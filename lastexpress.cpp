@@ -77,18 +77,14 @@ Common::Error LastExpressEngine::init() {
 
 	_graphics = new GraphicsManager(this);
 
-	//{
-	//	// DEBUG
-	//	Background *background = _resources->loadBackground("clock01.bg");
-	//	background->render(&_graphics->_background);
-
-	//	_graphics->updateScreen(&_graphics->_background);
-	//}
-
-	Subtitle *subtitle = _resources->loadSubtitle("xvas3.sbe");
-	subtitle->render(&_graphics->_foreground, 0);
-
-	_graphics->updateScreen(&_graphics->_foreground);
+	// DEBUG
+	/*Background *background = _resources->loadBackground("clock01.bg");
+	background->render(&_graphics->_background);
+	_graphics->updateScreen(&_graphics->_background);
+        */
+	//Subtitle *subtitle = _resources->loadSubtitle("xvas3.sbe");
+	//subtitle->render(&_graphics->_foreground, 0);
+	//_graphics->updateScreen(&_graphics->_foreground);
 
 	return Common::kNoError;
 }

@@ -28,7 +28,26 @@
 
 namespace LastExpress {
 
+class ResourceManager;
 
+class Sequence {
+public:
+	Sequence(ResourceManager *resource);
+	~Sequence();
+
+	bool load(const Common::String &name);
+	void render(Graphics::Surface *surface, int index);
+
+private:
+	struct SequenceHeader {
+		uint32 numframes;		//!< data size
+		uint32 unknown;			//!< unknown
+	};
+
+	ResourceManager *_resource;
+
+	SequenceHeader _header;	
+};
 
 
 

@@ -56,11 +56,11 @@ private:
 	ResourceManager *_resource;
 
 	BackgroundHeader _header;
-	uint16 *_pixels;
+	byte *_pixels;
 	uint32 _size;
 
 	void cleanup();
-	void decompress(uint16* data, uint32 dataSize, uint16* buffer, uint32 bufferSize);
+	void decompress(byte char* data, uint32 dataSize, byte* buffer, uint32 bufferSize);
 };
 
 } // End of namespace LastExpress

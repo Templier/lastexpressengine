@@ -46,8 +46,17 @@ Debugger::~Debugger() {
 }
 
 bool Debugger::cmd_playseq(int argc, const char **argv) {
-	if (argc == 2) {
-		return true;
+	if (argc == 3) {
+		Common::String filename(const_cast<char*>(argv[1]));
+
+		if (!_engine->_resources->hasFile(filename)) {
+			DebugPrintf("Cannot find file: %s\n", filename.c_str());
+			return true;
+		}
+
+		//Sequence *sequence = _engine->_resources->loadSequence(filename);
+		//sequence->render(&_engine->_graphics->_foreground, (int)(argv[2]));
+		//_engine->_graphics->updateScreen(&_engine->_graphics->_foreground);
 	} else {
 		DebugPrintf("Syntax: playseq <seqname>\n");
 	}
@@ -90,7 +99,9 @@ bool Debugger::cmd_playnis(int argc, const char **argv) {
 			return true;
 		}
 
-		return true;
+		//Animation *animation = _engine->_resources->loadAnimation(filename);
+		//animation->render(&_engine->_graphics->_foreground, (int)(argv[2]));
+		//_engine->_graphics->updateScreen(&_engine->_graphics->_foreground);
 	} else {
 		DebugPrintf("Syntax: playnis <nisname>\n");
 	}

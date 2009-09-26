@@ -28,5 +28,37 @@
 
 namespace LastExpress {
 
+Sequence::Sequence(ResourceManager *resource) : _resource(resource) {}
+
+Sequence::~Sequence() {
+
+}
+
+bool Sequence::load(const Common::String &name)
+{
+	// Get a stream to the file
+	if (!_resource->hasFile(name)) {
+		debugC(2, kLastExpressDebugVideo, "Error opening sequence: %s", name.c_str());
+		return false;
+	}
+
+	debugC(2, kLastExpressDebugVideo, "Loading sequence: %s", name.c_str());
+
+	Common::SeekableReadStream *stream = _resource->createReadStreamForMember(name);
+
+	// Read header to get the number of subtitles
+	uint32 numFrames = stream->readUint32LE();
+	debugC(3, kLastExpressDebugVideo, "Number of frames in sequence: %d", numFrames);
+
+	// Read the list of subtitles
+	for (unsigned int i = 0; i < numFrames; ++i) {		
+			
+	}
+
+	return true;
+}
+
+void Sequence::render(Graphics::Surface *surface, int index) {
+}
 
 } // End of namespace LastExpress

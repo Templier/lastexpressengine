@@ -68,33 +68,33 @@ bool Background::load(const Common::String &name)
 		   _header.posX, _header.posY, _header.width, _header.height, _header.redSize, _header.blueSize, _header.greenSize);
 
 	// Load and decompress Background channel data
-	uint16 *redData, *blueData, *greenData;
-	uint16 *redBuffer, *blueBuffer, *greenBuffer;	// temporary buffer to hold decompressed data
+	byte *redData, *blueData, *greenData;
+	byte *redBuffer, *blueBuffer, *greenBuffer;	// temporary buffer to hold decompressed data
 
-	redData = (uint16*)malloc(sizeof(uint16) * _header.redSize);
-	blueData = (uint16*)malloc(sizeof(uint16) * _header.blueSize);
-	greenData = (uint16*)malloc(sizeof(uint16) * _header.greenSize);
+	redData = (byte*)malloc(_header.redSize);
+	blueData = (byte*)malloc(_header.blueSize);
+	greenData = (byte*)malloc(_header.greenSize);
 
-	uint32 bufferSize = sizeof(uint16) * _header.width * _header.height;
-	redBuffer = (uint16*)malloc(bufferSize);
-	blueBuffer = (uint16*)malloc(bufferSize);
-	greenBuffer = (uint16*)malloc(bufferSize);
+	uint32 bufferSize = sizeof(byte) * _header.width * _header.height;
+	redBuffer = (byte*)malloc(bufferSize);
+	blueBuffer = (byte*)malloc(bufferSize);
+	greenBuffer = (byte*)malloc(bufferSize);
 
 	// Read compressed data
-	stream->read(redData, _header.redSize);
-	stream->read(blueData, _header.redSize);
-	stream->read(greenData, _header.redSize);
+	stream->read(redData, sizeof(byte) * _header.redSize);
+	stream->read(blueData, sizeof(byte) * _header.blueSize);
+	stream->read(greenData, sizeof(byte) * _header.greenSize);
 
 	// Decompress the data
-	decompress(redData, sizeof(uint16) * _header.redSize, redBuffer, bufferSize);
-	decompress(blueData, sizeof(uint16) * _header.blueSize, blueBuffer, bufferSize);
-	decompress(greenData, sizeof(uint16) * _header.greenSize, greenBuffer, bufferSize);
+	decompress(redData, sizeof(byte) * _header.redSize, redBuffer, bufferSize);
+	decompress(blueData, sizeof(byte) * _header.blueSize, blueBuffer, bufferSize);
+	decompress(greenData, sizeof(byte) * _header.greenSize, greenBuffer, bufferSize);
 
 	// Save to pixel buffer
-	_size = sizeof(uint16) * _header.width * _header.height * 3;
-	_pixels = (uint16*)malloc(_size);
+	_size = sizeof(byte) * _header.width * _header.height * 3;
+	_pixels = (byte*)malloc(_size);
 	memset(_pixels, 0, _size);
-	/*for (uint32 x = 0; x < _header.width - 1; ++x) {
+	for (uint32 x = 0; x < _header.width - 1; ++x) {
 		for (uint32 y = 0; y < _header.height - 1; ++y) {		
 			int i = y * _header.width + x;
 
@@ -102,7 +102,7 @@ bool Background::load(const Common::String &name)
 			_pixels[i+1] = greenBuffer[i];
 			_pixels[i+2] = blueBuffer[i];
 		}
-	}*/
+	}
 
 	free(redData);
 	free(blueData);
@@ -128,24 +128,24 @@ void Background::render(Graphics::Surface *surface) {
 	memcpy(surface->getBasePtr(_header.posX, _header.posY), _pixels, _size);	
 }
 
-void Background::decompress(uint16* src, uint32 srcSize, uint16* dst, uint32 dstSize) {
+void Background::decompress(byte* src, uint32 srcSize, byte* dst, uint32 dstSize) {
 	// Init destination buffer
 	memset(dst, 0, dstSize);
 
 	uint32 srcPos = 0;
 	uint32 dstPos = 0;
 
-	while (srcPos < srcSize) {
-		if (src[srcPos] < 0x8000) {
+	while (srcPos <= srcSize) {
+		if (src[srcPos] < 0x80) {
 			// direct decompression
 			uint16 length = (src[srcPos] >> 5) + 1;
-			uint16 data = src[srcPos] << 3;
+			char data = src[srcPos] << 3;
 
 			++srcPos;
 
 			for (uint32 i = 0; i < length; ++i)
 			{
-				if (dstPos > dstSize - 1)
+				if (dstPos > dstSize)
 					return;
 
 				dst[dstPos] = data;
@@ -153,13 +153,15 @@ void Background::decompress(uint16* src, uint32 srcSize, uint16* dst, uint32 dst
 			}
 		} else {
 			// buffer back reference, 4096 byte window			
-			if (srcPos == srcSize - 1)
+			if (srcPos == srcSize)
 				return;
 
 			// Offset: src[srcPos] et src[srcPos+1] as a big endian uint16 (plus zeroing the first bit)
-			uint16 offset = (src[srcPos] << 8) + src[srcPos+1];
-			uint16 length = (offset >> 12) + 3; //((src[srcPos] & 0x7f) >> 4) + 3;
-			uint32 position = dstPos - 4096 + (offset & 0x0fff); //((src[srcPos] & 0x0f) << 8) + src[srcPos + 1];
+			//uint16 offset = (src[srcPos] << 8) + src[srcPos+1];
+			//uint16 length = (offset >> 12) + 3;
+			//uint32 position = dstPos - 4096 + (offset & 0x0fff); //((src[srcPos] & 0x0f) << 8) + src[srcPos + 1];
+			uint16 length = ((src[srcPos] & 0x7f) >> 4) + 3;
+			uint32 position = dstPos - 4096 + ((src[srcPos] & 0x0f) << 8) + src[srcPos + 1];
 
 			srcPos = srcPos + 2;
 
