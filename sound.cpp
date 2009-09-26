@@ -23,16 +23,36 @@
  *
  */
 
-#ifndef LASTEXPRESS_SEQUENCE_H
-#define LASTEXPRESS_SEQUENCE_H
+#include "lastexpress/lastexpress.h"
+#include "lastexpress/sound.h"
 
 namespace LastExpress {
 
+Sound::Sound(ResourceManager *resource) : _resource(resource) {}
 
+Sound::~Sound() {
 
+}
 
+bool Sound::load(const Common::String &name)
+{
+	// Get a stream to the file
+	if (!_resource->hasFile(name)) {
+		debugC(2, kLastExpressDebugSound, "Error opening sound: %s", name.c_str());
+		return false;
+	}
 
+	debugC(2, kLastExpressDebugVideo, "Loading sound: %s", name.c_str());
+
+	Common::SeekableReadStream *stream = _resource->createReadStreamForMember(name);
+	
+
+	delete stream;
+
+	return true;
+}
+
+void Sound::play() {
+}
 
 } // End of namespace LastExpress
-
-#endif // LASTEXPRESS_SEQUENCE_H

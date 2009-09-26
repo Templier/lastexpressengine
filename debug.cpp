@@ -25,6 +25,7 @@
 
 #include "lastexpress/debug.h"
 #include "lastexpress/lastexpress.h"
+#include "lastexpress/background.h"
 
 namespace LastExpress {
 
@@ -63,10 +64,19 @@ bool Debugger::cmd_playsnd(int argc, const char **argv) {
 }
 
 bool Debugger::cmd_playsbe(int argc, const char **argv) {
-	if (argc == 2) {
-		return true;
+	if (argc == 3) {
+		Common::String filename(const_cast<char*>(argv[1]));
+
+		if (!_engine->_resources->hasFile(filename)) {
+			DebugPrintf("Cannot find file: %s\n", filename.c_str());
+			return true;
+		}
+
+		Subtitle *subtitle = _engine->_resources->loadSubtitle(filename);
+		subtitle->render(&_engine->_graphics->_foreground, (int)(argv[2]));
+		_engine->_graphics->updateScreen(&_engine->_graphics->_foreground);
 	} else {
-		DebugPrintf("Syntax: playsbe <sbename>\n");
+		DebugPrintf("Syntax: playsbe <sbename> <time>\n");
 	}
 	return true;
 }
@@ -75,7 +85,7 @@ bool Debugger::cmd_playnis(int argc, const char **argv) {
 	if (argc == 2) {
 		Common::String filename(const_cast<char*>(argv[1]));
 
-		if (!_engine->_resource->hasFile(filename)) {
+		if (!_engine->_resources->hasFile(filename)) {
 			DebugPrintf("Cannot find file: %s\n", filename.c_str());
 			return true;
 		}
@@ -89,7 +99,17 @@ bool Debugger::cmd_playnis(int argc, const char **argv) {
 
 bool Debugger::cmd_showbg(int argc, const char **argv) {
 	if (argc == 2) {
-		return true;
+		Common::String filename(const_cast<char*>(argv[1]));
+
+		if (!_engine->_resources->hasFile(filename)) {
+			DebugPrintf("Cannot find file: %s\n", filename.c_str());
+			return true;
+		}
+
+		Background *background = _engine->_resources->loadBackground(filename);
+		background->render(&_engine->_graphics->_background);
+
+		_engine->_graphics->updateScreen(&_engine->_graphics->_background);
 	} else {
 		DebugPrintf("Syntax: showbg <bgname>\n");
 	}
@@ -101,7 +121,7 @@ bool Debugger::cmd_listfiles(int argc, const char **argv) {
 		Common::String filter(const_cast<char*>(argv[1]));
 
 		Common::ArchiveMemberList list;
-		int count = _engine->_resource->listMatchingMembers(list, filter);
+		int count = _engine->_resources->listMatchingMembers(list, filter);
 
 		DebugPrintf("Number of matches: %d\n", count);
 		for (Common::ArchiveMemberList::iterator it = list.begin(); it != list.end(); ++it) {

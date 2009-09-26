@@ -23,16 +23,39 @@
  *
  */
 
-#ifndef LASTEXPRESS_SEQUENCE_H
-#define LASTEXPRESS_SEQUENCE_H
+#ifndef LASTEXPRESS_SOUND_H
+#define LASTEXPRESS_SOUND_H
 
 namespace LastExpress {
 
+class ResourceManager;
 
+class Sound {
+public:
+	Sound(ResourceManager *resource);
+	~Sound();
 
+	bool load(const Common::String &name);
+	void play();
 
+private:
+	struct SndHeader {
+		uint32 size;			//!< data size
+		uint16 count;			//!< number of blocks
+	};
 
+	struct SndBlock {
+		int16 sample;			//!< initial sample
+		uint16 index;			//!< initial index
+		uint16 unused;			//!< unused (00)
+		uint16* samples;		//!< IMA ADPCM sample codes
+	};
+
+	ResourceManager *_resource;
+
+	SndHeader _header;
+};
 
 } // End of namespace LastExpress
 
-#endif // LASTEXPRESS_SEQUENCE_H
+#endif // LASTEXPRESS_SOUND_H

@@ -23,13 +23,17 @@
  *
  */
 
+#ifndef LASTEXPRESS_RESOURCE_H
+#define LASTEXPRESS_RESOURCE_H
+
 #include "common/array.h"
 
 #include "lastexpress/lastexpress.h"
 #include "lastexpress/hpfarchive.h"
-
-#ifndef LASTEXPRESS_RESOURCE_H
-#define LASTEXPRESS_RESOURCE_H
+#include "lastexpress/background.h"
+#include "lastexpress/sound.h"
+#include "lastexpress/subtitle.h"
+#include "lastexpress/sequence.h"
 
 namespace LastExpress {
 
@@ -45,7 +49,10 @@ public:
 	Common::ArchiveMemberPtr getMember(const Common::String &name);
 	Common::SeekableReadStream *createReadStreamForMember(const Common::String &name) const;
 
-	// 
+	// Data handling
+	Background *loadBackground(const Common::String &name);
+	Sound *loadSound(const Common::String &name);
+	Subtitle *loadSubtitle(const Common::String &name);	
 
 private:
 	LastExpressEngine *_engine;

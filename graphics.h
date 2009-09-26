@@ -23,16 +23,32 @@
  *
  */
 
-#ifndef LASTEXPRESS_SEQUENCE_H
-#define LASTEXPRESS_SEQUENCE_H
+#ifndef LASTEXPRESS_GRAPHICS_H
+#define LASTEXPRESS_GRAPHICS_H
 
 namespace LastExpress {
 
+class LastExpressEngine;
 
+class GraphicsManager {
+public:
+	GraphicsManager(LastExpressEngine *engine);
+	~GraphicsManager();
 
+	// Buffers
+	void update();
+	void change();
+	void mergeFgAndBg();
+	void updateScreen(Graphics::Surface *source);
+	Graphics::Surface _foreground;				// The main surface used for sequences and videos
+	Graphics::Surface _background;				// Background
 
+private:
+	LastExpressEngine *_engine;
 
+	bool _changed;
+};
 
 } // End of namespace LastExpress
 
-#endif // LASTEXPRESS_SEQUENCE_H
+#endif // LASTEXPRESS_GRAPHICS_H

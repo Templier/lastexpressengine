@@ -23,11 +23,10 @@
  *
  */
 
+#include "lastexpress/lastexpress.h"
+#include "lastexpress/sequence.h"
+
 namespace LastExpress {
-
-
-
-
 
 
 } // End of namespace LastExpress

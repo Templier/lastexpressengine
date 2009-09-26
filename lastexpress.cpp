@@ -28,12 +28,11 @@
 #include "sound/mixer.h"
 
 #include "lastexpress/lastexpress.h"
-#include "lastexpress/resource.h"
 
 namespace LastExpress {
 
 LastExpressEngine::LastExpressEngine(OSystem *syst, const ADGameDescription *gd) :
-	Engine(syst), _gameDescription(gd), _debugger(NULL), _resource(NULL) {
+	Engine(syst), _gameDescription(gd), _debugger(NULL), _resources(NULL) {
 
 	// Adding the default directories
 	SearchMan.addSubDirectoryMatching(_gameDataDir, "data");
@@ -50,7 +49,8 @@ LastExpressEngine::LastExpressEngine(OSystem *syst, const ADGameDescription *gd)
 LastExpressEngine::~LastExpressEngine() {
 	// Delete the remaining objects
 	delete _debugger;
-	delete _resource;
+	delete _resources;
+	delete _graphics;
 }
 
 Common::Error LastExpressEngine::run() {
@@ -65,13 +65,30 @@ Common::Error LastExpressEngine::run() {
 Common::Error LastExpressEngine::init() {
 
 	// Initialize the graphics
-	initGraphics(640, 480, true);
+	Graphics::PixelFormat format(2, 5, 6, 5, 0, 11, 5, 0, 0);
+	initGraphics(640, 480, true, &format);
+	_pixelFormat = _system->getScreenFormat();
 
 	// Create debugger. It requires GFX to be initialized
 	_debugger = new Debugger(this);
 
 	// Start resource manager
-	_resource = new ResourceManager(this);
+	_resources = new ResourceManager(this);
+
+	_graphics = new GraphicsManager(this);
+
+	//{
+	//	// DEBUG
+	//	Background *background = _resources->loadBackground("clock01.bg");
+	//	background->render(&_graphics->_background);
+
+	//	_graphics->updateScreen(&_graphics->_background);
+	//}
+
+	Subtitle *subtitle = _resources->loadSubtitle("xvas3.sbe");
+	subtitle->render(&_graphics->_foreground, 0);
+
+	_graphics->updateScreen(&_graphics->_foreground);
 
 	return Common::kNoError;
 }
@@ -100,7 +117,7 @@ Common::Error LastExpressEngine::go() {
 			case Common::EVENT_MOUSEMOVE:
 				break;
 
-			case Common::EVENT_LBUTTONDOWN:
+			case Common::EVENT_LBUTTONDOWN:			
 				break;
 
 			case Common::EVENT_RBUTTONDOWN:

@@ -23,16 +23,47 @@
  *
  */
 
-#ifndef LASTEXPRESS_SEQUENCE_H
-#define LASTEXPRESS_SEQUENCE_H
+#ifndef LASTEXPRESS_SUBTITLE_H
+#define LASTEXPRESS_SUBTITLE_H
+
+#include "common/str.h"
 
 namespace LastExpress {
 
+class ResourceManager;
 
+class Subtitle {
+public:
+	Subtitle(ResourceManager *resource);
+	~Subtitle();
 
+	bool load(const Common::String &name);
+	void render(Graphics::Surface *surface, uint16 currentTime);
 
+private:	
+	struct SubtitleData {
+		uint16 start;			//!< display start time
+		uint16 stop;			//!< display stop time
+		uint16 topSize;			//!< top line length
+		uint16 bottomSize;		//!< bottom line length
+		uint16* top;			//!< top line (UTF-16 string)
+		uint16* bottom;			//!< bottom line (UTF-16 string)
+
+		SubtitleData() : top(NULL), bottom(NULL) {}
+		~SubtitleData() {
+			if (top)
+				free(top);
+			if (bottom)
+				free(bottom);
+		}
+	};
+
+	ResourceManager *_resource;
+
+	Common::Array<SubtitleData> _subtitles;
+};
 
 
 } // End of namespace LastExpress
 
-#endif // LASTEXPRESS_SEQUENCE_H
+#endif // LASTEXPRESS_SUBTITLE_H

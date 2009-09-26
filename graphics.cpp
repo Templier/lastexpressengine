@@ -23,11 +23,55 @@
  *
  */
 
+#include "lastexpress/lastexpress.h"
+#include "lastexpress/graphics.h"
+
 namespace LastExpress {
 
+GraphicsManager::GraphicsManager(LastExpressEngine *engine) :
+	_engine(engine), _changed(false) {
 
+	// Create the game surfaces
+	_foreground.create(640, 480, _engine->_pixelFormat.bytesPerPixel);
+	_background.create(640, 480, _engine->_pixelFormat.bytesPerPixel);
+}
 
+GraphicsManager::~GraphicsManager() {
+	// Free the game surfaces
+	_foreground.free();
+	_background.free();
+}
 
+void GraphicsManager::update() {
+	// Update the screen if needed and reset the status
+	if (_changed) {
+		_engine->_system->updateScreen();
+		_changed = false;
+	}
+}
 
+void GraphicsManager::change() {
+	_changed = true;
+}
 
-} // End of namespace LastExpress
+void GraphicsManager::mergeFgAndBg() {
+	uint32 i;
+	byte *countf, *countb;
+
+	countf = (byte *)_foreground.getBasePtr(0, 0);
+	countb = (byte *)_background.getBasePtr(0, 0);
+	for (i = 640 * 320; i; i--) {
+		if (255 == *(countf)) {
+			*(countf) = *(countb);
+		}
+		countf++;
+		countb++;
+	}
+}
+
+void GraphicsManager::updateScreen(Graphics::Surface *source) {
+	_engine->_system->copyRectToScreen((byte *)source->getBasePtr(0, 0), 640, 0, 80, 640, 320);
+	change();
+}
+
+} // End of Groovie namespace

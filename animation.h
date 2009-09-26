@@ -23,16 +23,16 @@
  *
  */
 
-#ifndef LASTEXPRESS_SEQUENCE_H
-#define LASTEXPRESS_SEQUENCE_H
+#ifndef LASTEXPRESS_ANIMATION_H
+#define LASTEXPRESS_ANIMATION_H
 
 namespace LastExpress {
 
+class Animation
+{
 
-
-
-
+};
 
 } // End of namespace LastExpress
 
-#endif // LASTEXPRESS_SEQUENCE_H
+#endif // LASTEXPRESS_ANIMATION_H

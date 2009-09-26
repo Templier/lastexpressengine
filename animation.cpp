@@ -23,16 +23,9 @@
  *
  */
 
-#ifndef LASTEXPRESS_SEQUENCE_H
-#define LASTEXPRESS_SEQUENCE_H
+#include "lastexpress/lastexpress.h"
+#include "lastexpress/animation.h"
 
 namespace LastExpress {
 
-
-
-
-
-
 } // End of namespace LastExpress
-
-#endif // LASTEXPRESS_SEQUENCE_H

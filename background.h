@@ -23,11 +23,46 @@
  *
  */
 
+#ifndef LASTEXPRESS_BACKGROUND_H
+#define LASTEXPRESS_BACKGROUND_H
+
+#include "graphics/surface.h"
+
+#include "lastexpress/resource.h"
+
 namespace LastExpress {
 
+class ResourceManager;
 
+class Background {
+public:
+	Background(ResourceManager *resource);
+	~Background();
 
+	bool load(const Common::String &name);
+	void render(Graphics::Surface *surface);
 
+private:
+	struct BackgroundHeader {
+		uint32 posX;			//!< position X on screen
+		uint32 posY;			//!< position Y on screen
+		uint32 width;			//!< image width
+		uint32 height;			//!< image height
+		uint32 redSize;			//!< red color channel data size
+		uint32 blueSize;		//!< blue color channel data size
+		uint32 greenSize;		//!< green color channel data size
+	};
 
+	ResourceManager *_resource;
+
+	BackgroundHeader _header;
+	uint16 *_pixels;
+	uint32 _size;
+
+	void cleanup();
+	void decompress(uint16* data, uint32 dataSize, uint16* buffer, uint32 bufferSize);
+};
 
 } // End of namespace LastExpress
+
+#endif // LASTEXPRESS_BACKGROUND_H

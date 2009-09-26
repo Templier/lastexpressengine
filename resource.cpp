@@ -47,15 +47,17 @@ ResourceManager::ResourceManager(LastExpressEngine *engine) {
 	// FIXME: handle DEMO
 
 	_archives.push_back(new HPFArchive(archiveHDPath));
-	_archives.push_back(new HPFArchive(archiveCD1Path));
-	_archives.push_back(new HPFArchive(archiveCD2Path));
-	_archives.push_back(new HPFArchive(archiveCD3Path));
+	//_archives.push_back(new HPFArchive(archiveCD1Path));
+	//_archives.push_back(new HPFArchive(archiveCD2Path));
+	//_archives.push_back(new HPFArchive(archiveCD3Path));
 }
 
 ResourceManager::~ResourceManager() {
 }
 
+//////////////////////////////////////////////////////////////////////////
 // Archive functions
+//////////////////////////////////////////////////////////////////////////
 bool ResourceManager::hasFile(const Common::String &name) {
 	for (Common::Array<HPFArchive*>::iterator it = _archives.begin(); it != _archives.end(); ++it) {
 		if ((*it)->hasFile(name))
@@ -96,6 +98,39 @@ Common::SeekableReadStream *ResourceManager::createReadStreamForMember(const Com
 	}
 
 	return 0;
+}
+
+//////////////////////////////////////////////////////////////////////////
+// Data handling
+//////////////////////////////////////////////////////////////////////////
+Background *ResourceManager::loadBackground(const Common::String &name) {
+
+	Background* background = new Background(this);
+	
+	if (!background->load(name))
+		return NULL;
+
+	return background;
+}
+
+Sound *ResourceManager::loadSound(const Common::String &name) {
+
+	Sound* sound = new Sound(this);
+
+	if (!sound->load(name))
+		return NULL;
+
+	return sound;
+}
+
+Subtitle *ResourceManager::loadSubtitle(const Common::String &name) {
+
+	Subtitle* subtitle = new Subtitle(this);
+
+	if (!subtitle->load(name))
+		return NULL;
+
+	return subtitle;
 }
 
 } // End of namespace LastExpress

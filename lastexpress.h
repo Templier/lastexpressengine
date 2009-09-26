@@ -26,12 +26,14 @@
 #ifndef LASTEXPRESS_H
 #define LASTEXPRESS_H
  
+#include "common/system.h"
 #include "engines/advancedDetector.h"
 #include "engines/engine.h"
 #include "graphics/surface.h"
 
 #include "lastexpress/debug.h"
 #include "lastexpress/resource.h"
+#include "lastexpress/graphics.h"
  
 namespace LastExpress {
  
@@ -60,12 +62,16 @@ protected:
 
 	virtual Debugger *getDebugger() { return _debugger; }
 
-	friend class Debugger;
+public:
+	Graphics::PixelFormat _pixelFormat;
+
+	ResourceManager *_resources;
+	GraphicsManager *_graphics;
 
 private:
 	const ADGameDescription *_gameDescription;
-	Debugger *_debugger;
-	ResourceManager *_resource;
+
+	Debugger *_debugger;	
 
 	Common::Error init();
 	Common::Error go();
