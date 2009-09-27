@@ -60,7 +60,7 @@ private:
 	uint32 _size;
 
 	void cleanup();
-	void decompress(byte char* data, uint32 dataSize, byte* buffer, uint32 bufferSize);
+	void decompress(byte* data, uint32 dataSize, byte* buffer, uint32 bufferSize);
 };
 
 } // End of namespace LastExpress
