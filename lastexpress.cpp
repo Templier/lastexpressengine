@@ -83,9 +83,11 @@ Common::Error LastExpressEngine::init() {
 	//////////////////////////////////////////////////////////////////////////////
 	// DEBUG
 	Background *background = _resources->loadBackground("clock01.bg");
-	background->render(&_graphics->_background);
-	_graphics->updateScreen(&_graphics->_background);
-	_graphics->update();
+	if (background) {
+		background->render(&_graphics->_background);
+		_graphics->updateScreen(&_graphics->_background);
+		_graphics->update();
+	}
         
 	//Subtitle *subtitle = _resources->loadSubtitle("xvas3.sbe");
 	//subtitle->render(&_graphics->_foreground, 0);
@@ -96,11 +98,13 @@ Common::Error LastExpressEngine::init() {
 	//sound->play(_system->getMixer());
 
 	Animation *sequence = _resources->loadSequence("jlinetl.seq"); //line1.seq");
-	for (uint32 i = 0; i < sequence->getNumberOfFrames(); i++) {
-		sequence->renderFrame(&_graphics->_foreground, i);
-		_graphics->mergeFgAndBg();
-		_graphics->updateScreen(&_graphics->_foreground);
-		_graphics->update();
+	if (sequence) {
+		for (uint32 i = 0; i < sequence->getNumberOfFrames(); i++) {
+			sequence->renderFrame(&_graphics->_foreground, i);
+			_graphics->mergeFgAndBg();
+			_graphics->updateScreen(&_graphics->_foreground);
+			_graphics->update();
+		}
 	}
 	//////////////////////////////////////////////////////////////////////////////
 

@@ -64,6 +64,12 @@ bool Animation::loadSequence(const Common::String &name)
 
 void Animation::renderFrame(Graphics::Surface *surface, uint32 index) {
 
+	if (index > _headerSequence.numframes - 1)
+		return;
+
+	// TODO: Move stream to start of frame
+
+
 	// Read frame header
 	SequenceFrameHeader header;
 
@@ -71,12 +77,12 @@ void Animation::renderFrame(Graphics::Surface *surface, uint32 index) {
 	header.frameInfo.dataOffset = _stream->readUint32LE();
 	header.frameInfo.unknown1 = _stream->readUint32LE();
 	header.frameInfo.paletteOffset = _stream->readUint32LE();
-	header.frameInfo.xPos1 = _stream->readUint32LE();
+	header.frameInfo.x0 = _stream->readUint32LE();
 	header.frameInfo.unknown2 = _stream->readUint32LE();
-	header.frameInfo.xPos2 = _stream->readUint32LE();
+	header.frameInfo.x1 = _stream->readUint32LE();
 	header.frameInfo.unknown3 = _stream->readUint32LE();
 	header.frameInfo.initialSkip = _stream->readUint32LE();
-	header.frameInfo.decompressedSize = _stream->readUint32LE();
+	header.frameInfo.decompressedEndOffset = _stream->readUint32LE();
 
 	// Sequence information
 	header.unknown4 = _stream->readUint32LE();
@@ -91,59 +97,164 @@ void Animation::renderFrame(Graphics::Surface *surface, uint32 index) {
 	header.unknown13 = _stream->readUint32LE();
 	header.unknown14 = _stream->readUint32LE();
 
-	debugC(3, kLastExpressDebugVideo, "-- Frame information --  %d/%d", index + 1, _headerSequence.numframes);
+	debugC(3, kLastExpressDebugVideo, "\n-- Frame information --  %d/%d", index + 1, _headerSequence.numframes);
 	debugC(3, kLastExpressDebugVideo, "Offsets: data=%d, unknown=%d, Palette=%d", header.frameInfo.dataOffset, header.frameInfo.unknown1, header.frameInfo.paletteOffset);
-	debugC(3, kLastExpressDebugVideo, "Position: x1=%d , unknown=%d, x2=%d , unknown=%d", header.frameInfo.xPos1, header.frameInfo.unknown2, header.frameInfo.xPos2, header.frameInfo.unknown3);
+	debugC(3, kLastExpressDebugVideo, "Position: x1=%d , unknown=%d, x2=%d , unknown=%d", header.frameInfo.x0, header.frameInfo.unknown2, header.frameInfo.x1, header.frameInfo.unknown3);
 	debugC(3, kLastExpressDebugVideo, "Initial Skip: %d", header.frameInfo.initialSkip);
-	debugC(3, kLastExpressDebugVideo, "Decompressed size: %d", header.frameInfo.decompressedSize);
-	debugC(3, kLastExpressDebugVideo, "Compression type: %u", header.compressionType);
+	debugC(3, kLastExpressDebugVideo, "Decompressed size: %d", header.frameInfo.decompressedEndOffset);
+	debugC(3, kLastExpressDebugVideo, "Compression type: %u\n", header.compressionType);
 
-	// Store palette information
-	uint32 paletteSize = (header.frameInfo.dataOffset - header.frameInfo.paletteOffset) * sizeof(byte);
-	byte *palette = (byte*)malloc(paletteSize);
-	_stream->seek(sizeof(SequenceHeader) + header.frameInfo.paletteOffset, SEEK_SET);
-	_stream->read(palette, paletteSize);
+	// Store palette information	
+	byte *palette = (byte*)malloc(_maxPaletteSize * sizeof(byte));
+	_stream->seek(header.frameInfo.paletteOffset, SEEK_SET);
+	_stream->read(palette, _maxPaletteSize * sizeof(byte));
+
+	// Init surface
+	byte *output = (byte*)surface->getBasePtr(0, 0);
+	memset(output, 0, _screenWidth * _screenHeigh * sizeof(byte) * 2);
 
 	// Decompress frame
-	bool isOk = false;
 	switch (header.compressionType) {
 		case 0x03:
+			decompress_03(header, output, palette);
+			break;	
+
 		case 0x04:
+			decompress_04(header, output, palette);
+			break;	
+
 		case 0x05:
-			break;
+			decompress_05(header, output, palette);
+			break;	
 
 		case 0x07:
-			isOk = decompress_07(header, (byte*)surface->getBasePtr(0, 0), palette);
+			decompress_07(header, output, palette);
 			break;
 
 		case 0xff:
+			decompress_ff(header, output, palette);
 			break;				
 	}
-
-	if (!isOk)
-		debugC(3, kLastExpressDebugVideo, "Error decompressing frame!");
 
 	free(palette);
 }
 
-bool Animation::decompress_07(SequenceFrameHeader header, byte *output, byte *palette) {
-
-	memset(output, 255, _screenWidth * _screenHeigh * sizeof(byte) * 2);
-
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Decompress FrameType 03
+void Animation::decompress_03(SequenceFrameHeader header, byte *output, byte *palette) {
 	uint32 outIndex = 0;	
 
-	// default number of columns to skip
-	uint32 numBlanks = (_screenWidth - 1) - (header.frameInfo.xPos2 - header.frameInfo.xPos1);
+	// Number of columns to skip
+	int numBlanks = (_screenWidth - 1) - (header.frameInfo.x1 - header.frameInfo.x0);
 
 	// Go to frame data
-	_stream->seek(sizeof(SequenceHeader) + header.frameInfo.dataOffset, SEEK_SET);
+	_stream->seek(header.frameInfo.dataOffset, SEEK_SET);
 	outIndex = header.frameInfo.initialSkip;
 
-	while (outIndex < header.frameInfo.decompressedSize)
+	while (outIndex < header.frameInfo.decompressedEndOffset)
 	{
 		byte opcode = _stream->readByte();
 		if (_stream->eos())
-			return false;
+			return;
+
+		if (opcode & 0x80) {
+
+			if (opcode & 0x40) {
+
+				opcode &= 0x3f;
+				
+				uint32 nextLine = 2 * (numBlanks + opcode);					
+
+				output[outIndex] = palette[2];
+				outIndex += nextLine + 2;
+
+				output[outIndex] = palette[2]; 
+				outIndex += 2;
+
+				if (outIndex >= header.frameInfo.decompressedEndOffset)
+					return;
+
+			} else { //  (opcode & 0x40)
+
+				opcode &= 0x3F;
+
+				if (opcode & 0x20) {
+
+					opcode = ((opcode & 0x1f) << 8) + _stream->readByte();
+					if (_stream->eos())
+						return;
+
+					if (opcode & 0x1000) {
+						outIndex += 2 * (opcode & 0xFFF);
+
+						if (outIndex >= header.frameInfo.decompressedEndOffset)
+							return;
+					}
+				} else {
+
+					uint32 nextIndex = 2 * opcode;
+
+					output[outIndex] = palette[2];
+					outIndex += nextIndex + 2;
+
+					output[outIndex] = palette[2];
+					outIndex += 2;
+
+					if (outIndex >= header.frameInfo.decompressedEndOffset)
+						return;
+				}
+			}
+
+		} else { //  (opcode & 0x80)
+
+			if (opcode >> 3) {
+				opcode = _stream->readByte();
+
+				if (_stream->eos())
+					return;
+			}
+
+			for (byte i = 0; i < opcode; i++) {
+				output[outIndex] = palette[(opcode & 0x7) * 2];
+				outIndex += 2;
+			}
+		}
+	}
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Decompress FrameType 04
+void Animation::decompress_04(SequenceFrameHeader header, byte *output, byte *palette) {
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Decompress FrameType 05
+void Animation::decompress_05(SequenceFrameHeader header, byte *output, byte *palette) {
+	uint32 outIndex = 0;
+
+
+
+
+
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Decompress FrameType 07
+void Animation::decompress_07(SequenceFrameHeader header, byte *output, byte *palette) {
+	uint32 outIndex = 0;	
+
+	// Number of columns to skip
+	int numBlanks = (_screenWidth - 1) - (header.frameInfo.x1 - header.frameInfo.x0);
+
+	// Go to frame data
+	_stream->seek(header.frameInfo.dataOffset, SEEK_SET);
+	outIndex = header.frameInfo.initialSkip;
+
+	while (outIndex < header.frameInfo.decompressedEndOffset)
+	{
+		byte opcode = _stream->readByte();
+		if (_stream->eos())
+			return;
 
 		if (opcode & 0x80) {
 
@@ -151,8 +262,10 @@ bool Animation::decompress_07(SequenceFrameHeader header, byte *output, byte *pa
 
 				if (opcode & 0x20) {
 
-					byte value = opcode & 0x1f;
-					byte nextLine = 2 * (numBlanks + value);					
+					//byte value = opcode & 0x1f;
+					opcode &= 0x1f;
+
+					uint32 nextLine = 2 * (numBlanks + opcode);					
 
 					output[outIndex] = palette[2];
 					outIndex += nextLine + 2;
@@ -160,28 +273,29 @@ bool Animation::decompress_07(SequenceFrameHeader header, byte *output, byte *pa
 					output[outIndex] = palette[2]; 
 					outIndex += 2;
 
-					if (outIndex >= header.frameInfo.decompressedSize)
-						return false;
+					if (outIndex >= header.frameInfo.decompressedEndOffset)
+						return;
 
 				} else {  // (opcode & 0x40)
 
-					byte value = opcode & 0x1f;
+					//byte value = opcode & 0x1f;
+					opcode &= 0x1f;
 
 					if (opcode & 0x10) {
 
 						opcode = ((opcode & 0x0f) << 8) + _stream->readByte();
 						if (_stream->eos())
-							return false;
+							return;
 
 						if (opcode & 0x0800) {
 							outIndex += 2 * (opcode & 0x7FF);
 
-							if (outIndex >= header.frameInfo.decompressedSize)
-								return false;
+							if (outIndex >= header.frameInfo.decompressedEndOffset)
+								return;
 						}
 					} else {
 
-						byte nextIndex = 2 * opcode;
+						uint32 nextIndex = 2 * opcode;
 
 						output[outIndex] = palette[2];
 						outIndex += nextIndex + 2;
@@ -189,8 +303,8 @@ bool Animation::decompress_07(SequenceFrameHeader header, byte *output, byte *pa
 						output[outIndex] = palette[2];
 						outIndex += 2;
 
-						if (outIndex >= header.frameInfo.decompressedSize)
-							return false;
+						if (outIndex >= header.frameInfo.decompressedEndOffset)
+							return;
 					}
 
 				
@@ -198,33 +312,37 @@ bool Animation::decompress_07(SequenceFrameHeader header, byte *output, byte *pa
 
 			} else { // (opcode & 0x40)
 
-				byte numLoops = opcode & 0x3f;
+				output[outIndex] = palette[opcode * 2];
+				outIndex += 2;
 
-				byte value = _stream->readByte();
-				if (_stream->eos())
-					return false;
-
-				for (byte i = 0; i < numLoops; i++) {
-					if (outIndex >= header.frameInfo.decompressedSize)
-						return false;
-
-					output[outIndex] = palette[value * 2];
-					outIndex += 2;
-				}
-
+				if (outIndex >= header.frameInfo.decompressedEndOffset)
+					return;
 			}
 
 		} else { // (opcode & 0x80)
 
-			output[outIndex] = palette[opcode * 2];
-			outIndex += 2;
+			//byte numLoops = opcode & 0x3f;
+			opcode &= 0x3f;
 
-			if (outIndex >= header.frameInfo.decompressedSize)
-				return false;
+			byte value = _stream->readByte();
+			if (_stream->eos())
+				return;
+
+			for (byte i = 0; i < opcode; i++) {
+				if (outIndex >= header.frameInfo.decompressedEndOffset)
+					return;
+
+				output[outIndex] = palette[value * 2];
+				outIndex += 2;
+			}
 		}
 	}
+}
 
-	return true;
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Decompress FrameType FF
+void Animation::decompress_ff(SequenceFrameHeader header, byte *output, byte *palette) {
+
 }
 
 } // End of namespace LastExpress

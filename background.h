@@ -40,7 +40,7 @@ public:
 	~Background();
 
 	bool load(const Common::String &name);
-	void render(Graphics::Surface *surface);
+	Common::Rect render(Graphics::Surface *surface);
 
 private:
 	struct BackgroundHeader {

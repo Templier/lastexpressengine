@@ -56,13 +56,14 @@ bool Debugger::cmd_playseq(int argc, const char **argv) {
 			return true;
 		}
 
-		Animation *sequence = _engine->_resources->loadSequence("jlinetl.seq"); //line1.seq");
-		for (uint32 i = 0; i < sequence->getNumberOfFrames(); i++) {
-			sequence->renderFrame(&_engine->_graphics->_foreground, i);
-			_engine->_graphics->mergeFgAndBg();
-			_engine->_graphics->updateScreen(&_engine->_graphics->_foreground);
-			_engine->_graphics->update();
-
+		Animation *sequence = _engine->_resources->loadSequence(filename);
+		if (sequence) {
+			for (uint32 i = 0; i < sequence->getNumberOfFrames(); i++) {
+				sequence->renderFrame(&_engine->_graphics->_foreground, i);
+				_engine->_graphics->mergeFgAndBg();
+				_engine->_graphics->updateScreen(&_engine->_graphics->_foreground);
+				_engine->_graphics->update();
+			}
 		}
 	} else {
 		DebugPrintf("Syntax: playseq <seqname>\n");
@@ -82,7 +83,8 @@ bool Debugger::cmd_playsnd(int argc, const char **argv) {
 		_engine->_system->getMixer()->stopAll();
 
 		Sound *sound = _engine->_resources->loadSound(filename);
-		sound->play(_engine->_system->getMixer());
+		if (sound)
+			sound->play(_engine->_system->getMixer());
 	} else {
 		DebugPrintf("Syntax: playsnd <sndname>\n");
 	}
@@ -99,10 +101,12 @@ bool Debugger::cmd_playsbe(int argc, const char **argv) {
 		}
 
 		Subtitle *subtitle = _engine->_resources->loadSubtitle(filename);
-		subtitle->render(&_engine->_graphics->_foreground, (int)(argv[2]));
-		_engine->_graphics->mergeFgAndBg();
-		_engine->_graphics->updateScreen(&_engine->_graphics->_foreground);
-		_engine->_graphics->update();
+		if (subtitle) {
+			subtitle->render(&_engine->_graphics->_foreground, (int)(argv[2]));
+			_engine->_graphics->mergeFgAndBg();
+			_engine->_graphics->updateScreen(&_engine->_graphics->_foreground);
+			_engine->_graphics->update();
+		}
 	} else {
 		DebugPrintf("Syntax: playsbe <sbename> <time>\n");
 	}
@@ -137,9 +141,10 @@ bool Debugger::cmd_showbg(int argc, const char **argv) {
 		}
 
 		Background *background = _engine->_resources->loadBackground(filename);
-		background->render(&_engine->_graphics->_background);
-
-		_engine->_graphics->updateScreen(&_engine->_graphics->_background);
+		if (background) {
+			background->render(&_engine->_graphics->_background);
+			_engine->_graphics->updateScreen(&_engine->_graphics->_background);
+		}
 	} else {
 		DebugPrintf("Syntax: showbg <bgname>\n");
 	}
@@ -157,11 +162,10 @@ bool Debugger::cmd_listfiles(int argc, const char **argv) {
 		for (Common::ArchiveMemberList::iterator it = list.begin(); it != list.end(); ++it) {
 			DebugPrintf("%s\n", (*it)->getName().c_str());
 		}
-		
-		return true;
 	} else {
 		DebugPrintf("Syntax: listfiles <filter> (use * for all)\n");
 	}
+
 	return true;
 }
 

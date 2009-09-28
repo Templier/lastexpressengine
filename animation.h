@@ -47,8 +47,8 @@ private:
 	static const uint32 _screenWidth = 640;
 	static const uint32 _screenHeigh = 480;
 	static const uint32 _maxPaletteSize = 256;
-	static const uint32 _transcol = 0;
-	static const uint32 _lineParBaseCol = _maxPaletteSize - 2;
+	//static const uint32 _transcol = 0;
+	//static const uint32 _lineParBaseCol = _maxPaletteSize - 2;
 
 	struct SequenceHeader {
 		uint32 numframes;		//!< data size
@@ -56,15 +56,16 @@ private:
 	};
 
 	struct FrameHeader {
-		uint32 dataOffset;  
+		uint32 dataOffset;				 //!< Data offset (from beginning of file)
 		uint32 unknown1;
-		uint32 paletteOffset;
-		uint32 xPos1;
-		uint32 unknown2;
-		uint32 xPos2;
+		uint32 paletteOffset;			 //!< Palette offset (from beginning of file)
+		uint32 x0;						 //!< Start X coordinate
+		uint32 unknown2;			
+		uint32 x1;						 //!< End X coordinate
 		uint32 unknown3;
-		uint32 initialSkip;  // doubled, since each pixel occupies one color word
-		uint32 decompressedSize;   // as above
+		uint32 initialSkip;				 //!< Initial offset of decompressed data (doubled, since each pixel occupies one color word)
+		uint32 decompressedEndOffset;    //!< End of data after decompression
+
 		// NIS frame headers end here. SEQ frame headers have additional 32 bytes of
 		// data, notably the compression type at the position outlined above in
 		// CompPos_SEQ
@@ -89,7 +90,12 @@ private:
 	SequenceHeader _headerSequence;
 	Common::SeekableReadStream *_stream;
 
-	bool decompress_07(SequenceFrameHeader header, byte *output, byte *palette);
+	// Decompression functions
+	void decompress_03(SequenceFrameHeader header, byte *output, byte *palette);
+	void decompress_04(SequenceFrameHeader header, byte *output, byte *palette);
+	void decompress_05(SequenceFrameHeader header, byte *output, byte *palette);
+	void decompress_07(SequenceFrameHeader header, byte *output, byte *palette);
+	void decompress_ff(SequenceFrameHeader header, byte *output, byte *palette);
 };
 
 } // End of namespace LastExpress

@@ -114,12 +114,22 @@ bool Background::load(const Common::String &name)
 	return true;
 }
 
-void Background::render(Graphics::Surface *surface) {
+Common::Rect Background::render(Graphics::Surface *surface) {
 	if (!_pixels)
-		return;
+		return Common::Rect();
 
-	// Copy background to surface
-	memcpy(surface->getBasePtr(_header.posX, _header.posY), _pixels, _header.width * _header.height * sizeof(byte) * 2);	
+	byte *src = (byte *)_pixels;
+	byte *dst = (byte *)surface->getBasePtr(_header.posX, _header.posY);
+
+	for (uint32 i = 0; i < _header.height; ++i) {
+		for (uint32 j = 0; j < _header.width * 2; ++j) {
+			dst[j] = src[j];
+		}
+		dst += surface->pitch;
+		src += _header.width * 2; //pitch;
+	}
+
+	return Common::Rect(_header.posX, _header.posY, _header.width, _header.height);
 }
 
 void Background::decompress(byte* src, uint32 srcSize, byte* dst, uint32 dstSize) {
