@@ -43,11 +43,11 @@ bool Sound::load(const Common::String &name)
 	}
 
 	debugC(2, kLastExpressDebugVideo, "Loading sound: %s", name.c_str());
-
 	Common::SeekableReadStream *stream = _resource->createReadStreamForMember(name);
 	
+	
 
-	delete stream;
+	
 
 	return true;
 }

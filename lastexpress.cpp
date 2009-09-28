@@ -69,6 +69,10 @@ Common::Error LastExpressEngine::init() {
 	initGraphics(640, 480, true, &format);
 	_pixelFormat = _system->getScreenFormat();
 
+	// We do not support 256 colors mode
+	if (_pixelFormat.bytesPerPixel == 1)
+		return Common::kUnsupportedColorMode;
+
 	// Create debugger. It requires GFX to be initialized
 	_debugger = new Debugger(this);
 
@@ -76,6 +80,7 @@ Common::Error LastExpressEngine::init() {
 	_resources = new ResourceManager(this);
 	_graphics = new GraphicsManager(this);
 
+	//////////////////////////////////////////////////////////////////////////////
 	// DEBUG
 	Background *background = _resources->loadBackground("clock01.bg");
 	background->render(&_graphics->_background);
@@ -86,6 +91,10 @@ Common::Error LastExpressEngine::init() {
 	//subtitle->render(&_graphics->_foreground, 0);
 	//_graphics->updateScreen(&_graphics->_foreground);
 	//_graphics->update();
+
+	Sound *sound = _resources->loadSound("mus001.snd");
+	sound->play();
+	//////////////////////////////////////////////////////////////////////////////
 
 	return Common::kNoError;
 }
@@ -105,7 +114,8 @@ Common::Error LastExpressEngine::go() {
 			case Common::EVENT_KEYDOWN:
 				// CTRL-D: Attach the debugger
 				if ((ev.kbd.flags & Common::KBD_CTRL) && ev.kbd.keycode == Common::KEYCODE_d)
-					_debugger->attach();
+					if (!_debugger->isAttached())
+						_debugger->attach();																
 				break;
 
 			case Common::EVENT_MAINMENU:

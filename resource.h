@@ -29,7 +29,7 @@
 #include "common/array.h"
 
 #include "lastexpress/lastexpress.h"
-#include "lastexpress/hpfarchive.h"
+#include "lastexpress/archive.h"
 #include "lastexpress/background.h"
 #include "lastexpress/sound.h"
 #include "lastexpress/subtitle.h"

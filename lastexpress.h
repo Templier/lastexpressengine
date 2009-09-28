@@ -44,6 +44,7 @@ enum {
 	kLastExpressDebugCursor = 1 << 3,
 	kLastExpressDebugSound = 1 << 4,
 	kLastExpressDebugSubtitle = 1 << 5,	
+	kLastExpressDebugFont = 1 << 6	
 	// the current limitation is 32 debug levels (1 << 31 is the last one)
 };
  

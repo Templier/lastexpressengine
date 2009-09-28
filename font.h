@@ -23,14 +23,28 @@
  *
  */
 
+#ifndef LASTEXPRESS_FONT_H
+#define LASTEXPRESS_FONT_H
+
+#include "common/str.h"
+
 namespace LastExpress {
 
-// Names of savegames
-//const Common::String eggBlue("BLUE.EGG");
-//const Common::String eggRed("RED.EGG");
-//const Common::String eggGreen("GREEN.EGG");
-//const Common::String eggPurple("PURPLE.EGG");
-//const Common::String eggTeal("TEAL.EGG");
-//const Common::String eggGold("GOLD.EGG");
+class ResourceManager;
+
+class Font {
+public:
+	Font(ResourceManager *resource);
+	~Font();
+
+	bool load(const Common::String &name);
+	void render();
+
+private:	
+	ResourceManager *_resource;
+};
+
 
 } // End of namespace LastExpress
+
+#endif // LASTEXPRESS_FONT_H

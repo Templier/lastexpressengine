@@ -70,7 +70,7 @@ void GraphicsManager::mergeFgAndBg() {
 }
 
 void GraphicsManager::updateScreen(Graphics::Surface *source) {
-	_engine->_system->copyRectToScreen((byte *)source->getBasePtr(0, 0), 640, 0, 0, 640, 480);
+	_engine->_system->copyRectToScreen((byte *)source->getBasePtr(0, 0), 640 * 2, 0, 0, 640, 480);
 	change();
 }
 

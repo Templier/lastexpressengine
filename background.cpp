@@ -28,14 +28,13 @@
 
 namespace LastExpress {
 
-Background::Background(ResourceManager *resource) : _resource(resource), _pixels(NULL), _size(0) {}
+Background::Background(ResourceManager *resource) : _resource(resource), _pixels(NULL) {}
 
 Background::~Background() {
 	cleanup();
 }
 
 void Background::cleanup() {
-	_size = 0;
 	if (_pixels)
 		free(_pixels);
 }
@@ -91,26 +90,26 @@ bool Background::load(const Common::String &name)
 	decompress(greenData, sizeof(byte) * _header.greenSize, greenBuffer, bufferSize);
 
 	// Save to pixel buffer
-#define RGB565(r, g, b) ((b & 31) + ((g & 63) << 5) + ((r & 31) << 11))
+	// FIXME handle big-endian case
+	// R 11-15, G 5-10, B 0-4
+	#define RGB565(r, g, b) ((b >> 3) + ((g >> 2) << 5) + ((r >> 3) << 11))
 
-	_size = _header.width * _header.height * sizeof(byte) * 2;
-	_pixels = (byte*)malloc(_size);
-	memset(_pixels, 0, _size);
-	for (uint32 y = 0; y < _header.height - 1; ++y) {
-		for (uint32 x = 0; x < _header.width - 1; ++x) {				
-			int i = y * _header.width + x;
+	_pixels = (byte*)calloc( _header.width * _header.height, 2 * sizeof(byte));
 
-			_pixels[i] = redBuffer[i]; //RGB565(redBuffer[i], greenBuffer[i], blueBuffer[i]);
+	for (uint16 y = 0; y < _header.height; y++) {
+		uint8 *dst = _pixels + (y * _header.width * 2);
+		for (uint16 x = 0; x < _header.width; x++) {	
+			int i = y * _header.width + x;			
+			uint16 color = RGB565(redBuffer[i], greenBuffer[i], blueBuffer[i]);
+
+			*dst++ = color & 0xFF;
+			*dst++ = (color >> 8) & 0xFF;
 		}
 	}
 
-	free(redData);
-	free(blueData);
-	free(greenData);
-
-	free(redBuffer);
-	free(blueBuffer);
-	free(greenBuffer);
+	// Cleanup buffers
+	free(redData); free(blueData); free(greenData);
+	free(redBuffer); free(blueBuffer); free(greenBuffer);
 
 	return true;
 }
@@ -119,13 +118,8 @@ void Background::render(Graphics::Surface *surface) {
 	if (!_pixels)
 		return;
 
-	Common::Rect rect(_header.posX, _header.posY, _header.width, _header.height);
-
-	// Clear rect on surface
-	surface->fillRect(rect, 0);
-
 	// Copy background to surface
-	memcpy(surface->getBasePtr(_header.posX, _header.posY), _pixels, _size);	
+	memcpy(surface->getBasePtr(_header.posX, _header.posY), _pixels, _header.width * _header.height * sizeof(byte) * 2);	
 }
 
 void Background::decompress(byte* src, uint32 srcSize, byte* dst, uint32 dstSize) {
@@ -135,31 +129,28 @@ void Background::decompress(byte* src, uint32 srcSize, byte* dst, uint32 dstSize
 	uint32 srcPos = 0;
 	uint32 dstPos = 0;
 
-	while (srcPos <= srcSize) {
+	while (srcPos < srcSize) {
 		if (src[srcPos] < 0x80) {
 			// direct decompression
 			uint16 length = (src[srcPos] >> 5) + 1;
 			char data = src[srcPos] << 3;
 
-			++srcPos;
+			srcPos++;
 
-			for (uint32 i = 0; i < length; ++i)
+			for (uint32 i = 0; i < length; i++)
 			{
 				if (dstPos > dstSize)
 					return;
 
 				dst[dstPos] = data;
-				++dstPos;
+				dstPos++;
 			}
 		} else {
 			// buffer back reference, 4096 byte window			
-			if (srcPos == srcSize)
+			if (srcPos == srcSize - 1)
 				return;
 
 			// Offset: src[srcPos] et src[srcPos+1] as a big endian uint16 (plus zeroing the first bit)
-			//uint16 offset = (src[srcPos] << 8) + src[srcPos+1];
-			//uint16 length = (offset >> 12) + 3;
-			//uint32 position = dstPos - 4096 + (offset & 0x0fff); //((src[srcPos] & 0x0f) << 8) + src[srcPos + 1];
 			uint16 length = ((src[srcPos] & 0x7f) >> 4) + 3;
 			uint32 position = dstPos - 4096 + ((src[srcPos] & 0x0f) << 8) + src[srcPos + 1];
 
@@ -168,13 +159,13 @@ void Background::decompress(byte* src, uint32 srcSize, byte* dst, uint32 dstSize
 			if (position < 0)
 				return;
 
-			for (uint32 i = position; i <= position + length - 1; ++i)
+			for (uint32 i = position; i <= position + length - 1; i++)
 			{
 				if ((dstPos > dstSize - 1) || (i > dstSize - 1))
 					return;
 
 				dst[dstPos] = dst[i];
-				++dstPos;
+				dstPos++;
 			}
 		}
 	}

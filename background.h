@@ -57,7 +57,6 @@ private:
 
 	BackgroundHeader _header;
 	byte *_pixels;
-	uint32 _size;
 
 	void cleanup();
 	void decompress(byte* data, uint32 dataSize, byte* buffer, uint32 bufferSize);

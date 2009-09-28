@@ -23,14 +23,38 @@
  *
  */
 
+#include "lastexpress/lastexpress.h"
+#include "lastexpress/cursor.h"
+
 namespace LastExpress {
 
-// Names of savegames
-//const Common::String eggBlue("BLUE.EGG");
-//const Common::String eggRed("RED.EGG");
-//const Common::String eggGreen("GREEN.EGG");
-//const Common::String eggPurple("PURPLE.EGG");
-//const Common::String eggTeal("TEAL.EGG");
-//const Common::String eggGold("GOLD.EGG");
+Cursor::Cursor(ResourceManager *resource) : _resource(resource) {}
+
+Cursor::~Cursor() {
+
+}
+
+bool Cursor::load(const Common::String &name)
+{
+	// Get a stream to the file
+	if (!_resource->hasFile(name)) {
+		debugC(2, kLastExpressDebugSubtitle, "Error opening cursor: %s", name.c_str());
+		return false;
+	}
+
+	Common::SeekableReadStream *stream = _resource->createReadStreamForMember(name);
+
+	debugC(2, kLastExpressDebugCursor, "Loading cursor data file: %s", name.c_str());
+
+	// Read header to get the number of cursors
+	
+
+	return true;
+}
+
+void Cursor::render() {
+
+}
+
 
 } // End of namespace LastExpress

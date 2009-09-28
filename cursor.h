@@ -23,14 +23,26 @@
  *
  */
 
+#ifndef LASTEXPRESS_CURSOR_H
+#define LASTEXPRESS_CURSOR_H
+
 namespace LastExpress {
 
-// Names of savegames
-//const Common::String eggBlue("BLUE.EGG");
-//const Common::String eggRed("RED.EGG");
-//const Common::String eggGreen("GREEN.EGG");
-//const Common::String eggPurple("PURPLE.EGG");
-//const Common::String eggTeal("TEAL.EGG");
-//const Common::String eggGold("GOLD.EGG");
+class ResourceManager;
+
+class Cursor {
+public:
+	Cursor(ResourceManager *resource);
+	~Cursor();
+
+	bool load(const Common::String &name);
+	void render();
+
+private:	
+	ResourceManager *_resource;
+};
+
 
 } // End of namespace LastExpress
+
+#endif // LASTEXPRESS_CURSOR_H

@@ -126,6 +126,22 @@
 			Name="data"
 			>
 			<File
+				RelativePath="..\..\engines\lastexpress\animation.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\engines\lastexpress\animation.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\engines\lastexpress\archive.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\engines\lastexpress\archive.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\engines\lastexpress\background.cpp"
 				>
 			</File>
@@ -134,11 +150,19 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\engines\lastexpress\hpfarchive.cpp"
+				RelativePath="..\..\engines\lastexpress\cursor.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\..\engines\lastexpress\hpfarchive.h"
+				RelativePath="..\..\engines\lastexpress\cursor.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\engines\lastexpress\font.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\engines\lastexpress\font.h"
 				>
 			</File>
 			<File
@@ -147,6 +171,22 @@
 			</File>
 			<File
 				RelativePath="..\..\engines\lastexpress\sequence.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\engines\lastexpress\sound.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\engines\lastexpress\sound.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\engines\lastexpress\subtitle.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\engines\lastexpress\subtitle.h"
 				>
 			</File>
 		</Filter>
@@ -164,6 +204,10 @@
 		</File>
 		<File
 			RelativePath="..\..\engines\lastexpress\graphics.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\..\engines\lastexpress\graphics.h"
 			>
 		</File>
 		<File

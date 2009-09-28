@@ -23,14 +23,34 @@
  *
  */
 
+#include "lastexpress/lastexpress.h"
+#include "lastexpress/font.h"
+
 namespace LastExpress {
 
-// Names of savegames
-//const Common::String eggBlue("BLUE.EGG");
-//const Common::String eggRed("RED.EGG");
-//const Common::String eggGreen("GREEN.EGG");
-//const Common::String eggPurple("PURPLE.EGG");
-//const Common::String eggTeal("TEAL.EGG");
-//const Common::String eggGold("GOLD.EGG");
+Font::Font(ResourceManager *resource) : _resource(resource) {}
+
+Font::~Font() {
+
+}
+
+bool Font::load(const Common::String &name)
+{
+	// Get a stream to the file
+	if (!_resource->hasFile(name)) {
+		debugC(2, kLastExpressDebugSubtitle, "Error opening font: %s", name.c_str());
+		return false;
+	}
+
+	Common::SeekableReadStream *stream = _resource->createReadStreamForMember(name);
+
+	debugC(2, kLastExpressDebugFont, "Loading font data file: %s", name.c_str());
+
+	return true;
+}
+
+void Font::render() {
+}
+
 
 } // End of namespace LastExpress
