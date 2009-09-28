@@ -60,7 +60,7 @@ void GraphicsManager::mergeFgAndBg() {
 
 	countf = (byte *)_foreground.getBasePtr(0, 0);
 	countb = (byte *)_background.getBasePtr(0, 0);
-	for (i = 640 * 480; i; i--) {
+	for (i = 640 * 480 * 2; i; i--) {
 		if (255 == *(countf)) {
 			*(countf) = *(countb);
 		}

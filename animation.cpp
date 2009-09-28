@@ -167,13 +167,13 @@ bool Animation::decompress_07(SequenceFrameHeader header, byte *output, byte *pa
 
 					byte value = opcode & 0x1f;
 
-					if ((opcode & 0x10) != 0) {
+					if (opcode & 0x10) {
 
 						opcode = ((opcode & 0x0f) << 8) + _stream->readByte();
 						if (_stream->eos())
 							return false;
 
-						if ((opcode & 0x0800) != 0) {
+						if (opcode & 0x0800) {
 							outIndex += 2 * (opcode & 0x7FF);
 
 							if (outIndex >= header.frameInfo.decompressedSize)
@@ -198,30 +198,29 @@ bool Animation::decompress_07(SequenceFrameHeader header, byte *output, byte *pa
 
 			} else { // (opcode & 0x40)
 
-				output[outIndex] = palette[opcode * 2];
-				outIndex += 2;
+				byte numLoops = opcode & 0x3f;
 
-				if (outIndex >= header.frameInfo.decompressedSize)
+				byte value = _stream->readByte();
+				if (_stream->eos())
 					return false;
-			}
 
+				for (byte i = 0; i < numLoops; i++) {
+					if (outIndex >= header.frameInfo.decompressedSize)
+						return false;
+
+					output[outIndex] = palette[value * 2];
+					outIndex += 2;
+				}
+
+			}
 
 		} else { // (opcode & 0x80)
 
-			byte loop = opcode & 0x3f;
+			output[outIndex] = palette[opcode * 2];
+			outIndex += 2;
 
-			byte value = _stream->readByte();
-			if (_stream->eos())
+			if (outIndex >= header.frameInfo.decompressedSize)
 				return false;
-
-			for (byte i = 0; i < loop; i++) {
-				if (outIndex >= header.frameInfo.decompressedSize)
-					return false;
-
-				output[outIndex] = palette[value * 2];
-				outIndex += 2;
-			}
-
 		}
 	}
 
