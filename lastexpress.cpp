@@ -92,8 +92,16 @@ Common::Error LastExpressEngine::init() {
 	//_graphics->updateScreen(&_graphics->_foreground);
 	//_graphics->update();
 
-	Sound *sound = _resources->loadSound("mus001.snd");
-	sound->play();
+	//Sound *sound = _resources->loadSound("mus001.snd");
+	//sound->play(_system->getMixer());
+
+	Animation *sequence = _resources->loadSequence("jlinetl.seq"); //line1.seq");
+	for (uint32 i = 0; i < sequence->getNumberOfFrames(); i++) {
+		sequence->renderFrame(&_graphics->_foreground, i);
+		_graphics->mergeFgAndBg();
+		_graphics->updateScreen(&_graphics->_foreground);
+		_graphics->update();
+	}
 	//////////////////////////////////////////////////////////////////////////////
 
 	return Common::kNoError;

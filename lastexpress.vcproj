@@ -166,14 +166,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\engines\lastexpress\sequence.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\engines\lastexpress\sequence.h"
-				>
-			</File>
-			<File
 				RelativePath="..\..\engines\lastexpress\sound.cpp"
 				>
 			</File>

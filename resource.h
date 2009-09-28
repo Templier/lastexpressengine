@@ -33,7 +33,7 @@
 #include "lastexpress/background.h"
 #include "lastexpress/sound.h"
 #include "lastexpress/subtitle.h"
-#include "lastexpress/sequence.h"
+#include "lastexpress/animation.h"
 
 namespace LastExpress {
 
@@ -53,6 +53,7 @@ public:
 	Background *loadBackground(const Common::String &name);
 	Sound *loadSound(const Common::String &name);
 	Subtitle *loadSubtitle(const Common::String &name);	
+	Animation *loadSequence(const Common::String &name);	
 
 private:
 	LastExpressEngine *_engine;

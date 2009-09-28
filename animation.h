@@ -26,11 +26,70 @@
 #ifndef LASTEXPRESS_ANIMATION_H
 #define LASTEXPRESS_ANIMATION_H
 
+#include "graphics/surface.h"
+
 namespace LastExpress {
 
-class Animation
-{
+class Animation {
+public:
+	Animation(ResourceManager *resource);
+	~Animation();
 
+	bool loadSequence(const Common::String &name);
+	bool loadAnimation(const Common::String &name);
+
+	void renderFrame(Graphics::Surface *surface , uint32 index);
+
+	uint32 getNumberOfFrames();
+
+private:
+	static const uint32 _seqFrameSize = 68;
+	static const uint32 _screenWidth = 640;
+	static const uint32 _screenHeigh = 480;
+	static const uint32 _maxPaletteSize = 256;
+	static const uint32 _transcol = 0;
+	static const uint32 _lineParBaseCol = _maxPaletteSize - 2;
+
+	struct SequenceHeader {
+		uint32 numframes;		//!< data size
+		uint32 unknown;			//!< unknown
+	};
+
+	struct FrameHeader {
+		uint32 dataOffset;  
+		uint32 unknown1;
+		uint32 paletteOffset;
+		uint32 xPos1;
+		uint32 unknown2;
+		uint32 xPos2;
+		uint32 unknown3;
+		uint32 initialSkip;  // doubled, since each pixel occupies one color word
+		uint32 decompressedSize;   // as above
+		// NIS frame headers end here. SEQ frame headers have additional 32 bytes of
+		// data, notably the compression type at the position outlined above in
+		// CompPos_SEQ
+	};
+
+	struct SequenceFrameHeader {
+		struct FrameHeader frameInfo;
+		uint32 unknown4;
+		uint32 unknown5;
+		byte compressionType;
+		byte unknown7;
+		byte unknown8;
+		byte unknown9;
+		uint32 unknown10;
+		uint32 unknown11;
+		uint32 unknown12;
+		uint32 unknown13;
+		uint32 unknown14;
+	};
+
+	ResourceManager *_resource;
+	SequenceHeader _headerSequence;
+	Common::SeekableReadStream *_stream;
+
+	bool decompress_07(SequenceFrameHeader header, byte *output, byte *palette);
 };
 
 } // End of namespace LastExpress

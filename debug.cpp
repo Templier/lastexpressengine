@@ -23,6 +23,8 @@
  *
  */
 
+#include "sound/mixer.h"
+
 #include "lastexpress/debug.h"
 #include "lastexpress/lastexpress.h"
 #include "lastexpress/background.h"
@@ -46,7 +48,7 @@ Debugger::~Debugger() {
 }
 
 bool Debugger::cmd_playseq(int argc, const char **argv) {
-	if (argc == 3) {
+	if (argc == 2) {
 		Common::String filename(const_cast<char*>(argv[1]));
 
 		if (!_engine->_resources->hasFile(filename)) {
@@ -54,9 +56,14 @@ bool Debugger::cmd_playseq(int argc, const char **argv) {
 			return true;
 		}
 
-		//Sequence *sequence = _engine->_resources->loadSequence(filename);
-		//sequence->render(&_engine->_graphics->_foreground, (int)(argv[2]));
-		//_engine->_graphics->updateScreen(&_engine->_graphics->_foreground);
+		Animation *sequence = _engine->_resources->loadSequence("jlinetl.seq"); //line1.seq");
+		for (uint32 i = 0; i < sequence->getNumberOfFrames(); i++) {
+			sequence->renderFrame(&_engine->_graphics->_foreground, i);
+			_engine->_graphics->mergeFgAndBg();
+			_engine->_graphics->updateScreen(&_engine->_graphics->_foreground);
+			_engine->_graphics->update();
+
+		}
 	} else {
 		DebugPrintf("Syntax: playseq <seqname>\n");
 	}
@@ -65,7 +72,17 @@ bool Debugger::cmd_playseq(int argc, const char **argv) {
 
 bool Debugger::cmd_playsnd(int argc, const char **argv) {
 	if (argc == 2) {
-		return true;
+		Common::String filename(const_cast<char*>(argv[1]));
+
+		if (!_engine->_resources->hasFile(filename)) {
+			DebugPrintf("Cannot find file: %s\n", filename.c_str());
+			return true;
+		}
+
+		_engine->_system->getMixer()->stopAll();
+
+		Sound *sound = _engine->_resources->loadSound(filename);
+		sound->play(_engine->_system->getMixer());
 	} else {
 		DebugPrintf("Syntax: playsnd <sndname>\n");
 	}
@@ -83,7 +100,9 @@ bool Debugger::cmd_playsbe(int argc, const char **argv) {
 
 		Subtitle *subtitle = _engine->_resources->loadSubtitle(filename);
 		subtitle->render(&_engine->_graphics->_foreground, (int)(argv[2]));
+		_engine->_graphics->mergeFgAndBg();
 		_engine->_graphics->updateScreen(&_engine->_graphics->_foreground);
+		_engine->_graphics->update();
 	} else {
 		DebugPrintf("Syntax: playsbe <sbename> <time>\n");
 	}

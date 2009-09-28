@@ -26,6 +26,8 @@
 #include "lastexpress/lastexpress.h"
 #include "lastexpress/sound.h"
 
+#include "sound/mixer.h"
+
 namespace LastExpress {
 
 Sound::Sound(ResourceManager *resource) : _resource(resource) {}
@@ -34,6 +36,7 @@ Sound::~Sound() {
 
 }
 
+// TODO handle LNK and NIS files
 bool Sound::load(const Common::String &name)
 {
 	// Get a stream to the file
@@ -43,16 +46,26 @@ bool Sound::load(const Common::String &name)
 	}
 
 	debugC(2, kLastExpressDebugVideo, "Loading sound: %s", name.c_str());
-	Common::SeekableReadStream *stream = _resource->createReadStreamForMember(name);
-	
-	
+	Common::SeekableReadStream *stream = _resource->createReadStreamForMember(name);	
 
-	
+	// Read the sound header
+	_header.size = stream->readUint32LE();
+	_header.count = stream->readUint16LE();
+
+	// Using MS IMA ADPCM reduces sound corruption a lot, but there are still some problems
+	// Maybe we need to have our own ADPCM decoding :(
+	_audio = Audio::makeADPCMStream(stream, false, _header.size, Audio::kADPCMMSIma, 44100, 1, _soundBlockSize, 0);
 
 	return true;
 }
 
-void Sound::play() {
+void Sound::play(Audio::Mixer *mixer) {
+	Audio::SoundHandle sound_handle;
+	mixer->playInputStream(Audio::Mixer::kPlainSoundType, &sound_handle, _audio);
+}
+
+Audio::AudioStream* Sound::getAudioStream() {
+	return _audio;
 }
 
 } // End of namespace LastExpress

@@ -26,6 +26,8 @@
 #ifndef LASTEXPRESS_SOUND_H
 #define LASTEXPRESS_SOUND_H
 
+#include "sound/adpcm.h"
+
 namespace LastExpress {
 
 class ResourceManager;
@@ -36,24 +38,23 @@ public:
 	~Sound();
 
 	bool load(const Common::String &name);
-	void play();
+	Audio::AudioStream* getAudioStream();
+	void play(Audio::Mixer *mixer);
 
 private:
+	static const unsigned int _soundBlockSize = 739; 
+
 	struct SndHeader {
 		uint32 size;			//!< data size
+								//!<  - NIS: size of all blocks, including those located in the matching LNK file
+								//!<  - LNK: size of the LNK file itself, including the header
+								//!<  - SND: size of all blocks
 		uint16 count;			//!< number of blocks
 	};
 
-	struct SndBlock {
-		int16 sample;			//!< initial sample
-		uint16 index;			//!< initial index
-		uint16 unused;			//!< unused (00)
-		uint16* samples;		//!< IMA ADPCM sample codes
-	};
-
 	ResourceManager *_resource;
-
 	SndHeader _header;
+	Audio::AudioStream *_audio;
 };
 
 } // End of namespace LastExpress

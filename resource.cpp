@@ -138,4 +138,14 @@ Subtitle *ResourceManager::loadSubtitle(const Common::String &name) {
 	return subtitle;
 }
 
+Animation *ResourceManager::loadSequence(const Common::String &name) {
+
+	Animation* sequence = new Animation(this);
+
+	if (!sequence->loadSequence(name))
+		return NULL;
+
+	return sequence;
+}
+
 } // End of namespace LastExpress
