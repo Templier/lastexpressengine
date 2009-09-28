@@ -30,7 +30,6 @@ namespace LastExpress {
 static const PlainGameDescriptor lastExpressGames[] = {
 	// Games
 	{"lastexpress", "The Last Express"},
-	{"lastexpress-demo", "The Last Express (Demo)"},
 	{0, 0}
 };
 
@@ -70,14 +69,14 @@ static const ADGameDescription gameDescriptions[] = {
 
 	// The Last Express (Demo)
 	{
-		"lastexpress-demo",
-		"",
+		"lastexpress",
+		"Demo",
 		{
 			{"Demo.HPF",  0, "baf3b1f64155d34872896e61c3d3cb78", 58191872},				
 		},
 		Common::EN_ANY,
 		Common::kPlatformWindows,
-		ADGF_NO_FLAGS,
+		ADGF_DEMO,
 		Common::GUIO_NONE
 	},
 	AD_TABLE_END_MARKER

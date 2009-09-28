@@ -72,19 +72,20 @@ Common::Error LastExpressEngine::init() {
 	// Create debugger. It requires GFX to be initialized
 	_debugger = new Debugger(this);
 
-	// Start resource manager
+	// Start all managers
 	_resources = new ResourceManager(this);
-
 	_graphics = new GraphicsManager(this);
 
 	// DEBUG
-	/*Background *background = _resources->loadBackground("clock01.bg");
+	Background *background = _resources->loadBackground("clock01.bg");
 	background->render(&_graphics->_background);
 	_graphics->updateScreen(&_graphics->_background);
-        */
+	_graphics->update();
+        
 	//Subtitle *subtitle = _resources->loadSubtitle("xvas3.sbe");
 	//subtitle->render(&_graphics->_foreground, 0);
 	//_graphics->updateScreen(&_graphics->_foreground);
+	//_graphics->update();
 
 	return Common::kNoError;
 }
@@ -144,6 +145,10 @@ bool LastExpressEngine::hasFeature(EngineFeature f) const {
 
 void LastExpressEngine::errorString(const char *buf_input, char *buf_output, int buf_output_size) {	
 	snprintf(buf_output, buf_output_size, "%s", buf_input);
+}
+
+uint32 LastExpressEngine::getFlags() const {
+	return _gameDescription->flags;
 }
 
 } // End of namespace LastExpress

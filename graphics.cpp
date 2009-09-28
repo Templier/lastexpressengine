@@ -60,7 +60,7 @@ void GraphicsManager::mergeFgAndBg() {
 
 	countf = (byte *)_foreground.getBasePtr(0, 0);
 	countb = (byte *)_background.getBasePtr(0, 0);
-	for (i = 640 * 320; i; i--) {
+	for (i = 640 * 480; i; i--) {
 		if (255 == *(countf)) {
 			*(countf) = *(countb);
 		}
@@ -70,7 +70,7 @@ void GraphicsManager::mergeFgAndBg() {
 }
 
 void GraphicsManager::updateScreen(Graphics::Surface *source) {
-	_engine->_system->copyRectToScreen((byte *)source->getBasePtr(0, 0), 640, 0, 80, 640, 320);
+	_engine->_system->copyRectToScreen((byte *)source->getBasePtr(0, 0), 640, 0, 0, 640, 480);
 	change();
 }
 

@@ -54,7 +54,7 @@ HPFArchive::HPFArchive(const Common::String &path) {
 		_archive->read(&name, sizeof(char) * _archiveNameSize);
 		entry.offset = _archive->readUint32LE();
 		entry.size = _archive->readUint32LE();	
-		entry.unknown = _archive->readUint16LE();
+		entry.isOnHD = _archive->readUint16LE();
 
 		// Terminate string
 		name[12] = '\0';
@@ -64,7 +64,7 @@ HPFArchive::HPFArchive(const Common::String &path) {
 
 		_files[filename] = entry;
 
-		debugC(9, kLastExpressDebugResource, "File entry: %s - %d - %d - %u", &name, entry.offset, entry.size, entry.unknown);		
+		//debugC(9, kLastExpressDebugResource, "File entry: %s (offset:%d - Size: %d - HD: %u)", &name, entry.offset, entry.size, entry.isOnHD);		
 	}
 }
 

@@ -41,15 +41,20 @@ const Common::String archiveCD3Path("CD3.HPF");
 const Common::String fontName("FONT.DAT");
 const Common::String cursorsName("CURSORS.TBM");
 
-// TODO: there are lots of duplicated files in CD archives: we need to handle load/unload of cd archives 
+ResourceManager::ResourceManager(LastExpressEngine *engine) : _engine(engine) {
 
-ResourceManager::ResourceManager(LastExpressEngine *engine) {
-	// FIXME: handle DEMO
+	// Load stable archives (DEMO or HD archives)
+	if (_engine->getFlags() & ADGF_DEMO) {
+		_archives.push_back(new HPFArchive(archiveDemoPath));
+	} else {
+		_archives.push_back(new HPFArchive(archiveHDPath));
 
-	_archives.push_back(new HPFArchive(archiveHDPath));
-	//_archives.push_back(new HPFArchive(archiveCD1Path));
-	//_archives.push_back(new HPFArchive(archiveCD2Path));
-	//_archives.push_back(new HPFArchive(archiveCD3Path));
+		// TODO: there are lots of duplicated files in CD archives: we need to handle load/unload of cd archives 
+		// FIXME: load CD archives on-the-fly?
+		//_archives.push_back(new HPFArchive(archiveCD1Path));
+		//_archives.push_back(new HPFArchive(archiveCD2Path));
+		//_archives.push_back(new HPFArchive(archiveCD3Path));
+	}
 }
 
 ResourceManager::~ResourceManager() {

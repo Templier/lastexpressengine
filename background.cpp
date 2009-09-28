@@ -91,16 +91,16 @@ bool Background::load(const Common::String &name)
 	decompress(greenData, sizeof(byte) * _header.greenSize, greenBuffer, bufferSize);
 
 	// Save to pixel buffer
-	_size = sizeof(byte) * _header.width * _header.height * 3;
+#define RGB565(r, g, b) ((b & 31) + ((g & 63) << 5) + ((r & 31) << 11))
+
+	_size = _header.width * _header.height * sizeof(byte) * 2;
 	_pixels = (byte*)malloc(_size);
 	memset(_pixels, 0, _size);
-	for (uint32 x = 0; x < _header.width - 1; ++x) {
-		for (uint32 y = 0; y < _header.height - 1; ++y) {		
+	for (uint32 y = 0; y < _header.height - 1; ++y) {
+		for (uint32 x = 0; x < _header.width - 1; ++x) {				
 			int i = y * _header.width + x;
 
-			_pixels[i] = redBuffer[i];
-			_pixels[i+1] = greenBuffer[i];
-			_pixels[i+2] = blueBuffer[i];
+			_pixels[i] = redBuffer[i]; //RGB565(redBuffer[i], greenBuffer[i], blueBuffer[i]);
 		}
 	}
 

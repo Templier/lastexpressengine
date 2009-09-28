@@ -59,7 +59,7 @@ private:
 		//char name[12];		//!< Name of the entry
 		uint32 offset;			//!< Offset (in sectors of 2048 bytes)
 		uint32 size; 			//!< Size (in sectors of 2048 bytes)
-		uint16 unknown; 		//!< ???
+		uint16 isOnHD; 		    //!< File is always on HD (1: true; 0: false)
 	};
 
 	typedef Common::HashMap<Common::String, HPFEntry, Common::IgnoreCase_Hash, Common::IgnoreCase_EqualTo> FileMap;

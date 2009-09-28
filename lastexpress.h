@@ -68,6 +68,8 @@ public:
 	ResourceManager *_resources;
 	GraphicsManager *_graphics;
 
+	uint32 getFlags() const;
+
 private:
 	const ADGameDescription *_gameDescription;
 
