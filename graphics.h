@@ -38,7 +38,7 @@ public:
 	// Buffers
 	void update();
 	void change();
-	void mergeFgAndBg();
+	void MergePlanes();
 	void updateScreen(Graphics::Surface *source);
 	Graphics::Surface _foreground;				// The main surface used for sequences and videos
 	Graphics::Surface _background;				// Background

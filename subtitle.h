@@ -35,7 +35,6 @@ class ResourceManager;
 class Subtitle {
 public:
 	Subtitle(ResourceManager *resource);
-	~Subtitle();
 
 	bool load(const Common::String &name);
 	void render(Graphics::Surface *surface, uint16 currentTime);

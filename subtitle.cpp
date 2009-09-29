@@ -30,10 +30,6 @@ namespace LastExpress {
 
 Subtitle::Subtitle(ResourceManager *resource) : _resource(resource) {}
 
-Subtitle::~Subtitle() {
-
-}
-
 bool Subtitle::load(const Common::String &name)
 {
 	// Get a stream to the file
@@ -51,7 +47,7 @@ bool Subtitle::load(const Common::String &name)
 	debugC(3, kLastExpressDebugSubtitle, "Number of subtitles in file: %d", numSubtitles);
 
 	// Read the list of subtitles
-	for (unsigned int i = 0; i < numSubtitles; ++i) {		
+	for (uint32 i = 0; i < numSubtitles; ++i) {		
 		SubtitleData data;
 
 		// Read start & stop times

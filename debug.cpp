@@ -58,9 +58,9 @@ bool Debugger::cmd_playseq(int argc, const char **argv) {
 
 		Animation *sequence = _engine->_resources->loadSequence(filename);
 		if (sequence) {
-			for (uint32 i = 0; i < sequence->getNumberOfFrames(); i++) {
-				sequence->renderFrame(&_engine->_graphics->_foreground, i);
-				_engine->_graphics->mergeFgAndBg();
+			for (uint32 i = 0; i < sequence->totalFrames(); i++) {
+				sequence->renderFrame(i);
+				_engine->_graphics->MergePlanes();
 				_engine->_graphics->updateScreen(&_engine->_graphics->_foreground);
 				_engine->_graphics->update();
 			}
@@ -103,7 +103,7 @@ bool Debugger::cmd_playsbe(int argc, const char **argv) {
 		Subtitle *subtitle = _engine->_resources->loadSubtitle(filename);
 		if (subtitle) {
 			subtitle->render(&_engine->_graphics->_foreground, (int)(argv[2]));
-			_engine->_graphics->mergeFgAndBg();
+			_engine->_graphics->MergePlanes();
 			_engine->_graphics->updateScreen(&_engine->_graphics->_foreground);
 			_engine->_graphics->update();
 		}

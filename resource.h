@@ -54,6 +54,7 @@ public:
 	Sound *loadSound(const Common::String &name);
 	Subtitle *loadSubtitle(const Common::String &name);	
 	Animation *loadSequence(const Common::String &name);	
+	Animation *loadAnimation(const Common::String &name);	
 
 private:
 	LastExpressEngine *_engine;

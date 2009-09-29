@@ -99,13 +99,18 @@ Common::Error LastExpressEngine::init() {
 
 	Animation *sequence = _resources->loadSequence("jlinetl.seq"); //line1.seq");
 	if (sequence) {
-		for (uint32 i = 0; i < sequence->getNumberOfFrames(); i++) {
-			sequence->renderFrame(&_graphics->_foreground, i);
-			_graphics->mergeFgAndBg();
+		for (uint32 i = 0; i < sequence->totalFrames(); i++) {
+			sequence->renderFrame(i);
+			_graphics->MergePlanes();
 			_graphics->updateScreen(&_graphics->_foreground);
 			_graphics->update();
 		}
 	}
+
+	//Animation *animation = _resources->loadAnimation("1032.nis"); //demo only, full version only has animation in cds.
+	//if (animation)
+	//	animation->play();
+
 	//////////////////////////////////////////////////////////////////////////////
 
 	return Common::kNoError;

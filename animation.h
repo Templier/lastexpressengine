@@ -32,15 +32,16 @@ namespace LastExpress {
 
 class Animation {
 public:
-	Animation(ResourceManager *resource);
-	~Animation();
+	Animation(LastExpressEngine *engine);
 
 	bool loadSequence(const Common::String &name);
 	bool loadAnimation(const Common::String &name);
 
-	void renderFrame(Graphics::Surface *surface , uint32 index);
+	bool play();
+	bool renderFrame(uint32 index);
 
-	uint32 getNumberOfFrames();
+	uint32 currentFrame();
+	uint32 totalFrames();
 
 private:
 	static const uint32 _seqFrameSize = 68;
@@ -50,19 +51,42 @@ private:
 	//static const uint32 _transcol = 0;
 	//static const uint32 _lineParBaseCol = _maxPaletteSize - 2;
 
+	enum typesChunk {
+		kChunkTypeAudioInfo 		= 0x0003,
+  		kChunkTypeBackgroundFrameA  = 0x000a,
+  		kChunkTypeSelectBackgroundA = 0x000b,
+  		kChunkTypeBackgroundFrameC  = 0x000c,
+  		kChunkTypeSelectBackgroundC = 0x000d,
+  		kChunkTypeOverlayFrame      = 0x0014,
+  		kChunkTypeAudioData         = 0x0020,
+  		kChunkTypeAudioEnd          = 0x0063
+	};
+
+	struct AnimationHeader {
+		uint32 chunksCount;		//!< Number of chunks in the NIS file
+	};
+
+	struct AnimationEntry {
+		typesChunk type;		//!< Type of chunk
+		uint16 tag;				//!< Tag
+		uint32 size;			//!< Size of chunk
+	};
+
 	struct SequenceHeader {
 		uint32 numframes;		//!< data size
 		uint32 unknown;			//!< unknown
+
+		SequenceHeader() : numframes(0), unknown(0) {}
 	};
 
 	struct FrameHeader {
 		uint32 dataOffset;				 //!< Data offset (from beginning of file)
-		uint32 unknown1;
+		uint32 unknown1;				
 		uint32 paletteOffset;			 //!< Palette offset (from beginning of file)
-		uint32 x0;						 //!< Start X coordinate
-		uint32 unknown2;			
-		uint32 x1;						 //!< End X coordinate
-		uint32 unknown3;
+		uint32 x0;						 //!< Top-left X coordinate
+		uint32 y0;						 //!< Top-left Y coordinate
+		uint32 x1;						 //!< Bottom-right X coordinate
+		uint32 y1;						 //!< Bottom-right Y coordinate
 		uint32 initialSkip;				 //!< Initial offset of decompressed data (doubled, since each pixel occupies one color word)
 		uint32 decompressedEndOffset;    //!< End of data after decompression
 
@@ -86,8 +110,12 @@ private:
 		uint32 unknown14;
 	};
 
-	ResourceManager *_resource;
+	LastExpressEngine *_engine;
+
+	uint32 _currentFrame;
 	SequenceHeader _headerSequence;
+	Common::Array<AnimationEntry> _chunks;
+	
 	Common::SeekableReadStream *_stream;
 
 	// Decompression functions

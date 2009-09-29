@@ -28,31 +28,70 @@
 
 namespace LastExpress {
 
-Animation::Animation(ResourceManager *resource) : _resource(resource) {}
+Animation::Animation(LastExpressEngine *engine) : _engine(engine), _stream(NULL), _currentFrame(0) {}
 
-Animation::~Animation() {
-
+uint32 Animation::currentFrame() {
+	return _currentFrame;
 }
 
-uint32 Animation::getNumberOfFrames() {
+uint32 Animation::totalFrames() {
+	if (_stream == NULL)
+		return 0;
+
 	return _headerSequence.numframes;
 }
 
 bool Animation::loadAnimation(const Common::String &name) {
-	return false;
+
+	// Get a stream to the file
+	if (!_engine->_resources->hasFile(name)) {
+		debugC(2, kLastExpressDebugVideo, "Error opening animation: %s", name.c_str());
+		_stream = NULL;
+		return false;
+	}
+
+	debugC(2, kLastExpressDebugVideo, "Loading animation: %s", name.c_str());
+	_stream = _engine->_resources->createReadStreamForMember(name);
+
+	// FIXME Add error handling
+	
+	// Read header to get the number of chunks
+	uint32 numChunks = _stream->readUint32LE();
+	debugC(3, kLastExpressDebugVideo, "Number of chunks in NIS file: %d", numChunks);
+
+	// Read all the chunks
+	for (uint32 i = 0; i < numChunks; ++i) {		
+		
+		AnimationEntry chunk;
+
+		chunk.type = (typesChunk)_stream->readUint16LE();
+		chunk.tag  = _stream->readUint16LE();
+		chunk.size = _stream->readUint32LE();
+
+		_chunks.push_back(chunk);
+
+		debugC(9, kLastExpressDebugVideo, "Chunk Entry: type 0x%.4x, tag=%d, size=%d", chunk.type, chunk.tag, chunk.size);		
+	}
+
+	return true;
 }
 
-bool Animation::loadSequence(const Common::String &name)
-{
+bool Animation::loadSequence(const Common::String &name) {
+
 	// Get a stream to the file
-	if (!_resource->hasFile(name)) {
+	if (!_engine->_resources->hasFile(name)) {
 		debugC(2, kLastExpressDebugVideo, "Error opening sequence: %s", name.c_str());
+		_stream = NULL;
 		return false;
 	}
 
 	debugC(2, kLastExpressDebugVideo, "Loading sequence: %s", name.c_str());
+	_stream = _engine->_resources->createReadStreamForMember(name);
 
-	_stream = _resource->createReadStreamForMember(name);
+	// FIXME Add error handling
+
+	// Reset current frame
+	_currentFrame = 0;
 
 	// Read header to get the number of frames
 	_headerSequence.numframes = _stream->readUint32LE();
@@ -62,13 +101,26 @@ bool Animation::loadSequence(const Common::String &name)
 	return true;
 }
 
-void Animation::renderFrame(Graphics::Surface *surface, uint32 index) {
+bool Animation::play() {
+	return false;
+}
 
-	if (index > _headerSequence.numframes - 1)
-		return;
+// Render a single frame to the surface
+// return false to know that no more frames need to be rendered?
+bool Animation::renderFrame(uint32 index) {
 
+	if (_stream == NULL || _headerSequence.numframes == 0) {
+		debugC(2, kLastExpressDebugVideo, "No sequence has been loaded!");
+	}
+
+	_currentFrame = index;
+
+	// Check if there are remaining frames to render
+	if (_currentFrame > _headerSequence.numframes - 1)
+		return false;
+
+	// FIXME: Add error handling
 	// TODO: Move stream to start of frame
-
 
 	// Read frame header
 	SequenceFrameHeader header;
@@ -78,9 +130,9 @@ void Animation::renderFrame(Graphics::Surface *surface, uint32 index) {
 	header.frameInfo.unknown1 = _stream->readUint32LE();
 	header.frameInfo.paletteOffset = _stream->readUint32LE();
 	header.frameInfo.x0 = _stream->readUint32LE();
-	header.frameInfo.unknown2 = _stream->readUint32LE();
+	header.frameInfo.y0 = _stream->readUint32LE();
 	header.frameInfo.x1 = _stream->readUint32LE();
-	header.frameInfo.unknown3 = _stream->readUint32LE();
+	header.frameInfo.y1 = _stream->readUint32LE();
 	header.frameInfo.initialSkip = _stream->readUint32LE();
 	header.frameInfo.decompressedEndOffset = _stream->readUint32LE();
 
@@ -97,11 +149,11 @@ void Animation::renderFrame(Graphics::Surface *surface, uint32 index) {
 	header.unknown13 = _stream->readUint32LE();
 	header.unknown14 = _stream->readUint32LE();
 
-	debugC(3, kLastExpressDebugVideo, "\n-- Frame information --  %d/%d", index + 1, _headerSequence.numframes);
-	debugC(3, kLastExpressDebugVideo, "Offsets: data=%d, unknown=%d, Palette=%d", header.frameInfo.dataOffset, header.frameInfo.unknown1, header.frameInfo.paletteOffset);
-	debugC(3, kLastExpressDebugVideo, "Position: x1=%d , unknown=%d, x2=%d , unknown=%d", header.frameInfo.x0, header.frameInfo.unknown2, header.frameInfo.x1, header.frameInfo.unknown3);
+	debugC(3, kLastExpressDebugVideo, "\n-- Frame information --  %d/%d", _currentFrame + 1, _headerSequence.numframes);
+	debugC(3, kLastExpressDebugVideo, "Offsets: data=%d, unknown=%d, palette=%d", header.frameInfo.dataOffset, header.frameInfo.unknown1, header.frameInfo.paletteOffset);
+	debugC(3, kLastExpressDebugVideo, "Position: (%d, %d) - (%d, %d)", header.frameInfo.x0, header.frameInfo.y0, header.frameInfo.x1, header.frameInfo.y1);
 	debugC(3, kLastExpressDebugVideo, "Initial Skip: %d", header.frameInfo.initialSkip);
-	debugC(3, kLastExpressDebugVideo, "Decompressed size: %d", header.frameInfo.decompressedEndOffset);
+	debugC(3, kLastExpressDebugVideo, "Decompressed end offset: %d", header.frameInfo.decompressedEndOffset);
 	debugC(3, kLastExpressDebugVideo, "Compression type: %u\n", header.compressionType);
 
 	// Store palette information	
@@ -110,8 +162,10 @@ void Animation::renderFrame(Graphics::Surface *surface, uint32 index) {
 	_stream->read(palette, _maxPaletteSize * sizeof(byte));
 
 	// Init surface
-	byte *output = (byte*)surface->getBasePtr(0, 0);
-	memset(output, 0, _screenWidth * _screenHeigh * sizeof(byte) * 2);
+	byte *output = (byte*)_engine->_graphics->_foreground.getBasePtr(0, 0);
+
+	// FIXME: don't do that, and only update portion of screen with image data
+	memset(output, 0xff, _screenWidth * _screenHeigh * sizeof(byte) * 2);
 
 	// Decompress frame
 	switch (header.compressionType) {
@@ -137,6 +191,8 @@ void Animation::renderFrame(Graphics::Surface *surface, uint32 index) {
 	}
 
 	free(palette);
+
+	return true;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -249,6 +305,18 @@ void Animation::decompress_07(SequenceFrameHeader header, byte *output, byte *pa
 	// Go to frame data
 	_stream->seek(header.frameInfo.dataOffset, SEEK_SET);
 	outIndex = header.frameInfo.initialSkip;
+
+	// Draw DEBUG rectangle 
+	uint32 y0 = 0, y1 = 0;
+	while (outIndex < header.frameInfo.decompressedEndOffset)
+	{			
+		for (uint32 i = 0; i < (header.frameInfo.x1 - header.frameInfo.x0) * 2; i++)
+			output[outIndex + i] = 0xFA;
+
+		outIndex += ((header.frameInfo.x1 - header.frameInfo.x0 + 1) + numBlanks) * 2;
+
+		y1++;
+	}
 
 	while (outIndex < header.frameInfo.decompressedEndOffset)
 	{

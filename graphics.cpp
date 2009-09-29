@@ -54,18 +54,21 @@ void GraphicsManager::change() {
 	_changed = true;
 }
 
-void GraphicsManager::mergeFgAndBg() {
-	uint32 i;
-	byte *countf, *countb;
+void GraphicsManager::MergePlanes() {
+	byte *foreground = (byte *)_foreground.getBasePtr(0, 0);
+	byte *background = (byte *)_background.getBasePtr(0, 0);
+	for (uint i = 640 * 480 * 2; i; i--) {
 
-	countf = (byte *)_foreground.getBasePtr(0, 0);
-	countb = (byte *)_background.getBasePtr(0, 0);
-	for (i = 640 * 480 * 2; i; i--) {
-		if (255 == *(countf)) {
-			*(countf) = *(countb);
+		// FIXME we already skip over parts of the image that aren't touched when decoding sequences
+		// we might pass a copy of the screen data and let it do its magic
+
+		// Skip transparent color
+		if (255 == *(foreground)) {
+			*(foreground) = *(background);
 		}
-		countf++;
-		countb++;
+
+		foreground++;
+		background++;
 	}
 }
 
