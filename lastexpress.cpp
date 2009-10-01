@@ -97,13 +97,15 @@ Common::Error LastExpressEngine::init() {
 	//Sound *sound = _resources->loadSound("mus001.snd");
 	//sound->play(_system->getMixer());
 
-	Animation *sequence = _resources->loadSequence("jlinetl.seq"); //line1.seq");
+	Animation *sequence = _resources->loadSequence("201-33ed.seq"); //credits.seq");//201-33ed.seq"); //"jlinetl.seq"); //line1.seq");
 	if (sequence) {
 		for (uint32 i = 0; i < sequence->totalFrames(); i++) {
-			sequence->renderFrame(i);
-			_graphics->MergePlanes();
-			_graphics->updateScreen(&_graphics->_foreground);
-			_graphics->update();
+			if (sequence->renderFrame(i)) {
+				_graphics->MergePlanes();
+				_graphics->updateScreen(&_graphics->_foreground);
+				_graphics->update();
+				_system->delayMillis(500);
+			}
 		}
 	}
 

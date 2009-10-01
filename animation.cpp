@@ -30,6 +30,13 @@ namespace LastExpress {
 
 Animation::Animation(LastExpressEngine *engine) : _engine(engine), _stream(NULL), _currentFrame(0) {}
 
+void Animation::cleanup() {
+	_stream = NULL;
+	_currentFrame = 0;
+	_headerSequence.numframes = 0;
+	_headerSequence.unknown = 0;
+}
+
 uint32 Animation::currentFrame() {
 	return _currentFrame;
 }
@@ -42,11 +49,11 @@ uint32 Animation::totalFrames() {
 }
 
 bool Animation::loadAnimation(const Common::String &name) {
+	cleanup();
 
 	// Get a stream to the file
 	if (!_engine->_resources->hasFile(name)) {
-		debugC(2, kLastExpressDebugVideo, "Error opening animation: %s", name.c_str());
-		_stream = NULL;
+		debugC(2, kLastExpressDebugVideo, "Error opening animation: %s", name.c_str());		
 		return false;
 	}
 
@@ -77,11 +84,11 @@ bool Animation::loadAnimation(const Common::String &name) {
 }
 
 bool Animation::loadSequence(const Common::String &name) {
+	cleanup();
 
 	// Get a stream to the file
 	if (!_engine->_resources->hasFile(name)) {
 		debugC(2, kLastExpressDebugVideo, "Error opening sequence: %s", name.c_str());
-		_stream = NULL;
 		return false;
 	}
 
@@ -98,6 +105,14 @@ bool Animation::loadSequence(const Common::String &name) {
 	_headerSequence.unknown = _stream->readUint32LE();
 	debugC(3, kLastExpressDebugVideo, "Number of frames in sequence: %d", _headerSequence.numframes);
 
+#ifdef _DEBUG
+	// Show all frames information
+	for (uint32 i = 0; i < _headerSequence.numframes; i++) {
+		SequenceFrameHeader header;
+		loadFrameHeader(&header, i);
+	}
+#endif
+
 	return true;
 }
 
@@ -111,6 +126,7 @@ bool Animation::renderFrame(uint32 index) {
 
 	if (_stream == NULL || _headerSequence.numframes == 0) {
 		debugC(2, kLastExpressDebugVideo, "No sequence has been loaded!");
+		return false;
 	}
 
 	_currentFrame = index;
@@ -120,52 +136,32 @@ bool Animation::renderFrame(uint32 index) {
 		return false;
 
 	// FIXME: Add error handling
-	// TODO: Move stream to start of frame
 
 	// Read frame header
 	SequenceFrameHeader header;
+	if (!loadFrameHeader(&header, index))
+		return false;
 
-	// Common frame information
-	header.frameInfo.dataOffset = _stream->readUint32LE();
-	header.frameInfo.unknown1 = _stream->readUint32LE();
-	header.frameInfo.paletteOffset = _stream->readUint32LE();
-	header.frameInfo.x0 = _stream->readUint32LE();
-	header.frameInfo.y0 = _stream->readUint32LE();
-	header.frameInfo.x1 = _stream->readUint32LE();
-	header.frameInfo.y1 = _stream->readUint32LE();
-	header.frameInfo.initialSkip = _stream->readUint32LE();
-	header.frameInfo.decompressedEndOffset = _stream->readUint32LE();
-
-	// Sequence information
-	header.unknown4 = _stream->readUint32LE();
-	header.unknown5 = _stream->readUint32LE();
-	header.compressionType = _stream->readByte();
-	header.unknown7 = _stream->readByte();
-	header.unknown8 = _stream->readByte();
-	header.unknown9 = _stream->readByte();
-	header.unknown10 = _stream->readUint32LE();
-	header.unknown11 = _stream->readUint32LE();
-	header.unknown12 = _stream->readUint32LE();
-	header.unknown13 = _stream->readUint32LE();
-	header.unknown14 = _stream->readUint32LE();
-
-	debugC(3, kLastExpressDebugVideo, "\n-- Frame information --  %d/%d", _currentFrame + 1, _headerSequence.numframes);
-	debugC(3, kLastExpressDebugVideo, "Offsets: data=%d, unknown=%d, palette=%d", header.frameInfo.dataOffset, header.frameInfo.unknown1, header.frameInfo.paletteOffset);
-	debugC(3, kLastExpressDebugVideo, "Position: (%d, %d) - (%d, %d)", header.frameInfo.x0, header.frameInfo.y0, header.frameInfo.x1, header.frameInfo.y1);
-	debugC(3, kLastExpressDebugVideo, "Initial Skip: %d", header.frameInfo.initialSkip);
-	debugC(3, kLastExpressDebugVideo, "Decompressed end offset: %d", header.frameInfo.decompressedEndOffset);
-	debugC(3, kLastExpressDebugVideo, "Compression type: %u\n", header.compressionType);
+	// Check that we have a valid frame
+	if (header.compressionType == 0)
+		return true;
 
 	// Store palette information	
-	byte *palette = (byte*)malloc(_maxPaletteSize * sizeof(byte));
+	uint16 *palette = (uint16*)malloc(_maxPaletteSize);
 	_stream->seek(header.frameInfo.paletteOffset, SEEK_SET);
-	_stream->read(palette, _maxPaletteSize * sizeof(byte));
+	_stream->read(palette, _maxPaletteSize);
 
 	// Init surface
 	byte *output = (byte*)_engine->_graphics->_foreground.getBasePtr(0, 0);
 
 	// FIXME: don't do that, and only update portion of screen with image data
-	memset(output, 0xff, _screenWidth * _screenHeigh * sizeof(byte) * 2);
+	// at this time, we use a special color as the transparent one, but this is crappy
+	// also doesn't support dirty rectangles, although it would be nice to have	
+	memset(output, 255, _screenWidth * _screenHeigh * 2);
+
+	// FIXME: we need to get the actual colors from the palette
+	// TODO: add switch to show full sprite or "transition"
+	// TODO: would be nice to have a "semi-transparent" sprite instead of checkboarded one (as an engine option?)
 
 	// Decompress frame
 	switch (header.compressionType) {
@@ -195,9 +191,75 @@ bool Animation::renderFrame(uint32 index) {
 	return true;
 }
 
+//////////////////////////////////////////////////////////////////////////
+// Load the header for a sequence frame
+bool Animation::loadFrameHeader(SequenceFrameHeader *header, uint32 index) {
+
+	// Move stream to start of frame
+	_stream->seek(sizeof(SequenceHeader) + index * _sequenceFrameSize);
+	if (_stream->eos()) {
+		debugC(2, kLastExpressDebugVideo, "Error seeking to current frame data!");
+		return false;
+	}
+
+	// Check if there is enough data
+	if (_stream->size() - _stream->pos() < sizeof(SequenceFrameHeader)) {
+		debugC(2, kLastExpressDebugVideo, "The frame does not have a valid header!");
+		return false;
+	}
+
+	// Common frame information
+	header->frameInfo.dataOffset = _stream->readUint32LE();
+	header->frameInfo.unknown1 = _stream->readUint32LE();
+	header->frameInfo.paletteOffset = _stream->readUint32LE();
+	header->frameInfo.x0 = _stream->readUint32LE();
+	header->frameInfo.y0 = _stream->readUint32LE();
+	header->frameInfo.x1 = _stream->readUint32LE();
+	header->frameInfo.y1 = _stream->readUint32LE();
+	header->frameInfo.initialSkip = _stream->readUint32LE();
+	header->frameInfo.decompressedEndOffset = _stream->readUint32LE();
+
+	// Sequence information
+	header->unknown4 = _stream->readUint32LE();
+	header->unknown5 = _stream->readUint32LE();
+	header->compressionType = _stream->readByte();
+	header->unknown7 = _stream->readByte();
+	header->unknown8 = _stream->readByte();
+	header->unknown9 = _stream->readByte();
+	header->unknown10 = _stream->readUint32LE();
+	header->unknown11 = _stream->readUint32LE();
+	header->unknown12 = _stream->readUint32LE();
+	header->unknown13 = _stream->readUint32LE();
+	header->unknown14 = _stream->readUint32LE();
+
+	debugC(3, kLastExpressDebugVideo, "\n-- Frame information --  %d/%d", index + 1, _headerSequence.numframes);
+	debugC(3, kLastExpressDebugVideo, "Offsets: data=%d, unknown=%d, palette=%d", header->frameInfo.dataOffset, header->frameInfo.unknown1, header->frameInfo.paletteOffset);
+	debugC(3, kLastExpressDebugVideo, "Position: (%d, %d) - (%d, %d)", header->frameInfo.x0, header->frameInfo.y0, header->frameInfo.x1, header->frameInfo.y1);
+	debugC(3, kLastExpressDebugVideo, "Initial Skip: %d", header->frameInfo.initialSkip);
+	debugC(3, kLastExpressDebugVideo, "Decompressed end offset: %d", header->frameInfo.decompressedEndOffset);
+	debugC(3, kLastExpressDebugVideo, "Compression type: %u\n", header->compressionType);
+
+	return true;
+}
+
+// Set a pixel value using the palette
+void Animation::setPixel(byte *pixel, uint32 index, byte value, uint16 *palette) {
+	
+	#define RGB565(r, g, b) ((b >> 3) + ((g >> 2) << 5) + ((r >> 3) << 11))
+
+	uint16 blue  = (palette[value] & 0x1F) << 3;
+	uint16 green = ((palette[value] >> 5) & 0x1F) << 3;
+	uint16 red   = ((palette[value] >> 10) & 0x1F) << 3;
+
+	uint16 color = RGB565(red, green, blue);
+
+	pixel[index] = color & 0xFF;
+	pixel[index + 1] = (color >> 8) & 0xFF;
+}
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Decompress FrameType 03
-void Animation::decompress_03(SequenceFrameHeader header, byte *output, byte *palette) {
+void Animation::decompress_03(SequenceFrameHeader header, byte *output, uint16 *palette) {
 	uint32 outIndex = 0;	
 
 	// Number of columns to skip
@@ -280,47 +342,113 @@ void Animation::decompress_03(SequenceFrameHeader header, byte *output, byte *pa
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Decompress FrameType 04
-void Animation::decompress_04(SequenceFrameHeader header, byte *output, byte *palette) {
+void Animation::decompress_04(SequenceFrameHeader header, byte *output, uint16 *palette) {
+
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Decompress FrameType 05
-void Animation::decompress_05(SequenceFrameHeader header, byte *output, byte *palette) {
-	uint32 outIndex = 0;
+void Animation::decompress_05(SequenceFrameHeader header, byte *output, uint16 *palette) {
 
+	// Go to frame data
+	_stream->seek(header.frameInfo.dataOffset, SEEK_SET);
+	uint32 outIndex = (header.frameInfo.initialSkip >> 1) * 2;
 
+	// Parity
+	byte parity = (outIndex / (_screenWidth * 2) ) & 0x01;  
 
+	while (outIndex < (header.frameInfo.decompressedEndOffset >> 1) * 2)
+	{
+		uint32 opcode = _stream->readByte();
+		if (_stream->eos())
+			return;
 
+		if ((opcode & 0x1F) == 0) {
 
+			opcode = (opcode << 3 ) + _stream->readByte();
+
+			if ((opcode & 0x0400) != 0) {
+				outIndex += (opcode & 0x03FF) * 2;
+
+				parity = (outIndex / (_screenWidth * 2) ) & 0x01;  
+			} else {
+
+				if ((outIndex & 0x01) != parity) {
+					setPixel(output, outIndex, 1, palette);
+				}
+
+				outIndex += (opcode + 1) * 2;
+
+				parity = (outIndex / (_screenWidth * 2) ) & 0x01;  
+
+				if ((outIndex & 0x01) != parity) {
+					setPixel(output, outIndex, 254, palette);
+				}
+
+				outIndex += 2;
+			}
+
+		} else { // (opcode & 0x1f)
+
+			byte value = opcode & 0x1F;					
+			opcode = (opcode >> 5);
+
+			if (opcode == 0)
+				opcode = _stream->readByte();
+
+			if ((outIndex & 0x01) == parity) {
+				setPixel(output, outIndex, value, palette);
+
+				outIndex += 2;
+				opcode--;
+
+				if (opcode == 0)
+					continue;
+			}
+			
+			for (uint32 i = 0; i < (opcode >> 1); i++) {
+				setPixel(output, outIndex, value, palette);
+				setPixel(output, outIndex + 2, value, palette);
+				outIndex += 4;
+			}
+
+			if ((opcode & 0x01) != 0) {
+				setPixel(output, outIndex, value, palette);
+				outIndex += 2;
+			}
+		}
+	}
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Decompress FrameType 07
-void Animation::decompress_07(SequenceFrameHeader header, byte *output, byte *palette) {
+void Animation::decompress_07(SequenceFrameHeader header, byte *output, uint16 *palette) {
 	uint32 outIndex = 0;	
 
 	// Number of columns to skip
-	int numBlanks = (_screenWidth - 1) - (header.frameInfo.x1 - header.frameInfo.x0);
-
-	// Go to frame data
-	_stream->seek(header.frameInfo.dataOffset, SEEK_SET);
-	outIndex = header.frameInfo.initialSkip;
+	int lineSkip = (_screenWidth - 1) - (header.frameInfo.x1 - header.frameInfo.x0);
 
 	// Draw DEBUG rectangle 
 	uint32 y0 = 0, y1 = 0;
+	outIndex = header.frameInfo.initialSkip;
 	while (outIndex < header.frameInfo.decompressedEndOffset)
 	{			
 		for (uint32 i = 0; i < (header.frameInfo.x1 - header.frameInfo.x0) * 2; i++)
 			output[outIndex + i] = 0xFA;
 
-		outIndex += ((header.frameInfo.x1 - header.frameInfo.x0 + 1) + numBlanks) * 2;
+		outIndex += ((header.frameInfo.x1 - header.frameInfo.x0 + 1) + lineSkip) * 2;
 
 		y1++;
 	}
+	///
+
+	// Go to frame data
+	_stream->seek(header.frameInfo.dataOffset, SEEK_SET);
+	outIndex = header.frameInfo.initialSkip;
 
 	while (outIndex < header.frameInfo.decompressedEndOffset)
 	{
-		byte opcode = _stream->readByte();
+		uint32 opcode = _stream->readByte();
 		if (_stream->eos())
 			return;
 
@@ -333,7 +461,7 @@ void Animation::decompress_07(SequenceFrameHeader header, byte *output, byte *pa
 					//byte value = opcode & 0x1f;
 					opcode &= 0x1f;
 
-					uint32 nextLine = 2 * (numBlanks + opcode);					
+					uint32 nextLine = 2 * (lineSkip + opcode);					
 
 					output[outIndex] = palette[2];
 					outIndex += nextLine + 2;
@@ -389,14 +517,13 @@ void Animation::decompress_07(SequenceFrameHeader header, byte *output, byte *pa
 
 		} else { // (opcode & 0x80)
 
-			//byte numLoops = opcode & 0x3f;
-			opcode &= 0x3f;
-
+			byte numLoops = opcode & 0x3f;
+			
 			byte value = _stream->readByte();
 			if (_stream->eos())
 				return;
 
-			for (byte i = 0; i < opcode; i++) {
+			for (byte i = 0; i < numLoops; i++) {
 				if (outIndex >= header.frameInfo.decompressedEndOffset)
 					return;
 
@@ -409,7 +536,7 @@ void Animation::decompress_07(SequenceFrameHeader header, byte *output, byte *pa
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Decompress FrameType FF
-void Animation::decompress_ff(SequenceFrameHeader header, byte *output, byte *palette) {
+void Animation::decompress_ff(SequenceFrameHeader header, byte *output, uint16 *palette) {
 
 }
 

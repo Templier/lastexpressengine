@@ -74,27 +74,27 @@ bool Background::load(const Common::String &name)
 	blueData = (byte*)malloc(_header.blueSize);
 	greenData = (byte*)malloc(_header.greenSize);
 
-	uint32 bufferSize = sizeof(byte) * _header.width * _header.height;
+	uint32 bufferSize = _header.width * _header.height;
 	redBuffer = (byte*)malloc(bufferSize);
 	blueBuffer = (byte*)malloc(bufferSize);
 	greenBuffer = (byte*)malloc(bufferSize);
 
 	// Read compressed data
-	stream->read(redData, sizeof(byte) * _header.redSize);
-	stream->read(blueData, sizeof(byte) * _header.blueSize);
-	stream->read(greenData, sizeof(byte) * _header.greenSize);
+	stream->read(redData, _header.redSize);
+	stream->read(blueData, _header.blueSize);
+	stream->read(greenData, _header.greenSize);
 
 	// Decompress the data
-	decompress(redData, sizeof(byte) * _header.redSize, redBuffer, bufferSize);
-	decompress(blueData, sizeof(byte) * _header.blueSize, blueBuffer, bufferSize);
-	decompress(greenData, sizeof(byte) * _header.greenSize, greenBuffer, bufferSize);
+	decompress(redData, _header.redSize, redBuffer, bufferSize);
+	decompress(blueData, _header.blueSize, blueBuffer, bufferSize);
+	decompress(greenData, _header.greenSize, greenBuffer, bufferSize);
 
 	// Save to pixel buffer
 	// FIXME handle big-endian case
 	// R 11-15, G 5-10, B 0-4
 	#define RGB565(r, g, b) ((b >> 3) + ((g >> 2) << 5) + ((r >> 3) << 11))
 
-	_pixels = (byte*)calloc( _header.width * _header.height, 2 * sizeof(byte));
+	_pixels = (byte*)calloc( _header.width * _header.height, 2);
 
 	for (uint16 y = 0; y < _header.height; y++) {
 		uint8 *dst = _pixels + (y * _header.width * 2);

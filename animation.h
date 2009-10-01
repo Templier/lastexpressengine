@@ -44,11 +44,11 @@ public:
 	uint32 totalFrames();
 
 private:
-	static const uint32 _seqFrameSize = 68;
+	static const uint32 _sequenceFrameSize = 68;
 	static const uint32 _screenWidth = 640;
 	static const uint32 _screenHeigh = 480;
 	static const uint32 _maxPaletteSize = 256;
-	//static const uint32 _transcol = 0;
+	static const uint32 _transparentColor = 255;
 	//static const uint32 _lineParBaseCol = _maxPaletteSize - 2;
 
 	enum typesChunk {
@@ -118,12 +118,18 @@ private:
 	
 	Common::SeekableReadStream *_stream;
 
+	void cleanup();
+	bool loadFrameHeader(SequenceFrameHeader *header, uint32 index);
+
+	// Palette
+	void setPixel(byte* pixel, uint32 index, byte value, uint16* palette);
+
 	// Decompression functions
-	void decompress_03(SequenceFrameHeader header, byte *output, byte *palette);
-	void decompress_04(SequenceFrameHeader header, byte *output, byte *palette);
-	void decompress_05(SequenceFrameHeader header, byte *output, byte *palette);
-	void decompress_07(SequenceFrameHeader header, byte *output, byte *palette);
-	void decompress_ff(SequenceFrameHeader header, byte *output, byte *palette);
+	void decompress_03(SequenceFrameHeader header, byte *output, uint16 *palette);
+	void decompress_04(SequenceFrameHeader header, byte *output, uint16 *palette);
+	void decompress_05(SequenceFrameHeader header, byte *output, uint16 *palette);
+	void decompress_07(SequenceFrameHeader header, byte *output, uint16 *palette);
+	void decompress_ff(SequenceFrameHeader header, byte *output, uint16 *palette);
 };
 
 } // End of namespace LastExpress
