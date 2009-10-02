@@ -46,27 +46,38 @@ public:
 private:
 	static const uint32 _sequenceFrameSize = 68;
 	static const uint32 _screenWidth = 640;
-	static const uint32 _screenHeigh = 480;
+	static const uint32 _screenHeight = 480;
 	static const uint32 _maxPaletteSize = 256;
 	static const uint32 _transparentColor = 255;
 	//static const uint32 _lineParBaseCol = _maxPaletteSize - 2;
 
+	static const unsigned int _soundBlockSize = 739;
+
+	// despite their size field, info chunks don't have a payload
 	enum typesChunk {
+		kChunkTypeUnknown1			= 0x0001,
+		kChunkTypeUnknown2			= 0x0002,
 		kChunkTypeAudioInfo 		= 0x0003,
+		kChunkTypeUnknown4			= 0x0004,
+		kChunkTypeUnknown5			= 0x0005,
   		kChunkTypeBackgroundFrameA  = 0x000a,
   		kChunkTypeSelectBackgroundA = 0x000b,
   		kChunkTypeBackgroundFrameC  = 0x000c,
   		kChunkTypeSelectBackgroundC = 0x000d,
   		kChunkTypeOverlayFrame      = 0x0014,
+		kChunkTypeUnknown15			= 0x0015,	// might be subtitles
+		kChunkTypeUnknown16			= 0x0016,
   		kChunkTypeAudioData         = 0x0020,
   		kChunkTypeAudioEnd          = 0x0063
 	};
 
 	struct AnimationHeader {
 		uint32 chunksCount;		//!< Number of chunks in the NIS file
+
+		AnimationHeader() : chunksCount(0) {}
 	};
 
-	struct AnimationEntry {
+	struct AnimationChunk {
 		typesChunk type;		//!< Type of chunk
 		uint16 tag;				//!< Tag
 		uint32 size;			//!< Size of chunk
@@ -114,22 +125,25 @@ private:
 
 	uint32 _currentFrame;
 	SequenceHeader _headerSequence;
-	Common::Array<AnimationEntry> _chunks;
+	Common::Array<AnimationChunk> _chunks;
 	
 	Common::SeekableReadStream *_stream;
 
 	void cleanup();
-	bool loadFrameHeader(SequenceFrameHeader *header, uint32 index);
+	void renderBackground(AnimationChunk *chunk);
+	bool renderFrameInternal(Graphics::Surface *surface, Common::SeekableReadStream *stream, FrameHeader *header, byte compressionType);
+	bool loadSequenceFrameHeader(SequenceFrameHeader *header, uint32 index);
+	void loadFrameHeader(Common::SeekableReadStream *stream, FrameHeader *header);
 
 	// Palette
 	void setPixel(byte* pixel, uint32 index, byte value, uint16* palette);
 
 	// Decompression functions
-	void decompress_03(SequenceFrameHeader header, byte *output, uint16 *palette);
-	void decompress_04(SequenceFrameHeader header, byte *output, uint16 *palette);
-	void decompress_05(SequenceFrameHeader header, byte *output, uint16 *palette);
-	void decompress_07(SequenceFrameHeader header, byte *output, uint16 *palette);
-	void decompress_ff(SequenceFrameHeader header, byte *output, uint16 *palette);
+	void decompress_03(Common::SeekableReadStream *stream, FrameHeader *header, byte *output, uint16 *palette);
+	void decompress_04(Common::SeekableReadStream *stream, FrameHeader *header, byte *output, uint16 *palette);
+	void decompress_05(Common::SeekableReadStream *stream, FrameHeader *header, byte *output, uint16 *palette);
+	void decompress_07(Common::SeekableReadStream *stream, FrameHeader *header, byte *output, uint16 *palette);
+	void decompress_ff(Common::SeekableReadStream *stream, FrameHeader *header, byte *output, uint16 *palette);
 };
 
 } // End of namespace LastExpress

@@ -51,7 +51,7 @@ ResourceManager::ResourceManager(LastExpressEngine *engine) : _engine(engine) {
 
 		// TODO: there are lots of duplicated files in CD archives: we need to handle load/unload of cd archives 
 		// FIXME: load CD archives on-the-fly?
-		//_archives.push_back(new HPFArchive(archiveCD1Path));
+		_archives.push_back(new HPFArchive(archiveCD1Path));
 		//_archives.push_back(new HPFArchive(archiveCD2Path));
 		//_archives.push_back(new HPFArchive(archiveCD3Path));
 	}

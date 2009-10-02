@@ -61,7 +61,7 @@ bool Debugger::cmd_playseq(int argc, const char **argv) {
 			for (uint32 i = 0; i < sequence->totalFrames(); i++) {
 				sequence->renderFrame(i);
 				_engine->_graphics->MergePlanes();
-				_engine->_graphics->updateScreen(&_engine->_graphics->_foreground);
+				_engine->_graphics->updateScreen(&_engine->_graphics->_overlay);
 				_engine->_graphics->update();
 			}
 		}
@@ -102,9 +102,9 @@ bool Debugger::cmd_playsbe(int argc, const char **argv) {
 
 		Subtitle *subtitle = _engine->_resources->loadSubtitle(filename);
 		if (subtitle) {
-			subtitle->render(&_engine->_graphics->_foreground, (int)(argv[2]));
+			subtitle->render(&_engine->_graphics->_overlay, (int)(argv[2]));
 			_engine->_graphics->MergePlanes();
-			_engine->_graphics->updateScreen(&_engine->_graphics->_foreground);
+			_engine->_graphics->updateScreen(&_engine->_graphics->_overlay);
 			_engine->_graphics->update();
 		}
 	} else {
@@ -142,8 +142,8 @@ bool Debugger::cmd_showbg(int argc, const char **argv) {
 
 		Background *background = _engine->_resources->loadBackground(filename);
 		if (background) {
-			background->render(&_engine->_graphics->_background);
-			_engine->_graphics->updateScreen(&_engine->_graphics->_background);
+			background->render(&_engine->_graphics->_backgroundA);
+			_engine->_graphics->updateScreen(&_engine->_graphics->_backgroundA);
 		}
 	} else {
 		DebugPrintf("Syntax: showbg <bgname>\n");

@@ -84,10 +84,14 @@ Common::Error LastExpressEngine::init() {
 	// DEBUG
 	Background *background = _resources->loadBackground("clock01.bg");
 	if (background) {
-		background->render(&_graphics->_background);
-		_graphics->updateScreen(&_graphics->_background);
+		background->render(&_graphics->_backgroundA);
+		_graphics->updateScreen(&_graphics->_backgroundA);
 		_graphics->update();
+
+		delete background;
 	}
+
+	_system->delayMillis(2000);
         
 	//Subtitle *subtitle = _resources->loadSubtitle("xvas3.sbe");
 	//subtitle->render(&_graphics->_foreground, 0);
@@ -97,21 +101,55 @@ Common::Error LastExpressEngine::init() {
 	//Sound *sound = _resources->loadSound("mus001.snd");
 	//sound->play(_system->getMixer());
 
-	Animation *sequence = _resources->loadSequence("201-33ed.seq"); //credits.seq");//201-33ed.seq"); //"jlinetl.seq"); //line1.seq");
-	if (sequence) {
-		for (uint32 i = 0; i < sequence->totalFrames(); i++) {
-			if (sequence->renderFrame(i)) {
-				_graphics->MergePlanes();
-				_graphics->updateScreen(&_graphics->_foreground);
-				_graphics->update();
-				_system->delayMillis(500);
-			}
-		}
-	}
+	/* Test values:
+		credits
+		201-33ed
+		jlinetl
+		line1
+		datenew
+		helpnewr
+		633xd-32
+		012-17ed
+		633xc-13
+		633xe-09
+		sun
 
-	//Animation *animation = _resources->loadAnimation("1032.nis"); //demo only, full version only has animation in cds.
-	//if (animation)
-	//	animation->play();
+		CD1:
+
+		230-38U
+		090-38U   (frames of type 3 show only half the lines - frame 229 type 4 -> end)
+		210-03D
+		090-03D
+		010-18U
+		220-38U
+		100-18U
+		010-18D
+		220-38U
+		100-18D
+		010-18D
+		090-03U
+		RCWNN-83
+	*/
+	//Animation *sequence = _resources->loadSequence("090-38U.seq");
+	//if (sequence) {
+	//	for (uint32 i = 0; i < sequence->totalFrames(); i++) {
+	//		if (sequence->renderFrame(i)) {
+	//			_graphics->MergePlanes();
+	//			_graphics->updateScreen(&_graphics->_foreground);
+	//			_graphics->update();
+	//			_system->delayMillis(250);
+	//		}
+	//	}
+	//
+	//	delete sequence;
+	//}
+
+	Animation *animation = _resources->loadAnimation("1017.nis");
+	if (animation) {
+		animation->play();
+
+		delete animation;
+	}
 
 	//////////////////////////////////////////////////////////////////////////////
 

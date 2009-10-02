@@ -39,9 +39,10 @@ public:
 	void update();
 	void change();
 	void MergePlanes();
-	void updateScreen(Graphics::Surface *source);
-	Graphics::Surface _foreground;				// The main surface used for sequences and videos
-	Graphics::Surface _background;				// Background
+	void updateScreen(Graphics::Surface *source);	
+	Graphics::Surface _backgroundA;				// Background A
+	Graphics::Surface _backgroundC;				// Background C
+	Graphics::Surface _overlay;					// Overlay
 
 private:
 	LastExpressEngine *_engine;

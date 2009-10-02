@@ -32,14 +32,16 @@ GraphicsManager::GraphicsManager(LastExpressEngine *engine) :
 	_engine(engine), _changed(false) {
 
 	// Create the game surfaces
-	_foreground.create(640, 480, _engine->_pixelFormat.bytesPerPixel);
-	_background.create(640, 480, _engine->_pixelFormat.bytesPerPixel);
+	_backgroundA.create(640, 480, _engine->_pixelFormat.bytesPerPixel);
+	_backgroundC.create(640, 480, _engine->_pixelFormat.bytesPerPixel);
+	_overlay.create(640, 480, _engine->_pixelFormat.bytesPerPixel);
 }
 
 GraphicsManager::~GraphicsManager() {
 	// Free the game surfaces
-	_foreground.free();
-	_background.free();
+	_backgroundA.free();
+	_backgroundC.free();
+	_overlay.free();	
 }
 
 void GraphicsManager::update() {
@@ -55,8 +57,9 @@ void GraphicsManager::change() {
 }
 
 void GraphicsManager::MergePlanes() {
-	byte *foreground = (byte *)_foreground.getBasePtr(0, 0);
-	byte *background = (byte *)_background.getBasePtr(0, 0);
+	byte *foreground = (byte *)_overlay.getBasePtr(0, 0);
+	byte *backgroundA = (byte *)_backgroundA.getBasePtr(0, 0);
+	byte *backgroundC = (byte *)_backgroundC.getBasePtr(0, 0);
 	for (uint i = 640 * 480 * 2; i; i--) {
 
 		// FIXME we already skip over parts of the image that aren't touched when decoding sequences
@@ -64,11 +67,15 @@ void GraphicsManager::MergePlanes() {
 
 		// Skip transparent color
 		if (255 == *(foreground)) {
-			*(foreground) = *(background);
+			if (255 == *(backgroundA))
+				*(foreground) = *(backgroundA);
+			else
+				*(foreground) = *(backgroundC);
 		}
 
 		foreground++;
-		background++;
+		backgroundA++;
+		backgroundC++;
 	}
 }
 
