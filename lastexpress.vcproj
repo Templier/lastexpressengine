@@ -166,6 +166,14 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\engines\lastexpress\sequence.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\engines\lastexpress\sequence.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\engines\lastexpress\sound.cpp"
 				>
 			</File>
@@ -195,14 +203,6 @@
 			>
 		</File>
 		<File
-			RelativePath="..\..\engines\lastexpress\graphics.cpp"
-			>
-		</File>
-		<File
-			RelativePath="..\..\engines\lastexpress\graphics.h"
-			>
-		</File>
-		<File
 			RelativePath="..\..\engines\lastexpress\lastexpress.cpp"
 			>
 		</File>
@@ -213,6 +213,18 @@
 		<File
 			RelativePath="..\..\engines\lastexpress\logic.cpp"
 			>
+		</File>
+		<File
+			RelativePath="..\..\engines\lastexpress\module.mk"
+			>
+			<FileConfiguration
+				Name="Debug|Win32"
+				ExcludedFromBuild="true"
+				>
+				<Tool
+					Name="VCCustomBuildTool"
+				/>
+			</FileConfiguration>
 		</File>
 		<File
 			RelativePath="..\..\engines\lastexpress\resource.cpp"

@@ -26,35 +26,81 @@
 #include "lastexpress/lastexpress.h"
 #include "lastexpress/cursor.h"
 
+#include "graphics/cursorman.h"
+
+#define MAX_CURSOR 48
+
 namespace LastExpress {
 
-Cursor::Cursor(ResourceManager *resource) : _resource(resource) {}
+const Common::String cursorsName("CURSORS.TBM");
+
+Cursor::Cursor(OSystem *system, ResourceManager *resource) : _system(system), _resource(resource), _current(CursorNormal), _data(NULL) {}
 
 Cursor::~Cursor() {
-
+	SAFE_DELETE_ARRAY(_data);
 }
 
-bool Cursor::load(const Common::String &name)
-{
+bool Cursor::load() {
+	// Reset data
+	SAFE_DELETE_ARRAY(_data);
+
 	// Get a stream to the file
-	if (!_resource->hasFile(name)) {
-		debugC(2, kLastExpressDebugSubtitle, "Error opening cursor: %s", name.c_str());
+	if (!_resource->hasFile(cursorsName)) {
+		debugC(2, kLastExpressDebugSubtitle, "Error opening cursor: %s", cursorsName.c_str());
 		return false;
 	}
 
-	Common::SeekableReadStream *stream = _resource->createReadStreamForMember(name);
+	debugC(2, kLastExpressDebugCursor, "Loading cursor data file: %s", cursorsName.c_str());
+	Common::SeekableReadStream *stream = _resource->createReadStreamForMember(cursorsName);
 
-	debugC(2, kLastExpressDebugCursor, "Loading cursor data file: %s", name.c_str());
-
-	// Read header to get the number of cursors
+	_data = new byte[stream->size()];
+	if (_data)
+		stream->read(_data, stream->size());
 	
-
 	return true;
 }
 
-void Cursor::render() {
-
+void Cursor::show(bool visible) {
+	CursorMan.showMouse(visible);
 }
+ 
+bool Cursor::setStyle(CursorStyle style) {
+	if (!_data) {
+		debugC(2, kLastExpressDebugGraphics, "Trying to set cursor style before loading data!");
+		return false;
+	}
 
+	if ((int)style < 0 || (int)style > MAX_CURSOR) {
+		debugC(2, kLastExpressDebugGraphics, "Trying to set an invalid cursor style: was %d, max %d", (int)style, MAX_CURSOR);
+		return false;
+	}
+	debugC(10, kLastExpressDebugCursor | kLastExpressDebugAll, "Cursor: setting style: %d", style);
+	 
+	// Save the new cursor
+	_current = style;
+ 
+	// Prepare the pixel data
+	uint16 pixels[32 * 32];
+	byte *fileImage = _data + MAX_CURSOR * 4 + (style * 32 * 32 * 2);
+	for(int i = 0; i < 32 * 32; i++, fileImage += 2) {
+		pixels[i] = READ_LE_UINT16(fileImage);
+		// TODO: transparency: now it makes the black pixels transparent,
+		// but there's still 1 unused bit (always 0?)
+		//pixels[i] = (READ_LE_UINT16(getStyleImage(style) + (i * 2)) & 0x8000) ? 0 : 0xffff;
+		//pixels[i] = (fileImage[1] & 0x80) ? 0 : 0xffff;
+	}
+ 
+	uint16 hotspotX = READ_LE_UINT16(_data + (style * 4));
+	uint16 hotspotY = READ_LE_UINT16(_data + (style * 4) + 2);
+	debugC(15, kLastExpressDebugCursor | kLastExpressDebugAll	, "    hotspot x: %d, hotspot y: %d", hotspotX, hotspotY);
+
+	CursorMan.replaceCursor((const byte *)pixels, 32, 32, hotspotX, hotspotY, 0, 1, new Graphics::PixelFormat(2, 5, 5, 5, 0, 10, 5, 0, 0));
+
+	return true;
+}
+ 
+Cursor::CursorStyle Cursor::getStyle() {
+	return _current;
+}
 
 } // End of namespace LastExpress

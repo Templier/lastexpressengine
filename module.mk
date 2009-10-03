@@ -1,16 +1,20 @@
 MODULE := engines/lastexpress
 
 MODULE_OBJS := \
+	animation.o \
+	archive.o \
 	background.o \
+	cursor.o \
+	font.o \
+	sequence.o \
+	sound.o \
+	subtitle.o \
 	debug.o \
-	detection.o \
-	graphics.o \
-	hpfarchive.o \
+	detection.o \	
 	lastexpress.o \
 	logic.o \
 	resource.o \
-	saveload.o \
-	sequence.o
+	saveload.o	
 
 # This module can be built as a plugin
 ifeq ($(ENABLE_LASTEXPRESS), DYNAMIC_PLUGIN)

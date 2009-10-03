@@ -26,40 +26,45 @@
 #ifndef LASTEXPRESS_SUBTITLE_H
 #define LASTEXPRESS_SUBTITLE_H
 
-#include "common/str.h"
+#include "lastExpress/font.h"
+#include "lastExpress/resource.h"
 
 namespace LastExpress {
 
-class ResourceManager;
-
 class Subtitle {
 public:
-	Subtitle(ResourceManager *resource);
+	Subtitle();
+	~Subtitle();
+
+	bool load(Common::SeekableReadStream *in);
+	void show(Font &font);
+
+private:
+	uint16 _timeStart;		//!< display start time
+	uint16 _timeStop;		//!< display stop time
+
+	uint16 _topLength;		//!< top line length
+	uint16 *_topText;		//!< bottom line length
+
+	uint16 _bottomLength;	//!< top line (UTF-16 string)
+	uint16 *_bottomText;	//!< bottom line (UTF-16 string)
+};
+
+class SubtitleManager {
+public:
+	SubtitleManager(ResourceManager *resource);
 
 	bool load(const Common::String &name);
-	void render(Graphics::Surface *surface, uint16 currentTime);
+	bool show(Font &font, uint16 index);
+
+	// TODO add function bool show(uint16 currentTime);
+
+	uint32 count();
 
 private:	
-	struct SubtitleData {
-		uint16 start;			//!< display start time
-		uint16 stop;			//!< display stop time
-		uint16 topSize;			//!< top line length
-		uint16 bottomSize;		//!< bottom line length
-		uint16* top;			//!< top line (UTF-16 string)
-		uint16* bottom;			//!< bottom line (UTF-16 string)
-
-		SubtitleData() : top(NULL), bottom(NULL) {}
-		~SubtitleData() {
-			if (top)
-				free(top);
-			if (bottom)
-				free(bottom);
-		}
-	};
-
 	ResourceManager *_resource;
 
-	Common::Array<SubtitleData> _subtitles;
+	Common::Array<Subtitle> _subtitles;
 };
 
 

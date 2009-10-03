@@ -26,22 +26,86 @@
 #ifndef LASTEXPRESS_CURSOR_H
 #define LASTEXPRESS_CURSOR_H
 
+//////////////////////////////////////////////////////////////////////
+// Data file: CURSORS.TBM
+//
+//	- 
+
 namespace LastExpress {
 
 class ResourceManager;
 
 class Cursor {
 public:
-	Cursor(ResourceManager *resource);
+	Cursor(OSystem *system, ResourceManager *resource);
 	~Cursor();
 
-	bool load(const Common::String &name);
-	void render();
+	enum CursorStyle {
+		CursorNormal,
+		CursorForward,
+		CursorBackward,
+		CursorTurnRight,
+		CursorTurnLeft,
+		CursorUp,
+		CursorDown,
+		CursorLeft,
+		CursorRight,
+		CursorHand,
+		CursorHandSmall,
+		CursorRound,
+		CursorHandPointer,
+		CursorTalkZ,		// Need better name
+		CursorTalk,
+		CursorTalk2,		// Need better name
+		CursorBox,
+		CursorLetter,
+		CursorMessage,
+		CursorList,
+		CursorScarf,
+		CursorPaper,		// Need better name
+		CursorParchemin,	// Need better name
+		CursorPen,			// Need better name
+		CursorStuff,		// Need better name (invoice?)
+		CursorKey,
+		CursorClock,
+		CursorGold,			// Need better name
+		CursorBriefcase,
+		CursorCorpse,
+		CursorClosedHandLeft,
+		CursorClosedHandRight,
+		CursorPortrait,
+		CursorPortraitSelected,
+		CursorPortrait2,
+		CursorPortrait2Selected,
+		CursorPortrait3,
+		CursorPortrait3Selected,
+		CursorWait,
+		CursorEggBlue,
+		CursorEggRed,
+		CursorEggGreen,
+		CursorEggPurple,
+		CursorEggTeal,
+		CursorEggGold,
+		CursorEggClock,
+		CursorNormal2,
+		CursorBlank
+	};
+
+	bool load();
+	void show(bool visible);
+	bool setStyle(CursorStyle style);
+	CursorStyle getStyle();
 
 private:	
 	ResourceManager *_resource;
+	OSystem *_system;
+ 
+	// Style
+	CursorStyle _current;
+	 
+	// Cursors data
+	byte *_data;
 };
-
 
 } // End of namespace LastExpress
 

@@ -26,18 +26,53 @@
 #include "lastexpress/lastexpress.h"
 #include "lastexpress/sound.h"
 
-#include "sound/mixer.h"
+#include "sound/adpcm.h"
+#include "sound/audiostream.h"
+
+// Based on the Xentax Wiki documentation:
+// http://wiki.xentax.com/index.php/The_Last_Express_SND
 
 namespace LastExpress {
 
-Sound::Sound(ResourceManager *resource) : _resource(resource) {}
+//////////////////////////////////////////////////////////////////////////
+// Sound
+//////////////////////////////////////////////////////////////////////////
+Sound::Sound() {}
 
 Sound::~Sound() {
-
+	// Stop the sound
+	g_system->getMixer()->stopHandle(_handle);
 }
 
-// TODO handle LNK and NIS files
-bool Sound::load(const Common::String &name)
+void Sound::loadHeader(Common::SeekableReadStream *in) {
+	_size = in->readUint32LE();
+	_blocks = in->readUint16LE();
+	debugC(5, kLastExpressDebugSound, "    sound header data: size=\"%d\", %d blocks", _size, _blocks);
+
+	assert (_size % _blocks == 0);
+	_blockSize = _size / _blocks;
+}
+
+Audio::AudioStream *Sound::makeDecoder(Common::SeekableReadStream *in, uint32 size) const {
+	return Audio::makeADPCMStream(in, true, size, Audio::kADPCMMSIma, 44100, 1, _blockSize);
+}
+
+void Sound::play(Audio::AudioStream *as) {
+	g_system->getMixer()->playInputStream(Audio::Mixer::kPlainSoundType, &_handle, as);
+}
+
+//////////////////////////////////////////////////////////////////////////
+// StreamedSound
+//////////////////////////////////////////////////////////////////////////
+StreamedSound::StreamedSound(ResourceManager *resource) : _resource(resource), _data(NULL) {
+}
+
+StreamedSound::~StreamedSound() {
+	if (_data)
+		free(_data);
+}
+
+bool StreamedSound::load(const Common::String &name)
 {
 	// Get a stream to the file
 	if (!_resource->hasFile(name)) {
@@ -45,27 +80,75 @@ bool Sound::load(const Common::String &name)
 		return false;
 	}
 
-	debugC(2, kLastExpressDebugVideo, "Loading sound: %s", name.c_str());
+	debugC(2, kLastExpressDebugGraphics, "Loading sound: %s", name.c_str());
 	Common::SeekableReadStream *stream = _resource->createReadStreamForMember(name);	
 
-	// Read the sound header
-	_header.size = stream->readUint32LE();
-	_header.count = stream->readUint16LE();
+	loadHeader(stream);
 
-	// Using MS IMA ADPCM reduces sound corruption a lot, but there are still some problems
-	// Maybe we need to have our own ADPCM decoding :(
-	_audio = Audio::makeADPCMStream(stream, false, _header.size, Audio::kADPCMMSIma, 44100, 1, _soundBlockSize, 0);
+	// Load all sound data to buffer
+	if (!_data)
+		_data = (byte*)malloc(_size);
+
+	stream->read(_data, _size);
+	Common::MemoryReadStream *buffer = new Common::MemoryReadStream(_data, _size);
+
+	// Start decoding the input stream
+	Audio::AudioStream *as = makeDecoder(buffer, _size);
+
+	// Start playing the decoded audio stream
+	play(as);
 
 	return true;
 }
 
-void Sound::play(Audio::Mixer *mixer) {
-	Audio::SoundHandle sound_handle;
-	mixer->playInputStream(Audio::Mixer::kPlainSoundType, &sound_handle, _audio);
+//////////////////////////////////////////////////////////////////////////
+// StreamedSound
+//////////////////////////////////////////////////////////////////////////
+AppendableSound::AppendableSound() : Sound() {
+	// Create an audio stream where the decoded chunks will be appended
+	// TODO: the ADPCM decoder works in native endianness, so the usage FLAG_LITTLE_ENDIAN will depend on the current platform
+	_as = Audio::makeAppendableAudioStream(44100, Audio::Mixer::FLAG_16BITS | Audio::Mixer::FLAG_AUTOFREE | Audio::Mixer::FLAG_LITTLE_ENDIAN);
+
+	// Start playing the decoded audio stream
+	play(_as);
+
+	// Initialize the block size
+	// TODO: get it as an argument?
+	_blockSize = 739;
 }
 
-Audio::AudioStream* Sound::getAudioStream() {
-	return _audio;
+AppendableSound::~AppendableSound() {
+	finish();
+}
+
+void AppendableSound::queueBuffer(byte *data, uint32 size) {
+	Common::MemoryReadStream *buffer = new Common::MemoryReadStream(data, size);
+	queueBuffer(buffer);
+}
+
+void AppendableSound::queueBuffer(Common::SeekableReadStream *bufferIn) {
+	assert (_as);
+
+	// Setup the ADPCM decoder
+	uint32 sizeIn = bufferIn->size();
+	Audio::AudioStream *adpcm = makeDecoder(bufferIn, sizeIn);
+
+	// Setup the output buffer
+	uint32 sizeOut = sizeIn * 2;
+	byte *bufferOut = new byte[sizeOut * 2];
+
+	// Decode to raw samples
+	sizeOut = adpcm->readBuffer((int16 *)bufferOut, sizeOut);
+	assert (adpcm->endOfData());
+	delete adpcm;
+
+	// Queue the decoded samples
+	_as->queueBuffer(bufferOut, sizeOut * 2);
+}
+
+void AppendableSound::finish() {
+	assert (_as);
+	_as->finish();
 }
 
 } // End of namespace LastExpress

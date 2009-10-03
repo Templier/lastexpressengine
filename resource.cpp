@@ -38,11 +38,11 @@ const Common::String archiveCD1Path("CD1.HPF");
 const Common::String archiveCD2Path("CD2.HPF");
 const Common::String archiveCD3Path("CD3.HPF");
 
-const Common::String fontName("FONT.DAT");
-const Common::String cursorsName("CURSORS.TBM");
-
 ResourceManager::ResourceManager(LastExpressEngine *engine) : _engine(engine) {
+}
 
+// TODO: add error handling
+bool ResourceManager::load() {
 	// Load stable archives (DEMO or HD archives)
 	if (_engine->getFlags() & ADGF_DEMO) {
 		_archives.push_back(new HPFArchive(archiveDemoPath));
@@ -51,13 +51,12 @@ ResourceManager::ResourceManager(LastExpressEngine *engine) : _engine(engine) {
 
 		// TODO: there are lots of duplicated files in CD archives: we need to handle load/unload of cd archives 
 		// FIXME: load CD archives on-the-fly?
-		_archives.push_back(new HPFArchive(archiveCD1Path));
+		//_archives.push_back(new HPFArchive(archiveCD1Path));
 		//_archives.push_back(new HPFArchive(archiveCD2Path));
 		//_archives.push_back(new HPFArchive(archiveCD3Path));
 	}
-}
 
-ResourceManager::~ResourceManager() {
+	return true;
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -103,59 +102,6 @@ Common::SeekableReadStream *ResourceManager::createReadStreamForMember(const Com
 	}
 
 	return 0;
-}
-
-//////////////////////////////////////////////////////////////////////////
-// Data handling
-//////////////////////////////////////////////////////////////////////////
-Background *ResourceManager::loadBackground(const Common::String &name) {
-
-	Background* background = new Background(this);
-	
-	if (!background->load(name))
-		return NULL;
-
-	return background;
-}
-
-Sound *ResourceManager::loadSound(const Common::String &name) {
-
-	Sound* sound = new Sound(this);
-
-	if (!sound->load(name))
-		return NULL;
-
-	return sound;
-}
-
-Subtitle *ResourceManager::loadSubtitle(const Common::String &name) {
-
-	Subtitle* subtitle = new Subtitle(this);
-
-	if (!subtitle->load(name))
-		return NULL;
-
-	return subtitle;
-}
-
-Animation *ResourceManager::loadSequence(const Common::String &name) {
-
-	Animation* sequence = new Animation(_engine);
-
-	if (!sequence->loadSequence(name))
-		return NULL;
-
-	return sequence;
-}
-
-Animation *ResourceManager::loadAnimation(const Common::String &name) {
-
-	Animation* animation = new Animation(_engine);
-
-	if (!animation->loadAnimation(name))
-		return NULL;
-
-	return animation;
 }
 
 } // End of namespace LastExpress

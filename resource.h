@@ -27,21 +27,20 @@
 #define LASTEXPRESS_RESOURCE_H
 
 #include "common/array.h"
+#include "common/str.h"
 
 #include "lastexpress/lastexpress.h"
 #include "lastexpress/archive.h"
-#include "lastexpress/background.h"
-#include "lastexpress/sound.h"
-#include "lastexpress/subtitle.h"
-#include "lastexpress/animation.h"
 
 namespace LastExpress {
 
-// FIXME: HD should be copied to ScummVM at this time but we might run from CDs if we do not force loading all archives at startup
 class ResourceManager : public Common::Archive {
+
 public:
 	ResourceManager(LastExpressEngine *engine);
-	~ResourceManager();
+
+	// Loading
+	bool load();
 
 	// Archive functions
 	bool hasFile(const Common::String &name);
@@ -49,18 +48,10 @@ public:
 	Common::ArchiveMemberPtr getMember(const Common::String &name);
 	Common::SeekableReadStream *createReadStreamForMember(const Common::String &name) const;
 
-	// Data handling
-	Background *loadBackground(const Common::String &name);
-	Sound *loadSound(const Common::String &name);
-	Subtitle *loadSubtitle(const Common::String &name);	
-	Animation *loadSequence(const Common::String &name);	
-	Animation *loadAnimation(const Common::String &name);	
-
 private:
 	LastExpressEngine *_engine;
 
 	Common::Array<HPFArchive *> _archives;
-
 };
 
 } // End of namespace LastExpress

@@ -28,9 +28,65 @@
 
 namespace LastExpress {
 
-Subtitle::Subtitle(ResourceManager *resource) : _resource(resource) {}
+//////////////////////////////////////////////////////////////////////////
+// Subtitle
+//////////////////////////////////////////////////////////////////////////
+Subtitle::Subtitle() : _timeStart(0), _timeStop(0),
+	_topLength(0), _topText(NULL), _bottomLength(0), _bottomText(NULL) {
+}
 
-bool Subtitle::load(const Common::String &name)
+Subtitle::~Subtitle() {
+	delete _topText;
+	delete _bottomText;
+}
+
+void Subtitle::show(Font &font) {
+	font.drawString(100, 100, _topText, _topLength);
+	font.drawString(100, 300, _bottomText, _bottomLength);
+}
+
+bool Subtitle::load(Common::SeekableReadStream *in) {
+	// Read the display times
+	_timeStart = in->readUint16LE();
+	_timeStop = in->readUint16LE();
+
+	// Read the text lengths
+	_topLength = in->readUint16LE();
+	_bottomLength = in->readUint16LE();
+
+	// Create the buffers
+	if (_topLength) {
+		_topText = new uint16[_topLength];
+		if (!_topText)
+			return false;
+	}
+	if (_bottomLength) {
+		_bottomText = new uint16[_bottomLength];
+		if (!_bottomText)
+			return false;
+	}
+
+	// Read the texts
+	for (int i = 0; i < _topLength; i++)
+		_topText[i] = in->readUint16LE();
+	for (int i = 0; i < _bottomLength; i++)
+		_bottomText[i] = in->readUint16LE();
+
+	debugC(9, kLastExpressDebugSubtitle, "Subtitle entry: %d -> %d | %S - %S", _timeStart, _timeStop, _topText, _bottomText);
+
+	return true;
+}
+
+//////////////////////////////////////////////////////////////////////////
+// SubtitleManager
+//////////////////////////////////////////////////////////////////////////
+SubtitleManager::SubtitleManager(ResourceManager *resource) : _resource(resource) {}
+
+uint32 SubtitleManager::count() {
+	return _subtitles.size();
+}
+
+bool SubtitleManager::load(const Common::String &name)
 {
 	// Get a stream to the file
 	if (!_resource->hasFile(name)) {
@@ -38,49 +94,45 @@ bool Subtitle::load(const Common::String &name)
 		return false;
 	}
 
-	Common::SeekableReadStream *stream = _resource->createReadStreamForMember(name);
-
 	debugC(2, kLastExpressDebugSubtitle, "Loading subtitle: %s", name.c_str());
+	Common::SeekableReadStream *stream = _resource->createReadStreamForMember(name);
 
 	// Read header to get the number of subtitles
 	uint32 numSubtitles = stream->readUint16LE();
+	if (stream->eos()) {
+		debugC(2, kLastExpressDebugSubtitle, "Cannot read from subtitle file!");
+		return false;
+	}
 	debugC(3, kLastExpressDebugSubtitle, "Number of subtitles in file: %d", numSubtitles);
 
+	// TODO: Check that stream contain enough data
+	//if (stream->size() < (signed)(numSubtitles * sizeof(SubtitleData))) {
+	//	debugC(2, kLastExpressDebugSubtitle, "Subtitle file does not contain valid data!");
+	//	return false;
+	//}
+
 	// Read the list of subtitles
-	for (uint32 i = 0; i < numSubtitles; ++i) {		
-		SubtitleData data;
-
-		// Read start & stop times
-		data.start = stream->readUint16LE();
-		data.stop = stream->readUint16LE();
-
-		// Read subtitles text
-		data.topSize = stream->readUint16LE();
-		data.bottomSize = stream->readUint16LE();
-
-		if (data.topSize > 0) {
-			data.top = (uint16*)malloc(data.topSize * sizeof(char));
-			stream->read(data.top, data.topSize);
+	for (uint i = 0; i < numSubtitles; i++) {
+		_subtitles.push_back(Subtitle());
+		if (!_subtitles.back().load(stream)) {
+			// Failed to read this line
+			_subtitles.clear();
+			return false;
 		}
-
-		if (data.bottomSize > 0) {
-			data.bottom = (uint16*)malloc(data.bottomSize * sizeof(char));
-			stream->read(data.bottom, data.bottomSize);
-		}
-
-		_subtitles.push_back(data);
-
-		// FIXME: UTF-16 strings, really?
-
-		debugC(9, kLastExpressDebugSubtitle, "Subtitle entry: %d -> %d | %S - %S", data.start, data.stop, data.top, data.bottom);		
 	}
 
 	return true;
 }
 
-void Subtitle::render(Graphics::Surface *surface, uint16 currentTime) {
+bool SubtitleManager::show(Font &font, uint16 index) {
+	if (index < 0 || index > (signed)(_subtitles.size() - 1)) {
+		debugC(3, kLastExpressDebugSubtitle, "Subtitle: invalid index (was: %d, max: %d)", index, _subtitles.size() - 1);
+		return false;
+	}
 
+	_subtitles[index].show(font);
+
+	return true;
 }
-
 
 } // End of namespace LastExpress

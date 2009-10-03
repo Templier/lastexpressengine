@@ -27,7 +27,11 @@
 
 #include "lastexpress/debug.h"
 #include "lastexpress/lastexpress.h"
+#include "lastexpress/animation.h"
 #include "lastexpress/background.h"
+#include "lastexpress/sequence.h"
+#include "lastexpress/subtitle.h"
+#include "lastexpress/sound.h"
 
 namespace LastExpress {
 
@@ -51,18 +55,16 @@ bool Debugger::cmd_playseq(int argc, const char **argv) {
 	if (argc == 2) {
 		Common::String filename(const_cast<char*>(argv[1]));
 
-		if (!_engine->_resources->hasFile(filename)) {
+		if (!_engine->_resource->hasFile(filename)) {
 			DebugPrintf("Cannot find file: %s\n", filename.c_str());
 			return true;
 		}
 
-		Animation *sequence = _engine->_resources->loadSequence(filename);
-		if (sequence) {
-			for (uint32 i = 0; i < sequence->totalFrames(); i++) {
-				sequence->renderFrame(i);
-				_engine->_graphics->MergePlanes();
-				_engine->_graphics->updateScreen(&_engine->_graphics->_overlay);
-				_engine->_graphics->update();
+		Sequence sequence(_engine->_resource);
+		if (sequence.load(filename)) {
+			for (uint32 i = 0; i < sequence.count(); i++) {
+				sequence.show(i);
+				_engine->_system->delayMillis(250);
 			}
 		}
 	} else {
@@ -75,16 +77,15 @@ bool Debugger::cmd_playsnd(int argc, const char **argv) {
 	if (argc == 2) {
 		Common::String filename(const_cast<char*>(argv[1]));
 
-		if (!_engine->_resources->hasFile(filename)) {
+		if (!_engine->_resource->hasFile(filename)) {
 			DebugPrintf("Cannot find file: %s\n", filename.c_str());
 			return true;
 		}
 
 		_engine->_system->getMixer()->stopAll();
 
-		Sound *sound = _engine->_resources->loadSound(filename);
-		if (sound)
-			sound->play(_engine->_system->getMixer());
+		_engine->_sfx->load(filename);
+
 	} else {
 		DebugPrintf("Syntax: playsnd <sndname>\n");
 	}
@@ -95,18 +96,20 @@ bool Debugger::cmd_playsbe(int argc, const char **argv) {
 	if (argc == 3) {
 		Common::String filename(const_cast<char*>(argv[1]));
 
-		if (!_engine->_resources->hasFile(filename)) {
+		if (!_engine->_resource->hasFile(filename)) {
 			DebugPrintf("Cannot find file: %s\n", filename.c_str());
 			return true;
 		}
 
-		Subtitle *subtitle = _engine->_resources->loadSubtitle(filename);
-		if (subtitle) {
-			subtitle->render(&_engine->_graphics->_overlay, (int)(argv[2]));
-			_engine->_graphics->MergePlanes();
-			_engine->_graphics->updateScreen(&_engine->_graphics->_overlay);
-			_engine->_graphics->update();
+		SubtitleManager subtitle(_engine->_resource);
+		if (subtitle.load(filename)) {
+			for (uint i = 0; i < subtitle.count(); i++) {
+				_engine->_system->fillScreen(0);
+				subtitle.show(*_engine->_font, i);
+				_engine->_system->delayMillis(250);
+			}
 		}
+
 	} else {
 		DebugPrintf("Syntax: playsbe <sbename> <time>\n");
 	}
@@ -117,14 +120,15 @@ bool Debugger::cmd_playnis(int argc, const char **argv) {
 	if (argc == 2) {
 		Common::String filename(const_cast<char*>(argv[1]));
 
-		if (!_engine->_resources->hasFile(filename)) {
+		if (!_engine->_resource->hasFile(filename)) {
 			DebugPrintf("Cannot find file: %s\n", filename.c_str());
 			return true;
 		}
 
-		//Animation *animation = _engine->_resources->loadAnimation(filename);
-		//animation->render(&_engine->_graphics->_foreground, (int)(argv[2]));
-		//_engine->_graphics->updateScreen(&_engine->_graphics->_foreground);
+		Animation animation(_engine->_resource);
+		if (animation.load(filename))
+			animation.show();	
+
 	} else {
 		DebugPrintf("Syntax: playnis <nisname>\n");
 	}
@@ -135,16 +139,15 @@ bool Debugger::cmd_showbg(int argc, const char **argv) {
 	if (argc == 2) {
 		Common::String filename(const_cast<char*>(argv[1]));
 
-		if (!_engine->_resources->hasFile(filename)) {
+		if (!_engine->_resource->hasFile(filename)) {
 			DebugPrintf("Cannot find file: %s\n", filename.c_str());
 			return true;
 		}
 
-		Background *background = _engine->_resources->loadBackground(filename);
-		if (background) {
-			background->render(&_engine->_graphics->_backgroundA);
-			_engine->_graphics->updateScreen(&_engine->_graphics->_backgroundA);
-		}
+		Background background(_engine->_resource);
+		if (background.load(filename))
+			background.show();
+
 	} else {
 		DebugPrintf("Syntax: showbg <bgname>\n");
 	}
@@ -156,7 +159,7 @@ bool Debugger::cmd_listfiles(int argc, const char **argv) {
 		Common::String filter(const_cast<char*>(argv[1]));
 
 		Common::ArchiveMemberList list;
-		int count = _engine->_resources->listMatchingMembers(list, filter);
+		int count = _engine->_resource->listMatchingMembers(list, filter);
 
 		DebugPrintf("Number of matches: %d\n", count);
 		for (Common::ArchiveMemberList::iterator it = list.begin(); it != list.end(); ++it) {

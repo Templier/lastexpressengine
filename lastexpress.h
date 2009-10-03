@@ -33,18 +33,23 @@
 
 #include "lastexpress/debug.h"
 #include "lastexpress/resource.h"
-#include "lastexpress/graphics.h"
+#include "lastexpress/cursor.h"
+#include "lastexpress/font.h"
+#include "lastexpress/sound.h"
+
+#define SAFE_DELETE(_p)			{ if(_p) { delete _p;		_p=NULL; } }
+#define SAFE_DELETE_ARRAY(_p)	{ if(_p) { delete [] _p;	_p=NULL; } }
  
 namespace LastExpress {
  
 enum {
 	kLastExpressDebugAll = 1 << 0,
-	kLastExpressDebugVideo = 1 << 1,
+	kLastExpressDebugGraphics = 1 << 1,
 	kLastExpressDebugResource = 1 << 2,
 	kLastExpressDebugCursor = 1 << 3,
 	kLastExpressDebugSound = 1 << 4,
 	kLastExpressDebugSubtitle = 1 << 5,	
-	kLastExpressDebugFont = 1 << 6	
+	kLastExpressDebugUnknown = 1 << 6
 	// the current limitation is 32 debug levels (1 << 31 is the last one)
 };
  
@@ -66,8 +71,10 @@ protected:
 public:
 	Graphics::PixelFormat _pixelFormat;
 
-	ResourceManager *_resources;
-	GraphicsManager *_graphics;
+	ResourceManager *_resource;
+	Cursor *_cursor;
+	Font *_font;
+	StreamedSound *_sfx;
 
 	uint32 getFlags() const;
 

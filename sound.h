@@ -26,7 +26,13 @@
 #ifndef LASTEXPRESS_SOUND_H
 #define LASTEXPRESS_SOUND_H
 
-#include "sound/adpcm.h"
+#include "common/stream.h"
+#include "sound/mixer.h"
+
+namespace Audio {
+	class AudioStream;
+	class AppendableAudioStream;
+}
 
 namespace LastExpress {
 
@@ -34,27 +40,46 @@ class ResourceManager;
 
 class Sound {
 public:
-	Sound(ResourceManager *resource);
-	~Sound();
+	Sound();
+	virtual ~Sound();
+
+protected:
+	void loadHeader(Common::SeekableReadStream *in);
+	Audio::AudioStream *makeDecoder(Common::SeekableReadStream *in, uint32 size) const;
+	void play(Audio::AudioStream *as);
+
+	uint32 _size;					//!< data size
+									//!<  - NIS: size of all blocks, including those located in the matching LNK file
+									//!<  - LNK: size of the LNK file itself, including the header
+									//!<  - SND: size of all blocks
+	uint16 _blocks;					//!< number of blocks
+	uint32 _blockSize;
+	Audio::SoundHandle _handle;
+};
+
+class StreamedSound : public Sound {
+public:
+	StreamedSound(ResourceManager *resource);
+	~StreamedSound();
 
 	bool load(const Common::String &name);
-	Audio::AudioStream* getAudioStream();
-	void play(Audio::Mixer *mixer);
 
 private:
-	static const unsigned int _soundBlockSize = 739; 
-
-	struct SndHeader {
-		uint32 size;			//!< data size
-								//!<  - NIS: size of all blocks, including those located in the matching LNK file
-								//!<  - LNK: size of the LNK file itself, including the header
-								//!<  - SND: size of all blocks
-		uint16 count;			//!< number of blocks
-	};
-
 	ResourceManager *_resource;
-	SndHeader _header;
-	Audio::AudioStream *_audio;
+	byte *_data;
+};
+
+class AppendableSound : public Sound {
+public:
+	AppendableSound();
+	~AppendableSound();
+
+	void queueBuffer(byte *data, uint32 size);
+	void queueBuffer(Common::SeekableReadStream *bufferIn);
+	void finish();
+
+private:
+	Audio::AppendableAudioStream *_as;
 };
 
 } // End of namespace LastExpress

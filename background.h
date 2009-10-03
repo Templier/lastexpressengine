@@ -40,7 +40,7 @@ public:
 	~Background();
 
 	bool load(const Common::String &name);
-	Common::Rect render(Graphics::Surface *surface);
+	bool show();
 
 private:
 	struct BackgroundHeader {
@@ -56,10 +56,10 @@ private:
 	ResourceManager *_resource;
 
 	BackgroundHeader _header;
-	byte *_pixels;
+	uint16 *_data;				// decoded background data
 
 	void cleanup();
-	void decompress(byte* data, uint32 dataSize, byte* buffer, uint32 bufferSize);
+	byte *decodeComponent(Common::SeekableReadStream *in, uint32 inSize, uint32 outSize);
 };
 
 } // End of namespace LastExpress

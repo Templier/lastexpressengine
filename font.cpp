@@ -26,31 +26,171 @@
 #include "lastexpress/lastexpress.h"
 #include "lastexpress/font.h"
 
+#include "common/stream.h"
+#include "common/system.h"
+
 namespace LastExpress {
 
-Font::Font(ResourceManager *resource) : _resource(resource) {}
+const Common::String fontName("FONT.DAT");
+
+Font::Font(ResourceManager *resource) : _resource(resource), _glyphs(NULL), _glyphWidths(NULL) {}
 
 Font::~Font() {
-
+	SAFE_DELETE_ARRAY(_glyphs);
+	SAFE_DELETE_ARRAY(_glyphWidths);
 }
 
-bool Font::load(const Common::String &name)
-{
+bool Font::load() {
+	// Reset data
+	SAFE_DELETE_ARRAY(_glyphs);
+	SAFE_DELETE_ARRAY(_glyphWidths);
+
 	// Get a stream to the file
-	if (!_resource->hasFile(name)) {
-		debugC(2, kLastExpressDebugSubtitle, "Error opening font: %s", name.c_str());
+	if (!_resource->hasFile(fontName)) {
+		debugC(2, kLastExpressDebugGraphics, "Error opening font: %s", fontName.c_str());
 		return false;
 	}
 
-	Common::SeekableReadStream *stream = _resource->createReadStreamForMember(name);
+	debugC(2, kLastExpressDebugGraphics, "Loading font data file: %s", fontName.c_str());
+	Common::SeekableReadStream *stream = _resource->createReadStreamForMember(fontName);
 
-	debugC(2, kLastExpressDebugFont, "Loading font data file: %s", name.c_str());
+	// Read the palette
+	for (int i = 0; i < 0x10; i++) {
+		_palette[i] = stream->readUint16LE();
+	}
+
+	// Read the character map
+	stream->read(_charMap, 0x200);
+
+	// Read the glyphs
+	_numGlyphs = stream->readUint16LE();
+	_glyphs = new byte[_numGlyphs * 18 * 8];
+	stream->read(_glyphs, _numGlyphs * 18 * 8);
+
+	// TODO: Read something else?
+	//uint16 unknown = fontFile->readByte();
+	//warning("unknown = %d", unknown);
+	//warning("pos = %d", fontFile->pos());
+	//warning("left = %d", fontFile->size() - fontFile->pos());
+
+	//while (!fontFile->eos()) {
+	//unknown = fontFile->readByte();
+	//warning("val = %d", unknown);
+	//}
+
+	// Precalculate glyph widths
+	_glyphWidths = new byte[_numGlyphs];
+	for (int i = 0; i < _numGlyphs; i++) {
+		_glyphWidths[i] = getGlyphWidth(i);
+	}
 
 	return true;
 }
 
-void Font::render() {
+
+uint16 Font::getCharGlyph(uint16 c) {
+	//warning("%c", c);
+	if (c >= 0x200)
+		error("Express::Font: Invalid character %d", c);
+
+	return _charMap[c];
 }
 
+byte *Font::getGlyphImg(uint16 g) {
+	if (g >= _numGlyphs)
+		error("Express::Font: Invalid glyph %d (%d available)", g, _numGlyphs);
+
+	return _glyphs + g * 18 * 8;
+}
+
+uint8 Font::getGlyphWidth(uint16 g) {
+	byte *p = getGlyphImg(g);
+
+	uint8 maxLineWidth = 0;
+	for (int j = 0; j < 18; j++) {
+		uint8 currentLineWidth = 0;
+		for (int i = 0; i < 16; i++) {
+			byte index;
+			if (i % 2)
+				index = *p & 0xf;
+			else
+				index = *p >> 4;
+			uint16 color = _palette[index];
+			if (color != 0x1f)
+				currentLineWidth = i;
+			if (i % 2)
+				p++;
+		}
+		if (currentLineWidth > maxLineWidth)
+			maxLineWidth = currentLineWidth;
+	}
+
+	return maxLineWidth;
+}
+
+byte *Font::getCharImg(uint16 c) {
+	return getGlyphImg(getCharGlyph(c));
+}
+
+uint8 Font::getCharWidth(uint16 c) {
+	if (c == 0x20) {
+		// Space is a special case
+		// TODO: this is an arbitrary value
+		return 10;
+	} else {
+		return _glyphWidths[getCharGlyph(c)];
+	}
+}
+
+uint16 Font::getStringWidth(Common::String str) {
+	uint16 width = 0;
+	for (uint i = 0; i < str.size(); i++)
+		width += getCharWidth(str[i]);
+
+	return width;
+}
+
+uint16 Font::getStringWidth(uint16 *str, uint16 length) {
+	uint16 width = 0;
+	for (uint i = 0; i < length; i++)
+		width += getCharWidth(str[i]);
+
+	return width;
+}
+
+void Font::drawChar(int x, int y, uint16 c) {
+	byte *p = getCharImg(c);
+
+	for (int j = 0; j < 18; j++) {
+		for (int i = 0; i < 16; i++) {
+			byte index;
+			if (i % 2)
+				index = *p & 0xf;
+			else
+				index = *p >> 4;
+			uint16 color = _palette[index];
+			if (color != 0x1f)
+				g_system->copyRectToScreen((byte *)&color, 2, x + i, y + j, 1, 1);
+			if (i % 2)
+				p++;
+		}
+	}
+}
+
+void Font::drawString(int x, int y, Common::String str) {
+	int currentX = x;
+	for (uint i = 0; i < str.size(); i++) {
+		drawChar(currentX, y, str[i]);
+		currentX += getCharWidth(str[i]);
+	}
+}
+
+void Font::drawString(int x, int y, uint16 *str, uint16 length) {
+	int currentX = x;
+	for (uint i = 0; i < length; i++) {
+		drawChar(currentX, y, str[i]);
+		currentX += getCharWidth(str[i]);
+	}
+}
 
 } // End of namespace LastExpress
