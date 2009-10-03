@@ -1,0 +1,80 @@
+﻿<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\engines\lastexpress\animation.cpp" />
+    <ClCompile Include="..\..\engines\lastexpress\archive.cpp" />
+    <ClCompile Include="..\..\engines\lastexpress\background.cpp" />
+    <ClCompile Include="..\..\engines\lastexpress\cursor.cpp" />
+    <ClCompile Include="..\..\engines\lastexpress\debug.cpp" />
+    <ClCompile Include="..\..\engines\lastexpress\detection.cpp" />
+    <ClCompile Include="..\..\engines\lastexpress\font.cpp" />
+    <ClCompile Include="..\..\engines\lastexpress\graphics.cpp" />
+    <ClCompile Include="..\..\engines\lastexpress\lastexpress.cpp" />
+    <ClCompile Include="..\..\engines\lastexpress\logic.cpp" />
+    <ClCompile Include="..\..\engines\lastexpress\resource.cpp" />
+    <ClCompile Include="..\..\engines\lastexpress\saveload.cpp" />
+    <ClCompile Include="..\..\engines\lastexpress\sequence.cpp" />
+    <ClCompile Include="..\..\engines\lastexpress\sound.cpp" />
+    <ClCompile Include="..\..\engines\lastexpress\subtitle.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\engines\lastexpress\animation.h" />
+    <ClInclude Include="..\..\engines\lastexpress\archive.h" />
+    <ClInclude Include="..\..\engines\lastexpress\background.h" />
+    <ClInclude Include="..\..\engines\lastexpress\cursor.h" />
+    <ClInclude Include="..\..\engines\lastexpress\debug.h" />
+    <ClInclude Include="..\..\engines\lastexpress\font.h" />
+    <ClInclude Include="..\..\engines\lastexpress\graphics.h" />
+    <ClInclude Include="..\..\engines\lastexpress\lastexpress.h" />
+    <ClInclude Include="..\..\engines\lastexpress\resource.h" />
+    <ClInclude Include="..\..\engines\lastexpress\sequence.h" />
+    <ClInclude Include="..\..\engines\lastexpress\sound.h" />
+    <ClInclude Include="..\..\engines\lastexpress\subtitle.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\engines\lastexpress\license.txt" />
+    <None Include="..\..\engines\lastexpress\TODO.txt" />
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGUID>{E88E827D-C429-4176-B9BE-CD215FB6D5CC}</ProjectGUID>
+    <RootNamespace>lastexpress</RootNamespace>
+    <Keyword>Win32Proj</Keyword>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets">
+    <Import Project="$(LocalAppData)\Microsoft\VisualStudio\10.0\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(LocalAppData)\Microsoft\VisualStudio\10.0\Microsoft.Cpp.$(Platform).user.props')" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="ScummVM_Debug.props" Condition="exists('.\ScummVM_Debug.props')" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="ScummVM_Release.props" Condition="exists('.\ScummVM_Release.props')" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.20506.1</_ProjectFileVersion>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+  </ItemDefinitionGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
