@@ -33,7 +33,6 @@
 #include "lastexpress/animation.h"
 #include "lastexpress/sequence.h"
 
-
 namespace LastExpress {
 
 LastExpressEngine::LastExpressEngine(OSystem *syst, const ADGameDescription *gd) :
@@ -59,6 +58,8 @@ LastExpressEngine::~LastExpressEngine() {
 	SAFE_DELETE(_cursor);
 	SAFE_DELETE(_font);
 	SAFE_DELETE(_sfx);
+	SAFE_DELETE(_music);
+	SAFE_DELETE(_logic);
 }
 
 Common::Error LastExpressEngine::run() {
@@ -96,12 +97,14 @@ Common::Error LastExpressEngine::init() {
 
 	_font = new Font(_resource);
 	if (!_font->load())
-		return Common::kUnknownError;	
-
-	_sfx = new StreamedSound(_resource);	
+		return Common::kUnknownError;
 
 	// Initialize cursor
 	_cursor->setStyle(Cursor::CursorNormal);
+
+	_sfx = new StreamedSound(_resource);	
+	_music = new StreamedSound(_resource);
+	_logic = new Logic(this);
 
 	return Common::kNoError;
 }
@@ -112,6 +115,7 @@ Common::Error LastExpressEngine::go() {
 	int style = 0;
 	_cursor->show(true);
 
+#ifdef LOAD_RESOURCES_LIST
 	// Test Backgrounds
 	Common::ArchiveMemberList list_bg;
 	int num_bg = _resource->listMatchingMembers(list_bg, "*.BG");
@@ -141,11 +145,18 @@ Common::Error LastExpressEngine::go() {
 	int n_snd = _resource->listMatchingMembers(list_snd, "*.SND");
 	warning("found %d snd's", n_snd);
 	Common::ArchiveMemberList::iterator i_snd = list_snd.begin();
+#endif
 
 	while (!shouldQuit()) {
 		// Show the debugger if required
 		if (_debugger->isAttached()) {
 			_debugger->onFrame();
+			if (_debugger->hasCommand()) {
+				_debugger->callCommand();
+
+				// re-attach the debugger
+				_debugger->attach();	
+			}
 		}
 
 		// Handle input
@@ -172,6 +183,12 @@ Common::Error LastExpressEngine::go() {
 					if (_cursor->setStyle((Cursor::CursorStyle)(style-1)))
 						style--;
 
+				// Play intro
+				if (ev.kbd.keycode == Common::KEYCODE_RETURN || ev.kbd.keycode == Common::KEYCODE_KP_ENTER) {
+					_logic->showMainMenu();
+				}
+
+#ifdef LOAD_RESOURCES_LIST
 				// DEBUG: show data files
 				if (ev.kbd.keycode == Common::KEYCODE_b) {
 					if (i_bg != list_bg.end()) {
@@ -228,6 +245,7 @@ Common::Error LastExpressEngine::go() {
 						i_sbe++;
 					}
 				}
+#endif
 				break;
 
 			case Common::EVENT_MAINMENU:

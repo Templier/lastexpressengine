@@ -48,6 +48,7 @@ bool Background::load(const Common::String &name) {
 		return false;
 	}
 
+	debugC(2, kLastExpressDebugGraphics, "=================================================================");
 	debugC(2, kLastExpressDebugGraphics, "Loading background: %s", name.c_str());
 
 	Common::SeekableReadStream *stream = _resource->createReadStreamForMember(name);

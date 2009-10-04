@@ -60,6 +60,7 @@
     </ClInclude>
     <ClInclude Include="..\..\engines\lastexpress\graphics.h" />
     <ClInclude Include="..\..\engines\lastexpress\lastexpress.h" />
+    <ClInclude Include="..\..\engines\lastexpress\logic.h" />
     <ClInclude Include="..\..\engines\lastexpress\resource.h" />
     <ClInclude Include="..\..\engines\lastexpress\sequence.h">
       <Filter>data</Filter>

@@ -35,6 +35,7 @@
     <ClInclude Include="..\..\engines\lastexpress\font.h" />
     <ClInclude Include="..\..\engines\lastexpress\graphics.h" />
     <ClInclude Include="..\..\engines\lastexpress\lastexpress.h" />
+    <ClInclude Include="..\..\engines\lastexpress\logic.h" />
     <ClInclude Include="..\..\engines\lastexpress\resource.h" />
     <ClInclude Include="..\..\engines\lastexpress\sequence.h" />
     <ClInclude Include="..\..\engines\lastexpress\sound.h" />
@@ -72,7 +73,12 @@
   <PropertyGroup>
     <_ProjectFileVersion>10.0.20506.1</_ProjectFileVersion>
   </PropertyGroup>
-  <ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <ExceptionHandling>false</ExceptionHandling>
+      <SmallerTypeCheck>true</SmallerTypeCheck>
+      <BufferSecurityCheck>true</BufferSecurityCheck>
+    </ClCompile>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

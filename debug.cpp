@@ -23,6 +23,8 @@
  *
  */
 
+#include "common/debug.h"
+#include "common/system.h"
 #include "sound/mixer.h"
 
 #include "lastexpress/debug.h"
@@ -35,8 +37,7 @@
 
 namespace LastExpress {
 
-Debugger::Debugger(LastExpressEngine *engine) {
-	_engine = engine;
+Debugger::Debugger(LastExpressEngine *engine) : _engine(engine) {
 
 	// Register the debugger commands
 	DCmd_Register("playseq",   WRAP_METHOD(Debugger, cmd_playseq));
@@ -45,10 +46,38 @@ Debugger::Debugger(LastExpressEngine *engine) {
 	DCmd_Register("playnis",   WRAP_METHOD(Debugger, cmd_playnis));
 	DCmd_Register("showbg",	   WRAP_METHOD(Debugger, cmd_showbg));
 	DCmd_Register("listfiles", WRAP_METHOD(Debugger, cmd_listfiles));
+
+	resetCommand();
 }
 
 Debugger::~Debugger() {
 	Common::clearAllDebugChannels();
+}
+
+bool Debugger::hasCommand() {
+	return (num_params != 0);
+}
+
+void Debugger::resetCommand() {	
+	command = NULL;
+	command_params = NULL;
+	num_params = 0;
+}
+
+void Debugger::copyCommand(int argc, const char **argv) {
+	num_params = argc;
+
+	command_params = (char **)malloc(argc);
+
+	for (int i = 0; i < num_params; i++) {		
+		command_params[i] = (char *)malloc(strlen(argv[i]));
+		strcpy(command_params[i], "");
+		strcpy(command_params[i], argv[i]);
+	}
+}
+
+void Debugger::callCommand() {
+	(*command)(num_params, (const char**)command_params);
 }
 
 bool Debugger::cmd_playseq(int argc, const char **argv) {
@@ -60,11 +89,19 @@ bool Debugger::cmd_playseq(int argc, const char **argv) {
 			return true;
 		}
 
-		Sequence sequence(_engine->_resource);
-		if (sequence.load(filename)) {
-			for (uint32 i = 0; i < sequence.count(); i++) {
-				sequence.show(i);
-				_engine->_system->delayMillis(250);
+		// Store command
+		if (!hasCommand()) {
+			command = WRAP_METHOD(Debugger, cmd_playseq);
+			copyCommand(argc, argv);
+
+			return false;
+		} else {
+			Sequence sequence(_engine->_resource);
+			if (sequence.load(filename)) {
+				for (uint32 i = 0; i < sequence.count(); i++) {
+					sequence.show(i);
+					_engine->_system->delayMillis(250);
+				}
 			}
 		}
 	} else {
@@ -83,7 +120,6 @@ bool Debugger::cmd_playsnd(int argc, const char **argv) {
 		}
 
 		_engine->_system->getMixer()->stopAll();
-
 		_engine->_sfx->load(filename);
 
 	} else {
@@ -101,12 +137,20 @@ bool Debugger::cmd_playsbe(int argc, const char **argv) {
 			return true;
 		}
 
-		SubtitleManager subtitle(_engine->_resource);
-		if (subtitle.load(filename)) {
-			for (uint i = 0; i < subtitle.count(); i++) {
-				_engine->_system->fillScreen(0);
-				subtitle.show(*_engine->_font, i);
-				_engine->_system->delayMillis(250);
+		// Store command
+		if (!hasCommand()) {
+			command = WRAP_METHOD(Debugger, cmd_playsbe);
+			copyCommand(argc, argv);
+
+			return false;
+		} else {
+			SubtitleManager subtitle(_engine->_resource);
+			if (subtitle.load(filename)) {
+				for (uint i = 0; i < subtitle.count(); i++) {
+					_engine->_system->fillScreen(0);
+					subtitle.show(*_engine->_font, i);
+					_engine->_system->delayMillis(250);
+				}
 			}
 		}
 
@@ -125,9 +169,19 @@ bool Debugger::cmd_playnis(int argc, const char **argv) {
 			return true;
 		}
 
-		Animation animation(_engine->_resource);
-		if (animation.load(filename))
-			animation.show();	
+		// Store command
+		if (!hasCommand()) {
+			command = WRAP_METHOD(Debugger, cmd_playnis);
+			copyCommand(argc, argv);
+
+			return false;
+		} else {
+			Animation animation(_engine->_resource);
+			if (animation.load(filename))
+				animation.show();	
+
+			resetCommand();
+		}
 
 	} else {
 		DebugPrintf("Syntax: playnis <nisname>\n");
@@ -144,9 +198,17 @@ bool Debugger::cmd_showbg(int argc, const char **argv) {
 			return true;
 		}
 
-		Background background(_engine->_resource);
-		if (background.load(filename))
-			background.show();
+		// Store command
+		if (!hasCommand()) {
+			command = WRAP_METHOD(Debugger, cmd_showbg);
+			copyCommand(argc, argv);
+
+			return false;
+		} else {
+			Background background(_engine->_resource);
+			if (background.load(filename))
+				background.show();
+		}
 
 	} else {
 		DebugPrintf("Syntax: showbg <bgname>\n");

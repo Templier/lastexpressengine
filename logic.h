@@ -23,60 +23,29 @@
  *
  */
 
-#include "lastexpress/logic.h"
-#include "lastexpress/animation.h"
+#ifndef LASTEXPRESS_LOGIC_H
+#define LASTEXPRESS_LOGIC_H
+
+#include "lastexpress/lastexpress.h"
 
 namespace LastExpress {
 
-Logic::Logic(LastExpressEngine *engine) : _engine(engine) {
+class Logic {
+public:
+	Logic(LastExpressEngine *engine);
+	~Logic();
 
-	_hasShownIntro = false;
+	void showMainMenu();
 
-}
-
-Logic::~Logic() {
-}
-
-// .text:00448590
-void Logic::showMainMenu() {
-
-	if (!_hasShownIntro) {
-		Animation animation(_engine->_resource);
-
-		// Show Broderbrund logo		
-		if (animation.load("1930.nis"))
-			animation.show();
-
-		// FIXME: since animations are not synced, we need to wait until we are done reading from the stream, otherwise it goes boom
-
-		// Play intro music
-		//_engine->_music->load("MUS001.SND");
-
-		// Show The Smoking Car logo
-		if (animation.load("1931.nis"))
-			animation.show();
-
-		_hasShownIntro = true;
-
-	} else {
-
-		//_engine->_music->load("MUS018.SND");
-
-	}
-
-	
-
-	// Do something with Timer sound
+private:
+	LastExpressEngine *_engine;
 
 
-	// Adjust mouse pointer
-	
+	// State
+	bool _hasShownIntro;
 
-
-
-}
-
-
-
+};
 
 } // End of namespace LastExpress
+
+#endif // LASTEXPRESS_LOGIC_H

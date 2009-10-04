@@ -356,7 +356,7 @@ bool Sequence::load(const Common::String &name) {
 		return false;
 	}
 
-	debugC(2, kLastExpressDebugGraphics, "====================================================");
+	debugC(2, kLastExpressDebugGraphics, "=================================================================");
 	debugC(2, kLastExpressDebugGraphics, "Loading sequence: %s", name.c_str());
 	_stream = _resource->createReadStreamForMember(name);
 

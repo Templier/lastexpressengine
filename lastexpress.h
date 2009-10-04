@@ -36,11 +36,14 @@
 #include "lastexpress/cursor.h"
 #include "lastexpress/font.h"
 #include "lastexpress/sound.h"
+#include "lastexpress/logic.h"
 
 #define SAFE_DELETE(_p)			{ if(_p) { delete _p;		_p=NULL; } }
 #define SAFE_DELETE_ARRAY(_p)	{ if(_p) { delete [] _p;	_p=NULL; } }
  
 namespace LastExpress {
+
+class Logic;
  
 enum {
 	kLastExpressDebugAll = 1 << 0,
@@ -75,6 +78,7 @@ public:
 	Cursor *_cursor;
 	Font *_font;
 	StreamedSound *_sfx;
+	StreamedSound *_music;
 
 	uint32 getFlags() const;
 
@@ -82,6 +86,7 @@ private:
 	const ADGameDescription *_gameDescription;
 
 	Debugger *_debugger;	
+	Logic *_logic;
 
 	Common::Error init();
 	Common::Error go();

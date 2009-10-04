@@ -215,16 +215,8 @@
 			>
 		</File>
 		<File
-			RelativePath="..\..\engines\lastexpress\module.mk"
+			RelativePath="..\..\engines\lastexpress\logic.h"
 			>
-			<FileConfiguration
-				Name="Debug|Win32"
-				ExcludedFromBuild="true"
-				>
-				<Tool
-					Name="VCCustomBuildTool"
-				/>
-			</FileConfiguration>
 		</File>
 		<File
 			RelativePath="..\..\engines\lastexpress\resource.cpp"

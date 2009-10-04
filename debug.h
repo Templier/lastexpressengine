@@ -38,6 +38,9 @@ public:
 	Debugger(LastExpressEngine *engine);
 	~Debugger();
 
+	bool hasCommand();
+	void callCommand();
+
 private:
 	LastExpressEngine *_engine;
 
@@ -47,6 +50,13 @@ private:
 	bool cmd_playnis(int argc, const char **argv);
 	bool cmd_showbg(int argc, const char **argv);
 	bool cmd_listfiles(int argc, const char **argv);
+
+	void resetCommand();
+	void copyCommand(int argc, const char **argv); 
+
+	Debuglet *command;
+	int num_params;
+	char **command_params;
 };
 
 }  // End of LastExpress namespace
