@@ -26,8 +26,8 @@
 #ifndef LASTEXPRESS_SUBTITLE_H
 #define LASTEXPRESS_SUBTITLE_H
 
-#include "lastExpress/font.h"
-#include "lastExpress/resource.h"
+#include "lastexpress/font.h"
+#include "lastexpress/resource.h"
 
 namespace LastExpress {
 
