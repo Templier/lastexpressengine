@@ -35,7 +35,7 @@ static const PlainGameDescriptor lastExpressGames[] = {
 
 static const ADGameDescription gameDescriptions[] = {
 
-	// The Last Express
+	// The Last Express (English)
 	{
 		"lastexpress",
 		"",
@@ -51,7 +51,7 @@ static const ADGameDescription gameDescriptions[] = {
 		Common::GUIO_NONE
 	},
 
-	// The Last Express
+	// The Last Express (French)
 	{
 		"lastexpress",
 		"",
@@ -62,6 +62,22 @@ static const ADGameDescription gameDescriptions[] = {
 			{"CD3.HPF", 0, "411c1bab57b3e8da4fb359c5b40ef5d7", 640884736},
 		},
 		Common::FR_FRA,
+		Common::kPlatformWindows,
+		ADGF_NO_FLAGS,
+		Common::GUIO_NONE
+	},
+
+	// The Last Express (Spanish)
+	{
+		"lastexpress",
+		"",
+		{
+			{"HD.HPF",  0, "46bed8832f06cf7160883a2aae2d667f", 29657088},
+			{"CD1.HPF", 0, "367a3a8581f6f88ddc51af7cde105ba9", 519927808},
+			{"CD2.HPF", 0, "af5566df3000472852ec182c9ec57797", 662210560},
+			{"CD3.HPF", 0, "0d1901662f4d063a5c250c9fbf64b771", 639504384},
+		},
+		Common::ES_ESP,
 		Common::kPlatformWindows,
 		ADGF_NO_FLAGS,
 		Common::GUIO_NONE
