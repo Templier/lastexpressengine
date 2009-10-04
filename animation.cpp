@@ -45,6 +45,9 @@ void Animation::reset() {
 	SAFE_DELETE(_background1);
 	SAFE_DELETE(_background2);
 	SAFE_DELETE(_audio);
+	_backgroundCurrent = 0;
+
+	_chunks.clear();
 }
 
 bool Animation::load(const Common::String &name) {
@@ -56,6 +59,7 @@ bool Animation::load(const Common::String &name) {
 		return false;
 	}
 
+	debugC(2, kLastExpressDebugGraphics, "=================================================================");
 	debugC(2, kLastExpressDebugGraphics, "Loading animation: %s", name.c_str());
 	_stream = _resource->createReadStreamForMember(name);
 
@@ -150,7 +154,7 @@ bool Animation::show() {
 			frameNumber++;
 
 			// FIXME implement proper syncing + subtitles
-			g_engine->_system->delayMillis(750);
+			g_engine->_system->delayMillis(50);
 			break;
 
 		case kChunkTypeUnknown15:
@@ -179,6 +183,10 @@ bool Animation::show() {
 			
 		}
 	}
+
+	// HACK: wait until sound has finished playing before returning
+	while (!_audio->endOfSound())
+		g_engine->_system->delayMillis(50);
 
 	return true;
 }
