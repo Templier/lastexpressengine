@@ -5,16 +5,15 @@ MODULE_OBJS := \
 	archive.o \
 	background.o \
 	cursor.o \
-	font.o \
-	sequence.o \
-	sound.o \
-	subtitle.o \
 	debug.o \
-	detection.o \	
+	detection.o \
+	font.o \
 	lastexpress.o \
 	logic.o \
 	resource.o \
-	saveload.o	
+	sequence.o \
+	sound.o \
+	subtitle.o
 
 # This module can be built as a plugin
 ifeq ($(ENABLE_LASTEXPRESS), DYNAMIC_PLUGIN)
