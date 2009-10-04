@@ -56,14 +56,14 @@ bool Cursor::load() {
 	_data = new byte[stream->size()];
 	if (_data)
 		stream->read(_data, stream->size());
-	
+
 	return true;
 }
 
 void Cursor::show(bool visible) {
 	CursorMan.showMouse(visible);
 }
- 
+
 bool Cursor::setStyle(CursorStyle style) {
 	if (!_data) {
 		debugC(2, kLastExpressDebugGraphics, "Trying to set cursor style before loading data!");
@@ -75,10 +75,10 @@ bool Cursor::setStyle(CursorStyle style) {
 		return false;
 	}
 	debugC(10, kLastExpressDebugCursor | kLastExpressDebugAll, "Cursor: setting style: %d", style);
-	 
+
 	// Save the new cursor
 	_current = style;
- 
+
 	// Prepare the pixel data
 	uint16 pixels[32 * 32];
 	byte *fileImage = _data + MAX_CURSOR * 4 + (style * 32 * 32 * 2);
@@ -89,7 +89,7 @@ bool Cursor::setStyle(CursorStyle style) {
 		//pixels[i] = (READ_LE_UINT16(getStyleImage(style) + (i * 2)) & 0x8000) ? 0 : 0xffff;
 		//pixels[i] = (fileImage[1] & 0x80) ? 0 : 0xffff;
 	}
- 
+
 	uint16 hotspotX = READ_LE_UINT16(_data + (style * 4));
 	uint16 hotspotY = READ_LE_UINT16(_data + (style * 4) + 2);
 	debugC(15, kLastExpressDebugCursor | kLastExpressDebugAll	, "    hotspot x: %d, hotspot y: %d", hotspotX, hotspotY);
@@ -98,7 +98,7 @@ bool Cursor::setStyle(CursorStyle style) {
 
 	return true;
 }
- 
+
 Cursor::CursorStyle Cursor::getStyle() {
 	return _current;
 }

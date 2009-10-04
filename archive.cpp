@@ -38,7 +38,7 @@ HPFArchive::HPFArchive(const Common::String &path) {
 	if (!_archive) {
 		debugC(2, kLastExpressDebugResource, "Error opening file: %s", path.c_str());
 		return;
-	}	
+	}
 
 	debugC(2, kLastExpressDebugResource, "Opened archive: %s", path.c_str());
 
@@ -53,7 +53,7 @@ HPFArchive::HPFArchive(const Common::String &path) {
 
 		_archive->read(&name, sizeof(char) * _archiveNameSize);
 		entry.offset = _archive->readUint32LE();
-		entry.size = _archive->readUint32LE();	
+		entry.size = _archive->readUint32LE();
 		entry.isOnHD = _archive->readUint16LE();
 
 		// Terminate string
@@ -64,7 +64,7 @@ HPFArchive::HPFArchive(const Common::String &path) {
 
 		_files[filename] = entry;
 
-		//debugC(9, kLastExpressDebugResource, "File entry: %s (offset:%d - Size: %d - HD: %u)", &name, entry.offset, entry.size, entry.isOnHD);		
+		//debugC(9, kLastExpressDebugResource, "File entry: %s (offset:%d - Size: %d - HD: %u)", &name, entry.offset, entry.size, entry.isOnHD);
 	}
 }
 
@@ -101,7 +101,7 @@ Common::SeekableReadStream *HPFArchive::createReadStreamForMember(const Common::
 	FileMap::const_iterator fDesc = _files.find(name);
 	if (fDesc == _files.end())
 		return 0;
-	
+
 	if (!_archive)
 		return 0;
 

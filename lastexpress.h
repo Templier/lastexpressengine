@@ -25,7 +25,7 @@
 
 #ifndef LASTEXPRESS_H
 #define LASTEXPRESS_H
- 
+
 #include "common/system.h"
 #include "engines/advancedDetector.h"
 #include "engines/engine.h"
@@ -40,22 +40,22 @@
 
 #define SAFE_DELETE(_p)			{ if(_p) { delete _p;		_p=NULL; } }
 #define SAFE_DELETE_ARRAY(_p)	{ if(_p) { delete [] _p;	_p=NULL; } }
- 
+
 namespace LastExpress {
 
 class Logic;
- 
+
 enum {
 	kLastExpressDebugAll = 1 << 0,
 	kLastExpressDebugGraphics = 1 << 1,
 	kLastExpressDebugResource = 1 << 2,
 	kLastExpressDebugCursor = 1 << 3,
 	kLastExpressDebugSound = 1 << 4,
-	kLastExpressDebugSubtitle = 1 << 5,	
+	kLastExpressDebugSubtitle = 1 << 5,
 	kLastExpressDebugUnknown = 1 << 6
 	// the current limitation is 32 debug levels (1 << 31 is the last one)
 };
- 
+
 class LastExpressEngine : public Engine {
 public:
 	LastExpressEngine(OSystem *syst, const ADGameDescription *gd);
@@ -85,13 +85,13 @@ public:
 private:
 	const ADGameDescription *_gameDescription;
 
-	Debugger *_debugger;	
+	Debugger *_debugger;
 	Logic *_logic;
 
 	Common::Error init();
 	Common::Error go();
 };
- 
+
 } // End of namespace LastExpress
- 
+
 #endif // LASTEXPRESS_H

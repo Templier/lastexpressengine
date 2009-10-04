@@ -41,7 +41,7 @@ public:
 	void drawString(int x, int y, Common::String str);
 	void drawString(int x, int y, uint16 *str, uint16 length);
 
-private:	
+private:
 	ResourceManager *_resource;
 
 	uint16 getCharGlyph(uint16 c);

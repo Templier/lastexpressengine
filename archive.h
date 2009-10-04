@@ -50,7 +50,7 @@ public:
 	Common::ArchiveMemberPtr getMember(const Common::String &name);
 	Common::SeekableReadStream *createReadStreamForMember(const Common::String &name) const;
 
-private:	
+private:
 	static const unsigned int _archiveNameSize = 12;
 	static const unsigned int _archiveSectorSize = 2048;
 
@@ -58,12 +58,12 @@ private:
 	struct HPFEntry {
 		//char name[12];		//!< Name of the entry
 		uint32 offset;			//!< Offset (in sectors of 2048 bytes)
-		uint32 size; 			//!< Size (in sectors of 2048 bytes)
-		uint16 isOnHD; 		    //!< File is always on HD (1: true; 0: false)
+		uint32 size;			//!< Size (in sectors of 2048 bytes)
+		uint16 isOnHD;		    //!< File is always on HD (1: true; 0: false)
 	};
 
 	typedef Common::HashMap<Common::String, HPFEntry, Common::IgnoreCase_Hash, Common::IgnoreCase_EqualTo> FileMap;
-		
+
 	FileMap _files;							//!< List of files
 	Common::SeekableReadStream *_archive;	//!< Archive file
 };

@@ -39,7 +39,7 @@ public:
 	void update();
 	void change();
 	void MergePlanes();
-	void updateScreen(Graphics::Surface *source);	
+	void updateScreen(Graphics::Surface *source);
 	Graphics::Surface _backgroundA;				// Background A
 	Graphics::Surface _backgroundC;				// Background C
 	Graphics::Surface _overlay;					// Overlay

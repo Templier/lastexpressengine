@@ -41,7 +41,7 @@ GraphicsManager::~GraphicsManager() {
 	// Free the game surfaces
 	_backgroundA.free();
 	_backgroundC.free();
-	_overlay.free();	
+	_overlay.free();
 }
 
 void GraphicsManager::update() {

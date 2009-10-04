@@ -61,7 +61,7 @@ public:
 
 	uint32 count();
 
-private:	
+private:
 	ResourceManager *_resource;
 
 	Common::Array<Subtitle> _subtitles;

@@ -37,14 +37,14 @@ void FrameInfo::read(Common::SeekableReadStream *in, uint16 decompOffset) {
 	// Save the current position
 	uint32 basePos = in->pos();
 
-	dataOffset = in->readUint32LE();	
-	unknown = in->readUint32LE();	
+	dataOffset = in->readUint32LE();
+	unknown = in->readUint32LE();
 	paletteOffset = in->readUint32LE();
 	xPos1 = in->readUint32LE();
 	yPos1 = in->readUint32LE();
 	xPos2 = in->readUint32LE();
 	yPos2 = in->readUint32LE();
-	initialSkip = in->readUint32LE();	
+	initialSkip = in->readUint32LE();
 	decompressedEndOffset = in->readUint32LE();
 
 	// Read the compression type
@@ -366,7 +366,7 @@ bool Sequence::load(const Common::String &name) {
 	debugC(3, kLastExpressDebugGraphics, "Number of frames in sequence: %d / unknown=0x%x", numframes, _unknown);
 
 	// Store frames information
-	for (uint i = 0; i < numframes; i++) {		
+	for (uint i = 0; i < numframes; i++) {
 		debugC(3, kLastExpressDebugGraphics, "-- Frame information --  %d/%d", i + 1, numframes);
 
 		// Move stream to start of frame
@@ -384,7 +384,7 @@ bool Sequence::load(const Common::String &name) {
 
 		FrameInfo info;
 		info.read(_stream, _compressionOffsetSEQ);
-		_frames.push_back(info);		
+		_frames.push_back(info);
 	}
 
 	return true;
@@ -423,7 +423,6 @@ bool Sequence::show(uint32 index) {
 	g_system->updateScreen();
 
 	delete f;
-	
 
 	return true;
 }

@@ -78,7 +78,7 @@ public:
 	Sequence(ResourceManager *resource);
 	~Sequence();
 
-	bool load(const Common::String &name);	
+	bool load(const Common::String &name);
 	bool show(uint32 index);
 
 	uint32 count();

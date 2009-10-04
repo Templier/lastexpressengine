@@ -58,7 +58,7 @@ bool Debugger::hasCommand() {
 	return (num_params != 0);
 }
 
-void Debugger::resetCommand() {	
+void Debugger::resetCommand() {
 	command = NULL;
 	command_params = NULL;
 	num_params = 0;
@@ -69,7 +69,7 @@ void Debugger::copyCommand(int argc, const char **argv) {
 
 	command_params = (char **)malloc(argc);
 
-	for (int i = 0; i < num_params; i++) {		
+	for (int i = 0; i < num_params; i++) {
 		command_params[i] = (char *)malloc(strlen(argv[i]));
 		strcpy(command_params[i], "");
 		strcpy(command_params[i], argv[i]);
@@ -178,7 +178,7 @@ bool Debugger::cmd_playnis(int argc, const char **argv) {
 		} else {
 			Animation animation(_engine->_resource);
 			if (animation.load(filename))
-				animation.show();	
+				animation.show();
 
 			resetCommand();
 		}

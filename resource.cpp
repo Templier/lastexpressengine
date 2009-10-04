@@ -49,7 +49,7 @@ bool ResourceManager::load() {
 	} else {
 		_archives.push_back(new HPFArchive(archiveHDPath));
 
-		// TODO: there are lots of duplicated files in CD archives: we need to handle load/unload of cd archives 
+		// TODO: there are lots of duplicated files in CD archives: we need to handle load/unload of cd archives
 		// FIXME: load CD archives on-the-fly?
 		_archives.push_back(new HPFArchive(archiveCD1Path));
 		//_archives.push_back(new HPFArchive(archiveCD2Path));
@@ -75,11 +75,11 @@ int ResourceManager::listMembers(Common::ArchiveMemberList &list) {
 	int count = 0;
 
 	for (Common::Array<HPFArchive*>::iterator it = _archives.begin(); it != _archives.end(); ++it) {
-		
+
 		Common::ArchiveMemberList members;
 		count += (*it)->listMembers(members);
 
-		list.insert(list.end(), members.begin(), members.end());		
+		list.insert(list.end(), members.begin(), members.end());
 	}
 
 	return count;

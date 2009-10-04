@@ -84,7 +84,7 @@ bool StreamedSound::load(const Common::String &name) {
 
 	debugC(2, kLastExpressDebugGraphics, "=================================================================");
 	debugC(2, kLastExpressDebugGraphics, "Loading sound: %s", name.c_str());
-	Common::SeekableReadStream *stream = _resource->createReadStreamForMember(name);	
+	Common::SeekableReadStream *stream = _resource->createReadStreamForMember(name);
 
 	loadHeader(stream);
 

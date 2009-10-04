@@ -51,27 +51,27 @@ public:
 	bool show();
 
 private:
-	static const uint32 _soundBlockSize = 739;	
+	static const uint32 _soundBlockSize = 739;
 
 	// despite their size field, info chunks don't have a payload
 	enum typesChunk {
 		kChunkTypeUnknown1			= 0x0001,
 		kChunkTypeUnknown2			= 0x0002,
-		kChunkTypeAudioInfo 		= 0x0003,
+		kChunkTypeAudioInfo			= 0x0003,
 		kChunkTypeUnknown4			= 0x0004,
 		kChunkTypeUnknown5			= 0x0005,
-  		kChunkTypeBackgroundFrameA  = 0x000a,
-  		kChunkTypeSelectBackgroundA = 0x000b,
-  		kChunkTypeBackgroundFrameC  = 0x000c,
-  		kChunkTypeSelectBackgroundC = 0x000d,
-  		kChunkTypeOverlayFrame      = 0x0014,
+		kChunkTypeBackgroundFrameA  = 0x000a,
+		kChunkTypeSelectBackgroundA = 0x000b,
+		kChunkTypeBackgroundFrameC  = 0x000c,
+		kChunkTypeSelectBackgroundC = 0x000d,
+		kChunkTypeOverlayFrame      = 0x0014,
 		kChunkTypeUnknown15			= 0x0015,	// might be subtitles
 		kChunkTypeUnknown16			= 0x0016,
-  		kChunkTypeAudioData         = 0x0020,
-  		kChunkTypeAudioEnd          = 0x0063
+		kChunkTypeAudioData         = 0x0020,
+		kChunkTypeAudioEnd          = 0x0063
 	};
-	
-	void reset();	
+
+	void reset();
 	AnimFrame *processChunkFrame(Common::SeekableReadStream *in, Chunk *c);
 	void processOverlayFrame(Common::SeekableReadStream *in, Chunk *c);
 	void processChunkAudio(Common::SeekableReadStream *in, Chunk *c);

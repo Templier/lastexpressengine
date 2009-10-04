@@ -44,7 +44,7 @@ public:
 
 	// Archive functions
 	bool hasFile(const Common::String &name);
-	int listMembers(Common::ArchiveMemberList &list);	
+	int listMembers(Common::ArchiveMemberList &list);
 	Common::ArchiveMemberPtr getMember(const Common::String &name);
 	Common::SeekableReadStream *createReadStreamForMember(const Common::String &name) const;
 

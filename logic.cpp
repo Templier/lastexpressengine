@@ -43,7 +43,7 @@ void Logic::showMainMenu() {
 	if (!_hasShownIntro) {
 		Animation animation(_engine->_resource);
 
-		// Show Broderbrund logo		
+		// Show Broderbrund logo
 		if (animation.load("1930.nis"))
 			animation.show();
 
@@ -64,13 +64,13 @@ void Logic::showMainMenu() {
 
 	}
 
-	
+
 
 	// Do something with Timer sound
 
 
 	// Adjust mouse pointer
-	
+
 
 
 

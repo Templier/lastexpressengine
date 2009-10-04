@@ -55,7 +55,7 @@ bool Animation::load(const Common::String &name) {
 
 	// Get a stream to the file
 	if (!_resource->hasFile(name)) {
-		debugC(2, kLastExpressDebugGraphics, "Error opening animation: %s", name.c_str());		
+		debugC(2, kLastExpressDebugGraphics, "Error opening animation: %s", name.c_str());
 		return false;
 	}
 
@@ -75,7 +75,7 @@ bool Animation::load(const Common::String &name) {
 	}
 
 	// Read all the chunks
-	for (uint32 i = 0; i < numChunks; ++i) {		
+	for (uint32 i = 0; i < numChunks; ++i) {
 
 		Chunk chunk;
 		chunk.type = (typesChunk)_stream->readUint16LE();
@@ -84,7 +84,7 @@ bool Animation::load(const Common::String &name) {
 
 		_chunks.push_back(chunk);
 
-		//debugC(9, kLastExpressDebugGraphics, "Chunk Entry: type 0x%.4x, tag=%d, size=%d", chunk.type, chunk.tag, chunk.size);		
+		//debugC(9, kLastExpressDebugGraphics, "Chunk Entry: type 0x%.4x, tag=%d, size=%d", chunk.type, chunk.tag, chunk.size);
 	}
 
 	return true;
@@ -107,11 +107,11 @@ bool Animation::show() {
 		case kChunkTypeUnknown2:
 		case kChunkTypeUnknown5:
 			debugC(9, kLastExpressDebugGraphics, "  info chunk: type 0x%.4x (size %d)", c->type, c->size);
-			assert (c->tag == 0);			
+			assert (c->tag == 0);
 			//TODO: c->size?
 			break;
 
-		case kChunkTypeAudioInfo:			
+		case kChunkTypeAudioInfo:
 			debugC(9, kLastExpressDebugGraphics, "  audio info: %d blocks", c->size);
 			assert (c->tag == 0);
 			//TODO: save the size?
@@ -125,7 +125,7 @@ bool Animation::show() {
 			break;
 
 		case kChunkTypeBackgroundFrameA:
-			debugC(9, kLastExpressDebugGraphics, "  frame A (background type 0x%.4x, %d bytes, tag %d)", c->type, c->size, c->tag);			
+			debugC(9, kLastExpressDebugGraphics, "  frame A (background type 0x%.4x, %d bytes, tag %d)", c->type, c->size, c->tag);
 			delete _background1;
 			_background1 = processChunkFrame(_stream, c);
 			break;
@@ -139,7 +139,7 @@ bool Animation::show() {
 		case kChunkTypeBackgroundFrameC:
 			debugC(9, kLastExpressDebugGraphics, "  frame C (background type 0x%.4x, %d bytes, tag %d)", c->type, c->size, c->tag);
 			delete _background2;
-			_background2 = processChunkFrame(_stream, c);						
+			_background2 = processChunkFrame(_stream, c);
 			break;
 
 		case kChunkTypeSelectBackgroundC:
@@ -158,7 +158,7 @@ bool Animation::show() {
 			break;
 
 		case kChunkTypeUnknown15:
-		case kChunkTypeUnknown16:			
+		case kChunkTypeUnknown16:
 			debugC(9, kLastExpressDebugGraphics, "  info chunk: type 0x%.4x (tag %d)", c->type, c->tag);
 			assert (c->size == 0);
 			//TODO: c->tag?
@@ -166,7 +166,7 @@ bool Animation::show() {
 
 		case kChunkTypeAudioData:
 			debugC(9, kLastExpressDebugGraphics, "  audio (%d blocks, %d bytes, tag %d)", c->size/_soundBlockSize, c->size, c->tag);
-			processChunkAudio(_stream, c);	
+			processChunkAudio(_stream, c);
 			break;
 
 		case kChunkTypeAudioEnd:
@@ -180,7 +180,7 @@ bool Animation::show() {
 		default:
 			error("  UNKNOWN chunk type=%x tag=%x size=%d", c->type, c->tag, c->size);
 			break;
-			
+
 		}
 	}
 
@@ -217,7 +217,7 @@ void Animation::processOverlayFrame( Common::SeekableReadStream * in, Chunk * c 
 
 	// Free the temporary surface
 	s->free();
-	delete s;		
+	delete s;
 }
 
 AnimFrame *Animation::processChunkFrame(Common::SeekableReadStream *in, Chunk *c) {

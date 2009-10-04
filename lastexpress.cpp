@@ -44,7 +44,7 @@ LastExpressEngine::LastExpressEngine(OSystem *syst, const ADGameDescription *gd)
 	// Initialize the custom debug levels
 	Common::addDebugChannel(kLastExpressDebugAll, "All", "Debug everything");
 	Common::addDebugChannel(kLastExpressDebugGraphics, "Graphics", "Debug graphics & animation/sequence playback");
-	Common::addDebugChannel(kLastExpressDebugResource, "Resource", "Debug resource management");	
+	Common::addDebugChannel(kLastExpressDebugResource, "Resource", "Debug resource management");
 	Common::addDebugChannel(kLastExpressDebugCursor, "Cursor", "Debug cursor handling");
 	Common::addDebugChannel(kLastExpressDebugSound, "Sound", "Debug sound playback");
 	Common::addDebugChannel(kLastExpressDebugSubtitle, "Subtitle", "Debug subtitles");
@@ -89,11 +89,11 @@ Common::Error LastExpressEngine::init() {
 	// Start managers: resource, cursor & font
 	_resource = new ResourceManager(this);
 	if (!_resource->load())
-		return Common::kUnknownError;	
+		return Common::kUnknownError;
 
-	_cursor = new Cursor(_system, _resource);	
+	_cursor = new Cursor(_system, _resource);
 	if (!_cursor->load())
-		return Common::kUnknownError;						
+		return Common::kUnknownError;
 
 	_font = new Font(_resource);
 	if (!_font->load())
@@ -102,7 +102,7 @@ Common::Error LastExpressEngine::init() {
 	// Initialize cursor
 	_cursor->setStyle(Cursor::CursorNormal);
 
-	_sfx = new StreamedSound(_resource);	
+	_sfx = new StreamedSound(_resource);
 	_music = new StreamedSound(_resource);
 	_logic = new Logic(this);
 
@@ -155,7 +155,7 @@ Common::Error LastExpressEngine::go() {
 				_debugger->callCommand();
 
 				// re-attach the debugger
-				_debugger->attach();	
+				_debugger->attach();
 			}
 		}
 
@@ -164,11 +164,11 @@ Common::Error LastExpressEngine::go() {
 		while (_eventMan->pollEvent(ev)) {
 			switch (ev.type) {
 
-			case Common::EVENT_KEYDOWN:		
+			case Common::EVENT_KEYDOWN:
 				// CTRL-D: Attach the debugger
 				if ((ev.kbd.flags & Common::KBD_CTRL) && ev.kbd.keycode == Common::KEYCODE_d)
 					if (!_debugger->isAttached())
-						_debugger->attach();	
+						_debugger->attach();
 
 				// DEBUG: Quit game on escape
 				if (ev.kbd.keycode == Common::KEYCODE_ESCAPE)
@@ -254,7 +254,7 @@ Common::Error LastExpressEngine::go() {
 			case Common::EVENT_MOUSEMOVE:
 				break;
 
-			case Common::EVENT_LBUTTONDOWN:			
+			case Common::EVENT_LBUTTONDOWN:
 				break;
 
 			case Common::EVENT_RBUTTONDOWN:
@@ -286,7 +286,7 @@ bool LastExpressEngine::hasFeature(EngineFeature f) const {
 	return (f == kSupportsRTL);
 }
 
-void LastExpressEngine::errorString(const char *buf_input, char *buf_output, int buf_output_size) {	
+void LastExpressEngine::errorString(const char *buf_input, char *buf_output, int buf_output_size) {
 	snprintf(buf_output, buf_output_size, "%s", buf_input);
 }
 

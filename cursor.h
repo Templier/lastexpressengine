@@ -29,7 +29,7 @@
 //////////////////////////////////////////////////////////////////////
 // Data file: CURSORS.TBM
 //
-//	- 
+//	-
 
 namespace LastExpress {
 
@@ -96,13 +96,13 @@ public:
 	bool setStyle(CursorStyle style);
 	CursorStyle getStyle();
 
-private:	
+private:
 	ResourceManager *_resource;
 	OSystem *_system;
- 
+
 	// Style
 	CursorStyle _current;
-	 
+
 	// Cursors data
 	byte *_data;
 };

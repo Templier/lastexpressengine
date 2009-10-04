@@ -88,7 +88,7 @@ static const ADGameDescription gameDescriptions[] = {
 		"lastexpress",
 		"Demo",
 		{
-			{"Demo.HPF",  0, "baf3b1f64155d34872896e61c3d3cb78", 58191872},				
+			{"Demo.HPF",  0, "baf3b1f64155d34872896e61c3d3cb78", 58191872},
 		},
 		Common::EN_ANY,
 		Common::kPlatformWindows,

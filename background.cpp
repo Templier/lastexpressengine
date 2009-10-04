@@ -52,7 +52,7 @@ bool Background::load(const Common::String &name) {
 	debugC(2, kLastExpressDebugGraphics, "Loading background: %s", name.c_str());
 
 	Common::SeekableReadStream *stream = _resource->createReadStreamForMember(name);
-	
+
 	// Load Background header
 	_header.posX = stream->readUint32LE();
 	_header.posY = stream->readUint32LE();
@@ -62,7 +62,7 @@ bool Background::load(const Common::String &name) {
 	_header.blueSize = stream->readUint32LE();
 	_header.greenSize = stream->readUint32LE();
 
-	debugC(3, kLastExpressDebugGraphics, "Background Info: (%d, %d) - (%d x %d) - (%d, %d, %d)", 
+	debugC(3, kLastExpressDebugGraphics, "Background Info: (%d, %d) - (%d x %d) - (%d, %d, %d)",
 		   _header.posX, _header.posY, _header.width, _header.height, _header.redSize, _header.blueSize, _header.greenSize);
 
 	// Load and decompress Background channel data

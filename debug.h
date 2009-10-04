@@ -52,7 +52,7 @@ private:
 	bool cmd_listfiles(int argc, const char **argv);
 
 	void resetCommand();
-	void copyCommand(int argc, const char **argv); 
+	void copyCommand(int argc, const char **argv);
 
 	Debuglet *command;
 	int num_params;
