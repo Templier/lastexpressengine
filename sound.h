@@ -74,12 +74,16 @@ public:
 	AppendableSound();
 	~AppendableSound();
 
+	// HACK
+	bool endOfSound();
+
 	void queueBuffer(byte *data, uint32 size);
 	void queueBuffer(Common::SeekableReadStream *bufferIn);
 	void finish();
 
 private:
 	Audio::AppendableAudioStream *_as;
+	bool _finished;
 };
 
 } // End of namespace LastExpress

@@ -72,14 +72,17 @@ StreamedSound::~StreamedSound() {
 		free(_data);
 }
 
-bool StreamedSound::load(const Common::String &name)
-{
+bool StreamedSound::load(const Common::String &name) {
+
+	g_system->getMixer()->stopHandle(_handle);
+
 	// Get a stream to the file
 	if (!_resource->hasFile(name)) {
 		debugC(2, kLastExpressDebugSound, "Error opening sound: %s", name.c_str());
 		return false;
 	}
 
+	debugC(2, kLastExpressDebugGraphics, "=================================================================");
 	debugC(2, kLastExpressDebugGraphics, "Loading sound: %s", name.c_str());
 	Common::SeekableReadStream *stream = _resource->createReadStreamForMember(name);	
 
@@ -108,6 +111,7 @@ AppendableSound::AppendableSound() : Sound() {
 	// Create an audio stream where the decoded chunks will be appended
 	// TODO: the ADPCM decoder works in native endianness, so the usage FLAG_LITTLE_ENDIAN will depend on the current platform
 	_as = Audio::makeAppendableAudioStream(44100, Audio::Mixer::FLAG_16BITS | Audio::Mixer::FLAG_AUTOFREE | Audio::Mixer::FLAG_LITTLE_ENDIAN);
+	_finished = false;
 
 	// Start playing the decoded audio stream
 	play(_as);
@@ -119,6 +123,10 @@ AppendableSound::AppendableSound() : Sound() {
 
 AppendableSound::~AppendableSound() {
 	finish();
+}
+
+bool AppendableSound::endOfSound() {
+	return _as->endOfData();
 }
 
 void AppendableSound::queueBuffer(byte *data, uint32 size) {
@@ -148,7 +156,10 @@ void AppendableSound::queueBuffer(Common::SeekableReadStream *bufferIn) {
 
 void AppendableSound::finish() {
 	assert (_as);
-	_as->finish();
+	if (!_finished)
+		_as->finish();
+
+	_finished = true;
 }
 
 } // End of namespace LastExpress
