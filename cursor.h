@@ -51,21 +51,21 @@ public:
 		CursorLeft,
 		CursorRight,
 		CursorHand,
-		CursorHandSmall,
-		CursorRound,
+		CursorHandKnock,
+		CursorMagnifier,
 		CursorHandPointer,
 		CursorTalkZ,		// Need better name
 		CursorTalk,
 		CursorTalk2,		// Need better name
-		CursorBox,
+		CursorMatchBox,
 		CursorLetter,
 		CursorMessage,
-		CursorList,
+		CursorArticle,
 		CursorScarf,
 		CursorPaper,		// Need better name
 		CursorParchemin,	// Need better name
-		CursorPen,			// Need better name
-		CursorStuff,		// Need better name (invoice?)
+		CursorMatch,
+		CursorStuff,		// Need better name
 		CursorKey,
 		CursorClock,
 		CursorGold,			// Need better name
@@ -73,12 +73,12 @@ public:
 		CursorCorpse,
 		CursorClosedHandLeft,
 		CursorClosedHandRight,
+		CursorPortraitYellow,
+		CursorPortraitYellowSelected,
+		CursorPortraitGreenVest,
+		CursorPortraitGreenSelected,
 		CursorPortrait,
 		CursorPortraitSelected,
-		CursorPortrait2,
-		CursorPortrait2Selected,
-		CursorPortrait3,
-		CursorPortrait3Selected,
 		CursorWait,
 		CursorEggBlue,
 		CursorEggRed,

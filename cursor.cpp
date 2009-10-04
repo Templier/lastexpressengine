@@ -70,7 +70,7 @@ bool Cursor::setStyle(CursorStyle style) {
 		return false;
 	}
 
-	if ((int)style < 0 || (int)style > MAX_CURSOR) {
+	if ((int)style < 0 || (int)style > MAX_CURSOR - 1) {
 		debugC(2, kLastExpressDebugGraphics, "Trying to set an invalid cursor style: was %d, max %d", (int)style, MAX_CURSOR);
 		return false;
 	}
