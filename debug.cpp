@@ -103,6 +103,8 @@ bool Debugger::cmd_playseq(int argc, const char **argv) {
 					_engine->_system->delayMillis(250);
 				}
 			}
+
+			resetCommand();
 		}
 	} else {
 		DebugPrintf("Syntax: playseq <seqname>\n");
@@ -152,6 +154,8 @@ bool Debugger::cmd_playsbe(int argc, const char **argv) {
 					_engine->_system->delayMillis(250);
 				}
 			}
+
+			resetCommand();
 		}
 
 	} else {
@@ -198,18 +202,9 @@ bool Debugger::cmd_showbg(int argc, const char **argv) {
 			return true;
 		}
 
-		// Store command
-		if (!hasCommand()) {
-			command = WRAP_METHOD(Debugger, cmd_showbg);
-			copyCommand(argc, argv);
-
-			return false;
-		} else {
-			Background background(_engine->_resource);
-			if (background.load(filename))
-				background.show();
-		}
-
+		Background background(_engine->_resource);
+		if (background.load(filename))
+			background.show();
 	} else {
 		DebugPrintf("Syntax: showbg <bgname>\n");
 	}
