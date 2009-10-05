@@ -64,7 +64,7 @@ void Sound::play(Audio::AudioStream *as) {
 //////////////////////////////////////////////////////////////////////////
 // StreamedSound
 //////////////////////////////////////////////////////////////////////////
-StreamedSound::StreamedSound(ResourceManager *resource) : _resource(resource), _data(NULL) {
+StreamedSound::StreamedSound(ResourceManager *resource) : _resource(resource) {
 }
 
 StreamedSound::~StreamedSound() {
