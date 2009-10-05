@@ -27,6 +27,7 @@
 #define LASTEXPRESS_LOGIC_H
 
 #include "lastexpress/lastexpress.h"
+#include "lastexpress/saveload.h"
 
 namespace LastExpress {
 
@@ -37,12 +38,21 @@ public:
 
 	void showMainMenu();
 
+	// TODO inventory (needs gamestate & new Cursor function)
+
 private:
 	LastExpressEngine *_engine;
 
-
 	// State
+	bool _hasStartedGame;
 	bool _hasShownIntro;
+	bool _hasShownStartScreen;
+
+
+	// Savegames
+	SaveLoad::SavegameId _savegameId;
+	
+
 
 };
 

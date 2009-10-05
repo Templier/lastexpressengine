@@ -24,14 +24,16 @@
  */
 
 #include "lastexpress/logic.h"
+#include "lastexpress/background.h"
 #include "lastexpress/animation.h"
 
 namespace LastExpress {
 
 Logic::Logic(LastExpressEngine *engine) : _engine(engine) {
 
+	_hasStartedGame = false;
 	_hasShownIntro = false;
-
+	_hasShownStartScreen = false;
 }
 
 Logic::~Logic() {
@@ -40,43 +42,40 @@ Logic::~Logic() {
 // .text:00448590
 void Logic::showMainMenu() {
 
-	if (!_hasShownIntro) {
-		Animation animation(_engine->_resource);
+	// FIXME Check savegames to see if a game has been started
+	if (!_hasStartedGame) {
+		if (!_hasShownIntro) {
+			Animation animation(_engine->_resource);
 
-		// Show Broderbrund logo
-		if (animation.load("1930.nis"))
-			animation.show();
+			// Show Broderbrund logo
+			if (animation.load("1930.nis"))
+				animation.show();
 
-		// FIXME: since animations are not synced, we need to wait until we are done reading from the stream, otherwise it goes boom
+			// Play intro music
+			_engine->_music->load("MUS001.SND");
 
-		// Play intro music
-		//_engine->_music->load("MUS001.SND");
+			// Show The Smoking Car logo
+			if (animation.load("1931.nis"))
+				animation.show();
 
-		// Show The Smoking Car logo
-		if (animation.load("1931.nis"))
-			animation.show();
-
-		_hasShownIntro = true;
-
+			_hasShownIntro = true;
+		}
 	} else {
+		if (!_hasShownStartScreen) {
+			_engine->_music->load("mus018.snd");
 
-		//_engine->_music->load("MUS018.SND");
+			// FIXME load data from scene! (DAT files?)
+			// Show Start screen
+			Background background(_engine->_resource);
+			if (background.load("autoplay.bg"))
+				background.show();
 
+			_hasShownStartScreen = true;
+		}
 	}
 
-
-
 	// Do something with Timer sound
-
-
 	// Adjust mouse pointer
-
-
-
-
 }
-
-
-
 
 } // End of namespace LastExpress
