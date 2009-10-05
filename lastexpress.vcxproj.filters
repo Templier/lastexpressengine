@@ -26,11 +26,13 @@
     <ClCompile Include="..\..\engines\lastexpress\font.cpp">
       <Filter>data</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\engines\lastexpress\graphics.cpp" />
     <ClCompile Include="..\..\engines\lastexpress\lastexpress.cpp" />
     <ClCompile Include="..\..\engines\lastexpress\logic.cpp" />
     <ClCompile Include="..\..\engines\lastexpress\resource.cpp" />
     <ClCompile Include="..\..\engines\lastexpress\saveload.cpp" />
+    <ClCompile Include="..\..\engines\lastexpress\scene.cpp">
+      <Filter>data</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\engines\lastexpress\sequence.cpp">
       <Filter>data</Filter>
     </ClCompile>
@@ -58,10 +60,13 @@
     <ClInclude Include="..\..\engines\lastexpress\font.h">
       <Filter>data</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\engines\lastexpress\graphics.h" />
     <ClInclude Include="..\..\engines\lastexpress\lastexpress.h" />
     <ClInclude Include="..\..\engines\lastexpress\logic.h" />
     <ClInclude Include="..\..\engines\lastexpress\resource.h" />
+    <ClInclude Include="..\..\engines\lastexpress\saveload.h" />
+    <ClInclude Include="..\..\engines\lastexpress\scene.h">
+      <Filter>data</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\engines\lastexpress\sequence.h">
       <Filter>data</Filter>
     </ClInclude>

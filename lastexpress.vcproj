@@ -166,6 +166,14 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\engines\lastexpress\scene.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\engines\lastexpress\scene.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\engines\lastexpress\sequence.cpp"
 				>
 			</File>
@@ -228,6 +236,10 @@
 		</File>
 		<File
 			RelativePath="..\..\engines\lastexpress\saveload.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\..\engines\lastexpress\saveload.h"
 			>
 		</File>
 	</Files>

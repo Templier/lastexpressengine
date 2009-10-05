@@ -17,11 +17,11 @@
     <ClCompile Include="..\..\engines\lastexpress\debug.cpp" />
     <ClCompile Include="..\..\engines\lastexpress\detection.cpp" />
     <ClCompile Include="..\..\engines\lastexpress\font.cpp" />
-    <ClCompile Include="..\..\engines\lastexpress\graphics.cpp" />
     <ClCompile Include="..\..\engines\lastexpress\lastexpress.cpp" />
     <ClCompile Include="..\..\engines\lastexpress\logic.cpp" />
     <ClCompile Include="..\..\engines\lastexpress\resource.cpp" />
     <ClCompile Include="..\..\engines\lastexpress\saveload.cpp" />
+    <ClCompile Include="..\..\engines\lastexpress\scene.cpp" />
     <ClCompile Include="..\..\engines\lastexpress\sequence.cpp" />
     <ClCompile Include="..\..\engines\lastexpress\sound.cpp" />
     <ClCompile Include="..\..\engines\lastexpress\subtitle.cpp" />
@@ -33,10 +33,11 @@
     <ClInclude Include="..\..\engines\lastexpress\cursor.h" />
     <ClInclude Include="..\..\engines\lastexpress\debug.h" />
     <ClInclude Include="..\..\engines\lastexpress\font.h" />
-    <ClInclude Include="..\..\engines\lastexpress\graphics.h" />
     <ClInclude Include="..\..\engines\lastexpress\lastexpress.h" />
     <ClInclude Include="..\..\engines\lastexpress\logic.h" />
     <ClInclude Include="..\..\engines\lastexpress\resource.h" />
+    <ClInclude Include="..\..\engines\lastexpress\saveload.h" />
+    <ClInclude Include="..\..\engines\lastexpress\scene.h" />
     <ClInclude Include="..\..\engines\lastexpress\sequence.h" />
     <ClInclude Include="..\..\engines\lastexpress\sound.h" />
     <ClInclude Include="..\..\engines\lastexpress\subtitle.h" />

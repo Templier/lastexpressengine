@@ -11,6 +11,7 @@ MODULE_OBJS := \
 	lastexpress.o \
 	logic.o \
 	resource.o \
+	scene.o \
 	sequence.o \
 	sound.o \
 	subtitle.o
