@@ -55,12 +55,12 @@ bool Font::load() {
 	Common::SeekableReadStream *stream = _resource->createReadStreamForMember(fontName);
 
 	// Read the palette
-	for (int i = 0; i < 0x10; i++) {
+	for (int i = 0; i < _paletteSize; i++) {
 		_palette[i] = stream->readUint16LE();
 	}
 
 	// Read the character map
-	stream->read(_charMap, 0x200);
+	stream->read(_charMap, _charMapSize);
 
 	// Read the glyphs
 	_numGlyphs = stream->readUint16LE();

@@ -26,7 +26,19 @@
 #ifndef LASTEXPRESS_FONT_H
 #define LASTEXPRESS_FONT_H
 
-#include "lastexpress/resource.h"
+/*
+	Font format (FONT.DAT)
+
+	uint16 {40}   - Palette data
+	byte {200}    - Character map
+	uint16 {2}    - Number of glyphs
+
+	// For each glyph
+		byte {18*8}   - Glyph data
+		
+	byte {x}      - Unknown data
+*/
+
 
 namespace LastExpress {
 
@@ -42,6 +54,9 @@ public:
 	void drawString(int x, int y, uint16 *str, uint16 length);
 
 private:
+	static const uint32 _paletteSize = 0x10;
+	static const uint32 _charMapSize = 0x200;
+
 	ResourceManager *_resource;
 
 	uint16 getCharGlyph(uint16 c);
