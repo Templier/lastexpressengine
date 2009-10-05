@@ -91,7 +91,7 @@ Common::Error LastExpressEngine::init() {
 	if (!_resource->load())
 		return Common::kUnknownError;
 
-	_cursor = new Cursor(_system, _resource);
+	_cursor = new Cursor(_resource);
 	if (!_cursor->load())
 		return Common::kUnknownError;
 

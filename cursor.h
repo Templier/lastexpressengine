@@ -39,15 +39,13 @@
 		uint16 {32*32}   - cursor data		
 */
 
-class OSystem;
-
 namespace LastExpress {
 
 class ResourceManager;
 
 class Cursor {
 public:
-	Cursor(OSystem *system, ResourceManager *resource);
+	Cursor(ResourceManager *resource);
 	~Cursor();
 
 	enum CursorStyle {
@@ -111,7 +109,6 @@ public:
 
 private:
 	ResourceManager *_resource;
-	OSystem *_system;
 
 	// Style
 	CursorStyle _current;

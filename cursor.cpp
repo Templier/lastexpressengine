@@ -34,7 +34,7 @@ namespace LastExpress {
 
 const Common::String cursorsName("CURSORS.TBM");
 
-Cursor::Cursor(OSystem *system, ResourceManager *resource) : _system(system), _resource(resource), _current(CursorNormal), _data(NULL) {}
+Cursor::Cursor(ResourceManager *resource) : _resource(resource), _current(CursorNormal), _data(NULL) {}
 
 Cursor::~Cursor() {
 	SAFE_DELETE_ARRAY(_data);
