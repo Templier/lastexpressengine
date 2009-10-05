@@ -26,6 +26,20 @@
 #ifndef LASTEXPRESS_HPFARCHIVE_H
 #define LASTEXPRESS_HPFARCHIVE_H
 
+/*
+
+	Archive file format (.HPF)
+
+	uint32 {4}   - number of files
+	
+	// for each file
+		char {12}    - name (zero-terminated)
+		uint32 {4}   - offset (expressed in sectors of 2048 bytes)
+		uint32 {4}   - size (expressed in sectors of 2048 bytes)
+		byte {2}     - file status: 1 = on disk (ie. in HD.HPF), 0 = on CD
+
+*/
+
 #include "common/archive.h"
 #include "common/hash-str.h"
 #include "common/hashmap.h"
@@ -33,17 +47,12 @@
 #include "common/list.h"
 #include "common/file.h"
 
-///////////////////////////////////////////////////////////////////////////
-//
-//
-
 namespace LastExpress {
 
 class HPFArchive : public Common::Archive {
 public:
 
 	HPFArchive(const Common::String &path);
-	~HPFArchive();
 
 	bool hasFile(const Common::String &name);
 	int listMembers(Common::ArchiveMemberList &list);
@@ -56,16 +65,15 @@ private:
 
 	// File entry
 	struct HPFEntry {
-		//char name[12];		//!< Name of the entry
 		uint32 offset;			//!< Offset (in sectors of 2048 bytes)
 		uint32 size;			//!< Size (in sectors of 2048 bytes)
-		uint16 isOnHD;		    //!< File is always on HD (1: true; 0: false)
+		uint16 isOnHD;		    //!< File location (1: on HD; 0: on CD)
 	};
 
 	typedef Common::HashMap<Common::String, HPFEntry, Common::IgnoreCase_Hash, Common::IgnoreCase_EqualTo> FileMap;
 
 	FileMap _files;							//!< List of files
-	Common::SeekableReadStream *_archive;	//!< Archive file
+	Common::String _filename;				//!< Filename of the archive
 };
 
 } // End of namespace LastExpress

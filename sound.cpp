@@ -68,8 +68,6 @@ StreamedSound::StreamedSound(ResourceManager *resource) : _resource(resource), _
 }
 
 StreamedSound::~StreamedSound() {
-	if (_data)
-		free(_data);
 }
 
 bool StreamedSound::load(const Common::String &name) {
@@ -88,15 +86,8 @@ bool StreamedSound::load(const Common::String &name) {
 
 	loadHeader(stream);
 
-	// Load all sound data to buffer
-	if (!_data)
-		_data = (byte*)malloc(_size);
-
-	stream->read(_data, _size);
-	Common::MemoryReadStream *buffer = new Common::MemoryReadStream(_data, _size);
-
 	// Start decoding the input stream
-	Audio::AudioStream *as = makeDecoder(buffer, _size);
+	Audio::AudioStream *as = makeDecoder(stream, _size);
 
 	// Start playing the decoded audio stream
 	play(as);

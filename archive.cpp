@@ -33,9 +33,11 @@
 namespace LastExpress {
 
 HPFArchive::HPFArchive(const Common::String &path) {
+	_filename = path;
+
 	// Open a stream to the archive
-	_archive = SearchMan.createReadStreamForMember(path);
-	if (!_archive) {
+	Common::SeekableReadStream *archive = SearchMan.createReadStreamForMember(_filename);
+	if (!archive) {
 		debugC(2, kLastExpressDebugResource, "Error opening file: %s", path.c_str());
 		return;
 	}
@@ -43,7 +45,7 @@ HPFArchive::HPFArchive(const Common::String &path) {
 	debugC(2, kLastExpressDebugResource, "Opened archive: %s", path.c_str());
 
 	// Read header to get the number of files
-	uint32 numFiles = _archive->readUint32LE();
+	uint32 numFiles = archive->readUint32LE();
 	debugC(3, kLastExpressDebugResource, "Number of files in archive: %d", numFiles);
 
 	// Read the list of files
@@ -51,10 +53,10 @@ HPFArchive::HPFArchive(const Common::String &path) {
 		char name[13];
 		HPFEntry entry;
 
-		_archive->read(&name, sizeof(char) * _archiveNameSize);
-		entry.offset = _archive->readUint32LE();
-		entry.size = _archive->readUint32LE();
-		entry.isOnHD = _archive->readUint16LE();
+		archive->read(&name, sizeof(char) * _archiveNameSize);
+		entry.offset = archive->readUint32LE();
+		entry.size = archive->readUint32LE();
+		entry.isOnHD = archive->readUint16LE();
 
 		// Terminate string
 		name[12] = '\0';
@@ -66,18 +68,14 @@ HPFArchive::HPFArchive(const Common::String &path) {
 
 		//debugC(9, kLastExpressDebugResource, "File entry: %s (offset:%d - Size: %d - HD: %u)", &name, entry.offset, entry.size, entry.isOnHD);
 	}
+
+	// Close stream
+	delete archive;
 }
-
-
-HPFArchive::~HPFArchive() {
-	delete _archive;
-}
-
 
 bool HPFArchive::hasFile(const Common::String &name) {
 	return (_files.find(name) != _files.end());
 }
-
 
 int HPFArchive::listMembers(Common::ArchiveMemberList &list) {
 	int count = 0;
@@ -100,12 +98,18 @@ Common::ArchiveMemberPtr HPFArchive::getMember(const Common::String &name) {
 Common::SeekableReadStream *HPFArchive::createReadStreamForMember(const Common::String &name) const {
 	FileMap::const_iterator fDesc = _files.find(name);
 	if (fDesc == _files.end())
-		return 0;
+		return NULL;
 
-	if (!_archive)
-		return 0;
+	Common::File *archive = new Common::File;
+	if (!archive)
+		return NULL;
+	 
+	if (!archive->open(_filename)) {
+		delete archive;
+		return NULL;
+	}
 
-	return new Common::SeekableSubReadStream(_archive, fDesc->_value.offset * _archiveSectorSize, fDesc->_value.offset * _archiveSectorSize + fDesc->_value.size * _archiveSectorSize, true);
+	return new Common::SeekableSubReadStream(archive, fDesc->_value.offset * _archiveSectorSize, fDesc->_value.offset * _archiveSectorSize + fDesc->_value.size * _archiveSectorSize, true);
 }
 
 } // End of namespace LastExpress
