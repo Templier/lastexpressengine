@@ -23,14 +23,14 @@
  *
  */
 
-#include "lastexpress/sequence.h"
-
 #include "common/system.h"
+
+#include "lastexpress/lastexpress.h"
+#include "lastexpress/sequence.h"
 
 // Based on Deniz Oezmen's code: http://oezmen.eu/
 
 namespace LastExpress {
-
 
 void FrameInfo::read(Common::SeekableReadStream *in, uint16 decompOffset) {
 

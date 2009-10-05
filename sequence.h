@@ -26,12 +26,52 @@
 #ifndef LASTEXPRESS_SEQUENCE_H
 #define LASTEXPRESS_SEQUENCE_H
 
+/*
+	Sequence format (.SEQ / .NIS (frame header & data only))
+
+	uint32 {4}    - Number of frames in sequence
+
+	frames headers:
+	// for each frame
+		uint32 {4}    - Data offset (from beginning of file)
+		uint32 {4}    - Unknown 
+		uint32 {4}    - Palette offset (from beginning of file)
+		uint32 {4}    - Top-left X coordinate
+		uint32 {4}    - Top-left Y coordinate
+		uint32 {4}    - Bottom-right X coordinate
+		uint32 {4}    - Bottom-right Y coordinate
+		uint32 {4}    - Initial offset of decompressed data (doubled, since each pixel occupies one color word)
+		uint32 {4}    - End of data after decompression
+		
+		(for SEQ files only)
+		uint32 {4}    - Unknown
+		uint32 {4}    - Unknown
+		byte {1}      - Compression type
+		byte {1}      - Unknown
+		uint16 {2}    - Unknown
+		uint32 {4}    - Unknown
+		uint32 {4}    - Unknown
+		uint32 {4}    - Unknown
+		uint32 {4}    - Unknown
+		uint32 {4}    - Unknown
+
+		(for NIS files: found at 0x124)
+		byte {1}	  - Compression type
+
+	palette	data:
+		uint16 {x}    - palette data (max size: 256)
+
+	data
+		byte {x}      - compressed image data
+
+*/
+
 #include "common/stream.h"
 #include "graphics/surface.h"
 
-#include "lastexpress/resource.h"
-
 namespace LastExpress {
+
+class ResourceManager;
 
 struct FrameInfo {
 	void read(Common::SeekableReadStream *in, uint16 decompOffset);
@@ -83,7 +123,7 @@ public:
 
 	uint32 count();
 
-	// TODO add getter for frame info
+	// TODO add getter for frame info (when we know what all the unknown entries are for)
 	//FrameInfo *getFrameInfo(uint32 index);
 
 private:

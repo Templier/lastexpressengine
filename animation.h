@@ -26,13 +26,24 @@
 #ifndef LASTEXPRESS_ANIMATION_H
 #define LASTEXPRESS_ANIMATION_H
 
+/*
+	Animation format (.NIS)
+
+	uint32 {4}    - Number of chunks
+
+	// for each chunk
+		uint16 {2}    - Type
+		uint16 {2}    - Tag
+		uint32 {4}    - Size of chunk
+		byte {x}      - Data (for "data" chunks: backgrounds, overlay & audio data)
+*/
+
 #include "common/array.h"
 #include "common/stream.h"
 
-#include "lastexpress/resource.h"
-
 namespace LastExpress {
 
+class ResourceManager;
 class AnimFrame;
 class AppendableSound;
 

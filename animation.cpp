@@ -23,6 +23,7 @@
  *
  */
 
+#include "lastexpress/lastexpress.h"
 #include "lastexpress/animation.h"
 #include "lastexpress/sequence.h"
 #include "lastexpress/sound.h"
@@ -90,7 +91,6 @@ bool Animation::load(const Common::String &name) {
 	return true;
 }
 
-// TODO we need to start the LNK sound after the animation is done
 bool Animation::show() {
 	if (_stream == NULL || _chunks.size() == 0) {
 		debugC(2, kLastExpressDebugGraphics, "Trying to show an animation before loading data!");
@@ -103,6 +103,7 @@ bool Animation::show() {
 	for (Common::Array<Chunk>::iterator c = _chunks.begin(); c != _chunks.end(); ++c) {
 
 		switch(c->type) {
+		//TODO: some info chunks are probably subtitle/sync related
 		case kChunkTypeUnknown1:
 		case kChunkTypeUnknown2:
 		case kChunkTypeUnknown5:
@@ -121,7 +122,7 @@ bool Animation::show() {
 		case kChunkTypeUnknown4:
 			debugC(9, kLastExpressDebugGraphics, "  info block 4: %d blocks", c->size);
 			assert (c->tag == 0 && c->size == 0);
-			//TODO
+			//TODO unkown type of chunk
 			break;
 
 		case kChunkTypeBackgroundFrameA:
@@ -153,7 +154,8 @@ bool Animation::show() {
 			processOverlayFrame(_stream, c);
 			frameNumber++;
 
-			// FIXME implement proper syncing + subtitles
+			//FIXME: implement proper syncing + subtitles
+			//TODO: we need to be able to interrupt an animation when the user pressed ESC
 			g_engine->_system->delayMillis(50);
 			break;
 
@@ -173,9 +175,10 @@ bool Animation::show() {
 			debugC(9, kLastExpressDebugGraphics, "  audio end: %d blocks", c->tag);
 			assert (c->size == 0);
 			_audio->finish();
+			//TODO: we need to start the linked sound (.LNK) after the audio from the animation ends
 			break;
 
-			// TODO: some info chunks are probably subtitle/sync related
+			
 
 		default:
 			error("  UNKNOWN chunk type=%x tag=%x size=%d", c->type, c->tag, c->size);
@@ -184,7 +187,7 @@ bool Animation::show() {
 		}
 	}
 
-	// HACK: wait until sound has finished playing before returning
+	//FIXME: since animations are not yet synced, we wait until we are done reading from the stream
 	while (!_audio->endOfSound())
 		g_engine->_system->delayMillis(50);
 

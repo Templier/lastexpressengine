@@ -26,6 +26,19 @@
 #ifndef LASTEXPRESS_SOUND_H
 #define LASTEXPRESS_SOUND_H
 
+/*
+	Sound format (.SND / .LNK)
+
+	uint32 {4}   - data size
+	uint16 {2}   - number of blocks
+
+	// for each block
+		int16 {2}    - initial sample
+		byte {1}     - initial index
+		byte {1}     - unused (00)
+		byte {x}     - IMA ADPCM sample codes
+*/
+
 #include "common/stream.h"
 #include "sound/mixer.h"
 
@@ -66,7 +79,6 @@ public:
 
 private:
 	ResourceManager *_resource;
-	byte *_data;
 };
 
 class AppendableSound : public Sound {

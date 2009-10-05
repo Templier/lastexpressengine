@@ -26,6 +26,20 @@
 #ifndef LASTEXPRESS_SUBTITLE_H
 #define LASTEXPRESS_SUBTITLE_H
 
+/*
+	Subtitle format (.SBE)
+
+	uint16 {2}   - number of subtitles
+
+	// for each subtitle
+		uint16 {2}   - display start time
+		uint16 {2}   - display stop time
+		uint16 {2}   - top line length
+		uint16 {2}   - bottom line length
+		byte {x}     - top line (UTF-16 string)
+		byte {x}     - bottom line (UTF-16 string)
+*/
+
 #include "lastexpress/font.h"
 #include "lastexpress/resource.h"
 
@@ -57,7 +71,7 @@ public:
 	bool load(const Common::String &name);
 	bool show(Font &font, uint16 index);
 
-	// TODO add function bool show(uint16 currentTime);
+	//TODO: add function bool show(uint16 currentTime);
 
 	uint32 count();
 

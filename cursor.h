@@ -26,10 +26,20 @@
 #ifndef LASTEXPRESS_CURSOR_H
 #define LASTEXPRESS_CURSOR_H
 
-//////////////////////////////////////////////////////////////////////
-// Data file: CURSORS.TBM
-//
-//	-
+/*
+	Cursor format (CURSORS.TBM)
+
+	style table: 
+		(for each cursor)
+		uint16 {2}       - hotspot X
+		uint16 {2}	     - hotspot Y	
+
+	data:
+		(for each cursor)
+		uint16 {32*32}   - cursor data		
+*/
+
+class OSystem;
 
 namespace LastExpress {
 
@@ -54,7 +64,7 @@ public:
 		CursorHandKnock,
 		CursorMagnifier,
 		CursorHandPointer,
-		CursorTalkZ,		// Need better name
+		CursorSleep,
 		CursorTalk,
 		CursorTalk2,		// Need better name
 		CursorMatchBox,
@@ -65,14 +75,14 @@ public:
 		CursorPaper,		// Need better name
 		CursorParchemin,	// Need better name
 		CursorMatch,
-		CursorStuff,		// Need better name
+		Cursorwhistle,
 		CursorKey,
-		CursorClock,
-		CursorGold,			// Need better name
+		CursorBomb,
+		CursorFirebird,
 		CursorBriefcase,
 		CursorCorpse,
-		CursorClosedHandLeft,
-		CursorClosedHandRight,
+		CursorPunchLeft,
+		CursorPunchRight,
 		CursorPortraitYellow,
 		CursorPortraitYellowSelected,
 		CursorPortraitGreenVest,
@@ -95,6 +105,9 @@ public:
 	void show(bool visible);
 	bool setStyle(CursorStyle style);
 	CursorStyle getStyle();
+
+	// TODO: Add function to draw a cursor to a surface, as they are also used for the inventory (top-right of the screen)
+	//void draw(Surface* surface, int x, int y, CursorStyle style);
 
 private:
 	ResourceManager *_resource;
