@@ -23,16 +23,27 @@
  *
  */
 
-#include "lastexpress/saveload.h"
+#ifndef LASTEXPRESS_SAVELOAD_H
+#define LASTEXPRESS_SAVELOAD_H
+
+#include "common/savefile.h"
+#include "engines/game.h"
 
 namespace LastExpress {
 
-// Names of savegames
-//const Common::String eggBlue("BLUE.EGG");
-//const Common::String eggRed("RED.EGG");
-//const Common::String eggGreen("GREEN.EGG");
-//const Common::String eggPurple("PURPLE.EGG");
-//const Common::String eggTeal("TEAL.EGG");
-//const Common::String eggGold("GOLD.EGG");
+class SaveLoad {
+public:
+	// Savegame
+	enum SavegameId {
+		SavegameBlue,
+		SavegameRed,
+		SavegameGreen,
+		SavegamePurple,
+		SavegameTeal,
+		SavegameGold
+	};
+};
 
 } // End of namespace LastExpress
+
+#endif // LASTEXPRESS_SAVELOAD_H
