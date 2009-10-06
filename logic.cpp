@@ -26,25 +26,26 @@
 #include "lastexpress/logic.h"
 #include "lastexpress/background.h"
 #include "lastexpress/animation.h"
+#include "lastexpress/sequence.h"
+
+#include "graphics/cursorman.h"
 
 namespace LastExpress {
 
 Logic::Logic(LastExpressEngine *engine) : _engine(engine) {
-
-	_hasStartedGame = false;
-	_hasShownIntro = false;
-	_hasShownStartScreen = false;
+	_runState = new RunState;
 }
 
 Logic::~Logic() {
+	SAFE_DELETE(_runState);
 }
 
 // .text:00448590
 void Logic::showMainMenu() {
 
-	// FIXME Check savegames to see if a game has been started
-	if (!_hasStartedGame) {
-		if (!_hasShownIntro) {
+	// If no blue savegame exists, this might be the first time we start the game, so we show the full intro
+	if (!SaveLoad::isSavegameValid(SaveLoad::SavegameBlue)) {
+		if (!_runState->hasShownIntro) {
 			Animation animation(_engine->_resource);
 
 			// Show Broderbrund logo
@@ -58,24 +59,85 @@ void Logic::showMainMenu() {
 			if (animation.load("1931.nis"))
 				animation.show();
 
-			_hasShownIntro = true;
+			_runState->hasShownIntro = true;
 		}
 	} else {
-		if (!_hasShownStartScreen) {
+		if (!_runState->hasShownStartScreen) {
 			_engine->_music->load("mus018.snd");
 
-			// FIXME load data from scene! (DAT files?)
+			// FIXME load data from scene: sceneIndex = 65
+			
 			// Show Start screen
 			Background background(_engine->_resource);
 			if (background.load("autoplay.bg"))
 				background.show();
 
-			_hasShownStartScreen = true;
+			_runState->hasShownStartScreen = true;
 		}
 	}
 
-	// Do something with Timer sound
-	// Adjust mouse pointer
+	// Set Cursor type
+	_engine->_cursor->setStyle(Cursor::CursorNormal);
+	_engine->_cursor->show(true);
+
+	// TODO: Load sequences for buttons & help text
+	//buttns.seq
+	//helpnewr.seq
+
+	
+
+	// TODO Load Main menu scene (sceneIndex = 5 * savegame id (+ 1/2)) - see text:00449d80
 }
+
+
+
+
+//////////////////////////////////////////////////////////////////////////
+// Helper functions
+//////////////////////////////////////////////////////////////////////////
+
+// Get the sequence to use for the acorn highlight, depending of the currently loaded savegame
+Sequence* Logic::getAcornHighlight(SaveLoad::SavegameId id) {
+	
+	// end of text:00449d80 (also sets up the main menu scene)
+
+	// TODO replace with string array and access by index?
+	Common::String name = "";
+	switch (id) {
+	case SaveLoad::SavegameBlue:
+		name = "aconblue3.seq";
+		break;
+
+	case SaveLoad::SavegameRed:
+		name = "aconred.seq";
+		break;
+
+	case SaveLoad::SavegameGreen:
+		name = "acongren.seq";
+		break;
+
+	case SaveLoad::SavegamePurple:
+		name = "aconpurp.seq";
+		break;
+
+	case SaveLoad::SavegameTeal:
+		name = "aconteal.seq";
+		break;
+
+	case SaveLoad::SavegameGold:
+		name = "acongold.seq";
+		break;
+	}
+
+	Sequence *highlight = new Sequence(_engine->_resource);
+
+	if (!highlight->load(name)) {
+		delete highlight;
+		return NULL;
+	}
+
+	return highlight;
+}
+
 
 } // End of namespace LastExpress

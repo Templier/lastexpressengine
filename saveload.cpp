@@ -23,16 +23,163 @@
  *
  */
 
+#include "lastexpress/lastexpress.h"
 #include "lastexpress/saveload.h"
+
+#include "common/file.h"
+#include "common/system.h"
 
 namespace LastExpress {
 
+// Savegame signature
+const uint32 savegameSignature = 0x12001200;
+
 // Names of savegames
-//const Common::String eggBlue("BLUE.EGG");
-//const Common::String eggRed("RED.EGG");
-//const Common::String eggGreen("GREEN.EGG");
-//const Common::String eggPurple("PURPLE.EGG");
-//const Common::String eggTeal("TEAL.EGG");
-//const Common::String eggGold("GOLD.EGG");
+const Common::String eggBlue("BLUE.EGG");
+const Common::String eggRed("RED.EGG");
+const Common::String eggGreen("GREEN.EGG");
+const Common::String eggPurple("PURPLE.EGG");
+const Common::String eggTeal("TEAL.EGG");
+const Common::String eggGold("GOLD.EGG");
+
+
+
+// Check if a specific savegame exists
+bool SaveLoad::isSavegamePresent(SavegameId id) {
+	if (!Common::File::exists(getSavegameName(id)))
+		return false;
+
+	return true;
+}
+
+// Check if the game has been started in the specific savegame
+bool SaveLoad::isSavegameValid(SavegameId id) {
+	if (!isSavegamePresent(id)) {
+		debugC(2, kLastExpressDebugSavegame, "SaveLoad::isSavegameValid - Savegame does not exist: %s", getSavegameName(id).c_str());
+		return false;
+	}
+
+	// Read first 32 bytes of savegame
+	Common::InSaveFile *save = openForLoading(id);
+	if (!save) {
+		debugC(2, kLastExpressDebugSavegame, "SaveLoad::isSavegameValid - Cannot open savegame for reading: %s", getSavegameName(id).c_str());
+		return false;
+	}
+
+	// Check there is enough data
+	if (save->size() < 32) {
+		debugC(2, kLastExpressDebugSavegame, "SaveLoad::isSavegameValid - Savegame seems to be corrupted (not enough data): %s", getSavegameName(id).c_str());
+		return false;
+	}
+
+	bool isOk = false;
+
+	if (save->readUint32LE() != savegameSignature)
+		goto EXIT;
+
+	if (save->readUint32LE() < 0)
+		goto EXIT;
+
+	if (save->readUint32LE() < 0x20)
+		goto EXIT;
+
+	if (save->readUint32LE() < 0x20)
+		goto EXIT;
+
+	if (save->readUint32LE() != 1)
+		goto EXIT;
+
+	uint32 luminosity = save->readUint32LE();
+	if  (luminosity < 0 || luminosity > 6)
+		goto EXIT;
+
+	uint32 volume = save->readUint32LE();
+	if  (volume < 0 || volume > 7)
+		goto EXIT;
+
+	if (save->readUint32LE() != 9)
+		goto EXIT;
+
+	isOk = true;
+
+EXIT:
+	delete save;
+	return isOk;
+}
+
+bool SaveLoad::initSavegame(SavegameId id) {
+	assert(!isSavegamePresent(id));
+
+	Common::OutSaveFile *save = openForSaving(id);
+	if (!save) {
+		debugC(2, kLastExpressDebugSavegame, "SaveLoad::initSavegame - Cannot open savegame for writing: %s", getSavegameName(id).c_str());
+		return false;
+	}
+
+	// Write default values to savegame
+	save->writeUint32LE(savegameSignature);
+	save->writeUint32LE(0);
+	save->writeUint32LE(0x20);
+	save->writeUint32LE(0x20);
+	save->writeUint32LE(0x0);
+	save->writeUint32LE(_defaultLuminosity);
+	save->writeUint32LE(_defaultVolume);
+	save->writeUint32LE(0x9);
+
+	delete save;
+
+	return true;
+}
+
+// Read savegame information
+SaveLoad::GameState* SaveLoad::getGameState(SavegameId id) {
+	// TODO: read info from savegame
+	return new GameState;
+}
+
+//////////////////////////////////////////////////////////////////////////
+// Private methods
+//////////////////////////////////////////////////////////////////////////
+
+// Get the file name from the savegame ID
+Common::String SaveLoad::getSavegameName(SavegameId id) {
+	assert(id >=0 && id < 6);
+
+	switch (id) {
+	case SavegameBlue:
+		return eggBlue;
+
+	case SavegameRed:
+		return eggRed;
+
+	case SavegameGreen:
+		return eggGreen;
+
+	case SavegamePurple:
+		return eggPurple;
+
+	case SavegameTeal:
+		return eggTeal;
+
+	case SavegameGold:
+		return eggGold;
+
+	default:
+		return "";
+	}
+
+	// should never happen!
+	return "";
+}
+
+Common::InSaveFile *SaveLoad::openForLoading(SavegameId id) {
+	Common::String savename = getSavegameName(id);
+	return g_system->getSavefileManager()->openForLoading(savename);
+}
+
+Common::OutSaveFile *SaveLoad::openForSaving(SavegameId id) {
+	Common::String savename = getSavegameName(id);
+	return g_system->getSavefileManager()->openForSaving(savename);
+}
 
 } // End of namespace LastExpress

@@ -185,6 +185,7 @@ Common::Error LastExpressEngine::go() {
 
 				// Play intro
 				if (ev.kbd.keycode == Common::KEYCODE_RETURN || ev.kbd.keycode == Common::KEYCODE_KP_ENTER) {
+					_cursor->show(false);
 					_logic->showMainMenu();
 				}
 

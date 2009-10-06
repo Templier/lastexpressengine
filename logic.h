@@ -31,6 +31,8 @@
 
 namespace LastExpress {
 
+class Sequence;
+
 class Logic {
 public:
 	Logic(LastExpressEngine *engine);
@@ -44,16 +46,26 @@ private:
 	LastExpressEngine *_engine;
 
 	// State
-	bool _hasStartedGame;
-	bool _hasShownIntro;
-	bool _hasShownStartScreen;
+	struct RunState {
+		bool hasShownIntro;
+		bool hasShownStartScreen;
 
+		RunState() {
+			hasShownIntro = false;
+			hasShownStartScreen = false;
+		}
+	};
 
-	// Savegames
+	RunState *_runState;	//<! State of the game session (this data won't be saved to savegames)
+
+	// Savegames	
 	SaveLoad::SavegameId _savegameId;
+	SaveLoad::GameState _gameState;
+
+
+	// Helper functions
+	Sequence* getAcornHighlight(SaveLoad::SavegameId id);
 	
-
-
 };
 
 } // End of namespace LastExpress

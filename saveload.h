@@ -26,6 +26,21 @@
 #ifndef LASTEXPRESS_SAVELOAD_H
 #define LASTEXPRESS_SAVELOAD_H
 
+/*
+	Savegame format
+
+	uint32 {4}    - signature: 0x12001200
+	uint32 {4}    - ?? needs to be >= 0
+	uint32 {4}    - ?? needs to be >= 0x20
+	uint32 {4}    - ?? needs to be >= 0x20
+	uint32 {4}    - ?? needs to be = 1
+	uint32 {4}    - Luminosity (needs to be [0-6])
+	uint32 {4}    - Volume (needs to be [0-7])
+	uint32 {4}    - ?? needs to be = 9
+
+*/
+
+
 #include "common/savefile.h"
 #include "engines/game.h"
 
@@ -42,6 +57,37 @@ public:
 		SavegameTeal,
 		SavegameGold
 	};
+
+	struct GameState {
+		// Header
+		uint32 luminosity;
+		uint32 volume;
+
+		GameState() {
+			luminosity = _defaultLuminosity;
+			volume = _defaultVolume;
+		}
+	};
+
+	// Init & Access
+	static bool initSavegame(SavegameId id);
+	static GameState* getGameState(SavegameId id);
+	
+
+	// Getting information
+	static bool isSavegamePresent(SavegameId id);
+	static bool isSavegameValid(SavegameId id);
+
+private:
+	static const uint32 _defaultLuminosity = 0x3;
+	static const uint32 _defaultVolume = 0x7;
+
+
+	static Common::String getSavegameName(SavegameId id);
+
+	// Opening save files
+	static Common::InSaveFile *openForLoading(SavegameId id);
+	static Common::OutSaveFile *openForSaving(SavegameId id);
 };
 
 } // End of namespace LastExpress
