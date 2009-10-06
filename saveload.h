@@ -29,14 +29,58 @@
 /*
 	Savegame format
 
-	uint32 {4}    - signature: 0x12001200
-	uint32 {4}    - ?? needs to be >= 0
-	uint32 {4}    - ?? needs to be >= 0x20
-	uint32 {4}    - ?? needs to be >= 0x20
-	uint32 {4}    - ?? needs to be = 1
-	uint32 {4}    - Luminosity (needs to be [0-6])
-	uint32 {4}    - Volume (needs to be [0-7])
-	uint32 {4}    - ?? needs to be = 9
+	header:
+		uint32 {4}      - signature: 0x12001200
+		uint32 {4}      - ?? needs to be >= 0
+		uint32 {4}      - ?? needs to be >= 0x20
+		uint32 {4}      - ?? needs to be >= 0x20
+		uint32 {4}      - ?? needs to be = 1
+		uint32 {4}      - Luminosity (needs to be [0-6])
+		uint32 {4}      - Volume (needs to be [0-7])
+		uint32 {4}      - ?? needs to be = 9
+
+	data:
+		uint32 {4}      - ??
+		uint32 {4}      - ??
+		uint32 {4}      - ??
+		uint32 {4}      - ??
+		uint32 {4}      - Scene Index
+		byte {1}        - ??
+		uint32 {4}      - Scene Index (copy?)
+		uint32 {4}      - ??
+		uint32 {4*1000} - ??
+		uint32 {4*16}   - ??
+		uint32 {4*16}   - ??
+		uint32 {4*128}  - ??
+		byte {512}      - ??
+		byte {7*32}     - ??
+		byte {5*128}    - ??
+		byte {1262*40}  - Game state (not sure what's in the struct yet)
+		uint32 {4}      - ??
+		uint32 {4}      - ??
+
+		uint32 {4}      - Number of sound cache entries?
+		(for each sound cache entry)  - total = byte {68} 
+			uint32 {4}      - ??
+			uint32 {4}      - ??
+			uint32 {4}      - ??
+			uint32 {4}      - ??
+			uint32 {4}      - ??
+			uint32 {4}      - ??
+			uint32 {4}      - ??
+			uint32 {4}      - ??
+			uint32 {4}      - ??
+			char {16}       - ??
+			char {16}       - ??
+
+		byte {16*128}   - ??
+		uint32 {4}      - Number of save points
+		(for each save point)
+			byte {16}   - ?? (maybe save point header?)
+
+		... more unknown stuff
+
+
 
 */
 
