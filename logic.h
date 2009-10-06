@@ -34,16 +34,82 @@ namespace LastExpress {
 class Sequence;
 
 class Logic {
-public:
-	Logic(LastExpressEngine *engine);
-	~Logic();
-
-	void showMainMenu();
-
-	// TODO inventory (needs gamestate & new Cursor function)
-
 private:
-	LastExpressEngine *_engine;
+	// Start menu events
+	enum StartMenuEvent {
+		kCase1 = 1,
+		kCredits = 2,
+		kQuit = 3,
+		kCase4 = 4,
+		kSwitchSaveGame = 6,
+		kRewind = 7,
+		kFastForward = 8,
+		kParis = 10,
+		kStrastBourg = 11,
+		kMunich = 12,
+		kVienna = 13,
+		kBudapest = 14,
+		kBelgrade = 15,
+		kEnding = 16,
+		kVolumeDown = 17,
+		kVolumeUp = 18,
+		kBrightnessDown = 19,
+		kBrightnessUp = 20
+	};
+
+	// Tooltips sequence (helpnewr.seq)
+	enum StartMenuTooltips {
+		kInsertCd1,
+		kInsertCd2,
+		kIsertCd3,
+		kContinueGame,
+		kReplayGame,
+		kPlayRewoundGame,
+		kViewGameEnding,
+		kStartAnotherGame,
+		kVolumeUp,
+		kVolumeDown,
+		kBrightnessUp,
+		kBrightnessDown,
+		kQuit,
+		kRewindParis,
+		kFastForwardStrasbourg,
+		kRewindStrasbourg,
+		kRewindMunich,
+		kFastForwardMunich,		
+		kFastForwardVienna,
+		kRewindVienna,
+		kRewindBudapest,
+		kFastForwardBudapest,
+		kFastForwardBelgrade,
+		kRewindBelgrade,
+		kFastForwardEnding,
+		kSwitchBlueGame,
+		kSwitchRedGame,
+		kSwitchGoldGame,
+		kSwitchGreenGame,
+		kSwitchTealGame,
+		kSwitchPurpleGame,
+		kPlayNewGame,
+		kCredits,
+		kFastForward,
+		kRewind
+	};
+
+	enum StartMenuButtons {
+		kVolumeDownPushed,
+		kVolumeDown,
+		kVolume,
+		kVolumeUp,
+		kVolumeUpPushed,
+		kBrightnessDownPushed,
+		kBrightnessDown,
+		kBrightness,
+		kBrightnessUp,
+		kBrightnessUpPushed,
+		kQuit,
+		kQuitPushed
+	};
 
 	// State
 	struct RunState {
@@ -56,16 +122,28 @@ private:
 		}
 	};
 
-	RunState *_runState;	//<! State of the game session (this data won't be saved to savegames)
+
+public:
+	Logic(LastExpressEngine *engine);
+	~Logic();
+
+	void showMainMenu();
+	
+
+	// TODO inventory (needs gamestate & new Cursor function)
+
+private:
+	LastExpressEngine *_engine;
+
+	RunState *_runState;	//<! State of the game session (this data won't be stored in savegames)
 
 	// Savegames	
 	SaveLoad::SavegameId _savegameId;
 	SaveLoad::GameState _gameState;
 
-
 	// Helper functions
 	Sequence* getAcornHighlight(SaveLoad::SavegameId id);
-	
+	bool HandleStartMenuEvent(StartMenuEvent event, byte clickStatus);
 };
 
 } // End of namespace LastExpress

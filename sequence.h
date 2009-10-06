@@ -126,6 +126,8 @@ public:
 	// TODO add getter for frame info (when we know what all the unknown entries are for)
 	//FrameInfo *getFrameInfo(uint32 index);
 
+	// TODO add option to cache decoded frames (for the start menu for example, we don't want to decode again on buttons mouseover)
+
 private:
 	static const uint32 _sequenceHeaderSize = 8;
 	static const uint32 _sequenceFrameSize = 68;

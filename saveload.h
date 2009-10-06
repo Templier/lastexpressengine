@@ -44,9 +44,9 @@
 		uint32 {4}      - ??
 		uint32 {4}      - ??
 		uint32 {4}      - ??
-		uint32 {4}      - Scene Index
+		uint32 {4}      - Scene Index				max: 2600
 		byte {1}        - ??
-		uint32 {4}      - Scene Index (copy?)
+		uint32 {4}      - Scene Index (copy?)		max: 2600
 		uint32 {4}      - ??
 		uint32 {4*1000} - ??
 		uint32 {4*16}   - ??

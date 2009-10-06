@@ -27,6 +27,7 @@
 #include "lastexpress/background.h"
 #include "lastexpress/animation.h"
 #include "lastexpress/sequence.h"
+#include "lastexpress/scene.h"
 
 #include "graphics/cursorman.h"
 
@@ -42,6 +43,9 @@ Logic::~Logic() {
 
 // .text:00448590
 void Logic::showMainMenu() {
+
+	//Scene scene(_engine->_resource);
+	//scene.load(1);
 
 	// If no blue savegame exists, this might be the first time we start the game, so we show the full intro
 	if (!SaveLoad::isSavegameValid(SaveLoad::SavegameBlue)) {
@@ -89,7 +93,10 @@ void Logic::showMainMenu() {
 	// TODO Load Main menu scene (sceneIndex = 5 * savegame id (+ 1/2)) - see text:00449d80
 }
 
-
+// text:00448b30
+bool Logic::HandleStartMenuEvent(StartMenuEvent event, byte clickStatus) {
+	return false;
+}
 
 
 //////////////////////////////////////////////////////////////////////////
