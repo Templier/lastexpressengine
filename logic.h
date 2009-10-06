@@ -38,12 +38,12 @@ private:
 	// Start menu events
 	enum StartMenuEvent {
 		kCase1 = 1,
-		kCredits = 2,
-		kQuit = 3,
+		kShowCredits = 2,
+		kQuitGame = 3,
 		kCase4 = 4,
 		kSwitchSaveGame = 6,
-		kRewind = 7,
-		kFastForward = 8,
+		kRewindGame = 7,
+		kFastForwardGame = 8,
 		kParis = 10,
 		kStrastBourg = 11,
 		kMunich = 12,
@@ -51,10 +51,10 @@ private:
 		kBudapest = 14,
 		kBelgrade = 15,
 		kEnding = 16,
-		kVolumeDown = 17,
-		kVolumeUp = 18,
-		kBrightnessDown = 19,
-		kBrightnessUp = 20
+		kIncreaseVolume = 17,
+		kDecreaseVolume = 18,
+		kDecreaseBrightness = 19,
+		kIncreaseBrightness = 20
 	};
 
 	// Tooltips sequence (helpnewr.seq)
@@ -97,18 +97,18 @@ private:
 	};
 
 	enum StartMenuButtons {
-		kVolumeDownPushed,
-		kVolumeDown,
-		kVolume,
-		kVolumeUp,
-		kVolumeUpPushed,
-		kBrightnessDownPushed,
-		kBrightnessDown,
-		kBrightness,
-		kBrightnessUp,
-		kBrightnessUpPushed,
-		kQuit,
-		kQuitPushed
+		kButtonVolumeDownPushed,
+		kButtonVolumeDown,
+		kButtonVolume,
+		kButtonVolumeUp,
+		kButtonVolumeUpPushed,
+		kButtonBrightnessDownPushed,
+		kButtonBrightnessDown,
+		kButtonBrightness,
+		kButtonBrightnessUp,
+		kButtonBrightnessUpPushed,
+		kButtonQuit,
+		kButtonQuitPushed
 	};
 
 	// State
