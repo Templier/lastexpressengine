@@ -29,6 +29,7 @@
 #include "lastexpress/sound.h"
 
 #include "common/system.h"
+#include "common/events.h"
 
 // Based on Deniz Oezmen's code: http://oezmen.eu/
 
@@ -122,7 +123,7 @@ bool Animation::show() {
 		case kChunkTypeUnknown4:
 			debugC(9, kLastExpressDebugGraphics, "  info block 4: %d blocks", c->size);
 			assert (c->tag == 0 && c->size == 0);
-			//TODO unkown type of chunk
+			//TODO unknown type of chunk
 			break;
 
 		case kChunkTypeBackgroundFrameA:
@@ -149,15 +150,29 @@ bool Animation::show() {
 			_backgroundCurrent = 2;
 			break;
 
-		case kChunkTypeOverlayFrame:
+		case kChunkTypeOverlayFrame: {
 			debugC(9, kLastExpressDebugGraphics, "  frame #%.4d (overlay, %d bytes, tag %d)", frameNumber, c->size, c->tag);
 			processOverlayFrame(_stream, c);
 			frameNumber++;
 
+			// Handle right-click to interrupt animations			
+			Common::Event ev;
+			g_engine->getEventManager()->pollEvent(ev);
+			if (ev.type == Common::EVENT_RBUTTONDOWN) {
+				// Stop audio
+				_audio->finish();
+
+				// TODO start LNK file sound
+
+				return true;
+			}
+
 			//FIXME: implement proper syncing + subtitles
-			//TODO: we need to be able to interrupt an animation when the user pressed ESC
 			g_engine->_system->delayMillis(50);
+
 			break;
+		}
+			
 
 		case kChunkTypeUnknown15:
 		case kChunkTypeUnknown16:
@@ -186,10 +201,6 @@ bool Animation::show() {
 
 		}
 	}
-
-	//FIXME: since animations are not yet synced, we wait until we are done reading from the stream
-	while (!_audio->endOfSound())
-		g_engine->_system->delayMillis(50);
 
 	return true;
 }

@@ -116,10 +116,6 @@ AppendableSound::~AppendableSound() {
 	finish();
 }
 
-bool AppendableSound::endOfSound() {
-	return _as->endOfData();
-}
-
 void AppendableSound::queueBuffer(byte *data, uint32 size) {
 	Common::MemoryReadStream *buffer = new Common::MemoryReadStream(data, size);
 	queueBuffer(buffer);
