@@ -45,6 +45,7 @@ private:
 	LastExpressEngine *_engine;
 
 	bool cmd_playseq(int argc, const char **argv);
+	bool cmd_showframe(int argc, const char **argv);
 	bool cmd_playsnd(int argc, const char **argv);
 	bool cmd_playsbe(int argc, const char **argv);
 	bool cmd_playnis(int argc, const char **argv);
@@ -53,6 +54,7 @@ private:
 
 	void resetCommand();
 	void copyCommand(int argc, const char **argv);
+	int getNumber(const char *arg);
 
 	Debuglet *command;
 	int num_params;

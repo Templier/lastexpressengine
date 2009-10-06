@@ -41,6 +41,7 @@ Debugger::Debugger(LastExpressEngine *engine) : _engine(engine) {
 
 	// Register the debugger commands
 	DCmd_Register("playseq",   WRAP_METHOD(Debugger, cmd_playseq));
+	DCmd_Register("showframe", WRAP_METHOD(Debugger, cmd_showframe));
 	DCmd_Register("playsnd",   WRAP_METHOD(Debugger, cmd_playsnd));
 	DCmd_Register("playsbe",   WRAP_METHOD(Debugger, cmd_playsbe));
 	DCmd_Register("playnis",   WRAP_METHOD(Debugger, cmd_playnis));
@@ -62,6 +63,10 @@ void Debugger::resetCommand() {
 	command = NULL;
 	command_params = NULL;
 	num_params = 0;
+}
+
+int Debugger::getNumber(const char *arg) {
+	return strtol(arg, (char **)NULL, 0);
 }
 
 void Debugger::copyCommand(int argc, const char **argv) {
@@ -112,6 +117,41 @@ bool Debugger::cmd_playseq(int argc, const char **argv) {
 	return true;
 }
 
+bool Debugger::cmd_showframe(int argc, const char **argv) {
+	if (argc == 3) {
+		Common::String filename(const_cast<char*>(argv[1]));
+
+		if (!_engine->_resource->hasFile(filename)) {
+			DebugPrintf("Cannot find file: %s\n", filename.c_str());
+			return true;
+		}
+
+		// Store command
+		if (!hasCommand()) {
+			command = WRAP_METHOD(Debugger, cmd_showframe);
+			copyCommand(argc, argv);
+
+			return false;
+		} else {
+			Sequence sequence(_engine->_resource);
+			if (sequence.load(filename)) {
+				if (!sequence.show(getNumber(argv[2]))) {
+					DebugPrintf("Invalid frame index: %i\n", filename.c_str());
+					resetCommand();
+					return true;
+				}
+
+				_engine->_system->delayMillis(1000);
+			}
+
+			resetCommand();
+		}
+	} else {
+		DebugPrintf("Syntax: cmd_showframe <seqname> <index>\n");
+	}
+	return true;
+}
+
 bool Debugger::cmd_playsnd(int argc, const char **argv) {
 	if (argc == 2) {
 		Common::String filename(const_cast<char*>(argv[1]));
@@ -131,7 +171,7 @@ bool Debugger::cmd_playsnd(int argc, const char **argv) {
 }
 
 bool Debugger::cmd_playsbe(int argc, const char **argv) {
-	if (argc == 3) {
+	if (argc == 2) {
 		Common::String filename(const_cast<char*>(argv[1]));
 
 		if (!_engine->_resource->hasFile(filename)) {
@@ -159,7 +199,7 @@ bool Debugger::cmd_playsbe(int argc, const char **argv) {
 		}
 
 	} else {
-		DebugPrintf("Syntax: playsbe <sbename> <time>\n");
+		DebugPrintf("Syntax: playsbe <sbename>\n");
 	}
 	return true;
 }
@@ -202,9 +242,24 @@ bool Debugger::cmd_showbg(int argc, const char **argv) {
 			return true;
 		}
 
-		Background background(_engine->_resource);
-		if (background.load(filename))
-			background.show();
+		// Store command
+		if (!hasCommand()) {
+			command = WRAP_METHOD(Debugger, cmd_showbg);
+			copyCommand(argc, argv);
+
+			return false;
+		} else {
+			Background background(_engine->_resource);
+			if (background.load(filename))
+				background.show();
+
+			// Pause for a second to be able to see the background
+			_engine->_system->delayMillis(1000);
+
+			resetCommand();
+		}
+
+		
 	} else {
 		DebugPrintf("Syntax: showbg <bgname>\n");
 	}
