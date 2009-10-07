@@ -31,119 +31,48 @@
 
 namespace LastExpress {
 
-class Sequence;
+class Menu;
 
 class Logic {
-private:
-	// Start menu events
-	enum StartMenuEvent {
-		kCase1 = 1,
-		kShowCredits = 2,
-		kQuitGame = 3,
-		kCase4 = 4,
-		kSwitchSaveGame = 6,
-		kRewindGame = 7,
-		kFastForwardGame = 8,
-		kParis = 10,
-		kStrastBourg = 11,
-		kMunich = 12,
-		kVienna = 13,
-		kBudapest = 14,
-		kBelgrade = 15,
-		kEnding = 16,
-		kIncreaseVolume = 17,
-		kDecreaseVolume = 18,
-		kDecreaseBrightness = 19,
-		kIncreaseBrightness = 20
-	};
-
-	// Tooltips sequence (helpnewr.seq)
-	enum StartMenuTooltips {
-		kInsertCd1,
-		kInsertCd2,
-		kIsertCd3,
-		kContinueGame,
-		kReplayGame,
-		kPlayRewoundGame,
-		kViewGameEnding,
-		kStartAnotherGame,
-		kVolumeUp,
-		kVolumeDown,
-		kBrightnessUp,
-		kBrightnessDown,
-		kQuit,
-		kRewindParis,
-		kFastForwardStrasbourg,
-		kRewindStrasbourg,
-		kRewindMunich,
-		kFastForwardMunich,		
-		kFastForwardVienna,
-		kRewindVienna,
-		kRewindBudapest,
-		kFastForwardBudapest,
-		kFastForwardBelgrade,
-		kRewindBelgrade,
-		kFastForwardEnding,
-		kSwitchBlueGame,
-		kSwitchRedGame,
-		kSwitchGoldGame,
-		kSwitchGreenGame,
-		kSwitchTealGame,
-		kSwitchPurpleGame,
-		kPlayNewGame,
-		kCredits,
-		kFastForward,
-		kRewind
-	};
-
-	enum StartMenuButtons {
-		kButtonVolumeDownPushed,
-		kButtonVolumeDown,
-		kButtonVolume,
-		kButtonVolumeUp,
-		kButtonVolumeUpPushed,
-		kButtonBrightnessDownPushed,
-		kButtonBrightnessDown,
-		kButtonBrightness,
-		kButtonBrightnessUp,
-		kButtonBrightnessUpPushed,
-		kButtonQuit,
-		kButtonQuitPushed
-	};
-
-	// State
-	struct RunState {
-		bool hasShownIntro;
-		bool hasShownStartScreen;
-
-		RunState() {
-			hasShownIntro = false;
-			hasShownStartScreen = false;
-		}
-	};
-
-
 public:
 	Logic(LastExpressEngine *engine);
 	~Logic();
 
-	void showMainMenu();
-	
+	void showMenu();
+	void handleMouseEvent(int16 x, int16 y, bool clicked);
 
 	// TODO inventory (needs gamestate & new Cursor function)
 
+	void switchSavegameId();
+
+	// Accessors
+	SaveLoad::SavegameId getSavegameId() { return _runState.savegameId; }
+	SaveLoad::GameState* getGameState() { return _gameState; }
+
 private:
+	// Scenes
+	enum Scene {
+		kSceneMenu
+	};
+
+	// State
+	struct RunState {
+		int currentScene;
+		SaveLoad::SavegameId savegameId;
+
+		RunState() {
+			currentScene = 0;
+			savegameId = SaveLoad::kSavegameBlue;
+		}
+	};
+
 	LastExpressEngine *_engine;
 
-	RunState *_runState;	//<! State of the game session (this data won't be stored in savegames)
+	RunState _runState;		//<! State of the game session (this data won't be stored in savegames)
+	Menu *_menu;			//<! Main menu handling
 
-	// Savegames	
-	SaveLoad::SavegameId _savegameId;
-	SaveLoad::GameState _gameState;
-
-	// Helper functions
-	Sequence* getAcornHighlight(SaveLoad::SavegameId id);
-	bool HandleStartMenuEvent(StartMenuEvent event, byte clickStatus);
+	// Move to engine?
+	SaveLoad::GameState *_gameState;
 };
 
 } // End of namespace LastExpress

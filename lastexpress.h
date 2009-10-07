@@ -27,23 +27,27 @@
 #define LASTEXPRESS_H
 
 #include "common/system.h"
+#include "graphics/surface.h"
 #include "engines/advancedDetector.h"
 #include "engines/engine.h"
-#include "graphics/surface.h"
 
 #include "lastexpress/debug.h"
-#include "lastexpress/resource.h"
 #include "lastexpress/cursor.h"
 #include "lastexpress/font.h"
+#include "lastexpress/resource.h"
 #include "lastexpress/sound.h"
-#include "lastexpress/logic.h"
 
 #define SAFE_DELETE(_p)			{ if(_p) { delete _p;		_p=NULL; } }
 #define SAFE_DELETE_ARRAY(_p)	{ if(_p) { delete [] _p;	_p=NULL; } }
 
 namespace LastExpress {
 
+//class Cursor;
+//class Debugger;
+//class Font;
 class Logic;
+//class ResourceManager;
+//class StreamedSound;
 
 enum {
 	kLastExpressDebugAll = 1 << 0,
@@ -59,39 +63,43 @@ enum {
 };
 
 class LastExpressEngine : public Engine {
+
+protected:
+	// Engine APIs
+	Common::Error run();
+	virtual void errorString(const char *buf_input, char *buf_output, int buf_output_size);
+	virtual bool hasFeature(EngineFeature f) const;
+	virtual Debugger *getDebugger() { return _debugger; }
+
 public:
 	LastExpressEngine(OSystem *syst, const ADGameDescription *gd);
 	~LastExpressEngine();
 
-protected:
-
-	// Engine APIs
-	Common::Error run();
-	virtual void errorString(const char *buf_input, char *buf_output, int buf_output_size);
-
-	virtual bool hasFeature(EngineFeature f) const;
-
-	virtual Debugger *getDebugger() { return _debugger; }
-
-public:
-	Graphics::PixelFormat _pixelFormat;
-
-	ResourceManager *_resource;
-	Cursor *_cursor;
-	Font *_font;
-	StreamedSound *_sfx;
-	StreamedSound *_music;
-
-	uint32 getFlags() const;
+	uint32 getFlags() const { return _gameDescription->flags; }
 
 private:
 	const ADGameDescription *_gameDescription;
+	Graphics::PixelFormat _pixelFormat;
 
+	Cursor *_cursor;
 	Debugger *_debugger;
+	Font *_font;
 	Logic *_logic;
+	ResourceManager *_resource;
+	StreamedSound *_music;
+	StreamedSound *_sfx;
 
 	Common::Error init();
 	Common::Error go();
+
+public:
+	// Accessors
+	Cursor *getCursor() const { return _cursor; }
+	Font *getFont() const { return _font; }
+	Logic *getLogic() const { return _logic; }
+	ResourceManager *getResource() const { return _resource; }
+	StreamedSound *getMusicStream() const { return _music; }
+	StreamedSound *getSfxStream() const { return _sfx; }
 };
 
 } // End of namespace LastExpress

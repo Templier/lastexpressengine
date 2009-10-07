@@ -32,6 +32,7 @@
 #include "lastexpress/subtitle.h"
 #include "lastexpress/animation.h"
 #include "lastexpress/sequence.h"
+#include "lastexpress/logic.h"
 
 namespace LastExpress {
 
@@ -184,9 +185,8 @@ Common::Error LastExpressEngine::go() {
 						style--;
 
 				// Play intro
-				if (ev.kbd.keycode == Common::KEYCODE_RETURN || ev.kbd.keycode == Common::KEYCODE_KP_ENTER) {
-					_cursor->show(false);
-					_logic->showMainMenu();
+				if (ev.kbd.keycode == Common::KEYCODE_RETURN || ev.kbd.keycode == Common::KEYCODE_KP_ENTER) {					
+					_logic->showMenu();
 				}
 
 #ifdef LOAD_RESOURCES_LIST
@@ -253,9 +253,8 @@ Common::Error LastExpressEngine::go() {
 				// Closing the GMM
 
 			case Common::EVENT_MOUSEMOVE:
-				break;
-
 			case Common::EVENT_LBUTTONDOWN:
+				_logic->handleMouseEvent(ev.mouse.x, ev.mouse.y, ev.type == Common::EVENT_LBUTTONDOWN);
 				break;
 
 			case Common::EVENT_RBUTTONDOWN:
@@ -289,10 +288,6 @@ bool LastExpressEngine::hasFeature(EngineFeature f) const {
 
 void LastExpressEngine::errorString(const char *buf_input, char *buf_output, int buf_output_size) {
 	snprintf(buf_output, buf_output_size, "%s", buf_input);
-}
-
-uint32 LastExpressEngine::getFlags() const {
-	return _gameDescription->flags;
 }
 
 } // End of namespace LastExpress

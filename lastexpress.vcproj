@@ -198,6 +198,26 @@
 				>
 			</File>
 		</Filter>
+		<Filter
+			Name="game"
+			>
+			<File
+				RelativePath="..\..\engines\lastexpress\menu.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\engines\lastexpress\menu.h"
+				>
+			</File>
+		</Filter>
+		<Filter
+			Name="docs"
+			>
+			<File
+				RelativePath="..\..\engines\lastexpress\docs\TODO.txt"
+				>
+			</File>
+		</Filter>
 		<File
 			RelativePath="..\..\engines\lastexpress\debug.cpp"
 			>

@@ -148,22 +148,22 @@ Common::String SaveLoad::getSavegameName(SavegameId id) {
 	assert(id >=0 && id < 6);
 
 	switch (id) {
-	case SavegameBlue:
+	case kSavegameBlue:
 		return eggBlue;
 
-	case SavegameRed:
+	case kSavegameRed:
 		return eggRed;
 
-	case SavegameGreen:
+	case kSavegameGreen:
 		return eggGreen;
 
-	case SavegamePurple:
+	case kSavegamePurple:
 		return eggPurple;
 
-	case SavegameTeal:
+	case kSavegameTeal:
 		return eggTeal;
 
-	case SavegameGold:
+	case kSavegameGold:
 		return eggGold;
 
 	default:

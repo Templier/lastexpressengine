@@ -27,6 +27,7 @@
 #define LASTEXPRESS_SCENE_H
 
 #include "common/system.h"
+#include "lastexpress/resource.h"
 
 /*
 	Scene format (CDTRAIN.DAT)
@@ -46,6 +47,8 @@
 		byte {1}    - ?? 
 		byte {1}    - ?? 
 		byte {1}    - ?? 
+
+		probably contains cursor type too
 
 	scene index : 0 - 2500 (max)
 */

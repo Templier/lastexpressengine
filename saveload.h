@@ -94,12 +94,12 @@ class SaveLoad {
 public:
 	// Savegame
 	enum SavegameId {
-		SavegameBlue,
-		SavegameRed,
-		SavegameGreen,
-		SavegamePurple,
-		SavegameTeal,
-		SavegameGold
+		kSavegameBlue,
+		kSavegameRed,
+		kSavegameGreen,
+		kSavegamePurple,
+		kSavegameTeal,
+		kSavegameGold
 	};
 
 	struct GameState {

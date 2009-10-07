@@ -90,7 +90,7 @@ bool Debugger::cmd_playseq(int argc, const char **argv) {
 	if (argc == 2) {
 		Common::String filename(const_cast<char*>(argv[1]));
 
-		if (!_engine->_resource->hasFile(filename)) {
+		if (!_engine->getResource()->hasFile(filename)) {
 			DebugPrintf("Cannot find file: %s\n", filename.c_str());
 			return true;
 		}
@@ -102,7 +102,7 @@ bool Debugger::cmd_playseq(int argc, const char **argv) {
 
 			return false;
 		} else {
-			Sequence sequence(_engine->_resource);
+			Sequence sequence(_engine->getResource());
 			if (sequence.load(filename)) {
 				for (uint32 i = 0; i < sequence.count(); i++) {
 					sequence.show(i);
@@ -129,7 +129,7 @@ bool Debugger::cmd_showframe(int argc, const char **argv) {
 	if (argc == 3) {
 		Common::String filename(const_cast<char*>(argv[1]));
 
-		if (!_engine->_resource->hasFile(filename)) {
+		if (!_engine->getResource()->hasFile(filename)) {
 			DebugPrintf("Cannot find file: %s\n", filename.c_str());
 			return true;
 		}
@@ -141,7 +141,7 @@ bool Debugger::cmd_showframe(int argc, const char **argv) {
 
 			return false;
 		} else {
-			Sequence sequence(_engine->_resource);
+			Sequence sequence(_engine->getResource());
 			if (sequence.load(filename)) {
 				if (!sequence.show(getNumber(argv[2]))) {
 					DebugPrintf("Invalid frame index: %i\n", filename.c_str());
@@ -164,13 +164,13 @@ bool Debugger::cmd_playsnd(int argc, const char **argv) {
 	if (argc == 2) {
 		Common::String filename(const_cast<char*>(argv[1]));
 
-		if (!_engine->_resource->hasFile(filename)) {
+		if (!_engine->getResource()->hasFile(filename)) {
 			DebugPrintf("Cannot find file: %s\n", filename.c_str());
 			return true;
 		}
 
 		_engine->_system->getMixer()->stopAll();
-		_engine->_sfx->load(filename);
+		_engine->getSfxStream()->load(filename);
 
 	} else {
 		DebugPrintf("Syntax: playsnd <sndname>\n");
@@ -182,7 +182,7 @@ bool Debugger::cmd_playsbe(int argc, const char **argv) {
 	if (argc == 2) {
 		Common::String filename(const_cast<char*>(argv[1]));
 
-		if (!_engine->_resource->hasFile(filename)) {
+		if (!_engine->getResource()->hasFile(filename)) {
 			DebugPrintf("Cannot find file: %s\n", filename.c_str());
 			return true;
 		}
@@ -194,11 +194,11 @@ bool Debugger::cmd_playsbe(int argc, const char **argv) {
 
 			return false;
 		} else {
-			SubtitleManager subtitle(_engine->_resource);
+			SubtitleManager subtitle(_engine->getResource());
 			if (subtitle.load(filename)) {
 				for (uint i = 0; i < subtitle.count(); i++) {
 					_engine->_system->fillScreen(0);
-					subtitle.show(*_engine->_font, i);
+					subtitle.show(*_engine->getFont(), i);
 					_engine->_system->delayMillis(250);
 				}
 			}
@@ -216,7 +216,7 @@ bool Debugger::cmd_playnis(int argc, const char **argv) {
 	if (argc == 2) {
 		Common::String filename(const_cast<char*>(argv[1]));
 
-		if (!_engine->_resource->hasFile(filename)) {
+		if (!_engine->getResource()->hasFile(filename)) {
 			DebugPrintf("Cannot find file: %s\n", filename.c_str());
 			return true;
 		}
@@ -228,7 +228,7 @@ bool Debugger::cmd_playnis(int argc, const char **argv) {
 
 			return false;
 		} else {
-			Animation animation(_engine->_resource);
+			Animation animation(_engine->getResource());
 			if (animation.load(filename))
 				animation.show();
 
@@ -245,7 +245,7 @@ bool Debugger::cmd_showbg(int argc, const char **argv) {
 	if (argc == 2) {
 		Common::String filename(const_cast<char*>(argv[1]));
 
-		if (!_engine->_resource->hasFile(filename)) {
+		if (!_engine->getResource()->hasFile(filename)) {
 			DebugPrintf("Cannot find file: %s\n", filename.c_str());
 			return true;
 		}
@@ -257,7 +257,7 @@ bool Debugger::cmd_showbg(int argc, const char **argv) {
 
 			return false;
 		} else {
-			Background background(_engine->_resource);
+			Background background(_engine->getResource());
 			if (background.load(filename))
 				background.show();
 
@@ -279,7 +279,7 @@ bool Debugger::cmd_listfiles(int argc, const char **argv) {
 		Common::String filter(const_cast<char*>(argv[1]));
 
 		Common::ArchiveMemberList list;
-		int count = _engine->_resource->listMatchingMembers(list, filter);
+		int count = _engine->getResource()->listMatchingMembers(list, filter);
 
 		DebugPrintf("Number of matches: %d\n", count);
 		for (Common::ArchiveMemberList::iterator it = list.begin(); it != list.end(); ++it) {
