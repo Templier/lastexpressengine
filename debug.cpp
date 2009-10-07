@@ -26,6 +26,7 @@
 #include "common/debug.h"
 #include "common/system.h"
 #include "sound/mixer.h"
+#include "common/events.h"
 
 #include "lastexpress/debug.h"
 #include "lastexpress/lastexpress.h"
@@ -105,7 +106,14 @@ bool Debugger::cmd_playseq(int argc, const char **argv) {
 			if (sequence.load(filename)) {
 				for (uint32 i = 0; i < sequence.count(); i++) {
 					sequence.show(i);
-					_engine->_system->delayMillis(250);
+
+					// Handle right-click to interrupt sequence			
+					Common::Event ev;
+					_engine->getEventManager()->pollEvent(ev);
+					if (ev.type == Common::EVENT_RBUTTONDOWN)
+						break;
+						
+					_engine->_system->delayMillis(175);
 				}
 			}
 
