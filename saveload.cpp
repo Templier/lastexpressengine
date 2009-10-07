@@ -54,6 +54,8 @@ bool SaveLoad::isSavegamePresent(SavegameId id) {
 
 // Check if the game has been started in the specific savegame
 bool SaveLoad::isSavegameValid(SavegameId id) {
+	uint32 luminosity, volume;
+
 	if (!isSavegamePresent(id)) {
 		debugC(2, kLastExpressDebugSavegame, "SaveLoad::isSavegameValid - Savegame does not exist: %s", getSavegameName(id).c_str());
 		return false;
@@ -89,11 +91,11 @@ bool SaveLoad::isSavegameValid(SavegameId id) {
 	if (save->readUint32LE() != 1)
 		goto EXIT;
 
-	uint32 luminosity = save->readUint32LE();
+	luminosity = save->readUint32LE();
 	if  (luminosity < 0 || luminosity > 6)
 		goto EXIT;
 
-	uint32 volume = save->readUint32LE();
+	volume = save->readUint32LE();
 	if  (volume < 0 || volume > 7)
 		goto EXIT;
 
