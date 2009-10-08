@@ -71,9 +71,9 @@ bool ResourceManager::loadArchive(ArchiveType type) {
 	
 	case kArchiveAll:
 	default:
-		loadedOk &= loadArchive(archiveHDPath);
-		loadedOk &= loadArchive(archiveHDPath);
-		loadedOk &= loadArchive(archiveHDPath);
+		loadedOk &= loadArchive(archiveCD1Path);
+		loadedOk &= loadArchive(archiveCD2Path);
+		loadedOk &= loadArchive(archiveCD3Path);
 		break;
 	}
 
