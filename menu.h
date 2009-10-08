@@ -27,11 +27,13 @@
 #define LASTEXPRESS_MENU_H
 
 #include "lastexpress/savegame.h"
+#include "lastexpress/sequence.h"
+
+#include "common/events.h"
 
 namespace LastExpress {
 
 class LastExpressEngine;
-class Sequence;
 
 class Menu {
 public:
@@ -43,7 +45,7 @@ public:
 		kEventCase4 = 4,
 		kEventSwitchSaveGame = 6,
 		kEventRewindGame = 7,
-		kEventFastForwardGame = 8,
+		kEventForwardGame = 8,
 		kEventParis = 10,
 		kEventStrasBourg = 11,
 		kEventMunich = 12,
@@ -61,7 +63,7 @@ public:
 	~Menu();
 
 	void showMenu();
-	bool handleStartMenuEvent(StartMenuEvent event, bool clicked);
+	bool handleStartMenuEvent(Common::Event ev);
 
 private:
 
@@ -81,17 +83,17 @@ private:
 		kTooltipBrightnessDown,
 		kTooltipQuit,
 		kTooltipRewindParis,
-		kTooltipFastForwardStrasbourg,
+		kTooltipForwardStrasbourg,
 		kTooltipRewindStrasbourg,
 		kTooltipRewindMunich,
-		kTooltipFastForwardMunich,
-		kTooltipFastForwardVienna,
+		kTooltipForwardMunich,
+		kTooltipForwardVienna,
 		kTooltipRewindVienna,
 		kTooltipRewindBudapest,	// 20
-		kTooltipFastForwardBudapest,
-		kTooltipFastForwardBelgrade,
+		kTooltipForwardBudapest,
+		kTooltipForwardBelgrade,
 		kTooltipRewindBelgrade,
-		kTooltipFastForwardEnding,
+		kTooltipForwardEnding,
 		kTooltipSwitchBlueGame,
 		kTooltipSwitchRedGame,
 		kTooltipSwitchGoldGame,
@@ -104,6 +106,7 @@ private:
 		kTooltipRewind
 	};
 
+	// Bottom-left buttons (quit.seq)
 	enum StartMenuButtons {
 		kButtonVolumeDownPushed,
 		kButtonVolumeDown,
@@ -119,35 +122,87 @@ private:
 		kButtonQuitPushed
 	};
 
-	enum StartMenuOverlayType {
-		kOverlayTooltip,
-		kOverlay1,
-		kOverlayButtons,
-		kOverlay3,
-		kOverlay4,
-		kOverlay5,
-		kOverlay6,
-		kOverlay7
+	// Egg buttons (buttns.seq)
+	enum StartMenuEggButtons {
+		kButtonShield,
+		kButtonRewind,
+		kButtonRewindPushed,
+		kButtonForward,
+		kButtonForwardPushed,
+		kButtonCredits,
+		kButtonCreditsPushed,
+		kButtonContinue
+	};
+
+	// Overlay on cities (jlinetl.seq - jlinecen.seq - jlinebr.seq)
+	enum CityOverlay {
+		kParis = 100,			// index on sequence is 0
+		kStrasbourg = 0,
+		kMunich = 1,
+		kVienna = 2,
+		kBudapest = 3,
+		kBelgrade = 4,
+		kEnding = 101			// index on sequence is 0
+	};
+
+	// Game time when the train is at a specific city
+	enum CityTime {
+		kTimeParis = 1037700,
+		kTimeStrasbourg = 1490400,
+		kTimeMunich = 1852200,
+		kTimeVienna = 2268000,
+		kTimeBudapest = 2551500,
+		kTimeBelgrade = 2952000,
+		kTimeEnding = 4941000
 	};
 
 	LastExpressEngine *_engine;
 
-	// Indicator to know if we need to show the animation when showMenu is called	
+	// Sequences
+	Sequence _seqHour;
+	Sequence _seqMinutes;
+	Sequence _seqSun;
+	Sequence _seqDate;
+
+	Sequence _seqTooltips;
+	Sequence _seqEggButtons;
+	Sequence _seqButtons;
+	Sequence _seqLine1;
+	Sequence _seqLine2;
+	Sequence _seqCityStart;
+	Sequence _seqCities;
+	Sequence _seqCityEnd;
+
+	// TODO might be loaded on-the-fly in the future
+	Sequence _seqCredits;
+	Sequence _seqAcorn;
+	
+	// Indicator to know if we need to show the start animation when showMenu is called	
 	bool _showStartScreen;
+	bool _isShowingCredits;
+	uint32 _creditsSequenceIndex;
 
 	void loadSequences();
-	Common::String getAcornHighlight(SaveLoad::SavegameId id);
 
 	// Overlays & elements
-	void hideAllOverlays();
-	void hideOverlay(StartMenuOverlayType type);
-	void drawTrainLine();
-	void drawClock();
+	void drawTrainLine(uint32 time);
+	void drawClock(uint32 time);
+	void hideOverlays();
+	Common::String getAcornHighlight(SaveLoad::SavegameId id);
+	void showCredits();
 
-	// Sound-related
-	void playClickSnd();
+	// Game time
+	uint32 getCurrentTime();
+	uint32 getMaxGameTime();
+	void goToTime(uint32 time);
+	void moveToCity(CityOverlay city, CityTime time, StartMenuTooltips tooltipRewind, StartMenuTooltips tooltipForward, bool clicked);
+	
+	// Sound/Brightness related
 	int getVolume();
 	void setVolume(int volume);
+	int getBrightness();
+	void setBrightness(int brightness);
+
 };
 
 } // End of namespace LastExpress

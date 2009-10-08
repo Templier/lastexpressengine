@@ -35,7 +35,7 @@
 		uint32 {4}      - ?? needs to be >= 0x20
 		uint32 {4}      - ?? needs to be >= 0x20
 		uint32 {4}      - ?? needs to be = 1
-		uint32 {4}      - Luminosity (needs to be [0-6])
+		uint32 {4}      - Brigthness (needs to be [0-6])
 		uint32 {4}      - Volume (needs to be [0-7])
 		uint32 {4}      - ?? needs to be = 9
 
@@ -104,7 +104,7 @@ public:
 
 	struct GameState {
 		// Header
-		uint32 luminosity;
+		uint32 brightness;
 		uint32 volume;
 
 
@@ -113,7 +113,7 @@ public:
 		uint32 currentTime;
 
 		GameState() {
-			luminosity = _defaultLuminosity;
+			brightness = _defaultBrigthness;
 			volume = _defaultVolume;
 
 			currentScene = 0;
@@ -131,7 +131,7 @@ public:
 	static bool isSavegameValid(SavegameId id);
 
 private:
-	static const uint32 _defaultLuminosity = 0x3;
+	static const uint32 _defaultBrigthness = 0x3;
 	static const uint32 _defaultVolume = 0x7;
 
 

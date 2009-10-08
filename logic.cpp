@@ -57,18 +57,19 @@ void Logic::showMenu() {
 	_menu->showMenu();
 }
 
-void Logic::handleMouseEvent(int16 x, int16 y, bool clicked) {
+void Logic::handleMouseEvent(Common::Event ev) {
 	if (_gameState->currentScene == 0)
 		return;
 
 	// FIXME: check hitbox & event from scene data
 
+
 	// Special case for the main menu scene ??
-	if (_gameState->currentScene == (uint32)getMenuSceneIndex(_runState.savegameId)) {
-		Menu::StartMenuEvent evt = Menu::kEventDecreaseVolume;
-				
-		_menu->handleStartMenuEvent(evt, clicked);
-	}
+	//if (_gameState->currentScene == (uint32)getMenuSceneIndex(_runState.savegameId)) {
+		bool quitGame = _menu->handleStartMenuEvent(ev);
+	//}
+
+	// cleanup and quit game is the quit button has been pressed
 }
 
 uint32 Logic::getMenuSceneIndex(SaveLoad::SavegameId savegameId) {

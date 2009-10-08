@@ -28,6 +28,8 @@
 
 #include "lastexpress/savegame.h"
 
+#include "common/events.h"
+
 namespace LastExpress {
 
 class LastExpressEngine;
@@ -39,7 +41,7 @@ public:
 	~Logic();
 
 	void showMenu();
-	void handleMouseEvent(int16 x, int16 y, bool clicked);
+	void handleMouseEvent(Common::Event ev);
 
 	// TODO inventory (needs gamestate & new Cursor function)
 
