@@ -23,20 +23,21 @@
  *
  */
 
-#include "lastexpress/lastexpress.h"
+// Based on Deniz Oezmen's code: http://oezmen.eu/
+
 #include "lastexpress/animation.h"
+
+#include "lastexpress/helpers.h"
+#include "lastexpress/debug.h"
 #include "lastexpress/sequence.h"
 #include "lastexpress/sound.h"
 
 #include "common/system.h"
 #include "common/events.h"
 
-// Based on Deniz Oezmen's code: http://oezmen.eu/
-
 namespace LastExpress {
 
-Animation::Animation(ResourceManager *resource) : _resource(resource), _stream(NULL),
-			_background1(NULL), _background2(NULL), _backgroundCurrent(0), _audio(NULL) {
+Animation::Animation() : _stream(NULL),	_background1(NULL), _background2(NULL), _backgroundCurrent(0), _audio(NULL) {
 }
 
 Animation::~Animation() {
@@ -48,23 +49,19 @@ void Animation::reset() {
 	SAFE_DELETE(_background2);
 	SAFE_DELETE(_audio);
 	_backgroundCurrent = 0;
-
 	_chunks.clear();
+
+	SAFE_DELETE(_stream);
 }
 
-bool Animation::load(const Common::String &name) {
+bool Animation::load(Common::SeekableReadStream *stream) {
+	if (!stream)
+		return false;
+
 	reset();
 
-	// Get a stream to the file
-	if (!_resource->hasFile(name)) {
-		debugC(2, kLastExpressDebugGraphics, "Error opening animation: %s", name.c_str());
-		return false;
-	}
-
-	debugC(2, kLastExpressDebugGraphics, "=================================================================");
-	debugC(2, kLastExpressDebugGraphics, "Loading animation: %s", name.c_str());
-	_stream = _resource->createReadStreamForMember(name);
-
+	// Keep stream for later decoding of animation
+	_stream = stream;
 
 	// Read header to get the number of chunks
 	uint32 numChunks = _stream->readUint32LE();
@@ -72,7 +69,7 @@ bool Animation::load(const Common::String &name) {
 
 	// Check if there is enough data
 	if (_stream->size() - _stream->pos() < (signed)(numChunks * sizeof(Chunk))) {
-		debugC(2, kLastExpressDebugGraphics, "NIS file seems to be corrupted: %s!", name.c_str());
+		debugC(2, kLastExpressDebugGraphics, "NIS file seems to be corrupted!");
 		return false;
 	}
 

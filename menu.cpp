@@ -24,11 +24,19 @@
  */
 
 #include "lastexpress/menu.h"
-#include "lastexpress/background.h"
+
+// Data
 #include "lastexpress/animation.h"
-#include "lastexpress/sequence.h"
-#include "lastexpress/scene.h"
+#include "lastexpress/background.h"
+#include "lastexpress/cursor.h"
 #include "lastexpress/logic.h"
+#include "lastexpress/sequence.h"
+#include "lastexpress/sound.h"
+
+#include "lastexpress/debug.h"
+#include "lastexpress/helpers.h"
+#include "lastexpress/lastexpress.h"
+#include "lastexpress/resource.h"
 
 #include "graphics/cursorman.h"
 
@@ -38,9 +46,7 @@ Menu::Menu(LastExpressEngine *engine) : _engine(engine) {
 	_showStartScreen = true;	
 }
 
-Menu::~Menu() {
-	
-}
+Menu::~Menu() {}
 
 //////////////////////////////////////////////////////////////////////////
 // Show the intro and load the main menu scene
@@ -56,30 +62,30 @@ void Menu::showMenu() {
 	// If no blue savegame exists, this might be the first time we start the game, so we show the full intro
 	if (!SaveLoad::isSavegameValid(SaveLoad::kSavegameBlue)) {
 		if (_showStartScreen) {
-			Animation animation(_engine->getResource());
+			Animation animation;
 
 			// Show Broderbrund logo
-			if (animation.load("1930.nis"))
+			if (animation.loadFile("1930.nis"))
 				animation.show();
 
 			// Play intro music
-			_engine->getMusicStream()->load("MUS001.SND");
+			playMusic("MUS001.SND");
 
 			// Show The Smoking Car logo
-			if (animation.load("1931.nis"))
+			if (animation.loadFile("1931.nis"))
 				animation.show();
 
 			_showStartScreen = false;
 		}
 	} else {
 		if (_showStartScreen) {
-			_engine->getMusicStream()->load("mus018.snd");
+			playMusic("mus018.snd");
 
 			// FIXME load data from scene: sceneIndex = 65
 			
 			// Show Start screen
-			Background background(_engine->getResource());
-			if (background.load("autoplay.bg"))
+			Background background;
+			if (background.loadFile("autoplay.bg"))
 				background.show();
 
 			_showStartScreen = false;
@@ -107,16 +113,16 @@ void Menu::showMenu() {
 bool Menu::handleStartMenuEvent(StartMenuEvent event, bool clicked) {
 
 	// Init overlay sequences (there should be 8 of them)
-	Sequence tooltips(_engine->getResource());
-	Sequence buttons(_engine->getResource());	
-	Sequence egg(_engine->getResource());
-	Sequence acorn(_engine->getResource());
+	Sequence tooltips;
+	Sequence buttons;	
+	Sequence egg;
+	Sequence acorn;
 
-	if (!tooltips.load("helpnewr.seq"))
+	if (!tooltips.loadFile("helpnewr.seq"))
 		return false;
-	if (!buttons.load("quit.seq"))
+	if (!buttons.loadFile("quit.seq"))
 		return false;
-	if (!egg.load("buttns.seq"))
+	if (!egg.loadFile("buttns.seq"))
 		return false;
 	//if (!acorn.load(getAcornHighlight(_engine->getLogic()->getSaveGameId())))
 	//	return false;
@@ -331,7 +337,7 @@ Common::String Menu::getAcornHighlight(SaveLoad::SavegameId id) {
 
 // Play the click sound (start menu buttons)
 void Menu::playClickSnd() {
-	_engine->getSfxStream()->load("LIB046.snd");
+	playSfx("LIB046.snd");
 }
 
 // Get current volume (converted to in-game value)

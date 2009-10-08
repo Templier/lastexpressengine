@@ -23,12 +23,14 @@
  *
  */
 
+#include "lastexpress/resource.h"
+
+#include "lastexpress/debug.h"
+#include "lastexpress/lastexpress.h"
+
 #include "common/stream.h"
 #include "common/endian.h"
 #include "common/fs.h"
-
-#include "lastexpress/lastexpress.h"
-#include "lastexpress/resource.h"
 
 namespace LastExpress {
 

@@ -26,11 +26,11 @@
 #ifndef LASTEXPRESS_MENU_H
 #define LASTEXPRESS_MENU_H
 
-#include "lastexpress/lastexpress.h"
 #include "lastexpress/saveload.h"
 
 namespace LastExpress {
 
+class LastExpressEngine;
 class Sequence;
 
 class Menu {

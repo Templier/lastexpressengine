@@ -40,10 +40,12 @@
 		byte {x}     - bottom line (UTF-16 string)
 */
 
-#include "lastexpress/font.h"
-#include "lastexpress/resource.h"
+#include "common/stream.h"
+#include "common/array.h"
 
 namespace LastExpress {
+
+class Font;
 
 class Subtitle {
 public:
@@ -66,9 +68,9 @@ private:
 
 class SubtitleManager {
 public:
-	SubtitleManager(ResourceManager *resource);
+	SubtitleManager();
 
-	bool load(const Common::String &name);
+	bool load(Common::SeekableReadStream *stream);
 	bool show(Font &font, uint16 index);
 
 	//TODO: add function bool show(uint16 currentTime);
@@ -76,8 +78,6 @@ public:
 	uint32 count();
 
 private:
-	ResourceManager *_resource;
-
 	Common::Array<Subtitle> _subtitles;
 };
 

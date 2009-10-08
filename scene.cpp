@@ -23,34 +23,35 @@
  *
  */
 
-#include "lastexpress/lastexpress.h"
 #include "lastexpress/scene.h"
+
+#include "lastexpress/debug.h"
+
+#include "common/stream.h"
 
 namespace LastExpress {
 
-Scene::Scene(ResourceManager *resource) : _resource(resource) {
-}
-
+Scene::Scene() {}
 Scene::~Scene() {}
 
-bool Scene::load(uint cdIndex) {
-	if (cdIndex < 0 || cdIndex > 3)	{
-		debugC(2, kLastExpressDebugScenes, "Scene::load - Invalid scene file index: %i", cdIndex);
-		return false;
-	}
+bool Scene::load(Common::SeekableReadStream *stream) {	
+	//if (cdIndex < 0 || cdIndex > 3)	{
+	//	debugC(2, kLastExpressDebugScenes, "Scene::load - Invalid scene file index: %i", cdIndex);
+	//	return false;
+	//}
 
-	Common::String name(Common::String::printf("CD%iTRAIN.DAT", cdIndex));
+	//Common::String name(Common::String::printf("CD%iTRAIN.DAT", cdIndex));
 
-	// Get a stream for the background file
-	if (!_resource->hasFile(name)) {
-		debugC(2, kLastExpressDebugScenes, "Scene::load - Error opening scene file: %s", name.c_str());
-		return false;
-	}
+	//// Get a stream for the background file
+	//if (!_resource->hasFile(name)) {
+	//	debugC(2, kLastExpressDebugScenes, "Scene::load - Error opening scene file: %s", name.c_str());
+	//	return false;
+	//}
 
-	debugC(2, kLastExpressDebugScenes, "=================================================================");
-	debugC(2, kLastExpressDebugScenes, "Loading scene data: %s", name.c_str());
+	//debugC(2, kLastExpressDebugScenes, "=================================================================");
+	//debugC(2, kLastExpressDebugScenes, "Loading scene data: %s", name.c_str());
 
-	Common::SeekableReadStream *stream = _resource->createReadStreamForMember(name);
+	//Common::SeekableReadStream *stream = _resource->createReadStreamForMember(name);
 
 	// Read the number of scenes (the first entry is a dummy one)
 	stream->seek(9, SEEK_SET);
@@ -85,6 +86,8 @@ bool Scene::load(uint cdIndex) {
 		debugC(9, kLastExpressDebugScenes, "           evt=%02d, unk16=%02d, unk17=%02d, unk18=%02d", scene.eventType, scene.unknown16, scene.unknown17, scene.unknown18);
 		debugC(9, kLastExpressDebugScenes, "           unk19=%02d, unk20=%02d, unk21=%02d, unk22=%02d, unk23=%02d", scene.unknown19, scene.unknown20, scene.unknown21, scene.unknown22, scene.unknown23);
 	}
+
+	delete stream;
 
 	return true;
 }

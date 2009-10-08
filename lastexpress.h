@@ -32,35 +32,15 @@
 #include "engines/engine.h"
 
 #include "lastexpress/debug.h"
-#include "lastexpress/cursor.h"
-#include "lastexpress/font.h"
-#include "lastexpress/resource.h"
-#include "lastexpress/sound.h"
-
-#define SAFE_DELETE(_p)			{ if(_p) { delete _p;		_p=NULL; } }
-#define SAFE_DELETE_ARRAY(_p)	{ if(_p) { delete [] _p;	_p=NULL; } }
 
 namespace LastExpress {
 
-//class Cursor;
-//class Debugger;
-//class Font;
+class Cursor;
+class Debugger;
+class Font;
 class Logic;
-//class ResourceManager;
-//class StreamedSound;
-
-enum {
-	kLastExpressDebugAll = 1 << 0,
-	kLastExpressDebugGraphics = 1 << 1,
-	kLastExpressDebugResource = 1 << 2,
-	kLastExpressDebugCursor = 1 << 3,
-	kLastExpressDebugSound = 1 << 4,
-	kLastExpressDebugSubtitle = 1 << 5,
-	kLastExpressDebugSavegame = 1 << 6,
-	kLastExpressDebugScenes = 1 << 7,
-	kLastExpressDebugUnknown = 1 << 8
-	// the current limitation is 32 debug levels (1 << 31 is the last one)
-};
+class ResourceManager;
+class StreamedSound;
 
 class LastExpressEngine : public Engine {
 

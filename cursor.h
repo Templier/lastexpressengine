@@ -39,15 +39,12 @@
 		uint16 {32*32}   - cursor data		
 */
 
-namespace LastExpress {
+#include "common/system.h"
 
-class ResourceManager;
+namespace LastExpress {
 
 class Cursor {
 public:
-	Cursor(ResourceManager *resource);
-	~Cursor();
-
 	enum CursorStyle {
 		CursorNormal,
 		CursorForward,
@@ -99,7 +96,10 @@ public:
 		CursorBlank
 	};
 
-	bool load();
+	Cursor();
+	~Cursor();
+
+	bool load(Common::SeekableReadStream *stream);
 	void show(bool visible);
 	bool setStyle(CursorStyle style);
 	CursorStyle getStyle();
@@ -108,8 +108,6 @@ public:
 	//void draw(Surface* surface, int x, int y, CursorStyle style);
 
 private:
-	ResourceManager *_resource;
-
 	// Style
 	CursorStyle _current;
 

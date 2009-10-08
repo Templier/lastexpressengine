@@ -23,12 +23,14 @@
  *
  */
 
-#include "common/system.h"
+// Based on Deniz Oezmen's code: http://oezmen.eu/
 
-#include "lastexpress/lastexpress.h"
 #include "lastexpress/sequence.h"
 
-// Based on Deniz Oezmen's code: http://oezmen.eu/
+#include "lastexpress/debug.h"
+#include "lastexpress/helpers.h"
+
+#include "common/system.h"
 
 namespace LastExpress {
 
@@ -332,33 +334,30 @@ void AnimFrame::decompFF(Common::SeekableReadStream *in, FrameInfo *f) {
 //////////////////////////////////////////////////////////////////////////
 //  SEQUENCE
 //////////////////////////////////////////////////////////////////////////
-Sequence::Sequence(ResourceManager *resource) : _resource(resource) {
-}
-
-Sequence::~Sequence() {
-}
+Sequence::Sequence() {}
+Sequence::~Sequence() {}
 
 void Sequence::reset() {
 	_unknown = 0;
 	_frames.clear();
+
+	// FIXME where is the stream disposed of?
+	//SAFE_DELETE(_stream);
 }
 
 uint32 Sequence::count() {
 	return _frames.size();
 }
 
-bool Sequence::load(const Common::String &name) {
+bool Sequence::load(Common::SeekableReadStream *stream) {
+	if (!stream)
+		return false;
+
+	// Reset data
 	reset();
 
-	// Get a stream to the file
-	if (!_resource->hasFile(name)) {
-		debugC(2, kLastExpressDebugGraphics, "Error opening sequence: %s", name.c_str());
-		return false;
-	}
-
-	debugC(2, kLastExpressDebugGraphics, "=================================================================");
-	debugC(2, kLastExpressDebugGraphics, "Loading sequence: %s", name.c_str());
-	_stream = _resource->createReadStreamForMember(name);
+	// Copy stream for later decoding of sequence
+	_stream = stream;
 
 	// Read header to get the number of frames
 	uint32 numframes = _stream->readUint32LE();

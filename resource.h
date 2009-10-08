@@ -29,10 +29,11 @@
 #include "common/array.h"
 #include "common/str.h"
 
-#include "lastexpress/lastexpress.h"
 #include "lastexpress/archive.h"
 
 namespace LastExpress {
+
+class LastExpressEngine;
 
 class ResourceManager : public Common::Archive {
 public:

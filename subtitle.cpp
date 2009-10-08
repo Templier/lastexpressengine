@@ -23,8 +23,13 @@
  *
  */
 
-#include "lastexpress/lastexpress.h"
+// Based on the Xentax Wiki documentation:
+// http://wiki.xentax.com/index.php/The_Last_Express_SBE
+
 #include "lastexpress/subtitle.h"
+
+#include "lastexpress/debug.h"
+#include "lastexpress/font.h"
 
 namespace LastExpress {
 
@@ -80,22 +85,15 @@ bool Subtitle::load(Common::SeekableReadStream *in) {
 //////////////////////////////////////////////////////////////////////////
 // SubtitleManager
 //////////////////////////////////////////////////////////////////////////
-SubtitleManager::SubtitleManager(ResourceManager *resource) : _resource(resource) {}
+SubtitleManager::SubtitleManager() {}
 
 uint32 SubtitleManager::count() {
 	return _subtitles.size();
 }
 
-bool SubtitleManager::load(const Common::String &name)
-{
-	// Get a stream to the file
-	if (!_resource->hasFile(name)) {
-		debugC(2, kLastExpressDebugSubtitle, "Error opening subtitle: %s", name.c_str());
+bool SubtitleManager::load(Common::SeekableReadStream *stream) {
+	if (!stream)
 		return false;
-	}
-
-	debugC(2, kLastExpressDebugSubtitle, "Loading subtitle: %s", name.c_str());
-	Common::SeekableReadStream *stream = _resource->createReadStreamForMember(name);
 
 	// Read header to get the number of subtitles
 	uint32 numSubtitles = stream->readUint16LE();
@@ -120,6 +118,8 @@ bool SubtitleManager::load(const Common::String &name)
 			return false;
 		}
 	}
+
+	delete stream;
 
 	return true;
 }

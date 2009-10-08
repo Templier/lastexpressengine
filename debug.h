@@ -26,10 +26,24 @@
 #ifndef LASTEXPRESS_DEBUG_H
 #define LASTEXPRESS_DEBUG_H
 
+#include "common/debug.h"
 #include "gui/debugger.h"
 #include "engines/engine.h"
 
 namespace LastExpress {
+
+enum {
+	kLastExpressDebugAll = 1 << 0,
+	kLastExpressDebugGraphics = 1 << 1,
+	kLastExpressDebugResource = 1 << 2,
+	kLastExpressDebugCursor = 1 << 3,
+	kLastExpressDebugSound = 1 << 4,
+	kLastExpressDebugSubtitle = 1 << 5,
+	kLastExpressDebugSavegame = 1 << 6,
+	kLastExpressDebugScenes = 1 << 7,
+	kLastExpressDebugUnknown = 1 << 8
+	// the current limitation is 32 debug levels (1 << 31 is the last one)
+};
 
 class LastExpressEngine;
 

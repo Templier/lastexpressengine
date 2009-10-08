@@ -214,6 +214,10 @@
 			Name="docs"
 			>
 			<File
+				RelativePath="..\..\engines\lastexpress\module.mk"
+				>
+			</File>
+			<File
 				RelativePath="..\..\engines\lastexpress\docs\TODO.txt"
 				>
 			</File>
@@ -228,6 +232,10 @@
 		</File>
 		<File
 			RelativePath="..\..\engines\lastexpress\detection.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\..\engines\lastexpress\helpers.h"
 			>
 		</File>
 		<File

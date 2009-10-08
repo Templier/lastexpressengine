@@ -23,18 +23,30 @@
  *
  */
 
+#include "lastexpress/lastexpress.h"
+
+#include "lastexpress/helpers.h"
+#include "lastexpress/resource.h"
+#include "lastexpress/cursor.h"
+#include "lastexpress/font.h"
+#include "lastexpress/sound.h"
+#include "lastexpress/logic.h"
+
 #include "common/config-manager.h"
 #include "common/events.h"
 #include "sound/mixer.h"
 
-#include "lastexpress/lastexpress.h"
+#ifdef LOAD_RESOURCES_LIST
 #include "lastexpress/background.h"
 #include "lastexpress/subtitle.h"
 #include "lastexpress/animation.h"
 #include "lastexpress/sequence.h"
-#include "lastexpress/logic.h"
+#endif
 
 namespace LastExpress {
+
+const Common::String cursorsName("CURSORS.TBM");
+const Common::String fontName("FONT.DAT");
 
 LastExpressEngine::LastExpressEngine(OSystem *syst, const ADGameDescription *gd) :
 	Engine(syst), _gameDescription(gd), _debugger(NULL), _resource(NULL) {
@@ -92,19 +104,19 @@ Common::Error LastExpressEngine::init() {
 	if (!_resource->loadArchive(ResourceManager::kArchiveAll))
 		return Common::kUnknownError;
 
-	_cursor = new Cursor(_resource);
-	if (!_cursor->load())
+	_cursor = new Cursor();
+	if (!_cursor->load(_resource->getFileStream(cursorsName)))
 		return Common::kUnknownError;
 
-	_font = new Font(_resource);
-	if (!_font->load())
+	_font = new Font();
+	if (!_font->load(_resource->getFileStream(fontName)))
 		return Common::kUnknownError;
 
 	// Initialize cursor
 	_cursor->setStyle(Cursor::CursorNormal);
 
-	_sfx = new StreamedSound(_resource);
-	_music = new StreamedSound(_resource);
+	_sfx = new StreamedSound();
+	_music = new StreamedSound();
 	_logic = new Logic(this);
 
 	return Common::kNoError;
@@ -146,6 +158,8 @@ Common::Error LastExpressEngine::go() {
 	int n_snd = _resource->listMatchingMembers(list_snd, "*.SND");
 	warning("found %d snd's", n_snd);
 	Common::ArchiveMemberList::iterator i_snd = list_snd.begin();
+
+	debugC(2, kLastExpressDebugResource, "Resource debugging:\n  b: background\n  m: music/sound\n  n: animation\n  s: sequence\n  t: subtitle\n  +/-: cursor");
 #endif
 
 	while (!shouldQuit()) {
@@ -193,8 +207,8 @@ Common::Error LastExpressEngine::go() {
 				// DEBUG: show data files
 				if (ev.kbd.keycode == Common::KEYCODE_b) {
 					if (i_bg != list_bg.end()) {
-						Background background(_resource);
-						if (background.load((*i_bg)->getName())) {
+						Background background;
+						if (background.load(_resource->getFileStream((*i_bg)->getName()))) {
 							background.show();
 						}
 						i_bg++;
@@ -203,8 +217,8 @@ Common::Error LastExpressEngine::go() {
 
 				if (ev.kbd.keycode == Common::KEYCODE_s) {
 					if (i_seq != list_seq.end()) {
-						Sequence sequence(_resource);
-						if (sequence.load((*i_seq)->getName())) {
+						Sequence sequence;
+						if (sequence.load(_resource->getFileStream((*i_seq)->getName()))) {
 							for (uint32 i = 0; i < sequence.count(); i++) {
 								if (sequence.show(i))
 									_system->delayMillis(200);
@@ -216,8 +230,8 @@ Common::Error LastExpressEngine::go() {
 
 				if (ev.kbd.keycode == Common::KEYCODE_n) {
 					if (i_nis != list_nis.end()) {
-						Animation animation(_resource);
-						if (animation.load((*i_nis)->getName())) {
+						Animation animation;
+						if (animation.load(_resource->getFileStream((*i_nis)->getName()))) {
 							animation.show();
 						}
 						i_nis++;
@@ -228,15 +242,15 @@ Common::Error LastExpressEngine::go() {
 					if (i_snd != list_snd.end()) {
 						_system->getMixer()->stopAll();
 
-						_sfx->load((*i_snd)->getName());
+						_sfx->load(_resource->getFileStream((*i_snd)->getName()));						
 						i_snd++;
 					}
 				}
 
 				if (ev.kbd.keycode == Common::KEYCODE_t) {
 					if (i_sbe != list_sbe.end()) {
-						SubtitleManager subtitle(_resource);
-						if (subtitle.load((*i_sbe)->getName())) {
+						SubtitleManager subtitle;
+						if (subtitle.load(_resource->getFileStream((*i_sbe)->getName()))) {
 							for (uint i = 0; i < subtitle.count(); i++) {
 								_system->fillScreen(0);
 								subtitle.show(*_font, i);

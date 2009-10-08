@@ -10,6 +10,7 @@ MODULE_OBJS := \
 	font.o \
 	lastexpress.o \
 	logic.o \
+	menu.o \
 	resource.o \
 	saveload.o \
 	scene.o \

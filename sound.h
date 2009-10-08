@@ -49,8 +49,6 @@ namespace Audio {
 
 namespace LastExpress {
 
-class ResourceManager;
-
 class Sound {
 public:
 	Sound();
@@ -72,13 +70,10 @@ protected:
 
 class StreamedSound : public Sound {
 public:
-	StreamedSound(ResourceManager *resource);
+	StreamedSound();
 	~StreamedSound();
 
-	bool load(const Common::String &name);
-
-private:
-	ResourceManager *_resource;
+	bool load(Common::SeekableReadStream *stream);
 };
 
 class AppendableSound : public Sound {

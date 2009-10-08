@@ -45,16 +45,16 @@
 
 */
 
-namespace LastExpress {
+#include "common/stream.h"
 
-class ResourceManager;
+namespace LastExpress {
 
 class Background {
 public:
-	Background(ResourceManager *resource);
+	Background();
 	~Background();
 
-	bool load(const Common::String &name);
+	bool load(Common::SeekableReadStream *stream);	
 	bool show();
 
 private:
@@ -68,13 +68,11 @@ private:
 		uint32 greenSize;		//!< green color channel data size
 	};
 
-	ResourceManager *_resource;
-
 	BackgroundHeader _header;
 	uint16 *_data;				// decoded background data
 
-	void cleanup();
 	byte *decodeComponent(Common::SeekableReadStream *in, uint32 inSize, uint32 outSize);
+	void reset();
 };
 
 } // End of namespace LastExpress

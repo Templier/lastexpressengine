@@ -23,8 +23,11 @@
  *
  */
 
-#include "lastexpress/lastexpress.h"
 #include "lastexpress/cursor.h"
+
+#include "lastexpress/debug.h"
+#include "lastexpress/helpers.h"
+#include "lastexpress/resource.h"
 
 #include "graphics/cursorman.h"
 
@@ -32,30 +35,25 @@
 
 namespace LastExpress {
 
-const Common::String cursorsName("CURSORS.TBM");
-
-Cursor::Cursor(ResourceManager *resource) : _resource(resource), _current(CursorNormal), _data(NULL) {}
+Cursor::Cursor() : _current(CursorNormal), _data(NULL) {}
 
 Cursor::~Cursor() {
-	SAFE_DELETE_ARRAY(_data);
+	SAFE_DELETE(_data);
 }
 
-bool Cursor::load() {
-	// Reset data
-	SAFE_DELETE_ARRAY(_data);
-
-	// Get a stream to the file
-	if (!_resource->hasFile(cursorsName)) {
-		debugC(2, kLastExpressDebugSubtitle, "Error opening cursor: %s", cursorsName.c_str());
+bool Cursor::load(Common::SeekableReadStream *stream) {
+	if (!stream)
 		return false;
-	}
 
-	debugC(2, kLastExpressDebugCursor, "Loading cursor data file: %s", cursorsName.c_str());
-	Common::SeekableReadStream *stream = _resource->createReadStreamForMember(cursorsName);
+	// Reset data
+	SAFE_DELETE(_data);
 
+	// Load cursor data
 	_data = new byte[stream->size()];
 	if (_data)
 		stream->read(_data, stream->size());
+
+	delete stream;
 
 	return true;
 }

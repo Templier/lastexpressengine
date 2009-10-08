@@ -43,7 +43,6 @@
 
 namespace LastExpress {
 
-class ResourceManager;
 class AnimFrame;
 class AppendableSound;
 
@@ -55,10 +54,10 @@ struct Chunk {
 
 class Animation {
 public:
-	Animation(ResourceManager *resource);
+	Animation();
 	~Animation();
 
-	bool load(const Common::String &name);
+	bool load(Common::SeekableReadStream *stream);
 	bool show();
 
 private:
@@ -87,7 +86,6 @@ private:
 	void processOverlayFrame(Common::SeekableReadStream *in, Chunk *c);
 	void processChunkAudio(Common::SeekableReadStream *in, Chunk *c);
 
-	ResourceManager *_resource;
 	Common::SeekableReadStream *_stream;
 	Common::Array<Chunk> _chunks;
 	AnimFrame *_background1, *_background2;

@@ -24,8 +24,10 @@
  */
 
 #include "lastexpress/logic.h"
-#include "lastexpress/scene.h"
+
+#include "lastexpress/lastexpress.h"
 #include "lastexpress/menu.h"
+#include "lastexpress/scene.h"
 
 namespace LastExpress {
 

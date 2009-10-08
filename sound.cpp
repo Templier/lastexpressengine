@@ -23,14 +23,15 @@
  *
  */
 
-#include "lastexpress/lastexpress.h"
+// Based on the Xentax Wiki documentation:
+// http://wiki.xentax.com/index.php/The_Last_Express_SND
+
 #include "lastexpress/sound.h"
+
+#include "lastexpress/debug.h"
 
 #include "sound/adpcm.h"
 #include "sound/audiostream.h"
-
-// Based on the Xentax Wiki documentation:
-// http://wiki.xentax.com/index.php/The_Last_Express_SND
 
 namespace LastExpress {
 
@@ -64,25 +65,14 @@ void Sound::play(Audio::AudioStream *as) {
 //////////////////////////////////////////////////////////////////////////
 // StreamedSound
 //////////////////////////////////////////////////////////////////////////
-StreamedSound::StreamedSound(ResourceManager *resource) : _resource(resource) {
-}
+StreamedSound::StreamedSound() {}
+StreamedSound::~StreamedSound() {}
 
-StreamedSound::~StreamedSound() {
-}
-
-bool StreamedSound::load(const Common::String &name) {
+bool StreamedSound::load(Common::SeekableReadStream *stream) {
+	if (!stream)
+		return false;
 
 	g_system->getMixer()->stopHandle(_handle);
-
-	// Get a stream to the file
-	if (!_resource->hasFile(name)) {
-		debugC(2, kLastExpressDebugSound, "Error opening sound: %s", name.c_str());
-		return false;
-	}
-
-	debugC(2, kLastExpressDebugGraphics, "=================================================================");
-	debugC(2, kLastExpressDebugGraphics, "Loading sound: %s", name.c_str());
-	Common::SeekableReadStream *stream = _resource->createReadStreamForMember(name);
 
 	loadHeader(stream);
 

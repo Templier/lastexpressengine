@@ -23,36 +23,33 @@
  *
  */
 
-#include "lastexpress/lastexpress.h"
 #include "lastexpress/font.h"
+
+#include "lastexpress/debug.h"
+#include "lastexpress/helpers.h"
 
 #include "common/stream.h"
 #include "common/system.h"
 
 namespace LastExpress {
 
-const Common::String fontName("FONT.DAT");
-
-Font::Font(ResourceManager *resource) : _resource(resource), _glyphs(NULL), _glyphWidths(NULL) {}
+Font::Font() : _glyphs(NULL), _glyphWidths(NULL) {}
 
 Font::~Font() {
+	reset();
+}
+
+void Font::reset() {
 	SAFE_DELETE_ARRAY(_glyphs);
 	SAFE_DELETE_ARRAY(_glyphWidths);
 }
 
-bool Font::load() {
-	// Reset data
-	SAFE_DELETE_ARRAY(_glyphs);
-	SAFE_DELETE_ARRAY(_glyphWidths);
-
-	// Get a stream to the file
-	if (!_resource->hasFile(fontName)) {
-		debugC(2, kLastExpressDebugGraphics, "Error opening font: %s", fontName.c_str());
+bool Font::load(Common::SeekableReadStream *stream) {
+	if (!stream)
 		return false;
-	}
 
-	debugC(2, kLastExpressDebugGraphics, "Loading font data file: %s", fontName.c_str());
-	Common::SeekableReadStream *stream = _resource->createReadStreamForMember(fontName);
+	// Reset data
+	reset();
 
 	// Read the palette
 	for (int i = 0; i < _paletteSize; i++) {
@@ -83,6 +80,8 @@ bool Font::load() {
 	for (int i = 0; i < _numGlyphs; i++) {
 		_glyphWidths[i] = getGlyphWidth(i);
 	}
+
+	delete stream;
 
 	return true;
 }

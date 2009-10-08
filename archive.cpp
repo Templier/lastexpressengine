@@ -23,12 +23,16 @@
  *
  */
 
-#include "common/stream.h"
-#include "common/endian.h"
-#include "common/fs.h"
+// Based on the Xentax Wiki documentation:
+// http://wiki.xentax.com/index.php/The_Last_Express_SND
+
+#include "lastexpress/archive.h"
 
 #include "lastexpress/lastexpress.h"
-#include "lastexpress/archive.h"
+
+#include "common/endian.h"
+#include "common/fs.h"
+#include "common/stream.h"
 
 namespace LastExpress {
 

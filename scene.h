@@ -27,7 +27,6 @@
 #define LASTEXPRESS_SCENE_H
 
 #include "common/system.h"
-#include "lastexpress/resource.h"
 
 /*
 	Scene format (CDTRAIN.DAT)
@@ -54,8 +53,6 @@
 */
 
 namespace LastExpress {
-
-class ResourceManager;
 
 class Scene {
 public:
@@ -91,15 +88,13 @@ public:
 		}
 	};
 
-	Scene(ResourceManager *resource);
+	Scene();
 	~Scene();
 
-	bool load(uint cdIndex);
+	bool load(Common::SeekableReadStream *stream);	
 	SceneEntry* getEntry(uint sceneIndex);
 
 private:
-	ResourceManager *_resource;
-	
 	Common::Array<SceneEntry> _scenes;
 };
 

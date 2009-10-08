@@ -23,35 +23,35 @@
  *
  */
 
-#include "lastexpress/lastexpress.h"
+// Based on Deniz Oezmen's code and Xentax Wiki documentation
+// http://oezmen.eu/
+// http://wiki.xentax.com/index.php/The_Last_Express_BG
+
 #include "lastexpress/background.h"
+
+#include "lastexpress/debug.h"
+#include "lastexpress/helpers.h"
+
+#include "common/system.h"
 
 namespace LastExpress {
 
-Background::Background(ResourceManager *resource) : _resource(resource), _data(NULL) {}
+Background::Background() : _data(NULL) {}
 
 Background::~Background() {
-	cleanup();
+	reset();
 }
 
-void Background::cleanup() {
-	SAFE_DELETE_ARRAY(_data);
+void Background::reset() {
+	SAFE_DELETE(_data);
 }
 
-// Ex: clock01.bg
-bool Background::load(const Common::String &name) {
-	cleanup();
-
-	// Get a stream for the background file
-	if (!_resource->hasFile(name)) {
-		debugC(2, kLastExpressDebugGraphics, "Error opening background: %s", name.c_str());
+bool Background::load(Common::SeekableReadStream *stream) {
+	if (!stream)
 		return false;
-	}
 
-	debugC(2, kLastExpressDebugGraphics, "=================================================================");
-	debugC(2, kLastExpressDebugGraphics, "Loading background: %s", name.c_str());
-
-	Common::SeekableReadStream *stream = _resource->createReadStreamForMember(name);
+	// Reset data
+	reset();
 
 	// Load Background header
 	_header.posX = stream->readUint32LE();
@@ -81,6 +81,8 @@ bool Background::load(const Common::String &name) {
 	delete[] dataR;
 	delete[] dataG;
 	delete[] dataB;
+
+	delete stream;
 
 	return true;
 }

@@ -23,18 +23,24 @@
  *
  */
 
+#include "lastexpress/debug.h"
+
+// Data
+#include "lastexpress/animation.h"
+#include "lastexpress/background.h"
+#include "lastexpress/scene.h"
+#include "lastexpress/sequence.h"
+#include "lastexpress/sound.h"
+#include "lastexpress/subtitle.h"
+
+#include "lastexpress/helpers.h"
+#include "lastexpress/lastexpress.h"
+#include "lastexpress/resource.h"
+
 #include "common/debug.h"
 #include "common/system.h"
 #include "sound/mixer.h"
 #include "common/events.h"
-
-#include "lastexpress/debug.h"
-#include "lastexpress/lastexpress.h"
-#include "lastexpress/animation.h"
-#include "lastexpress/background.h"
-#include "lastexpress/sequence.h"
-#include "lastexpress/subtitle.h"
-#include "lastexpress/sound.h"
 
 namespace LastExpress {
 
@@ -102,8 +108,8 @@ bool Debugger::cmd_playseq(int argc, const char **argv) {
 
 			return false;
 		} else {
-			Sequence sequence(_engine->getResource());
-			if (sequence.load(filename)) {
+			Sequence sequence;
+			if (sequence.loadFile(filename)) {
 				for (uint32 i = 0; i < sequence.count(); i++) {
 					sequence.show(i);
 
@@ -141,8 +147,8 @@ bool Debugger::cmd_showframe(int argc, const char **argv) {
 
 			return false;
 		} else {
-			Sequence sequence(_engine->getResource());
-			if (sequence.load(filename)) {
+			Sequence sequence;
+			if (sequence.loadFile(filename)) {
 				if (!sequence.show(getNumber(argv[2]))) {
 					DebugPrintf("Invalid frame index: %i\n", filename.c_str());
 					resetCommand();
@@ -170,7 +176,7 @@ bool Debugger::cmd_playsnd(int argc, const char **argv) {
 		}
 
 		_engine->_system->getMixer()->stopAll();
-		_engine->getSfxStream()->load(filename);
+		playSfx(filename);
 
 	} else {
 		DebugPrintf("Syntax: playsnd <sndname>\n");
@@ -194,8 +200,8 @@ bool Debugger::cmd_playsbe(int argc, const char **argv) {
 
 			return false;
 		} else {
-			SubtitleManager subtitle(_engine->getResource());
-			if (subtitle.load(filename)) {
+			SubtitleManager subtitle;
+			if (subtitle.loadFile(filename)) {
 				for (uint i = 0; i < subtitle.count(); i++) {
 					_engine->_system->fillScreen(0);
 					subtitle.show(*_engine->getFont(), i);
@@ -228,8 +234,8 @@ bool Debugger::cmd_playnis(int argc, const char **argv) {
 
 			return false;
 		} else {
-			Animation animation(_engine->getResource());
-			if (animation.load(filename))
+			Animation animation;
+			if (animation.loadFile(filename))
 				animation.show();
 
 			resetCommand();
@@ -257,8 +263,8 @@ bool Debugger::cmd_showbg(int argc, const char **argv) {
 
 			return false;
 		} else {
-			Background background(_engine->getResource());
-			if (background.load(filename))
+			Background background;
+			if (background.loadFile(filename))
 				background.show();
 
 			// Pause for a second to be able to see the background

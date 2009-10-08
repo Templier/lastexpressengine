@@ -71,8 +71,6 @@
 
 namespace LastExpress {
 
-class ResourceManager;
-
 struct FrameInfo {
 	void read(Common::SeekableReadStream *in, uint16 decompOffset);
 
@@ -115,10 +113,10 @@ private:
 
 class Sequence {
 public:
-	Sequence(ResourceManager *resource);
+	Sequence();
 	~Sequence();
 
-	bool load(const Common::String &name);
+	bool load(Common::SeekableReadStream *stream);	
 	bool show(uint32 index);
 
 	uint32 count();
@@ -137,9 +135,7 @@ private:
 	void reset();
 	AnimFrame *decodeFrame(Common::SeekableReadStream *in, uint32 numFrame);
 
-	ResourceManager *_resource;
 	Common::Array<FrameInfo> _frames;
-
 	Common::SeekableReadStream *_stream;
 
 	uint32 _unknown;

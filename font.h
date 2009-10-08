@@ -39,17 +39,16 @@
 	byte {x}      - Unknown data
 */
 
+#include "common/stream.h"
 
 namespace LastExpress {
 
-class ResourceManager;
-
 class Font {
 public:
-	Font(ResourceManager *resource);
+	Font();
 	~Font();
 
-	bool load();
+	bool load(Common::SeekableReadStream *stream);
 	void drawString(int x, int y, Common::String str);
 	void drawString(int x, int y, uint16 *str, uint16 length);
 
@@ -57,7 +56,7 @@ private:
 	static const uint32 _paletteSize = 0x10;
 	static const uint32 _charMapSize = 0x200;
 
-	ResourceManager *_resource;
+	void reset();
 
 	uint16 getCharGlyph(uint16 c);
 	byte *getGlyphImg(uint16 g);

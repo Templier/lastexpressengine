@@ -23,8 +23,9 @@
  *
  */
 
-#include "lastexpress/lastexpress.h"
 #include "lastexpress/saveload.h"
+
+#include "lastexpress/debug.h"
 
 #include "common/file.h"
 #include "common/system.h"
@@ -41,8 +42,6 @@ const Common::String eggGreen("GREEN.EGG");
 const Common::String eggPurple("PURPLE.EGG");
 const Common::String eggTeal("TEAL.EGG");
 const Common::String eggGold("GOLD.EGG");
-
-
 
 // Check if a specific savegame exists
 bool SaveLoad::isSavegamePresent(SavegameId id) {

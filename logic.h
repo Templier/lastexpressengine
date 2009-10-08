@@ -26,11 +26,11 @@
 #ifndef LASTEXPRESS_LOGIC_H
 #define LASTEXPRESS_LOGIC_H
 
-#include "lastexpress/lastexpress.h"
 #include "lastexpress/saveload.h"
 
 namespace LastExpress {
 
+class LastExpressEngine;
 class Menu;
 
 class Logic {
