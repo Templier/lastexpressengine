@@ -409,16 +409,24 @@ bool Sequence::show(uint32 index) {
 	AnimFrame *f = new AnimFrame(_stream, &_frames[index]);
 
 	//TEST: paint it directly to screen
+//#define PAINT_TO_SCREEN
+#ifdef PAINT_TO_SCREEN
 	Graphics::Surface *s = g_system->lockScreen();
-	//Graphics::Surface *s = new Graphics::Surface;
-	//s->create(640, 480, 2);
+#else
+	Graphics::Surface *s = new Graphics::Surface;
+	s->create(640, 480, 2);
+#endif
 
 	f->paint(s);
 
-	//g_system->copyRectToScreen((byte *)s->pixels, s->pitch, 0, 0, s->w, s->h);
-	//s->free();
-	//delete s;
+#ifdef PAINT_TO_SCREEN
 	g_system->unlockScreen();
+#else
+	g_system->copyRectToScreen((byte *)s->pixels, s->pitch, 0, 0, s->w, s->h);
+	s->free();
+	delete s;
+#endif
+
 	g_system->updateScreen();
 
 	delete f;
