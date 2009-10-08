@@ -52,6 +52,7 @@
 		uint32 {4}    - Unknown
 		uint32 {4}    - Unknown
 		uint32 {4}    - Unknown
+		uint16 {2}    - Set to 1 in some places
 		uint32 {4}    - Unknown
 		uint32 {4}    - Unknown
 
