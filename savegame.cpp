@@ -23,7 +23,7 @@
  *
  */
 
-#include "lastexpress/saveload.h"
+#include "lastexpress/savegame.h"
 
 #include "lastexpress/debug.h"
 

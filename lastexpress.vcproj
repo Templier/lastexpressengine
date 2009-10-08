@@ -209,6 +209,14 @@
 				RelativePath="..\..\engines\lastexpress\menu.h"
 				>
 			</File>
+			<File
+				RelativePath="..\..\engines\lastexpress\savegame.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\engines\lastexpress\savegame.h"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="docs"
@@ -260,14 +268,6 @@
 		</File>
 		<File
 			RelativePath="..\..\engines\lastexpress\resource.h"
-			>
-		</File>
-		<File
-			RelativePath="..\..\engines\lastexpress\saveload.cpp"
-			>
-		</File>
-		<File
-			RelativePath="..\..\engines\lastexpress\saveload.h"
 			>
 		</File>
 	</Files>

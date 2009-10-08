@@ -26,7 +26,7 @@
 #ifndef LASTEXPRESS_MENU_H
 #define LASTEXPRESS_MENU_H
 
-#include "lastexpress/saveload.h"
+#include "lastexpress/savegame.h"
 
 namespace LastExpress {
 

@@ -26,7 +26,7 @@
 #ifndef LASTEXPRESS_LOGIC_H
 #define LASTEXPRESS_LOGIC_H
 
-#include "lastexpress/saveload.h"
+#include "lastexpress/savegame.h"
 
 namespace LastExpress {
 
