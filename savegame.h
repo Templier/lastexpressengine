@@ -41,7 +41,7 @@
 
 	data:
 		uint32 {4}      - ??
-		uint32 {4}      - ??
+		uint32 {4}      - current time
 		uint32 {4}      - ??
 		uint32 {4}      - ??
 		uint32 {4}      - Scene Index				max: 2600
@@ -107,13 +107,17 @@ public:
 		uint32 luminosity;
 		uint32 volume;
 
-		// Sceme
+
+		// TODO: NOT YET FOUND IN SAVEGAME
 		uint32 currentScene;
+		uint32 currentTime;
 
 		GameState() {
-			currentScene = 0;
 			luminosity = _defaultLuminosity;
 			volume = _defaultVolume;
+
+			currentScene = 0;
+			currentTime = 0;			
 		}
 	};
 
