@@ -89,7 +89,7 @@ Common::Error LastExpressEngine::init() {
 
 	// Start managers: resource, cursor & font
 	_resource = new ResourceManager(this);
-	if (!_resource->load())
+	if (!_resource->loadArchive(ResourceManager::kArchiveAll))
 		return Common::kUnknownError;
 
 	_cursor = new Cursor(_resource);
@@ -254,7 +254,7 @@ Common::Error LastExpressEngine::go() {
 
 			case Common::EVENT_MOUSEMOVE:
 			case Common::EVENT_LBUTTONDOWN:
-				_logic->handleMouseEvent(ev.mouse.x, ev.mouse.y, ev.type == Common::EVENT_LBUTTONDOWN);
+				//_logic->handleMouseEvent(ev.mouse.x, ev.mouse.y, ev.type == Common::EVENT_LBUTTONDOWN);
 				break;
 
 			case Common::EVENT_RBUTTONDOWN:

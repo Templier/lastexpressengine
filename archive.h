@@ -53,11 +53,13 @@ class HPFArchive : public Common::Archive {
 public:
 
 	HPFArchive(const Common::String &path);
-
+	
 	bool hasFile(const Common::String &name);
 	int listMembers(Common::ArchiveMemberList &list);
 	Common::ArchiveMemberPtr getMember(const Common::String &name);
 	Common::SeekableReadStream *createReadStreamForMember(const Common::String &name) const;
+
+	int count() { return _files.size(); };
 
 private:
 	static const unsigned int _archiveNameSize = 12;

@@ -41,22 +41,72 @@ const Common::String archiveCD3Path("CD3.HPF");
 ResourceManager::ResourceManager(LastExpressEngine *engine) : _engine(engine) {
 }
 
-// TODO: add error handling
-bool ResourceManager::load() {
-	// Load stable archives (DEMO or HD archives)
-	if (_engine->getFlags() & ADGF_DEMO) {
-		_archives.push_back(new HPFArchive(archiveDemoPath));
-	} else {
-		_archives.push_back(new HPFArchive(archiveHDPath));
+// Load a specific archive collection
+//  - type is ignored in the demo version
+//  - use ArchiveAll to load all three cds
+//  - HD.hpf is always loaded along with the selected archive(s)
+//  - will remove all other archives
+bool ResourceManager::loadArchive(ArchiveType type) {
+	// Unload all archives
+	_archives.clear();
 
-		// TODO: there are lots of duplicated files in CD archives: we need to handle load/unload of cd archives
-		// FIXME: load CD archives on-the-fly?
-		_archives.push_back(new HPFArchive(archiveCD1Path));
-		_archives.push_back(new HPFArchive(archiveCD2Path));
-		_archives.push_back(new HPFArchive(archiveCD3Path));
+	// Demo version
+	if (_engine->getFlags() & ADGF_DEMO)
+		return loadArchive(archiveDemoPath);
+
+	bool loadedOk = true;
+
+	// Load HD
+	loadedOk &= loadArchive(archiveHDPath);
+	
+	switch(type) {
+	case kArchiveCd1:
+		return loadedOk && loadArchive(archiveCD1Path);
+
+	case kArchiveCd2:
+		return loadedOk && loadArchive(archiveCD2Path);
+
+	case kArchiveCd3:
+		return loadedOk && loadArchive(archiveCD3Path);
+	
+	case kArchiveAll:
+	default:
+		loadedOk &= loadArchive(archiveHDPath);
+		loadedOk &= loadArchive(archiveHDPath);
+		loadedOk &= loadArchive(archiveHDPath);
+		break;
 	}
 
+	return loadedOk;
+}
+
+bool ResourceManager::loadArchive(const Common::String &name) {
+	HPFArchive *archive = new HPFArchive(name);
+
+	if (archive->count() == 0) {
+		debugC(2, kLastExpressDebugResource, "Error opening archive: %s", name.c_str());
+		return false;
+	}
+
+	_archives.push_back(archive);
+
 	return true;
+}
+
+// Get a stream to file in the archive
+//  - same as createReadStreamForMember except it checks if the file exists and will assert / output a debug message if not
+Common::SeekableReadStream *ResourceManager::getFileStream(const Common::String &name) {
+
+	// Check if the file exits in the archive
+	if (!hasFile(name)) {
+		debugC(2, kLastExpressDebugResource, "Error opening file: %s", name.c_str());
+#ifdef _DEBUG
+		error("Error opening file: %s", name.c_str());
+#endif
+		return false;
+	}
+
+	return createReadStreamForMember(name);
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -101,7 +151,7 @@ Common::SeekableReadStream *ResourceManager::createReadStreamForMember(const Com
 			return stream;
 	}
 
-	return 0;
+	return NULL;
 }
 
 } // End of namespace LastExpress

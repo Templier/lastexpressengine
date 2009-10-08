@@ -35,12 +35,19 @@
 namespace LastExpress {
 
 class ResourceManager : public Common::Archive {
-
 public:
+	enum ArchiveType {
+		kArchiveCd1,
+		kArchiveCd2,
+		kArchiveCd3,
+		kArchiveAll
+	};
+
 	ResourceManager(LastExpressEngine *engine);
 
 	// Loading
-	bool load();
+	bool loadArchive(ArchiveType type);	
+	Common::SeekableReadStream *getFileStream(const Common::String &name);
 
 	// Archive functions
 	bool hasFile(const Common::String &name);
@@ -51,7 +58,9 @@ public:
 private:
 	LastExpressEngine *_engine;
 
-	Common::Array<HPFArchive *> _archives;
+	bool loadArchive(const Common::String &name);
+
+	Common::Array<HPFArchive*> _archives;
 };
 
 } // End of namespace LastExpress
