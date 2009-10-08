@@ -419,7 +419,7 @@ bool Sequence::show(uint32 index) {
 	//s->free();
 	//delete s;
 	g_system->unlockScreen();
-	//g_system->updateScreen();
+	g_system->updateScreen();
 
 	delete f;
 
