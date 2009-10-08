@@ -52,16 +52,14 @@ public:
 private:
 	// Scenes
 	enum Scene {
-		kSceneMenu
+		kSceneIntroScreen = 65,		
 	};
 
 	// State
 	struct RunState {
-		int currentScene;
 		SaveLoad::SavegameId savegameId;
 
 		RunState() {
-			currentScene = 0;
 			savegameId = SaveLoad::kSavegameBlue;
 		}
 	};
@@ -73,6 +71,8 @@ private:
 
 	// Move to engine?
 	SaveLoad::GameState *_gameState;
+
+	uint32 getMenuSceneIndex(SaveLoad::SavegameId savegameId);
 };
 
 } // End of namespace LastExpress

@@ -107,7 +107,11 @@ public:
 		uint32 luminosity;
 		uint32 volume;
 
+		// Sceme
+		uint32 currentScene;
+
 		GameState() {
+			currentScene = 0;
 			luminosity = _defaultLuminosity;
 			volume = _defaultVolume;
 		}

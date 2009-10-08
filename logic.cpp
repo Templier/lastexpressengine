@@ -56,14 +56,22 @@ void Logic::showMenu() {
 }
 
 void Logic::handleMouseEvent(int16 x, int16 y, bool clicked) {
+	if (_gameState->currentScene == 0)
+		return;
+
 	// FIXME: check hitbox & event from scene data
 
 	// Special case for the main menu scene ??
-	if (_runState.currentScene == kSceneMenu) {
+	if (_gameState->currentScene == (uint32)getMenuSceneIndex(_runState.savegameId)) {
 		Menu::StartMenuEvent evt = Menu::kEventDecreaseVolume;
 				
 		_menu->handleStartMenuEvent(evt, clicked);
 	}
+}
+
+uint32 Logic::getMenuSceneIndex(SaveLoad::SavegameId savegameId) {
+	// TODO Do check for DWORD at text:004ADF70 < 0x1030EC
+	return (int)savegameId * 5 + 1; // or 2...
 }
 
 } // End of namespace LastExpress

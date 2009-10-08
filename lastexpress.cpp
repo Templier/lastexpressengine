@@ -254,7 +254,7 @@ Common::Error LastExpressEngine::go() {
 
 			case Common::EVENT_MOUSEMOVE:
 			case Common::EVENT_LBUTTONDOWN:
-				//_logic->handleMouseEvent(ev.mouse.x, ev.mouse.y, ev.type == Common::EVENT_LBUTTONDOWN);
+				_logic->handleMouseEvent(ev.mouse.x, ev.mouse.y, ev.type == Common::EVENT_LBUTTONDOWN);
 				break;
 
 			case Common::EVENT_RBUTTONDOWN:
