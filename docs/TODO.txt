@@ -4,3 +4,5 @@
    
 - The game supports adjusting the luminosity (see text:0044DE40)
   Do we need to support this or do we let it be handled by the user? 
+  
+- Add functions to manipulate the game time and add checks for bounds

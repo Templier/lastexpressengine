@@ -36,6 +36,7 @@ Logic::Logic(LastExpressEngine *engine) : _engine(engine) {
 
 	// Get those from savegame
 	_gameState = new SaveLoad::GameState();
+	_gameState->currentTime = 2383200;
 }
 
 Logic::~Logic() {
@@ -53,7 +54,7 @@ Logic::~Logic() {
 // Show main menu
 void Logic::showMenu() {
 	// TODO: load scene and set current scene
-
+	_gameState->currentScene = 1;
 	_menu->showMenu();
 }
 
@@ -66,7 +67,7 @@ void Logic::handleMouseEvent(Common::Event ev) {
 
 	// Special case for the main menu scene ??
 	//if (_gameState->currentScene == (uint32)getMenuSceneIndex(_runState.savegameId)) {
-		bool quitGame = _menu->handleStartMenuEvent(ev);
+	bool quitGame = _menu->handleStartMenuEvent(ev);
 	//}
 
 	// cleanup and quit game is the quit button has been pressed

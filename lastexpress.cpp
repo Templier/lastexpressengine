@@ -202,10 +202,18 @@ Common::Error LastExpressEngine::go() {
 					if (_cursor->setStyle((Cursor::CursorStyle)(style-1)))
 						style--;
 
-				// Play intro
-				if (ev.kbd.keycode == Common::KEYCODE_RETURN || ev.kbd.keycode == Common::KEYCODE_KP_ENTER) {					
+				// DEBUG: time
+				if (ev.kbd.keycode == Common::KEYCODE_KP_DIVIDE)
+					_logic->getGameState()->currentTime = _logic->getGameState()->currentTime - 4984;
 					_logic->showMenu();
-				}
+
+				if (ev.kbd.keycode == Common::KEYCODE_KP_MULTIPLY)
+					_logic->getGameState()->currentTime = _logic->getGameState()->currentTime + 5167;
+					_logic->showMenu();
+
+				// Play intro
+				if (ev.kbd.keycode == Common::KEYCODE_RETURN || ev.kbd.keycode == Common::KEYCODE_KP_ENTER)
+					_logic->showMenu();
 
 #ifdef LOAD_RESOURCES_LIST
 				// DEBUG: show data files

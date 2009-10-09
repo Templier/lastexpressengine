@@ -117,7 +117,7 @@ public:
 			volume = _defaultVolume;
 
 			currentScene = 0;
-			currentTime = 0;			
+			currentTime = _defaultTime;			
 		}
 	};
 
@@ -133,6 +133,7 @@ public:
 private:
 	static const uint32 _defaultBrigthness = 0x3;
 	static const uint32 _defaultVolume = 0x7;
+	static const uint32 _defaultTime = 1037700;
 
 
 	static Common::String getSavegameName(SavegameId id);

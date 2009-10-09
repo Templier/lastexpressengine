@@ -43,6 +43,54 @@
 
 namespace LastExpress {
 
+//////////////////////////////////////////////////////////////////////////
+// DATA
+//////////////////////////////////////////////////////////////////////////
+
+// Train line times
+const uint32 trainLineTimes[31] = { /* Start */ 1037700 , 1148400, 1170900, 1228500, 1303200, 1335600, 1359900, 1367100,
+								  /* Strasbourg */ 1490400, 1539000, 1563300, 1656000, 1713600, 1739700, 1809900,
+								  /* Munich */ 1852200, 1984500, 2049300, 2075400, 2101500, 2154600, 
+								  /* Vienna */ 2268000, 2383200, 2418300, 
+								  /* Budapest */ 2551500, 
+								  /* Belgrade */ 2952000, 3205800, 3492000, 3690000, 4320900,
+								  /* Constantinople */ 4941000 };
+
+const uint32 trainCitiesIndex[31] = {0, // Paris
+									 9, // Epernay
+									 11, // Chalons
+									 16, // Bar Le Duc
+									 21, // Nancy
+									 25, // Luneville
+									 35, // Avricourt
+									 37, // Deutsch Avricourt
+									 40, // Strasbourg
+									 53, // Baden Oos
+									 56, // Karlsruhe
+									 60, // Stuttgart
+									 63, // Geislingen
+									 66, // Ulm
+									 68, // Augsburg
+									 73, // Munich
+									 84, // Salzbourg
+									 89, // Attnang-Puchheim
+									 97, // Wels
+									 100, // Linz
+									 104, // Amstetten
+									 111, // Vienna
+									 120, // Poszony
+									 124, // Galanta
+									 132, // Budapest
+									 148, // Belgrade
+									 /* Line 1 ends at 150 - line 2 begins at 0 */
+									 157, // Nish
+									 165, // Tzaribrod
+									 174, // Sofia
+									 198, // Adrianople
+									 210  /* Constantinople */};
+
+//////////////////////////////////////////////////////////////////////////
+
 Menu::Menu(LastExpressEngine *engine) : _engine(engine) {
 	// FIXME: skip intro
 	_showStartScreen = false;
@@ -103,7 +151,7 @@ void Menu::showMenu() {
 	_engine->getCursor()->setStyle(Cursor::CursorNormal);
 	_engine->getCursor()->show(true);
 
-	// Load all menu-related sequences
+	// Load all menu-related sequences if needed
 	loadSequences();
 
 	// TODO Load Main menu scene (sceneIndex = 5 * savegame id (+ 1/2)) - see text:00449d80
@@ -111,11 +159,8 @@ void Menu::showMenu() {
 	if (background.loadFile("clock01.bg"))
 		background.showBg(C);	
 
-	// FIXME set properly
-	getState()->currentScene = 1;
-	getState()->currentTime = 1759500;
-
 	// Draw default elements
+	clearBg(A);
 	drawClock(getState()->currentTime);
 	drawTrainLine(getState()->currentTime);
 
@@ -354,6 +399,10 @@ bool Menu::handleStartMenuEvent(Common::Event ev) {
 //////////////////////////////////////////////////////////////////////////
 
 void Menu::loadSequences() {
+	// Check if we loaded sequences before
+	if (_seqTooltips.count() > 0)
+		return;
+
 	bool loaded = true;
 	
 	loaded  &= _seqHour.loadFile("egghour.seq");
@@ -420,13 +469,14 @@ Common::String Menu::getAcornHighlight(SaveLoad::SavegameId id) {
 
 // Draw the clock hands at the time
 void Menu::drawClock(uint32 time) {	
-	clearBg(A);
-
 	// 7:14 p.m. on July 24, 1914 (= 1037700)
 	// 7:30 p.m. on July 26, 1914 (= 4941000)
 
 	// 360 degrees = 1296000 (360*60*60) minutes of arc
 	// 129600 / 24 = 54000
+	// 54000 / 60 = 900
+
+	// FIXME the hours are not moving along with minutes as in-game
 
 	// Calculate each sequence index from the current time
 	uint32 hours = time % 1296000 / 54000;
@@ -445,8 +495,29 @@ void Menu::drawClock(uint32 time) {
 }
 
 // Draw the train line at the time
+//  line1: 150 frames (=> Belgrade)
+//  line2: 61 frames (=> Constantinople)
+// text:0042E710
 void Menu::drawTrainLine(uint32 time) {
+	int ixTime;
 
+	// Get index of the closest train line time to the current time
+	for (ixTime = 0; ixTime < sizeof(trainLineTimes) - 1; ixTime++)
+		if (getCurrentTime() <= trainLineTimes[ixTime])
+			break;
+
+	// Get index of city
+	uint32 index = trainCitiesIndex[ixTime - 1];	// NOTE: disasm is accessing cities array starting from index -1 (= 0) - ie they have two 0 at the start of the array
+
+	// FIXME do some stuff on index... as right now we jump from cities to cities
+
+	if (index >= _seqLine1.count()) { // we passed Belgrade
+		_seqLine1.showFrameBg(A, _seqLine1.count() - 1);
+		_seqLine2.showFrameBg(A, index);
+	} else {		
+		_seqLine1.showFrameBg(A, index);
+		// no need to draw from line2
+	}
 }
 
 // Show credits overlay
@@ -469,7 +540,6 @@ uint32 Menu::getCurrentTime() {
 
 	// return current time as if we already rewinded
 	return getState()->currentTime; 
-	
 }
 
 uint32 Menu::getMaxGameTime() {
