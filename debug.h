@@ -64,6 +64,7 @@ private:
 	bool cmd_playsbe(int argc, const char **argv);
 	bool cmd_playnis(int argc, const char **argv);
 	bool cmd_showbg(int argc, const char **argv);
+	bool cmd_clear(int argc, const char **argv);
 	bool cmd_listfiles(int argc, const char **argv);
 
 	void resetCommand();

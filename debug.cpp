@@ -54,6 +54,7 @@ Debugger::Debugger(LastExpressEngine *engine) : _engine(engine) {
 	DCmd_Register("playsbe",   WRAP_METHOD(Debugger, cmd_playsbe));
 	DCmd_Register("playnis",   WRAP_METHOD(Debugger, cmd_playnis));
 	DCmd_Register("showbg",	   WRAP_METHOD(Debugger, cmd_showbg));
+	DCmd_Register("clear",	   WRAP_METHOD(Debugger, cmd_clear));
 	DCmd_Register("listfiles", WRAP_METHOD(Debugger, cmd_listfiles));
 
 	resetCommand();
@@ -114,9 +115,9 @@ bool Debugger::cmd_playseq(int argc, const char **argv) {
 				for (uint32 i = 0; i < sequence.count(); i++) {
 
 					// Clear screen
-					_engine->getGraphicsManager()->clear();
+					_engine->getGraphicsManager()->getBackgroundA()->fillRect(Common::Rect(640, 480), 0);
 
-					sequence.showFrameBg(C, i);
+					sequence.showFrameBg(A, i);
 
 					askForRedraw();
 					redrawScreen();
@@ -157,10 +158,9 @@ bool Debugger::cmd_showframe(int argc, const char **argv) {
 		} else {
 			Sequence sequence;
 			if (sequence.loadFile(filename)) {
-				// Clear screen
-				_engine->getGraphicsManager()->clear();
+				clearBgOverlay();
 
-				if (!sequence.showFrameBg(C, getNumber(argv[2]))) {
+				if (!sequence.showFrameOverlay(getNumber(argv[2]))) {
 					DebugPrintf("Invalid frame index: %i\n", filename.c_str());
 					resetCommand();
 					return true;
@@ -276,7 +276,9 @@ bool Debugger::cmd_showbg(int argc, const char **argv) {
 			copyCommand(argc, argv);
 
 			return false;
-		} else {
+		} else {			
+			clearBg(C);
+
 			Background background;
 			if (background.loadFile(filename)) {
 				background.showBg(C);
@@ -295,6 +297,16 @@ bool Debugger::cmd_showbg(int argc, const char **argv) {
 	} else {
 		DebugPrintf("Syntax: showbg <bgname>\n");
 	}
+	return true;
+}
+
+bool Debugger::cmd_clear(int argc, const char **argv) {
+	if (argc == 1) {
+		
+	} else {
+		DebugPrintf("Syntax: clear - clear the screen\n");
+	}
+
 	return true;
 }
 
