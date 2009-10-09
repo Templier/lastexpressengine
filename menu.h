@@ -186,8 +186,7 @@ private:
 
 	// Overlays & elements
 	void drawTrainLine(uint32 time);
-	void drawClock(uint32 time);
-	void hideOverlays();
+	void drawClock(uint32 time);	
 	Common::String getAcornHighlight(SaveLoad::SavegameId id);
 	void showCredits();
 

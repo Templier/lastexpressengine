@@ -33,6 +33,7 @@
 #include "lastexpress/sound.h"
 #include "lastexpress/subtitle.h"
 
+#include "lastexpress/graphics.h"
 #include "lastexpress/helpers.h"
 #include "lastexpress/lastexpress.h"
 #include "lastexpress/resource.h"
@@ -111,7 +112,14 @@ bool Debugger::cmd_playseq(int argc, const char **argv) {
 			Sequence sequence;
 			if (sequence.loadFile(filename)) {
 				for (uint32 i = 0; i < sequence.count(); i++) {
-					sequence.show(i);
+
+					// Clear screen
+					_engine->getGraphicsManager()->clear();
+
+					sequence.showFrameBg(C, i);
+
+					askForRedraw();
+					redrawScreen();
 
 					// Handle right-click to interrupt sequence			
 					Common::Event ev;
@@ -149,11 +157,17 @@ bool Debugger::cmd_showframe(int argc, const char **argv) {
 		} else {
 			Sequence sequence;
 			if (sequence.loadFile(filename)) {
-				if (!sequence.show(getNumber(argv[2]))) {
+				// Clear screen
+				_engine->getGraphicsManager()->clear();
+
+				if (!sequence.showFrameBg(C, getNumber(argv[2]))) {
 					DebugPrintf("Invalid frame index: %i\n", filename.c_str());
 					resetCommand();
 					return true;
 				}
+
+				askForRedraw();
+				redrawScreen();
 
 				_engine->_system->delayMillis(1000);
 			}
@@ -264,8 +278,12 @@ bool Debugger::cmd_showbg(int argc, const char **argv) {
 			return false;
 		} else {
 			Background background;
-			if (background.loadFile(filename))
-				background.show();
+			if (background.loadFile(filename)) {
+				background.showBg(C);
+				askForRedraw();
+			}
+
+			redrawScreen();
 
 			// Pause for a second to be able to see the background
 			_engine->_system->delayMillis(1000);

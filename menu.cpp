@@ -34,6 +34,7 @@
 #include "lastexpress/sound.h"
 
 #include "lastexpress/debug.h"
+#include "lastexpress/graphics.h"
 #include "lastexpress/helpers.h"
 #include "lastexpress/lastexpress.h"
 #include "lastexpress/resource.h"
@@ -86,8 +87,13 @@ void Menu::showMenu() {
 			// FIXME load data from scene: sceneIndex = 65
 			// Show Start screen
 			Background background;
-			if (background.loadFile("autoplay.bg"))
-				background.show();
+			if (background.loadFile("autoplay.bg")) {
+				background.showBg(C);
+				askForRedraw();
+			}
+			
+			redrawScreen();			
+			_engine->_system->delayMillis(250);
 
 			_showStartScreen = false;
 		}
@@ -103,15 +109,17 @@ void Menu::showMenu() {
 	// TODO Load Main menu scene (sceneIndex = 5 * savegame id (+ 1/2)) - see text:00449d80
 	Background background;
 	if (background.loadFile("clock01.bg"))
-		background.show();
+		background.showBg(C);	
 
 	// FIXME set properly
-	_engine->getLogic()->getGameState()->currentScene = 1;
-	_engine->getLogic()->getGameState()->currentTime = 1759500;
+	getState()->currentScene = 1;
+	getState()->currentTime = 1759500;
 
 	// Draw default elements
-	drawClock(_engine->getLogic()->getGameState()->currentTime);
-	drawTrainLine(_engine->getLogic()->getGameState()->currentTime);
+	drawClock(getState()->currentTime);
+	drawTrainLine(getState()->currentTime);
+
+	askForRedraw();
 }
 
 // Handle events
@@ -132,6 +140,8 @@ bool Menu::handleStartMenuEvent(Common::Event ev) {
 	clicked = !clicked;
 	//////////////////////////////////////////////////////////////////////////
 
+	clearBgOverlay();
+
 	// Special case if we are showing credits (only allow left-click & right-click)
 	if (_isShowingCredits) {
 		// Interrupt on right click
@@ -139,47 +149,46 @@ bool Menu::handleStartMenuEvent(Common::Event ev) {
 			_isShowingCredits = false;				// Will cause credits to stop & reset overlays
 
 		showCredits();
+		askForRedraw();
 		return true;
 	}
 	
 	switch(event) {
 	default:
-		hideOverlays();
-		return true;
+		break;
 
 	case kEventCase1:
 	case kEventCase4:
 		// FIXME: understand code...
-		return true;
+		break;
 
 	//////////////////////////////////////////////////////////////////////////
 	case kEventCredits:
-		if (clicked) {
-			_seqEggButtons.show(kButtonCreditsPushed);			
-			playSfx("LIB046.snd");
-			hideOverlays();
+		if (clicked) {			
+			_seqEggButtons.showFrameOverlay(kButtonCreditsPushed);			
+			playSfx("LIB046.snd");			
 			_isShowingCredits = true;
 			_creditsSequenceIndex = 0;
 			showCredits();			
 		} else {
-			_seqEggButtons.show(kButtonCredits);
-			_seqTooltips.show(kTooltipCredits);
+			_seqEggButtons.showFrameOverlay(kButtonCredits);
+			_seqTooltips.showFrameOverlay(kTooltipCredits);
 		}
 		return true;
 
 	//////////////////////////////////////////////////////////////////////////
 	case kEventQuitGame:
-		_seqTooltips.show(kTooltipQuit);
+		_seqTooltips.showFrameOverlay(kTooltipQuit);
 		
 		if (clicked) {
-			_seqButtons.show(kButtonQuitPushed);	
+			_seqButtons.showFrameOverlay(kButtonQuitPushed);	
 			playSfx("LIB046.snd");
+			askForRedraw();
 
 			//TODO some stuff... see disasm
 			return false;
 		} else {
-			_seqButtons.show(kButtonQuit);		
-			return true;
+			_seqButtons.showFrameOverlay(kButtonQuit);					
 		}
 		break;
 
@@ -191,15 +200,14 @@ bool Menu::handleStartMenuEvent(Common::Event ev) {
 	case kEventRewindGame:
 		// TODO check that we can actually rewind
 		if (clicked) {
-			_seqEggButtons.show(kButtonRewindPushed);
-			hideOverlays();
+			_seqEggButtons.showFrameOverlay(kButtonRewindPushed);			
 			playSfx("LIB046.snd");
 
 			// TODO rewind clock
 
 		} else {
-			_seqEggButtons.show(kButtonRewind);
-			_seqTooltips.show(kTooltipRewind);
+			_seqEggButtons.showFrameOverlay(kButtonRewind);
+			_seqTooltips.showFrameOverlay(kTooltipRewind);
 		}
 		return true;
 
@@ -207,15 +215,14 @@ bool Menu::handleStartMenuEvent(Common::Event ev) {
 	case kEventForwardGame:
 		// TODO check that we can actually rewind
 		if (clicked) {
-			_seqEggButtons.show(kButtonForwardPushed);
-			hideOverlays();
+			_seqEggButtons.showFrameOverlay(kButtonForwardPushed);			
 			playSfx("LIB046.snd");
 
 			// TODO advance clock
 
 		} else {
-			_seqEggButtons.show(kButtonForward);
-			_seqTooltips.show(kTooltipFastForward);
+			_seqEggButtons.showFrameOverlay(kButtonForward);
+			_seqTooltips.showFrameOverlay(kTooltipFastForward);
 		}
 		break;
 
@@ -258,20 +265,19 @@ bool Menu::handleStartMenuEvent(Common::Event ev) {
 	case kEventDecreaseVolume:
 		// Cannot decrease volume further
 		if (getVolume() == 0) {
-			_seqButtons.show(kButtonVolume);
-			hideOverlays();
-			return true;
+			_seqButtons.showFrameOverlay(kButtonVolume);			
+			break;
 		}
 
-		_seqTooltips.show(kTooltipVolumeDown);
+		_seqTooltips.showFrameOverlay(kTooltipVolumeDown);
 
 		// Show highlight on button & adjust volume if needed
 		if (clicked) {
-			_seqButtons.show(kButtonVolumeDownPushed);
+			_seqButtons.showFrameOverlay(kButtonVolumeDownPushed);
 			playSfx("LIB046.snd");
 			setVolume(getVolume() - 1);
 		} else {
-			_seqButtons.show(kButtonVolumeDown);			
+			_seqButtons.showFrameOverlay(kButtonVolumeDown);			
 		}
 		break;
 
@@ -279,20 +285,19 @@ bool Menu::handleStartMenuEvent(Common::Event ev) {
 	case kEventIncreaseVolume:
 		// Cannot increase volume further
 		if (getVolume() >= 7) {
-			_seqButtons.show(kButtonVolume);
-			hideOverlays();
-			return true;
+			_seqButtons.showFrameOverlay(kButtonVolume);			
+			break;
 		}
 
-		_seqTooltips.show(kTooltipVolumeUp);
+		_seqTooltips.showFrameOverlay(kTooltipVolumeUp);
 
 		// Show highlight on button & adjust volume if needed
 		if (clicked) {
-			_seqButtons.show(kButtonVolumeUpPushed);
+			_seqButtons.showFrameOverlay(kButtonVolumeUpPushed);
 			playSfx("LIB046.snd");
 			setVolume(getVolume() + 1);
 		} else {
-			_seqButtons.show(kButtonVolumeUp);			
+			_seqButtons.showFrameOverlay(kButtonVolumeUp);			
 		}
 		break;
 
@@ -300,21 +305,20 @@ bool Menu::handleStartMenuEvent(Common::Event ev) {
 	case kEventDecreaseBrightness:
 		// Cannot increase brightness further
 		if (getBrightness() == 0) {
-			_seqButtons.show(kButtonBrightness);
-			hideOverlays();
-			return true;
+			_seqButtons.showFrameOverlay(kButtonBrightness);			
+			break;
 		}
 
-		_seqTooltips.show(kTooltipBrightnessDown);
+		_seqTooltips.showFrameOverlay(kTooltipBrightnessDown);
 
 		// Show highlight on button & adjust brightness if needed
 		if (clicked) {
-			_seqButtons.show(kButtonBrightnessDownPushed);
+			_seqButtons.showFrameOverlay(kButtonBrightnessDownPushed);
 			playSfx("LIB046.snd");
 
 			setBrightness(getBrightness() + 1);
 		} else {
-			_seqButtons.show(kButtonBrightnessDown);			
+			_seqButtons.showFrameOverlay(kButtonBrightnessDown);			
 		}
 		break;
 
@@ -322,23 +326,25 @@ bool Menu::handleStartMenuEvent(Common::Event ev) {
 	case kEventIncreaseBrightness:
 		// Cannot increase brightness further
 		if (getBrightness() >= 6) {
-			_seqButtons.show(kButtonBrightness);
-			hideOverlays();
-			return true;
+			_seqButtons.showFrameOverlay(kButtonBrightness);			
+			break;
 		}
 
-		_seqTooltips.show(kTooltipBrightnessUp);
+		_seqTooltips.showFrameOverlay(kTooltipBrightnessUp);
 
 		// Show highlight on button & adjust brightness if needed
 		if (clicked) {
-			_seqButtons.show(kButtonBrightnessUpPushed);
+			_seqButtons.showFrameOverlay(kButtonBrightnessUpPushed);
 			playSfx("LIB046.snd");
 			setBrightness(getBrightness() + 1);
 		} else {
-			_seqButtons.show(kButtonBrightnessUp);			
+			_seqButtons.showFrameOverlay(kButtonBrightnessUp);			
 		}
 		break;
 	}
+
+	// All cases should break apart from the Quit case, so we can ask for redraw only once here
+	askForRedraw();
 
 	return true;
 }
@@ -413,7 +419,8 @@ Common::String Menu::getAcornHighlight(SaveLoad::SavegameId id) {
 //////////////////////////////////////////////////////////////////////////
 
 // Draw the clock hands at the time
-void Menu::drawClock(uint32 time) {
+void Menu::drawClock(uint32 time) {	
+	clearBg(A);
 
 	// 7:14 p.m. on July 24, 1914 (= 1037700)
 	// 7:30 p.m. on July 26, 1914 (= 4941000)
@@ -431,10 +438,10 @@ void Menu::drawClock(uint32 time) {
 		index_date += 18 * index_minutes / 60;
 
 	// Draw each element
-	_seqHour.show(index_hour);
-	_seqMinutes.show(index_minutes);
-	_seqSun.show(index_sun);
-	_seqDate.show(index_date);
+	_seqHour.showFrameBg(A, index_hour);
+	_seqMinutes.showFrameBg(A, index_minutes);
+	_seqSun.showFrameBg(A, index_sun);
+	_seqDate.showFrameBg(A, index_date);
 }
 
 // Draw the train line at the time
@@ -442,21 +449,14 @@ void Menu::drawTrainLine(uint32 time) {
 
 }
 
-// Hide all overlay frames on the start menu (tooltips, highlights)
-void Menu::hideOverlays() {
-	// TODO implement: get back graphics class and use several surface for background / elements / overlay
-	// hiding overlays will consist in dropping the surface contents, and just refreshing the screen using the untouched other surfaces
-}
-
 // Show credits overlay
 void Menu::showCredits() {
 	if (!_isShowingCredits || _creditsSequenceIndex > _seqCredits.count() - 1) {
 		_isShowingCredits = false;
-		hideOverlays();
 		return;
 	}
 
-	_seqCredits.show(_creditsSequenceIndex);
+	_seqCredits.showFrameOverlay(_creditsSequenceIndex);
 	_creditsSequenceIndex++;
 }
 
@@ -468,14 +468,14 @@ uint32 Menu::getCurrentTime() {
 	// FIXME this is the time as showed on the menu, which might be different from the max time attained in the game by the player
 
 	// return current time as if we already rewinded
-	return _engine->getLogic()->getGameState()->currentTime; 
+	return getState()->currentTime; 
 	
 }
 
 uint32 Menu::getMaxGameTime() {
 	// FIXME check disasm
 	// DEBUG value
-	return _engine->getLogic()->getGameState()->currentTime + 54360; 
+	return getState()->currentTime + 54360; 
 }
 
 void Menu::goToTime(uint32 time) {
@@ -486,34 +486,32 @@ void Menu::goToTime(uint32 time) {
 void Menu::moveToCity(CityOverlay city, CityTime time, StartMenuTooltips tooltipRewind, StartMenuTooltips tooltipForward, bool clicked) {
 	// TODO Check if we have access (there seems to be more checks on some internal times) - probably : current_time / max_game_time / some other?
 	if (getMaxGameTime() < (uint32)time || getCurrentTime() == (uint32)time) {
-		hideOverlays();
 		return;
 	}
 
 	// Show city overlay
 	switch (city) {
 	case kParis:
-		_seqCityStart.show(0);
+		_seqCityStart.showFrameOverlay(0);
 		break;
 
 	case kEnding:
-		_seqCityEnd.show(0);
+		_seqCityEnd.showFrameOverlay(0);
 		break;
 
 	default:
-		_seqCities.show(city);
+		_seqCities.showFrameOverlay(city);
 	}	
 
 	if (clicked) {
-		hideOverlays();
 		playSfx("LIB046.snd");
 		goToTime(time);
 		// TODO set some global var to 1
 	} else {
 		if (getCurrentTime() < (uint32)time)			// For start city (Paris) and end city, this will always be true
-			_seqTooltips.show(tooltipForward);
+			_seqTooltips.showFrameOverlay(tooltipForward);
 		else
-			_seqTooltips.show(tooltipRewind);
+			_seqTooltips.showFrameOverlay(tooltipRewind);
 	}
 }
 
@@ -533,7 +531,7 @@ int Menu::getVolume() {
 
 // Set the volume (converts to ScummVM values)
 void Menu::setVolume(int volume) {
-	_engine->getLogic()->getGameState()->volume = volume;	
+	getState()->volume = volume;	
 
 	// Clamp volume
 	int value = volume * Audio::Mixer::kMaxMixerVolume/7.0;
@@ -548,11 +546,11 @@ void Menu::setVolume(int volume) {
 }
 
 int Menu::getBrightness() {
-	return _engine->getLogic()->getGameState()->brightness;
+	return getState()->brightness;
 }
 
 void Menu::setBrightness(int brightness) {
-	_engine->getLogic()->getGameState()->brightness = brightness;
+	getState()->brightness = brightness;
 
 	// TODO: write to savegame
 	// TODO: reload all graphics and adjust for the new brightness (or not :D)

@@ -46,6 +46,7 @@
 */
 
 #include "common/stream.h"
+#include "graphics/surface.h"
 
 namespace LastExpress {
 
@@ -55,7 +56,7 @@ public:
 	~Background();
 
 	bool load(Common::SeekableReadStream *stream);	
-	bool show();
+	bool show(Graphics::Surface *surface);
 
 private:
 	struct BackgroundHeader {

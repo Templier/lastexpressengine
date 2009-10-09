@@ -25,6 +25,7 @@
 
 #include "lastexpress/lastexpress.h"
 
+#include "lastexpress/graphics.h"
 #include "lastexpress/helpers.h"
 #include "lastexpress/resource.h"
 #include "lastexpress/cursor.h"
@@ -73,6 +74,7 @@ LastExpressEngine::~LastExpressEngine() {
 	SAFE_DELETE(_sfx);
 	SAFE_DELETE(_music);
 	SAFE_DELETE(_logic);
+	SAFE_DELETE(_graphics);
 }
 
 Common::Error LastExpressEngine::run() {
@@ -99,10 +101,12 @@ Common::Error LastExpressEngine::init() {
 	// Create debugger. It requires GFX to be initialized
 	_debugger = new Debugger(this);
 
-	// Start managers: resource, cursor & font
+	// Start managers: resource, graphics, cursor & font
 	_resource = new ResourceManager(this);
 	if (!_resource->loadArchive(ResourceManager::kArchiveAll))
 		return Common::kUnknownError;
+
+	_graphics = new GraphicsManager(_pixelFormat);
 
 	_cursor = new Cursor();
 	if (!_cursor->load(_resource->getFileStream(cursorsName)))
@@ -280,6 +284,7 @@ Common::Error LastExpressEngine::go() {
 				break;
 			}
 
+			_graphics->update();
 			_system->updateScreen();
 			_system->delayMillis(10);
 		}

@@ -118,7 +118,7 @@ public:
 	~Sequence();
 
 	bool load(Common::SeekableReadStream *stream);	
-	bool show(uint32 index);
+	bool show(Graphics::Surface *surface, uint32 index);
 
 	uint32 count();
 

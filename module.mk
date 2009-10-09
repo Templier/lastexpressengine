@@ -8,6 +8,7 @@ MODULE_OBJS := \
 	debug.o \
 	detection.o \
 	font.o \
+	graphics.o \
 	lastexpress.o \
 	logic.o \
 	menu.o \

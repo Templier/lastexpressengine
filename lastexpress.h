@@ -26,24 +26,25 @@
 #ifndef LASTEXPRESS_H
 #define LASTEXPRESS_H
 
+#include "lastexpress/debug.h"
+
 #include "common/system.h"
-#include "graphics/surface.h"
 #include "engines/advancedDetector.h"
 #include "engines/engine.h"
-
-#include "lastexpress/debug.h"
+#include "graphics/surface.h"
+#include "graphics/pixelformat.h"
 
 namespace LastExpress {
 
 class Cursor;
 class Debugger;
 class Font;
+class GraphicsManager;
 class Logic;
 class ResourceManager;
 class StreamedSound;
 
 class LastExpressEngine : public Engine {
-
 protected:
 	// Engine APIs
 	Common::Error run();
@@ -55,24 +56,6 @@ public:
 	LastExpressEngine(OSystem *syst, const ADGameDescription *gd);
 	~LastExpressEngine();
 
-	uint32 getFlags() const { return _gameDescription->flags; }
-
-private:
-	const ADGameDescription *_gameDescription;
-	Graphics::PixelFormat _pixelFormat;
-
-	Cursor *_cursor;
-	Debugger *_debugger;
-	Font *_font;
-	Logic *_logic;
-	ResourceManager *_resource;
-	StreamedSound *_music;
-	StreamedSound *_sfx;
-
-	Common::Error init();
-	Common::Error go();
-
-public:
 	// Accessors
 	Cursor *getCursor() const { return _cursor; }
 	Font *getFont() const { return _font; }
@@ -80,6 +63,25 @@ public:
 	ResourceManager *getResource() const { return _resource; }
 	StreamedSound *getMusicStream() const { return _music; }
 	StreamedSound *getSfxStream() const { return _sfx; }
+	Graphics::PixelFormat getPixelFormat() const { return _pixelFormat; }
+	GraphicsManager *getGraphicsManager() const { return _graphics; }
+
+	uint32 getFlags() const { return _gameDescription->flags; }
+
+private:
+	const ADGameDescription *_gameDescription;
+	Graphics::PixelFormat _pixelFormat;
+	Cursor *_cursor;
+	Debugger *_debugger;
+	Font *_font;
+	Logic *_logic;
+	ResourceManager *_resource;
+	StreamedSound *_music;
+	StreamedSound *_sfx;
+	GraphicsManager *_graphics;
+	
+	Common::Error init();
+	Common::Error go();	
 };
 
 } // End of namespace LastExpress

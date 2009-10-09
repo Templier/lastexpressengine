@@ -87,15 +87,20 @@ bool Background::load(Common::SeekableReadStream *stream) {
 	return true;
 }
 
-bool Background::show() {
+bool Background::show(Graphics::Surface *surface) {
 	if (!_data) {
 		debugC(2, kLastExpressDebugGraphics, "Trying to show a background before loading data!");
 		return false;
 	}
 
-	g_system->fillScreen(0);
-	g_system->copyRectToScreen((byte *)_data, _header.width * 2, _header.posX, _header.posY, _header.width, _header.height);
-	g_system->updateScreen();
+	for (uint16 y = 0; y < _header.height; y++) {
+		uint16 *dst = (uint16 *)surface->pixels + (y * _header.width);
+		for (uint16 x = 0; x < _header.width; x++) {    
+			int i = y * _header.width + x;                  
+
+			*dst++ = _data[i];
+		}
+	}
 
 	return true;
 }

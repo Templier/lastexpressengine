@@ -86,11 +86,11 @@ void FrameInfo::read(Common::SeekableReadStream *in, uint16 decompOffset) {
 	}
 	*/
 
-	debugC(3, kLastExpressDebugGraphics, "    Offsets: data=%d, unknown=%d, palette=%d", dataOffset, unknown, paletteOffset);
-	debugC(3, kLastExpressDebugGraphics, "    Position: (%d, %d) - (%d, %d)", xPos1, yPos1, xPos2, yPos2);
-	debugC(3, kLastExpressDebugGraphics, "    Initial Skip: %d", initialSkip);
-	debugC(3, kLastExpressDebugGraphics, "    Decompressed end offset: %d", decompressedEndOffset);
-	debugC(3, kLastExpressDebugGraphics, "    Compression type: %u\n", compressionType);
+	//debugC(3, kLastExpressDebugGraphics, "    Offsets: data=%d, unknown=%d, palette=%d", dataOffset, unknown, paletteOffset);
+	//debugC(3, kLastExpressDebugGraphics, "    Position: (%d, %d) - (%d, %d)", xPos1, yPos1, xPos2, yPos2);
+	//debugC(3, kLastExpressDebugGraphics, "    Initial Skip: %d", initialSkip);
+	//debugC(3, kLastExpressDebugGraphics, "    Decompressed end offset: %d", decompressedEndOffset);
+	//debugC(3, kLastExpressDebugGraphics, "    Compression type: %u\n", compressionType);
 }
 
 // AnimFrame
@@ -389,7 +389,7 @@ bool Sequence::load(Common::SeekableReadStream *stream) {
 	return true;
 }
 
-bool Sequence::show(uint32 index) {
+bool Sequence::show(Graphics::Surface *surface, uint32 index) {
 	if (_frames.size() == 0) {
 		debugC(2, kLastExpressDebugGraphics, "Trying to show a sequence before loading data!");
 		return false;
@@ -408,28 +408,7 @@ bool Sequence::show(uint32 index) {
 
 	AnimFrame *f = new AnimFrame(_stream, &_frames[index]);
 
-	//TEST: paint it directly to screen
-//#define PAINT_TO_SCREEN
-#ifdef PAINT_TO_SCREEN
-	Graphics::Surface *s = g_system->lockScreen();
-#else
-	Graphics::Surface *s = new Graphics::Surface;
-	s->create(640, 480, 2);
-#endif
-
-	f->paint(s);
-
-#ifdef PAINT_TO_SCREEN
-	g_system->unlockScreen();
-#else
-	g_system->copyRectToScreen((byte *)s->pixels, s->pitch, 0, 0, s->w, s->h);
-	s->free();
-	delete s;
-#endif
-
-	g_system->updateScreen();
-
-	delete f;
+	f->paint(surface);
 
 	return true;
 }
