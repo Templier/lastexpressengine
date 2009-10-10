@@ -13,7 +13,7 @@ MODULE_OBJS := \
 	logic.o \
 	menu.o \
 	resource.o \
-	saveload.o \
+	savegame.o \
 	scene.o \
 	sequence.o \
 	sound.o \

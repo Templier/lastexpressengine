@@ -54,7 +54,7 @@ public:
 private:
 	// Scenes
 	enum Scene {
-		kSceneIntroScreen = 65,		
+		kSceneIntroScreen = 65
 	};
 
 	// State
