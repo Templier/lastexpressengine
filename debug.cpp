@@ -122,12 +122,12 @@ bool Debugger::cmd_playseq(int argc, const char **argv) {
 					askForRedraw();
 					redrawScreen();
 
-					// Handle right-click to interrupt sequence			
+					// Handle right-click to interrupt sequence
 					Common::Event ev;
 					_engine->getEventManager()->pollEvent(ev);
 					if (ev.type == Common::EVENT_RBUTTONDOWN)
 						break;
-						
+
 					_engine->_system->delayMillis(175);
 				}
 			}
@@ -276,7 +276,7 @@ bool Debugger::cmd_showbg(int argc, const char **argv) {
 			copyCommand(argc, argv);
 
 			return false;
-		} else {			
+		} else {
 			clearBg(C);
 
 			Background background;
@@ -293,7 +293,7 @@ bool Debugger::cmd_showbg(int argc, const char **argv) {
 			resetCommand();
 		}
 
-		
+
 	} else {
 		DebugPrintf("Syntax: showbg <bgname>\n");
 	}
@@ -302,7 +302,7 @@ bool Debugger::cmd_showbg(int argc, const char **argv) {
 
 bool Debugger::cmd_clear(int argc, const char **argv) {
 	if (argc == 1) {
-		
+
 	} else {
 		DebugPrintf("Syntax: clear - clear the screen\n");
 	}

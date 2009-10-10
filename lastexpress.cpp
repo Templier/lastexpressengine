@@ -254,7 +254,7 @@ Common::Error LastExpressEngine::go() {
 					if (i_snd != list_snd.end()) {
 						_system->getMixer()->stopAll();
 
-						_sfx->load(_resource->getFileStream((*i_snd)->getName()));						
+						_sfx->load(_resource->getFileStream((*i_snd)->getName()));
 						i_snd++;
 					}
 				}

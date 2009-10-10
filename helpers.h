@@ -35,7 +35,7 @@
 #define playSfx(name) _engine->getSfxStream()->load(_engine->getResource()->getFileStream(name));
 #define getState() _engine->getLogic()->getGameState()
 
-#define showBg(type) show(_engine->getGraphicsManager()->getBackground##type())				 
+#define showBg(type) show(_engine->getGraphicsManager()->getBackground##type())
 #define showFrameBg(type, index) show(_engine->getGraphicsManager()->getBackground##type(), index)
 #define showFrameOverlay(index) show(_engine->getGraphicsManager()->getOverlay(), index)
 

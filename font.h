@@ -35,7 +35,7 @@
 
 	// For each glyph
 		byte {18*8}   - Glyph data
-		
+
 	byte {x}      - Unknown data
 */
 

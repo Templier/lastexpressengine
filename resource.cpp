@@ -60,7 +60,7 @@ bool ResourceManager::loadArchive(ArchiveType type) {
 
 	// Load HD
 	loadedOk &= loadArchive(archiveHDPath);
-	
+
 	switch(type) {
 	case kArchiveCd1:
 		return loadedOk && loadArchive(archiveCD1Path);
@@ -70,7 +70,7 @@ bool ResourceManager::loadArchive(ArchiveType type) {
 
 	case kArchiveCd3:
 		return loadedOk && loadArchive(archiveCD3Path);
-	
+
 	case kArchiveAll:
 	default:
 		loadedOk &= loadArchive(archiveCD1Path);

@@ -176,8 +176,8 @@ private:
 	// TODO might be loaded on-the-fly in the future
 	Sequence _seqCredits;
 	Sequence _seqAcorn;
-	
-	// Indicator to know if we need to show the start animation when showMenu is called	
+
+	// Indicator to know if we need to show the start animation when showMenu is called
 	bool _showStartScreen;
 	bool _isShowingCredits;
 	uint32 _creditsSequenceIndex;
@@ -186,7 +186,7 @@ private:
 
 	// Overlays & elements
 	void drawTrainLine(uint32 time);
-	void drawClock(uint32 time);	
+	void drawClock(uint32 time);
 	Common::String getAcornHighlight(SaveLoad::SavegameId id);
 	void showCredits();
 
@@ -195,7 +195,7 @@ private:
 	uint32 getMaxGameTime();
 	void goToTime(uint32 time);
 	void moveToCity(CityOverlay city, CityTime time, StartMenuTooltips tooltipRewind, StartMenuTooltips tooltipForward, bool clicked);
-	
+
 	// Sound/Brightness related
 	int getVolume();
 	void setVolume(int volume);

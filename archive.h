@@ -31,7 +31,7 @@
 	Archive file format (.HPF)
 
 	uint32 {4}   - number of files
-	
+
 	// for each file
 		char {12}    - name (zero-terminated)
 		uint32 {4}   - offset (expressed in sectors of 2048 bytes)
@@ -53,7 +53,7 @@ class HPFArchive : public Common::Archive {
 public:
 
 	HPFArchive(const Common::String &path);
-	
+
 	bool hasFile(const Common::String &name);
 	int listMembers(Common::ArchiveMemberList &list);
 	Common::ArchiveMemberPtr getMember(const Common::String &name);

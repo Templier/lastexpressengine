@@ -152,7 +152,7 @@ bool Animation::show() {
 			processOverlayFrame(_stream, c);
 			frameNumber++;
 
-			// Handle right-click to interrupt animations			
+			// Handle right-click to interrupt animations
 			Common::Event ev;
 			g_engine->getEventManager()->pollEvent(ev);
 			if (ev.type == Common::EVENT_RBUTTONDOWN) {
@@ -169,7 +169,7 @@ bool Animation::show() {
 
 			break;
 		}
-			
+
 
 		case kChunkTypeUnknown15:
 		case kChunkTypeUnknown16:
@@ -190,12 +190,9 @@ bool Animation::show() {
 			//TODO: we need to start the linked sound (.LNK) after the audio from the animation ends
 			break;
 
-			
-
 		default:
 			error("  UNKNOWN chunk type=%x tag=%x size=%d", c->type, c->tag, c->size);
 			break;
-
 		}
 	}
 

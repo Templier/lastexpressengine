@@ -34,7 +34,7 @@ namespace LastExpress {
 Scene::Scene() {}
 Scene::~Scene() {}
 
-bool Scene::load(Common::SeekableReadStream *stream) {	
+bool Scene::load(Common::SeekableReadStream *stream) {
 	//if (cdIndex < 0 || cdIndex > 3)	{
 	//	debugC(2, kLastExpressDebugScenes, "Scene::load - Invalid scene file index: %i", cdIndex);
 	//	return false;
@@ -65,7 +65,7 @@ bool Scene::load(Common::SeekableReadStream *stream) {
 	for (uint32 i = 0; i < numScenes; ++i) {
 
 		SceneEntry scene;
-		
+
 		stream->read(&scene.name, sizeof(scene.name));
 		scene.sig = stream->readByte();
 		scene.count = stream->readUint16LE();;

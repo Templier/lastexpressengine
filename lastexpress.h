@@ -79,9 +79,9 @@ private:
 	StreamedSound *_music;
 	StreamedSound *_sfx;
 	GraphicsManager *_graphics;
-	
+
 	Common::Error init();
-	Common::Error go();	
+	Common::Error go();
 };
 
 } // End of namespace LastExpress

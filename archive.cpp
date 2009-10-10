@@ -107,7 +107,7 @@ Common::SeekableReadStream *HPFArchive::createReadStreamForMember(const Common::
 	Common::File *archive = new Common::File;
 	if (!archive)
 		return NULL;
-	 
+
 	if (!archive->open(_filename)) {
 		delete archive;
 		return NULL;

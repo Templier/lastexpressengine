@@ -60,7 +60,7 @@
 		uint32 {4}      - ??
 
 		uint32 {4}      - Number of sound cache entries?
-		(for each sound cache entry)  - total = byte {68} 
+		(for each sound cache entry)  - total = byte {68}
 			uint32 {4}      - ??
 			uint32 {4}      - ??
 			uint32 {4}      - ??
@@ -117,14 +117,14 @@ public:
 			volume = _defaultVolume;
 
 			currentScene = 0;
-			currentTime = _defaultTime;			
+			currentTime = _defaultTime;
 		}
 	};
 
 	// Init & Access
 	static bool initSavegame(SavegameId id);
 	static GameState* getGameState(SavegameId id);
-	
+
 
 	// Getting information
 	static bool isSavegamePresent(SavegameId id);

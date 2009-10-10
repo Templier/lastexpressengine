@@ -53,7 +53,7 @@ void GraphicsManager::update() {
 	// Update the screen if needed and reset the status
 	if (_changed) {
 		mergePlanes();
-		updateScreen();		
+		updateScreen();
 		_changed = false;
 	}
 }
@@ -70,7 +70,7 @@ void GraphicsManager::clear() {
 	_backgroundA.fillRect(Common::Rect(640, 480), 0);
 }
 
-void GraphicsManager::mergePlanes() {	
+void GraphicsManager::mergePlanes() {
 	// Clear screen surface
 	_screen.fillRect(Common::Rect(640, 480), 0);
 
@@ -80,10 +80,10 @@ void GraphicsManager::mergePlanes() {
 	uint16 *backgroundA = (uint16 *)_backgroundA.pixels;
 
 	for (int i = 0; i < 640 * 480; i++) {
-		
+
 		if (*(overlay))
 			*(screen) = *(overlay);
-		else if (*(backgroundA)) 
+		else if (*(backgroundA))
 			*(screen) = *(backgroundA);
 		else
 			*(screen) = *(backgroundC);

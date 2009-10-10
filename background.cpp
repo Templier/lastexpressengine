@@ -95,8 +95,8 @@ bool Background::show(Graphics::Surface *surface) {
 
 	for (uint16 y = 0; y < _header.height; y++) {
 		uint16 *dst = (uint16 *)surface->pixels + (y * _header.width);
-		for (uint16 x = 0; x < _header.width; x++) {    
-			int i = y * _header.width + x;                  
+		for (uint16 x = 0; x < _header.width; x++) {
+			int i = y * _header.width + x;
 
 			*dst++ = _data[i];
 		}

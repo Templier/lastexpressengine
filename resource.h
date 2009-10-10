@@ -47,7 +47,7 @@ public:
 	ResourceManager(LastExpressEngine *engine);
 
 	// Loading
-	bool loadArchive(ArchiveType type);	
+	bool loadArchive(ArchiveType type);
 	Common::SeekableReadStream *getFileStream(const Common::String &name);
 
 	// Archive functions

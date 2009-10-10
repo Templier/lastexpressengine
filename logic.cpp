@@ -41,10 +41,10 @@ Logic::Logic(LastExpressEngine *engine) : _engine(engine) {
 
 Logic::~Logic() {
 	if (_gameState)
-		delete _gameState;	
+		delete _gameState;
 
 	if (_menu)
-		delete _menu;	
+		delete _menu;
 }
 
 //////////////////////////////////////////////////////////////////////////

@@ -40,12 +40,12 @@
 		byte {1}    - Event type (second part of sequence file name at some point)
 		byte {1}    - ?? (see text:004067F0 - used as a switch value)
 		byte {1}    - ??
-		byte {1}    - ?? 
-		byte {1}    - ?? 
-		byte {1}    - ?? 
-		byte {1}    - ?? 
-		byte {1}    - ?? 
-		byte {1}    - ?? 
+		byte {1}    - ??
+		byte {1}    - ??
+		byte {1}    - ??
+		byte {1}    - ??
+		byte {1}    - ??
+		byte {1}    - ??
 
 		probably contains cursor type too
 
@@ -70,7 +70,7 @@ public:
 		byte unknown21;
 		byte unknown22;
 		byte unknown23;
-		
+
 		SceneEntry() {
 			strcpy((char*)&name, "");
 			sig = 0;
@@ -91,7 +91,7 @@ public:
 	Scene();
 	~Scene();
 
-	bool load(Common::SeekableReadStream *stream);	
+	bool load(Common::SeekableReadStream *stream);
 	SceneEntry* getEntry(uint sceneIndex);
 
 private:

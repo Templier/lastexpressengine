@@ -29,14 +29,14 @@
 /*
 	Cursor format (CURSORS.TBM)
 
-	style table: 
+	style table:
 		(for each cursor)
 		uint16 {2}       - hotspot X
-		uint16 {2}	     - hotspot Y	
+		uint16 {2}	     - hotspot Y
 
 	data:
 		(for each cursor)
-		uint16 {32*32}   - cursor data		
+		uint16 {32*32}   - cursor data
 */
 
 #include "common/system.h"

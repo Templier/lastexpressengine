@@ -47,7 +47,7 @@ public:
 
 	// FIXME this is there for animation until we change it to use the graphic surface here instead of its private ones.
 	Graphics::Surface _screen;					// Actual screen surface
-	
+
 	// Accessors
 	Graphics::Surface *getBackgroundA() { return &_backgroundA; }
 	Graphics::Surface *getBackgroundC() { return &_backgroundC; }

@@ -50,9 +50,9 @@ namespace LastExpress {
 // Train line times
 const uint32 trainLineTimes[31] = { /* Start */ 1037700 , 1148400, 1170900, 1228500, 1303200, 1335600, 1359900, 1367100,
 								  /* Strasbourg */ 1490400, 1539000, 1563300, 1656000, 1713600, 1739700, 1809900,
-								  /* Munich */ 1852200, 1984500, 2049300, 2075400, 2101500, 2154600, 
-								  /* Vienna */ 2268000, 2383200, 2418300, 
-								  /* Budapest */ 2551500, 
+								  /* Munich */ 1852200, 1984500, 2049300, 2075400, 2101500, 2154600,
+								  /* Vienna */ 2268000, 2383200, 2418300,
+								  /* Budapest */ 2551500,
 								  /* Belgrade */ 2952000, 3205800, 3492000, 3690000, 4320900,
 								  /* Constantinople */ 4941000 };
 
@@ -139,8 +139,8 @@ void Menu::showMenu() {
 				background.showBg(C);
 				askForRedraw();
 			}
-			
-			redrawScreen();			
+
+			redrawScreen();
 			_engine->_system->delayMillis(250);
 
 			_showStartScreen = false;
@@ -157,7 +157,7 @@ void Menu::showMenu() {
 	// TODO Load Main menu scene (sceneIndex = 5 * savegame id (+ 1/2)) - see text:00449d80
 	Background background;
 	if (background.loadFile("clock01.bg"))
-		background.showBg(C);	
+		background.showBg(C);
 
 	// Draw default elements
 	clearBg(A);
@@ -173,7 +173,7 @@ bool Menu::handleStartMenuEvent(Common::Event ev) {
 	// TODO Process event (check hitbox / etc.)
 	// coordinates: ev.mouse.x, ev.mouse.y
 	//bool clicked = (ev.type == Common::EVENT_LBUTTONDOWN);
-	
+
 	//////////////////////////////////////////////////////////////////////////
 	// DEBUG
 	if (ev.type == Common::EVENT_MOUSEMOVE)
@@ -197,7 +197,7 @@ bool Menu::handleStartMenuEvent(Common::Event ev) {
 		askForRedraw();
 		return true;
 	}
-	
+
 	switch(event) {
 	default:
 		break;
@@ -209,12 +209,12 @@ bool Menu::handleStartMenuEvent(Common::Event ev) {
 
 	//////////////////////////////////////////////////////////////////////////
 	case kEventCredits:
-		if (clicked) {			
-			_seqEggButtons.showFrameOverlay(kButtonCreditsPushed);			
-			playSfx("LIB046.snd");			
+		if (clicked) {
+			_seqEggButtons.showFrameOverlay(kButtonCreditsPushed);
+			playSfx("LIB046.snd");
 			_isShowingCredits = true;
 			_creditsSequenceIndex = 0;
-			showCredits();			
+			showCredits();
 		} else {
 			_seqEggButtons.showFrameOverlay(kButtonCredits);
 			_seqTooltips.showFrameOverlay(kTooltipCredits);
@@ -224,16 +224,16 @@ bool Menu::handleStartMenuEvent(Common::Event ev) {
 	//////////////////////////////////////////////////////////////////////////
 	case kEventQuitGame:
 		_seqTooltips.showFrameOverlay(kTooltipQuit);
-		
+
 		if (clicked) {
-			_seqButtons.showFrameOverlay(kButtonQuitPushed);	
+			_seqButtons.showFrameOverlay(kButtonQuitPushed);
 			playSfx("LIB046.snd");
 			askForRedraw();
 
 			//TODO some stuff... see disasm
 			return false;
 		} else {
-			_seqButtons.showFrameOverlay(kButtonQuit);					
+			_seqButtons.showFrameOverlay(kButtonQuit);
 		}
 		break;
 
@@ -245,7 +245,7 @@ bool Menu::handleStartMenuEvent(Common::Event ev) {
 	case kEventRewindGame:
 		// TODO check that we can actually rewind
 		if (clicked) {
-			_seqEggButtons.showFrameOverlay(kButtonRewindPushed);			
+			_seqEggButtons.showFrameOverlay(kButtonRewindPushed);
 			playSfx("LIB046.snd");
 
 			// TODO rewind clock
@@ -260,7 +260,7 @@ bool Menu::handleStartMenuEvent(Common::Event ev) {
 	case kEventForwardGame:
 		// TODO check that we can actually rewind
 		if (clicked) {
-			_seqEggButtons.showFrameOverlay(kButtonForwardPushed);			
+			_seqEggButtons.showFrameOverlay(kButtonForwardPushed);
 			playSfx("LIB046.snd");
 
 			// TODO advance clock
@@ -310,7 +310,7 @@ bool Menu::handleStartMenuEvent(Common::Event ev) {
 	case kEventDecreaseVolume:
 		// Cannot decrease volume further
 		if (getVolume() == 0) {
-			_seqButtons.showFrameOverlay(kButtonVolume);			
+			_seqButtons.showFrameOverlay(kButtonVolume);
 			break;
 		}
 
@@ -322,7 +322,7 @@ bool Menu::handleStartMenuEvent(Common::Event ev) {
 			playSfx("LIB046.snd");
 			setVolume(getVolume() - 1);
 		} else {
-			_seqButtons.showFrameOverlay(kButtonVolumeDown);			
+			_seqButtons.showFrameOverlay(kButtonVolumeDown);
 		}
 		break;
 
@@ -330,7 +330,7 @@ bool Menu::handleStartMenuEvent(Common::Event ev) {
 	case kEventIncreaseVolume:
 		// Cannot increase volume further
 		if (getVolume() >= 7) {
-			_seqButtons.showFrameOverlay(kButtonVolume);			
+			_seqButtons.showFrameOverlay(kButtonVolume);
 			break;
 		}
 
@@ -342,7 +342,7 @@ bool Menu::handleStartMenuEvent(Common::Event ev) {
 			playSfx("LIB046.snd");
 			setVolume(getVolume() + 1);
 		} else {
-			_seqButtons.showFrameOverlay(kButtonVolumeUp);			
+			_seqButtons.showFrameOverlay(kButtonVolumeUp);
 		}
 		break;
 
@@ -350,7 +350,7 @@ bool Menu::handleStartMenuEvent(Common::Event ev) {
 	case kEventDecreaseBrightness:
 		// Cannot increase brightness further
 		if (getBrightness() == 0) {
-			_seqButtons.showFrameOverlay(kButtonBrightness);			
+			_seqButtons.showFrameOverlay(kButtonBrightness);
 			break;
 		}
 
@@ -363,7 +363,7 @@ bool Menu::handleStartMenuEvent(Common::Event ev) {
 
 			setBrightness(getBrightness() + 1);
 		} else {
-			_seqButtons.showFrameOverlay(kButtonBrightnessDown);			
+			_seqButtons.showFrameOverlay(kButtonBrightnessDown);
 		}
 		break;
 
@@ -371,7 +371,7 @@ bool Menu::handleStartMenuEvent(Common::Event ev) {
 	case kEventIncreaseBrightness:
 		// Cannot increase brightness further
 		if (getBrightness() >= 6) {
-			_seqButtons.showFrameOverlay(kButtonBrightness);			
+			_seqButtons.showFrameOverlay(kButtonBrightness);
 			break;
 		}
 
@@ -383,7 +383,7 @@ bool Menu::handleStartMenuEvent(Common::Event ev) {
 			playSfx("LIB046.snd");
 			setBrightness(getBrightness() + 1);
 		} else {
-			_seqButtons.showFrameOverlay(kButtonBrightnessUp);			
+			_seqButtons.showFrameOverlay(kButtonBrightnessUp);
 		}
 		break;
 	}
@@ -404,7 +404,7 @@ void Menu::loadSequences() {
 		return;
 
 	bool loaded = true;
-	
+
 	loaded  &= _seqHour.loadFile("egghour.seq");
 	loaded  &= _seqMinutes.loadFile("eggmin.seq");
 	loaded  &= _seqSun.loadFile("sun.seq");
@@ -415,7 +415,7 @@ void Menu::loadSequences() {
 	loaded  &= _seqButtons.loadFile("quit.seq");
 	loaded  &= _seqCityStart.loadFile("jlinetl.seq");
 	loaded  &= _seqCities.loadFile("jlinecen.seq");
-	loaded  &= _seqCityEnd.loadFile("jlinebr.seq");	
+	loaded  &= _seqCityEnd.loadFile("jlinebr.seq");
 	loaded  &= _seqLine1.loadFile("line1.seq");
 	loaded  &= _seqLine2.loadFile("line2.seq");
 
@@ -468,7 +468,7 @@ Common::String Menu::getAcornHighlight(SaveLoad::SavegameId id) {
 //////////////////////////////////////////////////////////////////////////
 
 // Draw the clock hands at the time
-void Menu::drawClock(uint32 time) {	
+void Menu::drawClock(uint32 time) {
 	// 7:14 p.m. on July 24, 1914 (= 1037700)
 	// 7:30 p.m. on July 26, 1914 (= 4941000)
 
@@ -481,7 +481,7 @@ void Menu::drawClock(uint32 time) {
 	// Calculate each sequence index from the current time
 	uint32 hours = time % 1296000 / 54000;
 	uint32 index_minutes = time % 54000 / 900 % 60 % 60;
-	uint32 index_hour = 5 * (index_minutes / 60 + hours % 12) % 60;	
+	uint32 index_hour = 5 * (index_minutes / 60 + hours % 12) % 60;
 	uint32 index_sun = 5 * (index_minutes / 60 + hours) % 120;
 	uint32 index_date = 18 * time / 1296000;
 	if (hours == 23)
@@ -514,7 +514,7 @@ void Menu::drawTrainLine(uint32 time) {
 	if (index >= _seqLine1.count()) { // we passed Belgrade
 		_seqLine1.showFrameBg(A, _seqLine1.count() - 1);
 		_seqLine2.showFrameBg(A, index);
-	} else {		
+	} else {
 		_seqLine1.showFrameBg(A, index);
 		// no need to draw from line2
 	}
@@ -539,13 +539,13 @@ uint32 Menu::getCurrentTime() {
 	// FIXME this is the time as showed on the menu, which might be different from the max time attained in the game by the player
 
 	// return current time as if we already rewinded
-	return getState()->currentTime; 
+	return getState()->currentTime;
 }
 
 uint32 Menu::getMaxGameTime() {
 	// FIXME check disasm
 	// DEBUG value
-	return getState()->currentTime + 54360; 
+	return getState()->currentTime + 54360;
 }
 
 void Menu::goToTime(uint32 time) {
@@ -571,7 +571,7 @@ void Menu::moveToCity(CityOverlay city, CityTime time, StartMenuTooltips tooltip
 
 	default:
 		_seqCities.showFrameOverlay(city);
-	}	
+	}
 
 	if (clicked) {
 		playSfx("LIB046.snd");
@@ -595,13 +595,13 @@ int Menu::getVolume() {
 
 	// Convert to in-game value [0-7]
 	volume *= 7.0/Audio::Mixer::kMaxMixerVolume;
-	
+
 	return volume;
 }
 
 // Set the volume (converts to ScummVM values)
 void Menu::setVolume(int volume) {
-	getState()->volume = volume;	
+	getState()->volume = volume;
 
 	// Clamp volume
 	int value = volume * Audio::Mixer::kMaxMixerVolume/7.0;

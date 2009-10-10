@@ -34,7 +34,7 @@
 	frames headers:
 	// for each frame
 		uint32 {4}    - Data offset (from beginning of file)
-		uint32 {4}    - Unknown 
+		uint32 {4}    - Unknown
 		uint32 {4}    - Palette offset (from beginning of file)
 		uint32 {4}    - Top-left X coordinate
 		uint32 {4}    - Top-left Y coordinate
@@ -42,7 +42,7 @@
 		uint32 {4}    - Bottom-right Y coordinate
 		uint32 {4}    - Initial offset of decompressed data (doubled, since each pixel occupies one color word)
 		uint32 {4}    - End of data after decompression
-		
+
 		(for SEQ files only)
 		uint32 {4}    - Unknown
 		uint32 {4}    - Unknown
@@ -117,7 +117,7 @@ public:
 	Sequence();
 	~Sequence();
 
-	bool load(Common::SeekableReadStream *stream);	
+	bool load(Common::SeekableReadStream *stream);
 	bool show(Graphics::Surface *surface, uint32 index);
 
 	uint32 count();

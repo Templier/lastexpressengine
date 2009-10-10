@@ -55,7 +55,7 @@ public:
 	Background();
 	~Background();
 
-	bool load(Common::SeekableReadStream *stream);	
+	bool load(Common::SeekableReadStream *stream);
 	bool show(Graphics::Surface *surface);
 
 private:
