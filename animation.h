@@ -93,6 +93,6 @@ private:
 	AppendableSound *_audio;
 };
 
-} // End of Express namespace
+} // End of namespace LastExpress
 
 #endif // LASTEXPRESS_ANIMATION_H

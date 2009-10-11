@@ -42,7 +42,6 @@
 		byte {x}     - red colour channel data
 		byte {x}     - blue colour channel data
 		byte {x}     - green colour channel data
-
 */
 
 #include "common/stream.h"

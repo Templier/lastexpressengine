@@ -58,7 +58,7 @@ private:
 
 	bool loadArchive(const Common::String &name);
 
-	Common::Array<HPFArchive*> _archives;
+	Common::Array<HPFArchive *> _archives;
 };
 
 } // End of namespace LastExpress

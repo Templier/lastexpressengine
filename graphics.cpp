@@ -100,4 +100,4 @@ void GraphicsManager::updateScreen() {
 	g_system->copyRectToScreen((byte *)_screen.getBasePtr(0, 0), 640 * 2, 0, 0, 640, 480);
 }
 
-} // End of Groovie namespace
+} // End of namespace LastExpress

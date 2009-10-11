@@ -144,7 +144,7 @@ SaveLoad::GameState* SaveLoad::getGameState(SavegameId id) {
 
 // Get the file name from the savegame ID
 Common::String SaveLoad::getSavegameName(SavegameId id) {
-	assert(id >=0 && id < 6);
+	assert(id >= 0 && id < 6);
 
 	switch (id) {
 	case kSavegameBlue:

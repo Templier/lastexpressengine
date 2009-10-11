@@ -74,6 +74,6 @@ private:
 	char **command_params;
 };
 
-}  // End of LastExpress namespace
+} // End of namespace LastExpress
 
 #endif // LASTEXPRESS_DEBUG_H

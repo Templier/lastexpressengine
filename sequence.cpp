@@ -90,6 +90,7 @@ void FrameInfo::read(Common::SeekableReadStream *in, uint16 decompOffset) {
 	//debugC(3, kLastExpressDebugGraphics, "    Compression type: %u\n", compressionType);
 }
 
+
 // AnimFrame
 
 AnimFrame::AnimFrame(Common::SeekableReadStream *in, FrameInfo *f) : _palette(NULL) {
@@ -410,4 +411,4 @@ bool Sequence::show(Graphics::Surface *surface, uint32 index) {
 	return true;
 }
 
-} // End of Express namespace
+} // End of namespace LastExpress

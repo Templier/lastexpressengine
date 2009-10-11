@@ -64,7 +64,6 @@
 
 	data
 		byte {x}      - compressed image data
-
 */
 
 #include "common/stream.h"
@@ -142,6 +141,6 @@ private:
 	uint32 _unknown;
 };
 
-} // End of LastExpress namespace
+} // End of namespace LastExpress
 
 #endif // LASTEXPRESS_SEQUENCE_H

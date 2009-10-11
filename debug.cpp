@@ -87,12 +87,12 @@ void Debugger::copyCommand(int argc, const char **argv) {
 }
 
 void Debugger::callCommand() {
-	(*command)(num_params, (const char**)command_params);
+	(*command)(num_params, (const char **)command_params);
 }
 
 bool Debugger::cmd_playseq(int argc, const char **argv) {
 	if (argc == 2) {
-		Common::String filename(const_cast<char*>(argv[1]));
+		Common::String filename(const_cast<char *>(argv[1]));
 
 		if (!_engine->getResource()->hasFile(filename)) {
 			DebugPrintf("Cannot find file: %s\n", filename.c_str());
@@ -138,7 +138,7 @@ bool Debugger::cmd_playseq(int argc, const char **argv) {
 
 bool Debugger::cmd_showframe(int argc, const char **argv) {
 	if (argc == 3) {
-		Common::String filename(const_cast<char*>(argv[1]));
+		Common::String filename(const_cast<char *>(argv[1]));
 
 		if (!_engine->getResource()->hasFile(filename)) {
 			DebugPrintf("Cannot find file: %s\n", filename.c_str());
@@ -178,7 +178,7 @@ bool Debugger::cmd_showframe(int argc, const char **argv) {
 
 bool Debugger::cmd_playsnd(int argc, const char **argv) {
 	if (argc == 2) {
-		Common::String filename(const_cast<char*>(argv[1]));
+		Common::String filename(const_cast<char *>(argv[1]));
 
 		if (!_engine->getResource()->hasFile(filename)) {
 			DebugPrintf("Cannot find file: %s\n", filename.c_str());
@@ -196,7 +196,7 @@ bool Debugger::cmd_playsnd(int argc, const char **argv) {
 
 bool Debugger::cmd_playsbe(int argc, const char **argv) {
 	if (argc == 2) {
-		Common::String filename(const_cast<char*>(argv[1]));
+		Common::String filename(const_cast<char *>(argv[1]));
 
 		if (!_engine->getResource()->hasFile(filename)) {
 			DebugPrintf("Cannot find file: %s\n", filename.c_str());
@@ -230,7 +230,7 @@ bool Debugger::cmd_playsbe(int argc, const char **argv) {
 
 bool Debugger::cmd_playnis(int argc, const char **argv) {
 	if (argc == 2) {
-		Common::String filename(const_cast<char*>(argv[1]));
+		Common::String filename(const_cast<char *>(argv[1]));
 
 		if (!_engine->getResource()->hasFile(filename)) {
 			DebugPrintf("Cannot find file: %s\n", filename.c_str());
@@ -259,7 +259,7 @@ bool Debugger::cmd_playnis(int argc, const char **argv) {
 
 bool Debugger::cmd_showbg(int argc, const char **argv) {
 	if (argc == 2) {
-		Common::String filename(const_cast<char*>(argv[1]));
+		Common::String filename(const_cast<char *>(argv[1]));
 
 		if (!_engine->getResource()->hasFile(filename)) {
 			DebugPrintf("Cannot find file: %s\n", filename.c_str());
@@ -308,7 +308,7 @@ bool Debugger::cmd_clear(int argc, const char **argv) {
 
 bool Debugger::cmd_listfiles(int argc, const char **argv) {
 	if (argc == 2) {
-		Common::String filter(const_cast<char*>(argv[1]));
+		Common::String filter(const_cast<char *>(argv[1]));
 
 		Common::ArchiveMemberList list;
 		int count = _engine->getResource()->listMatchingMembers(list, filter);
@@ -324,4 +324,4 @@ bool Debugger::cmd_listfiles(int argc, const char **argv) {
 	return true;
 }
 
-} // End of LastExpress namespace
+} // End of namespace LastExpress

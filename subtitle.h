@@ -81,7 +81,6 @@ private:
 	Common::Array<Subtitle> _subtitles;
 };
 
-
 } // End of namespace LastExpress
 
 #endif // LASTEXPRESS_SUBTITLE_H

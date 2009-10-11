@@ -199,7 +199,7 @@ bool Animation::show() {
 	return true;
 }
 
-void Animation::processOverlayFrame( Common::SeekableReadStream * in, Chunk * c ) {
+void Animation::processOverlayFrame(Common::SeekableReadStream *in, Chunk *c) {
 	// Create a temporary surface to merge the overlay with the background
 	Graphics::Surface *s = new Graphics::Surface;
 	s->create(640, 480, 2);
@@ -259,4 +259,4 @@ void Animation::processChunkAudio(Common::SeekableReadStream *in, Chunk *c) {
 	_audio->queueBuffer(in->readStream(size));
 }
 
-} // End of Express namespace
+} // End of namespace LastExpress

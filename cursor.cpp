@@ -89,7 +89,7 @@ bool Cursor::setStyle(CursorStyle style) {
 
 	uint16 hotspotX = READ_LE_UINT16(_data + (style * 4));
 	uint16 hotspotY = READ_LE_UINT16(_data + (style * 4) + 2);
-	debugC(15, kLastExpressDebugCursor | kLastExpressDebugAll	, "    hotspot x: %d, hotspot y: %d", hotspotX, hotspotY);
+	debugC(15, kLastExpressDebugCursor | kLastExpressDebugAll, "    hotspot x: %d, hotspot y: %d", hotspotX, hotspotY);
 
 	CursorMan.replaceCursor((const byte *)pixels, 32, 32, hotspotX, hotspotY, 0, 1, new Graphics::PixelFormat(2, 5, 5, 5, 0, 10, 5, 0, 0));
 

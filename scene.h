@@ -62,7 +62,7 @@ public:
 		char name[8];
 		byte sig;
 		uint16 count;
-		Common::Rect* rect;
+		Common::Rect *rect;
 		byte eventType;
 		byte unknown16;
 		byte unknown17;
@@ -74,7 +74,7 @@ public:
 		byte unknown23;
 
 		SceneEntry() {
-			strcpy((char*)&name, "");
+			strcpy((char *)&name, "");
 			sig = 0;
 			count = 0;
 			rect = NULL;
@@ -94,7 +94,7 @@ public:
 	~Scene();
 
 	bool load(Common::SeekableReadStream *stream);
-	SceneEntry* getEntry(uint sceneIndex);
+	SceneEntry *getEntry(uint sceneIndex);
 
 private:
 	Common::Array<SceneEntry> _scenes;

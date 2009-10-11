@@ -79,11 +79,7 @@
 			byte {16}   - ?? (maybe save point header?)
 
 		... more unknown stuff
-
-
-
 */
-
 
 #include "common/savefile.h"
 
@@ -122,7 +118,7 @@ public:
 
 	// Init & Access
 	static bool initSavegame(SavegameId id);
-	static GameState* getGameState(SavegameId id);
+	static GameState *getGameState(SavegameId id);
 
 
 	// Getting information

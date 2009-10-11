@@ -70,7 +70,7 @@ bool Scene::load(Common::SeekableReadStream *stream) {
 		stream->read(&scene.name, sizeof(scene.name));
 		scene.sig = stream->readByte();
 		scene.count = stream->readUint16LE();;
-		scene.rect = (Common::Rect*)stream->readUint32LE();
+		scene.rect = (Common::Rect *)stream->readUint32LE();
 		scene.eventType = stream->readByte();
 		scene.unknown16 = stream->readByte();
 		scene.unknown17 = stream->readByte();
@@ -93,7 +93,7 @@ bool Scene::load(Common::SeekableReadStream *stream) {
 	return true;
 }
 
-Scene::SceneEntry* Scene::getEntry(uint sceneIndex) {
+Scene::SceneEntry *Scene::getEntry(uint sceneIndex) {
 	if (_scenes.empty())
 		return NULL;
 

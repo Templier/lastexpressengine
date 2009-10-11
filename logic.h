@@ -49,7 +49,7 @@ public:
 
 	// Accessors
 	SaveLoad::SavegameId getSavegameId() { return _runState.savegameId; }
-	SaveLoad::GameState* getGameState() { return _gameState; }
+	SaveLoad::GameState *getGameState() { return _gameState; }
 
 private:
 	// Scenes

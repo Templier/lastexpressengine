@@ -201,7 +201,6 @@ private:
 	void setVolume(int volume);
 	int getBrightness();
 	void setBrightness(int brightness);
-
 };
 
 } // End of namespace LastExpress

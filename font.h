@@ -36,7 +36,7 @@
 	// For each glyph
 		byte {18*8}   - Glyph data
 
-	byte {x}      - Unknown data
+	byte {x}      - Unknown data (probably just garbage)
 */
 
 #include "common/stream.h"
@@ -68,8 +68,8 @@ private:
 	void drawChar(int x, int y, uint16 c);
 
 	// Font data
-	uint16 _palette[0x20];
-	uint8 _charMap[0x200];
+	uint16 _palette[_paletteSize];
+	uint8 _charMap[_charMapSize];
 	uint16 _numGlyphs;
 	byte *_glyphs;
 	uint8 *_glyphWidths;

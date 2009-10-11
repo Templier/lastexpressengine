@@ -105,7 +105,7 @@ public:
 	CursorStyle getStyle();
 
 	// TODO: Add function to draw a cursor to a surface, as they are also used for the inventory (top-right of the screen)
-	//void draw(Surface* surface, int x, int y, CursorStyle style);
+	//void draw(Surface *surface, int x, int y, CursorStyle style);
 
 private:
 	// Style

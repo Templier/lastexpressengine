@@ -27,7 +27,6 @@
 #define LASTEXPRESS_HPFARCHIVE_H
 
 /*
-
 	Archive file format (.HPF)
 
 	uint32 {4}   - number of files
@@ -37,7 +36,6 @@
 		uint32 {4}   - offset (expressed in sectors of 2048 bytes)
 		uint32 {4}   - size (expressed in sectors of 2048 bytes)
 		byte {2}     - file status: 1 = on disk (ie. in HD.HPF), 0 = on CD
-
 */
 
 #include "common/archive.h"
@@ -54,7 +52,7 @@ public:
 	Common::ArchiveMemberPtr getMember(const Common::String &name);
 	Common::SeekableReadStream *createReadStreamForMember(const Common::String &name) const;
 
-	int count() { return _files.size(); };
+	int count() { return _files.size(); }
 
 private:
 	static const unsigned int _archiveNameSize = 12;
