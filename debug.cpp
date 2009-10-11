@@ -299,10 +299,22 @@ bool Debugger::cmd_showbg(int argc, const char **argv) {
 }
 
 bool Debugger::cmd_loadscene(int argc, const char **argv) {
-	if (argc == 3) {
+	if (argc >= 2) {
+
+		if (argc > 3) {
+			DebugPrintf("Syntax: loadscene (<cd number>) <scene index>\n");
+			return true;
+		}
+
+		int cd = 1, index = 0;
+		
 		// Check args
-		int cd = getNumber(argv[1]);
-		int index = getNumber(argv[2]);
+		if (argc == 3) {
+			cd = getNumber(argv[1]);
+			index = getNumber(argv[2]);
+		} else {
+			index = getNumber(argv[1]);
+		}
 
 		if (cd <= 0 || cd > 3 || index < 0 || index > 2500) {
 			DebugPrintf("Error: invalid cd number (1-3) or index value (0-2500)");
@@ -316,14 +328,14 @@ bool Debugger::cmd_loadscene(int argc, const char **argv) {
 
 			return false;
 		} else {
-			clearBg(C);
+			_engine->getGraphicsManager()->clear();
 
 			Scene scene(_engine->getResource());
 			if (scene.loadScene(cd)) {
 				if (scene.showScene(C, index)) {
 					askForRedraw();
 				} else {
-					DebugPrintf("Cannot load scenes from CD %i", cd);									
+					DebugPrintf("Cannot load scene: %i", index);									
 				}
 			} else {
 				DebugPrintf("Cannot load scenes from CD %i", cd);
