@@ -55,6 +55,10 @@ void Logic::showMenu() {
 	// TODO: load scene and set current scene
 	_gameState->currentScene = 1;
 	_menu->showMenu();
+
+	// Init the first savegame if needed
+	if (!SaveLoad::isSavegamePresent(SaveLoad::kSavegameBlue))
+		SaveLoad::initSavegame(SaveLoad::kSavegameBlue);
 }
 
 void Logic::handleMouseEvent(Common::Event ev) {

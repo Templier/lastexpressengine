@@ -30,6 +30,7 @@
 #include "lastexpress/background.h"
 #include "lastexpress/cursor.h"
 #include "lastexpress/logic.h"
+#include "lastexpress/scene.h"
 #include "lastexpress/sound.h"
 
 #include "lastexpress/graphics.h"
@@ -88,13 +89,14 @@ const uint32 trainCitiesIndex[31] = {0, // Paris
 //////////////////////////////////////////////////////////////////////////
 
 Menu::Menu(LastExpressEngine *engine) : _engine(engine) {
-	// FIXME: skip intro
-	_showStartScreen = false;
+	_showStartScreen = true;
 	_creditsSequenceIndex = 0;
 	_isShowingCredits = false;
 }
 
-Menu::~Menu() {}
+Menu::~Menu() {
+	SAFE_DELETE(_scene);
+}
 
 // Show the intro and load the main menu scene
 //
@@ -102,8 +104,9 @@ Menu::~Menu() {}
 // .text:00448590 (EN)
 void Menu::showMenu() {
 
-	//Scene scene(_engine->_resource);
-	//scene.load(1);
+	// Load all menu-related data
+	loadData();
+
 	_engine->getCursor()->show(false);
 
 	// If no blue savegame exists, this might be the first time we start the game, so we show the full intro
@@ -128,16 +131,9 @@ void Menu::showMenu() {
 		if (_showStartScreen) {
 			playMusic("mus018.snd");
 
-			// FIXME load data from scene: sceneIndex = 65
-			// Show Start screen
-			Background background;
-			if (background.loadFile("autoplay.bg")) {
-				background.showBg(C);
-				askForRedraw();
-			}
-
-			redrawScreen();
-			_engine->_system->delayMillis(250);
+			_scene->showScene(C, 65);
+			askForRedraw(); redrawScreen();
+			_engine->_system->delayMillis(1000);
 
 			_showStartScreen = false;
 		}
@@ -147,13 +143,8 @@ void Menu::showMenu() {
 	_engine->getCursor()->setStyle(Cursor::CursorNormal);
 	_engine->getCursor()->show(true);
 
-	// Load all menu-related sequences if needed
-	loadSequences();
-
 	// TODO Load Main menu scene (sceneIndex = 5 * savegame id (+ 1/2)) - see text:00449d80
-	Background background;
-	if (background.loadFile("clock01.bg"))
-		background.showBg(C);
+	_scene->showScene(C, 1);
 
 	// Draw default elements
 	clearBg(A);
@@ -394,7 +385,7 @@ bool Menu::handleStartMenuEvent(Common::Event ev) {
 // Helper functions
 //////////////////////////////////////////////////////////////////////////
 
-void Menu::loadSequences() {
+void Menu::loadData() {
 	// Check if we loaded sequences before
 	if (_seqTooltips.count() > 0)
 		return;
@@ -417,6 +408,10 @@ void Menu::loadSequences() {
 
 	loaded  &= _seqAcorn.loadFile(getAcornHighlight(_engine->getLogic()->getSavegameId()));
 	loaded  &= _seqCredits.loadFile("credits.seq");
+
+	// Load scene
+	_scene = new Scene(_engine->getResource());
+	loaded &= _scene->loadScene(1);
 
 	// We cannot proceed unless all files loaded properly
 	assert(loaded == true);
@@ -495,7 +490,7 @@ void Menu::drawClock(uint32 time) {
 //  line2: 61 frames (=> Constantinople)
 // text:0042E710
 void Menu::drawTrainLine(uint32 time) {
-	int ixTime;
+	uint ixTime;
 
 	// Get index of the closest train line time to the current time
 	for (ixTime = 0; ixTime < sizeof(trainLineTimes) - 1; ixTime++)

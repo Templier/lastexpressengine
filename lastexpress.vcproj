@@ -38,6 +38,8 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
+				SmallerTypeCheck="true"
+				TreatWChar_tAsBuiltInType="false"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"

@@ -40,34 +40,38 @@
 		uint16 {2}	- number of scenes (for first entry - always 0 after?)
 		uint32 {4}  - pointer to RECT? (seems wrong!)
 		byte {1}    - Event type (second part of sequence file name at some point)
-		byte {1}    - ?? (see text:004067F0 - used as a switch value)
-		byte {1}    - ??
-		byte {1}    - ??
-		byte {1}    - ??
-		byte {1}    - ??
-		byte {1}    - ??
-		byte {1}    - ??
-		byte {1}    - ??
+		byte {1}    - 16 ?? (see text:004067F0 - used as a switch value)
+		byte {1}    - 17 ??
+		byte {1}    - 18 ??
+		byte {1}    - 19 ?? (do something if set to -1)
+		byte {1}    - 20 ??
+		byte {1}    - 21 ??
+		byte {1}    - 22 ??
+		byte {1}    - 23 ??
 
 		probably contains cursor type too
 
 	scene index : 0 - 2500 (max)
 */
 
+#include "graphics/surface.h"
+
 namespace LastExpress {
+
+class ResourceManager;
 
 class Scene {
 public:
 	struct SceneEntry {
-		char name[8];
-		byte sig;
-		uint16 count;
-		Common::Rect *rect;
-		byte eventType;
+		char name[8];					// 0
+		byte sig;						// 8
+		uint16 count;					// 9
+		uint32 unknown11;				// 11
+		byte eventType;					// 15
 		byte unknown16;
 		byte unknown17;
 		byte unknown18;
-		byte unknown19;
+		byte unknown19;					
 		byte unknown20;
 		byte unknown21;
 		byte unknown22;
@@ -77,7 +81,7 @@ public:
 			strcpy((char *)&name, "");
 			sig = 0;
 			count = 0;
-			rect = NULL;
+			unknown11 = 0;
 			eventType = 0;
 			unknown16 = 0;
 			unknown17 = 0;
@@ -90,13 +94,16 @@ public:
 		}
 	};
 
-	Scene();
+	Scene(ResourceManager *resource);
 	~Scene();
 
 	bool load(Common::SeekableReadStream *stream);
-	SceneEntry *getEntry(uint sceneIndex);
+	bool show(Graphics::Surface *surface, uint32 index);
+	//SceneEntry *getEntry(uint sceneIndex);
 
 private:
+	ResourceManager *_resource;
+
 	Common::Array<SceneEntry> _scenes;
 };
 

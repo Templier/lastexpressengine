@@ -106,6 +106,8 @@ Common::SeekableReadStream *ResourceManager::getFileStream(const Common::String 
 		return false;
 	}
 
+	debugC(2, kLastExpressDebugResource, "Opening file: %s", name.c_str());
+
 	return createReadStreamForMember(name);
 }
 

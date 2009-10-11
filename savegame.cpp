@@ -69,7 +69,7 @@ bool SaveLoad::isSavegameValid(SavegameId id) {
 
 	// Check there is enough data
 	if (save->size() < 32) {
-		debugC(2, kLastExpressDebugSavegame, "SaveLoad::isSavegameValid - Savegame seems to be corrupted (not enough data): %s", getSavegameName(id).c_str());
+		debugC(2, kLastExpressDebugSavegame, "SaveLoad::isSavegameValid - Savegame seems to be corrupted (not enough data: %i bytes): %s", save->size(), getSavegameName(id).c_str());
 		return false;
 	}
 
@@ -173,13 +173,11 @@ Common::String SaveLoad::getSavegameName(SavegameId id) {
 }
 
 Common::InSaveFile *SaveLoad::openForLoading(SavegameId id) {
-	Common::String savename = getSavegameName(id);
-	return g_system->getSavefileManager()->openForLoading(savename);
+	return g_system->getSavefileManager()->openForLoading(getSavegameName(id));
 }
 
 Common::OutSaveFile *SaveLoad::openForSaving(SavegameId id) {
-	Common::String savename = getSavegameName(id);
-	return g_system->getSavefileManager()->openForSaving(savename);
+	return g_system->getSavefileManager()->openForSaving(getSavegameName(id));
 }
 
 } // End of namespace LastExpress

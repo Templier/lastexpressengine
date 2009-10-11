@@ -34,6 +34,7 @@
 namespace LastExpress {
 
 class LastExpressEngine;
+class Scene;
 
 class Menu {
 public:
@@ -158,6 +159,8 @@ private:
 
 	LastExpressEngine *_engine;
 
+	Scene* _scene;
+
 	// Sequences
 	Sequence _seqHour;
 	Sequence _seqMinutes;
@@ -182,7 +185,7 @@ private:
 	bool _isShowingCredits;
 	uint32 _creditsSequenceIndex;
 
-	void loadSequences();
+	void loadData();
 
 	// Overlays & elements
 	void drawTrainLine(uint32 time);

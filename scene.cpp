@@ -25,35 +25,19 @@
 
 #include "lastexpress/scene.h"
 
+#include "lastexpress/background.h"
 #include "lastexpress/debug.h"
+#include "lastexpress/resource.h"
 
 #include "common/debug.h"
 #include "common/stream.h"
 
 namespace LastExpress {
 
-Scene::Scene() {}
+Scene::Scene(ResourceManager *resource) : _resource(resource) {}
 Scene::~Scene() {}
 
 bool Scene::load(Common::SeekableReadStream *stream) {
-	//if (cdIndex < 0 || cdIndex > 3)	{
-	//	debugC(2, kLastExpressDebugScenes, "Scene::load - Invalid scene file index: %i", cdIndex);
-	//	return false;
-	//}
-
-	//Common::String name(Common::String::printf("CD%iTRAIN.DAT", cdIndex));
-
-	//// Get a stream for the background file
-	//if (!_resource->hasFile(name)) {
-	//	debugC(2, kLastExpressDebugScenes, "Scene::load - Error opening scene file: %s", name.c_str());
-	//	return false;
-	//}
-
-	//debugC(2, kLastExpressDebugScenes, "=================================================================");
-	//debugC(2, kLastExpressDebugScenes, "Loading scene data: %s", name.c_str());
-
-	//Common::SeekableReadStream *stream = _resource->createReadStreamForMember(name);
-
 	// Read the number of scenes (the first entry is a dummy one)
 	stream->seek(9, SEEK_SET);
 	uint32 numScenes = stream->readUint32LE();
@@ -70,7 +54,7 @@ bool Scene::load(Common::SeekableReadStream *stream) {
 		stream->read(&scene.name, sizeof(scene.name));
 		scene.sig = stream->readByte();
 		scene.count = stream->readUint16LE();;
-		scene.rect = (Common::Rect *)stream->readUint32LE();
+		scene.unknown11 = stream->readUint32LE();
 		scene.eventType = stream->readByte();
 		scene.unknown16 = stream->readByte();
 		scene.unknown17 = stream->readByte();
@@ -83,9 +67,9 @@ bool Scene::load(Common::SeekableReadStream *stream) {
 
 		_scenes.push_back(scene);
 
-		debugC(9, kLastExpressDebugScenes, "\n    Scene: name=%s, sig=%02d, count=%d, Rect=%d", scene.name, scene.sig, scene.count, scene.rect);
-		debugC(9, kLastExpressDebugScenes, "           evt=%02d, unk16=%02d, unk17=%02d, unk18=%02d", scene.eventType, scene.unknown16, scene.unknown17, scene.unknown18);
-		debugC(9, kLastExpressDebugScenes, "           unk19=%02d, unk20=%02d, unk21=%02d, unk22=%02d, unk23=%02d", scene.unknown19, scene.unknown20, scene.unknown21, scene.unknown22, scene.unknown23);
+		//debugC(9, kLastExpressDebugScenes, "\n    Scene: name=%s, sig=%02d, count=%d, Rect=%d", scene.name, scene.sig, scene.count, scene.unknown11);
+		//debugC(9, kLastExpressDebugScenes, "           evt=%02d, unk16=%02d, unk17=%02d, unk18=%02d", scene.eventType, scene.unknown16, scene.unknown17, scene.unknown18);
+		//debugC(9, kLastExpressDebugScenes, "           unk19=%02d, unk20=%02d, unk21=%02d, unk22=%02d, unk23=%02d", scene.unknown19, scene.unknown20, scene.unknown21, scene.unknown22, scene.unknown23);
 	}
 
 	delete stream;
@@ -93,14 +77,28 @@ bool Scene::load(Common::SeekableReadStream *stream) {
 	return true;
 }
 
-Scene::SceneEntry *Scene::getEntry(uint sceneIndex) {
-	if (_scenes.empty())
-		return NULL;
+bool Scene::show(Graphics::Surface *surface, uint32 index) {
+	if (index == 0 || index > 2500) // max number of scenes
+		index = 1;
 
-	if (sceneIndex < 0 || sceneIndex > _scenes.size())
-		return NULL;
+	SceneEntry entry = _scenes[index - 1];
 
-	return &_scenes[sceneIndex];
+	// Load background
+	Background background;
+	if (background.load(_resource->getFileStream(Common::String::printf("%s.bg", entry.name))))
+		background.show(surface);
+
+	return true;
 }
+
+//Scene::SceneEntry *Scene::getEntry(uint sceneIndex) {
+//	if (_scenes.empty())
+//		return NULL;
+//
+//	if (sceneIndex < 0 || sceneIndex > _scenes.size())
+//		return NULL;
+//
+//	return &_scenes[sceneIndex];
+//}
 
 } // End of namespace LastExpress
