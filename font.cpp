@@ -50,7 +50,7 @@ bool Font::load(Common::SeekableReadStream *stream) {
 	reset();
 
 	// Read the palette
-	for (int i = 0; i < _paletteSize; i++) {
+	for (uint i = 0; i < _paletteSize; i++) {
 		_palette[i] = stream->readUint16LE();
 	}
 

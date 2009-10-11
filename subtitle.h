@@ -71,7 +71,7 @@ public:
 	SubtitleManager();
 
 	bool load(Common::SeekableReadStream *stream);
-	bool show(Font &font, uint16 index);
+	bool show(Font &font, uint index);
 
 	//TODO: add function bool show(uint16 currentTime);
 

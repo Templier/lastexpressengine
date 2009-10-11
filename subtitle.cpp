@@ -79,7 +79,7 @@ bool Subtitle::load(Common::SeekableReadStream *in) {
 	for (int i = 0; i < _bottomLength; i++)
 		_bottomText[i] = in->readUint16LE();
 
-	debugC(9, kLastExpressDebugSubtitle, "Subtitle entry: %d -> %d | %S - %S", _timeStart, _timeStop, _topText, _bottomText);
+	debugC(9, kLastExpressDebugSubtitle, "Subtitle entry: %d -> %d | %s - %s", _timeStart, _timeStop, _topText, _bottomText);
 
 	return true;
 }
@@ -126,8 +126,8 @@ bool SubtitleManager::load(Common::SeekableReadStream *stream) {
 	return true;
 }
 
-bool SubtitleManager::show(Font &font, uint16 index) {
-	if (index < 0 || index > (signed)(_subtitles.size() - 1)) {
+bool SubtitleManager::show(Font &font, uint index) {
+	if (index < 0 || index > _subtitles.size() - 1) {
 		debugC(3, kLastExpressDebugSubtitle, "Subtitle: invalid index (was: %d, max: %d)", index, _subtitles.size() - 1);
 		return false;
 	}

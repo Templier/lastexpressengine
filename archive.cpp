@@ -81,14 +81,14 @@ bool HPFArchive::hasFile(const Common::String &name) {
 }
 
 int HPFArchive::listMembers(Common::ArchiveMemberList &list) {
-	int count = 0;
+	int numMembers = 0;
 
 	for (FileMap::const_iterator i = _files.begin(); i != _files.end(); ++i) {
 		list.push_back(Common::ArchiveMemberList::value_type(new Common::GenericArchiveMember(i->_key, this)));
-		count++;
+		numMembers++;
 	}
 
-	return count;
+	return numMembers;
 }
 
 Common::ArchiveMemberPtr HPFArchive::getMember(const Common::String &name) {

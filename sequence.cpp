@@ -393,7 +393,7 @@ bool Sequence::show(Graphics::Surface *surface, uint32 index) {
 		return false;
 	}
 
-	if (index < 0 || index > _frames.size() - 1) {
+	if (index > _frames.size() - 1) {
 		debugC(2, kLastExpressDebugGraphics, "Invalid frame index: was %d, max %d", index, _frames.size() - 1);
 		return false;
 	}

@@ -78,8 +78,7 @@ bool SaveLoad::isSavegameValid(SavegameId id) {
 	if (save->readUint32LE() != savegameSignature)
 		goto EXIT;
 
-	if (save->readUint32LE() < 0)
-		goto EXIT;
+	save->readUint32LE();	
 
 	if (save->readUint32LE() < 0x20)
 		goto EXIT;
@@ -91,11 +90,11 @@ bool SaveLoad::isSavegameValid(SavegameId id) {
 		goto EXIT;
 
 	britghness = save->readUint32LE();
-	if  (britghness < 0 || britghness > 6)
+	if  (britghness > 6)
 		goto EXIT;
 
 	volume = save->readUint32LE();
-	if  (volume < 0 || volume > 7)
+	if  (volume > 7)
 		goto EXIT;
 
 	if (save->readUint32LE() != 9)
