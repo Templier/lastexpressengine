@@ -199,13 +199,15 @@ Common::Error LastExpressEngine::go() {
 						style--;
 
 				// DEBUG: time
-				if (ev.kbd.keycode == Common::KEYCODE_KP_DIVIDE)
+				if (ev.kbd.keycode == Common::KEYCODE_KP_DIVIDE) {
 					_logic->getGameState()->currentTime = _logic->getGameState()->currentTime - 4984;
 					_logic->showMenu();
+				}
 
-				if (ev.kbd.keycode == Common::KEYCODE_KP_MULTIPLY)
+				if (ev.kbd.keycode == Common::KEYCODE_KP_MULTIPLY) {
 					_logic->getGameState()->currentTime = _logic->getGameState()->currentTime + 5167;
 					_logic->showMenu();
+				}
 
 				// Play intro
 				if (ev.kbd.keycode == Common::KEYCODE_RETURN || ev.kbd.keycode == Common::KEYCODE_KP_ENTER)

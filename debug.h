@@ -56,6 +56,7 @@ public:
 private:
 	LastExpressEngine *_engine;
 
+	bool cmd_loadscene(int argc, const char **argv);
 	bool cmd_playseq(int argc, const char **argv);
 	bool cmd_showframe(int argc, const char **argv);
 	bool cmd_playsnd(int argc, const char **argv);

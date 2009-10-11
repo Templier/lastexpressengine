@@ -28,6 +28,7 @@
 // Data
 #include "lastexpress/animation.h"
 #include "lastexpress/background.h"
+#include "lastexpress/scene.h"
 #include "lastexpress/sequence.h"
 #include "lastexpress/sound.h"
 #include "lastexpress/subtitle.h"
@@ -50,6 +51,7 @@ Debugger::Debugger(LastExpressEngine *engine) : _engine(engine) {
 	DCmd_Register("playsbe",   WRAP_METHOD(Debugger, cmd_playsbe));
 	DCmd_Register("playnis",   WRAP_METHOD(Debugger, cmd_playnis));
 	DCmd_Register("showbg",	   WRAP_METHOD(Debugger, cmd_showbg));
+	DCmd_Register("loadscene", WRAP_METHOD(Debugger, cmd_loadscene));
 	DCmd_Register("clear",	   WRAP_METHOD(Debugger, cmd_clear));
 	DCmd_Register("listfiles", WRAP_METHOD(Debugger, cmd_listfiles));
 
@@ -295,6 +297,53 @@ bool Debugger::cmd_showbg(int argc, const char **argv) {
 	}
 	return true;
 }
+
+bool Debugger::cmd_loadscene(int argc, const char **argv) {
+	if (argc == 3) {
+		// Check args
+		int cd = getNumber(argv[1]);
+		int index = getNumber(argv[2]);
+
+		if (cd <= 0 || cd > 3 || index < 0 || index > 2500) {
+			DebugPrintf("Error: invalid cd number (1-3) or index value (0-2500)");
+			return true;
+		}
+		
+		// Store command
+		if (!hasCommand()) {
+			command = WRAP_METHOD(Debugger, cmd_loadscene);
+			copyCommand(argc, argv);
+
+			return false;
+		} else {
+			clearBg(C);
+
+			Scene scene(_engine->getResource());
+			if (scene.loadScene(cd)) {
+				if (scene.showScene(C, index)) {
+					askForRedraw();
+				} else {
+					DebugPrintf("Cannot load scenes from CD %i", cd);									
+				}
+			} else {
+				DebugPrintf("Cannot load scenes from CD %i", cd);
+			}
+
+			redrawScreen();
+
+			// Pause for a second to be able to see the background
+			_engine->_system->delayMillis(1000);
+
+			resetCommand();
+		}
+
+
+	} else {
+		DebugPrintf("Syntax: loadscene <cd number> <scene index>\n");
+	}
+	return true;
+}
+
 
 bool Debugger::cmd_clear(int argc, const char **argv) {
 	if (argc == 1) {
