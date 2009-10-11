@@ -30,16 +30,12 @@
 #include "lastexpress/background.h"
 #include "lastexpress/cursor.h"
 #include "lastexpress/logic.h"
-#include "lastexpress/sequence.h"
 #include "lastexpress/sound.h"
 
-#include "lastexpress/debug.h"
 #include "lastexpress/graphics.h"
 #include "lastexpress/helpers.h"
 #include "lastexpress/lastexpress.h"
 #include "lastexpress/resource.h"
-
-#include "graphics/cursorman.h"
 
 namespace LastExpress {
 

@@ -28,7 +28,6 @@
 // Data
 #include "lastexpress/animation.h"
 #include "lastexpress/background.h"
-#include "lastexpress/scene.h"
 #include "lastexpress/sequence.h"
 #include "lastexpress/sound.h"
 #include "lastexpress/subtitle.h"
@@ -38,9 +37,6 @@
 #include "lastexpress/lastexpress.h"
 #include "lastexpress/resource.h"
 
-#include "common/debug.h"
-#include "common/system.h"
-#include "sound/mixer.h"
 #include "common/events.h"
 
 namespace LastExpress {

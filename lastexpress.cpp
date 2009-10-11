@@ -33,10 +33,6 @@
 #include "lastexpress/sound.h"
 #include "lastexpress/logic.h"
 
-#include "common/config-manager.h"
-#include "common/events.h"
-#include "sound/mixer.h"
-
 #ifdef LOAD_RESOURCES_LIST
 #include "lastexpress/background.h"
 #include "lastexpress/subtitle.h"

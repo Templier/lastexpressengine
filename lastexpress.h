@@ -28,11 +28,8 @@
 
 #include "lastexpress/debug.h"
 
-#include "common/system.h"
 #include "engines/advancedDetector.h"
 #include "engines/engine.h"
-#include "graphics/surface.h"
-#include "graphics/pixelformat.h"
 
 namespace LastExpress {
 

@@ -25,10 +25,8 @@
 
 #include "lastexpress/font.h"
 
-#include "lastexpress/debug.h"
 #include "lastexpress/helpers.h"
 
-#include "common/stream.h"
 #include "common/system.h"
 
 namespace LastExpress {

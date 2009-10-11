@@ -26,9 +26,6 @@
 #ifndef LASTEXPRESS_RESOURCE_H
 #define LASTEXPRESS_RESOURCE_H
 
-#include "common/array.h"
-#include "common/str.h"
-
 #include "lastexpress/archive.h"
 
 namespace LastExpress {

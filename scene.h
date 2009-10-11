@@ -26,7 +26,9 @@
 #ifndef LASTEXPRESS_SCENE_H
 #define LASTEXPRESS_SCENE_H
 
-#include "common/system.h"
+#include "common/array.h"
+#include "common/rect.h"
+#include "common/stream.h"
 
 /*
 	Scene format (CDTRAIN.DAT)

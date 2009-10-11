@@ -26,9 +26,7 @@
 #ifndef LASTEXPRESS_DEBUG_H
 #define LASTEXPRESS_DEBUG_H
 
-#include "common/debug.h"
 #include "gui/debugger.h"
-#include "engines/engine.h"
 
 namespace LastExpress {
 

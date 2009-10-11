@@ -32,8 +32,8 @@
 #include "lastexpress/sequence.h"
 #include "lastexpress/sound.h"
 
-#include "common/system.h"
 #include "common/events.h"
+#include "engines/engine.h"
 
 namespace LastExpress {
 

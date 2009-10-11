@@ -86,7 +86,6 @@
 
 
 #include "common/savefile.h"
-#include "engines/game.h"
 
 namespace LastExpress {
 

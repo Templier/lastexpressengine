@@ -41,11 +41,6 @@
 */
 
 #include "common/archive.h"
-#include "common/hash-str.h"
-#include "common/hashmap.h"
-#include "common/str.h"
-#include "common/list.h"
-#include "common/file.h"
 
 namespace LastExpress {
 

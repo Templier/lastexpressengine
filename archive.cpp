@@ -28,11 +28,10 @@
 
 #include "lastexpress/archive.h"
 
-#include "lastexpress/lastexpress.h"
+#include "lastexpress/debug.h"
 
-#include "common/endian.h"
-#include "common/fs.h"
-#include "common/stream.h"
+#include "common/debug.h"
+#include "common/file.h"
 
 namespace LastExpress {
 

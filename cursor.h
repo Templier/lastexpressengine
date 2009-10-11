@@ -39,7 +39,7 @@
 		uint16 {32*32}   - cursor data
 */
 
-#include "common/system.h"
+#include "common/stream.h"
 
 namespace LastExpress {
 

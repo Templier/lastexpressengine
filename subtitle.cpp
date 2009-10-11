@@ -31,6 +31,8 @@
 #include "lastexpress/debug.h"
 #include "lastexpress/font.h"
 
+#include "common/debug.h"
+
 namespace LastExpress {
 
 //////////////////////////////////////////////////////////////////////////

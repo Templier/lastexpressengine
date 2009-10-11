@@ -32,8 +32,6 @@
 #include "lastexpress/debug.h"
 #include "lastexpress/helpers.h"
 
-#include "common/system.h"
-
 namespace LastExpress {
 
 Background::Background() : _data(NULL) {}
