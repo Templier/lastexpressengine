@@ -140,6 +140,8 @@ private:
 		byte eventId;
 		uint16 unknown17;
 		uint16 unknown19;
+		uint16 unknown21;
+		uint16 unknown23;
 
 		SceneHotspot() {			
 			offset = 0;
@@ -149,6 +151,8 @@ private:
 			eventId = 0;
 			unknown17 = 0;
 			unknown19 = 0;
+			unknown21 = 0;
+			unknown23 = 0;
 		}
 
 	};

@@ -157,25 +157,31 @@ void Menu::showMenu() {
 
 // Handle events
 bool Menu::handleStartMenuEvent(Common::Event ev) {
-	clearBgOverlay();
-
-	// Process event (check hit box / etc.)
-	static Menu::StartMenuEvent event;
-	if (!_scene->checkHotSpot(getState()->currentScene, ev.mouse, (byte*)&event))
-		return true;
 
 	// Special case if we are showing credits (only allow left-click & right-click)
 	if (_isShowingCredits) {
 		// Interrupt on right click
-		if (ev.type == Common::EVENT_RBUTTONDOWN)
-			_isShowingCredits = false;				// Will cause credits to stop & reset overlays
+		switch(ev.type) {
+			case Common::EVENT_RBUTTONDOWN:
+				_isShowingCredits = false;	// Will cause credits to stop & reset overlays
+			case Common::EVENT_LBUTTONDOWN:				
+				showCredits();
+				askForRedraw();
+			default:
+				return true;
+		}
+	}
 
-		showCredits();
+	// Process event (check hit box / etc.)
+	static Menu::StartMenuEvent event;
+	if (!_scene->checkHotSpot(getState()->currentScene, ev.mouse, (byte*)&event)) {
+		clearBgOverlay();
 		askForRedraw();
 		return true;
 	}
 
 	bool clicked = (ev.type == Common::EVENT_LBUTTONDOWN);
+	clearBgOverlay();
 
 	switch(event) {
 	default:
@@ -198,7 +204,7 @@ bool Menu::handleStartMenuEvent(Common::Event ev) {
 			_seqEggButtons.showFrameOverlay(kButtonCredits);
 			_seqTooltips.showFrameOverlay(kTooltipCredits);
 		}
-		return true;
+		break;
 
 	//////////////////////////////////////////////////////////////////////////
 	case kEventQuitGame:
@@ -206,14 +212,13 @@ bool Menu::handleStartMenuEvent(Common::Event ev) {
 
 		if (clicked) {
 			_seqButtons.showFrameOverlay(kButtonQuitPushed);
-			playSfx("LIB046.snd");
-			askForRedraw();
+			playSfx("LIB046.snd");			
 
 			//TODO some stuff... see disasm
 			return false;
 		} else {
 			_seqButtons.showFrameOverlay(kButtonQuit);
-		}
+		}		
 		break;
 
 	//////////////////////////////////////////////////////////////////////////
@@ -233,7 +238,7 @@ bool Menu::handleStartMenuEvent(Common::Event ev) {
 			_seqEggButtons.showFrameOverlay(kButtonRewind);
 			_seqTooltips.showFrameOverlay(kTooltipRewind);
 		}
-		return true;
+		break;
 
 	//////////////////////////////////////////////////////////////////////////
 	case kEventForwardGame:
@@ -505,6 +510,8 @@ void Menu::drawTrainLine(uint32 time) {
 
 // Show credits overlay
 void Menu::showCredits() {
+	clearBgOverlay();
+
 	if (!_isShowingCredits || _creditsSequenceIndex > _seqCredits.count() - 1) {
 		_isShowingCredits = false;
 		return;

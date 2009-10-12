@@ -173,8 +173,8 @@ bool Scene::readHotspot(SceneHotspot *hotspot) {
 	hotspot->eventId = _stream->readByte();
 	hotspot->unknown17 = _stream->readUint16LE();
 	hotspot->unknown19 = _stream->readUint16LE();
-	_stream->readUint16LE();
-	_stream->readUint16LE();
+	hotspot->unknown21 = _stream->readUint16LE();
+	hotspot->unknown23 = _stream->readUint16LE();
 
 	return true;
 }

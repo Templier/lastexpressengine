@@ -364,7 +364,7 @@ bool Sequence::load(Common::SeekableReadStream *stream) {
 
 	// Store frames information
 	for (uint i = 0; i < numframes; i++) {
-		debugC(3, kLastExpressDebugGraphics, "-- Frame information --  %d/%d", i + 1, numframes);
+		//debugC(3, kLastExpressDebugGraphics, "-- Frame information --  %d/%d", i + 1, numframes);
 
 		// Move stream to start of frame
 		_stream->seek(_sequenceHeaderSize + i * _sequenceFrameSize, SEEK_SET);
@@ -398,7 +398,7 @@ bool Sequence::show(Graphics::Surface *surface, uint32 index) {
 		return false;
 	}
 
-	debugC(2, kLastExpressDebugGraphics, "Decoding frame %d / %d", index, _frames.size() - 1);
+	//debugC(2, kLastExpressDebugGraphics, "Decoding frame %d / %d", index, _frames.size() - 1);
 
 	// Skip "invalid" frames
 	if (_frames[index].compressionType == 0)
