@@ -40,7 +40,7 @@ class Menu {
 public:
 	// Start menu events
 	enum StartMenuEvent {
-		kEventCase1 = 1,
+		kEventContinue = 1,
 		kEventCredits = 2,
 		kEventQuitGame = 3,
 		kEventCase4 = 4,
@@ -64,7 +64,9 @@ public:
 	~Menu();
 
 	void showMenu();
+
 	bool handleStartMenuEvent(Common::Event ev);
+	uint32 getSceneIndex();
 
 private:
 
@@ -188,14 +190,15 @@ private:
 	void loadData();
 
 	// Overlays & elements
+	void drawElements();
 	void drawTrainLine(uint32 time);
 	void drawClock(uint32 time);
-	Common::String getAcornHighlight(SaveLoad::SavegameId id);
+	Common::String getAcornSequenceName(SaveLoad::SavegameId id);
 	void showCredits();
 
 	// Game time
 	uint32 getCurrentTime();
-	uint32 getMaxGameTime();
+	uint32 getTotalTime();
 	void goToTime(uint32 time);
 	void moveToCity(CityOverlay city, CityTime time, StartMenuTooltips tooltipRewind, StartMenuTooltips tooltipForward, bool clicked);
 

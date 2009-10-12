@@ -45,9 +45,10 @@ public:
 
 	// TODO inventory (needs gamestate & new Cursor function)
 
-	void switchSavegameId();
+	void switchGame();
 
 	// Accessors
+	bool isGameStarted() { return _runState.gameStarted; }
 	SaveLoad::SavegameId getSavegameId() { return _runState.savegameId; }
 	SaveLoad::GameState *getGameState() { return _gameState; }
 
@@ -60,8 +61,10 @@ private:
 	// State
 	struct RunState {
 		SaveLoad::SavegameId savegameId;
+		bool gameStarted;
 
 		RunState() {
+			gameStarted = false;
 			savegameId = SaveLoad::kSavegameBlue;
 		}
 	};
@@ -69,12 +72,11 @@ private:
 	LastExpressEngine *_engine;
 
 	RunState _runState;		//<! State of the game session (this data won't be stored in savegames)
-	Menu *_menu;			//<! Main menu handling
+	Menu *_menu;			//<! Main menu handling	
 
 	// Move to engine?
 	SaveLoad::GameState *_gameState;
 
-	uint32 getMenuSceneIndex(SaveLoad::SavegameId savegameId);
 };
 
 } // End of namespace LastExpress

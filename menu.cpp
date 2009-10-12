@@ -129,15 +129,16 @@ Menu::~Menu() {
 // The main menu screen is a background plus 8 overlay elements
 // .text:00448590 (EN)
 void Menu::showMenu() {
+	// Clear screen
+	_engine->getGraphicsManager()->clear();
 
 	// Load all menu-related data
-	loadData();
-
-	_engine->getCursor()->show(false);
+	loadData();	
 
 	// If no blue savegame exists, this might be the first time we start the game, so we show the full intro
-	if (!SaveLoad::isSavegameValid(SaveLoad::kSavegameBlue)) {
-		if (_showStartScreen) {
+	if (_showStartScreen) {
+		_engine->getCursor()->show(false);
+		if (!SaveLoad::isSavegameValid(SaveLoad::kSavegameBlue)) {		
 			Animation animation;
 
 			// Show Broderbrund logo
@@ -152,14 +153,12 @@ void Menu::showMenu() {
 				animation.show();
 
 			_showStartScreen = false;
-		}
-	} else {
-		if (_showStartScreen) {
+		} else {
 			playMusic("mus018.snd");
 
 			_scene->showScene(C, 65);
 			askForRedraw(); redrawScreen();
-			_engine->_system->delayMillis(1000);
+			//_engine->_system->delayMillis(1000);
 
 			_showStartScreen = false;
 		}
@@ -169,16 +168,21 @@ void Menu::showMenu() {
 	_engine->getCursor()->setStyle(Cursor::CursorNormal);
 	_engine->getCursor()->show(true);
 
-	// TODO Load Main menu scene (sceneIndex = 5 * savegame id (+ 1/2)) - see text:00449d80
-	_scene->showScene(C, 1);
-	getState()->currentScene = 1;
+	_scene->showScene(C, getSceneIndex());
 
 	// Draw default elements
-	clearBg(A);
-	drawClock(getState()->currentTime);
-	drawTrainLine(getState()->currentTime);
+	drawElements();
 
 	askForRedraw();
+}
+
+// Get menu scene index
+uint32 Menu::getSceneIndex() {
+	// TODO Do check for DWORD at text:004ADF70 < 0x1030EC
+
+	// + 1 = normal menu with open egg / clock
+	// + 2 = shield menu, when no savegame exists (no game has been started)
+	return (SaveLoad::isSavegameValid(getGameId())) ? getGameId() * 5 + 1 : getGameId() * 5 + 2;
 }
 
 // Handle events
@@ -213,9 +217,12 @@ bool Menu::handleStartMenuEvent(Common::Event ev) {
 	default:
 		break;
 
-	case kEventCase1:
-	case kEventCase4:
+	case kEventContinue:
 		// FIXME: understand code...
+		break;
+
+	case kEventCase4:
+		// Never called ?
 		break;
 
 	//////////////////////////////////////////////////////////////////////////
@@ -249,6 +256,48 @@ bool Menu::handleStartMenuEvent(Common::Event ev) {
 
 	//////////////////////////////////////////////////////////////////////////
 	case kEventSwitchSaveGame:
+		if (clicked) {
+			_seqAcorn.showFrameOverlay(1);
+			playSfx("LIB046.snd");	
+			_engine->getLogic()->switchGame();
+			// the menu should have been reset & redrawn, so don't do anything else here
+		} else {
+			_seqAcorn.showFrameOverlay(0);
+			
+			if (!SaveLoad::isSavegameValid(getNextGameId())) {
+				if (_engine->getLogic()->isGameStarted())
+					_seqTooltips.showFrameOverlay(kTooltipStartAnotherGame);
+				else
+					_seqTooltips.showFrameOverlay(kTooltipSwitchBlueGame);
+			} else {
+				// Stupid tooltips ids are not in order, so we can't just increment them...
+				switch(getGameId()) {
+					case SaveLoad::kSavegameBlue:
+						_seqTooltips.showFrameOverlay(kTooltipSwitchRedGame);
+						break;
+
+					case SaveLoad::kSavegameRed:
+						_seqTooltips.showFrameOverlay(kTooltipSwitchGreenGame);
+						break;
+
+					case SaveLoad::kSavegameGreen:
+						_seqTooltips.showFrameOverlay(kTooltipSwitchPurpleGame);
+						break;
+
+					case SaveLoad::kSavegamePurple:
+						_seqTooltips.showFrameOverlay(kTooltipSwitchTealGame);
+						break;
+
+					case SaveLoad::kSavegameTeal:
+						_seqTooltips.showFrameOverlay(kTooltipSwitchGoldGame);
+						break;
+
+					case SaveLoad::kSavegameGold:
+						_seqTooltips.showFrameOverlay(kTooltipSwitchBlueGame);
+						break;
+				}
+			}
+		}
 		break;
 
 	//////////////////////////////////////////////////////////////////////////
@@ -409,12 +458,20 @@ bool Menu::handleStartMenuEvent(Common::Event ev) {
 //////////////////////////////////////////////////////////////////////////
 
 void Menu::loadData() {
+	bool loaded = true;
+
+	// Special case: acorn highlight needs to be reloaded when showing the menu again in case we switched games
+	if (SaveLoad::isSavegameValid(getNextGameId()))
+		loaded &= _seqAcorn.loadFile(getAcornSequenceName(getNextGameId()));
+	else
+		loaded &= _seqAcorn.loadFile(getAcornSequenceName(SaveLoad::kSavegameBlue));
+	assert(loaded == true);
+
 	// Check if we loaded sequences before
 	if (_seqTooltips.count() > 0)
 		return;
 
-	bool loaded = true;
-
+	// Load all static data
 	loaded  &= _seqHour.loadFile("egghour.seq");
 	loaded  &= _seqMinutes.loadFile("eggmin.seq");
 	loaded  &= _seqSun.loadFile("sun.seq");
@@ -429,7 +486,6 @@ void Menu::loadData() {
 	loaded  &= _seqLine1.loadFile("line1.seq");
 	loaded  &= _seqLine2.loadFile("line2.seq");
 
-	loaded  &= _seqAcorn.loadFile(getAcornHighlight(_engine->getLogic()->getSavegameId()));
 	loaded  &= _seqCredits.loadFile("credits.seq");
 
 	// Load scene
@@ -440,7 +496,7 @@ void Menu::loadData() {
 }
 
 // Get the sequence name to use for the acorn highlight, depending of the currently loaded savegame
-Common::String Menu::getAcornHighlight(SaveLoad::SavegameId id) {
+Common::String Menu::getAcornSequenceName(SaveLoad::SavegameId id) {
 
 	// end of text:00449d80 (also sets up the main menu scene)
 
@@ -480,6 +536,16 @@ Common::String Menu::getAcornHighlight(SaveLoad::SavegameId id) {
 // Overlays & elements
 //////////////////////////////////////////////////////////////////////////
 
+void Menu::drawElements() {
+	// Do not draw if the game has not yet started
+	if (!SaveLoad::isSavegameValid(getGameId()))
+		return;
+
+	clearBg(A);
+	drawClock(getState()->currentTime);
+	drawTrainLine(getState()->currentTime);
+}
+
 // Draw the clock hands at the time
 void Menu::drawClock(uint32 time) {
 	// 7:14 p.m. on July 24, 1914 (= 1037700)
@@ -516,7 +582,7 @@ void Menu::drawTrainLine(uint32 time) {
 
 	// Get index of the closest train line time to the current time
 	for (ixTime = 0; ixTime < sizeof(trainLineTimes) - 1; ixTime++)
-		if (getCurrentTime() <= trainLineTimes[ixTime])
+		if (getState()->currentTime <= trainLineTimes[ixTime])
 			break;
 
 	// Get index of city
@@ -550,19 +616,6 @@ void Menu::showCredits() {
 // Time
 //////////////////////////////////////////////////////////////////////////
 
-uint32 Menu::getCurrentTime() {
-	// FIXME this is the time as showed on the menu, which might be different from the max time attained in the game by the player
-
-	// return current time as if we already rewinded
-	return getState()->currentTime;
-}
-
-uint32 Menu::getMaxGameTime() {
-	// FIXME check disasm
-	// DEBUG value
-	return getState()->currentTime + 54360;
-}
-
 void Menu::goToTime(uint32 time) {
 	// TODO implement modifying the current game time
 	// + adjusting elements on screen : clock + train line
@@ -570,7 +623,7 @@ void Menu::goToTime(uint32 time) {
 
 void Menu::moveToCity(CityOverlay city, CityTime time, StartMenuTooltips tooltipRewind, StartMenuTooltips tooltipForward, bool clicked) {
 	// TODO Check if we have access (there seems to be more checks on some internal times) - probably : current_time / max_game_time / some other?
-	if (getMaxGameTime() < (uint32)time || getCurrentTime() == (uint32)time) {
+	if (getState()->totalTime < (uint32)time || getState()->currentTime == (uint32)time) {
 		return;
 	}
 
@@ -593,7 +646,7 @@ void Menu::moveToCity(CityOverlay city, CityTime time, StartMenuTooltips tooltip
 		goToTime(time);
 		// TODO set some global var to 1
 	} else {
-		if (getCurrentTime() < (uint32)time)			// For start city (Paris) and end city, this will always be true
+		if (getState()->currentTime < (uint32)time)			// For start city (Paris) and end city, this will always be true
 			_seqTooltips.showFrameOverlay(tooltipForward);
 		else
 			_seqTooltips.showFrameOverlay(tooltipRewind);

@@ -26,12 +26,16 @@
 #ifndef LASTEXPRESS_HELPERS_H
 #define LASTEXPRESS_HELPERS_H
 
-// Define helper macros to make code clearer
+//////////////////////////////////////////////////////////////////////////
+// Misc helpers
+//////////////////////////////////////////////////////////////////////////
 #define loadFile(name) load(_engine->getResource()->getFileStream(name))
 #define playMusic(name) _engine->getMusicStream()->load(_engine->getResource()->getFileStream(name));
 #define playSfx(name) _engine->getSfxStream()->load(_engine->getResource()->getFileStream(name));
-#define getState() _engine->getLogic()->getGameState()
 
+//////////////////////////////////////////////////////////////////////////
+// Graphics
+//////////////////////////////////////////////////////////////////////////
 #define loadScene(cd) loadFile(Common::String::printf("CD%iTRAIN.DAT", cd))
 #define showScene(type, index) show(_engine->getGraphicsManager()->getBackground##type(), index)
 
@@ -42,7 +46,15 @@
 #define clearBg(type) _engine->getGraphicsManager()->getBackground##type()->fillRect(Common::Rect(640, 480), 0);
 #define clearBgOverlay() _engine->getGraphicsManager()->getOverlay()->fillRect(Common::Rect(640, 480), 0);
 
-#define redrawScreen() _engine->getGraphicsManager()->update(); _engine->_system->updateScreen();
 #define askForRedraw() _engine->getGraphicsManager()->change();
+#define redrawScreen() _engine->getGraphicsManager()->update(); _engine->_system->updateScreen();
+
+//////////////////////////////////////////////////////////////////////////
+// Game
+//////////////////////////////////////////////////////////////////////////
+#define getState() _engine->getLogic()->getGameState()
+
+#define getGameId() _engine->getLogic()->getSavegameId()
+#define getNextGameId() (SaveLoad::SavegameId)((getGameId() + 1) % 6)
 
 #endif // LASTEXPRESS_HELPERS_H
