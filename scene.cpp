@@ -27,7 +27,6 @@
 
 #include "lastexpress/background.h"
 #include "lastexpress/debug.h"
-#include "lastexpress/helpers.h"
 #include "lastexpress/resource.h"
 
 #include "common/debug.h"

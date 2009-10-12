@@ -30,7 +30,6 @@
 #include "lastexpress/background.h"
 
 #include "lastexpress/debug.h"
-#include "lastexpress/helpers.h"
 
 namespace LastExpress {
 

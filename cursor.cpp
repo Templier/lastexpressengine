@@ -26,7 +26,6 @@
 #include "lastexpress/cursor.h"
 
 #include "lastexpress/debug.h"
-#include "lastexpress/helpers.h"
 
 #include "graphics/cursorman.h"
 

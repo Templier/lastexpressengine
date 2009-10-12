@@ -30,7 +30,6 @@
 
 #include "lastexpress/debug.h"
 #include "lastexpress/font.h"
-#include "lastexpress/helpers.h"
 
 #include "common/debug.h"
 

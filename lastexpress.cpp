@@ -26,7 +26,6 @@
 #include "lastexpress/lastexpress.h"
 
 #include "lastexpress/graphics.h"
-#include "lastexpress/helpers.h"
 #include "lastexpress/resource.h"
 #include "lastexpress/cursor.h"
 #include "lastexpress/font.h"
@@ -34,6 +33,7 @@
 #include "lastexpress/logic.h"
 
 #ifdef LOAD_RESOURCES_LIST
+#include "lastexpress/helpers.h"
 #include "lastexpress/background.h"
 #include "lastexpress/subtitle.h"
 #include "lastexpress/animation.h"
