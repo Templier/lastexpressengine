@@ -27,6 +27,7 @@
 
 #include "lastexpress/background.h"
 #include "lastexpress/debug.h"
+#include "lastexpress/helpers.h"
 #include "lastexpress/resource.h"
 
 #include "common/debug.h"
@@ -34,17 +35,27 @@
 
 namespace LastExpress {
 
-Scene::Scene(ResourceManager *resource) : _resource(resource) {}
-Scene::~Scene() {}
+Scene::Scene(ResourceManager *resource) : _resource(resource), _stream(NULL) {}
+
+Scene::~Scene() {
+	SAFE_DELETE(_stream);
+}
 
 bool Scene::load(Common::SeekableReadStream *stream) {
+
+	SAFE_DELETE(_stream);
+	_stream = stream;
+
 	// Read the number of scenes (the first entry is a dummy one)
 	stream->seek(9, SEEK_SET);
 	uint32 numScenes = stream->readUint32LE();
 	debugC(2, kLastExpressDebugScenes, "   found %d entries", numScenes);
 
+	if (numScenes > 2500)
+		return false;
+
 	// Go to first scene
-	stream->seek(24, SEEK_SET);
+	stream->seek(_headerSize, SEEK_SET);
 
 	// Read all the chunks
 	for (uint32 i = 0; i < numScenes; ++i) {
@@ -54,25 +65,19 @@ bool Scene::load(Common::SeekableReadStream *stream) {
 		stream->read(&scene.name, sizeof(scene.name));
 		scene.sig = stream->readByte();
 		scene.count = stream->readUint16LE();;
-		scene.unknown11 = stream->readUint32LE();
-		scene.eventType = stream->readByte();
+		scene.unknown11 = stream->readUint16LE();
+		scene.unknown13 = stream->readUint16LE();
+		scene.unknown15 = stream->readByte();
 		scene.unknown16 = stream->readByte();
 		scene.unknown17 = stream->readByte();
 		scene.unknown18 = stream->readByte();
 		scene.unknown19 = stream->readByte();
-		scene.unknown20 = stream->readByte();
-		scene.unknown21 = stream->readByte();
+		scene.offsetHotspot = stream->readUint16LE();
 		scene.unknown22 = stream->readByte();
 		scene.unknown23 = stream->readByte();
 
 		_scenes.push_back(scene);
-
-		//debugC(9, kLastExpressDebugScenes, "\n    Scene: name=%s, sig=%02d, count=%d, Rect=%d", scene.name, scene.sig, scene.count, scene.unknown11);
-		//debugC(9, kLastExpressDebugScenes, "           evt=%02d, unk16=%02d, unk17=%02d, unk18=%02d", scene.eventType, scene.unknown16, scene.unknown17, scene.unknown18);
-		//debugC(9, kLastExpressDebugScenes, "           unk19=%02d, unk20=%02d, unk21=%02d, unk22=%02d, unk23=%02d", scene.unknown19, scene.unknown20, scene.unknown21, scene.unknown22, scene.unknown23);
 	}
-
-	delete stream;
 
 	return true;
 }
@@ -81,12 +86,95 @@ bool Scene::show(Graphics::Surface *surface, uint32 index) {
 	if (index == 0 || index > 2500) // max number of scenes
 		index = 1;
 
-	SceneEntry entry = _scenes[index - 1];
+	SceneEntry scene = _scenes[index - 1];
+
+#ifdef _DEBUG
+	debugC(9, kLastExpressDebugScenes, "\nScene:  name=%s, sig=%02d, count=%d, unk11=%d", scene.name, scene.sig, scene.count, scene.unknown11);
+	debugC(9, kLastExpressDebugScenes, "\tunk13=%02d, unk16=%02d, unk17=%02d, unk18=%02d", scene.unknown13, scene.unknown16, scene.unknown17, scene.unknown18);
+	debugC(9, kLastExpressDebugScenes, "\tunk19=%02d, hotspotOffset=%02d, unk22=%02d, unk23=%02d", scene.unknown19, scene.offsetHotspot, scene.unknown22, scene.unknown23);
+
+	// Read all hotspots
+	if (scene.offsetHotspot != 0) {
+		_stream->seek(scene.offsetHotspot, SEEK_SET);
+		SceneHotspot hotspot;
+		while (readHotspot(&hotspot))
+			debugC(9, kLastExpressDebugScenes, "\thotspot: Rect=(%d, %d)x(%d,%d) event=%02d", hotspot.rect.left, hotspot.rect.top, hotspot.rect.right, hotspot.rect.bottom, hotspot.eventId);
+	}
+#endif
+	
+	// Safety checks
+	Common::String name(scene.name);
+	name.trim();
+	if (name.empty()) {
+		debugC(2, kLastExpressDebugScenes, "This scene is not a valid root scene: %i", index);
+		return false;
+	}
 
 	// Load background
 	Background background;
-	if (background.load(_resource->getFileStream(Common::String::printf("%s.bg", entry.name))))
+	if (background.load(_resource->getFileStream(Common::String::printf("%s.bg", name.c_str()))))
 		background.show(surface);
+
+	return true;
+}
+
+bool Scene::checkHotSpot(uint index, Common::Point coord, byte* eventId) {
+	// Reset values
+	*eventId = 0;
+
+	SceneEntry entry = _scenes[index - 1];	// we don't store the first entry (only stores the number of scenes)	
+
+	// TODO: Iterate over scene rectangles
+	if (entry.offsetHotspot == 0)
+		return false;
+
+	_stream->seek(entry.offsetHotspot, SEEK_SET);
+
+	uint16 unknown = 0;	
+	byte id = 0;
+	bool found = false;
+	SceneHotspot hotspot;
+	while(readHotspot(&hotspot)) {
+		if (hotspot.rect.contains(coord)) {
+			if (unknown <= hotspot.unknown14) {
+				found = true;
+				unknown = hotspot.unknown14;
+				id = hotspot.eventId;	
+			}
+		}	
+	}
+
+	if (found) {
+		*eventId = id;
+		return true;
+	}
+
+	return false;
+}
+
+// Read hotpost information		
+bool Scene::readHotspot(SceneHotspot *hotspot) {
+	
+	// Check that we have data to read
+	uint16 left = _stream->readUint16LE();
+	if (left == 0)
+		return false;
+
+	// Rect
+	hotspot->rect.left = left;
+	hotspot->rect.right = _stream->readUint16LE();
+	hotspot->rect.top = _stream->readUint16LE();
+	hotspot->rect.bottom = _stream->readUint16LE();
+
+	hotspot->offset = _stream->readUint16LE();
+	hotspot->unknown10 = _stream->readUint16LE();
+	hotspot->unknown12 = _stream->readUint16LE();
+	hotspot->unknown14 = _stream->readByte();
+	hotspot->eventId = _stream->readByte();
+	hotspot->unknown17 = _stream->readUint16LE();
+	hotspot->unknown19 = _stream->readUint16LE();
+	_stream->readUint16LE();
+	_stream->readUint16LE();
 
 	return true;
 }

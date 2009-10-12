@@ -145,6 +145,7 @@ void Menu::showMenu() {
 
 	// TODO Load Main menu scene (sceneIndex = 5 * savegame id (+ 1/2)) - see text:00449d80
 	_scene->showScene(C, 1);
+	getState()->currentScene = 1;
 
 	// Draw default elements
 	clearBg(A);
@@ -156,23 +157,12 @@ void Menu::showMenu() {
 
 // Handle events
 bool Menu::handleStartMenuEvent(Common::Event ev) {
-
-	// TODO Process event (check hitbox / etc.)
-	// coordinates: ev.mouse.x, ev.mouse.y
-	//bool clicked = (ev.type == Common::EVENT_LBUTTONDOWN);
-
-	//////////////////////////////////////////////////////////////////////////
-	// DEBUG
-	if (ev.type == Common::EVENT_MOUSEMOVE)
-		return true;
-
-	static Menu::StartMenuEvent event = (Menu::StartMenuEvent)-1;
-	static bool clicked = true;
-	event = (Menu::StartMenuEvent)((event + 1) % 21);
-	clicked = !clicked;
-	//////////////////////////////////////////////////////////////////////////
-
 	clearBgOverlay();
+
+	// Process event (check hit box / etc.)
+	static Menu::StartMenuEvent event;
+	if (!_scene->checkHotSpot(getState()->currentScene, ev.mouse, (byte*)&event))
+		return true;
 
 	// Special case if we are showing credits (only allow left-click & right-click)
 	if (_isShowingCredits) {
@@ -184,6 +174,8 @@ bool Menu::handleStartMenuEvent(Common::Event ev) {
 		askForRedraw();
 		return true;
 	}
+
+	bool clicked = (ev.type == Common::EVENT_LBUTTONDOWN);
 
 	switch(event) {
 	default:
