@@ -41,7 +41,7 @@ public:
 	~Logic();
 
 	void showMenu();
-	void handleMouseEvent(Common::Event ev);
+	bool handleMouseEvent(Common::Event ev);
 
 	// TODO inventory (needs gamestate & new Cursor function)
 

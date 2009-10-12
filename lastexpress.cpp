@@ -298,7 +298,9 @@ Common::Error LastExpressEngine::go() {
 			case Common::EVENT_MOUSEMOVE:
 			case Common::EVENT_LBUTTONDOWN:
 			case Common::EVENT_RBUTTONDOWN:
-				_logic->handleMouseEvent(ev);
+				// cleanup and quit game is the quit button has been pressed
+				if (!_logic->handleMouseEvent(ev))
+					quitGame();
 				break;
 
 			case Common::EVENT_QUIT:

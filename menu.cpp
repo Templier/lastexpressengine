@@ -158,7 +158,7 @@ void Menu::showMenu() {
 // Handle events
 bool Menu::handleStartMenuEvent(Common::Event ev) {
 
-	// Special case if we are showing credits (only allow left-click & right-click)
+	// Special case if we are showing credits (only allow left & right-click)
 	if (_isShowingCredits) {
 		// Interrupt on right click
 		switch(ev.type) {
