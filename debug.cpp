@@ -217,7 +217,7 @@ bool Debugger::cmd_playsbe(int argc, const char **argv) {
 				for (uint i = 0; i < subtitle.count(); i++) {
 					_engine->_system->fillScreen(0);
 					subtitle.show(*_engine->getFont(), i);
-					_engine->_system->delayMillis(250);
+					_engine->_system->delayMillis(1000);
 				}
 			}
 

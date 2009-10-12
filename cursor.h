@@ -63,12 +63,12 @@ public:
 		CursorTalk,
 		CursorTalk2,		// Need better name
 		CursorMatchBox,
-		CursorLetter,
-		CursorMessage,
+		CursorTelegram,
+		CursorPassengerList,
 		CursorArticle,
 		CursorScarf,
 		CursorPaper,		// Need better name
-		CursorParchemin,	// Need better name
+		CursorParchemin,
 		CursorMatch,
 		Cursorwhistle,
 		CursorKey,

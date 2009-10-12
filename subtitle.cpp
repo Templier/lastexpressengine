@@ -30,6 +30,7 @@
 
 #include "lastexpress/debug.h"
 #include "lastexpress/font.h"
+#include "lastexpress/helpers.h"
 
 #include "common/debug.h"
 
@@ -47,8 +48,8 @@ Subtitle::~Subtitle() {
 	delete _bottomText;
 }
 
-void Subtitle::show(Font &font) {
-	font.drawString(100, 100, _topText, _topLength);
+void Subtitle::show(Font &font) {	
+	font.drawString(100, 100, _topText, _topLength);	
 	font.drawString(100, 300, _bottomText, _bottomLength);
 }
 
@@ -63,12 +64,12 @@ bool Subtitle::load(Common::SeekableReadStream *in) {
 
 	// Create the buffers
 	if (_topLength) {
-		_topText = new uint16[_topLength];
+		_topText = new uint16[_topLength];		
 		if (!_topText)
 			return false;
 	}
 	if (_bottomLength) {
-		_bottomText = new uint16[_bottomLength];
+		_bottomText = new uint16[_bottomLength];		
 		if (!_bottomText)
 			return false;
 	}
@@ -79,7 +80,11 @@ bool Subtitle::load(Common::SeekableReadStream *in) {
 	for (int i = 0; i < _bottomLength; i++)
 		_bottomText[i] = in->readUint16LE();
 
-	debugC(9, kLastExpressDebugSubtitle, "Subtitle entry: %d -> %d | %s - %s", _timeStart, _timeStop, _topText, _bottomText);
+	debugC(9, kLastExpressDebugSubtitle, "  %d -> %d:", _timeStart, _timeStop);
+	if (_topLength)
+		debugC(9, kLastExpressDebugSubtitle, "\t%S", _topText);
+	if (_bottomLength)
+		debugC(9, kLastExpressDebugSubtitle, "\t%S", _bottomText);
 
 	return true;
 }
@@ -100,7 +105,7 @@ bool SubtitleManager::load(Common::SeekableReadStream *stream) {
 	// Read header to get the number of subtitles
 	uint32 numSubtitles = stream->readUint16LE();
 	if (stream->eos()) {
-		debugC(2, kLastExpressDebugSubtitle, "Cannot read from subtitle file!");
+		debugC(2, kLastExpressDebugSubtitle, "ERROR: Cannot read from subtitle file!");
 		return false;
 	}
 	debugC(3, kLastExpressDebugSubtitle, "Number of subtitles in file: %d", numSubtitles);
@@ -113,12 +118,14 @@ bool SubtitleManager::load(Common::SeekableReadStream *stream) {
 
 	// Read the list of subtitles
 	for (uint i = 0; i < numSubtitles; i++) {
-		_subtitles.push_back(Subtitle());
-		if (!_subtitles.back().load(stream)) {
+		Subtitle subtitle;
+		if (!subtitle.load(stream)) {
 			// Failed to read this line
 			_subtitles.clear();
 			return false;
 		}
+
+		_subtitles.push_back(subtitle);
 	}
 
 	delete stream;
@@ -128,7 +135,7 @@ bool SubtitleManager::load(Common::SeekableReadStream *stream) {
 
 bool SubtitleManager::show(Font &font, uint index) {
 	if (index < 0 || index > _subtitles.size() - 1) {
-		debugC(3, kLastExpressDebugSubtitle, "Subtitle: invalid index (was: %d, max: %d)", index, _subtitles.size() - 1);
+		debugC(3, kLastExpressDebugSubtitle, "ERROR: invalid subtitle index (was: %d, max: %d)", index, _subtitles.size() - 1);
 		return false;
 	}
 
