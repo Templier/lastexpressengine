@@ -44,8 +44,12 @@ Subtitle::Subtitle() : _timeStart(0), _timeStop(0),
 }
 
 Subtitle::~Subtitle() {
-	delete _topText;
-	delete _bottomText;
+	reset();
+}
+
+void Subtitle::reset() {
+	SAFE_DELETE_ARRAY(_topText);
+	SAFE_DELETE_ARRAY(_bottomText);
 }
 
 void Subtitle::show(Font &font) {	
@@ -54,6 +58,11 @@ void Subtitle::show(Font &font) {
 }
 
 bool Subtitle::load(Common::SeekableReadStream *in) {
+	reset();
+
+	if (!in)
+		return false;
+
 	// Read the display times
 	_timeStart = in->readUint16LE();
 	_timeStop = in->readUint16LE();

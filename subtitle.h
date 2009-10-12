@@ -64,6 +64,8 @@ private:
 
 	uint16 _bottomLength;	//!< top line (UTF-16 string)
 	uint16 *_bottomText;	//!< bottom line (UTF-16 string)
+
+	void reset();
 };
 
 class SubtitleManager {
