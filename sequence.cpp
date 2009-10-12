@@ -332,7 +332,7 @@ void AnimFrame::decompFF(Common::SeekableReadStream *in, FrameInfo *f) {
 //////////////////////////////////////////////////////////////////////////
 //  SEQUENCE
 //////////////////////////////////////////////////////////////////////////
-Sequence::Sequence() {}
+Sequence::Sequence() : _stream(NULL) {}
 Sequence::~Sequence() {}
 
 void Sequence::reset() {
