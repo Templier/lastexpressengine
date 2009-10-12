@@ -143,7 +143,7 @@ bool SubtitleManager::load(Common::SeekableReadStream *stream) {
 }
 
 bool SubtitleManager::show(Font &font, uint index) {
-	if (index < 0 || index > _subtitles.size() - 1) {
+	if (index > _subtitles.size() - 1) {
 		debugC(3, kLastExpressDebugSubtitle, "ERROR: invalid subtitle index (was: %d, max: %d)", index, _subtitles.size() - 1);
 		return false;
 	}

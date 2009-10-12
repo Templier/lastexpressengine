@@ -374,7 +374,7 @@ bool Sequence::load(Common::SeekableReadStream *stream) {
 		}
 
 		// Check if there is enough data
-		if (_stream->size() - _stream->pos() < _sequenceFrameSize) {
+		if ((unsigned)(_stream->size() - _stream->pos()) < _sequenceFrameSize) {
 			debugC(2, kLastExpressDebugGraphics, "The frame does not have a valid header!");
 			return false;
 		}
