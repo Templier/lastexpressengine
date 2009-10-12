@@ -37,7 +37,7 @@ namespace LastExpress {
 Cursor::Cursor() : _current(CursorNormal), _data(NULL) {}
 
 Cursor::~Cursor() {
-	SAFE_DELETE(_data);
+	delete[] _data;
 }
 
 bool Cursor::load(Common::SeekableReadStream *stream) {
@@ -45,7 +45,7 @@ bool Cursor::load(Common::SeekableReadStream *stream) {
 		return false;
 
 	// Reset data
-	SAFE_DELETE(_data);
+	delete[] _data;
 
 	// Load cursor data
 	_data = new byte[stream->size()];

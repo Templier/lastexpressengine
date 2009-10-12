@@ -63,14 +63,14 @@ LastExpressEngine::LastExpressEngine(OSystem *syst, const ADGameDescription *gd)
 
 LastExpressEngine::~LastExpressEngine() {
 	// Delete the remaining objects
-	SAFE_DELETE(_debugger);
-	SAFE_DELETE(_resource);
-	SAFE_DELETE(_cursor);
-	SAFE_DELETE(_font);
-	SAFE_DELETE(_sfx);
-	SAFE_DELETE(_music);
-	SAFE_DELETE(_logic);
-	SAFE_DELETE(_graphics);
+	delete _debugger;
+	delete _resource;
+	delete _cursor;
+	delete _font;
+	delete _sfx;
+	delete _music;
+	delete _logic;
+	delete _graphics;
 }
 
 Common::Error LastExpressEngine::run() {

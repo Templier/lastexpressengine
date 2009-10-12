@@ -53,7 +53,7 @@ public:
 		kEventVienna = 13,
 		kEventBudapest = 14,
 		kEventBelgrade = 15,
-		kEventEnding = 16,
+		kEventConstantinople = 16,
 		kEventDecreaseVolume = 17,
 		kEventIncreaseVolume = 18,
 		kEventDecreaseBrightness = 19,
@@ -94,7 +94,7 @@ private:
 		kTooltipForwardBudapest,
 		kTooltipForwardBelgrade,
 		kTooltipRewindBelgrade,
-		kTooltipForwardEnding,
+		kTooltipForwardConstantinople,
 		kTooltipSwitchBlueGame,
 		kTooltipSwitchRedGame,
 		kTooltipSwitchGoldGame,
@@ -143,7 +143,7 @@ private:
 		kVienna = 2,
 		kBudapest = 3,
 		kBelgrade = 4,
-		kEnding = 101			// index on sequence is 0
+		kConstantinople = 101			// index on sequence is 0
 	};
 
 	// Game time when the train is at a specific city

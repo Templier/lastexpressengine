@@ -333,14 +333,16 @@ void AnimFrame::decompFF(Common::SeekableReadStream *in, FrameInfo *f) {
 //  SEQUENCE
 //////////////////////////////////////////////////////////////////////////
 Sequence::Sequence() : _stream(NULL) {}
-Sequence::~Sequence() {}
+Sequence::~Sequence() {
+	reset();
+}
 
 void Sequence::reset() {
 	_unknown = 0;
 	_frames.clear();
 
 	// FIXME where is the stream disposed of?
-	//SAFE_DELETE(_stream);
+	//delete _stream;
 }
 
 uint32 Sequence::count() {

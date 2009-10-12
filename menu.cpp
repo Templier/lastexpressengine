@@ -45,13 +45,37 @@ namespace LastExpress {
 //////////////////////////////////////////////////////////////////////////
 
 // Train line times
-const uint32 trainLineTimes[31] = { /* Start */ 1037700 , 1148400, 1170900, 1228500, 1303200, 1335600, 1359900, 1367100,
-								  /* Strasbourg */ 1490400, 1539000, 1563300, 1656000, 1713600, 1739700, 1809900,
-								  /* Munich */ 1852200, 1984500, 2049300, 2075400, 2101500, 2154600,
-								  /* Vienna */ 2268000, 2383200, 2418300,
-								  /* Budapest */ 2551500,
-								  /* Belgrade */ 2952000, 3205800, 3492000, 3690000, 4320900,
-								  /* Constantinople */ 4941000 };
+const uint32 trainLineTimes[31] = { 1037700, // Paris
+									1148400,
+									1170900,
+									1228500,
+									1303200,
+									1335600,
+									1359900,
+									1367100,
+								    1490400, // Strasbourg
+									1539000,
+									1563300,
+									1656000,
+									1713600,
+									1739700,
+									1809900,
+								    1852200, // Munich
+									1984500,
+									2049300,
+									2075400,
+									2101500,
+									2154600,
+								    2268000, // Vienna
+									2383200,
+									2418300,
+								    2551500, // Budapest
+									2952000, // Belgrade
+									3205800,
+									3492000,
+									3690000,
+									4320900,
+								    4941000 /* Constantinople */ };
 
 const uint32 trainCitiesIndex[31] = {0, // Paris
 									 9, // Epernay
@@ -92,10 +116,12 @@ Menu::Menu(LastExpressEngine *engine) : _engine(engine) {
 	_showStartScreen = true;
 	_creditsSequenceIndex = 0;
 	_isShowingCredits = false;
+
+	_scene = new Scene(_engine->getResource());
 }
 
 Menu::~Menu() {
-	SAFE_DELETE(_scene);
+	delete _scene;
 }
 
 // Show the intro and load the main menu scene
@@ -286,8 +312,8 @@ bool Menu::handleStartMenuEvent(Common::Event ev) {
 		break;
 
 	//////////////////////////////////////////////////////////////////////////
-	case kEventEnding:
-		moveToCity(kEnding, kTimeEnding, kTooltipForwardEnding, kTooltipForwardEnding, clicked);
+	case kEventConstantinople:
+		moveToCity(kConstantinople, kTimeEnding, kTooltipForwardConstantinople, kTooltipForwardConstantinople, clicked);
 		break;
 
 	//////////////////////////////////////////////////////////////////////////
@@ -407,7 +433,6 @@ void Menu::loadData() {
 	loaded  &= _seqCredits.loadFile("credits.seq");
 
 	// Load scene
-	_scene = new Scene(_engine->getResource());
 	loaded &= _scene->loadScene(1);
 
 	// We cannot proceed unless all files loaded properly
@@ -555,7 +580,7 @@ void Menu::moveToCity(CityOverlay city, CityTime time, StartMenuTooltips tooltip
 		_seqCityStart.showFrameOverlay(0);
 		break;
 
-	case kEnding:
+	case kConstantinople:
 		_seqCityEnd.showFrameOverlay(0);
 		break;
 

@@ -38,8 +38,8 @@ Font::~Font() {
 }
 
 void Font::reset() {
-	SAFE_DELETE_ARRAY(_glyphs);
-	SAFE_DELETE_ARRAY(_glyphWidths);
+	delete[] _glyphs;
+	delete[] _glyphWidths;
 }
 
 bool Font::load(Common::SeekableReadStream *stream) {

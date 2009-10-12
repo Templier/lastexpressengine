@@ -26,9 +26,6 @@
 #ifndef LASTEXPRESS_HELPERS_H
 #define LASTEXPRESS_HELPERS_H
 
-#define SAFE_DELETE(_p)			{ delete _p; _p=NULL;}
-#define SAFE_DELETE_ARRAY(_p)	{ delete [] _p;	_p=NULL;}
-
 // Define helper macros to make code clearer
 #define loadFile(name) load(_engine->getResource()->getFileStream(name))
 #define playMusic(name) _engine->getMusicStream()->load(_engine->getResource()->getFileStream(name));

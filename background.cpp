@@ -41,7 +41,7 @@ Background::~Background() {
 }
 
 void Background::reset() {
-	SAFE_DELETE(_data);
+	delete[] _data;
 }
 
 bool Background::load(Common::SeekableReadStream *stream) {

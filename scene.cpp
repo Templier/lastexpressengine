@@ -38,12 +38,14 @@ namespace LastExpress {
 Scene::Scene(ResourceManager *resource) : _resource(resource), _stream(NULL) {}
 
 Scene::~Scene() {
-	SAFE_DELETE(_stream);
+	delete _stream;
 }
 
 bool Scene::load(Common::SeekableReadStream *stream) {
+	if (!stream)
+		return false;
 
-	SAFE_DELETE(_stream);
+	delete _stream;
 	_stream = stream;
 
 	// Read the number of scenes (the first entry is a dummy one)

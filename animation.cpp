@@ -45,13 +45,13 @@ Animation::~Animation() {
 }
 
 void Animation::reset() {
-	SAFE_DELETE(_background1);
-	SAFE_DELETE(_background2);
-	SAFE_DELETE(_audio);
+	delete _background1;
+	delete _background2;
+	delete _audio;
 	_backgroundCurrent = 0;
 	_chunks.clear();
 
-	SAFE_DELETE(_stream);
+	delete _stream;
 }
 
 bool Animation::load(Common::SeekableReadStream *stream) {

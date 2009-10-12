@@ -48,8 +48,8 @@ Subtitle::~Subtitle() {
 }
 
 void Subtitle::reset() {
-	SAFE_DELETE_ARRAY(_topText);
-	SAFE_DELETE_ARRAY(_bottomText);
+	delete[] _topText;
+	delete[] _bottomText;
 }
 
 void Subtitle::show(Font &font) {	
