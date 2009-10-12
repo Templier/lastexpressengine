@@ -113,7 +113,7 @@ bool Debugger::cmd_playseq(int argc, const char **argv) {
 				for (uint32 i = 0; i < sequence.count(); i++) {
 
 					// Clear screen
-					_engine->getGraphicsManager()->getBackgroundA()->fillRect(Common::Rect(640, 480), 0);
+					clearBg(A);
 
 					sequence.showFrameBg(A, i);
 

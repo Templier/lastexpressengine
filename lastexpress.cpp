@@ -214,12 +214,17 @@ Common::Error LastExpressEngine::go() {
 					_logic->showMenu();
 
 #ifdef LOAD_RESOURCES_LIST
+				{
+				LastExpressEngine *_engine = this;
 				// DEBUG: show data files
 				if (ev.kbd.keycode == Common::KEYCODE_b) {
 					if (i_bg != list_bg.end()) {
+						clearBg(C);
+
 						Background background;
-						if (background.load(_resource->getFileStream((*i_bg)->getName()))) {
-							background.show();
+						if (background.loadFile((*i_bg)->getName())) {
+							background.showBg(C);
+							askForRedraw();
 						}
 						i_bg++;
 					}
@@ -230,8 +235,21 @@ Common::Error LastExpressEngine::go() {
 						Sequence sequence;
 						if (sequence.load(_resource->getFileStream((*i_seq)->getName()))) {
 							for (uint32 i = 0; i < sequence.count(); i++) {
-								if (sequence.show(i))
-									_system->delayMillis(200);
+								// Clear screen
+								clearBg(A);
+
+								sequence.showFrameBg(A, i);
+
+								askForRedraw();
+								redrawScreen();
+
+								// Handle right-click to interrupt sequence
+								Common::Event ev;
+								_eventMan->pollEvent(ev);
+								if (ev.type == Common::EVENT_RBUTTONDOWN)
+									break;
+
+								_system->delayMillis(175);
 							}
 						}
 						i_seq++;
@@ -269,6 +287,7 @@ Common::Error LastExpressEngine::go() {
 						}
 						i_sbe++;
 					}
+				}
 				}
 #endif
 				break;
