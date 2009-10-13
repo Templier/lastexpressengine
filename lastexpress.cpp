@@ -200,12 +200,12 @@ Common::Error LastExpressEngine::go() {
 
 				// DEBUG: time
 				if (ev.kbd.keycode == Common::KEYCODE_KP_DIVIDE) {
-					_logic->getGameState()->currentTime = _logic->getGameState()->currentTime - 4984;
+					_logic->getGameState()->time -= 4984;
 					_logic->showMenu();
 				}
 
 				if (ev.kbd.keycode == Common::KEYCODE_KP_MULTIPLY) {
-					_logic->getGameState()->currentTime = _logic->getGameState()->currentTime + 5167;
+					_logic->getGameState()->time += 5167;
 					_logic->showMenu();
 				}
 

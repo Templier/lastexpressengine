@@ -77,7 +77,7 @@ private:
 		kTooltipInsertCd3,
 		kTooltipContinueGame,
 		kTooltipReplayGame,
-		kTooltipPlayRewoundGame,
+		kTooltipContinueRewoundGame,
 		kTooltipViewGameEnding,
 		kTooltipStartAnotherGame,
 		kTooltipVolumeUp,
@@ -197,8 +197,7 @@ private:
 	void showCredits();
 
 	// Game time
-	uint32 getCurrentTime();
-	uint32 getTotalTime();
+	uint32 currentTime; // internal time for the menu (to handle rewind/forward)
 	void goToTime(uint32 time);
 	void moveToCity(CityOverlay city, CityTime time, StartMenuTooltips tooltipRewind, StartMenuTooltips tooltipForward, bool clicked);
 

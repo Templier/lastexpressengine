@@ -35,7 +35,7 @@ Logic::Logic(LastExpressEngine *engine) : _engine(engine) {
 
 	// Get those from savegame
 	_gameState = new SaveLoad::GameState();
-	_gameState->currentTime = 2383200;
+	_gameState->time = 2383200;
 	_runState.gameStarted = true;
 }
 
@@ -99,7 +99,7 @@ void Logic::switchGame() {
 	//////////////////////////////////////////////////////////////////////////
 	// HACK for debug
 	if (_runState.savegameId == SaveLoad::kSavegameBlue) {
-		_gameState->currentTime = 2383200;
+		_gameState->time = 2383200;
 		_runState.gameStarted = true;
 	}
 	//////////////////////////////////////////////////////////////////////////

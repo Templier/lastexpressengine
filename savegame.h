@@ -105,16 +105,14 @@ public:
 
 		// TODO: NOT YET FOUND IN SAVEGAME
 		uint32 currentScene;
-		uint32 currentTime;
-		uint32 totalTime;
+		uint32 time;
 
 		GameState() {
 			brightness = _defaultBrigthness;
 			volume = _defaultVolume;
 
 			currentScene = 0;
-			currentTime = _defaultTime;
-			totalTime = _defaultTime;
+			time = _defaultTime;
 		}
 	};
 
