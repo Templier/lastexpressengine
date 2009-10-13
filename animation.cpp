@@ -45,8 +45,12 @@ Animation::~Animation() {
 
 void Animation::reset() {
 	delete _background1;
+	_background1 = NULL;
 	delete _background2;
+	_background2 = NULL;
 	delete _audio;
+	_audio = NULL;
+
 	_backgroundCurrent = 0;
 	_chunks.clear();
 
