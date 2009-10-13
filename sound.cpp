@@ -41,7 +41,11 @@ namespace LastExpress {
 Sound::Sound() {}
 
 Sound::~Sound() {
-	// Stop the sound
+	stop();
+}
+
+// Stop the sound
+void Sound::stop() {
 	g_system->getMixer()->stopHandle(_handle);
 }
 

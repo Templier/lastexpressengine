@@ -54,6 +54,8 @@ public:
 	Sound();
 	virtual ~Sound();
 
+	void stop();
+
 protected:
 	void loadHeader(Common::SeekableReadStream *in);
 	Audio::AudioStream *makeDecoder(Common::SeekableReadStream *in, uint32 size) const;

@@ -676,19 +676,57 @@ void Menu::showCredits() {
 void Menu::goToTime(uint32 time) {
 	// TODO implement modifying the current game time
 	// + adjusting elements on screen : clock + train line
-	getState()->time = time;
+	//;getState()->time = time;		// need to use targetTime var, as modifying the global state will prevent us from going into the other direction later
 
 	// Nothing to do if the menu time is already set to the correct value
 	// FIXME can this really happen?
-	if (currentTime == getState()->time)
+	if (currentTime == time)
 		return;
 
-	if (getState()->time >= currentTime) {
-		playSfx("LIB042.SND");
+	int direction = 1;
+	int speed = 1;
+
+	if (currentTime <= time) {
+		playSfx("LIB042.SND");		
 	} else {
 		playSfx("LIB041.SND");
+		direction = -1;
 	}
 
+	_engine->getCursor()->show(false);
+
+	while (currentTime != time) {
+		currentTime = currentTime + direction * 500 * speed;		
+		if (speed < 10)
+			speed++;
+
+		// Make sure we don't pass destination
+		if ((direction == 1 && currentTime > time) || (direction == -1 && currentTime < time))
+			currentTime = time;
+		
+		drawElements();
+		askForRedraw(); 
+		redrawScreen();
+
+		Common::Event ev;
+		_engine->getEventManager()->pollEvent(ev);
+		if (ev.type == Common::EVENT_RBUTTONDOWN) {			
+			break;
+		}
+
+		//g_system->delayMillis(250);
+	}
+
+	// Draw final time
+	currentTime = time;			
+	drawElements();
+	askForRedraw(); 
+	redrawScreen();
+
+	_engine->getCursor()->show(true);
+
+	// Stop sound
+	_engine->getSfxStream()->stop();
 }
 
 void Menu::moveToCity(CityOverlay city, CityTime time, StartMenuTooltips tooltipRewind, StartMenuTooltips tooltipForward, bool clicked) {

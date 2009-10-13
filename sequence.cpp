@@ -410,6 +410,8 @@ bool Sequence::show(Graphics::Surface *surface, uint32 index) {
 
 	f->paint(surface);
 
+	delete f;
+
 	return true;
 }
 
