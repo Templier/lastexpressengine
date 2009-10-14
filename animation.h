@@ -77,7 +77,9 @@ private:
 		kChunkTypeOverlayFrame      = 0x0014,
 		kChunkTypeUnknown15			= 0x0015,	// might be subtitles
 		kChunkTypeUnknown16			= 0x0016,
-		kChunkTypeAudioData         = 0x0020,
+		kChunkTypeUnknown1e         = 0x001e,
+		kChunkTypeUnknown1f         = 0x001f,
+		kChunkTypeAudioData         = 0x0020,		
 		kChunkTypeAudioEnd          = 0x0063
 	};
 
