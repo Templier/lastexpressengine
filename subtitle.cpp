@@ -56,6 +56,16 @@ void Subtitle::show(Font &font) {
 	font.drawString(100, 300, _bottomText, _bottomLength);
 }
 
+template<typename T>
+T* newArray(size_t n)
+{
+	if (n <= (size_t)-1 / sizeof(T))
+		return new T[n];
+
+	// n is too large
+	return NULL;
+}
+
 bool Subtitle::load(Common::SeekableReadStream *in) {
 	reset();
 
@@ -72,12 +82,12 @@ bool Subtitle::load(Common::SeekableReadStream *in) {
 
 	// Create the buffers
 	if (_topLength) {
-		_topText = new uint16[_topLength];		
+		_topText = newArray<uint16>(_topLength);
 		if (!_topText)
 			return false;
 	}
 	if (_bottomLength) {
-		_bottomText = new uint16[_bottomLength];		
+		_bottomText = newArray<uint16>(_bottomLength);
 		if (!_bottomText)
 			return false;
 	}
