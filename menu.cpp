@@ -173,7 +173,7 @@ void Menu::showMenu() {
 	drawElements();
 
 	// Init time
-	currentTime = getState()->time;
+	_currentTime = getState()->time;
 
 	askForRedraw();
 }
@@ -219,6 +219,9 @@ bool Menu::handleStartMenuEvent(Common::Event ev) {
 	default:
 		break;
 
+	case kEventCase4:
+		// TODO reset time variable (and fall down to kEventContinue)
+
 	case kEventContinue:
 		// TODO Check for cd archive: reload the proper archive here if running in single cd mode
 		if (!_engine->getLogic()->isGameStarted()) {
@@ -228,7 +231,7 @@ bool Menu::handleStartMenuEvent(Common::Event ev) {
 			_seqEggButtons.showFrameOverlay(kButtonContinue);
 
 			// FIXME: using different global in original game -> find out what they do
-			if (currentTime == getState()->time) { // will break since we adjust the game time with rewind/forward/cities
+			if (_currentTime == getState()->time) { // will break since we adjust the game time with rewind/forward/cities
 				// TODO check if game is finished
 				//if (isGameFinished())
 				//	_seqTooltips.showFrameOverlay(kTooltipViewGameEnding);
@@ -273,10 +276,6 @@ bool Menu::handleStartMenuEvent(Common::Event ev) {
 		
 
 
-		break;
-
-	case kEventCase4:
-		// Never called ?
 		break;
 
 	//////////////////////////////////////////////////////////////////////////
@@ -355,8 +354,9 @@ bool Menu::handleStartMenuEvent(Common::Event ev) {
 		break;
 
 	//////////////////////////////////////////////////////////////////////////
-	case kEventRewindGame:
+	case kEventRewindGame:		
 		// TODO check that we can actually rewind
+		//if (_currentTime <= getState()->time)
 		if (clicked) {
 			_seqEggButtons.showFrameOverlay(kButtonRewindPushed);
 			playSfx("LIB046.snd");
@@ -371,7 +371,7 @@ bool Menu::handleStartMenuEvent(Common::Event ev) {
 	//////////////////////////////////////////////////////////////////////////
 	case kEventForwardGame:
 		// TODO check that we can actually rewind
-		if (currentTime == getState()->time)
+		if (_currentTime == getState()->time)
 			break;
 
 		if (clicked) {
@@ -599,8 +599,8 @@ void Menu::drawElements() {
 		return;
 
 	clearBg(A);
-	drawClock(currentTime);
-	drawTrainLine(currentTime);
+	drawClock(_currentTime);
+	drawTrainLine(_currentTime);
 }
 
 // Draw the clock hands at the time
@@ -639,7 +639,7 @@ void Menu::drawTrainLine(uint32 time) {
 
 	// Get index of the closest train line time to the current time
 	for (ixTime = 0; ixTime < sizeof(trainLineTimes) - 1; ixTime++)
-		if (currentTime <= trainLineTimes[ixTime])
+		if (_currentTime <= trainLineTimes[ixTime])
 			break;
 
 	// Get index of city
@@ -680,13 +680,13 @@ void Menu::goToTime(uint32 time) {
 
 	// Nothing to do if the menu time is already set to the correct value
 	// FIXME can this really happen?
-	if (currentTime == time)
+	if (_currentTime == time)
 		return;
 
 	int direction = 1;
 	int speed = 1;
 
-	if (currentTime <= time) {
+	if (_currentTime <= time) {
 		playSfx("LIB042.SND");		
 	} else {
 		playSfx("LIB041.SND");
@@ -695,14 +695,14 @@ void Menu::goToTime(uint32 time) {
 
 	_engine->getCursor()->show(false);
 
-	while (currentTime != time) {
-		currentTime = currentTime + direction * 500 * speed;		
+	while (_currentTime != time) {
+		_currentTime = _currentTime + direction * 500 * speed;		
 		if (speed < 10)
 			speed++;
 
 		// Make sure we don't pass destination
-		if ((direction == 1 && currentTime > time) || (direction == -1 && currentTime < time))
-			currentTime = time;
+		if ((direction == 1 && _currentTime > time) || (direction == -1 && _currentTime < time))
+			_currentTime = time;
 		
 		drawElements();
 		askForRedraw(); 
@@ -718,7 +718,7 @@ void Menu::goToTime(uint32 time) {
 	}
 
 	// Draw final time
-	currentTime = time;			
+	_currentTime = time;			
 	drawElements();
 	askForRedraw(); 
 	redrawScreen();
@@ -731,7 +731,7 @@ void Menu::goToTime(uint32 time) {
 
 void Menu::moveToCity(CityOverlay city, CityTime time, StartMenuTooltips tooltipRewind, StartMenuTooltips tooltipForward, bool clicked) {
 	// TODO Check if we have access (there seems to be more checks on some internal times) - probably : current_time (menu only) / game time / some other?
-	if (getState()->time < (uint32)time || currentTime == (uint32)time) {
+	if (getState()->time < (uint32)time || _currentTime == (uint32)time) {
 		return;
 	}
 
@@ -754,7 +754,7 @@ void Menu::moveToCity(CityOverlay city, CityTime time, StartMenuTooltips tooltip
 		goToTime(time);
 		// TODO set some global var to 1
 	} else {
-		if (currentTime < (uint32)time)			// For start city (Paris) and end city, this will always be true
+		if (_currentTime < (uint32)time)			// For start city (Paris) and end city, this will always be true
 			_seqTooltips.showFrameOverlay(tooltipForward);
 		else
 			_seqTooltips.showFrameOverlay(tooltipRewind);

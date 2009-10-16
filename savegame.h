@@ -51,7 +51,7 @@
 		uint32 {4*1000} - ??
 		uint32 {4*16}   - ??
 		uint32 {4*16}   - ??
-		uint32 {4*128}  - ??
+		uint32 {4*128}  - Game progress
 		byte {512}      - ??
 		byte {7*32}     - ??
 		byte {5*128}    - ??
@@ -79,6 +79,30 @@
 			byte {16}   - ?? (maybe save point header?)
 
 		... more unknown stuff
+
+
+	game progress:
+		uint32 {4}      - ??
+		uint32 {4}      - ??
+		uint32 {4}      - ??
+		uint32 {4}      - ??
+		uint32 {4}      - ??
+		uint32 {4}      - ??
+		uint32 {4}      - ??
+		uint32 {4}      - ??
+		uint32 {4}      - ??
+		uint32 {4}      - ??
+		uint32 {4}      - ??
+		uint32 {4}      - cd number
+
+
+	save point: max: 126 - rotates through list (ie. goes back and overwrites first save point when full)
+		uint32 {4}      - ?? (0 - 40 ?) type ?
+		uint32 {4}      - ??
+		uint32 {4}      - time or similar?
+		uint32 {4}      - 0 or 1 ?
+		
+		
 */
 
 #include "common/savefile.h"

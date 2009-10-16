@@ -197,7 +197,7 @@ private:
 	void showCredits();
 
 	// Game time
-	uint32 currentTime; // internal time for the menu (to handle rewind/forward)
+	uint32 _currentTime; // internal time for the menu (to handle rewind/forward)
 	void goToTime(uint32 time);
 	void moveToCity(CityOverlay city, CityTime time, StartMenuTooltips tooltipRewind, StartMenuTooltips tooltipForward, bool clicked);
 
