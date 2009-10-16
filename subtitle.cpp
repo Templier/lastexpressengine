@@ -102,13 +102,26 @@ bool Subtitle::load(Common::SeekableReadStream *in) {
 //////////////////////////////////////////////////////////////////////////
 SubtitleManager::SubtitleManager() {}
 
+SubtitleManager::~SubtitleManager() {
+	reset();	
+}
+
 uint32 SubtitleManager::count() {
 	return _subtitles.size();
+}
+
+void SubtitleManager::reset() {
+	for (uint i = 0; i < _subtitles.size(); i++)
+		delete _subtitles[i];
+
+	_subtitles.clear();
 }
 
 bool SubtitleManager::load(Common::SeekableReadStream *stream) {
 	if (!stream)
 		return false;
+
+	reset();
 
 	// Read header to get the number of subtitles
 	uint32 numSubtitles = stream->readUint16LE();
@@ -126,10 +139,11 @@ bool SubtitleManager::load(Common::SeekableReadStream *stream) {
 
 	// Read the list of subtitles
 	for (uint i = 0; i < numSubtitles; i++) {
-		Subtitle subtitle;
-		if (!subtitle.load(stream)) {
+		Subtitle *subtitle = new Subtitle();
+		if (!subtitle->load(stream)) {
 			// Failed to read this line
-			_subtitles.clear();
+			reset();
+
 			return false;
 		}
 
@@ -147,7 +161,7 @@ bool SubtitleManager::show(Font &font, uint index) {
 		return false;
 	}
 
-	_subtitles[index].show(font);
+	_subtitles[index]->show(font);
 
 	return true;
 }

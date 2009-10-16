@@ -32,6 +32,7 @@
 #include "lastexpress/sound.h"
 #include "lastexpress/logic.h"
 
+//#define LOAD_RESOURCES_LIST
 #ifdef LOAD_RESOURCES_LIST
 #include "lastexpress/helpers.h"
 #include "lastexpress/background.h"
@@ -281,8 +282,19 @@ Common::Error LastExpressEngine::go() {
 						if (subtitle.load(_resource->getFileStream((*i_sbe)->getName()))) {
 							for (uint i = 0; i < subtitle.count(); i++) {
 								_system->fillScreen(0);
-								subtitle.show(*_font, i);
-								_system->delayMillis(250);
+								subtitle.show(*_font, i);								
+
+								/*askForRedraw(); 
+								redrawScreen();*/
+								_system->updateScreen();
+
+								// Handle right-click to interrupt sequence
+								Common::Event ev;
+								_eventMan->pollEvent(ev);
+								if (ev.type == Common::EVENT_RBUTTONDOWN)
+									break;
+
+								_system->delayMillis(500);
 							}
 						}
 						i_sbe++;

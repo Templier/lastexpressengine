@@ -71,6 +71,7 @@ private:
 class SubtitleManager {
 public:
 	SubtitleManager();
+	~SubtitleManager();
 
 	bool load(Common::SeekableReadStream *stream);
 	bool show(Font &font, uint index);
@@ -80,7 +81,9 @@ public:
 	uint32 count();
 
 private:
-	Common::Array<Subtitle> _subtitles;
+	Common::Array<Subtitle*> _subtitles;
+
+	void reset();
 };
 
 } // End of namespace LastExpress
