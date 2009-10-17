@@ -95,7 +95,7 @@ class AnimFrame {
 public:
 	AnimFrame(Common::SeekableReadStream *in, FrameInfo *f);
 	~AnimFrame();
-	void paint(Graphics::Surface *s);
+	void draw(Graphics::Surface *s);
 
 private:
 	void decomp3(Common::SeekableReadStream *in, FrameInfo *f);
@@ -117,7 +117,7 @@ public:
 	~Sequence();
 
 	bool load(Common::SeekableReadStream *stream);
-	bool show(Graphics::Surface *surface, uint32 index);
+	bool draw(Graphics::Surface *surface, uint32 index);
 
 	uint32 count();
 

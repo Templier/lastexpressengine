@@ -51,7 +51,7 @@ void Subtitle::reset() {
 	delete[] _bottomText;
 }
 
-void Subtitle::show(Font &font) {	
+void Subtitle::draw(Font &font) {	
 	font.drawString(100, 100, _topText, _topLength);	
 	font.drawString(100, 300, _bottomText, _bottomLength);
 }
@@ -165,13 +165,13 @@ bool SubtitleManager::load(Common::SeekableReadStream *stream) {
 	return true;
 }
 
-bool SubtitleManager::show(Font &font, uint index) {
+bool SubtitleManager::draw(Font &font, uint index) {
 	if (index > _subtitles.size() - 1) {
 		debugC(3, kLastExpressDebugSubtitle, "ERROR: invalid subtitle index (was: %d, max: %d)", index, _subtitles.size() - 1);
 		return false;
 	}
 
-	_subtitles[index]->show(font);
+	_subtitles[index]->draw(font);
 
 	return true;
 }

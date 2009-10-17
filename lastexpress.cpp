@@ -261,7 +261,7 @@ Common::Error LastExpressEngine::go() {
 					if (i_nis != list_nis.end()) {
 						Animation animation;
 						if (animation.load(_resource->getFileStream((*i_nis)->getName()))) {
-							animation.show();
+							animation.draw();
 						}
 						i_nis++;
 					}
@@ -282,7 +282,7 @@ Common::Error LastExpressEngine::go() {
 						if (subtitle.load(_resource->getFileStream((*i_sbe)->getName()))) {
 							for (uint i = 0; i < subtitle.count(); i++) {
 								_system->fillScreen(0);
-								subtitle.show(*_font, i);								
+								subtitle.draw(*_font, i);								
 
 								/*askForRedraw(); 
 								redrawScreen();*/

@@ -58,7 +58,7 @@ public:
 	~Animation();
 
 	bool load(Common::SeekableReadStream *stream);
-	bool show();
+	bool draw();
 
 private:
 	static const uint32 _soundBlockSize = 739;

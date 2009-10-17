@@ -128,7 +128,7 @@ AnimFrame::~AnimFrame() {
 	delete[] _palette;
 }
 
-void AnimFrame::paint(Graphics::Surface *s) {
+void AnimFrame::draw(Graphics::Surface *s) {
 	byte *inp = (byte *)_image.pixels;
 	uint16 *outp = (uint16 *)s->pixels;
 	for (int i = 0; i < 640 * 480; i++, inp++, outp++) {
@@ -389,7 +389,7 @@ bool Sequence::load(Common::SeekableReadStream *stream) {
 	return true;
 }
 
-bool Sequence::show(Graphics::Surface *surface, uint32 index) {
+bool Sequence::draw(Graphics::Surface *surface, uint32 index) {
 	if (_frames.size() == 0) {
 		debugC(2, kLastExpressDebugGraphics, "Trying to show a sequence before loading data!");
 		return false;
@@ -408,7 +408,7 @@ bool Sequence::show(Graphics::Surface *surface, uint32 index) {
 
 	AnimFrame *f = new AnimFrame(_stream, &_frames[index]);
 
-	f->paint(surface);
+	f->draw(surface);
 
 	delete f;
 

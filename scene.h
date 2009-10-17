@@ -91,7 +91,7 @@ public:
 	~Scene();
 
 	bool load(Common::SeekableReadStream *stream);
-	bool show(Graphics::Surface *surface, uint32 index);
+	bool draw(Graphics::Surface *surface, uint32 index);
 	//SceneEntry *getEntry(uint sceneIndex);
 
 	bool checkHotSpot(uint index, Common::Point coord, byte* eventId);

@@ -55,7 +55,7 @@ public:
 	~Background();
 
 	bool load(Common::SeekableReadStream *stream);
-	bool show(Graphics::Surface *surface);
+	bool draw(Graphics::Surface *surface);
 
 private:
 	struct BackgroundHeader {

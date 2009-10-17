@@ -53,7 +53,7 @@ public:
 	~Subtitle();
 
 	bool load(Common::SeekableReadStream *in);
-	void show(Font &font);
+	void draw(Font &font);
 
 private:
 	uint16 _timeStart;		//!< display start time
@@ -74,7 +74,7 @@ public:
 	~SubtitleManager();
 
 	bool load(Common::SeekableReadStream *stream);
-	bool show(Font &font, uint index);
+	bool draw(Font &font, uint index);
 
 	//TODO: add function bool show(uint16 currentTime);
 

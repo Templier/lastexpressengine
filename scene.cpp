@@ -83,7 +83,7 @@ bool Scene::load(Common::SeekableReadStream *stream) {
 	return true;
 }
 
-bool Scene::show(Graphics::Surface *surface, uint32 index) {
+bool Scene::draw(Graphics::Surface *surface, uint32 index) {
 	if (index == 0 || index > 2500) // max number of scenes
 		index = 1;
 
@@ -114,7 +114,7 @@ bool Scene::show(Graphics::Surface *surface, uint32 index) {
 	// Load background
 	Background background;
 	if (background.load(_resource->getFileStream(Common::String::printf("%s.bg", name.c_str()))))
-		background.show(surface);
+		background.draw(surface);
 
 	return true;
 }

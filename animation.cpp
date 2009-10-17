@@ -92,7 +92,7 @@ bool Animation::load(Common::SeekableReadStream *stream) {
 	return true;
 }
 
-bool Animation::show() {
+bool Animation::draw() {
 	if (_stream == NULL || _chunks.size() == 0) {
 		debugC(2, kLastExpressDebugGraphics, "Trying to show an animation before loading data!");
 		return false;
@@ -209,15 +209,15 @@ void Animation::processOverlayFrame(Common::SeekableReadStream *in, Chunk *c) {
 
 	// Paint the background
 	if (_backgroundCurrent == 1 && _background1)
-		_background1->paint(s);
+		_background1->draw(s);
 	else if (_backgroundCurrent == 2 && _background2)
-		_background2->paint(s);
+		_background2->draw(s);
 
 	// Read the overlay frame
 	AnimFrame *f = processChunkFrame(in, c);
 
 	// Paint the overlay
-	f->paint(s);
+	f->draw(s);
 
 	// Free the overlay frame
 	delete f;

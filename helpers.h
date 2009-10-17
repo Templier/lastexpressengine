@@ -37,11 +37,11 @@
 // Graphics
 //////////////////////////////////////////////////////////////////////////
 #define loadScene(cd) loadFile(Common::String::printf("CD%iTRAIN.DAT", cd))
-#define showScene(type, index) show(_engine->getGraphicsManager()->getBackground##type(), index)
+#define showScene(type, index) draw(_engine->getGraphicsManager()->getBackground##type(), index)
 
-#define showBg(type) show(_engine->getGraphicsManager()->getBackground##type())
-#define showFrameBg(type, index) show(_engine->getGraphicsManager()->getBackground##type(), index)
-#define showFrameOverlay(index) show(_engine->getGraphicsManager()->getOverlay(), index)
+#define showBg(type) draw(_engine->getGraphicsManager()->getBackground##type())
+#define showFrameBg(type, index) draw(_engine->getGraphicsManager()->getBackground##type(), index)
+#define showFrameOverlay(index) draw(_engine->getGraphicsManager()->getOverlay(), index)
 
 #define clearBg(type) _engine->getGraphicsManager()->getBackground##type()->fillRect(Common::Rect(640, 480), 0);
 #define clearBgOverlay() _engine->getGraphicsManager()->getOverlay()->fillRect(Common::Rect(640, 480), 0);

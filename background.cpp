@@ -84,7 +84,7 @@ bool Background::load(Common::SeekableReadStream *stream) {
 	return true;
 }
 
-bool Background::show(Graphics::Surface *surface) {
+bool Background::draw(Graphics::Surface *surface) {
 	if (!_data) {
 		debugC(2, kLastExpressDebugGraphics, "Trying to show a background before loading data!");
 		return false;

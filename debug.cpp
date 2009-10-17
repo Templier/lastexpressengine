@@ -216,7 +216,7 @@ bool Debugger::cmd_playsbe(int argc, const char **argv) {
 			if (subtitle.loadFile(filename)) {
 				for (uint i = 0; i < subtitle.count(); i++) {
 					_engine->_system->fillScreen(0);
-					subtitle.show(*_engine->getFont(), i);
+					subtitle.draw(*_engine->getFont(), i);
 					//askForRedraw(); redrawScreen();
 					_engine->_system->updateScreen();
 
@@ -251,7 +251,7 @@ bool Debugger::cmd_playnis(int argc, const char **argv) {
 		} else {
 			Animation animation;
 			if (animation.loadFile(filename))
-				animation.show();
+				animation.draw();
 
 			resetCommand();
 		}
