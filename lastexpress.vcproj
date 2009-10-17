@@ -257,6 +257,10 @@
 			>
 		</File>
 		<File
+			RelativePath="..\..\engines\lastexpress\drawable.h"
+			>
+		</File>
+		<File
 			RelativePath="..\..\engines\lastexpress\graphics.cpp"
 			>
 		</File>

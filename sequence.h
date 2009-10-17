@@ -66,6 +66,8 @@
 		byte {x}      - compressed image data
 */
 
+#include "lastexpress/drawable.h"
+
 #include "common/stream.h"
 #include "graphics/surface.h"
 
@@ -111,13 +113,13 @@ private:
 	uint16 *_palette;
 };
 
-class Sequence {
+class Sequence : Drawable {
 public:
 	Sequence();
 	~Sequence();
 
 	bool load(Common::SeekableReadStream *stream);
-	bool draw(Graphics::Surface *surface, uint32 index);
+	Common::Rect draw(Graphics::Surface *surface, uint32 index);
 
 	uint32 count();
 

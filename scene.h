@@ -79,19 +79,21 @@
 
 */
 
+#include "lastexpress/drawable.h"
+
 #include "graphics/surface.h"
 
 namespace LastExpress {
 
 class ResourceManager;
 
-class Scene {
+class Scene : Drawable {
 public:
 	Scene(ResourceManager *resource);
 	~Scene();
 
 	bool load(Common::SeekableReadStream *stream);
-	bool draw(Graphics::Surface *surface, uint32 index);
+	Common::Rect draw(Graphics::Surface *surface, uint32 index);
 	//SceneEntry *getEntry(uint sceneIndex);
 
 	bool checkHotSpot(uint index, Common::Point coord, byte* eventId);

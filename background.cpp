@@ -84,10 +84,10 @@ bool Background::load(Common::SeekableReadStream *stream) {
 	return true;
 }
 
-bool Background::draw(Graphics::Surface *surface) {
+Common::Rect Background::draw(Graphics::Surface *surface) {
 	if (!_data) {
 		debugC(2, kLastExpressDebugGraphics, "Trying to show a background before loading data!");
-		return false;
+		return Common::Rect();
 	}
 
 	for (uint16 y = 0; y < _header.height; y++) {
@@ -99,7 +99,7 @@ bool Background::draw(Graphics::Surface *surface) {
 		}
 	}
 
-	return true;
+	return Common::Rect(_header.posX, _header.posY, _header.posX + _header.width, _header.posY + _header.height);
 }
 
 byte *Background::decodeComponent(Common::SeekableReadStream *in, uint32 inSize, uint32 outSize) {

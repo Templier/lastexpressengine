@@ -389,22 +389,22 @@ bool Sequence::load(Common::SeekableReadStream *stream) {
 	return true;
 }
 
-bool Sequence::draw(Graphics::Surface *surface, uint32 index) {
+Common::Rect Sequence::draw(Graphics::Surface *surface, uint32 index) {
 	if (_frames.size() == 0) {
 		debugC(2, kLastExpressDebugGraphics, "Trying to show a sequence before loading data!");
-		return false;
+		return Common::Rect();
 	}
 
 	if (index > _frames.size() - 1) {
 		debugC(2, kLastExpressDebugGraphics, "Invalid frame index: was %d, max %d", index, _frames.size() - 1);
-		return false;
+		return Common::Rect();
 	}
 
 	//debugC(2, kLastExpressDebugGraphics, "Decoding frame %d / %d", index, _frames.size() - 1);
 
 	// Skip "invalid" frames
 	if (_frames[index].compressionType == 0)
-		return false;
+		return Common::Rect();
 
 	AnimFrame *f = new AnimFrame(_stream, &_frames[index]);
 
@@ -412,7 +412,7 @@ bool Sequence::draw(Graphics::Surface *surface, uint32 index) {
 
 	delete f;
 
-	return true;
+	return Common::Rect(_frames[index].xPos1, _frames[index].yPos1, _frames[index].xPos2, _frames[index].yPos2);
 }
 
 } // End of namespace LastExpress

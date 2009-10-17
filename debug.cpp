@@ -158,7 +158,7 @@ bool Debugger::cmd_showframe(int argc, const char **argv) {
 			if (sequence.loadFile(filename)) {
 				clearBgOverlay();
 
-				if (!sequence.showFrameOverlay(getNumber(argv[2]))) {
+				if (!sequence.showFrameOverlay(getNumber(argv[2])).isEmpty()) {
 					DebugPrintf("Invalid frame index: %i\n", filename.c_str());
 					resetCommand();
 					return true;
@@ -335,7 +335,7 @@ bool Debugger::cmd_loadscene(int argc, const char **argv) {
 
 			Scene scene(_engine->getResource());
 			if (scene.loadScene(cd)) {
-				if (scene.showScene(C, index)) {
+				if (!scene.showScene(C, index).isEmpty()) {
 					askForRedraw();
 				} else {
 					DebugPrintf("Cannot load scene: %i", index);									

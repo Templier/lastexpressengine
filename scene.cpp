@@ -83,7 +83,7 @@ bool Scene::load(Common::SeekableReadStream *stream) {
 	return true;
 }
 
-bool Scene::draw(Graphics::Surface *surface, uint32 index) {
+Common::Rect Scene::draw(Graphics::Surface *surface, uint32 index) {
 	if (index == 0 || index > 2500) // max number of scenes
 		index = 1;
 
@@ -108,15 +108,16 @@ bool Scene::draw(Graphics::Surface *surface, uint32 index) {
 	name.trim();
 	if (name.empty()) {
 		debugC(2, kLastExpressDebugScenes, "This scene is not a valid root scene: %i", index);
-		return false;
+		return Common::Rect();
 	}
 
 	// Load background
 	Background background;
+	Common::Rect rect;
 	if (background.load(_resource->getFileStream(Common::String::printf("%s.bg", name.c_str()))))
-		background.draw(surface);
+		rect = background.draw(surface);
 
-	return true;
+	return rect;
 }
 
 bool Scene::checkHotSpot(uint index, Common::Point coord, byte* eventId) {
