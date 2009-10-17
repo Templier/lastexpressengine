@@ -39,7 +39,9 @@
 		uint16 {32*32}   - cursor data
 */
 
+#include "common/rect.h"
 #include "common/stream.h"
+#include "graphics/surface.h"
 
 namespace LastExpress {
 
@@ -103,9 +105,8 @@ public:
 	void show(bool visible);
 	bool setStyle(CursorStyle style);
 	CursorStyle getStyle();
-
-	// TODO: Add function to draw a cursor to a surface, as they are also used for the inventory (top-right of the screen)
-	//void draw(Surface *surface, int x, int y, CursorStyle style);
+	
+	Common::Rect draw(Graphics::Surface *surface, int x, int y, CursorStyle style);
 
 private:
 	// Style
@@ -113,6 +114,8 @@ private:
 
 	// Cursors data
 	byte *_data;
+
+	bool checkStyle(CursorStyle style);
 };
 
 } // End of namespace LastExpress

@@ -60,16 +60,24 @@ void Cursor::show(bool visible) {
 	CursorMan.showMouse(visible);
 }
 
-bool Cursor::setStyle(CursorStyle style) {
+bool Cursor::checkStyle(CursorStyle style) {
 	if (!_data) {
-		debugC(2, kLastExpressDebugGraphics, "Trying to set cursor style before loading data!");
+		debugC(2, kLastExpressDebugGraphics, "Trying to use a cursor before loading data!");
 		return false;
 	}
 
 	if ((int)style < 0 || (int)style > MAX_CURSOR - 1) {
-		debugC(2, kLastExpressDebugGraphics, "Trying to set an invalid cursor style: was %d, max %d", (int)style, MAX_CURSOR);
+		debugC(2, kLastExpressDebugGraphics, "Trying to use an invalid cursor style: was %d, max %d", (int)style, MAX_CURSOR);
 		return false;
 	}
+	
+	return true;
+}
+
+bool Cursor::setStyle(CursorStyle style) {
+	if (!checkStyle(style))
+		return false;
+
 	debugC(10, kLastExpressDebugCursor | kLastExpressDebugAll, "Cursor: setting style: %d", style);
 
 	// Save the new cursor
@@ -97,6 +105,22 @@ bool Cursor::setStyle(CursorStyle style) {
 
 Cursor::CursorStyle Cursor::getStyle() {
 	return _current;
+}
+
+// Draw a cursor to a surface, as they are also used for the inventory (top-right of the screen)
+Common::Rect Cursor::draw(Graphics::Surface *surface, int x, int y, CursorStyle style) {
+	if (!checkStyle(style))
+		return Common::Rect();
+	
+	byte *fileImage = _data + MAX_CURSOR * 4 + (style * 32 * 32 * 2);
+	for (int i = 0; i < 32; i++) {
+		for (int j = 0; j < 32; j++) {
+			surface->fillRect(Common::Rect(x + i, y + j, x + j + 1, y + j + 1), READ_LE_UINT16(fileImage));
+			fileImage += 2;
+		}
+	}
+
+	return Common::Rect(x, y, x+32, y+32);
 }
 
 } // End of namespace LastExpress
