@@ -278,15 +278,14 @@ Common::Error LastExpressEngine::go() {
 
 				if (ev.kbd.keycode == Common::KEYCODE_t) {
 					if (i_sbe != list_sbe.end()) {
-						SubtitleManager subtitle;
+						SubtitleManager subtitle(_font);
 						if (subtitle.load(_resource->getFileStream((*i_sbe)->getName()))) {
 							for (uint i = 0; i < subtitle.count(); i++) {
-								_system->fillScreen(0);
-								subtitle.draw(*_font, i);								
+								_graphics->clear();
+								subtitle.showFrameOverlay(i);								
 
-								/*askForRedraw(); 
-								redrawScreen();*/
-								_system->updateScreen();
+								askForRedraw(); 
+								redrawScreen();
 
 								// Handle right-click to interrupt sequence
 								Common::Event ev;

@@ -51,9 +51,16 @@ void Subtitle::reset() {
 	delete[] _bottomText;
 }
 
-void Subtitle::draw(Font &font) {	
-	font.drawString(100, 100, _topText, _topLength);	
-	font.drawString(100, 300, _bottomText, _bottomLength);
+Common::Rect Subtitle::draw(Graphics::Surface *surface, Font *font) {	
+	Common::Rect rectTop, rectBottom;
+	
+	//FIXME find out proper subtitles coordinates (and hope it's hardcoded and not stored in the sequence or animation)
+	rectTop = font->drawString(surface, 100, 100, _topText, _topLength);	
+	rectBottom = font->drawString(surface, 100, 300, _bottomText, _bottomLength);
+
+	rectTop.extend(rectBottom);
+
+	return rectTop;
 }
 
 template<typename T>
@@ -110,7 +117,7 @@ bool Subtitle::load(Common::SeekableReadStream *in) {
 //////////////////////////////////////////////////////////////////////////
 // SubtitleManager
 //////////////////////////////////////////////////////////////////////////
-SubtitleManager::SubtitleManager() {}
+SubtitleManager::SubtitleManager(Font* font) : _font(font) {}
 
 SubtitleManager::~SubtitleManager() {
 	reset();	
@@ -165,15 +172,13 @@ bool SubtitleManager::load(Common::SeekableReadStream *stream) {
 	return true;
 }
 
-bool SubtitleManager::draw(Font &font, uint index) {
+Common::Rect SubtitleManager::draw(Graphics::Surface *surface, uint index){
 	if (index > _subtitles.size() - 1) {
 		debugC(3, kLastExpressDebugSubtitle, "ERROR: invalid subtitle index (was: %d, max: %d)", index, _subtitles.size() - 1);
-		return false;
+		return Common::Rect();
 	}
 
-	_subtitles[index]->draw(font);
-
-	return true;
+	return _subtitles[index]->draw(surface, _font);	
 }
 
 } // End of namespace LastExpress

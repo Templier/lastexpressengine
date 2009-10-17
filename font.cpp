@@ -153,10 +153,10 @@ uint16 Font::getStringWidth(uint16 *str, uint16 length) {
 	return width;
 }
 
-void Font::drawChar(int x, int y, uint16 c) {
+void Font::drawChar(Graphics::Surface *surface, int x, int y, uint16 c) {
 	byte *p = getCharImg(c);
-
-	for (int j = 0; j < 18; j++) {
+	
+	for (int j = 0; j < 18; j++) {		
 		for (int i = 0; i < 16; i++) {
 			byte index;
 			if (i % 2)
@@ -164,28 +164,33 @@ void Font::drawChar(int x, int y, uint16 c) {
 			else
 				index = *p >> 4;
 			uint16 color = _palette[index];
-			if (color != 0x1f)
-				g_system->copyRectToScreen((byte *)&color, 2, x + i, y + j, 1, 1);
+			if (color != 0x1f) {
+				surface->fillRect(Common::Rect(x+i, y+j, x+i+1, y+j+1), color);				
+			}
 			if (i % 2)
 				p++;
 		}
 	}
 }
 
-void Font::drawString(int x, int y, Common::String str) {
+Common::Rect Font::drawString(Graphics::Surface *surface, int x, int y, Common::String str) {
 	int currentX = x;
 	for (uint i = 0; i < str.size(); i++) {
-		drawChar(currentX, y, str[i]);
+		drawChar(surface, currentX, y, str[i]);
 		currentX += getCharWidth(str[i]);
 	}
+
+	return Common::Rect(x, y, x + currentX, y + _charHeight);
 }
 
-void Font::drawString(int x, int y, uint16 *str, uint16 length) {
+Common::Rect Font::drawString(Graphics::Surface *surface, int x, int y, uint16 *str, uint16 length) {
 	int currentX = x;
 	for (uint i = 0; i < length; i++) {
-		drawChar(currentX, y, str[i]);
+		drawChar(surface, currentX, y, str[i]);
 		currentX += getCharWidth(str[i]);
 	}
+
+	return Common::Rect(x, y, x + currentX, y + _charHeight);
 }
 
 } // End of namespace LastExpress

@@ -40,6 +40,8 @@
 		byte {x}     - bottom line (UTF-16 string)
 */
 
+#include "lastexpress/drawable.h"
+
 #include "common/stream.h"
 #include "common/array.h"
 
@@ -53,7 +55,7 @@ public:
 	~Subtitle();
 
 	bool load(Common::SeekableReadStream *in);
-	void draw(Font &font);
+	Common::Rect draw(Graphics::Surface *surface, Font *font);
 
 private:
 	uint16 _timeStart;		//!< display start time
@@ -68,20 +70,21 @@ private:
 	void reset();
 };
 
-class SubtitleManager {
+class SubtitleManager : Drawable {
 public:
-	SubtitleManager();
+	SubtitleManager(Font *font);
 	~SubtitleManager();
 
 	bool load(Common::SeekableReadStream *stream);
-	bool draw(Font &font, uint index);
+	Common::Rect draw(Graphics::Surface *surface, uint index);
 
-	//TODO: add function bool show(uint16 currentTime);
+	//TODO: add helper function uint getIndexFromTime(uint16 time);
 
 	uint32 count();
 
 private:
 	Common::Array<Subtitle*> _subtitles;
+	Font* _font;
 
 	void reset();
 };

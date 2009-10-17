@@ -212,13 +212,14 @@ bool Debugger::cmd_playsbe(int argc, const char **argv) {
 
 			return false;
 		} else {
-			SubtitleManager subtitle;
+			SubtitleManager subtitle(_engine->getFont());
 			if (subtitle.loadFile(filename)) {
 				for (uint i = 0; i < subtitle.count(); i++) {
-					_engine->_system->fillScreen(0);
-					subtitle.draw(*_engine->getFont(), i);
-					//askForRedraw(); redrawScreen();
-					_engine->_system->updateScreen();
+					_engine->getGraphicsManager()->clear();
+					subtitle.showFrameOverlay(i);
+
+					askForRedraw();
+					redrawScreen();
 
 					_engine->_system->delayMillis(500);
 				}
