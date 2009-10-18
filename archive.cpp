@@ -112,7 +112,7 @@ Common::SeekableReadStream *HPFArchive::createReadStreamForMember(const Common::
 		return NULL;
 	}
 
-	return new Common::SeekableSubReadStream(archive, fDesc->_value.offset * _archiveSectorSize, fDesc->_value.offset * _archiveSectorSize + fDesc->_value.size * _archiveSectorSize, DisposeAfterUse::YES);
+	return new Common::SeekableSubReadStream(archive, fDesc->_value.offset * _archiveSectorSize, fDesc->_value.offset * _archiveSectorSize + fDesc->_value.size * _archiveSectorSize, Common::DisposeAfterUse::YES);
 }
 
 } // End of namespace LastExpress
