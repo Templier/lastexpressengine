@@ -72,7 +72,7 @@ public:
 		CursorPaper,		// Need better name
 		CursorParchemin,
 		CursorMatch,
-		Cursorwhistle,
+		CursorWhistle,
 		CursorKey,
 		CursorBomb,
 		CursorFirebird,

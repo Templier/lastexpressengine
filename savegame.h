@@ -89,11 +89,30 @@
 		uint32 {4}      - ??
 		uint32 {4}      - ??
 		uint32 {4}      - ??
-		uint32 {4}      - ??
+		uint32 {4}      - portraitType (top left portrait - with/without vest)
 		uint32 {4}      - ??
 		uint32 {4}      - ??
 		uint32 {4}      - ??
 		uint32 {4}      - cd number
+		uint32 {4}      - ??
+		uint32 {4}      - ??
+		uint32 {4}      - ??
+		uint32 {4}      - ??
+		uint32 {4}      - ??
+		uint32 {4}      - ??
+		uint32 {4}      - ??
+		uint32 {4}      - ??
+		uint32 {4}      - ??
+		uint32 {4}      - ??
+		uint32 {4}      - ??
+		uint32 {4}      - ??
+		uint32 {4}      - ??
+		uint32 {4}      - ??
+		uint32 {4}      - ??
+		uint32 {4}      - ??
+		uint32 {4}      - ??
+		uint32 {4}      - ??
+		uint32 {4}      - ??		
 
 
 	save point: max: 126 - rotates through list (ie. goes back and overwrites first save point when full)
@@ -137,6 +156,15 @@ public:
 
 			currentScene = 0;
 			time = _defaultTime;
+		}
+	};
+
+	struct GameProgress {
+		uint32 cdNumber;
+		uint32 portraitType;
+
+		GameProgress() {
+
 		}
 	};
 
