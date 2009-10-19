@@ -50,54 +50,54 @@ namespace LastExpress {
 class Cursor : public Drawable{
 public:
 	enum CursorStyle {
-		CursorNormal,
-		CursorForward,
-		CursorBackward,
-		CursorTurnRight,
-		CursorTurnLeft,
-		CursorUp,
-		CursorDown,
-		CursorLeft,
-		CursorRight,
-		CursorHand,
-		CursorHandKnock,
-		CursorMagnifier,
-		CursorHandPointer,
-		CursorSleep,
-		CursorTalk,
-		CursorTalk2,		// Need better name
-		CursorMatchBox,
-		CursorTelegram,
-		CursorPassengerList,
-		CursorArticle,
-		CursorScarf,
-		CursorPaper,		// Need better name
-		CursorParchemin,
-		CursorMatch,
-		CursorWhistle,
-		CursorKey,
-		CursorBomb,
-		CursorFirebird,
-		CursorBriefcase,
-		CursorCorpse,
-		CursorPunchLeft,
-		CursorPunchRight,
-		CursorPortraitYellow,
-		CursorPortraitYellowSelected,
-		CursorPortraitGreenVest,
-		CursorPortraitGreenSelected,
-		CursorPortrait,
-		CursorPortraitSelected,
-		CursorWait,
-		CursorEggBlue,
-		CursorEggRed,
-		CursorEggGreen,
-		CursorEggPurple,
-		CursorEggTeal,
-		CursorEggGold,
-		CursorEggClock,
-		CursorNormal2,
-		CursorBlank
+		kCursorNormal,
+		kCursorForward,
+		kCursorBackward,
+		kCursorTurnRight,
+		kCursorTurnLeft,
+		kCursorUp,
+		kCursorDown,
+		kCursorLeft,
+		kCursorRight,
+		kCursorHand,
+		kCursorHandKnock,
+		kCursorMagnifier,
+		kCursorHandPointer,
+		kCursorSleep,
+		kCursorTalk,
+		kCursorTalk2,		// Need better name
+		kCursorMatchBox,
+		kCursorTelegram,
+		kCursorPassengerList,
+		kCursorArticle,
+		kCursorScarf,
+		kCursorPaper,		// Need better name
+		kCursorParchemin,
+		kCursorMatch,
+		kCursorWhistle,
+		kCursorKey,
+		kCursorBomb,
+		kCursorFirebird,
+		kCursorBriefcase,
+		kCursorCorpse,
+		kCursorPunchLeft,
+		kCursorPunchRight,
+		kCursorPortraitYellow,
+		kCursorPortraitYellowSelected,
+		kCursorPortraitGreenVest,
+		kCursorPortraitGreenSelected,
+		kCursorPortrait,
+		kCursorPortraitSelected,
+		kCursorHourGlass,
+		kCursorEggBlue,
+		kCursorEggRed,
+		kCursorEggGreen,
+		kCursorEggPurple,
+		kCursorEggTeal,
+		kCursorEggGold,
+		kCursorEggClock,
+		kCursorNormal2,
+		kCursorBlank
 	};
 
 	Cursor();
@@ -108,7 +108,7 @@ public:
 	bool setStyle(CursorStyle style);
 	CursorStyle getStyle();
 	
-	Common::Rect draw(Graphics::Surface *surface, int x, int y, CursorStyle style);
+	Common::Rect draw(Graphics::Surface *surface, int x, int y, CursorStyle style, int brightness);
 
 private:
 	// Style

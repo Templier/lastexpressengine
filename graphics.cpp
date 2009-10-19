@@ -99,9 +99,9 @@ bool GraphicsManager::draw(Drawable* drawable, uint index, BackgroundType type, 
 	return (!rect.isEmpty());
 }
 
-bool GraphicsManager::draw(Drawable* drawable, int x, int y, uint index, BackgroundType type, bool transition) {
+bool GraphicsManager::draw(Drawable* drawable, int x, int y, uint index, BackgroundType type, int brightness, bool transition) {
 	// TODO store rect for later use
-	Common::Rect rect = drawable->draw(getSurface(type), x, y, index);
+	Common::Rect rect = drawable->draw(getSurface(type), x, y, index, brightness);
 
 	return (!rect.isEmpty());
 }

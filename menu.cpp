@@ -165,7 +165,7 @@ void Menu::showMenu() {
 	}
 
 	// Set Cursor type
-	_engine->getCursor()->setStyle(Cursor::CursorNormal);
+	_engine->getCursor()->setStyle(Cursor::kCursorNormal);
 	_engine->getCursor()->show(true);
 
 	// Load scene

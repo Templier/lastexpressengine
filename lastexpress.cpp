@@ -114,7 +114,7 @@ Common::Error LastExpressEngine::init() {
 		return Common::kUnknownError;
 
 	// Initialize cursor
-	_cursor->setStyle(Cursor::CursorNormal);
+	_cursor->setStyle(Cursor::kCursorNormal);
 
 	_sfx = new StreamedSound();
 	_music = new StreamedSound();

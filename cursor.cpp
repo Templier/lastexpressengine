@@ -33,7 +33,7 @@
 
 namespace LastExpress {
 
-Cursor::Cursor() : _current(CursorNormal), _data(NULL) {}
+Cursor::Cursor() : _current(kCursorNormal), _data(NULL) {}
 
 Cursor::~Cursor() {
 	delete[] _data;
@@ -108,7 +108,7 @@ Cursor::CursorStyle Cursor::getStyle() {
 }
 
 // Draw a cursor to a surface, as they are also used for the inventory (top-right of the screen)
-Common::Rect Cursor::draw(Graphics::Surface *surface, int x, int y, CursorStyle style) {
+Common::Rect Cursor::draw(Graphics::Surface *surface, int x, int y, CursorStyle style, int brigthness) {
 	if (!checkStyle(style))
 		return Common::Rect();
 	
