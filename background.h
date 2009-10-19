@@ -59,7 +59,6 @@ public:
 	bool load(Common::SeekableReadStream *stream);
 
 	Common::Rect draw(Graphics::Surface *surface);
-	Common::Rect draw(Graphics::Surface *surface, uint index) { return Common::Rect(); }
 
 private:
 	struct BackgroundHeader {

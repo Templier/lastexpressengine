@@ -93,7 +93,6 @@ public:
 	~Scene();
 
 	bool load(Common::SeekableReadStream *stream);
-	Common::Rect draw(Graphics::Surface *surface) { return Common::Rect(); }
 	Common::Rect draw(Graphics::Surface *surface, uint index);
 	//SceneEntry *getEntry(uint sceneIndex);
 
