@@ -39,13 +39,15 @@
 		uint16 {32*32}   - cursor data
 */
 
+#include "lastexpress/drawable.h"
+
 #include "common/rect.h"
 #include "common/stream.h"
 #include "graphics/surface.h"
 
 namespace LastExpress {
 
-class Cursor {
+class Cursor : public Drawable{
 public:
 	enum CursorStyle {
 		CursorNormal,

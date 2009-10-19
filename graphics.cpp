@@ -85,16 +85,23 @@ void GraphicsManager::clear(BackgroundType type) {
 	}	
 }
 
-bool GraphicsManager::draw(Drawable* drawable, BackgroundType type) {
+bool GraphicsManager::draw(Drawable* drawable, BackgroundType type, bool transition) {
 	// TODO store rect for later use
 	Common::Rect rect = drawable->draw(getSurface(type));
 
 	return (!rect.isEmpty());
 }
 
-bool GraphicsManager::draw(Drawable* drawable, uint index, BackgroundType type) {
+bool GraphicsManager::draw(Drawable* drawable, uint index, BackgroundType type, bool transition) {
 	// TODO store rect for later use
 	Common::Rect rect = drawable->draw(getSurface(type), index);
+
+	return (!rect.isEmpty());
+}
+
+bool GraphicsManager::draw(Drawable* drawable, int x, int y, uint index, BackgroundType type, bool transition) {
+	// TODO store rect for later use
+	Common::Rect rect = drawable->draw(getSurface(type), x, y, index);
 
 	return (!rect.isEmpty());
 }
