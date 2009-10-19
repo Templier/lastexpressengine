@@ -35,8 +35,6 @@ Logic::Logic(LastExpressEngine *engine) : _engine(engine) {
 
 	// Get those from savegame
 	_gameState = new SaveLoad::GameState();
-	_gameState->time = 2383200;
-	_runState.gameStarted = true;
 }
 
 Logic::~Logic() {

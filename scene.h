@@ -87,13 +87,14 @@ namespace LastExpress {
 
 class ResourceManager;
 
-class Scene : Drawable {
+class Scene : public Drawable {
 public:
 	Scene(ResourceManager *resource);
 	~Scene();
 
 	bool load(Common::SeekableReadStream *stream);
-	Common::Rect draw(Graphics::Surface *surface, uint32 index);
+	Common::Rect draw(Graphics::Surface *surface) { return Common::Rect(); }
+	Common::Rect draw(Graphics::Surface *surface, uint index);
 	//SceneEntry *getEntry(uint sceneIndex);
 
 	bool checkHotSpot(uint index, Common::Point coord, byte* eventId);

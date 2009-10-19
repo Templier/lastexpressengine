@@ -26,6 +26,8 @@
 #ifndef LASTEXPRESS_GRAPHICS_H
 #define LASTEXPRESS_GRAPHICS_H
 
+#include "lastexpress/drawable.h"
+
 #include "graphics/pixelformat.h"
 #include "graphics/surface.h"
 
@@ -33,6 +35,14 @@ namespace LastExpress {
 
 class GraphicsManager {
 public:
+	enum BackgroundType {
+		kBackgroundA,
+		kBackgroundC,
+		kBackgroundOverlay,
+		kBackgroundInventory,
+		kBackgroundAll
+	};
+
 	GraphicsManager(Graphics::PixelFormat format);
 	~GraphicsManager();
 
@@ -42,24 +52,24 @@ public:
 	// Signal a change to the screen, will cause the planes to be remerged
 	void change();
 
-	// Clear all screen parts
-	void clear();
+	// Clear some screen parts
+	void clear(BackgroundType type);
 
 	// FIXME this is there for animation until we change it to use the graphic surface here instead of its private ones.
 	Graphics::Surface _screen;					// Actual screen surface
-
-	// Accessors
-	Graphics::Surface *getBackgroundA() { return &_backgroundA; }
-	Graphics::Surface *getBackgroundC() { return &_backgroundC; }
-	Graphics::Surface *getOverlay() { return &_overlay; }
+	
+	bool draw(Drawable* drawable, BackgroundType type);
+	bool draw(Drawable* drawable, uint index, BackgroundType type);
 
 private:
 	Graphics::Surface _backgroundA;				// Background A
 	Graphics::Surface _backgroundC;				// Background C
 	Graphics::Surface _overlay;					// Overlay
+	Graphics::Surface _inventory;				// Overlay
 
 	void mergePlanes();
 	void updateScreen();
+	Graphics::Surface *getSurface(BackgroundType type);
 
 	bool _changed;
 };

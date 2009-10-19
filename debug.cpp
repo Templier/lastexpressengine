@@ -113,9 +113,9 @@ bool Debugger::cmd_playseq(int argc, const char **argv) {
 				for (uint32 i = 0; i < sequence.count(); i++) {
 
 					// Clear screen
-					clearBg(A);
+					clearBg(GraphicsManager::kBackgroundA);
 
-					sequence.showFrameBg(A, i);
+					drawFrame(&sequence, i, GraphicsManager::kBackgroundA);
 
 					askForRedraw();
 					redrawScreen();
@@ -156,9 +156,10 @@ bool Debugger::cmd_showframe(int argc, const char **argv) {
 		} else {
 			Sequence sequence;
 			if (sequence.loadFile(filename)) {
-				clearBgOverlay();
+				clearBg(GraphicsManager::kBackgroundOverlay);
 
-				if (!sequence.showFrameOverlay(getNumber(argv[2])).isEmpty()) {
+				
+				if (!drawFrame(&sequence, getNumber(argv[2]), GraphicsManager::kBackgroundOverlay)) {
 					DebugPrintf("Invalid frame index: %i\n", filename.c_str());
 					resetCommand();
 					return true;
@@ -215,8 +216,9 @@ bool Debugger::cmd_playsbe(int argc, const char **argv) {
 			SubtitleManager subtitle(_engine->getFont());
 			if (subtitle.loadFile(filename)) {
 				for (uint i = 0; i < subtitle.count(); i++) {
-					_engine->getGraphicsManager()->clear();
-					subtitle.showFrameOverlay(i);
+					clearBg(GraphicsManager::kBackgroundAll);
+
+					drawFrame(&subtitle, i, GraphicsManager::kBackgroundOverlay);
 
 					askForRedraw();
 					redrawScreen();
@@ -279,11 +281,11 @@ bool Debugger::cmd_showbg(int argc, const char **argv) {
 
 			return false;
 		} else {
-			clearBg(C);
+			clearBg(GraphicsManager::kBackgroundC);
 
 			Background background;
 			if (background.loadFile(filename)) {
-				background.showBg(C);
+				drawBg(&background, GraphicsManager::kBackgroundC);
 				askForRedraw();
 			}
 
@@ -332,11 +334,11 @@ bool Debugger::cmd_loadscene(int argc, const char **argv) {
 
 			return false;
 		} else {
-			_engine->getGraphicsManager()->clear();
+			clearBg(GraphicsManager::kBackgroundAll);
 
 			Scene scene(_engine->getResource());
 			if (scene.loadScene(cd)) {
-				if (!scene.showScene(C, index).isEmpty()) {
+				if (!showScene(&scene, index, GraphicsManager::kBackgroundC)) {
 					askForRedraw();
 				} else {
 					DebugPrintf("Cannot load scene: %i", index);									

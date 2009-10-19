@@ -113,13 +113,14 @@ private:
 	uint16 *_palette;
 };
 
-class Sequence : Drawable {
+class Sequence : public Drawable {
 public:
 	Sequence();
 	~Sequence();
 
 	bool load(Common::SeekableReadStream *stream);
-	Common::Rect draw(Graphics::Surface *surface, uint32 index);
+	Common::Rect draw(Graphics::Surface *surface) { return Common::Rect(); }
+	Common::Rect draw(Graphics::Surface *surface, uint index);
 
 	uint32 count();
 

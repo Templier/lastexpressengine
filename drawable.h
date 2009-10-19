@@ -34,10 +34,8 @@ namespace LastExpress {
 
 class Drawable {
 public:
-	virtual bool load(Common::SeekableReadStream *stream) = 0;
-
-	virtual Common::Rect draw(Graphics::Surface *surface) { return Common::Rect(); }
-	virtual Common::Rect draw(Graphics::Surface *surface, uint16 index) { return Common::Rect(); }
+	virtual Common::Rect draw(Graphics::Surface *surface) = 0;
+	virtual Common::Rect draw(Graphics::Surface *surface, uint index) = 0;
 };
 
 } // End of namespace LastExpress

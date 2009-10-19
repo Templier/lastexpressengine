@@ -70,12 +70,13 @@ private:
 	void reset();
 };
 
-class SubtitleManager : Drawable {
+class SubtitleManager : public Drawable {
 public:
 	SubtitleManager(Font *font);
 	~SubtitleManager();
 
 	bool load(Common::SeekableReadStream *stream);
+	Common::Rect draw(Graphics::Surface *surface) { return Common::Rect(); }
 	Common::Rect draw(Graphics::Surface *surface, uint index);
 
 	//TODO: add helper function uint getIndexFromTime(uint16 time);

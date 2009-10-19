@@ -83,7 +83,7 @@ bool Scene::load(Common::SeekableReadStream *stream) {
 	return true;
 }
 
-Common::Rect Scene::draw(Graphics::Surface *surface, uint32 index) {
+Common::Rect Scene::draw(Graphics::Surface *surface, uint index) {
 	if (index == 0 || index > 2500) // max number of scenes
 		index = 1;
 

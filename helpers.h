@@ -37,14 +37,11 @@
 // Graphics
 //////////////////////////////////////////////////////////////////////////
 #define loadScene(cd) loadFile(Common::String::printf("CD%iTRAIN.DAT", cd))
-#define showScene(type, index) draw(_engine->getGraphicsManager()->getBackground##type(), index)
+#define showScene(drawable, index, type) drawFrame(drawable, index, type)
 
-#define showBg(type) draw(_engine->getGraphicsManager()->getBackground##type())
-#define showFrameBg(type, index) draw(_engine->getGraphicsManager()->getBackground##type(), index)
-#define showFrameOverlay(index) draw(_engine->getGraphicsManager()->getOverlay(), index)
-
-#define clearBg(type) _engine->getGraphicsManager()->getBackground##type()->fillRect(Common::Rect(640, 480), 0);
-#define clearBgOverlay() _engine->getGraphicsManager()->getOverlay()->fillRect(Common::Rect(640, 480), 0);
+#define drawBg(drawable, type) _engine->getGraphicsManager()->draw(drawable, type)
+#define drawFrame(drawable, index, type) _engine->getGraphicsManager()->draw(drawable, index, type)
+#define clearBg(type) _engine->getGraphicsManager()->clear(type)
 
 #define askForRedraw() _engine->getGraphicsManager()->change();
 #define redrawScreen() _engine->getGraphicsManager()->update(); _engine->_system->updateScreen();

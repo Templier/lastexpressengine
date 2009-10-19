@@ -37,8 +37,9 @@ GraphicsManager::GraphicsManager(Graphics::PixelFormat format) : _changed(false)
 	_backgroundA.create(640, 480, format.bytesPerPixel);
 	_backgroundC.create(640, 480, format.bytesPerPixel);
 	_overlay.create(640, 480, format.bytesPerPixel);
+	_inventory.create(640, 480, format.bytesPerPixel);
 
-	clear();
+	clear(kBackgroundAll);
 }
 
 GraphicsManager::~GraphicsManager() {
@@ -62,13 +63,70 @@ void GraphicsManager::change() {
 	_changed = true;
 }
 
-void GraphicsManager::clear() {
-	// Clear all surfaces
-	_screen.fillRect(Common::Rect(640, 480), 0);
-	_overlay.fillRect(Common::Rect(640, 480), 0);
-	_backgroundC.fillRect(Common::Rect(640, 480), 0);
-	_backgroundA.fillRect(Common::Rect(640, 480), 0);
+void GraphicsManager::clear(BackgroundType type) {
+	switch (type) {
+		default:
+			error("GraphicsManager::clear() - Unknown background type: %d", type);
+			break;
+
+		case kBackgroundA:
+		case kBackgroundC:
+		case kBackgroundOverlay:
+		case kBackgroundInventory:
+			getSurface(type)->fillRect(Common::Rect(640, 480), 0);
+			break;
+
+		case kBackgroundAll:			
+			_backgroundA.fillRect(Common::Rect(640, 480), 0);
+			_backgroundC.fillRect(Common::Rect(640, 480), 0);
+			_overlay.fillRect(Common::Rect(640, 480), 0);
+			_inventory.fillRect(Common::Rect(640, 480), 0);
+			break;
+	}	
 }
+
+bool GraphicsManager::draw(Drawable* drawable, BackgroundType type) {
+	// TODO store rect for later use
+	Common::Rect rect = drawable->draw(getSurface(type));
+
+	return (!rect.isEmpty());
+}
+
+bool GraphicsManager::draw(Drawable* drawable, uint index, BackgroundType type) {
+	// TODO store rect for later use
+	Common::Rect rect = drawable->draw(getSurface(type), index);
+
+	return (!rect.isEmpty());
+}
+
+Graphics::Surface *GraphicsManager::getSurface(BackgroundType type) {
+	switch (type) {
+		default:
+			error("GraphicsManager::getSurface() - Unknown surface type: %d", type);
+			break;
+
+		case kBackgroundA:
+			return &_backgroundA;
+			break;
+
+		case kBackgroundC:
+			return &_backgroundC;
+			break;
+
+		case kBackgroundOverlay:
+			return &_overlay;
+			break;
+
+		case kBackgroundInventory:
+			return &_inventory;
+			break;
+
+		case kBackgroundAll:			
+			error("GraphicsManager::getSurface() - cannot return a surface for kBackgroundAll!");
+			break;
+	}	
+}
+
 
 void GraphicsManager::mergePlanes() {
 	// Clear screen surface
