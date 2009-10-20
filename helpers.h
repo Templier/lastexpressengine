@@ -50,6 +50,7 @@
 // Game
 //////////////////////////////////////////////////////////////////////////
 #define getState() _engine->getLogic()->getGameState()
+#define getProgress() _engine->getLogic()->getGameProgress()
 
 #define getGameId() _engine->getLogic()->getSavegameId()
 #define getNextGameId() (SaveLoad::SavegameId)((getGameId() + 1) % 6)

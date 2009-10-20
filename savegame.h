@@ -89,7 +89,7 @@
 		uint32 {4}      - ??
 		uint32 {4}      - ??
 		uint32 {4}      - ??
-		uint32 {4}      - portraitType (top left portrait - with/without vest)
+		uint32 {4}      - portraitType (top left portrait - 32 to 37)
 		uint32 {4}      - ??
 		uint32 {4}      - ??
 		uint32 {4}      - ??
@@ -164,7 +164,8 @@ public:
 		uint32 portraitType;
 
 		GameProgress() {
-
+			cdNumber = 1;
+			portraitType = 32;
 		}
 	};
 
