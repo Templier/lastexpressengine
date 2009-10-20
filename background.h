@@ -61,13 +61,13 @@ public:
 
 private:
 	struct BackgroundHeader {
-		uint32 posX;			//!< position X on screen
-		uint32 posY;			//!< position Y on screen
-		uint32 width;			//!< image width
-		uint32 height;			//!< image height
-		uint32 redSize;			//!< red color channel data size
-		uint32 blueSize;		//!< blue color channel data size
-		uint32 greenSize;		//!< green color channel data size
+		uint32 posX;			///< position X on screen
+		uint32 posY;			///< position Y on screen
+		uint32 width;			///< image width
+		uint32 height;			///< image height
+		uint32 redSize;			///< red color channel data size
+		uint32 blueSize;		///< blue color channel data size
+		uint32 greenSize;		///< green color channel data size
 	};
 
 	BackgroundHeader _header;

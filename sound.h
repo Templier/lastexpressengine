@@ -61,11 +61,11 @@ protected:
 	Audio::AudioStream *makeDecoder(Common::SeekableReadStream *in, uint32 size) const;
 	void play(Audio::AudioStream *as);
 
-	uint32 _size;					//!< data size
-									//!<  - NIS: size of all blocks, including those located in the matching LNK file
-									//!<  - LNK: size of the LNK file itself, including the header
-									//!<  - SND: size of all blocks
-	uint16 _blocks;					//!< number of blocks
+	uint32 _size;					///< data size
+									///<  - NIS: size of all blocks, including those located in the matching LNK file
+									///<  - LNK: size of the LNK file itself, including the header
+									///<  - SND: size of all blocks
+	uint16 _blocks;					///< number of blocks
 	uint32 _blockSize;
 	Audio::SoundHandle _handle;
 };

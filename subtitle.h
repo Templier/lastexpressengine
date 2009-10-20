@@ -57,14 +57,14 @@ public:
 	Common::Rect draw(Graphics::Surface *surface, Font *font);
 
 private:
-	uint16 _timeStart;		//!< display start time
-	uint16 _timeStop;		//!< display stop time
+	uint16 _timeStart;		///< display start time
+	uint16 _timeStop;		///< display stop time
 
-	uint16 _topLength;		//!< top line length
-	uint16 *_topText;		//!< bottom line length
+	uint16 _topLength;		///< top line length
+	uint16 *_topText;		///< bottom line length
 
-	uint16 _bottomLength;	//!< top line (UTF-16 string)
-	uint16 *_bottomText;	//!< bottom line (UTF-16 string)
+	uint16 _bottomLength;	///< top line (UTF-16 string)
+	uint16 *_bottomText;	///< bottom line (UTF-16 string)
 
 	void reset();
 };

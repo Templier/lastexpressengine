@@ -75,21 +75,21 @@ namespace LastExpress {
 struct FrameInfo {
 	void read(Common::SeekableReadStream *in, uint16 decompOffset);
 
-	uint32 dataOffset;					//!< Data offset (from beginning of file)
-	uint32 unknown;						//!< FIXME: unknown data
-	uint32 paletteOffset;				//!< Palette offset (from beginning of file)
-	uint32 xPos1;						//!< Top-left X coordinate
-	uint32 yPos1;						//!< Top-left Y coordinate
-	uint32 xPos2;						//!< Bottom-right X coordinate
-	uint32 yPos2;						//!< Bottom-right Y coordinate
-	uint32 initialSkip;					//!< Initial offset of decompressed data (doubled, since each pixel occupies one color word)
-	uint32 decompressedEndOffset;		//!< End of data after decompression
+	uint32 dataOffset;					///< Data offset (from beginning of file)
+	uint32 unknown;						///< FIXME: unknown data
+	uint32 paletteOffset;				///< Palette offset (from beginning of file)
+	uint32 xPos1;						///< Top-left X coordinate
+	uint32 yPos1;						///< Top-left Y coordinate
+	uint32 xPos2;						///< Bottom-right X coordinate
+	uint32 yPos2;						///< Bottom-right Y coordinate
+	uint32 initialSkip;					///< Initial offset of decompressed data (doubled, since each pixel occupies one color word)
+	uint32 decompressedEndOffset;		///< End of data after decompression
 
 	// NIS frame headers end here. SEQ frame headers have additional 32 bytes of
 	// data, notably the compression type at the position outlined above in
 	// CompPos_SEQ
 
-	byte compressionType;				//!< Type of frame compression (0x03, 0x04, 0x05, 0x07, 0xFF)
+	byte compressionType;				///< Type of frame compression (0x03, 0x04, 0x05, 0x07, 0xFF)
 };
 
 class AnimFrame {
