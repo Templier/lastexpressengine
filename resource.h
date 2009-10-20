@@ -42,6 +42,7 @@ public:
 	};
 
 	ResourceManager(LastExpressEngine *engine);
+	~ResourceManager();
 
 	// Loading
 	bool loadArchive(ArchiveType type);
@@ -57,6 +58,7 @@ private:
 	LastExpressEngine *_engine;
 
 	bool loadArchive(const Common::String &name);
+	void reset();
 
 	Common::Array<HPFArchive *> _archives;
 };

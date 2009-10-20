@@ -48,6 +48,7 @@ GraphicsManager::~GraphicsManager() {
 	_backgroundA.free();
 	_backgroundC.free();
 	_overlay.free();
+	_inventory.free();
 }
 
 void GraphicsManager::update() {

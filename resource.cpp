@@ -40,6 +40,10 @@ const Common::String archiveCD3Path("CD3.HPF");
 ResourceManager::ResourceManager(LastExpressEngine *engine) : _engine(engine) {
 }
 
+ResourceManager::~ResourceManager() {
+	reset();
+}
+
 // Load a specific archive collection
 //  - type is ignored in the demo version
 //  - use ArchiveAll to load all three cds
@@ -47,7 +51,7 @@ ResourceManager::ResourceManager(LastExpressEngine *engine) : _engine(engine) {
 //  - will remove all other archives
 bool ResourceManager::loadArchive(ArchiveType type) {
 	// Unload all archives
-	_archives.clear();
+	reset();
 
 	// Demo version
 	if (_engine->getFlags() & ADGF_DEMO)
@@ -77,6 +81,14 @@ bool ResourceManager::loadArchive(ArchiveType type) {
 	}
 
 	return loadedOk;
+}
+
+void ResourceManager::reset() {
+	// Free the loaded archives
+	for (Common::Array<HPFArchive *>::iterator it = _archives.begin(); it != _archives.end(); ++it) {
+		delete (*it);
+	}
+	_archives.clear();
 }
 
 bool ResourceManager::loadArchive(const Common::String &name) {
