@@ -58,7 +58,7 @@ public:
 		kCursorLeft,
 		kCursorRight,
 		kCursorHand,
-		kCursorHandKnock,
+		kCursorHandKnock,	// 10
 		kCursorMagnifier,
 		kCursorHandPointer,
 		kCursorSleep,
@@ -68,7 +68,7 @@ public:
 		kCursorTelegram,
 		kCursorPassengerList,
 		kCursorArticle,
-		kCursorScarf,
+		kCursorScarf,	// 20
 		kCursorPaper,		// Need better name
 		kCursorParchemin,
 		kCursorMatch,
@@ -78,17 +78,17 @@ public:
 		kCursorFirebird,
 		kCursorBriefcase,
 		kCursorCorpse,
-		kCursorPunchLeft,
+		kCursorPunchLeft,	// 30
 		kCursorPunchRight,
-		kCursorPortraitYellow,
-		kCursorPortraitYellowSelected,
-		kCursorPortraitGreenVest,
-		kCursorPortraitGreenSelected,
 		kCursorPortrait,
 		kCursorPortraitSelected,
+		kCursorPortraitGreen,
+		kCursorPortraitGreenSelected,
+		kCursorPortraitYellow,
+		kCursorPortraitYellowSelected,
 		kCursorHourGlass,
 		kCursorEggBlue,
-		kCursorEggRed,
+		kCursorEggRed,	// 40
 		kCursorEggGreen,
 		kCursorEggPurple,
 		kCursorEggTeal,
@@ -106,7 +106,7 @@ public:
 	bool setStyle(CursorStyle style);
 	CursorStyle getStyle();
 	
-	Common::Rect draw(Graphics::Surface *surface, int x, int y, CursorStyle style, int brightness);
+	Common::Rect draw(Graphics::Surface *surface, int x, int y, uint style, int brightness);
 
 private:
 	// Style

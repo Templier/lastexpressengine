@@ -108,14 +108,14 @@ Cursor::CursorStyle Cursor::getStyle() {
 }
 
 // Draw a cursor to a surface, as they are also used for the inventory (top-right of the screen)
-Common::Rect Cursor::draw(Graphics::Surface *surface, int x, int y, CursorStyle style, int brigthness) {
-	if (!checkStyle(style))
+Common::Rect Cursor::draw(Graphics::Surface *surface, int x, int y, uint style, int brigthness) {
+	if (!checkStyle((CursorStyle)style))
 		return Common::Rect();
 	
 	byte *fileImage = _data + MAX_CURSOR * 4 + (style * 32 * 32 * 2);
-	for (int i = 0; i < 32; i++) {
-		for (int j = 0; j < 32; j++) {
-			surface->fillRect(Common::Rect(x + i, y + j, x + j + 1, y + j + 1), READ_LE_UINT16(fileImage));
+	for (int j = 0; j < 32; j++) {
+		for (int i = 0; i < 32; i++) {		
+			surface->fillRect(Common::Rect(x + i, y + j, x + i + 1, y + j + 1), READ_LE_UINT16(fileImage));
 			fileImage += 2;
 		}
 	}
