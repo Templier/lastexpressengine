@@ -135,25 +135,29 @@ Graphics::Surface *GraphicsManager::getSurface(BackgroundType type) {
 	}	
 }
 
-
+// TODO optimize to only merge dirty rects
 void GraphicsManager::mergePlanes() {
 	// Clear screen surface
 	_screen.fillRect(Common::Rect(640, 480), 0);
 
 	uint16 *screen = (uint16 *)_screen.pixels;
+	uint16 *inventory = (uint16 *)_inventory.pixels;
 	uint16 *overlay = (uint16 *)_overlay.pixels;
 	uint16 *backgroundC = (uint16 *)_backgroundC.pixels;
 	uint16 *backgroundA = (uint16 *)_backgroundA.pixels;
 
 	for (int i = 0; i < 640 * 480; i++) {
 
-		if (*(overlay))
+		if (*(inventory))
+			*(screen) = *(inventory);
+		else if (*(overlay))
 			*(screen) = *(overlay);
 		else if (*(backgroundA))
 			*(screen) = *(backgroundA);
 		else
 			*(screen) = *(backgroundC);
 
+		inventory++;
 		screen++;
 		overlay++;
 		backgroundA++;
