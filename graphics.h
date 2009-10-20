@@ -29,7 +29,6 @@
 #include "lastexpress/drawable.h"
 
 #include "graphics/pixelformat.h"
-#include "graphics/surface.h"
 
 namespace LastExpress {
 

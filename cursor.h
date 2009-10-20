@@ -41,13 +41,11 @@
 
 #include "lastexpress/drawable.h"
 
-#include "common/rect.h"
 #include "common/stream.h"
-#include "graphics/surface.h"
 
 namespace LastExpress {
 
-class Cursor : public Drawable{
+class Cursor : public Drawable {
 public:
 	enum CursorStyle {
 		kCursorNormal,

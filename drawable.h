@@ -26,8 +26,6 @@
 #ifndef LASTEXPRESS_DRAWABLE_H
 #define LASTEXPRESS_DRAWABLE_H
 
-#include "common/rect.h"
-#include "common/stream.h"
 #include "graphics/surface.h"
 
 namespace LastExpress {

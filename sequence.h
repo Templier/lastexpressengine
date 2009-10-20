@@ -69,7 +69,6 @@
 #include "lastexpress/drawable.h"
 
 #include "common/stream.h"
-#include "graphics/surface.h"
 
 namespace LastExpress {
 

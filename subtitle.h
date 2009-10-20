@@ -43,7 +43,6 @@
 #include "lastexpress/drawable.h"
 
 #include "common/stream.h"
-#include "common/array.h"
 
 namespace LastExpress {
 
