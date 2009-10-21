@@ -132,7 +132,7 @@ bool SaveLoad::initSavegame(SavegameId id) {
 }
 
 // Read savegame information
-SaveLoad::GameState* SaveLoad::getGameState(SavegameId id) {
+SaveLoad::GameState *SaveLoad::getGameState(SavegameId id) {
 	// TODO: read info from savegame
 	return new GameState;
 }

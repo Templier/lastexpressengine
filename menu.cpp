@@ -206,7 +206,7 @@ bool Menu::handleStartMenuEvent(Common::Event ev) {
 
 	// Process event (check hit box / etc.)
 	static Menu::StartMenuEvent event;
-	if (!_scene->checkHotSpot(getState()->currentScene, ev.mouse, (byte*)&event)) {
+	if (!_scene->checkHotSpot(getState()->currentScene, ev.mouse, (byte *)&event)) {
 		clearBg(GraphicsManager::kBackgroundOverlay);
 		askForRedraw();
 		return true;
@@ -771,7 +771,7 @@ int Menu::getVolume() {
 	int volume = _engine->_mixer->getVolumeForSoundType(Audio::Mixer::kPlainSoundType);
 
 	// Convert to in-game value [0-7]
-	volume *= 7.0/Audio::Mixer::kMaxMixerVolume;
+	volume *= 7.0 / Audio::Mixer::kMaxMixerVolume;
 
 	return volume;
 }
@@ -781,7 +781,7 @@ void Menu::setVolume(int volume) {
 	getState()->volume = volume;
 
 	// Clamp volume
-	int value = volume * Audio::Mixer::kMaxMixerVolume/7.0;
+	int value = volume * Audio::Mixer::kMaxMixerVolume / 7.0;
 	if (value < 0)
 		value = 0;
 	if (value > Audio::Mixer::kMaxMixerVolume)

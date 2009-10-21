@@ -82,8 +82,8 @@ public:
 	uint32 count();
 
 private:
-	Common::Array<Subtitle*> _subtitles;
-	Font* _font;
+	Common::Array<Subtitle *> _subtitles;
+	Font *_font;
 
 	void reset();
 };

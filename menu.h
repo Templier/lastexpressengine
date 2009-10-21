@@ -161,7 +161,7 @@ private:
 
 	LastExpressEngine *_engine;
 
-	Scene* _scene;
+	Scene *_scene;
 
 	// Sequences
 	Sequence _seqHour;

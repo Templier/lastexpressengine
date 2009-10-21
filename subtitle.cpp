@@ -64,7 +64,7 @@ Common::Rect Subtitle::draw(Graphics::Surface *surface, Font *font) {
 }
 
 template<typename T>
-T* newArray(size_t n)
+T *newArray(size_t n)
 {
 	if (n <= (size_t)-1 / sizeof(T))
 		return new T[n];
@@ -117,7 +117,7 @@ bool Subtitle::load(Common::SeekableReadStream *in) {
 //////////////////////////////////////////////////////////////////////////
 // SubtitleManager
 //////////////////////////////////////////////////////////////////////////
-SubtitleManager::SubtitleManager(Font* font) : _font(font) {}
+SubtitleManager::SubtitleManager(Font *font) : _font(font) {}
 
 SubtitleManager::~SubtitleManager() {
 	reset();

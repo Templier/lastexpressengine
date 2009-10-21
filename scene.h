@@ -96,7 +96,7 @@ public:
 	Common::Rect draw(Graphics::Surface *surface, uint index);
 	//SceneEntry *getEntry(uint sceneIndex);
 
-	bool checkHotSpot(uint index, Common::Point coord, byte* eventId);
+	bool checkHotSpot(uint index, Common::Point coord, byte *eventId);
 
 private:
 	static const uint32 _headerSize = 24;

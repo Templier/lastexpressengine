@@ -120,7 +120,7 @@ Common::Rect Scene::draw(Graphics::Surface *surface, uint index) {
 	return rect;
 }
 
-bool Scene::checkHotSpot(uint index, Common::Point coord, byte* eventId) {
+bool Scene::checkHotSpot(uint index, Common::Point coord, byte *eventId) {
 	// Reset values
 	*eventId = 0;
 
