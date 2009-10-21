@@ -253,7 +253,8 @@ bool Debugger::cmd_playnis(int argc, const char **argv) {
 		} else {
 			Animation animation;
 			if (animation.loadFile(filename))
-				animation.draw();
+				//TODO: separate processing and drawing
+				animation.process();
 
 			resetCommand();
 		}

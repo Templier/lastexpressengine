@@ -38,7 +38,8 @@
 		byte {x}      - Data (for "data" chunks: backgrounds, overlay & audio data)
 */
 
-#include "common/array.h"
+#include "lastexpress/drawable.h"
+
 #include "common/stream.h"
 
 namespace LastExpress {
@@ -52,13 +53,15 @@ struct Chunk {
 	uint32 size;
 };
 
-class Animation {
+class Animation : public Drawable {
 public:
 	Animation();
 	~Animation();
 
 	bool load(Common::SeekableReadStream *stream);
-	bool draw();
+	bool process();
+	Common::Rect draw(Graphics::Surface *surface);
+	void updateScreen();
 
 private:
 	static const uint32 _soundBlockSize = 739;
@@ -85,14 +88,14 @@ private:
 
 	void reset();
 	AnimFrame *processChunkFrame(Common::SeekableReadStream *in, Chunk *c);
-	void processOverlayFrame(Common::SeekableReadStream *in, Chunk *c);
 	void processChunkAudio(Common::SeekableReadStream *in, Chunk *c);
 
 	Common::SeekableReadStream *_stream;
 	Common::Array<Chunk> _chunks;
-	AnimFrame *_background1, *_background2;
+	AnimFrame *_overlay, *_background1, *_background2;
 	byte _backgroundCurrent;
 	AppendableSound *_audio;
+	uint32 _frameNumber;
 };
 
 } // End of namespace LastExpress

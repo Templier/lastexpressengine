@@ -36,7 +36,7 @@
 
 namespace LastExpress {
 
-Animation::Animation() : _stream(NULL),	_background1(NULL), _background2(NULL), _backgroundCurrent(0), _audio(NULL) {
+Animation::Animation() : _stream(NULL), _overlay(NULL), _background1(NULL), _background2(NULL), _backgroundCurrent(0), _audio(NULL) {
 }
 
 Animation::~Animation() {
@@ -44,6 +44,8 @@ Animation::~Animation() {
 }
 
 void Animation::reset() {
+	delete _overlay;
+	_overlay = NULL;
 	delete _background1;
 	_background1 = NULL;
 	delete _background2;
@@ -52,6 +54,7 @@ void Animation::reset() {
 	_audio = NULL;
 
 	_backgroundCurrent = 0;
+	_frameNumber = 0;
 	_chunks.clear();
 
 	delete _stream;
@@ -92,15 +95,14 @@ bool Animation::load(Common::SeekableReadStream *stream) {
 	return true;
 }
 
-bool Animation::draw() {
+bool Animation::process() {
 	if (_stream == NULL || _chunks.size() == 0) {
 		debugC(2, kLastExpressDebugGraphics, "Trying to show an animation before loading data!");
 		return false;
 	}
 
-	uint32 frameNumber = 0;
-
 	// Process each chunk
+	//TODO: end when the frame ends?
 	for (Common::Array<Chunk>::iterator c = _chunks.begin(); c != _chunks.end(); ++c) {
 
 		switch(c->type) {
@@ -151,9 +153,12 @@ bool Animation::draw() {
 			break;
 
 		case kChunkTypeOverlayFrame: {
-			debugC(9, kLastExpressDebugGraphics, "  frame #%.4d (overlay, %d bytes, tag %d)", frameNumber, c->size, c->tag);
-			processOverlayFrame(_stream, c);
-			frameNumber++;
+			debugC(9, kLastExpressDebugGraphics, "  frame #%.4d (overlay, %d bytes, tag %d)", _frameNumber, c->size, c->tag);
+			delete _overlay;
+			_overlay = processChunkFrame(_stream, c);
+			//TODO: remove draw from here
+			updateScreen();
+			_frameNumber++;
 
 			// Handle right-click to interrupt animations
 			Common::Event ev;
@@ -202,25 +207,26 @@ bool Animation::draw() {
 	return true;
 }
 
-void Animation::processOverlayFrame(Common::SeekableReadStream *in, Chunk *c) {
+Common::Rect Animation::draw(Graphics::Surface *surface) {
+	// Paint the background
+	if (_backgroundCurrent == 1 && _background1)
+		_background1->draw(surface);
+	else if (_backgroundCurrent == 2 && _background2)
+		_background2->draw(surface);
+
+	// Paint the overlay
+	_overlay->draw(surface);
+
+	//TODO
+	return Common::Rect();
+}
+
+void Animation::updateScreen() {
 	// Create a temporary surface to merge the overlay with the background
 	Graphics::Surface *s = new Graphics::Surface;
 	s->create(640, 480, 2);
 
-	// Paint the background
-	if (_backgroundCurrent == 1 && _background1)
-		_background1->draw(s);
-	else if (_backgroundCurrent == 2 && _background2)
-		_background2->draw(s);
-
-	// Read the overlay frame
-	AnimFrame *f = processChunkFrame(in, c);
-
-	// Paint the overlay
-	f->draw(s);
-
-	// Free the overlay frame
-	delete f;
+	draw(s);
 
 	// XXX: Update the screen
 	g_system->copyRectToScreen((byte *)s->pixels, s->pitch, 0, 0, s->w, s->h);

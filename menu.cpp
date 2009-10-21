@@ -143,14 +143,14 @@ void Menu::showMenu() {
 
 			// Show Broderbrund logo
 			if (animation.loadFile("1930.nis"))
-				animation.draw();
+				animation.process();
 
 			// Play intro music
 			playMusic("MUS001.SND");
 
 			// Show The Smoking Car logo
 			if (animation.loadFile("1931.nis"))
-				animation.draw();
+				animation.process();
 
 			_showStartScreen = false;
 		} else {
@@ -271,7 +271,7 @@ bool Menu::handleStartMenuEvent(Common::Event ev) {
 			// Show intro
 			Animation animation;
 			if (animation.loadFile("1601.nis"))
-				animation.draw();
+				animation.process();
 		}
 
 
