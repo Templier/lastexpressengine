@@ -192,11 +192,11 @@ Common::Error LastExpressEngine::go() {
 
 				// DEBUG: cursors
 				if (ev.kbd.keycode == Common::KEYCODE_PLUS || ev.kbd.keycode == Common::KEYCODE_KP_PLUS)
-					if (_cursor->setStyle((Cursor::CursorStyle)(style+1)))
+					if (_cursor->setStyle((Cursor::CursorStyle)(style + 1)))
 						style++;
 
 				if (ev.kbd.keycode == Common::KEYCODE_MINUS || ev.kbd.keycode == Common::KEYCODE_KP_MINUS)
-					if (_cursor->setStyle((Cursor::CursorStyle)(style-1)))
+					if (_cursor->setStyle((Cursor::CursorStyle)(style - 1)))
 						style--;
 
 				// DEBUG: time
@@ -321,11 +321,12 @@ Common::Error LastExpressEngine::go() {
 			default:
 				break;
 			}
-
-			_graphics->update();
-			_system->updateScreen();
-			_system->delayMillis(10);
 		}
+
+		// Update the screen
+		_graphics->update();
+		_system->updateScreen();
+		_system->delayMillis(10);
 
 		// The event loop may have triggered the quit status. In this case,
 		// stop the execution.
