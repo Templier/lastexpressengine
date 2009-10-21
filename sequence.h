@@ -92,11 +92,11 @@ struct FrameInfo {
 	byte compressionType;				///< Type of frame compression (0x03, 0x04, 0x05, 0x07, 0xFF)
 };
 
-class AnimFrame {
+class AnimFrame : public Drawable {
 public:
 	AnimFrame(Common::SeekableReadStream *in, FrameInfo *f);
 	~AnimFrame();
-	void draw(Graphics::Surface *s);
+	Common::Rect draw(Graphics::Surface *s);
 
 private:
 	void decomp3(Common::SeekableReadStream *in, FrameInfo *f);
@@ -110,6 +110,7 @@ private:
 	Graphics::Surface _image;
 	uint16 _palSize;
 	uint16 *_palette;
+	Common::Rect _rect;
 };
 
 class Sequence : public Drawable {
@@ -118,7 +119,8 @@ public:
 	~Sequence();
 
 	bool load(Common::SeekableReadStream *stream);
-	Common::Rect draw(Graphics::Surface *surface, uint index);
+	AnimFrame *getFrame(uint32 index);
+	Common::Rect draw(Graphics::Surface *surface, uint32 index);
 
 	uint32 count();
 

@@ -121,6 +121,7 @@ AnimFrame::AnimFrame(Common::SeekableReadStream *in, FrameInfo *f) : _palette(NU
 	}
 
 	readPalette(in, f);
+	_rect = Common::Rect(f->xPos1, f->yPos1, f->xPos2, f->yPos2);
 }
 
 AnimFrame::~AnimFrame() {
@@ -128,13 +129,14 @@ AnimFrame::~AnimFrame() {
 	delete[] _palette;
 }
 
-void AnimFrame::draw(Graphics::Surface *s) {
+Common::Rect AnimFrame::draw(Graphics::Surface *s) {
 	byte *inp = (byte *)_image.pixels;
 	uint16 *outp = (uint16 *)s->pixels;
 	for (int i = 0; i < 640 * 480; i++, inp++, outp++) {
 		if (*inp)
 			*outp = _palette[*inp];
 	}
+	return _rect;
 }
 
 void AnimFrame::readPalette(Common::SeekableReadStream *in, FrameInfo *f) {
@@ -389,24 +391,30 @@ bool Sequence::load(Common::SeekableReadStream *stream) {
 	return true;
 }
 
-Common::Rect Sequence::draw(Graphics::Surface *surface, uint32 index) {
+AnimFrame *Sequence::getFrame(uint32 index) {
 	if (_frames.size() == 0) {
 		debugC(2, kLastExpressDebugGraphics, "Trying to show a sequence before loading data!");
-		return Common::Rect();
+		return NULL;
 	}
 
 	if (index > _frames.size() - 1) {
 		debugC(2, kLastExpressDebugGraphics, "Invalid frame index: was %d, max %d", index, _frames.size() - 1);
-		return Common::Rect();
+		return NULL;
 	}
 
 	//debugC(2, kLastExpressDebugGraphics, "Decoding frame %d / %d", index, _frames.size() - 1);
 
 	// Skip "invalid" frames
 	if (_frames[index].compressionType == 0)
-		return Common::Rect();
+		return NULL;
 
-	AnimFrame *f = new AnimFrame(_stream, &_frames[index]);
+	return new AnimFrame(_stream, &_frames[index]);
+}
+
+Common::Rect Sequence::draw(Graphics::Surface *surface, uint32 index) {
+	AnimFrame *f = getFrame(index);
+	if (!f)
+		return Common::Rect();
 
 	f->draw(surface);
 
