@@ -338,13 +338,15 @@ bool Debugger::cmd_loadscene(int argc, const char **argv) {
 
 			Scene scene(_engine->getResource());
 			if (scene.loadScene(cd)) {
-				if (!showScene(&scene, index, GraphicsManager::kBackgroundC)) {
-					askForRedraw();
-				} else {
-					DebugPrintf("Cannot load scene: %i", index);									
-				}
+				showScene(&scene, index, GraphicsManager::kBackgroundC);
+
+				askForRedraw();
+				redrawScreen();
+
+				// Pause for a second to be able to see the scene
+				_engine->_system->delayMillis(1000);
 			} else {
-				DebugPrintf("Cannot load scenes from CD %i", cd);
+				DebugPrintf("Cannot load scene %i from CD %i", index, cd);
 			}
 
 			redrawScreen();
