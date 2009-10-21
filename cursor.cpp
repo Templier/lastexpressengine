@@ -70,7 +70,7 @@ bool Cursor::checkStyle(CursorStyle style) {
 		debugC(2, kLastExpressDebugGraphics, "Trying to use an invalid cursor style: was %d, max %d", (int)style, MAX_CURSOR);
 		return false;
 	}
-	
+
 	return true;
 }
 
@@ -111,10 +111,10 @@ Cursor::CursorStyle Cursor::getStyle() {
 Common::Rect Cursor::draw(Graphics::Surface *surface, int x, int y, uint style, int brigthness) {
 	if (!checkStyle((CursorStyle)style))
 		return Common::Rect();
-	
+
 	byte *fileImage = _data + MAX_CURSOR * 4 + (style * 32 * 32 * 2);
 	for (int j = 0; j < 32; j++) {
-		for (int i = 0; i < 32; i++) {		
+		for (int i = 0; i < 32; i++) {
 			surface->fillRect(Common::Rect(x + i, y + j, x + i + 1, y + j + 1), READ_LE_UINT16(fileImage));
 			fileImage += 2;
 		}

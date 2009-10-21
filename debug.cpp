@@ -158,7 +158,6 @@ bool Debugger::cmd_showframe(int argc, const char **argv) {
 			if (sequence.loadFile(filename)) {
 				clearBg(GraphicsManager::kBackgroundOverlay);
 
-				
 				if (!drawFrame(&sequence, getNumber(argv[2]), GraphicsManager::kBackgroundOverlay)) {
 					DebugPrintf("Invalid frame index: %i\n", filename.c_str());
 					resetCommand();
@@ -313,7 +312,7 @@ bool Debugger::cmd_loadscene(int argc, const char **argv) {
 		}
 
 		int cd = 1, index = 0;
-		
+
 		// Check args
 		if (argc == 3) {
 			cd = getNumber(argv[1]);
@@ -326,7 +325,7 @@ bool Debugger::cmd_loadscene(int argc, const char **argv) {
 			DebugPrintf("Error: invalid cd number (1-3) or index value (0-2500)");
 			return true;
 		}
-		
+
 		// Store command
 		if (!hasCommand()) {
 			command = WRAP_METHOD(Debugger, cmd_loadscene);

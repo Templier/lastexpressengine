@@ -77,13 +77,13 @@ void GraphicsManager::clear(BackgroundType type) {
 			getSurface(type)->fillRect(Common::Rect(640, 480), 0);
 			break;
 
-		case kBackgroundAll:			
+		case kBackgroundAll:
 			_backgroundA.fillRect(Common::Rect(640, 480), 0);
 			_backgroundC.fillRect(Common::Rect(640, 480), 0);
 			_overlay.fillRect(Common::Rect(640, 480), 0);
 			_inventory.fillRect(Common::Rect(640, 480), 0);
 			break;
-	}	
+	}
 }
 
 bool GraphicsManager::draw(Drawable* drawable, BackgroundType type, bool transition) {
@@ -129,10 +129,10 @@ Graphics::Surface *GraphicsManager::getSurface(BackgroundType type) {
 			return &_inventory;
 			break;
 
-		case kBackgroundAll:			
+		case kBackgroundAll:
 			error("GraphicsManager::getSurface() - cannot return a surface for kBackgroundAll!");
 			break;
-	}	
+	}
 }
 
 // TODO optimize to only merge dirty rects

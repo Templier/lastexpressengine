@@ -78,7 +78,7 @@ bool SaveLoad::isSavegameValid(SavegameId id) {
 	if (save->readUint32LE() != savegameSignature)
 		goto EXIT;
 
-	save->readUint32LE();	
+	save->readUint32LE();
 
 	if (save->readUint32LE() < 0x20)
 		goto EXIT;

@@ -155,8 +155,8 @@ uint16 Font::getStringWidth(uint16 *str, uint16 length) {
 
 void Font::drawChar(Graphics::Surface *surface, int x, int y, uint16 c) {
 	byte *p = getCharImg(c);
-	
-	for (int j = 0; j < 18; j++) {		
+
+	for (int j = 0; j < 18; j++) {
 		for (int i = 0; i < 16; i++) {
 			byte index;
 			if (i % 2)
@@ -165,7 +165,7 @@ void Font::drawChar(Graphics::Surface *surface, int x, int y, uint16 c) {
 				index = *p >> 4;
 			uint16 color = _palette[index];
 			if (color != 0x1f) {
-				surface->fillRect(Common::Rect(x+i, y+j, x+i+1, y+j+1), color);				
+				surface->fillRect(Common::Rect(x+i, y+j, x+i+1, y+j+1), color);
 			}
 			if (i % 2)
 				p++;

@@ -111,7 +111,7 @@ private:
 		byte unknown16;
 		byte unknown17;
 		byte unknown18;
-		byte unknown19;					
+		byte unknown19;
 		uint16 offsetHotspot;
 		byte unknown22;
 		byte unknown23;
@@ -145,7 +145,7 @@ private:
 		uint16 unknown21;
 		uint16 unknown23;
 
-		SceneHotspot() {			
+		SceneHotspot() {
 			offset = 0;
 			unknown10 = 0;
 			unknown12 = 0;
@@ -161,7 +161,7 @@ private:
 
 	ResourceManager *_resource;
 
-	Common::SeekableReadStream *_stream;	
+	Common::SeekableReadStream *_stream;
 	Common::Array<SceneEntry> _scenes;
 
 	bool readHotspot(SceneHotspot *hotspot);

@@ -105,7 +105,7 @@ public:
 	void show(bool visible);
 	bool setStyle(CursorStyle style);
 	CursorStyle getStyle();
-	
+
 	Common::Rect draw(Graphics::Surface *surface, int x, int y, uint style, int brightness);
 
 private:

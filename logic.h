@@ -72,7 +72,7 @@ private:
 	LastExpressEngine *_engine;
 
 	RunState _runState;		//<! State of the game session (this data won't be stored in savegames)
-	Menu *_menu;			//<! Main menu handling	
+	Menu *_menu;			//<! Main menu handling
 
 	// Move to engine?
 	SaveLoad::GameState *_gameState;

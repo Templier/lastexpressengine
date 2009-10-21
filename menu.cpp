@@ -133,12 +133,12 @@ void Menu::showMenu() {
 	_engine->getGraphicsManager()->clear(GraphicsManager::kBackgroundAll);
 
 	// Load all menu-related data
-	loadData();	
+	loadData();
 
 	// If no blue savegame exists, this might be the first time we start the game, so we show the full intro
 	if (_showStartScreen) {
 		_engine->getCursor()->show(false);
-		if (!SaveLoad::isSavegameValid(SaveLoad::kSavegameBlue)) {		
+		if (!SaveLoad::isSavegameValid(SaveLoad::kSavegameBlue)) {
 			Animation animation;
 
 			// Show Broderbrund logo
@@ -169,7 +169,7 @@ void Menu::showMenu() {
 	_engine->getCursor()->show(true);
 
 	// Load scene
-	showScene(_scene, getSceneIndex(), GraphicsManager::kBackgroundC);	
+	showScene(_scene, getSceneIndex(), GraphicsManager::kBackgroundC);
 	drawElements();
 
 	// Init time
@@ -196,7 +196,7 @@ bool Menu::handleStartMenuEvent(Common::Event ev) {
 		switch(ev.type) {
 			case Common::EVENT_RBUTTONDOWN:
 				_isShowingCredits = false;	// Will cause credits to stop & reset overlays
-			case Common::EVENT_LBUTTONDOWN:				
+			case Common::EVENT_LBUTTONDOWN:
 				showCredits();
 				askForRedraw();
 			default:
@@ -273,7 +273,7 @@ bool Menu::handleStartMenuEvent(Common::Event ev) {
 			if (animation.loadFile("1601.nis"))
 				animation.draw();
 		}
-		
+
 
 
 		break;
@@ -298,28 +298,28 @@ bool Menu::handleStartMenuEvent(Common::Event ev) {
 
 		if (clicked) {
 			drawFrame(&_seqButtons, kButtonQuitPushed, GraphicsManager::kBackgroundOverlay);
-			playSfx("LIB046.snd");			
+			playSfx("LIB046.snd");
 
 			//TODO some stuff... see disasm
 			return false;
 		} else {
 			drawFrame(&_seqButtons, kButtonQuit, GraphicsManager::kBackgroundOverlay);
-		}		
+		}
 		break;
 
 	//////////////////////////////////////////////////////////////////////////
 	case kEventSwitchSaveGame:
 		if (clicked) {
 			drawFrame(&_seqAcorn, 1, GraphicsManager::kBackgroundOverlay);
-			playSfx("LIB046.snd");	
+			playSfx("LIB046.snd");
 			_engine->getLogic()->switchGame();
 			// the menu should have been reset & redrawn, so don't do anything else here
 		} else {
-			drawFrame(&_seqAcorn, 0, GraphicsManager::kBackgroundOverlay);			
-			
+			drawFrame(&_seqAcorn, 0, GraphicsManager::kBackgroundOverlay);
+
 			if (!SaveLoad::isSavegameValid(getNextGameId())) {
 				if (_engine->getLogic()->isGameStarted())
-					drawFrame(&_seqTooltips, kTooltipStartAnotherGame, GraphicsManager::kBackgroundOverlay);					
+					drawFrame(&_seqTooltips, kTooltipStartAnotherGame, GraphicsManager::kBackgroundOverlay);
 				else
 					drawFrame(&_seqTooltips, kTooltipSwitchBlueGame, GraphicsManager::kBackgroundOverlay);
 			} else {
@@ -354,14 +354,14 @@ bool Menu::handleStartMenuEvent(Common::Event ev) {
 		break;
 
 	//////////////////////////////////////////////////////////////////////////
-	case kEventRewindGame:		
+	case kEventRewindGame:
 		// TODO check that we can actually rewind
 		//if (_currentTime <= getState()->time)
 		if (clicked) {
 			drawFrame(&_seqEggButtons, kButtonRewindPushed, GraphicsManager::kBackgroundOverlay);
 			playSfx("LIB046.snd");
 			// TODO rewind clock
-			//goToTime(XXX + 8);			
+			//goToTime(XXX + 8);
 		} else {
 			drawFrame(&_seqEggButtons, kButtonRewind, GraphicsManager::kBackgroundOverlay);
 			drawFrame(&_seqTooltips, kTooltipRewind, GraphicsManager::kBackgroundOverlay);
@@ -379,7 +379,7 @@ bool Menu::handleStartMenuEvent(Common::Event ev) {
 			playSfx("LIB046.snd");
 
 			// TODO advance clock
-			//goToTime(32 * ??? + XXX + 8);	
+			//goToTime(32 * ??? + XXX + 8);
 
 		} else {
 			drawFrame(&_seqEggButtons, kButtonForward, GraphicsManager::kBackgroundOverlay);
@@ -688,7 +688,7 @@ void Menu::goToTime(uint32 time) {
 	int speed = 1;
 
 	if (_currentTime <= time) {
-		playSfx("LIB042.SND");		
+		playSfx("LIB042.SND");
 	} else {
 		playSfx("LIB041.SND");
 		direction = -1;
@@ -697,21 +697,21 @@ void Menu::goToTime(uint32 time) {
 	_engine->getCursor()->show(false);
 
 	while (_currentTime != time) {
-		_currentTime = _currentTime + direction * 500 * speed;		
+		_currentTime = _currentTime + direction * 500 * speed;
 		if (speed < 10)
 			speed++;
 
 		// Make sure we don't pass destination
 		if ((direction == 1 && _currentTime > time) || (direction == -1 && _currentTime < time))
 			_currentTime = time;
-		
+
 		drawElements();
-		askForRedraw(); 
+		askForRedraw();
 		redrawScreen();
 
 		Common::Event ev;
 		_engine->getEventManager()->pollEvent(ev);
-		if (ev.type == Common::EVENT_RBUTTONDOWN) {			
+		if (ev.type == Common::EVENT_RBUTTONDOWN) {
 			break;
 		}
 
@@ -719,9 +719,9 @@ void Menu::goToTime(uint32 time) {
 	}
 
 	// Draw final time
-	_currentTime = time;			
+	_currentTime = time;
 	drawElements();
-	askForRedraw(); 
+	askForRedraw();
 	redrawScreen();
 
 	_engine->getCursor()->show(true);

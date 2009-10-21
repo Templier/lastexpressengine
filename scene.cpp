@@ -102,7 +102,7 @@ Common::Rect Scene::draw(Graphics::Surface *surface, uint index) {
 			debugC(9, kLastExpressDebugScenes, "\thotspot: Rect=(%d, %d)x(%d,%d) event=%02d", hotspot.rect.left, hotspot.rect.top, hotspot.rect.right, hotspot.rect.bottom, hotspot.eventId);
 	}
 #endif
-	
+
 	// Safety checks
 	Common::String name(scene.name);
 	name.trim();
@@ -124,7 +124,7 @@ bool Scene::checkHotSpot(uint index, Common::Point coord, byte* eventId) {
 	// Reset values
 	*eventId = 0;
 
-	SceneEntry entry = _scenes[index - 1];	// we don't store the first entry (only stores the number of scenes)	
+	SceneEntry entry = _scenes[index - 1];	// we don't store the first entry (only stores the number of scenes)
 
 	// TODO: Iterate over scene rectangles
 	if (entry.offsetHotspot == 0)
@@ -132,7 +132,7 @@ bool Scene::checkHotSpot(uint index, Common::Point coord, byte* eventId) {
 
 	_stream->seek(entry.offsetHotspot, SEEK_SET);
 
-	uint16 unknown = 0;	
+	uint16 unknown = 0;
 	byte id = 0;
 	bool found = false;
 	SceneHotspot hotspot;
@@ -141,9 +141,9 @@ bool Scene::checkHotSpot(uint index, Common::Point coord, byte* eventId) {
 			if (unknown <= hotspot.unknown14) {
 				found = true;
 				unknown = hotspot.unknown14;
-				id = hotspot.eventId;	
+				id = hotspot.eventId;
 			}
-		}	
+		}
 	}
 
 	if (found) {
@@ -154,9 +154,9 @@ bool Scene::checkHotSpot(uint index, Common::Point coord, byte* eventId) {
 	return false;
 }
 
-// Read hotpost information		
+// Read hotpost information
 bool Scene::readHotspot(SceneHotspot *hotspot) {
-	
+
 	// Check that we have data to read
 	uint16 left = _stream->readUint16LE();
 	if (left == 0)

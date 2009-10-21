@@ -282,9 +282,9 @@ Common::Error LastExpressEngine::go() {
 						if (subtitle.load(_resource->getFileStream((*i_sbe)->getName()))) {
 							for (uint i = 0; i < subtitle.count(); i++) {
 								_graphics->clear();
-								subtitle.showFrameOverlay(i);								
+								subtitle.showFrameOverlay(i);
 
-								askForRedraw(); 
+								askForRedraw();
 								redrawScreen();
 
 								// Handle right-click to interrupt sequence

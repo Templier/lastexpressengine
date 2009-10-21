@@ -112,7 +112,7 @@
 		uint32 {4}      - ??
 		uint32 {4}      - ??
 		uint32 {4}      - ??
-		uint32 {4}      - ??		
+		uint32 {4}      - ??
 
 
 	save point: max: 126 - rotates through list (ie. goes back and overwrites first save point when full)
@@ -120,8 +120,6 @@
 		uint32 {4}      - ??
 		uint32 {4}      - time or similar?
 		uint32 {4}      - 0 or 1 ?
-		
-		
 */
 
 #include "common/savefile.h"

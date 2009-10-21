@@ -51,11 +51,11 @@ void Subtitle::reset() {
 	delete[] _bottomText;
 }
 
-Common::Rect Subtitle::draw(Graphics::Surface *surface, Font *font) {	
+Common::Rect Subtitle::draw(Graphics::Surface *surface, Font *font) {
 	Common::Rect rectTop, rectBottom;
-	
+
 	//FIXME find out proper subtitles coordinates (and hope it's hardcoded and not stored in the sequence or animation)
-	rectTop = font->drawString(surface, 100, 100, _topText, _topLength);	
+	rectTop = font->drawString(surface, 100, 100, _topText, _topLength);
 	rectBottom = font->drawString(surface, 100, 300, _bottomText, _bottomLength);
 
 	rectTop.extend(rectBottom);
@@ -120,7 +120,7 @@ bool Subtitle::load(Common::SeekableReadStream *in) {
 SubtitleManager::SubtitleManager(Font* font) : _font(font) {}
 
 SubtitleManager::~SubtitleManager() {
-	reset();	
+	reset();
 }
 
 uint32 SubtitleManager::count() {
@@ -178,7 +178,7 @@ Common::Rect SubtitleManager::draw(Graphics::Surface *surface, uint index){
 		return Common::Rect();
 	}
 
-	return _subtitles[index]->draw(surface, _font);	
+	return _subtitles[index]->draw(surface, _font);
 }
 
 } // End of namespace LastExpress

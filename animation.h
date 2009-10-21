@@ -79,7 +79,7 @@ private:
 		kChunkTypeUnknown16			= 0x0016,
 		kChunkTypeUnknown1e         = 0x001e,
 		kChunkTypeUnknown1f         = 0x001f,
-		kChunkTypeAudioData         = 0x0020,		
+		kChunkTypeAudioData         = 0x0020,
 		kChunkTypeAudioEnd          = 0x0063
 	};
 

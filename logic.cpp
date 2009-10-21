@@ -71,7 +71,7 @@ bool Logic::handleMouseEvent(Common::Event ev) {
 	// Special case for the main menu scene
 	if (_gameState->currentScene == _menu->getSceneIndex()) {
 		return _menu->handleStartMenuEvent(ev);
-	}	
+	}
 
 	return true;
 }
@@ -81,7 +81,6 @@ void Logic::switchGame() {
 	// Switch back to blue game is the current game is not started
 	if (!_runState.gameStarted) {
 		_runState.savegameId = SaveLoad::kSavegameBlue;
-		
 	} else {
 		_runState.savegameId = (SaveLoad::SavegameId)((_runState.savegameId + 1) % 6);
 	}
