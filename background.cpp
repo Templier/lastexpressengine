@@ -90,12 +90,11 @@ Common::Rect Background::draw(Graphics::Surface *surface) {
 		return Common::Rect();
 	}
 
+	int i = 0;
 	for (uint16 y = 0; y < _header.height; y++) {
-		uint16 *dst = (uint16 *)surface->pixels + (y * _header.width);
 		for (uint16 x = 0; x < _header.width; x++) {
-			int i = y * _header.width + x;
-
-			*dst++ = _data[i];
+			surface->fillRect(Common::Rect(_header.posX + x, _header.posY + y, _header.posX + x + 1, _header.posY + y + 1), _data[i]);
+			i ++;
 		}
 	}
 
