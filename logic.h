@@ -26,6 +26,8 @@
 #ifndef LASTEXPRESS_LOGIC_H
 #define LASTEXPRESS_LOGIC_H
 
+#include "lastexpress/cursor.h"
+#include "lastexpress/inventory.h"
 #include "lastexpress/savegame.h"
 
 #include "common/events.h"
@@ -40,7 +42,7 @@ public:
 	Logic(LastExpressEngine *engine);
 	~Logic();
 
-	void showMenu();
+	void showMenu(bool visible);
 	bool handleMouseEvent(Common::Event ev);
 
 	// TODO inventory (needs gamestate & new Cursor function)
@@ -49,8 +51,10 @@ public:
 
 	// Accessors
 	bool isGameStarted() { return _runState.gameStarted; }
+	bool isShowingMenu() { return _runState.showingMenu; }
 	SaveLoad::SavegameId getSavegameId() { return _runState.savegameId; }
 	SaveLoad::GameState *getGameState() { return _gameState; }
+	Cursor::CursorStyle getCursorStyle() { return _runState.cursorStyle; }
 
 private:
 	// Scenes
@@ -62,10 +66,14 @@ private:
 	struct RunState {
 		SaveLoad::SavegameId savegameId;
 		bool gameStarted;
+		bool showingMenu;
+		Cursor::CursorStyle cursorStyle;
 
 		RunState() {
-			gameStarted = false;
 			savegameId = SaveLoad::kSavegameBlue;
+			gameStarted = false;
+			showingMenu = false;	
+			cursorStyle = Cursor::kCursorNormal;
 		}
 	};
 
@@ -73,6 +81,7 @@ private:
 
 	RunState _runState;		//<! State of the game session (this data won't be stored in savegames)
 	Menu *_menu;			//<! Main menu handling
+	Inventory *_inventory;	//<! Inventory
 
 	// Move to engine?
 	SaveLoad::GameState *_gameState;

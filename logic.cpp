@@ -25,6 +25,8 @@
 
 #include "lastexpress/logic.h"
 
+#include "lastexpress/inventory.h"
+#include "lastexpress/lastexpress.h"
 #include "lastexpress/menu.h"
 #include "lastexpress/scene.h"
 
@@ -32,17 +34,23 @@ namespace LastExpress {
 
 Logic::Logic(LastExpressEngine *engine) : _engine(engine) {
 	_menu = new Menu(engine);
+	_inventory = new Inventory(engine);
 
 	// Get those from savegame
 	_gameState = new SaveLoad::GameState();
+
+	// Init inventory
+	_inventory->init(_gameState);
+
+	// HACK set specific cursor style for inventory testing
+	_engine->getCursor()->show(true);
+	_runState.cursorStyle = Cursor::kCursorTurnLeft;
+	_engine->getCursor()->setStyle(_runState.cursorStyle);
 }
 
 Logic::~Logic() {
-	if (_gameState)
-		delete _gameState;
-
-	if (_menu)
-		delete _menu;
+	delete _gameState;
+	delete _menu;
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -50,10 +58,23 @@ Logic::~Logic() {
 //////////////////////////////////////////////////////////////////////////
 
 // Show main menu
-void Logic::showMenu() {
+void Logic::showMenu(bool visible) {
+
+	if (!visible) {
+		_inventory->show(true);
+		_runState.showingMenu = false;
+		return;
+	}
+
+	// Hide inventory
+	_inventory->show(false);
+
 	// TODO: load scene and set current scene
+	_runState.showingMenu = true;
 	_gameState->currentScene = _menu->getSceneIndex();
 	_menu->showMenu();
+
+	// TODO reset showingMenu to false when starting/returning to a game and show inventory	
 
 	// TODO: move to shared method
 	// Init the first savegame if needed
@@ -62,16 +83,22 @@ void Logic::showMenu() {
 }
 
 bool Logic::handleMouseEvent(Common::Event ev) {
-	if (_gameState->currentScene == 0)
+	if (_gameState->currentScene == 0) {
+		// FIXME: allow inventory to show
+		_gameState->currentScene = 1;	
+		_inventory->show(true);
+
 		return true;
-
-	// FIXME: check hitbox & event from scene data
-
+	}
+		
 
 	// Special case for the main menu scene
-	if (_gameState->currentScene == _menu->getSceneIndex()) {
+	if (isShowingMenu()) {
 		return _menu->handleStartMenuEvent(ev);
 	}
+
+	// FIXME: check hitbox & event from scene data
+	_inventory->handleMouseEvent(ev);
 
 	return true;
 }
@@ -102,7 +129,7 @@ void Logic::switchGame() {
 	//////////////////////////////////////////////////////////////////////////
 
 	// Redraw all menu elements
-	showMenu();
+	showMenu(true);
 }
 
 } // End of namespace LastExpress

@@ -202,17 +202,17 @@ Common::Error LastExpressEngine::go() {
 				// DEBUG: time
 				if (ev.kbd.keycode == Common::KEYCODE_KP_DIVIDE) {
 					_logic->getGameState()->time -= 4984;
-					_logic->showMenu();
+					_logic->showMenu(true);
 				}
 
 				if (ev.kbd.keycode == Common::KEYCODE_KP_MULTIPLY) {
 					_logic->getGameState()->time += 5167;
-					_logic->showMenu();
+					_logic->showMenu(true);
 				}
 
 				// Play intro
 				if (ev.kbd.keycode == Common::KEYCODE_RETURN || ev.kbd.keycode == Common::KEYCODE_KP_ENTER)
-					_logic->showMenu();
+					_logic->showMenu(true);
 
 #ifdef LOAD_RESOURCES_LIST
 				{
@@ -308,6 +308,7 @@ Common::Error LastExpressEngine::go() {
 
 			case Common::EVENT_MOUSEMOVE:
 			case Common::EVENT_LBUTTONDOWN:
+			case Common::EVENT_LBUTTONUP:
 			case Common::EVENT_RBUTTONDOWN:
 				// cleanup and quit game is the quit button has been pressed
 				if (!_logic->handleMouseEvent(ev))

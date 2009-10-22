@@ -272,6 +272,12 @@ bool Menu::handleStartMenuEvent(Common::Event ev) {
 			Animation animation;
 			if (animation.loadFile("1601.nis"))
 				animation.process();
+
+			clearBg(GraphicsManager::kBackgroundAll);
+
+			// Reset scene
+			getState()->currentScene = 0;
+			_engine->getLogic()->showMenu(false);
 		}
 
 

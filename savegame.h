@@ -116,9 +116,9 @@
 		uint32 {4}      - ??
 
 	InventoryData (32 entries)
-		byte {1}		- Item ID (16 to 29) - set to 0 for "undefined" items
-		byte {1}		- Scene ID set to 31 -> 39 for matchbox, telegram, passengerlist, scarf, parchemin, firebird, briefcase, paper, article
-		byte {1}		- ?? set to 0
+		byte {1}		- Item ID		(set to 0 for "undefined" items)
+		byte {1}		- Scene ID
+		byte {1}		- 1 if item is "selectable"
 		byte {1}		- ?? set to 1 for matchbox, match, telegram, whistle, key, firebird, briefcase, corpse, passengerlist
 		byte {1}		- Is item in inventory (set to 1 for telegram and article)
 		byte {1}		- ?? set to 1 (including entry 0 and excepting last entry) and set to 0 for XXXX(several entries), firebird, briefcase, corpse
@@ -163,7 +163,7 @@ public:
 		byte item_id;
 		byte scene_id;
 		byte field_2;
-		byte field_3;
+		byte is_selectable;
 		byte has_item;
 		byte field_5;
 		byte field_6;
@@ -172,7 +172,7 @@ public:
 			item_id = 0;
 			scene_id = 0;
 			field_2 = 0;
-			field_3 = 0;
+			is_selectable = 0;
 			has_item = 0;
 			field_5 = 1;	// TODO all except last it seems (is it really important?)
 			field_6 = 0;
@@ -196,10 +196,10 @@ public:
 			brightness = _defaultBrigthness;
 			volume = _defaultVolume;
 
-			// TODO init inventory with default values (here or in Logic code?)
-
-			currentScene = 0;
+			//Game data
 			time = _defaultTime;
+			currentScene = 0;
+			selectedItem = 0;			
 		}
 	};
 
