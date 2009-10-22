@@ -112,8 +112,8 @@ bool GraphicsManager::draw(Drawable *drawable, int x, int y, uint index, Backgro
 	// HACK change color to show hightlight
 	if (brightness != 100) {
 		uint16 *color = (uint16 *)getSurface(type)->getBasePtr(rect.left, rect.top);
-		for (int j = y; j < 32; j++) {
-			for (int i = x; i < 32; i++) {
+		for (int j = y; j < y + 32; j++) {
+			for (int i = x; i < x + 32; i++) {
 				*color = (*color & 0x739C) >> 1;			
 				color++;
 			}

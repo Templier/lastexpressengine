@@ -68,7 +68,7 @@ public:
 		kCursorTelegram,
 		kCursorPassengerList,
 		kCursorArticle,
-		kCursorScarf,	// 20
+		kCursorScarf,		// 20
 		kCursorPaper,		// Need better name
 		kCursorParchemin,
 		kCursorMatch,
