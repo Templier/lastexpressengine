@@ -208,6 +208,14 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\engines\lastexpress\inventory.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\engines\lastexpress\inventory.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\engines\lastexpress\logic.cpp"
 				>
 			</File>

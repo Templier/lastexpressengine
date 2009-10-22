@@ -1,4 +1,5 @@
-﻿<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
       <Configuration>Debug</Configuration>
@@ -17,10 +18,13 @@
     <ClCompile Include="..\..\engines\lastexpress\debug.cpp" />
     <ClCompile Include="..\..\engines\lastexpress\detection.cpp" />
     <ClCompile Include="..\..\engines\lastexpress\font.cpp" />
+    <ClCompile Include="..\..\engines\lastexpress\graphics.cpp" />
+    <ClCompile Include="..\..\engines\lastexpress\inventory.cpp" />
     <ClCompile Include="..\..\engines\lastexpress\lastexpress.cpp" />
     <ClCompile Include="..\..\engines\lastexpress\logic.cpp" />
+    <ClCompile Include="..\..\engines\lastexpress\menu.cpp" />
     <ClCompile Include="..\..\engines\lastexpress\resource.cpp" />
-    <ClCompile Include="..\..\engines\lastexpress\saveload.cpp" />
+    <ClCompile Include="..\..\engines\lastexpress\savegame.cpp" />
     <ClCompile Include="..\..\engines\lastexpress\scene.cpp" />
     <ClCompile Include="..\..\engines\lastexpress\sequence.cpp" />
     <ClCompile Include="..\..\engines\lastexpress\sound.cpp" />
@@ -32,19 +36,24 @@
     <ClInclude Include="..\..\engines\lastexpress\background.h" />
     <ClInclude Include="..\..\engines\lastexpress\cursor.h" />
     <ClInclude Include="..\..\engines\lastexpress\debug.h" />
+    <ClInclude Include="..\..\engines\lastexpress\drawable.h" />
     <ClInclude Include="..\..\engines\lastexpress\font.h" />
+    <ClInclude Include="..\..\engines\lastexpress\graphics.h" />
+    <ClInclude Include="..\..\engines\lastexpress\helpers.h" />
+    <ClInclude Include="..\..\engines\lastexpress\inventory.h" />
     <ClInclude Include="..\..\engines\lastexpress\lastexpress.h" />
     <ClInclude Include="..\..\engines\lastexpress\logic.h" />
+    <ClInclude Include="..\..\engines\lastexpress\menu.h" />
     <ClInclude Include="..\..\engines\lastexpress\resource.h" />
-    <ClInclude Include="..\..\engines\lastexpress\saveload.h" />
+    <ClInclude Include="..\..\engines\lastexpress\savegame.h" />
     <ClInclude Include="..\..\engines\lastexpress\scene.h" />
     <ClInclude Include="..\..\engines\lastexpress\sequence.h" />
     <ClInclude Include="..\..\engines\lastexpress\sound.h" />
     <ClInclude Include="..\..\engines\lastexpress\subtitle.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\engines\lastexpress\license.txt" />
-    <None Include="..\..\engines\lastexpress\TODO.txt" />
+    <None Include="..\..\engines\lastexpress\docs\TODO.txt" />
+    <None Include="..\..\engines\lastexpress\module.mk" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGUID>{E88E827D-C429-4176-B9BE-CD215FB6D5CC}</ProjectGUID>

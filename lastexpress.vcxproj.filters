@@ -7,6 +7,9 @@
     <Filter Include="docs">
       <UniqueIdentifier>{15706779-992d-41c7-b123-4ad0445b5745}</UniqueIdentifier>
     </Filter>
+    <Filter Include="game">
+      <UniqueIdentifier>{5f1dc07f-44af-4a4e-9774-5d091996ec3c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\engines\lastexpress\animation.cpp">
@@ -26,10 +29,21 @@
     <ClCompile Include="..\..\engines\lastexpress\font.cpp">
       <Filter>data</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\engines\lastexpress\graphics.cpp" />
+    <ClCompile Include="..\..\engines\lastexpress\inventory.cpp">
+      <Filter>game</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\engines\lastexpress\lastexpress.cpp" />
-    <ClCompile Include="..\..\engines\lastexpress\logic.cpp" />
+    <ClCompile Include="..\..\engines\lastexpress\logic.cpp">
+      <Filter>game</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\engines\lastexpress\menu.cpp">
+      <Filter>game</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\engines\lastexpress\resource.cpp" />
-    <ClCompile Include="..\..\engines\lastexpress\saveload.cpp" />
+    <ClCompile Include="..\..\engines\lastexpress\savegame.cpp">
+      <Filter>game</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\engines\lastexpress\scene.cpp">
       <Filter>data</Filter>
     </ClCompile>
@@ -57,13 +71,28 @@
       <Filter>data</Filter>
     </ClInclude>
     <ClInclude Include="..\..\engines\lastexpress\debug.h" />
+    <ClInclude Include="..\..\engines\lastexpress\drawable.h" />
     <ClInclude Include="..\..\engines\lastexpress\font.h">
       <Filter>data</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\engines\lastexpress\graphics.h" />
+    <ClInclude Include="..\..\engines\lastexpress\helpers.h">
+      <Filter>game</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\engines\lastexpress\inventory.h">
+      <Filter>game</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\engines\lastexpress\lastexpress.h" />
-    <ClInclude Include="..\..\engines\lastexpress\logic.h" />
+    <ClInclude Include="..\..\engines\lastexpress\logic.h">
+      <Filter>game</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\engines\lastexpress\menu.h">
+      <Filter>game</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\engines\lastexpress\resource.h" />
-    <ClInclude Include="..\..\engines\lastexpress\saveload.h" />
+    <ClInclude Include="..\..\engines\lastexpress\savegame.h">
+      <Filter>game</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\engines\lastexpress\scene.h">
       <Filter>data</Filter>
     </ClInclude>
@@ -78,10 +107,10 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\engines\lastexpress\license.txt">
+    <None Include="..\..\engines\lastexpress\docs\TODO.txt">
       <Filter>docs</Filter>
     </None>
-    <None Include="..\..\engines\lastexpress\TODO.txt">
+    <None Include="..\..\engines\lastexpress\module.mk">
       <Filter>docs</Filter>
     </None>
   </ItemGroup>
