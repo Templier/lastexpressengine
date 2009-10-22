@@ -78,6 +78,9 @@ bool Cursor::setStyle(CursorStyle style) {
 	if (!checkStyle(style))
 		return false;
 
+	if (style == _current)
+		return true;
+
 	debugC(10, kLastExpressDebugCursor | kLastExpressDebugAll, "Cursor: setting style: %d", style);
 
 	// Save the new cursor
