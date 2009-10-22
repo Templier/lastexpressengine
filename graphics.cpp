@@ -65,6 +65,10 @@ void GraphicsManager::change() {
 }
 
 void GraphicsManager::clear(BackgroundType type) {
+	clear(type, Common::Rect(640, 480));
+}
+
+void GraphicsManager::clear(BackgroundType type, Common::Rect rect) {
 	switch (type) {
 		default:
 			error("GraphicsManager::clear() - Unknown background type: %d", type);
@@ -74,14 +78,14 @@ void GraphicsManager::clear(BackgroundType type) {
 		case kBackgroundC:
 		case kBackgroundOverlay:
 		case kBackgroundInventory:
-			getSurface(type)->fillRect(Common::Rect(640, 480), 0);
+			getSurface(type)->fillRect(rect, 0);
 			break;
 
 		case kBackgroundAll:
-			_backgroundA.fillRect(Common::Rect(640, 480), 0);
-			_backgroundC.fillRect(Common::Rect(640, 480), 0);
-			_overlay.fillRect(Common::Rect(640, 480), 0);
-			_inventory.fillRect(Common::Rect(640, 480), 0);
+			_backgroundA.fillRect(rect, 0);
+			_backgroundC.fillRect(rect, 0);
+			_overlay.fillRect(rect, 0);
+			_inventory.fillRect(rect, 0);
 			break;
 	}
 }
