@@ -47,13 +47,14 @@
 		uint32 {4}      - Scene Index				max: 2600
 		byte {1}        - ??
 		uint32 {4}      - Scene Index (copy?)		max: 2600
+		uint32 {4}      - Selected inventory item
 		uint32 {4}      - ??
 		uint32 {4*1000} - ??
 		uint32 {4*16}   - ??
 		uint32 {4*16}   - ??
 		uint32 {4*128}  - Game progress
 		byte {512}      - ??
-		byte {7*32}     - ??
+		byte {7*32}     - Inventory
 		byte {5*128}    - ??
 		byte {1262*40}  - Game state (not sure what's in the struct yet)
 		uint32 {4}      - ??
@@ -81,7 +82,7 @@
 		... more unknown stuff
 
 
-	game progress:
+	Game progress:
 		uint32 {4}      - ??
 		uint32 {4}      - ??
 		uint32 {4}      - ??
@@ -114,8 +115,18 @@
 		uint32 {4}      - ??
 		uint32 {4}      - ??
 
+	InventoryData (32 entries)
+		byte {1}		- Item ID (16 to 29) - set to 0 for "undefined" items
+		byte {1}		- Scene ID set to 31 -> 39 for matchbox, telegram, passengerlist, scarf, parchemin, firebird, briefcase, paper, article
+		byte {1}		- ?? set to 0
+		byte {1}		- ?? set to 1 for matchbox, match, telegram, whistle, key, firebird, briefcase, corpse, passengerlist
+		byte {1}		- Is item in inventory (set to 1 for telegram and article)
+		byte {1}		- ?? set to 1 (including entry 0 and excepting last entry) and set to 0 for XXXX(several entries), firebird, briefcase, corpse
+		byte {1}		- ?? set to 0
+		
 
-	save point: max: 126 - rotates through list (ie. goes back and overwrites first save point when full)
+
+	Save point: max: 126 - rotates through list (ie. goes back and overwrites first save point when full)
 		uint32 {4}      - ?? (0 - 40 ?) type ?
 		uint32 {4}      - ??
 		uint32 {4}      - time or similar?
@@ -138,39 +149,65 @@ public:
 		kSavegameGold
 	};
 
+	struct GameProgress {
+		uint32 cdNumber;
+		uint32 portraitType;
+
+		GameProgress() {
+			cdNumber = _defaultCdNumber;
+			portraitType = _defaultPortrait;
+		}
+	};
+
+	struct InventoryEntry {
+		byte item_id;
+		byte scene_id;
+		byte field_2;
+		byte field_3;
+		byte has_item;
+		byte field_5;
+		byte field_6;
+
+		InventoryEntry() {
+			item_id = 0;
+			scene_id = 0;
+			field_2 = 0;
+			field_3 = 0;
+			has_item = 0;
+			field_5 = 1;	// TODO all except last it seems (is it really important?)
+			field_6 = 0;
+		}
+	};
+
 	struct GameState {
 		// Header
 		uint32 brightness;
 		uint32 volume;
 
-
-		// TODO: NOT YET FOUND IN SAVEGAME
-		uint32 currentScene;
+		// Game data		
 		uint32 time;
+		uint32 currentScene;
+		uint32 selectedItem;
+
+		GameProgress progress;
+		InventoryEntry inventory[32];
 
 		GameState() {
 			brightness = _defaultBrigthness;
 			volume = _defaultVolume;
+
+			// TODO init inventory with default values (here or in Logic code?)
 
 			currentScene = 0;
 			time = _defaultTime;
 		}
 	};
 
-	struct GameProgress {
-		uint32 cdNumber;
-		uint32 portraitType;
 
-		GameProgress() {
-			cdNumber = 1;
-			portraitType = 32;
-		}
-	};
 
 	// Init & Access
 	static bool initSavegame(SavegameId id);
 	static GameState *getGameState(SavegameId id);
-
 
 	// Getting information
 	static bool isSavegamePresent(SavegameId id);
@@ -180,7 +217,8 @@ private:
 	static const uint32 _defaultBrigthness = 0x3;
 	static const uint32 _defaultVolume = 0x7;
 	static const uint32 _defaultTime = 1037700;
-
+	static const uint32 _defaultPortrait = 32;
+	static const uint32 _defaultCdNumber = 1;
 
 	static Common::String getSavegameName(SavegameId id);
 
