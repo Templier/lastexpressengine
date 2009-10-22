@@ -106,7 +106,8 @@ bool GraphicsManager::draw(Drawable *drawable, uint index, BackgroundType type, 
 
 bool GraphicsManager::draw(Drawable *drawable, int x, int y, uint index, BackgroundType type, int brightness, bool transition) {
 	// TODO store rect for later use
-	Common::Rect rect = drawable->draw(getSurface(type), x, y, index, brightness);
+	// TODO adjust brightness. The original game seems to be using a table for that (at least in the highlighting case)
+	Common::Rect rect = drawable->draw(getSurface(type), x, y, index);
 
 	return (!rect.isEmpty());
 }

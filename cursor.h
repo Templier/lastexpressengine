@@ -106,7 +106,7 @@ public:
 	bool setStyle(CursorStyle style);
 	CursorStyle getStyle();
 
-	Common::Rect draw(Graphics::Surface *surface, int x, int y, uint style, int brightness);
+	Common::Rect draw(Graphics::Surface *surface, int x, int y, uint style);
 
 private:
 	// Style

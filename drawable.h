@@ -36,7 +36,7 @@ public:
 
 	virtual Common::Rect draw(Graphics::Surface *surface) { return Common::Rect(); }
 	virtual Common::Rect draw(Graphics::Surface *surface, uint index) { return Common::Rect(); }
-	virtual Common::Rect draw(Graphics::Surface *surface, int x, int y, uint index, int brightness) { return Common::Rect(); }
+	virtual Common::Rect draw(Graphics::Surface *surface, int x, int y, uint index) { return Common::Rect(); }
 };
 
 } // End of namespace LastExpress

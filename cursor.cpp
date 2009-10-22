@@ -107,8 +107,23 @@ Cursor::CursorStyle Cursor::getStyle() {
 	return _current;
 }
 
+static uint16 HSL2RGB(int n1, int n2, int hue) {
+	if (hue > 360)
+		hue = hue - 360;
+	else if (hue < 0)
+		hue = hue + 360;
+
+	if (hue < 60)
+		return n1 + (n2 - n1) * hue / 60;
+	if (hue < 180)
+		return n2;
+	if (hue < 240)
+		return n1 + (n2 - n1) * (240 - hue) / 60;
+	return n1;
+}
+
 // Draw a cursor to a surface, as they are also used for the inventory (top-right of the screen)
-Common::Rect Cursor::draw(Graphics::Surface *surface, int x, int y, uint style, int brigthness) {
+Common::Rect Cursor::draw(Graphics::Surface *surface, int x, int y, uint style) {
 	if (!checkStyle((CursorStyle)style))
 		return Common::Rect();
 
