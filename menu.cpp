@@ -225,10 +225,10 @@ bool Menu::handleStartMenuEvent(Common::Event ev) {
 	case kEventContinue:
 		// TODO Check for cd archive: reload the proper archive here if running in single cd mode
 		if (!_engine->getLogic()->isGameStarted()) {
-			drawFrame(&_seqEggButtons, kButtonShield, GraphicsManager::kBackgroundOverlay);
-			drawFrame(&_seqTooltips, kTooltipPlayNewGame, GraphicsManager::kBackgroundOverlay);
+			drawSeqFrame(&_seqEggButtons, kButtonShield, GraphicsManager::kBackgroundOverlay);
+			drawSeqFrame(&_seqTooltips, kTooltipPlayNewGame, GraphicsManager::kBackgroundOverlay);
 		} else {
-			drawFrame(&_seqEggButtons, kButtonContinue, GraphicsManager::kBackgroundOverlay);
+			drawSeqFrame(&_seqEggButtons, kButtonContinue, GraphicsManager::kBackgroundOverlay);
 
 			// FIXME: using different global in original game -> find out what they do
 			if (_currentTime == getState()->time) { // will break since we adjust the game time with rewind/forward/cities
@@ -236,9 +236,9 @@ bool Menu::handleStartMenuEvent(Common::Event ev) {
 				//if (isGameFinished())
 				//	_seqTooltips.showFrameOverlay(kTooltipViewGameEnding);
 				//else
-					drawFrame(&_seqTooltips, kTooltipContinueGame, GraphicsManager::kBackgroundOverlay);
+					drawSeqFrame(&_seqTooltips, kTooltipContinueGame, GraphicsManager::kBackgroundOverlay);
 			} else {
-				drawFrame(&_seqTooltips, kTooltipContinueRewoundGame, GraphicsManager::kBackgroundOverlay);
+				drawSeqFrame(&_seqTooltips, kTooltipContinueRewoundGame, GraphicsManager::kBackgroundOverlay);
 			}
 		}
 
@@ -287,72 +287,72 @@ bool Menu::handleStartMenuEvent(Common::Event ev) {
 	//////////////////////////////////////////////////////////////////////////
 	case kEventCredits:
 		if (clicked) {
-			drawFrame(&_seqTooltips, kButtonCreditsPushed, GraphicsManager::kBackgroundOverlay);
+			drawSeqFrame(&_seqTooltips, kButtonCreditsPushed, GraphicsManager::kBackgroundOverlay);
 			playSfx("LIB046.snd");
 			_isShowingCredits = true;
 			_creditsSequenceIndex = 0;
 			showCredits();
 		} else {
-			drawFrame(&_seqEggButtons, kButtonCredits, GraphicsManager::kBackgroundOverlay);
-			drawFrame(&_seqTooltips, kTooltipCredits, GraphicsManager::kBackgroundOverlay);
+			drawSeqFrame(&_seqEggButtons, kButtonCredits, GraphicsManager::kBackgroundOverlay);
+			drawSeqFrame(&_seqTooltips, kTooltipCredits, GraphicsManager::kBackgroundOverlay);
 		}
 		break;
 
 	//////////////////////////////////////////////////////////////////////////
 	case kEventQuitGame:
-		drawFrame(&_seqTooltips, kTooltipQuit, GraphicsManager::kBackgroundOverlay);
+		drawSeqFrame(&_seqTooltips, kTooltipQuit, GraphicsManager::kBackgroundOverlay);
 
 		if (clicked) {
-			drawFrame(&_seqButtons, kButtonQuitPushed, GraphicsManager::kBackgroundOverlay);
+			drawSeqFrame(&_seqButtons, kButtonQuitPushed, GraphicsManager::kBackgroundOverlay);
 			playSfx("LIB046.snd");
 
 			//TODO some stuff... see disasm
 			return false;
 		} else {
-			drawFrame(&_seqButtons, kButtonQuit, GraphicsManager::kBackgroundOverlay);
+			drawSeqFrame(&_seqButtons, kButtonQuit, GraphicsManager::kBackgroundOverlay);
 		}
 		break;
 
 	//////////////////////////////////////////////////////////////////////////
 	case kEventSwitchSaveGame:
 		if (clicked) {
-			drawFrame(&_seqAcorn, 1, GraphicsManager::kBackgroundOverlay);
+			drawSeqFrame(&_seqAcorn, 1, GraphicsManager::kBackgroundOverlay);
 			playSfx("LIB046.snd");
 			_engine->getLogic()->switchGame();
 			// the menu should have been reset & redrawn, so don't do anything else here
 		} else {
-			drawFrame(&_seqAcorn, 0, GraphicsManager::kBackgroundOverlay);
+			drawSeqFrame(&_seqAcorn, 0, GraphicsManager::kBackgroundOverlay);
 
 			if (!SaveLoad::isSavegameValid(getNextGameId())) {
 				if (_engine->getLogic()->isGameStarted())
-					drawFrame(&_seqTooltips, kTooltipStartAnotherGame, GraphicsManager::kBackgroundOverlay);
+					drawSeqFrame(&_seqTooltips, kTooltipStartAnotherGame, GraphicsManager::kBackgroundOverlay)
 				else
-					drawFrame(&_seqTooltips, kTooltipSwitchBlueGame, GraphicsManager::kBackgroundOverlay);
+					drawSeqFrame(&_seqTooltips, kTooltipSwitchBlueGame, GraphicsManager::kBackgroundOverlay);
 			} else {
 				// Stupid tooltips ids are not in order, so we can't just increment them...
 				switch(getGameId()) {
 					case SaveLoad::kSavegameBlue:
-						drawFrame(&_seqTooltips, kTooltipSwitchRedGame, GraphicsManager::kBackgroundOverlay);
+						drawSeqFrame(&_seqTooltips, kTooltipSwitchRedGame, GraphicsManager::kBackgroundOverlay);
 						break;
 
 					case SaveLoad::kSavegameRed:
-						drawFrame(&_seqTooltips, kTooltipSwitchGreenGame, GraphicsManager::kBackgroundOverlay);
+						drawSeqFrame(&_seqTooltips, kTooltipSwitchGreenGame, GraphicsManager::kBackgroundOverlay);
 						break;
 
 					case SaveLoad::kSavegameGreen:
-						drawFrame(&_seqTooltips, kTooltipSwitchPurpleGame, GraphicsManager::kBackgroundOverlay);
+						drawSeqFrame(&_seqTooltips, kTooltipSwitchPurpleGame, GraphicsManager::kBackgroundOverlay);
 						break;
 
 					case SaveLoad::kSavegamePurple:
-						drawFrame(&_seqTooltips, kTooltipSwitchTealGame, GraphicsManager::kBackgroundOverlay);
+						drawSeqFrame(&_seqTooltips, kTooltipSwitchTealGame, GraphicsManager::kBackgroundOverlay);
 						break;
 
 					case SaveLoad::kSavegameTeal:
-						drawFrame(&_seqTooltips, kTooltipSwitchGoldGame, GraphicsManager::kBackgroundOverlay);
+						drawSeqFrame(&_seqTooltips, kTooltipSwitchGoldGame, GraphicsManager::kBackgroundOverlay);
 						break;
 
 					case SaveLoad::kSavegameGold:
-						drawFrame(&_seqTooltips, kTooltipSwitchBlueGame, GraphicsManager::kBackgroundOverlay);
+						drawSeqFrame(&_seqTooltips, kTooltipSwitchBlueGame, GraphicsManager::kBackgroundOverlay);
 						break;
 				}
 			}
@@ -364,13 +364,13 @@ bool Menu::handleStartMenuEvent(Common::Event ev) {
 		// TODO check that we can actually rewind
 		//if (_currentTime <= getState()->time)
 		if (clicked) {
-			drawFrame(&_seqEggButtons, kButtonRewindPushed, GraphicsManager::kBackgroundOverlay);
+			drawSeqFrame(&_seqEggButtons, kButtonRewindPushed, GraphicsManager::kBackgroundOverlay);
 			playSfx("LIB046.snd");
 			// TODO rewind clock
 			//goToTime(XXX + 8);
 		} else {
-			drawFrame(&_seqEggButtons, kButtonRewind, GraphicsManager::kBackgroundOverlay);
-			drawFrame(&_seqTooltips, kTooltipRewind, GraphicsManager::kBackgroundOverlay);
+			drawSeqFrame(&_seqEggButtons, kButtonRewind, GraphicsManager::kBackgroundOverlay);
+			drawSeqFrame(&_seqTooltips, kTooltipRewind, GraphicsManager::kBackgroundOverlay);
 		}
 		break;
 
@@ -381,15 +381,15 @@ bool Menu::handleStartMenuEvent(Common::Event ev) {
 			break;
 
 		if (clicked) {
-			drawFrame(&_seqEggButtons, kButtonForwardPushed, GraphicsManager::kBackgroundOverlay);
+			drawSeqFrame(&_seqEggButtons, kButtonForwardPushed, GraphicsManager::kBackgroundOverlay);
 			playSfx("LIB046.snd");
 
 			// TODO advance clock
 			//goToTime(32 * ??? + XXX + 8);
 
 		} else {
-			drawFrame(&_seqEggButtons, kButtonForward, GraphicsManager::kBackgroundOverlay);
-			drawFrame(&_seqTooltips, kTooltipFastForward, GraphicsManager::kBackgroundOverlay);
+			drawSeqFrame(&_seqEggButtons, kButtonForward, GraphicsManager::kBackgroundOverlay);
+			drawSeqFrame(&_seqTooltips, kTooltipFastForward, GraphicsManager::kBackgroundOverlay);
 		}
 		break;
 
@@ -432,19 +432,19 @@ bool Menu::handleStartMenuEvent(Common::Event ev) {
 	case kEventDecreaseVolume:
 		// Cannot decrease volume further
 		if (getVolume() == 0) {
-			drawFrame(&_seqButtons, kButtonVolume, GraphicsManager::kBackgroundOverlay);
+			drawSeqFrame(&_seqButtons, kButtonVolume, GraphicsManager::kBackgroundOverlay);
 			break;
 		}
 
-		drawFrame(&_seqTooltips, kTooltipVolumeDown, GraphicsManager::kBackgroundOverlay);
+		drawSeqFrame(&_seqTooltips, kTooltipVolumeDown, GraphicsManager::kBackgroundOverlay);
 
 		// Show highlight on button & adjust volume if needed
 		if (clicked) {
-			drawFrame(&_seqButtons, kButtonVolumeDownPushed, GraphicsManager::kBackgroundOverlay);
+			drawSeqFrame(&_seqButtons, kButtonVolumeDownPushed, GraphicsManager::kBackgroundOverlay);
 			playSfx("LIB046.snd");
 			setVolume(getVolume() - 1);
 		} else {
-			drawFrame(&_seqButtons, kButtonVolumeDown, GraphicsManager::kBackgroundOverlay);
+			drawSeqFrame(&_seqButtons, kButtonVolumeDown, GraphicsManager::kBackgroundOverlay);
 		}
 		break;
 
@@ -452,19 +452,19 @@ bool Menu::handleStartMenuEvent(Common::Event ev) {
 	case kEventIncreaseVolume:
 		// Cannot increase volume further
 		if (getVolume() >= 7) {
-			drawFrame(&_seqButtons, kButtonVolume, GraphicsManager::kBackgroundOverlay);
+			drawSeqFrame(&_seqButtons, kButtonVolume, GraphicsManager::kBackgroundOverlay);
 			break;
 		}
 
-		drawFrame(&_seqTooltips, kTooltipVolumeUp, GraphicsManager::kBackgroundOverlay);
+		drawSeqFrame(&_seqTooltips, kTooltipVolumeUp, GraphicsManager::kBackgroundOverlay);
 
 		// Show highlight on button & adjust volume if needed
 		if (clicked) {
-			drawFrame(&_seqButtons, kButtonVolumeUpPushed, GraphicsManager::kBackgroundOverlay);
+			drawSeqFrame(&_seqButtons, kButtonVolumeUpPushed, GraphicsManager::kBackgroundOverlay);
 			playSfx("LIB046.snd");
 			setVolume(getVolume() + 1);
 		} else {
-			drawFrame(&_seqButtons, kButtonVolumeUp, GraphicsManager::kBackgroundOverlay);
+			drawSeqFrame(&_seqButtons, kButtonVolumeUp, GraphicsManager::kBackgroundOverlay);
 		}
 		break;
 
@@ -472,20 +472,20 @@ bool Menu::handleStartMenuEvent(Common::Event ev) {
 	case kEventDecreaseBrightness:
 		// Cannot increase brightness further
 		if (getBrightness() == 0) {
-			drawFrame(&_seqButtons, kButtonBrightness, GraphicsManager::kBackgroundOverlay);
+			drawSeqFrame(&_seqButtons, kButtonBrightness, GraphicsManager::kBackgroundOverlay);
 			break;
 		}
 
-		drawFrame(&_seqTooltips, kTooltipBrightnessDown, GraphicsManager::kBackgroundOverlay);
+		drawSeqFrame(&_seqTooltips, kTooltipBrightnessDown, GraphicsManager::kBackgroundOverlay);
 
 		// Show highlight on button & adjust brightness if needed
 		if (clicked) {
-			drawFrame(&_seqButtons, kButtonBrightnessDownPushed, GraphicsManager::kBackgroundOverlay);
+			drawSeqFrame(&_seqButtons, kButtonBrightnessDownPushed, GraphicsManager::kBackgroundOverlay);
 			playSfx("LIB046.snd");
 
 			setBrightness(getBrightness() + 1);
 		} else {
-			drawFrame(&_seqButtons, kButtonBrightnessDown, GraphicsManager::kBackgroundOverlay);
+			drawSeqFrame(&_seqButtons, kButtonBrightnessDown, GraphicsManager::kBackgroundOverlay);
 		}
 		break;
 
@@ -493,19 +493,19 @@ bool Menu::handleStartMenuEvent(Common::Event ev) {
 	case kEventIncreaseBrightness:
 		// Cannot increase brightness further
 		if (getBrightness() >= 6) {
-			drawFrame(&_seqButtons, kButtonBrightness, GraphicsManager::kBackgroundOverlay);
+			drawSeqFrame(&_seqButtons, kButtonBrightness, GraphicsManager::kBackgroundOverlay);
 			break;
 		}
 
-		drawFrame(&_seqTooltips, kTooltipBrightnessUp, GraphicsManager::kBackgroundOverlay);
+		drawSeqFrame(&_seqTooltips, kTooltipBrightnessUp, GraphicsManager::kBackgroundOverlay);
 
 		// Show highlight on button & adjust brightness if needed
 		if (clicked) {
-			drawFrame(&_seqButtons, kButtonBrightnessUpPushed, GraphicsManager::kBackgroundOverlay);
+			drawSeqFrame(&_seqButtons, kButtonBrightnessUpPushed, GraphicsManager::kBackgroundOverlay);
 			playSfx("LIB046.snd");
 			setBrightness(getBrightness() + 1);
 		} else {
-			drawFrame(&_seqButtons, kButtonBrightnessUp, GraphicsManager::kBackgroundOverlay);
+			drawSeqFrame(&_seqButtons, kButtonBrightnessUp, GraphicsManager::kBackgroundOverlay);
 		}
 		break;
 	}
@@ -631,10 +631,10 @@ void Menu::drawClock(uint32 time) {
 		index_date += 18 * index_minutes / 60;
 
 	// Draw each element
-	drawFrame(&_seqHour, index_hour, GraphicsManager::kBackgroundA);
-	drawFrame(&_seqMinutes, index_minutes, GraphicsManager::kBackgroundA);
-	drawFrame(&_seqSun, index_sun, GraphicsManager::kBackgroundA);
-	drawFrame(&_seqDate, index_date, GraphicsManager::kBackgroundA);
+	drawSeqFrame(&_seqHour, index_hour, GraphicsManager::kBackgroundA);
+	drawSeqFrame(&_seqMinutes, index_minutes, GraphicsManager::kBackgroundA);
+	drawSeqFrame(&_seqSun, index_sun, GraphicsManager::kBackgroundA);
+	drawSeqFrame(&_seqDate, index_date, GraphicsManager::kBackgroundA);
 }
 
 // Draw the train line at the time
@@ -655,10 +655,10 @@ void Menu::drawTrainLine(uint32 time) {
 	// FIXME do some stuff on index... as right now we jump from cities to cities
 
 	if (index >= _seqLine1.count()) { // we passed Belgrade
-		drawFrame(&_seqLine1, _seqLine1.count() - 1, GraphicsManager::kBackgroundA);
-		drawFrame(&_seqLine2, index, GraphicsManager::kBackgroundA);
+		drawSeqFrame(&_seqLine1, _seqLine1.count() - 1, GraphicsManager::kBackgroundA);
+		drawSeqFrame(&_seqLine2, index, GraphicsManager::kBackgroundA);
 	} else {
-		drawFrame(&_seqLine1, index, GraphicsManager::kBackgroundA);
+		drawSeqFrame(&_seqLine1, index, GraphicsManager::kBackgroundA);
 		// no need to draw from line2
 	}
 }
@@ -672,7 +672,7 @@ void Menu::showCredits() {
 		return;
 	}
 
-	drawFrame(&_seqCredits, _creditsSequenceIndex, GraphicsManager::kBackgroundA);
+	drawSeqFrame(&_seqCredits, _creditsSequenceIndex, GraphicsManager::kBackgroundA);
 	_creditsSequenceIndex++;
 }
 
@@ -745,15 +745,15 @@ void Menu::moveToCity(CityOverlay city, CityTime time, StartMenuTooltips tooltip
 	// Show city overlay
 	switch (city) {
 	case kParis:
-		drawFrame(&_seqCityStart, 0, GraphicsManager::kBackgroundOverlay);
+		drawSeqFrame(&_seqCityStart, 0, GraphicsManager::kBackgroundOverlay);
 		break;
 
 	case kConstantinople:
-		drawFrame(&_seqCityEnd, 0, GraphicsManager::kBackgroundOverlay);
+		drawSeqFrame(&_seqCityEnd, 0, GraphicsManager::kBackgroundOverlay);
 		break;
 
 	default:
-		drawFrame(&_seqCities, city, GraphicsManager::kBackgroundOverlay);
+		drawSeqFrame(&_seqCities, city, GraphicsManager::kBackgroundOverlay);
 	}
 
 	if (clicked) {
@@ -762,9 +762,9 @@ void Menu::moveToCity(CityOverlay city, CityTime time, StartMenuTooltips tooltip
 		// TODO set some global var to 1
 	} else {
 		if (_currentTime < (uint32)time)			// For start city (Paris) and end city, this will always be true
-			drawFrame(&_seqTooltips, tooltipForward, GraphicsManager::kBackgroundOverlay);
+			drawSeqFrame(&_seqTooltips, tooltipForward, GraphicsManager::kBackgroundOverlay)
 		else
-			drawFrame(&_seqTooltips, tooltipRewind, GraphicsManager::kBackgroundOverlay);
+			drawSeqFrame(&_seqTooltips, tooltipRewind, GraphicsManager::kBackgroundOverlay);
 	}
 }
 

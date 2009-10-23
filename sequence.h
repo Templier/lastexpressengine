@@ -113,16 +113,14 @@ private:
 	Common::Rect _rect;
 };
 
-class Sequence : public Drawable {
+class Sequence {
 public:
 	Sequence();
 	~Sequence();
 
 	bool load(Common::SeekableReadStream *stream);
-	AnimFrame *getFrame(uint32 index);
-	Common::Rect draw(Graphics::Surface *surface, uint32 index);
-
 	uint32 count();
+	AnimFrame *getFrame(uint32 index);
 
 	// TODO add getter for frame info (when we know what all the unknown entries are for)
 	//FrameInfo *getFrameInfo(uint32 index);
@@ -136,12 +134,24 @@ private:
 	static const uint32 _compressionOffsetNIS = 0x0124;
 
 	void reset();
-	AnimFrame *decodeFrame(Common::SeekableReadStream *in, uint32 numFrame);
 
 	Common::Array<FrameInfo> _frames;
 	Common::SeekableReadStream *_stream;
+};
 
-	uint32 _unknown;
+class SequencePlayer : public Drawable {
+public:
+	SequencePlayer(Sequence *sequence);
+	~SequencePlayer();
+
+	bool processTime();
+	bool hasEnded();
+	Common::Rect draw(Graphics::Surface *surface);
+	// TODO: options to go to a concrete frame, play forwards, play backwards...
+
+private:
+	Sequence *_sequence;
+	uint32 _currentFrame;
 };
 
 } // End of namespace LastExpress

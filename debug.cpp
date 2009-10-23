@@ -108,14 +108,14 @@ bool Debugger::cmd_playseq(int argc, const char **argv) {
 
 			return false;
 		} else {
-			Sequence sequence;
-			if (sequence.loadFile(filename)) {
-				for (uint32 i = 0; i < sequence.count(); i++) {
-
+			Sequence *sequence = new Sequence();
+			if (sequence->loadFile(filename)) {
+				SequencePlayer player(sequence);
+				while (!player.hasEnded()) {
 					// Clear screen
 					clearBg(GraphicsManager::kBackgroundA);
 
-					drawFrame(&sequence, i, GraphicsManager::kBackgroundA);
+					_engine->getGraphicsManager()->draw(&player, GraphicsManager::kBackgroundA);
 
 					askForRedraw();
 					redrawScreen();
@@ -127,6 +127,9 @@ bool Debugger::cmd_playseq(int argc, const char **argv) {
 						break;
 
 					_engine->_system->delayMillis(175);
+
+					// Update the player status
+					player.processTime();
 				}
 			}
 
@@ -158,11 +161,15 @@ bool Debugger::cmd_showframe(int argc, const char **argv) {
 			if (sequence.loadFile(filename)) {
 				clearBg(GraphicsManager::kBackgroundOverlay);
 
-				if (!drawFrame(&sequence, getNumber(argv[2]), GraphicsManager::kBackgroundOverlay)) {
+				AnimFrame *frame = sequence.getFrame(getNumber(argv[2]));
+				if (!frame) {
 					DebugPrintf("Invalid frame index: %i\n", filename.c_str());
 					resetCommand();
 					return true;
 				}
+
+				_engine->getGraphicsManager()->draw(frame, GraphicsManager::kBackgroundOverlay);
+				delete frame;
 
 				askForRedraw();
 				redrawScreen();

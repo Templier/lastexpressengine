@@ -32,7 +32,6 @@
 namespace LastExpress {
 
 void FrameInfo::read(Common::SeekableReadStream *in, uint16 decompOffset) {
-
 	// Save the current position
 	uint32 basePos = in->pos();
 
@@ -83,11 +82,11 @@ void FrameInfo::read(Common::SeekableReadStream *in, uint16 decompOffset) {
 	}
 	*/
 
-	//debugC(3, kLastExpressDebugGraphics, "    Offsets: data=%d, unknown=%d, palette=%d", dataOffset, unknown, paletteOffset);
-	//debugC(3, kLastExpressDebugGraphics, "    Position: (%d, %d) - (%d, %d)", xPos1, yPos1, xPos2, yPos2);
-	//debugC(3, kLastExpressDebugGraphics, "    Initial Skip: %d", initialSkip);
-	//debugC(3, kLastExpressDebugGraphics, "    Decompressed end offset: %d", decompressedEndOffset);
-	//debugC(3, kLastExpressDebugGraphics, "    Compression type: %u\n", compressionType);
+	debugC(6, kLastExpressDebugGraphics, "    Offsets: data=%d, unknown=%d, palette=%d", dataOffset, unknown, paletteOffset);
+	debugC(6, kLastExpressDebugGraphics, "    Position: (%d, %d) - (%d, %d)", xPos1, yPos1, xPos2, yPos2);
+	debugC(6, kLastExpressDebugGraphics, "    Initial Skip: %d", initialSkip);
+	debugC(6, kLastExpressDebugGraphics, "    Decompressed end offset: %d", decompressedEndOffset);
+	debugC(6, kLastExpressDebugGraphics, "    Compression type: %u\n", compressionType);
 }
 
 
@@ -117,11 +116,12 @@ AnimFrame::AnimFrame(Common::SeekableReadStream *in, FrameInfo *f) : _palette(NU
 		decompFF(in, f);
 		break;
 	default:
-		error("Unknown compression: %d", f->compressionType);
+		error("Unknown frame compression: %d", f->compressionType);
 	}
 
 	readPalette(in, f);
 	_rect = Common::Rect(f->xPos1, f->yPos1, f->xPos2, f->yPos2);
+	//_rect.debugPrint(0, "Frame rect:");
 }
 
 AnimFrame::~AnimFrame() {
@@ -334,21 +334,18 @@ void AnimFrame::decompFF(Common::SeekableReadStream *in, FrameInfo *f) {
 //////////////////////////////////////////////////////////////////////////
 //  SEQUENCE
 //////////////////////////////////////////////////////////////////////////
-Sequence::Sequence() : _stream(NULL) {}
+
+Sequence::Sequence() : _stream(NULL) {
+}
+
 Sequence::~Sequence() {
 	reset();
 }
 
 void Sequence::reset() {
-	_unknown = 0;
 	_frames.clear();
-
-	// FIXME where is the stream disposed of?
-	//delete _stream;
-}
-
-uint32 Sequence::count() {
-	return _frames.size();
+	delete _stream;
+	_stream = NULL;
 }
 
 bool Sequence::load(Common::SeekableReadStream *stream) {
@@ -363,23 +360,23 @@ bool Sequence::load(Common::SeekableReadStream *stream) {
 
 	// Read header to get the number of frames
 	uint32 numframes = _stream->readUint32LE();
-	_unknown = _stream->readUint32LE();
-	debugC(3, kLastExpressDebugGraphics, "Number of frames in sequence: %d / unknown=0x%x", numframes, _unknown);
+	uint32 unknown = _stream->readUint32LE();
+	debugC(3, kLastExpressDebugGraphics, "Number of frames in sequence: %d / unknown=0x%x", numframes, unknown);
 
 	// Store frames information
 	for (uint i = 0; i < numframes; i++) {
-		//debugC(3, kLastExpressDebugGraphics, "-- Frame information --  %d/%d", i + 1, numframes);
+		debugC(5, kLastExpressDebugGraphics, "  Reading frame information (%d/%d)", i + 1, numframes);
 
 		// Move stream to start of frame
 		_stream->seek(_sequenceHeaderSize + i * _sequenceFrameSize, SEEK_SET);
 		if (_stream->eos()) {
-			debugC(2, kLastExpressDebugGraphics, "Error seeking to current frame data!");
+			error("Couldn't seek to the current frame data");
 			return false;
 		}
 
 		// Check if there is enough data
 		if ((unsigned)(_stream->size() - _stream->pos()) < _sequenceFrameSize) {
-			debugC(2, kLastExpressDebugGraphics, "The frame does not have a valid header!");
+			error("The sequence frame does not have a valid header");
 			return false;
 		}
 
@@ -391,18 +388,22 @@ bool Sequence::load(Common::SeekableReadStream *stream) {
 	return true;
 }
 
+uint32 Sequence::count() {
+	return _frames.size();
+}
+
 AnimFrame *Sequence::getFrame(uint32 index) {
 	if (_frames.size() == 0) {
-		debugC(2, kLastExpressDebugGraphics, "Trying to show a sequence before loading data!");
+		warning("Trying to decode a sequence before loading its data");
 		return NULL;
 	}
 
 	if (index > _frames.size() - 1) {
-		debugC(2, kLastExpressDebugGraphics, "Invalid frame index: was %d, max %d", index, _frames.size() - 1);
+		warning("Invalid sequence frame requested: %d, max %d", index, _frames.size() - 1);
 		return NULL;
 	}
 
-	//debugC(2, kLastExpressDebugGraphics, "Decoding frame %d / %d", index, _frames.size() - 1);
+	debugC(4, kLastExpressDebugGraphics, "Decoding frame %d / %d", index, _frames.size() - 1);
 
 	// Skip "invalid" frames
 	if (_frames[index].compressionType == 0)
@@ -411,16 +412,42 @@ AnimFrame *Sequence::getFrame(uint32 index) {
 	return new AnimFrame(_stream, &_frames[index]);
 }
 
-Common::Rect Sequence::draw(Graphics::Surface *surface, uint32 index) {
-	AnimFrame *f = getFrame(index);
+
+// SequencePlayer
+
+SequencePlayer::SequencePlayer(Sequence *sequence) :
+	_sequence(sequence), _currentFrame(0) {
+}
+
+SequencePlayer::~SequencePlayer() {
+	delete _sequence;
+}
+
+bool SequencePlayer::processTime() {
+	// TODO: Just increment the current frame when it's the appropiate time
+	if (_currentFrame < _sequence->count()) {
+		_currentFrame++;
+		return true;
+	} else
+		return true;
+}
+
+bool SequencePlayer::hasEnded() {
+	return _currentFrame >= _sequence->count();
+}
+
+Common::Rect SequencePlayer::draw(Graphics::Surface *surface) {
+	if (hasEnded())
+		return Common::Rect();
+
+	AnimFrame *f = _sequence->getFrame(_currentFrame);
 	if (!f)
 		return Common::Rect();
 
-	f->draw(surface);
-
+	Common::Rect rect = f->draw(surface);
 	delete f;
 
-	return Common::Rect(_frames[index].xPos1, _frames[index].yPos1, _frames[index].xPos2, _frames[index].yPos2);
+	return rect;
 }
 
 } // End of namespace LastExpress
