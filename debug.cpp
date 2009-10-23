@@ -196,7 +196,6 @@ bool Debugger::cmd_playsnd(int argc, const char **argv) {
 
 		_engine->_system->getMixer()->stopAll();
 		playSfx(filename);
-
 	} else {
 		DebugPrintf("Syntax: playsnd <sndname>\n");
 	}
@@ -235,7 +234,6 @@ bool Debugger::cmd_playsbe(int argc, const char **argv) {
 
 			resetCommand();
 		}
-
 	} else {
 		DebugPrintf("Syntax: playsbe <sbename>\n");
 	}
@@ -260,12 +258,10 @@ bool Debugger::cmd_playnis(int argc, const char **argv) {
 		} else {
 			Animation animation;
 			if (animation.loadFile(filename))
-				//TODO: separate processing and drawing
-				animation.process();
+				animation.play();
 
 			resetCommand();
 		}
-
 	} else {
 		DebugPrintf("Syntax: playnis <nisname>\n");
 	}
@@ -303,8 +299,6 @@ bool Debugger::cmd_showbg(int argc, const char **argv) {
 
 			resetCommand();
 		}
-
-
 	} else {
 		DebugPrintf("Syntax: showbg <bgname>\n");
 	}
@@ -313,7 +307,6 @@ bool Debugger::cmd_showbg(int argc, const char **argv) {
 
 bool Debugger::cmd_loadscene(int argc, const char **argv) {
 	if (argc >= 2) {
-
 		if (argc > 3) {
 			DebugPrintf("Syntax: loadscene (<cd number>) <scene index>\n");
 			return true;
@@ -363,8 +356,6 @@ bool Debugger::cmd_loadscene(int argc, const char **argv) {
 
 			resetCommand();
 		}
-
-
 	} else {
 		DebugPrintf("Syntax: loadscene <cd number> <scene index>\n");
 	}

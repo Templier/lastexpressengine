@@ -47,12 +47,6 @@ namespace LastExpress {
 class AnimFrame;
 class AppendableSound;
 
-struct Chunk {
-	uint16 type;
-	uint16 tag;
-	uint32 size;
-};
-
 class Animation : public Drawable {
 public:
 	Animation();
@@ -60,8 +54,9 @@ public:
 
 	bool load(Common::SeekableReadStream *stream);
 	bool process();
+	bool hasEnded();
 	Common::Rect draw(Graphics::Surface *surface);
-	void updateScreen();
+	void play();
 
 private:
 	static const uint32 _soundBlockSize = 739;
@@ -86,12 +81,19 @@ private:
 		kChunkTypeAudioEnd          = 0x0063
 	};
 
+	struct Chunk {
+		uint16 type;
+		uint16 tag;
+		uint32 size;
+	};
+
 	void reset();
 	AnimFrame *processChunkFrame(Common::SeekableReadStream *in, Chunk *c);
 	void processChunkAudio(Common::SeekableReadStream *in, Chunk *c);
 
 	Common::SeekableReadStream *_stream;
 	Common::Array<Chunk> _chunks;
+	Common::Array<Chunk>::iterator _currentChunk;
 	AnimFrame *_overlay, *_background1, *_background2;
 	byte _backgroundCurrent;
 	AppendableSound *_audio;

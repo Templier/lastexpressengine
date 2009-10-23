@@ -27,10 +27,7 @@
 
 // Data
 #include "lastexpress/animation.h"
-#include "lastexpress/background.h"
-#include "lastexpress/cursor.h"
 #include "lastexpress/logic.h"
-#include "lastexpress/scene.h"
 #include "lastexpress/sound.h"
 
 #include "lastexpress/graphics.h"
@@ -143,14 +140,14 @@ void Menu::showMenu() {
 
 			// Show Broderbrund logo
 			if (animation.loadFile("1930.nis"))
-				animation.process();
+				animation.play();
 
 			// Play intro music
 			playMusic("MUS001.SND");
 
 			// Show The Smoking Car logo
 			if (animation.loadFile("1931.nis"))
-				animation.process();
+				animation.play();
 
 			_showStartScreen = false;
 		} else {
@@ -271,7 +268,7 @@ bool Menu::handleStartMenuEvent(Common::Event ev) {
 			// Show intro
 			Animation animation;
 			if (animation.loadFile("1601.nis"))
-				animation.process();
+				animation.play();
 
 			clearBg(GraphicsManager::kBackgroundAll);
 
@@ -279,9 +276,6 @@ bool Menu::handleStartMenuEvent(Common::Event ev) {
 			getState()->currentScene = 0;
 			_engine->getLogic()->showMenu(false);
 		}
-
-
-
 		break;
 
 	//////////////////////////////////////////////////////////////////////////
