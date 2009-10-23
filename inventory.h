@@ -65,7 +65,7 @@ public:
 	void init(SaveLoad::GameState *state);
 
 	// Handle inventory UI events.
-	void handleMouseEvent(Common::Event ev);	
+	void handleMouseEvent(Common::Event ev);
 
 	// Inventory contents
 	void addItem(InventoryItem item);
@@ -100,12 +100,12 @@ private:
 
 	LastExpressEngine *_engine;
 
-	// State	
+	// State
 	bool _opened;
 	InventoryItem _highlightedItem;
-	
-	bool _showingHourGlass;		
-	bool _blinkingEgg;	
+
+	bool _showingHourGlass;
+	bool _blinkingEgg;
 	uint32 _blinkingTime;
 	uint32 _blinkingInterval;
 	int _blinkingBrightness;
@@ -117,7 +117,7 @@ private:
 	Common::Rect _inventoryRect;
 	Common::Rect _menuRect;
 	Common::Rect _selectedRect;
-	
+
 	void open();
 	void close();
 	void examine(InventoryItem item);

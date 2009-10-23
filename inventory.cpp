@@ -25,7 +25,6 @@
 
 #include "lastexpress/inventory.h"
 
-#include "lastexpress/cursor.h"
 #include "lastexpress/graphics.h"
 #include "lastexpress/helpers.h"
 #include "lastexpress/lastexpress.h"
@@ -60,7 +59,7 @@ Inventory::~Inventory() {}
 void Inventory::init(SaveLoad::GameState *state) {
 
 	// item_id
-	state->inventory[kIndexMatchBox].item_id = kMatchBox; 
+	state->inventory[kIndexMatchBox].item_id = kMatchBox;
 	state->inventory[kIndexTelegram].item_id = kTelegram;
 	state->inventory[kIndexPassengerList].item_id = kPassengerList;
 	state->inventory[kIndexArticle].item_id = kArticle;
@@ -76,15 +75,15 @@ void Inventory::init(SaveLoad::GameState *state) {
 	state->inventory[kIndexCorpse].item_id = kCorpse;
 
 	// is_selectable
-	state->inventory[kIndexMatchBox].is_selectable = 1; 
-	state->inventory[kIndexMatch].is_selectable = 1; 
-	state->inventory[kIndexTelegram].is_selectable = 1; 
-	state->inventory[kIndexWhistle].is_selectable = 1; 
-	state->inventory[kIndexKey].is_selectable = 1; 
-	state->inventory[kIndexFirebird].is_selectable = 1; 
-	state->inventory[kIndexBriefcase].is_selectable = 1; 
-	state->inventory[kIndexCorpse].is_selectable = 1; 
-	state->inventory[kIndexPassengerList].is_selectable = 1; 
+	state->inventory[kIndexMatchBox].is_selectable = 1;
+	state->inventory[kIndexMatch].is_selectable = 1;
+	state->inventory[kIndexTelegram].is_selectable = 1;
+	state->inventory[kIndexWhistle].is_selectable = 1;
+	state->inventory[kIndexKey].is_selectable = 1;
+	state->inventory[kIndexFirebird].is_selectable = 1;
+	state->inventory[kIndexBriefcase].is_selectable = 1;
+	state->inventory[kIndexCorpse].is_selectable = 1;
+	state->inventory[kIndexPassengerList].is_selectable = 1;
 
 	// ??
 	state->inventory[2].field_5 = 0;
@@ -102,15 +101,15 @@ void Inventory::init(SaveLoad::GameState *state) {
 	state->inventory[22].field_5 = 0;
 
 	// scene_id
-	state->inventory[kIndexMatchBox].scene_id = 31; 
-	state->inventory[kIndexTelegram].scene_id = 32; 
-	state->inventory[kIndexPassengerList].scene_id = 33; 
-	state->inventory[kIndexScarf].scene_id = 34; 
-	state->inventory[kIndexParchemin].scene_id = 35; 
-	state->inventory[kIndexArticle].scene_id = 36; 
-	state->inventory[kIndexPaper].scene_id = 37; 
-	state->inventory[kIndexFirebird].scene_id = 38; 
-	state->inventory[kIndexBriefcase].scene_id = 39; 
+	state->inventory[kIndexMatchBox].scene_id = 31;
+	state->inventory[kIndexTelegram].scene_id = 32;
+	state->inventory[kIndexPassengerList].scene_id = 33;
+	state->inventory[kIndexScarf].scene_id = 34;
+	state->inventory[kIndexParchemin].scene_id = 35;
+	state->inventory[kIndexArticle].scene_id = 36;
+	state->inventory[kIndexPaper].scene_id = 37;
+	state->inventory[kIndexFirebird].scene_id = 38;
+	state->inventory[kIndexBriefcase].scene_id = 39;
 
 	// has_item
 	state->inventory[kIndexTelegram].has_item = 1;
@@ -120,7 +119,7 @@ void Inventory::init(SaveLoad::GameState *state) {
 // FIXME we need to draw cursors with full background opacity so that whatever is in the background is erased
 // this saved us clearing some part of the background when switching between states
 
-// TODO if we draw inventory objects on screen, we need to load a new scene. 
+// TODO if we draw inventory objects on screen, we need to load a new scene.
 // Signal that the inventory has taken over the screen and stop processing mouse events after we have been called
 void Inventory::handleMouseEvent(Common::Event ev) {
 
@@ -160,7 +159,7 @@ void Inventory::handleMouseEvent(Common::Event ev) {
 			askForRedraw();
 		}
 	}
-	
+
 	// Portrait (inventory)
 	if (_inventoryRect.contains(ev.mouse)) {
 		insideInventory = true;
@@ -171,7 +170,7 @@ void Inventory::handleMouseEvent(Common::Event ev) {
 			open();
 		} else {
 			// Highlight if needed
-			if (_highlightedItem != (InventoryItem)getProgress().portraitType && !_opened) {			
+			if (_highlightedItem != (InventoryItem)getProgress().portraitType && !_opened) {
 				_highlightedItem = (InventoryItem)getProgress().portraitType;
 				drawItem(0, 0, getProgress().portraitType);
 
@@ -203,7 +202,7 @@ void Inventory::handleMouseEvent(Common::Event ev) {
 				if (Common::Rect(0, y, 32, 32 + y).contains(ev.mouse)) {
 
 					// If released with an item highlighted, show this item
-					if (ev.type == Common::EVENT_LBUTTONUP) {						
+					if (ev.type == Common::EVENT_LBUTTONUP) {
 						if (getState()->inventory[i].is_selectable) {
 							selected = true;
 							getState()->selectedItem = (InventoryItem)getState()->inventory[i].item_id;
@@ -215,7 +214,7 @@ void Inventory::handleMouseEvent(Common::Event ev) {
 					} else {
 						if (_highlightedItem != getState()->inventory[i].item_id) {
 							drawItem(0, y, getState()->inventory[i].item_id);
-							_highlightedItem = (InventoryItem)getState()->inventory[i].item_id;							
+							_highlightedItem = (InventoryItem)getState()->inventory[i].item_id;
 							askForRedraw();
 						}
 					}
@@ -231,7 +230,7 @@ void Inventory::handleMouseEvent(Common::Event ev) {
 				y += 40;
 			}
 		}
-		
+
 		// Right button is released: we need to close the inventory
 		if (ev.type == Common::EVENT_LBUTTONUP) {
 
@@ -242,12 +241,12 @@ void Inventory::handleMouseEvent(Common::Event ev) {
 			}
 			close();
 			askForRedraw();
-		}		
+		}
 	}
 
 	// Selected item
 	if (getState()->selectedItem != kNoItem && _selectedRect.contains(ev.mouse)) {
-		insideInventory = true;		
+		insideInventory = true;
 		// Show magnifier icon
 		_engine->getCursor()->setStyle(Cursor::kCursorMagnifier);
 
@@ -262,7 +261,7 @@ void Inventory::handleMouseEvent(Common::Event ev) {
 
 	// Restore cursor
 	if (!insideInventory)
-		_engine->getCursor()->setStyle(_engine->getLogic()->getCursorStyle());	
+		_engine->getCursor()->setStyle(_engine->getLogic()->getCursorStyle());
 }
 
 void Inventory::show(bool visible) {
@@ -283,7 +282,7 @@ void Inventory::show(bool visible) {
 }
 
 void Inventory::blinkEgg(bool enabled) {
-	_blinkingEgg = enabled; 
+	_blinkingEgg = enabled;
 
 	// Reset state
 	_showingHourGlass = false;
@@ -292,7 +291,7 @@ void Inventory::blinkEgg(bool enabled) {
 	if (_blinkingEgg)
 		drawItemBrightness(608, 448, getGameId() + 39, _blinkingBrightness);
 	else {
-		// Reset values	
+		// Reset values
 		_blinkingBrightness = 100;
 		_blinkingInterval = _defaultBlinkingInterval;
 		drawItemBrightness(608, 448, getGameId() + 39, 50);	// normal egg state
@@ -302,7 +301,7 @@ void Inventory::blinkEgg(bool enabled) {
 }
 
 void Inventory::showHourGlass(bool enabled) {
-	_showingHourGlass = enabled; 
+	_showingHourGlass = enabled;
 
 	// Reset state
 	_blinkingEgg = false;
@@ -334,10 +333,10 @@ void Inventory::removeItem(InventoryItem item) {
 }
 
 bool Inventory::hasItem(InventoryItem item) {
-	if (getEntry(item)->has_item)		
+	if (getEntry(item)->has_item)
 			return true;
 
-	return false;	
+	return false;
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -350,7 +349,7 @@ SaveLoad::InventoryEntry *Inventory::getEntry(InventoryItem item) {
 	}
 
 	// Should never get invalid item
-	error("Invalid inventory item id: %D", item);	
+	error("Invalid inventory item id: %D", item);
 }
 
 // Examine an inventory item
@@ -360,7 +359,7 @@ void Inventory::examine(InventoryItem item) {
 
 	if (sceneId != 0)
 		showScene(&_scene, sceneId, GraphicsManager::kBackgroundOverlay);
-	
+
 	// TODO implement
 }
 
@@ -374,7 +373,7 @@ void Inventory::drawEgg() {
 		// Reset values and stop blinking
 		if (_blinkingTime == 0)
 			blinkEgg(false);
-		
+
 		askForRedraw();
 	} else {
 		drawItemBrightness(608, 448, getGameId() + 39, 50);
