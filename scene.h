@@ -26,10 +26,6 @@
 #ifndef LASTEXPRESS_SCENE_H
 #define LASTEXPRESS_SCENE_H
 
-#include "common/array.h"
-#include "common/rect.h"
-#include "common/stream.h"
-
 /*
 	Scene format (CDTRAIN.DAT)
 
@@ -81,7 +77,7 @@
 
 #include "lastexpress/drawable.h"
 
-#include "graphics/surface.h"
+#include "common/stream.h"
 
 namespace LastExpress {
 
