@@ -9,6 +9,7 @@ MODULE_OBJS := \
 	detection.o \
 	font.o \
 	graphics.o \
+	inventory.o \
 	lastexpress.o \
 	logic.o \
 	menu.o \
