@@ -78,7 +78,7 @@ public:
 	void showHourGlass(bool enabled);
 
 private:
-	static const uint32 _defaultBlinkingInterval = 250;	//<! Default blinking interval in ms
+	static const uint32 _defaultBlinkingInterval = 250;	///< Default blinking interval in ms
 
 	// Index if items in inventory data
 	enum InventoryDataIndex {

@@ -79,9 +79,9 @@ private:
 
 	LastExpressEngine *_engine;
 
-	RunState _runState;		//<! State of the game session (this data won't be stored in savegames)
-	Menu *_menu;			//<! Main menu handling
-	Inventory *_inventory;	//<! Inventory
+	RunState _runState;		///< State of the game session (this data won't be stored in savegames)
+	Menu *_menu;			///< Main menu handling
+	Inventory *_inventory;	///< Inventory
 
 	// Move to engine?
 	SaveLoad::GameState *_gameState;
