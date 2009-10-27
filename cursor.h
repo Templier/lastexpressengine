@@ -95,16 +95,16 @@ public:
 		kCursorEggGold,
 		kCursorEggClock,
 		kCursorNormal2,
-		kCursorBlank
+		kCursorBlank,
+		kCursorMAX
 	};
 
 	Cursor();
-	~Cursor();
 
 	bool load(Common::SeekableReadStream *stream);
 	void show(bool visible);
 	bool setStyle(CursorStyle style);
-	CursorStyle getStyle();
+	uint16 *getCursorImage(CursorStyle style);
 
 	Common::Rect draw(Graphics::Surface *surface, int x, int y, uint style);
 
@@ -113,7 +113,10 @@ private:
 	CursorStyle _current;
 
 	// Cursors data
-	byte *_data;
+	struct {
+		uint16 image[32 * 32];
+		uint16 hotspotX, hotspotY;
+	} _cursors[kCursorMAX];
 
 	bool checkStyle(CursorStyle style);
 };

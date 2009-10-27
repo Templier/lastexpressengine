@@ -29,30 +29,35 @@
 
 #include "graphics/cursorman.h"
 
-#define MAX_CURSOR 48
-
 namespace LastExpress {
 
-Cursor::Cursor() : _current(kCursorNormal), _data(NULL) {}
-
-Cursor::~Cursor() {
-	delete[] _data;
-}
+Cursor::Cursor() : _current(kCursorNormal) {}
 
 bool Cursor::load(Common::SeekableReadStream *stream) {
 	if (!stream)
 		return false;
 
-	// Reset data
-	delete[] _data;
-
-	// Load cursor data
-	_data = new byte[stream->size()];
-	if (_data)
-		stream->read(_data, stream->size());
-
+	// Load the whole file to memory
+	Common::MemoryReadStream *data = stream->readStream(stream->size());
 	delete stream;
+	if (!data)
+		return false;
 
+	// Read the hotspot data
+	for (int i = 0; i < kCursorMAX; i++) {
+		_cursors[i].hotspotX = data->readUint16LE();
+		_cursors[i].hotspotY = data->readUint16LE();
+		debugC(15, kLastExpressDebugCursor | kLastExpressDebugAll,
+			"Cursor %d hotspot x: %d, hotspot y: %d",
+			i, _cursors[i].hotspotX, _cursors[i].hotspotY);
+	}
+
+	// Read the pixel data
+	for (int i = 0; i < kCursorMAX; i++)
+		for (int pix = 0; pix < 32 * 32; pix++)
+			_cursors[i].image[pix] = data->readUint16LE();
+
+	delete data;
 	return true;
 }
 
@@ -61,13 +66,8 @@ void Cursor::show(bool visible) {
 }
 
 bool Cursor::checkStyle(CursorStyle style) {
-	if (!_data) {
-		debugC(2, kLastExpressDebugGraphics, "Trying to use a cursor before loading data!");
-		return false;
-	}
-
-	if ((int)style < 0 || (int)style > MAX_CURSOR - 1) {
-		debugC(2, kLastExpressDebugGraphics, "Trying to use an invalid cursor style: was %d, max %d", (int)style, MAX_CURSOR);
+	if ((int)style < 0 || (int)style >= kCursorMAX) {
+		debugC(2, kLastExpressDebugGraphics, "Trying to use an invalid cursor style: was %d, max %d", (int)style, kCursorMAX);
 		return false;
 	}
 
@@ -86,40 +86,29 @@ bool Cursor::setStyle(CursorStyle style) {
 	// Save the new cursor
 	_current = style;
 
-	// Prepare the pixel data
-	uint16 pixels[32 * 32];
-	byte *fileImage = _data + MAX_CURSOR * 4 + (style * 32 * 32 * 2);
-	for(int i = 0; i < 32 * 32; i++, fileImage += 2) {
-		pixels[i] = READ_LE_UINT16(fileImage);
-		// TODO: transparency: now it makes the black pixels transparent,
-		// but there's still 1 unused bit (always 0?)
-		//pixels[i] = (READ_LE_UINT16(getStyleImage(style) + (i * 2)) & 0x8000) ? 0 : 0xffff;
-		//pixels[i] = (fileImage[1] & 0x80) ? 0 : 0xffff;
-	}
-
-	uint16 hotspotX = READ_LE_UINT16(_data + (style * 4));
-	uint16 hotspotY = READ_LE_UINT16(_data + (style * 4) + 2);
-	debugC(15, kLastExpressDebugCursor | kLastExpressDebugAll, "    hotspot x: %d, hotspot y: %d", hotspotX, hotspotY);
-
-	CursorMan.replaceCursor((const byte *)pixels, 32, 32, hotspotX, hotspotY, 0, 1, new Graphics::PixelFormat(2, 5, 5, 5, 0, 10, 5, 0, 0));
+	CursorMan.replaceCursor((const byte *)getCursorImage(_current), 32, 32,
+		_cursors[_current].hotspotX, _cursors[_current].hotspotY, 0, 1,
+		new Graphics::PixelFormat(2, 5, 5, 5, 0, 10, 5, 0, 0));
 
 	return true;
 }
 
-Cursor::CursorStyle Cursor::getStyle() {
-	return _current;
+uint16 *Cursor::getCursorImage(CursorStyle style) {
+	if (!checkStyle(style))
+		return NULL;
+	return _cursors[style].image;
 }
 
 // Draw a cursor to a surface, as they are also used for the inventory (top-right of the screen)
 Common::Rect Cursor::draw(Graphics::Surface *surface, int x, int y, uint style) {
-	if (!checkStyle((CursorStyle)style))
+	uint16 *image = getCursorImage((CursorStyle)style);
+	if (!image)
 		return Common::Rect();
 
-	byte *fileImage = _data + MAX_CURSOR * 4 + (style * 32 * 32 * 2);
 	for (int j = 0; j < 32; j++) {
 		for (int i = 0; i < 32; i++) {
-			surface->fillRect(Common::Rect(x + i, y + j, x + i + 1, y + j + 1), READ_LE_UINT16(fileImage));
-			fileImage += 2;
+			surface->fillRect(Common::Rect(x + i, y + j, x + i + 1, y + j + 1), *image);
+			image++;
 		}
 	}
 
