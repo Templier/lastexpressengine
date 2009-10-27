@@ -319,7 +319,7 @@ bool Menu::handleStartMenuEvent(Common::Event ev) {
 
 			if (!SaveLoad::isSavegameValid(getNextGameId())) {
 				if (_engine->getLogic()->isGameStarted())
-					drawSeqFrame(&_seqTooltips, kTooltipStartAnotherGame, GraphicsManager::kBackgroundOverlay)
+					drawSeqFrame(&_seqTooltips, kTooltipStartAnotherGame, GraphicsManager::kBackgroundOverlay);
 				else
 					drawSeqFrame(&_seqTooltips, kTooltipSwitchBlueGame, GraphicsManager::kBackgroundOverlay);
 			} else {
@@ -756,7 +756,7 @@ void Menu::moveToCity(CityOverlay city, CityTime time, StartMenuTooltips tooltip
 		// TODO set some global var to 1
 	} else {
 		if (_currentTime < (uint32)time)			// For start city (Paris) and end city, this will always be true
-			drawSeqFrame(&_seqTooltips, tooltipForward, GraphicsManager::kBackgroundOverlay)
+			drawSeqFrame(&_seqTooltips, tooltipForward, GraphicsManager::kBackgroundOverlay);
 		else
 			drawSeqFrame(&_seqTooltips, tooltipRewind, GraphicsManager::kBackgroundOverlay);
 	}

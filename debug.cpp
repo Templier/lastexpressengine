@@ -169,7 +169,6 @@ bool Debugger::cmd_showframe(int argc, const char **argv) {
 				}
 
 				_engine->getGraphicsManager()->draw(frame, GraphicsManager::kBackgroundOverlay);
-				delete frame;
 
 				askForRedraw();
 				redrawScreen();
