@@ -220,11 +220,16 @@ Common::Error LastExpressEngine::go() {
 				// DEBUG: show data files
 				if (ev.kbd.keycode == Common::KEYCODE_b) {
 					if (i_bg != list_bg.end()) {
-						clearBg(C);
+						clearBg(GraphicsManager::kBackgroundC);
 
-						Background background;
-						if (background.loadFile((*i_bg)->getName())) {
-							background.showBg(C);
+						Common::String bgName = (*i_bg)->getName();
+						bgName.deleteLastChar();
+						bgName.deleteLastChar();
+						bgName.deleteLastChar();
+						Background *background = _resource->loadBackground(bgName);
+						if (background) {
+							background->showBg(GraphicsManager::kBackgroundC);
+							delete background;
 							askForRedraw();
 						}
 						i_bg++;
@@ -237,9 +242,9 @@ Common::Error LastExpressEngine::go() {
 						if (sequence.load(_resource->getFileStream((*i_seq)->getName()))) {
 							for (uint32 i = 0; i < sequence.count(); i++) {
 								// Clear screen
-								clearBg(A);
+								clearBg(GraphicsManager::kBackgroundA);
 
-								sequence.showFrameBg(A, i);
+								sequence.showFrameBg(GraphicsManager::kBackgroundA, i);
 
 								askForRedraw();
 								redrawScreen();
@@ -281,7 +286,7 @@ Common::Error LastExpressEngine::go() {
 						SubtitleManager subtitle(_font);
 						if (subtitle.load(_resource->getFileStream((*i_sbe)->getName()))) {
 							for (uint i = 0; i < subtitle.count(); i++) {
-								_graphics->clear();
+								_graphics->clear(GraphicsManager::kBackgroundAll);
 								subtitle.showFrameOverlay(i);
 
 								askForRedraw();

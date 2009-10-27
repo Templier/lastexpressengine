@@ -39,7 +39,6 @@
 #define loadScene(cd) loadFile(Common::String::printf("CD%iTRAIN.DAT", cd))
 #define showScene(drawable, index, type) drawFrame(drawable, index, type)
 
-#define drawBg(drawable, type) _engine->getGraphicsManager()->draw(drawable, type)
 #define drawFrame(drawable, index, type) _engine->getGraphicsManager()->draw(drawable, index, type)
 #define drawSeqFrame(drawable, index, type) { \
 	AnimFrame *frame = (drawable)->getFrame((index)); \

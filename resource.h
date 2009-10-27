@@ -30,6 +30,7 @@
 
 namespace LastExpress {
 
+class Background;
 class LastExpressEngine;
 
 class ResourceManager : public Common::Archive {
@@ -53,6 +54,9 @@ public:
 	int listMembers(Common::ArchiveMemberList &list);
 	Common::ArchiveMemberPtr getMember(const Common::String &name);
 	Common::SeekableReadStream *createReadStreamForMember(const Common::String &name) const;
+
+	// Resource loading
+	Background *loadBackground(const Common::String &name);
 
 private:
 	LastExpressEngine *_engine;

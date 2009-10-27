@@ -272,8 +272,8 @@ bool Debugger::cmd_showbg(int argc, const char **argv) {
 	if (argc == 2) {
 		Common::String filename(const_cast<char *>(argv[1]));
 
-		if (!_engine->getResource()->hasFile(filename)) {
-			DebugPrintf("Cannot find file: %s\n", filename.c_str());
+		if (!_engine->getResource()->hasFile(filename + ".BG")) {
+			DebugPrintf("Cannot find file: %s\n", (filename + ".BG").c_str());
 			return true;
 		}
 
@@ -286,9 +286,10 @@ bool Debugger::cmd_showbg(int argc, const char **argv) {
 		} else {
 			clearBg(GraphicsManager::kBackgroundC);
 
-			Background background;
-			if (background.loadFile(filename)) {
-				drawBg(&background, GraphicsManager::kBackgroundC);
+			Background *background = _engine->getResource()->loadBackground(filename);
+			if (background) {
+				_engine->getGraphicsManager()->draw(background, GraphicsManager::kBackgroundC);
+				delete background;
 				askForRedraw();
 			}
 

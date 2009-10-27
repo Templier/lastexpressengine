@@ -112,10 +112,12 @@ Common::Rect Scene::draw(Graphics::Surface *surface, uint index) {
 	}
 
 	// Load background
-	Background background;
+	Background *background = _resource->loadBackground(name);
 	Common::Rect rect;
-	if (background.load(_resource->getFileStream(Common::String::printf("%s.bg", name.c_str()))))
-		rect = background.draw(surface);
+	if (background) {
+		rect = background->draw(surface);
+		delete background;
+	}
 
 	return rect;
 }

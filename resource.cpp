@@ -24,7 +24,7 @@
  */
 
 #include "lastexpress/resource.h"
-
+#include "lastexpress/background.h"
 #include "lastexpress/lastexpress.h"
 
 #include "common/debug.h"
@@ -166,6 +166,31 @@ Common::SeekableReadStream *ResourceManager::createReadStreamForMember(const Com
 	}
 
 	return NULL;
+}
+
+
+// Resource loading
+
+Background *ResourceManager::loadBackground(const Common::String &name) {
+	// Open the resource
+	Common::SeekableReadStream *stream = createReadStreamForMember(name + ".BG");
+	if (!stream)
+		return NULL;
+
+	// Create the new background
+	Background *bg = new Background;
+	if (!bg) {
+		delete stream;
+		return NULL;
+	}
+
+	// Load the data
+	if (!bg->load(stream)) {
+		delete bg;
+		return NULL;
+	}
+
+	return bg;
 }
 
 } // End of namespace LastExpress
