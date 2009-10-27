@@ -24,8 +24,7 @@
  */
 
 #include "lastexpress/cursor.h"
-
-#include "lastexpress/debug.h"
+#include "lastexpress/lastexpress.h"
 
 #include "graphics/cursorman.h"
 
@@ -99,20 +98,35 @@ uint16 *Cursor::getCursorImage(CursorStyle style) {
 	return _cursors[style].image;
 }
 
-// Draw a cursor to a surface, as they are also used for the inventory (top-right of the screen)
-Common::Rect Cursor::draw(Graphics::Surface *surface, int x, int y, uint style) {
-	uint16 *image = getCursorImage((CursorStyle)style);
+
+Icon::Icon(Cursor::CursorStyle style) : _style(style), _brightness(100) {}
+
+void Icon::setBrightness(uint8 brightness) {
+	_brightness = brightness;
+}
+
+Common::Rect Icon::draw(Graphics::Surface *surface, int x, int y) {
+	uint16 *image = ((LastExpressEngine *)g_engine)->getCursor()->getCursorImage((Cursor::CursorStyle)_style);
 	if (!image)
 		return Common::Rect();
 
+	// TODO adjust brightness. The original game seems to be using a table for that (at least in the highlighting case)
 	for (int j = 0; j < 32; j++) {
+		uint16 *s = (uint16 *)surface->getBasePtr(x, y + j);
 		for (int i = 0; i < 32; i++) {
-			surface->fillRect(Common::Rect(x + i, y + j, x + i + 1, y + j + 1), *image);
+			if (_brightness == 100)
+				*s = *image;
+			else
+				// HACK change color to show highlight
+				*s = (*image & 0x739C) >> 1;
+
+			// Update the image and surface pointers
 			image++;
+			s++;
 		}
 	}
 
-	return Common::Rect(x, y, x+32, y+32);
+	return Common::Rect(x, y, x + 32, y + 32);
 }
 
 } // End of namespace LastExpress

@@ -60,7 +60,7 @@ public:
 
 	bool draw(Drawable *drawable, BackgroundType type, bool transition = false);
 	bool draw(Drawable *drawable, uint index, BackgroundType type, bool transition = false);
-	bool draw(Drawable *drawable, int x, int y, uint index, BackgroundType type, int brightness = 100, bool transition = false);
+	bool draw(Drawable *drawable, int x, int y, BackgroundType type, bool transition = false);
 
 private:
 	Graphics::Surface _backgroundA;				// Background A

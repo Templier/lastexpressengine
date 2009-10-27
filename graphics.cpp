@@ -104,22 +104,9 @@ bool GraphicsManager::draw(Drawable *drawable, uint index, BackgroundType type, 
 	return (!rect.isEmpty());
 }
 
-bool GraphicsManager::draw(Drawable *drawable, int x, int y, uint index, BackgroundType type, int brightness, bool transition) {
+bool GraphicsManager::draw(Drawable *drawable, int x, int y, BackgroundType type, bool transition) {
 	// TODO store rect for later use
-	// TODO adjust brightness. The original game seems to be using a table for that (at least in the highlighting case)
-	Common::Rect rect = drawable->draw(getSurface(type), x, y, index);
-
-	// HACK change color to show hightlight
-	if (brightness != 100) {
-		uint16 *color = (uint16 *)getSurface(type)->getBasePtr(rect.left, rect.top);
-		for (int j = y; j < y + 32; j++) {
-			for (int i = x; i < x + 32; i++) {
-				*color = (*color & 0x739C) >> 1;			
-				color++;
-			}
-			color += 608;
-		}
-	}
+	Common::Rect rect = drawable->draw(getSurface(type), x, y);
 
 	return (!rect.isEmpty());
 }

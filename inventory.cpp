@@ -32,8 +32,8 @@
 #include "lastexpress/resource.h"
 #include "lastexpress/sound.h"
 
-#define drawItem(x, y, index) _engine->getGraphicsManager()->draw(_engine->getCursor(), x, y, index, GraphicsManager::kBackgroundInventory)
-#define drawItemBrightness(x, y, index, brightness) _engine->getGraphicsManager()->draw(_engine->getCursor(), x, y, index, GraphicsManager::kBackgroundInventory, brightness)
+#define drawItem(x, y, index) { Icon icon((Cursor::CursorStyle)(index)); _engine->getGraphicsManager()->draw(&icon, x, y, GraphicsManager::kBackgroundInventory); }
+#define drawItemBrightness(x, y, index, brightness) { Icon icon((Cursor::CursorStyle)(index)); icon.setBrightness(brightness); _engine->getGraphicsManager()->draw(&icon, x, y, GraphicsManager::kBackgroundInventory); }
 
 namespace LastExpress {
 
@@ -146,7 +146,7 @@ void Inventory::handleMouseEvent(Common::Event ev) {
 			// Highlight if needed
 			if (_highlightedItem != getGameId() + 39) {
 				_highlightedItem = (InventoryItem)(getGameId() + 39);
-				drawItem(608, 448, _highlightedItem);
+				drawItem(608, 448, _highlightedItem)
 
 				askForRedraw();
 			}
@@ -154,7 +154,7 @@ void Inventory::handleMouseEvent(Common::Event ev) {
 	} else {
 		// remove hightlight if needed
 		if (_highlightedItem == getGameId() + 39) {
-			drawItemBrightness(608, 448, _highlightedItem, 50);
+			drawItemBrightness(608, 448, _highlightedItem, 50)
 			_highlightedItem = kNoItem;
 			askForRedraw();
 		}
@@ -172,7 +172,7 @@ void Inventory::handleMouseEvent(Common::Event ev) {
 			// Highlight if needed
 			if (_highlightedItem != (InventoryItem)getProgress().portraitType && !_opened) {
 				_highlightedItem = (InventoryItem)getProgress().portraitType;
-				drawItem(0, 0, getProgress().portraitType);
+				drawItem(0, 0, getProgress().portraitType)
 
 				askForRedraw();
 			}
@@ -180,7 +180,7 @@ void Inventory::handleMouseEvent(Common::Event ev) {
 	} else {
 		// remove hightlight if needed
 		if (_highlightedItem == (InventoryItem)getProgress().portraitType && !_opened) {
-			drawItemBrightness(0, 0, getProgress().portraitType, 50);
+			drawItemBrightness(0, 0, getProgress().portraitType, 50)
 			_highlightedItem = kNoItem;
 			askForRedraw();
 		}
@@ -206,14 +206,14 @@ void Inventory::handleMouseEvent(Common::Event ev) {
 						if (getState()->inventory[i].is_selectable) {
 							selected = true;
 							getState()->selectedItem = (InventoryItem)getState()->inventory[i].item_id;
-							drawItem(44, 0, getState()->selectedItem);
+							drawItem(44, 0, getState()->selectedItem)
 						}
 
 						examine((InventoryItem)getState()->inventory[i].item_id);
 						break;
 					} else {
 						if (_highlightedItem != getState()->inventory[i].item_id) {
-							drawItem(0, y, getState()->inventory[i].item_id);
+							drawItem(0, y, getState()->inventory[i].item_id)
 							_highlightedItem = (InventoryItem)getState()->inventory[i].item_id;
 							askForRedraw();
 						}
@@ -221,7 +221,7 @@ void Inventory::handleMouseEvent(Common::Event ev) {
 				} else {
 					// Remove hightlight if necessary
 					if (_highlightedItem == (InventoryItem)getState()->inventory[i].item_id) {
-						drawItemBrightness(0, y, getState()->inventory[i].item_id, 50);
+						drawItemBrightness(0, y, getState()->inventory[i].item_id, 50)
 						_highlightedItem = kNoItem;
 						askForRedraw();
 					}
@@ -272,11 +272,11 @@ void Inventory::show(bool visible) {
 		return;
 
 	// Show portrait (first draw, cannot be highlighted)
-	drawItemBrightness(0, 0, getProgress().portraitType, 50);
+	drawItemBrightness(0, 0, getProgress().portraitType, 50)
 
 	// Show selected item
 	if (getState()->selectedItem != kNoItem)
-		drawItem(44, 0, getState()->selectedItem);
+		drawItem(44, 0, getState()->selectedItem)
 
 	drawEgg();
 }
@@ -289,12 +289,12 @@ void Inventory::blinkEgg(bool enabled) {
 
 	// Show egg at full brightness for first step if blinking
 	if (_blinkingEgg)
-		drawItemBrightness(608, 448, getGameId() + 39, _blinkingBrightness);
+		drawItemBrightness(608, 448, getGameId() + 39, _blinkingBrightness)
 	else {
 		// Reset values
 		_blinkingBrightness = 100;
 		_blinkingInterval = _defaultBlinkingInterval;
-		drawItemBrightness(608, 448, getGameId() + 39, 50);	// normal egg state
+		drawItemBrightness(608, 448, getGameId() + 39, 50)	// normal egg state
 	}
 
 	askForRedraw();
@@ -308,9 +308,9 @@ void Inventory::showHourGlass(bool enabled) {
 
 	// Show/Hide hour glass and ask for redraw
 	if (_showingHourGlass)
-		drawItem(608, 448, Cursor::kCursorHourGlass);
+		drawItem(608, 448, Cursor::kCursorHourGlass)
 	else
-		drawItem(608, 448, getGameId() + 39); // normal egg state
+		drawItem(608, 448, getGameId() + 39) // normal egg state
 
 	askForRedraw();
 }
@@ -366,7 +366,7 @@ void Inventory::examine(InventoryItem item) {
 void Inventory::drawEgg() {
 	// Blinking egg: we need to blink the egg for delta time, with the blinking getting faster until it's always lit.
 	if (_blinkingEgg) {
-		drawItemBrightness(608, 448, getGameId() + 39, _blinkingBrightness);
+		drawItemBrightness(608, 448, getGameId() + 39, _blinkingBrightness)
 
 		// TODO if delta time > _blinkingInterval, update egg & ask for redraw then adjust blinking time and remaining time
 
@@ -376,7 +376,7 @@ void Inventory::drawEgg() {
 
 		askForRedraw();
 	} else {
-		drawItemBrightness(608, 448, getGameId() + 39, 50);
+		drawItemBrightness(608, 448, getGameId() + 39, 50)
 	}
 }
 
@@ -385,14 +385,14 @@ void Inventory::open() {
 	_opened = true;
 
 	// Show selected state
-	drawItem(0, 0, getProgress().portraitType + 1);
+	drawItem(0, 0, getProgress().portraitType + 1)
 
 	uint y = 44;
 
 	// Iterate over items
 	for (uint i = 1; i < 32; i++) {
 		if (getState()->inventory[i].has_item) {
-			drawItemBrightness(0, y, getState()->inventory[i].item_id, 50);
+			drawItemBrightness(0, y, getState()->inventory[i].item_id, 50)
 			y += 40;
 		}
 	}
@@ -405,7 +405,7 @@ void Inventory::close() {
 	_opened = false;
 
 	// Fallback to unselected state
-	drawItem(0, 0, getProgress().portraitType);
+	drawItem(0, 0, getProgress().portraitType)
 
 	// Erase rectangle for all inventory items
 	int count = 0;

@@ -45,7 +45,7 @@
 
 namespace LastExpress {
 
-class Cursor : public Drawable {
+class Cursor {
 public:
 	enum CursorStyle {
 		kCursorNormal,
@@ -106,8 +106,6 @@ public:
 	bool setStyle(CursorStyle style);
 	uint16 *getCursorImage(CursorStyle style);
 
-	Common::Rect draw(Graphics::Surface *surface, int x, int y, uint style);
-
 private:
 	// Style
 	CursorStyle _current;
@@ -119,6 +117,18 @@ private:
 	} _cursors[kCursorMAX];
 
 	bool checkStyle(CursorStyle style);
+};
+
+class Icon : public Drawable {
+public:
+	Icon(Cursor::CursorStyle style);
+
+	void setBrightness(uint8 brightness);
+	Common::Rect draw(Graphics::Surface *surface, int x, int y);
+
+private:
+	Cursor::CursorStyle _style;
+	uint8 _brightness;
 };
 
 } // End of namespace LastExpress
