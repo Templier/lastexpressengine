@@ -132,4 +132,20 @@ void Logic::switchGame() {
 	showMenu(true);
 }
 
+
+//////////////////////////////////////////////////////////////////////////
+// Actions
+//////////////////////////////////////////////////////////////////////////
+
+void Logic::action_pickGreenJacket() {
+	// _gameState->progress.field_4 = 2; ???
+	_inventory->addItem(Inventory::kMatchBox);
+	// Set field_6 to 0 (in addItem?)
+
+	// 2 unknown functions calls
+
+	_inventory->setPortrait(Inventory::kPortraitGreen);	
+
+}
+
 } // End of namespace LastExpress

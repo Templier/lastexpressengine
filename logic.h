@@ -86,6 +86,11 @@ private:
 	// Move to engine?
 	SaveLoad::GameState *_gameState;
 
+
+
+	// Actions
+	void action_pickGreenJacket();
+
 };
 
 } // End of namespace LastExpress

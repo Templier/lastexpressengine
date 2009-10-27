@@ -281,6 +281,11 @@ void Inventory::show(bool visible) {
 	drawEgg();
 }
 
+void Inventory::setPortrait(InventoryItem item) {
+	getProgress().portraitType = item;
+	drawItemBrightness(0, 0, getProgress().portraitType, 50);
+}
+
 void Inventory::blinkEgg(bool enabled) {
 	_blinkingEgg = enabled;
 

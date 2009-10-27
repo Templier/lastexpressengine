@@ -56,7 +56,12 @@ public:
 		kBomb = 26,
 		kFirebird = 27,
 		kBriefcase = 28,
-		kCorpse = 29
+		kCorpse = 29,
+
+		// Portraits
+		kPortraitNormal = 32,
+		kPortraitGreen = 34,
+		kPortraitYellow = 36
 	};
 
 	Inventory(LastExpressEngine *engine);
@@ -76,6 +81,7 @@ public:
 	void show(bool visible);
 	void blinkEgg(bool enabled);
 	void showHourGlass(bool enabled);
+	void setPortrait(InventoryItem item);
 
 private:
 	static const uint32 _defaultBlinkingInterval = 250;	///< Default blinking interval in ms
