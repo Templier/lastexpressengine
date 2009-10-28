@@ -74,41 +74,33 @@ LastExpressEngine::~LastExpressEngine() {
 	delete _graphics;
 }
 
-Common::Error LastExpressEngine::run() {
-	Common::Error err;
-	err = init();
-	if (err != Common::kNoError)
-		return err;
-
-	return go();
-}
-
 // TODO: which error should we return when some game files are missing/corrupted?
-Common::Error LastExpressEngine::init() {
-
+Common::Error LastExpressEngine::run() {
 	// Initialize the graphics
-	Graphics::PixelFormat format(2, 5, 5, 5, 0, 10, 5, 0, 0);
-	initGraphics(640, 480, true, &format);
+	Graphics::PixelFormat dataPixelFormat(2, 5, 5, 5, 0, 10, 5, 0, 0);
+	initGraphics(640, 480, true, &dataPixelFormat);
 	_pixelFormat = _system->getScreenFormat();
 
-	// We do not support 256 colors mode
-	if (_pixelFormat.bytesPerPixel == 1)
+	// We do not support color conversion
+	if (_pixelFormat != dataPixelFormat)
 		return Common::kUnsupportedColorMode;
 
 	// Create debugger. It requires GFX to be initialized
 	_debugger = new Debugger(this);
 
-	// Start managers: resource, graphics, cursor & font
+	// Start the resource and graphics managers
 	_resource = new ResourceManager(this);
 	if (!_resource->loadArchive(ResourceManager::kArchiveAll))
 		return Common::kUnknownError;
 
 	_graphics = new GraphicsManager(_pixelFormat);
 
+	// Load the cursor data
 	_cursor = new Cursor();
 	if (!_cursor->load(_resource->getFileStream(cursorsName)))
 		return Common::kUnknownError;
 
+	// Load the font data
 	_font = new Font();
 	if (!_font->load(_resource->getFileStream(fontName)))
 		return Common::kUnknownError;
@@ -120,10 +112,6 @@ Common::Error LastExpressEngine::init() {
 	_music = new StreamedSound();
 	_logic = new Logic(this);
 
-	return Common::kNoError;
-}
-
-Common::Error LastExpressEngine::go() {
 
 	// DEBUG
 	int style = 0;
@@ -315,7 +303,7 @@ Common::Error LastExpressEngine::go() {
 			case Common::EVENT_LBUTTONDOWN:
 			case Common::EVENT_LBUTTONUP:
 			case Common::EVENT_RBUTTONDOWN:
-				// cleanup and quit game is the quit button has been pressed
+				// Cleanup and quit game is the quit button has been pressed
 				if (!_logic->handleMouseEvent(ev))
 					quitGame();
 				break;
