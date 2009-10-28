@@ -36,12 +36,16 @@ namespace LastExpress {
 const uint32 savegameSignature = 0x12001200;
 
 // Names of savegames
-const Common::String eggBlue("BLUE.EGG");
-const Common::String eggRed("RED.EGG");
-const Common::String eggGreen("GREEN.EGG");
-const Common::String eggPurple("PURPLE.EGG");
-const Common::String eggTeal("TEAL.EGG");
-const Common::String eggGold("GOLD.EGG");
+const static struct {
+	const char *saveFile;
+} gameInfo[6] = {
+	{"blue.egg"},
+	{"red.egg"},
+	{"green.egg"},
+	{"purple.egg"},
+	{"teal.egg"},
+	{"gold.egg"}
+};
 
 // Check if a specific savegame exists
 bool SaveLoad::isSavegamePresent(SavegameId id) {
@@ -145,31 +149,7 @@ SaveLoad::GameState *SaveLoad::getGameState(SavegameId id) {
 Common::String SaveLoad::getSavegameName(SavegameId id) {
 	assert(id >= 0 && id < 6);
 
-	switch (id) {
-	case kSavegameBlue:
-		return eggBlue;
-
-	case kSavegameRed:
-		return eggRed;
-
-	case kSavegameGreen:
-		return eggGreen;
-
-	case kSavegamePurple:
-		return eggPurple;
-
-	case kSavegameTeal:
-		return eggTeal;
-
-	case kSavegameGold:
-		return eggGold;
-
-	default:
-		return "";
-	}
-
-	// should never happen!
-	return "";
+	return gameInfo[id].saveFile;
 }
 
 Common::InSaveFile *SaveLoad::openForLoading(SavegameId id) {
