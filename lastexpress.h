@@ -57,7 +57,7 @@ public:
 	Cursor *getCursor() const { return _cursor; }
 	Font *getFont() const { return _font; }
 	Logic *getLogic() const { return _logic; }
-	ResourceManager *getResource() const { return _resource; }
+	ResourceManager *getResMan() const { return _resMan; }
 	StreamedSound *getMusicStream() const { return _music; }
 	StreamedSound *getSfxStream() const { return _sfx; }
 	Graphics::PixelFormat getPixelFormat() const { return _pixelFormat; }
@@ -70,7 +70,7 @@ private:
 	Debugger *_debugger;
 	Font *_font;
 	Logic *_logic;
-	ResourceManager *_resource;
+	ResourceManager *_resMan;
 	StreamedSound *_music;
 	StreamedSound *_sfx;
 	GraphicsManager *_graphics;

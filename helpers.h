@@ -29,9 +29,9 @@
 //////////////////////////////////////////////////////////////////////////
 // Misc helpers
 //////////////////////////////////////////////////////////////////////////
-#define loadFile(name) load(_engine->getResource()->getFileStream(name))
-#define playMusic(name) _engine->getMusicStream()->load(_engine->getResource()->getFileStream(name));
-#define playSfx(name) _engine->getSfxStream()->load(_engine->getResource()->getFileStream(name));
+#define loadFile(name) load(_engine->getResMan()->getFileStream(name))
+#define playMusic(name) _engine->getMusicStream()->load(_engine->getResMan()->getFileStream(name));
+#define playSfx(name) _engine->getSfxStream()->load(_engine->getResMan()->getFileStream(name));
 
 //////////////////////////////////////////////////////////////////////////
 // Graphics

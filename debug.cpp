@@ -96,7 +96,7 @@ bool Debugger::cmd_playseq(int argc, const char **argv) {
 	if (argc == 2) {
 		Common::String filename(const_cast<char *>(argv[1]));
 
-		if (!_engine->getResource()->hasFile(filename)) {
+		if (!_engine->getResMan()->hasFile(filename)) {
 			DebugPrintf("Cannot find file: %s\n", filename.c_str());
 			return true;
 		}
@@ -145,7 +145,7 @@ bool Debugger::cmd_showframe(int argc, const char **argv) {
 	if (argc == 3) {
 		Common::String filename(const_cast<char *>(argv[1]));
 
-		if (!_engine->getResource()->hasFile(filename)) {
+		if (!_engine->getResMan()->hasFile(filename)) {
 			DebugPrintf("Cannot find file: %s\n", filename.c_str());
 			return true;
 		}
@@ -189,7 +189,7 @@ bool Debugger::cmd_playsnd(int argc, const char **argv) {
 	if (argc == 2) {
 		Common::String filename(const_cast<char *>(argv[1]));
 
-		if (!_engine->getResource()->hasFile(filename)) {
+		if (!_engine->getResMan()->hasFile(filename)) {
 			DebugPrintf("Cannot find file: %s\n", filename.c_str());
 			return true;
 		}
@@ -206,7 +206,7 @@ bool Debugger::cmd_playsbe(int argc, const char **argv) {
 	if (argc == 2) {
 		Common::String filename(const_cast<char *>(argv[1]));
 
-		if (!_engine->getResource()->hasFile(filename)) {
+		if (!_engine->getResMan()->hasFile(filename)) {
 			DebugPrintf("Cannot find file: %s\n", filename.c_str());
 			return true;
 		}
@@ -244,7 +244,7 @@ bool Debugger::cmd_playnis(int argc, const char **argv) {
 	if (argc == 2) {
 		Common::String filename(const_cast<char *>(argv[1]));
 
-		if (!_engine->getResource()->hasFile(filename)) {
+		if (!_engine->getResMan()->hasFile(filename)) {
 			DebugPrintf("Cannot find file: %s\n", filename.c_str());
 			return true;
 		}
@@ -272,7 +272,7 @@ bool Debugger::cmd_showbg(int argc, const char **argv) {
 	if (argc == 2) {
 		Common::String filename(const_cast<char *>(argv[1]));
 
-		if (!_engine->getResource()->hasFile(filename + ".BG")) {
+		if (!_engine->getResMan()->hasFile(filename + ".BG")) {
 			DebugPrintf("Cannot find file: %s\n", (filename + ".BG").c_str());
 			return true;
 		}
@@ -286,7 +286,7 @@ bool Debugger::cmd_showbg(int argc, const char **argv) {
 		} else {
 			clearBg(GraphicsManager::kBackgroundC);
 
-			Background *background = _engine->getResource()->loadBackground(filename);
+			Background *background = _engine->getResMan()->loadBackground(filename);
 			if (background) {
 				_engine->getGraphicsManager()->draw(background, GraphicsManager::kBackgroundC);
 				delete background;
@@ -337,7 +337,7 @@ bool Debugger::cmd_loadscene(int argc, const char **argv) {
 		} else {
 			clearBg(GraphicsManager::kBackgroundAll);
 
-			Scene scene(_engine->getResource());
+			Scene scene(_engine->getResMan());
 			if (scene.loadScene(cd)) {
 				showScene(&scene, index, GraphicsManager::kBackgroundC);
 
@@ -379,7 +379,7 @@ bool Debugger::cmd_listfiles(int argc, const char **argv) {
 		Common::String filter(const_cast<char *>(argv[1]));
 
 		Common::ArchiveMemberList list;
-		int count = _engine->getResource()->listMatchingMembers(list, filter);
+		int count = _engine->getResMan()->listMatchingMembers(list, filter);
 
 		DebugPrintf("Number of matches: %d\n", count);
 		for (Common::ArchiveMemberList::iterator it = list.begin(); it != list.end(); ++it) {

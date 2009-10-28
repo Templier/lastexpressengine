@@ -44,7 +44,7 @@
 namespace LastExpress {
 
 LastExpressEngine::LastExpressEngine(OSystem *syst, const ADGameDescription *gd) :
-	Engine(syst), _gameDescription(gd), _debugger(NULL), _resource(NULL),
+	Engine(syst), _gameDescription(gd), _debugger(NULL), _resMan(NULL),
 	_cursor(NULL), _font(NULL), _sfx(NULL), _music(NULL), _logic(NULL),
 	_graphics(NULL) {
 	// Adding the default directories
@@ -63,7 +63,7 @@ LastExpressEngine::LastExpressEngine(OSystem *syst, const ADGameDescription *gd)
 LastExpressEngine::~LastExpressEngine() {
 	// Delete the remaining objects
 	delete _debugger;
-	delete _resource;
+	delete _resMan;
 	delete _cursor;
 	delete _font;
 	delete _sfx;
@@ -87,19 +87,19 @@ Common::Error LastExpressEngine::run() {
 	_debugger = new Debugger(this);
 
 	// Start the resource and graphics managers
-	_resource = new ResourceManager(_gameDescription->flags & ADGF_DEMO);
-	if (!_resource->loadArchive(ResourceManager::kArchiveAll))
+	_resMan = new ResourceManager(_gameDescription->flags & ADGF_DEMO);
+	if (!_resMan->loadArchive(ResourceManager::kArchiveAll))
 		return Common::kUnknownError;
 
 	_graphics = new GraphicsManager(_pixelFormat);
 
 	// Load the cursor data
-	_cursor = _resource->loadCursor();
+	_cursor = _resMan->loadCursor();
 	if (!_cursor)
 		return Common::kUnknownError;
 
 	// Load the font data
-	_font = _resource->loadFont();
+	_font = _resMan->loadFont();
 	if (!_font)
 		return Common::kUnknownError;
 
@@ -115,31 +115,31 @@ Common::Error LastExpressEngine::run() {
 #ifdef LOAD_RESOURCES_LIST
 	// Test Backgrounds
 	Common::ArchiveMemberList list_bg;
-	int num_bg = _resource->listMatchingMembers(list_bg, "*.BG");
+	int num_bg = _resMan->listMatchingMembers(list_bg, "*.bg");
 	warning("found %d bg's", num_bg);
 	Common::ArchiveMemberList::iterator i_bg = list_bg.begin();
 
 	// Test SEQ
 	Common::ArchiveMemberList list_seq;
-	int n_seq = _resource->listMatchingMembers(list_seq, "*.SEQ");
+	int n_seq = _resMan->listMatchingMembers(list_seq, "*.seq");
 	warning("found %d seq's", n_seq);
 	Common::ArchiveMemberList::iterator i_seq = list_seq.begin();
 
 	// Test NIS
 	Common::ArchiveMemberList list_nis;
-	int n_nis = _resource->listMatchingMembers(list_nis, "*.NIS");
+	int n_nis = _resMan->listMatchingMembers(list_nis, "*.nis");
 	warning("found %d nis's", n_nis);
 	Common::ArchiveMemberList::iterator i_nis = list_nis.begin();
 
 	// Test subtitles
 	Common::ArchiveMemberList list_sbe;
-	int n_sbe = _resource->listMatchingMembers(list_sbe, "*.SBE");
+	int n_sbe = _resMan->listMatchingMembers(list_sbe, "*.sbe");
 	warning("found %d sbe's", n_sbe);
 	Common::ArchiveMemberList::iterator i_sbe = list_sbe.begin();
 
 	// Test sound
 	Common::ArchiveMemberList list_snd;
-	int n_snd = _resource->listMatchingMembers(list_snd, "*.SND");
+	int n_snd = _resMan->listMatchingMembers(list_snd, "*.snd");
 	warning("found %d snd's", n_snd);
 	Common::ArchiveMemberList::iterator i_snd = list_snd.begin();
 
@@ -209,7 +209,7 @@ Common::Error LastExpressEngine::run() {
 						bgName.deleteLastChar();
 						bgName.deleteLastChar();
 						bgName.deleteLastChar();
-						Background *background = _resource->loadBackground(bgName);
+						Background *background = _resMan->loadBackground(bgName);
 						if (background) {
 							background->showBg(GraphicsManager::kBackgroundC);
 							delete background;
@@ -222,7 +222,7 @@ Common::Error LastExpressEngine::run() {
 				if (ev.kbd.keycode == Common::KEYCODE_s) {
 					if (i_seq != list_seq.end()) {
 						Sequence sequence;
-						if (sequence.load(_resource->getFileStream((*i_seq)->getName()))) {
+						if (sequence.load(_resMan->getFileStream((*i_seq)->getName()))) {
 							for (uint32 i = 0; i < sequence.count(); i++) {
 								// Clear screen
 								clearBg(GraphicsManager::kBackgroundA);
@@ -248,7 +248,7 @@ Common::Error LastExpressEngine::run() {
 				if (ev.kbd.keycode == Common::KEYCODE_n) {
 					if (i_nis != list_nis.end()) {
 						Animation animation;
-						if (animation.load(_resource->getFileStream((*i_nis)->getName()))) {
+						if (animation.load(_resMan->getFileStream((*i_nis)->getName()))) {
 							animation.draw();
 						}
 						i_nis++;
@@ -259,7 +259,7 @@ Common::Error LastExpressEngine::run() {
 					if (i_snd != list_snd.end()) {
 						_system->getMixer()->stopAll();
 
-						_sfx->load(_resource->getFileStream((*i_snd)->getName()));
+						_sfx->load(_resMan->getFileStream((*i_snd)->getName()));
 						i_snd++;
 					}
 				}
@@ -267,7 +267,7 @@ Common::Error LastExpressEngine::run() {
 				if (ev.kbd.keycode == Common::KEYCODE_t) {
 					if (i_sbe != list_sbe.end()) {
 						SubtitleManager subtitle(_font);
-						if (subtitle.load(_resource->getFileStream((*i_sbe)->getName()))) {
+						if (subtitle.load(_resMan->getFileStream((*i_sbe)->getName()))) {
 							for (uint i = 0; i < subtitle.count(); i++) {
 								_graphics->clear(GraphicsManager::kBackgroundAll);
 								subtitle.showFrameOverlay(i);

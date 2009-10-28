@@ -182,7 +182,7 @@ Menu::Menu(LastExpressEngine *engine) : _engine(engine) {
 	_creditsSequenceIndex = 0;
 	_isShowingCredits = false;
 
-	_scene = new Scene(_engine->getResource());
+	_scene = new Scene(_engine->getResMan());
 	_clock = new Clock(_engine, &_currentTime);
 	_clock->load();
 }

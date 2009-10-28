@@ -39,7 +39,7 @@ namespace LastExpress {
 
 Inventory::Inventory(LastExpressEngine *engine) : _engine(engine),
 	_showingHourGlass(false), _blinkingEgg(false), _blinkingTime(0), _blinkingBrightness(100), _blinkingInterval(_defaultBlinkingInterval),
-	_opened(false), _scene(engine->getResource()) {
+	_opened(false), _scene(engine->getResMan()) {
 
 	_inventoryRect = Common::Rect(0, 0, 32, 32);
 	_menuRect = Common::Rect(608, 448, 640, 480);
