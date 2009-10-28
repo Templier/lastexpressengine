@@ -33,7 +33,6 @@ namespace LastExpress {
 class Background;
 class Cursor;
 class Font;
-class LastExpressEngine;
 
 class ResourceManager : public Common::Archive {
 public:
@@ -44,7 +43,7 @@ public:
 		kArchiveAll
 	};
 
-	ResourceManager(LastExpressEngine *engine);
+	ResourceManager(bool demo);
 	~ResourceManager();
 
 	// Loading
@@ -63,7 +62,7 @@ public:
 	Font *loadFont();
 
 private:
-	LastExpressEngine *_engine;
+	bool _demo;
 
 	bool loadArchive(const Common::String &name);
 	void reset();

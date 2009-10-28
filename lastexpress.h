@@ -63,8 +63,6 @@ public:
 	Graphics::PixelFormat getPixelFormat() const { return _pixelFormat; }
 	GraphicsManager *getGraphicsManager() const { return _graphics; }
 
-	uint32 getFlags() const { return _gameDescription->flags; }
-
 private:
 	const ADGameDescription *_gameDescription;
 	Graphics::PixelFormat _pixelFormat;

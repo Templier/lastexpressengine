@@ -26,8 +26,8 @@
 #include "lastexpress/resource.h"
 #include "lastexpress/background.h"
 #include "lastexpress/cursor.h"
+#include "lastexpress/debug.h"
 #include "lastexpress/font.h"
-#include "lastexpress/lastexpress.h"
 
 #include "common/debug.h"
 
@@ -39,7 +39,7 @@ const char *archiveCD1Path = "cd1.hpf";
 const char *archiveCD2Path = "cd2.hpf";
 const char *archiveCD3Path = "cd3.hpf";
 
-ResourceManager::ResourceManager(LastExpressEngine *engine) : _engine(engine) {
+ResourceManager::ResourceManager(bool demo) : _demo(demo) {
 }
 
 ResourceManager::~ResourceManager() {
@@ -56,7 +56,7 @@ bool ResourceManager::loadArchive(ArchiveType type) {
 	reset();
 
 	// Demo version
-	if (_engine->getFlags() & ADGF_DEMO)
+	if (_demo)
 		return loadArchive(archiveDemoPath);
 
 	bool loadedOk = true;

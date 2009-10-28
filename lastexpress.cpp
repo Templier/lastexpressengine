@@ -87,7 +87,7 @@ Common::Error LastExpressEngine::run() {
 	_debugger = new Debugger(this);
 
 	// Start the resource and graphics managers
-	_resource = new ResourceManager(this);
+	_resource = new ResourceManager(_gameDescription->flags & ADGF_DEMO);
 	if (!_resource->loadArchive(ResourceManager::kArchiveAll))
 		return Common::kUnknownError;
 
