@@ -36,6 +36,7 @@
 #include "lastexpress/resource.h"
 
 #define getNextGameId() (GameId)((_engine->getLogic()->getGameId() + 1) % 6)
+#define getState() _engine->getLogic()->getGameState()
 
 namespace LastExpress {
 

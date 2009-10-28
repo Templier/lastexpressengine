@@ -40,7 +40,7 @@ Logic::Logic(LastExpressEngine *engine) : _engine(engine) {
 	_gameState = new SaveLoad::GameState();
 
 	// Init inventory
-	_inventory->init(_gameState);
+	_inventory->init();
 
 	// HACK set specific cursor style for inventory testing
 	_engine->getCursor()->show(true);
@@ -107,14 +107,14 @@ bool Logic::handleMouseEvent(Common::Event ev) {
 void Logic::switchGame() {
 	// Switch back to blue game is the current game is not started
 	if (!_runState.gameStarted) {
-		_runState.savegameId = kGameBlue;
+		_runState.gameId = kGameBlue;
 	} else {
-		_runState.savegameId = (GameId)((_runState.savegameId + 1) % 6);
+		_runState.gameId = (GameId)((_runState.gameId + 1) % 6);
 	}
 
 	// Init savegame if needed
-	if (!SaveLoad::isSavegamePresent(_runState.savegameId))
-		SaveLoad::initSavegame(_runState.savegameId);
+	if (!SaveLoad::isSavegamePresent(_runState.gameId))
+		SaveLoad::initSavegame(_runState.gameId);
 
 	// Reset run state
 	_runState.gameStarted = false;
@@ -122,7 +122,7 @@ void Logic::switchGame() {
 	// TODO load data from savegame, adjust volume & luminosity, etc...
 	//////////////////////////////////////////////////////////////////////////
 	// HACK for debug
-	if (_runState.savegameId == kGameBlue) {
+	if (_runState.gameId == kGameBlue) {
 		_gameState->time = 2383200;
 		_runState.gameStarted = true;
 	}

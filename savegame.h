@@ -158,26 +158,6 @@ public:
 		}
 	};
 
-	struct InventoryEntry {
-		byte item_id;
-		byte scene_id;
-		byte field_2;
-		byte is_selectable;
-		byte has_item;
-		byte field_5;
-		byte field_6;
-
-		InventoryEntry() {
-			item_id = 0;
-			scene_id = 0;
-			field_2 = 0;
-			is_selectable = 0;
-			has_item = 0;
-			field_5 = 1;	// TODO all except last it seems (is it really important?)
-			field_6 = 0;
-		}
-	};
-
 	struct GameState {
 		// Header
 		uint32 brightness;
@@ -186,10 +166,8 @@ public:
 		// Game data		
 		uint32 time;
 		uint32 currentScene;
-		uint32 selectedItem;
 
 		GameProgress progress;
-		InventoryEntry inventory[32];
 
 		GameState() {
 			brightness = _defaultBrigthness;
@@ -198,11 +176,8 @@ public:
 			//Game data
 			time = _defaultTime;
 			currentScene = 0;
-			selectedItem = 0;			
 		}
 	};
-
-
 
 	// Init & Access
 	static bool initSavegame(GameId id);

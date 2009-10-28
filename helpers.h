@@ -49,10 +49,4 @@
 #define askForRedraw() _engine->getGraphicsManager()->change();
 #define redrawScreen() _engine->getGraphicsManager()->update(); _engine->_system->updateScreen();
 
-//////////////////////////////////////////////////////////////////////////
-// Game
-//////////////////////////////////////////////////////////////////////////
-#define getState() _engine->getLogic()->getGameState()
-#define getProgress() _engine->getLogic()->getGameState()->progress
-
 #endif // LASTEXPRESS_HELPERS_H

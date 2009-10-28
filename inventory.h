@@ -26,7 +26,6 @@
 #ifndef LASTEXPRESS_INVENTORY_H
 #define LASTEXPRESS_INVENTORY_H
 
-#include "lastexpress/savegame.h"
 #include "lastexpress/scene.h"
 
 #include "common/events.h"
@@ -67,7 +66,7 @@ public:
 	Inventory(LastExpressEngine *engine);
 	~Inventory();
 
-	void init(SaveLoad::GameState *state);
+	void init();
 
 	// Handle inventory UI events.
 	void handleMouseEvent(Common::Event ev);
@@ -107,6 +106,27 @@ private:
 	LastExpressEngine *_engine;
 
 	// State
+	struct InventoryEntry {
+		byte item_id;
+		byte scene_id;
+		byte field_2;
+		byte is_selectable;
+		byte has_item;
+		byte field_5;
+		byte field_6;
+
+		InventoryEntry() {
+			item_id = 0;
+			scene_id = 0;
+			field_2 = 0;
+			is_selectable = 0;
+			has_item = 0;
+			field_5 = 1;	// TODO all except last it seems (is it really important?)
+			field_6 = 0;
+		}
+	}; 
+	InventoryEntry _entries[32];
+	uint32 _selectedItem;
 	bool _opened;
 	InventoryItem _highlightedItem;
 
@@ -128,7 +148,7 @@ private:
 	void close();
 	void examine(InventoryItem item);
 	void drawEgg();
-	SaveLoad::InventoryEntry *getEntry(InventoryItem item);
+	InventoryEntry *getEntry(InventoryItem item);
 	Common::Rect getItemRect(int index);
 };
 

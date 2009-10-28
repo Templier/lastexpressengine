@@ -34,6 +34,7 @@
 
 #define drawItem(x, y, index) { Icon icon((Cursor::CursorStyle)(index)); _engine->getGraphicsManager()->draw(&icon, x, y, GraphicsManager::kBackgroundInventory); }
 #define drawItemBrightness(x, y, index, brightness) { Icon icon((Cursor::CursorStyle)(index)); icon.setBrightness(brightness); _engine->getGraphicsManager()->draw(&icon, x, y, GraphicsManager::kBackgroundInventory); }
+#define getProgress() _engine->getLogic()->getGameState()->progress
 
 namespace LastExpress {
 
@@ -56,64 +57,65 @@ Inventory::~Inventory() {}
 //////////////////////////////////////////////////////////////////////////
 
 // Init inventory contents
-void Inventory::init(SaveLoad::GameState *state) {
-
+void Inventory::init() {
 	// item_id
-	state->inventory[kIndexMatchBox].item_id = kMatchBox;
-	state->inventory[kIndexTelegram].item_id = kTelegram;
-	state->inventory[kIndexPassengerList].item_id = kPassengerList;
-	state->inventory[kIndexArticle].item_id = kArticle;
-	state->inventory[kIndexScarf].item_id = kScarf;
-	state->inventory[kIndexPaper].item_id = kPaper;
-	state->inventory[kIndexParchemin].item_id = kParchemin;
-	state->inventory[kIndexMatch].item_id = kMatch;
-	state->inventory[kIndexWhistle].item_id = kWhistle;
-	state->inventory[kIndexKey].item_id = kKey;
-	state->inventory[kIndexBomb].item_id = kBomb;
-	state->inventory[kIndexFirebird].item_id = kFirebird;
-	state->inventory[kIndexBriefcase].item_id = kBriefcase;
-	state->inventory[kIndexCorpse].item_id = kCorpse;
+	_entries[kIndexMatchBox].item_id = kMatchBox;
+	_entries[kIndexTelegram].item_id = kTelegram;
+	_entries[kIndexPassengerList].item_id = kPassengerList;
+	_entries[kIndexArticle].item_id = kArticle;
+	_entries[kIndexScarf].item_id = kScarf;
+	_entries[kIndexPaper].item_id = kPaper;
+	_entries[kIndexParchemin].item_id = kParchemin;
+	_entries[kIndexMatch].item_id = kMatch;
+	_entries[kIndexWhistle].item_id = kWhistle;
+	_entries[kIndexKey].item_id = kKey;
+	_entries[kIndexBomb].item_id = kBomb;
+	_entries[kIndexFirebird].item_id = kFirebird;
+	_entries[kIndexBriefcase].item_id = kBriefcase;
+	_entries[kIndexCorpse].item_id = kCorpse;
 
 	// is_selectable
-	state->inventory[kIndexMatchBox].is_selectable = 1;
-	state->inventory[kIndexMatch].is_selectable = 1;
-	state->inventory[kIndexTelegram].is_selectable = 1;
-	state->inventory[kIndexWhistle].is_selectable = 1;
-	state->inventory[kIndexKey].is_selectable = 1;
-	state->inventory[kIndexFirebird].is_selectable = 1;
-	state->inventory[kIndexBriefcase].is_selectable = 1;
-	state->inventory[kIndexCorpse].is_selectable = 1;
-	state->inventory[kIndexPassengerList].is_selectable = 1;
+	_entries[kIndexMatchBox].is_selectable = 1;
+	_entries[kIndexMatch].is_selectable = 1;
+	_entries[kIndexTelegram].is_selectable = 1;
+	_entries[kIndexWhistle].is_selectable = 1;
+	_entries[kIndexKey].is_selectable = 1;
+	_entries[kIndexFirebird].is_selectable = 1;
+	_entries[kIndexBriefcase].is_selectable = 1;
+	_entries[kIndexCorpse].is_selectable = 1;
+	_entries[kIndexPassengerList].is_selectable = 1;
 
 	// ??
-	state->inventory[2].field_5 = 0;
-	state->inventory[3].field_5 = 0;
-	state->inventory[5].field_5 = 0;
-	state->inventory[7].field_5 = 0;
-	state->inventory[9].field_5 = 0;
-	state->inventory[11].field_5 = 0;
-	state->inventory[14].field_5 = 0;
-	state->inventory[17].field_5 = 0;
-	state->inventory[kIndexFirebird].field_5 = 0;
-	state->inventory[kIndexBriefcase].field_5 = 0;
-	state->inventory[kIndexCorpse].field_5 = 0;
-	state->inventory[21].field_5 = 0;
-	state->inventory[22].field_5 = 0;
+	_entries[2].field_5 = 0;
+	_entries[3].field_5 = 0;
+	_entries[5].field_5 = 0;
+	_entries[7].field_5 = 0;
+	_entries[9].field_5 = 0;
+	_entries[11].field_5 = 0;
+	_entries[14].field_5 = 0;
+	_entries[17].field_5 = 0;
+	_entries[kIndexFirebird].field_5 = 0;
+	_entries[kIndexBriefcase].field_5 = 0;
+	_entries[kIndexCorpse].field_5 = 0;
+	_entries[21].field_5 = 0;
+	_entries[22].field_5 = 0;
 
 	// scene_id
-	state->inventory[kIndexMatchBox].scene_id = 31;
-	state->inventory[kIndexTelegram].scene_id = 32;
-	state->inventory[kIndexPassengerList].scene_id = 33;
-	state->inventory[kIndexScarf].scene_id = 34;
-	state->inventory[kIndexParchemin].scene_id = 35;
-	state->inventory[kIndexArticle].scene_id = 36;
-	state->inventory[kIndexPaper].scene_id = 37;
-	state->inventory[kIndexFirebird].scene_id = 38;
-	state->inventory[kIndexBriefcase].scene_id = 39;
+	_entries[kIndexMatchBox].scene_id = 31;
+	_entries[kIndexTelegram].scene_id = 32;
+	_entries[kIndexPassengerList].scene_id = 33;
+	_entries[kIndexScarf].scene_id = 34;
+	_entries[kIndexParchemin].scene_id = 35;
+	_entries[kIndexArticle].scene_id = 36;
+	_entries[kIndexPaper].scene_id = 37;
+	_entries[kIndexFirebird].scene_id = 38;
+	_entries[kIndexBriefcase].scene_id = 39;
 
 	// has_item
-	state->inventory[kIndexTelegram].has_item = 1;
-	state->inventory[kIndexArticle].has_item = 1;
+	_entries[kIndexTelegram].has_item = 1;
+	_entries[kIndexArticle].has_item = 1;
+
+	_selectedItem = 0;			
 }
 
 // FIXME we need to draw cursors with full background opacity so that whatever is in the background is erased
@@ -198,30 +200,30 @@ void Inventory::handleMouseEvent(Common::Event ev) {
 		// Iterate over items
 		int y = 44;
 		for (uint i = 1; i < 32; i++) {
-			if (getState()->inventory[i].has_item) {
+			if (_entries[i].has_item) {
 				if (Common::Rect(0, y, 32, 32 + y).contains(ev.mouse)) {
 
 					// If released with an item highlighted, show this item
 					if (ev.type == Common::EVENT_LBUTTONUP) {
-						if (getState()->inventory[i].is_selectable) {
+						if (_entries[i].is_selectable) {
 							selected = true;
-							getState()->selectedItem = (InventoryItem)getState()->inventory[i].item_id;
-							drawItem(44, 0, getState()->selectedItem)
+							_selectedItem = (InventoryItem)_entries[i].item_id;
+							drawItem(44, 0, _selectedItem)
 						}
 
-						examine((InventoryItem)getState()->inventory[i].item_id);
+						examine((InventoryItem)_entries[i].item_id);
 						break;
 					} else {
-						if (_highlightedItem != getState()->inventory[i].item_id) {
-							drawItem(0, y, getState()->inventory[i].item_id)
-							_highlightedItem = (InventoryItem)getState()->inventory[i].item_id;
+						if (_highlightedItem != _entries[i].item_id) {
+							drawItem(0, y, _entries[i].item_id)
+							_highlightedItem = (InventoryItem)_entries[i].item_id;
 							askForRedraw();
 						}
 					}
 				} else {
 					// Remove hightlight if necessary
-					if (_highlightedItem == (InventoryItem)getState()->inventory[i].item_id) {
-						drawItemBrightness(0, y, getState()->inventory[i].item_id, 50)
+					if (_highlightedItem == (InventoryItem)_entries[i].item_id) {
+						drawItemBrightness(0, y, _entries[i].item_id, 50)
 						_highlightedItem = kNoItem;
 						askForRedraw();
 					}
@@ -236,7 +238,7 @@ void Inventory::handleMouseEvent(Common::Event ev) {
 
 			// Not on a selectable item: deselect the current item
 			if (!selected) {
-				getState()->selectedItem = kNoItem;
+				_selectedItem = kNoItem;
 				_engine->getGraphicsManager()->clear(GraphicsManager::kBackgroundInventory, Common::Rect(44, 0, 44 + 32, 32));
 			}
 			close();
@@ -245,13 +247,13 @@ void Inventory::handleMouseEvent(Common::Event ev) {
 	}
 
 	// Selected item
-	if (getState()->selectedItem != kNoItem && _selectedRect.contains(ev.mouse)) {
+	if (_selectedItem != kNoItem && _selectedRect.contains(ev.mouse)) {
 		insideInventory = true;
 		// Show magnifier icon
 		_engine->getCursor()->setStyle(Cursor::kCursorMagnifier);
 
 		if (ev.type == Common::EVENT_LBUTTONDOWN) {
-			examine((InventoryItem)getState()->selectedItem);
+			examine((InventoryItem)_selectedItem);
 		}
 	}
 
@@ -275,8 +277,8 @@ void Inventory::show(bool visible) {
 	drawItemBrightness(0, 0, getProgress().portraitType, 50)
 
 	// Show selected item
-	if (getState()->selectedItem != kNoItem)
-		drawItem(44, 0, getState()->selectedItem)
+	if (_selectedItem != kNoItem)
+		drawItem(44, 0, _selectedItem)
 
 	drawEgg();
 }
@@ -347,10 +349,10 @@ bool Inventory::hasItem(InventoryItem item) {
 //////////////////////////////////////////////////////////////////////////
 // Private methods
 //////////////////////////////////////////////////////////////////////////
-SaveLoad::InventoryEntry *Inventory::getEntry(InventoryItem item) {
+Inventory::InventoryEntry *Inventory::getEntry(InventoryItem item) {
 	for (uint i = 0; i < 32; i++) {
-		if (getState()->inventory[i].item_id == (byte)item)
-			return &getState()->inventory[i];
+		if (_entries[i].item_id == (byte)item)
+			return &_entries[i];
 	}
 
 	// Should never get invalid item
@@ -396,8 +398,8 @@ void Inventory::open() {
 
 	// Iterate over items
 	for (uint i = 1; i < 32; i++) {
-		if (getState()->inventory[i].has_item) {
-			drawItemBrightness(0, y, getState()->inventory[i].item_id, 50)
+		if (_entries[i].has_item) {
+			drawItemBrightness(0, y, _entries[i].item_id, 50)
 			y += 40;
 		}
 	}
@@ -415,7 +417,7 @@ void Inventory::close() {
 	// Erase rectangle for all inventory items
 	int count = 0;
 	for (uint i = 1; i < 32; i++) {
-		if (getState()->inventory[i].has_item) {
+		if (_entries[i].has_item) {
 			count++;
 		}
 	}
