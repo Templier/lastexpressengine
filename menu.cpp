@@ -41,71 +41,139 @@ namespace LastExpress {
 // DATA
 //////////////////////////////////////////////////////////////////////////
 
-// Train line times
-const uint32 trainLineTimes[31] = { 1037700, // Paris
-									1148400,
-									1170900,
-									1228500,
-									1303200,
-									1335600,
-									1359900,
-									1367100,
-								    1490400, // Strasbourg
-									1539000,
-									1563300,
-									1656000,
-									1713600,
-									1739700,
-									1809900,
-								    1852200, // Munich
-									1984500,
-									2049300,
-									2075400,
-									2101500,
-									2154600,
-								    2268000, // Vienna
-									2383200,
-									2418300,
-								    2551500, // Budapest
-									2952000, // Belgrade
-									3205800,
-									3492000,
-									3690000,
-									4320900,
-								    4941000 /* Constantinople */ };
+// Information about the cities on the train line
+struct CityInfo {
+	uint32 time;
+	uint32 index;
+};
 
-const uint32 trainCitiesIndex[31] = {0, // Paris
-									 9, // Epernay
-									 11, // Chalons
-									 16, // Bar Le Duc
-									 21, // Nancy
-									 25, // Luneville
-									 35, // Avricourt
-									 37, // Deutsch Avricourt
-									 40, // Strasbourg
-									 53, // Baden Oos
-									 56, // Karlsruhe
-									 60, // Stuttgart
-									 63, // Geislingen
-									 66, // Ulm
-									 68, // Augsburg
-									 73, // Munich
-									 84, // Salzbourg
-									 89, // Attnang-Puchheim
-									 97, // Wels
-									 100, // Linz
-									 104, // Amstetten
-									 111, // Vienna
-									 120, // Poszony
-									 124, // Galanta
-									 132, // Budapest
-									 148, // Belgrade
-									 /* Line 1 ends at 150 - line 2 begins at 0 */
-									 157, // Nish
-									 165, // Tzaribrod
-									 174, // Sofia
-									 198, // Adrianople
-									 210  /* Constantinople */};
+const static CityInfo trainCities[31] = {
+	{0, 1037700}, // Paris
+	{9, 1148400}, // Epernay
+	{11, 1170900}, // Chalons
+	{16, 1228500}, // Bar Le Duc
+	{21, 1303200}, // Nancy
+	{25, 1335600}, // Luneville
+	{35, 1359900}, // Avricourt
+	{37, 1367100}, // Deutsch Avricourt
+	{40, 1490400}, // Strasbourg
+	{53, 1539000}, // Baden Oos
+	{56, 1563300}, // Karlsruhe
+	{60, 1656000}, // Stuttgart
+	{63, 1713600}, // Geislingen
+	{66, 1739700}, // Ulm
+	{68, 1809900}, // Augsburg
+	{73, 1852200}, // Munich
+	{84, 1984500}, // Salzbourg
+	{89, 2049300}, // Attnang-Puchheim
+	{97, 2075400}, // Wels
+	{100, 2101500}, // Linz
+	{104, 2154600}, // Amstetten
+	{111, 2268000}, // Vienna
+	{120, 2383200}, // Poszony
+	{124, 2418300}, // Galanta
+	{132, 2551500}, // Budapest
+	{148, 2952000}, // Belgrade
+	/* Line 1 ends at 150 - line 2 begins at 0 */
+	{157, 3205800}, // Nish
+	{165, 3492000}, // Tzaribrod
+	{174, 3690000}, // Sofia
+	{198, 4320900}, // Adrianople
+	{210, 4941000}}; // Constantinople
+
+
+// Menu elements
+
+class Clock : public Drawable {
+public:
+	Clock(LastExpressEngine *engine, uint32 *time);
+	~Clock();
+
+	bool load();
+	bool process();
+	Common::Rect draw(Graphics::Surface *surface);
+
+private:
+	LastExpressEngine *_engine;
+
+	uint32 *_time;
+	SequencePlayer *_seqHour;
+	SequencePlayer *_seqMinutes;
+	SequencePlayer *_seqSun;
+	SequencePlayer *_seqDate;
+};
+
+Clock::Clock(LastExpressEngine *engine, uint32 *time) : _engine(engine), _time(time),
+	_seqHour(NULL), _seqMinutes(NULL), _seqSun(NULL), _seqDate(NULL) {}
+
+Clock::~Clock() {
+	delete _seqHour;
+	delete _seqMinutes;
+	delete _seqSun;
+	delete _seqDate;
+}
+
+bool Clock::load() {
+	bool loaded = true;
+	Sequence *s = new Sequence;
+	loaded &= s->loadFile("egghour.seq");
+	_seqHour = new SequencePlayer(s);
+
+	s = new Sequence;
+	loaded &= s->loadFile("eggmin.seq");
+	_seqMinutes = new SequencePlayer(s);
+
+	s = new Sequence;
+	loaded &= s->loadFile("sun.seq");
+	_seqSun = new SequencePlayer(s);
+
+	s = new Sequence;
+	loaded &= s->loadFile("datenew.seq");
+	_seqDate = new SequencePlayer(s);
+
+	return loaded;
+}
+
+bool Clock::process() {
+	// Game starts at: 1037700 = 7:13 p.m. on July 24, 1914
+	// Game ends at:   4941000 = 7:30 p.m. on July 26, 1914
+	// Game lasts for: 3903300 = 2 days + 17 mins = 2897 mins
+
+	// 15 = 1 second
+	// 15 * 60 = 900 = 1 minute
+	// 900 * 60 = 54000 = 1 hour
+	// 54000 * 24 = 1296000 = 1 day
+
+	// Calculate each sequence index from the current time
+	uint8 hour = (*_time % 1296000) / 54000;
+	uint8 minute = (*_time % 54000) / 900;
+	_seqMinutes->setFrame(minute);
+	_seqHour->setFrame((5 * hour + minute / 12) % 60);
+	_seqSun->setFrame((5 * hour + minute / 12) % 120);
+
+	// TODO: verify index_date (60 frames)
+	//uint8 day = *_time / 1296000;
+	uint32 index_date = 18 * *_time / 1296000;
+	if (hour == 23)
+		index_date += 18 * minute / 60;
+	_seqDate->setFrame(index_date);
+
+	//warning("%02d:%02d on July %d", hour, minute, day + 24);
+
+	return true;
+}
+
+// Draw the clock hands at the time
+Common::Rect Clock::draw(Graphics::Surface *surface) {
+	// Draw each element
+	_seqHour->draw(surface);
+	_seqMinutes->draw(surface);
+	_seqSun->draw(surface);
+	_seqDate->draw(surface);
+
+	return Common::Rect();
+}
+
 
 //////////////////////////////////////////////////////////////////////////
 
@@ -115,10 +183,13 @@ Menu::Menu(LastExpressEngine *engine) : _engine(engine) {
 	_isShowingCredits = false;
 
 	_scene = new Scene(_engine->getResource());
+	_clock = new Clock(_engine, &_currentTime);
+	_clock->load();
 }
 
 Menu::~Menu() {
 	delete _scene;
+	delete _clock;
 }
 
 // Show the intro and load the main menu scene
@@ -319,7 +390,7 @@ bool Menu::handleStartMenuEvent(Common::Event ev) {
 
 			if (!SaveLoad::isSavegameValid(getNextGameId())) {
 				if (_engine->getLogic()->isGameStarted())
-					drawSeqFrame(&_seqTooltips, kTooltipStartAnotherGame, GraphicsManager::kBackgroundOverlay);
+					drawSeqFrame(&_seqTooltips, kTooltipStartAnotherGame, GraphicsManager::kBackgroundOverlay)
 				else
 					drawSeqFrame(&_seqTooltips, kTooltipSwitchBlueGame, GraphicsManager::kBackgroundOverlay);
 			} else {
@@ -529,11 +600,6 @@ void Menu::loadData() {
 		return;
 
 	// Load all static data
-	loaded  &= _seqHour.loadFile("egghour.seq");
-	loaded  &= _seqMinutes.loadFile("eggmin.seq");
-	loaded  &= _seqSun.loadFile("sun.seq");
-	loaded  &= _seqDate.loadFile("datenew.seq");
-
 	loaded  &= _seqTooltips.loadFile("helpnewr.seq");
 	loaded  &= _seqEggButtons.loadFile("buttns.seq");
 	loaded  &= _seqButtons.loadFile("quit.seq");
@@ -600,35 +666,9 @@ void Menu::drawElements() {
 
 	clearBg(GraphicsManager::kBackgroundA);
 
-	drawClock(_currentTime);
+	_clock->process();
+	_engine->getGraphicsManager()->draw(_clock, GraphicsManager::kBackgroundA);
 	drawTrainLine(_currentTime);
-}
-
-// Draw the clock hands at the time
-void Menu::drawClock(uint32 time) {
-	// 7:14 p.m. on July 24, 1914 (= 1037700)
-	// 7:30 p.m. on July 26, 1914 (= 4941000)
-
-	// 360 degrees = 1296000 (360*60*60) minutes of arc
-	// 129600 / 24 = 54000
-	// 54000 / 60 = 900
-
-	// FIXME the hours are not moving along with minutes as in-game
-
-	// Calculate each sequence index from the current time
-	uint32 hours = time % 1296000 / 54000;
-	uint32 index_minutes = time % 54000 / 900 % 60 % 60;
-	uint32 index_hour = 5 * (index_minutes / 60 + hours % 12) % 60;
-	uint32 index_sun = 5 * (index_minutes / 60 + hours) % 120;
-	uint32 index_date = 18 * time / 1296000;
-	if (hours == 23)
-		index_date += 18 * index_minutes / 60;
-
-	// Draw each element
-	drawSeqFrame(&_seqHour, index_hour, GraphicsManager::kBackgroundA);
-	drawSeqFrame(&_seqMinutes, index_minutes, GraphicsManager::kBackgroundA);
-	drawSeqFrame(&_seqSun, index_sun, GraphicsManager::kBackgroundA);
-	drawSeqFrame(&_seqDate, index_date, GraphicsManager::kBackgroundA);
 }
 
 // Draw the train line at the time
@@ -639,12 +679,12 @@ void Menu::drawTrainLine(uint32 time) {
 	uint ixTime;
 
 	// Get index of the closest train line time to the current time
-	for (ixTime = 0; ixTime < sizeof(trainLineTimes) - 1; ixTime++)
-		if (_currentTime <= trainLineTimes[ixTime])
+	for (ixTime = 0; ixTime < sizeof(trainCities) - 1; ixTime++)
+		if (_currentTime <= trainCities[ixTime].time)
 			break;
 
 	// Get index of city
-	uint32 index = trainCitiesIndex[ixTime - 1];	// NOTE: disasm is accessing cities array starting from index -1 (= 0) - ie they have two 0 at the start of the array
+	uint32 index = trainCities[ixTime - 1].index;	// NOTE: disasm is accessing cities array starting from index -1 (= 0) - ie they have two 0 at the start of the array
 
 	// FIXME do some stuff on index... as right now we jump from cities to cities
 
@@ -756,7 +796,7 @@ void Menu::moveToCity(CityOverlay city, CityTime time, StartMenuTooltips tooltip
 		// TODO set some global var to 1
 	} else {
 		if (_currentTime < (uint32)time)			// For start city (Paris) and end city, this will always be true
-			drawSeqFrame(&_seqTooltips, tooltipForward, GraphicsManager::kBackgroundOverlay);
+			drawSeqFrame(&_seqTooltips, tooltipForward, GraphicsManager::kBackgroundOverlay)
 		else
 			drawSeqFrame(&_seqTooltips, tooltipRewind, GraphicsManager::kBackgroundOverlay);
 	}

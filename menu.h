@@ -36,6 +36,8 @@ namespace LastExpress {
 class LastExpressEngine;
 class Scene;
 
+class Clock;
+
 class Menu {
 public:
 	// Start menu events
@@ -164,11 +166,6 @@ private:
 	Scene *_scene;
 
 	// Sequences
-	Sequence _seqHour;
-	Sequence _seqMinutes;
-	Sequence _seqSun;
-	Sequence _seqDate;
-
 	Sequence _seqTooltips;
 	Sequence _seqEggButtons;
 	Sequence _seqButtons;
@@ -192,7 +189,7 @@ private:
 	// Overlays & elements
 	void drawElements();
 	void drawTrainLine(uint32 time);
-	void drawClock(uint32 time);
+	Clock *_clock;
 	Common::String getAcornSequenceName(SaveLoad::SavegameId id);
 	void showCredits();
 
