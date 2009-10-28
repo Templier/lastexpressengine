@@ -102,18 +102,23 @@ uint16 *Cursor::getCursorImage(CursorStyle style) {
 
 Icon::Icon(Cursor::CursorStyle style) : _style(style), _brightness(100) {}
 
+void Icon::setPosition(int x, int y) {
+	_x = x;
+	_y = y;
+}
+
 void Icon::setBrightness(uint8 brightness) {
 	_brightness = brightness;
 }
 
-Common::Rect Icon::draw(Graphics::Surface *surface, int x, int y) {
+Common::Rect Icon::draw(Graphics::Surface *surface) {
 	uint16 *image = ((LastExpressEngine *)g_engine)->getCursor()->getCursorImage((Cursor::CursorStyle)_style);
 	if (!image)
 		return Common::Rect();
 
 	// TODO adjust brightness. The original game seems to be using a table for that (at least in the highlighting case)
 	for (int j = 0; j < 32; j++) {
-		uint16 *s = (uint16 *)surface->getBasePtr(x, y + j);
+		uint16 *s = (uint16 *)surface->getBasePtr(_x, _y + j);
 		for (int i = 0; i < 32; i++) {
 			if (_brightness == 100)
 				*s = *image;
@@ -127,7 +132,7 @@ Common::Rect Icon::draw(Graphics::Surface *surface, int x, int y) {
 		}
 	}
 
-	return Common::Rect(x, y, x + 32, y + 32);
+	return Common::Rect(_x, _y, _x + 32, _y + 32);
 }
 
 } // End of namespace LastExpress

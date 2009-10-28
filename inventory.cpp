@@ -32,8 +32,7 @@
 #include "lastexpress/resource.h"
 #include "lastexpress/sound.h"
 
-#define drawItem(x, y, index) { Icon icon((Cursor::CursorStyle)(index)); _engine->getGraphicsManager()->draw(&icon, x, y, GraphicsManager::kBackgroundInventory); }
-#define drawItemBrightness(x, y, index, brightness) { Icon icon((Cursor::CursorStyle)(index)); icon.setBrightness(brightness); _engine->getGraphicsManager()->draw(&icon, x, y, GraphicsManager::kBackgroundInventory); }
+#define drawItem(x, y, index, brightness) { Icon icon((Cursor::CursorStyle)(index)); icon.setPosition(x, y); icon.setBrightness(brightness); _engine->getGraphicsManager()->draw(&icon, GraphicsManager::kBackgroundInventory); }
 #define getProgress() _engine->getLogic()->getGameState()->progress
 
 namespace LastExpress {
@@ -148,7 +147,7 @@ void Inventory::handleMouseEvent(Common::Event ev) {
 			// Highlight if needed
 			if (_highlightedItem != _engine->getLogic()->getGameId() + 39) {
 				_highlightedItem = (InventoryItem)(_engine->getLogic()->getGameId() + 39);
-				drawItem(608, 448, _highlightedItem)
+				drawItem(608, 448, _highlightedItem, 100)
 
 				askForRedraw();
 			}
@@ -156,7 +155,7 @@ void Inventory::handleMouseEvent(Common::Event ev) {
 	} else {
 		// remove hightlight if needed
 		if (_highlightedItem == _engine->getLogic()->getGameId() + 39) {
-			drawItemBrightness(608, 448, _highlightedItem, 50)
+			drawItem(608, 448, _highlightedItem, 50)
 			_highlightedItem = kNoItem;
 			askForRedraw();
 		}
@@ -174,7 +173,7 @@ void Inventory::handleMouseEvent(Common::Event ev) {
 			// Highlight if needed
 			if (_highlightedItem != (InventoryItem)getProgress().portraitType && !_opened) {
 				_highlightedItem = (InventoryItem)getProgress().portraitType;
-				drawItem(0, 0, getProgress().portraitType)
+				drawItem(0, 0, getProgress().portraitType, 100)
 
 				askForRedraw();
 			}
@@ -182,7 +181,7 @@ void Inventory::handleMouseEvent(Common::Event ev) {
 	} else {
 		// remove hightlight if needed
 		if (_highlightedItem == (InventoryItem)getProgress().portraitType && !_opened) {
-			drawItemBrightness(0, 0, getProgress().portraitType, 50)
+			drawItem(0, 0, getProgress().portraitType, 50)
 			_highlightedItem = kNoItem;
 			askForRedraw();
 		}
@@ -208,14 +207,14 @@ void Inventory::handleMouseEvent(Common::Event ev) {
 						if (_entries[i].is_selectable) {
 							selected = true;
 							_selectedItem = (InventoryItem)_entries[i].item_id;
-							drawItem(44, 0, _selectedItem)
+							drawItem(44, 0, _selectedItem, 100)
 						}
 
 						examine((InventoryItem)_entries[i].item_id);
 						break;
 					} else {
 						if (_highlightedItem != _entries[i].item_id) {
-							drawItem(0, y, _entries[i].item_id)
+							drawItem(0, y, _entries[i].item_id, 100)
 							_highlightedItem = (InventoryItem)_entries[i].item_id;
 							askForRedraw();
 						}
@@ -223,7 +222,7 @@ void Inventory::handleMouseEvent(Common::Event ev) {
 				} else {
 					// Remove hightlight if necessary
 					if (_highlightedItem == (InventoryItem)_entries[i].item_id) {
-						drawItemBrightness(0, y, _entries[i].item_id, 50)
+						drawItem(0, y, _entries[i].item_id, 50)
 						_highlightedItem = kNoItem;
 						askForRedraw();
 					}
@@ -274,18 +273,18 @@ void Inventory::show(bool visible) {
 		return;
 
 	// Show portrait (first draw, cannot be highlighted)
-	drawItemBrightness(0, 0, getProgress().portraitType, 50)
+	drawItem(0, 0, getProgress().portraitType, 50)
 
 	// Show selected item
 	if (_selectedItem != kNoItem)
-		drawItem(44, 0, _selectedItem)
+		drawItem(44, 0, _selectedItem, 100)
 
 	drawEgg();
 }
 
 void Inventory::setPortrait(InventoryItem item) {
 	getProgress().portraitType = item;
-	drawItemBrightness(0, 0, getProgress().portraitType, 50);
+	drawItem(0, 0, getProgress().portraitType, 50);
 }
 
 void Inventory::blinkEgg(bool enabled) {
@@ -296,12 +295,12 @@ void Inventory::blinkEgg(bool enabled) {
 
 	// Show egg at full brightness for first step if blinking
 	if (_blinkingEgg)
-		drawItemBrightness(608, 448, _engine->getLogic()->getGameId() + 39, _blinkingBrightness)
+		drawItem(608, 448, _engine->getLogic()->getGameId() + 39, _blinkingBrightness)
 	else {
 		// Reset values
 		_blinkingBrightness = 100;
 		_blinkingInterval = _defaultBlinkingInterval;
-		drawItemBrightness(608, 448, _engine->getLogic()->getGameId() + 39, 50)	// normal egg state
+		drawItem(608, 448, _engine->getLogic()->getGameId() + 39, 50)	// normal egg state
 	}
 
 	askForRedraw();
@@ -315,9 +314,9 @@ void Inventory::showHourGlass(bool enabled) {
 
 	// Show/Hide hour glass and ask for redraw
 	if (_showingHourGlass)
-		drawItem(608, 448, Cursor::kCursorHourGlass)
+		drawItem(608, 448, Cursor::kCursorHourGlass, 100)
 	else
-		drawItem(608, 448, _engine->getLogic()->getGameId() + 39) // normal egg state
+		drawItem(608, 448, _engine->getLogic()->getGameId() + 39, 100) // normal egg state
 
 	askForRedraw();
 }
@@ -373,7 +372,7 @@ void Inventory::examine(InventoryItem item) {
 void Inventory::drawEgg() {
 	// Blinking egg: we need to blink the egg for delta time, with the blinking getting faster until it's always lit.
 	if (_blinkingEgg) {
-		drawItemBrightness(608, 448, _engine->getLogic()->getGameId() + 39, _blinkingBrightness)
+		drawItem(608, 448, _engine->getLogic()->getGameId() + 39, _blinkingBrightness)
 
 		// TODO if delta time > _blinkingInterval, update egg & ask for redraw then adjust blinking time and remaining time
 
@@ -383,7 +382,7 @@ void Inventory::drawEgg() {
 
 		askForRedraw();
 	} else {
-		drawItemBrightness(608, 448, _engine->getLogic()->getGameId() + 39, 50)
+		drawItem(608, 448, _engine->getLogic()->getGameId() + 39, 50)
 	}
 }
 
@@ -392,14 +391,14 @@ void Inventory::open() {
 	_opened = true;
 
 	// Show selected state
-	drawItem(0, 0, getProgress().portraitType + 1)
+	drawItem(0, 0, getProgress().portraitType + 1, 100)
 
 	uint y = 44;
 
 	// Iterate over items
 	for (uint i = 1; i < 32; i++) {
 		if (_entries[i].has_item) {
-			drawItemBrightness(0, y, _entries[i].item_id, 50)
+			drawItem(0, y, _entries[i].item_id, 50)
 			y += 40;
 		}
 	}
@@ -412,7 +411,7 @@ void Inventory::close() {
 	_opened = false;
 
 	// Fallback to unselected state
-	drawItem(0, 0, getProgress().portraitType)
+	drawItem(0, 0, getProgress().portraitType, 100)
 
 	// Erase rectangle for all inventory items
 	int count = 0;

@@ -123,11 +123,13 @@ class Icon : public Drawable {
 public:
 	Icon(Cursor::CursorStyle style);
 
+	void setPosition(int x, int y);
 	void setBrightness(uint8 brightness);
-	Common::Rect draw(Graphics::Surface *surface, int x, int y);
+	Common::Rect draw(Graphics::Surface *surface);
 
 private:
 	Cursor::CursorStyle _style;
+	int _x, _y;
 	uint8 _brightness;
 };
 

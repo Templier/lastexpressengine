@@ -103,13 +103,6 @@ bool GraphicsManager::draw(Drawable *drawable, uint index, BackgroundType type, 
 	return (!rect.isEmpty());
 }
 
-bool GraphicsManager::draw(Drawable *drawable, int x, int y, BackgroundType type, bool transition) {
-	// TODO store rect for later use
-	Common::Rect rect = drawable->draw(getSurface(type), x, y);
-
-	return (!rect.isEmpty());
-}
-
 Graphics::Surface *GraphicsManager::getSurface(BackgroundType type) {
 	switch (type) {
 		default:
