@@ -43,12 +43,10 @@
 
 namespace LastExpress {
 
-const Common::String cursorsName("CURSORS.TBM");
-const Common::String fontName("FONT.DAT");
-
 LastExpressEngine::LastExpressEngine(OSystem *syst, const ADGameDescription *gd) :
-	Engine(syst), _gameDescription(gd), _debugger(NULL), _resource(NULL) {
-
+	Engine(syst), _gameDescription(gd), _debugger(NULL), _resource(NULL),
+	_cursor(NULL), _font(NULL), _sfx(NULL), _music(NULL), _logic(NULL),
+	_graphics(NULL) {
 	// Adding the default directories
 	SearchMan.addSubDirectoryMatching(_gameDataDir, "data");
 
@@ -96,17 +94,14 @@ Common::Error LastExpressEngine::run() {
 	_graphics = new GraphicsManager(_pixelFormat);
 
 	// Load the cursor data
-	_cursor = new Cursor();
-	if (!_cursor->load(_resource->getFileStream(cursorsName)))
+	_cursor = _resource->loadCursor();
+	if (!_cursor)
 		return Common::kUnknownError;
 
 	// Load the font data
-	_font = new Font();
-	if (!_font->load(_resource->getFileStream(fontName)))
+	_font = _resource->loadFont();
+	if (!_font)
 		return Common::kUnknownError;
-
-	// Initialize cursor
-	_cursor->setStyle(Cursor::kCursorNormal);
 
 	_sfx = new StreamedSound();
 	_music = new StreamedSound();

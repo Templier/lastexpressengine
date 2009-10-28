@@ -25,17 +25,19 @@
 
 #include "lastexpress/resource.h"
 #include "lastexpress/background.h"
+#include "lastexpress/cursor.h"
+#include "lastexpress/font.h"
 #include "lastexpress/lastexpress.h"
 
 #include "common/debug.h"
 
 namespace LastExpress {
 
-const Common::String archiveDemoPath("DEMO.HPF");
-const Common::String archiveHDPath("HD.HPF");
-const Common::String archiveCD1Path("CD1.HPF");
-const Common::String archiveCD2Path("CD2.HPF");
-const Common::String archiveCD3Path("CD3.HPF");
+const char *archiveDemoPath = "demo.hpf";
+const char *archiveHDPath = "hd.hpf";
+const char *archiveCD1Path = "cd1.hpf";
+const char *archiveCD2Path = "cd2.hpf";
+const char *archiveCD3Path = "cd3.hpf";
 
 ResourceManager::ResourceManager(LastExpressEngine *engine) : _engine(engine) {
 }
@@ -173,12 +175,12 @@ Common::SeekableReadStream *ResourceManager::createReadStreamForMember(const Com
 
 Background *ResourceManager::loadBackground(const Common::String &name) {
 	// Open the resource
-	Common::SeekableReadStream *stream = createReadStreamForMember(name + ".BG");
+	Common::SeekableReadStream *stream = createReadStreamForMember(name + ".bg");
 	if (!stream)
 		return NULL;
 
 	// Create the new background
-	Background *bg = new Background;
+	Background *bg = new Background();
 	if (!bg) {
 		delete stream;
 		return NULL;
@@ -191,6 +193,50 @@ Background *ResourceManager::loadBackground(const Common::String &name) {
 	}
 
 	return bg;
+}
+
+Cursor *ResourceManager::loadCursor() {
+	// Open the resource
+	Common::SeekableReadStream *stream = createReadStreamForMember("cursors.tbm");
+	if (!stream)
+		return NULL;
+
+	// Create the new background
+	Cursor *c = new Cursor();
+	if (!c) {
+		delete stream;
+		return NULL;
+	}
+
+	// Load the data
+	if (!c->load(stream)) {
+		delete c;
+		return NULL;
+	}
+
+	return c;
+}
+
+Font *ResourceManager::loadFont() {
+	// Open the resource
+	Common::SeekableReadStream *stream = createReadStreamForMember("font.dat");
+	if (!stream)
+		return NULL;
+
+	// Create the new background
+	Font *f = new Font();
+	if (!f) {
+		delete stream;
+		return NULL;
+	}
+
+	// Load the data
+	if (!f->load(stream)) {
+		delete f;
+		return NULL;
+	}
+
+	return f;
 }
 
 } // End of namespace LastExpress

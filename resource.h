@@ -31,6 +31,8 @@
 namespace LastExpress {
 
 class Background;
+class Cursor;
+class Font;
 class LastExpressEngine;
 
 class ResourceManager : public Common::Archive {
@@ -57,6 +59,8 @@ public:
 
 	// Resource loading
 	Background *loadBackground(const Common::String &name);
+	Cursor *loadCursor();
+	Font *loadFont();
 
 private:
 	LastExpressEngine *_engine;
