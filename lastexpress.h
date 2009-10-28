@@ -60,7 +60,6 @@ public:
 	ResourceManager *getResMan() const { return _resMan; }
 	StreamedSound *getMusicStream() const { return _music; }
 	StreamedSound *getSfxStream() const { return _sfx; }
-	Graphics::PixelFormat getPixelFormat() const { return _pixelFormat; }
 	GraphicsManager *getGraphicsManager() const { return _graphics; }
 
 private:

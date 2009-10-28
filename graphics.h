@@ -28,8 +28,6 @@
 
 #include "lastexpress/drawable.h"
 
-#include "graphics/pixelformat.h"
-
 namespace LastExpress {
 
 class GraphicsManager {
@@ -42,7 +40,7 @@ public:
 		kBackgroundAll
 	};
 
-	GraphicsManager(Graphics::PixelFormat format);
+	GraphicsManager();
 	~GraphicsManager();
 
 	// Update the screen

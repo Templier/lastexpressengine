@@ -75,12 +75,11 @@ LastExpressEngine::~LastExpressEngine() {
 // TODO: which error should we return when some game files are missing/corrupted?
 Common::Error LastExpressEngine::run() {
 	// Initialize the graphics
-	Graphics::PixelFormat dataPixelFormat(2, 5, 5, 5, 0, 10, 5, 0, 0);
+	const Graphics::PixelFormat dataPixelFormat(2, 5, 5, 5, 0, 10, 5, 0, 0);
 	initGraphics(640, 480, true, &dataPixelFormat);
-	_pixelFormat = _system->getScreenFormat();
 
 	// We do not support color conversion
-	if (_pixelFormat != dataPixelFormat)
+	if (_system->getScreenFormat() != dataPixelFormat)
 		return Common::kUnsupportedColorMode;
 
 	// Create debugger. It requires GFX to be initialized
@@ -91,7 +90,7 @@ Common::Error LastExpressEngine::run() {
 	if (!_resMan->loadArchive(ResourceManager::kArchiveAll))
 		return Common::kUnknownError;
 
-	_graphics = new GraphicsManager(_pixelFormat);
+	_graphics = new GraphicsManager();
 
 	// Load the cursor data
 	_cursor = _resMan->loadCursor();

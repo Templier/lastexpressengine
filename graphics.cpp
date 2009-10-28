@@ -29,15 +29,14 @@
 
 namespace LastExpress {
 
-GraphicsManager::GraphicsManager(Graphics::PixelFormat format) : _changed(false) {
-
-	_screen.create(640, 480, format.bytesPerPixel);
+GraphicsManager::GraphicsManager() : _changed(false) {
+	_screen.create(640, 480, 2);
 
 	// Create the game surfaces
-	_backgroundA.create(640, 480, format.bytesPerPixel);
-	_backgroundC.create(640, 480, format.bytesPerPixel);
-	_overlay.create(640, 480, format.bytesPerPixel);
-	_inventory.create(640, 480, format.bytesPerPixel);
+	_backgroundA.create(640, 480, 2);
+	_backgroundC.create(640, 480, 2);
+	_overlay.create(640, 480, 2);
+	_inventory.create(640, 480, 2);
 
 	clear(kBackgroundAll);
 }
