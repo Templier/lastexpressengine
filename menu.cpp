@@ -35,6 +35,8 @@
 #include "lastexpress/lastexpress.h"
 #include "lastexpress/resource.h"
 
+#define getNextGameId() (GameId)((_engine->getLogic()->getGameId() + 1) % 6)
+
 namespace LastExpress {
 
 //////////////////////////////////////////////////////////////////////////
@@ -206,7 +208,7 @@ void Menu::showMenu() {
 	// If no blue savegame exists, this might be the first time we start the game, so we show the full intro
 	if (_showStartScreen) {
 		_engine->getCursor()->show(false);
-		if (!SaveLoad::isSavegameValid(SaveLoad::kSavegameBlue)) {
+		if (!SaveLoad::isSavegameValid(kGameBlue)) {
 			Animation animation;
 
 			// Show Broderbrund logo
@@ -252,7 +254,7 @@ uint32 Menu::getSceneIndex() {
 
 	// + 1 = normal menu with open egg / clock
 	// + 2 = shield menu, when no savegame exists (no game has been started)
-	return (SaveLoad::isSavegameValid(getGameId())) ? getGameId() * 5 + 1 : getGameId() * 5 + 2;
+	return (SaveLoad::isSavegameValid(_engine->getLogic()->getGameId())) ? _engine->getLogic()->getGameId() * 5 + 1 : _engine->getLogic()->getGameId() * 5 + 2;
 }
 
 // Handle events
@@ -324,15 +326,15 @@ bool Menu::handleStartMenuEvent(Common::Event ev) {
 			getState()->currentScene = 255; // HACK to not show menu after we are finished
 			clearBg(GraphicsManager::kBackgroundAll);
 
-			showScene(_scene, 5 * getGameId() + 3, GraphicsManager::kBackgroundC);
+			showScene(_scene, 5 * _engine->getLogic()->getGameId() + 3, GraphicsManager::kBackgroundC);
 			askForRedraw(); redrawScreen();
 			_engine->_system->delayMillis(1000);
 
-			showScene(_scene, 5 * getGameId() + 4, GraphicsManager::kBackgroundC);
+			showScene(_scene, 5 * _engine->getLogic()->getGameId() + 4, GraphicsManager::kBackgroundC);
 			askForRedraw(); redrawScreen();
 			_engine->_system->delayMillis(1000);
 
-			showScene(_scene, 5 * getGameId() + 5, GraphicsManager::kBackgroundC);
+			showScene(_scene, 5 * _engine->getLogic()->getGameId() + 5, GraphicsManager::kBackgroundC);
 			askForRedraw(); redrawScreen();
 			_engine->_system->delayMillis(1000);
 
@@ -395,28 +397,28 @@ bool Menu::handleStartMenuEvent(Common::Event ev) {
 					drawSeqFrame(&_seqTooltips, kTooltipSwitchBlueGame, GraphicsManager::kBackgroundOverlay);
 			} else {
 				// Stupid tooltips ids are not in order, so we can't just increment them...
-				switch(getGameId()) {
-					case SaveLoad::kSavegameBlue:
+				switch(_engine->getLogic()->getGameId()) {
+					case kGameBlue:
 						drawSeqFrame(&_seqTooltips, kTooltipSwitchRedGame, GraphicsManager::kBackgroundOverlay);
 						break;
 
-					case SaveLoad::kSavegameRed:
+					case kGameRed:
 						drawSeqFrame(&_seqTooltips, kTooltipSwitchGreenGame, GraphicsManager::kBackgroundOverlay);
 						break;
 
-					case SaveLoad::kSavegameGreen:
+					case kGameGreen:
 						drawSeqFrame(&_seqTooltips, kTooltipSwitchPurpleGame, GraphicsManager::kBackgroundOverlay);
 						break;
 
-					case SaveLoad::kSavegamePurple:
+					case kGamePurple:
 						drawSeqFrame(&_seqTooltips, kTooltipSwitchTealGame, GraphicsManager::kBackgroundOverlay);
 						break;
 
-					case SaveLoad::kSavegameTeal:
+					case kGameTeal:
 						drawSeqFrame(&_seqTooltips, kTooltipSwitchGoldGame, GraphicsManager::kBackgroundOverlay);
 						break;
 
-					case SaveLoad::kSavegameGold:
+					case kGameGold:
 						drawSeqFrame(&_seqTooltips, kTooltipSwitchBlueGame, GraphicsManager::kBackgroundOverlay);
 						break;
 				}
@@ -592,7 +594,7 @@ void Menu::loadData() {
 	if (SaveLoad::isSavegameValid(getNextGameId()))
 		loaded &= _seqAcorn.loadFile(getAcornSequenceName(getNextGameId()));
 	else
-		loaded &= _seqAcorn.loadFile(getAcornSequenceName(SaveLoad::kSavegameBlue));
+		loaded &= _seqAcorn.loadFile(getAcornSequenceName(kGameBlue));
 	assert(loaded == true);
 
 	// Check if we loaded sequences before
@@ -619,7 +621,7 @@ void Menu::loadData() {
 }
 
 // Get the sequence name to use for the acorn highlight, depending of the currently loaded savegame
-Common::String Menu::getAcornSequenceName(SaveLoad::SavegameId id) {
+Common::String Menu::getAcornSequenceName(GameId id) {
 
 	// end of text:00449d80 (also sets up the main menu scene)
 
@@ -627,27 +629,27 @@ Common::String Menu::getAcornSequenceName(SaveLoad::SavegameId id) {
 	Common::String name = "";
 	switch (id) {
 	default:
-	case SaveLoad::kSavegameBlue:
+	case kGameBlue:
 		name = "aconblu3.seq";
 		break;
 
-	case SaveLoad::kSavegameRed:
+	case kGameRed:
 		name = "aconred.seq";
 		break;
 
-	case SaveLoad::kSavegameGreen:
+	case kGameGreen:
 		name = "acongren.seq";
 		break;
 
-	case SaveLoad::kSavegamePurple:
+	case kGamePurple:
 		name = "aconpurp.seq";
 		break;
 
-	case SaveLoad::kSavegameTeal:
+	case kGameTeal:
 		name = "aconteal.seq";
 		break;
 
-	case SaveLoad::kSavegameGold:
+	case kGameGold:
 		name = "acongold.seq";
 		break;
 	}
@@ -661,7 +663,7 @@ Common::String Menu::getAcornSequenceName(SaveLoad::SavegameId id) {
 
 void Menu::drawElements() {
 	// Do not draw if the game has not yet started
-	if (!SaveLoad::isSavegameValid(getGameId()))
+	if (!SaveLoad::isSavegameValid(_engine->getLogic()->getGameId()))
 		return;
 
 	clearBg(GraphicsManager::kBackgroundA);

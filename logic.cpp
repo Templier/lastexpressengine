@@ -78,8 +78,8 @@ void Logic::showMenu(bool visible) {
 
 	// TODO: move to shared method
 	// Init the first savegame if needed
-	if (!SaveLoad::isSavegamePresent(SaveLoad::kSavegameBlue))
-		SaveLoad::initSavegame(SaveLoad::kSavegameBlue);
+	if (!SaveLoad::isSavegamePresent(kGameBlue))
+		SaveLoad::initSavegame(kGameBlue);
 }
 
 bool Logic::handleMouseEvent(Common::Event ev) {
@@ -107,9 +107,9 @@ bool Logic::handleMouseEvent(Common::Event ev) {
 void Logic::switchGame() {
 	// Switch back to blue game is the current game is not started
 	if (!_runState.gameStarted) {
-		_runState.savegameId = SaveLoad::kSavegameBlue;
+		_runState.savegameId = kGameBlue;
 	} else {
-		_runState.savegameId = (SaveLoad::SavegameId)((_runState.savegameId + 1) % 6);
+		_runState.savegameId = (GameId)((_runState.savegameId + 1) % 6);
 	}
 
 	// Init savegame if needed
@@ -122,7 +122,7 @@ void Logic::switchGame() {
 	// TODO load data from savegame, adjust volume & luminosity, etc...
 	//////////////////////////////////////////////////////////////////////////
 	// HACK for debug
-	if (_runState.savegameId == SaveLoad::kSavegameBlue) {
+	if (_runState.savegameId == kGameBlue) {
 		_gameState->time = 2383200;
 		_runState.gameStarted = true;
 	}

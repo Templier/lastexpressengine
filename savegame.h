@@ -137,18 +137,17 @@
 
 namespace LastExpress {
 
+enum GameId {
+	kGameBlue,
+	kGameRed,
+	kGameGreen,
+	kGamePurple,
+	kGameTeal,
+	kGameGold
+};
+
 class SaveLoad {
 public:
-	// Savegame
-	enum SavegameId {
-		kSavegameBlue,
-		kSavegameRed,
-		kSavegameGreen,
-		kSavegamePurple,
-		kSavegameTeal,
-		kSavegameGold
-	};
-
 	struct GameProgress {
 		uint32 cdNumber;
 		uint32 portraitType;
@@ -206,12 +205,12 @@ public:
 
 
 	// Init & Access
-	static bool initSavegame(SavegameId id);
-	static GameState *getGameState(SavegameId id);
+	static bool initSavegame(GameId id);
+	static GameState *getGameState(GameId id);
 
 	// Getting information
-	static bool isSavegamePresent(SavegameId id);
-	static bool isSavegameValid(SavegameId id);
+	static bool isSavegamePresent(GameId id);
+	static bool isSavegameValid(GameId id);
 
 private:
 	static const uint32 _defaultBrigthness = 0x3;
@@ -220,11 +219,11 @@ private:
 	static const uint32 _defaultPortrait = 32;
 	static const uint32 _defaultCdNumber = 1;
 
-	static Common::String getSavegameName(SavegameId id);
+	static Common::String getSavegameName(GameId id);
 
 	// Opening save files
-	static Common::InSaveFile *openForLoading(SavegameId id);
-	static Common::OutSaveFile *openForSaving(SavegameId id);
+	static Common::InSaveFile *openForLoading(GameId id);
+	static Common::OutSaveFile *openForSaving(GameId id);
 };
 
 } // End of namespace LastExpress

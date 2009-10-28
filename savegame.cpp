@@ -48,7 +48,7 @@ const static struct {
 };
 
 // Check if a specific savegame exists
-bool SaveLoad::isSavegamePresent(SavegameId id) {
+bool SaveLoad::isSavegamePresent(GameId id) {
 	if (!Common::File::exists(getSavegameName(id)))
 		return false;
 
@@ -56,7 +56,7 @@ bool SaveLoad::isSavegamePresent(SavegameId id) {
 }
 
 // Check if the game has been started in the specific savegame
-bool SaveLoad::isSavegameValid(SavegameId id) {
+bool SaveLoad::isSavegameValid(GameId id) {
 	uint32 britghness, volume;
 
 	if (!isSavegamePresent(id)) {
@@ -111,7 +111,7 @@ EXIT:
 	return isOk;
 }
 
-bool SaveLoad::initSavegame(SavegameId id) {
+bool SaveLoad::initSavegame(GameId id) {
 	assert(!isSavegamePresent(id));
 
 	Common::OutSaveFile *save = openForSaving(id);
@@ -136,7 +136,7 @@ bool SaveLoad::initSavegame(SavegameId id) {
 }
 
 // Read savegame information
-SaveLoad::GameState *SaveLoad::getGameState(SavegameId id) {
+SaveLoad::GameState *SaveLoad::getGameState(GameId id) {
 	// TODO: read info from savegame
 	return new GameState;
 }
@@ -146,17 +146,17 @@ SaveLoad::GameState *SaveLoad::getGameState(SavegameId id) {
 //////////////////////////////////////////////////////////////////////////
 
 // Get the file name from the savegame ID
-Common::String SaveLoad::getSavegameName(SavegameId id) {
+Common::String SaveLoad::getSavegameName(GameId id) {
 	assert(id >= 0 && id < 6);
 
 	return gameInfo[id].saveFile;
 }
 
-Common::InSaveFile *SaveLoad::openForLoading(SavegameId id) {
+Common::InSaveFile *SaveLoad::openForLoading(GameId id) {
 	return g_system->getSavefileManager()->openForLoading(getSavegameName(id));
 }
 
-Common::OutSaveFile *SaveLoad::openForSaving(SavegameId id) {
+Common::OutSaveFile *SaveLoad::openForSaving(GameId id) {
 	return g_system->getSavefileManager()->openForSaving(getSavegameName(id));
 }
 

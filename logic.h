@@ -52,7 +52,7 @@ public:
 	// Accessors
 	bool isGameStarted() { return _runState.gameStarted; }
 	bool isShowingMenu() { return _runState.showingMenu; }
-	SaveLoad::SavegameId getSavegameId() { return _runState.savegameId; }
+	GameId getGameId() { return _runState.gameId; }
 	SaveLoad::GameState *getGameState() { return _gameState; }
 	Cursor::CursorStyle getCursorStyle() { return _runState.cursorStyle; }
 
@@ -64,13 +64,13 @@ private:
 
 	// State
 	struct RunState {
-		SaveLoad::SavegameId savegameId;
+		GameId gameId;
 		bool gameStarted;
 		bool showingMenu;
 		Cursor::CursorStyle cursorStyle;
 
 		RunState() {
-			savegameId = SaveLoad::kSavegameBlue;
+			gameId = kGameBlue;
 			gameStarted = false;
 			showingMenu = false;	
 			cursorStyle = Cursor::kCursorNormal;
@@ -86,11 +86,8 @@ private:
 	// Move to engine?
 	SaveLoad::GameState *_gameState;
 
-
-
 	// Actions
 	void action_pickGreenJacket();
-
 };
 
 } // End of namespace LastExpress

@@ -144,8 +144,8 @@ void Inventory::handleMouseEvent(Common::Event ev) {
 			return;
 		} else {
 			// Highlight if needed
-			if (_highlightedItem != getGameId() + 39) {
-				_highlightedItem = (InventoryItem)(getGameId() + 39);
+			if (_highlightedItem != _engine->getLogic()->getGameId() + 39) {
+				_highlightedItem = (InventoryItem)(_engine->getLogic()->getGameId() + 39);
 				drawItem(608, 448, _highlightedItem)
 
 				askForRedraw();
@@ -153,7 +153,7 @@ void Inventory::handleMouseEvent(Common::Event ev) {
 		}
 	} else {
 		// remove hightlight if needed
-		if (_highlightedItem == getGameId() + 39) {
+		if (_highlightedItem == _engine->getLogic()->getGameId() + 39) {
 			drawItemBrightness(608, 448, _highlightedItem, 50)
 			_highlightedItem = kNoItem;
 			askForRedraw();
@@ -294,12 +294,12 @@ void Inventory::blinkEgg(bool enabled) {
 
 	// Show egg at full brightness for first step if blinking
 	if (_blinkingEgg)
-		drawItemBrightness(608, 448, getGameId() + 39, _blinkingBrightness)
+		drawItemBrightness(608, 448, _engine->getLogic()->getGameId() + 39, _blinkingBrightness)
 	else {
 		// Reset values
 		_blinkingBrightness = 100;
 		_blinkingInterval = _defaultBlinkingInterval;
-		drawItemBrightness(608, 448, getGameId() + 39, 50)	// normal egg state
+		drawItemBrightness(608, 448, _engine->getLogic()->getGameId() + 39, 50)	// normal egg state
 	}
 
 	askForRedraw();
@@ -315,7 +315,7 @@ void Inventory::showHourGlass(bool enabled) {
 	if (_showingHourGlass)
 		drawItem(608, 448, Cursor::kCursorHourGlass)
 	else
-		drawItem(608, 448, getGameId() + 39) // normal egg state
+		drawItem(608, 448, _engine->getLogic()->getGameId() + 39) // normal egg state
 
 	askForRedraw();
 }
@@ -371,7 +371,7 @@ void Inventory::examine(InventoryItem item) {
 void Inventory::drawEgg() {
 	// Blinking egg: we need to blink the egg for delta time, with the blinking getting faster until it's always lit.
 	if (_blinkingEgg) {
-		drawItemBrightness(608, 448, getGameId() + 39, _blinkingBrightness)
+		drawItemBrightness(608, 448, _engine->getLogic()->getGameId() + 39, _blinkingBrightness)
 
 		// TODO if delta time > _blinkingInterval, update egg & ask for redraw then adjust blinking time and remaining time
 
@@ -381,7 +381,7 @@ void Inventory::drawEgg() {
 
 		askForRedraw();
 	} else {
-		drawItemBrightness(608, 448, getGameId() + 39, 50)
+		drawItemBrightness(608, 448, _engine->getLogic()->getGameId() + 39, 50)
 	}
 }
 

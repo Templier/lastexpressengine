@@ -190,7 +190,7 @@ private:
 	void drawElements();
 	void drawTrainLine(uint32 time);
 	Clock *_clock;
-	Common::String getAcornSequenceName(SaveLoad::SavegameId id);
+	Common::String getAcornSequenceName(GameId id);
 	void showCredits();
 
 	// Game time
