@@ -137,8 +137,6 @@ private:
 
 	Common::Array<FrameInfo> _frames;
 	Common::SeekableReadStream *_stream;
-	AnimFrame *_currentFrame;
-	uint32 _currentIndex;
 };
 
 class SequencePlayer : public Drawable {

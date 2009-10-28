@@ -40,7 +40,10 @@
 #define showScene(drawable, index, type) drawFrame(drawable, index, type)
 
 #define drawFrame(drawable, index, type) _engine->getGraphicsManager()->draw(drawable, index, type)
-#define drawSeqFrame(drawable, index, type) _engine->getGraphicsManager()->draw((drawable)->getFrame((index)), (type))
+#define drawSeqFrame(drawable, index, type) { \
+	AnimFrame *frame = (drawable)->getFrame((index)); \
+	_engine->getGraphicsManager()->draw((frame), (type)); \
+	delete frame; }
 #define clearBg(type) _engine->getGraphicsManager()->clear(type)
 
 #define askForRedraw() _engine->getGraphicsManager()->change();

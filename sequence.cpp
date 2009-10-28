@@ -335,7 +335,7 @@ void AnimFrame::decompFF(Common::SeekableReadStream *in, FrameInfo *f) {
 //  SEQUENCE
 //////////////////////////////////////////////////////////////////////////
 
-Sequence::Sequence() : _stream(NULL), _currentFrame(NULL), _currentIndex(0) {
+Sequence::Sequence() : _stream(NULL) {
 }
 
 Sequence::~Sequence() {
@@ -344,10 +344,8 @@ Sequence::~Sequence() {
 
 void Sequence::reset() {
 	_frames.clear();
-	delete _currentFrame;
 	delete _stream;
 	_stream = NULL;
-	_currentIndex = 0;
 }
 
 bool Sequence::load(Common::SeekableReadStream *stream) {
@@ -409,17 +407,9 @@ AnimFrame *Sequence::getFrame(uint32 index) {
 	if (_frames[index].compressionType == 0)
 		return NULL;	// FIXME is this error handled correctly in all cases?
 
-	// Return cached frame if requested again
-	if (index == _currentIndex && _currentFrame != NULL) // need to test _currentFrame for index = 0
-		return _currentFrame;
-
 	debugC(4, kLastExpressDebugGraphics, "Decoding frame %d / %d", index, _frames.size() - 1);
 
-	delete _currentFrame;
-	_currentIndex = index;
-	_currentFrame = new AnimFrame(_stream, &_frames[index]);
-
-	return _currentFrame;
+	return new AnimFrame(_stream, &_frames[index]);
 }
 
 
