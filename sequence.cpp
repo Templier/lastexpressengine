@@ -434,7 +434,7 @@ SequencePlayer::~SequencePlayer() {
 }
 
 bool SequencePlayer::processTime() {
-	// TODO: Just increment the current frame when it's the appropiate time
+	// TODO: Just increase the current frame when it's the appropiate time
 	if (_currentFrame < _sequence->count()) {
 		_currentFrame++;
 		return true;
@@ -457,6 +457,14 @@ Common::Rect SequencePlayer::draw(Graphics::Surface *surface) {
 	Common::Rect rect = f->draw(surface);
 
 	return rect;
+}
+
+bool SequencePlayer::setFrame(uint32 frame) {
+	if (frame < _sequence->count()) {
+		_currentFrame = frame;
+		return true;
+	} else
+		return false;
 }
 
 } // End of namespace LastExpress

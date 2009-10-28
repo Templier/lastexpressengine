@@ -137,7 +137,7 @@ private:
 
 	Common::Array<FrameInfo> _frames;
 	Common::SeekableReadStream *_stream;
-	AnimFrame* _currentFrame;
+	AnimFrame *_currentFrame;
 	uint32 _currentIndex;
 };
 
@@ -149,7 +149,9 @@ public:
 	bool processTime();
 	bool hasEnded();
 	Common::Rect draw(Graphics::Surface *surface);
+
 	// TODO: options to go to a concrete frame, play forwards, play backwards...
+	bool setFrame(uint32);
 
 private:
 	Sequence *_sequence;
