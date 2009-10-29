@@ -94,6 +94,7 @@ void FrameInfo::read(Common::SeekableReadStream *in, uint16 decompOffset) {
 
 AnimFrame::AnimFrame(Common::SeekableReadStream *in, FrameInfo *f) : _palette(NULL) {
 	_palSize = 1;
+	// TODO: use just the needed rectangle
 	_image.create(640, 480, 1);
 
 	switch (f->compressionType) {
@@ -405,7 +406,7 @@ AnimFrame *Sequence::getFrame(uint32 index) {
 
 	// Skip "invalid" frames
 	if (_frames[index].compressionType == 0)
-		return NULL;	// FIXME is this error handled correctly in all cases?
+		return NULL; // FIXME is this error handled correctly in all cases?
 
 	debugC(4, kLastExpressDebugGraphics, "Decoding frame %d / %d", index, _frames.size() - 1);
 

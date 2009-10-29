@@ -31,9 +31,9 @@
 
 	(text:00484750)
 	header (24 bytes)
-		char {8}   - entry name (null terminated)
-		byte {1}	- 0xCD
-		uint16 {2}	- number of scenes (for first entry - always 0 after?)
+		char {8}    - entry name (null terminated)
+		byte {1}    - 0xCD
+		uint16 {2}  - number of scenes (for first entry - always 0 after?)
 		uint16 {2}  - 11 ??
 		uint16 {2}  - 13 ??
 		byte {1}    - 15 ??

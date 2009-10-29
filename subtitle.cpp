@@ -47,15 +47,15 @@ public:
 	bool load(Common::SeekableReadStream *in);
 	Common::Rect draw(Graphics::Surface *surface, Font *font);
 
-	uint16 _timeStart;		///< display start time
-	uint16 _timeStop;		///< display stop time
+	uint16 _timeStart;    ///< display start time
+	uint16 _timeStop;     ///< display stop time
 
 private:
-	uint16 _topLength;		///< top line length
-	uint16 *_topText;		///< bottom line length
+	uint16 _topLength;    ///< top line length
+	uint16 *_topText;     ///< bottom line length
 
-	uint16 _bottomLength;	///< top line (UTF-16 string)
-	uint16 *_bottomText;	///< bottom line (UTF-16 string)
+	uint16 _bottomLength; ///< top line (UTF-16 string)
+	uint16 *_bottomText;  ///< bottom line (UTF-16 string)
 
 	void reset();
 };
@@ -165,8 +165,8 @@ bool SubtitleManager::load(Common::SeekableReadStream *stream) {
 
 	// TODO: Check that stream contain enough data
 	//if (stream->size() < (signed)(numSubtitles * sizeof(SubtitleData))) {
-	//	debugC(2, kLastExpressDebugSubtitle, "Subtitle file does not contain valid data!");
-	//	return false;
+		//debugC(2, kLastExpressDebugSubtitle, "Subtitle file does not contain valid data!");
+		//return false;
 	//}
 
 	// Read the list of subtitles
@@ -180,7 +180,7 @@ bool SubtitleManager::load(Common::SeekableReadStream *stream) {
 			return false;
 		}
 
-		// Update the max time 
+		// Update the max time
 		if (subtitle->_timeStop > _maxTime)
 			_maxTime = subtitle->_timeStop;
 

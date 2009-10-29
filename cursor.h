@@ -32,7 +32,7 @@
 	style table:
 		(for each cursor)
 		uint16 {2}       - hotspot X
-		uint16 {2}	     - hotspot Y
+		uint16 {2}       - hotspot Y
 
 	data:
 		(for each cursor)
@@ -58,18 +58,18 @@ public:
 		kCursorLeft,
 		kCursorRight,
 		kCursorHand,
-		kCursorHandKnock,	// 10
+		kCursorHandKnock, // 10
 		kCursorMagnifier,
 		kCursorHandPointer,
 		kCursorSleep,
 		kCursorTalk,
-		kCursorTalk2,		// Need better name
+		kCursorTalk2,     // Need better name
 		kCursorMatchBox,
 		kCursorTelegram,
 		kCursorPassengerList,
 		kCursorArticle,
-		kCursorScarf,		// 20
-		kCursorPaper,		// Need better name
+		kCursorScarf,     // 20
+		kCursorPaper,     // Need better name
 		kCursorParchemin,
 		kCursorMatch,
 		kCursorWhistle,
@@ -78,7 +78,7 @@ public:
 		kCursorFirebird,
 		kCursorBriefcase,
 		kCursorCorpse,
-		kCursorPunchLeft,	// 30
+		kCursorPunchLeft, // 30
 		kCursorPunchRight,
 		kCursorPortrait,
 		kCursorPortraitSelected,
@@ -88,7 +88,7 @@ public:
 		kCursorPortraitYellowSelected,
 		kCursorHourGlass,
 		kCursorEggBlue,
-		kCursorEggRed,	// 40
+		kCursorEggRed,    // 40
 		kCursorEggGreen,
 		kCursorEggPurple,
 		kCursorEggTeal,

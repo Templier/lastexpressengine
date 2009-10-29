@@ -75,7 +75,7 @@ void Logic::showMenu(bool visible) {
 	_gameState->currentScene = _menu->getSceneIndex();
 	_menu->showMenu();
 
-	// TODO reset showingMenu to false when starting/returning to a game and show inventory	
+	// TODO reset showingMenu to false when starting/returning to a game and show inventory
 
 	// TODO: move to shared method
 	// Init the first savegame if needed
@@ -86,12 +86,11 @@ void Logic::showMenu(bool visible) {
 bool Logic::handleMouseEvent(Common::Event ev) {
 	if (_gameState->currentScene == 0) {
 		// FIXME: allow inventory to show
-		_gameState->currentScene = 1;	
+		_gameState->currentScene = 1;
 		_inventory->show(true);
 
 		return true;
 	}
-		
 
 	// Special case for the main menu scene
 	if (isShowingMenu()) {
@@ -145,8 +144,7 @@ void Logic::action_pickGreenJacket() {
 
 	// 2 unknown functions calls
 
-	_inventory->setPortrait(Inventory::kPortraitGreen);	
-
+	_inventory->setPortrait(Inventory::kPortraitGreen);
 }
 
 } // End of namespace LastExpress

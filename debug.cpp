@@ -50,9 +50,9 @@ Debugger::Debugger(LastExpressEngine *engine) : _engine(engine) {
 	DCmd_Register("playsnd",   WRAP_METHOD(Debugger, cmd_playsnd));
 	DCmd_Register("playsbe",   WRAP_METHOD(Debugger, cmd_playsbe));
 	DCmd_Register("playnis",   WRAP_METHOD(Debugger, cmd_playnis));
-	DCmd_Register("showbg",	   WRAP_METHOD(Debugger, cmd_showbg));
+	DCmd_Register("showbg",    WRAP_METHOD(Debugger, cmd_showbg));
 	DCmd_Register("loadscene", WRAP_METHOD(Debugger, cmd_loadscene));
-	DCmd_Register("clear",	   WRAP_METHOD(Debugger, cmd_clear));
+	DCmd_Register("clear",     WRAP_METHOD(Debugger, cmd_clear));
 	DCmd_Register("listfiles", WRAP_METHOD(Debugger, cmd_listfiles));
 
 	resetCommand();
@@ -350,7 +350,7 @@ bool Debugger::cmd_loadscene(int argc, const char **argv) {
 				// Pause for a second to be able to see the scene
 				_engine->_system->delayMillis(1000);
 			//} else {
-			//	DebugPrintf("Cannot load scene %i from CD %i", index, cd);
+				//DebugPrintf("Cannot load scene %i from CD %i", index, cd);
 			//}
 
 			redrawScreen();

@@ -41,12 +41,12 @@ private:
 	SceneHeader() {}
 
 public: // XXX
-	char name[8];					// 0
-	byte sig;						// 8
-	uint16 count;					// 9
-	uint16 unknown11;				// 11
-	uint16 unknown13;				// 13
-	byte unknown15;					// 15
+	char name[8];     // 0
+	byte sig;         // 8
+	uint16 count;     // 9
+	uint16 unknown11; // 11
+	uint16 unknown13; // 13
+	byte unknown15;   // 15
 	byte unknown16;
 	byte unknown17;
 	byte unknown18;

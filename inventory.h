@@ -83,7 +83,7 @@ public:
 	void setPortrait(InventoryItem item);
 
 private:
-	static const uint32 _defaultBlinkingInterval = 250;	///< Default blinking interval in ms
+	static const uint32 _defaultBlinkingInterval = 250; ///< Default blinking interval in ms
 
 	// Index if items in inventory data
 	enum InventoryDataIndex {
@@ -121,10 +121,10 @@ private:
 			field_2 = 0;
 			is_selectable = 0;
 			has_item = 0;
-			field_5 = 1;	// TODO all except last it seems (is it really important?)
+			field_5 = 1; // TODO all except last it seems (is it really important?)
 			field_6 = 0;
 		}
-	}; 
+	};
 	InventoryEntry _entries[32];
 	uint32 _selectedItem;
 	bool _opened;

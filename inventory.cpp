@@ -111,7 +111,7 @@ void Inventory::init() {
 	_entries[kIndexTelegram].has_item = 1;
 	_entries[kIndexArticle].has_item = 1;
 
-	_selectedItem = 0;			
+	_selectedItem = 0;
 }
 
 // FIXME we need to draw cursors with full background opacity so that whatever is in the background is erased
@@ -297,7 +297,7 @@ void Inventory::blinkEgg(bool enabled) {
 		// Reset values
 		_blinkingBrightness = 100;
 		_blinkingInterval = _defaultBlinkingInterval;
-		drawItem(608, 448, _engine->getLogic()->getGameId() + 39, 50)	// normal egg state
+		drawItem(608, 448, _engine->getLogic()->getGameId() + 39, 50) // normal egg state
 	}
 
 	askForRedraw();

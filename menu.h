@@ -60,7 +60,7 @@ private:
 		kTooltipStartAnotherGame,
 		kTooltipVolumeUp,
 		kTooltipVolumeDown,
-		kTooltipBrightnessUp,	// 10
+		kTooltipBrightnessUp,     // 10
 		kTooltipBrightnessDown,
 		kTooltipQuit,
 		kTooltipRewindParis,
@@ -70,7 +70,7 @@ private:
 		kTooltipForwardMunich,
 		kTooltipForwardVienna,
 		kTooltipRewindVienna,
-		kTooltipRewindBudapest,	// 20
+		kTooltipRewindBudapest,   // 20
 		kTooltipForwardBudapest,
 		kTooltipForwardBelgrade,
 		kTooltipRewindBelgrade,
@@ -89,13 +89,13 @@ private:
 
 	// Overlay on cities (jlinetl.seq - jlinecen.seq - jlinebr.seq)
 	enum CityOverlay {
-		kParis = 100,			// index on sequence is 0
+		kParis = 100,         // index on sequence is 0
 		kStrasbourg = 0,
 		kMunich = 1,
 		kVienna = 2,
 		kBudapest = 3,
 		kBelgrade = 4,
-		kConstantinople = 101			// index on sequence is 0
+		kConstantinople = 101 // index on sequence is 0
 	};
 
 	// Game time when the train is at a specific city

@@ -318,7 +318,7 @@ bool Menu::handleStartMenuEvent(Common::Event ev) {
 		// Interrupt on right click
 		switch(ev.type) {
 			case Common::EVENT_RBUTTONDOWN:
-				_isShowingCredits = false;	// Will cause credits to stop & reset overlays
+				_isShowingCredits = false; // Will cause credits to stop & reset overlays
 			case Common::EVENT_LBUTTONDOWN:
 				showCredits();
 				askForRedraw();
@@ -360,7 +360,7 @@ bool Menu::handleStartMenuEvent(Common::Event ev) {
 			if (_currentTime == getState()->time) { // will break since we adjust the game time with rewind/forward/cities
 				// TODO check if game is finished
 				//if (isGameFinished())
-				//	_seqTooltips.showFrameOverlay(kTooltipViewGameEnding);
+					//_seqTooltips.showFrameOverlay(kTooltipViewGameEnding);
 				//else
 					drawSeqFrame(&_seqTooltips, kTooltipContinueGame, GraphicsManager::kBackgroundOverlay);
 			} else {
@@ -739,7 +739,7 @@ void Menu::drawTrainLine(uint32 time) {
 			break;
 
 	// Get index of city
-	uint32 index = trainCities[ixTime - 1].index;	// NOTE: disasm is accessing cities array starting from index -1 (= 0) - ie they have two 0 at the start of the array
+	uint32 index = trainCities[ixTime - 1].index; // NOTE: disasm is accessing cities array starting from index -1 (= 0) - ie they have two 0 at the start of the array
 
 	// FIXME do some stuff on index... as right now we jump from cities to cities
 
@@ -772,7 +772,7 @@ void Menu::showCredits() {
 void Menu::goToTime(uint32 time) {
 	// TODO implement modifying the current game time
 	// + adjusting elements on screen : clock + train line
-	//;getState()->time = time;		// need to use targetTime var, as modifying the global state will prevent us from going into the other direction later
+	//;getState()->time = time; // need to use targetTime var, as modifying the global state will prevent us from going into the other direction later
 
 	// Nothing to do if the menu time is already set to the correct value
 	// FIXME can this really happen?
@@ -850,7 +850,7 @@ void Menu::moveToCity(CityOverlay city, CityTime time, StartMenuTooltips tooltip
 		goToTime(time);
 		// TODO set some global var to 1
 	} else {
-		if (_currentTime < (uint32)time)			// For start city (Paris) and end city, this will always be true
+		if (_currentTime < (uint32)time) // For start city (Paris) and end city, this will always be true
 			drawSeqFrame(&_seqTooltips, tooltipForward, GraphicsManager::kBackgroundOverlay)
 		else
 			drawSeqFrame(&_seqTooltips, tooltipRewind, GraphicsManager::kBackgroundOverlay);

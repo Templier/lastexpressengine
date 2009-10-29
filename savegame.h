@@ -44,9 +44,9 @@
 		uint32 {4}      - current time
 		uint32 {4}      - ??
 		uint32 {4}      - ??
-		uint32 {4}      - Scene Index				max: 2600
+		uint32 {4}      - Scene Index               max: 2600
 		byte {1}        - ??
-		uint32 {4}      - Scene Index (copy?)		max: 2600
+		uint32 {4}      - Scene Index (copy?)       max: 2600
 		uint32 {4}      - Selected inventory item
 		uint32 {4}      - ??
 		uint32 {4*1000} - ??
@@ -116,15 +116,13 @@
 		uint32 {4}      - ??
 
 	InventoryData (32 entries)
-		byte {1}		- Item ID		(set to 0 for "undefined" items)
-		byte {1}		- Scene ID
-		byte {1}		- 1 if item is "selectable"
-		byte {1}		- ?? set to 1 for matchbox, match, telegram, whistle, key, firebird, briefcase, corpse, passengerlist
-		byte {1}		- Is item in inventory (set to 1 for telegram and article)
-		byte {1}		- ?? set to 1 (including entry 0 and excepting last entry) and set to 0 for XXXX(several entries), firebird, briefcase, corpse
-		byte {1}		- ?? set to 0
-		
-
+		byte {1}        - Item ID (set to 0 for "undefined" items)
+		byte {1}        - Scene ID
+		byte {1}        - 1 if item is "selectable"
+		byte {1}        - ?? set to 1 for matchbox, match, telegram, whistle, key, firebird, briefcase, corpse, passengerlist
+		byte {1}        - Is item in inventory (set to 1 for telegram and article)
+		byte {1}        - ?? set to 1 (including entry 0 and excepting last entry) and set to 0 for XXXX(several entries), firebird, briefcase, corpse
+		byte {1}        - ?? set to 0
 
 	Save point: max: 126 - rotates through list (ie. goes back and overwrites first save point when full)
 		uint32 {4}      - ?? (0 - 40 ?) type ?
@@ -163,7 +161,7 @@ public:
 		uint32 brightness;
 		uint32 volume;
 
-		// Game data		
+		// Game data
 		uint32 time;
 		uint32 currentScene;
 

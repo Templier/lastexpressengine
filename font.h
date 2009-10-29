@@ -77,7 +77,6 @@ private:
 	uint8 *_glyphWidths;
 };
 
-
 } // End of namespace LastExpress
 
 #endif // LASTEXPRESS_FONT_H
