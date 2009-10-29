@@ -40,28 +40,6 @@ class Clock;
 
 class Menu {
 public:
-	// Start menu events
-	enum StartMenuEvent {
-		kEventContinue = 1,
-		kEventCredits = 2,
-		kEventQuitGame = 3,
-		kEventCase4 = 4,
-		kEventSwitchSaveGame = 6,
-		kEventRewindGame = 7,
-		kEventForwardGame = 8,
-		kEventParis = 10,
-		kEventStrasBourg = 11,
-		kEventMunich = 12,
-		kEventVienna = 13,
-		kEventBudapest = 14,
-		kEventBelgrade = 15,
-		kEventConstantinople = 16,
-		kEventDecreaseVolume = 17,
-		kEventIncreaseVolume = 18,
-		kEventDecreaseBrightness = 19,
-		kEventIncreaseBrightness = 20
-	};
-
 	Menu(LastExpressEngine *engine);
 	~Menu();
 
@@ -71,7 +49,6 @@ public:
 	uint32 getSceneIndex();
 
 private:
-
 	// Tooltips sequence (helpnewr.seq)
 	enum StartMenuTooltips {
 		kTooltipInsertCd1,
@@ -109,34 +86,6 @@ private:
 		kTooltipCredits,
 		kTooltipFastForward,
 		kTooltipRewind
-	};
-
-	// Bottom-left buttons (quit.seq)
-	enum StartMenuButtons {
-		kButtonVolumeDownPushed,
-		kButtonVolumeDown,
-		kButtonVolume,
-		kButtonVolumeUp,
-		kButtonVolumeUpPushed,
-		kButtonBrightnessDownPushed,
-		kButtonBrightnessDown,
-		kButtonBrightness,
-		kButtonBrightnessUp,
-		kButtonBrightnessUpPushed,
-		kButtonQuit,
-		kButtonQuitPushed
-	};
-
-	// Egg buttons (buttns.seq)
-	enum StartMenuEggButtons {
-		kButtonShield,
-		kButtonRewind,
-		kButtonRewindPushed,
-		kButtonForward,
-		kButtonForwardPushed,
-		kButtonCredits,
-		kButtonCreditsPushed,
-		kButtonContinue
 	};
 
 	// Overlay on cities (jlinetl.seq - jlinecen.seq - jlinebr.seq)
