@@ -62,19 +62,19 @@ private:
 	static const uint32 _soundBlockSize = 739;
 
 	// despite their size field, info chunks don't have a payload
-	enum typesChunk {
+	enum ChunkType {
 		kChunkTypeUnknown1			= 0x0001,
 		kChunkTypeUnknown2			= 0x0002,
 		kChunkTypeAudioInfo			= 0x0003,
 		kChunkTypeUnknown4			= 0x0004,
 		kChunkTypeUnknown5			= 0x0005,
-		kChunkTypeBackgroundFrameA  = 0x000a,
-		kChunkTypeSelectBackgroundA = 0x000b,
-		kChunkTypeBackgroundFrameC  = 0x000c,
-		kChunkTypeSelectBackgroundC = 0x000d,
-		kChunkTypeOverlayFrame      = 0x0014,
-		kChunkTypeUnknown15			= 0x0015,	// might be subtitles
-		kChunkTypeUnknown16			= 0x0016,
+		kChunkTypeBackground1       = 0x000a,
+		kChunkTypeSelectBackground1 = 0x000b,
+		kChunkTypeBackground2       = 0x000c,
+		kChunkTypeSelectBackground2 = 0x000d,
+		kChunkTypeOverlay           = 0x0014,
+		kChunkTypeUpdate			= 0x0015,
+		kChunkTypeUpdateTransition	= 0x0016,
 		kChunkTypeUnknown1e         = 0x001e,
 		kChunkTypeUnknown1f         = 0x001f,
 		kChunkTypeAudioData         = 0x0020,
@@ -82,8 +82,8 @@ private:
 	};
 
 	struct Chunk {
-		uint16 type;
-		uint16 tag;
+		ChunkType type;
+		uint16 frame;
 		uint32 size;
 	};
 
@@ -97,7 +97,9 @@ private:
 	AnimFrame *_overlay, *_background1, *_background2;
 	byte _backgroundCurrent;
 	AppendableSound *_audio;
-	uint32 _frameNumber;
+
+	uint32 _startTime;
+	bool _changed;
 };
 
 } // End of namespace LastExpress

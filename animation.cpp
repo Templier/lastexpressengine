@@ -54,7 +54,6 @@ void Animation::reset() {
 	_audio = NULL;
 
 	_backgroundCurrent = 0;
-	_frameNumber = 0;
 	_chunks.clear();
 
 	delete _stream;
@@ -82,15 +81,17 @@ bool Animation::load(Common::SeekableReadStream *stream) {
 	// Read all the chunks
 	for (uint32 i = 0; i < numChunks; ++i) {
 		Chunk chunk;
-		chunk.type = (typesChunk)_stream->readUint16LE();
-		chunk.tag  = _stream->readUint16LE();
+		chunk.type = (ChunkType)_stream->readUint16LE();
+		chunk.frame = _stream->readUint16LE();
 		chunk.size = _stream->readUint32LE();
 
 		_chunks.push_back(chunk);
 
-		debugC(9, kLastExpressDebugGraphics, "Chunk Entry: type 0x%.4x, tag=%d, size=%d", chunk.type, chunk.tag, chunk.size);
+		debugC(9, kLastExpressDebugGraphics, "Chunk Entry: type 0x%.4x, frame=%d, size=%d", chunk.type, chunk.frame, chunk.size);
 	}
 	_currentChunk = _chunks.begin();
+	_changed = false;
+	_startTime = g_engine->_system->getMillis();
 
 	return true;
 }
@@ -101,84 +102,89 @@ bool Animation::process() {
 		return false;
 	}
 
-	// Process each chunk
-	bool frameEnd = false;
-	while (!frameEnd && !hasEnded()) {
+	// TODO: substract the time paused by the GUI
+	uint32 currentFrame = ((float)(g_engine->_system->getMillis() - _startTime)) / 33.33f;
+
+	// Process all chunks until the current frame
+	while (!_changed && currentFrame > _currentChunk->frame && !hasEnded()) {
 		switch(_currentChunk->type) {
 		//TODO: some info chunks are probably subtitle/sync related
 		case kChunkTypeUnknown1:
 		case kChunkTypeUnknown2:
 		case kChunkTypeUnknown5:
-			debugC(9, kLastExpressDebugGraphics, "  info chunk: type 0x%.4x (size %d)", _currentChunk->type, _currentChunk->size);
-			assert (_currentChunk->tag == 0);
+			debugC(9, kLastExpressDebugGraphics | kLastExpressDebugUnknown, "  info chunk: type 0x%.4x (size %d)", _currentChunk->type, _currentChunk->size);
+			assert (_currentChunk->frame == 0);
 			//TODO: _currentChunk->size?
 			break;
 
 		case kChunkTypeAudioInfo:
 			debugC(9, kLastExpressDebugGraphics, "  audio info: %d blocks", _currentChunk->size);
-			assert (_currentChunk->tag == 0);
+			assert (_currentChunk->frame == 0);
 			//TODO: save the size?
 			_audio = new AppendableSound();
 			break;
 
 		case kChunkTypeUnknown4:
-			debugC(9, kLastExpressDebugGraphics, "  info block 4: %d blocks", _currentChunk->size);
-			assert (_currentChunk->tag == 0 && _currentChunk->size == 0);
+			debugC(9, kLastExpressDebugGraphics | kLastExpressDebugUnknown, "  info block 4");
+			assert (_currentChunk->frame == 0 && _currentChunk->size == 0);
 			//TODO unknown type of chunk
 			break;
 
-		case kChunkTypeBackgroundFrameA:
-			debugC(9, kLastExpressDebugGraphics, "  frame A (background type 0x%.4x, %d bytes, tag %d)", _currentChunk->type, _currentChunk->size, _currentChunk->tag);
+		case kChunkTypeBackground1:
+			debugC(9, kLastExpressDebugGraphics, "  background frame 1 (%d bytes, frame %d)", _currentChunk->size, _currentChunk->frame);
 			delete _background1;
 			_background1 = processChunkFrame(_stream, _currentChunk);
 			break;
 
-		case kChunkTypeSelectBackgroundA:
-			debugC(9, kLastExpressDebugGraphics, "  frame info: select background A");
-			assert (_currentChunk->tag == 0 && _currentChunk->size == 0);
+		case kChunkTypeSelectBackground1:
+			debugC(9, kLastExpressDebugGraphics, "  select background 1");
+			assert (_currentChunk->frame == 0 && _currentChunk->size == 0);
 			_backgroundCurrent = 1;
 			break;
 
-		case kChunkTypeBackgroundFrameC:
-			debugC(9, kLastExpressDebugGraphics, "  frame C (background type 0x%.4x, %d bytes, tag %d)", _currentChunk->type, _currentChunk->size, _currentChunk->tag);
+		case kChunkTypeBackground2:
+			debugC(9, kLastExpressDebugGraphics, "  background frame 2 (%d bytes, frame %d)", _currentChunk->size, _currentChunk->frame);
 			delete _background2;
 			_background2 = processChunkFrame(_stream, _currentChunk);
 			break;
 
-		case kChunkTypeSelectBackgroundC:
-			debugC(9, kLastExpressDebugGraphics, "  frame info: select background C");
-			assert (_currentChunk->tag == 0 && _currentChunk->size == 0);
+		case kChunkTypeSelectBackground2:
+			debugC(9, kLastExpressDebugGraphics, "  select background 2");
+			assert (_currentChunk->frame == 0 && _currentChunk->size == 0);
 			_backgroundCurrent = 2;
 			break;
 
-		case kChunkTypeOverlayFrame:
-			debugC(9, kLastExpressDebugGraphics, "  frame #%.4d (overlay, %d bytes, tag %d)", _frameNumber, _currentChunk->size, _currentChunk->tag);
+		case kChunkTypeOverlay:
+			debugC(9, kLastExpressDebugGraphics, "  overlay frame (%d bytes, frame %d)", _currentChunk->size, _currentChunk->frame);
 			delete _overlay;
 			_overlay = processChunkFrame(_stream, _currentChunk);
-			frameEnd = true;
 			break;
 
-		case kChunkTypeUnknown15:
-		case kChunkTypeUnknown16:
-			debugC(9, kLastExpressDebugGraphics, "  info chunk: type 0x%.4x (tag %d)", _currentChunk->type, _currentChunk->tag);
+		case kChunkTypeUpdate:
+		case kChunkTypeUpdateTransition:
+			debugC(9, kLastExpressDebugGraphics, "  update%s: frame %d", _currentChunk->type == 15 ? "" : " with transition", _currentChunk->frame);
 			assert (_currentChunk->size == 0);
-			//TODO: _currentChunk->tag?
+			_changed = true;
 			break;
 
 		case kChunkTypeAudioData:
-			debugC(9, kLastExpressDebugGraphics, "  audio (%d blocks, %d bytes, tag %d)", _currentChunk->size/_soundBlockSize, _currentChunk->size, _currentChunk->tag);
+			debugC(9, kLastExpressDebugGraphics, "  audio (%d blocks, %d bytes, frame %d)", _currentChunk->size / _soundBlockSize, _currentChunk->size, _currentChunk->frame);
 			processChunkAudio(_stream, _currentChunk);
+
+			// Synchronize the audio by resetting the start time
+			if (_currentChunk->frame == 0)
+				_startTime = g_engine->_system->getMillis();
 			break;
 
 		case kChunkTypeAudioEnd:
-			debugC(9, kLastExpressDebugGraphics, "  audio end: %d blocks", _currentChunk->tag);
+			debugC(9, kLastExpressDebugGraphics, "  audio end: %d blocks", _currentChunk->frame);
 			assert (_currentChunk->size == 0);
 			_audio->finish();
 			//TODO: we need to start the linked sound (.LNK) after the audio from the animation ends
 			break;
 
 		default:
-			error("  UNKNOWN chunk type=%x tag=%x size=%d", _currentChunk->type, _currentChunk->tag, _currentChunk->size);
+			error("  UNKNOWN chunk type=%x frame=%d size=%d", _currentChunk->type, _currentChunk->frame, _currentChunk->size);
 			break;
 		}
 		_currentChunk++;
@@ -206,7 +212,7 @@ Common::Rect Animation::draw(Graphics::Surface *surface) {
 }
 
 AnimFrame *Animation::processChunkFrame(Common::SeekableReadStream *in, Chunk *c) {
-	assert (c->tag == 0);
+	assert (c->frame == 0);
 
 	// Create a temporary chunk buffer
 	Common::MemoryReadStream *str = in->readStream(c->size);
@@ -240,24 +246,28 @@ void Animation::processChunkAudio(Common::SeekableReadStream *in, Chunk *c) {
 void Animation::play() {
 	while (!hasEnded()) {
 		process();
-		_frameNumber++;
 
-		// Create a temporary surface to merge the overlay with the background
-		Graphics::Surface *s = new Graphics::Surface;
-		s->create(640, 480, 2);
+		if (_changed) {
+			// Create a temporary surface to merge the overlay with the background
+			Graphics::Surface *s = new Graphics::Surface;
+			s->create(640, 480, 2);
 
-		draw(s);
+			draw(s);
 
-		// XXX: Update the screen
-		g_system->copyRectToScreen((byte *)s->pixels, s->pitch, 0, 0, s->w, s->h);
+			// XXX: Update the screen
+			g_system->copyRectToScreen((byte *)s->pixels, s->pitch, 0, 0, s->w, s->h);
+
+			// Free the temporary surface
+			s->free();
+			delete s;
+
+			_changed = false;
+		}
+
 		g_system->updateScreen();
 
-		// Free the temporary surface
-		s->free();
-		delete s;
-
-		//FIXME: implement proper syncing + subtitles
-		g_engine->_system->delayMillis(50);
+		//FIXME: implement subtitles
+		g_engine->_system->delayMillis(20);
 
 		// Handle right-click to interrupt animations
 		Common::Event ev;
