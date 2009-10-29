@@ -83,11 +83,16 @@ bool Scene::load(Common::SeekableReadStream *stream) {
 	return true;
 }
 
-Common::Rect Scene::draw(Graphics::Surface *surface, uint index) {
-	if (index == 0 || index > 2500) // max number of scenes
-		index = 1;
+bool Scene::setScene(uint16 index) {
+	_currentScene = index;
+	return true;
+}
 
-	SceneEntry scene = _scenes[index - 1];
+Common::Rect Scene::draw(Graphics::Surface *surface) {
+	if (_currentScene == 0 || _currentScene > 2500) // max number of scenes
+		_currentScene = 1;
+
+	SceneEntry scene = _scenes[_currentScene - 1];
 
 #ifdef _DEBUG
 	debugC(9, kLastExpressDebugScenes, "\nScene:  name=%s, sig=%02d, count=%d, unk11=%d", scene.name, scene.sig, scene.count, scene.unknown11);
@@ -107,7 +112,7 @@ Common::Rect Scene::draw(Graphics::Surface *surface, uint index) {
 	Common::String name(scene.name);
 	name.trim();
 	if (name.empty()) {
-		debugC(2, kLastExpressDebugScenes, "This scene is not a valid root scene: %i", index);
+		debugC(2, kLastExpressDebugScenes, "This scene is not a valid root scene: %i", _currentScene);
 		return Common::Rect();
 	}
 

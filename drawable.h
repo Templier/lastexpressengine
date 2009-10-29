@@ -34,8 +34,7 @@ class Drawable {
 public:
 	virtual ~Drawable() {}
 
-	virtual Common::Rect draw(Graphics::Surface *surface) { return Common::Rect(); }
-	virtual Common::Rect draw(Graphics::Surface *surface, uint index) { return Common::Rect(); }
+	virtual Common::Rect draw(Graphics::Surface *surface) = 0;
 };
 
 } // End of namespace LastExpress

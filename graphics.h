@@ -57,7 +57,6 @@ public:
 	Graphics::Surface _screen;					// Actual screen surface
 
 	bool draw(Drawable *drawable, BackgroundType type, bool transition = false);
-	bool draw(Drawable *drawable, uint index, BackgroundType type, bool transition = false);
 
 private:
 	Graphics::Surface _backgroundA;				// Background A

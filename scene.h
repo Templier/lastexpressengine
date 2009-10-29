@@ -89,7 +89,8 @@ public:
 	~Scene();
 
 	bool load(Common::SeekableReadStream *stream);
-	Common::Rect draw(Graphics::Surface *surface, uint index);
+	bool setScene(uint16 index);
+	Common::Rect draw(Graphics::Surface *surface);
 	//SceneEntry *getEntry(uint sceneIndex);
 
 	bool checkHotSpot(uint index, Common::Point coord, byte *eventId);
@@ -159,6 +160,7 @@ private:
 
 	Common::SeekableReadStream *_stream;
 	Common::Array<SceneEntry> _scenes;
+	uint16 _currentScene;
 
 	bool readHotspot(SceneHotspot *hotspot);
 };
