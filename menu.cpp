@@ -101,8 +101,8 @@ enum StartMenuEggButtons {
 
 // Information about the cities on the train line
 struct CityInfo {
+	uint8 frame;
 	uint32 time;
-	uint32 index;
 };
 
 const static CityInfo trainCities[31] = {
@@ -141,6 +141,8 @@ const static CityInfo trainCities[31] = {
 
 
 // Menu elements
+
+// Clock
 
 class Clock : public Drawable {
 public:
@@ -193,6 +195,7 @@ bool Clock::load() {
 }
 
 bool Clock::process() {
+	assert(*_time >= 1037700 && *_time <= 4941000);
 	// Game starts at: 1037700 = 7:13 p.m. on July 24, 1914
 	// Game ends at:   4941000 = 7:30 p.m. on July 26, 1914
 	// Game lasts for: 3903300 = 2 days + 17 mins = 2897 mins
@@ -233,19 +236,111 @@ Common::Rect Clock::draw(Graphics::Surface *surface) {
 }
 
 
+// TrainLine
+
+class TrainLine : public Drawable {
+public:
+	TrainLine(LastExpressEngine *engine, uint32 *time);
+	~TrainLine();
+
+	bool load();
+	bool process();
+	Common::Rect draw(Graphics::Surface *surface);
+
+private:
+	LastExpressEngine *_engine;
+
+	uint32 *_time;
+	SequencePlayer *_seqLine1;
+	SequencePlayer *_seqLine2;
+	bool _line2Visible;
+};
+
+TrainLine::TrainLine(LastExpressEngine *engine, uint32 *time) : _engine(engine),
+	_time(time), _seqLine1(NULL), _seqLine2(NULL), _line2Visible(false) {}
+
+TrainLine::~TrainLine() {
+	delete _seqLine1;
+	delete _seqLine2;
+}
+
+bool TrainLine::load() {
+	bool loaded = true;
+	Sequence *s = new Sequence;
+	loaded &= s->loadFile("line1.seq");
+	_seqLine1 = new SequencePlayer(s);
+
+	s = new Sequence;
+	loaded &= s->loadFile("line2.seq");
+	_seqLine2 = new SequencePlayer(s);
+
+	return loaded;
+}
+
+// Draw the train line at the time
+//  line1: 150 frames (=> Belgrade)
+//  line2: 61 frames (=> Constantinople)
+// text:0042E710
+bool TrainLine::process() {
+	assert(*_time >= 1037700 && *_time <= 4941000);
+
+	// Get the index of the last city the train has visited
+	uint index = 0;
+	for (uint i = 0; i < ARRAYSIZE(trainCities); i++)
+		if (trainCities[i].time <= *_time)
+			index = i;
+
+	uint16 frame;
+	if (*_time > trainCities[index].time) {
+		// Interpolate linearly to use a frame between the cities
+		uint8 diffFrames = trainCities[index + 1].frame - trainCities[index].frame;
+		uint diffTimeCities = (trainCities[index + 1].time - trainCities[index].time);
+		uint traveledTime = (*_time - trainCities[index].time);
+		frame = trainCities[index].frame + (traveledTime * diffFrames) / diffTimeCities;
+	} else {
+		// Exactly on the city
+		frame = trainCities[index].frame;
+	}
+
+	if (frame < 150) {
+		_seqLine1->setFrame(frame);
+		_line2Visible = false;
+	} else {
+		// We passed Belgrade
+		_seqLine1->setFrame(149);
+		_seqLine2->setFrame(frame - 150);
+		_line2Visible = true;
+	}
+
+	return true;
+}
+
+Common::Rect TrainLine::draw(Graphics::Surface *surface) {
+	// Draw each element
+	_seqLine1->draw(surface);
+	if (_line2Visible)
+		_seqLine2->draw(surface);
+
+	return Common::Rect();
+}
+
+
 //////////////////////////////////////////////////////////////////////////
 
-Menu::Menu(LastExpressEngine *engine) : _engine(engine) {
+Menu::Menu(LastExpressEngine *engine) : _engine(engine), _clock(NULL), _trainLine(NULL) {
 	_showStartScreen = true;
 	_creditsSequenceIndex = 0;
 	_isShowingCredits = false;
 
 	_clock = new Clock(_engine, &_currentTime);
 	_clock->load();
+	_trainLine = new TrainLine(_engine, &_currentTime);
+	_trainLine->load();
 }
 
 Menu::~Menu() {
 	delete _clock;
+	delete _trainLine;
 }
 
 // Show the intro and load the main menu scene
@@ -292,12 +387,12 @@ void Menu::showMenu() {
 	_engine->getCursor()->setStyle(Cursor::kCursorNormal);
 	_engine->getCursor()->show(true);
 
+	// Init time
+	_currentTime = getState()->time;
+
 	// Load scene
 	showScene(getSceneIndex(), GraphicsManager::kBackgroundC);
 	drawElements();
-
-	// Init time
-	_currentTime = getState()->time;
 
 	askForRedraw();
 }
@@ -664,8 +759,6 @@ void Menu::loadData() {
 	loaded  &= _seqCityStart.loadFile("jlinetl.seq");
 	loaded  &= _seqCities.loadFile("jlinecen.seq");
 	loaded  &= _seqCityEnd.loadFile("jlinebr.seq");
-	loaded  &= _seqLine1.loadFile("line1.seq");
-	loaded  &= _seqLine2.loadFile("line2.seq");
 
 	loaded  &= _seqCredits.loadFile("credits.seq");
 
@@ -718,38 +811,15 @@ void Menu::drawElements() {
 	// Do not draw if the game has not yet started
 	if (!SaveLoad::isSavegameValid(_engine->getLogic()->getGameId()))
 		return;
+	if (!_engine->getLogic()->isGameStarted())
+		return;
 
 	clearBg(GraphicsManager::kBackgroundA);
 
 	_clock->process();
+	_trainLine->process();
 	_engine->getGraphicsManager()->draw(_clock, GraphicsManager::kBackgroundA);
-	drawTrainLine(_currentTime);
-}
-
-// Draw the train line at the time
-//  line1: 150 frames (=> Belgrade)
-//  line2: 61 frames (=> Constantinople)
-// text:0042E710
-void Menu::drawTrainLine(uint32 time) {
-	uint ixTime;
-
-	// Get index of the closest train line time to the current time
-	for (ixTime = 0; ixTime < sizeof(trainCities) - 1; ixTime++)
-		if (_currentTime <= trainCities[ixTime].time)
-			break;
-
-	// Get index of city
-	uint32 index = trainCities[ixTime - 1].index; // NOTE: disasm is accessing cities array starting from index -1 (= 0) - ie they have two 0 at the start of the array
-
-	// FIXME do some stuff on index... as right now we jump from cities to cities
-
-	if (index >= _seqLine1.count()) { // we passed Belgrade
-		drawSeqFrame(&_seqLine1, _seqLine1.count() - 1, GraphicsManager::kBackgroundA);
-		drawSeqFrame(&_seqLine2, index, GraphicsManager::kBackgroundA);
-	} else {
-		drawSeqFrame(&_seqLine1, index, GraphicsManager::kBackgroundA);
-		// no need to draw from line2
-	}
+	_engine->getGraphicsManager()->draw(_trainLine, GraphicsManager::kBackgroundA);
 }
 
 // Show credits overlay

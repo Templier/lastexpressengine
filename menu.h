@@ -36,6 +36,7 @@ namespace LastExpress {
 class LastExpressEngine;
 
 class Clock;
+class TrainLine;
 
 class Menu {
 public:
@@ -115,8 +116,6 @@ private:
 	Sequence _seqTooltips;
 	Sequence _seqEggButtons;
 	Sequence _seqButtons;
-	Sequence _seqLine1;
-	Sequence _seqLine2;
 	Sequence _seqCityStart;
 	Sequence _seqCities;
 	Sequence _seqCityEnd;
@@ -134,8 +133,8 @@ private:
 
 	// Overlays & elements
 	void drawElements();
-	void drawTrainLine(uint32 time);
 	Clock *_clock;
+	TrainLine *_trainLine;
 	Common::String getAcornSequenceName(GameId id);
 	void showCredits();
 
