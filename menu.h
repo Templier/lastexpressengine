@@ -34,7 +34,6 @@
 namespace LastExpress {
 
 class LastExpressEngine;
-class Scene;
 
 class Clock;
 
@@ -111,8 +110,6 @@ private:
 	};
 
 	LastExpressEngine *_engine;
-
-	Scene *_scene;
 
 	// Sequences
 	Sequence _seqTooltips;

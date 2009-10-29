@@ -34,11 +34,12 @@
 namespace LastExpress {
 
 class Cursor;
-class Debugger;
 class Font;
 class GraphicsManager;
 class Logic;
 class ResourceManager;
+class Scene;
+class SceneManager;
 class StreamedSound;
 
 class LastExpressEngine : public Engine {
@@ -61,6 +62,7 @@ public:
 	StreamedSound *getMusicStream() const { return _music; }
 	StreamedSound *getSfxStream() const { return _sfx; }
 	GraphicsManager *getGraphicsManager() const { return _graphics; }
+	Scene *getScene(uint16 sceneId) const;
 
 private:
 	const ADGameDescription *_gameDescription;
@@ -73,6 +75,7 @@ private:
 	StreamedSound *_music;
 	StreamedSound *_sfx;
 	GraphicsManager *_graphics;
+	SceneManager *_sceneMan;
 };
 
 } // End of namespace LastExpress

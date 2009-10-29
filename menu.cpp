@@ -41,6 +41,7 @@
 	AnimFrame *frame = (drawable)->getFrame((index)); \
 	_engine->getGraphicsManager()->draw((frame), (type)); \
 	delete frame; }
+#define showScene(index, type) { Scene *s = _engine->getScene(index); _engine->getGraphicsManager()->draw(s, type); delete s; }
 
 namespace LastExpress {
 
@@ -239,13 +240,11 @@ Menu::Menu(LastExpressEngine *engine) : _engine(engine) {
 	_creditsSequenceIndex = 0;
 	_isShowingCredits = false;
 
-	_scene = new Scene(_engine->getResMan());
 	_clock = new Clock(_engine, &_currentTime);
 	_clock->load();
 }
 
 Menu::~Menu() {
-	delete _scene;
 	delete _clock;
 }
 
@@ -281,7 +280,7 @@ void Menu::showMenu() {
 		} else {
 			playMusic("mus018.snd");
 
-			showScene(_scene, 65, GraphicsManager::kBackgroundC);
+			showScene(65, GraphicsManager::kBackgroundC);
 			askForRedraw(); redrawScreen();
 			//_engine->_system->delayMillis(1000);
 
@@ -294,7 +293,7 @@ void Menu::showMenu() {
 	_engine->getCursor()->show(true);
 
 	// Load scene
-	showScene(_scene, getSceneIndex(), GraphicsManager::kBackgroundC);
+	showScene(getSceneIndex(), GraphicsManager::kBackgroundC);
 	drawElements();
 
 	// Init time
@@ -314,7 +313,6 @@ uint32 Menu::getSceneIndex() {
 
 // Handle events
 bool Menu::handleStartMenuEvent(Common::Event ev) {
-
 	// Special case if we are showing credits (only allow left & right-click)
 	if (_isShowingCredits) {
 		// Interrupt on right click
@@ -331,11 +329,14 @@ bool Menu::handleStartMenuEvent(Common::Event ev) {
 
 	// Process event (check hit box / etc.)
 	static StartMenuEvent event;
-	if (!_scene->checkHotSpot(getState()->currentScene, ev.mouse, (byte *)&event)) {
+	Scene *sc = _engine->getScene(getState()->currentScene);
+	if (!sc->checkHotSpot(ev.mouse, (byte *)&event)) {
+		delete sc;
 		clearBg(GraphicsManager::kBackgroundOverlay);
 		askForRedraw();
 		return true;
 	}
+	delete sc;
 
 	bool clicked = (ev.type == Common::EVENT_LBUTTONDOWN);
 	clearBg(GraphicsManager::kBackgroundOverlay);
@@ -381,15 +382,15 @@ bool Menu::handleStartMenuEvent(Common::Event ev) {
 			getState()->currentScene = 255; // HACK to not show menu after we are finished
 			clearBg(GraphicsManager::kBackgroundAll);
 
-			showScene(_scene, 5 * _engine->getLogic()->getGameId() + 3, GraphicsManager::kBackgroundC);
+			showScene(5 * _engine->getLogic()->getGameId() + 3, GraphicsManager::kBackgroundC);
 			askForRedraw(); redrawScreen();
 			_engine->_system->delayMillis(1000);
 
-			showScene(_scene, 5 * _engine->getLogic()->getGameId() + 4, GraphicsManager::kBackgroundC);
+			showScene(5 * _engine->getLogic()->getGameId() + 4, GraphicsManager::kBackgroundC);
 			askForRedraw(); redrawScreen();
 			_engine->_system->delayMillis(1000);
 
-			showScene(_scene, 5 * _engine->getLogic()->getGameId() + 5, GraphicsManager::kBackgroundC);
+			showScene(5 * _engine->getLogic()->getGameId() + 5, GraphicsManager::kBackgroundC);
 			askForRedraw(); redrawScreen();
 			_engine->_system->delayMillis(1000);
 
@@ -667,9 +668,6 @@ void Menu::loadData() {
 	loaded  &= _seqLine2.loadFile("line2.seq");
 
 	loaded  &= _seqCredits.loadFile("credits.seq");
-
-	// Load scene
-	loaded &= _scene->loadScene(1);
 
 	// We cannot proceed unless all files loaded properly
 	assert(loaded == true);

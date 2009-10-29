@@ -338,18 +338,20 @@ bool Debugger::cmd_loadscene(int argc, const char **argv) {
 		} else {
 			clearBg(GraphicsManager::kBackgroundAll);
 
-			Scene scene(_engine->getResMan());
-			if (scene.loadScene(cd)) {
-				showScene(&scene, index, GraphicsManager::kBackgroundC);
+			//SceneManager scene;
+			//if (scene.loadScene(cd)) {
+				Scene *s = _engine->getScene(index);
+				_engine->getGraphicsManager()->draw(s, GraphicsManager::kBackgroundC);
+				delete s;
 
 				askForRedraw();
 				redrawScreen();
 
 				// Pause for a second to be able to see the scene
 				_engine->_system->delayMillis(1000);
-			} else {
-				DebugPrintf("Cannot load scene %i from CD %i", index, cd);
-			}
+			//} else {
+			//	DebugPrintf("Cannot load scene %i from CD %i", index, cd);
+			//}
 
 			redrawScreen();
 

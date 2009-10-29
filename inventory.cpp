@@ -39,14 +39,11 @@ namespace LastExpress {
 
 Inventory::Inventory(LastExpressEngine *engine) : _engine(engine),
 	_showingHourGlass(false), _blinkingEgg(false), _blinkingTime(0), _blinkingBrightness(100), _blinkingInterval(_defaultBlinkingInterval),
-	_opened(false), _scene(engine->getResMan()) {
+	_opened(false) {
 
 	_inventoryRect = Common::Rect(0, 0, 32, 32);
 	_menuRect = Common::Rect(608, 448, 640, 480);
 	_selectedRect = Common::Rect(44, 0, 76, 32);
-
-	// Load scene data
-	_scene.loadScene(1);
 }
 
 Inventory::~Inventory() {}
@@ -360,11 +357,13 @@ Inventory::InventoryEntry *Inventory::getEntry(InventoryItem item) {
 
 // Examine an inventory item
 void Inventory::examine(InventoryItem item) {
-
 	uint32 sceneId = getEntry(item)->scene_id;
 
-	if (sceneId != 0)
-		showScene(&_scene, sceneId, GraphicsManager::kBackgroundOverlay);
+	if (sceneId != 0) {
+		Scene *s = _engine->getScene(sceneId);
+		_engine->getGraphicsManager()->draw(s, GraphicsManager::kBackgroundOverlay);
+		delete s;
+	}
 
 	// TODO implement
 }

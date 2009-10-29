@@ -26,98 +26,174 @@
 #include "lastexpress/scene.h"
 
 #include "lastexpress/background.h"
-#include "lastexpress/debug.h"
+#include "lastexpress/lastexpress.h"
 #include "lastexpress/resource.h"
-
-#include "common/debug.h"
-#include "common/stream.h"
 
 namespace LastExpress {
 
-Scene::Scene(ResourceManager *resource) : _resource(resource), _stream(NULL) {}
+// SceneHeader
+
+struct SceneHeader {
+public:
+	static SceneHeader *load(Common::SeekableReadStream *stream);
+
+private:
+	SceneHeader() {}
+
+public: // XXX
+	char name[8];					// 0
+	byte sig;						// 8
+	uint16 count;					// 9
+	uint16 unknown11;				// 11
+	uint16 unknown13;				// 13
+	byte unknown15;					// 15
+	byte unknown16;
+	byte unknown17;
+	byte unknown18;
+	byte unknown19;
+	uint16 offsetHotspot;
+	byte unknown22;
+	byte unknown23;
+};
+
+SceneHeader *SceneHeader::load(Common::SeekableReadStream *stream) {
+	SceneHeader *sh = new SceneHeader();
+	if (!sh)
+		return NULL;
+
+	stream->read(&sh->name, sizeof(sh->name));
+	sh->sig = stream->readByte();
+	sh->count = stream->readUint16LE();;
+	sh->unknown11 = stream->readUint16LE();
+	sh->unknown13 = stream->readUint16LE();
+	sh->unknown15 = stream->readByte();
+	sh->unknown16 = stream->readByte();
+	sh->unknown17 = stream->readByte();
+	sh->unknown18 = stream->readByte();
+	sh->unknown19 = stream->readByte();
+	sh->offsetHotspot = stream->readUint16LE();
+	sh->unknown22 = stream->readByte();
+	sh->unknown23 = stream->readByte();
+
+	debugC(9, kLastExpressDebugScenes, "\nScene:  name=%s, sig=%02d, count=%d, unk11=%d", sh->name, sh->sig, sh->count, sh->unknown11);
+	debugC(9, kLastExpressDebugScenes, "\tunk13=%02d, unk16=%02d, unk17=%02d, unk18=%02d", sh->unknown13, sh->unknown16, sh->unknown17, sh->unknown18);
+	debugC(9, kLastExpressDebugScenes, "\tunk19=%02d, hotspotOffset=%02d, unk22=%02d, unk23=%02d", sh->unknown19, sh->offsetHotspot, sh->unknown22, sh->unknown23);
+
+	return sh;
+}
+
+
+// SceneHotspot
+
+class SceneHotspot {
+public:
+	static SceneHotspot *load(Common::SeekableReadStream *stream);
+
+private:
+	SceneHotspot() {}
+
+public: //XXX
+	Common::Rect rect;
+	uint16 offset;
+	uint16 unknown10;
+	uint16 unknown12;
+	byte unknown14;
+	byte eventId;
+	uint16 unknown17;
+	uint16 unknown19;
+	uint16 unknown21;
+	uint16 unknown23;
+};
+
+SceneHotspot *SceneHotspot::load(Common::SeekableReadStream *stream) {
+	// Check that we have data to read
+	uint16 left = stream->readUint16LE();
+	if (left == 0)
+		return NULL;
+
+	SceneHotspot *hs = new SceneHotspot();
+	if (!hs)
+		return NULL;
+
+	// Rect
+	hs->rect.left = left;
+	hs->rect.right = stream->readUint16LE();
+	hs->rect.top = stream->readUint16LE();
+	hs->rect.bottom = stream->readUint16LE();
+
+	hs->offset = stream->readUint16LE();
+	hs->unknown10 = stream->readUint16LE();
+	hs->unknown12 = stream->readUint16LE();
+	hs->unknown14 = stream->readByte();
+	hs->eventId = stream->readByte();
+	hs->unknown17 = stream->readUint16LE();
+	hs->unknown19 = stream->readUint16LE();
+	hs->unknown21 = stream->readUint16LE();
+	hs->unknown23 = stream->readUint16LE();
+
+	debugC(9, kLastExpressDebugScenes, "\thotspot: Rect=(%d, %d)x(%d,%d) event=%02d", hs->rect.left, hs->rect.top, hs->rect.right, hs->rect.bottom, hs->eventId);
+
+	return hs;
+}
+
+
+// Scene
 
 Scene::~Scene() {
-	delete _stream;
+	// Free the hotspots
+	for (uint i = 0; i < _hotspots.size(); i++)
+		delete _hotspots[i];
 }
 
-bool Scene::load(Common::SeekableReadStream *stream) {
-	if (!stream)
-		return false;
+Scene *Scene::load(Common::SeekableReadStream *stream, SceneHeader *header) {
+	Scene *s = new Scene(header);
+	if (!s)
+		return NULL;
 
-	delete _stream;
-	_stream = stream;
-
-	// Read the number of scenes (the first entry is a dummy one)
-	stream->seek(9, SEEK_SET);
-	uint32 numScenes = stream->readUint32LE();
-	debugC(2, kLastExpressDebugScenes, "   found %d entries", numScenes);
-
-	if (numScenes > 2500)
-		return false;
-
-	// Go to first scene
-	stream->seek(_headerSize, SEEK_SET);
-
-	// Read all the chunks
-	for (uint32 i = 0; i < numScenes; ++i) {
-
-		SceneEntry scene;
-
-		stream->read(&scene.name, sizeof(scene.name));
-		scene.sig = stream->readByte();
-		scene.count = stream->readUint16LE();;
-		scene.unknown11 = stream->readUint16LE();
-		scene.unknown13 = stream->readUint16LE();
-		scene.unknown15 = stream->readByte();
-		scene.unknown16 = stream->readByte();
-		scene.unknown17 = stream->readByte();
-		scene.unknown18 = stream->readByte();
-		scene.unknown19 = stream->readByte();
-		scene.offsetHotspot = stream->readUint16LE();
-		scene.unknown22 = stream->readByte();
-		scene.unknown23 = stream->readByte();
-
-		_scenes.push_back(scene);
+	// Read all hotspots
+	if (header->offsetHotspot != 0) {
+		stream->seek(header->offsetHotspot, SEEK_SET);
+		SceneHotspot *hotspot = SceneHotspot::load(stream);
+		while (hotspot) {
+			s->_hotspots.push_back(hotspot);
+			hotspot = SceneHotspot::load(stream);
+		}
 	}
 
-	return true;
+	return s;
 }
 
-bool Scene::setScene(uint16 index) {
-	_currentScene = index;
-	return true;
+bool Scene::checkHotSpot(Common::Point coord, byte *eventId) {
+	// TODO: Iterate over scene rectangles?
+
+	uint16 unknown = 0;
+	byte id = 0;
+	bool found = false;
+	for (uint i = 0; i < _hotspots.size(); i++) {
+		if (_hotspots[i]->rect.contains(coord)) {
+			if (unknown <= _hotspots[i]->unknown14) {
+				found = true;
+				unknown = _hotspots[i]->unknown14;
+				id = _hotspots[i]->eventId;
+			}
+		}
+	}
+
+	*eventId = id;
+	return found;
 }
 
 Common::Rect Scene::draw(Graphics::Surface *surface) {
-	if (_currentScene == 0 || _currentScene > 2500) // max number of scenes
-		_currentScene = 1;
-
-	SceneEntry scene = _scenes[_currentScene - 1];
-
-#ifdef _DEBUG
-	debugC(9, kLastExpressDebugScenes, "\nScene:  name=%s, sig=%02d, count=%d, unk11=%d", scene.name, scene.sig, scene.count, scene.unknown11);
-	debugC(9, kLastExpressDebugScenes, "\tunk13=%02d, unk16=%02d, unk17=%02d, unk18=%02d", scene.unknown13, scene.unknown16, scene.unknown17, scene.unknown18);
-	debugC(9, kLastExpressDebugScenes, "\tunk19=%02d, hotspotOffset=%02d, unk22=%02d, unk23=%02d", scene.unknown19, scene.offsetHotspot, scene.unknown22, scene.unknown23);
-
-	// Read all hotspots
-	if (scene.offsetHotspot != 0) {
-		_stream->seek(scene.offsetHotspot, SEEK_SET);
-		SceneHotspot hotspot;
-		while (readHotspot(&hotspot))
-			debugC(9, kLastExpressDebugScenes, "\thotspot: Rect=(%d, %d)x(%d,%d) event=%02d", hotspot.rect.left, hotspot.rect.top, hotspot.rect.right, hotspot.rect.bottom, hotspot.eventId);
-	}
-#endif
-
 	// Safety checks
-	Common::String name(scene.name);
+	Common::String name(_header->name);
 	name.trim();
 	if (name.empty()) {
-		debugC(2, kLastExpressDebugScenes, "This scene is not a valid root scene: %i", _currentScene);
+		debugC(2, kLastExpressDebugScenes, "This scene is not a valid root scene");
 		return Common::Rect();
 	}
 
 	// Load background
-	Background *background = _resource->loadBackground(name);
+	Background *background = ((LastExpressEngine *)g_engine)->getResMan()->loadBackground(name);
 	Common::Rect rect;
 	if (background) {
 		rect = background->draw(surface);
@@ -127,75 +203,56 @@ Common::Rect Scene::draw(Graphics::Surface *surface) {
 	return rect;
 }
 
-bool Scene::checkHotSpot(uint index, Common::Point coord, byte *eventId) {
-	// Reset values
-	*eventId = 0;
 
-	SceneEntry entry = _scenes[index - 1];	// we don't store the first entry (only stores the number of scenes)
+// SceneManager
 
-	// TODO: Iterate over scene rectangles
-	if (entry.offsetHotspot == 0)
-		return false;
+SceneManager::SceneManager() : _stream(NULL) {}
 
-	_stream->seek(entry.offsetHotspot, SEEK_SET);
+SceneManager::~SceneManager() {
+	delete _stream;
 
-	uint16 unknown = 0;
-	byte id = 0;
-	bool found = false;
-	SceneHotspot hotspot;
-	while(readHotspot(&hotspot)) {
-		if (hotspot.rect.contains(coord)) {
-			if (unknown <= hotspot.unknown14) {
-				found = true;
-				unknown = hotspot.unknown14;
-				id = hotspot.eventId;
-			}
-		}
-	}
-
-	if (found) {
-		*eventId = id;
-		return true;
-	}
-
-	return false;
+	// Free the headers
+	for (uint i = 0; i < _headers.size(); i++)
+		delete _headers[i];
 }
 
-// Read hotpost information
-bool Scene::readHotspot(SceneHotspot *hotspot) {
-
-	// Check that we have data to read
-	uint16 left = _stream->readUint16LE();
-	if (left == 0)
+bool SceneManager::load(Common::SeekableReadStream *stream) {
+	if (!stream)
 		return false;
 
-	// Rect
-	hotspot->rect.left = left;
-	hotspot->rect.right = _stream->readUint16LE();
-	hotspot->rect.top = _stream->readUint16LE();
-	hotspot->rect.bottom = _stream->readUint16LE();
+	delete _stream;
+	_stream = stream;
 
-	hotspot->offset = _stream->readUint16LE();
-	hotspot->unknown10 = _stream->readUint16LE();
-	hotspot->unknown12 = _stream->readUint16LE();
-	hotspot->unknown14 = _stream->readByte();
-	hotspot->eventId = _stream->readByte();
-	hotspot->unknown17 = _stream->readUint16LE();
-	hotspot->unknown19 = _stream->readUint16LE();
-	hotspot->unknown21 = _stream->readUint16LE();
-	hotspot->unknown23 = _stream->readUint16LE();
+	// Read the number of scenes (the first entry is a dummy one)
+	_stream->seek(9, SEEK_SET);
+	uint32 numScenes = _stream->readUint32LE();
+	debugC(2, kLastExpressDebugScenes, "   found %d entries", numScenes);
+
+	if (numScenes > 2500)
+		return false;
+
+	// Go to first scene (each header is 24 bytes long)
+	_stream->seek(24, SEEK_SET);
+
+	// Read all the chunks
+	for (uint32 i = 0; i < numScenes; ++i) {
+		SceneHeader *header = SceneHeader::load(_stream);
+		if (!header)
+			break;
+		_headers.push_back(header);
+	}
 
 	return true;
 }
 
-//Scene::SceneEntry *Scene::getEntry(uint sceneIndex) {
-//	if (_scenes.empty())
-//		return NULL;
-//
-//	if (sceneIndex < 0 || sceneIndex > _scenes.size())
-//		return NULL;
-//
-//	return &_scenes[sceneIndex];
-//}
+Scene *SceneManager::getScene(uint16 index) {
+	if (_headers.empty())
+		return NULL;
+
+	if (index > _headers.size())
+		return NULL;
+
+	return Scene::load(_stream, _headers[index - 1]);
+}
 
 } // End of namespace LastExpress

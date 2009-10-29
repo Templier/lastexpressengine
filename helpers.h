@@ -36,8 +36,6 @@
 //////////////////////////////////////////////////////////////////////////
 // Graphics
 //////////////////////////////////////////////////////////////////////////
-#define loadScene(cd) loadFile(Common::String::printf("CD%iTRAIN.DAT", cd))
-#define showScene(scene, index, type) (scene)->setScene(index); _engine->getGraphicsManager()->draw(scene, type)
 #define clearBg(type) _engine->getGraphicsManager()->clear(type)
 
 #define askForRedraw() _engine->getGraphicsManager()->change();

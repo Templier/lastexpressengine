@@ -72,7 +72,6 @@
 		byte {1}
 		byte {1}
 		byte {1}
-
 */
 
 #include "lastexpress/drawable.h"
@@ -81,88 +80,35 @@
 
 namespace LastExpress {
 
-class ResourceManager;
+class SceneHeader;
+class SceneHotspot;
 
 class Scene : public Drawable {
 public:
-	Scene(ResourceManager *resource);
 	~Scene();
 
-	bool load(Common::SeekableReadStream *stream);
-	bool setScene(uint16 index);
+	static Scene *load(Common::SeekableReadStream *stream, SceneHeader *header);
+	bool checkHotSpot(Common::Point coord, byte *eventId);
 	Common::Rect draw(Graphics::Surface *surface);
-	//SceneEntry *getEntry(uint sceneIndex);
-
-	bool checkHotSpot(uint index, Common::Point coord, byte *eventId);
 
 private:
-	static const uint32 _headerSize = 24;
+	Scene(SceneHeader *header) : _header(header) {}
 
-	struct SceneEntry {
-		char name[8];					// 0
-		byte sig;						// 8
-		uint16 count;					// 9
-		uint16 unknown11;				// 11
-		uint16 unknown13;				// 13
-		byte unknown15;					// 15
-		byte unknown16;
-		byte unknown17;
-		byte unknown18;
-		byte unknown19;
-		uint16 offsetHotspot;
-		byte unknown22;
-		byte unknown23;
+	SceneHeader *_header;
+	Common::Array<SceneHotspot *> _hotspots;
+};
 
-		SceneEntry() {
-			memset(&name, 0, sizeof(name));
-			sig = 0;
-			count = 0;
-			unknown11 = 0;
-			unknown13 = 0;
-			unknown15 = 0;
-			unknown16 = 0;
-			unknown17 = 0;
-			unknown18 = 0;
-			unknown19 = 0;
-			offsetHotspot = NULL;
-			unknown22 = 0;
-			unknown23 = 0;
-		}
-	};
+class SceneManager {
+public:
+	SceneManager();
+	~SceneManager();
 
-	struct SceneHotspot {
-		Common::Rect rect;
-		uint16 offset;
-		uint16 unknown10;
-		uint16 unknown12;
-		byte unknown14;
-		byte eventId;
-		uint16 unknown17;
-		uint16 unknown19;
-		uint16 unknown21;
-		uint16 unknown23;
+	bool load(Common::SeekableReadStream *stream);
+	Scene *getScene(uint16 sceneIndex);
 
-		SceneHotspot() {
-			offset = 0;
-			unknown10 = 0;
-			unknown12 = 0;
-			unknown14 = 0;
-			eventId = 0;
-			unknown17 = 0;
-			unknown19 = 0;
-			unknown21 = 0;
-			unknown23 = 0;
-		}
-
-	};
-
-	ResourceManager *_resource;
-
+private:
 	Common::SeekableReadStream *_stream;
-	Common::Array<SceneEntry> _scenes;
-	uint16 _currentScene;
-
-	bool readHotspot(SceneHotspot *hotspot);
+	Common::Array<SceneHeader *> _headers;
 };
 
 } // End of namespace LastExpress

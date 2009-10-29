@@ -46,7 +46,7 @@ namespace LastExpress {
 LastExpressEngine::LastExpressEngine(OSystem *syst, const ADGameDescription *gd) :
 	Engine(syst), _gameDescription(gd), _debugger(NULL), _resMan(NULL),
 	_cursor(NULL), _font(NULL), _sfx(NULL), _music(NULL), _logic(NULL),
-	_graphics(NULL) {
+	_graphics(NULL), _sceneMan(NULL) {
 	// Adding the default directories
 	SearchMan.addSubDirectoryMatching(_gameDataDir, "data");
 
@@ -70,6 +70,7 @@ LastExpressEngine::~LastExpressEngine() {
 	delete _music;
 	delete _logic;
 	delete _graphics;
+	delete _sceneMan;
 }
 
 // TODO: which error should we return when some game files are missing/corrupted?
@@ -105,6 +106,9 @@ Common::Error LastExpressEngine::run() {
 	_sfx = new StreamedSound();
 	_music = new StreamedSound();
 	_logic = new Logic(this);
+
+	_sceneMan = new SceneManager();
+	_sceneMan->load(_resMan->getFileStream(Common::String::printf("CD%iTRAIN.DAT", 1)));
 
 
 	// DEBUG
@@ -332,6 +336,10 @@ bool LastExpressEngine::hasFeature(EngineFeature f) const {
 
 void LastExpressEngine::errorString(const char *buf_input, char *buf_output, int buf_output_size) {
 	snprintf(buf_output, buf_output_size, "%s", buf_input);
+}
+
+Scene *LastExpressEngine::getScene(uint16 sceneId) const {
+	return _sceneMan->getScene(sceneId);
 }
 
 } // End of namespace LastExpress
