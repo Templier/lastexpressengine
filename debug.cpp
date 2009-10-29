@@ -220,10 +220,11 @@ bool Debugger::cmd_playsbe(int argc, const char **argv) {
 		} else {
 			SubtitleManager subtitle(_engine->getFont());
 			if (subtitle.loadFile(filename)) {
-				for (uint i = 0; i < subtitle.count(); i++) {
+				for (uint i = 0; i < subtitle.getMaxTime(); i++) {
 					clearBg(GraphicsManager::kBackgroundAll);
 
-					drawFrame(&subtitle, i, GraphicsManager::kBackgroundOverlay);
+					subtitle.setTime(i);
+					_engine->getGraphicsManager()->draw(&subtitle, GraphicsManager::kBackgroundOverlay);
 
 					askForRedraw();
 					redrawScreen();

@@ -47,27 +47,7 @@
 namespace LastExpress {
 
 class Font;
-
-class Subtitle {
-public:
-	Subtitle();
-	~Subtitle();
-
-	bool load(Common::SeekableReadStream *in);
-	Common::Rect draw(Graphics::Surface *surface, Font *font);
-
-private:
-	uint16 _timeStart;		///< display start time
-	uint16 _timeStop;		///< display stop time
-
-	uint16 _topLength;		///< top line length
-	uint16 *_topText;		///< bottom line length
-
-	uint16 _bottomLength;	///< top line (UTF-16 string)
-	uint16 *_bottomText;	///< bottom line (UTF-16 string)
-
-	void reset();
-};
+class Subtitle;
 
 class SubtitleManager : public Drawable {
 public:
@@ -75,15 +55,18 @@ public:
 	~SubtitleManager();
 
 	bool load(Common::SeekableReadStream *stream);
-	Common::Rect draw(Graphics::Surface *surface, uint index);
-
-	//TODO: add helper function uint getIndexFromTime(uint16 time);
-
-	uint32 count();
+	uint16 getMaxTime();
+	void setTime(uint16 time);
+	bool hasChanged();
+	Common::Rect draw(Graphics::Surface *surface);
 
 private:
 	Common::Array<Subtitle *> _subtitles;
 	Font *_font;
+	uint16 _maxTime;
+
+	int16 _currentIndex;
+	int16 _lastIndex;
 
 	void reset();
 };

@@ -38,29 +38,33 @@ namespace LastExpress {
 //////////////////////////////////////////////////////////////////////////
 // Subtitle
 //////////////////////////////////////////////////////////////////////////
-Subtitle::Subtitle() : _timeStart(0), _timeStop(0),
-	_topLength(0), _topText(NULL), _bottomLength(0), _bottomText(NULL) {
-}
+class Subtitle {
+public:
+	Subtitle() : _timeStart(0), _timeStop(0), _topLength(0), _topText(NULL),
+		_bottomLength(0), _bottomText(NULL) {}
+	~Subtitle() { reset(); }
 
-Subtitle::~Subtitle() {
-	reset();
-}
+	bool load(Common::SeekableReadStream *in);
+	Common::Rect draw(Graphics::Surface *surface, Font *font);
+
+	uint16 _timeStart;		///< display start time
+	uint16 _timeStop;		///< display stop time
+
+private:
+	uint16 _topLength;		///< top line length
+	uint16 *_topText;		///< bottom line length
+
+	uint16 _bottomLength;	///< top line (UTF-16 string)
+	uint16 *_bottomText;	///< bottom line (UTF-16 string)
+
+	void reset();
+};
 
 void Subtitle::reset() {
 	delete[] _topText;
 	delete[] _bottomText;
-}
-
-Common::Rect Subtitle::draw(Graphics::Surface *surface, Font *font) {
-	Common::Rect rectTop, rectBottom;
-
-	//FIXME find out proper subtitles coordinates (and hope it's hardcoded and not stored in the sequence or animation)
-	rectTop = font->drawString(surface, 100, 100, _topText, _topLength);
-	rectBottom = font->drawString(surface, 100, 300, _bottomText, _bottomLength);
-
-	rectTop.extend(rectBottom);
-
-	return rectTop;
+	_topText = NULL;
+	_bottomText = NULL;
 }
 
 template<typename T>
@@ -107,12 +111,25 @@ bool Subtitle::load(Common::SeekableReadStream *in) {
 
 	debugC(9, kLastExpressDebugSubtitle, "  %d -> %d:", _timeStart, _timeStop);
 	if (_topLength)
-		debugC(9, kLastExpressDebugSubtitle, "\t%S", _topText);
+		debugC(9, kLastExpressDebugSubtitle, "\t%ls", (wchar_t *)_topText);
 	if (_bottomLength)
-		debugC(9, kLastExpressDebugSubtitle, "\t%S", _bottomText);
+		debugC(9, kLastExpressDebugSubtitle, "\t%ls", (wchar_t *)_bottomText);
 
 	return true;
 }
+
+Common::Rect Subtitle::draw(Graphics::Surface *surface, Font *font) {
+	Common::Rect rectTop, rectBottom;
+
+	//FIXME find out proper subtitles coordinates (and hope it's hardcoded and not stored in the sequence or animation)
+	rectTop = font->drawString(surface, 100, 100, _topText, _topLength);
+	rectBottom = font->drawString(surface, 100, 300, _bottomText, _bottomLength);
+
+	rectTop.extend(rectBottom);
+
+	return rectTop;
+}
+
 
 //////////////////////////////////////////////////////////////////////////
 // SubtitleManager
@@ -123,15 +140,13 @@ SubtitleManager::~SubtitleManager() {
 	reset();
 }
 
-uint32 SubtitleManager::count() {
-	return _subtitles.size();
-}
-
 void SubtitleManager::reset() {
 	for (uint i = 0; i < _subtitles.size(); i++)
 		delete _subtitles[i];
 
 	_subtitles.clear();
+	_currentIndex = -1;
+	_lastIndex = -1;
 }
 
 bool SubtitleManager::load(Common::SeekableReadStream *stream) {
@@ -143,7 +158,7 @@ bool SubtitleManager::load(Common::SeekableReadStream *stream) {
 	// Read header to get the number of subtitles
 	uint32 numSubtitles = stream->readUint16LE();
 	if (stream->eos()) {
-		debugC(2, kLastExpressDebugSubtitle, "ERROR: Cannot read from subtitle file!");
+		error("Cannot read from subtitle file");
 		return false;
 	}
 	debugC(3, kLastExpressDebugSubtitle, "Number of subtitles in file: %d", numSubtitles);
@@ -155,6 +170,7 @@ bool SubtitleManager::load(Common::SeekableReadStream *stream) {
 	//}
 
 	// Read the list of subtitles
+	_maxTime = 0;
 	for (uint i = 0; i < numSubtitles; i++) {
 		Subtitle *subtitle = new Subtitle();
 		if (!subtitle->load(stream)) {
@@ -164,6 +180,10 @@ bool SubtitleManager::load(Common::SeekableReadStream *stream) {
 			return false;
 		}
 
+		// Update the max time 
+		if (subtitle->_timeStop > _maxTime)
+			_maxTime = subtitle->_timeStop;
+
 		_subtitles.push_back(subtitle);
 	}
 
@@ -172,13 +192,42 @@ bool SubtitleManager::load(Common::SeekableReadStream *stream) {
 	return true;
 }
 
-Common::Rect SubtitleManager::draw(Graphics::Surface *surface, uint index){
-	if (index > _subtitles.size() - 1) {
-		debugC(3, kLastExpressDebugSubtitle, "ERROR: invalid subtitle index (was: %d, max: %d)", index, _subtitles.size() - 1);
-		return Common::Rect();
-	}
+uint16 SubtitleManager::getMaxTime() {
+	return _maxTime;
+}
 
-	return _subtitles[index]->draw(surface, _font);
+void SubtitleManager::setTime(uint16 time) {
+	_currentIndex = -1;
+
+	// Find the appropriate line to show
+	for (uint i = 0; i < _subtitles.size(); i++) {
+		if ((time >= _subtitles[i]->_timeStart) && (time <= _subtitles[i]->_timeStop)) {
+			// Keep the index of the line to show
+			_currentIndex = i;
+			return;
+		}
+	}
+}
+
+bool SubtitleManager::hasChanged() {
+	// TODO: mark the old line rect as dirty
+	if (_currentIndex != _lastIndex)
+		return true;
+	else
+		return false;
+}
+
+Common::Rect SubtitleManager::draw(Graphics::Surface *surface) {
+	// Update the last drawn index
+	_lastIndex = _currentIndex;
+
+	// Return if we don't have to draw any line
+	if (_currentIndex == -1)
+		return Common::Rect();
+
+	// Draw the current line
+	assert(_currentIndex >= 0 && _currentIndex < (int16)_subtitles.size());
+	return _subtitles[_currentIndex]->draw(surface, _font);
 }
 
 } // End of namespace LastExpress
