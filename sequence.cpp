@@ -447,6 +447,8 @@ Common::Rect SequencePlayer::draw(Graphics::Surface *surface) {
 
 	Common::Rect rect = f->draw(surface);
 
+	delete f;
+
 	return rect;
 }
 
