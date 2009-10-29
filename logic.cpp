@@ -51,6 +51,7 @@ Logic::Logic(LastExpressEngine *engine) : _engine(engine) {
 Logic::~Logic() {
 	delete _gameState;
 	delete _menu;
+	delete _inventory;
 }
 
 //////////////////////////////////////////////////////////////////////////
