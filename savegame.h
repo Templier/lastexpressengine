@@ -84,7 +84,7 @@
 
 	Game progress:
 		uint32 {4}      - ??
-		uint32 {4}      - ??
+		uint32 {4}      - jacketType (2 = green, ?? = original)
 		uint32 {4}      - ??
 		uint32 {4}      - ??
 		uint32 {4}      - ??
@@ -121,7 +121,7 @@
 		byte {1}        - 1 if item is "selectable"
 		byte {1}        - ?? set to 1 for matchbox, match, telegram, whistle, key, firebird, briefcase, corpse, passengerlist
 		byte {1}        - Is item in inventory (set to 1 for telegram and article)
-		byte {1}        - ?? set to 1 (including entry 0 and excepting last entry) and set to 0 for XXXX(several entries), firebird, briefcase, corpse
+		byte {1}        - No autoselect set to 1 (including entry 0 and excepting last entry) and set to 0 for XXXX(several entries), firebird, briefcase, corpse
 		byte {1}        - ?? set to 0
 
 	Save point: max: 126 - rotates through list (ie. goes back and overwrites first save point when full)
@@ -146,11 +146,19 @@ enum GameId {
 
 class SaveLoad {
 public:
+
+	enum JacketType {
+		kOriginalJacket = 1,
+		kGreenJacket = 2
+	};
+	
 	struct GameProgress {
+		JacketType jacketType;
 		uint32 cdNumber;
 		uint32 portraitType;
 
 		GameProgress() {
+			jacketType = kOriginalJacket;
 			cdNumber = _defaultCdNumber;
 			portraitType = _defaultPortrait;
 		}

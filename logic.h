@@ -83,11 +83,14 @@ private:
 	Menu *_menu;           ///< Main menu handling
 	Inventory *_inventory; ///< Inventory
 
-	// Move to engine?
+	// Global game state
 	SaveLoad::GameState *_gameState;
 
-	// Actions
+	void playAnimation(int index);
+
+	// Actions	
 	void action_pickGreenJacket();
+	void action_pickScarf();
 };
 
 } // End of namespace LastExpress
