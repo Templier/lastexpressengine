@@ -82,19 +82,19 @@ void Inventory::init() {
 	_entries[kIndexPassengerList].is_selectable = 1;
 
 	// ??
-	_entries[2].field_5 = 0;
-	_entries[3].field_5 = 0;
-	_entries[5].field_5 = 0;
-	_entries[7].field_5 = 0;
-	_entries[9].field_5 = 0;
-	_entries[11].field_5 = 0;
-	_entries[14].field_5 = 0;
-	_entries[17].field_5 = 0;
-	_entries[kIndexFirebird].field_5 = 0;
-	_entries[kIndexBriefcase].field_5 = 0;
-	_entries[kIndexCorpse].field_5 = 0;
-	_entries[21].field_5 = 0;
-	_entries[22].field_5 = 0;
+	_entries[2].no_autoselect = 0;
+	_entries[3].no_autoselect = 0;
+	_entries[5].no_autoselect = 0;
+	_entries[7].no_autoselect = 0;
+	_entries[9].no_autoselect = 0;
+	_entries[11].no_autoselect = 0;
+	_entries[14].no_autoselect = 0;
+	_entries[17].no_autoselect = 0;
+	_entries[kIndexFirebird].no_autoselect = 0;
+	_entries[kIndexBriefcase].no_autoselect = 0;
+	_entries[kIndexCorpse].no_autoselect = 0;
+	_entries[21].no_autoselect = 0;
+	_entries[22].no_autoselect = 0;
 
 	// scene_id
 	_entries[kIndexMatchBox].scene_id = 31;
@@ -326,6 +326,14 @@ void Inventory::addItem(InventoryItem item) {
 		return;
 
 	getEntry(item)->has_item = 1;
+	getEntry(item)->field_6 = 0;
+
+	// Autoselect item if necessary
+	if (!getEntry(item)->no_autoselect) {
+		_selectedItem = getEntry(item)->item_id;
+		drawItem(44, 0, _selectedItem, 100)
+		askForRedraw();
+	}
 }
 
 void Inventory::removeItem(InventoryItem item) {

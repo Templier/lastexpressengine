@@ -112,7 +112,7 @@ private:
 		byte field_2;
 		byte is_selectable;
 		byte has_item;
-		byte field_5;
+		byte no_autoselect;
 		byte field_6;
 
 		InventoryEntry() {
@@ -121,7 +121,7 @@ private:
 			field_2 = 0;
 			is_selectable = 0;
 			has_item = 0;
-			field_5 = 1; // TODO all except last it seems (is it really important?)
+			no_autoselect = 1; 
 			field_6 = 0;
 		}
 	};
