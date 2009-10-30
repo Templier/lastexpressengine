@@ -95,17 +95,54 @@ enum StartMenuEggButtons {
 	kButtonContinue
 };
 
+// Tooltips sequence (helpnewr.seq)
+enum StartMenuTooltips {
+	kTooltipInsertCd1,
+	kTooltipInsertCd2,
+	kTooltipInsertCd3,
+	kTooltipContinueGame,
+	kTooltipReplayGame,
+	kTooltipContinueRewoundGame,
+	kTooltipViewGameEnding,
+	kTooltipStartAnotherGame,
+	kTooltipVolumeUp,
+	kTooltipVolumeDown,
+	kTooltipBrightnessUp,     // 10
+	kTooltipBrightnessDown,
+	kTooltipQuit,
+	kTooltipRewindParis,
+	kTooltipForwardStrasbourg,
+	kTooltipRewindStrasbourg,
+	kTooltipRewindMunich,
+	kTooltipForwardMunich,
+	kTooltipForwardVienna,
+	kTooltipRewindVienna,
+	kTooltipRewindBudapest,   // 20
+	kTooltipForwardBudapest,
+	kTooltipForwardBelgrade,
+	kTooltipRewindBelgrade,
+	kTooltipForwardConstantinople,
+	kTooltipSwitchBlueGame,
+	kTooltipSwitchRedGame,
+	kTooltipSwitchGoldGame,
+	kTooltipSwitchGreenGame,
+	kTooltipSwitchTealGame,
+	kTooltipSwitchPurpleGame, // 30
+	kTooltipPlayNewGame,
+	kTooltipCredits,
+	kTooltipFastForward,
+	kTooltipRewind
+};
+
 //////////////////////////////////////////////////////////////////////////
 // DATA
 //////////////////////////////////////////////////////////////////////////
 
 // Information about the cities on the train line
-struct CityInfo {
+const static struct {
 	uint8 frame;
 	uint32 time;
-};
-
-const static CityInfo trainCities[31] = {
+} trainCities[31] = {
 	{0, 1037700}, // Paris
 	{9, 1148400}, // Epernay
 	{11, 1170900}, // Chalons
@@ -138,6 +175,20 @@ const static CityInfo trainCities[31] = {
 	{174, 3690000}, // Sofia
 	{198, 4320900}, // Adrianople
 	{210, 4941000}}; // Constantinople
+
+const static struct {
+	uint32 time;
+	StartMenuTooltips rewind;
+	StartMenuTooltips forward;
+} cityButtonsInfo[7] = {
+	{1037700, kTooltipRewindParis, kTooltipRewindParis},
+	{1490400, kTooltipRewindStrasbourg, kTooltipForwardStrasbourg},
+	{1852200, kTooltipRewindMunich, kTooltipForwardMunich},
+	{2268000, kTooltipRewindVienna, kTooltipForwardVienna},
+	{2551500, kTooltipRewindBudapest, kTooltipForwardBudapest},
+	{2952000, kTooltipRewindBelgrade, kTooltipForwardBelgrade},
+	{4941000, kTooltipForwardConstantinople, kTooltipForwardConstantinople}
+};
 
 
 // Menu elements
@@ -331,6 +382,8 @@ Menu::Menu(LastExpressEngine *engine) : _engine(engine), _clock(NULL), _trainLin
 	_showStartScreen = true;
 	_creditsSequenceIndex = 0;
 	_isShowingCredits = false;
+	for (int i = 0; i < 7; i++)
+		_cityButtonFrames[i] = NULL;
 
 	_clock = new Clock(_engine, &_currentTime);
 	_clock->load();
@@ -341,6 +394,8 @@ Menu::Menu(LastExpressEngine *engine) : _engine(engine), _clock(NULL), _trainLin
 Menu::~Menu() {
 	delete _clock;
 	delete _trainLine;
+	for (int i = 0; i < 7; i++)
+		delete _cityButtonFrames[i];
 }
 
 // Show the intro and load the main menu scene
@@ -613,37 +668,37 @@ bool Menu::handleStartMenuEvent(Common::Event ev) {
 
 	//////////////////////////////////////////////////////////////////////////
 	case kEventParis:
-		moveToCity(kParis, kTimeParis, kTooltipRewindParis, kTooltipRewindParis, clicked);
+		moveToCity(kParis, clicked);
 		break;
 
 	//////////////////////////////////////////////////////////////////////////
 	case kEventStrasBourg:
-		moveToCity(kStrasbourg, kTimeStrasbourg, kTooltipRewindStrasbourg, kTooltipForwardStrasbourg, clicked);
+		moveToCity(kStrasbourg, clicked);
 		break;
 
 	//////////////////////////////////////////////////////////////////////////
 	case kEventMunich:
-		moveToCity(kMunich, kTimeMunich, kTooltipRewindMunich, kTooltipForwardMunich, clicked);
+		moveToCity(kMunich, clicked);
 		break;
 
 	//////////////////////////////////////////////////////////////////////////
 	case kEventVienna:
-		moveToCity(kVienna, kTimeVienna, kTooltipRewindVienna, kTooltipForwardVienna, clicked);
+		moveToCity(kVienna, clicked);
 		break;
 
 	//////////////////////////////////////////////////////////////////////////
 	case kEventBudapest:
-		moveToCity(kBudapest, kTimeBudapest, kTooltipRewindBudapest, kTooltipForwardBudapest, clicked);
+		moveToCity(kBudapest, clicked);
 		break;
 
 	//////////////////////////////////////////////////////////////////////////
 	case kEventBelgrade:
-		moveToCity(kBelgrade, kTimeBelgrade, kTooltipRewindBelgrade, kTooltipForwardBelgrade, clicked);
+		moveToCity(kBelgrade, clicked);
 		break;
 
 	//////////////////////////////////////////////////////////////////////////
 	case kEventConstantinople:
-		moveToCity(kConstantinople, kTimeEnding, kTooltipForwardConstantinople, kTooltipForwardConstantinople, clicked);
+		moveToCity(kConstantinople, clicked);
 		break;
 
 	//////////////////////////////////////////////////////////////////////////
@@ -701,7 +756,7 @@ bool Menu::handleStartMenuEvent(Common::Event ev) {
 			drawSeqFrame(&_seqButtons, kButtonBrightnessDownPushed, GraphicsManager::kBackgroundOverlay);
 			playSfx("LIB046.snd");
 
-			setBrightness(getBrightness() + 1);
+			setBrightness(getBrightness() - 1);
 		} else {
 			drawSeqFrame(&_seqButtons, kButtonBrightnessDown, GraphicsManager::kBackgroundOverlay);
 		}
@@ -756,11 +811,20 @@ void Menu::loadData() {
 	loaded  &= _seqTooltips.loadFile("helpnewr.seq");
 	loaded  &= _seqEggButtons.loadFile("buttns.seq");
 	loaded  &= _seqButtons.loadFile("quit.seq");
-	loaded  &= _seqCityStart.loadFile("jlinetl.seq");
-	loaded  &= _seqCities.loadFile("jlinecen.seq");
-	loaded  &= _seqCityEnd.loadFile("jlinebr.seq");
 
 	loaded  &= _seqCredits.loadFile("credits.seq");
+
+	// Load the city buttons
+	Sequence s;
+	loaded &= s.loadFile("jlinetl.seq");
+	_cityButtonFrames[0] = s.getFrame(0);
+
+	loaded &= s.loadFile("jlinecen.seq");
+	for (int i = 0; i < 5; i++)
+		_cityButtonFrames[i + 1] = s.getFrame(i);
+
+	loaded &= s.loadFile("jlinebr.seq");
+	_cityButtonFrames[6] = s.getFrame(0);
 
 	// We cannot proceed unless all files loaded properly
 	assert(loaded == true);
@@ -895,35 +959,28 @@ void Menu::goToTime(uint32 time) {
 	_engine->getSfxStream()->stop();
 }
 
-void Menu::moveToCity(CityOverlay city, CityTime time, StartMenuTooltips tooltipRewind, StartMenuTooltips tooltipForward, bool clicked) {
+void Menu::moveToCity(CityButton city, bool clicked) {
+	uint32 time = cityButtonsInfo[city].time;
+
 	// TODO Check if we have access (there seems to be more checks on some internal times) - probably : current_time (menu only) / game time / some other?
-	if (getState()->time < (uint32)time || _currentTime == (uint32)time) {
+	if (getState()->time < time || _currentTime == time) {
 		return;
 	}
 
 	// Show city overlay
-	switch (city) {
-	case kParis:
-		drawSeqFrame(&_seqCityStart, 0, GraphicsManager::kBackgroundOverlay);
-		break;
-
-	case kConstantinople:
-		drawSeqFrame(&_seqCityEnd, 0, GraphicsManager::kBackgroundOverlay);
-		break;
-
-	default:
-		drawSeqFrame(&_seqCities, city, GraphicsManager::kBackgroundOverlay);
-	}
+	_engine->getGraphicsManager()->draw(_cityButtonFrames[city], GraphicsManager::kBackgroundOverlay);
 
 	if (clicked) {
 		playSfx("LIB046.snd");
 		goToTime(time);
 		// TODO set some global var to 1
 	} else {
-		if (_currentTime < (uint32)time) // For start city (Paris) and end city, this will always be true
-			drawSeqFrame(&_seqTooltips, tooltipForward, GraphicsManager::kBackgroundOverlay)
+		StartMenuTooltips tooltip;
+		if (_currentTime < time)
+			tooltip = cityButtonsInfo[city].forward;
 		else
-			drawSeqFrame(&_seqTooltips, tooltipRewind, GraphicsManager::kBackgroundOverlay);
+			tooltip = cityButtonsInfo[city].rewind;
+		drawSeqFrame(&_seqTooltips, tooltip, GraphicsManager::kBackgroundOverlay)
 	}
 }
 
