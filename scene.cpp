@@ -33,7 +33,7 @@ namespace LastExpress {
 
 // SceneHeader
 
-struct SceneHeader {
+class SceneHeader {
 public:
 	static SceneHeader *load(Common::SeekableReadStream *stream);
 
@@ -126,6 +126,13 @@ SceneHotspot *SceneHotspot::load(Common::SeekableReadStream *stream) {
 	hs->unknown12 = stream->readUint16LE();
 	hs->unknown14 = stream->readByte();
 	hs->eventId = stream->readByte();
+
+	// Check that this is a valid hotspot
+	if (hs->eventId == 255) {
+		delete hs;
+		return NULL;
+	}
+
 	hs->unknown17 = stream->readUint16LE();
 	hs->unknown19 = stream->readUint16LE();
 	hs->unknown21 = stream->readUint16LE();
