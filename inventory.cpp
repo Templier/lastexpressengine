@@ -341,6 +341,13 @@ void Inventory::removeItem(InventoryItem item) {
 		return;
 
 	getEntry(item)->has_item = 0;
+	getEntry(item)->field_6 = 0;
+
+	if (getEntry(item)->item_id == _selectedItem) {
+		_selectedItem = kNoItem;
+		_engine->getGraphicsManager()->clear(GraphicsManager::kBackgroundInventory, Common::Rect(44, 0, 44 + 32, 32));
+		askForRedraw();
+	}
 }
 
 bool Inventory::hasItem(InventoryItem item) {
