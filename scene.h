@@ -55,9 +55,9 @@
 		uint16 {2}  - offset to another struct
 		uint16 {2}  - unknownA
 		uint16 {2}  - scene
-		byte {1}    - unknownE;
-		byte {1}    - event;
+		byte {1}    - location;
 		byte {1}    - action;
+		byte {1}    - param;
 		byte {1}    - unknown11;
 		byte {1}    - unknown12
 		byte {1}    - unknown13

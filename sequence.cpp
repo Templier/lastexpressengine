@@ -81,12 +81,6 @@ void FrameInfo::read(Common::SeekableReadStream *in, uint16 decompOffset) {
 			assert (unknown == 0);
 	}
 	*/
-
-	debugC(6, kLastExpressDebugGraphics, "    Offsets: data=%d, unknown=%d, palette=%d", dataOffset, unknown, paletteOffset);
-	debugC(6, kLastExpressDebugGraphics, "    Position: (%d, %d) - (%d, %d)", xPos1, yPos1, xPos2, yPos2);
-	debugC(6, kLastExpressDebugGraphics, "    Initial Skip: %d", initialSkip);
-	debugC(6, kLastExpressDebugGraphics, "    Decompressed end offset: %d", decompressedEndOffset);
-	debugC(6, kLastExpressDebugGraphics, "    Compression type: %u\n", compressionType);
 }
 
 
@@ -96,6 +90,12 @@ AnimFrame::AnimFrame(Common::SeekableReadStream *in, FrameInfo *f) : _palette(NU
 	_palSize = 1;
 	// TODO: use just the needed rectangle
 	_image.create(640, 480, 1);
+
+	debugC(6, kLastExpressDebugGraphics, "    Offsets: data=%d, unknown=%d, palette=%d", f->dataOffset, f->unknown, f->paletteOffset);
+	debugC(6, kLastExpressDebugGraphics, "    Position: (%d, %d) - (%d, %d)", f->xPos1, f->yPos1, f->xPos2, f->yPos2);
+	debugC(6, kLastExpressDebugGraphics, "    Initial Skip: %d", f->initialSkip);
+	debugC(6, kLastExpressDebugGraphics, "    Decompressed end offset: %d", f->decompressedEndOffset);
+	debugC(6, kLastExpressDebugGraphics, "    Compression type: %u\n", f->compressionType);
 
 	switch (f->compressionType) {
 	case 0:
@@ -366,7 +366,6 @@ bool Sequence::load(Common::SeekableReadStream *stream) {
 
 	// Store frames information
 	for (uint i = 0; i < numframes; i++) {
-		debugC(5, kLastExpressDebugGraphics, "  Reading frame information (%d/%d)", i + 1, numframes);
 
 		// Move stream to start of frame
 		_stream->seek(_sequenceHeaderSize + i * _sequenceFrameSize, SEEK_SET);
