@@ -77,20 +77,27 @@ private:
 		}
 	};
 
+	Common::RandomSource _random;
 	LastExpressEngine *_engine;
 
 	RunState _runState;    ///< State of the game session (this data won't be stored in savegames)
 	Menu *_menu;           ///< Main menu handling
 	Inventory *_inventory; ///< Inventory
+	SaveLoad::GameState *_gameState;	///< Global game state
 
-	// Global game state
-	SaveLoad::GameState *_gameState;
-
+	//////////////////////////////////////////////////////////////////////
+	// Misc function
 	void playAnimation(int index);
 
-	// Actions	
+	// Actions
 	void action_pickGreenJacket();
 	void action_pickScarf();
+
+	// Soundbites
+	Common::String sound_excuseMe();
+	Common::String sound_justChecking();
+	Common::String sound_wrongDoor();
+	Common::String sound_justAMinute();
 };
 
 } // End of namespace LastExpress

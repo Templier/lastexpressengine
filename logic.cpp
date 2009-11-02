@@ -32,6 +32,8 @@
 #include "lastexpress/resource.h"
 #include "lastexpress/scene.h"
 
+#include "common/EventRecorder.h"
+
 namespace LastExpress {
 
 enum Animations {
@@ -335,6 +337,8 @@ Logic::Logic(LastExpressEngine *engine) : _engine(engine) {
 	// Init inventory
 	_inventory->init();
 
+	g_eventRec.registerRandomSource(_random, "lastexpress");
+
 	// HACK set specific cursor style for inventory testing
 	_engine->getCursor()->show(true);
 	_runState.cursorStyle = Cursor::kCursorTurnLeft;
@@ -451,7 +455,6 @@ void Logic::playAnimation(int index) {
 //////////////////////////////////////////////////////////////////////////
 // Actions
 //////////////////////////////////////////////////////////////////////////
-
 void Logic::action_pickGreenJacket() {
 	_gameState->progress.jacketType = SaveLoad::kGreenJacket;
 	_inventory->addItem(Inventory::kMatchBox);
@@ -470,5 +473,67 @@ void Logic::action_pickScarf() {
 
 	// TODO Add scarf to inventory + other stuff
 }
+
+//////////////////////////////////////////////////////////////////////////
+// Soundbites
+//////////////////////////////////////////////////////////////////////////
+Common::String Logic::sound_excuseMe() {
+	switch(_random.getRandomNumber(3)) {
+	case 0:
+		return "CAT1126B";
+	case 1:
+		return "CAT1126C";
+	case 2:
+		return "CAT1126D";
+	}
+
+	return "CAT1126B";
+}
+
+Common::String Logic::sound_justChecking() {
+	switch(_random.getRandomNumber(4)) {
+	case 0:
+		return "CAT5001";
+	case 1:
+		return "CAT5001A";
+	case 2:
+		return "CAT5001B";
+	case 3:
+		return "CAT5001C";
+	}
+
+	return "CAT5001";
+}
+
+Common::String Logic::sound_wrongDoor() {
+	switch(_random.getRandomNumber(5)) {
+	case 0:
+		return "CAT1125";
+	case 1:
+		return "CAT1125A";
+	case 2:
+		return "CAT1125B";
+	case 3:
+		return "CAT1125C";
+	case 4:
+		return "CAT1125D";
+	}
+
+	return "CAT1125";
+}
+
+Common::String Logic::sound_justAMinute() {
+	switch(_random.getRandomNumber(3)) {
+	case 0:
+		return "CAT1520";
+	case 1:
+		return "CAT1521";
+	case 2:
+		return "CAT1125";	// ?? is this a bug in the original?
+	}
+
+	return "CAT1520";
+}
+
 
 } // End of namespace LastExpress
