@@ -184,7 +184,7 @@ public:
 			currentScene3 = 0;
 
 			// Clear game events
-			memcpy(gameEvents, 0, 512);
+			memset(gameEvents, 0, 512*sizeof(byte));
 		}
 	};
 	
