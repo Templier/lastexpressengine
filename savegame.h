@@ -157,44 +157,6 @@ enum GameId {
 class SaveLoad {
 public:
 
-	enum JacketType {
-		kOriginalJacket = 1,
-		kGreenJacket = 2
-	};
-	
-	struct GameProgress {
-		JacketType jacketType;
-		uint32 cdNumber;
-		uint32 portraitType;
-
-		GameProgress() {
-			jacketType = kOriginalJacket;
-			cdNumber = _defaultCdNumber;
-			portraitType = _defaultPortrait;
-		}
-	};
-
-	struct GameState {
-		// Header
-		uint32 brightness;
-		uint32 volume;
-
-		// Game data
-		uint32 time;
-		uint32 currentScene;
-
-		GameProgress progress;
-
-		GameState() {
-			brightness = _defaultBrigthness;
-			volume = _defaultVolume;
-
-			//Game data
-			time = _defaultTime;
-			currentScene = _defaultScene;
-		}
-	};
-
 	// Init & Access
 	static bool initSavegame(GameId id);
 	
@@ -203,13 +165,6 @@ public:
 	static bool isSavegameValid(GameId id);
 
 private:
-	static const uint32 _defaultBrigthness = 0x3;
-	static const uint32 _defaultVolume = 0x7;
-	static const uint32 _defaultTime = 1037700;
-	static const uint32 _defaultPortrait = 32;
-	static const uint32 _defaultCdNumber = 1;
-	static const uint32 _defaultScene = 40;
-
 	static Common::String getSavegameName(GameId id);
 
 	// Opening save files

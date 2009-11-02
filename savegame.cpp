@@ -126,8 +126,8 @@ bool SaveLoad::initSavegame(GameId id) {
 	save->writeUint32LE(32);
 	save->writeUint32LE(32);
 	save->writeUint32LE(0);
-	save->writeUint32LE(_defaultBrigthness);
-	save->writeUint32LE(_defaultVolume);
+	save->writeUint32LE(3);
+	save->writeUint32LE(7);
 	save->writeUint32LE(9);
 
 	delete save;

@@ -32,6 +32,8 @@
 #include "lastexpress/sound.h"
 #include "lastexpress/logic.h"
 
+#include "common/EventRecorder.h"
+
 //#define LOAD_RESOURCES_LIST
 #ifdef LOAD_RESOURCES_LIST
 #include "lastexpress/helpers.h"
@@ -58,6 +60,8 @@ LastExpressEngine::LastExpressEngine(OSystem *syst, const ADGameDescription *gd)
 	Common::addDebugChannel(kLastExpressDebugSound, "Sound", "Debug sound playback");
 	Common::addDebugChannel(kLastExpressDebugSubtitle, "Subtitle", "Debug subtitles");
 	Common::addDebugChannel(kLastExpressDebugUnknown, "Unknown", "Debug unknown data");
+
+	g_eventRec.registerRandomSource(_random, "lastexpress");
 }
 
 LastExpressEngine::~LastExpressEngine() {

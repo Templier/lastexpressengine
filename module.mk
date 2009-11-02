@@ -1,6 +1,7 @@
 MODULE := engines/lastexpress
 
 MODULE_OBJS := \
+	action.o \
 	animation.o \
 	archive.o \
 	background.o \
@@ -14,6 +15,7 @@ MODULE_OBJS := \
 	logic.o \
 	menu.o \
 	resource.o \
+	savepoint.o \
 	savegame.o \
 	scene.o \
 	sequence.o \

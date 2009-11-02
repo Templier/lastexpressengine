@@ -33,6 +33,9 @@
 #define playMusic(name) _engine->getMusicStream()->load(_engine->getResMan()->getFileStream(name));
 #define playSfx(name) _engine->getSfxStream()->load(_engine->getResMan()->getFileStream(name));
 
+// Logic subclasses
+#define getProgress() _engine->getLogic()->getGameState()->progress
+
 //////////////////////////////////////////////////////////////////////////
 // Graphics
 //////////////////////////////////////////////////////////////////////////

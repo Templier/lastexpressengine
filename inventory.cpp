@@ -33,7 +33,6 @@
 #include "lastexpress/sound.h"
 
 #define drawItem(x, y, index, brightness) { Icon icon((Cursor::CursorStyle)(index)); icon.setPosition(x, y); icon.setBrightness(brightness); _engine->getGraphicsManager()->draw(&icon, GraphicsManager::kBackgroundInventory); }
-#define getProgress() _engine->getLogic()->getGameState()->progress
 
 namespace LastExpress {
 
@@ -325,12 +324,12 @@ void Inventory::addItem(InventoryItem item) {
 	if (hasItem(item))
 		return;
 
-	getEntry(item)->has_item = 1;
-	getEntry(item)->field_6 = 0;
+	getItem(item)->has_item = 1;
+	getItem(item)->location = 0;
 
 	// Autoselect item if necessary
-	if (!getEntry(item)->no_autoselect) {
-		_selectedItem = getEntry(item)->item_id;
+	if (!getItem(item)->no_autoselect) {
+		_selectedItem = getItem(item)->item_id;
 		drawItem(44, 0, _selectedItem, 100)
 		askForRedraw();
 	}
@@ -340,10 +339,10 @@ void Inventory::removeItem(InventoryItem item) {
 	if (!hasItem(item))
 		return;
 
-	getEntry(item)->has_item = 0;
-	getEntry(item)->field_6 = 0;
+	getItem(item)->has_item = 0;
+	getItem(item)->location = 0;
 
-	if (getEntry(item)->item_id == _selectedItem) {
+	if (getItem(item)->item_id == _selectedItem) {
 		_selectedItem = kNoItem;
 		_engine->getGraphicsManager()->clear(GraphicsManager::kBackgroundInventory, Common::Rect(44, 0, 44 + 32, 32));
 		askForRedraw();
@@ -351,7 +350,7 @@ void Inventory::removeItem(InventoryItem item) {
 }
 
 bool Inventory::hasItem(InventoryItem item) {
-	if (getEntry(item)->has_item)
+	if (getItem(item)->has_item)
 			return true;
 
 	return false;
@@ -360,7 +359,7 @@ bool Inventory::hasItem(InventoryItem item) {
 //////////////////////////////////////////////////////////////////////////
 // Private methods
 //////////////////////////////////////////////////////////////////////////
-Inventory::InventoryEntry *Inventory::getEntry(InventoryItem item) {
+Inventory::InventoryEntry *Inventory::getItem(InventoryItem item) {
 	for (uint i = 0; i < 32; i++) {
 		if (_entries[i].item_id == (byte)item)
 			return &_entries[i];
@@ -372,7 +371,7 @@ Inventory::InventoryEntry *Inventory::getEntry(InventoryItem item) {
 
 // Examine an inventory item
 void Inventory::examine(InventoryItem item) {
-	uint32 sceneId = getEntry(item)->scene_id;
+	uint32 sceneId = getItem(item)->scene_id;
 
 	if (sceneId != 0) {
 		Scene *s = _engine->getScene(sceneId);

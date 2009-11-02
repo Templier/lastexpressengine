@@ -34,11 +34,108 @@
 
 namespace LastExpress {
 
+class Action;
 class LastExpressEngine;
 class Menu;
 
 class Logic {
 public:
+	enum JacketType {
+		kOriginalJacket = 1,
+		kGreenJacket = 2
+	};
+
+	struct GameProgress {
+		uint32 field_0;
+		JacketType jacketType;
+		uint32 field_8;
+		uint32 field_C;
+		uint32 field_10;
+		uint32 field_14;
+		uint32 field_18;		
+		uint32 portraitType;
+		uint32 field_20;
+		uint32 field_24;
+		uint32 field_28;
+		uint32 cdNumber;
+		uint32 field_30;
+		uint32 field_34;
+		uint32 field_38;
+		uint32 field_3C;
+		uint32 field_40;
+		uint32 field_44;
+		uint32 field_48;
+		uint32 field_4C;
+		uint32 field_50;
+		uint32 field_54;
+		uint32 field_58;
+		uint32 field_5C;
+		uint32 field_60;
+		uint32 field_64;
+		uint32 field_68;
+		uint32 field_6C;
+		uint32 field_70;
+		uint32 field_74;
+		uint32 field_78;
+		uint32 field_7C;
+
+		GameProgress() {
+			field_0 = 0;
+			jacketType = kOriginalJacket;
+			field_8 = 0;
+			field_C = 0;
+			field_10 = 0;
+			field_14 = 0;
+			field_18 = 0;		
+			portraitType = _defaultPortrait;
+			field_20 = 0;
+			field_24 = 0;
+			field_28 = 0;
+			cdNumber = _defaultCdNumber;
+			field_30 = 0;
+			field_34 = 0;
+			field_38 = 0;
+			field_3C = 0;
+			field_40 = 0;
+			field_44 = 0;
+			field_48 = 0;
+			field_4C = 0;
+			field_50 = 0;
+			field_54 = 0;
+			field_58 = 0;
+			field_5C = 0;
+			field_60 = 0;
+			field_64 = 0;
+			field_68 = 0;
+			field_6C = 0;
+			field_70 = 0;
+			field_74 = 0;
+			field_78 = 0;
+			field_7C = 0;		
+		}
+	};
+
+	struct GameState {
+		// Header
+		uint32 brightness;
+		uint32 volume;
+
+		// Game data
+		uint32 time;
+		uint32 currentScene;
+
+		GameProgress progress;
+
+		GameState() {
+			brightness = _defaultBrigthness;
+			volume = _defaultVolume;
+
+			//Game data
+			time = _defaultTime;
+			currentScene = _defaultScene;
+		}
+	};
+	
 	Logic(LastExpressEngine *engine);
 	~Logic();
 
@@ -53,10 +150,18 @@ public:
 	bool isGameStarted() { return _runState.gameStarted; }
 	bool isShowingMenu() { return _runState.showingMenu; }
 	GameId getGameId() { return _runState.gameId; }
-	SaveLoad::GameState *getGameState() { return _gameState; }
+	GameState *getGameState() { return _gameState; }
+	Inventory *getInventory() { return _inventory; }
 	Cursor::CursorStyle getCursorStyle() { return _runState.cursorStyle; }
 
 private:
+	static const uint32 _defaultBrigthness = 0x3;
+	static const uint32 _defaultVolume = 0x7;
+	static const uint32 _defaultTime = 1037700;
+	static const uint32 _defaultPortrait = 32;
+	static const uint32 _defaultCdNumber = 1;
+	static const uint32 _defaultScene = 40;
+
 	// Scenes
 	enum Scene {
 		kSceneIntroScreen = 65
@@ -77,21 +182,14 @@ private:
 		}
 	};
 
-	Common::RandomSource _random;
 	LastExpressEngine *_engine;
 
 	RunState _runState;    ///< State of the game session (this data won't be stored in savegames)
-	Menu *_menu;           ///< Main menu handling
-	Inventory *_inventory; ///< Inventory
-	SaveLoad::GameState *_gameState;	///< Global game state
-
-	//////////////////////////////////////////////////////////////////////
-	// Misc function
-	void playAnimation(int index);
-
-	// Actions
-	void action_pickGreenJacket();
-	void action_pickScarf();
+	
+	Action *_action;		///< Actions
+	GameState *_gameState;	///< Global game state
+	Inventory *_inventory;  ///< Inventory
+	Menu *_menu;            ///< Main menu handling
 
 	// Soundbites
 	Common::String sound_excuseMe();

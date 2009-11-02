@@ -63,6 +63,27 @@ public:
 		kPortraitYellow = 36
 	};
 
+	// Entry
+	struct InventoryEntry {
+		byte item_id;
+		byte scene_id;
+		byte field_2;
+		byte is_selectable;
+		byte has_item;
+		byte no_autoselect;
+		byte location;
+
+		InventoryEntry() {
+			item_id = 0;
+			scene_id = 0;
+			field_2 = 0;
+			is_selectable = 0;
+			has_item = 0;
+			no_autoselect = 1; 
+			location = 0;
+		}
+	};
+
 	Inventory(LastExpressEngine *engine);
 	~Inventory();
 
@@ -75,6 +96,7 @@ public:
 	void addItem(InventoryItem item);
 	void removeItem(InventoryItem item);
 	bool hasItem(InventoryItem item);
+	InventoryEntry *getItem(InventoryItem item);
 
 	// UI Control
 	void show(bool visible);
@@ -105,26 +127,6 @@ private:
 
 	LastExpressEngine *_engine;
 
-	// State
-	struct InventoryEntry {
-		byte item_id;
-		byte scene_id;
-		byte field_2;
-		byte is_selectable;
-		byte has_item;
-		byte no_autoselect;
-		byte field_6;
-
-		InventoryEntry() {
-			item_id = 0;
-			scene_id = 0;
-			field_2 = 0;
-			is_selectable = 0;
-			has_item = 0;
-			no_autoselect = 1; 
-			field_6 = 0;
-		}
-	};
 	InventoryEntry _entries[32];
 	uint32 _selectedItem;
 	bool _opened;
@@ -144,8 +146,7 @@ private:
 	void open();
 	void close();
 	void examine(InventoryItem item);
-	void drawEgg();
-	InventoryEntry *getEntry(InventoryItem item);
+	void drawEgg();	
 	Common::Rect getItemRect(int index);
 };
 

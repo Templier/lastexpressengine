@@ -63,6 +63,7 @@ public:
 	StreamedSound *getSfxStream() const { return _sfx; }
 	GraphicsManager *getGraphicsManager() const { return _graphics; }
 	Scene *getScene(uint16 sceneId) const;
+	Common::RandomSource getRandom() const {return _random; }
 
 private:
 	const ADGameDescription *_gameDescription;
@@ -76,6 +77,8 @@ private:
 	StreamedSound *_sfx;
 	GraphicsManager *_graphics;
 	SceneManager *_sceneMan;
+
+	Common::RandomSource _random;
 };
 
 } // End of namespace LastExpress

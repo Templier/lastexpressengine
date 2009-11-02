@@ -12,6 +12,9 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\engines\lastexpress\action.cpp">
+      <Filter>game</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\engines\lastexpress\animation.cpp">
       <Filter>data</Filter>
     </ClCompile>
@@ -41,7 +44,8 @@
       <Filter>game</Filter>
     </ClCompile>
     <ClCompile Include="..\..\engines\lastexpress\resource.cpp" />
-    <ClCompile Include="..\..\engines\lastexpress\savegame.cpp">
+    <ClCompile Include="..\..\engines\lastexpress\savegame.cpp" />
+    <ClCompile Include="..\..\engines\lastexpress\savepoint.cpp">
       <Filter>game</Filter>
     </ClCompile>
     <ClCompile Include="..\..\engines\lastexpress\scene.cpp">
@@ -58,6 +62,9 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\engines\lastexpress\action.h">
+      <Filter>game</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\engines\lastexpress\animation.h">
       <Filter>data</Filter>
     </ClInclude>
@@ -90,7 +97,8 @@
       <Filter>game</Filter>
     </ClInclude>
     <ClInclude Include="..\..\engines\lastexpress\resource.h" />
-    <ClInclude Include="..\..\engines\lastexpress\savegame.h">
+    <ClInclude Include="..\..\engines\lastexpress\savegame.h" />
+    <ClInclude Include="..\..\engines\lastexpress\savepoint.h">
       <Filter>game</Filter>
     </ClInclude>
     <ClInclude Include="..\..\engines\lastexpress\scene.h">
