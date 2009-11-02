@@ -38,7 +38,7 @@
 		uint16 {2}  - 13 ??
 		byte {1}    - 15 ??
 		byte {1}    - 16 ?? (see text:004067F0/740 - used as a switch value)
-		byte {1}    - 17 ??
+		byte {1}    - sound file id
 		byte {1}    - 18 ??
 		byte {1}    - 19 ?? (do something if set to -1)
 		uint16 {2}  - Offset to hotspot info struct

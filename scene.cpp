@@ -48,7 +48,7 @@ public: // XXX
 	uint16 unknown13; // 13
 	byte unknown15;   // 15
 	byte unknown16;
-	byte unknown17;
+	byte soundId;
 	byte unknown18;
 	byte unknown19;
 	uint16 offsetHotspot;
@@ -68,7 +68,7 @@ SceneHeader *SceneHeader::load(Common::SeekableReadStream *stream) {
 	sh->unknown13 = stream->readUint16LE();
 	sh->unknown15 = stream->readByte();
 	sh->unknown16 = stream->readByte();
-	sh->unknown17 = stream->readByte();
+	sh->soundId = stream->readByte();
 	sh->unknown18 = stream->readByte();
 	sh->unknown19 = stream->readByte();
 	sh->offsetHotspot = stream->readUint16LE();
@@ -76,7 +76,7 @@ SceneHeader *SceneHeader::load(Common::SeekableReadStream *stream) {
 	sh->unknown23 = stream->readByte();
 
 	debugC(9, kLastExpressDebugScenes, "\nScene:  name=%s, sig=%02d, count=%d, unk11=%d", sh->name, sh->sig, sh->count, sh->unknown11);
-	debugC(9, kLastExpressDebugScenes, "\tunk13=%02d, unk16=%02d, unk17=%02d, unk18=%02d", sh->unknown13, sh->unknown16, sh->unknown17, sh->unknown18);
+	debugC(9, kLastExpressDebugScenes, "\tunk13=%02d, unk16=%02d, soundId=%02d, unk18=%02d", sh->unknown13, sh->unknown16, sh->soundId, sh->unknown18);
 	debugC(9, kLastExpressDebugScenes, "\tunk19=%02d, hotspotOffset=%02d, unk22=%02d, unk23=%02d", sh->unknown19, sh->offsetHotspot, sh->unknown22, sh->unknown23);
 
 	return sh;
@@ -256,7 +256,7 @@ Scene *SceneManager::getScene(uint16 index) {
 	if (_headers.empty())
 		return NULL;
 
-	if (index > _headers.size())
+	if (index == 0 || index > _headers.size())
 		return NULL;
 
 	return Scene::load(_stream, _headers[index - 1]);
