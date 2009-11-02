@@ -26,30 +26,48 @@
 #ifndef LASTEXPRESS_SAVEPOINT_H
 #define LASTEXPRESS_SAVEPOINT_H
 
+/*
+	Savepoint format
+	----------------
+
+	Save point: max: 127 - FIFO list (ie. goes back and overwrites first save point when full)
+		uint32 {4}      - index of function pointer inside savePointFunctions array
+		uint32 {4}      - ??
+		uint32 {4}      - time
+		uint32 {4}      - 0 or 1 ?
+
+	?? array: 16 bytes
+		uint32 {4}		- ??
+		uint32 {4}		- ??
+		uint32 {4}		- ??
+		uint32 {4}		- function pointer to ??	
+
+*/
+
 #include "common\queue.h"
 
 namespace LastExpress {
 
-class SavePoint {
+class SavePoints {
 public:
-	struct savepoint {
+	struct SavePoint {
 		uint32 index;
 		uint32 field_4;
-		uint32 field_8;
+		uint32 time;
 		uint32 field_C;
 	};	
 
-	SavePoint();
-	~SavePoint();
+	SavePoints();
+	~SavePoints();
 	
-	void add(uint32 index, uint32 field_4, uint32 field_8, uint32 field_C);
-	savepoint pop();
+	void add(uint32 index, uint32 field_4, uint32 time, uint32 field_C);
+	SavePoint pop();
 
 	void reset();
 
 private:
 
-	Common::Queue<savepoint> _savepoints;
+	Common::Queue<SavePoint> _savepoints;
 };
 
 } // End of namespace LastExpress

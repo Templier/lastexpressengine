@@ -26,6 +26,20 @@
 #ifndef LASTEXPRESS_INVENTORY_H
 #define LASTEXPRESS_INVENTORY_H
 
+/*
+	Inventory entry (32 entries)
+	----------------------------
+
+		byte {1}        - Item ID (set to 0 for "undefined" items)
+		byte {1}        - Scene ID
+		byte {1}        - 1 if item is "selectable"
+		byte {1}        - ?? set to 1 for matchbox, match, telegram, whistle, key, firebird, briefcase, corpse, passengerlist
+		byte {1}        - Is item in inventory (set to 1 for telegram and article)
+		byte {1}        - No autoselect set to 1 (including entry 0 and excepting last entry) and set to 0 for XXXX(several entries), firebird, briefcase, corpse
+		byte {1}        - ?? set to 0
+
+*/
+
 #include "lastexpress/scene.h"
 
 #include "common/events.h"

@@ -26,6 +26,44 @@
 #ifndef LASTEXPRESS_LOGIC_H
 #define LASTEXPRESS_LOGIC_H
 
+/*
+	Game Progress format
+	--------------------
+
+		uint32 {4}      - ??
+		uint32 {4}      - jacketType (2 = green, ?? = original)
+		uint32 {4}      - ??
+		uint32 {4}      - ??
+		uint32 {4}      - ??
+		uint32 {4}      - ??
+		uint32 {4}      - ??
+		uint32 {4}      - portraitType (top left portrait - 32 to 37)
+		uint32 {4}      - ??
+		uint32 {4}      - ??
+		uint32 {4}      - ??
+		uint32 {4}      - index (cd number)
+		uint32 {4}      - ??
+		uint32 {4}      - ??
+		uint32 {4}      - ??
+		uint32 {4}      - ??
+		uint32 {4}      - ??
+		uint32 {4}      - ??
+		uint32 {4}      - ??
+		uint32 {4}      - ??
+		uint32 {4}      - ??
+		uint32 {4}      - ??
+		uint32 {4}      - ??
+		uint32 {4}      - ??
+		uint32 {4}      - ??
+		uint32 {4}      - ??
+		uint32 {4}      - ??
+		uint32 {4}      - ??
+		uint32 {4}      - ??
+		uint32 {4}      - ??
+		uint32 {4}      - ??
+
+*/
+
 #include "lastexpress/cursor.h"
 #include "lastexpress/inventory.h"
 #include "lastexpress/savegame.h"

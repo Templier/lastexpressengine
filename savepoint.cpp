@@ -27,22 +27,22 @@
 
 namespace LastExpress {
 
-SavePoint::SavePoint() {}
-SavePoint::~SavePoint() {}
+SavePoints::SavePoints() {}
+SavePoints::~SavePoints() {}
 
-void SavePoint::reset() {
+void SavePoints::reset() {
 	_savepoints.empty();
 }
 
-SavePoint::savepoint SavePoint::pop() {
+SavePoints::SavePoint SavePoints::pop() {
 	return _savepoints.pop();
 }
 
-void SavePoint::add(uint32 index, uint32 field_4, uint32 field_8, uint32 field_C) {
-	savepoint save;
+void SavePoints::add(uint32 index, uint32 field_4, uint32 time, uint32 field_C) {
+	SavePoint save;
 	save.index = index;
 	save.field_4 = field_4;
-	save.field_8 = field_8;
+	save.time = time;
 	save.field_C = field_C;
 }
 

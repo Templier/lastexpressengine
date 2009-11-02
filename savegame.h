@@ -28,6 +28,7 @@
 
 /*
 	Savegame format
+	---------------
 
 	header: 32 bytes
 		uint32 {4}      - signature: 0x12001200
@@ -69,51 +70,7 @@
 
 		... more unknown stuff
 
-
-	///////////////////////////////////////////////////////////////////////////////////////////
-	// Structure description
-
-	Game progress:
-		uint32 {4}      - ??
-		uint32 {4}      - jacketType (2 = green, ?? = original)
-		uint32 {4}      - ??
-		uint32 {4}      - ??
-		uint32 {4}      - ??
-		uint32 {4}      - ??
-		uint32 {4}      - ??
-		uint32 {4}      - portraitType (top left portrait - 32 to 37)
-		uint32 {4}      - ??
-		uint32 {4}      - ??
-		uint32 {4}      - ??
-		uint32 {4}      - cd number
-		uint32 {4}      - ??
-		uint32 {4}      - ??
-		uint32 {4}      - ??
-		uint32 {4}      - ??
-		uint32 {4}      - ??
-		uint32 {4}      - ??
-		uint32 {4}      - ??
-		uint32 {4}      - ??
-		uint32 {4}      - ??
-		uint32 {4}      - ??
-		uint32 {4}      - ??
-		uint32 {4}      - ??
-		uint32 {4}      - ??
-		uint32 {4}      - ??
-		uint32 {4}      - ??
-		uint32 {4}      - ??
-		uint32 {4}      - ??
-		uint32 {4}      - ??
-		uint32 {4}      - ??
-
-	InventoryData (32 entries)
-		byte {1}        - Item ID (set to 0 for "undefined" items)
-		byte {1}        - Scene ID
-		byte {1}        - 1 if item is "selectable"
-		byte {1}        - ?? set to 1 for matchbox, match, telegram, whistle, key, firebird, briefcase, corpse, passengerlist
-		byte {1}        - Is item in inventory (set to 1 for telegram and article)
-		byte {1}        - No autoselect set to 1 (including entry 0 and excepting last entry) and set to 0 for XXXX(several entries), firebird, briefcase, corpse
-		byte {1}        - ?? set to 0
+	
 
 	Sound cache entry: 68 bytes
 		uint32 {4}      - ??
@@ -128,17 +85,7 @@
 		char {16}       - ??
 		char {16}       - ??
 
-	?? array: 16 bytes
-		uint32 {4}		- ??
-		uint32 {4}		- ??
-		uint32 {4}		- ??
-		uint32 {4}		- function pointer to ??
-
-	Save point: max: 127 - FIFO list (ie. goes back and overwrites first save point when full)
-		uint32 {4}      - index of function pointer inside savePointFunctions array
-		uint32 {4}      - ??
-		uint32 {4}      - time or similar?
-		uint32 {4}      - 0 or 1 ?
+	
 */
 
 #include "common/savefile.h"
