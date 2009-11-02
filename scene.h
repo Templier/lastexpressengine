@@ -38,8 +38,8 @@
 		uint16 {2}  - 13 ??
 		byte {1}    - 15 ??
 		byte {1}    - 16 ?? (see text:004067F0/740 - used as a switch value)
-		byte {1}    - sound file id
-		byte {1}    - 18 ??
+		byte {1}    - 17 ?? 
+		byte {1}    - 18 ?? 
 		byte {1}    - 19 ?? (do something if set to -1)
 		uint16 {2}  - Offset to hotspot info struct
 		byte {1}    - 22 ??
@@ -53,14 +53,15 @@
 		uint16 {2}  - top
 		uint16 {2}  - bottom
 		uint16 {2}  - offset to another struct
-		uint16 {2}  - unknown10
+		uint16 {2}  - unknownA
+		uint16 {2}  - scene
+		byte {1}    - unknownE;
+		byte {1}    - event;
+		byte {1}    - action;
+		byte {1}    - unknown11;
 		uint16 {2}  - unknown12
-		byte {1}    - unknown14;
-		byte {1}    - eventId;
-		uint16 {2}  - unknown17
-		uint16 {2}  - unknown19
-		uint16 {2}  - unknown21
-		uint16 {2}  - unknown23
+		uint16 {2}  - unknown14
+		uint16 {2}  - unknown16
 
 	??? (9 bytes)
 		byte {1}

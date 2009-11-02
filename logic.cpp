@@ -343,6 +343,15 @@ Logic::Logic(LastExpressEngine *engine) : _engine(engine) {
 	_engine->getCursor()->show(true);
 	_runState.cursorStyle = Cursor::kCursorTurnLeft;
 	_engine->getCursor()->setStyle(_runState.cursorStyle);
+
+	// HACK add more items for testing
+	_inventory->addItem(Inventory::kMatchBox);
+	_inventory->addItem(Inventory::kPassengerList);
+	_inventory->addItem(Inventory::kScarf);
+	_inventory->addItem(Inventory::kWhistle);
+	_inventory->addItem(Inventory::kArticle);
+	_inventory->addItem(Inventory::kBomb);
+	_inventory->addItem(Inventory::kKey);
 }
 
 Logic::~Logic() {
@@ -384,7 +393,7 @@ bool Logic::handleMouseEvent(Common::Event ev) {
 	if (_gameState->currentScene == 0) {
 		// FIXME: allow inventory to show
 		_gameState->currentScene = 1;
-		_inventory->show(true);
+		_inventory->show(true);		
 
 		return true;
 	}

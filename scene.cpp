@@ -95,14 +95,15 @@ private:
 public: //XXX
 	Common::Rect rect;
 	uint16 offset;
-	uint16 unknown10;
+	uint16 unknownA;
+	uint16 scene;
+	byte unknownE;
+	byte event;
+	byte action;
+	byte unknown11;	
 	uint16 unknown12;
-	byte unknown14;
-	byte eventId;
-	uint16 unknown17;
-	uint16 unknown19;
-	uint16 unknown21;
-	uint16 unknown23;
+	uint16 unknown14;
+	uint16 unknown16;
 };
 
 SceneHotspot *SceneHotspot::load(Common::SeekableReadStream *stream) {
@@ -122,23 +123,26 @@ SceneHotspot *SceneHotspot::load(Common::SeekableReadStream *stream) {
 	hs->rect.bottom = stream->readUint16LE();
 
 	hs->offset = stream->readUint16LE();
-	hs->unknown10 = stream->readUint16LE();
-	hs->unknown12 = stream->readUint16LE();
-	hs->unknown14 = stream->readByte();
-	hs->eventId = stream->readByte();
-
+	hs->unknownA = stream->readUint16LE();
+	hs->scene = stream->readUint16LE();
+	hs->unknownE = stream->readByte();
+	hs->event = stream->readByte();
+	
 	// Check that this is a valid hotspot
-	if (hs->eventId == 255) {
+	if (hs->event == 0 || hs->event > 44) {
 		delete hs;
 		return NULL;
 	}
 
-	hs->unknown17 = stream->readUint16LE();
-	hs->unknown19 = stream->readUint16LE();
-	hs->unknown21 = stream->readUint16LE();
-	hs->unknown23 = stream->readUint16LE();
+	hs->action = stream->readByte();
+	hs->unknown11 = stream->readByte();
+	hs->unknown12 = stream->readUint16LE();
+	hs->unknown14 = stream->readUint16LE();
+	hs->unknown16 = stream->readUint16LE();
 
-	debugC(9, kLastExpressDebugScenes, "\thotspot: Rect=(%d, %d)x(%d,%d) event=%02d", hs->rect.left, hs->rect.top, hs->rect.right, hs->rect.bottom, hs->eventId);
+	debugC(9, kLastExpressDebugScenes, "\thotspot: Rect=(%d, %d)x(%d,%d) event=%02d offset=%d action=%03d scene=%d uA=%d uE=%02d u11=%02d u12=%d u14=%d u16=%d",
+									   hs->rect.left, hs->rect.top, hs->rect.right, hs->rect.bottom, hs->event, hs->action, hs->scene, hs->unknownA,
+									   hs->unknownE, hs->unknown11, hs->unknown12, hs->unknown14, hs->unknown16);
 
 	return hs;
 }
@@ -181,7 +185,7 @@ bool Scene::checkHotSpot(Common::Point coord, byte *eventId) {
 			if (unknown <= _hotspots[i]->unknown14) {
 				found = true;
 				unknown = _hotspots[i]->unknown14;
-				id = _hotspots[i]->eventId;
+				id = _hotspots[i]->event;
 			}
 		}
 	}
@@ -195,8 +199,7 @@ Common::Rect Scene::draw(Graphics::Surface *surface) {
 	Common::String name(_header->name);
 	name.trim();
 	if (name.empty()) {
-		debugC(2, kLastExpressDebugScenes, "This scene is not a valid root scene");
-		return Common::Rect();
+		error("This scene is not a valid drawing scene: %s", name);		
 	}
 
 	// Load background
