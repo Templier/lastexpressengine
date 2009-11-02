@@ -33,7 +33,7 @@
 namespace LastExpress {
 
 // Savegame signature
-const uint32 savegameSignature = 0x12001200;
+const uint32 SAVEGAME_SIGNATURE = 0x12001200;
 
 // Names of savegames
 const static struct {
@@ -79,7 +79,7 @@ bool SaveLoad::isSavegameValid(GameId id) {
 
 	bool isOk = false;
 
-	if (save->readUint32LE() != savegameSignature)
+	if (save->readUint32LE() != SAVEGAME_SIGNATURE)
 		goto EXIT;
 
 	save->readUint32LE();
@@ -121,24 +121,18 @@ bool SaveLoad::initSavegame(GameId id) {
 	}
 
 	// Write default values to savegame
-	save->writeUint32LE(savegameSignature);
+	save->writeUint32LE(SAVEGAME_SIGNATURE);
 	save->writeUint32LE(0);
-	save->writeUint32LE(0x20);
-	save->writeUint32LE(0x20);
-	save->writeUint32LE(0x0);
+	save->writeUint32LE(32);
+	save->writeUint32LE(32);
+	save->writeUint32LE(0);
 	save->writeUint32LE(_defaultBrigthness);
 	save->writeUint32LE(_defaultVolume);
-	save->writeUint32LE(0x9);
+	save->writeUint32LE(9);
 
 	delete save;
 
 	return true;
-}
-
-// Read savegame information
-SaveLoad::GameState *SaveLoad::getGameState(GameId id) {
-	// TODO: read info from savegame
-	return new GameState;
 }
 
 //////////////////////////////////////////////////////////////////////////

@@ -29,11 +29,11 @@
 /*
 	Savegame format
 
-	header:
+	header: 32 bytes
 		uint32 {4}      - signature: 0x12001200
-		uint32 {4}      - ?? needs to be >= 0
-		uint32 {4}      - ?? needs to be >= 0x20
-		uint32 {4}      - ?? needs to be >= 0x20
+		uint32 {4}      - ?? needs to be [0; 5]
+		uint32 {4}      - ?? needs to be >= 32 [1061100; timeMax]
+		uint32 {4}      - ?? needs to be >= 32
 		uint32 {4}      - ?? needs to be = 1
 		uint32 {4}      - Brigthness (needs to be [0-6])
 		uint32 {4}      - Volume (needs to be [0-7])
@@ -41,14 +41,14 @@
 
 	data:
 		uint32 {4}      - ??
-		uint32 {4}      - current time
+		uint32 {4}      - current time 
 		uint32 {4}      - ??
 		uint32 {4}      - ??
 		uint32 {4}      - Scene Index               max: 2600
 		byte {1}        - ??
 		uint32 {4}      - Scene Index (copy?)       max: 2600
-		uint32 {4}      - Selected inventory item
 		uint32 {4}      - ??
+		uint32 {4}      - Selected inventory item
 		uint32 {4*1000} - ??
 		uint32 {4*16}   - ??
 		uint32 {4*16}   - ??
@@ -57,30 +57,21 @@
 		byte {7*32}     - Inventory
 		byte {5*128}    - ??
 		byte {1262*40}  - Game state (not sure what's in the struct yet)
+		
 		uint32 {4}      - ??
 		uint32 {4}      - ??
+		uint32 {4}      - Number of sound cache entries
+		byte {count*68} - Sound cache entries
 
-		uint32 {4}      - Number of sound cache entries?
-		(for each sound cache entry)  - total = byte {68}
-			uint32 {4}      - ??
-			uint32 {4}      - ??
-			uint32 {4}      - ??
-			uint32 {4}      - ??
-			uint32 {4}      - ??
-			uint32 {4}      - ??
-			uint32 {4}      - ??
-			uint32 {4}      - ??
-			uint32 {4}      - ??
-			char {16}       - ??
-			char {16}       - ??
-
-		byte {16*128}   - ??
-		uint32 {4}      - Number of save points
-		(for each save point)
-			byte {16}   - ?? (maybe save point header?)
+		byte {16*128}   - ?? array
+		uint32 {4}      - Number of save points (max: 128)
+		byte {count*16} - Save points
 
 		... more unknown stuff
 
+
+	///////////////////////////////////////////////////////////////////////////////////////////
+	// Structure description
 
 	Game progress:
 		uint32 {4}      - ??
@@ -124,8 +115,27 @@
 		byte {1}        - No autoselect set to 1 (including entry 0 and excepting last entry) and set to 0 for XXXX(several entries), firebird, briefcase, corpse
 		byte {1}        - ?? set to 0
 
-	Save point: max: 126 - rotates through list (ie. goes back and overwrites first save point when full)
-		uint32 {4}      - ?? (0 - 40 ?) type ?
+	Sound cache entry: 68 bytes
+		uint32 {4}      - ??
+		uint32 {4}      - ??
+		uint32 {4}      - ??
+		uint32 {4}      - ??
+		uint32 {4}      - ??
+		uint32 {4}      - ??
+		uint32 {4}      - ??
+		uint32 {4}      - ??
+		uint32 {4}      - ??
+		char {16}       - ??
+		char {16}       - ??
+
+	?? array: 16 bytes
+		uint32 {4}		- ??
+		uint32 {4}		- ??
+		uint32 {4}		- ??
+		uint32 {4}		- function pointer to ??
+
+	Save point: max: 127 - FIFO list (ie. goes back and overwrites first save point when full)
+		uint32 {4}      - index of function pointer inside savePointFunctions array
 		uint32 {4}      - ??
 		uint32 {4}      - time or similar?
 		uint32 {4}      - 0 or 1 ?
@@ -181,14 +191,13 @@ public:
 
 			//Game data
 			time = _defaultTime;
-			currentScene = 0;
+			currentScene = _defaultScene;
 		}
 	};
 
 	// Init & Access
 	static bool initSavegame(GameId id);
-	static GameState *getGameState(GameId id);
-
+	
 	// Getting information
 	static bool isSavegamePresent(GameId id);
 	static bool isSavegameValid(GameId id);
@@ -199,6 +208,7 @@ private:
 	static const uint32 _defaultTime = 1037700;
 	static const uint32 _defaultPortrait = 32;
 	static const uint32 _defaultCdNumber = 1;
+	static const uint32 _defaultScene = 40;
 
 	static Common::String getSavegameName(GameId id);
 
