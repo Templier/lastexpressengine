@@ -469,12 +469,13 @@ void Action::playAnimation(int index) {
 
 	Animation animation;
 	if (animation.loadFile(Common::String(animationList[index].filename) + ".nis"))
-		animation.play();
+		animation.play();	
 
-	inventory->showHourGlass(false);
-
-	// TODO add delta time to game time
-
+	// Adjust game time
+	Logic::GameState *state = _engine->getLogic()->getGameState();
+	state->gameEvents[index] = 1;
+	state->timeTicks += animationList[index].time;
+	state->time += animationList[index].time * state->timeDelta;
 }
 
 

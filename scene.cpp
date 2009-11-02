@@ -101,7 +101,8 @@ public: //XXX
 	byte event;
 	byte action;
 	byte unknown11;	
-	uint16 unknown12;
+	byte unknown12;
+	byte unknown13;
 	uint16 unknown14;
 	uint16 unknown16;
 };
@@ -136,13 +137,14 @@ SceneHotspot *SceneHotspot::load(Common::SeekableReadStream *stream) {
 
 	hs->action = stream->readByte();
 	hs->unknown11 = stream->readByte();
-	hs->unknown12 = stream->readUint16LE();
+	hs->unknown12 = stream->readByte();
+	hs->unknown13 = stream->readByte();
 	hs->unknown14 = stream->readUint16LE();
 	hs->unknown16 = stream->readUint16LE();
 
-	debugC(9, kLastExpressDebugScenes, "\thotspot: Rect=(%d, %d)x(%d,%d) event=%02d offset=%d action=%03d scene=%d uA=%d uE=%02d u11=%02d u12=%d u14=%d u16=%d",
+	debugC(9, kLastExpressDebugScenes, "\thotspot: Rect=(%d, %d)x(%d,%d) event=%02d offset=%d action=%03d scene=%d uA=%d uE=%02d u11=%02d u12=%02d u13=%02d u14=%d u16=%d",
 									   hs->rect.left, hs->rect.top, hs->rect.right, hs->rect.bottom, hs->event, hs->action, hs->scene, hs->unknownA,
-									   hs->unknownE, hs->unknown11, hs->unknown12, hs->unknown14, hs->unknown16);
+									   hs->unknownE, hs->unknown11, hs->unknown12, hs->unknown13, hs->unknown14, hs->unknown16);
 
 	return hs;
 }

@@ -121,18 +121,32 @@ public:
 		uint32 volume;
 
 		// Game data
+		//uint32 unknown0;
 		uint32 time;
+		uint32 timeDelta;
+		uint32 timeTicks;
 		uint32 currentScene;
+		//uint32 unknown17;
+		uint32 currentScene2;
+		uint32 currentScene3;
 
 		GameProgress progress;
+		byte gameEvents[512];
 
 		GameState() {
 			brightness = _defaultBrigthness;
 			volume = _defaultVolume;
 
-			//Game data
+			//Game data			
 			time = _defaultTime;
+			timeDelta = _defaultTimeDelta;
+			timeTicks = 0;
 			currentScene = _defaultScene;
+			currentScene2 = 0;
+			currentScene3 = 0;
+
+			// Clear game events
+			memcpy(gameEvents, 0, 512);
 		}
 	};
 	
@@ -158,6 +172,7 @@ private:
 	static const uint32 _defaultBrigthness = 0x3;
 	static const uint32 _defaultVolume = 0x7;
 	static const uint32 _defaultTime = 1037700;
+	static const uint32 _defaultTimeDelta = 3;
 	static const uint32 _defaultPortrait = 32;
 	static const uint32 _defaultCdNumber = 1;
 	static const uint32 _defaultScene = 40;

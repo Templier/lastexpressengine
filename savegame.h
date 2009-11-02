@@ -42,8 +42,8 @@
 	data:
 		uint32 {4}      - ??
 		uint32 {4}      - current time 
-		uint32 {4}      - ??
-		uint32 {4}      - ??
+		uint32 {4}      - time delta (ie how much a tick is in "real" time)
+		uint32 {4}      - time ticks
 		uint32 {4}      - Scene Index               max: 2600
 		byte {1}        - ??
 		uint32 {4}      - Scene Index (copy?)       max: 2600
@@ -53,7 +53,7 @@
 		uint32 {4*16}   - ??
 		uint32 {4*16}   - ??
 		uint32 {4*128}  - Game progress
-		byte {512}      - ??
+		byte {512}      - Game events
 		byte {7*32}     - Inventory
 		byte {5*128}    - ??
 		byte {1262*40}  - Game state (not sure what's in the struct yet)

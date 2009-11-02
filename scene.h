@@ -59,7 +59,8 @@
 		byte {1}    - event;
 		byte {1}    - action;
 		byte {1}    - unknown11;
-		uint16 {2}  - unknown12
+		byte {1}    - unknown12
+		byte {1}    - unknown13
 		uint16 {2}  - unknown14
 		uint16 {2}  - unknown16
 
