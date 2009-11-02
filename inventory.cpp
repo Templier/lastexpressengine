@@ -118,11 +118,11 @@ void Inventory::init() {
 
 // TODO if we draw inventory objects on screen, we need to load a new scene.
 // Signal that the inventory has taken over the screen and stop processing mouse events after we have been called
-void Inventory::handleMouseEvent(Common::Event ev) {
+bool Inventory::handleMouseEvent(Common::Event ev) {
 
 	// Do not show inventory when on the menu screen
-	if (_engine->getLogic()->isShowingMenu())
-		return;
+	if (_engine->getLogic()->isShowingMenu() || !_visible)
+		return false;
 
 	// Flag to know whether to restore the current cursor or not
 	bool insideInventory = false;
@@ -138,7 +138,7 @@ void Inventory::handleMouseEvent(Common::Event ev) {
 			_engine->getLogic()->showMenu(true);
 
 			// TODO can we return directly or do we need to make sure the state will be "valid" when we come back from the menu
-			return;
+			return true;
 		} else {
 			// Highlight if needed
 			if (_highlightedItem != _engine->getLogic()->getGameId() + 39) {
@@ -259,9 +259,13 @@ void Inventory::handleMouseEvent(Common::Event ev) {
 	// Restore cursor
 	if (!insideInventory)
 		_engine->getCursor()->setStyle(_engine->getLogic()->getCursorStyle());
+
+	return insideInventory;
 }
 
 void Inventory::show(bool visible) {
+	_visible = visible;
+
 	clearBg(GraphicsManager::kBackgroundInventory);
 	askForRedraw();
 

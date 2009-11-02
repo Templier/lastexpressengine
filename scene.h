@@ -60,7 +60,7 @@
 		byte {1}    - param;
 		byte {1}    - unknown11;
 		byte {1}    - unknown12
-		byte {1}    - unknown13
+		byte {1}    - cursor
 		uint16 {2}  - unknown14
 		uint16 {2}  - unknown16
 
@@ -83,14 +83,34 @@
 namespace LastExpress {
 
 class SceneHeader;
-class SceneHotspot;
+// SceneHotspot
+
+class SceneHotspot {
+public:
+	SceneHotspot() {}
+	static SceneHotspot *load(Common::SeekableReadStream *stream);
+
+public:
+	Common::Rect rect;
+	uint16 offset;
+	uint16 unknownA;
+	uint16 scene;
+	byte location;
+	byte action;
+	byte param;
+	byte unknown11;	
+	byte unknown12;
+	byte cursor;
+	uint16 next;
+	uint16 unknown16;
+};
 
 class Scene : public Drawable {
 public:
 	~Scene();
 
 	static Scene *load(Common::SeekableReadStream *stream, SceneHeader *header);
-	bool checkHotSpot(Common::Point coord, byte *eventId);
+	bool checkHotSpot(Common::Point coord, SceneHotspot **hotspot);
 	Common::Rect draw(Graphics::Surface *surface);
 
 private:

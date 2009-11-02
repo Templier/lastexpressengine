@@ -41,7 +41,6 @@
 	AnimFrame *frame = (drawable)->getFrame((index)); \
 	_engine->getGraphicsManager()->draw((frame), (type)); \
 	delete frame; }
-#define showScene(index, type) { Scene *s = _engine->getScene(index); _engine->getGraphicsManager()->draw(s, type); delete s; }
 
 namespace LastExpress {
 
@@ -479,13 +478,15 @@ bool Menu::handleStartMenuEvent(Common::Event ev) {
 
 	// Process event (check hit box / etc.)
 	static StartMenuEvent event;
+	SceneHotspot *hotspost;
 	Scene *sc = _engine->getScene(getState()->currentScene);
-	if (!sc->checkHotSpot(ev.mouse, (byte *)&event)) {
+	if (!sc->checkHotSpot(ev.mouse, &hotspost)) {
 		delete sc;
 		clearBg(GraphicsManager::kBackgroundOverlay);
 		askForRedraw();
 		return true;
 	}
+	event = (StartMenuEvent)hotspost->action;
 	delete sc;
 
 	bool clicked = (ev.type == Common::EVENT_LBUTTONDOWN);
@@ -552,8 +553,7 @@ bool Menu::handleStartMenuEvent(Common::Event ev) {
 			clearBg(GraphicsManager::kBackgroundAll);
 
 			// Reset scene
-			getState()->currentScene = 0;
-			_engine->getLogic()->showMenu(false);
+			_engine->getLogic()->startGame();	
 		}
 		break;
 

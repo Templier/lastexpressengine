@@ -104,7 +104,7 @@ public:
 	void init();
 
 	// Handle inventory UI events.
-	void handleMouseEvent(Common::Event ev);
+	bool handleMouseEvent(Common::Event ev);
 
 	// Inventory contents
 	void addItem(InventoryItem item);
@@ -144,6 +144,7 @@ private:
 	InventoryEntry _entries[32];
 	uint32 _selectedItem;
 	bool _opened;
+	bool _visible;
 	InventoryItem _highlightedItem;
 
 	bool _showingHourGlass;

@@ -28,6 +28,8 @@
 #include "lastexpress/action.h"
 #include "lastexpress/animation.h"
 #include "lastexpress/inventory.h"
+#include "lastexpress/graphics.h"
+#include "lastexpress/helpers.h"
 #include "lastexpress/lastexpress.h"
 #include "lastexpress/menu.h"
 #include "lastexpress/resource.h"
@@ -45,13 +47,6 @@ Logic::Logic(LastExpressEngine *engine) : _engine(engine) {
 
 	// Init inventory
 	_inventory->init();
-
-	
-
-	// HACK set specific cursor style for inventory testing
-	_engine->getCursor()->show(true);
-	_runState.cursorStyle = Cursor::kCursorTurnLeft;
-	_engine->getCursor()->setStyle(_runState.cursorStyle);
 
 	// HACK add more items for testing
 	_inventory->addItem(Inventory::kMatchBox);
@@ -99,22 +94,52 @@ void Logic::showMenu(bool visible) {
 		SaveLoad::initSavegame(kGameBlue);
 }
 
-bool Logic::handleMouseEvent(Common::Event ev) {
-	if (_gameState->currentScene == 0) {
-		// FIXME: allow inventory to show
-		_gameState->currentScene = 1;
-		_inventory->show(true);		
+void Logic::startGame() {
+	showMenu(false);
 
-		return true;
-	}
+	_gameState->currentScene = 105; //_defaultScene;
+	_engine->getGraphicsManager()->clear(GraphicsManager::kBackgroundAll);
+	showScene(_gameState->currentScene, GraphicsManager::kBackgroundC);
+
+	// Set Cursor type
+	_engine->getCursor()->setStyle(Cursor::kCursorNormal);
+	_engine->getCursor()->show(true);
+
+	askForRedraw();
+}
+
+bool Logic::handleMouseEvent(Common::Event ev) {
 
 	// Special case for the main menu scene
 	if (isShowingMenu()) {
 		return _menu->handleStartMenuEvent(ev);
 	}
 
-	// FIXME: check hitbox & event from scene data
-	_inventory->handleMouseEvent(ev);
+	//if (_inventory->handleMouseEvent(ev))
+	//	return true;
+
+	// Check hitbox & event from scene data
+	// TODO cache current loaded scene
+	SceneHotspot *hotspot = NULL;
+	Scene *scene = _engine->getScene(_gameState->currentScene);
+
+	if (scene && scene->checkHotSpot(ev.mouse, &hotspot)) {
+		// Change mouse cursor		
+		_runState.cursorStyle = (Cursor::CursorStyle)hotspot->cursor;
+
+		// Load next scene
+		if ((ev.type == Common::EVENT_LBUTTONDOWN)) {
+			_gameState->currentScene = hotspot->scene;
+			_engine->getGraphicsManager()->clear(GraphicsManager::kBackgroundAll);
+			showScene(_gameState->currentScene, GraphicsManager::kBackgroundC);
+			askForRedraw();
+		}
+	} else {
+		_runState.cursorStyle = Cursor::kCursorNormal;
+	}
+	_engine->getCursor()->setStyle(_runState.cursorStyle);
+
+	delete scene;
 
 	return true;
 }

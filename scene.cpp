@@ -78,31 +78,6 @@ SceneHeader *SceneHeader::load(Common::SeekableReadStream *stream) {
 	return sh;
 }
 
-
-// SceneHotspot
-
-class SceneHotspot {
-public:
-	static SceneHotspot *load(Common::SeekableReadStream *stream);
-
-private:
-	SceneHotspot() {}
-
-public:
-	Common::Rect rect;
-	uint16 offset;
-	uint16 unknownA;
-	uint16 scene;
-	byte location;
-	byte action;
-	byte param;
-	byte unknown11;	
-	byte unknown12;
-	byte unknown13;
-	uint16 next;
-	uint16 unknown16;
-};
-
 SceneHotspot *SceneHotspot::load(Common::SeekableReadStream *stream) {
 	// Check that we have data to read
 	uint16 left = stream->readUint16LE();
@@ -125,14 +100,14 @@ SceneHotspot *SceneHotspot::load(Common::SeekableReadStream *stream) {
 	hs->param = stream->readByte();
 	hs->unknown11 = stream->readByte();
 	hs->unknown12 = stream->readByte();
-	hs->unknown13 = stream->readByte();
+	hs->cursor = stream->readByte();
 	hs->next = stream->readUint16LE();
 	hs->unknown16 = stream->readUint16LE();
 
-	debugC(9, kLastExpressDebugScenes, "\thotspot: rect=(%d, %d)x(%d,%d) scene=%d location=%02d action=%02d param=%02d",
-									   hs->rect.left, hs->rect.top, hs->rect.right, hs->rect.bottom, hs->scene, hs->location, hs->action, hs->param);
-	debugC(9, kLastExpressDebugScenes, "\t         next=%d offset=%d uA=%d u11=%02d u12=%02d u13=%02d u16=%d", 
-									   hs->next, hs->offset, hs->unknownA, hs->unknown11, hs->unknown12, hs->unknown13, hs->unknown16);
+	debugC(9, kLastExpressDebugScenes, "\thotspot: rect=(%d, %d)x(%d,%d) scene=%d location=%02d action=%02d param=%02d cursor=%02d",
+									   hs->rect.left, hs->rect.top, hs->rect.right, hs->rect.bottom, hs->scene, hs->location, hs->action, hs->param, hs->cursor);
+	debugC(9, kLastExpressDebugScenes, "\t         next=%d offset=%d uA=%d u11=%02d u12=%02d u16=%d", 
+									   hs->next, hs->offset, hs->unknownA, hs->unknown11, hs->unknown12, hs->unknown16);
 
 	return hs;
 }
@@ -177,23 +152,17 @@ Scene *Scene::load(Common::SeekableReadStream *stream, SceneHeader *header) {
 	return s;
 }
 
-bool Scene::checkHotSpot(Common::Point coord, byte *eventId) {
-	// TODO: Iterate over scene rectangles?
-
-	uint16 nextOffset = 0;
-	byte id = 0;
+bool Scene::checkHotSpot(Common::Point coord, SceneHotspot **hotspot) {
 	bool found = false;
+
 	for (uint i = 0; i < _hotspots.size(); i++) {
 		if (_hotspots[i]->rect.contains(coord)) {
-			if (nextOffset <= _hotspots[i]->next) {
-				found = true;
-				nextOffset = _hotspots[i]->next;
-				id = _hotspots[i]->action;
-			}
+			found = true;
+			*hotspot = _hotspots[i];
+			break;
 		}
 	}
 
-	*eventId = id;
 	return found;
 }
 

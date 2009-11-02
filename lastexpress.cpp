@@ -119,6 +119,8 @@ Common::Error LastExpressEngine::run() {
 	int style = 0;
 	_cursor->show(true);
 
+	_logic->startGame();
+
 #ifdef LOAD_RESOURCES_LIST
 	// Test Backgrounds
 	Common::ArchiveMemberList list_bg;

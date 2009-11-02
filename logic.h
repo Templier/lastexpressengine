@@ -196,6 +196,7 @@ public:
 
 	// TODO inventory (needs gamestate & new Cursor function)
 
+	void startGame();
 	void switchGame();
 
 	// Accessors
@@ -216,7 +217,7 @@ private:
 	static const uint32 _defaultScene = 40;
 
 	// Scenes
-	enum Scene {
+	enum SceneIndex {
 		kSceneIntroScreen = 65
 	};
 
@@ -225,7 +226,7 @@ private:
 		GameId gameId;
 		bool gameStarted;
 		bool showingMenu;
-		Cursor::CursorStyle cursorStyle;
+		Cursor::CursorStyle cursorStyle;	// necessary to remember current cursor when inside inventory TODO remove?
 
 		RunState() {
 			gameId = kGameBlue;
