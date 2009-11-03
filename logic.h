@@ -244,6 +244,9 @@ private:
 	GameState *_gameState;	///< Global game state
 	Inventory *_inventory;  ///< Inventory
 	Menu *_menu;            ///< Main menu handling
+	Scene *_scene;			///< Current scene
+
+	void setScene(uint32 index);
 
 	// Soundbites
 	Common::String sound_excuseMe();

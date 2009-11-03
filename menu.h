@@ -37,6 +37,7 @@ class LastExpressEngine;
 
 class Clock;
 class TrainLine;
+class Scene;
 
 class Menu {
 public:
@@ -50,6 +51,8 @@ public:
 
 private:
 	LastExpressEngine *_engine;
+
+	Scene *_scene;			///< Menu scene
 
 	// Sequences
 	Sequence _seqTooltips;

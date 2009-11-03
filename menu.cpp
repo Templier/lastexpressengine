@@ -444,8 +444,9 @@ void Menu::showMenu() {
 	// Init time
 	_currentTime = getState()->time;
 
-	// Load scene
-	showScene(getSceneIndex(), GraphicsManager::kBackgroundC);
+	// Load main scene
+	_scene = _engine->getScene(getSceneIndex()); 
+	_engine->getGraphicsManager()->draw(_scene, GraphicsManager::kBackgroundC);
 	drawElements();
 
 	askForRedraw();
@@ -479,15 +480,12 @@ bool Menu::handleStartMenuEvent(Common::Event ev) {
 	// Process event (check hit box / etc.)
 	static StartMenuEvent event;
 	SceneHotspot *hotspost;
-	Scene *sc = _engine->getScene(getState()->currentScene);
-	if (!sc->checkHotSpot(ev.mouse, &hotspost)) {
-		delete sc;
+	if (_scene && !_scene->checkHotSpot(ev.mouse, &hotspost)) {
 		clearBg(GraphicsManager::kBackgroundOverlay);
 		askForRedraw();
 		return true;
 	}
 	event = (StartMenuEvent)hotspost->action;
-	delete sc;
 
 	bool clicked = (ev.type == Common::EVENT_LBUTTONDOWN);
 	clearBg(GraphicsManager::kBackgroundOverlay);

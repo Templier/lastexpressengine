@@ -37,7 +37,7 @@
 
 namespace LastExpress {
 
-Logic::Logic(LastExpressEngine *engine) : _engine(engine) {
+Logic::Logic(LastExpressEngine *engine) : _engine(engine), _scene(NULL) {
 	_action = new Action(engine);
 	_menu = new Menu(engine);
 	_inventory = new Inventory(engine);
@@ -63,6 +63,7 @@ Logic::~Logic() {
 	delete _gameState;
 	delete _menu;
 	delete _inventory;
+	delete _scene;
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -97,13 +98,13 @@ void Logic::showMenu(bool visible) {
 void Logic::startGame() {
 	showMenu(false);
 
-	_gameState->currentScene = 105; //_defaultScene;
-	_engine->getGraphicsManager()->clear(GraphicsManager::kBackgroundAll);
-	showScene(_gameState->currentScene, GraphicsManager::kBackgroundC);
-
+	setScene(_defaultScene);
+	
 	// Set Cursor type
 	_engine->getCursor()->setStyle(Cursor::kCursorNormal);
 	_engine->getCursor()->show(true);
+
+	_inventory->show(true);
 
 	askForRedraw();
 }
@@ -115,15 +116,13 @@ bool Logic::handleMouseEvent(Common::Event ev) {
 		return _menu->handleStartMenuEvent(ev);
 	}
 
-	//if (_inventory->handleMouseEvent(ev))
-	//	return true;
+	if (_inventory->handleMouseEvent(ev))
+		return true;
 
 	// Check hitbox & event from scene data
 	// TODO cache current loaded scene
 	SceneHotspot *hotspot = NULL;
-	Scene *scene = _engine->getScene(_gameState->currentScene);
-
-	if (scene && scene->checkHotSpot(ev.mouse, &hotspot)) {
+	if (_scene && _scene->checkHotSpot(ev.mouse, &hotspot)) {
 		// Change mouse cursor		
 		_runState.cursorStyle = (Cursor::CursorStyle)hotspot->cursor;
 
@@ -138,8 +137,6 @@ bool Logic::handleMouseEvent(Common::Event ev) {
 		_runState.cursorStyle = Cursor::kCursorNormal;
 	}
 	_engine->getCursor()->setStyle(_runState.cursorStyle);
-
-	delete scene;
 
 	return true;
 }
@@ -171,6 +168,17 @@ void Logic::switchGame() {
 
 	// Redraw all menu elements
 	showMenu(true);
+}
+
+void Logic::setScene(uint32 index) {
+	_gameState->currentScene = index;
+
+	delete _scene;
+
+	_engine->getGraphicsManager()->clear(GraphicsManager::kBackgroundAll);
+
+	_scene = _engine->getScene(_gameState->currentScene); 
+	_engine->getGraphicsManager()->draw(_scene, GraphicsManager::kBackgroundC);
 }
 
 //////////////////////////////////////////////////////////////////////////
