@@ -30,7 +30,7 @@
 
 namespace LastExpress {
 
-Cursor::Cursor() : _current(kCursorNormal) {}
+Cursor::Cursor() : _current(kCursorMAX) {}
 
 bool Cursor::load(Common::SeekableReadStream *stream) {
 	if (!stream)
