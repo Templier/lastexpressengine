@@ -190,14 +190,14 @@ public:
 	
 	Logic(LastExpressEngine *engine);
 	~Logic();
-
-	void showMenu(bool visible);
+	
 	bool handleMouseEvent(Common::Event ev);
 
-	// TODO inventory (needs gamestate & new Cursor function)
-
+	void showMenu(bool visible);
 	void startGame();
 	void switchGame();
+
+	void processScene(uint32 *index);
 
 	// Accessors
 	bool isGameStarted() { return _runState.gameStarted; }
@@ -247,12 +247,7 @@ private:
 	Scene *_scene;			///< Current scene
 
 	void setScene(uint32 index);
-
-	// Soundbites
-	Common::String sound_excuseMe();
-	Common::String sound_justChecking();
-	Common::String sound_wrongDoor();
-	Common::String sound_justAMinute();
+	
 };
 
 } // End of namespace LastExpress

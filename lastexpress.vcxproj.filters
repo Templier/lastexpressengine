@@ -29,6 +29,9 @@
     </ClCompile>
     <ClCompile Include="..\..\engines\lastexpress\debug.cpp" />
     <ClCompile Include="..\..\engines\lastexpress\detection.cpp" />
+    <ClCompile Include="..\..\engines\lastexpress\dialog.cpp">
+      <Filter>game</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\engines\lastexpress\font.cpp">
       <Filter>data</Filter>
     </ClCompile>
@@ -78,6 +81,9 @@
       <Filter>data</Filter>
     </ClInclude>
     <ClInclude Include="..\..\engines\lastexpress\debug.h" />
+    <ClInclude Include="..\..\engines\lastexpress\dialog.h">
+      <Filter>game</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\engines\lastexpress\drawable.h" />
     <ClInclude Include="..\..\engines\lastexpress\font.h">
       <Filter>data</Filter>
@@ -115,9 +121,6 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\engines\lastexpress\docs\TODO.txt">
-      <Filter>docs</Filter>
-    </None>
     <None Include="..\..\engines\lastexpress\module.mk">
       <Filter>docs</Filter>
     </None>

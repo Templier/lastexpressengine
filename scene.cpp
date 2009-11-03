@@ -32,30 +32,6 @@
 namespace LastExpress {
 
 // SceneHeader
-
-class SceneHeader {
-public:
-	static SceneHeader *load(Common::SeekableReadStream *stream);
-
-private:
-	SceneHeader() {}
-
-public: // XXX
-	char name[8];     // 0
-	byte sig;         // 8
-	uint16 count;     // 9
-	uint16 unknown11; // 11
-	uint16 unknown13; // 13
-	byte unknown15;   // 15
-	byte unknown16;
-	byte soundId;
-	byte unknown18;
-	byte unknown19;
-	uint16 offsetHotspot;
-	byte unknown22;
-	byte unknown23;
-};
-
 SceneHeader *SceneHeader::load(Common::SeekableReadStream *stream) {
 	SceneHeader *sh = new SceneHeader();
 	if (!sh)
@@ -64,16 +40,16 @@ SceneHeader *SceneHeader::load(Common::SeekableReadStream *stream) {
 	stream->read(&sh->name, sizeof(sh->name));
 	sh->sig = stream->readByte();
 	sh->count = stream->readUint16LE();;
-	sh->unknown11 = stream->readUint16LE();
-	sh->unknown13 = stream->readUint16LE();
-	sh->unknown15 = stream->readByte();
-	sh->unknown16 = stream->readByte();
-	sh->soundId = stream->readByte();
-	sh->unknown18 = stream->readByte();
-	sh->unknown19 = stream->readByte();
-	sh->offsetHotspot = stream->readUint16LE();
-	sh->unknown22 = stream->readByte();
-	sh->unknown23 = stream->readByte();
+	sh->field_11 = stream->readUint16LE();
+	sh->field_13 = stream->readUint16LE();
+	sh->field_15 = stream->readByte();
+	sh->field_16 = stream->readByte();
+	sh->field_17 = stream->readByte();
+	sh->field_18 = stream->readByte();
+	sh->field_19 = stream->readByte();
+	sh->hotspot = stream->readUint16LE();
+	sh->field_22 = stream->readByte();
+	sh->field_23 = stream->readByte();
 
 	return sh;
 }
@@ -126,14 +102,13 @@ Scene *Scene::load(Common::SeekableReadStream *stream, SceneHeader *header) {
 	if (!s)
 		return NULL;
 
-	debugC(9, kLastExpressDebugScenes, "\nScene:  name=%s, sig=%02d, count=%d, unk11=%d", header->name, header->sig, header->count, header->unknown11);
-	debugC(9, kLastExpressDebugScenes, "\tunk13=%02d, unk16=%02d, soundId=%02d, unk18=%02d", header->unknown13, header->unknown16, header->soundId, header->unknown18);
-	debugC(9, kLastExpressDebugScenes, "\tunk19=%02d, hotspotOffset=%02d, unk22=%02d, unk23=%02d\n", header->unknown19, header->offsetHotspot, header->unknown22, header->unknown23);
-
+	debugC(9, kLastExpressDebugScenes, "Scene:  name=%s, sig=%02d, count=%d, field_11=%d", header->name, header->sig, header->count, header->field_11);
+	debugC(9, kLastExpressDebugScenes, "\tfield_13=%02d, field_16=%02d, field_17=%02d, field_18=%02d", header->field_13, header->field_16, header->field_17, header->field_18);
+	debugC(9, kLastExpressDebugScenes, "\tfield_19=%02d, hotspot=%02d, field_22=%02d, field_23=%02d\n", header->field_19, header->hotspot, header->field_22, header->field_23);
 
 	// Read all hotspots
-	if (header->offsetHotspot != 0) {
-		stream->seek(header->offsetHotspot, SEEK_SET);		
+	if (header->hotspot != 0) {
+		stream->seek(header->hotspot, SEEK_SET);		
 		while (1) {
 			SceneHotspot *hotspot = SceneHotspot::load(stream);
 
@@ -234,6 +209,7 @@ Scene *SceneManager::getScene(uint16 index) {
 	if (index == 0 || index > _headers.size())
 		return NULL;
 
+	debugC(9, kLastExpressDebugScenes, "Loading scene %d", index);
 	return Scene::load(_stream, _headers[index - 1]);
 }
 

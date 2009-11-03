@@ -67,8 +67,22 @@ Logic::~Logic() {
 }
 
 //////////////////////////////////////////////////////////////////////////
-// Menu handling
+// Game & Menu
 //////////////////////////////////////////////////////////////////////////
+
+void Logic::startGame() {
+	showMenu(false);
+
+	setScene(_defaultScene);
+	
+	// Set Cursor type
+	_engine->getCursor()->setStyle(Cursor::kCursorNormal);
+	_engine->getCursor()->show(true);
+
+	_inventory->show(true);
+
+	askForRedraw();
+}
 
 // Show main menu
 void Logic::showMenu(bool visible) {
@@ -95,20 +109,38 @@ void Logic::showMenu(bool visible) {
 		SaveLoad::initSavegame(kGameBlue);
 }
 
-void Logic::startGame() {
-	showMenu(false);
+// Switch to the next savegame
+void Logic::switchGame() {
+	// Switch back to blue game is the current game is not started
+	if (!_runState.gameStarted) {
+		_runState.gameId = kGameBlue;
+	} else {
+		_runState.gameId = (GameId)((_runState.gameId + 1) % 6);
+	}
 
-	setScene(_defaultScene);
-	
-	// Set Cursor type
-	_engine->getCursor()->setStyle(Cursor::kCursorNormal);
-	_engine->getCursor()->show(true);
+	// Init savegame if needed
+	if (!SaveLoad::isSavegamePresent(_runState.gameId))
+		SaveLoad::initSavegame(_runState.gameId);
 
-	_inventory->show(true);
+	// Reset run state
+	_runState.gameStarted = false;
 
-	askForRedraw();
+	// TODO load data from savegame, adjust volume & luminosity, etc...
+	//////////////////////////////////////////////////////////////////////////
+	// HACK for debug
+	if (_runState.gameId == kGameBlue) {
+		_gameState->time = 2383200;
+		_runState.gameStarted = true;
+	}
+	//////////////////////////////////////////////////////////////////////////
+
+	// Redraw all menu elements
+	showMenu(true);
 }
 
+//////////////////////////////////////////////////////////////////////////
+// Event Handling
+//////////////////////////////////////////////////////////////////////////
 bool Logic::handleMouseEvent(Common::Event ev) {
 
 	// Special case for the main menu scene
@@ -141,106 +173,52 @@ bool Logic::handleMouseEvent(Common::Event ev) {
 	return true;
 }
 
-// Switch to the next savegame
-void Logic::switchGame() {
-	// Switch back to blue game is the current game is not started
-	if (!_runState.gameStarted) {
-		_runState.gameId = kGameBlue;
-	} else {
-		_runState.gameId = (GameId)((_runState.gameId + 1) % 6);
+//////////////////////////////////////////////////////////////////////////
+// Scenes
+//////////////////////////////////////////////////////////////////////////
+
+void Logic::processScene(uint32 *index) {
+
+	// Check index validity
+	if (*index == 0 || *index > 2500)
+		*index = 1;
+
+	Scene* scene = _engine->getScene(*index);
+
+	switch (scene->getHeader()->field_16) {
+	case 1:
+	case 2:
+	case 3:
+	case 4:
+	case 5:
+	case 6:
+	case 7:
+	case 8:
+		error("Logic::processScene: unsupported scene type (%02d)", scene->getHeader()->field_16);
+		break;
+
+	default:
+		break;
 	}
 
-	// Init savegame if needed
-	if (!SaveLoad::isSavegamePresent(_runState.gameId))
-		SaveLoad::initSavegame(_runState.gameId);
-
-	// Reset run state
-	_runState.gameStarted = false;
-
-	// TODO load data from savegame, adjust volume & luminosity, etc...
-	//////////////////////////////////////////////////////////////////////////
-	// HACK for debug
-	if (_runState.gameId == kGameBlue) {
-		_gameState->time = 2383200;
-		_runState.gameStarted = true;
-	}
-	//////////////////////////////////////////////////////////////////////////
-
-	// Redraw all menu elements
-	showMenu(true);
+	// Cleanup
+	delete scene;
 }
 
+//////////////////////////////////////////////////////////////////////////
+// Private methods
+//////////////////////////////////////////////////////////////////////////
 void Logic::setScene(uint32 index) {
 	_gameState->currentScene = index;
 
 	delete _scene;
+
+	processScene(&_gameState->currentScene);
 
 	_engine->getGraphicsManager()->clear(GraphicsManager::kBackgroundAll);
 
 	_scene = _engine->getScene(_gameState->currentScene); 
 	_engine->getGraphicsManager()->draw(_scene, GraphicsManager::kBackgroundC);
 }
-
-//////////////////////////////////////////////////////////////////////////
-// Soundbites
-//////////////////////////////////////////////////////////////////////////
-Common::String Logic::sound_excuseMe() {
-	switch(((LastExpressEngine*)g_engine)->getRandom().getRandomNumber(3)) {
-	case 0:
-		return "CAT1126B";
-	case 1:
-		return "CAT1126C";
-	case 2:
-		return "CAT1126D";
-	}
-
-	return "CAT1126B";
-}
-
-Common::String Logic::sound_justChecking() {
-	switch(((LastExpressEngine*)g_engine)->getRandom().getRandomNumber(4)) {
-	case 0:
-		return "CAT5001";
-	case 1:
-		return "CAT5001A";
-	case 2:
-		return "CAT5001B";
-	case 3:
-		return "CAT5001C";
-	}
-
-	return "CAT5001";
-}
-
-Common::String Logic::sound_wrongDoor() {
-	switch(((LastExpressEngine*)g_engine)->getRandom().getRandomNumber(5)) {
-	case 0:
-		return "CAT1125";
-	case 1:
-		return "CAT1125A";
-	case 2:
-		return "CAT1125B";
-	case 3:
-		return "CAT1125C";
-	case 4:
-		return "CAT1125D";
-	}
-
-	return "CAT1125";
-}
-
-Common::String Logic::sound_justAMinute() {
-	switch(((LastExpressEngine*)g_engine)->getRandom().getRandomNumber(3)) {
-	case 0:
-		return "CAT1520";
-	case 1:
-		return "CAT1521";
-	case 2:
-		return "CAT1125";	// ?? is this a bug in the original?
-	}
-
-	return "CAT1520";
-}
-
 
 } // End of namespace LastExpress

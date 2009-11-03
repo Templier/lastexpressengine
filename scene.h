@@ -61,7 +61,7 @@
 		byte {1}    - unknown11;
 		byte {1}    - unknown12
 		byte {1}    - cursor
-		uint16 {2}  - unknown14
+		uint16 {2}  - offset to next hotpost
 		uint16 {2}  - unknown16
 
 	??? (9 bytes)
@@ -74,6 +74,7 @@
 		byte {1}
 		byte {1}
 		byte {1}
+
 */
 
 #include "lastexpress/drawable.h"
@@ -82,8 +83,28 @@
 
 namespace LastExpress {
 
-class SceneHeader;
-// SceneHotspot
+class SceneHeader {
+public:
+	static SceneHeader *load(Common::SeekableReadStream *stream);
+
+private:
+	SceneHeader() {}
+
+public: // XXX
+	char name[8];
+	byte sig;
+	uint16 count;
+	uint16 field_11;
+	uint16 field_13;
+	byte field_15;
+	byte field_16;
+	byte field_17;
+	byte field_18;
+	byte field_19;
+	uint16 hotspot;
+	byte field_22;
+	byte field_23;
+};
 
 class SceneHotspot {
 public:
@@ -113,6 +134,8 @@ public:
 	bool checkHotSpot(Common::Point coord, SceneHotspot **hotspot);
 	Common::Rect draw(Graphics::Surface *surface);
 
+	SceneHeader* getHeader() { return _header; }
+
 private:
 	Scene(SceneHeader *header) : _header(header) {}
 
@@ -126,7 +149,7 @@ public:
 	~SceneManager();
 
 	bool load(Common::SeekableReadStream *stream);
-	Scene *getScene(uint16 sceneIndex);
+	Scene *getScene(uint16 index);
 
 private:
 	Common::SeekableReadStream *_stream;
