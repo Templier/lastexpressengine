@@ -41,9 +41,7 @@
 		byte {1}    - 17 ?? 
 		byte {1}    - 18 ?? 
 		byte {1}    - 19 ?? (do something if set to -1)
-		uint16 {2}  - Offset to hotspot info struct
-		byte {1}    - 22 ??
-		byte {1}    - 23 ??
+		uint32 {4}  - Offset to hotspot info struct
 
 		probably contains cursor type too / scene index : 0 - 2500 (max)
 
@@ -101,9 +99,7 @@ public: // XXX
 	byte field_17;
 	byte field_18;
 	byte field_19;
-	uint16 hotspot;
-	byte field_22;
-	byte field_23;
+	uint32 hotspot;
 };
 
 class SceneHotspot {
@@ -122,8 +118,7 @@ public:
 	byte unknown11;	
 	byte unknown12;
 	byte cursor;
-	uint16 next;
-	uint16 unknown16;
+	uint32 next;
 };
 
 class Scene : public Drawable {

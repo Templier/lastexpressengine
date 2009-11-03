@@ -159,12 +159,8 @@ bool Logic::handleMouseEvent(Common::Event ev) {
 		_runState.cursorStyle = (Cursor::CursorStyle)hotspot->cursor;
 
 		// Load next scene
-		if ((ev.type == Common::EVENT_LBUTTONDOWN)) {
-			_gameState->currentScene = hotspot->scene;
-			_engine->getGraphicsManager()->clear(GraphicsManager::kBackgroundAll);
-			showScene(_gameState->currentScene, GraphicsManager::kBackgroundC);
-			askForRedraw();
-		}
+		if ((ev.type == Common::EVENT_LBUTTONDOWN))
+			setScene(hotspot->scene);
 	} else {
 		_runState.cursorStyle = Cursor::kCursorNormal;
 	}
@@ -219,6 +215,7 @@ void Logic::setScene(uint32 index) {
 
 	_scene = _engine->getScene(_gameState->currentScene); 
 	_engine->getGraphicsManager()->draw(_scene, GraphicsManager::kBackgroundC);
+	askForRedraw();
 }
 
 } // End of namespace LastExpress
