@@ -197,7 +197,8 @@ public:
 	void startGame();
 	void switchGame();
 
-	void processScene(uint32 *index);
+	void preProcessScene(uint32 *index);
+	void postProcessScene(uint32 *index);
 	void processHotspot(SceneHotspot *hotspot);
 
 	// Accessors

@@ -37,7 +37,7 @@
 		uint16 {2}  - 11 ??
 		uint16 {2}  - 13 ??
 		byte {1}    - 15 ??
-		byte {1}    - 16 ?? (see text:004067F0/740 - used as a switch value)
+		byte {1}    - type
 		byte {1}    - 17 ?? 
 		byte {1}    - 18 ?? 
 		byte {1}    - 19 ?? (do something if set to -1)
@@ -95,7 +95,7 @@ public: // XXX
 	uint16 field_11;
 	uint16 field_13;
 	byte field_15;
-	byte field_16;
+	byte type;
 	byte field_17;
 	byte field_18;
 	byte field_19;
@@ -131,6 +131,7 @@ public:
 
 	SceneHeader* getHeader() { return _header; }
 	Common::Array<SceneHotspot *> *getHotspots() { return &_hotspots; }
+	SceneHotspot *getHotspot(int index) { return _hotspots[index]; }
 
 private:
 	Scene(SceneHeader *header) : _header(header) {}

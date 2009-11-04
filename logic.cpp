@@ -173,7 +173,7 @@ bool Logic::handleMouseEvent(Common::Event ev) {
 // Scenes & Hotspots
 //////////////////////////////////////////////////////////////////////////
 
-void Logic::processScene(uint32 *index) {
+void Logic::preProcessScene(uint32 *index) {
 
 	// Check index validity
 	if (*index == 0 || *index > 2500)
@@ -181,7 +181,7 @@ void Logic::processScene(uint32 *index) {
 
 	Scene* scene = _engine->getScene(*index);
 
-	switch (scene->getHeader()->field_16) {
+	switch (scene->getHeader()->type) {
 	case 1:
 	case 2:
 	case 3:
@@ -189,7 +189,7 @@ void Logic::processScene(uint32 *index) {
 	case 5:
 	case 7:
 	case 8:
-		error("Logic::processScene: unsupported scene type (%02d)", scene->getHeader()->field_16);
+		error("Logic::processScene: unsupported scene type (%02d)", scene->getHeader()->type);
 		break;
 
 	case 6:
@@ -200,7 +200,7 @@ void Logic::processScene(uint32 *index) {
 					processHotspot(*it);
 					if ((*it)->scene) {
 						*index = (*it)->scene;
-						processScene(index);
+						preProcessScene(index);
 					}
 					break;
 				}
@@ -208,6 +208,47 @@ void Logic::processScene(uint32 *index) {
 		}
 		break;
 	
+
+	default:
+		break;
+	}
+
+	// Cleanup
+	delete scene;
+}
+
+void Logic::postProcessScene(uint32 *index) {
+
+	Scene* scene = _engine->getScene(*index);
+
+	switch (scene->getHeader()->type) {
+	case 128: {
+		// TODO adjust time
+
+		SceneHotspot *hotspot = scene->getHotspot(0);
+		processHotspot(hotspot);
+
+		while (_engine->getScene(hotspot->scene)->getHeader()->type == 128) {
+			hotspot = _engine->getScene(hotspot->scene)->getHotspot(0);
+			processHotspot(hotspot);
+		}
+
+		// More stuff
+
+		if (hotspot->scene)
+			setScene(hotspot->scene);
+
+		break;
+		}
+		
+
+	case 129:
+	case 130:
+	case 131:
+	case 132:
+	case 133:
+		error("Logic::processScene: unsupported scene type (%02d)", scene->getHeader()->type);
+		break;
 
 	default:
 		break;
@@ -262,6 +303,8 @@ void Logic::processHotspot(SceneHotspot *hotspot) {
 	case 44:
 		warning("Logic::processScene: unsupported hotspot action (%02d)", hotspot->action);
 		break;
+	default:
+		break;
 	}
 }
 
@@ -273,13 +316,20 @@ void Logic::setScene(uint32 index) {
 
 	delete _scene;
 
-	processScene(&_gameState->currentScene);
+	preProcessScene(&_gameState->currentScene);
 
 	_engine->getGraphicsManager()->clear(GraphicsManager::kBackgroundAll);
 
 	_scene = _engine->getScene(_gameState->currentScene); 
 	_engine->getGraphicsManager()->draw(_scene, GraphicsManager::kBackgroundC);
 	askForRedraw();
+
+	// Show the scene 
+	_engine->getGraphicsManager()->update();
+	_engine->_system->updateScreen();
+	_engine->_system->delayMillis(10);
+
+	postProcessScene(&_gameState->currentScene);
 }
 
 } // End of namespace LastExpress
