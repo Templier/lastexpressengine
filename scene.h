@@ -38,8 +38,8 @@
 		uint16 {2}  - 13 ??
 		byte {1}    - 15 ??
 		byte {1}    - type
-		byte {1}    - 17 ?? 
-		byte {1}    - 18 ?? 
+		byte {1}    - param1
+		byte {1}    - param2
 		byte {1}    - 19 ?? (do something if set to -1)
 		uint32 {4}  - Offset to hotspot info struct
 
@@ -55,8 +55,8 @@
 		uint16 {2}  - scene
 		byte {1}    - location;
 		byte {1}    - action;
-		byte {1}    - param;
-		byte {1}    - unknown11;
+		byte {1}    - param1;
+		byte {1}    - param2;
 		byte {1}    - unknown12
 		byte {1}    - cursor
 		uint16 {2}  - offset to next hotpost
@@ -96,8 +96,8 @@ public: // XXX
 	uint16 field_13;
 	byte field_15;
 	byte type;
-	byte field_17;
-	byte field_18;
+	byte param1;
+	byte param2;
 	byte field_19;
 	uint32 hotspot;
 };
@@ -114,8 +114,8 @@ public:
 	uint16 scene;
 	byte location;
 	byte action;
-	byte param;
-	byte unknown11;	
+	byte param1;
+	byte param2;	
 	byte unknown12;
 	byte cursor;
 	uint32 next;

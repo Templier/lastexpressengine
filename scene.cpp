@@ -44,8 +44,8 @@ SceneHeader *SceneHeader::load(Common::SeekableReadStream *stream) {
 	sh->field_13 = stream->readUint16LE();
 	sh->field_15 = stream->readByte();
 	sh->type = stream->readByte();
-	sh->field_17 = stream->readByte();
-	sh->field_18 = stream->readByte();
+	sh->param1 = stream->readByte();
+	sh->param2 = stream->readByte();
 	sh->field_19 = stream->readByte();
 	sh->hotspot = stream->readUint32LE();
 
@@ -71,20 +71,19 @@ SceneHotspot *SceneHotspot::load(Common::SeekableReadStream *stream) {
 	hs->scene = stream->readUint16LE();
 	hs->location = stream->readByte();
 	hs->action = stream->readByte();
-	hs->param = stream->readByte();
-	hs->unknown11 = stream->readByte();
+	hs->param1 = stream->readByte();
+	hs->param2 = stream->readByte();
 	hs->unknown12 = stream->readByte();
 	hs->cursor = stream->readByte();
 	hs->next = stream->readUint32LE();
 
-	debugC(9, kLastExpressDebugScenes, "\thotspot: rect=(%d, %d)x(%d,%d) scene=%d location=%02d action=%02d param=%02d cursor=%02d",
-									   hs->rect.left, hs->rect.top, hs->rect.right, hs->rect.bottom, hs->scene, hs->location, hs->action, hs->param, hs->cursor);
-	debugC(9, kLastExpressDebugScenes, "\t         next=%d offset=%d uA=%d u11=%02d u12=%02d", 
-									   hs->next, hs->offset, hs->unknownA, hs->unknown11, hs->unknown12);
+	debugC(9, kLastExpressDebugScenes, "\thotspot: scene=%d location=%02d action=%02d param1=%02d param2=%02d cursor=%02d rect=(%d, %d)x(%d,%d)",
+									   hs->scene, hs->location, hs->action, hs->param1, hs->param2, hs->cursor, hs->rect.left, hs->rect.top, hs->rect.right, hs->rect.bottom);
+	debugC(9, kLastExpressDebugScenes, "\t         uA=%d u12=%02d, next=%d offset=%d ", 
+									   hs->unknownA, hs->unknown12, hs->next, hs->offset);
 
 	return hs;
 }
-
 
 // Scene
 
@@ -100,7 +99,7 @@ Scene *Scene::load(Common::SeekableReadStream *stream, SceneHeader *header) {
 		return NULL;
 
 	debugC(9, kLastExpressDebugScenes, "Scene:  name=%s, sig=%02d, count=%d, field_11=%d", header->name, header->sig, header->count, header->field_11);
-	debugC(9, kLastExpressDebugScenes, "\tfield_13=%02d, type=%02d, field_17=%02d, field_18=%02d", header->field_13, header->type, header->field_17, header->field_18);
+	debugC(9, kLastExpressDebugScenes, "\tfield_13=%02d, type=%02d, param1=%02d, param2=%02d", header->field_13, header->type, header->param1, header->param2);
 	debugC(9, kLastExpressDebugScenes, "\tfield_19=%02d, hotspot=%d\n", header->field_19, header->hotspot);
 
 	// Read all hotspots

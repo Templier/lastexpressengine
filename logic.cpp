@@ -156,7 +156,7 @@ bool Logic::handleMouseEvent(Common::Event ev) {
 	SceneHotspot *hotspot = NULL;
 	if (_scene && _scene->checkHotSpot(ev.mouse, &hotspot)) {
 		// Change mouse cursor		
-		_runState.cursorStyle = (Cursor::CursorStyle)hotspot->cursor;
+		_runState.cursorStyle = getCursor(hotspot);
 
 		// Load next scene
 		if ((ev.type == Common::EVENT_LBUTTONDOWN))
@@ -173,6 +173,27 @@ bool Logic::handleMouseEvent(Common::Event ev) {
 // Scenes & Hotspots
 //////////////////////////////////////////////////////////////////////////
 
+void Logic::setScene(uint32 index) {
+	_gameState->currentScene = index;
+
+	delete _scene;
+
+	preProcessScene(&_gameState->currentScene);
+
+	_engine->getGraphicsManager()->clear(GraphicsManager::kBackgroundAll);
+
+	_scene = _engine->getScene(_gameState->currentScene); 
+	_engine->getGraphicsManager()->draw(_scene, GraphicsManager::kBackgroundC);
+	askForRedraw();
+
+	// Show the scene 
+	_engine->getGraphicsManager()->update();
+	_engine->_system->updateScreen();
+	_engine->_system->delayMillis(10);
+
+	postProcessScene(&_gameState->currentScene);
+}
+
 void Logic::preProcessScene(uint32 *index) {
 
 	// Check index validity
@@ -183,31 +204,107 @@ void Logic::preProcessScene(uint32 *index) {
 
 	switch (scene->getHeader()->type) {
 	case 1:
+		if (scene->getHeader()->param1 >= 128)
+			break;
+
+		warning("Logic::preProcessScene: unimplemented scene type (%02d)", scene->getHeader()->type);		
+		break;
+
 	case 2:
-	case 3:
+	{
+		if (scene->getHeader()->param1 >= 32)
+			break;
+
+		byte location = _inventory->getEntry((Inventory::InventoryItem)scene->getHeader()->param1)->location;
+		if (!location)
+			break;
+
+		for (Common::Array<SceneHotspot *>::iterator it = scene->getHotspots()->begin(); it != scene->getHotspots()->end(); ++it) {
+
+			if ((*it)->location == location) {
+				processHotspot(*it);
+				if ((*it)->scene) {
+					*index = (*it)->scene;
+					preProcessScene(index);
+				}
+				break;
+			}
+		}	
+
+		break;
+	}
+
+	case 3: {
+		if (scene->getHeader()->param1 >= 32)
+			break;
+
+		if (scene->getHeader()->param2 >= 32)
+			break;
+
+		// Check location
+		byte location1 = _inventory->getEntry((Inventory::InventoryItem)scene->getHeader()->param1)->location;
+		byte location2 = _inventory->getEntry((Inventory::InventoryItem)scene->getHeader()->param2)->location;
+		int location = 0;
+
+		if (location1)
+			location = 1;
+
+		if (location2)
+			location |= 2;
+
+		if (!location)
+			break;
+
+		for (Common::Array<SceneHotspot *>::iterator it = scene->getHotspots()->begin(); it != scene->getHotspots()->end(); ++it) {
+
+			if ((*it)->location != location || (*it)->param1 != location1 || (*it)->param2 != location2)
+				continue;
+			
+			processHotspot(*it);
+			if ((*it)->scene) {
+				*index = (*it)->scene;
+				preProcessScene(index);
+			}
+
+			break;
+		}		
+		break;
+	}
+	
+
 	case 4:
 	case 5:
+		warning("Logic::preProcessScene: unsupported scene type (%02d)", scene->getHeader()->type);
+		break;
+
 	case 7:
+		if (scene->getHeader()->param1 >= 16)
+			break;
+
+		warning("Logic::preProcessScene: unimplemented scene type (%02d)", scene->getHeader()->type);
+		// TODO implement
+		break;
+
 	case 8:
-		error("Logic::processScene: unsupported scene type (%02d)", scene->getHeader()->type);
+		warning("Logic::preProcessScene: unsupported scene type (%02d)", scene->getHeader()->type);
 		break;
 
 	case 6:
-		if (scene->getHeader()->field_17 < 128) {
-			for (Common::Array<SceneHotspot *>::iterator it = scene->getHotspots()->begin(); it != scene->getHotspots()->end(); ++it) {
+		if (scene->getHeader()->param1 >= 128)
+			break;
 
-				if (1 /* test with savegame data & hotspot location */) {
-					processHotspot(*it);
-					if ((*it)->scene) {
-						*index = (*it)->scene;
-						preProcessScene(index);
-					}
-					break;
+		for (Common::Array<SceneHotspot *>::iterator it = scene->getHotspots()->begin(); it != scene->getHotspots()->end(); ++it) {
+
+			if (1 /* test with savegame data & hotspot location */) {
+				processHotspot(*it);
+				if ((*it)->scene) {
+					*index = (*it)->scene;
+					preProcessScene(index);
 				}
+				break;
 			}
-		}
-		break;
-	
+		}	
+		break;	
 
 	default:
 		break;
@@ -223,7 +320,11 @@ void Logic::postProcessScene(uint32 *index) {
 
 	switch (scene->getHeader()->type) {
 	case 128: {
-		// TODO adjust time
+		// Adjust time
+		_gameState->time += (scene->getHeader()->param1 + 10) * _gameState->timeDelta;
+		_gameState->timeTicks += (scene->getHeader()->param1 + 10);
+
+		// Some stuff
 
 		SceneHotspot *hotspot = scene->getHotspot(0);
 		processHotspot(hotspot);
@@ -239,17 +340,20 @@ void Logic::postProcessScene(uint32 *index) {
 			setScene(hotspot->scene);
 
 		break;
-		}
+	}
 		
-
 	case 129:
 	case 130:
 	case 131:
 	case 132:
-	case 133:
-		error("Logic::processScene: unsupported scene type (%02d)", scene->getHeader()->type);
+		error("Logic::postProcessScene: unsupported scene type (%02d)", scene->getHeader()->type);
 		break;
 
+	case 133:
+		warning("Logic::postProcessScene: unsupported scene type (%02d)", scene->getHeader()->type);
+		// TODO do some stuff with inventory
+		break;
+		
 	default:
 		break;
 	}
@@ -308,28 +412,72 @@ void Logic::processHotspot(SceneHotspot *hotspot) {
 	}
 }
 
-//////////////////////////////////////////////////////////////////////////
-// Private methods
-//////////////////////////////////////////////////////////////////////////
-void Logic::setScene(uint32 index) {
-	_gameState->currentScene = index;
+Cursor::CursorStyle Logic::getCursor(SceneHotspot *hotspot) {
 
-	delete _scene;
+	// Simple cursor style
+	if (hotspot->cursor != 128)
+		return (Cursor::CursorStyle)hotspot->cursor;
 
-	preProcessScene(&_gameState->currentScene);
+	switch (hotspot->action) {
+	default:
+		return Cursor::kCursorNormal;
 
-	_engine->getGraphicsManager()->clear(GraphicsManager::kBackgroundAll);
+	case 1:
+		if (!_gameState->currentScene3 && (_gameState->gameEvents[Action::kKronosBringFirebird] || _gameState->progress.field_74))				
+			return Cursor::kCursorNormal;
+		else
+			return Cursor::kCursorBackward;		
 
-	_scene = _engine->getScene(_gameState->currentScene); 
-	_engine->getGraphicsManager()->draw(_scene, GraphicsManager::kBackgroundC);
-	askForRedraw();
+	case 5:
+		if (hotspot->param1 >= 128)
+			return Cursor::kCursorNormal;
+		else
+			error("Logic::getCursor: unsupported cursor for action (%02d)", hotspot->action);
 
-	// Show the scene 
-	_engine->getGraphicsManager()->update();
-	_engine->_system->updateScreen();
-	_engine->_system->delayMillis(10);
+	case 6:
+	case 31:
+		if (hotspot->param1 >= 128)
+			return Cursor::kCursorNormal;
+		else {
+			if (1/* test with savegame data */)
+				return Cursor::kCursorForward; // HACK should be extracted from savegame data 
+			else
+				return Cursor::kCursorKey;//_inventory->getItem(Inventory::kKey)->item_id;
+		}
 
-	postProcessScene(&_gameState->currentScene);
+	case 12:
+		if (hotspot->param1 >= 128)
+			return Cursor::kCursorNormal;
+		else
+			error("Logic::getCursor: unsupported cursor for action (%02d)", hotspot->action);
+
+	case 13:
+		if (hotspot->param1 >= 32)
+			return Cursor::kCursorNormal;
+		else {
+			if ((!_inventory->getSelectedItem() || _inventory->getItem(_inventory->getSelectedItem())->no_autoselect) 
+			 && (hotspot->param1 != 21 || _gameState->progress.field_8 == 1))
+				return Cursor::kCursorHand;
+			else
+				return Cursor::kCursorNormal;			
+		}
+
+	case 14:
+	case 15:
+	case 16:
+	case 18:
+	case 19:
+	case 21:
+	case 23:
+	case 24:
+	case 30:	
+	case 33:
+	case 35:
+	case 37:
+	case 40:
+		error("Logic::getCursor: unsupported cursor for action (%02d)", hotspot->action);
+	}
+
 }
 
 } // End of namespace LastExpress

@@ -111,6 +111,8 @@ public:
 	void removeItem(InventoryItem item);
 	bool hasItem(InventoryItem item);
 	InventoryEntry *getItem(InventoryItem item);
+	InventoryEntry *getEntry(int index);
+	InventoryItem getSelectedItem() { return _selectedItem; }
 
 	// UI Control
 	void show(bool visible);
@@ -142,7 +144,7 @@ private:
 	LastExpressEngine *_engine;
 
 	InventoryEntry _entries[32];
-	uint32 _selectedItem;
+	InventoryItem _selectedItem;
 	bool _opened;
 	bool _visible;
 	InventoryItem _highlightedItem;

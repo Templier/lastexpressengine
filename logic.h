@@ -197,9 +197,7 @@ public:
 	void startGame();
 	void switchGame();
 
-	void preProcessScene(uint32 *index);
-	void postProcessScene(uint32 *index);
-	void processHotspot(SceneHotspot *hotspot);
+	void setScene(uint32 index);
 
 	// Accessors
 	bool isGameStarted() { return _runState.gameStarted; }
@@ -248,8 +246,10 @@ private:
 	Menu *_menu;            ///< Main menu handling
 	Scene *_scene;			///< Current scene
 
-	void setScene(uint32 index);
-	
+	void preProcessScene(uint32 *index);
+	void postProcessScene(uint32 *index);
+	void processHotspot(SceneHotspot *hotspot);
+	Cursor::CursorStyle getCursor(SceneHotspot *hotspot);
 };
 
 } // End of namespace LastExpress

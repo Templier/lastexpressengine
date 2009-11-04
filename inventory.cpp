@@ -38,7 +38,7 @@ namespace LastExpress {
 
 Inventory::Inventory(LastExpressEngine *engine) : _engine(engine),
 	_showingHourGlass(false), _blinkingEgg(false), _blinkingTime(0), _blinkingBrightness(100), _blinkingInterval(_defaultBlinkingInterval),
-	_opened(false) {
+	_opened(false), _selectedItem(kNoItem) {
 
 	_inventoryRect = Common::Rect(0, 0, 32, 32);
 	_menuRect = Common::Rect(608, 448, 640, 480);
@@ -110,7 +110,7 @@ void Inventory::init() {
 	_entries[kIndexTelegram].has_item = 1;
 	_entries[kIndexArticle].has_item = 1;
 
-	_selectedItem = 0;
+	_selectedItem = kNoItem;
 }
 
 // FIXME we need to draw cursors with full background opacity so that whatever is in the background is erased
@@ -333,7 +333,7 @@ void Inventory::addItem(InventoryItem item) {
 
 	// Autoselect item if necessary
 	if (!getItem(item)->no_autoselect) {
-		_selectedItem = getItem(item)->item_id;
+		_selectedItem = (InventoryItem)getItem(item)->item_id;
 		drawItem(44, 0, _selectedItem, 100)
 		askForRedraw();
 	}
@@ -371,6 +371,12 @@ Inventory::InventoryEntry *Inventory::getItem(InventoryItem item) {
 
 	// Should never get invalid item
 	error("Invalid inventory item id: %D", item);
+}
+
+Inventory::InventoryEntry *Inventory::getEntry(int index) {
+	assert(index < 32);
+	
+	return &_entries[index];
 }
 
 // Examine an inventory item
