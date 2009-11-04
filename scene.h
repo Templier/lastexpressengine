@@ -130,6 +130,7 @@ public:
 	Common::Rect draw(Graphics::Surface *surface);
 
 	SceneHeader* getHeader() { return _header; }
+	Common::Array<SceneHotspot *> *getHotspots() { return &_hotspots; }
 
 private:
 	Scene(SceneHeader *header) : _header(header) {}

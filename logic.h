@@ -198,6 +198,7 @@ public:
 	void switchGame();
 
 	void processScene(uint32 *index);
+	void processHotspot(SceneHotspot *hotspot);
 
 	// Accessors
 	bool isGameStarted() { return _runState.gameStarted; }
