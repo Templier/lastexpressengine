@@ -370,7 +370,7 @@ Inventory::InventoryEntry *Inventory::getItem(InventoryItem item) {
 	}
 
 	// Should never get invalid item
-	error("Invalid inventory item id: %D", item);
+	error("Invalid inventory item id: %d", item);
 }
 
 Inventory::InventoryEntry *Inventory::getEntry(int index) {

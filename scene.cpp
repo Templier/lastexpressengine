@@ -142,7 +142,7 @@ Common::Rect Scene::draw(Graphics::Surface *surface) {
 	Common::String name(_header->name);
 	name.trim();
 	if (name.empty()) {
-		error("This scene is not a valid drawing scene: %s", name);		
+		error("This scene is not a valid drawing scene: %s", name.c_str());
 	}
 
 	// Load background
