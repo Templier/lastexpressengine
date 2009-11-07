@@ -430,7 +430,7 @@ void Action::dropCorpse() {
 
 // Play an animation and add delta time to global game time
 void Action::playAnimation(int index) {
-	assert(index > 0 || index < sizeof(animationList));
+	assert(index > 0 || (uint)index < sizeof(animationList));
 
 	//bool unknown = false;
 	//if (index >= 212)

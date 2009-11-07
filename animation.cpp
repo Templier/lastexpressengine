@@ -103,7 +103,7 @@ bool Animation::process() {
 	}
 
 	// TODO: substract the time paused by the GUI
-	uint32 currentFrame = ((float)(g_engine->_system->getMillis() - _startTime)) / 33.33f;
+	uint32 currentFrame = (uint32)(((float)(g_engine->_system->getMillis() - _startTime)) / 33.33f);
 
 	// Process all chunks until the current frame
 	while (!_changed && currentFrame > _currentChunk->frame && !hasEnded()) {
