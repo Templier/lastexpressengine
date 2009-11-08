@@ -446,7 +446,7 @@ void Action::playAnimation(int index) {
 
 	// Adjust game time
 	Logic::GameState *state = _engine->getLogic()->getGameState();
-	state->gameEvents[index] = 1;
+	state->events[index] = 1;
 	state->timeTicks += animationList[index].time;
 	state->time += animationList[index].time * state->timeDelta;
 }

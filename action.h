@@ -294,22 +294,21 @@ public:
 		k = 255,*/
 		kPickGreenJacket = 256,
 		kPickScarfGreen = 257,
-		kPickScarfOriginal = 258
-		/*k = 259,
-		k = 260,
-		k = 261,
-		k = 262,
-		k = 263,
-		k = 264,
+		kPickScarfOriginal = 258,
+		kCloseMatchbox = 259,
+		kCathStruggleWithBonds = 260,
+		kCathBurnRope = 261,
+		kCathRemoveBonds = 262,
+		kCathStruggleWithBonds2 = 263,
+		/*k = 264,
 		k = 265,
 		k = 266,
 		k = 267,
 		k = 268,
 		k = 269,
-		k = 270,
-		k = 271,
-		k = 272
-		*/
+		k = 270, */
+		kCathUseWhistleOpenEgg = 271,
+		kCathUseWhistleOpenEggNoBackground = 272		
 	};
 
 	Action(LastExpressEngine *engine);

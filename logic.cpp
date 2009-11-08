@@ -433,7 +433,7 @@ Cursor::CursorStyle Logic::getCursor(SceneHotspot *hotspot) {
 		return Cursor::kCursorNormal;
 
 	case 1:
-		if (!_gameState->currentScene3 && (_gameState->gameEvents[Action::kKronosBringFirebird] || _gameState->progress.field_74))				
+		if (!_gameState->currentScene3 && (_gameState->events[Action::kKronosBringFirebird] || _gameState->progress.field_74))				
 			return Cursor::kCursorNormal;
 		else
 			return Cursor::kCursorBackward;		
@@ -441,48 +441,117 @@ Cursor::CursorStyle Logic::getCursor(SceneHotspot *hotspot) {
 	case 5:
 		if (hotspot->param1 >= 128)
 			return Cursor::kCursorNormal;
-		else
-			error("Logic::getCursor: unsupported cursor for action (%02d)", hotspot->action);
+		
+		warning("Logic::getCursor: unsupported cursor for action (%02d)", hotspot->action);
+		// TODO gets the cursor from an unknown savegame struct, which is updated in other game code
+		return Cursor::kCursorNormal;
 
+LABEL_KEY:
 	case 6:
 	case 31:
 		if (hotspot->param1 >= 128)
 			return Cursor::kCursorNormal;
-		else {
-			if (1/* test with savegame data */)
-				return Cursor::kCursorForward; // HACK should be extracted from savegame data 
-			else
-				return Cursor::kCursorKey;//_inventory->getItem(Inventory::kKey)->item_id;
-		}
+		
+		if (1/* test with savegame data */)
+			return Cursor::kCursorForward; // HACK should be extracted from savegame data 
+		else
+			return Cursor::kCursorKey;
+		
 
 	case 12:
 		if (hotspot->param1 >= 128)
 			return Cursor::kCursorNormal;
-		else
-			error("Logic::getCursor: unsupported cursor for action (%02d)", hotspot->action);
+		
+		error("Logic::getCursor: unsupported cursor for action (%02d)", hotspot->action);
 
 	case 13:
 		if (hotspot->param1 >= 32)
 			return Cursor::kCursorNormal;
-		else {
-			if ((!_inventory->getSelectedItem() || _inventory->getItem(_inventory->getSelectedItem())->no_autoselect) 
+		
+		if ((!_inventory->getSelectedItem() || _inventory->getItem(_inventory->getSelectedItem())->no_autoselect) 
 			 && (hotspot->param1 != 21 || _gameState->progress.field_8 == 1))
-				return Cursor::kCursorHand;
-			else
-				return Cursor::kCursorNormal;			
-		}
+			 return Cursor::kCursorHand;
+		else
+			return Cursor::kCursorNormal;			
+		
 
 	case 14:
+		if (hotspot->param1 >= 32)
+			return Cursor::kCursorNormal;
+
+		if (_inventory->getSelectedIndex() != hotspot->param1)
+			return Cursor::kCursorNormal;
+
+		if (hotspot->param1 == 20 && hotspot->param2 == 4 && !_gameState->progress.field_50)
+			return Cursor::kCursorNormal;
+
+		if (hotspot->param1 == 18  && hotspot->param2 == 1 && _gameState->progress.field_5C)
+			return Cursor::kCursorNormal;
+	
+		return (Cursor::CursorStyle)_inventory->getSelectedItem();
+
 	case 15:
+		if (hotspot->param1 >= 128)
+			return Cursor::kCursorNormal;
+
+		if (*(&_gameState->progress.field_0 + hotspot->param1) == hotspot->param2)
+			return (Cursor::CursorStyle)hotspot->unknown12;
+
+		return Cursor::kCursorNormal; 
+
 	case 16:
+		if (_inventory->getSelectedItem() != Inventory::kKey)
+			goto LABEL_KEY;
+
+		// TODO check other savegame struct...
+
+		if (!_inventory->hasItem(Inventory::kKey))
+			goto LABEL_KEY;
+
+		if (_inventory->getSelectedItem() != Inventory::kFirebird && _inventory->getSelectedItem() != Inventory::kBriefcase)
+			goto LABEL_KEY;
+
+		return Cursor::kCursorKey;
+
 	case 18:
 	case 19:
+		error("Logic::getCursor: unsupported cursor for action (%02d)", hotspot->action);
+
 	case 21:
+		if (_gameState->progress.field_50
+		 && (_gameState->progress.index == 2 || _gameState->progress.index == 3 || _gameState->progress.index == 5)
+		 && _inventory->getSelectedItem() != Inventory::kFirebird 
+		 && _inventory->getSelectedItem() != Inventory::kBriefcase)
+			return Cursor::kCursorUp;
+
+		return Cursor::kCursorNormal; 
+
 	case 23:
-	case 24:
+		error("Logic::getCursor: unsupported cursor for action (%02d)", hotspot->action);
+
+	case kActionUnbound:
+		if (hotspot->param2 != 2)
+			return Cursor::kCursorNormal; 
+				
+		if (_gameState->events[Action::kCathBurnRope] || !_gameState->events[Action::kCathStruggleWithBonds2])
+			return Cursor::kCursorNormal; 
+
+		return Cursor::kCursorHand; 
+
+
 	case 30:	
-	case 33:
-	case 35:
+		error("Logic::getCursor: unsupported cursor for action (%02d)", hotspot->action);
+
+	case KActionUseWhistle:
+		if (hotspot->param1 != 3)
+			return Cursor::kCursorNormal; 
+
+		if (_inventory->getSelectedItem() == Inventory::kWhistle)
+			return Cursor::kCursorWhistle;
+		else
+			return Cursor::kCursorNormal; 
+
+	case 35:		
 	case 37:
 	case 40:
 		error("Logic::getCursor: unsupported cursor for action (%02d)", hotspot->action);

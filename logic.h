@@ -142,7 +142,7 @@ public:
 		uint32 field_20;
 		uint32 field_24;
 		uint32 field_28;
-		uint32 cdNumber;
+		uint32 index;
 		uint32 field_30;
 		uint32 field_34;
 		uint32 field_38;
@@ -176,7 +176,7 @@ public:
 			field_20 = 0;
 			field_24 = 0;
 			field_28 = 0;
-			cdNumber = _defaultCdNumber;
+			index = _defaultIndex;
 			field_30 = 0;
 			field_34 = 0;
 			field_38 = 0;
@@ -216,7 +216,7 @@ public:
 		uint32 currentScene3;
 
 		GameProgress progress;
-		byte gameEvents[512];
+		byte events[512];
 
 		GameState() {
 			brightness = _defaultBrigthness;
@@ -231,7 +231,7 @@ public:
 			currentScene3 = 0;
 
 			// Clear game events
-			memset(gameEvents, 0, 512*sizeof(byte));
+			memset(events, 0, 512*sizeof(byte));
 		}
 	};
 	
@@ -260,7 +260,7 @@ private:
 	static const uint32 _defaultTime = 1037700;
 	static const uint32 _defaultTimeDelta = 3;
 	static const uint32 _defaultPortrait = 32;
-	static const uint32 _defaultCdNumber = 1;
+	static const uint32 _defaultIndex = 1;
 	static const uint32 _defaultScene = 40;
 
 	// Scenes
@@ -275,6 +275,28 @@ private:
 		kSceneGameOver = 131,
 		kSceneSound = 132,
 		kScene133 = 133
+	};
+
+	enum HotspotAction {
+		kAction1 = 1,
+		kAction5 = 5,
+		kAction6 = 6,
+		kAction12 = 12,
+		kAction13 = 13,
+		kAction14 = 14,
+		kAction15 = 15,
+		kAction16 = 16,
+		kAction18 = 18,
+		kAction19 = 19,
+		kAction21 = 21,
+		kAction23 = 23,
+		kActionUnbound = 24,
+		kAction30 = 30,
+		kAction31 = 31,
+		KActionUseWhistle = 33,
+		kAction35 = 35,
+		kAction37 = 37,
+		kAction40 = 40
 	};
 
 	// State

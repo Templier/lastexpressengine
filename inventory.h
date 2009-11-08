@@ -112,7 +112,8 @@ public:
 	bool hasItem(InventoryItem item);
 	InventoryEntry *getItem(InventoryItem item);
 	InventoryEntry *getEntry(int index);
-	InventoryItem getSelectedItem() { return _selectedItem; }
+	InventoryItem getSelectedItem() { return (InventoryItem)getEntry(_selectedItem)->item_id; }
+	int getSelectedIndex() { return _selectedItem; }
 
 	// UI Control
 	void show(bool visible);
@@ -123,7 +124,7 @@ public:
 private:
 	static const uint32 _defaultBlinkingInterval = 250; ///< Default blinking interval in ms
 
-	// Index if items in inventory data
+	// Index of items in inventory data
 	enum InventoryDataIndex {
 		kIndexMatchBox = 1,
 		kIndexTelegram = 4,
@@ -144,7 +145,7 @@ private:
 	LastExpressEngine *_engine;
 
 	InventoryEntry _entries[32];
-	InventoryItem _selectedItem;
+	int _selectedItem;
 	bool _opened;
 	bool _visible;
 	InventoryItem _highlightedItem;
