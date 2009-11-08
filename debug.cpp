@@ -204,7 +204,7 @@ bool Debugger::cmd_playsnd(int argc, const char **argv) {
 		}
 
 		_engine->_system->getMixer()->stopAll();
-		playSfx(filename);
+		_engine->getSfxStream()->load(_engine->getResMan()->getFileStream(filename));
 	} else {
 		DebugPrintf("Syntax: playsnd <sndname>\n");
 	}
