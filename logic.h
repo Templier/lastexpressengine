@@ -164,6 +164,38 @@ public:
 		uint32 field_74;
 		uint32 field_78;
 		uint32 field_7C;
+		uint32 field_80;
+		uint32 field_84;
+		uint32 field_88;
+		uint32 field_8C;
+		uint32 field_90;
+		uint32 field_94;
+		uint32 field_98;
+		uint32 field_9C;
+		uint32 field_A0;
+		uint32 field_A4;
+		uint32 field_A8;
+		uint32 field_AC;
+		uint32 field_B0;
+		uint32 field_B4;
+		uint32 field_B8;
+		uint32 field_BC;
+		uint32 field_C0;
+		uint32 field_C4;
+		uint32 field_C8;
+		uint32 field_CC;
+		uint32 field_D0;
+		uint32 field_D4;
+		uint32 field_D8;
+		uint32 field_DC;
+		uint32 field_E0;
+		uint32 field_E4;
+		uint32 field_E8;
+		uint32 field_EC;
+		uint32 field_F0;
+		uint32 field_F4;
+		uint32 field_F8;
+		uint32 field_FC;
 
 		// TODO add missing fields
 
@@ -200,6 +232,38 @@ public:
 			field_74 = 0;
 			field_78 = 0;
 			field_7C = 0;
+			field_80 = 0;
+			field_84 = 0;
+			field_88 = 0;
+			field_8C = 0;
+			field_90 = 0;
+			field_94 = 0;
+			field_98 = 0;
+			field_9C = 0;
+			field_A0 = 0;
+			field_A4 = 0;
+			field_A8 = 0;
+			field_AC = 0;
+			field_B0 = 0;
+			field_B4 = 0;
+			field_B8 = 0;
+			field_BC = 0;
+			field_C0 = 0;
+			field_C4 = 0;
+			field_C8 = 0;
+			field_CC = 0;
+			field_D0 = 0;
+			field_D4 = 0;
+			field_D8 = 0;
+			field_DC = 0;
+			field_E0 = 0;
+			field_E4 = 0;
+			field_E8 = 0;
+			field_EC = 0;
+			field_F0 = 0;
+			field_F4 = 0;
+			field_F8 = 0;
+			field_FC = 0;
 		}
 	};
 
