@@ -34,14 +34,39 @@ class LastExpressEngine;
 
 class Dialog {
 public:
+	enum DialogId {
+		kDialogAnna = 1,
+		kDialogAugust = 2,
+		kDialogTatiana = 10,
+		kDialogVassili = 11,
+		kDialogAlexei = 12,
+		kDialogAbbot = 13,
+		kDialogMilos = 14,
+		kDialogVesna = 15,
+		kDialogKronos = 18,
+		kDialogFrancois = 20,
+		kDialogMadameBoutarel = 21,
+		kDialog22 = 22,
+		kDialogRebecca = 23,
+		kDialogSophie = 24,
+		kDialogMahmud = 25,
+		kDialogHarem2 = 26,
+		kDialogHarem1 = 27,
+		kDialogHarem3 = 28,
+		kDialogHarem4 = 29,
+		kDialogTyler = 31
+	};
 
 	Dialog(LastExpressEngine *engine);
 
-	// Soundbites
-	Common::String sound_excuseMe();
-	Common::String sound_justChecking();
-	Common::String sound_wrongDoor();
-	Common::String sound_justAMinute();
+	// Dialog
+	const char *getDialog(DialogId id);
+
+	// Sound bites
+	const char *excuseMe();
+	const char *justChecking();
+	const char *wrongDoor();
+	const char *justAMinute();
 
 private:
 	LastExpressEngine* _engine;

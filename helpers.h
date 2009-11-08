@@ -31,10 +31,12 @@
 //////////////////////////////////////////////////////////////////////////
 #define loadFile(name) load(_engine->getResMan()->getFileStream(name))
 #define playMusic(name) _engine->getMusicStream()->load(_engine->getResMan()->getFileStream(name));
-#define playSfx(name) _engine->getSfxStream()->load(_engine->getResMan()->getFileStream(name));
+#define playSfx(name) _engine->getSfxStream()->load(_engine->getResMan()->getFileStream(Common::String(name) + ".snd"));
 
 // Logic subclasses
-#define getProgress() _engine->getLogic()->getGameState()->progress
+#define getState() _engine->getLogic()->getGameState()
+#define getProgress() getState()->progress
+#define getEvent(id) getState()->events[id]
 
 //////////////////////////////////////////////////////////////////////////
 // Graphics

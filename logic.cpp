@@ -27,6 +27,7 @@
 
 #include "lastexpress/action.h"
 #include "lastexpress/animation.h"
+#include "lastexpress/dialog.h"
 #include "lastexpress/inventory.h"
 #include "lastexpress/graphics.h"
 #include "lastexpress/helpers.h"
@@ -34,6 +35,7 @@
 #include "lastexpress/menu.h"
 #include "lastexpress/resource.h"
 #include "lastexpress/scene.h"
+#include "lastexpress/sound.h"
 
 namespace LastExpress {
 
@@ -41,6 +43,7 @@ Logic::Logic(LastExpressEngine *engine) : _engine(engine), _scene(NULL) {
 	_action = new Action(engine);
 	_menu = new Menu(engine);
 	_inventory = new Inventory(engine);
+	_dialog = new Dialog(engine);
 
 	// Get those from savegame
 	_gameState = new GameState();
@@ -60,9 +63,10 @@ Logic::Logic(LastExpressEngine *engine) : _engine(engine), _scene(NULL) {
 
 Logic::~Logic() {
 	delete _action;
+	delete _dialog;
 	delete _gameState;
-	delete _menu;
 	delete _inventory;
+	delete _menu;	
 	delete _scene;
 }
 
@@ -408,14 +412,24 @@ void Logic::processHotspot(SceneHotspot *hotspot) {
 	case 33:
 	case 34:
 	case 35:
-	case 37:
+		error("Logic::processScene: unsupported hotspot action (%02d)", hotspot->action);
+
+	case kActionDialog: {
+		const char* dialog = _dialog->getDialog((Dialog::DialogId)hotspot->param1);
+
+		if (dialog)			
+			playSfx(dialog);
+
+		}
+		break;
+
 	case 38:
 	case 39:
 	case 40:
 	case 41:
 	case 42:
 	case 44:
-		warning("Logic::processScene: unsupported hotspot action (%02d)", hotspot->action);
+		error("Logic::processScene: unsupported hotspot action (%02d)", hotspot->action);
 		break;
 	default:
 		break;
@@ -551,8 +565,15 @@ LABEL_KEY:
 		else
 			return Cursor::kCursorNormal; 
 
-	case 35:		
-	case 37:
+	case 35:
+		error("Logic::getCursor: unsupported cursor for action (%02d)", hotspot->action);
+
+	case kActionDialog:
+		if (_dialog->getDialog((Dialog::DialogId)hotspot->param1))
+			return Cursor::kCursorTalk; 
+
+		return Cursor::kCursorNormal;
+
 	case 40:
 		error("Logic::getCursor: unsupported cursor for action (%02d)", hotspot->action);
 	}

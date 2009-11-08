@@ -25,16 +25,119 @@
 
 #include "lastexpress/dialog.h"
 
+#include "lastexpress/action.h"
+#include "lastexpress/helpers.h"
 #include "lastexpress/lastexpress.h"
+#include "lastexpress/logic.h"
 
 namespace LastExpress {
 
 Dialog::Dialog(LastExpressEngine *engine) : _engine(engine) {}
 
+const char *Dialog::getDialog(DialogId id) {
+	switch (id) {
+	case kDialogAnna:
+		if (getEvent(Action::kAnnaDialogGoToJerusalem))
+			return "XANN12";
+
+		if (getEvent(Action::kLocomotiveRestartTrain))
+			return "XANN11";
+
+		if (getEvent(Action::kAnnaBagageTies) || getEvent(Action::kAnnaBagageTies2) || getEvent(Action::kAnnaBagageTies3) || getEvent(Action::kAnnaBagageTies4))
+			return "XANN10";
+
+		if (getEvent(Action::kAnnaTired) || getEvent(Action::kAnnaTiredKiss))
+			return "XANN9";
+
+		if (getEvent(Action::kAnnaBagageArgument))
+			return "XANN8";
+
+		if (getEvent(Action::kKronosVisit))
+			return "XANN7";
+
+		if (getEvent(Action::kAbbotIntroduction))
+			return "XANN6A";
+
+		if (getEvent(Action::kVassiliSeizure))
+			return "XANN6";
+
+		if (getEvent(Action::kAugustPresentAnna) || getEvent(Action::kAugustPresentAnnaFirstIntroduction))
+			return "XANN5";
+
+		if (getProgress().field_60)
+			return "XANN4";
+
+		if (getEvent(Action::kAnnaGiveScarf) || getEvent(Action::kAnnaGiveScarfDiner) || getEvent(Action::kAnnaGiveScarfRestaurant)
+		 || getEvent(Action::kAnnaGiveScarfMonogram) || getEvent(Action::kAnnaGiveScarfDinerMonogram) || getEvent(Action::kAnnaGiveScarfRestaurantMonogram))
+			return "XANN3";
+
+		if (getEvent(Action::kDinerMindJoin))
+			return "XANN2";
+
+		if (getEvent(Action::kGotALight) || getEvent(Action::kGotALightD))
+			return "XANN1";
+
+		break;
+
+	case kDialogAugust:
+		if (getEvent(Action::kAugustTalkCigar))
+			return "XAUG6";
+
+		if (getEvent(Action::kAugustBringBriefcase))
+			return "XAUG5";
+
+		// Getting closer to Vienna...
+		if (getState()->time > 2200500 && !getEvent(Action::kAugustMerchandise))
+			return "XAUG4A";
+
+		if (getEvent(Action::kAugustMerchandise))
+			return "XAUG4";
+
+		if (getEvent(Action::kDinerAugust) || getEvent(Action::kDinerAugustAlexeiBackground) || getEvent(Action::kMeetAugustTylerCompartment)
+		 || getEvent(Action::kMeetAugustTylerCompartmentBed) || getEvent(Action::kMeetAugustHisCompartment) || getEvent(Action::kMeetAugustHisCompartmentBed))
+			return "XAUG3";
+
+		if (getEvent(Action::kAugustPresentAnnaFirstIntroduction))
+			return "XAUG2";
+
+		if (getProgress().field_6C)
+			return "XAUG1";
+
+		break;
+
+	case kDialogTatiana:
+	/*	if (getEvent(Action::))
+			return "";*/
+	case kDialogVassili:
+	case kDialogAlexei:
+	case kDialogAbbot:
+	case kDialogMilos:
+	case kDialogVesna:
+	case kDialogKronos:
+	case kDialogFrancois:
+	case kDialogMadameBoutarel:
+	case kDialog22:
+	case kDialogRebecca:
+	case kDialogSophie:
+	case kDialogMahmud:
+	case kDialogHarem2:
+	case kDialogHarem1:
+	case kDialogHarem3:
+	case kDialogHarem4:
+	case kDialogTyler:
+		error("Dialog::getDialog: unsupported dialog id (%d)", id);
+
+	default:
+		return NULL;
+	}
+
+	return NULL;
+}
+
 //////////////////////////////////////////////////////////////////////////
-// Soundbites
+// Sound bites
 //////////////////////////////////////////////////////////////////////////
-Common::String Dialog::sound_excuseMe() {
+const char *Dialog::excuseMe() {
 	switch(_engine->getRandom().getRandomNumber(3)) {
 	case 0:
 		return "CAT1126B";
@@ -47,7 +150,7 @@ Common::String Dialog::sound_excuseMe() {
 	return "CAT1126B";
 }
 
-Common::String Dialog::sound_justChecking() {
+const char *Dialog::justChecking() {
 	switch(_engine->getRandom().getRandomNumber(4)) {
 	case 0:
 		return "CAT5001";
@@ -62,7 +165,7 @@ Common::String Dialog::sound_justChecking() {
 	return "CAT5001";
 }
 
-Common::String Dialog::sound_wrongDoor() {
+const char *Dialog::wrongDoor() {
 	switch(_engine->getRandom().getRandomNumber(5)) {
 	case 0:
 		return "CAT1125";
@@ -79,7 +182,7 @@ Common::String Dialog::sound_wrongDoor() {
 	return "CAT1125";
 }
 
-Common::String Dialog::sound_justAMinute() {
+const char *Dialog::justAMinute() {
 	switch(_engine->getRandom().getRandomNumber(3)) {
 	case 0:
 		return "CAT1520";

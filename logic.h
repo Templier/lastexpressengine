@@ -120,6 +120,7 @@
 namespace LastExpress {
 
 class Action;
+class Dialog;
 class LastExpressEngine;
 class Menu;
 
@@ -164,6 +165,8 @@ public:
 		uint32 field_78;
 		uint32 field_7C;
 
+		// TODO add missing fields
+
 		GameProgress() {
 			field_0 = 0;
 			jacketType = kOriginalJacket;
@@ -196,7 +199,7 @@ public:
 			field_70 = 0;
 			field_74 = 0;
 			field_78 = 0;
-			field_7C = 0;		
+			field_7C = 0;
 		}
 	};
 
@@ -295,7 +298,7 @@ private:
 		kAction31 = 31,
 		KActionUseWhistle = 33,
 		kAction35 = 35,
-		kAction37 = 37,
+		kActionDialog = 37,
 		kAction40 = 40
 	};
 
@@ -316,14 +319,15 @@ private:
 
 	LastExpressEngine *_engine;
 
-	RunState _runState;    ///< State of the game session (this data won't be stored in savegames)
+	RunState _runState;     ///< State of the game session (this data won't be stored in savegames)
 	
 	Action *_action;		///< Actions
+	Dialog *_dialog;		///< Dialogs
 	GameState *_gameState;	///< Global game state
 	Inventory *_inventory;  ///< Inventory
 	Menu *_menu;            ///< Main menu handling
 	Scene *_scene;			///< Current scene
-
+	
 	void preProcessScene(uint32 *index);
 	void postProcessScene(uint32 *index);
 	void processHotspot(SceneHotspot *hotspot);

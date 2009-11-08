@@ -134,7 +134,7 @@ bool Inventory::handleMouseEvent(Common::Event ev) {
 
 		// If clicked, show the menu
 		if (ev.type == Common::EVENT_LBUTTONDOWN) {
-			playSfx("LIB039.SND");
+			playSfx("LIB039");
 			_engine->getLogic()->showMenu(true);
 
 			// TODO can we return directly or do we need to make sure the state will be "valid" when we come back from the menu
