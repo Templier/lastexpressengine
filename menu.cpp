@@ -45,25 +45,25 @@
 namespace LastExpress {
 
 // Start menu events
-enum StartMenuEvent {
-	kEventContinue = 1,
-	kEventCredits = 2,
-	kEventQuitGame = 3,
-	kEventCase4 = 4,
-	kEventSwitchSaveGame = 6,
-	kEventRewindGame = 7,
-	kEventForwardGame = 8,
-	kEventParis = 10,
-	kEventStrasBourg = 11,
-	kEventMunich = 12,
-	kEventVienna = 13,
-	kEventBudapest = 14,
-	kEventBelgrade = 15,
-	kEventConstantinople = 16,
-	kEventDecreaseVolume = 17,
-	kEventIncreaseVolume = 18,
-	kEventDecreaseBrightness = 19,
-	kEventIncreaseBrightness = 20
+enum StartMenuAction {
+	kActionContinue = 1,
+	kActionCredits = 2,
+	kActionQuitGame = 3,
+	kActionCase4 = 4,
+	kActionSwitchSaveGame = 6,
+	kActionRewindGame = 7,
+	kActionForwardGame = 8,
+	kActionParis = 10,
+	kActionStrasBourg = 11,
+	kActionMunich = 12,
+	kActionVienna = 13,
+	kActionBudapest = 14,
+	kActionBelgrade = 15,
+	kActionConstantinople = 16,
+	kActionDecreaseVolume = 17,
+	kActionIncreaseVolume = 18,
+	kActionDecreaseBrightness = 19,
+	kActionIncreaseBrightness = 20
 };
 
 // Bottom-left buttons (quit.seq)
@@ -478,26 +478,26 @@ bool Menu::handleStartMenuEvent(Common::Event ev) {
 	}
 
 	// Process event (check hit box / etc.)
-	static StartMenuEvent event;
+	static StartMenuAction action;
 	SceneHotspot *hotspost;
 	if (_scene && !_scene->checkHotSpot(ev.mouse, &hotspost)) {
 		clearBg(GraphicsManager::kBackgroundOverlay);
 		askForRedraw();
 		return true;
 	}
-	event = (StartMenuEvent)hotspost->action;
+	action = (StartMenuAction)hotspost->action;
 
 	bool clicked = (ev.type == Common::EVENT_LBUTTONDOWN);
 	clearBg(GraphicsManager::kBackgroundOverlay);
 
-	switch(event) {
+	switch(action) {
 	default:
 		break;
 
-	case kEventCase4:
-		// TODO reset time variable (and fall down to kEventContinue)
+	case kActionCase4:
+		// TODO reset time variable (and fall down to kActionContinue)
 
-	case kEventContinue:
+	case kActionContinue:
 		// TODO Check for cd archive: reload the proper archive here if running in single cd mode
 		if (!_engine->getLogic()->isGameStarted()) {
 			drawSeqFrame(&_seqEggButtons, kButtonShield, GraphicsManager::kBackgroundOverlay);
@@ -556,7 +556,7 @@ bool Menu::handleStartMenuEvent(Common::Event ev) {
 		break;
 
 	//////////////////////////////////////////////////////////////////////////
-	case kEventCredits:
+	case kActionCredits:
 		if (clicked) {
 			drawSeqFrame(&_seqTooltips, kButtonCreditsPushed, GraphicsManager::kBackgroundOverlay);
 			playSfx("LIB046.snd");
@@ -570,7 +570,7 @@ bool Menu::handleStartMenuEvent(Common::Event ev) {
 		break;
 
 	//////////////////////////////////////////////////////////////////////////
-	case kEventQuitGame:
+	case kActionQuitGame:
 		drawSeqFrame(&_seqTooltips, kTooltipQuit, GraphicsManager::kBackgroundOverlay);
 
 		if (clicked) {
@@ -585,7 +585,7 @@ bool Menu::handleStartMenuEvent(Common::Event ev) {
 		break;
 
 	//////////////////////////////////////////////////////////////////////////
-	case kEventSwitchSaveGame:
+	case kActionSwitchSaveGame:
 		if (clicked) {
 			drawSeqFrame(&_seqAcorn, 1, GraphicsManager::kBackgroundOverlay);
 			playSfx("LIB046.snd");
@@ -631,7 +631,7 @@ bool Menu::handleStartMenuEvent(Common::Event ev) {
 		break;
 
 	//////////////////////////////////////////////////////////////////////////
-	case kEventRewindGame:
+	case kActionRewindGame:
 		// TODO check that we can actually rewind
 		//if (_currentTime <= getState()->time)
 		if (clicked) {
@@ -646,7 +646,7 @@ bool Menu::handleStartMenuEvent(Common::Event ev) {
 		break;
 
 	//////////////////////////////////////////////////////////////////////////
-	case kEventForwardGame:
+	case kActionForwardGame:
 		// TODO check that we can actually rewind
 		if (_currentTime == getState()->time)
 			break;
@@ -665,42 +665,42 @@ bool Menu::handleStartMenuEvent(Common::Event ev) {
 		break;
 
 	//////////////////////////////////////////////////////////////////////////
-	case kEventParis:
+	case kActionParis:
 		moveToCity(kParis, clicked);
 		break;
 
 	//////////////////////////////////////////////////////////////////////////
-	case kEventStrasBourg:
+	case kActionStrasBourg:
 		moveToCity(kStrasbourg, clicked);
 		break;
 
 	//////////////////////////////////////////////////////////////////////////
-	case kEventMunich:
+	case kActionMunich:
 		moveToCity(kMunich, clicked);
 		break;
 
 	//////////////////////////////////////////////////////////////////////////
-	case kEventVienna:
+	case kActionVienna:
 		moveToCity(kVienna, clicked);
 		break;
 
 	//////////////////////////////////////////////////////////////////////////
-	case kEventBudapest:
+	case kActionBudapest:
 		moveToCity(kBudapest, clicked);
 		break;
 
 	//////////////////////////////////////////////////////////////////////////
-	case kEventBelgrade:
+	case kActionBelgrade:
 		moveToCity(kBelgrade, clicked);
 		break;
 
 	//////////////////////////////////////////////////////////////////////////
-	case kEventConstantinople:
+	case kActionConstantinople:
 		moveToCity(kConstantinople, clicked);
 		break;
 
 	//////////////////////////////////////////////////////////////////////////
-	case kEventDecreaseVolume:
+	case kActionDecreaseVolume:
 		// Cannot decrease volume further
 		if (getVolume() == 0) {
 			drawSeqFrame(&_seqButtons, kButtonVolume, GraphicsManager::kBackgroundOverlay);
@@ -720,7 +720,7 @@ bool Menu::handleStartMenuEvent(Common::Event ev) {
 		break;
 
 	//////////////////////////////////////////////////////////////////////////
-	case kEventIncreaseVolume:
+	case kActionIncreaseVolume:
 		// Cannot increase volume further
 		if (getVolume() >= 7) {
 			drawSeqFrame(&_seqButtons, kButtonVolume, GraphicsManager::kBackgroundOverlay);
@@ -740,7 +740,7 @@ bool Menu::handleStartMenuEvent(Common::Event ev) {
 		break;
 
 	//////////////////////////////////////////////////////////////////////////
-	case kEventDecreaseBrightness:
+	case kActionDecreaseBrightness:
 		// Cannot increase brightness further
 		if (getBrightness() == 0) {
 			drawSeqFrame(&_seqButtons, kButtonBrightness, GraphicsManager::kBackgroundOverlay);
@@ -761,7 +761,7 @@ bool Menu::handleStartMenuEvent(Common::Event ev) {
 		break;
 
 	//////////////////////////////////////////////////////////////////////////
-	case kEventIncreaseBrightness:
+	case kActionIncreaseBrightness:
 		// Cannot increase brightness further
 		if (getBrightness() >= 6) {
 			drawSeqFrame(&_seqButtons, kButtonBrightness, GraphicsManager::kBackgroundOverlay);
