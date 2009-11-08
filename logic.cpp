@@ -138,6 +138,13 @@ void Logic::switchGame() {
 	showMenu(true);
 }
 
+// Handle game over
+void Logic::gameOver(int a1, int a2, int scene, bool showScene) {
+
+
+
+}
+
 //////////////////////////////////////////////////////////////////////////
 // Event Handling
 //////////////////////////////////////////////////////////////////////////
@@ -319,7 +326,7 @@ void Logic::postProcessScene(uint32 *index) {
 	Scene* scene = _engine->getScene(*index);
 
 	switch (scene->getHeader()->type) {
-	case 128: {
+	case kSceneSequence: {
 		// Adjust time
 		_gameState->time += (scene->getHeader()->param1 + 10) * _gameState->timeDelta;
 		_gameState->timeTicks += (scene->getHeader()->param1 + 10);
@@ -342,14 +349,17 @@ void Logic::postProcessScene(uint32 *index) {
 		break;
 	}
 		
-	case 129:
-	case 130:
-	case 131:
-	case 132:
+	case kSceneSavePoint:
+	case kSceneLoadSequence:
+	case kSceneGameOver:
 		error("Logic::postProcessScene: unsupported scene type (%02d)", scene->getHeader()->type);
 		break;
 
-	case 133:
+	case kSceneSound:
+		error("Logic::postProcessScene: unsupported scene type (%02d)", scene->getHeader()->type);
+		break;
+
+	case kScene133:
 		warning("Logic::postProcessScene: unsupported scene type (%02d)", scene->getHeader()->type);
 		// TODO do some stuff with inventory
 		break;

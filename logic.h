@@ -27,6 +27,39 @@
 #define LASTEXPRESS_LOGIC_H
 
 /*
+	Game data Format
+	-----------------
+
+	uint32 {4}      - ??
+	uint32 {4}      - current time 
+	uint32 {4}      - time delta (how much a tick is in "real" time)
+	uint32 {4}      - time ticks
+	uint32 {4}      - Scene Index               max: 2600
+	byte {1}        - ??
+	uint32 {4}      - Scene Index (copy?)       max: 2600
+	uint32 {4}      - Scene Index (copy?)       max: 2600
+	uint32 {4}      - Selected inventory item
+	uint32 {4*1000} - ??
+	uint32 {4*16}   - ??
+	uint32 {4*16}   - ??
+	uint32 {4*128}  - Game progress
+	byte {512}      - Game events
+	byte {7*32}     - Inventory
+	byte {5*128}    - ??
+	byte {1262*40}  - Game state (not sure what's in the struct yet)
+
+	uint32 {4}      - ??
+	uint32 {4}      - ??
+	uint32 {4}      - Number of sound cache entries
+	byte {count*68} - Sound cache entries
+
+	byte {16*128}   - ?? array
+	uint32 {4}      - Number of save points (max: 128)
+	byte {count*16} - Save points
+
+	... more unknown stuff
+
+
 	Game Progress format
 	--------------------
 
@@ -61,6 +94,20 @@
 		uint32 {4}      - ??
 		uint32 {4}      - ??
 		uint32 {4}      - ??
+
+	
+	Sound cache entry: 68 bytes
+		uint32 {4}      - ??
+		uint32 {4}      - ??
+		uint32 {4}      - ??
+		uint32 {4}      - ??
+		uint32 {4}      - ??
+		uint32 {4}      - ??
+		uint32 {4}      - ??
+		uint32 {4}      - ??
+		uint32 {4}      - ??
+		char {16}       - ??
+		char {16}       - ??
 
 */
 
@@ -217,8 +264,17 @@ private:
 	static const uint32 _defaultScene = 40;
 
 	// Scenes
-	enum SceneIndex {
-		kSceneIntroScreen = 65
+	enum SceneType {
+		// PreProcess
+
+
+		// PostProcess
+		kSceneSequence = 128,
+		kSceneSavePoint = 129,
+		kSceneLoadSequence = 130,
+		kSceneGameOver = 131,
+		kSceneSound = 132,
+		kScene133 = 133
 	};
 
 	// State
@@ -250,6 +306,8 @@ private:
 	void postProcessScene(uint32 *index);
 	void processHotspot(SceneHotspot *hotspot);
 	Cursor::CursorStyle getCursor(SceneHotspot *hotspot);
+
+	void gameOver(int a1, int a2, int scene, bool showScene);
 };
 
 } // End of namespace LastExpress
