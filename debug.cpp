@@ -28,6 +28,7 @@
 // Data
 #include "lastexpress/animation.h"
 #include "lastexpress/background.h"
+#include "lastexpress/cursor.h"
 #include "lastexpress/scene.h"
 #include "lastexpress/sequence.h"
 #include "lastexpress/sound.h"
@@ -96,6 +97,8 @@ bool Debugger::cmd_playseq(int argc, const char **argv) {
 	if (argc == 2) {
 		Common::String filename(const_cast<char *>(argv[1]));
 
+		filename += ".seq";
+
 		if (!_engine->getResMan()->hasFile(filename)) {
 			DebugPrintf("Cannot find file: %s\n", filename.c_str());
 			return true;
@@ -144,6 +147,8 @@ bool Debugger::cmd_playseq(int argc, const char **argv) {
 bool Debugger::cmd_showframe(int argc, const char **argv) {
 	if (argc == 3) {
 		Common::String filename(const_cast<char *>(argv[1]));
+
+		filename += ".seq";
 
 		if (!_engine->getResMan()->hasFile(filename)) {
 			DebugPrintf("Cannot find file: %s\n", filename.c_str());
@@ -206,6 +211,8 @@ bool Debugger::cmd_playsbe(int argc, const char **argv) {
 	if (argc == 2) {
 		Common::String filename(const_cast<char *>(argv[1]));
 
+		filename += ".sbe";
+
 		if (!_engine->getResMan()->hasFile(filename)) {
 			DebugPrintf("Cannot find file: %s\n", filename.c_str());
 			return true;
@@ -220,6 +227,7 @@ bool Debugger::cmd_playsbe(int argc, const char **argv) {
 		} else {
 			SubtitleManager subtitle(_engine->getFont());
 			if (subtitle.loadFile(filename)) {
+				_engine->getCursor()->show(false);
 				for (uint i = 0; i < subtitle.getMaxTime(); i++) {
 					clearBg(GraphicsManager::kBackgroundAll);
 
@@ -229,8 +237,16 @@ bool Debugger::cmd_playsbe(int argc, const char **argv) {
 					askForRedraw();
 					redrawScreen();
 
+					// Handle right-click to interrupt sequence
+					Common::Event ev;
+					_engine->getEventManager()->pollEvent(ev);
+					if (ev.type == Common::EVENT_RBUTTONDOWN)
+						break;
+
 					_engine->_system->delayMillis(500);
+					i += 25;
 				}
+				_engine->getCursor()->show(true);
 			}
 
 			resetCommand();
@@ -244,6 +260,8 @@ bool Debugger::cmd_playsbe(int argc, const char **argv) {
 bool Debugger::cmd_playnis(int argc, const char **argv) {
 	if (argc == 2) {
 		Common::String filename(const_cast<char *>(argv[1]));
+
+		filename += ".nis";
 
 		if (!_engine->getResMan()->hasFile(filename)) {
 			DebugPrintf("Cannot find file: %s\n", filename.c_str());
