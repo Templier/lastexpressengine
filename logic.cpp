@@ -495,7 +495,7 @@ LABEL_KEY:
 			return Cursor::kCursorNormal;
 
 		if (*(&_gameState->progress.field_0 + hotspot->param1) == hotspot->param2)
-			return (Cursor::CursorStyle)hotspot->unknown12;
+			return (Cursor::CursorStyle)hotspot->param3;
 
 		return Cursor::kCursorNormal; 
 

@@ -57,7 +57,7 @@
 		byte {1}    - action;
 		byte {1}    - param1;
 		byte {1}    - param2;
-		byte {1}    - unknown12
+		byte {1}    - param3
 		byte {1}    - cursor
 		uint16 {2}  - offset to next hotpost
 		uint16 {2}  - unknown16
@@ -116,7 +116,7 @@ public:
 	byte action;
 	byte param1;
 	byte param2;	
-	byte unknown12;
+	byte param3;
 	byte cursor;
 	uint32 next;
 };
