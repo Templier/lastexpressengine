@@ -113,6 +113,7 @@ bool Debugger::cmd_playseq(int argc, const char **argv) {
 		} else {
 			Sequence *sequence = new Sequence();
 			if (sequence->loadFile(filename)) {
+				_engine->getCursor()->show(false);
 				SequencePlayer player(sequence);
 				while (!player.hasEnded()) {
 					// Clear screen
@@ -134,6 +135,7 @@ bool Debugger::cmd_playseq(int argc, const char **argv) {
 					// Update the player status
 					player.processTime();
 				}
+				_engine->getCursor()->show(true);
 			}
 
 			resetCommand();
@@ -164,6 +166,7 @@ bool Debugger::cmd_showframe(int argc, const char **argv) {
 		} else {
 			Sequence sequence;
 			if (sequence.loadFile(filename)) {
+				_engine->getCursor()->show(false);
 				clearBg(GraphicsManager::kBackgroundOverlay);
 
 				AnimFrame *frame = sequence.getFrame(getNumber(argv[2]));
@@ -180,6 +183,7 @@ bool Debugger::cmd_showframe(int argc, const char **argv) {
 				redrawScreen();
 
 				_engine->_system->delayMillis(1000);
+				_engine->getCursor()->show(true);
 			}
 
 			resetCommand();
@@ -276,9 +280,12 @@ bool Debugger::cmd_playnis(int argc, const char **argv) {
 			return false;
 		} else {
 			Animation animation;
-			if (animation.loadFile(filename))
+			if (animation.loadFile(filename)) {
+				_engine->getCursor()->show(false);
 				animation.play();
-
+				_engine->getCursor()->show(true);
+			}
+			
 			resetCommand();
 		}
 	} else {
