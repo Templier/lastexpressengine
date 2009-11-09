@@ -167,17 +167,17 @@ bool Inventory::handleMouseEvent(Common::Event ev) {
 			open();
 		} else {
 			// Highlight if needed
-			if (_highlightedItem != (InventoryItem)getProgress().portraitType && !_opened) {
-				_highlightedItem = (InventoryItem)getProgress().portraitType;
-				drawItem(0, 0, getProgress().portraitType, 100)
+			if (_highlightedItem != (InventoryItem)getProgress().portrait && !_opened) {
+				_highlightedItem = (InventoryItem)getProgress().portrait;
+				drawItem(0, 0, getProgress().portrait, 100)
 
 				askForRedraw();
 			}
 		}
 	} else {
 		// remove hightlight if needed
-		if (_highlightedItem == (InventoryItem)getProgress().portraitType && !_opened) {
-			drawItem(0, 0, getProgress().portraitType, 50)
+		if (_highlightedItem == (InventoryItem)getProgress().portrait && !_opened) {
+			drawItem(0, 0, getProgress().portrait, 50)
 			_highlightedItem = kNoItem;
 			askForRedraw();
 		}
@@ -273,7 +273,7 @@ void Inventory::show(bool visible) {
 		return;
 
 	// Show portrait (first draw, cannot be highlighted)
-	drawItem(0, 0, getProgress().portraitType, 50)
+	drawItem(0, 0, getProgress().portrait, 50)
 
 	// Show selected item
 	if (_selectedItem != kNoItem)
@@ -283,8 +283,8 @@ void Inventory::show(bool visible) {
 }
 
 void Inventory::setPortrait(InventoryItem item) {
-	getProgress().portraitType = item;
-	drawItem(0, 0, getProgress().portraitType, 50);
+	getProgress().portrait = item;
+	drawItem(0, 0, getProgress().portrait, 50);
 }
 
 void Inventory::blinkEgg(bool enabled) {
@@ -414,7 +414,7 @@ void Inventory::open() {
 	_opened = true;
 
 	// Show selected state
-	drawItem(0, 0, getProgress().portraitType + 1, 100)
+	drawItem(0, 0, getProgress().portrait + 1, 100)
 
 	uint y = 44;
 
@@ -434,7 +434,7 @@ void Inventory::close() {
 	_opened = false;
 
 	// Fallback to unselected state
-	drawItem(0, 0, getProgress().portraitType, 100)
+	drawItem(0, 0, getProgress().portrait, 100)
 
 	// Erase rectangle for all inventory items
 	int count = 0;

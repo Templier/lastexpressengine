@@ -100,7 +100,7 @@ const char *Dialog::getDialog(DialogId id) {
 		if (getEvent(Action::kAugustPresentAnnaFirstIntroduction))
 			return "XAUG2";
 
-		if (getProgress().field_6C)
+		if (getProgress().event_mertens_august_waiting)
 			return "XAUG1";
 
 		break;
@@ -227,7 +227,7 @@ const char *Dialog::getDialog(DialogId id) {
 				return "XKRO2";
 		}
 
-		if (getProgress().field_70)
+		if (getProgress().event_mertens_chronos_invitation)
 			return "XKRO1";
 
 		break;

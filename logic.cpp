@@ -169,9 +169,16 @@ bool Logic::handleMouseEvent(Common::Event ev) {
 		// Change mouse cursor		
 		_runState.cursorStyle = getCursor(hotspot);
 
-		// Load next scene
-		if ((ev.type == Common::EVENT_LBUTTONDOWN))
-			setScene(hotspot->scene);
+		// Handle click
+		if ((ev.type == Common::EVENT_LBUTTONDOWN)) {
+			processHotspot(hotspot);
+			if (hotspot->scene)
+				setScene(hotspot->scene);
+
+			// Switch to next chapter if necessary
+			if (hotspot->action == SceneHotspot::kAction43 && hotspot->param1 == _gameState->progress.index)
+				switchChapter();
+		}
 	} else {
 		_runState.cursorStyle = Cursor::kCursorNormal;
 	}

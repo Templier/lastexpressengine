@@ -322,7 +322,7 @@ Action::Action(LastExpressEngine *engine) : _engine(engine) {}
 // Actions
 //////////////////////////////////////////////////////////////////////////
 void Action::pickGreenJacket() {
-	getProgress().jacketType = Logic::kGreenJacket;
+	getProgress().jacket = Logic::kGreenJacket;
 	inventory->addItem(Inventory::kMatchBox);
 
 	// 1 unknown functions call
@@ -332,7 +332,7 @@ void Action::pickGreenJacket() {
 }
 
 void Action::pickScarf() {
-	if (getProgress().jacketType == Logic::kOriginalJacket)
+	if (getProgress().jacket == Logic::kOriginalJacket)
 		playAnimation(kPickScarfGreen);
 	else
 		playAnimation(kPickScarfOriginal);
@@ -350,7 +350,7 @@ void Action::pickCorpse(byte bedPosition) {
 	switch(inventory->getItem(Inventory::kCorpse)->location) {
 	case 1:	// Floor
 		if (bedPosition != 4) {
-			if (getProgress().jacketType == Logic::kOriginalJacket)
+			if (getProgress().jacket == Logic::kOriginalJacket)
 				playAnimation(kpCorpsePickFloorOriginal);
 			else
 				playAnimation(kpCorpsePickFloorGreen);
@@ -363,7 +363,7 @@ void Action::pickCorpse(byte bedPosition) {
 		break;
 
 	case 2:	// Bed
-		if (getProgress().jacketType == Logic::kOriginalJacket)
+		if (getProgress().jacket == Logic::kOriginalJacket)
 			playAnimation(kpCorpsePickBedOriginal);
 		else
 			playAnimation(kpCorpsePickBedGreen);
@@ -386,7 +386,7 @@ void Action::pickCorpse(byte bedPosition) {
 void Action::dropCorpse() {
 	switch(inventory->getItem(Inventory::kCorpse)->location) {
 	case 1:	// Floor
-		if (getProgress().jacketType == Logic::kOriginalJacket)
+		if (getProgress().jacket == Logic::kOriginalJacket)
 			playAnimation(kCorpseDropFloorOriginal);
 		else
 			playAnimation(kCorpseDropFloorGreen);
@@ -394,7 +394,7 @@ void Action::dropCorpse() {
 		break;
 
 	case 2:	// Bed
-		if (getProgress().jacketType == Logic::kOriginalJacket)
+		if (getProgress().jacket == Logic::kOriginalJacket)
 			playAnimation(kCorpseDropBedOriginal);
 		else
 			playAnimation(kCorpseDropBedGreen);
@@ -408,7 +408,7 @@ void Action::dropCorpse() {
 
 		if (_engine->getLogic()->getGameState()->time <= 1138500) {
 
-			if (getProgress().jacketType == Logic::kOriginalJacket)
+			if (getProgress().jacket == Logic::kOriginalJacket)
 				playAnimation(kCorpseDropWindowOriginal);
 			else
 				playAnimation(kCorpseDropWindowGreen);

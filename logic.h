@@ -133,19 +133,19 @@ public:
 
 	struct GameProgress {
 		uint32 field_0;
-		JacketType jacketType;
+		JacketType jacket;
 		uint32 field_8;
 		uint32 field_C;
 		uint32 field_10;
 		uint32 field_14;
 		uint32 field_18;		
-		uint32 portraitType;
+		uint32 portrait;
 		uint32 field_20;
 		uint32 field_24;
 		uint32 field_28;
 		uint32 index;
 		uint32 field_30;
-		uint32 field_34;
+		uint32 event_august_met;
 		uint32 field_38;
 		uint32 field_3C;
 		uint32 field_40;
@@ -159,8 +159,8 @@ public:
 		uint32 field_60;
 		uint32 field_64;
 		uint32 field_68;
-		uint32 field_6C;
-		uint32 field_70;
+		uint32 event_mertens_august_waiting;
+		uint32 event_mertens_chronos_invitation;
 		uint32 field_74;
 		uint32 field_78;
 		uint32 field_7C;
@@ -201,19 +201,19 @@ public:
 
 		GameProgress() {
 			field_0 = 0;
-			jacketType = kOriginalJacket;
+			jacket = kOriginalJacket;
 			field_8 = 0;
 			field_C = 0;
 			field_10 = 0;
 			field_14 = 0;
 			field_18 = 0;		
-			portraitType = _defaultPortrait;
+			portrait = _defaultPortrait;
 			field_20 = 0;
 			field_24 = 0;
 			field_28 = 0;
 			index = _defaultIndex;
 			field_30 = 0;
-			field_34 = 0;
+			event_august_met = 0;
 			field_38 = 0;
 			field_3C = 0;
 			field_40 = 0;
@@ -227,8 +227,8 @@ public:
 			field_60 = 0;
 			field_64 = 0;
 			field_68 = 0;
-			field_6C = 0;
-			field_70 = 0;
+			event_mertens_august_waiting = 0;
+			event_mertens_chronos_invitation = 0;
 			field_74 = 0;
 			field_78 = 0;
 			field_7C = 0;

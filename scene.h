@@ -123,7 +123,8 @@ public:
 		KActionUseWhistle = 33,
 		kAction35 = 35,
 		kActionDialog = 37,
-		kAction40 = 40
+		kAction40 = 40,
+		kAction43 = 43
 	};
 
 	SceneHotspot() {}

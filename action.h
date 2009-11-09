@@ -34,7 +34,12 @@ class LastExpressEngine;
 
 class Action {
 public:
-	// Events with D at the end means that Cath is on the right of the "scene" (D = Down the train, U = Up the train)
+	// Events
+	//   - a single D at the end means that Cath is on the right of the "scene" (D = Down the train, U = Up the train)
+	//   - DD: during the day, coming down the train
+	//   - DU: during the day, coming up the train
+	//   - ND: during the night, coming down the train
+	//   - NU: during the night, coming up the train
 	enum Events {
 		kInvalid = 0,
 		kGotALight = 1,
@@ -78,15 +83,15 @@ public:
 		kAnnaBagageTies2 = 39,
 		kAnnaBagageTies3 = 40,
 		kAnnaBagageTies4 = 41,
-		/*k = 42,
-		k = 43,
-		k = 44,
-		k = 45,
-		k = 46,
-		k = 47,
-		k = 48,
-		k = 49,
-		k = 50, */
+		kAugustUnhookCarsBetrayal = 42,
+		kAugustUnhookCars = 43,
+		kLocomotiveAnnaStopsTrain = 44,
+		kInvalid1047 = 45,
+		kTrainStopped = 46,
+		kAnnaKissTrainHijacked = 47,
+		kTrainHijacked = 48,
+		kAnnaKilled = 49,
+		kKronosGoingToInvitation = 50,
 		kKronosConversation = 51,
 		kKahinaAskSpeakFirebird = 52,
 		kKahinaAskSpeak = 53,
@@ -173,13 +178,13 @@ public:
 		k = 134,
 		k = 135,
 		k = 136,
-		k = 137,
-		k = 138,
-		k = 139,
-		k = 140,
-		k = 141,
-		k = 142,
-		k = 143, */
+		k = 137,*/
+		kMertensAskTylerCompartment = 138, 
+		kMertensAskTylerCompartmentD = 139,
+		kMertensPushCall = 140,
+		kMertensPushCall2 = 141,
+		kMertensAugustWaiting = 142,
+		kMertensAugustWaitingCompartment = 143, 
 		kIntroBroderbrund = 144,
 		/*k = 145,
 		k = 146,
