@@ -354,12 +354,15 @@ private:
 	GameState *_gameState;	///< Global game state
 	Inventory *_inventory;  ///< Inventory
 	Menu *_menu;            ///< Main menu handling
-	Scene *_scene;			///< Current scene
+	Scene *_scene;			///< Current scene	
 	
 	void preProcessScene(uint32 *index);
 	void postProcessScene(uint32 *index);
 	void processHotspot(SceneHotspot *hotspot);
 	Cursor::CursorStyle getCursor(SceneHotspot *hotspot);
+
+	void switchChapter();
+	void playFinalSequence();
 
 	void gameOver(int a1, int a2, int scene, bool showScene);
 };

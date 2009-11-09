@@ -580,4 +580,56 @@ LABEL_KEY:
 
 }
 
+//////////////////////////////////////////////////////////////////////////
+// Misc
+//////////////////////////////////////////////////////////////////////////
+
+void Logic::switchChapter() {
+	switch(_gameState->progress.index) {
+	default:
+		break;
+
+	case 1:
+		_inventory->addItem(Inventory::kParchemin);
+		_inventory->addItem(Inventory::kMatchBox);
+		// TODO call game logic
+		break;
+
+	case 2:
+		_inventory->addItem(Inventory::kScarf);
+		// TODO call game logic
+		break;
+
+	case 3:
+		_inventory->getItem(Inventory::kFirebird)->location = 4;
+		_inventory->getItem(Inventory::kFirebird)->has_item = 0;
+		_inventory->getEntry(11)->location = 1; // ??
+
+		_inventory->addItem(Inventory::kWhistle);
+		_inventory->addItem(Inventory::kKey);
+		// TODO call game logic
+		break;
+
+	case 4:
+		// TODO call game logic
+		break;
+
+	case 5:
+		playFinalSequence();
+		break;
+	}
+}
+
+void Logic::playFinalSequence() {
+	// TODO function call
+	_action->playAnimation(Action::kFinalSequence);
+	// TODO
+	// - function call
+	// - reset game state
+	// - reset save points
+	// - ??value = 1
+
+	showMenu(true);
+}
+
 } // End of namespace LastExpress
