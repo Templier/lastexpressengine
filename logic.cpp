@@ -330,7 +330,7 @@ void Logic::postProcessScene(uint32 *index) {
 	Scene* scene = _engine->getScene(*index);
 
 	switch (scene->getHeader()->type) {
-	case kSceneSequence: {
+	case Scene::kTypeSequence: {
 		// Adjust time
 		_gameState->time += (scene->getHeader()->param1 + 10) * _gameState->timeDelta;
 		_gameState->timeTicks += (scene->getHeader()->param1 + 10);
@@ -353,17 +353,17 @@ void Logic::postProcessScene(uint32 *index) {
 		break;
 	}
 		
-	case kSceneSavePoint:
-	case kSceneLoadSequence:
-	case kSceneGameOver:
+	case Scene::kTypeSavePoint:
+	case Scene::kTypeLoadSequence:
+	case Scene::kTypeGameOver:
 		error("Logic::postProcessScene: unsupported scene type (%02d)", scene->getHeader()->type);
 		break;
 
-	case kSceneSound:
+	case Scene::kTypeSound:
 		error("Logic::postProcessScene: unsupported scene type (%02d)", scene->getHeader()->type);
 		break;
 
-	case kScene133:
+	case Scene::kType133:
 		warning("Logic::postProcessScene: unsupported scene type (%02d)", scene->getHeader()->type);
 		// TODO do some stuff with inventory
 		break;
@@ -414,7 +414,7 @@ void Logic::processHotspot(SceneHotspot *hotspot) {
 	case 35:
 		error("Logic::processScene: unsupported hotspot action (%02d)", hotspot->action);
 
-	case kActionDialog: {
+	case SceneHotspot::kActionDialog: {
 		const char* dialog = _dialog->getDialog((Dialog::DialogId)hotspot->param1);
 
 		if (dialog)			
@@ -543,7 +543,7 @@ LABEL_KEY:
 	case 23:
 		error("Logic::getCursor: unsupported cursor for action (%02d)", hotspot->action);
 
-	case kActionUnbound:
+	case SceneHotspot::kActionUnbound:
 		if (hotspot->param2 != 2)
 			return Cursor::kCursorNormal; 
 				
@@ -556,7 +556,7 @@ LABEL_KEY:
 	case 30:	
 		error("Logic::getCursor: unsupported cursor for action (%02d)", hotspot->action);
 
-	case KActionUseWhistle:
+	case SceneHotspot::KActionUseWhistle:
 		if (hotspot->param1 != 3)
 			return Cursor::kCursorNormal; 
 
@@ -568,7 +568,7 @@ LABEL_KEY:
 	case 35:
 		error("Logic::getCursor: unsupported cursor for action (%02d)", hotspot->action);
 
-	case kActionDialog:
+	case SceneHotspot::kActionDialog:
 		if (_dialog->getDialog((Dialog::DialogId)hotspot->param1))
 			return Cursor::kCursorTalk; 
 

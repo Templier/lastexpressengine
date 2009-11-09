@@ -104,6 +104,28 @@ public: // XXX
 
 class SceneHotspot {
 public:
+	enum Action {
+		kAction1 = 1,
+		kAction5 = 5,
+		kAction6 = 6,
+		kAction12 = 12,
+		kAction13 = 13,
+		kAction14 = 14,
+		kAction15 = 15,
+		kAction16 = 16,
+		kAction18 = 18,
+		kAction19 = 19,
+		kAction21 = 21,
+		kAction23 = 23,
+		kActionUnbound = 24,
+		kAction30 = 30,
+		kAction31 = 31,
+		KActionUseWhistle = 33,
+		kAction35 = 35,
+		kActionDialog = 37,
+		kAction40 = 40
+	};
+
 	SceneHotspot() {}
 	static SceneHotspot *load(Common::SeekableReadStream *stream);
 
@@ -123,6 +145,20 @@ public:
 
 class Scene : public Drawable {
 public:
+	// Scenes
+	enum Type {
+		// PreProcess
+
+
+		// PostProcess
+		kTypeSequence = 128,
+		kTypeSavePoint = 129,
+		kTypeLoadSequence = 130,
+		kTypeGameOver = 131,
+		kTypeSound = 132,
+		kType133 = 133
+	};
+
 	~Scene();
 
 	static Scene *load(Common::SeekableReadStream *stream, SceneHeader *header);

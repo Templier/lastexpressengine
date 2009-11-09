@@ -330,42 +330,6 @@ private:
 	static const uint32 _defaultIndex = 1;
 	static const uint32 _defaultScene = 40;
 
-	// Scenes
-	enum SceneType {
-		// PreProcess
-
-
-		// PostProcess
-		kSceneSequence = 128,
-		kSceneSavePoint = 129,
-		kSceneLoadSequence = 130,
-		kSceneGameOver = 131,
-		kSceneSound = 132,
-		kScene133 = 133
-	};
-
-	enum HotspotAction {
-		kAction1 = 1,
-		kAction5 = 5,
-		kAction6 = 6,
-		kAction12 = 12,
-		kAction13 = 13,
-		kAction14 = 14,
-		kAction15 = 15,
-		kAction16 = 16,
-		kAction18 = 18,
-		kAction19 = 19,
-		kAction21 = 21,
-		kAction23 = 23,
-		kActionUnbound = 24,
-		kAction30 = 30,
-		kAction31 = 31,
-		KActionUseWhistle = 33,
-		kAction35 = 35,
-		kActionDialog = 37,
-		kAction40 = 40
-	};
-
 	// State
 	struct RunState {
 		GameId gameId;
