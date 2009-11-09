@@ -366,8 +366,11 @@ void Logic::postProcessScene(uint32 *index) {
 		error("Logic::postProcessScene: unsupported scene type (%02d)", scene->getHeader()->type);
 		break;
 
-	case Scene::kTypeSound:
-		error("Logic::postProcessScene: unsupported scene type (%02d)", scene->getHeader()->type);
+	case Scene::kTypeReadText: {
+		const char *text = _dialog->readText(scene->getHeader()->param1);
+		if (text)
+			playSfx(text);
+		}
 		break;
 
 	case Scene::kType133:

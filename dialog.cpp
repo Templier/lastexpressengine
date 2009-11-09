@@ -32,6 +32,34 @@
 
 namespace LastExpress {
 
+// Letters & messages
+const char *messages[24] = {
+	"",
+	"TXT1001",	// 1
+	"TXT1001A",	// 2
+	"TXT1011",	// 3
+	"TXT1012",	// 4
+	"TXT1013",	// 5
+	"TXT1014",	// 6
+	"TXT1020",	// 7
+	"TXT1030",	// 8
+	"END1009B",	// 50
+	"END1046",	// 51
+	"END1047",	// 52
+	"END1112",	// 53
+	"END1112A",	// 54
+	"END1503",	// 55
+	"END1505A",	// 56
+	"END1505B",	// 57
+	"END1610",	// 58
+	"END1612A",	// 59
+	"END1612C", // 61
+	"END1612D", // 62
+	"ENDALRM1", // 63
+	"ENDALRM2", // 64
+	"ENDALRM3"  // 65
+};
+
 Dialog::Dialog(LastExpressEngine *engine) : _engine(engine) {}
 
 const char *Dialog::getDialog(DialogId id) {
@@ -335,9 +363,17 @@ const char *Dialog::getDialog(DialogId id) {
 }
 
 //////////////////////////////////////////////////////////////////////////
+// Letters & Messages
+//////////////////////////////////////////////////////////////////////////
+const char *Dialog::readText(int id) {
+	// names are stored in sequence in the array but id is [1;8] - [50;64]
+	return messages[id <= 8 ? id : id - 41];
+}
+
+//////////////////////////////////////////////////////////////////////////
 // Sound bites
 //////////////////////////////////////////////////////////////////////////
-const char *Dialog::excuseMe() {
+const char *Dialog::excuseMeCath() {
 	switch(_engine->getRandom().getRandomNumber(3)) {
 	case 0:
 		return "CAT1126B";
@@ -350,7 +386,7 @@ const char *Dialog::excuseMe() {
 	return "CAT1126B";
 }
 
-const char *Dialog::justChecking() {
+const char *Dialog::justCheckingCath() {
 	switch(_engine->getRandom().getRandomNumber(4)) {
 	case 0:
 		return "CAT5001";
@@ -365,7 +401,7 @@ const char *Dialog::justChecking() {
 	return "CAT5001";
 }
 
-const char *Dialog::wrongDoor() {
+const char *Dialog::wrongDoorCath() {
 	switch(_engine->getRandom().getRandomNumber(5)) {
 	case 0:
 		return "CAT1125";
@@ -382,7 +418,7 @@ const char *Dialog::wrongDoor() {
 	return "CAT1125";
 }
 
-const char *Dialog::justAMinute() {
+const char *Dialog::justAMinuteCath() {
 	switch(_engine->getRandom().getRandomNumber(3)) {
 	case 0:
 		return "CAT1520";

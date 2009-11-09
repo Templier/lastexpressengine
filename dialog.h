@@ -62,11 +62,16 @@ public:
 	// Dialog
 	const char *getDialog(DialogId id);
 
+	// Letters
+	const char *readText(int id);
+
 	// Sound bites
-	const char *excuseMe();
-	const char *justChecking();
-	const char *wrongDoor();
-	const char *justAMinute();
+	const char* excuseMe();
+
+	const char *excuseMeCath();
+	const char *justCheckingCath();
+	const char *wrongDoorCath();
+	const char *justAMinuteCath();
 
 private:
 	LastExpressEngine* _engine;

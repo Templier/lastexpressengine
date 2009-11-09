@@ -156,7 +156,7 @@ public:
 		kTypeSavePoint = 129,
 		kTypeLoadSequence = 130,
 		kTypeGameOver = 131,
-		kTypeSound = 132,
+		kTypeReadText = 132,
 		kType133 = 133
 	};
 
