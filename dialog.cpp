@@ -350,7 +350,7 @@ const char *Dialog::getDialog(DialogId id) {
 		break;
 
 	case kDialogTyler:
-		if (getEvent(Action::kDream) || getEvent(Action::kCathWakingUp))
+		if (getEvent(Action::kCathDream) || getEvent(Action::kCathWakingUp))
 			return "XTYL3";
 		
 		return "XTYL1";

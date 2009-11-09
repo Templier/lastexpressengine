@@ -162,7 +162,7 @@ public:
 		uint32 event_mertens_august_waiting;
 		uint32 event_mertens_chronos_invitation;
 		uint32 field_74;
-		uint32 field_78;
+		uint32 field_78;	// time?
 		uint32 field_7C;
 		uint32 field_80;
 		uint32 field_84;

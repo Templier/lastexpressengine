@@ -351,22 +351,22 @@ void Action::pickCorpse(byte bedPosition) {
 	case 1:	// Floor
 		if (bedPosition != 4) {
 			if (getProgress().jacket == Logic::kOriginalJacket)
-				playAnimation(kpCorpsePickFloorOriginal);
+				playAnimation(kCorpsePickFloorOriginal);
 			else
-				playAnimation(kpCorpsePickFloorGreen);
+				playAnimation(kCorpsePickFloorGreen);
 
 			break;
 		}
 
-		playAnimation(kpCorpsePickFloorOpenedBedOriginal);
+		playAnimation(kCorpsePickFloorOpenedBedOriginal);
 		inventory->getItem(Inventory::kCorpse)->location = 5;
 		break;
 
 	case 2:	// Bed
 		if (getProgress().jacket == Logic::kOriginalJacket)
-			playAnimation(kpCorpsePickBedOriginal);
+			playAnimation(kCorpsePickBedOriginal);
 		else
-			playAnimation(kpCorpsePickBedGreen);
+			playAnimation(kCorpsePickBedGreen);
 
 		break;
 
