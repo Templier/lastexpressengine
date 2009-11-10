@@ -137,6 +137,16 @@ bool Scene::checkHotSpot(Common::Point coord, SceneHotspot **hotspot) {
 	return found;
 }
 
+SceneHotspot *Scene::getHotspot(uint index) { 
+	if (_hotspots.empty())
+		return NULL;
+
+	if (index >= _hotspots.size())
+		return NULL;
+	
+	return _hotspots[index]; 
+}
+
 Common::Rect Scene::draw(Graphics::Surface *surface) {
 	// Safety checks
 	Common::String name(_header->name);

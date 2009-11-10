@@ -375,11 +375,16 @@ void Logic::preProcessScene(uint32 *index) {
 		// If the scene has no hotspot or if we haven't found a proper hotspot, get the first hotspot from the current scene
 		if (!found) {
 			// TODO make sure we are doing the right thing here
-			SceneHotspot *hotspot = scene->getHotspot(0);
+			SceneHotspot *hotspot = _engine->getScene(_gameState->currentScene)->getHotspot(0);
+			if (!hotspot)
+				break;
+
 			processHotspot(hotspot);
 			if (hotspot->scene) {
 				*index = hotspot->scene;
 				preProcessScene(index);
+
+				// TODO else case missing
 			}
 		}
 		break;	
@@ -389,14 +394,14 @@ void Logic::preProcessScene(uint32 *index) {
 		if (scene->getHeader()->param1 >= 16)
 			break;
 
-		error("Logic::preProcessScene: unimplemented scene type (%02d)", scene->getHeader()->type);		
+		warning("Logic::preProcessScene: unimplemented scene type (%02d)", scene->getHeader()->type);		
 		break;
 
 	case Scene::kType8:
 		if (scene->getHeader()->param1 >= 16)
 			break;
 
-		error("Logic::preProcessScene: unsupported scene type (%02d)", scene->getHeader()->type);
+		warning("Logic::preProcessScene: unsupported scene type (%02d)", scene->getHeader()->type);
 		break;
 
 	default:
@@ -472,7 +477,7 @@ void Logic::postProcessScene(uint32 *index) {
 	}
 
 	case Scene::kType133:
-		error("Logic::postProcessScene: unsupported scene type (%02d)", scene->getHeader()->type);
+		warning("Logic::postProcessScene: unsupported scene type (%02d)", scene->getHeader()->type);
 		// TODO do some stuff with inventory
 		break;
 		
@@ -488,7 +493,7 @@ void Logic::processHotspot(SceneHotspot *hotspot) {
 
 	switch (hotspot->action) {
 	case 1:
-		error("Logic::processScene: unsupported hotspot action (%02d)", hotspot->action);
+		error("Logic::processHotspot: unsupported hotspot action (%02d)", hotspot->action);
 		break;
 
 	case SceneHotspot::kActionSavePoint:	
@@ -502,7 +507,7 @@ void Logic::processHotspot(SceneHotspot *hotspot) {
 		break;
 
 	case SceneHotspot::kActionPlayMusic:		
-		error("Logic::processScene: unsupported hotspot action (%02d)", hotspot->action);
+		error("Logic::processHotspot: unsupported hotspot action (%02d)", hotspot->action);
 
 	case SceneHotspot::kActionKnockDoor:
 		if (hotspot->param1 >= 128)
@@ -516,8 +521,42 @@ void Logic::processHotspot(SceneHotspot *hotspot) {
 		break;
 
 	case 6:
-		// TODO does a lot of stuff
-		error("Logic::processScene: unsupported hotspot action (%02d)", hotspot->action);
+		// TODO extract to function
+		if (hotspot->param1 >= 128)
+			break;
+
+		if (_entities->get(hotspot->param1).field_0) {
+			_savepoints->push(0, _entities->get(hotspot->param1).field_0, 9, hotspot->param1);
+			hotspot->scene = 0;
+			break;
+		}
+
+		if (0 /* call to function that does a bunch of stuff */) {
+			hotspot->scene = 0;
+			break;
+		}
+
+		if (_entities->get(hotspot->param1).location == 1 || _entities->get(hotspot->param1).location == 3 || 0 /* another call to another function X*/) {
+			error("Logic::processHotspot: unsupported hotspot action (%02d)", hotspot->action);
+
+			break;
+		}
+
+		if (hotspot->action != 16 || _inventory->getSelectedIndex() != Inventory::kIndexKey) {
+			if (hotspot->param1 == 109) {
+				playSfx(_dialog->getSound(0, 26, 0));
+			} else {
+				playSfx(_dialog->getSound(0, 14, 0));
+				playSfx(_dialog->getSound(0, 15, 22));
+			}
+			break;
+		}
+
+		_entities->update(1, 0, 1, 10, 9);
+		playSfx(_dialog->getSound(0, 16, 0));
+		_inventory->selectItem(0);
+		hotspot->scene = 0;
+		
 		break;
 
 	case SceneHotspot::kActionPlaySounds:
@@ -526,7 +565,7 @@ void Logic::processHotspot(SceneHotspot *hotspot) {
 		break;
 
 	case SceneHotspot::kActionPlayAnimation:
-		error("Logic::processScene: unsupported hotspot action (%02d)", hotspot->action);
+		error("Logic::processHotspot: unsupported hotspot action (%02d)", hotspot->action);
 
 	case SceneHotspot::kActionOpenWindow:
 		if (hotspot->param1 >= 128)
@@ -578,7 +617,7 @@ void Logic::processHotspot(SceneHotspot *hotspot) {
 		break;
 
 	case 11:
-		error("Logic::processScene: unsupported hotspot action (%02d)", hotspot->action);
+		error("Logic::processHotspot: unsupported hotspot action (%02d)", hotspot->action);
 
 	case SceneHotspot::kActionTylerCompartment: {
 		Inventory::InventoryEntry* item = _inventory->getEntry(hotspot->param1);
@@ -600,12 +639,12 @@ void Logic::processHotspot(SceneHotspot *hotspot) {
 	}
 
 	case SceneHotspot::kActionDropItem:
-		error("Logic::processScene: unsupported hotspot action (%02d)", hotspot->action);
+		error("Logic::processHotspot: unsupported hotspot action (%02d)", hotspot->action);
 
 	case SceneHotspot::kActionEnterTylerCompartment:
 		// TODO check savegame_640 struct
 		if (getProgress().event_found_corpse) {
-			error("Logic::processScene: unsupported hotspot action (%02d)", hotspot->action);
+			error("Logic::processHotspot: unsupported hotspot action (%02d)", hotspot->action);
 		} else {
 			// TODO savegame
 			playSfx("LIB014");
@@ -625,13 +664,13 @@ void Logic::processHotspot(SceneHotspot *hotspot) {
 	case 24:
 	case 25:
 	case 26:
-		error("Logic::processScene: unsupported hotspot action (%02d)", hotspot->action);
+		error("Logic::processHotspot: unsupported hotspot action (%02d)", hotspot->action);
 
 	case 27:
 		playSfx(_dialog->getSound(0, 31, 0));
 
 		// TODO update game state
-		error("Logic::processScene: unsupported hotspot action (%02d)", hotspot->action);
+		error("Logic::processHotspot: unsupported hotspot action (%02d)", hotspot->action);
 		break;
 
 	case 28:
@@ -641,7 +680,7 @@ void Logic::processHotspot(SceneHotspot *hotspot) {
 	case 32:
 	case 33:
 	case 34:
-		error("Logic::processScene: unsupported hotspot action (%02d)", hotspot->action);
+		error("Logic::processHotspot: unsupported hotspot action (%02d)", hotspot->action);
 
 	case SceneHotspot::kActionOpenBed:
 		playSfx(_dialog->getSound(0, 59, 0));
@@ -680,9 +719,40 @@ void Logic::processHotspot(SceneHotspot *hotspot) {
 		break;
 
 	case 41:
-	case 42:
+		error("Logic::processHotspot: unsupported hotspot action (%02d)", hotspot->action);
+
+	case 42: {
+		int value;
+		switch (getProgress().index) {
+		case 1:
+			value = 1;
+			break;
+			
+		case 2:
+		case 3:
+			value = 2;
+			break;
+
+		case 4:
+		case 5:
+			value = 4;
+			break;
+		}
+
+		if (hotspot->param3 & value) {
+			char filename[6];
+			sprintf((char*)&filename, "MUS%03d", hotspot->param1);
+			playMusic((char *)&filename);
+			_savepoints->call(0, 32, 203863200, (int)&filename);
+			_savepoints->push(0, 32, 222746496, hotspot->param2);
+
+		}
+
+		break;
+	}
+
 	case 44:
-		error("Logic::processScene: unsupported hotspot action (%02d)", hotspot->action);
+		error("Logic::processHotspot: unsupported hotspot action (%02d)", hotspot->action);
 		break;
 	default:
 		break;
