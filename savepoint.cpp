@@ -27,23 +27,113 @@
 
 namespace LastExpress {
 
-SavePoints::SavePoints() {}
-SavePoints::~SavePoints() {}
+SavePoints::SavePoints() {
+	for (int i = 0; i < 40; i++)
+		_callbacks[i] = NULL;
+}
+
+SavePoints::~SavePoints() {
+}
+
+//////////////////////////////////////////////////////////////////////////
+// Savepoints
+//////////////////////////////////////////////////////////////////////////
+void SavePoints::push(uint32 field_8, uint32 index, uint32 field_4, uint32 field_C) {
+
+	if (_savepoints.size() >= 128)
+		return;
+
+	SavePoint point;
+	point.index = index;
+	point.field_4 = field_4;
+	point.field_8 = field_8;
+	point.field_C = field_C;
+
+	_savepoints.push(point);
+}
+
+void SavePoints::pushAll(uint32 field_8,uint32 field_4, uint32 field_C) {
+	for (uint32 index = 1; index < 40; index++) {
+		if (index != field_8)
+			push(field_8, index, field_4, field_C);
+	}
+}
+
+// Process all savepoints
+void SavePoints::process() {
+	// TODO add check for another global var
+	while (_savepoints.size() > 0) {
+		SavePoint point = _savepoints.pop();
+		
+		if (updateGameState(point)) {
+
+			// Call requested callback
+			Callback *callback = getCallback(point.index);
+			if (callback)
+				(*callback)(point);
+		}
+	}
+}
 
 void SavePoints::reset() {
 	_savepoints.empty();
 }
 
-SavePoints::SavePoint SavePoints::pop() {
-	return _savepoints.pop();
+//////////////////////////////////////////////////////////////////////////
+// Data
+//////////////////////////////////////////////////////////////////////////
+void SavePoints::addData(uint32 index, uint32 field_4, uint32 field_C) {
+	if (_data.size() >= 128)
+		return;
+
+	SavePointData data;
+	data.index = index;
+	data.field_4 = field_4;
+	data.field_C = field_C;
+
+	_data.push_back(data);
 }
 
-void SavePoints::add(uint32 index, uint32 field_4, uint32 time, uint32 field_C) {
-	SavePoint save;
-	save.index = index;
-	save.field_4 = field_4;
-	save.time = time;
-	save.field_C = field_C;
+//////////////////////////////////////////////////////////////////////////
+// Callbacks
+//////////////////////////////////////////////////////////////////////////
+void SavePoints::setCallback(uint index, SavePoints::Callback* callback) {
+	assert(index < 40);
+
+	_callbacks[index] = callback;
+}
+
+SavePoints::Callback *SavePoints::getCallback(uint index) {
+	assert(index < 40);
+
+	return _callbacks[index];
+}
+
+void SavePoints::call(int field_8, int index, int field_4, int field_C) {
+	SavePoint point;
+	point.index = index;
+	point.field_4 = field_4;
+	point.field_8 = field_8;
+	point.field_C = field_C;
+
+	Callback *callback = getCallback(index);
+	if (callback)
+		(*callback)(point);
+}
+
+//////////////////////////////////////////////////////////////////////////
+// Misc
+//////////////////////////////////////////////////////////////////////////
+bool SavePoints::updateGameState(SavePoints::SavePoint point) {
+	for (uint i = 0; i < _data.size(); i++) {
+		if (_data[i].index == point.index && _data[i].field_4 == point.field_4) {
+
+			// TODO update game state
+
+			return true;
+		}
+	}
+	return false;
 }
 
 

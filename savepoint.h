@@ -26,6 +26,9 @@
 #ifndef LASTEXPRESS_SAVEPOINT_H
 #define LASTEXPRESS_SAVEPOINT_H
 
+#include "common/array.h"
+#include "common/func.h"
+
 /*
 	Savepoint format
 	----------------
@@ -33,7 +36,7 @@
 	Save point: max: 127 - FIFO list (ie. goes back and overwrites first save point when full)
 		uint32 {4}      - index of function pointer inside savePointFunctions array
 		uint32 {4}      - ??
-		uint32 {4}      - time
+		uint32 {4}      - time ?
 		uint32 {4}      - 0 or 1 ?
 
 	?? array: 16 bytes
@@ -53,21 +56,49 @@ public:
 	struct SavePoint {
 		uint32 index;
 		uint32 field_4;
-		uint32 time;
+		uint32 field_8;
 		uint32 field_C;
 	};	
+
+	struct SavePointData {
+		uint32 index;
+		uint32 field_4;
+		uint32 field_8;
+		uint32 field_C;
+
+		SavePointData() {
+			index = 0;
+			field_4 = 0;
+			field_8 = 0;
+			field_C = 0;
+		}
+	};	
+
+	typedef Common::Functor1<SavePoint, void> Callback;
 
 	SavePoints();
 	~SavePoints();
 	
-	void add(uint32 index, uint32 field_4, uint32 time, uint32 field_C);
-	SavePoint pop();
-
+	// Savepoints
+	void push(uint32 field_8, uint32 index, uint32 field_4, uint32 field_C);
+	void pushAll(uint32 field_8, uint32 field_4, uint32 field_C);
+	void process();
 	void reset();
 
-private:
+	// Data
+	void addData(uint32 index, uint32 field_4, uint32 field_C);
 
-	Common::Queue<SavePoint> _savepoints;
+	// Callbacks
+	void setCallback(uint index, Callback* callback);
+	Callback *getCallback(uint index);
+	void call(int field_8, int index, int field_4, int field_C);
+
+private:
+	Common::Queue<SavePoint> _savepoints;	
+	Common::Array<SavePointData> _data;
+	Callback* _callbacks[40];
+
+	bool updateGameState(SavePoint point);
 };
 
 } // End of namespace LastExpress
