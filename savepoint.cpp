@@ -28,7 +28,7 @@
 namespace LastExpress {
 
 SavePoints::SavePoints() {
-	for (int i = 0; i < sizeof(_callbacks); i++)
+	for (int i = 0; i < 40; i++)
 		_callbacks[i] = NULL;
 }
 
@@ -60,7 +60,7 @@ SavePoints::SavePoint SavePoints::pop() {
 
 
 void SavePoints::pushAll(uint32 field_8,uint32 field_4, uint32 field_C) {
-	for (uint32 index = 1; index < sizeof(_callbacks); index++) {
+	for (uint32 index = 1; index < 40; index++) {
 		if (index != field_8)
 			push(field_8, index, field_4, field_C);
 	}
@@ -105,13 +105,13 @@ void SavePoints::addData(uint32 index, uint32 field_4, uint32 field_C) {
 // Callbacks
 //////////////////////////////////////////////////////////////////////////
 void SavePoints::setCallback(uint index, SavePoints::Callback* callback) {
-	assert(index < sizeof(_callbacks));
+	assert(index < 40);
 
 	_callbacks[index] = callback;
 }
 
 SavePoints::Callback *SavePoints::getCallback(uint index) {
-	assert(index < sizeof(_callbacks));
+	assert(index < 40);
 
 	return _callbacks[index];
 }
