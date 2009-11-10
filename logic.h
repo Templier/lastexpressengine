@@ -123,6 +123,7 @@ class Action;
 class Dialog;
 class LastExpressEngine;
 class Menu;
+class SavePoints;
 
 class Logic {
 public:
@@ -347,14 +348,15 @@ private:
 
 	LastExpressEngine *_engine;
 
-	RunState _runState;     ///< State of the game session (this data won't be stored in savegames)
+	RunState _runState;     	///< State of the game session (this data won't be stored in savegames)
 	
-	Action *_action;		///< Actions
-	Dialog *_dialog;		///< Dialogs
-	GameState *_gameState;	///< Global game state
-	Inventory *_inventory;  ///< Inventory
-	Menu *_menu;            ///< Main menu handling
-	Scene *_scene;			///< Current scene	
+	Action *_action;			///< Actions
+	Dialog *_dialog;			///< Dialogs
+	GameState *_gameState;		///< Global game state
+	Inventory *_inventory;  	///< Inventory
+	Menu *_menu;            	///< Main menu handling
+	Scene *_scene;				///< Current scene	
+	SavePoints *_savepoints;	///< SavePoints
 	
 	void preProcessScene(uint32 *index);
 	void postProcessScene(uint32 *index);

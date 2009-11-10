@@ -34,6 +34,7 @@
 #include "lastexpress/lastexpress.h"
 #include "lastexpress/menu.h"
 #include "lastexpress/resource.h"
+#include "lastexpress/savepoint.h"
 #include "lastexpress/scene.h"
 #include "lastexpress/sound.h"
 
@@ -44,6 +45,7 @@ Logic::Logic(LastExpressEngine *engine) : _engine(engine), _scene(NULL) {
 	_menu = new Menu(engine);
 	_inventory = new Inventory(engine);
 	_dialog = new Dialog(engine);
+	_savepoints = new SavePoints();
 
 	// Get those from savegame
 	_gameState = new GameState();
@@ -390,12 +392,33 @@ void Logic::processHotspot(SceneHotspot *hotspot) {
 
 	switch (hotspot->action) {
 	case 1:
-	case 2:
-	case 3:
-	case 4:
+		error("Logic::processScene: unsupported hotspot action (%02d)", hotspot->action);
+		break;
+
+	case SceneHotspot::kActionSavePoint:	
+		_savepoints->push(0, hotspot->param1, hotspot->param2, 0);
+		break;
+
+	case SceneHotspot::kActionPlaySound:
+		// TODO: Check validity: does the file exits?
+		if (hotspot->param2)
+			playSfx(_dialog->getSound(0, hotspot->param1, hotspot->param2));
+		break;
+
+	case SceneHotspot::kActionPlayMusic:		
 	case 5:
+		error("Logic::processScene: unsupported hotspot action (%02d)", hotspot->action);
+
 	case 6:
-	case 7:
+		// TODO does a lot of stuff
+		warning("Logic::processScene: unsupported hotspot action (%02d)", hotspot->action);
+		break;
+
+	case SceneHotspot::kActionPlaySounds:
+		playSfx(_dialog->getSound(0, hotspot->param1, 0));
+		playSfx(_dialog->getSound(0, hotspot->param3, hotspot->param3));
+		break;
+
 	case 8:
 	case 9:
 	case 10:

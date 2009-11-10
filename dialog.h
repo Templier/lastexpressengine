@@ -58,6 +58,10 @@ public:
 	};
 
 	Dialog(LastExpressEngine *engine);
+	~Dialog();
+
+	// Sounds
+	const char *getSound(int index, byte action, byte a3);
 
 	// Dialog
 	const char *getDialog(DialogId id);
@@ -75,6 +79,8 @@ public:
 
 private:
 	LastExpressEngine* _engine;
+
+	char *sound_name;
 };
 
 } // End of namespace LastExpress

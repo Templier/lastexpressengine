@@ -60,7 +60,21 @@ const char *messages[24] = {
 	"ENDALRM3"  // 65
 };
 
-Dialog::Dialog(LastExpressEngine *engine) : _engine(engine) {}
+Dialog::Dialog(LastExpressEngine *engine) : _engine(engine), sound_name(NULL) {}
+
+Dialog::~Dialog() {
+	delete[] sound_name;
+}
+
+const char *Dialog::getSound(int index, byte action, byte a3) {
+	delete[] sound_name;
+
+	// TODO implement tests
+	sound_name = new char[7];
+	sprintf(sound_name, "LIB%03d", action);
+
+	return sound_name;
+}
 
 const char *Dialog::getDialog(DialogId id) {
 	switch (id) {

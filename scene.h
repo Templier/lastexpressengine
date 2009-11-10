@@ -106,8 +106,13 @@ class SceneHotspot {
 public:
 	enum Action {
 		kAction1 = 1,
+		kActionSavePoint = 2,
+		kActionPlaySound = 3,
+		kActionPlayMusic = 4,
 		kAction5 = 5,
 		kAction6 = 6,
+		kActionPlaySounds = 7,
+		kActionPlayAnimation = 8,
 		kAction12 = 12,
 		kAction13 = 13,
 		kAction14 = 14,
