@@ -136,5 +136,11 @@ bool SavePoints::updateGameState(SavePoints::SavePoint point) {
 	return false;
 }
 
+//////////////////////////////////////////////////////////////////////////
+// Serializable
+//////////////////////////////////////////////////////////////////////////
+void SavePoints::saveLoadWithSerializer(Common::Serializer &s) {
+	// TODO implement
+}
 
 } // End of namespace LastExpress

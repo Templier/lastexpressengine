@@ -48,10 +48,11 @@
 */
 
 #include "common/queue.h"
+#include "common/serializer.h"
 
 namespace LastExpress {
 
-class SavePoints {
+class SavePoints : Common::Serializable {
 public:
 	struct SavePoint {
 		uint32 index;
@@ -92,6 +93,9 @@ public:
 	void setCallback(uint index, Callback* callback);
 	Callback *getCallback(uint index);
 	void call(int field_8, int index, int field_4, int field_C);
+
+	// Serializable
+	void saveLoadWithSerializer(Common::Serializer &s);
 
 private:
 	Common::Queue<SavePoint> _savepoints;	

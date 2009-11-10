@@ -43,12 +43,13 @@
 #include "lastexpress/scene.h"
 
 #include "common/events.h"
+#include "common/serializer.h"
 
 namespace LastExpress {
 
 class LastExpressEngine;
 
-class Inventory {
+class Inventory : Common::Serializable {
 public:
 	// Items (same id as cursors) FIXME: do we need to duplicate those?
 	enum InventoryItem {
@@ -120,6 +121,9 @@ public:
 	void blinkEgg(bool enabled);
 	void showHourGlass(bool enabled);
 	void setPortrait(InventoryItem item);
+
+	// Serializable
+	void saveLoadWithSerializer(Common::Serializer &ser);
 
 private:
 	static const uint32 _defaultBlinkingInterval = 250; ///< Default blinking interval in ms
