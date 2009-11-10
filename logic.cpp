@@ -424,9 +424,23 @@ void Logic::processHotspot(SceneHotspot *hotspot) {
 	case 10:
 	case 11:
 	case 12:
-	case 13:
+	case SceneHotspot::kActionTylerCompartment:
 	case 14:
-	case 16:
+		error("Logic::processScene: unsupported hotspot action (%02d)", hotspot->action);
+
+	case SceneHotspot::kActionEnterTylerCompartment:
+		// TODO check savegame_640 struct
+		if (getProgress().event_found_corpse) {
+			error("Logic::processScene: unsupported hotspot action (%02d)", hotspot->action);
+		} else {
+			// TODO savegame
+			playSfx("LIB014");
+			_action->playAnimation(Action::kCathFindCorpse);
+			playSfx("LIB015");
+			getProgress().event_found_corpse = 1;
+			hotspot->scene = 42; // Tyler compartment
+		}
+		break;
 	case 18:
 	case 19:
 	case 20:

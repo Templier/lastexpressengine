@@ -137,7 +137,7 @@ public:
 		JacketType jacket;
 		uint32 field_8;
 		uint32 field_C;
-		uint32 field_10;
+		uint32 event_found_corpse;
 		uint32 field_14;
 		uint32 field_18;		
 		uint32 portrait;
@@ -205,7 +205,7 @@ public:
 			jacket = kOriginalJacket;
 			field_8 = 0;
 			field_C = 0;
-			field_10 = 0;
+			event_found_corpse = 0;
 			field_14 = 0;
 			field_18 = 0;		
 			portrait = _defaultPortrait;
