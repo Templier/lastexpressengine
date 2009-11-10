@@ -28,7 +28,7 @@
 namespace LastExpress {
 
 SavePoints::SavePoints() {
-	for (int i = 0; i < 40; i++)
+	for (int i = 0; i < sizeof(_callbacks); i++)
 		_callbacks[i] = NULL;
 }
 
@@ -40,7 +40,7 @@ SavePoints::~SavePoints() {
 //////////////////////////////////////////////////////////////////////////
 void SavePoints::push(uint32 field_8, uint32 index, uint32 field_4, uint32 field_C) {
 
-	if (_savepoints.size() >= 128)
+	if (_savepoints.size() >= _savePointsMaxSize)
 		return;
 
 	SavePoint point;
@@ -49,11 +49,18 @@ void SavePoints::push(uint32 field_8, uint32 index, uint32 field_4, uint32 field
 	point.field_8 = field_8;
 	point.field_C = field_C;
 
-	_savepoints.push(point);
+	_savepoints.push_back(point);
 }
 
+SavePoints::SavePoint SavePoints::pop() {
+	SavePoint point = _savepoints.front();
+	_savepoints.pop_front();
+	return point;
+}
+
+
 void SavePoints::pushAll(uint32 field_8,uint32 field_4, uint32 field_C) {
-	for (uint32 index = 1; index < 40; index++) {
+	for (uint32 index = 1; index < sizeof(_callbacks); index++) {
 		if (index != field_8)
 			push(field_8, index, field_4, field_C);
 	}
@@ -63,7 +70,7 @@ void SavePoints::pushAll(uint32 field_8,uint32 field_4, uint32 field_C) {
 void SavePoints::process() {
 	// TODO add check for another global var
 	while (_savepoints.size() > 0) {
-		SavePoint point = _savepoints.pop();
+		SavePoint point = pop();
 		
 		if (updateGameState(point)) {
 
@@ -83,7 +90,7 @@ void SavePoints::reset() {
 // Data
 //////////////////////////////////////////////////////////////////////////
 void SavePoints::addData(uint32 index, uint32 field_4, uint32 field_C) {
-	if (_data.size() >= 128)
+	if (_data.size() >= _savePointsMaxSize)
 		return;
 
 	SavePointData data;
@@ -98,13 +105,13 @@ void SavePoints::addData(uint32 index, uint32 field_4, uint32 field_C) {
 // Callbacks
 //////////////////////////////////////////////////////////////////////////
 void SavePoints::setCallback(uint index, SavePoints::Callback* callback) {
-	assert(index < 40);
+	assert(index < sizeof(_callbacks));
 
 	_callbacks[index] = callback;
 }
 
 SavePoints::Callback *SavePoints::getCallback(uint index) {
-	assert(index < 40);
+	assert(index < sizeof(_callbacks));
 
 	return _callbacks[index];
 }
@@ -140,7 +147,50 @@ bool SavePoints::updateGameState(SavePoints::SavePoint point) {
 // Serializable
 //////////////////////////////////////////////////////////////////////////
 void SavePoints::saveLoadWithSerializer(Common::Serializer &s) {
-	// TODO implement
+
+	// Serialize savepoint data
+	uint32 dataSize = (s.isLoading() ? _savePointsMaxSize : _data.size());
+	for (uint i = 0; i < dataSize; i++) {
+		if (s.isLoading()) {
+			SavePointData data;
+			_data.push_back(data);
+		}
+
+		s.syncAsUint32LE(_data[i].index);
+		s.syncAsUint32LE(_data[i].field_4);
+		s.syncAsUint32LE(_data[i].field_8);
+		s.syncAsUint32LE(_data[i].field_C);
+	}
+
+	// Skip uninitialized data if any
+	s.skip((_savePointsMaxSize - dataSize) * 16);
+	
+	// Number of savepoints
+	uint32 count = _savepoints.size();
+	s.syncAsUint32LE(count);
+
+	// Savepoints
+	if (s.isLoading()) {
+		for (uint i= 0; i < count; i++) {
+			SavePoint point;
+			s.syncAsUint32LE(point.index);
+			s.syncAsUint32LE(point.field_4);
+			s.syncAsUint32LE(point.field_8);
+			s.syncAsUint32LE(point.field_C);
+
+			_savepoints.push_back(point);
+
+			if (_savepoints.size() >= _savePointsMaxSize)
+				break;
+		}
+	} else {
+		for (Common::List<SavePoint>::iterator it = _savepoints.begin(); it != _savepoints.end(); ++it) {
+			s.syncAsUint32LE((*it).index);
+			s.syncAsUint32LE((*it).field_4);
+			s.syncAsUint32LE((*it).field_8);
+			s.syncAsUint32LE((*it).field_C);
+		}
+	}
 }
 
 } // End of namespace LastExpress

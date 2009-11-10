@@ -47,7 +47,7 @@
 
 */
 
-#include "common/queue.h"
+#include "common/list.h"
 #include "common/serializer.h"
 
 namespace LastExpress {
@@ -98,10 +98,13 @@ public:
 	void saveLoadWithSerializer(Common::Serializer &s);
 
 private:
-	Common::Queue<SavePoint> _savepoints;	
+	static const uint32 _savePointsMaxSize = 128;
+
+	Common::List<SavePoint> _savepoints;	///< could be a queue, but we need to be able to iterate on the items
 	Common::Array<SavePointData> _data;
 	Callback* _callbacks[40];
 
+	SavePoint pop();
 	bool updateGameState(SavePoint point);
 };
 
