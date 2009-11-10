@@ -32,6 +32,9 @@
     <ClCompile Include="..\..\engines\lastexpress\dialog.cpp">
       <Filter>game</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\engines\lastexpress\entity.cpp">
+      <Filter>game</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\engines\lastexpress\font.cpp">
       <Filter>data</Filter>
     </ClCompile>
@@ -85,6 +88,9 @@
       <Filter>game</Filter>
     </ClInclude>
     <ClInclude Include="..\..\engines\lastexpress\drawable.h" />
+    <ClInclude Include="..\..\engines\lastexpress\entity.h">
+      <Filter>game</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\engines\lastexpress\font.h">
       <Filter>data</Filter>
     </ClInclude>

@@ -121,6 +121,7 @@ namespace LastExpress {
 
 class Action;
 class Dialog;
+class Entities;
 class LastExpressEngine;
 class Menu;
 class SavePoints;
@@ -268,6 +269,8 @@ public:
 		}
 	};
 
+	
+
 	struct GameState {
 		// Header
 		uint32 brightness;
@@ -312,7 +315,9 @@ public:
 	void startGame();
 	void switchGame();
 
+	// Scene
 	void setScene(uint32 index);
+	void updateTrainClock();
 
 	// Accessors
 	bool isGameStarted() { return _runState.gameStarted; }
@@ -357,6 +362,7 @@ private:
 	Menu *_menu;            	///< Main menu handling
 	Scene *_scene;				///< Current scene	
 	SavePoints *_savepoints;	///< SavePoints
+	Entities *_entities;		///< Entities
 	
 	void preProcessScene(uint32 *index);
 	void postProcessScene(uint32 *index);

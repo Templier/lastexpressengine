@@ -378,7 +378,7 @@ void Action::pickCorpse(byte bedPosition) {
 	// Add corpse to inventory
 	if (bedPosition != 4) {
 		inventory->addItem(Inventory::kCorpse);
-		// TODO seems to set selected item to 20? (scarf)
+		inventory->selectItem(Inventory::kIndexCorpse);		
 	}
 
 }

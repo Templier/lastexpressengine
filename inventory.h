@@ -78,6 +78,24 @@ public:
 		kPortraitYellow = 36
 	};
 
+	// Index of items in inventory data
+	enum InventoryDataIndex {
+		kIndexMatchBox = 1,
+		kIndexTelegram = 4,
+		kIndexPassengerList = 6,
+		kIndexArticle = 24,
+		kIndexScarf = 8,
+		kIndexPaper = 23,
+		kIndexParchemin = 10,
+		kIndexMatch = 12,
+		kIndexWhistle = 13,
+		kIndexKey = 15,
+		kIndexBomb = 16,
+		kIndexFirebird = 18,
+		kIndexBriefcase = 19,
+		kIndexCorpse = 20
+	};
+
 	// Entry
 	struct InventoryEntry {
 		byte item_id;
@@ -115,6 +133,7 @@ public:
 	InventoryEntry *getEntry(int index);
 	InventoryItem getSelectedItem() { return (InventoryItem)getEntry(_selectedItem)->item_id; }
 	int getSelectedIndex() { return _selectedItem; }
+	void selectItem(int index) { _selectedItem = index; } // needed or can we use InventoryItem as param?
 
 	// UI Control
 	void show(bool visible);
@@ -127,24 +146,6 @@ public:
 
 private:
 	static const uint32 _defaultBlinkingInterval = 250; ///< Default blinking interval in ms
-
-	// Index of items in inventory data
-	enum InventoryDataIndex {
-		kIndexMatchBox = 1,
-		kIndexTelegram = 4,
-		kIndexPassengerList = 6,
-		kIndexArticle = 24,
-		kIndexScarf = 8,
-		kIndexPaper = 23,
-		kIndexParchemin = 10,
-		kIndexMatch = 12,
-		kIndexWhistle = 13,
-		kIndexKey = 15,
-		kIndexBomb = 16,
-		kIndexFirebird = 18,
-		kIndexBriefcase = 19,
-		kIndexCorpse = 20
-	};
 
 	LastExpressEngine *_engine;
 

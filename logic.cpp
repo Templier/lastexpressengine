@@ -28,6 +28,7 @@
 #include "lastexpress/action.h"
 #include "lastexpress/animation.h"
 #include "lastexpress/dialog.h"
+#include "lastexpress/entity.h"
 #include "lastexpress/inventory.h"
 #include "lastexpress/graphics.h"
 #include "lastexpress/helpers.h"
@@ -46,26 +47,19 @@ Logic::Logic(LastExpressEngine *engine) : _engine(engine), _scene(NULL) {
 	_inventory = new Inventory(engine);
 	_dialog = new Dialog(engine);
 	_savepoints = new SavePoints();
+	_entities = new Entities(engine);
 
 	// Get those from savegame
 	_gameState = new GameState();
 
 	// Init inventory
 	_inventory->init();
-
-	// HACK add more items for testing
-	_inventory->addItem(Inventory::kMatchBox);
-	_inventory->addItem(Inventory::kPassengerList);
-	_inventory->addItem(Inventory::kScarf);
-	_inventory->addItem(Inventory::kWhistle);
-	_inventory->addItem(Inventory::kArticle);
-	_inventory->addItem(Inventory::kBomb);
-	_inventory->addItem(Inventory::kKey);
 }
 
 Logic::~Logic() {
 	delete _action;
 	delete _dialog;
+	delete _entities;
 	delete _gameState;
 	delete _inventory;
 	delete _menu;	
@@ -79,7 +73,8 @@ Logic::~Logic() {
 void Logic::startGame() {
 	showMenu(false);
 
-	setScene(_defaultScene);
+	//setScene(_defaultScene);
+	setScene(1018);
 	
 	// Set Cursor type
 	_engine->getCursor()->setStyle(Cursor::kCursorNormal);
@@ -147,8 +142,8 @@ void Logic::switchGame() {
 // Handle game over
 void Logic::gameOver(int a1, int a2, int scene, bool showScene) {
 
-
-
+	// TODO implement
+	setScene(scene);
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -190,9 +185,8 @@ bool Logic::handleMouseEvent(Common::Event ev) {
 }
 
 //////////////////////////////////////////////////////////////////////////
-// Scenes & Hotspots
+// Scene
 //////////////////////////////////////////////////////////////////////////
-
 void Logic::setScene(uint32 index) {
 	_gameState->currentScene = index;
 
@@ -214,6 +208,13 @@ void Logic::setScene(uint32 index) {
 	postProcessScene(&_gameState->currentScene);
 }
 
+void Logic::updateTrainClock() {
+
+}
+
+//////////////////////////////////////////////////////////////////////////
+// Scene pre/post & hotspots
+//////////////////////////////////////////////////////////////////////////
 void Logic::preProcessScene(uint32 *index) {
 
 	// Check index validity
@@ -223,15 +224,25 @@ void Logic::preProcessScene(uint32 *index) {
 	Scene* scene = _engine->getScene(*index);
 
 	switch (scene->getHeader()->type) {
-	case 1:
+	case Scene::kTypeEntity:
 		if (scene->getHeader()->param1 >= 128)
 			break;
 
-		warning("Logic::preProcessScene: unimplemented scene type (%02d)", scene->getHeader()->type);		
+		if (_entities->get(scene->getHeader()->param1).location) {
+			for (Common::Array<SceneHotspot *>::iterator it = scene->getHotspots()->begin(); it != scene->getHotspots()->end(); ++it) {
+				if ((*it)->location == _entities->get(scene->getHeader()->param1).location) {
+					processHotspot(*it);
+					if ((*it)->scene) {
+						*index = (*it)->scene;
+						preProcessScene(index);
+					}
+					break;
+				}
+			}
+		}		
 		break;
 
-	case 2:
-	{
+	case Scene::kTypeItem:	{
 		if (scene->getHeader()->param1 >= 32)
 			break;
 
@@ -254,15 +265,21 @@ void Logic::preProcessScene(uint32 *index) {
 		break;
 	}
 
-	case 3: {
-		if (scene->getHeader()->param1 >= 32)
+	case Scene::kTypeItem2:
+	case Scene::kTypeEntityItem: {
+		if (scene->getHeader()->param1 >= (scene->getHeader()->type == Scene::kTypeItem2 ? 32 : 128))
 			break;
 
 		if (scene->getHeader()->param2 >= 32)
 			break;
 
 		// Check location
-		byte location1 = _inventory->getEntry((Inventory::InventoryItem)scene->getHeader()->param1)->location;
+		byte location1; 
+		if (scene->getHeader()->type == Scene::kTypeItem2)
+			location1 = _inventory->getEntry((Inventory::InventoryItem)scene->getHeader()->param1)->location;
+		else
+			location1 = _entities->get(scene->getHeader()->param1).location;
+
 		byte location2 = _inventory->getEntry((Inventory::InventoryItem)scene->getHeader()->param2)->location;
 		int location = 0;
 
@@ -290,41 +307,97 @@ void Logic::preProcessScene(uint32 *index) {
 		}		
 		break;
 	}
-	
 
-	case 4:
-	case 5:
-		warning("Logic::preProcessScene: unsupported scene type (%02d)", scene->getHeader()->type);
-		break;
-
-	case 7:
-		if (scene->getHeader()->param1 >= 16)
+	case Scene::kTypeItem3: {
+		if (scene->getHeader()->param1 >= 32)
 			break;
 
-		warning("Logic::preProcessScene: unimplemented scene type (%02d)", scene->getHeader()->type);
-		// TODO implement
-		break;
+		if (scene->getHeader()->param2 >= 32)
+			break;
 
-	case 8:
-		warning("Logic::preProcessScene: unsupported scene type (%02d)", scene->getHeader()->type);
-		break;
+		if (scene->getHeader()->param3 >= 32)
+			break;
 
-	case 6:
-		if (scene->getHeader()->param1 >= 128)
+		// Check location
+		byte location1 = _inventory->getEntry((Inventory::InventoryItem)scene->getHeader()->param1)->location;
+		byte location2 = _inventory->getEntry((Inventory::InventoryItem)scene->getHeader()->param2)->location;
+		byte location3 = _inventory->getEntry((Inventory::InventoryItem)scene->getHeader()->param3)->location;
+		int location = 0;
+
+		if (location1)
+			location = 1;
+
+		if (location2)
+			location |= 2;
+
+		if (location3)
+			location |= 4;
+
+		if (!location)
 			break;
 
 		for (Common::Array<SceneHotspot *>::iterator it = scene->getHotspots()->begin(); it != scene->getHotspots()->end(); ++it) {
 
-			if (1 /* test with savegame data & hotspot location */) {
-				processHotspot(*it);
-				if ((*it)->scene) {
-					*index = (*it)->scene;
-					preProcessScene(index);
-				}
-				break;
+			if ((*it)->location != location || (*it)->param1 != location1 || (*it)->param2 != location2 || (*it)->param3 != location3)
+				continue;
+
+			processHotspot(*it);
+			if ((*it)->scene) {
+				*index = (*it)->scene;
+				preProcessScene(index);
 			}
-		}	
+
+			break;
+		}		
+		break;
+	}
+
+	case Scene::kType6: {
+		if (scene->getHeader()->param1 >= 128)
+			break;
+
+		bool found = false;
+		if (scene->getHotspots()->size() > 0) {
+			for (Common::Array<SceneHotspot *>::iterator it = scene->getHotspots()->begin(); it != scene->getHotspots()->end(); ++it) {
+
+				if (_entities->get(scene->getHeader()->param1).location == (*it)->location) {
+					processHotspot(*it);
+					if ((*it)->scene) {
+						*index = (*it)->scene;
+						preProcessScene(index);
+					}
+					found = true;
+					break;
+				}
+			}	
+		}
+
+		// If the scene has no hotspot or if we haven't found a proper hotspot, get the first hotspot from the current scene
+		if (!found) {
+			// TODO make sure we are doing the right thing here
+			SceneHotspot *hotspot = scene->getHotspot(0);
+			processHotspot(hotspot);
+			if (hotspot->scene) {
+				*index = hotspot->scene;
+				preProcessScene(index);
+			}
+		}
 		break;	
+	}
+
+	case Scene::kType7:
+		if (scene->getHeader()->param1 >= 16)
+			break;
+
+		error("Logic::preProcessScene: unimplemented scene type (%02d)", scene->getHeader()->type);		
+		break;
+
+	case Scene::kType8:
+		if (scene->getHeader()->param1 >= 16)
+			break;
+
+		error("Logic::preProcessScene: unsupported scene type (%02d)", scene->getHeader()->type);
+		break;
 
 	default:
 		break;
@@ -363,20 +436,43 @@ void Logic::postProcessScene(uint32 *index) {
 	}
 		
 	case Scene::kTypeSavePoint:
+		if (getProgress().field_18 == 2)
+			_savepoints->push(0, 31, 190346110, 0);
+		break;
+
 	case Scene::kTypeLoadSequence:
-	case Scene::kTypeGameOver:
 		error("Logic::postProcessScene: unsupported scene type (%02d)", scene->getHeader()->type);
+
+	case Scene::kTypeGameOver:
+		if (_gameState->time >= 2418300 || getProgress().field_18 == 4)
+			break;
+
+		playSfx("LIB050");
+		switch (getProgress().index) {
+		case 1:
+			gameOver(0, 0, 62, 1);
+			break;
+
+		case 4:
+			gameOver(0, 0, 64, 1);
+			break;
+
+		default:
+			gameOver(0, 0, 63, 1);
+			break;
+		}
 		break;
 
 	case Scene::kTypeReadText: {
 		const char *text = _dialog->readText(scene->getHeader()->param1);
 		if (text)
 			playSfx(text);
-		}
+		
 		break;
+	}
 
 	case Scene::kType133:
-		warning("Logic::postProcessScene: unsupported scene type (%02d)", scene->getHeader()->type);
+		error("Logic::postProcessScene: unsupported scene type (%02d)", scene->getHeader()->type);
 		// TODO do some stuff with inventory
 		break;
 		
@@ -400,32 +496,110 @@ void Logic::processHotspot(SceneHotspot *hotspot) {
 		break;
 
 	case SceneHotspot::kActionPlaySound:
-		// TODO: Check validity: does the file exits?
+		// TODO: Check validity: does the file exits (LIBxxx)?
 		if (hotspot->param2)
 			playSfx(_dialog->getSound(0, hotspot->param1, hotspot->param2));
 		break;
 
 	case SceneHotspot::kActionPlayMusic:		
-	case 5:
 		error("Logic::processScene: unsupported hotspot action (%02d)", hotspot->action);
+
+	case SceneHotspot::kActionKnockDoor:
+		if (hotspot->param1 >= 128)
+			break;
+
+		if (_entities->get(hotspot->param1).field_0)
+			_savepoints->push(0, _entities->get(hotspot->param1).field_0, 8, hotspot->param1);
+		else
+			playSfx(_dialog->getSound(0, 12, 0));
+		
+		break;
 
 	case 6:
 		// TODO does a lot of stuff
-		warning("Logic::processScene: unsupported hotspot action (%02d)", hotspot->action);
+		error("Logic::processScene: unsupported hotspot action (%02d)", hotspot->action);
 		break;
 
 	case SceneHotspot::kActionPlaySounds:
 		playSfx(_dialog->getSound(0, hotspot->param1, 0));
-		playSfx(_dialog->getSound(0, hotspot->param3, hotspot->param3));
+		playSfx(_dialog->getSound(0, hotspot->param3, hotspot->param2));
 		break;
 
-	case 8:
-	case 9:
+	case SceneHotspot::kActionPlayAnimation:
+		error("Logic::processScene: unsupported hotspot action (%02d)", hotspot->action);
+
+	case SceneHotspot::kActionOpenWindow:
+		if (hotspot->param1 >= 128)
+			break;
+
+		// TODO update entity
+
+		if ((hotspot->param1 < 9  || hotspot->param1 > 16)
+		 && (hotspot->param1 < 40 || hotspot->param1 > 47)) {
+			
+			switch (hotspot->param2) {
+			case 1:
+				playSfx(_dialog->getSound(0, 24, 0));
+				break;
+			
+			case 2:
+				playSfx(_dialog->getSound(0, 36, 0));
+				break;
+
+			default:
+				break;
+			}
+		}
+
+		switch (hotspot->param2) {
+		case 1:
+			playSfx(_dialog->getSound(0, 21, 0));
+			break;
+
+		case 2:
+			playSfx(_dialog->getSound(0, 20, 0));
+			break;
+
+		default:
+			break;
+		}
+
 	case 10:
+		if (hotspot->param1 >= 128)
+			break;
+
+		// TODO Store value in savegame_640
+		if (hotspot->param1 != 112) {
+			if (hotspot->param1 == 1)
+				playSfx(_dialog->getSound(0, 73, 0));
+		} else  {
+			playSfx(_dialog->getSound(0, 96, 0));	
+		}
+		break;
+
 	case 11:
-	case 12:
-	case SceneHotspot::kActionTylerCompartment:
-	case 14:
+		error("Logic::processScene: unsupported hotspot action (%02d)", hotspot->action);
+
+	case SceneHotspot::kActionTylerCompartment: {
+		Inventory::InventoryEntry* item = _inventory->getEntry(hotspot->param1);
+
+		if (hotspot->param1 >= 32 || !item->location)
+			break;
+
+		switch(hotspot->param1) {
+		case 20:
+			_action->pickCorpse(hotspot->param2);
+			// TODO (either here or in pickCorpse: if hotspot->scene < 1 => do something
+			if (hotspot->param2 != 4) {
+				_engine->getCursor()->setStyle(Cursor::kCursorCorpse);
+			}
+
+		}
+		
+		break;
+	}
+
+	case SceneHotspot::kActionDropItem:
 		error("Logic::processScene: unsupported hotspot action (%02d)", hotspot->action);
 
 	case SceneHotspot::kActionEnterTylerCompartment:
@@ -438,10 +612,11 @@ void Logic::processHotspot(SceneHotspot *hotspot) {
 			_action->playAnimation(Action::kCathFindCorpse);
 			playSfx("LIB015");
 			getProgress().event_found_corpse = 1;
-			hotspot->scene = 42; // Tyler compartment
+			hotspot->scene = 42; // Tyler compartment with corpse on floor
 		}
 		break;
-	case 18:
+
+	case SceneHotspot::kActionOutside:
 	case 19:
 	case 20:
 	case 21:
@@ -450,7 +625,15 @@ void Logic::processHotspot(SceneHotspot *hotspot) {
 	case 24:
 	case 25:
 	case 26:
+		error("Logic::processScene: unsupported hotspot action (%02d)", hotspot->action);
+
 	case 27:
+		playSfx(_dialog->getSound(0, 31, 0));
+
+		// TODO update game state
+		error("Logic::processScene: unsupported hotspot action (%02d)", hotspot->action);
+		break;
+
 	case 28:
 	case 29:
 	case 30:
@@ -458,21 +641,44 @@ void Logic::processHotspot(SceneHotspot *hotspot) {
 	case 32:
 	case 33:
 	case 34:
-	case 35:
 		error("Logic::processScene: unsupported hotspot action (%02d)", hotspot->action);
 
-	case SceneHotspot::kActionDialog: {
-		const char* dialog = _dialog->getDialog((Dialog::DialogId)hotspot->param1);
+	case SceneHotspot::kActionOpenBed:
+		playSfx(_dialog->getSound(0, 59, 0));
+		break;
 
-		if (dialog)			
-			playSfx(dialog);
+	case SceneHotspot::kActionDialog:
+		playSfx(_dialog->getDialog((Dialog::DialogId)hotspot->param1));
+		break;
 
+	case SceneHotspot::kActionEggBox:
+		playSfx(_dialog->getSound(0, 43, 0));
+		if (getProgress().field_7C) {
+			playMusic("MUS003");
+			getProgress().field_7C = 0;
 		}
 		break;
 
-	case 38:
 	case 39:
-	case 40:
+		playSfx(_dialog->getSound(0, 24, 0));
+		if (getProgress().field_80) {
+			playMusic("MUS003");
+			getProgress().field_80 = 0;
+		}
+		break;
+
+	case SceneHotspot::kActionBed:
+		playSfx(_dialog->getSound(0, 85, 0));
+		// falls to case 12
+	case 12:
+		if (hotspot->param1 >= 128)
+			break;
+
+		if (_entities->get(hotspot->param1).field_0)
+			_savepoints->push(0, _entities->get(hotspot->param1).field_0, 8, hotspot->param1);
+
+		break;
+
 	case 41:
 	case 42:
 	case 44:
@@ -499,14 +705,12 @@ Cursor::CursorStyle Logic::getCursor(SceneHotspot *hotspot) {
 		else
 			return Cursor::kCursorBackward;		
 
-	case 5:
+	case SceneHotspot::kActionKnockDoor:
 		if (hotspot->param1 >= 128)
 			return Cursor::kCursorNormal;
+		else
+			return (Cursor::CursorStyle)_entities->get(hotspot->param1).cursor;
 		
-		warning("Logic::getCursor: unsupported cursor for action (%02d)", hotspot->action);
-		// TODO gets the cursor from an unknown savegame struct, which is updated in other game code
-		return Cursor::kCursorNormal;
-
 LABEL_KEY:
 	case 6:
 	case 31:
@@ -522,8 +726,12 @@ LABEL_KEY:
 	case 12:
 		if (hotspot->param1 >= 128)
 			return Cursor::kCursorNormal;
-		
-		error("Logic::getCursor: unsupported cursor for action (%02d)", hotspot->action);
+		else {
+			if (_entities->get(hotspot->param1).field_0)
+				return (Cursor::CursorStyle)_entities->get(hotspot->param1).cursor;
+			else
+				return Cursor::kCursorNormal;
+		}
 
 	case 13:
 		if (hotspot->param1 >= 32)
@@ -534,7 +742,6 @@ LABEL_KEY:
 			 return Cursor::kCursorHand;
 		else
 			return Cursor::kCursorNormal;			
-		
 
 	case 14:
 		if (hotspot->param1 >= 32)
@@ -574,7 +781,19 @@ LABEL_KEY:
 
 		return Cursor::kCursorKey;
 
-	case 18:
+	case SceneHotspot::kActionOutside:
+		if (getProgress().jacket != Logic::kGreenJacket)
+			return Cursor::kCursorNormal;
+
+		if ((_gameState->events[Action::kCathLookOutsideWindowDay] || _gameState->events[Action::kCathLookOutsideWindowDay] || _entities->get(1).field_4)
+		 && getProgress().field_50
+		 && (hotspot->param1 != 45 || 1/*function call*/ && _entities->get(44).location == 2)
+		 && _inventory->getSelectedIndex() != Inventory::kIndexBriefcase
+		 && _inventory->getSelectedIndex() != Inventory::kIndexFirebird)
+			return Cursor::kCursorForward; 
+
+		return Cursor::kCursorNormal; 
+
 	case 19:
 		error("Logic::getCursor: unsupported cursor for action (%02d)", hotspot->action);
 
@@ -612,17 +831,25 @@ LABEL_KEY:
 		else
 			return Cursor::kCursorNormal; 
 
-	case 35:
-		error("Logic::getCursor: unsupported cursor for action (%02d)", hotspot->action);
+	case SceneHotspot::kActionOpenBed:
+		if (getProgress().index < 2)
+			return Cursor::kCursorHand;
+		
+		return Cursor::kCursorNormal;		
 
 	case SceneHotspot::kActionDialog:
 		if (_dialog->getDialog((Dialog::DialogId)hotspot->param1))
-			return Cursor::kCursorTalk; 
+			return Cursor::kCursorHandPointer; 
 
 		return Cursor::kCursorNormal;
 
-	case 40:
-		error("Logic::getCursor: unsupported cursor for action (%02d)", hotspot->action);
+	case SceneHotspot::kActionBed:
+		if (getProgress().field_18 == 2 && !getProgress().field_E4
+		&& (_gameState->time > 1404000 || getProgress().event_august_met && getProgress().field_CC
+		&& (!getProgress().field_24 || getProgress().field_3C)))
+			return Cursor::kCursorSleep;
+
+		return Cursor::kCursorNormal;
 	}
 
 }

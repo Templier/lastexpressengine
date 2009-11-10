@@ -98,7 +98,7 @@ public: // XXX
 	byte type;
 	byte param1;
 	byte param2;
-	byte field_19;
+	byte param3;
 	uint32 hotspot;
 };
 
@@ -109,16 +109,17 @@ public:
 		kActionSavePoint = 2,
 		kActionPlaySound = 3,
 		kActionPlayMusic = 4,
-		kAction5 = 5,
+		kActionKnockDoor = 5,
 		kAction6 = 6,
 		kActionPlaySounds = 7,
 		kActionPlayAnimation = 8,
+		kActionOpenWindow = 9,
 		kAction12 = 12,
 		kActionTylerCompartment = 13,
-		kAction14 = 14,
+		kActionDropItem = 14,
 		kAction15 = 15,
 		kActionEnterTylerCompartment = 16,
-		kAction18 = 18,
+		kActionOutside = 18,
 		kAction19 = 19,
 		kAction21 = 21,
 		kAction23 = 23,
@@ -126,9 +127,10 @@ public:
 		kAction30 = 30,
 		kAction31 = 31,
 		KActionUseWhistle = 33,
-		kAction35 = 35,
+		kActionOpenBed = 35,
 		kActionDialog = 37,
-		kAction40 = 40,
+		kActionEggBox = 38,
+		kActionBed = 40,
 		kAction43 = 43
 	};
 
@@ -154,7 +156,14 @@ public:
 	// Scenes
 	enum Type {
 		// PreProcess
-
+		kTypeEntity = 1,
+		kTypeItem = 2,
+		kTypeItem2 = 3,
+		kTypeEntityItem = 4,
+		kTypeItem3 = 5,
+		kType6 = 6,
+		kType7 = 7,
+		kType8 = 8,
 
 		// PostProcess
 		kTypeSequence = 128,
