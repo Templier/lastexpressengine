@@ -27,6 +27,7 @@
 
 #include "lastexpress/action.h"
 #include "lastexpress/animation.h"
+#include "lastexpress/beetle.h"
 #include "lastexpress/dialog.h"
 #include "lastexpress/entity.h"
 #include "lastexpress/inventory.h"
@@ -48,6 +49,7 @@ Logic::Logic(LastExpressEngine *engine) : _engine(engine), _scene(NULL) {
 	_dialog = new Dialog(engine);
 	_savepoints = new SavePoints();
 	_entities = new Entities(engine);
+	_beetle = new Beetle(engine);
 
 	// Get those from savegame
 	_gameState = new GameState();
@@ -58,6 +60,7 @@ Logic::Logic(LastExpressEngine *engine) : _engine(engine), _scene(NULL) {
 
 Logic::~Logic() {
 	delete _action;
+	delete _beetle;
 	delete _dialog;
 	delete _entities;
 	delete _gameState;
@@ -322,9 +325,12 @@ void Logic::preProcessScene(uint32 *index) {
 		// If the scene has no hotspot or if we haven't found a proper hotspot, get the first hotspot from the current scene
 		if (!found) {
 			// TODO make sure we are doing the right thing here
-			SceneHotspot *hotspot = _engine->getScene(_gameState->currentScene)->getHotspot(0);
-			if (!hotspot)
+			Scene *hotspotScene = _engine->getScene(*index);
+			SceneHotspot *hotspot = scene->getHotspot(0);
+			if (!hotspot) {
+				delete hotspotScene;
 				break;
+			}
 
 			processHotspot(hotspot);
 			if (hotspot->scene) {
@@ -333,6 +339,8 @@ void Logic::preProcessScene(uint32 *index) {
 
 				// TODO else case missing
 			}
+
+			delete hotspotScene;
 		}
 		break;	
 	}
@@ -356,6 +364,15 @@ void Logic::preProcessScene(uint32 *index) {
 	}
 
 	// Cleanup
+	if (_beetle->isLoaded()) {
+		// Get scene type
+		Scene *currentScene = _engine->getScene(*index);
+		if (currentScene->getHeader()->type != -126)
+			_beetle->unload();
+
+		delete currentScene;
+	}
+
 	delete scene;
 }
 
@@ -374,9 +391,14 @@ void Logic::postProcessScene(uint32 *index) {
 		SceneHotspot *hotspot = scene->getHotspot(0);
 		processHotspot(hotspot);
 
-		while (_engine->getScene(hotspot->scene)->getHeader()->type == 128) {
-			hotspot = _engine->getScene(hotspot->scene)->getHotspot(0);
+		Scene *hotspotScene = _engine->getScene(hotspot->scene);
+		while (hotspotScene->getHeader()->type == 128) {
+			hotspot = hotspotScene->getHotspot(0);
 			processHotspot(hotspot);
+
+			uint16 nextScene = hotspot->scene;
+			delete hotspotScene;
+			hotspotScene = _engine->getScene(nextScene);
 		}
 
 		// More stuff
@@ -393,7 +415,12 @@ void Logic::postProcessScene(uint32 *index) {
 		break;
 
 	case Scene::kTypeLoadBeetleSequences:
-		error("Logic::postProcessScene: unsupported scene type (%02d)", scene->getHeader()->type);
+		if ((getProgress().index == 2 || getProgress().index == 3)
+			&& _inventory->getItem(Inventory::kBeetle)->location == 3) {
+			if (!_beetle->isLoaded())
+				_beetle->load();
+		}		
+		break;
 
 	case Scene::kTypeGameOver:
 		if (_gameState->time >= 2418300 || getProgress().field_18 == 4)
@@ -642,9 +669,9 @@ void Logic::processHotspot(SceneHotspot *hotspot) {
 	case SceneHotspot::kActionOutsideTrain:
 	case SceneHotspot::kAction19:
 	case SceneHotspot::kAction20:
-	case SceneHotspot::kAction21:
+	case SceneHotspot::kActionClimbUpTrain:
 	case SceneHotspot::kAction22:
-	case SceneHotspot::kAction23:
+	case SceneHotspot::kActionClimbDownTrain:
 	case SceneHotspot::kActionUnbound:
 	case SceneHotspot::kAction25:
 	case SceneHotspot::kAction26:
@@ -659,10 +686,21 @@ void Logic::processHotspot(SceneHotspot *hotspot) {
 
 	case SceneHotspot::kAction28:
 	case SceneHotspot::kAction29:
+		error("Logic::processHotspot: unsupported hotspot action (%02d)", hotspot->action);
+
 	case SceneHotspot::kActionCatchBeetle:	
+		if (_beetle->isLoaded()) {
+			if (_beetle->catchBeetle()) {
+				_beetle->unload();
+				_inventory->getItem(Inventory::kBeetle)->location = 1;
+				_savepoints->push(0, 32, 202613084, 0);
+			}
+		}
+		break;
+
 	case SceneHotspot::kAction32:
 	case SceneHotspot::KActionUseWhistle:
-	case SceneHotspot::kAction34:
+	case SceneHotspot::kActionOpenMatchBox:
 		error("Logic::processHotspot: unsupported hotspot action (%02d)", hotspot->action);
 
 	case SceneHotspot::kActionOpenBed:
@@ -891,7 +929,7 @@ LABEL_KEY:
 	case SceneHotspot::kAction19:
 		error("Logic::getCursor: unsupported cursor for action (%02d)", hotspot->action);
 
-	case SceneHotspot::kAction21:
+	case SceneHotspot::kActionClimbUpTrain:
 		if (_gameState->progress.field_50
 		 && (_gameState->progress.index == 2 || _gameState->progress.index == 3 || _gameState->progress.index == 5)
 		 && _inventory->getSelectedItem() != Inventory::kFirebird 
@@ -900,7 +938,7 @@ LABEL_KEY:
 
 		return Cursor::kCursorNormal; 
 
-	case SceneHotspot::kAction23:
+	case SceneHotspot::kActionClimbDownTrain:
 		error("Logic::getCursor: unsupported cursor for action (%02d)", hotspot->action);
 
 	case SceneHotspot::kActionUnbound:
@@ -970,7 +1008,7 @@ void Logic::switchChapter() {
 	case 3:
 		_inventory->getItem(Inventory::kFirebird)->location = 4;
 		_inventory->getItem(Inventory::kFirebird)->has_item = 0;
-		_inventory->getItem((Inventory::InventoryItem)11)->location = 1; // ??
+		_inventory->getItem(Inventory::kItem11)->location = 1; // ??
 
 		_inventory->addItem(Inventory::kWhistle);
 		_inventory->addItem(Inventory::kKey);

@@ -21,6 +21,9 @@
     <ClCompile Include="..\..\engines\lastexpress\background.cpp">
       <Filter>data</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\engines\lastexpress\beetle.cpp">
+      <Filter>game</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\engines\lastexpress\cursor.cpp">
       <Filter>data</Filter>
     </ClCompile>
@@ -76,6 +79,9 @@
     </ClInclude>
     <ClInclude Include="..\..\engines\lastexpress\background.h">
       <Filter>data</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\engines\lastexpress\beetle.h">
+      <Filter>game</Filter>
     </ClInclude>
     <ClInclude Include="..\..\engines\lastexpress\cursor.h">
       <Filter>data</Filter>

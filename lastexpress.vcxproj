@@ -66,6 +66,7 @@
     <ClCompile Include="..\..\engines\lastexpress\animation.cpp" />
     <ClCompile Include="..\..\engines\lastexpress\archive.cpp" />
     <ClCompile Include="..\..\engines\lastexpress\background.cpp" />
+    <ClCompile Include="..\..\engines\lastexpress\beetle.cpp" />
     <ClCompile Include="..\..\engines\lastexpress\cursor.cpp" />
     <ClCompile Include="..\..\engines\lastexpress\debug.cpp" />
     <ClCompile Include="..\..\engines\lastexpress\detection.cpp" />
@@ -90,6 +91,7 @@
     <ClInclude Include="..\..\engines\lastexpress\animation.h" />
     <ClInclude Include="..\..\engines\lastexpress\archive.h" />
     <ClInclude Include="..\..\engines\lastexpress\background.h" />
+    <ClInclude Include="..\..\engines\lastexpress\beetle.h" />
     <ClInclude Include="..\..\engines\lastexpress\cursor.h" />
     <ClInclude Include="..\..\engines\lastexpress\debug.h" />
     <ClInclude Include="..\..\engines\lastexpress\dialog.h" />

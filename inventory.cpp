@@ -83,19 +83,19 @@ void Inventory::init() {
 	_entries[kPassengerList].is_selectable = 1;
 
 	// Autoselection
-	_entries[2].no_autoselect = 0;
-	_entries[3].no_autoselect = 0;
-	_entries[5].no_autoselect = 0;
-	_entries[7].no_autoselect = 0;
-	_entries[9].no_autoselect = 0;
-	_entries[11].no_autoselect = 0;
-	_entries[14].no_autoselect = 0;
-	_entries[17].no_autoselect = 0;
+	_entries[kItem2].no_autoselect = 0;
+	_entries[kItem3].no_autoselect = 0;
+	_entries[kItem5].no_autoselect = 0;
+	_entries[kItem7].no_autoselect = 0;
+	_entries[kItem9].no_autoselect = 0;
+	_entries[kItem11].no_autoselect = 0;
+	_entries[kBeetle].no_autoselect = 0;
+	_entries[kItem17].no_autoselect = 0;
 	_entries[kFirebird].no_autoselect = 0;
 	_entries[kBriefcase].no_autoselect = 0;
 	_entries[kCorpse].no_autoselect = 0;
-	_entries[21].no_autoselect = 0;
-	_entries[22].no_autoselect = 0;
+	_entries[kItem21].no_autoselect = 0;
+	_entries[kItem22].no_autoselect = 0;
 
 	// Scene
 	_entries[kMatchBox].scene_id = 31;

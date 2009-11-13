@@ -59,42 +59,6 @@
 
 	... more unknown stuff
 
-
-	Game Progress format
-	--------------------
-
-		uint32 {4}      - ??
-		uint32 {4}      - jacketType (2 = green, ?? = original)
-		uint32 {4}      - ??
-		uint32 {4}      - ??
-		uint32 {4}      - ??
-		uint32 {4}      - ??
-		uint32 {4}      - ??
-		uint32 {4}      - portraitType (top left portrait - 32 to 37)
-		uint32 {4}      - ??
-		uint32 {4}      - ??
-		uint32 {4}      - ??
-		uint32 {4}      - index (cd number)
-		uint32 {4}      - ??
-		uint32 {4}      - ??
-		uint32 {4}      - ??
-		uint32 {4}      - ??
-		uint32 {4}      - ??
-		uint32 {4}      - ??
-		uint32 {4}      - ??
-		uint32 {4}      - ??
-		uint32 {4}      - ??
-		uint32 {4}      - ??
-		uint32 {4}      - ??
-		uint32 {4}      - ??
-		uint32 {4}      - ??
-		uint32 {4}      - ??
-		uint32 {4}      - ??
-		uint32 {4}      - ??
-		uint32 {4}      - ??
-		uint32 {4}      - ??
-		uint32 {4}      - ??
-
 	
 	Sound cache entry: 68 bytes
 		uint32 {4}      - ??
@@ -120,6 +84,7 @@
 namespace LastExpress {
 
 class Action;
+class Beetle;
 class Dialog;
 class Entities;
 class LastExpressEngine;
@@ -148,7 +113,7 @@ public:
 		uint32 index;
 		uint32 field_30;
 		uint32 event_august_met;
-		uint32 field_38;
+		uint32 timeOfDay;					///< 0 = day / 1 = night
 		uint32 field_3C;
 		uint32 field_40;
 		uint32 field_44;
@@ -216,7 +181,7 @@ public:
 			index = _defaultIndex;
 			field_30 = 0;
 			event_august_met = 0;
-			field_38 = 0;
+			timeOfDay = 0;
 			field_3C = 0;
 			field_40 = 0;
 			field_44 = 0;
@@ -364,6 +329,7 @@ private:
 	Scene *_scene;				///< Current scene	
 	SavePoints *_savepoints;	///< SavePoints
 	Entities *_entities;		///< Entities
+	Beetle *_beetle;			///< Beetle catching
 	
 	void preProcessScene(uint32 *index);
 	void postProcessScene(uint32 *index);
