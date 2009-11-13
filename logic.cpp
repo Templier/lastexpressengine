@@ -229,29 +229,16 @@ void Logic::preProcessScene(uint32 *index) {
 	Scene* scene = _engine->getScene(*index);
 
 	switch (scene->getHeader()->type) {
-	case Scene::kTypeEntity:
-		if (scene->getHeader()->param1 >= 128)
-			break;
-
-		if (_entities->get(scene->getHeader()->param1).location) {
-			for (Common::Array<SceneHotspot *>::iterator it = scene->getHotspots()->begin(); it != scene->getHotspots()->end(); ++it) {
-				if ((*it)->location == _entities->get(scene->getHeader()->param1).location) {
-					PROCESS_HOTSPOT_SCENE(*it, index);
-					break;
-				}
-			}
-		}		
-		break;
-
 	case Scene::kTypeItem:
 	case Scene::kTypeItem2:	
 	case Scene::kTypeItem3:
+	case Scene::kTypeEntity:
 	case Scene::kTypeEntityItem: {
 		byte location1, location2, location3; 
 		byte type = scene->getHeader()->type;
 
 		// Check bounds
-		if (scene->getHeader()->param1 >= (type == Scene::kTypeEntityItem ? 128 : 32))
+		if (scene->getHeader()->param1 >= ((type == Scene::kTypeEntity || type == Scene::kTypeEntityItem) ? 128 : 32))
 			break;
 
 		if (type != Scene::kTypeItem && scene->getHeader()->param2 >= 32)
@@ -261,7 +248,7 @@ void Logic::preProcessScene(uint32 *index) {
 			break;
 
 		// Check location
-		if (type == Scene::kTypeEntityItem)
+		if (type == Scene::kTypeEntity || type == Scene::kTypeEntityItem)
 			location1 = _entities->get(scene->getHeader()->param1).location;			
 		else
 			location1 = _inventory->getItem((Inventory::InventoryItem)scene->getHeader()->param1)->location;
@@ -287,12 +274,18 @@ void Logic::preProcessScene(uint32 *index) {
 			break;
 
 		for (Common::Array<SceneHotspot *>::iterator it = scene->getHotspots()->begin(); it != scene->getHotspots()->end(); ++it) {
+			
+			if ((type == Scene::kTypeItem || type == Scene::kTypeEntity)) {
+				if ((*it)->location != location1) {			
+					continue;
+				}
+			} else {
+				if ((*it)->location != location || (*it)->param1 != location1 || (*it)->param2 != location2) {
+					continue;
+				}
+			}
 
-			if ((*it)->location != location)
-				
-			if (type != Scene::kTypeItem && ((*it)->param1 != location1 || (*it)->param2 != location2))
-				continue;
-
+			// Special case for TypeItem3
 			if (type == Scene::kTypeItem3 && (*it)->param3 != location3)
 				continue;
 			
