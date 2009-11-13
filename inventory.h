@@ -83,7 +83,7 @@ public:
 		// Portrait (not an index)
 		kPortraitOriginal = 32,		
 		kPortraitGreen = 34,		
-		kPortraitYellow = 36,
+		kPortraitYellow = 36
 	};
 
 	// Entry
