@@ -374,14 +374,6 @@ void Action::pickCorpse(byte bedPosition) {
 		// No way to pick the corpse
 		break;
 	}
-
-	// Add corpse to inventory
-	if (bedPosition != 4) {
-		inventory->addItem(Inventory::kCorpse);
-		inventory->selectItem(Inventory::kCorpse);
-		_engine->getCursor()->setStyle(Cursor::kCursorCorpse);
-	}
-
 }
 
 void Action::dropCorpse() {

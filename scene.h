@@ -40,7 +40,7 @@
 		byte {1}    - type
 		byte {1}    - param1
 		byte {1}    - param2
-		byte {1}    - 19 ?? (do something if set to -1)
+		byte {1}    - param3
 		uint32 {4}  - Offset to hotspot info struct
 
 		probably contains cursor type too / scene index : 0 - 2500 (max)
@@ -114,24 +114,39 @@ public:
 		kActionPlaySounds = 7,
 		kActionPlayAnimation = 8,
 		kActionOpenWindow = 9,
+		kAction10 = 10,
+		kAction11 = 11,
 		kAction12 = 12,
-		kActionTylerCompartment = 13,
+		kActionCompartment = 13,
 		kActionDropItem = 14,
 		kAction15 = 15,
-		kActionEnterTylerCompartment = 16,
-		kActionOutside = 18,
+		kActionEnterCompartment = 16,
+		kActionOutsideTrain = 18,
 		kAction19 = 19,
+		kAction20 = 20,
 		kAction21 = 21,
+		kAction22 = 22,
 		kAction23 = 23,
 		kActionUnbound = 24,
-		kAction30 = 30,
-		kAction31 = 31,
+		kAction25 = 25,
+		kAction26 = 26,
+		kAction27 = 27,
+		kAction28 = 28,
+		kAction29 = 29,
+		kActionCatchBeetle = 30,
+		kActionExitCompartment = 31,
+		kAction32 = 32,
 		KActionUseWhistle = 33,
+		kAction34 = 34,
 		kActionOpenBed = 35,
 		kActionDialog = 37,
 		kActionEggBox = 38,
+		kAction39 = 39,
 		kActionBed = 40,
-		kAction43 = 43
+		kAction41 = 41,
+		kAction42 = 42,
+		kAction43 = 43,
+		kAction44 = 44
 	};
 
 	SceneHotspot() {}
@@ -168,7 +183,7 @@ public:
 		// PostProcess
 		kTypeSequence = 128,
 		kTypeSavePoint = 129,
-		kTypeLoadSequence = 130,
+		kTypeLoadBeetleSequences = 130,
 		kTypeGameOver = 131,
 		kTypeReadText = 132,
 		kType133 = 133

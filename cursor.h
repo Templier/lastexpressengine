@@ -64,12 +64,14 @@ public:
 		kCursorSleep,
 		kCursorTalk,
 		kCursorTalk2,     // Need better name
+
+		// Items
 		kCursorMatchBox,
 		kCursorTelegram,
 		kCursorPassengerList,
 		kCursorArticle,
 		kCursorScarf,     // 20
-		kCursorPaper,     // Need better name
+		kCursorPaper,
 		kCursorParchemin,
 		kCursorMatch,
 		kCursorWhistle,
@@ -78,8 +80,12 @@ public:
 		kCursorFirebird,
 		kCursorBriefcase,
 		kCursorCorpse,
+
+		// Combat
 		kCursorPunchLeft, // 30
 		kCursorPunchRight,
+
+		// Portraits
 		kCursorPortrait,
 		kCursorPortraitSelected,
 		kCursorPortraitGreen,

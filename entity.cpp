@@ -69,6 +69,13 @@ void Entities::update(uint index, byte field_0, byte location, byte cursor, byte
 		}
 }
 
+void Entities::updateField4(uint index, byte value) {
+	if (index >= 128)
+		return;
+
+	_entities[index].field_4 = value;
+}
+
 //////////////////////////////////////////////////////////////////////////
 // Serializable
 //////////////////////////////////////////////////////////////////////////

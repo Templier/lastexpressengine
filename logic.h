@@ -45,15 +45,15 @@
 	uint32 {4*128}  - Game progress
 	byte {512}      - Game events
 	byte {7*32}     - Inventory
-	byte {5*128}    - ??
-	byte {1262*40}  - Game state (not sure what's in the struct yet)
+	byte {5*128}    - Entities
+	byte {1262*40}  - Game state
 
 	uint32 {4}      - ??
 	uint32 {4}      - ??
 	uint32 {4}      - Number of sound cache entries
 	byte {count*68} - Sound cache entries
 
-	byte {16*128}   - ?? array
+	byte {16*128}   - Save point data
 	uint32 {4}      - Number of save points (max: 128)
 	byte {count*16} - Save points
 
@@ -277,12 +277,12 @@ public:
 		uint32 volume;
 
 		// Game data
-		//uint32 unknown0;
+		uint32 field_0;
 		uint32 time;
 		uint32 timeDelta;
 		uint32 timeTicks;
-		uint32 currentScene;
-		//uint32 unknown17;
+		byte field_17;
+		uint32 currentScene;		
 		uint32 currentScene2;
 		uint32 currentScene3;
 
@@ -293,10 +293,11 @@ public:
 			brightness = _defaultBrigthness;
 			volume = _defaultVolume;
 
-			//Game data			
+			//Game data	
 			time = _defaultTime;
 			timeDelta = _defaultTimeDelta;
 			timeTicks = 0;
+			field_17 = 0;
 			currentScene = _defaultScene;
 			currentScene2 = 0;
 			currentScene3 = 0;
@@ -366,7 +367,11 @@ private:
 	
 	void preProcessScene(uint32 *index);
 	void postProcessScene(uint32 *index);
+	
+	// Hotspots
 	void processHotspot(SceneHotspot *hotspot);
+	void hotspot_enterCompartment(SceneHotspot *hotspot);
+
 	Cursor::CursorStyle getCursor(SceneHotspot *hotspot);
 
 	void switchChapter();

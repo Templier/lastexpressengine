@@ -220,6 +220,12 @@ void Logic::updateTrainClock() {
 		preProcessScene(index); \
 	}
 
+#define GET_ENTITY_LOCATION(scene) \
+	_entities->get(scene->getHeader()->param1).location
+
+#define GET_ITEM_LOCATION(scene, parameter) \
+	_inventory->getItem((Inventory::InventoryItem)scene->getHeader()->parameter)->location
+
 void Logic::preProcessScene(uint32 *index) {
 
 	// Check index validity
@@ -249,15 +255,15 @@ void Logic::preProcessScene(uint32 *index) {
 
 		// Check location
 		if (type == Scene::kTypeEntity || type == Scene::kTypeEntityItem)
-			location1 = _entities->get(scene->getHeader()->param1).location;			
+			location1 = GET_ENTITY_LOCATION(scene);			
 		else
-			location1 = _inventory->getItem((Inventory::InventoryItem)scene->getHeader()->param1)->location;
+			location1 = GET_ITEM_LOCATION(scene, param1);
 
 		if (type != Scene::kTypeItem)
-			location2 = _inventory->getItem((Inventory::InventoryItem)scene->getHeader()->param2)->location;
+			location2 = GET_ITEM_LOCATION(scene, param2);
 
 		if (type == Scene::kTypeItem3)
-			location3 = _inventory->getItem((Inventory::InventoryItem)scene->getHeader()->param3)->location;
+			location3 = GET_ITEM_LOCATION(scene, param3);
 
 		int location = 0;
 
@@ -276,11 +282,13 @@ void Logic::preProcessScene(uint32 *index) {
 		for (Common::Array<SceneHotspot *>::iterator it = scene->getHotspots()->begin(); it != scene->getHotspots()->end(); ++it) {
 			
 			if ((type == Scene::kTypeItem || type == Scene::kTypeEntity)) {
-				if ((*it)->location != location1) {			
+				if ((*it)->location != location1) {
 					continue;
 				}
 			} else {
-				if ((*it)->location != location || (*it)->param1 != location1 || (*it)->param2 != location2) {
+				if ((*it)->location != location 
+				 || (*it)->param1 != location1 
+				 || (*it)->param2 != location2) {
 					continue;
 				}
 			}
@@ -384,7 +392,7 @@ void Logic::postProcessScene(uint32 *index) {
 			_savepoints->push(0, 31, 190346110, 0);
 		break;
 
-	case Scene::kTypeLoadSequence:
+	case Scene::kTypeLoadBeetleSequences:
 		error("Logic::postProcessScene: unsupported scene type (%02d)", scene->getHeader()->type);
 
 	case Scene::kTypeGameOver:
@@ -428,10 +436,13 @@ void Logic::postProcessScene(uint32 *index) {
 	delete scene;
 }
 
+//////////////////////////////////////////////////////////////////////////
+// Hotspot
+//////////////////////////////////////////////////////////////////////////
 void Logic::processHotspot(SceneHotspot *hotspot) {
 
 	switch (hotspot->action) {
-	case 1:
+	case SceneHotspot::kAction1:
 		error("Logic::processHotspot: unsupported hotspot action (%02d)", hotspot->action);
 		break;
 
@@ -459,7 +470,7 @@ void Logic::processHotspot(SceneHotspot *hotspot) {
 		
 		break;
 
-	case 6:
+	case SceneHotspot::kAction6:
 		// TODO extract to function
 		if (hotspot->param1 >= 128)
 			break;
@@ -542,7 +553,7 @@ void Logic::processHotspot(SceneHotspot *hotspot) {
 			break;
 		}
 
-	case 10:
+	case SceneHotspot::kAction10:
 		if (hotspot->param1 >= 128)
 			break;
 
@@ -555,10 +566,10 @@ void Logic::processHotspot(SceneHotspot *hotspot) {
 		}
 		break;
 
-	case 11:
+	case SceneHotspot::kAction11:
 		error("Logic::processHotspot: unsupported hotspot action (%02d)", hotspot->action);
 
-	case SceneHotspot::kActionTylerCompartment: {
+	case SceneHotspot::kActionCompartment: {
 		Inventory::InventoryEntry* item = _inventory->getItem((Inventory::InventoryItem)hotspot->param1);
 
 		if (hotspot->param1 >= 32 || !item->location)
@@ -567,6 +578,15 @@ void Logic::processHotspot(SceneHotspot *hotspot) {
 		switch(hotspot->param1) {
 		case 20:
 			_action->pickCorpse(hotspot->param2);
+
+			// TODO further process index
+
+			// Add corpse to inventory
+			if (hotspot->param2 != 4) { // bed position
+				_inventory->addItem(Inventory::kCorpse);
+				_inventory->selectItem(Inventory::kCorpse);
+				_engine->getCursor()->setStyle(Cursor::kCursorCorpse);
+			}
 			break;
 
 
@@ -578,10 +598,37 @@ void Logic::processHotspot(SceneHotspot *hotspot) {
 	case SceneHotspot::kActionDropItem:
 		error("Logic::processHotspot: unsupported hotspot action (%02d)", hotspot->action);
 
-	case SceneHotspot::kActionEnterTylerCompartment:
-		// TODO check savegame_640 struct
+	case SceneHotspot::kActionExitCompartment:
+		if (!getProgress().field_30 && getProgress().jacket != 0) {
+			// TODO save game
+			getProgress().field_30 = 1;
+		}
+		_entities->updateField4(1, hotspot->param2);
+
+		// fall to case kActionEnterCompartment
+
+	case SceneHotspot::kActionEnterCompartment:
+		
+		if (_entities->get(1).location == 1 || _entities->get(1).location == 3 || _inventory->getSelectedItem() == Inventory::kKey) {
+			hotspot_enterCompartment(hotspot);
+			break;
+		}
+
 		if (getProgress().event_found_corpse) {
-			error("Logic::processHotspot: unsupported hotspot action (%02d)", hotspot->action);
+
+			if (hotspot->action != 16 || _inventory->getItem(Inventory::kBriefcase)->location != 2) {
+				hotspot_enterCompartment(hotspot);
+			} else {				
+				playSfx(_dialog->getSound(0, 14, 0));
+				playSfx(_dialog->getSound(0, 15, 22));
+				if (getProgress().field_78) {
+					playMusic("MUS003");
+					getProgress().field_78 = 0;
+				}
+
+				// TODO call to further process scene index
+				error("Logic::processHotspot: unsupported hotspot action (%02d)", hotspot->action);
+			}
 		} else {
 			// TODO savegame
 			playSfx("LIB014");
@@ -592,31 +639,30 @@ void Logic::processHotspot(SceneHotspot *hotspot) {
 		}
 		break;
 
-	case SceneHotspot::kActionOutside:
-	case 19:
-	case 20:
-	case 21:
-	case 22:
-	case 23:
-	case 24:
-	case 25:
-	case 26:
+	case SceneHotspot::kActionOutsideTrain:
+	case SceneHotspot::kAction19:
+	case SceneHotspot::kAction20:
+	case SceneHotspot::kAction21:
+	case SceneHotspot::kAction22:
+	case SceneHotspot::kAction23:
+	case SceneHotspot::kActionUnbound:
+	case SceneHotspot::kAction25:
+	case SceneHotspot::kAction26:
 		error("Logic::processHotspot: unsupported hotspot action (%02d)", hotspot->action);
 
-	case 27:
+	case SceneHotspot::kAction27:
 		playSfx(_dialog->getSound(0, 31, 0));
 
 		// TODO update game state
 		error("Logic::processHotspot: unsupported hotspot action (%02d)", hotspot->action);
 		break;
 
-	case 28:
-	case 29:
-	case 30:
-	case 31:
-	case 32:
-	case 33:
-	case 34:
+	case SceneHotspot::kAction28:
+	case SceneHotspot::kAction29:
+	case SceneHotspot::kActionCatchBeetle:	
+	case SceneHotspot::kAction32:
+	case SceneHotspot::KActionUseWhistle:
+	case SceneHotspot::kAction34:
 		error("Logic::processHotspot: unsupported hotspot action (%02d)", hotspot->action);
 
 	case SceneHotspot::kActionOpenBed:
@@ -635,7 +681,7 @@ void Logic::processHotspot(SceneHotspot *hotspot) {
 		}
 		break;
 
-	case 39:
+	case SceneHotspot::kAction39:
 		playSfx(_dialog->getSound(0, 24, 0));
 		if (getProgress().field_80) {
 			playMusic("MUS003");
@@ -646,7 +692,7 @@ void Logic::processHotspot(SceneHotspot *hotspot) {
 	case SceneHotspot::kActionBed:
 		playSfx(_dialog->getSound(0, 85, 0));
 		// falls to case 12
-	case 12:
+	case SceneHotspot::kAction12:
 		if (hotspot->param1 >= 128)
 			break;
 
@@ -655,10 +701,10 @@ void Logic::processHotspot(SceneHotspot *hotspot) {
 
 		break;
 
-	case 41:
+	case SceneHotspot::kAction41:
 		error("Logic::processHotspot: unsupported hotspot action (%02d)", hotspot->action);
 
-	case 42: {
+	case SceneHotspot::kAction42: {
 		int value;
 		switch (getProgress().index) {
 		case 1:
@@ -688,13 +734,54 @@ void Logic::processHotspot(SceneHotspot *hotspot) {
 		break;
 	}
 
-	case 44:
+	case SceneHotspot::kAction44:
 		error("Logic::processHotspot: unsupported hotspot action (%02d)", hotspot->action);
 		break;
 	default:
 		break;
 	}
 }
+
+void Logic::hotspot_enterCompartment(SceneHotspot *hotspot) {
+	if (hotspot->param1 >= 128)
+		return;
+
+	if (_entities->get(hotspot->param1).field_0) {
+		_savepoints->push(0, _entities->get(hotspot->param1).field_0, 9, hotspot->param1);
+		hotspot->scene = 0;
+		return;
+	}
+
+	if (0 /*function call f(hotspot->param1, 1, 1) */) {
+		hotspot->scene = 0;
+		return;
+	}
+
+	byte location = _entities->get(hotspot->param1).location;
+	if (location == 1 || location == 3 || 0 /* TODO function call */) {
+		error("Logic::processHotspot: unsupported hotspot action (%02d)", hotspot->action);
+		return;
+	}
+
+	if (hotspot->action != 16 || _inventory->getSelectedItem() != Inventory::kKey) {
+		if (hotspot->param1 == 109) {
+			playSfx(_dialog->getSound(0, 26, 0));
+		} else {
+			playSfx(_dialog->getSound(0, 14, 0));
+			playSfx(_dialog->getSound(0, 15, 22));
+		}
+		return;
+	}
+
+	_entities->update(1, 0, 1, 10, 9);
+	playSfx(_dialog->getSound(0, 16, 0));
+	_inventory->unselectItem();
+	hotspot->scene = 0;
+}
+
+//////////////////////////////////////////////////////////////////////////
+// Cursor
+//////////////////////////////////////////////////////////////////////////
 
 Cursor::CursorStyle Logic::getCursor(SceneHotspot *hotspot) {
 
@@ -706,7 +793,7 @@ Cursor::CursorStyle Logic::getCursor(SceneHotspot *hotspot) {
 	default:
 		return Cursor::kCursorNormal;
 
-	case 1:
+	case SceneHotspot::kAction1:
 		if (!_gameState->currentScene3 && (_gameState->events[Action::kKronosBringFirebird] || _gameState->progress.field_74))				
 			return Cursor::kCursorNormal;
 		else
@@ -719,8 +806,8 @@ Cursor::CursorStyle Logic::getCursor(SceneHotspot *hotspot) {
 			return (Cursor::CursorStyle)_entities->get(hotspot->param1).cursor;
 		
 LABEL_KEY:
-	case 6:
-	case 31:
+	case SceneHotspot::kAction6:
+	case SceneHotspot::kActionExitCompartment:
 		if (hotspot->param1 >= 128)
 			return Cursor::kCursorNormal;
 		
@@ -730,7 +817,7 @@ LABEL_KEY:
 			return Cursor::kCursorKey;
 		
 
-	case 12:
+	case SceneHotspot::kAction12:
 		if (hotspot->param1 >= 128)
 			return Cursor::kCursorNormal;
 		else {
@@ -740,7 +827,7 @@ LABEL_KEY:
 				return Cursor::kCursorNormal;
 		}
 
-	case 13:
+	case SceneHotspot::kActionCompartment:
 		if (hotspot->param1 >= 32)
 			return Cursor::kCursorNormal;
 		
@@ -750,7 +837,7 @@ LABEL_KEY:
 		else
 			return Cursor::kCursorNormal;			
 
-	case 14:
+	case SceneHotspot::kActionDropItem:
 		if (hotspot->param1 >= 32)
 			return Cursor::kCursorNormal;
 
@@ -765,7 +852,7 @@ LABEL_KEY:
 	
 		return (Cursor::CursorStyle)_inventory->getSelectedItem();
 
-	case 15:
+	case SceneHotspot::kAction15:
 		if (hotspot->param1 >= 128)
 			return Cursor::kCursorNormal;
 
@@ -774,7 +861,7 @@ LABEL_KEY:
 
 		return Cursor::kCursorNormal; 
 
-	case 16:
+	case SceneHotspot::kActionEnterCompartment:
 		if (_inventory->getSelectedItem() != Inventory::kKey)
 			goto LABEL_KEY;
 
@@ -788,7 +875,7 @@ LABEL_KEY:
 
 		return Cursor::kCursorKey;
 
-	case SceneHotspot::kActionOutside:
+	case SceneHotspot::kActionOutsideTrain:
 		if (getProgress().jacket != Logic::kGreenJacket)
 			return Cursor::kCursorNormal;
 
@@ -801,10 +888,10 @@ LABEL_KEY:
 
 		return Cursor::kCursorNormal; 
 
-	case 19:
+	case SceneHotspot::kAction19:
 		error("Logic::getCursor: unsupported cursor for action (%02d)", hotspot->action);
 
-	case 21:
+	case SceneHotspot::kAction21:
 		if (_gameState->progress.field_50
 		 && (_gameState->progress.index == 2 || _gameState->progress.index == 3 || _gameState->progress.index == 5)
 		 && _inventory->getSelectedItem() != Inventory::kFirebird 
@@ -813,7 +900,7 @@ LABEL_KEY:
 
 		return Cursor::kCursorNormal; 
 
-	case 23:
+	case SceneHotspot::kAction23:
 		error("Logic::getCursor: unsupported cursor for action (%02d)", hotspot->action);
 
 	case SceneHotspot::kActionUnbound:
@@ -825,8 +912,7 @@ LABEL_KEY:
 
 		return Cursor::kCursorHand; 
 
-
-	case 30:	
+	case SceneHotspot::kActionCatchBeetle:	
 		error("Logic::getCursor: unsupported cursor for action (%02d)", hotspot->action);
 
 	case SceneHotspot::KActionUseWhistle:

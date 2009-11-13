@@ -55,6 +55,7 @@ public:
 
 	const Entity get(uint index);
 	void update(uint index, byte field_0, byte location, byte cursor, byte field_3);
+	void updateField4(uint index, byte value);
 
 	// Serializable
 	void saveLoadWithSerializer(Common::Serializer &ser);
