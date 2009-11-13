@@ -215,6 +215,13 @@ void Logic::updateTrainClock() {
 //////////////////////////////////////////////////////////////////////////
 // Scene pre/post & hotspots
 //////////////////////////////////////////////////////////////////////////
+#define PROCESS_HOTSPOT_SCENE(hotspot, index) \
+	processHotspot(hotspot); \
+	if ((hotspot)->scene) { \
+		*index = (hotspot)->scene; \
+		preProcessScene(index); \
+	}
+
 void Logic::preProcessScene(uint32 *index) {
 
 	// Check index validity
@@ -231,106 +238,51 @@ void Logic::preProcessScene(uint32 *index) {
 		if (_entities->get(scene->getHeader()->param1).location) {
 			for (Common::Array<SceneHotspot *>::iterator it = scene->getHotspots()->begin(); it != scene->getHotspots()->end(); ++it) {
 				if ((*it)->location == _entities->get(scene->getHeader()->param1).location) {
-					processHotspot(*it);
-					if ((*it)->scene) {
-						*index = (*it)->scene;
-						preProcessScene(index);
-					}
+					PROCESS_HOTSPOT_SCENE(*it, index);
 					break;
 				}
 			}
 		}		
 		break;
 
-	case Scene::kTypeItem:	{
-		if (scene->getHeader()->param1 >= 32)
-			break;
-
-		byte location = _inventory->getItem((Inventory::InventoryItem)scene->getHeader()->param1)->location;
-		if (!location)
-			break;
-
-		for (Common::Array<SceneHotspot *>::iterator it = scene->getHotspots()->begin(); it != scene->getHotspots()->end(); ++it) {
-
-			if ((*it)->location == location) {
-				processHotspot(*it);
-				if ((*it)->scene) {
-					*index = (*it)->scene;
-					preProcessScene(index);
-				}
-				break;
-			}
-		}	
-
-		break;
-	}
-
-	case Scene::kTypeItem2:
+	case Scene::kTypeItem:
+	case Scene::kTypeItem2:	
+	case Scene::kTypeItem3:
 	case Scene::kTypeEntityItem: {
-		if (scene->getHeader()->param1 >= (scene->getHeader()->type == Scene::kTypeItem2 ? 32 : 128))
+		byte location1, location2, location3; 
+		byte type = scene->getHeader()->type;
+
+		// Check bounds
+		if (scene->getHeader()->param1 >= (type == Scene::kTypeEntityItem ? 128 : 32))
 			break;
 
-		if (scene->getHeader()->param2 >= 32)
+		if (type != Scene::kTypeItem && scene->getHeader()->param2 >= 32)
+			break;
+
+		if (type == Scene::kTypeItem3 && scene->getHeader()->param3 >= 32)
 			break;
 
 		// Check location
-		byte location1; 
-		if (scene->getHeader()->type == Scene::kTypeItem2)
-			location1 = _inventory->getItem((Inventory::InventoryItem)scene->getHeader()->param1)->location;
+		if (type == Scene::kTypeEntityItem)
+			location1 = _entities->get(scene->getHeader()->param1).location;			
 		else
-			location1 = _entities->get(scene->getHeader()->param1).location;
+			location1 = _inventory->getItem((Inventory::InventoryItem)scene->getHeader()->param1)->location;
 
-		byte location2 = _inventory->getItem((Inventory::InventoryItem)scene->getHeader()->param2)->location;
+		if (type != Scene::kTypeItem)
+			location2 = _inventory->getItem((Inventory::InventoryItem)scene->getHeader()->param2)->location;
+
+		if (type == Scene::kTypeItem3)
+			location3 = _inventory->getItem((Inventory::InventoryItem)scene->getHeader()->param3)->location;
+
 		int location = 0;
 
 		if (location1)
 			location = 1;
 
-		if (location2)
+		if (type != Scene::kTypeItem && location2)
 			location |= 2;
 
-		if (!location)
-			break;
-
-		for (Common::Array<SceneHotspot *>::iterator it = scene->getHotspots()->begin(); it != scene->getHotspots()->end(); ++it) {
-
-			if ((*it)->location != location || (*it)->param1 != location1 || (*it)->param2 != location2)
-				continue;
-			
-			processHotspot(*it);
-			if ((*it)->scene) {
-				*index = (*it)->scene;
-				preProcessScene(index);
-			}
-
-			break;
-		}		
-		break;
-	}
-
-	case Scene::kTypeItem3: {
-		if (scene->getHeader()->param1 >= 32)
-			break;
-
-		if (scene->getHeader()->param2 >= 32)
-			break;
-
-		if (scene->getHeader()->param3 >= 32)
-			break;
-
-		// Check location
-		byte location1 = _inventory->getItem((Inventory::InventoryItem)scene->getHeader()->param1)->location;
-		byte location2 = _inventory->getItem((Inventory::InventoryItem)scene->getHeader()->param2)->location;
-		byte location3 = _inventory->getItem((Inventory::InventoryItem)scene->getHeader()->param3)->location;
-		int location = 0;
-
-		if (location1)
-			location = 1;
-
-		if (location2)
-			location |= 2;
-
-		if (location3)
+		if (type == Scene::kTypeItem3 && location3)
 			location |= 4;
 
 		if (!location)
@@ -338,19 +290,19 @@ void Logic::preProcessScene(uint32 *index) {
 
 		for (Common::Array<SceneHotspot *>::iterator it = scene->getHotspots()->begin(); it != scene->getHotspots()->end(); ++it) {
 
-			if ((*it)->location != location || (*it)->param1 != location1 || (*it)->param2 != location2 || (*it)->param3 != location3)
+			if ((*it)->location != location)
+				
+			if (type != Scene::kTypeItem && ((*it)->param1 != location1 || (*it)->param2 != location2))
 				continue;
 
-			processHotspot(*it);
-			if ((*it)->scene) {
-				*index = (*it)->scene;
-				preProcessScene(index);
-			}
-
+			if (type == Scene::kTypeItem3 && (*it)->param3 != location3)
+				continue;
+			
+			PROCESS_HOTSPOT_SCENE(*it, index);
 			break;
 		}		
 		break;
-	}
+	}	
 
 	case Scene::kType6: {
 		if (scene->getHeader()->param1 >= 128)
@@ -361,11 +313,7 @@ void Logic::preProcessScene(uint32 *index) {
 			for (Common::Array<SceneHotspot *>::iterator it = scene->getHotspots()->begin(); it != scene->getHotspots()->end(); ++it) {
 
 				if (_entities->get(scene->getHeader()->param1).location == (*it)->location) {
-					processHotspot(*it);
-					if ((*it)->scene) {
-						*index = (*it)->scene;
-						preProcessScene(index);
-					}
+					PROCESS_HOTSPOT_SCENE(*it, index);
 					found = true;
 					break;
 				}
