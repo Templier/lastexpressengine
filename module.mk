@@ -5,6 +5,7 @@ MODULE_OBJS := \
 	animation.o \
 	archive.o \
 	background.o \
+	beetle.o \
 	cursor.o \
 	debug.o \
 	detection.o \
