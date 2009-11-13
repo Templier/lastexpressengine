@@ -53,34 +53,34 @@ Inventory::~Inventory() {}
 
 // Init inventory contents
 void Inventory::init() {
-	// item_id
-	_entries[kIndexMatchBox].item_id = kMatchBox;
-	_entries[kIndexTelegram].item_id = kTelegram;
-	_entries[kIndexPassengerList].item_id = kPassengerList;
-	_entries[kIndexArticle].item_id = kArticle;
-	_entries[kIndexScarf].item_id = kScarf;
-	_entries[kIndexPaper].item_id = kPaper;
-	_entries[kIndexParchemin].item_id = kParchemin;
-	_entries[kIndexMatch].item_id = kMatch;
-	_entries[kIndexWhistle].item_id = kWhistle;
-	_entries[kIndexKey].item_id = kKey;
-	_entries[kIndexBomb].item_id = kBomb;
-	_entries[kIndexFirebird].item_id = kFirebird;
-	_entries[kIndexBriefcase].item_id = kBriefcase;
-	_entries[kIndexCorpse].item_id = kCorpse;
+	// ID
+	_entries[kMatchBox].item_id = Cursor::kCursorMatchBox;
+	_entries[kTelegram].item_id = Cursor::kCursorTelegram;
+	_entries[kPassengerList].item_id = Cursor::kCursorPassengerList;
+	_entries[kArticle].item_id = Cursor::kCursorArticle;
+	_entries[kScarf].item_id = Cursor::kCursorScarf;
+	_entries[kPaper].item_id = Cursor::kCursorPaper;
+	_entries[kParchemin].item_id = Cursor::kCursorParchemin;
+	_entries[kMatch].item_id = Cursor::kCursorMatch;
+	_entries[kWhistle].item_id = Cursor::kCursorWhistle;
+	_entries[kKey].item_id = Cursor::kCursorKey;
+	_entries[kBomb].item_id = Cursor::kCursorBomb;
+	_entries[kFirebird].item_id = Cursor::kCursorFirebird;
+	_entries[kBriefcase].item_id = Cursor::kCursorBriefcase;
+	_entries[kCorpse].item_id = Cursor::kCursorCorpse;
 
-	// is_selectable
-	_entries[kIndexMatchBox].is_selectable = 1;
-	_entries[kIndexMatch].is_selectable = 1;
-	_entries[kIndexTelegram].is_selectable = 1;
-	_entries[kIndexWhistle].is_selectable = 1;
-	_entries[kIndexKey].is_selectable = 1;
-	_entries[kIndexFirebird].is_selectable = 1;
-	_entries[kIndexBriefcase].is_selectable = 1;
-	_entries[kIndexCorpse].is_selectable = 1;
-	_entries[kIndexPassengerList].is_selectable = 1;
+	// Selectable
+	_entries[kMatchBox].is_selectable = 1;
+	_entries[kMatch].is_selectable = 1;
+	_entries[kTelegram].is_selectable = 1;
+	_entries[kWhistle].is_selectable = 1;
+	_entries[kKey].is_selectable = 1;
+	_entries[kFirebird].is_selectable = 1;
+	_entries[kBriefcase].is_selectable = 1;
+	_entries[kCorpse].is_selectable = 1;
+	_entries[kPassengerList].is_selectable = 1;
 
-	// ??
+	// Autoselection
 	_entries[2].no_autoselect = 0;
 	_entries[3].no_autoselect = 0;
 	_entries[5].no_autoselect = 0;
@@ -89,26 +89,26 @@ void Inventory::init() {
 	_entries[11].no_autoselect = 0;
 	_entries[14].no_autoselect = 0;
 	_entries[17].no_autoselect = 0;
-	_entries[kIndexFirebird].no_autoselect = 0;
-	_entries[kIndexBriefcase].no_autoselect = 0;
-	_entries[kIndexCorpse].no_autoselect = 0;
+	_entries[kFirebird].no_autoselect = 0;
+	_entries[kBriefcase].no_autoselect = 0;
+	_entries[kCorpse].no_autoselect = 0;
 	_entries[21].no_autoselect = 0;
 	_entries[22].no_autoselect = 0;
 
-	// scene_id
-	_entries[kIndexMatchBox].scene_id = 31;
-	_entries[kIndexTelegram].scene_id = 32;
-	_entries[kIndexPassengerList].scene_id = 33;
-	_entries[kIndexScarf].scene_id = 34;
-	_entries[kIndexParchemin].scene_id = 35;
-	_entries[kIndexArticle].scene_id = 36;
-	_entries[kIndexPaper].scene_id = 37;
-	_entries[kIndexFirebird].scene_id = 38;
-	_entries[kIndexBriefcase].scene_id = 39;
+	// Scene
+	_entries[kMatchBox].scene_id = 31;
+	_entries[kTelegram].scene_id = 32;
+	_entries[kPassengerList].scene_id = 33;
+	_entries[kScarf].scene_id = 34;
+	_entries[kParchemin].scene_id = 35;
+	_entries[kArticle].scene_id = 36;
+	_entries[kPaper].scene_id = 37;
+	_entries[kFirebird].scene_id = 38;
+	_entries[kBriefcase].scene_id = 39;
 
-	// has_item
-	_entries[kIndexTelegram].has_item = 1;
-	_entries[kIndexArticle].has_item = 1;
+	// Has item
+	_entries[kTelegram].has_item = 1;
+	_entries[kArticle].has_item = 1;
 
 	_selectedItem = kNoItem;
 }
@@ -149,7 +149,7 @@ bool Inventory::handleMouseEvent(Common::Event ev) {
 			}
 		}
 	} else {
-		// remove hightlight if needed
+		// remove highlight if needed
 		if (_highlightedItem == _engine->getLogic()->getGameId() + 39) {
 			drawItem(608, 448, _highlightedItem, 50)
 			_highlightedItem = kNoItem;
@@ -175,7 +175,7 @@ bool Inventory::handleMouseEvent(Common::Event ev) {
 			}
 		}
 	} else {
-		// remove hightlight if needed
+		// remove highlight if needed
 		if (_highlightedItem == (InventoryItem)getProgress().portrait && !_opened) {
 			drawItem(0, 0, getProgress().portrait, 50)
 			_highlightedItem = kNoItem;
@@ -183,7 +183,7 @@ bool Inventory::handleMouseEvent(Common::Event ev) {
 		}
 	}
 
-	// If the inventory is open, check all items rect to see if we need to higlight one / handle click
+	// If the inventory is open, check all items rect to see if we need to highlight one / handle click
 	if (_opened) {
 
 		// Always show normal cursor when the inventory is opened
@@ -194,44 +194,45 @@ bool Inventory::handleMouseEvent(Common::Event ev) {
 
 		// Iterate over items
 		int y = 44;
-		for (uint i = 1; i < 32; i++) {
-			if (_entries[i].has_item) {
-				if (Common::Rect(0, y, 32, 32 + y).contains(ev.mouse)) {
+		for (int i = 1; i < 32; i++) {
+			if (!hasItem((InventoryItem)i))
+				continue;
+			
+			if (Common::Rect(0, y, 32, 32 + y).contains(ev.mouse)) {
 
-					// If released with an item highlighted, show this item
-					if (ev.type == Common::EVENT_LBUTTONUP) {
-						if (_entries[i].is_selectable) {
-							selected = true;
-							_selectedItem = (InventoryItem)_entries[i].item_id;
-							drawItem(44, 0, _selectedItem, 100)
-						}
-
-						examine((InventoryItem)_entries[i].item_id);
-						break;
-					} else {
-						if (_highlightedItem != _entries[i].item_id) {
-							drawItem(0, y, _entries[i].item_id, 100)
-							_highlightedItem = (InventoryItem)_entries[i].item_id;
-							askForRedraw();
-						}
+				// If released with an item highlighted, show this item
+				if (ev.type == Common::EVENT_LBUTTONUP) {
+					if (_entries[i].is_selectable) {
+						selected = true;
+						_selectedItem = (InventoryItem)i;
+						drawItem(44, 0, getItem(_selectedItem)->item_id, 100)
 					}
+
+					examine((InventoryItem)i);
+					break;
 				} else {
-					// Remove hightlight if necessary
-					if (_highlightedItem == (InventoryItem)_entries[i].item_id) {
-						drawItem(0, y, _entries[i].item_id, 50)
-						_highlightedItem = kNoItem;
+					if (_highlightedItem != i) {
+						drawItem(0, y, _entries[i].item_id, 100)
+						_highlightedItem = (InventoryItem)i;
 						askForRedraw();
 					}
 				}
-
-				y += 40;
+			} else {
+				// Remove highlight if necessary
+				if (_highlightedItem == i) {
+					drawItem(0, y, _entries[i].item_id, 50)
+					_highlightedItem = kNoItem;
+					askForRedraw();
+				}
 			}
+
+			y += 40;			
 		}
 
 		// Right button is released: we need to close the inventory
 		if (ev.type == Common::EVENT_LBUTTONUP) {
 
-			// Not on a selectable item: deselect the current item
+			// Not on a selectable item: de-select the current item
 			if (!selected) {
 				_selectedItem = kNoItem;
 				_engine->getGraphicsManager()->clear(GraphicsManager::kBackgroundInventory, Common::Rect(44, 0, 44 + 32, 32));
@@ -324,6 +325,12 @@ void Inventory::showHourGlass(bool enabled) {
 //////////////////////////////////////////////////////////////////////////
 // Items
 //////////////////////////////////////////////////////////////////////////
+Inventory::InventoryEntry *Inventory::getItem(InventoryItem item) {
+	assert(item < 32);
+
+	return &_entries[item];
+}
+
 void Inventory::addItem(InventoryItem item) {
 	if (hasItem(item))
 		return;
@@ -370,29 +377,13 @@ void Inventory::saveLoadWithSerializer(Common::Serializer &s) {
 //////////////////////////////////////////////////////////////////////////
 // Private methods
 //////////////////////////////////////////////////////////////////////////
-Inventory::InventoryEntry *Inventory::getItem(InventoryItem item) {
-	for (uint i = 0; i < 32; i++) {
-		if (_entries[i].item_id == (byte)item)
-			return &_entries[i];
-	}
-
-	// Should never get invalid item
-	error("Invalid inventory item id: %d", item);
-}
-
-Inventory::InventoryEntry *Inventory::getEntry(int index) {
-	assert(index < 32);
-	
-	return &_entries[index];
-}
-
 // Examine an inventory item
 void Inventory::examine(InventoryItem item) {
 	uint32 sceneId = getItem(item)->scene_id;
 
 	if (sceneId != 0) {
 		Scene *s = _engine->getScene(sceneId);
-		_engine->getGraphicsManager()->draw(s, GraphicsManager::kBackgroundOverlay);
+		_engine->getGraphicsManager()->draw(s, GraphicsManager::kBackgroundOverlay, true);
 		delete s;
 	}
 

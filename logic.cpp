@@ -246,7 +246,7 @@ void Logic::preProcessScene(uint32 *index) {
 		if (scene->getHeader()->param1 >= 32)
 			break;
 
-		byte location = _inventory->getEntry((Inventory::InventoryItem)scene->getHeader()->param1)->location;
+		byte location = _inventory->getItem((Inventory::InventoryItem)scene->getHeader()->param1)->location;
 		if (!location)
 			break;
 
@@ -276,11 +276,11 @@ void Logic::preProcessScene(uint32 *index) {
 		// Check location
 		byte location1; 
 		if (scene->getHeader()->type == Scene::kTypeItem2)
-			location1 = _inventory->getEntry((Inventory::InventoryItem)scene->getHeader()->param1)->location;
+			location1 = _inventory->getItem((Inventory::InventoryItem)scene->getHeader()->param1)->location;
 		else
 			location1 = _entities->get(scene->getHeader()->param1).location;
 
-		byte location2 = _inventory->getEntry((Inventory::InventoryItem)scene->getHeader()->param2)->location;
+		byte location2 = _inventory->getItem((Inventory::InventoryItem)scene->getHeader()->param2)->location;
 		int location = 0;
 
 		if (location1)
@@ -319,9 +319,9 @@ void Logic::preProcessScene(uint32 *index) {
 			break;
 
 		// Check location
-		byte location1 = _inventory->getEntry((Inventory::InventoryItem)scene->getHeader()->param1)->location;
-		byte location2 = _inventory->getEntry((Inventory::InventoryItem)scene->getHeader()->param2)->location;
-		byte location3 = _inventory->getEntry((Inventory::InventoryItem)scene->getHeader()->param3)->location;
+		byte location1 = _inventory->getItem((Inventory::InventoryItem)scene->getHeader()->param1)->location;
+		byte location2 = _inventory->getItem((Inventory::InventoryItem)scene->getHeader()->param2)->location;
+		byte location3 = _inventory->getItem((Inventory::InventoryItem)scene->getHeader()->param3)->location;
 		int location = 0;
 
 		if (location1)
@@ -542,7 +542,7 @@ void Logic::processHotspot(SceneHotspot *hotspot) {
 			break;
 		}
 
-		if (hotspot->action != 16 || _inventory->getSelectedIndex() != Inventory::kIndexKey) {
+		if (hotspot->action != 16 || _inventory->getSelectedItem() != Inventory::kKey) {
 			if (hotspot->param1 == 109) {
 				playSfx(_dialog->getSound(0, 26, 0));
 			} else {
@@ -554,7 +554,7 @@ void Logic::processHotspot(SceneHotspot *hotspot) {
 
 		_entities->update(1, 0, 1, 10, 9);
 		playSfx(_dialog->getSound(0, 16, 0));
-		_inventory->selectItem(0);
+		_inventory->unselectItem();
 		hotspot->scene = 0;
 		
 		break;
@@ -620,7 +620,7 @@ void Logic::processHotspot(SceneHotspot *hotspot) {
 		error("Logic::processHotspot: unsupported hotspot action (%02d)", hotspot->action);
 
 	case SceneHotspot::kActionTylerCompartment: {
-		Inventory::InventoryEntry* item = _inventory->getEntry(hotspot->param1);
+		Inventory::InventoryEntry* item = _inventory->getItem((Inventory::InventoryItem)hotspot->param1);
 
 		if (hotspot->param1 >= 32 || !item->location)
 			break;
@@ -628,10 +628,8 @@ void Logic::processHotspot(SceneHotspot *hotspot) {
 		switch(hotspot->param1) {
 		case 20:
 			_action->pickCorpse(hotspot->param2);
-			// TODO (either here or in pickCorpse: if hotspot->scene < 1 => do something
-			if (hotspot->param2 != 4) {
-				_engine->getCursor()->setStyle(Cursor::kCursorCorpse);
-			}
+			break;
+
 
 		}
 		
@@ -817,7 +815,7 @@ LABEL_KEY:
 		if (hotspot->param1 >= 32)
 			return Cursor::kCursorNormal;
 
-		if (_inventory->getSelectedIndex() != hotspot->param1)
+		if (_inventory->getSelectedItem() != hotspot->param1)
 			return Cursor::kCursorNormal;
 
 		if (hotspot->param1 == 20 && hotspot->param2 == 4 && !_gameState->progress.field_50)
@@ -858,8 +856,8 @@ LABEL_KEY:
 		if ((_gameState->events[Action::kCathLookOutsideWindowDay] || _gameState->events[Action::kCathLookOutsideWindowDay] || _entities->get(1).field_4)
 		 && getProgress().field_50
 		 && (hotspot->param1 != 45 || 1/*function call*/ && _entities->get(44).location == 2)
-		 && _inventory->getSelectedIndex() != Inventory::kIndexBriefcase
-		 && _inventory->getSelectedIndex() != Inventory::kIndexFirebird)
+		 && _inventory->getSelectedItem() != Inventory::kBriefcase
+		 && _inventory->getSelectedItem() != Inventory::kFirebird)
 			return Cursor::kCursorForward; 
 
 		return Cursor::kCursorNormal; 
@@ -947,7 +945,7 @@ void Logic::switchChapter() {
 	case 3:
 		_inventory->getItem(Inventory::kFirebird)->location = 4;
 		_inventory->getItem(Inventory::kFirebird)->has_item = 0;
-		_inventory->getEntry(11)->location = 1; // ??
+		_inventory->getItem((Inventory::InventoryItem)11)->location = 1; // ??
 
 		_inventory->addItem(Inventory::kWhistle);
 		_inventory->addItem(Inventory::kKey);

@@ -378,7 +378,8 @@ void Action::pickCorpse(byte bedPosition) {
 	// Add corpse to inventory
 	if (bedPosition != 4) {
 		inventory->addItem(Inventory::kCorpse);
-		inventory->selectItem(Inventory::kIndexCorpse);		
+		inventory->selectItem(Inventory::kCorpse);
+		_engine->getCursor()->setStyle(Cursor::kCursorCorpse);
 	}
 
 }

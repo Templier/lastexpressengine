@@ -32,11 +32,11 @@
 
 		byte {1}        - Item ID (set to 0 for "undefined" items)
 		byte {1}        - Scene ID
-		byte {1}        - 1 if item is "selectable"
-		byte {1}        - ?? set to 1 for matchbox, match, telegram, whistle, key, firebird, briefcase, corpse, passengerlist
+		byte {1}        - ??
+		byte {1}        - Selectable (1 if item is selectable, 0 otherwise)
 		byte {1}        - Is item in inventory (set to 1 for telegram and article)
-		byte {1}        - No autoselect set to 1 (including entry 0 and excepting last entry) and set to 0 for XXXX(several entries), firebird, briefcase, corpse
-		byte {1}        - ?? set to 0
+		byte {1}        - Auto selection (1 for no auto selection, 0 otherwise)
+		byte {1}        - Location
 
 */
 
@@ -51,49 +51,29 @@ class LastExpressEngine;
 
 class Inventory : Common::Serializable {
 public:
-	// Items (same id as cursors) FIXME: do we need to duplicate those?
+	// Index of items in inventory data
 	enum InventoryItem {
-		// Special
 		kNoItem = 0,
 
-		// Items
-		kMatchBox = 16,
-		kTelegram = 17,
-		kPassengerList = 18,
-		kArticle = 19,
-		kScarf = 20,
-		kPaper = 21,
-		kParchemin = 22,
-		kMatch = 23,
-		kWhistle = 24,
-		kKey = 25,
-		kBomb = 26,
-		kFirebird = 27,
-		kBriefcase = 28,
-		kCorpse = 29,
+		kMatchBox = 1,
+		kTelegram = 4,
+		kPassengerList = 6,
+		kArticle = 24,
+		kScarf = 8,
+		kPaper = 23,
+		kParchemin = 10,
+		kMatch = 12,
+		kWhistle = 13,
+		kKey = 15,
+		kBomb = 16,
+		kFirebird = 18,
+		kBriefcase = 19,
+		kCorpse = 20,
 
-		// Portraits
-		kPortraitNormal = 32,
-		kPortraitGreen = 34,
-		kPortraitYellow = 36
-	};
-
-	// Index of items in inventory data
-	enum InventoryDataIndex {
-		kIndexMatchBox = 1,
-		kIndexTelegram = 4,
-		kIndexPassengerList = 6,
-		kIndexArticle = 24,
-		kIndexScarf = 8,
-		kIndexPaper = 23,
-		kIndexParchemin = 10,
-		kIndexMatch = 12,
-		kIndexWhistle = 13,
-		kIndexKey = 15,
-		kIndexBomb = 16,
-		kIndexFirebird = 18,
-		kIndexBriefcase = 19,
-		kIndexCorpse = 20
+		// Portrait (not an index)
+		kPortraitOriginal = 32,		
+		kPortraitGreen = 34,		
+		kPortraitYellow = 36,
 	};
 
 	// Entry
@@ -130,11 +110,10 @@ public:
 	void removeItem(InventoryItem item);
 	bool hasItem(InventoryItem item);
 	InventoryEntry *getItem(InventoryItem item);
-	InventoryEntry *getEntry(int index);
-	InventoryItem getSelectedItem() { return (InventoryItem)getEntry(_selectedItem)->item_id; }
-	int getSelectedIndex() { return _selectedItem; }
-	void selectItem(int index) { _selectedItem = index; } // needed or can we use InventoryItem as param?
-
+	void selectItem(InventoryItem item) { _selectedItem = item; }
+	void unselectItem() { _selectedItem = kNoItem; }
+	InventoryItem getSelectedItem() { return _selectedItem; }
+	
 	// UI Control
 	void show(bool visible);
 	void blinkEgg(bool enabled);
@@ -150,11 +129,11 @@ private:
 	LastExpressEngine *_engine;
 
 	InventoryEntry _entries[32];
-	int _selectedItem;
+	InventoryItem _selectedItem;
+	InventoryItem _highlightedItem;
 	bool _opened;
 	bool _visible;
-	InventoryItem _highlightedItem;
-
+	
 	bool _showingHourGlass;
 	bool _blinkingEgg;
 	uint32 _blinkingTime;
