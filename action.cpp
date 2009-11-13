@@ -450,6 +450,8 @@ void Action::playAnimation(int index) {
 	state->events[index] = 1;
 	state->timeTicks += animationList[index].time;
 	state->time += animationList[index].time * state->timeDelta;
+
+	inventory->showHourGlass(false);
 }
 
 
