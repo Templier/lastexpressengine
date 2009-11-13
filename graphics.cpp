@@ -90,6 +90,10 @@ void GraphicsManager::clear(BackgroundType type, Common::Rect rect) {
 }
 
 bool GraphicsManager::draw(Drawable *drawable, BackgroundType type, bool transition) {
+	// TODO handle transition properly
+	if (transition)
+		clear(type);
+
 	// TODO store rect for later use
 	Common::Rect rect = drawable->draw(getSurface(type));
 

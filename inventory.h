@@ -140,6 +140,8 @@ private:
 	uint32 _blinkingInterval;
 	int _blinkingBrightness;
 
+	Scene *_itemScene;
+
 	// Important rects
 	Common::Rect _inventoryRect;
 	Common::Rect _menuRect;

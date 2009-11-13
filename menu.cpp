@@ -402,7 +402,7 @@ Menu::~Menu() {
 // The main menu screen is a background plus 8 overlay elements
 // .text:00448590 (EN)
 void Menu::showMenu() {
-	// Clear screen
+	// TODO: need to ask graphics manager to transition between current screen and menu
 	_engine->getGraphicsManager()->clear(GraphicsManager::kBackgroundAll);
 
 	// Load all menu-related data

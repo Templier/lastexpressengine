@@ -194,10 +194,8 @@ void Logic::setScene(uint32 index) {
 
 	preProcessScene(&_gameState->currentScene);
 
-	_engine->getGraphicsManager()->clear(GraphicsManager::kBackgroundAll);
-
 	_scene = _engine->getScene(_gameState->currentScene); 
-	_engine->getGraphicsManager()->draw(_scene, GraphicsManager::kBackgroundC);
+	_engine->getGraphicsManager()->draw(_scene, GraphicsManager::kBackgroundC, true);
 	askForRedraw();
 
 	// Show the scene 

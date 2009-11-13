@@ -38,14 +38,16 @@ namespace LastExpress {
 
 Inventory::Inventory(LastExpressEngine *engine) : _engine(engine),
 	_showingHourGlass(false), _blinkingEgg(false), _blinkingTime(0), _blinkingBrightness(100), _blinkingInterval(_defaultBlinkingInterval),
-	_opened(false), _selectedItem(kNoItem) {
+	_opened(false), _selectedItem(kNoItem), _itemScene(NULL) {
 
 	_inventoryRect = Common::Rect(0, 0, 32, 32);
 	_menuRect = Common::Rect(608, 448, 640, 480);
 	_selectedRect = Common::Rect(44, 0, 76, 32);
 }
 
-Inventory::~Inventory() {}
+Inventory::~Inventory() {
+	delete _itemScene;
+}
 
 //////////////////////////////////////////////////////////////////////////
 // Inventory handling
@@ -245,6 +247,7 @@ bool Inventory::handleMouseEvent(Common::Event ev) {
 	// Selected item
 	if (_selectedItem != kNoItem && _selectedRect.contains(ev.mouse)) {
 		insideInventory = true;
+
 		// Show magnifier icon
 		_engine->getCursor()->setStyle(Cursor::kCursorMagnifier);
 
@@ -381,13 +384,8 @@ void Inventory::saveLoadWithSerializer(Common::Serializer &s) {
 void Inventory::examine(InventoryItem item) {
 	uint32 sceneId = getItem(item)->scene_id;
 
-	if (sceneId != 0) {
-		Scene *s = _engine->getScene(sceneId);
-		_engine->getGraphicsManager()->draw(s, GraphicsManager::kBackgroundOverlay, true);
-		delete s;
-	}
-
-	// TODO implement
+	if (sceneId != 0)
+		_engine->getLogic()->setScene(sceneId);
 }
 
 void Inventory::drawEgg() {
