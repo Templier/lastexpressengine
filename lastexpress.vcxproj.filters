@@ -4,9 +4,6 @@
     <Filter Include="data">
       <UniqueIdentifier>{9392cfef-78ca-42cc-9cc1-da595c12bd2e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="docs">
-      <UniqueIdentifier>{15706779-992d-41c7-b123-4ad0445b5745}</UniqueIdentifier>
-    </Filter>
     <Filter Include="game">
       <UniqueIdentifier>{5f1dc07f-44af-4a4e-9774-5d091996ec3c}</UniqueIdentifier>
     </Filter>
@@ -127,8 +124,6 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\engines\lastexpress\module.mk">
-      <Filter>docs</Filter>
-    </None>
+    <None Include="..\..\engines\lastexpress\module.mk" />
   </ItemGroup>
 </Project>
