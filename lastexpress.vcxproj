@@ -67,11 +67,12 @@
     <ClCompile Include="..\..\engines\lastexpress\archive.cpp" />
     <ClCompile Include="..\..\engines\lastexpress\background.cpp" />
     <ClCompile Include="..\..\engines\lastexpress\beetle.cpp" />
+    <ClCompile Include="..\..\engines\lastexpress\character.cpp" />
     <ClCompile Include="..\..\engines\lastexpress\cursor.cpp" />
     <ClCompile Include="..\..\engines\lastexpress\debug.cpp" />
     <ClCompile Include="..\..\engines\lastexpress\detection.cpp" />
     <ClCompile Include="..\..\engines\lastexpress\dialog.cpp" />
-    <ClCompile Include="..\..\engines\lastexpress\entity.cpp" />
+    <ClCompile Include="..\..\engines\lastexpress\items.cpp" />
     <ClCompile Include="..\..\engines\lastexpress\font.cpp" />
     <ClCompile Include="..\..\engines\lastexpress\graphics.cpp" />
     <ClCompile Include="..\..\engines\lastexpress\inventory.cpp" />
@@ -92,11 +93,12 @@
     <ClInclude Include="..\..\engines\lastexpress\archive.h" />
     <ClInclude Include="..\..\engines\lastexpress\background.h" />
     <ClInclude Include="..\..\engines\lastexpress\beetle.h" />
+    <ClInclude Include="..\..\engines\lastexpress\character.h" />
     <ClInclude Include="..\..\engines\lastexpress\cursor.h" />
     <ClInclude Include="..\..\engines\lastexpress\debug.h" />
     <ClInclude Include="..\..\engines\lastexpress\dialog.h" />
     <ClInclude Include="..\..\engines\lastexpress\drawable.h" />
-    <ClInclude Include="..\..\engines\lastexpress\entity.h" />
+    <ClInclude Include="..\..\engines\lastexpress\items.h" />
     <ClInclude Include="..\..\engines\lastexpress\font.h" />
     <ClInclude Include="..\..\engines\lastexpress\graphics.h" />
     <ClInclude Include="..\..\engines\lastexpress\helpers.h" />

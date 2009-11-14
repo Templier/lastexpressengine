@@ -33,16 +33,16 @@ namespace LastExpress {
 
 class LastExpressEngine;
 
-class Entities : Common::Serializable {
+class Items : Common::Serializable {
 public:
-	struct Entity {
+	struct Item {
 		byte field_0;
 		byte location;
 		byte cursor;
 		byte field_3;
 		byte field_4;
 
-		Entity() {
+		Item() {
 			field_0 = 0;
 			location = 0;
 			cursor = 10;
@@ -51,9 +51,9 @@ public:
 		}
 	};
 	
-	Entities(LastExpressEngine *engine);
+	Items(LastExpressEngine *engine);
 
-	const Entity get(uint index);
+	const Item get(uint index);
 	void update(uint index, byte field_0, byte location, byte cursor, byte field_3);
 	void updateField4(uint index, byte value);
 
@@ -63,7 +63,7 @@ public:
 private:
 	LastExpressEngine* _engine;
 
-	Entity _entities[128];
+	Item _items[128];
 };
 
 } // End of namespace LastExpress

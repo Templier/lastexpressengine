@@ -30,20 +30,20 @@
 
 namespace LastExpress {
 
-Entities::Entities(LastExpressEngine *engine) : _engine(engine) {}
+Items::Items(LastExpressEngine *engine) : _engine(engine) {}
 
 
-const Entities::Entity Entities::get(uint index) {
+const Items::Item Items::get(uint index) {
 	assert(index < 128);
 
-	return _entities[index];
+	return _items[index];
 }
 
-void Entities::update(uint index, byte field_0, byte location, byte cursor, byte field_3) {
+void Items::update(uint index, byte field_0, byte location, byte cursor, byte field_3) {
 	if (index >= 128)
 		return;
 
-	Entity *entity = &_entities[index];
+	Item *entity = &_items[index];
 
 	// Store original location
 	byte original_location = entity->location;
@@ -69,17 +69,17 @@ void Entities::update(uint index, byte field_0, byte location, byte cursor, byte
 		}
 }
 
-void Entities::updateField4(uint index, byte value) {
+void Items::updateField4(uint index, byte value) {
 	if (index >= 128)
 		return;
 
-	_entities[index].field_4 = value;
+	_items[index].field_4 = value;
 }
 
 //////////////////////////////////////////////////////////////////////////
 // Serializable
 //////////////////////////////////////////////////////////////////////////
-void Entities::saveLoadWithSerializer(Common::Serializer &ser) {
+void Items::saveLoadWithSerializer(Common::Serializer &ser) {
 
 }
 

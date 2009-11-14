@@ -10,7 +10,7 @@ MODULE_OBJS := \
 	debug.o \
 	detection.o \
 	dialog.o \
-	entity.o \
+	items.o \
 	font.o \
 	graphics.o \
 	inventory.o \

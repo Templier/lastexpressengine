@@ -45,8 +45,8 @@
 	uint32 {4*128}  - Game progress
 	byte {512}      - Game events
 	byte {7*32}     - Inventory
-	byte {5*128}    - Entities
-	byte {1262*40}  - Characters
+	byte {5*128}    - Items
+	byte {1262*40}  - Entities (characters and train entities)
 
 	uint32 {4}      - ??
 	uint32 {4}      - ??
@@ -86,7 +86,7 @@ namespace LastExpress {
 class Action;
 class Beetle;
 class Dialog;
-class Entities;
+class Items;
 class LastExpressEngine;
 class Menu;
 class SavePoints;
@@ -328,7 +328,7 @@ private:
 	Menu *_menu;            	///< Main menu handling
 	Scene *_scene;				///< Current scene	
 	SavePoints *_savepoints;	///< SavePoints
-	Entities *_entities;		///< Entities
+	Items *_items;				///< Items
 	Beetle *_beetle;			///< Beetle catching
 	
 	void preProcessScene(uint32 *index);

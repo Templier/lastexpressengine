@@ -48,7 +48,7 @@ Logic::Logic(LastExpressEngine *engine) : _engine(engine), _scene(NULL) {
 	_inventory = new Inventory(engine);
 	_dialog = new Dialog(engine);
 	_savepoints = new SavePoints();
-	_entities = new Entities(engine);
+	_items = new Items(engine);
 	_beetle = new Beetle(engine);
 
 	// Get those from savegame
@@ -62,7 +62,7 @@ Logic::~Logic() {
 	delete _action;
 	delete _beetle;
 	delete _dialog;
-	delete _entities;
+	delete _items;
 	delete _gameState;
 	delete _inventory;
 	delete _menu;	
@@ -224,7 +224,7 @@ void Logic::updateTrainClock() {
 	}
 
 #define GET_ENTITY_LOCATION(scene) \
-	_entities->get(scene->getHeader()->param1).location
+	_items->get(scene->getHeader()->param1).location
 
 #define GET_ITEM_LOCATION(scene, parameter) \
 	_inventory->getItem((Inventory::InventoryItem)scene->getHeader()->parameter)->location
@@ -314,7 +314,7 @@ void Logic::preProcessScene(uint32 *index) {
 		if (scene->getHotspots()->size() > 0) {
 			for (Common::Array<SceneHotspot *>::iterator it = scene->getHotspots()->begin(); it != scene->getHotspots()->end(); ++it) {
 
-				if (_entities->get(scene->getHeader()->param1).location == (*it)->location) {
+				if (_items->get(scene->getHeader()->param1).location == (*it)->location) {
 					PROCESS_HOTSPOT_SCENE(*it, index);
 					found = true;
 					break;
@@ -490,8 +490,8 @@ void Logic::processHotspot(SceneHotspot *hotspot) {
 		if (hotspot->param1 >= 128)
 			break;
 
-		if (_entities->get(hotspot->param1).field_0)
-			_savepoints->push(0, _entities->get(hotspot->param1).field_0, 8, hotspot->param1);
+		if (_items->get(hotspot->param1).field_0)
+			_savepoints->push(0, _items->get(hotspot->param1).field_0, 8, hotspot->param1);
 		else
 			playSfx(_dialog->getSound(0, 12, 0));
 		
@@ -502,8 +502,8 @@ void Logic::processHotspot(SceneHotspot *hotspot) {
 		if (hotspot->param1 >= 128)
 			break;
 
-		if (_entities->get(hotspot->param1).field_0) {
-			_savepoints->push(0, _entities->get(hotspot->param1).field_0, 9, hotspot->param1);
+		if (_items->get(hotspot->param1).field_0) {
+			_savepoints->push(0, _items->get(hotspot->param1).field_0, 9, hotspot->param1);
 			hotspot->scene = 0;
 			break;
 		}
@@ -513,7 +513,7 @@ void Logic::processHotspot(SceneHotspot *hotspot) {
 			break;
 		}
 
-		if (_entities->get(hotspot->param1).location == 1 || _entities->get(hotspot->param1).location == 3 || 0 /* another call to another function X*/) {
+		if (_items->get(hotspot->param1).location == 1 || _items->get(hotspot->param1).location == 3 || 0 /* another call to another function X*/) {
 			error("Logic::processHotspot: unsupported hotspot action (%02d)", hotspot->action);
 
 			break;
@@ -529,7 +529,7 @@ void Logic::processHotspot(SceneHotspot *hotspot) {
 			break;
 		}
 
-		_entities->update(1, 0, 1, 10, 9);
+		_items->update(1, 0, 1, 10, 9);
 		playSfx(_dialog->getSound(0, 16, 0));
 		_inventory->unselectItem();
 		hotspot->scene = 0;
@@ -731,13 +731,13 @@ void Logic::processHotspot(SceneHotspot *hotspot) {
 			// TODO save game
 			getProgress().field_30 = 1;
 		}
-		_entities->updateField4(1, hotspot->param2);
+		_items->updateField4(1, hotspot->param2);
 
 		// fall to case kActionEnterCompartment
 
 	case SceneHotspot::kActionEnterCompartment:
 		
-		if (_entities->get(1).location == 1 || _entities->get(1).location == 3 || _inventory->getSelectedItem() == Inventory::kKey) {
+		if (_items->get(1).location == 1 || _items->get(1).location == 3 || _inventory->getSelectedItem() == Inventory::kKey) {
 			hotspot_enterCompartment(hotspot);
 			break;
 		}
@@ -835,8 +835,8 @@ void Logic::processHotspot(SceneHotspot *hotspot) {
 		if (hotspot->param1 >= 128)
 			break;
 
-		if (_entities->get(hotspot->param1).field_0)
-			_savepoints->push(0, _entities->get(hotspot->param1).field_0, 8, hotspot->param1);
+		if (_items->get(hotspot->param1).field_0)
+			_savepoints->push(0, _items->get(hotspot->param1).field_0, 8, hotspot->param1);
 
 		break;
 
@@ -885,8 +885,8 @@ void Logic::hotspot_enterCompartment(SceneHotspot *hotspot) {
 	if (hotspot->param1 >= 128)
 		return;
 
-	if (_entities->get(hotspot->param1).field_0) {
-		_savepoints->push(0, _entities->get(hotspot->param1).field_0, 9, hotspot->param1);
+	if (_items->get(hotspot->param1).field_0) {
+		_savepoints->push(0, _items->get(hotspot->param1).field_0, 9, hotspot->param1);
 		hotspot->scene = 0;
 		return;
 	}
@@ -896,7 +896,7 @@ void Logic::hotspot_enterCompartment(SceneHotspot *hotspot) {
 		return;
 	}
 
-	byte location = _entities->get(hotspot->param1).location;
+	byte location = _items->get(hotspot->param1).location;
 	if (location == 1 || location == 3 || 0 /* TODO function call */) {
 		error("Logic::processHotspot: unsupported hotspot action (%02d)", hotspot->action);
 		return;
@@ -912,7 +912,7 @@ void Logic::hotspot_enterCompartment(SceneHotspot *hotspot) {
 		return;
 	}
 
-	_entities->update(1, 0, 1, 10, 9);
+	_items->update(1, 0, 1, 10, 9);
 	playSfx(_dialog->getSound(0, 16, 0));
 	_inventory->unselectItem();
 	hotspot->scene = 0;
@@ -942,7 +942,7 @@ Cursor::CursorStyle Logic::getCursor(SceneHotspot *hotspot) {
 		if (hotspot->param1 >= 128)
 			return Cursor::kCursorNormal;
 		else
-			return (Cursor::CursorStyle)_entities->get(hotspot->param1).cursor;
+			return (Cursor::CursorStyle)_items->get(hotspot->param1).cursor;
 		
 LABEL_KEY:
 	case SceneHotspot::kAction6:
@@ -960,8 +960,8 @@ LABEL_KEY:
 		if (hotspot->param1 >= 128)
 			return Cursor::kCursorNormal;
 		else {
-			if (_entities->get(hotspot->param1).field_0)
-				return (Cursor::CursorStyle)_entities->get(hotspot->param1).cursor;
+			if (_items->get(hotspot->param1).field_0)
+				return (Cursor::CursorStyle)_items->get(hotspot->param1).cursor;
 			else
 				return Cursor::kCursorNormal;
 		}
@@ -1018,9 +1018,9 @@ LABEL_KEY:
 		if (getProgress().jacket != Logic::kGreenJacket)
 			return Cursor::kCursorNormal;
 
-		if ((_gameState->events[Action::kCathLookOutsideWindowDay] || _gameState->events[Action::kCathLookOutsideWindowDay] || _entities->get(1).field_4)
+		if ((_gameState->events[Action::kCathLookOutsideWindowDay] || _gameState->events[Action::kCathLookOutsideWindowDay] || _items->get(1).field_4)
 		 && getProgress().field_50
-		 && (hotspot->param1 != 45 || 1/*function call*/ && _entities->get(44).location == 2)
+		 && (hotspot->param1 != 45 || 1/*function call*/ && _items->get(44).location == 2)
 		 && _inventory->getSelectedItem() != Inventory::kBriefcase
 		 && _inventory->getSelectedItem() != Inventory::kFirebird)
 			return Cursor::kCursorForward; 
