@@ -23,7 +23,7 @@
  *
  */
 
-#include "lastexpress/entity.h"
+#include "lastexpress/items.h"
 
 #include "lastexpress/lastexpress.h"
 #include "lastexpress/logic.h"

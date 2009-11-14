@@ -29,7 +29,7 @@
 #include "lastexpress/animation.h"
 #include "lastexpress/beetle.h"
 #include "lastexpress/dialog.h"
-#include "lastexpress/entity.h"
+#include "lastexpress/items.h"
 #include "lastexpress/inventory.h"
 #include "lastexpress/graphics.h"
 #include "lastexpress/helpers.h"
