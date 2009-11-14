@@ -75,7 +75,7 @@ public:
 		kFirebird = 18,
 		kBriefcase = 19,
 		kCorpse = 20,
-		kItem21 = 21,
+		kGreenJacket = 21,
 		kItem22 = 22,
 		kPaper = 23,
 		kArticle = 24,		
@@ -117,7 +117,7 @@ public:
 
 	// Inventory contents
 	void addItem(InventoryItem item);
-	void removeItem(InventoryItem item);
+	void removeItem(InventoryItem item, byte newLocation = 0);
 	bool hasItem(InventoryItem item);
 	InventoryEntry *getItem(InventoryItem item);
 	void selectItem(InventoryItem item) { _selectedItem = item; }

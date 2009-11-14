@@ -35,9 +35,9 @@
 	uint32 {4}      - time delta (how much a tick is in "real" time)
 	uint32 {4}      - time ticks
 	uint32 {4}      - Scene Index               max: 2600
-	byte {1}        - ??
-	uint32 {4}      - Scene Index (copy?)       max: 2600
-	uint32 {4}      - Scene Index (copy?)       max: 2600
+	byte {1}        - Use backup scene
+	uint32 {4}      - Backup Scene Index 1
+	uint32 {4}      - Backup Scene Index 2
 	uint32 {4}      - Selected inventory item
 	uint32 {4*1000} - ??
 	uint32 {4*16}   - ??
@@ -46,7 +46,7 @@
 	byte {512}      - Game events
 	byte {7*32}     - Inventory
 	byte {5*128}    - Entities
-	byte {1262*40}  - Game state
+	byte {1262*40}  - Characters
 
 	uint32 {4}      - ??
 	uint32 {4}      - ??
@@ -113,7 +113,7 @@ public:
 		uint32 index;
 		uint32 field_30;
 		uint32 event_august_met;
-		uint32 timeOfDay;					///< 0 = day / 1 = night
+		uint32 is_nighttime;					///< 0 = day / 1 = night
 		uint32 field_3C;
 		uint32 field_40;
 		uint32 field_44;
@@ -181,7 +181,7 @@ public:
 			index = _defaultIndex;
 			field_30 = 0;
 			event_august_met = 0;
-			timeOfDay = 0;
+			is_nighttime = 0;
 			field_3C = 0;
 			field_40 = 0;
 			field_44 = 0;
@@ -246,7 +246,7 @@ public:
 		uint32 time;
 		uint32 timeDelta;
 		uint32 timeTicks;
-		byte field_17;
+		byte useBackupScene;
 		uint32 currentScene;		
 		uint32 currentScene2;
 		uint32 currentScene3;
@@ -262,7 +262,7 @@ public:
 			time = _defaultTime;
 			timeDelta = _defaultTimeDelta;
 			timeTicks = 0;
-			field_17 = 0;
+			useBackupScene = 0;
 			currentScene = _defaultScene;
 			currentScene2 = 0;
 			currentScene3 = 0;
@@ -333,6 +333,7 @@ private:
 	
 	void preProcessScene(uint32 *index);
 	void postProcessScene(uint32 *index);
+	void processItem();
 	
 	// Hotspots
 	void processHotspot(SceneHotspot *hotspot);

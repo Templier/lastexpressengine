@@ -596,34 +596,135 @@ void Logic::processHotspot(SceneHotspot *hotspot) {
 	case SceneHotspot::kAction11:
 		error("Logic::processHotspot: unsupported hotspot action (%02d)", hotspot->action);
 
-	case SceneHotspot::kActionCompartment: {
-		Inventory::InventoryEntry* item = _inventory->getItem((Inventory::InventoryItem)hotspot->param1);
+	case SceneHotspot::kActionPickItem: {
+		Inventory::InventoryItem item = (Inventory::InventoryItem)hotspot->param1;
+		byte location = hotspot->param2;
 
-		if (hotspot->param1 >= 32 || !item->location)
+		Inventory::InventoryEntry* entry = _inventory->getItem(item);
+
+		if (item >= 32 || !entry->location)
 			break;
 
-		switch(hotspot->param1) {
-		case 20:
+		// Special case for corpse
+		if (item == Inventory::kCorpse) {
 			_action->pickCorpse(hotspot->param2);
 
-			// TODO further process index
-
+			if (hotspot->scene < 1)
+				processItem();
+		
 			// Add corpse to inventory
-			if (hotspot->param2 != 4) { // bed position
+			if (location != 4) { // bed position
 				_inventory->addItem(Inventory::kCorpse);
 				_inventory->selectItem(Inventory::kCorpse);
 				_engine->getCursor()->setStyle(Cursor::kCursorCorpse);
 			}
 			break;
-
-
 		}
+
+		// Add and process items
+		_inventory->addItem(item);
+
+		switch (item) {
+		case Inventory::kGreenJacket:
+			_action->pickGreenJacket();
+
+			if (hotspot->scene)
+				processItem();
+
+			break;
+
+		case Inventory::kScarf:
+			_action->pickScarf();
+
+			if (hotspot->scene)
+				processItem();
+
+			// stop processing
+			return;
 		
+		case Inventory::kParchemin:
+			if (location == 2)
+				break;
+
+			_inventory->addItem(Inventory::kParchemin);
+			_inventory->getItem(Inventory::kItem11)->location = 1;
+			playSfx(_dialog->getSound(0, 9, 0));
+			break;
+
+		case Inventory::kBomb:
+			error("Logic::processHotspot: pickItem case for item bomb is not implemented!");
+			break;
+
+		case Inventory::kBriefcase:
+			playSfx(_dialog->getSound(0, 83, 0));
+			break;
+		}
+
+		// Load item scene
+		if (_inventory->getItem(item)->scene_id) {
+			if (!_gameState->useBackupScene) {
+				_gameState->useBackupScene = 1;
+				_gameState->currentScene2 = _gameState->currentScene;
+			}
+
+			setScene(_inventory->getItem(item)->scene_id);
+			hotspot->scene = 0;
+		}
+
+		// Select item
+		if (_inventory->getItem(item)->is_selectable) {
+			_inventory->selectItem(item);
+			_engine->getCursor()->setStyle((Cursor::CursorStyle)_inventory->getItem(item)->item_id);
+		}
 		break;
 	}
 
-	case SceneHotspot::kActionDropItem:
-		error("Logic::processHotspot: unsupported hotspot action (%02d)", hotspot->action);
+	case SceneHotspot::kActionDropItem: {
+		Inventory::InventoryItem item = (Inventory::InventoryItem)hotspot->param1;
+		byte location = hotspot->param2;
+
+		if (item >= 32)
+			break;
+
+		if (!_inventory->hasItem(item))
+			break;
+
+		if (location < 1)
+			break;
+
+		// Handle actions
+		if (item == Inventory::kBriefcase) {
+			playSfx(_dialog->getSound(0, 82, 0));
+
+			if (location == 2) {
+				if (!getProgress().field_58) {
+					// TODO save game
+					getProgress().field_58 = 1;
+				}
+
+				if (_inventory->getItem(Inventory::kParchemin)->location == 2) {
+					_inventory->addItem(Inventory::kParchemin);
+					_inventory->getItem(Inventory::kItem11)->location = 11;
+					playSfx(_dialog->getSound(0, 9, 0));
+				}
+			}
+		}
+
+		// Update item location
+		_inventory->removeItem(item, location);
+
+		if (item == Inventory::kCorpse) {
+			_action->dropCorpse();
+
+			if (hotspot->scene < 1)
+				processItem();
+		}
+
+		// Unselect item
+		_inventory->unselectItem();
+
+		break;
+	}
 
 	case SceneHotspot::kActionExitCompartment:
 		if (!getProgress().field_30 && getProgress().jacket != 0) {
@@ -865,7 +966,7 @@ LABEL_KEY:
 				return Cursor::kCursorNormal;
 		}
 
-	case SceneHotspot::kActionCompartment:
+	case SceneHotspot::kActionPickItem:
 		if (hotspot->param1 >= 32)
 			return Cursor::kCursorNormal;
 		
@@ -988,6 +1089,11 @@ LABEL_KEY:
 //////////////////////////////////////////////////////////////////////////
 // Misc
 //////////////////////////////////////////////////////////////////////////
+
+void Logic::processItem() {
+	error("Logic::processItem is not implemented!");
+}
+
 
 void Logic::switchChapter() {
 	switch(_gameState->progress.index) {

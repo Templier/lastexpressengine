@@ -117,7 +117,7 @@ public:
 		kAction10 = 10,
 		kAction11 = 11,
 		kAction12 = 12,
-		kActionCompartment = 13,
+		kActionPickItem = 13,
 		kActionDropItem = 14,
 		kAction15 = 15,
 		kActionEnterCompartment = 16,

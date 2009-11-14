@@ -341,6 +341,7 @@ void Action::pickScarf() {
 }
 
 // Corpse location:
+//   0 = Disposed of / Inside inventory
 //   1 = Floor
 //   2 = Bed
 //   3 = 

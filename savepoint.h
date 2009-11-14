@@ -35,8 +35,8 @@
 
 	Save point: max: 127 - FIFO list (ie. goes back and overwrites first save point when full)
 		uint32 {4}      - index of function pointer inside savePointFunctions array
-		uint32 {4}      - ??
-		uint32 {4}      - time ?
+		uint32 {4}      - action
+		uint32 {4}      - time
 		uint32 {4}      - 0 or 1 ?
 
 	?? array: 16 bytes
@@ -56,8 +56,8 @@ class SavePoints : Common::Serializable {
 public:
 	struct SavePoint {
 		uint32 index;
-		uint32 field_4;
-		uint32 field_8;
+		uint32 action;
+		uint32 time;
 		uint32 field_C;
 	};	
 
@@ -81,8 +81,8 @@ public:
 	~SavePoints();
 	
 	// Savepoints
-	void push(uint32 field_8, uint32 index, uint32 field_4, uint32 field_C);
-	void pushAll(uint32 field_8, uint32 field_4, uint32 field_C);
+	void push(uint32 time, uint32 index, uint32 action, uint32 field_C);
+	void pushAll(uint32 time, uint32 action, uint32 field_C);
 	void process();
 	void reset();
 
@@ -92,7 +92,7 @@ public:
 	// Callbacks
 	void setCallback(uint index, Callback* callback);
 	Callback *getCallback(uint index);
-	void call(int field_8, int index, int field_4, int field_C);
+	void call(int field_8, int index, int action, int field_C);
 
 	// Serializable
 	void saveLoadWithSerializer(Common::Serializer &s);

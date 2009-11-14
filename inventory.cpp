@@ -94,7 +94,7 @@ void Inventory::init() {
 	_entries[kFirebird].no_autoselect = 0;
 	_entries[kBriefcase].no_autoselect = 0;
 	_entries[kCorpse].no_autoselect = 0;
-	_entries[kItem21].no_autoselect = 0;
+	_entries[kGreenJacket].no_autoselect = 0;
 	_entries[kItem22].no_autoselect = 0;
 
 	// Scene
@@ -349,12 +349,12 @@ void Inventory::addItem(InventoryItem item) {
 	}
 }
 
-void Inventory::removeItem(InventoryItem item) {
+void Inventory::removeItem(InventoryItem item, byte newLocation) {
 	if (!hasItem(item))
 		return;
 
 	getItem(item)->has_item = 0;
-	getItem(item)->location = 0;
+	getItem(item)->location = newLocation;
 
 	if (getItem(item)->item_id == _selectedItem) {
 		_selectedItem = kNoItem;
