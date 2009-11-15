@@ -16,8 +16,8 @@ MODULE_OBJS := \
 	entities/alouan.o \
 	entities/anna.o \
 	entities/august.o \
-	entities/boutarel.o \	
-	entities/chapters.o \	
+	entities/boutarel.o \
+	entities/chapters.o \
 	entities/cooks.o \
 	entities/coudert.o \
 	entities/entity24.o \

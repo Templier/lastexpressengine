@@ -44,7 +44,7 @@ namespace LastExpress {
 	_entities.push_back(new class(engine));
 
 #define CALLBACK_FUNCTION(class, name) \
-	_callbacks.push_back(new Common::Functor1Mem<SavePoints::SavePoint*, void, ##class>(this, &##class::##name));
+	_callbacks.push_back(new Common::Functor1Mem<SavePoints::SavePoint*, void, class>(this, &class::name));
 
 #define CALLBACK_FUNCTION_NULL() \
 	_callbacks.push_back(new Common::Functor1Mem<SavePoints::SavePoint*, void, Entity>(this, &Entity::nullfunction));
@@ -55,14 +55,14 @@ namespace LastExpress {
 
 #define DECLARE_FUNCTION_NULL(index)  \
 	DECLARE_SETUP(Entity, nullfunction, index)
-
+	
 #define DECLARE_SETUP(class, name, index) \
 	void setup_##name() { \
-	_engine->getLogic()->getGameSavePoints()->setCallback(_entityIndex, new Common::Functor1Mem<SavePoints::SavePoint*, void, ##class>(this, &##class::##name)); \
-	_data.callbacks[_data.current_call] = index; \
-	memset(&_data.callback_data[_data.current_call], 0, sizeof(Entity::EntityData)); \
-	_engine->getLogic()->getGameSavePoints()->call(_entityIndex, _entityIndex, SavePoints::kActionDefault, 0); \
-}
+		_engine->getLogic()->getGameSavePoints()->setCallback(_entityIndex, new Common::Functor1Mem<SavePoints::SavePoint*, void, class>(this, &class::name)); \
+		_data.callbacks[_data.current_call] = index; \
+		memset(&_data.callback_data[_data.current_call], 0, sizeof(Entity::EntityData)); \
+		_engine->getLogic()->getGameSavePoints()->call(_entityIndex, _entityIndex, SavePoints::kActionDefault, 0); \
+	}
 
 class LastExpressEngine;
 
@@ -194,7 +194,7 @@ public:
 	typedef void (*FunctionPointer)(char* name, int param2, int param3, int param4);
 
 	Entity(LastExpressEngine *engine, EntityIndex index);
-	~Entity();
+	virtual ~Entity();
 
 	// Accessors
 	EntityData *getData() { return &_data; }
