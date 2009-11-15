@@ -200,20 +200,24 @@ bool Logic::handleMouseEvent(Common::Event ev) {
 // Scene
 //////////////////////////////////////////////////////////////////////////
 void Logic::setScene(uint32 index) {
-	_gameState->currentScene = index;
+	preProcessScene(&index);
 
 	delete _scene;
-
-	preProcessScene(&_gameState->currentScene);
-
-	_scene = _engine->getScene(_gameState->currentScene); 
+	_scene = _engine->getScene(index); 
 	_engine->getGraphicsManager()->draw(_scene, GraphicsManager::kBackgroundC, true);
 	askForRedraw();
+
+	_gameState->currentScene = index;
+
+	// TODO update entities
+	_savepoints->pushAll(0, 17, 0);
+	_savepoints->process();
 
 	// Show the scene 
 	_engine->getGraphicsManager()->update();
 	_engine->_system->updateScreen();
 	_engine->_system->delayMillis(10);
+
 
 	postProcessScene(&_gameState->currentScene);
 }

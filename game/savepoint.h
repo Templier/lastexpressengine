@@ -109,7 +109,7 @@ private:
 	Callback* _callbacks[40];
 
 	SavePoint pop();
-	bool updateGameState(SavePoint point);
+	bool updateEntity(SavePoint point);
 };
 
 } // End of namespace LastExpress

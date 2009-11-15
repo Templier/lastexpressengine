@@ -74,7 +74,7 @@ void SavePoints::process() {
 	while (_savepoints.size() > 0) {
 		SavePoint point = pop();
 		
-		if (updateGameState(point)) {
+		if (updateEntity(point)) {
 
 			// Call requested callback
 			Callback *callback = getCallback(point.index);
@@ -136,7 +136,7 @@ void SavePoints::call(int field_8, int index, int action, int field_C) {
 //////////////////////////////////////////////////////////////////////////
 // Misc
 //////////////////////////////////////////////////////////////////////////
-bool SavePoints::updateGameState(SavePoint point) {
+bool SavePoints::updateEntity(SavePoint point) {
 	for (uint i = 0; i < _data.size(); i++) {
 		if (_data[i].index == point.index && _data[i].field_4 == point.action) {
 

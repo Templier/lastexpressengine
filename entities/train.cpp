@@ -47,18 +47,38 @@ void Train::nullfunc(SavePoints::SavePoint *savepoint) {
 }
 
 void Train::chapter1(SavePoints::SavePoint *savepoint) {
+	if (savepoint->action != SavePoints::kActionDefault)
+		return;
+
+	setup_process();
 }
 
 void Train::chapter2(SavePoints::SavePoint *savepoint) {
+	if (savepoint->action != SavePoints::kActionDefault)
+		return;
+
+	setup_process();
 }
 
 void Train::chapter3(SavePoints::SavePoint *savepoint) {
+	if (savepoint->action != SavePoints::kActionDefault)
+		return;
+
+	setup_process();
 }
 
 void Train::chapter4(SavePoints::SavePoint *savepoint) {
+	if (savepoint->action != SavePoints::kActionDefault)
+		return;
+
+	setup_process();
 }
 
 void Train::chapter5(SavePoints::SavePoint *savepoint) {
+	if (savepoint->action != SavePoints::kActionDefault)
+		return;
+
+	setup_process();
 }
 
 void Train::harem(SavePoints::SavePoint *savepoint) {
@@ -66,7 +86,22 @@ void Train::harem(SavePoints::SavePoint *savepoint) {
 }
 
 void Train::process(SavePoints::SavePoint *savepoint) {
-	error("Train: process callback function not implemented!");
+	
+	switch (savepoint->action) {
+	case SavePoints::kActionDefault:
+		_data.callback_data[_data.current_call].field_8 = 1;
+		if (getProgress().index < 5) {
+			getItems()->update(5, 32, 3, 10, 9);
+			getItems()->update(6, 32, 3, 10, 9);
+			getItems()->update(7, 32, 3, 10, 9);
+			getItems()->update(8, 32, 3, 10, 9);
+		}
+		_data.field_491 = 30000;
+		break;
+
+	default:
+		error("Train: process callback function not implemented for action %d", savepoint->action);
+	}
 }
 
 } // End of namespace LastExpress
