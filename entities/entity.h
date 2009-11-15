@@ -159,9 +159,13 @@ public:
 
 	struct EntityCallbackData {
 		int field_0;
+		int field_4;
+		int field_8;
 
 		EntityCallbackData() {
 			field_0 = 0;
+			field_4 = 0;
+			field_8 = 0;
 		}
 	};
 
@@ -172,13 +176,15 @@ public:
 		// int16 ??
 		// byte ??
 		byte current_call;
-		// byte ?? (numScenes)
+		int16 field_491; // ?? numScenes
 		// byte ??
 		// byte ?? (field 13)
 		// etc.
 
 		EntityData() {
+			// TODO Everything set to 0 on start, except field_4A3 ? set to 30
 			current_call = 0;
+			field_491 = 0;
 		}
 	};
 
