@@ -90,7 +90,7 @@ void Debugger::copyCommand(int argc, const char **argv) {
 }
 
 void Debugger::callCommand() {
-	(*command)(num_params, (const char **)command_params);
+	(*command)(num_params, const_cast<const char **>(command_params));
 }
 
 bool Debugger::cmd_playseq(int argc, const char **argv) {
