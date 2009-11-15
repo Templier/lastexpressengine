@@ -79,6 +79,13 @@ public:
 		kItem22 = 22,
 		kPaper = 23,
 		kArticle = 24,		
+		kItem25 = 25,
+		kItem26 = 26,
+		kItem27 = 27,
+		kItem28 = 28,
+		kItem29 = 29,
+		kItem30 = 30,
+		kItem31 = 31,
 				
 		// Portrait (not an index)
 		kPortraitOriginal = 32,		
