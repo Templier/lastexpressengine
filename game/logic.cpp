@@ -392,8 +392,8 @@ void Logic::postProcessScene(uint32 *index) {
 		_gameState->time += (scene->getHeader()->param1 + 10) * _gameState->timeDelta;
 		_gameState->timeTicks += (scene->getHeader()->param1 + 10);
 
-		// Some stuff
-
+		// Some stuff related to menu?
+		
 		SceneHotspot *hotspot = scene->getHotspot(0);
 		processHotspot(hotspot);
 
@@ -407,7 +407,7 @@ void Logic::postProcessScene(uint32 *index) {
 			hotspotScene = _engine->getScene(nextScene);
 		}
 
-		// More stuff
+		// Some stuff related to entities (dialog Excuse me)
 
 		if (hotspot->scene)
 			setScene(hotspot->scene);

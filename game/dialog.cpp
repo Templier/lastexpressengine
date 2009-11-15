@@ -69,9 +69,117 @@ Dialog::~Dialog() {
 
 const char *Dialog::getSound(int index, byte action, byte a3) {
 	delete[] sound_name;
-
-	// TODO implement tests
 	sound_name = new char[7];
+
+	int values[5];
+
+	// TODO:
+	// - check entities (0 against current)
+	// - check index against entity values
+	// - more checks
+
+	switch (action) {
+	case 36:
+	case 37:
+		error("Dialog::getSound: action not implemented (%d)", action);
+
+	case 150:
+	case 156:
+	case 162:
+	case 168:
+	case 188:
+	case 198:
+		action += 1 + random(5);
+		break;
+
+	case 174:
+	case 184:
+	case 194:
+		action += 1 + random(3);
+		break;
+
+	case 180:
+		action += 1 + random(4);
+		break;
+
+	case 246:
+		values[0] = 0;
+		values[1] = 104;
+		values[2] = 105;
+		values[3] = 106;
+		values[4] = 116;
+		action = values[random(5)];
+		break;
+
+	case 247:
+		values[0] = 11;
+		values[1] = 123;
+		values[2] = 124;
+		action = values[random(3)];
+		break;
+
+	case 248:
+		values[0] = 0;
+		values[1] = 103;
+		values[2] = 108;
+		values[3] = 109;
+		action = values[random(4)];
+		break;
+
+	case 249:
+		values[0] = 0;
+		values[1] = 56;
+		values[2] = 112;
+		values[3] = 113;
+		action = values[random(4)];
+		break;
+
+	case 250:
+		values[0] = 0;
+		values[1] = 107;
+		values[2] = 115;
+		values[3] = 117;
+		action = values[random(4)];
+		break;
+
+	case 251:
+		values[0] = 0;
+		values[1] = 11;
+		values[2] = 56;
+		values[3] = 113;
+		action = values[random(4)];
+		break;
+
+	case 252:
+		values[0] = 0;
+		values[1] = 6;
+		values[2] = 109;
+		values[3] = 121;
+		action = values[random(4)];
+		break;
+
+	case 254:
+		values[0] = 0;
+		values[1] = 104;
+		values[2] = 120;
+		values[3] = 121;
+		action = values[random(4)];
+		break;
+
+	case 255:
+		values[0] = 0;
+		values[1] = 106;
+		values[2] = 115;
+		action = values[random(3)];
+		break;
+
+	default:
+		break;		
+	}
+
+	if (!action)
+		return "";
+
 	sprintf(sound_name, "LIB%03d", action);
 
 	return sound_name;
@@ -389,7 +497,7 @@ const char *Dialog::readText(int id) {
 // Sound bites
 //////////////////////////////////////////////////////////////////////////
 const char *Dialog::excuseMeCath() {
-	switch(_engine->getRandom().getRandomNumber(3)) {
+	switch(random(3)) {
 	case 0:
 		return "CAT1126B";
 	case 1:
@@ -402,7 +510,7 @@ const char *Dialog::excuseMeCath() {
 }
 
 const char *Dialog::justCheckingCath() {
-	switch(_engine->getRandom().getRandomNumber(4)) {
+	switch(random(4)) {
 	case 0:
 		return "CAT5001";
 	case 1:
@@ -417,7 +525,7 @@ const char *Dialog::justCheckingCath() {
 }
 
 const char *Dialog::wrongDoorCath() {
-	switch(_engine->getRandom().getRandomNumber(5)) {
+	switch(random(5)) {
 	case 0:
 		return "CAT1125";
 	case 1:
@@ -434,7 +542,7 @@ const char *Dialog::wrongDoorCath() {
 }
 
 const char *Dialog::justAMinuteCath() {
-	switch(_engine->getRandom().getRandomNumber(3)) {
+	switch(random(3)) {
 	case 0:
 		return "CAT1520";
 	case 1:
