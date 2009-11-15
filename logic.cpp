@@ -367,9 +367,8 @@ void Logic::preProcessScene(uint32 *index) {
 	if (_beetle->isLoaded()) {
 		// Get scene type
 		Scene *currentScene = _engine->getScene(*index);
-		
-		// FIXME: This condition will never be true
-		if (currentScene->getHeader()->type != -126)
+
+		if (currentScene->getHeader()->type != Scene::kTypeLoadBeetleSequences)
 			_beetle->unload();
 
 		delete currentScene;
