@@ -317,15 +317,13 @@ const static struct {
 	{"8042A",	600}
 };
 
-#define inventory _engine->getLogic()->getInventory()
-
 Action::Action(LastExpressEngine *engine) : _engine(engine) {}
 
 //////////////////////////////////////////////////////////////////////////
 // Items
 //////////////////////////////////////////////////////////////////////////
 bool Action::pickItem(Inventory::InventoryItem item, byte location, bool process) {
-	Inventory::InventoryEntry* entry = inventory->getItem(item);
+	Inventory::InventoryEntry* entry = getInventory()->getItem(item);
 
 	if (item >= 32 || !entry->location)
 		return false;
@@ -339,8 +337,8 @@ bool Action::pickItem(Inventory::InventoryItem item, byte location, bool process
 
 		// Add corpse to inventory
 		if (location != 4) { // bed position
-			inventory->addItem(Inventory::kCorpse);
-			inventory->selectItem(Inventory::kCorpse);
+			getInventory()->addItem(Inventory::kCorpse);
+			getInventory()->selectItem(Inventory::kCorpse);
 			_engine->getCursor()->setStyle(Cursor::kCursorCorpse);
 		}
 
@@ -348,7 +346,7 @@ bool Action::pickItem(Inventory::InventoryItem item, byte location, bool process
 	}
 
 	// Add and process items
-	inventory->addItem(item);
+	getInventory()->addItem(item);
 
 	switch (item) {
 	case Inventory::kGreenJacket:
@@ -372,8 +370,8 @@ bool Action::pickItem(Inventory::InventoryItem item, byte location, bool process
 		if (location == 2)
 			break;
 
-		inventory->addItem(Inventory::kParchemin);
-		inventory->getItem(Inventory::kItem11)->location = 1;
+		getInventory()->addItem(Inventory::kParchemin);
+		getInventory()->getItem(Inventory::kItem11)->location = 1;
 		playSound(0, 9, 0);
 		break;
 
@@ -397,7 +395,7 @@ void Action::dropItem(Inventory::InventoryItem item, byte location, bool process
 	if (item >= 32)
 		return;
 
-	if (!inventory->hasItem(item))
+	if (!getInventory()->hasItem(item))
 		return;
 
 	if (location < 1)
@@ -413,16 +411,16 @@ void Action::dropItem(Inventory::InventoryItem item, byte location, bool process
 				getProgress().field_58 = 1;
 			}
 
-			if (inventory->getItem(Inventory::kParchemin)->location == 2) {
-				inventory->addItem(Inventory::kParchemin);
-				inventory->getItem(Inventory::kItem11)->location = 11;
+			if (getInventory()->getItem(Inventory::kParchemin)->location == 2) {
+				getInventory()->addItem(Inventory::kParchemin);
+				getInventory()->getItem(Inventory::kItem11)->location = 11;
 				playSound(0, 9, 0);
 			}
 		}
 	}
 
 	// Update item location
-	inventory->removeItem(item, location);
+	getInventory()->removeItem(item, location);
 
 	if (item == Inventory::kCorpse) {
 		dropCorpse();
@@ -432,17 +430,17 @@ void Action::dropItem(Inventory::InventoryItem item, byte location, bool process
 	}
 
 	// Unselect item
-	inventory->unselectItem();
+	getInventory()->unselectItem();
 }
 
 void Action::pickGreenJacket() {
 	getProgress().jacket = Logic::kGreenJacket;
-	inventory->addItem(Inventory::kMatchBox);
+	getInventory()->addItem(Inventory::kMatchBox);
 
 	// 1 unknown functions call
 	playAnimation(kPickGreenJacket);
 
-	inventory->setPortrait(Inventory::kPortraitGreen);
+	getInventory()->setPortrait(Inventory::kPortraitGreen);
 }
 
 void Action::pickScarf() {
@@ -462,7 +460,7 @@ void Action::pickScarf() {
 //   4 = Window
 //   5 = 
 void Action::pickCorpse(byte bedPosition) {
-	switch(inventory->getItem(Inventory::kCorpse)->location) {
+	switch(getInventory()->getItem(Inventory::kCorpse)->location) {
 	case 1:	// Floor
 		if (bedPosition != 4) {
 			if (getProgress().jacket == Logic::kOriginalJacket)
@@ -474,7 +472,7 @@ void Action::pickCorpse(byte bedPosition) {
 		}
 
 		playAnimation(kCorpsePickFloorOpenedBedOriginal);
-		inventory->getItem(Inventory::kCorpse)->location = 5;
+		getInventory()->getItem(Inventory::kCorpse)->location = 5;
 		break;
 
 	case 2:	// Bed
@@ -492,7 +490,7 @@ void Action::pickCorpse(byte bedPosition) {
 }
 
 void Action::dropCorpse() {
-	switch(inventory->getItem(Inventory::kCorpse)->location) {
+	switch(getInventory()->getItem(Inventory::kCorpse)->location) {
 	case 1:	// Floor
 		if (getProgress().jacket == Logic::kOriginalJacket)
 			playAnimation(kCorpseDropFloorOriginal);
@@ -511,10 +509,10 @@ void Action::dropCorpse() {
 
 	case 4: // Window
 		// Say goodbye to an old friend
-		inventory->getItem(Inventory::kCorpse)->location = 0;
+		getInventory()->getItem(Inventory::kCorpse)->location = 0;
 		getProgress().field_20 = 1;
 
-		if (_engine->getLogic()->getGameState()->time <= 1138500) {
+		if (getState()->time <= 1138500) {
 
 			if (getProgress().jacket == Logic::kOriginalJacket)
 				playAnimation(kCorpseDropWindowOriginal);
@@ -545,20 +543,19 @@ void Action::playAnimation(int index) {
 	//	unknown = true;
 
 	// Show inventory & hourglass
-	inventory->show(true);
-	inventory->showHourGlass(true);
+	getInventory()->show(true);
+	getInventory()->showHourGlass(true);
 
 	Animation animation;
 	if (animation.loadFile(Common::String(animationList[index].filename) + ".nis"))
 		animation.play();	
 
 	// Adjust game time
-	Logic::GameState *state = _engine->getLogic()->getGameState();
-	state->events[index] = 1;
-	state->timeTicks += animationList[index].time;
-	state->time += animationList[index].time * state->timeDelta;
+	getState()->events[index] = 1;
+	getState()->timeTicks += animationList[index].time;
+	getState()->time += animationList[index].time * getState()->timeDelta;
 
-	inventory->showHourGlass(false);
+	getInventory()->showHourGlass(false);
 }
 
 

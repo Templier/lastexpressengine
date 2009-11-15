@@ -10,6 +10,8 @@ MODULE_OBJS := \
 	data/sequence.o \
 	data/sound.o \
 	data/subtitle.o \
+	entities/chapters.o \
+	entities/entity.o \
 	game/action.o \
 	game/beetle.o \
 	game/dialog.o \

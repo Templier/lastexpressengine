@@ -73,6 +73,7 @@
     <ClCompile Include="..\..\engines\lastexpress\data\subtitle.cpp" />
     <ClCompile Include="..\..\engines\lastexpress\debug.cpp" />
     <ClCompile Include="..\..\engines\lastexpress\detection.cpp" />
+    <ClCompile Include="..\..\engines\lastexpress\entities\chapters.cpp" />
     <ClCompile Include="..\..\engines\lastexpress\entities\entity.cpp" />
     <ClCompile Include="..\..\engines\lastexpress\game\action.cpp" />
     <ClCompile Include="..\..\engines\lastexpress\game\beetle.cpp" />
@@ -99,6 +100,7 @@
     <ClInclude Include="..\..\engines\lastexpress\data\subtitle.h" />
     <ClInclude Include="..\..\engines\lastexpress\debug.h" />
     <ClInclude Include="..\..\engines\lastexpress\drawable.h" />
+    <ClInclude Include="..\..\engines\lastexpress\entities\chapters.h" />
     <ClInclude Include="..\..\engines\lastexpress\entities\entity.h" />
     <ClInclude Include="..\..\engines\lastexpress\game\action.h" />
     <ClInclude Include="..\..\engines\lastexpress\game\beetle.h" />

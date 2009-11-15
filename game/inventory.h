@@ -130,6 +130,8 @@ public:
 	void selectItem(InventoryItem item) { _selectedItem = item; }
 	void unselectItem() { _selectedItem = kNoItem; }
 	InventoryItem getSelectedItem() { return _selectedItem; }
+
+	void setLocationAndProcess(InventoryItem item, byte newLocation);
 	
 	// UI Control
 	void show(bool visible);

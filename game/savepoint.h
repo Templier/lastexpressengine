@@ -54,6 +54,10 @@ namespace LastExpress {
 
 class SavePoints : Common::Serializable {
 public:
+	enum SavePointsAction {
+		kActionDefault = 12
+	};
+
 	struct SavePoint {
 		uint32 index;
 		uint32 action;
@@ -75,7 +79,7 @@ public:
 		}
 	};	
 
-	typedef Common::Functor1<SavePoint, void> Callback;
+	typedef Common::Functor1<SavePoint*, void> Callback;
 
 	SavePoints();
 	~SavePoints();

@@ -41,6 +41,9 @@
     </ClCompile>
     <ClCompile Include="..\..\engines\lastexpress\debug.cpp" />
     <ClCompile Include="..\..\engines\lastexpress\detection.cpp" />
+    <ClCompile Include="..\..\engines\lastexpress\entities\chapters.cpp">
+      <Filter>entities</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\engines\lastexpress\entities\entity.cpp">
       <Filter>entities</Filter>
     </ClCompile>
@@ -103,6 +106,9 @@
     </ClInclude>
     <ClInclude Include="..\..\engines\lastexpress\debug.h" />
     <ClInclude Include="..\..\engines\lastexpress\drawable.h" />
+    <ClInclude Include="..\..\engines\lastexpress\entities\chapters.h">
+      <Filter>entities</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\engines\lastexpress\entities\entity.h">
       <Filter>entities</Filter>
     </ClInclude>

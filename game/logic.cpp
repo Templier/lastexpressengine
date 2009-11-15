@@ -39,6 +39,9 @@
 #include "lastexpress/game/menu.h"
 #include "lastexpress/game/savepoint.h"
 
+// Entities
+#include "lastexpress/entities/entity.h"
+
 #include "lastexpress/graphics.h"
 #include "lastexpress/helpers.h"
 #include "lastexpress/lastexpress.h"
@@ -47,7 +50,7 @@
 
 namespace LastExpress {
 
-Logic::Logic(LastExpressEngine *engine) : _engine(engine), _scene(NULL) {
+Logic::Logic(LastExpressEngine *engine) : _engine(engine), _scene(NULL), _gameState(NULL) {
 	_action = new Action(engine);
 	_menu = new Menu(engine);
 	_inventory = new Inventory(engine);
@@ -55,12 +58,7 @@ Logic::Logic(LastExpressEngine *engine) : _engine(engine), _scene(NULL) {
 	_savepoints = new SavePoints();
 	_items = new Items(engine);
 	_beetle = new Beetle(engine);
-
-	// Get those from savegame
-	_gameState = new GameState();
-
-	// Init inventory
-	_inventory->init();
+	_entities = new Entities(engine);
 }
 
 Logic::~Logic() {
@@ -79,10 +77,16 @@ Logic::~Logic() {
 //////////////////////////////////////////////////////////////////////////
 
 void Logic::startGame() {
-	showMenu(false);
+	// Init data
+	_inventory->init();
 
-	//setScene(_defaultScene);
-	setScene(1018);
+	delete _gameState;
+	_gameState = new GameState();
+
+	_entities->setup(Entity::kChapter1);
+
+	showMenu(false);
+	setScene(_defaultScene);
 	
 	// Set Cursor type
 	_engine->getCursor()->setStyle(Cursor::kCursorNormal);

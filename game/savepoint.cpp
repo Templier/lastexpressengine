@@ -33,6 +33,8 @@ SavePoints::SavePoints() {
 }
 
 SavePoints::~SavePoints() {
+	for (int i = 0; i < 40; i++)
+		delete _callbacks[i];
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -77,7 +79,7 @@ void SavePoints::process() {
 			// Call requested callback
 			Callback *callback = getCallback(point.index);
 			if (callback)
-				(*callback)(point);
+				(*callback)(&point);
 		}
 	}
 }
@@ -107,6 +109,9 @@ void SavePoints::addData(uint32 index, uint32 field_4, uint32 field_C) {
 void SavePoints::setCallback(uint index, SavePoints::Callback* callback) {
 	assert(index < 40);
 
+	// Clear previous callback
+	delete _callbacks[index];
+
 	_callbacks[index] = callback;
 }
 
@@ -125,13 +130,13 @@ void SavePoints::call(int field_8, int index, int action, int field_C) {
 
 	Callback *callback = getCallback(index);
 	if (callback)
-		(*callback)(point);
+		(*callback)(&point);
 }
 
 //////////////////////////////////////////////////////////////////////////
 // Misc
 //////////////////////////////////////////////////////////////////////////
-bool SavePoints::updateGameState(SavePoints::SavePoint point) {
+bool SavePoints::updateGameState(SavePoint point) {
 	for (uint i = 0; i < _data.size(); i++) {
 		if (_data[i].index == point.index && _data[i].field_4 == point.action) {
 

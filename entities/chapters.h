@@ -23,49 +23,34 @@
  *
  */
 
-#ifndef LASTEXPRESS_ITEMS_H
-#define LASTEXPRESS_ITEMS_H
+#ifndef LASTEXPRESS_CHAPTERS_H
+#define LASTEXPRESS_CHAPTERS_H
 
-#include "common/serializer.h"
-#include "common/system.h"
+#include "lastexpress/entities/entity.h"
+
+#include "lastexpress/game/logic.h"
+
+#include "lastexpress/lastexpress.h"
 
 namespace LastExpress {
 
 class LastExpressEngine;
 
-class Items : Common::Serializable {
+class Chapters : public Entity {
 public:
-	struct Item {
-		byte field_0;
-		byte location;
-		byte cursor;
-		byte field_3;
-		byte field_4;
+	Chapters(LastExpressEngine *engine);
 
-		Item() {
-			field_0 = 0;
-			location = 0;
-			cursor = 10;
-			field_3 = 9;
-			field_4 = 0;
-		}
-	};
-	
-	Items(LastExpressEngine *engine);
+	// Setup	
+	DECLARE_FUNCTION(Chapters, chapter1, 4)
+	DECLARE_FUNCTION(Chapters, chapter1_init, 7)
+	DECLARE_FUNCTION(Chapters, chapter2, 10)
+	DECLARE_FUNCTION(Chapters, chapter3, 13)
+	DECLARE_FUNCTION(Chapters, chapter4, 17)
+	DECLARE_FUNCTION(Chapters, chapter5, 20)
 
-	const Item get(uint index);
-	void update(uint index, byte field_0, byte location, byte cursor, byte field_3);
-	void updateField4(uint index, byte value);
-
-	// Serializable
-	void saveLoadWithSerializer(Common::Serializer &ser);
-
-private:
-	LastExpressEngine* _engine;
-
-	Item _items[128];
+	void nullfunc(SavePoints::SavePoint *savepoint);
 };
 
 } // End of namespace LastExpress
 
-#endif // LASTEXPRESS_ITEMS_H
+#endif // LASTEXPRESS_CHAPTERS_H

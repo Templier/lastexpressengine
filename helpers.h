@@ -35,9 +35,13 @@
 #define playSound(index, action, a3) playSfx(_engine->getLogic()->getDialog()->getSound(index, action, a3))
 
 // Logic subclasses
-#define getState() _engine->getLogic()->getGameState()
-#define getProgress() getState()->progress
 #define getEvent(id) getState()->events[id]
+#define getItems() _engine->getLogic()->getGameItems()
+#define getInventory() _engine->getLogic()->getGameInventory()
+#define getProgress() getState()->progress
+#define getSavePoints() _engine->getLogic()->getGameSavePoints()
+#define getState() _engine->getLogic()->getGameState()
+
 
 #define random(value) _engine->getRandom().getRandomNumber(value)
 

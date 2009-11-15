@@ -372,6 +372,19 @@ bool Inventory::hasItem(InventoryItem item) {
 	return false;
 }
 
+void Inventory::setLocationAndProcess(InventoryItem item, byte newLocation) {
+	if (item >= 32)
+		return;
+
+	if (getItem(item)->location == newLocation)
+		return;
+
+	getItem(item)->location = newLocation;
+
+	// TODO check scene parameters and process
+	warning("Inventory::setLocationAndProcess: further processing not implemented yet!");
+}
+
 //////////////////////////////////////////////////////////////////////////
 // Serializable
 //////////////////////////////////////////////////////////////////////////

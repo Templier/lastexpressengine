@@ -86,6 +86,7 @@ namespace LastExpress {
 class Action;
 class Beetle;
 class Dialog;
+class Entities;
 class Items;
 class LastExpressEngine;
 class Menu;
@@ -290,11 +291,14 @@ public:
 	bool isGameStarted() { return _runState.gameStarted; }
 	bool isShowingMenu() { return _runState.showingMenu; }
 	GameId getGameId() { return _runState.gameId; }
-	GameState *getGameState() { return _gameState; }
-	Inventory *getInventory() { return _inventory; }
-	Cursor::CursorStyle getCursorStyle() { return _runState.cursorStyle; }
-	Dialog *getDialog() { return _dialog; }
 
+	Cursor::CursorStyle getCursorStyle() { return _runState.cursorStyle; }
+	Dialog 	   *getDialog() { return _dialog; }
+	Inventory  *getGameInventory() { return _inventory; }
+	Items	   *getGameItems() { return _items; }
+	GameState  *getGameState() { return _gameState; }
+	SavePoints *getGameSavePoints() { return _savepoints; }
+	
 private:
 	static const uint32 _defaultBrigthness = 0x3;
 	static const uint32 _defaultVolume = 0x7;
@@ -324,14 +328,17 @@ private:
 	RunState _runState;     	///< State of the game session (this data won't be stored in savegames)
 	
 	Action *_action;			///< Actions
+	Beetle *_beetle;			///< Beetle catching
 	Dialog *_dialog;			///< Dialogs
+	Entities *_entities;		///< Entities
 	GameState *_gameState;		///< Global game state
 	Inventory *_inventory;  	///< Inventory
+	Items *_items;				///< Items
 	Menu *_menu;            	///< Main menu handling
 	Scene *_scene;				///< Current scene	
 	SavePoints *_savepoints;	///< SavePoints
-	Items *_items;				///< Items
-	Beetle *_beetle;			///< Beetle catching
+	
+	
 	
 	void preProcessScene(uint32 *index);
 	void postProcessScene(uint32 *index);	
