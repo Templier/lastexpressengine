@@ -41,10 +41,109 @@
     </ClCompile>
     <ClCompile Include="..\..\engines\lastexpress\debug.cpp" />
     <ClCompile Include="..\..\engines\lastexpress\detection.cpp" />
+    <ClCompile Include="..\..\engines\lastexpress\entities\abbot.cpp">
+      <Filter>entities</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\engines\lastexpress\entities\alexei.cpp">
+      <Filter>entities</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\engines\lastexpress\entities\alouan.cpp">
+      <Filter>entities</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\engines\lastexpress\entities\anna.cpp">
+      <Filter>entities</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\engines\lastexpress\entities\august.cpp">
+      <Filter>entities</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\engines\lastexpress\entities\boutarel.cpp">
+      <Filter>entities</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\engines\lastexpress\entities\chapters.cpp">
       <Filter>entities</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\engines\lastexpress\entities\cooks.cpp">
+      <Filter>entities</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\engines\lastexpress\entities\coudert.cpp">
+      <Filter>entities</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\engines\lastexpress\entities\entity.cpp">
+      <Filter>entities</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\engines\lastexpress\entities\entity24.cpp">
+      <Filter>entities</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\engines\lastexpress\entities\entity39.cpp">
+      <Filter>entities</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\engines\lastexpress\entities\francois.cpp">
+      <Filter>entities</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\engines\lastexpress\entities\gendarmes.cpp">
+      <Filter>entities</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\engines\lastexpress\entities\hadija.cpp">
+      <Filter>entities</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\engines\lastexpress\entities\ivo.cpp">
+      <Filter>entities</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\engines\lastexpress\entities\kahina.cpp">
+      <Filter>entities</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\engines\lastexpress\entities\kronos.cpp">
+      <Filter>entities</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\engines\lastexpress\entities\mahmud.cpp">
+      <Filter>entities</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\engines\lastexpress\entities\max.cpp">
+      <Filter>entities</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\engines\lastexpress\entities\mertens.cpp">
+      <Filter>entities</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\engines\lastexpress\entities\milos.cpp">
+      <Filter>entities</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\engines\lastexpress\entities\mmeboutarel.cpp">
+      <Filter>entities</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\engines\lastexpress\entities\pascale.cpp">
+      <Filter>entities</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\engines\lastexpress\entities\rebecca.cpp">
+      <Filter>entities</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\engines\lastexpress\entities\salko.cpp">
+      <Filter>entities</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\engines\lastexpress\entities\servers0.cpp">
+      <Filter>entities</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\engines\lastexpress\entities\servers1.cpp">
+      <Filter>entities</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\engines\lastexpress\entities\tables.cpp">
+      <Filter>entities</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\engines\lastexpress\entities\tatiana.cpp">
+      <Filter>entities</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\engines\lastexpress\entities\train.cpp">
+      <Filter>entities</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\engines\lastexpress\entities\vassili.cpp">
+      <Filter>entities</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\engines\lastexpress\entities\verges.cpp">
+      <Filter>entities</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\engines\lastexpress\entities\vesna.cpp">
+      <Filter>entities</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\engines\lastexpress\entities\yasmin.cpp">
       <Filter>entities</Filter>
     </ClCompile>
     <ClCompile Include="..\..\engines\lastexpress\game\action.cpp">
@@ -106,10 +205,109 @@
     </ClInclude>
     <ClInclude Include="..\..\engines\lastexpress\debug.h" />
     <ClInclude Include="..\..\engines\lastexpress\drawable.h" />
+    <ClInclude Include="..\..\engines\lastexpress\entities\abbot.h">
+      <Filter>entities</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\engines\lastexpress\entities\alexei.h">
+      <Filter>entities</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\engines\lastexpress\entities\alouan.h">
+      <Filter>entities</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\engines\lastexpress\entities\anna.h">
+      <Filter>entities</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\engines\lastexpress\entities\august.h">
+      <Filter>entities</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\engines\lastexpress\entities\boutarel.h">
+      <Filter>entities</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\engines\lastexpress\entities\chapters.h">
       <Filter>entities</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\engines\lastexpress\entities\cooks.h">
+      <Filter>entities</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\engines\lastexpress\entities\coudert.h">
+      <Filter>entities</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\engines\lastexpress\entities\entity.h">
+      <Filter>entities</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\engines\lastexpress\entities\entity24.h">
+      <Filter>entities</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\engines\lastexpress\entities\entity39.h">
+      <Filter>entities</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\engines\lastexpress\entities\francois.h">
+      <Filter>entities</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\engines\lastexpress\entities\gendarmes.h">
+      <Filter>entities</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\engines\lastexpress\entities\hadija.h">
+      <Filter>entities</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\engines\lastexpress\entities\ivo.h">
+      <Filter>entities</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\engines\lastexpress\entities\kahina.h">
+      <Filter>entities</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\engines\lastexpress\entities\kronos.h">
+      <Filter>entities</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\engines\lastexpress\entities\mahmud.h">
+      <Filter>entities</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\engines\lastexpress\entities\max.h">
+      <Filter>entities</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\engines\lastexpress\entities\mertens.h">
+      <Filter>entities</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\engines\lastexpress\entities\milos.h">
+      <Filter>entities</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\engines\lastexpress\entities\mmeboutarel.h">
+      <Filter>entities</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\engines\lastexpress\entities\pascale.h">
+      <Filter>entities</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\engines\lastexpress\entities\rebecca.h">
+      <Filter>entities</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\engines\lastexpress\entities\salko.h">
+      <Filter>entities</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\engines\lastexpress\entities\servers0.h">
+      <Filter>entities</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\engines\lastexpress\entities\servers1.h">
+      <Filter>entities</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\engines\lastexpress\entities\tables.h">
+      <Filter>entities</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\engines\lastexpress\entities\tatiana.h">
+      <Filter>entities</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\engines\lastexpress\entities\train.h">
+      <Filter>entities</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\engines\lastexpress\entities\vassili.h">
+      <Filter>entities</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\engines\lastexpress\entities\verges.h">
+      <Filter>entities</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\engines\lastexpress\entities\vesna.h">
+      <Filter>entities</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\engines\lastexpress\entities\yasmin.h">
       <Filter>entities</Filter>
     </ClInclude>
     <ClInclude Include="..\..\engines\lastexpress\game\action.h">

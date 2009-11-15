@@ -10,8 +10,41 @@ MODULE_OBJS := \
 	data/sequence.o \
 	data/sound.o \
 	data/subtitle.o \
-	entities/chapters.o \
 	entities/entity.o \
+	entities/abbot.o \
+	entities/alexei.o \
+	entities/alouan.o \
+	entities/anna.o \
+	entities/august.o \
+	entities/boutarel.o \	
+	entities/chapters.o \	
+	entities/cooks.o \
+	entities/coudert.o \
+	entities/entity24.o \
+	entities/entity39.o \
+	entities/francois.o \
+	entities/gendarmes.o \
+	entities/hadija.o \
+	entities/ivo.o \
+	entities/kahina.o \
+	entities/kronos.o \
+	entities/mahmud.o \
+	entities/max.o \
+	entities/mertens.o \
+	entities/milos.o \
+	entities/mmeboutarel.o \
+	entities/pascale.o \
+	entities/rebecca.o \
+	entities/salko.o \
+	entities/servers0.o \
+	entities/servers1.o \
+	entities/tables.o \
+	entities/tatiana.o \
+	entities/train.o \
+	entities/vassili.o \
+	entities/verges.o \
+	entities/vesna.o \
+	entities/yasmin.o \
 	game/action.o \
 	game/beetle.o \
 	game/dialog.o \

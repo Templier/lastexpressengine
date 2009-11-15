@@ -38,7 +38,7 @@ Chapters::Chapters(LastExpressEngine *engine) : Entity(engine, Entity::kChapters
 	CALLBACK_FUNCTION(Chapters, chapter1);
 	CALLBACK_FUNCTION(Chapters, nullfunc);
 	CALLBACK_FUNCTION(Chapters, nullfunc);
-	CALLBACK_FUNCTION(Chapters, nullfunc);
+	CALLBACK_FUNCTION(Chapters, chapter1_init);
 	CALLBACK_FUNCTION(Chapters, nullfunc);
 	CALLBACK_FUNCTION(Chapters, nullfunc);
 	CALLBACK_FUNCTION(Chapters, chapter2);

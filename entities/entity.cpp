@@ -25,7 +25,41 @@
 
 #include "lastexpress/entities/entity.h"
 
+// Entities
+#include "lastexpress/entities/abbot.h"
+#include "lastexpress/entities/alexei.h"
+#include "lastexpress/entities/alouan.h"
+#include "lastexpress/entities/anna.h"
+#include "lastexpress/entities/august.h"
+#include "lastexpress/entities/boutarel.h"
 #include "lastexpress/entities/chapters.h"
+#include "lastexpress/entities/cooks.h"
+#include "lastexpress/entities/coudert.h"
+#include "lastexpress/entities/entity24.h"
+#include "lastexpress/entities/entity39.h"
+#include "lastexpress/entities/francois.h"
+#include "lastexpress/entities/gendarmes.h"
+#include "lastexpress/entities/hadija.h"
+#include "lastexpress/entities/ivo.h"
+#include "lastexpress/entities/kahina.h"
+#include "lastexpress/entities/kronos.h"
+#include "lastexpress/entities/mahmud.h"
+#include "lastexpress/entities/max.h"
+#include "lastexpress/entities/mertens.h"
+#include "lastexpress/entities/milos.h"
+#include "lastexpress/entities/mmeboutarel.h"
+#include "lastexpress/entities/pascale.h"
+#include "lastexpress/entities/rebecca.h"
+#include "lastexpress/entities/salko.h"
+#include "lastexpress/entities/servers0.h"
+#include "lastexpress/entities/servers1.h"
+#include "lastexpress/entities/tables.h"
+#include "lastexpress/entities/tatiana.h"
+#include "lastexpress/entities/train.h"
+#include "lastexpress/entities/vassili.h"
+#include "lastexpress/entities/verges.h"
+#include "lastexpress/entities/vesna.h"
+#include "lastexpress/entities/yasmin.h"
 
 #include "lastexpress/game/logic.h"
 
@@ -38,11 +72,54 @@ namespace LastExpress {
 // Entities
 //////////////////////////////////////////////////////////////////////////
 Entities::Entities(LastExpressEngine *engine) : _engine(engine) {
-	_chapters = new Chapters(engine);
+	_entities.push_back(NULL);		// Header
+	ADD_ENTITY(Anna);	
+	ADD_ENTITY(August);
+	ADD_ENTITY(Mertens);
+	ADD_ENTITY(Coudert);
+	ADD_ENTITY(Pascale);
+	ADD_ENTITY(Servers0);
+	ADD_ENTITY(Servers1);
+	ADD_ENTITY(Cooks);
+	ADD_ENTITY(Verges);
+	ADD_ENTITY(Tatiana);	
+	ADD_ENTITY(Vassili);
+	ADD_ENTITY(Alexei);
+	ADD_ENTITY(Abbot);
+	ADD_ENTITY(Milos);
+	ADD_ENTITY(Vesna);
+	ADD_ENTITY(Ivo);
+	ADD_ENTITY(Salko);
+	ADD_ENTITY(Kronos);
+	ADD_ENTITY(Kahina);
+	ADD_ENTITY(Francois);
+	ADD_ENTITY(MmeBoutarel);
+	ADD_ENTITY(Boutarel);
+	ADD_ENTITY(Rebecca);
+	ADD_ENTITY(Entity24);	
+	ADD_ENTITY(Mahmud);
+	ADD_ENTITY(Yasmin);
+	ADD_ENTITY(Hadija);
+	ADD_ENTITY(Alouan);
+	ADD_ENTITY(Gendarmes);
+	ADD_ENTITY(Max);	
+	ADD_ENTITY(Chapters);	
+	ADD_ENTITY(Train);
+
+	// Special case for tables
+	_entities.push_back(new Tables(engine, 0));
+	_entities.push_back(new Tables(engine, 1));
+	_entities.push_back(new Tables(engine, 2));
+	_entities.push_back(new Tables(engine, 3));
+	_entities.push_back(new Tables(engine, 4));
+	_entities.push_back(new Tables(engine, 5));
+
+	ADD_ENTITY(Entity39);
 }
 
-Entities::~Entities() {
-	delete _chapters;
+Entities::~Entities() {	
+	for (uint i = 0; i < _entities.size(); i++)
+		delete _entities[i];
 }
 
 void Entities::load(int callbackIndex) {
@@ -55,19 +132,36 @@ void Entities::setup(Entity::ChapterIndex chapter) {
 	//  - raw sequences
 	//  - reset savegame fields (4x1000 & the two 4x16)
 
-	if (chapter < 2)
-		_chapters->setup(chapter);
+	// Skip "header"
+	for (uint i = 1; i < _entities.size(); i++) {
+		
+		// Special case of chapters
+		if (i == Entity::kChapters && chapter >= 2)			
+			continue;	
+
+		_entities[i]->setup(chapter);
+	}
 }
 
+void Entities::serialize(Common::Serializer &ser, Entity::EntityData *data) {
+	// TODO implement
+}
 
 void Entities::saveLoadWithSerializer(Common::Serializer &ser) {
-	_chapters->saveLoadWithSerializer(ser);
+	serialize(ser, &_header);
+	for (uint i = 1; i < _entities.size(); i++)
+		serialize(ser, _entities[i]->getData());		
 }
 
 
 //////////////////////////////////////////////////////////////////////////
 // Entity
 //////////////////////////////////////////////////////////////////////////
+Entity::Entity(LastExpressEngine *engine, EntityIndex index) : _engine(engine), _entityIndex(index) {
+	// Add first empty entry to callbacks array
+	_callbacks.push_back(NULL);
+}
+
 Entity::~Entity() {
 	for (uint i = 0; i < _callbacks.size(); i++)
 		delete _callbacks[i];
@@ -104,14 +198,9 @@ void Entity::setup(ChapterIndex index) {
 	}
 }
 
-void Entity::call(FunctionPointer function, int param1, int param2, int param3, int param4) {
+void Entity::call(FunctionPointer function, char* name, int param2, int param3, int param4) {
 	_data.current_call++;
-	(*function)(param1, param2, param3, param4);
+	(*function)(name, param2, param3, param4);
 }
-
-void Entity::saveLoadWithSerializer(Common::Serializer &ser) {
-
-}
-
 
 } // End of namespace LastExpress

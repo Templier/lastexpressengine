@@ -31,46 +31,6 @@
 	--------
 
 	The entities structure contains a 40 Entity_t structures for each entity
-	 - ????
-	 - Anna
-	 - August
-	 - Mertens
-	 - Coudert
-	 - Pascale
-	 - Servers 0
-	 - Servers 1
-	 - Cooks
-	 - Verges
-	 - Tatiana				// 10
-	 - Vassili
-	 - Alexei
-	 - Abbot
-	 - Milos
-	 - Vesna
-	 - Ivo
-	 - Salko
-	 - Kronos
-	 - Kahina
-	 - Francois				// 20
-	 - Mme Boutarek=l
-	 - M. Boutarel
-	 - Rebecca
-	 - ??? (24)
-	 - Mahmud
-	 - Yasmin
-	 - Hadija
-	 - Alouan
-	 - Gendarmes
-	 - Max					// 30
-	 - Chapters
-	 - Train
-	 - Tables 0
-	 - Tables 1
-	 - Tables 2
-	 - Tables 3
-	 - Tables 4
-	 - Tables 5
-	 - ??? (39)
 
 */
 
@@ -80,12 +40,21 @@
 
 namespace LastExpress {
 
+#define ADD_ENTITY(class) \
+	_entities.push_back(new class(engine));
+
 #define CALLBACK_FUNCTION(class, name) \
 	_callbacks.push_back(new Common::Functor1Mem<SavePoints::SavePoint*, void, ##class>(this, &##class::##name));
+
+#define CALLBACK_FUNCTION_NULL() \
+	_callbacks.push_back(new Common::Functor1Mem<SavePoints::SavePoint*, void, Entity>(this, &Entity::nullfunction));
 
 #define DECLARE_FUNCTION(class, name, index) \
 	void name(SavePoints::SavePoint *savepoint); \
 	DECLARE_SETUP(class, name, index)
+
+#define DECLARE_FUNCTION_NULL(index)  \
+	DECLARE_SETUP(Entity, nullfunction, index)
 
 #define DECLARE_SETUP(class, name, index) \
 	void setup_##name() { \
@@ -98,12 +67,85 @@ namespace LastExpress {
 class LastExpressEngine;
 
 // Entities
+//class Entry0;
+class Anna;
+class August;
+class Mertens;
+class Coudert;
+class Pascale;
+class Servers0;
+class Servers1;
+class Cooks;
+class Verges;
+class Tatiana;
+class Vassili;
+class Alexei;
+class Abbot;
+class Milos;
+class Vesna;
+class Ivo;
+class Salko;
+class Kronos;
+class Kahina;
+class Francois;
+class MmeBoutarel;
+class Boutarel;
+class Rebecca;
+class Entity24;
+class Mahmud;
+class Yasmin;
+class Hadija;
+class Alouan;
+class Gendarmes;
+class Max;
 class Chapters;
+class Train;
+class Tables;
+class Entity39;
 
-class Entity : Common::Serializable {
+class Entity {
 public:
 	enum EntityIndex {
-		kChapters = 31
+		kEntry0,
+		kAnna,
+		kAugust,
+		kMertens,
+		kCoudert,
+		kPascale,
+		kServers0,
+		kServers1,
+		kCooks,
+		kVerges,
+		kTatiana,				// 10
+		kVassili,
+		kAlexei,
+		kAbbot,
+		kMilos,
+		kVesna,
+		kIvo,
+		kSalko,
+		kKronos,
+		kKahina,
+		kFrancois,				// 20
+		kMmeBoutarel,
+		kBoutarel,
+		kRebecca,
+		kEntity24,
+		kMahmud,
+		kYasmin,
+		kHadija,
+		kAlouan,
+		kGendarmes,
+		kMax,					// 30
+		kChapters,
+		kTrain,
+		kTables0,
+		kTables1,
+		kTables2,
+		kTables3,
+		kTables4,
+		kTables5,
+		kEntity39
 	};
 
 	enum ChapterIndex {
@@ -115,27 +157,6 @@ public:
 		kChapter5 = 5
 	};
 
-	typedef void (*FunctionPointer)(int param1, int param2, int param3, int param4);
-
-	Entity(LastExpressEngine *engine, EntityIndex index) : _engine(engine), _entityIndex(index) {};
-	~Entity();
-
-	// Setup
-	void setup(ChapterIndex index);
-
-	virtual void setup_chapter1() = 0;
-	virtual void setup_chapter2() = 0;
-	virtual void setup_chapter3() = 0;
-	virtual void setup_chapter4() = 0;
-	virtual void setup_chapter5() = 0;
-
-	// Calls
-	void call(FunctionPointer function, int param1, int param2, int param3, int param4);
-
-	// Serializable
-	void saveLoadWithSerializer(Common::Serializer &ser);
-
-protected:
 	struct EntityCallbackData {
 		int field_0;
 
@@ -161,6 +182,30 @@ protected:
 		}
 	};
 
+	typedef void (*FunctionPointer)(char* name, int param2, int param3, int param4);
+
+	Entity(LastExpressEngine *engine, EntityIndex index);
+	~Entity();
+
+	// Accessors
+	EntityData *getData() { return &_data; }
+
+	// Setup
+	void setup(ChapterIndex index);
+
+	virtual void setup_chapter1() = 0;
+	virtual void setup_chapter2() = 0;
+	virtual void setup_chapter3() = 0;
+	virtual void setup_chapter4() = 0;
+	virtual void setup_chapter5() = 0;
+
+	// Calls
+	void call(FunctionPointer function, char* name, int param2, int param3, int param4);
+
+	// Empty function
+	void nullfunction(SavePoints::SavePoint *savepoint) {}
+
+protected:
 	LastExpressEngine* _engine;
 
 	int _entityIndex;
@@ -180,13 +225,14 @@ public:
 	void load(int callbackIndex);
 
 	// Serializable
+	void serialize(Common::Serializer &ser, Entity::EntityData *data);
 	void saveLoadWithSerializer(Common::Serializer &ser);
 
 private:
 	LastExpressEngine* _engine;
 
-	// Entities
-	Chapters *_chapters;	
+	Entity::EntityData _header;
+	Common::Array<Entity *> _entities;	
 };
 
 } // End of namespace LastExpress
