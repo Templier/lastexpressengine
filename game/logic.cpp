@@ -874,7 +874,7 @@ void Logic::processHotspot(SceneHotspot *hotspot) {
 			sprintf((char*)&filename, "MUS%03d", hotspot->param1);
 			playMusic((char *)&filename);
 			// FIXME check what is stored in savepoint.field_C
-			_savepoints->call(0, 32, 203863200, (int)&filename);
+			//_savepoints->call(0, 32, 203863200, (int)&filename);
 			_savepoints->push(0, 32, 222746496, hotspot->param2);
 
 		}

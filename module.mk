@@ -1,29 +1,29 @@
 MODULE := engines/lastexpress
 
 MODULE_OBJS := \
-	action.o \
-	animation.o \
-	archive.o \
-	background.o \
-	beetle.o \
-	cursor.o \
+	data/animation.o \
+	data/archive.o \
+	data/background.o \
+	data/cursor.o \
+	data/font.o \
+	data/scene.o \
+	data/sequence.o \
+	data/sound.o \
+	data/subtitle.o \
+	game/action.o \
+	game/beetle.o \
+	game/dialog.o \
+	game/items.o \
+	game/inventory.o \
+	game/logic.o \
+	game/menu.o \
+	game/savepoint.o \
 	debug.o \
 	detection.o \
-	dialog.o \
-	items.o \
-	font.o \
 	graphics.o \
-	inventory.o \
 	lastexpress.o \
-	logic.o \
-	menu.o \
 	resource.o \
-	savepoint.o \
-	savegame.o \
-	scene.o \
-	sequence.o \
-	sound.o \
-	subtitle.o
+	savegame.o
 
 # This module can be built as a plugin
 ifeq ($(ENABLE_LASTEXPRESS), DYNAMIC_PLUGIN)
