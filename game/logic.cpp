@@ -55,7 +55,7 @@ Logic::Logic(LastExpressEngine *engine) : _engine(engine), _scene(NULL), _gameSt
 	_menu = new Menu(engine);
 	_inventory = new Inventory(engine);
 	_dialog = new Dialog(engine);
-	_savepoints = new SavePoints();
+	_savepoints = new SavePoints(engine);
 	_items = new Items(engine);
 	_beetle = new Beetle(engine);
 	_entities = new Entities(engine);

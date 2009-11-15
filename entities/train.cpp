@@ -89,7 +89,7 @@ void Train::process(SavePoints::SavePoint *savepoint) {
 	
 	switch (savepoint->action) {
 	case SavePoints::kActionDefault:
-		_data.callback_data[_data.current_call].field_8 = 1;
+		_data.callback_data[_data.current_call].entries[8].field_0 = 1;
 		if (getProgress().index < 5) {
 			getItems()->update(5, 32, 3, 10, 9);
 			getItems()->update(6, 32, 3, 10, 9);

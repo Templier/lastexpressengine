@@ -135,7 +135,7 @@ void Entities::setup(Entity::ChapterIndex chapter) {
 	// Skip "header"
 	for (uint i = 1; i < _entities.size(); i++) {
 		
-		// Special case of chapters
+		// Special case of chapters (prevents infinite loop as we will be called from Chapters functions when changing chapters)
 		if (i == Entity::kChapters && chapter >= 2)			
 			continue;	
 
@@ -143,6 +143,18 @@ void Entities::setup(Entity::ChapterIndex chapter) {
 	}
 }
 
+// Accessors
+Entity::EntityData *Entities::getEntityData(uint index) {
+	assert(index < _entities.size());
+
+	if (index == 0)
+		return &_header;
+
+	return _entities[index]->getData();
+}
+
+
+// Serializer
 void Entities::serialize(Common::Serializer &ser, Entity::EntityData *data) {
 	// TODO implement
 }

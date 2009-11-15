@@ -25,9 +25,16 @@
 
 #include "lastexpress/game/savepoint.h"
 
+#include "lastexpress/entities/entity.h"
+#include "lastexpress/game/logic.h"
+
+#include "lastexpress/helpers.h"
+#include "lastexpress/lastexpress.h"
+
+
 namespace LastExpress {
 
-SavePoints::SavePoints() {
+SavePoints::SavePoints(LastExpressEngine *engine) : _engine(engine) {
 	for (int i = 0; i < 40; i++)
 		_callbacks[i] = NULL;
 }
@@ -140,7 +147,8 @@ bool SavePoints::updateEntity(SavePoint point) {
 	for (uint i = 0; i < _data.size(); i++) {
 		if (_data[i].index == point.index && _data[i].field_4 == point.action) {
 
-			// TODO update game state
+			// FIXME this looks pretty bad :(
+			*(&getEntities()->getEntityData(_data[i].index)->callback_data[8].entries[0].field_0 + _data[i].field_C) = 1;
 
 			return true;
 		}

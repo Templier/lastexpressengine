@@ -108,7 +108,7 @@ void Chapters::chapter1_init(SavePoints::SavePoint *savepoint) {
 		getItems()->updateField4(i, 2);
 	}
 
-	_data.callback_data[_data.current_call].field_0 = 40;
+	_data.callback_data[_data.current_call].entries[0].field_0 = 40;
 
 	getItems()->updateField4(25, 1);
 	getItems()->updateField4(23, 1);

@@ -294,6 +294,7 @@ public:
 
 	Cursor::CursorStyle getCursorStyle() { return _runState.cursorStyle; }
 	Dialog 	   *getDialog() { return _dialog; }
+	Entities   *getGameEntities() { return _entities; }
 	Inventory  *getGameInventory() { return _inventory; }
 	Items	   *getGameItems() { return _items; }
 	GameState  *getGameState() { return _gameState; }

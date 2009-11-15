@@ -157,16 +157,19 @@ public:
 		kChapter5 = 5
 	};
 
-	struct EntityCallbackData {
+	struct EntityCallbackDataEntry {
 		int field_0;
 		int field_4;
 		int field_8;
+		int field_C;
+		int field_10;
+		int field_14;
+		int field_18;
+		int field_1C;
+	};
 
-		EntityCallbackData() {
-			field_0 = 0;
-			field_4 = 0;
-			field_8 = 0;
-		}
+	struct EntityCallbackData {
+		EntityCallbackDataEntry entries[4];
 	};
 
 	struct EntityData {
@@ -229,6 +232,9 @@ public:
 
 	void setup(Entity::ChapterIndex chapter);
 	void load(int callbackIndex);
+
+	// Accessors
+	Entity::EntityData* getEntityData(uint index);
 
 	// Serializable
 	void serialize(Common::Serializer &ser, Entity::EntityData *data);

@@ -52,6 +52,8 @@
 
 namespace LastExpress {
 
+class LastExpressEngine;
+
 class SavePoints : Common::Serializable {
 public:
 	enum SavePointsAction {
@@ -81,7 +83,7 @@ public:
 
 	typedef Common::Functor1<SavePoint*, void> Callback;
 
-	SavePoints();
+	SavePoints(LastExpressEngine *engine);
 	~SavePoints();
 	
 	// Savepoints
@@ -103,6 +105,8 @@ public:
 
 private:
 	static const uint32 _savePointsMaxSize = 128;
+
+	LastExpressEngine *_engine;
 
 	Common::List<SavePoint> _savepoints;	///< could be a queue, but we need to be able to iterate on the items
 	Common::Array<SavePointData> _data;
