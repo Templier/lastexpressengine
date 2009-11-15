@@ -32,6 +32,7 @@
 #define loadFile(name) load(_engine->getResMan()->getFileStream(name))
 #define playMusic(name) _engine->getMusicStream()->load(_engine->getResMan()->getFileStream(name));
 #define playSfx(name) if (name) _engine->getSfxStream()->load(_engine->getResMan()->getFileStream(Common::String(name) + ".snd"));
+#define playSound(index, action, a3) playSfx(_engine->getLogic()->getDialog()->getSound(index, action, a3))
 
 // Logic subclasses
 #define getState() _engine->getLogic()->getGameState()

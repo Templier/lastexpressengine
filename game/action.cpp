@@ -26,8 +26,9 @@
 #include "lastexpress/game/action.h"
 
 #include "lastexpress/data/animation.h"
+#include "lastexpress/data/sound.h"
 
-#include "lastexpress/game/inventory.h"
+#include "lastexpress/game/dialog.h"
 #include "lastexpress/game/logic.h"
 
 #include "lastexpress/helpers.h"
@@ -321,8 +322,119 @@ const static struct {
 Action::Action(LastExpressEngine *engine) : _engine(engine) {}
 
 //////////////////////////////////////////////////////////////////////////
-// Actions
+// Items
 //////////////////////////////////////////////////////////////////////////
+bool Action::pickItem(Inventory::InventoryItem item, byte location, bool process) {
+	Inventory::InventoryEntry* entry = inventory->getItem(item);
+
+	if (item >= 32 || !entry->location)
+		return false;
+
+	// Special case for corpse
+	if (item == Inventory::kCorpse) {
+		pickCorpse(location);
+
+		if (process)
+			_engine->getLogic()->processItem();
+
+		// Add corpse to inventory
+		if (location != 4) { // bed position
+			inventory->addItem(Inventory::kCorpse);
+			inventory->selectItem(Inventory::kCorpse);
+			_engine->getCursor()->setStyle(Cursor::kCursorCorpse);
+		}
+
+		return false;
+	}
+
+	// Add and process items
+	inventory->addItem(item);
+
+	switch (item) {
+	case Inventory::kGreenJacket:
+		pickGreenJacket();
+
+		if (process)
+			_engine->getLogic()->processItem();
+
+		break;
+
+	case Inventory::kScarf:
+		pickScarf();
+
+		if (process)
+			_engine->getLogic()->processItem();
+
+		// stop processing
+		return false;
+
+	case Inventory::kParchemin:
+		if (location == 2)
+			break;
+
+		inventory->addItem(Inventory::kParchemin);
+		inventory->getItem(Inventory::kItem11)->location = 1;
+		playSound(0, 9, 0);
+		break;
+
+	case Inventory::kBomb:
+		error("Logic::processHotspot: pickItem case for item bomb is not implemented!");
+		break;
+
+	case Inventory::kBriefcase:
+		playSound(0, 83, 0);
+		break;
+
+	default:
+		break;
+	}
+
+	return true;
+}
+
+void Action::dropItem(Inventory::InventoryItem item, byte location, bool process) 
+{
+	if (item >= 32)
+		return;
+
+	if (!inventory->hasItem(item))
+		return;
+
+	if (location < 1)
+		return;
+
+	// Handle actions
+	if (item == Inventory::kBriefcase) {
+		playSound(0, 82, 0);
+
+		if (location == 2) {
+			if (!getProgress().field_58) {
+				// TODO save game
+				getProgress().field_58 = 1;
+			}
+
+			if (inventory->getItem(Inventory::kParchemin)->location == 2) {
+				inventory->addItem(Inventory::kParchemin);
+				inventory->getItem(Inventory::kItem11)->location = 11;
+				playSound(0, 9, 0);
+			}
+		}
+	}
+
+	// Update item location
+	inventory->removeItem(item, location);
+
+	if (item == Inventory::kCorpse) {
+		dropCorpse();
+
+		if (process)
+			_engine->getLogic()->processItem();
+	}
+
+	// Unselect item
+	inventory->unselectItem();
+}
+
 void Action::pickGreenJacket() {
 	getProgress().jacket = Logic::kGreenJacket;
 	inventory->addItem(Inventory::kMatchBox);

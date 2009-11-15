@@ -284,6 +284,7 @@ public:
 	// Scene
 	void setScene(uint32 index);
 	void updateTrainClock();
+	void processItem();
 
 	// Accessors
 	bool isGameStarted() { return _runState.gameStarted; }
@@ -292,6 +293,7 @@ public:
 	GameState *getGameState() { return _gameState; }
 	Inventory *getInventory() { return _inventory; }
 	Cursor::CursorStyle getCursorStyle() { return _runState.cursorStyle; }
+	Dialog *getDialog() { return _dialog; }
 
 private:
 	static const uint32 _defaultBrigthness = 0x3;
@@ -332,11 +334,11 @@ private:
 	Beetle *_beetle;			///< Beetle catching
 	
 	void preProcessScene(uint32 *index);
-	void postProcessScene(uint32 *index);
-	void processItem();
+	void postProcessScene(uint32 *index);	
 	
 	// Hotspots
 	void processHotspot(SceneHotspot *hotspot);
+
 	void hotspot_enterCompartment(SceneHotspot *hotspot);
 
 	Cursor::CursorStyle getCursor(SceneHotspot *hotspot);

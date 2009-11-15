@@ -26,6 +26,8 @@
 #ifndef LASTEXPRESS_ACTION_H
 #define LASTEXPRESS_ACTION_H
 
+#include "lastexpress/game/inventory.h"
+
 #include "common/system.h"
 
 namespace LastExpress {
@@ -318,15 +320,18 @@ public:
 
 	Action(LastExpressEngine *engine);
 
+	void playAnimation(int index);
+
+	bool pickItem(Inventory::InventoryItem item, byte location, bool process);
+	void dropItem(Inventory::InventoryItem item, byte location, bool process);
+
+private:
+	LastExpressEngine* _engine;
+
 	void pickGreenJacket();
 	void pickScarf();
 	void pickCorpse(byte bedPosition);
 	void dropCorpse();
-
-	void playAnimation(int index);
-
-private:
-	LastExpressEngine* _engine;
 };
 
 } // End of namespace LastExpress

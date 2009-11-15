@@ -486,7 +486,7 @@ void Logic::processHotspot(SceneHotspot *hotspot) {
 	case SceneHotspot::kActionPlaySound:
 		// TODO: Check validity: does the file exits (LIBxxx)?
 		if (hotspot->param2)
-			playSfx(_dialog->getSound(0, hotspot->param1, hotspot->param2));
+			playSound(0, hotspot->param1, hotspot->param2);
 		break;
 
 	case SceneHotspot::kActionPlayMusic:		
@@ -499,7 +499,7 @@ void Logic::processHotspot(SceneHotspot *hotspot) {
 		if (_items->get(hotspot->param1).field_0)
 			_savepoints->push(0, _items->get(hotspot->param1).field_0, 8, hotspot->param1);
 		else
-			playSfx(_dialog->getSound(0, 12, 0));
+			playSound(0, 12, 0);
 		
 		break;
 
@@ -527,24 +527,24 @@ void Logic::processHotspot(SceneHotspot *hotspot) {
 
 		if (hotspot->action != 16 || _inventory->getSelectedItem() != Inventory::kKey) {
 			if (hotspot->param1 == 109) {
-				playSfx(_dialog->getSound(0, 26, 0));
+				playSound(0, 26, 0);
 			} else {
-				playSfx(_dialog->getSound(0, 14, 0));
-				playSfx(_dialog->getSound(0, 15, 22));
+				playSound(0, 14, 0);
+				playSound(0, 15, 22);
 			}
 			break;
 		}
 
 		_items->update(1, 0, 1, 10, 9);
-		playSfx(_dialog->getSound(0, 16, 0));
+		playSound(0, 16, 0);
 		_inventory->unselectItem();
 		hotspot->scene = 0;
 		
 		break;
 
 	case SceneHotspot::kActionPlaySounds:
-		playSfx(_dialog->getSound(0, hotspot->param1, 0));
-		playSfx(_dialog->getSound(0, hotspot->param3, hotspot->param2));
+		playSound(0, hotspot->param1, 0);
+		playSound(0, hotspot->param3, hotspot->param2);
 		break;
 
 	case SceneHotspot::kActionPlayAnimation:
@@ -561,11 +561,11 @@ void Logic::processHotspot(SceneHotspot *hotspot) {
 			
 			switch (hotspot->param2) {
 			case 1:
-				playSfx(_dialog->getSound(0, 24, 0));
+				playSound(0, 24, 0);
 				break;
 			
 			case 2:
-				playSfx(_dialog->getSound(0, 36, 0));
+				playSound(0, 36, 0);
 				break;
 
 			default:
@@ -575,11 +575,11 @@ void Logic::processHotspot(SceneHotspot *hotspot) {
 
 		switch (hotspot->param2) {
 		case 1:
-			playSfx(_dialog->getSound(0, 21, 0));
+			playSound(0, 21, 0);
 			break;
 
 		case 2:
-			playSfx(_dialog->getSound(0, 20, 0));
+			playSound(0, 20, 0);
 			break;
 
 		default:
@@ -593,9 +593,9 @@ void Logic::processHotspot(SceneHotspot *hotspot) {
 		// TODO Store value in savegame_640
 		if (hotspot->param1 != 112) {
 			if (hotspot->param1 == 1)
-				playSfx(_dialog->getSound(0, 73, 0));
+				playSound(0, 73, 0);
 		} else  {
-			playSfx(_dialog->getSound(0, 96, 0));	
+			playSound(0, 96, 0);	
 		}
 		break;
 
@@ -604,69 +604,9 @@ void Logic::processHotspot(SceneHotspot *hotspot) {
 
 	case SceneHotspot::kActionPickItem: {
 		Inventory::InventoryItem item = (Inventory::InventoryItem)hotspot->param1;
-		byte location = hotspot->param2;
 
-		Inventory::InventoryEntry* entry = _inventory->getItem(item);
-
-		if (item >= 32 || !entry->location)
+		if (!_action->pickItem(item, hotspot->param2, hotspot->scene < 1))
 			break;
-
-		// Special case for corpse
-		if (item == Inventory::kCorpse) {
-			_action->pickCorpse(hotspot->param2);
-
-			if (hotspot->scene < 1)
-				processItem();
-		
-			// Add corpse to inventory
-			if (location != 4) { // bed position
-				_inventory->addItem(Inventory::kCorpse);
-				_inventory->selectItem(Inventory::kCorpse);
-				_engine->getCursor()->setStyle(Cursor::kCursorCorpse);
-			}
-			break;
-		}
-
-		// Add and process items
-		_inventory->addItem(item);
-
-		switch (item) {
-		case Inventory::kGreenJacket:
-			_action->pickGreenJacket();
-
-			if (hotspot->scene)
-				processItem();
-
-			break;
-
-		case Inventory::kScarf:
-			_action->pickScarf();
-
-			if (hotspot->scene)
-				processItem();
-
-			// stop processing
-			return;
-		
-		case Inventory::kParchemin:
-			if (location == 2)
-				break;
-
-			_inventory->addItem(Inventory::kParchemin);
-			_inventory->getItem(Inventory::kItem11)->location = 1;
-			playSfx(_dialog->getSound(0, 9, 0));
-			break;
-
-		case Inventory::kBomb:
-			error("Logic::processHotspot: pickItem case for item bomb is not implemented!");
-			break;
-
-		case Inventory::kBriefcase:
-			playSfx(_dialog->getSound(0, 83, 0));
-			break;
-		default:
-			break;
-		}
 
 		// Load item scene
 		if (_inventory->getItem(item)->scene_id) {
@@ -687,52 +627,9 @@ void Logic::processHotspot(SceneHotspot *hotspot) {
 		break;
 	}
 
-	case SceneHotspot::kActionDropItem: {
-		Inventory::InventoryItem item = (Inventory::InventoryItem)hotspot->param1;
-		byte location = hotspot->param2;
-
-		if (item >= 32)
-			break;
-
-		if (!_inventory->hasItem(item))
-			break;
-
-		if (location < 1)
-			break;
-
-		// Handle actions
-		if (item == Inventory::kBriefcase) {
-			playSfx(_dialog->getSound(0, 82, 0));
-
-			if (location == 2) {
-				if (!getProgress().field_58) {
-					// TODO save game
-					getProgress().field_58 = 1;
-				}
-
-				if (_inventory->getItem(Inventory::kParchemin)->location == 2) {
-					_inventory->addItem(Inventory::kParchemin);
-					_inventory->getItem(Inventory::kItem11)->location = 11;
-					playSfx(_dialog->getSound(0, 9, 0));
-				}
-			}
-		}
-
-		// Update item location
-		_inventory->removeItem(item, location);
-
-		if (item == Inventory::kCorpse) {
-			_action->dropCorpse();
-
-			if (hotspot->scene < 1)
-				processItem();
-		}
-
-		// Unselect item
-		_inventory->unselectItem();
-
+	case SceneHotspot::kActionDropItem:
+		_action->dropItem((Inventory::InventoryItem)hotspot->param1, hotspot->param2, hotspot->scene < 1);
 		break;
-	}
 
 	case SceneHotspot::kActionExitCompartment:
 		if (!getProgress().field_30 && getProgress().jacket != 0) {
@@ -755,8 +652,8 @@ void Logic::processHotspot(SceneHotspot *hotspot) {
 			if (hotspot->action != 16 || _inventory->getItem(Inventory::kBriefcase)->location != 2) {
 				hotspot_enterCompartment(hotspot);
 			} else {				
-				playSfx(_dialog->getSound(0, 14, 0));
-				playSfx(_dialog->getSound(0, 15, 22));
+				playSound(0, 14, 0);
+				playSound(0, 15, 22);
 				if (getProgress().field_78) {
 					playMusic("MUS003");
 					getProgress().field_78 = 0;
@@ -787,7 +684,7 @@ void Logic::processHotspot(SceneHotspot *hotspot) {
 		error("Logic::processHotspot: unsupported hotspot action (%02d)", hotspot->action);
 
 	case SceneHotspot::kAction27:
-		playSfx(_dialog->getSound(0, 31, 0));
+		playSound(0, 31, 0);
 
 		// TODO update game state
 		error("Logic::processHotspot: unsupported hotspot action (%02d)", hotspot->action);
@@ -813,7 +710,7 @@ void Logic::processHotspot(SceneHotspot *hotspot) {
 		error("Logic::processHotspot: unsupported hotspot action (%02d)", hotspot->action);
 
 	case SceneHotspot::kActionOpenBed:
-		playSfx(_dialog->getSound(0, 59, 0));
+		playSound(0, 59, 0);
 		break;
 
 	case SceneHotspot::kActionDialog:
@@ -821,7 +718,7 @@ void Logic::processHotspot(SceneHotspot *hotspot) {
 		break;
 
 	case SceneHotspot::kActionEggBox:
-		playSfx(_dialog->getSound(0, 43, 0));
+		playSound(0, 43, 0);
 		if (getProgress().field_7C) {
 			playMusic("MUS003");
 			getProgress().field_7C = 0;
@@ -829,7 +726,7 @@ void Logic::processHotspot(SceneHotspot *hotspot) {
 		break;
 
 	case SceneHotspot::kAction39:
-		playSfx(_dialog->getSound(0, 24, 0));
+		playSound(0, 24, 0);
 		if (getProgress().field_80) {
 			playMusic("MUS003");
 			getProgress().field_80 = 0;
@@ -837,7 +734,7 @@ void Logic::processHotspot(SceneHotspot *hotspot) {
 		break;
 
 	case SceneHotspot::kActionBed:
-		playSfx(_dialog->getSound(0, 85, 0));
+		playSound(0, 85, 0);
 		// falls to case 12
 	case SceneHotspot::kAction12:
 		if (hotspot->param1 >= 128)
@@ -913,16 +810,16 @@ void Logic::hotspot_enterCompartment(SceneHotspot *hotspot) {
 
 	if (hotspot->action != 16 || _inventory->getSelectedItem() != Inventory::kKey) {
 		if (hotspot->param1 == 109) {
-			playSfx(_dialog->getSound(0, 26, 0));
+			playSound(0, 26, 0);
 		} else {
-			playSfx(_dialog->getSound(0, 14, 0));
-			playSfx(_dialog->getSound(0, 15, 22));
+			playSound(0, 14, 0);
+			playSound(0, 15, 22);
 		}
 		return;
 	}
 
 	_items->update(1, 0, 1, 10, 9);
-	playSfx(_dialog->getSound(0, 16, 0));
+	playSound(0, 16, 0);
 	_inventory->unselectItem();
 	hotspot->scene = 0;
 }
