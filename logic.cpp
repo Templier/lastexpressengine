@@ -367,6 +367,8 @@ void Logic::preProcessScene(uint32 *index) {
 	if (_beetle->isLoaded()) {
 		// Get scene type
 		Scene *currentScene = _engine->getScene(*index);
+		
+		// FIXME: This condition will never be true
 		if (currentScene->getHeader()->type != -126)
 			_beetle->unload();
 
@@ -657,6 +659,8 @@ void Logic::processHotspot(SceneHotspot *hotspot) {
 
 		case Inventory::kBriefcase:
 			playSfx(_dialog->getSound(0, 83, 0));
+			break;
+		default:
 			break;
 		}
 
