@@ -31,7 +31,7 @@
 
 namespace LastExpress {
 
-Chapters::Chapters(LastExpressEngine *engine) : Entity(engine, Entity::kChapters) {
+Chapters::Chapters(LastExpressEngine *engine) : Entity(engine, SavePoints::kChapters) {
 	CALLBACK_FUNCTION(Chapters, nullfunc);
 	CALLBACK_FUNCTION(Chapters, nullfunc);
 	CALLBACK_FUNCTION(Chapters, nullfunc);
@@ -64,7 +64,7 @@ void Chapters::chapter1(SavePoints::SavePoint *savepoint) {
 	if (savepoint->action != SavePoints::kActionDefault)
 		return;
 
-	getSavePoints()->addData(31, 171843264, 0);
+	getSavePoints()->addData(SavePoints::kChapters, 171843264, 0);
 	setup_chapter1_init();
 }
 
@@ -108,7 +108,7 @@ void Chapters::chapter1_init(SavePoints::SavePoint *savepoint) {
 		getItems()->updateField4(i, 2);
 	}
 
-	_data.callback_data[_data.current_call].entries[0].field_0 = 40;
+	getCallData().entries[0].field_0 = 40;
 
 	getItems()->updateField4(25, 1);
 	getItems()->updateField4(23, 1);

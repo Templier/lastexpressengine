@@ -31,7 +31,7 @@
 
 namespace LastExpress {
 
-Mahmud::Mahmud(LastExpressEngine *engine) : Entity(engine, Entity::kMahmud) {
+Mahmud::Mahmud(LastExpressEngine *engine) : Entity(engine, SavePoints::kMahmud) {
 	CALLBACK_FUNCTION(Mahmud, nullfunc);
 	CALLBACK_FUNCTION(Mahmud, nullfunc);
 	CALLBACK_FUNCTION(Mahmud, nullfunc);
@@ -59,6 +59,30 @@ void Mahmud::nullfunc(SavePoints::SavePoint *savepoint) {
 }
 
 void Mahmud::chapter1(SavePoints::SavePoint *savepoint) {
+	switch (savepoint->action) {
+	default:
+		break;
+
+	case SavePoints::kActionDefault: 
+		getSavePoints()->addData(SavePoints::kMahmud, 170483072, 0);
+
+		getItems()->update(4, 0, 3, 10, 9);
+		getItems()->update(20, 0, 3, 10, 9);
+
+		_data.field_491 = 540;
+		_data.field_493 = 0;
+		_data.field_495 = 3;
+		break;
+
+	case SavePoints::kActionNone: 
+		if (getState()->time > 1062000) {
+			if (!getCallData().entries[0].field_0) {
+				getCallData().entries[0].field_0 = 1;
+				// call function
+			}
+		}
+		break;
+	}
 }
 
 void Mahmud::chapter2(SavePoints::SavePoint *savepoint) {

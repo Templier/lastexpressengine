@@ -31,7 +31,7 @@
 
 namespace LastExpress {
 
-Coudert::Coudert(LastExpressEngine *engine) : Entity(engine, Entity::kCoudert) {
+Coudert::Coudert(LastExpressEngine *engine) : Entity(engine, SavePoints::kCoudert) {
 	CALLBACK_FUNCTION(Coudert, nullfunc);
 	CALLBACK_FUNCTION(Coudert, nullfunc);
 	CALLBACK_FUNCTION(Coudert, nullfunc);
@@ -102,6 +102,53 @@ void Coudert::nullfunc(SavePoints::SavePoint *savepoint) {
 }
 
 void Coudert::chapter1(SavePoints::SavePoint *savepoint) {
+	switch (savepoint->action) {
+	default:
+		break;
+
+	case SavePoints::kActionDefault: 
+		getSavePoints()->addData(SavePoints::kCoudert, 292048641, 7);
+		getSavePoints()->addData(SavePoints::kCoudert, 326348944, 8);
+		getSavePoints()->addData(SavePoints::kCoudert, 171394341, 2);
+		getSavePoints()->addData(SavePoints::kCoudert, 154005632, 4);
+		getSavePoints()->addData(SavePoints::kCoudert, 169557824, 3);
+		getSavePoints()->addData(SavePoints::kCoudert, 226031488, 5);
+		getSavePoints()->addData(SavePoints::kCoudert, 339669520, 6);
+		getSavePoints()->addData(SavePoints::kCoudert, 189750912, 10);
+		getSavePoints()->addData(SavePoints::kCoudert, 185737168, 12);
+		getSavePoints()->addData(SavePoints::kCoudert, 185671840, 13);
+		getSavePoints()->addData(SavePoints::kCoudert, 205033696, 15);
+		getSavePoints()->addData(SavePoints::kCoudert, 157026693, 14);
+		getSavePoints()->addData(SavePoints::kCoudert, 189026624, 11);
+		getSavePoints()->addData(SavePoints::kCoudert, 168254872, 17);
+		getSavePoints()->addData(SavePoints::kCoudert, 201431954, 18);
+		getSavePoints()->addData(SavePoints::kCoudert, 188570113, 19);
+
+		_data.callback_data[8].entries[0].field_0 = 0;
+		_data.callback_data[8].entries[0].field_4 = 1;
+
+		_data.field_491 = 1500;
+		_data.field_493 = 0;
+		_data.field_495 = 4;
+
+		getItems()->updateField4(111, 1);
+		break;
+
+	case 18:
+		//if (_data.callbacks[_data.current_call + 8] == 1)
+			// call function
+		break;
+
+	case SavePoints::kActionNone: 
+		if (getState()->time > 1062000) {
+			if (!getCallData().entries[0].field_0) {
+				getCallData().entries[0].field_0 = 1;
+				_data.callbacks[_data.current_call + 8] = 1;				
+				// call function call(, 0, 0, 0, 0);
+			}
+		}
+		break;
+	}
 }
 
 void Coudert::chapter2(SavePoints::SavePoint *savepoint) {

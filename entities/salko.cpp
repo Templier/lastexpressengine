@@ -31,7 +31,7 @@
 
 namespace LastExpress {
 
-Salko::Salko(LastExpressEngine *engine) : Entity(engine, Entity::kSalko) {
+Salko::Salko(LastExpressEngine *engine) : Entity(engine, SavePoints::kSalko) {
 	CALLBACK_FUNCTION(Salko, nullfunc);
 	CALLBACK_FUNCTION(Salko, nullfunc);
 	CALLBACK_FUNCTION(Salko, nullfunc);

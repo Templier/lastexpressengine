@@ -31,7 +31,7 @@
 
 namespace LastExpress {
 
-Anna::Anna(LastExpressEngine *engine) : Entity(engine, Entity::kAnna) {
+Anna::Anna(LastExpressEngine *engine) : Entity(engine, SavePoints::kAnna) {
 	CALLBACK_FUNCTION(Anna, nullfunc);
 	CALLBACK_FUNCTION(Anna, nullfunc);
 	CALLBACK_FUNCTION(Anna, nullfunc);
@@ -120,6 +120,33 @@ void Anna::nullfunc(SavePoints::SavePoint *savepoint) {
 }
 
 void Anna::chapter1(SavePoints::SavePoint *savepoint) {
+	switch (savepoint->action) {
+	default:
+		break;
+
+	case SavePoints::kActionDefault: 
+		getSavePoints()->addData(SavePoints::kAnna, 291662081, 0);
+		getSavePoints()->addData(SavePoints::kAnna, 238936000, 1);
+
+		getItems()->update(37, 0, 1, 10, 9);
+		getItems()->update(53, 0, 1, 10, 9);
+		getItems()->update(45, 0, 1, 255, 255);
+
+		_data.field_491 = 8200;
+		_data.field_493 = 1;
+		_data.field_495 = 3;
+		_data.field_4A5 = 0;
+		break;
+
+	case SavePoints::kActionNone: 
+		if (getState()->time > 1062000) {
+			if (!getCallData().entries[0].field_0) {
+				getCallData().entries[0].field_0 = 1;
+				// call function
+			}
+		}
+		break;
+	}
 }
 
 void Anna::chapter2(SavePoints::SavePoint *savepoint) {

@@ -55,14 +55,14 @@ namespace LastExpress {
 
 #define DECLARE_FUNCTION_NULL(index)  \
 	DECLARE_SETUP(Entity, nullfunction, index)
-	
+
 #define DECLARE_SETUP(class, name, index) \
 	void setup_##name() { \
-		_engine->getLogic()->getGameSavePoints()->setCallback(_entityIndex, new Common::Functor1Mem<SavePoints::SavePoint*, void, class>(this, &class::name)); \
-		_data.callbacks[_data.current_call] = index; \
-		memset(&_data.callback_data[_data.current_call], 0, sizeof(Entity::EntityData)); \
-		_engine->getLogic()->getGameSavePoints()->call(_entityIndex, _entityIndex, SavePoints::kActionDefault, 0); \
-	}
+	_engine->getLogic()->getGameSavePoints()->setCallback(_entityIndex, new Common::Functor1Mem<SavePoints::SavePoint*, void, class>(this, &class::name)); \
+	_data.callbacks[_data.current_call] = index; \
+	memset(&_data.callback_data[_data.current_call], 0, sizeof(Entity::EntityData)); \
+	_engine->getLogic()->getGameSavePoints()->call(_entityIndex, _entityIndex, SavePoints::kActionDefault, 0); \
+}
 
 class LastExpressEngine;
 
@@ -105,49 +105,6 @@ class Entity39;
 
 class Entity {
 public:
-	enum EntityIndex {
-		kEntry0,
-		kAnna,
-		kAugust,
-		kMertens,
-		kCoudert,
-		kPascale,
-		kServers0,
-		kServers1,
-		kCooks,
-		kVerges,
-		kTatiana,				// 10
-		kVassili,
-		kAlexei,
-		kAbbot,
-		kMilos,
-		kVesna,
-		kIvo,
-		kSalko,
-		kKronos,
-		kKahina,
-		kFrancois,				// 20
-		kMmeBoutarel,
-		kBoutarel,
-		kRebecca,
-		kEntity24,
-		kMahmud,
-		kYasmin,
-		kHadija,
-		kAlouan,
-		kGendarmes,
-		kMax,					// 30
-		kChapters,
-		kTrain,
-		kTables0,
-		kTables1,
-		kTables2,
-		kTables3,
-		kTables4,
-		kTables5,
-		kEntity39
-	};
-
 	enum ChapterIndex {
 		kCustom = 0,
 		kChapter1 = 1,
@@ -179,10 +136,10 @@ public:
 		// int16 ??
 		// byte ??
 		byte current_call;
-		int16 field_491; // ?? numScenes
-		// byte ??
-		// byte ?? (field 13)
-		// etc.
+		int16 field_491; // ?? (numScenes)
+		int16 field_493;
+		int16 field_495; // ?? (field 13)
+		byte field_4A5;
 
 		EntityData() {
 			// TODO Everything set to 0 on start, except field_4A3 ? set to 30
@@ -193,7 +150,7 @@ public:
 
 	typedef void (*FunctionPointer)(char* name, int param2, int param3, int param4);
 
-	Entity(LastExpressEngine *engine, EntityIndex index);
+	Entity(LastExpressEngine *engine, SavePoints::EntityIndex index);
 	virtual ~Entity();
 
 	// Accessors
@@ -217,7 +174,7 @@ public:
 protected:
 	LastExpressEngine* _engine;
 
-	int _entityIndex;
+	SavePoints::EntityIndex _entityIndex;
 	EntityData _data;
 	Common::Array<SavePoints::Callback *> _callbacks;
 };

@@ -31,7 +31,7 @@
 
 namespace LastExpress {
 
-Servers1::Servers1(LastExpressEngine *engine) : Entity(engine, Entity::kServers1) {
+Servers1::Servers1(LastExpressEngine *engine) : Entity(engine, SavePoints::kServers1) {
 	CALLBACK_FUNCTION(Servers1, nullfunc);
 	CALLBACK_FUNCTION(Servers1, nullfunc);
 	CALLBACK_FUNCTION(Servers1, nullfunc);
@@ -71,6 +71,32 @@ void Servers1::nullfunc(SavePoints::SavePoint *savepoint) {
 }
 
 void Servers1::chapter1(SavePoints::SavePoint *savepoint) {
+	switch (savepoint->action) {
+	default:
+		break;
+
+	case SavePoints::kActionDefault: 
+		getSavePoints()->addData(SavePoints::kServers1, 302203328, 5);
+		getSavePoints()->addData(SavePoints::kServers1, 189688608, 6);
+		getSavePoints()->addData(SavePoints::kServers1, 236237423, 7);
+		getSavePoints()->addData(SavePoints::kServers1, 219377792, 8);
+		getSavePoints()->addData(SavePoints::kServers1, 291721418, 10);
+		getSavePoints()->addData(SavePoints::kServers1, 258136010, 11);
+		getSavePoints()->addData(SavePoints::kServers1, 302996448, 2);
+		getSavePoints()->addData(SavePoints::kServers1, 223002560, 0);
+		getSavePoints()->addData(SavePoints::kServers1, 256200848, 9);
+		getSavePoints()->addData(SavePoints::kServers1, 269485588, 3);
+		getSavePoints()->addData(SavePoints::kServers1, 326144276, 4);
+
+		_data.field_491 = 5900;
+		_data.field_493 = 0;
+		_data.field_495 = 5;
+		break;
+
+	case SavePoints::kActionNone: 
+		// call function
+		break;
+	}
 }
 
 void Servers1::chapter2(SavePoints::SavePoint *savepoint) {

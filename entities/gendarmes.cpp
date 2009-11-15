@@ -31,7 +31,7 @@
 
 namespace LastExpress {
 
-Gendarmes::Gendarmes(LastExpressEngine *engine) : Entity(engine, Entity::kGendarmes) {
+Gendarmes::Gendarmes(LastExpressEngine *engine) : Entity(engine, SavePoints::kGendarmes) {
 	CALLBACK_FUNCTION(Gendarmes, nullfunc);
 	CALLBACK_FUNCTION(Gendarmes, chapter1);
 	CALLBACK_FUNCTION(Gendarmes, nullfunc);

@@ -31,7 +31,7 @@
 
 namespace LastExpress {
 
-Milos::Milos(LastExpressEngine *engine) : Entity(engine, Entity::kMilos) {
+Milos::Milos(LastExpressEngine *engine) : Entity(engine, SavePoints::kMilos) {
 	CALLBACK_FUNCTION(Milos, nullfunc);
 	CALLBACK_FUNCTION(Milos, nullfunc);
 	CALLBACK_FUNCTION(Milos, nullfunc);
@@ -74,6 +74,31 @@ void Milos::nullfunc(SavePoints::SavePoint *savepoint) {
 }
 
 void Milos::chapter1(SavePoints::SavePoint *savepoint) {
+	switch (savepoint->action) {
+	default:
+		break;
+
+	case SavePoints::kActionDefault: 
+		getSavePoints()->addData(SavePoints::kMilos, 157691176, 0);
+		getSavePoints()->addData(SavePoints::kMilos, 208228224, 2);
+
+		getItems()->update(38, 0, 3, 10, 9);
+		getItems()->update(46, 0, 0, 255, 255);
+
+		_data.field_491 = 4689;
+		_data.field_493 = 1;
+		_data.field_495 = 5;
+		break;
+
+	case SavePoints::kActionNone: 
+		if (getState()->time > 1062000) {
+			if (!getCallData().entries[0].field_0) {
+				getCallData().entries[0].field_0 = 1;
+				// call function
+			}
+		}
+		break;
+	}
 }
 
 void Milos::chapter2(SavePoints::SavePoint *savepoint) {

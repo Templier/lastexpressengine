@@ -98,7 +98,7 @@ void SavePoints::reset() {
 //////////////////////////////////////////////////////////////////////////
 // Data
 //////////////////////////////////////////////////////////////////////////
-void SavePoints::addData(uint32 index, uint32 field_4, uint32 field_C) {
+void SavePoints::addData(SavePoints::EntityIndex index, uint32 field_4, uint32 field_C) {
 	if (_data.size() >= _savePointsMaxSize)
 		return;
 

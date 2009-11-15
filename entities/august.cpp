@@ -31,7 +31,7 @@
 
 namespace LastExpress {
 
-August::August(LastExpressEngine *engine) : Entity(engine, Entity::kAugust) {
+August::August(LastExpressEngine *engine) : Entity(engine, SavePoints::kAugust) {
 	CALLBACK_FUNCTION(August, nullfunc);
 	CALLBACK_FUNCTION(August, nullfunc);
 	CALLBACK_FUNCTION(August, nullfunc);

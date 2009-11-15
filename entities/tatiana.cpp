@@ -31,7 +31,7 @@
 
 namespace LastExpress {
 
-Tatiana::Tatiana(LastExpressEngine *engine) : Entity(engine, Entity::kTatiana) {
+Tatiana::Tatiana(LastExpressEngine *engine) : Entity(engine, SavePoints::kTatiana) {
 	CALLBACK_FUNCTION(Tatiana, nullfunc);
 	CALLBACK_FUNCTION(Tatiana, nullfunc);
 	CALLBACK_FUNCTION(Tatiana, nullfunc);
@@ -94,6 +94,31 @@ void Tatiana::nullfunc(SavePoints::SavePoint *savepoint) {
 }
 
 void Tatiana::chapter1(SavePoints::SavePoint *savepoint) {
+	switch (savepoint->action) {
+	default:
+		break;
+
+	case SavePoints::kActionDefault: 
+		getSavePoints()->addData(SavePoints::kTatiana, 191198209, 0);
+
+		getItems()->update(33, 0, 1, 10, 9);
+		getItems()->update(49, 0, 1, 10, 9);
+		getItems()->update(41, 0, 0, 255, 255);
+
+		_data.field_491 = 5419;
+		_data.field_493 = 1;
+		_data.field_495 = 3;
+		break;
+
+	case SavePoints::kActionNone: 
+		if (getState()->time > 1062000) {
+			if (!getCallData().entries[0].field_0) {
+				getCallData().entries[0].field_0 = 1;
+				// call function
+			}
+		}
+		break;
+	}
 }
 
 void Tatiana::chapter2(SavePoints::SavePoint *savepoint) {

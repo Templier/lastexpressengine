@@ -31,7 +31,7 @@
 
 namespace LastExpress {
 
-Verges::Verges(LastExpressEngine *engine) : Entity(engine, Entity::kVerges) {
+Verges::Verges(LastExpressEngine *engine) : Entity(engine, SavePoints::kVerges) {
 	CALLBACK_FUNCTION(Verges, nullfunc);
 	CALLBACK_FUNCTION(Verges, nullfunc);
 	CALLBACK_FUNCTION(Verges, nullfunc);
@@ -81,6 +81,37 @@ void Verges::nullfunc(SavePoints::SavePoint *savepoint) {
 }
 
 void Verges::chapter1(SavePoints::SavePoint *savepoint) {
+	switch (savepoint->action) {
+	default:
+		break;
+
+	case SavePoints::kActionDefault: 
+		getSavePoints()->addData(SavePoints::kVerges, 191337656, 0);
+		getSavePoints()->addData(SavePoints::kVerges, 226031488, 1);
+		getSavePoints()->addData(SavePoints::kVerges, 339669520, 1);
+		getSavePoints()->addData(SavePoints::kVerges, 167854368, 4);
+		getSavePoints()->addData(SavePoints::kVerges, 158617345, 2);
+		getSavePoints()->addData(SavePoints::kVerges, 168255788, 3);
+		getSavePoints()->addData(SavePoints::kVerges, 201431954, 5);
+		getSavePoints()->addData(SavePoints::kVerges, 168187490, 6);
+
+		getItems()->update(104, 9, 0, 0, 9);
+		getItems()->update(105, 9, 0, 0, 9);
+
+		_data.field_491 = 5000;
+		_data.field_493 = 0;
+		_data.field_495 = 6;
+		break;
+
+	case SavePoints::kActionNone: 
+		if (getState()->time > 1062000) {
+			if (!getCallData().entries[0].field_0) {
+				getCallData().entries[0].field_0 = 1;
+				// call function
+			}
+		}
+		break;
+	}
 }
 
 void Verges::chapter2(SavePoints::SavePoint *savepoint) {

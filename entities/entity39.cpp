@@ -31,7 +31,7 @@
 
 namespace LastExpress {
 
-Entity39::Entity39(LastExpressEngine *engine) : Entity(engine, Entity::kEntity39) {	
+Entity39::Entity39(LastExpressEngine *engine) : Entity(engine, SavePoints::kEntity39) {	
 	CALLBACK_FUNCTION(Entity39, chapter1);
 	CALLBACK_FUNCTION(Entity39, chapter2);
 	CALLBACK_FUNCTION(Entity39, chapter3);

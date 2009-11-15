@@ -31,7 +31,7 @@
 
 namespace LastExpress {
 
-Abbot::Abbot(LastExpressEngine *engine) : Entity(engine, Entity::kAbbot) {
+Abbot::Abbot(LastExpressEngine *engine) : Entity(engine, SavePoints::kAbbot) {
 	CALLBACK_FUNCTION(Abbot, nullfunc);
 	CALLBACK_FUNCTION(Abbot, nullfunc);
 	CALLBACK_FUNCTION(Abbot, nullfunc);
@@ -92,6 +92,10 @@ void Abbot::nullfunc(SavePoints::SavePoint *savepoint) {
 }
 
 void Abbot::chapter1(SavePoints::SavePoint *savepoint) {
+	if (savepoint->action != SavePoints::kActionDefault)
+		return;
+
+	getSavePoints()->addData(SavePoints::kAbbot, 203073664, 0);
 }
 
 void Abbot::chapter2(SavePoints::SavePoint *savepoint) {

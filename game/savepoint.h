@@ -56,7 +56,51 @@ class LastExpressEngine;
 
 class SavePoints : Common::Serializable {
 public:
+	enum EntityIndex {
+		kEntry0,
+		kAnna,
+		kAugust,
+		kMertens,
+		kCoudert,
+		kPascale,
+		kServers0,
+		kServers1,
+		kCooks,
+		kVerges,
+		kTatiana,				// 10
+		kVassili,
+		kAlexei,
+		kAbbot,
+		kMilos,
+		kVesna,
+		kIvo,
+		kSalko,
+		kKronos,
+		kKahina,
+		kFrancois,				// 20
+		kMmeBoutarel,
+		kBoutarel,
+		kRebecca,
+		kEntity24,
+		kMahmud,
+		kYasmin,
+		kHadija,
+		kAlouan,
+		kGendarmes,
+		kMax,					// 30
+		kChapters,
+		kTrain,
+		kTables0,
+		kTables1,
+		kTables2,
+		kTables3,
+		kTables4,
+		kTables5,
+		kEntity39
+	};
+
 	enum SavePointsAction {
+		kActionNone = 0,
 		kActionDefault = 12
 	};
 
@@ -93,7 +137,7 @@ public:
 	void reset();
 
 	// Data
-	void addData(uint32 index, uint32 field_4, uint32 field_C);
+	void addData(SavePoints::EntityIndex index, uint32 field_4, uint32 field_C);
 
 	// Callbacks
 	void setCallback(uint index, Callback* callback);

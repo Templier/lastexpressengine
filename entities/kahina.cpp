@@ -31,7 +31,7 @@
 
 namespace LastExpress {
 
-Kahina::Kahina(LastExpressEngine *engine) : Entity(engine, Entity::kKahina) {
+Kahina::Kahina(LastExpressEngine *engine) : Entity(engine, SavePoints::kKahina) {
 	CALLBACK_FUNCTION(Kahina, nullfunc);
 	CALLBACK_FUNCTION(Kahina, nullfunc);
 	CALLBACK_FUNCTION(Kahina, nullfunc);

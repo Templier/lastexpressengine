@@ -31,7 +31,7 @@
 
 namespace LastExpress {
 
-Mertens::Mertens(LastExpressEngine *engine) : Entity(engine, Entity::kMertens) {
+Mertens::Mertens(LastExpressEngine *engine) : Entity(engine, SavePoints::kMertens) {
 	CALLBACK_FUNCTION(Mertens, nullfunc);
 	CALLBACK_FUNCTION(Mertens, nullfunc);
 	CALLBACK_FUNCTION(Mertens, nullfunc);
@@ -91,6 +91,39 @@ void Mertens::nullfunc(SavePoints::SavePoint *savepoint) {
 }
 
 void Mertens::chapter1(SavePoints::SavePoint *savepoint) {
+	switch (savepoint->action) {
+	default:
+		break;
+
+	case SavePoints::kActionDefault: 
+		getSavePoints()->addData(SavePoints::kMertens, 171394341, 7);
+		getSavePoints()->addData(SavePoints::kMertens, 169633856, 9);
+		getSavePoints()->addData(SavePoints::kMertens, 238732837, 10);
+		getSavePoints()->addData(SavePoints::kMertens, 269624833, 12);
+		getSavePoints()->addData(SavePoints::kMertens, 302614416, 11);
+		getSavePoints()->addData(SavePoints::kMertens, 190082817, 8);
+		getSavePoints()->addData(SavePoints::kMertens, 269436673, 13);
+		getSavePoints()->addData(SavePoints::kMertens, 303343617, 14);
+		getSavePoints()->addData(SavePoints::kMertens, 224122407, 17);
+		getSavePoints()->addData(SavePoints::kMertens, 201431954, 18);
+		getSavePoints()->addData(SavePoints::kMertens, 188635520, 19);
+		getSavePoints()->addData(SavePoints::kMertens, 204379649, 4);
+
+		_data.callback_data[8].entries[0].field_0 = 0;
+		_data.field_491 = 9460;
+		_data.field_493 = 0;
+		_data.field_495 = 3;
+		break;
+
+	case SavePoints::kActionNone: 
+		if (getState()->time > 1062000) {
+			if (!getCallData().entries[0].field_0) {
+				getCallData().entries[0].field_0 = 1;
+				// call function
+			}
+		}
+		break;
+	}
 }
 
 void Mertens::chapter2(SavePoints::SavePoint *savepoint) {

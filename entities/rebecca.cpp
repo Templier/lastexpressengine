@@ -31,7 +31,7 @@
 
 namespace LastExpress {
 
-Rebecca::Rebecca(LastExpressEngine *engine) : Entity(engine, Entity::kRebecca) {
+Rebecca::Rebecca(LastExpressEngine *engine) : Entity(engine, SavePoints::kRebecca) {
 	CALLBACK_FUNCTION(Rebecca, nullfunc);
 	CALLBACK_FUNCTION(Rebecca, nullfunc);
 	CALLBACK_FUNCTION(Rebecca, nullfunc);
@@ -88,6 +88,35 @@ void Rebecca::nullfunc(SavePoints::SavePoint *savepoint) {
 }
 
 void Rebecca::chapter1(SavePoints::SavePoint *savepoint) {
+	switch (savepoint->action) {
+	default:
+		break;
+
+	case SavePoints::kActionDefault: 
+		getSavePoints()->addData(SavePoints::kRebecca, 224253538, 0);
+
+		getItems()->update(36, 0, 0, 10, 9);
+		getItems()->update(52, 0, 0, 10, 9);
+		getItems()->update(44, 0, 0, 255, 255);
+
+		getItems()->updateField4(110, 1);
+
+		_data.field_491 = 2830;
+		_data.field_493 = 1;
+		_data.field_495 = 5;
+
+		_data.callback_data[8].entries[0].field_4 = 1;
+		break;
+
+	case SavePoints::kActionNone: 
+		if (getState()->time > 1062000) {
+			if (!getCallData().entries[0].field_0) {
+				getCallData().entries[0].field_0 = 1;
+				// call function
+			}
+		}
+		break;
+	}
 }
 
 void Rebecca::chapter2(SavePoints::SavePoint *savepoint) {

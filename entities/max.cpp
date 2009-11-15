@@ -31,7 +31,7 @@
 
 namespace LastExpress {
 
-Max::Max(LastExpressEngine *engine) : Entity(engine, Entity::kMax) {
+Max::Max(LastExpressEngine *engine) : Entity(engine, SavePoints::kMax) {
 	CALLBACK_FUNCTION(Max, nullfunc);
 	CALLBACK_FUNCTION(Max, nullfunc);
 	CALLBACK_FUNCTION(Max, nullfunc);

@@ -31,7 +31,7 @@
 
 namespace LastExpress {
 
-Boutarel::Boutarel(LastExpressEngine *engine) : Entity(engine, Entity::kBoutarel) {
+Boutarel::Boutarel(LastExpressEngine *engine) : Entity(engine, SavePoints::kBoutarel) {
 	CALLBACK_FUNCTION(Boutarel, nullfunc);
 	CALLBACK_FUNCTION(Boutarel, nullfunc);
 	CALLBACK_FUNCTION(Boutarel, nullfunc);
@@ -78,6 +78,32 @@ void Boutarel::nullfunc(SavePoints::SavePoint *savepoint) {
 }
 
 void Boutarel::chapter1(SavePoints::SavePoint *savepoint) {
+	switch (savepoint->action) {
+	default:
+		break;
+
+	case SavePoints::kActionDefault: 
+		getSavePoints()->addData(SavePoints::kBoutarel, 203520448, 0);
+		getSavePoints()->addData(SavePoints::kBoutarel, 237889408, 1);
+
+		getItems()->update(34, 0, 0, 10, 9);
+		getItems()->update(50, 0, 0, 10, 9);
+		getItems()->update(42, 0, 0, 255, 255);
+
+		_data.field_491 = 1750;
+		_data.field_493 = 1;
+		_data.field_495 = 5;
+		break;
+
+	case SavePoints::kActionNone: 
+		if (getState()->time > 1062000) {
+			if (!getCallData().entries[0].field_0) {
+				getCallData().entries[0].field_0 = 1;
+				// call function
+			}
+		}
+		break;
+	}
 }
 
 void Boutarel::chapter2(SavePoints::SavePoint *savepoint) {

@@ -31,7 +31,7 @@
 
 namespace LastExpress {
 
-Vesna::Vesna(LastExpressEngine *engine) : Entity(engine, Entity::kVesna) {
+Vesna::Vesna(LastExpressEngine *engine) : Entity(engine, SavePoints::kVesna) {
 	CALLBACK_FUNCTION(Vesna, nullfunc);
 	CALLBACK_FUNCTION(Vesna, nullfunc);
 	CALLBACK_FUNCTION(Vesna, nullfunc);
@@ -70,6 +70,27 @@ void Vesna::nullfunc(SavePoints::SavePoint *savepoint) {
 }
 
 void Vesna::chapter1(SavePoints::SavePoint *savepoint) {
+	switch (savepoint->action) {
+	default:
+		break;
+
+	case SavePoints::kActionDefault: 
+		getSavePoints()->addData(SavePoints::kVesna, 124190740, 0);
+
+		_data.field_491 = 4689;
+		_data.field_493 = 1;
+		_data.field_495 = 5;
+		break;
+
+	case SavePoints::kActionNone: 
+		if (getState()->time > 1062000) {
+			if (!getCallData().entries[0].field_0) {
+				getCallData().entries[0].field_0 = 1;
+				// call function
+			}
+		}
+		break;
+	}
 }
 
 void Vesna::chapter2(SavePoints::SavePoint *savepoint) {

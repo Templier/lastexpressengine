@@ -31,7 +31,7 @@
 
 namespace LastExpress {
 
-Alexei::Alexei(LastExpressEngine *engine) : Entity(engine, Entity::kAlexei) {
+Alexei::Alexei(LastExpressEngine *engine) : Entity(engine, SavePoints::kAlexei) {
 	CALLBACK_FUNCTION(Alexei, nullfunc);
 	CALLBACK_FUNCTION(Alexei, nullfunc);
 	CALLBACK_FUNCTION(Alexei, nullfunc);

@@ -136,7 +136,7 @@ void Entities::setup(Entity::ChapterIndex chapter) {
 	for (uint i = 1; i < _entities.size(); i++) {
 		
 		// Special case of chapters (prevents infinite loop as we will be called from Chapters functions when changing chapters)
-		if (i == Entity::kChapters && chapter >= 2)			
+		if (i == SavePoints::kChapters && chapter >= 2)			
 			continue;	
 
 		_entities[i]->setup(chapter);
@@ -169,7 +169,7 @@ void Entities::saveLoadWithSerializer(Common::Serializer &ser) {
 //////////////////////////////////////////////////////////////////////////
 // Entity
 //////////////////////////////////////////////////////////////////////////
-Entity::Entity(LastExpressEngine *engine, EntityIndex index) : _engine(engine), _entityIndex(index) {
+Entity::Entity(LastExpressEngine *engine, SavePoints::EntityIndex index) : _engine(engine), _entityIndex(index) {
 	// Add first empty entry to callbacks array
 	_callbacks.push_back(NULL);
 }

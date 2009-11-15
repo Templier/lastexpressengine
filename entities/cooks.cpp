@@ -31,7 +31,7 @@
 
 namespace LastExpress {
 
-Cooks::Cooks(LastExpressEngine *engine) : Entity(engine, Entity::kCooks) {
+Cooks::Cooks(LastExpressEngine *engine) : Entity(engine, SavePoints::kCooks) {
 	CALLBACK_FUNCTION(Cooks, nullfunc);
 	CALLBACK_FUNCTION(Cooks, nullfunc);
 	CALLBACK_FUNCTION(Cooks, nullfunc);

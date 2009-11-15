@@ -31,7 +31,7 @@
 
 namespace LastExpress {
 
-Hadija::Hadija(LastExpressEngine *engine) : Entity(engine, Entity::kHadija) {
+Hadija::Hadija(LastExpressEngine *engine) : Entity(engine, SavePoints::kHadija) {
 	CALLBACK_FUNCTION(Hadija, nullfunc);
 	CALLBACK_FUNCTION(Hadija, nullfunc);
 	CALLBACK_FUNCTION(Hadija, nullfunc);
