@@ -23,14 +23,16 @@
  *
  */
 
-#include "lastexpress/inventory.h"
+#include "lastexpress/game/inventory.h"
+
+#include "lastexpress/data/sound.h"
+#include "lastexpress/game/logic.h"
 
 #include "lastexpress/graphics.h"
 #include "lastexpress/helpers.h"
 #include "lastexpress/lastexpress.h"
-#include "lastexpress/logic.h"
 #include "lastexpress/resource.h"
-#include "lastexpress/sound.h"
+
 
 #define drawItem(x, y, index, brightness) { Icon icon((Cursor::CursorStyle)(index)); icon.setPosition(x, y); icon.setBrightness(brightness); _engine->getGraphicsManager()->draw(&icon, GraphicsManager::kBackgroundInventory); }
 

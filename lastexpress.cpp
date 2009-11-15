@@ -25,12 +25,14 @@
 
 #include "lastexpress/lastexpress.h"
 
+#include "lastexpress/data/cursor.h"
+#include "lastexpress/data/font.h"
+#include "lastexpress/data/sound.h"
+
+#include "lastexpress/game/logic.h"
+
 #include "lastexpress/graphics.h"
 #include "lastexpress/resource.h"
-#include "lastexpress/cursor.h"
-#include "lastexpress/font.h"
-#include "lastexpress/sound.h"
-#include "lastexpress/logic.h"
 
 #include "common/EventRecorder.h"
 

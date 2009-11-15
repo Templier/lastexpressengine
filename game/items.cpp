@@ -23,10 +23,11 @@
  *
  */
 
-#include "lastexpress/items.h"
+#include "lastexpress/game/items.h"
+
+#include "lastexpress/game/logic.h"
 
 #include "lastexpress/lastexpress.h"
-#include "lastexpress/logic.h"
 
 namespace LastExpress {
 

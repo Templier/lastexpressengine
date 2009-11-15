@@ -26,10 +26,11 @@
 // Based on the Xentax Wiki documentation:
 // http://wiki.xentax.com/index.php/The_Last_Express_SBE
 
-#include "lastexpress/subtitle.h"
+#include "lastexpress/data/subtitle.h"
+
+#include "lastexpress/data/font.h"
 
 #include "lastexpress/debug.h"
-#include "lastexpress/font.h"
 
 #include "common/debug.h"
 

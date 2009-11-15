@@ -23,12 +23,13 @@
  *
  */
 
-#include "lastexpress/menu.h"
+#include "lastexpress/game/menu.h"
 
 // Data
-#include "lastexpress/animation.h"
-#include "lastexpress/logic.h"
-#include "lastexpress/sound.h"
+#include "lastexpress/data/animation.h"
+#include "lastexpress/data/sound.h"
+
+#include "lastexpress/game/logic.h"
 
 #include "lastexpress/graphics.h"
 #include "lastexpress/helpers.h"

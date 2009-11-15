@@ -24,10 +24,12 @@
  */
 
 #include "lastexpress/resource.h"
-#include "lastexpress/background.h"
-#include "lastexpress/cursor.h"
+
+#include "lastexpress/data/background.h"
+#include "lastexpress/data/cursor.h"
+#include "lastexpress/data/font.h"
+
 #include "lastexpress/debug.h"
-#include "lastexpress/font.h"
 
 #include "common/debug.h"
 

@@ -23,7 +23,7 @@
  *
  */
 
-#include "lastexpress/beetle.h"
+#include "lastexpress/game/beetle.h"
 
 namespace LastExpress {
 

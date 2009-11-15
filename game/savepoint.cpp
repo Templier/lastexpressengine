@@ -23,7 +23,7 @@
  *
  */
 
-#include "lastexpress/savepoint.h"
+#include "lastexpress/game/savepoint.h"
 
 namespace LastExpress {
 

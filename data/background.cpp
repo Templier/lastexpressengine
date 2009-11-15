@@ -27,7 +27,7 @@
 // http://oezmen.eu/
 // http://wiki.xentax.com/index.php/The_Last_Express_BG
 
-#include "lastexpress/background.h"
+#include "lastexpress/data/background.h"
 
 #include "lastexpress/debug.h"
 

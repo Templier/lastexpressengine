@@ -25,11 +25,12 @@
 
 // Based on Deniz Oezmen's code: http://oezmen.eu/
 
-#include "lastexpress/animation.h"
+#include "lastexpress/data/animation.h"
+
+#include "lastexpress/data/sequence.h"
+#include "lastexpress/data/sound.h"
 
 #include "lastexpress/debug.h"
-#include "lastexpress/sequence.h"
-#include "lastexpress/sound.h"
 
 #include "common/events.h"
 #include "engines/engine.h"

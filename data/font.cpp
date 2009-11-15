@@ -23,7 +23,7 @@
  *
  */
 
-#include "lastexpress/font.h"
+#include "lastexpress/data/font.h"
 
 #include "common/system.h"
 

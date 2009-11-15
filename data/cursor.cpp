@@ -23,7 +23,8 @@
  *
  */
 
-#include "lastexpress/cursor.h"
+#include "lastexpress/data/cursor.h"
+
 #include "lastexpress/lastexpress.h"
 
 #include "graphics/cursorman.h"

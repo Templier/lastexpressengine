@@ -23,22 +23,27 @@
  *
  */
 
-#include "lastexpress/logic.h"
+#include "lastexpress/game/logic.h"
 
-#include "lastexpress/action.h"
-#include "lastexpress/animation.h"
-#include "lastexpress/beetle.h"
-#include "lastexpress/dialog.h"
-#include "lastexpress/items.h"
-#include "lastexpress/inventory.h"
+// Data
+#include "lastexpress/data/animation.h"
+#include "lastexpress/data/scene.h"
+#include "lastexpress/data/sound.h"
+
+// Game
+#include "lastexpress/game/action.h"
+#include "lastexpress/game/beetle.h"
+#include "lastexpress/game/dialog.h"
+#include "lastexpress/game/items.h"
+#include "lastexpress/game/inventory.h"
+#include "lastexpress/game/menu.h"
+#include "lastexpress/game/savepoint.h"
+
 #include "lastexpress/graphics.h"
 #include "lastexpress/helpers.h"
 #include "lastexpress/lastexpress.h"
-#include "lastexpress/menu.h"
 #include "lastexpress/resource.h"
-#include "lastexpress/savepoint.h"
-#include "lastexpress/scene.h"
-#include "lastexpress/sound.h"
+
 
 namespace LastExpress {
 
@@ -868,6 +873,7 @@ void Logic::processHotspot(SceneHotspot *hotspot) {
 			char filename[6];
 			sprintf((char*)&filename, "MUS%03d", hotspot->param1);
 			playMusic((char *)&filename);
+			// FIXME check what is stored in savepoint.field_C
 			_savepoints->call(0, 32, 203863200, (int)&filename);
 			_savepoints->push(0, 32, 222746496, hotspot->param2);
 
@@ -1023,7 +1029,7 @@ LABEL_KEY:
 
 		if ((_gameState->events[Action::kCathLookOutsideWindowDay] || _gameState->events[Action::kCathLookOutsideWindowDay] || _items->get(1).field_4)
 		 && getProgress().field_50
-		 && (hotspot->param1 != 45 || 1/*function call*/ && _items->get(44).location == 2)
+		 && (hotspot->param1 != 45 || (1/*function call*/ && _items->get(44).location == 2))
 		 && _inventory->getSelectedItem() != Inventory::kBriefcase
 		 && _inventory->getSelectedItem() != Inventory::kFirebird)
 			return Cursor::kCursorForward; 
@@ -1080,8 +1086,9 @@ LABEL_KEY:
 
 	case SceneHotspot::kActionBed:
 		if (getProgress().field_18 == 2 && !getProgress().field_E4
-		&& (_gameState->time > 1404000 || getProgress().event_august_met && getProgress().field_CC
-		&& (!getProgress().field_24 || getProgress().field_3C)))
+		&& (_gameState->time > 1404000 
+		|| (getProgress().event_august_met && getProgress().field_CC 
+		&& (!getProgress().field_24 || getProgress().field_3C))))
 			return Cursor::kCursorSleep;
 
 		return Cursor::kCursorNormal;

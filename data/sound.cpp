@@ -26,7 +26,7 @@
 // Based on the Xentax Wiki documentation:
 // http://wiki.xentax.com/index.php/The_Last_Express_SND
 
-#include "lastexpress/sound.h"
+#include "lastexpress/data/sound.h"
 
 #include "lastexpress/debug.h"
 

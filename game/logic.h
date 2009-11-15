@@ -75,8 +75,8 @@
 
 */
 
-#include "lastexpress/cursor.h"
-#include "lastexpress/inventory.h"
+#include "lastexpress/data/cursor.h"
+#include "lastexpress/game/inventory.h"
 #include "lastexpress/savegame.h"
 
 #include "common/events.h"

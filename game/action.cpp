@@ -23,13 +23,15 @@
  *
  */
 
-#include "lastexpress/action.h"
+#include "lastexpress/game/action.h"
 
-#include "lastexpress/animation.h"
+#include "lastexpress/data/animation.h"
+
+#include "lastexpress/game/inventory.h"
+#include "lastexpress/game/logic.h"
+
 #include "lastexpress/helpers.h"
-#include "lastexpress/inventory.h"
 #include "lastexpress/lastexpress.h"
-#include "lastexpress/logic.h"
 #include "lastexpress/resource.h"
 
 namespace LastExpress {

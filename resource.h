@@ -26,7 +26,7 @@
 #ifndef LASTEXPRESS_RESOURCE_H
 #define LASTEXPRESS_RESOURCE_H
 
-#include "lastexpress/archive.h"
+#include "lastexpress/data/archive.h"
 
 namespace LastExpress {
 

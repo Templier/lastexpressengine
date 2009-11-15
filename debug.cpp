@@ -26,13 +26,13 @@
 #include "lastexpress/debug.h"
 
 // Data
-#include "lastexpress/animation.h"
-#include "lastexpress/background.h"
-#include "lastexpress/cursor.h"
-#include "lastexpress/scene.h"
-#include "lastexpress/sequence.h"
-#include "lastexpress/sound.h"
-#include "lastexpress/subtitle.h"
+#include "lastexpress/data/animation.h"
+#include "lastexpress/data/background.h"
+#include "lastexpress/data/cursor.h"
+#include "lastexpress/data/scene.h"
+#include "lastexpress/data/sequence.h"
+#include "lastexpress/data/sound.h"
+#include "lastexpress/data/subtitle.h"
 
 #include "lastexpress/graphics.h"
 #include "lastexpress/helpers.h"

@@ -26,8 +26,9 @@
 #ifndef LASTEXPRESS_MENU_H
 #define LASTEXPRESS_MENU_H
 
+#include "lastexpress/data/sequence.h"
+
 #include "lastexpress/savegame.h"
-#include "lastexpress/sequence.h"
 
 #include "common/events.h"
 

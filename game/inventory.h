@@ -40,7 +40,7 @@
 
 */
 
-#include "lastexpress/scene.h"
+#include "lastexpress/data/scene.h"
 
 #include "common/events.h"
 #include "common/serializer.h"

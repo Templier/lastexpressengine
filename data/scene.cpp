@@ -23,9 +23,10 @@
  *
  */
 
-#include "lastexpress/scene.h"
+#include "lastexpress/data/scene.h"
 
-#include "lastexpress/background.h"
+#include "lastexpress/data/background.h"
+
 #include "lastexpress/lastexpress.h"
 #include "lastexpress/resource.h"
 
