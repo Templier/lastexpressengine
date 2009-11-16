@@ -99,6 +99,15 @@ public:
 		kGreenJacket = 2
 	};
 
+	enum ChapterIndex {
+		kCustom = 0,
+		kChapter1 = 1,
+		kChapter2 = 2,
+		kChapter3 = 3,
+		kChapter4 = 4,
+		kChapter5 = 5
+	};
+
 	struct GameProgress {
 		uint32 field_0;
 		JacketType jacket;
@@ -111,7 +120,7 @@ public:
 		uint32 field_20;
 		uint32 field_24;
 		uint32 field_28;
-		uint32 index;
+		uint32 chapter;
 		uint32 field_30;
 		uint32 event_august_met;
 		uint32 is_nighttime;					///< 0 = day / 1 = night
@@ -179,7 +188,7 @@ public:
 			field_20 = 0;
 			field_24 = 0;
 			field_28 = 0;
-			index = _defaultIndex;
+			chapter = kChapter1;
 			field_30 = 0;
 			event_august_met = 0;
 			is_nighttime = 0;
@@ -247,10 +256,10 @@ public:
 		uint32 time;
 		uint32 timeDelta;
 		uint32 timeTicks;
-		byte useBackupScene;
-		uint32 currentScene;		
-		uint32 currentScene2;
-		uint32 currentScene3;
+		byte sceneUseBackup;
+		uint32 scene;		
+		uint32 sceneBackup;
+		uint32 sceneBackup2;
 
 		GameProgress progress;
 		byte events[512];
@@ -263,10 +272,10 @@ public:
 			time = _defaultTime;
 			timeDelta = _defaultTimeDelta;
 			timeTicks = 0;
-			useBackupScene = 0;
-			currentScene = _defaultScene;
-			currentScene2 = 0;
-			currentScene3 = 0;
+			sceneUseBackup = 0;
+			scene = _defaultScene;
+			sceneBackup = 0;
+			sceneBackup2 = 0;
 
 			// Clear game events
 			memset(events, 0, 512*sizeof(byte));
@@ -293,7 +302,7 @@ public:
 	GameId getGameId() { return _runState.gameId; }
 
 	Cursor::CursorStyle getCursorStyle() { return _runState.cursorStyle; }
-	Dialog 	   *getDialog() { return _dialog; }
+	Dialog 	   *getGameDialog() { return _dialog; }
 	Entities   *getGameEntities() { return _entities; }
 	Inventory  *getGameInventory() { return _inventory; }
 	Items	   *getGameItems() { return _items; }
@@ -305,8 +314,7 @@ private:
 	static const uint32 _defaultVolume = 0x7;
 	static const uint32 _defaultTime = 1037700;
 	static const uint32 _defaultTimeDelta = 3;
-	static const uint32 _defaultPortrait = 32;
-	static const uint32 _defaultIndex = 1;
+	static const uint32 _defaultPortrait = 32;	
 	static const uint32 _defaultScene = 40;
 
 	// State
@@ -348,8 +356,6 @@ private:
 	void processHotspot(SceneHotspot *hotspot);
 
 	void hotspot_enterCompartment(SceneHotspot *hotspot);
-
-	Cursor::CursorStyle getCursor(SceneHotspot *hotspot);
 
 	void switchChapter();
 	void playFinalSequence();

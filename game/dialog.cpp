@@ -185,7 +185,7 @@ const char *Dialog::getSound(int index, byte action, byte a3) {
 	return sound_name;
 }
 
-const char *Dialog::getDialog(DialogId id) {
+const char *Dialog::getDialogName(DialogId id) {
 	switch (id) {
 	case kDialogAnna:
 		if (getEvent(Action::kAnnaDialogGoToJerusalem))
@@ -332,10 +332,10 @@ const char *Dialog::getDialog(DialogId id) {
 		if (getEvent(Action::kLocomotiveMilos) || getEvent(Action::kLocomotiveMilosNight))
 			return "XMIL5";
 
-		if (getEvent(Action::kMilosCompartmentVisitTyler) && (getProgress().index == 3 || getProgress().index == 4))
+		if (getEvent(Action::kMilosCompartmentVisitTyler) && (getProgress().chapter == Logic::kChapter3 || getProgress().chapter == Logic::kChapter4))
 			return "XMIL4";
 
-		if (getEvent(Action::kMilosCorridorThanks) || getProgress().index == 5)
+		if (getEvent(Action::kMilosCorridorThanks) || getProgress().chapter == Logic::kChapter5)
 			return "XMIL3";
 
 		if (getEvent(Action::kMilosCompartmentVisitAugust))
@@ -363,7 +363,7 @@ const char *Dialog::getDialog(DialogId id) {
 			return "XKRO5";
 
 		if (getEvent(Action::kKronosConversation) || getEvent(Action::kKronosConversationFirebird)) {
-			byte location = getInventory()->getItem(Inventory::kFirebird)->location;
+			byte location = getInventory()->getEntry(Inventory::kFirebird)->location;
 			if (location != 6 && location != 5 && location != 2 && location != 1)
 				return "XKRO4A";
 		}

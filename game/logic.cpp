@@ -83,7 +83,7 @@ void Logic::startGame() {
 	delete _gameState;
 	_gameState = new GameState();
 
-	_entities->setup(Entity::kChapter1);
+	_entities->setup(kChapter1);
 
 	showMenu(false);
 	setScene(_defaultScene);
@@ -111,7 +111,7 @@ void Logic::showMenu(bool visible) {
 
 	// TODO: load scene and set current scene
 	_runState.showingMenu = true;
-	_gameState->currentScene = _menu->getSceneIndex();
+	_gameState->scene = _menu->getSceneIndex();
 	_menu->showMenu();
 
 	// TODO reset showingMenu to false when starting/returning to a game and show inventory
@@ -176,7 +176,7 @@ bool Logic::handleMouseEvent(Common::Event ev) {
 	SceneHotspot *hotspot = NULL;
 	if (_scene && _scene->checkHotSpot(ev.mouse, &hotspot)) {
 		// Change mouse cursor		
-		_runState.cursorStyle = getCursor(hotspot);
+		_runState.cursorStyle = _action->getCursor(hotspot->action, hotspot->param1, hotspot->param2, hotspot->param3, hotspot->cursor);
 
 		// Handle click
 		if ((ev.type == Common::EVENT_LBUTTONDOWN)) {
@@ -185,7 +185,7 @@ bool Logic::handleMouseEvent(Common::Event ev) {
 				setScene(hotspot->scene);
 
 			// Switch to next chapter if necessary
-			if (hotspot->action == SceneHotspot::kAction43 && hotspot->param1 == _gameState->progress.index)
+			if (hotspot->action == SceneHotspot::kAction43 && hotspot->param1 == _gameState->progress.chapter)
 				switchChapter();
 		}
 	} else {
@@ -206,15 +206,15 @@ void Logic::setScene(uint32 index) {
 	delete _scene;
 	_scene = _engine->getScene(index); 
 	_engine->getGraphicsManager()->draw(_scene, GraphicsManager::kBackgroundC, true);
-	_gameState->currentScene = index;
+	_gameState->scene = index;
 
 	// Update entities
-	Scene *scene = (_gameState->useBackupScene ? _engine->getScene(_gameState->currentScene2) : _scene);
+	Scene *scene = (_gameState->sceneUseBackup ? _engine->getScene(_gameState->sceneBackup) : _scene);
 	
 	_entities->getEntityData(SavePoints::kHeader)->field_491 = scene->getHeader()->count;
 	_entities->getEntityData(SavePoints::kHeader)->field_495 = scene->getHeader()->field_13;
 
-	if (_gameState->useBackupScene)
+	if (_gameState->sceneUseBackup)
 		delete scene;
 
 	_savepoints->pushAll(0, 17, 0);
@@ -229,7 +229,7 @@ void Logic::setScene(uint32 index) {
 	_engine->_system->delayMillis(10);
 
 
-	postProcessScene(&_gameState->currentScene);
+	postProcessScene(&_gameState->scene);
 }
 
 void Logic::updateTrainClock() {
@@ -250,7 +250,7 @@ void Logic::updateTrainClock() {
 	_items->get(scene->getHeader()->param1).location
 
 #define GET_ITEM_LOCATION(scene, parameter) \
-	_inventory->getItem((Inventory::InventoryItem)scene->getHeader()->parameter)->location
+	_inventory->getEntry((Inventory::InventoryItem)scene->getHeader()->parameter)->location
 
 void Logic::preProcessScene(uint32 *index) {
 
@@ -439,8 +439,8 @@ void Logic::postProcessScene(uint32 *index) {
 		break;
 
 	case Scene::kTypeLoadBeetleSequences:
-		if ((getProgress().index == 2 || getProgress().index == 3)
-			&& _inventory->getItem(Inventory::kBeetle)->location == 3) {
+		if ((getProgress().chapter == kChapter2 || getProgress().chapter == kChapter3)
+			&& _inventory->getEntry(Inventory::kBeetle)->location == 3) {
 			if (!_beetle->isLoaded())
 				_beetle->load();
 		}		
@@ -451,12 +451,12 @@ void Logic::postProcessScene(uint32 *index) {
 			break;
 
 		playSfx("LIB050");
-		switch (getProgress().index) {
-		case 1:
+		switch (getProgress().chapter) {
+		case kChapter1:
 			gameOver(0, 0, 62, 1);
 			break;
 
-		case 4:
+		case kChapter4:
 			gameOver(0, 0, 64, 1);
 			break;
 
@@ -494,16 +494,16 @@ void Logic::processHotspot(SceneHotspot *hotspot) {
 
 	switch (hotspot->action) {
 	case SceneHotspot::kActionInventory: {		
-		if (!_gameState->useBackupScene)
+		if (!_gameState->sceneUseBackup)
 			break;
 
 		int index = 0;
-		if (_gameState->currentScene3) {
-			index = _gameState->currentScene3;
-			_gameState->currentScene3 = 0;
+		if (_gameState->sceneBackup2) {
+			index = _gameState->sceneBackup2;
+			_gameState->sceneBackup2 = 0;
 		} else {
-			_gameState->useBackupScene = 0;
-			index = _gameState->currentScene2;
+			_gameState->sceneUseBackup = 0;
+			index = _gameState->sceneBackup;
 
 			// TODO check savegame field 4x1000
 		}
@@ -648,20 +648,20 @@ void Logic::processHotspot(SceneHotspot *hotspot) {
 			break;
 
 		// Load item scene
-		if (_inventory->getItem(item)->scene_id) {
-			if (!_gameState->useBackupScene) {
-				_gameState->useBackupScene = 1;
-				_gameState->currentScene2 = _gameState->currentScene;
+		if (_inventory->getEntry(item)->scene_id) {
+			if (!_gameState->sceneUseBackup) {
+				_gameState->sceneUseBackup = 1;
+				_gameState->sceneBackup = _gameState->scene;
 			}
 
-			setScene(_inventory->getItem(item)->scene_id);
+			setScene(_inventory->getEntry(item)->scene_id);
 			hotspot->scene = 0;
 		}
 
 		// Select item
-		if (_inventory->getItem(item)->is_selectable) {
+		if (_inventory->getEntry(item)->is_selectable) {
 			_inventory->selectItem(item);
-			_engine->getCursor()->setStyle((Cursor::CursorStyle)_inventory->getItem(item)->item_id);
+			_engine->getCursor()->setStyle((Cursor::CursorStyle)_inventory->getEntry(item)->item_id);
 		}
 		break;
 	}
@@ -688,7 +688,7 @@ void Logic::processHotspot(SceneHotspot *hotspot) {
 
 		if (getProgress().event_found_corpse) {
 
-			if (hotspot->action != 16 || _inventory->getItem(Inventory::kBriefcase)->location != 2) {
+			if (hotspot->action != 16 || _inventory->getEntry(Inventory::kBriefcase)->location != 2) {
 				hotspot_enterCompartment(hotspot);
 			} else {				
 				playSound(0, 14, 0);
@@ -737,7 +737,7 @@ void Logic::processHotspot(SceneHotspot *hotspot) {
 		if (_beetle->isLoaded()) {
 			if (_beetle->catchBeetle()) {
 				_beetle->unload();
-				_inventory->getItem(Inventory::kBeetle)->location = 1;
+				_inventory->getEntry(Inventory::kBeetle)->location = 1;
 				_savepoints->push(0, 32, 202613084, 0);
 			}
 		}
@@ -753,7 +753,7 @@ void Logic::processHotspot(SceneHotspot *hotspot) {
 		break;
 
 	case SceneHotspot::kActionDialog:
-		playSfx(_dialog->getDialog((Dialog::DialogId)hotspot->param1));
+		playDialog(hotspot->param1);
 		break;
 
 	case SceneHotspot::kActionEggBox:
@@ -789,18 +789,18 @@ void Logic::processHotspot(SceneHotspot *hotspot) {
 
 	case SceneHotspot::kAction42: {
 		int value;
-		switch (getProgress().index) {
-		case 1:
+		switch (getProgress().chapter) {
+		case kChapter1:
 			value = 1;
 			break;
 			
-		case 2:
-		case 3:
+		case kChapter2:
+		case kChapter3:
 			value = 2;
 			break;
 
-		case 4:
-		case 5:
+		case kChapter4:
+		case kChapter5:
 			value = 4;
 			break;
 		}
@@ -864,175 +864,6 @@ void Logic::hotspot_enterCompartment(SceneHotspot *hotspot) {
 }
 
 //////////////////////////////////////////////////////////////////////////
-// Cursor
-//////////////////////////////////////////////////////////////////////////
-
-Cursor::CursorStyle Logic::getCursor(SceneHotspot *hotspot) {
-
-	// Simple cursor style
-	if (hotspot->cursor != 128)
-		return (Cursor::CursorStyle)hotspot->cursor;
-
-	switch (hotspot->action) {
-	default:
-		return Cursor::kCursorNormal;
-
-	case SceneHotspot::kActionInventory:
-		if (!_gameState->currentScene3 && (_gameState->events[Action::kKronosBringFirebird] || _gameState->progress.field_74))				
-			return Cursor::kCursorNormal;
-		else
-			return Cursor::kCursorBackward;		
-
-	case SceneHotspot::kActionKnockDoor:
-		if (hotspot->param1 >= 128)
-			return Cursor::kCursorNormal;
-		else
-			return (Cursor::CursorStyle)_items->get(hotspot->param1).cursor;
-		
-LABEL_KEY:
-	case SceneHotspot::kAction6:
-	case SceneHotspot::kActionExitCompartment:
-		if (hotspot->param1 >= 128)
-			return Cursor::kCursorNormal;
-		
-		if (1/* test with savegame data */)
-			return Cursor::kCursorForward; // HACK should be extracted from savegame data 
-		else
-			return Cursor::kCursorKey;
-		
-
-	case SceneHotspot::kAction12:
-		if (hotspot->param1 >= 128)
-			return Cursor::kCursorNormal;
-		else {
-			if (_items->get(hotspot->param1).field_0)
-				return (Cursor::CursorStyle)_items->get(hotspot->param1).cursor;
-			else
-				return Cursor::kCursorNormal;
-		}
-
-	case SceneHotspot::kActionPickItem:
-		if (hotspot->param1 >= 32)
-			return Cursor::kCursorNormal;
-		
-		if ((!_inventory->getSelectedItem() || _inventory->getItem(_inventory->getSelectedItem())->no_autoselect) 
-			 && (hotspot->param1 != 21 || _gameState->progress.field_8 == 1))
-			 return Cursor::kCursorHand;
-		else
-			return Cursor::kCursorNormal;			
-
-	case SceneHotspot::kActionDropItem:
-		if (hotspot->param1 >= 32)
-			return Cursor::kCursorNormal;
-
-		if (_inventory->getSelectedItem() != hotspot->param1)
-			return Cursor::kCursorNormal;
-
-		if (hotspot->param1 == 20 && hotspot->param2 == 4 && !_gameState->progress.field_50)
-			return Cursor::kCursorNormal;
-
-		if (hotspot->param1 == 18  && hotspot->param2 == 1 && _gameState->progress.field_5C)
-			return Cursor::kCursorNormal;
-	
-		return (Cursor::CursorStyle)_inventory->getSelectedItem();
-
-	case SceneHotspot::kAction15:
-		if (hotspot->param1 >= 128)
-			return Cursor::kCursorNormal;
-
-		if (*(&_gameState->progress.field_0 + hotspot->param1) == hotspot->param2)
-			return (Cursor::CursorStyle)hotspot->param3;
-
-		return Cursor::kCursorNormal; 
-
-	case SceneHotspot::kActionEnterCompartment:
-		if (_inventory->getSelectedItem() != Inventory::kKey)
-			goto LABEL_KEY;
-
-		// TODO check other savegame struct...
-
-		if (!_inventory->hasItem(Inventory::kKey))
-			goto LABEL_KEY;
-
-		if (_inventory->getSelectedItem() != Inventory::kFirebird && _inventory->getSelectedItem() != Inventory::kBriefcase)
-			goto LABEL_KEY;
-
-		return Cursor::kCursorKey;
-
-	case SceneHotspot::kActionOutsideTrain:
-		if (getProgress().jacket != Logic::kGreenJacket)
-			return Cursor::kCursorNormal;
-
-		if ((_gameState->events[Action::kCathLookOutsideWindowDay] || _gameState->events[Action::kCathLookOutsideWindowDay] || _items->get(1).field_4)
-		 && getProgress().field_50
-		 && (hotspot->param1 != 45 || (1/*function call*/ && _items->get(44).location == 2))
-		 && _inventory->getSelectedItem() != Inventory::kBriefcase
-		 && _inventory->getSelectedItem() != Inventory::kFirebird)
-			return Cursor::kCursorForward; 
-
-		return Cursor::kCursorNormal; 
-
-	case SceneHotspot::kAction19:
-		error("Logic::getCursor: unsupported cursor for action (%02d)", hotspot->action);
-
-	case SceneHotspot::kActionClimbUpTrain:
-		if (_gameState->progress.field_50
-		 && (_gameState->progress.index == 2 || _gameState->progress.index == 3 || _gameState->progress.index == 5)
-		 && _inventory->getSelectedItem() != Inventory::kFirebird 
-		 && _inventory->getSelectedItem() != Inventory::kBriefcase)
-			return Cursor::kCursorUp;
-
-		return Cursor::kCursorNormal; 
-
-	case SceneHotspot::kActionClimbDownTrain:
-		error("Logic::getCursor: unsupported cursor for action (%02d)", hotspot->action);
-
-	case SceneHotspot::kActionUnbound:
-		if (hotspot->param2 != 2)
-			return Cursor::kCursorNormal; 
-				
-		if (_gameState->events[Action::kCathBurnRope] || !_gameState->events[Action::kCathStruggleWithBonds2])
-			return Cursor::kCursorNormal; 
-
-		return Cursor::kCursorHand; 
-
-	case SceneHotspot::kActionCatchBeetle:	
-		error("Logic::getCursor: unsupported cursor for action (%02d)", hotspot->action);
-
-	case SceneHotspot::KActionUseWhistle:
-		if (hotspot->param1 != 3)
-			return Cursor::kCursorNormal; 
-
-		if (_inventory->getSelectedItem() == Inventory::kWhistle)
-			return Cursor::kCursorWhistle;
-		else
-			return Cursor::kCursorNormal; 
-
-	case SceneHotspot::kActionOpenBed:
-		if (getProgress().index < 2)
-			return Cursor::kCursorHand;
-		
-		return Cursor::kCursorNormal;		
-
-	case SceneHotspot::kActionDialog:
-		if (_dialog->getDialog((Dialog::DialogId)hotspot->param1))
-			return Cursor::kCursorHandPointer; 
-
-		return Cursor::kCursorNormal;
-
-	case SceneHotspot::kActionBed:
-		if (getProgress().field_18 == 2 && !getProgress().field_E4
-		&& (_gameState->time > 1404000 
-		|| (getProgress().event_august_met && getProgress().field_CC 
-		&& (!getProgress().field_24 || getProgress().field_3C))))
-			return Cursor::kCursorSleep;
-
-		return Cursor::kCursorNormal;
-	}
-
-}
-
-//////////////////////////////////////////////////////////////////////////
 // Misc
 //////////////////////////////////////////////////////////////////////////
 
@@ -1042,36 +873,36 @@ void Logic::processItem() {
 
 
 void Logic::switchChapter() {
-	switch(_gameState->progress.index) {
+	switch(_gameState->progress.chapter) {
 	default:
 		break;
 
-	case 1:
+	case kChapter1:
 		_inventory->addItem(Inventory::kParchemin);
 		_inventory->addItem(Inventory::kMatchBox);
 		// TODO call game logic
 		break;
 
-	case 2:
+	case kChapter2:
 		_inventory->addItem(Inventory::kScarf);
 		// TODO call game logic
 		break;
 
-	case 3:
-		_inventory->getItem(Inventory::kFirebird)->location = 4;
-		_inventory->getItem(Inventory::kFirebird)->has_item = 0;
-		_inventory->getItem(Inventory::kItem11)->location = 1; // ??
+	case kChapter3:
+		_inventory->getEntry(Inventory::kFirebird)->location = 4;
+		_inventory->getEntry(Inventory::kFirebird)->has_item = 0;
+		_inventory->getEntry(Inventory::kItem11)->location = 1; // ??
 
 		_inventory->addItem(Inventory::kWhistle);
 		_inventory->addItem(Inventory::kKey);
 		// TODO call game logic
 		break;
 
-	case 4:
+	case kChapter4:
 		// TODO call game logic
 		break;
 
-	case 5:
+	case kChapter5:
 		playFinalSequence();
 		break;
 	}

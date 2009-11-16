@@ -72,7 +72,7 @@ void Chapters::chapter1_init(SavePoints::SavePoint *savepoint) {
 	if (savepoint->action != SavePoints::kActionDefault)
 		return;
 
-	getProgress().index = 1;
+	getProgress().chapter = Logic::kChapter1;
 	// TODO function call modifying an unknown global var
 	getState()->time = 1061100;
 	getState()->timeDelta = 0;

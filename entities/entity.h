@@ -34,6 +34,7 @@
 
 */
 
+#include "lastexpress/game/logic.h"
 #include "lastexpress/game/savepoint.h"
 
 #include "common/serializer.h"
@@ -67,7 +68,6 @@ namespace LastExpress {
 class LastExpressEngine;
 
 // Entities
-//class Entry0;
 class Anna;
 class August;
 class Mertens;
@@ -105,15 +105,6 @@ class Entity39;
 
 class Entity {
 public:
-	enum ChapterIndex {
-		kCustom = 0,
-		kChapter1 = 1,
-		kChapter2 = 2,
-		kChapter3 = 3,
-		kChapter4 = 4,
-		kChapter5 = 5
-	};
-
 	struct EntityCallbackDataEntry {
 		int field_0;
 		int field_4;
@@ -157,7 +148,7 @@ public:
 	EntityData *getData() { return &_data; }
 
 	// Setup
-	void setup(ChapterIndex index);
+	void setup(Logic::ChapterIndex index);
 
 	virtual void setup_chapter1() = 0;
 	virtual void setup_chapter2() = 0;
@@ -187,7 +178,7 @@ public:
 	Entities(LastExpressEngine *engine);
 	~Entities();
 
-	void setup(Entity::ChapterIndex chapter);
+	void setup(Logic::ChapterIndex chapter);
 	void load(int callbackIndex);
 
 	// Accessors

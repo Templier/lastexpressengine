@@ -90,7 +90,7 @@ void Train::process(SavePoints::SavePoint *savepoint) {
 	switch (savepoint->action) {
 	case SavePoints::kActionDefault:
 		getCallData().entries[8].field_0 = 1;
-		if (getProgress().index < 5) {
+		if (getProgress().chapter < Logic::kChapter5) {
 			getItems()->update(5, 32, 3, 10, 9);
 			getItems()->update(6, 32, 3, 10, 9);
 			getItems()->update(7, 32, 3, 10, 9);

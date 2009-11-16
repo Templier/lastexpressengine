@@ -26,6 +26,7 @@
 #ifndef LASTEXPRESS_ACTION_H
 #define LASTEXPRESS_ACTION_H
 
+#include "lastexpress/data/cursor.h"
 #include "lastexpress/game/inventory.h"
 
 #include "common/system.h"
@@ -324,6 +325,8 @@ public:
 
 	bool pickItem(Inventory::InventoryItem item, byte location, bool process);
 	void dropItem(Inventory::InventoryItem item, byte location, bool process);
+
+	Cursor::CursorStyle getCursor(byte action, byte param1, byte param2, byte param3, byte cursor);
 
 private:
 	LastExpressEngine* _engine;

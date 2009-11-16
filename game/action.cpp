@@ -27,8 +27,10 @@
 
 #include "lastexpress/data/animation.h"
 #include "lastexpress/data/sound.h"
+#include "lastexpress/data/scene.h"
 
 #include "lastexpress/game/dialog.h"
+#include "lastexpress/game/items.h"
 #include "lastexpress/game/logic.h"
 
 #include "lastexpress/helpers.h"
@@ -319,11 +321,179 @@ const static struct {
 
 Action::Action(LastExpressEngine *engine) : _engine(engine) {}
 
+
+//////////////////////////////////////////////////////////////////////////
+// Items
+//////////////////////////////////////////////////////////////////////////
+Cursor::CursorStyle Action::getCursor(byte action, byte param1, byte param2, byte param3, byte cursor)
+{
+	// Simple cursor style
+	if (cursor != 128)
+		return (Cursor::CursorStyle)cursor;
+
+	switch (action) {
+	default:
+		return Cursor::kCursorNormal;
+
+	case SceneHotspot::kActionInventory:
+		if (!getState()->sceneBackup2 && (getEvent(Action::kKronosBringFirebird) || getProgress().field_74))				
+			return Cursor::kCursorNormal;
+		else
+			return Cursor::kCursorBackward;		
+
+	case SceneHotspot::kActionKnockDoor:
+		if (param1 >= 128)
+			return Cursor::kCursorNormal;
+		else
+			return (Cursor::CursorStyle)getItems()->get(param1).cursor;
+
+LABEL_KEY:
+	case SceneHotspot::kAction6:
+	case SceneHotspot::kActionExitCompartment:
+		if (param1 >= 128)
+			return Cursor::kCursorNormal;
+
+		if (1/* test with savegame data */)
+			return Cursor::kCursorForward; // HACK should be extracted from savegame data 
+		else
+			return Cursor::kCursorKey;
+
+
+	case SceneHotspot::kAction12:
+		if (param1 >= 128)
+			return Cursor::kCursorNormal;
+		else {
+			if (getItems()->get(param1).field_0)
+				return (Cursor::CursorStyle)getItems()->get(param1).cursor;
+			else
+				return Cursor::kCursorNormal;
+		}
+
+	case SceneHotspot::kActionPickItem:
+		if (param1 >= 32)
+			return Cursor::kCursorNormal;
+
+		if ((!getInventory()->getSelectedItem() || getInventory()->getSelectedEntry()->no_autoselect)
+		 && (param1 != 21 || getProgress().field_8 == 1))
+			return Cursor::kCursorHand;
+		else
+			return Cursor::kCursorNormal;			
+
+	case SceneHotspot::kActionDropItem:
+		if (param1 >= 32)
+			return Cursor::kCursorNormal;
+
+		if (getInventory()->getSelectedItem() != param1)
+			return Cursor::kCursorNormal;
+
+		if (param1 == 20 && param2 == 4 && !getProgress().field_50)
+			return Cursor::kCursorNormal;
+
+		if (param1 == 18  && param2 == 1 && getProgress().field_5C)
+			return Cursor::kCursorNormal;
+
+		return (Cursor::CursorStyle)getInventory()->getSelectedEntry()->item_id;
+
+	case SceneHotspot::kAction15:
+		if (param1 >= 128)
+			return Cursor::kCursorNormal;
+
+		if (*(&getProgress().field_0 + param1) == param2)
+			return (Cursor::CursorStyle)param3;
+
+		return Cursor::kCursorNormal; 
+
+	case SceneHotspot::kActionEnterCompartment:
+		if (getInventory()->getSelectedItem() != Inventory::kKey)
+			goto LABEL_KEY;
+
+		// TODO check other savegame struct...
+
+		if (!getInventory()->hasItem(Inventory::kKey))
+			goto LABEL_KEY;
+
+		if (getInventory()->getSelectedItem() != Inventory::kFirebird && getInventory()->getSelectedItem() != Inventory::kBriefcase)
+			goto LABEL_KEY;
+
+		return Cursor::kCursorKey;
+
+	case SceneHotspot::kActionOutsideTrain:
+		if (getProgress().jacket != Logic::kGreenJacket)
+			return Cursor::kCursorNormal;
+
+		if ((getEvent(Action::kCathLookOutsideWindowDay) || getEvent(Action::kCathLookOutsideWindowDay) || getItems()->get(1).field_4)
+		 && getProgress().field_50
+		 && (param1 != 45 || (1/*function call*/ && getItems()->get(44).location == 2))
+		 && getInventory()->getSelectedItem() != Inventory::kBriefcase
+	 	 && getInventory()->getSelectedItem() != Inventory::kFirebird)
+			return Cursor::kCursorForward; 
+
+		return Cursor::kCursorNormal; 
+
+	case SceneHotspot::kAction19:
+		error("Action::getCursor: unsupported cursor for action (%02d)", action);
+
+	case SceneHotspot::kActionClimbUpTrain:
+		if (getProgress().field_50
+		&& (getProgress().chapter == Logic::kChapter2 || getProgress().chapter == Logic::kChapter3 || getProgress().chapter == Logic::kChapter5)
+		&& getInventory()->getSelectedItem() != Inventory::kFirebird 
+		&& getInventory()->getSelectedItem() != Inventory::kBriefcase)
+			return Cursor::kCursorUp;
+
+		return Cursor::kCursorNormal; 
+
+	case SceneHotspot::kActionClimbDownTrain:
+		error("Action::getCursor: unsupported cursor for action (%02d)", action);
+
+	case SceneHotspot::kActionUnbound:
+		if (param2 != 2)
+			return Cursor::kCursorNormal; 
+
+		if (getEvent(Action::kCathBurnRope) || !getEvent(Action::kCathStruggleWithBonds2))
+			return Cursor::kCursorNormal; 
+
+		return Cursor::kCursorHand; 
+
+	case SceneHotspot::kActionCatchBeetle:	
+		error("Action::getCursor: unsupported cursor for action (%02d)", action);
+
+	case SceneHotspot::KActionUseWhistle:
+		if (param1 != 3)
+			return Cursor::kCursorNormal; 
+
+		if (getInventory()->getSelectedItem() == Inventory::kWhistle)
+			return Cursor::kCursorWhistle;
+		else
+			return Cursor::kCursorNormal; 
+
+	case SceneHotspot::kActionOpenBed:
+		if (getProgress().chapter < Logic::kChapter2)
+			return Cursor::kCursorHand;
+
+		return Cursor::kCursorNormal;		
+
+	case SceneHotspot::kActionDialog:
+		if (getDialog()->getDialogName((Dialog::DialogId)param1))
+			return Cursor::kCursorHandPointer; 
+
+		return Cursor::kCursorNormal;
+
+	case SceneHotspot::kActionBed:
+		if (getProgress().field_18 == 2 && !getProgress().field_E4
+		&& (getState()->time > 1404000 
+		|| (getProgress().event_august_met && getProgress().field_CC 
+		&& (!getProgress().field_24 || getProgress().field_3C))))
+			return Cursor::kCursorSleep;
+
+		return Cursor::kCursorNormal;
+	}
+}
+
 //////////////////////////////////////////////////////////////////////////
 // Items
 //////////////////////////////////////////////////////////////////////////
 bool Action::pickItem(Inventory::InventoryItem item, byte location, bool process) {
-	Inventory::InventoryEntry* entry = getInventory()->getItem(item);
+	Inventory::InventoryEntry* entry = getInventory()->getEntry(item);
 
 	if (item >= 32 || !entry->location)
 		return false;
@@ -371,7 +541,7 @@ bool Action::pickItem(Inventory::InventoryItem item, byte location, bool process
 			break;
 
 		getInventory()->addItem(Inventory::kParchemin);
-		getInventory()->getItem(Inventory::kItem11)->location = 1;
+		getInventory()->getEntry(Inventory::kItem11)->location = 1;
 		playSound(0, 9, 0);
 		break;
 
@@ -411,9 +581,9 @@ void Action::dropItem(Inventory::InventoryItem item, byte location, bool process
 				getProgress().field_58 = 1;
 			}
 
-			if (getInventory()->getItem(Inventory::kParchemin)->location == 2) {
+			if (getInventory()->getEntry(Inventory::kParchemin)->location == 2) {
 				getInventory()->addItem(Inventory::kParchemin);
-				getInventory()->getItem(Inventory::kItem11)->location = 11;
+				getInventory()->getEntry(Inventory::kItem11)->location = 11;
 				playSound(0, 9, 0);
 			}
 		}
@@ -460,7 +630,7 @@ void Action::pickScarf() {
 //   4 = Window
 //   5 = 
 void Action::pickCorpse(byte bedPosition) {
-	switch(getInventory()->getItem(Inventory::kCorpse)->location) {
+	switch(getInventory()->getEntry(Inventory::kCorpse)->location) {
 	case 1:	// Floor
 		if (bedPosition != 4) {
 			if (getProgress().jacket == Logic::kOriginalJacket)
@@ -472,7 +642,7 @@ void Action::pickCorpse(byte bedPosition) {
 		}
 
 		playAnimation(kCorpsePickFloorOpenedBedOriginal);
-		getInventory()->getItem(Inventory::kCorpse)->location = 5;
+		getInventory()->getEntry(Inventory::kCorpse)->location = 5;
 		break;
 
 	case 2:	// Bed
@@ -490,7 +660,7 @@ void Action::pickCorpse(byte bedPosition) {
 }
 
 void Action::dropCorpse() {
-	switch(getInventory()->getItem(Inventory::kCorpse)->location) {
+	switch(getInventory()->getEntry(Inventory::kCorpse)->location) {
 	case 1:	// Floor
 		if (getProgress().jacket == Logic::kOriginalJacket)
 			playAnimation(kCorpseDropFloorOriginal);
@@ -509,7 +679,7 @@ void Action::dropCorpse() {
 
 	case 4: // Window
 		// Say goodbye to an old friend
-		getInventory()->getItem(Inventory::kCorpse)->location = 0;
+		getInventory()->getEntry(Inventory::kCorpse)->location = 0;
 		getProgress().field_20 = 1;
 
 		if (getState()->time <= 1138500) {
@@ -531,7 +701,7 @@ void Action::dropCorpse() {
 
 
 //////////////////////////////////////////////////////////////////////////
-// Misc
+// Animation
 //////////////////////////////////////////////////////////////////////////
 
 // Play an animation and add delta time to global game time
@@ -551,7 +721,7 @@ void Action::playAnimation(int index) {
 		animation.play();	
 
 	// Adjust game time
-	getState()->events[index] = 1;
+	getEvent(index) = 1;
 	getState()->timeTicks += animationList[index].time;
 	getState()->time += animationList[index].time * getState()->timeDelta;
 

@@ -529,7 +529,7 @@ bool Menu::handleStartMenuEvent(Common::Event ev) {
 		//  - Reset save game & "save points"
 		//  - etc.
 		{
-			getState()->currentScene = 255; // HACK to not show menu after we are finished
+			getState()->scene = 255; // HACK to not show menu after we are finished
 			clearBg(GraphicsManager::kBackgroundAll);
 
 			showScene(5 * _engine->getLogic()->getGameId() + 3, GraphicsManager::kBackgroundC);

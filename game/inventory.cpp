@@ -209,7 +209,7 @@ bool Inventory::handleMouseEvent(Common::Event ev) {
 					if (_entries[i].is_selectable) {
 						selected = true;
 						_selectedItem = (InventoryItem)i;
-						drawItem(44, 0, getItem(_selectedItem)->item_id, 100)
+						drawItem(44, 0, getEntry(_selectedItem)->item_id, 100)
 					}
 
 					examine((InventoryItem)i);
@@ -330,7 +330,7 @@ void Inventory::showHourGlass(bool enabled) {
 //////////////////////////////////////////////////////////////////////////
 // Items
 //////////////////////////////////////////////////////////////////////////
-Inventory::InventoryEntry *Inventory::getItem(InventoryItem item) {
+Inventory::InventoryEntry *Inventory::getEntry(InventoryItem item) {
 	assert(item < 32);
 
 	return &_entries[item];
@@ -340,12 +340,12 @@ void Inventory::addItem(InventoryItem item) {
 	if (hasItem(item))
 		return;
 
-	getItem(item)->has_item = 1;
-	getItem(item)->location = 0;
+	getEntry(item)->has_item = 1;
+	getEntry(item)->location = 0;
 
 	// Autoselect item if necessary
-	if (!getItem(item)->no_autoselect) {
-		_selectedItem = (InventoryItem)getItem(item)->item_id;
+	if (!getEntry(item)->no_autoselect) {
+		_selectedItem = (InventoryItem)getEntry(item)->item_id;
 		drawItem(44, 0, _selectedItem, 100)
 		askForRedraw();
 	}
@@ -355,10 +355,10 @@ void Inventory::removeItem(InventoryItem item, byte newLocation) {
 	if (!hasItem(item))
 		return;
 
-	getItem(item)->has_item = 0;
-	getItem(item)->location = newLocation;
+	getEntry(item)->has_item = 0;
+	getEntry(item)->location = newLocation;
 
-	if (getItem(item)->item_id == _selectedItem) {
+	if (getEntry(item)->item_id == _selectedItem) {
 		_selectedItem = kNoItem;
 		_engine->getGraphicsManager()->clear(GraphicsManager::kBackgroundInventory, Common::Rect(44, 0, 44 + 32, 32));
 		askForRedraw();
@@ -366,7 +366,7 @@ void Inventory::removeItem(InventoryItem item, byte newLocation) {
 }
 
 bool Inventory::hasItem(InventoryItem item) {
-	if (getItem(item)->has_item)
+	if (getEntry(item)->has_item)
 			return true;
 
 	return false;
@@ -376,10 +376,10 @@ void Inventory::setLocationAndProcess(InventoryItem item, byte newLocation) {
 	if (item >= 32)
 		return;
 
-	if (getItem(item)->location == newLocation)
+	if (getEntry(item)->location == newLocation)
 		return;
 
-	getItem(item)->location = newLocation;
+	getEntry(item)->location = newLocation;
 
 	// TODO check scene parameters and process
 	warning("Inventory::setLocationAndProcess: further processing not implemented yet!");
@@ -397,7 +397,7 @@ void Inventory::saveLoadWithSerializer(Common::Serializer &s) {
 //////////////////////////////////////////////////////////////////////////
 // Examine an inventory item
 void Inventory::examine(InventoryItem item) {
-	uint32 sceneId = getItem(item)->scene_id;
+	uint32 sceneId = getEntry(item)->scene_id;
 
 	if (sceneId != 0)
 		_engine->getLogic()->setScene(sceneId);

@@ -126,7 +126,7 @@ void Entities::load(int callbackIndex) {
 
 }
 
-void Entities::setup(Entity::ChapterIndex chapter) {
+void Entities::setup(Logic::ChapterIndex chapter) {
 	// TODO if chapter is not 0
 	//  - reset current call for every entity & another entry
 	//  - raw sequences
@@ -179,29 +179,29 @@ Entity::~Entity() {
 		delete _callbacks[i];
 }
 
-void Entity::setup(ChapterIndex index) {
+void Entity::setup(Logic::ChapterIndex index) {
 	switch(index) {
-	case kCustom:
+	case Logic::kCustom:
 		getSavePoints()->setCallback(_entityIndex, _callbacks[_data.callbacks[_data.current_call]]);
 		break;
 
-	case kChapter1:
+	case Logic::kChapter1:
 		setup_chapter1();
 		break;
 
-	case kChapter2:
+	case Logic::kChapter2:
 		setup_chapter2();
 		break;
 
-	case kChapter3:
+	case Logic::kChapter3:
 		setup_chapter3();
 		break;
 
-	case kChapter4:
+	case Logic::kChapter4:
 		setup_chapter4();
 		break;
 
-	case kChapter5:
+	case Logic::kChapter5:
 		setup_chapter5();
 		break;
 

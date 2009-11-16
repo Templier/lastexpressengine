@@ -64,7 +64,7 @@ public:
 	const char *getSound(int index, byte action, byte a3);
 
 	// Dialog
-	const char *getDialog(DialogId id);
+	const char *getDialogName(DialogId id);
 
 	// Letters
 	const char *readText(int id);
