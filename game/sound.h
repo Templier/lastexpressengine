@@ -32,7 +32,7 @@ namespace LastExpress {
 
 class LastExpressEngine;
 
-class Dialog {
+class Sound {
 public:
 	enum DialogId {
 		kDialogAnna = 1,
@@ -57,11 +57,11 @@ public:
 		kDialogTyler = 31
 	};
 
-	Dialog(LastExpressEngine *engine);
-	~Dialog();
+	Sound(LastExpressEngine *engine);
+	~Sound();
 
 	// Sounds
-	const char *getSound(int index, byte action, byte a3);
+	const char *getSoundName(int index, byte action, byte a3);
 
 	// Dialog
 	const char *getDialogName(DialogId id);

@@ -25,7 +25,7 @@
 
 #include "lastexpress/game/inventory.h"
 
-#include "lastexpress/data/sound.h"
+#include "lastexpress/data/snd.h"
 #include "lastexpress/game/logic.h"
 
 #include "lastexpress/graphics.h"
@@ -269,6 +269,21 @@ bool Inventory::handleMouseEvent(Common::Event ev) {
 	return insideInventory;
 }
 
+// Restore status after looking at an item
+//  - selected item icon
+//  - cursor
+void Inventory::restore() {
+	if (!_selectedItem)
+		return;
+
+	// See processhotspot for kActionInventory
+
+	warning("Inventory::restore is not implemented!");
+}
+
+//////////////////////////////////////////////////////////////////////////
+// UI
+//////////////////////////////////////////////////////////////////////////
 void Inventory::show(bool visible) {
 	_visible = visible;
 

@@ -69,7 +69,7 @@
     <ClCompile Include="..\..\engines\lastexpress\data\font.cpp" />
     <ClCompile Include="..\..\engines\lastexpress\data\scene.cpp" />
     <ClCompile Include="..\..\engines\lastexpress\data\sequence.cpp" />
-    <ClCompile Include="..\..\engines\lastexpress\data\sound.cpp" />
+    <ClCompile Include="..\..\engines\lastexpress\data\snd.cpp" />
     <ClCompile Include="..\..\engines\lastexpress\data\subtitle.cpp" />
     <ClCompile Include="..\..\engines\lastexpress\debug.cpp" />
     <ClCompile Include="..\..\engines\lastexpress\detection.cpp" />
@@ -110,7 +110,7 @@
     <ClCompile Include="..\..\engines\lastexpress\entities\yasmin.cpp" />
     <ClCompile Include="..\..\engines\lastexpress\game\action.cpp" />
     <ClCompile Include="..\..\engines\lastexpress\game\beetle.cpp" />
-    <ClCompile Include="..\..\engines\lastexpress\game\dialog.cpp" />
+    <ClCompile Include="..\..\engines\lastexpress\game\sound.cpp" />
     <ClCompile Include="..\..\engines\lastexpress\game\inventory.cpp" />
     <ClCompile Include="..\..\engines\lastexpress\game\items.cpp" />
     <ClCompile Include="..\..\engines\lastexpress\game\logic.cpp" />
@@ -129,7 +129,7 @@
     <ClInclude Include="..\..\engines\lastexpress\data\font.h" />
     <ClInclude Include="..\..\engines\lastexpress\data\scene.h" />
     <ClInclude Include="..\..\engines\lastexpress\data\sequence.h" />
-    <ClInclude Include="..\..\engines\lastexpress\data\sound.h" />
+    <ClInclude Include="..\..\engines\lastexpress\data\snd.h" />
     <ClInclude Include="..\..\engines\lastexpress\data\subtitle.h" />
     <ClInclude Include="..\..\engines\lastexpress\debug.h" />
     <ClInclude Include="..\..\engines\lastexpress\drawable.h" />
@@ -170,7 +170,7 @@
     <ClInclude Include="..\..\engines\lastexpress\entities\yasmin.h" />
     <ClInclude Include="..\..\engines\lastexpress\game\action.h" />
     <ClInclude Include="..\..\engines\lastexpress\game\beetle.h" />
-    <ClInclude Include="..\..\engines\lastexpress\game\dialog.h" />
+    <ClInclude Include="..\..\engines\lastexpress\game\sound.h" />
     <ClInclude Include="..\..\engines\lastexpress\game\inventory.h" />
     <ClInclude Include="..\..\engines\lastexpress\game\items.h" />
     <ClInclude Include="..\..\engines\lastexpress\game\logic.h" />

@@ -28,12 +28,12 @@
 // Data
 #include "lastexpress/data/animation.h"
 #include "lastexpress/data/scene.h"
-#include "lastexpress/data/sound.h"
+#include "lastexpress/data/snd.h"
 
 // Game
 #include "lastexpress/game/action.h"
 #include "lastexpress/game/beetle.h"
-#include "lastexpress/game/dialog.h"
+#include "lastexpress/game/sound.h"
 #include "lastexpress/game/items.h"
 #include "lastexpress/game/inventory.h"
 #include "lastexpress/game/menu.h"
@@ -54,7 +54,7 @@ Logic::Logic(LastExpressEngine *engine) : _engine(engine), _scene(NULL), _gameSt
 	_action = new Action(engine);
 	_menu = new Menu(engine);
 	_inventory = new Inventory(engine);
-	_dialog = new Dialog(engine);
+	_sound = new Sound(engine);
 	_savepoints = new SavePoints(engine);
 	_items = new Items(engine);
 	_beetle = new Beetle(engine);
@@ -64,7 +64,7 @@ Logic::Logic(LastExpressEngine *engine) : _engine(engine), _scene(NULL), _gameSt
 Logic::~Logic() {
 	delete _action;
 	delete _beetle;
-	delete _dialog;
+	delete _sound;
 	delete _items;
 	delete _gameState;
 	delete _inventory;
@@ -479,7 +479,7 @@ void Logic::postProcessScene(uint32 *index) {
 		break;
 
 	case Scene::kTypeReadText: {
-		const char *text = _dialog->readText(scene->getHeader()->param1);
+		const char *text = _sound->readText(scene->getHeader()->param1);
 		if (text)
 			playSfx(text);
 		
@@ -517,15 +517,12 @@ void Logic::processHotspot(SceneHotspot *hotspot) {
 			_gameState->sceneUseBackup = 0;
 			index = _gameState->sceneBackup;
 
-			// TODO check savegame field 4x1000
+			// TODO check savegame field 4x1000 and process index
 		}
 		
 		loadScene(index); // FIXME loadScene(_gameState->currentScene2); // reset backup values and set scene
 		
-		if (!_inventory->getSelectedItem())
-			break;
-
-		// TODO update cursor
+		_inventory->restore();
 
 		break;
 	}

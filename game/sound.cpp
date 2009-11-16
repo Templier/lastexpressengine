@@ -23,7 +23,7 @@
  *
  */
 
-#include "lastexpress/game/dialog.h"
+#include "lastexpress/game/sound.h"
 
 #include "lastexpress/game/action.h"
 #include "lastexpress/game/logic.h"
@@ -61,13 +61,13 @@ const char *messages[24] = {
 	"ENDALRM3"  // 65
 };
 
-Dialog::Dialog(LastExpressEngine *engine) : _engine(engine), sound_name(NULL) {}
+Sound::Sound(LastExpressEngine *engine) : _engine(engine), sound_name(NULL) {}
 
-Dialog::~Dialog() {
+Sound::~Sound() {
 	delete[] sound_name;
 }
 
-const char *Dialog::getSound(int index, byte action, byte a3) {
+const char *Sound::getSoundName(int index, byte action, byte a3) {
 	delete[] sound_name;
 	sound_name = new char[7];
 
@@ -185,7 +185,7 @@ const char *Dialog::getSound(int index, byte action, byte a3) {
 	return sound_name;
 }
 
-const char *Dialog::getDialogName(DialogId id) {
+const char *Sound::getDialogName(DialogId id) {
 	switch (id) {
 	case kDialogAnna:
 		if (getEvent(Action::kAnnaDialogGoToJerusalem))
@@ -488,7 +488,7 @@ const char *Dialog::getDialogName(DialogId id) {
 //////////////////////////////////////////////////////////////////////////
 // Letters & Messages
 //////////////////////////////////////////////////////////////////////////
-const char *Dialog::readText(int id) {
+const char *Sound::readText(int id) {
 	// names are stored in sequence in the array but id is [1;8] - [50;64]
 	return messages[id <= 8 ? id : id - 41];
 }
@@ -496,7 +496,7 @@ const char *Dialog::readText(int id) {
 //////////////////////////////////////////////////////////////////////////
 // Sound bites
 //////////////////////////////////////////////////////////////////////////
-const char *Dialog::excuseMeCath() {
+const char *Sound::excuseMeCath() {
 	switch(random(3)) {
 	case 0:
 		return "CAT1126B";
@@ -509,7 +509,7 @@ const char *Dialog::excuseMeCath() {
 	return "CAT1126B";
 }
 
-const char *Dialog::justCheckingCath() {
+const char *Sound::justCheckingCath() {
 	switch(random(4)) {
 	case 0:
 		return "CAT5001";
@@ -524,7 +524,7 @@ const char *Dialog::justCheckingCath() {
 	return "CAT5001";
 }
 
-const char *Dialog::wrongDoorCath() {
+const char *Sound::wrongDoorCath() {
 	switch(random(5)) {
 	case 0:
 		return "CAT1125";
@@ -541,7 +541,7 @@ const char *Dialog::wrongDoorCath() {
 	return "CAT1125";
 }
 
-const char *Dialog::justAMinuteCath() {
+const char *Sound::justAMinuteCath() {
 	switch(random(3)) {
 	case 0:
 		return "CAT1520";

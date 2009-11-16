@@ -49,10 +49,10 @@ namespace Audio {
 
 namespace LastExpress {
 
-class Sound {
+class SimpleSound {
 public:
-	Sound();
-	virtual ~Sound();
+	SimpleSound();
+	virtual ~SimpleSound();
 
 	void stop();
 
@@ -70,7 +70,7 @@ protected:
 	Audio::SoundHandle _handle;
 };
 
-class StreamedSound : public Sound {
+class StreamedSound : public SimpleSound {
 public:
 	StreamedSound();
 	~StreamedSound();
@@ -78,7 +78,7 @@ public:
 	bool load(Common::SeekableReadStream *stream);
 };
 
-class AppendableSound : public Sound {
+class AppendableSound : public SimpleSound {
 public:
 	AppendableSound();
 	~AppendableSound();

@@ -31,7 +31,7 @@
 #include "lastexpress/data/cursor.h"
 #include "lastexpress/data/scene.h"
 #include "lastexpress/data/sequence.h"
-#include "lastexpress/data/sound.h"
+#include "lastexpress/data/snd.h"
 #include "lastexpress/data/subtitle.h"
 
 #include "lastexpress/graphics.h"

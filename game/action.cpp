@@ -26,16 +26,16 @@
 #include "lastexpress/game/action.h"
 
 #include "lastexpress/data/animation.h"
-#include "lastexpress/data/sound.h"
+#include "lastexpress/data/snd.h"
 #include "lastexpress/data/scene.h"
 
 #include "lastexpress/entities/abbot.h"
 #include "lastexpress/entities/entity.h"
 
-#include "lastexpress/game/dialog.h"
 #include "lastexpress/game/items.h"
 #include "lastexpress/game/logic.h"
 #include "lastexpress/game/savepoint.h"
+#include "lastexpress/game/sound.h"
 
 #include "lastexpress/helpers.h"
 #include "lastexpress/lastexpress.h"
@@ -477,7 +477,7 @@ LABEL_KEY:
 		return Cursor::kCursorNormal;		
 
 	case SceneHotspot::kActionDialog:
-		if (getDialog()->getDialogName((Dialog::DialogId)param1))
+		if (getSound()->getDialogName((Sound::DialogId)param1))
 			return Cursor::kCursorHandPointer; 
 
 		return Cursor::kCursorNormal;

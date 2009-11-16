@@ -119,9 +119,6 @@ public:
 
 	void init();
 
-	// Handle inventory UI events.
-	bool handleMouseEvent(Common::Event ev);
-
 	// Inventory contents
 	void addItem(InventoryItem item);
 	void removeItem(InventoryItem item, byte newLocation = 0);
@@ -133,13 +130,17 @@ public:
 	InventoryEntry *getEntry(InventoryItem item);
 	InventoryEntry *getSelectedEntry() { return getEntry(_selectedItem); }
 
-	void setLocationAndProcess(InventoryItem item, byte newLocation);
-	
 	// UI Control
 	void show(bool visible);
 	void blinkEgg(bool enabled);
 	void showHourGlass(bool enabled);
 	void setPortrait(InventoryItem item);
+
+	// Handle inventory UI events.
+	bool handleMouseEvent(Common::Event ev);
+
+	void restore();
+	void setLocationAndProcess(InventoryItem item, byte newLocation);
 
 	// Serializable
 	void saveLoadWithSerializer(Common::Serializer &ser);

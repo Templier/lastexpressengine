@@ -27,7 +27,7 @@
 
 // Data
 #include "lastexpress/data/animation.h"
-#include "lastexpress/data/sound.h"
+#include "lastexpress/data/snd.h"
 
 #include "lastexpress/game/logic.h"
 

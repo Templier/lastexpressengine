@@ -33,7 +33,7 @@
     <ClCompile Include="..\..\engines\lastexpress\data\sequence.cpp">
       <Filter>data</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\engines\lastexpress\data\sound.cpp">
+    <ClCompile Include="..\..\engines\lastexpress\data\snd.cpp">
       <Filter>data</Filter>
     </ClCompile>
     <ClCompile Include="..\..\engines\lastexpress\data\subtitle.cpp">
@@ -152,9 +152,6 @@
     <ClCompile Include="..\..\engines\lastexpress\game\beetle.cpp">
       <Filter>game</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\engines\lastexpress\game\dialog.cpp">
-      <Filter>game</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\engines\lastexpress\game\inventory.cpp">
       <Filter>game</Filter>
     </ClCompile>
@@ -168,6 +165,9 @@
       <Filter>game</Filter>
     </ClCompile>
     <ClCompile Include="..\..\engines\lastexpress\game\savepoint.cpp">
+      <Filter>game</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\engines\lastexpress\game\sound.cpp">
       <Filter>game</Filter>
     </ClCompile>
     <ClCompile Include="..\..\engines\lastexpress\graphics.cpp" />
@@ -197,7 +197,7 @@
     <ClInclude Include="..\..\engines\lastexpress\data\sequence.h">
       <Filter>data</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\engines\lastexpress\data\sound.h">
+    <ClInclude Include="..\..\engines\lastexpress\data\snd.h">
       <Filter>data</Filter>
     </ClInclude>
     <ClInclude Include="..\..\engines\lastexpress\data\subtitle.h">
@@ -316,9 +316,6 @@
     <ClInclude Include="..\..\engines\lastexpress\game\beetle.h">
       <Filter>game</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\engines\lastexpress\game\dialog.h">
-      <Filter>game</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\engines\lastexpress\game\inventory.h">
       <Filter>game</Filter>
     </ClInclude>
@@ -332,6 +329,9 @@
       <Filter>game</Filter>
     </ClInclude>
     <ClInclude Include="..\..\engines\lastexpress\game\savepoint.h">
+      <Filter>game</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\engines\lastexpress\game\sound.h">
       <Filter>game</Filter>
     </ClInclude>
     <ClInclude Include="..\..\engines\lastexpress\graphics.h" />

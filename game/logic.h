@@ -85,7 +85,7 @@ namespace LastExpress {
 
 class Action;
 class Beetle;
-class Dialog;
+class Sound;
 class Entities;
 class Items;
 class LastExpressEngine;
@@ -305,7 +305,7 @@ public:
 	GameId getGameId() { return _runState.gameId; }
 
 	Cursor::CursorStyle getCursorStyle() { return _runState.cursorStyle; }
-	Dialog 	   *getGameDialog() { return _dialog; }
+	Sound 	   *getGameSound() { return _sound; }
 	Entities   *getGameEntities() { return _entities; }
 	Inventory  *getGameInventory() { return _inventory; }
 	Items	   *getGameItems() { return _items; }
@@ -341,7 +341,7 @@ private:
 	
 	Action *_action;			///< Actions
 	Beetle *_beetle;			///< Beetle catching
-	Dialog *_dialog;			///< Dialogs
+	Sound *_sound;				///< Sound
 	Entities *_entities;		///< Entities
 	GameState *_gameState;		///< Global game state
 	Inventory *_inventory;  	///< Inventory

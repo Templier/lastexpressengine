@@ -28,7 +28,7 @@
 #include "lastexpress/data/animation.h"
 
 #include "lastexpress/data/sequence.h"
-#include "lastexpress/data/sound.h"
+#include "lastexpress/data/snd.h"
 
 #include "lastexpress/debug.h"
 

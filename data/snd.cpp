@@ -26,7 +26,7 @@
 // Based on the Xentax Wiki documentation:
 // http://wiki.xentax.com/index.php/The_Last_Express_SND
 
-#include "lastexpress/data/sound.h"
+#include "lastexpress/data/snd.h"
 
 #include "lastexpress/debug.h"
 
@@ -38,18 +38,18 @@ namespace LastExpress {
 //////////////////////////////////////////////////////////////////////////
 // Sound
 //////////////////////////////////////////////////////////////////////////
-Sound::Sound() {}
+SimpleSound::SimpleSound() {}
 
-Sound::~Sound() {
+SimpleSound::~SimpleSound() {
 	stop();
 }
 
 // Stop the sound
-void Sound::stop() {
+void SimpleSound::stop() {
 	g_system->getMixer()->stopHandle(_handle);
 }
 
-void Sound::loadHeader(Common::SeekableReadStream *in) {
+void SimpleSound::loadHeader(Common::SeekableReadStream *in) {
 	_size = in->readUint32LE();
 	_blocks = in->readUint16LE();
 	debugC(5, kLastExpressDebugSound, "    sound header data: size=\"%d\", %d blocks", _size, _blocks);
@@ -58,11 +58,11 @@ void Sound::loadHeader(Common::SeekableReadStream *in) {
 	_blockSize = _size / _blocks;
 }
 
-Audio::AudioStream *Sound::makeDecoder(Common::SeekableReadStream *in, uint32 size) const {
+Audio::AudioStream *SimpleSound::makeDecoder(Common::SeekableReadStream *in, uint32 size) const {
 	return Audio::makeADPCMStream(in, true, size, Audio::kADPCMMSIma, 44100, 1, _blockSize);
 }
 
-void Sound::play(Audio::AudioStream *as) {
+void SimpleSound::play(Audio::AudioStream *as) {
 	g_system->getMixer()->playInputStream(Audio::Mixer::kPlainSoundType, &_handle, as);
 }
 
@@ -92,7 +92,7 @@ bool StreamedSound::load(Common::SeekableReadStream *stream) {
 //////////////////////////////////////////////////////////////////////////
 // StreamedSound
 //////////////////////////////////////////////////////////////////////////
-AppendableSound::AppendableSound() : Sound() {
+AppendableSound::AppendableSound() : SimpleSound() {
 	// Create an audio stream where the decoded chunks will be appended
 	// TODO: the ADPCM decoder works in native endianness, so the usage FLAG_LITTLE_ENDIAN will depend on the current platform
 	_as = Audio::makeAppendableAudioStream(44100, Audio::Mixer::FLAG_16BITS | Audio::Mixer::FLAG_AUTOFREE | Audio::Mixer::FLAG_LITTLE_ENDIAN);

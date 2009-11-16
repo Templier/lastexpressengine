@@ -8,7 +8,7 @@ MODULE_OBJS := \
 	data/font.o \
 	data/scene.o \
 	data/sequence.o \
-	data/sound.o \
+	data/snd.o \
 	data/subtitle.o \
 	entities/entity.o \
 	entities/abbot.o \
@@ -47,12 +47,12 @@ MODULE_OBJS := \
 	entities/yasmin.o \
 	game/action.o \
 	game/beetle.o \
-	game/dialog.o \
 	game/items.o \
 	game/inventory.o \
 	game/logic.o \
 	game/menu.o \
 	game/savepoint.o \
+	game/sound.o \
 	debug.o \
 	detection.o \
 	graphics.o \
