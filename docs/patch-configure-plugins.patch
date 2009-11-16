@@ -1,18 +1,8 @@
 Index: base/plugins.cpp
 ===================================================================
---- base/plugins.cpp	(revision 44891)
+--- base/plugins.cpp	(revision 45936)
 +++ base/plugins.cpp	(working copy)
-@@ -94,6 +94,9 @@
- 		#if PLUGIN_ENABLED_STATIC(AGI)
- 		LINK_PLUGIN(AGI)
- 		#endif
-+		#if PLUGIN_ENABLED_STATIC(ASYLUM)
-+		LINK_PLUGIN(ASYLUM)
-+		#endif
- 		#if PLUGIN_ENABLED_STATIC(AGOS)
- 		LINK_PLUGIN(AGOS)
- 		#endif
-@@ -118,6 +121,9 @@
+@@ -118,6 +118,9 @@
  		#if PLUGIN_ENABLED_STATIC(KYRA)
  		LINK_PLUGIN(KYRA)
  		#endif
@@ -22,38 +12,24 @@ Index: base/plugins.cpp
  		#if PLUGIN_ENABLED_STATIC(LURE)
  		LINK_PLUGIN(LURE)
  		#endif
-@@ -163,6 +169,12 @@
- 		#if PLUGIN_ENABLED_STATIC(DRACI)
- 		LINK_PLUGIN(DRACI)
- 		#endif
-+		#if PLUGIN_ENABLED_STATIC(KOM)
-+		LINK_PLUGIN(KOM)
-+		#endif
-+		//#if PLUGIN_ENABLED_STATIC(INNOCENT)
-+		//LINK_PLUGIN(INNOCENT)
-+		//#endif
- 
- 		// Music plugins
- 		// TODO: Use defines to disable or enable each MIDI driver as a
 Index: configure
 ===================================================================
---- configure	(revision 44891)
+--- configure	(revision 45936)
 +++ configure	(working copy)
-@@ -108,6 +108,7 @@
- add_engine tinsel "Tinsel" yes
- add_engine touche "Touche: The Adventures of the Fifth Musketeer" yes
- add_engine tucker "Bud Tucker in Double Trouble" yes
+@@ -90,6 +90,7 @@
+ add_engine groovie2 "Groovie 2 games" no
+ add_engine kyra "Legend of Kyrandia" yes "lol"
+ add_engine lol "Lands of Lore" no
 +add_engine lastexpress "The Last Express" no
- 
- 
- #
- 
+ add_engine lure "Lure of the Temptress" yes
+ add_engine m4 "M4/MADS" no
+ add_engine made "MADE" yes
 Index: engines/engines.mk
 ===================================================================
---- engines/engines.mk	(revision 44891)
+--- engines/engines.mk	(revision 45936)
 +++ engines/engines.mk	(working copy)
-@@ -70,6 +70,11 @@
- MODULES += engines/kyra
+@@ -69,6 +69,11 @@
+ endif
  endif
  
 +ifdef ENABLE_LASTEXPRESS
@@ -61,6 +37,6 @@ Index: engines/engines.mk
 +MODULES += engines/lastexpress
 +endif
 +
- ifdef ENABLE_LOL
- DEFINES += -DENABLE_LOL
- endif
+ ifdef ENABLE_LURE
+ DEFINES += -DENABLE_LURE=$(ENABLE_LURE)
+ MODULES += engines/lure

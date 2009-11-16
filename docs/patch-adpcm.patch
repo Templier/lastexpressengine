@@ -1,23 +1,15 @@
 Index: sound/adpcm.cpp
 ===================================================================
---- sound/adpcm.cpp	(revision 44891)
+--- sound/adpcm.cpp	(revision 45936)
 +++ sound/adpcm.cpp	(working copy)
-@@ -241,9 +241,16 @@
+@@ -241,8 +241,8 @@
  		for (; samples < numSamples && _blockPos < _blockAlign && !_stream->eos() && _stream->pos() < _endpos; samples += 2) {
  			data = _stream->readByte();
  			_blockPos++;
--			buffer[samples] = TO_LE_16(decodeIMA(data & 0x0f));
--			buffer[samples + 1] = TO_LE_16(decodeIMA((data >> 4) & 0x0f));
-+			buffer[samples] = TO_LE_16(decodeIMA((data >> 4) & 0x0f));
-+			buffer[samples + 1] = TO_LE_16(decodeIMA(data & 0x0f));
+-			buffer[samples] = decodeIMA(data & 0x0f);
+-			buffer[samples + 1] = decodeIMA((data >> 4) & 0x0f);
++			buffer[samples] = decodeIMA((data >> 4) & 0x0f);
++			buffer[samples + 1] = decodeIMA(data & 0x0f);
  		}
-+
-+		//for (; samples < numSamples && _blockPos < _blockAlign && !_stream->eos() && _stream->pos() < _endpos; samples += 2) {
-+		//	data = _stream->readByte();
-+		//	_blockPos++;
-+		//	buffer[samples] = TO_LE_16(decodeIMA(data & 0x0f));
-+		//	buffer[samples + 1] = TO_LE_16(decodeIMA((data >> 4) & 0x0f));
-+		//}
  	}
  	return samples;
- }
