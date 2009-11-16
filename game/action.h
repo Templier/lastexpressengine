@@ -331,10 +331,10 @@ public:
 private:
 	LastExpressEngine* _engine;
 
-	void pickGreenJacket();
-	void pickScarf();
-	void pickCorpse(byte bedPosition);
-	void dropCorpse();
+	void pickGreenJacket(bool process);
+	void pickScarf(bool process);
+	void pickCorpse(byte bedPosition, bool process);
+	void dropCorpse(bool process);
 };
 
 } // End of namespace LastExpress

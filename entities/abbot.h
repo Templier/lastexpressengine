@@ -45,6 +45,7 @@ public:
 	DECLARE_FUNCTION(Abbot, chapter2, 16)
 	DECLARE_FUNCTION(Abbot, chapter3, 17)
 	DECLARE_FUNCTION(Abbot, chapter4, 39)
+	DECLARE_FUNCTION(Abbot, pickBomb, 49)
 	DECLARE_FUNCTION(Abbot, chapter5, 50)
 
 	void nullfunc(SavePoints::SavePoint *savepoint);

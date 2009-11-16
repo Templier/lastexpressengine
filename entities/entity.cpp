@@ -210,7 +210,7 @@ void Entity::setup(Logic::ChapterIndex index) {
 	}
 }
 
-void Entity::call(FunctionPointer function, char* name, int param2, int param3, int param4) {
+void Entity::call(SetupFunction function, char* name, int param2, int param3, int param4) {
 	_data.current_call++;
 	(*function)(name, param2, param3, param4);
 }

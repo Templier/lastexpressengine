@@ -41,14 +41,17 @@
 
 namespace LastExpress {
 
+#define MAKE_CALLBACK(class, name, pointer) \
+	new Common::Functor1Mem<SavePoints::SavePoint*, void, class>(pointer, &class::name)
+
 #define ADD_ENTITY(class) \
 	_entities.push_back(new class(engine));
 
 #define CALLBACK_FUNCTION(class, name) \
-	_callbacks.push_back(new Common::Functor1Mem<SavePoints::SavePoint*, void, class>(this, &class::name));
+	_callbacks.push_back(MAKE_CALLBACK(class, name, this));
 
 #define CALLBACK_FUNCTION_NULL() \
-	_callbacks.push_back(new Common::Functor1Mem<SavePoints::SavePoint*, void, Entity>(this, &Entity::nullfunction));
+	_callbacks.push_back(MAKE_CALLBACK(Entity, nullfunction, this));
 
 #define DECLARE_FUNCTION(class, name, index) \
 	void name(SavePoints::SavePoint *savepoint); \
@@ -58,8 +61,8 @@ namespace LastExpress {
 	DECLARE_SETUP(Entity, nullfunction, index)
 
 #define DECLARE_SETUP(class, name, index) \
-	void setup_##name() { \
-	_engine->getLogic()->getGameSavePoints()->setCallback(_entityIndex, new Common::Functor1Mem<SavePoints::SavePoint*, void, class>(this, &class::name)); \
+	void setup_##name(char* name = 0, int param2 = 0, int param3 = 0, int param4 = 0) { \
+	_engine->getLogic()->getGameSavePoints()->setCallback(_entityIndex, MAKE_CALLBACK(class, name, this)); \
 	_data.callbacks[_data.current_call] = index; \
 	memset(&_data.callback_data[_data.current_call], 0, sizeof(Entity::EntityData)); \
 	_engine->getLogic()->getGameSavePoints()->call(_entityIndex, _entityIndex, SavePoints::kActionDefault, 0); \
@@ -139,7 +142,7 @@ public:
 		}
 	};
 
-	typedef void (*FunctionPointer)(char* name, int param2, int param3, int param4);
+	typedef void (*SetupFunction)(char* name, int param2, int param3, int param4);
 
 	Entity(LastExpressEngine *engine, SavePoints::EntityIndex index);
 	virtual ~Entity();
@@ -150,14 +153,14 @@ public:
 	// Setup
 	void setup(Logic::ChapterIndex index);
 
-	virtual void setup_chapter1() = 0;
-	virtual void setup_chapter2() = 0;
-	virtual void setup_chapter3() = 0;
-	virtual void setup_chapter4() = 0;
-	virtual void setup_chapter5() = 0;
+	virtual void setup_chapter1(char* name = 0, int param2 = 0, int param3 = 0, int param4 = 0) = 0;
+	virtual void setup_chapter2(char* name = 0, int param2 = 0, int param3 = 0, int param4 = 0) = 0;
+	virtual void setup_chapter3(char* name = 0, int param2 = 0, int param3 = 0, int param4 = 0) = 0;
+	virtual void setup_chapter4(char* name = 0, int param2 = 0, int param3 = 0, int param4 = 0) = 0;
+	virtual void setup_chapter5(char* name = 0, int param2 = 0, int param3 = 0, int param4 = 0) = 0;
 
 	// Calls
-	void call(FunctionPointer function, char* name, int param2, int param3, int param4);
+	void call(SetupFunction function, char* name, int param2, int param3, int param4);
 
 	// Empty function
 	void nullfunction(SavePoints::SavePoint *savepoint) {}
@@ -173,13 +176,13 @@ protected:
 
 class Entities : Common::Serializable {
 public:
-	
-
 	Entities(LastExpressEngine *engine);
 	~Entities();
 
 	void setup(Logic::ChapterIndex chapter);
 	void load(int callbackIndex);
+
+	void reset(SavePoints::EntityIndex index, Entity::SetupFunction function);
 
 	// Accessors
 	Entity::EntityData* getEntityData(uint index);

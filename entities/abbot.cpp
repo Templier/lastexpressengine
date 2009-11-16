@@ -80,7 +80,7 @@ Abbot::Abbot(LastExpressEngine *engine) : Entity(engine, SavePoints::kAbbot) {
 	CALLBACK_FUNCTION(Abbot, nullfunc);
 	CALLBACK_FUNCTION(Abbot, nullfunc);
 	CALLBACK_FUNCTION(Abbot, nullfunc);
-	CALLBACK_FUNCTION(Abbot, nullfunc);
+	CALLBACK_FUNCTION(Abbot, pickBomb);
 	CALLBACK_FUNCTION(Abbot, chapter5);
 	CALLBACK_FUNCTION(Abbot, nullfunc);
 	CALLBACK_FUNCTION(Abbot, nullfunc);
@@ -105,6 +105,10 @@ void Abbot::chapter3(SavePoints::SavePoint *savepoint) {
 }
 
 void Abbot::chapter4(SavePoints::SavePoint *savepoint) {
+}
+
+void Abbot::pickBomb(SavePoints::SavePoint *savepoint) {
+	error("Abbot::pickBomb: callback function not implemented!");
 }
 
 void Abbot::chapter5(SavePoints::SavePoint *savepoint) {

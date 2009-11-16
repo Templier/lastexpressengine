@@ -400,7 +400,7 @@ void Inventory::examine(InventoryItem item) {
 	uint32 sceneId = getEntry(item)->scene_id;
 
 	if (sceneId != 0)
-		_engine->getLogic()->setScene(sceneId);
+		_engine->getLogic()->loadScene(sceneId);
 }
 
 void Inventory::drawEgg() {

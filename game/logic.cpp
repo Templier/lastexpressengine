@@ -86,7 +86,7 @@ void Logic::startGame() {
 	_entities->setup(kChapter1);
 
 	showMenu(false);
-	setScene(_defaultScene);
+	loadScene(_defaultScene);
 	
 	// Set Cursor type
 	_engine->getCursor()->setStyle(Cursor::kCursorNormal);
@@ -155,7 +155,12 @@ void Logic::switchGame() {
 void Logic::gameOver(int a1, int a2, int scene, bool showScene) {
 
 	// TODO implement
-	setScene(scene);
+	loadScene(scene);
+}
+
+// Save game
+void Logic::savegame() {
+	warning("Logic::savegame is not implemented!");
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -199,6 +204,13 @@ bool Logic::handleMouseEvent(Common::Event ev) {
 //////////////////////////////////////////////////////////////////////////
 // Scene
 //////////////////////////////////////////////////////////////////////////
+
+void Logic::loadScene(uint32 index) {
+
+	// TODO add rest of implementation
+	setScene(index);
+}
+
 void Logic::setScene(uint32 index) {
 	preProcessScene(&index);
 
@@ -508,7 +520,7 @@ void Logic::processHotspot(SceneHotspot *hotspot) {
 			// TODO check savegame field 4x1000
 		}
 		
-		setScene(index); // FIXME loadScene(_gameState->currentScene2); // reset backup values and set scene
+		loadScene(index); // FIXME loadScene(_gameState->currentScene2); // reset backup values and set scene
 		
 		if (!_inventory->getSelectedItem())
 			break;
@@ -654,7 +666,7 @@ void Logic::processHotspot(SceneHotspot *hotspot) {
 				_gameState->sceneBackup = _gameState->scene;
 			}
 
-			setScene(_inventory->getEntry(item)->scene_id);
+			loadScene(_inventory->getEntry(item)->scene_id);
 			hotspot->scene = 0;
 		}
 

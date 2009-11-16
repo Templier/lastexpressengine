@@ -29,9 +29,13 @@
 #include "lastexpress/data/sound.h"
 #include "lastexpress/data/scene.h"
 
+#include "lastexpress/entities/abbot.h"
+#include "lastexpress/entities/entity.h"
+
 #include "lastexpress/game/dialog.h"
 #include "lastexpress/game/items.h"
 #include "lastexpress/game/logic.h"
+#include "lastexpress/game/savepoint.h"
 
 #include "lastexpress/helpers.h"
 #include "lastexpress/lastexpress.h"
@@ -500,18 +504,7 @@ bool Action::pickItem(Inventory::InventoryItem item, byte location, bool process
 
 	// Special case for corpse
 	if (item == Inventory::kCorpse) {
-		pickCorpse(location);
-
-		if (process)
-			_engine->getLogic()->processItem();
-
-		// Add corpse to inventory
-		if (location != 4) { // bed position
-			getInventory()->addItem(Inventory::kCorpse);
-			getInventory()->selectItem(Inventory::kCorpse);
-			_engine->getCursor()->setStyle(Cursor::kCursorCorpse);
-		}
-
+		pickCorpse(location, process);		
 		return false;
 	}
 
@@ -520,24 +513,17 @@ bool Action::pickItem(Inventory::InventoryItem item, byte location, bool process
 
 	switch (item) {
 	case Inventory::kGreenJacket:
-		pickGreenJacket();
-
-		if (process)
-			_engine->getLogic()->processItem();
-
+		pickGreenJacket(process);
 		break;
 
 	case Inventory::kScarf:
-		pickScarf();
-
-		if (process)
-			_engine->getLogic()->processItem();
+		pickScarf(process);
 
 		// stop processing
 		return false;
 
 	case Inventory::kParchemin:
-		if (location == 2)
+		if (location != 2)
 			break;
 
 		getInventory()->addItem(Inventory::kParchemin);
@@ -546,6 +532,7 @@ bool Action::pickItem(Inventory::InventoryItem item, byte location, bool process
 		break;
 
 	case Inventory::kBomb:
+		//getEntities()->reset(SavePoints::kAbbot, &Abbot::setup_pickBomb);
 		error("Logic::processHotspot: pickItem case for item bomb is not implemented!");
 		break;
 
@@ -577,7 +564,7 @@ void Action::dropItem(Inventory::InventoryItem item, byte location, bool process
 
 		if (location == 2) {
 			if (!getProgress().field_58) {
-				// TODO save game
+				_engine->getLogic()->savegame();
 				getProgress().field_58 = 1;
 			}
 
@@ -592,34 +579,34 @@ void Action::dropItem(Inventory::InventoryItem item, byte location, bool process
 	// Update item location
 	getInventory()->removeItem(item, location);
 
-	if (item == Inventory::kCorpse) {
-		dropCorpse();
-
-		if (process)
-			_engine->getLogic()->processItem();
-	}
+	if (item == Inventory::kCorpse)
+		dropCorpse(process);
 
 	// Unselect item
 	getInventory()->unselectItem();
 }
 
-void Action::pickGreenJacket() {
+void Action::pickGreenJacket(bool process) {
 	getProgress().jacket = Logic::kGreenJacket;
 	getInventory()->addItem(Inventory::kMatchBox);
 
-	// 1 unknown functions call
+	getItems()->update(9, 0, 2, 255, 255);	
 	playAnimation(kPickGreenJacket);
 
 	getInventory()->setPortrait(Inventory::kPortraitGreen);
+
+	if (process)
+		_engine->getLogic()->processItem();
 }
 
-void Action::pickScarf() {
+void Action::pickScarf(bool process) {
 	if (getProgress().jacket == Logic::kOriginalJacket)
 		playAnimation(kPickScarfGreen);
 	else
 		playAnimation(kPickScarfOriginal);
 
-	// TODO Add scarf to inventory + other stuff
+	if (process)
+		_engine->getLogic()->processItem();
 }
 
 // Corpse location:
@@ -629,7 +616,8 @@ void Action::pickScarf() {
 //   3 = 
 //   4 = Window
 //   5 = 
-void Action::pickCorpse(byte bedPosition) {
+void Action::pickCorpse(byte bedPosition, bool process) {
+
 	switch(getInventory()->getEntry(Inventory::kCorpse)->location) {
 	case 1:	// Floor
 		if (bedPosition != 4) {
@@ -657,9 +645,19 @@ void Action::pickCorpse(byte bedPosition) {
 		// No way to pick the corpse
 		break;
 	}
+
+	if (process)
+		_engine->getLogic()->processItem();
+
+	// Add corpse to inventory
+	if (bedPosition != 4) { // bed position
+		getInventory()->addItem(Inventory::kCorpse);
+		getInventory()->selectItem(Inventory::kCorpse);
+		_engine->getCursor()->setStyle(Cursor::kCursorCorpse);
+	}
 }
 
-void Action::dropCorpse() {
+void Action::dropCorpse(bool process) {
 	switch(getInventory()->getEntry(Inventory::kCorpse)->location) {
 	case 1:	// Floor
 		if (getProgress().jacket == Logic::kOriginalJacket)
@@ -697,6 +695,9 @@ void Action::dropCorpse() {
 		getProgress().field_8 = 1;
 		break;
 	}
+
+	if (process)
+		_engine->getLogic()->processItem();
 }
 
 

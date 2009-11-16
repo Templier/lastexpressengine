@@ -291,7 +291,10 @@ public:
 	void startGame();
 	void switchGame();
 
+	void savegame();
+
 	// Scene
+	void loadScene(uint32 index);
 	void setScene(uint32 index);
 	void updateTrainClock();
 	void processItem();
