@@ -202,18 +202,28 @@ bool Logic::handleMouseEvent(Common::Event ev) {
 void Logic::setScene(uint32 index) {
 	preProcessScene(&index);
 
+	// Draw background
 	delete _scene;
 	_scene = _engine->getScene(index); 
 	_engine->getGraphicsManager()->draw(_scene, GraphicsManager::kBackgroundC, true);
-	askForRedraw();
-
 	_gameState->currentScene = index;
 
-	// TODO update entities
+	// Update entities
+	Scene *scene = (_gameState->useBackupScene ? _engine->getScene(_gameState->currentScene2) : _scene);
+	
+	_entities->getEntityData(SavePoints::kHeader)->field_491 = scene->getHeader()->count;
+	_entities->getEntityData(SavePoints::kHeader)->field_495 = scene->getHeader()->field_13;
+
+	if (_gameState->useBackupScene)
+		delete scene;
+
 	_savepoints->pushAll(0, 17, 0);
 	_savepoints->process();
 
+	// TODO test + 3 function calls that draw sequences
+
 	// Show the scene 
+	askForRedraw();
 	_engine->getGraphicsManager()->update();
 	_engine->_system->updateScreen();
 	_engine->_system->delayMillis(10);
@@ -395,7 +405,7 @@ void Logic::postProcessScene(uint32 *index) {
 	Scene* scene = _engine->getScene(*index);
 
 	switch (scene->getHeader()->type) {
-	case Scene::kTypeSequence: {
+	case Scene::kTypeList: {
 		// Adjust time
 		_gameState->time += (scene->getHeader()->param1 + 10) * _gameState->timeDelta;
 		_gameState->timeTicks += (scene->getHeader()->param1 + 10);
@@ -483,9 +493,30 @@ void Logic::postProcessScene(uint32 *index) {
 void Logic::processHotspot(SceneHotspot *hotspot) {
 
 	switch (hotspot->action) {
-	case SceneHotspot::kAction1:
-		error("Logic::processHotspot: unsupported hotspot action (%02d)", hotspot->action);
+	case SceneHotspot::kActionInventory: {		
+		if (!_gameState->useBackupScene)
+			break;
+
+		int index = 0;
+		if (_gameState->currentScene3) {
+			index = _gameState->currentScene3;
+			_gameState->currentScene3 = 0;
+		} else {
+			_gameState->useBackupScene = 0;
+			index = _gameState->currentScene2;
+
+			// TODO check savegame field 4x1000
+		}
+		
+		setScene(index); // FIXME loadScene(_gameState->currentScene2); // reset backup values and set scene
+		
+		if (!_inventory->getSelectedItem())
+			break;
+
+		// TODO update cursor
+
 		break;
+	}
 
 	case SceneHotspot::kActionSavePoint:	
 		_savepoints->push(0, hotspot->param1, hotspot->param2, 0);
@@ -846,7 +877,7 @@ Cursor::CursorStyle Logic::getCursor(SceneHotspot *hotspot) {
 	default:
 		return Cursor::kCursorNormal;
 
-	case SceneHotspot::kAction1:
+	case SceneHotspot::kActionInventory:
 		if (!_gameState->currentScene3 && (_gameState->events[Action::kKronosBringFirebird] || _gameState->progress.field_74))				
 			return Cursor::kCursorNormal;
 		else

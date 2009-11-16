@@ -105,7 +105,7 @@ public: // XXX
 class SceneHotspot {
 public:
 	enum Action {
-		kAction1 = 1,
+		kActionInventory = 1,
 		kActionSavePoint = 2,
 		kActionPlaySound = 3,
 		kActionPlayMusic = 4,
@@ -181,7 +181,7 @@ public:
 		kType8 = 8,
 
 		// PostProcess
-		kTypeSequence = 128,
+		kTypeList = 128,
 		kTypeSavePoint = 129,
 		kTypeLoadBeetleSequences = 130,
 		kTypeGameOver = 131,
