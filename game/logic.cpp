@@ -598,7 +598,7 @@ void Logic::processHotspot(SceneHotspot *hotspot) {
 		break;
 
 	case SceneHotspot::kActionPlayAnimation:
-		if (hotspot->param1 >= 512 || getEvent(hotspot->param1))
+		if (getEvent(hotspot->param1))
 			break;
 
 		_action->playAnimation(hotspot->param1);

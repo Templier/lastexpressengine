@@ -42,7 +42,7 @@
 // Utilities
 #define loadFile(name) load(_engine->getResMan()->getFileStream(name))
 #define playMusicStream(name) _engine->getMusicStream()->load(_engine->getResMan()->getFileStream(name));
-#define playSfxStream(name) if (name) _engine->getSfxStream()->load(_engine->getResMan()->getFileStream(Common::String(name) + ".snd"));
+#define playSfxStream(name) _engine->getSfxStream()->load(_engine->getResMan()->getFileStream(Common::String(name) + ".snd"));
 #define playEventSound(index, action, a3) _engine->getLogic()->getGameSound()->playSoundEvent(index, action, a3)
 #define playDialog(id) playSfxStream(getSound()->getDialogName((Sound::DialogId)id))
 
