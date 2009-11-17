@@ -321,12 +321,13 @@ public:
 	GameId getGameId() { return _runState.gameId; }
 
 	Cursor::CursorStyle getCursorStyle() { return _runState.cursorStyle; }
-	Sound 	   *getGameSound() { return _sound; }
+	Beetle     *getGameBeetle() { return _beetle; }
 	Entities   *getGameEntities() { return _entities; }
 	Inventory  *getGameInventory() { return _inventory; }
 	Objects	   *getGameObjects() { return _objects; }
 	GameState  *getGameState() { return _gameState; }
 	SavePoints *getGameSavePoints() { return _savepoints; }
+	Sound 	   *getGameSound() { return _sound; }
 	
 private:
 	static const uint32 _defaultBrigthness = 0x3;
@@ -367,14 +368,8 @@ private:
 	SavePoints *_savepoints;	///< SavePoints
 	
 	
-	
 	void preProcessScene(uint32 *index);
 	void postProcessScene(uint32 *index);	
-	
-	// Hotspots
-	void processHotspot(SceneHotspot *hotspot);
-
-	void hotspot_enterCompartment(SceneHotspot *hotspot);
 
 	void switchChapter();
 	void playFinalSequence();

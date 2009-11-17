@@ -32,6 +32,7 @@
 #include "lastexpress/entities/abbot.h"
 #include "lastexpress/entities/entity.h"
 
+#include "lastexpress/game/beetle.h"
 #include "lastexpress/game/entities.h"
 #include "lastexpress/game/logic.h"
 #include "lastexpress/game/object.h"
@@ -327,7 +328,268 @@ const static struct {
 Action::Action(LastExpressEngine *engine) : _engine(engine) {}
 
 //////////////////////////////////////////////////////////////////////////
-// Action
+// Hotspot
+//////////////////////////////////////////////////////////////////////////
+void Action::processHotspot(SceneHotspot *hotspot) {
+
+	switch (hotspot->action) {
+	case SceneHotspot::kActionInventory: {		
+		if (!getState()->sceneUseBackup)
+			break;
+
+		int index = 0;
+		if (getState()->sceneBackup2) {
+			index = getState()->sceneBackup2;
+			getState()->sceneBackup2 = 0;
+		} else {
+			getState()->sceneUseBackup = 0;
+			index = getState()->sceneBackup;
+
+			Scene *backup = _engine->getScene(getState()->sceneBackup);
+
+			if (getState()->field1000[backup->getHeader()->field_15 + 100 * backup->getHeader()->field_13])
+				index = _engine->getLogic()->processIndex(getState()->sceneBackup);
+
+			delete backup;
+		}
+
+		_engine->getLogic()->loadScene(index);		
+		getInventory()->restore();
+		break;
+	}
+
+	case SceneHotspot::kActionSavePoint:	
+		getSavePoints()->push(0, (SavePoints::EntityIndex)hotspot->param1, hotspot->param2, 0);
+		break;
+
+	case SceneHotspot::kActionPlaySound:
+		if (hotspot->param2)
+			playEventSound(0, hotspot->param1, hotspot->param2);
+		break;
+
+	case SceneHotspot::kActionPlayMusic:
+		if (hotspot->param1 != 50 || getProgress().chapter == Logic::kChapter5)
+			getSound()->playMusic(SavePoints::kNone, hotspot->param1, 16, hotspot->param2);	
+		break;
+
+	case SceneHotspot::kActionKnockOnDoor:
+		knockOnDoor(hotspot->param1);		
+		break;
+
+	case SceneHotspot::kActionPlaySounds:
+		playEventSound(0, hotspot->param1, 0);
+		playEventSound(0, hotspot->param3, hotspot->param2);
+		break;
+
+	case SceneHotspot::kActionPlayAnimation:
+		if (getEvent(hotspot->param1))
+			break;
+
+		playAnimation(hotspot->param1);
+
+		if (!hotspot->scene)
+			_engine->getLogic()->processScene();
+		break;		
+
+	case SceneHotspot::kActionOpenCloseItem:
+		openCloseObject(hotspot->param1, hotspot->param2);
+		break;
+
+	case SceneHotspot::kAction10:
+		action10(hotspot->param1, hotspot->param2);
+		break;
+
+	case SceneHotspot::kActionSetItemLocation:
+		setItemLocation((Inventory::InventoryItem)hotspot->param1, hotspot->param2);
+		break;		
+
+	case SceneHotspot::kActionPickItem:
+		pickItem((Inventory::InventoryItem)hotspot->param1, hotspot->param2, &hotspot->scene);
+		break;
+
+	case SceneHotspot::kActionDropItem:
+		dropItem((Inventory::InventoryItem)hotspot->param1, hotspot->param2, hotspot->scene < 1);
+		break;
+
+	case SceneHotspot::kActionGetOutsideTrain:
+		getOutside(hotspot->param1, &hotspot->scene);
+		break;
+
+	case SceneHotspot::kActionSlip:
+		if (slip(hotspot->param1))
+			if (!hotspot->scene)
+				_engine->getLogic()->processScene();
+		break;
+
+	case SceneHotspot::kActionGetInsideTrain:
+		if (getInside(hotspot->param1))
+			if (!hotspot->scene)
+				_engine->getLogic()->processScene();
+		break;
+
+	case SceneHotspot::kActionClimbUpTrain:
+		if (climbUp(hotspot->param1))
+			if (!hotspot->scene)
+				_engine->getLogic()->processScene();
+		break;
+
+	case SceneHotspot::kActionClimbDownTrain:
+		if (climbDown())
+			if (!hotspot->scene)
+				_engine->getLogic()->processScene();
+		break;
+
+	case SceneHotspot::kActionJumpDownTrain:
+		if (jumpUpDown(hotspot->param1))
+			if (!hotspot->scene)
+				_engine->getLogic()->processScene();
+		break;
+
+	case SceneHotspot::kActionUnbound:
+		unbound(hotspot->param1, &hotspot->scene);
+		break;
+
+	case SceneHotspot::kAction25:
+		if (action25(hotspot->param1))
+			hotspot->scene = 0;
+		break;
+
+	case SceneHotspot::kAction26:
+		if (action26(hotspot->param1))
+			hotspot->scene = 0;
+		break;
+
+	case SceneHotspot::kAction27:
+		action27(hotspot->param1);
+		break;
+
+	case SceneHotspot::kActionConcertSitCough:
+		if (concertSitCough(hotspot->param1))
+			if (!hotspot->scene)
+				_engine->getLogic()->processScene();
+		break;
+
+	case SceneHotspot::kAction29:
+		action29(hotspot->param1, hotspot->param2, hotspot->param3);
+		break;
+
+	case SceneHotspot::kActionCatchBeetle:	
+		catchBeetle();
+		break;
+
+	case SceneHotspot::kAction32:
+		if (action32(hotspot->param1))
+			hotspot->scene = 0;
+		break;
+
+	case SceneHotspot::KActionUseWhistle:
+		useWhistle(hotspot->param1, &hotspot->scene);
+		break;
+
+	case SceneHotspot::kActionOpenMatchBox:
+		openMatchbox();
+		break;
+
+	case SceneHotspot::kActionOpenBed:
+		playEventSound(0, 59, 0);
+		break;
+
+	case SceneHotspot::kActionDialog:
+		getSound()->playDialog(SavePoints::kTables4, (Sound::DialogId)hotspot->param1, 16, 0);
+		break;
+
+	case SceneHotspot::kActionEggBox:
+		playEventSound(0, 43, 0);
+		if (getProgress().field_7C) {
+			getSound()->playSound(SavePoints::kNone, "MUS003", 16, 0);
+			getProgress().field_7C = 0;
+		}
+		break;
+
+	case SceneHotspot::kAction39:
+		playEventSound(0, 24, 0);
+		if (getProgress().field_80) {
+			getSound()->playSound(SavePoints::kNone, "MUS003", 16, 0);
+			getProgress().field_80 = 0;
+		}
+		break;
+
+	case SceneHotspot::kAction6:
+		// TODO extract to function
+		if (hotspot->param1 >= 128)
+			break;
+
+		if (getObjects()->get(hotspot->param1).entity) {
+			getSavePoints()->push(0, getObjects()->get(hotspot->param1).entity, 9, hotspot->param1);
+			hotspot->scene = 0;
+			break;
+		}
+
+		if (0 /* call to function that does a bunch of stuff */) {
+			hotspot->scene = 0;
+			break;
+		}
+
+		if (getObjects()->get(hotspot->param1).location == 1 || getObjects()->get(hotspot->param1).location == 3 || 0 /* another call to another function X*/) {
+			error("Logic::processHotspot: unsupported hotspot action (%02d)", hotspot->action);
+
+			break;
+		}
+
+		if (hotspot->action != 16 || getInventory()->getSelectedItem() != Inventory::kKey) {
+			if (hotspot->param1 == 109) {
+				playEventSound(0, 26, 0);
+			} else {
+				playEventSound(0, 14, 0);
+				playEventSound(0, 15, 22);
+			}
+			break;
+		}
+
+		getObjects()->update(1, SavePoints::kNone, 1, 10, 9);
+		playEventSound(0, 16, 0);
+		getInventory()->unselectItem();
+		hotspot->scene = 0;		
+		break;
+
+	case SceneHotspot::kActionExitCompartment:
+		exitCompartment(hotspot->param2);
+		// fall to case kActionEnterCompartment
+
+	case SceneHotspot::kActionEnterCompartment:
+		enterCompartment(hotspot->action, hotspot->param1, &hotspot->scene);
+		break;
+
+	case SceneHotspot::kActionBed:
+		playEventSound(0, 85, 0);
+		// falls to case 12
+
+	case SceneHotspot::kAction12:
+		if (hotspot->param1 >= 128)
+			break;
+
+		if (getObjects()->get(hotspot->param1).entity)
+			getSavePoints()->push(0, getObjects()->get(hotspot->param1).entity, 8, hotspot->param1);
+
+		break;
+
+	case SceneHotspot::kAction41:
+		error("Logic::processHotspot: unsupported hotspot action (%02d)", hotspot->action);
+
+	case SceneHotspot::kAction42:
+		action42(hotspot->param1, hotspot->param2, hotspot->param3);
+		break;
+
+	case SceneHotspot::kAction44:
+		error("Logic::processHotspot: unsupported hotspot action (%02d)", hotspot->action);
+		break;
+	default:
+		break;
+	}
+}
+
+//////////////////////////////////////////////////////////////////////////
+// Actions
 //////////////////////////////////////////////////////////////////////////
 void Action::knockOnDoor(byte object) {
 	if (object >= 128)
@@ -424,17 +686,6 @@ void Action::unbound(byte action, uint16 *sceneIndex) {
 	}
 }
 
-void Action::openMatchbox() {
-	// If the match is already in the inventory, do nothing
-	if (!getInventory()->getEntry(Inventory::kMatch)->location
-	  || getInventory()->getEntry(Inventory::kMatch)->has_item)
-		return;
-
-	getInventory()->addItem(Inventory::kMatch);
-	playEventSound(0, 102, 0);
-}
-
-
 
 bool Action::action25(byte action) {
 	switch(action) {
@@ -508,7 +759,6 @@ void Action::action27(byte action) {
 	case 4:
 		getSavePoints()->push(0, SavePoints::kCoudert, 225358684, action);
 		break;
-
 	}
 }
 
@@ -535,9 +785,138 @@ void Action::action29(byte param1, byte param2, byte param3) {
 	getSound()->playMusic(SavePoints::kNone, param3, 16, 0);
 }
 
+bool Action::action32(byte action) {
+	error("Action: method not implemented!");
+}
+
+void Action::catchBeetle()
+{
+	if (getBeetle()->isLoaded()) {
+		if (getBeetle()->catchBeetle()) {
+			getBeetle()->unload();
+			getInventory()->getEntry(Inventory::kBeetle)->location = 1;
+			getSavePoints()->push(0, SavePoints::kChapters, 202613084, 0);
+		}
+	}
+}
+
 bool Action::useWhistle(byte action, uint16 *sceneIndex) {
 	error("Action: method not implemented!");
 	return false;
+}
+
+void Action::action42(byte param1, byte param2, byte param3) {
+	int value = 0;
+	switch (getProgress().chapter) {
+	default:
+		break;
+
+	case Logic::kChapter1:
+		value = 1;
+		break;
+
+	case Logic::kChapter2:
+	case Logic::kChapter3:
+		value = 2;
+		break;
+
+	case Logic::kChapter4:
+	case Logic::kChapter5:
+		value = 4;
+		break;
+	}
+
+	if (param3 & value) {					
+		getSound()->playMusic(SavePoints::kNone, param1, 16, 0);
+
+		char filename[6];
+		sprintf((char*)&filename, "MUS%03d", param1);	
+		// FIXME check what is stored in savepoint.field_C
+		//_savepoints->call(0, 32, 203863200, (int)&filename);
+
+		getSavePoints()->push(0, SavePoints::kTrain, 222746496, param2);
+	}
+}
+
+//////////////////////////////////////////////////////////////////////////
+// Compartment
+//////////////////////////////////////////////////////////////////////////
+void Action::enterCompartment(byte action, byte object, uint16 *sceneIndex) {
+	if (getObjects()->get(1).location == 1 || getObjects()->get(1).location == 3 || getInventory()->getSelectedItem() == Inventory::kKey) {
+		handleCompartmentAction(action, object, sceneIndex);
+		return;
+	}
+
+	if (getProgress().event_found_corpse) {
+
+		if (action != 16 || getInventory()->getEntry(Inventory::kBriefcase)->location != 2) {
+			handleCompartmentAction(action, object, sceneIndex);
+		} else {				
+			playEventSound(0, 14, 0);
+			playEventSound(0, 15, 22);
+			if (getProgress().field_78) {
+				playMusicStream("MUS003");
+				getProgress().field_78 = 0;
+			}
+
+			// TODO call to further process scene index
+			error("Logic::processHotspot: unsupported hotspot action");
+		}
+	} else {
+		// TODO savegame
+		playSfxStream("LIB014");
+		playAnimation(kCathFindCorpse);
+		playSfxStream("LIB015");
+		getProgress().event_found_corpse = 1;
+		*sceneIndex = 42; // Tyler compartment with corpse on floor
+	}
+}
+
+
+void Action::exitCompartment(byte field4) {
+	if (!getProgress().field_30 && getProgress().jacket != 0) {
+		_engine->getLogic()->savegame();
+		getProgress().field_30 = 1;
+	}
+
+	getObjects()->updateField4(1, field4);
+}
+
+void Action::handleCompartmentAction(byte action, byte object, uint16 *sceneIndex) {
+	if (object >= 128)
+		return;
+
+	if (getObjects()->get(object).entity) {
+		getSavePoints()->push(0, getObjects()->get(object).entity, 9, object);
+		*sceneIndex = 0;
+		return;
+	}
+
+	if (0 /*function call f(hotspot->param1, 1, 1) */) {
+		*sceneIndex = 0;
+		return;
+	}
+
+	byte location = getObjects()->get(object).location;
+	if (location == 1 || location == 3 || 0 /* TODO function call */) {
+		error("Logic::processHotspot: unsupported hotspot action (%02d)", action);
+		return;
+	}
+
+	if (action != 16 || getInventory()->getSelectedItem() != Inventory::kKey) {
+		if (object == 109) {
+			playEventSound(0, 26, 0);
+		} else {
+			playEventSound(0, 14, 0);
+			playEventSound(0, 15, 22);
+		}
+		return;
+	}
+
+	getObjects()->update(1, SavePoints::kNone, 1, 10, 9);
+	playEventSound(0, 16, 0);
+	getInventory()->unselectItem();
+	*sceneIndex = 0;
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -550,7 +929,6 @@ void Action::getOutside(byte action, uint16 *sceneIndex) {
 	  && getInventory()->getSelectedItem() != Inventory::kFirebird
 	  && getInventory()->getSelectedItem() != Inventory::kBriefcase) {
 
-		//Events evt = kInvalid;
 		switch (action) {
 		default:
 			return;
@@ -730,16 +1108,17 @@ void Action::setItemLocation(Inventory::InventoryItem item, byte location) {
 	}
 }
 
-bool Action::pickItem(Inventory::InventoryItem item, byte location, bool process) {
+void Action::pickItem(Inventory::InventoryItem item, byte location, uint16 *sceneIndex) {
 	Inventory::InventoryEntry* entry = getInventory()->getEntry(item);
+	bool process = (*sceneIndex == 0);
 
 	if (item >= 32 || !entry->location)
-		return false;
+		return;
 
 	// Special case for corpse
 	if (item == Inventory::kCorpse) {
 		pickCorpse(location, process);		
-		return false;
+		return;
 	}
 
 	// Add and process items
@@ -754,7 +1133,7 @@ bool Action::pickItem(Inventory::InventoryItem item, byte location, bool process
 		pickScarf(process);
 
 		// stop processing
-		return false;
+		return;
 
 	case Inventory::kParchemin:
 		if (location != 2)
@@ -778,7 +1157,22 @@ bool Action::pickItem(Inventory::InventoryItem item, byte location, bool process
 		break;
 	}
 
-	return true;
+	// Load item scene
+	if (getInventory()->getEntry(item)->scene_id) {
+		if (!getState()->sceneUseBackup) {
+			getState()->sceneUseBackup = 1;
+			getState()->sceneBackup = getState()->scene;
+		}
+
+		_engine->getLogic()->loadScene(getInventory()->getEntry(item)->scene_id);
+		*sceneIndex = 0;
+	}
+
+	// Select item
+	if (getInventory()->getEntry(item)->is_selectable) {
+		getInventory()->selectItem(item);
+		_engine->getCursor()->setStyle((Cursor::CursorStyle)getInventory()->getEntry(item)->item_id);
+	}
 }
 
 void Action::dropItem(Inventory::InventoryItem item, byte location, bool process) 
@@ -818,6 +1212,16 @@ void Action::dropItem(Inventory::InventoryItem item, byte location, bool process
 
 	// Unselect item
 	getInventory()->unselectItem();
+}
+
+void Action::openMatchbox() {
+	// If the match is already in the inventory, do nothing
+	if (!getInventory()->getEntry(Inventory::kMatch)->location
+		|| getInventory()->getEntry(Inventory::kMatch)->has_item)
+		return;
+
+	getInventory()->addItem(Inventory::kMatch);
+	playEventSound(0, 102, 0);
 }
 
 void Action::pickGreenJacket(bool process) {
@@ -1123,6 +1527,5 @@ void Action::playAnimation(int index) {
 
 	getInventory()->showHourGlass(false);
 }
-
 
 } // End of namespace LastExpress

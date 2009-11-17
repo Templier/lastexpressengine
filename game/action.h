@@ -330,12 +330,29 @@ public:
 
 	Action(LastExpressEngine *engine);
 
+	// Hotspot action
+	void processHotspot(SceneHotspot *hotspot);
+	
+	// Cursor
+	Cursor::CursorStyle getCursor(byte action, byte param1, byte param2, byte param3, byte cursor);
+
+	// Animation
+	void playAnimation(int index);
+
+private:
+	LastExpressEngine* _engine;
+
+	// TODO this is a huge mess
+	//   - use the same function signature for all action, eg. void action(SceneHotspot* hotspot) or void action(byte action, byte param1 [...], uint16 *sceneIndex)
+	//   - add all functions to pointer array
+	//   - processHotspot just calls the proper function pointer
+
 	// Actions
 	void knockOnDoor(byte object);
 	void openCloseObject(byte object, byte action);
 	void action10(byte object, byte field4);
 	void setItemLocation(Inventory::InventoryItem item, byte location);
-	bool pickItem(Inventory::InventoryItem item, byte location, bool process);
+	void pickItem(Inventory::InventoryItem item, byte location, uint16 *sceneIndex);
 	void dropItem(Inventory::InventoryItem item, byte location, bool process);
 	void getOutside(byte action, uint16 *sceneIndex);
 	bool slip(byte action);
@@ -348,23 +365,22 @@ public:
 	bool action26(byte action);
 	void action27(byte action);
 	bool concertSitCough(byte action);
-	void action29(byte param1, byte param2, byte param3);	
+	void action29(byte param1, byte param2, byte param3);
+	void catchBeetle();
+	bool action32(byte action);
 	bool useWhistle(byte action, uint16 *sceneIndex);
 	void openMatchbox();
+	void action42(byte param1, byte param2, byte param3);
 
-	// Cursor
-	Cursor::CursorStyle getCursor(byte action, byte param1, byte param2, byte param3, byte cursor);
+	void enterCompartment(byte action, byte object, uint16 *sceneIndex);
+	void exitCompartment(byte field4);
 
-	// Animation
-	void playAnimation(int index);
-
-private:
-	LastExpressEngine* _engine;
-
+	// Sub-actions
 	void pickGreenJacket(bool process);
 	void pickScarf(bool process);
 	void pickCorpse(byte bedPosition, bool process);
 	void dropCorpse(bool process);
+	void handleCompartmentAction(byte action, byte object, uint16 *sceneIndex);
 };
 
 } // End of namespace LastExpress

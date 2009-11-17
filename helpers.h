@@ -30,7 +30,7 @@
 // Misc helpers
 //////////////////////////////////////////////////////////////////////////
 // Logic subclasses
-#define getSound() _engine->getLogic()->getGameSound()
+#define getBeetle() _engine->getLogic()->getGameBeetle()
 #define getEntities() _engine->getLogic()->getGameEntities()
 #define getEvent(id) getState()->events[id]
 #define getObjects() _engine->getLogic()->getGameObjects()
@@ -38,6 +38,7 @@
 #define getProgress() getState()->progress
 #define getSavePoints() _engine->getLogic()->getGameSavePoints()
 #define getState() _engine->getLogic()->getGameState()
+#define getSound() _engine->getLogic()->getGameSound()
 
 // Utilities
 #define loadFile(name) load(_engine->getResMan()->getFileStream(name))
