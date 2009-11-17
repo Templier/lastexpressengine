@@ -550,7 +550,7 @@ void Action::getOutside(byte action, uint16 *sceneIndex) {
 	  && getInventory()->getSelectedItem() != Inventory::kFirebird
 	  && getInventory()->getSelectedItem() != Inventory::kBriefcase) {
 
-		Events evt = kInvalid;
+		//Events evt = kInvalid;
 		switch (action) {
 		default:
 			return;

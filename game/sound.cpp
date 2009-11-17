@@ -68,7 +68,7 @@ Sound::Sound(LastExpressEngine *engine) : _engine(engine) {}
 
 Sound::~Sound() {}
 
-void Sound::playSound(SavePoints::EntityIndex entity, char* filename, int a3, byte a4) {
+void Sound::playSound(SavePoints::EntityIndex entity, const char *filename, int a3, byte a4) {
 	warning("Sound::playSound: no implemented!");
 
 	playSfxStream(filename);
@@ -201,7 +201,7 @@ void Sound::playDialog(SavePoints::EntityIndex entity, DialogId id, int a3, byte
 	playSound(entity, getDialogName(id), a3, a4);
 }
 
-char *Sound::getDialogName(DialogId id) {
+const char *Sound::getDialogName(DialogId id) {
 	switch (id) {
 	case kDialogAnna:
 		if (getEvent(Action::kAnnaDialogGoToJerusalem))
