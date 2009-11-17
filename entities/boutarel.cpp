@@ -25,7 +25,7 @@
 
 #include "lastexpress/entities/boutarel.h"
 
-#include "lastexpress/game/items.h"
+#include "lastexpress/game/object.h"
 
 #include "lastexpress/helpers.h"
 
@@ -86,9 +86,9 @@ void Boutarel::chapter1(SavePoints::SavePoint *savepoint) {
 		getSavePoints()->addData(SavePoints::kBoutarel, 203520448, 0);
 		getSavePoints()->addData(SavePoints::kBoutarel, 237889408, 1);
 
-		getItems()->update(34, 0, 0, 10, 9);
-		getItems()->update(50, 0, 0, 10, 9);
-		getItems()->update(42, 0, 0, 255, 255);
+		getObjects()->update(34, 0, 0, 10, 9);
+		getObjects()->update(50, 0, 0, 10, 9);
+		getObjects()->update(42, 0, 0, 255, 255);
 
 		_data.field_491 = 1750;
 		_data.field_493 = 1;

@@ -33,7 +33,7 @@
 #define getSound() _engine->getLogic()->getGameSound()
 #define getEntities() _engine->getLogic()->getGameEntities()
 #define getEvent(id) getState()->events[id]
-#define getItems() _engine->getLogic()->getGameItems()
+#define getObjects() _engine->getLogic()->getGameObjects()
 #define getInventory() _engine->getLogic()->getGameInventory()
 #define getProgress() getState()->progress
 #define getSavePoints() _engine->getLogic()->getGameSavePoints()
@@ -41,10 +41,10 @@
 
 // Utilities
 #define loadFile(name) load(_engine->getResMan()->getFileStream(name))
-#define playMusic(name) _engine->getMusicStream()->load(_engine->getResMan()->getFileStream(name));
-#define playSfx(name) if (name) _engine->getSfxStream()->load(_engine->getResMan()->getFileStream(Common::String(name) + ".snd"));
-#define playSound(index, action, a3) playSfx(_engine->getLogic()->getGameSound()->getSoundName(index, action, a3))
-#define playDialog(id) playSfx(getSound()->getDialogName((Sound::DialogId)id))
+#define playMusicStream(name) _engine->getMusicStream()->load(_engine->getResMan()->getFileStream(name));
+#define playSfxStream(name) if (name) _engine->getSfxStream()->load(_engine->getResMan()->getFileStream(Common::String(name) + ".snd"));
+#define playEventSound(index, action, a3) _engine->getLogic()->getGameSound()->playSoundEvent(index, action, a3)
+#define playDialog(id) playSfxStream(getSound()->getDialogName((Sound::DialogId)id))
 
 // Misc
 #define random(value) _engine->getRandom().getRandomNumber(value)

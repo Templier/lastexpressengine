@@ -57,7 +57,7 @@ class LastExpressEngine;
 class SavePoints : Common::Serializable {
 public:
 	enum EntityIndex {
-		kHeader,
+		kNone,
 		kAnna,
 		kAugust,
 		kMertens,

@@ -45,7 +45,7 @@
 	uint32 {4*128}  - Game progress
 	byte {512}      - Game events
 	byte {7*32}     - Inventory
-	byte {5*128}    - Items
+	byte {5*128}    - Objects
 	byte {1262*40}  - Entities (characters and train entities)
 
 	uint32 {4}      - ??
@@ -87,7 +87,7 @@ class Action;
 class Beetle;
 class Sound;
 class Entities;
-class Items;
+class Objects;
 class LastExpressEngine;
 class Menu;
 class SavePoints;
@@ -264,6 +264,11 @@ public:
 		GameProgress progress;
 		byte events[512];
 
+		// Needs to be figured out
+		int field1000[1000];
+		int field16[16];
+		int field16_2[16];
+
 		GameState() {
 			brightness = _defaultBrigthness;
 			volume = _defaultVolume;
@@ -279,6 +284,10 @@ public:
 
 			// Clear game events
 			memset(events, 0, 512*sizeof(byte));
+
+			memset(field1000, 0, 1000*sizeof(int));
+			memset(field16, 0, 16*sizeof(int));
+			memset(field16_2, 0, 16*sizeof(int));
 		}
 	};
 	
@@ -297,7 +306,10 @@ public:
 	void loadScene(uint32 index);
 	void setScene(uint32 index);
 	void updateTrainClock();
-	void processItem();
+
+	// Index processing
+	void processScene();
+	uint32 processIndex(uint32 index);
 
 	// Accessors
 	bool isGameStarted() { return _runState.gameStarted; }
@@ -308,7 +320,7 @@ public:
 	Sound 	   *getGameSound() { return _sound; }
 	Entities   *getGameEntities() { return _entities; }
 	Inventory  *getGameInventory() { return _inventory; }
-	Items	   *getGameItems() { return _items; }
+	Objects	   *getGameObjects() { return _objects; }
 	GameState  *getGameState() { return _gameState; }
 	SavePoints *getGameSavePoints() { return _savepoints; }
 	
@@ -345,8 +357,8 @@ private:
 	Entities *_entities;		///< Entities
 	GameState *_gameState;		///< Global game state
 	Inventory *_inventory;  	///< Inventory
-	Items *_items;				///< Items
 	Menu *_menu;            	///< Main menu handling
+	Objects *_objects;			///< Objects
 	Scene *_scene;				///< Current scene	
 	SavePoints *_savepoints;	///< SavePoints
 	

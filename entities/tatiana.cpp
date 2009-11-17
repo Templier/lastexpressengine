@@ -25,7 +25,7 @@
 
 #include "lastexpress/entities/tatiana.h"
 
-#include "lastexpress/game/items.h"
+#include "lastexpress/game/object.h"
 
 #include "lastexpress/helpers.h"
 
@@ -101,9 +101,9 @@ void Tatiana::chapter1(SavePoints::SavePoint *savepoint) {
 	case SavePoints::kActionDefault: 
 		getSavePoints()->addData(SavePoints::kTatiana, 191198209, 0);
 
-		getItems()->update(33, 0, 1, 10, 9);
-		getItems()->update(49, 0, 1, 10, 9);
-		getItems()->update(41, 0, 0, 255, 255);
+		getObjects()->update(33, 0, 1, 10, 9);
+		getObjects()->update(49, 0, 1, 10, 9);
+		getObjects()->update(41, 0, 0, 255, 255);
 
 		_data.field_491 = 5419;
 		_data.field_493 = 1;

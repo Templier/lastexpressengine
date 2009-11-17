@@ -23,8 +23,8 @@
  *
  */
 
-#ifndef LASTEXPRESS_SOUND_H
-#define LASTEXPRESS_SOUND_H
+#ifndef LASTEXPRESS_SND_H
+#define LASTEXPRESS_SND_H
 
 /*
 	Sound format (.SND / .LNK)
@@ -94,4 +94,4 @@ private:
 
 } // End of namespace LastExpress
 
-#endif // LASTEXPRESS_SOUND_H
+#endif // LASTEXPRESS_SND_H

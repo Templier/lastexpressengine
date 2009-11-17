@@ -25,7 +25,7 @@
 
 #include "lastexpress/entities/verges.h"
 
-#include "lastexpress/game/items.h"
+#include "lastexpress/game/object.h"
 
 #include "lastexpress/helpers.h"
 
@@ -95,8 +95,8 @@ void Verges::chapter1(SavePoints::SavePoint *savepoint) {
 		getSavePoints()->addData(SavePoints::kVerges, 201431954, 5);
 		getSavePoints()->addData(SavePoints::kVerges, 168187490, 6);
 
-		getItems()->update(104, 9, 0, 0, 9);
-		getItems()->update(105, 9, 0, 0, 9);
+		getObjects()->update(104, 9, 0, 0, 9);
+		getObjects()->update(105, 9, 0, 0, 9);
 
 		_data.field_491 = 5000;
 		_data.field_493 = 0;

@@ -25,7 +25,7 @@
 
 #include "lastexpress/entities/coudert.h"
 
-#include "lastexpress/game/items.h"
+#include "lastexpress/game/object.h"
 
 #include "lastexpress/helpers.h"
 
@@ -131,7 +131,7 @@ void Coudert::chapter1(SavePoints::SavePoint *savepoint) {
 		_data.field_493 = 0;
 		_data.field_495 = 4;
 
-		getItems()->updateField4(111, 1);
+		getObjects()->updateField4(111, 1);
 		break;
 
 	case 18:

@@ -25,7 +25,7 @@
 
 #include "lastexpress/entities/chapters.h"
 
-#include "lastexpress/game/items.h"
+#include "lastexpress/game/object.h"
 
 #include "lastexpress/helpers.h"
 
@@ -97,40 +97,40 @@ void Chapters::chapter1_init(SavePoints::SavePoint *savepoint) {
 	getInventory()->setLocationAndProcess(Inventory::kItem22, 1);
 	getInventory()->setLocationAndProcess(Inventory::kPaper, 1);
 
-	getItems()->update(1, 0, 0, 10, 9);
-	getItems()->update(9, 0, 0, 255, 255);
+	getObjects()->update(1, 0, 0, 10, 9);
+	getObjects()->update(9, 0, 0, 255, 255);
 
 	for (uint i = 1; i < 9; i++) {
-		getItems()->updateField4(i, 2);
+		getObjects()->updateField4(i, 2);
 	}
 
 	for (uint i = 32; i < 40; i++) {
-		getItems()->updateField4(i, 2);
+		getObjects()->updateField4(i, 2);
 	}
 
 	getCallData().entries[0].field_0 = 40;
 
-	getItems()->updateField4(25, 1);
-	getItems()->updateField4(23, 1);
-	getItems()->updateField4(98, 1);
-	getItems()->updateField4(55, 1);
+	getObjects()->updateField4(25, 1);
+	getObjects()->updateField4(23, 1);
+	getObjects()->updateField4(98, 1);
+	getObjects()->updateField4(55, 1);
 
-	getItems()->update(25, 0, 0, 0, 1);
-	getItems()->update(23, 0, 0, 0, 1);
-	getItems()->update(24, 0, 0, 0, 1);
-	getItems()->update(28, 0, 0, 0, 1);
-	getItems()->update(56, 0, 0, 0, 1);
-	getItems()->update(54, 0, 0, 0, 1);
-	getItems()->update(55, 0, 0, 0, 1);
-	getItems()->update(59, 0, 0, 0, 1);
-	getItems()->update(66, 0, 0, 0, 1);
-	getItems()->update(64, 0, 0, 0, 1);
-	getItems()->update(65, 0, 0, 0, 1);
-	getItems()->update(69, 0, 0, 0, 1);
-	getItems()->update(98, 0, 0, 0, 1);
-	getItems()->update(26, 0, 1, 0, 9);
-	getItems()->update(27, 0, 1, 0, 9);
-	getItems()->update(101, 0, 1, 10, 9);
+	getObjects()->update(25, 0, 0, 0, 1);
+	getObjects()->update(23, 0, 0, 0, 1);
+	getObjects()->update(24, 0, 0, 0, 1);
+	getObjects()->update(28, 0, 0, 0, 1);
+	getObjects()->update(56, 0, 0, 0, 1);
+	getObjects()->update(54, 0, 0, 0, 1);
+	getObjects()->update(55, 0, 0, 0, 1);
+	getObjects()->update(59, 0, 0, 0, 1);
+	getObjects()->update(66, 0, 0, 0, 1);
+	getObjects()->update(64, 0, 0, 0, 1);
+	getObjects()->update(65, 0, 0, 0, 1);
+	getObjects()->update(69, 0, 0, 0, 1);
+	getObjects()->update(98, 0, 0, 0, 1);
+	getObjects()->update(26, 0, 1, 0, 9);
+	getObjects()->update(27, 0, 1, 0, 9);
+	getObjects()->update(101, 0, 1, 10, 9);
 
 	// TODO call another function
 }

@@ -23,8 +23,10 @@
  *
  */
 
-#ifndef LASTEXPRESS_DIALOG_H
-#define LASTEXPRESS_DIALOG_H
+#ifndef LASTEXPRESS_SOUND_H
+#define LASTEXPRESS_SOUND_H
+
+#include "lastexpress/game/savepoint.h"
 
 #include "common/system.h"
 
@@ -60,8 +62,11 @@ public:
 	Sound(LastExpressEngine *engine);
 	~Sound();
 
-	// Sounds
-	const char *getSoundName(int index, byte action, byte a3);
+	// Sound
+	void playSound(SavePoints::EntityIndex entity, char* filename, int a3, byte a4);
+	void playMusic(SavePoints::EntityIndex entity, byte action, int a3, byte a4);
+	void playSoundEvent(int index, byte action, byte a3);
+
 
 	// Dialog
 	const char *getDialogName(DialogId id);
@@ -79,10 +84,8 @@ public:
 
 private:
 	LastExpressEngine* _engine;
-
-	char *sound_name;
 };
 
 } // End of namespace LastExpress
 
-#endif // LASTEXPRESS_DIALOG_H
+#endif // LASTEXPRESS_SOUND_H

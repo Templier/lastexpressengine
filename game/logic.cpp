@@ -34,9 +34,9 @@
 #include "lastexpress/game/action.h"
 #include "lastexpress/game/beetle.h"
 #include "lastexpress/game/sound.h"
-#include "lastexpress/game/items.h"
 #include "lastexpress/game/inventory.h"
 #include "lastexpress/game/menu.h"
+#include "lastexpress/game/object.h"
 #include "lastexpress/game/savepoint.h"
 
 // Entities
@@ -56,7 +56,7 @@ Logic::Logic(LastExpressEngine *engine) : _engine(engine), _scene(NULL), _gameSt
 	_inventory = new Inventory(engine);
 	_sound = new Sound(engine);
 	_savepoints = new SavePoints(engine);
-	_items = new Items(engine);
+	_objects = new Objects(engine);
 	_beetle = new Beetle(engine);
 	_entities = new Entities(engine);
 }
@@ -65,7 +65,7 @@ Logic::~Logic() {
 	delete _action;
 	delete _beetle;
 	delete _sound;
-	delete _items;
+	delete _objects;
 	delete _gameState;
 	delete _inventory;
 	delete _menu;	
@@ -223,8 +223,8 @@ void Logic::setScene(uint32 index) {
 	// Update entities
 	Scene *scene = (_gameState->sceneUseBackup ? _engine->getScene(_gameState->sceneBackup) : _scene);
 	
-	_entities->getEntityData(SavePoints::kHeader)->field_491 = scene->getHeader()->count;
-	_entities->getEntityData(SavePoints::kHeader)->field_495 = scene->getHeader()->field_13;
+	_entities->getEntityData(SavePoints::kNone)->field_491 = scene->getHeader()->count;
+	_entities->getEntityData(SavePoints::kNone)->field_495 = scene->getHeader()->field_13;
 
 	if (_gameState->sceneUseBackup)
 		delete scene;
@@ -240,12 +240,15 @@ void Logic::setScene(uint32 index) {
 	_engine->_system->updateScreen();
 	_engine->_system->delayMillis(10);
 
-
 	postProcessScene(&_gameState->scene);
 }
 
-void Logic::updateTrainClock() {
+void Logic::processScene() {
+	error("Logic::processItem is not implemented!");
+}
 
+uint32 Logic::processIndex(uint32 index) {
+	error("Logic::processItem is not implemented!");
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -259,7 +262,7 @@ void Logic::updateTrainClock() {
 	}
 
 #define GET_ENTITY_LOCATION(scene) \
-	_items->get(scene->getHeader()->param1).location
+	_objects->get(scene->getHeader()->param1).location
 
 #define GET_ITEM_LOCATION(scene, parameter) \
 	_inventory->getEntry((Inventory::InventoryItem)scene->getHeader()->parameter)->location
@@ -349,7 +352,7 @@ void Logic::preProcessScene(uint32 *index) {
 		if (scene->getHotspots()->size() > 0) {
 			for (Common::Array<SceneHotspot *>::iterator it = scene->getHotspots()->begin(); it != scene->getHotspots()->end(); ++it) {
 
-				if (_items->get(scene->getHeader()->param1).location == (*it)->location) {
+				if (_objects->get(scene->getHeader()->param1).location == (*it)->location) {
 					PROCESS_HOTSPOT_SCENE(*it, index);
 					found = true;
 					break;
@@ -462,7 +465,7 @@ void Logic::postProcessScene(uint32 *index) {
 		if (_gameState->time >= 2418300 || getProgress().field_18 == 4)
 			break;
 
-		playSfx("LIB050");
+		playSfxStream("LIB050");
 		switch (getProgress().chapter) {
 		case kChapter1:
 			gameOver(0, 0, 62, 1);
@@ -481,7 +484,7 @@ void Logic::postProcessScene(uint32 *index) {
 	case Scene::kTypeReadText: {
 		const char *text = _sound->readText(scene->getHeader()->param1);
 		if (text)
-			playSfx(text);
+			playSfxStream(text);
 		
 		break;
 	}
@@ -517,13 +520,16 @@ void Logic::processHotspot(SceneHotspot *hotspot) {
 			_gameState->sceneUseBackup = 0;
 			index = _gameState->sceneBackup;
 
-			// TODO check savegame field 4x1000 and process index
+			Scene *backup = _engine->getScene(_gameState->sceneBackup);
+
+			if (_gameState->field1000[backup->getHeader()->field_15 + 100 * backup->getHeader()->field_13])
+				index = processIndex(_gameState->sceneBackup);
+
+			delete backup;
 		}
 		
-		loadScene(index); // FIXME loadScene(_gameState->currentScene2); // reset backup values and set scene
-		
+		loadScene(index);		
 		_inventory->restore();
-
 		break;
 	}
 
@@ -532,23 +538,19 @@ void Logic::processHotspot(SceneHotspot *hotspot) {
 		break;
 
 	case SceneHotspot::kActionPlaySound:
-		// TODO: Check validity: does the file exits (LIBxxx)?
 		if (hotspot->param2)
-			playSound(0, hotspot->param1, hotspot->param2);
+			playEventSound(0, hotspot->param1, hotspot->param2);
+
 		break;
 
-	case SceneHotspot::kActionPlayMusic:		
-		error("Logic::processHotspot: unsupported hotspot action (%02d)", hotspot->action);
+	case SceneHotspot::kActionPlayMusic:
+		if (hotspot->param1 != 50 || getProgress().chapter == kChapter5)
+			_sound->playMusic(SavePoints::kNone, hotspot->param1, 16, hotspot->param2);	
 
-	case SceneHotspot::kActionKnockDoor:
-		if (hotspot->param1 >= 128)
-			break;
+		break;
 
-		if (_items->get(hotspot->param1).field_0)
-			_savepoints->push(0, _items->get(hotspot->param1).field_0, 8, hotspot->param1);
-		else
-			playSound(0, 12, 0);
-		
+	case SceneHotspot::kActionKnockOnDoor:
+		_action->knockOnDoor(hotspot->param1);		
 		break;
 
 	case SceneHotspot::kAction6:
@@ -556,8 +558,8 @@ void Logic::processHotspot(SceneHotspot *hotspot) {
 		if (hotspot->param1 >= 128)
 			break;
 
-		if (_items->get(hotspot->param1).field_0) {
-			_savepoints->push(0, _items->get(hotspot->param1).field_0, 9, hotspot->param1);
+		if (_objects->get(hotspot->param1).field_0) {
+			_savepoints->push(0, _objects->get(hotspot->param1).field_0, 9, hotspot->param1);
 			hotspot->scene = 0;
 			break;
 		}
@@ -567,7 +569,7 @@ void Logic::processHotspot(SceneHotspot *hotspot) {
 			break;
 		}
 
-		if (_items->get(hotspot->param1).location == 1 || _items->get(hotspot->param1).location == 3 || 0 /* another call to another function X*/) {
+		if (_objects->get(hotspot->param1).location == 1 || _objects->get(hotspot->param1).location == 3 || 0 /* another call to another function X*/) {
 			error("Logic::processHotspot: unsupported hotspot action (%02d)", hotspot->action);
 
 			break;
@@ -575,80 +577,48 @@ void Logic::processHotspot(SceneHotspot *hotspot) {
 
 		if (hotspot->action != 16 || _inventory->getSelectedItem() != Inventory::kKey) {
 			if (hotspot->param1 == 109) {
-				playSound(0, 26, 0);
+				playEventSound(0, 26, 0);
 			} else {
-				playSound(0, 14, 0);
-				playSound(0, 15, 22);
+				playEventSound(0, 14, 0);
+				playEventSound(0, 15, 22);
 			}
 			break;
 		}
 
-		_items->update(1, 0, 1, 10, 9);
-		playSound(0, 16, 0);
+		_objects->update(1, 0, 1, 10, 9);
+		playEventSound(0, 16, 0);
 		_inventory->unselectItem();
 		hotspot->scene = 0;
 		
 		break;
 
 	case SceneHotspot::kActionPlaySounds:
-		playSound(0, hotspot->param1, 0);
-		playSound(0, hotspot->param3, hotspot->param2);
+		playEventSound(0, hotspot->param1, 0);
+		playEventSound(0, hotspot->param3, hotspot->param2);
 		break;
 
 	case SceneHotspot::kActionPlayAnimation:
-		error("Logic::processHotspot: unsupported hotspot action (%02d)", hotspot->action);
-
-	case SceneHotspot::kActionOpenWindow:
-		if (hotspot->param1 >= 128)
+		if (hotspot->param1 >= 512 || getEvent(hotspot->param1))
 			break;
 
-		// TODO update entity
+		_action->playAnimation(hotspot->param1);
 
-		if ((hotspot->param1 < 9  || hotspot->param1 > 16)
-		 && (hotspot->param1 < 40 || hotspot->param1 > 47)) {
-			
-			switch (hotspot->param2) {
-			case 1:
-				playSound(0, 24, 0);
-				break;
-			
-			case 2:
-				playSound(0, 36, 0);
-				break;
+		if (!hotspot->scene)
+			processScene();
 
-			default:
-				break;
-			}
-		}
+		break;		
 
-		switch (hotspot->param2) {
-		case 1:
-			playSound(0, 21, 0);
-			break;
-
-		case 2:
-			playSound(0, 20, 0);
-			break;
-
-		default:
-			break;
-		}
-
-	case SceneHotspot::kAction10:
-		if (hotspot->param1 >= 128)
-			break;
-
-		// TODO Store value in savegame_640
-		if (hotspot->param1 != 112) {
-			if (hotspot->param1 == 1)
-				playSound(0, 73, 0);
-		} else  {
-			playSound(0, 96, 0);	
-		}
+	case SceneHotspot::kActionOpenCloseItem:
+		_action->openCloseItem(hotspot->param1, hotspot->param2);
 		break;
 
-	case SceneHotspot::kAction11:
-		error("Logic::processHotspot: unsupported hotspot action (%02d)", hotspot->action);
+	case SceneHotspot::kAction10:
+		_action->action10(hotspot->param1, hotspot->param2);
+		break;
+
+	case SceneHotspot::kActionSetItemLocation:
+		_action->setItemLocation((Inventory::InventoryItem)hotspot->param1, hotspot->param2);
+		break;		
 
 	case SceneHotspot::kActionPickItem: {
 		Inventory::InventoryItem item = (Inventory::InventoryItem)hotspot->param1;
@@ -684,13 +654,13 @@ void Logic::processHotspot(SceneHotspot *hotspot) {
 			// TODO save game
 			getProgress().field_30 = 1;
 		}
-		_items->updateField4(1, hotspot->param2);
+		_objects->updateField4(1, hotspot->param2);
 
 		// fall to case kActionEnterCompartment
 
 	case SceneHotspot::kActionEnterCompartment:
 		
-		if (_items->get(1).location == 1 || _items->get(1).location == 3 || _inventory->getSelectedItem() == Inventory::kKey) {
+		if (_objects->get(1).location == 1 || _objects->get(1).location == 3 || _inventory->getSelectedItem() == Inventory::kKey) {
 			hotspot_enterCompartment(hotspot);
 			break;
 		}
@@ -700,10 +670,10 @@ void Logic::processHotspot(SceneHotspot *hotspot) {
 			if (hotspot->action != 16 || _inventory->getEntry(Inventory::kBriefcase)->location != 2) {
 				hotspot_enterCompartment(hotspot);
 			} else {				
-				playSound(0, 14, 0);
-				playSound(0, 15, 22);
+				playEventSound(0, 14, 0);
+				playEventSound(0, 15, 22);
 				if (getProgress().field_78) {
-					playMusic("MUS003");
+					playMusicStream("MUS003");
 					getProgress().field_78 = 0;
 				}
 
@@ -712,9 +682,9 @@ void Logic::processHotspot(SceneHotspot *hotspot) {
 			}
 		} else {
 			// TODO savegame
-			playSfx("LIB014");
+			playSfxStream("LIB014");
 			_action->playAnimation(Action::kCathFindCorpse);
-			playSfx("LIB015");
+			playSfxStream("LIB015");
 			getProgress().event_found_corpse = 1;
 			hotspot->scene = 42; // Tyler compartment with corpse on floor
 		}
@@ -732,7 +702,7 @@ void Logic::processHotspot(SceneHotspot *hotspot) {
 		error("Logic::processHotspot: unsupported hotspot action (%02d)", hotspot->action);
 
 	case SceneHotspot::kAction27:
-		playSound(0, 31, 0);
+		playEventSound(0, 31, 0);
 
 		// TODO update game state
 		error("Logic::processHotspot: unsupported hotspot action (%02d)", hotspot->action);
@@ -758,7 +728,7 @@ void Logic::processHotspot(SceneHotspot *hotspot) {
 		error("Logic::processHotspot: unsupported hotspot action (%02d)", hotspot->action);
 
 	case SceneHotspot::kActionOpenBed:
-		playSound(0, 59, 0);
+		playEventSound(0, 59, 0);
 		break;
 
 	case SceneHotspot::kActionDialog:
@@ -766,30 +736,30 @@ void Logic::processHotspot(SceneHotspot *hotspot) {
 		break;
 
 	case SceneHotspot::kActionEggBox:
-		playSound(0, 43, 0);
+		playEventSound(0, 43, 0);
 		if (getProgress().field_7C) {
-			playMusic("MUS003");
+			playMusicStream("MUS003");
 			getProgress().field_7C = 0;
 		}
 		break;
 
 	case SceneHotspot::kAction39:
-		playSound(0, 24, 0);
+		playEventSound(0, 24, 0);
 		if (getProgress().field_80) {
-			playMusic("MUS003");
+			playMusicStream("MUS003");
 			getProgress().field_80 = 0;
 		}
 		break;
 
 	case SceneHotspot::kActionBed:
-		playSound(0, 85, 0);
+		playEventSound(0, 85, 0);
 		// falls to case 12
 	case SceneHotspot::kAction12:
 		if (hotspot->param1 >= 128)
 			break;
 
-		if (_items->get(hotspot->param1).field_0)
-			_savepoints->push(0, _items->get(hotspot->param1).field_0, 8, hotspot->param1);
+		if (_objects->get(hotspot->param1).field_0)
+			_savepoints->push(0, _objects->get(hotspot->param1).field_0, 8, hotspot->param1);
 
 		break;
 
@@ -817,7 +787,7 @@ void Logic::processHotspot(SceneHotspot *hotspot) {
 		if (hotspot->param3 & value) {
 			char filename[6];
 			sprintf((char*)&filename, "MUS%03d", hotspot->param1);
-			playMusic((char *)&filename);
+			playMusicStream((char *)&filename);
 			// FIXME check what is stored in savepoint.field_C
 			//_savepoints->call(0, 32, 203863200, (int)&filename);
 			_savepoints->push(0, 32, 222746496, hotspot->param2);
@@ -839,8 +809,8 @@ void Logic::hotspot_enterCompartment(SceneHotspot *hotspot) {
 	if (hotspot->param1 >= 128)
 		return;
 
-	if (_items->get(hotspot->param1).field_0) {
-		_savepoints->push(0, _items->get(hotspot->param1).field_0, 9, hotspot->param1);
+	if (_objects->get(hotspot->param1).field_0) {
+		_savepoints->push(0, _objects->get(hotspot->param1).field_0, 9, hotspot->param1);
 		hotspot->scene = 0;
 		return;
 	}
@@ -850,7 +820,7 @@ void Logic::hotspot_enterCompartment(SceneHotspot *hotspot) {
 		return;
 	}
 
-	byte location = _items->get(hotspot->param1).location;
+	byte location = _objects->get(hotspot->param1).location;
 	if (location == 1 || location == 3 || 0 /* TODO function call */) {
 		error("Logic::processHotspot: unsupported hotspot action (%02d)", hotspot->action);
 		return;
@@ -858,16 +828,16 @@ void Logic::hotspot_enterCompartment(SceneHotspot *hotspot) {
 
 	if (hotspot->action != 16 || _inventory->getSelectedItem() != Inventory::kKey) {
 		if (hotspot->param1 == 109) {
-			playSound(0, 26, 0);
+			playEventSound(0, 26, 0);
 		} else {
-			playSound(0, 14, 0);
-			playSound(0, 15, 22);
+			playEventSound(0, 14, 0);
+			playEventSound(0, 15, 22);
 		}
 		return;
 	}
 
-	_items->update(1, 0, 1, 10, 9);
-	playSound(0, 16, 0);
+	_objects->update(1, 0, 1, 10, 9);
+	playEventSound(0, 16, 0);
 	_inventory->unselectItem();
 	hotspot->scene = 0;
 }
@@ -875,12 +845,6 @@ void Logic::hotspot_enterCompartment(SceneHotspot *hotspot) {
 //////////////////////////////////////////////////////////////////////////
 // Misc
 //////////////////////////////////////////////////////////////////////////
-
-void Logic::processItem() {
-	error("Logic::processItem is not implemented!");
-}
-
-
 void Logic::switchChapter() {
 	switch(_gameState->progress.chapter) {
 	default:
@@ -927,6 +891,10 @@ void Logic::playFinalSequence() {
 	// - ??value = 1
 
 	showMenu(true);
+}
+
+void Logic::updateTrainClock() {
+
 }
 
 } // End of namespace LastExpress

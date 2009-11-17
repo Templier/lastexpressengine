@@ -25,7 +25,7 @@
 
 #include "lastexpress/entities/rebecca.h"
 
-#include "lastexpress/game/items.h"
+#include "lastexpress/game/object.h"
 
 #include "lastexpress/helpers.h"
 
@@ -95,11 +95,11 @@ void Rebecca::chapter1(SavePoints::SavePoint *savepoint) {
 	case SavePoints::kActionDefault: 
 		getSavePoints()->addData(SavePoints::kRebecca, 224253538, 0);
 
-		getItems()->update(36, 0, 0, 10, 9);
-		getItems()->update(52, 0, 0, 10, 9);
-		getItems()->update(44, 0, 0, 255, 255);
+		getObjects()->update(36, 0, 0, 10, 9);
+		getObjects()->update(52, 0, 0, 10, 9);
+		getObjects()->update(44, 0, 0, 255, 255);
 
-		getItems()->updateField4(110, 1);
+		getObjects()->updateField4(110, 1);
 
 		_data.field_491 = 2830;
 		_data.field_493 = 1;

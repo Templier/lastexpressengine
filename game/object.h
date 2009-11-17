@@ -23,8 +23,8 @@
  *
  */
 
-#ifndef LASTEXPRESS_ITEMS_H
-#define LASTEXPRESS_ITEMS_H
+#ifndef LASTEXPRESS_OBJECT_H
+#define LASTEXPRESS_OBJECT_H
 
 #include "common/serializer.h"
 #include "common/system.h"
@@ -33,16 +33,16 @@ namespace LastExpress {
 
 class LastExpressEngine;
 
-class Items : Common::Serializable {
+class Objects : Common::Serializable {
 public:
-	struct Item {
+	struct Object {
 		byte field_0;
 		byte location;
 		byte cursor;
 		byte field_3;
 		byte field_4;
 
-		Item() {
+		Object() {
 			field_0 = 0;
 			location = 0;
 			cursor = 10;
@@ -51,9 +51,9 @@ public:
 		}
 	};
 	
-	Items(LastExpressEngine *engine);
+	Objects(LastExpressEngine *engine);
 
-	const Item get(uint index);
+	const Object get(uint index);
 	void update(uint index, byte field_0, byte location, byte cursor, byte field_3);
 	void updateField4(uint index, byte value);
 
@@ -63,9 +63,9 @@ public:
 private:
 	LastExpressEngine* _engine;
 
-	Item _items[128];
+	Object _items[128];
 };
 
 } // End of namespace LastExpress
 
-#endif // LASTEXPRESS_ITEMS_H
+#endif // LASTEXPRESS_OBJECT_H

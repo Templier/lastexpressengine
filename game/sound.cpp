@@ -25,11 +25,14 @@
 
 #include "lastexpress/game/sound.h"
 
+#include "lastexpress/data/snd.h"
+
 #include "lastexpress/game/action.h"
 #include "lastexpress/game/logic.h"
 
 #include "lastexpress/helpers.h"
 #include "lastexpress/lastexpress.h"
+#include "lastexpress/resource.h"
 
 namespace LastExpress {
 
@@ -61,16 +64,25 @@ const char *messages[24] = {
 	"ENDALRM3"  // 65
 };
 
-Sound::Sound(LastExpressEngine *engine) : _engine(engine), sound_name(NULL) {}
+Sound::Sound(LastExpressEngine *engine) : _engine(engine) {}
 
-Sound::~Sound() {
-	delete[] sound_name;
+Sound::~Sound() {}
+
+void Sound::playSound(SavePoints::EntityIndex entity, char* filename, int a3, byte a4) {
+	warning("Sound::playSound: no implemented!");
+
+	playSfxStream(filename);
 }
 
-const char *Sound::getSoundName(int index, byte action, byte a3) {
-	delete[] sound_name;
-	sound_name = new char[7];
+void Sound::playMusic(SavePoints::EntityIndex entity, byte action, int a3, byte a4) {
+	char filename[7];
+	sprintf((char *)&filename, "MUS%03d", action);
 
+	playSound(entity, filename, a3, a4);
+}
+
+void Sound::playSoundEvent(int index, byte action, byte a3) {
+	char sound_name[7];
 	int values[5];
 
 	// TODO:
@@ -81,7 +93,7 @@ const char *Sound::getSoundName(int index, byte action, byte a3) {
 	switch (action) {
 	case 36:
 	case 37:
-		error("Dialog::getSound: action not implemented (%d)", action);
+		error("Dialog::playSoundEvent: action not implemented (%d)", action);
 
 	case 150:
 	case 156:
@@ -177,12 +189,12 @@ const char *Sound::getSoundName(int index, byte action, byte a3) {
 		break;		
 	}
 
-	if (!action)
-		return "";
-
-	sprintf(sound_name, "LIB%03d", action);
-
-	return sound_name;
+	if (action) {
+		sprintf((char *)&sound_name, "LIB%03d", action);
+	
+		// TODO do another check
+		playSfxStream((char*)&sound_name);
+	}
 }
 
 const char *Sound::getDialogName(DialogId id) {

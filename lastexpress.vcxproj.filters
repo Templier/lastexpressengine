@@ -155,13 +155,13 @@
     <ClCompile Include="..\..\engines\lastexpress\game\inventory.cpp">
       <Filter>game</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\engines\lastexpress\game\items.cpp">
-      <Filter>game</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\engines\lastexpress\game\logic.cpp">
       <Filter>game</Filter>
     </ClCompile>
     <ClCompile Include="..\..\engines\lastexpress\game\menu.cpp">
+      <Filter>game</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\engines\lastexpress\game\object.cpp">
       <Filter>game</Filter>
     </ClCompile>
     <ClCompile Include="..\..\engines\lastexpress\game\savepoint.cpp">
@@ -319,13 +319,13 @@
     <ClInclude Include="..\..\engines\lastexpress\game\inventory.h">
       <Filter>game</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\engines\lastexpress\game\items.h">
-      <Filter>game</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\engines\lastexpress\game\logic.h">
       <Filter>game</Filter>
     </ClInclude>
     <ClInclude Include="..\..\engines\lastexpress\game\menu.h">
+      <Filter>game</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\engines\lastexpress\game\object.h">
       <Filter>game</Filter>
     </ClInclude>
     <ClInclude Include="..\..\engines\lastexpress\game\savepoint.h">

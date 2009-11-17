@@ -23,7 +23,7 @@
  *
  */
 
-#include "lastexpress/game/items.h"
+#include "lastexpress/game/object.h"
 
 #include "lastexpress/game/logic.h"
 
@@ -31,20 +31,20 @@
 
 namespace LastExpress {
 
-Items::Items(LastExpressEngine *engine) : _engine(engine) {}
+Objects::Objects(LastExpressEngine *engine) : _engine(engine) {}
 
 
-const Items::Item Items::get(uint index) {
+const Objects::Object Objects::get(uint index) {
 	assert(index < 128);
 
 	return _items[index];
 }
 
-void Items::update(uint index, byte field_0, byte location, byte cursor, byte field_3) {
+void Objects::update(uint index, byte field_0, byte location, byte cursor, byte field_3) {
 	if (index >= 128)
 		return;
 
-	Item *entity = &_items[index];
+	Object *entity = &_items[index];
 
 	// Store original location
 	byte original_location = entity->location;
@@ -70,7 +70,7 @@ void Items::update(uint index, byte field_0, byte location, byte cursor, byte fi
 		}
 }
 
-void Items::updateField4(uint index, byte value) {
+void Objects::updateField4(uint index, byte value) {
 	if (index >= 128)
 		return;
 
@@ -80,7 +80,7 @@ void Items::updateField4(uint index, byte value) {
 //////////////////////////////////////////////////////////////////////////
 // Serializable
 //////////////////////////////////////////////////////////////////////////
-void Items::saveLoadWithSerializer(Common::Serializer &ser) {
+void Objects::saveLoadWithSerializer(Common::Serializer &ser) {
 
 }
 

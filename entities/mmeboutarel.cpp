@@ -25,7 +25,7 @@
 
 #include "lastexpress/entities/mmeboutarel.h"
 
-#include "lastexpress/game/items.h"
+#include "lastexpress/game/object.h"
 
 #include "lastexpress/helpers.h"
 
@@ -75,8 +75,8 @@ void MmeBoutarel::chapter1(SavePoints::SavePoint *savepoint) {
 	case SavePoints::kActionDefault: 
 		getSavePoints()->addData(SavePoints::kMmeBoutarel, 242526416, 0);
 		
-		getItems()->update(35, 0, 2, 0, 0);
-		getItems()->update(51, 0, 0, 10, 9);
+		getObjects()->update(35, 0, 2, 0, 0);
+		getObjects()->update(51, 0, 0, 10, 9);
 
 		_data.field_491 = 5790;
 		_data.field_493 = 1;

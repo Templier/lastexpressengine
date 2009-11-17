@@ -25,7 +25,7 @@
 
 #include "lastexpress/entities/train.h"
 
-#include "lastexpress/game/items.h"
+#include "lastexpress/game/object.h"
 
 #include "lastexpress/helpers.h"
 
@@ -91,10 +91,10 @@ void Train::process(SavePoints::SavePoint *savepoint) {
 	case SavePoints::kActionDefault:
 		getCallData().entries[8].field_0 = 1;
 		if (getProgress().chapter < Logic::kChapter5) {
-			getItems()->update(5, 32, 3, 10, 9);
-			getItems()->update(6, 32, 3, 10, 9);
-			getItems()->update(7, 32, 3, 10, 9);
-			getItems()->update(8, 32, 3, 10, 9);
+			getObjects()->update(5, 32, 3, 10, 9);
+			getObjects()->update(6, 32, 3, 10, 9);
+			getObjects()->update(7, 32, 3, 10, 9);
+			getObjects()->update(8, 32, 3, 10, 9);
 		}
 		_data.field_491 = 30000;
 		break;

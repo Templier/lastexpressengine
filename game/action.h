@@ -319,14 +319,31 @@ public:
 		kCathUseWhistleOpenEggNoBackground = 272		
 	};
 
+	enum CorpseLocation {
+		kCorpseLocationNone,
+		kCorpseLocationFloor,
+		kCorpseLocationBed,
+		kCorpseLocation3,
+		kCorpseLocationWindow,
+		kCorpseLocation5
+	};
+
 	Action(LastExpressEngine *engine);
 
-	void playAnimation(int index);
+	// Actions
+	void knockOnDoor(byte item);
+	void openCloseItem(byte item, byte action);
+	void action10(byte item, byte field4);
+	void setItemLocation(Inventory::InventoryItem item, byte location);
 
 	bool pickItem(Inventory::InventoryItem item, byte location, bool process);
 	void dropItem(Inventory::InventoryItem item, byte location, bool process);
 
+	// Cursor
 	Cursor::CursorStyle getCursor(byte action, byte param1, byte param2, byte param3, byte cursor);
+
+	// Animation
+	void playAnimation(int index);
 
 private:
 	LastExpressEngine* _engine;

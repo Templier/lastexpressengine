@@ -25,7 +25,7 @@
 
 #include "lastexpress/entities/servers1.h"
 
-#include "lastexpress/game/items.h"
+#include "lastexpress/game/object.h"
 
 #include "lastexpress/helpers.h"
 
