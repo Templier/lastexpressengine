@@ -61,7 +61,7 @@ namespace LastExpress {
 	DECLARE_SETUP(Entity, nullfunction, index)
 
 #define DECLARE_SETUP(class, name, index) \
-	void setup_##name(char* name = 0, int param2 = 0, int param3 = 0, int param4 = 0) { \
+	void setup_##name(char* sequence = 0, int param2 = 0, int param3 = 0, int param4 = 0) { \
 	_engine->getLogic()->getGameSavePoints()->setCallback(_entityIndex, MAKE_CALLBACK(class, name, this)); \
 	_data.callbacks[_data.current_call] = index; \
 	memset(&_data.callback_data[_data.current_call], 0, sizeof(Entity::EntityData)); \
@@ -117,6 +117,17 @@ public:
 		int field_14;
 		int field_18;
 		int field_1C;
+
+		EntityCallbackDataEntry() {
+			field_0 = 0;
+			field_4 = 0;
+			field_8 = 0;
+			field_C = 0;
+			field_10 = 0;
+			field_14 = 0;
+			field_18 = 0;
+			field_1C = 0;
+		}
 	};
 
 	struct EntityCallbackData {
@@ -133,12 +144,18 @@ public:
 		int16 field_491; // ?? (numScenes)
 		int16 field_493;
 		int16 field_495; // ?? (field 13)
+		byte inventoryItem;
+		int16 field_4A3;
 		byte field_4A5;
 
 		EntityData() {
-			// TODO Everything set to 0 on start, except field_4A3 ? set to 30
 			current_call = 0;
 			field_491 = 0;
+			field_493 = 0;
+			field_495 = 0;
+			inventoryItem = 0;
+			field_4A3 = 30;
+			field_4A5 = 0;
 		}
 	};
 
