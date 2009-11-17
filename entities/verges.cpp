@@ -95,8 +95,8 @@ void Verges::chapter1(SavePoints::SavePoint *savepoint) {
 		getSavePoints()->addData(SavePoints::kVerges, 201431954, 5);
 		getSavePoints()->addData(SavePoints::kVerges, 168187490, 6);
 
-		getObjects()->update(104, 9, 0, 0, 9);
-		getObjects()->update(105, 9, 0, 0, 9);
+		getObjects()->update(104, SavePoints::kVerges, 0, 0, 9);
+		getObjects()->update(105, SavePoints::kVerges, 0, 0, 9);
 
 		_data.field_491 = 5000;
 		_data.field_493 = 0;

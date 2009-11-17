@@ -62,14 +62,15 @@ public:
 	Sound(LastExpressEngine *engine);
 	~Sound();
 
-	// Sound
+	// Sound playing
 	void playSound(SavePoints::EntityIndex entity, char* filename, int a3, byte a4);
-	void playMusic(SavePoints::EntityIndex entity, byte action, int a3, byte a4);
-	void playSoundEvent(int index, byte action, byte a3);
 
+	void playMusic(SavePoints::EntityIndex entity, byte id, int a3, byte a4);	
+	void playDialog(SavePoints::EntityIndex entity, DialogId id, int a3, byte a4);
+	void playSoundEvent(int index, byte action, byte a3);	
 
 	// Dialog
-	const char *getDialogName(DialogId id);
+	char *getDialogName(DialogId id);
 
 	// Letters
 	const char *readText(int id);
@@ -84,6 +85,8 @@ public:
 
 private:
 	LastExpressEngine* _engine;
+
+	
 };
 
 } // End of namespace LastExpress

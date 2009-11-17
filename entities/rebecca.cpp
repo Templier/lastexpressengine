@@ -95,9 +95,9 @@ void Rebecca::chapter1(SavePoints::SavePoint *savepoint) {
 	case SavePoints::kActionDefault: 
 		getSavePoints()->addData(SavePoints::kRebecca, 224253538, 0);
 
-		getObjects()->update(36, 0, 0, 10, 9);
-		getObjects()->update(52, 0, 0, 10, 9);
-		getObjects()->update(44, 0, 0, 255, 255);
+		getObjects()->update(36, SavePoints::kNone, 0, 10, 9);
+		getObjects()->update(52, SavePoints::kNone, 0, 10, 9);
+		getObjects()->update(44, SavePoints::kNone, 0, 255, 255);
 
 		getObjects()->updateField4(110, 1);
 

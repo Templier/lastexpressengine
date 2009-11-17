@@ -26,6 +26,8 @@
 #ifndef LASTEXPRESS_OBJECT_H
 #define LASTEXPRESS_OBJECT_H
 
+#include "lastexpress/game/savepoint.h"
+
 #include "common/serializer.h"
 #include "common/system.h"
 
@@ -36,14 +38,14 @@ class LastExpressEngine;
 class Objects : Common::Serializable {
 public:
 	struct Object {
-		byte field_0;
+		SavePoints::EntityIndex entity;
 		byte location;
 		byte cursor;
 		byte field_3;
 		byte field_4;
 
 		Object() {
-			field_0 = 0;
+			entity = SavePoints::kNone;
 			location = 0;
 			cursor = 10;
 			field_3 = 9;
@@ -54,7 +56,7 @@ public:
 	Objects(LastExpressEngine *engine);
 
 	const Object get(uint index);
-	void update(uint index, byte field_0, byte location, byte cursor, byte field_3);
+	void update(uint index, SavePoints::EntityIndex entity, byte location, byte cursor, byte field_3);
 	void updateField4(uint index, byte value);
 
 	// Serializable
@@ -63,7 +65,7 @@ public:
 private:
 	LastExpressEngine* _engine;
 
-	Object _items[128];
+	Object _objects[128];
 };
 
 } // End of namespace LastExpress

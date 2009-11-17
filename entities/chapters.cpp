@@ -97,8 +97,8 @@ void Chapters::chapter1_init(SavePoints::SavePoint *savepoint) {
 	getInventory()->setLocationAndProcess(Inventory::kItem22, 1);
 	getInventory()->setLocationAndProcess(Inventory::kPaper, 1);
 
-	getObjects()->update(1, 0, 0, 10, 9);
-	getObjects()->update(9, 0, 0, 255, 255);
+	getObjects()->update(1, SavePoints::kNone, 0, 10, 9);
+	getObjects()->update(9, SavePoints::kNone, 0, 255, 255);
 
 	for (uint i = 1; i < 9; i++) {
 		getObjects()->updateField4(i, 2);
@@ -115,22 +115,22 @@ void Chapters::chapter1_init(SavePoints::SavePoint *savepoint) {
 	getObjects()->updateField4(98, 1);
 	getObjects()->updateField4(55, 1);
 
-	getObjects()->update(25, 0, 0, 0, 1);
-	getObjects()->update(23, 0, 0, 0, 1);
-	getObjects()->update(24, 0, 0, 0, 1);
-	getObjects()->update(28, 0, 0, 0, 1);
-	getObjects()->update(56, 0, 0, 0, 1);
-	getObjects()->update(54, 0, 0, 0, 1);
-	getObjects()->update(55, 0, 0, 0, 1);
-	getObjects()->update(59, 0, 0, 0, 1);
-	getObjects()->update(66, 0, 0, 0, 1);
-	getObjects()->update(64, 0, 0, 0, 1);
-	getObjects()->update(65, 0, 0, 0, 1);
-	getObjects()->update(69, 0, 0, 0, 1);
-	getObjects()->update(98, 0, 0, 0, 1);
-	getObjects()->update(26, 0, 1, 0, 9);
-	getObjects()->update(27, 0, 1, 0, 9);
-	getObjects()->update(101, 0, 1, 10, 9);
+	getObjects()->update(25, SavePoints::kNone, 0, 0, 1);
+	getObjects()->update(23, SavePoints::kNone, 0, 0, 1);
+	getObjects()->update(24, SavePoints::kNone, 0, 0, 1);
+	getObjects()->update(28, SavePoints::kNone, 0, 0, 1);
+	getObjects()->update(56, SavePoints::kNone, 0, 0, 1);
+	getObjects()->update(54, SavePoints::kNone, 0, 0, 1);
+	getObjects()->update(55, SavePoints::kNone, 0, 0, 1);
+	getObjects()->update(59, SavePoints::kNone, 0, 0, 1);
+	getObjects()->update(66, SavePoints::kNone, 0, 0, 1);
+	getObjects()->update(64, SavePoints::kNone, 0, 0, 1);
+	getObjects()->update(65, SavePoints::kNone, 0, 0, 1);
+	getObjects()->update(69, SavePoints::kNone, 0, 0, 1);
+	getObjects()->update(98, SavePoints::kNone, 0, 0, 1);
+	getObjects()->update(26, SavePoints::kNone, 1, 0, 9);
+	getObjects()->update(27, SavePoints::kNone, 1, 0, 9);
+	getObjects()->update(101, SavePoints::kNone, 1, 10, 9);
 
 	// TODO call another function
 }

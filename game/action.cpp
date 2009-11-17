@@ -332,17 +332,17 @@ void Action::knockOnDoor(byte item) {
 	if (item >= 128)
 		return;
 
-	if (getObjects()->get(item).field_0)
-		getSavePoints()->push(0, getObjects()->get(item).field_0, 8, item);
+	if (getObjects()->get(item).entity)
+		getSavePoints()->push(0, getObjects()->get(item).entity, 8, item);
 	else
 		playEventSound(0, 12, 0);
 }
 
-void Action::openCloseItem(byte item, byte action) {
+void Action::openCloseObject(byte item, byte action) {
 	if (item >= 128)
 		return;
 
-	getObjects()->update(item, getObjects()->get(item).field_0, action, 255, 255);
+	getObjects()->update(item, getObjects()->get(item).entity, action, 255, 255);
 
 	bool isNotWindow = ((item < 9  || item > 16) && (item < 40 || item > 47));
 
@@ -372,13 +372,179 @@ void Action::action10(byte item, byte field4) {
 
 	getObjects()->updateField4(item, field4);
 
-	if (item != 112 /* TODO: or LIB096 does not exist */) {
+	if (item != 112 /* TODO: or LIB096 does not exist -> is it needed, ie. the cd hpf is not loaded or something */) {
 		if (item == 1)
 			playEventSound(0, 73, 0);
 	} else {
 		playEventSound(0, 96, 0);	
 	}
 }
+
+void Action::unbound(byte action, uint16 *sceneIndex) {
+	error("Action: method not implemented!");
+}
+
+void Action::openMatchbox() {
+	// If the match is already in the inventory, do nothing
+	if (!getInventory()->getEntry(Inventory::kMatch)->location
+	  || getInventory()->getEntry(Inventory::kMatch)->has_item)
+		return;
+
+	getInventory()->addItem(Inventory::kMatch);
+	getSound()->playSoundEvent(0, 102, 0);
+}
+
+bool useWhistle(byte action, uint16 *sceneIndex) {
+	error("Action: method not implemented!");
+	return false;
+}
+
+//////////////////////////////////////////////////////////////////////////
+// Inside & Outside train
+//////////////////////////////////////////////////////////////////////////
+void Action::getOutside(byte action, uint16 *sceneIndex) {
+	if (1) {
+		Events evt = kInvalid;
+		switch (action) {
+		default:
+			return;
+
+		case 9:
+			getEvent(kCathLookOutsideWindowDay) = 1;
+			playAnimation(_engine->getLogic()->isDayTime() ? kCathGoOutsideTylerCompartmentDay : kCathGoOutsideTylerCompartmentNight);
+			getProgress().field_C8 = 1;
+			break;
+
+		case 44:
+			getEvent(kCathLookOutsideWindowDay) = 1;
+			playAnimation(_engine->getLogic()->isDayTime() ? kCathGoOutsideDay : kCathGoOutsideNight);
+			getProgress().field_C8 = 1;
+			break;
+
+		case 45:
+			getEvent(kCathLookOutsideWindowDay) = 1;
+			playAnimation(_engine->getLogic()->isDayTime() ? kCathGetInsideDay : kCathGetInsideNight);
+			if (!*sceneIndex)
+				_engine->getLogic()->processScene();
+			break;
+		}
+
+	} else {
+		if (action == 9 || action == 44 || action == 45) {
+			playAnimation(_engine->getLogic()->isDayTime() ? kCathLookOutsideWindowDay : kCathLookOutsideWindowNight);
+			_engine->getLogic()->processScene();
+			*sceneIndex = 0;
+		}
+	}
+}
+
+bool Action::getInside(byte action) {
+	Events evt = kInvalid;
+
+	switch (action) {
+	default:
+		return false;
+
+	case 9:
+		evt = (_engine->getLogic()->isDayTime() ? kCathGetInsideTylerCompartmentDay : kCathGetInsideTylerCompartmentNight); 
+		break;
+
+	case 44:
+		evt = (_engine->getLogic()->isDayTime() ? kCathGetInsideDay : kCathGetInsideNight);
+		break;
+
+	case 45:
+		evt = kCathGettingInsideAnnaCompartment;
+		break;
+	}
+
+	playAnimation(evt);
+	return true;
+}
+
+bool Action::slip(byte action) {
+	Events evt = kInvalid;
+
+	switch(action) {
+	default:
+		return false;
+
+	case 9:
+		evt = (_engine->getLogic()->isDayTime() ? kCathSlipTylerCompartmentDay : kCathSlipTylerCompartmentNight); 
+		break;
+
+	case 44:
+		evt = (_engine->getLogic()->isDayTime() ? kCathSlipDay : kCathSlipNight);
+		break;
+	}
+
+	playAnimation(evt);
+	getProgress().field_C8 = 0;
+	return true;
+}
+
+bool Action::climbUp(byte action) {
+	error("Action: method not implemented!");
+	return false;
+}
+
+bool Action::climbDown() {
+	Events evt = kInvalid;
+	switch (getProgress().chapter) {
+	default:
+		return false;
+
+	case 2:
+	case 3:
+		evt = kCathClimbDownTrainGreenJacket;
+		break;
+
+	case 5:
+		evt = (getProgress().is_nighttime ? kCathClimbDownTrainNoJacketNight : kCathClimbDownTrainNoJacketDay);
+		break;
+	}
+
+	playAnimation(evt);
+	if (evt == kCathClimbDownTrainNoJacketDay)
+		getSound()->playSoundEvent(0, 37, 0);
+
+	return true;
+}
+
+bool Action::jumpUpDown(byte action) {
+	switch (action) {
+	case 1:
+		getSavePoints()->push(0, SavePoints::kChapters, 225056224, 0);
+		break;
+
+	case 2:
+		getSavePoints()->push(0, SavePoints::kChapters, 338494260, 0);
+		break;
+
+	case 3: {
+		if (getInventory()->getSelectedItem() == Inventory::kBriefcase) {
+			getInventory()->removeItem(Inventory::kBriefcase, 3);
+			getSound()->playSoundEvent(0, 82, 0);
+			getInventory()->unselectItem();
+		}	
+
+		// Show animation with or without briefcase
+		playAnimation((getInventory()->getEntry(Inventory::kBriefcase)->location - 3) ? kCathJumpUpCeilingBriefcase : kCathJumpUpCeiling);
+		return true;
+	}
+
+	case 4:
+		if (getProgress().chapter == Logic::kChapter1)
+			getSavePoints()->push(0, SavePoints::kKronos, 202621266, 0);
+		break;
+	}
+
+	return false;
+}
+
+//////////////////////////////////////////////////////////////////////////
+// Items
+//////////////////////////////////////////////////////////////////////////
 
 void Action::setItemLocation(Inventory::InventoryItem item, byte location) {
 	Inventory::InventoryEntry* entry = getInventory()->getEntry(item);
@@ -492,7 +658,7 @@ void Action::pickGreenJacket(bool process) {
 	getProgress().jacket = Logic::kGreenJacket;
 	getInventory()->addItem(Inventory::kMatchBox);
 
-	getObjects()->update(9, 0, 2, 255, 255);	
+	getObjects()->update(9, SavePoints::kNone, 2, 255, 255);	
 	playAnimation(kPickGreenJacket);
 
 	getInventory()->setPortrait(Inventory::kPortraitGreen);
@@ -638,7 +804,7 @@ LABEL_KEY:
 		if (param1 >= 128)
 			return Cursor::kCursorNormal;
 		else {
-			if (getObjects()->get(param1).field_0)
+			if (getObjects()->get(param1).entity)
 				return (Cursor::CursorStyle)getObjects()->get(param1).cursor;
 			else
 				return Cursor::kCursorNormal;
@@ -692,7 +858,7 @@ LABEL_KEY:
 
 		return Cursor::kCursorKey;
 
-	case SceneHotspot::kActionOutsideTrain:
+	case SceneHotspot::kActionGetOutsideTrain:
 		if (getProgress().jacket != Logic::kGreenJacket)
 			return Cursor::kCursorNormal;
 
@@ -705,7 +871,7 @@ LABEL_KEY:
 
 		return Cursor::kCursorNormal; 
 
-	case SceneHotspot::kAction19:
+	case SceneHotspot::kActionSlip:
 		error("Action::getCursor: unsupported cursor for action (%02d)", action);
 
 	case SceneHotspot::kActionClimbUpTrain:
@@ -717,7 +883,7 @@ LABEL_KEY:
 
 		return Cursor::kCursorNormal; 
 
-	case SceneHotspot::kActionClimbDownTrain:
+	case SceneHotspot::kActionJumpDownTrain:
 		error("Action::getCursor: unsupported cursor for action (%02d)", action);
 
 	case SceneHotspot::kActionUnbound:

@@ -311,6 +311,9 @@ public:
 	void processScene();
 	uint32 processIndex(uint32 index);
 
+	// Time checks
+	bool isDayTime();
+
 	// Accessors
 	bool isGameStarted() { return _runState.gameStarted; }
 	bool isShowingMenu() { return _runState.showingMenu; }

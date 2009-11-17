@@ -82,8 +82,8 @@ void Milos::chapter1(SavePoints::SavePoint *savepoint) {
 		getSavePoints()->addData(SavePoints::kMilos, 157691176, 0);
 		getSavePoints()->addData(SavePoints::kMilos, 208228224, 2);
 
-		getObjects()->update(38, 0, 3, 10, 9);
-		getObjects()->update(46, 0, 0, 255, 255);
+		getObjects()->update(38, SavePoints::kNone, 3, 10, 9);
+		getObjects()->update(46, SavePoints::kNone, 0, 255, 255);
 
 		_data.field_491 = 4689;
 		_data.field_493 = 1;

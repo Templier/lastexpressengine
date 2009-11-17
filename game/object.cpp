@@ -37,31 +37,31 @@ Objects::Objects(LastExpressEngine *engine) : _engine(engine) {}
 const Objects::Object Objects::get(uint index) {
 	assert(index < 128);
 
-	return _items[index];
+	return _objects[index];
 }
 
-void Objects::update(uint index, byte field_0, byte location, byte cursor, byte field_3) {
+void Objects::update(uint index, SavePoints::EntityIndex entity, byte location, byte cursor, byte field_3) {
 	if (index >= 128)
 		return;
 
-	Object *entity = &_items[index];
+	Object *object = &_objects[index];
 
 	// Store original location
-	byte original_location = entity->location;
+	byte original_location = object->location;
 
 	// Update entity
-	entity->field_0 = field_0;
-	entity->location = location;
+	object->entity = entity;
+	object->location = location;
 	if (cursor != 255)
-		entity->cursor = cursor;
+		object->cursor = cursor;
 	if (field_3 != 255)
-		entity->field_3 = field_3;
+		object->field_3 = field_3;
 
 	if (cursor != 255 || field_3 != 255) {
-		// TODO redraw some stuff on the scene
+		warning("Objects::update: TODO redraw some stuff on the scene");		 
 	}
 
-	// TODO set a global var
+	warning("Objects::update: TODO set a global var");
 
 	if (original_location != location && (original_location == 2 || location == 2))
 		if ((index > 0 && index < 9)
@@ -74,7 +74,7 @@ void Objects::updateField4(uint index, byte value) {
 	if (index >= 128)
 		return;
 
-	_items[index].field_4 = value;
+	_objects[index].field_4 = value;
 }
 
 //////////////////////////////////////////////////////////////////////////

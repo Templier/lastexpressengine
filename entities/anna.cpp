@@ -128,9 +128,9 @@ void Anna::chapter1(SavePoints::SavePoint *savepoint) {
 		getSavePoints()->addData(SavePoints::kAnna, 291662081, 0);
 		getSavePoints()->addData(SavePoints::kAnna, 238936000, 1);
 
-		getObjects()->update(37, 0, 1, 10, 9);
-		getObjects()->update(53, 0, 1, 10, 9);
-		getObjects()->update(45, 0, 1, 255, 255);
+		getObjects()->update(37, SavePoints::kNone, 1, 10, 9);
+		getObjects()->update(53, SavePoints::kNone, 1, 10, 9);
+		getObjects()->update(45, SavePoints::kNone, 1, 255, 255);
 
 		_data.field_491 = 8200;
 		_data.field_493 = 1;

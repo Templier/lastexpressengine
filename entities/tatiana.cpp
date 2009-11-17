@@ -101,9 +101,9 @@ void Tatiana::chapter1(SavePoints::SavePoint *savepoint) {
 	case SavePoints::kActionDefault: 
 		getSavePoints()->addData(SavePoints::kTatiana, 191198209, 0);
 
-		getObjects()->update(33, 0, 1, 10, 9);
-		getObjects()->update(49, 0, 1, 10, 9);
-		getObjects()->update(41, 0, 0, 255, 255);
+		getObjects()->update(33, SavePoints::kNone, 1, 10, 9);
+		getObjects()->update(49, SavePoints::kNone, 1, 10, 9);
+		getObjects()->update(41, SavePoints::kNone, 0, 255, 255);
 
 		_data.field_491 = 5419;
 		_data.field_493 = 1;

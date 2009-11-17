@@ -275,7 +275,7 @@ public:
 		kCathLookOutsideWindowDay = 228,
 		kCathLookOutsideWindowNight = 229,		
 		kCathGoOutsideTylerCompartmentDay = 230,
-		kCathGoOutsideTylerCompartmenNight = 231,
+		kCathGoOutsideTylerCompartmentNight = 231,
 		kCathGoOutsideDay = 232,
 		kCathGoOutsideNight = 233,
 		kCathSlipTylerCompartmentDay = 234,
@@ -291,7 +291,7 @@ public:
 		kCathClimbUpTrainNoJacket = 244,
 		kCathClimbUpTrainNoJacketDay = 245,
 		kCathClimbDownTrainGreenJacket = 246,
-		kCathClimbDownTrainNoJacket = 247,
+		kCathClimbDownTrainNoJacketNight = 247,
 		kCathClimbDownTrainNoJacketDay= 248,
 		kCathTopTrainGreenJacket = 249,
 		kCathTopTrainNoJacket = 250,
@@ -332,12 +332,21 @@ public:
 
 	// Actions
 	void knockOnDoor(byte item);
-	void openCloseItem(byte item, byte action);
+	void openCloseObject(byte item, byte action);
 	void action10(byte item, byte field4);
 	void setItemLocation(Inventory::InventoryItem item, byte location);
-
 	bool pickItem(Inventory::InventoryItem item, byte location, bool process);
 	void dropItem(Inventory::InventoryItem item, byte location, bool process);
+	void getOutside(byte action, uint16 *sceneIndex);
+	bool slip(byte action);
+	bool getInside(byte action);
+	bool climbUp(byte action);
+	bool climbDown();
+	bool jumpUpDown(byte action);
+	void unbound(byte action, uint16 *sceneIndex);
+
+	bool useWhistle(byte action, uint16 *sceneIndex);
+	void openMatchbox();
 
 	// Cursor
 	Cursor::CursorStyle getCursor(byte action, byte param1, byte param2, byte param3, byte cursor);

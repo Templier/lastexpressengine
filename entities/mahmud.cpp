@@ -66,8 +66,8 @@ void Mahmud::chapter1(SavePoints::SavePoint *savepoint) {
 	case SavePoints::kActionDefault: 
 		getSavePoints()->addData(SavePoints::kMahmud, 170483072, 0);
 
-		getObjects()->update(4, 0, 3, 10, 9);
-		getObjects()->update(20, 0, 3, 10, 9);
+		getObjects()->update(4, SavePoints::kNone, 3, 10, 9);
+		getObjects()->update(20, SavePoints::kNone, 3, 10, 9);
 
 		_data.field_491 = 540;
 		_data.field_493 = 0;

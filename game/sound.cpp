@@ -74,9 +74,9 @@ void Sound::playSound(SavePoints::EntityIndex entity, char* filename, int a3, by
 	playSfxStream(filename);
 }
 
-void Sound::playMusic(SavePoints::EntityIndex entity, byte action, int a3, byte a4) {
+void Sound::playMusic(SavePoints::EntityIndex entity, byte id, int a3, byte a4) {
 	char filename[7];
-	sprintf((char *)&filename, "MUS%03d", action);
+	sprintf((char *)&filename, "MUS%03d", id);
 
 	playSound(entity, filename, a3, a4);
 }
@@ -197,7 +197,11 @@ void Sound::playSoundEvent(int index, byte action, byte a3) {
 	}
 }
 
-const char *Sound::getDialogName(DialogId id) {
+void Sound::playDialog(SavePoints::EntityIndex entity, DialogId id, int a3, byte a4) {
+	playSound(entity, getDialogName(id), a3, a4);
+}
+
+char *Sound::getDialogName(DialogId id) {
 	switch (id) {
 	case kDialogAnna:
 		if (getEvent(Action::kAnnaDialogGoToJerusalem))

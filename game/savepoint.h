@@ -62,7 +62,7 @@ public:
 		kAugust,
 		kMertens,
 		kCoudert,
-		kPascale,
+		kPascale,				// 5
 		kServers0,
 		kServers1,
 		kCooks,
@@ -72,7 +72,7 @@ public:
 		kAlexei,
 		kAbbot,
 		kMilos,
-		kVesna,
+		kVesna,					// 15
 		kIvo,
 		kSalko,
 		kKronos,
@@ -82,7 +82,7 @@ public:
 		kBoutarel,
 		kRebecca,
 		kEntity24,
-		kMahmud,
+		kMahmud,				// 25
 		kYasmin,
 		kHadija,
 		kAlouan,
@@ -92,7 +92,7 @@ public:
 		kTrain,
 		kTables0,
 		kTables1,
-		kTables2,
+		kTables2,				// 35
 		kTables3,
 		kTables4,
 		kTables5,
@@ -105,20 +105,27 @@ public:
 	};
 
 	struct SavePoint {
-		uint32 index;
+		EntityIndex entity;
 		uint32 action;
 		uint32 time;
 		uint32 field_C;
+
+		SavePoint() {
+			entity = kNone;
+			action = 0;
+			time = 0;
+			field_C = 0;
+		}
 	};	
 
 	struct SavePointData {
-		uint32 index;
+		EntityIndex entity;
 		uint32 field_4;
 		uint32 field_8;
 		uint32 field_C;
 
 		SavePointData() {
-			index = 0;
+			entity = kNone;
 			field_4 = 0;
 			field_8 = 0;
 			field_C = 0;
@@ -131,18 +138,18 @@ public:
 	~SavePoints();
 	
 	// Savepoints
-	void push(uint32 time, uint32 index, uint32 action, uint32 field_C);
+	void push(uint32 time, EntityIndex entity, uint32 action, uint32 field_C);
 	void pushAll(uint32 time, uint32 action, uint32 field_C);
 	void process();
 	void reset();
 
 	// Data
-	void addData(SavePoints::EntityIndex index, uint32 field_4, uint32 field_C);
+	void addData(SavePoints::EntityIndex entity, uint32 field_4, uint32 field_C);
 
 	// Callbacks
 	void setCallback(uint index, Callback* callback);
-	Callback *getCallback(uint index);
-	void call(int field_8, int index, int action, int field_C);
+	Callback *getCallback(EntityIndex entity);
+	void call(int field_8, EntityIndex entity, int action, int field_C);
 
 	// Serializable
 	void saveLoadWithSerializer(Common::Serializer &s);
