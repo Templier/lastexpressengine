@@ -306,6 +306,7 @@ public:
 	void loadScene(uint32 index);
 	void setScene(uint32 index);
 	void updateTrainClock();
+	void loadSceneFromData(int param1, int param2, int param3);
 
 	// Index processing
 	void processScene();

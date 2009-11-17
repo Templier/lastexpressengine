@@ -288,13 +288,13 @@ public:
 		kCathGetInsideNight = 241,
 		kCathGettingInsideAnnaCompartment = 242,
 		kCathClimbUpTrainGreenJacket = 243,
-		kCathClimbUpTrainNoJacket = 244,
+		kCathClimbUpTrainNoJacketNight = 244,
 		kCathClimbUpTrainNoJacketDay = 245,
 		kCathClimbDownTrainGreenJacket = 246,
 		kCathClimbDownTrainNoJacketNight = 247,
 		kCathClimbDownTrainNoJacketDay= 248,
 		kCathTopTrainGreenJacket = 249,
-		kCathTopTrainNoJacket = 250,
+		kCathTopTrainNoJacketNight = 250,
 		kCathTopTrainNoJacketDay = 251,
 		kCathBreakCeiling = 252,
 		kCathJumpDownCeiling = 253,
@@ -331,9 +331,9 @@ public:
 	Action(LastExpressEngine *engine);
 
 	// Actions
-	void knockOnDoor(byte item);
-	void openCloseObject(byte item, byte action);
-	void action10(byte item, byte field4);
+	void knockOnDoor(byte object);
+	void openCloseObject(byte object, byte action);
+	void action10(byte object, byte field4);
 	void setItemLocation(Inventory::InventoryItem item, byte location);
 	bool pickItem(Inventory::InventoryItem item, byte location, bool process);
 	void dropItem(Inventory::InventoryItem item, byte location, bool process);
@@ -344,7 +344,11 @@ public:
 	bool climbDown();
 	bool jumpUpDown(byte action);
 	void unbound(byte action, uint16 *sceneIndex);
-
+	bool action25(byte action);
+	bool action26(byte action);
+	void action27(byte action);
+	bool concertSitCough(byte action);
+	void action29(byte param1, byte param2, byte param3);	
 	bool useWhistle(byte action, uint16 *sceneIndex);
 	void openMatchbox();
 

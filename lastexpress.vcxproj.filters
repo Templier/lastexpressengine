@@ -152,6 +152,9 @@
     <ClCompile Include="..\..\engines\lastexpress\game\beetle.cpp">
       <Filter>game</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\engines\lastexpress\game\entities.cpp">
+      <Filter>game</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\engines\lastexpress\game\inventory.cpp">
       <Filter>game</Filter>
     </ClCompile>
@@ -314,6 +317,9 @@
       <Filter>game</Filter>
     </ClInclude>
     <ClInclude Include="..\..\engines\lastexpress\game\beetle.h">
+      <Filter>game</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\engines\lastexpress\game\entities.h">
       <Filter>game</Filter>
     </ClInclude>
     <ClInclude Include="..\..\engines\lastexpress\game\inventory.h">

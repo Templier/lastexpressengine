@@ -110,6 +110,7 @@
     <ClCompile Include="..\..\engines\lastexpress\entities\yasmin.cpp" />
     <ClCompile Include="..\..\engines\lastexpress\game\action.cpp" />
     <ClCompile Include="..\..\engines\lastexpress\game\beetle.cpp" />
+    <ClCompile Include="..\..\engines\lastexpress\game\entities.cpp" />
     <ClCompile Include="..\..\engines\lastexpress\game\sound.cpp" />
     <ClCompile Include="..\..\engines\lastexpress\game\inventory.cpp" />
     <ClCompile Include="..\..\engines\lastexpress\game\object.cpp" />
@@ -170,6 +171,7 @@
     <ClInclude Include="..\..\engines\lastexpress\entities\yasmin.h" />
     <ClInclude Include="..\..\engines\lastexpress\game\action.h" />
     <ClInclude Include="..\..\engines\lastexpress\game\beetle.h" />
+    <ClInclude Include="..\..\engines\lastexpress\game\entities.h" />
     <ClInclude Include="..\..\engines\lastexpress\game\sound.h" />
     <ClInclude Include="..\..\engines\lastexpress\game\inventory.h" />
     <ClInclude Include="..\..\engines\lastexpress\game\object.h" />

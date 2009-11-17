@@ -33,14 +33,12 @@
 // Game
 #include "lastexpress/game/action.h"
 #include "lastexpress/game/beetle.h"
-#include "lastexpress/game/sound.h"
+#include "lastexpress/game/entities.h"
 #include "lastexpress/game/inventory.h"
 #include "lastexpress/game/menu.h"
 #include "lastexpress/game/object.h"
 #include "lastexpress/game/savepoint.h"
-
-// Entities
-#include "lastexpress/entities/entity.h"
+#include "lastexpress/game/sound.h"
 
 #include "lastexpress/graphics.h"
 #include "lastexpress/helpers.h"
@@ -250,6 +248,13 @@ void Logic::processScene() {
 
 uint32 Logic::processIndex(uint32 index) {
 	error("Logic::processItem is not implemented!");
+}
+
+void Logic::loadSceneFromData(int param1, int param2, int param3) {
+	error("Logic::loadSceneFromData is not implemented!");
+
+	// index = get index from fields
+	// loadScene(index);
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -647,41 +652,28 @@ void Logic::processHotspot(SceneHotspot *hotspot) {
 		break;
 
 	case SceneHotspot::kAction25:
+		if (_action->action25(hotspot->param1))
+			hotspot->scene = 0;
+		break;
+
 	case SceneHotspot::kAction26:
-		error("Logic::processHotspot: unsupported hotspot action (%02d)", hotspot->action);
+		if (_action->action26(hotspot->param1))
+			hotspot->scene = 0;
+		break;
 
 	case SceneHotspot::kAction27:
-		playEventSound(0, 31, 0);
-
-		// TODO update game state
-		error("Logic::processHotspot: unsupported hotspot action (%02d)", hotspot->action);
+		_action->action27(hotspot->param1);
 		break;
 
-	case SceneHotspot::kActionConcertSitCough: {
-		int index = 0;
-		switch(hotspot->param1) {
-		default:
-			break;
-
-		case 1:
-			index = 214;
-			break;
-
-		case 2:
-			index = 213;
-			break;
-		}
-
-		if (index) {
-			_action->playAnimation(index);
+	case SceneHotspot::kActionConcertSitCough:
+		if (_action->concertSitCough(hotspot->param1))
 			if (!hotspot->scene)
 				processScene();
-		}
 		break;
-	}
 
 	case SceneHotspot::kAction29:
-		error("Logic::processHotspot: unsupported hotspot action (%02d)", hotspot->action);
+		_action->action29(hotspot->param1, hotspot->param2, hotspot->param3);
+		break;
 
 	case SceneHotspot::kActionCatchBeetle:	
 		if (_beetle->isLoaded()) {

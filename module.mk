@@ -47,6 +47,7 @@ MODULE_OBJS := \
 	entities/yasmin.o \
 	game/action.o \
 	game/beetle.o \
+	game/entities.o \
 	game/inventory.o \
 	game/logic.o \
 	game/menu.o \

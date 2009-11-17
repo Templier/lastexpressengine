@@ -26,14 +26,6 @@
 #ifndef LASTEXPRESS_ENTITY_H
 #define LASTEXPRESS_ENTITY_H
 
-/*
-	Entities
-	--------
-
-	The entities structure contains a 40 Entity_t structures for each entity
-
-*/
-
 #include "lastexpress/game/logic.h"
 #include "lastexpress/game/savepoint.h"
 
@@ -43,9 +35,6 @@ namespace LastExpress {
 
 #define MAKE_CALLBACK(class, name, pointer) \
 	new Common::Functor1Mem<SavePoints::SavePoint*, void, class>(pointer, &class::name)
-
-#define ADD_ENTITY(class) \
-	_entities.push_back(new class(engine));
 
 #define CALLBACK_FUNCTION(class, name) \
 	_callbacks.push_back(MAKE_CALLBACK(class, name, this));
@@ -69,42 +58,6 @@ namespace LastExpress {
 }
 
 class LastExpressEngine;
-
-// Entities
-class Anna;
-class August;
-class Mertens;
-class Coudert;
-class Pascale;
-class Servers0;
-class Servers1;
-class Cooks;
-class Verges;
-class Tatiana;
-class Vassili;
-class Alexei;
-class Abbot;
-class Milos;
-class Vesna;
-class Ivo;
-class Salko;
-class Kronos;
-class Kahina;
-class Francois;
-class MmeBoutarel;
-class Boutarel;
-class Rebecca;
-class Entity24;
-class Mahmud;
-class Yasmin;
-class Hadija;
-class Alouan;
-class Gendarmes;
-class Max;
-class Chapters;
-class Train;
-class Tables;
-class Entity39;
 
 class Entity {
 public:
@@ -143,7 +96,7 @@ public:
 		byte current_call;
 		int16 field_491; // ?? (numScenes)
 		int16 field_493;
-		int16 field_495; // ?? (field 13)
+		int16 field_495; // ?? (field 13) (entity index?)
 		byte inventoryItem;
 		int16 field_4A3;
 		byte field_4A5;
@@ -190,30 +143,6 @@ protected:
 	Common::Array<SavePoints::Callback *> _callbacks;
 };
 
-
-class Entities : Common::Serializable {
-public:
-	Entities(LastExpressEngine *engine);
-	~Entities();
-
-	void setup(Logic::ChapterIndex chapter);
-	void load(int callbackIndex);
-
-	void reset(SavePoints::EntityIndex index, Entity::SetupFunction function);
-
-	// Accessors
-	Entity::EntityData* getEntityData(uint index);
-
-	// Serializable
-	void serialize(Common::Serializer &ser, Entity::EntityData *data);
-	void saveLoadWithSerializer(Common::Serializer &ser);
-
-private:
-	LastExpressEngine* _engine;
-
-	Entity::EntityData _header;
-	Common::Array<Entity *> _entities;	
-};
 
 } // End of namespace LastExpress
 

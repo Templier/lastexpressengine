@@ -32,6 +32,7 @@
 #include "lastexpress/entities/abbot.h"
 #include "lastexpress/entities/entity.h"
 
+#include "lastexpress/game/entities.h"
 #include "lastexpress/game/logic.h"
 #include "lastexpress/game/object.h"
 #include "lastexpress/game/savepoint.h"
@@ -328,23 +329,23 @@ Action::Action(LastExpressEngine *engine) : _engine(engine) {}
 //////////////////////////////////////////////////////////////////////////
 // Action
 //////////////////////////////////////////////////////////////////////////
-void Action::knockOnDoor(byte item) {
-	if (item >= 128)
+void Action::knockOnDoor(byte object) {
+	if (object >= 128)
 		return;
 
-	if (getObjects()->get(item).entity)
-		getSavePoints()->push(0, getObjects()->get(item).entity, 8, item);
+	if (getObjects()->get(object).entity)
+		getSavePoints()->push(0, getObjects()->get(object).entity, 8, object);
 	else
 		playEventSound(0, 12, 0);
 }
 
-void Action::openCloseObject(byte item, byte action) {
-	if (item >= 128)
+void Action::openCloseObject(byte object, byte action) {
+	if (object >= 128)
 		return;
 
-	getObjects()->update(item, getObjects()->get(item).entity, action, 255, 255);
+	getObjects()->update(object, getObjects()->get(object).entity, action, 255, 255);
 
-	bool isNotWindow = ((item < 9  || item > 16) && (item < 40 || item > 47));
+	bool isNotWindow = ((object < 9  || object > 16) && (object < 40 || object > 47));
 
 	switch (action) {
 	case 1:
@@ -366,14 +367,14 @@ void Action::openCloseObject(byte item, byte action) {
 	}
 }
 
-void Action::action10(byte item, byte field4) {
-	if (item >= 128)
+void Action::action10(byte object, byte field4) {
+	if (object >= 128)
 		return;
 
-	getObjects()->updateField4(item, field4);
+	getObjects()->updateField4(object, field4);
 
-	if (item != 112 /* TODO: or LIB096 does not exist -> is it needed, ie. the cd hpf is not loaded or something */) {
-		if (item == 1)
+	if (object != 112 /* TODO: or LIB096 does not exist -> is it needed, ie. the cd hpf is not loaded or something */) {
+		if (object == 1)
 			playEventSound(0, 73, 0);
 	} else {
 		playEventSound(0, 96, 0);	
@@ -381,7 +382,46 @@ void Action::action10(byte item, byte field4) {
 }
 
 void Action::unbound(byte action, uint16 *sceneIndex) {
-	error("Action: method not implemented!");
+
+	switch (action) {
+	default:
+		break;
+
+	case 1:
+		playAnimation(kCathStruggleWithBonds);
+		if (*sceneIndex)
+			_engine->getLogic()->processScene();
+		break;
+
+	case 2:
+		playAnimation(kCathBurnRope);
+		if (*sceneIndex)
+			_engine->getLogic()->processScene();
+		break;
+
+	case 3:
+		if (getEvent(kCathBurnRope)) {
+			playAnimation(kCathRemoveBonds);
+			getProgress().field_84 = 0;
+			_engine->getLogic()->loadSceneFromData(1, 89, 255);
+			*sceneIndex = 0;				
+		}
+		break;
+
+	case 4:
+		if (!getEvent(kCathStruggleWithBonds2)) {
+			playAnimation(kCathStruggleWithBonds2);
+			playEventSound(0, 101, 0);
+			getInventory()->setLocationAndProcess(Inventory::kMatch, 2);
+			if (!*sceneIndex)
+				_engine->getLogic()->processScene();
+		}
+		break;
+
+	case 5:
+		getSavePoints()->push(0, SavePoints::kIvo, 192637492, 0);
+		break;
+	}
 }
 
 void Action::openMatchbox() {
@@ -391,10 +431,111 @@ void Action::openMatchbox() {
 		return;
 
 	getInventory()->addItem(Inventory::kMatch);
-	getSound()->playSoundEvent(0, 102, 0);
+	playEventSound(0, 102, 0);
 }
 
-bool useWhistle(byte action, uint16 *sceneIndex) {
+
+
+bool Action::action25(byte action) {
+	switch(action) {
+	default:
+		break;
+
+	case 1:
+		getSavePoints()->push(0, SavePoints::kAnna, 272177921, 0);
+		break;
+
+	case 2:
+		getSound()->playSound(SavePoints::kNone, "MUS021", 16, 0);
+		break;
+
+	case 3:
+		playEventSound(0, 43, 0);
+		if (!getInventory()->hasItem(Inventory::kKey)) {
+			if (!getEvent(kAnnaBagageArgument)) {
+				//getEntities()->reset(SavePoints::kAnna, );
+				error("Action::action25 is missing reset call!");
+				return true;
+			}
+		}
+		break;
+	}
+
+	return false;
+}
+
+bool Action::action26(byte action) {
+	switch(action) {
+	default:
+		return false;
+
+	case 1:
+		getSavePoints()->push(0, SavePoints::kChapters, 158610240, 0);
+		return false;
+
+	case 2:
+		getSavePoints()->push(0, SavePoints::kChapters, 225367984, 0);
+		getInventory()->unselectItem();
+		break;
+
+	case 3:
+		getSavePoints()->push(0, SavePoints::kChapters, 191001984, 0);
+		break;
+
+	case 4:
+		getSavePoints()->push(0, SavePoints::kChapters, 201959744, 0);
+		break;
+
+	case 5:
+		getSavePoints()->push(0, SavePoints::kChapters, 169300225, 0);
+		break;
+	}
+
+	return true;
+}
+
+void Action::action27(byte action) {
+	playEventSound(0, 31, 0);
+
+	switch (getEntities()->getEntityData(SavePoints::kNone)->field_495) {
+	default:
+		break;
+
+	case 3:
+		getSavePoints()->push(0, SavePoints::kMertens, 225358684, action);
+		break;
+
+	case 4:
+		getSavePoints()->push(0, SavePoints::kCoudert, 225358684, action);
+		break;
+
+	}
+}
+
+bool Action::concertSitCough(byte action) {
+	switch(action) {
+	default:
+		return false;
+
+	case 1:
+		playAnimation(kConcertSit);
+		break;
+
+	case 2:
+		playAnimation(kConcertCough);
+		break;
+	}
+
+	return true;
+}
+
+void Action::action29(byte param1, byte param2, byte param3) {
+	getProgress().field_C = 1;
+	playEventSound(0, param1, param2);
+	getSound()->playMusic(SavePoints::kNone, param3, 16, 0);
+}
+
+bool Action::useWhistle(byte action, uint16 *sceneIndex) {
 	error("Action: method not implemented!");
 	return false;
 }
@@ -403,7 +544,12 @@ bool useWhistle(byte action, uint16 *sceneIndex) {
 // Inside & Outside train
 //////////////////////////////////////////////////////////////////////////
 void Action::getOutside(byte action, uint16 *sceneIndex) {
-	if (1) {
+	if ((getEvent(kCathLookOutsideWindowDay) || getEvent(kCathLookOutsideWindowNight) || getObjects()->get(1).field_4)
+	  && getProgress().field_50
+	  && (action != 45 || (!getEntities()->checkFields1(SavePoints::kRebecca, 4, 4840) && getObjects()->get(44).location == 2))
+	  && getInventory()->getSelectedItem() != Inventory::kFirebird
+	  && getInventory()->getSelectedItem() != Inventory::kBriefcase) {
+
 		Events evt = kInvalid;
 		switch (action) {
 		default:
@@ -483,9 +629,29 @@ bool Action::slip(byte action) {
 	return true;
 }
 
-bool Action::climbUp(byte action) {
-	error("Action: method not implemented!");
-	return false;
+bool Action::climbUp(byte action) {	
+	if (action != 1 && action != 2)
+		return false;
+
+	switch (getProgress().chapter) {
+	default:
+		break;
+
+	case 2:
+	case 3:
+		if (action == 2)
+			playAnimation(kCathClimbUpTrainGreenJacket);
+		playAnimation(kCathTopTrainGreenJacket);
+		break;
+
+	case 5:
+		if (action == 2)
+			playAnimation(getProgress().is_nighttime ? kCathClimbUpTrainNoJacketNight : kCathClimbUpTrainNoJacketDay);
+		playAnimation(getProgress().is_nighttime ? kCathTopTrainNoJacketNight : kCathTopTrainNoJacketDay);
+		break;
+	}
+
+	return true;
 }
 
 bool Action::climbDown() {
@@ -506,7 +672,7 @@ bool Action::climbDown() {
 
 	playAnimation(evt);
 	if (evt == kCathClimbDownTrainNoJacketDay)
-		getSound()->playSoundEvent(0, 37, 0);
+		playEventSound(0, 37, 0);
 
 	return true;
 }
@@ -524,7 +690,7 @@ bool Action::jumpUpDown(byte action) {
 	case 3: {
 		if (getInventory()->getSelectedItem() == Inventory::kBriefcase) {
 			getInventory()->removeItem(Inventory::kBriefcase, 3);
-			getSound()->playSoundEvent(0, 82, 0);
+			playEventSound(0, 82, 0);
 			getInventory()->unselectItem();
 		}	
 
@@ -600,8 +766,8 @@ bool Action::pickItem(Inventory::InventoryItem item, byte location, bool process
 		break;
 
 	case Inventory::kBomb:
+		error("Action::pickItem is missing reset call for item bomb!");
 		//getEntities()->reset(SavePoints::kAbbot, &Abbot::setup_pickBomb);
-		error("Logic::processHotspot: pickItem case for item bomb is not implemented!");
 		break;
 
 	case Inventory::kBriefcase:
