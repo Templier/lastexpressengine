@@ -29,9 +29,19 @@
 #include "lastexpress/data/cursor.h"
 #include "lastexpress/game/inventory.h"
 
+#include "common/func.h"
 #include "common/system.h"
 
 namespace LastExpress {
+
+#define DECLARE_ACTION(name) \
+	void action_##name(SceneHotspot *hotspot);
+
+#define ADD_ACTION(name) \
+	_actions.push_back(new Common::Functor1Mem<SceneHotspot*, void, Action>(this, &Action::action_##name));
+
+#define IMPLEMENT_ACTION(name) \
+	void Action::action_##name(SceneHotspot *hotspot)
 
 class LastExpressEngine;
 
@@ -319,16 +329,8 @@ public:
 		kCathUseWhistleOpenEggNoBackground = 272		
 	};
 
-	enum CorpseLocation {
-		kCorpseLocationNone,
-		kCorpseLocationFloor,
-		kCorpseLocationBed,
-		kCorpseLocation3,
-		kCorpseLocationWindow,
-		kCorpseLocation5
-	};
-
 	Action(LastExpressEngine *engine);
+	~Action();
 
 	// Hotspot action
 	void processHotspot(SceneHotspot *hotspot);
@@ -340,47 +342,76 @@ public:
 	void playAnimation(int index);
 
 private:
+	enum CorpseLocation {
+		kCorpseLocationNone,
+		kCorpseLocationFloor,
+		kCorpseLocationBed,
+		kCorpseLocation3,
+		kCorpseLocationWindow,
+		kCorpseLocation5
+	};
+
+	typedef Common::Functor1<SceneHotspot*, void> ActionFunctor;
+	
 	LastExpressEngine* _engine;
+	Common::Array<ActionFunctor *> _actions; 
 
-	// TODO this is a huge mess
-	//   - use the same function signature for all action, eg. void action(SceneHotspot* hotspot) or void action(byte action, byte param1 [...], uint16 *sceneIndex)
-	//   - add all functions to pointer array
-	//   - processHotspot just calls the proper function pointer
+	// Each action is of the form action_<name>(SceneHotspot *hotspot)
+	//   - a pointer to each action is added to the _actions array
+	//   - processHotspot simply calls the proper function given by the hotspot->action value
+	//
+	// Note: even though there are 44 actions, only 41 are used in processHotspot
+	
+	DECLARE_ACTION(inventory);
+	DECLARE_ACTION(savePoint);
+	DECLARE_ACTION(playSound);
+	DECLARE_ACTION(playMusic);
+	DECLARE_ACTION(knock);
+	DECLARE_ACTION(enterOtherCompartment);
+	DECLARE_ACTION(playSounds);
+	DECLARE_ACTION(playAnimation);
+	DECLARE_ACTION(openCloseObject);
+	DECLARE_ACTION(10);
+	DECLARE_ACTION(setItemLocation);
+	DECLARE_ACTION(12);
+	DECLARE_ACTION(pickItem);
+	DECLARE_ACTION(dropItem);
+	DECLARE_ACTION(enterCompartment);
+	DECLARE_ACTION(getOutsideTrain);
+	DECLARE_ACTION(slip);
+	DECLARE_ACTION(getInsideTrain);
+	DECLARE_ACTION(climbUpTrain);
+	DECLARE_ACTION(climbDownTrain);
+	DECLARE_ACTION(jumpUpDownTrain);
+	DECLARE_ACTION(unbound);
+	DECLARE_ACTION(25);
+	DECLARE_ACTION(26);
+	DECLARE_ACTION(27);
+	DECLARE_ACTION(concertSitCough);
+	DECLARE_ACTION(29);
+	DECLARE_ACTION(catchBeetle);
+	DECLARE_ACTION(exitCompartment);
+	DECLARE_ACTION(32);
+	DECLARE_ACTION(useWhistle);
+	DECLARE_ACTION(openMatchBox);
+	DECLARE_ACTION(openBed);
+	DECLARE_ACTION(dialog);
+	DECLARE_ACTION(eggBox);
+	DECLARE_ACTION(39);
+	DECLARE_ACTION(bed);
+	DECLARE_ACTION(41);
+	DECLARE_ACTION(42);
+	DECLARE_ACTION(44);
 
-	// Actions
-	void knockOnDoor(byte object);
-	void openCloseObject(byte object, byte action);
-	void action10(byte object, byte field4);
-	void setItemLocation(Inventory::InventoryItem item, byte location);
-	void pickItem(Inventory::InventoryItem item, byte location, uint16 *sceneIndex);
-	void dropItem(Inventory::InventoryItem item, byte location, bool process);
-	void getOutside(byte action, uint16 *sceneIndex);
-	bool slip(byte action);
-	bool getInside(byte action);
-	bool climbUp(byte action);
-	bool climbDown();
-	bool jumpUpDown(byte action);
-	void unbound(byte action, uint16 *sceneIndex);
-	bool action25(byte action);
-	bool action26(byte action);
-	void action27(byte action);
-	bool concertSitCough(byte action);
-	void action29(byte param1, byte param2, byte param3);
-	void catchBeetle();
-	bool action32(byte action);
-	bool useWhistle(byte action, uint16 *sceneIndex);
-	void openMatchbox();
-	void action42(byte param1, byte param2, byte param3);
+	// Special dummy function
+	DECLARE_ACTION(dummy);
 
-	void enterCompartment(byte action, byte object, uint16 *sceneIndex);
-	void exitCompartment(byte field4);
-
-	// Sub-actions
+	// Helpers
 	void pickGreenJacket(bool process);
 	void pickScarf(bool process);
 	void pickCorpse(byte bedPosition, bool process);
 	void dropCorpse(bool process);
-	void handleCompartmentAction(byte action, byte object, uint16 *sceneIndex);
+	bool handleWrongCompartmentAction(byte object, int param2, int param3);
 };
 
 } // End of namespace LastExpress

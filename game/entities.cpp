@@ -177,4 +177,9 @@ bool Entities::checkFields1(SavePoints::EntityIndex entityIndex, int field495, i
 	return (entity->getData()->field_491 == field491 && entity->getData()->field_493 == 1 && entity->getData()->field_495 == field495);
 }
 
+bool Entities::checkFields2(byte object) {
+	error("Entities::checkFields2: not implemented!");
+	return false;
+}
+
 } // End of namespace LastExpress

@@ -64,6 +64,7 @@ public:
 
 	// Checks
 	bool checkFields1(SavePoints::EntityIndex entity, int field495, int field491);
+	bool checkFields2(byte object);
 
 private:
 	LastExpressEngine* _engine;

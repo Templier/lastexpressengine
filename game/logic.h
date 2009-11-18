@@ -138,7 +138,7 @@ public:
 		uint32 field_68;
 		uint32 event_mertens_august_waiting;
 		uint32 event_mertens_chronos_invitation;
-		uint32 field_74;
+		uint32 is_egg_open;
 		uint32 field_78;	// time?
 		uint32 field_7C;
 		uint32 field_80;
@@ -206,7 +206,7 @@ public:
 			field_68 = 0;
 			event_mertens_august_waiting = 0;
 			event_mertens_chronos_invitation = 0;
-			field_74 = 0;
+			is_egg_open = 0;
 			field_78 = 0;
 			field_7C = 0;
 			field_80 = 0;
@@ -300,7 +300,7 @@ public:
 	void startGame();
 	void switchGame();
 
-	void savegame();
+	void savegame(int param1, int param2, int param3);
 
 	// Scene
 	void loadScene(uint32 index);
