@@ -236,13 +236,11 @@ bool Inventory::handleMouseEvent(Common::Event ev) {
 		// Right button is released: we need to close the inventory
 		if (ev.type == Common::EVENT_LBUTTONUP) {
 
-			// Not on a selectable item: de-select the current item
-			if (!selected) {
-				_selectedItem = kNoItem;
-				_engine->getGraphicsManager()->clear(GraphicsManager::kBackgroundInventory, Common::Rect(44, 0, 44 + 32, 32));
-			}
+			// Not on a selectable item: unselect the current item
+			if (!selected)
+				unselectItem();
+
 			close();
-			askForRedraw();
 		}
 	}
 
@@ -278,7 +276,7 @@ void Inventory::restore() {
 
 	// See processhotspot for kActionInventory
 
-	warning("Inventory::restore is not implemented!");
+	error("Inventory::restore is not implemented!");
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -385,6 +383,20 @@ bool Inventory::hasItem(InventoryItem item) {
 			return true;
 
 	return false;
+}
+
+void Inventory::selectItem(InventoryItem item) {
+	_selectedItem = item; 
+
+	drawItem(44, 0, getEntry(_selectedItem)->item_id, 100)
+	askForRedraw();
+}
+
+void Inventory::unselectItem() { 
+	_selectedItem = kNoItem; 
+
+	_engine->getGraphicsManager()->clear(GraphicsManager::kBackgroundInventory, Common::Rect(44, 0, 44 + 32, 32));
+	askForRedraw();
 }
 
 void Inventory::setLocationAndProcess(InventoryItem item, byte newLocation) {

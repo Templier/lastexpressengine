@@ -123,8 +123,8 @@ public:
 	void addItem(InventoryItem item);
 	void removeItem(InventoryItem item, byte newLocation = 0);
 	bool hasItem(InventoryItem item);	
-	void selectItem(InventoryItem item) { _selectedItem = item; }
-	void unselectItem() { _selectedItem = kNoItem; }
+	void selectItem(InventoryItem item);
+	void unselectItem();
 	InventoryItem getSelectedItem() { return _selectedItem; }
 
 	InventoryEntry *getEntry(InventoryItem item);
