@@ -182,4 +182,10 @@ bool Entities::checkFields2(byte object) {
 	return false;
 }
 
+bool Entities::checkFields3(SavePoints::EntityIndex entityIndex) {
+	Entity* entity = _entities[entityIndex];
+
+	return (entity->getData()->field_495 == 3 || entity->getData()->field_495 == 4) && entity->getData()->field_493 == 1;
+}
+
 } // End of namespace LastExpress

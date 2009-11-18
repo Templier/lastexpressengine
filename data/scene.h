@@ -110,7 +110,7 @@ public:
 		kActionPlaySound = 3,
 		kActionPlayMusic = 4,
 		kActionKnockOnDoor = 5,
-		kAction6 = 6,
+		kActionCompartment = 6,
 		kActionPlaySounds = 7,
 		kActionPlayAnimation = 8,
 		kActionOpenCloseObject = 9,

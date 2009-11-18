@@ -336,7 +336,7 @@ public:
 	void processHotspot(SceneHotspot *hotspot);
 	
 	// Cursor
-	Cursor::CursorStyle getCursor(byte action, byte param1, byte param2, byte param3, byte cursor);
+	Cursor::CursorStyle getCursor(byte action, byte object, byte param2, byte param3, byte cursor);
 
 	// Animation
 	void playAnimation(int index);
@@ -367,7 +367,7 @@ private:
 	DECLARE_ACTION(playSound);
 	DECLARE_ACTION(playMusic);
 	DECLARE_ACTION(knock);
-	DECLARE_ACTION(enterOtherCompartment);
+	DECLARE_ACTION(compartment);
 	DECLARE_ACTION(playSounds);
 	DECLARE_ACTION(playAnimation);
 	DECLARE_ACTION(openCloseObject);
