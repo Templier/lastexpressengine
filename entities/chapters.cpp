@@ -25,6 +25,7 @@
 
 #include "lastexpress/entities/chapters.h"
 
+#include "lastexpress/game/inventory.h"
 #include "lastexpress/game/object.h"
 
 #include "lastexpress/helpers.h"

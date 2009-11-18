@@ -28,6 +28,7 @@
 // Data
 #include "lastexpress/data/animation.h"
 #include "lastexpress/data/snd.h"
+#include "lastexpress/data/scene.h"
 
 #include "lastexpress/game/logic.h"
 

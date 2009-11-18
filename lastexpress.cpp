@@ -27,6 +27,7 @@
 
 #include "lastexpress/data/cursor.h"
 #include "lastexpress/data/font.h"
+#include "lastexpress/data/scene.h"
 #include "lastexpress/data/snd.h"
 
 #include "lastexpress/game/logic.h"

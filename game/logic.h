@@ -76,21 +76,24 @@
 */
 
 #include "lastexpress/data/cursor.h"
-#include "lastexpress/game/inventory.h"
+
 #include "lastexpress/savegame.h"
 
 #include "common/events.h"
 
 namespace LastExpress {
 
+class LastExpressEngine;
+	
 class Action;
 class Beetle;
-class Sound;
 class Entities;
+class Inventory;
 class Objects;
-class LastExpressEngine;
 class Menu;
 class SavePoints;
+class Scene;
+class Sound;
 
 class Logic {
 public:
