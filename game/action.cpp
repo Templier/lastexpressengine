@@ -719,7 +719,7 @@ IMPLEMENT_ACTION(dropItem) {
 
 //////////////////////////////////////////////////////////////////////////
 IMPLEMENT_ACTION(enterCompartment) {
-	byte object = hotspot->param1;
+	//byte object = hotspot->param1;
 
 	if (getObjects()->get(1).location == 1 || getObjects()->get(1).location == 3 || getInventory()->getSelectedItem() == Inventory::kKey) {
 		action_compartment(hotspot);

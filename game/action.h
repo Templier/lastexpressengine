@@ -35,7 +35,7 @@
 namespace LastExpress {
 
 #define DECLARE_ACTION(name) \
-	void action_##name(SceneHotspot *hotspot);
+	void action_##name(SceneHotspot *hotspot)
 
 #define ADD_ACTION(name) \
 	_actions.push_back(new Common::Functor1Mem<SceneHotspot*, void, Action>(this, &Action::action_##name));
