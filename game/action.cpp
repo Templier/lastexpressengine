@@ -467,7 +467,7 @@ IMPLEMENT_ACTION(compartment) {
 		return;
 	}
 
-	if (handleWrongCompartmentAction(object, 1, 1)) {
+	if (handleOtherCompartment(object, 1, 1)) {
 		hotspot->scene = 0;
 		return;
 	}
@@ -1036,7 +1036,7 @@ IMPLEMENT_ACTION(26) {
 IMPLEMENT_ACTION(27) {
 	playEventSound(0, 31, 0);
 
-	switch (getEntities()->getEntityData(SavePoints::kNone)->field_495) {
+	switch (getEntities()->getHeader()->field_495) {
 	default:
 		break;
 
@@ -1319,12 +1319,6 @@ IMPLEMENT_ACTION(44) {
 //////////////////////////////////////////////////////////////////////////
 // Helper functions
 //////////////////////////////////////////////////////////////////////////
-bool Action::handleWrongCompartmentAction(byte object, int param2, int param3) {
-	error("Action::handleWrongCompartmentAction: not implemented!");
-
-	return false;
-}
-
 void Action::pickGreenJacket(bool process) {
 	getProgress().jacket = State::kGreenJacket;
 	getInventory()->addItem(Inventory::kMatchBox);
@@ -1432,6 +1426,18 @@ void Action::dropCorpse(bool process) {
 
 	if (process)
 		_engine->getLogic()->processScene();
+}
+
+bool Action::handleOtherCompartment(byte object, byte param2, byte param3) {
+
+	if (getEntities()->getHeader()->field_493 || ((object < 2 || object > 8) && (object < 32 || object > 39)))
+		return false;
+
+
+
+	error("Action::handleOtherCompartment: not implemented!");
+
+	return false;
 }
 
 //////////////////////////////////////////////////////////////////////////

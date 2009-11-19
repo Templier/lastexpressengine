@@ -56,7 +56,8 @@ public:
 	void reset(SavePoints::EntityIndex entity, Entity::SetupFunction function);
 
 	// Accessors
-	Entity::EntityData* getEntityData(uint index);
+	Entity::EntityData* getData(SavePoints::EntityIndex entity);
+	Entity::EntityData* getHeader() { return &_header; }
 
 	// Serializable
 	void serialize(Common::Serializer &ser, Entity::EntityData *data);

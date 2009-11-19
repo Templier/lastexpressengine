@@ -68,6 +68,8 @@
 
 namespace LastExpress {
 
+const static int field491_values[9] = {0, 8200, 7500, 6470, 5790, 4840, 4070, 3050, 2740};
+
 #define ADD_ENTITY(class) \
 	_entities.push_back(new class(engine));
 
@@ -147,13 +149,13 @@ void Entities::setup(State::ChapterIndex chapter) {
 }
 
 // Accessors
-Entity::EntityData *Entities::getEntityData(uint index) {
-	assert(index < _entities.size());
+Entity::EntityData *Entities::getData(SavePoints::EntityIndex entity) {
+	assert((uint)entity < _entities.size());
 
-	if (index == 0)
+	if (entity == 0)
 		return &_header;
 
-	return _entities[index]->getData();
+	return _entities[entity]->getData();
 }
 
 
@@ -171,21 +173,81 @@ void Entities::saveLoadWithSerializer(Common::Serializer &ser) {
 //////////////////////////////////////////////////////////////////////////
 //	Checks
 //////////////////////////////////////////////////////////////////////////
-bool Entities::checkFields1(SavePoints::EntityIndex entityIndex, int field495, int field491) {
-	Entity* entity = _entities[entityIndex];
-
-	return (entity->getData()->field_491 == field491 && entity->getData()->field_493 == 1 && entity->getData()->field_495 == field495);
+bool Entities::checkFields1(SavePoints::EntityIndex entity, int field495, int field491) {
+	return (getData(entity)->field_491 == field491 && getData(entity)->field_493 == 1 && getData(entity)->field_495 == field495);
 }
 
 bool Entities::checkFields2(byte object) {
-	error("Entities::checkFields2: not implemented!");
-	return false;
+
+	int field491 = 0;
+	int field495 = 0;	
+
+	switch (object) {
+	default:
+		return false;
+
+	case 1:
+	case 2:
+	case 3:
+	case 4:
+	case 5:
+	case 6:
+	case 7:
+	case 8:
+		field491 = field491_values[object];
+		field495 = 3;
+		if (checkFields1(SavePoints::kNone, field495, field491))
+			return false;
+		break;
+
+	case 17:
+	case 18:
+	case 19:
+	case 20:
+	case 21:
+	case 22:
+		field491 = field491_values[object-17];
+		field495 = 3;
+		break;
+
+	case 32:
+	case 33:
+	case 34:
+	case 35:
+	case 36:
+	case 37:
+	case 38:
+	case 39:
+		field491 = field491_values[object-32];
+		field495 = 4;
+		if (checkFields1(SavePoints::kNone, field495, field491))
+			return false;
+		break;
+
+	case 48:
+	case 49:
+	case 50:
+	case 51:
+	case 52:
+	case 53:
+		field491 = field491_values[object-48];
+		field495 = 4;
+		break;
+
+	}
+
+	uint index = 1;
+	while (!checkFields1((SavePoints::EntityIndex)index, field495, field491) || index == SavePoints::kVassili) {
+		index++;
+		if (index >= 40)
+			return false;
+	}
+	
+	return true;
 }
 
-bool Entities::checkFields3(SavePoints::EntityIndex entityIndex) {
-	Entity* entity = _entities[entityIndex];
-
-	return (entity->getData()->field_495 == 3 || entity->getData()->field_495 == 4) && entity->getData()->field_493 == 1;
+bool Entities::checkFields3(SavePoints::EntityIndex entity) {
+	return (getData(entity)->field_495 == 3 || getData(entity)->field_495 == 4) && getData(entity)->field_493 == 1;
 }
 
 } // End of namespace LastExpress

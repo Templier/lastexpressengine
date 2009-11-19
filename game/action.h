@@ -411,7 +411,7 @@ private:
 	void pickScarf(bool process);
 	void pickCorpse(byte bedPosition, bool process);
 	void dropCorpse(bool process);
-	bool handleWrongCompartmentAction(byte object, int param2, int param3);
+	bool handleOtherCompartment(byte object, byte param2, byte param3);
 };
 
 } // End of namespace LastExpress

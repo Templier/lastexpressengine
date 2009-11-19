@@ -227,8 +227,8 @@ void Logic::setScene(uint32 index) {
 	// Update entities
 	Scene *scene = (getState()->sceneUseBackup ? _engine->getScene(getState()->sceneBackup) : _scene);
 	
-	_entities->getEntityData(SavePoints::kNone)->field_491 = scene->getHeader()->count;
-	_entities->getEntityData(SavePoints::kNone)->field_495 = scene->getHeader()->field_13;
+	_entities->getHeader()->field_491 = scene->getHeader()->count;
+	_entities->getHeader()->field_495 = scene->getHeader()->field_13;
 
 	if (getState()->sceneUseBackup)
 		delete scene;
