@@ -471,9 +471,9 @@ IMPLEMENT_ACTION(compartment) {
 	if (location == 1 || location == 3 || getEntities()->checkFields2(object)) {
 
 		// FIXME check again, this might be wrong (and simplify expression)
-		if (location != 1 || getEntities()->checkFields2(object) || getInventory()->getSelectedItem() != Inventory::kKey
+		if (location != 1 || getEntities()->checkFields2(object) || (getInventory()->getSelectedItem() != Inventory::kKey
 			&& (location != 1 || !getInventory()->hasItem(Inventory::kKey) 
-			|| getInventory()->getSelectedItem() != Inventory::kFirebird || getInventory()->getSelectedItem() != Inventory::kBriefcase)) {
+			|| getInventory()->getSelectedItem() != Inventory::kFirebird || getInventory()->getSelectedItem() != Inventory::kBriefcase))) {
 				playEventSound(0, 13, 0);
 				hotspot->scene = 0;
 				return;
@@ -481,7 +481,7 @@ IMPLEMENT_ACTION(compartment) {
 
 		playEventSound(0, 32, 0);
 
-		if ( object >= 1 && object <= 3 || object >= 32 && object <= 37)
+		if ((object >= 1 && object <= 3) || (object >= 32 && object <= 37))
 			getObjects()->update(object, SavePoints::kNone, 0, 10, 9);
 
 		playEventSound(0, 15, 22);
@@ -1092,7 +1092,7 @@ IMPLEMENT_ACTION(exitCompartment) {
 
 	getObjects()->updateField4(1, hotspot->param2);
 
-	// fall to case enterCompartement action
+	// fall to case enterCompartment action
 	action_enterCompartment(hotspot);
 }
 
