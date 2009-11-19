@@ -665,7 +665,7 @@ IMPLEMENT_ACTION(pickItem) {
 	if (getInventory()->getEntry(item)->scene_id) {
 		if (!getState()->sceneUseBackup) {
 			getState()->sceneUseBackup = 1;
-			getState()->sceneBackup = getState()->scene;
+			getState()->sceneBackup = (hotspot->scene ? hotspot->scene : getState()->scene);
 		}
 
 		_engine->getLogic()->loadScene(getInventory()->getEntry(item)->scene_id);

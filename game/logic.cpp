@@ -200,7 +200,7 @@ void Logic::loadScene(uint32 index) {
 	if (getState()->sceneUseBackup) {
 		Scene *scene = _engine->getScene(index);
 	
-		if (scene->getHeader()->param3 != -1) {
+		if (scene->getHeader()->param3 != 255) {
 			getState()->sceneUseBackup = 0;
 			getState()->sceneBackup2 = 0;
 		}
@@ -262,7 +262,10 @@ void Logic::processScene() {
 
 	getState()->sceneUseBackup = 0;
 	
-	// TODO update selected item
+	// Select item if needed
+	Inventory::InventoryItem item = getInventory()->getFirstExaminableItem();
+	if (item && getInventory()->getSelectedItem() == item)
+		getInventory()->selectItem(item);
 
 	Scene *backup = _engine->getScene(getState()->sceneBackup);
 
