@@ -170,7 +170,7 @@ bool Logic::handleMouseEvent(Common::Event ev) {
 	SceneHotspot *hotspot = NULL;
 	if (_scene && _scene->checkHotSpot(ev.mouse, &hotspot)) {
 		// Change mouse cursor		
-		_runState.cursorStyle = _action->getCursor(hotspot->action, hotspot->param1, hotspot->param2, hotspot->param3, hotspot->cursor);
+		_runState.cursorStyle = _action->getCursor(hotspot->action, (Objects::ObjectIndex)hotspot->param1, hotspot->param2, hotspot->param3, hotspot->cursor);
 
 		// Handle click
 		if ((ev.type == Common::EVENT_LBUTTONDOWN)) {
@@ -299,7 +299,7 @@ void Logic::loadSceneFromData(int param1, int param2, int param3) {
 	}
 
 #define GET_ENTITY_LOCATION(scene) \
-	getObjects()->get(scene->getHeader()->param1).location
+	getObjects()->get((Objects::ObjectIndex)scene->getHeader()->param1).location
 
 #define GET_ITEM_LOCATION(scene, parameter) \
 	getInventory()->getEntry((Inventory::InventoryItem)scene->getHeader()->parameter)->location
@@ -389,7 +389,7 @@ void Logic::preProcessScene(uint32 *index) {
 		if (scene->getHotspots()->size() > 0) {
 			for (Common::Array<SceneHotspot *>::iterator it = scene->getHotspots()->begin(); it != scene->getHotspots()->end(); ++it) {
 
-				if (getObjects()->get(scene->getHeader()->param1).location == (*it)->location) {
+				if (getObjects()->get((Objects::ObjectIndex)scene->getHeader()->param1).location == (*it)->location) {
 					PROCESS_HOTSPOT_SCENE(*it, index);
 					found = true;
 					break;
@@ -557,8 +557,10 @@ void Logic::postProcessScene(uint32 *index) {
 	}
 
 	case Scene::kType133:
-		error("Logic::postProcessScene: unsupported scene type (%02d)", scene->getHeader()->type);
-		// TODO do some stuff with inventory
+		if (_engine->getGameState()->unknown_flag_0) {
+			_engine->getGameState()->unknown_flag_0 = 0;
+			updateCursor();
+		}
 		break;
 		
 	default:

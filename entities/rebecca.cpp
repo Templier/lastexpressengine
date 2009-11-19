@@ -98,11 +98,11 @@ IMPLEMENT_FUNCTION(Rebecca, chapter1, 21) {
 	case SavePoints::kActionDefault: 
 		getSavePoints()->addData(SavePoints::kRebecca, 224253538, 0);
 
-		getObjects()->update(36, SavePoints::kNone, 0, 10, 9);
-		getObjects()->update(52, SavePoints::kNone, 0, 10, 9);
-		getObjects()->update(44, SavePoints::kNone, 0, 255, 255);
+		getObjects()->update(Objects::kObjectCompartmentE, SavePoints::kNone, 0, 10, 9);
+		getObjects()->update(Objects::kObject52, SavePoints::kNone, 0, 10, 9);
+		getObjects()->update(Objects::kObject44, SavePoints::kNone, 0, 255, 255);
 
-		getObjects()->updateField4(110, 1);
+		getObjects()->updateField4(Objects::kObject110, 1);
 
 		_data.field_491 = 2830;
 		_data.field_493 = 1;

@@ -27,7 +27,9 @@
 #define LASTEXPRESS_ACTION_H
 
 #include "lastexpress/data/cursor.h"
+
 #include "lastexpress/game/inventory.h"
+#include "lastexpress/game/object.h"
 
 #include "common/func.h"
 #include "common/system.h"
@@ -336,7 +338,7 @@ public:
 	void processHotspot(SceneHotspot *hotspot);
 	
 	// Cursor
-	Cursor::CursorStyle getCursor(byte action, byte object, byte param2, byte param3, byte cursor);
+	Cursor::CursorStyle getCursor(byte action, Objects::ObjectIndex object, byte param2, byte param3, byte cursor);
 
 	// Animation
 	void playAnimation(int index);
@@ -411,7 +413,7 @@ private:
 	void pickScarf(bool process);
 	void pickCorpse(byte bedPosition, bool process);
 	void dropCorpse(bool process);
-	bool handleOtherCompartment(byte object, byte param2, byte param3);
+	bool handleOtherCompartment(Objects::ObjectIndex object, byte param2, byte param3);
 };
 
 } // End of namespace LastExpress

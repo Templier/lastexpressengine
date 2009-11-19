@@ -89,9 +89,9 @@ IMPLEMENT_FUNCTION(Boutarel, chapter1, 19) {
 		getSavePoints()->addData(SavePoints::kBoutarel, 203520448, 0);
 		getSavePoints()->addData(SavePoints::kBoutarel, 237889408, 1);
 
-		getObjects()->update(34, SavePoints::kNone, 0, 10, 9);
-		getObjects()->update(50, SavePoints::kNone, 0, 10, 9);
-		getObjects()->update(42, SavePoints::kNone, 0, 255, 255);
+		getObjects()->update(Objects::kObjectCompartmentC, SavePoints::kNone, 0, 10, 9);
+		getObjects()->update(Objects::kObject50, SavePoints::kNone, 0, 10, 9);
+		getObjects()->update(Objects::kObject42, SavePoints::kNone, 0, 255, 255);
 
 		_data.field_491 = 1750;
 		_data.field_493 = 1;

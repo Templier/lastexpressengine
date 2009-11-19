@@ -98,8 +98,8 @@ IMPLEMENT_FUNCTION(Verges, chapter1, 18) {
 		getSavePoints()->addData(SavePoints::kVerges, 201431954, 5);
 		getSavePoints()->addData(SavePoints::kVerges, 168187490, 6);
 
-		getObjects()->update(104, SavePoints::kVerges, 0, 0, 9);
-		getObjects()->update(105, SavePoints::kVerges, 0, 0, 9);
+		getObjects()->update(Objects::kObject104, SavePoints::kVerges, 0, 0, 9);
+		getObjects()->update(Objects::kObject105, SavePoints::kVerges, 0, 0, 9);
 
 		_data.field_491 = 5000;
 		_data.field_493 = 0;

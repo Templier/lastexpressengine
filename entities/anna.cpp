@@ -131,9 +131,9 @@ IMPLEMENT_FUNCTION(Anna, chapter1, 16) {
 		getSavePoints()->addData(SavePoints::kAnna, 291662081, 0);
 		getSavePoints()->addData(SavePoints::kAnna, 238936000, 1);
 
-		getObjects()->update(37, SavePoints::kNone, 1, 10, 9);
-		getObjects()->update(53, SavePoints::kNone, 1, 10, 9);
-		getObjects()->update(45, SavePoints::kNone, 1, 255, 255);
+		getObjects()->update(Objects::kObjectCompartmentF, SavePoints::kNone, 1, 10, 9);
+		getObjects()->update(Objects::kObject53, SavePoints::kNone, 1, 10, 9);
+		getObjects()->update(Objects::kObject45, SavePoints::kNone, 1, 255, 255);
 
 		_data.field_491 = 8200;
 		_data.field_493 = 1;

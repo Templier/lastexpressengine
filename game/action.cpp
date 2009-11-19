@@ -35,7 +35,6 @@
 #include "lastexpress/game/beetle.h"
 #include "lastexpress/game/entities.h"
 #include "lastexpress/game/logic.h"
-#include "lastexpress/game/object.h"
 #include "lastexpress/game/savepoint.h"
 #include "lastexpress/game/sound.h"
 
@@ -443,8 +442,8 @@ IMPLEMENT_ACTION(playMusic) {
 
 //////////////////////////////////////////////////////////////////////////
 IMPLEMENT_ACTION(knock) {
-	byte object = hotspot->param1;
-
+	Objects::ObjectIndex object = (Objects::ObjectIndex)hotspot->param1;
+	
 	if (object >= 128)
 		return;
 	
@@ -456,11 +455,11 @@ IMPLEMENT_ACTION(knock) {
 
 //////////////////////////////////////////////////////////////////////////
 IMPLEMENT_ACTION(compartment) {
-	byte object = hotspot->param1;
+	Objects::ObjectIndex object = (Objects::ObjectIndex)hotspot->param1;
 
 	if (object >= 128)
 		return;
-
+	
 	if (getObjects()->get(object).entity) {
 		getSavePoints()->push(0, getObjects()->get(object).entity, 9, object);
 		hotspot->scene = 0;
@@ -505,7 +504,7 @@ IMPLEMENT_ACTION(compartment) {
 		return;
 	}
 
-	getObjects()->update(1, SavePoints::kNone, 1, 10, 9);
+	getObjects()->update(Objects::kObjectCompartment1, SavePoints::kNone, 1, 10, 9);
 	playEventSound(0, 16, 0);
 	getInventory()->unselectItem();
 	hotspot->scene = 0;
@@ -530,12 +529,12 @@ IMPLEMENT_ACTION(playAnimation) {
 
 //////////////////////////////////////////////////////////////////////////
 IMPLEMENT_ACTION(openCloseObject) {
-	byte object = hotspot->param1;
+	Objects::ObjectIndex object = (Objects::ObjectIndex)hotspot->param1;
 	byte action = hotspot->param2;
 
 	if (object >= 128)
 		return;
-
+	
 	getObjects()->update(object, getObjects()->get(object).entity, action, 255, 255);
 
 	bool isNotWindow = ((object < 9  || object > 16) && (object < 40 || object > 47));
@@ -562,7 +561,7 @@ IMPLEMENT_ACTION(openCloseObject) {
 
 //////////////////////////////////////////////////////////////////////////
 IMPLEMENT_ACTION(10) {
-	byte object = hotspot->param1;
+	Objects::ObjectIndex object = (Objects::ObjectIndex)hotspot->param1;
 
 	if (object >= 128)
 		return;
@@ -599,7 +598,7 @@ IMPLEMENT_ACTION(setItemLocation) {
 
 //////////////////////////////////////////////////////////////////////////
 IMPLEMENT_ACTION(12) {
-	byte object = hotspot->param1;
+	Objects::ObjectIndex object = (Objects::ObjectIndex)hotspot->param1;
 
 	if (object >= 128)
 		return;
@@ -724,7 +723,7 @@ IMPLEMENT_ACTION(dropItem) {
 
 //////////////////////////////////////////////////////////////////////////
 IMPLEMENT_ACTION(enterCompartment) {
-	if (getObjects()->get(1).location == 1 || getObjects()->get(1).location == 3 || getInventory()->getSelectedItem() == Inventory::kKey) {
+	if (getObjects()->get(Objects::kObjectCompartment1).location == 1 || getObjects()->get(Objects::kObjectCompartment1).location == 3 || getInventory()->getSelectedItem() == Inventory::kKey) {
 		action_compartment(hotspot);
 		return;
 	}
@@ -758,9 +757,9 @@ IMPLEMENT_ACTION(enterCompartment) {
 IMPLEMENT_ACTION(getOutsideTrain) {
 	byte action = hotspot->param1;
 
-	if ((getEvent(kCathLookOutsideWindowDay) || getEvent(kCathLookOutsideWindowNight) || getObjects()->get(1).field_4)
+	if ((getEvent(kCathLookOutsideWindowDay) || getEvent(kCathLookOutsideWindowNight) || getObjects()->get(Objects::kObjectCompartment1).field_4)
 	  && getProgress().field_50
-	  && (action != 45 || (!getEntities()->checkFields1(SavePoints::kRebecca, 4, 4840) && getObjects()->get(44).location == 2))
+	  && (action != 45 || (!getEntities()->checkFields1(SavePoints::kRebecca, 4, 4840) && getObjects()->get(Objects::kObject44).location == 2))
 	  && getInventory()->getSelectedItem() != Inventory::kFirebird
 	  && getInventory()->getSelectedItem() != Inventory::kBriefcase) {
 
@@ -1095,7 +1094,7 @@ IMPLEMENT_ACTION(exitCompartment) {
 		getProgress().field_30 = 1;
 	}
 
-	getObjects()->updateField4(1, hotspot->param2);
+	getObjects()->updateField4(Objects::kObjectCompartment1, hotspot->param2);
 
 	// fall to case enterCompartment action
 	action_enterCompartment(hotspot);
@@ -1323,7 +1322,7 @@ void Action::pickGreenJacket(bool process) {
 	getProgress().jacket = State::kGreenJacket;
 	getInventory()->addItem(Inventory::kMatchBox);
 
-	getObjects()->update(9, SavePoints::kNone, 2, 255, 255);	
+	getObjects()->update(Objects::kObjectOutside, SavePoints::kNone, 2, 255, 255);	
 	playAnimation(kPickGreenJacket);
 
 	getInventory()->setPortrait(Inventory::kPortraitGreen);
@@ -1428,7 +1427,7 @@ void Action::dropCorpse(bool process) {
 		_engine->getLogic()->processScene();
 }
 
-bool Action::handleOtherCompartment(byte object, byte param2, byte param3) {
+bool Action::handleOtherCompartment(Objects::ObjectIndex object, byte param2, byte param3) {
 
 	if (getEntities()->getHeader()->field_493 || ((object < 2 || object > 8) && (object < 32 || object > 39)))
 		return false;
@@ -1443,11 +1442,13 @@ bool Action::handleOtherCompartment(byte object, byte param2, byte param3) {
 //////////////////////////////////////////////////////////////////////////
 // Cursors
 //////////////////////////////////////////////////////////////////////////
-Cursor::CursorStyle Action::getCursor(byte action, byte object, byte param2, byte param3, byte cursor)
+Cursor::CursorStyle Action::getCursor(byte action, Objects::ObjectIndex object, byte param2, byte param3, byte cursor)
 {
 	// Simple cursor style
 	if (cursor != 128)
 		return (Cursor::CursorStyle)cursor;
+
+	warning("================================= OBJECT %03d =================================", object);
 
 	switch (action) {
 	default:
@@ -1509,8 +1510,8 @@ Cursor::CursorStyle Action::getCursor(byte action, byte object, byte param2, byt
 		return Cursor::kCursorNormal; 
 
 	case SceneHotspot::kActionEnterCompartment:
-		if ((getInventory()->getSelectedItem() != Inventory::kKey || getObjects()->get(1).location)
-		 && (getObjects()->get(1).location != 1 || !getInventory()->hasItem(Inventory::kKey)
+		if ((getInventory()->getSelectedItem() != Inventory::kKey || getObjects()->get(Objects::kObjectCompartment1).location)
+		&& (getObjects()->get(Objects::kObjectCompartment1).location != 1 || !getInventory()->hasItem(Inventory::kKey)
 		 ||	(getInventory()->getSelectedItem() != Inventory::kFirebird && getInventory()->getSelectedItem() != Inventory::kBriefcase)))
 			goto LABEL_KEY;
 
@@ -1520,14 +1521,14 @@ Cursor::CursorStyle Action::getCursor(byte action, byte object, byte param2, byt
 		if (getProgress().jacket != State::kGreenJacket)
 			return Cursor::kCursorNormal;
 
-		if ((getEvent(Action::kCathLookOutsideWindowDay) || getEvent(Action::kCathLookOutsideWindowDay) || getObjects()->get(1).field_4 == 1)
+		if ((getEvent(Action::kCathLookOutsideWindowDay) || getEvent(Action::kCathLookOutsideWindowDay) || getObjects()->get(Objects::kObjectCompartment1).field_4 == 1)
 			&& getProgress().field_50
-			&& (object != 45 || (getEntities()->checkFields1(SavePoints::kRebecca, 4, 4840) && getObjects()->get(44).location == 2))
+			&& (object != 45 || (getEntities()->checkFields1(SavePoints::kRebecca, 4, 4840) && getObjects()->get(Objects::kObject44).location == 2))
 			&& getInventory()->getSelectedItem() != Inventory::kBriefcase && getInventory()->getSelectedItem() != Inventory::kFirebird)
 			return Cursor::kCursorForward; 
 
 		// FIXME convert to something readable
-		return (Cursor::CursorStyle)((((getObjects()->get(1).field_4 - 1) < 1) - 1) & 11); 
+		return (Cursor::CursorStyle)((((getObjects()->get(Objects::kObjectCompartment1).field_4 - 1) < 1) - 1) & 11); 
 
 	case SceneHotspot::kActionSlip:
 		// FIXME convert to something readable
@@ -1547,7 +1548,7 @@ Cursor::CursorStyle Action::getCursor(byte action, byte object, byte param2, byt
 			return Cursor::kCursorNormal; 
 
 		// FIXME convert to something readable
-		return (Cursor::CursorStyle)(-(getObjects()->get(73).location < 1) & 9);
+		return (Cursor::CursorStyle)(-(getObjects()->get(Objects::kObject73).location < 1) & 9);
 
 	case SceneHotspot::kActionUnbound:
 		if (param2 != 2)

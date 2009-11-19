@@ -93,7 +93,7 @@ void Sound::playSoundEvent(int index, byte action, byte a3) {
 	switch (action) {
 	case 36:
 	case 37:
-		error("Dialog::playSoundEvent: action not implemented (%d)", action);
+		warning("Dialog::playSoundEvent: action not implemented (%d)", action);
 
 	case 150:
 	case 156:

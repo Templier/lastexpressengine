@@ -134,7 +134,7 @@ IMPLEMENT_FUNCTION(Coudert, chapter1, 36) {
 		_data.field_493 = 0;
 		_data.field_495 = 4;
 
-		getObjects()->updateField4(111, 1);
+		getObjects()->updateField4(Objects::kObject111, 1);
 		break;
 
 	case 18:

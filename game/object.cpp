@@ -34,13 +34,13 @@ namespace LastExpress {
 Objects::Objects(LastExpressEngine *engine) : _engine(engine) {}
 
 
-const Objects::Object Objects::get(uint index) {
+const Objects::Object Objects::get(ObjectIndex index) {
 	assert(index < 128);
 
 	return _objects[index];
 }
 
-void Objects::update(uint index, SavePoints::EntityIndex entity, byte location, byte cursor, byte field_3) {
+void Objects::update(ObjectIndex index, SavePoints::EntityIndex entity, byte location, byte cursor, byte field_3) {
 	if (index >= 128)
 		return;
 
@@ -69,7 +69,7 @@ void Objects::update(uint index, SavePoints::EntityIndex entity, byte location, 
 		}
 }
 
-void Objects::updateField4(uint index, byte value) {
+void Objects::updateField4(ObjectIndex index, byte value) {
 	if (index >= 128)
 		return;
 
