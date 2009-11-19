@@ -25,44 +25,48 @@
 
 #include "lastexpress/entities/entity24.h"
 
-#include "lastexpress/game/object.h"
+#include "lastexpress/game/savepoint.h"
+#include "lastexpress/game/state.h"
 
 #include "lastexpress/helpers.h"
+#include "lastexpress/lastexpress.h"
 
 namespace LastExpress {
 
 Entity24::Entity24(LastExpressEngine *engine) : Entity(engine, SavePoints::kEntity24) {
-	CALLBACK_FUNCTION(Entity24, nullfunc);
-	CALLBACK_FUNCTION(Entity24, nullfunc);
-	CALLBACK_FUNCTION(Entity24, nullfunc);
-	CALLBACK_FUNCTION(Entity24, chapter1);
-	CALLBACK_FUNCTION(Entity24, nullfunc);
-	CALLBACK_FUNCTION(Entity24, chapter2);
-	CALLBACK_FUNCTION(Entity24, chapter3);
-	CALLBACK_FUNCTION(Entity24, chapter4);
-	CALLBACK_FUNCTION(Entity24, nullfunc);
-	CALLBACK_FUNCTION(Entity24, chapter5);
-	CALLBACK_FUNCTION(Entity24, nullfunc);
-	CALLBACK_FUNCTION_NULL();
+	ADD_CALLBACK_FUNCTION(Entity24, nullfunc);
+	ADD_CALLBACK_FUNCTION(Entity24, nullfunc);
+	ADD_CALLBACK_FUNCTION(Entity24, nullfunc);
+	ADD_CALLBACK_FUNCTION(Entity24, chapter1);
+	ADD_CALLBACK_FUNCTION(Entity24, nullfunc);
+	ADD_CALLBACK_FUNCTION(Entity24, chapter2);
+	ADD_CALLBACK_FUNCTION(Entity24, chapter3);
+	ADD_CALLBACK_FUNCTION(Entity24, chapter4);
+	ADD_CALLBACK_FUNCTION(Entity24, nullfunc);
+	ADD_CALLBACK_FUNCTION(Entity24, chapter5);
+	ADD_CALLBACK_FUNCTION(Entity24, nullfunc);
+	ADD_NULL_FUNCTION();
 }
 
 void Entity24::nullfunc(SavePoints::SavePoint *savepoint) {
 	error("Entity24: callback function not implemented!");
 }
 
-void Entity24::chapter1(SavePoints::SavePoint *savepoint) {
+IMPLEMENT_FUNCTION(Entity24, chapter1, 4) {
 }
 
-void Entity24::chapter2(SavePoints::SavePoint *savepoint) {
+IMPLEMENT_FUNCTION(Entity24, chapter2, 6) {
 }
 
-void Entity24::chapter3(SavePoints::SavePoint *savepoint) {
+IMPLEMENT_FUNCTION(Entity24, chapter3, 7) {
 }
 
-void Entity24::chapter4(SavePoints::SavePoint *savepoint) {
+IMPLEMENT_FUNCTION(Entity24, chapter4, 8) {
 }
 
-void Entity24::chapter5(SavePoints::SavePoint *savepoint) {
+IMPLEMENT_FUNCTION(Entity24, chapter5, 10){
 }
+
+IMPLEMENT_NULL_FUNCTION(Entity24, 12)
 
 } // End of namespace LastExpress

@@ -26,82 +26,85 @@
 #include "lastexpress/entities/coudert.h"
 
 #include "lastexpress/game/object.h"
+#include "lastexpress/game/savepoint.h"
+#include "lastexpress/game/state.h"
 
 #include "lastexpress/helpers.h"
+#include "lastexpress/lastexpress.h"
 
 namespace LastExpress {
 
 Coudert::Coudert(LastExpressEngine *engine) : Entity(engine, SavePoints::kCoudert) {
-	CALLBACK_FUNCTION(Coudert, nullfunc);
-	CALLBACK_FUNCTION(Coudert, nullfunc);
-	CALLBACK_FUNCTION(Coudert, nullfunc);
-	CALLBACK_FUNCTION(Coudert, nullfunc);
-	CALLBACK_FUNCTION(Coudert, nullfunc);
-	CALLBACK_FUNCTION(Coudert, nullfunc);
-	CALLBACK_FUNCTION(Coudert, nullfunc);
-	CALLBACK_FUNCTION(Coudert, nullfunc);
-	CALLBACK_FUNCTION(Coudert, nullfunc);
-	CALLBACK_FUNCTION(Coudert, nullfunc);
-	CALLBACK_FUNCTION(Coudert, nullfunc);
-	CALLBACK_FUNCTION(Coudert, nullfunc);
-	CALLBACK_FUNCTION(Coudert, nullfunc);
-	CALLBACK_FUNCTION(Coudert, nullfunc);
-	CALLBACK_FUNCTION(Coudert, nullfunc);
-	CALLBACK_FUNCTION(Coudert, nullfunc);
-	CALLBACK_FUNCTION(Coudert, nullfunc);
-	CALLBACK_FUNCTION(Coudert, nullfunc);
-	CALLBACK_FUNCTION(Coudert, nullfunc);
-	CALLBACK_FUNCTION(Coudert, nullfunc);
-	CALLBACK_FUNCTION(Coudert, nullfunc);
-	CALLBACK_FUNCTION(Coudert, nullfunc);
-	CALLBACK_FUNCTION(Coudert, nullfunc);
-	CALLBACK_FUNCTION(Coudert, nullfunc);
-	CALLBACK_FUNCTION(Coudert, nullfunc);
-	CALLBACK_FUNCTION(Coudert, nullfunc);
-	CALLBACK_FUNCTION(Coudert, nullfunc);
-	CALLBACK_FUNCTION(Coudert, nullfunc);
-	CALLBACK_FUNCTION(Coudert, nullfunc);
-	CALLBACK_FUNCTION(Coudert, nullfunc);
-	CALLBACK_FUNCTION(Coudert, nullfunc);
-	CALLBACK_FUNCTION(Coudert, nullfunc);
-	CALLBACK_FUNCTION(Coudert, nullfunc);
-	CALLBACK_FUNCTION(Coudert, nullfunc);
-	CALLBACK_FUNCTION(Coudert, nullfunc);
-	CALLBACK_FUNCTION(Coudert, chapter1);
-	CALLBACK_FUNCTION(Coudert, nullfunc);
-	CALLBACK_FUNCTION(Coudert, nullfunc);
-	CALLBACK_FUNCTION(Coudert, nullfunc);
-	CALLBACK_FUNCTION(Coudert, nullfunc);
-	CALLBACK_FUNCTION(Coudert, nullfunc);
-	CALLBACK_FUNCTION(Coudert, chapter2);
-	CALLBACK_FUNCTION(Coudert, nullfunc);	
-	CALLBACK_FUNCTION(Coudert, chapter3);
-	CALLBACK_FUNCTION(Coudert, nullfunc);
-	CALLBACK_FUNCTION(Coudert, nullfunc);
-	CALLBACK_FUNCTION(Coudert, nullfunc);
-	CALLBACK_FUNCTION(Coudert, nullfunc);
-	CALLBACK_FUNCTION(Coudert, nullfunc);
-	CALLBACK_FUNCTION(Coudert, nullfunc);
-	CALLBACK_FUNCTION(Coudert, nullfunc);
-	CALLBACK_FUNCTION(Coudert, chapter4);
-	CALLBACK_FUNCTION(Coudert, nullfunc);
-	CALLBACK_FUNCTION(Coudert, nullfunc);
-	CALLBACK_FUNCTION(Coudert, nullfunc);
-	CALLBACK_FUNCTION(Coudert, nullfunc);
-	CALLBACK_FUNCTION(Coudert, chapter5);
-	CALLBACK_FUNCTION(Coudert, nullfunc);
-	CALLBACK_FUNCTION(Coudert, nullfunc);
-	CALLBACK_FUNCTION(Coudert, nullfunc);
-	CALLBACK_FUNCTION(Coudert, nullfunc);
-	CALLBACK_FUNCTION(Coudert, nullfunc);
-	CALLBACK_FUNCTION_NULL();
+	ADD_CALLBACK_FUNCTION(Coudert, nullfunc);
+	ADD_CALLBACK_FUNCTION(Coudert, nullfunc);
+	ADD_CALLBACK_FUNCTION(Coudert, nullfunc);
+	ADD_CALLBACK_FUNCTION(Coudert, nullfunc);
+	ADD_CALLBACK_FUNCTION(Coudert, nullfunc);
+	ADD_CALLBACK_FUNCTION(Coudert, nullfunc);
+	ADD_CALLBACK_FUNCTION(Coudert, nullfunc);
+	ADD_CALLBACK_FUNCTION(Coudert, nullfunc);
+	ADD_CALLBACK_FUNCTION(Coudert, nullfunc);
+	ADD_CALLBACK_FUNCTION(Coudert, nullfunc);
+	ADD_CALLBACK_FUNCTION(Coudert, nullfunc);
+	ADD_CALLBACK_FUNCTION(Coudert, nullfunc);
+	ADD_CALLBACK_FUNCTION(Coudert, nullfunc);
+	ADD_CALLBACK_FUNCTION(Coudert, nullfunc);
+	ADD_CALLBACK_FUNCTION(Coudert, nullfunc);
+	ADD_CALLBACK_FUNCTION(Coudert, nullfunc);
+	ADD_CALLBACK_FUNCTION(Coudert, nullfunc);
+	ADD_CALLBACK_FUNCTION(Coudert, nullfunc);
+	ADD_CALLBACK_FUNCTION(Coudert, nullfunc);
+	ADD_CALLBACK_FUNCTION(Coudert, nullfunc);
+	ADD_CALLBACK_FUNCTION(Coudert, nullfunc);
+	ADD_CALLBACK_FUNCTION(Coudert, nullfunc);
+	ADD_CALLBACK_FUNCTION(Coudert, nullfunc);
+	ADD_CALLBACK_FUNCTION(Coudert, nullfunc);
+	ADD_CALLBACK_FUNCTION(Coudert, nullfunc);
+	ADD_CALLBACK_FUNCTION(Coudert, nullfunc);
+	ADD_CALLBACK_FUNCTION(Coudert, nullfunc);
+	ADD_CALLBACK_FUNCTION(Coudert, nullfunc);
+	ADD_CALLBACK_FUNCTION(Coudert, nullfunc);
+	ADD_CALLBACK_FUNCTION(Coudert, nullfunc);
+	ADD_CALLBACK_FUNCTION(Coudert, nullfunc);
+	ADD_CALLBACK_FUNCTION(Coudert, nullfunc);
+	ADD_CALLBACK_FUNCTION(Coudert, nullfunc);
+	ADD_CALLBACK_FUNCTION(Coudert, nullfunc);
+	ADD_CALLBACK_FUNCTION(Coudert, nullfunc);
+	ADD_CALLBACK_FUNCTION(Coudert, chapter1);
+	ADD_CALLBACK_FUNCTION(Coudert, nullfunc);
+	ADD_CALLBACK_FUNCTION(Coudert, nullfunc);
+	ADD_CALLBACK_FUNCTION(Coudert, nullfunc);
+	ADD_CALLBACK_FUNCTION(Coudert, nullfunc);
+	ADD_CALLBACK_FUNCTION(Coudert, nullfunc);
+	ADD_CALLBACK_FUNCTION(Coudert, chapter2);
+	ADD_CALLBACK_FUNCTION(Coudert, nullfunc);	
+	ADD_CALLBACK_FUNCTION(Coudert, chapter3);
+	ADD_CALLBACK_FUNCTION(Coudert, nullfunc);
+	ADD_CALLBACK_FUNCTION(Coudert, nullfunc);
+	ADD_CALLBACK_FUNCTION(Coudert, nullfunc);
+	ADD_CALLBACK_FUNCTION(Coudert, nullfunc);
+	ADD_CALLBACK_FUNCTION(Coudert, nullfunc);
+	ADD_CALLBACK_FUNCTION(Coudert, nullfunc);
+	ADD_CALLBACK_FUNCTION(Coudert, nullfunc);
+	ADD_CALLBACK_FUNCTION(Coudert, chapter4);
+	ADD_CALLBACK_FUNCTION(Coudert, nullfunc);
+	ADD_CALLBACK_FUNCTION(Coudert, nullfunc);
+	ADD_CALLBACK_FUNCTION(Coudert, nullfunc);
+	ADD_CALLBACK_FUNCTION(Coudert, nullfunc);
+	ADD_CALLBACK_FUNCTION(Coudert, chapter5);
+	ADD_CALLBACK_FUNCTION(Coudert, nullfunc);
+	ADD_CALLBACK_FUNCTION(Coudert, nullfunc);
+	ADD_CALLBACK_FUNCTION(Coudert, nullfunc);
+	ADD_CALLBACK_FUNCTION(Coudert, nullfunc);
+	ADD_CALLBACK_FUNCTION(Coudert, nullfunc);
+	ADD_NULL_FUNCTION();
 }
 
 void Coudert::nullfunc(SavePoints::SavePoint *savepoint) {
 	error("Coudert: callback function not implemented!");
 }
 
-void Coudert::chapter1(SavePoints::SavePoint *savepoint) {
+IMPLEMENT_FUNCTION(Coudert, chapter1, 36) {
 	switch (savepoint->action) {
 	default:
 		break;
@@ -151,16 +154,18 @@ void Coudert::chapter1(SavePoints::SavePoint *savepoint) {
 	}
 }
 
-void Coudert::chapter2(SavePoints::SavePoint *savepoint) {
+IMPLEMENT_FUNCTION(Coudert, chapter2, 42) {
 }
 
-void Coudert::chapter3(SavePoints::SavePoint *savepoint) {
+IMPLEMENT_FUNCTION(Coudert, chapter3, 44) {
 }
 
-void Coudert::chapter4(SavePoints::SavePoint *savepoint) {
+IMPLEMENT_FUNCTION(Coudert, chapter4, 52) {
 }
 
-void Coudert::chapter5(SavePoints::SavePoint *savepoint) {
+IMPLEMENT_FUNCTION(Coudert, chapter5, 57) {
 }
+
+IMPLEMENT_NULL_FUNCTION(Coudert, 63)
 
 } // End of namespace LastExpress

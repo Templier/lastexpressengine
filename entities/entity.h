@@ -26,8 +26,8 @@
 #ifndef LASTEXPRESS_ENTITY_H
 #define LASTEXPRESS_ENTITY_H
 
-#include "lastexpress/game/logic.h"
 #include "lastexpress/game/savepoint.h"
+#include "lastexpress/game/state.h"
 
 #include "common/serializer.h"
 
@@ -36,26 +36,33 @@ namespace LastExpress {
 #define MAKE_CALLBACK(class, name, pointer) \
 	new Common::Functor1Mem<SavePoints::SavePoint*, void, class>(pointer, &class::name)
 
-#define CALLBACK_FUNCTION(class, name) \
+#define ADD_CALLBACK_FUNCTION(class, name) \
 	_callbacks.push_back(MAKE_CALLBACK(class, name, this));
 
-#define CALLBACK_FUNCTION_NULL() \
+#define ADD_NULL_FUNCTION() \
 	_callbacks.push_back(MAKE_CALLBACK(Entity, nullfunction, this));
 
-#define DECLARE_FUNCTION(class, name, index) \
+#define DECLARE_NULL_FUNCTION() \
+	void setup_nullfunction(char* sequence = 0, int param2 = 0, int param3 = 0, int param4 = 0);
+
+#define DECLARE_FUNCTION(name) \
 	void name(SavePoints::SavePoint *savepoint); \
-	DECLARE_SETUP(class, name, index)
+	void setup_##name(char* sequence = 0, int param2 = 0, int param3 = 0, int param4 = 0);
 
-#define DECLARE_FUNCTION_NULL(index)  \
-	DECLARE_SETUP(Entity, nullfunction, index)
+#define IMPLEMENT_NULL_FUNCTION(class, index) \
+	IMPLEMENT_SETUP(class, Entity, nullfunction, index) \
 
-#define DECLARE_SETUP(class, name, index) \
-	void setup_##name(char* sequence = 0, int param2 = 0, int param3 = 0, int param4 = 0) { \
-	_engine->getLogic()->getGameSavePoints()->setCallback(_entityIndex, MAKE_CALLBACK(class, name, this)); \
+#define IMPLEMENT_FUNCTION(class, name, index) \
+	IMPLEMENT_SETUP(class, class, name, index) \
+	void class::name(SavePoints::SavePoint *savepoint)
+	
+#define IMPLEMENT_SETUP(class, classCallback, name, index) \
+	void class::setup_##name(char* sequence, int param2, int param3, int param4) { \
+	_engine->getGameState()->getGameSavePoints()->setCallback(_entityIndex, MAKE_CALLBACK(classCallback, name, this)); \
 	_data.callbacks[_data.current_call] = index; \
 	memset(&_data.callback_data[_data.current_call], 0, sizeof(Entity::EntityData)); \
-	_engine->getLogic()->getGameSavePoints()->call(_entityIndex, _entityIndex, SavePoints::kActionDefault, 0); \
-}
+	_engine->getGameState()->getGameSavePoints()->call(_entityIndex, _entityIndex, SavePoints::kActionDefault, 0); \
+	}
 
 class LastExpressEngine;
 
@@ -121,7 +128,7 @@ public:
 	EntityData *getData() { return &_data; }
 
 	// Setup
-	void setup(Logic::ChapterIndex index);
+	void setup(State::ChapterIndex index);
 
 	virtual void setup_chapter1(char* name = 0, int param2 = 0, int param3 = 0, int param4 = 0) = 0;
 	virtual void setup_chapter2(char* name = 0, int param2 = 0, int param3 = 0, int param4 = 0) = 0;

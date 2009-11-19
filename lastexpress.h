@@ -41,6 +41,7 @@ class ResourceManager;
 class Scene;
 class SceneManager;
 class StreamedSound;
+class State;
 
 class LastExpressEngine : public Engine {
 protected:
@@ -58,6 +59,7 @@ public:
 	Cursor *getCursor() const { return _cursor; }
 	Font *getFont() const { return _font; }
 	Logic *getLogic() const { return _logic; }
+	State *getGameState() const { return _state; }
 	ResourceManager *getResMan() const { return _resMan; }
 	StreamedSound *getMusicStream() const { return _music; }
 	StreamedSound *getSfxStream() const { return _sfx; }
@@ -68,16 +70,18 @@ public:
 private:
 	const ADGameDescription *_gameDescription;
 	Graphics::PixelFormat _pixelFormat;
+
 	Cursor *_cursor;
 	Debugger *_debugger;
 	Font *_font;
+	GraphicsManager *_graphics;
 	Logic *_logic;
 	ResourceManager *_resMan;
+	SceneManager *_sceneMan;
 	StreamedSound *_music;
 	StreamedSound *_sfx;
-	GraphicsManager *_graphics;
-	SceneManager *_sceneMan;
-
+	State *_state;
+	
 	Common::RandomSource _random;
 };
 

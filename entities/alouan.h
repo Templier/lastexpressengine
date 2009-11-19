@@ -28,10 +28,6 @@
 
 #include "lastexpress/entities/entity.h"
 
-#include "lastexpress/game/logic.h"
-
-#include "lastexpress/lastexpress.h"
-
 namespace LastExpress {
 
 class LastExpressEngine;
@@ -41,11 +37,11 @@ public:
 	Alouan(LastExpressEngine *engine);
 
 	// Setup	
-	DECLARE_FUNCTION(Alouan, chapter1, 10)
-	DECLARE_FUNCTION(Alouan, chapter2, 13)
-	DECLARE_FUNCTION(Alouan, chapter3, 15)
-	DECLARE_FUNCTION(Alouan, chapter4, 17)
-	DECLARE_FUNCTION(Alouan, chapter5, 20)
+	DECLARE_FUNCTION(chapter1)
+	DECLARE_FUNCTION(chapter2)
+	DECLARE_FUNCTION(chapter3)
+	DECLARE_FUNCTION(chapter4)
+	DECLARE_FUNCTION(chapter5)
 
 	void nullfunc(SavePoints::SavePoint *savepoint);
 };

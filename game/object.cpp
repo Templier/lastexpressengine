@@ -52,16 +52,15 @@ void Objects::update(uint index, SavePoints::EntityIndex entity, byte location, 
 	// Update entity
 	object->entity = entity;
 	object->location = location;
-	if (cursor != 255)
-		object->cursor = cursor;
-	if (field_3 != 255)
-		object->field_3 = field_3;
-
+	
 	if (cursor != 255 || field_3 != 255) {
-		warning("Objects::update: TODO redraw some stuff on the scene");		 
-	}
+		if (cursor != 255)
+			object->cursor = cursor;
+		if (field_3 != 255)
+			object->field_3 = field_3;
 
-	warning("Objects::update: TODO set a global var");
+		_engine->getLogic()->updateCursor();
+	}
 
 	if (original_location != location && (original_location == 2 || location == 2))
 		if ((index > 0 && index < 9)

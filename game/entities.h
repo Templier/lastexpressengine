@@ -36,7 +36,7 @@
 
 #include "lastexpress/entities/entity.h"
 
-#include "lastexpress/game/logic.h"
+#include "lastexpress/game/state.h"
 #include "lastexpress/game/savepoint.h"
 
 #include "common/serializer.h"
@@ -50,7 +50,7 @@ public:
 	Entities(LastExpressEngine *engine);
 	~Entities();
 
-	void setup(Logic::ChapterIndex chapter);
+	void setup(State::ChapterIndex chapter);
 	void load(int callbackIndex);
 
 	void reset(SavePoints::EntityIndex entity, Entity::SetupFunction function);

@@ -25,54 +25,58 @@
 
 #include "lastexpress/entities/yasmin.h"
 
-#include "lastexpress/game/object.h"
+#include "lastexpress/game/savepoint.h"
+#include "lastexpress/game/state.h"
 
+#include "lastexpress/lastexpress.h"
 #include "lastexpress/helpers.h"
 
 namespace LastExpress {
 
 Yasmin::Yasmin(LastExpressEngine *engine) : Entity(engine, SavePoints::kYasmin) {
-	CALLBACK_FUNCTION(Yasmin, nullfunc);
-	CALLBACK_FUNCTION(Yasmin, nullfunc);
-	CALLBACK_FUNCTION(Yasmin, nullfunc);
-	CALLBACK_FUNCTION(Yasmin, nullfunc);
-	CALLBACK_FUNCTION(Yasmin, nullfunc);
-	CALLBACK_FUNCTION(Yasmin, nullfunc);
-	CALLBACK_FUNCTION(Yasmin, nullfunc);
-	CALLBACK_FUNCTION(Yasmin, chapter1);
-	CALLBACK_FUNCTION(Yasmin, nullfunc);
-	CALLBACK_FUNCTION(Yasmin, nullfunc);
-	CALLBACK_FUNCTION(Yasmin, chapter2);
-	CALLBACK_FUNCTION(Yasmin, nullfunc);
-	CALLBACK_FUNCTION(Yasmin, chapter3);
-	CALLBACK_FUNCTION(Yasmin, nullfunc);
-	CALLBACK_FUNCTION(Yasmin, chapter4);
-	CALLBACK_FUNCTION(Yasmin, nullfunc);
-	CALLBACK_FUNCTION(Yasmin, nullfunc);
-	CALLBACK_FUNCTION(Yasmin, chapter5);
-	CALLBACK_FUNCTION(Yasmin, nullfunc);
-	CALLBACK_FUNCTION(Yasmin, nullfunc);
-	CALLBACK_FUNCTION(Yasmin, nullfunc);
-	CALLBACK_FUNCTION_NULL();
+	ADD_CALLBACK_FUNCTION(Yasmin, nullfunc);
+	ADD_CALLBACK_FUNCTION(Yasmin, nullfunc);
+	ADD_CALLBACK_FUNCTION(Yasmin, nullfunc);
+	ADD_CALLBACK_FUNCTION(Yasmin, nullfunc);
+	ADD_CALLBACK_FUNCTION(Yasmin, nullfunc);
+	ADD_CALLBACK_FUNCTION(Yasmin, nullfunc);
+	ADD_CALLBACK_FUNCTION(Yasmin, nullfunc);
+	ADD_CALLBACK_FUNCTION(Yasmin, chapter1);
+	ADD_CALLBACK_FUNCTION(Yasmin, nullfunc);
+	ADD_CALLBACK_FUNCTION(Yasmin, nullfunc);
+	ADD_CALLBACK_FUNCTION(Yasmin, chapter2);
+	ADD_CALLBACK_FUNCTION(Yasmin, nullfunc);
+	ADD_CALLBACK_FUNCTION(Yasmin, chapter3);
+	ADD_CALLBACK_FUNCTION(Yasmin, nullfunc);
+	ADD_CALLBACK_FUNCTION(Yasmin, chapter4);
+	ADD_CALLBACK_FUNCTION(Yasmin, nullfunc);
+	ADD_CALLBACK_FUNCTION(Yasmin, nullfunc);
+	ADD_CALLBACK_FUNCTION(Yasmin, chapter5);
+	ADD_CALLBACK_FUNCTION(Yasmin, nullfunc);
+	ADD_CALLBACK_FUNCTION(Yasmin, nullfunc);
+	ADD_CALLBACK_FUNCTION(Yasmin, nullfunc);
+	ADD_NULL_FUNCTION();
 }
 
 void Yasmin::nullfunc(SavePoints::SavePoint *savepoint) {
 	error("Yasmin: callback function not implemented!");
 }
 
-void Yasmin::chapter1(SavePoints::SavePoint *savepoint) {
+IMPLEMENT_FUNCTION(Yasmin, chapter1, 8) {
 }
 
-void Yasmin::chapter2(SavePoints::SavePoint *savepoint) {
+IMPLEMENT_FUNCTION(Yasmin, chapter2, 11) {
 }
 
-void Yasmin::chapter3(SavePoints::SavePoint *savepoint) {
+IMPLEMENT_FUNCTION(Yasmin, chapter3, 13) {
 }
 
-void Yasmin::chapter4(SavePoints::SavePoint *savepoint) {
+IMPLEMENT_FUNCTION(Yasmin, chapter4, 15) {
 }
 
-void Yasmin::chapter5(SavePoints::SavePoint *savepoint) {
+IMPLEMENT_FUNCTION(Yasmin, chapter5, 18) {
 }
+
+IMPLEMENT_NULL_FUNCTION(Yasmin, 22)
 
 } // End of namespace LastExpress

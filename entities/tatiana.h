@@ -28,10 +28,6 @@
 
 #include "lastexpress/entities/entity.h"
 
-#include "lastexpress/game/logic.h"
-
-#include "lastexpress/lastexpress.h"
-
 namespace LastExpress {
 
 class LastExpressEngine;
@@ -41,11 +37,11 @@ public:
 	Tatiana(LastExpressEngine *engine);
 
 	// Setup	
-	DECLARE_FUNCTION(Tatiana, chapter1, 17)
-	DECLARE_FUNCTION(Tatiana, chapter2, 25)
-	DECLARE_FUNCTION(Tatiana, chapter3, 31)
-	DECLARE_FUNCTION(Tatiana, chapter4, 43)
-	DECLARE_FUNCTION(Tatiana, chapter5, 52)
+	DECLARE_FUNCTION(chapter1)
+	DECLARE_FUNCTION(chapter2)
+	DECLARE_FUNCTION(chapter3)
+	DECLARE_FUNCTION(chapter4)
+	DECLARE_FUNCTION(chapter5)
 
 	void nullfunc(SavePoints::SavePoint *savepoint);
 };

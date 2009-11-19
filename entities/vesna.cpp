@@ -25,51 +25,53 @@
 
 #include "lastexpress/entities/vesna.h"
 
-#include "lastexpress/game/object.h"
+#include "lastexpress/game/savepoint.h"
+#include "lastexpress/game/state.h"
 
+#include "lastexpress/lastexpress.h"
 #include "lastexpress/helpers.h"
 
 namespace LastExpress {
 
 Vesna::Vesna(LastExpressEngine *engine) : Entity(engine, SavePoints::kVesna) {
-	CALLBACK_FUNCTION(Vesna, nullfunc);
-	CALLBACK_FUNCTION(Vesna, nullfunc);
-	CALLBACK_FUNCTION(Vesna, nullfunc);
-	CALLBACK_FUNCTION(Vesna, nullfunc);
-	CALLBACK_FUNCTION(Vesna, nullfunc);
-	CALLBACK_FUNCTION(Vesna, nullfunc);
-	CALLBACK_FUNCTION(Vesna, nullfunc);
-	CALLBACK_FUNCTION(Vesna, nullfunc);
-	CALLBACK_FUNCTION(Vesna, nullfunc);
-	CALLBACK_FUNCTION(Vesna, nullfunc);
-	CALLBACK_FUNCTION(Vesna, nullfunc);
-	CALLBACK_FUNCTION(Vesna, chapter1);
-	CALLBACK_FUNCTION(Vesna, nullfunc);
-	CALLBACK_FUNCTION(Vesna, nullfunc);
-	CALLBACK_FUNCTION(Vesna, nullfunc);
-	CALLBACK_FUNCTION(Vesna, chapter2);
-	CALLBACK_FUNCTION(Vesna, nullfunc);
-	CALLBACK_FUNCTION(Vesna, nullfunc);
-	CALLBACK_FUNCTION(Vesna, chapter3);
-	CALLBACK_FUNCTION(Vesna, nullfunc);
-	CALLBACK_FUNCTION(Vesna, nullfunc);
-	CALLBACK_FUNCTION(Vesna, nullfunc);
-	CALLBACK_FUNCTION(Vesna, nullfunc);
-	CALLBACK_FUNCTION(Vesna, chapter4);
-	CALLBACK_FUNCTION(Vesna, nullfunc);
-	CALLBACK_FUNCTION(Vesna, nullfunc);
-	CALLBACK_FUNCTION(Vesna, nullfunc);
-	CALLBACK_FUNCTION(Vesna, chapter5);
-	CALLBACK_FUNCTION(Vesna, nullfunc);
-	CALLBACK_FUNCTION(Vesna, nullfunc);
-	CALLBACK_FUNCTION_NULL();
+	ADD_CALLBACK_FUNCTION(Vesna, nullfunc);
+	ADD_CALLBACK_FUNCTION(Vesna, nullfunc);
+	ADD_CALLBACK_FUNCTION(Vesna, nullfunc);
+	ADD_CALLBACK_FUNCTION(Vesna, nullfunc);
+	ADD_CALLBACK_FUNCTION(Vesna, nullfunc);
+	ADD_CALLBACK_FUNCTION(Vesna, nullfunc);
+	ADD_CALLBACK_FUNCTION(Vesna, nullfunc);
+	ADD_CALLBACK_FUNCTION(Vesna, nullfunc);
+	ADD_CALLBACK_FUNCTION(Vesna, nullfunc);
+	ADD_CALLBACK_FUNCTION(Vesna, nullfunc);
+	ADD_CALLBACK_FUNCTION(Vesna, nullfunc);
+	ADD_CALLBACK_FUNCTION(Vesna, chapter1);
+	ADD_CALLBACK_FUNCTION(Vesna, nullfunc);
+	ADD_CALLBACK_FUNCTION(Vesna, nullfunc);
+	ADD_CALLBACK_FUNCTION(Vesna, nullfunc);
+	ADD_CALLBACK_FUNCTION(Vesna, chapter2);
+	ADD_CALLBACK_FUNCTION(Vesna, nullfunc);
+	ADD_CALLBACK_FUNCTION(Vesna, nullfunc);
+	ADD_CALLBACK_FUNCTION(Vesna, chapter3);
+	ADD_CALLBACK_FUNCTION(Vesna, nullfunc);
+	ADD_CALLBACK_FUNCTION(Vesna, nullfunc);
+	ADD_CALLBACK_FUNCTION(Vesna, nullfunc);
+	ADD_CALLBACK_FUNCTION(Vesna, nullfunc);
+	ADD_CALLBACK_FUNCTION(Vesna, chapter4);
+	ADD_CALLBACK_FUNCTION(Vesna, nullfunc);
+	ADD_CALLBACK_FUNCTION(Vesna, nullfunc);
+	ADD_CALLBACK_FUNCTION(Vesna, nullfunc);
+	ADD_CALLBACK_FUNCTION(Vesna, chapter5);
+	ADD_CALLBACK_FUNCTION(Vesna, nullfunc);
+	ADD_CALLBACK_FUNCTION(Vesna, nullfunc);
+	ADD_NULL_FUNCTION();
 }
 
 void Vesna::nullfunc(SavePoints::SavePoint *savepoint) {
 	error("Vesna: callback function not implemented!");
 }
 
-void Vesna::chapter1(SavePoints::SavePoint *savepoint) {
+IMPLEMENT_FUNCTION(Vesna, chapter1, 12) {
 	switch (savepoint->action) {
 	default:
 		break;
@@ -93,16 +95,18 @@ void Vesna::chapter1(SavePoints::SavePoint *savepoint) {
 	}
 }
 
-void Vesna::chapter2(SavePoints::SavePoint *savepoint) {
+IMPLEMENT_FUNCTION(Vesna, chapter2, 16) {
 }
 
-void Vesna::chapter3(SavePoints::SavePoint *savepoint) {
+IMPLEMENT_FUNCTION(Vesna, chapter3, 19) {
 }
 
-void Vesna::chapter4(SavePoints::SavePoint *savepoint) {
+IMPLEMENT_FUNCTION(Vesna, chapter4, 24) {
 }
 
-void Vesna::chapter5(SavePoints::SavePoint *savepoint) {
+IMPLEMENT_FUNCTION(Vesna, chapter5, 28) {
 }
+
+IMPLEMENT_NULL_FUNCTION(Vesna, 31)
 
 } // End of namespace LastExpress

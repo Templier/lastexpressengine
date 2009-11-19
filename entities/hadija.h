@@ -28,10 +28,6 @@
 
 #include "lastexpress/entities/entity.h"
 
-#include "lastexpress/game/logic.h"
-
-#include "lastexpress/lastexpress.h"
-
 namespace LastExpress {
 
 class LastExpressEngine;
@@ -41,12 +37,12 @@ public:
 	Hadija(LastExpressEngine *engine);
 
 	// Setup	
-	DECLARE_FUNCTION(Hadija, chapter1, 10)
-	DECLARE_FUNCTION(Hadija, chapter2, 13)
-	DECLARE_FUNCTION(Hadija, chapter3, 15)
-	DECLARE_FUNCTION(Hadija, chapter4, 17)
-	DECLARE_FUNCTION(Hadija, chapter5, 20)
-	DECLARE_FUNCTION_NULL(24)
+	DECLARE_FUNCTION(chapter1)
+	DECLARE_FUNCTION(chapter2)
+	DECLARE_FUNCTION(chapter3)
+	DECLARE_FUNCTION(chapter4)
+	DECLARE_FUNCTION(chapter5)
+	DECLARE_NULL_FUNCTION()
 
 	void nullfunc(SavePoints::SavePoint *savepoint);
 };

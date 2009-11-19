@@ -25,38 +25,40 @@
 
 #include "lastexpress/entities/entity39.h"
 
-#include "lastexpress/game/object.h"
+#include "lastexpress/game/savepoint.h"
+#include "lastexpress/game/state.h"
 
 #include "lastexpress/helpers.h"
+#include "lastexpress/lastexpress.h"
 
 namespace LastExpress {
 
 Entity39::Entity39(LastExpressEngine *engine) : Entity(engine, SavePoints::kEntity39) {	
-	CALLBACK_FUNCTION(Entity39, chapter1);
-	CALLBACK_FUNCTION(Entity39, chapter2);
-	CALLBACK_FUNCTION(Entity39, chapter3);
-	CALLBACK_FUNCTION(Entity39, chapter4);
-	CALLBACK_FUNCTION(Entity39, chapter5);
-	CALLBACK_FUNCTION(Entity39, process);
+	ADD_CALLBACK_FUNCTION(Entity39, chapter1);
+	ADD_CALLBACK_FUNCTION(Entity39, chapter2);
+	ADD_CALLBACK_FUNCTION(Entity39, chapter3);
+	ADD_CALLBACK_FUNCTION(Entity39, chapter4);
+	ADD_CALLBACK_FUNCTION(Entity39, chapter5);
+	ADD_CALLBACK_FUNCTION(Entity39, process);
 }
 
-void Entity39::chapter1(SavePoints::SavePoint *savepoint) {
+IMPLEMENT_FUNCTION(Entity39, chapter1, 1) {
 }
 
-void Entity39::chapter2(SavePoints::SavePoint *savepoint) {
+IMPLEMENT_FUNCTION(Entity39, chapter2, 2) {
 }
 
-void Entity39::chapter3(SavePoints::SavePoint *savepoint) {
+IMPLEMENT_FUNCTION(Entity39, chapter3, 3) {
 }
 
-void Entity39::chapter4(SavePoints::SavePoint *savepoint) {
+IMPLEMENT_FUNCTION(Entity39, chapter4, 4) {
 }
 
-void Entity39::chapter5(SavePoints::SavePoint *savepoint) {
+IMPLEMENT_FUNCTION(Entity39, chapter5, 5) {
 }
 
-void Entity39::process(SavePoints::SavePoint *savepoint) {
-	error("Entity39: callback function not implemented!");
+IMPLEMENT_FUNCTION(Entity39, process, 6) {
+	error("Entity39::process callback function not implemented!");
 }
 
 } // End of namespace LastExpress

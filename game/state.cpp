@@ -23,30 +23,28 @@
  *
  */
 
-#ifndef LASTEXPRESS_MMEBOUTAREL_H
-#define LASTEXPRESS_MMEBOUTAREL_H
+#include "lastexpress/game/state.h"
 
-#include "lastexpress/entities/entity.h"
+#include "lastexpress/game/inventory.h"
+#include "lastexpress/game/object.h"
+#include "lastexpress/game/savepoint.h"
+
+#include "lastexpress/lastexpress.h"
 
 namespace LastExpress {
 
-class LastExpressEngine;
+State::State(LastExpressEngine *engine) : _engine(engine) {	
+	_inventory = new Inventory(engine);	
+	_objects = new Objects(engine);
+	_savepoints = new SavePoints(engine);
+	_state = new GameState();
+}
 
-class MmeBoutarel : public Entity {
-public:
-	MmeBoutarel(LastExpressEngine *engine);
-
-	// Setup
-	DECLARE_FUNCTION(chapter1)
-	DECLARE_FUNCTION(chapter2)
-	DECLARE_FUNCTION(chapter3)
-	DECLARE_FUNCTION(chapter4)
-	DECLARE_FUNCTION(chapter5)
-	DECLARE_NULL_FUNCTION()
-
-	void nullfunc(SavePoints::SavePoint *savepoint);
-};
+State::~State() {
+	delete _inventory;
+	delete _objects;
+	delete _savepoints;
+	delete _state;
+}
 
 } // End of namespace LastExpress
-
-#endif // LASTEXPRESS_MMEBOUTAREL_H

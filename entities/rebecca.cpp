@@ -26,68 +26,71 @@
 #include "lastexpress/entities/rebecca.h"
 
 #include "lastexpress/game/object.h"
+#include "lastexpress/game/savepoint.h"
+#include "lastexpress/game/state.h"
 
+#include "lastexpress/lastexpress.h"
 #include "lastexpress/helpers.h"
 
 namespace LastExpress {
 
 Rebecca::Rebecca(LastExpressEngine *engine) : Entity(engine, SavePoints::kRebecca) {
-	CALLBACK_FUNCTION(Rebecca, nullfunc);
-	CALLBACK_FUNCTION(Rebecca, nullfunc);
-	CALLBACK_FUNCTION(Rebecca, nullfunc);
-	CALLBACK_FUNCTION(Rebecca, nullfunc);
-	CALLBACK_FUNCTION(Rebecca, nullfunc);
-	CALLBACK_FUNCTION(Rebecca, nullfunc);
-	CALLBACK_FUNCTION(Rebecca, nullfunc);
-	CALLBACK_FUNCTION(Rebecca, nullfunc);
-	CALLBACK_FUNCTION(Rebecca, nullfunc);
-	CALLBACK_FUNCTION(Rebecca, nullfunc);
-	CALLBACK_FUNCTION(Rebecca, nullfunc);
-	CALLBACK_FUNCTION(Rebecca, nullfunc);
-	CALLBACK_FUNCTION(Rebecca, nullfunc);
-	CALLBACK_FUNCTION(Rebecca, nullfunc);
-	CALLBACK_FUNCTION(Rebecca, nullfunc);
-	CALLBACK_FUNCTION(Rebecca, nullfunc);
-	CALLBACK_FUNCTION(Rebecca, nullfunc);
-	CALLBACK_FUNCTION(Rebecca, nullfunc);
-	CALLBACK_FUNCTION(Rebecca, nullfunc);
-	CALLBACK_FUNCTION(Rebecca, nullfunc);
-	CALLBACK_FUNCTION(Rebecca, chapter1);
-	CALLBACK_FUNCTION(Rebecca, nullfunc);
-	CALLBACK_FUNCTION(Rebecca, nullfunc);
-	CALLBACK_FUNCTION(Rebecca, nullfunc);
-	CALLBACK_FUNCTION(Rebecca, nullfunc);
-	CALLBACK_FUNCTION(Rebecca, nullfunc);
-	CALLBACK_FUNCTION(Rebecca, nullfunc);
-	CALLBACK_FUNCTION(Rebecca, chapter2);
-	CALLBACK_FUNCTION(Rebecca, nullfunc);
-	CALLBACK_FUNCTION(Rebecca, nullfunc);
-	CALLBACK_FUNCTION(Rebecca, nullfunc);
-	CALLBACK_FUNCTION(Rebecca, chapter3);
-	CALLBACK_FUNCTION(Rebecca, nullfunc);
-	CALLBACK_FUNCTION(Rebecca, nullfunc);
-	CALLBACK_FUNCTION(Rebecca, nullfunc);
-	CALLBACK_FUNCTION(Rebecca, nullfunc);
-	CALLBACK_FUNCTION(Rebecca, nullfunc);
-	CALLBACK_FUNCTION(Rebecca, nullfunc);
-	CALLBACK_FUNCTION(Rebecca, nullfunc);
-	CALLBACK_FUNCTION(Rebecca, nullfunc);
-	CALLBACK_FUNCTION(Rebecca, nullfunc);
-	CALLBACK_FUNCTION(Rebecca, chapter4);
-	CALLBACK_FUNCTION(Rebecca, nullfunc);
-	CALLBACK_FUNCTION(Rebecca, nullfunc);
-	CALLBACK_FUNCTION(Rebecca, nullfunc);	
-	CALLBACK_FUNCTION(Rebecca, chapter5);
-	CALLBACK_FUNCTION(Rebecca, nullfunc);
-	CALLBACK_FUNCTION(Rebecca, nullfunc);
-	CALLBACK_FUNCTION_NULL();
+	ADD_CALLBACK_FUNCTION(Rebecca, nullfunc);
+	ADD_CALLBACK_FUNCTION(Rebecca, nullfunc);
+	ADD_CALLBACK_FUNCTION(Rebecca, nullfunc);
+	ADD_CALLBACK_FUNCTION(Rebecca, nullfunc);
+	ADD_CALLBACK_FUNCTION(Rebecca, nullfunc);
+	ADD_CALLBACK_FUNCTION(Rebecca, nullfunc);
+	ADD_CALLBACK_FUNCTION(Rebecca, nullfunc);
+	ADD_CALLBACK_FUNCTION(Rebecca, nullfunc);
+	ADD_CALLBACK_FUNCTION(Rebecca, nullfunc);
+	ADD_CALLBACK_FUNCTION(Rebecca, nullfunc);
+	ADD_CALLBACK_FUNCTION(Rebecca, nullfunc);
+	ADD_CALLBACK_FUNCTION(Rebecca, nullfunc);
+	ADD_CALLBACK_FUNCTION(Rebecca, nullfunc);
+	ADD_CALLBACK_FUNCTION(Rebecca, nullfunc);
+	ADD_CALLBACK_FUNCTION(Rebecca, nullfunc);
+	ADD_CALLBACK_FUNCTION(Rebecca, nullfunc);
+	ADD_CALLBACK_FUNCTION(Rebecca, nullfunc);
+	ADD_CALLBACK_FUNCTION(Rebecca, nullfunc);
+	ADD_CALLBACK_FUNCTION(Rebecca, nullfunc);
+	ADD_CALLBACK_FUNCTION(Rebecca, nullfunc);
+	ADD_CALLBACK_FUNCTION(Rebecca, chapter1);
+	ADD_CALLBACK_FUNCTION(Rebecca, nullfunc);
+	ADD_CALLBACK_FUNCTION(Rebecca, nullfunc);
+	ADD_CALLBACK_FUNCTION(Rebecca, nullfunc);
+	ADD_CALLBACK_FUNCTION(Rebecca, nullfunc);
+	ADD_CALLBACK_FUNCTION(Rebecca, nullfunc);
+	ADD_CALLBACK_FUNCTION(Rebecca, nullfunc);
+	ADD_CALLBACK_FUNCTION(Rebecca, chapter2);
+	ADD_CALLBACK_FUNCTION(Rebecca, nullfunc);
+	ADD_CALLBACK_FUNCTION(Rebecca, nullfunc);
+	ADD_CALLBACK_FUNCTION(Rebecca, nullfunc);
+	ADD_CALLBACK_FUNCTION(Rebecca, chapter3);
+	ADD_CALLBACK_FUNCTION(Rebecca, nullfunc);
+	ADD_CALLBACK_FUNCTION(Rebecca, nullfunc);
+	ADD_CALLBACK_FUNCTION(Rebecca, nullfunc);
+	ADD_CALLBACK_FUNCTION(Rebecca, nullfunc);
+	ADD_CALLBACK_FUNCTION(Rebecca, nullfunc);
+	ADD_CALLBACK_FUNCTION(Rebecca, nullfunc);
+	ADD_CALLBACK_FUNCTION(Rebecca, nullfunc);
+	ADD_CALLBACK_FUNCTION(Rebecca, nullfunc);
+	ADD_CALLBACK_FUNCTION(Rebecca, nullfunc);
+	ADD_CALLBACK_FUNCTION(Rebecca, chapter4);
+	ADD_CALLBACK_FUNCTION(Rebecca, nullfunc);
+	ADD_CALLBACK_FUNCTION(Rebecca, nullfunc);
+	ADD_CALLBACK_FUNCTION(Rebecca, nullfunc);	
+	ADD_CALLBACK_FUNCTION(Rebecca, chapter5);
+	ADD_CALLBACK_FUNCTION(Rebecca, nullfunc);
+	ADD_CALLBACK_FUNCTION(Rebecca, nullfunc);
+	ADD_NULL_FUNCTION();
 }
 
 void Rebecca::nullfunc(SavePoints::SavePoint *savepoint) {
 	error("Rebecca: callback function not implemented!");
 }
 
-void Rebecca::chapter1(SavePoints::SavePoint *savepoint) {
+IMPLEMENT_FUNCTION(Rebecca, chapter1, 21) {
 	switch (savepoint->action) {
 	default:
 		break;
@@ -119,16 +122,18 @@ void Rebecca::chapter1(SavePoints::SavePoint *savepoint) {
 	}
 }
 
-void Rebecca::chapter2(SavePoints::SavePoint *savepoint) {
+IMPLEMENT_FUNCTION(Rebecca, chapter2, 28) {
 }
 
-void Rebecca::chapter3(SavePoints::SavePoint *savepoint) {
+IMPLEMENT_FUNCTION(Rebecca, chapter3, 32) {
 }
 
-void Rebecca::chapter4(SavePoints::SavePoint *savepoint) {
+IMPLEMENT_FUNCTION(Rebecca, chapter4, 42) {
 }
 
-void Rebecca::chapter5(SavePoints::SavePoint *savepoint) {
+IMPLEMENT_FUNCTION(Rebecca, chapter5, 46) {
 }
+
+IMPLEMENT_NULL_FUNCTION(Rebecca, 49)
 
 } // End of namespace LastExpress

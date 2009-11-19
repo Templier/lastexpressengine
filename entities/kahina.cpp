@@ -25,61 +25,63 @@
 
 #include "lastexpress/entities/kahina.h"
 
-#include "lastexpress/game/object.h"
+#include "lastexpress/game/savepoint.h"
+#include "lastexpress/game/state.h"
 
+#include "lastexpress/lastexpress.h"
 #include "lastexpress/helpers.h"
 
 namespace LastExpress {
 
 Kahina::Kahina(LastExpressEngine *engine) : Entity(engine, SavePoints::kKahina) {
-	CALLBACK_FUNCTION(Kahina, nullfunc);
-	CALLBACK_FUNCTION(Kahina, nullfunc);
-	CALLBACK_FUNCTION(Kahina, nullfunc);
-	CALLBACK_FUNCTION(Kahina, nullfunc);
-	CALLBACK_FUNCTION(Kahina, nullfunc);
-	CALLBACK_FUNCTION(Kahina, nullfunc);
-	CALLBACK_FUNCTION(Kahina, nullfunc);
-	CALLBACK_FUNCTION(Kahina, nullfunc);
-	CALLBACK_FUNCTION(Kahina, nullfunc);
-	CALLBACK_FUNCTION(Kahina, chapter1);
-	CALLBACK_FUNCTION(Kahina, nullfunc);
-	CALLBACK_FUNCTION(Kahina, nullfunc);
-	CALLBACK_FUNCTION(Kahina, nullfunc);
-	CALLBACK_FUNCTION(Kahina, nullfunc);
-	CALLBACK_FUNCTION(Kahina, nullfunc);
-	CALLBACK_FUNCTION(Kahina, chapter2);
-	CALLBACK_FUNCTION(Kahina, nullfunc);
-	CALLBACK_FUNCTION(Kahina, chapter3);
-	CALLBACK_FUNCTION(Kahina, nullfunc);
-	CALLBACK_FUNCTION(Kahina, nullfunc);
-	CALLBACK_FUNCTION(Kahina, nullfunc);
-	CALLBACK_FUNCTION(Kahina, nullfunc);
-	CALLBACK_FUNCTION(Kahina, nullfunc);
-	CALLBACK_FUNCTION(Kahina, nullfunc);
-	CALLBACK_FUNCTION(Kahina, nullfunc);
-	CALLBACK_FUNCTION(Kahina, nullfunc);
-	CALLBACK_FUNCTION(Kahina, nullfunc);
-	CALLBACK_FUNCTION(Kahina, chapter4);
-	CALLBACK_FUNCTION(Kahina, chapter5);
+	ADD_CALLBACK_FUNCTION(Kahina, nullfunc);
+	ADD_CALLBACK_FUNCTION(Kahina, nullfunc);
+	ADD_CALLBACK_FUNCTION(Kahina, nullfunc);
+	ADD_CALLBACK_FUNCTION(Kahina, nullfunc);
+	ADD_CALLBACK_FUNCTION(Kahina, nullfunc);
+	ADD_CALLBACK_FUNCTION(Kahina, nullfunc);
+	ADD_CALLBACK_FUNCTION(Kahina, nullfunc);
+	ADD_CALLBACK_FUNCTION(Kahina, nullfunc);
+	ADD_CALLBACK_FUNCTION(Kahina, nullfunc);
+	ADD_CALLBACK_FUNCTION(Kahina, chapter1);
+	ADD_CALLBACK_FUNCTION(Kahina, nullfunc);
+	ADD_CALLBACK_FUNCTION(Kahina, nullfunc);
+	ADD_CALLBACK_FUNCTION(Kahina, nullfunc);
+	ADD_CALLBACK_FUNCTION(Kahina, nullfunc);
+	ADD_CALLBACK_FUNCTION(Kahina, nullfunc);
+	ADD_CALLBACK_FUNCTION(Kahina, chapter2);
+	ADD_CALLBACK_FUNCTION(Kahina, nullfunc);
+	ADD_CALLBACK_FUNCTION(Kahina, chapter3);
+	ADD_CALLBACK_FUNCTION(Kahina, nullfunc);
+	ADD_CALLBACK_FUNCTION(Kahina, nullfunc);
+	ADD_CALLBACK_FUNCTION(Kahina, nullfunc);
+	ADD_CALLBACK_FUNCTION(Kahina, nullfunc);
+	ADD_CALLBACK_FUNCTION(Kahina, nullfunc);
+	ADD_CALLBACK_FUNCTION(Kahina, nullfunc);
+	ADD_CALLBACK_FUNCTION(Kahina, nullfunc);
+	ADD_CALLBACK_FUNCTION(Kahina, nullfunc);
+	ADD_CALLBACK_FUNCTION(Kahina, nullfunc);
+	ADD_CALLBACK_FUNCTION(Kahina, chapter4);
+	ADD_CALLBACK_FUNCTION(Kahina, chapter5);
 }
 
 void Kahina::nullfunc(SavePoints::SavePoint *savepoint) {
 	error("Kahina: callback function not implemented!");
 }
 
-void Kahina::chapter1(SavePoints::SavePoint *savepoint) {
+IMPLEMENT_FUNCTION(Kahina, chapter1, 10) {
 }
 
-void Kahina::chapter2(SavePoints::SavePoint *savepoint) {
+IMPLEMENT_FUNCTION(Kahina, chapter2, 16) {
 }
 
-void Kahina::chapter3(SavePoints::SavePoint *savepoint) {
+IMPLEMENT_FUNCTION(Kahina, chapter3, 18) {
 }
 
-void Kahina::chapter4(SavePoints::SavePoint *savepoint) {
+IMPLEMENT_FUNCTION(Kahina, chapter4, 28) {
 }
 
-void Kahina::chapter5(SavePoints::SavePoint *savepoint) {
+IMPLEMENT_FUNCTION(Kahina, chapter5, 29) {
 }
 
 } // End of namespace LastExpress

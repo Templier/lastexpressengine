@@ -26,71 +26,74 @@
 #include "lastexpress/entities/train.h"
 
 #include "lastexpress/game/object.h"
+#include "lastexpress/game/savepoint.h"
+#include "lastexpress/game/state.h"
 
+#include "lastexpress/lastexpress.h"
 #include "lastexpress/helpers.h"
 
 namespace LastExpress {
 
 Train::Train(LastExpressEngine *engine) : Entity(engine, SavePoints::kTrain) {
-	CALLBACK_FUNCTION(Train, nullfunc);
-	CALLBACK_FUNCTION(Train, chapter1);
-	CALLBACK_FUNCTION(Train, chapter2);
-	CALLBACK_FUNCTION(Train, chapter3);
-	CALLBACK_FUNCTION(Train, chapter4);
-	CALLBACK_FUNCTION(Train, chapter5);
-	CALLBACK_FUNCTION(Train, harem);
-	CALLBACK_FUNCTION(Train, process);
+	ADD_CALLBACK_FUNCTION(Train, nullfunc);
+	ADD_CALLBACK_FUNCTION(Train, chapter1);
+	ADD_CALLBACK_FUNCTION(Train, chapter2);
+	ADD_CALLBACK_FUNCTION(Train, chapter3);
+	ADD_CALLBACK_FUNCTION(Train, chapter4);
+	ADD_CALLBACK_FUNCTION(Train, chapter5);
+	ADD_CALLBACK_FUNCTION(Train, harem);
+	ADD_CALLBACK_FUNCTION(Train, process);
 }
 
 void Train::nullfunc(SavePoints::SavePoint *savepoint) {
 	error("Train: callback function not implemented!");
 }
 
-void Train::chapter1(SavePoints::SavePoint *savepoint) {
+IMPLEMENT_FUNCTION(Train, chapter1, 2) {
 	if (savepoint->action != SavePoints::kActionDefault)
 		return;
 
 	setup_process();
 }
 
-void Train::chapter2(SavePoints::SavePoint *savepoint) {
+IMPLEMENT_FUNCTION(Train, chapter2, 3) {
 	if (savepoint->action != SavePoints::kActionDefault)
 		return;
 
 	setup_process();
 }
 
-void Train::chapter3(SavePoints::SavePoint *savepoint) {
+IMPLEMENT_FUNCTION(Train, chapter3, 4) {
 	if (savepoint->action != SavePoints::kActionDefault)
 		return;
 
 	setup_process();
 }
 
-void Train::chapter4(SavePoints::SavePoint *savepoint) {
+IMPLEMENT_FUNCTION(Train, chapter4, 5) {
 	if (savepoint->action != SavePoints::kActionDefault)
 		return;
 
 	setup_process();
 }
 
-void Train::chapter5(SavePoints::SavePoint *savepoint) {
+IMPLEMENT_FUNCTION(Train, chapter5, 6) {
 	if (savepoint->action != SavePoints::kActionDefault)
 		return;
 
 	setup_process();
 }
 
-void Train::harem(SavePoints::SavePoint *savepoint) {
+IMPLEMENT_FUNCTION(Train, harem, 7) {
 	error("Train: harem callback function not implemented!");
 }
 
-void Train::process(SavePoints::SavePoint *savepoint) {
+IMPLEMENT_FUNCTION(Train, process, 8) {
 	
 	switch (savepoint->action) {
 	case SavePoints::kActionDefault:
 		getCallData().entries[8].field_0 = 1;
-		if (getProgress().chapter < Logic::kChapter5) {
+		if (getProgress().chapter < State::kChapter5) {
 			getObjects()->update(5, SavePoints::kTrain, 3, 10, 9);
 			getObjects()->update(6, SavePoints::kTrain, 3, 10, 9);
 			getObjects()->update(7, SavePoints::kTrain, 3, 10, 9);

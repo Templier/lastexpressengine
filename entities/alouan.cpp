@@ -25,55 +25,57 @@
 
 #include "lastexpress/entities/alouan.h"
 
-#include "lastexpress/game/object.h"
+#include "lastexpress/game/savepoint.h"
+#include "lastexpress/game/state.h"
 
 #include "lastexpress/helpers.h"
+#include "lastexpress/lastexpress.h"
 
 namespace LastExpress {
 
 Alouan::Alouan(LastExpressEngine *engine) : Entity(engine, SavePoints::kAlouan) {
-	CALLBACK_FUNCTION(Alouan, nullfunc);
-	CALLBACK_FUNCTION(Alouan, nullfunc);
-	CALLBACK_FUNCTION(Alouan, nullfunc);
-	CALLBACK_FUNCTION(Alouan, nullfunc);
-	CALLBACK_FUNCTION(Alouan, nullfunc);
-	CALLBACK_FUNCTION(Alouan, nullfunc);
-	CALLBACK_FUNCTION(Alouan, nullfunc);
-	CALLBACK_FUNCTION(Alouan, nullfunc);
-	CALLBACK_FUNCTION(Alouan, nullfunc);
-	CALLBACK_FUNCTION(Alouan, chapter1);
-	CALLBACK_FUNCTION(Alouan, nullfunc);
-	CALLBACK_FUNCTION(Alouan, nullfunc);
-	CALLBACK_FUNCTION(Alouan, chapter2);
-	CALLBACK_FUNCTION(Alouan, nullfunc);
-	CALLBACK_FUNCTION(Alouan, chapter3);
-	CALLBACK_FUNCTION(Alouan, nullfunc);	
-	CALLBACK_FUNCTION(Alouan, chapter4);
-	CALLBACK_FUNCTION(Alouan, nullfunc);
-	CALLBACK_FUNCTION(Alouan, nullfunc);
-	CALLBACK_FUNCTION(Alouan, chapter5);
-	CALLBACK_FUNCTION(Alouan, nullfunc);
-	CALLBACK_FUNCTION(Alouan, nullfunc);
-	CALLBACK_FUNCTION(Alouan, nullfunc);
+	ADD_CALLBACK_FUNCTION(Alouan, nullfunc);
+	ADD_CALLBACK_FUNCTION(Alouan, nullfunc);
+	ADD_CALLBACK_FUNCTION(Alouan, nullfunc);
+	ADD_CALLBACK_FUNCTION(Alouan, nullfunc);
+	ADD_CALLBACK_FUNCTION(Alouan, nullfunc);
+	ADD_CALLBACK_FUNCTION(Alouan, nullfunc);
+	ADD_CALLBACK_FUNCTION(Alouan, nullfunc);
+	ADD_CALLBACK_FUNCTION(Alouan, nullfunc);
+	ADD_CALLBACK_FUNCTION(Alouan, nullfunc);
+	ADD_CALLBACK_FUNCTION(Alouan, chapter1);
+	ADD_CALLBACK_FUNCTION(Alouan, nullfunc);
+	ADD_CALLBACK_FUNCTION(Alouan, nullfunc);
+	ADD_CALLBACK_FUNCTION(Alouan, chapter2);
+	ADD_CALLBACK_FUNCTION(Alouan, nullfunc);
+	ADD_CALLBACK_FUNCTION(Alouan, chapter3);
+	ADD_CALLBACK_FUNCTION(Alouan, nullfunc);	
+	ADD_CALLBACK_FUNCTION(Alouan, chapter4);
+	ADD_CALLBACK_FUNCTION(Alouan, nullfunc);
+	ADD_CALLBACK_FUNCTION(Alouan, nullfunc);
+	ADD_CALLBACK_FUNCTION(Alouan, chapter5);
+	ADD_CALLBACK_FUNCTION(Alouan, nullfunc);
+	ADD_CALLBACK_FUNCTION(Alouan, nullfunc);
+	ADD_CALLBACK_FUNCTION(Alouan, nullfunc);
 }
 
 void Alouan::nullfunc(SavePoints::SavePoint *savepoint) {
 	error("Alouan: callback function not implemented!");
 }
 
-void Alouan::chapter1(SavePoints::SavePoint *savepoint) {
+IMPLEMENT_FUNCTION(Alouan, chapter1, 10) {
 }
 
-void Alouan::chapter2(SavePoints::SavePoint *savepoint) {
+IMPLEMENT_FUNCTION(Alouan, chapter2, 13) {
 }
 
-void Alouan::chapter3(SavePoints::SavePoint *savepoint) {
+IMPLEMENT_FUNCTION(Alouan, chapter3, 15) {
 }
 
-void Alouan::chapter4(SavePoints::SavePoint *savepoint) {
+IMPLEMENT_FUNCTION(Alouan, chapter4, 17) {
 }
 
-void Alouan::chapter5(SavePoints::SavePoint *savepoint) {
+IMPLEMENT_FUNCTION(Alouan, chapter5, 20) {
 }
 
 } // End of namespace LastExpress

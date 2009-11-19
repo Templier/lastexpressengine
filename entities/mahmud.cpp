@@ -26,39 +26,42 @@
 #include "lastexpress/entities/mahmud.h"
 
 #include "lastexpress/game/object.h"
+#include "lastexpress/game/savepoint.h"
+#include "lastexpress/game/state.h"
 
+#include "lastexpress/lastexpress.h"
 #include "lastexpress/helpers.h"
 
 namespace LastExpress {
 
 Mahmud::Mahmud(LastExpressEngine *engine) : Entity(engine, SavePoints::kMahmud) {
-	CALLBACK_FUNCTION(Mahmud, nullfunc);
-	CALLBACK_FUNCTION(Mahmud, nullfunc);
-	CALLBACK_FUNCTION(Mahmud, nullfunc);
-	CALLBACK_FUNCTION(Mahmud, nullfunc);
-	CALLBACK_FUNCTION(Mahmud, nullfunc);
-	CALLBACK_FUNCTION(Mahmud, nullfunc);
-	CALLBACK_FUNCTION(Mahmud, nullfunc);
-	CALLBACK_FUNCTION(Mahmud, nullfunc);
-	CALLBACK_FUNCTION(Mahmud, nullfunc);
-	CALLBACK_FUNCTION(Mahmud, nullfunc);
-	CALLBACK_FUNCTION(Mahmud, nullfunc);
-	CALLBACK_FUNCTION(Mahmud, nullfunc);
-	CALLBACK_FUNCTION(Mahmud, nullfunc);
-	CALLBACK_FUNCTION(Mahmud, nullfunc);
-	CALLBACK_FUNCTION(Mahmud, chapter1);
-	CALLBACK_FUNCTION(Mahmud, nullfunc);
-	CALLBACK_FUNCTION(Mahmud, chapter2);
-	CALLBACK_FUNCTION(Mahmud, chapter3);
-	CALLBACK_FUNCTION(Mahmud, chapter4);
-	CALLBACK_FUNCTION(Mahmud, chapter5);
+	ADD_CALLBACK_FUNCTION(Mahmud, nullfunc);
+	ADD_CALLBACK_FUNCTION(Mahmud, nullfunc);
+	ADD_CALLBACK_FUNCTION(Mahmud, nullfunc);
+	ADD_CALLBACK_FUNCTION(Mahmud, nullfunc);
+	ADD_CALLBACK_FUNCTION(Mahmud, nullfunc);
+	ADD_CALLBACK_FUNCTION(Mahmud, nullfunc);
+	ADD_CALLBACK_FUNCTION(Mahmud, nullfunc);
+	ADD_CALLBACK_FUNCTION(Mahmud, nullfunc);
+	ADD_CALLBACK_FUNCTION(Mahmud, nullfunc);
+	ADD_CALLBACK_FUNCTION(Mahmud, nullfunc);
+	ADD_CALLBACK_FUNCTION(Mahmud, nullfunc);
+	ADD_CALLBACK_FUNCTION(Mahmud, nullfunc);
+	ADD_CALLBACK_FUNCTION(Mahmud, nullfunc);
+	ADD_CALLBACK_FUNCTION(Mahmud, nullfunc);
+	ADD_CALLBACK_FUNCTION(Mahmud, chapter1);
+	ADD_CALLBACK_FUNCTION(Mahmud, nullfunc);
+	ADD_CALLBACK_FUNCTION(Mahmud, chapter2);
+	ADD_CALLBACK_FUNCTION(Mahmud, chapter3);
+	ADD_CALLBACK_FUNCTION(Mahmud, chapter4);
+	ADD_CALLBACK_FUNCTION(Mahmud, chapter5);
 }
 
 void Mahmud::nullfunc(SavePoints::SavePoint *savepoint) {
 	error("Mahmud: callback function not implemented!");
 }
 
-void Mahmud::chapter1(SavePoints::SavePoint *savepoint) {
+IMPLEMENT_FUNCTION(Mahmud, chapter1, 15) {
 	switch (savepoint->action) {
 	default:
 		break;
@@ -85,16 +88,16 @@ void Mahmud::chapter1(SavePoints::SavePoint *savepoint) {
 	}
 }
 
-void Mahmud::chapter2(SavePoints::SavePoint *savepoint) {
+IMPLEMENT_FUNCTION(Mahmud, chapter2, 17) {
 }
 
-void Mahmud::chapter3(SavePoints::SavePoint *savepoint) {
+IMPLEMENT_FUNCTION(Mahmud, chapter3, 18) {
 }
 
-void Mahmud::chapter4(SavePoints::SavePoint *savepoint) {
+IMPLEMENT_FUNCTION(Mahmud, chapter4, 19) {
 }
 
-void Mahmud::chapter5(SavePoints::SavePoint *savepoint) {
+IMPLEMENT_FUNCTION(Mahmud, chapter5, 20) {
 }
 
 } // End of namespace LastExpress

@@ -31,6 +31,7 @@
 #include "lastexpress/data/scene.h"
 
 #include "lastexpress/game/logic.h"
+#include "lastexpress/game/state.h"
 
 #include "lastexpress/graphics.h"
 #include "lastexpress/helpers.h"
@@ -38,7 +39,6 @@
 #include "lastexpress/resource.h"
 
 #define getNextGameId() (GameId)((_engine->getLogic()->getGameId() + 1) % 6)
-#define getState() _engine->getLogic()->getGameState()
 #define drawSeqFrame(drawable, index, type) { \
 	AnimFrame *frame = (drawable)->getFrame((index)); \
 	_engine->getGraphicsManager()->draw((frame), (type)); \

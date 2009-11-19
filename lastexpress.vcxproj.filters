@@ -173,6 +173,9 @@
     <ClCompile Include="..\..\engines\lastexpress\game\sound.cpp">
       <Filter>game</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\engines\lastexpress\game\state.cpp">
+      <Filter>game</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\engines\lastexpress\graphics.cpp" />
     <ClCompile Include="..\..\engines\lastexpress\lastexpress.cpp" />
     <ClCompile Include="..\..\engines\lastexpress\resource.cpp" />
@@ -338,6 +341,9 @@
       <Filter>game</Filter>
     </ClInclude>
     <ClInclude Include="..\..\engines\lastexpress\game\sound.h">
+      <Filter>game</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\engines\lastexpress\game\state.h">
       <Filter>game</Filter>
     </ClInclude>
     <ClInclude Include="..\..\engines\lastexpress\graphics.h" />

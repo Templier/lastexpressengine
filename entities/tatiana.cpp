@@ -26,74 +26,77 @@
 #include "lastexpress/entities/tatiana.h"
 
 #include "lastexpress/game/object.h"
+#include "lastexpress/game/savepoint.h"
+#include "lastexpress/game/state.h"
 
+#include "lastexpress/lastexpress.h"
 #include "lastexpress/helpers.h"
 
 namespace LastExpress {
 
 Tatiana::Tatiana(LastExpressEngine *engine) : Entity(engine, SavePoints::kTatiana) {
-	CALLBACK_FUNCTION(Tatiana, nullfunc);
-	CALLBACK_FUNCTION(Tatiana, nullfunc);
-	CALLBACK_FUNCTION(Tatiana, nullfunc);
-	CALLBACK_FUNCTION(Tatiana, nullfunc);
-	CALLBACK_FUNCTION(Tatiana, nullfunc);
-	CALLBACK_FUNCTION(Tatiana, nullfunc);
-	CALLBACK_FUNCTION(Tatiana, nullfunc);
-	CALLBACK_FUNCTION(Tatiana, nullfunc);
-	CALLBACK_FUNCTION(Tatiana, nullfunc);
-	CALLBACK_FUNCTION(Tatiana, nullfunc);
-	CALLBACK_FUNCTION(Tatiana, nullfunc);
-	CALLBACK_FUNCTION(Tatiana, nullfunc);
-	CALLBACK_FUNCTION(Tatiana, nullfunc);
-	CALLBACK_FUNCTION(Tatiana, nullfunc);
-	CALLBACK_FUNCTION(Tatiana, nullfunc);
-	CALLBACK_FUNCTION(Tatiana, nullfunc);
-	CALLBACK_FUNCTION(Tatiana, chapter1);
-	CALLBACK_FUNCTION(Tatiana, nullfunc);
-	CALLBACK_FUNCTION(Tatiana, nullfunc);
-	CALLBACK_FUNCTION(Tatiana, nullfunc);
-	CALLBACK_FUNCTION(Tatiana, nullfunc);
-	CALLBACK_FUNCTION(Tatiana, nullfunc);
-	CALLBACK_FUNCTION(Tatiana, nullfunc);
-	CALLBACK_FUNCTION(Tatiana, nullfunc);	
-	CALLBACK_FUNCTION(Tatiana, chapter2);
-	CALLBACK_FUNCTION(Tatiana, nullfunc);
-	CALLBACK_FUNCTION(Tatiana, nullfunc);
-	CALLBACK_FUNCTION(Tatiana, nullfunc);
-	CALLBACK_FUNCTION(Tatiana, nullfunc);
-	CALLBACK_FUNCTION(Tatiana, nullfunc);	
-	CALLBACK_FUNCTION(Tatiana, chapter3);
-	CALLBACK_FUNCTION(Tatiana, nullfunc);
-	CALLBACK_FUNCTION(Tatiana, nullfunc);
-	CALLBACK_FUNCTION(Tatiana, nullfunc);
-	CALLBACK_FUNCTION(Tatiana, nullfunc);
-	CALLBACK_FUNCTION(Tatiana, nullfunc);
-	CALLBACK_FUNCTION(Tatiana, nullfunc);
-	CALLBACK_FUNCTION(Tatiana, nullfunc);
-	CALLBACK_FUNCTION(Tatiana, nullfunc);
-	CALLBACK_FUNCTION(Tatiana, nullfunc);
-	CALLBACK_FUNCTION(Tatiana, nullfunc);
-	CALLBACK_FUNCTION(Tatiana, nullfunc);
-	CALLBACK_FUNCTION(Tatiana, chapter4);
-	CALLBACK_FUNCTION(Tatiana, nullfunc);
-	CALLBACK_FUNCTION(Tatiana, nullfunc);
-	CALLBACK_FUNCTION(Tatiana, nullfunc);
-	CALLBACK_FUNCTION(Tatiana, nullfunc);
-	CALLBACK_FUNCTION(Tatiana, nullfunc);
-	CALLBACK_FUNCTION(Tatiana, nullfunc);
-	CALLBACK_FUNCTION(Tatiana, nullfunc);
-	CALLBACK_FUNCTION(Tatiana, nullfunc);
-	CALLBACK_FUNCTION(Tatiana, chapter5);
-	CALLBACK_FUNCTION(Tatiana, nullfunc);
-	CALLBACK_FUNCTION(Tatiana, nullfunc);
-	CALLBACK_FUNCTION(Tatiana, nullfunc);
+	ADD_CALLBACK_FUNCTION(Tatiana, nullfunc);
+	ADD_CALLBACK_FUNCTION(Tatiana, nullfunc);
+	ADD_CALLBACK_FUNCTION(Tatiana, nullfunc);
+	ADD_CALLBACK_FUNCTION(Tatiana, nullfunc);
+	ADD_CALLBACK_FUNCTION(Tatiana, nullfunc);
+	ADD_CALLBACK_FUNCTION(Tatiana, nullfunc);
+	ADD_CALLBACK_FUNCTION(Tatiana, nullfunc);
+	ADD_CALLBACK_FUNCTION(Tatiana, nullfunc);
+	ADD_CALLBACK_FUNCTION(Tatiana, nullfunc);
+	ADD_CALLBACK_FUNCTION(Tatiana, nullfunc);
+	ADD_CALLBACK_FUNCTION(Tatiana, nullfunc);
+	ADD_CALLBACK_FUNCTION(Tatiana, nullfunc);
+	ADD_CALLBACK_FUNCTION(Tatiana, nullfunc);
+	ADD_CALLBACK_FUNCTION(Tatiana, nullfunc);
+	ADD_CALLBACK_FUNCTION(Tatiana, nullfunc);
+	ADD_CALLBACK_FUNCTION(Tatiana, nullfunc);
+	ADD_CALLBACK_FUNCTION(Tatiana, chapter1);
+	ADD_CALLBACK_FUNCTION(Tatiana, nullfunc);
+	ADD_CALLBACK_FUNCTION(Tatiana, nullfunc);
+	ADD_CALLBACK_FUNCTION(Tatiana, nullfunc);
+	ADD_CALLBACK_FUNCTION(Tatiana, nullfunc);
+	ADD_CALLBACK_FUNCTION(Tatiana, nullfunc);
+	ADD_CALLBACK_FUNCTION(Tatiana, nullfunc);
+	ADD_CALLBACK_FUNCTION(Tatiana, nullfunc);	
+	ADD_CALLBACK_FUNCTION(Tatiana, chapter2);
+	ADD_CALLBACK_FUNCTION(Tatiana, nullfunc);
+	ADD_CALLBACK_FUNCTION(Tatiana, nullfunc);
+	ADD_CALLBACK_FUNCTION(Tatiana, nullfunc);
+	ADD_CALLBACK_FUNCTION(Tatiana, nullfunc);
+	ADD_CALLBACK_FUNCTION(Tatiana, nullfunc);	
+	ADD_CALLBACK_FUNCTION(Tatiana, chapter3);
+	ADD_CALLBACK_FUNCTION(Tatiana, nullfunc);
+	ADD_CALLBACK_FUNCTION(Tatiana, nullfunc);
+	ADD_CALLBACK_FUNCTION(Tatiana, nullfunc);
+	ADD_CALLBACK_FUNCTION(Tatiana, nullfunc);
+	ADD_CALLBACK_FUNCTION(Tatiana, nullfunc);
+	ADD_CALLBACK_FUNCTION(Tatiana, nullfunc);
+	ADD_CALLBACK_FUNCTION(Tatiana, nullfunc);
+	ADD_CALLBACK_FUNCTION(Tatiana, nullfunc);
+	ADD_CALLBACK_FUNCTION(Tatiana, nullfunc);
+	ADD_CALLBACK_FUNCTION(Tatiana, nullfunc);
+	ADD_CALLBACK_FUNCTION(Tatiana, nullfunc);
+	ADD_CALLBACK_FUNCTION(Tatiana, chapter4);
+	ADD_CALLBACK_FUNCTION(Tatiana, nullfunc);
+	ADD_CALLBACK_FUNCTION(Tatiana, nullfunc);
+	ADD_CALLBACK_FUNCTION(Tatiana, nullfunc);
+	ADD_CALLBACK_FUNCTION(Tatiana, nullfunc);
+	ADD_CALLBACK_FUNCTION(Tatiana, nullfunc);
+	ADD_CALLBACK_FUNCTION(Tatiana, nullfunc);
+	ADD_CALLBACK_FUNCTION(Tatiana, nullfunc);
+	ADD_CALLBACK_FUNCTION(Tatiana, nullfunc);
+	ADD_CALLBACK_FUNCTION(Tatiana, chapter5);
+	ADD_CALLBACK_FUNCTION(Tatiana, nullfunc);
+	ADD_CALLBACK_FUNCTION(Tatiana, nullfunc);
+	ADD_CALLBACK_FUNCTION(Tatiana, nullfunc);
 }
 
 void Tatiana::nullfunc(SavePoints::SavePoint *savepoint) {
 	error("Tatiana: callback function not implemented!");
 }
 
-void Tatiana::chapter1(SavePoints::SavePoint *savepoint) {
+IMPLEMENT_FUNCTION(Tatiana, chapter1, 17) {
 	switch (savepoint->action) {
 	default:
 		break;
@@ -121,16 +124,16 @@ void Tatiana::chapter1(SavePoints::SavePoint *savepoint) {
 	}
 }
 
-void Tatiana::chapter2(SavePoints::SavePoint *savepoint) {
+IMPLEMENT_FUNCTION(Tatiana, chapter2, 25) {
 }
 
-void Tatiana::chapter3(SavePoints::SavePoint *savepoint) {
+IMPLEMENT_FUNCTION(Tatiana, chapter3, 31) {
 }
 
-void Tatiana::chapter4(SavePoints::SavePoint *savepoint) {
+IMPLEMENT_FUNCTION(Tatiana, chapter4, 43) {
 }
 
-void Tatiana::chapter5(SavePoints::SavePoint *savepoint) {
+IMPLEMENT_FUNCTION(Tatiana, chapter5, 52) {
 }
 
 } // End of namespace LastExpress

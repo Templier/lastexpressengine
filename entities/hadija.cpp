@@ -25,56 +25,60 @@
 
 #include "lastexpress/entities/hadija.h"
 
-#include "lastexpress/game/object.h"
+#include "lastexpress/game/savepoint.h"
+#include "lastexpress/game/state.h"
 
+#include "lastexpress/lastexpress.h"
 #include "lastexpress/helpers.h"
 
 namespace LastExpress {
 
 Hadija::Hadija(LastExpressEngine *engine) : Entity(engine, SavePoints::kHadija) {
-	CALLBACK_FUNCTION(Hadija, nullfunc);
-	CALLBACK_FUNCTION(Hadija, nullfunc);
-	CALLBACK_FUNCTION(Hadija, nullfunc);
-	CALLBACK_FUNCTION(Hadija, nullfunc);
-	CALLBACK_FUNCTION(Hadija, nullfunc);
-	CALLBACK_FUNCTION(Hadija, nullfunc);
-	CALLBACK_FUNCTION(Hadija, nullfunc);
-	CALLBACK_FUNCTION(Hadija, nullfunc);
-	CALLBACK_FUNCTION(Hadija, nullfunc);
-	CALLBACK_FUNCTION(Hadija, chapter1);
-	CALLBACK_FUNCTION(Hadija, nullfunc);
-	CALLBACK_FUNCTION(Hadija, nullfunc);
-	CALLBACK_FUNCTION(Hadija, chapter2);
-	CALLBACK_FUNCTION(Hadija, nullfunc);
-	CALLBACK_FUNCTION(Hadija, chapter3);
-	CALLBACK_FUNCTION(Hadija, nullfunc);
-	CALLBACK_FUNCTION(Hadija, chapter4);
-	CALLBACK_FUNCTION(Hadija, nullfunc);
-	CALLBACK_FUNCTION(Hadija, nullfunc);
-	CALLBACK_FUNCTION(Hadija, chapter5);
-	CALLBACK_FUNCTION(Hadija, nullfunc);
-	CALLBACK_FUNCTION(Hadija, nullfunc);
-	CALLBACK_FUNCTION(Hadija, nullfunc);
-	CALLBACK_FUNCTION_NULL();
+	ADD_CALLBACK_FUNCTION(Hadija, nullfunc);
+	ADD_CALLBACK_FUNCTION(Hadija, nullfunc);
+	ADD_CALLBACK_FUNCTION(Hadija, nullfunc);
+	ADD_CALLBACK_FUNCTION(Hadija, nullfunc);
+	ADD_CALLBACK_FUNCTION(Hadija, nullfunc);
+	ADD_CALLBACK_FUNCTION(Hadija, nullfunc);
+	ADD_CALLBACK_FUNCTION(Hadija, nullfunc);
+	ADD_CALLBACK_FUNCTION(Hadija, nullfunc);
+	ADD_CALLBACK_FUNCTION(Hadija, nullfunc);
+	ADD_CALLBACK_FUNCTION(Hadija, chapter1);
+	ADD_CALLBACK_FUNCTION(Hadija, nullfunc);
+	ADD_CALLBACK_FUNCTION(Hadija, nullfunc);
+	ADD_CALLBACK_FUNCTION(Hadija, chapter2);
+	ADD_CALLBACK_FUNCTION(Hadija, nullfunc);
+	ADD_CALLBACK_FUNCTION(Hadija, chapter3);
+	ADD_CALLBACK_FUNCTION(Hadija, nullfunc);
+	ADD_CALLBACK_FUNCTION(Hadija, chapter4);
+	ADD_CALLBACK_FUNCTION(Hadija, nullfunc);
+	ADD_CALLBACK_FUNCTION(Hadija, nullfunc);
+	ADD_CALLBACK_FUNCTION(Hadija, chapter5);
+	ADD_CALLBACK_FUNCTION(Hadija, nullfunc);
+	ADD_CALLBACK_FUNCTION(Hadija, nullfunc);
+	ADD_CALLBACK_FUNCTION(Hadija, nullfunc);
+	ADD_NULL_FUNCTION();
 }
 
 void Hadija::nullfunc(SavePoints::SavePoint *savepoint) {
 	error("Hadija: callback function not implemented!");
 }
 
-void Hadija::chapter1(SavePoints::SavePoint *savepoint) {
+IMPLEMENT_FUNCTION(Hadija, chapter1, 10) {
 }
 
-void Hadija::chapter2(SavePoints::SavePoint *savepoint) {
+IMPLEMENT_FUNCTION(Hadija, chapter2, 13) {
 }
 
-void Hadija::chapter3(SavePoints::SavePoint *savepoint) {
+IMPLEMENT_FUNCTION(Hadija, chapter3, 15) {
 }
 
-void Hadija::chapter4(SavePoints::SavePoint *savepoint) {
+IMPLEMENT_FUNCTION(Hadija, chapter4, 17) {
 }
 
-void Hadija::chapter5(SavePoints::SavePoint *savepoint) {
+IMPLEMENT_FUNCTION(Hadija, chapter5, 20) {
 }
+
+IMPLEMENT_NULL_FUNCTION(Hadija, 24)
 
 } // End of namespace LastExpress

@@ -25,54 +25,56 @@
 
 #include "lastexpress/entities/pascale.h"
 
-#include "lastexpress/game/object.h"
+#include "lastexpress/game/savepoint.h"
+#include "lastexpress/game/state.h"
 
+#include "lastexpress/lastexpress.h"
 #include "lastexpress/helpers.h"
 
 namespace LastExpress {
 
 Pascale::Pascale(LastExpressEngine *engine) : Entity(engine, SavePoints::kPascale) {
-	CALLBACK_FUNCTION(Pascale, nullfunc);
-	CALLBACK_FUNCTION(Pascale, nullfunc);
-	CALLBACK_FUNCTION(Pascale, nullfunc);
-	CALLBACK_FUNCTION(Pascale, nullfunc);
-	CALLBACK_FUNCTION(Pascale, nullfunc);
-	CALLBACK_FUNCTION(Pascale, nullfunc);
-	CALLBACK_FUNCTION(Pascale, nullfunc);
-	CALLBACK_FUNCTION(Pascale, nullfunc);
-	CALLBACK_FUNCTION(Pascale, nullfunc);
-	CALLBACK_FUNCTION(Pascale, nullfunc);
-	CALLBACK_FUNCTION(Pascale, nullfunc);
-	CALLBACK_FUNCTION(Pascale, chapter1);
-	CALLBACK_FUNCTION(Pascale, nullfunc);
-	CALLBACK_FUNCTION(Pascale, nullfunc);
-	CALLBACK_FUNCTION(Pascale, nullfunc);
-	CALLBACK_FUNCTION(Pascale, nullfunc);
-	CALLBACK_FUNCTION(Pascale, nullfunc);
-	CALLBACK_FUNCTION(Pascale, nullfunc);
-	CALLBACK_FUNCTION(Pascale, nullfunc);
-	CALLBACK_FUNCTION(Pascale, chapter2);
-	CALLBACK_FUNCTION(Pascale, chapter3);
-	CALLBACK_FUNCTION(Pascale, nullfunc);
-	CALLBACK_FUNCTION(Pascale, nullfunc);
-	CALLBACK_FUNCTION(Pascale, nullfunc);
-	CALLBACK_FUNCTION(Pascale, chapter4);
-	CALLBACK_FUNCTION(Pascale, nullfunc);
-	CALLBACK_FUNCTION(Pascale, nullfunc);
-	CALLBACK_FUNCTION(Pascale, nullfunc);
-	CALLBACK_FUNCTION(Pascale, nullfunc);
-	CALLBACK_FUNCTION(Pascale, nullfunc);
-	CALLBACK_FUNCTION(Pascale, chapter5);
-	CALLBACK_FUNCTION(Pascale, nullfunc);
-	CALLBACK_FUNCTION(Pascale, nullfunc);
-	CALLBACK_FUNCTION_NULL();
+	ADD_CALLBACK_FUNCTION(Pascale, nullfunc);
+	ADD_CALLBACK_FUNCTION(Pascale, nullfunc);
+	ADD_CALLBACK_FUNCTION(Pascale, nullfunc);
+	ADD_CALLBACK_FUNCTION(Pascale, nullfunc);
+	ADD_CALLBACK_FUNCTION(Pascale, nullfunc);
+	ADD_CALLBACK_FUNCTION(Pascale, nullfunc);
+	ADD_CALLBACK_FUNCTION(Pascale, nullfunc);
+	ADD_CALLBACK_FUNCTION(Pascale, nullfunc);
+	ADD_CALLBACK_FUNCTION(Pascale, nullfunc);
+	ADD_CALLBACK_FUNCTION(Pascale, nullfunc);
+	ADD_CALLBACK_FUNCTION(Pascale, nullfunc);
+	ADD_CALLBACK_FUNCTION(Pascale, chapter1);
+	ADD_CALLBACK_FUNCTION(Pascale, nullfunc);
+	ADD_CALLBACK_FUNCTION(Pascale, nullfunc);
+	ADD_CALLBACK_FUNCTION(Pascale, nullfunc);
+	ADD_CALLBACK_FUNCTION(Pascale, nullfunc);
+	ADD_CALLBACK_FUNCTION(Pascale, nullfunc);
+	ADD_CALLBACK_FUNCTION(Pascale, nullfunc);
+	ADD_CALLBACK_FUNCTION(Pascale, nullfunc);
+	ADD_CALLBACK_FUNCTION(Pascale, chapter2);
+	ADD_CALLBACK_FUNCTION(Pascale, chapter3);
+	ADD_CALLBACK_FUNCTION(Pascale, nullfunc);
+	ADD_CALLBACK_FUNCTION(Pascale, nullfunc);
+	ADD_CALLBACK_FUNCTION(Pascale, nullfunc);
+	ADD_CALLBACK_FUNCTION(Pascale, chapter4);
+	ADD_CALLBACK_FUNCTION(Pascale, nullfunc);
+	ADD_CALLBACK_FUNCTION(Pascale, nullfunc);
+	ADD_CALLBACK_FUNCTION(Pascale, nullfunc);
+	ADD_CALLBACK_FUNCTION(Pascale, nullfunc);
+	ADD_CALLBACK_FUNCTION(Pascale, nullfunc);
+	ADD_CALLBACK_FUNCTION(Pascale, chapter5);
+	ADD_CALLBACK_FUNCTION(Pascale, nullfunc);
+	ADD_CALLBACK_FUNCTION(Pascale, nullfunc);
+	ADD_NULL_FUNCTION();
 }
 
 void Pascale::nullfunc(SavePoints::SavePoint *savepoint) {
 	error("Pascale: callback function not implemented!");
 }
 
-void Pascale::chapter1(SavePoints::SavePoint *savepoint) {
+IMPLEMENT_FUNCTION(Pascale, chapter1, 12) {
 	switch (savepoint->action) {
 	default:
 		break;
@@ -101,16 +103,18 @@ void Pascale::chapter1(SavePoints::SavePoint *savepoint) {
 	}
 }
 
-void Pascale::chapter2(SavePoints::SavePoint *savepoint) {
+IMPLEMENT_FUNCTION(Pascale, chapter2, 20) {
 }
 
-void Pascale::chapter3(SavePoints::SavePoint *savepoint) {
+IMPLEMENT_FUNCTION(Pascale, chapter3, 21) {
 }
 
-void Pascale::chapter4(SavePoints::SavePoint *savepoint) {
+IMPLEMENT_FUNCTION(Pascale, chapter4, 25) {
 }
 
-void Pascale::chapter5(SavePoints::SavePoint *savepoint) {
+IMPLEMENT_FUNCTION(Pascale, chapter5, 31) {
 }
+
+IMPLEMENT_NULL_FUNCTION(Pascale, 34)
 
 } // End of namespace LastExpress

@@ -26,100 +26,103 @@
 #include "lastexpress/entities/anna.h"
 
 #include "lastexpress/game/object.h"
+#include "lastexpress/game/savepoint.h"
+#include "lastexpress/game/state.h"
 
 #include "lastexpress/helpers.h"
+#include "lastexpress/lastexpress.h"
 
 namespace LastExpress {
 
 Anna::Anna(LastExpressEngine *engine) : Entity(engine, SavePoints::kAnna) {
-	CALLBACK_FUNCTION(Anna, nullfunc);
-	CALLBACK_FUNCTION(Anna, nullfunc);
-	CALLBACK_FUNCTION(Anna, nullfunc);
-	CALLBACK_FUNCTION(Anna, nullfunc);
-	CALLBACK_FUNCTION(Anna, nullfunc);
-	CALLBACK_FUNCTION(Anna, nullfunc);
-	CALLBACK_FUNCTION(Anna, nullfunc);
-	CALLBACK_FUNCTION(Anna, nullfunc);
-	CALLBACK_FUNCTION(Anna, nullfunc);
-	CALLBACK_FUNCTION(Anna, nullfunc);
-	CALLBACK_FUNCTION(Anna, nullfunc);
-	CALLBACK_FUNCTION(Anna, nullfunc);
-	CALLBACK_FUNCTION(Anna, nullfunc);
-	CALLBACK_FUNCTION(Anna, nullfunc);
-	CALLBACK_FUNCTION(Anna, nullfunc);
-	CALLBACK_FUNCTION(Anna, chapter1);
-	CALLBACK_FUNCTION(Anna, nullfunc);
-	CALLBACK_FUNCTION(Anna, nullfunc);
-	CALLBACK_FUNCTION(Anna, nullfunc);
-	CALLBACK_FUNCTION(Anna, nullfunc);
-	CALLBACK_FUNCTION(Anna, nullfunc);
-	CALLBACK_FUNCTION(Anna, nullfunc);
-	CALLBACK_FUNCTION(Anna, nullfunc);
-	CALLBACK_FUNCTION(Anna, nullfunc);
-	CALLBACK_FUNCTION(Anna, nullfunc);
-	CALLBACK_FUNCTION(Anna, nullfunc);
-	CALLBACK_FUNCTION(Anna, nullfunc);
-	CALLBACK_FUNCTION(Anna, nullfunc);
-	CALLBACK_FUNCTION(Anna, nullfunc);
-	CALLBACK_FUNCTION(Anna, nullfunc);
-	CALLBACK_FUNCTION(Anna, nullfunc);
-	CALLBACK_FUNCTION(Anna, nullfunc);
-	CALLBACK_FUNCTION(Anna, nullfunc);
-	CALLBACK_FUNCTION(Anna, nullfunc);
-	CALLBACK_FUNCTION(Anna, nullfunc);
-	CALLBACK_FUNCTION(Anna, nullfunc);
-	CALLBACK_FUNCTION(Anna, nullfunc);
-	CALLBACK_FUNCTION(Anna, nullfunc);
-	CALLBACK_FUNCTION(Anna, nullfunc);
-	CALLBACK_FUNCTION(Anna, nullfunc);
-	CALLBACK_FUNCTION(Anna, nullfunc);
-	CALLBACK_FUNCTION(Anna, chapter2);
-	CALLBACK_FUNCTION(Anna, nullfunc);
-	CALLBACK_FUNCTION(Anna, chapter3);
-	CALLBACK_FUNCTION(Anna, nullfunc);
-	CALLBACK_FUNCTION(Anna, nullfunc);
-	CALLBACK_FUNCTION(Anna, nullfunc);
-	CALLBACK_FUNCTION(Anna, nullfunc);
-	CALLBACK_FUNCTION(Anna, nullfunc);
-	CALLBACK_FUNCTION(Anna, nullfunc);
-	CALLBACK_FUNCTION(Anna, nullfunc);
-	CALLBACK_FUNCTION(Anna, nullfunc);
-	CALLBACK_FUNCTION(Anna, nullfunc);
-	CALLBACK_FUNCTION(Anna, nullfunc);
-	CALLBACK_FUNCTION(Anna, nullfunc);
-	CALLBACK_FUNCTION(Anna, nullfunc);
-	CALLBACK_FUNCTION(Anna, nullfunc);
-	CALLBACK_FUNCTION(Anna, nullfunc);
-	CALLBACK_FUNCTION(Anna, nullfunc);
-	CALLBACK_FUNCTION(Anna, nullfunc);
-	CALLBACK_FUNCTION(Anna, nullfunc);
-	CALLBACK_FUNCTION(Anna, nullfunc);
-	CALLBACK_FUNCTION(Anna, nullfunc);
-	CALLBACK_FUNCTION(Anna, nullfunc);
-	CALLBACK_FUNCTION(Anna, nullfunc);
-	CALLBACK_FUNCTION(Anna, chapter4);
-	CALLBACK_FUNCTION(Anna, nullfunc);
-	CALLBACK_FUNCTION(Anna, nullfunc);
-	CALLBACK_FUNCTION(Anna, nullfunc);
-	CALLBACK_FUNCTION(Anna, nullfunc);
-	CALLBACK_FUNCTION(Anna, nullfunc);
-	CALLBACK_FUNCTION(Anna, nullfunc);
-	CALLBACK_FUNCTION(Anna, nullfunc);
-	CALLBACK_FUNCTION(Anna, chapter5);
-	CALLBACK_FUNCTION(Anna, nullfunc);
-	CALLBACK_FUNCTION(Anna, nullfunc);
-	CALLBACK_FUNCTION(Anna, nullfunc);
-	CALLBACK_FUNCTION(Anna, nullfunc);
-	CALLBACK_FUNCTION(Anna, nullfunc);
-	CALLBACK_FUNCTION(Anna, nullfunc);
-	CALLBACK_FUNCTION(Anna, nullfunc);
+	ADD_CALLBACK_FUNCTION(Anna, nullfunc);
+	ADD_CALLBACK_FUNCTION(Anna, nullfunc);
+	ADD_CALLBACK_FUNCTION(Anna, nullfunc);
+	ADD_CALLBACK_FUNCTION(Anna, nullfunc);
+	ADD_CALLBACK_FUNCTION(Anna, nullfunc);
+	ADD_CALLBACK_FUNCTION(Anna, nullfunc);
+	ADD_CALLBACK_FUNCTION(Anna, nullfunc);
+	ADD_CALLBACK_FUNCTION(Anna, nullfunc);
+	ADD_CALLBACK_FUNCTION(Anna, nullfunc);
+	ADD_CALLBACK_FUNCTION(Anna, nullfunc);
+	ADD_CALLBACK_FUNCTION(Anna, nullfunc);
+	ADD_CALLBACK_FUNCTION(Anna, nullfunc);
+	ADD_CALLBACK_FUNCTION(Anna, nullfunc);
+	ADD_CALLBACK_FUNCTION(Anna, nullfunc);
+	ADD_CALLBACK_FUNCTION(Anna, nullfunc);
+	ADD_CALLBACK_FUNCTION(Anna, chapter1);
+	ADD_CALLBACK_FUNCTION(Anna, nullfunc);
+	ADD_CALLBACK_FUNCTION(Anna, nullfunc);
+	ADD_CALLBACK_FUNCTION(Anna, nullfunc);
+	ADD_CALLBACK_FUNCTION(Anna, nullfunc);
+	ADD_CALLBACK_FUNCTION(Anna, nullfunc);
+	ADD_CALLBACK_FUNCTION(Anna, nullfunc);
+	ADD_CALLBACK_FUNCTION(Anna, nullfunc);
+	ADD_CALLBACK_FUNCTION(Anna, nullfunc);
+	ADD_CALLBACK_FUNCTION(Anna, nullfunc);
+	ADD_CALLBACK_FUNCTION(Anna, nullfunc);
+	ADD_CALLBACK_FUNCTION(Anna, nullfunc);
+	ADD_CALLBACK_FUNCTION(Anna, nullfunc);
+	ADD_CALLBACK_FUNCTION(Anna, nullfunc);
+	ADD_CALLBACK_FUNCTION(Anna, nullfunc);
+	ADD_CALLBACK_FUNCTION(Anna, nullfunc);
+	ADD_CALLBACK_FUNCTION(Anna, nullfunc);
+	ADD_CALLBACK_FUNCTION(Anna, nullfunc);
+	ADD_CALLBACK_FUNCTION(Anna, nullfunc);
+	ADD_CALLBACK_FUNCTION(Anna, nullfunc);
+	ADD_CALLBACK_FUNCTION(Anna, nullfunc);
+	ADD_CALLBACK_FUNCTION(Anna, nullfunc);
+	ADD_CALLBACK_FUNCTION(Anna, nullfunc);
+	ADD_CALLBACK_FUNCTION(Anna, nullfunc);
+	ADD_CALLBACK_FUNCTION(Anna, nullfunc);
+	ADD_CALLBACK_FUNCTION(Anna, nullfunc);
+	ADD_CALLBACK_FUNCTION(Anna, chapter2);
+	ADD_CALLBACK_FUNCTION(Anna, nullfunc);
+	ADD_CALLBACK_FUNCTION(Anna, chapter3);
+	ADD_CALLBACK_FUNCTION(Anna, nullfunc);
+	ADD_CALLBACK_FUNCTION(Anna, nullfunc);
+	ADD_CALLBACK_FUNCTION(Anna, nullfunc);
+	ADD_CALLBACK_FUNCTION(Anna, nullfunc);
+	ADD_CALLBACK_FUNCTION(Anna, nullfunc);
+	ADD_CALLBACK_FUNCTION(Anna, nullfunc);
+	ADD_CALLBACK_FUNCTION(Anna, nullfunc);
+	ADD_CALLBACK_FUNCTION(Anna, nullfunc);
+	ADD_CALLBACK_FUNCTION(Anna, nullfunc);
+	ADD_CALLBACK_FUNCTION(Anna, nullfunc);
+	ADD_CALLBACK_FUNCTION(Anna, nullfunc);
+	ADD_CALLBACK_FUNCTION(Anna, nullfunc);
+	ADD_CALLBACK_FUNCTION(Anna, nullfunc);
+	ADD_CALLBACK_FUNCTION(Anna, nullfunc);
+	ADD_CALLBACK_FUNCTION(Anna, nullfunc);
+	ADD_CALLBACK_FUNCTION(Anna, nullfunc);
+	ADD_CALLBACK_FUNCTION(Anna, nullfunc);
+	ADD_CALLBACK_FUNCTION(Anna, nullfunc);
+	ADD_CALLBACK_FUNCTION(Anna, nullfunc);
+	ADD_CALLBACK_FUNCTION(Anna, nullfunc);
+	ADD_CALLBACK_FUNCTION(Anna, nullfunc);
+	ADD_CALLBACK_FUNCTION(Anna, chapter4);
+	ADD_CALLBACK_FUNCTION(Anna, nullfunc);
+	ADD_CALLBACK_FUNCTION(Anna, nullfunc);
+	ADD_CALLBACK_FUNCTION(Anna, nullfunc);
+	ADD_CALLBACK_FUNCTION(Anna, nullfunc);
+	ADD_CALLBACK_FUNCTION(Anna, nullfunc);
+	ADD_CALLBACK_FUNCTION(Anna, nullfunc);
+	ADD_CALLBACK_FUNCTION(Anna, nullfunc);
+	ADD_CALLBACK_FUNCTION(Anna, chapter5);
+	ADD_CALLBACK_FUNCTION(Anna, nullfunc);
+	ADD_CALLBACK_FUNCTION(Anna, nullfunc);
+	ADD_CALLBACK_FUNCTION(Anna, nullfunc);
+	ADD_CALLBACK_FUNCTION(Anna, nullfunc);
+	ADD_CALLBACK_FUNCTION(Anna, nullfunc);
+	ADD_CALLBACK_FUNCTION(Anna, nullfunc);
+	ADD_CALLBACK_FUNCTION(Anna, nullfunc);
 }
 
 void Anna::nullfunc(SavePoints::SavePoint *savepoint) {
 	error("Anna: callback function not implemented!");
 }
 
-void Anna::chapter1(SavePoints::SavePoint *savepoint) {
+IMPLEMENT_FUNCTION(Anna, chapter1, 16) {
 	switch (savepoint->action) {
 	default:
 		break;
@@ -149,16 +152,16 @@ void Anna::chapter1(SavePoints::SavePoint *savepoint) {
 	}
 }
 
-void Anna::chapter2(SavePoints::SavePoint *savepoint) {
+IMPLEMENT_FUNCTION(Anna, chapter2, 42) {
 }
 
-void Anna::chapter3(SavePoints::SavePoint *savepoint) {
+IMPLEMENT_FUNCTION(Anna, chapter3, 44) {
 }
 
-void Anna::chapter4(SavePoints::SavePoint *savepoint) {
+IMPLEMENT_FUNCTION(Anna, chapter4, 66) {
 }
 
-void Anna::chapter5(SavePoints::SavePoint *savepoint) {
+IMPLEMENT_FUNCTION(Anna, chapter5, 74) {
 }
 
 } // End of namespace LastExpress

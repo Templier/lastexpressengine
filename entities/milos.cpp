@@ -26,54 +26,57 @@
 #include "lastexpress/entities/milos.h"
 
 #include "lastexpress/game/object.h"
+#include "lastexpress/game/savepoint.h"
+#include "lastexpress/game/state.h"
 
+#include "lastexpress/lastexpress.h"
 #include "lastexpress/helpers.h"
 
 namespace LastExpress {
 
 Milos::Milos(LastExpressEngine *engine) : Entity(engine, SavePoints::kMilos) {
-	CALLBACK_FUNCTION(Milos, nullfunc);
-	CALLBACK_FUNCTION(Milos, nullfunc);
-	CALLBACK_FUNCTION(Milos, nullfunc);
-	CALLBACK_FUNCTION(Milos, nullfunc);
-	CALLBACK_FUNCTION(Milos, nullfunc);
-	CALLBACK_FUNCTION(Milos, nullfunc);
-	CALLBACK_FUNCTION(Milos, nullfunc);
-	CALLBACK_FUNCTION(Milos, nullfunc);
-	CALLBACK_FUNCTION(Milos, nullfunc);
-	CALLBACK_FUNCTION(Milos, nullfunc);
-	CALLBACK_FUNCTION(Milos, nullfunc);
-	CALLBACK_FUNCTION(Milos, chapter1);
-	CALLBACK_FUNCTION(Milos, nullfunc);
-	CALLBACK_FUNCTION(Milos, nullfunc);
-	CALLBACK_FUNCTION(Milos, nullfunc);
-	CALLBACK_FUNCTION(Milos, nullfunc);
-	CALLBACK_FUNCTION(Milos, nullfunc);
-	CALLBACK_FUNCTION(Milos, nullfunc);
-	CALLBACK_FUNCTION(Milos, chapter2);
-	CALLBACK_FUNCTION(Milos, nullfunc);
-	CALLBACK_FUNCTION(Milos, nullfunc);
-	CALLBACK_FUNCTION(Milos, chapter3);
-	CALLBACK_FUNCTION(Milos, nullfunc);
-	CALLBACK_FUNCTION(Milos, nullfunc);
-	CALLBACK_FUNCTION(Milos, nullfunc);
-	CALLBACK_FUNCTION(Milos, nullfunc);
-	CALLBACK_FUNCTION(Milos, nullfunc);
-	CALLBACK_FUNCTION(Milos, chapter4);
-	CALLBACK_FUNCTION(Milos, nullfunc);
-	CALLBACK_FUNCTION(Milos, nullfunc);
-	CALLBACK_FUNCTION(Milos, nullfunc);
-	CALLBACK_FUNCTION(Milos, nullfunc);
-	CALLBACK_FUNCTION(Milos, chapter5);
-	CALLBACK_FUNCTION(Milos, nullfunc);
-	CALLBACK_FUNCTION(Milos, nullfunc);
+	ADD_CALLBACK_FUNCTION(Milos, nullfunc);
+	ADD_CALLBACK_FUNCTION(Milos, nullfunc);
+	ADD_CALLBACK_FUNCTION(Milos, nullfunc);
+	ADD_CALLBACK_FUNCTION(Milos, nullfunc);
+	ADD_CALLBACK_FUNCTION(Milos, nullfunc);
+	ADD_CALLBACK_FUNCTION(Milos, nullfunc);
+	ADD_CALLBACK_FUNCTION(Milos, nullfunc);
+	ADD_CALLBACK_FUNCTION(Milos, nullfunc);
+	ADD_CALLBACK_FUNCTION(Milos, nullfunc);
+	ADD_CALLBACK_FUNCTION(Milos, nullfunc);
+	ADD_CALLBACK_FUNCTION(Milos, nullfunc);
+	ADD_CALLBACK_FUNCTION(Milos, chapter1);
+	ADD_CALLBACK_FUNCTION(Milos, nullfunc);
+	ADD_CALLBACK_FUNCTION(Milos, nullfunc);
+	ADD_CALLBACK_FUNCTION(Milos, nullfunc);
+	ADD_CALLBACK_FUNCTION(Milos, nullfunc);
+	ADD_CALLBACK_FUNCTION(Milos, nullfunc);
+	ADD_CALLBACK_FUNCTION(Milos, nullfunc);
+	ADD_CALLBACK_FUNCTION(Milos, chapter2);
+	ADD_CALLBACK_FUNCTION(Milos, nullfunc);
+	ADD_CALLBACK_FUNCTION(Milos, nullfunc);
+	ADD_CALLBACK_FUNCTION(Milos, chapter3);
+	ADD_CALLBACK_FUNCTION(Milos, nullfunc);
+	ADD_CALLBACK_FUNCTION(Milos, nullfunc);
+	ADD_CALLBACK_FUNCTION(Milos, nullfunc);
+	ADD_CALLBACK_FUNCTION(Milos, nullfunc);
+	ADD_CALLBACK_FUNCTION(Milos, nullfunc);
+	ADD_CALLBACK_FUNCTION(Milos, chapter4);
+	ADD_CALLBACK_FUNCTION(Milos, nullfunc);
+	ADD_CALLBACK_FUNCTION(Milos, nullfunc);
+	ADD_CALLBACK_FUNCTION(Milos, nullfunc);
+	ADD_CALLBACK_FUNCTION(Milos, nullfunc);
+	ADD_CALLBACK_FUNCTION(Milos, chapter5);
+	ADD_CALLBACK_FUNCTION(Milos, nullfunc);
+	ADD_CALLBACK_FUNCTION(Milos, nullfunc);
 }
 
 void Milos::nullfunc(SavePoints::SavePoint *savepoint) {
 	error("Milos: callback function not implemented!");
 }
 
-void Milos::chapter1(SavePoints::SavePoint *savepoint) {
+IMPLEMENT_FUNCTION(Milos, chapter1, 12) {
 	switch (savepoint->action) {
 	default:
 		break;
@@ -101,16 +104,16 @@ void Milos::chapter1(SavePoints::SavePoint *savepoint) {
 	}
 }
 
-void Milos::chapter2(SavePoints::SavePoint *savepoint) {
+IMPLEMENT_FUNCTION(Milos, chapter2, 19) {
 }
 
-void Milos::chapter3(SavePoints::SavePoint *savepoint) {
+IMPLEMENT_FUNCTION(Milos, chapter3, 22) {
 }
 
-void Milos::chapter4(SavePoints::SavePoint *savepoint) {
+IMPLEMENT_FUNCTION(Milos, chapter4, 28) {
 }
 
-void Milos::chapter5(SavePoints::SavePoint *savepoint) {
+IMPLEMENT_FUNCTION(Milos, chapter5, 33) {
 }
 
 } // End of namespace LastExpress

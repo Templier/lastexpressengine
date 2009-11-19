@@ -45,29 +45,29 @@ Entity::~Entity() {
 		delete _callbacks[i];
 }
 
-void Entity::setup(Logic::ChapterIndex index) {
+void Entity::setup(State::ChapterIndex index) {
 	switch(index) {
-	case Logic::kCustom:
+	case State::kCustom:
 		getSavePoints()->setCallback(_entityIndex, _callbacks[_data.callbacks[_data.current_call]]);
 		break;
 
-	case Logic::kChapter1:
+	case State::kChapter1:
 		setup_chapter1();
 		break;
 
-	case Logic::kChapter2:
+	case State::kChapter2:
 		setup_chapter2();
 		break;
 
-	case Logic::kChapter3:
+	case State::kChapter3:
 		setup_chapter3();
 		break;
 
-	case Logic::kChapter4:
+	case State::kChapter4:
 		setup_chapter4();
 		break;
 
-	case Logic::kChapter5:
+	case State::kChapter5:
 		setup_chapter5();
 		break;
 

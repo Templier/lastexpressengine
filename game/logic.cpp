@@ -37,7 +37,6 @@
 #include "lastexpress/game/inventory.h"
 #include "lastexpress/game/menu.h"
 #include "lastexpress/game/object.h"
-#include "lastexpress/game/savepoint.h"
 #include "lastexpress/game/sound.h"
 
 #include "lastexpress/graphics.h"
@@ -48,13 +47,10 @@
 
 namespace LastExpress {
 
-Logic::Logic(LastExpressEngine *engine) : _engine(engine), _scene(NULL), _gameState(NULL) {
+Logic::Logic(LastExpressEngine *engine) : _engine(engine), _scene(NULL) {
 	_action = new Action(engine);
-	_menu = new Menu(engine);
-	_inventory = new Inventory(engine);
-	_sound = new Sound(engine);
-	_savepoints = new SavePoints(engine);
-	_objects = new Objects(engine);
+	_menu = new Menu(engine);	
+	_sound = new Sound(engine);	
 	_beetle = new Beetle(engine);
 	_entities = new Entities(engine);
 }
@@ -63,9 +59,6 @@ Logic::~Logic() {
 	delete _action;
 	delete _beetle;
 	delete _sound;
-	delete _objects;
-	delete _gameState;
-	delete _inventory;
 	delete _menu;	
 	delete _scene;
 }
@@ -76,12 +69,9 @@ Logic::~Logic() {
 
 void Logic::startGame() {
 	// Init data
-	_inventory->init();
+	getInventory()->init();
 
-	delete _gameState;
-	_gameState = new GameState();
-
-	_entities->setup(kChapter1);
+	_entities->setup(State::kChapter1);
 
 	showMenu(false);
 	loadScene(1018);
@@ -91,7 +81,7 @@ void Logic::startGame() {
 	_engine->getCursor()->setStyle(Cursor::kCursorNormal);
 	_engine->getCursor()->show(true);
 
-	_inventory->show(true);
+	getInventory()->show(true);
 
 	askForRedraw();
 }
@@ -100,17 +90,17 @@ void Logic::startGame() {
 void Logic::showMenu(bool visible) {
 
 	if (!visible) {
-		_inventory->show(true);
+		getInventory()->show(true);
 		_runState.showingMenu = false;
 		return;
 	}
 
 	// Hide inventory
-	_inventory->show(false);
+	getInventory()->show(false);
 
 	// TODO: load scene and set current scene
 	_runState.showingMenu = true;
-	_gameState->scene = _menu->getSceneIndex();
+	getState()->scene = _menu->getSceneIndex();
 	_menu->showMenu();
 
 	// TODO reset showingMenu to false when starting/returning to a game and show inventory
@@ -141,7 +131,7 @@ void Logic::switchGame() {
 	//////////////////////////////////////////////////////////////////////////
 	// HACK for debug
 	if (_runState.gameId == kGameBlue) {
-		_gameState->time = 2383200;
+		getState()->time = 2383200;
 		_runState.gameStarted = true;
 	}
 	//////////////////////////////////////////////////////////////////////////
@@ -172,7 +162,7 @@ bool Logic::handleMouseEvent(Common::Event ev) {
 		return _menu->handleStartMenuEvent(ev);
 	}
 
-	if (_inventory->handleMouseEvent(ev))
+	if (getInventory()->handleMouseEvent(ev))
 		return true;
 
 	// Check hitbox & event from scene data
@@ -189,7 +179,7 @@ bool Logic::handleMouseEvent(Common::Event ev) {
 				setScene(hotspot->scene);
 
 			// Switch to next chapter if necessary
-			if (hotspot->action == SceneHotspot::kAction43 && hotspot->param1 == _gameState->progress.chapter)
+			if (hotspot->action == SceneHotspot::kAction43 && hotspot->param1 == getState()->progress.chapter)
 				switchChapter();
 		}
 	} else {
@@ -217,19 +207,19 @@ void Logic::setScene(uint32 index) {
 	delete _scene;
 	_scene = _engine->getScene(index); 
 	_engine->getGraphicsManager()->draw(_scene, GraphicsManager::kBackgroundC, true);
-	_gameState->scene = index;
+	getState()->scene = index;
 
 	// Update entities
-	Scene *scene = (_gameState->sceneUseBackup ? _engine->getScene(_gameState->sceneBackup) : _scene);
+	Scene *scene = (getState()->sceneUseBackup ? _engine->getScene(getState()->sceneBackup) : _scene);
 	
 	_entities->getEntityData(SavePoints::kNone)->field_491 = scene->getHeader()->count;
 	_entities->getEntityData(SavePoints::kNone)->field_495 = scene->getHeader()->field_13;
 
-	if (_gameState->sceneUseBackup)
+	if (getState()->sceneUseBackup)
 		delete scene;
 
-	_savepoints->pushAll(0, 17, 0);
-	_savepoints->process();
+	getSavePoints()->pushAll(0, 17, 0);
+	getSavePoints()->process();
 
 	// TODO test + 3 function calls that draw sequences
 
@@ -239,7 +229,7 @@ void Logic::setScene(uint32 index) {
 	_engine->_system->updateScreen();
 	_engine->_system->delayMillis(10);
 
-	postProcessScene(&_gameState->scene);
+	postProcessScene(&getState()->scene);
 }
 
 void Logic::processScene() {
@@ -268,10 +258,10 @@ void Logic::loadSceneFromData(int param1, int param2, int param3) {
 	}
 
 #define GET_ENTITY_LOCATION(scene) \
-	_objects->get(scene->getHeader()->param1).location
+	getObjects()->get(scene->getHeader()->param1).location
 
 #define GET_ITEM_LOCATION(scene, parameter) \
-	_inventory->getEntry((Inventory::InventoryItem)scene->getHeader()->parameter)->location
+	getInventory()->getEntry((Inventory::InventoryItem)scene->getHeader()->parameter)->location
 
 void Logic::preProcessScene(uint32 *index) {
 
@@ -358,7 +348,7 @@ void Logic::preProcessScene(uint32 *index) {
 		if (scene->getHotspots()->size() > 0) {
 			for (Common::Array<SceneHotspot *>::iterator it = scene->getHotspots()->begin(); it != scene->getHotspots()->end(); ++it) {
 
-				if (_objects->get(scene->getHeader()->param1).location == (*it)->location) {
+				if (getObjects()->get(scene->getHeader()->param1).location == (*it)->location) {
 					PROCESS_HOTSPOT_SCENE(*it, index);
 					found = true;
 					break;
@@ -393,14 +383,14 @@ void Logic::preProcessScene(uint32 *index) {
 		if (scene->getHeader()->param1 >= 16)
 			break;
 
-		warning("Logic::preProcessScene: unimplemented scene type (%02d)", scene->getHeader()->type);		
+		error("Logic::preProcessScene: unimplemented scene type (%02d)", scene->getHeader()->type);		
 		break;
 
 	case Scene::kType8:
 		if (scene->getHeader()->param1 >= 16)
 			break;
 
-		warning("Logic::preProcessScene: unsupported scene type (%02d)", scene->getHeader()->type);
+		error("Logic::preProcessScene: unsupported scene type (%02d)", scene->getHeader()->type);
 		break;
 
 	default:
@@ -428,23 +418,23 @@ void Logic::postProcessScene(uint32 *index) {
 	switch (scene->getHeader()->type) {
 	case Scene::kTypeList: {
 		// Adjust time
-		_gameState->time += (scene->getHeader()->param1 + 10) * _gameState->timeDelta;
-		_gameState->timeTicks += (scene->getHeader()->param1 + 10);
+		getState()->time += (scene->getHeader()->param1 + 10) * getState()->timeDelta;
+		getState()->timeTicks += (scene->getHeader()->param1 + 10);
 
 		// Some stuff related to menu?
 		
 		SceneHotspot *hotspot = scene->getHotspot(0);
 		_action->processHotspot(hotspot);
 
-		Scene *hotspotScene = _engine->getScene(hotspot->scene);
-		while (hotspotScene->getHeader()->type == 128) {
-			hotspot = hotspotScene->getHotspot(0);
-			_action->processHotspot(hotspot);
+		//Scene *hotspotScene = _engine->getScene(hotspot->scene);
+		//while (hotspotScene->getHeader()->type == 128) {
+		//	hotspot = hotspotScene->getHotspot(0);
+		//	_action->processHotspot(hotspot);
 
-			uint16 nextScene = hotspot->scene;
-			delete hotspotScene;
-			hotspotScene = _engine->getScene(nextScene);
-		}
+		//	uint16 nextScene = hotspot->scene;
+		//	delete hotspotScene;
+		//	hotspotScene = _engine->getScene(nextScene);
+		//}
 
 		// Some stuff related to entities (dialog Excuse me)
 
@@ -456,28 +446,28 @@ void Logic::postProcessScene(uint32 *index) {
 		
 	case Scene::kTypeSavePointChapter:
 		if (getProgress().field_18 == 2)
-			_savepoints->push(0, SavePoints::kChapters, 190346110, 0);
+			getSavePoints()->push(0, SavePoints::kChapters, 190346110, 0);
 		break;
 
 	case Scene::kTypeLoadBeetleSequences:
-		if ((getProgress().chapter == kChapter2 || getProgress().chapter == kChapter3)
-			&& _inventory->getEntry(Inventory::kBeetle)->location == 3) {
+		if ((getProgress().chapter == State::kChapter2 || getProgress().chapter == State::kChapter3)
+			&& getInventory()->getEntry(Inventory::kBeetle)->location == 3) {
 			if (!_beetle->isLoaded())
 				_beetle->load();
 		}		
 		break;
 
 	case Scene::kTypeGameOver:
-		if (_gameState->time >= 2418300 || getProgress().field_18 == 4)
+		if (getState()->time >= 2418300 || getProgress().field_18 == 4)
 			break;
 
 		playSfxStream("LIB050");
 		switch (getProgress().chapter) {
-		case kChapter1:
+		case State::kChapter1:
 			gameOver(0, 0, 62, 1);
 			break;
 
-		case kChapter4:
+		case State::kChapter4:
 			gameOver(0, 0, 64, 1);
 			break;
 
@@ -496,7 +486,7 @@ void Logic::postProcessScene(uint32 *index) {
 	}
 
 	case Scene::kType133:
-		warning("Logic::postProcessScene: unsupported scene type (%02d)", scene->getHeader()->type);
+		error("Logic::postProcessScene: unsupported scene type (%02d)", scene->getHeader()->type);
 		// TODO do some stuff with inventory
 		break;
 		
@@ -513,42 +503,42 @@ void Logic::postProcessScene(uint32 *index) {
 //////////////////////////////////////////////////////////////////////////
 
 bool Logic::isDayTime() {
-	return (_gameState->progress.chapter == kChapter1
-		 || _gameState->progress.chapter == kChapter4
-		 || (_gameState->progress.chapter == kChapter5 && _gameState->progress.is_nighttime));		
+	return (getState()->progress.chapter == State::kChapter1
+		 || getState()->progress.chapter == State::kChapter4
+		 || (getState()->progress.chapter == State::kChapter5 && getState()->progress.is_nighttime));		
 }
 
 void Logic::switchChapter() {
-	switch(_gameState->progress.chapter) {
+	switch(getState()->progress.chapter) {
 	default:
 		break;
 
-	case kChapter1:
-		_inventory->addItem(Inventory::kParchemin);
-		_inventory->addItem(Inventory::kMatchBox);
+	case State::kChapter1:
+		getInventory()->addItem(Inventory::kParchemin);
+		getInventory()->addItem(Inventory::kMatchBox);
 		// TODO call game logic
 		break;
 
-	case kChapter2:
-		_inventory->addItem(Inventory::kScarf);
+	case State::kChapter2:
+		getInventory()->addItem(Inventory::kScarf);
 		// TODO call game logic
 		break;
 
-	case kChapter3:
-		_inventory->getEntry(Inventory::kFirebird)->location = 4;
-		_inventory->getEntry(Inventory::kFirebird)->has_item = 0;
-		_inventory->getEntry(Inventory::kItem11)->location = 1; // ??
+	case State::kChapter3:
+		getInventory()->getEntry(Inventory::kFirebird)->location = 4;
+		getInventory()->getEntry(Inventory::kFirebird)->has_item = 0;
+		getInventory()->getEntry(Inventory::kItem11)->location = 1; // ??
 
-		_inventory->addItem(Inventory::kWhistle);
-		_inventory->addItem(Inventory::kKey);
+		getInventory()->addItem(Inventory::kWhistle);
+		getInventory()->addItem(Inventory::kKey);
 		// TODO call game logic
 		break;
 
-	case kChapter4:
+	case State::kChapter4:
 		// TODO call game logic
 		break;
 
-	case kChapter5:
+	case State::kChapter5:
 		playFinalSequence();
 		break;
 	}
@@ -567,7 +557,11 @@ void Logic::playFinalSequence() {
 }
 
 void Logic::updateTrainClock() {
+	warning("Logic::updateTrainClock: not implemented!");
+}
 
+void Logic::updateCursor() {
+	warning("Logic::updateCursor: not implemented!");
 }
 
 } // End of namespace LastExpress

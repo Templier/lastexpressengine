@@ -26,61 +26,64 @@
 #include "lastexpress/entities/verges.h"
 
 #include "lastexpress/game/object.h"
+#include "lastexpress/game/savepoint.h"
+#include "lastexpress/game/state.h"
 
+#include "lastexpress/lastexpress.h"
 #include "lastexpress/helpers.h"
 
 namespace LastExpress {
 
 Verges::Verges(LastExpressEngine *engine) : Entity(engine, SavePoints::kVerges) {
-	CALLBACK_FUNCTION(Verges, nullfunc);
-	CALLBACK_FUNCTION(Verges, nullfunc);
-	CALLBACK_FUNCTION(Verges, nullfunc);
-	CALLBACK_FUNCTION(Verges, nullfunc);
-	CALLBACK_FUNCTION(Verges, nullfunc);
-	CALLBACK_FUNCTION(Verges, nullfunc);
-	CALLBACK_FUNCTION(Verges, nullfunc);
-	CALLBACK_FUNCTION(Verges, nullfunc);
-	CALLBACK_FUNCTION(Verges, nullfunc);
-	CALLBACK_FUNCTION(Verges, nullfunc);
-	CALLBACK_FUNCTION(Verges, nullfunc);
-	CALLBACK_FUNCTION(Verges, nullfunc);
-	CALLBACK_FUNCTION(Verges, nullfunc);
-	CALLBACK_FUNCTION(Verges, nullfunc);
-	CALLBACK_FUNCTION(Verges, nullfunc);
-	CALLBACK_FUNCTION(Verges, nullfunc);
-	CALLBACK_FUNCTION(Verges, nullfunc);
-	CALLBACK_FUNCTION(Verges, chapter1);
-	CALLBACK_FUNCTION(Verges, nullfunc);
-	CALLBACK_FUNCTION(Verges, nullfunc);
-	CALLBACK_FUNCTION(Verges, nullfunc);
-	CALLBACK_FUNCTION(Verges, nullfunc);
-	CALLBACK_FUNCTION(Verges, nullfunc);
-	CALLBACK_FUNCTION(Verges, nullfunc);
-	CALLBACK_FUNCTION(Verges, nullfunc);
-	CALLBACK_FUNCTION(Verges, nullfunc);
-	CALLBACK_FUNCTION(Verges, chapter2);
-	CALLBACK_FUNCTION(Verges, nullfunc);
-	CALLBACK_FUNCTION(Verges, chapter3);
-	CALLBACK_FUNCTION(Verges, nullfunc);
-	CALLBACK_FUNCTION(Verges, nullfunc);
-	CALLBACK_FUNCTION(Verges, nullfunc);
-	CALLBACK_FUNCTION(Verges, nullfunc);
-	CALLBACK_FUNCTION(Verges, nullfunc);
-	CALLBACK_FUNCTION(Verges, nullfunc);
-	CALLBACK_FUNCTION(Verges, chapter4);
-	CALLBACK_FUNCTION(Verges, nullfunc);
-	CALLBACK_FUNCTION(Verges, nullfunc);
-	CALLBACK_FUNCTION(Verges, chapter5);
-	CALLBACK_FUNCTION(Verges, nullfunc);
-	CALLBACK_FUNCTION(Verges, nullfunc);
-	CALLBACK_FUNCTION(Verges, nullfunc);
+	ADD_CALLBACK_FUNCTION(Verges, nullfunc);
+	ADD_CALLBACK_FUNCTION(Verges, nullfunc);
+	ADD_CALLBACK_FUNCTION(Verges, nullfunc);
+	ADD_CALLBACK_FUNCTION(Verges, nullfunc);
+	ADD_CALLBACK_FUNCTION(Verges, nullfunc);
+	ADD_CALLBACK_FUNCTION(Verges, nullfunc);
+	ADD_CALLBACK_FUNCTION(Verges, nullfunc);
+	ADD_CALLBACK_FUNCTION(Verges, nullfunc);
+	ADD_CALLBACK_FUNCTION(Verges, nullfunc);
+	ADD_CALLBACK_FUNCTION(Verges, nullfunc);
+	ADD_CALLBACK_FUNCTION(Verges, nullfunc);
+	ADD_CALLBACK_FUNCTION(Verges, nullfunc);
+	ADD_CALLBACK_FUNCTION(Verges, nullfunc);
+	ADD_CALLBACK_FUNCTION(Verges, nullfunc);
+	ADD_CALLBACK_FUNCTION(Verges, nullfunc);
+	ADD_CALLBACK_FUNCTION(Verges, nullfunc);
+	ADD_CALLBACK_FUNCTION(Verges, nullfunc);
+	ADD_CALLBACK_FUNCTION(Verges, chapter1);
+	ADD_CALLBACK_FUNCTION(Verges, nullfunc);
+	ADD_CALLBACK_FUNCTION(Verges, nullfunc);
+	ADD_CALLBACK_FUNCTION(Verges, nullfunc);
+	ADD_CALLBACK_FUNCTION(Verges, nullfunc);
+	ADD_CALLBACK_FUNCTION(Verges, nullfunc);
+	ADD_CALLBACK_FUNCTION(Verges, nullfunc);
+	ADD_CALLBACK_FUNCTION(Verges, nullfunc);
+	ADD_CALLBACK_FUNCTION(Verges, nullfunc);
+	ADD_CALLBACK_FUNCTION(Verges, chapter2);
+	ADD_CALLBACK_FUNCTION(Verges, nullfunc);
+	ADD_CALLBACK_FUNCTION(Verges, chapter3);
+	ADD_CALLBACK_FUNCTION(Verges, nullfunc);
+	ADD_CALLBACK_FUNCTION(Verges, nullfunc);
+	ADD_CALLBACK_FUNCTION(Verges, nullfunc);
+	ADD_CALLBACK_FUNCTION(Verges, nullfunc);
+	ADD_CALLBACK_FUNCTION(Verges, nullfunc);
+	ADD_CALLBACK_FUNCTION(Verges, nullfunc);
+	ADD_CALLBACK_FUNCTION(Verges, chapter4);
+	ADD_CALLBACK_FUNCTION(Verges, nullfunc);
+	ADD_CALLBACK_FUNCTION(Verges, nullfunc);
+	ADD_CALLBACK_FUNCTION(Verges, chapter5);
+	ADD_CALLBACK_FUNCTION(Verges, nullfunc);
+	ADD_CALLBACK_FUNCTION(Verges, nullfunc);
+	ADD_CALLBACK_FUNCTION(Verges, nullfunc);
 }
 
 void Verges::nullfunc(SavePoints::SavePoint *savepoint) {
 	error("Verges: callback function not implemented!");
 }
 
-void Verges::chapter1(SavePoints::SavePoint *savepoint) {
+IMPLEMENT_FUNCTION(Verges, chapter1, 18) {
 	switch (savepoint->action) {
 	default:
 		break;
@@ -114,16 +117,16 @@ void Verges::chapter1(SavePoints::SavePoint *savepoint) {
 	}
 }
 
-void Verges::chapter2(SavePoints::SavePoint *savepoint) {
+IMPLEMENT_FUNCTION(Verges, chapter2, 27) {
 }
 
-void Verges::chapter3(SavePoints::SavePoint *savepoint) {
+IMPLEMENT_FUNCTION(Verges, chapter3, 29) {
 }
 
-void Verges::chapter4(SavePoints::SavePoint *savepoint) {
+IMPLEMENT_FUNCTION(Verges, chapter4, 36) {
 }
 
-void Verges::chapter5(SavePoints::SavePoint *savepoint) {
+IMPLEMENT_FUNCTION(Verges, chapter5, 39) {
 }
 
 } // End of namespace LastExpress

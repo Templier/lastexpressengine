@@ -117,6 +117,7 @@
     <ClCompile Include="..\..\engines\lastexpress\game\logic.cpp" />
     <ClCompile Include="..\..\engines\lastexpress\game\menu.cpp" />
     <ClCompile Include="..\..\engines\lastexpress\game\savepoint.cpp" />
+    <ClCompile Include="..\..\engines\lastexpress\game\state.cpp" />
     <ClCompile Include="..\..\engines\lastexpress\graphics.cpp" />
     <ClCompile Include="..\..\engines\lastexpress\lastexpress.cpp" />
     <ClCompile Include="..\..\engines\lastexpress\resource.cpp" />
@@ -178,6 +179,7 @@
     <ClInclude Include="..\..\engines\lastexpress\game\logic.h" />
     <ClInclude Include="..\..\engines\lastexpress\game\menu.h" />
     <ClInclude Include="..\..\engines\lastexpress\game\savepoint.h" />
+    <ClInclude Include="..\..\engines\lastexpress\game\state.h" />
     <ClInclude Include="..\..\engines\lastexpress\graphics.h" />
     <ClInclude Include="..\..\engines\lastexpress\helpers.h" />
     <ClInclude Include="..\..\engines\lastexpress\lastexpress.h" />

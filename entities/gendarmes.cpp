@@ -25,49 +25,51 @@
 
 #include "lastexpress/entities/gendarmes.h"
 
-#include "lastexpress/game/object.h"
+#include "lastexpress/game/savepoint.h"
+#include "lastexpress/game/state.h"
 
+#include "lastexpress/lastexpress.h"
 #include "lastexpress/helpers.h"
 
 namespace LastExpress {
 
 Gendarmes::Gendarmes(LastExpressEngine *engine) : Entity(engine, SavePoints::kGendarmes) {
-	CALLBACK_FUNCTION(Gendarmes, nullfunc);
-	CALLBACK_FUNCTION(Gendarmes, chapter1);
-	CALLBACK_FUNCTION(Gendarmes, nullfunc);
-	CALLBACK_FUNCTION(Gendarmes, nullfunc);
-	CALLBACK_FUNCTION(Gendarmes, nullfunc);
-	CALLBACK_FUNCTION(Gendarmes, nullfunc);
-	CALLBACK_FUNCTION(Gendarmes, nullfunc);
-	CALLBACK_FUNCTION(Gendarmes, nullfunc);
-	CALLBACK_FUNCTION(Gendarmes, nullfunc);
-	CALLBACK_FUNCTION(Gendarmes, nullfunc);
-	CALLBACK_FUNCTION(Gendarmes, nullfunc);
-	CALLBACK_FUNCTION(Gendarmes, nullfunc);
-	CALLBACK_FUNCTION(Gendarmes, nullfunc);	
-	CALLBACK_FUNCTION(Gendarmes, chapter2);
-	CALLBACK_FUNCTION(Gendarmes, chapter3);
-	CALLBACK_FUNCTION(Gendarmes, chapter4);
-	CALLBACK_FUNCTION(Gendarmes, chapter5);
+	ADD_CALLBACK_FUNCTION(Gendarmes, nullfunc);
+	ADD_CALLBACK_FUNCTION(Gendarmes, chapter1);
+	ADD_CALLBACK_FUNCTION(Gendarmes, nullfunc);
+	ADD_CALLBACK_FUNCTION(Gendarmes, nullfunc);
+	ADD_CALLBACK_FUNCTION(Gendarmes, nullfunc);
+	ADD_CALLBACK_FUNCTION(Gendarmes, nullfunc);
+	ADD_CALLBACK_FUNCTION(Gendarmes, nullfunc);
+	ADD_CALLBACK_FUNCTION(Gendarmes, nullfunc);
+	ADD_CALLBACK_FUNCTION(Gendarmes, nullfunc);
+	ADD_CALLBACK_FUNCTION(Gendarmes, nullfunc);
+	ADD_CALLBACK_FUNCTION(Gendarmes, nullfunc);
+	ADD_CALLBACK_FUNCTION(Gendarmes, nullfunc);
+	ADD_CALLBACK_FUNCTION(Gendarmes, nullfunc);	
+	ADD_CALLBACK_FUNCTION(Gendarmes, chapter2);
+	ADD_CALLBACK_FUNCTION(Gendarmes, chapter3);
+	ADD_CALLBACK_FUNCTION(Gendarmes, chapter4);
+	ADD_CALLBACK_FUNCTION(Gendarmes, chapter5);
 }
 
 void Gendarmes::nullfunc(SavePoints::SavePoint *savepoint) {
 	error("Gendarmes: callback function not implemented!");
 }
 
-void Gendarmes::chapter1(SavePoints::SavePoint *savepoint) {
+IMPLEMENT_FUNCTION(Gendarmes, chapter1, 2) {
 }
 
-void Gendarmes::chapter2(SavePoints::SavePoint *savepoint) {
+IMPLEMENT_FUNCTION(Gendarmes, chapter2, 14) {
 }
 
-void Gendarmes::chapter3(SavePoints::SavePoint *savepoint) {
+IMPLEMENT_FUNCTION(Gendarmes, chapter3, 15) {
 }
 
-void Gendarmes::chapter4(SavePoints::SavePoint *savepoint) {
+IMPLEMENT_FUNCTION(Gendarmes, chapter4, 16) {
 }
 
-void Gendarmes::chapter5(SavePoints::SavePoint *savepoint) {
+IMPLEMENT_FUNCTION(Gendarmes, chapter5, 17) {
 }
 
 } // End of namespace LastExpress

@@ -28,10 +28,6 @@
 
 #include "lastexpress/entities/entity.h"
 
-#include "lastexpress/game/logic.h"
-
-#include "lastexpress/lastexpress.h"
-
 namespace LastExpress {
 
 class LastExpressEngine;
@@ -41,11 +37,11 @@ public:
 	Alexei(LastExpressEngine *engine);
 
 	// Setup	
-	DECLARE_FUNCTION(Alexei, chapter1, 17)
-	DECLARE_FUNCTION(Alexei, chapter2, 28)
-	DECLARE_FUNCTION(Alexei, chapter3, 32)
-	DECLARE_FUNCTION(Alexei, chapter4, 37)
-	DECLARE_FUNCTION(Alexei, chapter5, 48)
+	DECLARE_FUNCTION(chapter1)
+	DECLARE_FUNCTION(chapter2)
+	DECLARE_FUNCTION(chapter3)
+	DECLARE_FUNCTION(chapter4)
+	DECLARE_FUNCTION(chapter5)
 
 	void nullfunc(SavePoints::SavePoint *savepoint);
 };

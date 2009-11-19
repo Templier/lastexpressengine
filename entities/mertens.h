@@ -28,10 +28,6 @@
 
 #include "lastexpress/entities/entity.h"
 
-#include "lastexpress/game/logic.h"
-
-#include "lastexpress/lastexpress.h"
-
 namespace LastExpress {
 
 class LastExpressEngine;
@@ -40,13 +36,13 @@ class Mertens : public Entity {
 public:
 	Mertens(LastExpressEngine *engine);
 
-	// Setup	
-	DECLARE_FUNCTION(Mertens, chapter1, 34)
-	DECLARE_FUNCTION(Mertens, chapter2, 43)
-	DECLARE_FUNCTION(Mertens, chapter3, 45)
-	DECLARE_FUNCTION(Mertens, chapter4, 47)
-	DECLARE_FUNCTION(Mertens, chapter5, 50)
-	DECLARE_FUNCTION_NULL(59)
+	// Setup
+	DECLARE_FUNCTION(chapter1)
+	DECLARE_FUNCTION(chapter2)
+	DECLARE_FUNCTION(chapter3)
+	DECLARE_FUNCTION(chapter4)
+	DECLARE_FUNCTION(chapter5)
+	DECLARE_NULL_FUNCTION()
 
 	void nullfunc(SavePoints::SavePoint *savepoint);
 };

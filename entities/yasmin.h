@@ -28,10 +28,6 @@
 
 #include "lastexpress/entities/entity.h"
 
-#include "lastexpress/game/logic.h"
-
-#include "lastexpress/lastexpress.h"
-
 namespace LastExpress {
 
 class LastExpressEngine;
@@ -41,12 +37,12 @@ public:
 	Yasmin(LastExpressEngine *engine);
 
 	// Setup	
-	DECLARE_FUNCTION(Yasmin, chapter1, 8)
-	DECLARE_FUNCTION(Yasmin, chapter2, 11)
-	DECLARE_FUNCTION(Yasmin, chapter3, 13)
-	DECLARE_FUNCTION(Yasmin, chapter4, 15)
-	DECLARE_FUNCTION(Yasmin, chapter5, 18)
-	DECLARE_FUNCTION_NULL(22)
+	DECLARE_FUNCTION(chapter1)
+	DECLARE_FUNCTION(chapter2)
+	DECLARE_FUNCTION(chapter3)
+	DECLARE_FUNCTION(chapter4)
+	DECLARE_FUNCTION(chapter5)
+	DECLARE_NULL_FUNCTION()
 
 	void nullfunc(SavePoints::SavePoint *savepoint);
 };

@@ -26,55 +26,6 @@
 #ifndef LASTEXPRESS_LOGIC_H
 #define LASTEXPRESS_LOGIC_H
 
-/*
-	Game data Format
-	-----------------
-
-	uint32 {4}      - ??
-	uint32 {4}      - current time 
-	uint32 {4}      - time delta (how much a tick is in "real" time)
-	uint32 {4}      - time ticks
-	uint32 {4}      - Scene Index               max: 2600
-	byte {1}        - Use backup scene
-	uint32 {4}      - Backup Scene Index 1
-	uint32 {4}      - Backup Scene Index 2
-	uint32 {4}      - Selected inventory item
-	uint32 {4*1000} - ??
-	uint32 {4*16}   - ??
-	uint32 {4*16}   - ??
-	uint32 {4*128}  - Game progress
-	byte {512}      - Game events
-	byte {7*32}     - Inventory
-	byte {5*128}    - Objects
-	byte {1262*40}  - Entities (characters and train entities)
-
-	uint32 {4}      - ??
-	uint32 {4}      - ??
-	uint32 {4}      - Number of sound cache entries
-	byte {count*68} - Sound cache entries
-
-	byte {16*128}   - Save point data
-	uint32 {4}      - Number of save points (max: 128)
-	byte {count*16} - Save points
-
-	... more unknown stuff
-
-	
-	Sound cache entry: 68 bytes
-		uint32 {4}      - ??
-		uint32 {4}      - ??
-		uint32 {4}      - ??
-		uint32 {4}      - ??
-		uint32 {4}      - ??
-		uint32 {4}      - ??
-		uint32 {4}      - ??
-		uint32 {4}      - ??
-		uint32 {4}      - ??
-		char {16}       - ??
-		char {16}       - ??
-
-*/
-
 #include "lastexpress/data/cursor.h"
 
 #include "lastexpress/savegame.h"
@@ -97,203 +48,7 @@ class Sound;
 
 class Logic {
 public:
-	enum JacketType {
-		kOriginalJacket = 1,
-		kGreenJacket = 2
-	};
-
-	enum ChapterIndex {
-		kCustom = 0,
-		kChapter1 = 1,
-		kChapter2 = 2,
-		kChapter3 = 3,
-		kChapter4 = 4,
-		kChapter5 = 5
-	};
-
-	struct GameProgress {
-		uint32 field_0;
-		JacketType jacket;
-		uint32 field_8;
-		uint32 field_C;
-		uint32 event_found_corpse;
-		uint32 field_14;
-		uint32 field_18;		
-		uint32 portrait;
-		uint32 field_20;
-		uint32 field_24;
-		uint32 field_28;
-		uint32 chapter;
-		uint32 field_30;
-		uint32 event_august_met;
-		uint32 is_nighttime;					///< 0 = day / 1 = night
-		uint32 field_3C;
-		uint32 field_40;
-		uint32 field_44;
-		uint32 field_48;
-		uint32 field_4C;
-		uint32 field_50;
-		uint32 field_54;
-		uint32 field_58;
-		uint32 field_5C;
-		uint32 field_60;
-		uint32 field_64;
-		uint32 field_68;
-		uint32 event_mertens_august_waiting;
-		uint32 event_mertens_chronos_invitation;
-		uint32 is_egg_open;
-		uint32 field_78;	// time?
-		uint32 field_7C;
-		uint32 field_80;
-		uint32 field_84;
-		uint32 field_88;
-		uint32 field_8C;
-		uint32 field_90;
-		uint32 field_94;
-		uint32 field_98;
-		uint32 field_9C;
-		uint32 field_A0;
-		uint32 field_A4;
-		uint32 field_A8;
-		uint32 field_AC;
-		uint32 field_B0;
-		uint32 field_B4;
-		uint32 field_B8;
-		uint32 field_BC;
-		uint32 field_C0;
-		uint32 field_C4;
-		uint32 field_C8;
-		uint32 field_CC;
-		uint32 field_D0;
-		uint32 field_D4;
-		uint32 field_D8;
-		uint32 field_DC;
-		uint32 field_E0;
-		uint32 field_E4;
-		uint32 field_E8;
-		uint32 field_EC;
-		uint32 field_F0;
-		uint32 field_F4;
-		uint32 field_F8;
-		uint32 field_FC;
-
-		// TODO add missing fields
-
-		GameProgress() {
-			field_0 = 0;
-			jacket = kOriginalJacket;
-			field_8 = 0;
-			field_C = 0;
-			event_found_corpse = 0;
-			field_14 = 0;
-			field_18 = 0;		
-			portrait = _defaultPortrait;
-			field_20 = 0;
-			field_24 = 0;
-			field_28 = 0;
-			chapter = kChapter1;
-			field_30 = 0;
-			event_august_met = 0;
-			is_nighttime = 0;
-			field_3C = 0;
-			field_40 = 0;
-			field_44 = 0;
-			field_48 = 0;
-			field_4C = 0;
-			field_50 = 0;
-			field_54 = 0;
-			field_58 = 0;
-			field_5C = 0;
-			field_60 = 0;
-			field_64 = 0;
-			field_68 = 0;
-			event_mertens_august_waiting = 0;
-			event_mertens_chronos_invitation = 0;
-			is_egg_open = 0;
-			field_78 = 0;
-			field_7C = 0;
-			field_80 = 0;
-			field_84 = 0;
-			field_88 = 0;
-			field_8C = 0;
-			field_90 = 0;
-			field_94 = 0;
-			field_98 = 0;
-			field_9C = 0;
-			field_A0 = 0;
-			field_A4 = 0;
-			field_A8 = 0;
-			field_AC = 0;
-			field_B0 = 0;
-			field_B4 = 0;
-			field_B8 = 0;
-			field_BC = 0;
-			field_C0 = 0;
-			field_C4 = 0;
-			field_C8 = 0;
-			field_CC = 0;
-			field_D0 = 0;
-			field_D4 = 0;
-			field_D8 = 0;
-			field_DC = 0;
-			field_E0 = 0;
-			field_E4 = 0;
-			field_E8 = 0;
-			field_EC = 0;
-			field_F0 = 0;
-			field_F4 = 0;
-			field_F8 = 0;
-			field_FC = 0;
-		}
-	};
-
-	
-
-	struct GameState {
-		// Header
-		uint32 brightness;
-		uint32 volume;
-
-		// Game data
-		uint32 field_0;
-		uint32 time;
-		uint32 timeDelta;
-		uint32 timeTicks;
-		byte sceneUseBackup;
-		uint32 scene;		
-		uint32 sceneBackup;
-		uint32 sceneBackup2;
-
-		GameProgress progress;
-		byte events[512];
-
-		// Needs to be figured out
-		int field1000[1000];
-		int field16[16];
-		int field16_2[16];
-
-		GameState() {
-			brightness = _defaultBrigthness;
-			volume = _defaultVolume;
-
-			//Game data	
-			time = _defaultTime;
-			timeDelta = _defaultTimeDelta;
-			timeTicks = 0;
-			sceneUseBackup = 0;
-			scene = _defaultScene;
-			sceneBackup = 0;
-			sceneBackup2 = 0;
-
-			// Clear game events
-			memset(events, 0, 512*sizeof(byte));
-
-			memset(field1000, 0, 1000*sizeof(int));
-			memset(field16, 0, 16*sizeof(int));
-			memset(field16_2, 0, 16*sizeof(int));
-		}
-	};
-	
+		
 	Logic(LastExpressEngine *engine);
 	~Logic();
 	
@@ -308,8 +63,11 @@ public:
 	// Scene
 	void loadScene(uint32 index);
 	void setScene(uint32 index);
-	void updateTrainClock();
+
 	void loadSceneFromData(int param1, int param2, int param3);
+
+	void updateTrainClock();
+	void updateCursor();
 
 	// Index processing
 	void processScene();
@@ -325,21 +83,11 @@ public:
 
 	Cursor::CursorStyle getCursorStyle() { return _runState.cursorStyle; }
 	Beetle     *getGameBeetle() { return _beetle; }
-	Entities   *getGameEntities() { return _entities; }
-	Inventory  *getGameInventory() { return _inventory; }
-	Objects	   *getGameObjects() { return _objects; }
-	GameState  *getGameState() { return _gameState; }
-	SavePoints *getGameSavePoints() { return _savepoints; }
+	Entities   *getGameEntities() { return _entities; }	
 	Sound 	   *getGameSound() { return _sound; }
 	
 private:
-	static const uint32 _defaultBrigthness = 0x3;
-	static const uint32 _defaultVolume = 0x7;
-	static const uint32 _defaultTime = 1037700;
-	static const uint32 _defaultTimeDelta = 3;
-	static const uint32 _defaultPortrait = 32;	
-	static const uint32 _defaultScene = 40;
-
+	
 	// State
 	struct RunState {
 		GameId gameId;
@@ -361,15 +109,10 @@ private:
 	
 	Action *_action;			///< Actions
 	Beetle *_beetle;			///< Beetle catching
-	Sound *_sound;				///< Sound
 	Entities *_entities;		///< Entities
-	GameState *_gameState;		///< Global game state
-	Inventory *_inventory;  	///< Inventory
-	Menu *_menu;            	///< Main menu handling
-	Objects *_objects;			///< Objects
+	Menu *_menu;            	///< Main menu handling	
 	Scene *_scene;				///< Current scene	
-	SavePoints *_savepoints;	///< SavePoints
-	
+	Sound *_sound;				///< Sound	
 	
 	void preProcessScene(uint32 *index);
 	void postProcessScene(uint32 *index);	

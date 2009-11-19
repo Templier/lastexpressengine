@@ -25,72 +25,74 @@
 
 #include "lastexpress/entities/mertens.h"
 
-#include "lastexpress/game/object.h"
+#include "lastexpress/game/savepoint.h"
+#include "lastexpress/game/state.h"
 
+#include "lastexpress/lastexpress.h"
 #include "lastexpress/helpers.h"
 
 namespace LastExpress {
 
 Mertens::Mertens(LastExpressEngine *engine) : Entity(engine, SavePoints::kMertens) {
-	CALLBACK_FUNCTION(Mertens, nullfunc);
-	CALLBACK_FUNCTION(Mertens, nullfunc);
-	CALLBACK_FUNCTION(Mertens, nullfunc);
-	CALLBACK_FUNCTION(Mertens, nullfunc);
-	CALLBACK_FUNCTION(Mertens, nullfunc);
-	CALLBACK_FUNCTION(Mertens, nullfunc);
-	CALLBACK_FUNCTION(Mertens, nullfunc);
-	CALLBACK_FUNCTION(Mertens, nullfunc);
-	CALLBACK_FUNCTION(Mertens, nullfunc);
-	CALLBACK_FUNCTION(Mertens, nullfunc);
-	CALLBACK_FUNCTION(Mertens, nullfunc);
-	CALLBACK_FUNCTION(Mertens, nullfunc);
-	CALLBACK_FUNCTION(Mertens, nullfunc);
-	CALLBACK_FUNCTION(Mertens, nullfunc);
-	CALLBACK_FUNCTION(Mertens, nullfunc);
-	CALLBACK_FUNCTION(Mertens, nullfunc);
-	CALLBACK_FUNCTION(Mertens, nullfunc);
-	CALLBACK_FUNCTION(Mertens, nullfunc);
-	CALLBACK_FUNCTION(Mertens, nullfunc);
-	CALLBACK_FUNCTION(Mertens, nullfunc);
-	CALLBACK_FUNCTION(Mertens, nullfunc);
-	CALLBACK_FUNCTION(Mertens, nullfunc);
-	CALLBACK_FUNCTION(Mertens, nullfunc);
-	CALLBACK_FUNCTION(Mertens, nullfunc);
-	CALLBACK_FUNCTION(Mertens, nullfunc);
-	CALLBACK_FUNCTION(Mertens, nullfunc);
-	CALLBACK_FUNCTION(Mertens, nullfunc);
-	CALLBACK_FUNCTION(Mertens, nullfunc);
-	CALLBACK_FUNCTION(Mertens, nullfunc);
-	CALLBACK_FUNCTION(Mertens, nullfunc);
-	CALLBACK_FUNCTION(Mertens, nullfunc);
-	CALLBACK_FUNCTION(Mertens, chapter1);
-	CALLBACK_FUNCTION(Mertens, nullfunc);
-	CALLBACK_FUNCTION(Mertens, nullfunc);
-	CALLBACK_FUNCTION(Mertens, nullfunc);
-	CALLBACK_FUNCTION(Mertens, nullfunc);
-	CALLBACK_FUNCTION(Mertens, nullfunc);
-	CALLBACK_FUNCTION(Mertens, nullfunc);
-	CALLBACK_FUNCTION(Mertens, nullfunc);
-	CALLBACK_FUNCTION(Mertens, nullfunc);
-	CALLBACK_FUNCTION(Mertens, chapter2);
-	CALLBACK_FUNCTION(Mertens, nullfunc);
-	CALLBACK_FUNCTION(Mertens, chapter3);
-	CALLBACK_FUNCTION(Mertens, nullfunc);
-	CALLBACK_FUNCTION(Mertens, chapter4);
-	CALLBACK_FUNCTION(Mertens, nullfunc);
-	CALLBACK_FUNCTION(Mertens, nullfunc);
-	CALLBACK_FUNCTION(Mertens, chapter5);
-	CALLBACK_FUNCTION(Mertens, nullfunc);
-	CALLBACK_FUNCTION(Mertens, nullfunc);
-	CALLBACK_FUNCTION(Mertens, nullfunc);
-	CALLBACK_FUNCTION_NULL();
+	ADD_CALLBACK_FUNCTION(Mertens, nullfunc);
+	ADD_CALLBACK_FUNCTION(Mertens, nullfunc);
+	ADD_CALLBACK_FUNCTION(Mertens, nullfunc);
+	ADD_CALLBACK_FUNCTION(Mertens, nullfunc);
+	ADD_CALLBACK_FUNCTION(Mertens, nullfunc);
+	ADD_CALLBACK_FUNCTION(Mertens, nullfunc);
+	ADD_CALLBACK_FUNCTION(Mertens, nullfunc);
+	ADD_CALLBACK_FUNCTION(Mertens, nullfunc);
+	ADD_CALLBACK_FUNCTION(Mertens, nullfunc);
+	ADD_CALLBACK_FUNCTION(Mertens, nullfunc);
+	ADD_CALLBACK_FUNCTION(Mertens, nullfunc);
+	ADD_CALLBACK_FUNCTION(Mertens, nullfunc);
+	ADD_CALLBACK_FUNCTION(Mertens, nullfunc);
+	ADD_CALLBACK_FUNCTION(Mertens, nullfunc);
+	ADD_CALLBACK_FUNCTION(Mertens, nullfunc);
+	ADD_CALLBACK_FUNCTION(Mertens, nullfunc);
+	ADD_CALLBACK_FUNCTION(Mertens, nullfunc);
+	ADD_CALLBACK_FUNCTION(Mertens, nullfunc);
+	ADD_CALLBACK_FUNCTION(Mertens, nullfunc);
+	ADD_CALLBACK_FUNCTION(Mertens, nullfunc);
+	ADD_CALLBACK_FUNCTION(Mertens, nullfunc);
+	ADD_CALLBACK_FUNCTION(Mertens, nullfunc);
+	ADD_CALLBACK_FUNCTION(Mertens, nullfunc);
+	ADD_CALLBACK_FUNCTION(Mertens, nullfunc);
+	ADD_CALLBACK_FUNCTION(Mertens, nullfunc);
+	ADD_CALLBACK_FUNCTION(Mertens, nullfunc);
+	ADD_CALLBACK_FUNCTION(Mertens, nullfunc);
+	ADD_CALLBACK_FUNCTION(Mertens, nullfunc);
+	ADD_CALLBACK_FUNCTION(Mertens, nullfunc);
+	ADD_CALLBACK_FUNCTION(Mertens, nullfunc);
+	ADD_CALLBACK_FUNCTION(Mertens, nullfunc);
+	ADD_CALLBACK_FUNCTION(Mertens, chapter1);
+	ADD_CALLBACK_FUNCTION(Mertens, nullfunc);
+	ADD_CALLBACK_FUNCTION(Mertens, nullfunc);
+	ADD_CALLBACK_FUNCTION(Mertens, nullfunc);
+	ADD_CALLBACK_FUNCTION(Mertens, nullfunc);
+	ADD_CALLBACK_FUNCTION(Mertens, nullfunc);
+	ADD_CALLBACK_FUNCTION(Mertens, nullfunc);
+	ADD_CALLBACK_FUNCTION(Mertens, nullfunc);
+	ADD_CALLBACK_FUNCTION(Mertens, nullfunc);
+	ADD_CALLBACK_FUNCTION(Mertens, chapter2);
+	ADD_CALLBACK_FUNCTION(Mertens, nullfunc);
+	ADD_CALLBACK_FUNCTION(Mertens, chapter3);
+	ADD_CALLBACK_FUNCTION(Mertens, nullfunc);
+	ADD_CALLBACK_FUNCTION(Mertens, chapter4);
+	ADD_CALLBACK_FUNCTION(Mertens, nullfunc);
+	ADD_CALLBACK_FUNCTION(Mertens, nullfunc);
+	ADD_CALLBACK_FUNCTION(Mertens, chapter5);
+	ADD_CALLBACK_FUNCTION(Mertens, nullfunc);
+	ADD_CALLBACK_FUNCTION(Mertens, nullfunc);
+	ADD_CALLBACK_FUNCTION(Mertens, nullfunc);
+	ADD_NULL_FUNCTION();
 }
 
 void Mertens::nullfunc(SavePoints::SavePoint *savepoint) {
 	error("Mertens: callback function not implemented!");
 }
 
-void Mertens::chapter1(SavePoints::SavePoint *savepoint) {
+IMPLEMENT_FUNCTION(Mertens, chapter1, 34) {
 	switch (savepoint->action) {
 	default:
 		break;
@@ -126,16 +128,18 @@ void Mertens::chapter1(SavePoints::SavePoint *savepoint) {
 	}
 }
 
-void Mertens::chapter2(SavePoints::SavePoint *savepoint) {
+IMPLEMENT_FUNCTION(Mertens, chapter2, 43) {
 }
 
-void Mertens::chapter3(SavePoints::SavePoint *savepoint) {
+IMPLEMENT_FUNCTION(Mertens, chapter3, 45) {
 }
 
-void Mertens::chapter4(SavePoints::SavePoint *savepoint) {
+IMPLEMENT_FUNCTION(Mertens, chapter4, 47) {
 }
 
-void Mertens::chapter5(SavePoints::SavePoint *savepoint) {
+IMPLEMENT_FUNCTION(Mertens, chapter5, 50) {
 }
+
+IMPLEMENT_NULL_FUNCTION(Mertens, 59)
 
 } // End of namespace LastExpress

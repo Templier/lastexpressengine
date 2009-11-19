@@ -25,63 +25,67 @@
 
 #include "lastexpress/entities/francois.h"
 
-#include "lastexpress/game/object.h"
+#include "lastexpress/game/savepoint.h"
+#include "lastexpress/game/state.h"
 
 #include "lastexpress/helpers.h"
+#include "lastexpress/lastexpress.h"
 
 namespace LastExpress {
 
 Francois::Francois(LastExpressEngine *engine) : Entity(engine, SavePoints::kFrancois) {	
-	CALLBACK_FUNCTION(Francois, nullfunc);
-	CALLBACK_FUNCTION(Francois, nullfunc);
-	CALLBACK_FUNCTION(Francois, nullfunc);
-	CALLBACK_FUNCTION(Francois, nullfunc);
-	CALLBACK_FUNCTION(Francois, nullfunc);
-	CALLBACK_FUNCTION(Francois, nullfunc);
-	CALLBACK_FUNCTION(Francois, nullfunc);
-	CALLBACK_FUNCTION(Francois, nullfunc);
-	CALLBACK_FUNCTION(Francois, nullfunc);
-	CALLBACK_FUNCTION(Francois, nullfunc);
-	CALLBACK_FUNCTION(Francois, nullfunc);
-	CALLBACK_FUNCTION(Francois, nullfunc);
-	CALLBACK_FUNCTION(Francois, nullfunc);
-	CALLBACK_FUNCTION(Francois, nullfunc);
-	CALLBACK_FUNCTION(Francois, nullfunc);
-	CALLBACK_FUNCTION(Francois, nullfunc);
-	CALLBACK_FUNCTION(Francois, chapter1);
-	CALLBACK_FUNCTION(Francois, nullfunc);
-	CALLBACK_FUNCTION(Francois, nullfunc);
-	CALLBACK_FUNCTION(Francois, nullfunc);
-	CALLBACK_FUNCTION(Francois, chapter2);
-	CALLBACK_FUNCTION(Francois, nullfunc);
-	CALLBACK_FUNCTION(Francois, nullfunc);
-	CALLBACK_FUNCTION(Francois, chapter3);
-	CALLBACK_FUNCTION(Francois, nullfunc);
-	CALLBACK_FUNCTION(Francois, chapter4);
-	CALLBACK_FUNCTION(Francois, nullfunc);
-	CALLBACK_FUNCTION(Francois, chapter5);
-	CALLBACK_FUNCTION(Francois, nullfunc);
-	CALLBACK_FUNCTION(Francois, nullfunc);
-	CALLBACK_FUNCTION_NULL();
+	ADD_CALLBACK_FUNCTION(Francois, nullfunc);
+	ADD_CALLBACK_FUNCTION(Francois, nullfunc);
+	ADD_CALLBACK_FUNCTION(Francois, nullfunc);
+	ADD_CALLBACK_FUNCTION(Francois, nullfunc);
+	ADD_CALLBACK_FUNCTION(Francois, nullfunc);
+	ADD_CALLBACK_FUNCTION(Francois, nullfunc);
+	ADD_CALLBACK_FUNCTION(Francois, nullfunc);
+	ADD_CALLBACK_FUNCTION(Francois, nullfunc);
+	ADD_CALLBACK_FUNCTION(Francois, nullfunc);
+	ADD_CALLBACK_FUNCTION(Francois, nullfunc);
+	ADD_CALLBACK_FUNCTION(Francois, nullfunc);
+	ADD_CALLBACK_FUNCTION(Francois, nullfunc);
+	ADD_CALLBACK_FUNCTION(Francois, nullfunc);
+	ADD_CALLBACK_FUNCTION(Francois, nullfunc);
+	ADD_CALLBACK_FUNCTION(Francois, nullfunc);
+	ADD_CALLBACK_FUNCTION(Francois, nullfunc);
+	ADD_CALLBACK_FUNCTION(Francois, chapter1);
+	ADD_CALLBACK_FUNCTION(Francois, nullfunc);
+	ADD_CALLBACK_FUNCTION(Francois, nullfunc);
+	ADD_CALLBACK_FUNCTION(Francois, nullfunc);
+	ADD_CALLBACK_FUNCTION(Francois, chapter2);
+	ADD_CALLBACK_FUNCTION(Francois, nullfunc);
+	ADD_CALLBACK_FUNCTION(Francois, nullfunc);
+	ADD_CALLBACK_FUNCTION(Francois, chapter3);
+	ADD_CALLBACK_FUNCTION(Francois, nullfunc);
+	ADD_CALLBACK_FUNCTION(Francois, chapter4);
+	ADD_CALLBACK_FUNCTION(Francois, nullfunc);
+	ADD_CALLBACK_FUNCTION(Francois, chapter5);
+	ADD_CALLBACK_FUNCTION(Francois, nullfunc);
+	ADD_CALLBACK_FUNCTION(Francois, nullfunc);
+	ADD_NULL_FUNCTION();
 }
 
 void Francois::nullfunc(SavePoints::SavePoint *savepoint) {
 	error("Francois: callback function not implemented!");
 }
 
-void Francois::chapter1(SavePoints::SavePoint *savepoint) {
+IMPLEMENT_FUNCTION(Francois, chapter1, 17) {
 }
 
-void Francois::chapter2(SavePoints::SavePoint *savepoint) {
+IMPLEMENT_FUNCTION(Francois, chapter2, 21) {
 }
 
-void Francois::chapter3(SavePoints::SavePoint *savepoint) {
+IMPLEMENT_FUNCTION(Francois, chapter3, 24) {
 }
 
-void Francois::chapter4(SavePoints::SavePoint *savepoint) {
+IMPLEMENT_FUNCTION(Francois, chapter4, 26) {
 }
 
-void Francois::chapter5(SavePoints::SavePoint *savepoint) {
+IMPLEMENT_FUNCTION(Francois, chapter5, 28) {
 }
+
+IMPLEMENT_NULL_FUNCTION(Francois, 31)	
 
 } // End of namespace LastExpress

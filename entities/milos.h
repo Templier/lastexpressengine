@@ -28,10 +28,6 @@
 
 #include "lastexpress/entities/entity.h"
 
-#include "lastexpress/game/logic.h"
-
-#include "lastexpress/lastexpress.h"
-
 namespace LastExpress {
 
 class LastExpressEngine;
@@ -41,11 +37,11 @@ public:
 	Milos(LastExpressEngine *engine);
 
 	// Setup	
-	DECLARE_FUNCTION(Milos, chapter1, 12)
-	DECLARE_FUNCTION(Milos, chapter2, 19)
-	DECLARE_FUNCTION(Milos, chapter3, 22)
-	DECLARE_FUNCTION(Milos, chapter4, 28)
-	DECLARE_FUNCTION(Milos, chapter5, 33)
+	DECLARE_FUNCTION(chapter1)
+	DECLARE_FUNCTION(chapter2)
+	DECLARE_FUNCTION(chapter3)
+	DECLARE_FUNCTION(chapter4)
+	DECLARE_FUNCTION(chapter5)
 
 	void nullfunc(SavePoints::SavePoint *savepoint);
 };

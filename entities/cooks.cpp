@@ -25,46 +25,48 @@
 
 #include "lastexpress/entities/cooks.h"
 
-#include "lastexpress/game/object.h"
+#include "lastexpress/game/savepoint.h"
+#include "lastexpress/game/state.h"
 
 #include "lastexpress/helpers.h"
+#include "lastexpress/lastexpress.h"
 
 namespace LastExpress {
 
 Cooks::Cooks(LastExpressEngine *engine) : Entity(engine, SavePoints::kCooks) {
-	CALLBACK_FUNCTION(Cooks, nullfunc);
-	CALLBACK_FUNCTION(Cooks, nullfunc);
-	CALLBACK_FUNCTION(Cooks, nullfunc);
-	CALLBACK_FUNCTION(Cooks, nullfunc);
-	CALLBACK_FUNCTION(Cooks, chapter1);
-	CALLBACK_FUNCTION(Cooks, nullfunc);
-	CALLBACK_FUNCTION(Cooks, nullfunc);
-	CALLBACK_FUNCTION(Cooks, chapter2);
-	CALLBACK_FUNCTION(Cooks, nullfunc);
-	CALLBACK_FUNCTION(Cooks, chapter3);
-	CALLBACK_FUNCTION(Cooks, nullfunc);
-	CALLBACK_FUNCTION(Cooks, chapter4);
-	CALLBACK_FUNCTION(Cooks, nullfunc);
-	CALLBACK_FUNCTION(Cooks, chapter5);
+	ADD_CALLBACK_FUNCTION(Cooks, nullfunc);
+	ADD_CALLBACK_FUNCTION(Cooks, nullfunc);
+	ADD_CALLBACK_FUNCTION(Cooks, nullfunc);
+	ADD_CALLBACK_FUNCTION(Cooks, nullfunc);
+	ADD_CALLBACK_FUNCTION(Cooks, chapter1);
+	ADD_CALLBACK_FUNCTION(Cooks, nullfunc);
+	ADD_CALLBACK_FUNCTION(Cooks, nullfunc);
+	ADD_CALLBACK_FUNCTION(Cooks, chapter2);
+	ADD_CALLBACK_FUNCTION(Cooks, nullfunc);
+	ADD_CALLBACK_FUNCTION(Cooks, chapter3);
+	ADD_CALLBACK_FUNCTION(Cooks, nullfunc);
+	ADD_CALLBACK_FUNCTION(Cooks, chapter4);
+	ADD_CALLBACK_FUNCTION(Cooks, nullfunc);
+	ADD_CALLBACK_FUNCTION(Cooks, chapter5);
 }
 
 void Cooks::nullfunc(SavePoints::SavePoint *savepoint) {
 	error("Cooks: callback function not implemented!");
 }
 
-void Cooks::chapter1(SavePoints::SavePoint *savepoint) {
+IMPLEMENT_FUNCTION(Cooks, chapter1, 5){
 }
 
-void Cooks::chapter2(SavePoints::SavePoint *savepoint) {
+IMPLEMENT_FUNCTION(Cooks, chapter2, 8) {
 }
 
-void Cooks::chapter3(SavePoints::SavePoint *savepoint) {
+IMPLEMENT_FUNCTION(Cooks, chapter3, 10) {
 }
 
-void Cooks::chapter4(SavePoints::SavePoint *savepoint) {
+IMPLEMENT_FUNCTION(Cooks, chapter4, 12) {
 }
 
-void Cooks::chapter5(SavePoints::SavePoint *savepoint) {
+IMPLEMENT_FUNCTION(Cooks, chapter5, 14) {
 }
 
 } // End of namespace LastExpress

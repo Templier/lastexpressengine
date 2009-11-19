@@ -28,10 +28,6 @@
 
 #include "lastexpress/entities/entity.h"
 
-#include "lastexpress/game/logic.h"
-
-#include "lastexpress/lastexpress.h"
-
 namespace LastExpress {
 
 class LastExpressEngine;
@@ -41,11 +37,11 @@ public:
 	Kahina(LastExpressEngine *engine);
 
 	// Setup	
-	DECLARE_FUNCTION(Kahina, chapter1, 10)
-	DECLARE_FUNCTION(Kahina, chapter2, 16)
-	DECLARE_FUNCTION(Kahina, chapter3, 18)
-	DECLARE_FUNCTION(Kahina, chapter4, 28)
-	DECLARE_FUNCTION(Kahina, chapter5, 29)
+	DECLARE_FUNCTION(chapter1)
+	DECLARE_FUNCTION(chapter2)
+	DECLARE_FUNCTION(chapter3)
+	DECLARE_FUNCTION(chapter4)
+	DECLARE_FUNCTION(chapter5)
 
 	void nullfunc(SavePoints::SavePoint *savepoint);
 };

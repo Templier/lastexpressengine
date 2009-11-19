@@ -25,80 +25,82 @@
 
 #include "lastexpress/entities/alexei.h"
 
-#include "lastexpress/game/object.h"
+#include "lastexpress/game/savepoint.h"
+#include "lastexpress/game/state.h"
 
 #include "lastexpress/helpers.h"
+#include "lastexpress/lastexpress.h"
 
 namespace LastExpress {
 
 Alexei::Alexei(LastExpressEngine *engine) : Entity(engine, SavePoints::kAlexei) {
-	CALLBACK_FUNCTION(Alexei, nullfunc);
-	CALLBACK_FUNCTION(Alexei, nullfunc);
-	CALLBACK_FUNCTION(Alexei, nullfunc);
-	CALLBACK_FUNCTION(Alexei, nullfunc);
-	CALLBACK_FUNCTION(Alexei, nullfunc);
-	CALLBACK_FUNCTION(Alexei, nullfunc);
-	CALLBACK_FUNCTION(Alexei, nullfunc);
-	CALLBACK_FUNCTION(Alexei, nullfunc);
-	CALLBACK_FUNCTION(Alexei, nullfunc);
-	CALLBACK_FUNCTION(Alexei, nullfunc);
-	CALLBACK_FUNCTION(Alexei, nullfunc);
-	CALLBACK_FUNCTION(Alexei, nullfunc);
-	CALLBACK_FUNCTION(Alexei, nullfunc);
-	CALLBACK_FUNCTION(Alexei, nullfunc);
-	CALLBACK_FUNCTION(Alexei, nullfunc);
-	CALLBACK_FUNCTION(Alexei, nullfunc);
-	CALLBACK_FUNCTION(Alexei, chapter1);
-	CALLBACK_FUNCTION(Alexei, nullfunc);
-	CALLBACK_FUNCTION(Alexei, nullfunc);
-	CALLBACK_FUNCTION(Alexei, nullfunc);
-	CALLBACK_FUNCTION(Alexei, nullfunc);
-	CALLBACK_FUNCTION(Alexei, nullfunc);
-	CALLBACK_FUNCTION(Alexei, nullfunc);
-	CALLBACK_FUNCTION(Alexei, nullfunc);
-	CALLBACK_FUNCTION(Alexei, nullfunc);
-	CALLBACK_FUNCTION(Alexei, nullfunc);
-	CALLBACK_FUNCTION(Alexei, nullfunc);
-	CALLBACK_FUNCTION(Alexei, chapter2);
-	CALLBACK_FUNCTION(Alexei, nullfunc);
-	CALLBACK_FUNCTION(Alexei, nullfunc);
-	CALLBACK_FUNCTION(Alexei, nullfunc);	
-	CALLBACK_FUNCTION(Alexei, chapter3);
-	CALLBACK_FUNCTION(Alexei, nullfunc);
-	CALLBACK_FUNCTION(Alexei, nullfunc);
-	CALLBACK_FUNCTION(Alexei, nullfunc);
-	CALLBACK_FUNCTION(Alexei, nullfunc);
-	CALLBACK_FUNCTION(Alexei, chapter4);
-	CALLBACK_FUNCTION(Alexei, nullfunc);
-	CALLBACK_FUNCTION(Alexei, nullfunc);
-	CALLBACK_FUNCTION(Alexei, nullfunc);
-	CALLBACK_FUNCTION(Alexei, nullfunc);
-	CALLBACK_FUNCTION(Alexei, nullfunc);
-	CALLBACK_FUNCTION(Alexei, nullfunc);
-	CALLBACK_FUNCTION(Alexei, nullfunc);
-	CALLBACK_FUNCTION(Alexei, nullfunc);
-	CALLBACK_FUNCTION(Alexei, nullfunc);
-	CALLBACK_FUNCTION(Alexei, nullfunc);
-	CALLBACK_FUNCTION(Alexei, chapter5);
+	ADD_CALLBACK_FUNCTION(Alexei, nullfunc);
+	ADD_CALLBACK_FUNCTION(Alexei, nullfunc);
+	ADD_CALLBACK_FUNCTION(Alexei, nullfunc);
+	ADD_CALLBACK_FUNCTION(Alexei, nullfunc);
+	ADD_CALLBACK_FUNCTION(Alexei, nullfunc);
+	ADD_CALLBACK_FUNCTION(Alexei, nullfunc);
+	ADD_CALLBACK_FUNCTION(Alexei, nullfunc);
+	ADD_CALLBACK_FUNCTION(Alexei, nullfunc);
+	ADD_CALLBACK_FUNCTION(Alexei, nullfunc);
+	ADD_CALLBACK_FUNCTION(Alexei, nullfunc);
+	ADD_CALLBACK_FUNCTION(Alexei, nullfunc);
+	ADD_CALLBACK_FUNCTION(Alexei, nullfunc);
+	ADD_CALLBACK_FUNCTION(Alexei, nullfunc);
+	ADD_CALLBACK_FUNCTION(Alexei, nullfunc);
+	ADD_CALLBACK_FUNCTION(Alexei, nullfunc);
+	ADD_CALLBACK_FUNCTION(Alexei, nullfunc);
+	ADD_CALLBACK_FUNCTION(Alexei, chapter1);
+	ADD_CALLBACK_FUNCTION(Alexei, nullfunc);
+	ADD_CALLBACK_FUNCTION(Alexei, nullfunc);
+	ADD_CALLBACK_FUNCTION(Alexei, nullfunc);
+	ADD_CALLBACK_FUNCTION(Alexei, nullfunc);
+	ADD_CALLBACK_FUNCTION(Alexei, nullfunc);
+	ADD_CALLBACK_FUNCTION(Alexei, nullfunc);
+	ADD_CALLBACK_FUNCTION(Alexei, nullfunc);
+	ADD_CALLBACK_FUNCTION(Alexei, nullfunc);
+	ADD_CALLBACK_FUNCTION(Alexei, nullfunc);
+	ADD_CALLBACK_FUNCTION(Alexei, nullfunc);
+	ADD_CALLBACK_FUNCTION(Alexei, chapter2);
+	ADD_CALLBACK_FUNCTION(Alexei, nullfunc);
+	ADD_CALLBACK_FUNCTION(Alexei, nullfunc);
+	ADD_CALLBACK_FUNCTION(Alexei, nullfunc);	
+	ADD_CALLBACK_FUNCTION(Alexei, chapter3);
+	ADD_CALLBACK_FUNCTION(Alexei, nullfunc);
+	ADD_CALLBACK_FUNCTION(Alexei, nullfunc);
+	ADD_CALLBACK_FUNCTION(Alexei, nullfunc);
+	ADD_CALLBACK_FUNCTION(Alexei, nullfunc);
+	ADD_CALLBACK_FUNCTION(Alexei, chapter4);
+	ADD_CALLBACK_FUNCTION(Alexei, nullfunc);
+	ADD_CALLBACK_FUNCTION(Alexei, nullfunc);
+	ADD_CALLBACK_FUNCTION(Alexei, nullfunc);
+	ADD_CALLBACK_FUNCTION(Alexei, nullfunc);
+	ADD_CALLBACK_FUNCTION(Alexei, nullfunc);
+	ADD_CALLBACK_FUNCTION(Alexei, nullfunc);
+	ADD_CALLBACK_FUNCTION(Alexei, nullfunc);
+	ADD_CALLBACK_FUNCTION(Alexei, nullfunc);
+	ADD_CALLBACK_FUNCTION(Alexei, nullfunc);
+	ADD_CALLBACK_FUNCTION(Alexei, nullfunc);
+	ADD_CALLBACK_FUNCTION(Alexei, chapter5);
 }
 
 void Alexei::nullfunc(SavePoints::SavePoint *savepoint) {
 	error("Alexei: callback function not implemented!");
 }
 
-void Alexei::chapter1(SavePoints::SavePoint *savepoint) {
+IMPLEMENT_FUNCTION(Alexei, chapter1, 17) {
 }
 
-void Alexei::chapter2(SavePoints::SavePoint *savepoint) {
+IMPLEMENT_FUNCTION(Alexei, chapter2, 28) {
 }
 
-void Alexei::chapter3(SavePoints::SavePoint *savepoint) {
+IMPLEMENT_FUNCTION(Alexei, chapter3, 32) {
 }
 
-void Alexei::chapter4(SavePoints::SavePoint *savepoint) {
+IMPLEMENT_FUNCTION(Alexei, chapter4, 37) {
 }
 
-void Alexei::chapter5(SavePoints::SavePoint *savepoint) {
+IMPLEMENT_FUNCTION(Alexei, chapter5, 48) {
 }
 
 } // End of namespace LastExpress

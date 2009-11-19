@@ -28,7 +28,7 @@
 #include "lastexpress/data/snd.h"
 
 #include "lastexpress/game/action.h"
-#include "lastexpress/game/logic.h"
+#include "lastexpress/game/state.h"
 
 #include "lastexpress/helpers.h"
 #include "lastexpress/lastexpress.h"
@@ -348,10 +348,10 @@ const char *Sound::getDialogName(DialogId id) {
 		if (getEvent(Action::kLocomotiveMilos) || getEvent(Action::kLocomotiveMilosNight))
 			return "XMIL5";
 
-		if (getEvent(Action::kMilosCompartmentVisitTyler) && (getProgress().chapter == Logic::kChapter3 || getProgress().chapter == Logic::kChapter4))
+		if (getEvent(Action::kMilosCompartmentVisitTyler) && (getProgress().chapter == State::kChapter3 || getProgress().chapter == State::kChapter4))
 			return "XMIL4";
 
-		if (getEvent(Action::kMilosCorridorThanks) || getProgress().chapter == Logic::kChapter5)
+		if (getEvent(Action::kMilosCorridorThanks) || getProgress().chapter == State::kChapter5)
 			return "XMIL3";
 
 		if (getEvent(Action::kMilosCompartmentVisitAugust))

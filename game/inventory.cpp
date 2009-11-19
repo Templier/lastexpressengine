@@ -25,8 +25,11 @@
 
 #include "lastexpress/game/inventory.h"
 
+#include "lastexpress/data/cursor.h"
 #include "lastexpress/data/snd.h"
+
 #include "lastexpress/game/logic.h"
+#include "lastexpress/game/state.h"
 
 #include "lastexpress/graphics.h"
 #include "lastexpress/helpers.h"
@@ -276,7 +279,7 @@ void Inventory::restore() {
 
 	// See processhotspot for kActionInventory
 
-	error("Inventory::restore is not implemented!");
+	warning("Inventory::restore is not implemented!");
 }
 
 //////////////////////////////////////////////////////////////////////////

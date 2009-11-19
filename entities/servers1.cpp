@@ -25,52 +25,54 @@
 
 #include "lastexpress/entities/servers1.h"
 
-#include "lastexpress/game/object.h"
+#include "lastexpress/game/savepoint.h"
+#include "lastexpress/game/state.h"
 
+#include "lastexpress/lastexpress.h"
 #include "lastexpress/helpers.h"
 
 namespace LastExpress {
 
 Servers1::Servers1(LastExpressEngine *engine) : Entity(engine, SavePoints::kServers1) {
-	CALLBACK_FUNCTION(Servers1, nullfunc);
-	CALLBACK_FUNCTION(Servers1, nullfunc);
-	CALLBACK_FUNCTION(Servers1, nullfunc);
-	CALLBACK_FUNCTION(Servers1, nullfunc);
-	CALLBACK_FUNCTION(Servers1, nullfunc);
-	CALLBACK_FUNCTION(Servers1, nullfunc);
-	CALLBACK_FUNCTION(Servers1, nullfunc);
-	CALLBACK_FUNCTION(Servers1, chapter1);
-	CALLBACK_FUNCTION(Servers1, nullfunc);
-	CALLBACK_FUNCTION(Servers1, nullfunc);
-	CALLBACK_FUNCTION(Servers1, nullfunc);
-	CALLBACK_FUNCTION(Servers1, nullfunc);
-	CALLBACK_FUNCTION(Servers1, nullfunc);
-	CALLBACK_FUNCTION(Servers1, nullfunc);
-	CALLBACK_FUNCTION(Servers1, nullfunc);
-	CALLBACK_FUNCTION(Servers1, nullfunc);
-	CALLBACK_FUNCTION(Servers1, chapter2);
-	CALLBACK_FUNCTION(Servers1, nullfunc);
-	CALLBACK_FUNCTION(Servers1, nullfunc);
-	CALLBACK_FUNCTION(Servers1, nullfunc);
-	CALLBACK_FUNCTION(Servers1, nullfunc);
-	CALLBACK_FUNCTION(Servers1, chapter3);
-	CALLBACK_FUNCTION(Servers1, nullfunc);
-	CALLBACK_FUNCTION(Servers1, nullfunc);
-	CALLBACK_FUNCTION(Servers1, chapter4);
-	CALLBACK_FUNCTION(Servers1, nullfunc);
-	CALLBACK_FUNCTION(Servers1, nullfunc);
-	CALLBACK_FUNCTION(Servers1, nullfunc);
-	CALLBACK_FUNCTION(Servers1, nullfunc);
-	CALLBACK_FUNCTION(Servers1, chapter5);
-	CALLBACK_FUNCTION(Servers1, nullfunc);
-	CALLBACK_FUNCTION_NULL()
+	ADD_CALLBACK_FUNCTION(Servers1, nullfunc);
+	ADD_CALLBACK_FUNCTION(Servers1, nullfunc);
+	ADD_CALLBACK_FUNCTION(Servers1, nullfunc);
+	ADD_CALLBACK_FUNCTION(Servers1, nullfunc);
+	ADD_CALLBACK_FUNCTION(Servers1, nullfunc);
+	ADD_CALLBACK_FUNCTION(Servers1, nullfunc);
+	ADD_CALLBACK_FUNCTION(Servers1, nullfunc);
+	ADD_CALLBACK_FUNCTION(Servers1, chapter1);
+	ADD_CALLBACK_FUNCTION(Servers1, nullfunc);
+	ADD_CALLBACK_FUNCTION(Servers1, nullfunc);
+	ADD_CALLBACK_FUNCTION(Servers1, nullfunc);
+	ADD_CALLBACK_FUNCTION(Servers1, nullfunc);
+	ADD_CALLBACK_FUNCTION(Servers1, nullfunc);
+	ADD_CALLBACK_FUNCTION(Servers1, nullfunc);
+	ADD_CALLBACK_FUNCTION(Servers1, nullfunc);
+	ADD_CALLBACK_FUNCTION(Servers1, nullfunc);
+	ADD_CALLBACK_FUNCTION(Servers1, chapter2);
+	ADD_CALLBACK_FUNCTION(Servers1, nullfunc);
+	ADD_CALLBACK_FUNCTION(Servers1, nullfunc);
+	ADD_CALLBACK_FUNCTION(Servers1, nullfunc);
+	ADD_CALLBACK_FUNCTION(Servers1, nullfunc);
+	ADD_CALLBACK_FUNCTION(Servers1, chapter3);
+	ADD_CALLBACK_FUNCTION(Servers1, nullfunc);
+	ADD_CALLBACK_FUNCTION(Servers1, nullfunc);
+	ADD_CALLBACK_FUNCTION(Servers1, chapter4);
+	ADD_CALLBACK_FUNCTION(Servers1, nullfunc);
+	ADD_CALLBACK_FUNCTION(Servers1, nullfunc);
+	ADD_CALLBACK_FUNCTION(Servers1, nullfunc);
+	ADD_CALLBACK_FUNCTION(Servers1, nullfunc);
+	ADD_CALLBACK_FUNCTION(Servers1, chapter5);
+	ADD_CALLBACK_FUNCTION(Servers1, nullfunc);
+	ADD_NULL_FUNCTION()
 }
 
 void Servers1::nullfunc(SavePoints::SavePoint *savepoint) {
 	error("Servers1: callback function not implemented!");
 }
 
-void Servers1::chapter1(SavePoints::SavePoint *savepoint) {
+IMPLEMENT_FUNCTION(Servers1, chapter1, 8) {
 	switch (savepoint->action) {
 	default:
 		break;
@@ -99,16 +101,18 @@ void Servers1::chapter1(SavePoints::SavePoint *savepoint) {
 	}
 }
 
-void Servers1::chapter2(SavePoints::SavePoint *savepoint) {
+IMPLEMENT_FUNCTION(Servers1, chapter2, 17) {
 }
 
-void Servers1::chapter3(SavePoints::SavePoint *savepoint) {
+IMPLEMENT_FUNCTION(Servers1, chapter3, 22) {
 }
 
-void Servers1::chapter4(SavePoints::SavePoint *savepoint) {
+IMPLEMENT_FUNCTION(Servers1, chapter4, 25) {
 }
 
-void Servers1::chapter5(SavePoints::SavePoint *savepoint) {
+IMPLEMENT_FUNCTION(Servers1, chapter5, 30) {
 }
+
+IMPLEMENT_NULL_FUNCTION(Servers1, 32)
 
 } // End of namespace LastExpress

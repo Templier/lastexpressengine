@@ -61,7 +61,7 @@
 #include "lastexpress/entities/vesna.h"
 #include "lastexpress/entities/yasmin.h"
 
-#include "lastexpress/game/logic.h"
+#include "lastexpress/game/state.h"
 
 #include "lastexpress/helpers.h"
 #include "lastexpress/lastexpress.h"
@@ -129,7 +129,7 @@ void Entities::load(int callbackIndex) {
 
 }
 
-void Entities::setup(Logic::ChapterIndex chapter) {
+void Entities::setup(State::ChapterIndex chapter) {
 	// TODO if chapter is not 0
 	//  - reset current call for every entity & another entry
 	//  - raw sequences

@@ -27,41 +27,44 @@
 
 #include "lastexpress/game/inventory.h"
 #include "lastexpress/game/object.h"
+#include "lastexpress/game/savepoint.h"
+#include "lastexpress/game/state.h"
 
 #include "lastexpress/helpers.h"
+#include "lastexpress/lastexpress.h"
 
 namespace LastExpress {
 
 Chapters::Chapters(LastExpressEngine *engine) : Entity(engine, SavePoints::kChapters) {
-	CALLBACK_FUNCTION(Chapters, nullfunc);
-	CALLBACK_FUNCTION(Chapters, nullfunc);
-	CALLBACK_FUNCTION(Chapters, nullfunc);
-	CALLBACK_FUNCTION(Chapters, chapter1);
-	CALLBACK_FUNCTION(Chapters, nullfunc);
-	CALLBACK_FUNCTION(Chapters, nullfunc);
-	CALLBACK_FUNCTION(Chapters, chapter1_init);
-	CALLBACK_FUNCTION(Chapters, nullfunc);
-	CALLBACK_FUNCTION(Chapters, nullfunc);
-	CALLBACK_FUNCTION(Chapters, chapter2);
-	CALLBACK_FUNCTION(Chapters, nullfunc);
-	CALLBACK_FUNCTION(Chapters, nullfunc);
-	CALLBACK_FUNCTION(Chapters, chapter3);
-	CALLBACK_FUNCTION(Chapters, nullfunc);
-	CALLBACK_FUNCTION(Chapters, nullfunc);
-	CALLBACK_FUNCTION(Chapters, nullfunc);
-	CALLBACK_FUNCTION(Chapters, chapter4);
-	CALLBACK_FUNCTION(Chapters, nullfunc);
-	CALLBACK_FUNCTION(Chapters, nullfunc);
-	CALLBACK_FUNCTION(Chapters, chapter5);
-	CALLBACK_FUNCTION(Chapters, nullfunc);
-	CALLBACK_FUNCTION(Chapters, nullfunc);
+	ADD_CALLBACK_FUNCTION(Chapters, nullfunc);
+	ADD_CALLBACK_FUNCTION(Chapters, nullfunc);
+	ADD_CALLBACK_FUNCTION(Chapters, nullfunc);
+	ADD_CALLBACK_FUNCTION(Chapters, chapter1);
+	ADD_CALLBACK_FUNCTION(Chapters, nullfunc);
+	ADD_CALLBACK_FUNCTION(Chapters, nullfunc);
+	ADD_CALLBACK_FUNCTION(Chapters, chapter1_init);
+	ADD_CALLBACK_FUNCTION(Chapters, nullfunc);
+	ADD_CALLBACK_FUNCTION(Chapters, nullfunc);
+	ADD_CALLBACK_FUNCTION(Chapters, chapter2);
+	ADD_CALLBACK_FUNCTION(Chapters, nullfunc);
+	ADD_CALLBACK_FUNCTION(Chapters, nullfunc);
+	ADD_CALLBACK_FUNCTION(Chapters, chapter3);
+	ADD_CALLBACK_FUNCTION(Chapters, nullfunc);
+	ADD_CALLBACK_FUNCTION(Chapters, nullfunc);
+	ADD_CALLBACK_FUNCTION(Chapters, nullfunc);
+	ADD_CALLBACK_FUNCTION(Chapters, chapter4);
+	ADD_CALLBACK_FUNCTION(Chapters, nullfunc);
+	ADD_CALLBACK_FUNCTION(Chapters, nullfunc);
+	ADD_CALLBACK_FUNCTION(Chapters, chapter5);
+	ADD_CALLBACK_FUNCTION(Chapters, nullfunc);
+	ADD_CALLBACK_FUNCTION(Chapters, nullfunc);
 }
 
 void Chapters::nullfunc(SavePoints::SavePoint *savepoint) {
 	error("Chapters: callback function not implemented!");
 }
 
-void Chapters::chapter1(SavePoints::SavePoint *savepoint) {
+IMPLEMENT_FUNCTION(Chapters, chapter1, 4) {
 	if (savepoint->action != SavePoints::kActionDefault)
 		return;
 
@@ -69,11 +72,11 @@ void Chapters::chapter1(SavePoints::SavePoint *savepoint) {
 	setup_chapter1_init();
 }
 
-void Chapters::chapter1_init(SavePoints::SavePoint *savepoint) {
+IMPLEMENT_FUNCTION(Chapters, chapter1_init, 7) {
 	if (savepoint->action != SavePoints::kActionDefault)
 		return;
 
-	getProgress().chapter = Logic::kChapter1;
+	getProgress().chapter = State::kChapter1;
 	// TODO function call modifying an unknown global var
 	getState()->time = 1061100;
 	getState()->timeDelta = 0;
@@ -136,19 +139,19 @@ void Chapters::chapter1_init(SavePoints::SavePoint *savepoint) {
 	// TODO call another function
 }
 
-void Chapters::chapter2(SavePoints::SavePoint *savepoint) {
+IMPLEMENT_FUNCTION(Chapters, chapter2, 10) {
 
 }
 
-void Chapters::chapter3(SavePoints::SavePoint *savepoint) {
+IMPLEMENT_FUNCTION(Chapters, chapter3, 13) {
 
 }
 
-void Chapters::chapter4(SavePoints::SavePoint *savepoint) {
+IMPLEMENT_FUNCTION(Chapters, chapter4, 17) {
 
 }
 
-void Chapters::chapter5(SavePoints::SavePoint *savepoint) {
+IMPLEMENT_FUNCTION(Chapters, chapter5, 20) {
 
 }
 

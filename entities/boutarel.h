@@ -28,10 +28,6 @@
 
 #include "lastexpress/entities/entity.h"
 
-#include "lastexpress/game/logic.h"
-
-#include "lastexpress/lastexpress.h"
-
 namespace LastExpress {
 
 class LastExpressEngine;
@@ -41,12 +37,12 @@ public:
 	Boutarel(LastExpressEngine *engine);
 
 	// Setup	
-	DECLARE_FUNCTION(Boutarel, chapter1, 19)
-	DECLARE_FUNCTION(Boutarel, chapter2, 23)
-	DECLARE_FUNCTION(Boutarel, chapter3, 26)
-	DECLARE_FUNCTION(Boutarel, chapter4, 31)
-	DECLARE_FUNCTION(Boutarel, chapter5, 36)
-	DECLARE_FUNCTION_NULL(39)
+	DECLARE_FUNCTION(chapter1)
+	DECLARE_FUNCTION(chapter2)
+	DECLARE_FUNCTION(chapter3)
+	DECLARE_FUNCTION(chapter4)
+	DECLARE_FUNCTION(chapter5)
+	DECLARE_NULL_FUNCTION()
 
 	void nullfunc(SavePoints::SavePoint *savepoint);
 };

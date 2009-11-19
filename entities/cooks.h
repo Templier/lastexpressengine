@@ -28,10 +28,6 @@
 
 #include "lastexpress/entities/entity.h"
 
-#include "lastexpress/game/logic.h"
-
-#include "lastexpress/lastexpress.h"
-
 namespace LastExpress {
 
 class LastExpressEngine;
@@ -40,12 +36,12 @@ class Cooks : public Entity {
 public:
 	Cooks(LastExpressEngine *engine);
 
-	// Setup	
-	DECLARE_FUNCTION(Cooks, chapter1, 5)
-	DECLARE_FUNCTION(Cooks, chapter2, 8)
-	DECLARE_FUNCTION(Cooks, chapter3, 10)
-	DECLARE_FUNCTION(Cooks, chapter4, 12)
-	DECLARE_FUNCTION(Cooks, chapter5, 14)
+	// Setup
+	DECLARE_FUNCTION(chapter1)
+	DECLARE_FUNCTION(chapter2)
+	DECLARE_FUNCTION(chapter3)
+	DECLARE_FUNCTION(chapter4)
+	DECLARE_FUNCTION(chapter5)
 
 	void nullfunc(SavePoints::SavePoint *savepoint);
 };

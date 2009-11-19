@@ -25,66 +25,68 @@
 
 #include "lastexpress/entities/ivo.h"
 
-#include "lastexpress/game/object.h"
+#include "lastexpress/game/savepoint.h"
+#include "lastexpress/game/state.h"
 
+#include "lastexpress/lastexpress.h"
 #include "lastexpress/helpers.h"
 
 namespace LastExpress {
 
 Ivo::Ivo(LastExpressEngine *engine) : Entity(engine, SavePoints::kIvo) {
-	CALLBACK_FUNCTION(Ivo, nullfunc);
-	CALLBACK_FUNCTION(Ivo, nullfunc);
-	CALLBACK_FUNCTION(Ivo, nullfunc);
-	CALLBACK_FUNCTION(Ivo, nullfunc);
-	CALLBACK_FUNCTION(Ivo, nullfunc);
-	CALLBACK_FUNCTION(Ivo, nullfunc);
-	CALLBACK_FUNCTION(Ivo, nullfunc);
-	CALLBACK_FUNCTION(Ivo, nullfunc);
-	CALLBACK_FUNCTION(Ivo, nullfunc);
-	CALLBACK_FUNCTION(Ivo, nullfunc);
-	CALLBACK_FUNCTION(Ivo, nullfunc);
-	CALLBACK_FUNCTION(Ivo, nullfunc);
-	CALLBACK_FUNCTION(Ivo, nullfunc);
-	CALLBACK_FUNCTION(Ivo, chapter1);
-	CALLBACK_FUNCTION(Ivo, nullfunc);
-	CALLBACK_FUNCTION(Ivo, nullfunc);
-	CALLBACK_FUNCTION(Ivo, nullfunc);
-	CALLBACK_FUNCTION(Ivo, chapter2);
-	CALLBACK_FUNCTION(Ivo, nullfunc);
-	CALLBACK_FUNCTION(Ivo, nullfunc);
-	CALLBACK_FUNCTION(Ivo, nullfunc);
-	CALLBACK_FUNCTION(Ivo, chapter3);
-	CALLBACK_FUNCTION(Ivo, nullfunc);
-	CALLBACK_FUNCTION(Ivo, chapter4);
-	CALLBACK_FUNCTION(Ivo, nullfunc);
-	CALLBACK_FUNCTION(Ivo, nullfunc);
-	CALLBACK_FUNCTION(Ivo, nullfunc);
-	CALLBACK_FUNCTION(Ivo, nullfunc);
-	CALLBACK_FUNCTION(Ivo, nullfunc);
-	CALLBACK_FUNCTION(Ivo, chapter5);
-	CALLBACK_FUNCTION(Ivo, nullfunc);
-	CALLBACK_FUNCTION(Ivo, nullfunc);
-	CALLBACK_FUNCTION(Ivo, nullfunc);
-	CALLBACK_FUNCTION(Ivo, nullfunc);
+	ADD_CALLBACK_FUNCTION(Ivo, nullfunc);
+	ADD_CALLBACK_FUNCTION(Ivo, nullfunc);
+	ADD_CALLBACK_FUNCTION(Ivo, nullfunc);
+	ADD_CALLBACK_FUNCTION(Ivo, nullfunc);
+	ADD_CALLBACK_FUNCTION(Ivo, nullfunc);
+	ADD_CALLBACK_FUNCTION(Ivo, nullfunc);
+	ADD_CALLBACK_FUNCTION(Ivo, nullfunc);
+	ADD_CALLBACK_FUNCTION(Ivo, nullfunc);
+	ADD_CALLBACK_FUNCTION(Ivo, nullfunc);
+	ADD_CALLBACK_FUNCTION(Ivo, nullfunc);
+	ADD_CALLBACK_FUNCTION(Ivo, nullfunc);
+	ADD_CALLBACK_FUNCTION(Ivo, nullfunc);
+	ADD_CALLBACK_FUNCTION(Ivo, nullfunc);
+	ADD_CALLBACK_FUNCTION(Ivo, chapter1);
+	ADD_CALLBACK_FUNCTION(Ivo, nullfunc);
+	ADD_CALLBACK_FUNCTION(Ivo, nullfunc);
+	ADD_CALLBACK_FUNCTION(Ivo, nullfunc);
+	ADD_CALLBACK_FUNCTION(Ivo, chapter2);
+	ADD_CALLBACK_FUNCTION(Ivo, nullfunc);
+	ADD_CALLBACK_FUNCTION(Ivo, nullfunc);
+	ADD_CALLBACK_FUNCTION(Ivo, nullfunc);
+	ADD_CALLBACK_FUNCTION(Ivo, chapter3);
+	ADD_CALLBACK_FUNCTION(Ivo, nullfunc);
+	ADD_CALLBACK_FUNCTION(Ivo, chapter4);
+	ADD_CALLBACK_FUNCTION(Ivo, nullfunc);
+	ADD_CALLBACK_FUNCTION(Ivo, nullfunc);
+	ADD_CALLBACK_FUNCTION(Ivo, nullfunc);
+	ADD_CALLBACK_FUNCTION(Ivo, nullfunc);
+	ADD_CALLBACK_FUNCTION(Ivo, nullfunc);
+	ADD_CALLBACK_FUNCTION(Ivo, chapter5);
+	ADD_CALLBACK_FUNCTION(Ivo, nullfunc);
+	ADD_CALLBACK_FUNCTION(Ivo, nullfunc);
+	ADD_CALLBACK_FUNCTION(Ivo, nullfunc);
+	ADD_CALLBACK_FUNCTION(Ivo, nullfunc);
 }
 
 void Ivo::nullfunc(SavePoints::SavePoint *savepoint) {
 	error("Ivo: callback function not implemented!");
 }
 
-void Ivo::chapter1(SavePoints::SavePoint *savepoint) {
+IMPLEMENT_FUNCTION(Ivo, chapter1, 14) {
 }
 
-void Ivo::chapter2(SavePoints::SavePoint *savepoint) {
+IMPLEMENT_FUNCTION(Ivo, chapter2, 18) {
 }
 
-void Ivo::chapter3(SavePoints::SavePoint *savepoint) {
+IMPLEMENT_FUNCTION(Ivo, chapter3, 22) {
 }
 
-void Ivo::chapter4(SavePoints::SavePoint *savepoint) {
+IMPLEMENT_FUNCTION(Ivo, chapter4, 24) {
 }
 
-void Ivo::chapter5(SavePoints::SavePoint *savepoint) {
+IMPLEMENT_FUNCTION(Ivo, chapter5, 30) {
 }
 
 } // End of namespace LastExpress

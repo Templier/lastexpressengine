@@ -28,10 +28,6 @@
 
 #include "lastexpress/entities/entity.h"
 
-#include "lastexpress/game/logic.h"
-
-#include "lastexpress/lastexpress.h"
-
 namespace LastExpress {
 
 class LastExpressEngine;
@@ -41,11 +37,11 @@ public:
 	August(LastExpressEngine *engine);
 
 	// Setup	
-	DECLARE_FUNCTION(August, chapter1, 22)
-	DECLARE_FUNCTION(August, chapter2, 35)
-	DECLARE_FUNCTION(August, chapter3, 40)
-	DECLARE_FUNCTION(August, chapter4, 57)
-	DECLARE_FUNCTION(August, chapter5, 66)
+	DECLARE_FUNCTION(chapter1)
+	DECLARE_FUNCTION(chapter2)
+	DECLARE_FUNCTION(chapter3)
+	DECLARE_FUNCTION(chapter4)
+	DECLARE_FUNCTION(chapter5)
 
 	void nullfunc(SavePoints::SavePoint *savepoint);
 };

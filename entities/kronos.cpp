@@ -25,57 +25,59 @@
 
 #include "lastexpress/entities/kronos.h"
 
-#include "lastexpress/game/object.h"
+#include "lastexpress/game/savepoint.h"
+#include "lastexpress/game/state.h"
 
+#include "lastexpress/lastexpress.h"
 #include "lastexpress/helpers.h"
 
 namespace LastExpress {
 
 Kronos::Kronos(LastExpressEngine *engine) : Entity(engine, SavePoints::kKronos) {
-	CALLBACK_FUNCTION(Kronos, nullfunc);
-	CALLBACK_FUNCTION(Kronos, nullfunc);
-	CALLBACK_FUNCTION(Kronos, nullfunc);
-	CALLBACK_FUNCTION(Kronos, nullfunc);
-	CALLBACK_FUNCTION(Kronos, nullfunc);
-	CALLBACK_FUNCTION(Kronos, nullfunc);
-	CALLBACK_FUNCTION(Kronos, chapter1);
-	CALLBACK_FUNCTION(Kronos, nullfunc);
-	CALLBACK_FUNCTION(Kronos, nullfunc);
-	CALLBACK_FUNCTION(Kronos, nullfunc);
-	CALLBACK_FUNCTION(Kronos, nullfunc);
-	CALLBACK_FUNCTION(Kronos, chapter2);
-	CALLBACK_FUNCTION(Kronos, chapter3);
-	CALLBACK_FUNCTION(Kronos, nullfunc);
-	CALLBACK_FUNCTION(Kronos, nullfunc);
-	CALLBACK_FUNCTION(Kronos, nullfunc);
-	CALLBACK_FUNCTION(Kronos, nullfunc);
-	CALLBACK_FUNCTION(Kronos, nullfunc);
-	CALLBACK_FUNCTION(Kronos, nullfunc);
-	CALLBACK_FUNCTION(Kronos, nullfunc);
-	CALLBACK_FUNCTION(Kronos, nullfunc);
-	CALLBACK_FUNCTION(Kronos, nullfunc);
-	CALLBACK_FUNCTION(Kronos, nullfunc);
-	CALLBACK_FUNCTION(Kronos, chapter4);
-	CALLBACK_FUNCTION(Kronos, chapter5);
+	ADD_CALLBACK_FUNCTION(Kronos, nullfunc);
+	ADD_CALLBACK_FUNCTION(Kronos, nullfunc);
+	ADD_CALLBACK_FUNCTION(Kronos, nullfunc);
+	ADD_CALLBACK_FUNCTION(Kronos, nullfunc);
+	ADD_CALLBACK_FUNCTION(Kronos, nullfunc);
+	ADD_CALLBACK_FUNCTION(Kronos, nullfunc);
+	ADD_CALLBACK_FUNCTION(Kronos, chapter1);
+	ADD_CALLBACK_FUNCTION(Kronos, nullfunc);
+	ADD_CALLBACK_FUNCTION(Kronos, nullfunc);
+	ADD_CALLBACK_FUNCTION(Kronos, nullfunc);
+	ADD_CALLBACK_FUNCTION(Kronos, nullfunc);
+	ADD_CALLBACK_FUNCTION(Kronos, chapter2);
+	ADD_CALLBACK_FUNCTION(Kronos, chapter3);
+	ADD_CALLBACK_FUNCTION(Kronos, nullfunc);
+	ADD_CALLBACK_FUNCTION(Kronos, nullfunc);
+	ADD_CALLBACK_FUNCTION(Kronos, nullfunc);
+	ADD_CALLBACK_FUNCTION(Kronos, nullfunc);
+	ADD_CALLBACK_FUNCTION(Kronos, nullfunc);
+	ADD_CALLBACK_FUNCTION(Kronos, nullfunc);
+	ADD_CALLBACK_FUNCTION(Kronos, nullfunc);
+	ADD_CALLBACK_FUNCTION(Kronos, nullfunc);
+	ADD_CALLBACK_FUNCTION(Kronos, nullfunc);
+	ADD_CALLBACK_FUNCTION(Kronos, nullfunc);
+	ADD_CALLBACK_FUNCTION(Kronos, chapter4);
+	ADD_CALLBACK_FUNCTION(Kronos, chapter5);
 }
 
 void Kronos::nullfunc(SavePoints::SavePoint *savepoint) {
 	error("Kronos: callback function not implemented!");
 }
 
-void Kronos::chapter1(SavePoints::SavePoint *savepoint) {
+IMPLEMENT_FUNCTION(Kronos, chapter1, 7) {
 }
 
-void Kronos::chapter2(SavePoints::SavePoint *savepoint) {
+IMPLEMENT_FUNCTION(Kronos, chapter2, 12) {
 }
 
-void Kronos::chapter3(SavePoints::SavePoint *savepoint) {
+IMPLEMENT_FUNCTION(Kronos, chapter3, 13) {
 }
 
-void Kronos::chapter4(SavePoints::SavePoint *savepoint) {
+IMPLEMENT_FUNCTION(Kronos, chapter4, 24) {
 }
 
-void Kronos::chapter5(SavePoints::SavePoint *savepoint) {
+IMPLEMENT_FUNCTION(Kronos, chapter5, 25) {
 }
 
 } // End of namespace LastExpress

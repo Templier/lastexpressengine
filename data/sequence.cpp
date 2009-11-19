@@ -394,12 +394,12 @@ uint32 Sequence::count() {
 
 AnimFrame *Sequence::getFrame(uint32 index) {
 	if (_frames.size() == 0) {
-		warning("Trying to decode a sequence before loading its data");
+		error("Trying to decode a sequence before loading its data");
 		return NULL;
 	}
 
 	if (index > _frames.size() - 1) {
-		warning("Invalid sequence frame requested: %d, max %d", index, _frames.size() - 1);
+		error("Invalid sequence frame requested: %d, max %d", index, _frames.size() - 1);
 		return NULL;
 	}
 

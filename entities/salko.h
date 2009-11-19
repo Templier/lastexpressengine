@@ -28,10 +28,6 @@
 
 #include "lastexpress/entities/entity.h"
 
-#include "lastexpress/game/logic.h"
-
-#include "lastexpress/lastexpress.h"
-
 namespace LastExpress {
 
 class LastExpressEngine;
@@ -41,12 +37,12 @@ public:
 	Salko(LastExpressEngine *engine);
 
 	// Setup	
-	DECLARE_FUNCTION(Salko, chapter1, 9)
-	DECLARE_FUNCTION(Salko, chapter2, 12)
-	DECLARE_FUNCTION(Salko, chapter3, 14)
-	DECLARE_FUNCTION(Salko, chapter4, 18)
-	DECLARE_FUNCTION(Salko, chapter5, 23)
-	DECLARE_FUNCTION_NULL(25)
+	DECLARE_FUNCTION(chapter1)
+	DECLARE_FUNCTION(chapter2)
+	DECLARE_FUNCTION(chapter3)
+	DECLARE_FUNCTION(chapter4)
+	DECLARE_FUNCTION(chapter5)
+	DECLARE_NULL_FUNCTION()
 
 	void nullfunc(SavePoints::SavePoint *savepoint);
 };

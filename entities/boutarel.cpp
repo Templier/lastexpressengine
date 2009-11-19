@@ -26,58 +26,61 @@
 #include "lastexpress/entities/boutarel.h"
 
 #include "lastexpress/game/object.h"
+#include "lastexpress/game/savepoint.h"
+#include "lastexpress/game/state.h"
 
 #include "lastexpress/helpers.h"
+#include "lastexpress/lastexpress.h"
 
 namespace LastExpress {
 
 Boutarel::Boutarel(LastExpressEngine *engine) : Entity(engine, SavePoints::kBoutarel) {
-	CALLBACK_FUNCTION(Boutarel, nullfunc);
-	CALLBACK_FUNCTION(Boutarel, nullfunc);
-	CALLBACK_FUNCTION(Boutarel, nullfunc);
-	CALLBACK_FUNCTION(Boutarel, nullfunc);
-	CALLBACK_FUNCTION(Boutarel, nullfunc);
-	CALLBACK_FUNCTION(Boutarel, nullfunc);
-	CALLBACK_FUNCTION(Boutarel, nullfunc);
-	CALLBACK_FUNCTION(Boutarel, nullfunc);
-	CALLBACK_FUNCTION(Boutarel, nullfunc);
-	CALLBACK_FUNCTION(Boutarel, nullfunc);
-	CALLBACK_FUNCTION(Boutarel, nullfunc);
-	CALLBACK_FUNCTION(Boutarel, nullfunc);
-	CALLBACK_FUNCTION(Boutarel, nullfunc);
-	CALLBACK_FUNCTION(Boutarel, nullfunc);
-	CALLBACK_FUNCTION(Boutarel, nullfunc);
-	CALLBACK_FUNCTION(Boutarel, nullfunc);
-	CALLBACK_FUNCTION(Boutarel, nullfunc);
-	CALLBACK_FUNCTION(Boutarel, nullfunc);
-	CALLBACK_FUNCTION(Boutarel, chapter1);
-	CALLBACK_FUNCTION(Boutarel, nullfunc);
-	CALLBACK_FUNCTION(Boutarel, nullfunc);
-	CALLBACK_FUNCTION(Boutarel, nullfunc);
-	CALLBACK_FUNCTION(Boutarel, chapter2);
-	CALLBACK_FUNCTION(Boutarel, nullfunc);
-	CALLBACK_FUNCTION(Boutarel, nullfunc);
-	CALLBACK_FUNCTION(Boutarel, chapter3);
-	CALLBACK_FUNCTION(Boutarel, nullfunc);
-	CALLBACK_FUNCTION(Boutarel, nullfunc);
-	CALLBACK_FUNCTION(Boutarel, nullfunc);
-	CALLBACK_FUNCTION(Boutarel, nullfunc);
-	CALLBACK_FUNCTION(Boutarel, chapter4);
-	CALLBACK_FUNCTION(Boutarel, nullfunc);
-	CALLBACK_FUNCTION(Boutarel, nullfunc);
-	CALLBACK_FUNCTION(Boutarel, nullfunc);
-	CALLBACK_FUNCTION(Boutarel, nullfunc);
-	CALLBACK_FUNCTION(Boutarel, chapter5);
-	CALLBACK_FUNCTION(Boutarel, nullfunc);
-	CALLBACK_FUNCTION(Boutarel, nullfunc);
-	CALLBACK_FUNCTION_NULL();
+	ADD_CALLBACK_FUNCTION(Boutarel, nullfunc);
+	ADD_CALLBACK_FUNCTION(Boutarel, nullfunc);
+	ADD_CALLBACK_FUNCTION(Boutarel, nullfunc);
+	ADD_CALLBACK_FUNCTION(Boutarel, nullfunc);
+	ADD_CALLBACK_FUNCTION(Boutarel, nullfunc);
+	ADD_CALLBACK_FUNCTION(Boutarel, nullfunc);
+	ADD_CALLBACK_FUNCTION(Boutarel, nullfunc);
+	ADD_CALLBACK_FUNCTION(Boutarel, nullfunc);
+	ADD_CALLBACK_FUNCTION(Boutarel, nullfunc);
+	ADD_CALLBACK_FUNCTION(Boutarel, nullfunc);
+	ADD_CALLBACK_FUNCTION(Boutarel, nullfunc);
+	ADD_CALLBACK_FUNCTION(Boutarel, nullfunc);
+	ADD_CALLBACK_FUNCTION(Boutarel, nullfunc);
+	ADD_CALLBACK_FUNCTION(Boutarel, nullfunc);
+	ADD_CALLBACK_FUNCTION(Boutarel, nullfunc);
+	ADD_CALLBACK_FUNCTION(Boutarel, nullfunc);
+	ADD_CALLBACK_FUNCTION(Boutarel, nullfunc);
+	ADD_CALLBACK_FUNCTION(Boutarel, nullfunc);
+	ADD_CALLBACK_FUNCTION(Boutarel, chapter1);
+	ADD_CALLBACK_FUNCTION(Boutarel, nullfunc);
+	ADD_CALLBACK_FUNCTION(Boutarel, nullfunc);
+	ADD_CALLBACK_FUNCTION(Boutarel, nullfunc);
+	ADD_CALLBACK_FUNCTION(Boutarel, chapter2);
+	ADD_CALLBACK_FUNCTION(Boutarel, nullfunc);
+	ADD_CALLBACK_FUNCTION(Boutarel, nullfunc);
+	ADD_CALLBACK_FUNCTION(Boutarel, chapter3);
+	ADD_CALLBACK_FUNCTION(Boutarel, nullfunc);
+	ADD_CALLBACK_FUNCTION(Boutarel, nullfunc);
+	ADD_CALLBACK_FUNCTION(Boutarel, nullfunc);
+	ADD_CALLBACK_FUNCTION(Boutarel, nullfunc);
+	ADD_CALLBACK_FUNCTION(Boutarel, chapter4);
+	ADD_CALLBACK_FUNCTION(Boutarel, nullfunc);
+	ADD_CALLBACK_FUNCTION(Boutarel, nullfunc);
+	ADD_CALLBACK_FUNCTION(Boutarel, nullfunc);
+	ADD_CALLBACK_FUNCTION(Boutarel, nullfunc);
+	ADD_CALLBACK_FUNCTION(Boutarel, chapter5);
+	ADD_CALLBACK_FUNCTION(Boutarel, nullfunc);
+	ADD_CALLBACK_FUNCTION(Boutarel, nullfunc);
+	ADD_NULL_FUNCTION();
 }
 
 void Boutarel::nullfunc(SavePoints::SavePoint *savepoint) {
 	error("Boutarel: callback function not implemented!");
 }
 
-void Boutarel::chapter1(SavePoints::SavePoint *savepoint) {
+IMPLEMENT_FUNCTION(Boutarel, chapter1, 19) {
 	switch (savepoint->action) {
 	default:
 		break;
@@ -106,16 +109,18 @@ void Boutarel::chapter1(SavePoints::SavePoint *savepoint) {
 	}
 }
 
-void Boutarel::chapter2(SavePoints::SavePoint *savepoint) {
+IMPLEMENT_FUNCTION(Boutarel, chapter2, 23) {
 }
 
-void Boutarel::chapter3(SavePoints::SavePoint *savepoint) {
+IMPLEMENT_FUNCTION(Boutarel, chapter3, 26) {
 }
 
-void Boutarel::chapter4(SavePoints::SavePoint *savepoint) {
+IMPLEMENT_FUNCTION(Boutarel, chapter4, 31) {
 }
 
-void Boutarel::chapter5(SavePoints::SavePoint *savepoint) {
+IMPLEMENT_FUNCTION(Boutarel, chapter5, 36) {
 }
+
+IMPLEMENT_NULL_FUNCTION(Boutarel, 39)
 
 } // End of namespace LastExpress

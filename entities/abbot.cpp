@@ -25,93 +25,95 @@
 
 #include "lastexpress/entities/abbot.h"
 
-#include "lastexpress/game/object.h"
+#include "lastexpress/game/savepoint.h"
+#include "lastexpress/game/state.h"
 
 #include "lastexpress/helpers.h"
+#include "lastexpress/lastexpress.h"
 
 namespace LastExpress {
 
 Abbot::Abbot(LastExpressEngine *engine) : Entity(engine, SavePoints::kAbbot) {
-	CALLBACK_FUNCTION(Abbot, nullfunc);
-	CALLBACK_FUNCTION(Abbot, nullfunc);
-	CALLBACK_FUNCTION(Abbot, nullfunc);
-	CALLBACK_FUNCTION(Abbot, nullfunc);
-	CALLBACK_FUNCTION(Abbot, nullfunc);
-	CALLBACK_FUNCTION(Abbot, nullfunc);
-	CALLBACK_FUNCTION(Abbot, nullfunc);
-	CALLBACK_FUNCTION(Abbot, nullfunc);
-	CALLBACK_FUNCTION(Abbot, nullfunc);
-	CALLBACK_FUNCTION(Abbot, nullfunc);
-	CALLBACK_FUNCTION(Abbot, nullfunc);
-	CALLBACK_FUNCTION(Abbot, nullfunc);
-	CALLBACK_FUNCTION(Abbot, nullfunc);
-	CALLBACK_FUNCTION(Abbot, nullfunc);
-	CALLBACK_FUNCTION(Abbot, chapter1);
-	CALLBACK_FUNCTION(Abbot, chapter2);
-	CALLBACK_FUNCTION(Abbot, chapter3);
-	CALLBACK_FUNCTION(Abbot, nullfunc);
-	CALLBACK_FUNCTION(Abbot, nullfunc);
-	CALLBACK_FUNCTION(Abbot, nullfunc);
-	CALLBACK_FUNCTION(Abbot, nullfunc);
-	CALLBACK_FUNCTION(Abbot, nullfunc);
-	CALLBACK_FUNCTION(Abbot, nullfunc);
-	CALLBACK_FUNCTION(Abbot, nullfunc);
-	CALLBACK_FUNCTION(Abbot, nullfunc);
-	CALLBACK_FUNCTION(Abbot, nullfunc);
-	CALLBACK_FUNCTION(Abbot, nullfunc);
-	CALLBACK_FUNCTION(Abbot, nullfunc);
-	CALLBACK_FUNCTION(Abbot, nullfunc);
-	CALLBACK_FUNCTION(Abbot, nullfunc);
-	CALLBACK_FUNCTION(Abbot, nullfunc);
-	CALLBACK_FUNCTION(Abbot, nullfunc);
-	CALLBACK_FUNCTION(Abbot, nullfunc);
-	CALLBACK_FUNCTION(Abbot, nullfunc);
-	CALLBACK_FUNCTION(Abbot, nullfunc);
-	CALLBACK_FUNCTION(Abbot, nullfunc);
-	CALLBACK_FUNCTION(Abbot, nullfunc);
-	CALLBACK_FUNCTION(Abbot, nullfunc);
-	CALLBACK_FUNCTION(Abbot, chapter4);
-	CALLBACK_FUNCTION(Abbot, nullfunc);
-	CALLBACK_FUNCTION(Abbot, nullfunc);
-	CALLBACK_FUNCTION(Abbot, nullfunc);
-	CALLBACK_FUNCTION(Abbot, nullfunc);
-	CALLBACK_FUNCTION(Abbot, nullfunc);
-	CALLBACK_FUNCTION(Abbot, nullfunc);
-	CALLBACK_FUNCTION(Abbot, nullfunc);
-	CALLBACK_FUNCTION(Abbot, nullfunc);
-	CALLBACK_FUNCTION(Abbot, nullfunc);
-	CALLBACK_FUNCTION(Abbot, pickBomb);
-	CALLBACK_FUNCTION(Abbot, chapter5);
-	CALLBACK_FUNCTION(Abbot, nullfunc);
-	CALLBACK_FUNCTION(Abbot, nullfunc);
-	CALLBACK_FUNCTION(Abbot, nullfunc);
+	ADD_CALLBACK_FUNCTION(Abbot, nullfunc);
+	ADD_CALLBACK_FUNCTION(Abbot, nullfunc);
+	ADD_CALLBACK_FUNCTION(Abbot, nullfunc);
+	ADD_CALLBACK_FUNCTION(Abbot, nullfunc);
+	ADD_CALLBACK_FUNCTION(Abbot, nullfunc);
+	ADD_CALLBACK_FUNCTION(Abbot, nullfunc);
+	ADD_CALLBACK_FUNCTION(Abbot, nullfunc);
+	ADD_CALLBACK_FUNCTION(Abbot, nullfunc);
+	ADD_CALLBACK_FUNCTION(Abbot, nullfunc);
+	ADD_CALLBACK_FUNCTION(Abbot, nullfunc);
+	ADD_CALLBACK_FUNCTION(Abbot, nullfunc);
+	ADD_CALLBACK_FUNCTION(Abbot, nullfunc);
+	ADD_CALLBACK_FUNCTION(Abbot, nullfunc);
+	ADD_CALLBACK_FUNCTION(Abbot, nullfunc);
+	ADD_CALLBACK_FUNCTION(Abbot, chapter1);
+	ADD_CALLBACK_FUNCTION(Abbot, chapter2);
+	ADD_CALLBACK_FUNCTION(Abbot, chapter3);
+	ADD_CALLBACK_FUNCTION(Abbot, nullfunc);
+	ADD_CALLBACK_FUNCTION(Abbot, nullfunc);
+	ADD_CALLBACK_FUNCTION(Abbot, nullfunc);
+	ADD_CALLBACK_FUNCTION(Abbot, nullfunc);
+	ADD_CALLBACK_FUNCTION(Abbot, nullfunc);
+	ADD_CALLBACK_FUNCTION(Abbot, nullfunc);
+	ADD_CALLBACK_FUNCTION(Abbot, nullfunc);
+	ADD_CALLBACK_FUNCTION(Abbot, nullfunc);
+	ADD_CALLBACK_FUNCTION(Abbot, nullfunc);
+	ADD_CALLBACK_FUNCTION(Abbot, nullfunc);
+	ADD_CALLBACK_FUNCTION(Abbot, nullfunc);
+	ADD_CALLBACK_FUNCTION(Abbot, nullfunc);
+	ADD_CALLBACK_FUNCTION(Abbot, nullfunc);
+	ADD_CALLBACK_FUNCTION(Abbot, nullfunc);
+	ADD_CALLBACK_FUNCTION(Abbot, nullfunc);
+	ADD_CALLBACK_FUNCTION(Abbot, nullfunc);
+	ADD_CALLBACK_FUNCTION(Abbot, nullfunc);
+	ADD_CALLBACK_FUNCTION(Abbot, nullfunc);
+	ADD_CALLBACK_FUNCTION(Abbot, nullfunc);
+	ADD_CALLBACK_FUNCTION(Abbot, nullfunc);
+	ADD_CALLBACK_FUNCTION(Abbot, nullfunc);
+	ADD_CALLBACK_FUNCTION(Abbot, chapter4);
+	ADD_CALLBACK_FUNCTION(Abbot, nullfunc);
+	ADD_CALLBACK_FUNCTION(Abbot, nullfunc);
+	ADD_CALLBACK_FUNCTION(Abbot, nullfunc);
+	ADD_CALLBACK_FUNCTION(Abbot, nullfunc);
+	ADD_CALLBACK_FUNCTION(Abbot, nullfunc);
+	ADD_CALLBACK_FUNCTION(Abbot, nullfunc);
+	ADD_CALLBACK_FUNCTION(Abbot, nullfunc);
+	ADD_CALLBACK_FUNCTION(Abbot, nullfunc);
+	ADD_CALLBACK_FUNCTION(Abbot, nullfunc);
+	ADD_CALLBACK_FUNCTION(Abbot, pickBomb);
+	ADD_CALLBACK_FUNCTION(Abbot, chapter5);
+	ADD_CALLBACK_FUNCTION(Abbot, nullfunc);
+	ADD_CALLBACK_FUNCTION(Abbot, nullfunc);
+	ADD_CALLBACK_FUNCTION(Abbot, nullfunc);
 }
 
 void Abbot::nullfunc(SavePoints::SavePoint *savepoint) {
 	error("Abbot: callback function not implemented!");
 }
 
-void Abbot::chapter1(SavePoints::SavePoint *savepoint) {
+IMPLEMENT_FUNCTION(Abbot, chapter1, 15) {
 	if (savepoint->action != SavePoints::kActionDefault)
 		return;
 
 	getSavePoints()->addData(SavePoints::kAbbot, 203073664, 0);
 }
 
-void Abbot::chapter2(SavePoints::SavePoint *savepoint) {
+IMPLEMENT_FUNCTION(Abbot, chapter2, 16) {
 }
 
-void Abbot::chapter3(SavePoints::SavePoint *savepoint) {
+IMPLEMENT_FUNCTION(Abbot, chapter3, 17) {
 }
 
-void Abbot::chapter4(SavePoints::SavePoint *savepoint) {
+IMPLEMENT_FUNCTION(Abbot, chapter4, 39) {
 }
 
-void Abbot::pickBomb(SavePoints::SavePoint *savepoint) {
+IMPLEMENT_FUNCTION(Abbot, pickBomb, 49) {
 	error("Abbot::pickBomb: callback function not implemented!");
 }
 
-void Abbot::chapter5(SavePoints::SavePoint *savepoint) {
+IMPLEMENT_FUNCTION(Abbot, chapter5, 50) {
 }
 
 } // End of namespace LastExpress

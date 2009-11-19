@@ -99,7 +99,7 @@ bool Animation::load(Common::SeekableReadStream *stream) {
 
 bool Animation::process() {
 	if (_stream == NULL || _chunks.size() == 0) {
-		warning("Trying to show an animation before loading data");
+		error("Trying to show an animation before loading data");
 		return false;
 	}
 

@@ -432,7 +432,7 @@ IMPLEMENT_ACTION(playSound) {
 
 //////////////////////////////////////////////////////////////////////////
 IMPLEMENT_ACTION(playMusic) {
-	if (hotspot->param1 != 50 || getProgress().chapter == Logic::kChapter5)
+	if (hotspot->param1 != 50 || getProgress().chapter == State::kChapter5)
 		getSound()->playMusic(SavePoints::kNone, hotspot->param1, 16, hotspot->param2);	
 }
 
@@ -719,8 +719,6 @@ IMPLEMENT_ACTION(dropItem) {
 
 //////////////////////////////////////////////////////////////////////////
 IMPLEMENT_ACTION(enterCompartment) {
-	//byte object = hotspot->param1;
-
 	if (getObjects()->get(1).location == 1 || getObjects()->get(1).location == 3 || getInventory()->getSelectedItem() == Inventory::kKey) {
 		action_compartment(hotspot);
 		return;
@@ -918,7 +916,7 @@ IMPLEMENT_ACTION(jumpUpDownTrain) {
 		break;
 
 	case 4:
-		if (getProgress().chapter == Logic::kChapter1)
+		if (getProgress().chapter == State::kChapter1)
 			getSavePoints()->push(0, SavePoints::kKronos, 202621266, 0);
 		break;
 	}
@@ -1113,7 +1111,7 @@ IMPLEMENT_ACTION(32) {
 		break;
 
 	case 3:
-		if (getProgress().chapter == Logic::kChapter5) {
+		if (getProgress().chapter == State::kChapter5) {
 			getSavePoints()->push(0, SavePoints::kAbbot, 168646401, 0);
 			getSavePoints()->push(0, SavePoints::kMilos, 168646401, 0);
 		} else {
@@ -1243,17 +1241,17 @@ IMPLEMENT_ACTION(bed) {
 IMPLEMENT_ACTION(41) {
 	byte id = 0;
 	switch (getProgress().chapter) {
-	case Logic::kChapter1:
+	case State::kChapter1:
 		id = hotspot->param1;
 		break;
 
-	case Logic::kChapter2:
-	case Logic::kChapter3:
+	case State::kChapter2:
+	case State::kChapter3:
 		id = hotspot->param2;
 		break;
 
-	case Logic::kChapter4:
-	case Logic::kChapter5:
+	case State::kChapter4:
+	case State::kChapter5:
 		id = hotspot->param3;
 		break;
 	}
@@ -1269,17 +1267,17 @@ IMPLEMENT_ACTION(42) {
 	default:
 		break;
 
-	case Logic::kChapter1:
+	case State::kChapter1:
 		value = 1;
 		break;
 
-	case Logic::kChapter2:
-	case Logic::kChapter3:
+	case State::kChapter2:
+	case State::kChapter3:
 		value = 2;
 		break;
 
-	case Logic::kChapter4:
-	case Logic::kChapter5:
+	case State::kChapter4:
+	case State::kChapter5:
 		value = 4;
 		break;
 	}
@@ -1323,7 +1321,7 @@ bool Action::handleWrongCompartmentAction(byte object, int param2, int param3) {
 }
 
 void Action::pickGreenJacket(bool process) {
-	getProgress().jacket = Logic::kGreenJacket;
+	getProgress().jacket = State::kGreenJacket;
 	getInventory()->addItem(Inventory::kMatchBox);
 
 	getObjects()->update(9, SavePoints::kNone, 2, 255, 255);	
@@ -1336,7 +1334,7 @@ void Action::pickGreenJacket(bool process) {
 }
 
 void Action::pickScarf(bool process) {
-	if (getProgress().jacket == Logic::kOriginalJacket)
+	if (getProgress().jacket == State::kOriginalJacket)
 		playAnimation(kPickScarfGreen);
 	else
 		playAnimation(kPickScarfOriginal);
@@ -1351,7 +1349,7 @@ void Action::pickCorpse(byte bedPosition, bool process) {
 	// Floor
 	case kCorpseLocationFloor:
 		if (bedPosition != 4) {
-			if (getProgress().jacket == Logic::kOriginalJacket)
+			if (getProgress().jacket == State::kOriginalJacket)
 				playAnimation(kCorpsePickFloorOriginal);
 			else
 				playAnimation(kCorpsePickFloorGreen);
@@ -1365,7 +1363,7 @@ void Action::pickCorpse(byte bedPosition, bool process) {
 
 	// Bed
 	case kCorpseLocationBed:	
-		if (getProgress().jacket == Logic::kOriginalJacket)
+		if (getProgress().jacket == State::kOriginalJacket)
 			playAnimation(kCorpsePickBedOriginal);
 		else
 			playAnimation(kCorpsePickBedGreen);
@@ -1391,7 +1389,7 @@ void Action::pickCorpse(byte bedPosition, bool process) {
 void Action::dropCorpse(bool process) {
 	switch(getInventory()->getEntry(Inventory::kCorpse)->location) {
 	case 1:	// Floor
-		if (getProgress().jacket == Logic::kOriginalJacket)
+		if (getProgress().jacket == State::kOriginalJacket)
 			playAnimation(kCorpseDropFloorOriginal);
 		else
 			playAnimation(kCorpseDropFloorGreen);
@@ -1399,7 +1397,7 @@ void Action::dropCorpse(bool process) {
 		break;
 
 	case 2:	// Bed
-		if (getProgress().jacket == Logic::kOriginalJacket)
+		if (getProgress().jacket == State::kOriginalJacket)
 			playAnimation(kCorpseDropBedOriginal);
 		else
 			playAnimation(kCorpseDropBedGreen);
@@ -1413,7 +1411,7 @@ void Action::dropCorpse(bool process) {
 
 		if (getState()->time <= 1138500) {
 
-			if (getProgress().jacket == Logic::kOriginalJacket)
+			if (getProgress().jacket == State::kOriginalJacket)
 				playAnimation(kCorpseDropWindowOriginal);
 			else
 				playAnimation(kCorpseDropWindowGreen);
@@ -1508,7 +1506,7 @@ Cursor::CursorStyle Action::getCursor(byte action, byte object, byte param2, byt
 		return (Cursor::CursorStyle)getInventory()->getEntry(Inventory::kKey)->item_id; // TODO is that always the same as Cursor::kCursorKey
 
 	case SceneHotspot::kActionGetOutsideTrain:
-		if (getProgress().jacket != Logic::kGreenJacket)
+		if (getProgress().jacket != State::kGreenJacket)
 			return Cursor::kCursorNormal;
 
 		if ((getEvent(Action::kCathLookOutsideWindowDay) || getEvent(Action::kCathLookOutsideWindowDay) || getObjects()->get(1).field_4 == 1)
@@ -1526,7 +1524,7 @@ Cursor::CursorStyle Action::getCursor(byte action, byte object, byte param2, byt
 
 	case SceneHotspot::kActionClimbUpTrain:
 		if (getProgress().field_50
-			&& (getProgress().chapter == Logic::kChapter2 || getProgress().chapter == Logic::kChapter3 || getProgress().chapter == Logic::kChapter5)
+			&& (getProgress().chapter == State::kChapter2 || getProgress().chapter == State::kChapter3 || getProgress().chapter == State::kChapter5)
 			&& getInventory()->getSelectedItem() != Inventory::kFirebird 
 			&& getInventory()->getSelectedItem() != Inventory::kBriefcase)
 			return Cursor::kCursorUp;
@@ -1571,7 +1569,7 @@ Cursor::CursorStyle Action::getCursor(byte action, byte object, byte param2, byt
 			return Cursor::kCursorNormal; 
 
 	case SceneHotspot::kActionOpenBed:
-		if (getProgress().chapter < Logic::kChapter2)
+		if (getProgress().chapter < State::kChapter2)
 			return Cursor::kCursorHand;
 
 		return Cursor::kCursorNormal;
@@ -1619,9 +1617,7 @@ LABEL_KEY:
 void Action::playAnimation(int index) {
 	assert(index > 0 || (uint)index < sizeof(animationList));
 
-	//bool unknown = false;
-	//if (index >= 212)
-	//	unknown = true;
+	// FIXME NIS animations need to be passed one more parameter than currently
 
 	// Show inventory & hourglass
 	getInventory()->show(true);

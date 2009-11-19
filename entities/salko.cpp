@@ -25,57 +25,61 @@
 
 #include "lastexpress/entities/salko.h"
 
-#include "lastexpress/game/object.h"
+#include "lastexpress/game/savepoint.h"
+#include "lastexpress/game/state.h"
 
+#include "lastexpress/lastexpress.h"
 #include "lastexpress/helpers.h"
 
 namespace LastExpress {
 
 Salko::Salko(LastExpressEngine *engine) : Entity(engine, SavePoints::kSalko) {
-	CALLBACK_FUNCTION(Salko, nullfunc);
-	CALLBACK_FUNCTION(Salko, nullfunc);
-	CALLBACK_FUNCTION(Salko, nullfunc);
-	CALLBACK_FUNCTION(Salko, nullfunc);
-	CALLBACK_FUNCTION(Salko, nullfunc);
-	CALLBACK_FUNCTION(Salko, nullfunc);
-	CALLBACK_FUNCTION(Salko, nullfunc);
-	CALLBACK_FUNCTION(Salko, nullfunc);
-	CALLBACK_FUNCTION(Salko, chapter1);
-	CALLBACK_FUNCTION(Salko, nullfunc);
-	CALLBACK_FUNCTION(Salko, nullfunc);
-	CALLBACK_FUNCTION(Salko, chapter2);
-	CALLBACK_FUNCTION(Salko, nullfunc);
-	CALLBACK_FUNCTION(Salko, chapter3);
-	CALLBACK_FUNCTION(Salko, nullfunc);
-	CALLBACK_FUNCTION(Salko, nullfunc);
-	CALLBACK_FUNCTION(Salko, nullfunc);
-	CALLBACK_FUNCTION(Salko, chapter4);
-	CALLBACK_FUNCTION(Salko, nullfunc);
-	CALLBACK_FUNCTION(Salko, nullfunc);
-	CALLBACK_FUNCTION(Salko, nullfunc);
-	CALLBACK_FUNCTION(Salko, nullfunc);
-	CALLBACK_FUNCTION(Salko, chapter5);
-	CALLBACK_FUNCTION(Salko, nullfunc);
-	CALLBACK_FUNCTION_NULL();
+	ADD_CALLBACK_FUNCTION(Salko, nullfunc);
+	ADD_CALLBACK_FUNCTION(Salko, nullfunc);
+	ADD_CALLBACK_FUNCTION(Salko, nullfunc);
+	ADD_CALLBACK_FUNCTION(Salko, nullfunc);
+	ADD_CALLBACK_FUNCTION(Salko, nullfunc);
+	ADD_CALLBACK_FUNCTION(Salko, nullfunc);
+	ADD_CALLBACK_FUNCTION(Salko, nullfunc);
+	ADD_CALLBACK_FUNCTION(Salko, nullfunc);
+	ADD_CALLBACK_FUNCTION(Salko, chapter1);
+	ADD_CALLBACK_FUNCTION(Salko, nullfunc);
+	ADD_CALLBACK_FUNCTION(Salko, nullfunc);
+	ADD_CALLBACK_FUNCTION(Salko, chapter2);
+	ADD_CALLBACK_FUNCTION(Salko, nullfunc);
+	ADD_CALLBACK_FUNCTION(Salko, chapter3);
+	ADD_CALLBACK_FUNCTION(Salko, nullfunc);
+	ADD_CALLBACK_FUNCTION(Salko, nullfunc);
+	ADD_CALLBACK_FUNCTION(Salko, nullfunc);
+	ADD_CALLBACK_FUNCTION(Salko, chapter4);
+	ADD_CALLBACK_FUNCTION(Salko, nullfunc);
+	ADD_CALLBACK_FUNCTION(Salko, nullfunc);
+	ADD_CALLBACK_FUNCTION(Salko, nullfunc);
+	ADD_CALLBACK_FUNCTION(Salko, nullfunc);
+	ADD_CALLBACK_FUNCTION(Salko, chapter5);
+	ADD_CALLBACK_FUNCTION(Salko, nullfunc);
+	ADD_NULL_FUNCTION();
 }
 
 void Salko::nullfunc(SavePoints::SavePoint *savepoint) {
 	error("Salko: callback function not implemented!");
 }
 
-void Salko::chapter1(SavePoints::SavePoint *savepoint) {
+IMPLEMENT_FUNCTION(Salko, chapter1, 9) {
 }
 
-void Salko::chapter2(SavePoints::SavePoint *savepoint) {
+IMPLEMENT_FUNCTION(Salko, chapter2, 12) {
 }
 
-void Salko::chapter3(SavePoints::SavePoint *savepoint) {
+IMPLEMENT_FUNCTION(Salko, chapter3, 14) {
 }
 
-void Salko::chapter4(SavePoints::SavePoint *savepoint) {
+IMPLEMENT_FUNCTION(Salko, chapter4, 18) {
 }
 
-void Salko::chapter5(SavePoints::SavePoint *savepoint) {
+IMPLEMENT_FUNCTION(Salko, chapter5, 23) {
 }
+
+IMPLEMENT_NULL_FUNCTION(Salko, 25)
 
 } // End of namespace LastExpress

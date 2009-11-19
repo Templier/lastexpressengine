@@ -25,8 +25,10 @@
 
 #include "lastexpress/entities/tables.h"
 
-#include "lastexpress/game/object.h"
+#include "lastexpress/game/savepoint.h"
+#include "lastexpress/game/state.h"
 
+#include "lastexpress/lastexpress.h"
 #include "lastexpress/helpers.h"
 
 namespace LastExpress {
@@ -34,30 +36,30 @@ namespace LastExpress {
 Tables::Tables(LastExpressEngine *engine, int id) : Entity(engine, (SavePoints::EntityIndex)(SavePoints::kTables0 + id)) {
 	_id = id;
 	
-	CALLBACK_FUNCTION(Tables, chapter1);
-	CALLBACK_FUNCTION(Tables, chapter2);
-	CALLBACK_FUNCTION(Tables, chapter3);
-	CALLBACK_FUNCTION(Tables, chapter4);
-	CALLBACK_FUNCTION(Tables, chapter5);
-	CALLBACK_FUNCTION(Tables, draw);
+	ADD_CALLBACK_FUNCTION(Tables, chapter1);
+	ADD_CALLBACK_FUNCTION(Tables, chapter2);
+	ADD_CALLBACK_FUNCTION(Tables, chapter3);
+	ADD_CALLBACK_FUNCTION(Tables, chapter4);
+	ADD_CALLBACK_FUNCTION(Tables, chapter5);
+	ADD_CALLBACK_FUNCTION(Tables, draw);
 }
 
-void Tables::chapter1(SavePoints::SavePoint *savepoint) {
+IMPLEMENT_FUNCTION(Tables, chapter1, 1) {
 }
 
-void Tables::chapter2(SavePoints::SavePoint *savepoint) {
+IMPLEMENT_FUNCTION(Tables, chapter2, 2) {
 }
 
-void Tables::chapter3(SavePoints::SavePoint *savepoint) {
+IMPLEMENT_FUNCTION(Tables, chapter3, 3) {
 }
 
-void Tables::chapter4(SavePoints::SavePoint *savepoint) {
+IMPLEMENT_FUNCTION(Tables, chapter4, 4) {
 }
 
-void Tables::chapter5(SavePoints::SavePoint *savepoint) {
+IMPLEMENT_FUNCTION(Tables, chapter5, 5) {
 }
 
-void Tables::draw(SavePoints::SavePoint *savepoint) {
+IMPLEMENT_FUNCTION(Tables, draw, 6) {
 	error("Tables: draw function not implemented!");
 }
 

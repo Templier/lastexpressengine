@@ -33,11 +33,11 @@
 #define getBeetle() _engine->getLogic()->getGameBeetle()
 #define getEntities() _engine->getLogic()->getGameEntities()
 #define getEvent(id) getState()->events[id]
-#define getObjects() _engine->getLogic()->getGameObjects()
-#define getInventory() _engine->getLogic()->getGameInventory()
+#define getObjects() _engine->getGameState()->getGameObjects()
+#define getInventory() _engine->getGameState()->getGameInventory()
 #define getProgress() getState()->progress
-#define getSavePoints() _engine->getLogic()->getGameSavePoints()
-#define getState() _engine->getLogic()->getGameState()
+#define getSavePoints() _engine->getGameState()->getGameSavePoints()
+#define getState() _engine->getGameState()->getGameState()
 #define getSound() _engine->getLogic()->getGameSound()
 
 // Utilities

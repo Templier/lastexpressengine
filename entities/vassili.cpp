@@ -25,50 +25,52 @@
 
 #include "lastexpress/entities/vassili.h"
 
-#include "lastexpress/game/object.h"
+#include "lastexpress/game/savepoint.h"
+#include "lastexpress/game/state.h"
 
+#include "lastexpress/lastexpress.h"
 #include "lastexpress/helpers.h"
 
 namespace LastExpress {
 
 Vassili::Vassili(LastExpressEngine *engine) : Entity(engine, SavePoints::kVassili) {
-	CALLBACK_FUNCTION(Vassili, nullfunc);
-	CALLBACK_FUNCTION(Vassili, nullfunc);
-	CALLBACK_FUNCTION(Vassili, nullfunc);
-	CALLBACK_FUNCTION(Vassili, chapter1);
-	CALLBACK_FUNCTION(Vassili, nullfunc);
-	CALLBACK_FUNCTION(Vassili, nullfunc);
-	CALLBACK_FUNCTION(Vassili, nullfunc);
-	CALLBACK_FUNCTION(Vassili, nullfunc);
-	CALLBACK_FUNCTION(Vassili, nullfunc);
-	CALLBACK_FUNCTION(Vassili, nullfunc);
-	CALLBACK_FUNCTION(Vassili, nullfunc);
-	CALLBACK_FUNCTION(Vassili, chapter2);
-	CALLBACK_FUNCTION(Vassili, nullfunc);
-	CALLBACK_FUNCTION(Vassili, chapter3);
-	CALLBACK_FUNCTION(Vassili, nullfunc);
-	CALLBACK_FUNCTION(Vassili, chapter4);
-	CALLBACK_FUNCTION(Vassili, nullfunc);
-	CALLBACK_FUNCTION(Vassili, chapter5);
+	ADD_CALLBACK_FUNCTION(Vassili, nullfunc);
+	ADD_CALLBACK_FUNCTION(Vassili, nullfunc);
+	ADD_CALLBACK_FUNCTION(Vassili, nullfunc);
+	ADD_CALLBACK_FUNCTION(Vassili, chapter1);
+	ADD_CALLBACK_FUNCTION(Vassili, nullfunc);
+	ADD_CALLBACK_FUNCTION(Vassili, nullfunc);
+	ADD_CALLBACK_FUNCTION(Vassili, nullfunc);
+	ADD_CALLBACK_FUNCTION(Vassili, nullfunc);
+	ADD_CALLBACK_FUNCTION(Vassili, nullfunc);
+	ADD_CALLBACK_FUNCTION(Vassili, nullfunc);
+	ADD_CALLBACK_FUNCTION(Vassili, nullfunc);
+	ADD_CALLBACK_FUNCTION(Vassili, chapter2);
+	ADD_CALLBACK_FUNCTION(Vassili, nullfunc);
+	ADD_CALLBACK_FUNCTION(Vassili, chapter3);
+	ADD_CALLBACK_FUNCTION(Vassili, nullfunc);
+	ADD_CALLBACK_FUNCTION(Vassili, chapter4);
+	ADD_CALLBACK_FUNCTION(Vassili, nullfunc);
+	ADD_CALLBACK_FUNCTION(Vassili, chapter5);
 }
 
 void Vassili::nullfunc(SavePoints::SavePoint *savepoint) {
 	error("Vassili: callback function not implemented!");
 }
 
-void Vassili::chapter1(SavePoints::SavePoint *savepoint) {
+IMPLEMENT_FUNCTION(Vassili, chapter1, 4) {
 }
 
-void Vassili::chapter2(SavePoints::SavePoint *savepoint) {
+IMPLEMENT_FUNCTION(Vassili, chapter2, 12) {
 }
 
-void Vassili::chapter3(SavePoints::SavePoint *savepoint) {
+IMPLEMENT_FUNCTION(Vassili, chapter3, 14) {
 }
 
-void Vassili::chapter4(SavePoints::SavePoint *savepoint) {
+IMPLEMENT_FUNCTION(Vassili, chapter4, 16) {
 }
 
-void Vassili::chapter5(SavePoints::SavePoint *savepoint) {
+IMPLEMENT_FUNCTION(Vassili, chapter5, 18) {
 }
 
 } // End of namespace LastExpress

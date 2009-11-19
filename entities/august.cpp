@@ -25,96 +25,98 @@
 
 #include "lastexpress/entities/august.h"
 
-#include "lastexpress/game/object.h"
+#include "lastexpress/game/savepoint.h"
+#include "lastexpress/game/state.h"
 
 #include "lastexpress/helpers.h"
+#include "lastexpress/lastexpress.h"
 
 namespace LastExpress {
 
 August::August(LastExpressEngine *engine) : Entity(engine, SavePoints::kAugust) {
-	CALLBACK_FUNCTION(August, nullfunc);
-	CALLBACK_FUNCTION(August, nullfunc);
-	CALLBACK_FUNCTION(August, nullfunc);
-	CALLBACK_FUNCTION(August, nullfunc);
-	CALLBACK_FUNCTION(August, nullfunc);
-	CALLBACK_FUNCTION(August, nullfunc);
-	CALLBACK_FUNCTION(August, nullfunc);
-	CALLBACK_FUNCTION(August, nullfunc);
-	CALLBACK_FUNCTION(August, nullfunc);
-	CALLBACK_FUNCTION(August, nullfunc);
-	CALLBACK_FUNCTION(August, nullfunc);
-	CALLBACK_FUNCTION(August, nullfunc);
-	CALLBACK_FUNCTION(August, nullfunc);
-	CALLBACK_FUNCTION(August, nullfunc);
-	CALLBACK_FUNCTION(August, nullfunc);
-	CALLBACK_FUNCTION(August, nullfunc);
-	CALLBACK_FUNCTION(August, nullfunc);
-	CALLBACK_FUNCTION(August, nullfunc);
-	CALLBACK_FUNCTION(August, nullfunc);
-	CALLBACK_FUNCTION(August, nullfunc);
-	CALLBACK_FUNCTION(August, nullfunc);
-	CALLBACK_FUNCTION(August, chapter1);
-	CALLBACK_FUNCTION(August, nullfunc);
-	CALLBACK_FUNCTION(August, nullfunc);
-	CALLBACK_FUNCTION(August, nullfunc);
-	CALLBACK_FUNCTION(August, nullfunc);
-	CALLBACK_FUNCTION(August, nullfunc);
-	CALLBACK_FUNCTION(August, nullfunc);
-	CALLBACK_FUNCTION(August, nullfunc);
-	CALLBACK_FUNCTION(August, chapter2);
-	CALLBACK_FUNCTION(August, nullfunc);
-	CALLBACK_FUNCTION(August, nullfunc);
-	CALLBACK_FUNCTION(August, nullfunc);
-	CALLBACK_FUNCTION(August, nullfunc);
-	CALLBACK_FUNCTION(August, chapter3);
-	CALLBACK_FUNCTION(August, nullfunc);
-	CALLBACK_FUNCTION(August, nullfunc);
-	CALLBACK_FUNCTION(August, nullfunc);
-	CALLBACK_FUNCTION(August, nullfunc);
-	CALLBACK_FUNCTION(August, nullfunc);
-	CALLBACK_FUNCTION(August, nullfunc);
-	CALLBACK_FUNCTION(August, nullfunc);
-	CALLBACK_FUNCTION(August, nullfunc);
-	CALLBACK_FUNCTION(August, nullfunc);
-	CALLBACK_FUNCTION(August, nullfunc);
-	CALLBACK_FUNCTION(August, nullfunc);
-	CALLBACK_FUNCTION(August, nullfunc);
-	CALLBACK_FUNCTION(August, nullfunc);
-	CALLBACK_FUNCTION(August, nullfunc);
-	CALLBACK_FUNCTION(August, nullfunc);
-	CALLBACK_FUNCTION(August, nullfunc);
-	CALLBACK_FUNCTION(August, chapter4);
-	CALLBACK_FUNCTION(August, nullfunc);
-	CALLBACK_FUNCTION(August, nullfunc);
-	CALLBACK_FUNCTION(August, nullfunc);
-	CALLBACK_FUNCTION(August, nullfunc);
-	CALLBACK_FUNCTION(August, nullfunc);
-	CALLBACK_FUNCTION(August, nullfunc);
-	CALLBACK_FUNCTION(August, nullfunc);
-	CALLBACK_FUNCTION(August, nullfunc);
-	CALLBACK_FUNCTION(August, chapter5);
-	CALLBACK_FUNCTION(August, nullfunc);
-	CALLBACK_FUNCTION(August, nullfunc);
-	CALLBACK_FUNCTION(August, nullfunc);
+	ADD_CALLBACK_FUNCTION(August, nullfunc);
+	ADD_CALLBACK_FUNCTION(August, nullfunc);
+	ADD_CALLBACK_FUNCTION(August, nullfunc);
+	ADD_CALLBACK_FUNCTION(August, nullfunc);
+	ADD_CALLBACK_FUNCTION(August, nullfunc);
+	ADD_CALLBACK_FUNCTION(August, nullfunc);
+	ADD_CALLBACK_FUNCTION(August, nullfunc);
+	ADD_CALLBACK_FUNCTION(August, nullfunc);
+	ADD_CALLBACK_FUNCTION(August, nullfunc);
+	ADD_CALLBACK_FUNCTION(August, nullfunc);
+	ADD_CALLBACK_FUNCTION(August, nullfunc);
+	ADD_CALLBACK_FUNCTION(August, nullfunc);
+	ADD_CALLBACK_FUNCTION(August, nullfunc);
+	ADD_CALLBACK_FUNCTION(August, nullfunc);
+	ADD_CALLBACK_FUNCTION(August, nullfunc);
+	ADD_CALLBACK_FUNCTION(August, nullfunc);
+	ADD_CALLBACK_FUNCTION(August, nullfunc);
+	ADD_CALLBACK_FUNCTION(August, nullfunc);
+	ADD_CALLBACK_FUNCTION(August, nullfunc);
+	ADD_CALLBACK_FUNCTION(August, nullfunc);
+	ADD_CALLBACK_FUNCTION(August, nullfunc);
+	ADD_CALLBACK_FUNCTION(August, chapter1);
+	ADD_CALLBACK_FUNCTION(August, nullfunc);
+	ADD_CALLBACK_FUNCTION(August, nullfunc);
+	ADD_CALLBACK_FUNCTION(August, nullfunc);
+	ADD_CALLBACK_FUNCTION(August, nullfunc);
+	ADD_CALLBACK_FUNCTION(August, nullfunc);
+	ADD_CALLBACK_FUNCTION(August, nullfunc);
+	ADD_CALLBACK_FUNCTION(August, nullfunc);
+	ADD_CALLBACK_FUNCTION(August, chapter2);
+	ADD_CALLBACK_FUNCTION(August, nullfunc);
+	ADD_CALLBACK_FUNCTION(August, nullfunc);
+	ADD_CALLBACK_FUNCTION(August, nullfunc);
+	ADD_CALLBACK_FUNCTION(August, nullfunc);
+	ADD_CALLBACK_FUNCTION(August, chapter3);
+	ADD_CALLBACK_FUNCTION(August, nullfunc);
+	ADD_CALLBACK_FUNCTION(August, nullfunc);
+	ADD_CALLBACK_FUNCTION(August, nullfunc);
+	ADD_CALLBACK_FUNCTION(August, nullfunc);
+	ADD_CALLBACK_FUNCTION(August, nullfunc);
+	ADD_CALLBACK_FUNCTION(August, nullfunc);
+	ADD_CALLBACK_FUNCTION(August, nullfunc);
+	ADD_CALLBACK_FUNCTION(August, nullfunc);
+	ADD_CALLBACK_FUNCTION(August, nullfunc);
+	ADD_CALLBACK_FUNCTION(August, nullfunc);
+	ADD_CALLBACK_FUNCTION(August, nullfunc);
+	ADD_CALLBACK_FUNCTION(August, nullfunc);
+	ADD_CALLBACK_FUNCTION(August, nullfunc);
+	ADD_CALLBACK_FUNCTION(August, nullfunc);
+	ADD_CALLBACK_FUNCTION(August, nullfunc);
+	ADD_CALLBACK_FUNCTION(August, nullfunc);
+	ADD_CALLBACK_FUNCTION(August, chapter4);
+	ADD_CALLBACK_FUNCTION(August, nullfunc);
+	ADD_CALLBACK_FUNCTION(August, nullfunc);
+	ADD_CALLBACK_FUNCTION(August, nullfunc);
+	ADD_CALLBACK_FUNCTION(August, nullfunc);
+	ADD_CALLBACK_FUNCTION(August, nullfunc);
+	ADD_CALLBACK_FUNCTION(August, nullfunc);
+	ADD_CALLBACK_FUNCTION(August, nullfunc);
+	ADD_CALLBACK_FUNCTION(August, nullfunc);
+	ADD_CALLBACK_FUNCTION(August, chapter5);
+	ADD_CALLBACK_FUNCTION(August, nullfunc);
+	ADD_CALLBACK_FUNCTION(August, nullfunc);
+	ADD_CALLBACK_FUNCTION(August, nullfunc);
 }
 
 void August::nullfunc(SavePoints::SavePoint *savepoint) {
 	error("August: callback function not implemented!");
 }
 
-void August::chapter1(SavePoints::SavePoint *savepoint) {
+IMPLEMENT_FUNCTION(August, chapter1, 22) {
 }
 
-void August::chapter2(SavePoints::SavePoint *savepoint) {
+IMPLEMENT_FUNCTION(August, chapter2, 35) {
 }
 
-void August::chapter3(SavePoints::SavePoint *savepoint) {
+IMPLEMENT_FUNCTION(August, chapter3, 40) {
 }
 
-void August::chapter4(SavePoints::SavePoint *savepoint) {
+IMPLEMENT_FUNCTION(August, chapter4, 57) {
 }
 
-void August::chapter5(SavePoints::SavePoint *savepoint) {
+IMPLEMENT_FUNCTION(August, chapter5, 66) {
 }
 
 } // End of namespace LastExpress

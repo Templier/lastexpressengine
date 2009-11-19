@@ -31,6 +31,7 @@
 #include "lastexpress/data/snd.h"
 
 #include "lastexpress/game/logic.h"
+#include "lastexpress/game/state.h"
 
 #include "lastexpress/graphics.h"
 #include "lastexpress/resource.h"
@@ -51,7 +52,7 @@ namespace LastExpress {
 LastExpressEngine::LastExpressEngine(OSystem *syst, const ADGameDescription *gd) :
 	Engine(syst), _gameDescription(gd), _debugger(NULL), _resMan(NULL),
 	_cursor(NULL), _font(NULL), _sfx(NULL), _music(NULL), _logic(NULL),
-	_graphics(NULL), _sceneMan(NULL) {
+	_graphics(NULL), _sceneMan(NULL), _state(NULL) {
 	// Adding the default directories
 	SearchMan.addSubDirectoryMatching(_gameDataDir, "data");
 
@@ -69,15 +70,16 @@ LastExpressEngine::LastExpressEngine(OSystem *syst, const ADGameDescription *gd)
 
 LastExpressEngine::~LastExpressEngine() {
 	// Delete the remaining objects
-	delete _debugger;
-	delete _resMan;
 	delete _cursor;
+	delete _debugger;
 	delete _font;
+	delete _graphics;
 	delete _sfx;
 	delete _music;
 	delete _logic;
-	delete _graphics;
+	delete _resMan;
 	delete _sceneMan;
+	delete _state;
 }
 
 // TODO: which error should we return when some game files are missing/corrupted?
@@ -112,6 +114,7 @@ Common::Error LastExpressEngine::run() {
 
 	_sfx = new StreamedSound();
 	_music = new StreamedSound();
+	_state = new State(this);
 	_logic = new Logic(this);
 
 	_sceneMan = new SceneManager();
@@ -196,12 +199,12 @@ Common::Error LastExpressEngine::run() {
 
 				// DEBUG: time
 				if (ev.kbd.keycode == Common::KEYCODE_KP_DIVIDE) {
-					_logic->getGameState()->time -= 4984;
+					_state->getGameState()->time -= 4984;
 					_logic->showMenu(true);
 				}
 
 				if (ev.kbd.keycode == Common::KEYCODE_KP_MULTIPLY) {
-					_logic->getGameState()->time += 5167;
+					_state->getGameState()->time += 5167;
 					_logic->showMenu(true);
 				}
 

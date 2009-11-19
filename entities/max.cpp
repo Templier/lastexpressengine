@@ -25,50 +25,52 @@
 
 #include "lastexpress/entities/max.h"
 
-#include "lastexpress/game/object.h"
+#include "lastexpress/game/savepoint.h"
+#include "lastexpress/game/state.h"
 
+#include "lastexpress/lastexpress.h"
 #include "lastexpress/helpers.h"
 
 namespace LastExpress {
 
 Max::Max(LastExpressEngine *engine) : Entity(engine, SavePoints::kMax) {
-	CALLBACK_FUNCTION(Max, nullfunc);
-	CALLBACK_FUNCTION(Max, nullfunc);
-	CALLBACK_FUNCTION(Max, nullfunc);
-	CALLBACK_FUNCTION(Max, nullfunc);
-	CALLBACK_FUNCTION(Max, nullfunc);
-	CALLBACK_FUNCTION(Max, nullfunc);
-	CALLBACK_FUNCTION(Max, nullfunc);
-	CALLBACK_FUNCTION(Max, nullfunc);
-	CALLBACK_FUNCTION(Max, nullfunc);
-	CALLBACK_FUNCTION(Max, chapter1);
-	CALLBACK_FUNCTION(Max, chapter2);
-	CALLBACK_FUNCTION(Max, chapter3);
-	CALLBACK_FUNCTION(Max, nullfunc);
-	CALLBACK_FUNCTION(Max, nullfunc);
-	CALLBACK_FUNCTION(Max, nullfunc);
-	CALLBACK_FUNCTION(Max, chapter4);
-	CALLBACK_FUNCTION(Max, nullfunc);
-	CALLBACK_FUNCTION(Max, chapter5);
+	ADD_CALLBACK_FUNCTION(Max, nullfunc);
+	ADD_CALLBACK_FUNCTION(Max, nullfunc);
+	ADD_CALLBACK_FUNCTION(Max, nullfunc);
+	ADD_CALLBACK_FUNCTION(Max, nullfunc);
+	ADD_CALLBACK_FUNCTION(Max, nullfunc);
+	ADD_CALLBACK_FUNCTION(Max, nullfunc);
+	ADD_CALLBACK_FUNCTION(Max, nullfunc);
+	ADD_CALLBACK_FUNCTION(Max, nullfunc);
+	ADD_CALLBACK_FUNCTION(Max, nullfunc);
+	ADD_CALLBACK_FUNCTION(Max, chapter1);
+	ADD_CALLBACK_FUNCTION(Max, chapter2);
+	ADD_CALLBACK_FUNCTION(Max, chapter3);
+	ADD_CALLBACK_FUNCTION(Max, nullfunc);
+	ADD_CALLBACK_FUNCTION(Max, nullfunc);
+	ADD_CALLBACK_FUNCTION(Max, nullfunc);
+	ADD_CALLBACK_FUNCTION(Max, chapter4);
+	ADD_CALLBACK_FUNCTION(Max, nullfunc);
+	ADD_CALLBACK_FUNCTION(Max, chapter5);
 }
 
 void Max::nullfunc(SavePoints::SavePoint *savepoint) {
 	error("Max: callback function not implemented!");
 }
 
-void Max::chapter1(SavePoints::SavePoint *savepoint) {
+IMPLEMENT_FUNCTION(Max, chapter1, 10) {
 }
 
-void Max::chapter2(SavePoints::SavePoint *savepoint) {
+IMPLEMENT_FUNCTION(Max, chapter2, 11) {
 }
 
-void Max::chapter3(SavePoints::SavePoint *savepoint) {
+IMPLEMENT_FUNCTION(Max, chapter3, 12) {
 }
 
-void Max::chapter4(SavePoints::SavePoint *savepoint) {
+IMPLEMENT_FUNCTION(Max, chapter4, 16) {
 }
 
-void Max::chapter5(SavePoints::SavePoint *savepoint) {
+IMPLEMENT_FUNCTION(Max, chapter5, 18) {
 }
 
 } // End of namespace LastExpress
