@@ -72,6 +72,7 @@ public:
 	// Index processing
 	void processScene();
 	uint32 processIndex(uint32 index);
+	bool checkSceneFields(uint32 index, bool isSecondCheck);
 
 	// Time checks
 	bool isDayTime();

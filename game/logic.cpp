@@ -421,17 +421,47 @@ void Logic::preProcessScene(uint32 *index) {
 	}
 
 	case Scene::kType7:
-		if (scene->getHeader()->param1 >= 16)
-			break;
-
-		error("Logic::preProcessScene: unimplemented scene type (%02d)", scene->getHeader()->type);		
-		break;
-
 	case Scene::kType8:
 		if (scene->getHeader()->param1 >= 16)
 			break;
 
-		error("Logic::preProcessScene: unsupported scene type (%02d)", scene->getHeader()->type);
+		if (getState()->field16[scene->getHeader()->param1] || getState()->field16_2[scene->getHeader()->param1]) {
+			
+			Scene *_currentScene = _engine->getScene(getState()->scene);
+
+			if ((checkSceneFields(getState()->scene, false) && checkSceneFields(*index, false) && _currentScene->getHeader()->count < scene->getHeader()->count)
+			 || (checkSceneFields(getState()->scene, true)  && checkSceneFields(*index, true)  && _currentScene->getHeader()->count > scene->getHeader()->count)) {
+
+				if (State::getPowerOfTwo(getState()->field16[scene->getHeader()->param1]) != 30 
+				 && State::getPowerOfTwo(getState()->field16_2[scene->getHeader()->param1]) != 30 )
+					getSound()->playSound(SavePoints::kNone, "CAT1126A", -1, 0);				
+
+				*index = scene->getHotspot(0)->scene;
+			} else {
+				*index = scene->getHotspot(1)->scene;
+			}
+
+			delete _currentScene;
+
+			preProcessScene(index);
+		} else {
+			if (scene->getHeader()->type == Scene::kType7)
+				break;
+
+			if (scene->getHeader()->param2 >= 32)
+				break;
+
+			byte location = getInventory()->getEntry((Inventory::InventoryItem)scene->getHeader()->param2)->location;
+			if (!location)
+				break;
+
+			for (Common::Array<SceneHotspot *>::iterator it = scene->getHotspots()->begin(); it != scene->getHotspots()->end(); ++it) {
+				if ((*it)->location == location) {
+					PROCESS_HOTSPOT_SCENE(*it, index);
+					break;
+				}
+			}			
+		}
 		break;
 
 	default:
@@ -492,7 +522,7 @@ void Logic::postProcessScene(uint32 *index) {
 
 	case Scene::kTypeLoadBeetleSequences:
 		if ((getProgress().chapter == State::kChapter2 || getProgress().chapter == State::kChapter3)
-			&& getInventory()->getEntry(Inventory::kBeetle)->location == 3) {
+		  && getInventory()->getEntry(Inventory::kBeetle)->location == 3) {
 			if (!_beetle->isLoaded())
 				_beetle->load();
 		}		
@@ -603,6 +633,23 @@ void Logic::updateTrainClock() {
 
 void Logic::updateCursor() {
 	warning("Logic::updateCursor: not implemented!");
+}
+
+bool Logic::checkSceneFields(uint32 index, bool isSecondCheck) {
+	bool result = false;
+	Scene *scene = _engine->getScene((index ? index : getState()->scene));
+
+	uint16 field13 = scene->getHeader()->field_13;
+	byte field15 = scene->getHeader()->field_15;
+
+	delete scene;
+
+	result = (field13 == 3 || field13 == 4);
+
+	if (!isSecondCheck)
+		return result && (field15 >= 1 && field15 <= 19);
+
+	return result && (field15 >= 21 && field15 <= 40);
 }
 
 } // End of namespace LastExpress

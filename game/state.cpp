@@ -51,4 +51,17 @@ State::~State() {
 	delete _state;
 }
 
+uint32 State::getPowerOfTwo(uint32 x) {	
+	if (!x || (x & 1))
+		return 0;
+
+	uint32 num = 0;
+	do {
+		x >>= 1;
+		num++;
+	} while ((x & 1) == 0);
+
+	return num;
+}
+
 } // End of namespace LastExpress

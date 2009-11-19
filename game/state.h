@@ -295,6 +295,9 @@ public:
 	SavePoints *getGameSavePoints() { return _savepoints; }
 	GameState  *getGameState() { return _state; }
 
+	// Helpers	
+	static uint32 getPowerOfTwo(uint32 x);
+
 private:
 	static const uint32 _defaultBrigthness = 0x3;
 	static const uint32 _defaultVolume = 0x7;
