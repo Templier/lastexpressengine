@@ -84,7 +84,7 @@ public:
 	Cursor::CursorStyle getCursorStyle() { return _runState.cursorStyle; }
 	Beetle     *getGameBeetle() { return _beetle; }
 	Entities   *getGameEntities() { return _entities; }	
-	Sound 	   *getGameSound() { return _sound; }
+	Sound 	   *getGameSound() { return _sound; }	
 	
 private:
 	

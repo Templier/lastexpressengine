@@ -415,8 +415,13 @@ IMPLEMENT_ACTION(inventory) {
 		delete backup;
 	}
 
-	_engine->getLogic()->loadScene(index);		
-	getInventory()->restore();
+	_engine->getLogic()->loadScene(index);	
+
+	if (!getInventory()->getSelectedItem())
+		return;
+
+	if (!getInventory()->getSelectedEntry()->is_selectable || (!getState()->sceneBackup2 && getInventory()->getFirstExaminableItem()))
+		getInventory()->selectItem(getInventory()->getFirstExaminableItem());
 }
 
 //////////////////////////////////////////////////////////////////////////

@@ -38,6 +38,10 @@ State::State(LastExpressEngine *engine) : _engine(engine) {
 	_objects = new Objects(engine);
 	_savepoints = new SavePoints(engine);
 	_state = new GameState();
+
+	unknown_flag_0 = 0;
+	unknown_flag_1 = 0;
+	unknown_flag_2 = 0;
 }
 
 State::~State() {

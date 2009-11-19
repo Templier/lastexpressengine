@@ -130,17 +130,18 @@ public:
 	InventoryEntry *getEntry(InventoryItem item);
 	InventoryEntry *getSelectedEntry() { return getEntry(_selectedItem); }
 
+	InventoryItem getFirstExaminableItem();
+	void setLocationAndProcess(InventoryItem item, byte newLocation);
+
 	// UI Control
 	void show(bool visible);
 	void blinkEgg(bool enabled);
 	void showHourGlass(bool enabled);
 	void setPortrait(InventoryItem item);
+	void showItem(InventoryItem item);
 
 	// Handle inventory UI events.
 	bool handleMouseEvent(Common::Event ev);
-
-	void restore();
-	void setLocationAndProcess(InventoryItem item, byte newLocation);
 
 	// Serializable
 	void saveLoadWithSerializer(Common::Serializer &ser);
@@ -174,6 +175,8 @@ private:
 	void examine(InventoryItem item);
 	void drawEgg();	
 	Common::Rect getItemRect(int index);
+
+	bool isSceneParameterEqual(byte value);
 };
 
 } // End of namespace LastExpress

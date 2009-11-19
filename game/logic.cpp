@@ -196,8 +196,23 @@ bool Logic::handleMouseEvent(Common::Event ev) {
 
 void Logic::loadScene(uint32 index) {
 
-	// TODO add rest of implementation
+	_engine->getGameState()->unknown_flag_0 = 0;
+	if (getState()->sceneUseBackup) {
+		Scene *scene = _engine->getScene(index);
+	
+		if (scene->getHeader()->param3 != -1) {
+			getState()->sceneUseBackup = 0;
+			getState()->sceneBackup2 = 0;
+		}
+
+		delete scene;
+	}
+
 	setScene(index);
+
+	// TODO draw egg / hourglass if neeeded
+
+	updateCursor();
 }
 
 void Logic::setScene(uint32 index) {
@@ -218,11 +233,18 @@ void Logic::setScene(uint32 index) {
 	if (getState()->sceneUseBackup)
 		delete scene;
 
-	getSavePoints()->pushAll(0, 17, 0);
-	getSavePoints()->process();
+	if (_engine->getGameState()->unknown_flag_1) {
+		getSavePoints()->pushAll(0, 17, 0);
+		getSavePoints()->process();
 
-	// TODO test + 3 function calls that draw sequences
+		if (_engine->getGameState()->unknown_flag_2)
+			return;
 
+		//getEntities()->updateFields()
+		//getEntities()->drawSequences()
+		//getEntities()->executeCallbacks()
+	}
+	
 	// Show the scene 
 	askForRedraw();
 	_engine->getGraphicsManager()->update();
@@ -233,7 +255,23 @@ void Logic::setScene(uint32 index) {
 }
 
 void Logic::processScene() {
-	error("Logic::processItem is not implemented!");
+	if (!getState()->sceneUseBackup) {
+		loadScene(getState()->scene);
+		return;
+	}
+
+	getState()->sceneUseBackup = 0;
+	
+	// TODO update selected item
+
+	Scene *backup = _engine->getScene(getState()->sceneBackup);
+
+	if (getState()->field1000[backup->getHeader()->field_15 + 100 * backup->getHeader()->field_13])
+		loadScene(_engine->getLogic()->processIndex(getState()->sceneBackup));
+	else
+		loadScene(getState()->sceneBackup);
+
+	delete backup;
 }
 
 uint32 Logic::processIndex(uint32 index) {

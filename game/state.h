@@ -285,6 +285,11 @@ public:
 	State(LastExpressEngine *engine);
 	~State();
 
+	// FIXME unknown value
+	byte unknown_flag_0;
+	byte unknown_flag_1;
+	byte unknown_flag_2;
+
 	Inventory  *getGameInventory() { return _inventory; }
 	Objects	   *getGameObjects() { return _objects; }	
 	SavePoints *getGameSavePoints() { return _savepoints; }

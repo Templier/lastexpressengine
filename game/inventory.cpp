@@ -270,18 +270,6 @@ bool Inventory::handleMouseEvent(Common::Event ev) {
 	return insideInventory;
 }
 
-// Restore status after looking at an item
-//  - selected item icon
-//  - cursor
-void Inventory::restore() {
-	if (!_selectedItem)
-		return;
-
-	// See processhotspot for kActionInventory
-
-	warning("Inventory::restore is not implemented!");
-}
-
 //////////////////////////////////////////////////////////////////////////
 // UI
 //////////////////////////////////////////////////////////////////////////
@@ -341,6 +329,20 @@ void Inventory::showHourGlass(bool enabled) {
 		drawItem(608, 448, _engine->getLogic()->getGameId() + 39, 100) // normal egg state
 
 	askForRedraw();
+}
+
+// Show an item scene
+void Inventory::showItem(InventoryItem item) {
+	uint32 scene = getEntry(item)->scene_id;
+	if (!scene )
+		return;
+
+	if (!getState()->sceneUseBackup) {
+		getState()->sceneBackup = getState()->scene;
+		getState()->sceneUseBackup = 1;
+	}
+
+	_engine->getLogic()->loadScene(scene);
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -411,8 +413,10 @@ void Inventory::setLocationAndProcess(InventoryItem item, byte newLocation) {
 
 	getEntry(item)->location = newLocation;
 
-	// TODO check scene parameters and process
-	warning("Inventory::setLocationAndProcess: further processing not implemented yet!");
+	if (isSceneParameterEqual(item)) {
+		if (_engine->getGameState()->unknown_flag_0)
+			_engine->getLogic()->processScene();
+	}
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -425,12 +429,85 @@ void Inventory::saveLoadWithSerializer(Common::Serializer &s) {
 //////////////////////////////////////////////////////////////////////////
 // Private methods
 //////////////////////////////////////////////////////////////////////////
+Inventory::InventoryItem Inventory::getFirstExaminableItem() {
+
+	int index = 0;
+	InventoryEntry entry = _entries[index];
+	while (!entry.has_item || !entry.no_autoselect || !entry.scene_id) {
+		index++;
+		entry = _entries[index];
+
+		if (index >= 32)
+			return kNoItem;
+	}
+
+	return (InventoryItem)index;
+}
+
+bool Inventory::isSceneParameterEqual(byte value) {
+	Scene *currentScene = _engine->getScene(getState()->scene);
+	bool equal = false;
+
+	switch(currentScene->getHeader()->type) {
+	default:		
+		break;
+
+	case Scene::kTypeItem:
+		if (currentScene->getHeader()->param1 == value)
+			equal = true;
+		break;
+
+	case Scene::kTypeItem2:
+		if (currentScene->getHeader()->param1 == value || currentScene->getHeader()->param2 == value)
+			equal = true;
+		break;
+
+	case Scene::kTypeEntityItem:
+		if (currentScene->getHeader()->param2 == value)
+			equal = true;
+		break;
+
+	case Scene::kTypeItem3:
+		if (currentScene->getHeader()->param1 == value || currentScene->getHeader()->param2 == value || currentScene->getHeader()->param3 == value)
+			equal = true;
+		break;
+
+	case Scene::kType8:
+		if (currentScene->getHeader()->param2 == value)
+			equal = true;
+		break;
+	}
+
+	delete currentScene;
+	return equal;
+}
+
 // Examine an inventory item
 void Inventory::examine(InventoryItem item) {
-	uint32 sceneId = getEntry(item)->scene_id;
+	uint32 index = getEntry(item)->scene_id;
+	if (!index)
+		return;
 
-	if (sceneId != 0)
-		_engine->getLogic()->loadScene(sceneId);
+	/*if (!getState()->sceneUseBackup ||
+		(getState()->sceneBackup2 && getFirstExaminableItem() == _selectedItem))
+		flag = 1;*/
+
+	if (!getState()->sceneUseBackup) {
+		getState()->sceneBackup = getState()->scene;
+		getState()->sceneUseBackup = 1;
+		
+		_engine->getLogic()->loadScene(index);
+	} else {
+
+		if (!getState()->sceneBackup2)
+			return;
+
+		if (getFirstExaminableItem() == _selectedItem) {
+			index = getState()->sceneBackup2;
+			getState()->sceneBackup2 = 0;
+			_engine->getLogic()->loadScene(index);
+		}
+	}
 }
 
 void Inventory::drawEgg() {
