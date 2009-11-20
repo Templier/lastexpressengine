@@ -503,7 +503,6 @@ void Logic::postProcessScene(uint32 *index) {
 			SavePoints::EntityIndex entities[39];
 
 			int progress = 0;
-			int index = 1;
 
 			for (uint i = 1; i < 40; i++) {
 
@@ -511,10 +510,10 @@ void Logic::postProcessScene(uint32 *index) {
 				int16 field495 = getEntities()->getData((SavePoints::EntityIndex)i)->field_495;
 				if (field491 == 4) {
 					if (!(field495 != 4 || field493 <= 9270) || !(field495 != 5 || field493 >= 1540))
-						entities[progress++] = (SavePoints::EntityIndex)index;
+						entities[progress++] = (SavePoints::EntityIndex)i;
 				} else {
 					if (!(field495 != 3 || field493 <= 9270) || !(field495 != 4 || field493 >= 850))
-						entities[progress++] = (SavePoints::EntityIndex)index;
+						entities[progress++] = (SavePoints::EntityIndex)i;
 				}
 			}
 
