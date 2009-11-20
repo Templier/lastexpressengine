@@ -74,9 +74,6 @@ public:
 	uint32 processIndex(uint32 index);
 	bool checkSceneFields(uint32 index, bool isSecondCheck);
 
-	// Time checks
-	bool isDayTime();
-
 	// Accessors
 	bool isGameStarted() { return _runState.gameStarted; }
 	bool isShowingMenu() { return _runState.showingMenu; }

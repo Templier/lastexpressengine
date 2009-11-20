@@ -143,13 +143,13 @@ void Logic::switchGame() {
 // Handle game over
 void Logic::gameOver(int a1, int a2, int scene, bool showScene) {
 
-	// TODO implement
+	warning("Logic::gameOver: not implemented!");
 	loadScene(scene);
 }
 
 // Save game
 void Logic::savegame(int param1, int param2, int param3) {
-	warning("Logic::savegame is not implemented!");
+	warning("Logic::savegame: not implemented!");
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -166,7 +166,6 @@ bool Logic::handleMouseEvent(Common::Event ev) {
 		return true;
 
 	// Check hitbox & event from scene data
-	// TODO cache current loaded scene
 	SceneHotspot *hotspot = NULL;
 	if (_scene && _scene->checkHotSpot(ev.mouse, &hotspot)) {
 		// Change mouse cursor		
@@ -210,7 +209,7 @@ void Logic::loadScene(uint32 index) {
 
 	setScene(index);
 
-	// TODO draw egg / hourglass if neeeded
+	warning("Logic::loadScene: TODO draw egg / hourglass if neeeded");
 
 	updateCursor();
 }
@@ -389,31 +388,21 @@ void Logic::preProcessScene(uint32 *index) {
 		if (scene->getHotspots()->size() > 0) {
 			for (Common::Array<SceneHotspot *>::iterator it = scene->getHotspots()->begin(); it != scene->getHotspots()->end(); ++it) {
 
-				if (getObjects()->get((Objects::ObjectIndex)scene->getHeader()->param1).location == (*it)->location) {
+				Scene *currentScene = _engine->getScene(*index);
+				if (getObjects()->get((Objects::ObjectIndex)currentScene->getHeader()->param1).field_4 == (*it)->location) {
 					PROCESS_HOTSPOT_SCENE(*it, index);
-					found = true;
-					break;
+					found = true;					
 				}
+				delete currentScene;
 			}	
 		}
 
-		// If the scene has no hotspot or if we haven't found a proper hotspot, get the first hotspot from the current scene
+		// If the scene has no hotspot or if we haven't found a proper hotspot, use the first hotspot from the current scene
 		if (!found) {
-			// TODO make sure we are doing the right thing here
 			Scene *hotspotScene = _engine->getScene(*index);
 			SceneHotspot *hotspot = scene->getHotspot(0);
-			if (!hotspot) {
-				delete hotspotScene;
-				break;
-			}
-
-			_action->processHotspot(hotspot);
-			if (hotspot->scene) {
-				*index = hotspot->scene;
-				preProcessScene(index);
-
-				// TODO else case missing
-			}
+			
+			PROCESS_HOTSPOT_SCENE(hotspot, index);
 
 			delete hotspotScene;
 		}
@@ -497,17 +486,41 @@ void Logic::postProcessScene(uint32 *index) {
 		SceneHotspot *hotspot = scene->getHotspot(0);
 		_action->processHotspot(hotspot);
 
-		//Scene *hotspotScene = _engine->getScene(hotspot->scene);
-		//while (hotspotScene->getHeader()->type == 128) {
-		//	hotspot = hotspotScene->getHotspot(0);
-		//	_action->processHotspot(hotspot);
+		//if (0) {
+		//	Scene *hotspotScene = _engine->getScene(hotspot->scene);
+		//	while (hotspotScene->getHeader()->type == 128) {
+		//		hotspot = hotspotScene->getHotspot(0);
+		//		_action->processHotspot(hotspot);
 
-		//	uint16 nextScene = hotspot->scene;
-		//	delete hotspotScene;
-		//	hotspotScene = _engine->getScene(nextScene);
+		//		uint16 nextScene = hotspot->scene;
+		//		delete hotspotScene;
+		//		hotspotScene = _engine->getScene(nextScene);
+		//	}
 		//}
 
-		// Some stuff related to entities (dialog Excuse me)
+		int16 field491 = getEntities()->getHeader()->field_491;
+		if (getEntities()->getHeader()->field_495 == 9 && (field491 == 4 || field491 == 3)) {
+			SavePoints::EntityIndex entities[39];
+
+			int progress = 0;
+			int index = 1;
+
+			for (uint i = 1; i < 40; i++) {
+
+				int16 field493 = getEntities()->getData((SavePoints::EntityIndex)i)->field_493;
+				int16 field495 = getEntities()->getData((SavePoints::EntityIndex)i)->field_495;
+				if (field491 == 4) {
+					if (!(field495 != 4 || field493 <= 9270) || !(field495 != 5 || field493 >= 1540))
+						entities[progress++] = (SavePoints::EntityIndex)index;
+				} else {
+					if (!(field495 != 3 || field493 <= 9270) || !(field495 != 4 || field493 >= 850))
+						entities[progress++] = (SavePoints::EntityIndex)index;
+				}
+			}
+
+			if (progress) 
+				getSound()->excuseMe((progress == 1) ? entities[0] : entities[random(progress)], 0 , 16);
+		}
 
 		if (hotspot->scene)
 			setScene(hotspot->scene);
@@ -574,13 +587,6 @@ void Logic::postProcessScene(uint32 *index) {
 //////////////////////////////////////////////////////////////////////////
 // Misc
 //////////////////////////////////////////////////////////////////////////
-
-bool Logic::isDayTime() {
-	return (getState()->progress.chapter == State::kChapter1
-		 || getState()->progress.chapter == State::kChapter4
-		 || (getState()->progress.chapter == State::kChapter5 && getState()->progress.is_nighttime));		
-}
-
 void Logic::switchChapter() {
 	switch(getState()->progress.chapter) {
 	default:

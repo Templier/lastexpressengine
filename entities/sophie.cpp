@@ -23,7 +23,7 @@
  *
  */
 
-#include "lastexpress/entities/entity24.h"
+#include "lastexpress/entities/sophie.h"
 
 #include "lastexpress/game/savepoint.h"
 #include "lastexpress/game/state.h"
@@ -33,40 +33,40 @@
 
 namespace LastExpress {
 
-Entity24::Entity24(LastExpressEngine *engine) : Entity(engine, SavePoints::kEntity24) {
-	ADD_CALLBACK_FUNCTION(Entity24, nullfunc);
-	ADD_CALLBACK_FUNCTION(Entity24, nullfunc);
-	ADD_CALLBACK_FUNCTION(Entity24, nullfunc);
-	ADD_CALLBACK_FUNCTION(Entity24, chapter1);
-	ADD_CALLBACK_FUNCTION(Entity24, nullfunc);
-	ADD_CALLBACK_FUNCTION(Entity24, chapter2);
-	ADD_CALLBACK_FUNCTION(Entity24, chapter3);
-	ADD_CALLBACK_FUNCTION(Entity24, chapter4);
-	ADD_CALLBACK_FUNCTION(Entity24, nullfunc);
-	ADD_CALLBACK_FUNCTION(Entity24, chapter5);
-	ADD_CALLBACK_FUNCTION(Entity24, nullfunc);
+Sophie::Sophie(LastExpressEngine *engine) : Entity(engine, SavePoints::kSophie) {
+	ADD_CALLBACK_FUNCTION(Sophie, nullfunc);
+	ADD_CALLBACK_FUNCTION(Sophie, nullfunc);
+	ADD_CALLBACK_FUNCTION(Sophie, nullfunc);
+	ADD_CALLBACK_FUNCTION(Sophie, chapter1);
+	ADD_CALLBACK_FUNCTION(Sophie, nullfunc);
+	ADD_CALLBACK_FUNCTION(Sophie, chapter2);
+	ADD_CALLBACK_FUNCTION(Sophie, chapter3);
+	ADD_CALLBACK_FUNCTION(Sophie, chapter4);
+	ADD_CALLBACK_FUNCTION(Sophie, nullfunc);
+	ADD_CALLBACK_FUNCTION(Sophie, chapter5);
+	ADD_CALLBACK_FUNCTION(Sophie, nullfunc);
 	ADD_NULL_FUNCTION();
 }
 
-void Entity24::nullfunc(SavePoints::SavePoint *savepoint) {
-	error("Entity24: callback function not implemented!");
+void Sophie::nullfunc(SavePoints::SavePoint *savepoint) {
+	error("Sophie: callback function not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Entity24, chapter1, 4) {
+IMPLEMENT_FUNCTION(Sophie, chapter1, 4) {
 }
 
-IMPLEMENT_FUNCTION(Entity24, chapter2, 6) {
+IMPLEMENT_FUNCTION(Sophie, chapter2, 6) {
 }
 
-IMPLEMENT_FUNCTION(Entity24, chapter3, 7) {
+IMPLEMENT_FUNCTION(Sophie, chapter3, 7) {
 }
 
-IMPLEMENT_FUNCTION(Entity24, chapter4, 8) {
+IMPLEMENT_FUNCTION(Sophie, chapter4, 8) {
 }
 
-IMPLEMENT_FUNCTION(Entity24, chapter5, 10){
+IMPLEMENT_FUNCTION(Sophie, chapter5, 10){
 }
 
-IMPLEMENT_NULL_FUNCTION(Entity24, 12)
+IMPLEMENT_NULL_FUNCTION(Sophie, 12)
 
 } // End of namespace LastExpress

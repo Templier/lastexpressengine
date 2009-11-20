@@ -71,9 +71,6 @@
     <ClCompile Include="..\..\engines\lastexpress\entities\entity.cpp">
       <Filter>entities</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\engines\lastexpress\entities\entity24.cpp">
-      <Filter>entities</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\engines\lastexpress\entities\entity39.cpp">
       <Filter>entities</Filter>
     </ClCompile>
@@ -123,6 +120,9 @@
       <Filter>entities</Filter>
     </ClCompile>
     <ClCompile Include="..\..\engines\lastexpress\entities\servers1.cpp">
+      <Filter>entities</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\engines\lastexpress\entities\sophie.cpp">
       <Filter>entities</Filter>
     </ClCompile>
     <ClCompile Include="..\..\engines\lastexpress\entities\tables.cpp">
@@ -241,9 +241,6 @@
     <ClInclude Include="..\..\engines\lastexpress\entities\entity.h">
       <Filter>entities</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\engines\lastexpress\entities\entity24.h">
-      <Filter>entities</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\engines\lastexpress\entities\entity39.h">
       <Filter>entities</Filter>
     </ClInclude>
@@ -293,6 +290,9 @@
       <Filter>entities</Filter>
     </ClInclude>
     <ClInclude Include="..\..\engines\lastexpress\entities\servers1.h">
+      <Filter>entities</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\engines\lastexpress\entities\sophie.h">
       <Filter>entities</Filter>
     </ClInclude>
     <ClInclude Include="..\..\engines\lastexpress\entities\tables.h">

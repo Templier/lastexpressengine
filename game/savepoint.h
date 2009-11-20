@@ -81,7 +81,7 @@ public:
 		kMmeBoutarel,
 		kBoutarel,
 		kRebecca,
-		kEntity24,
+		kSophie,
 		kMahmud,				// 25
 		kYasmin,
 		kHadija,

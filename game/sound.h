@@ -36,29 +36,6 @@ class LastExpressEngine;
 
 class Sound {
 public:
-	enum DialogId {
-		kDialogAnna = 1,
-		kDialogAugust = 2,
-		kDialogTatiana = 10,
-		kDialogVassili = 11,
-		kDialogAlexei = 12,
-		kDialogAbbot = 13,
-		kDialogMilos = 14,
-		kDialogVesna = 15,
-		kDialogKronos = 18,
-		kDialogFrancois = 20,
-		kDialogMadameBoutarel = 21,
-		kDialog22 = 22,
-		kDialogRebecca = 23,
-		kDialogSophie = 24,
-		kDialogMahmud = 25,
-		kDialogHarem2 = 26,
-		kDialogHarem1 = 27,
-		kDialogHarem3 = 28,
-		kDialogHarem4 = 29,
-		kDialogTyler = 31
-	};
-
 	Sound(LastExpressEngine *engine);
 	~Sound();
 
@@ -66,27 +43,27 @@ public:
 	void playSound(SavePoints::EntityIndex entity, const char *filename, int a3, byte a4);
 
 	void playMusic(SavePoints::EntityIndex entity, byte id, int a3, byte a4);	
-	void playDialog(SavePoints::EntityIndex entity, DialogId id, int a3, byte a4);
+	void playDialog(SavePoints::EntityIndex entity, SavePoints::EntityIndex entityDialog, int a3, byte a4);
 	void playSoundEvent(int index, byte action, byte a3);	
 
 	// Dialog
-	const char *getDialogName(DialogId id);
+	const char *getDialogName(SavePoints::EntityIndex entity);
 
 	// Letters
 	const char *readText(int id);
 
 	// Sound bites
-	const char* excuseMe();
-
+	void excuseMe(SavePoints::EntityIndex entity, int param2, int param3);
 	const char *excuseMeCath();
 	const char *justCheckingCath();
 	const char *wrongDoorCath();
 	const char *justAMinuteCath();
 
+	// Tests
+	static bool testParameter(int param);
+
 private:
 	LastExpressEngine* _engine;
-
-	
 };
 
 } // End of namespace LastExpress

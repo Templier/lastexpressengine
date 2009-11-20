@@ -28,6 +28,8 @@
 #include "lastexpress/data/snd.h"
 
 #include "lastexpress/game/action.h"
+#include "lastexpress/game/entities.h"
+#include "lastexpress/game/logic.h"
 #include "lastexpress/game/state.h"
 
 #include "lastexpress/helpers.h"
@@ -192,18 +194,18 @@ void Sound::playSoundEvent(int index, byte action, byte a3) {
 	if (action) {
 		sprintf((char *)&sound_name, "LIB%03d", action);
 	
-		// TODO do another check
-		playSfxStream((char*)&sound_name);
+		if (_engine->getResMan()->hasFile(Common::String((char*)&sound_name) + ".snd"))
+			playSfxStream((char*)&sound_name);
 	}
 }
 
-void Sound::playDialog(SavePoints::EntityIndex entity, DialogId id, int a3, byte a4) {
-	playSound(entity, getDialogName(id), a3, a4);
+void Sound::playDialog(SavePoints::EntityIndex entity, SavePoints::EntityIndex entityDialog, int a3, byte a4) {
+	playSound(entity, getDialogName(entityDialog), a3, a4);
 }
 
-const char *Sound::getDialogName(DialogId id) {
-	switch (id) {
-	case kDialogAnna:
+const char *Sound::getDialogName(SavePoints::EntityIndex entity) {
+	switch (entity) {
+	case SavePoints::kAnna:
 		if (getEvent(Action::kAnnaDialogGoToJerusalem))
 			return "XANN12";
 
@@ -246,7 +248,7 @@ const char *Sound::getDialogName(DialogId id) {
 
 		break;
 
-	case kDialogAugust:
+	case SavePoints::kAugust:
 		if (getEvent(Action::kAugustTalkCigar))
 			return "XAUG6";
 
@@ -272,7 +274,7 @@ const char *Sound::getDialogName(DialogId id) {
 
 		break;
 
-	case kDialogTatiana:
+	case SavePoints::kTatiana:
 		if (getEvent(Action::kTatianaTylerCompartment))
 			return "XTAT6";
 
@@ -287,7 +289,7 @@ const char *Sound::getDialogName(DialogId id) {
 
 		break;
 
-	case kDialogVassili:
+	case SavePoints::kVassili:
 		if (getEvent(Action::kCathFreePassengers))
 			return "XVAS4";
 
@@ -305,7 +307,7 @@ const char *Sound::getDialogName(DialogId id) {
 
 		break;
 
-	case kDialogAlexei:
+	case SavePoints::kAlexei:
 		if (getProgress().field_88)
 			return "XALX6";
 
@@ -329,7 +331,7 @@ const char *Sound::getDialogName(DialogId id) {
 
 		break;
 
-	case kDialogAbbot:
+	case SavePoints::kAbbot:
 		if (getEvent(Action::kAbbotDrinkDefuse))
 			return "XABB4";
 
@@ -344,7 +346,7 @@ const char *Sound::getDialogName(DialogId id) {
 
 		break;
 
-	case kDialogMilos:
+	case SavePoints::kMilos:
 		if (getEvent(Action::kLocomotiveMilos) || getEvent(Action::kLocomotiveMilosNight))
 			return "XMIL5";
 
@@ -362,7 +364,7 @@ const char *Sound::getDialogName(DialogId id) {
 
 		break;
 
-	case kDialogVesna:
+	case SavePoints::kVesna:
 		if (getProgress().field_94)
 			return "XVES2";
 
@@ -371,7 +373,7 @@ const char *Sound::getDialogName(DialogId id) {
 
 		break;
 
-	case kDialogKronos:
+	case SavePoints::kKronos:
 		if (getEvent(Action::kKronosReturnBriefcase))
 			return "XKRO6";
 
@@ -399,7 +401,7 @@ const char *Sound::getDialogName(DialogId id) {
 
 		break;
 
-	case kDialogFrancois:
+	case SavePoints::kFrancois:
 		if (getProgress().field_9C)
 			return "XFRA3";
 
@@ -413,7 +415,7 @@ const char *Sound::getDialogName(DialogId id) {
 
 		break;
 
-	case kDialogMadameBoutarel:
+	case SavePoints::kMmeBoutarel:
 		if (getProgress().field_A4)
 			return "XMME4";
 
@@ -428,13 +430,13 @@ const char *Sound::getDialogName(DialogId id) {
 
 		break;
 
-	case kDialog22:
-		if (getProgress().field_D0)
+	case SavePoints::kBoutarel:
+		if (getProgress().event_met_boutarel)
 			return "XMRB1";
 
 		break;
 
-	case kDialogRebecca:
+	case SavePoints::kRebecca:
 		if (getProgress().field_B4)
 			return "XREB1A";
 
@@ -443,7 +445,7 @@ const char *Sound::getDialogName(DialogId id) {
 
 		break;
 
-	case kDialogSophie:
+	case SavePoints::kSophie:
 		if (getProgress().field_B0)
 			return "XSOP2";
 
@@ -458,37 +460,37 @@ const char *Sound::getDialogName(DialogId id) {
 
 		break;
 
-	case kDialogMahmud:
+	case SavePoints::kMahmud:
 		if (getProgress().field_C4)
 			return "XMAH1";
 
 		break;
 
-	case kDialogHarem2:
-		if (getProgress().field_D8)
+	case SavePoints::kYasmin:
+		if (getProgress().event_met_yasmin)
 			return "XHAR2";
 
 		break;
 
-	case kDialogHarem1:
-		if (getProgress().field_D4)
+	case SavePoints::kHadija:
+		if (getProgress().event_met_hadija)
 			return "XHAR1";
 
 		break;
 
-	case kDialogHarem3:
+	case SavePoints::kAlouan:
 		if (getProgress().field_DC)
 			return "XHAR3";
 
 		break;
 
-	case kDialogHarem4:
+	case SavePoints::kGendarmes:
 		if (getProgress().field_E0)
 			return "XHAR4";
 
 		break;
 
-	case kDialogTyler:
+	case SavePoints::kChapters:
 		if (getEvent(Action::kCathDream) || getEvent(Action::kCathWakingUp))
 			return "XTYL3";
 		
@@ -512,6 +514,277 @@ const char *Sound::readText(int id) {
 //////////////////////////////////////////////////////////////////////////
 // Sound bites
 //////////////////////////////////////////////////////////////////////////
+void Sound::excuseMe(SavePoints::EntityIndex entity, int param2, int param3) {
+	if (entity == SavePoints::kNone || entity == SavePoints::kChapters || entity == SavePoints::kTrain)
+		return;
+
+	if (param2 == 20 || param2 == 30)
+		return;
+
+	if (entity == SavePoints::kFrancois && getEntities()->getData(SavePoints::kFrancois)->field_4A3 == 30)
+		return;
+
+	if (!param3) {
+		error("Sound::excuseMe: not implemented!");
+	}
+	
+	switch (entity) {
+	default:
+		error("Sound::excuseMe: not implemented!");
+		break;
+
+	case SavePoints::kAnna:
+		playSound(SavePoints::kNone, "ANN1107A", param3, 0);
+		break;
+
+	case SavePoints::kAugust:
+		switch(random(4)) {
+		default:
+			break;
+
+		case 0:
+			playSound(SavePoints::kNone, "AUG1100A", param3, 0);
+			break;
+
+		case 1:
+			playSound(SavePoints::kNone, "AUG1100B", param3, 0);
+			break;
+
+		case 2:
+			playSound(SavePoints::kNone, "AUG1100C", param3, 0);
+			break;
+
+		case 3:
+			playSound(SavePoints::kNone, "AUG1100D", param3, 0);
+			break;
+		}
+		break;
+
+	case SavePoints::kMertens:
+		if (testParameter(param2)) {
+			playSound(SavePoints::kNone, (random(2) ? "CON1111" : "CON1111A"), param3, 0);
+		} else {
+			if (param2 || getProgress().jacket != State::kGreenJacket || !random(2)) {
+				switch(random(3)) {
+				default:
+					break;
+
+				case 0:
+					playSound(SavePoints::kNone, "CON1110A", param3, 0);
+					break;
+
+				case 1:
+					playSound(SavePoints::kNone, "CON1110C", param3, 0);
+					break;
+
+				case 2:
+					playSound(SavePoints::kNone, "CON1110", param3, 0);
+					break;
+				}
+			} else {
+				if (_engine->getGameState()->isDayTime()) {
+					playSound(SavePoints::kNone, (getProgress().field_18 == 2 ? "CON1110F" : "CON1110E"), -1, 0);
+				} else {
+					playSound(SavePoints::kNone, "CON1110D", -1, 0);
+				}
+			}
+		}
+		break;
+
+	case SavePoints::kCoudert:
+		if (testParameter(param2)) {
+			playSound(SavePoints::kNone, "JAC1111D", param3, 0);
+		} else {
+			if (param2 || getProgress().jacket != State::kGreenJacket || !random(2)) {
+				switch(random(4)) {
+				default:
+					break;
+
+				case 0:
+					playSound(SavePoints::kNone, "JAC1111", param3, 0);
+					break;
+
+				case 1:
+					playSound(SavePoints::kNone, "JAC1111A", param3, 0);
+					break;
+
+				case 2:
+					playSound(SavePoints::kNone, "JAC1111B", param3, 0);
+					break;
+
+				case 3:
+					playSound(SavePoints::kNone, "JAC1111C", param3, 0);
+					break;
+				}
+			} else {
+				playSound(SavePoints::kNone, "JAC1113B", param3, 0);
+			}
+		}
+		break;
+
+	case SavePoints::kPascale:
+		playSound(SavePoints::kNone, (random(2) ? "HDE1002" : "HED1002A"), param3, 0);
+		break;
+
+	case SavePoints::kServers0:
+	case SavePoints::kServers1:
+		switch(random(3)) {
+		default:
+			break;
+
+		case 0:
+			playSound(SavePoints::kNone, (entity == SavePoints::kServers0) ? "WAT1002" : "WAT1003", param3, 0);
+			break;
+
+		case 1:
+			playSound(SavePoints::kNone, (entity == SavePoints::kServers0) ? "WAT1002A" : "WAT1003A", param3, 0);
+			break;
+
+		case 2:
+			playSound(SavePoints::kNone, (entity == SavePoints::kServers0) ? "WAT1002B" : "WAT1003B", param3, 0);
+			break;
+		}
+		break;
+
+	case SavePoints::kVerges:
+		if (testParameter(param2)) {
+			playSound(SavePoints::kNone, (random(2) ? "TRA1113A" : "TRA1113B"), -1, 0);
+		} else {
+			playSound(SavePoints::kNone, "TRA1112", param3, 0);
+		}
+		break;
+
+	case SavePoints::kTatiana:
+		playSound(SavePoints::kNone, (random(2) ? "TAT1102A" : "TAT1102B"), param3, 0);
+		break;
+
+	case SavePoints::kAlexei:
+		playSound(SavePoints::kNone, (random(2) ? "ALX1099C" : "ALX1099D"), param3, 0);
+		break;
+
+	case SavePoints::kAbbot:
+		if (testParameter(param2)) {
+			playSound(SavePoints::kNone, "ABB3002C", param3, 0);
+		} else {			
+			switch(random(3)) {
+			default:
+				break;
+
+			case 0:
+				playSound(SavePoints::kNone, "ABB3002", param3, 0);
+				break;
+
+			case 1:
+				playSound(SavePoints::kNone, "ABB3002A", param3, 0);
+				break;
+
+			case 2:
+				playSound(SavePoints::kNone, "ABB3002B", param3, 0);
+				break;
+			}
+		}
+		break;
+
+	case SavePoints::kVesna:
+		switch(random(3)) {
+		default:
+			break;
+
+		case 0:
+			playSound(SavePoints::kNone, "VES1109A", param3, 0);
+			break;
+
+		case 1:
+			playSound(SavePoints::kNone, "VES1109B", param3, 0);
+			break;
+
+		case 2:
+			playSound(SavePoints::kNone, "VES1109C", param3, 0);
+			break;
+		}
+		break;
+
+	case SavePoints::kKahina:
+		playSound(SavePoints::kNone, (random(2) ? "KAH1001" : "KAH1001A"), param3, 0);
+		break;
+
+	case SavePoints::kFrancois:
+	case SavePoints::kMmeBoutarel:
+		switch(random(4)) {
+		default:
+			break;
+
+		case 0:
+			playSound(SavePoints::kNone, (entity == SavePoints::kFrancois) ? "FRA1001" : "MME1103A", param3, 0);
+			break;
+
+		case 1:
+			playSound(SavePoints::kNone, (entity == SavePoints::kFrancois) ? "FRA1001A" : "MME1103B", param3, 0);
+			break;
+
+		case 2:
+			playSound(SavePoints::kNone, (entity == SavePoints::kFrancois) ? "FRA1001B" : "MME1103C", param3, 0);
+			break;
+
+		case 3:
+			playSound(SavePoints::kNone, (entity == SavePoints::kFrancois) ? "FRA1001C" : "MME1103D", param3, 0);
+			break;
+		}
+		break;
+
+	case SavePoints::kBoutarel:
+		playSound(SavePoints::kNone, "MRB1104", param3, 0);
+		if (param3 > 2)
+			getProgress().event_met_boutarel = 1;
+		break;
+
+	case SavePoints::kRebecca:
+		playSound(SavePoints::kNone, (random(2) ? "REB1106" : "REB110A"), param3, 0);
+		break;
+
+	case SavePoints::kSophie: {
+		bool param2Test = testParameter(param2);
+		switch(random(3)) {
+		default:
+			break;
+
+		case 0:
+			playSound(SavePoints::kNone, "SOP1105", param3, 0);
+			break;
+
+		case 1:
+			playSound(SavePoints::kNone, param2Test ? "SOP1105C" : "SOP1105A", param3, 0);
+			break;
+
+		case 2:
+			playSound(SavePoints::kNone, param2Test ? "SOP1105D" : "SOP1105B", param3, 0);
+			break;
+		}
+		break;
+	}
+
+	case SavePoints::kMahmud:
+		playSound(SavePoints::kNone, "MAH1101", param3, 0);
+		break;
+
+	case SavePoints::kYasmin:
+		playSound(SavePoints::kNone, "HAR1002", param3, 0);
+		if (param3 > 2)
+			getProgress().event_met_yasmin = 1;
+		break;
+
+	case SavePoints::kHadija:
+		playSound(SavePoints::kNone, (random(2) ? "HAR1001" : "HAR1001A"), param3, 0);
+		if (param3 > 2)
+			getProgress().event_met_hadija = 1;
+		break;
+
+	case SavePoints::kAlouan:
+		playSound(SavePoints::kNone, "HAR1004", param3, 0);
+		break;
+	}	
+}
+
 const char *Sound::excuseMeCath() {
 	switch(random(3)) {
 	case 0:
@@ -570,5 +843,11 @@ const char *Sound::justAMinuteCath() {
 	return "CAT1520";
 }
 
+//////////////////////////////////////////////////////////////////////////
+// Tests
+//////////////////////////////////////////////////////////////////////////
+bool Sound::testParameter(int param) {
+	return (param == 1 || param == 10 || param == 15 || param == 19 || param == 21 || param == 23 || param == 24 || param == 26 || param == 27 || param == 28);
+}
 
 } // End of namespace LastExpress

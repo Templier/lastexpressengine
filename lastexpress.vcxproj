@@ -83,7 +83,6 @@
     <ClCompile Include="..\..\engines\lastexpress\entities\cooks.cpp" />
     <ClCompile Include="..\..\engines\lastexpress\entities\coudert.cpp" />
     <ClCompile Include="..\..\engines\lastexpress\entities\entity.cpp" />
-    <ClCompile Include="..\..\engines\lastexpress\entities\entity24.cpp" />
     <ClCompile Include="..\..\engines\lastexpress\entities\entity39.cpp" />
     <ClCompile Include="..\..\engines\lastexpress\entities\francois.cpp" />
     <ClCompile Include="..\..\engines\lastexpress\entities\gendarmes.cpp" />
@@ -101,6 +100,7 @@
     <ClCompile Include="..\..\engines\lastexpress\entities\salko.cpp" />
     <ClCompile Include="..\..\engines\lastexpress\entities\servers0.cpp" />
     <ClCompile Include="..\..\engines\lastexpress\entities\servers1.cpp" />
+    <ClCompile Include="..\..\engines\lastexpress\entities\sophie.cpp" />
     <ClCompile Include="..\..\engines\lastexpress\entities\tables.cpp" />
     <ClCompile Include="..\..\engines\lastexpress\entities\tatiana.cpp" />
     <ClCompile Include="..\..\engines\lastexpress\entities\train.cpp" />
@@ -145,7 +145,6 @@
     <ClInclude Include="..\..\engines\lastexpress\entities\cooks.h" />
     <ClInclude Include="..\..\engines\lastexpress\entities\coudert.h" />
     <ClInclude Include="..\..\engines\lastexpress\entities\entity.h" />
-    <ClInclude Include="..\..\engines\lastexpress\entities\entity24.h" />
     <ClInclude Include="..\..\engines\lastexpress\entities\entity39.h" />
     <ClInclude Include="..\..\engines\lastexpress\entities\francois.h" />
     <ClInclude Include="..\..\engines\lastexpress\entities\gendarmes.h" />
@@ -163,6 +162,7 @@
     <ClInclude Include="..\..\engines\lastexpress\entities\salko.h" />
     <ClInclude Include="..\..\engines\lastexpress\entities\servers0.h" />
     <ClInclude Include="..\..\engines\lastexpress\entities\servers1.h" />
+    <ClInclude Include="..\..\engines\lastexpress\entities\sophie.h" />
     <ClInclude Include="..\..\engines\lastexpress\entities\tables.h" />
     <ClInclude Include="..\..\engines\lastexpress\entities\tatiana.h" />
     <ClInclude Include="..\..\engines\lastexpress\entities\train.h" />

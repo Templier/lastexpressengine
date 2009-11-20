@@ -20,7 +20,6 @@ MODULE_OBJS := \
 	entities/chapters.o \
 	entities/cooks.o \
 	entities/coudert.o \
-	entities/entity24.o \
 	entities/entity39.o \
 	entities/francois.o \
 	entities/gendarmes.o \
@@ -38,6 +37,7 @@ MODULE_OBJS := \
 	entities/salko.o \
 	entities/servers0.o \
 	entities/servers1.o \
+	entities/sophie.o \
 	entities/tables.o \
 	entities/tatiana.o \
 	entities/train.o \

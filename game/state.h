@@ -154,9 +154,9 @@ public:
 		uint32 field_C4;
 		uint32 field_C8;
 		uint32 field_CC;
-		uint32 field_D0;
-		uint32 field_D4;
-		uint32 field_D8;
+		uint32 event_met_boutarel;
+		uint32 event_met_hadija;
+		uint32 event_met_yasmin;
 		uint32 field_DC;
 		uint32 field_E0;
 		uint32 field_E4;
@@ -222,9 +222,9 @@ public:
 			field_C4 = 0;
 			field_C8 = 0;
 			field_CC = 0;
-			field_D0 = 0;
-			field_D4 = 0;
-			field_D8 = 0;
+			event_met_boutarel = 0;
+			event_met_hadija = 0;
+			event_met_yasmin = 0;
 			field_DC = 0;
 			field_E0 = 0;
 			field_E4 = 0;
@@ -290,10 +290,14 @@ public:
 	byte unknown_flag_1;
 	byte unknown_flag_2;
 
+	// Accessors
 	Inventory  *getGameInventory() { return _inventory; }
 	Objects	   *getGameObjects() { return _objects; }	
 	SavePoints *getGameSavePoints() { return _savepoints; }
 	GameState  *getGameState() { return _state; }
+
+	// Time checks
+	bool isDayTime();
 
 	// Helpers	
 	static uint32 getPowerOfTwo(uint32 x);

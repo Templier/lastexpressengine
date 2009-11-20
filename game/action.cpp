@@ -381,7 +381,7 @@ Action::~Action() {
 // Processing hotspot
 //////////////////////////////////////////////////////////////////////////
 void Action::processHotspot(SceneHotspot *hotspot) {
-	if (!hotspot->action || hotspot->action >= _actions.size())
+	if (!hotspot || !hotspot->action || hotspot->action >= _actions.size())
 		return;
 
 	(*_actions[hotspot->action])(hotspot);
@@ -476,8 +476,8 @@ IMPLEMENT_ACTION(compartment) {
 
 		// FIXME check again, this might be wrong (and simplify expression)
 		if (location != 1 || getEntities()->checkFields2(object) || (getInventory()->getSelectedItem() != Inventory::kKey
-			&& (location != 1 || !getInventory()->hasItem(Inventory::kKey) 
-			|| getInventory()->getSelectedItem() != Inventory::kFirebird || getInventory()->getSelectedItem() != Inventory::kBriefcase))) {
+		&& (location != 1 || !getInventory()->hasItem(Inventory::kKey) 
+		|| getInventory()->getSelectedItem() != Inventory::kFirebird || getInventory()->getSelectedItem() != Inventory::kBriefcase))) {
 				playEventSound(0, 13, 0);
 				hotspot->scene = 0;
 				return;
@@ -769,26 +769,26 @@ IMPLEMENT_ACTION(getOutsideTrain) {
 
 		case 9:
 			getEvent(kCathLookOutsideWindowDay) = 1;
-			playAnimation(_engine->getLogic()->isDayTime() ? kCathGoOutsideTylerCompartmentDay : kCathGoOutsideTylerCompartmentNight);
+			playAnimation(_engine->getGameState()->isDayTime() ? kCathGoOutsideTylerCompartmentDay : kCathGoOutsideTylerCompartmentNight);
 			getProgress().field_C8 = 1;
 			break;
 
 		case 44:
 			getEvent(kCathLookOutsideWindowDay) = 1;
-			playAnimation(_engine->getLogic()->isDayTime() ? kCathGoOutsideDay : kCathGoOutsideNight);
+			playAnimation(_engine->getGameState()->isDayTime() ? kCathGoOutsideDay : kCathGoOutsideNight);
 			getProgress().field_C8 = 1;
 			break;
 
 		case 45:
 			getEvent(kCathLookOutsideWindowDay) = 1;
-			playAnimation(_engine->getLogic()->isDayTime() ? kCathGetInsideDay : kCathGetInsideNight);
+			playAnimation(_engine->getGameState()->isDayTime() ? kCathGetInsideDay : kCathGetInsideNight);
 			if (!hotspot->scene)
 				_engine->getLogic()->processScene();
 			break;
 		}
 	} else {
 		if (action == 9 || action == 44 || action == 45) {
-			playAnimation(_engine->getLogic()->isDayTime() ? kCathLookOutsideWindowDay : kCathLookOutsideWindowNight);
+			playAnimation(_engine->getGameState()->isDayTime() ? kCathLookOutsideWindowDay : kCathLookOutsideWindowNight);
 			_engine->getLogic()->processScene();
 			hotspot->scene = 0;
 		}
@@ -802,11 +802,11 @@ IMPLEMENT_ACTION(slip) {
 		return;
 
 	case 9:
-		playAnimation(_engine->getLogic()->isDayTime() ? kCathSlipTylerCompartmentDay : kCathSlipTylerCompartmentNight); 
+		playAnimation(_engine->getGameState()->isDayTime() ? kCathSlipTylerCompartmentDay : kCathSlipTylerCompartmentNight); 
 		break;
 
 	case 44:
-		playAnimation(_engine->getLogic()->isDayTime() ? kCathSlipDay : kCathSlipNight);
+		playAnimation(_engine->getGameState()->isDayTime() ? kCathSlipDay : kCathSlipNight);
 		break;
 	}
 
@@ -823,11 +823,11 @@ IMPLEMENT_ACTION(getInsideTrain) {
 		return;
 
 	case 9:
-		playAnimation(_engine->getLogic()->isDayTime() ? kCathGetInsideTylerCompartmentDay : kCathGetInsideTylerCompartmentNight); 
+		playAnimation(_engine->getGameState()->isDayTime() ? kCathGetInsideTylerCompartmentDay : kCathGetInsideTylerCompartmentNight); 
 		break;
 
 	case 44:
-		playAnimation(_engine->getLogic()->isDayTime() ? kCathGetInsideDay : kCathGetInsideNight);
+		playAnimation(_engine->getGameState()->isDayTime() ? kCathGetInsideDay : kCathGetInsideNight);
 		break;
 
 	case 45:
@@ -1213,7 +1213,7 @@ IMPLEMENT_ACTION(openBed) {
 
 //////////////////////////////////////////////////////////////////////////
 IMPLEMENT_ACTION(dialog) {
-	getSound()->playDialog(SavePoints::kTables4, (Sound::DialogId)hotspot->param1, 16, 0);
+	getSound()->playDialog(SavePoints::kTables4, (SavePoints::EntityIndex)hotspot->param1, 16, 0);
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -1587,7 +1587,7 @@ Cursor::CursorStyle Action::getCursor(byte action, Objects::ObjectIndex object, 
 		return Cursor::kCursorNormal;
 
 	case SceneHotspot::kActionDialog:
-		if (getSound()->getDialogName((Sound::DialogId)object))
+		if (getSound()->getDialogName((SavePoints::EntityIndex)object))
 			return Cursor::kCursorHandPointer; 
 
 		return Cursor::kCursorNormal;

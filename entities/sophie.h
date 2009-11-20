@@ -23,8 +23,8 @@
  *
  */
 
-#ifndef LASTEXPRESS_ENTITY24_H
-#define LASTEXPRESS_ENTITY24_H
+#ifndef LASTEXPRESS_SOPHIE_H
+#define LASTEXPRESS_SOPHIE_H
 
 #include "lastexpress/entities/entity.h"
 
@@ -32,9 +32,9 @@ namespace LastExpress {
 
 class LastExpressEngine;
 
-class Entity24 : public Entity {
+class Sophie : public Entity {
 public:
-	Entity24(LastExpressEngine *engine);
+	Sophie(LastExpressEngine *engine);
 
 	// Setup	
 	DECLARE_FUNCTION(chapter1)
@@ -49,4 +49,4 @@ public:
 
 } // End of namespace LastExpress
 
-#endif // LASTEXPRESS_ENTITY24_H
+#endif // LASTEXPRESS_SOPHIE_H

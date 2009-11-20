@@ -35,7 +35,6 @@
 #include "lastexpress/entities/chapters.h"
 #include "lastexpress/entities/cooks.h"
 #include "lastexpress/entities/coudert.h"
-#include "lastexpress/entities/entity24.h"
 #include "lastexpress/entities/entity39.h"
 #include "lastexpress/entities/francois.h"
 #include "lastexpress/entities/gendarmes.h"
@@ -53,6 +52,7 @@
 #include "lastexpress/entities/salko.h"
 #include "lastexpress/entities/servers0.h"
 #include "lastexpress/entities/servers1.h"
+#include "lastexpress/entities/sophie.h"
 #include "lastexpress/entities/tables.h"
 #include "lastexpress/entities/tatiana.h"
 #include "lastexpress/entities/train.h"
@@ -101,7 +101,7 @@ Entities::Entities(LastExpressEngine *engine) : _engine(engine) {
 	ADD_ENTITY(MmeBoutarel);
 	ADD_ENTITY(Boutarel);
 	ADD_ENTITY(Rebecca);
-	ADD_ENTITY(Entity24);	
+	ADD_ENTITY(Sophie);	
 	ADD_ENTITY(Mahmud);
 	ADD_ENTITY(Yasmin);
 	ADD_ENTITY(Hadija);
