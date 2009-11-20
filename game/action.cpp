@@ -1489,7 +1489,7 @@ Cursor::CursorStyle Action::getCursor(byte action, Objects::ObjectIndex object, 
 		if (object >= 32)
 			return Cursor::kCursorNormal;
 
-		if (getInventory()->getSelectedItem() != object)
+		if (getInventory()->getSelectedItem() != (Inventory::InventoryItem)object)
 			return Cursor::kCursorNormal;
 
 		if (object == 20 && param2 == 4 && !getProgress().field_50)
