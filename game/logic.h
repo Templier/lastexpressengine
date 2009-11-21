@@ -61,7 +61,7 @@ public:
 	void savegame(int param1, int param2, int param3);
 
 	// Scene
-	void loadScene(uint32 index);
+	void loadScene(uint32 index);	
 	void setScene(uint32 index);
 
 	void loadSceneFromData(int param1, int param2, int param3);
@@ -93,11 +93,19 @@ private:
 		bool showingMenu;
 		Cursor::CursorStyle cursorStyle;	// necessary to remember current cursor when inside inventory TODO remove?
 
+		// flags
+		byte flag_no_entity;
+		byte flag_draw_entities;
+
+
 		RunState() {
 			gameId = kGameBlue;
 			gameStarted = false;
 			showingMenu = false;
 			cursorStyle = Cursor::kCursorNormal;
+
+			flag_no_entity = false;
+			flag_draw_entities = false;
 		}
 	};
 
@@ -112,6 +120,7 @@ private:
 	Scene *_scene;				///< Current scene	
 	Sound *_sound;				///< Sound	
 	
+	void drawScene(uint32 index);
 	void preProcessScene(uint32 *index);
 	void postProcessScene(uint32 *index);	
 

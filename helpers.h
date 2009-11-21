@@ -32,13 +32,18 @@
 // Logic subclasses
 #define getBeetle() _engine->getLogic()->getGameBeetle()
 #define getEntities() _engine->getLogic()->getGameEntities()
-#define getEvent(id) getState()->events[id]
-#define getObjects() _engine->getGameState()->getGameObjects()
-#define getInventory() _engine->getGameState()->getGameInventory()
-#define getProgress() getState()->progress
-#define getSavePoints() _engine->getGameState()->getGameSavePoints()
-#define getState() _engine->getGameState()->getGameState()
 #define getSound() _engine->getLogic()->getGameSound()
+
+#define getState() _engine->getGameState()->getGameState()
+#define getEvent(id) getState()->events[id]
+#define getProgress() getState()->progress
+
+#define getFlags() _engine->getGameState()->getGameFlags()
+#define getInventory() _engine->getGameState()->getGameInventory()
+#define getObjects() _engine->getGameState()->getGameObjects()
+#define getSavePoints() _engine->getGameState()->getGameSavePoints()
+
+
 
 // Utilities
 #define loadFile(name) load(_engine->getResMan()->getFileStream(name))

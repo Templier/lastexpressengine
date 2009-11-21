@@ -414,7 +414,7 @@ void Inventory::setLocationAndProcess(InventoryItem item, byte newLocation) {
 	getEntry(item)->location = newLocation;
 
 	if (isSceneParameterEqual(item)) {
-		if (_engine->getGameState()->unknown_flag_0)
+		if (getFlags()->flag_0)
 			_engine->getLogic()->processScene();
 	}
 }

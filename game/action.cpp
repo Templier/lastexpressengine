@@ -1616,8 +1616,6 @@ LABEL_KEY:
 			return (Cursor::CursorStyle)getObjects()->get(object).field_3;
 		else
 			return (Cursor::CursorStyle)getInventory()->getEntry(Inventory::kKey)->item_id;
-
-
 	}
 }
 

@@ -195,7 +195,7 @@ bool Logic::handleMouseEvent(Common::Event ev) {
 
 void Logic::loadScene(uint32 index) {
 
-	_engine->getGameState()->unknown_flag_0 = 0;
+	getFlags()->flag_0 = 0;
 	if (getState()->sceneUseBackup) {
 		Scene *scene = _engine->getScene(index);
 	
@@ -209,12 +209,26 @@ void Logic::loadScene(uint32 index) {
 
 	setScene(index);
 
-	warning("Logic::loadScene: TODO draw egg / hourglass if neeeded");
+	warning("Logic::loadScene: TODO draw egg / hourglass if needed");
 
 	updateCursor();
 }
 
 void Logic::setScene(uint32 index) {
+	_runState.flag_no_entity = false;
+
+	if (_runState.flag_draw_entities) {
+		// TODO Setup screen size (is it necessary for our animations?)
+		drawScene(index);
+		_runState.flag_no_entity = true;
+	} else {
+		_runState.flag_draw_entities = true;
+		drawScene(index);
+		_runState.flag_draw_entities = false;
+	}
+}
+
+void Logic::drawScene(uint32 index) {
 	preProcessScene(&index);
 
 	// Draw background
@@ -232,16 +246,16 @@ void Logic::setScene(uint32 index) {
 	if (getState()->sceneUseBackup)
 		delete scene;
 
-	if (_engine->getGameState()->unknown_flag_1) {
+	if (getFlags()->flag_1) {
 		getSavePoints()->pushAll(0, 17, 0);
 		getSavePoints()->process();
 
-		if (_engine->getGameState()->unknown_flag_2)
+		if (_runState.flag_no_entity)
 			return;
 
 		//getEntities()->updateFields()
 		//getEntities()->drawSequences()
-		//getEntities()->executeCallbacks()
+		//getEntities()->executeCallbacks()		
 	}
 	
 	// Show the scene 
@@ -569,8 +583,8 @@ void Logic::postProcessScene(uint32 *index) {
 	}
 
 	case Scene::kType133:
-		if (_engine->getGameState()->unknown_flag_0) {
-			_engine->getGameState()->unknown_flag_0 = 0;
+		if (getFlags()->flag_0) {
+			getFlags()->flag_0 = 0;
 			updateCursor();
 		}
 		break;

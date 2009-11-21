@@ -38,6 +38,8 @@
 		uint16 {2}   - bottom line length
 		byte {x}     - top line (UTF-16 string)
 		byte {x}     - bottom line (UTF-16 string)
+
+	Subtitles seem to be drawn on screen at (80, 420) x (560, 458)
 */
 
 #include "lastexpress/drawable.h"

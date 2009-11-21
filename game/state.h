@@ -282,19 +282,25 @@ public:
 		}
 	};
 
+	struct Flags {
+		byte flag_0;
+		byte flag_1;
+
+		Flags() {
+			flag_0 = false;
+			flag_1 = false;
+		}
+	};
+
 	State(LastExpressEngine *engine);
 	~State();
-
-	// FIXME unknown value
-	byte unknown_flag_0;
-	byte unknown_flag_1;
-	byte unknown_flag_2;
 
 	// Accessors
 	Inventory  *getGameInventory() { return _inventory; }
 	Objects	   *getGameObjects() { return _objects; }	
 	SavePoints *getGameSavePoints() { return _savepoints; }
 	GameState  *getGameState() { return _state; }
+	Flags  	   *getGameFlags() { return _flags; }
 
 	// Time checks
 	bool isDayTime();
@@ -312,11 +318,11 @@ private:
 
 	LastExpressEngine *_engine;
 	
-	GameState *_state;			///< State
+	Flags *_flags;				///< Flags
 	Inventory *_inventory;  	///< Inventory
 	Objects *_objects;			///< Objects
 	SavePoints *_savepoints;	///< SavePoints
-	
+	GameState *_state;			///< State
 };
 
 } // End of namespace LastExpress
