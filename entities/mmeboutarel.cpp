@@ -78,8 +78,8 @@ IMPLEMENT_FUNCTION(MmeBoutarel, chapter1, 10) {
 	case SavePoints::kActionDefault: 
 		getSavePoints()->addData(SavePoints::kMmeBoutarel, 242526416, 0);
 		
-		getObjects()->update(Objects::kObjectCompartmentD, SavePoints::kNone, 2, 0, 0);
-		getObjects()->update(Objects::kObject51, SavePoints::kNone, 0, 10, 9);
+		getObjects()->update(Objects::kObjectCompartmentD, SavePoints::kNone, 2, Cursor::kCursorNormal, 0);
+		getObjects()->update(Objects::kObject51, SavePoints::kNone, 0, Cursor::kCursorHandKnock, 9);
 
 		_data.field_491 = 5790;
 		_data.field_493 = 1;

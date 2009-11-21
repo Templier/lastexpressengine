@@ -102,7 +102,10 @@ public:
 		kCursorEggClock,
 		kCursorNormal2,
 		kCursorBlank,
-		kCursorMAX
+		kCursorMAX,
+
+		// Special
+		kCursorKeepValue = 255
 	};
 
 	Cursor();

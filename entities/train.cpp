@@ -94,10 +94,10 @@ IMPLEMENT_FUNCTION(Train, process, 8) {
 	case SavePoints::kActionDefault:
 		getCallData().entries[8].field_0 = 1;
 		if (getProgress().chapter < State::kChapter5) {
-			getObjects()->update(Objects::kObjectCompartment5, SavePoints::kTrain, 3, 10, 9);
-			getObjects()->update(Objects::kObjectCompartment6, SavePoints::kTrain, 3, 10, 9);
-			getObjects()->update(Objects::kObjectCompartment7, SavePoints::kTrain, 3, 10, 9);
-			getObjects()->update(Objects::kObjectCompartment8, SavePoints::kTrain, 3, 10, 9);
+			getObjects()->update(Objects::kObjectCompartment5, SavePoints::kTrain, 3, Cursor::kCursorHandKnock, 9);
+			getObjects()->update(Objects::kObjectCompartment6, SavePoints::kTrain, 3, Cursor::kCursorHandKnock, 9);
+			getObjects()->update(Objects::kObjectCompartment7, SavePoints::kTrain, 3, Cursor::kCursorHandKnock, 9);
+			getObjects()->update(Objects::kObjectCompartment8, SavePoints::kTrain, 3, Cursor::kCursorHandKnock, 9);
 		}
 		_data.field_491 = 30000;
 		break;

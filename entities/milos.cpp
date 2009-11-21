@@ -85,8 +85,8 @@ IMPLEMENT_FUNCTION(Milos, chapter1, 12) {
 		getSavePoints()->addData(SavePoints::kMilos, 157691176, 0);
 		getSavePoints()->addData(SavePoints::kMilos, 208228224, 2);
 
-		getObjects()->update(Objects::kObjectCompartmentG, SavePoints::kNone, 3, 10, 9);
-		getObjects()->update(Objects::kObject46, SavePoints::kNone, 0, 255, 255);
+		getObjects()->update(Objects::kObjectCompartmentG, SavePoints::kNone, 3, Cursor::kCursorHandKnock, 9);
+		getObjects()->update(Objects::kObject46, SavePoints::kNone, 0, Cursor::kCursorKeepValue, 255);
 
 		_data.field_491 = 4689;
 		_data.field_493 = 1;

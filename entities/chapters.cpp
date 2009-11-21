@@ -101,8 +101,8 @@ IMPLEMENT_FUNCTION(Chapters, chapter1_init, 7) {
 	getInventory()->setLocationAndProcess(Inventory::kItem22, 1);
 	getInventory()->setLocationAndProcess(Inventory::kPaper, 1);
 
-	getObjects()->update(Objects::kObjectCompartment1, SavePoints::kNone, 0, 10, 9);
-	getObjects()->update(Objects::kObjectOutside, SavePoints::kNone, 0, 255, 255);
+	getObjects()->update(Objects::kObjectCompartment1, SavePoints::kNone, 0, Cursor::kCursorHandKnock, 9);
+	getObjects()->update(Objects::kObjectOutside, SavePoints::kNone, 0, Cursor::kCursorKeepValue, 255);
 
 	for (uint i = 1; i < 9; i++) {
 		getObjects()->updateField4((Objects::ObjectIndex)i, 2);
@@ -119,22 +119,22 @@ IMPLEMENT_FUNCTION(Chapters, chapter1_init, 7) {
 	getObjects()->updateField4(Objects::kObject98, 1);
 	getObjects()->updateField4(Objects::kObjectRestaurantCar, 1);
 
-	getObjects()->update(Objects::kObject25, SavePoints::kNone, 0, 0, 1);
-	getObjects()->update(Objects::kObjectGreenSleepingCar, SavePoints::kNone, 0, 0, 1);
-	getObjects()->update(Objects::kObjectRedSleepingCar, SavePoints::kNone, 0, 0, 1);
-	getObjects()->update(Objects::kObject28, SavePoints::kNone, 0, 0, 1);
-	getObjects()->update(Objects::kObject56, SavePoints::kNone, 0, 0, 1);
-	getObjects()->update(Objects::kObject54, SavePoints::kNone, 0, 0, 1);
-	getObjects()->update(Objects::kObjectRestaurantCar, SavePoints::kNone, 0, 0, 1);
-	getObjects()->update(Objects::kObject59, SavePoints::kNone, 0, 0, 1);
-	getObjects()->update(Objects::kObject66, SavePoints::kNone, 0, 0, 1);
-	getObjects()->update(Objects::kObject64, SavePoints::kNone, 0, 0, 1);
-	getObjects()->update(Objects::kObject65, SavePoints::kNone, 0, 0, 1);
-	getObjects()->update(Objects::kObject69, SavePoints::kNone, 0, 0, 1);
-	getObjects()->update(Objects::kObject98, SavePoints::kNone, 0, 0, 1);
-	getObjects()->update(Objects::kObjectHandleOutsideLeft, SavePoints::kNone, 1, 0, 9);
-	getObjects()->update(Objects::kObjectHandleOutsideRight, SavePoints::kNone, 1, 0, 9);
-	getObjects()->update(Objects::kObject101, SavePoints::kNone, 1, 10, 9);
+	getObjects()->update(Objects::kObject25, SavePoints::kNone, 0, Cursor::kCursorNormal, 1);
+	getObjects()->update(Objects::kObjectGreenSleepingCar, SavePoints::kNone, 0, Cursor::kCursorNormal, 1);
+	getObjects()->update(Objects::kObjectRedSleepingCar, SavePoints::kNone, 0, Cursor::kCursorNormal, 1);
+	getObjects()->update(Objects::kObject28, SavePoints::kNone, 0, Cursor::kCursorNormal, 1);
+	getObjects()->update(Objects::kObject56, SavePoints::kNone, 0, Cursor::kCursorNormal, 1);
+	getObjects()->update(Objects::kObject54, SavePoints::kNone, 0, Cursor::kCursorNormal, 1);
+	getObjects()->update(Objects::kObjectRestaurantCar, SavePoints::kNone, 0, Cursor::kCursorNormal, 1);
+	getObjects()->update(Objects::kObject59, SavePoints::kNone, 0, Cursor::kCursorNormal, 1);
+	getObjects()->update(Objects::kObject66, SavePoints::kNone, 0, Cursor::kCursorNormal, 1);
+	getObjects()->update(Objects::kObject64, SavePoints::kNone, 0, Cursor::kCursorNormal, 1);
+	getObjects()->update(Objects::kObject65, SavePoints::kNone, 0, Cursor::kCursorNormal, 1);
+	getObjects()->update(Objects::kObject69, SavePoints::kNone, 0, Cursor::kCursorNormal, 1);
+	getObjects()->update(Objects::kObject98, SavePoints::kNone, 0, Cursor::kCursorNormal, 1);
+	getObjects()->update(Objects::kObjectHandleOutsideLeft, SavePoints::kNone, 1, Cursor::kCursorNormal, 9);
+	getObjects()->update(Objects::kObjectHandleOutsideRight, SavePoints::kNone, 1, Cursor::kCursorNormal, 9);
+	getObjects()->update(Objects::kObject101, SavePoints::kNone, 1, Cursor::kCursorHandKnock, 9);
 
 	// TODO call another function
 }

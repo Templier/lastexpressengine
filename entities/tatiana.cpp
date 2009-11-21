@@ -104,9 +104,9 @@ IMPLEMENT_FUNCTION(Tatiana, chapter1, 17) {
 	case SavePoints::kActionDefault: 
 		getSavePoints()->addData(SavePoints::kTatiana, 191198209, 0);
 
-		getObjects()->update(Objects::kObjectCompartmentB, SavePoints::kNone, 1, 10, 9);
-		getObjects()->update(Objects::kObject49, SavePoints::kNone, 1, 10, 9);
-		getObjects()->update(Objects::kObject41, SavePoints::kNone, 0, 255, 255);
+		getObjects()->update(Objects::kObjectCompartmentB, SavePoints::kNone, 1, Cursor::kCursorHandKnock, 9);
+		getObjects()->update(Objects::kObject49, SavePoints::kNone, 1, Cursor::kCursorHandKnock, 9);
+		getObjects()->update(Objects::kObject41, SavePoints::kNone, 0, Cursor::kCursorKeepValue, 255);
 
 		_data.field_491 = 5419;
 		_data.field_493 = 1;

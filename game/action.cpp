@@ -486,7 +486,7 @@ IMPLEMENT_ACTION(compartment) {
 		playEventSound(0, 32, 0);
 
 		if ((object >= 1 && object <= 3) || (object >= 32 && object <= 37))
-			getObjects()->update(object, SavePoints::kNone, 0, 10, 9);
+			getObjects()->update(object, SavePoints::kNone, 0, Cursor::kCursorHandKnock, 9);
 
 		playEventSound(0, 15, 22);
 		getInventory()->unselectItem();
@@ -504,7 +504,7 @@ IMPLEMENT_ACTION(compartment) {
 		return;
 	}
 
-	getObjects()->update(Objects::kObjectCompartment1, SavePoints::kNone, 1, 10, 9);
+	getObjects()->update(Objects::kObjectCompartment1, SavePoints::kNone, 1, Cursor::kCursorHandKnock, 9);
 	playEventSound(0, 16, 0);
 	getInventory()->unselectItem();
 	hotspot->scene = 0;
@@ -530,16 +530,16 @@ IMPLEMENT_ACTION(playAnimation) {
 //////////////////////////////////////////////////////////////////////////
 IMPLEMENT_ACTION(openCloseObject) {
 	Objects::ObjectIndex object = (Objects::ObjectIndex)hotspot->param1;
-	byte action = hotspot->param2;
+	byte location = hotspot->param2;
 
 	if (object >= 128)
 		return;
 	
-	getObjects()->update(object, getObjects()->get(object).entity, action, 255, 255);
+	getObjects()->update(object, getObjects()->get(object).entity, location, Cursor::kCursorKeepValue, 255);
 
 	bool isNotWindow = ((object < 9  || object > 16) && (object < 40 || object > 47));
 
-	switch (action) {
+	switch (location) {
 	case 1:
 		if (isNotWindow)
 			playEventSound(0, 24, 0);
@@ -1322,7 +1322,7 @@ void Action::pickGreenJacket(bool process) {
 	getProgress().jacket = State::kGreenJacket;
 	getInventory()->addItem(Inventory::kMatchBox);
 
-	getObjects()->update(Objects::kObjectOutside, SavePoints::kNone, 2, 255, 255);	
+	getObjects()->update(Objects::kObjectOutside, SavePoints::kNone, 2,  Cursor::kCursorKeepValue, 255);	
 	playAnimation(kPickGreenJacket);
 
 	getInventory()->setPortrait(Inventory::kPortraitGreen);

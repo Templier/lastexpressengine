@@ -40,7 +40,7 @@ const Objects::Object Objects::get(ObjectIndex index) {
 	return _objects[index];
 }
 
-void Objects::update(ObjectIndex index, SavePoints::EntityIndex entity, byte location, byte cursor, byte field_3) {
+void Objects::update(ObjectIndex index, SavePoints::EntityIndex entity, byte location, Cursor::CursorStyle cursor, byte field_3) {
 	if (index >= 128)
 		return;
 
@@ -53,8 +53,8 @@ void Objects::update(ObjectIndex index, SavePoints::EntityIndex entity, byte loc
 	object->entity = entity;
 	object->location = location;
 	
-	if (cursor != 255 || field_3 != 255) {
-		if (cursor != 255)
+	if (cursor != Cursor::kCursorKeepValue || field_3 != Cursor::kCursorKeepValue) {
+		if (cursor != Cursor::kCursorKeepValue)
 			object->cursor = cursor;
 		if (field_3 != 255)
 			object->field_3 = field_3;
