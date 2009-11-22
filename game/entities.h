@@ -54,7 +54,7 @@ public:
 	void load(int callbackIndex);
 
 	//void reset(SavePoints::EntityIndex entity, Entity::SetupFunction function);
-	void drawSequence(SavePoints::EntityIndex entity, char* sequence);
+	void drawSequence(SavePoints::EntityIndex entity, const char* sequence);
 	void drawSequences(SavePoints::EntityIndex entity);	
 
 	// Accessors

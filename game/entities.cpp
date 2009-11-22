@@ -175,7 +175,7 @@ void Entities::saveLoadWithSerializer(Common::Serializer &ser) {
 // Drawing
 //////////////////////////////////////////////////////////////////////////
 
-void Entities::drawSequence(SavePoints::EntityIndex entity, char* sequence) {
+void Entities::drawSequence(SavePoints::EntityIndex entity, const char* sequence) {
 	error("Entities::drawSequence: not implemented!");
 }
 
@@ -266,7 +266,7 @@ bool Entities::checkFields3(SavePoints::EntityIndex entity) {
 bool Entities::checkFields4(int field495, int field15) {
 
 	Scene *scene = _engine->getScene(getState()->scene);
-	bool ret = getData(SavePoints::kNone)->getData()->field_495 = field495 && scene->getHeader()->field_15 == field15;
+	bool ret = getData(SavePoints::kNone)->getData()->field_495 == field495 && scene->getHeader()->field_15 == field15;
 	delete scene;
 
 	return ret;
