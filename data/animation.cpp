@@ -245,7 +245,7 @@ void Animation::processChunkAudio(Common::SeekableReadStream *in, Chunk *c) {
 
 // TODO: this method will probably go away and be integrated in the main loop
 void Animation::play() {
-	while (!hasEnded()) {
+	while (!hasEnded() && !g_engine->getEventManager()->shouldQuit() && !g_engine->getEventManager()->shouldRTL()) {
 		process();
 
 		if (_changed) {
