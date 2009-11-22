@@ -35,12 +35,12 @@ namespace LastExpress {
 //////////////////////////////////////////////////////////////////////////
 // EntityData
 //////////////////////////////////////////////////////////////////////////
-void EntityData::setCallParameters(int callback, int index, EntityData::EntityCallParametersEntry* parameters) {
+void EntityData::setParameters(int callback, int index, EntityData::EntityParameters* parameters) {
 	delete _parameters[_data.current_call].parameters[index];
 	_parameters[_data.current_call].parameters[index] = parameters;
 }
 
-void EntityData::resetCurrentCallParameters() {
+void EntityData::resetCurrentParameters() {
 	// TODO see if this ever called without setting the call parameters just after
 	// if not, we can optimize the thing and not instantiate an EntityCallParameters just to delete it afterwards
 	_parameters[_data.current_call].clear();
@@ -98,11 +98,5 @@ void Entity::setup(State::ChapterIndex index) {
 		break;
 	}
 }
-
-void Entity::call(SetupFunction function, int param1, int param2, int param3, int param4) {
-	_data->getData()->current_call++;
-	(*function)(param1, param2, param3, param4);
-}
-
 
 } // End of namespace LastExpress

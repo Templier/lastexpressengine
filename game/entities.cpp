@@ -25,6 +25,9 @@
 
 #include "lastexpress/game/entities.h"
 
+// Data
+#include "lastexpress/data/scene.h"
+
 // Entities
 #include "lastexpress/entities/abbot.h"
 #include "lastexpress/entities/alexei.h"
@@ -169,6 +172,18 @@ void Entities::saveLoadWithSerializer(Common::Serializer &ser) {
 }
 
 //////////////////////////////////////////////////////////////////////////
+// Drawing
+//////////////////////////////////////////////////////////////////////////
+
+void Entities::drawSequence(SavePoints::EntityIndex entity, char* sequence) {
+	error("Entities::drawSequence: not implemented!");
+}
+
+void Entities::drawSequences(SavePoints::EntityIndex entity) {
+	error("Entities::drawSequences: not implemented!");
+}
+
+//////////////////////////////////////////////////////////////////////////
 //	Checks
 //////////////////////////////////////////////////////////////////////////
 bool Entities::checkFields1(SavePoints::EntityIndex entity, int field495, int field491) {
@@ -246,6 +261,28 @@ bool Entities::checkFields2(byte object) {
 
 bool Entities::checkFields3(SavePoints::EntityIndex entity) {
 	return (getData(entity)->getData()->field_495 == 3 || getData(entity)->getData()->field_495 == 4) && getData(entity)->getData()->field_493 == 1;
+}
+
+bool Entities::checkFields4(int field495, int field15) {
+
+	Scene *scene = _engine->getScene(getState()->scene);
+	bool ret = getData(SavePoints::kNone)->getData()->field_495 = field495 && scene->getHeader()->field_15 == field15;
+	delete scene;
+
+	return ret;
+}
+
+bool Entities::checkFields5(SavePoints::EntityIndex entity, int field495) {
+	return getData(entity)->getData()->field_495 == field495 && getData(entity)->getData()->field_493 < 2;
+}
+
+
+bool Entities::checkFields6(SavePoints::EntityIndex entity) {
+	return checkFields5(entity, 3) && getData(entity)->getData()->field_491 < 850;
+}
+
+bool Entities::checkFields7(int field495) {
+	return checkFields5(SavePoints::kNone, field495) && !getData(SavePoints::kNone)->getData()->field_493 && !checkFields6(SavePoints::kNone);
 }
 
 } // End of namespace LastExpress

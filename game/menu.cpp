@@ -38,7 +38,7 @@
 #include "lastexpress/lastexpress.h"
 #include "lastexpress/resource.h"
 
-#define getNextGameId() (GameId)((_engine->getLogic()->getGameId() + 1) % 6)
+#define getNextGameId() (GameId)((getLogic()->getGameId() + 1) % 6)
 #define drawSeqFrame(drawable, index, type) { \
 	AnimFrame *frame = (drawable)->getFrame((index)); \
 	_engine->getGraphicsManager()->draw((frame), (type)); \
@@ -460,7 +460,7 @@ uint32 Menu::getSceneIndex() {
 
 	// + 1 = normal menu with open egg / clock
 	// + 2 = shield menu, when no savegame exists (no game has been started)
-	return (SaveLoad::isSavegameValid(_engine->getLogic()->getGameId())) ? _engine->getLogic()->getGameId() * 5 + 1 : _engine->getLogic()->getGameId() * 5 + 2;
+	return (SaveLoad::isSavegameValid(getLogic()->getGameId())) ? getLogic()->getGameId() * 5 + 1 : getLogic()->getGameId() * 5 + 2;
 }
 
 // Handle events
@@ -501,7 +501,7 @@ bool Menu::handleStartMenuEvent(Common::Event ev) {
 
 	case kActionContinue:
 		// TODO Check for cd archive: reload the proper archive here if running in single cd mode
-		if (!_engine->getLogic()->isGameStarted()) {
+		if (!getLogic()->isGameStarted()) {
 			drawSeqFrame(&_seqEggButtons, kButtonShield, GraphicsManager::kBackgroundOverlay);
 			drawSeqFrame(&_seqTooltips, kTooltipPlayNewGame, GraphicsManager::kBackgroundOverlay);
 		} else {
@@ -533,15 +533,15 @@ bool Menu::handleStartMenuEvent(Common::Event ev) {
 			getState()->scene = 255; // HACK to not show menu after we are finished
 			clearBg(GraphicsManager::kBackgroundAll);
 
-			showScene(5 * _engine->getLogic()->getGameId() + 3, GraphicsManager::kBackgroundC);
+			showScene(5 * getLogic()->getGameId() + 3, GraphicsManager::kBackgroundC);
 			askForRedraw(); redrawScreen();
 			_engine->_system->delayMillis(1000);
 
-			showScene(5 * _engine->getLogic()->getGameId() + 4, GraphicsManager::kBackgroundC);
+			showScene(5 * getLogic()->getGameId() + 4, GraphicsManager::kBackgroundC);
 			askForRedraw(); redrawScreen();
 			_engine->_system->delayMillis(1000);
 
-			showScene(5 * _engine->getLogic()->getGameId() + 5, GraphicsManager::kBackgroundC);
+			showScene(5 * getLogic()->getGameId() + 5, GraphicsManager::kBackgroundC);
 			askForRedraw(); redrawScreen();
 			_engine->_system->delayMillis(1000);
 
@@ -553,7 +553,7 @@ bool Menu::handleStartMenuEvent(Common::Event ev) {
 			clearBg(GraphicsManager::kBackgroundAll);
 
 			// Reset scene
-			_engine->getLogic()->startGame();	
+			getLogic()->startGame();	
 		}
 		break;
 
@@ -591,19 +591,19 @@ bool Menu::handleStartMenuEvent(Common::Event ev) {
 		if (clicked) {
 			drawSeqFrame(&_seqAcorn, 1, GraphicsManager::kBackgroundOverlay);
 			playSfxStream("LIB046");
-			_engine->getLogic()->switchGame();
+			getLogic()->switchGame();
 			// the menu should have been reset & redrawn, so don't do anything else here
 		} else {
 			drawSeqFrame(&_seqAcorn, 0, GraphicsManager::kBackgroundOverlay);
 
 			if (!SaveLoad::isSavegameValid(getNextGameId())) {
-				if (_engine->getLogic()->isGameStarted())
+				if (getLogic()->isGameStarted())
 					drawSeqFrame(&_seqTooltips, kTooltipStartAnotherGame, GraphicsManager::kBackgroundOverlay)
 				else
 					drawSeqFrame(&_seqTooltips, kTooltipSwitchBlueGame, GraphicsManager::kBackgroundOverlay);
 			} else {
 				// Stupid tooltips ids are not in order, so we can't just increment them...
-				switch(_engine->getLogic()->getGameId()) {
+				switch(getLogic()->getGameId()) {
 					case kGameBlue:
 						drawSeqFrame(&_seqTooltips, kTooltipSwitchRedGame, GraphicsManager::kBackgroundOverlay);
 						break;
@@ -873,9 +873,9 @@ Common::String Menu::getAcornSequenceName(GameId id) {
 
 void Menu::drawElements() {
 	// Do not draw if the game has not yet started
-	if (!SaveLoad::isSavegameValid(_engine->getLogic()->getGameId()))
+	if (!SaveLoad::isSavegameValid(getLogic()->getGameId()))
 		return;
-	if (!_engine->getLogic()->isGameStarted())
+	if (!getLogic()->isGameStarted())
 		return;
 
 	clearBg(GraphicsManager::kBackgroundA);

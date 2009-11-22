@@ -168,6 +168,7 @@ public:
 
 class Scene : public Drawable {
 public:
+
 	// Scenes
 	enum Type {
 		// PreProcess
@@ -187,6 +188,10 @@ public:
 		kTypeGameOver = 131,
 		kTypeReadText = 132,
 		kType133 = 133
+	};
+
+	enum SceneIndex {
+		kSceneDefault = 40
 	};
 
 	~Scene();

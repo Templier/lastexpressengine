@@ -581,7 +581,7 @@ void Sound::excuseMe(SavePoints::EntityIndex entity, int param2, int param3) {
 					break;
 				}
 			} else {
-				if (_engine->getGameState()->isDayTime()) {
+				if (isDay()) {
 					playSound(SavePoints::kNone, (getProgress().field_18 == 2 ? "CON1110F" : "CON1110E"), -1, 0);
 				} else {
 					playSound(SavePoints::kNone, "CON1110D", -1, 0);

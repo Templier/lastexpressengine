@@ -27,6 +27,7 @@
 
 #include "lastexpress/game/logic.h"
 
+#include "lastexpress/helpers.h"
 #include "lastexpress/lastexpress.h"
 
 namespace LastExpress {
@@ -59,13 +60,13 @@ void Objects::update(ObjectIndex index, SavePoints::EntityIndex entity, byte loc
 		if (field_3 != 255)
 			object->field_3 = field_3;
 
-		_engine->getLogic()->updateCursor();
+		getLogic()->updateCursor();
 	}
 
 	if (original_location != location && (original_location == 2 || location == 2))
 		if ((index > 0 && index < 9)
 	     || (index > 31 && index < 40)) {
-		 	_engine->getLogic()->updateTrainClock();
+		 	getLogic()->updateTrainClock();
 		}
 }
 

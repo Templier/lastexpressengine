@@ -45,6 +45,13 @@ public:
 	DECLARE_FUNCTION(chapter5)
 	DECLARE_FUNCTION(harem)
 	DECLARE_FUNCTION(process)
+
+private:	
+	DECLARE_CALL_FUNCTION(default, Train, int, int, int, int)
+	DECLARE_CALL_FUNCTION(char, Train, int, int, int, char*)
+
+	// Helper methods
+	void resetParam8();	
 };
 
 } // End of namespace LastExpress

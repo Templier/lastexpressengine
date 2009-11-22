@@ -35,14 +35,20 @@ namespace LastExpress {
 
 //////////////////////////////////////////////////////////////////////////
 // Callbacks
-#define MAKE_CALLBACK(class, name, pointer) \
-	new Common::Functor1Mem<SavePoints::SavePoint*, void, class>(pointer, &class::name)
+#define ENTITY_CALLBACK(class, name, pointer) \
+	Common::Functor1Mem<SavePoints::SavePoint*, void, class>(pointer, &class::name)
+
+#define ENTITY_SETUP_DEFAULT(class, name) \
+	Functor4Mem<int, int, int, int, void, class>(this, &class::name)
+
+#define ENTITY_SETUP(class, name, type1, type2, type3, type4) \
+	Functor4Mem<type1, type2, type3, type4, void, class>(this, &class::name)
 
 #define ADD_CALLBACK_FUNCTION(class, name) \
-	_callbacks.push_back(MAKE_CALLBACK(class, name, this));
+	_callbacks.push_back(new ENTITY_CALLBACK(class, name, this));
 
 #define ADD_NULL_FUNCTION() \
-	_callbacks.push_back(MAKE_CALLBACK(Entity, nullfunction, this));
+	_callbacks.push_back(new ENTITY_CALLBACK(Entity, nullfunction, this));
 
 //////////////////////////////////////////////////////////////////////////
 // Declaration
@@ -56,6 +62,16 @@ namespace LastExpress {
 #define DECLARE_FUNCTION_SEQ2(name) \
 	void name(SavePoints::SavePoint *savepoint); \
 	void setup_##name(int param1 = 0, int param2 = 0, int param3 = 0, int param4 = 0);
+
+//////////////////////////////////////////////////////////////////////////
+// Call function
+#define DECLARE_CALL_FUNCTION(id, class, type1, type2, type3, type4) \
+	typedef Functor4Mem<type1, type2, type3, type4, void, class> SetupFunction_##id; \
+	void call(SetupFunction_##id *func, type1 param1 = 0, type2 param2 = 0, type3 param3 = 0, type4 param4 = 0) { \
+		_data->getData()->current_call++; \
+		(*func)(param1, param2, param3, param4); \
+		delete func; \
+	}
 
 //////////////////////////////////////////////////////////////////////////		   
 // Implementation
@@ -79,8 +95,8 @@ namespace LastExpress {
 #define IMPLEMENT_FUNCTION_INT2(class, name, index) \
 	void class::setup_##name(int param1, int param2, int param3, int param4) { \
 		BEGIN_SETUP(class, name, index) \
-		_data->getCurrentCallParameters(0)->param1 = param1; \
-		_data->getCurrentCallParameters(0)->param2 = param2; \
+		_data->getCurrentParameters(0)->param1 = param1; \
+		_data->getCurrentParameters(0)->param2 = param2; \
 		END_SETUP() \
 	} \
 	void class::name(SavePoints::SavePoint *savepoint)
@@ -88,10 +104,10 @@ namespace LastExpress {
 #define IMPLEMENT_FUNCTION_SEQ2(class, name, index) \
 	void class::setup_##name(char* seq1, int param2, int param3, char* seq2) { \
 		BEGIN_SETUP(class, name, index) \
-		strncpy(&_data->getCurrentCallParameters(0)->seq1, seq1, 12); \
-		_data->getCurrentCallParameters(0)->param2 = param2; \
-		_data->getCurrentCallParameters(0)->param3 = param3; \
-		strncpy(&_data->getCurrentCallParameters(0)->seq2, seq2, 12); \
+		strncpy(&_data->getCurrentParameters(0)->seq1, seq1, 12); \
+		_data->getCurrentParameters(0)->param2 = param2; \
+		_data->getCurrentParameters(0)->param3 = param3; \
+		strncpy(&_data->getCurrentParameters(0)->seq2, seq2, 12); \
 		END_SETUP() \
 	} \
 	void class::name(SavePoints::SavePoint *savepoint)
@@ -99,19 +115,55 @@ namespace LastExpress {
 //////////////////////////////////////////////////////////////////////////
 // Setup helpers
 #define BEGIN_SETUP(class, name, index) \
-		_engine->getGameState()->getGameSavePoints()->setCallback(_entityIndex, MAKE_CALLBACK(class, name, this)); \
+		_engine->getGameState()->getGameSavePoints()->setCallback(_entityIndex, new ENTITY_CALLBACK(class, name, this)); \
 		_data->setCurrentCallback(index); \
-		_data->resetCurrentCallParameters();
+		_data->resetCurrentParameters();
 
 #define END_SETUP() \
 		_engine->getGameState()->getGameSavePoints()->call(_entityIndex, _entityIndex, SavePoints::kActionDefault, 0);
+
+
+//////////////////////////////////////////////////////////////////////////
+// Functors class for setup functions
+template<class Arg1, class Arg2, class Arg3, class Arg4, class Result>
+struct QuaternaryFunction {
+	typedef Arg1 FirstArgumentType;
+	typedef Arg2 SecondArgumentType;
+	typedef Arg3 ThirdArgumentType;
+	typedef Arg4 FourthArgumentType;
+	typedef Result ResultType;
+};
+
+template<class Arg1, class Arg2, class Arg3, class Arg4, class Res>
+struct Functor4 : public QuaternaryFunction<Arg1, Arg2, Arg3, Arg4, Res> {
+	virtual ~Functor4() {}
+
+	virtual bool isValid() const = 0;
+	virtual Res operator()(Arg1, Arg2, Arg3, Arg4) const = 0;
+};
+
+template<class Arg1, class Arg2, class Arg3, class Arg4, class Res, class T>
+class Functor4Mem : public Functor4<Arg1, Arg2, Arg3, Arg4, Res> {
+public:
+	typedef Res (T::*FuncType)(Arg1, Arg2, Arg3, Arg4);
+
+	Functor4Mem(T *t, const FuncType &func) : _t(t), _func(func) {}
+
+	bool isValid() const { return _func != 0 && _t != 0; }
+	Res operator()(Arg1 v1, Arg2 v2, Arg3 v3, Arg4 v4) const {
+		return (_t->*_func)(v1, v2, v3, v4);
+	}
+private:
+	mutable T *_t;
+	const FuncType _func;
+};
 
 class LastExpressEngine;
 
 class EntityData : Common::Serializable {
 public:
 	
-	struct EntityCallParametersEntry {
+	struct EntityParameters {
 		int param1;
 		int param2;
 		int param3;
@@ -121,7 +173,7 @@ public:
 		int param7;
 		int param8;
 
-		EntityCallParametersEntry() {
+		EntityParameters() {
 			param1 = 0;
 			param2 = 0;
 			param3 = 0;
@@ -133,13 +185,31 @@ public:
 		}
 	};
 
-	struct EntityCallParametersEntrySeq2 : EntityCallParametersEntry {
+	struct EntityParametersSeq1 : EntityParameters {
+		int param1;
+		int param2;
+		int param3;
+		char param4[12];
+		int param7;
+		int param8;
+
+		EntityParametersSeq1() {
+			param1 = 0;
+			param2 = 0;
+			param3 = 0;
+			memset(&param4, 0, 12);	
+			param7 = 0;
+			param8 = 0;
+		}
+	};
+
+	struct EntityParametersSeq2 : EntityParameters {
 		char seq1[12];
 		int param2;
 		int param3;
 		char seq2[12];
 
-		EntityCallParametersEntrySeq2() {
+		EntityParametersSeq2() {
 			memset(&seq1, 0, 12);
 			param2 = 0;
 			param3 = 0;
@@ -148,7 +218,7 @@ public:
 	};
 
 	struct EntityCallParameters {
-		EntityCallParametersEntry* parameters[4];
+		EntityParameters* parameters[4];
 
 		EntityCallParameters() {
 			create();
@@ -160,7 +230,7 @@ public:
 
 		void create() {
 			for (int i = 0; i < 4; i++)
-				parameters[i] = new EntityCallParametersEntry();
+				parameters[i] = new EntityParameters();
 		}
 
 		void clear() {
@@ -198,10 +268,11 @@ public:
 	EntityData() {}
 
 	EntityCallData 		  	   *getData() { return &_data; }
-	EntityCallParametersEntry  *getCallParameters(int callback, int index) { return _parameters[callback].parameters[index]; }	
-	EntityCallParametersEntry  *getCurrentCallParameters(int index) { return getCallParameters(_data.current_call, index); }
-	void 			 	   		setCallParameters(int callback, int index, EntityCallParametersEntry* parameters);
-	void 			 	   		resetCurrentCallParameters();
+
+	EntityParameters  *getParameters(int callback, int index) { return _parameters[callback].parameters[index]; }	
+	EntityParameters  *getCurrentParameters(int index) { return getParameters(_data.current_call, index); }
+	void 			 	   		setParameters(int callback, int index, EntityParameters* parameters);
+	void 			 	   		resetCurrentParameters();
 
 	int 						getCallback(int callback) { return _data.callbacks[callback]; }
 	int							getCurrentCallback() { return getCallback(_data.current_call); }
@@ -219,8 +290,6 @@ private:
 
 class Entity : Common::Serializable {
 public:
-	typedef void (*SetupFunction)(int name, int param2, int param3, int param4);
-
 	Entity(LastExpressEngine *engine, SavePoints::EntityIndex index);
 	virtual ~Entity();
 
@@ -235,9 +304,6 @@ public:
 	virtual void setup_chapter3(int param1 = 0, int param2 = 0, int param3 = 0, int param4 = 0) = 0;
 	virtual void setup_chapter4(int param1 = 0, int param2 = 0, int param3 = 0, int param4 = 0) = 0;
 	virtual void setup_chapter5(int param1 = 0, int param2 = 0, int param3 = 0, int param4 = 0) = 0;
-
-	// Calls
-	void call(SetupFunction function, int param1, int param2, int param3, int param4);
 
 	// Empty function
 	void nullfunction(SavePoints::SavePoint *savepoint) {}

@@ -29,11 +29,13 @@
 //////////////////////////////////////////////////////////////////////////
 // Misc helpers
 //////////////////////////////////////////////////////////////////////////
-// Logic subclasses
-#define getBeetle() _engine->getLogic()->getGameBeetle()
-#define getEntities() _engine->getLogic()->getGameEntities()
+// Logic & subclasses
+#define getLogic() _engine->getGameLogic()
+#define getAction() getLogic()->getGameAction()
+#define getBeetle() getLogic()->getGameBeetle()
+#define getEntities() getLogic()->getGameEntities()
 #define getEntityData(entity) getEntities()->getData(entity)->getData()
-#define getSound() _engine->getLogic()->getGameSound()
+#define getSound() getLogic()->getGameSound()
 
 #define getState() _engine->getGameState()->getGameState()
 #define getEvent(id) getState()->events[id]
@@ -48,10 +50,10 @@
 #define loadFile(name) load(_engine->getResMan()->getFileStream(name))
 #define playMusicStream(name) _engine->getMusicStream()->load(_engine->getResMan()->getFileStream(name));
 #define playSfxStream(name) _engine->getSfxStream()->load(_engine->getResMan()->getFileStream(Common::String(name) + ".snd"));
-#define playEventSound(index, action, a3) _engine->getLogic()->getGameSound()->playSoundEvent(index, action, a3)
 
 // Misc
 #define random(value) _engine->getRandom().getRandomNumber(value)
+#define isDay() _engine->getGameState()->isDayTime()
 
 //////////////////////////////////////////////////////////////////////////
 // Graphics

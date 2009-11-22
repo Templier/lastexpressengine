@@ -108,8 +108,8 @@ IMPLEMENT_FUNCTION(Verges, chapter1, 18) {
 
 	case SavePoints::kActionNone: 
 		if (getState()->time > 1062000) {
-			if (!_data->getCurrentCallParameters(0)->param1) {
-				_data->getCurrentCallParameters(0)->param1 = 1;
+			if (!_data->getCurrentParameters(0)->param1) {
+				_data->getCurrentParameters(0)->param1 = 1;
 				// call function
 			}
 		}

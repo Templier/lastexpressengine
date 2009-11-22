@@ -53,7 +53,9 @@ public:
 	void setup(State::ChapterIndex chapter);
 	void load(int callbackIndex);
 
-	void reset(SavePoints::EntityIndex entity, Entity::SetupFunction function);
+	//void reset(SavePoints::EntityIndex entity, Entity::SetupFunction function);
+	void drawSequence(SavePoints::EntityIndex entity, char* sequence);
+	void drawSequences(SavePoints::EntityIndex entity);	
 
 	// Accessors
 	EntityData* getData(SavePoints::EntityIndex entity);
@@ -65,6 +67,11 @@ public:
 	bool checkFields1(SavePoints::EntityIndex entity, int field495, int field491);
 	bool checkFields2(byte object);
 	bool checkFields3(SavePoints::EntityIndex entity);
+	bool checkFields4(int field495, int field15);
+	bool checkFields5(SavePoints::EntityIndex entity, int field495);
+	bool checkFields6(SavePoints::EntityIndex entity);
+	bool checkFields7(int field495);
+
 
 private:
 	LastExpressEngine	    *_engine;

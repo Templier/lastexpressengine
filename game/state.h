@@ -50,8 +50,8 @@
 
 	uint32 {4}      - ??
 	uint32 {4}      - ??
-	uint32 {4}      - Number of sound cache entries
-	byte {count*68} - Sound cache entries
+	uint32 {4}      - Number of sound entries
+	byte {count*68} - Sound entries
 
 	byte {16*128}   - Save point data
 	uint32 {4}      - Number of save points (max: 128)
@@ -67,11 +67,11 @@
 		uint32 {4}      - ??
 		uint32 {4}      - ??
 		uint32 {4}      - ??
+		uint32 {4}      - entity
 		uint32 {4}      - ??
 		uint32 {4}      - ??
-		uint32 {4}      - ??
-		char {16}       - ??
-		char {16}       - ??
+		char {16}       - name 1
+		char {16}       - name 2
 
 */
 
@@ -285,10 +285,12 @@ public:
 	struct Flags {
 		byte flag_0;
 		byte flag_1;
+		byte flag_3;
 
 		Flags() {
 			flag_0 = false;
 			flag_1 = false;
+			flag_3 = false;
 		}
 	};
 

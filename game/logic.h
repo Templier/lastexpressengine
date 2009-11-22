@@ -59,6 +59,7 @@ public:
 	void switchGame();
 
 	void savegame(int param1, int param2, int param3);
+	void gameOver(int a1, int a2, int scene, bool showScene);
 
 	// Scene
 	void loadScene(uint32 index);	
@@ -79,10 +80,11 @@ public:
 	bool isShowingMenu() { return _runState.showingMenu; }
 	GameId getGameId() { return _runState.gameId; }
 
+	Action 	   *getGameAction() { return _action; }
 	Cursor::CursorStyle getCursorStyle() { return _runState.cursorStyle; }
 	Beetle     *getGameBeetle() { return _beetle; }
 	Entities   *getGameEntities() { return _entities; }	
-	Sound 	   *getGameSound() { return _sound; }	
+	Sound 	   *getGameSound() { return _sound; }		
 	
 private:
 	
@@ -96,8 +98,6 @@ private:
 		// flags
 		byte flag_no_entity;
 		byte flag_draw_entities;
-		byte flag_menu;
-
 
 		RunState() {
 			gameId = kGameBlue;
@@ -107,7 +107,6 @@ private:
 
 			flag_no_entity = false;
 			flag_draw_entities = false;
-			flag_menu = false;
 		}
 	};
 
@@ -128,8 +127,6 @@ private:
 
 	void switchChapter();
 	void playFinalSequence();
-
-	void gameOver(int a1, int a2, int scene, bool showScene);
 };
 
 } // End of namespace LastExpress

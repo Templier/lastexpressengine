@@ -127,8 +127,8 @@ IMPLEMENT_FUNCTION(Coudert, chapter1, 36) {
 		getSavePoints()->addData(SavePoints::kCoudert, 201431954, 18);
 		getSavePoints()->addData(SavePoints::kCoudert, 188570113, 19);
 
-		_data->getCallParameters(8, 0)->param1 = 0;
-		_data->getCallParameters(8, 0)->param2 = 1;
+		_data->getParameters(8, 0)->param1 = 0;
+		_data->getParameters(8, 0)->param2 = 1;
 
 		_data->getData()->field_491 = 1500;
 		_data->getData()->field_493 = 0;
@@ -144,8 +144,8 @@ IMPLEMENT_FUNCTION(Coudert, chapter1, 36) {
 
 	case SavePoints::kActionNone: 
 		if (getState()->time > 1062000) {
-			if (!_data->getCurrentCallParameters(0)->param1) {
-				_data->getCurrentCallParameters(0)->param1 = 1;				
+			if (!_data->getCurrentParameters(0)->param1) {
+				_data->getCurrentParameters(0)->param1 = 1;				
 				_data->setCallback(_data->getData()->current_call + 8, 1);				
 				// call function call(, 0, 0, 0, 0);
 			}

@@ -58,7 +58,7 @@ public:
 	// Accessors
 	Cursor *getCursor() const { return _cursor; }
 	Font *getFont() const { return _font; }
-	Logic *getLogic() const { return _logic; }
+	Logic *getGameLogic() const { return _logic; }
 	State *getGameState() const { return _state; }
 	ResourceManager *getResMan() const { return _resMan; }
 	StreamedSound *getMusicStream() const { return _music; }

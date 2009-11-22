@@ -113,7 +113,7 @@ public:
 		kObject70,							// 70
 		kObject71,
 		kObject72,
-		kObject73,
+		kObjectCeiling,
 		kObject74,
 		kObjectCompartmentKronos,			// 75
 		kObject76,

@@ -283,7 +283,7 @@ void Logic::processScene() {
 	Scene *backup = _engine->getScene(getState()->sceneBackup);
 
 	if (getState()->field1000[backup->getHeader()->field_15 + 100 * backup->getHeader()->field_13])
-		loadScene(_engine->getLogic()->processIndex(getState()->sceneBackup));
+		loadScene(getLogic()->processIndex(getState()->sceneBackup));
 	else
 		loadScene(getState()->sceneBackup);
 

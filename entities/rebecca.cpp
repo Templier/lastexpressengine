@@ -108,13 +108,13 @@ IMPLEMENT_FUNCTION(Rebecca, chapter1, 21) {
 		_data->getData()->field_493 = 1;
 		_data->getData()->field_495 = 5;
 
-		_data->getCallParameters(8, 0)->param2 = 1;
+		_data->getParameters(8, 0)->param2 = 1;
 		break;
 
 	case SavePoints::kActionNone: 
 		if (getState()->time > 1062000) {
-			if (!_data->getCurrentCallParameters(0)->param1) {
-				_data->getCurrentCallParameters(0)->param1 = 1;
+			if (!_data->getCurrentParameters(0)->param1) {
+				_data->getCurrentParameters(0)->param1 = 1;
 				// call function
 			}
 		}
