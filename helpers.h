@@ -32,6 +32,7 @@
 // Logic subclasses
 #define getBeetle() _engine->getLogic()->getGameBeetle()
 #define getEntities() _engine->getLogic()->getGameEntities()
+#define getEntityData(entity) getEntities()->getData(entity)->getData()
 #define getSound() _engine->getLogic()->getGameSound()
 
 #define getState() _engine->getGameState()->getGameState()
@@ -43,8 +44,6 @@
 #define getObjects() _engine->getGameState()->getGameObjects()
 #define getSavePoints() _engine->getGameState()->getGameSavePoints()
 
-
-
 // Utilities
 #define loadFile(name) load(_engine->getResMan()->getFileStream(name))
 #define playMusicStream(name) _engine->getMusicStream()->load(_engine->getResMan()->getFileStream(name));
@@ -53,9 +52,6 @@
 
 // Misc
 #define random(value) _engine->getRandom().getRandomNumber(value)
-
-// Entities
-#define getCallData() _data.callback_data[_data.current_call]
 
 //////////////////////////////////////////////////////////////////////////
 // Graphics

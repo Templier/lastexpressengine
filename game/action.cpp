@@ -1035,7 +1035,7 @@ IMPLEMENT_ACTION(26) {
 IMPLEMENT_ACTION(27) {
 	playEventSound(0, 31, 0);
 
-	switch (getEntities()->getHeader()->field_495) {
+	switch (getEntityData(SavePoints::kNone)->field_495) {
 	default:
 		break;
 
@@ -1429,7 +1429,7 @@ void Action::dropCorpse(bool process) {
 
 bool Action::handleOtherCompartment(Objects::ObjectIndex object, byte param2, byte param3) {
 
-	if (getEntities()->getHeader()->field_493 || ((object < 2 || object > 8) && (object < 32 || object > 39)))
+	if (getEntityData(SavePoints::kNone)->field_493 || ((object < 2 || object > 8) && (object < 32 || object > 39)))
 		return false;
 
 

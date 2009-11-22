@@ -88,15 +88,15 @@ IMPLEMENT_FUNCTION(Milos, chapter1, 12) {
 		getObjects()->update(Objects::kObjectCompartmentG, SavePoints::kNone, 3, Cursor::kCursorHandKnock, 9);
 		getObjects()->update(Objects::kObject46, SavePoints::kNone, 0, Cursor::kCursorKeepValue, 255);
 
-		_data.field_491 = 4689;
-		_data.field_493 = 1;
-		_data.field_495 = 5;
+		_data->getData()->field_491 = 4689;
+		_data->getData()->field_493 = 1;
+		_data->getData()->field_495 = 5;
 		break;
 
 	case SavePoints::kActionNone: 
 		if (getState()->time > 1062000) {
-			if (!getCallData().entries[0].field_0) {
-				getCallData().entries[0].field_0 = 1;
+			if (!_data->getCurrentCallParameters(0)->param1) {
+				_data->getCurrentCallParameters(0)->param1 = 1;
 				// call function
 			}
 		}

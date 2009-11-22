@@ -148,7 +148,8 @@ bool SavePoints::updateEntity(SavePoint point) {
 		if (_data[i].entity == point.entity && _data[i].field_4 == point.action) {
 
 			// FIXME this looks pretty bad :(
-			*(&getEntities()->getData(_data[i].entity)->callback_data[8].entries[0].field_0 + _data[i].field_C) = 1;
+			error("SavePoints::updateEntity: not implemented!");
+			//*(&getEntities()->getData(_data[i].entity)->callback_data[8].entries[0].field_0 + _data[i].field_C) = 1;
 
 			return true;
 		}

@@ -108,15 +108,15 @@ IMPLEMENT_FUNCTION(Tatiana, chapter1, 17) {
 		getObjects()->update(Objects::kObject49, SavePoints::kNone, 1, Cursor::kCursorHandKnock, 9);
 		getObjects()->update(Objects::kObject41, SavePoints::kNone, 0, Cursor::kCursorKeepValue, 255);
 
-		_data.field_491 = 5419;
-		_data.field_493 = 1;
-		_data.field_495 = 3;
+		_data->getData()->field_491 = 5419;
+		_data->getData()->field_493 = 1;
+		_data->getData()->field_495 = 3;
 		break;
 
 	case SavePoints::kActionNone: 
 		if (getState()->time > 1062000) {
-			if (!getCallData().entries[0].field_0) {
-				getCallData().entries[0].field_0 = 1;
+			if (!_data->getCurrentCallParameters(0)->param1) {
+				_data->getCurrentCallParameters(0)->param1 = 1;
 				// call function
 			}
 		}

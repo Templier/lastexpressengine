@@ -240,8 +240,8 @@ void Logic::drawScene(uint32 index) {
 	// Update entities
 	Scene *scene = (getState()->sceneUseBackup ? _engine->getScene(getState()->sceneBackup) : _scene);
 	
-	_entities->getHeader()->field_491 = scene->getHeader()->count;
-	_entities->getHeader()->field_495 = scene->getHeader()->field_13;
+	getEntityData(SavePoints::kNone)->field_491 = scene->getHeader()->count;
+	getEntityData(SavePoints::kNone)->field_495 = scene->getHeader()->field_13;
 
 	if (getState()->sceneUseBackup)
 		delete scene;
@@ -512,16 +512,16 @@ void Logic::postProcessScene(uint32 *index) {
 		//	}
 		//}
 
-		int16 field491 = getEntities()->getHeader()->field_491;
-		if (getEntities()->getHeader()->field_495 == 9 && (field491 == 4 || field491 == 3)) {
+		int16 field491 = getEntityData(SavePoints::kNone)->field_491;
+		if (getEntityData(SavePoints::kNone)->field_495 == 9 && (field491 == 4 || field491 == 3)) {
 			SavePoints::EntityIndex entities[39];
 
 			int progress = 0;
 
 			for (uint i = 1; i < 40; i++) {
 
-				int16 field493 = getEntities()->getData((SavePoints::EntityIndex)i)->field_493;
-				int16 field495 = getEntities()->getData((SavePoints::EntityIndex)i)->field_495;
+				int16 field493 = getEntityData((SavePoints::EntityIndex)i)->field_493;
+				int16 field495 = getEntityData((SavePoints::EntityIndex)i)->field_495;
 				if (field491 == 4) {
 					if (!(field495 != 4 || field493 <= 9270) || !(field495 != 5 || field493 >= 1540))
 						entities[progress++] = (SavePoints::EntityIndex)i;

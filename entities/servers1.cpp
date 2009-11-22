@@ -90,9 +90,9 @@ IMPLEMENT_FUNCTION(Servers1, chapter1, 8) {
 		getSavePoints()->addData(SavePoints::kServers1, 269485588, 3);
 		getSavePoints()->addData(SavePoints::kServers1, 326144276, 4);
 
-		_data.field_491 = 5900;
-		_data.field_493 = 0;
-		_data.field_495 = 5;
+		_data->getData()->field_491 = 5900;
+		_data->getData()->field_493 = 0;
+		_data->getData()->field_495 = 5;
 		break;
 
 	case SavePoints::kActionNone: 

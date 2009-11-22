@@ -81,15 +81,15 @@ IMPLEMENT_FUNCTION(MmeBoutarel, chapter1, 10) {
 		getObjects()->update(Objects::kObjectCompartmentD, SavePoints::kNone, 2, Cursor::kCursorNormal, 0);
 		getObjects()->update(Objects::kObject51, SavePoints::kNone, 0, Cursor::kCursorHandKnock, 9);
 
-		_data.field_491 = 5790;
-		_data.field_493 = 1;
-		_data.field_495 = 4;
+		_data->getData()->field_491 = 5790;
+		_data->getData()->field_493 = 1;
+		_data->getData()->field_495 = 4;
 		break;
 
 	case SavePoints::kActionNone: 
 		if (getState()->time > 1062000) {
-			if (!getCallData().entries[0].field_0) {
-				getCallData().entries[0].field_0 = 1;
+			if (!_data->getCurrentCallParameters(0)->param1) {
+				_data->getCurrentCallParameters(0)->param1 = 1;
 				// call function
 			}
 		}

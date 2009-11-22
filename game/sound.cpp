@@ -521,7 +521,7 @@ void Sound::excuseMe(SavePoints::EntityIndex entity, int param2, int param3) {
 	if (param2 == 20 || param2 == 30)
 		return;
 
-	if (entity == SavePoints::kFrancois && getEntities()->getData(SavePoints::kFrancois)->field_4A3 == 30)
+	if (entity == SavePoints::kFrancois && getEntityData(SavePoints::kFrancois)->field_4A3 == 30)
 		return;
 
 	if (!param3) {

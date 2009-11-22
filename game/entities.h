@@ -56,11 +56,9 @@ public:
 	void reset(SavePoints::EntityIndex entity, Entity::SetupFunction function);
 
 	// Accessors
-	Entity::EntityData* getData(SavePoints::EntityIndex entity);
-	Entity::EntityData* getHeader() { return &_header; }
+	EntityData* getData(SavePoints::EntityIndex entity);
 
 	// Serializable
-	void serialize(Common::Serializer &ser, Entity::EntityData *data);
 	void saveLoadWithSerializer(Common::Serializer &ser);
 
 	// Checks
@@ -69,10 +67,9 @@ public:
 	bool checkFields3(SavePoints::EntityIndex entity);
 
 private:
-	LastExpressEngine* _engine;
-
-	Entity::EntityData _header;
-	Common::Array<Entity *> _entities;	
+	LastExpressEngine	    *_engine;
+	EntityData 			    *_header;
+	Common::Array<Entity *>  _entities;	
 };
 
 } // End of namespace LastExpress

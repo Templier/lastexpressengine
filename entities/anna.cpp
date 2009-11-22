@@ -135,16 +135,16 @@ IMPLEMENT_FUNCTION(Anna, chapter1, 16) {
 		getObjects()->update(Objects::kObject53, SavePoints::kNone, 1, Cursor::kCursorHandKnock, 9);
 		getObjects()->update(Objects::kObject45, SavePoints::kNone, 1, Cursor::kCursorKeepValue, 255);
 
-		_data.field_491 = 8200;
-		_data.field_493 = 1;
-		_data.field_495 = 3;
-		_data.field_4A5 = 0;
+		_data->getData()->field_491 = 8200;
+		_data->getData()->field_493 = 1;
+		_data->getData()->field_495 = 3;
+		_data->getData()->field_4A5 = 0;
 		break;
 
 	case SavePoints::kActionNone: 
 		if (getState()->time > 1062000) {
-			if (!getCallData().entries[0].field_0) {
-				getCallData().entries[0].field_0 = 1;
+			if (!_data->getCurrentCallParameters(0)->param1) {
+				_data->getCurrentCallParameters(0)->param1 = 1;
 				// call function
 			}
 		}

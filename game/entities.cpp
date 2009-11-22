@@ -77,6 +77,8 @@ const static int field491_values[9] = {0, 8200, 7500, 6470, 5790, 4840, 4070, 30
 // Entities
 //////////////////////////////////////////////////////////////////////////
 Entities::Entities(LastExpressEngine *engine) : _engine(engine) {
+	_header = new EntityData();
+
 	_entities.push_back(NULL);		// Header
 	ADD_ENTITY(Anna);	
 	ADD_ENTITY(August);
@@ -123,6 +125,8 @@ Entities::Entities(LastExpressEngine *engine) : _engine(engine) {
 }
 
 Entities::~Entities() {	
+	delete _header;
+
 	for (uint i = 0; i < _entities.size(); i++)
 		delete _entities[i];
 }
@@ -149,32 +153,26 @@ void Entities::setup(State::ChapterIndex chapter) {
 }
 
 // Accessors
-Entity::EntityData *Entities::getData(SavePoints::EntityIndex entity) {
+EntityData *Entities::getData(SavePoints::EntityIndex entity) {
 	assert((uint)entity < _entities.size());
 
 	if (entity == 0)
-		return &_header;
+		return _header;
 
 	return _entities[entity]->getData();
 }
 
-
-// Serializer
-void Entities::serialize(Common::Serializer &ser, Entity::EntityData *data) {
-	// TODO implement
-}
-
 void Entities::saveLoadWithSerializer(Common::Serializer &ser) {
-	serialize(ser, &_header);
+	_header->saveLoadWithSerializer(ser);
 	for (uint i = 1; i < _entities.size(); i++)
-		serialize(ser, _entities[i]->getData());		
+		_entities[i]->saveLoadWithSerializer(ser);
 }
 
 //////////////////////////////////////////////////////////////////////////
 //	Checks
 //////////////////////////////////////////////////////////////////////////
 bool Entities::checkFields1(SavePoints::EntityIndex entity, int field495, int field491) {
-	return (getData(entity)->field_491 == field491 && getData(entity)->field_493 == 1 && getData(entity)->field_495 == field495);
+	return (getData(entity)->getData()->field_491 == field491 && getData(entity)->getData()->field_493 == 1 && getData(entity)->getData()->field_495 == field495);
 }
 
 bool Entities::checkFields2(byte object) {
@@ -247,7 +245,7 @@ bool Entities::checkFields2(byte object) {
 }
 
 bool Entities::checkFields3(SavePoints::EntityIndex entity) {
-	return (getData(entity)->field_495 == 3 || getData(entity)->field_495 == 4) && getData(entity)->field_493 == 1;
+	return (getData(entity)->getData()->field_495 == 3 || getData(entity)->getData()->field_495 == 4) && getData(entity)->getData()->field_493 == 1;
 }
 
 } // End of namespace LastExpress

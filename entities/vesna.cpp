@@ -79,15 +79,15 @@ IMPLEMENT_FUNCTION(Vesna, chapter1, 12) {
 	case SavePoints::kActionDefault: 
 		getSavePoints()->addData(SavePoints::kVesna, 124190740, 0);
 
-		_data.field_491 = 4689;
-		_data.field_493 = 1;
-		_data.field_495 = 5;
+		_data->getData()->field_491 = 4689;
+		_data->getData()->field_493 = 1;
+		_data->getData()->field_495 = 5;
 		break;
 
 	case SavePoints::kActionNone: 
 		if (getState()->time > 1062000) {
-			if (!getCallData().entries[0].field_0) {
-				getCallData().entries[0].field_0 = 1;
+			if (!_data->getCurrentCallParameters(0)->param1) {
+				_data->getCurrentCallParameters(0)->param1 = 1;
 				// call function
 			}
 		}

@@ -104,17 +104,17 @@ IMPLEMENT_FUNCTION(Rebecca, chapter1, 21) {
 
 		getObjects()->updateField4(Objects::kObject110, 1);
 
-		_data.field_491 = 2830;
-		_data.field_493 = 1;
-		_data.field_495 = 5;
+		_data->getData()->field_491 = 2830;
+		_data->getData()->field_493 = 1;
+		_data->getData()->field_495 = 5;
 
-		_data.callback_data[8].entries[0].field_4 = 1;
+		_data->getCallParameters(8, 0)->param2 = 1;
 		break;
 
 	case SavePoints::kActionNone: 
 		if (getState()->time > 1062000) {
-			if (!getCallData().entries[0].field_0) {
-				getCallData().entries[0].field_0 = 1;
+			if (!_data->getCurrentCallParameters(0)->param1) {
+				_data->getCurrentCallParameters(0)->param1 = 1;
 				// call function
 			}
 		}

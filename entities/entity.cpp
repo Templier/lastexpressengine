@@ -33,9 +33,30 @@
 namespace LastExpress {
 
 //////////////////////////////////////////////////////////////////////////
+// EntityData
+//////////////////////////////////////////////////////////////////////////
+void EntityData::setCallParameters(int callback, int index, EntityData::EntityCallParametersEntry* parameters) {
+	delete _parameters[_data.current_call].parameters[index];
+	_parameters[_data.current_call].parameters[index] = parameters;
+}
+
+void EntityData::resetCurrentCallParameters() {
+	// TODO see if this ever called without setting the call parameters just after
+	// if not, we can optimize the thing and not instantiate an EntityCallParameters just to delete it afterwards
+	_parameters[_data.current_call].clear();
+	_parameters[_data.current_call].create();
+}
+
+void EntityData::saveLoadWithSerializer(Common::Serializer &ser) {
+	error("EntityData::saveLoadWithSerializer: not implemented!");
+}
+
+//////////////////////////////////////////////////////////////////////////
 // Entity
 //////////////////////////////////////////////////////////////////////////
 Entity::Entity(LastExpressEngine *engine, SavePoints::EntityIndex index) : _engine(engine), _entityIndex(index) {
+	_data = new EntityData();
+
 	// Add first empty entry to callbacks array
 	_callbacks.push_back(NULL);
 }
@@ -43,12 +64,14 @@ Entity::Entity(LastExpressEngine *engine, SavePoints::EntityIndex index) : _engi
 Entity::~Entity() {
 	for (uint i = 0; i < _callbacks.size(); i++)
 		delete _callbacks[i];
+
+	delete _data;
 }
 
 void Entity::setup(State::ChapterIndex index) {
 	switch(index) {
 	case State::kCustom:
-		getSavePoints()->setCallback(_entityIndex, _callbacks[_data.callbacks[_data.current_call]]);
+		getSavePoints()->setCallback(_entityIndex, _callbacks[_data->getCurrentCallback()]);
 		break;
 
 	case State::kChapter1:
@@ -76,9 +99,9 @@ void Entity::setup(State::ChapterIndex index) {
 	}
 }
 
-void Entity::call(SetupFunction function, char* name, int param2, int param3, int param4) {
-	_data.current_call++;
-	(*function)(name, param2, param3, param4);
+void Entity::call(SetupFunction function, int param1, int param2, int param3, int param4) {
+	_data->getData()->current_call++;
+	(*function)(param1, param2, param3, param4);
 }
 
 

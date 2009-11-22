@@ -111,16 +111,16 @@ IMPLEMENT_FUNCTION(Mertens, chapter1, 34) {
 		getSavePoints()->addData(SavePoints::kMertens, 188635520, 19);
 		getSavePoints()->addData(SavePoints::kMertens, 204379649, 4);
 
-		_data.callback_data[8].entries[0].field_0 = 0;
-		_data.field_491 = 9460;
-		_data.field_493 = 0;
-		_data.field_495 = 3;
+		_data->getCallParameters(8, 0)->param1 = 0;
+		_data->getData()->field_491 = 9460;
+		_data->getData()->field_493 = 0;
+		_data->getData()->field_495 = 3;
 		break;
 
 	case SavePoints::kActionNone: 
 		if (getState()->time > 1062000) {
-			if (!getCallData().entries[0].field_0) {
-				getCallData().entries[0].field_0 = 1;
+			if (!_data->getCurrentCallParameters(0)->param1) {
+				_data->getCurrentCallParameters(0)->param1 = 1;
 				// call function
 			}
 		}

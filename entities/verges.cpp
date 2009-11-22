@@ -101,15 +101,15 @@ IMPLEMENT_FUNCTION(Verges, chapter1, 18) {
 		getObjects()->update(Objects::kObject104, SavePoints::kVerges, 0, Cursor::kCursorNormal, 9);
 		getObjects()->update(Objects::kObject105, SavePoints::kVerges, 0, Cursor::kCursorNormal, 9);
 
-		_data.field_491 = 5000;
-		_data.field_493 = 0;
-		_data.field_495 = 6;
+		_data->getData()->field_491 = 5000;
+		_data->getData()->field_493 = 0;
+		_data->getData()->field_495 = 6;
 		break;
 
 	case SavePoints::kActionNone: 
 		if (getState()->time > 1062000) {
-			if (!getCallData().entries[0].field_0) {
-				getCallData().entries[0].field_0 = 1;
+			if (!_data->getCurrentCallParameters(0)->param1) {
+				_data->getCurrentCallParameters(0)->param1 = 1;
 				// call function
 			}
 		}

@@ -93,15 +93,15 @@ IMPLEMENT_FUNCTION(Boutarel, chapter1, 19) {
 		getObjects()->update(Objects::kObject50, SavePoints::kNone, 0, Cursor::kCursorHandKnock, 9);
 		getObjects()->update(Objects::kObject42, SavePoints::kNone, 0, Cursor::kCursorKeepValue, 255);
 
-		_data.field_491 = 1750;
-		_data.field_493 = 1;
-		_data.field_495 = 5;
+		_data->getData()->field_491 = 1750;
+		_data->getData()->field_493 = 1;
+		_data->getData()->field_495 = 5;
 		break;
 
 	case SavePoints::kActionNone: 
 		if (getState()->time > 1062000) {
-			if (!getCallData().entries[0].field_0) {
-				getCallData().entries[0].field_0 = 1;
+			if (!_data->getCurrentCallParameters(0)->param1) {
+				_data->getCurrentCallParameters(0)->param1 = 1;
 				// call function
 			}
 		}

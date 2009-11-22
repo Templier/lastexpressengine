@@ -96,6 +96,7 @@ private:
 		// flags
 		byte flag_no_entity;
 		byte flag_draw_entities;
+		byte flag_menu;
 
 
 		RunState() {
@@ -106,6 +107,7 @@ private:
 
 			flag_no_entity = false;
 			flag_draw_entities = false;
+			flag_menu = false;
 		}
 	};
 

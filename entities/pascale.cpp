@@ -92,9 +92,9 @@ IMPLEMENT_FUNCTION(Pascale, chapter1, 12) {
 		getSavePoints()->addData(SavePoints::kPascale, 191604416, 10);
 		getSavePoints()->addData(SavePoints::kPascale, 190605184, 11);
 
-		_data.field_491 = 5900;
-		_data.field_493 = 0;
-		_data.field_495 = 5;
+		_data->getData()->field_491 = 5900;
+		_data->getData()->field_493 = 0;
+		_data->getData()->field_495 = 5;
 		break;
 
 	case SavePoints::kActionNone: 

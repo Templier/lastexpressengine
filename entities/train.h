@@ -37,6 +37,7 @@ public:
 	Train(LastExpressEngine *engine);
 
 	// Setup	
+	DECLARE_FUNCTION(execute)
 	DECLARE_FUNCTION(chapter1)
 	DECLARE_FUNCTION(chapter2)
 	DECLARE_FUNCTION(chapter3)
@@ -44,8 +45,6 @@ public:
 	DECLARE_FUNCTION(chapter5)
 	DECLARE_FUNCTION(harem)
 	DECLARE_FUNCTION(process)
-
-	void nullfunc(SavePoints::SavePoint *savepoint);
 };
 
 } // End of namespace LastExpress

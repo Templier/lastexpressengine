@@ -72,15 +72,15 @@ IMPLEMENT_FUNCTION(Mahmud, chapter1, 15) {
 		getObjects()->update(Objects::kObjectCompartment4, SavePoints::kNone, 3, Cursor::kCursorHandKnock, 9);
 		getObjects()->update(Objects::kObject20, SavePoints::kNone, 3, Cursor::kCursorKeepValue, 9);
 
-		_data.field_491 = 540;
-		_data.field_493 = 0;
-		_data.field_495 = 3;
+		_data->getData()->field_491 = 540;
+		_data->getData()->field_493 = 0;
+		_data->getData()->field_495 = 3;
 		break;
 
 	case SavePoints::kActionNone: 
 		if (getState()->time > 1062000) {
-			if (!getCallData().entries[0].field_0) {
-				getCallData().entries[0].field_0 = 1;
+			if (!_data->getCurrentCallParameters(0)->param1) {
+				_data->getCurrentCallParameters(0)->param1 = 1;
 				// call function
 			}
 		}

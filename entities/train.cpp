@@ -35,7 +35,7 @@
 namespace LastExpress {
 
 Train::Train(LastExpressEngine *engine) : Entity(engine, SavePoints::kTrain) {
-	ADD_CALLBACK_FUNCTION(Train, nullfunc);
+	ADD_CALLBACK_FUNCTION(Train, execute);
 	ADD_CALLBACK_FUNCTION(Train, chapter1);
 	ADD_CALLBACK_FUNCTION(Train, chapter2);
 	ADD_CALLBACK_FUNCTION(Train, chapter3);
@@ -45,8 +45,8 @@ Train::Train(LastExpressEngine *engine) : Entity(engine, SavePoints::kTrain) {
 	ADD_CALLBACK_FUNCTION(Train, process);
 }
 
-void Train::nullfunc(SavePoints::SavePoint *savepoint) {
-	error("Train: callback function not implemented!");
+IMPLEMENT_FUNCTION_INT2(Train, execute, 1) {
+
 }
 
 IMPLEMENT_FUNCTION(Train, chapter1, 2) {
@@ -91,19 +91,67 @@ IMPLEMENT_FUNCTION(Train, harem, 7) {
 IMPLEMENT_FUNCTION(Train, process, 8) {
 	
 	switch (savepoint->action) {
+	default:
+		break;	
+
+	case 8:
+		break;
+
+	case 9:
+		break;
+
 	case SavePoints::kActionDefault:
-		getCallData().entries[8].field_0 = 1;
+		_data->getCurrentCallParameters(8)->param1 = 1;		
 		if (getProgress().chapter < State::kChapter5) {
 			getObjects()->update(Objects::kObjectCompartment5, SavePoints::kTrain, 3, Cursor::kCursorHandKnock, 9);
 			getObjects()->update(Objects::kObjectCompartment6, SavePoints::kTrain, 3, Cursor::kCursorHandKnock, 9);
 			getObjects()->update(Objects::kObjectCompartment7, SavePoints::kTrain, 3, Cursor::kCursorHandKnock, 9);
 			getObjects()->update(Objects::kObjectCompartment8, SavePoints::kTrain, 3, Cursor::kCursorHandKnock, 9);
 		}
-		_data.field_491 = 30000;
+		_data->getData()->field_491 = 30000;
 		break;
 
-	default:
-		error("Train: process callback function not implemented for action %d", savepoint->action);
+	case 17:
+		break;
+
+	case 18:
+		break;
+		
+	case 191070912:
+		break;
+
+	case 191350523:
+		break;
+
+	case 202613084:
+		break;
+
+	case 203339360:
+		break;
+
+	case 203419131:
+		break;
+
+	case 203863200:
+		break;
+
+	case 222746496:
+		//switch(savepoint->field_C) {
+		//default:
+		//	break;
+
+		//}
+		break;
+
+	case 225056224:
+		//_data.callbacks[_data.current_call + 8] = 6;
+		//call(setup_execute, 2, 252);
+		break;
+
+	case 338494260:
+		//_data.callbacks[_data.current_call + 8] = 7;
+		//call(setup_execute, 2, 253);
+		break;
 	}
 }
 
