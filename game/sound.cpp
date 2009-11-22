@@ -530,7 +530,6 @@ void Sound::excuseMe(SavePoints::EntityIndex entity, int param2, int param3) {
 	
 	switch (entity) {
 	default:
-		error("Sound::excuseMe: not implemented!");
 		break;
 
 	case SavePoints::kAnna:
