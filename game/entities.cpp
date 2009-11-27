@@ -139,10 +139,22 @@ void Entities::load(int callbackIndex) {
 }
 
 void Entities::setup(State::ChapterIndex chapter) {
-	// TODO if chapter is not 0
-	//  - reset current call for every entity & another entry
-	//  - raw sequences
-	//  - reset savegame fields (4x1000 & the two 4x16)
+	if (chapter) {
+		// Reset current call, inventory item & draw sequences
+		for (uint i = 1; i < _entities.size(); i++) {
+			_entities[i]->getData()->getData()->current_call = 0;
+			_entities[i]->getData()->getData()->inventoryItem = 0;
+
+			drawSequences((SavePoints::EntityIndex)i);
+		}
+
+		// Move that to reset method in state
+		memset(getState()->field1000, 0, 1000*sizeof(int));
+		memset(getState()->field16, 0, 16*sizeof(int));
+		memset(getState()->field16_2, 0, 16*sizeof(int));
+
+		// FIXME call to sound cache
+	}
 
 	// Skip "header"
 	for (uint i = 1; i < _entities.size(); i++) {
@@ -180,7 +192,7 @@ void Entities::drawSequence(SavePoints::EntityIndex entity, const char* sequence
 }
 
 void Entities::drawSequences(SavePoints::EntityIndex entity) {
-	error("Entities::drawSequences: not implemented!");
+	//error("Entities::drawSequences: not implemented!");
 }
 
 //////////////////////////////////////////////////////////////////////////
