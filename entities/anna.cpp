@@ -98,7 +98,7 @@ Anna::Anna(LastExpressEngine *engine) : Entity(engine, SavePoints::kAnna) {
 	ADD_CALLBACK_FUNCTION(Anna, nullfunc);
 	ADD_CALLBACK_FUNCTION(Anna, nullfunc);
 	ADD_CALLBACK_FUNCTION(Anna, nullfunc);
-	ADD_CALLBACK_FUNCTION(Anna, nullfunc);
+	ADD_CALLBACK_FUNCTION(Anna, bagage);
 	ADD_CALLBACK_FUNCTION(Anna, nullfunc);
 	ADD_CALLBACK_FUNCTION(Anna, chapter4);
 	ADD_CALLBACK_FUNCTION(Anna, nullfunc);
@@ -156,6 +156,9 @@ IMPLEMENT_FUNCTION(Anna, chapter2, 42) {
 }
 
 IMPLEMENT_FUNCTION(Anna, chapter3, 44) {
+}
+
+IMPLEMENT_FUNCTION(Anna, bagage, 64) {
 }
 
 IMPLEMENT_FUNCTION(Anna, chapter4, 66) {

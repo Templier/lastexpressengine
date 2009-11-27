@@ -30,6 +30,7 @@
 #include "lastexpress/data/scene.h"
 
 #include "lastexpress/entities/abbot.h"
+#include "lastexpress/entities/anna.h"
 #include "lastexpress/entities/entity.h"
 
 #include "lastexpress/game/beetle.h"
@@ -648,8 +649,8 @@ IMPLEMENT_ACTION(pickItem) {
 		break;
 
 	case Inventory::kBomb:
-		error("Action::action_pickItem is missing reset call!");
-		//getEntities()->reset(SavePoints::kAbbot, &Abbot::setup_pickBomb);
+		getEntities()->reset(SavePoints::kAbbot);
+		((Abbot*)getEntities()->get(SavePoints::kAbbot))->setup_pickBomb();
 		break;
 
 	case Inventory::kBriefcase:
@@ -854,12 +855,14 @@ IMPLEMENT_ACTION(climbUpTrain) {
 	case 3:
 		if (action == 2)
 			playAnimation(kCathClimbUpTrainGreenJacket);
+
 		playAnimation(kCathTopTrainGreenJacket);
 		break;
 
 	case 5:
 		if (action == 2)
 			playAnimation(getProgress().is_nighttime ? kCathClimbUpTrainNoJacketNight : kCathClimbUpTrainNoJacketDay);
+
 		playAnimation(getProgress().is_nighttime ? kCathTopTrainNoJacketNight : kCathTopTrainNoJacketDay);
 		break;
 	}
@@ -989,8 +992,8 @@ IMPLEMENT_ACTION(25) {
 		getSound()->playSoundEvent(0, 43, 0);
 		if (!getInventory()->hasItem(Inventory::kKey)) {
 			if (!getEvent(kAnnaBagageArgument)) {
-				//getEntities()->reset(SavePoints::kAnna, );
-				error("Action::action25 is missing reset call!");
+				getEntities()->reset(SavePoints::kAnna);
+				((Anna*)getEntities()->get(SavePoints::kAnna))->setup_bagage();
 				hotspot->scene = 0;
 			}
 		}
@@ -1291,10 +1294,7 @@ IMPLEMENT_ACTION(42) {
 
 		char filename[6];
 		sprintf((char*)&filename, "MUS%03d", hotspot->param1);	
-		// FIXME check what is stored in savepoint.field_C
-		//_savepoints->call(0, 32, 203863200, (int)&filename);
-		error("Action::action42 is missing reset call!");
-
+		getSavePoints()->call(0, SavePoints::kTrain, 203863200, (int)&filename);
 		getSavePoints()->push(0, SavePoints::kTrain, 222746496, hotspot->param2);
 	}
 }

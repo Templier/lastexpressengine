@@ -324,7 +324,8 @@ label_skip:
 	case 203863200:
 		if (savepoint->field_C) {
 			_data->getCurrentParameters(0)->param8 = 1;
-			// TODO why using strcpy if fieldC is not a char array (we also store non-null int values inside in several places)
+			// We use strcpy here because we stored a char value in field_C (see in action.cpp for action 42)
+			// we also store non-null int values inside field_C in several places, so that sucks a bit...
 			strcpy((char *)&parameters1->param4, (char *)savepoint->field_C);	// this is the sound file name
 		}
 		break;

@@ -51,14 +51,19 @@ public:
 	~Entities();
 
 	void setup(State::ChapterIndex chapter);
-	void load(int callbackIndex);
 
-	//void reset(SavePoints::EntityIndex entity, Entity::SetupFunction function);
+	void reset(SavePoints::EntityIndex entity);
+
 	void drawSequence(SavePoints::EntityIndex entity, const char* sequence);
 	void drawSequences(SavePoints::EntityIndex entity);	
 
+	void updateFields();	
+	void setupSequences();
+	void setupCallbacks();
+
 	// Accessors
-	EntityData* getData(SavePoints::EntityIndex entity);
+	Entity *get(SavePoints::EntityIndex entity);
+	EntityData *getData(SavePoints::EntityIndex entity);
 
 	// Serializable
 	void saveLoadWithSerializer(Common::Serializer &ser);
@@ -71,12 +76,16 @@ public:
 	bool checkFields5(SavePoints::EntityIndex entity, int field495);
 	bool checkFields6(SavePoints::EntityIndex entity);
 	bool checkFields7(int field495);
+	bool checkFields8(SavePoints::EntityIndex entity);
 
 
 private:
 	LastExpressEngine	    *_engine;
 	EntityData 			    *_header;
 	Common::Array<Entity *>  _entities;	
+
+	void executeCallbacks();
+	void processEntity(SavePoints::EntityIndex entity);	
 };
 
 } // End of namespace LastExpress

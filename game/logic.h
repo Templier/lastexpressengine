@@ -96,8 +96,8 @@ private:
 		Cursor::CursorStyle cursorStyle;	// necessary to remember current cursor when inside inventory TODO remove?
 
 		// flags
-		byte flag_no_entity;
-		byte flag_draw_entities;
+		bool flag_no_entity;
+		bool flag_draw_entities;
 
 		RunState() {
 			gameId = kGameBlue;

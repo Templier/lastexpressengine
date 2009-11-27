@@ -196,7 +196,7 @@ bool Logic::handleMouseEvent(Common::Event ev) {
 
 void Logic::loadScene(uint32 index) {
 
-	getFlags()->flag_0 = 0;
+	getFlags()->flag_0 = false;
 	if (getState()->sceneUseBackup) {
 		Scene *scene = _engine->getScene(index);
 	
@@ -252,9 +252,9 @@ void Logic::drawScene(uint32 index) {
 		if (_runState.flag_no_entity)
 			return;
 
-		//getEntities()->updateFields()
-		//getEntities()->drawSequences()
-		//getEntities()->executeCallbacks()		
+		getEntities()->updateFields();
+		getEntities()->setupSequences();
+		getEntities()->setupCallbacks();		
 	}
 	
 	// Show the scene 
@@ -586,7 +586,7 @@ void Logic::postProcessScene(uint32 *index) {
 
 	case Scene::kType133:
 		if (getFlags()->flag_0) {
-			getFlags()->flag_0 = 0;
+			getFlags()->flag_0 = false;
 			updateCursor();
 		}
 		break;

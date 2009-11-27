@@ -134,10 +134,6 @@ Entities::~Entities() {
 		delete _entities[i];
 }
 
-void Entities::load(int callbackIndex) {
-
-}
-
 void Entities::setup(State::ChapterIndex chapter) {
 	if (chapter) {
 		// Reset current call, inventory item & draw sequences
@@ -167,7 +163,135 @@ void Entities::setup(State::ChapterIndex chapter) {
 	}
 }
 
+void Entities::reset(SavePoints::EntityIndex entity) {
+	EntityData *data = getData(entity);
+
+	data->getData()->current_call = 0;
+	data->getData()->inventoryItem = 0;
+
+	// TODO clear sound cache for entity
+
+	drawSequences(entity);
+	
+	// update fields 4x1000, 4x16 & 4x16_2
+}
+
+//////////////////////////////////////////////////////////////////////////
+// Scene setup & drawing
+void Entities::updateFields() {
+	if (!getFlags()->flag_1)
+		return;
+
+	for (uint i = 0; i < _entities.size(); i++) {
+		
+		if (!getSavePoints()->getCallback((SavePoints::EntityIndex)i))
+			continue;
+
+		byte field_491 = _entities[i]->getData()->getData()->field_491;
+		byte field_49A = _entities[i]->getData()->getData()->field_49A;
+		int16 field_4A3 = _entities[i]->getData()->getData()->field_4A3;
+		byte field_4AB = _entities[i]->getData()->getData()->field_49B;
+		
+		switch (field_49A) {
+		default:
+			break;
+
+		case 1:
+		case 2:
+			if (field_49A != 1 || (field_491 + field_4A3 * 10) >= 10000)			
+			{	
+				if (field_49A == 2) {
+					if (field_491 > field_4A3 * 10)
+						_entities[i]->getData()->getData()->field_491 -= field_4A3 * 10;
+				}
+			} else {
+				_entities[i]->getData()->getData()->field_491 += field_4A3 * 10;
+			}
+			break;
+
+		case 3:
+			_entities[i]->getData()->getData()->field_49D += 1;
+			break;
+
+		case 4:
+			_entities[i]->getData()->getData()->field_4A1 += 9;
+			break;
+
+		case 5:
+			if (field_4AB == 4)
+				_entities[i]->getData()->getData()->field_4A1 += 9;
+			break;
+
+		}
+	}
+}
+
+void Entities::setupSequences() {
+	if (!getFlags()->flag_1)
+		return;
+
+}
+
+void Entities::setupCallbacks() {
+	if (!getFlags()->flag_1)
+		return;
+
+	getFlags()->flag_entities_0 = false;
+
+	if (getFlags()->flag_entities_1) {
+		executeCallbacks();
+		getFlags()->flag_entities_0 = true;
+	} else {
+		getFlags()->flag_entities_1 = true;
+		executeCallbacks();
+		getFlags()->flag_entities_1 = false;
+	}
+}
+
+void Entities::executeCallbacks() {
+	for (uint i = 1; i < _entities.size(); i++) {
+		if (getFlags()->flag_entities_0)
+			break;
+
+		if (getSavePoints()->getCallback((SavePoints::EntityIndex)i))
+			processEntity((SavePoints::EntityIndex)i);
+	}
+
+	if (getFlags()->flag_entities_0)
+		return;
+
+
+	bool processed = false;
+	do {
+		for (uint i = 1; i < _entities.size(); i++) {
+			if (getFlags()->flag_entities_0)
+				break;
+
+			if (getSavePoints()->getCallback((SavePoints::EntityIndex)i)) {
+				if (_entities[i]->getData()->getData()->field_4A8) {
+					processed = true;
+					processEntity((SavePoints::EntityIndex)i);
+				}				
+			}
+		}
+	} while (!processed);
+}
+
+void Entities::processEntity(SavePoints::EntityIndex entity) {
+}
+
+
+//////////////////////////////////////////////////////////////////////////
 // Accessors
+Entity *Entities::get(SavePoints::EntityIndex entity) {
+	assert((uint)entity < _entities.size());
+
+	if (entity == SavePoints::kNone)
+		error("Cannot get entity for index = 0!");
+
+	return _entities[entity];
+}
+
 EntityData *Entities::getData(SavePoints::EntityIndex entity) {
 	assert((uint)entity < _entities.size());
 
@@ -295,6 +419,10 @@ bool Entities::checkFields6(SavePoints::EntityIndex entity) {
 
 bool Entities::checkFields7(int field495) {
 	return checkFields5(SavePoints::kNone, field495) && !getData(SavePoints::kNone)->getData()->field_493 && !checkFields6(SavePoints::kNone);
+}
+
+bool Entities::checkFields8(SavePoints::EntityIndex entity) {
+	return getData(entity)->getData()->field_49A == 1 || getData(entity)->getData()->field_49A == 2;
 }
 
 } // End of namespace LastExpress

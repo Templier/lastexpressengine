@@ -251,8 +251,13 @@ public:
 		int16 field_493;
 		int16 field_495; // ?? (field 13) (entity index?)
 		byte inventoryItem;
+		byte field_49A;
+		byte field_49B;
+		byte field_49D;
+		byte field_4A1;	
 		int16 field_4A3;
 		byte field_4A5;
+		byte field_4A8;	
 
 		EntityCallData() {
 			current_call = 0;
@@ -260,8 +265,13 @@ public:
 			field_493 = 0;
 			field_495 = 0;
 			inventoryItem = 0;
+			field_49A = 0;
+			field_49B = 0;
+			field_49D = 0;
+			field_4A1 = 0;
 			field_4A3 = 30;
 			field_4A5 = 0;
+			field_4A8 = 0;
 		}
 	};
 

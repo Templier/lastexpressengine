@@ -283,16 +283,22 @@ public:
 	};
 
 	struct Flags {
-		byte flag_0;
-		byte flag_1;
-		byte flag_2;
-		byte flag_3;
+		bool flag_0;
+		bool flag_1;
+		bool flag_2;
+		bool flag_3;
+
+		bool flag_entities_0;
+		bool flag_entities_1;
 
 		Flags() {
 			flag_0 = false;
 			flag_1 = false;
 			flag_2 = false;
 			flag_3 = false;
+
+			flag_entities_0 = false;
+			flag_entities_1 = false;
 		}
 	};
 
@@ -307,7 +313,7 @@ public:
 	Flags  	   *getGameFlags() { return _flags; }
 
 	// Time checks
-	bool isDayTime();
+	bool isDayTime();	
 
 	// Helpers	
 	static uint32 getPowerOfTwo(uint32 x);
