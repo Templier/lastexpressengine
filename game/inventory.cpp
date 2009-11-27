@@ -523,6 +523,7 @@ void Inventory::drawEgg() {
 
 		askForRedraw();
 	} else {
+		// TODO do not draw if not needed (ie no blink and already drawn)
 		drawItem(608, 448, getLogic()->getGameId() + 39, 50)
 	}
 }

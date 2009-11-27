@@ -210,8 +210,6 @@ void Logic::loadScene(uint32 index) {
 
 	setScene(index);
 
-	warning("Logic::loadScene: TODO draw egg / hourglass if needed");
-
 	updateCursor();
 }
 
@@ -415,7 +413,7 @@ void Logic::preProcessScene(uint32 *index) {
 		// If the scene has no hotspot or if we haven't found a proper hotspot, use the first hotspot from the current scene
 		if (!found) {
 			Scene *hotspotScene = _engine->getScene(*index);
-			SceneHotspot *hotspot = scene->getHotspot(0);
+			SceneHotspot *hotspot = scene->getHotspot();
 			
 			PROCESS_HOTSPOT_SCENE(hotspot, index);
 
@@ -440,7 +438,7 @@ void Logic::preProcessScene(uint32 *index) {
 				 && State::getPowerOfTwo(getState()->field16_2[scene->getHeader()->param1]) != 30 )
 					getSound()->playSound(SavePoints::kNone, "CAT1126A", -1, 0);				
 
-				*index = scene->getHotspot(0)->scene;
+				*index = scene->getHotspot()->scene;
 			} else {
 				*index = scene->getHotspot(1)->scene;
 			}
@@ -497,21 +495,23 @@ void Logic::postProcessScene(uint32 *index) {
 		getState()->timeTicks += (scene->getHeader()->param1 + 10);
 
 		// Some stuff related to menu?
-		
-		SceneHotspot *hotspot = scene->getHotspot(0);
-		_action->processHotspot(hotspot);
 
-		//if (0) {
-		//	Scene *hotspotScene = _engine->getScene(hotspot->scene);
-		//	while (hotspotScene->getHeader()->type == 128) {
-		//		hotspot = hotspotScene->getHotspot(0);
-		//		_action->processHotspot(hotspot);
+		Scene *currentScene = _engine->getScene(getState()->scene);
+		SceneHotspot *hotspot = currentScene->getHotspot();
+		_action->processHotspot(hotspot);		
 
-		//		uint16 nextScene = hotspot->scene;
-		//		delete hotspotScene;
-		//		hotspotScene = _engine->getScene(nextScene);
-		//	}
-		//}
+		if (getFlags()->flag_2) {
+			Scene *hotspotScene = _engine->getScene(hotspot->scene);
+			while (hotspotScene->getHeader()->type == Scene::kTypeList) {
+				hotspot = hotspotScene->getHotspot();
+				_action->processHotspot(hotspot);
+
+				uint16 nextScene = hotspot->scene;
+				delete hotspotScene;
+				hotspotScene = _engine->getScene(nextScene);
+			}
+			delete hotspotScene;
+		}
 
 		int16 field491 = getEntityData(SavePoints::kNone)->field_491;
 		if (getEntityData(SavePoints::kNone)->field_495 == 9 && (field491 == 4 || field491 == 3)) {
@@ -536,9 +536,10 @@ void Logic::postProcessScene(uint32 *index) {
 				getSound()->excuseMe((progress == 1) ? entities[0] : entities[random(progress)], 0 , 16);
 		}
 
-		if (hotspot->scene)
+		if (hotspot && hotspot->scene)
 			setScene(hotspot->scene);
 
+		delete currentScene;
 		break;
 	}
 		

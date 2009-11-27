@@ -1157,8 +1157,8 @@ IMPLEMENT_ACTION(useWhistle) {
 
 			Scene *scene = _engine->getScene(hotspot->scene);
 
-			if (scene->getHotspot(0))
-				hotspot->scene = scene->getHotspot(0)->scene;
+			if (scene->getHotspot())
+				hotspot->scene = scene->getHotspot()->scene;
 
 			delete scene;
 		} else {

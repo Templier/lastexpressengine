@@ -202,7 +202,7 @@ public:
 
 	SceneHeader* getHeader() { return _header; }
 	Common::Array<SceneHotspot *> *getHotspots() { return &_hotspots; }	
-	SceneHotspot *getHotspot(uint index);
+	SceneHotspot *getHotspot(uint index = 0);
 
 private:
 	Scene(SceneHeader *header) : _header(header) {}

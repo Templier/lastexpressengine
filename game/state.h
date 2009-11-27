@@ -285,11 +285,13 @@ public:
 	struct Flags {
 		byte flag_0;
 		byte flag_1;
+		byte flag_2;
 		byte flag_3;
 
 		Flags() {
 			flag_0 = false;
 			flag_1 = false;
+			flag_2 = false;
 			flag_3 = false;
 		}
 	};
