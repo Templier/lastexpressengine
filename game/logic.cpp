@@ -49,18 +49,19 @@ namespace LastExpress {
 
 Logic::Logic(LastExpressEngine *engine) : _engine(engine), _scene(NULL) {
 	_action = new Action(engine);
-	_menu = new Menu(engine);	
-	_sound = new Sound(engine);	
 	_beetle = new Beetle(engine);
 	_entities = new Entities(engine);
+	_menu = new Menu(engine);	
+	_sound = new Sound(engine);	
 }
 
 Logic::~Logic() {
 	delete _action;
 	delete _beetle;
-	delete _sound;
+	delete _entities;
 	delete _menu;	
 	delete _scene;
+	delete _sound;
 }
 
 //////////////////////////////////////////////////////////////////////////
