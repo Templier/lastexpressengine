@@ -36,7 +36,6 @@
 #include "lastexpress/game/entities.h"
 #include "lastexpress/game/inventory.h"
 #include "lastexpress/game/menu.h"
-#include "lastexpress/game/object.h"
 #include "lastexpress/game/sound.h"
 
 #include "lastexpress/graphics.h"
@@ -291,6 +290,39 @@ void Logic::processScene() {
 
 uint32 Logic::processIndex(uint32 index) {
 	error("Logic::processItem is not implemented!");
+}
+
+void Logic::loadSceneFromObject(Objects::ObjectIndex object) {
+	switch (object) {
+	default:
+		break;
+
+	case Objects::kObjectCompartment1:
+	case Objects::kObjectCompartment2:
+	case Objects::kObjectCompartment3:
+	case Objects::kObjectCompartment4:
+	case Objects::kObjectCompartment5:
+	case Objects::kObjectCompartment6:
+	case Objects::kObjectCompartment7:	
+	case Objects::kObjectCompartmentA:
+	case Objects::kObjectCompartmentB:
+	case Objects::kObjectCompartmentC:
+	case Objects::kObjectCompartmentD:
+	case Objects::kObjectCompartmentE:
+	case Objects::kObjectCompartmentF:
+	case Objects::kObjectCompartmentG:
+		loadSceneFromData((object < 10 ? 3 : 4), 38 - (object - 1) * 2, 255);
+		break;
+
+	case Objects::kObjectCompartment8:
+	case Objects::kObjectCompartmentH:
+		loadSceneFromData(3, 25, 255);
+		break;
+	}
+}
+
+void Logic::loadSceneFromObject2(Objects::ObjectIndex object) {
+	loadSceneFromData((object < 10 ? 3 : 4), 17 - (object - 1) * 2, 255);
 }
 
 void Logic::loadSceneFromData(int param1, int param2, int param3) {

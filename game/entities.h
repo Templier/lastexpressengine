@@ -36,6 +36,7 @@
 
 #include "lastexpress/entities/entity.h"
 
+#include "lastexpress/game/object.h"
 #include "lastexpress/game/state.h"
 #include "lastexpress/game/savepoint.h"
 
@@ -54,6 +55,7 @@ public:
 
 	void reset(SavePoints::EntityIndex entity);
 
+	// Update & drawing
 	void drawSequence(SavePoints::EntityIndex entity, const char* sequence);
 	void drawSequences(SavePoints::EntityIndex entity);	
 
@@ -69,8 +71,10 @@ public:
 	void saveLoadWithSerializer(Common::Serializer &ser);
 
 	// Checks
+	bool compare(SavePoints::EntityIndex entity1, SavePoints::EntityIndex entity2);	
+
 	bool checkFields1(SavePoints::EntityIndex entity, int field495, int field491);
-	bool checkFields2(byte object);
+	bool checkFields2(Objects::ObjectIndex object);
 	bool checkFields3(SavePoints::EntityIndex entity);
 	bool checkFields4(int field495, int field15);
 	bool checkFields5(SavePoints::EntityIndex entity, int field495);

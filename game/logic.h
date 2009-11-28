@@ -28,6 +28,8 @@
 
 #include "lastexpress/data/cursor.h"
 
+#include "lastexpress/game/object.h"
+
 #include "lastexpress/savegame.h"
 
 #include "common/events.h"
@@ -40,7 +42,6 @@ class Action;
 class Beetle;
 class Entities;
 class Inventory;
-class Objects;
 class Menu;
 class SavePoints;
 class Scene;
@@ -65,6 +66,8 @@ public:
 	void loadScene(uint32 index);	
 	void setScene(uint32 index);
 
+	void loadSceneFromObject(Objects::ObjectIndex object);
+	void loadSceneFromObject2(Objects::ObjectIndex object);
 	void loadSceneFromData(int param1, int param2, int param3);
 
 	void updateTrainClock();

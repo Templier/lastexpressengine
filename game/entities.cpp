@@ -322,11 +322,15 @@ void Entities::drawSequences(SavePoints::EntityIndex entity) {
 //////////////////////////////////////////////////////////////////////////
 //	Checks
 //////////////////////////////////////////////////////////////////////////
+bool Entities::compare(SavePoints::EntityIndex entity1, SavePoints::EntityIndex entity2) {
+	error("Entities::compare: not implemented!");
+}
+
 bool Entities::checkFields1(SavePoints::EntityIndex entity, int field495, int field491) {
 	return (getData(entity)->getData()->field_491 == field491 && getData(entity)->getData()->field_493 == 1 && getData(entity)->getData()->field_495 == field495);
 }
 
-bool Entities::checkFields2(byte object) {
+bool Entities::checkFields2(Objects::ObjectIndex object) {
 
 	int field491 = 0;
 	int field495 = 0;	
@@ -335,50 +339,50 @@ bool Entities::checkFields2(byte object) {
 	default:
 		return false;
 
-	case 1:
-	case 2:
-	case 3:
-	case 4:
-	case 5:
-	case 6:
-	case 7:
-	case 8:
+	case Objects::kObjectCompartment1:
+	case Objects::kObjectCompartment2:
+	case Objects::kObjectCompartment3:
+	case Objects::kObjectCompartment4:
+	case Objects::kObjectCompartment5:
+	case Objects::kObjectCompartment6:
+	case Objects::kObjectCompartment7:
+	case Objects::kObjectCompartment8:
 		field491 = field491_values[object];
 		field495 = 3;
 		if (checkFields1(SavePoints::kNone, field495, field491))
 			return false;
 		break;
 
-	case 17:
-	case 18:
-	case 19:
-	case 20:
-	case 21:
-	case 22:
+	case Objects::kObjectHandleBathroom:
+	case Objects::kObjectHandleInsideBathroom:
+	case Objects::kObjectKitchen:
+	case Objects::kObject20:
+	case Objects::kObject21:
+	case Objects::kObject22:
 		field491 = field491_values[object-17];
 		field495 = 3;
 		break;
 
-	case 32:
-	case 33:
-	case 34:
-	case 35:
-	case 36:
-	case 37:
-	case 38:
-	case 39:
+	case Objects::kObjectCompartmentA:
+	case Objects::kObjectCompartmentB:
+	case Objects::kObjectCompartmentC:
+	case Objects::kObjectCompartmentD:
+	case Objects::kObjectCompartmentE:
+	case Objects::kObjectCompartmentF:
+	case Objects::kObjectCompartmentG:
+	case Objects::kObjectCompartmentH:
 		field491 = field491_values[object-32];
 		field495 = 4;
 		if (checkFields1(SavePoints::kNone, field495, field491))
 			return false;
 		break;
 
-	case 48:
-	case 49:
-	case 50:
-	case 51:
-	case 52:
-	case 53:
+	case Objects::kObject48:
+	case Objects::kObject49:
+	case Objects::kObject50:
+	case Objects::kObject51:
+	case Objects::kObject52:
+	case Objects::kObject53:
 		field491 = field491_values[object-48];
 		field495 = 4;
 		break;

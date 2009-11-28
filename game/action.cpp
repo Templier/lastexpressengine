@@ -1432,8 +1432,38 @@ bool Action::handleOtherCompartment(Objects::ObjectIndex object, byte param2, by
 	if (getEntityData(SavePoints::kNone)->field_493 || ((object < 2 || object > 8) && (object < 32 || object > 39)))
 		return false;
 
+	//////////////////////////////////////////////////////////////////////////
+	// Gendarmes
+	if (getEntityData(SavePoints::kNone)->field_495 == getEntityData(SavePoints::kGendarmes)->field_495
+	&& !getEntityData(SavePoints::kGendarmes)->field_493
+	&& !getEntities()->compare(SavePoints::kNone, SavePoints::kGendarmes)) {
+		if (param2) {
+			if (getObjects()->get(object).location == 1 || getObjects()->get(object).location == 3 || getEntities()->checkFields2(object)) {
+				getSound()->playSoundEvent(SavePoints::kNone, 13, 0);
+			} else {
+				getSound()->playSoundEvent(SavePoints::kNone, 14, 0);
+				getSound()->playSoundEvent(SavePoints::kNone, 15, 3);
+			}
+		}
+
+		if (param3)
+			getLogic()->loadSceneFromObject(object);
+
+		return true;
+	}
+
+	//////////////////////////////////////////////////////////////////////////
+	// Mertens
 
 
+
+
+	//////////////////////////////////////////////////////////////////////////
+	// Coudert
+
+	//if (param3)
+	//	getLogic()->loadSceneFromObject2(object);
+		
 	error("Action::handleOtherCompartment: not implemented!");
 
 	return false;
