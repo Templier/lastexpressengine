@@ -110,8 +110,10 @@ public:
 
 		// Entity-specific actions
 		kAction101824388 = 101824388,	// Pascale
+		kAction103798704 = 103798704,	// Tables
 		kAction124190740 = 124190740,	// Vesna
 		kAction136059947 = 136059947,	// Pascale
+		kAction136455232 = 136455232,	// Tables
 		kAction154005632 = 154005632,	// Coudert
 		kAction157026693 = 157026693,	// Coudert
 		kAction157691176 = 157691176,	// Milos
@@ -220,23 +222,24 @@ public:
 		kAction352703104 = 352703104,	// Pascale
 		kAction352768896 = 352768896,	// Pascale
 
-
-
-
 		kActionEnd
 	};
+
 
 	struct SavePoint {
 		EntityIndex entity1;
 		ActionIndex action;
 		EntityIndex entity2;
-		uint32 field_C;
+		union {
+			uint32 intValue;
+			char charValue[4];
+		} field_C;
 
 		SavePoint() {
 			entity1 = kEntityNone;
 			action = kActionNone;
 			entity2 = kEntityNone;
-			field_C = 0;
+			field_C.intValue = 0;
 		}
 	};	
 
@@ -260,8 +263,8 @@ public:
 	~SavePoints();
 	
 	// Savepoints
-	void push(EntityIndex entity2, EntityIndex entity1, ActionIndex action, uint32 field_C);
-	void pushAll(EntityIndex entity, ActionIndex action, uint32 field_C);
+	void push(EntityIndex entity2, EntityIndex entity1, ActionIndex action, uint32 field_C = 0);
+	void pushAll(EntityIndex entity, ActionIndex action, uint32 field_C = 0);
 	void process();
 	void reset();
 
@@ -271,7 +274,8 @@ public:
 	// Callbacks
 	void setCallback(EntityIndex index, Callback* callback);
 	Callback *getCallback(EntityIndex entity);
-	void call(EntityIndex entity2, EntityIndex entity1, ActionIndex action, int field_C);
+	void call(EntityIndex entity2, EntityIndex entity1, ActionIndex action, uint32 field_C = 0);
+	void call(EntityIndex entity2, EntityIndex entity1, ActionIndex action, char* field_C);
 
 	// Serializable
 	void saveLoadWithSerializer(Common::Serializer &s);

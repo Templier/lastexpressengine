@@ -56,7 +56,7 @@ void SavePoints::push(EntityIndex entity2, EntityIndex entity1, ActionIndex acti
 	point.entity1 = entity1;
 	point.action = action;
 	point.entity2 = entity2;
-	point.field_C = field_C;
+	point.field_C.intValue = field_C;
 
 	_savepoints.push_back(point);
 }
@@ -128,12 +128,24 @@ SavePoints::Callback *SavePoints::getCallback(EntityIndex index) {
 	return _callbacks[index];
 }
 
-void SavePoints::call(EntityIndex entity2, EntityIndex entity1, ActionIndex action, int field_C) {
+void SavePoints::call(EntityIndex entity2, EntityIndex entity1, ActionIndex action, uint32 field_C) {
 	SavePoint point;
 	point.entity1 = entity1;
 	point.action = action;
 	point.entity2 = entity2;
-	point.field_C = field_C;
+	point.field_C.intValue = field_C;
+
+	Callback *callback = getCallback(entity1);
+	if (callback)
+		(*callback)(&point);
+}
+
+void SavePoints::call(EntityIndex entity2, EntityIndex entity1, ActionIndex action, char* field_C) {
+	SavePoint point;
+	point.entity1 = entity1;
+	point.action = action;
+	point.entity2 = entity2;
+	strcpy((char *)&point.field_C.charValue, field_C);
 
 	Callback *callback = getCallback(entity1);
 	if (callback)
@@ -190,7 +202,7 @@ void SavePoints::saveLoadWithSerializer(Common::Serializer &s) {
 			s.syncAsUint32LE(point.entity1);
 			s.syncAsUint32LE(point.action);
 			s.syncAsUint32LE(point.entity2);
-			s.syncAsUint32LE(point.field_C);
+			s.syncAsUint32LE(point.field_C.intValue);
 
 			_savepoints.push_back(point);
 
@@ -202,7 +214,7 @@ void SavePoints::saveLoadWithSerializer(Common::Serializer &s) {
 			s.syncAsUint32LE((*it).entity1);
 			s.syncAsUint32LE((*it).action);
 			s.syncAsUint32LE((*it).entity2);
-			s.syncAsUint32LE((*it).field_C);
+			s.syncAsUint32LE((*it).field_C.intValue);
 		}
 	}
 }

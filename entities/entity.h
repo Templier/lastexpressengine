@@ -130,7 +130,7 @@ namespace LastExpress {
 		_data->resetCurrentParameters();
 
 #define END_SETUP() \
-		_engine->getGameState()->getGameSavePoints()->call(_entityIndex, _entityIndex, SavePoints::kActionDefault, 0);
+		_engine->getGameState()->getGameSavePoints()->call(_entityIndex, _entityIndex, SavePoints::kActionDefault);
 
 
 //////////////////////////////////////////////////////////////////////////

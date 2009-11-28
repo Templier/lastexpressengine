@@ -244,7 +244,7 @@ void Logic::drawScene(uint32 index) {
 		delete scene;
 
 	if (getFlags()->flag_1) {
-		getSavePoints()->pushAll(SavePoints::kEntityNone, SavePoints::kAction17, 0);
+		getSavePoints()->pushAll(SavePoints::kEntityNone, SavePoints::kAction17);
 		getSavePoints()->process();
 
 		if (_runState.flag_no_entity)
@@ -580,7 +580,7 @@ void Logic::postProcessScene(uint32 *index) {
 		
 	case Scene::kTypeSavePointChapter:
 		if (getProgress().field_18 == 2)
-			getSavePoints()->push(SavePoints::kEntityNone, SavePoints::kEntityChapters, SavePoints::kAction190346110, 0);
+			getSavePoints()->push(SavePoints::kEntityNone, SavePoints::kEntityChapters, SavePoints::kAction190346110);
 		break;
 
 	case Scene::kTypeLoadBeetleSequences:

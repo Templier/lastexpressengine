@@ -25,6 +25,8 @@
 
 #include "lastexpress/entities/tables.h"
 
+#include "lastexpress/game/entities.h"
+#include "lastexpress/game/logic.h"
 #include "lastexpress/game/savepoint.h"
 #include "lastexpress/game/state.h"
 
@@ -33,7 +35,7 @@
 
 namespace LastExpress {
 
-Tables::Tables(LastExpressEngine *engine, int id) : Entity(engine, (SavePoints::EntityIndex)(SavePoints::kEntityTables0 + id)) {
+Tables::Tables(LastExpressEngine *engine, SavePoints::EntityIndex id) : Entity(engine, id) {
 	_id = id;
 	
 	ADD_CALLBACK_FUNCTION(Tables, chapter1);
@@ -45,22 +47,139 @@ Tables::Tables(LastExpressEngine *engine, int id) : Entity(engine, (SavePoints::
 }
 
 IMPLEMENT_FUNCTION(Tables, chapter1, 1) {
+	if (savepoint->action == SavePoints::kActionDefault)
+		setup_draw();
 }
 
 IMPLEMENT_FUNCTION(Tables, chapter2, 2) {
+	if (savepoint->action == SavePoints::kActionDefault)
+		setup_draw();
 }
 
 IMPLEMENT_FUNCTION(Tables, chapter3, 3) {
+	if (savepoint->action == SavePoints::kActionDefault)
+		setup_draw();
 }
 
 IMPLEMENT_FUNCTION(Tables, chapter4, 4) {
+	if (savepoint->action == SavePoints::kActionDefault)
+		setup_draw();
 }
 
 IMPLEMENT_FUNCTION(Tables, chapter5, 5) {
+	if (savepoint->action == SavePoints::kActionDefault)
+		setup_draw();
 }
 
-IMPLEMENT_FUNCTION(Tables, draw, 6) {
-	error("Tables: draw function not implemented!");
+IMPLEMENT_FUNCTION(Tables, draw, 6) {	
+	switch (savepoint->action) {
+	default:
+		break;
+
+	case SavePoints::kActionNone:
+		if (_id != SavePoints::kEntityTables2)
+			break;
+
+		// TODO sound cache handling
+		switch (getProgress().chapter) {
+		default:
+			break;
+
+		case State::kChapter1:
+			if (getState()->time > 1165500)
+				if (!_data->getCurrentParameters(0)->param1)
+					_data->getCurrentParameters(0)->param1 = 1;
+			break;
+
+		case State::kChapter3:
+			if (getState()->time > 2052000)
+				if (!_data->getCurrentParameters(0)->param2)
+					_data->getCurrentParameters(0)->param2 = 1;
+			break;
+
+		case State::kChapter4:
+			if (getState()->time > 2488500)
+				if (!_data->getCurrentParameters(0)->param3)
+					_data->getCurrentParameters(0)->param3 = 1;
+			break;
+
+		}
+		break;
+
+	case SavePoints::kActionDefault:
+		_data->getData()->field_491 = 3970;
+		_data->getData()->field_493 = 1;
+		_data->getData()->field_495 = 5;
+		switch(_id) {
+		default:
+			break;
+
+		case SavePoints::kEntityTables0:
+			getEntities()->drawSequence(_id, "001P");
+			break;
+
+		case SavePoints::kEntityTables1:
+			getEntities()->drawSequence(_id, "005J");
+			break;
+
+		case SavePoints::kEntityTables2:
+			getEntities()->drawSequence(_id, "009G");
+			break;
+
+		case SavePoints::kEntityTables3:
+			getEntities()->drawSequence(_id, "010M");
+			break;
+
+		case SavePoints::kEntityTables4:
+			getEntities()->drawSequence(_id, "014F");
+			break;
+
+		case SavePoints::kEntityTables5:
+			getEntities()->drawSequence(_id, "024D");
+			break;
+		}
+		
+		break;
+
+	case SavePoints::kAction103798704:
+		if (savepoint->field_C.charValue) {
+			getEntities()->drawSequence(_id, savepoint->field_C.charValue);
+		} else {
+			switch(_id) {
+			default:
+				break;
+
+			case SavePoints::kEntityTables0:
+				getEntities()->drawSequence(_id, "001P");
+				break;
+
+			case SavePoints::kEntityTables1:
+				getEntities()->drawSequence(_id, "005J");
+				break;
+
+			case SavePoints::kEntityTables2:
+				getEntities()->drawSequence(_id, "009G");
+				break;
+
+			case SavePoints::kEntityTables3:
+				getEntities()->drawSequence(_id, "010M");
+				break;
+
+			case SavePoints::kEntityTables4:
+				getEntities()->drawSequence(_id, "014F");
+				break;
+
+			case SavePoints::kEntityTables5:
+				getEntities()->drawSequence(_id, "024D");
+				break;
+			}
+		}
+		break;
+
+	case SavePoints::kAction136455232:
+		getEntities()->drawSequence(_id, "BLANK");
+		break;
+	}
 }
 
 

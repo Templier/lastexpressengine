@@ -98,7 +98,7 @@ Mertens::Mertens(LastExpressEngine *engine) : Entity(engine, SavePoints::kEntity
 #define CALL_PREVIOUS_SAVEPOINT() \
 	_data->getData()->current_call--; \
 	getSavePoints()->setCallback(SavePoints::kEntityMertens, _callbacks[_data->getCurrentCallback()]); \
-	getSavePoints()->call(SavePoints::kEntityMertens, SavePoints::kEntityMertens, SavePoints::kAction18, 0)
+	getSavePoints()->call(SavePoints::kEntityMertens, SavePoints::kEntityMertens, SavePoints::kAction18)
 
 IMPLEMENT_FUNCTION(Mertens, function6, 6) {
 	switch (savepoint->action) {
@@ -169,7 +169,7 @@ IMPLEMENT_FUNCTION_INT(Mertens, function11, 11) {
 		}
 
 		if (_data->getCurrentParameters(0)->param2) {
-			if (_data->getCurrentParameters(0)->param2  > getState()->time)
+			if (_data->getCurrentParameters(0)->param2  > (int)getState()->time)
 				break;
 
 			_data->getCurrentParameters(0)->param2 = 2147483647;
@@ -255,7 +255,7 @@ IMPLEMENT_FUNCTION(Mertens, function17, 17) {
 			if (!_data->getParameters(8, 0)->param3
 			 && !getInventory()->hasItem(Inventory::kPassengerList)
 			 && _data->getParameters(8, 0)->param2) {
-				 getSavePoints()->push(SavePoints::kEntityMertens, SavePoints::kEntityVerges, SavePoints::kAction158617345, 0);
+				 getSavePoints()->push(SavePoints::kEntityMertens, SavePoints::kEntityVerges, SavePoints::kAction158617345);
 				 _data->getParameters(8, 0)->param3 = 1;
 			}
 
@@ -264,7 +264,7 @@ IMPLEMENT_FUNCTION(Mertens, function17, 17) {
 			_data->getParameters(8, 0)->param1 = 0;
 			_data->getData()->inventoryItem = Inventory::kNoItem;
 
-			getSavePoints()->push(SavePoints::kEntityMertens, SavePoints::kEntityMertens, SavePoints::kAction17, 0);
+			getSavePoints()->push(SavePoints::kEntityMertens, SavePoints::kEntityMertens, SavePoints::kAction17);
 
 			CALL_PREVIOUS_SAVEPOINT();
 			break;

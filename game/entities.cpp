@@ -117,12 +117,12 @@ Entities::Entities(LastExpressEngine *engine) : _engine(engine) {
 	ADD_ENTITY(Train);
 
 	// Special case for tables
-	_entities.push_back(new Tables(engine, 0));
-	_entities.push_back(new Tables(engine, 1));
-	_entities.push_back(new Tables(engine, 2));
-	_entities.push_back(new Tables(engine, 3));
-	_entities.push_back(new Tables(engine, 4));
-	_entities.push_back(new Tables(engine, 5));
+	_entities.push_back(new Tables(engine, SavePoints::kEntityTables0));
+	_entities.push_back(new Tables(engine, SavePoints::kEntityTables1));
+	_entities.push_back(new Tables(engine, SavePoints::kEntityTables2));
+	_entities.push_back(new Tables(engine, SavePoints::kEntityTables3));
+	_entities.push_back(new Tables(engine, SavePoints::kEntityTables4));
+	_entities.push_back(new Tables(engine, SavePoints::kEntityTables5));
 
 	ADD_ENTITY(Entity39);
 }
