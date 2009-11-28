@@ -34,7 +34,7 @@
 
 namespace LastExpress {
 
-MmeBoutarel::MmeBoutarel(LastExpressEngine *engine) : Entity(engine, SavePoints::kMmeBoutarel) {
+MmeBoutarel::MmeBoutarel(LastExpressEngine *engine) : Entity(engine, SavePoints::kEntityMmeBoutarel) {
 	ADD_CALLBACK_FUNCTION(MmeBoutarel, nullfunc);
 	ADD_CALLBACK_FUNCTION(MmeBoutarel, nullfunc);
 	ADD_CALLBACK_FUNCTION(MmeBoutarel, nullfunc);
@@ -76,10 +76,10 @@ IMPLEMENT_FUNCTION(MmeBoutarel, chapter1, 10) {
 		break;
 
 	case SavePoints::kActionDefault: 
-		getSavePoints()->addData(SavePoints::kMmeBoutarel, SavePoints::kAction242526416, 0);
+		getSavePoints()->addData(SavePoints::kEntityMmeBoutarel, SavePoints::kAction242526416, 0);
 		
-		getObjects()->update(Objects::kObjectCompartmentD, SavePoints::kNone, 2, Cursor::kCursorNormal, 0);
-		getObjects()->update(Objects::kObject51, SavePoints::kNone, 0, Cursor::kCursorHandKnock, 9);
+		getObjects()->update(Objects::kObjectCompartmentD, SavePoints::kEntityNone, 2, Cursor::kCursorNormal, 0);
+		getObjects()->update(Objects::kObject51, SavePoints::kEntityNone, 0, Cursor::kCursorHandKnock, 9);
 
 		_data->getData()->field_491 = 5790;
 		_data->getData()->field_493 = 1;

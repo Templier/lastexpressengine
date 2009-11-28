@@ -34,7 +34,7 @@
 
 namespace LastExpress {
 
-Coudert::Coudert(LastExpressEngine *engine) : Entity(engine, SavePoints::kCoudert) {
+Coudert::Coudert(LastExpressEngine *engine) : Entity(engine, SavePoints::kEntityCoudert) {
 	ADD_CALLBACK_FUNCTION(Coudert, nullfunc);
 	ADD_CALLBACK_FUNCTION(Coudert, nullfunc);
 	ADD_CALLBACK_FUNCTION(Coudert, nullfunc);
@@ -110,22 +110,22 @@ IMPLEMENT_FUNCTION(Coudert, chapter1, 36) {
 		break;
 
 	case SavePoints::kActionDefault: 
-		getSavePoints()->addData(SavePoints::kCoudert, SavePoints::kAction292048641, 7);
-		getSavePoints()->addData(SavePoints::kCoudert, SavePoints::kAction326348944, 8);
-		getSavePoints()->addData(SavePoints::kCoudert, SavePoints::kAction171394341, 2);
-		getSavePoints()->addData(SavePoints::kCoudert, SavePoints::kAction154005632, 4);
-		getSavePoints()->addData(SavePoints::kCoudert, SavePoints::kAction169557824, 3);
-		getSavePoints()->addData(SavePoints::kCoudert, SavePoints::kAction226031488, 5);
-		getSavePoints()->addData(SavePoints::kCoudert, SavePoints::kAction339669520, 6);
-		getSavePoints()->addData(SavePoints::kCoudert, SavePoints::kAction189750912, 10);
-		getSavePoints()->addData(SavePoints::kCoudert, SavePoints::kAction185737168, 12);
-		getSavePoints()->addData(SavePoints::kCoudert, SavePoints::kAction185671840, 13);
-		getSavePoints()->addData(SavePoints::kCoudert, SavePoints::kAction205033696, 15);
-		getSavePoints()->addData(SavePoints::kCoudert, SavePoints::kAction157026693, 14);
-		getSavePoints()->addData(SavePoints::kCoudert, SavePoints::kAction189026624, 11);
-		getSavePoints()->addData(SavePoints::kCoudert, SavePoints::kAction168254872, 17);
-		getSavePoints()->addData(SavePoints::kCoudert, SavePoints::kAction201431954, 18);
-		getSavePoints()->addData(SavePoints::kCoudert, SavePoints::kAction188570113, 19);
+		getSavePoints()->addData(SavePoints::kEntityCoudert, SavePoints::kAction292048641, 7);
+		getSavePoints()->addData(SavePoints::kEntityCoudert, SavePoints::kAction326348944, 8);
+		getSavePoints()->addData(SavePoints::kEntityCoudert, SavePoints::kAction171394341, 2);
+		getSavePoints()->addData(SavePoints::kEntityCoudert, SavePoints::kAction154005632, 4);
+		getSavePoints()->addData(SavePoints::kEntityCoudert, SavePoints::kAction169557824, 3);
+		getSavePoints()->addData(SavePoints::kEntityCoudert, SavePoints::kAction226031488, 5);
+		getSavePoints()->addData(SavePoints::kEntityCoudert, SavePoints::kAction339669520, 6);
+		getSavePoints()->addData(SavePoints::kEntityCoudert, SavePoints::kAction189750912, 10);
+		getSavePoints()->addData(SavePoints::kEntityCoudert, SavePoints::kAction185737168, 12);
+		getSavePoints()->addData(SavePoints::kEntityCoudert, SavePoints::kAction185671840, 13);
+		getSavePoints()->addData(SavePoints::kEntityCoudert, SavePoints::kAction205033696, 15);
+		getSavePoints()->addData(SavePoints::kEntityCoudert, SavePoints::kAction157026693, 14);
+		getSavePoints()->addData(SavePoints::kEntityCoudert, SavePoints::kAction189026624, 11);
+		getSavePoints()->addData(SavePoints::kEntityCoudert, SavePoints::kAction168254872, 17);
+		getSavePoints()->addData(SavePoints::kEntityCoudert, SavePoints::kAction201431954, 18);
+		getSavePoints()->addData(SavePoints::kEntityCoudert, SavePoints::kAction188570113, 19);
 
 		_data->getParameters(8, 0)->param1 = 0;
 		_data->getParameters(8, 0)->param2 = 1;

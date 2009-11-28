@@ -205,7 +205,7 @@ void Sound::playDialog(SavePoints::EntityIndex entity, SavePoints::EntityIndex e
 
 const char *Sound::getDialogName(SavePoints::EntityIndex entity) {
 	switch (entity) {
-	case SavePoints::kAnna:
+	case SavePoints::kEntityAnna:
 		if (getEvent(Action::kAnnaDialogGoToJerusalem))
 			return "XANN12";
 
@@ -248,7 +248,7 @@ const char *Sound::getDialogName(SavePoints::EntityIndex entity) {
 
 		break;
 
-	case SavePoints::kAugust:
+	case SavePoints::kEntityAugust:
 		if (getEvent(Action::kAugustTalkCigar))
 			return "XAUG6";
 
@@ -274,7 +274,7 @@ const char *Sound::getDialogName(SavePoints::EntityIndex entity) {
 
 		break;
 
-	case SavePoints::kTatiana:
+	case SavePoints::kEntityTatiana:
 		if (getEvent(Action::kTatianaTylerCompartment))
 			return "XTAT6";
 
@@ -289,7 +289,7 @@ const char *Sound::getDialogName(SavePoints::EntityIndex entity) {
 
 		break;
 
-	case SavePoints::kVassili:
+	case SavePoints::kEntityVassili:
 		if (getEvent(Action::kCathFreePassengers))
 			return "XVAS4";
 
@@ -307,7 +307,7 @@ const char *Sound::getDialogName(SavePoints::EntityIndex entity) {
 
 		break;
 
-	case SavePoints::kAlexei:
+	case SavePoints::kEntityAlexei:
 		if (getProgress().field_88)
 			return "XALX6";
 
@@ -331,7 +331,7 @@ const char *Sound::getDialogName(SavePoints::EntityIndex entity) {
 
 		break;
 
-	case SavePoints::kAbbot:
+	case SavePoints::kEntityAbbot:
 		if (getEvent(Action::kAbbotDrinkDefuse))
 			return "XABB4";
 
@@ -346,7 +346,7 @@ const char *Sound::getDialogName(SavePoints::EntityIndex entity) {
 
 		break;
 
-	case SavePoints::kMilos:
+	case SavePoints::kEntityMilos:
 		if (getEvent(Action::kLocomotiveMilos) || getEvent(Action::kLocomotiveMilosNight))
 			return "XMIL5";
 
@@ -364,7 +364,7 @@ const char *Sound::getDialogName(SavePoints::EntityIndex entity) {
 
 		break;
 
-	case SavePoints::kVesna:
+	case SavePoints::kEntityVesna:
 		if (getProgress().field_94)
 			return "XVES2";
 
@@ -373,7 +373,7 @@ const char *Sound::getDialogName(SavePoints::EntityIndex entity) {
 
 		break;
 
-	case SavePoints::kKronos:
+	case SavePoints::kEntityKronos:
 		if (getEvent(Action::kKronosReturnBriefcase))
 			return "XKRO6";
 
@@ -401,7 +401,7 @@ const char *Sound::getDialogName(SavePoints::EntityIndex entity) {
 
 		break;
 
-	case SavePoints::kFrancois:
+	case SavePoints::kEntityFrancois:
 		if (getProgress().field_9C)
 			return "XFRA3";
 
@@ -415,7 +415,7 @@ const char *Sound::getDialogName(SavePoints::EntityIndex entity) {
 
 		break;
 
-	case SavePoints::kMmeBoutarel:
+	case SavePoints::kEntityMmeBoutarel:
 		if (getProgress().field_A4)
 			return "XMME4";
 
@@ -430,13 +430,13 @@ const char *Sound::getDialogName(SavePoints::EntityIndex entity) {
 
 		break;
 
-	case SavePoints::kBoutarel:
+	case SavePoints::kEntityBoutarel:
 		if (getProgress().event_met_boutarel)
 			return "XMRB1";
 
 		break;
 
-	case SavePoints::kRebecca:
+	case SavePoints::kEntityRebecca:
 		if (getProgress().field_B4)
 			return "XREB1A";
 
@@ -445,7 +445,7 @@ const char *Sound::getDialogName(SavePoints::EntityIndex entity) {
 
 		break;
 
-	case SavePoints::kSophie:
+	case SavePoints::kEntitySophie:
 		if (getProgress().field_B0)
 			return "XSOP2";
 
@@ -460,37 +460,37 @@ const char *Sound::getDialogName(SavePoints::EntityIndex entity) {
 
 		break;
 
-	case SavePoints::kMahmud:
+	case SavePoints::kEntityMahmud:
 		if (getProgress().field_C4)
 			return "XMAH1";
 
 		break;
 
-	case SavePoints::kYasmin:
+	case SavePoints::kEntityYasmin:
 		if (getProgress().event_met_yasmin)
 			return "XHAR2";
 
 		break;
 
-	case SavePoints::kHadija:
+	case SavePoints::kEntityHadija:
 		if (getProgress().event_met_hadija)
 			return "XHAR1";
 
 		break;
 
-	case SavePoints::kAlouan:
+	case SavePoints::kEntityAlouan:
 		if (getProgress().field_DC)
 			return "XHAR3";
 
 		break;
 
-	case SavePoints::kGendarmes:
+	case SavePoints::kEntityGendarmes:
 		if (getProgress().field_E0)
 			return "XHAR4";
 
 		break;
 
-	case SavePoints::kChapters:
+	case SavePoints::kEntityChapters:
 		if (getEvent(Action::kCathDream) || getEvent(Action::kCathWakingUp))
 			return "XTYL3";
 		
@@ -515,13 +515,13 @@ const char *Sound::readText(int id) {
 // Sound bites
 //////////////////////////////////////////////////////////////////////////
 void Sound::excuseMe(SavePoints::EntityIndex entity, int param2, int param3) {
-	if (entity == SavePoints::kNone || entity == SavePoints::kChapters || entity == SavePoints::kTrain)
+	if (entity == SavePoints::kEntityNone || entity == SavePoints::kEntityChapters || entity == SavePoints::kEntityTrain)
 		return;
 
 	if (param2 == 20 || param2 == 30)
 		return;
 
-	if (entity == SavePoints::kFrancois && getEntityData(SavePoints::kFrancois)->field_4A3 == 30)
+	if (entity == SavePoints::kEntityFrancois && getEntityData(SavePoints::kEntityFrancois)->field_4A3 == 30)
 		return;
 
 	if (!param3) {
@@ -532,36 +532,36 @@ void Sound::excuseMe(SavePoints::EntityIndex entity, int param2, int param3) {
 	default:
 		break;
 
-	case SavePoints::kAnna:
-		playSound(SavePoints::kNone, "ANN1107A", param3, 0);
+	case SavePoints::kEntityAnna:
+		playSound(SavePoints::kEntityNone, "ANN1107A", param3, 0);
 		break;
 
-	case SavePoints::kAugust:
+	case SavePoints::kEntityAugust:
 		switch(random(4)) {
 		default:
 			break;
 
 		case 0:
-			playSound(SavePoints::kNone, "AUG1100A", param3, 0);
+			playSound(SavePoints::kEntityNone, "AUG1100A", param3, 0);
 			break;
 
 		case 1:
-			playSound(SavePoints::kNone, "AUG1100B", param3, 0);
+			playSound(SavePoints::kEntityNone, "AUG1100B", param3, 0);
 			break;
 
 		case 2:
-			playSound(SavePoints::kNone, "AUG1100C", param3, 0);
+			playSound(SavePoints::kEntityNone, "AUG1100C", param3, 0);
 			break;
 
 		case 3:
-			playSound(SavePoints::kNone, "AUG1100D", param3, 0);
+			playSound(SavePoints::kEntityNone, "AUG1100D", param3, 0);
 			break;
 		}
 		break;
 
-	case SavePoints::kMertens:
+	case SavePoints::kEntityMertens:
 		if (testParameter(param2)) {
-			playSound(SavePoints::kNone, (random(2) ? "CON1111" : "CON1111A"), param3, 0);
+			playSound(SavePoints::kEntityNone, (random(2) ? "CON1111" : "CON1111A"), param3, 0);
 		} else {
 			if (param2 || getProgress().jacket != State::kGreenJacket || !random(2)) {
 				switch(random(3)) {
@@ -569,30 +569,30 @@ void Sound::excuseMe(SavePoints::EntityIndex entity, int param2, int param3) {
 					break;
 
 				case 0:
-					playSound(SavePoints::kNone, "CON1110A", param3, 0);
+					playSound(SavePoints::kEntityNone, "CON1110A", param3, 0);
 					break;
 
 				case 1:
-					playSound(SavePoints::kNone, "CON1110C", param3, 0);
+					playSound(SavePoints::kEntityNone, "CON1110C", param3, 0);
 					break;
 
 				case 2:
-					playSound(SavePoints::kNone, "CON1110", param3, 0);
+					playSound(SavePoints::kEntityNone, "CON1110", param3, 0);
 					break;
 				}
 			} else {
 				if (isDay()) {
-					playSound(SavePoints::kNone, (getProgress().field_18 == 2 ? "CON1110F" : "CON1110E"), -1, 0);
+					playSound(SavePoints::kEntityNone, (getProgress().field_18 == 2 ? "CON1110F" : "CON1110E"), -1, 0);
 				} else {
-					playSound(SavePoints::kNone, "CON1110D", -1, 0);
+					playSound(SavePoints::kEntityNone, "CON1110D", -1, 0);
 				}
 			}
 		}
 		break;
 
-	case SavePoints::kCoudert:
+	case SavePoints::kEntityCoudert:
 		if (testParameter(param2)) {
-			playSound(SavePoints::kNone, "JAC1111D", param3, 0);
+			playSound(SavePoints::kEntityNone, "JAC1111D", param3, 0);
 		} else {
 			if (param2 || getProgress().jacket != State::kGreenJacket || !random(2)) {
 				switch(random(4)) {
@@ -600,186 +600,186 @@ void Sound::excuseMe(SavePoints::EntityIndex entity, int param2, int param3) {
 					break;
 
 				case 0:
-					playSound(SavePoints::kNone, "JAC1111", param3, 0);
+					playSound(SavePoints::kEntityNone, "JAC1111", param3, 0);
 					break;
 
 				case 1:
-					playSound(SavePoints::kNone, "JAC1111A", param3, 0);
+					playSound(SavePoints::kEntityNone, "JAC1111A", param3, 0);
 					break;
 
 				case 2:
-					playSound(SavePoints::kNone, "JAC1111B", param3, 0);
+					playSound(SavePoints::kEntityNone, "JAC1111B", param3, 0);
 					break;
 
 				case 3:
-					playSound(SavePoints::kNone, "JAC1111C", param3, 0);
+					playSound(SavePoints::kEntityNone, "JAC1111C", param3, 0);
 					break;
 				}
 			} else {
-				playSound(SavePoints::kNone, "JAC1113B", param3, 0);
+				playSound(SavePoints::kEntityNone, "JAC1113B", param3, 0);
 			}
 		}
 		break;
 
-	case SavePoints::kPascale:
-		playSound(SavePoints::kNone, (random(2) ? "HDE1002" : "HED1002A"), param3, 0);
+	case SavePoints::kEntityPascale:
+		playSound(SavePoints::kEntityNone, (random(2) ? "HDE1002" : "HED1002A"), param3, 0);
 		break;
 
-	case SavePoints::kServers0:
-	case SavePoints::kServers1:
+	case SavePoints::kEntityServers0:
+	case SavePoints::kEntityServers1:
 		switch(random(3)) {
 		default:
 			break;
 
 		case 0:
-			playSound(SavePoints::kNone, (entity == SavePoints::kServers0) ? "WAT1002" : "WAT1003", param3, 0);
+			playSound(SavePoints::kEntityNone, (entity == SavePoints::kEntityServers0) ? "WAT1002" : "WAT1003", param3, 0);
 			break;
 
 		case 1:
-			playSound(SavePoints::kNone, (entity == SavePoints::kServers0) ? "WAT1002A" : "WAT1003A", param3, 0);
+			playSound(SavePoints::kEntityNone, (entity == SavePoints::kEntityServers0) ? "WAT1002A" : "WAT1003A", param3, 0);
 			break;
 
 		case 2:
-			playSound(SavePoints::kNone, (entity == SavePoints::kServers0) ? "WAT1002B" : "WAT1003B", param3, 0);
+			playSound(SavePoints::kEntityNone, (entity == SavePoints::kEntityServers0) ? "WAT1002B" : "WAT1003B", param3, 0);
 			break;
 		}
 		break;
 
-	case SavePoints::kVerges:
+	case SavePoints::kEntityVerges:
 		if (testParameter(param2)) {
-			playSound(SavePoints::kNone, (random(2) ? "TRA1113A" : "TRA1113B"), -1, 0);
+			playSound(SavePoints::kEntityNone, (random(2) ? "TRA1113A" : "TRA1113B"), -1, 0);
 		} else {
-			playSound(SavePoints::kNone, "TRA1112", param3, 0);
+			playSound(SavePoints::kEntityNone, "TRA1112", param3, 0);
 		}
 		break;
 
-	case SavePoints::kTatiana:
-		playSound(SavePoints::kNone, (random(2) ? "TAT1102A" : "TAT1102B"), param3, 0);
+	case SavePoints::kEntityTatiana:
+		playSound(SavePoints::kEntityNone, (random(2) ? "TAT1102A" : "TAT1102B"), param3, 0);
 		break;
 
-	case SavePoints::kAlexei:
-		playSound(SavePoints::kNone, (random(2) ? "ALX1099C" : "ALX1099D"), param3, 0);
+	case SavePoints::kEntityAlexei:
+		playSound(SavePoints::kEntityNone, (random(2) ? "ALX1099C" : "ALX1099D"), param3, 0);
 		break;
 
-	case SavePoints::kAbbot:
+	case SavePoints::kEntityAbbot:
 		if (testParameter(param2)) {
-			playSound(SavePoints::kNone, "ABB3002C", param3, 0);
+			playSound(SavePoints::kEntityNone, "ABB3002C", param3, 0);
 		} else {			
 			switch(random(3)) {
 			default:
 				break;
 
 			case 0:
-				playSound(SavePoints::kNone, "ABB3002", param3, 0);
+				playSound(SavePoints::kEntityNone, "ABB3002", param3, 0);
 				break;
 
 			case 1:
-				playSound(SavePoints::kNone, "ABB3002A", param3, 0);
+				playSound(SavePoints::kEntityNone, "ABB3002A", param3, 0);
 				break;
 
 			case 2:
-				playSound(SavePoints::kNone, "ABB3002B", param3, 0);
+				playSound(SavePoints::kEntityNone, "ABB3002B", param3, 0);
 				break;
 			}
 		}
 		break;
 
-	case SavePoints::kVesna:
+	case SavePoints::kEntityVesna:
 		switch(random(3)) {
 		default:
 			break;
 
 		case 0:
-			playSound(SavePoints::kNone, "VES1109A", param3, 0);
+			playSound(SavePoints::kEntityNone, "VES1109A", param3, 0);
 			break;
 
 		case 1:
-			playSound(SavePoints::kNone, "VES1109B", param3, 0);
+			playSound(SavePoints::kEntityNone, "VES1109B", param3, 0);
 			break;
 
 		case 2:
-			playSound(SavePoints::kNone, "VES1109C", param3, 0);
+			playSound(SavePoints::kEntityNone, "VES1109C", param3, 0);
 			break;
 		}
 		break;
 
-	case SavePoints::kKahina:
-		playSound(SavePoints::kNone, (random(2) ? "KAH1001" : "KAH1001A"), param3, 0);
+	case SavePoints::kEntityKahina:
+		playSound(SavePoints::kEntityNone, (random(2) ? "KAH1001" : "KAH1001A"), param3, 0);
 		break;
 
-	case SavePoints::kFrancois:
-	case SavePoints::kMmeBoutarel:
+	case SavePoints::kEntityFrancois:
+	case SavePoints::kEntityMmeBoutarel:
 		switch(random(4)) {
 		default:
 			break;
 
 		case 0:
-			playSound(SavePoints::kNone, (entity == SavePoints::kFrancois) ? "FRA1001" : "MME1103A", param3, 0);
+			playSound(SavePoints::kEntityNone, (entity == SavePoints::kEntityFrancois) ? "FRA1001" : "MME1103A", param3, 0);
 			break;
 
 		case 1:
-			playSound(SavePoints::kNone, (entity == SavePoints::kFrancois) ? "FRA1001A" : "MME1103B", param3, 0);
+			playSound(SavePoints::kEntityNone, (entity == SavePoints::kEntityFrancois) ? "FRA1001A" : "MME1103B", param3, 0);
 			break;
 
 		case 2:
-			playSound(SavePoints::kNone, (entity == SavePoints::kFrancois) ? "FRA1001B" : "MME1103C", param3, 0);
+			playSound(SavePoints::kEntityNone, (entity == SavePoints::kEntityFrancois) ? "FRA1001B" : "MME1103C", param3, 0);
 			break;
 
 		case 3:
-			playSound(SavePoints::kNone, (entity == SavePoints::kFrancois) ? "FRA1001C" : "MME1103D", param3, 0);
+			playSound(SavePoints::kEntityNone, (entity == SavePoints::kEntityFrancois) ? "FRA1001C" : "MME1103D", param3, 0);
 			break;
 		}
 		break;
 
-	case SavePoints::kBoutarel:
-		playSound(SavePoints::kNone, "MRB1104", param3, 0);
+	case SavePoints::kEntityBoutarel:
+		playSound(SavePoints::kEntityNone, "MRB1104", param3, 0);
 		if (param3 > 2)
 			getProgress().event_met_boutarel = 1;
 		break;
 
-	case SavePoints::kRebecca:
-		playSound(SavePoints::kNone, (random(2) ? "REB1106" : "REB110A"), param3, 0);
+	case SavePoints::kEntityRebecca:
+		playSound(SavePoints::kEntityNone, (random(2) ? "REB1106" : "REB110A"), param3, 0);
 		break;
 
-	case SavePoints::kSophie: {
+	case SavePoints::kEntitySophie: {
 		bool param2Test = testParameter(param2);
 		switch(random(3)) {
 		default:
 			break;
 
 		case 0:
-			playSound(SavePoints::kNone, "SOP1105", param3, 0);
+			playSound(SavePoints::kEntityNone, "SOP1105", param3, 0);
 			break;
 
 		case 1:
-			playSound(SavePoints::kNone, param2Test ? "SOP1105C" : "SOP1105A", param3, 0);
+			playSound(SavePoints::kEntityNone, param2Test ? "SOP1105C" : "SOP1105A", param3, 0);
 			break;
 
 		case 2:
-			playSound(SavePoints::kNone, param2Test ? "SOP1105D" : "SOP1105B", param3, 0);
+			playSound(SavePoints::kEntityNone, param2Test ? "SOP1105D" : "SOP1105B", param3, 0);
 			break;
 		}
 		break;
 	}
 
-	case SavePoints::kMahmud:
-		playSound(SavePoints::kNone, "MAH1101", param3, 0);
+	case SavePoints::kEntityMahmud:
+		playSound(SavePoints::kEntityNone, "MAH1101", param3, 0);
 		break;
 
-	case SavePoints::kYasmin:
-		playSound(SavePoints::kNone, "HAR1002", param3, 0);
+	case SavePoints::kEntityYasmin:
+		playSound(SavePoints::kEntityNone, "HAR1002", param3, 0);
 		if (param3 > 2)
 			getProgress().event_met_yasmin = 1;
 		break;
 
-	case SavePoints::kHadija:
-		playSound(SavePoints::kNone, (random(2) ? "HAR1001" : "HAR1001A"), param3, 0);
+	case SavePoints::kEntityHadija:
+		playSound(SavePoints::kEntityNone, (random(2) ? "HAR1001" : "HAR1001A"), param3, 0);
 		if (param3 > 2)
 			getProgress().event_met_hadija = 1;
 		break;
 
-	case SavePoints::kAlouan:
-		playSound(SavePoints::kNone, "HAR1004", param3, 0);
+	case SavePoints::kEntityAlouan:
+		playSound(SavePoints::kEntityNone, "HAR1004", param3, 0);
 		break;
 	}	
 }

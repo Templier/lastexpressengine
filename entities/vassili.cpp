@@ -33,7 +33,7 @@
 
 namespace LastExpress {
 
-Vassili::Vassili(LastExpressEngine *engine) : Entity(engine, SavePoints::kVassili) {
+Vassili::Vassili(LastExpressEngine *engine) : Entity(engine, SavePoints::kEntityVassili) {
 	ADD_CALLBACK_FUNCTION(Vassili, nullfunc);
 	ADD_CALLBACK_FUNCTION(Vassili, nullfunc);
 	ADD_CALLBACK_FUNCTION(Vassili, nullfunc);

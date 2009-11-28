@@ -34,7 +34,7 @@
 
 namespace LastExpress {
 
-Mahmud::Mahmud(LastExpressEngine *engine) : Entity(engine, SavePoints::kMahmud) {
+Mahmud::Mahmud(LastExpressEngine *engine) : Entity(engine, SavePoints::kEntityMahmud) {
 	ADD_CALLBACK_FUNCTION(Mahmud, nullfunc);
 	ADD_CALLBACK_FUNCTION(Mahmud, nullfunc);
 	ADD_CALLBACK_FUNCTION(Mahmud, nullfunc);
@@ -67,10 +67,10 @@ IMPLEMENT_FUNCTION(Mahmud, chapter1, 15) {
 		break;
 
 	case SavePoints::kActionDefault: 
-		getSavePoints()->addData(SavePoints::kMahmud, SavePoints::kAction170483072, 0);
+		getSavePoints()->addData(SavePoints::kEntityMahmud, SavePoints::kAction170483072, 0);
 
-		getObjects()->update(Objects::kObjectCompartment4, SavePoints::kNone, 3, Cursor::kCursorHandKnock, 9);
-		getObjects()->update(Objects::kObject20, SavePoints::kNone, 3, Cursor::kCursorKeepValue, 9);
+		getObjects()->update(Objects::kObjectCompartment4, SavePoints::kEntityNone, 3, Cursor::kCursorHandKnock, 9);
+		getObjects()->update(Objects::kObject20, SavePoints::kEntityNone, 3, Cursor::kCursorKeepValue, 9);
 
 		_data->getData()->field_491 = 540;
 		_data->getData()->field_493 = 0;

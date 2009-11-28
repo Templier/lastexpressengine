@@ -33,7 +33,7 @@
 
 namespace LastExpress {
 
-Tables::Tables(LastExpressEngine *engine, int id) : Entity(engine, (SavePoints::EntityIndex)(SavePoints::kTables0 + id)) {
+Tables::Tables(LastExpressEngine *engine, int id) : Entity(engine, (SavePoints::EntityIndex)(SavePoints::kEntityTables0 + id)) {
 	_id = id;
 	
 	ADD_CALLBACK_FUNCTION(Tables, chapter1);

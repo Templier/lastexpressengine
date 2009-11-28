@@ -33,7 +33,7 @@
 
 namespace LastExpress {
 
-Francois::Francois(LastExpressEngine *engine) : Entity(engine, SavePoints::kFrancois) {	
+Francois::Francois(LastExpressEngine *engine) : Entity(engine, SavePoints::kEntityFrancois) {	
 	ADD_CALLBACK_FUNCTION(Francois, nullfunc);
 	ADD_CALLBACK_FUNCTION(Francois, nullfunc);
 	ADD_CALLBACK_FUNCTION(Francois, nullfunc);

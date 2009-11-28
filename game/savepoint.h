@@ -57,45 +57,45 @@ class LastExpressEngine;
 class SavePoints : Common::Serializable {
 public:
 	enum EntityIndex {
-		kNone,
-		kAnna,
-		kAugust,
-		kMertens,
-		kCoudert,
-		kPascale,				// 5
-		kServers0,
-		kServers1,
-		kCooks,
-		kVerges,
-		kTatiana,				// 10
-		kVassili,
-		kAlexei,
-		kAbbot,
-		kMilos,
-		kVesna,					// 15
-		kIvo,
-		kSalko,
-		kKronos,
-		kKahina,
-		kFrancois,				// 20
-		kMmeBoutarel,
-		kBoutarel,
-		kRebecca,
-		kSophie,
-		kMahmud,				// 25
-		kYasmin,
-		kHadija,
-		kAlouan,
-		kGendarmes,
-		kMax,					// 30
-		kChapters,
-		kTrain,
-		kTables0,
-		kTables1,
-		kTables2,				// 35
-		kTables3,
-		kTables4,
-		kTables5,
+		kEntityNone,
+		kEntityAnna,
+		kEntityAugust,
+		kEntityMertens,
+		kEntityCoudert,
+		kEntityPascale,				// 5
+		kEntityServers0,
+		kEntityServers1,
+		kEntityCooks,
+		kEntityVerges,
+		kEntityTatiana,				// 10
+		kEntityVassili,
+		kEntityAlexei,
+		kEntityAbbot,
+		kEntityMilos,
+		kEntityVesna,				// 15
+		kEntityIvo,
+		kEntitySalko,
+		kEntityKronos,
+		kEntityKahina,
+		kEntityFrancois,			// 20
+		kEntityMmeBoutarel,
+		kEntityBoutarel,
+		kEntityRebecca,
+		kEntitySophie,
+		kEntityMahmud,				// 25
+		kEntityYasmin,
+		kEntityHadija,
+		kEntityAlouan,
+		kEntityGendarmes,
+		kEntityMax,					// 30
+		kEntityChapters,
+		kEntityTrain,
+		kEntityTables0,
+		kEntityTables1,
+		kEntityTables2,				// 35
+		kEntityTables3,
+		kEntityTables4,
+		kEntityTables5,
 		kEntity39
 	};
 
@@ -233,9 +233,9 @@ public:
 		uint32 field_C;
 
 		SavePoint() {
-			entity1 = kNone;
+			entity1 = kEntityNone;
 			action = kActionNone;
-			entity2 = kNone;
+			entity2 = kEntityNone;
 			field_C = 0;
 		}
 	};	
@@ -247,9 +247,9 @@ public:
 		uint32 field_C;
 
 		SavePointData() {
-			entity1 = kNone;
+			entity1 = kEntityNone;
 			action = kActionNone;
-			entity2 = kNone;
+			entity2 = kEntityNone;
 			field_C = 0;
 		}
 	};	

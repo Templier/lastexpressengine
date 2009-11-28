@@ -34,7 +34,7 @@
 
 namespace LastExpress {
 
-Milos::Milos(LastExpressEngine *engine) : Entity(engine, SavePoints::kMilos) {
+Milos::Milos(LastExpressEngine *engine) : Entity(engine, SavePoints::kEntityMilos) {
 	ADD_CALLBACK_FUNCTION(Milos, nullfunc);
 	ADD_CALLBACK_FUNCTION(Milos, nullfunc);
 	ADD_CALLBACK_FUNCTION(Milos, nullfunc);
@@ -82,11 +82,11 @@ IMPLEMENT_FUNCTION(Milos, chapter1, 12) {
 		break;
 
 	case SavePoints::kActionDefault: 
-		getSavePoints()->addData(SavePoints::kMilos, SavePoints::kAction157691176, 0);
-		getSavePoints()->addData(SavePoints::kMilos, SavePoints::kAction208228224, 2);
+		getSavePoints()->addData(SavePoints::kEntityMilos, SavePoints::kAction157691176, 0);
+		getSavePoints()->addData(SavePoints::kEntityMilos, SavePoints::kAction208228224, 2);
 
-		getObjects()->update(Objects::kObjectCompartmentG, SavePoints::kNone, 3, Cursor::kCursorHandKnock, 9);
-		getObjects()->update(Objects::kObject46, SavePoints::kNone, 0, Cursor::kCursorKeepValue, 255);
+		getObjects()->update(Objects::kObjectCompartmentG, SavePoints::kEntityNone, 3, Cursor::kCursorHandKnock, 9);
+		getObjects()->update(Objects::kObject46, SavePoints::kEntityNone, 0, Cursor::kCursorKeepValue, 255);
 
 		_data->getData()->field_491 = 4689;
 		_data->getData()->field_493 = 1;

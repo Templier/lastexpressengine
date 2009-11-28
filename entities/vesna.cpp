@@ -33,7 +33,7 @@
 
 namespace LastExpress {
 
-Vesna::Vesna(LastExpressEngine *engine) : Entity(engine, SavePoints::kVesna) {
+Vesna::Vesna(LastExpressEngine *engine) : Entity(engine, SavePoints::kEntityVesna) {
 	ADD_CALLBACK_FUNCTION(Vesna, nullfunc);
 	ADD_CALLBACK_FUNCTION(Vesna, nullfunc);
 	ADD_CALLBACK_FUNCTION(Vesna, nullfunc);
@@ -77,7 +77,7 @@ IMPLEMENT_FUNCTION(Vesna, chapter1, 12) {
 		break;
 
 	case SavePoints::kActionDefault: 
-		getSavePoints()->addData(SavePoints::kVesna, SavePoints::kAction124190740, 0);
+		getSavePoints()->addData(SavePoints::kEntityVesna, SavePoints::kAction124190740, 0);
 
 		_data->getData()->field_491 = 4689;
 		_data->getData()->field_493 = 1;

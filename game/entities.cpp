@@ -156,7 +156,7 @@ void Entities::setup(State::ChapterIndex chapter) {
 	for (uint i = 1; i < _entities.size(); i++) {
 		
 		// Special case of chapters (prevents infinite loop as we will be called from Chapters functions when changing chapters)
-		if (i == SavePoints::kChapters && chapter >= 2)			
+		if (i == SavePoints::kEntityChapters && chapter >= 2)			
 			continue;	
 
 		_entities[i]->setup(chapter);
@@ -286,7 +286,7 @@ void Entities::processEntity(SavePoints::EntityIndex entity) {
 Entity *Entities::get(SavePoints::EntityIndex entity) {
 	assert((uint)entity < _entities.size());
 
-	if (entity == SavePoints::kNone)
+	if (entity == SavePoints::kEntityNone)
 		error("Cannot get entity for index = 0!");
 
 	return _entities[entity];
@@ -352,7 +352,7 @@ bool Entities::checkFields2(Objects::ObjectIndex object) {
 	case Objects::kObjectCompartment8:
 		field491 = field491_values[object];
 		field495 = 3;
-		if (checkFields1(SavePoints::kNone, field495, field491))
+		if (checkFields1(SavePoints::kEntityNone, field495, field491))
 			return false;
 		break;
 
@@ -376,7 +376,7 @@ bool Entities::checkFields2(Objects::ObjectIndex object) {
 	case Objects::kObjectCompartmentH:
 		field491 = field491_values[object-32];
 		field495 = 4;
-		if (checkFields1(SavePoints::kNone, field495, field491))
+		if (checkFields1(SavePoints::kEntityNone, field495, field491))
 			return false;
 		break;
 
@@ -393,7 +393,7 @@ bool Entities::checkFields2(Objects::ObjectIndex object) {
 	}
 
 	uint index = 1;
-	while (!checkFields1((SavePoints::EntityIndex)index, field495, field491) || index == SavePoints::kVassili) {
+	while (!checkFields1((SavePoints::EntityIndex)index, field495, field491) || index == SavePoints::kEntityVassili) {
 		index++;
 		if (index >= 40)
 			return false;
@@ -409,7 +409,7 @@ bool Entities::checkFields3(SavePoints::EntityIndex entity) {
 bool Entities::checkFields4(int field495, int field15) {
 
 	Scene *scene = _engine->getScene(getState()->scene);
-	bool ret = getData(SavePoints::kNone)->getData()->field_495 == field495 && scene->getHeader()->field_15 == field15;
+	bool ret = getData(SavePoints::kEntityNone)->getData()->field_495 == field495 && scene->getHeader()->field_15 == field15;
 	delete scene;
 
 	return ret;
@@ -425,7 +425,7 @@ bool Entities::checkFields6(SavePoints::EntityIndex entity) {
 }
 
 bool Entities::checkFields7(int field495) {
-	return checkFields5(SavePoints::kNone, field495) && !getData(SavePoints::kNone)->getData()->field_493 && !checkFields6(SavePoints::kNone);
+	return checkFields5(SavePoints::kEntityNone, field495) && !getData(SavePoints::kEntityNone)->getData()->field_493 && !checkFields6(SavePoints::kEntityNone);
 }
 
 bool Entities::checkFields8(SavePoints::EntityIndex entity) {

@@ -37,7 +37,7 @@
 
 namespace LastExpress {
 
-Mertens::Mertens(LastExpressEngine *engine) : Entity(engine, SavePoints::kMertens) {
+Mertens::Mertens(LastExpressEngine *engine) : Entity(engine, SavePoints::kEntityMertens) {
 	ADD_CALLBACK_FUNCTION(Mertens, nullfunc);
 	ADD_CALLBACK_FUNCTION(Mertens, nullfunc);
 	ADD_CALLBACK_FUNCTION(Mertens, nullfunc);
@@ -95,7 +95,16 @@ Mertens::Mertens(LastExpressEngine *engine) : Entity(engine, SavePoints::kMerten
 }
 
 IMPLEMENT_FUNCTION(Mertens, function6, 6) {
+	switch (savepoint->action) {
+	default:
+		break;	
 
+	case SavePoints::kActionNone:
+		break;
+
+	case SavePoints::kActionDefault: 		
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION_INT2(Mertens, function10, 10) {
@@ -123,27 +132,27 @@ IMPLEMENT_FUNCTION(Mertens, function17, 17) {
 			
 			if (_data->getParameters(8, 0)->param8) {
 				
-				getEntities()->drawSequence(SavePoints::kMertens, "601K");
+				getEntities()->drawSequence(SavePoints::kEntityMertens, "601K");
 				getLogic()->loadSceneFromItem(Inventory::kItem7);
 
 				_data->getParameters(8, 2)->param1 = 1;
 				_data->getData()->current_call--;
-				getSavePoints()->setCallback(SavePoints::kMertens, _callbacks[_data->getCurrentCallback()]);
-				getSavePoints()->call(SavePoints::kMertens, SavePoints::kMertens, SavePoints::kAction18, 0);
+				getSavePoints()->setCallback(SavePoints::kEntityMertens, _callbacks[_data->getCurrentCallback()]);
+				getSavePoints()->call(SavePoints::kEntityMertens, SavePoints::kEntityMertens, SavePoints::kAction18, 0);
 
 			} else {	// Mertens sits on his chair at the back of the train
 				if (getInventory()->hasItem(Inventory::kPassengerList) || _data->getParameters(8, 0)->param2)
-					getEntities()->storeSequenceName(SavePoints::kMertens, "601A");
+					getEntities()->storeSequenceName(SavePoints::kEntityMertens, "601A");
 				else {	// Got the passenger list, Mertens is looking for it before sitting
 					_data->getParameters(8, 0)->param2 = 1;
-					getSound()->playSound(SavePoints::kMertens, "CON1058", -1, 75);
-					getEntities()->storeSequenceName(SavePoints::kMertens, "601D");
+					getSound()->playSound(SavePoints::kEntityMertens, "CON1058", -1, 75);
+					getEntities()->storeSequenceName(SavePoints::kEntityMertens, "601D");
 				}
 
 				getLogic()->loadSceneFromItem(Inventory::kItem7);
 
 				if (getEntities()->checkFields4(3, 68)) {
-					getSound()->playSound(SavePoints::kNone, "CON1110", -1, 0);
+					getSound()->playSound(SavePoints::kEntityNone, "CON1110", -1, 0);
 					getLogic()->loadSceneFromData(3, 25, 255);
 				}
 
@@ -160,7 +169,7 @@ IMPLEMENT_FUNCTION(Mertens, function17, 17) {
 			break;
 
 		case 1:
-			getEntities()->drawSequences(SavePoints::kMertens);
+			getEntities()->drawSequences(SavePoints::kEntityMertens);
 			_data->getParameters(8, 2)->param1 = 1;
 			_data->setNextCallback(2);
 			call(new ENTITY_SETUP_DEFAULT(Mertens, setup_function11), 75);
@@ -168,28 +177,28 @@ IMPLEMENT_FUNCTION(Mertens, function17, 17) {
 
 		case 2:
 			_data->getData()->current_call--;
-			getSavePoints()->setCallback(SavePoints::kMertens, _callbacks[_data->getCurrentCallback()]);
-			getSavePoints()->call(SavePoints::kMertens, SavePoints::kMertens, SavePoints::kAction18, 0);
+			getSavePoints()->setCallback(SavePoints::kEntityMertens, _callbacks[_data->getCurrentCallback()]);
+			getSavePoints()->call(SavePoints::kEntityMertens, SavePoints::kEntityMertens, SavePoints::kAction18, 0);
 			break;
 
 		case 3:
 			if (!_data->getParameters(8, 0)->param3
 			 && !getInventory()->hasItem(Inventory::kPassengerList)
 			 && _data->getParameters(8, 0)->param2) {
-				 getSavePoints()->push(SavePoints::kMertens, SavePoints::kVerges, SavePoints::kAction158617345, 0);
+				 getSavePoints()->push(SavePoints::kEntityMertens, SavePoints::kEntityVerges, SavePoints::kAction158617345, 0);
 				 _data->getParameters(8, 0)->param3 = 1;
 			}
 
-			getEntities()->drawSequence(SavePoints::kMertens, "601B");
+			getEntities()->drawSequence(SavePoints::kEntityMertens, "601B");
 
 			_data->getParameters(8, 0)->param1 = 0;
 			_data->getData()->inventoryItem = Inventory::kNoItem;
 
-			getSavePoints()->push(SavePoints::kMertens, SavePoints::kMertens, SavePoints::kAction17, 0);
+			getSavePoints()->push(SavePoints::kEntityMertens, SavePoints::kEntityMertens, SavePoints::kAction17, 0);
 
 			_data->getData()->current_call--;
-			getSavePoints()->setCallback(SavePoints::kMertens, _callbacks[_data->getCurrentCallback()]);
-			getSavePoints()->call(SavePoints::kMertens, SavePoints::kMertens, SavePoints::kAction18, 0);
+			getSavePoints()->setCallback(SavePoints::kEntityMertens, _callbacks[_data->getCurrentCallback()]);
+			getSavePoints()->call(SavePoints::kEntityMertens, SavePoints::kEntityMertens, SavePoints::kAction18, 0);
 			break;
 		}
 		break;
@@ -215,18 +224,18 @@ IMPLEMENT_FUNCTION(Mertens, chapter1, 34) {
 		break;
 
 	case SavePoints::kActionDefault: 
-		getSavePoints()->addData(SavePoints::kMertens, SavePoints::kAction171394341, 7);
-		getSavePoints()->addData(SavePoints::kMertens, SavePoints::kAction169633856, 9);
-		getSavePoints()->addData(SavePoints::kMertens, SavePoints::kAction238732837, 10);
-		getSavePoints()->addData(SavePoints::kMertens, SavePoints::kAction269624833, 12);
-		getSavePoints()->addData(SavePoints::kMertens, SavePoints::kAction302614416, 11);
-		getSavePoints()->addData(SavePoints::kMertens, SavePoints::kAction190082817, 8);
-		getSavePoints()->addData(SavePoints::kMertens, SavePoints::kAction269436673, 13);
-		getSavePoints()->addData(SavePoints::kMertens, SavePoints::kAction303343617, 14);
-		getSavePoints()->addData(SavePoints::kMertens, SavePoints::kAction224122407, 17);
-		getSavePoints()->addData(SavePoints::kMertens, SavePoints::kAction201431954, 18);
-		getSavePoints()->addData(SavePoints::kMertens, SavePoints::kAction188635520, 19);
-		getSavePoints()->addData(SavePoints::kMertens, SavePoints::kAction204379649, 4);
+		getSavePoints()->addData(SavePoints::kEntityMertens, SavePoints::kAction171394341, 7);
+		getSavePoints()->addData(SavePoints::kEntityMertens, SavePoints::kAction169633856, 9);
+		getSavePoints()->addData(SavePoints::kEntityMertens, SavePoints::kAction238732837, 10);
+		getSavePoints()->addData(SavePoints::kEntityMertens, SavePoints::kAction269624833, 12);
+		getSavePoints()->addData(SavePoints::kEntityMertens, SavePoints::kAction302614416, 11);
+		getSavePoints()->addData(SavePoints::kEntityMertens, SavePoints::kAction190082817, 8);
+		getSavePoints()->addData(SavePoints::kEntityMertens, SavePoints::kAction269436673, 13);
+		getSavePoints()->addData(SavePoints::kEntityMertens, SavePoints::kAction303343617, 14);
+		getSavePoints()->addData(SavePoints::kEntityMertens, SavePoints::kAction224122407, 17);
+		getSavePoints()->addData(SavePoints::kEntityMertens, SavePoints::kAction201431954, 18);
+		getSavePoints()->addData(SavePoints::kEntityMertens, SavePoints::kAction188635520, 19);
+		getSavePoints()->addData(SavePoints::kEntityMertens, SavePoints::kAction204379649, 4);
 
 		_data->getParameters(8, 0)->param1 = 0;
 		_data->getData()->field_491 = 9460;
@@ -278,7 +287,7 @@ IMPLEMENT_FUNCTION(Mertens, chapter2, 43) {
 		break;
 
 	case SavePoints::kActionDefault: 
-		getEntities()->drawSequences(SavePoints::kMertens);
+		getEntities()->drawSequences(SavePoints::kEntityMertens);
 
 		_data->getData()->field_491 = 1500;
 		_data->getData()->field_493 = 0;
@@ -358,7 +367,7 @@ IMPLEMENT_FUNCTION(Mertens, chapter4, 47) {
 		break;
 
 	case SavePoints::kActionDefault: 
-		getEntities()->drawSequences(SavePoints::kMertens);
+		getEntities()->drawSequences(SavePoints::kEntityMertens);
 
 		_data->getData()->field_491 = 1500;
 		_data->getData()->field_493 = 0;
@@ -399,7 +408,7 @@ IMPLEMENT_FUNCTION(Mertens, chapter5, 50) {
 		break;
 
 	case SavePoints::kActionDefault: 
-		getEntities()->drawSequences(SavePoints::kMertens);
+		getEntities()->drawSequences(SavePoints::kEntityMertens);
 
 		_data->getData()->field_491 = 3969;
 		_data->getData()->field_493 = 1;

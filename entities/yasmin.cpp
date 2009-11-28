@@ -33,7 +33,7 @@
 
 namespace LastExpress {
 
-Yasmin::Yasmin(LastExpressEngine *engine) : Entity(engine, SavePoints::kYasmin) {
+Yasmin::Yasmin(LastExpressEngine *engine) : Entity(engine, SavePoints::kEntityYasmin) {
 	ADD_CALLBACK_FUNCTION(Yasmin, nullfunc);
 	ADD_CALLBACK_FUNCTION(Yasmin, nullfunc);
 	ADD_CALLBACK_FUNCTION(Yasmin, nullfunc);

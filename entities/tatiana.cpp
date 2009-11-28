@@ -34,7 +34,7 @@
 
 namespace LastExpress {
 
-Tatiana::Tatiana(LastExpressEngine *engine) : Entity(engine, SavePoints::kTatiana) {
+Tatiana::Tatiana(LastExpressEngine *engine) : Entity(engine, SavePoints::kEntityTatiana) {
 	ADD_CALLBACK_FUNCTION(Tatiana, nullfunc);
 	ADD_CALLBACK_FUNCTION(Tatiana, nullfunc);
 	ADD_CALLBACK_FUNCTION(Tatiana, nullfunc);
@@ -102,11 +102,11 @@ IMPLEMENT_FUNCTION(Tatiana, chapter1, 17) {
 		break;
 
 	case SavePoints::kActionDefault: 
-		getSavePoints()->addData(SavePoints::kTatiana, SavePoints::kAction191198209, 0);
+		getSavePoints()->addData(SavePoints::kEntityTatiana, SavePoints::kAction191198209, 0);
 
-		getObjects()->update(Objects::kObjectCompartmentB, SavePoints::kNone, 1, Cursor::kCursorHandKnock, 9);
-		getObjects()->update(Objects::kObject49, SavePoints::kNone, 1, Cursor::kCursorHandKnock, 9);
-		getObjects()->update(Objects::kObject41, SavePoints::kNone, 0, Cursor::kCursorKeepValue, 255);
+		getObjects()->update(Objects::kObjectCompartmentB, SavePoints::kEntityNone, 1, Cursor::kCursorHandKnock, 9);
+		getObjects()->update(Objects::kObject49, SavePoints::kEntityNone, 1, Cursor::kCursorHandKnock, 9);
+		getObjects()->update(Objects::kObject41, SavePoints::kEntityNone, 0, Cursor::kCursorKeepValue, 255);
 
 		_data->getData()->field_491 = 5419;
 		_data->getData()->field_493 = 1;

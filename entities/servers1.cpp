@@ -33,7 +33,7 @@
 
 namespace LastExpress {
 
-Servers1::Servers1(LastExpressEngine *engine) : Entity(engine, SavePoints::kServers1) {
+Servers1::Servers1(LastExpressEngine *engine) : Entity(engine, SavePoints::kEntityServers1) {
 	ADD_CALLBACK_FUNCTION(Servers1, nullfunc);
 	ADD_CALLBACK_FUNCTION(Servers1, nullfunc);
 	ADD_CALLBACK_FUNCTION(Servers1, nullfunc);
@@ -78,17 +78,17 @@ IMPLEMENT_FUNCTION(Servers1, chapter1, 8) {
 		break;
 
 	case SavePoints::kActionDefault: 
-		getSavePoints()->addData(SavePoints::kServers1, SavePoints::kAction302203328, 5);
-		getSavePoints()->addData(SavePoints::kServers1, SavePoints::kAction189688608, 6);
-		getSavePoints()->addData(SavePoints::kServers1, SavePoints::kAction236237423, 7);
-		getSavePoints()->addData(SavePoints::kServers1, SavePoints::kAction219377792, 8);
-		getSavePoints()->addData(SavePoints::kServers1, SavePoints::kAction291721418, 10);
-		getSavePoints()->addData(SavePoints::kServers1, SavePoints::kAction258136010, 11);
-		getSavePoints()->addData(SavePoints::kServers1, SavePoints::kAction302996448, 2);
-		getSavePoints()->addData(SavePoints::kServers1, SavePoints::kAction223002560, 0);
-		getSavePoints()->addData(SavePoints::kServers1, SavePoints::kAction256200848, 9);
-		getSavePoints()->addData(SavePoints::kServers1, SavePoints::kAction269485588, 3);
-		getSavePoints()->addData(SavePoints::kServers1, SavePoints::kAction326144276, 4);
+		getSavePoints()->addData(SavePoints::kEntityServers1, SavePoints::kAction302203328, 5);
+		getSavePoints()->addData(SavePoints::kEntityServers1, SavePoints::kAction189688608, 6);
+		getSavePoints()->addData(SavePoints::kEntityServers1, SavePoints::kAction236237423, 7);
+		getSavePoints()->addData(SavePoints::kEntityServers1, SavePoints::kAction219377792, 8);
+		getSavePoints()->addData(SavePoints::kEntityServers1, SavePoints::kAction291721418, 10);
+		getSavePoints()->addData(SavePoints::kEntityServers1, SavePoints::kAction258136010, 11);
+		getSavePoints()->addData(SavePoints::kEntityServers1, SavePoints::kAction302996448, 2);
+		getSavePoints()->addData(SavePoints::kEntityServers1, SavePoints::kAction223002560, 0);
+		getSavePoints()->addData(SavePoints::kEntityServers1, SavePoints::kAction256200848, 9);
+		getSavePoints()->addData(SavePoints::kEntityServers1, SavePoints::kAction269485588, 3);
+		getSavePoints()->addData(SavePoints::kEntityServers1, SavePoints::kAction326144276, 4);
 
 		_data->getData()->field_491 = 5900;
 		_data->getData()->field_493 = 0;

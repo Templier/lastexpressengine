@@ -34,7 +34,7 @@
 
 namespace LastExpress {
 
-Rebecca::Rebecca(LastExpressEngine *engine) : Entity(engine, SavePoints::kRebecca) {
+Rebecca::Rebecca(LastExpressEngine *engine) : Entity(engine, SavePoints::kEntityRebecca) {
 	ADD_CALLBACK_FUNCTION(Rebecca, nullfunc);
 	ADD_CALLBACK_FUNCTION(Rebecca, nullfunc);
 	ADD_CALLBACK_FUNCTION(Rebecca, nullfunc);
@@ -96,11 +96,11 @@ IMPLEMENT_FUNCTION(Rebecca, chapter1, 21) {
 		break;
 
 	case SavePoints::kActionDefault: 
-		getSavePoints()->addData(SavePoints::kRebecca, SavePoints::kAction224253538, 0);
+		getSavePoints()->addData(SavePoints::kEntityRebecca, SavePoints::kAction224253538, 0);
 
-		getObjects()->update(Objects::kObjectCompartmentE, SavePoints::kNone, 0, Cursor::kCursorHandKnock, 9);
-		getObjects()->update(Objects::kObject52, SavePoints::kNone, 0, Cursor::kCursorHandKnock, 9);
-		getObjects()->update(Objects::kObject44, SavePoints::kNone, 0, Cursor::kCursorKeepValue, 255);
+		getObjects()->update(Objects::kObjectCompartmentE, SavePoints::kEntityNone, 0, Cursor::kCursorHandKnock, 9);
+		getObjects()->update(Objects::kObject52, SavePoints::kEntityNone, 0, Cursor::kCursorHandKnock, 9);
+		getObjects()->update(Objects::kObject44, SavePoints::kEntityNone, 0, Cursor::kCursorKeepValue, 255);
 
 		getObjects()->updateField4(Objects::kObject110, 1);
 

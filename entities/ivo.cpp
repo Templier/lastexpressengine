@@ -33,7 +33,7 @@
 
 namespace LastExpress {
 
-Ivo::Ivo(LastExpressEngine *engine) : Entity(engine, SavePoints::kIvo) {
+Ivo::Ivo(LastExpressEngine *engine) : Entity(engine, SavePoints::kEntityIvo) {
 	ADD_CALLBACK_FUNCTION(Ivo, nullfunc);
 	ADD_CALLBACK_FUNCTION(Ivo, nullfunc);
 	ADD_CALLBACK_FUNCTION(Ivo, nullfunc);

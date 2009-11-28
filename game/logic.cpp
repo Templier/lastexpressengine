@@ -237,14 +237,14 @@ void Logic::drawScene(uint32 index) {
 	// Update entities
 	Scene *scene = (getState()->sceneUseBackup ? _engine->getScene(getState()->sceneBackup) : _scene);
 	
-	getEntityData(SavePoints::kNone)->field_491 = scene->getHeader()->count;
-	getEntityData(SavePoints::kNone)->field_495 = scene->getHeader()->field_13;
+	getEntityData(SavePoints::kEntityNone)->field_491 = scene->getHeader()->count;
+	getEntityData(SavePoints::kEntityNone)->field_495 = scene->getHeader()->field_13;
 
 	if (getState()->sceneUseBackup)
 		delete scene;
 
 	if (getFlags()->flag_1) {
-		getSavePoints()->pushAll(SavePoints::kNone, SavePoints::kAction17, 0);
+		getSavePoints()->pushAll(SavePoints::kEntityNone, SavePoints::kAction17, 0);
 		getSavePoints()->process();
 
 		if (_runState.flag_no_entity)
@@ -471,7 +471,7 @@ void Logic::preProcessScene(uint32 *index) {
 
 				if (State::getPowerOfTwo(getState()->field16[scene->getHeader()->param1]) != 30 
 				 && State::getPowerOfTwo(getState()->field16_2[scene->getHeader()->param1]) != 30 )
-					getSound()->playSound(SavePoints::kNone, "CAT1126A", -1, 0);				
+					getSound()->playSound(SavePoints::kEntityNone, "CAT1126A", -1, 0);				
 
 				*index = scene->getHotspot()->scene;
 			} else {
@@ -548,8 +548,8 @@ void Logic::postProcessScene(uint32 *index) {
 			delete hotspotScene;
 		}
 
-		int16 field491 = getEntityData(SavePoints::kNone)->field_491;
-		if (getEntityData(SavePoints::kNone)->field_495 == 9 && (field491 == 4 || field491 == 3)) {
+		int16 field491 = getEntityData(SavePoints::kEntityNone)->field_491;
+		if (getEntityData(SavePoints::kEntityNone)->field_495 == 9 && (field491 == 4 || field491 == 3)) {
 			SavePoints::EntityIndex entities[39];
 
 			int progress = 0;
@@ -580,7 +580,7 @@ void Logic::postProcessScene(uint32 *index) {
 		
 	case Scene::kTypeSavePointChapter:
 		if (getProgress().field_18 == 2)
-			getSavePoints()->push(SavePoints::kNone, SavePoints::kChapters, SavePoints::kAction190346110, 0);
+			getSavePoints()->push(SavePoints::kEntityNone, SavePoints::kEntityChapters, SavePoints::kAction190346110, 0);
 		break;
 
 	case Scene::kTypeLoadBeetleSequences:

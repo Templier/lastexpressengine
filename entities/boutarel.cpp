@@ -34,7 +34,7 @@
 
 namespace LastExpress {
 
-Boutarel::Boutarel(LastExpressEngine *engine) : Entity(engine, SavePoints::kBoutarel) {
+Boutarel::Boutarel(LastExpressEngine *engine) : Entity(engine, SavePoints::kEntityBoutarel) {
 	ADD_CALLBACK_FUNCTION(Boutarel, nullfunc);
 	ADD_CALLBACK_FUNCTION(Boutarel, nullfunc);
 	ADD_CALLBACK_FUNCTION(Boutarel, nullfunc);
@@ -86,12 +86,12 @@ IMPLEMENT_FUNCTION(Boutarel, chapter1, 19) {
 		break;
 
 	case SavePoints::kActionDefault: 
-		getSavePoints()->addData(SavePoints::kBoutarel, SavePoints::kAction203520448, 0);
-		getSavePoints()->addData(SavePoints::kBoutarel, SavePoints::kAction237889408, 1);
+		getSavePoints()->addData(SavePoints::kEntityBoutarel, SavePoints::kAction203520448, 0);
+		getSavePoints()->addData(SavePoints::kEntityBoutarel, SavePoints::kAction237889408, 1);
 
-		getObjects()->update(Objects::kObjectCompartmentC, SavePoints::kNone, 0, Cursor::kCursorHandKnock, 9);
-		getObjects()->update(Objects::kObject50, SavePoints::kNone, 0, Cursor::kCursorHandKnock, 9);
-		getObjects()->update(Objects::kObject42, SavePoints::kNone, 0, Cursor::kCursorKeepValue, 255);
+		getObjects()->update(Objects::kObjectCompartmentC, SavePoints::kEntityNone, 0, Cursor::kCursorHandKnock, 9);
+		getObjects()->update(Objects::kObject50, SavePoints::kEntityNone, 0, Cursor::kCursorHandKnock, 9);
+		getObjects()->update(Objects::kObject42, SavePoints::kEntityNone, 0, Cursor::kCursorKeepValue, 255);
 
 		_data->getData()->field_491 = 1750;
 		_data->getData()->field_493 = 1;

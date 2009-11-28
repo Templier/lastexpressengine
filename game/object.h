@@ -179,7 +179,7 @@ public:
 		byte field_4;
 
 		Object() {
-			entity = SavePoints::kNone;
+			entity = SavePoints::kEntityNone;
 			location = 0;
 			cursor = Cursor::kCursorHandKnock;
 			field_3 = 9;

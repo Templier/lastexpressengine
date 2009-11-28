@@ -33,7 +33,7 @@
 
 namespace LastExpress {
 
-Alouan::Alouan(LastExpressEngine *engine) : Entity(engine, SavePoints::kAlouan) {
+Alouan::Alouan(LastExpressEngine *engine) : Entity(engine, SavePoints::kEntityAlouan) {
 	ADD_CALLBACK_FUNCTION(Alouan, nullfunc);
 	ADD_CALLBACK_FUNCTION(Alouan, nullfunc);
 	ADD_CALLBACK_FUNCTION(Alouan, nullfunc);

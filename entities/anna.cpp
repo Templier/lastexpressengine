@@ -34,7 +34,7 @@
 
 namespace LastExpress {
 
-Anna::Anna(LastExpressEngine *engine) : Entity(engine, SavePoints::kAnna) {
+Anna::Anna(LastExpressEngine *engine) : Entity(engine, SavePoints::kEntityAnna) {
 	ADD_CALLBACK_FUNCTION(Anna, nullfunc);
 	ADD_CALLBACK_FUNCTION(Anna, nullfunc);
 	ADD_CALLBACK_FUNCTION(Anna, nullfunc);
@@ -128,12 +128,12 @@ IMPLEMENT_FUNCTION(Anna, chapter1, 16) {
 		break;
 
 	case SavePoints::kActionDefault: 
-		getSavePoints()->addData(SavePoints::kAnna, SavePoints::kAction291662081, 0);
-		getSavePoints()->addData(SavePoints::kAnna, SavePoints::kAction238936000, 1);
+		getSavePoints()->addData(SavePoints::kEntityAnna, SavePoints::kAction291662081, 0);
+		getSavePoints()->addData(SavePoints::kEntityAnna, SavePoints::kAction238936000, 1);
 
-		getObjects()->update(Objects::kObjectCompartmentF, SavePoints::kNone, 1, Cursor::kCursorHandKnock, 9);
-		getObjects()->update(Objects::kObject53, SavePoints::kNone, 1, Cursor::kCursorHandKnock, 9);
-		getObjects()->update(Objects::kObject45, SavePoints::kNone, 1, Cursor::kCursorKeepValue, 255);
+		getObjects()->update(Objects::kObjectCompartmentF, SavePoints::kEntityNone, 1, Cursor::kCursorHandKnock, 9);
+		getObjects()->update(Objects::kObject53, SavePoints::kEntityNone, 1, Cursor::kCursorHandKnock, 9);
+		getObjects()->update(Objects::kObject45, SavePoints::kEntityNone, 1, Cursor::kCursorKeepValue, 255);
 
 		_data->getData()->field_491 = 8200;
 		_data->getData()->field_493 = 1;

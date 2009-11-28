@@ -33,7 +33,7 @@
 
 namespace LastExpress {
 
-Sophie::Sophie(LastExpressEngine *engine) : Entity(engine, SavePoints::kSophie) {
+Sophie::Sophie(LastExpressEngine *engine) : Entity(engine, SavePoints::kEntitySophie) {
 	ADD_CALLBACK_FUNCTION(Sophie, nullfunc);
 	ADD_CALLBACK_FUNCTION(Sophie, nullfunc);
 	ADD_CALLBACK_FUNCTION(Sophie, nullfunc);

@@ -33,7 +33,7 @@
 
 namespace LastExpress {
 
-Kronos::Kronos(LastExpressEngine *engine) : Entity(engine, SavePoints::kKronos) {
+Kronos::Kronos(LastExpressEngine *engine) : Entity(engine, SavePoints::kEntityKronos) {
 	ADD_CALLBACK_FUNCTION(Kronos, nullfunc);
 	ADD_CALLBACK_FUNCTION(Kronos, nullfunc);
 	ADD_CALLBACK_FUNCTION(Kronos, nullfunc);
