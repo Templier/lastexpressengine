@@ -432,4 +432,14 @@ bool Entities::checkFields8(SavePoints::EntityIndex entity) {
 	return getData(entity)->getData()->field_49A == 1 || getData(entity)->getData()->field_49A == 2;
 }
 
+bool Entities::checkFields9(SavePoints::EntityIndex entity1, SavePoints::EntityIndex entity2, int value) {
+	return getData(entity1)->getData()->field_495 == getData(entity2)->getData()->field_495
+		&& abs(getData(entity1)->getData()->field_491 - getData(entity2)->getData()->field_491) <= value
+		&& (getData(entity1)->getData()->field_493 !=2 || getData(entity2)->getData()->field_493 != 2);
+}
+
+bool Entities::checkFields10(SavePoints::EntityIndex entity) {
+	return getData(entity)->getData()->field_493 < 3;
+}
+
 } // End of namespace LastExpress

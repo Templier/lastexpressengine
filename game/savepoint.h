@@ -101,14 +101,14 @@ public:
 
 	enum ActionIndex {
 		kActionNone = 0,
+		kAction3 = 3,
 		kAction8 = 8,
 		kAction9 = 9,
 		kActionDefault = 12,
 		kAction17 = 17,
 		kAction18 = 18,
 
-		
-		
+		// Entity-specific actions
 		kAction101824388 = 101824388,	// Pascale
 		kAction124190740 = 124190740,	// Vesna
 		kAction136059947 = 136059947,	// Pascale

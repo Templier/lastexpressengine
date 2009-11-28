@@ -147,7 +147,7 @@ void Logic::gameOver(int a1, int a2, int scene, bool showScene) {
 }
 
 // Save game
-void Logic::savegame(int param1, int param2, int param3) {
+void Logic::savegame(int param1, int param2, SavePoints::EntityIndex entity, int param4) {
 	warning("Logic::savegame: not implemented!");
 }
 

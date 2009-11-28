@@ -83,7 +83,8 @@ public:
 	bool checkFields6(SavePoints::EntityIndex entity);
 	bool checkFields7(int field495);
 	bool checkFields8(SavePoints::EntityIndex entity);
-
+	bool checkFields9(SavePoints::EntityIndex entity1, SavePoints::EntityIndex entity2, int value);
+	bool checkFields10(SavePoints::EntityIndex entity);
 
 private:
 	LastExpressEngine	    *_engine;

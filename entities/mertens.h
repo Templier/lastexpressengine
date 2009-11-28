@@ -38,6 +38,7 @@ public:
 
 	// Setup
 	DECLARE_FUNCTION(function6)
+	DECLARE_FUNCTION(savegame)
 	DECLARE_FUNCTION(function10)
 	DECLARE_FUNCTION(function11)
 	DECLARE_FUNCTION(function17)

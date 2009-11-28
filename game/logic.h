@@ -30,6 +30,7 @@
 
 #include "lastexpress/game/inventory.h"
 #include "lastexpress/game/object.h"
+#include "lastexpress/game/savepoint.h"
 
 #include "lastexpress/savegame.h"
 
@@ -43,7 +44,6 @@ class Action;
 class Beetle;
 class Entities;
 class Menu;
-class SavePoints;
 class Scene;
 class Sound;
 
@@ -59,7 +59,7 @@ public:
 	void startGame();
 	void switchGame();
 
-	void savegame(int param1, int param2, int param3);
+	void savegame(int param1, int param2, SavePoints::EntityIndex entity, int param4);
 	void gameOver(int a1, int a2, int scene, bool showScene);
 
 	// Scene

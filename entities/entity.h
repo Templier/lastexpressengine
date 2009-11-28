@@ -291,7 +291,7 @@ public:
 
 	EntityData() {}
 
-	EntityCallData 		  	   *getData() { return &_data; }
+	EntityCallData 	  *getData() { return &_data; }
 
 	EntityParameters  *getParameters(int callback, int index) { return _parameters[callback].parameters[index]; }	
 	EntityParameters  *getCurrentParameters(int index) { return getParameters(_data.current_call, index); }
@@ -302,10 +302,11 @@ public:
 	int				   getCurrentCallback() { return getCallback(_data.current_call); }
 	void 			   setCallback(int callback, int index) { _data.callbacks[callback] = index; }
 	void 			   setCurrentCallback(int index) { setCallback(_data.current_call, index); }
+	int			   	   getNextCallback() { return getCallback(getCurrentCallback() + 8); }
 	void			   setNextCallback(int index) { setCallback(getCurrentCallback() + 8, index); }
 
 	// Serializable
-	void saveLoadWithSerializer(Common::Serializer &ser);
+	void 			   saveLoadWithSerializer(Common::Serializer &ser);
 
 private:
 	

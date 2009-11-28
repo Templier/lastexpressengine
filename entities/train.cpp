@@ -252,7 +252,7 @@ label_skip:
 
 
 	case SavePoints::kAction18: {
-		int action = _data->getCallback(_data->getCurrentCallback() + 8);
+		int action = _data->getNextCallback();
 		switch(action) {
 		default:
 			break;

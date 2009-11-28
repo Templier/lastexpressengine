@@ -27,6 +27,7 @@
 
 #include "lastexpress/game/entities.h"
 
+#include "lastexpress/game/action.h"
 #include "lastexpress/game/logic.h"
 #include "lastexpress/game/savepoint.h"
 #include "lastexpress/game/sound.h"
@@ -46,7 +47,7 @@ Mertens::Mertens(LastExpressEngine *engine) : Entity(engine, SavePoints::kEntity
 	ADD_CALLBACK_FUNCTION(Mertens, function6);
 	ADD_CALLBACK_FUNCTION(Mertens, nullfunc);
 	ADD_CALLBACK_FUNCTION(Mertens, nullfunc);
-	ADD_CALLBACK_FUNCTION(Mertens, nullfunc);
+	ADD_CALLBACK_FUNCTION(Mertens, savegame);
 	ADD_CALLBACK_FUNCTION(Mertens, function10);	// 10
 	ADD_CALLBACK_FUNCTION(Mertens, function11);
 	ADD_CALLBACK_FUNCTION(Mertens, nullfunc);
@@ -94,25 +95,98 @@ Mertens::Mertens(LastExpressEngine *engine) : Entity(engine, SavePoints::kEntity
 	ADD_NULL_FUNCTION();
 }
 
+#define CALL_PREVIOUS_SAVEPOINT() \
+	_data->getData()->current_call--; \
+	getSavePoints()->setCallback(SavePoints::kEntityMertens, _callbacks[_data->getCurrentCallback()]); \
+	getSavePoints()->call(SavePoints::kEntityMertens, SavePoints::kEntityMertens, SavePoints::kAction18, 0)
+
 IMPLEMENT_FUNCTION(Mertens, function6, 6) {
 	switch (savepoint->action) {
 	default:
 		break;	
 
 	case SavePoints::kActionNone:
+		if (_data->getData()->field_49A != 4) {
+			CALL_PREVIOUS_SAVEPOINT();
+			break;
+		}
+		
+		if (getProgress().jacket == State::kOriginalJacket
+		 && getEntities()->checkFields9(SavePoints::kEntityMertens, SavePoints::kEntityNone, 1000)
+		 && !getEntities()->checkFields3(SavePoints::kEntityNone)
+		 && !getEntities()->checkFields10(SavePoints::kEntityNone)) {
+			 _data->setNextCallback(1);
+			 call(new ENTITY_SETUP_DEFAULT(Mertens, setup_savegame), 2, 123);
+		}
 		break;
 
-	case SavePoints::kActionDefault: 		
+	case SavePoints::kAction3:
+		CALL_PREVIOUS_SAVEPOINT();
+		break;
+
+	case SavePoints::kAction18: 	
+		if (_data->getNextCallback() == 1) {
+			getAction()->playAnimation(Action::kMertensBloodJacket);
+			getLogic()->gameOver(0, 1, 55, true);
+		}
+		break;
+	}
+}
+
+IMPLEMENT_FUNCTION_INT2(Mertens, savegame, 9) {
+	switch (savepoint->action) {
+	default:
+		break;	
+
+	case SavePoints::kActionNone:
+		CALL_PREVIOUS_SAVEPOINT();
+		break;
+
+	case SavePoints::kActionDefault: 
+		save(SavePoints::kEntityMertens, _data->getCurrentParameters(0)->param1, _data->getCurrentParameters(0)->param2);
+		CALL_PREVIOUS_SAVEPOINT();
 		break;
 	}
 }
 
 IMPLEMENT_FUNCTION_INT2(Mertens, function10, 10) {
-
+	error("Mertens: callback function not implemented!");
 }
 
 IMPLEMENT_FUNCTION_INT(Mertens, function11, 11) {
+	switch (savepoint->action) {
+	default:
+		break;	
 
+	case SavePoints::kActionNone:
+		if (getProgress().jacket == State::kOriginalJacket
+			&& getEntities()->checkFields9(SavePoints::kEntityMertens, SavePoints::kEntityNone, 1000)
+			&& !getEntities()->checkFields3(SavePoints::kEntityNone)
+			&& !getEntities()->checkFields10(SavePoints::kEntityNone)) {
+				_data->setNextCallback(1);
+				call(new ENTITY_SETUP_DEFAULT(Mertens, setup_savegame), 2, 123);
+				break;
+		}
+
+		if (_data->getCurrentParameters(0)->param2) {
+			if (_data->getCurrentParameters(0)->param2  > getState()->time)
+				break;
+
+			_data->getCurrentParameters(0)->param2 = 2147483647;
+		} else {
+			_data->getCurrentParameters(0)->param2 = _data->getCurrentParameters(0)->param1 + getState()->time;
+		}
+
+		CALL_PREVIOUS_SAVEPOINT();
+		break;
+
+	case SavePoints::kAction18: 
+		if (_data->getNextCallback() == 1) {
+			getAction()->playAnimation(Action::kMertensBloodJacket);
+			getLogic()->gameOver(0, 1, 55, true);
+		}		
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Mertens, function17, 17) {
@@ -136,9 +210,7 @@ IMPLEMENT_FUNCTION(Mertens, function17, 17) {
 				getLogic()->loadSceneFromItem(Inventory::kItem7);
 
 				_data->getParameters(8, 2)->param1 = 1;
-				_data->getData()->current_call--;
-				getSavePoints()->setCallback(SavePoints::kEntityMertens, _callbacks[_data->getCurrentCallback()]);
-				getSavePoints()->call(SavePoints::kEntityMertens, SavePoints::kEntityMertens, SavePoints::kAction18, 0);
+				CALL_PREVIOUS_SAVEPOINT();
 
 			} else {	// Mertens sits on his chair at the back of the train
 				if (getInventory()->hasItem(Inventory::kPassengerList) || _data->getParameters(8, 0)->param2)
@@ -164,7 +236,7 @@ IMPLEMENT_FUNCTION(Mertens, function17, 17) {
 		break;
 
 	case SavePoints::kAction18:
-		switch (_data->getCallback(_data->getCurrentCallback() + 8)) {
+		switch (_data->getNextCallback()) {
 		default:
 			break;
 
@@ -176,9 +248,7 @@ IMPLEMENT_FUNCTION(Mertens, function17, 17) {
 			break;
 
 		case 2:
-			_data->getData()->current_call--;
-			getSavePoints()->setCallback(SavePoints::kEntityMertens, _callbacks[_data->getCurrentCallback()]);
-			getSavePoints()->call(SavePoints::kEntityMertens, SavePoints::kEntityMertens, SavePoints::kAction18, 0);
+			CALL_PREVIOUS_SAVEPOINT();
 			break;
 
 		case 3:
@@ -196,17 +266,11 @@ IMPLEMENT_FUNCTION(Mertens, function17, 17) {
 
 			getSavePoints()->push(SavePoints::kEntityMertens, SavePoints::kEntityMertens, SavePoints::kAction17, 0);
 
-			_data->getData()->current_call--;
-			getSavePoints()->setCallback(SavePoints::kEntityMertens, _callbacks[_data->getCurrentCallback()]);
-			getSavePoints()->call(SavePoints::kEntityMertens, SavePoints::kEntityMertens, SavePoints::kAction18, 0);
+			CALL_PREVIOUS_SAVEPOINT();
 			break;
 		}
 		break;
 	}
-}
-
-void Mertens::nullfunc(SavePoints::SavePoint *savepoint) {
-	error("Mertens: callback function not implemented!");
 }
 
 IMPLEMENT_FUNCTION(Mertens, chapter1, 34) {
@@ -256,7 +320,7 @@ IMPLEMENT_FUNCTION(Mertens, function41, 41) {
 		break;
 
 	case SavePoints::kAction18:
-		switch (_data->getCallback(_data->getCurrentCallback() + 8)) {
+		switch (_data->getNextCallback()) {
 		default:
 			break;
 
@@ -273,6 +337,7 @@ IMPLEMENT_FUNCTION(Mertens, function41, 41) {
 }
 
 IMPLEMENT_FUNCTION(Mertens, function42, 42) {
+	error("Mertens: callback function not implemented!");
 
 }
 
@@ -307,13 +372,14 @@ IMPLEMENT_FUNCTION(Mertens, chapter2, 43) {
 		break;
 
 	case SavePoints::kAction18: 
-		if (_data->getCallback(_data->getCurrentCallback() + 8) == 1)
+		if (_data->getNextCallback() == 1)
 			setup_function44();
 		break;
 	}
 }
 
 IMPLEMENT_FUNCTION(Mertens, function44, 44) {
+	error("Mertens: callback function not implemented!");
 }
 
 IMPLEMENT_FUNCTION(Mertens, chapter3, 45) {
@@ -347,13 +413,14 @@ IMPLEMENT_FUNCTION(Mertens, chapter3, 45) {
 		break;
 
 	case SavePoints::kAction18: 
-		if (_data->getCallback(_data->getCurrentCallback() + 8) == 1)
+		if (_data->getNextCallback() == 1)
 			setup_function46();
 		break;
 	}
 }
 
 IMPLEMENT_FUNCTION(Mertens, function46, 46) {
+	error("Mertens: callback function not implemented!");
 }
 
 IMPLEMENT_FUNCTION(Mertens, chapter4, 47) {
@@ -389,13 +456,14 @@ IMPLEMENT_FUNCTION(Mertens, chapter4, 47) {
 		break;
 
 	case SavePoints::kAction18: 
-		if (_data->getCallback(_data->getCurrentCallback() + 8) == 1)
+		if (_data->getNextCallback() == 1)
 			setup_function48();
 		break;
 	}
 }
 
 IMPLEMENT_FUNCTION(Mertens, function48, 48) {
+	error("Mertens: callback function not implemented!");
 }
 
 IMPLEMENT_FUNCTION(Mertens, chapter5, 50) {
@@ -424,9 +492,13 @@ IMPLEMENT_FUNCTION(Mertens, function51, 51) {
 }
 
 IMPLEMENT_FUNCTION(Mertens, function52, 52) {
-	
+	error("Mertens: callback function not implemented!");
 }
 
 IMPLEMENT_NULL_FUNCTION(Mertens, 59)
+
+void Mertens::nullfunc(SavePoints::SavePoint *savepoint) {
+	error("Mertens: callback function not implemented!");
+}
 
 } // End of namespace LastExpress
