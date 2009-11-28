@@ -77,7 +77,7 @@ IMPLEMENT_FUNCTION(Vesna, chapter1, 12) {
 		break;
 
 	case SavePoints::kActionDefault: 
-		getSavePoints()->addData(SavePoints::kVesna, 124190740, 0);
+		getSavePoints()->addData(SavePoints::kVesna, SavePoints::kAction124190740, 0);
 
 		_data->getData()->field_491 = 4689;
 		_data->getData()->field_493 = 1;

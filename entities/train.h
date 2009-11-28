@@ -48,7 +48,7 @@ public:
 
 private:	
 	DECLARE_CALL_FUNCTION(default, Train, int, int, int, int)
-	DECLARE_CALL_FUNCTION(char, Train, int, int, int, char*)
+	DECLARE_CALL_FUNCTION(seq, Train, int, int, int, char*)
 
 	// Helper methods
 	void resetParam8();	

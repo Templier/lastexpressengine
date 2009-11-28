@@ -128,8 +128,8 @@ IMPLEMENT_FUNCTION(Anna, chapter1, 16) {
 		break;
 
 	case SavePoints::kActionDefault: 
-		getSavePoints()->addData(SavePoints::kAnna, 291662081, 0);
-		getSavePoints()->addData(SavePoints::kAnna, 238936000, 1);
+		getSavePoints()->addData(SavePoints::kAnna, SavePoints::kAction291662081, 0);
+		getSavePoints()->addData(SavePoints::kAnna, SavePoints::kAction238936000, 1);
 
 		getObjects()->update(Objects::kObjectCompartmentF, SavePoints::kNone, 1, Cursor::kCursorHandKnock, 9);
 		getObjects()->update(Objects::kObject53, SavePoints::kNone, 1, Cursor::kCursorHandKnock, 9);

@@ -80,17 +80,17 @@ IMPLEMENT_FUNCTION(Pascale, chapter1, 12) {
 		break;
 
 	case SavePoints::kActionDefault: 
-		getSavePoints()->addData(SavePoints::kPascale, 239072064, 0);
-		getSavePoints()->addData(SavePoints::kPascale, 257489762, 2);
-		getSavePoints()->addData(SavePoints::kPascale, 207769280, 6);
-		getSavePoints()->addData(SavePoints::kPascale, 101824388, 7);
-		getSavePoints()->addData(SavePoints::kPascale, 136059947, 8);
-		getSavePoints()->addData(SavePoints::kPascale, 223262556, 1);
-		getSavePoints()->addData(SavePoints::kPascale, 269479296, 3);
-		getSavePoints()->addData(SavePoints::kPascale, 352703104, 4);
-		getSavePoints()->addData(SavePoints::kPascale, 352768896, 5);
-		getSavePoints()->addData(SavePoints::kPascale, 191604416, 10);
-		getSavePoints()->addData(SavePoints::kPascale, 190605184, 11);
+		getSavePoints()->addData(SavePoints::kPascale, SavePoints::kAction239072064, 0);
+		getSavePoints()->addData(SavePoints::kPascale, SavePoints::kAction257489762, 2);
+		getSavePoints()->addData(SavePoints::kPascale, SavePoints::kAction207769280, 6);
+		getSavePoints()->addData(SavePoints::kPascale, SavePoints::kAction101824388, 7);
+		getSavePoints()->addData(SavePoints::kPascale, SavePoints::kAction136059947, 8);
+		getSavePoints()->addData(SavePoints::kPascale, SavePoints::kAction223262556, 1);
+		getSavePoints()->addData(SavePoints::kPascale, SavePoints::kAction269479296, 3);
+		getSavePoints()->addData(SavePoints::kPascale, SavePoints::kAction352703104, 4);
+		getSavePoints()->addData(SavePoints::kPascale, SavePoints::kAction352768896, 5);
+		getSavePoints()->addData(SavePoints::kPascale, SavePoints::kAction191604416, 10);
+		getSavePoints()->addData(SavePoints::kPascale, SavePoints::kAction190605184, 11);
 
 		_data->getData()->field_491 = 5900;
 		_data->getData()->field_493 = 0;

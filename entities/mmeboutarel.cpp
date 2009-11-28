@@ -76,7 +76,7 @@ IMPLEMENT_FUNCTION(MmeBoutarel, chapter1, 10) {
 		break;
 
 	case SavePoints::kActionDefault: 
-		getSavePoints()->addData(SavePoints::kMmeBoutarel, 242526416, 0);
+		getSavePoints()->addData(SavePoints::kMmeBoutarel, SavePoints::kAction242526416, 0);
 		
 		getObjects()->update(Objects::kObjectCompartmentD, SavePoints::kNone, 2, Cursor::kCursorNormal, 0);
 		getObjects()->update(Objects::kObject51, SavePoints::kNone, 0, Cursor::kCursorHandKnock, 9);

@@ -25,7 +25,11 @@
 
 #include "lastexpress/entities/mertens.h"
 
+#include "lastexpress/game/entities.h"
+
+#include "lastexpress/game/logic.h"
 #include "lastexpress/game/savepoint.h"
+#include "lastexpress/game/sound.h"
 #include "lastexpress/game/state.h"
 
 #include "lastexpress/lastexpress.h"
@@ -38,54 +42,158 @@ Mertens::Mertens(LastExpressEngine *engine) : Entity(engine, SavePoints::kMerten
 	ADD_CALLBACK_FUNCTION(Mertens, nullfunc);
 	ADD_CALLBACK_FUNCTION(Mertens, nullfunc);
 	ADD_CALLBACK_FUNCTION(Mertens, nullfunc);
+	ADD_CALLBACK_FUNCTION(Mertens, nullfunc);	// 5
+	ADD_CALLBACK_FUNCTION(Mertens, function6);
+	ADD_CALLBACK_FUNCTION(Mertens, nullfunc);
+	ADD_CALLBACK_FUNCTION(Mertens, nullfunc);
+	ADD_CALLBACK_FUNCTION(Mertens, nullfunc);
+	ADD_CALLBACK_FUNCTION(Mertens, function10);	// 10
+	ADD_CALLBACK_FUNCTION(Mertens, function11);
+	ADD_CALLBACK_FUNCTION(Mertens, nullfunc);
+	ADD_CALLBACK_FUNCTION(Mertens, nullfunc);
+	ADD_CALLBACK_FUNCTION(Mertens, nullfunc);
+	ADD_CALLBACK_FUNCTION(Mertens, nullfunc);	// 15
+	ADD_CALLBACK_FUNCTION(Mertens, nullfunc);
+	ADD_CALLBACK_FUNCTION(Mertens, function17);
+	ADD_CALLBACK_FUNCTION(Mertens, nullfunc);
+	ADD_CALLBACK_FUNCTION(Mertens, nullfunc);
+	ADD_CALLBACK_FUNCTION(Mertens, nullfunc);	// 20
 	ADD_CALLBACK_FUNCTION(Mertens, nullfunc);
 	ADD_CALLBACK_FUNCTION(Mertens, nullfunc);
 	ADD_CALLBACK_FUNCTION(Mertens, nullfunc);
 	ADD_CALLBACK_FUNCTION(Mertens, nullfunc);
+	ADD_CALLBACK_FUNCTION(Mertens, nullfunc);	// 25
 	ADD_CALLBACK_FUNCTION(Mertens, nullfunc);
 	ADD_CALLBACK_FUNCTION(Mertens, nullfunc);
 	ADD_CALLBACK_FUNCTION(Mertens, nullfunc);
 	ADD_CALLBACK_FUNCTION(Mertens, nullfunc);
+	ADD_CALLBACK_FUNCTION(Mertens, nullfunc);	// 30
+	ADD_CALLBACK_FUNCTION(Mertens, nullfunc);
+	ADD_CALLBACK_FUNCTION(Mertens, nullfunc);
+	ADD_CALLBACK_FUNCTION(Mertens, nullfunc);
+	ADD_CALLBACK_FUNCTION(Mertens, chapter1);	
+	ADD_CALLBACK_FUNCTION(Mertens, nullfunc);	// 35
 	ADD_CALLBACK_FUNCTION(Mertens, nullfunc);
 	ADD_CALLBACK_FUNCTION(Mertens, nullfunc);
 	ADD_CALLBACK_FUNCTION(Mertens, nullfunc);
 	ADD_CALLBACK_FUNCTION(Mertens, nullfunc);
-	ADD_CALLBACK_FUNCTION(Mertens, nullfunc);
-	ADD_CALLBACK_FUNCTION(Mertens, nullfunc);
-	ADD_CALLBACK_FUNCTION(Mertens, nullfunc);
-	ADD_CALLBACK_FUNCTION(Mertens, nullfunc);
-	ADD_CALLBACK_FUNCTION(Mertens, nullfunc);
-	ADD_CALLBACK_FUNCTION(Mertens, nullfunc);
-	ADD_CALLBACK_FUNCTION(Mertens, nullfunc);
-	ADD_CALLBACK_FUNCTION(Mertens, nullfunc);
-	ADD_CALLBACK_FUNCTION(Mertens, nullfunc);
-	ADD_CALLBACK_FUNCTION(Mertens, nullfunc);
-	ADD_CALLBACK_FUNCTION(Mertens, nullfunc);
-	ADD_CALLBACK_FUNCTION(Mertens, nullfunc);
-	ADD_CALLBACK_FUNCTION(Mertens, nullfunc);
-	ADD_CALLBACK_FUNCTION(Mertens, nullfunc);
-	ADD_CALLBACK_FUNCTION(Mertens, nullfunc);
-	ADD_CALLBACK_FUNCTION(Mertens, chapter1);
-	ADD_CALLBACK_FUNCTION(Mertens, nullfunc);
-	ADD_CALLBACK_FUNCTION(Mertens, nullfunc);
-	ADD_CALLBACK_FUNCTION(Mertens, nullfunc);
-	ADD_CALLBACK_FUNCTION(Mertens, nullfunc);
-	ADD_CALLBACK_FUNCTION(Mertens, nullfunc);
-	ADD_CALLBACK_FUNCTION(Mertens, nullfunc);
-	ADD_CALLBACK_FUNCTION(Mertens, nullfunc);
-	ADD_CALLBACK_FUNCTION(Mertens, nullfunc);
+	ADD_CALLBACK_FUNCTION(Mertens, nullfunc);	// 40
+	ADD_CALLBACK_FUNCTION(Mertens, function41);
+	ADD_CALLBACK_FUNCTION(Mertens, function42);
 	ADD_CALLBACK_FUNCTION(Mertens, chapter2);
-	ADD_CALLBACK_FUNCTION(Mertens, nullfunc);
-	ADD_CALLBACK_FUNCTION(Mertens, chapter3);
-	ADD_CALLBACK_FUNCTION(Mertens, nullfunc);
+	ADD_CALLBACK_FUNCTION(Mertens, function44);
+	ADD_CALLBACK_FUNCTION(Mertens, chapter3);	// 45
+	ADD_CALLBACK_FUNCTION(Mertens, function46);
 	ADD_CALLBACK_FUNCTION(Mertens, chapter4);
+	ADD_CALLBACK_FUNCTION(Mertens, function48);
 	ADD_CALLBACK_FUNCTION(Mertens, nullfunc);
-	ADD_CALLBACK_FUNCTION(Mertens, nullfunc);
-	ADD_CALLBACK_FUNCTION(Mertens, chapter5);
-	ADD_CALLBACK_FUNCTION(Mertens, nullfunc);
-	ADD_CALLBACK_FUNCTION(Mertens, nullfunc);
+	ADD_CALLBACK_FUNCTION(Mertens, chapter5);	// 50
+	ADD_CALLBACK_FUNCTION(Mertens, function51);
+	ADD_CALLBACK_FUNCTION(Mertens, function52);
 	ADD_CALLBACK_FUNCTION(Mertens, nullfunc);
 	ADD_NULL_FUNCTION();
+}
+
+IMPLEMENT_FUNCTION(Mertens, function6, 6) {
+
+}
+
+IMPLEMENT_FUNCTION_INT2(Mertens, function10, 10) {
+
+}
+
+IMPLEMENT_FUNCTION_INT(Mertens, function11, 11) {
+
+}
+
+IMPLEMENT_FUNCTION(Mertens, function17, 17) {
+	switch (savepoint->action) {
+	default:
+		break;	
+
+	case SavePoints::kActionDefault: 
+		if (_data->getParameters(8, 0)->param6 || _data->getParameters(8, 1)->hasNonNullParameter()) {
+
+			getInventory()->setLocationAndProcess(Inventory::kItem7, 1);
+			
+			_data->setNextCallback(1);
+			call(new ENTITY_SETUP_DEFAULT(Mertens, setup_function10), 3, 540);
+
+		} else {
+			
+			if (_data->getParameters(8, 0)->param8) {
+				
+				getEntities()->drawSequence(SavePoints::kMertens, "601K");
+				getLogic()->loadSceneFromItem(Inventory::kItem7);
+
+				_data->getParameters(8, 2)->param1 = 1;
+				_data->getData()->current_call--;
+				getSavePoints()->setCallback(SavePoints::kMertens, _callbacks[_data->getCurrentCallback()]);
+				getSavePoints()->call(SavePoints::kMertens, SavePoints::kMertens, SavePoints::kAction18, 0);
+
+			} else {	// Mertens sits on his chair at the back of the train
+				if (getInventory()->hasItem(Inventory::kPassengerList) || _data->getParameters(8, 0)->param2)
+					getEntities()->storeSequenceName(SavePoints::kMertens, "601A");
+				else {	// Got the passenger list, Mertens is looking for it before sitting
+					_data->getParameters(8, 0)->param2 = 1;
+					getSound()->playSound(SavePoints::kMertens, "CON1058", -1, 75);
+					getEntities()->storeSequenceName(SavePoints::kMertens, "601D");
+				}
+
+				getLogic()->loadSceneFromItem(Inventory::kItem7);
+
+				if (getEntities()->checkFields4(3, 68)) {
+					getSound()->playSound(SavePoints::kNone, "CON1110", -1, 0);
+					getLogic()->loadSceneFromData(3, 25, 255);
+				}
+
+				_data->setNextCallback(3);
+				call(new ENTITY_SETUP_DEFAULT(Mertens, setup_function6));
+			}
+
+		}
+		break;
+
+	case SavePoints::kAction18:
+		switch (_data->getCallback(_data->getCurrentCallback() + 8)) {
+		default:
+			break;
+
+		case 1:
+			getEntities()->drawSequences(SavePoints::kMertens);
+			_data->getParameters(8, 2)->param1 = 1;
+			_data->setNextCallback(2);
+			call(new ENTITY_SETUP_DEFAULT(Mertens, setup_function11), 75);
+			break;
+
+		case 2:
+			_data->getData()->current_call--;
+			getSavePoints()->setCallback(SavePoints::kMertens, _callbacks[_data->getCurrentCallback()]);
+			getSavePoints()->call(SavePoints::kMertens, SavePoints::kMertens, SavePoints::kAction18, 0);
+			break;
+
+		case 3:
+			if (!_data->getParameters(8, 0)->param3
+			 && !getInventory()->hasItem(Inventory::kPassengerList)
+			 && _data->getParameters(8, 0)->param2) {
+				 getSavePoints()->push(SavePoints::kMertens, SavePoints::kVerges, SavePoints::kAction158617345, 0);
+				 _data->getParameters(8, 0)->param3 = 1;
+			}
+
+			getEntities()->drawSequence(SavePoints::kMertens, "601B");
+
+			_data->getParameters(8, 0)->param1 = 0;
+			_data->getData()->inventoryItem = Inventory::kNoItem;
+
+			getSavePoints()->push(SavePoints::kMertens, SavePoints::kMertens, SavePoints::kAction17, 0);
+
+			_data->getData()->current_call--;
+			getSavePoints()->setCallback(SavePoints::kMertens, _callbacks[_data->getCurrentCallback()]);
+			getSavePoints()->call(SavePoints::kMertens, SavePoints::kMertens, SavePoints::kAction18, 0);
+			break;
+		}
+		break;
+	}
 }
 
 void Mertens::nullfunc(SavePoints::SavePoint *savepoint) {
@@ -97,47 +205,217 @@ IMPLEMENT_FUNCTION(Mertens, chapter1, 34) {
 	default:
 		break;
 
+	case SavePoints::kActionNone: 
+		if (getState()->time > 1062000) {
+			if (!_data->getCurrentParameters(0)->param1) {
+				_data->getCurrentParameters(0)->param1 = 1;
+				setup_function41();
+			}
+		}
+		break;
+
 	case SavePoints::kActionDefault: 
-		getSavePoints()->addData(SavePoints::kMertens, 171394341, 7);
-		getSavePoints()->addData(SavePoints::kMertens, 169633856, 9);
-		getSavePoints()->addData(SavePoints::kMertens, 238732837, 10);
-		getSavePoints()->addData(SavePoints::kMertens, 269624833, 12);
-		getSavePoints()->addData(SavePoints::kMertens, 302614416, 11);
-		getSavePoints()->addData(SavePoints::kMertens, 190082817, 8);
-		getSavePoints()->addData(SavePoints::kMertens, 269436673, 13);
-		getSavePoints()->addData(SavePoints::kMertens, 303343617, 14);
-		getSavePoints()->addData(SavePoints::kMertens, 224122407, 17);
-		getSavePoints()->addData(SavePoints::kMertens, 201431954, 18);
-		getSavePoints()->addData(SavePoints::kMertens, 188635520, 19);
-		getSavePoints()->addData(SavePoints::kMertens, 204379649, 4);
+		getSavePoints()->addData(SavePoints::kMertens, SavePoints::kAction171394341, 7);
+		getSavePoints()->addData(SavePoints::kMertens, SavePoints::kAction169633856, 9);
+		getSavePoints()->addData(SavePoints::kMertens, SavePoints::kAction238732837, 10);
+		getSavePoints()->addData(SavePoints::kMertens, SavePoints::kAction269624833, 12);
+		getSavePoints()->addData(SavePoints::kMertens, SavePoints::kAction302614416, 11);
+		getSavePoints()->addData(SavePoints::kMertens, SavePoints::kAction190082817, 8);
+		getSavePoints()->addData(SavePoints::kMertens, SavePoints::kAction269436673, 13);
+		getSavePoints()->addData(SavePoints::kMertens, SavePoints::kAction303343617, 14);
+		getSavePoints()->addData(SavePoints::kMertens, SavePoints::kAction224122407, 17);
+		getSavePoints()->addData(SavePoints::kMertens, SavePoints::kAction201431954, 18);
+		getSavePoints()->addData(SavePoints::kMertens, SavePoints::kAction188635520, 19);
+		getSavePoints()->addData(SavePoints::kMertens, SavePoints::kAction204379649, 4);
 
 		_data->getParameters(8, 0)->param1 = 0;
 		_data->getData()->field_491 = 9460;
 		_data->getData()->field_493 = 0;
 		_data->getData()->field_495 = 3;
 		break;
+	}
+}
 
-	case SavePoints::kActionNone: 
-		if (getState()->time > 1062000) {
-			if (!_data->getCurrentParameters(0)->param1) {
-				_data->getCurrentParameters(0)->param1 = 1;
-				// call function
-			}
+IMPLEMENT_FUNCTION(Mertens, function41, 41) {
+	switch (savepoint->action) {
+	default:
+		break;	
+
+	case SavePoints::kActionDefault: 
+		_data->setNextCallback(1);
+		call(new ENTITY_SETUP_DEFAULT(Mertens, setup_function10), 3, 2000);
+		break;
+
+	case SavePoints::kAction18:
+		switch (_data->getCallback(_data->getCurrentCallback() + 8)) {
+		default:
+			break;
+
+		case 1:
+			call(new ENTITY_SETUP_DEFAULT(Mertens, setup_function17));
+			break;
+
+		case 2:
+			setup_function42();
+			break;
 		}
 		break;
 	}
 }
 
+IMPLEMENT_FUNCTION(Mertens, function42, 42) {
+
+}
+
 IMPLEMENT_FUNCTION(Mertens, chapter2, 43) {
+	switch (savepoint->action) {
+	default:
+		break;
+
+	case SavePoints::kActionNone: 
+		_data->setNextCallback(1);
+		call(new ENTITY_SETUP_DEFAULT(Mertens, setup_function17));
+		break;
+
+	case SavePoints::kActionDefault: 
+		getEntities()->drawSequences(SavePoints::kMertens);
+
+		_data->getData()->field_491 = 1500;
+		_data->getData()->field_493 = 0;
+		_data->getData()->field_495 = 3;
+		_data->getData()->inventoryItem = Inventory::kNoItem;
+
+		_data->getParameters(8, 0)->param6 = 0;
+		_data->getParameters(8, 0)->param8 = 0;
+
+		_data->getParameters(8, 1)->param1 = 0;
+		_data->getParameters(8, 1)->param2 = 0;
+		_data->getParameters(8, 1)->param3 = 0;
+		_data->getParameters(8, 1)->param4 = 0;
+		_data->getParameters(8, 1)->param5 = 0;
+		_data->getParameters(8, 1)->param6 = 0;
+		_data->getParameters(8, 1)->param7 = 0;
+		break;
+
+	case SavePoints::kAction18: 
+		if (_data->getCallback(_data->getCurrentCallback() + 8) == 1)
+			setup_function44();
+		break;
+	}
+}
+
+IMPLEMENT_FUNCTION(Mertens, function44, 44) {
 }
 
 IMPLEMENT_FUNCTION(Mertens, chapter3, 45) {
+	switch (savepoint->action) {
+	default:
+		break;
+
+	case SavePoints::kActionNone: 
+		_data->setNextCallback(1);
+		call(new ENTITY_SETUP_DEFAULT(Mertens, setup_function17));
+		break;
+
+	case SavePoints::kActionDefault: 
+		_data->getData()->field_491 = 1500;
+		_data->getData()->field_493 = 0;
+		_data->getData()->field_495 = 3;
+		_data->getData()->inventoryItem = Inventory::kNoItem;
+
+		_data->getParameters(8, 0)->param6 = 0;
+		_data->getParameters(8, 0)->param8 = 0;
+
+		_data->getParameters(8, 1)->param1 = 0;
+		_data->getParameters(8, 1)->param2 = 0;
+		_data->getParameters(8, 1)->param3 = 0;
+		_data->getParameters(8, 1)->param4 = 0;
+		_data->getParameters(8, 1)->param5 = 0;
+		_data->getParameters(8, 1)->param6 = 0;
+		_data->getParameters(8, 1)->param7 = 0;
+
+		_data->getParameters(8, 2)->param3 = 0;		
+		break;
+
+	case SavePoints::kAction18: 
+		if (_data->getCallback(_data->getCurrentCallback() + 8) == 1)
+			setup_function46();
+		break;
+	}
+}
+
+IMPLEMENT_FUNCTION(Mertens, function46, 46) {
 }
 
 IMPLEMENT_FUNCTION(Mertens, chapter4, 47) {
+	switch (savepoint->action) {
+	default:
+		break;
+
+	case SavePoints::kActionNone: 
+		_data->setNextCallback(1);
+		call(new ENTITY_SETUP_DEFAULT(Mertens, setup_function17));
+		break;
+
+	case SavePoints::kActionDefault: 
+		getEntities()->drawSequences(SavePoints::kMertens);
+
+		_data->getData()->field_491 = 1500;
+		_data->getData()->field_493 = 0;
+		_data->getData()->field_495 = 3;
+		_data->getData()->inventoryItem = Inventory::kNoItem;
+
+		_data->getParameters(8, 0)->param6 = 0;
+		_data->getParameters(8, 0)->param8 = 0;
+
+		_data->getParameters(8, 1)->param1 = 0;
+		_data->getParameters(8, 1)->param2 = 0;
+		_data->getParameters(8, 1)->param3 = 0;
+		_data->getParameters(8, 1)->param4 = 0;
+		_data->getParameters(8, 1)->param5 = 0;
+		_data->getParameters(8, 1)->param6 = 0;
+		_data->getParameters(8, 1)->param7 = 0;
+
+		_data->getParameters(8, 2)->param4 = 0;
+		break;
+
+	case SavePoints::kAction18: 
+		if (_data->getCallback(_data->getCurrentCallback() + 8) == 1)
+			setup_function48();
+		break;
+	}
+}
+
+IMPLEMENT_FUNCTION(Mertens, function48, 48) {
 }
 
 IMPLEMENT_FUNCTION(Mertens, chapter5, 50) {
+	switch (savepoint->action) {
+	default:
+		break;
+
+	case SavePoints::kActionNone: 
+		setup_function51();
+		break;
+
+	case SavePoints::kActionDefault: 
+		getEntities()->drawSequences(SavePoints::kMertens);
+
+		_data->getData()->field_491 = 3969;
+		_data->getData()->field_493 = 1;
+		_data->getData()->field_495 = 5;
+		_data->getData()->inventoryItem = Inventory::kNoItem;
+		break;
+	}
+}
+
+IMPLEMENT_FUNCTION(Mertens, function51, 51) {
+	if (savepoint->action == 70549068)
+		setup_function52();
+}
+
+IMPLEMENT_FUNCTION(Mertens, function52, 52) {
+	
 }
 
 IMPLEMENT_NULL_FUNCTION(Mertens, 59)

@@ -26,6 +26,7 @@
 #ifndef LASTEXPRESS_ENTITY_H
 #define LASTEXPRESS_ENTITY_H
 
+#include "lastexpress/game/inventory.h"
 #include "lastexpress/game/savepoint.h"
 #include "lastexpress/game/state.h"
 
@@ -90,6 +91,15 @@ namespace LastExpress {
 		BEGIN_SETUP(callback_class, name, index) \
 		END_SETUP() \
 	 }
+
+// setup with one int parameter
+#define IMPLEMENT_FUNCTION_INT(class, name, index) \
+	void class::setup_##name(int param1, int param2, int param3, int param4) { \
+	BEGIN_SETUP(class, name, index) \
+	_data->getCurrentParameters(0)->param1 = param1; \
+	END_SETUP() \
+	} \
+	void class::name(SavePoints::SavePoint *savepoint)
 
 // setup with two int parameters
 #define IMPLEMENT_FUNCTION_INT2(class, name, index) \
@@ -183,6 +193,10 @@ public:
 			param7 = 0;
 			param8 = 0;
 		}
+
+		bool hasNonNullParameter() {
+			return param1 || param2 || param3 || param4 || param5 || param6 || param7 || param8;
+		}
 	};
 
 	struct EntityParametersSeq1 : EntityParameters {
@@ -250,7 +264,7 @@ public:
 		int16 field_491; // ?? (numScenes)
 		int16 field_493;
 		int16 field_495; // ?? (field 13) (entity index?)
-		byte inventoryItem;
+		Inventory::InventoryItem inventoryItem;
 		byte field_49A;
 		byte field_49B;
 		byte field_49D;
@@ -264,7 +278,7 @@ public:
 			field_491 = 0;
 			field_493 = 0;
 			field_495 = 0;
-			inventoryItem = 0;
+			inventoryItem = Inventory::kNoItem;
 			field_49A = 0;
 			field_49B = 0;
 			field_49D = 0;
@@ -281,13 +295,14 @@ public:
 
 	EntityParameters  *getParameters(int callback, int index) { return _parameters[callback].parameters[index]; }	
 	EntityParameters  *getCurrentParameters(int index) { return getParameters(_data.current_call, index); }
-	void 			 	   		setParameters(int callback, int index, EntityParameters* parameters);
-	void 			 	   		resetCurrentParameters();
+	void 			   setParameters(int callback, int index, EntityParameters* parameters);
+	void 			   resetCurrentParameters();
 
-	int 						getCallback(int callback) { return _data.callbacks[callback]; }
-	int							getCurrentCallback() { return getCallback(_data.current_call); }
-	void 			 	   		setCallback(int callback, int index) { _data.callbacks[callback] = index; }
-	void 			 	   		setCurrentCallback(int index) { setCallback(_data.current_call, index); }
+	int 			   getCallback(int callback) { return _data.callbacks[callback]; }
+	int				   getCurrentCallback() { return getCallback(_data.current_call); }
+	void 			   setCallback(int callback, int index) { _data.callbacks[callback] = index; }
+	void 			   setCurrentCallback(int index) { setCallback(_data.current_call, index); }
+	void			   setNextCallback(int index) { setCallback(getCurrentCallback() + 8, index); }
 
 	// Serializable
 	void saveLoadWithSerializer(Common::Serializer &ser);

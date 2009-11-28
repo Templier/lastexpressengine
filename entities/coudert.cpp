@@ -110,22 +110,22 @@ IMPLEMENT_FUNCTION(Coudert, chapter1, 36) {
 		break;
 
 	case SavePoints::kActionDefault: 
-		getSavePoints()->addData(SavePoints::kCoudert, 292048641, 7);
-		getSavePoints()->addData(SavePoints::kCoudert, 326348944, 8);
-		getSavePoints()->addData(SavePoints::kCoudert, 171394341, 2);
-		getSavePoints()->addData(SavePoints::kCoudert, 154005632, 4);
-		getSavePoints()->addData(SavePoints::kCoudert, 169557824, 3);
-		getSavePoints()->addData(SavePoints::kCoudert, 226031488, 5);
-		getSavePoints()->addData(SavePoints::kCoudert, 339669520, 6);
-		getSavePoints()->addData(SavePoints::kCoudert, 189750912, 10);
-		getSavePoints()->addData(SavePoints::kCoudert, 185737168, 12);
-		getSavePoints()->addData(SavePoints::kCoudert, 185671840, 13);
-		getSavePoints()->addData(SavePoints::kCoudert, 205033696, 15);
-		getSavePoints()->addData(SavePoints::kCoudert, 157026693, 14);
-		getSavePoints()->addData(SavePoints::kCoudert, 189026624, 11);
-		getSavePoints()->addData(SavePoints::kCoudert, 168254872, 17);
-		getSavePoints()->addData(SavePoints::kCoudert, 201431954, 18);
-		getSavePoints()->addData(SavePoints::kCoudert, 188570113, 19);
+		getSavePoints()->addData(SavePoints::kCoudert, SavePoints::kAction292048641, 7);
+		getSavePoints()->addData(SavePoints::kCoudert, SavePoints::kAction326348944, 8);
+		getSavePoints()->addData(SavePoints::kCoudert, SavePoints::kAction171394341, 2);
+		getSavePoints()->addData(SavePoints::kCoudert, SavePoints::kAction154005632, 4);
+		getSavePoints()->addData(SavePoints::kCoudert, SavePoints::kAction169557824, 3);
+		getSavePoints()->addData(SavePoints::kCoudert, SavePoints::kAction226031488, 5);
+		getSavePoints()->addData(SavePoints::kCoudert, SavePoints::kAction339669520, 6);
+		getSavePoints()->addData(SavePoints::kCoudert, SavePoints::kAction189750912, 10);
+		getSavePoints()->addData(SavePoints::kCoudert, SavePoints::kAction185737168, 12);
+		getSavePoints()->addData(SavePoints::kCoudert, SavePoints::kAction185671840, 13);
+		getSavePoints()->addData(SavePoints::kCoudert, SavePoints::kAction205033696, 15);
+		getSavePoints()->addData(SavePoints::kCoudert, SavePoints::kAction157026693, 14);
+		getSavePoints()->addData(SavePoints::kCoudert, SavePoints::kAction189026624, 11);
+		getSavePoints()->addData(SavePoints::kCoudert, SavePoints::kAction168254872, 17);
+		getSavePoints()->addData(SavePoints::kCoudert, SavePoints::kAction201431954, 18);
+		getSavePoints()->addData(SavePoints::kCoudert, SavePoints::kAction188570113, 19);
 
 		_data->getParameters(8, 0)->param1 = 0;
 		_data->getParameters(8, 0)->param2 = 1;

@@ -37,14 +37,29 @@ public:
 	Mertens(LastExpressEngine *engine);
 
 	// Setup
+	DECLARE_FUNCTION(function6)
+	DECLARE_FUNCTION(function10)
+	DECLARE_FUNCTION(function11)
+	DECLARE_FUNCTION(function17)
 	DECLARE_FUNCTION(chapter1)
+	DECLARE_FUNCTION(function41)
+	DECLARE_FUNCTION(function42)
 	DECLARE_FUNCTION(chapter2)
+	DECLARE_FUNCTION(function44)
 	DECLARE_FUNCTION(chapter3)
+	DECLARE_FUNCTION(function46)
 	DECLARE_FUNCTION(chapter4)
+	DECLARE_FUNCTION(function48)
 	DECLARE_FUNCTION(chapter5)
+	DECLARE_FUNCTION(function51)
+	DECLARE_FUNCTION(function52)
 	DECLARE_NULL_FUNCTION()
 
 	void nullfunc(SavePoints::SavePoint *savepoint);
+
+private:
+	DECLARE_CALL_FUNCTION(default, Mertens, int, int, int, int)
+	DECLARE_CALL_FUNCTION(char, Mertens, char*, int, int, int)
 };
 
 } // End of namespace LastExpress

@@ -34,7 +34,6 @@
 #include "lastexpress/game/action.h"
 #include "lastexpress/game/beetle.h"
 #include "lastexpress/game/entities.h"
-#include "lastexpress/game/inventory.h"
 #include "lastexpress/game/menu.h"
 #include "lastexpress/game/sound.h"
 
@@ -245,7 +244,7 @@ void Logic::drawScene(uint32 index) {
 		delete scene;
 
 	if (getFlags()->flag_1) {
-		getSavePoints()->pushAll(0, 17, 0);
+		getSavePoints()->pushAll(SavePoints::kNone, SavePoints::kAction17, 0);
 		getSavePoints()->process();
 
 		if (_runState.flag_no_entity)
@@ -330,6 +329,10 @@ void Logic::loadSceneFromData(int param1, int param2, int param3) {
 
 	// index = get index from fields
 	// loadScene(index);
+}
+
+void Logic::loadSceneFromItem(Inventory::InventoryItem item) {
+	error("Logic::loadSceneFromItem is not implemented!");
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -577,7 +580,7 @@ void Logic::postProcessScene(uint32 *index) {
 		
 	case Scene::kTypeSavePointChapter:
 		if (getProgress().field_18 == 2)
-			getSavePoints()->push(0, SavePoints::kChapters, 190346110, 0);
+			getSavePoints()->push(SavePoints::kNone, SavePoints::kChapters, SavePoints::kAction190346110, 0);
 		break;
 
 	case Scene::kTypeLoadBeetleSequences:

@@ -67,7 +67,7 @@ IMPLEMENT_FUNCTION(Mahmud, chapter1, 15) {
 		break;
 
 	case SavePoints::kActionDefault: 
-		getSavePoints()->addData(SavePoints::kMahmud, 170483072, 0);
+		getSavePoints()->addData(SavePoints::kMahmud, SavePoints::kAction170483072, 0);
 
 		getObjects()->update(Objects::kObjectCompartment4, SavePoints::kNone, 3, Cursor::kCursorHandKnock, 9);
 		getObjects()->update(Objects::kObject20, SavePoints::kNone, 3, Cursor::kCursorKeepValue, 9);

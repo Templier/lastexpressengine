@@ -56,12 +56,14 @@ public:
 	void reset(SavePoints::EntityIndex entity);
 
 	// Update & drawing
-	void drawSequence(SavePoints::EntityIndex entity, const char* sequence);
-	void drawSequences(SavePoints::EntityIndex entity);	
-
 	void updateFields();	
 	void setupSequences();
 	void setupCallbacks();
+
+	// Sequences
+	void storeSequenceName(SavePoints::EntityIndex entity, const char* sequence);
+	void drawSequence(SavePoints::EntityIndex entity, const char* sequence);
+	void drawSequences(SavePoints::EntityIndex entity);	
 
 	// Accessors
 	Entity *get(SavePoints::EntityIndex entity);

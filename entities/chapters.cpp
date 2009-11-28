@@ -68,7 +68,7 @@ IMPLEMENT_FUNCTION(Chapters, chapter1, 4) {
 	if (savepoint->action != SavePoints::kActionDefault)
 		return;
 
-	getSavePoints()->addData(SavePoints::kChapters, 171843264, 0);
+	getSavePoints()->addData(SavePoints::kChapters, SavePoints::kAction171843264, 0);
 	setup_chapter1_init();
 }
 

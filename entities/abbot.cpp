@@ -97,7 +97,7 @@ IMPLEMENT_FUNCTION(Abbot, chapter1, 15) {
 	if (savepoint->action != SavePoints::kActionDefault)
 		return;
 
-	getSavePoints()->addData(SavePoints::kAbbot, 203073664, 0);
+	getSavePoints()->addData(SavePoints::kAbbot, SavePoints::kAction203073664, 0);
 }
 
 IMPLEMENT_FUNCTION(Abbot, chapter2, 16) {

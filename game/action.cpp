@@ -426,7 +426,7 @@ IMPLEMENT_ACTION(inventory) {
 
 //////////////////////////////////////////////////////////////////////////
 IMPLEMENT_ACTION(savePoint) {
-	getSavePoints()->push(0, (SavePoints::EntityIndex)hotspot->param1, hotspot->param2, 0);
+	getSavePoints()->push(SavePoints::kNone, (SavePoints::EntityIndex)hotspot->param1, (SavePoints::ActionIndex)hotspot->param2, 0);
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -449,7 +449,7 @@ IMPLEMENT_ACTION(knock) {
 		return;
 	
 	if (getObjects()->get(object).entity)
-		getSavePoints()->push(0, getObjects()->get(object).entity, 8, object);
+		getSavePoints()->push(SavePoints::kNone, getObjects()->get(object).entity, SavePoints::kAction8, object);
 	else
 		getSound()->playSoundEvent(0, 12, 0);
 }
@@ -462,7 +462,7 @@ IMPLEMENT_ACTION(compartment) {
 		return;
 	
 	if (getObjects()->get(object).entity) {
-		getSavePoints()->push(0, getObjects()->get(object).entity, 9, object);
+		getSavePoints()->push(SavePoints::kNone, getObjects()->get(object).entity, SavePoints::kAction9, object);
 		hotspot->scene = 0;
 		return;
 	}
@@ -605,7 +605,7 @@ IMPLEMENT_ACTION(12) {
 		return;
 
 	if (getObjects()->get(object).entity)
-		getSavePoints()->push(0, getObjects()->get(object).entity, 8, object);
+		getSavePoints()->push(SavePoints::kNone, getObjects()->get(object).entity, SavePoints::kAction8, object);
 
 }
 
@@ -900,11 +900,11 @@ IMPLEMENT_ACTION(climbDownTrain) {
 IMPLEMENT_ACTION(jumpUpDownTrain) {
 	switch (hotspot->param1) {
 	case 1:
-		getSavePoints()->push(0, SavePoints::kChapters, 225056224, 0);
+		getSavePoints()->push(SavePoints::kNone, SavePoints::kChapters, SavePoints::kAction225056224, 0);
 		break;
 
 	case 2:
-		getSavePoints()->push(0, SavePoints::kChapters, 338494260, 0);
+		getSavePoints()->push(SavePoints::kNone, SavePoints::kChapters, SavePoints::kAction338494260, 0);
 		break;
 
 	case 3:
@@ -924,7 +924,7 @@ IMPLEMENT_ACTION(jumpUpDownTrain) {
 
 	case 4:
 		if (getProgress().chapter == State::kChapter1)
-			getSavePoints()->push(0, SavePoints::kKronos, 202621266, 0);
+			getSavePoints()->push(SavePoints::kNone, SavePoints::kKronos, SavePoints::kAction202621266, 0);
 		break;
 	}
 }
@@ -969,7 +969,7 @@ IMPLEMENT_ACTION(unbound) {
 		break;
 
 	case 5:
-		getSavePoints()->push(0, SavePoints::kIvo, 192637492, 0);
+		getSavePoints()->push(SavePoints::kNone, SavePoints::kIvo, SavePoints::kAction192637492, 0);
 		break;
 	}
 }
@@ -981,7 +981,7 @@ IMPLEMENT_ACTION(25) {
 		break;
 
 	case 1:
-		getSavePoints()->push(0, SavePoints::kAnna, 272177921, 0);
+		getSavePoints()->push(SavePoints::kNone, SavePoints::kAnna, SavePoints::kAction272177921, 0);
 		break;
 
 	case 2:
@@ -1008,27 +1008,27 @@ IMPLEMENT_ACTION(26) {
 		break;
 
 	case 1:
-		getSavePoints()->push(0, SavePoints::kChapters, 158610240, 0);
+		getSavePoints()->push(SavePoints::kNone, SavePoints::kChapters, SavePoints::kAction158610240, 0);
 		break;
 
 	case 2:
-		getSavePoints()->push(0, SavePoints::kChapters, 225367984, 0);
+		getSavePoints()->push(SavePoints::kNone, SavePoints::kChapters, SavePoints::kAction225367984, 0);
 		getInventory()->unselectItem();
 		hotspot->scene = 0;
 		break;
 
 	case 3:
-		getSavePoints()->push(0, SavePoints::kChapters, 191001984, 0);
+		getSavePoints()->push(SavePoints::kNone, SavePoints::kChapters, SavePoints::kAction191001984, 0);
 		hotspot->scene = 0;
 		break;
 
 	case 4:
-		getSavePoints()->push(0, SavePoints::kChapters, 201959744, 0);
+		getSavePoints()->push(SavePoints::kNone, SavePoints::kChapters, SavePoints::kAction201959744, 0);
 		hotspot->scene = 0;
 		break;
 
 	case 5:
-		getSavePoints()->push(0, SavePoints::kChapters, 169300225, 0);
+		getSavePoints()->push(SavePoints::kNone, SavePoints::kChapters, SavePoints::kAction169300225, 0);
 		hotspot->scene = 0;
 		break;
 	}	
@@ -1043,11 +1043,11 @@ IMPLEMENT_ACTION(27) {
 		break;
 
 	case 3:
-		getSavePoints()->push(0, SavePoints::kMertens, 225358684, hotspot->param1);
+		getSavePoints()->push(SavePoints::kNone, SavePoints::kMertens, SavePoints::kAction225358684, hotspot->param1);
 		break;
 
 	case 4:
-		getSavePoints()->push(0, SavePoints::kCoudert, 225358684, hotspot->param1);
+		getSavePoints()->push(SavePoints::kNone, SavePoints::kCoudert, SavePoints::kAction225358684, hotspot->param1);
 		break;
 	}
 }
@@ -1086,7 +1086,7 @@ IMPLEMENT_ACTION(catchBeetle) {
 	if (getBeetle()->catchBeetle()) {
 		getBeetle()->unload();
 		getInventory()->getEntry(Inventory::kBeetle)->location = 1;
-		getSavePoints()->push(0, SavePoints::kChapters, 202613084, 0);
+		getSavePoints()->push(SavePoints::kNone, SavePoints::kChapters, SavePoints::kAction202613084, 0);
 	}
 }
 
@@ -1110,33 +1110,33 @@ IMPLEMENT_ACTION(32) {
 		break;
 
 	case 1:
-		getSavePoints()->push(0, SavePoints::kSalko, 167992577, 0);
+		getSavePoints()->push(SavePoints::kNone, SavePoints::kSalko, SavePoints::kAction167992577, 0);
 		break;
 
 	case 2:
-		getSavePoints()->push(0, SavePoints::kVesna, 202884544, 0);
+		getSavePoints()->push(SavePoints::kNone, SavePoints::kVesna, SavePoints::kAction202884544, 0);
 		break;
 
 	case 3:
 		if (getProgress().chapter == State::kChapter5) {
-			getSavePoints()->push(0, SavePoints::kAbbot, 168646401, 0);
-			getSavePoints()->push(0, SavePoints::kMilos, 168646401, 0);
+			getSavePoints()->push(SavePoints::kNone, SavePoints::kAbbot, SavePoints::kAction168646401, 0);
+			getSavePoints()->push(SavePoints::kNone, SavePoints::kMilos, SavePoints::kAction168646401, 0);
 		} else {
-			getSavePoints()->push(0, SavePoints::kTrain, 203339360, 0);
+			getSavePoints()->push(SavePoints::kNone, SavePoints::kTrain, SavePoints::kAction203339360, 0);
 		}
 		hotspot->scene = 0;
 		break;
 
 	case 4:
-		getSavePoints()->push(0, SavePoints::kMilos, 169773228, 0);
+		getSavePoints()->push(SavePoints::kNone, SavePoints::kMilos, SavePoints::kAction169773228, 0);
 		break;
 
 	case 5:
-		getSavePoints()->push(0, SavePoints::kVesna, 167992577, 0);
+		getSavePoints()->push(SavePoints::kNone, SavePoints::kVesna, SavePoints::kAction167992577, 0);
 		break;
 
 	case 6:
-		getSavePoints()->push(0, SavePoints::kAugust, 203078272, 0);
+		getSavePoints()->push(SavePoints::kNone, SavePoints::kAugust, SavePoints::kAction203078272, 0);
 		break;
 	}
 }
@@ -1151,7 +1151,7 @@ IMPLEMENT_ACTION(useWhistle) {
 
 	case 1:
 		if (getEvent(kKronosBringFirebird)) {
-			getSavePoints()->push(0, SavePoints::kAnna, 205294778, 0);
+			getSavePoints()->push(SavePoints::kNone, SavePoints::kAnna, SavePoints::kAction205294778, 0);
 			break;
 		}
 
@@ -1172,7 +1172,7 @@ IMPLEMENT_ACTION(useWhistle) {
 
 	case 2:
 		if (getEvent(kKronosBringFirebird)) {
-			getSavePoints()->push(0, SavePoints::kAnna, 224309120, 0);
+			getSavePoints()->push(SavePoints::kNone, SavePoints::kAnna, SavePoints::kAction224309120, 0);
 			break;
 		}
 
@@ -1182,7 +1182,7 @@ IMPLEMENT_ACTION(useWhistle) {
 
 	case 3:
 		if (getEvent(kKronosBringFirebird)) {
-			getSavePoints()->push(0, SavePoints::kAnna, 270751616, 0);
+			getSavePoints()->push(SavePoints::kNone, SavePoints::kAnna, SavePoints::kAction270751616, 0);
 			break;
 		}
 
@@ -1294,8 +1294,8 @@ IMPLEMENT_ACTION(42) {
 
 		char filename[6];
 		sprintf((char*)&filename, "MUS%03d", hotspot->param1);	
-		getSavePoints()->call(0, SavePoints::kTrain, 203863200, (int)&filename);
-		getSavePoints()->push(0, SavePoints::kTrain, 222746496, hotspot->param2);
+		getSavePoints()->call(SavePoints::kNone, SavePoints::kTrain, SavePoints::kAction203863200, (int)&filename);
+		getSavePoints()->push(SavePoints::kNone, SavePoints::kTrain, SavePoints::kAction222746496, hotspot->param2);
 	}
 }
 
@@ -1306,11 +1306,11 @@ IMPLEMENT_ACTION(44) {
 		break;
 
 	case 1:
-		getSavePoints()->push(0, SavePoints::kRebecca, 205034665, 0);
+		getSavePoints()->push(SavePoints::kNone, SavePoints::kRebecca, SavePoints::kAction205034665, 0);
 		break;
 
 	case 2:
-		getSavePoints()->push(0, SavePoints::kChapters, 225358684, 0);
+		getSavePoints()->push(SavePoints::kNone, SavePoints::kChapters, SavePoints::kAction225358684, 0);
 		break;
 	}
 }

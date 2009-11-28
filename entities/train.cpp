@@ -103,7 +103,7 @@ IMPLEMENT_FUNCTION(Train, process, 8) {
 	default:
 		break;	
 
-	case 0: {
+	case SavePoints::kActionNone: {
 		// Play smoke animation
 		if ((getEntities()->checkFields7(3) || getEntities()->checkFields7(4)) 
 		  && _data->getCurrentParameters(0)->param4
@@ -163,10 +163,10 @@ label_skip:
 		break;
 	}
 
-	case 8:
-	case 9:
+	case SavePoints::kAction8:
+	case SavePoints::kAction9:
 		if (savepoint->field_C == 5 || savepoint->field_C == 6 || savepoint->field_C == 7 || savepoint->field_C == 8) {
-			_data->setCallback(_data->getCurrentCallback() + 8, savepoint->action == 8 ? 3 : 4);
+			_data->setNextCallback(savepoint->action == 8 ? 3 : 4);
 			call(new ENTITY_SETUP_DEFAULT(Train, setup_harem), savepoint->field_C, savepoint->action);
 		}
 		break;
@@ -182,7 +182,7 @@ label_skip:
 		_data->getData()->field_491 = 30000;
 		break;
 
-	case 17:
+	case SavePoints::kAction17:
 		_data->getData()->field_495 = getEntityData(SavePoints::kNone)->field_495;
 
 		// Play clock sound
@@ -235,13 +235,13 @@ label_skip:
 
 		if (getProgress().jacket == State::kOriginalJacket) {
 			if (getEntities()->checkFields4(4, 18)) {
-				_data->setCallback(_data->getCurrentCallback() + 8, 1);
+				_data->setNextCallback(1);
 				call(new ENTITY_SETUP_DEFAULT(Train, setup_execute), 2, 123);
 				break;
 			}
 
 			if (getEntities()->checkFields4(3, 22)) {
-				_data->setCallback(_data->getCurrentCallback() + 8, 2);
+				_data->setNextCallback(2);
 				call(new ENTITY_SETUP_DEFAULT(Train, setup_execute), 2, 123);
 				break;
 			}
@@ -251,7 +251,7 @@ label_skip:
 		break;
 
 
-	case 18: {
+	case SavePoints::kAction18: {
 		int action = _data->getCallback(_data->getCurrentCallback() + 8);
 		switch(action) {
 		default:
@@ -288,23 +288,23 @@ label_skip:
 		break;
 	}
 		
-	case 191070912:
+	case SavePoints::kAction191070912:
 		_data->getParameters(8, 0)->param7 = savepoint->field_C;
 		break;
 
-	case 191350523:
+	case SavePoints::kAction191350523:
 		_data->getCurrentParameters(0)->param3 = 0;
 		getEntities()->drawSequences(SavePoints::kTrain);
 		break;
 
-	case 202613084:
-		_data->setCallback(_data->getCurrentCallback() + 8, 8);
+	case SavePoints::kAction202613084:
+		_data->setNextCallback(8);
 		call(new ENTITY_SETUP_DEFAULT(Train, setup_execute), 2, 259);
 		break;
 
-	case 203339360:
+	case SavePoints::kAction203339360:
 		if (!_data->getCurrentParameters(0)->param7) {
-			_data->setCallback(_data->getCurrentCallback() + 8, 5);
+			_data->setNextCallback(5);
 			call(new ENTITY_SETUP_DEFAULT(Train, setup_execute), 2, 148);
 		} else {
 			_data->getCurrentParameters(0)->param7 = 1;
@@ -313,15 +313,15 @@ label_skip:
 		}
 		break;
 
-	case 203419131:
+	case SavePoints::kAction203419131:
 		if (!_data->getCurrentParameters(0)->param3) {
 			_data->getCurrentParameters(0)->param1 = 0;
 			_data->getCurrentParameters(0)->param3 = 1;
-			getSavePoints()->push(32, SavePoints::kTrain, 17, 0);
+			getSavePoints()->push(SavePoints::kTrain, SavePoints::kTrain, SavePoints::kAction17, 0);
 		}
 		break;
 
-	case 203863200:
+	case SavePoints::kAction203863200:
 		if (savepoint->field_C) {
 			_data->getCurrentParameters(0)->param8 = 1;
 			// We use strcpy here because we stored a char value in field_C (see in action.cpp for action 42)
@@ -330,7 +330,7 @@ label_skip:
 		}
 		break;
 
-	case 222746496:
+	case SavePoints::kAction222746496:
 		switch(savepoint->field_C) {
 		default:
 			break;
@@ -373,13 +373,13 @@ label_skip:
 		}
 		break;
 
-	case 225056224:
-		_data->setCallback(_data->getCurrentCallback() + 8, 6);		
+	case SavePoints::kAction225056224:
+		_data->setNextCallback(6);		
 		call(new ENTITY_SETUP_DEFAULT(Train, setup_execute), 2, 252);
 		break;
 
-	case 338494260:
-		_data->setCallback(_data->getCurrentCallback() + 8, 7);
+	case SavePoints::kAction338494260:
+		_data->setNextCallback(7);
 		call(new ENTITY_SETUP_DEFAULT(Train, setup_execute), 2, 253);
 		break;
 	}

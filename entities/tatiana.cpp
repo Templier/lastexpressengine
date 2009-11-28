@@ -102,7 +102,7 @@ IMPLEMENT_FUNCTION(Tatiana, chapter1, 17) {
 		break;
 
 	case SavePoints::kActionDefault: 
-		getSavePoints()->addData(SavePoints::kTatiana, 191198209, 0);
+		getSavePoints()->addData(SavePoints::kTatiana, SavePoints::kAction191198209, 0);
 
 		getObjects()->update(Objects::kObjectCompartmentB, SavePoints::kNone, 1, Cursor::kCursorHandKnock, 9);
 		getObjects()->update(Objects::kObject49, SavePoints::kNone, 1, Cursor::kCursorHandKnock, 9);

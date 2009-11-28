@@ -89,14 +89,14 @@ IMPLEMENT_FUNCTION(Verges, chapter1, 18) {
 		break;
 
 	case SavePoints::kActionDefault: 
-		getSavePoints()->addData(SavePoints::kVerges, 191337656, 0);
-		getSavePoints()->addData(SavePoints::kVerges, 226031488, 1);
-		getSavePoints()->addData(SavePoints::kVerges, 339669520, 1);
-		getSavePoints()->addData(SavePoints::kVerges, 167854368, 4);
-		getSavePoints()->addData(SavePoints::kVerges, 158617345, 2);
-		getSavePoints()->addData(SavePoints::kVerges, 168255788, 3);
-		getSavePoints()->addData(SavePoints::kVerges, 201431954, 5);
-		getSavePoints()->addData(SavePoints::kVerges, 168187490, 6);
+		getSavePoints()->addData(SavePoints::kVerges, SavePoints::kAction191337656, 0);
+		getSavePoints()->addData(SavePoints::kVerges, SavePoints::kAction226031488, 1);
+		getSavePoints()->addData(SavePoints::kVerges, SavePoints::kAction339669520, 1);
+		getSavePoints()->addData(SavePoints::kVerges, SavePoints::kAction167854368, 4);
+		getSavePoints()->addData(SavePoints::kVerges, SavePoints::kAction158617345, 2);
+		getSavePoints()->addData(SavePoints::kVerges, SavePoints::kAction168255788, 3);
+		getSavePoints()->addData(SavePoints::kVerges, SavePoints::kAction201431954, 5);
+		getSavePoints()->addData(SavePoints::kVerges, SavePoints::kAction168187490, 6);
 
 		getObjects()->update(Objects::kObject104, SavePoints::kVerges, 0, Cursor::kCursorNormal, 9);
 		getObjects()->update(Objects::kObject105, SavePoints::kVerges, 0, Cursor::kCursorNormal, 9);

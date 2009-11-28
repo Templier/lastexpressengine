@@ -84,22 +84,22 @@ IMPLEMENT_FUNCTION(Servers0, chapter1, 11) {
 		break;
 
 	case SavePoints::kActionDefault: 
-		getSavePoints()->addData(SavePoints::kServers0, 270410280, 0);
-		getSavePoints()->addData(SavePoints::kServers0, 304061224, 1);
-		getSavePoints()->addData(SavePoints::kServers0, 252568704, 10);
-		getSavePoints()->addData(SavePoints::kServers0, 286534136, 11);
-		getSavePoints()->addData(SavePoints::kServers0, 218983616, 12);
-		getSavePoints()->addData(SavePoints::kServers0, 218586752, 13);
-		getSavePoints()->addData(SavePoints::kServers0, 207330561, 14);
-		getSavePoints()->addData(SavePoints::kServers0, 286403504, 16);
-		getSavePoints()->addData(SavePoints::kServers0, 218128129, 17);
-		getSavePoints()->addData(SavePoints::kServers0, 270068760, 18);
-		getSavePoints()->addData(SavePoints::kServers0, 223712416, 2);
-		getSavePoints()->addData(SavePoints::kServers0, 237485916, 5);
-		getSavePoints()->addData(SavePoints::kServers0, 188893625, 8);
-		getSavePoints()->addData(SavePoints::kServers0, 204704037, 6);
-		getSavePoints()->addData(SavePoints::kServers0, 292758554, 7);
-		getSavePoints()->addData(SavePoints::kServers0, 337548856, 9);
+		getSavePoints()->addData(SavePoints::kServers0, SavePoints::kAction270410280, 0);
+		getSavePoints()->addData(SavePoints::kServers0, SavePoints::kAction304061224, 1);
+		getSavePoints()->addData(SavePoints::kServers0, SavePoints::kAction252568704, 10);
+		getSavePoints()->addData(SavePoints::kServers0, SavePoints::kAction286534136, 11);
+		getSavePoints()->addData(SavePoints::kServers0, SavePoints::kAction218983616, 12);
+		getSavePoints()->addData(SavePoints::kServers0, SavePoints::kAction218586752, 13);
+		getSavePoints()->addData(SavePoints::kServers0, SavePoints::kAction207330561, 14);
+		getSavePoints()->addData(SavePoints::kServers0, SavePoints::kAction286403504, 16);
+		getSavePoints()->addData(SavePoints::kServers0, SavePoints::kAction218128129, 17);
+		getSavePoints()->addData(SavePoints::kServers0, SavePoints::kAction270068760, 18);
+		getSavePoints()->addData(SavePoints::kServers0, SavePoints::kAction223712416, 2);
+		getSavePoints()->addData(SavePoints::kServers0, SavePoints::kAction237485916, 5);
+		getSavePoints()->addData(SavePoints::kServers0, SavePoints::kAction188893625, 8);
+		getSavePoints()->addData(SavePoints::kServers0, SavePoints::kAction204704037, 6);
+		getSavePoints()->addData(SavePoints::kServers0, SavePoints::kAction292758554, 7);
+		getSavePoints()->addData(SavePoints::kServers0, SavePoints::kAction337548856, 9);
 
 		_data->getData()->field_491 = 5900;
 		_data->getData()->field_493 = 0;

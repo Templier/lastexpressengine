@@ -47,15 +47,15 @@ SavePoints::~SavePoints() {
 //////////////////////////////////////////////////////////////////////////
 // Savepoints
 //////////////////////////////////////////////////////////////////////////
-void SavePoints::push(uint32 time, EntityIndex entity, uint32 action, uint32 field_C) {
+void SavePoints::push(EntityIndex entity2, EntityIndex entity1, ActionIndex action, uint32 field_C) {
 
 	if (_savepoints.size() >= _savePointsMaxSize)
 		return;
 
 	SavePoint point;
-	point.entity = entity;
+	point.entity1 = entity1;
 	point.action = action;
-	point.time = time;
+	point.entity2 = entity2;
 	point.field_C = field_C;
 
 	_savepoints.push_back(point);
@@ -68,10 +68,10 @@ SavePoints::SavePoint SavePoints::pop() {
 }
 
 
-void SavePoints::pushAll(uint32 time, uint32 action, uint32 field_C) {
+void SavePoints::pushAll(EntityIndex entity, ActionIndex action, uint32 field_C) {
 	for (uint32 index = 1; index < 40; index++) {
-		if (index != time)
-			push(time, (EntityIndex)index, action, field_C);
+		if ((EntityIndex)index != entity)
+			push(entity, (EntityIndex)index, action, field_C);
 	}
 }
 
@@ -84,7 +84,7 @@ void SavePoints::process() {
 		if (updateEntity(point)) {
 
 			// Call requested callback
-			Callback *callback = getCallback(point.entity);
+			Callback *callback = getCallback(point.entity1);
 			if (callback)
 				(*callback)(&point);
 		}
@@ -98,13 +98,13 @@ void SavePoints::reset() {
 //////////////////////////////////////////////////////////////////////////
 // Data
 //////////////////////////////////////////////////////////////////////////
-void SavePoints::addData(SavePoints::EntityIndex entity, uint32 field_4, uint32 field_C) {
+void SavePoints::addData(SavePoints::EntityIndex entity, ActionIndex action, uint32 field_C) {
 	if (_data.size() >= _savePointsMaxSize)
 		return;
 
 	SavePointData data;
-	data.entity = entity;
-	data.field_4 = field_4;
+	data.entity1 = entity;
+	data.action = action;
 	data.field_C = field_C;
 
 	_data.push_back(data);
@@ -113,7 +113,7 @@ void SavePoints::addData(SavePoints::EntityIndex entity, uint32 field_4, uint32 
 //////////////////////////////////////////////////////////////////////////
 // Callbacks
 //////////////////////////////////////////////////////////////////////////
-void SavePoints::setCallback(uint index, SavePoints::Callback* callback) {
+void SavePoints::setCallback(EntityIndex index, SavePoints::Callback* callback) {
 	assert(index < 40);
 
 	// Clear previous callback
@@ -128,14 +128,14 @@ SavePoints::Callback *SavePoints::getCallback(EntityIndex index) {
 	return _callbacks[index];
 }
 
-void SavePoints::call(int field_8, EntityIndex entity, int action, int field_C) {
+void SavePoints::call(EntityIndex entity2, EntityIndex entity1, ActionIndex action, int field_C) {
 	SavePoint point;
-	point.entity = entity;
+	point.entity1 = entity1;
 	point.action = action;
-	point.time = field_8;
+	point.entity2 = entity2;
 	point.field_C = field_C;
 
-	Callback *callback = getCallback(entity);
+	Callback *callback = getCallback(entity1);
 	if (callback)
 		(*callback)(&point);
 }
@@ -145,7 +145,7 @@ void SavePoints::call(int field_8, EntityIndex entity, int action, int field_C) 
 //////////////////////////////////////////////////////////////////////////
 bool SavePoints::updateEntity(SavePoint point) {
 	for (uint i = 0; i < _data.size(); i++) {
-		if (_data[i].entity == point.entity && _data[i].field_4 == point.action) {
+		if (_data[i].entity1 == point.entity1 && _data[i].action == point.action) {
 
 			// FIXME this looks pretty bad :(
 			error("SavePoints::updateEntity: not implemented!");
@@ -170,9 +170,9 @@ void SavePoints::saveLoadWithSerializer(Common::Serializer &s) {
 			_data.push_back(data);
 		}
 
-		s.syncAsUint32LE(_data[i].entity);
-		s.syncAsUint32LE(_data[i].field_4);
-		s.syncAsUint32LE(_data[i].field_8);
+		s.syncAsUint32LE(_data[i].entity1);
+		s.syncAsUint32LE(_data[i].action);
+		s.syncAsUint32LE(_data[i].entity2);
 		s.syncAsUint32LE(_data[i].field_C);
 	}
 
@@ -187,9 +187,9 @@ void SavePoints::saveLoadWithSerializer(Common::Serializer &s) {
 	if (s.isLoading()) {
 		for (uint i= 0; i < count; i++) {
 			SavePoint point;
-			s.syncAsUint32LE(point.entity);
+			s.syncAsUint32LE(point.entity1);
 			s.syncAsUint32LE(point.action);
-			s.syncAsUint32LE(point.time);
+			s.syncAsUint32LE(point.entity2);
 			s.syncAsUint32LE(point.field_C);
 
 			_savepoints.push_back(point);
@@ -199,9 +199,9 @@ void SavePoints::saveLoadWithSerializer(Common::Serializer &s) {
 		}
 	} else {
 		for (Common::List<SavePoint>::iterator it = _savepoints.begin(); it != _savepoints.end(); ++it) {
-			s.syncAsUint32LE((*it).entity);
+			s.syncAsUint32LE((*it).entity1);
 			s.syncAsUint32LE((*it).action);
-			s.syncAsUint32LE((*it).time);
+			s.syncAsUint32LE((*it).entity2);
 			s.syncAsUint32LE((*it).field_C);
 		}
 	}
