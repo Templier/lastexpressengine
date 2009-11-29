@@ -95,11 +95,6 @@ Mertens::Mertens(LastExpressEngine *engine) : Entity(engine, SavePoints::kEntity
 	ADD_NULL_FUNCTION();
 }
 
-#define CALL_PREVIOUS_SAVEPOINT() \
-	_data->getData()->current_call--; \
-	getSavePoints()->setCallback(SavePoints::kEntityMertens, _callbacks[_data->getCurrentCallback()]); \
-	getSavePoints()->call(SavePoints::kEntityMertens, SavePoints::kEntityMertens, SavePoints::kAction18)
-
 IMPLEMENT_FUNCTION(Mertens, function6, 6) {
 	switch (savepoint->action) {
 	default:
@@ -107,7 +102,7 @@ IMPLEMENT_FUNCTION(Mertens, function6, 6) {
 
 	case SavePoints::kActionNone:
 		if (_data->getData()->field_49A != 4) {
-			CALL_PREVIOUS_SAVEPOINT();
+			CALL_PREVIOUS_SAVEPOINT(SavePoints::kEntityMertens)
 			break;
 		}
 		
@@ -121,7 +116,7 @@ IMPLEMENT_FUNCTION(Mertens, function6, 6) {
 		break;
 
 	case SavePoints::kAction3:
-		CALL_PREVIOUS_SAVEPOINT();
+		CALL_PREVIOUS_SAVEPOINT(SavePoints::kEntityMertens)
 		break;
 
 	case SavePoints::kAction18: 	
@@ -139,12 +134,12 @@ IMPLEMENT_FUNCTION_INT2(Mertens, savegame, 9) {
 		break;	
 
 	case SavePoints::kActionNone:
-		CALL_PREVIOUS_SAVEPOINT();
+		CALL_PREVIOUS_SAVEPOINT(SavePoints::kEntityMertens)
 		break;
 
 	case SavePoints::kActionDefault: 
 		save(SavePoints::kEntityMertens, _data->getCurrentParameters(0)->param1, _data->getCurrentParameters(0)->param2);
-		CALL_PREVIOUS_SAVEPOINT();
+		CALL_PREVIOUS_SAVEPOINT(SavePoints::kEntityMertens)
 		break;
 	}
 }
@@ -177,7 +172,7 @@ IMPLEMENT_FUNCTION_INT(Mertens, function11, 11) {
 			_data->getCurrentParameters(0)->param2 = _data->getCurrentParameters(0)->param1 + getState()->time;
 		}
 
-		CALL_PREVIOUS_SAVEPOINT();
+		CALL_PREVIOUS_SAVEPOINT(SavePoints::kEntityMertens)
 		break;
 
 	case SavePoints::kAction18: 
@@ -210,7 +205,7 @@ IMPLEMENT_FUNCTION(Mertens, function17, 17) {
 				getLogic()->loadSceneFromItem(Inventory::kItem7);
 
 				_data->getParameters(8, 2)->param1 = 1;
-				CALL_PREVIOUS_SAVEPOINT();
+				CALL_PREVIOUS_SAVEPOINT(SavePoints::kEntityMertens)
 
 			} else {	// Mertens sits on his chair at the back of the train
 				if (getInventory()->hasItem(Inventory::kPassengerList) || _data->getParameters(8, 0)->param2)
@@ -248,7 +243,7 @@ IMPLEMENT_FUNCTION(Mertens, function17, 17) {
 			break;
 
 		case 2:
-			CALL_PREVIOUS_SAVEPOINT();
+			CALL_PREVIOUS_SAVEPOINT(SavePoints::kEntityMertens)
 			break;
 
 		case 3:
@@ -266,7 +261,7 @@ IMPLEMENT_FUNCTION(Mertens, function17, 17) {
 
 			getSavePoints()->push(SavePoints::kEntityMertens, SavePoints::kEntityMertens, SavePoints::kAction17);
 
-			CALL_PREVIOUS_SAVEPOINT();
+			CALL_PREVIOUS_SAVEPOINT(SavePoints::kEntityMertens)
 			break;
 		}
 		break;

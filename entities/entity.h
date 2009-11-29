@@ -51,6 +51,11 @@ namespace LastExpress {
 #define ADD_NULL_FUNCTION() \
 	_callbacks.push_back(new ENTITY_CALLBACK(Entity, nullfunction, this));
 
+#define CALL_PREVIOUS_SAVEPOINT(entity) \
+	_data->getData()->current_call--; \
+	getSavePoints()->setCallback(entity, _callbacks[_data->getCurrentCallback()]); \
+	getSavePoints()->call(entity, entity, SavePoints::kAction18);
+
 //////////////////////////////////////////////////////////////////////////
 // Declaration
 #define DECLARE_NULL_FUNCTION() \

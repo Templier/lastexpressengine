@@ -73,6 +73,7 @@ public:
 	void saveLoadWithSerializer(Common::Serializer &ser);
 
 	// Checks
+	bool checkEntity(SavePoints::EntityIndex entity, int field495, int field491);
 	bool compare(SavePoints::EntityIndex entity1, SavePoints::EntityIndex entity2);	
 
 	bool checkFields1(SavePoints::EntityIndex entity, int field495, int field491);

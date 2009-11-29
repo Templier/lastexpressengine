@@ -37,14 +37,21 @@ public:
 	Sophie(LastExpressEngine *engine);
 
 	// Setup	
+	DECLARE_FUNCTION(function1)
+	DECLARE_FUNCTION(function2)
+	DECLARE_FUNCTION(function3)
 	DECLARE_FUNCTION(chapter1)
+	DECLARE_FUNCTION(function5)
 	DECLARE_FUNCTION(chapter2)
 	DECLARE_FUNCTION(chapter3)
 	DECLARE_FUNCTION(chapter4)
+	DECLARE_FUNCTION(function9)
 	DECLARE_FUNCTION(chapter5)
+	DECLARE_FUNCTION(function11)
 	DECLARE_NULL_FUNCTION()
 
-	void nullfunc(SavePoints::SavePoint *savepoint);
+private:
+	DECLARE_CALL_FUNCTION(default, Sophie, int, int, int, int)
 };
 
 } // End of namespace LastExpress

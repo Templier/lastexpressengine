@@ -278,6 +278,7 @@ void Entities::executeCallbacks() {
 }
 
 void Entities::processEntity(SavePoints::EntityIndex entity) {
+	error("Entities::processEntity: not implemented!");
 }
 
 
@@ -315,11 +316,11 @@ void Entities::storeSequenceName(SavePoints::EntityIndex entity, const char* seq
 }
 
 void Entities::drawSequence(SavePoints::EntityIndex entity, const char* sequence) {
-	error("Entities::drawSequence: not implemented!");
+	warning("Entities::drawSequence: not implemented!");
 }
 
 void Entities::drawSequences(SavePoints::EntityIndex entity) {
-	//error("Entities::drawSequences: not implemented!");
+	warning("Entities::drawSequences: not implemented!");
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -327,6 +328,10 @@ void Entities::drawSequences(SavePoints::EntityIndex entity) {
 //////////////////////////////////////////////////////////////////////////
 bool Entities::compare(SavePoints::EntityIndex entity1, SavePoints::EntityIndex entity2) {
 	error("Entities::compare: not implemented!");
+}
+
+bool Entities::checkEntity(SavePoints::EntityIndex entity, int field495, int field491) {
+	error("Entities::checkEntity: not implemented!");
 }
 
 bool Entities::checkFields1(SavePoints::EntityIndex entity, int field495, int field491) {

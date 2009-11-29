@@ -1478,7 +1478,7 @@ Cursor::CursorStyle Action::getCursor(byte action, Objects::ObjectIndex object, 
 	if (cursor != 128)
 		return (Cursor::CursorStyle)cursor;
 
-	warning("================================= OBJECT %03d =================================", object);
+	//warning("================================= OBJECT %03d =================================", object);
 
 	switch (action) {
 	default:

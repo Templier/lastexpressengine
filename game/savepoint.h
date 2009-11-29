@@ -102,6 +102,8 @@ public:
 	enum ActionIndex {
 		kActionNone = 0,
 		kAction3 = 3,
+		kAction5 = 5,
+		kAction6 = 6,
 		kAction8 = 8,
 		kAction9 = 9,
 		kActionDefault = 12,
@@ -109,9 +111,12 @@ public:
 		kAction18 = 18,
 
 		// Entity-specific actions
+		kAction70549068  = 70549068,	// Sophie
 		kAction101824388 = 101824388,	// Pascale
 		kAction103798704 = 103798704,	// Tables
+		kAction123668192 = 123668192,	// Sophie
 		kAction124190740 = 124190740,	// Vesna
+		kAction125242096 = 125242096,	// Sophie
 		kAction136059947 = 136059947,	// Pascale
 		kAction136455232 = 136455232,	// Tables
 		kAction154005632 = 154005632,	// Coudert
@@ -221,6 +226,10 @@ public:
 		kAction339669520 = 339669520,	// Coudert / Verges		
 		kAction352703104 = 352703104,	// Pascale
 		kAction352768896 = 352768896,	// Pascale
+		
+		kAction136654208 = 136654208,	// Sophie
+		kAction259921280 = 259921280,	// Sophie
+		kAction292775040 = 292775040,	// Sophie
 
 		kActionEnd
 	};

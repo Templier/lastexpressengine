@@ -44,8 +44,6 @@ public:
 	DECLARE_FUNCTION(chapter5)
 	DECLARE_FUNCTION(draw)
 
-	void nullfunc(SavePoints::SavePoint *savepoint);
-	
 private:
 	SavePoints::EntityIndex _id;	///< Table entity id
 };
