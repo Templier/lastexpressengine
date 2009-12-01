@@ -165,9 +165,9 @@ label_skip:
 
 	case SavePoints::kAction8:
 	case SavePoints::kAction9:
-		if (savepoint->field_C.intValue == 5 || savepoint->field_C.intValue == 6 || savepoint->field_C.intValue == 7 || savepoint->field_C.intValue == 8) {
+		if (savepoint->param.intValue == 5 || savepoint->param.intValue == 6 || savepoint->param.intValue == 7 || savepoint->param.intValue == 8) {
 			_data->setNextCallback(savepoint->action == 8 ? 3 : 4);
-			call(new ENTITY_SETUP_DEFAULT(Train, setup_harem), savepoint->field_C.intValue, savepoint->action);
+			call(new ENTITY_SETUP_DEFAULT(Train, setup_harem), savepoint->param.intValue, savepoint->action);
 		}
 		break;
 
@@ -289,7 +289,7 @@ label_skip:
 	}
 		
 	case SavePoints::kAction191070912:
-		_data->getParameters(8, 0)->param7 = savepoint->field_C.intValue;
+		_data->getParameters(8, 0)->param7 = savepoint->param.intValue;
 		break;
 
 	case SavePoints::kAction191350523:
@@ -322,16 +322,14 @@ label_skip:
 		break;
 
 	case SavePoints::kAction203863200:
-		if (savepoint->field_C.charValue) {
+		if (savepoint->param.charValue) {
 			_data->getCurrentParameters(0)->param8 = 1;
-			// We use strcpy here because we stored a char value in field_C (see in action.cpp for action 42)
-			// we also store non-null int values inside field_C in several places, so that sucks a bit...
-			strcpy((char *)&parameters1->param4, savepoint->field_C.charValue);	// this is the sound file name
+			strcpy((char *)&parameters1->param4, savepoint->param.charValue);	// this is the sound file name
 		}
 		break;
 
 	case SavePoints::kAction222746496:
-		switch(savepoint->field_C.intValue) {
+		switch(savepoint->param.intValue) {
 		default:
 			break;
 
@@ -339,8 +337,8 @@ label_skip:
 		case 2:
 		case 32:
 		case 33:
-			parameters1->param1 = (savepoint->field_C.intValue == 1 || savepoint->field_C.intValue == 2) ? 3 : 4;
-			parameters1->param2 = (savepoint->field_C.intValue == 1 || savepoint->field_C.intValue == 32) ? 8200 : 7500;
+			parameters1->param1 = (savepoint->param.intValue == 1 || savepoint->param.intValue == 2) ? 3 : 4;
+			parameters1->param2 = (savepoint->param.intValue == 1 || savepoint->param.intValue == 32) ? 8200 : 7500;
 			parameters1->param3 = 7850;
 			break;
 
@@ -348,8 +346,8 @@ label_skip:
 		case 4:
 		case 34:
 		case 35:
-			parameters1->param1 = (savepoint->field_C.intValue == 1 || savepoint->field_C.intValue == 2) ? 3 : 4;
-			parameters1->param2 = (savepoint->field_C.intValue == 3 || savepoint->field_C.intValue == 34) ? 6470 : 5790;
+			parameters1->param1 = (savepoint->param.intValue == 1 || savepoint->param.intValue == 2) ? 3 : 4;
+			parameters1->param2 = (savepoint->param.intValue == 3 || savepoint->param.intValue == 34) ? 6470 : 5790;
 			parameters1->param3 = 6130;
 			break;
 
@@ -357,8 +355,8 @@ label_skip:
 		case 6:
 		case 36:
 		case 37:
-			parameters1->param1 = (savepoint->field_C.intValue == 1 || savepoint->field_C.intValue == 2) ? 3 : 4;
-			parameters1->param2 = (savepoint->field_C.intValue == 5 || savepoint->field_C.intValue == 36) ? 4840 : 4070;
+			parameters1->param1 = (savepoint->param.intValue == 1 || savepoint->param.intValue == 2) ? 3 : 4;
+			parameters1->param2 = (savepoint->param.intValue == 5 || savepoint->param.intValue == 36) ? 4840 : 4070;
 			parameters1->param3 = 4455;
 			break;
 
@@ -366,8 +364,8 @@ label_skip:
 		case 8:
 		case 38:
 		case 39:
-			parameters1->param1 = (savepoint->field_C.intValue == 1 || savepoint->field_C.intValue == 2) ? 3 : 4;
-			parameters1->param2 = (savepoint->field_C.intValue == 7 || savepoint->field_C.intValue == 38) ? 3050 : 2740;
+			parameters1->param1 = (savepoint->param.intValue == 1 || savepoint->param.intValue == 2) ? 3 : 4;
+			parameters1->param2 = (savepoint->param.intValue == 7 || savepoint->param.intValue == 38) ? 3050 : 2740;
 			parameters1->param3 = 0;
 			break;
 		}

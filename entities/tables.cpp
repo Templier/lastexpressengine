@@ -142,8 +142,8 @@ IMPLEMENT_FUNCTION(Tables, draw, 6) {
 		break;
 
 	case SavePoints::kAction103798704:
-		if (savepoint->field_C.charValue) {
-			getEntities()->drawSequence(_id, savepoint->field_C.charValue);
+		if (savepoint->param.charValue) {
+			getEntities()->drawSequence(_id, savepoint->param.charValue);
 		} else {
 			switch(_id) {
 			default:

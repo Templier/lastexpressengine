@@ -47,7 +47,7 @@ SavePoints::~SavePoints() {
 //////////////////////////////////////////////////////////////////////////
 // Savepoints
 //////////////////////////////////////////////////////////////////////////
-void SavePoints::push(EntityIndex entity2, EntityIndex entity1, ActionIndex action, uint32 field_C) {
+void SavePoints::push(EntityIndex entity2, EntityIndex entity1, ActionIndex action, uint32 param) {
 
 	if (_savepoints.size() >= _savePointsMaxSize)
 		return;
@@ -56,7 +56,7 @@ void SavePoints::push(EntityIndex entity2, EntityIndex entity1, ActionIndex acti
 	point.entity1 = entity1;
 	point.action = action;
 	point.entity2 = entity2;
-	point.field_C.intValue = field_C;
+	point.param.intValue = param;
 
 	_savepoints.push_back(point);
 }
@@ -68,10 +68,10 @@ SavePoints::SavePoint SavePoints::pop() {
 }
 
 
-void SavePoints::pushAll(EntityIndex entity, ActionIndex action, uint32 field_C) {
+void SavePoints::pushAll(EntityIndex entity, ActionIndex action, uint32 param) {
 	for (uint32 index = 1; index < 40; index++) {
 		if ((EntityIndex)index != entity)
-			push(entity, (EntityIndex)index, action, field_C);
+			push(entity, (EntityIndex)index, action, param);
 	}
 }
 
@@ -98,14 +98,14 @@ void SavePoints::reset() {
 //////////////////////////////////////////////////////////////////////////
 // Data
 //////////////////////////////////////////////////////////////////////////
-void SavePoints::addData(SavePoints::EntityIndex entity, ActionIndex action, uint32 field_C) {
+void SavePoints::addData(SavePoints::EntityIndex entity, ActionIndex action, uint32 param) {
 	if (_data.size() >= _savePointsMaxSize)
 		return;
 
 	SavePointData data;
 	data.entity1 = entity;
 	data.action = action;
-	data.field_C = field_C;
+	data.param = param;
 
 	_data.push_back(data);
 }
@@ -128,24 +128,24 @@ SavePoints::Callback *SavePoints::getCallback(EntityIndex index) {
 	return _callbacks[index];
 }
 
-void SavePoints::call(EntityIndex entity2, EntityIndex entity1, ActionIndex action, uint32 field_C) {
+void SavePoints::call(EntityIndex entity2, EntityIndex entity1, ActionIndex action, uint32 param) {
 	SavePoint point;
 	point.entity1 = entity1;
 	point.action = action;
 	point.entity2 = entity2;
-	point.field_C.intValue = field_C;
+	point.param.intValue = param;
 
 	Callback *callback = getCallback(entity1);
 	if (callback)
 		(*callback)(&point);
 }
 
-void SavePoints::call(EntityIndex entity2, EntityIndex entity1, ActionIndex action, char* field_C) {
+void SavePoints::call(EntityIndex entity2, EntityIndex entity1, ActionIndex action, char* param) {
 	SavePoint point;
 	point.entity1 = entity1;
 	point.action = action;
 	point.entity2 = entity2;
-	strcpy((char *)&point.field_C.charValue, field_C);
+	strcpy((char *)&point.param.charValue, param);
 
 	Callback *callback = getCallback(entity1);
 	if (callback)
@@ -161,7 +161,7 @@ bool SavePoints::updateEntity(SavePoint point) {
 
 			// FIXME this looks pretty bad :(
 			error("SavePoints::updateEntity: not implemented!");
-			//*(&getEntities()->getData(_data[i].entity)->callback_data[8].entries[0].field_0 + _data[i].field_C) = 1;
+			//*(&getEntities()->getData(_data[i].entity)->callback_data[8].entries[0].field_0 + _data[i].param) = 1;
 
 			return true;
 		}
@@ -185,7 +185,7 @@ void SavePoints::saveLoadWithSerializer(Common::Serializer &s) {
 		s.syncAsUint32LE(_data[i].entity1);
 		s.syncAsUint32LE(_data[i].action);
 		s.syncAsUint32LE(_data[i].entity2);
-		s.syncAsUint32LE(_data[i].field_C);
+		s.syncAsUint32LE(_data[i].param);
 	}
 
 	// Skip uninitialized data if any
@@ -202,7 +202,7 @@ void SavePoints::saveLoadWithSerializer(Common::Serializer &s) {
 			s.syncAsUint32LE(point.entity1);
 			s.syncAsUint32LE(point.action);
 			s.syncAsUint32LE(point.entity2);
-			s.syncAsUint32LE(point.field_C.intValue);
+			s.syncAsUint32LE(point.param.intValue);
 
 			_savepoints.push_back(point);
 
@@ -214,7 +214,7 @@ void SavePoints::saveLoadWithSerializer(Common::Serializer &s) {
 			s.syncAsUint32LE((*it).entity1);
 			s.syncAsUint32LE((*it).action);
 			s.syncAsUint32LE((*it).entity2);
-			s.syncAsUint32LE((*it).field_C.intValue);
+			s.syncAsUint32LE((*it).param.intValue);
 		}
 	}
 }

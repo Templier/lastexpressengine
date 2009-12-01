@@ -197,7 +197,7 @@ void Entities::updateFields() {
 			break;
 
 		case 1:
-		case 2:
+		case 2:	// Replace calls to CheckFields8
 			if (field_49A != 1 || (field_491 + field_4A3 * 10) >= 10000)			
 			{	
 				if (field_49A == 2) {
@@ -229,6 +229,8 @@ void Entities::updateFields() {
 void Entities::setupSequences() {
 	if (!getFlags()->flag_1)
 		return;
+
+	error("Entities::setupSequences: not implemented!");
 
 }
 

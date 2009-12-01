@@ -174,6 +174,7 @@ private:
 };
 
 class LastExpressEngine;
+class Sequence;
 
 class EntityData : Common::Serializable {
 public:
@@ -262,35 +263,61 @@ public:
 
 	struct EntityCallData {		
 		byte callbacks[9];
-		// int ??
-		// int16 ??
+		// uint32 ??
+		// uint16 ??
 		// byte ??
 		byte current_call;
-		int16 field_491; // ?? (numScenes)
+		int16 field_491;
 		int16 field_493;
-		int16 field_495; // ?? (field 13) (entity index?)
+		int16 field_495;
+		//int16 field_497;
 		Inventory::InventoryItem inventoryItem;
 		byte field_49A;
-		byte field_49B;
-		byte field_49D;
-		byte field_4A1;	
+		int16 field_49B;		
+		int16 field_49D;
+
+		int16 field_4A1;	
 		int16 field_4A3;
 		byte field_4A5;
 		byte field_4A8;	
 
+		char sequenceName3[9];
+		char sequenceName2[9];
+		char sequenceName[9];
+
+		Sequence *sequence0;
+		Sequence *sequence1;
+		Sequence *sequence2;
+		Sequence *sequence3;
+
+
+
 		EntityCallData() {
+			memset(&callbacks, 0, 9 * sizeof(byte));
 			current_call = 0;
 			field_491 = 0;
 			field_493 = 0;
 			field_495 = 0;
+			//field_497 = 0;
 			inventoryItem = Inventory::kNoItem;
 			field_49A = 0;
 			field_49B = 0;
 			field_49D = 0;
+
 			field_4A1 = 0;
 			field_4A3 = 30;
 			field_4A5 = 0;
 			field_4A8 = 0;
+
+			memset(&sequenceName3, 0, 9 * sizeof(char));
+			memset(&sequenceName2, 0, 9 * sizeof(char));
+			memset(&sequenceName, 0, 9 * sizeof(char));
+
+			sequence0 = NULL;
+			sequence1 = NULL;
+			sequence2 = NULL;
+			sequence3 = NULL;
+
 		}
 	};
 

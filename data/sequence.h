@@ -47,7 +47,7 @@
 		uint32 {4}    - Unknown
 		uint32 {4}    - Unknown
 		byte {1}      - Compression type
-		byte {1}      - Unknown
+		byte {1}      - Subtype (determines which set of decompression functions will be called) => 0, 1, 2, 3
 		uint16 {2}    - Unknown
 		uint32 {4}    - Unknown
 		uint32 {4}    - Unknown

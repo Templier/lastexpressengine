@@ -242,13 +242,13 @@ public:
 		union {
 			uint32 intValue;
 			char charValue[4];
-		} field_C;
+		} param;
 
 		SavePoint() {
 			entity1 = kEntityNone;
 			action = kActionNone;
 			entity2 = kEntityNone;
-			field_C.intValue = 0;
+			param.intValue = 0;
 		}
 	};	
 
@@ -256,13 +256,13 @@ public:
 		EntityIndex entity1;
 		ActionIndex action;
 		EntityIndex entity2;
-		uint32 field_C;
+		uint32 param;
 
 		SavePointData() {
 			entity1 = kEntityNone;
 			action = kActionNone;
 			entity2 = kEntityNone;
-			field_C = 0;
+			param = 0;
 		}
 	};	
 
@@ -272,19 +272,19 @@ public:
 	~SavePoints();
 	
 	// Savepoints
-	void push(EntityIndex entity2, EntityIndex entity1, ActionIndex action, uint32 field_C = 0);
-	void pushAll(EntityIndex entity, ActionIndex action, uint32 field_C = 0);
+	void push(EntityIndex entity2, EntityIndex entity1, ActionIndex action, uint32 param = 0);
+	void pushAll(EntityIndex entity, ActionIndex action, uint32 param = 0);
 	void process();
 	void reset();
 
 	// Data
-	void addData(EntityIndex entity, ActionIndex action, uint32 field_C);
+	void addData(EntityIndex entity, ActionIndex action, uint32 param);
 
 	// Callbacks
 	void setCallback(EntityIndex index, Callback* callback);
 	Callback *getCallback(EntityIndex entity);
-	void call(EntityIndex entity2, EntityIndex entity1, ActionIndex action, uint32 field_C = 0);
-	void call(EntityIndex entity2, EntityIndex entity1, ActionIndex action, char* field_C);
+	void call(EntityIndex entity2, EntityIndex entity1, ActionIndex action, uint32 param = 0);
+	void call(EntityIndex entity2, EntityIndex entity1, ActionIndex action, char* param);
 
 	// Serializable
 	void saveLoadWithSerializer(Common::Serializer &s);
