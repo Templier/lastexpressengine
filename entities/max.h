@@ -35,15 +35,30 @@ class LastExpressEngine;
 class Max : public Entity {
 public:
 	Max(LastExpressEngine *engine);
-
-	// Setup	
+	
+	DECLARE_FUNCTION(function1)
+	DECLARE_FUNCTION_SEQ(function2)
+	// There doesn't seem to be a setup part for function 3 (no idea why), so we skip that part too
+	void function3(SavePoints::SavePoint *savepoint);
+	DECLARE_FUNCTION_SEQ(function4)
+	DECLARE_FUNCTION(savegame)
+	DECLARE_FUNCTION(function6)
+	DECLARE_FUNCTION(function7)
+	DECLARE_FUNCTION(function8)
+	DECLARE_FUNCTION(function9)
 	DECLARE_FUNCTION(chapter1)
 	DECLARE_FUNCTION(chapter2)
 	DECLARE_FUNCTION(chapter3)
+	DECLARE_FUNCTION(function13)
+	DECLARE_FUNCTION(function14)
+	DECLARE_FUNCTION(function15)
 	DECLARE_FUNCTION(chapter4)
+	DECLARE_FUNCTION(function17)
 	DECLARE_FUNCTION(chapter5)
 
-	void nullfunc(SavePoints::SavePoint *savepoint);
+private:	
+	DECLARE_CALL_FUNCTION(default, Max, int, int, int, int)
+	DECLARE_CALL_FUNCTION(char, Max, char*, int, int, char*)
 };
 
 } // End of namespace LastExpress

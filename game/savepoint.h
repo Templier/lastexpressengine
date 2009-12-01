@@ -101,6 +101,7 @@ public:
 
 	enum ActionIndex {
 		kActionNone = 0,
+		kAction2 = 2,
 		kAction3 = 3,
 		kAction5 = 5,
 		kAction6 = 6,

@@ -129,19 +129,7 @@ IMPLEMENT_FUNCTION(Mertens, function6, 6) {
 }
 
 IMPLEMENT_FUNCTION_INT2(Mertens, savegame, 9) {
-	switch (savepoint->action) {
-	default:
-		break;	
-
-	case SavePoints::kActionNone:
-		CALL_PREVIOUS_SAVEPOINT(SavePoints::kEntityMertens)
-		break;
-
-	case SavePoints::kActionDefault: 
-		save(SavePoints::kEntityMertens, _data->getCurrentParameters(0)->param1, _data->getCurrentParameters(0)->param2);
-		CALL_PREVIOUS_SAVEPOINT(SavePoints::kEntityMertens)
-		break;
-	}
+	CALL_SAVEGAME(SavePoints::kEntityMertens)
 }
 
 IMPLEMENT_FUNCTION_INT2(Mertens, function10, 10) {

@@ -78,23 +78,7 @@ Sophie::Sophie(LastExpressEngine *engine) : Entity(engine, SavePoints::kEntitySo
 
 //////////////////////////////////////////////////////////////////////////
 IMPLEMENT_FUNCTION(Sophie, function1, 1) {
-	switch (savepoint->action) {
-	default:
-		break;	
-
-	case SavePoints::kActionNone:
-		if (getEntities()->checkEntity(SavePoints::kEntitySophie, 3, _data->getCurrentParameters(0)->param1))
-			_data->getCurrentParameters(0)->param1 = (_data->getCurrentParameters(0)->param1 == 10000) ? 0 : 10000;
-		break;
-
-	case SavePoints::kActionDefault: 
-		_data->getData()->field_491 = 0;
-		_data->getData()->field_493 = 0;
-		_data->getData()->field_495 = 3;
-
-		_data->getCurrentParameters(0)->param1 = 10000;
-		break;
-	}
+	FUNCTION_1_IMPLEMENTATION(SavePoints::kEntitySophie)
 }
 
 //////////////////////////////////////////////////////////////////////////

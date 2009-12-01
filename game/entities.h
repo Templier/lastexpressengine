@@ -60,6 +60,9 @@ public:
 	void setupSequences();
 	void setupCallbacks();
 
+	void updateFields0(SavePoints::EntityIndex entity1, SavePoints::EntityIndex entity2);
+	void updateFields1(SavePoints::EntityIndex entity1, SavePoints::EntityIndex entity2);
+
 	// Sequences
 	void storeSequenceName(SavePoints::EntityIndex entity, const char* sequence);
 	void drawSequence(SavePoints::EntityIndex entity, const char* sequence);

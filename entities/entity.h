@@ -51,11 +51,6 @@ namespace LastExpress {
 #define ADD_NULL_FUNCTION() \
 	_callbacks.push_back(new ENTITY_CALLBACK(Entity, nullfunction, this));
 
-#define CALL_PREVIOUS_SAVEPOINT(entity) \
-	_data->getData()->current_call--; \
-	getSavePoints()->setCallback(entity, _callbacks[_data->getCurrentCallback()]); \
-	getSavePoints()->call(entity, entity, SavePoints::kAction18);
-
 //////////////////////////////////////////////////////////////////////////
 // Declaration
 #define DECLARE_NULL_FUNCTION() \
@@ -65,9 +60,9 @@ namespace LastExpress {
 	void name(SavePoints::SavePoint *savepoint); \
 	void setup_##name(int param1 = 0, int param2 = 0, int param3 = 0, int param4 = 0);
 
-#define DECLARE_FUNCTION_SEQ2(name) \
+#define DECLARE_FUNCTION_SEQ(name) \
 	void name(SavePoints::SavePoint *savepoint); \
-	void setup_##name(int param1 = 0, int param2 = 0, int param3 = 0, int param4 = 0);
+	void setup_##name(char* seq1, int param2 = 0, int param3 = 0, char* seq2 = 0);
 
 //////////////////////////////////////////////////////////////////////////
 // Call function
@@ -115,14 +110,33 @@ namespace LastExpress {
 		END_SETUP() \
 	} \
 	void class::name(SavePoints::SavePoint *savepoint)
+
+#define IMPLEMENT_FUNCTION_SEQ(class, name, index) \
+	void class::setup_##name(char* seq1, int param2, int param3, char* seq2) { \
+		BEGIN_SETUP(class, name, index) \
+		strncpy((char *)&((EntityData::EntityParametersSeq*)_data->getCurrentParameters(0))->seq1, seq1, 12); \
+		END_SETUP() \
+	} \
+	void class::name(SavePoints::SavePoint *savepoint)
 	
+#define IMPLEMENT_FUNCTION_SEQ_INT(class, name, index) \
+	void class::setup_##name(char* seq1, int param2, int param3, char* seq2) { \
+		BEGIN_SETUP(class, name, index) \
+		EntityData::EntityParametersSeq *params = (EntityData::EntityParametersSeq*)_data->getCurrentParameters(0); \
+		strncpy((char *)&params->seq1, seq1, 12); \
+		params->param2 = param2; \
+		END_SETUP() \
+	} \
+	void class::name(SavePoints::SavePoint *savepoint)
+
 #define IMPLEMENT_FUNCTION_SEQ2(class, name, index) \
 	void class::setup_##name(char* seq1, int param2, int param3, char* seq2) { \
 		BEGIN_SETUP(class, name, index) \
-		strncpy(&_data->getCurrentParameters(0)->seq1, seq1, 12); \
-		_data->getCurrentParameters(0)->param2 = param2; \
-		_data->getCurrentParameters(0)->param3 = param3; \
-		strncpy(&_data->getCurrentParameters(0)->seq2, seq2, 12); \
+		EntityData::EntityParametersSeq *params = (EntityData::EntityParametersSeq*)_data->getCurrentParameters(0); \
+		strncpy((char *)&params->seq1, seq1, 12); \
+		params->param2 = param2; \
+		params->param3 = param3; \
+		strncpy((char *)&params->seq2, seq2, 12); \
 		END_SETUP() \
 	} \
 	void class::name(SavePoints::SavePoint *savepoint)
@@ -137,6 +151,42 @@ namespace LastExpress {
 #define END_SETUP() \
 		_engine->getGameState()->getGameSavePoints()->call(_entityIndex, _entityIndex, SavePoints::kActionDefault);
 
+
+//////////////////////////////////////////////////////////////////////////
+// Function logic
+#define CALL_PREVIOUS_SAVEPOINT(entity) \
+	_data->getData()->current_call--; \
+	getSavePoints()->setCallback(entity, _callbacks[_data->getCurrentCallback()]); \
+	getSavePoints()->call(entity, entity, SavePoints::kAction18);
+
+#define FUNCTION_1_IMPLEMENTATION(entity) \
+	switch (savepoint->action) { \
+	default: \
+		break; \
+	case SavePoints::kActionNone: \
+		if (getEntities()->checkEntity(entity, 3, _data->getCurrentParameters(0)->param1)) \
+			_data->getCurrentParameters(0)->param1 = (_data->getCurrentParameters(0)->param1 == 10000) ? 0 : 10000; \
+		break; \
+	case SavePoints::kActionDefault:  \
+		_data->getData()->field_491 = 0; \
+		_data->getData()->field_493 = 0; \
+		_data->getData()->field_495 = 3; \
+		_data->getCurrentParameters(0)->param1 = 10000; \
+		break; \
+	}
+
+#define CALL_SAVEGAME(entity) \
+	switch (savepoint->action) { \
+	default: \
+		break; \
+	case SavePoints::kActionNone: \
+		CALL_PREVIOUS_SAVEPOINT(entity) \
+		break; \
+	case SavePoints::kActionDefault: \
+		save(entity, _data->getCurrentParameters(0)->param1, _data->getCurrentParameters(0)->param2); \
+		CALL_PREVIOUS_SAVEPOINT(entity) \
+		break; \
+	}
 
 //////////////////////////////////////////////////////////////////////////
 // Functors class for setup functions
@@ -205,6 +255,20 @@ public:
 		}
 	};
 
+	struct EntityParametersSeq : EntityParameters {
+		char seq1[12];
+		int param2;
+		int param3;
+		char seq2[12];
+
+		EntityParametersSeq() {
+			memset(&seq1, 0, 12);
+			param2 = 0;
+			param3 = 0;
+			memset(&seq2, 0, 12);			
+		}
+	};
+
 	struct EntityParametersSeq1 : EntityParameters {
 		int param1;
 		int param2;
@@ -220,20 +284,6 @@ public:
 			memset(&param4, 0, 12);	
 			param7 = 0;
 			param8 = 0;
-		}
-	};
-
-	struct EntityParametersSeq2 : EntityParameters {
-		char seq1[12];
-		int param2;
-		int param3;
-		char seq2[12];
-
-		EntityParametersSeq2() {
-			memset(&seq1, 0, 12);
-			param2 = 0;
-			param3 = 0;
-			memset(&seq2, 0, 12);			
 		}
 	};
 

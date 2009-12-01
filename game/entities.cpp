@@ -283,6 +283,15 @@ void Entities::processEntity(SavePoints::EntityIndex entity) {
 	error("Entities::processEntity: not implemented!");
 }
 
+//////////////////////////////////////////////////////////////////////////
+/// Fields update
+void Entities::updateFields0(SavePoints::EntityIndex entity1, SavePoints::EntityIndex entity2) {
+	error("Entities::updateFields0: not implemented!");
+}
+
+void Entities::updateFields1(SavePoints::EntityIndex entity1, SavePoints::EntityIndex entity2) {
+	error("Entities::updateFields1: not implemented!");
+}
 
 //////////////////////////////////////////////////////////////////////////
 // Accessors
