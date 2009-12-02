@@ -96,7 +96,7 @@ namespace LastExpress {
 #define IMPLEMENT_FUNCTION_INT(class, name, index) \
 	void class::setup_##name(int param1, int param2, int param3, int param4) { \
 	BEGIN_SETUP(class, name, index) \
-	_data->getCurrentParameters(0)->param1 = param1; \
+	_data->getCurrentParameters()->param1 = param1; \
 	END_SETUP() \
 	} \
 	void class::name(SavePoints::SavePoint *savepoint)
@@ -105,8 +105,8 @@ namespace LastExpress {
 #define IMPLEMENT_FUNCTION_INT2(class, name, index) \
 	void class::setup_##name(int param1, int param2, int param3, int param4) { \
 		BEGIN_SETUP(class, name, index) \
-		_data->getCurrentParameters(0)->param1 = param1; \
-		_data->getCurrentParameters(0)->param2 = param2; \
+		_data->getCurrentParameters()->param1 = param1; \
+		_data->getCurrentParameters()->param2 = param2; \
 		END_SETUP() \
 	} \
 	void class::name(SavePoints::SavePoint *savepoint)
@@ -114,7 +114,7 @@ namespace LastExpress {
 #define IMPLEMENT_FUNCTION_SEQ(class, name, index) \
 	void class::setup_##name(char* seq1, int param2, int param3, char* seq2) { \
 		BEGIN_SETUP(class, name, index) \
-		strncpy((char *)&((EntityData::EntityParametersSeq*)_data->getCurrentParameters(0))->seq1, seq1, 12); \
+		strncpy((char *)&((EntityData::EntityParametersSeq*)_data->getCurrentParameters())->seq1, seq1, 12); \
 		END_SETUP() \
 	} \
 	void class::name(SavePoints::SavePoint *savepoint)
@@ -122,7 +122,7 @@ namespace LastExpress {
 #define IMPLEMENT_FUNCTION_SEQ_INT(class, name, index) \
 	void class::setup_##name(char* seq1, int param2, int param3, char* seq2) { \
 		BEGIN_SETUP(class, name, index) \
-		EntityData::EntityParametersSeq *params = (EntityData::EntityParametersSeq*)_data->getCurrentParameters(0); \
+		EntityData::EntityParametersSeq *params = (EntityData::EntityParametersSeq*)_data->getCurrentParameters(); \
 		strncpy((char *)&params->seq1, seq1, 12); \
 		params->param2 = param2; \
 		END_SETUP() \
@@ -132,7 +132,7 @@ namespace LastExpress {
 #define IMPLEMENT_FUNCTION_SEQ2(class, name, index) \
 	void class::setup_##name(char* seq1, int param2, int param3, char* seq2) { \
 		BEGIN_SETUP(class, name, index) \
-		EntityData::EntityParametersSeq *params = (EntityData::EntityParametersSeq*)_data->getCurrentParameters(0); \
+		EntityData::EntityParametersSeq *params = (EntityData::EntityParametersSeq*)_data->getCurrentParameters(); \
 		strncpy((char *)&params->seq1, seq1, 12); \
 		params->param2 = param2; \
 		params->param3 = param3; \
@@ -164,14 +164,14 @@ namespace LastExpress {
 	default: \
 		break; \
 	case SavePoints::kActionNone: \
-		if (getEntities()->checkEntity(entity, 3, _data->getCurrentParameters(0)->param1)) \
-			_data->getCurrentParameters(0)->param1 = (_data->getCurrentParameters(0)->param1 == 10000) ? 0 : 10000; \
+		if (getEntities()->checkEntity(entity, 3, _data->getCurrentParameters()->param1)) \
+			_data->getCurrentParameters()->param1 = (_data->getCurrentParameters()->param1 == 10000) ? 0 : 10000; \
 		break; \
 	case SavePoints::kActionDefault:  \
 		_data->getData()->field_491 = 0; \
 		_data->getData()->field_493 = 0; \
 		_data->getData()->field_495 = 3; \
-		_data->getCurrentParameters(0)->param1 = 10000; \
+		_data->getCurrentParameters()->param1 = 10000; \
 		break; \
 	}
 
@@ -183,7 +183,7 @@ namespace LastExpress {
 		CALL_PREVIOUS_SAVEPOINT(entity) \
 		break; \
 	case SavePoints::kActionDefault: \
-		save(entity, _data->getCurrentParameters(0)->param1, _data->getCurrentParameters(0)->param2); \
+		save(entity, _data->getCurrentParameters()->param1, _data->getCurrentParameters()->param2); \
 		CALL_PREVIOUS_SAVEPOINT(entity) \
 		break; \
 	}
@@ -376,7 +376,7 @@ public:
 	EntityCallData 	  *getData() { return &_data; }
 
 	EntityParameters  *getParameters(int callback, int index) { return _parameters[callback].parameters[index]; }	
-	EntityParameters  *getCurrentParameters(int index) { return getParameters(_data.current_call, index); }
+	EntityParameters  *getCurrentParameters(int index = 0) { return getParameters(_data.current_call, index); }
 	void 			   setParameters(int callback, int index, EntityParameters* parameters);
 	void 			   resetCurrentParameters();
 

@@ -87,20 +87,20 @@ IMPLEMENT_FUNCTION(Tables, draw, 6) {
 
 		case State::kChapter1:
 			if (getState()->time > 1165500)
-				if (!_data->getCurrentParameters(0)->param1)
-					_data->getCurrentParameters(0)->param1 = 1;
+				if (!_data->getCurrentParameters()->param1)
+					_data->getCurrentParameters()->param1 = 1;
 			break;
 
 		case State::kChapter3:
 			if (getState()->time > 2052000)
-				if (!_data->getCurrentParameters(0)->param2)
-					_data->getCurrentParameters(0)->param2 = 1;
+				if (!_data->getCurrentParameters()->param2)
+					_data->getCurrentParameters()->param2 = 1;
 			break;
 
 		case State::kChapter4:
 			if (getState()->time > 2488500)
-				if (!_data->getCurrentParameters(0)->param3)
-					_data->getCurrentParameters(0)->param3 = 1;
+				if (!_data->getCurrentParameters()->param3)
+					_data->getCurrentParameters()->param3 = 1;
 			break;
 
 		}

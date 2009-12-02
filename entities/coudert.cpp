@@ -144,8 +144,8 @@ IMPLEMENT_FUNCTION(Coudert, chapter1, 36) {
 
 	case SavePoints::kActionNone: 
 		if (getState()->time > 1062000) {
-			if (!_data->getCurrentParameters(0)->param1) {
-				_data->getCurrentParameters(0)->param1 = 1;				
+			if (!_data->getCurrentParameters()->param1) {
+				_data->getCurrentParameters()->param1 = 1;				
 				_data->setCallback(_data->getData()->current_call + 8, 1);				
 				// call function call(, 0, 0, 0, 0);
 			}

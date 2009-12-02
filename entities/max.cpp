@@ -71,7 +71,7 @@ IMPLEMENT_FUNCTION_SEQ(Max, function2, 2) {
 		break;
 
 	case SavePoints::kActionDefault: 
-		getSound()->playSound(SavePoints::kEntityMax, ((EntityData::EntityParametersSeq*)_data->getCurrentParameters(0))->seq1, -1 , 0);		
+		getSound()->playSound(SavePoints::kEntityMax, ((EntityData::EntityParametersSeq*)_data->getCurrentParameters())->seq1, -1 , 0);		
 		break;
 	}
 }
@@ -87,13 +87,13 @@ void Max::function3(SavePoints::SavePoint *savepoint) {
 		break;
 
 	case SavePoints::kActionDefault: 
-		getEntities()->storeSequenceName(SavePoints::kEntityMax, ((EntityData::EntityParametersSeq*)_data->getCurrentParameters(0))->seq1);
+		getEntities()->storeSequenceName(SavePoints::kEntityMax, ((EntityData::EntityParametersSeq*)_data->getCurrentParameters())->seq1);
 		break;
 	}
 }
 
 IMPLEMENT_FUNCTION_SEQ_INT(Max, function4, 4) {
-	EntityData::EntityParametersSeq *params = (EntityData::EntityParametersSeq*)_data->getCurrentParameters(0);
+	EntityData::EntityParametersSeq *params = (EntityData::EntityParametersSeq*)_data->getCurrentParameters();
 
 	switch (savepoint->action) {
 	default:
@@ -117,15 +117,109 @@ IMPLEMENT_FUNCTION_INT2(Max, savegame, 5) {
 }
 
 IMPLEMENT_FUNCTION(Max, function6, 6) {
+	switch (savepoint->action) {
+	default:
+		break;
+
+	case SavePoints::kActionNone: 
+		if (_data->getCurrentParameters()->param2) {
+			if (_data->getCurrentParameters()->param2 > (int)getState()->time)
+				break;
+			
+			_data->getCurrentParameters()->param2 = 2147483647;
+		} else {
+			_data->getCurrentParameters()->param2 = _data->getCurrentParameters()->param1 + getState()->time;
+		}
+
+		getSound()->playSound(SavePoints::kEntityMax, "Max1122", -1, 0);
+		_data->getCurrentParameters()->param1 = 255 * ( 4 * random(20) + 40);
+		_data->getCurrentParameters()->param2 = 0;
+		break;
+
+	case SavePoints::kActionDefault: 
+		_data->getCurrentParameters()->param1 = 255 * ( 4 * random(20) + 40);
+		break;
+
+	case SavePoints::kAction71277948:
+		_data->setNextCallback(1);
+		call(new ENTITY_SETUP_DEFAULT(Max, setup_function7));
+		break;
+
+	case SavePoints::kAction158007856:
+		getSound()->playSound(SavePoints::kEntityMax, "Max1122", -1, 0);
+		_data->getCurrentParameters()->param1 = 255 * ( 4 * random(20) + 40);
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Max, function7, 7) {
+	switch (savepoint->action) {
+	default:
+		break;
+
+	case SavePoints::kActionNone: 		
+		break;
+
+	case SavePoints::kAction3: 
+		break;
+
+	case SavePoints::kAction8: 
+		break;
+
+	case SavePoints::kActionDefault: 
+		break;
+
+	case SavePoints::kAction17: 
+		break;
+
+	case SavePoints::kAction18: 
+		break;
+
+	case SavePoints::kAction101687594: 
+		break;
+
+	case SavePoints::kAction122358304: 
+		break;
+
+	case SavePoints::kAction135204609: 
+		break;
+
+	case SavePoints::kAction158007856: 
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Max, function8, 8) {
+	switch (savepoint->action) {
+	default:
+		break;
+
+	case SavePoints::kActionNone: 		
+		break;
+
+	case SavePoints::kAction9: 		
+		break;
+
+	case SavePoints::kActionDefault: 
+		break;
+
+	case SavePoints::kAction18: 		
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Max, function9, 9) {
+	switch (savepoint->action) {
+	default:
+		break;
+
+	case SavePoints::kActionNone: 
+		
+		break;
+
+	case SavePoints::kActionDefault: 
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Max, chapter1, 10) {
@@ -135,8 +229,8 @@ IMPLEMENT_FUNCTION(Max, chapter1, 10) {
 
 	case SavePoints::kActionNone: 
 		if (getState()->time > 1062000) {
-			if (!_data->getCurrentParameters(0)->param1) {
-				_data->getCurrentParameters(0)->param1 = 1;
+			if (!_data->getCurrentParameters()->param1) {
+				_data->getCurrentParameters()->param1 = 1;
 				setup_function6();
 			}
 		}
@@ -192,12 +286,74 @@ IMPLEMENT_FUNCTION(Max, chapter3, 12) {
 }
 
 IMPLEMENT_FUNCTION(Max, function13, 13) {
+	switch (savepoint->action) {
+	default:
+		break;
+
+	case SavePoints::kActionNone: 
+
+		break;
+
+	case SavePoints::kActionDefault: 
+		break;
+
+	case SavePoints::kAction71277948: 
+		break;
+
+	case SavePoints::kAction122358304: 
+		break;
+
+	case SavePoints::kAction135204609: 
+		break;
+
+	case SavePoints::kAction158007856: 
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Max, function14, 14) {
+	switch (savepoint->action) {
+	default:
+		break;
+
+	case SavePoints::kActionNone: 		
+		break;
+
+	case SavePoints::kAction2: 		
+		break;
+
+	case SavePoints::kAction9: 		
+		break;
+
+	case SavePoints::kActionDefault: 
+		break;
+
+	case SavePoints::kAction18: 		
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Max, function15, 15) {
+	switch (savepoint->action) {
+	default:
+		break;
+
+	case SavePoints::kActionNone: 
+
+		break;
+
+	case SavePoints::kActionDefault: 
+		break;
+
+	case SavePoints::kAction18: 
+		break;
+
+	case SavePoints::kAction122358304: 
+		break;
+
+	case SavePoints::kAction135204609: 
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Max, chapter4, 16) {
@@ -219,6 +375,23 @@ IMPLEMENT_FUNCTION(Max, chapter4, 16) {
 }
 
 IMPLEMENT_FUNCTION(Max, function17, 17) {
+	switch (savepoint->action) {
+	default:
+		break;
+
+	case SavePoints::kActionNone: 
+
+		break;
+
+	case SavePoints::kActionDefault: 
+		break;
+
+	case SavePoints::kAction122358304: 
+		break;
+
+	case SavePoints::kAction135204609: 
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Max, chapter5, 18) {

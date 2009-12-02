@@ -106,19 +106,19 @@ IMPLEMENT_FUNCTION(Train, process, 8) {
 	case SavePoints::kActionNone: {
 		// Play smoke animation
 		if ((getEntities()->checkFields7(3) || getEntities()->checkFields7(4)) 
-		  && _data->getCurrentParameters(0)->param4
-		  && !_data->getCurrentParameters(0)->param5) {
+		  && _data->getCurrentParameters()->param4
+		  && !_data->getCurrentParameters()->param5) {
 
-		  _data->getCurrentParameters(0)->param4 -= 1;
+		  _data->getCurrentParameters()->param4 -= 1;
 
-		  if (!_data->getCurrentParameters(0)->param4 && getProgress().jacket == State::kGreenJacket) {
+		  if (!_data->getCurrentParameters()->param4 && getProgress().jacket == State::kGreenJacket) {
 			  getAction()->playAnimation(isDay() ? Action::kCathSmokeDay : Action::kCathSmokeNight);
-			  _data->getCurrentParameters(0)->param5 = 1;
+			  _data->getCurrentParameters()->param5 = 1;
 			  getLogic()->processScene();
 		  }			
 		}
 
-		if (_data->getCurrentParameters(0)->param6) {
+		if (_data->getCurrentParameters()->param6) {
 		
 			if (_data->getCurrentParameters(1)->param7) {
 				_data->getCurrentParameters(1)->param7 = getState()->time + 900;
@@ -135,7 +135,7 @@ IMPLEMENT_FUNCTION(Train, process, 8) {
 		_data->getCurrentParameters(1)->param7 = 0;
 
 label_skip:
-		if (_data->getCurrentParameters(0)->param7) {
+		if (_data->getCurrentParameters()->param7) {
 			if (!_data->getCurrentParameters(1)->param8) {
 				_data->getCurrentParameters(1)->param8 = getState()->time + 4500;
 				// FIXME not sure what it is checking here, resetting param8 & param7 in some case (overflow?)
@@ -143,7 +143,7 @@ label_skip:
 
 			if (_data->getCurrentParameters(1)->param8 < (int)getState()->time) {
 				// FIXME it seems to be setting param8 to 0x7FFFFFFF and then to 0 ?
-				_data->getCurrentParameters(0)->param7 = 0;
+				_data->getCurrentParameters()->param7 = 0;
 				_data->getCurrentParameters(1)->param8 = 0;
 			}
 		}
@@ -156,7 +156,7 @@ label_skip:
 		}
 		
 		// Play clock sound
-		if (_data->getCurrentParameters(0)->param6) {
+		if (_data->getCurrentParameters()->param6) {
 			getSound()->playSound(SavePoints::kEntityNone, "ZFX1001", -1, 0);
 		}
 
@@ -187,15 +187,15 @@ label_skip:
 
 		// Play clock sound
 		if (getEntities()->checkFields4(5, 81)) {
-			_data->getCurrentParameters(0)->param6 = 1;
+			_data->getCurrentParameters()->param6 = 1;
 			getSound()->playSound(SavePoints::kEntityNone, "ZFX1001", -1, 0);
 		} else {
-			_data->getCurrentParameters(0)->param6 = 0;
+			_data->getCurrentParameters()->param6 = 0;
 		}
 
 		// Draw moving background behind windows
-		if (_data->getCurrentParameters(0)->param3) {
-			if (getEntityData(SavePoints::kEntityNone)->field_495 != _data->getCurrentParameters(0)->param1 || isDay() != (_data->getCurrentParameters(0)->param2 > 0)) {
+		if (_data->getCurrentParameters()->param3) {
+			if (getEntityData(SavePoints::kEntityNone)->field_495 != _data->getCurrentParameters()->param1 || isDay() != (_data->getCurrentParameters()->param2 > 0)) {
 				switch (getEntityData(SavePoints::kEntityNone)->field_495) {
 				default:
 					getEntities()->drawSequences(SavePoints::kEntityTrain);
@@ -223,14 +223,14 @@ label_skip:
 				}
 
 				// Set parameters so we do not get called twice
-				_data->getCurrentParameters(0)->param1 = getEntityData(SavePoints::kEntityNone)->field_495;
-				_data->getCurrentParameters(0)->param2 = isDay();
+				_data->getCurrentParameters()->param1 = getEntityData(SavePoints::kEntityNone)->field_495;
+				_data->getCurrentParameters()->param2 = isDay();
 			}
 		}
 
-		if (!_data->getCurrentParameters(0)->param5) {
-			_data->getCurrentParameters(0)->param4 = 2700;	// this is the sound file name
-			//_data->getCurrentParameters(0)->param5 = 0;
+		if (!_data->getCurrentParameters()->param5) {
+			_data->getCurrentParameters()->param4 = 2700;	// this is the sound file name
+			//_data->getCurrentParameters()->param5 = 0;
 		}
 
 		if (getProgress().jacket == State::kOriginalJacket) {
@@ -293,7 +293,7 @@ label_skip:
 		break;
 
 	case SavePoints::kAction191350523:
-		_data->getCurrentParameters(0)->param3 = 0;
+		_data->getCurrentParameters()->param3 = 0;
 		getEntities()->drawSequences(SavePoints::kEntityTrain);
 		break;
 
@@ -303,27 +303,27 @@ label_skip:
 		break;
 
 	case SavePoints::kAction203339360:
-		if (!_data->getCurrentParameters(0)->param7) {
+		if (!_data->getCurrentParameters()->param7) {
 			_data->setNextCallback(5);
 			call(new ENTITY_SETUP_DEFAULT(Train, setup_execute), 2, 148);
 		} else {
-			_data->getCurrentParameters(0)->param7 = 1;
+			_data->getCurrentParameters()->param7 = 1;
 			getAction()->playAnimation(Action::kLocomotiveConductorsLook);
 			getLogic()->loadSceneFromData(7, 2, 255);
 		}
 		break;
 
 	case SavePoints::kAction203419131:
-		if (!_data->getCurrentParameters(0)->param3) {
-			_data->getCurrentParameters(0)->param1 = 0;
-			_data->getCurrentParameters(0)->param3 = 1;
+		if (!_data->getCurrentParameters()->param3) {
+			_data->getCurrentParameters()->param1 = 0;
+			_data->getCurrentParameters()->param3 = 1;
 			getSavePoints()->push(SavePoints::kEntityTrain, SavePoints::kEntityTrain, SavePoints::kAction17);
 		}
 		break;
 
 	case SavePoints::kAction203863200:
 		if (savepoint->param.charValue) {
-			_data->getCurrentParameters(0)->param8 = 1;
+			_data->getCurrentParameters()->param8 = 1;
 			strcpy((char *)&parameters1->param4, savepoint->param.charValue);	// this is the sound file name
 		}
 		break;
@@ -385,11 +385,11 @@ label_skip:
 
 void Train::resetParam8() {
 	EntityData::EntityParametersSeq1 *parameters1 = (EntityData::EntityParametersSeq1*)_data->getCurrentParameters(1);
-	if (_data->getCurrentParameters(0)->param8
+	if (_data->getCurrentParameters()->param8
 		&& getEntities()->checkFields1(SavePoints::kEntityNone, parameters1->param1, parameters1->param2)
 		&& getEntities()->checkFields1(SavePoints::kEntityNone, parameters1->param1, parameters1->param3)) {
 			// loads a file in the sound cache (param4)
-			_data->getCurrentParameters(0)->param8 = 0;
+			_data->getCurrentParameters()->param8 = 0;
 	}
 }
 

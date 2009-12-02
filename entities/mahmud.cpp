@@ -79,8 +79,8 @@ IMPLEMENT_FUNCTION(Mahmud, chapter1, 15) {
 
 	case SavePoints::kActionNone: 
 		if (getState()->time > 1062000) {
-			if (!_data->getCurrentParameters(0)->param1) {
-				_data->getCurrentParameters(0)->param1 = 1;
+			if (!_data->getCurrentParameters()->param1) {
+				_data->getCurrentParameters()->param1 = 1;
 				// call function
 			}
 		}

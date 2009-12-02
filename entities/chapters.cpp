@@ -112,7 +112,7 @@ IMPLEMENT_FUNCTION(Chapters, chapter1_init, 7) {
 		getObjects()->updateField4((Objects::ObjectIndex)i, 2);
 	}
 
-	_data->getCurrentParameters(0)->param1 = 40;
+	_data->getCurrentParameters()->param1 = 40;
 
 	getObjects()->updateField4(Objects::kObject25, 1);
 	getObjects()->updateField4(Objects::kObjectGreenSleepingCar, 1);

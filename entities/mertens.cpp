@@ -151,13 +151,13 @@ IMPLEMENT_FUNCTION_INT(Mertens, function11, 11) {
 				break;
 		}
 
-		if (_data->getCurrentParameters(0)->param2) {
-			if (_data->getCurrentParameters(0)->param2  > (int)getState()->time)
+		if (_data->getCurrentParameters()->param2) {
+			if (_data->getCurrentParameters()->param2  > (int)getState()->time)
 				break;
 
-			_data->getCurrentParameters(0)->param2 = 2147483647;
+			_data->getCurrentParameters()->param2 = 2147483647;
 		} else {
-			_data->getCurrentParameters(0)->param2 = _data->getCurrentParameters(0)->param1 + getState()->time;
+			_data->getCurrentParameters()->param2 = _data->getCurrentParameters()->param1 + getState()->time;
 		}
 
 		CALL_PREVIOUS_SAVEPOINT(SavePoints::kEntityMertens)
@@ -263,8 +263,8 @@ IMPLEMENT_FUNCTION(Mertens, chapter1, 34) {
 
 	case SavePoints::kActionNone: 
 		if (getState()->time > 1062000) {
-			if (!_data->getCurrentParameters(0)->param1) {
-				_data->getCurrentParameters(0)->param1 = 1;
+			if (!_data->getCurrentParameters()->param1) {
+				_data->getCurrentParameters()->param1 = 1;
 				setup_function41();
 			}
 		}

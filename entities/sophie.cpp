@@ -88,7 +88,7 @@ IMPLEMENT_FUNCTION_INT2(Sophie, function2, 2) {
 		break;
 
 	case SavePoints::kActionNone: {
-		_data->getCurrentParameters(0)->param3 = 0;
+		_data->getCurrentParameters()->param3 = 0;
 
 		// Sophie
 		byte field_49A = _data->getData()->field_49A;
@@ -103,11 +103,11 @@ IMPLEMENT_FUNCTION_INT2(Sophie, function2, 2) {
 		 || (field_49A == 1 && field_495 >= rebecca_field_495 && field_491 > rebecca_field_491)
 		 || (field_49A == 2 && field_495 <= rebecca_field_495 && field_491 < rebecca_field_491)) {
 			 _data->getData()->field_49B = 0;
-			 _data->getCurrentParameters(0)->param3 = 1;
+			 _data->getCurrentParameters()->param3 = 1;
 		}
 
-		if (!_data->getCurrentParameters(0)->param3)
-			getEntities()->checkEntity(SavePoints::kEntitySophie, _data->getCurrentParameters(0)->param1, _data->getCurrentParameters(0)->param2);
+		if (!_data->getCurrentParameters()->param3)
+			getEntities()->checkEntity(SavePoints::kEntitySophie, _data->getCurrentParameters()->param1, _data->getCurrentParameters()->param2);
 
 		break;
 	}
@@ -121,7 +121,7 @@ IMPLEMENT_FUNCTION_INT2(Sophie, function2, 2) {
 		break;
 
 	case SavePoints::kActionDefault:
-		getEntities()->checkEntity(SavePoints::kEntitySophie, _data->getCurrentParameters(0)->param1, _data->getCurrentParameters(0)->param2);
+		getEntities()->checkEntity(SavePoints::kEntitySophie, _data->getCurrentParameters()->param1, _data->getCurrentParameters()->param2);
 		break;
 
 	case SavePoints::kAction123668192:
@@ -210,8 +210,8 @@ IMPLEMENT_FUNCTION(Sophie, chapter1, 4) {
 
 	case SavePoints::kActionNone:
 		if (getState()->time > 1062000)
-			if (!_data->getCurrentParameters(0)->param1) {
-				_data->getCurrentParameters(0)->param1 = 1;
+			if (!_data->getCurrentParameters()->param1) {
+				_data->getCurrentParameters()->param1 = 1;
 				setup_function3();
 			}
 		break;
