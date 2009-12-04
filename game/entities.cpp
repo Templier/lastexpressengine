@@ -27,6 +27,7 @@
 
 // Data
 #include "lastexpress/data/scene.h"
+#include "lastexpress/data/sequence.h"
 
 // Entities
 #include "lastexpress/entities/abbot.h"
@@ -293,6 +294,10 @@ void Entities::updateFields1(SavePoints::EntityIndex entity1, SavePoints::Entity
 	error("Entities::updateFields1: not implemented!");
 }
 
+void Entities::updateFields2(SavePoints::EntityIndex entity1, SavePoints::EntityIndex entity2) {
+	error("Entities::updateFields2: not implemented!");
+}
+
 //////////////////////////////////////////////////////////////////////////
 // Accessors
 Entity *Entities::get(SavePoints::EntityIndex entity) {
@@ -456,6 +461,10 @@ bool Entities::checkFields9(SavePoints::EntityIndex entity1, SavePoints::EntityI
 
 bool Entities::checkFields10(SavePoints::EntityIndex entity) {
 	return getData(entity)->getData()->field_493 < 3;
+}
+
+bool Entities::checkSequence0(SavePoints::EntityIndex entity) {
+	return (getData(entity)->getData()->sequence0 && (getData(entity)->getData()->sequence0->getFrameInfo(0)->subType != 3));
 }
 
 } // End of namespace LastExpress

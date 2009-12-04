@@ -62,6 +62,7 @@ public:
 
 	void updateFields0(SavePoints::EntityIndex entity1, SavePoints::EntityIndex entity2);
 	void updateFields1(SavePoints::EntityIndex entity1, SavePoints::EntityIndex entity2);
+	void updateFields2(SavePoints::EntityIndex entity1, SavePoints::EntityIndex entity2);
 
 	// Sequences
 	void storeSequenceName(SavePoints::EntityIndex entity, const char* sequence);
@@ -89,6 +90,8 @@ public:
 	bool checkFields8(SavePoints::EntityIndex entity);
 	bool checkFields9(SavePoints::EntityIndex entity1, SavePoints::EntityIndex entity2, int value);
 	bool checkFields10(SavePoints::EntityIndex entity);
+
+	bool checkSequence0(SavePoints::EntityIndex entity);
 
 private:
 	LastExpressEngine	    *_engine;
