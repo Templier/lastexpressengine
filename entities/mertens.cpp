@@ -111,7 +111,7 @@ IMPLEMENT_FUNCTION(Mertens, function6, 6) {
 		 && !getEntities()->checkFields3(SavePoints::kEntityNone)
 		 && !getEntities()->checkFields10(SavePoints::kEntityNone)) {
 			 _data->setNextCallback(1);
-			 call(new ENTITY_SETUP_DEFAULT(Mertens, setup_savegame), 2, 123);
+			 call(new ENTITY_SETUP_DEFAULT(Mertens, setup_savegame), 2, Action::kMertensBloodJacket);
 		}
 		break;
 
@@ -147,7 +147,7 @@ IMPLEMENT_FUNCTION_INT(Mertens, function11, 11) {
 			&& !getEntities()->checkFields3(SavePoints::kEntityNone)
 			&& !getEntities()->checkFields10(SavePoints::kEntityNone)) {
 				_data->setNextCallback(1);
-				call(new ENTITY_SETUP_DEFAULT(Mertens, setup_savegame), 2, 123);
+				call(new ENTITY_SETUP_DEFAULT(Mertens, setup_savegame), 2, Action::kMertensBloodJacket);
 				break;
 		}
 
@@ -155,7 +155,7 @@ IMPLEMENT_FUNCTION_INT(Mertens, function11, 11) {
 			if (_data->getCurrentParameters()->param2  > (int)getState()->time)
 				break;
 
-			_data->getCurrentParameters()->param2 = 2147483647;
+			_data->getCurrentParameters()->param2 = EntityData::kParameterTime;
 		} else {
 			_data->getCurrentParameters()->param2 = _data->getCurrentParameters()->param1 + getState()->time;
 		}
@@ -207,7 +207,7 @@ IMPLEMENT_FUNCTION(Mertens, function17, 17) {
 				getLogic()->loadSceneFromItem(Inventory::kItem7);
 
 				if (getEntities()->checkFields4(3, 68)) {
-					getSound()->playSound(SavePoints::kEntityNone, "CON1110", -1, 0);
+					getSound()->playSound(SavePoints::kEntityNone, "CON1110");
 					getLogic()->loadSceneFromData(3, 25, 255);
 				}
 

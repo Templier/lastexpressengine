@@ -700,7 +700,7 @@ IMPLEMENT_ACTION(dropItem) {
 
 		if (location == 2) {
 			if (!getProgress().field_58) {
-				getLogic()->savegame(1, 0, SavePoints::kEntityNone, 0);
+				getLogic()->savegame(0, SavePoints::kEntityNone, kActionNone);
 				getProgress().field_58 = 1;
 			}
 
@@ -745,10 +745,10 @@ IMPLEMENT_ACTION(enterCompartment) {
 			hotspot->scene = 0;
 		}
 	} else {
-		getLogic()->savegame(1, 0, SavePoints::kEntityNone, 0);
-		getSound()->playSound(SavePoints::kEntityNone, "LIB014", -1, 0);		
+		getLogic()->savegame(0, SavePoints::kEntityNone, kActionNone);
+		getSound()->playSound(SavePoints::kEntityNone, "LIB014");		
 		playAnimation(kCathFindCorpse);
-		getSound()->playSound(SavePoints::kEntityNone, "LIB015", -1, 0);
+		getSound()->playSound(SavePoints::kEntityNone, "LIB015");
 		getProgress().event_found_corpse = 1;
 		hotspot->scene = 42; // Tyler compartment with corpse on floor
 	}
@@ -873,7 +873,7 @@ IMPLEMENT_ACTION(climbUpTrain) {
 
 //////////////////////////////////////////////////////////////////////////
 IMPLEMENT_ACTION(climbDownTrain) {
-	Events evt = kInvalid;
+	EventIndex evt = kActionNone;
 	switch (getProgress().chapter) {
 	default:
 		return;
@@ -1093,7 +1093,7 @@ IMPLEMENT_ACTION(catchBeetle) {
 //////////////////////////////////////////////////////////////////////////
 IMPLEMENT_ACTION(exitCompartment) {
 	if (!getProgress().field_30 && getProgress().jacket != 0) {
-		getLogic()->savegame(1, 0, SavePoints::kEntityNone, 0);
+		getLogic()->savegame(0, SavePoints::kEntityNone, kActionNone);
 		getProgress().field_30 = 1;
 	}
 
@@ -1143,7 +1143,7 @@ IMPLEMENT_ACTION(32) {
 
 //////////////////////////////////////////////////////////////////////////
 IMPLEMENT_ACTION(useWhistle) {
-	Events evt = kInvalid;
+	EventIndex evt = kActionNone;
 
 	switch (hotspot->param1) {
 	default:
@@ -1191,7 +1191,7 @@ IMPLEMENT_ACTION(useWhistle) {
 
 	}	
 
-	if (evt != kInvalid) {
+	if (evt != kActionNone) {
 		playAnimation(evt);
 		if (!hotspot->scene)
 			getLogic()->processScene();

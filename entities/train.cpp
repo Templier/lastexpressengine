@@ -157,7 +157,7 @@ label_skip:
 		
 		// Play clock sound
 		if (_data->getCurrentParameters()->param6) {
-			getSound()->playSound(SavePoints::kEntityNone, "ZFX1001", -1, 0);
+			getSound()->playSound(SavePoints::kEntityNone, "ZFX1001");
 		}
 
 		break;
@@ -188,7 +188,7 @@ label_skip:
 		// Play clock sound
 		if (getEntities()->checkFields4(5, 81)) {
 			_data->getCurrentParameters()->param6 = 1;
-			getSound()->playSound(SavePoints::kEntityNone, "ZFX1001", -1, 0);
+			getSound()->playSound(SavePoints::kEntityNone, "ZFX1001");
 		} else {
 			_data->getCurrentParameters()->param6 = 0;
 		}

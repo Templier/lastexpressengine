@@ -55,8 +55,8 @@ public:
 	//   - DU: during the day, coming up the train
 	//   - ND: during the night, coming down the train
 	//   - NU: during the night, coming up the train
-	enum Events {
-		kInvalid = 0,
+	enum EventIndex {
+		kActionNone = 0,
 		kGotALight = 1,
 		kGotALightD = 2,
 		kDinerMindJoin = 3,

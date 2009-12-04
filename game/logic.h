@@ -28,6 +28,7 @@
 
 #include "lastexpress/data/cursor.h"
 
+#include "lastexpress/game/action.h"
 #include "lastexpress/game/inventory.h"
 #include "lastexpress/game/object.h"
 #include "lastexpress/game/savepoint.h"
@@ -59,7 +60,7 @@ public:
 	void startGame();
 	void switchGame();
 
-	void savegame(int param1, int param2, SavePoints::EntityIndex entity, int param4);
+	void savegame(int param1, SavePoints::EntityIndex entity, Action::EventIndex event);
 	void gameOver(int a1, int a2, int scene, bool showScene);
 
 	// Scene

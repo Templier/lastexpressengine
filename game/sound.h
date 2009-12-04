@@ -40,7 +40,7 @@ public:
 	~Sound();
 
 	// Sound playing
-	void playSound(SavePoints::EntityIndex entity, const char *filename, int a3, byte a4);
+	void playSound(SavePoints::EntityIndex entity, const char *filename, int a3 = -1, byte a4 = 0);
 
 	void playMusic(SavePoints::EntityIndex entity, byte id, int a3, byte a4);	
 	void playDialog(SavePoints::EntityIndex entity, SavePoints::EntityIndex entityDialog, int a3, byte a4);

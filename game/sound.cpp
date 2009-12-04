@@ -582,9 +582,9 @@ void Sound::excuseMe(SavePoints::EntityIndex entity, int param2, int param3) {
 				}
 			} else {
 				if (isDay()) {
-					playSound(SavePoints::kEntityNone, (getProgress().field_18 == 2 ? "CON1110F" : "CON1110E"), -1, 0);
+					playSound(SavePoints::kEntityNone, (getProgress().field_18 == 2 ? "CON1110F" : "CON1110E"));
 				} else {
-					playSound(SavePoints::kEntityNone, "CON1110D", -1, 0);
+					playSound(SavePoints::kEntityNone, "CON1110D");
 				}
 			}
 		}
@@ -647,7 +647,7 @@ void Sound::excuseMe(SavePoints::EntityIndex entity, int param2, int param3) {
 
 	case SavePoints::kEntityVerges:
 		if (testParameter(param2)) {
-			playSound(SavePoints::kEntityNone, (random(2) ? "TRA1113A" : "TRA1113B"), -1, 0);
+			playSound(SavePoints::kEntityNone, (random(2) ? "TRA1113A" : "TRA1113B"));
 		} else {
 			playSound(SavePoints::kEntityNone, "TRA1112", param3, 0);
 		}

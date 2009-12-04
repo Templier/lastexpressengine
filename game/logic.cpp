@@ -147,7 +147,7 @@ void Logic::gameOver(int a1, int a2, int scene, bool showScene) {
 }
 
 // Save game
-void Logic::savegame(int param1, int param2, SavePoints::EntityIndex entity, int param4) {
+void Logic::savegame(int param1, SavePoints::EntityIndex entity, Action::EventIndex event) {
 	warning("Logic::savegame: not implemented!");
 }
 
@@ -471,7 +471,7 @@ void Logic::preProcessScene(uint32 *index) {
 
 				if (State::getPowerOfTwo(getState()->field16[scene->getHeader()->param1]) != 30 
 				 && State::getPowerOfTwo(getState()->field16_2[scene->getHeader()->param1]) != 30 )
-					getSound()->playSound(SavePoints::kEntityNone, "CAT1126A", -1, 0);				
+					getSound()->playSound(SavePoints::kEntityNone, "CAT1126A");				
 
 				*index = scene->getHotspot()->scene;
 			} else {

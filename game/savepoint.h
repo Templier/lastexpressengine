@@ -166,7 +166,8 @@ public:
 		kAction158007856 = 158007856,
 		kAction101687594 = 101687594,
 		kAction122358304 = 122358304,
-		kAction135204609 = 135204609,
+		kActionMaxFreeFromCage = 135204609,
+		kAction156622016 = 156622016,
 
 		/////////////////////////////
 		// Mertens

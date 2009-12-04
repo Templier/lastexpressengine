@@ -63,6 +63,7 @@ public:
 	void updateFields0(SavePoints::EntityIndex entity1, SavePoints::EntityIndex entity2);
 	void updateFields1(SavePoints::EntityIndex entity1, SavePoints::EntityIndex entity2);
 	void updateFields2(SavePoints::EntityIndex entity1, SavePoints::EntityIndex entity2);
+	void updateFields3(SavePoints::EntityIndex entity1, SavePoints::EntityIndex entity2);
 
 	// Sequences
 	void storeSequenceName(SavePoints::EntityIndex entity, const char* sequence);

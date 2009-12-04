@@ -183,7 +183,7 @@ namespace LastExpress {
 		CALL_PREVIOUS_SAVEPOINT(entity) \
 		break; \
 	case SavePoints::kActionDefault: \
-		save(entity, _data->getCurrentParameters()->param1, _data->getCurrentParameters()->param2); \
+		save(entity, _data->getCurrentParameters()->param1, (Action::EventIndex)_data->getCurrentParameters()->param2); \
 		CALL_PREVIOUS_SAVEPOINT(entity) \
 		break; \
 	}
@@ -228,6 +228,10 @@ class Sequence;
 
 class EntityData : Common::Serializable {
 public:
+
+	enum ParameterValues {
+		kParameterTime = 2147483647
+	};
 	
 	struct EntityParameters {
 		int param1;

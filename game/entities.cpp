@@ -298,6 +298,10 @@ void Entities::updateFields2(SavePoints::EntityIndex entity1, SavePoints::Entity
 	error("Entities::updateFields2: not implemented!");
 }
 
+void Entities::updateFields3(SavePoints::EntityIndex entity1, SavePoints::EntityIndex entity2) {
+	error("Entities::updateFields2: not implemented!");
+}
+
 //////////////////////////////////////////////////////////////////////////
 // Accessors
 Entity *Entities::get(SavePoints::EntityIndex entity) {

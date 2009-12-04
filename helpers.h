@@ -52,7 +52,7 @@
 #define playSfxStream(name) _engine->getSfxStream()->load(_engine->getResMan()->getFileStream(Common::String(name) + ".snd"));
 
 // Misc
-#define save(entity, a2, a3) getLogic()->savegame(a3, a2, entity, a3)
+#define save(entity, a2, event) getLogic()->savegame(a2, entity, event)
 #define random(value) _engine->getRandom().getRandomNumber(value)
 #define isDay() _engine->getGameState()->isDayTime()
 

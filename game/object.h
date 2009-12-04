@@ -149,7 +149,7 @@ public:
 		kObject106,
 		kObject107,
 		kObject108,
-		kObject109,
+		kCageMax,
 		kObject110,							// 110
 		kObject111,
 		kObject112,
