@@ -48,6 +48,7 @@ void FrameInfo::read(Common::SeekableReadStream *in, uint16 decompOffset) {
 	// Read the compression type
 	in->seek(basePos + decompOffset);
 	compressionType = in->readByte();
+	subType = in->readByte();
 
 	/*
 	unknown = in->readUint32LE();
@@ -392,7 +393,7 @@ uint32 Sequence::count() {
 	return _frames.size();
 }
 
-AnimFrame *Sequence::getFrame(uint32 index) {
+FrameInfo *Sequence::getFrameInfo(uint32 index) {
 	if (_frames.size() == 0) {
 		error("Trying to decode a sequence before loading its data");
 		return NULL;
@@ -405,11 +406,21 @@ AnimFrame *Sequence::getFrame(uint32 index) {
 
 	// Skip "invalid" frames
 	if (_frames[index].compressionType == 0)
-		return NULL; // FIXME is this error handled correctly in all cases?
+		return NULL;
+
+	return &_frames[index];
+}
+
+AnimFrame *Sequence::getFrame(uint32 index) {
+	
+	FrameInfo *frame = getFrameInfo(index);
+
+	if (!frame)
+		return NULL;
 
 	debugC(4, kLastExpressDebugGraphics, "Decoding frame %d / %d", index, _frames.size() - 1);
 
-	return new AnimFrame(_stream, &_frames[index]);
+	return new AnimFrame(_stream, frame);
 }
 
 

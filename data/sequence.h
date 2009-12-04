@@ -90,6 +90,7 @@ struct FrameInfo {
 	// CompPos_SEQ
 
 	byte compressionType;         ///< Type of frame compression (0x03, 0x04, 0x05, 0x07, 0xFF)
+	byte subType;        		  ///< Subtype
 };
 
 class AnimFrame : public Drawable {
@@ -120,10 +121,8 @@ public:
 
 	bool load(Common::SeekableReadStream *stream);
 	uint32 count();
-	AnimFrame *getFrame(uint32 index);
-
-	// TODO add getter for frame info (when we know what all the unknown entries are for)
-	//FrameInfo *getFrameInfo(uint32 index);
+	AnimFrame *getFrame(uint32 index);	
+	FrameInfo *getFrameInfo(uint32 index);
 
 private:
 	static const uint32 _sequenceHeaderSize = 8;
