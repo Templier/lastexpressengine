@@ -34,7 +34,7 @@
 
 namespace LastExpress {
 
-Milos::Milos(LastExpressEngine *engine) : Entity(engine, SavePoints::kEntityMilos) {
+Milos::Milos(LastExpressEngine *engine) : Entity(engine, kEntityMilos) {
 	ADD_CALLBACK_FUNCTION(Milos, nullfunc);
 	ADD_CALLBACK_FUNCTION(Milos, nullfunc);
 	ADD_CALLBACK_FUNCTION(Milos, nullfunc);
@@ -72,7 +72,7 @@ Milos::Milos(LastExpressEngine *engine) : Entity(engine, SavePoints::kEntityMilo
 	ADD_CALLBACK_FUNCTION(Milos, nullfunc);
 }
 
-void Milos::nullfunc(SavePoints::SavePoint *savepoint) {
+void Milos::nullfunc(SavePoint *savepoint) {
 	error("Milos: callback function not implemented!");
 }
 
@@ -81,19 +81,19 @@ IMPLEMENT_FUNCTION(Milos, chapter1, 12) {
 	default:
 		break;
 
-	case SavePoints::kActionDefault: 
-		getSavePoints()->addData(SavePoints::kEntityMilos, SavePoints::kAction157691176, 0);
-		getSavePoints()->addData(SavePoints::kEntityMilos, SavePoints::kAction208228224, 2);
+	case kActionDefault: 
+		getSavePoints()->addData(kEntityMilos, kAction157691176, 0);
+		getSavePoints()->addData(kEntityMilos, kAction208228224, 2);
 
-		getObjects()->update(Objects::kObjectCompartmentG, SavePoints::kEntityNone, 3, Cursor::kCursorHandKnock, 9);
-		getObjects()->update(Objects::kObject46, SavePoints::kEntityNone, 0, Cursor::kCursorKeepValue, 255);
+		getObjects()->update(Objects::kObjectCompartmentG, kEntityNone, 3, Cursor::kCursorHandKnock, 9);
+		getObjects()->update(Objects::kObject46, kEntityNone, 0, Cursor::kCursorKeepValue, 255);
 
 		_data->getData()->field_491 = 4689;
 		_data->getData()->field_493 = 1;
 		_data->getData()->field_495 = 5;
 		break;
 
-	case SavePoints::kActionNone: 
+	case kActionNone: 
 		if (getState()->time > 1062000) {
 			if (!_data->getCurrentParameters()->param1) {
 				_data->getCurrentParameters()->param1 = 1;

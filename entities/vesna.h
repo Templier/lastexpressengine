@@ -44,7 +44,7 @@ public:
 	DECLARE_FUNCTION(chapter5)
 	DECLARE_NULL_FUNCTION()
 
-	void nullfunc(SavePoints::SavePoint *savepoint);
+	void nullfunc(SavePoint *savepoint);
 };
 
 } // End of namespace LastExpress

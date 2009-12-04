@@ -147,7 +147,7 @@ void Logic::gameOver(int a1, int a2, int scene, bool showScene) {
 }
 
 // Save game
-void Logic::savegame(int param1, SavePoints::EntityIndex entity, Action::EventIndex event) {
+void Logic::savegame(int param1, Entity::EntityIndex entity, Action::EventIndex event) {
 	warning("Logic::savegame: not implemented!");
 }
 
@@ -237,14 +237,14 @@ void Logic::drawScene(uint32 index) {
 	// Update entities
 	Scene *scene = (getState()->sceneUseBackup ? _engine->getScene(getState()->sceneBackup) : _scene);
 	
-	getEntityData(SavePoints::kEntityNone)->field_491 = scene->getHeader()->count;
-	getEntityData(SavePoints::kEntityNone)->field_495 = scene->getHeader()->field_13;
+	getEntityData(Entity::kEntityNone)->field_491 = scene->getHeader()->count;
+	getEntityData(Entity::kEntityNone)->field_495 = scene->getHeader()->field_13;
 
 	if (getState()->sceneUseBackup)
 		delete scene;
 
 	if (getFlags()->flag_1) {
-		getSavePoints()->pushAll(SavePoints::kEntityNone, SavePoints::kAction17);
+		getSavePoints()->pushAll(Entity::kEntityNone, Entity::kAction17);
 		getSavePoints()->process();
 
 		if (_runState.flag_no_entity)
@@ -471,7 +471,7 @@ void Logic::preProcessScene(uint32 *index) {
 
 				if (State::getPowerOfTwo(getState()->field16[scene->getHeader()->param1]) != 30 
 				 && State::getPowerOfTwo(getState()->field16_2[scene->getHeader()->param1]) != 30 )
-					getSound()->playSound(SavePoints::kEntityNone, "CAT1126A");				
+					getSound()->playSound(Entity::kEntityNone, "CAT1126A");				
 
 				*index = scene->getHotspot()->scene;
 			} else {
@@ -548,22 +548,22 @@ void Logic::postProcessScene(uint32 *index) {
 			delete hotspotScene;
 		}
 
-		int16 field491 = getEntityData(SavePoints::kEntityNone)->field_491;
-		if (getEntityData(SavePoints::kEntityNone)->field_495 == 9 && (field491 == 4 || field491 == 3)) {
-			SavePoints::EntityIndex entities[39];
+		int16 field491 = getEntityData(Entity::kEntityNone)->field_491;
+		if (getEntityData(Entity::kEntityNone)->field_495 == 9 && (field491 == 4 || field491 == 3)) {
+			Entity::EntityIndex entities[39];
 
 			int progress = 0;
 
 			for (uint i = 1; i < 40; i++) {
 
-				int16 field493 = getEntityData((SavePoints::EntityIndex)i)->field_493;
-				int16 field495 = getEntityData((SavePoints::EntityIndex)i)->field_495;
+				int16 field493 = getEntityData((Entity::EntityIndex)i)->field_493;
+				int16 field495 = getEntityData((Entity::EntityIndex)i)->field_495;
 				if (field491 == 4) {
 					if (!(field495 != 4 || field493 <= 9270) || !(field495 != 5 || field493 >= 1540))
-						entities[progress++] = (SavePoints::EntityIndex)i;
+						entities[progress++] = (Entity::EntityIndex)i;
 				} else {
 					if (!(field495 != 3 || field493 <= 9270) || !(field495 != 4 || field493 >= 850))
-						entities[progress++] = (SavePoints::EntityIndex)i;
+						entities[progress++] = (Entity::EntityIndex)i;
 				}
 			}
 
@@ -580,7 +580,7 @@ void Logic::postProcessScene(uint32 *index) {
 		
 	case Scene::kTypeSavePointChapter:
 		if (getProgress().field_18 == 2)
-			getSavePoints()->push(SavePoints::kEntityNone, SavePoints::kEntityChapters, SavePoints::kAction190346110);
+			getSavePoints()->push(Entity::kEntityNone, Entity::kEntityChapters, Entity::kAction190346110);
 		break;
 
 	case Scene::kTypeLoadBeetleSequences:

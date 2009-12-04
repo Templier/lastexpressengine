@@ -33,7 +33,7 @@
 
 namespace LastExpress {
 
-Kahina::Kahina(LastExpressEngine *engine) : Entity(engine, SavePoints::kEntityKahina) {
+Kahina::Kahina(LastExpressEngine *engine) : Entity(engine, kEntityKahina) {
 	ADD_CALLBACK_FUNCTION(Kahina, nullfunc);
 	ADD_CALLBACK_FUNCTION(Kahina, nullfunc);
 	ADD_CALLBACK_FUNCTION(Kahina, nullfunc);
@@ -65,7 +65,7 @@ Kahina::Kahina(LastExpressEngine *engine) : Entity(engine, SavePoints::kEntityKa
 	ADD_CALLBACK_FUNCTION(Kahina, chapter5);
 }
 
-void Kahina::nullfunc(SavePoints::SavePoint *savepoint) {
+void Kahina::nullfunc(SavePoint *savepoint) {
 	error("Kahina: callback function not implemented!");
 }
 

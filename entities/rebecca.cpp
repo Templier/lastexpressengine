@@ -34,7 +34,7 @@
 
 namespace LastExpress {
 
-Rebecca::Rebecca(LastExpressEngine *engine) : Entity(engine, SavePoints::kEntityRebecca) {
+Rebecca::Rebecca(LastExpressEngine *engine) : Entity(engine, kEntityRebecca) {
 	ADD_CALLBACK_FUNCTION(Rebecca, nullfunc);
 	ADD_CALLBACK_FUNCTION(Rebecca, nullfunc);
 	ADD_CALLBACK_FUNCTION(Rebecca, nullfunc);
@@ -86,7 +86,7 @@ Rebecca::Rebecca(LastExpressEngine *engine) : Entity(engine, SavePoints::kEntity
 	ADD_NULL_FUNCTION();
 }
 
-void Rebecca::nullfunc(SavePoints::SavePoint *savepoint) {
+void Rebecca::nullfunc(SavePoint *savepoint) {
 	error("Rebecca: callback function not implemented!");
 }
 
@@ -95,12 +95,12 @@ IMPLEMENT_FUNCTION(Rebecca, chapter1, 21) {
 	default:
 		break;
 
-	case SavePoints::kActionDefault: 
-		getSavePoints()->addData(SavePoints::kEntityRebecca, SavePoints::kAction224253538, 0);
+	case kActionDefault: 
+		getSavePoints()->addData(kEntityRebecca, kAction224253538, 0);
 
-		getObjects()->update(Objects::kObjectCompartmentE, SavePoints::kEntityNone, 0, Cursor::kCursorHandKnock, 9);
-		getObjects()->update(Objects::kObject52, SavePoints::kEntityNone, 0, Cursor::kCursorHandKnock, 9);
-		getObjects()->update(Objects::kObject44, SavePoints::kEntityNone, 0, Cursor::kCursorKeepValue, 255);
+		getObjects()->update(Objects::kObjectCompartmentE, kEntityNone, 0, Cursor::kCursorHandKnock, 9);
+		getObjects()->update(Objects::kObject52, kEntityNone, 0, Cursor::kCursorHandKnock, 9);
+		getObjects()->update(Objects::kObject44, kEntityNone, 0, Cursor::kCursorKeepValue, 255);
 
 		getObjects()->updateField4(Objects::kObject110, 1);
 
@@ -111,7 +111,7 @@ IMPLEMENT_FUNCTION(Rebecca, chapter1, 21) {
 		_data->getParameters(8, 0)->param2 = 1;
 		break;
 
-	case SavePoints::kActionNone: 
+	case kActionNone: 
 		if (getState()->time > 1062000) {
 			if (!_data->getCurrentParameters()->param1) {
 				_data->getCurrentParameters()->param1 = 1;

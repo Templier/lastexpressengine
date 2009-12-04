@@ -33,7 +33,7 @@
 
 namespace LastExpress {
 
-Francois::Francois(LastExpressEngine *engine) : Entity(engine, SavePoints::kEntityFrancois) {	
+Francois::Francois(LastExpressEngine *engine) : Entity(engine, kEntityFrancois) {	
 	ADD_CALLBACK_FUNCTION(Francois, nullfunc);
 	ADD_CALLBACK_FUNCTION(Francois, nullfunc);
 	ADD_CALLBACK_FUNCTION(Francois, nullfunc);
@@ -67,7 +67,7 @@ Francois::Francois(LastExpressEngine *engine) : Entity(engine, SavePoints::kEnti
 	ADD_NULL_FUNCTION();
 }
 
-void Francois::nullfunc(SavePoints::SavePoint *savepoint) {
+void Francois::nullfunc(SavePoint *savepoint) {
 	error("Francois: callback function not implemented!");
 }
 

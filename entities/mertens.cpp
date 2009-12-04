@@ -38,7 +38,7 @@
 
 namespace LastExpress {
 
-Mertens::Mertens(LastExpressEngine *engine) : Entity(engine, SavePoints::kEntityMertens) {
+Mertens::Mertens(LastExpressEngine *engine) : Entity(engine, kEntityMertens) {
 	ADD_CALLBACK_FUNCTION(Mertens, nullfunc);
 	ADD_CALLBACK_FUNCTION(Mertens, nullfunc);
 	ADD_CALLBACK_FUNCTION(Mertens, nullfunc);
@@ -100,26 +100,26 @@ IMPLEMENT_FUNCTION(Mertens, function6, 6) {
 	default:
 		break;	
 
-	case SavePoints::kActionNone:
+	case kActionNone:
 		if (_data->getData()->field_49A != 4) {
-			CALL_PREVIOUS_SAVEPOINT(SavePoints::kEntityMertens)
+			CALL_PREVIOUS_SAVEPOINT(kEntityMertens)
 			break;
 		}
 		
 		if (getProgress().jacket == State::kOriginalJacket
-		 && getEntities()->checkFields9(SavePoints::kEntityMertens, SavePoints::kEntityNone, 1000)
-		 && !getEntities()->checkFields3(SavePoints::kEntityNone)
-		 && !getEntities()->checkFields10(SavePoints::kEntityNone)) {
+		 && getEntities()->checkFields9(kEntityMertens, kEntityNone, 1000)
+		 && !getEntities()->checkFields3(kEntityNone)
+		 && !getEntities()->checkFields10(kEntityNone)) {
 			 _data->setNextCallback(1);
 			 call(new ENTITY_SETUP_DEFAULT(Mertens, setup_savegame), 2, Action::kMertensBloodJacket);
 		}
 		break;
 
-	case SavePoints::kAction3:
-		CALL_PREVIOUS_SAVEPOINT(SavePoints::kEntityMertens)
+	case kAction3:
+		CALL_PREVIOUS_SAVEPOINT(kEntityMertens)
 		break;
 
-	case SavePoints::kAction18: 	
+	case kAction18: 	
 		if (_data->getNextCallback() == 1) {
 			getAction()->playAnimation(Action::kMertensBloodJacket);
 			getLogic()->gameOver(0, 1, 55, true);
@@ -129,7 +129,7 @@ IMPLEMENT_FUNCTION(Mertens, function6, 6) {
 }
 
 IMPLEMENT_FUNCTION_INT2(Mertens, savegame, 9) {
-	CALL_SAVEGAME(SavePoints::kEntityMertens)
+	CALL_SAVEGAME(kEntityMertens)
 }
 
 IMPLEMENT_FUNCTION_INT2(Mertens, function10, 10) {
@@ -141,11 +141,11 @@ IMPLEMENT_FUNCTION_INT(Mertens, function11, 11) {
 	default:
 		break;	
 
-	case SavePoints::kActionNone:
+	case kActionNone:
 		if (getProgress().jacket == State::kOriginalJacket
-			&& getEntities()->checkFields9(SavePoints::kEntityMertens, SavePoints::kEntityNone, 1000)
-			&& !getEntities()->checkFields3(SavePoints::kEntityNone)
-			&& !getEntities()->checkFields10(SavePoints::kEntityNone)) {
+			&& getEntities()->checkFields9(kEntityMertens, kEntityNone, 1000)
+			&& !getEntities()->checkFields3(kEntityNone)
+			&& !getEntities()->checkFields10(kEntityNone)) {
 				_data->setNextCallback(1);
 				call(new ENTITY_SETUP_DEFAULT(Mertens, setup_savegame), 2, Action::kMertensBloodJacket);
 				break;
@@ -160,10 +160,10 @@ IMPLEMENT_FUNCTION_INT(Mertens, function11, 11) {
 			_data->getCurrentParameters()->param2 = _data->getCurrentParameters()->param1 + getState()->time;
 		}
 
-		CALL_PREVIOUS_SAVEPOINT(SavePoints::kEntityMertens)
+		CALL_PREVIOUS_SAVEPOINT(kEntityMertens)
 		break;
 
-	case SavePoints::kAction18: 
+	case kAction18: 
 		if (_data->getNextCallback() == 1) {
 			getAction()->playAnimation(Action::kMertensBloodJacket);
 			getLogic()->gameOver(0, 1, 55, true);
@@ -177,7 +177,7 @@ IMPLEMENT_FUNCTION(Mertens, function17, 17) {
 	default:
 		break;	
 
-	case SavePoints::kActionDefault: 
+	case kActionDefault: 
 		if (_data->getParameters(8, 0)->param6 || _data->getParameters(8, 1)->hasNonNullParameter()) {
 
 			getInventory()->setLocationAndProcess(Inventory::kItem7, 1);
@@ -189,25 +189,25 @@ IMPLEMENT_FUNCTION(Mertens, function17, 17) {
 			
 			if (_data->getParameters(8, 0)->param8) {
 				
-				getEntities()->drawSequence(SavePoints::kEntityMertens, "601K");
+				getEntities()->drawSequence(kEntityMertens, "601K");
 				getLogic()->loadSceneFromItem(Inventory::kItem7);
 
 				_data->getParameters(8, 2)->param1 = 1;
-				CALL_PREVIOUS_SAVEPOINT(SavePoints::kEntityMertens)
+				CALL_PREVIOUS_SAVEPOINT(kEntityMertens)
 
 			} else {	// Mertens sits on his chair at the back of the train
 				if (getInventory()->hasItem(Inventory::kPassengerList) || _data->getParameters(8, 0)->param2)
-					getEntities()->storeSequenceName(SavePoints::kEntityMertens, "601A");
+					getEntities()->storeSequenceName(kEntityMertens, "601A");
 				else {	// Got the passenger list, Mertens is looking for it before sitting
 					_data->getParameters(8, 0)->param2 = 1;
-					getSound()->playSound(SavePoints::kEntityMertens, "CON1058", -1, 75);
-					getEntities()->storeSequenceName(SavePoints::kEntityMertens, "601D");
+					getSound()->playSound(kEntityMertens, "CON1058", -1, 75);
+					getEntities()->storeSequenceName(kEntityMertens, "601D");
 				}
 
 				getLogic()->loadSceneFromItem(Inventory::kItem7);
 
 				if (getEntities()->checkFields4(3, 68)) {
-					getSound()->playSound(SavePoints::kEntityNone, "CON1110");
+					getSound()->playSound(kEntityNone, "CON1110");
 					getLogic()->loadSceneFromData(3, 25, 255);
 				}
 
@@ -218,38 +218,38 @@ IMPLEMENT_FUNCTION(Mertens, function17, 17) {
 		}
 		break;
 
-	case SavePoints::kAction18:
+	case kAction18:
 		switch (_data->getNextCallback()) {
 		default:
 			break;
 
 		case 1:
-			getEntities()->drawSequences(SavePoints::kEntityMertens);
+			getEntities()->drawSequences(kEntityMertens);
 			_data->getParameters(8, 2)->param1 = 1;
 			_data->setNextCallback(2);
 			call(new ENTITY_SETUP_DEFAULT(Mertens, setup_function11), 75);
 			break;
 
 		case 2:
-			CALL_PREVIOUS_SAVEPOINT(SavePoints::kEntityMertens)
+			CALL_PREVIOUS_SAVEPOINT(kEntityMertens)
 			break;
 
 		case 3:
 			if (!_data->getParameters(8, 0)->param3
 			 && !getInventory()->hasItem(Inventory::kPassengerList)
 			 && _data->getParameters(8, 0)->param2) {
-				 getSavePoints()->push(SavePoints::kEntityMertens, SavePoints::kEntityVerges, SavePoints::kAction158617345);
+				 getSavePoints()->push(kEntityMertens, kEntityVerges, kAction158617345);
 				 _data->getParameters(8, 0)->param3 = 1;
 			}
 
-			getEntities()->drawSequence(SavePoints::kEntityMertens, "601B");
+			getEntities()->drawSequence(kEntityMertens, "601B");
 
 			_data->getParameters(8, 0)->param1 = 0;
 			_data->getData()->inventoryItem = Inventory::kNoItem;
 
-			getSavePoints()->push(SavePoints::kEntityMertens, SavePoints::kEntityMertens, SavePoints::kAction17);
+			getSavePoints()->push(kEntityMertens, kEntityMertens, kAction17);
 
-			CALL_PREVIOUS_SAVEPOINT(SavePoints::kEntityMertens)
+			CALL_PREVIOUS_SAVEPOINT(kEntityMertens)
 			break;
 		}
 		break;
@@ -261,7 +261,7 @@ IMPLEMENT_FUNCTION(Mertens, chapter1, 34) {
 	default:
 		break;
 
-	case SavePoints::kActionNone: 
+	case kActionNone: 
 		if (getState()->time > 1062000) {
 			if (!_data->getCurrentParameters()->param1) {
 				_data->getCurrentParameters()->param1 = 1;
@@ -270,19 +270,19 @@ IMPLEMENT_FUNCTION(Mertens, chapter1, 34) {
 		}
 		break;
 
-	case SavePoints::kActionDefault: 
-		getSavePoints()->addData(SavePoints::kEntityMertens, SavePoints::kAction171394341, 7);
-		getSavePoints()->addData(SavePoints::kEntityMertens, SavePoints::kAction169633856, 9);
-		getSavePoints()->addData(SavePoints::kEntityMertens, SavePoints::kAction238732837, 10);
-		getSavePoints()->addData(SavePoints::kEntityMertens, SavePoints::kAction269624833, 12);
-		getSavePoints()->addData(SavePoints::kEntityMertens, SavePoints::kAction302614416, 11);
-		getSavePoints()->addData(SavePoints::kEntityMertens, SavePoints::kAction190082817, 8);
-		getSavePoints()->addData(SavePoints::kEntityMertens, SavePoints::kAction269436673, 13);
-		getSavePoints()->addData(SavePoints::kEntityMertens, SavePoints::kAction303343617, 14);
-		getSavePoints()->addData(SavePoints::kEntityMertens, SavePoints::kAction224122407, 17);
-		getSavePoints()->addData(SavePoints::kEntityMertens, SavePoints::kAction201431954, 18);
-		getSavePoints()->addData(SavePoints::kEntityMertens, SavePoints::kAction188635520, 19);
-		getSavePoints()->addData(SavePoints::kEntityMertens, SavePoints::kAction204379649, 4);
+	case kActionDefault: 
+		getSavePoints()->addData(kEntityMertens, kAction171394341, 7);
+		getSavePoints()->addData(kEntityMertens, kAction169633856, 9);
+		getSavePoints()->addData(kEntityMertens, kAction238732837, 10);
+		getSavePoints()->addData(kEntityMertens, kAction269624833, 12);
+		getSavePoints()->addData(kEntityMertens, kAction302614416, 11);
+		getSavePoints()->addData(kEntityMertens, kAction190082817, 8);
+		getSavePoints()->addData(kEntityMertens, kAction269436673, 13);
+		getSavePoints()->addData(kEntityMertens, kAction303343617, 14);
+		getSavePoints()->addData(kEntityMertens, kAction224122407, 17);
+		getSavePoints()->addData(kEntityMertens, kAction201431954, 18);
+		getSavePoints()->addData(kEntityMertens, kAction188635520, 19);
+		getSavePoints()->addData(kEntityMertens, kAction204379649, 4);
 
 		_data->getParameters(8, 0)->param1 = 0;
 		_data->getData()->field_491 = 9460;
@@ -297,12 +297,12 @@ IMPLEMENT_FUNCTION(Mertens, function41, 41) {
 	default:
 		break;	
 
-	case SavePoints::kActionDefault: 
+	case kActionDefault: 
 		_data->setNextCallback(1);
 		call(new ENTITY_SETUP_DEFAULT(Mertens, setup_function10), 3, 2000);
 		break;
 
-	case SavePoints::kAction18:
+	case kAction18:
 		switch (_data->getNextCallback()) {
 		default:
 			break;
@@ -329,13 +329,13 @@ IMPLEMENT_FUNCTION(Mertens, chapter2, 43) {
 	default:
 		break;
 
-	case SavePoints::kActionNone: 
+	case kActionNone: 
 		_data->setNextCallback(1);
 		call(new ENTITY_SETUP_DEFAULT(Mertens, setup_function17));
 		break;
 
-	case SavePoints::kActionDefault: 
-		getEntities()->drawSequences(SavePoints::kEntityMertens);
+	case kActionDefault: 
+		getEntities()->drawSequences(kEntityMertens);
 
 		_data->getData()->field_491 = 1500;
 		_data->getData()->field_493 = 0;
@@ -354,7 +354,7 @@ IMPLEMENT_FUNCTION(Mertens, chapter2, 43) {
 		_data->getParameters(8, 1)->param7 = 0;
 		break;
 
-	case SavePoints::kAction18: 
+	case kAction18: 
 		if (_data->getNextCallback() == 1)
 			setup_function44();
 		break;
@@ -370,12 +370,12 @@ IMPLEMENT_FUNCTION(Mertens, chapter3, 45) {
 	default:
 		break;
 
-	case SavePoints::kActionNone: 
+	case kActionNone: 
 		_data->setNextCallback(1);
 		call(new ENTITY_SETUP_DEFAULT(Mertens, setup_function17));
 		break;
 
-	case SavePoints::kActionDefault: 
+	case kActionDefault: 
 		_data->getData()->field_491 = 1500;
 		_data->getData()->field_493 = 0;
 		_data->getData()->field_495 = 3;
@@ -395,7 +395,7 @@ IMPLEMENT_FUNCTION(Mertens, chapter3, 45) {
 		_data->getParameters(8, 2)->param3 = 0;		
 		break;
 
-	case SavePoints::kAction18: 
+	case kAction18: 
 		if (_data->getNextCallback() == 1)
 			setup_function46();
 		break;
@@ -411,13 +411,13 @@ IMPLEMENT_FUNCTION(Mertens, chapter4, 47) {
 	default:
 		break;
 
-	case SavePoints::kActionNone: 
+	case kActionNone: 
 		_data->setNextCallback(1);
 		call(new ENTITY_SETUP_DEFAULT(Mertens, setup_function17));
 		break;
 
-	case SavePoints::kActionDefault: 
-		getEntities()->drawSequences(SavePoints::kEntityMertens);
+	case kActionDefault: 
+		getEntities()->drawSequences(kEntityMertens);
 
 		_data->getData()->field_491 = 1500;
 		_data->getData()->field_493 = 0;
@@ -438,7 +438,7 @@ IMPLEMENT_FUNCTION(Mertens, chapter4, 47) {
 		_data->getParameters(8, 2)->param4 = 0;
 		break;
 
-	case SavePoints::kAction18: 
+	case kAction18: 
 		if (_data->getNextCallback() == 1)
 			setup_function48();
 		break;
@@ -454,12 +454,12 @@ IMPLEMENT_FUNCTION(Mertens, chapter5, 50) {
 	default:
 		break;
 
-	case SavePoints::kActionNone: 
+	case kActionNone: 
 		setup_function51();
 		break;
 
-	case SavePoints::kActionDefault: 
-		getEntities()->drawSequences(SavePoints::kEntityMertens);
+	case kActionDefault: 
+		getEntities()->drawSequences(kEntityMertens);
 
 		_data->getData()->field_491 = 3969;
 		_data->getData()->field_493 = 1;
@@ -480,7 +480,7 @@ IMPLEMENT_FUNCTION(Mertens, function52, 52) {
 
 IMPLEMENT_NULL_FUNCTION(Mertens, 59)
 
-void Mertens::nullfunc(SavePoints::SavePoint *savepoint) {
+void Mertens::nullfunc(SavePoint *savepoint) {
 	error("Mertens: callback function not implemented!");
 }
 

@@ -118,12 +118,12 @@ Entities::Entities(LastExpressEngine *engine) : _engine(engine) {
 	ADD_ENTITY(Train);
 
 	// Special case for tables
-	_entities.push_back(new Tables(engine, SavePoints::kEntityTables0));
-	_entities.push_back(new Tables(engine, SavePoints::kEntityTables1));
-	_entities.push_back(new Tables(engine, SavePoints::kEntityTables2));
-	_entities.push_back(new Tables(engine, SavePoints::kEntityTables3));
-	_entities.push_back(new Tables(engine, SavePoints::kEntityTables4));
-	_entities.push_back(new Tables(engine, SavePoints::kEntityTables5));
+	_entities.push_back(new Tables(engine, Entity::kEntityTables0));
+	_entities.push_back(new Tables(engine, Entity::kEntityTables1));
+	_entities.push_back(new Tables(engine, Entity::kEntityTables2));
+	_entities.push_back(new Tables(engine, Entity::kEntityTables3));
+	_entities.push_back(new Tables(engine, Entity::kEntityTables4));
+	_entities.push_back(new Tables(engine, Entity::kEntityTables5));
 
 	ADD_ENTITY(Entity39);
 }
@@ -142,7 +142,7 @@ void Entities::setup(State::ChapterIndex chapter) {
 			_entities[i]->getData()->getData()->current_call = 0;
 			_entities[i]->getData()->getData()->inventoryItem = Inventory::kNoItem;
 
-			drawSequences((SavePoints::EntityIndex)i);
+			drawSequences((Entity::EntityIndex)i);
 		}
 
 		// Move that to reset method in state
@@ -157,14 +157,14 @@ void Entities::setup(State::ChapterIndex chapter) {
 	for (uint i = 1; i < _entities.size(); i++) {
 		
 		// Special case of chapters (prevents infinite loop as we will be called from Chapters functions when changing chapters)
-		if (i == SavePoints::kEntityChapters && chapter >= 2)			
+		if (i == Entity::kEntityChapters && chapter >= 2)			
 			continue;	
 
 		_entities[i]->setup(chapter);
 	}
 }
 
-void Entities::reset(SavePoints::EntityIndex entity) {
+void Entities::reset(Entity::EntityIndex entity) {
 	EntityData *data = getData(entity);
 
 	data->getData()->current_call = 0;
@@ -185,7 +185,7 @@ void Entities::updateFields() {
 
 	for (uint i = 0; i < _entities.size(); i++) {
 		
-		if (!getSavePoints()->getCallback((SavePoints::EntityIndex)i))
+		if (!getSavePoints()->getCallback((Entity::EntityIndex)i))
 			continue;
 
 		byte field_491 = _entities[i]->getData()->getData()->field_491;
@@ -256,8 +256,8 @@ void Entities::executeCallbacks() {
 		if (getFlags()->flag_entities_0)
 			break;
 
-		if (getSavePoints()->getCallback((SavePoints::EntityIndex)i))
-			processEntity((SavePoints::EntityIndex)i);
+		if (getSavePoints()->getCallback((Entity::EntityIndex)i))
+			processEntity((Entity::EntityIndex)i);
 	}
 
 	if (getFlags()->flag_entities_0)
@@ -270,50 +270,50 @@ void Entities::executeCallbacks() {
 			if (getFlags()->flag_entities_0)
 				break;
 
-			if (getSavePoints()->getCallback((SavePoints::EntityIndex)i)) {
+			if (getSavePoints()->getCallback((Entity::EntityIndex)i)) {
 				if (_entities[i]->getData()->getData()->field_4A8) {
 					processed = true;
-					processEntity((SavePoints::EntityIndex)i);
+					processEntity((Entity::EntityIndex)i);
 				}				
 			}
 		}
 	} while (!processed);
 }
 
-void Entities::processEntity(SavePoints::EntityIndex entity) {
+void Entities::processEntity(Entity::EntityIndex entity) {
 	error("Entities::processEntity: not implemented!");
 }
 
 //////////////////////////////////////////////////////////////////////////
 /// Fields update
-void Entities::updateFields0(SavePoints::EntityIndex entity1, SavePoints::EntityIndex entity2) {
+void Entities::updateFields0(Entity::EntityIndex entity1, Entity::EntityIndex entity2) {
 	error("Entities::updateFields0: not implemented!");
 }
 
-void Entities::updateFields1(SavePoints::EntityIndex entity1, SavePoints::EntityIndex entity2) {
+void Entities::updateFields1(Entity::EntityIndex entity1, Entity::EntityIndex entity2) {
 	error("Entities::updateFields1: not implemented!");
 }
 
-void Entities::updateFields2(SavePoints::EntityIndex entity1, SavePoints::EntityIndex entity2) {
+void Entities::updateFields2(Entity::EntityIndex entity1, Entity::EntityIndex entity2) {
 	error("Entities::updateFields2: not implemented!");
 }
 
-void Entities::updateFields3(SavePoints::EntityIndex entity1, SavePoints::EntityIndex entity2) {
+void Entities::updateFields3(Entity::EntityIndex entity1, Entity::EntityIndex entity2) {
 	error("Entities::updateFields2: not implemented!");
 }
 
 //////////////////////////////////////////////////////////////////////////
 // Accessors
-Entity *Entities::get(SavePoints::EntityIndex entity) {
+Entity *Entities::get(Entity::EntityIndex entity) {
 	assert((uint)entity < _entities.size());
 
-	if (entity == SavePoints::kEntityNone)
+	if (entity == Entity::kEntityNone)
 		error("Cannot get entity for index = 0!");
 
 	return _entities[entity];
 }
 
-EntityData *Entities::getData(SavePoints::EntityIndex entity) {
+EntityData *Entities::getData(Entity::EntityIndex entity) {
 	assert((uint)entity < _entities.size());
 
 	if (entity == 0)
@@ -331,30 +331,30 @@ void Entities::saveLoadWithSerializer(Common::Serializer &ser) {
 //////////////////////////////////////////////////////////////////////////
 // Drawing
 //////////////////////////////////////////////////////////////////////////
-void Entities::storeSequenceName(SavePoints::EntityIndex entity, const char* sequence) {
+void Entities::storeSequenceName(Entity::EntityIndex entity, const char* sequence) {
 	error("Entities::storeSequenceName: not implemented!");
 }
 
-void Entities::drawSequence(SavePoints::EntityIndex entity, const char* sequence) {
+void Entities::drawSequence(Entity::EntityIndex entity, const char* sequence) {
 	warning("Entities::drawSequence: not implemented!");
 }
 
-void Entities::drawSequences(SavePoints::EntityIndex entity) {
+void Entities::drawSequences(Entity::EntityIndex entity) {
 	warning("Entities::drawSequences: not implemented!");
 }
 
 //////////////////////////////////////////////////////////////////////////
 //	Checks
 //////////////////////////////////////////////////////////////////////////
-bool Entities::compare(SavePoints::EntityIndex entity1, SavePoints::EntityIndex entity2) {
+bool Entities::compare(Entity::EntityIndex entity1, Entity::EntityIndex entity2) {
 	error("Entities::compare: not implemented!");
 }
 
-bool Entities::checkEntity(SavePoints::EntityIndex entity, int field495, int field491) {
+bool Entities::checkEntity(Entity::EntityIndex entity, int field495, int field491) {
 	error("Entities::checkEntity: not implemented!");
 }
 
-bool Entities::checkFields1(SavePoints::EntityIndex entity, int field495, int field491) {
+bool Entities::checkFields1(Entity::EntityIndex entity, int field495, int field491) {
 	return (getData(entity)->getData()->field_491 == field491 && getData(entity)->getData()->field_493 == 1 && getData(entity)->getData()->field_495 == field495);
 }
 
@@ -377,7 +377,7 @@ bool Entities::checkFields2(Objects::ObjectIndex object) {
 	case Objects::kObjectCompartment8:
 		field491 = field491_values[object];
 		field495 = 3;
-		if (checkFields1(SavePoints::kEntityNone, field495, field491))
+		if (checkFields1(Entity::kEntityNone, field495, field491))
 			return false;
 		break;
 
@@ -401,7 +401,7 @@ bool Entities::checkFields2(Objects::ObjectIndex object) {
 	case Objects::kObjectCompartmentH:
 		field491 = field491_values[object-32];
 		field495 = 4;
-		if (checkFields1(SavePoints::kEntityNone, field495, field491))
+		if (checkFields1(Entity::kEntityNone, field495, field491))
 			return false;
 		break;
 
@@ -418,7 +418,7 @@ bool Entities::checkFields2(Objects::ObjectIndex object) {
 	}
 
 	uint index = 1;
-	while (!checkFields1((SavePoints::EntityIndex)index, field495, field491) || index == SavePoints::kEntityVassili) {
+	while (!checkFields1((Entity::EntityIndex)index, field495, field491) || index == Entity::kEntityVassili) {
 		index++;
 		if (index >= 40)
 			return false;
@@ -427,47 +427,47 @@ bool Entities::checkFields2(Objects::ObjectIndex object) {
 	return true;
 }
 
-bool Entities::checkFields3(SavePoints::EntityIndex entity) {
+bool Entities::checkFields3(Entity::EntityIndex entity) {
 	return (getData(entity)->getData()->field_495 == 3 || getData(entity)->getData()->field_495 == 4) && getData(entity)->getData()->field_493 == 1;
 }
 
 bool Entities::checkFields4(int field495, int field15) {
 
 	Scene *scene = _engine->getScene(getState()->scene);
-	bool ret = getData(SavePoints::kEntityNone)->getData()->field_495 == field495 && scene->getHeader()->field_15 == field15;
+	bool ret = getData(Entity::kEntityNone)->getData()->field_495 == field495 && scene->getHeader()->field_15 == field15;
 	delete scene;
 
 	return ret;
 }
 
-bool Entities::checkFields5(SavePoints::EntityIndex entity, int field495) {
+bool Entities::checkFields5(Entity::EntityIndex entity, int field495) {
 	return getData(entity)->getData()->field_495 == field495 && getData(entity)->getData()->field_493 < 2;
 }
 
 
-bool Entities::checkFields6(SavePoints::EntityIndex entity) {
+bool Entities::checkFields6(Entity::EntityIndex entity) {
 	return checkFields5(entity, 3) && getData(entity)->getData()->field_491 < 850;
 }
 
 bool Entities::checkFields7(int field495) {
-	return checkFields5(SavePoints::kEntityNone, field495) && !getData(SavePoints::kEntityNone)->getData()->field_493 && !checkFields6(SavePoints::kEntityNone);
+	return checkFields5(Entity::kEntityNone, field495) && !getData(Entity::kEntityNone)->getData()->field_493 && !checkFields6(Entity::kEntityNone);
 }
 
-bool Entities::checkFields8(SavePoints::EntityIndex entity) {
+bool Entities::checkFields8(Entity::EntityIndex entity) {
 	return getData(entity)->getData()->field_49A == 1 || getData(entity)->getData()->field_49A == 2;
 }
 
-bool Entities::checkFields9(SavePoints::EntityIndex entity1, SavePoints::EntityIndex entity2, int value) {
+bool Entities::checkFields9(Entity::EntityIndex entity1, Entity::EntityIndex entity2, int value) {
 	return getData(entity1)->getData()->field_495 == getData(entity2)->getData()->field_495
 		&& abs(getData(entity1)->getData()->field_491 - getData(entity2)->getData()->field_491) <= value
 		&& (getData(entity1)->getData()->field_493 !=2 || getData(entity2)->getData()->field_493 != 2);
 }
 
-bool Entities::checkFields10(SavePoints::EntityIndex entity) {
+bool Entities::checkFields10(Entity::EntityIndex entity) {
 	return getData(entity)->getData()->field_493 < 3;
 }
 
-bool Entities::checkSequence0(SavePoints::EntityIndex entity) {
+bool Entities::checkSequence0(Entity::EntityIndex entity) {
 	return (getData(entity)->getData()->sequence0 && (getData(entity)->getData()->sequence0->getFrameInfo(0)->subType != 3));
 }
 

@@ -54,7 +54,7 @@ void EntityData::saveLoadWithSerializer(Common::Serializer &ser) {
 //////////////////////////////////////////////////////////////////////////
 // Entity
 //////////////////////////////////////////////////////////////////////////
-Entity::Entity(LastExpressEngine *engine, SavePoints::EntityIndex index) : _engine(engine), _entityIndex(index) {
+Entity::Entity(LastExpressEngine *engine, Entity::EntityIndex index) : _engine(engine), _entityIndex(index) {
 	_data = new EntityData();
 
 	// Add first empty entry to callbacks array

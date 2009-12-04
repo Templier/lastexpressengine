@@ -33,7 +33,7 @@
 
 namespace LastExpress {
 
-Gendarmes::Gendarmes(LastExpressEngine *engine) : Entity(engine, SavePoints::kEntityGendarmes) {
+Gendarmes::Gendarmes(LastExpressEngine *engine) : Entity(engine, kEntityGendarmes) {
 	ADD_CALLBACK_FUNCTION(Gendarmes, nullfunc);
 	ADD_CALLBACK_FUNCTION(Gendarmes, chapter1);
 	ADD_CALLBACK_FUNCTION(Gendarmes, nullfunc);
@@ -53,7 +53,7 @@ Gendarmes::Gendarmes(LastExpressEngine *engine) : Entity(engine, SavePoints::kEn
 	ADD_CALLBACK_FUNCTION(Gendarmes, chapter5);
 }
 
-void Gendarmes::nullfunc(SavePoints::SavePoint *savepoint) {
+void Gendarmes::nullfunc(SavePoint *savepoint) {
 	error("Gendarmes: callback function not implemented!");
 }
 

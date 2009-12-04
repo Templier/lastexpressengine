@@ -33,7 +33,7 @@
 
 namespace LastExpress {
 
-Alexei::Alexei(LastExpressEngine *engine) : Entity(engine, SavePoints::kEntityAlexei) {
+Alexei::Alexei(LastExpressEngine *engine) : Entity(engine, kEntityAlexei) {
 	ADD_CALLBACK_FUNCTION(Alexei, nullfunc);
 	ADD_CALLBACK_FUNCTION(Alexei, nullfunc);
 	ADD_CALLBACK_FUNCTION(Alexei, nullfunc);
@@ -84,7 +84,7 @@ Alexei::Alexei(LastExpressEngine *engine) : Entity(engine, SavePoints::kEntityAl
 	ADD_CALLBACK_FUNCTION(Alexei, chapter5);
 }
 
-void Alexei::nullfunc(SavePoints::SavePoint *savepoint) {
+void Alexei::nullfunc(SavePoint *savepoint) {
 	error("Alexei: callback function not implemented!");
 }
 

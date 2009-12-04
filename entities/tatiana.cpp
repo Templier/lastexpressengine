@@ -34,7 +34,7 @@
 
 namespace LastExpress {
 
-Tatiana::Tatiana(LastExpressEngine *engine) : Entity(engine, SavePoints::kEntityTatiana) {
+Tatiana::Tatiana(LastExpressEngine *engine) : Entity(engine, kEntityTatiana) {
 	ADD_CALLBACK_FUNCTION(Tatiana, nullfunc);
 	ADD_CALLBACK_FUNCTION(Tatiana, nullfunc);
 	ADD_CALLBACK_FUNCTION(Tatiana, nullfunc);
@@ -92,7 +92,7 @@ Tatiana::Tatiana(LastExpressEngine *engine) : Entity(engine, SavePoints::kEntity
 	ADD_CALLBACK_FUNCTION(Tatiana, nullfunc);
 }
 
-void Tatiana::nullfunc(SavePoints::SavePoint *savepoint) {
+void Tatiana::nullfunc(SavePoint *savepoint) {
 	error("Tatiana: callback function not implemented!");
 }
 
@@ -101,19 +101,19 @@ IMPLEMENT_FUNCTION(Tatiana, chapter1, 17) {
 	default:
 		break;
 
-	case SavePoints::kActionDefault: 
-		getSavePoints()->addData(SavePoints::kEntityTatiana, SavePoints::kAction191198209, 0);
+	case kActionDefault: 
+		getSavePoints()->addData(kEntityTatiana, kAction191198209, 0);
 
-		getObjects()->update(Objects::kObjectCompartmentB, SavePoints::kEntityNone, 1, Cursor::kCursorHandKnock, 9);
-		getObjects()->update(Objects::kObject49, SavePoints::kEntityNone, 1, Cursor::kCursorHandKnock, 9);
-		getObjects()->update(Objects::kObject41, SavePoints::kEntityNone, 0, Cursor::kCursorKeepValue, 255);
+		getObjects()->update(Objects::kObjectCompartmentB, kEntityNone, 1, Cursor::kCursorHandKnock, 9);
+		getObjects()->update(Objects::kObject49, kEntityNone, 1, Cursor::kCursorHandKnock, 9);
+		getObjects()->update(Objects::kObject41, kEntityNone, 0, Cursor::kCursorKeepValue, 255);
 
 		_data->getData()->field_491 = 5419;
 		_data->getData()->field_493 = 1;
 		_data->getData()->field_495 = 3;
 		break;
 
-	case SavePoints::kActionNone: 
+	case kActionNone: 
 		if (getState()->time > 1062000) {
 			if (!_data->getCurrentParameters()->param1) {
 				_data->getCurrentParameters()->param1 = 1;

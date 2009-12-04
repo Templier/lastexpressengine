@@ -33,7 +33,7 @@
 
 namespace LastExpress {
 
-Alouan::Alouan(LastExpressEngine *engine) : Entity(engine, SavePoints::kEntityAlouan) {
+Alouan::Alouan(LastExpressEngine *engine) : Entity(engine, kEntityAlouan) {
 	ADD_CALLBACK_FUNCTION(Alouan, nullfunc);
 	ADD_CALLBACK_FUNCTION(Alouan, nullfunc);
 	ADD_CALLBACK_FUNCTION(Alouan, nullfunc);
@@ -59,7 +59,7 @@ Alouan::Alouan(LastExpressEngine *engine) : Entity(engine, SavePoints::kEntityAl
 	ADD_CALLBACK_FUNCTION(Alouan, nullfunc);
 }
 
-void Alouan::nullfunc(SavePoints::SavePoint *savepoint) {
+void Alouan::nullfunc(SavePoint *savepoint) {
 	error("Alouan: callback function not implemented!");
 }
 

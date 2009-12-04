@@ -33,7 +33,7 @@
 
 namespace LastExpress {
 
-Salko::Salko(LastExpressEngine *engine) : Entity(engine, SavePoints::kEntitySalko) {
+Salko::Salko(LastExpressEngine *engine) : Entity(engine, kEntitySalko) {
 	ADD_CALLBACK_FUNCTION(Salko, nullfunc);
 	ADD_CALLBACK_FUNCTION(Salko, nullfunc);
 	ADD_CALLBACK_FUNCTION(Salko, nullfunc);
@@ -61,7 +61,7 @@ Salko::Salko(LastExpressEngine *engine) : Entity(engine, SavePoints::kEntitySalk
 	ADD_NULL_FUNCTION();
 }
 
-void Salko::nullfunc(SavePoints::SavePoint *savepoint) {
+void Salko::nullfunc(SavePoint *savepoint) {
 	error("Salko: callback function not implemented!");
 }
 

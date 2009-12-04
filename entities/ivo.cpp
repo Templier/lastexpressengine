@@ -33,7 +33,7 @@
 
 namespace LastExpress {
 
-Ivo::Ivo(LastExpressEngine *engine) : Entity(engine, SavePoints::kEntityIvo) {
+Ivo::Ivo(LastExpressEngine *engine) : Entity(engine, kEntityIvo) {
 	ADD_CALLBACK_FUNCTION(Ivo, nullfunc);
 	ADD_CALLBACK_FUNCTION(Ivo, nullfunc);
 	ADD_CALLBACK_FUNCTION(Ivo, nullfunc);
@@ -70,7 +70,7 @@ Ivo::Ivo(LastExpressEngine *engine) : Entity(engine, SavePoints::kEntityIvo) {
 	ADD_CALLBACK_FUNCTION(Ivo, nullfunc);
 }
 
-void Ivo::nullfunc(SavePoints::SavePoint *savepoint) {
+void Ivo::nullfunc(SavePoint *savepoint) {
 	error("Ivo: callback function not implemented!");
 }
 

@@ -33,7 +33,7 @@
 
 namespace LastExpress {
 
-Cooks::Cooks(LastExpressEngine *engine) : Entity(engine, SavePoints::kEntityCooks) {
+Cooks::Cooks(LastExpressEngine *engine) : Entity(engine, kEntityCooks) {
 	ADD_CALLBACK_FUNCTION(Cooks, nullfunc);
 	ADD_CALLBACK_FUNCTION(Cooks, nullfunc);
 	ADD_CALLBACK_FUNCTION(Cooks, nullfunc);
@@ -50,7 +50,7 @@ Cooks::Cooks(LastExpressEngine *engine) : Entity(engine, SavePoints::kEntityCook
 	ADD_CALLBACK_FUNCTION(Cooks, chapter5);
 }
 
-void Cooks::nullfunc(SavePoints::SavePoint *savepoint) {
+void Cooks::nullfunc(SavePoint *savepoint) {
 	error("Cooks: callback function not implemented!");
 }
 

@@ -33,7 +33,7 @@
 
 namespace LastExpress {
 
-Kronos::Kronos(LastExpressEngine *engine) : Entity(engine, SavePoints::kEntityKronos) {
+Kronos::Kronos(LastExpressEngine *engine) : Entity(engine, kEntityKronos) {
 	ADD_CALLBACK_FUNCTION(Kronos, nullfunc);
 	ADD_CALLBACK_FUNCTION(Kronos, nullfunc);
 	ADD_CALLBACK_FUNCTION(Kronos, nullfunc);
@@ -61,7 +61,7 @@ Kronos::Kronos(LastExpressEngine *engine) : Entity(engine, SavePoints::kEntityKr
 	ADD_CALLBACK_FUNCTION(Kronos, chapter5);
 }
 
-void Kronos::nullfunc(SavePoints::SavePoint *savepoint) {
+void Kronos::nullfunc(SavePoint *savepoint) {
 	error("Kronos: callback function not implemented!");
 }
 

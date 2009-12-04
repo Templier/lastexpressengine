@@ -33,7 +33,7 @@
 
 namespace LastExpress {
 
-August::August(LastExpressEngine *engine) : Entity(engine, SavePoints::kEntityAugust) {
+August::August(LastExpressEngine *engine) : Entity(engine, kEntityAugust) {
 	ADD_CALLBACK_FUNCTION(August, nullfunc);
 	ADD_CALLBACK_FUNCTION(August, nullfunc);
 	ADD_CALLBACK_FUNCTION(August, nullfunc);
@@ -100,7 +100,7 @@ August::August(LastExpressEngine *engine) : Entity(engine, SavePoints::kEntityAu
 	ADD_CALLBACK_FUNCTION(August, nullfunc);
 }
 
-void August::nullfunc(SavePoints::SavePoint *savepoint) {
+void August::nullfunc(SavePoint *savepoint) {
 	error("August: callback function not implemented!");
 }
 

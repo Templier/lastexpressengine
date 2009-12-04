@@ -33,7 +33,7 @@
 
 namespace LastExpress {
 
-Abbot::Abbot(LastExpressEngine *engine) : Entity(engine, SavePoints::kEntityAbbot) {
+Abbot::Abbot(LastExpressEngine *engine) : Entity(engine, kEntityAbbot) {
 	ADD_CALLBACK_FUNCTION(Abbot, nullfunc);
 	ADD_CALLBACK_FUNCTION(Abbot, nullfunc);
 	ADD_CALLBACK_FUNCTION(Abbot, nullfunc);
@@ -89,15 +89,15 @@ Abbot::Abbot(LastExpressEngine *engine) : Entity(engine, SavePoints::kEntityAbbo
 	ADD_CALLBACK_FUNCTION(Abbot, nullfunc);
 }
 
-void Abbot::nullfunc(SavePoints::SavePoint *savepoint) {
+void Abbot::nullfunc(SavePoint *savepoint) {
 	error("Abbot: callback function not implemented!");
 }
 
 IMPLEMENT_FUNCTION(Abbot, chapter1, 15) {
-	if (savepoint->action != SavePoints::kActionDefault)
+	if (savepoint->action != kActionDefault)
 		return;
 
-	getSavePoints()->addData(SavePoints::kEntityAbbot, SavePoints::kAction203073664, 0);
+	getSavePoints()->addData(kEntityAbbot, kAction203073664, 0);
 }
 
 IMPLEMENT_FUNCTION(Abbot, chapter2, 16) {

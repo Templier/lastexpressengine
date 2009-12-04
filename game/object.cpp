@@ -41,7 +41,7 @@ const Objects::Object Objects::get(ObjectIndex index) {
 	return _objects[index];
 }
 
-void Objects::update(ObjectIndex index, SavePoints::EntityIndex entity, byte location, Cursor::CursorStyle cursor, byte field_3) {
+void Objects::update(ObjectIndex index, Entity::EntityIndex entity, byte location, Cursor::CursorStyle cursor, byte field_3) {
 	if (index >= 128)
 		return;
 

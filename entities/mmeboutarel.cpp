@@ -34,7 +34,7 @@
 
 namespace LastExpress {
 
-MmeBoutarel::MmeBoutarel(LastExpressEngine *engine) : Entity(engine, SavePoints::kEntityMmeBoutarel) {
+MmeBoutarel::MmeBoutarel(LastExpressEngine *engine) : Entity(engine, kEntityMmeBoutarel) {
 	ADD_CALLBACK_FUNCTION(MmeBoutarel, nullfunc);
 	ADD_CALLBACK_FUNCTION(MmeBoutarel, nullfunc);
 	ADD_CALLBACK_FUNCTION(MmeBoutarel, nullfunc);
@@ -66,7 +66,7 @@ MmeBoutarel::MmeBoutarel(LastExpressEngine *engine) : Entity(engine, SavePoints:
 	ADD_NULL_FUNCTION();
 }
 
-void MmeBoutarel::nullfunc(SavePoints::SavePoint *savepoint) {
+void MmeBoutarel::nullfunc(SavePoint *savepoint) {
 	error("MmeBoutarel: callback function not implemented!");
 }
 
@@ -75,18 +75,18 @@ IMPLEMENT_FUNCTION(MmeBoutarel, chapter1, 10) {
 	default:
 		break;
 
-	case SavePoints::kActionDefault: 
-		getSavePoints()->addData(SavePoints::kEntityMmeBoutarel, SavePoints::kAction242526416, 0);
+	case kActionDefault: 
+		getSavePoints()->addData(kEntityMmeBoutarel, kAction242526416, 0);
 		
-		getObjects()->update(Objects::kObjectCompartmentD, SavePoints::kEntityNone, 2, Cursor::kCursorNormal, 0);
-		getObjects()->update(Objects::kObject51, SavePoints::kEntityNone, 0, Cursor::kCursorHandKnock, 9);
+		getObjects()->update(Objects::kObjectCompartmentD, kEntityNone, 2, Cursor::kCursorNormal, 0);
+		getObjects()->update(Objects::kObject51, kEntityNone, 0, Cursor::kCursorHandKnock, 9);
 
 		_data->getData()->field_491 = 5790;
 		_data->getData()->field_493 = 1;
 		_data->getData()->field_495 = 4;
 		break;
 
-	case SavePoints::kActionNone: 
+	case kActionNone: 
 		if (getState()->time > 1062000) {
 			if (!_data->getCurrentParameters()->param1) {
 				_data->getCurrentParameters()->param1 = 1;

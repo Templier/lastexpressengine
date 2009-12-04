@@ -34,7 +34,7 @@
 
 namespace LastExpress {
 
-Mahmud::Mahmud(LastExpressEngine *engine) : Entity(engine, SavePoints::kEntityMahmud) {
+Mahmud::Mahmud(LastExpressEngine *engine) : Entity(engine, kEntityMahmud) {
 	ADD_CALLBACK_FUNCTION(Mahmud, nullfunc);
 	ADD_CALLBACK_FUNCTION(Mahmud, nullfunc);
 	ADD_CALLBACK_FUNCTION(Mahmud, nullfunc);
@@ -57,7 +57,7 @@ Mahmud::Mahmud(LastExpressEngine *engine) : Entity(engine, SavePoints::kEntityMa
 	ADD_CALLBACK_FUNCTION(Mahmud, chapter5);
 }
 
-void Mahmud::nullfunc(SavePoints::SavePoint *savepoint) {
+void Mahmud::nullfunc(SavePoint *savepoint) {
 	error("Mahmud: callback function not implemented!");
 }
 
@@ -66,18 +66,18 @@ IMPLEMENT_FUNCTION(Mahmud, chapter1, 15) {
 	default:
 		break;
 
-	case SavePoints::kActionDefault: 
-		getSavePoints()->addData(SavePoints::kEntityMahmud, SavePoints::kAction170483072, 0);
+	case kActionDefault: 
+		getSavePoints()->addData(kEntityMahmud, kAction170483072, 0);
 
-		getObjects()->update(Objects::kObjectCompartment4, SavePoints::kEntityNone, 3, Cursor::kCursorHandKnock, 9);
-		getObjects()->update(Objects::kObject20, SavePoints::kEntityNone, 3, Cursor::kCursorKeepValue, 9);
+		getObjects()->update(Objects::kObjectCompartment4, kEntityNone, 3, Cursor::kCursorHandKnock, 9);
+		getObjects()->update(Objects::kObject20, kEntityNone, 3, Cursor::kCursorKeepValue, 9);
 
 		_data->getData()->field_491 = 540;
 		_data->getData()->field_493 = 0;
 		_data->getData()->field_495 = 3;
 		break;
 
-	case SavePoints::kActionNone: 
+	case kActionNone: 
 		if (getState()->time > 1062000) {
 			if (!_data->getCurrentParameters()->param1) {
 				_data->getCurrentParameters()->param1 = 1;

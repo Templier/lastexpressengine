@@ -38,7 +38,7 @@
 
 namespace LastExpress {
 
-Train::Train(LastExpressEngine *engine) : Entity(engine, SavePoints::kEntityTrain) {
+Train::Train(LastExpressEngine *engine) : Entity(engine, kEntityTrain) {
 	ADD_CALLBACK_FUNCTION(Train, execute);
 	ADD_CALLBACK_FUNCTION(Train, chapter1);
 	ADD_CALLBACK_FUNCTION(Train, chapter2);
@@ -54,35 +54,35 @@ IMPLEMENT_FUNCTION_INT2(Train, execute, 1) {
 }
 
 IMPLEMENT_FUNCTION(Train, chapter1, 2) {
-	if (savepoint->action != SavePoints::kActionDefault)
+	if (savepoint->action != kActionDefault)
 		return;
 
 	setup_process();
 }
 
 IMPLEMENT_FUNCTION(Train, chapter2, 3) {
-	if (savepoint->action != SavePoints::kActionDefault)
+	if (savepoint->action != kActionDefault)
 		return;
 
 	setup_process();
 }
 
 IMPLEMENT_FUNCTION(Train, chapter3, 4) {
-	if (savepoint->action != SavePoints::kActionDefault)
+	if (savepoint->action != kActionDefault)
 		return;
 
 	setup_process();
 }
 
 IMPLEMENT_FUNCTION(Train, chapter4, 5) {
-	if (savepoint->action != SavePoints::kActionDefault)
+	if (savepoint->action != kActionDefault)
 		return;
 
 	setup_process();
 }
 
 IMPLEMENT_FUNCTION(Train, chapter5, 6) {
-	if (savepoint->action != SavePoints::kActionDefault)
+	if (savepoint->action != kActionDefault)
 		return;
 
 	setup_process();
@@ -103,7 +103,7 @@ IMPLEMENT_FUNCTION(Train, process, 8) {
 	default:
 		break;	
 
-	case SavePoints::kActionNone: {
+	case kActionNone: {
 		// Play smoke animation
 		if ((getEntities()->checkFields7(3) || getEntities()->checkFields7(4)) 
 		  && _data->getCurrentParameters()->param4
@@ -157,73 +157,73 @@ label_skip:
 		
 		// Play clock sound
 		if (_data->getCurrentParameters()->param6) {
-			getSound()->playSound(SavePoints::kEntityNone, "ZFX1001");
+			getSound()->playSound(kEntityNone, "ZFX1001");
 		}
 
 		break;
 	}
 
-	case SavePoints::kAction8:
-	case SavePoints::kAction9:
+	case kAction8:
+	case kAction9:
 		if (savepoint->param.intValue == 5 || savepoint->param.intValue == 6 || savepoint->param.intValue == 7 || savepoint->param.intValue == 8) {
 			_data->setNextCallback(savepoint->action == 8 ? 3 : 4);
 			call(new ENTITY_SETUP_DEFAULT(Train, setup_harem), savepoint->param.intValue, savepoint->action);
 		}
 		break;
 
-	case SavePoints::kActionDefault:
+	case kActionDefault:
 		_data->getCurrentParameters(8)->param1 = 1;		
 		if (getProgress().chapter < State::kChapter5) {
-			getObjects()->update(Objects::kObjectCompartment5, SavePoints::kEntityTrain, 3, Cursor::kCursorHandKnock, 9);
-			getObjects()->update(Objects::kObjectCompartment6, SavePoints::kEntityTrain, 3, Cursor::kCursorHandKnock, 9);
-			getObjects()->update(Objects::kObjectCompartment7, SavePoints::kEntityTrain, 3, Cursor::kCursorHandKnock, 9);
-			getObjects()->update(Objects::kObjectCompartment8, SavePoints::kEntityTrain, 3, Cursor::kCursorHandKnock, 9);
+			getObjects()->update(Objects::kObjectCompartment5, kEntityTrain, 3, Cursor::kCursorHandKnock, 9);
+			getObjects()->update(Objects::kObjectCompartment6, kEntityTrain, 3, Cursor::kCursorHandKnock, 9);
+			getObjects()->update(Objects::kObjectCompartment7, kEntityTrain, 3, Cursor::kCursorHandKnock, 9);
+			getObjects()->update(Objects::kObjectCompartment8, kEntityTrain, 3, Cursor::kCursorHandKnock, 9);
 		}
 		_data->getData()->field_491 = 30000;
 		break;
 
-	case SavePoints::kAction17:
-		_data->getData()->field_495 = getEntityData(SavePoints::kEntityNone)->field_495;
+	case kAction17:
+		_data->getData()->field_495 = getEntityData(kEntityNone)->field_495;
 
 		// Play clock sound
 		if (getEntities()->checkFields4(5, 81)) {
 			_data->getCurrentParameters()->param6 = 1;
-			getSound()->playSound(SavePoints::kEntityNone, "ZFX1001");
+			getSound()->playSound(kEntityNone, "ZFX1001");
 		} else {
 			_data->getCurrentParameters()->param6 = 0;
 		}
 
 		// Draw moving background behind windows
 		if (_data->getCurrentParameters()->param3) {
-			if (getEntityData(SavePoints::kEntityNone)->field_495 != _data->getCurrentParameters()->param1 || isDay() != (_data->getCurrentParameters()->param2 > 0)) {
-				switch (getEntityData(SavePoints::kEntityNone)->field_495) {
+			if (getEntityData(kEntityNone)->field_495 != _data->getCurrentParameters()->param1 || isDay() != (_data->getCurrentParameters()->param2 > 0)) {
+				switch (getEntityData(kEntityNone)->field_495) {
 				default:
-					getEntities()->drawSequences(SavePoints::kEntityTrain);
+					getEntities()->drawSequences(kEntityTrain);
 					break;
 
 				case 1:
 				case 6:
 					if (getProgress().is_nighttime)
-						getEntities()->drawSequence(SavePoints::kEntityTrain, "B1WNM");
+						getEntities()->drawSequence(kEntityTrain, "B1WNM");
 					else
-						getEntities()->drawSequence(SavePoints::kEntityTrain, isDay() ? "B1WNM" : "B1WND");
+						getEntities()->drawSequence(kEntityTrain, isDay() ? "B1WNM" : "B1WND");
 					break;
 
 				case 3:
 				case 4:
 					if (getProgress().is_nighttime)
-						getEntities()->drawSequence(SavePoints::kEntityTrain, "S1WNM");
+						getEntities()->drawSequence(kEntityTrain, "S1WNM");
 					else
-						getEntities()->drawSequence(SavePoints::kEntityTrain, isDay() ? "S1WNM" : "S1WND");
+						getEntities()->drawSequence(kEntityTrain, isDay() ? "S1WNM" : "S1WND");
 					break;
 
 				case 5:
-					getEntities()->drawSequence(SavePoints::kEntityTrain, isDay() ? "RCWNN" : "RCWND");
+					getEntities()->drawSequence(kEntityTrain, isDay() ? "RCWNN" : "RCWND");
 					break;
 				}
 
 				// Set parameters so we do not get called twice
-				_data->getCurrentParameters()->param1 = getEntityData(SavePoints::kEntityNone)->field_495;
+				_data->getCurrentParameters()->param1 = getEntityData(kEntityNone)->field_495;
 				_data->getCurrentParameters()->param2 = isDay();
 			}
 		}
@@ -251,7 +251,7 @@ label_skip:
 		break;
 
 
-	case SavePoints::kAction18: {
+	case kAction18: {
 		int action = _data->getNextCallback();
 		switch(action) {
 		default:
@@ -271,7 +271,7 @@ label_skip:
 
 		case 6:
 			getAction()->playAnimation(Action::kCathBreakCeiling);
-			getObjects()->update(Objects::kObjectCeiling, SavePoints::kEntityNone, 2, Cursor::kCursorKeepValue, 255);
+			getObjects()->update(Objects::kObjectCeiling, kEntityNone, 2, Cursor::kCursorKeepValue, 255);
 			getLogic()->processScene();
 			break;
 
@@ -288,21 +288,21 @@ label_skip:
 		break;
 	}
 		
-	case SavePoints::kAction191070912:
+	case kAction191070912:
 		_data->getParameters(8, 0)->param7 = savepoint->param.intValue;
 		break;
 
-	case SavePoints::kAction191350523:
+	case kAction191350523:
 		_data->getCurrentParameters()->param3 = 0;
-		getEntities()->drawSequences(SavePoints::kEntityTrain);
+		getEntities()->drawSequences(kEntityTrain);
 		break;
 
-	case SavePoints::kAction202613084:
+	case kAction202613084:
 		_data->setNextCallback(8);
 		call(new ENTITY_SETUP_DEFAULT(Train, setup_execute), 2, 259);
 		break;
 
-	case SavePoints::kAction203339360:
+	case kAction203339360:
 		if (!_data->getCurrentParameters()->param7) {
 			_data->setNextCallback(5);
 			call(new ENTITY_SETUP_DEFAULT(Train, setup_execute), 2, 148);
@@ -313,22 +313,22 @@ label_skip:
 		}
 		break;
 
-	case SavePoints::kAction203419131:
+	case kAction203419131:
 		if (!_data->getCurrentParameters()->param3) {
 			_data->getCurrentParameters()->param1 = 0;
 			_data->getCurrentParameters()->param3 = 1;
-			getSavePoints()->push(SavePoints::kEntityTrain, SavePoints::kEntityTrain, SavePoints::kAction17);
+			getSavePoints()->push(kEntityTrain, kEntityTrain, kAction17);
 		}
 		break;
 
-	case SavePoints::kAction203863200:
+	case kAction203863200:
 		if (savepoint->param.charValue) {
 			_data->getCurrentParameters()->param8 = 1;
 			strcpy((char *)&parameters1->param4, savepoint->param.charValue);	// this is the sound file name
 		}
 		break;
 
-	case SavePoints::kAction222746496:
+	case kAction222746496:
 		switch(savepoint->param.intValue) {
 		default:
 			break;
@@ -371,12 +371,12 @@ label_skip:
 		}
 		break;
 
-	case SavePoints::kAction225056224:
+	case kAction225056224:
 		_data->setNextCallback(6);		
 		call(new ENTITY_SETUP_DEFAULT(Train, setup_execute), 2, 252);
 		break;
 
-	case SavePoints::kAction338494260:
+	case kAction338494260:
 		_data->setNextCallback(7);
 		call(new ENTITY_SETUP_DEFAULT(Train, setup_execute), 2, 253);
 		break;
@@ -386,8 +386,8 @@ label_skip:
 void Train::resetParam8() {
 	EntityData::EntityParametersSeq1 *parameters1 = (EntityData::EntityParametersSeq1*)_data->getCurrentParameters(1);
 	if (_data->getCurrentParameters()->param8
-		&& getEntities()->checkFields1(SavePoints::kEntityNone, parameters1->param1, parameters1->param2)
-		&& getEntities()->checkFields1(SavePoints::kEntityNone, parameters1->param1, parameters1->param3)) {
+		&& getEntities()->checkFields1(kEntityNone, parameters1->param1, parameters1->param2)
+		&& getEntities()->checkFields1(kEntityNone, parameters1->param1, parameters1->param3)) {
 			// loads a file in the sound cache (param4)
 			_data->getCurrentParameters()->param8 = 0;
 	}

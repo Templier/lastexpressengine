@@ -39,7 +39,7 @@ public:
 	DECLARE_FUNCTION(function1)
 	DECLARE_FUNCTION_SEQ(function2)
 	// There doesn't seem to be a setup part for function 3 (no idea why), so we skip that part too
-	void function3(SavePoints::SavePoint *savepoint);
+	void function3(SavePoint *savepoint);
 	DECLARE_FUNCTION_SEQ(function4)
 	DECLARE_FUNCTION(savegame)
 	DECLARE_FUNCTION(function6)

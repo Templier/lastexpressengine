@@ -33,7 +33,7 @@
 
 namespace LastExpress {
 
-Yasmin::Yasmin(LastExpressEngine *engine) : Entity(engine, SavePoints::kEntityYasmin) {
+Yasmin::Yasmin(LastExpressEngine *engine) : Entity(engine, kEntityYasmin) {
 	ADD_CALLBACK_FUNCTION(Yasmin, nullfunc);
 	ADD_CALLBACK_FUNCTION(Yasmin, nullfunc);
 	ADD_CALLBACK_FUNCTION(Yasmin, nullfunc);
@@ -58,7 +58,7 @@ Yasmin::Yasmin(LastExpressEngine *engine) : Entity(engine, SavePoints::kEntityYa
 	ADD_NULL_FUNCTION();
 }
 
-void Yasmin::nullfunc(SavePoints::SavePoint *savepoint) {
+void Yasmin::nullfunc(SavePoint *savepoint) {
 	error("Yasmin: callback function not implemented!");
 }
 

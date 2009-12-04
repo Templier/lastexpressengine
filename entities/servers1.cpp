@@ -33,7 +33,7 @@
 
 namespace LastExpress {
 
-Servers1::Servers1(LastExpressEngine *engine) : Entity(engine, SavePoints::kEntityServers1) {
+Servers1::Servers1(LastExpressEngine *engine) : Entity(engine, kEntityServers1) {
 	ADD_CALLBACK_FUNCTION(Servers1, nullfunc);
 	ADD_CALLBACK_FUNCTION(Servers1, nullfunc);
 	ADD_CALLBACK_FUNCTION(Servers1, nullfunc);
@@ -68,7 +68,7 @@ Servers1::Servers1(LastExpressEngine *engine) : Entity(engine, SavePoints::kEnti
 	ADD_NULL_FUNCTION()
 }
 
-void Servers1::nullfunc(SavePoints::SavePoint *savepoint) {
+void Servers1::nullfunc(SavePoint *savepoint) {
 	error("Servers1: callback function not implemented!");
 }
 
@@ -77,25 +77,25 @@ IMPLEMENT_FUNCTION(Servers1, chapter1, 8) {
 	default:
 		break;
 
-	case SavePoints::kActionDefault: 
-		getSavePoints()->addData(SavePoints::kEntityServers1, SavePoints::kAction302203328, 5);
-		getSavePoints()->addData(SavePoints::kEntityServers1, SavePoints::kAction189688608, 6);
-		getSavePoints()->addData(SavePoints::kEntityServers1, SavePoints::kAction236237423, 7);
-		getSavePoints()->addData(SavePoints::kEntityServers1, SavePoints::kAction219377792, 8);
-		getSavePoints()->addData(SavePoints::kEntityServers1, SavePoints::kAction291721418, 10);
-		getSavePoints()->addData(SavePoints::kEntityServers1, SavePoints::kAction258136010, 11);
-		getSavePoints()->addData(SavePoints::kEntityServers1, SavePoints::kAction302996448, 2);
-		getSavePoints()->addData(SavePoints::kEntityServers1, SavePoints::kAction223002560, 0);
-		getSavePoints()->addData(SavePoints::kEntityServers1, SavePoints::kAction256200848, 9);
-		getSavePoints()->addData(SavePoints::kEntityServers1, SavePoints::kAction269485588, 3);
-		getSavePoints()->addData(SavePoints::kEntityServers1, SavePoints::kAction326144276, 4);
+	case kActionDefault: 
+		getSavePoints()->addData(kEntityServers1, kAction302203328, 5);
+		getSavePoints()->addData(kEntityServers1, kAction189688608, 6);
+		getSavePoints()->addData(kEntityServers1, kAction236237423, 7);
+		getSavePoints()->addData(kEntityServers1, kAction219377792, 8);
+		getSavePoints()->addData(kEntityServers1, kAction291721418, 10);
+		getSavePoints()->addData(kEntityServers1, kAction258136010, 11);
+		getSavePoints()->addData(kEntityServers1, kAction302996448, 2);
+		getSavePoints()->addData(kEntityServers1, kAction223002560, 0);
+		getSavePoints()->addData(kEntityServers1, kAction256200848, 9);
+		getSavePoints()->addData(kEntityServers1, kAction269485588, 3);
+		getSavePoints()->addData(kEntityServers1, kAction326144276, 4);
 
 		_data->getData()->field_491 = 5900;
 		_data->getData()->field_493 = 0;
 		_data->getData()->field_495 = 5;
 		break;
 
-	case SavePoints::kActionNone: 
+	case kActionNone: 
 		// call function
 		break;
 	}

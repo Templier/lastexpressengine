@@ -33,7 +33,7 @@
 
 namespace LastExpress {
 
-Vesna::Vesna(LastExpressEngine *engine) : Entity(engine, SavePoints::kEntityVesna) {
+Vesna::Vesna(LastExpressEngine *engine) : Entity(engine, kEntityVesna) {
 	ADD_CALLBACK_FUNCTION(Vesna, nullfunc);
 	ADD_CALLBACK_FUNCTION(Vesna, nullfunc);
 	ADD_CALLBACK_FUNCTION(Vesna, nullfunc);
@@ -67,7 +67,7 @@ Vesna::Vesna(LastExpressEngine *engine) : Entity(engine, SavePoints::kEntityVesn
 	ADD_NULL_FUNCTION();
 }
 
-void Vesna::nullfunc(SavePoints::SavePoint *savepoint) {
+void Vesna::nullfunc(SavePoint *savepoint) {
 	error("Vesna: callback function not implemented!");
 }
 
@@ -76,15 +76,15 @@ IMPLEMENT_FUNCTION(Vesna, chapter1, 12) {
 	default:
 		break;
 
-	case SavePoints::kActionDefault: 
-		getSavePoints()->addData(SavePoints::kEntityVesna, SavePoints::kAction124190740, 0);
+	case kActionDefault: 
+		getSavePoints()->addData(kEntityVesna, kAction124190740, 0);
 
 		_data->getData()->field_491 = 4689;
 		_data->getData()->field_493 = 1;
 		_data->getData()->field_495 = 5;
 		break;
 
-	case SavePoints::kActionNone: 
+	case kActionNone: 
 		if (getState()->time > 1062000) {
 			if (!_data->getCurrentParameters()->param1) {
 				_data->getCurrentParameters()->param1 = 1;

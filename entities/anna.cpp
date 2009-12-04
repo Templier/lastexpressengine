@@ -34,7 +34,7 @@
 
 namespace LastExpress {
 
-Anna::Anna(LastExpressEngine *engine) : Entity(engine, SavePoints::kEntityAnna) {
+Anna::Anna(LastExpressEngine *engine) : Entity(engine, kEntityAnna) {
 	ADD_CALLBACK_FUNCTION(Anna, nullfunc);
 	ADD_CALLBACK_FUNCTION(Anna, nullfunc);
 	ADD_CALLBACK_FUNCTION(Anna, nullfunc);
@@ -118,7 +118,7 @@ Anna::Anna(LastExpressEngine *engine) : Entity(engine, SavePoints::kEntityAnna) 
 	ADD_CALLBACK_FUNCTION(Anna, nullfunc);
 }
 
-void Anna::nullfunc(SavePoints::SavePoint *savepoint) {
+void Anna::nullfunc(SavePoint *savepoint) {
 	error("Anna: callback function not implemented!");
 }
 
@@ -127,13 +127,13 @@ IMPLEMENT_FUNCTION(Anna, chapter1, 16) {
 	default:
 		break;
 
-	case SavePoints::kActionDefault: 
-		getSavePoints()->addData(SavePoints::kEntityAnna, SavePoints::kAction291662081, 0);
-		getSavePoints()->addData(SavePoints::kEntityAnna, SavePoints::kAction238936000, 1);
+	case kActionDefault: 
+		getSavePoints()->addData(kEntityAnna, kAction291662081, 0);
+		getSavePoints()->addData(kEntityAnna, kAction238936000, 1);
 
-		getObjects()->update(Objects::kObjectCompartmentF, SavePoints::kEntityNone, 1, Cursor::kCursorHandKnock, 9);
-		getObjects()->update(Objects::kObject53, SavePoints::kEntityNone, 1, Cursor::kCursorHandKnock, 9);
-		getObjects()->update(Objects::kObject45, SavePoints::kEntityNone, 1, Cursor::kCursorKeepValue, 255);
+		getObjects()->update(Objects::kObjectCompartmentF, kEntityNone, 1, Cursor::kCursorHandKnock, 9);
+		getObjects()->update(Objects::kObject53, kEntityNone, 1, Cursor::kCursorHandKnock, 9);
+		getObjects()->update(Objects::kObject45, kEntityNone, 1, Cursor::kCursorKeepValue, 255);
 
 		_data->getData()->field_491 = 8200;
 		_data->getData()->field_493 = 1;
@@ -141,7 +141,7 @@ IMPLEMENT_FUNCTION(Anna, chapter1, 16) {
 		_data->getData()->field_4A5 = 0;
 		break;
 
-	case SavePoints::kActionNone: 
+	case kActionNone: 
 		if (getState()->time > 1062000) {
 			if (!_data->getCurrentParameters()->param1) {
 				_data->getCurrentParameters()->param1 = 1;

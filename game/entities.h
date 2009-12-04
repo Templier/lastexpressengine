@@ -53,46 +53,46 @@ public:
 
 	void setup(State::ChapterIndex chapter);
 
-	void reset(SavePoints::EntityIndex entity);
+	void reset(Entity::EntityIndex entity);
 
 	// Update & drawing
 	void updateFields();	
 	void setupSequences();
 	void setupCallbacks();
 
-	void updateFields0(SavePoints::EntityIndex entity1, SavePoints::EntityIndex entity2);
-	void updateFields1(SavePoints::EntityIndex entity1, SavePoints::EntityIndex entity2);
-	void updateFields2(SavePoints::EntityIndex entity1, SavePoints::EntityIndex entity2);
-	void updateFields3(SavePoints::EntityIndex entity1, SavePoints::EntityIndex entity2);
+	void updateFields0(Entity::EntityIndex entity1, Entity::EntityIndex entity2);
+	void updateFields1(Entity::EntityIndex entity1, Entity::EntityIndex entity2);
+	void updateFields2(Entity::EntityIndex entity1, Entity::EntityIndex entity2);
+	void updateFields3(Entity::EntityIndex entity1, Entity::EntityIndex entity2);
 
 	// Sequences
-	void storeSequenceName(SavePoints::EntityIndex entity, const char* sequence);
-	void drawSequence(SavePoints::EntityIndex entity, const char* sequence);
-	void drawSequences(SavePoints::EntityIndex entity);	
+	void storeSequenceName(Entity::EntityIndex entity, const char* sequence);
+	void drawSequence(Entity::EntityIndex entity, const char* sequence);
+	void drawSequences(Entity::EntityIndex entity);	
 
 	// Accessors
-	Entity *get(SavePoints::EntityIndex entity);
-	EntityData *getData(SavePoints::EntityIndex entity);
+	Entity *get(Entity::EntityIndex entity);
+	EntityData *getData(Entity::EntityIndex entity);
 
 	// Serializable
 	void saveLoadWithSerializer(Common::Serializer &ser);
 
 	// Checks
-	bool checkEntity(SavePoints::EntityIndex entity, int field495, int field491);
-	bool compare(SavePoints::EntityIndex entity1, SavePoints::EntityIndex entity2);	
+	bool checkEntity(Entity::EntityIndex entity, int field495, int field491);
+	bool compare(Entity::EntityIndex entity1, Entity::EntityIndex entity2);	
 
-	bool checkFields1(SavePoints::EntityIndex entity, int field495, int field491);
+	bool checkFields1(Entity::EntityIndex entity, int field495, int field491);
 	bool checkFields2(Objects::ObjectIndex object);
-	bool checkFields3(SavePoints::EntityIndex entity);
+	bool checkFields3(Entity::EntityIndex entity);
 	bool checkFields4(int field495, int field15);
-	bool checkFields5(SavePoints::EntityIndex entity, int field495);
-	bool checkFields6(SavePoints::EntityIndex entity);
+	bool checkFields5(Entity::EntityIndex entity, int field495);
+	bool checkFields6(Entity::EntityIndex entity);
 	bool checkFields7(int field495);
-	bool checkFields8(SavePoints::EntityIndex entity);
-	bool checkFields9(SavePoints::EntityIndex entity1, SavePoints::EntityIndex entity2, int value);
-	bool checkFields10(SavePoints::EntityIndex entity);
+	bool checkFields8(Entity::EntityIndex entity);
+	bool checkFields9(Entity::EntityIndex entity1, Entity::EntityIndex entity2, int value);
+	bool checkFields10(Entity::EntityIndex entity);
 
-	bool checkSequence0(SavePoints::EntityIndex entity);
+	bool checkSequence0(Entity::EntityIndex entity);
 
 private:
 	LastExpressEngine	    *_engine;
@@ -100,7 +100,7 @@ private:
 	Common::Array<Entity *>  _entities;	
 
 	void executeCallbacks();
-	void processEntity(SavePoints::EntityIndex entity);	
+	void processEntity(Entity::EntityIndex entity);	
 };
 
 } // End of namespace LastExpress

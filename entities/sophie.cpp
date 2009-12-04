@@ -40,11 +40,11 @@ namespace LastExpress {
 	switch (savepoint->action) { \
 	default: \
 		break; \
-	case SavePoints::kActionNone: \
+	case kActionNone: \
 		setup_function3(); \
 		break; \
-	case SavePoints::kActionDefault: \
-		getEntities()->drawSequences(SavePoints::kEntitySophie); \
+	case kActionDefault: \
+		getEntities()->drawSequences(kEntitySophie); \
 		_data->getData()->field_491 = 4840; \
 		_data->getData()->field_493 = 1; \
 		_data->getData()->field_495 = 4; \
@@ -54,14 +54,14 @@ namespace LastExpress {
 	}
 
 #define DEFAULT_ACTION_IMPLEMENTATION() \
-	if (savepoint->action == SavePoints::kActionDefault) { \
+	if (savepoint->action == kActionDefault) { \
 		_data->getData()->field_491 = 4840; \
 		_data->getData()->field_493 = 1; \
 		_data->getData()->field_495 = 4; \
-		getEntities()->drawSequences(SavePoints::kEntitySophie); \
+		getEntities()->drawSequences(kEntitySophie); \
 	}
 
-Sophie::Sophie(LastExpressEngine *engine) : Entity(engine, SavePoints::kEntitySophie) {
+Sophie::Sophie(LastExpressEngine *engine) : Entity(engine, kEntitySophie) {
 	ADD_CALLBACK_FUNCTION(Sophie, function1);
 	ADD_CALLBACK_FUNCTION(Sophie, function2);
 	ADD_CALLBACK_FUNCTION(Sophie, function3);
@@ -78,7 +78,7 @@ Sophie::Sophie(LastExpressEngine *engine) : Entity(engine, SavePoints::kEntitySo
 
 //////////////////////////////////////////////////////////////////////////
 IMPLEMENT_FUNCTION(Sophie, function1, 1) {
-	FUNCTION_1_IMPLEMENTATION(SavePoints::kEntitySophie)
+	FUNCTION_1_IMPLEMENTATION(kEntitySophie)
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -87,7 +87,7 @@ IMPLEMENT_FUNCTION_INT2(Sophie, function2, 2) {
 	default:
 		break;
 
-	case SavePoints::kActionNone: {
+	case kActionNone: {
 		_data->getCurrentParameters()->param3 = 0;
 
 		// Sophie
@@ -96,10 +96,10 @@ IMPLEMENT_FUNCTION_INT2(Sophie, function2, 2) {
 		int16 field_495 = _data->getData()->field_495;
 
 		// Rebecca
-		int16 rebecca_field_491 = getEntityData(SavePoints::kEntityRebecca)->field_491;
-		int16 rebecca_field_495 = getEntityData(SavePoints::kEntityRebecca)->field_495;
+		int16 rebecca_field_491 = getEntityData(kEntityRebecca)->field_491;
+		int16 rebecca_field_495 = getEntityData(kEntityRebecca)->field_495;
 
-		if (getEntities()->checkFields9(SavePoints::kEntitySophie, SavePoints::kEntityRebecca, 500)
+		if (getEntities()->checkFields9(kEntitySophie, kEntityRebecca, 500)
 		 || (field_49A == 1 && field_495 >= rebecca_field_495 && field_491 > rebecca_field_491)
 		 || (field_49A == 2 && field_495 <= rebecca_field_495 && field_491 < rebecca_field_491)) {
 			 _data->getData()->field_49B = 0;
@@ -107,25 +107,25 @@ IMPLEMENT_FUNCTION_INT2(Sophie, function2, 2) {
 		}
 
 		if (!_data->getCurrentParameters()->param3)
-			getEntities()->checkEntity(SavePoints::kEntitySophie, _data->getCurrentParameters()->param1, _data->getCurrentParameters()->param2);
+			getEntities()->checkEntity(kEntitySophie, _data->getCurrentParameters()->param1, _data->getCurrentParameters()->param2);
 
 		break;
 	}
 
-	case SavePoints::kAction5:
+	case kAction5:
 		getSound()->excuseMeCath();
 		break;
 
-	case SavePoints::kAction6:
-		getSound()->excuseMe(SavePoints::kEntitySophie, 0, 0);
+	case kAction6:
+		getSound()->excuseMe(kEntitySophie, 0, 0);
 		break;
 
-	case SavePoints::kActionDefault:
-		getEntities()->checkEntity(SavePoints::kEntitySophie, _data->getCurrentParameters()->param1, _data->getCurrentParameters()->param2);
+	case kActionDefault:
+		getEntities()->checkEntity(kEntitySophie, _data->getCurrentParameters()->param1, _data->getCurrentParameters()->param2);
 		break;
 
-	case SavePoints::kAction123668192:
-		CALL_PREVIOUS_SAVEPOINT(SavePoints::kEntitySophie)
+	case kAction123668192:
+		CALL_PREVIOUS_SAVEPOINT(kEntitySophie)
 		break;
 	}
 }
@@ -136,62 +136,62 @@ IMPLEMENT_FUNCTION(Sophie, function3, 3) {
 	default:
 		break;
 		
-	case SavePoints::kActionNone:
-		_data->getData()->field_491 = getEntityData(SavePoints::kEntityRebecca)->field_491;
-		_data->getData()->field_495 = getEntityData(SavePoints::kEntityRebecca)->field_495;
+	case kActionNone:
+		_data->getData()->field_491 = getEntityData(kEntityRebecca)->field_491;
+		_data->getData()->field_495 = getEntityData(kEntityRebecca)->field_495;
 		break;
 
-	case SavePoints::kAction18:
+	case kAction18:
 		switch (_data->getNextCallback()) {
 		default:
 			break;
 
 		case 1:
-			getEntities()->drawSequences(SavePoints::kEntitySophie);
+			getEntities()->drawSequences(kEntitySophie);
 			break;
 
 		case 2:
-			getEntities()->drawSequence(SavePoints::kEntitySophie, "BLANK");
+			getEntities()->drawSequence(kEntitySophie, "BLANK");
 			break;
 
 		case 3:
-			getEntities()->drawSequences(SavePoints::kEntitySophie);
+			getEntities()->drawSequences(kEntitySophie);
 			break;
 
 		case 4:
-			getEntities()->drawSequence(SavePoints::kEntitySophie, "BLANK");
+			getEntities()->drawSequence(kEntitySophie, "BLANK");
 			break;
 		}
 		break;
 
-	case SavePoints::kAction125242096:
-		_data->getData()->field_491 = getEntityData(SavePoints::kEntityRebecca)->field_491 - 100;
-		_data->getData()->field_493 = getEntityData(SavePoints::kEntityRebecca)->field_493;
-		_data->getData()->field_495 = getEntityData(SavePoints::kEntityRebecca)->field_495;
+	case kAction125242096:
+		_data->getData()->field_491 = getEntityData(kEntityRebecca)->field_491 - 100;
+		_data->getData()->field_493 = getEntityData(kEntityRebecca)->field_493;
+		_data->getData()->field_495 = getEntityData(kEntityRebecca)->field_495;
 
 		_data->setNextCallback(1);
 		call(new ENTITY_SETUP_DEFAULT(Sophie, setup_function2), 5, 850);
 		break;
 
-	case SavePoints::kAction136654208:
-		_data->getData()->field_491 = getEntityData(SavePoints::kEntityRebecca)->field_491 + 100;
-		_data->getData()->field_493 = getEntityData(SavePoints::kEntityRebecca)->field_493;
-		_data->getData()->field_495 = getEntityData(SavePoints::kEntityRebecca)->field_495;
+	case kAction136654208:
+		_data->getData()->field_491 = getEntityData(kEntityRebecca)->field_491 + 100;
+		_data->getData()->field_493 = getEntityData(kEntityRebecca)->field_493;
+		_data->getData()->field_495 = getEntityData(kEntityRebecca)->field_495;
 
 		_data->setNextCallback(2);
 		call(new ENTITY_SETUP_DEFAULT(Sophie, setup_function2), 4, 4840);
 		break;
 
-	case SavePoints::kAction259921280:
-		_data->getData()->field_491 = getEntityData(SavePoints::kEntityRebecca)->field_491 + 100;
-		_data->getData()->field_493 = getEntityData(SavePoints::kEntityRebecca)->field_493;
-		_data->getData()->field_495 = getEntityData(SavePoints::kEntityRebecca)->field_495;
+	case kAction259921280:
+		_data->getData()->field_491 = getEntityData(kEntityRebecca)->field_491 + 100;
+		_data->getData()->field_493 = getEntityData(kEntityRebecca)->field_493;
+		_data->getData()->field_495 = getEntityData(kEntityRebecca)->field_495;
 		
 		_data->setNextCallback(3);
 		call(new ENTITY_SETUP_DEFAULT(Sophie, setup_function2), 2, 9640);
 		break;
 
-	case SavePoints::kAction292775040:
+	case kAction292775040:
 		_data->getData()->field_491 = 9270;
 		_data->getData()->field_493 = 0;
 		_data->getData()->field_495 = 2;
@@ -208,7 +208,7 @@ IMPLEMENT_FUNCTION(Sophie, chapter1, 4) {
 	default:
 		break;	
 
-	case SavePoints::kActionNone:
+	case kActionNone:
 		if (getState()->time > 1062000)
 			if (!_data->getCurrentParameters()->param1) {
 				_data->getCurrentParameters()->param1 = 1;
@@ -216,7 +216,7 @@ IMPLEMENT_FUNCTION(Sophie, chapter1, 4) {
 			}
 		break;
 
-	case SavePoints::kActionDefault: 
+	case kActionDefault: 
 		_data->getData()->field_491 = 4840;
 		_data->getData()->field_493 = 1;
 		_data->getData()->field_495 = 4;
@@ -255,12 +255,12 @@ IMPLEMENT_FUNCTION(Sophie, chapter5, 10){
 	default:
 		break;
 
-	case SavePoints::kActionNone:
+	case kActionNone:
 		setup_function11();
 		break;
 
-	case SavePoints::kActionDefault:
-		getEntities()->drawSequences(SavePoints::kEntitySophie);
+	case kActionDefault:
+		getEntities()->drawSequences(kEntitySophie);
 
 		_data->getData()->field_491 = 3969;
 		_data->getData()->field_493 = 1;
@@ -273,7 +273,7 @@ IMPLEMENT_FUNCTION(Sophie, chapter5, 10){
 
 //////////////////////////////////////////////////////////////////////////
 IMPLEMENT_FUNCTION(Sophie, function11, 11) {
-	if (savepoint->action == SavePoints::kAction70549068)
+	if (savepoint->action == kAction70549068)
 		setup_nullfunction();
 }
 

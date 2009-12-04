@@ -33,7 +33,7 @@
 
 namespace LastExpress {
 
-Vassili::Vassili(LastExpressEngine *engine) : Entity(engine, SavePoints::kEntityVassili) {
+Vassili::Vassili(LastExpressEngine *engine) : Entity(engine, kEntityVassili) {
 	ADD_CALLBACK_FUNCTION(Vassili, nullfunc);
 	ADD_CALLBACK_FUNCTION(Vassili, nullfunc);
 	ADD_CALLBACK_FUNCTION(Vassili, nullfunc);
@@ -54,7 +54,7 @@ Vassili::Vassili(LastExpressEngine *engine) : Entity(engine, SavePoints::kEntity
 	ADD_CALLBACK_FUNCTION(Vassili, chapter5);
 }
 
-void Vassili::nullfunc(SavePoints::SavePoint *savepoint) {
+void Vassili::nullfunc(SavePoint *savepoint) {
 	error("Vassili: callback function not implemented!");
 }
 

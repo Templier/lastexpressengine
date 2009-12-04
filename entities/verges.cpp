@@ -34,7 +34,7 @@
 
 namespace LastExpress {
 
-Verges::Verges(LastExpressEngine *engine) : Entity(engine, SavePoints::kEntityVerges) {
+Verges::Verges(LastExpressEngine *engine) : Entity(engine, kEntityVerges) {
 	ADD_CALLBACK_FUNCTION(Verges, nullfunc);
 	ADD_CALLBACK_FUNCTION(Verges, nullfunc);
 	ADD_CALLBACK_FUNCTION(Verges, nullfunc);
@@ -79,7 +79,7 @@ Verges::Verges(LastExpressEngine *engine) : Entity(engine, SavePoints::kEntityVe
 	ADD_CALLBACK_FUNCTION(Verges, nullfunc);
 }
 
-void Verges::nullfunc(SavePoints::SavePoint *savepoint) {
+void Verges::nullfunc(SavePoint *savepoint) {
 	error("Verges: callback function not implemented!");
 }
 
@@ -88,25 +88,25 @@ IMPLEMENT_FUNCTION(Verges, chapter1, 18) {
 	default:
 		break;
 
-	case SavePoints::kActionDefault: 
-		getSavePoints()->addData(SavePoints::kEntityVerges, SavePoints::kAction191337656, 0);
-		getSavePoints()->addData(SavePoints::kEntityVerges, SavePoints::kAction226031488, 1);
-		getSavePoints()->addData(SavePoints::kEntityVerges, SavePoints::kAction339669520, 1);
-		getSavePoints()->addData(SavePoints::kEntityVerges, SavePoints::kAction167854368, 4);
-		getSavePoints()->addData(SavePoints::kEntityVerges, SavePoints::kAction158617345, 2);
-		getSavePoints()->addData(SavePoints::kEntityVerges, SavePoints::kAction168255788, 3);
-		getSavePoints()->addData(SavePoints::kEntityVerges, SavePoints::kAction201431954, 5);
-		getSavePoints()->addData(SavePoints::kEntityVerges, SavePoints::kAction168187490, 6);
+	case kActionDefault: 
+		getSavePoints()->addData(kEntityVerges, kAction191337656, 0);
+		getSavePoints()->addData(kEntityVerges, kAction226031488, 1);
+		getSavePoints()->addData(kEntityVerges, kAction339669520, 1);
+		getSavePoints()->addData(kEntityVerges, kAction167854368, 4);
+		getSavePoints()->addData(kEntityVerges, kAction158617345, 2);
+		getSavePoints()->addData(kEntityVerges, kAction168255788, 3);
+		getSavePoints()->addData(kEntityVerges, kAction201431954, 5);
+		getSavePoints()->addData(kEntityVerges, kAction168187490, 6);
 
-		getObjects()->update(Objects::kObject104, SavePoints::kEntityVerges, 0, Cursor::kCursorNormal, 9);
-		getObjects()->update(Objects::kObject105, SavePoints::kEntityVerges, 0, Cursor::kCursorNormal, 9);
+		getObjects()->update(Objects::kObject104, kEntityVerges, 0, Cursor::kCursorNormal, 9);
+		getObjects()->update(Objects::kObject105, kEntityVerges, 0, Cursor::kCursorNormal, 9);
 
 		_data->getData()->field_491 = 5000;
 		_data->getData()->field_493 = 0;
 		_data->getData()->field_495 = 6;
 		break;
 
-	case SavePoints::kActionNone: 
+	case kActionNone: 
 		if (getState()->time > 1062000) {
 			if (!_data->getCurrentParameters()->param1) {
 				_data->getCurrentParameters()->param1 = 1;

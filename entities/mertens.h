@@ -56,7 +56,7 @@ public:
 	DECLARE_FUNCTION(function52)
 	DECLARE_NULL_FUNCTION()
 
-	void nullfunc(SavePoints::SavePoint *savepoint);
+	void nullfunc(SavePoint *savepoint);
 
 private:
 	DECLARE_CALL_FUNCTION(default, Mertens, int, int, int, int)

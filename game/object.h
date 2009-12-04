@@ -26,9 +26,9 @@
 #ifndef LASTEXPRESS_OBJECT_H
 #define LASTEXPRESS_OBJECT_H
 
-#include "lastexpress/game/savepoint.h"
-
 #include "lastexpress/data/cursor.h"
+
+#include "lastexpress/entities/entity.h"
 
 #include "common/serializer.h"
 #include "common/system.h"
@@ -172,14 +172,14 @@ public:
 	};
 
 	struct Object {
-		SavePoints::EntityIndex entity;		// Should be saved as a byte
+		Entity::EntityIndex entity;		// Should be saved as a byte
 		byte location;
 		Cursor::CursorStyle cursor;			// Should be saved as a byte
 		byte field_3;
 		byte field_4;
 
 		Object() {
-			entity = SavePoints::kEntityNone;
+			entity = Entity::kEntityNone;
 			location = 0;
 			cursor = Cursor::kCursorHandKnock;
 			field_3 = 9;
@@ -190,7 +190,7 @@ public:
 	Objects(LastExpressEngine *engine);
 
 	const Object get(ObjectIndex index);
-	void update(ObjectIndex index, SavePoints::EntityIndex entity, byte location, Cursor::CursorStyle cursor, byte field_3);
+	void update(ObjectIndex index, Entity::EntityIndex entity, byte location, Cursor::CursorStyle cursor, byte field_3);
 	void updateField4(ObjectIndex index, byte field4);
 
 	// Serializable

@@ -33,7 +33,7 @@
 
 namespace LastExpress {
 
-Pascale::Pascale(LastExpressEngine *engine) : Entity(engine, SavePoints::kEntityPascale) {
+Pascale::Pascale(LastExpressEngine *engine) : Entity(engine, kEntityPascale) {
 	ADD_CALLBACK_FUNCTION(Pascale, nullfunc);
 	ADD_CALLBACK_FUNCTION(Pascale, nullfunc);
 	ADD_CALLBACK_FUNCTION(Pascale, nullfunc);
@@ -70,7 +70,7 @@ Pascale::Pascale(LastExpressEngine *engine) : Entity(engine, SavePoints::kEntity
 	ADD_NULL_FUNCTION();
 }
 
-void Pascale::nullfunc(SavePoints::SavePoint *savepoint) {
+void Pascale::nullfunc(SavePoint *savepoint) {
 	error("Pascale: callback function not implemented!");
 }
 
@@ -79,25 +79,25 @@ IMPLEMENT_FUNCTION(Pascale, chapter1, 12) {
 	default:
 		break;
 
-	case SavePoints::kActionDefault: 
-		getSavePoints()->addData(SavePoints::kEntityPascale, SavePoints::kAction239072064, 0);
-		getSavePoints()->addData(SavePoints::kEntityPascale, SavePoints::kAction257489762, 2);
-		getSavePoints()->addData(SavePoints::kEntityPascale, SavePoints::kAction207769280, 6);
-		getSavePoints()->addData(SavePoints::kEntityPascale, SavePoints::kAction101824388, 7);
-		getSavePoints()->addData(SavePoints::kEntityPascale, SavePoints::kAction136059947, 8);
-		getSavePoints()->addData(SavePoints::kEntityPascale, SavePoints::kAction223262556, 1);
-		getSavePoints()->addData(SavePoints::kEntityPascale, SavePoints::kAction269479296, 3);
-		getSavePoints()->addData(SavePoints::kEntityPascale, SavePoints::kAction352703104, 4);
-		getSavePoints()->addData(SavePoints::kEntityPascale, SavePoints::kAction352768896, 5);
-		getSavePoints()->addData(SavePoints::kEntityPascale, SavePoints::kAction191604416, 10);
-		getSavePoints()->addData(SavePoints::kEntityPascale, SavePoints::kAction190605184, 11);
+	case kActionDefault: 
+		getSavePoints()->addData(kEntityPascale, kAction239072064, 0);
+		getSavePoints()->addData(kEntityPascale, kAction257489762, 2);
+		getSavePoints()->addData(kEntityPascale, kAction207769280, 6);
+		getSavePoints()->addData(kEntityPascale, kAction101824388, 7);
+		getSavePoints()->addData(kEntityPascale, kAction136059947, 8);
+		getSavePoints()->addData(kEntityPascale, kAction223262556, 1);
+		getSavePoints()->addData(kEntityPascale, kAction269479296, 3);
+		getSavePoints()->addData(kEntityPascale, kAction352703104, 4);
+		getSavePoints()->addData(kEntityPascale, kAction352768896, 5);
+		getSavePoints()->addData(kEntityPascale, kAction191604416, 10);
+		getSavePoints()->addData(kEntityPascale, kAction190605184, 11);
 
 		_data->getData()->field_491 = 5900;
 		_data->getData()->field_493 = 0;
 		_data->getData()->field_495 = 5;
 		break;
 
-	case SavePoints::kActionNone: 
+	case kActionNone: 
 		// call function
  		break;
 	}

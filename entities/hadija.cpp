@@ -33,7 +33,7 @@
 
 namespace LastExpress {
 
-Hadija::Hadija(LastExpressEngine *engine) : Entity(engine, SavePoints::kEntityHadija) {
+Hadija::Hadija(LastExpressEngine *engine) : Entity(engine, kEntityHadija) {
 	ADD_CALLBACK_FUNCTION(Hadija, nullfunc);
 	ADD_CALLBACK_FUNCTION(Hadija, nullfunc);
 	ADD_CALLBACK_FUNCTION(Hadija, nullfunc);
@@ -60,7 +60,7 @@ Hadija::Hadija(LastExpressEngine *engine) : Entity(engine, SavePoints::kEntityHa
 	ADD_NULL_FUNCTION();
 }
 
-void Hadija::nullfunc(SavePoints::SavePoint *savepoint) {
+void Hadija::nullfunc(SavePoint *savepoint) {
 	error("Hadija: callback function not implemented!");
 }
 
