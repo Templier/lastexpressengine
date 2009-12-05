@@ -30,6 +30,8 @@
 #include "lastexpress/data/sequence.h"
 
 // Entities
+#include "lastexpress/entities/entity.h"
+
 #include "lastexpress/entities/abbot.h"
 #include "lastexpress/entities/alexei.h"
 #include "lastexpress/entities/alouan.h"
@@ -72,7 +74,7 @@
 
 namespace LastExpress {
 
-const static int field491_values[9] = {0, 8200, 7500, 6470, 5790, 4840, 4070, 3050, 2740};
+const static EntityData::Field491Value field491_values[9] = {EntityData::kField491_0, EntityData::kField491_8200, EntityData::kField491_7500, EntityData::kField491_6470, EntityData::kField491_5790, EntityData::kField491_4840, EntityData::kField491_4070, EntityData::kField491_3050, EntityData::kField491_2740};
 
 #define ADD_ENTITY(class) \
 	_entities.push_back(new class(engine));
@@ -203,10 +205,10 @@ void Entities::updateFields() {
 			{	
 				if (field_49A == 2) {
 					if (field_491 > field_4A3 * 10)
-						_entities[i]->getData()->getData()->field_491 -= field_4A3 * 10;
+						_entities[i]->getData()->getData()->field_491 = (EntityData::Field491Value)(_entities[i]->getData()->getData()->field_491 - field_4A3 * 10);
 				}
 			} else {
-				_entities[i]->getData()->getData()->field_491 += field_4A3 * 10;
+				_entities[i]->getData()->getData()->field_491 = (EntityData::Field491Value)(_entities[i]->getData()->getData()->field_491 + field_4A3 * 10);
 			}
 			break;
 
@@ -350,18 +352,18 @@ bool Entities::compare(Entity::EntityIndex entity1, Entity::EntityIndex entity2)
 	error("Entities::compare: not implemented!");
 }
 
-bool Entities::checkEntity(Entity::EntityIndex entity, int field495, int field491) {
+bool Entities::checkEntity(Entity::EntityIndex entity, EntityData::Field495Value field495, EntityData::Field491Value field491) {
 	error("Entities::checkEntity: not implemented!");
 }
 
-bool Entities::checkFields1(Entity::EntityIndex entity, int field495, int field491) {
-	return (getData(entity)->getData()->field_491 == field491 && getData(entity)->getData()->field_493 == 1 && getData(entity)->getData()->field_495 == field495);
+bool Entities::checkFields1(Entity::EntityIndex entity, EntityData::Field495Value field495, EntityData::Field491Value field491) {
+	return (getData(entity)->getData()->field_491 == field491 && getData(entity)->getData()->field_493 == EntityData::kField493_1 && getData(entity)->getData()->field_495 == field495);
 }
 
 bool Entities::checkFields2(Objects::ObjectIndex object) {
 
-	int field491 = 0;
-	int field495 = 0;	
+	EntityData::Field491Value field491 = EntityData::kField491_0;
+	EntityData::Field495Value field495 = EntityData::kField495_0;	
 
 	switch (object) {
 	default:
@@ -376,7 +378,7 @@ bool Entities::checkFields2(Objects::ObjectIndex object) {
 	case Objects::kObjectCompartment7:
 	case Objects::kObjectCompartment8:
 		field491 = field491_values[object];
-		field495 = 3;
+		field495 = EntityData::kField495_3;
 		if (checkFields1(Entity::kEntityNone, field495, field491))
 			return false;
 		break;
@@ -388,7 +390,7 @@ bool Entities::checkFields2(Objects::ObjectIndex object) {
 	case Objects::kObject21:
 	case Objects::kObject22:
 		field491 = field491_values[object-17];
-		field495 = 3;
+		field495 = EntityData::kField495_3;
 		break;
 
 	case Objects::kObjectCompartmentA:
@@ -400,7 +402,7 @@ bool Entities::checkFields2(Objects::ObjectIndex object) {
 	case Objects::kObjectCompartmentG:
 	case Objects::kObjectCompartmentH:
 		field491 = field491_values[object-32];
-		field495 = 4;
+		field495 = EntityData::kField495_4;
 		if (checkFields1(Entity::kEntityNone, field495, field491))
 			return false;
 		break;
@@ -412,7 +414,7 @@ bool Entities::checkFields2(Objects::ObjectIndex object) {
 	case Objects::kObject52:
 	case Objects::kObject53:
 		field491 = field491_values[object-48];
-		field495 = 4;
+		field495 = EntityData::kField495_4;
 		break;
 
 	}
@@ -428,10 +430,11 @@ bool Entities::checkFields2(Objects::ObjectIndex object) {
 }
 
 bool Entities::checkFields3(Entity::EntityIndex entity) {
-	return (getData(entity)->getData()->field_495 == 3 || getData(entity)->getData()->field_495 == 4) && getData(entity)->getData()->field_493 == 1;
+	return (getData(entity)->getData()->field_495 == EntityData::kField495_3 
+		 || getData(entity)->getData()->field_495 == EntityData::kField495_4) && getData(entity)->getData()->field_493 == EntityData::kField493_1;
 }
 
-bool Entities::checkFields4(int field495, int field15) {
+bool Entities::checkFields4(EntityData::Field495Value field495, int field15) {
 
 	Scene *scene = _engine->getScene(getState()->scene);
 	bool ret = getData(Entity::kEntityNone)->getData()->field_495 == field495 && scene->getHeader()->field_15 == field15;
@@ -440,16 +443,16 @@ bool Entities::checkFields4(int field495, int field15) {
 	return ret;
 }
 
-bool Entities::checkFields5(Entity::EntityIndex entity, int field495) {
-	return getData(entity)->getData()->field_495 == field495 && getData(entity)->getData()->field_493 < 2;
+bool Entities::checkFields5(Entity::EntityIndex entity, EntityData::Field495Value field495) {
+	return getData(entity)->getData()->field_495 == field495 && getData(entity)->getData()->field_493 < EntityData::kField493_2;
 }
 
 
 bool Entities::checkFields6(Entity::EntityIndex entity) {
-	return checkFields5(entity, 3) && getData(entity)->getData()->field_491 < 850;
+	return checkFields5(entity, EntityData::kField495_3) && getData(entity)->getData()->field_491 < EntityData::kField491_850;
 }
 
-bool Entities::checkFields7(int field495) {
+bool Entities::checkFields7(EntityData::Field495Value field495) {
 	return checkFields5(Entity::kEntityNone, field495) && !getData(Entity::kEntityNone)->getData()->field_493 && !checkFields6(Entity::kEntityNone);
 }
 
@@ -460,11 +463,11 @@ bool Entities::checkFields8(Entity::EntityIndex entity) {
 bool Entities::checkFields9(Entity::EntityIndex entity1, Entity::EntityIndex entity2, int value) {
 	return getData(entity1)->getData()->field_495 == getData(entity2)->getData()->field_495
 		&& abs(getData(entity1)->getData()->field_491 - getData(entity2)->getData()->field_491) <= value
-		&& (getData(entity1)->getData()->field_493 !=2 || getData(entity2)->getData()->field_493 != 2);
+		&& (getData(entity1)->getData()->field_493 != EntityData::kField493_2 || getData(entity2)->getData()->field_493 != EntityData::kField493_2);
 }
 
 bool Entities::checkFields10(Entity::EntityIndex entity) {
-	return getData(entity)->getData()->field_493 < 3;
+	return getData(entity)->getData()->field_493 < EntityData::kField493_3;
 }
 
 bool Entities::checkSequence0(Entity::EntityIndex entity) {

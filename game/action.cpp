@@ -487,7 +487,7 @@ IMPLEMENT_ACTION(compartment) {
 		getSound()->playSoundEvent(0, 32, 0);
 
 		if ((object >= 1 && object <= 3) || (object >= 32 && object <= 37))
-			getObjects()->update(object, Entity::kEntityNone, 0, Cursor::kCursorHandKnock, 9);
+			getObjects()->update(object, Entity::kEntityNone, kNoLocation, Cursor::kCursorHandKnock, Cursor::kCursorHand);
 
 		getSound()->playSoundEvent(0, 15, 22);
 		getInventory()->unselectItem();
@@ -505,7 +505,7 @@ IMPLEMENT_ACTION(compartment) {
 		return;
 	}
 
-	getObjects()->update(Objects::kObjectCompartment1, Entity::kEntityNone, 1, Cursor::kCursorHandKnock, 9);
+	getObjects()->update(Objects::kObjectCompartment1, Entity::kEntityNone, kLocation1, Cursor::kCursorHandKnock, Cursor::kCursorHand);
 	getSound()->playSoundEvent(0, 16, 0);
 	getInventory()->unselectItem();
 	hotspot->scene = 0;
@@ -531,24 +531,24 @@ IMPLEMENT_ACTION(playAnimation) {
 //////////////////////////////////////////////////////////////////////////
 IMPLEMENT_ACTION(openCloseObject) {
 	Objects::ObjectIndex object = (Objects::ObjectIndex)hotspot->param1;
-	byte location = hotspot->param2;
+	ObjectLocation location = (ObjectLocation)hotspot->param2;
 
 	if (object >= 128)
 		return;
 	
-	getObjects()->update(object, getObjects()->get(object).entity, location, Cursor::kCursorKeepValue, 255);
+	getObjects()->update(object, getObjects()->get(object).entity, location, Cursor::kCursorKeepValue, Cursor::kCursorKeepValue);
 
 	bool isNotWindow = ((object < 9  || object > 16) && (object < 40 || object > 47));
 
 	switch (location) {
-	case 1:
+	case kLocation1:
 		if (isNotWindow)
 			getSound()->playSoundEvent(0, 24, 0);
 		else
 			getSound()->playSoundEvent(0, 21, 0);
 		break;
 
-	case 2:
+	case kLocation2:
 		if (isNotWindow)
 			getSound()->playSoundEvent(0, 36, 0);
 		else
@@ -567,7 +567,7 @@ IMPLEMENT_ACTION(10) {
 	if (object >= 128)
 		return;
 
-	getObjects()->updateField4(object, hotspot->param2);
+	getObjects()->updateLocation2(object, (ObjectLocation)hotspot->param2);
 
 	if (object != 112 /* TODO: or LIB096 does not exist -> is it needed, say if the HPF is not loaded or something */) {
 		if (object == 1)
@@ -585,12 +585,12 @@ IMPLEMENT_ACTION(setItemLocation) {
 	if (!entry->has_item)
 		return;
 
-	entry->location = hotspot->param2;
+	entry->location = (ObjectLocation)hotspot->param2;
 
 	if (item == Inventory::kCorpse) {
-		byte corpseLocation = getInventory()->getEntry(Inventory::kCorpse)->location;
+		ObjectLocation corpseLocation = getInventory()->getEntry(Inventory::kCorpse)->location;
 
-		if (corpseLocation == kCorpseLocation3 || corpseLocation == kCorpseLocationWindow)
+		if (corpseLocation == kLocation3 || corpseLocation == kLocation4)
 			getProgress().field_8 = 1;
 		else
 			getProgress().field_8 = 0;
@@ -640,11 +640,11 @@ IMPLEMENT_ACTION(pickItem) {
 		return;
 
 	case Inventory::kParchemin:
-		if (location != 2)
+		if (location != kLocation2)
 			break;
 
 		getInventory()->addItem(Inventory::kParchemin);
-		getInventory()->getEntry(Inventory::kItem11)->location = 1;
+		getInventory()->getEntry(Inventory::kItem11)->location = kLocation1;
 		getSound()->playSoundEvent(0, 9, 0);
 		break;
 
@@ -682,7 +682,7 @@ IMPLEMENT_ACTION(pickItem) {
 //////////////////////////////////////////////////////////////////////////
 IMPLEMENT_ACTION(dropItem) {
 	Inventory::InventoryItem item = (Inventory::InventoryItem)hotspot->param1;
-	byte location = hotspot->param2;
+	ObjectLocation location = (ObjectLocation)hotspot->param2;
 	bool process = (hotspot->scene == 0);
 
 	if (item >= 32)
@@ -691,22 +691,22 @@ IMPLEMENT_ACTION(dropItem) {
 	if (!getInventory()->hasItem(item))
 		return;
 
-	if (location < 1)
+	if (location < kLocation1)
 		return;
 
 	// Handle actions
 	if (item == Inventory::kBriefcase) {
 		getSound()->playSoundEvent(0, 82, 0);
 
-		if (location == 2) {
+		if (location == kLocation2) {
 			if (!getProgress().field_58) {
 				getLogic()->savegame(0, Entity::kEntityNone, kActionNone);
 				getProgress().field_58 = 1;
 			}
 
-			if (getInventory()->getEntry(Inventory::kParchemin)->location == 2) {
+			if (getInventory()->getEntry(Inventory::kParchemin)->location == kLocation2) {
 				getInventory()->addItem(Inventory::kParchemin);
-				getInventory()->getEntry(Inventory::kItem11)->location = 11;
+				getInventory()->getEntry(Inventory::kItem11)->location = kLocation11;
 				getSound()->playSoundEvent(0, 9, 0);
 			}
 		}
@@ -758,9 +758,9 @@ IMPLEMENT_ACTION(enterCompartment) {
 IMPLEMENT_ACTION(getOutsideTrain) {
 	byte action = hotspot->param1;
 
-	if ((getEvent(kCathLookOutsideWindowDay) || getEvent(kCathLookOutsideWindowNight) || getObjects()->get(Objects::kObjectCompartment1).field_4)
+	if ((getEvent(kCathLookOutsideWindowDay) || getEvent(kCathLookOutsideWindowNight) || getObjects()->get(Objects::kObjectCompartment1).location2)
 	  && getProgress().field_50
-	  && (action != 45 || (!getEntities()->checkFields1(Entity::kEntityRebecca, 4, 4840) && getObjects()->get(Objects::kObject44).location == 2))
+	  && (action != 45 || (!getEntities()->checkFields1(Entity::kEntityRebecca, EntityData::kField495_4, EntityData::kField491_4840) && getObjects()->get(Objects::kObject44).location == 2))
 	  && getInventory()->getSelectedItem() != Inventory::kFirebird
 	  && getInventory()->getSelectedItem() != Inventory::kBriefcase) {
 
@@ -900,16 +900,16 @@ IMPLEMENT_ACTION(climbDownTrain) {
 IMPLEMENT_ACTION(jumpUpDownTrain) {
 	switch (hotspot->param1) {
 	case 1:
-		getSavePoints()->push(Entity::kEntityNone, Entity::kEntityChapters, Entity::kAction225056224);
+		getSavePoints()->push(Entity::kEntityNone, Entity::kEntityChapters, Entity::kActionBreakCeiling);
 		break;
 
 	case 2:
-		getSavePoints()->push(Entity::kEntityNone, Entity::kEntityChapters, Entity::kAction338494260);
+		getSavePoints()->push(Entity::kEntityNone, Entity::kEntityChapters, Entity::kActionJumpDownCeiling);
 		break;
 
 	case 3:
 		if (getInventory()->getSelectedItem() == Inventory::kBriefcase) {
-			getInventory()->removeItem(Inventory::kBriefcase, 3);
+			getInventory()->removeItem(Inventory::kBriefcase, kLocation3);
 			getSound()->playSoundEvent(0, 82, 0);
 			getInventory()->unselectItem();
 		}	
@@ -962,7 +962,7 @@ IMPLEMENT_ACTION(unbound) {
 		if (!getEvent(kCathStruggleWithBonds2)) {
 			playAnimation(kCathStruggleWithBonds2);
 			getSound()->playSoundEvent(0, 101, 0);
-			getInventory()->setLocationAndProcess(Inventory::kMatch, 2);
+			getInventory()->setLocationAndProcess(Inventory::kMatch, kLocation2);
 			if (!hotspot->scene)
 				getLogic()->processScene();
 		}
@@ -1085,7 +1085,7 @@ IMPLEMENT_ACTION(catchBeetle) {
 
 	if (getBeetle()->catchBeetle()) {
 		getBeetle()->unload();
-		getInventory()->getEntry(Inventory::kBeetle)->location = 1;
+		getInventory()->getEntry(Inventory::kBeetle)->location = kLocation1;
 		getSavePoints()->push(Entity::kEntityNone, Entity::kEntityChapters, Entity::kAction202613084);
 	}
 }
@@ -1097,7 +1097,7 @@ IMPLEMENT_ACTION(exitCompartment) {
 		getProgress().field_30 = 1;
 	}
 
-	getObjects()->updateField4(Objects::kObjectCompartment1, hotspot->param2);
+	getObjects()->updateLocation2(Objects::kObjectCompartment1, (ObjectLocation)hotspot->param2);
 
 	// fall to case enterCompartment action
 	action_enterCompartment(hotspot);
@@ -1155,7 +1155,7 @@ IMPLEMENT_ACTION(useWhistle) {
 			break;
 		}
 
-		if (getEntities()->checkFields1(Entity::kEntityNone, 3, 8200)) {
+		if (getEntities()->checkFields1(Entity::kEntityNone, EntityData::kField495_3, EntityData::kField491_8200)) {
 			evt = kCathOpenEgg;
 
 			Scene *scene = _engine->getScene(hotspot->scene);
@@ -1176,7 +1176,7 @@ IMPLEMENT_ACTION(useWhistle) {
 			break;
 		}
 
-		evt = (getEntities()->checkFields1(Entity::kEntityNone, 3, 8200)) ? kCathCloseEgg : kCathCloseEggNoBackground;
+		evt = (getEntities()->checkFields1(Entity::kEntityNone, EntityData::kField495_3, EntityData::kField491_8200)) ? kCathCloseEgg : kCathCloseEggNoBackground;
 		getProgress().is_egg_open = 0;
 		break;
 
@@ -1186,7 +1186,7 @@ IMPLEMENT_ACTION(useWhistle) {
 			break;
 		}
 
-		evt = (getEntities()->checkFields1(Entity::kEntityNone, 3, 8200)) ? kCathUseWhistleOpenEgg : kCathUseWhistleOpenEggNoBackground;
+		evt = (getEntities()->checkFields1(Entity::kEntityNone, EntityData::kField495_3, EntityData::kField491_8200)) ? kCathUseWhistleOpenEgg : kCathUseWhistleOpenEggNoBackground;
 		break;
 
 	}	
@@ -1322,7 +1322,7 @@ void Action::pickGreenJacket(bool process) {
 	getProgress().jacket = State::kGreenJacket;
 	getInventory()->addItem(Inventory::kMatchBox);
 
-	getObjects()->update(Objects::kObjectOutside, Entity::kEntityNone, 2,  Cursor::kCursorKeepValue, 255);	
+	getObjects()->update(Objects::kObjectOutside, Entity::kEntityNone, kLocation2, Cursor::kCursorKeepValue, Cursor::kCursorKeepValue);	
 	playAnimation(kPickGreenJacket);
 
 	getInventory()->setPortrait(Inventory::kPortraitGreen);
@@ -1345,7 +1345,7 @@ void Action::pickCorpse(byte bedPosition, bool process) {
 
 	switch(getInventory()->getEntry(Inventory::kCorpse)->location) {
 	// Floor
-	case kCorpseLocationFloor:
+	case kLocation1:
 		if (bedPosition != 4) {
 			if (getProgress().jacket == State::kOriginalJacket)
 				playAnimation(kCorpsePickFloorOriginal);
@@ -1356,11 +1356,11 @@ void Action::pickCorpse(byte bedPosition, bool process) {
 		}
 
 		playAnimation(kCorpsePickFloorOpenedBedOriginal);
-		getInventory()->getEntry(Inventory::kCorpse)->location = 5;
+		getInventory()->getEntry(Inventory::kCorpse)->location = kLocation5;
 		break;
 
 	// Bed
-	case kCorpseLocationBed:	
+	case kLocation2:	
 		if (getProgress().jacket == State::kOriginalJacket)
 			playAnimation(kCorpsePickBedOriginal);
 		else
@@ -1386,7 +1386,7 @@ void Action::pickCorpse(byte bedPosition, bool process) {
 
 void Action::dropCorpse(bool process) {
 	switch(getInventory()->getEntry(Inventory::kCorpse)->location) {
-	case 1:	// Floor
+	case kLocation1:	// Floor
 		if (getProgress().jacket == State::kOriginalJacket)
 			playAnimation(kCorpseDropFloorOriginal);
 		else
@@ -1394,7 +1394,7 @@ void Action::dropCorpse(bool process) {
 
 		break;
 
-	case 2:	// Bed
+	case kLocation2:	// Bed
 		if (getProgress().jacket == State::kOriginalJacket)
 			playAnimation(kCorpseDropBedOriginal);
 		else
@@ -1402,9 +1402,9 @@ void Action::dropCorpse(bool process) {
 
 		break;
 
-	case 4: // Window
+	case kLocation4: // Window
 		// Say goodbye to an old friend
-		getInventory()->getEntry(Inventory::kCorpse)->location = 0;
+		getInventory()->getEntry(Inventory::kCorpse)->location = kNoLocation;
 		getProgress().field_20 = 1;
 
 		if (getState()->time <= 1138500) {
@@ -1551,14 +1551,14 @@ Cursor::CursorStyle Action::getCursor(byte action, Objects::ObjectIndex object, 
 		if (getProgress().jacket != State::kGreenJacket)
 			return Cursor::kCursorNormal;
 
-		if ((getEvent(Action::kCathLookOutsideWindowDay) || getEvent(Action::kCathLookOutsideWindowDay) || getObjects()->get(Objects::kObjectCompartment1).field_4 == 1)
+		if ((getEvent(Action::kCathLookOutsideWindowDay) || getEvent(Action::kCathLookOutsideWindowDay) || getObjects()->get(Objects::kObjectCompartment1).location2 == kLocation1)
 			&& getProgress().field_50
-			&& (object != 45 || (getEntities()->checkFields1(Entity::kEntityRebecca, 4, 4840) && getObjects()->get(Objects::kObject44).location == 2))
+			&& (object != 45 || (getEntities()->checkFields1(Entity::kEntityRebecca, EntityData::kField495_4, EntityData::kField491_4840) && getObjects()->get(Objects::kObject44).location == 2))
 			&& getInventory()->getSelectedItem() != Inventory::kBriefcase && getInventory()->getSelectedItem() != Inventory::kFirebird)
 			return Cursor::kCursorForward; 
 
 		// FIXME convert to something readable
-		return (Cursor::CursorStyle)((((getObjects()->get(Objects::kObjectCompartment1).field_4 - 1) < 1) - 1) & 11); 
+		return (Cursor::CursorStyle)((((getObjects()->get(Objects::kObjectCompartment1).location2 - 1) < 1) - 1) & 11); 
 
 	case SceneHotspot::kActionSlip:
 		// FIXME convert to something readable
@@ -1640,10 +1640,10 @@ LABEL_KEY:
 		if (getInventory()->getSelectedItem() != Inventory::kKey
 		|| getObjects()->get(object).entity 
 		|| getObjects()->get(object).location != 1 
-		|| !getObjects()->get(object).field_3
+		|| !getObjects()->get(object).cursor2
 		|| getEntities()->checkFields3(Entity::kEntityNone)
 		|| getEntities()->checkFields2(object))
-			return (Cursor::CursorStyle)getObjects()->get(object).field_3;
+			return (Cursor::CursorStyle)getObjects()->get(object).cursor2;
 		else
 			return (Cursor::CursorStyle)getInventory()->getEntry(Inventory::kKey)->item_id;
 	}

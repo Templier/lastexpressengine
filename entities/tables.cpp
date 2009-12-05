@@ -107,9 +107,9 @@ IMPLEMENT_FUNCTION(Tables, draw, 6) {
 		break;
 
 	case kActionDefault:
-		_data->getData()->field_491 = 3970;
-		_data->getData()->field_493 = 1;
-		_data->getData()->field_495 = 5;
+		_data->getData()->field_491 = EntityData::kField491_3970;
+		_data->getData()->field_493 = EntityData::kField493_1;
+		_data->getData()->field_495 = EntityData::kField495_5;
 		switch(_id) {
 		default:
 			break;

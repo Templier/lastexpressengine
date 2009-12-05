@@ -45,9 +45,9 @@ namespace LastExpress {
 		break; \
 	case kActionDefault: \
 		getEntities()->drawSequences(kEntitySophie); \
-		_data->getData()->field_491 = 4840; \
-		_data->getData()->field_493 = 1; \
-		_data->getData()->field_495 = 4; \
+		_data->getData()->field_491 = EntityData::kField491_4840; \
+		_data->getData()->field_493 = EntityData::kField493_1; \
+		_data->getData()->field_495 = EntityData::kField495_4; \
 		_data->getData()->field_4A5 = 0; \
 		_data->getData()->inventoryItem = Inventory::kNoItem; \
 		break; \
@@ -55,9 +55,9 @@ namespace LastExpress {
 
 #define DEFAULT_ACTION_IMPLEMENTATION() \
 	if (savepoint->action == kActionDefault) { \
-		_data->getData()->field_491 = 4840; \
-		_data->getData()->field_493 = 1; \
-		_data->getData()->field_495 = 4; \
+		_data->getData()->field_491 = EntityData::kField491_4840; \
+		_data->getData()->field_493 = EntityData::kField493_1; \
+		_data->getData()->field_495 = EntityData::kField495_4; \
 		getEntities()->drawSequences(kEntitySophie); \
 	}
 
@@ -107,7 +107,7 @@ IMPLEMENT_FUNCTION_INT2(Sophie, function2, 2) {
 		}
 
 		if (!_data->getCurrentParameters()->param3)
-			getEntities()->checkEntity(kEntitySophie, _data->getCurrentParameters()->param1, _data->getCurrentParameters()->param2);
+			getEntities()->checkEntity(kEntitySophie, (EntityData::Field495Value)_data->getCurrentParameters()->param1, (EntityData::Field491Value)_data->getCurrentParameters()->param2);
 
 		break;
 	}
@@ -121,7 +121,7 @@ IMPLEMENT_FUNCTION_INT2(Sophie, function2, 2) {
 		break;
 
 	case kActionDefault:
-		getEntities()->checkEntity(kEntitySophie, _data->getCurrentParameters()->param1, _data->getCurrentParameters()->param2);
+		getEntities()->checkEntity(kEntitySophie, (EntityData::Field495Value)_data->getCurrentParameters()->param1, (EntityData::Field491Value)_data->getCurrentParameters()->param2);
 		break;
 
 	case kAction123668192:
@@ -165,7 +165,7 @@ IMPLEMENT_FUNCTION(Sophie, function3, 3) {
 		break;
 
 	case kAction125242096:
-		_data->getData()->field_491 = getEntityData(kEntityRebecca)->field_491 - 100;
+		_data->getData()->field_491 = (EntityData::Field491Value)(getEntityData(kEntityRebecca)->field_491 - 100);
 		_data->getData()->field_493 = getEntityData(kEntityRebecca)->field_493;
 		_data->getData()->field_495 = getEntityData(kEntityRebecca)->field_495;
 
@@ -174,16 +174,16 @@ IMPLEMENT_FUNCTION(Sophie, function3, 3) {
 		break;
 
 	case kAction136654208:
-		_data->getData()->field_491 = getEntityData(kEntityRebecca)->field_491 + 100;
+		_data->getData()->field_491 = (EntityData::Field491Value)(getEntityData(kEntityRebecca)->field_491 + 100);
 		_data->getData()->field_493 = getEntityData(kEntityRebecca)->field_493;
 		_data->getData()->field_495 = getEntityData(kEntityRebecca)->field_495;
 
 		_data->setNextCallback(2);
-		call(new ENTITY_SETUP_DEFAULT(Sophie, setup_function2), 4, 4840);
+		call(new ENTITY_SETUP_DEFAULT(Sophie, setup_function2), 4, EntityData::kField491_4840);
 		break;
 
 	case kAction259921280:
-		_data->getData()->field_491 = getEntityData(kEntityRebecca)->field_491 + 100;
+		_data->getData()->field_491 = (EntityData::Field491Value)(getEntityData(kEntityRebecca)->field_491 + 100);
 		_data->getData()->field_493 = getEntityData(kEntityRebecca)->field_493;
 		_data->getData()->field_495 = getEntityData(kEntityRebecca)->field_495;
 		
@@ -192,12 +192,12 @@ IMPLEMENT_FUNCTION(Sophie, function3, 3) {
 		break;
 
 	case kAction292775040:
-		_data->getData()->field_491 = 9270;
-		_data->getData()->field_493 = 0;
-		_data->getData()->field_495 = 2;
+		_data->getData()->field_491 = EntityData::kField491_9270;
+		_data->getData()->field_493 = EntityData::kField493_0;
+		_data->getData()->field_495 = EntityData::kField495_2;
 
 		_data->setNextCallback(4);
-		call(new ENTITY_SETUP_DEFAULT(Sophie, setup_function2), 4, 4840);
+		call(new ENTITY_SETUP_DEFAULT(Sophie, setup_function2), 4, EntityData::kField491_4840);
 		break;
 	}
 }
@@ -217,9 +217,9 @@ IMPLEMENT_FUNCTION(Sophie, chapter1, 4) {
 		break;
 
 	case kActionDefault: 
-		_data->getData()->field_491 = 4840;
-		_data->getData()->field_493 = 1;
-		_data->getData()->field_495 = 4;
+		_data->getData()->field_491 = EntityData::kField491_4840;
+		_data->getData()->field_493 = EntityData::kField493_1;
+		_data->getData()->field_495 = EntityData::kField495_4;
 		break;
 	}
 }
@@ -262,9 +262,9 @@ IMPLEMENT_FUNCTION(Sophie, chapter5, 10){
 	case kActionDefault:
 		getEntities()->drawSequences(kEntitySophie);
 
-		_data->getData()->field_491 = 3969;
-		_data->getData()->field_493 = 1;
-		_data->getData()->field_495 = 5;
+		_data->getData()->field_491 = EntityData::kField491_3969;
+		_data->getData()->field_493 = EntityData::kField493_1;
+		_data->getData()->field_495 = EntityData::kField495_5;
 
 		_data->getData()->inventoryItem = Inventory::kNoItem;
 		break;

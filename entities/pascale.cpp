@@ -92,9 +92,9 @@ IMPLEMENT_FUNCTION(Pascale, chapter1, 12) {
 		getSavePoints()->addData(kEntityPascale, kAction191604416, 10);
 		getSavePoints()->addData(kEntityPascale, kAction190605184, 11);
 
-		_data->getData()->field_491 = 5900;
-		_data->getData()->field_493 = 0;
-		_data->getData()->field_495 = 5;
+		_data->getData()->field_491 = EntityData::kField491_5900;
+		_data->getData()->field_493 = EntityData::kField493_0;
+		_data->getData()->field_495 = EntityData::kField495_5;
 		break;
 
 	case kActionNone: 

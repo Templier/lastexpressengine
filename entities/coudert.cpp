@@ -130,11 +130,11 @@ IMPLEMENT_FUNCTION(Coudert, chapter1, 36) {
 		_data->getParameters(8, 0)->param1 = 0;
 		_data->getParameters(8, 0)->param2 = 1;
 
-		_data->getData()->field_491 = 1500;
-		_data->getData()->field_493 = 0;
-		_data->getData()->field_495 = 4;
+		_data->getData()->field_491 = EntityData::kField491_1500;
+		_data->getData()->field_493 = EntityData::kField493_0;
+		_data->getData()->field_495 = EntityData::kField495_4;
 
-		getObjects()->updateField4(Objects::kObject111, 1);
+		getObjects()->updateLocation2(Objects::kObject111, kLocation1);
 		break;
 
 	case 18:

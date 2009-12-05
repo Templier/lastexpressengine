@@ -37,8 +37,19 @@ namespace LastExpress {
 
 class LastExpressEngine;
 
+enum ObjectLocation {
+	kNoLocation = 0,
+	kLocation1 = 1,	// Floor?
+	kLocation2 = 2, // Bed ?
+	kLocation3 = 3,
+	kLocation4 = 4, // Window ?
+	kLocation5 = 5,
+	kLocation11 = 11
+};
+
 class Objects : Common::Serializable {
 public:
+
 	enum ObjectIndex {
 		kObjectNone,
 		kObjectCompartment1,
@@ -171,27 +182,27 @@ public:
 		kObject128
 	};
 
-	struct Object {
-		Entity::EntityIndex entity;		// Should be saved as a byte
-		byte location;
-		Cursor::CursorStyle cursor;			// Should be saved as a byte
-		byte field_3;
-		byte field_4;
+	struct Object {							// All  fields should be saved as bytes
+		Entity::EntityIndex entity;
+		ObjectLocation location;
+		Cursor::CursorStyle cursor;	
+		Cursor::CursorStyle cursor2;
+		ObjectLocation location2;
 
 		Object() {
 			entity = Entity::kEntityNone;
-			location = 0;
+			location = kNoLocation;
 			cursor = Cursor::kCursorHandKnock;
-			field_3 = 9;
-			field_4 = 0;
+			cursor2 = Cursor::kCursorHandKnock;
+			location2 = kNoLocation;
 		}
 	};
 	
 	Objects(LastExpressEngine *engine);
 
 	const Object get(ObjectIndex index);
-	void update(ObjectIndex index, Entity::EntityIndex entity, byte location, Cursor::CursorStyle cursor, byte field_3);
-	void updateField4(ObjectIndex index, byte field4);
+	void update(ObjectIndex index, Entity::EntityIndex entity, ObjectLocation location, Cursor::CursorStyle cursor, Cursor::CursorStyle cursor2);
+	void updateLocation2(ObjectIndex index, ObjectLocation location2);
 
 	// Serializable
 	void saveLoadWithSerializer(Common::Serializer &ser);

@@ -89,13 +89,13 @@ IMPLEMENT_FUNCTION(Boutarel, chapter1, 19) {
 		getSavePoints()->addData(kEntityBoutarel, kAction203520448, 0);
 		getSavePoints()->addData(kEntityBoutarel, kAction237889408, 1);
 
-		getObjects()->update(Objects::kObjectCompartmentC, kEntityNone, 0, Cursor::kCursorHandKnock, 9);
-		getObjects()->update(Objects::kObject50, kEntityNone, 0, Cursor::kCursorHandKnock, 9);
-		getObjects()->update(Objects::kObject42, kEntityNone, 0, Cursor::kCursorKeepValue, 255);
+		getObjects()->update(Objects::kObjectCompartmentC, kEntityNone, kNoLocation, Cursor::kCursorHandKnock, Cursor::kCursorHand);
+		getObjects()->update(Objects::kObject50, kEntityNone, kNoLocation, Cursor::kCursorHandKnock, Cursor::kCursorHand);
+		getObjects()->update(Objects::kObject42, kEntityNone, kNoLocation, Cursor::kCursorKeepValue, Cursor::kCursorKeepValue);
 
-		_data->getData()->field_491 = 1750;
-		_data->getData()->field_493 = 1;
-		_data->getData()->field_495 = 5;
+		_data->getData()->field_491 = EntityData::kField491_1750;
+		_data->getData()->field_493 = EntityData::kField493_1;
+		_data->getData()->field_495 = EntityData::kField495_5;
 		break;
 
 	case kActionNone: 

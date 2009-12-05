@@ -359,7 +359,7 @@ void Inventory::addItem(InventoryItem item) {
 		return;
 
 	getEntry(item)->has_item = 1;
-	getEntry(item)->location = 0;
+	getEntry(item)->location = kNoLocation;
 
 	// Autoselect item if necessary
 	if (!getEntry(item)->no_autoselect) {
@@ -369,7 +369,7 @@ void Inventory::addItem(InventoryItem item) {
 	}
 }
 
-void Inventory::removeItem(InventoryItem item, byte newLocation) {
+void Inventory::removeItem(InventoryItem item, ObjectLocation newLocation) {
 	if (!hasItem(item))
 		return;
 
@@ -404,14 +404,14 @@ void Inventory::unselectItem() {
 	askForRedraw();
 }
 
-void Inventory::setLocationAndProcess(InventoryItem item, byte newLocation) {
+void Inventory::setLocationAndProcess(InventoryItem item, ObjectLocation location) {
 	if (item >= 32)
 		return;
 
-	if (getEntry(item)->location == newLocation)
+	if (getEntry(item)->location == location)
 		return;
 
-	getEntry(item)->location = newLocation;
+	getEntry(item)->location = location;
 
 	if (isSceneParameterEqual(item)) {
 		if (getFlags()->flag_0)

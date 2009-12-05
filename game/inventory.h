@@ -48,6 +48,7 @@
 namespace LastExpress {
 
 class LastExpressEngine;
+enum ObjectLocation;
 
 class Inventory : Common::Serializable {
 public:
@@ -101,7 +102,7 @@ public:
 		byte is_selectable;
 		byte has_item;
 		byte no_autoselect;
-		byte location;
+		ObjectLocation location;
 
 		InventoryEntry() {
 			item_id = 0;
@@ -110,7 +111,7 @@ public:
 			is_selectable = 0;
 			has_item = 0;
 			no_autoselect = 1; 
-			location = 0;
+			location = (ObjectLocation)0;
 		}
 	};
 
@@ -121,7 +122,7 @@ public:
 
 	// Inventory contents
 	void addItem(InventoryItem item);
-	void removeItem(InventoryItem item, byte newLocation = 0);
+	void removeItem(InventoryItem item, ObjectLocation newLocation = (ObjectLocation)0);
 	bool hasItem(InventoryItem item);	
 	void selectItem(InventoryItem item);
 	void unselectItem();
@@ -131,7 +132,7 @@ public:
 	InventoryEntry *getSelectedEntry() { return getEntry(_selectedItem); }
 
 	InventoryItem getFirstExaminableItem();
-	void setLocationAndProcess(InventoryItem item, byte newLocation);
+	void setLocationAndProcess(InventoryItem item, ObjectLocation location);
 
 	// UI Control
 	void show(bool visible);

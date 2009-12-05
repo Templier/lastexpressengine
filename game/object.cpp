@@ -41,40 +41,41 @@ const Objects::Object Objects::get(ObjectIndex index) {
 	return _objects[index];
 }
 
-void Objects::update(ObjectIndex index, Entity::EntityIndex entity, byte location, Cursor::CursorStyle cursor, byte field_3) {
+void Objects::update(ObjectIndex index, Entity::EntityIndex entity, ObjectLocation location, Cursor::CursorStyle cursor, Cursor::CursorStyle cursor2) {
 	if (index >= 128)
 		return;
 
 	Object *object = &_objects[index];
 
 	// Store original location
-	byte original_location = object->location;
+	ObjectLocation original_location = object->location;
 
 	// Update entity
 	object->entity = entity;
 	object->location = location;
 	
-	if (cursor != Cursor::kCursorKeepValue || field_3 != Cursor::kCursorKeepValue) {
+	if (cursor != Cursor::kCursorKeepValue || cursor2 != Cursor::kCursorKeepValue) {
 		if (cursor != Cursor::kCursorKeepValue)
 			object->cursor = cursor;
-		if (field_3 != 255)
-			object->field_3 = field_3;
+		if (cursor2 != Cursor::kCursorKeepValue)
+			object->cursor2 = cursor2;
 
 		getLogic()->updateCursor();
 	}
 
-	if (original_location != location && (original_location == 2 || location == 2))
-		if ((index > 0 && index < 9)
-	     || (index > 31 && index < 40)) {
+	// Compartments
+	if (original_location != location && (original_location == kLocation2 || location == kLocation2))		
+		if ((index >= kObjectCompartment1 && index <= kObjectCompartment8)
+	     || (index >= kObjectCompartmentA && index <= kObjectCompartmentF)) {
 		 	getLogic()->updateTrainClock();
 		}
 }
 
-void Objects::updateField4(ObjectIndex index, byte value) {
+void Objects::updateLocation2(ObjectIndex index, ObjectLocation location2) {
 	if (index >= 128)
 		return;
 
-	_objects[index].field_4 = value;
+	_objects[index].location2 = location2;
 }
 
 //////////////////////////////////////////////////////////////////////////

@@ -131,13 +131,13 @@ IMPLEMENT_FUNCTION(Anna, chapter1, 16) {
 		getSavePoints()->addData(kEntityAnna, kAction291662081, 0);
 		getSavePoints()->addData(kEntityAnna, kAction238936000, 1);
 
-		getObjects()->update(Objects::kObjectCompartmentF, kEntityNone, 1, Cursor::kCursorHandKnock, 9);
-		getObjects()->update(Objects::kObject53, kEntityNone, 1, Cursor::kCursorHandKnock, 9);
-		getObjects()->update(Objects::kObject45, kEntityNone, 1, Cursor::kCursorKeepValue, 255);
+		getObjects()->update(Objects::kObjectCompartmentF, kEntityNone, kLocation1, Cursor::kCursorHandKnock, Cursor::kCursorHand);
+		getObjects()->update(Objects::kObject53, kEntityNone, kLocation1, Cursor::kCursorHandKnock, Cursor::kCursorHand);
+		getObjects()->update(Objects::kObject45, kEntityNone, kLocation1, Cursor::kCursorKeepValue, Cursor::kCursorKeepValue);
 
-		_data->getData()->field_491 = 8200;
-		_data->getData()->field_493 = 1;
-		_data->getData()->field_495 = 3;
+		_data->getData()->field_491 = EntityData::kField491_8200;
+		_data->getData()->field_493 = EntityData::kField493_1;
+		_data->getData()->field_495 = EntityData::kField495_3;
 		_data->getData()->field_4A5 = 0;
 		break;
 

@@ -101,9 +101,9 @@ IMPLEMENT_FUNCTION(Servers0, chapter1, 11) {
 		getSavePoints()->addData(kEntityServers0, kAction292758554, 7);
 		getSavePoints()->addData(kEntityServers0, kAction337548856, 9);
 
-		_data->getData()->field_491 = 5900;
-		_data->getData()->field_493 = 0;
-		_data->getData()->field_495 = 5;
+		_data->getData()->field_491 = EntityData::kField491_5900;
+		_data->getData()->field_493 = EntityData::kField493_0;
+		_data->getData()->field_495 = EntityData::kField495_5;
 		break;
 
 	case kActionNone: 

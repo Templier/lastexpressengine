@@ -104,13 +104,13 @@ IMPLEMENT_FUNCTION(Tatiana, chapter1, 17) {
 	case kActionDefault: 
 		getSavePoints()->addData(kEntityTatiana, kAction191198209, 0);
 
-		getObjects()->update(Objects::kObjectCompartmentB, kEntityNone, 1, Cursor::kCursorHandKnock, 9);
-		getObjects()->update(Objects::kObject49, kEntityNone, 1, Cursor::kCursorHandKnock, 9);
-		getObjects()->update(Objects::kObject41, kEntityNone, 0, Cursor::kCursorKeepValue, 255);
+		getObjects()->update(Objects::kObjectCompartmentB, kEntityNone, kLocation1, Cursor::kCursorHandKnock, Cursor::kCursorHand);
+		getObjects()->update(Objects::kObject49, kEntityNone, kLocation1, Cursor::kCursorHandKnock, Cursor::kCursorHand);
+		getObjects()->update(Objects::kObject41, kEntityNone, kNoLocation, Cursor::kCursorKeepValue, Cursor::kCursorKeepValue);
 
-		_data->getData()->field_491 = 5419;
-		_data->getData()->field_493 = 1;
-		_data->getData()->field_495 = 3;
+		_data->getData()->field_491 = EntityData::kField491_5419;
+		_data->getData()->field_493 = EntityData::kField493_1;
+		_data->getData()->field_495 = EntityData::kField495_3;
 		break;
 
 	case kActionNone: 

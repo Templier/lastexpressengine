@@ -168,13 +168,13 @@ struct SavePoint;
 	default: \
 		break; \
 	case kActionNone: \
-		if (getEntities()->checkEntity(entity, 3, _data->getCurrentParameters()->param1)) \
+		if (getEntities()->checkEntity(entity, EntityData::kField495_3, (EntityData::Field491Value)_data->getCurrentParameters()->param1)) \
 			_data->getCurrentParameters()->param1 = (_data->getCurrentParameters()->param1 == 10000) ? 0 : 10000; \
 		break; \
 	case kActionDefault:  \
-		_data->getData()->field_491 = 0; \
-		_data->getData()->field_493 = 0; \
-		_data->getData()->field_495 = 3; \
+		_data->getData()->field_491 = EntityData::kField491_0; \
+		_data->getData()->field_493 = EntityData::kField493_0; \
+		_data->getData()->field_495 = EntityData::kField495_3; \
 		_data->getCurrentParameters()->param1 = 10000; \
 		break; \
 	}
@@ -230,8 +230,54 @@ private:
 class EntityData : Common::Serializable {
 public:
 
-	enum ParameterValues {
-		kParameterTime = 2147483647
+	enum Field491Value {
+		kField491_0     = 0,
+		kField491_1	    = 1,
+		kField491_540   = 540,
+		kField491_850   = 850,
+		kField491_1500  = 1500,
+		kField491_1750  = 1750,
+		kField491_2740  = 2740,
+		kField491_2830  = 2830,
+		kField491_3050  = 3050,
+		kField491_3969  = 3969,
+		kField491_3970  = 3970,
+		kField491_4070  = 4070,		
+		kField491_4689  = 4689,
+		kField491_4840  = 4840,
+		kField491_5000  = 5000,
+		kField491_5419  = 5419,
+		kField491_5790  = 5790,
+		kField491_5900  = 5900,
+		kField491_6470  = 6470,
+		kField491_7500  = 7500,
+		kField491_8000  = 8000,
+		kField491_8200  = 8200,
+		kField491_9270  = 9270,
+		kField491_9460  = 9460,
+		kField491_30000 = 30000
+	};
+
+	enum Field493Value {
+		kField493_0 = 0,
+		kField493_1 = 1,
+		kField493_2 = 2,
+		kField493_3 = 3,
+		kField493_4 = 4
+	};
+
+	enum Field495Value {
+		kField495_0 = 0,
+		kField495_1 = 1,
+		kField495_2 = 2,
+		kField495_3 = 3,
+		kField495_4 = 4,
+		kField495_5 = 5,
+		kField495_6 = 6
+	};
+
+	enum ParameterValue {
+		kParamTime = 2147483647
 	};
 	
 	struct EntityParameters {
@@ -322,9 +368,9 @@ public:
 		// uint16 ??
 		// byte ??
 		byte current_call;
-		int16 field_491;
-		int16 field_493;
-		int16 field_495;
+		Field491Value field_491;
+		Field493Value field_493;
+		Field495Value field_495;
 		//int16 field_497;
 		Inventory::InventoryItem inventoryItem;
 		byte field_49A;
@@ -350,9 +396,9 @@ public:
 		EntityCallData() {
 			memset(&callbacks, 0, 9 * sizeof(byte));
 			current_call = 0;
-			field_491 = 0;
-			field_493 = 0;
-			field_495 = 0;
+			field_491 = EntityData::kField491_0;
+			field_493 = EntityData::kField493_0;
+			field_495 = EntityData::kField495_0;
 			//field_497 = 0;
 			inventoryItem = Inventory::kNoItem;
 			field_49A = 0;
@@ -629,8 +675,8 @@ public:
 		kAction203419131 = 203419131,
 		kAction203863200 = 203863200,
 		kAction222746496 = 222746496,
-		kAction225056224 = 225056224,
-		kAction338494260 = 338494260,
+		kActionBreakCeiling = 225056224,
+		kActionJumpDownCeiling = 338494260,
 
 		/////////////////////////////
 		// Verges

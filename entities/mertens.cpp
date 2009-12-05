@@ -155,7 +155,7 @@ IMPLEMENT_FUNCTION_INT(Mertens, function11, 11) {
 			if (_data->getCurrentParameters()->param2  > (int)getState()->time)
 				break;
 
-			_data->getCurrentParameters()->param2 = EntityData::kParameterTime;
+			_data->getCurrentParameters()->param2 = EntityData::kParamTime;
 		} else {
 			_data->getCurrentParameters()->param2 = _data->getCurrentParameters()->param1 + getState()->time;
 		}
@@ -180,7 +180,7 @@ IMPLEMENT_FUNCTION(Mertens, function17, 17) {
 	case kActionDefault: 
 		if (_data->getParameters(8, 0)->param6 || _data->getParameters(8, 1)->hasNonNullParameter()) {
 
-			getInventory()->setLocationAndProcess(Inventory::kItem7, 1);
+			getInventory()->setLocationAndProcess(Inventory::kItem7, kLocation1);
 			
 			_data->setNextCallback(1);
 			call(new ENTITY_SETUP_DEFAULT(Mertens, setup_function10), 3, 540);
@@ -206,9 +206,9 @@ IMPLEMENT_FUNCTION(Mertens, function17, 17) {
 
 				getLogic()->loadSceneFromItem(Inventory::kItem7);
 
-				if (getEntities()->checkFields4(3, 68)) {
+				if (getEntities()->checkFields4(EntityData::kField495_3, 68)) {
 					getSound()->playSound(kEntityNone, "CON1110");
-					getLogic()->loadSceneFromData(3, 25, 255);
+					getLogic()->loadSceneFromData(EntityData::kField495_3, 25, 255);
 				}
 
 				_data->setNextCallback(3);
@@ -285,9 +285,9 @@ IMPLEMENT_FUNCTION(Mertens, chapter1, 34) {
 		getSavePoints()->addData(kEntityMertens, kAction204379649, 4);
 
 		_data->getParameters(8, 0)->param1 = 0;
-		_data->getData()->field_491 = 9460;
-		_data->getData()->field_493 = 0;
-		_data->getData()->field_495 = 3;
+		_data->getData()->field_491 = EntityData::kField491_9460;
+		_data->getData()->field_493 = EntityData::kField493_0;
+		_data->getData()->field_495 = EntityData::kField495_3;
 		break;
 	}
 }
@@ -337,9 +337,9 @@ IMPLEMENT_FUNCTION(Mertens, chapter2, 43) {
 	case kActionDefault: 
 		getEntities()->drawSequences(kEntityMertens);
 
-		_data->getData()->field_491 = 1500;
-		_data->getData()->field_493 = 0;
-		_data->getData()->field_495 = 3;
+		_data->getData()->field_491 = EntityData::kField491_1500;
+		_data->getData()->field_493 = EntityData::kField493_0;
+		_data->getData()->field_495 = EntityData::kField495_3;
 		_data->getData()->inventoryItem = Inventory::kNoItem;
 
 		_data->getParameters(8, 0)->param6 = 0;
@@ -376,9 +376,9 @@ IMPLEMENT_FUNCTION(Mertens, chapter3, 45) {
 		break;
 
 	case kActionDefault: 
-		_data->getData()->field_491 = 1500;
-		_data->getData()->field_493 = 0;
-		_data->getData()->field_495 = 3;
+		_data->getData()->field_491 = EntityData::kField491_1500;
+		_data->getData()->field_493 = EntityData::kField493_0;
+		_data->getData()->field_495 = EntityData::kField495_3;
 		_data->getData()->inventoryItem = Inventory::kNoItem;
 
 		_data->getParameters(8, 0)->param6 = 0;
@@ -419,9 +419,9 @@ IMPLEMENT_FUNCTION(Mertens, chapter4, 47) {
 	case kActionDefault: 
 		getEntities()->drawSequences(kEntityMertens);
 
-		_data->getData()->field_491 = 1500;
-		_data->getData()->field_493 = 0;
-		_data->getData()->field_495 = 3;
+		_data->getData()->field_491 = EntityData::kField491_1500;
+		_data->getData()->field_493 = EntityData::kField493_0;
+		_data->getData()->field_495 = EntityData::kField495_3;
 		_data->getData()->inventoryItem = Inventory::kNoItem;
 
 		_data->getParameters(8, 0)->param6 = 0;
@@ -461,9 +461,9 @@ IMPLEMENT_FUNCTION(Mertens, chapter5, 50) {
 	case kActionDefault: 
 		getEntities()->drawSequences(kEntityMertens);
 
-		_data->getData()->field_491 = 3969;
-		_data->getData()->field_493 = 1;
-		_data->getData()->field_495 = 5;
+		_data->getData()->field_491 = EntityData::kField491_3969;
+		_data->getData()->field_493 = EntityData::kField493_1;
+		_data->getData()->field_495 = EntityData::kField495_5;
 		_data->getData()->inventoryItem = Inventory::kNoItem;
 		break;
 	}

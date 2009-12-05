@@ -78,16 +78,16 @@ public:
 	void saveLoadWithSerializer(Common::Serializer &ser);
 
 	// Checks
-	bool checkEntity(Entity::EntityIndex entity, int field495, int field491);
+	bool checkEntity(Entity::EntityIndex entity, EntityData::Field495Value field495, EntityData::Field491Value field491);
 	bool compare(Entity::EntityIndex entity1, Entity::EntityIndex entity2);	
 
-	bool checkFields1(Entity::EntityIndex entity, int field495, int field491);
+	bool checkFields1(Entity::EntityIndex entity, EntityData::Field495Value field495, EntityData::Field491Value field491);
 	bool checkFields2(Objects::ObjectIndex object);
 	bool checkFields3(Entity::EntityIndex entity);
-	bool checkFields4(int field495, int field15);
-	bool checkFields5(Entity::EntityIndex entity, int field495);
+	bool checkFields4(EntityData::Field495Value field495, int field15);
+	bool checkFields5(Entity::EntityIndex entity, EntityData::Field495Value field495);
 	bool checkFields6(Entity::EntityIndex entity);
-	bool checkFields7(int field495);
+	bool checkFields7(EntityData::Field495Value field495);
 	bool checkFields8(Entity::EntityIndex entity);
 	bool checkFields9(Entity::EntityIndex entity1, Entity::EntityIndex entity2, int value);
 	bool checkFields10(Entity::EntityIndex entity);

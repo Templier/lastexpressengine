@@ -237,8 +237,8 @@ void Logic::drawScene(uint32 index) {
 	// Update entities
 	Scene *scene = (getState()->sceneUseBackup ? _engine->getScene(getState()->sceneBackup) : _scene);
 	
-	getEntityData(Entity::kEntityNone)->field_491 = scene->getHeader()->count;
-	getEntityData(Entity::kEntityNone)->field_495 = scene->getHeader()->field_13;
+	getEntityData(Entity::kEntityNone)->field_491 = (EntityData::Field491Value)scene->getHeader()->count;
+	getEntityData(Entity::kEntityNone)->field_495 = (EntityData::Field495Value)scene->getHeader()->field_13;
 
 	if (getState()->sceneUseBackup)
 		delete scene;
@@ -437,7 +437,7 @@ void Logic::preProcessScene(uint32 *index) {
 			for (Common::Array<SceneHotspot *>::iterator it = scene->getHotspots()->begin(); it != scene->getHotspots()->end(); ++it) {
 
 				Scene *currentScene = _engine->getScene(*index);
-				if (getObjects()->get((Objects::ObjectIndex)currentScene->getHeader()->param1).field_4 == (*it)->location) {
+				if (getObjects()->get((Objects::ObjectIndex)currentScene->getHeader()->param1).location2 == (*it)->location) {
 					PROCESS_HOTSPOT_SCENE(*it, index);
 					found = true;					
 				}
@@ -654,9 +654,9 @@ void Logic::switchChapter() {
 		break;
 
 	case State::kChapter3:
-		getInventory()->getEntry(Inventory::kFirebird)->location = 4;
+		getInventory()->getEntry(Inventory::kFirebird)->location = kLocation4;
 		getInventory()->getEntry(Inventory::kFirebird)->has_item = 0;
-		getInventory()->getEntry(Inventory::kItem11)->location = 1; // ??
+		getInventory()->getEntry(Inventory::kItem11)->location = kLocation1;
 
 		getInventory()->addItem(Inventory::kWhistle);
 		getInventory()->addItem(Inventory::kKey);

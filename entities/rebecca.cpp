@@ -98,15 +98,15 @@ IMPLEMENT_FUNCTION(Rebecca, chapter1, 21) {
 	case kActionDefault: 
 		getSavePoints()->addData(kEntityRebecca, kAction224253538, 0);
 
-		getObjects()->update(Objects::kObjectCompartmentE, kEntityNone, 0, Cursor::kCursorHandKnock, 9);
-		getObjects()->update(Objects::kObject52, kEntityNone, 0, Cursor::kCursorHandKnock, 9);
-		getObjects()->update(Objects::kObject44, kEntityNone, 0, Cursor::kCursorKeepValue, 255);
+		getObjects()->update(Objects::kObjectCompartmentE, kEntityNone, kNoLocation, Cursor::kCursorHandKnock, Cursor::kCursorHand);
+		getObjects()->update(Objects::kObject52, kEntityNone, kNoLocation, Cursor::kCursorHandKnock, Cursor::kCursorHand);
+		getObjects()->update(Objects::kObject44, kEntityNone, kNoLocation, Cursor::kCursorKeepValue, Cursor::kCursorKeepValue);
 
-		getObjects()->updateField4(Objects::kObject110, 1);
+		getObjects()->updateLocation2(Objects::kObject110, kLocation1);
 
-		_data->getData()->field_491 = 2830;
-		_data->getData()->field_493 = 1;
-		_data->getData()->field_495 = 5;
+		_data->getData()->field_491 = EntityData::kField491_2830;
+		_data->getData()->field_493 = EntityData::kField493_1;
+		_data->getData()->field_495 = EntityData::kField495_5;
 
 		_data->getParameters(8, 0)->param2 = 1;
 		break;

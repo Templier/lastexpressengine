@@ -344,15 +344,6 @@ public:
 	void playAnimation(int index);
 
 private:
-	enum CorpseLocation {
-		kCorpseLocationNone,
-		kCorpseLocationFloor,
-		kCorpseLocationBed,
-		kCorpseLocation3,
-		kCorpseLocationWindow,
-		kCorpseLocation5
-	};
-
 	typedef Common::Functor1<SceneHotspot*, void> ActionFunctor;
 	
 	LastExpressEngine* _engine;

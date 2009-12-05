@@ -79,9 +79,9 @@ IMPLEMENT_FUNCTION(Vesna, chapter1, 12) {
 	case kActionDefault: 
 		getSavePoints()->addData(kEntityVesna, kAction124190740, 0);
 
-		_data->getData()->field_491 = 4689;
-		_data->getData()->field_493 = 1;
-		_data->getData()->field_495 = 5;
+		_data->getData()->field_491 = EntityData::kField491_4689;
+		_data->getData()->field_493 = EntityData::kField493_1;
+		_data->getData()->field_495 = EntityData::kField495_5;
 		break;
 
 	case kActionNone: 

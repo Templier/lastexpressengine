@@ -39,7 +39,7 @@
 namespace LastExpress {
 
 Train::Train(LastExpressEngine *engine) : Entity(engine, kEntityTrain) {
-	ADD_CALLBACK_FUNCTION(Train, execute);
+	ADD_CALLBACK_FUNCTION(Train, savegame);
 	ADD_CALLBACK_FUNCTION(Train, chapter1);
 	ADD_CALLBACK_FUNCTION(Train, chapter2);
 	ADD_CALLBACK_FUNCTION(Train, chapter3);
@@ -49,8 +49,21 @@ Train::Train(LastExpressEngine *engine) : Entity(engine, kEntityTrain) {
 	ADD_CALLBACK_FUNCTION(Train, process);
 }
 
-IMPLEMENT_FUNCTION_INT2(Train, execute, 1) {
+IMPLEMENT_FUNCTION_INT2(Train, savegame, 1) {
+	switch (savepoint->action) {
+	default:
+		break;	
 
+	case kActionNone:
+		CALL_PREVIOUS_SAVEPOINT(kEntityTrain)
+		break;
+
+	case kActionDefault:
+		save(kEntityTrain, _data->getCurrentParameters()->param1, (Action::EventIndex)_data->getCurrentParameters()->param2);
+
+		CALL_PREVIOUS_SAVEPOINT(kEntityTrain)
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Train, chapter1, 2) {
@@ -89,32 +102,69 @@ IMPLEMENT_FUNCTION(Train, chapter5, 6) {
 }
 
 IMPLEMENT_FUNCTION_INT2(Train, harem, 7) {
-	error("Train: harem callback function not implemented!");
+	if (savepoint->action != kActionDefault)
+		return;
+
+	switch (_data->getCurrentParameters()->param1) {
+	case 5:
+		_data->getCurrentParameters()->param3 = EntityData::kField491_4840;
+		break;
+
+	case 6:
+		_data->getCurrentParameters()->param3 = EntityData::kField491_4070;
+		break;
+
+	case 7:
+		_data->getCurrentParameters()->param3 = EntityData::kField491_3050;
+		break;
+
+	case 8:
+		_data->getCurrentParameters()->param3 = EntityData::kField491_2740;
+		break;
+	}
+
+	_data->getCurrentParameters()->param4 = getEntities()->checkFields1(kEntityAlouan, EntityData::kField495_3, (EntityData::Field491Value)_data->getCurrentParameters()->param3);
+	_data->getCurrentParameters()->param5 = (_data->getParameters(8, 0)->param7 - _data->getCurrentParameters()->param3) <= 0;
+	_data->getCurrentParameters()->param6 = getEntities()->checkFields1(kEntityYasmin, EntityData::kField495_3, (EntityData::Field491Value)_data->getCurrentParameters()->param3);
+	_data->getCurrentParameters()->param7 = getEntities()->checkFields1(kEntityHadija, EntityData::kField495_3, (EntityData::Field491Value)_data->getCurrentParameters()->param3);
+
+	getObjects()->update((Objects::ObjectIndex)_data->getCurrentParameters()->param1, kEntityTrain, kLocation3, Cursor::kCursorNormal, Cursor::kCursorNormal);
+	getSound()->playSound(kEntityTables5, (_data->getCurrentParameters()->param2 == 8) ? "LIB012" : "LIB013", 16);
+
+
+	error("Train::harem: implementation is incomplete!");
+
+	// TODO finish implementation
+
+	if (!_data->getCurrentParameters()->param4 || !_data->getCurrentParameters()->param5)
+		return;
+
+	if (!_data->getCurrentParameters()->param6 || !_data->getCurrentParameters()->param7)
+		return;
 }
 
 IMPLEMENT_FUNCTION(Train, process, 8) {
 
 	EntityData::EntityParametersSeq1 *parameters1 = (EntityData::EntityParametersSeq1*)_data->getCurrentParameters(1);
 
-	// Notes:
-	//  - setting current callback + 8: will be used as an action index for case 18	
-	
 	switch (savepoint->action) {
 	default:
 		break;	
 
-	case kActionNone: {
+	case kActionNone:
 		// Play smoke animation
-		if ((getEntities()->checkFields7(3) || getEntities()->checkFields7(4)) 
+		if ((getEntities()->checkFields7(EntityData::kField495_3) || getEntities()->checkFields7(EntityData::kField495_4)) 
 		  && _data->getCurrentParameters()->param4
 		  && !_data->getCurrentParameters()->param5) {
 
 		  _data->getCurrentParameters()->param4 -= 1;
 
 		  if (!_data->getCurrentParameters()->param4 && getProgress().jacket == State::kGreenJacket) {
+
 			  getAction()->playAnimation(isDay() ? Action::kCathSmokeDay : Action::kCathSmokeNight);
 			  _data->getCurrentParameters()->param5 = 1;
 			  getLogic()->processScene();
+
 		  }			
 		}
 
@@ -126,7 +176,7 @@ IMPLEMENT_FUNCTION(Train, process, 8) {
 				if (_data->getCurrentParameters(1)->param7 >= (int)getState()->time)
 					goto label_skip;
 
-				//_data->getCurrentParameters(1)->param7 = 0x7FFFFFFF;	// what does it do?		
+				_data->getCurrentParameters(1)->param7 = EntityData::kParamTime;
 			}
 		
 			getLogic()->loadSceneFromData(5, 58, 255);			
@@ -135,23 +185,30 @@ IMPLEMENT_FUNCTION(Train, process, 8) {
 		_data->getCurrentParameters(1)->param7 = 0;
 
 label_skip:
+		// FIXME make sense of all this crap
 		if (_data->getCurrentParameters()->param7) {
 			if (!_data->getCurrentParameters(1)->param8) {
 				_data->getCurrentParameters(1)->param8 = getState()->time + 4500;
-				// FIXME not sure what it is checking here, resetting param8 & param7 in some case (overflow?)
+
+				if (_data->getCurrentParameters(1)->param8) {
+					_data->getCurrentParameters()->param7 = 0;
+					_data->getCurrentParameters(1)->param8 = 0;
+				}
 			}
 
-			if (_data->getCurrentParameters(1)->param8 < (int)getState()->time) {
-				// FIXME it seems to be setting param8 to 0x7FFFFFFF and then to 0 ?
+			if (_data->getCurrentParameters(1)->param8 && _data->getCurrentParameters(1)->param8 < (int)getState()->time) {
+				//_data->getCurrentParameters(1)->param8 = EntityData::kParameterTime;
 				_data->getCurrentParameters()->param7 = 0;
 				_data->getCurrentParameters(1)->param8 = 0;
+				// Why does it sets it back to 0?
 			}
 		}
+		
+		if (_data->getParameters(8, 0)->param8) {
+			Objects::ObjectIndex param8 = (Objects::ObjectIndex)_data->getParameters(8, 0)->param8;
 
-		Objects::ObjectIndex param8 = (Objects::ObjectIndex)_data->getParameters(8, 0)->param8;
-		if (param8) {
-			// TODO check if sound is cached (crap, we don't support that, so fail as a check...)
-			getObjects()->update(param8, getObjects()->get(param8).entity, 3, Cursor::kCursorHandKnock, 9);
+			// TODO check if sound is cached
+			getObjects()->update(param8, getObjects()->get(param8).entity, kLocation3, Cursor::kCursorHandKnock, Cursor::kCursorHand);
 			_data->getParameters(8, 0)->param8 = 0;
 		}
 		
@@ -161,7 +218,6 @@ label_skip:
 		}
 
 		break;
-	}
 
 	case kAction8:
 	case kAction9:
@@ -174,19 +230,19 @@ label_skip:
 	case kActionDefault:
 		_data->getCurrentParameters(8)->param1 = 1;		
 		if (getProgress().chapter < State::kChapter5) {
-			getObjects()->update(Objects::kObjectCompartment5, kEntityTrain, 3, Cursor::kCursorHandKnock, 9);
-			getObjects()->update(Objects::kObjectCompartment6, kEntityTrain, 3, Cursor::kCursorHandKnock, 9);
-			getObjects()->update(Objects::kObjectCompartment7, kEntityTrain, 3, Cursor::kCursorHandKnock, 9);
-			getObjects()->update(Objects::kObjectCompartment8, kEntityTrain, 3, Cursor::kCursorHandKnock, 9);
+			getObjects()->update(Objects::kObjectCompartment5, kEntityTrain, kLocation3, Cursor::kCursorHandKnock, Cursor::kCursorHand);
+			getObjects()->update(Objects::kObjectCompartment6, kEntityTrain, kLocation3, Cursor::kCursorHandKnock, Cursor::kCursorHand);
+			getObjects()->update(Objects::kObjectCompartment7, kEntityTrain, kLocation3, Cursor::kCursorHandKnock, Cursor::kCursorHand);
+			getObjects()->update(Objects::kObjectCompartment8, kEntityTrain, kLocation3, Cursor::kCursorHandKnock, Cursor::kCursorHand);
 		}
-		_data->getData()->field_491 = 30000;
+		_data->getData()->field_491 = EntityData::kField491_30000;
 		break;
 
 	case kAction17:
 		_data->getData()->field_495 = getEntityData(kEntityNone)->field_495;
 
 		// Play clock sound
-		if (getEntities()->checkFields4(5, 81)) {
+		if (getEntities()->checkFields4(EntityData::kField495_5, 81)) {
 			_data->getCurrentParameters()->param6 = 1;
 			getSound()->playSound(kEntityNone, "ZFX1001");
 		} else {
@@ -201,23 +257,23 @@ label_skip:
 					getEntities()->drawSequences(kEntityTrain);
 					break;
 
-				case 1:
-				case 6:
+				case EntityData::kField493_1:
+				case EntityData::kField495_6:
 					if (getProgress().is_nighttime)
 						getEntities()->drawSequence(kEntityTrain, "B1WNM");
 					else
 						getEntities()->drawSequence(kEntityTrain, isDay() ? "B1WNM" : "B1WND");
 					break;
 
-				case 3:
-				case 4:
+				case EntityData::kField495_3:
+				case EntityData::kField495_4:
 					if (getProgress().is_nighttime)
 						getEntities()->drawSequence(kEntityTrain, "S1WNM");
 					else
 						getEntities()->drawSequence(kEntityTrain, isDay() ? "S1WNM" : "S1WND");
 					break;
 
-				case 5:
+				case EntityData::kField495_5:
 					getEntities()->drawSequence(kEntityTrain, isDay() ? "RCWNN" : "RCWND");
 					break;
 				}
@@ -230,19 +286,19 @@ label_skip:
 
 		if (!_data->getCurrentParameters()->param5) {
 			_data->getCurrentParameters()->param4 = 2700;	// this is the sound file name
-			//_data->getCurrentParameters()->param5 = 0;
+			_data->getCurrentParameters()->param5 = 0;
 		}
 
 		if (getProgress().jacket == State::kOriginalJacket) {
-			if (getEntities()->checkFields4(4, 18)) {
+			if (getEntities()->checkFields4(EntityData::kField495_4, 18)) {
 				_data->setNextCallback(1);
-				call(new ENTITY_SETUP_DEFAULT(Train, setup_execute), 2, 123);
+				call(new ENTITY_SETUP_DEFAULT(Train, setup_savegame), 2, Action::kMertensBloodJacket);
 				break;
 			}
 
-			if (getEntities()->checkFields4(3, 22)) {
+			if (getEntities()->checkFields4(EntityData::kField495_3, 22)) {
 				_data->setNextCallback(2);
-				call(new ENTITY_SETUP_DEFAULT(Train, setup_execute), 2, 123);
+				call(new ENTITY_SETUP_DEFAULT(Train, setup_savegame), 2, Action::kMertensBloodJacket);
 				break;
 			}
 		}	
@@ -271,7 +327,7 @@ label_skip:
 
 		case 6:
 			getAction()->playAnimation(Action::kCathBreakCeiling);
-			getObjects()->update(Objects::kObjectCeiling, kEntityNone, 2, Cursor::kCursorKeepValue, 255);
+			getObjects()->update(Objects::kObjectCeiling, kEntityNone, kLocation2, Cursor::kCursorKeepValue, Cursor::kCursorKeepValue);
 			getLogic()->processScene();
 			break;
 
@@ -299,13 +355,13 @@ label_skip:
 
 	case kAction202613084:
 		_data->setNextCallback(8);
-		call(new ENTITY_SETUP_DEFAULT(Train, setup_execute), 2, 259);
+		call(new ENTITY_SETUP_DEFAULT(Train, setup_savegame), 2, Action::kCloseMatchbox);
 		break;
 
 	case kAction203339360:
 		if (!_data->getCurrentParameters()->param7) {
 			_data->setNextCallback(5);
-			call(new ENTITY_SETUP_DEFAULT(Train, setup_execute), 2, 148);
+			call(new ENTITY_SETUP_DEFAULT(Train, setup_savegame), 2, Action::kLocomotiveConductorsDiscovered);
 		} else {
 			_data->getCurrentParameters()->param7 = 1;
 			getAction()->playAnimation(Action::kLocomotiveConductorsLook);
@@ -333,52 +389,52 @@ label_skip:
 		default:
 			break;
 
-		case 1:
-		case 2:
-		case 32:
-		case 33:
-			parameters1->param1 = (savepoint->param.intValue == 1 || savepoint->param.intValue == 2) ? 3 : 4;
-			parameters1->param2 = (savepoint->param.intValue == 1 || savepoint->param.intValue == 32) ? 8200 : 7500;
+		case Objects::kObjectCompartment1:
+		case Objects::kObjectCompartment2:
+		case Objects::kObjectCompartmentA:
+		case Objects::kObjectCompartmentB:
+			parameters1->param1 = (savepoint->param.intValue == Objects::kObjectCompartment1 || savepoint->param.intValue == Objects::kObjectCompartment2) ? 3 : 4;
+			parameters1->param2 = (savepoint->param.intValue == Objects::kObjectCompartment1 || savepoint->param.intValue == Objects::kObjectCompartmentA) ? EntityData::kField491_8200 : EntityData::kField491_7500;
 			parameters1->param3 = 7850;
 			break;
 
-		case 3:
-		case 4:
-		case 34:
-		case 35:
-			parameters1->param1 = (savepoint->param.intValue == 1 || savepoint->param.intValue == 2) ? 3 : 4;
-			parameters1->param2 = (savepoint->param.intValue == 3 || savepoint->param.intValue == 34) ? 6470 : 5790;
+		case Objects::kObjectCompartment3:
+		case Objects::kObjectCompartment4:
+		case Objects::kObjectCompartmentC:
+		case Objects::kObjectCompartmentD:
+			parameters1->param1 = (savepoint->param.intValue == Objects::kObjectCompartment1 || savepoint->param.intValue == Objects::kObjectCompartment2) ? 3 : 4;
+			parameters1->param2 = (savepoint->param.intValue == Objects::kObjectCompartment3 || savepoint->param.intValue == Objects::kObjectCompartmentC) ? EntityData::kField491_6470 : EntityData::kField491_5790;
 			parameters1->param3 = 6130;
 			break;
 
-		case 5:
-		case 6:
-		case 36:
-		case 37:
-			parameters1->param1 = (savepoint->param.intValue == 1 || savepoint->param.intValue == 2) ? 3 : 4;
-			parameters1->param2 = (savepoint->param.intValue == 5 || savepoint->param.intValue == 36) ? 4840 : 4070;
+		case Objects::kObjectCompartment5:
+		case Objects::kObjectCompartment6:
+		case Objects::kObjectCompartmentE:
+		case Objects::kObjectCompartmentF:
+			parameters1->param1 = (savepoint->param.intValue == Objects::kObjectCompartment1 || savepoint->param.intValue == Objects::kObjectCompartment2) ? 3 : 4;
+			parameters1->param2 = (savepoint->param.intValue == Objects::kObjectCompartment5 || savepoint->param.intValue == Objects::kObjectCompartmentE) ? EntityData::kField491_4840 : EntityData::kField491_4070;
 			parameters1->param3 = 4455;
 			break;
 
-		case 7:
-		case 8:
-		case 38:
-		case 39:
-			parameters1->param1 = (savepoint->param.intValue == 1 || savepoint->param.intValue == 2) ? 3 : 4;
-			parameters1->param2 = (savepoint->param.intValue == 7 || savepoint->param.intValue == 38) ? 3050 : 2740;
+		case Objects::kObjectCompartment7:
+		case Objects::kObjectCompartment8:
+		case Objects::kObjectCompartmentG:
+		case Objects::kObjectCompartmentH:
+			parameters1->param1 = (savepoint->param.intValue == Objects::kObjectCompartment1 || savepoint->param.intValue == Objects::kObjectCompartment2) ? 3 : 4;
+			parameters1->param2 = (savepoint->param.intValue == Objects::kObjectCompartment7 || savepoint->param.intValue == Objects::kObjectCompartmentG) ? EntityData::kField491_3050 : EntityData::kField491_2740;
 			parameters1->param3 = 0;
 			break;
 		}
 		break;
 
-	case kAction225056224:
+	case kActionBreakCeiling:
 		_data->setNextCallback(6);		
-		call(new ENTITY_SETUP_DEFAULT(Train, setup_execute), 2, 252);
+		call(new ENTITY_SETUP_DEFAULT(Train, setup_savegame), 2, Action::kCathBreakCeiling);
 		break;
 
-	case kAction338494260:
+	case kActionJumpDownCeiling:
 		_data->setNextCallback(7);
-		call(new ENTITY_SETUP_DEFAULT(Train, setup_execute), 2, 253);
+		call(new ENTITY_SETUP_DEFAULT(Train, setup_savegame), 2, Action::kCathJumpDownCeiling);
 		break;
 	}
 }
@@ -386,8 +442,8 @@ label_skip:
 void Train::resetParam8() {
 	EntityData::EntityParametersSeq1 *parameters1 = (EntityData::EntityParametersSeq1*)_data->getCurrentParameters(1);
 	if (_data->getCurrentParameters()->param8
-		&& getEntities()->checkFields1(kEntityNone, parameters1->param1, parameters1->param2)
-		&& getEntities()->checkFields1(kEntityNone, parameters1->param1, parameters1->param3)) {
+		&& getEntities()->checkFields1(kEntityNone, (EntityData::Field495Value)parameters1->param1, (EntityData::Field491Value)parameters1->param2)
+		&& getEntities()->checkFields1(kEntityNone, (EntityData::Field495Value)parameters1->param1, (EntityData::Field491Value)parameters1->param3)) {
 			// loads a file in the sound cache (param4)
 			_data->getCurrentParameters()->param8 = 0;
 	}

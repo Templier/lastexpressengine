@@ -37,7 +37,7 @@ public:
 	Train(LastExpressEngine *engine);
 
 	// Setup	
-	DECLARE_FUNCTION(execute)
+	DECLARE_FUNCTION(savegame)
 	DECLARE_FUNCTION(chapter1)
 	DECLARE_FUNCTION(chapter2)
 	DECLARE_FUNCTION(chapter3)
