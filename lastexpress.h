@@ -81,7 +81,7 @@ public:
 	StreamedSound *getMusicStream() const { return _music; }
 	StreamedSound *getSfxStream() const { return _sfx; }
 	GraphicsManager *getGraphicsManager() const { return _graphics; }
-	Scene *getScene(uint16 sceneId) const;
+	Scene *getScene(uint32 sceneId) const;
 	Common::RandomSource getRandom() const {return _random; }
 
 private:

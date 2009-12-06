@@ -35,7 +35,7 @@
 
 namespace LastExpress {
 
-Tables::Tables(LastExpressEngine *engine, Entity::EntityIndex id) : Entity(engine, id) {
+Tables::Tables(LastExpressEngine *engine, EntityIndex id) : Entity(engine, id) {
 	_id = id;
 	
 	ADD_CALLBACK_FUNCTION(Tables, chapter1);
@@ -85,19 +85,19 @@ IMPLEMENT_FUNCTION(Tables, draw, 6) {
 		default:
 			break;
 
-		case State::kChapter1:
+		case kChapter1:
 			if (getState()->time > 1165500)
 				if (!_data->getCurrentParameters()->param1)
 					_data->getCurrentParameters()->param1 = 1;
 			break;
 
-		case State::kChapter3:
+		case kChapter3:
 			if (getState()->time > 2052000)
 				if (!_data->getCurrentParameters()->param2)
 					_data->getCurrentParameters()->param2 = 1;
 			break;
 
-		case State::kChapter4:
+		case kChapter4:
 			if (getState()->time > 2488500)
 				if (!_data->getCurrentParameters()->param3)
 					_data->getCurrentParameters()->param3 = 1;

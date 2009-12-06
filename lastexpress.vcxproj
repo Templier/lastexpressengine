@@ -59,7 +59,12 @@
   <PropertyGroup>
     <_ProjectFileVersion>10.0.21006.1</_ProjectFileVersion>
   </PropertyGroup>
-  <ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <DisableSpecificWarnings>4100;4250;4512;4800</DisableSpecificWarnings>
+      <DisableLanguageExtensions>true</DisableLanguageExtensions>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;WIN32;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\..\engines\lastexpress\data\animation.cpp" />
@@ -173,6 +178,7 @@
     <ClInclude Include="..\..\engines\lastexpress\game\action.h" />
     <ClInclude Include="..\..\engines\lastexpress\game\beetle.h" />
     <ClInclude Include="..\..\engines\lastexpress\game\entities.h" />
+    <ClInclude Include="..\..\engines\lastexpress\game\shared.h" />
     <ClInclude Include="..\..\engines\lastexpress\game\sound.h" />
     <ClInclude Include="..\..\engines\lastexpress\game\inventory.h" />
     <ClInclude Include="..\..\engines\lastexpress\game\object.h" />

@@ -340,6 +340,9 @@
     <ClInclude Include="..\..\engines\lastexpress\game\savepoint.h">
       <Filter>game</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\engines\lastexpress\game\shared.h">
+      <Filter>game</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\engines\lastexpress\game\sound.h">
       <Filter>game</Filter>
     </ClInclude>

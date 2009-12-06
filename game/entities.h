@@ -51,48 +51,48 @@ public:
 	Entities(LastExpressEngine *engine);
 	~Entities();
 
-	void setup(State::ChapterIndex chapter);
+	void setup(ChapterIndex chapter);
 
-	void reset(Entity::EntityIndex entity);
+	void reset(EntityIndex entity);
 
 	// Update & drawing
 	void updateFields();	
 	void setupSequences();
 	void setupCallbacks();
 
-	void updateFields0(Entity::EntityIndex entity1, Entity::EntityIndex entity2);
-	void updateFields1(Entity::EntityIndex entity1, Entity::EntityIndex entity2);
-	void updateFields2(Entity::EntityIndex entity1, Entity::EntityIndex entity2);
-	void updateFields3(Entity::EntityIndex entity1, Entity::EntityIndex entity2);
+	void updateFields0(EntityIndex entity1, EntityIndex entity2);
+	void updateFields1(EntityIndex entity1, EntityIndex entity2);
+	void updateFields2(EntityIndex entity1, EntityIndex entity2);
+	void updateFields3(EntityIndex entity1, EntityIndex entity2);
 
 	// Sequences
-	void storeSequenceName(Entity::EntityIndex entity, const char* sequence);
-	void drawSequence(Entity::EntityIndex entity, const char* sequence);
-	void drawSequences(Entity::EntityIndex entity);	
+	void storeSequenceName(EntityIndex entity, const char* sequence);
+	void drawSequence(EntityIndex entity, const char* sequence);
+	void drawSequences(EntityIndex entity);	
 
 	// Accessors
-	Entity *get(Entity::EntityIndex entity);
-	EntityData *getData(Entity::EntityIndex entity);
+	Entity *get(EntityIndex entity);
+	EntityData *getData(EntityIndex entity);
 
 	// Serializable
 	void saveLoadWithSerializer(Common::Serializer &ser);
 
 	// Checks
-	bool checkEntity(Entity::EntityIndex entity, EntityData::Field495Value field495, EntityData::Field491Value field491);
-	bool compare(Entity::EntityIndex entity1, Entity::EntityIndex entity2);	
+	bool checkEntity(EntityIndex entity, EntityData::Field495Value field495, EntityData::Field491Value field491);
+	bool compare(EntityIndex entity1, EntityIndex entity2);	
 
-	bool checkFields1(Entity::EntityIndex entity, EntityData::Field495Value field495, EntityData::Field491Value field491);
+	bool checkFields1(EntityIndex entity, EntityData::Field495Value field495, EntityData::Field491Value field491);
 	bool checkFields2(Objects::ObjectIndex object);
-	bool checkFields3(Entity::EntityIndex entity);
+	bool checkFields3(EntityIndex entity);
 	bool checkFields4(EntityData::Field495Value field495, int field15);
-	bool checkFields5(Entity::EntityIndex entity, EntityData::Field495Value field495);
-	bool checkFields6(Entity::EntityIndex entity);
+	bool checkFields5(EntityIndex entity, EntityData::Field495Value field495);
+	bool checkFields6(EntityIndex entity);
 	bool checkFields7(EntityData::Field495Value field495);
-	bool checkFields8(Entity::EntityIndex entity);
-	bool checkFields9(Entity::EntityIndex entity1, Entity::EntityIndex entity2, int value);
-	bool checkFields10(Entity::EntityIndex entity);
+	bool checkFields8(EntityIndex entity);
+	bool checkFields9(EntityIndex entity1, EntityIndex entity2, int value);
+	bool checkFields10(EntityIndex entity);
 
-	bool checkSequence0(Entity::EntityIndex entity);
+	bool checkSequence0(EntityIndex entity);
 
 private:
 	LastExpressEngine	    *_engine;
@@ -100,7 +100,7 @@ private:
 	Common::Array<Entity *>  _entities;	
 
 	void executeCallbacks();
-	void processEntity(Entity::EntityIndex entity);	
+	void processEntity(EntityIndex entity);	
 };
 
 } // End of namespace LastExpress

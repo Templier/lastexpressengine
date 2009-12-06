@@ -200,7 +200,7 @@ bool Inventory::handleMouseEvent(Common::Event ev) {
 		bool selected = false;
 
 		// Iterate over items
-		int y = 44;
+		int16 y = 44;
 		for (int i = 1; i < 32; i++) {
 			if (!hasItem((InventoryItem)i))
 				continue;
@@ -359,7 +359,7 @@ void Inventory::addItem(InventoryItem item) {
 		return;
 
 	getEntry(item)->has_item = 1;
-	getEntry(item)->location = kNoLocation;
+	getEntry(item)->location = kLocationNone;
 
 	// Autoselect item if necessary
 	if (!getEntry(item)->no_autoselect) {
@@ -413,7 +413,7 @@ void Inventory::setLocationAndProcess(InventoryItem item, ObjectLocation locatio
 
 	getEntry(item)->location = location;
 
-	if (isSceneParameterEqual(item)) {
+	if (isItemSceneParameter(item)) {
 		if (getFlags()->flag_0)
 			getLogic()->processScene();
 	}
@@ -444,7 +444,7 @@ InventoryItem Inventory::getFirstExaminableItem() {
 	return (InventoryItem)index;
 }
 
-bool Inventory::isSceneParameterEqual(byte value) {
+bool Inventory::isItemSceneParameter(InventoryItem item) {
 	Scene *currentScene = _engine->getScene(getState()->scene);
 	bool equal = false;
 
@@ -453,27 +453,27 @@ bool Inventory::isSceneParameterEqual(byte value) {
 		break;
 
 	case Scene::kTypeItem:
-		if (currentScene->getHeader()->param1 == value)
+		if (currentScene->getHeader()->param1 == item)
 			equal = true;
 		break;
 
 	case Scene::kTypeItem2:
-		if (currentScene->getHeader()->param1 == value || currentScene->getHeader()->param2 == value)
+		if (currentScene->getHeader()->param1 == item || currentScene->getHeader()->param2 == item)
 			equal = true;
 		break;
 
 	case Scene::kTypeEntityItem:
-		if (currentScene->getHeader()->param2 == value)
+		if (currentScene->getHeader()->param2 == item)
 			equal = true;
 		break;
 
 	case Scene::kTypeItem3:
-		if (currentScene->getHeader()->param1 == value || currentScene->getHeader()->param2 == value || currentScene->getHeader()->param3 == value)
+		if (currentScene->getHeader()->param1 == item || currentScene->getHeader()->param2 == item || currentScene->getHeader()->param3 == item)
 			equal = true;
 		break;
 
 	case Scene::kType8:
-		if (currentScene->getHeader()->param2 == value)
+		if (currentScene->getHeader()->param2 == item)
 			equal = true;
 		break;
 	}
@@ -563,12 +563,12 @@ void Inventory::close() {
 		}
 	}
 
-	_engine->getGraphicsManager()->clear(GraphicsManager::kBackgroundInventory, Common::Rect(0, 44, 32, 44 + 44 * count));
+	_engine->getGraphicsManager()->clear(GraphicsManager::kBackgroundInventory, Common::Rect(0, 44, 32, 44 + 44 * (int16)count));
 
 	askForRedraw();
 }
 
-Common::Rect Inventory::getItemRect(int index) {
+Common::Rect Inventory::getItemRect(int16 index) {
 	return Common::Rect(0, (32 + 12) * (index + 1), 32, (32 + 12) * (index + 2)); // space between items = 12px
 }
 

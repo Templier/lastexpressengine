@@ -133,7 +133,7 @@ public:
 	Icon(Cursor::CursorStyle style);
 
 	void setPosition(int x, int y);
-	void setBrightness(uint8 brightness);
+	void setBrightness(uint brightness);
 	Common::Rect draw(Graphics::Surface *surface);
 
 private:

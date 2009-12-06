@@ -106,7 +106,7 @@ IMPLEMENT_FUNCTION(Mertens, function6, 6) {
 			break;
 		}
 		
-		if (getProgress().jacket == State::kOriginalJacket
+		if (getProgress().jacket == kJacketOriginal
 		 && getEntities()->checkFields9(kEntityMertens, kEntityNone, 1000)
 		 && !getEntities()->checkFields3(kEntityNone)
 		 && !getEntities()->checkFields10(kEntityNone)) {
@@ -142,7 +142,7 @@ IMPLEMENT_FUNCTION_INT(Mertens, function11, 11) {
 		break;	
 
 	case kActionNone:
-		if (getProgress().jacket == State::kOriginalJacket
+		if (getProgress().jacket == kJacketOriginal
 			&& getEntities()->checkFields9(kEntityMertens, kEntityNone, 1000)
 			&& !getEntities()->checkFields3(kEntityNone)
 			&& !getEntities()->checkFields10(kEntityNone)) {

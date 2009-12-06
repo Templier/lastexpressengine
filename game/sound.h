@@ -40,20 +40,20 @@ public:
 	~Sound();
 
 	// Sound playing
-	void playSound(Entity::EntityIndex entity, const char *filename, int a3 = -1, byte a4 = 0);
+	void playSound(EntityIndex entity, const char *filename, int a3 = -1, byte a4 = 0);
 
-	void playMusic(Entity::EntityIndex entity, byte id, int a3, byte a4);	
-	void playDialog(Entity::EntityIndex entity, Entity::EntityIndex entityDialog, int a3, byte a4);
+	void playMusic(EntityIndex entity, byte id, int a3, byte a4);	
+	void playDialog(EntityIndex entity, EntityIndex entityDialog, int a3, byte a4);
 	void playSoundEvent(int index, byte action, byte a3);	
 
 	// Dialog
-	const char *getDialogName(Entity::EntityIndex entity);
+	const char *getDialogName(EntityIndex entity);
 
 	// Letters
 	const char *readText(int id);
 
 	// Sound bites
-	void excuseMe(Entity::EntityIndex entity, int param2, int param3);
+	void excuseMe(EntityIndex entity, int param2, int param3);
 	const char *excuseMeCath();
 	const char *justCheckingCath();
 	const char *wrongDoorCath();

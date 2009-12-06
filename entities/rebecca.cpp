@@ -98,9 +98,9 @@ IMPLEMENT_FUNCTION(Rebecca, chapter1, 21) {
 	case kActionDefault: 
 		getSavePoints()->addData(kEntityRebecca, kAction224253538, 0);
 
-		getObjects()->update(Objects::kObjectCompartmentE, kEntityNone, kNoLocation, Cursor::kCursorHandKnock, Cursor::kCursorHand);
-		getObjects()->update(Objects::kObject52, kEntityNone, kNoLocation, Cursor::kCursorHandKnock, Cursor::kCursorHand);
-		getObjects()->update(Objects::kObject44, kEntityNone, kNoLocation, Cursor::kCursorKeepValue, Cursor::kCursorKeepValue);
+		getObjects()->update(Objects::kObjectCompartmentE, kEntityNone, kLocationNone, Cursor::kCursorHandKnock, Cursor::kCursorHand);
+		getObjects()->update(Objects::kObject52, kEntityNone, kLocationNone, Cursor::kCursorHandKnock, Cursor::kCursorHand);
+		getObjects()->update(Objects::kObject44, kEntityNone, kLocationNone, Cursor::kCursorKeepValue, Cursor::kCursorKeepValue);
 
 		getObjects()->updateLocation2(Objects::kObject110, kLocation1);
 

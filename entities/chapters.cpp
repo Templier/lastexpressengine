@@ -76,7 +76,7 @@ IMPLEMENT_FUNCTION(Chapters, chapter1_init, 7) {
 	if (savepoint->action != kActionDefault)
 		return;
 
-	getProgress().chapter = State::kChapter1;
+	getProgress().chapter = kChapter1;
 	// TODO function call modifying an unknown global var
 	getState()->time = 1061100;
 	getState()->timeDelta = 0;
@@ -101,8 +101,8 @@ IMPLEMENT_FUNCTION(Chapters, chapter1_init, 7) {
 	getInventory()->setLocationAndProcess(kItem22, kLocation1);
 	getInventory()->setLocationAndProcess(kPaper, kLocation1);
 
-	getObjects()->update(Objects::kObjectCompartment1, kEntityNone, kNoLocation, Cursor::kCursorHandKnock, Cursor::kCursorHand);
-	getObjects()->update(Objects::kObjectOutside, kEntityNone, kNoLocation, Cursor::kCursorKeepValue, Cursor::kCursorKeepValue);
+	getObjects()->update(Objects::kObjectCompartment1, kEntityNone, kLocationNone, Cursor::kCursorHandKnock, Cursor::kCursorHand);
+	getObjects()->update(Objects::kObjectOutside, kEntityNone, kLocationNone, Cursor::kCursorKeepValue, Cursor::kCursorKeepValue);
 
 	for (uint i = 1; i < 9; i++) {
 		getObjects()->updateLocation2((Objects::ObjectIndex)i, kLocation2);
@@ -119,19 +119,19 @@ IMPLEMENT_FUNCTION(Chapters, chapter1_init, 7) {
 	getObjects()->updateLocation2(Objects::kObject98, kLocation1);
 	getObjects()->updateLocation2(Objects::kObjectRestaurantCar, kLocation1);
 
-	getObjects()->update(Objects::kObject25, kEntityNone, kNoLocation, Cursor::kCursorNormal, Cursor::kCursorForward);
-	getObjects()->update(Objects::kObjectGreenSleepingCar, kEntityNone, kNoLocation, Cursor::kCursorNormal, Cursor::kCursorForward);
-	getObjects()->update(Objects::kObjectRedSleepingCar, kEntityNone, kNoLocation, Cursor::kCursorNormal, Cursor::kCursorForward);
-	getObjects()->update(Objects::kObject28, kEntityNone, kNoLocation, Cursor::kCursorNormal, Cursor::kCursorForward);
-	getObjects()->update(Objects::kObject56, kEntityNone, kNoLocation, Cursor::kCursorNormal, Cursor::kCursorForward);
-	getObjects()->update(Objects::kObject54, kEntityNone, kNoLocation, Cursor::kCursorNormal, Cursor::kCursorForward);
-	getObjects()->update(Objects::kObjectRestaurantCar, kEntityNone, kNoLocation, Cursor::kCursorNormal, Cursor::kCursorForward);
-	getObjects()->update(Objects::kObject59, kEntityNone, kNoLocation, Cursor::kCursorNormal, Cursor::kCursorForward);
-	getObjects()->update(Objects::kObject66, kEntityNone, kNoLocation, Cursor::kCursorNormal, Cursor::kCursorForward);
-	getObjects()->update(Objects::kObject64, kEntityNone, kNoLocation, Cursor::kCursorNormal, Cursor::kCursorForward);
-	getObjects()->update(Objects::kObject65, kEntityNone, kNoLocation, Cursor::kCursorNormal, Cursor::kCursorForward);
-	getObjects()->update(Objects::kObject69, kEntityNone, kNoLocation, Cursor::kCursorNormal, Cursor::kCursorForward);
-	getObjects()->update(Objects::kObject98, kEntityNone, kNoLocation, Cursor::kCursorNormal, Cursor::kCursorForward);
+	getObjects()->update(Objects::kObject25, kEntityNone, kLocationNone, Cursor::kCursorNormal, Cursor::kCursorForward);
+	getObjects()->update(Objects::kObjectGreenSleepingCar, kEntityNone, kLocationNone, Cursor::kCursorNormal, Cursor::kCursorForward);
+	getObjects()->update(Objects::kObjectRedSleepingCar, kEntityNone, kLocationNone, Cursor::kCursorNormal, Cursor::kCursorForward);
+	getObjects()->update(Objects::kObject28, kEntityNone, kLocationNone, Cursor::kCursorNormal, Cursor::kCursorForward);
+	getObjects()->update(Objects::kObject56, kEntityNone, kLocationNone, Cursor::kCursorNormal, Cursor::kCursorForward);
+	getObjects()->update(Objects::kObject54, kEntityNone, kLocationNone, Cursor::kCursorNormal, Cursor::kCursorForward);
+	getObjects()->update(Objects::kObjectRestaurantCar, kEntityNone, kLocationNone, Cursor::kCursorNormal, Cursor::kCursorForward);
+	getObjects()->update(Objects::kObject59, kEntityNone, kLocationNone, Cursor::kCursorNormal, Cursor::kCursorForward);
+	getObjects()->update(Objects::kObject66, kEntityNone, kLocationNone, Cursor::kCursorNormal, Cursor::kCursorForward);
+	getObjects()->update(Objects::kObject64, kEntityNone, kLocationNone, Cursor::kCursorNormal, Cursor::kCursorForward);
+	getObjects()->update(Objects::kObject65, kEntityNone, kLocationNone, Cursor::kCursorNormal, Cursor::kCursorForward);
+	getObjects()->update(Objects::kObject69, kEntityNone, kLocationNone, Cursor::kCursorNormal, Cursor::kCursorForward);
+	getObjects()->update(Objects::kObject98, kEntityNone, kLocationNone, Cursor::kCursorNormal, Cursor::kCursorForward);
 	getObjects()->update(Objects::kObjectHandleOutsideLeft, kEntityNone, kLocation1, Cursor::kCursorNormal, Cursor::kCursorHandKnock);
 	getObjects()->update(Objects::kObjectHandleOutsideRight, kEntityNone, kLocation1, Cursor::kCursorNormal, Cursor::kCursorHandKnock);
 	getObjects()->update(Objects::kObject101, kEntityNone, kLocation1, Cursor::kCursorHandKnock, Cursor::kCursorHand);

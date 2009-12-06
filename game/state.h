@@ -75,6 +75,8 @@
 
 */
 
+#include "lastexpress/game/shared.h"
+
 #include "common/system.h"
 
 namespace LastExpress {
@@ -87,20 +89,6 @@ class SavePoints;
 
 class State {
 public:
-	enum ChapterIndex {
-		kCustom = 0,
-		kChapter1 = 1,
-		kChapter2 = 2,
-		kChapter3 = 3,
-		kChapter4 = 4,
-		kChapter5 = 5
-	};
-
-	enum JacketType {
-		kOriginalJacket = 1,
-		kGreenJacket = 2
-	};
-
 	struct GameProgress {
 		uint32 field_0;
 		JacketType jacket;
@@ -171,7 +159,7 @@ public:
 
 		GameProgress() {
 			field_0 = 0;
-			jacket = kOriginalJacket;
+			jacket = kJacketOriginal;
 			field_8 = 0;
 			field_C = 0;
 			event_found_corpse = 0;

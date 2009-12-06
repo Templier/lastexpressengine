@@ -217,7 +217,7 @@ public:
 	~SceneManager();
 
 	bool load(Common::SeekableReadStream *stream);
-	Scene *getScene(uint16 index);
+	Scene *getScene(int index);
 
 private:
 	Common::SeekableReadStream *_stream;

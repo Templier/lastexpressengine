@@ -42,55 +42,14 @@
 
 #include "lastexpress/data/scene.h"
 
+#include "lastexpress/game/shared.h"
+
 #include "common/events.h"
 #include "common/serializer.h"
 
 namespace LastExpress {
 
 class LastExpressEngine;
-enum ObjectLocation;
-
-// Index of items in inventory data
-enum InventoryItem {
-	kNoItem = 0,
-
-	kMatchBox = 1,
-	kItem2 = 2,
-	kItem3 = 3,
-	kTelegram = 4,
-	kItem5 = 5,
-	kPassengerList = 6,
-	kItem7 = 7,
-	kScarf = 8,
-	kItem9 = 9,
-	kParchemin = 10,
-	kItem11 = 11,
-	kMatch = 12,
-	kWhistle = 13,
-	kBeetle = 14,
-	kKey = 15,
-	kBomb = 16,
-	kItem17 = 17,
-	kFirebird = 18,
-	kBriefcase = 19,
-	kCorpse = 20,
-	kGreenJacket = 21,
-	kItem22 = 22,
-	kPaper = 23,
-	kArticle = 24,		
-	kItem25 = 25,
-	kItem26 = 26,
-	kItem27 = 27,
-	kItem28 = 28,
-	kItem29 = 29,
-	kItem30 = 30,
-	kItem31 = 31,
-
-	// Portrait (not an index)
-	kPortraitOriginal = 32,		
-	kPortraitGreen = 34,		
-	kPortraitYellow = 36
-};
 
 class Inventory : Common::Serializable {
 public:
@@ -112,7 +71,7 @@ public:
 			is_selectable = 0;
 			has_item = 0;
 			no_autoselect = 1; 
-			location = (ObjectLocation)0;
+			location = kLocationNone;
 		}
 	};
 
@@ -176,9 +135,9 @@ private:
 	void close();
 	void examine(InventoryItem item);
 	void drawEgg();	
-	Common::Rect getItemRect(int index);
+	Common::Rect getItemRect(int16 index);
 
-	bool isSceneParameterEqual(byte value);
+	bool isItemSceneParameter(InventoryItem item);
 };
 
 } // End of namespace LastExpress

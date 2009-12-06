@@ -28,7 +28,7 @@
 
 #include "lastexpress/data/cursor.h"
 
-#include "lastexpress/entities/entity.h"
+#include "lastexpress/game/shared.h"
 
 #include "common/serializer.h"
 #include "common/system.h"
@@ -36,16 +36,6 @@
 namespace LastExpress {
 
 class LastExpressEngine;
-
-enum ObjectLocation {
-	kNoLocation = 0,
-	kLocation1 = 1,	// Floor?
-	kLocation2 = 2, // Bed ?
-	kLocation3 = 3,
-	kLocation4 = 4, // Window ?
-	kLocation5 = 5,
-	kLocation11 = 11
-};
 
 class Objects : Common::Serializable {
 public:
@@ -183,25 +173,25 @@ public:
 	};
 
 	struct Object {							// All  fields should be saved as bytes
-		Entity::EntityIndex entity;
+		EntityIndex entity;
 		ObjectLocation location;
 		Cursor::CursorStyle cursor;	
 		Cursor::CursorStyle cursor2;
 		ObjectLocation location2;
 
 		Object() {
-			entity = Entity::kEntityNone;
-			location = kNoLocation;
+			entity = kEntityNone;
+			location = kLocationNone;
 			cursor = Cursor::kCursorHandKnock;
 			cursor2 = Cursor::kCursorHandKnock;
-			location2 = kNoLocation;
+			location2 = kLocationNone;
 		}
 	};
 	
 	Objects(LastExpressEngine *engine);
 
 	const Object get(ObjectIndex index);
-	void update(ObjectIndex index, Entity::EntityIndex entity, ObjectLocation location, Cursor::CursorStyle cursor, Cursor::CursorStyle cursor2);
+	void update(ObjectIndex index, EntityIndex entity, ObjectLocation location, Cursor::CursorStyle cursor, Cursor::CursorStyle cursor2);
 	void updateLocation2(ObjectIndex index, ObjectLocation location2);
 
 	// Serializable

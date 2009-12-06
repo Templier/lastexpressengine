@@ -25,6 +25,7 @@
 
 #include "lastexpress/entities/entity.h"
 
+#include "lastexpress/game/state.h"
 #include "lastexpress/game/savepoint.h"
 
 #include "lastexpress/helpers.h"
@@ -54,7 +55,7 @@ void EntityData::saveLoadWithSerializer(Common::Serializer &ser) {
 //////////////////////////////////////////////////////////////////////////
 // Entity
 //////////////////////////////////////////////////////////////////////////
-Entity::Entity(LastExpressEngine *engine, Entity::EntityIndex index) : _engine(engine), _entityIndex(index) {
+Entity::Entity(LastExpressEngine *engine, EntityIndex index) : _engine(engine), _entityIndex(index) {
 	_data = new EntityData();
 
 	// Add first empty entry to callbacks array
@@ -68,29 +69,29 @@ Entity::~Entity() {
 	delete _data;
 }
 
-void Entity::setup(State::ChapterIndex index) {
+void Entity::setup(ChapterIndex index) {
 	switch(index) {
-	case State::kCustom:
+	case kChapterAll:
 		getSavePoints()->setCallback(_entityIndex, _callbacks[_data->getCurrentCallback()]);
 		break;
 
-	case State::kChapter1:
+	case kChapter1:
 		setup_chapter1();
 		break;
 
-	case State::kChapter2:
+	case kChapter2:
 		setup_chapter2();
 		break;
 
-	case State::kChapter3:
+	case kChapter3:
 		setup_chapter3();
 		break;
 
-	case State::kChapter4:
+	case kChapter4:
 		setup_chapter4();
 		break;
 
-	case State::kChapter5:
+	case kChapter5:
 		setup_chapter5();
 		break;
 

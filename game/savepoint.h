@@ -55,18 +55,18 @@ namespace LastExpress {
 class LastExpressEngine;
 
 struct SavePoint {
-	Entity::EntityIndex entity1;
-	Entity::ActionIndex action;
-	Entity::EntityIndex entity2;
+	EntityIndex entity1;
+	ActionIndex action;
+	EntityIndex entity2;
 	union {
 		uint32 intValue;
 		char charValue[4];
 	} param;
 
 	SavePoint() {
-		entity1 = Entity::kEntityNone;
-		action = Entity::kActionNone;
-		entity2 = Entity::kEntityNone;
+		entity1 = kEntityNone;
+		action = kActionNone;
+		entity2 = kEntityNone;
 		param.intValue = 0;
 	}
 };	
@@ -75,15 +75,15 @@ class SavePoints : Common::Serializable {
 public:
 
 	struct SavePointData {
-		Entity::EntityIndex entity1;
-		Entity::ActionIndex action;
-		Entity::EntityIndex entity2;
+		EntityIndex entity1;
+		ActionIndex action;
+		EntityIndex entity2;
 		uint32 param;
 
 		SavePointData() {
-			entity1 = Entity::kEntityNone;
-			action = Entity::kActionNone;
-			entity2 = Entity::kEntityNone;
+			entity1 = kEntityNone;
+			action = kActionNone;
+			entity2 = kEntityNone;
 			param = 0;
 		}
 	};
@@ -92,19 +92,19 @@ public:
 	~SavePoints();
 	
 	// Savepoints
-	void push(Entity::EntityIndex entity2, Entity::EntityIndex entity1, Entity::ActionIndex action, uint32 param = 0);
-	void pushAll(Entity::EntityIndex entity, Entity::ActionIndex action, uint32 param = 0);
+	void push(EntityIndex entity2, EntityIndex entity1, ActionIndex action, uint32 param = 0);
+	void pushAll(EntityIndex entity, ActionIndex action, uint32 param = 0);
 	void process();
 	void reset();
 
 	// Data
-	void addData(Entity::EntityIndex entity, Entity::ActionIndex action, uint32 param);
+	void addData(EntityIndex entity, ActionIndex action, uint32 param);
 
 	// Callbacks
-	void setCallback(Entity::EntityIndex index, Entity::Callback* callback);
-	Entity::Callback *getCallback(Entity::EntityIndex entity);
-	void call(Entity::EntityIndex entity2, Entity::EntityIndex entity1, Entity::ActionIndex action, uint32 param = 0);
-	void call(Entity::EntityIndex entity2, Entity::EntityIndex entity1, Entity::ActionIndex action, char* param);
+	void setCallback(EntityIndex index, Entity::Callback* callback);
+	Entity::Callback *getCallback(EntityIndex entity);
+	void call(EntityIndex entity2, EntityIndex entity1, ActionIndex action, uint32 param = 0);
+	void call(EntityIndex entity2, EntityIndex entity1, ActionIndex action, char* param);
 
 	// Serializable
 	void saveLoadWithSerializer(Common::Serializer &s);

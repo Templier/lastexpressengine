@@ -70,7 +70,7 @@ void Logic::startGame() {
 	// Init data
 	getInventory()->init();
 
-	_entities->setup(State::kChapter1);
+	_entities->setup(kChapter1);
 
 	showMenu(false);
 	loadScene(1018);
@@ -147,7 +147,7 @@ void Logic::gameOver(int a1, int a2, int scene, bool showScene) {
 }
 
 // Save game
-void Logic::savegame(int param1, Entity::EntityIndex entity, Action::EventIndex event) {
+void Logic::savegame(int param1, EntityIndex entity, Action::EventIndex event) {
 	warning("Logic::savegame: not implemented!");
 }
 
@@ -237,14 +237,14 @@ void Logic::drawScene(uint32 index) {
 	// Update entities
 	Scene *scene = (getState()->sceneUseBackup ? _engine->getScene(getState()->sceneBackup) : _scene);
 	
-	getEntityData(Entity::kEntityNone)->field_491 = (EntityData::Field491Value)scene->getHeader()->count;
-	getEntityData(Entity::kEntityNone)->field_495 = (EntityData::Field495Value)scene->getHeader()->field_13;
+	getEntityData(kEntityNone)->field_491 = (EntityData::Field491Value)scene->getHeader()->count;
+	getEntityData(kEntityNone)->field_495 = (EntityData::Field495Value)scene->getHeader()->field_13;
 
 	if (getState()->sceneUseBackup)
 		delete scene;
 
 	if (getFlags()->flag_1) {
-		getSavePoints()->pushAll(Entity::kEntityNone, Entity::kAction17);
+		getSavePoints()->pushAll(kEntityNone, kAction17);
 		getSavePoints()->process();
 
 		if (_runState.flag_no_entity)
@@ -365,7 +365,8 @@ void Logic::preProcessScene(uint32 *index) {
 	case Scene::kTypeItem3:
 	case Scene::kTypeEntity:
 	case Scene::kTypeEntityItem: {
-		byte location1, location2, location3; 
+		int location = 0;
+		ObjectLocation location1 = kLocationNone, location2 = kLocationNone, location3 = kLocationNone; 
 		byte type = scene->getHeader()->type;
 
 		// Check bounds
@@ -389,8 +390,6 @@ void Logic::preProcessScene(uint32 *index) {
 
 		if (type == Scene::kTypeItem3)
 			location3 = GET_ITEM_LOCATION(scene, param3);
-
-		int location = 0;
 
 		if (location1)
 			location = 1;
@@ -471,7 +470,7 @@ void Logic::preProcessScene(uint32 *index) {
 
 				if (State::getPowerOfTwo(getState()->field16[scene->getHeader()->param1]) != 30 
 				 && State::getPowerOfTwo(getState()->field16_2[scene->getHeader()->param1]) != 30 )
-					getSound()->playSound(Entity::kEntityNone, "CAT1126A");				
+					getSound()->playSound(kEntityNone, "CAT1126A");				
 
 				*index = scene->getHotspot()->scene;
 			} else {
@@ -488,7 +487,7 @@ void Logic::preProcessScene(uint32 *index) {
 			if (scene->getHeader()->param2 >= 32)
 				break;
 
-			byte location = getInventory()->getEntry((InventoryItem)scene->getHeader()->param2)->location;
+			ObjectLocation location = getInventory()->getEntry((InventoryItem)scene->getHeader()->param2)->location;
 			if (!location)
 				break;
 
@@ -548,22 +547,22 @@ void Logic::postProcessScene(uint32 *index) {
 			delete hotspotScene;
 		}
 
-		int16 field491 = getEntityData(Entity::kEntityNone)->field_491;
-		if (getEntityData(Entity::kEntityNone)->field_495 == 9 && (field491 == 4 || field491 == 3)) {
-			Entity::EntityIndex entities[39];
+		EntityData::Field491Value field491 = getEntityData(kEntityNone)->field_491;
+		if (getEntityData(kEntityNone)->field_495 == 9 && (field491 == 4 || field491 == 3)) {
+			EntityIndex entities[39];
 
 			int progress = 0;
 
 			for (uint i = 1; i < 40; i++) {
 
-				int16 field493 = getEntityData((Entity::EntityIndex)i)->field_493;
-				int16 field495 = getEntityData((Entity::EntityIndex)i)->field_495;
+				EntityData::Field493Value field493 = getEntityData((EntityIndex)i)->field_493;
+				EntityData::Field495Value field495 = getEntityData((EntityIndex)i)->field_495;
 				if (field491 == 4) {
 					if (!(field495 != 4 || field493 <= 9270) || !(field495 != 5 || field493 >= 1540))
-						entities[progress++] = (Entity::EntityIndex)i;
+						entities[progress++] = (EntityIndex)i;
 				} else {
 					if (!(field495 != 3 || field493 <= 9270) || !(field495 != 4 || field493 >= 850))
-						entities[progress++] = (Entity::EntityIndex)i;
+						entities[progress++] = (EntityIndex)i;
 				}
 			}
 
@@ -580,11 +579,11 @@ void Logic::postProcessScene(uint32 *index) {
 		
 	case Scene::kTypeSavePointChapter:
 		if (getProgress().field_18 == 2)
-			getSavePoints()->push(Entity::kEntityNone, Entity::kEntityChapters, Entity::kAction190346110);
+			getSavePoints()->push(kEntityNone, kEntityChapters, kAction190346110);
 		break;
 
 	case Scene::kTypeLoadBeetleSequences:
-		if ((getProgress().chapter == State::kChapter2 || getProgress().chapter == State::kChapter3)
+		if ((getProgress().chapter == kChapter2 || getProgress().chapter == kChapter3)
 		  && getInventory()->getEntry(kBeetle)->location == 3) {
 			if (!_beetle->isLoaded())
 				_beetle->load();
@@ -597,11 +596,11 @@ void Logic::postProcessScene(uint32 *index) {
 
 		playSfxStream("LIB050");
 		switch (getProgress().chapter) {
-		case State::kChapter1:
+		case kChapter1:
 			gameOver(0, 0, 62, 1);
 			break;
 
-		case State::kChapter4:
+		case kChapter4:
 			gameOver(0, 0, 64, 1);
 			break;
 
@@ -642,18 +641,18 @@ void Logic::switchChapter() {
 	default:
 		break;
 
-	case State::kChapter1:
+	case kChapter1:
 		getInventory()->addItem(kParchemin);
 		getInventory()->addItem(kMatchBox);
 		// TODO call game logic
 		break;
 
-	case State::kChapter2:
+	case kChapter2:
 		getInventory()->addItem(kScarf);
 		// TODO call game logic
 		break;
 
-	case State::kChapter3:
+	case kChapter3:
 		getInventory()->getEntry(kFirebird)->location = kLocation4;
 		getInventory()->getEntry(kFirebird)->has_item = 0;
 		getInventory()->getEntry(kItem11)->location = kLocation1;
@@ -663,11 +662,11 @@ void Logic::switchChapter() {
 		// TODO call game logic
 		break;
 
-	case State::kChapter4:
+	case kChapter4:
 		// TODO call game logic
 		break;
 
-	case State::kChapter5:
+	case kChapter5:
 		playFinalSequence();
 		break;
 	}

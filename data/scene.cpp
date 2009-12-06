@@ -105,19 +105,16 @@ Scene *Scene::load(Common::SeekableReadStream *stream, SceneHeader *header) {
 
 	// Read all hotspots
 	if (header->hotspot != 0) {
-		stream->seek(header->hotspot, SEEK_SET);		
-		while (1) {
-			SceneHotspot *hotspot = SceneHotspot::load(stream);
-
-			if (!hotspot)
-				break;
-
+		stream->seek(header->hotspot, SEEK_SET);	
+		SceneHotspot *hotspot = SceneHotspot::load(stream);
+		while (hotspot) {
 			s->_hotspots.push_back(hotspot);
 			
 			if (hotspot->next == 0)
 				break;
 
 			stream->seek(hotspot->next, SEEK_SET);
+			hotspot = SceneHotspot::load(stream);
 		}
 	}
 
@@ -209,11 +206,11 @@ bool SceneManager::load(Common::SeekableReadStream *stream) {
 	return true;
 }
 
-Scene *SceneManager::getScene(uint16 index) {
+Scene *SceneManager::getScene(int index) {
 	if (_headers.empty())
 		return NULL;
 
-	if (index == 0 || index > _headers.size())
+	if (index == 0 || index > (int)_headers.size())
 		return NULL;
 
 	debugC(9, kLastExpressDebugScenes, "Loading scene %d", index);

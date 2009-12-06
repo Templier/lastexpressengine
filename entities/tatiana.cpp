@@ -106,7 +106,7 @@ IMPLEMENT_FUNCTION(Tatiana, chapter1, 17) {
 
 		getObjects()->update(Objects::kObjectCompartmentB, kEntityNone, kLocation1, Cursor::kCursorHandKnock, Cursor::kCursorHand);
 		getObjects()->update(Objects::kObject49, kEntityNone, kLocation1, Cursor::kCursorHandKnock, Cursor::kCursorHand);
-		getObjects()->update(Objects::kObject41, kEntityNone, kNoLocation, Cursor::kCursorKeepValue, Cursor::kCursorKeepValue);
+		getObjects()->update(Objects::kObject41, kEntityNone, kLocationNone, Cursor::kCursorKeepValue, Cursor::kCursorKeepValue);
 
 		_data->getData()->field_491 = EntityData::kField491_5419;
 		_data->getData()->field_493 = EntityData::kField493_1;

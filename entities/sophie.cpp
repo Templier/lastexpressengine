@@ -92,12 +92,12 @@ IMPLEMENT_FUNCTION_INT2(Sophie, function2, 2) {
 
 		// Sophie
 		byte field_49A = _data->getData()->field_49A;
-		int16 field_491 = _data->getData()->field_491;
-		int16 field_495 = _data->getData()->field_495;
+		EntityData::Field491Value field_491 = _data->getData()->field_491;
+		EntityData::Field495Value field_495 = _data->getData()->field_495;
 
 		// Rebecca
-		int16 rebecca_field_491 = getEntityData(kEntityRebecca)->field_491;
-		int16 rebecca_field_495 = getEntityData(kEntityRebecca)->field_495;
+		EntityData::Field491Value rebecca_field_491 = getEntityData(kEntityRebecca)->field_491;
+		EntityData::Field495Value rebecca_field_495 = getEntityData(kEntityRebecca)->field_495;
 
 		if (getEntities()->checkFields9(kEntitySophie, kEntityRebecca, 500)
 		 || (field_49A == 1 && field_495 >= rebecca_field_495 && field_491 > rebecca_field_491)

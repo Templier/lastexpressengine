@@ -34,7 +34,7 @@ class LastExpressEngine;
 
 class Tables : public Entity {
 public:
-	Tables(LastExpressEngine *engine, Entity::EntityIndex id);
+	Tables(LastExpressEngine *engine, EntityIndex id);
 
 	// Setup	
 	DECLARE_FUNCTION(chapter1)
@@ -45,7 +45,7 @@ public:
 	DECLARE_FUNCTION(draw)
 
 private:
-	Entity::EntityIndex _id;	///< Table entity id
+	EntityIndex _id;	///< Table entity id
 };
 
 } // End of namespace LastExpress

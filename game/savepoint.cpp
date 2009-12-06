@@ -46,7 +46,7 @@ SavePoints::~SavePoints() {
 //////////////////////////////////////////////////////////////////////////
 // Savepoints
 //////////////////////////////////////////////////////////////////////////
-void SavePoints::push(Entity::EntityIndex entity2, Entity::EntityIndex entity1, Entity::ActionIndex action, uint32 param) {
+void SavePoints::push(EntityIndex entity2, EntityIndex entity1, ActionIndex action, uint32 param) {
 
 	if (_savepoints.size() >= _savePointsMaxSize)
 		return;
@@ -67,10 +67,10 @@ SavePoint SavePoints::pop() {
 }
 
 
-void SavePoints::pushAll(Entity::EntityIndex entity, Entity::ActionIndex action, uint32 param) {
+void SavePoints::pushAll(EntityIndex entity, ActionIndex action, uint32 param) {
 	for (uint32 index = 1; index < 40; index++) {
-		if ((Entity::EntityIndex)index != entity)
-			push(entity, (Entity::EntityIndex)index, action, param);
+		if ((EntityIndex)index != entity)
+			push(entity, (EntityIndex)index, action, param);
 	}
 }
 
@@ -97,7 +97,7 @@ void SavePoints::reset() {
 //////////////////////////////////////////////////////////////////////////
 // Data
 //////////////////////////////////////////////////////////////////////////
-void SavePoints::addData(Entity::EntityIndex entity, Entity::ActionIndex action, uint32 param) {
+void SavePoints::addData(EntityIndex entity, ActionIndex action, uint32 param) {
 	if (_data.size() >= _savePointsMaxSize)
 		return;
 
@@ -112,7 +112,7 @@ void SavePoints::addData(Entity::EntityIndex entity, Entity::ActionIndex action,
 //////////////////////////////////////////////////////////////////////////
 // Callbacks
 //////////////////////////////////////////////////////////////////////////
-void SavePoints::setCallback(Entity::EntityIndex index, Entity::Callback* callback) {
+void SavePoints::setCallback(EntityIndex index, Entity::Callback* callback) {
 	assert(index < 40);
 
 	// Clear previous callback
@@ -121,13 +121,13 @@ void SavePoints::setCallback(Entity::EntityIndex index, Entity::Callback* callba
 	_callbacks[index] = callback;
 }
 
-Entity::Callback *SavePoints::getCallback(Entity::EntityIndex index) {
+Entity::Callback *SavePoints::getCallback(EntityIndex index) {
 	assert(index < 40);
 
 	return _callbacks[index];
 }
 
-void SavePoints::call(Entity::EntityIndex entity2, Entity::EntityIndex entity1, Entity::ActionIndex action, uint32 param) {
+void SavePoints::call(EntityIndex entity2, EntityIndex entity1, ActionIndex action, uint32 param) {
 	SavePoint point;
 	point.entity1 = entity1;
 	point.action = action;
@@ -139,7 +139,7 @@ void SavePoints::call(Entity::EntityIndex entity2, Entity::EntityIndex entity1, 
 		(*callback)(&point);
 }
 
-void SavePoints::call(Entity::EntityIndex entity2, Entity::EntityIndex entity1, Entity::ActionIndex action, char* param) {
+void SavePoints::call(EntityIndex entity2, EntityIndex entity1, ActionIndex action, char* param) {
 	SavePoint point;
 	point.entity1 = entity1;
 	point.action = action;

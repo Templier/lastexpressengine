@@ -159,7 +159,7 @@ IMPLEMENT_FUNCTION(Train, process, 8) {
 
 		  _data->getCurrentParameters()->param4 -= 1;
 
-		  if (!_data->getCurrentParameters()->param4 && getProgress().jacket == State::kGreenJacket) {
+		  if (!_data->getCurrentParameters()->param4 && getProgress().jacket == kJacketGreen) {
 
 			  getAction()->playAnimation(isDay() ? Action::kCathSmokeDay : Action::kCathSmokeNight);
 			  _data->getCurrentParameters()->param5 = 1;
@@ -229,7 +229,7 @@ label_skip:
 
 	case kActionDefault:
 		_data->getCurrentParameters(8)->param1 = 1;		
-		if (getProgress().chapter < State::kChapter5) {
+		if (getProgress().chapter < kChapter5) {
 			getObjects()->update(Objects::kObjectCompartment5, kEntityTrain, kLocation3, Cursor::kCursorHandKnock, Cursor::kCursorHand);
 			getObjects()->update(Objects::kObjectCompartment6, kEntityTrain, kLocation3, Cursor::kCursorHandKnock, Cursor::kCursorHand);
 			getObjects()->update(Objects::kObjectCompartment7, kEntityTrain, kLocation3, Cursor::kCursorHandKnock, Cursor::kCursorHand);
@@ -289,7 +289,7 @@ label_skip:
 			_data->getCurrentParameters()->param5 = 0;
 		}
 
-		if (getProgress().jacket == State::kOriginalJacket) {
+		if (getProgress().jacket == kJacketOriginal) {
 			if (getEntities()->checkFields4(EntityData::kField495_4, 18)) {
 				_data->setNextCallback(1);
 				call(new ENTITY_SETUP_DEFAULT(Train, setup_savegame), 2, Action::kMertensBloodJacket);

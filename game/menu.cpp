@@ -258,8 +258,8 @@ bool Clock::process() {
 	// 54000 * 24 = 1296000 = 1 day
 
 	// Calculate each sequence index from the current time
-	uint8 hour = (*_time % 1296000) / 54000;
-	uint8 minute = (*_time % 54000) / 900;
+	uint8 hour = (uint8)((*_time % 1296000) / 54000);
+	uint8 minute =  (uint8)((*_time % 54000) / 900);
 	_seqMinutes->setFrame(minute);
 	_seqHour->setFrame((5 * hour + minute / 12) % 60);
 	_seqSun->setFrame((5 * hour + minute / 12) % 120);
@@ -348,7 +348,7 @@ bool TrainLine::process() {
 		uint8 diffFrames = trainCities[index + 1].frame - trainCities[index].frame;
 		uint diffTimeCities = (trainCities[index + 1].time - trainCities[index].time);
 		uint traveledTime = (*_time - trainCities[index].time);
-		frame = trainCities[index].frame + (traveledTime * diffFrames) / diffTimeCities;
+		frame = (uint16)(trainCities[index].frame + (traveledTime * diffFrames) / diffTimeCities);
 	} else {
 		// Exactly on the city
 		frame = trainCities[index].frame;
@@ -481,13 +481,17 @@ bool Menu::handleStartMenuEvent(Common::Event ev) {
 
 	// Process event (check hit box / etc.)
 	static StartMenuAction action;
-	SceneHotspot *hotspost;
-	if (_scene && !_scene->checkHotSpot(ev.mouse, &hotspost)) {
+	SceneHotspot *hotspot;
+	if (_scene && !_scene->checkHotSpot(ev.mouse, &hotspot)) {
 		clearBg(GraphicsManager::kBackgroundOverlay);
 		askForRedraw();
 		return true;
 	}
-	action = (StartMenuAction)hotspost->action;
+
+	if (!hotspot)
+		return true;
+
+	action = (StartMenuAction)hotspot->action;
 
 	bool clicked = (ev.type == Common::EVENT_LBUTTONDOWN);
 	clearBg(GraphicsManager::kBackgroundOverlay);

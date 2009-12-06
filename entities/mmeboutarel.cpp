@@ -79,7 +79,7 @@ IMPLEMENT_FUNCTION(MmeBoutarel, chapter1, 10) {
 		getSavePoints()->addData(kEntityMmeBoutarel, kAction242526416, 0);
 		
 		getObjects()->update(Objects::kObjectCompartmentD, kEntityNone, kLocation2, Cursor::kCursorNormal, Cursor::kCursorNormal);
-		getObjects()->update(Objects::kObject51, kEntityNone, kNoLocation, Cursor::kCursorHandKnock, Cursor::kCursorHand);
+		getObjects()->update(Objects::kObject51, kEntityNone, kLocationNone, Cursor::kCursorHandKnock, Cursor::kCursorHand);
 
 		_data->getData()->field_491 = EntityData::kField491_5790;
 		_data->getData()->field_493 = EntityData::kField493_1;

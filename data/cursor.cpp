@@ -108,7 +108,9 @@ void Icon::setPosition(int x, int y) {
 	_y = y;
 }
 
-void Icon::setBrightness(uint8 brightness) {
+void Icon::setBrightness(uint brightness) {
+	assert(brightness <= 100);
+
 	_brightness = brightness;
 }
 

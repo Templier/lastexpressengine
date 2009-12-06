@@ -60,7 +60,7 @@ public:
 	void startGame();
 	void switchGame();
 
-	void savegame(int param1, Entity::EntityIndex entity, Action::EventIndex event);
+	void savegame(int param1, EntityIndex entity, Action::EventIndex event);
 	void gameOver(int a1, int a2, int scene, bool showScene);
 
 	// Scene
