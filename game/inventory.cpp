@@ -429,7 +429,7 @@ void Inventory::saveLoadWithSerializer(Common::Serializer &s) {
 //////////////////////////////////////////////////////////////////////////
 // Private methods
 //////////////////////////////////////////////////////////////////////////
-Inventory::InventoryItem Inventory::getFirstExaminableItem() {
+InventoryItem Inventory::getFirstExaminableItem() {
 
 	int index = 0;
 	InventoryEntry entry = _entries[index];

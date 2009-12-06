@@ -26,7 +26,6 @@
 #ifndef LASTEXPRESS_ENTITY_H
 #define LASTEXPRESS_ENTITY_H
 
-#include "lastexpress/game/inventory.h"
 #include "lastexpress/game/state.h"
 
 #include "common/serializer.h"
@@ -37,6 +36,7 @@ namespace LastExpress {
 class LastExpressEngine;
 class Sequence;
 struct SavePoint;
+enum InventoryItem;
 	
 //////////////////////////////////////////////////////////////////////////
 // Callbacks
@@ -372,7 +372,7 @@ public:
 		Field493Value field_493;
 		Field495Value field_495;
 		//int16 field_497;
-		Inventory::InventoryItem inventoryItem;
+		InventoryItem inventoryItem;
 		byte field_49A;
 		int16 field_49B;		
 		int16 field_49D;
@@ -400,7 +400,7 @@ public:
 			field_493 = EntityData::kField493_0;
 			field_495 = EntityData::kField495_0;
 			//field_497 = 0;
-			inventoryItem = Inventory::kNoItem;
+			inventoryItem = (InventoryItem)0;
 			field_49A = 0;
 			field_49B = 0;
 			field_49D = 0;

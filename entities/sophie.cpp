@@ -49,7 +49,7 @@ namespace LastExpress {
 		_data->getData()->field_493 = EntityData::kField493_1; \
 		_data->getData()->field_495 = EntityData::kField495_4; \
 		_data->getData()->field_4A5 = 0; \
-		_data->getData()->inventoryItem = Inventory::kNoItem; \
+		_data->getData()->inventoryItem = kNoItem; \
 		break; \
 	}
 
@@ -266,7 +266,7 @@ IMPLEMENT_FUNCTION(Sophie, chapter5, 10){
 		_data->getData()->field_493 = EntityData::kField493_1;
 		_data->getData()->field_495 = EntityData::kField495_5;
 
-		_data->getData()->inventoryItem = Inventory::kNoItem;
+		_data->getData()->inventoryItem = kNoItem;
 		break;
 	}
 }

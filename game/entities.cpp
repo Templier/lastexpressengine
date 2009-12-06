@@ -67,6 +67,7 @@
 #include "lastexpress/entities/vesna.h"
 #include "lastexpress/entities/yasmin.h"
 
+#include "lastexpress/game/inventory.h"
 #include "lastexpress/game/state.h"
 
 #include "lastexpress/helpers.h"
@@ -142,7 +143,7 @@ void Entities::setup(State::ChapterIndex chapter) {
 		// Reset current call, inventory item & draw sequences
 		for (uint i = 1; i < _entities.size(); i++) {
 			_entities[i]->getData()->getData()->current_call = 0;
-			_entities[i]->getData()->getData()->inventoryItem = Inventory::kNoItem;
+			_entities[i]->getData()->getData()->inventoryItem = kNoItem;
 
 			drawSequences((Entity::EntityIndex)i);
 		}
@@ -170,7 +171,7 @@ void Entities::reset(Entity::EntityIndex entity) {
 	EntityData *data = getData(entity);
 
 	data->getData()->current_call = 0;
-	data->getData()->inventoryItem = Inventory::kNoItem;
+	data->getData()->inventoryItem = kNoItem;
 
 	// TODO clear sound cache for entity
 

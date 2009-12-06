@@ -180,7 +180,7 @@ IMPLEMENT_FUNCTION(Mertens, function17, 17) {
 	case kActionDefault: 
 		if (_data->getParameters(8, 0)->param6 || _data->getParameters(8, 1)->hasNonNullParameter()) {
 
-			getInventory()->setLocationAndProcess(Inventory::kItem7, kLocation1);
+			getInventory()->setLocationAndProcess(kItem7, kLocation1);
 			
 			_data->setNextCallback(1);
 			call(new ENTITY_SETUP_DEFAULT(Mertens, setup_function10), 3, 540);
@@ -190,13 +190,13 @@ IMPLEMENT_FUNCTION(Mertens, function17, 17) {
 			if (_data->getParameters(8, 0)->param8) {
 				
 				getEntities()->drawSequence(kEntityMertens, "601K");
-				getLogic()->loadSceneFromItem(Inventory::kItem7);
+				getLogic()->loadSceneFromItem(kItem7);
 
 				_data->getParameters(8, 2)->param1 = 1;
 				CALL_PREVIOUS_SAVEPOINT(kEntityMertens)
 
 			} else {	// Mertens sits on his chair at the back of the train
-				if (getInventory()->hasItem(Inventory::kPassengerList) || _data->getParameters(8, 0)->param2)
+				if (getInventory()->hasItem(kPassengerList) || _data->getParameters(8, 0)->param2)
 					getEntities()->storeSequenceName(kEntityMertens, "601A");
 				else {	// Got the passenger list, Mertens is looking for it before sitting
 					_data->getParameters(8, 0)->param2 = 1;
@@ -204,7 +204,7 @@ IMPLEMENT_FUNCTION(Mertens, function17, 17) {
 					getEntities()->storeSequenceName(kEntityMertens, "601D");
 				}
 
-				getLogic()->loadSceneFromItem(Inventory::kItem7);
+				getLogic()->loadSceneFromItem(kItem7);
 
 				if (getEntities()->checkFields4(EntityData::kField495_3, 68)) {
 					getSound()->playSound(kEntityNone, "CON1110");
@@ -236,7 +236,7 @@ IMPLEMENT_FUNCTION(Mertens, function17, 17) {
 
 		case 3:
 			if (!_data->getParameters(8, 0)->param3
-			 && !getInventory()->hasItem(Inventory::kPassengerList)
+			 && !getInventory()->hasItem(kPassengerList)
 			 && _data->getParameters(8, 0)->param2) {
 				 getSavePoints()->push(kEntityMertens, kEntityVerges, kAction158617345);
 				 _data->getParameters(8, 0)->param3 = 1;
@@ -245,7 +245,7 @@ IMPLEMENT_FUNCTION(Mertens, function17, 17) {
 			getEntities()->drawSequence(kEntityMertens, "601B");
 
 			_data->getParameters(8, 0)->param1 = 0;
-			_data->getData()->inventoryItem = Inventory::kNoItem;
+			_data->getData()->inventoryItem = kNoItem;
 
 			getSavePoints()->push(kEntityMertens, kEntityMertens, kAction17);
 
@@ -340,7 +340,7 @@ IMPLEMENT_FUNCTION(Mertens, chapter2, 43) {
 		_data->getData()->field_491 = EntityData::kField491_1500;
 		_data->getData()->field_493 = EntityData::kField493_0;
 		_data->getData()->field_495 = EntityData::kField495_3;
-		_data->getData()->inventoryItem = Inventory::kNoItem;
+		_data->getData()->inventoryItem = kNoItem;
 
 		_data->getParameters(8, 0)->param6 = 0;
 		_data->getParameters(8, 0)->param8 = 0;
@@ -379,7 +379,7 @@ IMPLEMENT_FUNCTION(Mertens, chapter3, 45) {
 		_data->getData()->field_491 = EntityData::kField491_1500;
 		_data->getData()->field_493 = EntityData::kField493_0;
 		_data->getData()->field_495 = EntityData::kField495_3;
-		_data->getData()->inventoryItem = Inventory::kNoItem;
+		_data->getData()->inventoryItem = kNoItem;
 
 		_data->getParameters(8, 0)->param6 = 0;
 		_data->getParameters(8, 0)->param8 = 0;
@@ -422,7 +422,7 @@ IMPLEMENT_FUNCTION(Mertens, chapter4, 47) {
 		_data->getData()->field_491 = EntityData::kField491_1500;
 		_data->getData()->field_493 = EntityData::kField493_0;
 		_data->getData()->field_495 = EntityData::kField495_3;
-		_data->getData()->inventoryItem = Inventory::kNoItem;
+		_data->getData()->inventoryItem = kNoItem;
 
 		_data->getParameters(8, 0)->param6 = 0;
 		_data->getParameters(8, 0)->param8 = 0;
@@ -464,7 +464,7 @@ IMPLEMENT_FUNCTION(Mertens, chapter5, 50) {
 		_data->getData()->field_491 = EntityData::kField491_3969;
 		_data->getData()->field_493 = EntityData::kField493_1;
 		_data->getData()->field_495 = EntityData::kField495_5;
-		_data->getData()->inventoryItem = Inventory::kNoItem;
+		_data->getData()->inventoryItem = kNoItem;
 		break;
 	}
 }

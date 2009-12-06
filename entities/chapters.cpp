@@ -81,25 +81,25 @@ IMPLEMENT_FUNCTION(Chapters, chapter1_init, 7) {
 	getState()->time = 1061100;
 	getState()->timeDelta = 0;
 	getProgress().field_50 = 1;
-	getProgress().portrait = Inventory::kPortraitOriginal;
+	getProgress().portrait = kPortraitOriginal;
 	getProgress().field_18 = 1;
 	getProgress().field_7C = 1;
 
 	// Setup inventory & items location
-	getInventory()->addItem(Inventory::kTelegram);
-	getInventory()->addItem(Inventory::kArticle);
+	getInventory()->addItem(kTelegram);
+	getInventory()->addItem(kArticle);
 
-	getInventory()->setLocationAndProcess(Inventory::kScarf, kLocation1);
-	getInventory()->setLocationAndProcess(Inventory::kParchemin, kLocation1);
-	getInventory()->setLocationAndProcess(Inventory::kGreenJacket, kLocation1);
-	getInventory()->setLocationAndProcess(Inventory::kCorpse, kLocation1);
-	getInventory()->setLocationAndProcess(Inventory::kPassengerList, kLocation1);
-	getInventory()->setLocationAndProcess(Inventory::kItem5, kLocation1);
-	getInventory()->setLocationAndProcess(Inventory::kItem7, kLocation1);
-	getInventory()->setLocationAndProcess(Inventory::kItem3, kLocation1);
-	getInventory()->setLocationAndProcess(Inventory::kMatch, kLocation1);
-	getInventory()->setLocationAndProcess(Inventory::kItem22, kLocation1);
-	getInventory()->setLocationAndProcess(Inventory::kPaper, kLocation1);
+	getInventory()->setLocationAndProcess(kScarf, kLocation1);
+	getInventory()->setLocationAndProcess(kParchemin, kLocation1);
+	getInventory()->setLocationAndProcess(kGreenJacket, kLocation1);
+	getInventory()->setLocationAndProcess(kCorpse, kLocation1);
+	getInventory()->setLocationAndProcess(kPassengerList, kLocation1);
+	getInventory()->setLocationAndProcess(kItem5, kLocation1);
+	getInventory()->setLocationAndProcess(kItem7, kLocation1);
+	getInventory()->setLocationAndProcess(kItem3, kLocation1);
+	getInventory()->setLocationAndProcess(kMatch, kLocation1);
+	getInventory()->setLocationAndProcess(kItem22, kLocation1);
+	getInventory()->setLocationAndProcess(kPaper, kLocation1);
 
 	getObjects()->update(Objects::kObjectCompartment1, kEntityNone, kNoLocation, Cursor::kCursorHandKnock, Cursor::kCursorHand);
 	getObjects()->update(Objects::kObjectOutside, kEntityNone, kNoLocation, Cursor::kCursorKeepValue, Cursor::kCursorKeepValue);

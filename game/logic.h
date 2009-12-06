@@ -70,7 +70,7 @@ public:
 	void loadSceneFromObject(Objects::ObjectIndex object);
 	void loadSceneFromObject2(Objects::ObjectIndex object);
 	void loadSceneFromData(int param1, int param2, int param3);
-	void loadSceneFromItem(Inventory::InventoryItem item);
+	void loadSceneFromItem(InventoryItem item);
 
 	void updateTrainClock();
 	void updateCursor();

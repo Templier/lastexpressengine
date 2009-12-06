@@ -273,7 +273,7 @@ void Logic::processScene() {
 	getState()->sceneUseBackup = 0;
 	
 	// Select item if needed
-	Inventory::InventoryItem item = getInventory()->getFirstExaminableItem();
+	InventoryItem item = getInventory()->getFirstExaminableItem();
 	if (item && getInventory()->getSelectedItem() == item)
 		getInventory()->selectItem(item);
 
@@ -331,7 +331,7 @@ void Logic::loadSceneFromData(int param1, int param2, int param3) {
 	// loadScene(index);
 }
 
-void Logic::loadSceneFromItem(Inventory::InventoryItem item) {
+void Logic::loadSceneFromItem(InventoryItem item) {
 	error("Logic::loadSceneFromItem is not implemented!");
 }
 
@@ -349,7 +349,7 @@ void Logic::loadSceneFromItem(Inventory::InventoryItem item) {
 	getObjects()->get((Objects::ObjectIndex)scene->getHeader()->param1).location
 
 #define GET_ITEM_LOCATION(scene, parameter) \
-	getInventory()->getEntry((Inventory::InventoryItem)scene->getHeader()->parameter)->location
+	getInventory()->getEntry((InventoryItem)scene->getHeader()->parameter)->location
 
 void Logic::preProcessScene(uint32 *index) {
 
@@ -488,7 +488,7 @@ void Logic::preProcessScene(uint32 *index) {
 			if (scene->getHeader()->param2 >= 32)
 				break;
 
-			byte location = getInventory()->getEntry((Inventory::InventoryItem)scene->getHeader()->param2)->location;
+			byte location = getInventory()->getEntry((InventoryItem)scene->getHeader()->param2)->location;
 			if (!location)
 				break;
 
@@ -585,7 +585,7 @@ void Logic::postProcessScene(uint32 *index) {
 
 	case Scene::kTypeLoadBeetleSequences:
 		if ((getProgress().chapter == State::kChapter2 || getProgress().chapter == State::kChapter3)
-		  && getInventory()->getEntry(Inventory::kBeetle)->location == 3) {
+		  && getInventory()->getEntry(kBeetle)->location == 3) {
 			if (!_beetle->isLoaded())
 				_beetle->load();
 		}		
@@ -643,23 +643,23 @@ void Logic::switchChapter() {
 		break;
 
 	case State::kChapter1:
-		getInventory()->addItem(Inventory::kParchemin);
-		getInventory()->addItem(Inventory::kMatchBox);
+		getInventory()->addItem(kParchemin);
+		getInventory()->addItem(kMatchBox);
 		// TODO call game logic
 		break;
 
 	case State::kChapter2:
-		getInventory()->addItem(Inventory::kScarf);
+		getInventory()->addItem(kScarf);
 		// TODO call game logic
 		break;
 
 	case State::kChapter3:
-		getInventory()->getEntry(Inventory::kFirebird)->location = kLocation4;
-		getInventory()->getEntry(Inventory::kFirebird)->has_item = 0;
-		getInventory()->getEntry(Inventory::kItem11)->location = kLocation1;
+		getInventory()->getEntry(kFirebird)->location = kLocation4;
+		getInventory()->getEntry(kFirebird)->has_item = 0;
+		getInventory()->getEntry(kItem11)->location = kLocation1;
 
-		getInventory()->addItem(Inventory::kWhistle);
-		getInventory()->addItem(Inventory::kKey);
+		getInventory()->addItem(kWhistle);
+		getInventory()->addItem(kKey);
 		// TODO call game logic
 		break;
 
