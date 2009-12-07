@@ -98,8 +98,8 @@ IMPLEMENT_FUNCTION(Verges, chapter1, 18) {
 		getSavePoints()->addData(kEntityVerges, kAction201431954, 5);
 		getSavePoints()->addData(kEntityVerges, kAction168187490, 6);
 
-		getObjects()->update(Objects::kObject104, kEntityVerges, kLocationNone, Cursor::kCursorNormal, Cursor::kCursorNormal);
-		getObjects()->update(Objects::kObject105, kEntityVerges, kLocationNone, Cursor::kCursorNormal, Cursor::kCursorNormal);
+		getObjects()->update(kObject104, kEntityVerges, kLocationNone, kCursorNormal, kCursorNormal);
+		getObjects()->update(kObject105, kEntityVerges, kLocationNone, kCursorNormal, kCursorNormal);
 
 		_data->getData()->field_491 = EntityData::kField491_5000;
 		_data->getData()->field_493 = EntityData::kField493_0;

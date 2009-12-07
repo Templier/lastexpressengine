@@ -26,7 +26,7 @@
 #ifndef LASTEXPRESS_ENTITY_H
 #define LASTEXPRESS_ENTITY_H
 
-#include "lastexpress/game/shared.h"
+#include "lastexpress/shared.h"
 
 #include "common/serializer.h"
 #include "common/func.h"
@@ -65,7 +65,7 @@ struct SavePoint;
 
 #define DECLARE_FUNCTION_SEQ(name) \
 	void name(SavePoint *savepoint); \
-	void setup_##name(char* seq1, int param2 = 0, int param3 = 0, char* seq2 = 0);
+	void setup_##name(const char* seq1, int param2 = 0, int param3 = 0, const char* seq2 = 0);
 
 //////////////////////////////////////////////////////////////////////////
 // Call function
@@ -115,7 +115,7 @@ struct SavePoint;
 	void class::name(SavePoint *savepoint)
 
 #define IMPLEMENT_FUNCTION_SEQ(class, name, index) \
-	void class::setup_##name(char* seq1, int param2, int param3, char* seq2) { \
+	void class::setup_##name(const char* seq1, int param2, int param3, const char* seq2) { \
 		BEGIN_SETUP(class, name, index) \
 		strncpy((char *)&((EntityData::EntityParametersSeq*)_data->getCurrentParameters())->seq1, seq1, 12); \
 		END_SETUP() \
@@ -123,7 +123,7 @@ struct SavePoint;
 	void class::name(SavePoint *savepoint)
 	
 #define IMPLEMENT_FUNCTION_SEQ_INT(class, name, index) \
-	void class::setup_##name(char* seq1, int param2, int param3, char* seq2) { \
+	void class::setup_##name(const char* seq1, int param2, int param3, const char* seq2) { \
 		BEGIN_SETUP(class, name, index) \
 		EntityData::EntityParametersSeq *params = (EntityData::EntityParametersSeq*)_data->getCurrentParameters(); \
 		strncpy((char *)&params->seq1, seq1, 12); \
@@ -133,7 +133,7 @@ struct SavePoint;
 	void class::name(SavePoint *savepoint)
 
 #define IMPLEMENT_FUNCTION_SEQ2(class, name, index) \
-	void class::setup_##name(char* seq1, int param2, int param3, char* seq2) { \
+	void class::setup_##name(const char* seq1, int param2, int param3, const char* seq2) { \
 		BEGIN_SETUP(class, name, index) \
 		EntityData::EntityParametersSeq *params = (EntityData::EntityParametersSeq*)_data->getCurrentParameters(); \
 		strncpy((char *)&params->seq1, seq1, 12); \
@@ -186,7 +186,7 @@ struct SavePoint;
 		CALL_PREVIOUS_SAVEPOINT(entity) \
 		break; \
 	case kActionDefault: \
-		save(entity, _data->getCurrentParameters()->param1, (Action::EventIndex)_data->getCurrentParameters()->param2); \
+		save(entity, _data->getCurrentParameters()->param1, (EventIndex)_data->getCurrentParameters()->param2); \
 		CALL_PREVIOUS_SAVEPOINT(entity) \
 		break; \
 	}

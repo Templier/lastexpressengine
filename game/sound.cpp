@@ -29,6 +29,7 @@
 
 #include "lastexpress/game/action.h"
 #include "lastexpress/game/entities.h"
+#include "lastexpress/game/inventory.h"
 #include "lastexpress/game/logic.h"
 #include "lastexpress/game/state.h"
 
@@ -208,67 +209,67 @@ void Sound::playDialog(EntityIndex entity, EntityIndex entityDialog, int a3, byt
 const char *Sound::getDialogName(EntityIndex entity) {
 	switch (entity) {
 	case kEntityAnna:
-		if (getEvent(Action::kAnnaDialogGoToJerusalem))
+		if (getEvent(kEventAnnaDialogGoToJerusalem))
 			return "XANN12";
 
-		if (getEvent(Action::kLocomotiveRestartTrain))
+		if (getEvent(kEventLocomotiveRestartTrain))
 			return "XANN11";
 
-		if (getEvent(Action::kAnnaBagageTies) || getEvent(Action::kAnnaBagageTies2) || getEvent(Action::kAnnaBagageTies3) || getEvent(Action::kAnnaBagageTies4))
+		if (getEvent(kEventAnnaBagageTies) || getEvent(kEventAnnaBagageTies2) || getEvent(kEventAnnaBagageTies3) || getEvent(kEventAnnaBagageTies4))
 			return "XANN10";
 
-		if (getEvent(Action::kAnnaTired) || getEvent(Action::kAnnaTiredKiss))
+		if (getEvent(kEventAnnaTired) || getEvent(kEventAnnaTiredKiss))
 			return "XANN9";
 
-		if (getEvent(Action::kAnnaBagageArgument))
+		if (getEvent(kEventAnnaBagageArgument))
 			return "XANN8";
 
-		if (getEvent(Action::kKronosVisit))
+		if (getEvent(kEventKronosVisit))
 			return "XANN7";
 
-		if (getEvent(Action::kAbbotIntroduction))
+		if (getEvent(kEventAbbotIntroduction))
 			return "XANN6A";
 
-		if (getEvent(Action::kVassiliSeizure))
+		if (getEvent(kEventVassiliSeizure))
 			return "XANN6";
 
-		if (getEvent(Action::kAugustPresentAnna) || getEvent(Action::kAugustPresentAnnaFirstIntroduction))
+		if (getEvent(kEventAugustPresentAnna) || getEvent(kEventAugustPresentAnnaFirstIntroduction))
 			return "XANN5";
 
 		if (getProgress().field_60)
 			return "XANN4";
 
-		if (getEvent(Action::kAnnaGiveScarf) || getEvent(Action::kAnnaGiveScarfDiner) || getEvent(Action::kAnnaGiveScarfSalon)
-		 || getEvent(Action::kAnnaGiveScarfMonogram) || getEvent(Action::kAnnaGiveScarfDinerMonogram) || getEvent(Action::kAnnaGiveScarfSalonMonogram))
+		if (getEvent(kEventAnnaGiveScarf) || getEvent(kEventAnnaGiveScarfDiner) || getEvent(kEventAnnaGiveScarfSalon)
+		 || getEvent(kEventAnnaGiveScarfMonogram) || getEvent(kEventAnnaGiveScarfDinerMonogram) || getEvent(kEventAnnaGiveScarfSalonMonogram))
 			return "XANN3";
 
-		if (getEvent(Action::kDinerMindJoin))
+		if (getEvent(kEventDinerMindJoin))
 			return "XANN2";
 
-		if (getEvent(Action::kGotALight) || getEvent(Action::kGotALightD))
+		if (getEvent(kEventGotALight) || getEvent(kEventGotALightD))
 			return "XANN1";
 
 		break;
 
 	case kEntityAugust:
-		if (getEvent(Action::kAugustTalkCigar))
+		if (getEvent(kEventAugustTalkCigar))
 			return "XAUG6";
 
-		if (getEvent(Action::kAugustBringBriefcase))
+		if (getEvent(kEventAugustBringBriefcase))
 			return "XAUG5";
 
 		// Getting closer to Vienna...
-		if (getState()->time > 2200500 && !getEvent(Action::kAugustMerchandise))
+		if (getState()->time > 2200500 && !getEvent(kEventAugustMerchandise))
 			return "XAUG4A";
 
-		if (getEvent(Action::kAugustMerchandise))
+		if (getEvent(kEventAugustMerchandise))
 			return "XAUG4";
 
-		if (getEvent(Action::kDinerAugust) || getEvent(Action::kDinerAugustAlexeiBackground) || getEvent(Action::kMeetAugustTylerCompartment)
-		 || getEvent(Action::kMeetAugustTylerCompartmentBed) || getEvent(Action::kMeetAugustHisCompartment) || getEvent(Action::kMeetAugustHisCompartmentBed))
+		if (getEvent(kEventDinerAugust) || getEvent(kEventDinerAugustAlexeiBackground) || getEvent(kEventMeetAugustTylerCompartment)
+		 || getEvent(kEventMeetAugustTylerCompartmentBed) || getEvent(kEventMeetAugustHisCompartment) || getEvent(kEventMeetAugustHisCompartmentBed))
 			return "XAUG3";
 
-		if (getEvent(Action::kAugustPresentAnnaFirstIntroduction))
+		if (getEvent(kEventAugustPresentAnnaFirstIntroduction))
 			return "XAUG2";
 
 		if (getProgress().event_mertens_august_waiting)
@@ -277,13 +278,13 @@ const char *Sound::getDialogName(EntityIndex entity) {
 		break;
 
 	case kEntityTatiana:
-		if (getEvent(Action::kTatianaTylerCompartment))
+		if (getEvent(kEventTatianaTylerCompartment))
 			return "XTAT6";
 
-		if (getEvent(Action::kTatianaCompartmentStealEgg))
+		if (getEvent(kEventTatianaCompartmentStealEgg))
 			return "XTAT5";
 
-		if (getEvent(Action::kTatianaGivePoem))
+		if (getEvent(kEventTatianaGivePoem))
 			return "XTAT3";
 
 		if (getProgress().field_64)
@@ -292,16 +293,16 @@ const char *Sound::getDialogName(EntityIndex entity) {
 		break;
 
 	case kEntityVassili:
-		if (getEvent(Action::kCathFreePassengers))
+		if (getEvent(kEventCathFreePassengers))
 			return "XVAS4";
 
-		if (getEvent(Action::kVassiliCompartmentStealEgg))
+		if (getEvent(kEventVassiliCompartmentStealEgg))
 			return "XVAS3";
 
-		if (getEvent(Action::kAbbotIntroduction))
+		if (getEvent(kEventAbbotIntroduction))
 			return "XVAS2";
 
-		if (getEvent(Action::kVassiliSeizure))
+		if (getEvent(kEventVassiliSeizure))
 			return "XVAS1A";
 
 		if (getProgress().field_64)
@@ -322,46 +323,46 @@ const char *Sound::getDialogName(EntityIndex entity) {
 		if (getProgress().field_68)
 			return "XALX4";
 
-		if (getEvent(Action::kAlexeiSalonPoem))
+		if (getEvent(kEventAlexeiSalonPoem))
 			return "XALX3";
 
-		if (getEvent(Action::kAlexeiSalonVassili))
+		if (getEvent(kEventAlexeiSalonVassili))
 			return "XALX2";
 
-		if (getEvent(Action::kAlexeiDiner) || getEvent(Action::kAlexeiDinerOriginalJacket))
+		if (getEvent(kEventAlexeiDiner) || getEvent(kEventAlexeiDinerOriginalJacket))
 			return "XALX1";
 
 		break;
 
 	case kEntityAbbot:
-		if (getEvent(Action::kAbbotDrinkDefuse))
+		if (getEvent(kEventAbbotDrinkDefuse))
 			return "XABB4";
 
-		if (getEvent(Action::kAbbotInvitationDrink) || getEvent(Action::kDefuseBomb))
+		if (getEvent(kEventAbbotInvitationDrink) || getEvent(kEventDefuseBomb))
 			return "XABB3";
 
-		if (getEvent(Action::kAbbotWrongCompartment) || getEvent(Action::kAbbotWrongCompartmentBed))
+		if (getEvent(kEventAbbotWrongCompartment) || getEvent(kEventAbbotWrongCompartmentBed))
 			return "XABB2";
 
-		if (getEvent(Action::kAbbotIntroduction))
+		if (getEvent(kEventAbbotIntroduction))
 			return "XABB1";
 
 		break;
 
 	case kEntityMilos:
-		if (getEvent(Action::kLocomotiveMilos) || getEvent(Action::kLocomotiveMilosNight))
+		if (getEvent(kEventLocomotiveMilos) || getEvent(kEventLocomotiveMilosNight))
 			return "XMIL5";
 
-		if (getEvent(Action::kMilosCompartmentVisitTyler) && (getProgress().chapter == kChapter3 || getProgress().chapter == kChapter4))
+		if (getEvent(kEventMilosCompartmentVisitTyler) && (getProgress().chapter == kChapter3 || getProgress().chapter == kChapter4))
 			return "XMIL4";
 
-		if (getEvent(Action::kMilosCorridorThanks) || getProgress().chapter == kChapter5)
+		if (getEvent(kEventMilosCorridorThanks) || getProgress().chapter == kChapter5)
 			return "XMIL3";
 
-		if (getEvent(Action::kMilosCompartmentVisitAugust))
+		if (getEvent(kEventMilosCompartmentVisitAugust))
 			return "XMIL2";
 
-		if (getEvent(Action::kMilosTylerCompartmentDefeat))
+		if (getEvent(kEventMilosTylerCompartmentDefeat))
 			return "XMIL1";
 
 		break;
@@ -376,23 +377,23 @@ const char *Sound::getDialogName(EntityIndex entity) {
 		break;
 
 	case kEntityKronos:
-		if (getEvent(Action::kKronosReturnBriefcase))
+		if (getEvent(kEventKronosReturnBriefcase))
 			return "XKRO6";
 
-		if (getEvent(Action::kKronosBringEggCeiling) || getEvent(Action::kKronosBringEgg))
+		if (getEvent(kEventKronosBringEggCeiling) || getEvent(kEventKronosBringEgg))
 			return "XKRO5";
 
-		if (getEvent(Action::kKronosConversation) || getEvent(Action::kKronosConversationFirebird)) {
+		if (getEvent(kEventKronosConversation) || getEvent(kEventKronosConversationFirebird)) {
 			ObjectLocation location = getInventory()->getEntry(kFirebird)->location;
 			if (location != kLocation6 && location != kLocation5 && location != kLocation2 && location != kLocation1)
 				return "XKRO4A";
 		}
 
-		if (getEvent(Action::kKronosConversationFirebird))
+		if (getEvent(kEventKronosConversationFirebird))
 			return "XKRO4";
 
-		if (getEvent(Action::kKronosConversation)) {
-			if (!getEvent(Action::kMilosCompartmentVisitAugust))	
+		if (getEvent(kEventKronosConversation)) {
+			if (!getEvent(kEventMilosCompartmentVisitAugust))	
 				return "XKRO3";
 			else
 				return "XKRO2";
@@ -408,8 +409,8 @@ const char *Sound::getDialogName(EntityIndex entity) {
 			return "XFRA3";
 
 		if (getProgress().field_A0 
-		 || getEvent(Action::kFrancoisWhistle) || getEvent(Action::kFrancoisWhistleD)
-		 || getEvent(Action::kFrancoisWhistleNight) || getEvent(Action::kFrancoisWhistleNightD))
+		 || getEvent(kEventFrancoisWhistle) || getEvent(kEventFrancoisWhistleD)
+		 || getEvent(kEventFrancoisWhistleNight) || getEvent(kEventFrancoisWhistleNightD))
 			return "XFRA2";
 
 		if (getState()->time > 1075500) // Between Paris and Epernay
@@ -493,7 +494,7 @@ const char *Sound::getDialogName(EntityIndex entity) {
 		break;
 
 	case kEntityChapters:
-		if (getEvent(Action::kCathDream) || getEvent(Action::kCathWakingUp))
+		if (getEvent(kEventCathDream) || getEvent(kEventCathWakingUp))
 			return "XTYL3";
 		
 		return "XTYL1";

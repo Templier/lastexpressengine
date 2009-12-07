@@ -28,17 +28,17 @@
 
 #include "lastexpress/data/sequence.h"
 
-#include "lastexpress/savegame.h"
+#include "lastexpress/shared.h"
 
 #include "common/events.h"
 
 namespace LastExpress {
 
 class LastExpressEngine;
+class Scene;
 
 class Clock;
 class TrainLine;
-class Scene;
 
 class Menu {
 public:

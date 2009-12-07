@@ -67,6 +67,10 @@
 #include "lastexpress/entities/vesna.h"
 #include "lastexpress/entities/yasmin.h"
 
+// Game
+#include "lastexpress/game/savepoint.h"
+#include "lastexpress/game/state.h"
+
 #include "lastexpress/helpers.h"
 #include "lastexpress/lastexpress.h"
 
@@ -358,7 +362,7 @@ bool Entities::checkFields1(EntityIndex entity, EntityData::Field495Value field4
 	return (getData(entity)->getData()->field_491 == field491 && getData(entity)->getData()->field_493 == EntityData::kField493_1 && getData(entity)->getData()->field_495 == field495);
 }
 
-bool Entities::checkFields2(Objects::ObjectIndex object) {
+bool Entities::checkFields2(ObjectIndex object) {
 
 	EntityData::Field491Value field491 = EntityData::kField491_0;
 	EntityData::Field495Value field495 = EntityData::kField495_0;	
@@ -367,50 +371,50 @@ bool Entities::checkFields2(Objects::ObjectIndex object) {
 	default:
 		return false;
 
-	case Objects::kObjectCompartment1:
-	case Objects::kObjectCompartment2:
-	case Objects::kObjectCompartment3:
-	case Objects::kObjectCompartment4:
-	case Objects::kObjectCompartment5:
-	case Objects::kObjectCompartment6:
-	case Objects::kObjectCompartment7:
-	case Objects::kObjectCompartment8:
+	case kObjectCompartment1:
+	case kObjectCompartment2:
+	case kObjectCompartment3:
+	case kObjectCompartment4:
+	case kObjectCompartment5:
+	case kObjectCompartment6:
+	case kObjectCompartment7:
+	case kObjectCompartment8:
 		field491 = field491_values[object];
 		field495 = EntityData::kField495_3;
 		if (checkFields1(kEntityNone, field495, field491))
 			return false;
 		break;
 
-	case Objects::kObjectHandleBathroom:
-	case Objects::kObjectHandleInsideBathroom:
-	case Objects::kObjectKitchen:
-	case Objects::kObject20:
-	case Objects::kObject21:
-	case Objects::kObject22:
+	case kObjectHandleBathroom:
+	case kObjectHandleInsideBathroom:
+	case kObjectKitchen:
+	case kObject20:
+	case kObject21:
+	case kObject22:
 		field491 = field491_values[object-17];
 		field495 = EntityData::kField495_3;
 		break;
 
-	case Objects::kObjectCompartmentA:
-	case Objects::kObjectCompartmentB:
-	case Objects::kObjectCompartmentC:
-	case Objects::kObjectCompartmentD:
-	case Objects::kObjectCompartmentE:
-	case Objects::kObjectCompartmentF:
-	case Objects::kObjectCompartmentG:
-	case Objects::kObjectCompartmentH:
+	case kObjectCompartmentA:
+	case kObjectCompartmentB:
+	case kObjectCompartmentC:
+	case kObjectCompartmentD:
+	case kObjectCompartmentE:
+	case kObjectCompartmentF:
+	case kObjectCompartmentG:
+	case kObjectCompartmentH:
 		field491 = field491_values[object-32];
 		field495 = EntityData::kField495_4;
 		if (checkFields1(kEntityNone, field495, field491))
 			return false;
 		break;
 
-	case Objects::kObject48:
-	case Objects::kObject49:
-	case Objects::kObject50:
-	case Objects::kObject51:
-	case Objects::kObject52:
-	case Objects::kObject53:
+	case kObject48:
+	case kObject49:
+	case kObject50:
+	case kObject51:
+	case kObject52:
+	case kObject53:
 		field491 = field491_values[object-48];
 		field495 = EntityData::kField495_4;
 		break;

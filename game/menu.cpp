@@ -27,6 +27,7 @@
 
 // Data
 #include "lastexpress/data/animation.h"
+#include "lastexpress/data/cursor.h"
 #include "lastexpress/data/snd.h"
 #include "lastexpress/data/scene.h"
 
@@ -37,6 +38,7 @@
 #include "lastexpress/helpers.h"
 #include "lastexpress/lastexpress.h"
 #include "lastexpress/resource.h"
+#include "lastexpress/savegame.h"
 
 #define getNextGameId() (GameId)((getLogic()->getGameId() + 1) % 6)
 #define drawSeqFrame(drawable, index, type) { \
@@ -431,7 +433,7 @@ void Menu::showMenu() {
 		} else {
 			playMusicStream("mus018.snd");
 
-			showScene(65, GraphicsManager::kBackgroundC);
+			showScene(kSceneMenu, GraphicsManager::kBackgroundC);
 			askForRedraw(); redrawScreen();
 			//_engine->_system->delayMillis(1000);
 
@@ -440,7 +442,7 @@ void Menu::showMenu() {
 	}
 
 	// Set Cursor type
-	_engine->getCursor()->setStyle(Cursor::kCursorNormal);
+	_engine->getCursor()->setStyle(kCursorNormal);
 	_engine->getCursor()->show(true);
 
 	// Init time

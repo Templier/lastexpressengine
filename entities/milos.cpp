@@ -85,8 +85,8 @@ IMPLEMENT_FUNCTION(Milos, chapter1, 12) {
 		getSavePoints()->addData(kEntityMilos, kAction157691176, 0);
 		getSavePoints()->addData(kEntityMilos, kAction208228224, 2);
 
-		getObjects()->update(Objects::kObjectCompartmentG, kEntityNone, kLocation3, Cursor::kCursorHandKnock, Cursor::kCursorHand);
-		getObjects()->update(Objects::kObject46, kEntityNone, kLocationNone, Cursor::kCursorKeepValue, Cursor::kCursorKeepValue);
+		getObjects()->update(kObjectCompartmentG, kEntityNone, kLocation3, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObject46, kEntityNone, kLocationNone, kCursorKeepValue, kCursorKeepValue);
 
 		_data->getData()->field_491 = EntityData::kField491_4689;
 		_data->getData()->field_493 = EntityData::kField493_1;

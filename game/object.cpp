@@ -41,7 +41,7 @@ const Objects::Object Objects::get(ObjectIndex index) {
 	return _objects[index];
 }
 
-void Objects::update(ObjectIndex index, EntityIndex entity, ObjectLocation location, Cursor::CursorStyle cursor, Cursor::CursorStyle cursor2) {
+void Objects::update(ObjectIndex index, EntityIndex entity, ObjectLocation location, CursorStyle cursor, CursorStyle cursor2) {
 	if (index >= 128)
 		return;
 
@@ -54,10 +54,10 @@ void Objects::update(ObjectIndex index, EntityIndex entity, ObjectLocation locat
 	object->entity = entity;
 	object->location = location;
 	
-	if (cursor != Cursor::kCursorKeepValue || cursor2 != Cursor::kCursorKeepValue) {
-		if (cursor != Cursor::kCursorKeepValue)
+	if (cursor != kCursorKeepValue || cursor2 != kCursorKeepValue) {
+		if (cursor != kCursorKeepValue)
 			object->cursor = cursor;
-		if (cursor2 != Cursor::kCursorKeepValue)
+		if (cursor2 != kCursorKeepValue)
 			object->cursor2 = cursor2;
 
 		getLogic()->updateCursor();

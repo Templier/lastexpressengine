@@ -190,11 +190,11 @@ Common::Error LastExpressEngine::run() {
 
 				// DEBUG: cursors
 				if (ev.kbd.keycode == Common::KEYCODE_PLUS || ev.kbd.keycode == Common::KEYCODE_KP_PLUS)
-					if (_cursor->setStyle((Cursor::CursorStyle)(style + 1)))
+					if (_cursor->setStyle((CursorStyle)(style + 1)))
 						style++;
 
 				if (ev.kbd.keycode == Common::KEYCODE_MINUS || ev.kbd.keycode == Common::KEYCODE_KP_MINUS)
-					if (_cursor->setStyle((Cursor::CursorStyle)(style - 1)))
+					if (_cursor->setStyle((CursorStyle)(style - 1)))
 						style--;
 
 				// DEBUG: time

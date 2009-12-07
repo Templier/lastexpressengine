@@ -354,6 +354,7 @@
     <ClInclude Include="..\..\engines\lastexpress\lastexpress.h" />
     <ClInclude Include="..\..\engines\lastexpress\resource.h" />
     <ClInclude Include="..\..\engines\lastexpress\savegame.h" />
+    <ClInclude Include="..\..\engines\lastexpress\shared.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\engines\lastexpress\module.mk" />

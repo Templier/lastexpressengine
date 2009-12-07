@@ -41,73 +41,14 @@
 
 #include "lastexpress/drawable.h"
 
+#include "lastexpress/shared.h"
+
 #include "common/stream.h"
 
 namespace LastExpress {
 
 class Cursor {
 public:
-	enum CursorStyle {
-		kCursorNormal,
-		kCursorForward,
-		kCursorBackward,
-		kCursorTurnRight,
-		kCursorTurnLeft,
-		kCursorUp,
-		kCursorDown,
-		kCursorLeft,
-		kCursorRight,
-		kCursorHand,
-		kCursorHandKnock, // 10
-		kCursorMagnifier,
-		kCursorHandPointer,
-		kCursorSleep,
-		kCursorTalk,
-		kCursorTalk2,     // Need better name
-
-		// Items
-		kCursorMatchBox,
-		kCursorTelegram,
-		kCursorPassengerList,
-		kCursorArticle,
-		kCursorScarf,     // 20
-		kCursorPaper,
-		kCursorParchemin,
-		kCursorMatch,
-		kCursorWhistle,
-		kCursorKey,
-		kCursorBomb,
-		kCursorFirebird,
-		kCursorBriefcase,
-		kCursorCorpse,
-
-		// Combat
-		kCursorPunchLeft, // 30
-		kCursorPunchRight,
-
-		// Portraits
-		kCursorPortrait,
-		kCursorPortraitSelected,
-		kCursorPortraitGreen,
-		kCursorPortraitGreenSelected,
-		kCursorPortraitYellow,
-		kCursorPortraitYellowSelected,
-		kCursorHourGlass,
-		kCursorEggBlue,
-		kCursorEggRed,    // 40
-		kCursorEggGreen,
-		kCursorEggPurple,
-		kCursorEggTeal,
-		kCursorEggGold,
-		kCursorEggClock,
-		kCursorNormal2,
-		kCursorBlank,
-		kCursorMAX,
-
-		// Special
-		kCursorKeepValue = 255
-	};
-
 	Cursor();
 
 	bool load(Common::SeekableReadStream *stream);
@@ -130,14 +71,14 @@ private:
 
 class Icon : public Drawable {
 public:
-	Icon(Cursor::CursorStyle style);
+	Icon(CursorStyle style);
 
 	void setPosition(int16 x, int16 y);
 	void setBrightness(uint brightness);
 	Common::Rect draw(Graphics::Surface *surface);
 
 private:
-	Cursor::CursorStyle _style;
+	CursorStyle _style;
 	int16 _x, _y;
 	uint8 _brightness;
 };

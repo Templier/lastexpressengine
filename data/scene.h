@@ -190,10 +190,6 @@ public:
 		kType133 = 133
 	};
 
-	enum SceneIndex {
-		kSceneDefault = 40
-	};
-
 	~Scene();
 
 	static Scene *load(Common::SeekableReadStream *stream, SceneHeader *header);

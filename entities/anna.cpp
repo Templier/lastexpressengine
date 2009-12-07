@@ -131,9 +131,9 @@ IMPLEMENT_FUNCTION(Anna, chapter1, 16) {
 		getSavePoints()->addData(kEntityAnna, kAction291662081, 0);
 		getSavePoints()->addData(kEntityAnna, kAction238936000, 1);
 
-		getObjects()->update(Objects::kObjectCompartmentF, kEntityNone, kLocation1, Cursor::kCursorHandKnock, Cursor::kCursorHand);
-		getObjects()->update(Objects::kObject53, kEntityNone, kLocation1, Cursor::kCursorHandKnock, Cursor::kCursorHand);
-		getObjects()->update(Objects::kObject45, kEntityNone, kLocation1, Cursor::kCursorKeepValue, Cursor::kCursorKeepValue);
+		getObjects()->update(kObjectCompartmentF, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObject53, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObject45, kEntityNone, kLocation1, kCursorKeepValue, kCursorKeepValue);
 
 		_data->getData()->field_491 = EntityData::kField491_8200;
 		_data->getData()->field_493 = EntityData::kField493_1;

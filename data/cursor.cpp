@@ -101,7 +101,7 @@ uint16 *Cursor::getCursorImage(CursorStyle style) {
 }
 
 
-Icon::Icon(Cursor::CursorStyle style) : _style(style), _brightness(100) {}
+Icon::Icon(CursorStyle style) : _style(style), _brightness(100) {}
 
 void Icon::setPosition(int16 x, int16 y) {
 	_x = x;
@@ -115,7 +115,7 @@ void Icon::setBrightness(uint brightness) {
 }
 
 Common::Rect Icon::draw(Graphics::Surface *surface) {
-	uint16 *image = ((LastExpressEngine *)g_engine)->getCursor()->getCursorImage((Cursor::CursorStyle)_style);
+	uint16 *image = ((LastExpressEngine *)g_engine)->getCursor()->getCursorImage((CursorStyle)_style);
 	if (!image)
 		return Common::Rect();
 

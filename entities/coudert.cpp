@@ -134,7 +134,7 @@ IMPLEMENT_FUNCTION(Coudert, chapter1, 36) {
 		_data->getData()->field_493 = EntityData::kField493_0;
 		_data->getData()->field_495 = EntityData::kField495_4;
 
-		getObjects()->updateLocation2(Objects::kObject111, kLocation1);
+		getObjects()->updateLocation2(kObject111, kLocation1);
 		break;
 
 	case 18:

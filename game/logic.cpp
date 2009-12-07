@@ -27,6 +27,7 @@
 
 // Data
 #include "lastexpress/data/animation.h"
+#include "lastexpress/data/cursor.h"
 #include "lastexpress/data/scene.h"
 #include "lastexpress/data/snd.h"
 
@@ -34,14 +35,18 @@
 #include "lastexpress/game/action.h"
 #include "lastexpress/game/beetle.h"
 #include "lastexpress/game/entities.h"
+#include "lastexpress/game/inventory.h"
 #include "lastexpress/game/menu.h"
+#include "lastexpress/game/object.h"
 #include "lastexpress/game/sound.h"
+#include "lastexpress/game/savepoint.h"
+#include "lastexpress/game/state.h"
 
 #include "lastexpress/graphics.h"
 #include "lastexpress/helpers.h"
 #include "lastexpress/lastexpress.h"
 #include "lastexpress/resource.h"
-
+#include "lastexpress/savegame.h"
 
 namespace LastExpress {
 
@@ -73,11 +78,11 @@ void Logic::startGame() {
 	_entities->setup(kChapter1);
 
 	showMenu(false);
-	loadScene(1018);
-	//loadScene(_defaultScene);
-	
+	//loadScene(1018);
+	loadScene(kSceneDefault);
+
 	// Set Cursor type
-	_engine->getCursor()->setStyle(Cursor::kCursorNormal);
+	_engine->getCursor()->setStyle(kCursorNormal);
 	_engine->getCursor()->show(true);
 
 	getInventory()->show(true);
@@ -147,7 +152,7 @@ void Logic::gameOver(int a1, int a2, int scene, bool showScene) {
 }
 
 // Save game
-void Logic::savegame(int param1, EntityIndex entity, Action::EventIndex event) {
+void Logic::savegame(int param1, EntityIndex entity, EventIndex event) {
 	warning("Logic::savegame: not implemented!");
 }
 
@@ -168,7 +173,7 @@ bool Logic::handleMouseEvent(Common::Event ev) {
 	SceneHotspot *hotspot = NULL;
 	if (_scene && _scene->checkHotSpot(ev.mouse, &hotspot)) {
 		// Change mouse cursor		
-		_runState.cursorStyle = _action->getCursor(hotspot->action, (Objects::ObjectIndex)hotspot->param1, hotspot->param2, hotspot->param3, hotspot->cursor);
+		_runState.cursorStyle = _action->getCursor(hotspot->action, (ObjectIndex)hotspot->param1, hotspot->param2, hotspot->param3, hotspot->cursor);
 
 		// Handle click
 		if ((ev.type == Common::EVENT_LBUTTONDOWN)) {
@@ -181,7 +186,7 @@ bool Logic::handleMouseEvent(Common::Event ev) {
 				switchChapter();
 		}
 	} else {
-		_runState.cursorStyle = Cursor::kCursorNormal;
+		_runState.cursorStyle = kCursorNormal;
 	}
 	_engine->getCursor()->setStyle(_runState.cursorStyle);
 
@@ -291,36 +296,36 @@ uint32 Logic::processIndex(uint32 index) {
 	error("Logic::processItem is not implemented!");
 }
 
-void Logic::loadSceneFromObject(Objects::ObjectIndex object) {
+void Logic::loadSceneFromObject(ObjectIndex object) {
 	switch (object) {
 	default:
 		break;
 
-	case Objects::kObjectCompartment1:
-	case Objects::kObjectCompartment2:
-	case Objects::kObjectCompartment3:
-	case Objects::kObjectCompartment4:
-	case Objects::kObjectCompartment5:
-	case Objects::kObjectCompartment6:
-	case Objects::kObjectCompartment7:	
-	case Objects::kObjectCompartmentA:
-	case Objects::kObjectCompartmentB:
-	case Objects::kObjectCompartmentC:
-	case Objects::kObjectCompartmentD:
-	case Objects::kObjectCompartmentE:
-	case Objects::kObjectCompartmentF:
-	case Objects::kObjectCompartmentG:
+	case kObjectCompartment1:
+	case kObjectCompartment2:
+	case kObjectCompartment3:
+	case kObjectCompartment4:
+	case kObjectCompartment5:
+	case kObjectCompartment6:
+	case kObjectCompartment7:	
+	case kObjectCompartmentA:
+	case kObjectCompartmentB:
+	case kObjectCompartmentC:
+	case kObjectCompartmentD:
+	case kObjectCompartmentE:
+	case kObjectCompartmentF:
+	case kObjectCompartmentG:
 		loadSceneFromData((object < 10 ? 3 : 4), 38 - (object - 1) * 2, 255);
 		break;
 
-	case Objects::kObjectCompartment8:
-	case Objects::kObjectCompartmentH:
+	case kObjectCompartment8:
+	case kObjectCompartmentH:
 		loadSceneFromData(3, 25, 255);
 		break;
 	}
 }
 
-void Logic::loadSceneFromObject2(Objects::ObjectIndex object) {
+void Logic::loadSceneFromObject2(ObjectIndex object) {
 	loadSceneFromData((object < 10 ? 3 : 4), 17 - (object - 1) * 2, 255);
 }
 
@@ -346,7 +351,7 @@ void Logic::loadSceneFromItem(InventoryItem item) {
 	}
 
 #define GET_ENTITY_LOCATION(scene) \
-	getObjects()->get((Objects::ObjectIndex)scene->getHeader()->param1).location
+	getObjects()->get((ObjectIndex)scene->getHeader()->param1).location
 
 #define GET_ITEM_LOCATION(scene, parameter) \
 	getInventory()->getEntry((InventoryItem)scene->getHeader()->parameter)->location
@@ -436,7 +441,7 @@ void Logic::preProcessScene(uint32 *index) {
 			for (Common::Array<SceneHotspot *>::iterator it = scene->getHotspots()->begin(); it != scene->getHotspots()->end(); ++it) {
 
 				Scene *currentScene = _engine->getScene(*index);
-				if (getObjects()->get((Objects::ObjectIndex)currentScene->getHeader()->param1).location2 == (*it)->location) {
+				if (getObjects()->get((ObjectIndex)currentScene->getHeader()->param1).location2 == (*it)->location) {
 					PROCESS_HOTSPOT_SCENE(*it, index);
 					found = true;					
 				}
@@ -674,7 +679,7 @@ void Logic::switchChapter() {
 
 void Logic::playFinalSequence() {
 	// TODO function call
-	_action->playAnimation(Action::kFinalSequence);
+	_action->playAnimation(kEventFinalSequence);
 	// TODO
 	// - function call
 	// - reset game state

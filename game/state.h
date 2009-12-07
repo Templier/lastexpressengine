@@ -75,7 +75,7 @@
 
 */
 
-#include "lastexpress/game/shared.h"
+#include "lastexpress/shared.h"
 
 #include "common/system.h"
 
@@ -257,7 +257,7 @@ public:
 			timeDelta = _defaultTimeDelta;
 			timeTicks = 0;
 			sceneUseBackup = 0;
-			scene = _defaultScene;
+			scene = kSceneDefault;
 			sceneBackup = 0;
 			sceneBackup2 = 0;
 
@@ -312,7 +312,6 @@ private:
 	static const uint32 _defaultTime = 1037700;
 	static const uint32 _defaultTimeDelta = 3;
 	static const uint32 _defaultPortrait = 32;	
-	static const uint32 _defaultScene = 40;
 
 	LastExpressEngine *_engine;
 	

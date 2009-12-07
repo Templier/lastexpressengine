@@ -28,6 +28,7 @@
 #include "lastexpress/game/action.h"
 #include "lastexpress/game/entities.h"
 #include "lastexpress/game/logic.h"
+#include "lastexpress/game/object.h"
 #include "lastexpress/game/savepoint.h"
 #include "lastexpress/game/sound.h"
 #include "lastexpress/game/state.h"
@@ -175,11 +176,11 @@ IMPLEMENT_FUNCTION(Max, function7, 7) {
 
 	case kAction8: 
 	case kAction9: 
-		getObjects()->update(Objects::kObjectCompartmentF, kEntityMax, kLocation1, Cursor::kCursorNormal, Cursor::kCursorNormal);
-		getObjects()->update(Objects::kObject53, kEntityMax, kLocation1, Cursor::kCursorNormal, Cursor::kCursorNormal);
+		getObjects()->update(kObjectCompartmentF, kEntityMax, kLocation1, kCursorNormal, kCursorNormal);
+		getObjects()->update(kObject53, kEntityMax, kLocation1, kCursorNormal, kCursorNormal);
 
 		_data->setNextCallback((savepoint->action == kAction8) ? 1 : 2);
-		call(new ENTITY_SETUP(Max, setup_function2, char*, int, int, char*), (char*)((savepoint->action == kAction8) ? "LIB012" : "LIB013"));
+		call(new ENTITY_SETUP(Max, setup_function2, const char*, int, int, const char*), (savepoint->action == kAction8) ? "LIB012" : "LIB013");
 		break;
 
 	case kActionDefault: 
@@ -189,8 +190,8 @@ IMPLEMENT_FUNCTION(Max, function7, 7) {
 		_data->getData()->field_493 = EntityData::kField493_1;
 		_data->getData()->field_495 = EntityData::kField495_4;
 
-		getObjects()->update(Objects::kObjectCompartmentF, kEntityMax, kLocation1, Cursor::kCursorHandKnock, Cursor::kCursorHand);
-		getObjects()->update(Objects::kObject53, kEntityMax, kLocation1, Cursor::kCursorHandKnock, Cursor::kCursorHand);
+		getObjects()->update(kObjectCompartmentF, kEntityMax, kLocation1, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObject53, kEntityMax, kLocation1, kCursorHandKnock, kCursorHand);
 		break;
 
 	case kAction17: 
@@ -207,12 +208,12 @@ IMPLEMENT_FUNCTION(Max, function7, 7) {
 		case 1:
 		case 2:
 			_data->setNextCallback(3);
-			call(new ENTITY_SETUP(Max, setup_function2, char*, int, int, char*), "Max1122");
+			call(new ENTITY_SETUP(Max, setup_function2, const char*, int, int, const char*), "Max1122");
 			break;
 
 		case 3:
-			getObjects()->update(Objects::kObjectCompartmentF, kEntityMax, kLocation1, Cursor::kCursorHandKnock, Cursor::kCursorHand);
-			getObjects()->update(Objects::kObject53, kEntityMax, kLocation1, Cursor::kCursorHandKnock, Cursor::kCursorHand);
+			getObjects()->update(kObjectCompartmentF, kEntityMax, kLocation1, kCursorHandKnock, kCursorHand);
+			getObjects()->update(kObject53, kEntityMax, kLocation1, kCursorHandKnock, kCursorHand);
 			break;
 		}
 		break;
@@ -226,8 +227,8 @@ IMPLEMENT_FUNCTION(Max, function7, 7) {
 	case kAction122358304: 
 	case kActionMaxFreeFromCage: 
 		getSavePoints()->push(kEntityMax, kEntityMax, kActionMaxFreeFromCage, 0);
-		getObjects()->update(Objects::kObjectCompartmentF, kEntityNone, kLocationNone, Cursor::kCursorHandKnock, Cursor::kCursorHand);
-		getObjects()->update(Objects::kObject53, kEntityNone, kLocationNone, Cursor::kCursorHandKnock, Cursor::kCursorHand);
+		getObjects()->update(kObjectCompartmentF, kEntityNone, kLocationNone, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObject53, kEntityNone, kLocationNone, kCursorHandKnock, kCursorHand);
 
 		CALL_PREVIOUS_SAVEPOINT(kEntityMax)
 		break;
@@ -263,11 +264,11 @@ IMPLEMENT_FUNCTION(Max, function8, 8) {
 	case kAction9: 		
 		if (_data->getCurrentParameters()->param1) {
 			_data->setNextCallback(1);
-			call(new ENTITY_SETUP_DEFAULT(Max, setup_savegame), 2, Action::kCathMaxLickHand);
+			call(new ENTITY_SETUP_DEFAULT(Max, setup_savegame), 2, kEventCathMaxLickHand);
 			break;
 		}
 
-		getAction()->playAnimation(Action::kCathMaxLickHand);
+		getAction()->playAnimation(kEventCathMaxLickHand);
 		getLogic()->processScene();
 		
 		_data->getCurrentParameters()->param1 = 1;
@@ -276,7 +277,7 @@ IMPLEMENT_FUNCTION(Max, function8, 8) {
 	case kActionDefault: 
 		_data->getCurrentParameters()->param2 = 255 * ( 4 * random(20) + 40);
 		
-		getObjects()->update(Objects::kCageMax, kEntityMax, kLocationNone, Cursor::kCursorNormal, Cursor::kCursorHand);
+		getObjects()->update(kObjectCageMax, kEntityMax, kLocationNone, kCursorNormal, kCursorHand);
 		getEntities()->drawSequences(kEntityMax);
 
 		_data->getData()->field_491 = EntityData::kField491_8000;
@@ -291,9 +292,9 @@ IMPLEMENT_FUNCTION(Max, function8, 8) {
 			break;
 
 		getSound()->playSound(kEntityNone, "LIB026");
-		getAction()->playAnimation(Action::kCathMaxFree);
+		getAction()->playAnimation(kEventCathMaxFree);
 		getLogic()->loadSceneFromData(6, 92, 255);
-		getObjects()->update(Objects::kCageMax, kEntityNone, kLocationNone, Cursor::kCursorNormal, Cursor::kCursorHand);
+		getObjects()->update(kObjectCageMax, kEntityNone, kLocationNone, kCursorNormal, kCursorHand);
 		setup_function9();
 		break;
 	}
@@ -474,20 +475,20 @@ IMPLEMENT_FUNCTION(Max, freeFromCage, 14) {
 	//////////////////////////////////////////////////////////////////////////
 	// Save game after freeing Max from his cage
 	case kAction9:
-		if (getEvent(Action::kCathMaxCage)) {
-			if (getEvent(Action::kCathMaxFree)) {
+		if (getEvent(kEventCathMaxCage)) {
+			if (getEvent(kEventCathMaxFree)) {
 				_data->setNextCallback(2);
-				call(new ENTITY_SETUP_DEFAULT(Max, setup_savegame), 2, Action::kCathMaxFree);
+				call(new ENTITY_SETUP_DEFAULT(Max, setup_savegame), 2, kEventCathMaxFree);
 			}
 
 		} else {
 			_data->setNextCallback(1);
-			call(new ENTITY_SETUP_DEFAULT(Max, setup_savegame), 2, Action::kCathMaxCage);
+			call(new ENTITY_SETUP_DEFAULT(Max, setup_savegame), 2, kEventCathMaxCage);
 		}
 		break;
 
 	case kActionDefault: 
-		getObjects()->update(Objects::kCageMax, kEntityMax, kLocationNone, Cursor::kCursorNormal, Cursor::kCursorHand);
+		getObjects()->update(kObjectCageMax, kEntityMax, kLocationNone, kCursorNormal, kCursorHand);
 
 		_data->getData()->field_491 = EntityData::kField491_8000;
 		_data->getData()->field_493 = EntityData::kField493_1;
@@ -504,15 +505,15 @@ IMPLEMENT_FUNCTION(Max, freeFromCage, 14) {
 			break;
 
 		case 1:
-			getAction()->playAnimation(Action::kCathMaxCage);
+			getAction()->playAnimation(kEventCathMaxCage);
 			getLogic()->processScene();
 			break;
 
 		case 2:
 			getSound()->playSound(kEntityNone, "LIB026");
-			getAction()->playAnimation(Action::kCathMaxFree);
+			getAction()->playAnimation(kEventCathMaxFree);
 			getLogic()->loadSceneFromData(6, 92, 255);
-			getObjects()->update(Objects::kCageMax, kEntityNone, kLocationNone, Cursor::kCursorNormal, Cursor::kCursorHand);
+			getObjects()->update(kObjectCageMax, kEntityNone, kLocationNone, kCursorNormal, kCursorHand);
 			setup_function9();
 			break;
 		}
@@ -560,7 +561,7 @@ IMPLEMENT_FUNCTION(Max, function15, 15) {
 		getSound()->playSound(kEntityMax, "Max3010");
 
 		_data->setNextCallback(1);
-		call(new ENTITY_SETUP(Max, setup_function4, char*, int, int, char*), "630Bf", kEntityTables4);
+		call(new ENTITY_SETUP(Max, setup_function4, const char*, int, int, const char*), "630Bf", kEntityTables4);
 		break;
 
 	case kAction18: 
@@ -642,7 +643,7 @@ IMPLEMENT_FUNCTION(Max, chapter5, 18) {
 		_data->getData()->field_491 = EntityData::kField491_0;
 		_data->getData()->field_493 = EntityData::kField493_0;
 		_data->getData()->field_495 = EntityData::kField495_0;
-		getObjects()->update(Objects::kCageMax, kEntityNone, kLocationNone, Cursor::kCursorNormal, Cursor::kCursorHand);
+		getObjects()->update(kObjectCageMax, kEntityNone, kLocationNone, kCursorNormal, kCursorHand);
 	}
 }
 

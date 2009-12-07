@@ -28,6 +28,7 @@
 #include "lastexpress/game/entities.h"
 
 #include "lastexpress/game/action.h"
+#include "lastexpress/game/inventory.h"
 #include "lastexpress/game/logic.h"
 #include "lastexpress/game/savepoint.h"
 #include "lastexpress/game/sound.h"
@@ -111,7 +112,7 @@ IMPLEMENT_FUNCTION(Mertens, function6, 6) {
 		 && !getEntities()->checkFields3(kEntityNone)
 		 && !getEntities()->checkFields10(kEntityNone)) {
 			 _data->setNextCallback(1);
-			 call(new ENTITY_SETUP_DEFAULT(Mertens, setup_savegame), 2, Action::kMertensBloodJacket);
+			 call(new ENTITY_SETUP_DEFAULT(Mertens, setup_savegame), 2, kEventMertensBloodJacket);
 		}
 		break;
 
@@ -121,7 +122,7 @@ IMPLEMENT_FUNCTION(Mertens, function6, 6) {
 
 	case kAction18: 	
 		if (_data->getNextCallback() == 1) {
-			getAction()->playAnimation(Action::kMertensBloodJacket);
+			getAction()->playAnimation(kEventMertensBloodJacket);
 			getLogic()->gameOver(0, 1, 55, true);
 		}
 		break;
@@ -147,7 +148,7 @@ IMPLEMENT_FUNCTION_INT(Mertens, function11, 11) {
 			&& !getEntities()->checkFields3(kEntityNone)
 			&& !getEntities()->checkFields10(kEntityNone)) {
 				_data->setNextCallback(1);
-				call(new ENTITY_SETUP_DEFAULT(Mertens, setup_savegame), 2, Action::kMertensBloodJacket);
+				call(new ENTITY_SETUP_DEFAULT(Mertens, setup_savegame), 2, kEventMertensBloodJacket);
 				break;
 		}
 
@@ -165,7 +166,7 @@ IMPLEMENT_FUNCTION_INT(Mertens, function11, 11) {
 
 	case kAction18: 
 		if (_data->getNextCallback() == 1) {
-			getAction()->playAnimation(Action::kMertensBloodJacket);
+			getAction()->playAnimation(kEventMertensBloodJacket);
 			getLogic()->gameOver(0, 1, 55, true);
 		}		
 		break;

@@ -69,8 +69,8 @@ IMPLEMENT_FUNCTION(Mahmud, chapter1, 15) {
 	case kActionDefault: 
 		getSavePoints()->addData(kEntityMahmud, kAction170483072, 0);
 
-		getObjects()->update(Objects::kObjectCompartment4, kEntityNone, kLocation3, Cursor::kCursorHandKnock, Cursor::kCursorHand);
-		getObjects()->update(Objects::kObject20, kEntityNone, kLocation3, Cursor::kCursorHandKnock, Cursor::kCursorHand);
+		getObjects()->update(kObjectCompartment4, kEntityNone, kLocation3, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObject20, kEntityNone, kLocation3, kCursorHandKnock, kCursorHand);
 
 		_data->getData()->field_491 = EntityData::kField491_540;
 		_data->getData()->field_493 = EntityData::kField493_0;

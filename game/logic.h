@@ -26,14 +26,7 @@
 #ifndef LASTEXPRESS_LOGIC_H
 #define LASTEXPRESS_LOGIC_H
 
-#include "lastexpress/data/cursor.h"
-
-#include "lastexpress/game/action.h"
-#include "lastexpress/game/inventory.h"
-#include "lastexpress/game/object.h"
-#include "lastexpress/game/savepoint.h"
-
-#include "lastexpress/savegame.h"
+#include "lastexpress/shared.h"
 
 #include "common/events.h"
 
@@ -60,15 +53,15 @@ public:
 	void startGame();
 	void switchGame();
 
-	void savegame(int param1, EntityIndex entity, Action::EventIndex event);
+	void savegame(int param1, EntityIndex entity, EventIndex event);
 	void gameOver(int a1, int a2, int scene, bool showScene);
 
 	// Scene
 	void loadScene(uint32 index);	
 	void setScene(uint32 index);
 
-	void loadSceneFromObject(Objects::ObjectIndex object);
-	void loadSceneFromObject2(Objects::ObjectIndex object);
+	void loadSceneFromObject(ObjectIndex object);
+	void loadSceneFromObject2(ObjectIndex object);
 	void loadSceneFromData(int param1, int param2, int param3);
 	void loadSceneFromItem(InventoryItem item);
 
@@ -86,7 +79,7 @@ public:
 	GameId getGameId() { return _runState.gameId; }
 
 	Action 	   *getGameAction() { return _action; }
-	Cursor::CursorStyle getCursorStyle() { return _runState.cursorStyle; }
+	CursorStyle getCursorStyle() { return _runState.cursorStyle; }
 	Beetle     *getGameBeetle() { return _beetle; }
 	Entities   *getGameEntities() { return _entities; }	
 	Sound 	   *getGameSound() { return _sound; }		
@@ -98,7 +91,7 @@ private:
 		GameId gameId;
 		bool gameStarted;
 		bool showingMenu;
-		Cursor::CursorStyle cursorStyle;	// necessary to remember current cursor when inside inventory TODO remove?
+		CursorStyle cursorStyle;	// necessary to remember current cursor when inside inventory TODO remove?
 
 		// flags
 		bool flag_no_entity;
@@ -108,7 +101,7 @@ private:
 			gameId = kGameBlue;
 			gameStarted = false;
 			showingMenu = false;
-			cursorStyle = Cursor::kCursorNormal;
+			cursorStyle = kCursorNormal;
 
 			flag_no_entity = false;
 			flag_draw_entities = false;

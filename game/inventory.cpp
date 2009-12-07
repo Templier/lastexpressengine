@@ -26,6 +26,7 @@
 #include "lastexpress/game/inventory.h"
 
 #include "lastexpress/data/cursor.h"
+#include "lastexpress/data/scene.h"
 #include "lastexpress/data/snd.h"
 
 #include "lastexpress/game/logic.h"
@@ -37,7 +38,7 @@
 #include "lastexpress/resource.h"
 
 
-#define drawItem(x, y, index, brightness) { Icon icon((Cursor::CursorStyle)(index)); icon.setPosition(x, y); icon.setBrightness(brightness); _engine->getGraphicsManager()->draw(&icon, GraphicsManager::kBackgroundInventory); }
+#define drawItem(x, y, index, brightness) { Icon icon((CursorStyle)(index)); icon.setPosition(x, y); icon.setBrightness(brightness); _engine->getGraphicsManager()->draw(&icon, GraphicsManager::kBackgroundInventory); }
 
 namespace LastExpress {
 
@@ -61,20 +62,20 @@ Inventory::~Inventory() {
 // Init inventory contents
 void Inventory::init() {
 	// ID
-	_entries[kMatchBox].item_id = Cursor::kCursorMatchBox;
-	_entries[kTelegram].item_id = Cursor::kCursorTelegram;
-	_entries[kPassengerList].item_id = Cursor::kCursorPassengerList;
-	_entries[kArticle].item_id = Cursor::kCursorArticle;
-	_entries[kScarf].item_id = Cursor::kCursorScarf;
-	_entries[kPaper].item_id = Cursor::kCursorPaper;
-	_entries[kParchemin].item_id = Cursor::kCursorParchemin;
-	_entries[kMatch].item_id = Cursor::kCursorMatch;
-	_entries[kWhistle].item_id = Cursor::kCursorWhistle;
-	_entries[kKey].item_id = Cursor::kCursorKey;
-	_entries[kBomb].item_id = Cursor::kCursorBomb;
-	_entries[kFirebird].item_id = Cursor::kCursorFirebird;
-	_entries[kBriefcase].item_id = Cursor::kCursorBriefcase;
-	_entries[kCorpse].item_id = Cursor::kCursorCorpse;
+	_entries[kMatchBox].item_id = kCursorMatchBox;
+	_entries[kTelegram].item_id = kCursorTelegram;
+	_entries[kPassengerList].item_id = kCursorPassengerList;
+	_entries[kArticle].item_id = kCursorArticle;
+	_entries[kScarf].item_id = kCursorScarf;
+	_entries[kPaper].item_id = kCursorPaper;
+	_entries[kParchemin].item_id = kCursorParchemin;
+	_entries[kMatch].item_id = kCursorMatch;
+	_entries[kWhistle].item_id = kCursorWhistle;
+	_entries[kKey].item_id = kCursorKey;
+	_entries[kBomb].item_id = kCursorBomb;
+	_entries[kFirebird].item_id = kCursorFirebird;
+	_entries[kBriefcase].item_id = kCursorBriefcase;
+	_entries[kCorpse].item_id = kCursorCorpse;
 
 	// Selectable
 	_entries[kMatchBox].is_selectable = 1;
@@ -137,7 +138,7 @@ bool Inventory::handleMouseEvent(Common::Event ev) {
 	// Egg (menu)
 	if (_menuRect.contains(ev.mouse)) {
 		insideInventory = true;
-		_engine->getCursor()->setStyle(Cursor::kCursorNormal);
+		_engine->getCursor()->setStyle(kCursorNormal);
 
 		// If clicked, show the menu
 		if (ev.type == Common::EVENT_LBUTTONDOWN) {
@@ -167,7 +168,7 @@ bool Inventory::handleMouseEvent(Common::Event ev) {
 	// Portrait (inventory)
 	if (_inventoryRect.contains(ev.mouse)) {
 		insideInventory = true;
-		_engine->getCursor()->setStyle(Cursor::kCursorNormal);
+		_engine->getCursor()->setStyle(kCursorNormal);
 
 		// If clicked, show pressed state and display inventory
 		if (ev.type == Common::EVENT_LBUTTONDOWN) {
@@ -195,7 +196,7 @@ bool Inventory::handleMouseEvent(Common::Event ev) {
 
 		// Always show normal cursor when the inventory is opened
 		insideInventory = true;
-		_engine->getCursor()->setStyle(Cursor::kCursorNormal);
+		_engine->getCursor()->setStyle(kCursorNormal);
 
 		bool selected = false;
 
@@ -252,7 +253,7 @@ bool Inventory::handleMouseEvent(Common::Event ev) {
 		insideInventory = true;
 
 		// Show magnifier icon
-		_engine->getCursor()->setStyle(Cursor::kCursorMagnifier);
+		_engine->getCursor()->setStyle(kCursorMagnifier);
 
 		if (ev.type == Common::EVENT_LBUTTONDOWN) {
 			examine((InventoryItem)_selectedItem);
@@ -324,7 +325,7 @@ void Inventory::showHourGlass(bool enabled) {
 
 	// Show/Hide hour glass and ask for redraw
 	if (_showingHourGlass)
-		drawItem(608, 448, Cursor::kCursorHourGlass, 100)
+		drawItem(608, 448, kCursorHourGlass, 100)
 	else
 		drawItem(608, 448, getLogic()->getGameId() + 39, 100) // normal egg state
 

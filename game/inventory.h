@@ -40,9 +40,7 @@
 
 */
 
-#include "lastexpress/data/scene.h"
-
-#include "lastexpress/game/shared.h"
+#include "lastexpress/shared.h"
 
 #include "common/events.h"
 #include "common/serializer.h"
@@ -50,6 +48,7 @@
 namespace LastExpress {
 
 class LastExpressEngine;
+class Scene;
 
 class Inventory : Common::Serializable {
 public:
@@ -82,7 +81,7 @@ public:
 
 	// Inventory contents
 	void addItem(InventoryItem item);
-	void removeItem(InventoryItem item, ObjectLocation newLocation = (ObjectLocation)0);
+	void removeItem(InventoryItem item, ObjectLocation newLocation = kLocationNone);
 	bool hasItem(InventoryItem item);	
 	void selectItem(InventoryItem item);
 	void unselectItem();

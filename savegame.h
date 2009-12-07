@@ -44,18 +44,11 @@
 		Game state (see logic.h)
 */
 
+#include "lastexpress/shared.h"
+
 #include "common/savefile.h"
 
 namespace LastExpress {
-
-enum GameId {
-	kGameBlue,
-	kGameRed,
-	kGameGreen,
-	kGamePurple,
-	kGameTeal,
-	kGameGold
-};
 
 class SaveLoad {
 public:

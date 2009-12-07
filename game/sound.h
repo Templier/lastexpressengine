@@ -26,7 +26,7 @@
 #ifndef LASTEXPRESS_SOUND_H
 #define LASTEXPRESS_SOUND_H
 
-#include "lastexpress/game/savepoint.h"
+#include "lastexpress/shared.h"
 
 #include "common/system.h"
 

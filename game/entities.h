@@ -36,9 +36,7 @@
 
 #include "lastexpress/entities/entity.h"
 
-#include "lastexpress/game/object.h"
-#include "lastexpress/game/state.h"
-#include "lastexpress/game/savepoint.h"
+#include "lastexpress/shared.h"
 
 #include "common/serializer.h"
 
@@ -82,7 +80,7 @@ public:
 	bool compare(EntityIndex entity1, EntityIndex entity2);	
 
 	bool checkFields1(EntityIndex entity, EntityData::Field495Value field495, EntityData::Field491Value field491);
-	bool checkFields2(Objects::ObjectIndex object);
+	bool checkFields2(ObjectIndex object);
 	bool checkFields3(EntityIndex entity);
 	bool checkFields4(EntityData::Field495Value field495, int field15);
 	bool checkFields5(EntityIndex entity, EntityData::Field495Value field495);

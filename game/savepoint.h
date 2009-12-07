@@ -72,6 +72,9 @@ struct SavePoint {
 };	
 
 class SavePoints : Common::Serializable {
+private:
+	typedef Common::Functor1<SavePoint*, void> Callback;
+
 public:
 
 	struct SavePointData {
@@ -102,7 +105,7 @@ public:
 
 	// Callbacks
 	void setCallback(EntityIndex index, Entity::Callback* callback);
-	Entity::Callback *getCallback(EntityIndex entity);
+	Callback *getCallback(EntityIndex entity);
 	void call(EntityIndex entity2, EntityIndex entity1, ActionIndex action, uint32 param = 0);
 	void call(EntityIndex entity2, EntityIndex entity1, ActionIndex action, char* param);
 
@@ -116,7 +119,7 @@ private:
 
 	Common::List<SavePoint> _savepoints;	///< could be a queue, but we need to be able to iterate on the items
 	Common::Array<SavePointData> _data;
-	Entity::Callback* _callbacks[40];
+	Callback* _callbacks[40];
 
 	SavePoint pop();
 	bool updateEntity(SavePoint point);

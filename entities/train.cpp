@@ -59,7 +59,7 @@ IMPLEMENT_FUNCTION_INT2(Train, savegame, 1) {
 		break;
 
 	case kActionDefault:
-		save(kEntityTrain, _data->getCurrentParameters()->param1, (Action::EventIndex)_data->getCurrentParameters()->param2);
+		save(kEntityTrain, _data->getCurrentParameters()->param1, (EventIndex)_data->getCurrentParameters()->param2);
 
 		CALL_PREVIOUS_SAVEPOINT(kEntityTrain)
 		break;
@@ -128,7 +128,7 @@ IMPLEMENT_FUNCTION_INT2(Train, harem, 7) {
 	_data->getCurrentParameters()->param6 = getEntities()->checkFields1(kEntityYasmin, EntityData::kField495_3, (EntityData::Field491Value)_data->getCurrentParameters()->param3);
 	_data->getCurrentParameters()->param7 = getEntities()->checkFields1(kEntityHadija, EntityData::kField495_3, (EntityData::Field491Value)_data->getCurrentParameters()->param3);
 
-	getObjects()->update((Objects::ObjectIndex)_data->getCurrentParameters()->param1, kEntityTrain, kLocation3, Cursor::kCursorNormal, Cursor::kCursorNormal);
+	getObjects()->update((ObjectIndex)_data->getCurrentParameters()->param1, kEntityTrain, kLocation3, kCursorNormal, kCursorNormal);
 	getSound()->playSound(kEntityTables5, (_data->getCurrentParameters()->param2 == 8) ? "LIB012" : "LIB013", 16);
 
 
@@ -161,7 +161,7 @@ IMPLEMENT_FUNCTION(Train, process, 8) {
 
 		  if (!_data->getCurrentParameters()->param4 && getProgress().jacket == kJacketGreen) {
 
-			  getAction()->playAnimation(isDay() ? Action::kCathSmokeDay : Action::kCathSmokeNight);
+			  getAction()->playAnimation(isDay() ? kEventCathSmokeDay : kEventCathSmokeNight);
 			  _data->getCurrentParameters()->param5 = 1;
 			  getLogic()->processScene();
 
@@ -205,10 +205,10 @@ label_skip:
 		}
 		
 		if (_data->getParameters(8, 0)->param8) {
-			Objects::ObjectIndex param8 = (Objects::ObjectIndex)_data->getParameters(8, 0)->param8;
+			ObjectIndex param8 = (ObjectIndex)_data->getParameters(8, 0)->param8;
 
 			// TODO check if sound is cached
-			getObjects()->update(param8, getObjects()->get(param8).entity, kLocation3, Cursor::kCursorHandKnock, Cursor::kCursorHand);
+			getObjects()->update(param8, getObjects()->get(param8).entity, kLocation3, kCursorHandKnock, kCursorHand);
 			_data->getParameters(8, 0)->param8 = 0;
 		}
 		
@@ -230,10 +230,10 @@ label_skip:
 	case kActionDefault:
 		_data->getCurrentParameters(8)->param1 = 1;		
 		if (getProgress().chapter < kChapter5) {
-			getObjects()->update(Objects::kObjectCompartment5, kEntityTrain, kLocation3, Cursor::kCursorHandKnock, Cursor::kCursorHand);
-			getObjects()->update(Objects::kObjectCompartment6, kEntityTrain, kLocation3, Cursor::kCursorHandKnock, Cursor::kCursorHand);
-			getObjects()->update(Objects::kObjectCompartment7, kEntityTrain, kLocation3, Cursor::kCursorHandKnock, Cursor::kCursorHand);
-			getObjects()->update(Objects::kObjectCompartment8, kEntityTrain, kLocation3, Cursor::kCursorHandKnock, Cursor::kCursorHand);
+			getObjects()->update(kObjectCompartment5, kEntityTrain, kLocation3, kCursorHandKnock, kCursorHand);
+			getObjects()->update(kObjectCompartment6, kEntityTrain, kLocation3, kCursorHandKnock, kCursorHand);
+			getObjects()->update(kObjectCompartment7, kEntityTrain, kLocation3, kCursorHandKnock, kCursorHand);
+			getObjects()->update(kObjectCompartment8, kEntityTrain, kLocation3, kCursorHandKnock, kCursorHand);
 		}
 		_data->getData()->field_491 = EntityData::kField491_30000;
 		break;
@@ -292,13 +292,13 @@ label_skip:
 		if (getProgress().jacket == kJacketOriginal) {
 			if (getEntities()->checkFields4(EntityData::kField495_4, 18)) {
 				_data->setNextCallback(1);
-				call(new ENTITY_SETUP_DEFAULT(Train, setup_savegame), 2, Action::kMertensBloodJacket);
+				call(new ENTITY_SETUP_DEFAULT(Train, setup_savegame), 2, kEventMertensBloodJacket);
 				break;
 			}
 
 			if (getEntities()->checkFields4(EntityData::kField495_3, 22)) {
 				_data->setNextCallback(2);
-				call(new ENTITY_SETUP_DEFAULT(Train, setup_savegame), 2, Action::kMertensBloodJacket);
+				call(new ENTITY_SETUP_DEFAULT(Train, setup_savegame), 2, kEventMertensBloodJacket);
 				break;
 			}
 		}	
@@ -315,29 +315,29 @@ label_skip:
 
 		case 1:
 		case 2:
-			getAction()->playAnimation(action == 1 ? Action::kCoudertBloodJacket : Action::kMertensBloodJacket);
+			getAction()->playAnimation(action == 1 ? kEventCoudertBloodJacket : kEventMertensBloodJacket);
 			getLogic()->gameOver(0, 1, 55, true);
 			resetParam8();
 			break;
 
 		case 5:
-			getAction()->playAnimation(Action::kLocomotiveConductorsDiscovered);
+			getAction()->playAnimation(kEventLocomotiveConductorsDiscovered);
 			getLogic()->gameOver(0, 1, 63, true);
 			break;
 
 		case 6:
-			getAction()->playAnimation(Action::kCathBreakCeiling);
-			getObjects()->update(Objects::kObjectCeiling, kEntityNone, kLocation2, Cursor::kCursorKeepValue, Cursor::kCursorKeepValue);
+			getAction()->playAnimation(kEventCathBreakCeiling);
+			getObjects()->update(kObjectCeiling, kEntityNone, kLocation2, kCursorKeepValue, kCursorKeepValue);
 			getLogic()->processScene();
 			break;
 
 		case 7:
-			getAction()->playAnimation(Action::kCathJumpDownCeiling);
+			getAction()->playAnimation(kEventCathJumpDownCeiling);
 			getLogic()->loadSceneFromData(2, 89, 255);
 			break;
 
 		case 8:
-			getAction()->playAnimation(Action::kCloseMatchbox);
+			getAction()->playAnimation(kEventCloseMatchbox);
 			getLogic()->loadSceneFromData(5, 51, 255);
 			break;
 		}
@@ -355,16 +355,16 @@ label_skip:
 
 	case kAction202613084:
 		_data->setNextCallback(8);
-		call(new ENTITY_SETUP_DEFAULT(Train, setup_savegame), 2, Action::kCloseMatchbox);
+		call(new ENTITY_SETUP_DEFAULT(Train, setup_savegame), 2, kEventCloseMatchbox);
 		break;
 
 	case kAction203339360:
 		if (!_data->getCurrentParameters()->param7) {
 			_data->setNextCallback(5);
-			call(new ENTITY_SETUP_DEFAULT(Train, setup_savegame), 2, Action::kLocomotiveConductorsDiscovered);
+			call(new ENTITY_SETUP_DEFAULT(Train, setup_savegame), 2, kEventLocomotiveConductorsDiscovered);
 		} else {
 			_data->getCurrentParameters()->param7 = 1;
-			getAction()->playAnimation(Action::kLocomotiveConductorsLook);
+			getAction()->playAnimation(kEventLocomotiveConductorsLook);
 			getLogic()->loadSceneFromData(7, 2, 255);
 		}
 		break;
@@ -389,39 +389,39 @@ label_skip:
 		default:
 			break;
 
-		case Objects::kObjectCompartment1:
-		case Objects::kObjectCompartment2:
-		case Objects::kObjectCompartmentA:
-		case Objects::kObjectCompartmentB:
-			parameters1->param1 = (savepoint->param.intValue == Objects::kObjectCompartment1 || savepoint->param.intValue == Objects::kObjectCompartment2) ? 3 : 4;
-			parameters1->param2 = (savepoint->param.intValue == Objects::kObjectCompartment1 || savepoint->param.intValue == Objects::kObjectCompartmentA) ? EntityData::kField491_8200 : EntityData::kField491_7500;
+		case kObjectCompartment1:
+		case kObjectCompartment2:
+		case kObjectCompartmentA:
+		case kObjectCompartmentB:
+			parameters1->param1 = (savepoint->param.intValue == kObjectCompartment1 || savepoint->param.intValue == kObjectCompartment2) ? 3 : 4;
+			parameters1->param2 = (savepoint->param.intValue == kObjectCompartment1 || savepoint->param.intValue == kObjectCompartmentA) ? EntityData::kField491_8200 : EntityData::kField491_7500;
 			parameters1->param3 = 7850;
 			break;
 
-		case Objects::kObjectCompartment3:
-		case Objects::kObjectCompartment4:
-		case Objects::kObjectCompartmentC:
-		case Objects::kObjectCompartmentD:
-			parameters1->param1 = (savepoint->param.intValue == Objects::kObjectCompartment1 || savepoint->param.intValue == Objects::kObjectCompartment2) ? 3 : 4;
-			parameters1->param2 = (savepoint->param.intValue == Objects::kObjectCompartment3 || savepoint->param.intValue == Objects::kObjectCompartmentC) ? EntityData::kField491_6470 : EntityData::kField491_5790;
+		case kObjectCompartment3:
+		case kObjectCompartment4:
+		case kObjectCompartmentC:
+		case kObjectCompartmentD:
+			parameters1->param1 = (savepoint->param.intValue == kObjectCompartment1 || savepoint->param.intValue == kObjectCompartment2) ? 3 : 4;
+			parameters1->param2 = (savepoint->param.intValue == kObjectCompartment3 || savepoint->param.intValue == kObjectCompartmentC) ? EntityData::kField491_6470 : EntityData::kField491_5790;
 			parameters1->param3 = 6130;
 			break;
 
-		case Objects::kObjectCompartment5:
-		case Objects::kObjectCompartment6:
-		case Objects::kObjectCompartmentE:
-		case Objects::kObjectCompartmentF:
-			parameters1->param1 = (savepoint->param.intValue == Objects::kObjectCompartment1 || savepoint->param.intValue == Objects::kObjectCompartment2) ? 3 : 4;
-			parameters1->param2 = (savepoint->param.intValue == Objects::kObjectCompartment5 || savepoint->param.intValue == Objects::kObjectCompartmentE) ? EntityData::kField491_4840 : EntityData::kField491_4070;
+		case kObjectCompartment5:
+		case kObjectCompartment6:
+		case kObjectCompartmentE:
+		case kObjectCompartmentF:
+			parameters1->param1 = (savepoint->param.intValue == kObjectCompartment1 || savepoint->param.intValue == kObjectCompartment2) ? 3 : 4;
+			parameters1->param2 = (savepoint->param.intValue == kObjectCompartment5 || savepoint->param.intValue == kObjectCompartmentE) ? EntityData::kField491_4840 : EntityData::kField491_4070;
 			parameters1->param3 = 4455;
 			break;
 
-		case Objects::kObjectCompartment7:
-		case Objects::kObjectCompartment8:
-		case Objects::kObjectCompartmentG:
-		case Objects::kObjectCompartmentH:
-			parameters1->param1 = (savepoint->param.intValue == Objects::kObjectCompartment1 || savepoint->param.intValue == Objects::kObjectCompartment2) ? 3 : 4;
-			parameters1->param2 = (savepoint->param.intValue == Objects::kObjectCompartment7 || savepoint->param.intValue == Objects::kObjectCompartmentG) ? EntityData::kField491_3050 : EntityData::kField491_2740;
+		case kObjectCompartment7:
+		case kObjectCompartment8:
+		case kObjectCompartmentG:
+		case kObjectCompartmentH:
+			parameters1->param1 = (savepoint->param.intValue == kObjectCompartment1 || savepoint->param.intValue == kObjectCompartment2) ? 3 : 4;
+			parameters1->param2 = (savepoint->param.intValue == kObjectCompartment7 || savepoint->param.intValue == kObjectCompartmentG) ? EntityData::kField491_3050 : EntityData::kField491_2740;
 			parameters1->param3 = 0;
 			break;
 		}
@@ -429,12 +429,12 @@ label_skip:
 
 	case kActionBreakCeiling:
 		_data->setNextCallback(6);		
-		call(new ENTITY_SETUP_DEFAULT(Train, setup_savegame), 2, Action::kCathBreakCeiling);
+		call(new ENTITY_SETUP_DEFAULT(Train, setup_savegame), 2, kEventCathBreakCeiling);
 		break;
 
 	case kActionJumpDownCeiling:
 		_data->setNextCallback(7);
-		call(new ENTITY_SETUP_DEFAULT(Train, setup_savegame), 2, Action::kCathJumpDownCeiling);
+		call(new ENTITY_SETUP_DEFAULT(Train, setup_savegame), 2, kEventCathJumpDownCeiling);
 		break;
 	}
 }
