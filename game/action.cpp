@@ -1195,7 +1195,7 @@ IMPLEMENT_ACTION(useWhistle) {
 
 	}	
 
-	if (evt != kActionNone) {
+	if (evt != kEventNone) {
 		playAnimation(evt);
 		if (!hotspot->scene)
 			getLogic()->processScene();
