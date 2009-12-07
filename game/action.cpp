@@ -1386,6 +1386,9 @@ void Action::pickCorpse(byte bedPosition, bool process) {
 
 void Action::dropCorpse(bool process) {
 	switch(getInventory()->getEntry(kCorpse)->location) {
+	default:
+		break;
+
 	case kLocation1:	// Floor
 		if (getProgress().jacket == kJacketOriginal)
 			playAnimation(kCorpseDropFloorOriginal);
@@ -1466,7 +1469,7 @@ bool Action::handleOtherCompartment(Objects::ObjectIndex object, byte param2, by
 		
 	error("Action::handleOtherCompartment: not implemented!");
 
-	return false;
+	//return false;
 }
 
 //////////////////////////////////////////////////////////////////////////

@@ -481,7 +481,7 @@ bool Menu::handleStartMenuEvent(Common::Event ev) {
 
 	// Process event (check hit box / etc.)
 	static StartMenuAction action;
-	SceneHotspot *hotspot;
+	SceneHotspot *hotspot = NULL;
 	if (_scene && !_scene->checkHotSpot(ev.mouse, &hotspot)) {
 		clearBg(GraphicsManager::kBackgroundOverlay);
 		askForRedraw();

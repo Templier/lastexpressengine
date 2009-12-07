@@ -160,7 +160,6 @@ bool SubtitleManager::load(Common::SeekableReadStream *stream) {
 	uint32 numSubtitles = stream->readUint16LE();
 	if (stream->eos()) {
 		error("Cannot read from subtitle file");
-		return false;
 	}
 	debugC(3, kLastExpressDebugSubtitle, "Number of subtitles in file: %d", numSubtitles);
 
@@ -201,7 +200,7 @@ void SubtitleManager::setTime(uint16 time) {
 	_currentIndex = -1;
 
 	// Find the appropriate line to show
-	for (uint i = 0; i < _subtitles.size(); i++) {
+	for (uint16 i = 0; i < _subtitles.size(); i++) {
 		if ((time >= _subtitles[i]->_timeStart) && (time <= _subtitles[i]->_timeStop)) {
 			// Keep the index of the line to show
 			_currentIndex = i;

@@ -122,7 +122,7 @@ AnimFrame::AnimFrame(Common::SeekableReadStream *in, FrameInfo *f) : _palette(NU
 	}
 
 	readPalette(in, f);
-	_rect = Common::Rect(f->xPos1, f->yPos1, f->xPos2, f->yPos2);
+	_rect = Common::Rect((int16)f->xPos1, (int16)f->yPos1, (int16)f->xPos2, (int16)f->yPos2);
 	//_rect.debugPrint(0, "Frame rect:");
 }
 
@@ -285,7 +285,7 @@ void AnimFrame::decomp7(Common::SeekableReadStream *in, FrameInfo *f) {
 			if (_palSize <= opcode)
 				_palSize = opcode + 1;
 			// set the given value
-			p[out] = opcode;
+			p[out] = (byte)opcode;
 			out++;
 		}
 	}
@@ -305,7 +305,7 @@ void AnimFrame::decompFF(Common::SeekableReadStream *in, FrameInfo *f) {
 			if (_palSize <= opcode)
 				_palSize = opcode + 1;
 			// set the given value
-			p[out] = opcode;
+			p[out] = (byte)opcode;
 			out++;
 		} else {
 			if (opcode < 0xf0) {
@@ -372,13 +372,11 @@ bool Sequence::load(Common::SeekableReadStream *stream) {
 		_stream->seek(_sequenceHeaderSize + i * _sequenceFrameSize, SEEK_SET);
 		if (_stream->eos()) {
 			error("Couldn't seek to the current frame data");
-			return false;
 		}
 
 		// Check if there is enough data
 		if ((unsigned)(_stream->size() - _stream->pos()) < _sequenceFrameSize) {
 			error("The sequence frame does not have a valid header");
-			return false;
 		}
 
 		FrameInfo info;
@@ -396,12 +394,10 @@ uint32 Sequence::count() {
 FrameInfo *Sequence::getFrameInfo(uint32 index) {
 	if (_frames.size() == 0) {
 		error("Trying to decode a sequence before loading its data");
-		return NULL;
 	}
 
 	if (index > _frames.size() - 1) {
 		error("Invalid sequence frame requested: %d, max %d", index, _frames.size() - 1);
-		return NULL;
 	}
 
 	// Skip "invalid" frames

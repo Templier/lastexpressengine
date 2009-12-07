@@ -93,12 +93,12 @@ Common::Rect Background::draw(Graphics::Surface *surface) {
 	int i = 0;
 	for (uint16 y = 0; y < _header.height; y++) {
 		for (uint16 x = 0; x < _header.width; x++) {
-			surface->fillRect(Common::Rect(_header.posX + x, _header.posY + y, _header.posX + x + 1, _header.posY + y + 1), _data[i]);
+			surface->fillRect(Common::Rect((uint16)_header.posX + x, (uint16)_header.posY + y, (uint16)_header.posX + x + 1, (uint16)_header.posY + y + 1), _data[i]);
 			i ++;
 		}
 	}
 
-	return Common::Rect(_header.posX, _header.posY, _header.posX + _header.width, _header.posY + _header.height);
+	return Common::Rect((uint16)_header.posX, (uint16)_header.posY, (uint16)(_header.posX + _header.width), (uint16)(_header.posY + _header.height));
 }
 
 byte *Background::decodeComponent(Common::SeekableReadStream *in, uint32 inSize, uint32 outSize) {

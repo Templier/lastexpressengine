@@ -98,10 +98,8 @@ bool Animation::load(Common::SeekableReadStream *stream) {
 }
 
 bool Animation::process() {
-	if (_stream == NULL || _chunks.size() == 0) {
+	if (_stream == NULL || _chunks.size() == 0)
 		error("Trying to show an animation before loading data");
-		return false;
-	}
 
 	// TODO: substract the time paused by the GUI
 	uint32 currentFrame = (uint32)(((float)(g_engine->_system->getMillis() - _startTime)) / 33.33f);

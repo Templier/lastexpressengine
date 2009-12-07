@@ -132,13 +132,13 @@ class Icon : public Drawable {
 public:
 	Icon(Cursor::CursorStyle style);
 
-	void setPosition(int x, int y);
+	void setPosition(int16 x, int16 y);
 	void setBrightness(uint brightness);
 	Common::Rect draw(Graphics::Surface *surface);
 
 private:
 	Cursor::CursorStyle _style;
-	int _x, _y;
+	int16 _x, _y;
 	uint8 _brightness;
 };
 

@@ -73,7 +73,7 @@ bool Font::load(Common::SeekableReadStream *stream) {
 
 	// Precalculate glyph widths
 	_glyphWidths = new byte[_numGlyphs];
-	for (int i = 0; i < _numGlyphs; i++) {
+	for (uint16 i = 0; i < _numGlyphs; i++) {
 		_glyphWidths[i] = getGlyphWidth(i);
 	}
 
@@ -104,7 +104,7 @@ uint8 Font::getGlyphWidth(uint16 g) {
 	uint8 maxLineWidth = 0;
 	for (int j = 0; j < 18; j++) {
 		uint8 currentLineWidth = 0;
-		for (int i = 0; i < 16; i++) {
+		for (uint8 i = 0; i < 16; i++) {
 			byte index;
 			if (i % 2)
 				index = *p & 0xf;
@@ -153,11 +153,11 @@ uint16 Font::getStringWidth(uint16 *str, uint16 length) {
 	return width;
 }
 
-void Font::drawChar(Graphics::Surface *surface, int x, int y, uint16 c) {
+void Font::drawChar(Graphics::Surface *surface, int16 x, int16 y, uint16 c) {
 	byte *p = getCharImg(c);
 
-	for (int j = 0; j < 18; j++) {
-		for (int i = 0; i < 16; i++) {
+	for (int16 j = 0; j < 18; j++) {
+		for (int16 i = 0; i < 16; i++) {
 			byte index;
 			if (i % 2)
 				index = *p & 0xf;
@@ -173,8 +173,8 @@ void Font::drawChar(Graphics::Surface *surface, int x, int y, uint16 c) {
 	}
 }
 
-Common::Rect Font::drawString(Graphics::Surface *surface, int x, int y, Common::String str) {
-	int currentX = x;
+Common::Rect Font::drawString(Graphics::Surface *surface, int16 x, int16 y, Common::String str) {
+	int16 currentX = x;
 	for (uint i = 0; i < str.size(); i++) {
 		drawChar(surface, currentX, y, str[i]);
 		currentX += getCharWidth(str[i]);
@@ -183,8 +183,8 @@ Common::Rect Font::drawString(Graphics::Surface *surface, int x, int y, Common::
 	return Common::Rect(x, y, x + currentX, y + _charHeight);
 }
 
-Common::Rect Font::drawString(Graphics::Surface *surface, int x, int y, uint16 *str, uint16 length) {
-	int currentX = x;
+Common::Rect Font::drawString(Graphics::Surface *surface, int16 x, int16 y, uint16 *str, uint16 length) {
+	int16 currentX = x;
 	for (uint i = 0; i < length; i++) {
 		drawChar(surface, currentX, y, str[i]);
 		currentX += getCharWidth(str[i]);

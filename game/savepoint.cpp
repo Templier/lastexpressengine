@@ -162,7 +162,7 @@ bool SavePoints::updateEntity(SavePoint point) {
 			error("SavePoints::updateEntity: not implemented!");
 			//*(&getEntities()->getData(_data[i].entity)->callback_data[8].entries[0].field_0 + _data[i].param) = 1;
 
-			return true;
+			//return true;
 		}
 	}
 	return false;

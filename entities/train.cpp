@@ -136,11 +136,11 @@ IMPLEMENT_FUNCTION_INT2(Train, harem, 7) {
 
 	// TODO finish implementation
 
-	if (!_data->getCurrentParameters()->param4 || !_data->getCurrentParameters()->param5)
-		return;
+	//if (!_data->getCurrentParameters()->param4 || !_data->getCurrentParameters()->param5)
+	//	return;
 
-	if (!_data->getCurrentParameters()->param6 || !_data->getCurrentParameters()->param7)
-		return;
+	//if (!_data->getCurrentParameters()->param6 || !_data->getCurrentParameters()->param7)
+	//	return;
 }
 
 IMPLEMENT_FUNCTION(Train, process, 8) {

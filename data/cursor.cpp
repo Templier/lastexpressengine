@@ -103,7 +103,7 @@ uint16 *Cursor::getCursorImage(CursorStyle style) {
 
 Icon::Icon(Cursor::CursorStyle style) : _style(style), _brightness(100) {}
 
-void Icon::setPosition(int x, int y) {
+void Icon::setPosition(int16 x, int16 y) {
 	_x = x;
 	_y = y;
 }
@@ -111,7 +111,7 @@ void Icon::setPosition(int x, int y) {
 void Icon::setBrightness(uint brightness) {
 	assert(brightness <= 100);
 
-	_brightness = brightness;
+	_brightness = (uint8)brightness;
 }
 
 Common::Rect Icon::draw(Graphics::Surface *surface) {

@@ -535,7 +535,7 @@ void Inventory::open() {
 	// Show selected state
 	drawItem(0, 0, getProgress().portrait + 1, 100)
 
-	uint y = 44;
+	int16 y = 44;
 
 	// Iterate over items
 	for (uint i = 1; i < 32; i++) {

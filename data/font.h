@@ -50,8 +50,8 @@ public:
 	~Font();
 
 	bool load(Common::SeekableReadStream *stream);
-	Common::Rect drawString(Graphics::Surface *surface, int x, int y, Common::String str);
-	Common::Rect drawString(Graphics::Surface *surface, int x, int y, uint16 *str, uint16 length);
+	Common::Rect drawString(Graphics::Surface *surface, int16 x, int16 y, Common::String str);
+	Common::Rect drawString(Graphics::Surface *surface, int16 x, int16 y, uint16 *str, uint16 length);
 
 private:
 	static const uint32 _paletteSize = 0x10;
@@ -67,7 +67,7 @@ private:
 	uint8 getCharWidth(uint16 c);
 	uint16 getStringWidth(Common::String str);
 	uint16 getStringWidth(uint16 *str, uint16 length);
-	void drawChar(Graphics::Surface *surface, int x, int y, uint16 c);
+	void drawChar(Graphics::Surface *surface, int16 x, int16 y, uint16 c);
 
 	// Font data
 	uint16 _palette[_paletteSize];

@@ -232,7 +232,7 @@ bool Debugger::cmd_playsbe(int argc, const char **argv) {
 			SubtitleManager subtitle(_engine->getFont());
 			if (subtitle.loadFile(filename)) {
 				_engine->getCursor()->show(false);
-				for (uint i = 0; i < subtitle.getMaxTime(); i++) {
+				for (uint16 i = 0; i < subtitle.getMaxTime(); i++) {
 					clearBg(GraphicsManager::kBackgroundAll);
 
 					subtitle.setTime(i);
