@@ -182,7 +182,7 @@ bool Logic::handleMouseEvent(Common::Event ev) {
 				setScene(hotspot->scene);
 
 			// Switch to next chapter if necessary
-			if (hotspot->action == SceneHotspot::kAction43 && hotspot->param1 == getState()->progress.chapter)
+			if (hotspot->action == SceneHotspot::kActionSwitchChapter && hotspot->param1 == getState()->progress.chapter)
 				switchChapter();
 		}
 	} else {

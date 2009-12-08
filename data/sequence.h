@@ -44,8 +44,10 @@
 		uint32 {4}    - End of data after decompression
 
 		(for SEQ files only)
-		uint32 {4}    - Unknown
-		uint32 {4}    - Unknown
+		uint16 {2}    - Hotspot left
+		uint16 {2}    - Hotspot right
+		uint16 {2}    - Hotspot top
+		uint16 {2}    - Hotspot bottom
 		byte {1}      - Compression type
 		byte {1}      - Subtype (determines which set of decompression functions will be called) => 0, 1, 2, 3
 		uint16 {2}    - Unknown
@@ -53,7 +55,7 @@
 		uint32 {4}    - Unknown
 		uint32 {4}    - Unknown
 		uint16 {2}    - Set to 1 in some places
-		uint32 {4}    - Unknown
+		uint16 {2}    - location (z-order?)
 		uint32 {4}    - Unknown
 
 		(for NIS files: found at 0x124)
@@ -73,7 +75,7 @@
 namespace LastExpress {
 
 struct FrameInfo {
-	void read(Common::SeekableReadStream *in, uint16 decompOffset);
+	void read(Common::SeekableReadStream *in, bool isSequence);
 
 	uint32 dataOffset;            ///< Data offset (from beginning of file)
 	uint32 unknown;               ///< FIXME: unknown data
@@ -88,9 +90,19 @@ struct FrameInfo {
 	// NIS frame headers end here. SEQ frame headers have additional 32 bytes of
 	// data, notably the compression type at the position outlined above in
 	// CompPos_SEQ
+	
+	Common::Rect hotspot;
 
 	byte compressionType;         ///< Type of frame compression (0x03, 0x04, 0x05, 0x07, 0xFF)
 	byte subType;        		  ///< Subtype
+
+	uint16 unknown1;
+	uint32 unknown2;
+	uint32 unknown3;
+	uint32 unknown4;
+	uint16 unknown5;
+	uint16 location;
+	uint32 unknown6;
 };
 
 class AnimFrame : public Drawable {
@@ -127,8 +139,6 @@ public:
 private:
 	static const uint32 _sequenceHeaderSize = 8;
 	static const uint32 _sequenceFrameSize = 68;
-	static const uint32 _compressionOffsetSEQ = 0x002c;
-	static const uint32 _compressionOffsetNIS = 0x0124;
 
 	void reset();
 

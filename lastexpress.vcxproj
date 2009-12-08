@@ -178,7 +178,6 @@
     <ClInclude Include="..\..\engines\lastexpress\game\action.h" />
     <ClInclude Include="..\..\engines\lastexpress\game\beetle.h" />
     <ClInclude Include="..\..\engines\lastexpress\game\entities.h" />
-    <ClInclude Include="..\..\engines\lastexpress\game\shared.h" />
     <ClInclude Include="..\..\engines\lastexpress\game\sound.h" />
     <ClInclude Include="..\..\engines\lastexpress\game\inventory.h" />
     <ClInclude Include="..\..\engines\lastexpress\game\object.h" />

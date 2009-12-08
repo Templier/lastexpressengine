@@ -116,9 +116,10 @@ Common::SeekableReadStream *ResourceManager::getFileStream(const Common::String 
 	if (!hasFile(name)) {
 #ifdef _DEBUG
 		error("Error opening file: %s", name.c_str());
+		return NULL;
 #else
 		debugC(2, kLastExpressDebugResource, "Error opening file: %s", name.c_str());
-		return false;
+		return NULL;
 #endif
 	}
 

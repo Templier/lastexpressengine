@@ -218,7 +218,7 @@ AnimFrame *Animation::processChunkFrame(Common::SeekableReadStream *in, Chunk *c
 
 	// Read the frame information
 	FrameInfo i;
-	i.read(str, 0x124);
+	i.read(str, false);
 
 	// Decode the frame
 	AnimFrame *f = new AnimFrame(str, &i);

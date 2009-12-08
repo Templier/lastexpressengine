@@ -145,7 +145,7 @@ public:
 		kActionBed = 40,
 		kAction41 = 41,
 		kAction42 = 42,
-		kAction43 = 43,
+		kActionSwitchChapter = 43,
 		kAction44 = 44
 	};
 

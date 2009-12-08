@@ -31,7 +31,7 @@
 
 namespace LastExpress {
 
-void FrameInfo::read(Common::SeekableReadStream *in, uint16 decompOffset) {
+void FrameInfo::read(Common::SeekableReadStream *in, bool isSequence) {
 	// Save the current position
 	uint32 basePos = in->pos();
 
@@ -45,43 +45,27 @@ void FrameInfo::read(Common::SeekableReadStream *in, uint16 decompOffset) {
 	initialSkip = in->readUint32LE();
 	decompressedEndOffset = in->readUint32LE();
 
-	// Read the compression type
-	in->seek(basePos + decompOffset);
+	// Read the compression type for NIS files
+	if (!isSequence) {
+		in->seek(basePos + 0x124);
+	} else {
+		hotspot.left = in->readUint16LE();
+		hotspot.right = in->readUint16LE();
+		hotspot.top = in->readUint16LE();
+		hotspot.bottom = in->readUint16LE();
+	}
+	
 	compressionType = in->readByte();
 	subType = in->readByte();
-
-	/*
-	unknown = in->readUint32LE();
-	//warning("frame, val 0: 0x%04x %d", unknown, unknown);
-	unknown = in->readUint32LE();
-	//warning("frame, val 1: 0x%04x %d", unknown, unknown);
-	compressionType = in->readByte();
-	//warning("frame, comptype: 0x%04x %d", compressionType, compressionType);
-	unknown = in->readByte();
-	//warning("frame, val 2: 0x%04x %d", unknown, unknown);
-	unknown = in->readUint16LE();
-	//warning("frame, val 2: 0x%04x %d", unknown, unknown);
-
+	
 	// Sequence information
-	header->unknown4 = _stream->readUint32LE();
-	header->unknown5 = _stream->readUint32LE();
-	header->compressionType = _stream->readByte();
-	header->unknown7 = _stream->readByte();
-	header->unknown8 = _stream->readUint16LE();
-	header->unknown9 = _stream->readUint32LE();
-	header->unknown10 = _stream->readUint32LE();
-	header->unknown11 = _stream->readUint32LE();
-	header->unknown12 = _stream->readUint32LE();
-	header->unknown13 = _stream->readUint32LE();
-
-	// decomp?
-	for (int i = 3; i < 8; i++) {
-		unknown = in->readUint32LE();
-		//warning("frame, val %d: 0x%04x %d", n, i, unknown, unknown);
-		if (i == 5 || i == 7)
-			assert (unknown == 0);
-	}
-	*/
+	unknown1 = in->readUint16LE();
+	unknown2 = in->readUint32LE();
+	unknown3 = in->readUint32LE();
+	unknown4 = in->readUint32LE();
+	unknown5 = in->readUint16LE();
+	location = in->readUint16LE();
+	//unknown6 = in->readUint32LE();
 }
 
 
@@ -96,7 +80,10 @@ AnimFrame::AnimFrame(Common::SeekableReadStream *in, FrameInfo *f) : _palette(NU
 	debugC(6, kLastExpressDebugGraphics, "    Position: (%d, %d) - (%d, %d)", f->xPos1, f->yPos1, f->xPos2, f->yPos2);
 	debugC(6, kLastExpressDebugGraphics, "    Initial Skip: %d", f->initialSkip);
 	debugC(6, kLastExpressDebugGraphics, "    Decompressed end offset: %d", f->decompressedEndOffset);
-	debugC(6, kLastExpressDebugGraphics, "    Compression type: %u\n", f->compressionType);
+	debugC(6, kLastExpressDebugGraphics, "    Compression type: %u / %u", f->compressionType, f->subType);
+	debugC(6, kLastExpressDebugGraphics, "    Hotspot: (%d, %d) x (%d, %d)\n", f->hotspot.left, f->hotspot.top, f->hotspot.right, f->hotspot.bottom);
+	debugC(6, kLastExpressDebugGraphics, "    Unknown: %d - %d - %d - %d - %d", f->unknown1, f->unknown2, f->unknown3, f->unknown4, f->unknown5);
+	debugC(6, kLastExpressDebugGraphics, "    Location: %d", f->location);
 
 	switch (f->compressionType) {
 	case 0:
@@ -380,7 +367,7 @@ bool Sequence::load(Common::SeekableReadStream *stream) {
 		}
 
 		FrameInfo info;
-		info.read(_stream, _compressionOffsetSEQ);
+		info.read(_stream, true);
 		_frames.push_back(info);
 	}
 
@@ -414,7 +401,7 @@ AnimFrame *Sequence::getFrame(uint32 index) {
 	if (!frame)
 		return NULL;
 
-	debugC(4, kLastExpressDebugGraphics, "Decoding frame %d / %d", index, _frames.size() - 1);
+	debugC(4, kLastExpressDebugGraphics, "Decoding frame %d / %d", index + 1, _frames.size());
 
 	return new AnimFrame(_stream, frame);
 }
