@@ -25,6 +25,7 @@
 
 #include "lastexpress/entities/entity39.h"
 
+#include "lastexpress/game/entities.h"
 #include "lastexpress/game/savepoint.h"
 #include "lastexpress/game/state.h"
 
@@ -43,22 +44,52 @@ Entity39::Entity39(LastExpressEngine *engine) : Entity(engine, kEntity39) {
 }
 
 IMPLEMENT_FUNCTION(Entity39, chapter1, 1) {
+	if (savepoint->action == kActionDefault)
+		setup_process();
 }
 
 IMPLEMENT_FUNCTION(Entity39, chapter2, 2) {
+	if (savepoint->action == kActionDefault)
+		setup_process();
 }
 
 IMPLEMENT_FUNCTION(Entity39, chapter3, 3) {
+	if (savepoint->action == kActionDefault)
+		setup_process();
 }
 
 IMPLEMENT_FUNCTION(Entity39, chapter4, 4) {
+	if (savepoint->action == kActionDefault)
+		setup_process();
 }
 
 IMPLEMENT_FUNCTION(Entity39, chapter5, 5) {
+	if (savepoint->action == kActionDefault)
+		setup_process();
 }
 
 IMPLEMENT_FUNCTION(Entity39, process, 6) {
-	error("Entity39::process callback function not implemented!");
+
+	warning("Entity39::process callback function not implemented!");
+
+	/*
+	switch (savepoint->action) {
+	default:
+		break;
+
+	case kAction3:
+		getEntities()->storeSequenceName(kEntity39, &unknownValue);
+		break;
+
+	case kActionNone:
+		getData()->field_495 = getEntities()->getData(kEntityNone)->field_495;
+
+		if (unknownValue && !unknownValue2) {
+			unknownValue2++;
+			getEntities()->storeSequenceName(kEntity39, &unknownValue);
+		}
+		break;
+	}*/
 }
 
 } // End of namespace LastExpress

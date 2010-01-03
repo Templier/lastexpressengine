@@ -54,7 +54,29 @@ void Cooks::nullfunc(SavePoint *savepoint) {
 	error("Cooks: callback function not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Cooks, chapter1, 5){
+IMPLEMENT_FUNCTION(Cooks, chapter1, 5) {
+	switch (savepoint->action) {
+	default:
+		break;
+
+	case kActionDefault:
+		_data->getData()->field_491 = EntityData::kField491_5900;
+		_data->getData()->field_493 = EntityData::kField493_0;
+		_data->getData()->field_495 = EntityData::kField495_5;		
+
+		getProgress().field_4C = 0;
+
+		break;
+
+	case kActionNone:
+		if (getState()->time > 1062000) {
+			if (!_data->getCurrentParameters()->param1) {
+				_data->getCurrentParameters()->param1 = 1;
+				// call function 6
+			}
+		}
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Cooks, chapter2, 8) {

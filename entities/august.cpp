@@ -25,6 +25,7 @@
 
 #include "lastexpress/entities/august.h"
 
+#include "lastexpress/game/object.h"
 #include "lastexpress/game/savepoint.h"
 #include "lastexpress/game/state.h"
 
@@ -105,6 +106,32 @@ void August::nullfunc(SavePoint *savepoint) {
 }
 
 IMPLEMENT_FUNCTION(August, chapter1, 22) {
+	switch (savepoint->action) {
+	default:
+		break;
+
+	case kActionDefault:
+		getObjects()->update(kObjectCompartment3, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObject11, kEntityNone, kLocationNone, kCursorKeepValue, kCursorKeepValue);
+
+		_data->getData()->field_491 = EntityData::kField491_4691;
+		_data->getData()->field_493 = EntityData::kField493_1;
+		_data->getData()->field_495 = EntityData::kField495_5;	
+		_data->getData()->field_4A5 = 0;
+
+		getProgress().event_august_met = 0;
+
+		break;
+
+	case kActionNone:
+		if (getState()->time > 1062000) {
+			if (!_data->getCurrentParameters()->param1) {
+				_data->getCurrentParameters()->param1 = 1;
+				// call function 25
+			}
+		}
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(August, chapter2, 35) {

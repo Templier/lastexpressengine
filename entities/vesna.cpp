@@ -88,7 +88,7 @@ IMPLEMENT_FUNCTION(Vesna, chapter1, 12) {
 		if (getState()->time > 1062000) {
 			if (!_data->getCurrentParameters()->param1) {
 				_data->getCurrentParameters()->param1 = 1;
-				// call function
+				// call function 13
 			}
 		}
 		break;

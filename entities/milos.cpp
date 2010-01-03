@@ -84,6 +84,7 @@ IMPLEMENT_FUNCTION(Milos, chapter1, 12) {
 	case kActionDefault:
 		getSavePoints()->addData(kEntityMilos, kAction157691176, 0);
 		getSavePoints()->addData(kEntityMilos, kAction208228224, 2);
+		getSavePoints()->addData(kEntityMilos, kAction259125998, 3);
 
 		getObjects()->update(kObjectCompartmentG, kEntityNone, kLocation3, kCursorHandKnock, kCursorHand);
 		getObjects()->update(kObject46, kEntityNone, kLocationNone, kCursorKeepValue, kCursorKeepValue);
@@ -97,7 +98,7 @@ IMPLEMENT_FUNCTION(Milos, chapter1, 12) {
 		if (getState()->time > 1062000) {
 			if (!_data->getCurrentParameters()->param1) {
 				_data->getCurrentParameters()->param1 = 1;
-				// call function
+				// call function 15
 			}
 		}
 		break;

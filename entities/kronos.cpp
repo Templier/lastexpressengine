@@ -25,6 +25,7 @@
 
 #include "lastexpress/entities/kronos.h"
 
+#include "lastexpress/game/object.h"
 #include "lastexpress/game/savepoint.h"
 #include "lastexpress/game/state.h"
 
@@ -66,6 +67,28 @@ void Kronos::nullfunc(SavePoint *savepoint) {
 }
 
 IMPLEMENT_FUNCTION(Kronos, chapter1, 7) {
+	switch (savepoint->action) {
+	default:
+		break;
+
+	case kActionDefault:
+		getObjects()->update(kObjectCeiling, kEntityNone, kLocation1, kCursorKeepValue, kCursorKeepValue);
+
+		_data->getData()->field_491 = EntityData::kField491_6000;
+		_data->getData()->field_493 = EntityData::kField493_1;
+		_data->getData()->field_495 = EntityData::kField495_2;		
+
+		break;
+
+	case kActionNone:
+		if (getState()->time > 1062000) {
+			if (!_data->getCurrentParameters()->param1) {
+				_data->getCurrentParameters()->param1 = 1;
+				// call function 8
+			}
+		}
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Kronos, chapter2, 12) {

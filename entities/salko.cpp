@@ -66,6 +66,25 @@ void Salko::nullfunc(SavePoint *savepoint) {
 }
 
 IMPLEMENT_FUNCTION(Salko, chapter1, 9) {
+	switch (savepoint->action) {
+	default:
+		break;
+
+	case kActionDefault:
+		_data->getData()->field_491 = EntityData::kField491_4691;
+		_data->getData()->field_493 = EntityData::kField493_0;
+		_data->getData()->field_495 = EntityData::kField495_5;		
+		break;
+
+	case kActionNone:
+		if (getState()->time > 1062000) {
+			if (!_data->getCurrentParameters()->param1) {
+				_data->getCurrentParameters()->param1 = 1;
+				// call function 10
+			}
+		}
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Salko, chapter2, 12) {

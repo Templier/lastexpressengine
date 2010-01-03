@@ -58,6 +58,23 @@ void Gendarmes::nullfunc(SavePoint *savepoint) {
 }
 
 IMPLEMENT_FUNCTION(Gendarmes, chapter1, 2) {
+	switch (savepoint->action) {
+	default:
+		break;
+
+	case kActionDefault:
+		_data->getData()->field_495 = EntityData::kField495_0;
+		break;
+
+	case kActionNone:
+		if (getState()->time > 1062000) {
+			if (!_data->getCurrentParameters()->param1) {
+				_data->getCurrentParameters()->param1 = 1;
+				// call function 11
+			}
+		}
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Gendarmes, chapter2, 14) {

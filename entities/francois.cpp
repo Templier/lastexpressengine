@@ -72,6 +72,26 @@ void Francois::nullfunc(SavePoint *savepoint) {
 }
 
 IMPLEMENT_FUNCTION(Francois, chapter1, 17) {
+	switch (savepoint->action) {
+	default:
+		break;
+
+	case kActionDefault:
+		_data->getData()->field_491 = EntityData::kField491_5790;
+		_data->getData()->field_493 = EntityData::kField493_1;
+		_data->getData()->field_495 = EntityData::kField495_4;		
+
+		break;
+
+	case kActionNone:
+		if (getState()->time > 1062000) {
+			if (!_data->getCurrentParameters()->param1) {
+				_data->getCurrentParameters()->param1 = 1;
+				// call function 18
+			}
+		}
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Francois, chapter2, 21) {

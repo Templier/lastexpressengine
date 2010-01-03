@@ -25,6 +25,7 @@
 
 #include "lastexpress/entities/kahina.h"
 
+#include "lastexpress/game/object.h"
 #include "lastexpress/game/savepoint.h"
 #include "lastexpress/game/state.h"
 
@@ -70,6 +71,28 @@ void Kahina::nullfunc(SavePoint *savepoint) {
 }
 
 IMPLEMENT_FUNCTION(Kahina, chapter1, 10) {
+	switch (savepoint->action) {
+	default:
+		break;
+
+	case kActionDefault:
+		getObjects()->update(kObjectCompartmentKronos, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
+
+		_data->getData()->field_491 = EntityData::kField491_5000;
+		_data->getData()->field_493 = EntityData::kField493_0;
+		_data->getData()->field_495 = EntityData::kField495_2;		
+
+		break;
+
+	case kActionNone:
+		if (getState()->time > 1062000) {
+			if (!_data->getCurrentParameters()->param1) {
+				_data->getCurrentParameters()->param1 = 1;
+				// call function 11
+			}
+		}
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Kahina, chapter2, 16) {

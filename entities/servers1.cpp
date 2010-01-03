@@ -96,7 +96,7 @@ IMPLEMENT_FUNCTION(Servers1, chapter1, 8) {
 		break;
 
 	case kActionNone:
-		// call function
+		// call function 14
 		break;
 	}
 }

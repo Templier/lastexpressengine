@@ -115,7 +115,7 @@ IMPLEMENT_FUNCTION(Rebecca, chapter1, 21) {
 		if (getState()->time > 1062000) {
 			if (!_data->getCurrentParameters()->param1) {
 				_data->getCurrentParameters()->param1 = 1;
-				// call function
+				// call function 22
 			}
 		}
 		break;

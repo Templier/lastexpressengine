@@ -25,6 +25,7 @@
 
 #include "lastexpress/entities/alexei.h"
 
+#include "lastexpress/game/object.h"
 #include "lastexpress/game/savepoint.h"
 #include "lastexpress/game/state.h"
 
@@ -89,6 +90,30 @@ void Alexei::nullfunc(SavePoint *savepoint) {
 }
 
 IMPLEMENT_FUNCTION(Alexei, chapter1, 17) {
+	switch (savepoint->action) {
+	default:
+		break;
+
+	case kActionDefault:
+		getObjects()->update(kObjectCompartment2, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObject10, kEntityNone, kLocationNone, kCursorKeepValue, kCursorKeepValue);
+		getObjects()->update(kObjectHandleInsideBathroom, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
+
+		_data->getData()->field_491 = EntityData::kField491_3969;
+		_data->getData()->field_493 = EntityData::kField493_1;
+		_data->getData()->field_495 = EntityData::kField495_5;		
+
+		break;
+
+	case kActionNone:
+		if (getState()->time > 1062000) {
+			if (!_data->getCurrentParameters()->param1) {
+				_data->getCurrentParameters()->param1 = 1;
+				// call function 18
+			}
+		}
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Alexei, chapter2, 28) {

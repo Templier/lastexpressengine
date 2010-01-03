@@ -64,6 +64,26 @@ void Alouan::nullfunc(SavePoint *savepoint) {
 }
 
 IMPLEMENT_FUNCTION(Alouan, chapter1, 10) {
+	switch (savepoint->action) {
+	default:
+		break;
+
+	case kActionDefault:
+		_data->getData()->field_491 = EntityData::kField491_2740;
+		_data->getData()->field_493 = EntityData::kField493_1;
+		_data->getData()->field_495 = EntityData::kField495_3;		
+
+		break;
+
+	case kActionNone:
+		if (getState()->time > 1062000) {
+			if (!_data->getCurrentParameters()->param1) {
+				_data->getCurrentParameters()->param1 = 1;
+				// call function 11
+			}
+		}
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Alouan, chapter2, 13) {

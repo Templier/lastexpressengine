@@ -136,7 +136,7 @@ IMPLEMENT_FUNCTION(Chapters, chapter1_init, 7) {
 	getObjects()->update(kObjectHandleOutsideRight, kEntityNone, kLocation1, kCursorNormal, kCursorHandKnock);
 	getObjects()->update(kObject101, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
 
-	// TODO call another function
+	// TODO call another function 8
 }
 
 IMPLEMENT_FUNCTION(Chapters, chapter2, 10) {

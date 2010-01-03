@@ -25,6 +25,7 @@
 
 #include "lastexpress/entities/vassili.h"
 
+#include "lastexpress/game/object.h"
 #include "lastexpress/game/savepoint.h"
 #include "lastexpress/game/state.h"
 
@@ -59,6 +60,24 @@ void Vassili::nullfunc(SavePoint *savepoint) {
 }
 
 IMPLEMENT_FUNCTION(Vassili, chapter1, 4) {
+	switch (savepoint->action) {
+	default:
+		break;
+
+	case kActionDefault:
+		getObjects()->update(kObjectCompartmentA, kEntityNone, kLocationNone, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObject40, kEntityNone, kLocationNone, kCursorKeepValue, kCursorKeepValue);
+		break;
+
+	case kActionNone:
+		if (getState()->time > 1062000) {
+			if (!_data->getCurrentParameters()->param1) {
+				_data->getCurrentParameters()->param1 = 1;
+				// call function 5
+			}
+		}
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Vassili, chapter2, 12) {

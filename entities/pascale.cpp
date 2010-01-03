@@ -98,7 +98,7 @@ IMPLEMENT_FUNCTION(Pascale, chapter1, 12) {
 		break;
 
 	case kActionNone:
-		// call function
+		// call function 17
  		break;
 	}
 }
