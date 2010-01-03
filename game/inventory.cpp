@@ -205,7 +205,7 @@ bool Inventory::handleMouseEvent(Common::Event ev) {
 		for (int i = 1; i < 32; i++) {
 			if (!hasItem((InventoryItem)i))
 				continue;
-			
+
 			if (Common::Rect(0, y, 32, 32 + y).contains(ev.mouse)) {
 
 				// If released with an item highlighted, show this item
@@ -234,7 +234,7 @@ bool Inventory::handleMouseEvent(Common::Event ev) {
 				}
 			}
 
-			y += 40;			
+			y += 40;
 		}
 
 		// Right button is released: we need to close the inventory
@@ -392,14 +392,14 @@ bool Inventory::hasItem(InventoryItem item) {
 }
 
 void Inventory::selectItem(InventoryItem item) {
-	_selectedItem = item; 
+	_selectedItem = item;
 
 	drawItem(44, 0, getEntry(_selectedItem)->item_id, 100)
 	askForRedraw();
 }
 
-void Inventory::unselectItem() { 
-	_selectedItem = kNoItem; 
+void Inventory::unselectItem() {
+	_selectedItem = kNoItem;
 
 	_engine->getGraphicsManager()->clear(GraphicsManager::kBackgroundInventory, Common::Rect(44, 0, 44 + 32, 32));
 	askForRedraw();
@@ -450,7 +450,7 @@ bool Inventory::isItemSceneParameter(InventoryItem item) {
 	bool equal = false;
 
 	switch(currentScene->getHeader()->type) {
-	default:		
+	default:
 		break;
 
 	case Scene::kTypeItem:
@@ -496,7 +496,7 @@ void Inventory::examine(InventoryItem item) {
 	if (!getState()->sceneUseBackup) {
 		getState()->sceneBackup = getState()->scene;
 		getState()->sceneUseBackup = 1;
-		
+
 		getLogic()->loadScene(index);
 	} else {
 

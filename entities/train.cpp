@@ -52,7 +52,7 @@ Train::Train(LastExpressEngine *engine) : Entity(engine, kEntityTrain) {
 IMPLEMENT_FUNCTION_INT2(Train, savegame, 1) {
 	switch (savepoint->action) {
 	default:
-		break;	
+		break;
 
 	case kActionNone:
 		CALL_PREVIOUS_SAVEPOINT(kEntityTrain)
@@ -149,11 +149,11 @@ IMPLEMENT_FUNCTION(Train, process, 8) {
 
 	switch (savepoint->action) {
 	default:
-		break;	
+		break;
 
 	case kActionNone:
 		// Play smoke animation
-		if ((getEntities()->checkFields7(EntityData::kField495_3) || getEntities()->checkFields7(EntityData::kField495_4)) 
+		if ((getEntities()->checkFields7(EntityData::kField495_3) || getEntities()->checkFields7(EntityData::kField495_4))
 		  && _data->getCurrentParameters()->param4
 		  && !_data->getCurrentParameters()->param5) {
 
@@ -165,11 +165,11 @@ IMPLEMENT_FUNCTION(Train, process, 8) {
 			  _data->getCurrentParameters()->param5 = 1;
 			  getLogic()->processScene();
 
-		  }			
+		  }
 		}
 
 		if (_data->getCurrentParameters()->param6) {
-		
+
 			if (_data->getCurrentParameters(1)->param7) {
 				_data->getCurrentParameters(1)->param7 = getState()->time + 900;
 
@@ -178,8 +178,8 @@ IMPLEMENT_FUNCTION(Train, process, 8) {
 
 				_data->getCurrentParameters(1)->param7 = EntityData::kParamTime;
 			}
-		
-			getLogic()->loadSceneFromData(5, 58, 255);			
+
+			getLogic()->loadSceneFromData(5, 58, 255);
 		}
 
 		_data->getCurrentParameters(1)->param7 = 0;
@@ -203,7 +203,7 @@ label_skip:
 				// Why does it sets it back to 0?
 			}
 		}
-		
+
 		if (_data->getParameters(8, 0)->param8) {
 			ObjectIndex param8 = (ObjectIndex)_data->getParameters(8, 0)->param8;
 
@@ -211,7 +211,7 @@ label_skip:
 			getObjects()->update(param8, getObjects()->get(param8).entity, kLocation3, kCursorHandKnock, kCursorHand);
 			_data->getParameters(8, 0)->param8 = 0;
 		}
-		
+
 		// Play clock sound
 		if (_data->getCurrentParameters()->param6) {
 			getSound()->playSound(kEntityNone, "ZFX1001");
@@ -228,7 +228,7 @@ label_skip:
 		break;
 
 	case kActionDefault:
-		_data->getCurrentParameters(8)->param1 = 1;		
+		_data->getCurrentParameters(8)->param1 = 1;
 		if (getProgress().chapter < kChapter5) {
 			getObjects()->update(kObjectCompartment5, kEntityTrain, kLocation3, kCursorHandKnock, kCursorHand);
 			getObjects()->update(kObjectCompartment6, kEntityTrain, kLocation3, kCursorHandKnock, kCursorHand);
@@ -301,7 +301,7 @@ label_skip:
 				call(new ENTITY_SETUP_DEFAULT(Train, setup_savegame), 2, kEventMertensBloodJacket);
 				break;
 			}
-		}	
+		}
 
 		resetParam8();
 		break;
@@ -343,7 +343,7 @@ label_skip:
 		}
 		break;
 	}
-		
+
 	case kAction191070912:
 		_data->getParameters(8, 0)->param7 = savepoint->param.intValue;
 		break;
@@ -428,7 +428,7 @@ label_skip:
 		break;
 
 	case kActionBreakCeiling:
-		_data->setNextCallback(6);		
+		_data->setNextCallback(6);
 		call(new ENTITY_SETUP_DEFAULT(Train, setup_savegame), 2, kEventCathBreakCeiling);
 		break;
 

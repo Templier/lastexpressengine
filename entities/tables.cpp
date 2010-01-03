@@ -37,7 +37,7 @@ namespace LastExpress {
 
 Tables::Tables(LastExpressEngine *engine, EntityIndex id) : Entity(engine, id) {
 	_id = id;
-	
+
 	ADD_CALLBACK_FUNCTION(Tables, chapter1);
 	ADD_CALLBACK_FUNCTION(Tables, chapter2);
 	ADD_CALLBACK_FUNCTION(Tables, chapter3);
@@ -71,7 +71,7 @@ IMPLEMENT_FUNCTION(Tables, chapter5, 5) {
 		setup_draw();
 }
 
-IMPLEMENT_FUNCTION(Tables, draw, 6) {	
+IMPLEMENT_FUNCTION(Tables, draw, 6) {
 	switch (savepoint->action) {
 	default:
 		break;
@@ -138,7 +138,7 @@ IMPLEMENT_FUNCTION(Tables, draw, 6) {
 			getEntities()->drawSequence(_id, "024D");
 			break;
 		}
-		
+
 		break;
 
 	case kAction103798704:

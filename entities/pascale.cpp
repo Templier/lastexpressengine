@@ -79,7 +79,7 @@ IMPLEMENT_FUNCTION(Pascale, chapter1, 12) {
 	default:
 		break;
 
-	case kActionDefault: 
+	case kActionDefault:
 		getSavePoints()->addData(kEntityPascale, kAction239072064, 0);
 		getSavePoints()->addData(kEntityPascale, kAction257489762, 2);
 		getSavePoints()->addData(kEntityPascale, kAction207769280, 6);
@@ -97,7 +97,7 @@ IMPLEMENT_FUNCTION(Pascale, chapter1, 12) {
 		_data->getData()->field_495 = EntityData::kField495_5;
 		break;
 
-	case kActionNone: 
+	case kActionNone:
 		// call function
  		break;
 	}

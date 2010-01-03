@@ -90,7 +90,7 @@ struct FrameInfo {
 	// NIS frame headers end here. SEQ frame headers have additional 32 bytes of
 	// data, notably the compression type at the position outlined above in
 	// CompPos_SEQ
-	
+
 	Common::Rect hotspot;
 
 	byte compressionType;         ///< Type of frame compression (0x03, 0x04, 0x05, 0x07, 0xFF)
@@ -133,7 +133,7 @@ public:
 
 	bool load(Common::SeekableReadStream *stream);
 	uint32 count();
-	AnimFrame *getFrame(uint32 index);	
+	AnimFrame *getFrame(uint32 index);
 	FrameInfo *getFrameInfo(uint32 index);
 
 private:

@@ -285,7 +285,7 @@ bool Debugger::cmd_playnis(int argc, const char **argv) {
 				animation.play();
 				_engine->getCursor()->show(true);
 			}
-			
+
 			resetCommand();
 		}
 	} else {

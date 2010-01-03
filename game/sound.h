@@ -42,9 +42,9 @@ public:
 	// Sound playing
 	void playSound(EntityIndex entity, const char *filename, int a3 = -1, byte a4 = 0);
 
-	void playMusic(EntityIndex entity, byte id, int a3, byte a4);	
+	void playMusic(EntityIndex entity, byte id, int a3, byte a4);
 	void playDialog(EntityIndex entity, EntityIndex entityDialog, int a3, byte a4);
-	void playSoundEvent(int index, byte action, byte a3);	
+	void playSoundEvent(int index, byte action, byte a3);
 
 	// Dialog
 	const char *getDialogName(EntityIndex entity);

@@ -54,7 +54,7 @@ public:
 	void reset(EntityIndex entity);
 
 	// Update & drawing
-	void updateFields();	
+	void updateFields();
 	void setupSequences();
 	void setupCallbacks();
 
@@ -66,7 +66,7 @@ public:
 	// Sequences
 	void storeSequenceName(EntityIndex entity, const char* sequence);
 	void drawSequence(EntityIndex entity, const char* sequence);
-	void drawSequences(EntityIndex entity);	
+	void drawSequences(EntityIndex entity);
 
 	// Accessors
 	Entity *get(EntityIndex entity);
@@ -77,7 +77,7 @@ public:
 
 	// Checks
 	bool checkEntity(EntityIndex entity, EntityData::Field495Value field495, EntityData::Field491Value field491);
-	bool compare(EntityIndex entity1, EntityIndex entity2);	
+	bool compare(EntityIndex entity1, EntityIndex entity2);
 
 	bool checkFields1(EntityIndex entity, EntityData::Field495Value field495, EntityData::Field491Value field491);
 	bool checkFields2(ObjectIndex object);
@@ -95,10 +95,10 @@ public:
 private:
 	LastExpressEngine	    *_engine;
 	EntityData 			    *_header;
-	Common::Array<Entity *>  _entities;	
+	Common::Array<Entity *>  _entities;
 
 	void executeCallbacks();
-	void processEntity(EntityIndex entity);	
+	void processEntity(EntityIndex entity);
 };
 
 } // End of namespace LastExpress

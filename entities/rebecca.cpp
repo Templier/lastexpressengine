@@ -79,7 +79,7 @@ Rebecca::Rebecca(LastExpressEngine *engine) : Entity(engine, kEntityRebecca) {
 	ADD_CALLBACK_FUNCTION(Rebecca, chapter4);
 	ADD_CALLBACK_FUNCTION(Rebecca, nullfunc);
 	ADD_CALLBACK_FUNCTION(Rebecca, nullfunc);
-	ADD_CALLBACK_FUNCTION(Rebecca, nullfunc);	
+	ADD_CALLBACK_FUNCTION(Rebecca, nullfunc);
 	ADD_CALLBACK_FUNCTION(Rebecca, chapter5);
 	ADD_CALLBACK_FUNCTION(Rebecca, nullfunc);
 	ADD_CALLBACK_FUNCTION(Rebecca, nullfunc);
@@ -95,7 +95,7 @@ IMPLEMENT_FUNCTION(Rebecca, chapter1, 21) {
 	default:
 		break;
 
-	case kActionDefault: 
+	case kActionDefault:
 		getSavePoints()->addData(kEntityRebecca, kAction224253538, 0);
 
 		getObjects()->update(kObjectCompartmentE, kEntityNone, kLocationNone, kCursorHandKnock, kCursorHand);
@@ -111,7 +111,7 @@ IMPLEMENT_FUNCTION(Rebecca, chapter1, 21) {
 		_data->getParameters(8, 0)->param2 = 1;
 		break;
 
-	case kActionNone: 
+	case kActionNone:
 		if (getState()->time > 1062000) {
 			if (!_data->getCurrentParameters()->param1) {
 				_data->getCurrentParameters()->param1 = 1;

@@ -49,7 +49,7 @@ Alouan::Alouan(LastExpressEngine *engine) : Entity(engine, kEntityAlouan) {
 	ADD_CALLBACK_FUNCTION(Alouan, chapter2);
 	ADD_CALLBACK_FUNCTION(Alouan, nullfunc);
 	ADD_CALLBACK_FUNCTION(Alouan, chapter3);
-	ADD_CALLBACK_FUNCTION(Alouan, nullfunc);	
+	ADD_CALLBACK_FUNCTION(Alouan, nullfunc);
 	ADD_CALLBACK_FUNCTION(Alouan, chapter4);
 	ADD_CALLBACK_FUNCTION(Alouan, nullfunc);
 	ADD_CALLBACK_FUNCTION(Alouan, nullfunc);

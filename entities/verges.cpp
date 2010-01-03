@@ -88,7 +88,7 @@ IMPLEMENT_FUNCTION(Verges, chapter1, 18) {
 	default:
 		break;
 
-	case kActionDefault: 
+	case kActionDefault:
 		getSavePoints()->addData(kEntityVerges, kAction191337656, 0);
 		getSavePoints()->addData(kEntityVerges, kAction226031488, 1);
 		getSavePoints()->addData(kEntityVerges, kAction339669520, 1);
@@ -106,7 +106,7 @@ IMPLEMENT_FUNCTION(Verges, chapter1, 18) {
 		_data->getData()->field_495 = EntityData::kField495_6;
 		break;
 
-	case kActionNone: 
+	case kActionNone:
 		if (getState()->time > 1062000) {
 			if (!_data->getCurrentParameters()->param1) {
 				_data->getCurrentParameters()->param1 = 1;

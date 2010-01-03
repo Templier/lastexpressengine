@@ -52,7 +52,7 @@ public:
 
 	// Hotspot action
 	void processHotspot(SceneHotspot *hotspot);
-	
+
 	// Cursor
 	CursorStyle getCursor(byte action, ObjectIndex object, byte param2, byte param3, byte cursor);
 
@@ -61,16 +61,16 @@ public:
 
 private:
 	typedef Common::Functor1<SceneHotspot*, void> ActionFunctor;
-	
+
 	LastExpressEngine* _engine;
-	Common::Array<ActionFunctor *> _actions; 
+	Common::Array<ActionFunctor *> _actions;
 
 	// Each action is of the form action_<name>(SceneHotspot *hotspot)
 	//   - a pointer to each action is added to the _actions array
 	//   - processHotspot simply calls the proper function given by the hotspot->action value
 	//
 	// Note: even though there are 44 actions, only 41 are used in processHotspot
-	
+
 	DECLARE_ACTION(inventory);
 	DECLARE_ACTION(savePoint);
 	DECLARE_ACTION(playSound);

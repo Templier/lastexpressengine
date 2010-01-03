@@ -36,7 +36,7 @@ class Chapters : public Entity {
 public:
 	Chapters(LastExpressEngine *engine);
 
-	// Setup	
+	// Setup
 	DECLARE_FUNCTION(chapter1)
 	DECLARE_FUNCTION(chapter1_init)
 	DECLARE_FUNCTION(chapter2)

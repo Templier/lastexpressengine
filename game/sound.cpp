@@ -91,7 +91,7 @@ void Sound::playSoundEvent(int index, byte action, byte a3) {
 	// TODO:
 	// - check entities (0 against current)
 	// - check index against entity values
-	// - more checks	
+	// - more checks
 
 	int _action = (int)action;
 
@@ -191,12 +191,12 @@ void Sound::playSoundEvent(int index, byte action, byte a3) {
 		break;
 
 	default:
-		break;		
+		break;
 	}
 
 	if (_action) {
 		sprintf((char *)&sound_name, "LIB%03d", _action);
-	
+
 		if (_engine->getResMan()->hasFile(Common::String((char*)&sound_name) + ".snd"))
 			playSfxStream((char*)&sound_name);
 	}
@@ -393,7 +393,7 @@ const char *Sound::getDialogName(EntityIndex entity) {
 			return "XKRO4";
 
 		if (getEvent(kEventKronosConversation)) {
-			if (!getEvent(kEventMilosCompartmentVisitAugust))	
+			if (!getEvent(kEventMilosCompartmentVisitAugust))
 				return "XKRO3";
 			else
 				return "XKRO2";
@@ -408,7 +408,7 @@ const char *Sound::getDialogName(EntityIndex entity) {
 		if (getProgress().field_9C)
 			return "XFRA3";
 
-		if (getProgress().field_A0 
+		if (getProgress().field_A0
 		 || getEvent(kEventFrancoisWhistle) || getEvent(kEventFrancoisWhistleD)
 		 || getEvent(kEventFrancoisWhistleNight) || getEvent(kEventFrancoisWhistleNightD))
 			return "XFRA2";
@@ -496,7 +496,7 @@ const char *Sound::getDialogName(EntityIndex entity) {
 	case kEntityChapters:
 		if (getEvent(kEventCathDream) || getEvent(kEventCathWakingUp))
 			return "XTYL3";
-		
+
 		return "XTYL1";
 
 	default:
@@ -530,7 +530,7 @@ void Sound::excuseMe(EntityIndex entity, int param2, int param3) {
 	if (!param3) {
 		error("Sound::excuseMe: not implemented!");
 	}
-	
+
 	switch (entity) {
 	default:
 		break;
@@ -667,7 +667,7 @@ void Sound::excuseMe(EntityIndex entity, int param2, int param3) {
 	case kEntityAbbot:
 		if (testParameter(param2)) {
 			playSound(kEntityNone, "ABB3002C", param3, 0);
-		} else {			
+		} else {
 			switch(random(3)) {
 			default:
 				break;
@@ -784,7 +784,7 @@ void Sound::excuseMe(EntityIndex entity, int param2, int param3) {
 	case kEntityAlouan:
 		playSound(kEntityNone, "HAR1004", param3, 0);
 		break;
-	}	
+	}
 }
 
 const char *Sound::excuseMeCath() {

@@ -52,7 +52,7 @@ class Scene;
 
 class Inventory : Common::Serializable {
 public:
-	
+
 	// Entry
 	struct InventoryEntry {
 		byte item_id;
@@ -69,7 +69,7 @@ public:
 			field_2 = 0;
 			is_selectable = 0;
 			has_item = 0;
-			no_autoselect = 1; 
+			no_autoselect = 1;
 			location = kLocationNone;
 		}
 	};
@@ -82,7 +82,7 @@ public:
 	// Inventory contents
 	void addItem(InventoryItem item);
 	void removeItem(InventoryItem item, ObjectLocation newLocation = kLocationNone);
-	bool hasItem(InventoryItem item);	
+	bool hasItem(InventoryItem item);
 	void selectItem(InventoryItem item);
 	void unselectItem();
 	InventoryItem getSelectedItem() { return _selectedItem; }
@@ -116,7 +116,7 @@ private:
 	InventoryItem _highlightedItem;
 	bool _opened;
 	bool _visible;
-	
+
 	bool _showingHourGlass;
 	bool _blinkingEgg;
 	uint32 _blinkingTime;
@@ -133,7 +133,7 @@ private:
 	void open();
 	void close();
 	void examine(InventoryItem item);
-	void drawEgg();	
+	void drawEgg();
 	Common::Rect getItemRect(int16 index);
 
 	bool isItemSceneParameter(InventoryItem item);

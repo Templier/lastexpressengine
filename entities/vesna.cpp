@@ -76,7 +76,7 @@ IMPLEMENT_FUNCTION(Vesna, chapter1, 12) {
 	default:
 		break;
 
-	case kActionDefault: 
+	case kActionDefault:
 		getSavePoints()->addData(kEntityVesna, kAction124190740, 0);
 
 		_data->getData()->field_491 = EntityData::kField491_4689;
@@ -84,7 +84,7 @@ IMPLEMENT_FUNCTION(Vesna, chapter1, 12) {
 		_data->getData()->field_495 = EntityData::kField495_5;
 		break;
 
-	case kActionNone: 
+	case kActionNone:
 		if (getState()->time > 1062000) {
 			if (!_data->getCurrentParameters()->param1) {
 				_data->getCurrentParameters()->param1 = 1;

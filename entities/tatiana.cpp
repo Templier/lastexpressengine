@@ -58,13 +58,13 @@ Tatiana::Tatiana(LastExpressEngine *engine) : Entity(engine, kEntityTatiana) {
 	ADD_CALLBACK_FUNCTION(Tatiana, nullfunc);
 	ADD_CALLBACK_FUNCTION(Tatiana, nullfunc);
 	ADD_CALLBACK_FUNCTION(Tatiana, nullfunc);
-	ADD_CALLBACK_FUNCTION(Tatiana, nullfunc);	
+	ADD_CALLBACK_FUNCTION(Tatiana, nullfunc);
 	ADD_CALLBACK_FUNCTION(Tatiana, chapter2);
 	ADD_CALLBACK_FUNCTION(Tatiana, nullfunc);
 	ADD_CALLBACK_FUNCTION(Tatiana, nullfunc);
 	ADD_CALLBACK_FUNCTION(Tatiana, nullfunc);
 	ADD_CALLBACK_FUNCTION(Tatiana, nullfunc);
-	ADD_CALLBACK_FUNCTION(Tatiana, nullfunc);	
+	ADD_CALLBACK_FUNCTION(Tatiana, nullfunc);
 	ADD_CALLBACK_FUNCTION(Tatiana, chapter3);
 	ADD_CALLBACK_FUNCTION(Tatiana, nullfunc);
 	ADD_CALLBACK_FUNCTION(Tatiana, nullfunc);
@@ -101,7 +101,7 @@ IMPLEMENT_FUNCTION(Tatiana, chapter1, 17) {
 	default:
 		break;
 
-	case kActionDefault: 
+	case kActionDefault:
 		getSavePoints()->addData(kEntityTatiana, kAction191198209, 0);
 
 		getObjects()->update(kObjectCompartmentB, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
@@ -113,7 +113,7 @@ IMPLEMENT_FUNCTION(Tatiana, chapter1, 17) {
 		_data->getData()->field_495 = EntityData::kField495_3;
 		break;
 
-	case kActionNone: 
+	case kActionNone:
 		if (getState()->time > 1062000) {
 			if (!_data->getCurrentParameters()->param1) {
 				_data->getCurrentParameters()->param1 = 1;

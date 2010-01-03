@@ -33,7 +33,7 @@
 namespace LastExpress {
 
 class LastExpressEngine;
-	
+
 class Action;
 class Beetle;
 class Entities;
@@ -43,10 +43,10 @@ class Sound;
 
 class Logic {
 public:
-		
+
 	Logic(LastExpressEngine *engine);
 	~Logic();
-	
+
 	bool handleMouseEvent(Common::Event ev);
 
 	void showMenu(bool visible);
@@ -57,7 +57,7 @@ public:
 	void gameOver(int a1, int a2, int scene, bool showScene);
 
 	// Scene
-	void loadScene(uint32 index);	
+	void loadScene(uint32 index);
 	void setScene(uint32 index);
 
 	void loadSceneFromObject(ObjectIndex object);
@@ -81,11 +81,11 @@ public:
 	Action 	   *getGameAction() { return _action; }
 	CursorStyle getCursorStyle() { return _runState.cursorStyle; }
 	Beetle     *getGameBeetle() { return _beetle; }
-	Entities   *getGameEntities() { return _entities; }	
-	Sound 	   *getGameSound() { return _sound; }		
-	
+	Entities   *getGameEntities() { return _entities; }
+	Sound 	   *getGameSound() { return _sound; }
+
 private:
-	
+
 	// State
 	struct RunState {
 		GameId gameId;
@@ -111,17 +111,17 @@ private:
 	LastExpressEngine *_engine;
 
 	RunState _runState;     	///< State of the game session (this data won't be stored in savegames)
-	
+
 	Action *_action;			///< Actions
 	Beetle *_beetle;			///< Beetle catching
 	Entities *_entities;		///< Entities
-	Menu *_menu;            	///< Main menu handling	
-	Scene *_scene;				///< Current scene	
-	Sound *_sound;				///< Sound	
-	
+	Menu *_menu;            	///< Main menu handling
+	Scene *_scene;				///< Current scene
+	Sound *_sound;				///< Sound
+
 	void drawScene(uint32 index);
 	void preProcessScene(uint32 *index);
-	void postProcessScene(uint32 *index);	
+	void postProcessScene(uint32 *index);
 
 	void switchChapter();
 	void playFinalSequence();

@@ -69,7 +69,7 @@ struct SavePoint {
 		entity2 = kEntityNone;
 		param.intValue = 0;
 	}
-};	
+};
 
 class SavePoints : Common::Serializable {
 private:
@@ -93,7 +93,7 @@ public:
 
 	SavePoints(LastExpressEngine *engine);
 	~SavePoints();
-	
+
 	// Savepoints
 	void push(EntityIndex entity2, EntityIndex entity1, ActionIndex action, uint32 param = 0);
 	void pushAll(EntityIndex entity, ActionIndex action, uint32 param = 0);

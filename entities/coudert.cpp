@@ -77,7 +77,7 @@ Coudert::Coudert(LastExpressEngine *engine) : Entity(engine, kEntityCoudert) {
 	ADD_CALLBACK_FUNCTION(Coudert, nullfunc);
 	ADD_CALLBACK_FUNCTION(Coudert, nullfunc);
 	ADD_CALLBACK_FUNCTION(Coudert, chapter2);
-	ADD_CALLBACK_FUNCTION(Coudert, nullfunc);	
+	ADD_CALLBACK_FUNCTION(Coudert, nullfunc);
 	ADD_CALLBACK_FUNCTION(Coudert, chapter3);
 	ADD_CALLBACK_FUNCTION(Coudert, nullfunc);
 	ADD_CALLBACK_FUNCTION(Coudert, nullfunc);
@@ -109,7 +109,7 @@ IMPLEMENT_FUNCTION(Coudert, chapter1, 36) {
 	default:
 		break;
 
-	case kActionDefault: 
+	case kActionDefault:
 		getSavePoints()->addData(kEntityCoudert, kAction292048641, 7);
 		getSavePoints()->addData(kEntityCoudert, kAction326348944, 8);
 		getSavePoints()->addData(kEntityCoudert, kAction171394341, 2);
@@ -142,11 +142,11 @@ IMPLEMENT_FUNCTION(Coudert, chapter1, 36) {
 			// call function
 		break;
 
-	case kActionNone: 
+	case kActionNone:
 		if (getState()->time > 1062000) {
 			if (!_data->getCurrentParameters()->param1) {
-				_data->getCurrentParameters()->param1 = 1;				
-				_data->setCallback(_data->getData()->current_call + 8, 1);				
+				_data->getCurrentParameters()->param1 = 1;
+				_data->setCallback(_data->getData()->current_call + 8, 1);
 				// call function call(, 0, 0, 0, 0);
 			}
 		}

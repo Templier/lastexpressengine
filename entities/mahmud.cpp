@@ -66,7 +66,7 @@ IMPLEMENT_FUNCTION(Mahmud, chapter1, 15) {
 	default:
 		break;
 
-	case kActionDefault: 
+	case kActionDefault:
 		getSavePoints()->addData(kEntityMahmud, kAction170483072, 0);
 
 		getObjects()->update(kObjectCompartment4, kEntityNone, kLocation3, kCursorHandKnock, kCursorHand);
@@ -77,7 +77,7 @@ IMPLEMENT_FUNCTION(Mahmud, chapter1, 15) {
 		_data->getData()->field_495 = EntityData::kField495_3;
 		break;
 
-	case kActionNone: 
+	case kActionNone:
 		if (getState()->time > 1062000) {
 			if (!_data->getCurrentParameters()->param1) {
 				_data->getCurrentParameters()->param1 = 1;

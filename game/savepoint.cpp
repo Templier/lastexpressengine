@@ -79,7 +79,7 @@ void SavePoints::process() {
 	// TODO add check for another global var
 	while (_savepoints.size() > 0) {
 		SavePoint point = pop();
-		
+
 		if (updateEntity(point)) {
 
 			// Call requested callback
@@ -189,7 +189,7 @@ void SavePoints::saveLoadWithSerializer(Common::Serializer &s) {
 
 	// Skip uninitialized data if any
 	s.skip((_savePointsMaxSize - dataSize) * 16);
-	
+
 	// Number of savepoints
 	uint32 count = _savepoints.size();
 	s.syncAsUint32LE(count);

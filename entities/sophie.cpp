@@ -135,7 +135,7 @@ IMPLEMENT_FUNCTION(Sophie, function3, 3) {
 	switch (savepoint->action) {
 	default:
 		break;
-		
+
 	case kActionNone:
 		_data->getData()->field_491 = getEntityData(kEntityRebecca)->field_491;
 		_data->getData()->field_495 = getEntityData(kEntityRebecca)->field_495;
@@ -186,7 +186,7 @@ IMPLEMENT_FUNCTION(Sophie, function3, 3) {
 		_data->getData()->field_491 = (EntityData::Field491Value)(getEntityData(kEntityRebecca)->field_491 + 100);
 		_data->getData()->field_493 = getEntityData(kEntityRebecca)->field_493;
 		_data->getData()->field_495 = getEntityData(kEntityRebecca)->field_495;
-		
+
 		_data->setNextCallback(3);
 		call(new ENTITY_SETUP_DEFAULT(Sophie, setup_function2), 2, 9640);
 		break;
@@ -206,7 +206,7 @@ IMPLEMENT_FUNCTION(Sophie, function3, 3) {
 IMPLEMENT_FUNCTION(Sophie, chapter1, 4) {
 	switch (savepoint->action) {
 	default:
-		break;	
+		break;
 
 	case kActionNone:
 		if (getState()->time > 1062000)
@@ -216,7 +216,7 @@ IMPLEMENT_FUNCTION(Sophie, chapter1, 4) {
 			}
 		break;
 
-	case kActionDefault: 
+	case kActionDefault:
 		_data->getData()->field_491 = EntityData::kField491_4840;
 		_data->getData()->field_493 = EntityData::kField493_1;
 		_data->getData()->field_495 = EntityData::kField495_4;

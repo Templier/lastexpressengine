@@ -449,7 +449,7 @@ void Menu::showMenu() {
 	_currentTime = getState()->time;
 
 	// Load main scene
-	_scene = _engine->getScene(getSceneIndex()); 
+	_scene = _engine->getScene(getSceneIndex());
 	_engine->getGraphicsManager()->draw(_scene, GraphicsManager::kBackgroundC);
 	drawElements();
 
@@ -559,7 +559,7 @@ bool Menu::handleStartMenuEvent(Common::Event ev) {
 			clearBg(GraphicsManager::kBackgroundAll);
 
 			// Reset scene
-			getLogic()->startGame();	
+			getLogic()->startGame();
 		}
 		break;
 

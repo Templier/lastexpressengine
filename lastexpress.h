@@ -98,7 +98,7 @@ private:
 	StreamedSound *_music;
 	StreamedSound *_sfx;
 	State *_state;
-	
+
 	Common::RandomSource _random;
 };
 

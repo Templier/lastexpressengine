@@ -36,7 +36,7 @@ namespace LastExpress {
 class LastExpressEngine;
 class Sequence;
 struct SavePoint;
-	
+
 //////////////////////////////////////////////////////////////////////////
 // Callbacks
 #define ENTITY_CALLBACK(class, name, pointer) \
@@ -77,7 +77,7 @@ struct SavePoint;
 		delete func; \
 	}
 
-//////////////////////////////////////////////////////////////////////////		   
+//////////////////////////////////////////////////////////////////////////
 // Implementation
 
 // nullfunction call
@@ -121,7 +121,7 @@ struct SavePoint;
 		END_SETUP() \
 	} \
 	void class::name(SavePoint *savepoint)
-	
+
 #define IMPLEMENT_FUNCTION_SEQ_INT(class, name, index) \
 	void class::setup_##name(const char* seq1, int param2, int param3, const char* seq2) { \
 		BEGIN_SETUP(class, name, index) \
@@ -143,7 +143,7 @@ struct SavePoint;
 		END_SETUP() \
 	} \
 	void class::name(SavePoint *savepoint)
-	
+
 //////////////////////////////////////////////////////////////////////////
 // Setup helpers
 #define BEGIN_SETUP(class, name, index) \
@@ -241,7 +241,7 @@ public:
 		kField491_3050  = 3050,
 		kField491_3969  = 3969,
 		kField491_3970  = 3970,
-		kField491_4070  = 4070,		
+		kField491_4070  = 4070,
 		kField491_4689  = 4689,
 		kField491_4840  = 4840,
 		kField491_5000  = 5000,
@@ -278,7 +278,7 @@ public:
 	enum ParameterValue {
 		kParamTime = 2147483647
 	};
-	
+
 	struct EntityParameters {
 		int param1;
 		int param2;
@@ -315,7 +315,7 @@ public:
 			memset(&seq1, 0, 12);
 			param2 = 0;
 			param3 = 0;
-			memset(&seq2, 0, 12);			
+			memset(&seq2, 0, 12);
 		}
 	};
 
@@ -331,7 +331,7 @@ public:
 			param1 = 0;
 			param2 = 0;
 			param3 = 0;
-			memset(&param4, 0, 12);	
+			memset(&param4, 0, 12);
 			param7 = 0;
 			param8 = 0;
 		}
@@ -358,10 +358,10 @@ public:
 				delete parameters[i];
 		}
 
-		
+
 	};
 
-	struct EntityCallData {		
+	struct EntityCallData {
 		byte callbacks[9];
 		// uint32 ??
 		// uint16 ??
@@ -373,13 +373,13 @@ public:
 		//int16 field_497;
 		InventoryItem inventoryItem;
 		byte field_49A;
-		int16 field_49B;		
+		int16 field_49B;
 		int16 field_49D;
 
-		int16 field_4A1;	
+		int16 field_4A1;
 		int16 field_4A3;
 		byte field_4A5;
-		byte field_4A8;	
+		byte field_4A8;
 
 		char sequenceName3[9];
 		char sequenceName2[9];
@@ -423,7 +423,7 @@ public:
 
 	EntityCallData 	  *getData() { return &_data; }
 
-	EntityParameters  *getParameters(int callback, int index) { return _parameters[callback].parameters[index]; }	
+	EntityParameters  *getParameters(int callback, int index) { return _parameters[callback].parameters[index]; }
 	EntityParameters  *getCurrentParameters(int index = 0) { return getParameters(_data.current_call, index); }
 	void 			   setParameters(int callback, int index, EntityParameters* parameters);
 	void 			   resetCurrentParameters();
@@ -439,7 +439,7 @@ public:
 	void 			   saveLoadWithSerializer(Common::Serializer &ser);
 
 private:
-	
+
 	EntityCallData 		 _data;
 	EntityCallParameters _parameters[9];
 };

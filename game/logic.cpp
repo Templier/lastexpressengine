@@ -54,15 +54,15 @@ Logic::Logic(LastExpressEngine *engine) : _engine(engine), _scene(NULL) {
 	_action = new Action(engine);
 	_beetle = new Beetle(engine);
 	_entities = new Entities(engine);
-	_menu = new Menu(engine);	
-	_sound = new Sound(engine);	
+	_menu = new Menu(engine);
+	_sound = new Sound(engine);
 }
 
 Logic::~Logic() {
 	delete _action;
 	delete _beetle;
 	delete _entities;
-	delete _menu;	
+	delete _menu;
 	delete _scene;
 	delete _sound;
 }
@@ -172,7 +172,7 @@ bool Logic::handleMouseEvent(Common::Event ev) {
 	// Check hitbox & event from scene data
 	SceneHotspot *hotspot = NULL;
 	if (_scene && _scene->checkHotSpot(ev.mouse, &hotspot)) {
-		// Change mouse cursor		
+		// Change mouse cursor
 		_runState.cursorStyle = _action->getCursor(hotspot->action, (ObjectIndex)hotspot->param1, hotspot->param2, hotspot->param3, hotspot->cursor);
 
 		// Handle click
@@ -202,7 +202,7 @@ void Logic::loadScene(uint32 index) {
 	getFlags()->flag_0 = false;
 	if (getState()->sceneUseBackup) {
 		Scene *scene = _engine->getScene(index);
-	
+
 		if (scene->getHeader()->param3 != 255) {
 			getState()->sceneUseBackup = 0;
 			getState()->sceneBackup2 = 0;
@@ -235,13 +235,13 @@ void Logic::drawScene(uint32 index) {
 
 	// Draw background
 	delete _scene;
-	_scene = _engine->getScene(index); 
+	_scene = _engine->getScene(index);
 	_engine->getGraphicsManager()->draw(_scene, GraphicsManager::kBackgroundC, true);
 	getState()->scene = index;
 
 	// Update entities
 	Scene *scene = (getState()->sceneUseBackup ? _engine->getScene(getState()->sceneBackup) : _scene);
-	
+
 	getEntityData(kEntityNone)->field_491 = (EntityData::Field491Value)scene->getHeader()->count;
 	getEntityData(kEntityNone)->field_495 = (EntityData::Field495Value)scene->getHeader()->field_13;
 
@@ -257,10 +257,10 @@ void Logic::drawScene(uint32 index) {
 
 		getEntities()->updateFields();
 		getEntities()->setupSequences();
-		getEntities()->setupCallbacks();		
+		getEntities()->setupCallbacks();
 	}
-	
-	// Show the scene 
+
+	// Show the scene
 	askForRedraw();
 	_engine->getGraphicsManager()->update();
 	_engine->_system->updateScreen();
@@ -276,7 +276,7 @@ void Logic::processScene() {
 	}
 
 	getState()->sceneUseBackup = 0;
-	
+
 	// Select item if needed
 	InventoryItem item = getInventory()->getFirstExaminableItem();
 	if (item && getInventory()->getSelectedItem() == item)
@@ -307,7 +307,7 @@ void Logic::loadSceneFromObject(ObjectIndex object) {
 	case kObjectCompartment4:
 	case kObjectCompartment5:
 	case kObjectCompartment6:
-	case kObjectCompartment7:	
+	case kObjectCompartment7:
 	case kObjectCompartmentA:
 	case kObjectCompartmentB:
 	case kObjectCompartmentC:
@@ -366,12 +366,12 @@ void Logic::preProcessScene(uint32 *index) {
 
 	switch (scene->getHeader()->type) {
 	case Scene::kTypeItem:
-	case Scene::kTypeItem2:	
+	case Scene::kTypeItem2:
 	case Scene::kTypeItem3:
 	case Scene::kTypeEntity:
 	case Scene::kTypeEntityItem: {
 		int location = 0;
-		ObjectLocation location1 = kLocationNone, location2 = kLocationNone, location3 = kLocationNone; 
+		ObjectLocation location1 = kLocationNone, location2 = kLocationNone, location3 = kLocationNone;
 		byte type = scene->getHeader()->type;
 
 		// Check bounds
@@ -386,7 +386,7 @@ void Logic::preProcessScene(uint32 *index) {
 
 		// Check location
 		if (type == Scene::kTypeEntity || type == Scene::kTypeEntityItem)
-			location1 = GET_ENTITY_LOCATION(scene);			
+			location1 = GET_ENTITY_LOCATION(scene);
 		else
 			location1 = GET_ITEM_LOCATION(scene, param1);
 
@@ -409,14 +409,14 @@ void Logic::preProcessScene(uint32 *index) {
 			break;
 
 		for (Common::Array<SceneHotspot *>::iterator it = scene->getHotspots()->begin(); it != scene->getHotspots()->end(); ++it) {
-			
+
 			if ((type == Scene::kTypeItem || type == Scene::kTypeEntity)) {
 				if ((*it)->location != location1) {
 					continue;
 				}
 			} else {
-				if ((*it)->location != location 
-				 || (*it)->param1 != location1 
+				if ((*it)->location != location
+				 || (*it)->param1 != location1
 				 || (*it)->param2 != location2) {
 					continue;
 				}
@@ -425,12 +425,12 @@ void Logic::preProcessScene(uint32 *index) {
 			// Special case for TypeItem3
 			if (type == Scene::kTypeItem3 && (*it)->param3 != location3)
 				continue;
-			
+
 			PROCESS_HOTSPOT_SCENE(*it, index);
 			break;
-		}		
+		}
 		break;
-	}	
+	}
 
 	case Scene::kType6: {
 		if (scene->getHeader()->param1 >= 128)
@@ -443,22 +443,22 @@ void Logic::preProcessScene(uint32 *index) {
 				Scene *currentScene = _engine->getScene(*index);
 				if (getObjects()->get((ObjectIndex)currentScene->getHeader()->param1).location2 == (*it)->location) {
 					PROCESS_HOTSPOT_SCENE(*it, index);
-					found = true;					
+					found = true;
 				}
 				delete currentScene;
-			}	
+			}
 		}
 
 		// If the scene has no hotspot or if we haven't found a proper hotspot, use the first hotspot from the current scene
 		if (!found) {
 			Scene *hotspotScene = _engine->getScene(*index);
 			SceneHotspot *hotspot = scene->getHotspot();
-			
+
 			PROCESS_HOTSPOT_SCENE(hotspot, index);
 
 			delete hotspotScene;
 		}
-		break;	
+		break;
 	}
 
 	case Scene::kType7:
@@ -467,15 +467,15 @@ void Logic::preProcessScene(uint32 *index) {
 			break;
 
 		if (getState()->field16[scene->getHeader()->param1] || getState()->field16_2[scene->getHeader()->param1]) {
-			
+
 			Scene *_currentScene = _engine->getScene(getState()->scene);
 
 			if ((checkSceneFields(getState()->scene, false) && checkSceneFields(*index, false) && _currentScene->getHeader()->count < scene->getHeader()->count)
 			 || (checkSceneFields(getState()->scene, true)  && checkSceneFields(*index, true)  && _currentScene->getHeader()->count > scene->getHeader()->count)) {
 
-				if (State::getPowerOfTwo(getState()->field16[scene->getHeader()->param1]) != 30 
+				if (State::getPowerOfTwo(getState()->field16[scene->getHeader()->param1]) != 30
 				 && State::getPowerOfTwo(getState()->field16_2[scene->getHeader()->param1]) != 30 )
-					getSound()->playSound(kEntityNone, "CAT1126A");				
+					getSound()->playSound(kEntityNone, "CAT1126A");
 
 				*index = scene->getHotspot()->scene;
 			} else {
@@ -501,7 +501,7 @@ void Logic::preProcessScene(uint32 *index) {
 					PROCESS_HOTSPOT_SCENE(*it, index);
 					break;
 				}
-			}			
+			}
 		}
 		break;
 
@@ -537,7 +537,7 @@ void Logic::postProcessScene(uint32 *index) {
 
 		Scene *currentScene = _engine->getScene(getState()->scene);
 		SceneHotspot *hotspot = currentScene->getHotspot();
-		_action->processHotspot(hotspot);		
+		_action->processHotspot(hotspot);
 
 		if (getFlags()->flag_2) {
 			Scene *hotspotScene = _engine->getScene(hotspot->scene);
@@ -571,7 +571,7 @@ void Logic::postProcessScene(uint32 *index) {
 				}
 			}
 
-			if (progress) 
+			if (progress)
 				getSound()->excuseMe((progress == 1) ? entities[0] : entities[random(progress)], 0 , 16);
 		}
 
@@ -581,7 +581,7 @@ void Logic::postProcessScene(uint32 *index) {
 		delete currentScene;
 		break;
 	}
-		
+
 	case Scene::kTypeSavePointChapter:
 		if (getProgress().field_18 == 2)
 			getSavePoints()->push(kEntityNone, kEntityChapters, kAction190346110);
@@ -592,7 +592,7 @@ void Logic::postProcessScene(uint32 *index) {
 		  && getInventory()->getEntry(kBeetle)->location == 3) {
 			if (!_beetle->isLoaded())
 				_beetle->load();
-		}		
+		}
 		break;
 
 	case Scene::kTypeGameOver:
@@ -619,7 +619,7 @@ void Logic::postProcessScene(uint32 *index) {
 		const char *text = _sound->readText(scene->getHeader()->param1);
 		if (text)
 			playSfxStream(text);
-		
+
 		break;
 	}
 
@@ -629,7 +629,7 @@ void Logic::postProcessScene(uint32 *index) {
 			updateCursor();
 		}
 		break;
-		
+
 	default:
 		break;
 	}

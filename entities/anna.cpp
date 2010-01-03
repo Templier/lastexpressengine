@@ -127,7 +127,7 @@ IMPLEMENT_FUNCTION(Anna, chapter1, 16) {
 	default:
 		break;
 
-	case kActionDefault: 
+	case kActionDefault:
 		getSavePoints()->addData(kEntityAnna, kAction291662081, 0);
 		getSavePoints()->addData(kEntityAnna, kAction238936000, 1);
 
@@ -141,7 +141,7 @@ IMPLEMENT_FUNCTION(Anna, chapter1, 16) {
 		_data->getData()->field_4A5 = 0;
 		break;
 
-	case kActionNone: 
+	case kActionNone:
 		if (getState()->time > 1062000) {
 			if (!_data->getCurrentParameters()->param1) {
 				_data->getCurrentParameters()->param1 = 1;

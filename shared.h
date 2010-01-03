@@ -175,7 +175,7 @@ enum InventoryItem {
 	kGreenJacket = 21,
 	kItem22 = 22,
 	kPaper = 23,
-	kArticle = 24,		
+	kArticle = 24,
 	kItem25 = 25,
 	kItem26 = 26,
 	kItem27 = 27,
@@ -185,8 +185,8 @@ enum InventoryItem {
 	kItem31 = 31,
 
 	// Portrait (not an index)
-	kPortraitOriginal = 32,		
-	kPortraitGreen = 34,		
+	kPortraitOriginal = 32,
+	kPortraitGreen = 34,
 	kPortraitYellow = 36
 };
 
@@ -439,7 +439,7 @@ enum EventIndex {
 	kEventKahinaGunBlue = 56,
 	kEventKahinaGun = 57,
 	kEventKronosBringEggCeiling = 58,
-	kEventKronosBringEgg = 59,		
+	kEventKronosBringEgg = 59,
 	kEventKronosBringNothing = 60,
 	kEventKronosReturnBriefcase = 61,
 	kEventKronosHostageAnna = 62,
@@ -454,12 +454,12 @@ enum EventIndex {
 	kEventKahinaPunchSuite4 = 71,
 	kEventKahinaPunchSuite5 = 72,
 	kEventKronosHostageAnnaNoFirebird = 73,
-	kEventKahinaPunchRestaurant = 74, 
-	kEventKahinaWrongDoor = 75, 
+	kEventKahinaPunchRestaurant = 74,
+	kEventKahinaWrongDoor = 75,
 	kEventAlexeiDiner = 76,
 	kEventAlexeiDinerOriginalJacket = 77,
 	kEventAlexeiSalonVassili = 78,
-	kEventAlexeiSalonCath = 79,		
+	kEventAlexeiSalonCath = 79,
 	kEventAlexeiSalonPoem = 80,
 	kEventTatianaAskMatchSpeakRussian = 81,
 	kEventTatianaAskMatch = 82,
@@ -470,7 +470,7 @@ enum EventIndex {
 	kEventTatianaBreakfastGivePoem = 87,
 	kEventTatianaAlexei = 88,
 	kEventTatianaCompartmentStealEgg = 89,
-	kEventTatianaCompartment = 90,	
+	kEventTatianaCompartment = 90,
 	kEventVassiliCompartmentStealEgg = 91,
 	kEventTatianaTylerCompartment = 92,
 	kEventTylerCastleDream= 93,
@@ -484,7 +484,7 @@ enum EventIndex {
 	kEventMilosTylerCompartmentBed = 101,
 	kEventMilosTylerCompartmentDefeat = 102,
 	kEventMilosCorpseFloor = 103,
-	kEventMilosCompartmentVisitAugust = 104,		
+	kEventMilosCompartmentVisitAugust = 104,
 	kEventMilosCorridorThanks = 105,
 	kEventMilosCorridorThanksD = 106,
 	kEventMilosCompartmentVisitTyler = 107,
@@ -503,7 +503,7 @@ enum EventIndex {
 	kEventMertensChronosInvitation = 120,
 	kEventMertensChronosInvitationCompartment = 121,
 	kEventMertensChronosInvitationClosedWindows = 122,
-	kEventMertensBloodJacket = 123,	
+	kEventMertensBloodJacket = 123,
 	kEventCoudertBloodJacket = 124,
 	kEventMertensCorpseFloor = 125,
 	kEventMertensCorpseBed = 126,
@@ -518,12 +518,12 @@ enum EventIndex {
 	kEventVergesSuitcaseNightStart = 135,
 	kEventVergesSuitcaseNightOtherEntry = 136,
 	kEventVergesSuitcaseNightOtherEntryStart = 137,
-	kEventMertensAskTylerCompartment = 138, 
+	kEventMertensAskTylerCompartment = 138,
 	kEventMertensAskTylerCompartmentD = 139,
 	kEventMertensPushCall = 140,
 	kEventMertensPushCall2 = 141,
 	kEventMertensAugustWaiting = 142,
-	kEventMertensAugustWaitingCompartment = 143, 
+	kEventMertensAugustWaitingCompartment = 143,
 	kEventIntroBroderbrund = 144,
 	kEventCoudertAskTylerCompartment = 145,
 	kEventMertensKronosConcertInvitation = 146,
@@ -560,7 +560,7 @@ enum EventIndex {
 	kEventFrancoisWhistle = 177,
 	kEventFrancoisWhistleD = 178,
 	kEventFrancoisWhistleNight = 179,
-	kEventFrancoisWhistleNightD = 180, 
+	kEventFrancoisWhistleNightD = 180,
 	kEventFrancoisShowBeetle = 181,
 	kEventFrancoisShowBeetleD = 182,
 	kEventFrancoisTradeWhistle = 183,
@@ -568,9 +568,9 @@ enum EventIndex {
 	kEventFrancoisShowEgg = 185,
 	kEventFrancoisShowEggD = 186,
 	kEventFrancoisShowEggNight = 187,
-	kEventFrancoisShowEggNightD = 188, 
+	kEventFrancoisShowEggNightD = 188,
 	kEventKronosBringFirebird = 189,
-	kEventKronosOpenFirebird = 190,	
+	kEventKronosOpenFirebird = 190,
 	kEventFinalSequence = 191,
 	kEventLocomotiveRestartTrain = 192,
 	kEventLocomotiveOldBridge = 193,
@@ -595,7 +595,7 @@ enum EventIndex {
 	kEventCathWakingUp = 212,
 	kEventConcertCough = 213,
 	kEventConcertSit = 214,
-	kEventConcertLeaveWithBriefcase = 215, 
+	kEventConcertLeaveWithBriefcase = 215,
 	kEventCorpseDropFloorOriginal = 216,
 	kEventCorpseDropFloorGreen = 217,
 	kEventCorpsePickFloorOriginal = 218,
@@ -609,7 +609,7 @@ enum EventIndex {
 	kEventCorpseDropWindowGreen = 226,
 	kEventCathFindCorpse = 227,
 	kEventCathLookOutsideWindowDay = 228,
-	kEventCathLookOutsideWindowNight = 229,		
+	kEventCathLookOutsideWindowNight = 229,
 	kEventCathGoOutsideTylerCompartmentDay = 230,
 	kEventCathGoOutsideTylerCompartmentNight = 231,
 	kEventCathGoOutsideDay = 232,
@@ -652,7 +652,7 @@ enum EventIndex {
 	kEventCathCloseEgg = 269,
 	kEventCathCloseEggNoBackground = 270,
 	kEventCathUseWhistleOpenEgg = 271,
-	kEventCathUseWhistleOpenEggNoBackground = 272		
+	kEventCathUseWhistleOpenEggNoBackground = 272
 };
 
 //////////////////////////////////////////////////////////////////////////
@@ -707,7 +707,7 @@ enum ActionIndex {
 	kAction189750912 = 189750912,
 	kAction201431954 = 201431954,	// Coudert / Mertens / Verges
 	kAction205033696 = 205033696,
-	kAction226031488 = 226031488,	// Coudert / Verges	
+	kAction226031488 = 226031488,	// Coudert / Verges
 	kAction292048641 = 292048641,
 	kAction326348944 = 326348944,
 	kAction339669520 = 339669520,	// Coudert / Verges
@@ -844,7 +844,7 @@ enum ActionIndex {
 	/////////////////////////////
 	// Verges
 	/////////////////////////////
-	kAction158617345 = 158617345,	
+	kAction158617345 = 158617345,
 	kAction167854368 = 167854368,
 	kAction168187490 = 168187490,
 	kAction168255788 = 168255788,

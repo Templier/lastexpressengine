@@ -36,7 +36,7 @@ class Servers1 : public Entity {
 public:
 	Servers1(LastExpressEngine *engine);
 
-	// Setup	
+	// Setup
 	DECLARE_FUNCTION(chapter1)
 	DECLARE_FUNCTION(chapter2)
 	DECLARE_FUNCTION(chapter3)

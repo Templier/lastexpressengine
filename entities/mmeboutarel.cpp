@@ -43,14 +43,14 @@ MmeBoutarel::MmeBoutarel(LastExpressEngine *engine) : Entity(engine, kEntityMmeB
 	ADD_CALLBACK_FUNCTION(MmeBoutarel, nullfunc);
 	ADD_CALLBACK_FUNCTION(MmeBoutarel, nullfunc);
 	ADD_CALLBACK_FUNCTION(MmeBoutarel, nullfunc);
-	ADD_CALLBACK_FUNCTION(MmeBoutarel, nullfunc);	
+	ADD_CALLBACK_FUNCTION(MmeBoutarel, nullfunc);
 	ADD_CALLBACK_FUNCTION(MmeBoutarel, chapter1);
 	ADD_CALLBACK_FUNCTION(MmeBoutarel, nullfunc);
 	ADD_CALLBACK_FUNCTION(MmeBoutarel, nullfunc);
 	ADD_CALLBACK_FUNCTION(MmeBoutarel, nullfunc);
 	ADD_CALLBACK_FUNCTION(MmeBoutarel, nullfunc);
 	ADD_CALLBACK_FUNCTION(MmeBoutarel, nullfunc);
-	ADD_CALLBACK_FUNCTION(MmeBoutarel, nullfunc);	
+	ADD_CALLBACK_FUNCTION(MmeBoutarel, nullfunc);
 	ADD_CALLBACK_FUNCTION(MmeBoutarel, chapter2);
 	ADD_CALLBACK_FUNCTION(MmeBoutarel, nullfunc);
 	ADD_CALLBACK_FUNCTION(MmeBoutarel, nullfunc);
@@ -75,9 +75,9 @@ IMPLEMENT_FUNCTION(MmeBoutarel, chapter1, 10) {
 	default:
 		break;
 
-	case kActionDefault: 
+	case kActionDefault:
 		getSavePoints()->addData(kEntityMmeBoutarel, kAction242526416, 0);
-		
+
 		getObjects()->update(kObjectCompartmentD, kEntityNone, kLocation2, kCursorNormal, kCursorNormal);
 		getObjects()->update(kObject51, kEntityNone, kLocationNone, kCursorHandKnock, kCursorHand);
 
@@ -86,7 +86,7 @@ IMPLEMENT_FUNCTION(MmeBoutarel, chapter1, 10) {
 		_data->getData()->field_495 = EntityData::kField495_4;
 		break;
 
-	case kActionNone: 
+	case kActionNone:
 		if (getState()->time > 1062000) {
 			if (!_data->getCurrentParameters()->param1) {
 				_data->getCurrentParameters()->param1 = 1;

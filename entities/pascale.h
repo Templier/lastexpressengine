@@ -36,7 +36,7 @@ class Pascale : public Entity {
 public:
 	Pascale(LastExpressEngine *engine);
 
-	// Setup	
+	// Setup
 	DECLARE_FUNCTION(chapter1)
 	DECLARE_FUNCTION(chapter2)
 	DECLARE_FUNCTION(chapter3)

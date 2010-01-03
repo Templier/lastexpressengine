@@ -64,7 +64,7 @@ Alexei::Alexei(LastExpressEngine *engine) : Entity(engine, kEntityAlexei) {
 	ADD_CALLBACK_FUNCTION(Alexei, chapter2);
 	ADD_CALLBACK_FUNCTION(Alexei, nullfunc);
 	ADD_CALLBACK_FUNCTION(Alexei, nullfunc);
-	ADD_CALLBACK_FUNCTION(Alexei, nullfunc);	
+	ADD_CALLBACK_FUNCTION(Alexei, nullfunc);
 	ADD_CALLBACK_FUNCTION(Alexei, chapter3);
 	ADD_CALLBACK_FUNCTION(Alexei, nullfunc);
 	ADD_CALLBACK_FUNCTION(Alexei, nullfunc);

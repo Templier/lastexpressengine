@@ -73,7 +73,7 @@ Mertens::Mertens(LastExpressEngine *engine) : Entity(engine, kEntityMertens) {
 	ADD_CALLBACK_FUNCTION(Mertens, nullfunc);
 	ADD_CALLBACK_FUNCTION(Mertens, nullfunc);
 	ADD_CALLBACK_FUNCTION(Mertens, nullfunc);
-	ADD_CALLBACK_FUNCTION(Mertens, chapter1);	
+	ADD_CALLBACK_FUNCTION(Mertens, chapter1);
 	ADD_CALLBACK_FUNCTION(Mertens, nullfunc);	// 35
 	ADD_CALLBACK_FUNCTION(Mertens, nullfunc);
 	ADD_CALLBACK_FUNCTION(Mertens, nullfunc);
@@ -99,14 +99,14 @@ Mertens::Mertens(LastExpressEngine *engine) : Entity(engine, kEntityMertens) {
 IMPLEMENT_FUNCTION(Mertens, function6, 6) {
 	switch (savepoint->action) {
 	default:
-		break;	
+		break;
 
 	case kActionNone:
 		if (_data->getData()->field_49A != 4) {
 			CALL_PREVIOUS_SAVEPOINT(kEntityMertens)
 			break;
 		}
-		
+
 		if (getProgress().jacket == kJacketOriginal
 		 && getEntities()->checkFields9(kEntityMertens, kEntityNone, 1000)
 		 && !getEntities()->checkFields3(kEntityNone)
@@ -120,7 +120,7 @@ IMPLEMENT_FUNCTION(Mertens, function6, 6) {
 		CALL_PREVIOUS_SAVEPOINT(kEntityMertens)
 		break;
 
-	case kAction18: 	
+	case kAction18:
 		if (_data->getNextCallback() == 1) {
 			getAction()->playAnimation(kEventMertensBloodJacket);
 			getLogic()->gameOver(0, 1, 55, true);
@@ -140,7 +140,7 @@ IMPLEMENT_FUNCTION_INT2(Mertens, function10, 10) {
 IMPLEMENT_FUNCTION_INT(Mertens, function11, 11) {
 	switch (savepoint->action) {
 	default:
-		break;	
+		break;
 
 	case kActionNone:
 		if (getProgress().jacket == kJacketOriginal
@@ -164,11 +164,11 @@ IMPLEMENT_FUNCTION_INT(Mertens, function11, 11) {
 		CALL_PREVIOUS_SAVEPOINT(kEntityMertens)
 		break;
 
-	case kAction18: 
+	case kAction18:
 		if (_data->getNextCallback() == 1) {
 			getAction()->playAnimation(kEventMertensBloodJacket);
 			getLogic()->gameOver(0, 1, 55, true);
-		}		
+		}
 		break;
 	}
 }
@@ -176,20 +176,20 @@ IMPLEMENT_FUNCTION_INT(Mertens, function11, 11) {
 IMPLEMENT_FUNCTION(Mertens, function17, 17) {
 	switch (savepoint->action) {
 	default:
-		break;	
+		break;
 
-	case kActionDefault: 
+	case kActionDefault:
 		if (_data->getParameters(8, 0)->param6 || _data->getParameters(8, 1)->hasNonNullParameter()) {
 
 			getInventory()->setLocationAndProcess(kItem7, kLocation1);
-			
+
 			_data->setNextCallback(1);
 			call(new ENTITY_SETUP_DEFAULT(Mertens, setup_function10), 3, 540);
 
 		} else {
-			
+
 			if (_data->getParameters(8, 0)->param8) {
-				
+
 				getEntities()->drawSequence(kEntityMertens, "601K");
 				getLogic()->loadSceneFromItem(kItem7);
 
@@ -262,7 +262,7 @@ IMPLEMENT_FUNCTION(Mertens, chapter1, 34) {
 	default:
 		break;
 
-	case kActionNone: 
+	case kActionNone:
 		if (getState()->time > 1062000) {
 			if (!_data->getCurrentParameters()->param1) {
 				_data->getCurrentParameters()->param1 = 1;
@@ -271,7 +271,7 @@ IMPLEMENT_FUNCTION(Mertens, chapter1, 34) {
 		}
 		break;
 
-	case kActionDefault: 
+	case kActionDefault:
 		getSavePoints()->addData(kEntityMertens, kAction171394341, 7);
 		getSavePoints()->addData(kEntityMertens, kAction169633856, 9);
 		getSavePoints()->addData(kEntityMertens, kAction238732837, 10);
@@ -296,9 +296,9 @@ IMPLEMENT_FUNCTION(Mertens, chapter1, 34) {
 IMPLEMENT_FUNCTION(Mertens, function41, 41) {
 	switch (savepoint->action) {
 	default:
-		break;	
+		break;
 
-	case kActionDefault: 
+	case kActionDefault:
 		_data->setNextCallback(1);
 		call(new ENTITY_SETUP_DEFAULT(Mertens, setup_function10), 3, 2000);
 		break;
@@ -330,12 +330,12 @@ IMPLEMENT_FUNCTION(Mertens, chapter2, 43) {
 	default:
 		break;
 
-	case kActionNone: 
+	case kActionNone:
 		_data->setNextCallback(1);
 		call(new ENTITY_SETUP_DEFAULT(Mertens, setup_function17));
 		break;
 
-	case kActionDefault: 
+	case kActionDefault:
 		getEntities()->drawSequences(kEntityMertens);
 
 		_data->getData()->field_491 = EntityData::kField491_1500;
@@ -355,7 +355,7 @@ IMPLEMENT_FUNCTION(Mertens, chapter2, 43) {
 		_data->getParameters(8, 1)->param7 = 0;
 		break;
 
-	case kAction18: 
+	case kAction18:
 		if (_data->getNextCallback() == 1)
 			setup_function44();
 		break;
@@ -371,12 +371,12 @@ IMPLEMENT_FUNCTION(Mertens, chapter3, 45) {
 	default:
 		break;
 
-	case kActionNone: 
+	case kActionNone:
 		_data->setNextCallback(1);
 		call(new ENTITY_SETUP_DEFAULT(Mertens, setup_function17));
 		break;
 
-	case kActionDefault: 
+	case kActionDefault:
 		_data->getData()->field_491 = EntityData::kField491_1500;
 		_data->getData()->field_493 = EntityData::kField493_0;
 		_data->getData()->field_495 = EntityData::kField495_3;
@@ -393,10 +393,10 @@ IMPLEMENT_FUNCTION(Mertens, chapter3, 45) {
 		_data->getParameters(8, 1)->param6 = 0;
 		_data->getParameters(8, 1)->param7 = 0;
 
-		_data->getParameters(8, 2)->param3 = 0;		
+		_data->getParameters(8, 2)->param3 = 0;
 		break;
 
-	case kAction18: 
+	case kAction18:
 		if (_data->getNextCallback() == 1)
 			setup_function46();
 		break;
@@ -412,12 +412,12 @@ IMPLEMENT_FUNCTION(Mertens, chapter4, 47) {
 	default:
 		break;
 
-	case kActionNone: 
+	case kActionNone:
 		_data->setNextCallback(1);
 		call(new ENTITY_SETUP_DEFAULT(Mertens, setup_function17));
 		break;
 
-	case kActionDefault: 
+	case kActionDefault:
 		getEntities()->drawSequences(kEntityMertens);
 
 		_data->getData()->field_491 = EntityData::kField491_1500;
@@ -439,7 +439,7 @@ IMPLEMENT_FUNCTION(Mertens, chapter4, 47) {
 		_data->getParameters(8, 2)->param4 = 0;
 		break;
 
-	case kAction18: 
+	case kAction18:
 		if (_data->getNextCallback() == 1)
 			setup_function48();
 		break;
@@ -455,11 +455,11 @@ IMPLEMENT_FUNCTION(Mertens, chapter5, 50) {
 	default:
 		break;
 
-	case kActionNone: 
+	case kActionNone:
 		setup_function51();
 		break;
 
-	case kActionDefault: 
+	case kActionDefault:
 		getEntities()->drawSequences(kEntityMertens);
 
 		_data->getData()->field_491 = EntityData::kField491_3969;

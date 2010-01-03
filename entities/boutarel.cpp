@@ -85,7 +85,7 @@ IMPLEMENT_FUNCTION(Boutarel, chapter1, 19) {
 	default:
 		break;
 
-	case kActionDefault: 
+	case kActionDefault:
 		getSavePoints()->addData(kEntityBoutarel, kAction203520448, 0);
 		getSavePoints()->addData(kEntityBoutarel, kAction237889408, 1);
 
@@ -98,7 +98,7 @@ IMPLEMENT_FUNCTION(Boutarel, chapter1, 19) {
 		_data->getData()->field_495 = EntityData::kField495_5;
 		break;
 
-	case kActionNone: 
+	case kActionNone:
 		if (getState()->time > 1062000) {
 			if (!_data->getCurrentParameters()->param1) {
 				_data->getCurrentParameters()->param1 = 1;

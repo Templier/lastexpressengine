@@ -83,7 +83,7 @@ IMPLEMENT_FUNCTION(Servers0, chapter1, 11) {
 	default:
 		break;
 
-	case kActionDefault: 
+	case kActionDefault:
 		getSavePoints()->addData(kEntityServers0, kAction270410280, 0);
 		getSavePoints()->addData(kEntityServers0, kAction304061224, 1);
 		getSavePoints()->addData(kEntityServers0, kAction252568704, 10);
@@ -106,7 +106,7 @@ IMPLEMENT_FUNCTION(Servers0, chapter1, 11) {
 		_data->getData()->field_495 = EntityData::kField495_5;
 		break;
 
-	case kActionNone: 
+	case kActionNone:
 		// call function
 		break;
 	}

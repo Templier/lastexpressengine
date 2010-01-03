@@ -50,7 +50,7 @@ static const ADGameDescription gameDescriptions[] = {
 		ADGF_NO_FLAGS,
 		Common::GUIO_NONE
 	},
-	
+
 	// The Last Express (English) - Interplay Release
 	{
 		"lastexpress",

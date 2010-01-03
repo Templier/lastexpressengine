@@ -80,7 +80,7 @@ SceneHotspot *SceneHotspot::load(Common::SeekableReadStream *stream) {
 
 	debugC(9, kLastExpressDebugScenes, "\thotspot: scene=%d location=%02d action=%02d param1=%02d param2=%02d param3=%02d cursor=%02d rect=(%d, %d)x(%d,%d)",
 									   hs->scene, hs->location, hs->action, hs->param1, hs->param2, hs->param3, hs->cursor, hs->rect.left, hs->rect.top, hs->rect.right, hs->rect.bottom);
-	debugC(9, kLastExpressDebugScenes, "\t         uA=%d, next=%d offset=%d ", 
+	debugC(9, kLastExpressDebugScenes, "\t         uA=%d, next=%d offset=%d ",
 									   hs->unknownA, hs->next, hs->offset);
 
 	return hs;
@@ -105,11 +105,11 @@ Scene *Scene::load(Common::SeekableReadStream *stream, SceneHeader *header) {
 
 	// Read all hotspots
 	if (header->hotspot != 0) {
-		stream->seek(header->hotspot, SEEK_SET);	
+		stream->seek(header->hotspot, SEEK_SET);
 		SceneHotspot *hotspot = SceneHotspot::load(stream);
 		while (hotspot) {
 			s->_hotspots.push_back(hotspot);
-			
+
 			if (hotspot->next == 0)
 				break;
 
@@ -135,14 +135,14 @@ bool Scene::checkHotSpot(Common::Point coord, SceneHotspot **hotspot) {
 	return found;
 }
 
-SceneHotspot *Scene::getHotspot(uint index) { 
+SceneHotspot *Scene::getHotspot(uint index) {
 	if (_hotspots.empty())
 		return NULL;
 
 	if (index >= _hotspots.size())
 		return NULL;
-	
-	return _hotspots[index]; 
+
+	return _hotspots[index];
 }
 
 Common::Rect Scene::draw(Graphics::Surface *surface) {

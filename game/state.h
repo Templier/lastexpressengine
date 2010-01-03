@@ -31,7 +31,7 @@
 	-----------------
 
 	uint32 {4}      - ??
-	uint32 {4}      - current time 
+	uint32 {4}      - current time
 	uint32 {4}      - time delta (how much a tick is in "real" time)
 	uint32 {4}      - time ticks
 	uint32 {4}      - Scene Index               max: 2600
@@ -59,7 +59,7 @@
 
 	... more unknown stuff
 
-	
+
 	Sound cache entry: 68 bytes
 		uint32 {4}      - ??
 		uint32 {4}      - ??
@@ -96,7 +96,7 @@ public:
 		uint32 field_C;
 		uint32 event_found_corpse;
 		uint32 field_14;
-		uint32 field_18;		
+		uint32 field_18;
 		uint32 portrait;
 		uint32 field_20;
 		uint32 field_24;
@@ -164,7 +164,7 @@ public:
 			field_C = 0;
 			event_found_corpse = 0;
 			field_14 = 0;
-			field_18 = 0;		
+			field_18 = 0;
 			portrait = _defaultPortrait;
 			field_20 = 0;
 			field_24 = 0;
@@ -236,7 +236,7 @@ public:
 		uint32 timeDelta;
 		uint32 timeTicks;
 		byte sceneUseBackup;
-		uint32 scene;		
+		uint32 scene;
 		uint32 sceneBackup;
 		uint32 sceneBackup2;
 
@@ -252,7 +252,7 @@ public:
 			brightness = _defaultBrigthness;
 			volume = _defaultVolume;
 
-			//Game data	
+			//Game data
 			time = _defaultTime;
 			timeDelta = _defaultTimeDelta;
 			timeTicks = 0;
@@ -295,15 +295,15 @@ public:
 
 	// Accessors
 	Inventory  *getGameInventory() { return _inventory; }
-	Objects	   *getGameObjects() { return _objects; }	
+	Objects	   *getGameObjects() { return _objects; }
 	SavePoints *getGameSavePoints() { return _savepoints; }
 	GameState  *getGameState() { return _state; }
 	Flags  	   *getGameFlags() { return _flags; }
 
 	// Time checks
-	bool isDayTime();	
+	bool isDayTime();
 
-	// Helpers	
+	// Helpers
 	static uint32 getPowerOfTwo(uint32 x);
 
 private:
@@ -311,10 +311,10 @@ private:
 	static const uint32 _defaultVolume = 0x7;
 	static const uint32 _defaultTime = 1037700;
 	static const uint32 _defaultTimeDelta = 3;
-	static const uint32 _defaultPortrait = 32;	
+	static const uint32 _defaultPortrait = 32;
 
 	LastExpressEngine *_engine;
-	
+
 	Flags *_flags;				///< Flags
 	Inventory *_inventory;  	///< Inventory
 	Objects *_objects;			///< Objects

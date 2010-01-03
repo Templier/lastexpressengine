@@ -35,7 +35,7 @@ class LastExpressEngine;
 class Max : public Entity {
 public:
 	Max(LastExpressEngine *engine);
-	
+
 	DECLARE_FUNCTION(function1)
 	DECLARE_FUNCTION_SEQ(function2)
 	// There doesn't seem to be a setup part for function 3 (no idea why), so we skip that part too
@@ -56,7 +56,7 @@ public:
 	DECLARE_FUNCTION(function17)
 	DECLARE_FUNCTION(chapter5)
 
-private:	
+private:
 	DECLARE_CALL_FUNCTION(char, Max, const char*, int, int, const char*)
 	DECLARE_CALL_FUNCTION(default, Max, int, int, int, int)
 };

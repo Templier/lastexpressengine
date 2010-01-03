@@ -46,7 +46,7 @@ Gendarmes::Gendarmes(LastExpressEngine *engine) : Entity(engine, kEntityGendarme
 	ADD_CALLBACK_FUNCTION(Gendarmes, nullfunc);
 	ADD_CALLBACK_FUNCTION(Gendarmes, nullfunc);
 	ADD_CALLBACK_FUNCTION(Gendarmes, nullfunc);
-	ADD_CALLBACK_FUNCTION(Gendarmes, nullfunc);	
+	ADD_CALLBACK_FUNCTION(Gendarmes, nullfunc);
 	ADD_CALLBACK_FUNCTION(Gendarmes, chapter2);
 	ADD_CALLBACK_FUNCTION(Gendarmes, chapter3);
 	ADD_CALLBACK_FUNCTION(Gendarmes, chapter4);

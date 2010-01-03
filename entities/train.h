@@ -36,22 +36,22 @@ class Train : public Entity {
 public:
 	Train(LastExpressEngine *engine);
 
-	// Setup	
+	// Setup
 	DECLARE_FUNCTION(savegame)
 	DECLARE_FUNCTION(chapter1)
 	DECLARE_FUNCTION(chapter2)
 	DECLARE_FUNCTION(chapter3)
-	DECLARE_FUNCTION(chapter4)	
+	DECLARE_FUNCTION(chapter4)
 	DECLARE_FUNCTION(chapter5)
 	DECLARE_FUNCTION(harem)
 	DECLARE_FUNCTION(process)
 
-private:	
+private:
 	DECLARE_CALL_FUNCTION(default, Train, int, int, int, int)
 	DECLARE_CALL_FUNCTION(seq, Train, int, int, int, char*)
 
 	// Helper methods
-	void resetParam8();	
+	void resetParam8();
 };
 
 } // End of namespace LastExpress

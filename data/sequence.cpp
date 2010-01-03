@@ -54,10 +54,10 @@ void FrameInfo::read(Common::SeekableReadStream *in, bool isSequence) {
 		hotspot.top = in->readUint16LE();
 		hotspot.bottom = in->readUint16LE();
 	}
-	
+
 	compressionType = in->readByte();
 	subType = in->readByte();
-	
+
 	// Sequence information
 	unknown1 = in->readUint16LE();
 	unknown2 = in->readUint32LE();
@@ -395,7 +395,7 @@ FrameInfo *Sequence::getFrameInfo(uint32 index) {
 }
 
 AnimFrame *Sequence::getFrame(uint32 index) {
-	
+
 	FrameInfo *frame = getFrameInfo(index);
 
 	if (!frame)

@@ -53,7 +53,7 @@ void Objects::update(ObjectIndex index, EntityIndex entity, ObjectLocation locat
 	// Update entity
 	object->entity = entity;
 	object->location = location;
-	
+
 	if (cursor != kCursorKeepValue || cursor2 != kCursorKeepValue) {
 		if (cursor != kCursorKeepValue)
 			object->cursor = cursor;
@@ -64,7 +64,7 @@ void Objects::update(ObjectIndex index, EntityIndex entity, ObjectLocation locat
 	}
 
 	// Compartments
-	if (original_location != location && (original_location == kLocation2 || location == kLocation2))		
+	if (original_location != location && (original_location == kLocation2 || location == kLocation2))
 		if ((index >= kObjectCompartment1 && index <= kObjectCompartment8)
 	     || (index >= kObjectCompartmentA && index <= kObjectCompartmentF)) {
 		 	getLogic()->updateTrainClock();

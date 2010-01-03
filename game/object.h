@@ -41,7 +41,7 @@ public:
 	struct Object {							// All  fields should be saved as bytes
 		EntityIndex entity;
 		ObjectLocation location;
-		CursorStyle cursor;	
+		CursorStyle cursor;
 		CursorStyle cursor2;
 		ObjectLocation location2;
 
@@ -53,7 +53,7 @@ public:
 			location2 = kLocationNone;
 		}
 	};
-	
+
 	Objects(LastExpressEngine *engine);
 
 	const Object get(ObjectIndex index);

@@ -88,7 +88,7 @@ Entities::Entities(LastExpressEngine *engine) : _engine(engine) {
 	_header = new EntityData();
 
 	_entities.push_back(NULL);		// Header
-	ADD_ENTITY(Anna);	
+	ADD_ENTITY(Anna);
 	ADD_ENTITY(August);
 	ADD_ENTITY(Mertens);
 	ADD_ENTITY(Coudert);
@@ -97,7 +97,7 @@ Entities::Entities(LastExpressEngine *engine) : _engine(engine) {
 	ADD_ENTITY(Servers1);
 	ADD_ENTITY(Cooks);
 	ADD_ENTITY(Verges);
-	ADD_ENTITY(Tatiana);	
+	ADD_ENTITY(Tatiana);
 	ADD_ENTITY(Vassili);
 	ADD_ENTITY(Alexei);
 	ADD_ENTITY(Abbot);
@@ -111,14 +111,14 @@ Entities::Entities(LastExpressEngine *engine) : _engine(engine) {
 	ADD_ENTITY(MmeBoutarel);
 	ADD_ENTITY(Boutarel);
 	ADD_ENTITY(Rebecca);
-	ADD_ENTITY(Sophie);	
+	ADD_ENTITY(Sophie);
 	ADD_ENTITY(Mahmud);
 	ADD_ENTITY(Yasmin);
 	ADD_ENTITY(Hadija);
 	ADD_ENTITY(Alouan);
 	ADD_ENTITY(Gendarmes);
-	ADD_ENTITY(Max);	
-	ADD_ENTITY(Chapters);	
+	ADD_ENTITY(Max);
+	ADD_ENTITY(Chapters);
 	ADD_ENTITY(Train);
 
 	// Special case for tables
@@ -132,7 +132,7 @@ Entities::Entities(LastExpressEngine *engine) : _engine(engine) {
 	ADD_ENTITY(Entity39);
 }
 
-Entities::~Entities() {	
+Entities::~Entities() {
 	delete _header;
 
 	for (uint i = 0; i < _entities.size(); i++)
@@ -159,10 +159,10 @@ void Entities::setup(ChapterIndex chapter) {
 
 	// Skip "header"
 	for (uint i = 1; i < _entities.size(); i++) {
-		
+
 		// Special case of chapters (prevents infinite loop as we will be called from Chapters functions when changing chapters)
-		if (i == kEntityChapters && chapter >= 2)			
-			continue;	
+		if (i == kEntityChapters && chapter >= 2)
+			continue;
 
 		_entities[i]->setup(chapter);
 	}
@@ -177,7 +177,7 @@ void Entities::reset(EntityIndex entity) {
 	// TODO clear sound cache for entity
 
 	drawSequences(entity);
-	
+
 	// update fields 4x1000, 4x16 & 4x16_2
 }
 
@@ -188,7 +188,7 @@ void Entities::updateFields() {
 		return;
 
 	for (uint i = 0; i < _entities.size(); i++) {
-		
+
 		if (!getSavePoints()->getCallback((EntityIndex)i))
 			continue;
 
@@ -196,15 +196,15 @@ void Entities::updateFields() {
 		byte field_49A = _entities[i]->getData()->getData()->field_49A;
 		int16 field_4A3 = _entities[i]->getData()->getData()->field_4A3;
 		int16 field_4AB = _entities[i]->getData()->getData()->field_49B;
-		
+
 		switch (field_49A) {
 		default:
 			break;
 
 		case 1:
 		case 2:	// Replace calls to CheckFields8
-			if (field_49A != 1 || (field_491 + field_4A3 * 10) >= 10000)			
-			{	
+			if (field_49A != 1 || (field_491 + field_4A3 * 10) >= 10000)
+			{
 				if (field_49A == 2) {
 					if (field_491 > field_4A3 * 10)
 						_entities[i]->getData()->getData()->field_491 = (EntityData::Field491Value)(_entities[i]->getData()->getData()->field_491 - field_4A3 * 10);
@@ -278,7 +278,7 @@ void Entities::executeCallbacks() {
 				if (_entities[i]->getData()->getData()->field_4A8) {
 					processed = true;
 					processEntity((EntityIndex)i);
-				}				
+				}
 			}
 		}
 	} while (!processed);
@@ -365,7 +365,7 @@ bool Entities::checkFields1(EntityIndex entity, EntityData::Field495Value field4
 bool Entities::checkFields2(ObjectIndex object) {
 
 	EntityData::Field491Value field491 = EntityData::kField491_0;
-	EntityData::Field495Value field495 = EntityData::kField495_0;	
+	EntityData::Field495Value field495 = EntityData::kField495_0;
 
 	switch (object) {
 	default:
@@ -427,12 +427,12 @@ bool Entities::checkFields2(ObjectIndex object) {
 		if (index >= 40)
 			return false;
 	}
-	
+
 	return true;
 }
 
 bool Entities::checkFields3(EntityIndex entity) {
-	return (getData(entity)->getData()->field_495 == EntityData::kField495_3 
+	return (getData(entity)->getData()->field_495 == EntityData::kField495_3
 		 || getData(entity)->getData()->field_495 == EntityData::kField495_4) && getData(entity)->getData()->field_493 == EntityData::kField493_1;
 }
 

@@ -33,8 +33,8 @@
 
 namespace LastExpress {
 
-State::State(LastExpressEngine *engine) : _engine(engine) {	
-	_inventory = new Inventory(engine);	
+State::State(LastExpressEngine *engine) : _engine(engine) {
+	_inventory = new Inventory(engine);
 	_objects = new Objects(engine);
 	_savepoints = new SavePoints(engine);
 	_state = new GameState();
@@ -51,10 +51,10 @@ State::~State() {
 bool State::isDayTime() {
 	return (_state->progress.chapter == kChapter1
 		|| _state->progress.chapter == kChapter4
-		|| (_state->progress.chapter == kChapter5 && _state->progress.is_nighttime));		
+		|| (_state->progress.chapter == kChapter5 && _state->progress.is_nighttime));
 }
 
-uint32 State::getPowerOfTwo(uint32 x) {	
+uint32 State::getPowerOfTwo(uint32 x) {
 	if (!x || (x & 1))
 		return 0;
 

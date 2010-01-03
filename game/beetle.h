@@ -33,7 +33,7 @@ class Sequence;
 
 class Beetle {
 public:
-	
+
 	Beetle(LastExpressEngine *engine);
 	~Beetle();
 
@@ -54,7 +54,7 @@ private:
 		// TODO add all members
 	};
 
-	LastExpressEngine* _engine;	
+	LastExpressEngine* _engine;
 
 	BeetleSequences *_sequences;
 };

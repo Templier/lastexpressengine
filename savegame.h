@@ -55,7 +55,7 @@ public:
 
 	// Init & Access
 	static bool initSavegame(GameId id);
-	
+
 	// Getting information
 	static bool isSavegamePresent(GameId id);
 	static bool isSavegameValid(GameId id);

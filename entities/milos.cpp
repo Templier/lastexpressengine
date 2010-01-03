@@ -81,7 +81,7 @@ IMPLEMENT_FUNCTION(Milos, chapter1, 12) {
 	default:
 		break;
 
-	case kActionDefault: 
+	case kActionDefault:
 		getSavePoints()->addData(kEntityMilos, kAction157691176, 0);
 		getSavePoints()->addData(kEntityMilos, kAction208228224, 2);
 
@@ -93,7 +93,7 @@ IMPLEMENT_FUNCTION(Milos, chapter1, 12) {
 		_data->getData()->field_495 = EntityData::kField495_5;
 		break;
 
-	case kActionNone: 
+	case kActionNone:
 		if (getState()->time > 1062000) {
 			if (!_data->getCurrentParameters()->param1) {
 				_data->getCurrentParameters()->param1 = 1;
