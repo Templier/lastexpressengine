@@ -95,7 +95,7 @@ bool StreamedSound::load(Common::SeekableReadStream *stream) {
 AppendableSound::AppendableSound() : SimpleSound() {
 	// Create an audio stream where the decoded chunks will be appended
 	// TODO: the ADPCM decoder works in native endianness, so the usage FLAG_LITTLE_ENDIAN will depend on the current platform
-	_as = Audio::makeAppendableAudioStream(44100, Audio::Mixer::FLAG_16BITS | Audio::Mixer::FLAG_AUTOFREE | Audio::Mixer::FLAG_LITTLE_ENDIAN);
+	_as = Audio::makeQueuingAudioStream(44100, false);
 	_finished = false;
 
 	// Start playing the decoded audio stream
@@ -132,7 +132,7 @@ void AppendableSound::queueBuffer(Common::SeekableReadStream *bufferIn) {
 	delete adpcm;
 
 	// Queue the decoded samples
-	_as->queueBuffer(bufferOut, sizeOut * 2);
+	_as->queueBuffer(bufferOut, sizeOut * 2, Audio::Mixer::FLAG_16BITS | Audio::Mixer::FLAG_AUTOFREE | Audio::Mixer::FLAG_LITTLE_ENDIAN);
 }
 
 void AppendableSound::finish() {

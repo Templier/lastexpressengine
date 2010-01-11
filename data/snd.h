@@ -44,7 +44,7 @@
 
 namespace Audio {
 	class AudioStream;
-	class AppendableAudioStream;
+	class QueuingAudioStream;
 }
 
 namespace LastExpress {
@@ -88,7 +88,7 @@ public:
 	void finish();
 
 private:
-	Audio::AppendableAudioStream *_as;
+	Audio::QueuingAudioStream *_as;
 	bool _finished;
 };
 

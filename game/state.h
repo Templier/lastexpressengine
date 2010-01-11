@@ -295,10 +295,10 @@ public:
 
 	// Accessors
 	Inventory  *getGameInventory() { return _inventory; }
-	Objects	   *getGameObjects() { return _objects; }
+	Objects    *getGameObjects() { return _objects; }
 	SavePoints *getGameSavePoints() { return _savepoints; }
 	GameState  *getGameState() { return _state; }
-	Flags  	   *getGameFlags() { return _flags; }
+	Flags      *getGameFlags() { return _flags; }
 
 	// Time checks
 	bool isDayTime();
