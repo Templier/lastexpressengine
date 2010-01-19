@@ -121,18 +121,9 @@ void AppendableSound::queueBuffer(Common::SeekableReadStream *bufferIn) {
 	// Setup the ADPCM decoder
 	uint32 sizeIn = bufferIn->size();
 	Audio::AudioStream *adpcm = makeDecoder(bufferIn, sizeIn);
-
-	// Setup the output buffer
-	uint32 sizeOut = sizeIn * 2;
-	byte *bufferOut = new byte[sizeOut * 2];
-
-	// Decode to raw samples
-	sizeOut = adpcm->readBuffer((int16 *)bufferOut, sizeOut);
-	assert (adpcm->endOfData());
-	delete adpcm;
-
-	// Queue the decoded samples
-	_as->queueBuffer(bufferOut, sizeOut * 2, Audio::Mixer::FLAG_16BITS | Audio::Mixer::FLAG_AUTOFREE | Audio::Mixer::FLAG_LITTLE_ENDIAN);
+	
+	// Queue the stream
+	_as->queueAudioStream(adpcm);
 }
 
 void AppendableSound::finish() {
