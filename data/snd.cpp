@@ -30,7 +30,7 @@
 
 #include "lastexpress/debug.h"
 
-#include "sound/adpcm.h"
+#include "sound/decoders/adpcm.h"
 #include "sound/audiostream.h"
 
 namespace LastExpress {
