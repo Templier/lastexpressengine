@@ -54,6 +54,7 @@ MODULE_OBJS := \
 	game/object.o \
 	game/savepoint.o \
 	game/sound.o \
+	game/soundmanager.o \
 	game/state.o \
 	debug.o \
 	detection.o \
