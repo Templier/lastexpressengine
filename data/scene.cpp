@@ -54,15 +54,12 @@ SceneHeader *SceneHeader::load(Common::SeekableReadStream *stream) {
 }
 
 SceneHotspot *SceneHotspot::load(Common::SeekableReadStream *stream) {
-	// Check that we have data to read
-	uint16 left = stream->readUint16LE();
-
 	SceneHotspot *hs = new SceneHotspot();
 	if (!hs)
 		return NULL;
 
 	// Rect
-	hs->rect.left = left;
+	hs->rect.left = stream->readUint16LE();
 	hs->rect.right = stream->readUint16LE();
 	hs->rect.top = stream->readUint16LE();
 	hs->rect.bottom = stream->readUint16LE();
@@ -79,9 +76,9 @@ SceneHotspot *SceneHotspot::load(Common::SeekableReadStream *stream) {
 	hs->next = stream->readUint32LE();
 
 	debugC(9, kLastExpressDebugScenes, "\thotspot: scene=%d location=%02d action=%02d param1=%02d param2=%02d param3=%02d cursor=%02d rect=(%d, %d)x(%d,%d)",
-									   hs->scene, hs->location, hs->action, hs->param1, hs->param2, hs->param3, hs->cursor, hs->rect.left, hs->rect.top, hs->rect.right, hs->rect.bottom);
+	                                   hs->scene, hs->location, hs->action, hs->param1, hs->param2, hs->param3, hs->cursor, hs->rect.left, hs->rect.top, hs->rect.right, hs->rect.bottom);
 	debugC(9, kLastExpressDebugScenes, "\t         uA=%d, next=%d offset=%d ",
-									   hs->unknownA, hs->next, hs->offset);
+	                                   hs->unknownA, hs->next, hs->offset);
 
 	return hs;
 }

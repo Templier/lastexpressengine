@@ -60,7 +60,8 @@ bool Background::load(Common::SeekableReadStream *stream) {
 	_header.greenSize = stream->readUint32LE();
 
 	debugC(3, kLastExpressDebugGraphics, "Background Info: (%d, %d) - (%d x %d) - (%d, %d, %d)",
-	       _header.posX, _header.posY, _header.width, _header.height, _header.redSize, _header.blueSize, _header.greenSize);
+	                                    _header.posX, _header.posY, _header.width, _header.height,
+	                                    _header.redSize, _header.blueSize, _header.greenSize);
 
 	// Load and decompress Background channel data
 	uint32 numPix = _header.width * _header.height;
