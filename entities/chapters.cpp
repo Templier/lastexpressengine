@@ -36,32 +36,40 @@
 namespace LastExpress {
 
 Chapters::Chapters(LastExpressEngine *engine) : Entity(engine, kEntityChapters) {
-	ADD_CALLBACK_FUNCTION(Chapters, nullfunc);
-	ADD_CALLBACK_FUNCTION(Chapters, nullfunc);
-	ADD_CALLBACK_FUNCTION(Chapters, nullfunc);
+	ADD_CALLBACK_FUNCTION(Chapters, function1);
+	ADD_CALLBACK_FUNCTION(Chapters, function2);
+	ADD_CALLBACK_FUNCTION(Chapters, function3);
 	ADD_CALLBACK_FUNCTION(Chapters, chapter1);
-	ADD_CALLBACK_FUNCTION(Chapters, nullfunc);
-	ADD_CALLBACK_FUNCTION(Chapters, nullfunc);
+	ADD_CALLBACK_FUNCTION(Chapters, function5);
+	ADD_CALLBACK_FUNCTION(Chapters, function6);
 	ADD_CALLBACK_FUNCTION(Chapters, chapter1_init);
-	ADD_CALLBACK_FUNCTION(Chapters, nullfunc);
-	ADD_CALLBACK_FUNCTION(Chapters, nullfunc);
+	ADD_CALLBACK_FUNCTION(Chapters, function8);
+	ADD_CALLBACK_FUNCTION(Chapters, function9);
 	ADD_CALLBACK_FUNCTION(Chapters, chapter2);
-	ADD_CALLBACK_FUNCTION(Chapters, nullfunc);
-	ADD_CALLBACK_FUNCTION(Chapters, nullfunc);
+	ADD_CALLBACK_FUNCTION(Chapters, function11);
+	ADD_CALLBACK_FUNCTION(Chapters, function12);
 	ADD_CALLBACK_FUNCTION(Chapters, chapter3);
-	ADD_CALLBACK_FUNCTION(Chapters, nullfunc);
-	ADD_CALLBACK_FUNCTION(Chapters, nullfunc);
-	ADD_CALLBACK_FUNCTION(Chapters, nullfunc);
+	ADD_CALLBACK_FUNCTION(Chapters, function14);
+	ADD_CALLBACK_FUNCTION(Chapters, function15);
+	ADD_CALLBACK_FUNCTION(Chapters, function16);
 	ADD_CALLBACK_FUNCTION(Chapters, chapter4);
-	ADD_CALLBACK_FUNCTION(Chapters, nullfunc);
-	ADD_CALLBACK_FUNCTION(Chapters, nullfunc);
+	ADD_CALLBACK_FUNCTION(Chapters, function18);
+	ADD_CALLBACK_FUNCTION(Chapters, function19);
 	ADD_CALLBACK_FUNCTION(Chapters, chapter5);
-	ADD_CALLBACK_FUNCTION(Chapters, nullfunc);
-	ADD_CALLBACK_FUNCTION(Chapters, nullfunc);
+	ADD_CALLBACK_FUNCTION(Chapters, function21);
+	ADD_CALLBACK_FUNCTION(Chapters, function22);
 }
 
-void Chapters::nullfunc(SavePoint *savepoint) {
-	error("Chapters: callback function not implemented!");
+IMPLEMENT_FUNCTION_II(Chapters, function1, 1) {
+	error("Chapters: callback function 1 not implemented!");
+}
+
+IMPLEMENT_FUNCTION_SI(Chapters, function2, 2) {
+	error("Chapters: callback function 2 not implemented!");
+}
+
+IMPLEMENT_FUNCTION_S(Chapters, function3, 3) {
+	error("Chapters: callback function 3 not implemented!");
 }
 
 IMPLEMENT_FUNCTION(Chapters, chapter1, 4) {
@@ -70,6 +78,14 @@ IMPLEMENT_FUNCTION(Chapters, chapter1, 4) {
 
 	getSavePoints()->addData(kEntityChapters, kAction171843264, 0);
 	setup_chapter1_init();
+}
+
+IMPLEMENT_FUNCTION(Chapters, function5, 5) {
+	error("Chapters: callback function 5 not implemented!");
+}
+
+IMPLEMENT_FUNCTION(Chapters, function6, 6) {
+	error("Chapters: callback function 6 not implemented!");
 }
 
 IMPLEMENT_FUNCTION(Chapters, chapter1_init, 7) {
@@ -112,7 +128,7 @@ IMPLEMENT_FUNCTION(Chapters, chapter1_init, 7) {
 		getObjects()->updateLocation2((ObjectIndex)i, kLocation2);
 	}
 
-	_data->getCurrentParameters()->param1 = 40;
+	CURRENT_PARAM(1) = 40;
 
 	getObjects()->updateLocation2(kObject25, kLocation1);
 	getObjects()->updateLocation2(kObjectGreenSleepingCar, kLocation1);
@@ -139,20 +155,64 @@ IMPLEMENT_FUNCTION(Chapters, chapter1_init, 7) {
 	// TODO call another function 8
 }
 
-IMPLEMENT_FUNCTION(Chapters, chapter2, 10) {
+IMPLEMENT_FUNCTION(Chapters, function8, 8) {
+	error("Chapters: callback function 8 not implemented!");
+}
 
+IMPLEMENT_FUNCTION(Chapters, function9, 9) {
+	error("Chapters: callback function 9 not implemented!");
+}
+
+IMPLEMENT_FUNCTION(Chapters, chapter2, 10) {
+	error("Chapters: callback function 10 not implemented!");
+}
+
+IMPLEMENT_FUNCTION(Chapters, function11, 11) {
+	error("Chapters: callback function 11 not implemented!");
+}
+
+IMPLEMENT_FUNCTION(Chapters, function12, 12) {
+	error("Chapters: callback function 12 not implemented!");
 }
 
 IMPLEMENT_FUNCTION(Chapters, chapter3, 13) {
+	error("Chapters: callback function 13 not implemented!");
+}
 
+IMPLEMENT_FUNCTION(Chapters, function14, 14) {
+	error("Chapters: callback function 14 not implemented!");
+}
+
+IMPLEMENT_FUNCTION(Chapters, function15, 15) {
+	error("Chapters: callback function 15 not implemented!");
+}
+
+IMPLEMENT_FUNCTION(Chapters, function16, 16) {
+	error("Chapters: callback function 16 not implemented!");
 }
 
 IMPLEMENT_FUNCTION(Chapters, chapter4, 17) {
+	error("Chapters: callback function 17 not implemented!");
+}
 
+IMPLEMENT_FUNCTION(Chapters, function18, 18) {
+	error("Chapters: callback function 18 not implemented!");
+}
+
+IMPLEMENT_FUNCTION(Chapters, function19, 19) {
+	error("Chapters: callback function 19 not implemented!");
 }
 
 IMPLEMENT_FUNCTION(Chapters, chapter5, 20) {
+	error("Chapters: callback function 20 not implemented!");
+}
 
+IMPLEMENT_FUNCTION(Chapters, function21, 21) {
+	error("Chapters: callback function 21 not implemented!");
+}
+
+IMPLEMENT_FUNCTION(Chapters, function22, 22) {
+	error("Chapters: callback function 22 not implemented!");
 }
 
 } // End of namespace LastExpress

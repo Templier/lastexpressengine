@@ -27,6 +27,7 @@
 #define LASTEXPRESS_VESNA_H
 
 #include "lastexpress/entities/entity.h"
+#include "lastexpress/entities/entity_intern.h"
 
 namespace LastExpress {
 
@@ -37,14 +38,37 @@ public:
 	Vesna(LastExpressEngine *engine);
 
 	// Setup
-	DECLARE_FUNCTION(chapter1)
-	DECLARE_FUNCTION(chapter2)
-	DECLARE_FUNCTION(chapter3)
-	DECLARE_FUNCTION(chapter4)
-	DECLARE_FUNCTION(chapter5)
+	DECLARE_FUNCTION(function1);
+	DECLARE_FUNCTION_S(function2);
+	DECLARE_FUNCTION_SI(function3);
+	DECLARE_FUNCTION_S(function4);
+	DECLARE_FUNCTION_II(function5);
+	DECLARE_FUNCTION_I(function6);
+	DECLARE_FUNCTION_II(function7);
+	DECLARE_FUNCTION(function8);
+	DECLARE_FUNCTION(function9);
+	DECLARE_FUNCTION_II(function10);
+	DECLARE_FUNCTION(function11);
+	DECLARE_FUNCTION(chapter1);
+	DECLARE_FUNCTION(function13);
+	DECLARE_FUNCTION(function14);
+	DECLARE_FUNCTION(function15);
+	DECLARE_FUNCTION(chapter2);
+	DECLARE_FUNCTION(function17);
+	DECLARE_FUNCTION(function18);
+	DECLARE_FUNCTION(chapter3);
+	DECLARE_FUNCTION(function20);
+	DECLARE_FUNCTION(function21);
+	DECLARE_FUNCTION(function22);
+	DECLARE_FUNCTION(function23);
+	DECLARE_FUNCTION(chapter4);
+	DECLARE_FUNCTION(function25);
+	DECLARE_FUNCTION(function26);
+	DECLARE_FUNCTION(function27);
+	DECLARE_FUNCTION(chapter5);
+	DECLARE_FUNCTION(function29);
+	DECLARE_FUNCTION(function30);
 	DECLARE_NULL_FUNCTION()
-
-	void nullfunc(SavePoint *savepoint);
 };
 
 } // End of namespace LastExpress

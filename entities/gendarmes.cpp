@@ -34,27 +34,27 @@
 namespace LastExpress {
 
 Gendarmes::Gendarmes(LastExpressEngine *engine) : Entity(engine, kEntityGendarmes) {
-	ADD_CALLBACK_FUNCTION(Gendarmes, nullfunc);
+	ADD_CALLBACK_FUNCTION(Gendarmes, function1);
 	ADD_CALLBACK_FUNCTION(Gendarmes, chapter1);
-	ADD_CALLBACK_FUNCTION(Gendarmes, nullfunc);
-	ADD_CALLBACK_FUNCTION(Gendarmes, nullfunc);
-	ADD_CALLBACK_FUNCTION(Gendarmes, nullfunc);
-	ADD_CALLBACK_FUNCTION(Gendarmes, nullfunc);
-	ADD_CALLBACK_FUNCTION(Gendarmes, nullfunc);
-	ADD_CALLBACK_FUNCTION(Gendarmes, nullfunc);
-	ADD_CALLBACK_FUNCTION(Gendarmes, nullfunc);
-	ADD_CALLBACK_FUNCTION(Gendarmes, nullfunc);
-	ADD_CALLBACK_FUNCTION(Gendarmes, nullfunc);
-	ADD_CALLBACK_FUNCTION(Gendarmes, nullfunc);
-	ADD_CALLBACK_FUNCTION(Gendarmes, nullfunc);
+	ADD_CALLBACK_FUNCTION(Gendarmes, function3);
+	ADD_CALLBACK_FUNCTION(Gendarmes, function4);
+	ADD_CALLBACK_FUNCTION(Gendarmes, function5);
+	ADD_CALLBACK_FUNCTION(Gendarmes, function6);
+	ADD_CALLBACK_FUNCTION(Gendarmes, function7);
+	ADD_CALLBACK_FUNCTION(Gendarmes, function8);
+	ADD_CALLBACK_FUNCTION(Gendarmes, function9);
+	ADD_CALLBACK_FUNCTION(Gendarmes, function10);
+	ADD_CALLBACK_FUNCTION(Gendarmes, function11);
+	ADD_CALLBACK_FUNCTION(Gendarmes, function12);
+	ADD_CALLBACK_FUNCTION(Gendarmes, function13);
 	ADD_CALLBACK_FUNCTION(Gendarmes, chapter2);
 	ADD_CALLBACK_FUNCTION(Gendarmes, chapter3);
 	ADD_CALLBACK_FUNCTION(Gendarmes, chapter4);
 	ADD_CALLBACK_FUNCTION(Gendarmes, chapter5);
 }
 
-void Gendarmes::nullfunc(SavePoint *savepoint) {
-	error("Gendarmes: callback function not implemented!");
+IMPLEMENT_FUNCTION(Gendarmes, function1, 1) {
+	error("Gendarmes: callback function 1 not implemented!");
 }
 
 IMPLEMENT_FUNCTION(Gendarmes, chapter1, 2) {
@@ -67,26 +67,69 @@ IMPLEMENT_FUNCTION(Gendarmes, chapter1, 2) {
 		break;
 
 	case kActionNone:
-		if (getState()->time > 1062000) {
-			if (!_data->getCurrentParameters()->param1) {
-				_data->getCurrentParameters()->param1 = 1;
-				// call function 11
-			}
-		}
+		CALL_CHAPTER_ACTION_NONE(11)
 		break;
 	}
 }
 
+IMPLEMENT_FUNCTION_S(Gendarmes, function3, 3) {
+	error("Gendarmes: callback function 3 not implemented!");
+}
+
+IMPLEMENT_FUNCTION_S(Gendarmes, function4, 4) {
+	error("Gendarmes: callback function 4 not implemented!");
+}
+
+IMPLEMENT_FUNCTION_S(Gendarmes, function5, 5) {
+	error("Gendarmes: callback function 5 not implemented!");
+}
+
+IMPLEMENT_FUNCTION_I(Gendarmes, function6, 6) {
+	error("Gendarmes: callback function 6 not implemented!");
+}
+
+IMPLEMENT_FUNCTION_II(Gendarmes, function7, 7) {
+	error("Gendarmes: callback function 7 not implemented!");
+}
+
+IMPLEMENT_FUNCTION_II(Gendarmes, function8, 8) {
+	error("Gendarmes: callback function 8 not implemented!");
+}
+
+IMPLEMENT_FUNCTION_IISS(Gendarmes, function9, 9) {
+	error("Gendarmes: callback function 9 not implemented!");
+}
+
+IMPLEMENT_FUNCTION_III(Gendarmes, function10, 10) {
+	error("Gendarmes: callback function 10 not implemented!");
+}
+
+IMPLEMENT_FUNCTION(Gendarmes, function11, 11) {
+	error("Gendarmes: callback function 11 not implemented!");
+}
+
+IMPLEMENT_FUNCTION(Gendarmes, function12, 12) {
+	error("Gendarmes: callback function 12 not implemented!");
+}
+
+IMPLEMENT_FUNCTION(Gendarmes, function13, 13) {
+	error("Gendarmes: callback function 13 not implemented!");
+}
+
 IMPLEMENT_FUNCTION(Gendarmes, chapter2, 14) {
+	error("Gendarmes: callback function 14 not implemented!");
 }
 
 IMPLEMENT_FUNCTION(Gendarmes, chapter3, 15) {
+	error("Gendarmes: callback function 15 not implemented!");
 }
 
 IMPLEMENT_FUNCTION(Gendarmes, chapter4, 16) {
+	error("Gendarmes: callback function 16 not implemented!");
 }
 
 IMPLEMENT_FUNCTION(Gendarmes, chapter5, 17) {
+	error("Gendarmes: callback function 17 not implemented!");
 }
 
 } // End of namespace LastExpress

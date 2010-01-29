@@ -35,44 +35,92 @@
 namespace LastExpress {
 
 Ivo::Ivo(LastExpressEngine *engine) : Entity(engine, kEntityIvo) {
-	ADD_CALLBACK_FUNCTION(Ivo, nullfunc);
-	ADD_CALLBACK_FUNCTION(Ivo, nullfunc);
-	ADD_CALLBACK_FUNCTION(Ivo, nullfunc);
-	ADD_CALLBACK_FUNCTION(Ivo, nullfunc);
-	ADD_CALLBACK_FUNCTION(Ivo, nullfunc);
-	ADD_CALLBACK_FUNCTION(Ivo, nullfunc);
-	ADD_CALLBACK_FUNCTION(Ivo, nullfunc);
-	ADD_CALLBACK_FUNCTION(Ivo, nullfunc);
-	ADD_CALLBACK_FUNCTION(Ivo, nullfunc);
-	ADD_CALLBACK_FUNCTION(Ivo, nullfunc);
-	ADD_CALLBACK_FUNCTION(Ivo, nullfunc);
-	ADD_CALLBACK_FUNCTION(Ivo, nullfunc);
-	ADD_CALLBACK_FUNCTION(Ivo, nullfunc);
+	ADD_CALLBACK_FUNCTION(Ivo, function1);
+	ADD_CALLBACK_FUNCTION(Ivo, function2);
+	ADD_CALLBACK_FUNCTION(Ivo, function3);
+	ADD_CALLBACK_FUNCTION(Ivo, function4);
+	ADD_CALLBACK_FUNCTION(Ivo, function5);
+	ADD_CALLBACK_FUNCTION(Ivo, function6);
+	ADD_CALLBACK_FUNCTION(Ivo, function7);
+	ADD_CALLBACK_FUNCTION(Ivo, function8);
+	ADD_CALLBACK_FUNCTION(Ivo, function9);
+	ADD_CALLBACK_FUNCTION(Ivo, function10);
+	ADD_CALLBACK_FUNCTION(Ivo, function11);
+	ADD_CALLBACK_FUNCTION(Ivo, function12);
+	ADD_CALLBACK_FUNCTION(Ivo, function13);
 	ADD_CALLBACK_FUNCTION(Ivo, chapter1);
-	ADD_CALLBACK_FUNCTION(Ivo, nullfunc);
-	ADD_CALLBACK_FUNCTION(Ivo, nullfunc);
-	ADD_CALLBACK_FUNCTION(Ivo, nullfunc);
+	ADD_CALLBACK_FUNCTION(Ivo, function15);
+	ADD_CALLBACK_FUNCTION(Ivo, function16);
+	ADD_CALLBACK_FUNCTION(Ivo, function17);
 	ADD_CALLBACK_FUNCTION(Ivo, chapter2);
-	ADD_CALLBACK_FUNCTION(Ivo, nullfunc);
-	ADD_CALLBACK_FUNCTION(Ivo, nullfunc);
-	ADD_CALLBACK_FUNCTION(Ivo, nullfunc);
+	ADD_CALLBACK_FUNCTION(Ivo, function19);
+	ADD_CALLBACK_FUNCTION(Ivo, function20);
+	ADD_CALLBACK_FUNCTION(Ivo, function21);
 	ADD_CALLBACK_FUNCTION(Ivo, chapter3);
-	ADD_CALLBACK_FUNCTION(Ivo, nullfunc);
+	ADD_CALLBACK_FUNCTION(Ivo, function23);
 	ADD_CALLBACK_FUNCTION(Ivo, chapter4);
-	ADD_CALLBACK_FUNCTION(Ivo, nullfunc);
-	ADD_CALLBACK_FUNCTION(Ivo, nullfunc);
-	ADD_CALLBACK_FUNCTION(Ivo, nullfunc);
-	ADD_CALLBACK_FUNCTION(Ivo, nullfunc);
-	ADD_CALLBACK_FUNCTION(Ivo, nullfunc);
+	ADD_CALLBACK_FUNCTION(Ivo, function25);
+	ADD_CALLBACK_FUNCTION(Ivo, function26);
+	ADD_CALLBACK_FUNCTION(Ivo, function27);
+	ADD_CALLBACK_FUNCTION(Ivo, function28);
+	ADD_CALLBACK_FUNCTION(Ivo, function29);
 	ADD_CALLBACK_FUNCTION(Ivo, chapter5);
-	ADD_CALLBACK_FUNCTION(Ivo, nullfunc);
-	ADD_CALLBACK_FUNCTION(Ivo, nullfunc);
-	ADD_CALLBACK_FUNCTION(Ivo, nullfunc);
-	ADD_CALLBACK_FUNCTION(Ivo, nullfunc);
+	ADD_CALLBACK_FUNCTION(Ivo, function31);
+	ADD_CALLBACK_FUNCTION(Ivo, function32);
+	ADD_CALLBACK_FUNCTION(Ivo, function33);
+	ADD_CALLBACK_FUNCTION(Ivo, function34);
 }
 
-void Ivo::nullfunc(SavePoint *savepoint) {
-	error("Ivo: callback function not implemented!");
+IMPLEMENT_FUNCTION(Ivo, function1, 1) {
+	error("Ivo: callback function 1 not implemented!");
+}
+
+IMPLEMENT_FUNCTION_S(Ivo, function2, 2) {
+	error("Ivo: callback function 2 not implemented!");
+}
+
+IMPLEMENT_FUNCTION_SI(Ivo, function3, 3) {
+	error("Ivo: callback function 3 not implemented!");
+}
+
+IMPLEMENT_FUNCTION_I(Ivo, function4, 4) {
+	error("Ivo: callback function 4 not implemented!");
+}
+
+IMPLEMENT_FUNCTION_I(Ivo, function5, 5) {
+	error("Ivo: callback function 5 not implemented!");
+}
+
+IMPLEMENT_FUNCTION_II(Ivo, function6, 6) {
+	error("Ivo: callback function 6 not implemented!");
+}
+
+IMPLEMENT_FUNCTION(Ivo, function7, 7) {
+	error("Ivo: callback function 7 not implemented!");
+}
+
+IMPLEMENT_FUNCTION_NOSETUP(Ivo, function8, 8) {
+	error("Ivo: callback function 8 not implemented!");
+}
+
+IMPLEMENT_FUNCTION(Ivo, function9, 9) {
+	error("Ivo: callback function 9 not implemented!");
+}
+
+IMPLEMENT_FUNCTION_II(Ivo, function10, 10) {
+	error("Ivo: callback function 10 not implemented!");
+}
+
+IMPLEMENT_FUNCTION(Ivo, function11, 11) {
+	error("Ivo: callback function 11 not implemented!");
+}
+
+IMPLEMENT_FUNCTION(Ivo, function12, 12) {
+	error("Ivo: callback function 12 not implemented!");
+}
+
+IMPLEMENT_FUNCTION(Ivo, function13, 13) {
+	error("Ivo: callback function 13 not implemented!");
 }
 
 IMPLEMENT_FUNCTION(Ivo, chapter1, 14) {
@@ -91,26 +139,89 @@ IMPLEMENT_FUNCTION(Ivo, chapter1, 14) {
 		break;
 
 	case kActionNone:
-		if (getState()->time > 1062000) {
-			if (!_data->getCurrentParameters()->param1) {
-				_data->getCurrentParameters()->param1 = 1;
-				// call function 15
-			}
-		}
+		CALL_CHAPTER_ACTION_NONE(15)
 		break;
 	}
 }
 
+IMPLEMENT_FUNCTION(Ivo, function15, 15) {
+	error("Ivo: callback function 15 not implemented!");
+}
+
+IMPLEMENT_FUNCTION(Ivo, function16, 16) {
+	error("Ivo: callback function 16 not implemented!");
+}
+
+IMPLEMENT_FUNCTION(Ivo, function17, 17) {
+	error("Ivo: callback function 17 not implemented!");
+}
+
 IMPLEMENT_FUNCTION(Ivo, chapter2, 18) {
+	error("Ivo: callback function 18 not implemented!");
+}
+
+IMPLEMENT_FUNCTION(Ivo, function19, 19) {
+	error("Ivo: callback function 19 not implemented!");
+}
+
+IMPLEMENT_FUNCTION(Ivo, function20, 20) {
+	error("Ivo: callback function 20 not implemented!");
+}
+
+IMPLEMENT_FUNCTION(Ivo, function21, 21) {
+	error("Ivo: callback function 21 not implemented!");
 }
 
 IMPLEMENT_FUNCTION(Ivo, chapter3, 22) {
+	error("Ivo: callback function 22 not implemented!");
+}
+
+IMPLEMENT_FUNCTION(Ivo, function23, 23) {
+	error("Ivo: callback function 23 not implemented!");
 }
 
 IMPLEMENT_FUNCTION(Ivo, chapter4, 24) {
+	error("Ivo: callback function 24 not implemented!");
+}
+
+IMPLEMENT_FUNCTION(Ivo, function25, 25) {
+	error("Ivo: callback function 25 not implemented!");
+}
+
+IMPLEMENT_FUNCTION(Ivo, function26, 26) {
+	error("Ivo: callback function 26 not implemented!");
+}
+
+IMPLEMENT_FUNCTION(Ivo, function27, 27) {
+	error("Ivo: callback function 27 not implemented!");
+}
+
+IMPLEMENT_FUNCTION(Ivo, function28, 28) {
+	error("Ivo: callback function 28 not implemented!");
+}
+
+IMPLEMENT_FUNCTION(Ivo, function29, 29) {
+	error("Ivo: callback function 29 not implemented!");
 }
 
 IMPLEMENT_FUNCTION(Ivo, chapter5, 30) {
+	error("Ivo: callback function 30 not implemented!");
+}
+
+IMPLEMENT_FUNCTION(Ivo, function31, 31) {
+	error("Ivo: callback function 31 not implemented!");
+}
+
+IMPLEMENT_FUNCTION(Ivo, function32, 32) {
+	error("Ivo: callback function 32 not implemented!");
+}
+
+IMPLEMENT_FUNCTION(Ivo, function33, 33) {
+	error("Ivo: callback function 33 not implemented!");
+}
+
+IMPLEMENT_FUNCTION(Ivo, function34, 34) {
+	error("Ivo: callback function 34 not implemented!");
 }
 
 } // End of namespace LastExpress

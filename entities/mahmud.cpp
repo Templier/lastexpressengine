@@ -35,30 +35,82 @@
 namespace LastExpress {
 
 Mahmud::Mahmud(LastExpressEngine *engine) : Entity(engine, kEntityMahmud) {
-	ADD_CALLBACK_FUNCTION(Mahmud, nullfunc);
-	ADD_CALLBACK_FUNCTION(Mahmud, nullfunc);
-	ADD_CALLBACK_FUNCTION(Mahmud, nullfunc);
-	ADD_CALLBACK_FUNCTION(Mahmud, nullfunc);
-	ADD_CALLBACK_FUNCTION(Mahmud, nullfunc);
-	ADD_CALLBACK_FUNCTION(Mahmud, nullfunc);
-	ADD_CALLBACK_FUNCTION(Mahmud, nullfunc);
-	ADD_CALLBACK_FUNCTION(Mahmud, nullfunc);
-	ADD_CALLBACK_FUNCTION(Mahmud, nullfunc);
-	ADD_CALLBACK_FUNCTION(Mahmud, nullfunc);
-	ADD_CALLBACK_FUNCTION(Mahmud, nullfunc);
-	ADD_CALLBACK_FUNCTION(Mahmud, nullfunc);
-	ADD_CALLBACK_FUNCTION(Mahmud, nullfunc);
-	ADD_CALLBACK_FUNCTION(Mahmud, nullfunc);
+	ADD_CALLBACK_FUNCTION(Mahmud, function1);
+	ADD_CALLBACK_FUNCTION(Mahmud, function2);
+	ADD_CALLBACK_FUNCTION(Mahmud, function3);
+	ADD_CALLBACK_FUNCTION(Mahmud, function4);
+	ADD_CALLBACK_FUNCTION(Mahmud, function5);
+	ADD_CALLBACK_FUNCTION(Mahmud, function6);
+	ADD_CALLBACK_FUNCTION(Mahmud, function7);
+	ADD_CALLBACK_FUNCTION(Mahmud, function8);
+	ADD_CALLBACK_FUNCTION(Mahmud, function9);
+	ADD_CALLBACK_FUNCTION(Mahmud, function10);
+	ADD_CALLBACK_FUNCTION(Mahmud, function11);
+	ADD_CALLBACK_FUNCTION(Mahmud, function12);
+	ADD_CALLBACK_FUNCTION(Mahmud, function13);
+	ADD_CALLBACK_FUNCTION(Mahmud, function14);
 	ADD_CALLBACK_FUNCTION(Mahmud, chapter1);
-	ADD_CALLBACK_FUNCTION(Mahmud, nullfunc);
+	ADD_CALLBACK_FUNCTION(Mahmud, function16);
 	ADD_CALLBACK_FUNCTION(Mahmud, chapter2);
 	ADD_CALLBACK_FUNCTION(Mahmud, chapter3);
 	ADD_CALLBACK_FUNCTION(Mahmud, chapter4);
 	ADD_CALLBACK_FUNCTION(Mahmud, chapter5);
 }
 
-void Mahmud::nullfunc(SavePoint *savepoint) {
-	error("Mahmud: callback function not implemented!");
+IMPLEMENT_FUNCTION(Mahmud, function1, 1) {
+	error("Mahmud: callback function 1 not implemented!");
+}
+
+IMPLEMENT_FUNCTION_NOSETUP(Mahmud, function2, 2) {
+	error("Mahmud: callback function 2 not implemented!");
+}
+
+IMPLEMENT_FUNCTION_SI(Mahmud, function3, 3) {
+	error("Mahmud: callback function 3 not implemented!");
+}
+
+IMPLEMENT_FUNCTION_SIII(Mahmud, function4, 4) {
+	error("Mahmud: callback function 4 not implemented!");
+}
+
+IMPLEMENT_FUNCTION_S(Mahmud, function5, 5) {
+	error("Mahmud: callback function 5 not implemented!");
+}
+
+IMPLEMENT_FUNCTION_S(Mahmud, function6, 6) {
+	error("Mahmud: callback function 6 not implemented!");
+}
+
+IMPLEMENT_FUNCTION_NOSETUP(Mahmud, function7, 7) {
+	error("Mahmud: callback function 7 not implemented!");
+}
+
+IMPLEMENT_FUNCTION_II(Mahmud, function8, 8) {
+	error("Mahmud: callback function 8 not implemented!");
+}
+
+IMPLEMENT_FUNCTION_II(Mahmud, function9, 9) {
+	error("Mahmud: callback function 9 not implemented!");
+}
+
+IMPLEMENT_FUNCTION_II(Mahmud, function10, 10) {
+	error("Mahmud: callback function 10 not implemented!");
+}
+
+IMPLEMENT_FUNCTION(Mahmud, function11, 11) {
+	error("Mahmud: callback function 11 not implemented!");
+}
+
+IMPLEMENT_FUNCTION(Mahmud, function12, 12) {
+	error("Mahmud: callback function 12 not implemented!");
+}
+
+IMPLEMENT_FUNCTION(Mahmud, function13, 13) {
+	error("Mahmud: callback function 13 not implemented!");
+}
+
+IMPLEMENT_FUNCTION(Mahmud, function14, 14) {
+	error("Mahmud: callback function 14 not implemented!");
 }
 
 IMPLEMENT_FUNCTION(Mahmud, chapter1, 15) {
@@ -78,26 +130,29 @@ IMPLEMENT_FUNCTION(Mahmud, chapter1, 15) {
 		break;
 
 	case kActionNone:
-		if (getState()->time > 1062000) {
-			if (!_data->getCurrentParameters()->param1) {
-				_data->getCurrentParameters()->param1 = 1;
-				// call function 14
-			}
-		}
+		CALL_CHAPTER_ACTION_NONE(14)
 		break;
 	}
 }
 
+IMPLEMENT_FUNCTION(Mahmud, function16, 16) {
+	error("Mahmud: callback function 16 not implemented!");
+}
+
 IMPLEMENT_FUNCTION(Mahmud, chapter2, 17) {
+	error("Mahmud: callback function 17 not implemented!");
 }
 
 IMPLEMENT_FUNCTION(Mahmud, chapter3, 18) {
+	error("Mahmud: callback function 18 not implemented!");
 }
 
 IMPLEMENT_FUNCTION(Mahmud, chapter4, 19) {
+	error("Mahmud: callback function 19 not implemented!");
 }
 
 IMPLEMENT_FUNCTION(Mahmud, chapter5, 20) {
+	error("Mahmud: callback function 20 not implemented!");
 }
 
 } // End of namespace LastExpress

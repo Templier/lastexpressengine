@@ -35,58 +35,118 @@
 namespace LastExpress {
 
 Alexei::Alexei(LastExpressEngine *engine) : Entity(engine, kEntityAlexei) {
-	ADD_CALLBACK_FUNCTION(Alexei, nullfunc);
-	ADD_CALLBACK_FUNCTION(Alexei, nullfunc);
-	ADD_CALLBACK_FUNCTION(Alexei, nullfunc);
-	ADD_CALLBACK_FUNCTION(Alexei, nullfunc);
-	ADD_CALLBACK_FUNCTION(Alexei, nullfunc);
-	ADD_CALLBACK_FUNCTION(Alexei, nullfunc);
-	ADD_CALLBACK_FUNCTION(Alexei, nullfunc);
-	ADD_CALLBACK_FUNCTION(Alexei, nullfunc);
-	ADD_CALLBACK_FUNCTION(Alexei, nullfunc);
-	ADD_CALLBACK_FUNCTION(Alexei, nullfunc);
-	ADD_CALLBACK_FUNCTION(Alexei, nullfunc);
-	ADD_CALLBACK_FUNCTION(Alexei, nullfunc);
-	ADD_CALLBACK_FUNCTION(Alexei, nullfunc);
-	ADD_CALLBACK_FUNCTION(Alexei, nullfunc);
-	ADD_CALLBACK_FUNCTION(Alexei, nullfunc);
-	ADD_CALLBACK_FUNCTION(Alexei, nullfunc);
+	ADD_CALLBACK_FUNCTION(Alexei, function1);
+	ADD_CALLBACK_FUNCTION(Alexei, function2);
+	ADD_CALLBACK_FUNCTION(Alexei, function3);
+	ADD_CALLBACK_FUNCTION(Alexei, function4);
+	ADD_CALLBACK_FUNCTION(Alexei, function5);
+	ADD_CALLBACK_FUNCTION(Alexei, function6);
+	ADD_CALLBACK_FUNCTION(Alexei, function7);
+	ADD_CALLBACK_FUNCTION(Alexei, function8);
+	ADD_CALLBACK_FUNCTION(Alexei, function9);
+	ADD_CALLBACK_FUNCTION(Alexei, function10);
+	ADD_CALLBACK_FUNCTION(Alexei, function11);
+	ADD_CALLBACK_FUNCTION(Alexei, function12);
+	ADD_CALLBACK_FUNCTION(Alexei, function13);
+	ADD_CALLBACK_FUNCTION(Alexei, function14);
+	ADD_CALLBACK_FUNCTION(Alexei, function15);
+	ADD_CALLBACK_FUNCTION(Alexei, function16);
 	ADD_CALLBACK_FUNCTION(Alexei, chapter1);
-	ADD_CALLBACK_FUNCTION(Alexei, nullfunc);
-	ADD_CALLBACK_FUNCTION(Alexei, nullfunc);
-	ADD_CALLBACK_FUNCTION(Alexei, nullfunc);
-	ADD_CALLBACK_FUNCTION(Alexei, nullfunc);
-	ADD_CALLBACK_FUNCTION(Alexei, nullfunc);
-	ADD_CALLBACK_FUNCTION(Alexei, nullfunc);
-	ADD_CALLBACK_FUNCTION(Alexei, nullfunc);
-	ADD_CALLBACK_FUNCTION(Alexei, nullfunc);
-	ADD_CALLBACK_FUNCTION(Alexei, nullfunc);
-	ADD_CALLBACK_FUNCTION(Alexei, nullfunc);
+	ADD_CALLBACK_FUNCTION(Alexei, function18);
+	ADD_CALLBACK_FUNCTION(Alexei, function19);
+	ADD_CALLBACK_FUNCTION(Alexei, function20);
+	ADD_CALLBACK_FUNCTION(Alexei, function21);
+	ADD_CALLBACK_FUNCTION(Alexei, function22);
+	ADD_CALLBACK_FUNCTION(Alexei, function23);
+	ADD_CALLBACK_FUNCTION(Alexei, function24);
+	ADD_CALLBACK_FUNCTION(Alexei, function25);
+	ADD_CALLBACK_FUNCTION(Alexei, function26);
+	ADD_CALLBACK_FUNCTION(Alexei, function27);
 	ADD_CALLBACK_FUNCTION(Alexei, chapter2);
-	ADD_CALLBACK_FUNCTION(Alexei, nullfunc);
-	ADD_CALLBACK_FUNCTION(Alexei, nullfunc);
-	ADD_CALLBACK_FUNCTION(Alexei, nullfunc);
+	ADD_CALLBACK_FUNCTION(Alexei, function29);
+	ADD_CALLBACK_FUNCTION(Alexei, function30);
+	ADD_CALLBACK_FUNCTION(Alexei, function31);
 	ADD_CALLBACK_FUNCTION(Alexei, chapter3);
-	ADD_CALLBACK_FUNCTION(Alexei, nullfunc);
-	ADD_CALLBACK_FUNCTION(Alexei, nullfunc);
-	ADD_CALLBACK_FUNCTION(Alexei, nullfunc);
-	ADD_CALLBACK_FUNCTION(Alexei, nullfunc);
+	ADD_CALLBACK_FUNCTION(Alexei, function33);
+	ADD_CALLBACK_FUNCTION(Alexei, function34);
+	ADD_CALLBACK_FUNCTION(Alexei, function35);
+	ADD_CALLBACK_FUNCTION(Alexei, function36);
 	ADD_CALLBACK_FUNCTION(Alexei, chapter4);
-	ADD_CALLBACK_FUNCTION(Alexei, nullfunc);
-	ADD_CALLBACK_FUNCTION(Alexei, nullfunc);
-	ADD_CALLBACK_FUNCTION(Alexei, nullfunc);
-	ADD_CALLBACK_FUNCTION(Alexei, nullfunc);
-	ADD_CALLBACK_FUNCTION(Alexei, nullfunc);
-	ADD_CALLBACK_FUNCTION(Alexei, nullfunc);
-	ADD_CALLBACK_FUNCTION(Alexei, nullfunc);
-	ADD_CALLBACK_FUNCTION(Alexei, nullfunc);
-	ADD_CALLBACK_FUNCTION(Alexei, nullfunc);
-	ADD_CALLBACK_FUNCTION(Alexei, nullfunc);
+	ADD_CALLBACK_FUNCTION(Alexei, function38);
+	ADD_CALLBACK_FUNCTION(Alexei, function39);
+	ADD_CALLBACK_FUNCTION(Alexei, function40);
+	ADD_CALLBACK_FUNCTION(Alexei, function41);
+	ADD_CALLBACK_FUNCTION(Alexei, function42);
+	ADD_CALLBACK_FUNCTION(Alexei, function43);
+	ADD_CALLBACK_FUNCTION(Alexei, function44);
+	ADD_CALLBACK_FUNCTION(Alexei, function45);
+	ADD_CALLBACK_FUNCTION(Alexei, function46);
+	ADD_CALLBACK_FUNCTION(Alexei, function47);
 	ADD_CALLBACK_FUNCTION(Alexei, chapter5);
 }
 
-void Alexei::nullfunc(SavePoint *savepoint) {
-	error("Alexei: callback function not implemented!");
+IMPLEMENT_FUNCTION(Alexei, function1, 1) {
+	error("Alexei: callback function 1 not implemented!");
+}
+
+IMPLEMENT_FUNCTION_S(Alexei, function2, 2) {
+	error("Alexei: callback function 2 not implemented!");
+}
+
+IMPLEMENT_FUNCTION_I(Alexei, function3, 3) {
+	error("Alexei: callback function 3 not implemented!");
+}
+
+IMPLEMENT_FUNCTION_S(Alexei, function4, 4) {
+	error("Alexei: callback function 4 not implemented!");
+}
+
+IMPLEMENT_FUNCTION_SII(Alexei, function5, 5) {
+	error("Alexei: callback function 5 not implemented!");
+}
+
+IMPLEMENT_FUNCTION_SI(Alexei, function6, 6) {
+	error("Alexei: callback function 6 not implemented!");
+}
+
+IMPLEMENT_FUNCTION(Alexei, function7, 7) {
+	error("Alexei: callback function 7 not implemented!");
+}
+
+IMPLEMENT_FUNCTION_SIIS(Alexei, function8, 8) {
+	error("Alexei: callback function 8 not implemented!");
+}
+
+IMPLEMENT_FUNCTION_II(Alexei, function9, 9) {
+	error("Alexei: callback function 9 not implemented!");
+}
+
+IMPLEMENT_FUNCTION_II(Alexei, function10, 10) {
+	error("Alexei: callback function 10 not implemented!");
+}
+
+IMPLEMENT_FUNCTION_NOSETUP(Alexei, function11, 11) {
+	error("Alexei: callback function 11 not implemented!");
+}
+
+IMPLEMENT_FUNCTION(Alexei, function12, 12) {
+	error("Alexei: callback function 12 not implemented!");
+}
+
+IMPLEMENT_FUNCTION(Alexei, function13, 13) {
+	error("Alexei: callback function 13 not implemented!");
+}
+
+IMPLEMENT_FUNCTION(Alexei, function14, 14) {
+	error("Alexei: callback function 14 not implemented!");
+}
+
+IMPLEMENT_FUNCTION(Alexei, function15, 15) {
+	error("Alexei: callback function 15 not implemented!");
+}
+
+IMPLEMENT_FUNCTION_IS(Alexei, function16, 16) {
+	error("Alexei: callback function 16 not implemented!");
 }
 
 IMPLEMENT_FUNCTION(Alexei, chapter1, 17) {
@@ -106,26 +166,133 @@ IMPLEMENT_FUNCTION(Alexei, chapter1, 17) {
 		break;
 
 	case kActionNone:
-		if (getState()->time > 1062000) {
-			if (!_data->getCurrentParameters()->param1) {
-				_data->getCurrentParameters()->param1 = 1;
-				// call function 18
-			}
-		}
+		CALL_CHAPTER_ACTION_NONE(18)
 		break;
 	}
 }
 
+IMPLEMENT_FUNCTION(Alexei, function18, 18) {
+	error("Alexei: callback function 18 not implemented!");
+}
+
+IMPLEMENT_FUNCTION(Alexei, function19, 19) {
+	error("Alexei: callback function 19 not implemented!");
+}
+
+IMPLEMENT_FUNCTION(Alexei, function20, 20) {
+	error("Alexei: callback function 20 not implemented!");
+}
+
+IMPLEMENT_FUNCTION(Alexei, function21, 21) {
+	error("Alexei: callback function 21 not implemented!");
+}
+
+IMPLEMENT_FUNCTION(Alexei, function22, 22) {
+	error("Alexei: callback function 22 not implemented!");
+}
+
+IMPLEMENT_FUNCTION(Alexei, function23, 23) {
+	error("Alexei: callback function 23 not implemented!");
+}
+
+IMPLEMENT_FUNCTION(Alexei, function24, 24) {
+	error("Alexei: callback function 24 not implemented!");
+}
+
+IMPLEMENT_FUNCTION(Alexei, function25, 25) {
+	error("Alexei: callback function 25 not implemented!");
+}
+
+IMPLEMENT_FUNCTION(Alexei, function26, 26) {
+	error("Alexei: callback function 26 not implemented!");
+}
+
+IMPLEMENT_FUNCTION(Alexei, function27, 27) {
+	error("Alexei: callback function 27 not implemented!");
+}
+
 IMPLEMENT_FUNCTION(Alexei, chapter2, 28) {
+	error("Alexei: callback function 28 not implemented!");
+}
+
+IMPLEMENT_FUNCTION(Alexei, function29, 29) {
+	error("Alexei: callback function 29 not implemented!");
+}
+
+IMPLEMENT_FUNCTION(Alexei, function30, 30) {
+	error("Alexei: callback function 30 not implemented!");
+}
+
+IMPLEMENT_FUNCTION(Alexei, function31, 31) {
+	error("Alexei: callback function 31 not implemented!");
 }
 
 IMPLEMENT_FUNCTION(Alexei, chapter3, 32) {
+	error("Alexei: callback function 32 not implemented!");
+}
+
+IMPLEMENT_FUNCTION(Alexei, function33, 33) {
+	error("Alexei: callback function 33 not implemented!");
+}
+
+IMPLEMENT_FUNCTION(Alexei, function34, 34) {
+	error("Alexei: callback function 34 not implemented!");
+}
+
+IMPLEMENT_FUNCTION(Alexei, function35, 35) {
+	error("Alexei: callback function 35 not implemented!");
+}
+
+IMPLEMENT_FUNCTION(Alexei, function36, 36) {
+	error("Alexei: callback function 36 not implemented!");
 }
 
 IMPLEMENT_FUNCTION(Alexei, chapter4, 37) {
+	error("Alexei: callback function 37 not implemented!");
+}
+
+IMPLEMENT_FUNCTION(Alexei, function38, 38) {
+	error("Alexei: callback function 38 not implemented!");
+}
+
+IMPLEMENT_FUNCTION(Alexei, function39, 39) {
+	error("Alexei: callback function 39 not implemented!");
+}
+
+IMPLEMENT_FUNCTION(Alexei, function40, 40) {
+	error("Alexei: callback function 40 not implemented!");
+}
+
+IMPLEMENT_FUNCTION(Alexei, function41, 41) {
+	error("Alexei: callback function 41 not implemented!");
+}
+
+IMPLEMENT_FUNCTION(Alexei, function42, 42) {
+	error("Alexei: callback function 42 not implemented!");
+}
+
+IMPLEMENT_FUNCTION(Alexei, function43, 43) {
+	error("Alexei: callback function 43 not implemented!");
+}
+
+IMPLEMENT_FUNCTION(Alexei, function44, 44) {
+	error("Alexei: callback function 44 not implemented!");
+}
+
+IMPLEMENT_FUNCTION(Alexei, function45, 45) {
+	error("Alexei: callback function 45 not implemented!");
+}
+
+IMPLEMENT_FUNCTION(Alexei, function46, 46) {
+	error("Alexei: callback function 46 not implemented!");
+}
+
+IMPLEMENT_FUNCTION(Alexei, function47, 47) {
+	error("Alexei: callback function 47 ot implemented!");
 }
 
 IMPLEMENT_FUNCTION(Alexei, chapter5, 48) {
+	error("Alexei: callback function 48 not implemented!");
 }
 
 } // End of namespace LastExpress

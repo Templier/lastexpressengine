@@ -82,13 +82,13 @@ IMPLEMENT_FUNCTION(Sophie, function1, 1) {
 }
 
 //////////////////////////////////////////////////////////////////////////
-IMPLEMENT_FUNCTION_INT2(Sophie, function2, 2) {
+IMPLEMENT_FUNCTION_II(Sophie, function2, 2) {
 	switch (savepoint->action) {
 	default:
 		break;
 
 	case kActionNone: {
-		_data->getCurrentParameters()->param3 = 0;
+		CURRENT_PARAM(3) = 0;
 
 		// Sophie
 		byte field_49A = _data->getData()->field_49A;
@@ -103,11 +103,11 @@ IMPLEMENT_FUNCTION_INT2(Sophie, function2, 2) {
 		 || (field_49A == 1 && field_495 >= rebecca_field_495 && field_491 > rebecca_field_491)
 		 || (field_49A == 2 && field_495 <= rebecca_field_495 && field_491 < rebecca_field_491)) {
 			 _data->getData()->field_49B = 0;
-			 _data->getCurrentParameters()->param3 = 1;
+			 CURRENT_PARAM(3) = 1;
 		}
 
-		if (!_data->getCurrentParameters()->param3)
-			getEntities()->checkEntity(kEntitySophie, (EntityData::Field495Value)_data->getCurrentParameters()->param1, (EntityData::Field491Value)_data->getCurrentParameters()->param2);
+		if (!CURRENT_PARAM(3))
+			getEntities()->checkEntity(kEntitySophie, (EntityData::Field495Value)CURRENT_PARAM(1), (EntityData::Field491Value)CURRENT_PARAM(2));
 
 		break;
 	}
@@ -121,7 +121,7 @@ IMPLEMENT_FUNCTION_INT2(Sophie, function2, 2) {
 		break;
 
 	case kActionDefault:
-		getEntities()->checkEntity(kEntitySophie, (EntityData::Field495Value)_data->getCurrentParameters()->param1, (EntityData::Field491Value)_data->getCurrentParameters()->param2);
+		getEntities()->checkEntity(kEntitySophie, (EntityData::Field495Value)CURRENT_PARAM(1), (EntityData::Field491Value)CURRENT_PARAM(2));
 		break;
 
 	case kAction123668192:
@@ -210,8 +210,8 @@ IMPLEMENT_FUNCTION(Sophie, chapter1, 4) {
 
 	case kActionNone:
 		if (getState()->time > 1062000)
-			if (!_data->getCurrentParameters()->param1) {
-				_data->getCurrentParameters()->param1 = 1;
+			if (!CURRENT_PARAM(1)) {
+				CURRENT_PARAM(1) = 1;
 				setup_function3();
 			}
 		break;

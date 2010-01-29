@@ -34,44 +34,84 @@
 namespace LastExpress {
 
 Pascale::Pascale(LastExpressEngine *engine) : Entity(engine, kEntityPascale) {
-	ADD_CALLBACK_FUNCTION(Pascale, nullfunc);
-	ADD_CALLBACK_FUNCTION(Pascale, nullfunc);
-	ADD_CALLBACK_FUNCTION(Pascale, nullfunc);
-	ADD_CALLBACK_FUNCTION(Pascale, nullfunc);
-	ADD_CALLBACK_FUNCTION(Pascale, nullfunc);
-	ADD_CALLBACK_FUNCTION(Pascale, nullfunc);
-	ADD_CALLBACK_FUNCTION(Pascale, nullfunc);
-	ADD_CALLBACK_FUNCTION(Pascale, nullfunc);
-	ADD_CALLBACK_FUNCTION(Pascale, nullfunc);
-	ADD_CALLBACK_FUNCTION(Pascale, nullfunc);
-	ADD_CALLBACK_FUNCTION(Pascale, nullfunc);
+	ADD_CALLBACK_FUNCTION(Pascale, function1);
+	ADD_CALLBACK_FUNCTION(Pascale, function2);
+	ADD_CALLBACK_FUNCTION(Pascale, function3);
+	ADD_CALLBACK_FUNCTION(Pascale, function4);
+	ADD_CALLBACK_FUNCTION(Pascale, function5);
+	ADD_CALLBACK_FUNCTION(Pascale, function6);
+	ADD_CALLBACK_FUNCTION(Pascale, function7);
+	ADD_CALLBACK_FUNCTION(Pascale, function8);
+	ADD_CALLBACK_FUNCTION(Pascale, function9);
+	ADD_CALLBACK_FUNCTION(Pascale, function10);
+	ADD_CALLBACK_FUNCTION(Pascale, function11);
 	ADD_CALLBACK_FUNCTION(Pascale, chapter1);
-	ADD_CALLBACK_FUNCTION(Pascale, nullfunc);
-	ADD_CALLBACK_FUNCTION(Pascale, nullfunc);
-	ADD_CALLBACK_FUNCTION(Pascale, nullfunc);
-	ADD_CALLBACK_FUNCTION(Pascale, nullfunc);
-	ADD_CALLBACK_FUNCTION(Pascale, nullfunc);
-	ADD_CALLBACK_FUNCTION(Pascale, nullfunc);
-	ADD_CALLBACK_FUNCTION(Pascale, nullfunc);
+	ADD_CALLBACK_FUNCTION(Pascale, function13);
+	ADD_CALLBACK_FUNCTION(Pascale, function14);
+	ADD_CALLBACK_FUNCTION(Pascale, function15);
+	ADD_CALLBACK_FUNCTION(Pascale, function16);
+	ADD_CALLBACK_FUNCTION(Pascale, function17);
+	ADD_CALLBACK_FUNCTION(Pascale, function18);
+	ADD_CALLBACK_FUNCTION(Pascale, function19);
 	ADD_CALLBACK_FUNCTION(Pascale, chapter2);
 	ADD_CALLBACK_FUNCTION(Pascale, chapter3);
-	ADD_CALLBACK_FUNCTION(Pascale, nullfunc);
-	ADD_CALLBACK_FUNCTION(Pascale, nullfunc);
-	ADD_CALLBACK_FUNCTION(Pascale, nullfunc);
+	ADD_CALLBACK_FUNCTION(Pascale, function22);
+	ADD_CALLBACK_FUNCTION(Pascale, function23);
+	ADD_CALLBACK_FUNCTION(Pascale, function24);
 	ADD_CALLBACK_FUNCTION(Pascale, chapter4);
-	ADD_CALLBACK_FUNCTION(Pascale, nullfunc);
-	ADD_CALLBACK_FUNCTION(Pascale, nullfunc);
-	ADD_CALLBACK_FUNCTION(Pascale, nullfunc);
-	ADD_CALLBACK_FUNCTION(Pascale, nullfunc);
-	ADD_CALLBACK_FUNCTION(Pascale, nullfunc);
+	ADD_CALLBACK_FUNCTION(Pascale, function26);
+	ADD_CALLBACK_FUNCTION(Pascale, function27);
+	ADD_CALLBACK_FUNCTION(Pascale, function28);
+	ADD_CALLBACK_FUNCTION(Pascale, function29);
+	ADD_CALLBACK_FUNCTION(Pascale, function30);
 	ADD_CALLBACK_FUNCTION(Pascale, chapter5);
-	ADD_CALLBACK_FUNCTION(Pascale, nullfunc);
-	ADD_CALLBACK_FUNCTION(Pascale, nullfunc);
+	ADD_CALLBACK_FUNCTION(Pascale, function32);
+	ADD_CALLBACK_FUNCTION(Pascale, function33);
 	ADD_NULL_FUNCTION();
 }
 
-void Pascale::nullfunc(SavePoint *savepoint) {
-	error("Pascale: callback function not implemented!");
+IMPLEMENT_FUNCTION_S(Pascale, function1, 1) {
+	error("Pascale: callback function 1 not implemented!");
+}
+
+IMPLEMENT_FUNCTION(Pascale, function2, 2) {
+	error("Pascale: callback function 2 not implemented!");
+}
+
+IMPLEMENT_FUNCTION(Pascale, function3, 3) {
+	error("Pascale: callback function 3 not implemented!");
+}
+
+IMPLEMENT_FUNCTION_I(Pascale, function4, 4) {
+	error("Pascale: callback function 4 not implemented!");
+}
+
+IMPLEMENT_FUNCTION_NOSETUP(Pascale, function5, 5) {
+	error("Pascale: callback function 5 not implemented!");
+}
+
+IMPLEMENT_FUNCTION_S(Pascale, function6, 6) {
+	error("Pascale: callback function 6 not implemented!");
+}
+
+IMPLEMENT_FUNCTION_NOSETUP(Pascale, function7, 7) {
+	error("Pascale: callback function 7 not implemented!");
+}
+
+IMPLEMENT_FUNCTION(Pascale, function8, 8) {
+	error("Pascale: callback function 8 not implemented!");
+}
+
+IMPLEMENT_FUNCTION(Pascale, function9, 9) {
+	error("Pascale: callback function 9 not implemented!");
+}
+
+IMPLEMENT_FUNCTION(Pascale, function10, 10) {
+	error("Pascale: callback function 10 not implemented!");
+}
+
+IMPLEMENT_FUNCTION(Pascale, function11, 11) {
+	error("Pascale: callback function 11 not implemented!");
 }
 
 IMPLEMENT_FUNCTION(Pascale, chapter1, 12) {
@@ -103,16 +143,88 @@ IMPLEMENT_FUNCTION(Pascale, chapter1, 12) {
 	}
 }
 
+IMPLEMENT_FUNCTION(Pascale, function13, 13) {
+	error("Pascale: callback function 13 not implemented!");
+}
+
+IMPLEMENT_FUNCTION(Pascale, function14, 14) {
+	error("Pascale: callback function 14 not implemented!");
+}
+
+IMPLEMENT_FUNCTION(Pascale, function15, 15) {
+	error("Pascale: callback function 15 not implemented!");
+}
+
+IMPLEMENT_FUNCTION(Pascale, function16, 16) {
+	error("Pascale: callback function 16 not implemented!");
+}
+
+IMPLEMENT_FUNCTION(Pascale, function17, 17) {
+	error("Pascale: callback function 17 not implemented!");
+}
+
+IMPLEMENT_FUNCTION(Pascale, function18, 18) {
+	error("Pascale: callback function 18 not implemented!");
+}
+
+IMPLEMENT_FUNCTION(Pascale, function19, 19) {
+	error("Pascale: callback function 19 not implemented!");
+}
+
 IMPLEMENT_FUNCTION(Pascale, chapter2, 20) {
+	error("Pascale: callback function 20 not implemented!");
 }
 
 IMPLEMENT_FUNCTION(Pascale, chapter3, 21) {
+	error("Pascale: callback function 21 not implemented!");
+}
+
+IMPLEMENT_FUNCTION(Pascale, function22, 22) {
+	error("Pascale: callback function 22 not implemented!");
+}
+
+IMPLEMENT_FUNCTION(Pascale, function23, 23) {
+	error("Pascale: callback function 23 not implemented!");
+}
+
+IMPLEMENT_FUNCTION(Pascale, function24, 24) {
+	error("Pascale: callback function 24 not implemented!");
 }
 
 IMPLEMENT_FUNCTION(Pascale, chapter4, 25) {
+	error("Pascale: callback function 25 not implemented!");
+}
+
+IMPLEMENT_FUNCTION(Pascale, function26, 26) {
+	error("Pascale: callback function 26 not implemented!");
+}
+
+IMPLEMENT_FUNCTION(Pascale, function27, 27) {
+	error("Pascale: callback function 27 not implemented!");
+}
+
+IMPLEMENT_FUNCTION(Pascale, function28, 28) {
+	error("Pascale: callback function 28 not implemented!");
+}
+
+IMPLEMENT_FUNCTION(Pascale, function29, 29) {
+	error("Pascale: callback function 29 not implemented!");
+}
+
+IMPLEMENT_FUNCTION(Pascale, function30, 30) {
+	error("Pascale: callback function 30 not implemented!");
 }
 
 IMPLEMENT_FUNCTION(Pascale, chapter5, 31) {
+	error("Pascale: callback function 31 not implemented!");
+}
+
+IMPLEMENT_FUNCTION(Pascale, function32, 32) {
+	error("Pascale: callback function 32 not implemented!");
+}
+
+IMPLEMENT_FUNCTION(Pascale, function33, 33) {
+	error("Pascale: callback function 33 not implemented!");
 }
 
 IMPLEMENT_NULL_FUNCTION(Pascale, 34)

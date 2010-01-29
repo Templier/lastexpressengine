@@ -27,6 +27,7 @@
 #define LASTEXPRESS_ENTITY39_H
 
 #include "lastexpress/entities/entity.h"
+#include "lastexpress/entities/entity_intern.h"
 
 namespace LastExpress {
 
@@ -43,8 +44,6 @@ public:
 	DECLARE_FUNCTION(chapter4)
 	DECLARE_FUNCTION(chapter5)
 	DECLARE_FUNCTION(process)
-
-	void nullfunc(SavePoint *savepoint);
 };
 
 } // End of namespace LastExpress

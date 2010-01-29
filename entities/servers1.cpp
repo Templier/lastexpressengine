@@ -34,42 +34,66 @@
 namespace LastExpress {
 
 Servers1::Servers1(LastExpressEngine *engine) : Entity(engine, kEntityServers1) {
-	ADD_CALLBACK_FUNCTION(Servers1, nullfunc);
-	ADD_CALLBACK_FUNCTION(Servers1, nullfunc);
-	ADD_CALLBACK_FUNCTION(Servers1, nullfunc);
-	ADD_CALLBACK_FUNCTION(Servers1, nullfunc);
-	ADD_CALLBACK_FUNCTION(Servers1, nullfunc);
-	ADD_CALLBACK_FUNCTION(Servers1, nullfunc);
-	ADD_CALLBACK_FUNCTION(Servers1, nullfunc);
+	ADD_CALLBACK_FUNCTION(Servers1, function1);
+	ADD_CALLBACK_FUNCTION(Servers1, function2);
+	ADD_CALLBACK_FUNCTION(Servers1, function3);
+	ADD_CALLBACK_FUNCTION(Servers1, function4);
+	ADD_CALLBACK_FUNCTION(Servers1, function5);
+	ADD_CALLBACK_FUNCTION(Servers1, function6);
+	ADD_CALLBACK_FUNCTION(Servers1, function7);
 	ADD_CALLBACK_FUNCTION(Servers1, chapter1);
-	ADD_CALLBACK_FUNCTION(Servers1, nullfunc);
-	ADD_CALLBACK_FUNCTION(Servers1, nullfunc);
-	ADD_CALLBACK_FUNCTION(Servers1, nullfunc);
-	ADD_CALLBACK_FUNCTION(Servers1, nullfunc);
-	ADD_CALLBACK_FUNCTION(Servers1, nullfunc);
-	ADD_CALLBACK_FUNCTION(Servers1, nullfunc);
-	ADD_CALLBACK_FUNCTION(Servers1, nullfunc);
-	ADD_CALLBACK_FUNCTION(Servers1, nullfunc);
+	ADD_CALLBACK_FUNCTION(Servers1, function9);
+	ADD_CALLBACK_FUNCTION(Servers1, function10);
+	ADD_CALLBACK_FUNCTION(Servers1, function11);
+	ADD_CALLBACK_FUNCTION(Servers1, function12);
+	ADD_CALLBACK_FUNCTION(Servers1, function13);
+	ADD_CALLBACK_FUNCTION(Servers1, function14);
+	ADD_CALLBACK_FUNCTION(Servers1, function15);
+	ADD_CALLBACK_FUNCTION(Servers1, function16);
 	ADD_CALLBACK_FUNCTION(Servers1, chapter2);
-	ADD_CALLBACK_FUNCTION(Servers1, nullfunc);
-	ADD_CALLBACK_FUNCTION(Servers1, nullfunc);
-	ADD_CALLBACK_FUNCTION(Servers1, nullfunc);
-	ADD_CALLBACK_FUNCTION(Servers1, nullfunc);
+	ADD_CALLBACK_FUNCTION(Servers1, function18);
+	ADD_CALLBACK_FUNCTION(Servers1, function19);
+	ADD_CALLBACK_FUNCTION(Servers1, function20);
+	ADD_CALLBACK_FUNCTION(Servers1, function21);
 	ADD_CALLBACK_FUNCTION(Servers1, chapter3);
-	ADD_CALLBACK_FUNCTION(Servers1, nullfunc);
-	ADD_CALLBACK_FUNCTION(Servers1, nullfunc);
+	ADD_CALLBACK_FUNCTION(Servers1, function23);
+	ADD_CALLBACK_FUNCTION(Servers1, function24);
 	ADD_CALLBACK_FUNCTION(Servers1, chapter4);
-	ADD_CALLBACK_FUNCTION(Servers1, nullfunc);
-	ADD_CALLBACK_FUNCTION(Servers1, nullfunc);
-	ADD_CALLBACK_FUNCTION(Servers1, nullfunc);
-	ADD_CALLBACK_FUNCTION(Servers1, nullfunc);
+	ADD_CALLBACK_FUNCTION(Servers1, function26);
+	ADD_CALLBACK_FUNCTION(Servers1, function27);
+	ADD_CALLBACK_FUNCTION(Servers1, function28);
+	ADD_CALLBACK_FUNCTION(Servers1, function29);
 	ADD_CALLBACK_FUNCTION(Servers1, chapter5);
-	ADD_CALLBACK_FUNCTION(Servers1, nullfunc);
+	ADD_CALLBACK_FUNCTION(Servers1, function31);
 	ADD_NULL_FUNCTION()
 }
 
-void Servers1::nullfunc(SavePoint *savepoint) {
-	error("Servers1: callback function not implemented!");
+IMPLEMENT_FUNCTION_NOSETUP(Servers1, function1, 1) {
+	error("Servers1: callback function 1 not implemented!");
+}
+
+IMPLEMENT_FUNCTION(Servers1, function2, 2) {
+	error("Servers1: callback function 2 not implemented!");
+}
+
+IMPLEMENT_FUNCTION_SII(Servers1, function3, 3) {
+	error("Servers1: callback function 3 not implemented!");
+}
+
+IMPLEMENT_FUNCTION(Servers1, function4, 4) {
+	error("Servers1: callback function 4 not implemented!");
+}
+
+IMPLEMENT_FUNCTION_SIIS(Servers1, function5, 5) {
+	error("Servers1: callback function 5 not implemented!");
+}
+
+IMPLEMENT_FUNCTION_S(Servers1, function6, 6) {
+	error("Servers1: callback function 6 not implemented!");
+}
+
+IMPLEMENT_FUNCTION(Servers1, function7, 7) {
+	error("Servers1: callback function 7 not implemented!");
 }
 
 IMPLEMENT_FUNCTION(Servers1, chapter1, 8) {
@@ -101,16 +125,96 @@ IMPLEMENT_FUNCTION(Servers1, chapter1, 8) {
 	}
 }
 
+IMPLEMENT_FUNCTION(Servers1, function9, 9) {
+	error("Servers1: callback function 9 not implemented!");
+}
+
+IMPLEMENT_FUNCTION(Servers1, function10, 10) {
+	error("Servers1: callback function 10 not implemented!");
+}
+
+IMPLEMENT_FUNCTION(Servers1, function11, 11) {
+	error("Servers1: callback function 11 not implemented!");
+}
+
+IMPLEMENT_FUNCTION(Servers1, function12, 12) {
+	error("Servers1: callback function 12 not implemented!");
+}
+
+IMPLEMENT_FUNCTION(Servers1, function13, 13) {
+	error("Servers1: callback function 13 not implemented!");
+}
+
+IMPLEMENT_FUNCTION(Servers1, function14, 14) {
+	error("Servers1: callback function 14 not implemented!");
+}
+
+IMPLEMENT_FUNCTION(Servers1, function15, 15) {
+	error("Servers1: callback function 15 not implemented!");
+}
+
+IMPLEMENT_FUNCTION(Servers1, function16, 16) {
+	error("Servers1: callback function 16 not implemented!");
+}
+
 IMPLEMENT_FUNCTION(Servers1, chapter2, 17) {
+	error("Servers1: callback function 17 not implemented!");
+}
+
+IMPLEMENT_FUNCTION(Servers1, function18, 18) {
+	error("Servers1: callback function 18 not implemented!");
+}
+
+IMPLEMENT_FUNCTION(Servers1, function19, 19) {
+	error("Servers1: callback function 19 not implemented!");
+}
+
+IMPLEMENT_FUNCTION(Servers1, function20, 20) {
+	error("Servers1: callback function 20 not implemented!");
+}
+
+IMPLEMENT_FUNCTION(Servers1, function21, 21) {
+	error("Servers1: callback function 21 not implemented!");
 }
 
 IMPLEMENT_FUNCTION(Servers1, chapter3, 22) {
+	error("Servers1: callback function 22 not implemented!");
+}
+
+IMPLEMENT_FUNCTION(Servers1, function23, 23) {
+	error("Servers1: callback function 23 not implemented!");
+}
+
+IMPLEMENT_FUNCTION(Servers1, function24, 24) {
+	error("Servers1: callback function 24 not implemented!");
 }
 
 IMPLEMENT_FUNCTION(Servers1, chapter4, 25) {
+	error("Servers1: callback function 25 not implemented!");
+}
+
+IMPLEMENT_FUNCTION(Servers1, function26, 26) {
+	error("Servers1: callback function 26 not implemented!");
+}
+
+IMPLEMENT_FUNCTION(Servers1, function27, 27) {
+	error("Servers1: callback function 27 not implemented!");
+}
+
+IMPLEMENT_FUNCTION(Servers1, function28, 28) {
+	error("Servers1: callback function 28 not implemented!");
+}
+
+IMPLEMENT_FUNCTION(Servers1, function29, 29) {
+	error("Servers1: callback function 29 not implemented!");
 }
 
 IMPLEMENT_FUNCTION(Servers1, chapter5, 30) {
+	error("Servers1: callback function 30 not implemented!");
+}
+
+IMPLEMENT_FUNCTION(Servers1, function31, 31) {
+	error("Servers1: callback function 31 not implemented!");
 }
 
 IMPLEMENT_NULL_FUNCTION(Servers1, 32)

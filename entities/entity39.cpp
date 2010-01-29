@@ -70,7 +70,7 @@ IMPLEMENT_FUNCTION(Entity39, chapter5, 5) {
 
 IMPLEMENT_FUNCTION(Entity39, process, 6) {
 
-	warning("Entity39::process callback function not implemented!");
+	warning("Entity39: callback function 6 not implemented!");
 
 	/*
 	switch (savepoint->action) {

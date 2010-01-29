@@ -63,7 +63,7 @@ IMPLEMENT_FUNCTION(Max, function1, 1) {
 	FUNCTION_1_IMPLEMENTATION(kEntityMax)
 }
 
-IMPLEMENT_FUNCTION_SEQ(Max, function2, 2) {
+IMPLEMENT_FUNCTION_S(Max, function2, 2) {
 	switch (savepoint->action) {
 	default:
 		break;
@@ -73,13 +73,13 @@ IMPLEMENT_FUNCTION_SEQ(Max, function2, 2) {
 		break;
 
 	case kActionDefault:
-		getSound()->playSound(kEntityMax, ((EntityData::EntityParametersSeq*)_data->getCurrentParameters())->seq1, -1 , 0);
+		getSound()->playSound(kEntityMax, ((EntityData::EntityParametersSIIS*)_data->getCurrentParameters())->seq1, -1 , 0);
 		break;
 	}
 }
 
 // There doesn't seem to be a setup part for function 3 (no idea why), so we skip that part too
-void Max::function3(SavePoint *savepoint) {
+IMPLEMENT_FUNCTION_NOSETUP(Max, function3, 3) {
 	switch (savepoint->action) {
 	default:
 		break;
@@ -89,13 +89,13 @@ void Max::function3(SavePoint *savepoint) {
 		break;
 
 	case kActionDefault:
-		getEntities()->storeSequenceName(kEntityMax, ((EntityData::EntityParametersSeq*)_data->getCurrentParameters())->seq1);
+		getEntities()->storeSequenceName(kEntityMax, ((EntityData::EntityParametersSIIS*)_data->getCurrentParameters())->seq1);
 		break;
 	}
 }
 
-IMPLEMENT_FUNCTION_SEQ_INT(Max, function4, 4) {
-	EntityData::EntityParametersSeq *params = (EntityData::EntityParametersSeq*)_data->getCurrentParameters();
+IMPLEMENT_FUNCTION_SI(Max, function4, 4) {
+	EntityData::EntityParametersSIIS *params = (EntityData::EntityParametersSIIS*)_data->getCurrentParameters();
 
 	switch (savepoint->action) {
 	default:
@@ -114,7 +114,7 @@ IMPLEMENT_FUNCTION_SEQ_INT(Max, function4, 4) {
 	}
 }
 
-IMPLEMENT_FUNCTION_INT2(Max, savegame, 5) {
+IMPLEMENT_FUNCTION_II(Max, savegame, 5) {
 	CALL_SAVEGAME(kEntityMax)
 }
 
@@ -124,22 +124,22 @@ IMPLEMENT_FUNCTION(Max, function6, 6) {
 		break;
 
 	case kActionNone:
-		if (_data->getCurrentParameters()->param2) {
-			if (_data->getCurrentParameters()->param2 > (int)getState()->time)
+		if (CURRENT_PARAM(2)) {
+			if (CURRENT_PARAM(2) > (int)getState()->time)
 				break;
 
-			_data->getCurrentParameters()->param2 = EntityData::kParamTime;
+			CURRENT_PARAM(2) = EntityData::kParamTime;
 		} else {
-			_data->getCurrentParameters()->param2 = _data->getCurrentParameters()->param1 + getState()->time;
+			CURRENT_PARAM(2) = CURRENT_PARAM(1) + getState()->time;
 		}
 
 		getSound()->playSound(kEntityMax, "Max1122");
-		_data->getCurrentParameters()->param1 = 255 * ( 4 * random(20) + 40);
-		_data->getCurrentParameters()->param2 = 0;
+		CURRENT_PARAM(1) = 255 * ( 4 * random(20) + 40);
+		CURRENT_PARAM(2) = 0;
 		break;
 
 	case kActionDefault:
-		_data->getCurrentParameters()->param1 = 255 * ( 4 * random(20) + 40);
+		CURRENT_PARAM(1) = 255 * ( 4 * random(20) + 40);
 		break;
 
 	case kAction71277948:
@@ -149,7 +149,7 @@ IMPLEMENT_FUNCTION(Max, function6, 6) {
 
 	case kAction158007856:
 		getSound()->playSound(kEntityMax, "Max1122");
-		_data->getCurrentParameters()->param1 = 255 * ( 4 * random(20) + 40);
+		CURRENT_PARAM(1) = 255 * ( 4 * random(20) + 40);
 		break;
 	}
 }
@@ -160,18 +160,18 @@ IMPLEMENT_FUNCTION(Max, function7, 7) {
 		break;
 
 	case kActionNone:
-		if (_data->getCurrentParameters()->param2) {
-			if (_data->getCurrentParameters()->param2 > (int)getState()->time)
+		if (CURRENT_PARAM(2)) {
+			if (CURRENT_PARAM(2) > (int)getState()->time)
 				break;
 
-			_data->getCurrentParameters()->param2 = EntityData::kParamTime;
+			CURRENT_PARAM(2) = EntityData::kParamTime;
 		} else {
-			_data->getCurrentParameters()->param2 = _data->getCurrentParameters()->param1 + getState()->time;
+			CURRENT_PARAM(2) = CURRENT_PARAM(1) + getState()->time;
 		}
 
 		getSound()->playSound(kEntityMax, "Max1122");
-		_data->getCurrentParameters()->param1 = 255 * (4 * random(20) + 40);
-		_data->getCurrentParameters()->param2 = 0;
+		CURRENT_PARAM(1) = 255 * (4 * random(20) + 40);
+		CURRENT_PARAM(2) = 0;
 		break;
 
 	case kAction8:
@@ -184,7 +184,7 @@ IMPLEMENT_FUNCTION(Max, function7, 7) {
 		break;
 
 	case kActionDefault:
-		_data->getCurrentParameters()->param1 = 255 * ( 4 * random(20) + 40);
+		CURRENT_PARAM(1) = 255 * ( 4 * random(20) + 40);
 
 		_data->getData()->field_491 = EntityData::kField491_4070;
 		_data->getData()->field_493 = EntityData::kField493_1;
@@ -235,7 +235,7 @@ IMPLEMENT_FUNCTION(Max, function7, 7) {
 
 	case kAction158007856:
 		getSound()->playSound(kEntityMax, "Max1122");
-		_data->getCurrentParameters()->param1 = 255 * ( 4 * random(20) + 40);
+		CURRENT_PARAM(1) = 255 * ( 4 * random(20) + 40);
 		break;
 	}
 }
@@ -246,23 +246,23 @@ IMPLEMENT_FUNCTION(Max, function8, 8) {
 		break;
 
 	case kActionNone:
-		if (!_data->getCurrentParameters(0)->param3) {
-			_data->getCurrentParameters(0)->param3 = _data->getCurrentParameters(0)->param2 + getState()->time;
+		if (!CURRENT_PARAM(3)) {
+			CURRENT_PARAM(3) = CURRENT_PARAM(2) + getState()->time;
 
-			if (_data->getCurrentParameters(0)->param3 == 0)
+			if (CURRENT_PARAM(3) == 0)
 				break;
 
-		} else if (_data->getCurrentParameters(0)->param3 < (int)getState()->time) {
-			_data->getCurrentParameters(0)->param3 = EntityData::kParamTime;
+		} else if (CURRENT_PARAM(3) < (int)getState()->time) {
+			CURRENT_PARAM(3) = EntityData::kParamTime;
 		}
 
 		getSound()->playSound(kEntityMax, "Max3101");
-		_data->getCurrentParameters()->param2 = 255 * ( 4 * random(20) + 40);
-		_data->getCurrentParameters()->param3 = 0;
+		CURRENT_PARAM(2) = 255 * ( 4 * random(20) + 40);
+		CURRENT_PARAM(3) = 0;
 		break;
 
 	case kAction9:
-		if (_data->getCurrentParameters()->param1) {
+		if (CURRENT_PARAM(1)) {
 			_data->setNextCallback(1);
 			call(new ENTITY_SETUP_DEFAULT(Max, setup_savegame), 2, kEventCathMaxLickHand);
 			break;
@@ -271,11 +271,11 @@ IMPLEMENT_FUNCTION(Max, function8, 8) {
 		getAction()->playAnimation(kEventCathMaxLickHand);
 		getLogic()->processScene();
 
-		_data->getCurrentParameters()->param1 = 1;
+		CURRENT_PARAM(1) = 1;
 		break;
 
 	case kActionDefault:
-		_data->getCurrentParameters()->param2 = 255 * ( 4 * random(20) + 40);
+		CURRENT_PARAM(2) = 255 * ( 4 * random(20) + 40);
 
 		getObjects()->update(kObjectCageMax, kEntityMax, kLocationNone, kCursorNormal, kCursorHand);
 		getEntities()->drawSequences(kEntityMax);
@@ -306,17 +306,17 @@ IMPLEMENT_FUNCTION(Max, function9, 9) {
 		break;
 
 	case kActionNone:
-		if (_data->getCurrentParameters()->param2 == EntityData::kParamTime)
+		if (CURRENT_PARAM(2) == EntityData::kParamTime)
 			break;
 
-		if (!getEntities()->checkSequence0(kEntityMax) || !_data->getCurrentParameters()->param2) {
+		if (!getEntities()->checkSequence0(kEntityMax) || !CURRENT_PARAM(2)) {
 
-			_data->getCurrentParameters()->param2 = getState()->time;
+			CURRENT_PARAM(2) = getState()->time;
 
-			if (_data->getCurrentParameters()->param2)
+			if (CURRENT_PARAM(2))
 				break;
 		} else {
-			_data->getCurrentParameters()->param2 = EntityData::kParamTime;
+			CURRENT_PARAM(2) = EntityData::kParamTime;
 		}
 
 		if (getProgress().chapter == 3)
@@ -336,7 +336,7 @@ IMPLEMENT_FUNCTION(Max, function9, 9) {
 		getEntities()->drawSequence(kEntityMax, "630Af");
 		getEntities()->updateFields2(kEntityMax, kEntityTables4);
 
-		_data->getCurrentParameters()->param1 = getState()->time + 2700;
+		CURRENT_PARAM(1) = getState()->time + 2700;
 		break;
 	}
 }
@@ -347,12 +347,7 @@ IMPLEMENT_FUNCTION(Max, chapter1, 10) {
 		break;
 
 	case kActionNone:
-		if (getState()->time > 1062000) {
-			if (!_data->getCurrentParameters()->param1) {
-				_data->getCurrentParameters()->param1 = 1;
-				setup_function6();
-			}
-		}
+		CALL_CHAPTER_ACTION_NONE(6)
 		break;
 
 	case kActionDefault:
@@ -410,27 +405,27 @@ IMPLEMENT_FUNCTION(Max, function13, 13) {
 		break;
 
 	case kActionNone:
-		if (_data->getCurrentParameters()->param2) {
+		if (CURRENT_PARAM(2)) {
 			_data->getData()->field_491 = getEntityData(kEntityCoudert)->field_491;
 			break;
 		}
 
-		if (_data->getCurrentParameters()->param3) {
-			if (_data->getCurrentParameters()->param3 > (int)getState()->time)
+		if (CURRENT_PARAM(3)) {
+			if (CURRENT_PARAM(3) > (int)getState()->time)
 				break;
 
-			_data->getCurrentParameters()->param3 = EntityData::kParamTime;
+			CURRENT_PARAM(3) = EntityData::kParamTime;
 		} else {
-			_data->getCurrentParameters()->param3 = _data->getCurrentParameters()->param1 + getState()->time;
+			CURRENT_PARAM(3) = CURRENT_PARAM(1) + getState()->time;
 		}
 
 		getSound()->playSound(kEntityMax, "Max1122");
-		_data->getCurrentParameters()->param1 = 255 * ( 4 * random(20) + 40);
-		_data->getCurrentParameters()->param3 = 0;
+		CURRENT_PARAM(1) = 255 * ( 4 * random(20) + 40);
+		CURRENT_PARAM(3) = 0;
 		break;
 
 	case kActionDefault:
-		_data->getCurrentParameters()->param1 = 255 * ( 4 * random(20) + 40);
+		CURRENT_PARAM(1) = 255 * ( 4 * random(20) + 40);
 
 		_data->getData()->field_491 = EntityData::kField491_4070;
 		_data->getData()->field_493 = EntityData::kField493_1;
@@ -443,7 +438,7 @@ IMPLEMENT_FUNCTION(Max, function13, 13) {
 		break;
 
 	case kAction122358304:
-		_data->getCurrentParameters()->param2 = 1;
+		CURRENT_PARAM(2) = 1;
 		break;
 
 	case kActionMaxFreeFromCage:
@@ -451,11 +446,11 @@ IMPLEMENT_FUNCTION(Max, function13, 13) {
 		break;
 
 	case kAction158007856:
-		if (_data->getCurrentParameters()->param2)
+		if (CURRENT_PARAM(2))
 			break;
 
 		getSound()->playSound(kEntityMax, "Max1122");
-		_data->getCurrentParameters()->param1 = 255 * ( 4 * random(20) + 40);
+		CURRENT_PARAM(1) = 255 * ( 4 * random(20) + 40);
 		break;
 	}
 }
@@ -527,16 +522,16 @@ IMPLEMENT_FUNCTION(Max, function15, 15) {
 		break;
 
 	case kActionNone:
-		if (_data->getCurrentParameters()->param2) {
+		if (CURRENT_PARAM(2)) {
 			_data->getData()->field_491 = getEntityData(kEntityCoudert)->field_491;
 			_data->getData()->field_495 = getEntityData(kEntityCoudert)->field_495;
 		}
 
-		if (!_data->getCurrentParameters()->param1) {
-			if (!_data->getCurrentParameters()->param3) {
-				_data->getCurrentParameters()->param3 = getState()->time + 900;
+		if (!CURRENT_PARAM(1)) {
+			if (!CURRENT_PARAM(3)) {
+				CURRENT_PARAM(3) = getState()->time + 900;
 
-				if (!_data->getCurrentParameters()->param3) {
+				if (!CURRENT_PARAM(3)) {
 					getSavePoints()->push(kEntityMax, kEntityCoudert, kAction157026693);
 					break;
 				}
@@ -545,8 +540,8 @@ IMPLEMENT_FUNCTION(Max, function15, 15) {
 			// FIXME seems wrong
 			_data->getData()->current_call = (byte)getState()->time;
 
-			if (_data->getCurrentParameters()->param3 < (int)getState()->time) {
-				_data->getCurrentParameters()->param3 = EntityData::kParamTime;
+			if (CURRENT_PARAM(3) < (int)getState()->time) {
+				CURRENT_PARAM(3) = EntityData::kParamTime;
 
 				getSavePoints()->push(kEntityMax, kEntityCoudert, kAction157026693);
 			}
@@ -573,7 +568,7 @@ IMPLEMENT_FUNCTION(Max, function15, 15) {
 		break;
 
 	case kAction122358304:
-		(savepoint->entity2 == kEntityAnna) ? _data->getCurrentParameters()->param1 = 1 : _data->getCurrentParameters()->param2 = 1;
+		(savepoint->entity2 == kEntityAnna) ? CURRENT_PARAM(1) = 1 : CURRENT_PARAM(2) = 1;
 		getEntities()->updateFields3(kEntityMax, kEntityTables4);
 		getEntities()->drawSequence(kEntityMax, "BLANK");
 		break;
@@ -609,7 +604,7 @@ IMPLEMENT_FUNCTION(Max, function17, 17) {
 		break;
 
 	case kActionNone:
-		if (_data->getCurrentParameters()->param1) {
+		if (CURRENT_PARAM(1)) {
 			_data->getData()->field_491 = getEntityData(kEntityCoudert)->field_491;
 			_data->getData()->field_495 = getEntityData(kEntityCoudert)->field_495;
 		}
@@ -625,7 +620,7 @@ IMPLEMENT_FUNCTION(Max, function17, 17) {
 		break;
 
 	case kAction122358304:
-		_data->getCurrentParameters()->param1 = 1;
+		CURRENT_PARAM(1) = 1;
 		getEntities()->updateFields3(kEntityMax, kEntityTables4);
 		getEntities()->drawSequence(kEntityMax, "BLANK");
 		break;

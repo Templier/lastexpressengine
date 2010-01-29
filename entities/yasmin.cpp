@@ -34,32 +34,56 @@
 namespace LastExpress {
 
 Yasmin::Yasmin(LastExpressEngine *engine) : Entity(engine, kEntityYasmin) {
-	ADD_CALLBACK_FUNCTION(Yasmin, nullfunc);
-	ADD_CALLBACK_FUNCTION(Yasmin, nullfunc);
-	ADD_CALLBACK_FUNCTION(Yasmin, nullfunc);
-	ADD_CALLBACK_FUNCTION(Yasmin, nullfunc);
-	ADD_CALLBACK_FUNCTION(Yasmin, nullfunc);
-	ADD_CALLBACK_FUNCTION(Yasmin, nullfunc);
-	ADD_CALLBACK_FUNCTION(Yasmin, nullfunc);
+	ADD_CALLBACK_FUNCTION(Yasmin, function1);
+	ADD_CALLBACK_FUNCTION(Yasmin, function2);
+	ADD_CALLBACK_FUNCTION(Yasmin, function3);
+	ADD_CALLBACK_FUNCTION(Yasmin, function4);
+	ADD_CALLBACK_FUNCTION(Yasmin, function5);
+	ADD_CALLBACK_FUNCTION(Yasmin, function6);
+	ADD_CALLBACK_FUNCTION(Yasmin, function7);
 	ADD_CALLBACK_FUNCTION(Yasmin, chapter1);
-	ADD_CALLBACK_FUNCTION(Yasmin, nullfunc);
-	ADD_CALLBACK_FUNCTION(Yasmin, nullfunc);
+	ADD_CALLBACK_FUNCTION(Yasmin, function9);
+	ADD_CALLBACK_FUNCTION(Yasmin, function10);
 	ADD_CALLBACK_FUNCTION(Yasmin, chapter2);
-	ADD_CALLBACK_FUNCTION(Yasmin, nullfunc);
+	ADD_CALLBACK_FUNCTION(Yasmin, function12);
 	ADD_CALLBACK_FUNCTION(Yasmin, chapter3);
-	ADD_CALLBACK_FUNCTION(Yasmin, nullfunc);
+	ADD_CALLBACK_FUNCTION(Yasmin, function14);
 	ADD_CALLBACK_FUNCTION(Yasmin, chapter4);
-	ADD_CALLBACK_FUNCTION(Yasmin, nullfunc);
-	ADD_CALLBACK_FUNCTION(Yasmin, nullfunc);
+	ADD_CALLBACK_FUNCTION(Yasmin, function16);
+	ADD_CALLBACK_FUNCTION(Yasmin, function17);
 	ADD_CALLBACK_FUNCTION(Yasmin, chapter5);
-	ADD_CALLBACK_FUNCTION(Yasmin, nullfunc);
-	ADD_CALLBACK_FUNCTION(Yasmin, nullfunc);
-	ADD_CALLBACK_FUNCTION(Yasmin, nullfunc);
+	ADD_CALLBACK_FUNCTION(Yasmin, function19);
+	ADD_CALLBACK_FUNCTION(Yasmin, function20);
+	ADD_CALLBACK_FUNCTION(Yasmin, function21);
 	ADD_NULL_FUNCTION();
 }
 
-void Yasmin::nullfunc(SavePoint *savepoint) {
-	error("Yasmin: callback function not implemented!");
+IMPLEMENT_FUNCTION(Yasmin, function1, 1) {
+	error("Yasmin: callback function 1 not implemented!");
+}
+
+IMPLEMENT_FUNCTION_SI(Yasmin, function2, 2) {
+	error("Yasmin: callback function 2 not implemented!");
+}
+
+IMPLEMENT_FUNCTION_S(Yasmin, function3, 3) {
+	error("Yasmin: callback function 3 not implemented!");
+}
+
+IMPLEMENT_FUNCTION_NOSETUP(Yasmin, function4, 4) {
+	error("Yasmin: callback function 4 not implemented!");
+}
+
+IMPLEMENT_FUNCTION_II(Yasmin, function5, 5) {
+	error("Yasmin: callback function 5 not implemented!");
+}
+
+IMPLEMENT_FUNCTION(Yasmin, function6, 6) {
+	error("Yasmin: callback function 6 not implemented!");
+}
+
+IMPLEMENT_FUNCTION(Yasmin, function7, 7) {
+	error("Yasmin: callback function 7 not implemented!");
 }
 
 IMPLEMENT_FUNCTION(Yasmin, chapter1, 8) {
@@ -74,26 +98,61 @@ IMPLEMENT_FUNCTION(Yasmin, chapter1, 8) {
 		break;
 
 	case kActionNone:
-		if (getState()->time > 1062000) {
-			if (!_data->getCurrentParameters()->param1) {
-				_data->getCurrentParameters()->param1 = 1;
-				// call function 9
-			}
-		}
+		CALL_CHAPTER_ACTION_NONE(9)
 		break;
 	}
 }
 
+IMPLEMENT_FUNCTION(Yasmin, function9, 9) {
+	error("Yasmin: callback function 9 not implemented!");
+}
+
+IMPLEMENT_FUNCTION(Yasmin, function10, 10) {
+	error("Yasmin: callback function 10 not implemented!");
+}
+
 IMPLEMENT_FUNCTION(Yasmin, chapter2, 11) {
+	error("Yasmin: callback function 11 not implemented!");
+}
+
+IMPLEMENT_FUNCTION(Yasmin, function12, 12) {
+	error("Yasmin: callback function 12 not implemented!");
 }
 
 IMPLEMENT_FUNCTION(Yasmin, chapter3, 13) {
+	error("Yasmin: callback function 13 not implemented!");
+}
+
+IMPLEMENT_FUNCTION(Yasmin, function14, 14) {
+	error("Yasmin: callback function 14 not implemented!");
 }
 
 IMPLEMENT_FUNCTION(Yasmin, chapter4, 15) {
+	error("Yasmin: callback function 15 not implemented!");
+}
+
+IMPLEMENT_FUNCTION(Yasmin, function16, 16) {
+	error("Yasmin: callback function 16 not implemented!");
+}
+
+IMPLEMENT_FUNCTION(Yasmin, function17, 17) {
+	error("Yasmin: callback function 17 not implemented!");
 }
 
 IMPLEMENT_FUNCTION(Yasmin, chapter5, 18) {
+	error("Yasmin: callback function 18 not implemented!");
+}
+
+IMPLEMENT_FUNCTION(Yasmin, function19, 19) {
+	error("Yasmin: callback function 19 not implemented!");
+}
+
+IMPLEMENT_FUNCTION(Yasmin, function20, 20) {
+	error("Yasmin: callback function 20 not implemented!");
+}
+
+IMPLEMENT_FUNCTION(Yasmin, function21, 21) {
+	error("Yasmin: callback function 21 not implemented!");
 }
 
 IMPLEMENT_NULL_FUNCTION(Yasmin, 22)

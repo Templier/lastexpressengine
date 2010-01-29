@@ -35,52 +35,116 @@
 namespace LastExpress {
 
 Verges::Verges(LastExpressEngine *engine) : Entity(engine, kEntityVerges) {
-	ADD_CALLBACK_FUNCTION(Verges, nullfunc);
-	ADD_CALLBACK_FUNCTION(Verges, nullfunc);
-	ADD_CALLBACK_FUNCTION(Verges, nullfunc);
-	ADD_CALLBACK_FUNCTION(Verges, nullfunc);
-	ADD_CALLBACK_FUNCTION(Verges, nullfunc);
-	ADD_CALLBACK_FUNCTION(Verges, nullfunc);
-	ADD_CALLBACK_FUNCTION(Verges, nullfunc);
-	ADD_CALLBACK_FUNCTION(Verges, nullfunc);
-	ADD_CALLBACK_FUNCTION(Verges, nullfunc);
-	ADD_CALLBACK_FUNCTION(Verges, nullfunc);
-	ADD_CALLBACK_FUNCTION(Verges, nullfunc);
-	ADD_CALLBACK_FUNCTION(Verges, nullfunc);
-	ADD_CALLBACK_FUNCTION(Verges, nullfunc);
-	ADD_CALLBACK_FUNCTION(Verges, nullfunc);
-	ADD_CALLBACK_FUNCTION(Verges, nullfunc);
-	ADD_CALLBACK_FUNCTION(Verges, nullfunc);
-	ADD_CALLBACK_FUNCTION(Verges, nullfunc);
+	ADD_CALLBACK_FUNCTION(Verges, function1);
+	ADD_CALLBACK_FUNCTION(Verges, function2);
+	ADD_CALLBACK_FUNCTION(Verges, function3);
+	ADD_CALLBACK_FUNCTION(Verges, function4);
+	ADD_CALLBACK_FUNCTION(Verges, function5);
+	ADD_CALLBACK_FUNCTION(Verges, function6);
+	ADD_CALLBACK_FUNCTION(Verges, function7);
+	ADD_CALLBACK_FUNCTION(Verges, function8);
+	ADD_CALLBACK_FUNCTION(Verges, function9);
+	ADD_CALLBACK_FUNCTION(Verges, function10);
+	ADD_CALLBACK_FUNCTION(Verges, function11);
+	ADD_CALLBACK_FUNCTION(Verges, function12);
+	ADD_CALLBACK_FUNCTION(Verges, function13);
+	ADD_CALLBACK_FUNCTION(Verges, function14);
+	ADD_CALLBACK_FUNCTION(Verges, function15);
+	ADD_CALLBACK_FUNCTION(Verges, function16);
+	ADD_CALLBACK_FUNCTION(Verges, function17);
 	ADD_CALLBACK_FUNCTION(Verges, chapter1);
-	ADD_CALLBACK_FUNCTION(Verges, nullfunc);
-	ADD_CALLBACK_FUNCTION(Verges, nullfunc);
-	ADD_CALLBACK_FUNCTION(Verges, nullfunc);
-	ADD_CALLBACK_FUNCTION(Verges, nullfunc);
-	ADD_CALLBACK_FUNCTION(Verges, nullfunc);
-	ADD_CALLBACK_FUNCTION(Verges, nullfunc);
-	ADD_CALLBACK_FUNCTION(Verges, nullfunc);
-	ADD_CALLBACK_FUNCTION(Verges, nullfunc);
+	ADD_CALLBACK_FUNCTION(Verges, function19);
+	ADD_CALLBACK_FUNCTION(Verges, function20);
+	ADD_CALLBACK_FUNCTION(Verges, function21);
+	ADD_CALLBACK_FUNCTION(Verges, function22);
+	ADD_CALLBACK_FUNCTION(Verges, function23);
+	ADD_CALLBACK_FUNCTION(Verges, function24);
+	ADD_CALLBACK_FUNCTION(Verges, function25);
+	ADD_CALLBACK_FUNCTION(Verges, function26);
 	ADD_CALLBACK_FUNCTION(Verges, chapter2);
-	ADD_CALLBACK_FUNCTION(Verges, nullfunc);
+	ADD_CALLBACK_FUNCTION(Verges, function28);
 	ADD_CALLBACK_FUNCTION(Verges, chapter3);
-	ADD_CALLBACK_FUNCTION(Verges, nullfunc);
-	ADD_CALLBACK_FUNCTION(Verges, nullfunc);
-	ADD_CALLBACK_FUNCTION(Verges, nullfunc);
-	ADD_CALLBACK_FUNCTION(Verges, nullfunc);
-	ADD_CALLBACK_FUNCTION(Verges, nullfunc);
-	ADD_CALLBACK_FUNCTION(Verges, nullfunc);
+	ADD_CALLBACK_FUNCTION(Verges, function30);
+	ADD_CALLBACK_FUNCTION(Verges, function31);
+	ADD_CALLBACK_FUNCTION(Verges, function32);
+	ADD_CALLBACK_FUNCTION(Verges, function33);
+	ADD_CALLBACK_FUNCTION(Verges, function34);
+	ADD_CALLBACK_FUNCTION(Verges, function35);
 	ADD_CALLBACK_FUNCTION(Verges, chapter4);
-	ADD_CALLBACK_FUNCTION(Verges, nullfunc);
-	ADD_CALLBACK_FUNCTION(Verges, nullfunc);
+	ADD_CALLBACK_FUNCTION(Verges, function37);
+	ADD_CALLBACK_FUNCTION(Verges, function38);
 	ADD_CALLBACK_FUNCTION(Verges, chapter5);
-	ADD_CALLBACK_FUNCTION(Verges, nullfunc);
-	ADD_CALLBACK_FUNCTION(Verges, nullfunc);
-	ADD_CALLBACK_FUNCTION(Verges, nullfunc);
+	ADD_CALLBACK_FUNCTION(Verges, function40);
+	ADD_CALLBACK_FUNCTION(Verges, function41);
+	ADD_CALLBACK_FUNCTION(Verges, function42);
 }
 
-void Verges::nullfunc(SavePoint *savepoint) {
-	error("Verges: callback function not implemented!");
+IMPLEMENT_FUNCTION(Verges, function1, 1) {
+	error("Verges: callback function 1 not implemented!");
+}
+
+IMPLEMENT_FUNCTION_S(Verges, function2, 2) {
+	error("Verges: callback function 2 not implemented!");
+}
+
+IMPLEMENT_FUNCTION(Verges, function3, 3) {
+	error("Verges: callback function 3 not implemented!");
+}
+
+IMPLEMENT_FUNCTION_S(Verges, function4, 4) {
+	error("Verges: callback function 4 not implemented!");
+}
+
+IMPLEMENT_FUNCTION_NOSETUP(Verges, function5, 5) {
+	error("Verges: callback function 5 not implemented!");
+}
+
+IMPLEMENT_FUNCTION(Verges, function6, 6) {
+	error("Verges: callback function 6 not implemented!");
+}
+
+IMPLEMENT_FUNCTION_II(Verges, function7, 7) {
+	error("Verges: callback function 7 not implemented!");
+}
+
+IMPLEMENT_FUNCTION_II(Verges, function8, 8) {
+	error("Verges: callback function 8 not implemented!");
+}
+
+IMPLEMENT_FUNCTION_S(Verges, function9, 9) {
+	error("Verges: callback function 9 not implemented!");
+}
+
+IMPLEMENT_FUNCTION_IIS(Verges, function10, 10) {
+	error("Verges: callback function 10 not implemented!");
+}
+
+IMPLEMENT_FUNCTION(Verges, function11, 11) {
+	error("Verges: callback function 11 not implemented!");
+}
+
+IMPLEMENT_FUNCTION(Verges, function12, 12) {
+	error("Verges: callback function 12 not implemented!");
+}
+
+IMPLEMENT_FUNCTION_I(Verges, function13, 13) {
+	error("Verges: callback function 13 not implemented!");
+}
+
+IMPLEMENT_FUNCTION_I(Verges, function14, 14) {
+	error("Verges: callback function 14 not implemented!");
+}
+
+IMPLEMENT_FUNCTION_IS(Verges, function15, 15) {
+	error("Verges: callback function 15 not implemented!");
+}
+
+IMPLEMENT_FUNCTION_ISS(Verges, function16, 16) {
+	error("Verges: callback function 16 not implemented!");
+}
+
+IMPLEMENT_FUNCTION(Verges, function17, 17) {
+	error("Verges: callback function 17 not implemented!");
 }
 
 IMPLEMENT_FUNCTION(Verges, chapter1, 18) {
@@ -107,26 +171,105 @@ IMPLEMENT_FUNCTION(Verges, chapter1, 18) {
 		break;
 
 	case kActionNone:
-		if (getState()->time > 1062000) {
-			if (!_data->getCurrentParameters()->param1) {
-				_data->getCurrentParameters()->param1 = 1;
-				// call function 26
-			}
-		}
+		CALL_CHAPTER_ACTION_NONE(26)
 		break;
 	}
 }
 
+IMPLEMENT_FUNCTION_NOSETUP(Verges, function19, 19) {
+	error("Verges: callback function 19 not implemented!");
+}
+
+IMPLEMENT_FUNCTION(Verges, function20, 20) {
+	error("Verges: callback function 20 not implemented!");
+}
+
+IMPLEMENT_FUNCTION(Verges, function21, 21) {
+	error("Verges: callback function 21 not implemented!");
+}
+
+IMPLEMENT_FUNCTION(Verges, function22, 22) {
+	error("Verges: callback function 22 not implemented!");
+}
+
+IMPLEMENT_FUNCTION(Verges, function23, 23) {
+	error("Verges: callback function 23 not implemented!");
+}
+
+IMPLEMENT_FUNCTION(Verges, function24, 24) {
+	error("Verges: callback function 24 not implemented!");
+}
+
+IMPLEMENT_FUNCTION(Verges, function25, 25) {
+	error("Verges: callback function 25 not implemented!");
+}
+
+IMPLEMENT_FUNCTION(Verges, function26, 26) {
+	error("Verges: callback function 26 not implemented!");
+}
+
 IMPLEMENT_FUNCTION(Verges, chapter2, 27) {
+	error("Verges: callback function 27 not implemented!");
+}
+
+IMPLEMENT_FUNCTION(Verges, function28, 28) {
+	error("Verges: callback function 28 not implemented!");
 }
 
 IMPLEMENT_FUNCTION(Verges, chapter3, 29) {
+	error("Verges: callback function 29 not implemented!");
+}
+
+IMPLEMENT_FUNCTION_S(Verges, function30, 30) {
+	error("Verges: callback function 30 not implemented!");
+}
+
+IMPLEMENT_FUNCTION(Verges, function31, 31) {
+	error("Verges: callback function 31 not implemented!");
+}
+
+IMPLEMENT_FUNCTION(Verges, function32, 32) {
+	error("Verges: callback function 32 not implemented!");
+}
+
+IMPLEMENT_FUNCTION(Verges, function33, 33) {
+	error("Verges: callback function 33 not implemented!");
+}
+
+IMPLEMENT_FUNCTION(Verges, function34, 34) {
+	error("Verges: callback function 34 not implemented!");
+}
+
+IMPLEMENT_FUNCTION(Verges, function35, 35) {
+	error("Verges: callback function 35 not implemented!");
 }
 
 IMPLEMENT_FUNCTION(Verges, chapter4, 36) {
+	error("Verges: callback function 36 not implemented!");
+}
+
+IMPLEMENT_FUNCTION(Verges, function37, 37) {
+	error("Verges: callback function 37 not implemented!");
+}
+
+IMPLEMENT_FUNCTION(Verges, function38, 38) {
+	error("Verges: callback function 38 not implemented!");
 }
 
 IMPLEMENT_FUNCTION(Verges, chapter5, 39) {
+	error("Verges: callback function 39 not implemented!");
+}
+
+IMPLEMENT_FUNCTION(Verges, function40, 40) {
+	error("Verges: callback function 40 not implemented!");
+}
+
+IMPLEMENT_FUNCTION(Verges, function41, 41) {
+	error("Verges: callback function 41 not implemented!");
+}
+
+IMPLEMENT_FUNCTION(Verges, function42, 42) {
+	error("Verges: callback function 42 not implemented!");
 }
 
 } // End of namespace LastExpress

@@ -35,28 +35,36 @@
 namespace LastExpress {
 
 Vassili::Vassili(LastExpressEngine *engine) : Entity(engine, kEntityVassili) {
-	ADD_CALLBACK_FUNCTION(Vassili, nullfunc);
-	ADD_CALLBACK_FUNCTION(Vassili, nullfunc);
-	ADD_CALLBACK_FUNCTION(Vassili, nullfunc);
+	ADD_CALLBACK_FUNCTION(Vassili, function1);
+	ADD_CALLBACK_FUNCTION(Vassili, function2);
+	ADD_CALLBACK_FUNCTION(Vassili, function3);
 	ADD_CALLBACK_FUNCTION(Vassili, chapter1);
-	ADD_CALLBACK_FUNCTION(Vassili, nullfunc);
-	ADD_CALLBACK_FUNCTION(Vassili, nullfunc);
-	ADD_CALLBACK_FUNCTION(Vassili, nullfunc);
-	ADD_CALLBACK_FUNCTION(Vassili, nullfunc);
-	ADD_CALLBACK_FUNCTION(Vassili, nullfunc);
-	ADD_CALLBACK_FUNCTION(Vassili, nullfunc);
-	ADD_CALLBACK_FUNCTION(Vassili, nullfunc);
+	ADD_CALLBACK_FUNCTION(Vassili, function5);
+	ADD_CALLBACK_FUNCTION(Vassili, function6);
+	ADD_CALLBACK_FUNCTION(Vassili, function7);
+	ADD_CALLBACK_FUNCTION(Vassili, function8);
+	ADD_CALLBACK_FUNCTION(Vassili, function9);
+	ADD_CALLBACK_FUNCTION(Vassili, function10);
+	ADD_CALLBACK_FUNCTION(Vassili, function11);
 	ADD_CALLBACK_FUNCTION(Vassili, chapter2);
-	ADD_CALLBACK_FUNCTION(Vassili, nullfunc);
+	ADD_CALLBACK_FUNCTION(Vassili, function13);
 	ADD_CALLBACK_FUNCTION(Vassili, chapter3);
-	ADD_CALLBACK_FUNCTION(Vassili, nullfunc);
+	ADD_CALLBACK_FUNCTION(Vassili, function15);
 	ADD_CALLBACK_FUNCTION(Vassili, chapter4);
-	ADD_CALLBACK_FUNCTION(Vassili, nullfunc);
+	ADD_CALLBACK_FUNCTION(Vassili, function17);
 	ADD_CALLBACK_FUNCTION(Vassili, chapter5);
 }
 
-void Vassili::nullfunc(SavePoint *savepoint) {
-	error("Vassili: callback function not implemented!");
+IMPLEMENT_FUNCTION(Vassili, function1, 1) {
+	error("Vassili: callback function 1 not implemented!");
+}
+
+IMPLEMENT_FUNCTION_S(Vassili, function2, 2) {
+	error("Vassili: callback function 2 not implemented!");
+}
+
+IMPLEMENT_FUNCTION_II(Vassili, function3, 3) {
+	error("Vassili: callback function 3 not implemented!");
 }
 
 IMPLEMENT_FUNCTION(Vassili, chapter1, 4) {
@@ -70,26 +78,65 @@ IMPLEMENT_FUNCTION(Vassili, chapter1, 4) {
 		break;
 
 	case kActionNone:
-		if (getState()->time > 1062000) {
-			if (!_data->getCurrentParameters()->param1) {
-				_data->getCurrentParameters()->param1 = 1;
-				// call function 5
-			}
-		}
+		CALL_CHAPTER_ACTION_NONE(5)
 		break;
 	}
 }
 
+IMPLEMENT_FUNCTION(Vassili, function5, 5) {
+	error("Vassili: callback function 5 not implemented!");
+}
+
+IMPLEMENT_FUNCTION(Vassili, function6, 6) {
+	error("Vassili: callback function 6 not implemented!");
+}
+
+IMPLEMENT_FUNCTION(Vassili, function7, 7) {
+	error("Vassili: callback function 7 not implemented!");
+}
+
+IMPLEMENT_FUNCTION(Vassili, function8, 8) {
+	error("Vassili: callback function 8 not implemented!");
+}
+
+IMPLEMENT_FUNCTION(Vassili, function9, 9) {
+	error("Vassili: callback function 9 not implemented!");
+}
+
+IMPLEMENT_FUNCTION(Vassili, function10, 10) {
+	error("Vassili: callback function 10 not implemented!");
+}
+
+IMPLEMENT_FUNCTION(Vassili, function11, 11) {
+	error("Vassili: callback function 11 not implemented!");
+}
+
 IMPLEMENT_FUNCTION(Vassili, chapter2, 12) {
+	error("Vassili: callback function 12 not implemented!");
+}
+
+IMPLEMENT_FUNCTION(Vassili, function13, 13) {
+	error("Vassili: callback function 13 not implemented!");
 }
 
 IMPLEMENT_FUNCTION(Vassili, chapter3, 14) {
+	error("Vassili: callback function 14 not implemented!");
+}
+
+IMPLEMENT_FUNCTION(Vassili, function15, 15) {
+	error("Vassili: callback function 15 not implemented!");
 }
 
 IMPLEMENT_FUNCTION(Vassili, chapter4, 16) {
+	error("Vassili: callback function 16 not implemented!");
+}
+
+IMPLEMENT_FUNCTION(Vassili, function17, 17) {
+	error("Vassili: callback function 17 not implemented!");
 }
 
 IMPLEMENT_FUNCTION(Vassili, chapter5, 18) {
+	error("Vassili: callback function 18 not implemented!");
 }
 
 } // End of namespace LastExpress

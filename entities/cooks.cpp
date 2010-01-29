@@ -34,24 +34,36 @@
 namespace LastExpress {
 
 Cooks::Cooks(LastExpressEngine *engine) : Entity(engine, kEntityCooks) {
-	ADD_CALLBACK_FUNCTION(Cooks, nullfunc);
-	ADD_CALLBACK_FUNCTION(Cooks, nullfunc);
-	ADD_CALLBACK_FUNCTION(Cooks, nullfunc);
-	ADD_CALLBACK_FUNCTION(Cooks, nullfunc);
+	ADD_CALLBACK_FUNCTION(Cooks, function1);
+	ADD_CALLBACK_FUNCTION(Cooks, function2);
+	ADD_CALLBACK_FUNCTION(Cooks, function3);
+	ADD_CALLBACK_FUNCTION(Cooks, function4);
 	ADD_CALLBACK_FUNCTION(Cooks, chapter1);
-	ADD_CALLBACK_FUNCTION(Cooks, nullfunc);
-	ADD_CALLBACK_FUNCTION(Cooks, nullfunc);
+	ADD_CALLBACK_FUNCTION(Cooks, function6);
+	ADD_CALLBACK_FUNCTION(Cooks, function7);
 	ADD_CALLBACK_FUNCTION(Cooks, chapter2);
-	ADD_CALLBACK_FUNCTION(Cooks, nullfunc);
+	ADD_CALLBACK_FUNCTION(Cooks, function9);
 	ADD_CALLBACK_FUNCTION(Cooks, chapter3);
-	ADD_CALLBACK_FUNCTION(Cooks, nullfunc);
+	ADD_CALLBACK_FUNCTION(Cooks, function11);
 	ADD_CALLBACK_FUNCTION(Cooks, chapter4);
-	ADD_CALLBACK_FUNCTION(Cooks, nullfunc);
+	ADD_CALLBACK_FUNCTION(Cooks, function13);
 	ADD_CALLBACK_FUNCTION(Cooks, chapter5);
 }
 
-void Cooks::nullfunc(SavePoint *savepoint) {
-	error("Cooks: callback function not implemented!");
+IMPLEMENT_FUNCTION_S(Cooks, function1, 1) {
+	error("Cooks: callback function 1 not implemented!");
+}
+
+IMPLEMENT_FUNCTION_S(Cooks, function2, 2) {
+	error("Cooks: callback function 2 not implemented!");
+}
+
+IMPLEMENT_FUNCTION(Cooks, function3, 3) {
+	error("Cooks: callback function 3 not implemented!");
+}
+
+IMPLEMENT_FUNCTION(Cooks, function4, 4) {
+	error("Cooks: callback function 4 not implemented!");
 }
 
 IMPLEMENT_FUNCTION(Cooks, chapter1, 5) {
@@ -69,26 +81,45 @@ IMPLEMENT_FUNCTION(Cooks, chapter1, 5) {
 		break;
 
 	case kActionNone:
-		if (getState()->time > 1062000) {
-			if (!_data->getCurrentParameters()->param1) {
-				_data->getCurrentParameters()->param1 = 1;
-				// call function 6
-			}
-		}
+		CALL_CHAPTER_ACTION_NONE(6)
 		break;
 	}
 }
 
+IMPLEMENT_FUNCTION(Cooks, function6, 6) {
+	error("Cooks: callback function 6 not implemented!");
+}
+
+IMPLEMENT_FUNCTION(Cooks, function7, 7) {
+	error("Cooks: callback function 7 not implemented!");
+}
+
 IMPLEMENT_FUNCTION(Cooks, chapter2, 8) {
+	error("Cooks: callback function 8 not implemented!");
+}
+
+IMPLEMENT_FUNCTION(Cooks, function9, 9) {
+	error("Cooks: callback function 9 not implemented!");
 }
 
 IMPLEMENT_FUNCTION(Cooks, chapter3, 10) {
+	error("Cooks: callback function 10 not implemented!");
+}
+
+IMPLEMENT_FUNCTION(Cooks, function11, 11) {
+	error("Cooks: callback function 11 not implemented!");
 }
 
 IMPLEMENT_FUNCTION(Cooks, chapter4, 12) {
+	error("Cooks: callback function 12 not implemented!");
+}
+
+IMPLEMENT_FUNCTION(Cooks, function13, 13) {
+	error("Cooks: callback function 13 not implemented!");
 }
 
 IMPLEMENT_FUNCTION(Cooks, chapter5, 14) {
+	error("Cooks: callback function 14 not implemented!");
 }
 
 } // End of namespace LastExpress

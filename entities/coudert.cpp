@@ -35,73 +35,209 @@
 namespace LastExpress {
 
 Coudert::Coudert(LastExpressEngine *engine) : Entity(engine, kEntityCoudert) {
-	ADD_CALLBACK_FUNCTION(Coudert, nullfunc);
-	ADD_CALLBACK_FUNCTION(Coudert, nullfunc);
-	ADD_CALLBACK_FUNCTION(Coudert, nullfunc);
-	ADD_CALLBACK_FUNCTION(Coudert, nullfunc);
-	ADD_CALLBACK_FUNCTION(Coudert, nullfunc);
-	ADD_CALLBACK_FUNCTION(Coudert, nullfunc);
-	ADD_CALLBACK_FUNCTION(Coudert, nullfunc);
-	ADD_CALLBACK_FUNCTION(Coudert, nullfunc);
-	ADD_CALLBACK_FUNCTION(Coudert, nullfunc);
-	ADD_CALLBACK_FUNCTION(Coudert, nullfunc);
-	ADD_CALLBACK_FUNCTION(Coudert, nullfunc);
-	ADD_CALLBACK_FUNCTION(Coudert, nullfunc);
-	ADD_CALLBACK_FUNCTION(Coudert, nullfunc);
-	ADD_CALLBACK_FUNCTION(Coudert, nullfunc);
-	ADD_CALLBACK_FUNCTION(Coudert, nullfunc);
-	ADD_CALLBACK_FUNCTION(Coudert, nullfunc);
-	ADD_CALLBACK_FUNCTION(Coudert, nullfunc);
-	ADD_CALLBACK_FUNCTION(Coudert, nullfunc);
-	ADD_CALLBACK_FUNCTION(Coudert, nullfunc);
-	ADD_CALLBACK_FUNCTION(Coudert, nullfunc);
-	ADD_CALLBACK_FUNCTION(Coudert, nullfunc);
-	ADD_CALLBACK_FUNCTION(Coudert, nullfunc);
-	ADD_CALLBACK_FUNCTION(Coudert, nullfunc);
-	ADD_CALLBACK_FUNCTION(Coudert, nullfunc);
-	ADD_CALLBACK_FUNCTION(Coudert, nullfunc);
-	ADD_CALLBACK_FUNCTION(Coudert, nullfunc);
-	ADD_CALLBACK_FUNCTION(Coudert, nullfunc);
-	ADD_CALLBACK_FUNCTION(Coudert, nullfunc);
-	ADD_CALLBACK_FUNCTION(Coudert, nullfunc);
-	ADD_CALLBACK_FUNCTION(Coudert, nullfunc);
-	ADD_CALLBACK_FUNCTION(Coudert, nullfunc);
-	ADD_CALLBACK_FUNCTION(Coudert, nullfunc);
-	ADD_CALLBACK_FUNCTION(Coudert, nullfunc);
-	ADD_CALLBACK_FUNCTION(Coudert, nullfunc);
-	ADD_CALLBACK_FUNCTION(Coudert, nullfunc);
+	ADD_CALLBACK_FUNCTION(Coudert, function1);
+	ADD_CALLBACK_FUNCTION(Coudert, function2);
+	ADD_CALLBACK_FUNCTION(Coudert, function3);
+	ADD_CALLBACK_FUNCTION(Coudert, function4);
+	ADD_CALLBACK_FUNCTION(Coudert, function5);
+	ADD_CALLBACK_FUNCTION(Coudert, function6);
+	ADD_CALLBACK_FUNCTION(Coudert, function7);
+	ADD_CALLBACK_FUNCTION(Coudert, function8);
+	ADD_CALLBACK_FUNCTION(Coudert, function9);
+	ADD_CALLBACK_FUNCTION(Coudert, function10);
+	ADD_CALLBACK_FUNCTION(Coudert, function11);
+	ADD_CALLBACK_FUNCTION(Coudert, function12);
+	ADD_CALLBACK_FUNCTION(Coudert, function13);
+	ADD_CALLBACK_FUNCTION(Coudert, function14);
+	ADD_CALLBACK_FUNCTION(Coudert, function15);
+	ADD_CALLBACK_FUNCTION(Coudert, function16);
+	ADD_CALLBACK_FUNCTION(Coudert, function17);
+	ADD_CALLBACK_FUNCTION(Coudert, function18);
+	ADD_CALLBACK_FUNCTION(Coudert, function19);
+	ADD_CALLBACK_FUNCTION(Coudert, function20);
+	ADD_CALLBACK_FUNCTION(Coudert, function21);
+	ADD_CALLBACK_FUNCTION(Coudert, function22);
+	ADD_CALLBACK_FUNCTION(Coudert, function23);
+	ADD_CALLBACK_FUNCTION(Coudert, function24);
+	ADD_CALLBACK_FUNCTION(Coudert, function25);
+	ADD_CALLBACK_FUNCTION(Coudert, function26);
+	ADD_CALLBACK_FUNCTION(Coudert, function27);
+	ADD_CALLBACK_FUNCTION(Coudert, function28);
+	ADD_CALLBACK_FUNCTION(Coudert, function29);
+	ADD_CALLBACK_FUNCTION(Coudert, function30);
+	ADD_CALLBACK_FUNCTION(Coudert, function31);
+	ADD_CALLBACK_FUNCTION(Coudert, function32);
+	ADD_CALLBACK_FUNCTION(Coudert, function33);
+	ADD_CALLBACK_FUNCTION(Coudert, function34);
+	ADD_CALLBACK_FUNCTION(Coudert, function35);
 	ADD_CALLBACK_FUNCTION(Coudert, chapter1);
-	ADD_CALLBACK_FUNCTION(Coudert, nullfunc);
-	ADD_CALLBACK_FUNCTION(Coudert, nullfunc);
-	ADD_CALLBACK_FUNCTION(Coudert, nullfunc);
-	ADD_CALLBACK_FUNCTION(Coudert, nullfunc);
-	ADD_CALLBACK_FUNCTION(Coudert, nullfunc);
+	ADD_CALLBACK_FUNCTION(Coudert, function37);
+	ADD_CALLBACK_FUNCTION(Coudert, function38);
+	ADD_CALLBACK_FUNCTION(Coudert, function39);
+	ADD_CALLBACK_FUNCTION(Coudert, function40);
+	ADD_CALLBACK_FUNCTION(Coudert, function41);
 	ADD_CALLBACK_FUNCTION(Coudert, chapter2);
-	ADD_CALLBACK_FUNCTION(Coudert, nullfunc);
+	ADD_CALLBACK_FUNCTION(Coudert, function43);
 	ADD_CALLBACK_FUNCTION(Coudert, chapter3);
-	ADD_CALLBACK_FUNCTION(Coudert, nullfunc);
-	ADD_CALLBACK_FUNCTION(Coudert, nullfunc);
-	ADD_CALLBACK_FUNCTION(Coudert, nullfunc);
-	ADD_CALLBACK_FUNCTION(Coudert, nullfunc);
-	ADD_CALLBACK_FUNCTION(Coudert, nullfunc);
-	ADD_CALLBACK_FUNCTION(Coudert, nullfunc);
-	ADD_CALLBACK_FUNCTION(Coudert, nullfunc);
+	ADD_CALLBACK_FUNCTION(Coudert, function45);
+	ADD_CALLBACK_FUNCTION(Coudert, function46);
+	ADD_CALLBACK_FUNCTION(Coudert, function47);
+	ADD_CALLBACK_FUNCTION(Coudert, function48);
+	ADD_CALLBACK_FUNCTION(Coudert, function49);
+	ADD_CALLBACK_FUNCTION(Coudert, function50);
+	ADD_CALLBACK_FUNCTION(Coudert, function51);
 	ADD_CALLBACK_FUNCTION(Coudert, chapter4);
-	ADD_CALLBACK_FUNCTION(Coudert, nullfunc);
-	ADD_CALLBACK_FUNCTION(Coudert, nullfunc);
-	ADD_CALLBACK_FUNCTION(Coudert, nullfunc);
-	ADD_CALLBACK_FUNCTION(Coudert, nullfunc);
+	ADD_CALLBACK_FUNCTION(Coudert, function53);
+	ADD_CALLBACK_FUNCTION(Coudert, function54);
+	ADD_CALLBACK_FUNCTION(Coudert, function55);
+	ADD_CALLBACK_FUNCTION(Coudert, function56);
 	ADD_CALLBACK_FUNCTION(Coudert, chapter5);
-	ADD_CALLBACK_FUNCTION(Coudert, nullfunc);
-	ADD_CALLBACK_FUNCTION(Coudert, nullfunc);
-	ADD_CALLBACK_FUNCTION(Coudert, nullfunc);
-	ADD_CALLBACK_FUNCTION(Coudert, nullfunc);
-	ADD_CALLBACK_FUNCTION(Coudert, nullfunc);
+	ADD_CALLBACK_FUNCTION(Coudert, function58);
+	ADD_CALLBACK_FUNCTION(Coudert, function59);
+	ADD_CALLBACK_FUNCTION(Coudert, function60);
+	ADD_CALLBACK_FUNCTION(Coudert, function61);
+	ADD_CALLBACK_FUNCTION(Coudert, function62);
 	ADD_NULL_FUNCTION();
 }
 
-void Coudert::nullfunc(SavePoint *savepoint) {
-	error("Coudert: callback function not implemented!");
+IMPLEMENT_FUNCTION(Coudert, function1, 1) {
+	error("Coudert: callback function 1 not implemented!");
+}
+
+IMPLEMENT_FUNCTION_S(Coudert, function2, 2) {
+	error("Coudert: callback function 2 not implemented!");
+}
+
+IMPLEMENT_FUNCTION_SI(Coudert, function3, 3) {
+	error("Coudert: callback function 3 not implemented!");
+}
+
+IMPLEMENT_FUNCTION(Coudert, function4, 4) {
+	error("Coudert: callback function 4 not implemented!");
+}
+
+IMPLEMENT_FUNCTION_SIII(Coudert, function5, 5) {
+	error("Coudert: callback function 5 not implemented!");
+}
+
+IMPLEMENT_FUNCTION_S(Coudert, function6, 6) {
+	error("Coudert: callback function 6 not implemented!");
+}
+
+IMPLEMENT_FUNCTION_NOSETUP(Coudert, function7, 7) {
+	error("Coudert: callback function 7 not implemented!");
+}
+
+IMPLEMENT_FUNCTION_II(Coudert, function8, 8) {
+	error("Coudert: callback function 8 not implemented!");
+}
+
+IMPLEMENT_FUNCTION_II(Coudert, function9, 9) {
+	error("Coudert: callback function 9 not implemented!");
+}
+
+IMPLEMENT_FUNCTION_I(Coudert, function10, 10) {
+	error("Coudert: callback function 10 not implemented!");
+}
+
+IMPLEMENT_FUNCTION_I(Coudert, function11, 11) {
+	error("Coudert: callback function 11 not implemented!");
+}
+
+IMPLEMENT_FUNCTION_I(Coudert, function12, 12) {
+	error("Coudert: callback function 12 not implemented!");
+}
+
+IMPLEMENT_FUNCTION_II(Coudert, function13, 13) {
+	error("Coudert: callback function 13 not implemented!");
+}
+
+IMPLEMENT_FUNCTION_I(Coudert, function14, 14) {
+	error("Coudert: callback function 14 not implemented!");
+}
+
+IMPLEMENT_FUNCTION_I(Coudert, function15, 15) {
+	error("Coudert: callback function 15 not implemented!");
+}
+
+IMPLEMENT_FUNCTION(Coudert, function16, 16) {
+	error("Coudert: callback function 16 not implemented!");
+}
+
+IMPLEMENT_FUNCTION_I(Coudert, function17, 17) {
+	error("Coudert: callback function 17 not implemented!");
+}
+
+IMPLEMENT_FUNCTION(Coudert, function18, 18) {
+	error("Coudert: callback function 18 not implemented!");
+}
+
+IMPLEMENT_FUNCTION_I(Coudert, function19, 19) {
+	error("Coudert: callback function 19 not implemented!");
+}
+
+IMPLEMENT_FUNCTION_II(Coudert, function20, 20) {
+	error("Coudert: callback function 20 not implemented!");
+}
+
+IMPLEMENT_FUNCTION(Coudert, function21, 21) {
+	error("Coudert: callback function 21 not implemented!");
+}
+
+IMPLEMENT_FUNCTION(Coudert, function22, 22) {
+	error("Coudert: callback function 22 not implemented!");
+}
+
+IMPLEMENT_FUNCTION(Coudert, function23, 23) {
+	error("Coudert: callback function 23 not implemented!");
+}
+
+IMPLEMENT_FUNCTION(Coudert, function24, 24) {
+	error("Coudert: callback function 24 not implemented!");
+}
+
+IMPLEMENT_FUNCTION(Coudert, function25, 25) {
+	error("Coudert: callback function 25 not implemented!");
+}
+
+IMPLEMENT_FUNCTION(Coudert, function26, 26) {
+	error("Coudert: callback function 26 not implemented!");
+}
+
+IMPLEMENT_FUNCTION(Coudert, function27, 27) {
+	error("Coudert: callback function 27 not implemented!");
+}
+
+IMPLEMENT_FUNCTION(Coudert, function28, 28) {
+	error("Coudert: callback function 28 not implemented!");
+}
+
+IMPLEMENT_FUNCTION(Coudert, function29, 29) {
+	error("Coudert: callback function 29 not implemented!");
+}
+
+IMPLEMENT_FUNCTION_I(Coudert, function30, 30) {
+	error("Coudert: callback function 30 not implemented!");
+}
+
+IMPLEMENT_FUNCTION_I(Coudert, function31, 31) {
+	error("Coudert: callback function 31 not implemented!");
+}
+
+IMPLEMENT_FUNCTION(Coudert, function32, 32) {
+	error("Coudert: callback function 32 not implemented!");
+}
+
+IMPLEMENT_FUNCTION(Coudert, function33, 33) {
+	error("Coudert: callback function 33 not implemented!");
+}
+
+IMPLEMENT_FUNCTION_I(Coudert, function34, 34) {
+	error("Coudert: callback function 34 not implemented!");
+}
+
+IMPLEMENT_FUNCTION_I(Coudert, function35, 35) {
+	error("Coudert: callback function 35 not implemented!");
 }
 
 IMPLEMENT_FUNCTION(Coudert, chapter1, 36) {
@@ -127,8 +263,8 @@ IMPLEMENT_FUNCTION(Coudert, chapter1, 36) {
 		getSavePoints()->addData(kEntityCoudert, kAction201431954, 18);
 		getSavePoints()->addData(kEntityCoudert, kAction188570113, 19);
 
-		_data->getParameters(8, 0)->param1 = 0;
-		_data->getParameters(8, 0)->param2 = 1;
+		ENTITY_PARAM(8, 0, 1) = 0;
+		ENTITY_PARAM(8, 0, 2) = 1;
 
 		_data->getData()->field_491 = EntityData::kField491_1500;
 		_data->getData()->field_493 = EntityData::kField493_0;
@@ -143,9 +279,10 @@ IMPLEMENT_FUNCTION(Coudert, chapter1, 36) {
 		break;
 
 	case kActionNone:
+		// We have some specific callback code here, so we cannot call the existing macro
 		if (getState()->time > 1062000) {
-			if (!_data->getCurrentParameters()->param1) {
-				_data->getCurrentParameters()->param1 = 1;
+			if (!CURRENT_PARAM(1)) {
+				CURRENT_PARAM(1) = 1;
 				_data->setCallback(_data->getData()->current_call + 8, 1);
 				// call function call(, 0, 0, 0, 0);
 			}
@@ -154,16 +291,108 @@ IMPLEMENT_FUNCTION(Coudert, chapter1, 36) {
 	}
 }
 
+IMPLEMENT_FUNCTION(Coudert, function37, 37) {
+	error("Coudert: callback function 37 not implemented!");
+}
+
+IMPLEMENT_FUNCTION(Coudert, function38, 38) {
+	error("Coudert: callback function 38 not implemented!");
+}
+
+IMPLEMENT_FUNCTION(Coudert, function39, 39) {
+	error("Coudert: callback function 39 not implemented!");
+}
+
+IMPLEMENT_FUNCTION(Coudert, function40, 40) {
+	error("Coudert: callback function 40 not implemented!");
+}
+
+IMPLEMENT_FUNCTION(Coudert, function41, 41) {
+	error("Coudert: callback function 41 not implemented!");
+}
+
 IMPLEMENT_FUNCTION(Coudert, chapter2, 42) {
+	error("Coudert: callback function 42 not implemented!");
+}
+
+IMPLEMENT_FUNCTION(Coudert, function43, 43) {
+	error("Coudert: callback function 43 not implemented!");
 }
 
 IMPLEMENT_FUNCTION(Coudert, chapter3, 44) {
+	error("Coudert: callback function 44 not implemented!");
+}
+
+IMPLEMENT_FUNCTION(Coudert, function45, 45) {
+	error("Coudert: callback function 45 not implemented!");
+}
+
+IMPLEMENT_FUNCTION(Coudert, function46, 46) {
+	error("Coudert: callback function 46 not implemented!");
+}
+
+IMPLEMENT_FUNCTION_I(Coudert, function47, 47) {
+	error("Coudert: callback function 47 not implemented!");
+}
+
+IMPLEMENT_FUNCTION(Coudert, function48, 48) {
+	error("Coudert: callback function 48 not implemented!");
+}
+
+IMPLEMENT_FUNCTION(Coudert, function49, 49) {
+	error("Coudert: callback function 49 not implemented!");
+}
+
+IMPLEMENT_FUNCTION(Coudert, function50, 50) {
+	error("Coudert: callback function 50 not implemented!");
+}
+
+IMPLEMENT_FUNCTION(Coudert, function51, 51) {
+	error("Coudert: callback function 51 not implemented!");
 }
 
 IMPLEMENT_FUNCTION(Coudert, chapter4, 52) {
+	error("Coudert: callback function 52 not implemented!");
+}
+
+IMPLEMENT_FUNCTION(Coudert, function53, 53) {
+	error("Coudert: callback function 53 not implemented!");
+}
+
+IMPLEMENT_FUNCTION(Coudert, function54, 54) {
+	error("Coudert: callback function 54 not implemented!");
+}
+
+IMPLEMENT_FUNCTION(Coudert, function55, 55) {
+	error("Coudert: callback function 55 not implemented!");
+}
+
+IMPLEMENT_FUNCTION(Coudert, function56, 56) {
+	error("Coudert: callback function 56 not implemented!");
 }
 
 IMPLEMENT_FUNCTION(Coudert, chapter5, 57) {
+	error("Coudert: callback function 57 not implemented!");
+}
+
+IMPLEMENT_FUNCTION(Coudert, function58, 58) {
+	error("Coudert: callback function 58 not implemented!");
+}
+
+IMPLEMENT_FUNCTION(Coudert, function59, 59) {
+	error("Coudert: callback function 59 not implemented!");
+}
+
+IMPLEMENT_FUNCTION(Coudert, function60, 60) {
+	error("Coudert: callback function 60 not implemented!");
+}
+
+IMPLEMENT_FUNCTION(Coudert, function61, 61) {
+	error("Coudert: callback function 61 not implemented!");
+}
+
+IMPLEMENT_FUNCTION(Coudert, function62, 62) {
+	error("Coudert: callback function 62 not implemented!");
 }
 
 IMPLEMENT_NULL_FUNCTION(Coudert, 63)

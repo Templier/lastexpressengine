@@ -27,6 +27,7 @@
 #define LASTEXPRESS_MERTENS_H
 
 #include "lastexpress/entities/entity.h"
+#include "lastexpress/entities/entity_intern.h"
 
 namespace LastExpress {
 
@@ -37,26 +38,60 @@ public:
 	Mertens(LastExpressEngine *engine);
 
 	// Setup
-	DECLARE_FUNCTION(function6)
-	DECLARE_FUNCTION(savegame)
-	DECLARE_FUNCTION(function10)
-	DECLARE_FUNCTION(function11)
-	DECLARE_FUNCTION(function17)
-	DECLARE_FUNCTION(chapter1)
-	DECLARE_FUNCTION(function41)
-	DECLARE_FUNCTION(function42)
-	DECLARE_FUNCTION(chapter2)
-	DECLARE_FUNCTION(function44)
-	DECLARE_FUNCTION(chapter3)
-	DECLARE_FUNCTION(function46)
-	DECLARE_FUNCTION(chapter4)
-	DECLARE_FUNCTION(function48)
-	DECLARE_FUNCTION(chapter5)
-	DECLARE_FUNCTION(function51)
-	DECLARE_FUNCTION(function52)
+	DECLARE_FUNCTION(function1);
+	DECLARE_FUNCTION_S(function2);
+	DECLARE_FUNCTION_SI(function3);
+	DECLARE_FUNCTION_SI(function4);
+	DECLARE_FUNCTION_SIII(function5);
+	DECLARE_FUNCTION(function6);
+	DECLARE_FUNCTION_S(function7);
+	DECLARE_FUNCTION_S(function8);
+	DECLARE_FUNCTION_II(savegame);
+	DECLARE_FUNCTION_II(function10);
+	DECLARE_FUNCTION_I(function11);
+	DECLARE_FUNCTION_I(bonsoir);
+	DECLARE_FUNCTION_II(function13);
+	DECLARE_FUNCTION_I(function14);
+	DECLARE_FUNCTION_I(function15);
+	DECLARE_FUNCTION_I(function16);
+	DECLARE_FUNCTION(function17);
+	DECLARE_FUNCTION(function18);
+	DECLARE_FUNCTION(function19);
+	DECLARE_FUNCTION(function20);
+	DECLARE_FUNCTION_II(function21);
+	DECLARE_FUNCTION(function22);
+	DECLARE_FUNCTION(function23);
+	DECLARE_FUNCTION(function24);
+	DECLARE_FUNCTION(function25);
+	DECLARE_FUNCTION_I(function26);
+	DECLARE_FUNCTION_I(function27);
+	DECLARE_FUNCTION_S(function28);
+	DECLARE_FUNCTION_SS(function29);
+	DECLARE_FUNCTION_I(function30);
+	DECLARE_FUNCTION_I(function31);
+	DECLARE_FUNCTION(function32);
+	DECLARE_FUNCTION(function33);
+	DECLARE_FUNCTION(chapter1);
+	DECLARE_FUNCTION(function35);
+	DECLARE_FUNCTION(function36);
+	DECLARE_FUNCTION(function37);
+	DECLARE_FUNCTION(function38);
+	DECLARE_FUNCTION(function39);
+	DECLARE_FUNCTION(function40);
+	DECLARE_FUNCTION(function41);
+	DECLARE_FUNCTION(function42);
+	DECLARE_FUNCTION(chapter2);
+	DECLARE_FUNCTION(function44);
+	DECLARE_FUNCTION(chapter3);
+	DECLARE_FUNCTION(function46);
+	DECLARE_FUNCTION(chapter4);
+	DECLARE_FUNCTION(function48);
+	DECLARE_FUNCTION(function49);
+	DECLARE_FUNCTION(chapter5);
+	DECLARE_FUNCTION(function51);
+	DECLARE_FUNCTION(function52);
+	DECLARE_FUNCTION(function53);
 	DECLARE_NULL_FUNCTION()
-
-	void nullfunc(SavePoint *savepoint);
 
 private:
 	DECLARE_CALL_FUNCTION(default, Mertens, int, int, int, int)

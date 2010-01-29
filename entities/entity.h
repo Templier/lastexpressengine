@@ -29,7 +29,6 @@
 #include "lastexpress/shared.h"
 
 #include "common/serializer.h"
-#include "common/func.h"
 
 namespace LastExpress {
 
@@ -37,201 +36,12 @@ class LastExpressEngine;
 class Sequence;
 struct SavePoint;
 
-//////////////////////////////////////////////////////////////////////////
-// Callbacks
-#define ENTITY_CALLBACK(class, name, pointer) \
-	Common::Functor1Mem<SavePoint*, void, class>(pointer, &class::name)
-
-#define ENTITY_SETUP_DEFAULT(class, name) \
-	Functor4Mem<int, int, int, int, void, class>(this, &class::name)
-
-#define ENTITY_SETUP(class, name, type1, type2, type3, type4) \
-	Functor4Mem<type1, type2, type3, type4, void, class>(this, &class::name)
-
-#define ADD_CALLBACK_FUNCTION(class, name) \
-	_callbacks.push_back(new ENTITY_CALLBACK(class, name, this));
-
-#define ADD_NULL_FUNCTION() \
-	_callbacks.push_back(new ENTITY_CALLBACK(Entity, nullfunction, this));
-
-//////////////////////////////////////////////////////////////////////////
-// Declaration
-#define DECLARE_NULL_FUNCTION() \
-	void setup_nullfunction(int param1 = 0, int param2 = 0, int param3 = 0, int param4 = 0); \
-
-#define DECLARE_FUNCTION(name) \
-	void name(SavePoint *savepoint); \
-	void setup_##name(int param1 = 0, int param2 = 0, int param3 = 0, int param4 = 0);
-
-#define DECLARE_FUNCTION_SEQ(name) \
-	void name(SavePoint *savepoint); \
-	void setup_##name(const char* seq1, int param2 = 0, int param3 = 0, const char* seq2 = 0);
-
-//////////////////////////////////////////////////////////////////////////
-// Call function
-#define DECLARE_CALL_FUNCTION(id, class, type1, type2, type3, type4) \
-	typedef Functor4Mem<type1, type2, type3, type4, void, class> SetupFunction_##id; \
-	void call(SetupFunction_##id *func, type1 param1 = 0, type2 param2 = 0, type3 param3 = 0, type4 param4 = 0) { \
-		_data->getData()->current_call++; \
-		(*func)(param1, param2, param3, param4); \
-		delete func; \
-	}
-
-//////////////////////////////////////////////////////////////////////////
-// Implementation
-
-// nullfunction call
-#define IMPLEMENT_NULL_FUNCTION(class, index) \
-	IMPLEMENT_SETUP(class, Entity, nullfunction, index)
-
-// simple setup with no parameters
-#define IMPLEMENT_FUNCTION(class, name, index) \
-	IMPLEMENT_SETUP(class, class, name, index) \
-	void class::name(SavePoint *savepoint)
-
-#define IMPLEMENT_SETUP(class, callback_class, name, index) \
-	void class::setup_##name(int param1, int param2, int param3, int param4) { \
-		BEGIN_SETUP(callback_class, name, index) \
-		END_SETUP() \
-	 }
-
-// setup with one int parameter
-#define IMPLEMENT_FUNCTION_INT(class, name, index) \
-	void class::setup_##name(int param1, int param2, int param3, int param4) { \
-	BEGIN_SETUP(class, name, index) \
-	_data->getCurrentParameters()->param1 = param1; \
-	END_SETUP() \
-	} \
-	void class::name(SavePoint *savepoint)
-
-// setup with two int parameters
-#define IMPLEMENT_FUNCTION_INT2(class, name, index) \
-	void class::setup_##name(int param1, int param2, int param3, int param4) { \
-		BEGIN_SETUP(class, name, index) \
-		_data->getCurrentParameters()->param1 = param1; \
-		_data->getCurrentParameters()->param2 = param2; \
-		END_SETUP() \
-	} \
-	void class::name(SavePoint *savepoint)
-
-#define IMPLEMENT_FUNCTION_SEQ(class, name, index) \
-	void class::setup_##name(const char* seq1, int param2, int param3, const char* seq2) { \
-		BEGIN_SETUP(class, name, index) \
-		strncpy((char *)&((EntityData::EntityParametersSeq*)_data->getCurrentParameters())->seq1, seq1, 12); \
-		END_SETUP() \
-	} \
-	void class::name(SavePoint *savepoint)
-
-#define IMPLEMENT_FUNCTION_SEQ_INT(class, name, index) \
-	void class::setup_##name(const char* seq1, int param2, int param3, const char* seq2) { \
-		BEGIN_SETUP(class, name, index) \
-		EntityData::EntityParametersSeq *params = (EntityData::EntityParametersSeq*)_data->getCurrentParameters(); \
-		strncpy((char *)&params->seq1, seq1, 12); \
-		params->param2 = param2; \
-		END_SETUP() \
-	} \
-	void class::name(SavePoint *savepoint)
-
-#define IMPLEMENT_FUNCTION_SEQ2(class, name, index) \
-	void class::setup_##name(const char* seq1, int param2, int param3, const char* seq2) { \
-		BEGIN_SETUP(class, name, index) \
-		EntityData::EntityParametersSeq *params = (EntityData::EntityParametersSeq*)_data->getCurrentParameters(); \
-		strncpy((char *)&params->seq1, seq1, 12); \
-		params->param2 = param2; \
-		params->param3 = param3; \
-		strncpy((char *)&params->seq2, seq2, 12); \
-		END_SETUP() \
-	} \
-	void class::name(SavePoint *savepoint)
-
-//////////////////////////////////////////////////////////////////////////
-// Setup helpers
-#define BEGIN_SETUP(class, name, index) \
-		_engine->getGameState()->getGameSavePoints()->setCallback(_entityIndex, new ENTITY_CALLBACK(class, name, this)); \
-		_data->setCurrentCallback(index); \
-		_data->resetCurrentParameters();
-
-#define END_SETUP() \
-		_engine->getGameState()->getGameSavePoints()->call(_entityIndex, _entityIndex, kActionDefault);
-
-
-//////////////////////////////////////////////////////////////////////////
-// Function logic
-#define CALL_PREVIOUS_SAVEPOINT(entity) \
-	_data->getData()->current_call--; \
-	getSavePoints()->setCallback(entity, _callbacks[_data->getCurrentCallback()]); \
-	getSavePoints()->call(entity, entity, kAction18);
-
-#define FUNCTION_1_IMPLEMENTATION(entity) \
-	switch (savepoint->action) { \
-	default: \
-		break; \
-	case kActionNone: \
-		if (getEntities()->checkEntity(entity, EntityData::kField495_3, (EntityData::Field491Value)_data->getCurrentParameters()->param1)) \
-			_data->getCurrentParameters()->param1 = (_data->getCurrentParameters()->param1 == 10000) ? 0 : 10000; \
-		break; \
-	case kActionDefault:  \
-		_data->getData()->field_491 = EntityData::kField491_0; \
-		_data->getData()->field_493 = EntityData::kField493_0; \
-		_data->getData()->field_495 = EntityData::kField495_3; \
-		_data->getCurrentParameters()->param1 = 10000; \
-		break; \
-	}
-
-#define CALL_SAVEGAME(entity) \
-	switch (savepoint->action) { \
-	default: \
-		break; \
-	case kActionNone: \
-		CALL_PREVIOUS_SAVEPOINT(entity) \
-		break; \
-	case kActionDefault: \
-		save(entity, _data->getCurrentParameters()->param1, (EventIndex)_data->getCurrentParameters()->param2); \
-		CALL_PREVIOUS_SAVEPOINT(entity) \
-		break; \
-	}
-
-//////////////////////////////////////////////////////////////////////////
-// Functors class for setup functions
-template<class Arg1, class Arg2, class Arg3, class Arg4, class Result>
-struct QuaternaryFunction {
-	typedef Arg1 FirstArgumentType;
-	typedef Arg2 SecondArgumentType;
-	typedef Arg3 ThirdArgumentType;
-	typedef Arg4 FourthArgumentType;
-	typedef Result ResultType;
-};
-
-template<class Arg1, class Arg2, class Arg3, class Arg4, class Res>
-struct Functor4 : public QuaternaryFunction<Arg1, Arg2, Arg3, Arg4, Res> {
-	virtual ~Functor4() {}
-
-	virtual bool isValid() const = 0;
-	virtual Res operator()(Arg1, Arg2, Arg3, Arg4) const = 0;
-};
-
-template<class Arg1, class Arg2, class Arg3, class Arg4, class Res, class T>
-class Functor4Mem : public Functor4<Arg1, Arg2, Arg3, Arg4, Res> {
-public:
-	typedef Res (T::*FuncType)(Arg1, Arg2, Arg3, Arg4);
-
-	Functor4Mem(T *t, const FuncType &func) : _t(t), _func(func) {}
-
-	bool isValid() const { return _func != 0 && _t != 0; }
-	Res operator()(Arg1 v1, Arg2 v2, Arg3 v3, Arg4 v4) const {
-		return (_t->*_func)(v1, v2, v3, v4);
-	}
-private:
-	mutable T *_t;
-	const FuncType _func;
-};
-
 class EntityData : Common::Serializable {
 public:
 
 	enum Field491Value {
 		kField491_0     = 0,
-		kField491_1	    = 1,
+		kField491_1     = 1,
 		kField491_540   = 540,
 		kField491_850   = 850,
 		kField491_1500  = 1500,
@@ -281,7 +91,10 @@ public:
 		kParamTime = 2147483647
 	};
 
-	struct EntityParameters {
+	struct EntityParameters {		
+	};
+
+	struct EntityParametersIIII : EntityParameters {
 		int param1;
 		int param2;
 		int param3;
@@ -291,7 +104,7 @@ public:
 		int param7;
 		int param8;
 
-		EntityParameters() {
+		EntityParametersIIII() {
 			param1 = 0;
 			param2 = 0;
 			param3 = 0;
@@ -307,13 +120,31 @@ public:
 		}
 	};
 
-	struct EntityParametersSeq : EntityParameters {
+	struct EntityParametersSIII : EntityParameters {
+		char seq[12];
+		int param2;
+		int param3;
+		int param4;
+		int param5;
+		int param6;
+
+		EntityParametersSIII() {
+			memset(&seq, 0, 12);
+			param2 = 0;
+			param3 = 0;
+			param4 = 0;
+			param5 = 0;
+			param6 = 0;
+		}
+	};
+
+	struct EntityParametersSIIS : EntityParameters {
 		char seq1[12];
 		int param2;
 		int param3;
 		char seq2[12];
 
-		EntityParametersSeq() {
+		EntityParametersSIIS() {
 			memset(&seq1, 0, 12);
 			param2 = 0;
 			param3 = 0;
@@ -321,19 +152,61 @@ public:
 		}
 	};
 
-	struct EntityParametersSeq1 : EntityParameters {
+	struct EntityParametersISSI : EntityParameters {
+		int param1;
+		char seq1[12];
+		char seq2[12];
+		int param8;
+
+		EntityParametersISSI() {
+			param1 = 0;
+			memset(&seq1, 0, 12);
+			memset(&seq2, 0, 12);
+			param8 = 0;
+		}
+	};
+
+	struct EntityParametersSSII : EntityParameters {
+		char seq1[12];
+		char seq2[12];
+		int param3;
+		int param4;
+
+		EntityParametersSSII() {
+			memset(&seq1, 0, 12);
+			memset(&seq2, 0, 12);
+			param3 = 0;
+			param4 = 0;
+		}
+	};
+
+	struct EntityParametersIISS : EntityParameters {
+		int param1;
+		int param2;
+		char seq1[12];
+		char seq2[12];
+
+		EntityParametersIISS() {
+			param1 = 0;
+			param2 = 0;			
+			memset(&seq1, 0, 12);
+			memset(&seq2, 0, 12);
+		}
+	};
+
+	struct EntityParametersIIIS : EntityParameters {
 		int param1;
 		int param2;
 		int param3;
-		char param4[12];
+		char seq[12];				
 		int param7;
 		int param8;
 
-		EntityParametersSeq1() {
+		EntityParametersIIIS() {
 			param1 = 0;
-			param2 = 0;
+			param2 = 0;						
 			param3 = 0;
-			memset(&param4, 0, 12);
+			memset(&seq, 0, 12);
 			param7 = 0;
 			param8 = 0;
 		}
@@ -349,10 +222,12 @@ public:
 		~EntityCallParameters() {
 			clear();
 		}
+		
 
+		// We default to int parameters
 		void create() {
 			for (int i = 0; i < 4; i++)
-				parameters[i] = new EntityParameters();
+				parameters[i] = new EntityParametersIIII();
 		}
 
 		void clear() {

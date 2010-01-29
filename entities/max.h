@@ -27,6 +27,7 @@
 #define LASTEXPRESS_MAX_H
 
 #include "lastexpress/entities/entity.h"
+#include "lastexpress/entities/entity_intern.h"
 
 namespace LastExpress {
 
@@ -37,11 +38,10 @@ public:
 	Max(LastExpressEngine *engine);
 
 	DECLARE_FUNCTION(function1)
-	DECLARE_FUNCTION_SEQ(function2)
-	// There doesn't seem to be a setup part for function 3 (no idea why), so we skip that part too
-	void function3(SavePoint *savepoint);
-	DECLARE_FUNCTION_SEQ(function4)
-	DECLARE_FUNCTION(savegame)
+	DECLARE_FUNCTION_S(function2)
+	DECLARE_FUNCTION_NOSETUP(function3)
+	DECLARE_FUNCTION_SI(function4)
+	DECLARE_FUNCTION_II(savegame)
 	DECLARE_FUNCTION(function6)
 	DECLARE_FUNCTION(function7)
 	DECLARE_FUNCTION(function8)

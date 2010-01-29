@@ -27,6 +27,7 @@
 #define LASTEXPRESS_ANNA_H
 
 #include "lastexpress/entities/entity.h"
+#include "lastexpress/entities/entity_intern.h"
 
 namespace LastExpress {
 
@@ -37,14 +38,87 @@ public:
 	Anna(LastExpressEngine *engine);
 
 	// Setup
-	DECLARE_FUNCTION(chapter1)
-	DECLARE_FUNCTION(chapter2)
-	DECLARE_FUNCTION(chapter3)
-	DECLARE_FUNCTION(bagage)
-	DECLARE_FUNCTION(chapter4)
-	DECLARE_FUNCTION(chapter5)
-
-	void nullfunc(SavePoint *savepoint);
+	DECLARE_FUNCTION(function1);
+	DECLARE_FUNCTION_S(function2);
+	DECLARE_FUNCTION_SII(function3);
+	DECLARE_FUNCTION_SI(function4);
+	DECLARE_FUNCTION(function5);
+	DECLARE_FUNCTION_SIIS(function6);
+	DECLARE_FUNCTION_S(function7);
+	DECLARE_FUNCTION(function8);
+	DECLARE_FUNCTION_II(function9);
+	DECLARE_FUNCTION_II(function10);
+	DECLARE_FUNCTION_I(function11);
+	DECLARE_FUNCTION(function12);
+	DECLARE_FUNCTION_SSI(function13);
+	DECLARE_FUNCTION_I(function14);
+	DECLARE_FUNCTION_IS(function15);
+	DECLARE_FUNCTION(chapter1);
+	DECLARE_FUNCTION_II(function17);
+	DECLARE_FUNCTION_I(function18);
+	DECLARE_FUNCTION(function19);
+	DECLARE_FUNCTION(function20);
+	DECLARE_FUNCTION(function21);
+	DECLARE_FUNCTION(function22);
+	DECLARE_FUNCTION(function23);
+	DECLARE_FUNCTION(function24);
+	DECLARE_FUNCTION(function25);
+	DECLARE_FUNCTION(function26);
+	DECLARE_FUNCTION(function27);
+	DECLARE_FUNCTION(function28);
+	DECLARE_FUNCTION(function29);
+	DECLARE_FUNCTION(function30);
+	DECLARE_FUNCTION(function31);
+	DECLARE_FUNCTION(function32);
+	DECLARE_FUNCTION(function33);
+	DECLARE_FUNCTION(function34);
+	DECLARE_FUNCTION(function35);
+	DECLARE_FUNCTION(function36);
+	DECLARE_FUNCTION(function37);
+	DECLARE_FUNCTION(function38);
+	DECLARE_FUNCTION_II(function39);
+	DECLARE_FUNCTION(function40);
+	DECLARE_FUNCTION(function41);
+	DECLARE_FUNCTION(chapter2);
+	DECLARE_FUNCTION(function43);
+	DECLARE_FUNCTION(chapter3);
+	DECLARE_FUNCTION_I(function45);
+	DECLARE_FUNCTION(function46);
+	DECLARE_FUNCTION(function47);
+	DECLARE_FUNCTION(function48);
+	DECLARE_FUNCTION(function49);
+	DECLARE_FUNCTION(function50);
+	DECLARE_FUNCTION(function51);
+	DECLARE_FUNCTION(function52);
+	DECLARE_FUNCTION(function53);
+	DECLARE_FUNCTION(function54);
+	DECLARE_FUNCTION(function55);
+	DECLARE_FUNCTION(function56);
+	DECLARE_FUNCTION(function57);
+	DECLARE_FUNCTION(function58);
+	DECLARE_FUNCTION(function59);
+	DECLARE_FUNCTION(function60);
+	DECLARE_FUNCTION(function61);
+	DECLARE_FUNCTION(function62);
+	DECLARE_FUNCTION(function63);
+	DECLARE_FUNCTION(bagage);
+	DECLARE_FUNCTION(function65);
+	DECLARE_FUNCTION(chapter4);
+	DECLARE_FUNCTION(function67);
+	DECLARE_FUNCTION(function68);
+	DECLARE_FUNCTION(function69);
+	DECLARE_FUNCTION(function70);
+	DECLARE_FUNCTION(function71);
+	DECLARE_FUNCTION_II(function72);
+	DECLARE_FUNCTION(function73);
+	DECLARE_FUNCTION(chapter5);
+	DECLARE_FUNCTION(function75);
+	DECLARE_FUNCTION(function76);
+	DECLARE_FUNCTION(function77);
+	DECLARE_FUNCTION(function78);
+	DECLARE_FUNCTION(function79);
+	DECLARE_FUNCTION(function80);
+	DECLARE_FUNCTION(function81);
 };
 
 } // End of namespace LastExpress

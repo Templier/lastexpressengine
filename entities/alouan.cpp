@@ -34,33 +34,66 @@
 namespace LastExpress {
 
 Alouan::Alouan(LastExpressEngine *engine) : Entity(engine, kEntityAlouan) {
-	ADD_CALLBACK_FUNCTION(Alouan, nullfunc);
-	ADD_CALLBACK_FUNCTION(Alouan, nullfunc);
-	ADD_CALLBACK_FUNCTION(Alouan, nullfunc);
-	ADD_CALLBACK_FUNCTION(Alouan, nullfunc);
-	ADD_CALLBACK_FUNCTION(Alouan, nullfunc);
-	ADD_CALLBACK_FUNCTION(Alouan, nullfunc);
-	ADD_CALLBACK_FUNCTION(Alouan, nullfunc);
-	ADD_CALLBACK_FUNCTION(Alouan, nullfunc);
-	ADD_CALLBACK_FUNCTION(Alouan, nullfunc);
+	ADD_CALLBACK_FUNCTION(Alouan, function1);
+	ADD_CALLBACK_FUNCTION(Alouan, function2);
+	ADD_CALLBACK_FUNCTION(Alouan, function3);
+	ADD_CALLBACK_FUNCTION(Alouan, function4);
+	ADD_CALLBACK_FUNCTION(Alouan, function5);
+	ADD_CALLBACK_FUNCTION(Alouan, function6);
+	ADD_CALLBACK_FUNCTION(Alouan, function7);
+	ADD_CALLBACK_FUNCTION(Alouan, function8);
+	ADD_CALLBACK_FUNCTION(Alouan, function9);
 	ADD_CALLBACK_FUNCTION(Alouan, chapter1);
-	ADD_CALLBACK_FUNCTION(Alouan, nullfunc);
-	ADD_CALLBACK_FUNCTION(Alouan, nullfunc);
+	ADD_CALLBACK_FUNCTION(Alouan, function11);
+	ADD_CALLBACK_FUNCTION(Alouan, function12);
 	ADD_CALLBACK_FUNCTION(Alouan, chapter2);
-	ADD_CALLBACK_FUNCTION(Alouan, nullfunc);
+	ADD_CALLBACK_FUNCTION(Alouan, function14);
 	ADD_CALLBACK_FUNCTION(Alouan, chapter3);
-	ADD_CALLBACK_FUNCTION(Alouan, nullfunc);
+	ADD_CALLBACK_FUNCTION(Alouan, function16);
 	ADD_CALLBACK_FUNCTION(Alouan, chapter4);
-	ADD_CALLBACK_FUNCTION(Alouan, nullfunc);
-	ADD_CALLBACK_FUNCTION(Alouan, nullfunc);
+	ADD_CALLBACK_FUNCTION(Alouan, function18);
+	ADD_CALLBACK_FUNCTION(Alouan, function19);
 	ADD_CALLBACK_FUNCTION(Alouan, chapter5);
-	ADD_CALLBACK_FUNCTION(Alouan, nullfunc);
-	ADD_CALLBACK_FUNCTION(Alouan, nullfunc);
-	ADD_CALLBACK_FUNCTION(Alouan, nullfunc);
+	ADD_CALLBACK_FUNCTION(Alouan, function21);
+	ADD_CALLBACK_FUNCTION(Alouan, function22);
+	ADD_CALLBACK_FUNCTION(Alouan, function23);
+	ADD_NULL_FUNCTION();
 }
 
-void Alouan::nullfunc(SavePoint *savepoint) {
-	error("Alouan: callback function not implemented!");
+IMPLEMENT_FUNCTION(Alouan, function1, 1) {
+	error("Alouan: callback function 1 not implemented!");
+}
+
+IMPLEMENT_FUNCTION_SI(Alouan, function2, 2) {
+	error("Alouan: callback function 2 not implemented!");
+}
+
+IMPLEMENT_FUNCTION_S(Alouan, function3, 3) {
+	error("Alouan: callback function 3 not implemented!");
+}
+
+IMPLEMENT_FUNCTION_I(Alouan, function4, 4) {
+	error("Alouan: callback function 4 not implemented!");
+}
+
+IMPLEMENT_FUNCTION_II(Alouan, function5, 5) {
+	error("Alouan: callback function 5 not implemented!");
+}
+
+IMPLEMENT_FUNCTION(Alouan, function6, 6) {
+	error("Alouan: callback function 6 not implemented!");
+}
+
+IMPLEMENT_FUNCTION(Alouan, function7, 7) {
+	error("Alouan: callback function 7 not implemented!");
+}
+
+IMPLEMENT_FUNCTION(Alouan, function8, 8) {
+	error("Alouan: callback function 8 not implemented!");
+}
+
+IMPLEMENT_FUNCTION(Alouan, function9, 9) {
+	error("Alouan: callback function 9 not implemented!");
 }
 
 IMPLEMENT_FUNCTION(Alouan, chapter1, 10) {
@@ -76,26 +109,63 @@ IMPLEMENT_FUNCTION(Alouan, chapter1, 10) {
 		break;
 
 	case kActionNone:
-		if (getState()->time > 1062000) {
-			if (!_data->getCurrentParameters()->param1) {
-				_data->getCurrentParameters()->param1 = 1;
-				// call function 11
-			}
-		}
+		CALL_CHAPTER_ACTION_NONE(11)
 		break;
 	}
 }
 
+IMPLEMENT_FUNCTION(Alouan, function11, 11) {
+	error("Alouan: callback function 11 not implemented!");
+}
+
+IMPLEMENT_FUNCTION(Alouan, function12, 12) {
+	error("Alouan: callback function 12 not implemented!");
+}
+
 IMPLEMENT_FUNCTION(Alouan, chapter2, 13) {
+	error("Alouan: callback function 13 not implemented!");
+}
+
+IMPLEMENT_FUNCTION(Alouan, function14, 14) {
+	error("Alouan: callback function 14 not implemented!");
 }
 
 IMPLEMENT_FUNCTION(Alouan, chapter3, 15) {
+	error("Alouan: callback function 15 not implemented!");
+}
+
+IMPLEMENT_FUNCTION(Alouan, function16, 16) {
+	error("Alouan: callback function 16 not implemented!");
 }
 
 IMPLEMENT_FUNCTION(Alouan, chapter4, 17) {
+	error("Alouan: callback function 17 not implemented!");
+}
+
+IMPLEMENT_FUNCTION(Alouan, function18, 18) {
+	error("Alouan: callback function 18 not implemented!");
+}
+
+IMPLEMENT_FUNCTION(Alouan, function19, 19) {
+	error("Alouan: callback function 19 not implemented!");
 }
 
 IMPLEMENT_FUNCTION(Alouan, chapter5, 20) {
+	error("Alouan: callback function 20 not implemented!");
 }
+
+IMPLEMENT_FUNCTION(Alouan, function21, 21) {
+	error("Alouan: callback function 21 not implemented!");
+}
+
+IMPLEMENT_FUNCTION(Alouan, function22, 22) {
+	error("Alouan: callback function 22 not implemented!");
+}
+
+IMPLEMENT_FUNCTION(Alouan, function23, 23) {
+	error("Alouan: callback function 23 not implemented!");
+}
+
+IMPLEMENT_NULL_FUNCTION(Alouan, 24)
 
 } // End of namespace LastExpress

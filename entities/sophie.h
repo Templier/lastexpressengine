@@ -27,6 +27,7 @@
 #define LASTEXPRESS_SOPHIE_H
 
 #include "lastexpress/entities/entity.h"
+#include "lastexpress/entities/entity_intern.h"
 
 namespace LastExpress {
 
@@ -38,7 +39,7 @@ public:
 
 	// Setup
 	DECLARE_FUNCTION(function1)
-	DECLARE_FUNCTION(function2)
+	DECLARE_FUNCTION_II(function2)
 	DECLARE_FUNCTION(function3)
 	DECLARE_FUNCTION(chapter1)
 	DECLARE_FUNCTION(function5)

@@ -27,6 +27,7 @@
 #define LASTEXPRESS_TRAIN_H
 
 #include "lastexpress/entities/entity.h"
+#include "lastexpress/entities/entity_intern.h"
 
 namespace LastExpress {
 
@@ -37,13 +38,13 @@ public:
 	Train(LastExpressEngine *engine);
 
 	// Setup
-	DECLARE_FUNCTION(savegame)
+	DECLARE_FUNCTION_II(savegame)
 	DECLARE_FUNCTION(chapter1)
 	DECLARE_FUNCTION(chapter2)
 	DECLARE_FUNCTION(chapter3)
 	DECLARE_FUNCTION(chapter4)
 	DECLARE_FUNCTION(chapter5)
-	DECLARE_FUNCTION(harem)
+	DECLARE_FUNCTION_II(harem)
 	DECLARE_FUNCTION(process)
 
 private:

@@ -27,6 +27,7 @@
 #define LASTEXPRESS_HADIJA_H
 
 #include "lastexpress/entities/entity.h"
+#include "lastexpress/entities/entity_intern.h"
 
 namespace LastExpress {
 
@@ -37,14 +38,30 @@ public:
 	Hadija(LastExpressEngine *engine);
 
 	// Setup
-	DECLARE_FUNCTION(chapter1)
-	DECLARE_FUNCTION(chapter2)
-	DECLARE_FUNCTION(chapter3)
-	DECLARE_FUNCTION(chapter4)
-	DECLARE_FUNCTION(chapter5)
+	DECLARE_FUNCTION(function1);
+	DECLARE_FUNCTION_SI(function2);
+	DECLARE_FUNCTION_S(function3);
+	DECLARE_FUNCTION_NOSETUP(function4);
+	DECLARE_FUNCTION_II(function5);
+	DECLARE_FUNCTION(function6);
+	DECLARE_FUNCTION(function7);
+	DECLARE_FUNCTION(function8);
+	DECLARE_FUNCTION(function9);
+	DECLARE_FUNCTION(chapter1);
+	DECLARE_FUNCTION(function11);
+	DECLARE_FUNCTION(function12);
+	DECLARE_FUNCTION(chapter2);
+	DECLARE_FUNCTION(function14);
+	DECLARE_FUNCTION(chapter3);
+	DECLARE_FUNCTION(function16);
+	DECLARE_FUNCTION(chapter4);
+	DECLARE_FUNCTION(function18);
+	DECLARE_FUNCTION(function19);
+	DECLARE_FUNCTION(chapter5);
+	DECLARE_FUNCTION(function21);
+	DECLARE_FUNCTION(function22);
+	DECLARE_FUNCTION(function23);
 	DECLARE_NULL_FUNCTION()
-
-	void nullfunc(SavePoint *savepoint);
 };
 
 } // End of namespace LastExpress
