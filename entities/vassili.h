@@ -38,24 +38,24 @@ public:
 	Vassili(LastExpressEngine *engine);
 
 	// Setup
-	DECLARE_FUNCTION(function1);
-	DECLARE_FUNCTION_S(function2);
-	DECLARE_FUNCTION_II(function3);
-	DECLARE_FUNCTION(chapter1);
-	DECLARE_FUNCTION(function5);
-	DECLARE_FUNCTION(function6);
-	DECLARE_FUNCTION(function7);
-	DECLARE_FUNCTION(function8);
-	DECLARE_FUNCTION(function9);
-	DECLARE_FUNCTION(function10);
-	DECLARE_FUNCTION(function11);
-	DECLARE_FUNCTION(chapter2);
-	DECLARE_FUNCTION(function13);
-	DECLARE_FUNCTION(chapter3);
-	DECLARE_FUNCTION(function15);
-	DECLARE_FUNCTION(chapter4);
-	DECLARE_FUNCTION(function17);
-	DECLARE_FUNCTION(chapter5);
+	DECLARE_FUNCTION(function1)
+	DECLARE_FUNCTION_S(function2)
+	DECLARE_FUNCTION_II(function3)
+	DECLARE_FUNCTION(chapter1)
+	DECLARE_FUNCTION(function5)
+	DECLARE_FUNCTION(function6)
+	DECLARE_FUNCTION(function7)
+	DECLARE_FUNCTION(function8)
+	DECLARE_FUNCTION(function9)
+	DECLARE_FUNCTION(function10)
+	DECLARE_FUNCTION(function11)
+	DECLARE_FUNCTION(chapter2)
+	DECLARE_FUNCTION(function13)
+	DECLARE_FUNCTION(chapter3)
+	DECLARE_FUNCTION(function15)
+	DECLARE_FUNCTION(chapter4)
+	DECLARE_FUNCTION(function17)
+	DECLARE_FUNCTION(chapter5)
 };
 
 } // End of namespace LastExpress
