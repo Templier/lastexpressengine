@@ -121,7 +121,7 @@ void AppendableSound::queueBuffer(Common::SeekableReadStream *bufferIn) {
 	// Setup the ADPCM decoder
 	uint32 sizeIn = bufferIn->size();
 	Audio::AudioStream *adpcm = makeDecoder(bufferIn, sizeIn);
-	
+
 	// Queue the stream
 	_as->queueAudioStream(adpcm);
 }

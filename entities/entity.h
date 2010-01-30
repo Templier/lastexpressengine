@@ -87,11 +87,18 @@ public:
 		kField495_6 = 6
 	};
 
+	enum Field4A5Value {
+		kField4A5_0 = 0,
+		kField4A5_1 = 1,
+		kField4A5_2 = 2,
+		kField4A5_3 = 3,
+	};
+
 	enum ParameterValue {
 		kParamTime = 2147483647
 	};
 
-	struct EntityParameters {		
+	struct EntityParameters {
 	};
 
 	struct EntityParametersIIII : EntityParameters {
@@ -188,7 +195,7 @@ public:
 
 		EntityParametersIISS() {
 			param1 = 0;
-			param2 = 0;			
+			param2 = 0;
 			memset(&seq1, 0, 12);
 			memset(&seq2, 0, 12);
 		}
@@ -198,13 +205,13 @@ public:
 		int param1;
 		int param2;
 		int param3;
-		char seq[12];				
+		char seq[12];
 		int param7;
 		int param8;
 
 		EntityParametersIIIS() {
 			param1 = 0;
-			param2 = 0;						
+			param2 = 0;
 			param3 = 0;
 			memset(&seq, 0, 12);
 			param7 = 0;
@@ -222,7 +229,7 @@ public:
 		~EntityCallParameters() {
 			clear();
 		}
-		
+
 
 		// We default to int parameters
 		void create() {
@@ -255,7 +262,7 @@ public:
 
 		int16 field_4A1;
 		int16 field_4A3;
-		byte field_4A5;
+		Field4A5Value field_4A5;
 		byte field_4A8;
 
 		char sequenceName3[9];
@@ -281,7 +288,7 @@ public:
 
 			field_4A1 = 0;
 			field_4A3 = 30;
-			field_4A5 = 0;
+			field_4A5 = EntityData::kField4A5_0;
 			field_4A8 = 0;
 
 			memset(&sequenceName3, 0, 9 * sizeof(char));

@@ -37,7 +37,7 @@ class Rebecca : public Entity {
 public:
 	Rebecca(LastExpressEngine *engine);
 
-	// Setup	
+	// Setup
 	DECLARE_FUNCTION(function1)
 	DECLARE_FUNCTION_I(function2)
 	DECLARE_FUNCTION_S(function3)

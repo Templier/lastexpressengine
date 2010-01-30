@@ -184,7 +184,7 @@ enum InventoryItem {
 	kItem31,
 
 	// Portrait (not an index)
-	kPortraitOriginal = 32,	
+	kPortraitOriginal = 32,
 	kPortraitGreen = 34,
 	kPortraitYellow = 36
 };
