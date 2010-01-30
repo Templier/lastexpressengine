@@ -246,7 +246,7 @@ IMPLEMENT_FUNCTION(Mertens, function17, 17) {
 				CALL_PREVIOUS_SAVEPOINT(kEntityMertens)
 
 			} else {	// Mertens sits on his chair at the back of the train
-				if (getInventory()->hasItem(kPassengerList) || ENTITY_PARAM(8, 0, 2))
+				if (getInventory()->hasItem(kItemPassengerList) || ENTITY_PARAM(8, 0, 2))
 					getEntities()->storeSequenceName(kEntityMertens, "601A");
 				else {	// Got the passenger list, Mertens is looking for it before sitting
 					ENTITY_PARAM(8, 0, 2) = 1;
@@ -286,7 +286,7 @@ IMPLEMENT_FUNCTION(Mertens, function17, 17) {
 
 		case 3:
 			if (!ENTITY_PARAM(8, 0, 3)
-			 && !getInventory()->hasItem(kPassengerList)
+			 && !getInventory()->hasItem(kItemPassengerList)
 			 && ENTITY_PARAM(8, 0, 2)) {
 				 getSavePoints()->push(kEntityMertens, kEntityVerges, kAction158617345);
 				 ENTITY_PARAM(8, 0, 3) = 1;
@@ -295,7 +295,7 @@ IMPLEMENT_FUNCTION(Mertens, function17, 17) {
 			getEntities()->drawSequence(kEntityMertens, "601B");
 
 			ENTITY_PARAM(8, 0, 1) = 0;
-			_data->getData()->inventoryItem = kNoItem;
+			_data->getData()->inventoryItem = kItemNone;
 
 			getSavePoints()->push(kEntityMertens, kEntityMertens, kAction17);
 
@@ -473,7 +473,7 @@ IMPLEMENT_FUNCTION(Mertens, chapter2, 43) {
 		_data->getData()->field_491 = EntityData::kField491_1500;
 		_data->getData()->field_493 = EntityData::kField493_0;
 		_data->getData()->field_495 = EntityData::kField495_3;
-		_data->getData()->inventoryItem = kNoItem;
+		_data->getData()->inventoryItem = kItemNone;
 
 		ENTITY_PARAM(8, 0, 6) = 0;
 		ENTITY_PARAM(8, 0, 8) = 0;
@@ -513,7 +513,7 @@ IMPLEMENT_FUNCTION(Mertens, chapter3, 45) {
 		_data->getData()->field_491 = EntityData::kField491_1500;
 		_data->getData()->field_493 = EntityData::kField493_0;
 		_data->getData()->field_495 = EntityData::kField495_3;
-		_data->getData()->inventoryItem = kNoItem;
+		_data->getData()->inventoryItem = kItemNone;
 
 		ENTITY_PARAM(8, 0, 6) = 0;
 		ENTITY_PARAM(8, 0, 8) = 0;
@@ -556,7 +556,7 @@ IMPLEMENT_FUNCTION(Mertens, chapter4, 47) {
 		_data->getData()->field_491 = EntityData::kField491_1500;
 		_data->getData()->field_493 = EntityData::kField493_0;
 		_data->getData()->field_495 = EntityData::kField495_3;
-		_data->getData()->inventoryItem = kNoItem;
+		_data->getData()->inventoryItem = kItemNone;
 
 		ENTITY_PARAM(8, 0, 6) = 0;
 		ENTITY_PARAM(8, 0, 8) = 0;
@@ -602,7 +602,7 @@ IMPLEMENT_FUNCTION(Mertens, chapter5, 50) {
 		_data->getData()->field_491 = EntityData::kField491_3969;
 		_data->getData()->field_493 = EntityData::kField493_1;
 		_data->getData()->field_495 = EntityData::kField495_5;
-		_data->getData()->inventoryItem = kNoItem;
+		_data->getData()->inventoryItem = kItemNone;
 		break;
 	}
 }

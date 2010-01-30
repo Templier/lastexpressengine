@@ -589,7 +589,7 @@ void Logic::postProcessScene(uint32 *index) {
 
 	case Scene::kTypeLoadBeetleSequences:
 		if ((getProgress().chapter == kChapter2 || getProgress().chapter == kChapter3)
-		  && getInventory()->getEntry(kBeetle)->location == 3) {
+		  && getInventory()->getEntry(kItemBeetle)->location == 3) {
 			if (!_beetle->isLoaded())
 				_beetle->load();
 		}
@@ -647,23 +647,23 @@ void Logic::switchChapter() {
 		break;
 
 	case kChapter1:
-		getInventory()->addItem(kParchemin);
-		getInventory()->addItem(kMatchBox);
+		getInventory()->addItem(kItemParchemin);
+		getInventory()->addItem(kItemMatchBox);
 		// TODO call game logic
 		break;
 
 	case kChapter2:
-		getInventory()->addItem(kScarf);
+		getInventory()->addItem(kItemScarf);
 		// TODO call game logic
 		break;
 
 	case kChapter3:
-		getInventory()->getEntry(kFirebird)->location = kLocation4;
-		getInventory()->getEntry(kFirebird)->has_item = 0;
+		getInventory()->getEntry(kItemFirebird)->location = kLocation4;
+		getInventory()->getEntry(kItemFirebird)->has_item = 0;
 		getInventory()->getEntry(kItem11)->location = kLocation1;
 
-		getInventory()->addItem(kWhistle);
-		getInventory()->addItem(kKey);
+		getInventory()->addItem(kItemWhistle);
+		getInventory()->addItem(kItemKey);
 		// TODO call game logic
 		break;
 

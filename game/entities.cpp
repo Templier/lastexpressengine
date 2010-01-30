@@ -144,7 +144,7 @@ void Entities::setup(ChapterIndex chapter) {
 		// Reset current call, inventory item & draw sequences
 		for (uint i = 1; i < _entities.size(); i++) {
 			_entities[i]->getData()->getData()->current_call = 0;
-			_entities[i]->getData()->getData()->inventoryItem = kNoItem;
+			_entities[i]->getData()->getData()->inventoryItem = kItemNone;
 
 			drawSequences((EntityIndex)i);
 		}
@@ -172,7 +172,7 @@ void Entities::reset(EntityIndex entity) {
 	EntityData *data = getData(entity);
 
 	data->getData()->current_call = 0;
-	data->getData()->inventoryItem = kNoItem;
+	data->getData()->inventoryItem = kItemNone;
 
 	// TODO clear sound cache for entity
 

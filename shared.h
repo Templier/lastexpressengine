@@ -150,42 +150,41 @@ enum ObjectLocation {
 // Index of items in inventory data
 //////////////////////////////////////////////////////////////////////////
 enum InventoryItem {
-	kNoItem = 0,
-
-	kMatchBox = 1,
-	kItem2 = 2,
-	kItem3 = 3,
-	kTelegram = 4,
-	kItem5 = 5,
-	kPassengerList = 6,
-	kItem7 = 7,
-	kScarf = 8,
-	kItem9 = 9,
-	kParchemin = 10,
-	kItem11 = 11,
-	kMatch = 12,
-	kWhistle = 13,
-	kBeetle = 14,
-	kKey = 15,
-	kBomb = 16,
-	kItem17 = 17,
-	kFirebird = 18,
-	kBriefcase = 19,
-	kCorpse = 20,
-	kGreenJacket = 21,
-	kItem22 = 22,
-	kPaper = 23,
-	kArticle = 24,
-	kItem25 = 25,
-	kItem26 = 26,
-	kItem27 = 27,
-	kItem28 = 28,
-	kItem29 = 29,
-	kItem30 = 30,
-	kItem31 = 31,
+	kItemNone,
+	kItemMatchBox,
+	kItem2,
+	kItem3,
+	kItemTelegram,
+	kItem5,               // 5
+	kItemPassengerList,
+	kItem7,
+	kItemScarf,
+	kItem9,
+	kItemParchemin,       // 10
+	kItem11,
+	kItemMatch,
+	kItemWhistle,
+	kItemBeetle,
+	kItemKey,             // 15
+	kItemBomb,
+	kItem17,
+	kItemFirebird,
+	kItemBriefcase,
+	kItemCorpse,          // 20
+	kItemGreenJacket,
+	kItem22,
+	kItemPaper,
+	kItemArticle,
+	kItem25,             // 25
+	kItem26,
+	kItem27,
+	kItem28,
+	kItem29,
+	kItem30,            // 30
+	kItem31,
 
 	// Portrait (not an index)
-	kPortraitOriginal = 32,
+	kPortraitOriginal = 32,	
 	kPortraitGreen = 34,
 	kPortraitYellow = 36
 };

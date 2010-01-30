@@ -102,20 +102,20 @@ IMPLEMENT_FUNCTION(Chapters, chapter1_init, 7) {
 	getProgress().field_7C = 1;
 
 	// Setup inventory & items location
-	getInventory()->addItem(kTelegram);
-	getInventory()->addItem(kArticle);
+	getInventory()->addItem(kItemTelegram);
+	getInventory()->addItem(kItemArticle);
 
-	getInventory()->setLocationAndProcess(kScarf, kLocation1);
-	getInventory()->setLocationAndProcess(kParchemin, kLocation1);
-	getInventory()->setLocationAndProcess(kGreenJacket, kLocation1);
-	getInventory()->setLocationAndProcess(kCorpse, kLocation1);
-	getInventory()->setLocationAndProcess(kPassengerList, kLocation1);
+	getInventory()->setLocationAndProcess(kItemScarf, kLocation1);
+	getInventory()->setLocationAndProcess(kItemParchemin, kLocation1);
+	getInventory()->setLocationAndProcess(kItemGreenJacket, kLocation1);
+	getInventory()->setLocationAndProcess(kItemCorpse, kLocation1);
+	getInventory()->setLocationAndProcess(kItemPassengerList, kLocation1);
 	getInventory()->setLocationAndProcess(kItem5, kLocation1);
 	getInventory()->setLocationAndProcess(kItem7, kLocation1);
 	getInventory()->setLocationAndProcess(kItem3, kLocation1);
-	getInventory()->setLocationAndProcess(kMatch, kLocation1);
+	getInventory()->setLocationAndProcess(kItemMatch, kLocation1);
 	getInventory()->setLocationAndProcess(kItem22, kLocation1);
-	getInventory()->setLocationAndProcess(kPaper, kLocation1);
+	getInventory()->setLocationAndProcess(kItemPaper, kLocation1);
 
 	getObjects()->update(kObjectCompartment1, kEntityNone, kLocationNone, kCursorHandKnock, kCursorHand);
 	getObjects()->update(kObjectOutside, kEntityNone, kLocationNone, kCursorKeepValue, kCursorKeepValue);

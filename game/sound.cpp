@@ -384,7 +384,7 @@ const char *Sound::getDialogName(EntityIndex entity) {
 			return "XKRO5";
 
 		if (getEvent(kEventKronosConversation) || getEvent(kEventKronosConversationFirebird)) {
-			ObjectLocation location = getInventory()->getEntry(kFirebird)->location;
+			ObjectLocation location = getInventory()->getEntry(kItemFirebird)->location;
 			if (location != kLocation6 && location != kLocation5 && location != kLocation2 && location != kLocation1)
 				return "XKRO4A";
 		}

@@ -172,7 +172,7 @@ IMPLEMENT_FUNCTION(Abbot, chapter3, 17) {
 		_data->getData()->field_491 = EntityData::kField491_5900;
 		_data->getData()->field_493 = EntityData::kField493_1;
 		_data->getData()->field_495 = EntityData::kField495_5;
-		_data->getData()->inventoryItem = kNoItem;
+		_data->getData()->inventoryItem = kItemNone;
 		_data->getData()->field_4A5 = 0;
 
 		break;
@@ -276,7 +276,7 @@ IMPLEMENT_FUNCTION(Abbot, chapter4, 39) {
 		getEntities()->drawSequences(kEntityAbbot);
 
 		_data->getData()->field_495 = EntityData::kField495_5;
-		_data->getData()->inventoryItem = kNoItem;
+		_data->getData()->inventoryItem = kItemNone;
 		
 		ENTITY_PARAM(8, 0, 1) = 0;
 
@@ -339,7 +339,7 @@ IMPLEMENT_FUNCTION(Abbot, chapter5, 50) {
 		_data->getData()->field_491 = EntityData::kField491_3969;
 		_data->getData()->field_493 = EntityData::kField493_1;
 		_data->getData()->field_495 = EntityData::kField495_5;
-		_data->getData()->inventoryItem = kNoItem;
+		_data->getData()->inventoryItem = kItemNone;
 		_data->getData()->field_4A5 = 0;
 
 		break;
