@@ -203,7 +203,7 @@ IMPLEMENT_FUNCTION(August, chapter1, 22) {
 		_data->getData()->field_491 = EntityData::kField491_4691;
 		_data->getData()->field_493 = EntityData::kField493_1;
 		_data->getData()->field_495 = EntityData::kField495_5;	
-		_data->getData()->field_4A5 = 0;
+		_data->getData()->field_4A5 = EntityData::kField4A5_0;
 
 		getProgress().event_august_met = 0;
 

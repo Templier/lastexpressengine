@@ -91,7 +91,7 @@ public:
 		kField4A5_0 = 0,
 		kField4A5_1 = 1,
 		kField4A5_2 = 2,
-		kField4A5_3 = 3,
+		kField4A5_3 = 3
 	};
 
 	enum ParameterValue {

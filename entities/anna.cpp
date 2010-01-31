@@ -194,7 +194,7 @@ IMPLEMENT_FUNCTION(Anna, chapter1, 16) {
 		_data->getData()->field_491 = EntityData::kField491_8200;
 		_data->getData()->field_493 = EntityData::kField493_1;
 		_data->getData()->field_495 = EntityData::kField495_3;
-		_data->getData()->field_4A5 = 0;
+		_data->getData()->field_4A5 = EntityData::kField4A5_0;
 		break;
 
 	case kActionNone:
