@@ -25,11 +25,18 @@
 
 #include "lastexpress/game/soundmanager.h"
 
+#include "lastexpress/data/snd.h"
+
 namespace LastExpress {
 
-SoundMgr::SoundMgr(LastExpressEngine *engine) : _engine(engine) {}
+SoundManager::SoundManager(LastExpressEngine *engine) : _engine(engine) {
+	_sfx = new StreamedSound();
+	_music = new StreamedSound();
+}
 
-//SoundMgr::~SoundMgr() {
-//}
+SoundManager::~SoundManager() {
+	delete _sfx;
+	delete _music;
+}
 
 } // End of namespace LastExpress

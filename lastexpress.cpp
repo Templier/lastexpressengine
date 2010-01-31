@@ -28,9 +28,9 @@
 #include "lastexpress/data/cursor.h"
 #include "lastexpress/data/font.h"
 #include "lastexpress/data/scene.h"
-#include "lastexpress/data/snd.h"
 
 #include "lastexpress/game/logic.h"
+#include "lastexpress/game/soundmanager.h"
 #include "lastexpress/game/state.h"
 
 #include "lastexpress/graphics.h"
@@ -51,8 +51,8 @@ namespace LastExpress {
 
 LastExpressEngine::LastExpressEngine(OSystem *syst, const ADGameDescription *gd) :
 	Engine(syst), _gameDescription(gd), _debugger(NULL), _resMan(NULL),
-	_cursor(NULL), _font(NULL), _sfx(NULL), _music(NULL), _logic(NULL),
-	_graphics(NULL), _sceneMan(NULL), _state(NULL) {
+	_cursor(NULL), _font(NULL), _logic(NULL), _graphicsMan(NULL), _sceneMan(NULL),
+	_soundMan(NULL), _state(NULL) {
 	// Adding the default directories
 	SearchMan.addSubDirectoryMatching(_gameDataDir, "data");
 
@@ -73,12 +73,11 @@ LastExpressEngine::~LastExpressEngine() {
 	delete _cursor;
 	delete _debugger;
 	delete _font;
-	delete _graphics;
-	delete _sfx;
-	delete _music;
+	delete _graphicsMan;
 	delete _logic;
 	delete _resMan;
 	delete _sceneMan;
+	delete _soundMan;
 	delete _state;
 }
 
@@ -100,7 +99,7 @@ Common::Error LastExpressEngine::run() {
 	if (!_resMan->loadArchive(kArchiveAll))
 		return Common::kUnknownError;
 
-	_graphics = new GraphicsManager();
+	_graphicsMan = new GraphicsManager();
 
 	// Load the cursor data
 	_cursor = _resMan->loadCursor();
@@ -111,11 +110,10 @@ Common::Error LastExpressEngine::run() {
 	_font = _resMan->loadFont();
 	if (!_font)
 		return Common::kUnknownError;
-
-	_sfx = new StreamedSound();
-	_music = new StreamedSound();
-	_state = new State(this);
+	
 	_sceneMan = new SceneManager();
+	_state = new State(this);
+	_soundMan = new SoundManager(this);
 	_logic = new Logic(this);
 
 	_logic->startGame();
@@ -282,7 +280,7 @@ Common::Error LastExpressEngine::run() {
 						SubtitleManager subtitle(_font);
 						if (subtitle.load(_resMan->getFileStream((*i_sbe)->getName()))) {
 							for (uint i = 0; i < subtitle.count(); i++) {
-								_graphics->clear(GraphicsManager::kBackgroundAll);
+								_graphicsMan->clear(GraphicsManager::kBackgroundAll);
 								subtitle.showFrameOverlay(i);
 
 								askForRedraw();
@@ -326,7 +324,7 @@ Common::Error LastExpressEngine::run() {
 		}
 
 		// Update the screen
-		_graphics->update();
+		_graphicsMan->update();
 		_system->updateScreen();
 		_system->delayMillis(10);
 

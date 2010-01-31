@@ -40,6 +40,7 @@
 #include "lastexpress/game/object.h"
 #include "lastexpress/game/sound.h"
 #include "lastexpress/game/savepoint.h"
+#include "lastexpress/game/soundmanager.h"
 #include "lastexpress/game/state.h"
 
 #include "lastexpress/graphics.h"
@@ -203,7 +204,7 @@ void Logic::loadSceneDataFile(ArchiveIndex archive) {
 	case kArchiveCd1:
 	case kArchiveCd2:
 	case kArchiveCd3:
-		_engine->getSceneManager()->load(_engine->getResMan()->getFileStream(Common::String::printf("CD%iTRAIN.DAT", archive)));
+		_engine->getSceneManager()->load(_engine->getResourceManager()->getFileStream(Common::String::printf("CD%iTRAIN.DAT", archive)));
 		break;
 
 	default:

@@ -31,6 +31,7 @@
 #include "lastexpress/game/entities.h"
 #include "lastexpress/game/inventory.h"
 #include "lastexpress/game/logic.h"
+#include "lastexpress/game/soundmanager.h"
 #include "lastexpress/game/state.h"
 
 #include "lastexpress/helpers.h"
@@ -197,7 +198,7 @@ void Sound::playSoundEvent(int index, byte action, byte a3) {
 	if (_action) {
 		sprintf((char *)&sound_name, "LIB%03d", _action);
 
-		if (_engine->getResMan()->hasFile(Common::String((char*)&sound_name) + ".snd"))
+		if (_engine->getResourceManager()->hasFile(Common::String((char*)&sound_name) + ".snd"))
 			playSfxStream((char*)&sound_name);
 	}
 }

@@ -57,7 +57,7 @@ class Logic;
 class ResourceManager;
 class Scene;
 class SceneManager;
-class StreamedSound;
+class SoundManager;
 class State;
 
 class LastExpressEngine : public Engine {
@@ -72,34 +72,40 @@ public:
 	LastExpressEngine(OSystem *syst, const ADGameDescription *gd);
 	~LastExpressEngine();
 
-	// Accessors
+	// Misc
+	Common::RandomSource getRandom() const {return _random; }
 	Cursor *getCursor() const { return _cursor; }
 	Font *getFont() const { return _font; }
+
+	// Game
 	Logic *getGameLogic() const { return _logic; }
 	State *getGameState() const { return _state; }
-	ResourceManager *getResMan() const { return _resMan; }
-	StreamedSound *getMusicStream() const { return _music; }
-	StreamedSound *getSfxStream() const { return _sfx; }
-	GraphicsManager *getGraphicsManager() const { return _graphics; }
+
+	// Managers
+	GraphicsManager *getGraphicsManager() const { return _graphicsMan; }
+	ResourceManager *getResourceManager() const { return _resMan; }	
 	SceneManager *getSceneManager() const { return _sceneMan; }
-	Common::RandomSource getRandom() const {return _random; }
+	SoundManager *getSoundManager() const { return _soundMan; }
 
 private:
 	const ADGameDescription *_gameDescription;
 	Graphics::PixelFormat _pixelFormat;
 
+	// Misc
 	Cursor *_cursor;
 	Debugger *_debugger;
 	Font *_font;
-	GraphicsManager *_graphics;
+	Common::RandomSource _random;
+
+	// Game
 	Logic *_logic;
-	ResourceManager *_resMan;
-	SceneManager *_sceneMan;
-	StreamedSound *_music;
-	StreamedSound *_sfx;
 	State *_state;
 
-	Common::RandomSource _random;
+	// Managers
+	GraphicsManager *_graphicsMan;
+	ResourceManager *_resMan;
+	SceneManager *_sceneMan;
+	SoundManager *_soundMan;
 };
 
 } // End of namespace LastExpress

@@ -30,6 +30,7 @@
 #include "lastexpress/data/snd.h"
 
 #include "lastexpress/game/logic.h"
+#include "lastexpress/game/soundmanager.h"
 #include "lastexpress/game/state.h"
 
 #include "lastexpress/graphics.h"

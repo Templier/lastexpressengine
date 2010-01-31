@@ -151,7 +151,7 @@ Common::Rect Scene::draw(Graphics::Surface *surface) {
 	}
 
 	// Load background
-	Background *background = ((LastExpressEngine *)g_engine)->getResMan()->loadBackground(name);
+	Background *background = ((LastExpressEngine *)g_engine)->getResourceManager()->loadBackground(name);
 	Common::Rect rect;
 	if (background) {
 		rect = background->draw(surface);

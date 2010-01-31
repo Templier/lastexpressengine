@@ -32,6 +32,7 @@
 #include "lastexpress/data/scene.h"
 
 #include "lastexpress/game/logic.h"
+#include "lastexpress/game/soundmanager.h"
 #include "lastexpress/game/state.h"
 
 #include "lastexpress/graphics.h"
@@ -962,7 +963,7 @@ void Menu::goToTime(uint32 time) {
 	_engine->getCursor()->show(true);
 
 	// Stop sound
-	_engine->getSfxStream()->stop();
+	_engine->getSoundManager()->getSfxStream()->stop();
 }
 
 void Menu::moveToCity(CityButton city, bool clicked) {

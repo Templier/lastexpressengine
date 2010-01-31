@@ -49,9 +49,9 @@
 #define getSavePoints() _engine->getGameState()->getGameSavePoints()
 
 // Utilities
-#define loadFile(name) load(_engine->getResMan()->getFileStream(name))
-#define playMusicStream(name) _engine->getMusicStream()->load(_engine->getResMan()->getFileStream(name));
-#define playSfxStream(name) _engine->getSfxStream()->load(_engine->getResMan()->getFileStream(Common::String(name) + ".snd"));
+#define loadFile(name) load(_engine->getResourceManager()->getFileStream(name))
+#define playMusicStream(name) _engine->getSoundManager()->getMusicStream()->load(_engine->getResourceManager()->getFileStream(name));
+#define playSfxStream(name) _engine->getSoundManager()->getSfxStream()->load(_engine->getResourceManager()->getFileStream(Common::String(name) + ".snd"));
 
 // Misc
 #define save(entity, a2, event) getLogic()->savegame(a2, entity, event)

@@ -187,7 +187,7 @@ IMPLEMENT_FUNCTION(Chapters, chapter2, 10) {
 
 	case kAction18:
 		if (_data->getNextCallback() == 1) {
-			if (!_engine->getResMan()->loadArchive(kArchiveCd2)) {
+			if (!_engine->getResourceManager()->loadArchive(kArchiveCd2)) {
 				getLogic()->showMenu(true);
 				return;
 			}
@@ -259,7 +259,7 @@ IMPLEMENT_FUNCTION(Chapters, chapter4, 17) {
 
 	case kAction18:
 		if (_data->getNextCallback() == 1) {
-			if (!_engine->getResMan()->loadArchive(kArchiveCd3)) {
+			if (!_engine->getResourceManager()->loadArchive(kArchiveCd3)) {
 				getLogic()->showMenu(true);
 				return;
 			}

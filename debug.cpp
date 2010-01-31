@@ -34,6 +34,8 @@
 #include "lastexpress/data/snd.h"
 #include "lastexpress/data/subtitle.h"
 
+#include "lastexpress/game/soundmanager.h"
+
 #include "lastexpress/graphics.h"
 #include "lastexpress/helpers.h"
 #include "lastexpress/lastexpress.h"
@@ -99,7 +101,7 @@ bool Debugger::cmd_playseq(int argc, const char **argv) {
 
 		filename += ".seq";
 
-		if (!_engine->getResMan()->hasFile(filename)) {
+		if (!_engine->getResourceManager()->hasFile(filename)) {
 			DebugPrintf("Cannot find file: %s\n", filename.c_str());
 			return true;
 		}
@@ -152,7 +154,7 @@ bool Debugger::cmd_showframe(int argc, const char **argv) {
 
 		filename += ".seq";
 
-		if (!_engine->getResMan()->hasFile(filename)) {
+		if (!_engine->getResourceManager()->hasFile(filename)) {
 			DebugPrintf("Cannot find file: %s\n", filename.c_str());
 			return true;
 		}
@@ -198,13 +200,14 @@ bool Debugger::cmd_playsnd(int argc, const char **argv) {
 	if (argc == 2) {
 		Common::String filename(const_cast<char *>(argv[1]));
 
-		if (!_engine->getResMan()->hasFile(filename)) {
+		if (!_engine->getResourceManager()->hasFile(filename)) {
 			DebugPrintf("Cannot find file: %s\n", filename.c_str());
 			return true;
 		}
 
 		_engine->_system->getMixer()->stopAll();
-		_engine->getSfxStream()->load(_engine->getResMan()->getFileStream(filename));
+		// FIXME: use another sound stream for debug (the one in the engine is not setup for playing a single sound)
+		_engine->getSoundManager()->getSfxStream()->load(_engine->getResourceManager()->getFileStream(filename));
 	} else {
 		DebugPrintf("Syntax: playsnd <sndname>\n");
 	}
@@ -217,7 +220,7 @@ bool Debugger::cmd_playsbe(int argc, const char **argv) {
 
 		filename += ".sbe";
 
-		if (!_engine->getResMan()->hasFile(filename)) {
+		if (!_engine->getResourceManager()->hasFile(filename)) {
 			DebugPrintf("Cannot find file: %s\n", filename.c_str());
 			return true;
 		}
@@ -267,7 +270,7 @@ bool Debugger::cmd_playnis(int argc, const char **argv) {
 
 		filename += ".nis";
 
-		if (!_engine->getResMan()->hasFile(filename)) {
+		if (!_engine->getResourceManager()->hasFile(filename)) {
 			DebugPrintf("Cannot find file: %s\n", filename.c_str());
 			return true;
 		}
@@ -298,7 +301,7 @@ bool Debugger::cmd_showbg(int argc, const char **argv) {
 	if (argc == 2) {
 		Common::String filename(const_cast<char *>(argv[1]));
 
-		if (!_engine->getResMan()->hasFile(filename + ".BG")) {
+		if (!_engine->getResourceManager()->hasFile(filename + ".BG")) {
 			DebugPrintf("Cannot find file: %s\n", (filename + ".BG").c_str());
 			return true;
 		}
@@ -312,7 +315,7 @@ bool Debugger::cmd_showbg(int argc, const char **argv) {
 		} else {
 			clearBg(GraphicsManager::kBackgroundC);
 
-			Background *background = _engine->getResMan()->loadBackground(filename);
+			Background *background = _engine->getResourceManager()->loadBackground(filename);
 			if (background) {
 				_engine->getGraphicsManager()->draw(background, GraphicsManager::kBackgroundC);
 				delete background;
@@ -407,7 +410,7 @@ bool Debugger::cmd_listfiles(int argc, const char **argv) {
 		Common::String filter(const_cast<char *>(argv[1]));
 
 		Common::ArchiveMemberList list;
-		int count = _engine->getResMan()->listMatchingMembers(list, filter);
+		int count = _engine->getResourceManager()->listMatchingMembers(list, filter);
 
 		DebugPrintf("Number of matches: %d\n", count);
 		for (Common::ArchiveMemberList::iterator it = list.begin(); it != list.end(); ++it) {

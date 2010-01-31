@@ -76,11 +76,17 @@
 namespace LastExpress {
 
 class LastExpressEngine;
+class StreamedSound;
 
-class SoundMgr {
+class SoundManager {
 public:
 
-	SoundMgr(LastExpressEngine *engine);
+	SoundManager(LastExpressEngine *engine);
+	~SoundManager();
+
+	// Sound streams
+	StreamedSound *getMusicStream() const { return _music; }
+	StreamedSound *getSfxStream() const { return _sfx; }
 
 private:
 
@@ -89,6 +95,10 @@ private:
 	};
 
 	LastExpressEngine* _engine;
+
+	// Sound streams
+	StreamedSound *_music;
+	StreamedSound *_sfx;
 };
 
 } // End of namespace LastExpress
