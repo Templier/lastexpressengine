@@ -63,6 +63,9 @@ LastExpressEngine::LastExpressEngine(OSystem *syst, const ADGameDescription *gd)
 	Common::addDebugChannel(kLastExpressDebugCursor, "Cursor", "Debug cursor handling");
 	Common::addDebugChannel(kLastExpressDebugSound, "Sound", "Debug sound playback");
 	Common::addDebugChannel(kLastExpressDebugSubtitle, "Subtitle", "Debug subtitles");
+	Common::addDebugChannel(kLastExpressDebugSavegame, "Savegame", "Debug savegames");
+	Common::addDebugChannel(kLastExpressDebugLogic, "Logic", "Debug logic");
+	Common::addDebugChannel(kLastExpressDebugScenes, "Scenes", "Debug scenes & hotspots");
 	Common::addDebugChannel(kLastExpressDebugUnknown, "Unknown", "Debug unknown data");
 
 	g_eventRec.registerRandomSource(_random, "lastexpress");

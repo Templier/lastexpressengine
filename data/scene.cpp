@@ -75,9 +75,9 @@ SceneHotspot *SceneHotspot::load(Common::SeekableReadStream *stream) {
 	hs->cursor = stream->readByte();
 	hs->next = stream->readUint32LE();
 
-	debugC(9, kLastExpressDebugScenes, "\thotspot: scene=%d location=%02d action=%02d param1=%02d param2=%02d param3=%02d cursor=%02d rect=(%d, %d)x(%d,%d)",
+	debugC(10, kLastExpressDebugScenes, "\thotspot: scene=%d location=%02d action=%02d param1=%02d param2=%02d param3=%02d cursor=%02d rect=(%d, %d)x(%d,%d)",
 	                                   hs->scene, hs->location, hs->action, hs->param1, hs->param2, hs->param3, hs->cursor, hs->rect.left, hs->rect.top, hs->rect.right, hs->rect.bottom);
-	debugC(9, kLastExpressDebugScenes, "\t         uA=%d, next=%d offset=%d ",
+	debugC(10, kLastExpressDebugScenes, "\t         uA=%d, next=%d offset=%d ",
 	                                   hs->unknownA, hs->next, hs->offset);
 
 	return hs;
@@ -96,9 +96,9 @@ Scene *Scene::load(Common::SeekableReadStream *stream, SceneHeader *header) {
 	if (!s)
 		return NULL;
 
-	debugC(9, kLastExpressDebugScenes, "Scene:  name=%s, sig=%02d, count=%d, field_11=%d", header->name, header->sig, header->count, header->field_11);
-	debugC(9, kLastExpressDebugScenes, "\tfield_13=%02d, type=%02d, param1=%02d, param2=%02d", header->field_13, header->type, header->param1, header->param2);
-	debugC(9, kLastExpressDebugScenes, "\tparam3=%02d, hotspot=%d\n", header->param3, header->hotspot);
+	debugC(10, kLastExpressDebugScenes, "Scene:  name=%s, sig=%02d, count=%d, field_11=%d", header->name, header->sig, header->count, header->field_11);
+	debugC(10, kLastExpressDebugScenes, "\tfield_13=%02d, type=%02d, param1=%02d, param2=%02d", header->field_13, header->type, header->param1, header->param2);
+	debugC(10, kLastExpressDebugScenes, "\tparam3=%02d, hotspot=%d\n", header->param3, header->hotspot);
 
 	// Read all hotspots
 	if (header->hotspot != 0) {

@@ -336,14 +336,20 @@ void Entities::saveLoadWithSerializer(Common::Serializer &ser) {
 // Drawing
 //////////////////////////////////////////////////////////////////////////
 void Entities::storeSequenceName(EntityIndex entity, const char* sequence) {
+	debugC(8, kLastExpressDebugLogic, "Storing sequence %s for entity %d", sequence, entity);
+
 	error("Entities::storeSequenceName: not implemented!");
 }
 
 void Entities::drawSequence(EntityIndex entity, const char* sequence) {
+	debugC(8, kLastExpressDebugLogic, "Drawing sequence %s for entity %d", sequence, entity);
+
 	warning("Entities::drawSequence: not implemented!");
 }
 
 void Entities::drawSequences(EntityIndex entity) {
+	debugC(8, kLastExpressDebugLogic, "Drawing sequences for entity %d", entity);
+
 	warning("Entities::drawSequences: not implemented!");
 }
 
