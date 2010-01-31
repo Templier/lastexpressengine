@@ -438,7 +438,7 @@ bool Entities::checkFields3(EntityIndex entity) {
 
 bool Entities::checkFields4(EntityData::Field495Value field495, int field15) {
 
-	Scene *scene = _engine->getScene(getState()->scene);
+	Scene *scene = getSceneObject(getState()->scene);
 	bool ret = getData(kEntityNone)->getData()->field_495 == field495 && scene->getHeader()->field_15 == field15;
 	delete scene;
 

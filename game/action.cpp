@@ -411,7 +411,7 @@ IMPLEMENT_ACTION(inventory) {
 		getState()->sceneUseBackup = 0;
 		index = getState()->sceneBackup;
 
-		Scene *backup = _engine->getScene(getState()->sceneBackup);
+		Scene *backup = getSceneObject(getState()->sceneBackup);
 
 		if (getState()->field1000[backup->getHeader()->field_15 + 100 * backup->getHeader()->field_13])
 			index = getLogic()->processIndex(getState()->sceneBackup);
@@ -1162,7 +1162,7 @@ IMPLEMENT_ACTION(useWhistle) {
 		if (getEntities()->checkFields1(kEntityNone, EntityData::kField495_3, EntityData::kField491_8200)) {
 			evt = kEventCathOpenEgg;
 
-			Scene *scene = _engine->getScene(hotspot->scene);
+			Scene *scene = getSceneObject(hotspot->scene);
 
 			if (scene->getHotspot())
 				hotspot->scene = scene->getHotspot()->scene;

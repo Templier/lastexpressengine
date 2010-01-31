@@ -449,7 +449,7 @@ void Menu::showMenu() {
 	_currentTime = getState()->time;
 
 	// Load main scene
-	_scene = _engine->getScene(getSceneIndex());
+	_scene = getSceneObject(getSceneIndex());
 	_engine->getGraphicsManager()->draw(_scene, GraphicsManager::kBackgroundC);
 	drawElements();
 

@@ -365,7 +365,7 @@ bool Debugger::cmd_loadscene(int argc, const char **argv) {
 
 			//SceneManager scene;
 			//if (scene.loadScene(cd)) {
-				Scene *s = _engine->getScene(index);
+				Scene *s = getSceneObject(index);
 				_engine->getGraphicsManager()->draw(s, GraphicsManager::kBackgroundC);
 				delete s;
 

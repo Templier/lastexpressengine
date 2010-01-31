@@ -217,7 +217,7 @@ void Logic::loadScene(uint32 index) {
 
 	getFlags()->flag_0 = false;
 	if (getState()->sceneUseBackup) {
-		Scene *scene = _engine->getScene(index);
+		Scene *scene = getSceneObject(index);
 
 		if (scene->getHeader()->param3 != 255) {
 			getState()->sceneUseBackup = 0;
@@ -251,12 +251,12 @@ void Logic::drawScene(uint32 index) {
 
 	// Draw background
 	delete _scene;
-	_scene = _engine->getScene(index);
+	_scene = getSceneObject(index);
 	_engine->getGraphicsManager()->draw(_scene, GraphicsManager::kBackgroundC, true);
 	getState()->scene = index;
 
 	// Update entities
-	Scene *scene = (getState()->sceneUseBackup ? _engine->getScene(getState()->sceneBackup) : _scene);
+	Scene *scene = (getState()->sceneUseBackup ? getSceneObject(getState()->sceneBackup) : _scene);
 
 	getEntityData(kEntityNone)->field_491 = (EntityData::Field491Value)scene->getHeader()->count;
 	getEntityData(kEntityNone)->field_495 = (EntityData::Field495Value)scene->getHeader()->field_13;
@@ -298,7 +298,7 @@ void Logic::processScene() {
 	if (item && getInventory()->getSelectedItem() == item)
 		getInventory()->selectItem(item);
 
-	Scene *backup = _engine->getScene(getState()->sceneBackup);
+	Scene *backup = getSceneObject(getState()->sceneBackup);
 
 	if (getState()->field1000[backup->getHeader()->field_15 + 100 * backup->getHeader()->field_13])
 		loadScene(getLogic()->processIndex(getState()->sceneBackup));
@@ -378,7 +378,7 @@ void Logic::preProcessScene(uint32 *index) {
 	if (*index == 0 || *index > 2500)
 		*index = 1;
 
-	Scene* scene = _engine->getScene(*index);
+	Scene* scene = getSceneObject(*index);
 
 	switch (scene->getHeader()->type) {
 	case Scene::kTypeItem:
@@ -456,7 +456,7 @@ void Logic::preProcessScene(uint32 *index) {
 		if (scene->getHotspots()->size() > 0) {
 			for (Common::Array<SceneHotspot *>::iterator it = scene->getHotspots()->begin(); it != scene->getHotspots()->end(); ++it) {
 
-				Scene *currentScene = _engine->getScene(*index);
+				Scene *currentScene = getSceneObject(*index);
 				if (getObjects()->get((ObjectIndex)currentScene->getHeader()->param1).location2 == (*it)->location) {
 					PROCESS_HOTSPOT_SCENE(*it, index);
 					found = true;
@@ -467,7 +467,7 @@ void Logic::preProcessScene(uint32 *index) {
 
 		// If the scene has no hotspot or if we haven't found a proper hotspot, use the first hotspot from the current scene
 		if (!found) {
-			Scene *hotspotScene = _engine->getScene(*index);
+			Scene *hotspotScene = getSceneObject(*index);
 			SceneHotspot *hotspot = scene->getHotspot();
 
 			PROCESS_HOTSPOT_SCENE(hotspot, index);
@@ -484,7 +484,7 @@ void Logic::preProcessScene(uint32 *index) {
 
 		if (getState()->field16[scene->getHeader()->param1] || getState()->field16_2[scene->getHeader()->param1]) {
 
-			Scene *_currentScene = _engine->getScene(getState()->scene);
+			Scene *_currentScene = getSceneObject(getState()->scene);
 
 			if ((checkSceneFields(getState()->scene, false) && checkSceneFields(*index, false) && _currentScene->getHeader()->count < scene->getHeader()->count)
 			 || (checkSceneFields(getState()->scene, true)  && checkSceneFields(*index, true)  && _currentScene->getHeader()->count > scene->getHeader()->count)) {
@@ -528,7 +528,7 @@ void Logic::preProcessScene(uint32 *index) {
 	// Cleanup
 	if (_beetle->isLoaded()) {
 		// Get scene type
-		Scene *currentScene = _engine->getScene(*index);
+		Scene *currentScene = getSceneObject(*index);
 
 		if (currentScene->getHeader()->type != Scene::kTypeLoadBeetleSequences)
 			_beetle->unload();
@@ -541,7 +541,7 @@ void Logic::preProcessScene(uint32 *index) {
 
 void Logic::postProcessScene(uint32 *index) {
 
-	Scene* scene = _engine->getScene(*index);
+	Scene* scene = getSceneObject(*index);
 
 	switch (scene->getHeader()->type) {
 	case Scene::kTypeList: {
@@ -551,19 +551,19 @@ void Logic::postProcessScene(uint32 *index) {
 
 		// Some stuff related to menu?
 
-		Scene *currentScene = _engine->getScene(getState()->scene);
+		Scene *currentScene = getSceneObject(getState()->scene);
 		SceneHotspot *hotspot = currentScene->getHotspot();
 		_action->processHotspot(hotspot);
 
 		if (getFlags()->flag_2) {
-			Scene *hotspotScene = _engine->getScene(hotspot->scene);
+			Scene *hotspotScene = getSceneObject(hotspot->scene);
 			while (hotspotScene->getHeader()->type == Scene::kTypeList) {
 				hotspot = hotspotScene->getHotspot();
 				_action->processHotspot(hotspot);
 
 				uint16 nextScene = hotspot->scene;
 				delete hotspotScene;
-				hotspotScene = _engine->getScene(nextScene);
+				hotspotScene = getSceneObject(nextScene);
 			}
 			delete hotspotScene;
 		}
@@ -715,7 +715,7 @@ void Logic::updateCursor() {
 
 bool Logic::checkSceneFields(uint32 index, bool isSecondCheck) {
 	bool result = false;
-	Scene *scene = _engine->getScene((index ? index : getState()->scene));
+	Scene *scene = getSceneObject((index ? index : getState()->scene));
 
 	uint16 field13 = scene->getHeader()->field_13;
 	byte field15 = scene->getHeader()->field_15;

@@ -41,6 +41,8 @@
 #define getEvent(id) getState()->events[id]
 #define getProgress() getState()->progress
 
+#define getSceneObject(sceneId) _engine->getSceneManager()->getScene(sceneId)
+
 #define getFlags() _engine->getGameState()->getGameFlags()
 #define getInventory() _engine->getGameState()->getGameInventory()
 #define getObjects() _engine->getGameState()->getGameObjects()
@@ -60,7 +62,7 @@
 // Graphics
 //////////////////////////////////////////////////////////////////////////
 #define clearBg(type) _engine->getGraphicsManager()->clear(type)
-#define showScene(index, type) { Scene *s = _engine->getScene(index); _engine->getGraphicsManager()->draw(s, type); delete s; }
+#define showScene(index, type) { Scene *s = getSceneObject(index); _engine->getGraphicsManager()->draw(s, type); delete s; }
 
 #define askForRedraw() _engine->getGraphicsManager()->change();
 #define redrawScreen() _engine->getGraphicsManager()->update(); _engine->_system->updateScreen();

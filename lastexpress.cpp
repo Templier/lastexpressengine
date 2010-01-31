@@ -348,8 +348,4 @@ void LastExpressEngine::errorString(const char *buf_input, char *buf_output, int
 	snprintf(buf_output, buf_output_size, "%s", buf_input);
 }
 
-Scene *LastExpressEngine::getScene(uint32 sceneId) const {
-	return _sceneMan->getScene(sceneId);
-}
-
 } // End of namespace LastExpress

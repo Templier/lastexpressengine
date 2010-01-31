@@ -446,7 +446,7 @@ InventoryItem Inventory::getFirstExaminableItem() {
 }
 
 bool Inventory::isItemSceneParameter(InventoryItem item) {
-	Scene *currentScene = _engine->getScene(getState()->scene);
+	Scene *currentScene = getSceneObject(getState()->scene);
 	bool equal = false;
 
 	switch(currentScene->getHeader()->type) {
