@@ -25,6 +25,9 @@
 
 #include "lastexpress/entities/vesna.h"
 
+#include "lastexpress/game/entities.h"
+#include "lastexpress/game/logic.h"
+#include "lastexpress/game/object.h"
 #include "lastexpress/game/savepoint.h"
 #include "lastexpress/game/state.h"
 
@@ -116,16 +119,16 @@ IMPLEMENT_FUNCTION(Vesna, chapter1, 12) {
 	default:
 		break;
 
+	case kActionNone:
+		CALL_CHAPTER_ACTION_NONE(13)
+		break;
+
 	case kActionDefault:
 		getSavePoints()->addData(kEntityVesna, kAction124190740, 0);
 
 		_data->getData()->field_491 = EntityData::kField491_4689;
 		_data->getData()->field_493 = EntityData::kField493_1;
 		_data->getData()->field_495 = EntityData::kField495_5;
-		break;
-
-	case kActionNone:
-		CALL_CHAPTER_ACTION_NONE(13)
 		break;
 	}
 }
@@ -143,7 +146,25 @@ IMPLEMENT_FUNCTION(Vesna, function15, 15) {
 }
 
 IMPLEMENT_FUNCTION(Vesna, chapter2, 16) {
-	error("Vesna: callback function 16 not implemented!");
+	switch (savepoint->action) {
+	default:
+		break;
+
+	case kActionNone:
+		setup_function17();
+		break;
+
+	case kActionDefault:
+		getEntities()->drawSequences(kEntityVesna);
+
+		_data->getData()->field_491 = EntityData::kField491_3050;
+		_data->getData()->field_493 = EntityData::kField493_1;
+		_data->getData()->field_495 = EntityData::kField495_4;
+		_data->getData()->field_4A5 = EntityData::kField4A5_0;
+		_data->getData()->inventoryItem = kItemNone;
+
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Vesna, function17, 17) {
@@ -155,13 +176,30 @@ IMPLEMENT_FUNCTION(Vesna, function18, 18) {
 }
 
 IMPLEMENT_FUNCTION(Vesna, chapter3, 19) {
-	error("Vesna: callback function 19 not implemented!");
+	switch (savepoint->action) {
+	default:
+		break;
+
+	case kActionNone:
+		setup_function20();
+		break;
+
+	case kActionDefault:
+		getEntities()->drawSequences(kEntityVesna);
+
+		_data->getData()->field_491 = EntityData::kField491_3050;
+		_data->getData()->field_493 = EntityData::kField493_1;
+		_data->getData()->field_495 = EntityData::kField495_4;
+		_data->getData()->field_4A5 = EntityData::kField4A5_0;
+		_data->getData()->inventoryItem = kItemNone;
+
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Vesna, function20, 20) {
 	error("Vesna: callback function 20 not implemented!");
 }
-
 
 IMPLEMENT_FUNCTION(Vesna, function21, 21) {
 	error("Vesna: callback function 21 not implemented!");
@@ -176,7 +214,30 @@ IMPLEMENT_FUNCTION(Vesna, function23, 23) {
 }
 
 IMPLEMENT_FUNCTION(Vesna, chapter4, 24) {
-	error("Vesna: callback function 24 not implemented!");
+	switch (savepoint->action) {
+	default:
+		break;
+
+	case kActionNone:
+		_data->setNextCallback(1);
+		call(new ENTITY_SETUP_DEFAULT(Vesna, setup_function11));
+		break;
+
+	case kActionDefault:
+		getEntities()->drawSequences(kEntityVesna);
+
+		_data->getData()->field_491 = EntityData::kField491_3050;
+		_data->getData()->field_493 = EntityData::kField493_1;
+		_data->getData()->field_495 = EntityData::kField495_4;
+		_data->getData()->inventoryItem = kItemNone;
+
+		getObjects()->update(kObjectCompartmentG, kEntityVesna, kLocation3, kCursorHandKnock, kCursorHand);
+		break;
+
+	case kAction18:
+		if (_data->getNextCallback() == 1)
+			setup_function25();
+	}
 }
 
 IMPLEMENT_FUNCTION(Vesna, function25, 25) {
@@ -192,7 +253,22 @@ IMPLEMENT_FUNCTION(Vesna, function27, 27) {
 }
 
 IMPLEMENT_FUNCTION(Vesna, chapter5, 28) {
-	error("Vesna: callback function 28 not implemented!");
+	switch (savepoint->action) {
+	default:
+		break;
+
+	case kActionNone:
+		setup_function29();
+		break;
+
+	case kActionDefault:
+		getEntities()->drawSequences(kEntityVesna);
+
+		_data->getData()->field_493 = EntityData::kField493_1;
+		_data->getData()->field_495 = EntityData::kField495_5;
+		_data->getData()->inventoryItem = kItemNone;
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Vesna, function29, 29) {

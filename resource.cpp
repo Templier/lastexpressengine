@@ -53,7 +53,7 @@ ResourceManager::~ResourceManager() {
 //  - use ArchiveAll to load all three cds
 //  - HD.hpf is always loaded along with the selected archive(s)
 //  - will remove all other archives
-bool ResourceManager::loadArchive(ArchiveType type) {
+bool ResourceManager::loadArchive(ArchiveIndex type) {
 	// Unload all archives
 	reset();
 

@@ -101,6 +101,9 @@ public:
 	DECLARE_FUNCTION(function61)
 	DECLARE_FUNCTION(function62)
 	DECLARE_NULL_FUNCTION()
+
+private:
+	DECLARE_CALL_FUNCTION(default, Coudert, int, int, int, int)
 };
 
 } // End of namespace LastExpress

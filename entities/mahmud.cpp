@@ -25,6 +25,8 @@
 
 #include "lastexpress/entities/mahmud.h"
 
+#include "lastexpress/game/entities.h"
+#include "lastexpress/game/logic.h"
 #include "lastexpress/game/object.h"
 #include "lastexpress/game/savepoint.h"
 #include "lastexpress/game/state.h"
@@ -118,19 +120,20 @@ IMPLEMENT_FUNCTION(Mahmud, chapter1, 15) {
 	default:
 		break;
 
+	case kActionNone:
+		CALL_CHAPTER_ACTION_NONE(14)
+		break;
+
 	case kActionDefault:
 		getSavePoints()->addData(kEntityMahmud, kAction170483072, 0);
-
-		getObjects()->update(kObjectCompartment4, kEntityNone, kLocation3, kCursorHandKnock, kCursorHand);
-		getObjects()->update(kObject20, kEntityNone, kLocation3, kCursorHandKnock, kCursorHand);
 
 		_data->getData()->field_491 = EntityData::kField491_540;
 		_data->getData()->field_493 = EntityData::kField493_0;
 		_data->getData()->field_495 = EntityData::kField495_3;
-		break;
 
-	case kActionNone:
-		CALL_CHAPTER_ACTION_NONE(14)
+		getObjects()->update(kObjectCompartment4, kEntityNone, kLocation3, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObject20, kEntityNone, kLocation3, kCursorHandKnock, kCursorHand);
+
 		break;
 	}
 }
@@ -140,19 +143,74 @@ IMPLEMENT_FUNCTION(Mahmud, function16, 16) {
 }
 
 IMPLEMENT_FUNCTION(Mahmud, chapter2, 17) {
-	error("Mahmud: callback function 17 not implemented!");
+	switch (savepoint->action) {
+	default:
+		break;
+
+	case kActionNone:
+		setup_function14();
+		break;
+
+	case kActionDefault:
+		getEntities()->drawSequences(kEntityMahmud);
+
+		_data->getData()->field_491 = EntityData::kField491_5790;
+		_data->getData()->field_493 = EntityData::kField493_1;
+		_data->getData()->field_495 = EntityData::kField495_3;
+		_data->getData()->field_4A5 = EntityData::kField4A5_0;
+		_data->getData()->inventoryItem = kItemNone;
+
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Mahmud, chapter3, 18) {
-	error("Mahmud: callback function 18 not implemented!");
+	switch (savepoint->action) {
+	default:
+		break;
+
+	case kActionNone:
+		setup_function14();
+		break;
+
+	case kActionDefault:
+		getEntities()->drawSequences(kEntityMahmud);
+
+		_data->getData()->field_491 = EntityData::kField491_5790;
+		_data->getData()->field_493 = EntityData::kField493_1;
+		_data->getData()->field_495 = EntityData::kField495_3;
+		_data->getData()->field_4A5 = EntityData::kField4A5_0;
+		_data->getData()->inventoryItem = kItemNone;
+
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Mahmud, chapter4, 19) {
-	error("Mahmud: callback function 19 not implemented!");
+	switch (savepoint->action) {
+	default:
+		break;
+
+	case kActionNone:
+		setup_function14();
+		break;
+
+	case kActionDefault:
+		getEntities()->drawSequences(kEntityMahmud);
+
+		_data->getData()->field_491 = EntityData::kField491_2740;
+		_data->getData()->field_493 = EntityData::kField493_1;
+		_data->getData()->field_495 = EntityData::kField495_3;
+		_data->getData()->field_4A5 = EntityData::kField4A5_0;
+		_data->getData()->inventoryItem = kItemNone;
+
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Mahmud, chapter5, 20) {
-	error("Mahmud: callback function 20 not implemented!");
+	if (savepoint->action == kActionDefault)
+		getEntities()->drawSequences(kEntityMahmud);
 }
 
 } // End of namespace LastExpress

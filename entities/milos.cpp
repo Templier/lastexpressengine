@@ -25,6 +25,8 @@
 
 #include "lastexpress/entities/milos.h"
 
+#include "lastexpress/game/entities.h"
+#include "lastexpress/game/logic.h"
 #include "lastexpress/game/object.h"
 #include "lastexpress/game/savepoint.h"
 #include "lastexpress/game/state.h"
@@ -121,21 +123,21 @@ IMPLEMENT_FUNCTION(Milos, chapter1, 12) {
 	default:
 		break;
 
-	case kActionDefault:
-		getSavePoints()->addData(kEntityMilos, kAction157691176, 0);
-		getSavePoints()->addData(kEntityMilos, kAction208228224, 2);
-		getSavePoints()->addData(kEntityMilos, kAction259125998, 3);
+	case kActionNone:
+		CALL_CHAPTER_ACTION_NONE(15)
+		break;
 
+	case kActionDefault:
 		getObjects()->update(kObjectCompartmentG, kEntityNone, kLocation3, kCursorHandKnock, kCursorHand);
 		getObjects()->update(kObject46, kEntityNone, kLocationNone, kCursorKeepValue, kCursorKeepValue);
 
 		_data->getData()->field_491 = EntityData::kField491_4689;
 		_data->getData()->field_493 = EntityData::kField493_1;
 		_data->getData()->field_495 = EntityData::kField495_5;
-		break;
 
-	case kActionNone:
-		CALL_CHAPTER_ACTION_NONE(13) // FIXME check call number
+		getSavePoints()->addData(kEntityMilos, kAction157691176, 0);
+		getSavePoints()->addData(kEntityMilos, kAction208228224, 2);
+		getSavePoints()->addData(kEntityMilos, kAction259125998, 3);
 		break;
 	}
 }
@@ -165,7 +167,25 @@ IMPLEMENT_FUNCTION(Milos, function18, 18) {
 }
 
 IMPLEMENT_FUNCTION(Milos, chapter2, 19) {
-	error("Milos: callback function 19 not implemented!");
+	switch (savepoint->action) {
+	default:
+		break;
+
+	case kActionNone:
+		setup_function20();
+		break;
+
+	case kActionDefault:
+		getEntities()->drawSequences(kEntityMilos);
+
+		_data->getData()->field_491 = EntityData::kField491_4689;
+		_data->getData()->field_493 = EntityData::kField493_1;
+		_data->getData()->field_495 = EntityData::kField495_5;
+
+		getObjects()->update(kObjectCompartmentG, kEntityNone, kLocation3, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObject46, kEntityNone, kLocationNone, kCursorKeepValue, kCursorKeepValue);
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Milos, function20, 20) {
@@ -177,7 +197,29 @@ IMPLEMENT_FUNCTION(Milos, function21, 21) {
 }
 
 IMPLEMENT_FUNCTION(Milos, chapter3, 22) {
-	error("Milos: callback function 22 not implemented!");
+	switch (savepoint->action) {
+	default:
+		break;
+
+	case kActionNone:
+		if (getState()->events[kEventMilosCompartmentVisitAugust])
+			setup_function24();
+		else
+			setup_function23();
+		break;
+
+	case kActionDefault:
+		getEntities()->drawSequences(kEntityMilos);
+
+		_data->getData()->field_4A5 = EntityData::kField4A5_0;
+		_data->getData()->inventoryItem = kItemNone;
+
+		getObjects()->update(kObjectCompartmentG, kEntityMilos, kLocation3, kCursorHandKnock, kCursorHand);
+
+		ENTITY_PARAM(0, 1) = 0;
+		ENTITY_PARAM(0, 4) = 0;
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Milos, function23, 23) {
@@ -201,7 +243,24 @@ IMPLEMENT_FUNCTION_II(Milos, function27, 27) {
 }
 
 IMPLEMENT_FUNCTION(Milos, chapter4, 28) {
-	error("Milos: callback function 28 not implemented!");
+	switch (savepoint->action) {
+	default:
+		break;
+
+	case kActionNone:
+		setup_function29();
+		break;
+
+	case kActionDefault:
+		getEntities()->drawSequences(kEntityMilos);
+
+		_data->getData()->field_491 = EntityData::kField491_3050;
+		_data->getData()->field_493 = EntityData::kField493_1;
+		_data->getData()->field_495 = EntityData::kField495_4;
+		_data->getData()->inventoryItem = kItemNone;
+
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Milos, function29, 29) {
@@ -221,7 +280,24 @@ IMPLEMENT_FUNCTION(Milos, function32, 32) {
 }
 
 IMPLEMENT_FUNCTION(Milos, chapter5, 33) {
-	error("Milos: callback function 33 not implemented!");
+	switch (savepoint->action) {
+	default:
+		break;
+
+	case kActionNone:
+		setup_function34();
+		break;
+
+	case kActionDefault:
+		getEntities()->drawSequences(kEntityMilos);
+
+		_data->getData()->field_491 = EntityData::kField491_540;
+		_data->getData()->field_493 = EntityData::kField493_1;
+		_data->getData()->field_495 = EntityData::kField495_7;
+		_data->getData()->inventoryItem = kItemNone;
+
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Milos, function34, 34) {

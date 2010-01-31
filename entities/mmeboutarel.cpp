@@ -25,9 +25,11 @@
 
 #include "lastexpress/entities/mmeboutarel.h"
 
+#include "lastexpress/game/entities.h"
+#include "lastexpress/game/logic.h"
 #include "lastexpress/game/object.h"
-#include "lastexpress/game/state.h"
 #include "lastexpress/game/savepoint.h"
+#include "lastexpress/game/state.h"
 
 #include "lastexpress/lastexpress.h"
 #include "lastexpress/helpers.h"
@@ -107,6 +109,10 @@ IMPLEMENT_FUNCTION(MmeBoutarel, chapter1, 10) {
 	default:
 		break;
 
+	case kActionNone:
+		CALL_CHAPTER_ACTION_NONE(12)
+		break;
+
 	case kActionDefault:
 		getSavePoints()->addData(kEntityMmeBoutarel, kAction242526416, 0);
 
@@ -116,10 +122,6 @@ IMPLEMENT_FUNCTION(MmeBoutarel, chapter1, 10) {
 		_data->getData()->field_491 = EntityData::kField491_5790;
 		_data->getData()->field_493 = EntityData::kField493_1;
 		_data->getData()->field_495 = EntityData::kField495_4;
-		break;
-
-	case kActionNone:
-		CALL_CHAPTER_ACTION_NONE(12)
 		break;
 	}
 }
@@ -149,7 +151,29 @@ IMPLEMENT_FUNCTION(MmeBoutarel, function16, 16) {
 }
 
 IMPLEMENT_FUNCTION(MmeBoutarel, chapter2, 17) {
-	error("MmeBoutarel: callback function 17 not implemented!");
+	switch (savepoint->action) {
+	default:
+		break;
+
+	case kActionNone:
+		setup_function18();
+		break;
+
+	case kActionDefault:
+		getEntities()->drawSequences(kEntityMmeBoutarel);
+
+		_data->getData()->field_491 = EntityData::kField491_4689;
+		_data->getData()->field_493 = EntityData::kField493_1;
+		_data->getData()->field_495 = EntityData::kField495_5;
+		_data->getData()->field_4A5 = EntityData::kField4A5_0;
+		_data->getData()->inventoryItem = kItemNone;
+
+		getObjects()->update(kObjectCompartmentD, kEntityNone, kLocationNone, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObject51, kEntityNone, kLocationNone, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObject43, kEntityNone, kLocationNone, kCursorKeepValue, kCursorKeepValue);
+
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(MmeBoutarel, function18, 18) {
@@ -161,7 +185,25 @@ IMPLEMENT_FUNCTION(MmeBoutarel, function19, 19) {
 }
 
 IMPLEMENT_FUNCTION(MmeBoutarel, chapter3, 20) {
-	error("MmeBoutarel: callback function 20 not implemented!");
+	switch (savepoint->action) {
+	default:
+		break;
+
+	case kActionNone:
+		setup_function21();
+		break;
+
+	case kActionDefault:
+		getEntities()->drawSequences(kEntityMmeBoutarel);
+
+		_data->getData()->field_491 = EntityData::kField491_5790;
+		_data->getData()->field_493 = EntityData::kField493_1;
+		_data->getData()->field_495 = EntityData::kField495_4;
+		_data->getData()->field_4A5 = EntityData::kField4A5_0;
+		_data->getData()->inventoryItem = kItemNone;
+
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(MmeBoutarel, function21, 21) {
@@ -169,7 +211,25 @@ IMPLEMENT_FUNCTION(MmeBoutarel, function21, 21) {
 }
 
 IMPLEMENT_FUNCTION(MmeBoutarel, chapter4, 22) {
-	error("MmeBoutarel: callback function 22 not implemented!");
+	switch (savepoint->action) {
+	default:
+		break;
+
+	case kActionNone:
+		setup_function23();
+		break;
+
+	case kActionDefault:
+		getEntities()->drawSequences(kEntityMmeBoutarel);
+
+		_data->getData()->field_491 = EntityData::kField491_5790;
+		_data->getData()->field_493 = EntityData::kField493_1;
+		_data->getData()->field_495 = EntityData::kField495_4;
+		_data->getData()->field_4A5 = EntityData::kField4A5_0;
+		_data->getData()->inventoryItem = kItemNone;
+
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(MmeBoutarel, function23, 23) {
@@ -185,7 +245,25 @@ IMPLEMENT_FUNCTION(MmeBoutarel, function25, 25) {
 }
 
 IMPLEMENT_FUNCTION(MmeBoutarel, chapter5, 26) {
-	error("MmeBoutarel: callback function 26 not implemented!");
+	switch (savepoint->action) {
+	default:
+		break;
+
+	case kActionNone:
+		setup_function27();
+		break;
+
+	case kActionDefault:
+		getEntities()->drawSequences(kEntityMmeBoutarel);
+
+		_data->getData()->field_491 = EntityData::kField491_3969;
+		_data->getData()->field_493 = EntityData::kField493_1;
+		_data->getData()->field_495 = EntityData::kField495_5;
+		_data->getData()->field_4A5 = EntityData::kField4A5_0;
+		_data->getData()->inventoryItem = kItemNone;
+
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(MmeBoutarel, function27, 27) {

@@ -49,6 +49,7 @@ public:
 		kField491_2740  = 2740,
 		kField491_2830  = 2830,
 		kField491_3050  = 3050,
+		kField491_3650  = 3650,
 		kField491_3969  = 3969,
 		kField491_3970  = 3970,
 		kField491_4070  = 4070,
@@ -57,6 +58,7 @@ public:
 		kField491_4840  = 4840,
 		kField491_5000  = 5000,
 		kField491_5419  = 5419,
+		kField491_5420  = 5420,
 		kField491_5790  = 5790,
 		kField491_5900  = 5900,
 		kField491_6000  = 6000,
@@ -84,7 +86,8 @@ public:
 		kField495_3 = 3,
 		kField495_4 = 4,
 		kField495_5 = 5,
-		kField495_6 = 6
+		kField495_6 = 6,
+		kField495_7 = 7
 	};
 
 	enum Field4A5Value {

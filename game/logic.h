@@ -57,6 +57,7 @@ public:
 	void gameOver(int a1, int a2, int scene, bool showScene);
 
 	// Scene
+	void loadSceneDataFile(ArchiveIndex archive);
 	void loadScene(uint32 index);
 	void setScene(uint32 index);
 

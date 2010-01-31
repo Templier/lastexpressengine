@@ -67,38 +67,28 @@ IMPLEMENT_FUNCTION_II(Train, savegame, 1) {
 }
 
 IMPLEMENT_FUNCTION(Train, chapter1, 2) {
-	if (savepoint->action != kActionDefault)
-		return;
-
-	setup_process();
+	if (savepoint->action == kActionDefault)
+		setup_process();
 }
 
 IMPLEMENT_FUNCTION(Train, chapter2, 3) {
-	if (savepoint->action != kActionDefault)
-		return;
-
-	setup_process();
+	if (savepoint->action == kActionDefault)
+		setup_process();
 }
 
 IMPLEMENT_FUNCTION(Train, chapter3, 4) {
-	if (savepoint->action != kActionDefault)
-		return;
-
-	setup_process();
+	if (savepoint->action == kActionDefault)
+		setup_process();
 }
 
 IMPLEMENT_FUNCTION(Train, chapter4, 5) {
-	if (savepoint->action != kActionDefault)
-		return;
-
-	setup_process();
+	if (savepoint->action == kActionDefault)
+		setup_process();
 }
 
 IMPLEMENT_FUNCTION(Train, chapter5, 6) {
-	if (savepoint->action != kActionDefault)
-		return;
-
-	setup_process();
+	if (savepoint->action == kActionDefault)
+		setup_process();
 }
 
 IMPLEMENT_FUNCTION_II(Train, harem, 7) {
@@ -204,12 +194,12 @@ label_skip:
 			}
 		}
 
-		if (ENTITY_PARAM(8, 0, 8)) {
-			ObjectIndex param8 = (ObjectIndex)ENTITY_PARAM(8, 0, 8);
+		if (ENTITY_PARAM(0, 8)) {
+			ObjectIndex param8 = (ObjectIndex)ENTITY_PARAM(0, 8);
 
 			// TODO check if sound is cached
 			getObjects()->update(param8, getObjects()->get(param8).entity, kLocation3, kCursorHandKnock, kCursorHand);
-			ENTITY_PARAM(8, 0, 8) = 0;
+			ENTITY_PARAM(0, 8) = 0;
 		}
 
 		// Play clock sound
@@ -228,7 +218,7 @@ label_skip:
 		break;
 
 	case kActionDefault:
-		CURRENT_PARAMS(8, 1) = 1;		
+		CURRENT_PARAMS(8, 1) = 1;
 		if (getProgress().chapter < kChapter5) {
 			getObjects()->update(kObjectCompartment5, kEntityTrain, kLocation3, kCursorHandKnock, kCursorHand);
 			getObjects()->update(kObjectCompartment6, kEntityTrain, kLocation3, kCursorHandKnock, kCursorHand);
@@ -345,7 +335,7 @@ label_skip:
 	}
 
 	case kAction191070912:
-		ENTITY_PARAM(8, 0, 7) = savepoint->param.intValue;
+		ENTITY_PARAM(0, 7) = savepoint->param.intValue;
 		break;
 
 	case kAction191350523:

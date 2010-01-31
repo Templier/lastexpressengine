@@ -25,6 +25,8 @@
 
 #include "lastexpress/entities/alexei.h"
 
+#include "lastexpress/game/entities.h"
+#include "lastexpress/game/logic.h"
 #include "lastexpress/game/object.h"
 #include "lastexpress/game/savepoint.h"
 #include "lastexpress/game/state.h"
@@ -154,6 +156,10 @@ IMPLEMENT_FUNCTION(Alexei, chapter1, 17) {
 	default:
 		break;
 
+	case kActionNone:
+		CALL_CHAPTER_ACTION_NONE(18)
+		break;
+
 	case kActionDefault:
 		getObjects()->update(kObjectCompartment2, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
 		getObjects()->update(kObject10, kEntityNone, kLocationNone, kCursorKeepValue, kCursorKeepValue);
@@ -161,12 +167,8 @@ IMPLEMENT_FUNCTION(Alexei, chapter1, 17) {
 
 		_data->getData()->field_491 = EntityData::kField491_3969;
 		_data->getData()->field_493 = EntityData::kField493_1;
-		_data->getData()->field_495 = EntityData::kField495_5;		
+		_data->getData()->field_495 = EntityData::kField495_5;
 
-		break;
-
-	case kActionNone:
-		CALL_CHAPTER_ACTION_NONE(18)
 		break;
 	}
 }
@@ -212,7 +214,29 @@ IMPLEMENT_FUNCTION(Alexei, function27, 27) {
 }
 
 IMPLEMENT_FUNCTION(Alexei, chapter2, 28) {
-	error("Alexei: callback function 28 not implemented!");
+	switch (savepoint->action) {
+	default:
+		break;
+
+	case kActionNone:
+		setup_function29();
+		break;
+
+	case kActionDefault:
+		getEntities()->drawSequences(kEntityAlexei);
+
+		getObjects()->update(kObjectCompartment2, kEntityAlexei, kLocation1, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObject10, kEntityNone, kLocationNone, kCursorKeepValue, kCursorKeepValue);
+		getObjects()->update(kObjectHandleInsideBathroom, kEntityAlexei, kLocation1, kCursorHandKnock, kCursorHand);
+
+		_data->getData()->field_491 = EntityData::kField491_7500;
+		_data->getData()->field_493 = EntityData::kField493_1;
+		_data->getData()->field_495 = EntityData::kField495_3;
+		_data->getData()->field_4A5 = EntityData::kField4A5_0;
+		_data->getData()->inventoryItem = kItemNone;
+
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Alexei, function29, 29) {
@@ -228,7 +252,28 @@ IMPLEMENT_FUNCTION(Alexei, function31, 31) {
 }
 
 IMPLEMENT_FUNCTION(Alexei, chapter3, 32) {
-	error("Alexei: callback function 32 not implemented!");
+	switch (savepoint->action) {
+	default:
+		break;
+
+	case kActionNone:
+		setup_function33();
+		break;
+
+	case kActionDefault:
+		getEntities()->drawSequences(kEntityAlexei);
+
+		getObjects()->update(kObjectCompartment2, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObject10, kEntityNone, kLocationNone, kCursorKeepValue, kCursorKeepValue);
+		getObjects()->update(kObjectHandleInsideBathroom, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
+
+		_data->getData()->field_493 = EntityData::kField493_1;
+		_data->getData()->field_495 = EntityData::kField495_5;
+		_data->getData()->field_4A5 = EntityData::kField4A5_0;
+		_data->getData()->inventoryItem = kItemNone;
+
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Alexei, function33, 33) {
@@ -248,7 +293,28 @@ IMPLEMENT_FUNCTION(Alexei, function36, 36) {
 }
 
 IMPLEMENT_FUNCTION(Alexei, chapter4, 37) {
-	error("Alexei: callback function 37 not implemented!");
+	switch (savepoint->action) {
+	default:
+		break;
+
+	case kActionNone:
+		setup_function38();
+		break;
+
+	case kActionDefault:
+		getEntities()->drawSequences(kEntityAlexei);
+
+		getObjects()->update(kObjectCompartment2, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObject10, kEntityNone, kLocationNone, kCursorKeepValue, kCursorKeepValue);
+		getObjects()->update(kObjectHandleInsideBathroom, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
+
+		_data->getData()->field_491 = EntityData::kField491_7500;
+		_data->getData()->field_493 = EntityData::kField493_1;
+		_data->getData()->field_495 = EntityData::kField495_3;
+		_data->getData()->inventoryItem = kItemNone;
+
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Alexei, function38, 38) {
@@ -288,11 +354,12 @@ IMPLEMENT_FUNCTION(Alexei, function46, 46) {
 }
 
 IMPLEMENT_FUNCTION(Alexei, function47, 47) {
-	error("Alexei: callback function 47 ot implemented!");
+	error("Alexei: callback function 47 not implemented!");
 }
 
 IMPLEMENT_FUNCTION(Alexei, chapter5, 48) {
-	error("Alexei: callback function 48 not implemented!");
+	if (savepoint->action == kActionDefault)
+		getEntities()->drawSequences(kEntityAlexei);
 }
 
 } // End of namespace LastExpress

@@ -25,6 +25,9 @@
 
 #include "lastexpress/entities/pascale.h"
 
+#include "lastexpress/game/entities.h"
+#include "lastexpress/game/logic.h"
+#include "lastexpress/game/object.h"
 #include "lastexpress/game/savepoint.h"
 #include "lastexpress/game/state.h"
 
@@ -119,6 +122,10 @@ IMPLEMENT_FUNCTION(Pascale, chapter1, 12) {
 	default:
 		break;
 
+	case kActionNone:
+		setup_function17();
+ 		break;
+
 	case kActionDefault:
 		getSavePoints()->addData(kEntityPascale, kAction239072064, 0);
 		getSavePoints()->addData(kEntityPascale, kAction257489762, 2);
@@ -136,10 +143,6 @@ IMPLEMENT_FUNCTION(Pascale, chapter1, 12) {
 		_data->getData()->field_493 = EntityData::kField493_0;
 		_data->getData()->field_495 = EntityData::kField495_5;
 		break;
-
-	case kActionNone:
-		// call function 17
- 		break;
 	}
 }
 
@@ -172,11 +175,40 @@ IMPLEMENT_FUNCTION(Pascale, function19, 19) {
 }
 
 IMPLEMENT_FUNCTION(Pascale, chapter2, 20) {
-	error("Pascale: callback function 20 not implemented!");
+	if (savepoint->action == kActionDefault) {
+		getEntities()->drawSequences(kEntityPascale);
+
+		_data->getData()->field_491 = EntityData::kField491_5900;
+		_data->getData()->field_493 = EntityData::kField493_0;
+		_data->getData()->field_495 = EntityData::kField495_5;
+		_data->getData()->field_4A5 = EntityData::kField4A5_1;
+		_data->getData()->inventoryItem = kItemNone;
+
+		getObjects()->update(kObject65, kEntityNone, kLocationNone, kCursorNormal, kCursorForward);
+	}
 }
 
 IMPLEMENT_FUNCTION(Pascale, chapter3, 21) {
-	error("Pascale: callback function 21 not implemented!");
+	switch (savepoint->action) {
+	default:
+		break;
+
+	case kActionNone:
+		setup_function22();
+ 		break;
+
+	case kActionDefault:
+		getEntities()->drawSequences(kEntityPascale);
+
+		_data->getData()->field_491 = EntityData::kField491_5900;
+		_data->getData()->field_493 = EntityData::kField493_0;
+		_data->getData()->field_495 = EntityData::kField495_5;
+		_data->getData()->inventoryItem = kItemNone;
+
+		ENTITY_PARAM(0, 4) = 0;
+		ENTITY_PARAM(0, 7) = 0;
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Pascale, function22, 22) {
@@ -192,7 +224,29 @@ IMPLEMENT_FUNCTION(Pascale, function24, 24) {
 }
 
 IMPLEMENT_FUNCTION(Pascale, chapter4, 25) {
-	error("Pascale: callback function 25 not implemented!");
+	switch (savepoint->action) {
+	default:
+		break;
+
+	case kActionNone:
+		setup_function26();
+ 		break;
+
+	case kActionDefault:
+		getEntities()->drawSequences(kEntityPascale);
+
+		_data->getData()->field_491 = EntityData::kField491_5900;
+		_data->getData()->field_493 = EntityData::kField493_0;
+		_data->getData()->field_495 = EntityData::kField495_5;
+		_data->getData()->inventoryItem = kItemNone;
+
+		ENTITY_PARAM(0, 4) = 0;
+		ENTITY_PARAM(0, 8) = 0;
+
+		ENTITY_PARAM(1, 1) = 0;
+		ENTITY_PARAM(1, 2) = 0;
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Pascale, function26, 26) {
@@ -216,7 +270,23 @@ IMPLEMENT_FUNCTION(Pascale, function30, 30) {
 }
 
 IMPLEMENT_FUNCTION(Pascale, chapter5, 31) {
-	error("Pascale: callback function 31 not implemented!");
+	switch (savepoint->action) {
+	default:
+		break;
+
+	case kActionNone:
+		setup_function32();
+ 		break;
+
+	case kActionDefault:
+		getEntities()->drawSequences(kEntityPascale);
+
+		_data->getData()->field_491 = EntityData::kField491_3969;
+		_data->getData()->field_493 = EntityData::kField493_1;
+		_data->getData()->field_495 = EntityData::kField495_5;
+		_data->getData()->inventoryItem = kItemNone;
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Pascale, function32, 32) {

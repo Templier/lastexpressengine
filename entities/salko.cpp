@@ -25,6 +25,9 @@
 
 #include "lastexpress/entities/salko.h"
 
+#include "lastexpress/game/entities.h"
+#include "lastexpress/game/logic.h"
+#include "lastexpress/game/object.h"
 #include "lastexpress/game/savepoint.h"
 #include "lastexpress/game/state.h"
 
@@ -98,14 +101,14 @@ IMPLEMENT_FUNCTION(Salko, chapter1, 9) {
 	default:
 		break;
 
+	case kActionNone:
+		CALL_CHAPTER_ACTION_NONE(10)
+		break;
+
 	case kActionDefault:
 		_data->getData()->field_491 = EntityData::kField491_4691;
 		_data->getData()->field_493 = EntityData::kField493_0;
-		_data->getData()->field_495 = EntityData::kField495_5;		
-		break;
-
-	case kActionNone:
-		CALL_CHAPTER_ACTION_NONE(10)
+		_data->getData()->field_495 = EntityData::kField495_5;
 		break;
 	}
 }
@@ -119,7 +122,25 @@ IMPLEMENT_FUNCTION(Salko, function11, 11) {
 }
 
 IMPLEMENT_FUNCTION(Salko, chapter2, 12) {
-	error("Salko: callback function 12 not implemented!");
+	switch (savepoint->action) {
+	default:
+		break;
+
+	case kActionDefault:
+		getEntities()->drawSequences(kEntitySalko);
+
+		_data->getData()->field_491 = EntityData::kField491_2740;
+		_data->getData()->field_493 = EntityData::kField493_1;
+		_data->getData()->field_495 = EntityData::kField495_4;
+		_data->getData()->field_4A5 = EntityData::kField4A5_0;
+		_data->getData()->inventoryItem = kItemNone;
+		break;
+
+	case kAction136184016:
+		_data->setNextCallback(1);
+		call(new ENTITY_SETUP_DEFAULT(Salko, setup_function13));
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Salko, function13, 13) {
@@ -127,7 +148,24 @@ IMPLEMENT_FUNCTION(Salko, function13, 13) {
 }
 
 IMPLEMENT_FUNCTION(Salko, chapter3, 14) {
-	error("Salko: callback function 14 not implemented!");
+	switch (savepoint->action) {
+	default:
+		break;
+
+	case kActionNone:
+		setup_function15();
+		break;
+
+	case kActionDefault:
+		getEntities()->drawSequences(kEntitySalko);
+
+		_data->getData()->field_491 = EntityData::kField491_2740;
+		_data->getData()->field_493 = EntityData::kField493_1;
+		_data->getData()->field_495 = EntityData::kField495_4;
+		_data->getData()->field_4A5 = EntityData::kField4A5_0;
+		_data->getData()->inventoryItem = kItemNone;
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Salko, function15, 15) {
@@ -143,7 +181,23 @@ IMPLEMENT_FUNCTION(Salko, function17, 17) {
 }
 
 IMPLEMENT_FUNCTION(Salko, chapter4, 18) {
-	error("Salko: callback function 18 not implemented!");
+	switch (savepoint->action) {
+	default:
+		break;
+
+	case kActionNone:
+		setup_function19();
+		break;
+
+	case kActionDefault:
+		getEntities()->drawSequences(kEntitySalko);
+
+		_data->getData()->field_491 = EntityData::kField491_5420;
+		_data->getData()->field_493 = EntityData::kField493_1;
+		_data->getData()->field_495 = EntityData::kField495_5;
+		_data->getData()->inventoryItem = kItemNone;
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Salko, function19, 19) {
@@ -163,7 +217,23 @@ IMPLEMENT_FUNCTION(Salko, function22, 22) {
 }
 
 IMPLEMENT_FUNCTION(Salko, chapter5, 23) {
-	error("Salko: callback function 23 not implemented!");
+	switch (savepoint->action) {
+	default:
+		break;
+
+	case kActionNone:
+		setup_function24();
+		break;
+
+	case kActionDefault:
+		getEntities()->drawSequences(kEntitySalko);
+
+		_data->getData()->field_491 = EntityData::kField491_9460;
+		_data->getData()->field_493 = EntityData::kField493_1;
+		_data->getData()->field_495 = EntityData::kField495_5;
+		_data->getData()->inventoryItem = kItemNone;
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Salko, function24, 24) {

@@ -25,6 +25,8 @@
 
 #include "lastexpress/entities/boutarel.h"
 
+#include "lastexpress/game/entities.h"
+#include "lastexpress/game/logic.h"
 #include "lastexpress/game/object.h"
 #include "lastexpress/game/savepoint.h"
 #include "lastexpress/game/state.h"
@@ -153,6 +155,10 @@ IMPLEMENT_FUNCTION(Boutarel, chapter1, 19) {
 	default:
 		break;
 
+	case kActionNone:
+		CALL_CHAPTER_ACTION_NONE(21)
+		break;
+
 	case kActionDefault:
 		getSavePoints()->addData(kEntityBoutarel, kAction203520448, 0);
 		getSavePoints()->addData(kEntityBoutarel, kAction237889408, 1);
@@ -164,10 +170,6 @@ IMPLEMENT_FUNCTION(Boutarel, chapter1, 19) {
 		_data->getData()->field_491 = EntityData::kField491_1750;
 		_data->getData()->field_493 = EntityData::kField493_1;
 		_data->getData()->field_495 = EntityData::kField495_5;
-		break;
-
-	case kActionNone:
-		CALL_CHAPTER_ACTION_NONE(21)
 		break;
 	}
 }
@@ -185,7 +187,27 @@ IMPLEMENT_FUNCTION(Boutarel, function22, 22) {
 }
 
 IMPLEMENT_FUNCTION(Boutarel, chapter2, 23) {
-	error("Boutarel: callback function 23 not implemented!");
+	switch (savepoint->action) {
+	default:
+		break;
+
+	case kActionNone:
+		setup_function24();
+		break;
+
+	case kActionDefault:
+		getEntities()->drawSequences(kEntityBoutarel);
+
+		_data->getData()->field_491 = EntityData::kField491_4689;
+		_data->getData()->field_493 = EntityData::kField493_1;
+		_data->getData()->field_495 = EntityData::kField495_5;
+		_data->getData()->inventoryItem = kItemNone;
+
+		getObjects()->update(kObjectCompartmentC, kEntityNone, kLocationNone, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObject50, kEntityNone, kLocationNone, kCursorHandKnock, kCursorHand);
+
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Boutarel, function24, 24) {
@@ -197,7 +219,27 @@ IMPLEMENT_FUNCTION(Boutarel, function25, 25) {
 }
 
 IMPLEMENT_FUNCTION(Boutarel, chapter3, 26) {
-	error("Boutarel: callback function 26 not implemented!");
+	switch (savepoint->action) {
+	default:
+		break;
+
+	case kActionNone:
+		setup_function27();
+		break;
+
+	case kActionDefault:
+		getEntities()->drawSequences(kEntityBoutarel);
+
+		_data->getData()->field_493 = EntityData::kField493_1;
+		_data->getData()->field_495 = EntityData::kField495_4;
+		_data->getData()->field_4A5 = EntityData::kField4A5_0;
+		_data->getData()->inventoryItem = kItemNone;
+
+		getObjects()->update(kObjectCompartmentC, kEntityNone, kLocation2, kCursorKeepValue, kCursorKeepValue);
+		getObjects()->update(kObject50, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
+
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Boutarel, function27, 27) {
@@ -217,7 +259,28 @@ IMPLEMENT_FUNCTION(Boutarel, function30, 30) {
 }
 
 IMPLEMENT_FUNCTION(Boutarel, chapter4, 31) {
-	error("Boutarel: callback function 31 not implemented!");
+	switch (savepoint->action) {
+	default:
+		break;
+
+	case kActionNone:
+		setup_function32();
+		break;
+
+	case kActionDefault:
+		getEntities()->drawSequences(kEntityBoutarel);
+
+		_data->getData()->field_491 = EntityData::kField491_6470;
+		_data->getData()->field_493 = EntityData::kField493_1;
+		_data->getData()->field_495 = EntityData::kField495_4;
+		_data->getData()->field_4A5 = EntityData::kField4A5_0;
+		_data->getData()->inventoryItem = kItemNone;
+
+		getObjects()->update(kObjectCompartmentC, kEntityNone, kLocation2, kCursorKeepValue, kCursorKeepValue);
+		getObjects()->update(kObject50, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
+
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Boutarel, function32, 32) {
@@ -237,7 +300,25 @@ IMPLEMENT_FUNCTION(Boutarel, function35, 35) {
 }
 
 IMPLEMENT_FUNCTION(Boutarel, chapter5, 36) {
-	error("Boutarel: callback function 36 not implemented!");
+	switch (savepoint->action) {
+	default:
+		break;
+
+	case kActionNone:
+		setup_function37();
+		break;
+
+	case kActionDefault:
+		getEntities()->drawSequences(kEntityBoutarel);
+
+		_data->getData()->field_491 = EntityData::kField491_3969;
+		_data->getData()->field_493 = EntityData::kField493_1;
+		_data->getData()->field_495 = EntityData::kField495_5;
+		_data->getData()->field_4A5 = EntityData::kField4A5_0;
+		_data->getData()->inventoryItem = kItemNone;
+
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Boutarel, function37, 37) {

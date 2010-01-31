@@ -69,6 +69,9 @@ public:
 	DECLARE_FUNCTION(function29)
 	DECLARE_FUNCTION(function30)
 	DECLARE_NULL_FUNCTION()
+
+private:
+	DECLARE_CALL_FUNCTION(default, Vesna, int, int, int, int)
 };
 
 } // End of namespace LastExpress

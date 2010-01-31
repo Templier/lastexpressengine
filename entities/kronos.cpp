@@ -25,6 +25,9 @@
 
 #include "lastexpress/entities/kronos.h"
 
+#include "lastexpress/game/entities.h"
+#include "lastexpress/game/inventory.h"
+#include "lastexpress/game/logic.h"
 #include "lastexpress/game/object.h"
 #include "lastexpress/game/savepoint.h"
 #include "lastexpress/game/state.h"
@@ -91,17 +94,17 @@ IMPLEMENT_FUNCTION(Kronos, chapter1, 7) {
 	default:
 		break;
 
-	case kActionDefault:
-		getObjects()->update(kObjectCeiling, kEntityNone, kLocation1, kCursorKeepValue, kCursorKeepValue);
-
-		_data->getData()->field_491 = EntityData::kField491_6000;
-		_data->getData()->field_493 = EntityData::kField493_1;
-		_data->getData()->field_495 = EntityData::kField495_2;		
-
-		break;
-
 	case kActionNone:
 		CALL_CHAPTER_ACTION_NONE(8)
+		break;
+
+	case kActionDefault:
+		_data->getData()->field_491 = EntityData::kField491_6000;
+		_data->getData()->field_493 = EntityData::kField493_1;
+		_data->getData()->field_495 = EntityData::kField495_2;
+
+		getObjects()->update(kObjectCeiling, kEntityNone, kLocation1, kCursorKeepValue, kCursorKeepValue);
+
 		break;
 	}
 }
@@ -123,11 +126,32 @@ IMPLEMENT_FUNCTION(Kronos, function11, 11) {
 }
 
 IMPLEMENT_FUNCTION(Kronos, chapter2, 12) {
-	error("Kronos: callback function 12 not implemented!");
+	if (savepoint->action == kActionDefault)
+		getEntities()->drawSequences(kEntityKronos);
 }
 
 IMPLEMENT_FUNCTION(Kronos, chapter3, 13) {
-	error("Kronos: callback function 13 not implemented!");
+	switch (savepoint->action) {
+	default:
+		break;
+
+	case kActionNone:
+		setup_function14();
+		break;
+
+	case kActionDefault:
+		getEntities()->drawSequences(kEntityKronos);
+
+		_data->getData()->field_491 = EntityData::kField491_6000;
+		_data->getData()->field_493 = EntityData::kField493_0;
+		_data->getData()->field_495 = EntityData::kField495_2;
+		_data->getData()->field_4A5 = EntityData::kField4A5_0;
+		_data->getData()->inventoryItem = kItemNone;
+
+		getObjects()->update(kObjectCeiling, kEntityNone, kLocationNone, kCursorKeepValue, kCursorKeepValue);
+
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Kronos, function14, 14) {
@@ -171,11 +195,13 @@ IMPLEMENT_FUNCTION(Kronos, function23, 23) {
 }
 
 IMPLEMENT_FUNCTION(Kronos, chapter4, 24) {
-	error("Kronos: callback function 24 not implemented!");
+	if (savepoint->action == kActionDefault)
+		getEntities()->drawSequences(kEntityKronos);
 }
 
 IMPLEMENT_FUNCTION(Kronos, chapter5, 25) {
-	error("Kronos: callback function 25 not implemented!");
+	if (savepoint->action == kActionDefault)
+		getEntities()->drawSequences(kEntityKronos);
 }
 
 } // End of namespace LastExpress

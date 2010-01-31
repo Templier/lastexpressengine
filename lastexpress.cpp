@@ -97,7 +97,7 @@ Common::Error LastExpressEngine::run() {
 
 	// Start the resource and graphics managers
 	_resMan = new ResourceManager(_gameDescription->flags & ADGF_DEMO);
-	if (!_resMan->loadArchive(ResourceManager::kArchiveAll))
+	if (!_resMan->loadArchive(kArchiveAll))
 		return Common::kUnknownError;
 
 	_graphics = new GraphicsManager();
@@ -115,17 +115,15 @@ Common::Error LastExpressEngine::run() {
 	_sfx = new StreamedSound();
 	_music = new StreamedSound();
 	_state = new State(this);
+	_sceneMan = new SceneManager();
 	_logic = new Logic(this);
 
-	_sceneMan = new SceneManager();
-	_sceneMan->load(_resMan->getFileStream(Common::String::printf("CD%iTRAIN.DAT", 1)));
+	_logic->startGame();
 
-
+	//////////////////////////////////////////////////////////////////////////
 	// DEBUG
 	int style = 0;
-	_cursor->show(true);
-
-	_logic->startGame();
+	//////////////////////////////////////////////////////////////////////////
 
 #ifdef LOAD_RESOURCES_LIST
 	// Test Backgrounds

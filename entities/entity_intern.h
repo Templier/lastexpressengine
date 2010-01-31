@@ -31,6 +31,17 @@ namespace LastExpress {
 #include "common/func.h"
 
 //////////////////////////////////////////////////////////////////////////
+// Time values
+//////////////////////////////////////////////////////////////////////////
+enum TimeValue {
+	kTimeChapter1 = 1062000,
+	kTimeChapter2 = 1750500,
+	kTimeChapter3 = 1944000,
+	kTimeChapter4 = 2353500,
+	kTimeChapter5 = 2844000
+};
+
+//////////////////////////////////////////////////////////////////////////
 // Callbacks
 #define ENTITY_CALLBACK(class, name, pointer) \
 	Common::Functor1Mem<SavePoint*, void, class>(pointer, &class::name)
@@ -349,7 +360,10 @@ namespace LastExpress {
 	}
 
 #define CALL_CHAPTER_ACTION_NONE(id) \
-	if (getState()->time > 1062000) { \
+	CALL_CHAPTER_ACTION(id, kTimeChapter1)
+
+#define CALL_CHAPTER_ACTION(id, timeValue) \
+	if (getState()->time > timeValue) { \
 		if (!CURRENT_PARAM(1)) { \
 			CURRENT_PARAM(1) = 1; \
 			setup_function##id(); \
@@ -382,11 +396,8 @@ namespace LastExpress {
 #define CURRENT_PARAMS(index, id) \
 	((EntityData::EntityParametersIIII*)_data->getCurrentParameters())->param##id
 
-#define ENTITY_PARAM(callback, index, id) \
-	((EntityData::EntityParametersIIII*)_data->getParameters(callback, id))->param##id
-
-
-
+#define ENTITY_PARAM(index, id) \
+	((EntityData::EntityParametersIIII*)_data->getParameters(8, id))->param##id
 
 //////////////////////////////////////////////////////////////////////////
 // Functors class for setup functions

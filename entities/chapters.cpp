@@ -25,13 +25,16 @@
 
 #include "lastexpress/entities/chapters.h"
 
+#include "lastexpress/game/entities.h"
 #include "lastexpress/game/inventory.h"
+#include "lastexpress/game/logic.h"
 #include "lastexpress/game/object.h"
 #include "lastexpress/game/savepoint.h"
 #include "lastexpress/game/state.h"
 
 #include "lastexpress/helpers.h"
 #include "lastexpress/lastexpress.h"
+#include "lastexpress/resource.h"
 
 namespace LastExpress {
 
@@ -73,11 +76,10 @@ IMPLEMENT_FUNCTION_S(Chapters, function3, 3) {
 }
 
 IMPLEMENT_FUNCTION(Chapters, chapter1, 4) {
-	if (savepoint->action != kActionDefault)
-		return;
-
-	getSavePoints()->addData(kEntityChapters, kAction171843264, 0);
-	setup_chapter1_init();
+	if (savepoint->action == kActionDefault) {
+		getSavePoints()->addData(kEntityChapters, kAction171843264, 0);
+		setup_chapter1_init();
+	}
 }
 
 IMPLEMENT_FUNCTION(Chapters, function5, 5) {
@@ -94,7 +96,7 @@ IMPLEMENT_FUNCTION(Chapters, chapter1_init, 7) {
 
 	getProgress().chapter = kChapter1;
 	// TODO function call modifying an unknown global var
-	getState()->time = 1061100;
+	getState()->time = kTimeChapter1;
 	getState()->timeDelta = 0;
 	getProgress().field_50 = 1;
 	getProgress().portrait = kPortraitOriginal;
@@ -164,7 +166,39 @@ IMPLEMENT_FUNCTION(Chapters, function9, 9) {
 }
 
 IMPLEMENT_FUNCTION(Chapters, chapter2, 10) {
-	error("Chapters: callback function 10 not implemented!");
+	switch (savepoint->action) {
+	default:
+		break;
+
+	case kActionDefault:
+		// Setup for chapter 2 in case it hasn't been done before
+		if (getProgress().chapter != kChapter2) {
+			getProgress().chapter = kChapter2;
+			getEntities()->setup(kChapter2);
+		}
+
+		// Set game time & delta
+		getState()->time = kTimeChapter2;
+		getState()->timeDelta = 5;
+
+		_data->setNextCallback(1);
+		call(new ENTITY_SETUP_DEFAULT(Chapters, setup_function1), 1, 0);
+		break;
+
+	case kAction18:
+		if (_data->getNextCallback() == 1) {
+			if (!_engine->getResMan()->loadArchive(kArchiveCd2)) {
+				getLogic()->showMenu(true);
+				return;
+			}
+
+			// Load scene data
+			getLogic()->loadSceneDataFile(kArchiveCd2);
+			setup_function18();
+		}
+		break;
+
+	}
 }
 
 IMPLEMENT_FUNCTION(Chapters, function11, 11) {
@@ -176,7 +210,19 @@ IMPLEMENT_FUNCTION(Chapters, function12, 12) {
 }
 
 IMPLEMENT_FUNCTION(Chapters, chapter3, 13) {
-	error("Chapters: callback function 13 not implemented!");
+	if (savepoint->action == kActionDefault) {
+		// Setup for chapter 3 in case it hasn't been done before
+		if (getProgress().chapter != kChapter3) {
+			getProgress().chapter = kChapter3;
+			getEntities()->setup(kChapter3);
+		}
+
+		// Set game time & delta
+		getState()->time = kTimeChapter3;
+		getState()->timeDelta = 5;
+
+		setup_function14();
+	}
 }
 
 IMPLEMENT_FUNCTION(Chapters, function14, 14) {
@@ -192,7 +238,39 @@ IMPLEMENT_FUNCTION(Chapters, function16, 16) {
 }
 
 IMPLEMENT_FUNCTION(Chapters, chapter4, 17) {
-	error("Chapters: callback function 17 not implemented!");
+	switch (savepoint->action) {
+	default:
+		break;
+
+	case kActionDefault:
+		// Setup for chapter 4 in case it hasn't been done before
+		if (getProgress().chapter != kChapter4) {
+			getProgress().chapter = kChapter4;
+			getEntities()->setup(kChapter4);
+		}
+
+		// Set game time & delta
+		getState()->time = kTimeChapter4;
+		getState()->timeDelta = 5;
+
+		_data->setNextCallback(1);
+		call(new ENTITY_SETUP_DEFAULT(Chapters, setup_function1), 1, 0);
+		break;
+
+	case kAction18:
+		if (_data->getNextCallback() == 1) {
+			if (!_engine->getResMan()->loadArchive(kArchiveCd3)) {
+				getLogic()->showMenu(true);
+				return;
+			}
+
+			// Load scene data
+			getLogic()->loadSceneDataFile(kArchiveCd3);
+			setup_function18();
+		}
+		break;
+
+	}
 }
 
 IMPLEMENT_FUNCTION(Chapters, function18, 18) {
@@ -204,7 +282,19 @@ IMPLEMENT_FUNCTION(Chapters, function19, 19) {
 }
 
 IMPLEMENT_FUNCTION(Chapters, chapter5, 20) {
-	error("Chapters: callback function 20 not implemented!");
+	if (savepoint->action == kActionDefault) {
+		// Setup for chapter 5 in case it hasn't been done before
+		if (getProgress().chapter != kChapter5) {
+			getProgress().chapter = kChapter5;
+			getEntities()->setup(kChapter5);
+		}
+
+		// Set game time & delta
+		getState()->time = kTimeChapter5;
+		getState()->timeDelta = 2;
+
+		setup_function21();
+	}
 }
 
 IMPLEMENT_FUNCTION(Chapters, function21, 21) {

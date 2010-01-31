@@ -25,6 +25,9 @@
 
 #include "lastexpress/entities/tatiana.h"
 
+#include "lastexpress/game/entities.h"
+#include "lastexpress/game/inventory.h"
+#include "lastexpress/game/logic.h"
 #include "lastexpress/game/object.h"
 #include "lastexpress/game/savepoint.h"
 #include "lastexpress/game/state.h"
@@ -161,6 +164,10 @@ IMPLEMENT_FUNCTION(Tatiana, chapter1, 17) {
 	default:
 		break;
 
+	case kActionNone:
+		CALL_CHAPTER_ACTION_NONE(19)
+		break;
+
 	case kActionDefault:
 		getSavePoints()->addData(kEntityTatiana, kAction191198209, 0);
 
@@ -170,11 +177,7 @@ IMPLEMENT_FUNCTION(Tatiana, chapter1, 17) {
 
 		_data->getData()->field_491 = EntityData::kField491_5419;
 		_data->getData()->field_493 = EntityData::kField493_1;
-		_data->getData()->field_495 = EntityData::kField495_3;
-		break;
-
-	case kActionNone:
-		CALL_CHAPTER_ACTION_NONE(19)
+		_data->getData()->field_495 = EntityData::kField495_5;
 		break;
 	}
 }
@@ -208,7 +211,27 @@ IMPLEMENT_FUNCTION(Tatiana, function24, 24) {
 }
 
 IMPLEMENT_FUNCTION(Tatiana, chapter2, 25) {
-	error("Tatiana: callback function 25 not implemented!");
+	switch (savepoint->action) {
+	default:
+		break;
+
+	case kActionNone:
+		setup_function26();
+		break;
+
+	case kActionDefault:
+		getEntities()->drawSequences(kEntityTatiana);
+
+		getObjects()->update(kObjectCompartmentB, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObject49, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObject41, kEntityNone, kLocationNone, kCursorKeepValue, kCursorKeepValue);
+
+		_data->getData()->field_491 = EntityData::kField491_5420;
+		_data->getData()->field_493 = EntityData::kField493_1;
+		_data->getData()->field_495 = EntityData::kField495_5;
+		_data->getData()->field_4A5 = EntityData::kField4A5_2;
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Tatiana, function26, 26) {
@@ -232,7 +255,34 @@ IMPLEMENT_FUNCTION(Tatiana, function30, 30) {
 }
 
 IMPLEMENT_FUNCTION(Tatiana, chapter3, 31) {
-	error("Tatiana: callback function 31 not implemented!");
+	switch (savepoint->action) {
+	default:
+		break;
+
+	case kActionNone:
+		setup_function32();
+		break;
+
+	case kActionDefault:
+		getEntities()->drawSequences(kEntityTatiana);
+
+		getObjects()->update(kObjectCompartmentB, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObject49, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
+
+		_data->getData()->field_491 = EntityData::kField491_1750;
+		_data->getData()->field_493 = EntityData::kField493_1;
+		_data->getData()->field_495 = EntityData::kField495_5;
+		_data->getData()->field_4A5 = EntityData::kField4A5_2;
+		_data->getData()->inventoryItem = kItemNone;
+
+		// Update inventory
+		getInventory()->getEntry(kItemFirebird)->location = kLocation2;
+
+		if (getEvent(kEventTatianaBreakfastGivePoem) || (getEvent(kEventTatianaGivePoem) && !getEvent(kEventTatianaBreakfastAlexei)))
+			getInventory()->getEntry(kItemParchemin)->location = kLocation2;
+
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Tatiana, function32, 32) {
@@ -280,7 +330,29 @@ IMPLEMENT_FUNCTION(Tatiana, function42, 42) {
 }
 
 IMPLEMENT_FUNCTION(Tatiana, chapter4, 43) {
-	error("Tatiana: callback function 43 not implemented!");
+	switch (savepoint->action) {
+	default:
+		break;
+
+	case kActionNone:
+		setup_function44();
+		break;
+
+	case kActionDefault:
+		getEntities()->drawSequences(kEntityTatiana);
+
+		getObjects()->update(kObjectCompartmentB, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObject49, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
+
+		_data->getData()->field_491 = EntityData::kField491_7500;
+		_data->getData()->field_493 = EntityData::kField493_1;
+		_data->getData()->field_495 = EntityData::kField495_4;
+		_data->getData()->field_4A5 = EntityData::kField4A5_2;
+		_data->getData()->inventoryItem = kItemNone;
+
+		ENTITY_PARAM(0, 1) = 0;
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Tatiana, function44, 44) {
@@ -316,7 +388,24 @@ IMPLEMENT_FUNCTION(Tatiana, function51, 51) {
 }
 
 IMPLEMENT_FUNCTION(Tatiana, chapter5, 52) {
-	error("Tatiana: callback function 52 not implemented!");
+	switch (savepoint->action) {
+	default:
+		break;
+
+	case kActionNone:
+		setup_function53();
+		break;
+
+	case kActionDefault:
+		getEntities()->drawSequences(kEntityTatiana);
+
+		_data->getData()->field_491 = EntityData::kField491_3969;
+		_data->getData()->field_493 = EntityData::kField493_1;
+		_data->getData()->field_495 = EntityData::kField495_5;
+		_data->getData()->field_4A5 = EntityData::kField4A5_0;
+		_data->getData()->inventoryItem = kItemNone;
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Tatiana, function53, 53) {

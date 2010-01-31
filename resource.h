@@ -27,6 +27,7 @@
 #define LASTEXPRESS_RESOURCE_H
 
 #include "lastexpress/data/archive.h"
+#include "lastexpress/shared.h"
 
 namespace LastExpress {
 
@@ -36,18 +37,11 @@ class Font;
 
 class ResourceManager : public Common::Archive {
 public:
-	enum ArchiveType {
-		kArchiveCd1,
-		kArchiveCd2,
-		kArchiveCd3,
-		kArchiveAll
-	};
-
 	ResourceManager(bool demo);
 	~ResourceManager();
 
 	// Loading
-	bool loadArchive(ArchiveType type);
+	bool loadArchive(ArchiveIndex type);
 	Common::SeekableReadStream *getFileStream(const Common::String &name);
 
 	// Archive functions

@@ -27,6 +27,7 @@
 
 #include "lastexpress/game/entities.h"
 #include "lastexpress/game/logic.h"
+#include "lastexpress/game/object.h"
 #include "lastexpress/game/savepoint.h"
 #include "lastexpress/game/state.h"
 

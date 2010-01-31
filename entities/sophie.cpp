@@ -209,11 +209,7 @@ IMPLEMENT_FUNCTION(Sophie, chapter1, 4) {
 		break;
 
 	case kActionNone:
-		if (getState()->time > 1062000)
-			if (!CURRENT_PARAM(1)) {
-				CURRENT_PARAM(1) = 1;
-				setup_function3();
-			}
+		CALL_CHAPTER_ACTION_NONE(3)
 		break;
 
 	case kActionDefault:
@@ -265,8 +261,8 @@ IMPLEMENT_FUNCTION(Sophie, chapter5, 10){
 		_data->getData()->field_491 = EntityData::kField491_3969;
 		_data->getData()->field_493 = EntityData::kField493_1;
 		_data->getData()->field_495 = EntityData::kField495_5;
-
 		_data->getData()->inventoryItem = kItemNone;
+
 		break;
 	}
 }

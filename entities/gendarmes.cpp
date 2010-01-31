@@ -25,6 +25,9 @@
 
 #include "lastexpress/entities/gendarmes.h"
 
+#include "lastexpress/game/entities.h"
+#include "lastexpress/game/logic.h"
+#include "lastexpress/game/object.h"
 #include "lastexpress/game/savepoint.h"
 #include "lastexpress/game/state.h"
 
@@ -62,12 +65,12 @@ IMPLEMENT_FUNCTION(Gendarmes, chapter1, 2) {
 	default:
 		break;
 
-	case kActionDefault:
-		_data->getData()->field_495 = EntityData::kField495_0;
-		break;
-
 	case kActionNone:
 		CALL_CHAPTER_ACTION_NONE(11)
+		break;
+
+	case kActionDefault:
+		_data->getData()->field_495 = EntityData::kField495_0;
 		break;
 	}
 }
@@ -117,19 +120,23 @@ IMPLEMENT_FUNCTION(Gendarmes, function13, 13) {
 }
 
 IMPLEMENT_FUNCTION(Gendarmes, chapter2, 14) {
-	error("Gendarmes: callback function 14 not implemented!");
+	if (savepoint->action == kActionDefault)
+		getEntities()->drawSequences(kEntityGendarmes);
 }
 
 IMPLEMENT_FUNCTION(Gendarmes, chapter3, 15) {
-	error("Gendarmes: callback function 15 not implemented!");
+	if (savepoint->action == kActionDefault)
+		getEntities()->drawSequences(kEntityGendarmes);
 }
 
 IMPLEMENT_FUNCTION(Gendarmes, chapter4, 16) {
-	error("Gendarmes: callback function 16 not implemented!");
+	if (savepoint->action == kActionDefault)
+		getEntities()->drawSequences(kEntityGendarmes);
 }
 
 IMPLEMENT_FUNCTION(Gendarmes, chapter5, 17) {
-	error("Gendarmes: callback function 17 not implemented!");
+	if (savepoint->action == kActionDefault)
+		getEntities()->drawSequences(kEntityGendarmes);
 }
 
 } // End of namespace LastExpress

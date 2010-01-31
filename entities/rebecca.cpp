@@ -25,6 +25,8 @@
 
 #include "lastexpress/entities/rebecca.h"
 
+#include "lastexpress/game/entities.h"
+#include "lastexpress/game/logic.h"
 #include "lastexpress/game/object.h"
 #include "lastexpress/game/savepoint.h"
 #include "lastexpress/game/state.h"
@@ -171,6 +173,10 @@ IMPLEMENT_FUNCTION(Rebecca, chapter1, 21) {
 	default:
 		break;
 
+	case kActionNone:
+		CALL_CHAPTER_ACTION_NONE(22)
+		break;
+
 	case kActionDefault:
 		getSavePoints()->addData(kEntityRebecca, kAction224253538, 0);
 
@@ -184,11 +190,7 @@ IMPLEMENT_FUNCTION(Rebecca, chapter1, 21) {
 		_data->getData()->field_493 = EntityData::kField493_1;
 		_data->getData()->field_495 = EntityData::kField495_5;
 
-		ENTITY_PARAM(8, 0, 2) = 1;
-		break;
-
-	case kActionNone:
-		CALL_CHAPTER_ACTION_NONE(22)
+		ENTITY_PARAM(0, 2) = 1;
 		break;
 	}
 }
@@ -218,7 +220,31 @@ IMPLEMENT_FUNCTION(Rebecca, function27, 27) {
 }
 
 IMPLEMENT_FUNCTION(Rebecca, chapter2, 28) {
-	error("Rebecca: callback function 28 not implemented!");
+	switch (savepoint->action) {
+	default:
+		break;
+
+	case kActionNone:
+		setup_function29();
+		break;
+
+	case kActionDefault:
+		getEntities()->drawSequences(kEntityRebecca);
+
+		_data->getData()->field_491 = EntityData::kField491_4840;
+		_data->getData()->field_493 = EntityData::kField493_1;
+		_data->getData()->field_495 = EntityData::kField495_4;
+		_data->getData()->field_4A5 = EntityData::kField4A5_0;
+		_data->getData()->inventoryItem = kItemNone;
+
+		getObjects()->update(kObjectCompartmentE, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObject52, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
+
+		getObjects()->updateLocation2(kObject110, kLocation2);
+
+		ENTITY_PARAM(0, 2) = 1;
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Rebecca, function29, 29) {
@@ -234,7 +260,25 @@ IMPLEMENT_FUNCTION(Rebecca, function31, 31) {
 }
 
 IMPLEMENT_FUNCTION(Rebecca, chapter3, 32) {
-	error("Rebecca: callback function 32 not implemented!");
+	switch (savepoint->action) {
+	default:
+		break;
+
+	case kActionNone:
+		setup_function33();
+		break;
+
+	case kActionDefault:
+		getEntities()->drawSequences(kEntityRebecca);
+
+		_data->getData()->field_491 = EntityData::kField491_4840;
+		_data->getData()->field_493 = EntityData::kField493_1;
+		_data->getData()->field_495 = EntityData::kField495_4;
+		_data->getData()->field_4A5 = EntityData::kField4A5_0;
+		_data->getData()->inventoryItem = kItemNone;
+
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Rebecca, function33, 33) {
@@ -274,7 +318,29 @@ IMPLEMENT_FUNCTION(Rebecca, function41, 41) {
 }
 
 IMPLEMENT_FUNCTION(Rebecca, chapter4, 42) {
-	error("Rebecca: callback function 42 not implemented!");
+	switch (savepoint->action) {
+	default:
+		break;
+
+	case kActionNone:
+		setup_function43();
+		break;
+
+	case kActionDefault:
+		getEntities()->drawSequences(kEntityRebecca);
+
+		_data->getData()->field_491 = EntityData::kField491_4840;
+		_data->getData()->field_493 = EntityData::kField493_1;
+		_data->getData()->field_495 = EntityData::kField495_4;
+		_data->getData()->field_4A5 = EntityData::kField4A5_0;
+		_data->getData()->inventoryItem = kItemNone;
+
+		getObjects()->updateLocation2(kObject110, kLocation3);
+
+		ENTITY_PARAM(0, 1) = 0;
+		ENTITY_PARAM(0, 2) = 1;
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Rebecca, function43, 43) {
@@ -290,7 +356,26 @@ IMPLEMENT_FUNCTION(Rebecca, function45, 45) {
 }
 
 IMPLEMENT_FUNCTION(Rebecca, chapter5, 46) {
-	error("Rebecca: callback function 46 not implemented!");
+	switch (savepoint->action) {
+	default:
+		break;
+
+	case kActionNone:
+		setup_function47();
+		break;
+
+	case kActionDefault:
+		getEntities()->drawSequences(kEntityRebecca);
+
+		_data->getData()->field_491 = EntityData::kField491_3969;
+		_data->getData()->field_493 = EntityData::kField493_1;
+		_data->getData()->field_495 = EntityData::kField495_5;
+		_data->getData()->inventoryItem = kItemNone;
+
+		getObjects()->updateLocation2(kObject110, kLocation4);
+
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Rebecca, function47, 47) {

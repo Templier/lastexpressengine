@@ -29,8 +29,15 @@
 namespace LastExpress {
 
 //////////////////////////////////////////////////////////////////////////
-// Chapter ID
+// Archive & Chapter ID
 //////////////////////////////////////////////////////////////////////////
+enum ArchiveIndex {
+	kArchiveAll = 0,
+	kArchiveCd1 = 1,
+	kArchiveCd2 = 2,
+	kArchiveCd3 = 3
+};
+
 enum ChapterIndex {
 	kChapterAll = 0,
 	kChapter1 = 1,
@@ -143,6 +150,7 @@ enum ObjectLocation {
 	kLocation4 = 4, // Window ?
 	kLocation5 = 5,
 	kLocation6 = 6,
+	kLocation10 = 10,
 	kLocation11 = 11
 };
 
@@ -771,6 +779,11 @@ enum ActionIndex {
 	// Rebecca
 	/////////////////////////////
 	kAction224253538 = 224253538,
+
+	/////////////////////////////
+	// Salko
+	/////////////////////////////
+	kAction136184016 = 136184016,
 
 	/////////////////////////////
 	// Servers 0

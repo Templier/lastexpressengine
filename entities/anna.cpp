@@ -25,6 +25,8 @@
 
 #include "lastexpress/entities/anna.h"
 
+#include "lastexpress/game/entities.h"
+#include "lastexpress/game/logic.h"
 #include "lastexpress/game/object.h"
 #include "lastexpress/game/savepoint.h"
 #include "lastexpress/game/state.h"
@@ -183,6 +185,10 @@ IMPLEMENT_FUNCTION(Anna, chapter1, 16) {
 	default:
 		break;
 
+	case kActionNone:
+		CALL_CHAPTER_ACTION_NONE(19)
+		break;
+
 	case kActionDefault:
 		getSavePoints()->addData(kEntityAnna, kAction291662081, 0);
 		getSavePoints()->addData(kEntityAnna, kAction238936000, 1);
@@ -195,10 +201,7 @@ IMPLEMENT_FUNCTION(Anna, chapter1, 16) {
 		_data->getData()->field_493 = EntityData::kField493_1;
 		_data->getData()->field_495 = EntityData::kField495_3;
 		_data->getData()->field_4A5 = EntityData::kField4A5_0;
-		break;
 
-	case kActionNone:
-		CALL_CHAPTER_ACTION_NONE(19)
 		break;
 	}
 }
@@ -304,7 +307,25 @@ IMPLEMENT_FUNCTION(Anna, function41, 41) {
 }
 
 IMPLEMENT_FUNCTION(Anna, chapter2, 42) {
-	error("Anna: callback function 42 not implemented!");
+	switch (savepoint->action) {
+	default:
+		break;
+
+	case kActionNone:
+		setup_function43();
+		break;
+
+	case kActionDefault:
+		getEntities()->drawSequences(kEntityAnna);
+
+		_data->getData()->field_491 = EntityData::kField491_4070;
+		_data->getData()->field_493 = EntityData::kField493_1;
+		_data->getData()->field_495 = EntityData::kField495_4;
+		_data->getData()->field_4A5 = EntityData::kField4A5_1;
+		_data->getData()->inventoryItem = kItemNone;
+
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Anna, function43, 43) {
@@ -312,7 +333,29 @@ IMPLEMENT_FUNCTION(Anna, function43, 43) {
 }
 
 IMPLEMENT_FUNCTION(Anna, chapter3, 44) {
-	error("Anna: callback function 44 not implemented!");
+	switch (savepoint->action) {
+	default:
+		break;
+
+	case kActionNone:
+		setup_function46();
+		break;
+
+	case kActionDefault:
+		getEntities()->drawSequences(kEntityAnna);
+
+		_data->getData()->field_491 = EntityData::kField491_4070;
+		_data->getData()->field_493 = EntityData::kField493_1;
+		_data->getData()->field_495 = EntityData::kField495_4;
+		_data->getData()->field_4A5 = EntityData::kField4A5_3;
+		_data->getData()->inventoryItem = kItemNone;
+
+		getObjects()->update(kObjectCompartmentF, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObject45, kEntityNone, kLocationNone, kCursorKeepValue, kCursorKeepValue);
+		getObjects()->update(kObject53, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
+
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION_I(Anna, function45, 45) {
@@ -400,7 +443,25 @@ IMPLEMENT_FUNCTION(Anna, function65, 65) {
 }
 
 IMPLEMENT_FUNCTION(Anna, chapter4, 66) {
-	error("Anna: callback function 66 not implemented!");
+	switch (savepoint->action) {
+	default:
+		break;
+
+	case kActionNone:
+		setup_function67();
+		break;
+
+	case kActionDefault:
+		getEntities()->drawSequences(kEntityAnna);
+
+		_data->getData()->field_491 = EntityData::kField491_4070;
+		_data->getData()->field_493 = EntityData::kField493_1;
+		_data->getData()->field_495 = EntityData::kField495_4;
+		_data->getData()->field_4A5 = EntityData::kField4A5_2;
+		_data->getData()->inventoryItem = kItemNone;
+
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Anna, function67, 67) {
@@ -432,7 +493,27 @@ IMPLEMENT_FUNCTION(Anna, function73, 73) {
 }
 
 IMPLEMENT_FUNCTION(Anna, chapter5, 74) {
-	error("Anna: callback function 74 not implemented!");
+	switch (savepoint->action) {
+	default:
+		break;
+
+	case kActionNone:
+		setup_function75();
+		break;
+
+	case kActionDefault:
+		getEntities()->drawSequences(kEntityAnna);
+
+		_data->getData()->field_491 = EntityData::kField491_3969;
+		_data->getData()->field_493 = EntityData::kField493_1;
+		_data->getData()->field_495 = EntityData::kField495_1;
+		_data->getData()->field_4A5 = EntityData::kField4A5_3;
+		_data->getData()->inventoryItem = kItemNone;
+
+		getObjects()->update(kObject45, kEntityNone, kLocationNone, kCursorKeepValue, kCursorKeepValue);
+
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Anna, function75, 75) {

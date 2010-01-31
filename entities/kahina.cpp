@@ -25,6 +25,8 @@
 
 #include "lastexpress/entities/kahina.h"
 
+#include "lastexpress/game/entities.h"
+#include "lastexpress/game/logic.h"
 #include "lastexpress/game/object.h"
 #include "lastexpress/game/savepoint.h"
 #include "lastexpress/game/state.h"
@@ -107,17 +109,17 @@ IMPLEMENT_FUNCTION(Kahina, chapter1, 10) {
 	default:
 		break;
 
+	case kActionNone:
+		CALL_CHAPTER_ACTION_NONE(11)
+		break;
+
 	case kActionDefault:
 		getObjects()->update(kObjectCompartmentKronos, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
 
 		_data->getData()->field_491 = EntityData::kField491_5000;
 		_data->getData()->field_493 = EntityData::kField493_0;
-		_data->getData()->field_495 = EntityData::kField495_2;		
+		_data->getData()->field_495 = EntityData::kField495_2;
 
-		break;
-
-	case kActionNone:
-		CALL_CHAPTER_ACTION_NONE(11)
 		break;
 	}
 }
@@ -143,7 +145,27 @@ IMPLEMENT_FUNCTION(Kahina, function15, 15) {
 }
 
 IMPLEMENT_FUNCTION(Kahina, chapter2, 16) {
-	error("Kahina: callback function 16 not implemented!");
+	switch (savepoint->action) {
+	default:
+		break;
+
+	case kActionNone:
+		setup_function17();
+		break;
+
+	case kActionDefault:
+		getEntities()->drawSequences(kEntityKahina);
+
+		_data->getData()->field_491 = EntityData::kField491_6000;
+		_data->getData()->field_493 = EntityData::kField493_0;
+		_data->getData()->field_495 = EntityData::kField495_2;
+		_data->getData()->field_4A5 = EntityData::kField4A5_0;
+		_data->getData()->inventoryItem = kItemNone;
+
+		getObjects()->update(kObjectCompartmentKronos, kEntityKahina, kLocation1, kCursorHandKnock, kCursorHand);
+
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Kahina, function17, 17) {
@@ -151,7 +173,25 @@ IMPLEMENT_FUNCTION(Kahina, function17, 17) {
 }
 
 IMPLEMENT_FUNCTION(Kahina, chapter3, 18) {
-	error("Kahina: callback function 18 not implemented!");
+	switch (savepoint->action) {
+	default:
+		break;
+
+	case kActionNone:
+		setup_function20();
+		break;
+
+	case kActionDefault:
+		getEntities()->drawSequences(kEntityKahina);
+
+		_data->getData()->field_491 = EntityData::kField491_5000;
+		_data->getData()->field_493 = EntityData::kField493_0;
+		_data->getData()->field_495 = EntityData::kField495_2;
+		_data->getData()->field_4A5 = EntityData::kField4A5_0;
+		_data->getData()->inventoryItem = kItemNone;
+
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION_II(Kahina, function19, 19) {
@@ -191,11 +231,13 @@ IMPLEMENT_FUNCTION(Kahina, function27, 27) {
 }
 
 IMPLEMENT_FUNCTION(Kahina, chapter4, 28) {
-	error("Kahina: callback function 28 not implemented!");
+	if (savepoint->action == kActionDefault)
+		getEntities()->drawSequences(kEntityKahina);
 }
 
 IMPLEMENT_FUNCTION(Kahina, chapter5, 29) {
-	error("Kahina: callback function 29 not implemented!");
+	if (savepoint->action == kActionDefault)
+		getEntities()->drawSequences(kEntityKahina);
 }
 
 } // End of namespace LastExpress

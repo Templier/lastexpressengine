@@ -25,6 +25,8 @@
 
 #include "lastexpress/entities/coudert.h"
 
+#include "lastexpress/game/entities.h"
+#include "lastexpress/game/logic.h"
 #include "lastexpress/game/object.h"
 #include "lastexpress/game/savepoint.h"
 #include "lastexpress/game/state.h"
@@ -245,6 +247,17 @@ IMPLEMENT_FUNCTION(Coudert, chapter1, 36) {
 	default:
 		break;
 
+	case kActionNone:
+		// We have some specific callback code here, so we cannot use the existing macro
+		if (getState()->time > 1062000) {
+			if (!CURRENT_PARAM(1)) {
+				CURRENT_PARAM(1) = 1;
+				_data->setNextCallback(1);
+				call(new ENTITY_SETUP_DEFAULT(Coudert, setup_function40));
+			}
+		}
+		break;
+
 	case kActionDefault:
 		getSavePoints()->addData(kEntityCoudert, kAction292048641, 7);
 		getSavePoints()->addData(kEntityCoudert, kAction326348944, 8);
@@ -263,8 +276,8 @@ IMPLEMENT_FUNCTION(Coudert, chapter1, 36) {
 		getSavePoints()->addData(kEntityCoudert, kAction201431954, 18);
 		getSavePoints()->addData(kEntityCoudert, kAction188570113, 19);
 
-		ENTITY_PARAM(8, 0, 1) = 0;
-		ENTITY_PARAM(8, 0, 2) = 1;
+		ENTITY_PARAM(0, 1) = 0;
+		ENTITY_PARAM(0, 2) = 1;
 
 		_data->getData()->field_491 = EntityData::kField491_1500;
 		_data->getData()->field_493 = EntityData::kField493_0;
@@ -273,20 +286,9 @@ IMPLEMENT_FUNCTION(Coudert, chapter1, 36) {
 		getObjects()->updateLocation2(kObject111, kLocation1);
 		break;
 
-	case 18:
-		//if (_data.callbacks[_data.current_call + 8] == 1)
-			// call function
-		break;
-
-	case kActionNone:
-		// We have some specific callback code here, so we cannot call the existing macro
-		if (getState()->time > 1062000) {
-			if (!CURRENT_PARAM(1)) {
-				CURRENT_PARAM(1) = 1;
-				_data->setCallback(_data->getData()->current_call + 8, 1);
-				// call function call(, 0, 0, 0, 0);
-			}
-		}
+	case kAction18:
+		if (_data->getNextCallback() == 1)
+			setup_function40();
 		break;
 	}
 }
@@ -312,7 +314,48 @@ IMPLEMENT_FUNCTION(Coudert, function41, 41) {
 }
 
 IMPLEMENT_FUNCTION(Coudert, chapter2, 42) {
-	error("Coudert: callback function 42 not implemented!");
+	switch (savepoint->action) {
+	default:
+		break;
+
+	case kActionNone:
+		_data->setNextCallback(1);
+		call(new ENTITY_SETUP_DEFAULT(Coudert, setup_function18));
+		break;
+
+	case kActionDefault:
+		getEntities()->drawSequences(kEntityCoudert);
+
+		_data->getData()->field_491 = EntityData::kField491_1500;
+		_data->getData()->field_493 = EntityData::kField493_0;
+		_data->getData()->field_495 = EntityData::kField495_4;
+		_data->getData()->inventoryItem = kItemNone;
+
+		ENTITY_PARAM(0, 2) = 0;
+		ENTITY_PARAM(0, 3) = 0;
+		ENTITY_PARAM(0, 4) = 0;
+		ENTITY_PARAM(0, 5) = 0;
+		ENTITY_PARAM(0, 6) = 0;
+		ENTITY_PARAM(0, 8) = 0;
+
+		ENTITY_PARAM(1, 1) = 0;
+		ENTITY_PARAM(1, 2) = 0;
+		ENTITY_PARAM(1, 3) = 0;
+		ENTITY_PARAM(1, 5) = 0;
+		ENTITY_PARAM(1, 6) = 0;
+		ENTITY_PARAM(1, 7) = 0;
+		ENTITY_PARAM(1, 8) = 0;
+
+		ENTITY_PARAM(2, 4) = 0;
+
+		getObjects()->updateLocation2(kObject111, kLocation5);
+		break;
+
+	case kAction18:
+		if (_data->getNextCallback() == 1)
+			setup_function43();
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Coudert, function43, 43) {
@@ -320,7 +363,50 @@ IMPLEMENT_FUNCTION(Coudert, function43, 43) {
 }
 
 IMPLEMENT_FUNCTION(Coudert, chapter3, 44) {
-	error("Coudert: callback function 44 not implemented!");
+	switch (savepoint->action) {
+	default:
+		break;
+
+	case kActionNone:
+		_data->setNextCallback(1);
+		call(new ENTITY_SETUP_DEFAULT(Coudert, setup_function18));
+		break;
+
+	case kActionDefault:
+		getEntities()->drawSequences(kEntityCoudert);
+
+		_data->getData()->field_491 = EntityData::kField491_1500;
+		_data->getData()->field_493 = EntityData::kField493_0;
+		_data->getData()->field_495 = EntityData::kField495_4;
+		_data->getData()->field_4A5 = EntityData::kField4A5_0;
+		_data->getData()->inventoryItem = kItemNone;
+
+		ENTITY_PARAM(0, 2) = 0;
+		ENTITY_PARAM(0, 3) = 0;
+		ENTITY_PARAM(0, 4) = 0;
+		ENTITY_PARAM(0, 5) = 0;
+		ENTITY_PARAM(0, 8) = 0;
+
+		ENTITY_PARAM(1, 1) = 0;
+		ENTITY_PARAM(1, 2) = 0;
+		ENTITY_PARAM(1, 3) = 0;
+		ENTITY_PARAM(1, 4) = 0;
+		ENTITY_PARAM(1, 5) = 0;
+		ENTITY_PARAM(1, 6) = 0;
+		ENTITY_PARAM(1, 7) = 0;
+		ENTITY_PARAM(1, 8) = 0;
+
+		ENTITY_PARAM(2, 4) = 0;
+		ENTITY_PARAM(2, 5) = 0;
+
+		getObjects()->updateLocation2(kObject111, kLocation6);
+		break;
+
+	case kAction18:
+		if (_data->getNextCallback() == 1)
+			setup_function45();
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Coudert, function45, 45) {
@@ -352,7 +438,51 @@ IMPLEMENT_FUNCTION(Coudert, function51, 51) {
 }
 
 IMPLEMENT_FUNCTION(Coudert, chapter4, 52) {
-	error("Coudert: callback function 52 not implemented!");
+	switch (savepoint->action) {
+	default:
+		break;
+
+	case kActionNone:
+		_data->setNextCallback(1);
+		call(new ENTITY_SETUP_DEFAULT(Coudert, setup_function18));
+		break;
+
+	case kActionDefault:
+		getEntities()->drawSequences(kEntityCoudert);
+
+		_data->getData()->field_491 = EntityData::kField491_1500;
+		_data->getData()->field_493 = EntityData::kField493_0;
+		_data->getData()->field_495 = EntityData::kField495_4;
+		_data->getData()->field_4A5 = EntityData::kField4A5_0;
+		_data->getData()->inventoryItem = kItemNone;
+
+		ENTITY_PARAM(0, 2) = 0;
+		ENTITY_PARAM(0, 3) = 0;
+		ENTITY_PARAM(0, 4) = 0;
+		ENTITY_PARAM(0, 5) = 0;
+		ENTITY_PARAM(0, 6) = 0;
+		ENTITY_PARAM(0, 8) = 0;
+
+		ENTITY_PARAM(1, 1) = 0;
+		ENTITY_PARAM(1, 3) = 0;
+		ENTITY_PARAM(1, 5) = 0;
+		ENTITY_PARAM(1, 6) = 0;
+		ENTITY_PARAM(1, 7) = 0;
+		ENTITY_PARAM(1, 8) = 0;
+
+		ENTITY_PARAM(2, 3) = 0;
+		ENTITY_PARAM(2, 4) = 0;
+
+		getObjects()->updateLocation2(kObject111, kLocation10);
+		break;
+
+	case kAction18:
+		if (_data->getNextCallback() == 1) {
+			ENTITY_PARAM(1, 2) = 1;
+			setup_function53();
+		}
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Coudert, function53, 53) {
@@ -372,7 +502,23 @@ IMPLEMENT_FUNCTION(Coudert, function56, 56) {
 }
 
 IMPLEMENT_FUNCTION(Coudert, chapter5, 57) {
-	error("Coudert: callback function 57 not implemented!");
+	switch (savepoint->action) {
+	default:
+		break;
+
+	case kActionNone:
+		setup_function58();
+		break;
+
+	case kActionDefault:
+		getEntities()->drawSequences(kEntityCoudert);
+
+		_data->getData()->field_491 = EntityData::kField491_3969;
+		_data->getData()->field_493 = EntityData::kField493_1;
+		_data->getData()->field_495 = EntityData::kField495_5;
+		_data->getData()->inventoryItem = kItemNone;
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Coudert, function58, 58) {

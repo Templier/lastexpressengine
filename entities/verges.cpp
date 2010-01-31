@@ -25,6 +25,8 @@
 
 #include "lastexpress/entities/verges.h"
 
+#include "lastexpress/game/entities.h"
+#include "lastexpress/game/logic.h"
 #include "lastexpress/game/object.h"
 #include "lastexpress/game/savepoint.h"
 #include "lastexpress/game/state.h"
@@ -152,6 +154,10 @@ IMPLEMENT_FUNCTION(Verges, chapter1, 18) {
 	default:
 		break;
 
+	case kActionNone:
+		CALL_CHAPTER_ACTION_NONE(26)
+		break;
+
 	case kActionDefault:
 		getSavePoints()->addData(kEntityVerges, kAction191337656, 0);
 		getSavePoints()->addData(kEntityVerges, kAction226031488, 1);
@@ -162,16 +168,12 @@ IMPLEMENT_FUNCTION(Verges, chapter1, 18) {
 		getSavePoints()->addData(kEntityVerges, kAction201431954, 5);
 		getSavePoints()->addData(kEntityVerges, kAction168187490, 6);
 
-		getObjects()->update(kObject104, kEntityVerges, kLocationNone, kCursorNormal, kCursorNormal);
-		getObjects()->update(kObject105, kEntityVerges, kLocationNone, kCursorNormal, kCursorNormal);
+		getObjects()->update(kObject104, kEntityVerges, kLocationNone, kCursorNormal, kCursorHand);
+		getObjects()->update(kObject105, kEntityVerges, kLocationNone, kCursorNormal, kCursorHand);
 
 		_data->getData()->field_491 = EntityData::kField491_5000;
 		_data->getData()->field_493 = EntityData::kField493_0;
 		_data->getData()->field_495 = EntityData::kField495_6;
-		break;
-
-	case kActionNone:
-		CALL_CHAPTER_ACTION_NONE(26)
 		break;
 	}
 }
@@ -209,7 +211,28 @@ IMPLEMENT_FUNCTION(Verges, function26, 26) {
 }
 
 IMPLEMENT_FUNCTION(Verges, chapter2, 27) {
-	error("Verges: callback function 27 not implemented!");
+	switch (savepoint->action) {
+	default:
+		break;
+
+	case kActionNone:
+		setup_function28();
+		break;
+
+	case kActionDefault:
+		getEntities()->drawSequences(kEntityVerges);
+
+		_data->getData()->field_491 = EntityData::kField491_5000;
+		_data->getData()->field_493 = EntityData::kField493_0;
+		_data->getData()->field_495 = EntityData::kField495_6;
+		_data->getData()->inventoryItem = kItemNone;
+
+		getObjects()->update(kObject104, kEntityVerges, kLocationNone, kCursorNormal, kCursorHand);
+		getObjects()->update(kObject105, kEntityVerges, kLocationNone, kCursorNormal, kCursorHand);
+
+		ENTITY_PARAM(0, 3) = 0;
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Verges, function28, 28) {
@@ -217,7 +240,30 @@ IMPLEMENT_FUNCTION(Verges, function28, 28) {
 }
 
 IMPLEMENT_FUNCTION(Verges, chapter3, 29) {
-	error("Verges: callback function 29 not implemented!");
+	switch (savepoint->action) {
+	default:
+		break;
+
+	case kActionNone:
+		setup_function23();
+		break;
+
+	case kActionDefault:
+		getEntities()->drawSequences(kEntityVerges);
+
+		_data->getData()->field_491 = EntityData::kField491_540;
+		_data->getData()->field_493 = EntityData::kField493_0;
+		_data->getData()->field_495 = EntityData::kField495_5;
+		_data->getData()->field_4A5 = EntityData::kField4A5_0;
+		_data->getData()->inventoryItem = kItemNone;
+
+		getObjects()->update(kObject104, kEntityVerges, kLocationNone, kCursorNormal, kCursorHand);
+		getObjects()->update(kObject105, kEntityVerges, kLocationNone, kCursorNormal, kCursorHand);
+
+		ENTITY_PARAM(0, 3) = 0;
+		ENTITY_PARAM(0, 4) = 0;
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION_S(Verges, function30, 30) {
@@ -245,7 +291,30 @@ IMPLEMENT_FUNCTION(Verges, function35, 35) {
 }
 
 IMPLEMENT_FUNCTION(Verges, chapter4, 36) {
-	error("Verges: callback function 36 not implemented!");
+	switch (savepoint->action) {
+	default:
+		break;
+
+	case kActionNone:
+		setup_function37();
+		break;
+
+	case kActionDefault:
+		getEntities()->drawSequences(kEntityVerges);
+
+		_data->getData()->field_491 = EntityData::kField491_5000;
+		_data->getData()->field_493 = EntityData::kField493_0;
+		_data->getData()->field_495 = EntityData::kField495_6;
+		_data->getData()->field_4A5 = EntityData::kField4A5_0;
+		_data->getData()->inventoryItem = kItemNone;
+
+		getObjects()->update(kObject104, kEntityVerges, kLocationNone, kCursorNormal, kCursorHand);
+		getObjects()->update(kObject105, kEntityVerges, kLocationNone, kCursorNormal, kCursorHand);
+
+		ENTITY_PARAM(0, 3) = 0;
+		ENTITY_PARAM(0, 6) = 0;
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Verges, function37, 37) {
@@ -257,7 +326,27 @@ IMPLEMENT_FUNCTION(Verges, function38, 38) {
 }
 
 IMPLEMENT_FUNCTION(Verges, chapter5, 39) {
-	error("Verges: callback function 39 not implemented!");
+	switch (savepoint->action) {
+	default:
+		break;
+
+	case kActionNone:
+		setup_function40();
+		break;
+
+	case kActionDefault:
+		getEntities()->drawSequences(kEntityVerges);
+
+		_data->getData()->field_491 = EntityData::kField491_3650;
+		_data->getData()->field_493 = EntityData::kField493_1;
+		_data->getData()->field_495 = EntityData::kField495_5;
+		_data->getData()->field_4A5 = EntityData::kField4A5_0;
+		_data->getData()->inventoryItem = kItemNone;
+
+		getObjects()->update(kObject104, kEntityNone, kLocationNone, kCursorNormal, kCursorHand);
+		getObjects()->update(kObject105, kEntityNone, kLocationNone, kCursorNormal, kCursorHand);
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Verges, function40, 40) {

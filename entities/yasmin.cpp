@@ -25,6 +25,9 @@
 
 #include "lastexpress/entities/yasmin.h"
 
+#include "lastexpress/game/entities.h"
+#include "lastexpress/game/logic.h"
+#include "lastexpress/game/object.h"
 #include "lastexpress/game/savepoint.h"
 #include "lastexpress/game/state.h"
 
@@ -91,14 +94,14 @@ IMPLEMENT_FUNCTION(Yasmin, chapter1, 8) {
 	default:
 		break;
 
+	case kActionNone:
+		CALL_CHAPTER_ACTION_NONE(9)
+		break;
+
 	case kActionDefault:
 		_data->getData()->field_491 = EntityData::kField491_4840;
 		_data->getData()->field_493 = EntityData::kField493_1;
 		_data->getData()->field_495 = EntityData::kField495_3;
-		break;
-
-	case kActionNone:
-		CALL_CHAPTER_ACTION_NONE(9)
 		break;
 	}
 }
@@ -112,7 +115,17 @@ IMPLEMENT_FUNCTION(Yasmin, function10, 10) {
 }
 
 IMPLEMENT_FUNCTION(Yasmin, chapter2, 11) {
-	error("Yasmin: callback function 11 not implemented!");
+	if (savepoint->action == kActionDefault) {
+		getEntities()->drawSequences(kEntityYasmin);
+
+		_data->getData()->field_491 = EntityData::kField491_3050;
+		_data->getData()->field_493 = EntityData::kField493_1;
+		_data->getData()->field_495 = EntityData::kField495_3;
+		_data->getData()->field_4A5 = EntityData::kField4A5_0;
+		_data->getData()->inventoryItem = kItemNone;
+
+		setup_function12();
+	}
 }
 
 IMPLEMENT_FUNCTION(Yasmin, function12, 12) {
@@ -120,7 +133,22 @@ IMPLEMENT_FUNCTION(Yasmin, function12, 12) {
 }
 
 IMPLEMENT_FUNCTION(Yasmin, chapter3, 13) {
-	error("Yasmin: callback function 13 not implemented!");
+	switch (savepoint->action) {
+	default:
+		break;
+
+	case kActionNone:
+		setup_function14();
+		break;
+
+	case kActionDefault:
+		getEntities()->drawSequences(kEntityYasmin);
+
+		_data->getData()->field_491 = EntityData::kField491_3050;
+		_data->getData()->field_493 = EntityData::kField493_1;
+		_data->getData()->field_495 = EntityData::kField495_3;
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Yasmin, function14, 14) {
@@ -128,7 +156,20 @@ IMPLEMENT_FUNCTION(Yasmin, function14, 14) {
 }
 
 IMPLEMENT_FUNCTION(Yasmin, chapter4, 15) {
-	error("Yasmin: callback function 15 not implemented!");
+	switch (savepoint->action) {
+	default:
+		break;
+
+	case kActionNone:
+		setup_function16();
+		break;
+
+	case kActionDefault:
+		_data->getData()->field_491 = EntityData::kField491_3050;
+		_data->getData()->field_493 = EntityData::kField493_1;
+		_data->getData()->field_495 = EntityData::kField495_3;
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Yasmin, function16, 16) {
@@ -140,7 +181,24 @@ IMPLEMENT_FUNCTION(Yasmin, function17, 17) {
 }
 
 IMPLEMENT_FUNCTION(Yasmin, chapter5, 18) {
-	error("Yasmin: callback function 18 not implemented!");
+	switch (savepoint->action) {
+	default:
+		break;
+
+	case kActionNone:
+		setup_function19();
+		break;
+
+	case kActionDefault:
+		getEntities()->drawSequences(kEntityYasmin);
+
+		_data->getData()->field_491 = EntityData::kField491_3969;
+		_data->getData()->field_493 = EntityData::kField493_1;
+		_data->getData()->field_495 = EntityData::kField495_5;
+		_data->getData()->field_4A5 = EntityData::kField4A5_0;
+		_data->getData()->inventoryItem = kItemNone;
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Yasmin, function19, 19) {

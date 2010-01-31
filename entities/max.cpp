@@ -370,11 +370,13 @@ IMPLEMENT_FUNCTION(Max, chapter2, 11) {
 
 	case kActionDefault:
 		getEntities()->drawSequences(kEntityMax);
+
 		_data->getData()->field_491 = EntityData::kField491_4070;
 		_data->getData()->field_493 = EntityData::kField493_1;
 		_data->getData()->field_495 = EntityData::kField495_4;
 		_data->getData()->field_4A5 = EntityData::kField4A5_0;
 		_data->getData()->inventoryItem = kItemNone;
+
 		break;
 	}
 }
@@ -390,6 +392,7 @@ IMPLEMENT_FUNCTION(Max, chapter3, 12) {
 
 	case kActionDefault:
 		getEntities()->drawSequences(kEntityMax);
+
 		_data->getData()->field_491 = EntityData::kField491_4070;
 		_data->getData()->field_493 = EntityData::kField493_1;
 		_data->getData()->field_495 = EntityData::kField495_4;
@@ -591,6 +594,7 @@ IMPLEMENT_FUNCTION(Max, chapter4, 16) {
 
 	case kActionDefault:
 		getEntities()->drawSequences(kEntityMax);
+
 		_data->getData()->field_491 = EntityData::kField491_8000;
 		_data->getData()->field_493 = EntityData::kField493_1;
 		_data->getData()->field_495 = EntityData::kField495_6;
@@ -635,9 +639,11 @@ IMPLEMENT_FUNCTION(Max, function17, 17) {
 IMPLEMENT_FUNCTION(Max, chapter5, 18) {
 	if (savepoint->action == kActionDefault) {
 		getEntities()->drawSequences(kEntityMax);
+
 		_data->getData()->field_491 = EntityData::kField491_0;
 		_data->getData()->field_493 = EntityData::kField493_0;
 		_data->getData()->field_495 = EntityData::kField495_0;
+
 		getObjects()->update(kObjectCageMax, kEntityNone, kLocationNone, kCursorNormal, kCursorHand);
 	}
 }

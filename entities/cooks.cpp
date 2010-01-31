@@ -25,6 +25,9 @@
 
 #include "lastexpress/entities/cooks.h"
 
+#include "lastexpress/game/entities.h"
+#include "lastexpress/game/logic.h"
+#include "lastexpress/game/object.h"
 #include "lastexpress/game/savepoint.h"
 #include "lastexpress/game/state.h"
 
@@ -71,17 +74,17 @@ IMPLEMENT_FUNCTION(Cooks, chapter1, 5) {
 	default:
 		break;
 
+	case kActionNone:
+		CALL_CHAPTER_ACTION_NONE(6)
+		break;
+
 	case kActionDefault:
 		_data->getData()->field_491 = EntityData::kField491_5900;
 		_data->getData()->field_493 = EntityData::kField493_0;
-		_data->getData()->field_495 = EntityData::kField495_5;		
+		_data->getData()->field_495 = EntityData::kField495_5;
 
 		getProgress().field_4C = 0;
 
-		break;
-
-	case kActionNone:
-		CALL_CHAPTER_ACTION_NONE(6)
 		break;
 	}
 }
@@ -95,7 +98,26 @@ IMPLEMENT_FUNCTION(Cooks, function7, 7) {
 }
 
 IMPLEMENT_FUNCTION(Cooks, chapter2, 8) {
-	error("Cooks: callback function 8 not implemented!");
+	switch (savepoint->action) {
+	default:
+		break;
+
+	case kActionNone:
+		setup_function9();
+		break;
+
+	case kActionDefault:
+		getEntities()->drawSequences(kEntityCooks);
+
+		_data->getData()->field_491 = EntityData::kField491_5900;
+		_data->getData()->field_493 = EntityData::kField493_0;
+		_data->getData()->field_495 = EntityData::kField495_5;
+		_data->getData()->inventoryItem = kItemNone;
+
+		getProgress().field_4C = 1;
+
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Cooks, function9, 9) {
@@ -103,7 +125,25 @@ IMPLEMENT_FUNCTION(Cooks, function9, 9) {
 }
 
 IMPLEMENT_FUNCTION(Cooks, chapter3, 10) {
-	error("Cooks: callback function 10 not implemented!");
+	switch (savepoint->action) {
+	default:
+		break;
+
+	case kActionNone:
+		setup_function11();
+		break;
+
+	case kActionDefault:
+		getEntities()->drawSequences(kEntityCooks);
+
+		_data->getData()->field_491 = EntityData::kField491_5900;
+		_data->getData()->field_495 = EntityData::kField495_5;
+		_data->getData()->inventoryItem = kItemNone;
+
+		getProgress().field_4C = 0;
+
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Cooks, function11, 11) {
@@ -111,7 +151,26 @@ IMPLEMENT_FUNCTION(Cooks, function11, 11) {
 }
 
 IMPLEMENT_FUNCTION(Cooks, chapter4, 12) {
-	error("Cooks: callback function 12 not implemented!");
+	switch (savepoint->action) {
+	default:
+		break;
+
+	case kActionNone:
+		setup_function13();
+		break;
+
+	case kActionDefault:
+		getEntities()->drawSequences(kEntityCooks);
+
+		_data->getData()->field_491 = EntityData::kField491_5900;
+		_data->getData()->field_493 = EntityData::kField493_0;
+		_data->getData()->field_495 = EntityData::kField495_5;
+		_data->getData()->inventoryItem = kItemNone;
+
+		getProgress().field_4C = 1;
+
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Cooks, function13, 13) {
@@ -119,7 +178,8 @@ IMPLEMENT_FUNCTION(Cooks, function13, 13) {
 }
 
 IMPLEMENT_FUNCTION(Cooks, chapter5, 14) {
-	error("Cooks: callback function 14 not implemented!");
+	if (savepoint->action == kActionDefault)
+		getEntities()->drawSequences(kEntityCooks);
 }
 
 } // End of namespace LastExpress

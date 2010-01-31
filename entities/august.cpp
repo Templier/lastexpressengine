@@ -25,6 +25,8 @@
 
 #include "lastexpress/entities/august.h"
 
+#include "lastexpress/game/entities.h"
+#include "lastexpress/game/logic.h"
 #include "lastexpress/game/object.h"
 #include "lastexpress/game/savepoint.h"
 #include "lastexpress/game/state.h"
@@ -69,7 +71,7 @@ August::August(LastExpressEngine *engine) : Entity(engine, kEntityAugust) {
 	ADD_CALLBACK_FUNCTION(August, function32);
 	ADD_CALLBACK_FUNCTION(August, function33);
 	ADD_CALLBACK_FUNCTION(August, function34);
-	ADD_CALLBACK_FUNCTION(August, chapter2);	
+	ADD_CALLBACK_FUNCTION(August, chapter2);
 	ADD_CALLBACK_FUNCTION(August, function36);
 	ADD_CALLBACK_FUNCTION(August, function37);
 	ADD_CALLBACK_FUNCTION(August, function38);
@@ -103,7 +105,7 @@ August::August(LastExpressEngine *engine) : Entity(engine, kEntityAugust) {
 	ADD_CALLBACK_FUNCTION(August, chapter5);
 	ADD_CALLBACK_FUNCTION(August, function67);
 	ADD_CALLBACK_FUNCTION(August, function68);
-	ADD_CALLBACK_FUNCTION(August, function69);	
+	ADD_CALLBACK_FUNCTION(August, function69);
 	ADD_NULL_FUNCTION();
 }
 
@@ -196,21 +198,20 @@ IMPLEMENT_FUNCTION(August, chapter1, 22) {
 	default:
 		break;
 
+	case kActionNone:
+		CALL_CHAPTER_ACTION_NONE(25)
+		break;
+
 	case kActionDefault:
 		getObjects()->update(kObjectCompartment3, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
 		getObjects()->update(kObject11, kEntityNone, kLocationNone, kCursorKeepValue, kCursorKeepValue);
 
 		_data->getData()->field_491 = EntityData::kField491_4691;
 		_data->getData()->field_493 = EntityData::kField493_1;
-		_data->getData()->field_495 = EntityData::kField495_5;	
+		_data->getData()->field_495 = EntityData::kField495_5;
 		_data->getData()->field_4A5 = EntityData::kField4A5_0;
 
 		getProgress().event_august_met = 0;
-
-		break;
-
-	case kActionNone:
-		CALL_CHAPTER_ACTION_NONE(25)
 		break;
 	}
 }
@@ -264,7 +265,28 @@ IMPLEMENT_FUNCTION(August, function34, 34) {
 }
 
 IMPLEMENT_FUNCTION(August, chapter2, 35) {
-	error("August: callback function 35 not implemented!");
+	switch (savepoint->action) {
+	default:
+		break;
+
+	case kActionNone:
+		setup_function36();
+		break;
+
+	case kActionDefault:
+		getEntities()->drawSequences(kEntityAugust);
+
+		_data->getData()->field_491 = EntityData::kField491_3970;
+		_data->getData()->field_493 = EntityData::kField493_1;
+		_data->getData()->field_495 = EntityData::kField495_5;
+		_data->getData()->field_4A5 = EntityData::kField4A5_1;
+		_data->getData()->inventoryItem = kItemNone;
+
+		getObjects()->update(kObjectCompartment3, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObject11, kEntityNone, kLocationNone, kCursorKeepValue, kCursorKeepValue);
+
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(August, function36, 36) {
@@ -284,7 +306,25 @@ IMPLEMENT_FUNCTION(August, function39, 39) {
 }
 
 IMPLEMENT_FUNCTION(August, chapter3, 40) {
-	error("August: callback function 40 not implemented!");
+	switch (savepoint->action) {
+	default:
+		break;
+
+	case kActionNone:
+		setup_function43();
+		break;
+
+	case kActionDefault:
+		getEntities()->drawSequences(kEntityAugust);
+
+		_data->getData()->field_491 = EntityData::kField491_6470;
+		_data->getData()->field_493 = EntityData::kField493_0;
+		_data->getData()->field_495 = EntityData::kField495_3;
+		_data->getData()->field_4A5 = EntityData::kField4A5_1;
+		_data->getData()->inventoryItem = kItemNone;
+
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION_II(August, function41, 41) {
@@ -352,7 +392,27 @@ IMPLEMENT_FUNCTION(August, function56, 56) {
 }
 
 IMPLEMENT_FUNCTION(August, chapter4, 57) {
-	error("August: callback function 57 not implemented!");
+	switch (savepoint->action) {
+	default:
+		break;
+
+	case kActionNone:
+		setup_function58();
+		break;
+
+	case kActionDefault:
+		getEntities()->drawSequences(kEntityAugust);
+
+		_data->getData()->field_491 = EntityData::kField491_6470;
+		_data->getData()->field_493 = EntityData::kField493_1;
+		_data->getData()->field_495 = EntityData::kField495_3;
+		_data->getData()->field_4A5 = EntityData::kField4A5_2;
+		_data->getData()->inventoryItem = kItemNone;
+
+		getObjects()->update(kObjectCompartment3, kEntityNone, kLocation2, kCursorNormal, kCursorNormal);
+
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(August, function58, 58) {
@@ -388,7 +448,25 @@ IMPLEMENT_FUNCTION(August, function65, 65) {
 }
 
 IMPLEMENT_FUNCTION(August, chapter5, 66) {
-	error("August: callback function 66 not implemented!");
+	switch (savepoint->action) {
+	default:
+		break;
+
+	case kActionNone:
+		setup_function67();
+		break;
+
+	case kActionDefault:
+		getEntities()->drawSequences(kEntityAugust);
+
+		_data->getData()->field_491 = EntityData::kField491_3969;
+		_data->getData()->field_493 = EntityData::kField493_1;
+		_data->getData()->field_495 = EntityData::kField495_5;
+		_data->getData()->field_4A5 = EntityData::kField4A5_2;
+		_data->getData()->inventoryItem = kItemNone;
+
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(August, function67, 67) {

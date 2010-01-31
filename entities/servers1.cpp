@@ -25,6 +25,9 @@
 
 #include "lastexpress/entities/servers1.h"
 
+#include "lastexpress/game/entities.h"
+#include "lastexpress/game/logic.h"
+#include "lastexpress/game/object.h"
 #include "lastexpress/game/savepoint.h"
 #include "lastexpress/game/state.h"
 
@@ -101,26 +104,26 @@ IMPLEMENT_FUNCTION(Servers1, chapter1, 8) {
 	default:
 		break;
 
+	case kActionNone:
+		// call function 14
+		break;
+
 	case kActionDefault:
+		getSavePoints()->addData(kEntityServers1, kAction223002560, 0);
+		getSavePoints()->addData(kEntityServers1, kAction302996448, 2);
+		getSavePoints()->addData(kEntityServers1, kAction269485588, 3);
+		getSavePoints()->addData(kEntityServers1, kAction326144276, 4);
 		getSavePoints()->addData(kEntityServers1, kAction302203328, 5);
 		getSavePoints()->addData(kEntityServers1, kAction189688608, 6);
 		getSavePoints()->addData(kEntityServers1, kAction236237423, 7);
 		getSavePoints()->addData(kEntityServers1, kAction219377792, 8);
+		getSavePoints()->addData(kEntityServers1, kAction256200848, 9);
 		getSavePoints()->addData(kEntityServers1, kAction291721418, 10);
 		getSavePoints()->addData(kEntityServers1, kAction258136010, 11);
-		getSavePoints()->addData(kEntityServers1, kAction302996448, 2);
-		getSavePoints()->addData(kEntityServers1, kAction223002560, 0);
-		getSavePoints()->addData(kEntityServers1, kAction256200848, 9);
-		getSavePoints()->addData(kEntityServers1, kAction269485588, 3);
-		getSavePoints()->addData(kEntityServers1, kAction326144276, 4);
 
 		_data->getData()->field_491 = EntityData::kField491_5900;
 		_data->getData()->field_493 = EntityData::kField493_0;
 		_data->getData()->field_495 = EntityData::kField495_5;
-		break;
-
-	case kActionNone:
-		// call function 14
 		break;
 	}
 }
@@ -158,7 +161,28 @@ IMPLEMENT_FUNCTION(Servers1, function16, 16) {
 }
 
 IMPLEMENT_FUNCTION(Servers1, chapter2, 17) {
-	error("Servers1: callback function 17 not implemented!");
+	switch (savepoint->action) {
+	default:
+		break;
+
+	case kActionNone:
+		setup_function18();
+		break;
+
+	case kActionDefault:
+		getEntities()->drawSequences(kEntityServers1);
+
+		_data->getData()->field_491 = EntityData::kField491_5900;
+		_data->getData()->field_493 = EntityData::kField493_0;
+		_data->getData()->field_495 = EntityData::kField495_5;
+		_data->getData()->field_4A5 = EntityData::kField4A5_1;
+		_data->getData()->inventoryItem = kItemNone;
+
+		ENTITY_PARAM(0, 6) = 0;
+		ENTITY_PARAM(0, 7) = 0;
+		ENTITY_PARAM(0, 8) = 0;
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Servers1, function18, 18) {
@@ -178,7 +202,27 @@ IMPLEMENT_FUNCTION(Servers1, function21, 21) {
 }
 
 IMPLEMENT_FUNCTION(Servers1, chapter3, 22) {
-	error("Servers1: callback function 22 not implemented!");
+	switch (savepoint->action) {
+	default:
+		break;
+
+	case kActionNone:
+		setup_function23();
+		break;
+
+	case kActionDefault:
+		getEntities()->drawSequences(kEntityServers1);
+
+		_data->getData()->field_491 = EntityData::kField491_5900;
+		_data->getData()->field_493 = EntityData::kField493_0;
+		_data->getData()->field_495 = EntityData::kField495_5;
+		_data->getData()->field_4A5 = EntityData::kField4A5_1;
+		_data->getData()->inventoryItem = kItemNone;
+
+		ENTITY_PARAM(1, 1) = 0;
+		ENTITY_PARAM(1, 2) = 0;
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Servers1, function23, 23) {
@@ -190,7 +234,31 @@ IMPLEMENT_FUNCTION(Servers1, function24, 24) {
 }
 
 IMPLEMENT_FUNCTION(Servers1, chapter4, 25) {
-	error("Servers1: callback function 25 not implemented!");
+	switch (savepoint->action) {
+	default:
+		break;
+
+	case kActionNone:
+		setup_function26();
+		break;
+
+	case kActionDefault:
+		getEntities()->drawSequences(kEntityServers1);
+
+		_data->getData()->field_491 = EntityData::kField491_5900;
+		_data->getData()->field_493 = EntityData::kField493_0;
+		_data->getData()->field_495 = EntityData::kField495_5;
+		_data->getData()->inventoryItem = kItemNone;
+
+		// TODO: there is a second call to drawSequences in the original code (is it really needed?)
+		getEntities()->drawSequences(kEntityServers1);
+
+		ENTITY_PARAM(1, 2) = 0;
+		ENTITY_PARAM(1, 3) = 0;
+		ENTITY_PARAM(1, 4) = 0;
+		ENTITY_PARAM(1, 5) = 0;
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Servers1, function26, 26) {
@@ -210,7 +278,23 @@ IMPLEMENT_FUNCTION(Servers1, function29, 29) {
 }
 
 IMPLEMENT_FUNCTION(Servers1, chapter5, 30) {
-	error("Servers1: callback function 30 not implemented!");
+	switch (savepoint->action) {
+	default:
+		break;
+
+	case kActionNone:
+		setup_function31();
+		break;
+
+	case kActionDefault:
+		getEntities()->drawSequences(kEntityServers1);
+
+		_data->getData()->field_491 = EntityData::kField491_3969;
+		_data->getData()->field_493 = EntityData::kField493_1;
+		_data->getData()->field_495 = EntityData::kField495_5;
+		_data->getData()->inventoryItem = kItemNone;
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Servers1, function31, 31) {

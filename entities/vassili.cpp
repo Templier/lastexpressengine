@@ -25,6 +25,8 @@
 
 #include "lastexpress/entities/vassili.h"
 
+#include "lastexpress/game/entities.h"
+#include "lastexpress/game/logic.h"
 #include "lastexpress/game/object.h"
 #include "lastexpress/game/savepoint.h"
 #include "lastexpress/game/state.h"
@@ -72,13 +74,13 @@ IMPLEMENT_FUNCTION(Vassili, chapter1, 4) {
 	default:
 		break;
 
+	case kActionNone:
+		CALL_CHAPTER_ACTION_NONE(5)
+		break;
+
 	case kActionDefault:
 		getObjects()->update(kObjectCompartmentA, kEntityNone, kLocationNone, kCursorHandKnock, kCursorHand);
 		getObjects()->update(kObject40, kEntityNone, kLocationNone, kCursorKeepValue, kCursorKeepValue);
-		break;
-
-	case kActionNone:
-		CALL_CHAPTER_ACTION_NONE(5)
 		break;
 	}
 }
@@ -112,7 +114,27 @@ IMPLEMENT_FUNCTION(Vassili, function11, 11) {
 }
 
 IMPLEMENT_FUNCTION(Vassili, chapter2, 12) {
-	error("Vassili: callback function 12 not implemented!");
+	switch (savepoint->action) {
+	default:
+		break;
+
+	case kActionNone:
+		setup_function13();
+		break;
+
+	case kActionDefault:
+		getEntities()->drawSequences(kEntityVassili);
+
+		_data->getData()->field_491 = EntityData::kField491_8200;
+		_data->getData()->field_493 = EntityData::kField493_1;
+		_data->getData()->field_495 = EntityData::kField495_4;
+		_data->getData()->field_4A5 = EntityData::kField4A5_0;
+		_data->getData()->inventoryItem = kItemNone;
+
+		getObjects()->update(kObjectCompartmentA, kEntityNone, kLocationNone, kCursorHandKnock, kCursorHand);
+		getObjects()->updateLocation2(kObjectCompartmentA, kLocation1);
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Vassili, function13, 13) {
@@ -120,7 +142,26 @@ IMPLEMENT_FUNCTION(Vassili, function13, 13) {
 }
 
 IMPLEMENT_FUNCTION(Vassili, chapter3, 14) {
-	error("Vassili: callback function 14 not implemented!");
+	switch (savepoint->action) {
+	default:
+		break;
+
+	case kActionNone:
+		setup_function15();
+		break;
+
+	case kActionDefault:
+		getEntities()->drawSequences(kEntityVassili);
+
+		_data->getData()->field_491 = EntityData::kField491_8200;
+		_data->getData()->field_493 = EntityData::kField493_1;
+		_data->getData()->field_495 = EntityData::kField495_4;
+		_data->getData()->field_4A5 = EntityData::kField4A5_0;
+		_data->getData()->inventoryItem = kItemNone;
+
+		getObjects()->update(kObjectCompartmentA, kEntityNone, kLocationNone, kCursorHandKnock, kCursorHand);
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Vassili, function15, 15) {
@@ -128,7 +169,27 @@ IMPLEMENT_FUNCTION(Vassili, function15, 15) {
 }
 
 IMPLEMENT_FUNCTION(Vassili, chapter4, 16) {
-	error("Vassili: callback function 16 not implemented!");
+	switch (savepoint->action) {
+	default:
+		break;
+
+	case kActionNone:
+		setup_function17();
+		break;
+
+	case kActionDefault:
+		getEntities()->drawSequences(kEntityVassili);
+
+		_data->getData()->field_491 = EntityData::kField491_8200;
+		_data->getData()->field_493 = EntityData::kField493_1;
+		_data->getData()->field_495 = EntityData::kField495_4;
+		_data->getData()->field_4A5 = EntityData::kField4A5_0;
+		_data->getData()->inventoryItem = kItemNone;
+
+		getObjects()->update(kObjectCompartmentA, kEntityNone, kLocationNone, kCursorHandKnock, kCursorHand);
+		getObjects()->updateLocation2(kObjectCompartmentA, kLocation1);
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Vassili, function17, 17) {
@@ -136,7 +197,15 @@ IMPLEMENT_FUNCTION(Vassili, function17, 17) {
 }
 
 IMPLEMENT_FUNCTION(Vassili, chapter5, 18) {
-	error("Vassili: callback function 18 not implemented!");
+	if (savepoint->action == kActionDefault) {
+		getEntities()->drawSequences(kEntityVassili);
+
+		_data->getData()->field_491 = EntityData::kField491_3969;
+		_data->getData()->field_493 = EntityData::kField493_1;
+		_data->getData()->field_495 = EntityData::kField495_5;
+		_data->getData()->field_4A5 = EntityData::kField4A5_0;
+		_data->getData()->inventoryItem = kItemNone;
+	}
 }
 
 } // End of namespace LastExpress

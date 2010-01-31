@@ -25,14 +25,14 @@
 
 #include "lastexpress/entities/mertens.h"
 
-#include "lastexpress/game/entities.h"
-
 #include "lastexpress/game/action.h"
+#include "lastexpress/game/entities.h"
 #include "lastexpress/game/inventory.h"
 #include "lastexpress/game/logic.h"
+#include "lastexpress/game/object.h"
 #include "lastexpress/game/savepoint.h"
-#include "lastexpress/game/sound.h"
 #include "lastexpress/game/state.h"
+#include "lastexpress/game/sound.h"
 
 #include "lastexpress/lastexpress.h"
 #include "lastexpress/helpers.h"
@@ -228,7 +228,7 @@ IMPLEMENT_FUNCTION(Mertens, function17, 17) {
 
 	case kActionDefault:
 		// FIXME: Check that we are using the correct parameter struct
-		if (ENTITY_PARAM(8, 0, 6) || ((EntityData::EntityParametersIIII*)_data->getParameters(8, 1))->hasNonNullParameter()) {
+		if (ENTITY_PARAM(0, 6) || ((EntityData::EntityParametersIIII*)_data->getParameters(8, 1))->hasNonNullParameter()) {
 
 			getInventory()->setLocationAndProcess(kItem7, kLocation1);
 
@@ -237,19 +237,19 @@ IMPLEMENT_FUNCTION(Mertens, function17, 17) {
 
 		} else {
 
-			if (ENTITY_PARAM(8, 0, 8)) {
+			if (ENTITY_PARAM(0, 8)) {
 
 				getEntities()->drawSequence(kEntityMertens, "601K");
 				getLogic()->loadSceneFromItem(kItem7);
 
-				ENTITY_PARAM(8, 2, 1) = 1;
+				ENTITY_PARAM(2, 1) = 1;
 				CALL_PREVIOUS_SAVEPOINT(kEntityMertens)
 
 			} else {	// Mertens sits on his chair at the back of the train
-				if (getInventory()->hasItem(kItemPassengerList) || ENTITY_PARAM(8, 0, 2))
+				if (getInventory()->hasItem(kItemPassengerList) || ENTITY_PARAM(0, 2))
 					getEntities()->storeSequenceName(kEntityMertens, "601A");
 				else {	// Got the passenger list, Mertens is looking for it before sitting
-					ENTITY_PARAM(8, 0, 2) = 1;
+					ENTITY_PARAM(0, 2) = 1;
 					getSound()->playSound(kEntityMertens, "CON1058", -1, 75);
 					getEntities()->storeSequenceName(kEntityMertens, "601D");
 				}
@@ -275,7 +275,7 @@ IMPLEMENT_FUNCTION(Mertens, function17, 17) {
 
 		case 1:
 			getEntities()->drawSequences(kEntityMertens);
-			ENTITY_PARAM(8, 2, 1) = 1;
+			ENTITY_PARAM(2, 1) = 1;
 			_data->setNextCallback(2);
 			call(new ENTITY_SETUP_DEFAULT(Mertens, setup_function11), 75);
 			break;
@@ -285,16 +285,16 @@ IMPLEMENT_FUNCTION(Mertens, function17, 17) {
 			break;
 
 		case 3:
-			if (!ENTITY_PARAM(8, 0, 3)
+			if (!ENTITY_PARAM(0, 3)
 			 && !getInventory()->hasItem(kItemPassengerList)
-			 && ENTITY_PARAM(8, 0, 2)) {
+			 && ENTITY_PARAM(0, 2)) {
 				 getSavePoints()->push(kEntityMertens, kEntityVerges, kAction158617345);
-				 ENTITY_PARAM(8, 0, 3) = 1;
+				 ENTITY_PARAM(0, 3) = 1;
 			}
 
 			getEntities()->drawSequence(kEntityMertens, "601B");
 
-			ENTITY_PARAM(8, 0, 1) = 0;
+			ENTITY_PARAM(0, 1) = 0;
 			_data->getData()->inventoryItem = kItemNone;
 
 			getSavePoints()->push(kEntityMertens, kEntityMertens, kAction17);
@@ -393,12 +393,15 @@ IMPLEMENT_FUNCTION(Mertens, chapter1, 34) {
 		getSavePoints()->addData(kEntityMertens, kAction188635520, 19);
 		getSavePoints()->addData(kEntityMertens, kAction204379649, 4);
 
-		ENTITY_PARAM(8, 0, 1) = 0;
+		ENTITY_PARAM(0, 1) = 0;
+
 		_data->getData()->field_491 = EntityData::kField491_9460;
 		_data->getData()->field_493 = EntityData::kField493_0;
 		_data->getData()->field_495 = EntityData::kField495_3;
+
 		break;
 	}
+
 }
 
 IMPLEMENT_FUNCTION(Mertens, function35, 35) {
@@ -475,17 +478,16 @@ IMPLEMENT_FUNCTION(Mertens, chapter2, 43) {
 		_data->getData()->field_495 = EntityData::kField495_3;
 		_data->getData()->inventoryItem = kItemNone;
 
-		ENTITY_PARAM(8, 0, 6) = 0;
-		ENTITY_PARAM(8, 0, 8) = 0;
+		ENTITY_PARAM(0, 6) = 0;
+		ENTITY_PARAM(0, 8) = 0;
 
-		// FIXME save param 8 and call reset
-		ENTITY_PARAM(8, 0, 1) = 0;
-		ENTITY_PARAM(8, 0, 2) = 0;
-		ENTITY_PARAM(8, 0, 3) = 0;
-		ENTITY_PARAM(8, 0, 4) = 0;
-		ENTITY_PARAM(8, 0, 5) = 0;
-		ENTITY_PARAM(8, 0, 6) = 0;
-		ENTITY_PARAM(8, 0, 7) = 0;
+		ENTITY_PARAM(0, 1) = 0;
+		ENTITY_PARAM(0, 2) = 0;
+		ENTITY_PARAM(0, 3) = 0;
+		ENTITY_PARAM(0, 4) = 0;
+		ENTITY_PARAM(0, 5) = 0;
+		ENTITY_PARAM(0, 6) = 0;
+		ENTITY_PARAM(0, 7) = 0;
 		break;
 
 	case kAction18:
@@ -515,18 +517,18 @@ IMPLEMENT_FUNCTION(Mertens, chapter3, 45) {
 		_data->getData()->field_495 = EntityData::kField495_3;
 		_data->getData()->inventoryItem = kItemNone;
 
-		ENTITY_PARAM(8, 0, 6) = 0;
-		ENTITY_PARAM(8, 0, 8) = 0;
+		ENTITY_PARAM(0, 6) = 0;
+		ENTITY_PARAM(0, 8) = 0;
 
-		ENTITY_PARAM(8, 1, 1) = 0;
-		ENTITY_PARAM(8, 1, 2) = 0;
-		ENTITY_PARAM(8, 1, 3) = 0;
-		ENTITY_PARAM(8, 1, 4) = 0;
-		ENTITY_PARAM(8, 1, 5) = 0;
-		ENTITY_PARAM(8, 1, 6) = 0;
-		ENTITY_PARAM(8, 1, 7) = 0;
+		ENTITY_PARAM(1, 1) = 0;
+		ENTITY_PARAM(1, 2) = 0;
+		ENTITY_PARAM(1, 3) = 0;
+		ENTITY_PARAM(1, 4) = 0;
+		ENTITY_PARAM(1, 5) = 0;
+		ENTITY_PARAM(1, 6) = 0;
+		ENTITY_PARAM(1, 7) = 0;
 
-		ENTITY_PARAM(8, 2, 3) = 0;
+		ENTITY_PARAM(2, 3) = 0;
 		break;
 
 	case kAction18:
@@ -558,18 +560,18 @@ IMPLEMENT_FUNCTION(Mertens, chapter4, 47) {
 		_data->getData()->field_495 = EntityData::kField495_3;
 		_data->getData()->inventoryItem = kItemNone;
 
-		ENTITY_PARAM(8, 0, 6) = 0;
-		ENTITY_PARAM(8, 0, 8) = 0;
+		ENTITY_PARAM(0, 6) = 0;
+		ENTITY_PARAM(0, 8) = 0;
 
-		ENTITY_PARAM(8, 1, 1) = 0;
-		ENTITY_PARAM(8, 1, 2) = 0;
-		ENTITY_PARAM(8, 1, 3) = 0;
-		ENTITY_PARAM(8, 1, 4) = 0;
-		ENTITY_PARAM(8, 1, 5) = 0;
-		ENTITY_PARAM(8, 1, 6) = 0;
-		ENTITY_PARAM(8, 1, 7) = 0;
+		ENTITY_PARAM(1, 1) = 0;
+		ENTITY_PARAM(1, 2) = 0;
+		ENTITY_PARAM(1, 3) = 0;
+		ENTITY_PARAM(1, 4) = 0;
+		ENTITY_PARAM(1, 5) = 0;
+		ENTITY_PARAM(1, 6) = 0;
+		ENTITY_PARAM(1, 7) = 0;
 
-		ENTITY_PARAM(8, 2, 4) = 0;
+		ENTITY_PARAM(2, 4) = 0;
 		break;
 
 	case kAction18:
@@ -608,7 +610,7 @@ IMPLEMENT_FUNCTION(Mertens, chapter5, 50) {
 }
 
 IMPLEMENT_FUNCTION(Mertens, function51, 51) {
-	if (savepoint->action == 70549068)
+	if (savepoint->action == kAction70549068)
 		setup_function52();
 }
 

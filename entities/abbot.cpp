@@ -148,22 +148,22 @@ IMPLEMENT_FUNCTION(Abbot, function14, 14) {
 }
 
 IMPLEMENT_FUNCTION(Abbot, chapter1, 15) {
-	if (savepoint->action != kActionDefault)
-		return;
-
-	getSavePoints()->addData(kEntityAbbot, kAction203073664, 0);
+	if (savepoint->action == kActionDefault)
+		getSavePoints()->addData(kEntityAbbot, kAction203073664, 0);
 }
 
 IMPLEMENT_FUNCTION(Abbot, chapter2, 16) {
-	if (savepoint->action != kActionDefault)
-		return;
-
-	getEntities()->drawSequences(kEntityAbbot);
+	if (savepoint->action == kActionDefault)
+		getEntities()->drawSequences(kEntityAbbot);
 }
 
 IMPLEMENT_FUNCTION(Abbot, chapter3, 17) {
 	switch (savepoint->action) {
 	default:
+		break;
+
+	case kActionNone:
+		setup_function18();
 		break;
 
 	case kActionDefault:
@@ -175,10 +175,6 @@ IMPLEMENT_FUNCTION(Abbot, chapter3, 17) {
 		_data->getData()->inventoryItem = kItemNone;
 		_data->getData()->field_4A5 = EntityData::kField4A5_0;
 
-		break;
-
-	case kActionNone:
-		setup_function18();
 		break;
 	}
 }
@@ -272,18 +268,18 @@ IMPLEMENT_FUNCTION(Abbot, chapter4, 39) {
 	default:
 		break;
 
+	case kActionNone:
+		setup_function41();
+		break;
+
 	case kActionDefault:
 		getEntities()->drawSequences(kEntityAbbot);
 
 		_data->getData()->field_495 = EntityData::kField495_5;
 		_data->getData()->inventoryItem = kItemNone;
-		
-		ENTITY_PARAM(8, 0, 1) = 0;
 
-		break;
+		ENTITY_PARAM(0, 1) = 0;
 
-	case kActionNone:
-		setup_function41();
 		break;
 	}
 }
@@ -333,6 +329,10 @@ IMPLEMENT_FUNCTION(Abbot, chapter5, 50) {
 	default:
 		break;
 
+	case kActionNone:
+		setup_function51();
+		break;
+
 	case kActionDefault:
 		getEntities()->drawSequences(kEntityAbbot);
 
@@ -342,10 +342,6 @@ IMPLEMENT_FUNCTION(Abbot, chapter5, 50) {
 		_data->getData()->inventoryItem = kItemNone;
 		_data->getData()->field_4A5 = EntityData::kField4A5_0;
 
-		break;
-
-	case kActionNone:
-		setup_function51();
 		break;
 	}
 }

@@ -25,6 +25,8 @@
 
 #include "lastexpress/entities/ivo.h"
 
+#include "lastexpress/game/entities.h"
+#include "lastexpress/game/logic.h"
 #include "lastexpress/game/object.h"
 #include "lastexpress/game/savepoint.h"
 #include "lastexpress/game/state.h"
@@ -128,18 +130,18 @@ IMPLEMENT_FUNCTION(Ivo, chapter1, 14) {
 	default:
 		break;
 
+	case kActionNone:
+		CALL_CHAPTER_ACTION_NONE(15)
+		break;
+
 	case kActionDefault:
 		getObjects()->update(kObjectCompartmentH, kEntityNone, kLocation3, kCursorHandKnock, kCursorHand);
-		getObjects()->update(kObject47, kEntityNone, kLocationNone, kCursorKeepValue, kCursorKeepValue);		
+		getObjects()->update(kObject47, kEntityNone, kLocationNone, kCursorKeepValue, kCursorKeepValue);
 
 		_data->getData()->field_491 = EntityData::kField491_4691;
 		_data->getData()->field_493 = EntityData::kField493_1;
-		_data->getData()->field_495 = EntityData::kField495_5;		
+		_data->getData()->field_495 = EntityData::kField495_5;
 
-		break;
-
-	case kActionNone:
-		CALL_CHAPTER_ACTION_NONE(15)
 		break;
 	}
 }
@@ -157,7 +159,28 @@ IMPLEMENT_FUNCTION(Ivo, function17, 17) {
 }
 
 IMPLEMENT_FUNCTION(Ivo, chapter2, 18) {
-	error("Ivo: callback function 18 not implemented!");
+	switch (savepoint->action) {
+	default:
+		break;
+
+	case kActionNone:
+		CALL_CHAPTER_ACTION(19, 1777500)
+		break;
+
+	case kActionDefault:
+		getEntities()->drawSequences(kEntityIvo);
+
+		_data->getData()->field_491 = EntityData::kField491_2740;
+		_data->getData()->field_493 = EntityData::kField493_1;
+		_data->getData()->field_495 = EntityData::kField495_4;
+		_data->getData()->field_4A5 = EntityData::kField4A5_0;
+		_data->getData()->inventoryItem = kItemNone;
+
+		getObjects()->update(kObjectCompartmentH, kEntityNone, kLocation3, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObject47, kEntityNone, kLocationNone, kCursorKeepValue, kCursorKeepValue);
+
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Ivo, function19, 19) {
@@ -173,7 +196,25 @@ IMPLEMENT_FUNCTION(Ivo, function21, 21) {
 }
 
 IMPLEMENT_FUNCTION(Ivo, chapter3, 22) {
-	error("Ivo: callback function 22 not implemented!");
+	switch (savepoint->action) {
+	default:
+		break;
+
+	case kActionNone:
+		setup_function23();
+		break;
+
+	case kActionDefault:
+		getEntities()->drawSequences(kEntityIvo);
+
+		_data->getData()->field_491 = EntityData::kField491_2740;
+		_data->getData()->field_493 = EntityData::kField493_1;
+		_data->getData()->field_495 = EntityData::kField495_4;
+		_data->getData()->field_4A5 = EntityData::kField4A5_0;
+		_data->getData()->inventoryItem = kItemNone;
+
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Ivo, function23, 23) {
@@ -181,7 +222,20 @@ IMPLEMENT_FUNCTION(Ivo, function23, 23) {
 }
 
 IMPLEMENT_FUNCTION(Ivo, chapter4, 24) {
-	error("Ivo: callback function 24 not implemented!");
+	switch (savepoint->action) {
+	default:
+		break;
+
+	case kActionNone:
+		setup_function25();
+		break;
+
+	case kActionDefault:
+		_data->getData()->field_493 = EntityData::kField493_1;
+		_data->getData()->field_495 = EntityData::kField495_5;
+		_data->getData()->inventoryItem = kItemNone;
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Ivo, function25, 25) {
@@ -205,7 +259,24 @@ IMPLEMENT_FUNCTION(Ivo, function29, 29) {
 }
 
 IMPLEMENT_FUNCTION(Ivo, chapter5, 30) {
-	error("Ivo: callback function 30 not implemented!");
+	switch (savepoint->action) {
+	default:
+		break;
+
+	case kActionNone:
+		setup_function31();
+		break;
+
+	case kActionDefault:
+		getEntities()->drawSequences(kEntityIvo);
+
+		_data->getData()->field_491 = EntityData::kField491_540;
+		_data->getData()->field_493 = EntityData::kField493_1;
+		_data->getData()->field_495 = EntityData::kField495_1;
+		_data->getData()->inventoryItem = kItemNone;
+
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Ivo, function31, 31) {

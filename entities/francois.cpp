@@ -25,6 +25,9 @@
 
 #include "lastexpress/entities/francois.h"
 
+#include "lastexpress/game/entities.h"
+#include "lastexpress/game/logic.h"
+#include "lastexpress/game/object.h"
 #include "lastexpress/game/savepoint.h"
 #include "lastexpress/game/state.h"
 
@@ -136,15 +139,15 @@ IMPLEMENT_FUNCTION(Francois, chapter1, 17) {
 	default:
 		break;
 
+	case kActionNone:
+		CALL_CHAPTER_ACTION_NONE(18)
+		break;
+
 	case kActionDefault:
 		_data->getData()->field_491 = EntityData::kField491_5790;
 		_data->getData()->field_493 = EntityData::kField493_1;
-		_data->getData()->field_495 = EntityData::kField495_4;		
+		_data->getData()->field_495 = EntityData::kField495_4;
 
-		break;
-
-	case kActionNone:
-		CALL_CHAPTER_ACTION_NONE(18)
 		break;
 	}
 }
@@ -162,7 +165,25 @@ IMPLEMENT_FUNCTION(Francois, function20, 20) {
 }
 
 IMPLEMENT_FUNCTION(Francois, chapter2, 21) {
-	error("Francois: callback function 21 not implemented!");
+	switch (savepoint->action) {
+	default:
+		break;
+
+	case kActionNone:
+		setup_function22();
+		break;
+
+	case kActionDefault:
+		getEntities()->drawSequences(kEntityFrancois);
+
+		_data->getData()->field_491 = EntityData::kField491_4689;
+		_data->getData()->field_493 = EntityData::kField493_1;
+		_data->getData()->field_495 = EntityData::kField495_5;
+		_data->getData()->field_4A5 = EntityData::kField4A5_0;
+		_data->getData()->inventoryItem = kItemNone;
+
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Francois, function22, 22) {
@@ -174,7 +195,25 @@ IMPLEMENT_FUNCTION(Francois, function23, 23) {
 }
 
 IMPLEMENT_FUNCTION(Francois, chapter3, 24) {
-	error("Francois: callback function 24 not implemented!");
+	switch (savepoint->action) {
+	default:
+		break;
+
+	case kActionNone:
+		setup_function25();
+		break;
+
+	case kActionDefault:
+		getEntities()->drawSequences(kEntityFrancois);
+
+		_data->getData()->field_491 = EntityData::kField491_5790;
+		_data->getData()->field_493 = EntityData::kField493_1;
+		_data->getData()->field_495 = EntityData::kField495_4;
+		_data->getData()->field_4A5 = EntityData::kField4A5_0;
+		_data->getData()->inventoryItem = kItemNone;
+
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Francois, function25, 25) {
@@ -182,7 +221,25 @@ IMPLEMENT_FUNCTION(Francois, function25, 25) {
 }
 
 IMPLEMENT_FUNCTION(Francois, chapter4, 26) {
-	error("Francois: callback function 26 not implemented!");
+	switch (savepoint->action) {
+	default:
+		break;
+
+	case kActionNone:
+		setup_function27();
+		break;
+
+	case kActionDefault:
+		getEntities()->drawSequences(kEntityFrancois);
+
+		_data->getData()->field_491 = EntityData::kField491_5790;
+		_data->getData()->field_493 = EntityData::kField493_1;
+		_data->getData()->field_495 = EntityData::kField495_4;
+		_data->getData()->field_4A5 = EntityData::kField4A5_0;
+		_data->getData()->inventoryItem = kItemNone;
+
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Francois, function27, 27) {
@@ -190,7 +247,25 @@ IMPLEMENT_FUNCTION(Francois, function27, 27) {
 }
 
 IMPLEMENT_FUNCTION(Francois, chapter5, 28) {
-	error("Francois: callback function 28 not implemented!");
+	switch (savepoint->action) {
+	default:
+		break;
+
+	case kActionNone:
+		setup_function29();
+		break;
+
+	case kActionDefault:
+		getEntities()->drawSequences(kEntityFrancois);
+
+		_data->getData()->field_491 = EntityData::kField491_3969;
+		_data->getData()->field_493 = EntityData::kField493_1;
+		_data->getData()->field_495 = EntityData::kField495_5;
+		_data->getData()->field_4A5 = EntityData::kField4A5_0;
+		_data->getData()->inventoryItem = kItemNone;
+
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Francois, function29, 29) {

@@ -25,6 +25,9 @@
 
 #include "lastexpress/entities/alouan.h"
 
+#include "lastexpress/game/entities.h"
+#include "lastexpress/game/logic.h"
+#include "lastexpress/game/object.h"
 #include "lastexpress/game/savepoint.h"
 #include "lastexpress/game/state.h"
 
@@ -101,15 +104,15 @@ IMPLEMENT_FUNCTION(Alouan, chapter1, 10) {
 	default:
 		break;
 
+	case kActionNone:
+		CALL_CHAPTER_ACTION_NONE(11)
+		break;
+
 	case kActionDefault:
 		_data->getData()->field_491 = EntityData::kField491_2740;
 		_data->getData()->field_493 = EntityData::kField493_1;
-		_data->getData()->field_495 = EntityData::kField495_3;		
+		_data->getData()->field_495 = EntityData::kField495_3;
 
-		break;
-
-	case kActionNone:
-		CALL_CHAPTER_ACTION_NONE(11)
 		break;
 	}
 }
@@ -123,7 +126,18 @@ IMPLEMENT_FUNCTION(Alouan, function12, 12) {
 }
 
 IMPLEMENT_FUNCTION(Alouan, chapter2, 13) {
-	error("Alouan: callback function 13 not implemented!");
+	if (savepoint->action != kActionDefault)
+		return;
+
+	getEntities()->drawSequences(kEntityAlouan);
+
+	_data->getData()->field_491 = EntityData::kField491_2740;
+	_data->getData()->field_493 = EntityData::kField493_1;
+	_data->getData()->field_495 = EntityData::kField495_3;
+	_data->getData()->field_4A5 = EntityData::kField4A5_0;
+	_data->getData()->inventoryItem = kItemNone;
+
+	setup_function14();
 }
 
 IMPLEMENT_FUNCTION(Alouan, function14, 14) {
@@ -131,7 +145,23 @@ IMPLEMENT_FUNCTION(Alouan, function14, 14) {
 }
 
 IMPLEMENT_FUNCTION(Alouan, chapter3, 15) {
-	error("Alouan: callback function 15 not implemented!");
+	switch (savepoint->action) {
+	default:
+		break;
+
+	case kActionNone:
+		setup_function16();
+		break;
+
+	case kActionDefault:
+		getEntities()->drawSequences(kEntityAlouan);
+
+		_data->getData()->field_491 = EntityData::kField491_2740;
+		_data->getData()->field_493 = EntityData::kField493_1;
+		_data->getData()->field_495 = EntityData::kField495_3;
+
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Alouan, function16, 16) {
@@ -139,7 +169,23 @@ IMPLEMENT_FUNCTION(Alouan, function16, 16) {
 }
 
 IMPLEMENT_FUNCTION(Alouan, chapter4, 17) {
-	error("Alouan: callback function 17 not implemented!");
+	switch (savepoint->action) {
+	default:
+		break;
+
+	case kActionNone:
+		setup_function18();
+		break;
+
+	case kActionDefault:
+		getEntities()->drawSequences(kEntityAlouan);
+
+		_data->getData()->field_491 = EntityData::kField491_2740;
+		_data->getData()->field_493 = EntityData::kField493_1;
+		_data->getData()->field_495 = EntityData::kField495_3;
+
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Alouan, function18, 18) {
@@ -151,7 +197,25 @@ IMPLEMENT_FUNCTION(Alouan, function19, 19) {
 }
 
 IMPLEMENT_FUNCTION(Alouan, chapter5, 20) {
-	error("Alouan: callback function 20 not implemented!");
+	switch (savepoint->action) {
+	default:
+		break;
+
+	case kActionNone:
+		setup_function21();
+		break;
+
+	case kActionDefault:
+		getEntities()->drawSequences(kEntityAlouan);
+
+		_data->getData()->field_491 = EntityData::kField491_3969;
+		_data->getData()->field_493 = EntityData::kField493_1;
+		_data->getData()->field_495 = EntityData::kField495_5;
+		_data->getData()->field_4A5 = EntityData::kField4A5_0;
+		_data->getData()->inventoryItem = kItemNone;
+
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Alouan, function21, 21) {

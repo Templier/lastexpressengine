@@ -25,9 +25,11 @@
 
 #include "lastexpress/entities/hadija.h"
 
+#include "lastexpress/game/entities.h"
+#include "lastexpress/game/logic.h"
+#include "lastexpress/game/object.h"
 #include "lastexpress/game/savepoint.h"
 #include "lastexpress/game/state.h"
-
 #include "lastexpress/lastexpress.h"
 #include "lastexpress/helpers.h"
 
@@ -101,15 +103,15 @@ IMPLEMENT_FUNCTION(Hadija, chapter1, 10) {
 	default:
 		break;
 
+	case kActionNone:
+		CALL_CHAPTER_ACTION_NONE(11)
+		break;
+
 	case kActionDefault:
 		_data->getData()->field_491 = EntityData::kField491_4070;
 		_data->getData()->field_493 = EntityData::kField493_1;
-		_data->getData()->field_495 = EntityData::kField495_3;		
+		_data->getData()->field_495 = EntityData::kField495_3;
 
-		break;
-
-	case kActionNone:
-		CALL_CHAPTER_ACTION_NONE(11)
 		break;
 	}
 }
@@ -123,7 +125,18 @@ IMPLEMENT_FUNCTION(Hadija, function12, 12) {
 }
 
 IMPLEMENT_FUNCTION(Hadija, chapter2, 13) {
-	error("Hadija: callback function 13 not implemented!");
+	if (savepoint->action == kActionDefault) {
+
+		getEntities()->drawSequences(kEntityHadija);
+
+		_data->getData()->field_491 = EntityData::kField491_3050;
+		_data->getData()->field_493 = EntityData::kField493_1;
+		_data->getData()->field_495 = EntityData::kField495_3;
+		_data->getData()->field_4A5 = EntityData::kField4A5_0;
+		_data->getData()->inventoryItem = kItemNone;
+
+		setup_function14();
+	}
 }
 
 IMPLEMENT_FUNCTION(Hadija, function14, 14) {
@@ -131,7 +144,23 @@ IMPLEMENT_FUNCTION(Hadija, function14, 14) {
 }
 
 IMPLEMENT_FUNCTION(Hadija, chapter3, 15) {
-	error("Hadija: callback function 15 not implemented!");
+	switch (savepoint->action) {
+	default:
+		break;
+
+	case kActionNone:
+		setup_function16();
+		break;
+
+	case kActionDefault:
+		getEntities()->drawSequences(kEntityHadija);
+
+		_data->getData()->field_491 = EntityData::kField491_4070;
+		_data->getData()->field_493 = EntityData::kField493_1;
+		_data->getData()->field_495 = EntityData::kField495_3;
+
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Hadija, function16, 16) {
@@ -139,7 +168,20 @@ IMPLEMENT_FUNCTION(Hadija, function16, 16) {
 }
 
 IMPLEMENT_FUNCTION(Hadija, chapter4, 17) {
-	error("Hadija: callback function 17 not implemented!");
+	switch (savepoint->action) {
+	default:
+		break;
+
+	case kActionNone:
+		setup_function18();
+		break;
+
+	case kActionDefault:
+		_data->getData()->field_491 = EntityData::kField491_4070;
+		_data->getData()->field_493 = EntityData::kField493_1;
+		_data->getData()->field_495 = EntityData::kField495_3;
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Hadija, function18, 18) {
@@ -151,7 +193,25 @@ IMPLEMENT_FUNCTION(Hadija, function19, 19) {
 }
 
 IMPLEMENT_FUNCTION(Hadija, chapter5, 20) {
-	error("Hadija: callback function 20 not implemented!");
+	switch (savepoint->action) {
+	default:
+		break;
+
+	case kActionNone:
+		setup_function21();
+		break;
+
+	case kActionDefault:
+		getEntities()->drawSequences(kEntityHadija);
+
+		_data->getData()->field_491 = EntityData::kField491_3969;
+		_data->getData()->field_493 = EntityData::kField493_1;
+		_data->getData()->field_495 = EntityData::kField495_5;
+		_data->getData()->field_4A5 = EntityData::kField4A5_0;
+		_data->getData()->inventoryItem = kItemNone;
+
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Hadija, function21, 21) {

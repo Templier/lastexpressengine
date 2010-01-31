@@ -72,13 +72,15 @@ Logic::~Logic() {
 //////////////////////////////////////////////////////////////////////////
 
 void Logic::startGame() {
+	// Load scene data for the first cd
+	loadSceneDataFile(kArchiveCd1);
+
 	// Init data
 	getInventory()->init();
 
 	_entities->setup(kChapter1);
 
 	showMenu(false);
-	//loadScene(1018);
 	loadScene(kSceneDefault);
 
 	// Set Cursor type
@@ -196,6 +198,20 @@ bool Logic::handleMouseEvent(Common::Event ev) {
 //////////////////////////////////////////////////////////////////////////
 // Scene
 //////////////////////////////////////////////////////////////////////////
+void Logic::loadSceneDataFile(ArchiveIndex archive) {
+	switch(archive) {
+	case kArchiveCd1:
+	case kArchiveCd2:
+	case kArchiveCd3:
+		_engine->getSceneManager()->load(_engine->getResMan()->getFileStream(Common::String::printf("CD%iTRAIN.DAT", archive)));
+		break;
+
+	default:
+	case kArchiveAll:
+		error("Logic::loadSceneDataFile: Invalid archive index (must be [1-3], was %d", archive);
+		break;
+	}
+}
 
 void Logic::loadScene(uint32 index) {
 
