@@ -89,7 +89,7 @@ IMPLEMENT_FUNCTION_NOSETUP(Max, function3, 3) {
 		break;
 
 	case kActionDefault:
-		getEntities()->storeSequenceName(kEntityMax, ((EntityData::EntityParametersSIIS*)_data->getCurrentParameters())->seq1);
+		getEntities()->drawSequence2(kEntityMax, ((EntityData::EntityParametersSIIS*)_data->getCurrentParameters())->seq1);
 		break;
 	}
 }
@@ -108,7 +108,7 @@ IMPLEMENT_FUNCTION_SI(Max, function4, 4) {
 		break;
 
 	case kActionDefault:
-		getEntities()->storeSequenceName(kEntityMax, params->seq1);
+		getEntities()->drawSequence2(kEntityMax, params->seq1);
 		getEntities()->updateFields0(kEntityMax, (EntityIndex)params->param2);
 		break;
 	}

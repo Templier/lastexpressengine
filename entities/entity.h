@@ -90,6 +90,14 @@ public:
 		kField495_7 = 7
 	};
 
+	enum Field49AValue {
+		kField49A_0 = 0,
+		kField49A_1 = 1,
+		kField49A_2 = 2,
+		kField49A_3 = 3,
+		kField49A_4 = 4
+	};
+
 	enum Field4A5Value {
 		kField4A5_0 = 0,
 		kField4A5_1 = 1,
@@ -259,7 +267,7 @@ public:
 		Field495Value field_495;
 		//int16 field_497;
 		InventoryItem inventoryItem;
-		byte field_49A;
+		Field49AValue field_49A;
 		int16 field_49B;
 		int16 field_49D;
 
@@ -267,6 +275,8 @@ public:
 		int16 field_4A3;
 		Field4A5Value field_4A5;
 		byte field_4A8;
+		byte field_4A9;
+		byte field_4AA;
 
 		char sequenceName3[9];
 		char sequenceName2[9];
@@ -284,8 +294,8 @@ public:
 			field_493 = EntityData::kField493_0;
 			field_495 = EntityData::kField495_0;
 			//field_497 = 0;
-			inventoryItem = (InventoryItem)0;
-			field_49A = 0;
+			inventoryItem = kItemNone;
+			field_49A = EntityData::kField49A_0;
 			field_49B = 0;
 			field_49D = 0;
 
@@ -293,6 +303,8 @@ public:
 			field_4A3 = 30;
 			field_4A5 = EntityData::kField4A5_0;
 			field_4A8 = 0;
+			field_4A9 = 0;
+			field_4AA = 0;
 
 			memset(&sequenceName3, 0, 9 * sizeof(char));
 			memset(&sequenceName2, 0, 9 * sizeof(char));
@@ -302,7 +314,6 @@ public:
 			sequence1 = NULL;
 			sequence2 = NULL;
 			sequence3 = NULL;
-
 		}
 	};
 

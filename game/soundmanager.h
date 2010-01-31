@@ -80,21 +80,31 @@ class StreamedSound;
 
 class SoundManager {
 public:
-
 	SoundManager(LastExpressEngine *engine);
 	~SoundManager();
+
+	// State (FIXME: to be renamed when we know more about it)
+	void resetState() { _state |= 1; }
 
 	// Sound streams
 	StreamedSound *getMusicStream() const { return _music; }
 	StreamedSound *getSfxStream() const { return _sfx; }
 
 private:
+	enum SoundState {
+		kSoundState0 = 0,
+		kSoundState1 = 1,
+		kSoundState2 = 2
+	};
 
 	struct SoundEntry_t {
 
 	};
 
 	LastExpressEngine* _engine;
+
+	// State
+	int _state;
 
 	// Sound streams
 	StreamedSound *_music;

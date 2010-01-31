@@ -63,10 +63,10 @@ public:
 	void updateFields2(EntityIndex entity1, EntityIndex entity2);
 	void updateFields3(EntityIndex entity1, EntityIndex entity2);
 
-	// Sequences
-	void storeSequenceName(EntityIndex entity, const char* sequence);
-	void drawSequence(EntityIndex entity, const char* sequence);
-	void drawSequences(EntityIndex entity);
+	// Sequences	
+	void drawSequence(EntityIndex index, const char* sequence);
+	void drawSequence2(EntityIndex index, const char* sequence);
+	void drawSequences(EntityIndex index);
 
 	// Accessors
 	Entity *get(EntityIndex entity);
@@ -99,6 +99,11 @@ private:
 
 	void executeCallbacks();
 	void processEntity(EntityIndex entity);
+
+	void drawSequenceInternal(EntityIndex index, const char* sequence, EntityData::Field49AValue field_49A);
+	void drawSequencesInternal(EntityIndex index, EntityData::Field49AValue field_49A, bool unknown);
+
+	void getSequenceName(EntityIndex index, EntityData::Field49AValue field_49A, char *sequence1, char *sequence2);
 };
 
 } // End of namespace LastExpress

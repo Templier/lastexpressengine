@@ -71,8 +71,10 @@
 #include "lastexpress/game/savepoint.h"
 #include "lastexpress/game/state.h"
 
+#include "lastexpress/graphics.h"
 #include "lastexpress/helpers.h"
 #include "lastexpress/lastexpress.h"
+#include "lastexpress/resource.h"
 
 namespace LastExpress {
 
@@ -335,22 +337,97 @@ void Entities::saveLoadWithSerializer(Common::Serializer &ser) {
 //////////////////////////////////////////////////////////////////////////
 // Drawing
 //////////////////////////////////////////////////////////////////////////
-void Entities::storeSequenceName(EntityIndex entity, const char* sequence) {
-	debugC(8, kLastExpressDebugLogic, "Storing sequence %s for entity %d", sequence, entity);
-
-	error("Entities::storeSequenceName: not implemented!");
+void Entities::drawSequence(EntityIndex index, const char* sequence) {
+	drawSequenceInternal(index, sequence, EntityData::kField49A_3);
 }
 
-void Entities::drawSequence(EntityIndex entity, const char* sequence) {
-	debugC(8, kLastExpressDebugLogic, "Drawing sequence %s for entity %d", sequence, entity);
-
-	warning("Entities::drawSequence: not implemented!");
+void Entities::drawSequence2(EntityIndex index, const char* sequence) {
+	drawSequenceInternal(index, sequence, EntityData::kField49A_4);
 }
 
-void Entities::drawSequences(EntityIndex entity) {
-	debugC(8, kLastExpressDebugLogic, "Drawing sequences for entity %d", entity);
+void Entities::drawSequences(EntityIndex index) {
+	debugC(8, kLastExpressDebugLogic, "Drawing sequences for entity %d", index);
+
+	//
 
 	warning("Entities::drawSequences: not implemented!");
+}
+
+void Entities::drawSequenceInternal(EntityIndex index, const char* sequence, EntityData::Field49AValue field_49A) {
+	debugC(8, kLastExpressDebugLogic, "Drawing sequence %s for entity %d (%d)", sequence, index, field_49A);
+
+	Entity *entity = _entities[index];
+
+	// Copy sequence name
+	Common::String processedName(sequence);
+	processedName.toUppercase();
+	processedName += "-";
+	
+	strcpy(entity->getData()->getData()->sequenceName, processedName.c_str());
+
+	// Reset fields	
+	entity->getData()->getData()->field_49B = 0;
+	entity->getData()->getData()->field_49D = 0;
+	entity->getData()->getData()->field_4A1 = 0;
+
+	drawSequencesInternal(index, field_49A, true);
+}
+
+void Entities::drawSequencesInternal(EntityIndex index, EntityData::Field49AValue field_49A, bool unknown) {	
+	//debugC(8, kLastExpressDebugLogic, "Drawing sequences for entity %d (%d)", index, field_49A);
+
+	// HACK draw the sequence stored in SequenceName
+	char seq1[13];
+	char seq2[13];
+	memset(&seq1, 0, 13 * sizeof(char));
+	memset(&seq2, 0, 13 * sizeof(char));
+
+	getSequenceName(index, field_49A, (char*)&seq1, (char*)&seq2);
+
+	debugC(8, kLastExpressDebugLogic, "  sequence1: %s", seq1);	
+		
+	//Sequence sequence;
+	//if (sequence.loadFile(seq1)) {
+	//	clearBg(GraphicsManager::kBackgroundOverlay);
+
+	//	AnimFrame *frame = sequence.getFrame(0);
+	//	_engine->getGraphicsManager()->draw(frame, GraphicsManager::kBackgroundOverlay);
+	//	delete frame;
+
+	//	askForRedraw();
+	//}
+
+	warning("Entities::drawSequencesInternal: not implemented!");
+}
+
+void Entities::getSequenceName(EntityIndex index, EntityData::Field49AValue field_49A, char *sequence1, char *sequence2) {
+	Entity *entity = _entities[index];
+	EntityData::EntityCallData *data = entity->getData()->getData();
+	Scene *_currentScene = getSceneObject(getState()->scene);
+
+	// reset fields
+	data->field_4A9 = 0;
+	data->field_4AA = 0;
+
+	switch (field_49A) {
+	default:
+		error("Invalid value for field_49A: %d", field_49A);
+		break;
+
+	case EntityData::kField49A_1:
+		break;
+
+	case EntityData::kField49A_2:
+		break;
+
+	// First part of sequence is already set
+	case EntityData::kField49A_3:
+	case EntityData::kField49A_4:
+		sprintf(sequence1, "%s%02d.seq", data->sequenceName, _currentScene->getHeader()->field_15);
+		break;
+	}
+
+	delete _currentScene;
 }
 
 //////////////////////////////////////////////////////////////////////////

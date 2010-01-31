@@ -30,6 +30,7 @@
 #include "lastexpress/game/logic.h"
 #include "lastexpress/game/object.h"
 #include "lastexpress/game/savepoint.h"
+#include "lastexpress/game/soundmanager.h"
 #include "lastexpress/game/state.h"
 
 #include "lastexpress/helpers.h"
@@ -95,7 +96,8 @@ IMPLEMENT_FUNCTION(Chapters, chapter1_init, 7) {
 		return;
 
 	getProgress().chapter = kChapter1;
-	// TODO function call modifying an unknown global var
+	_engine->getSoundManager()->resetState();
+
 	getState()->time = kTimeChapter1;
 	getState()->timeDelta = 0;
 	getProgress().field_50 = 1;
@@ -154,11 +156,19 @@ IMPLEMENT_FUNCTION(Chapters, chapter1_init, 7) {
 	getObjects()->update(kObjectHandleOutsideRight, kEntityNone, kLocation1, kCursorNormal, kCursorHandKnock);
 	getObjects()->update(kObject101, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
 
-	// TODO call another function 8
+	setup_function8();
 }
 
 IMPLEMENT_FUNCTION(Chapters, function8, 8) {
-	error("Chapters: callback function 8 not implemented!");
+	switch (savepoint->action) {
+	default:
+		error("Chapters: callback function 8 not implemented!");
+		break;
+
+	case kActionDefault:
+		CURRENT_PARAM(2) = 225 * (4 * random(5) + 20);
+		break;
+	}	
 }
 
 IMPLEMENT_FUNCTION(Chapters, function9, 9) {
