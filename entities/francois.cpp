@@ -179,7 +179,7 @@ IMPLEMENT_FUNCTION(Francois, chapter2, 21) {
 		_data->getData()->field_491 = EntityData::kField491_4689;
 		_data->getData()->field_493 = EntityData::kField493_1;
 		_data->getData()->field_495 = EntityData::kField495_5;
-		_data->getData()->field_4A5 = EntityData::kField4A5_0;
+		_data->getData()->clothes = EntityData::kClothesDefault;
 		_data->getData()->inventoryItem = kItemNone;
 
 		break;
@@ -209,7 +209,7 @@ IMPLEMENT_FUNCTION(Francois, chapter3, 24) {
 		_data->getData()->field_491 = EntityData::kField491_5790;
 		_data->getData()->field_493 = EntityData::kField493_1;
 		_data->getData()->field_495 = EntityData::kField495_4;
-		_data->getData()->field_4A5 = EntityData::kField4A5_0;
+		_data->getData()->clothes = EntityData::kClothesDefault;
 		_data->getData()->inventoryItem = kItemNone;
 
 		break;
@@ -235,7 +235,7 @@ IMPLEMENT_FUNCTION(Francois, chapter4, 26) {
 		_data->getData()->field_491 = EntityData::kField491_5790;
 		_data->getData()->field_493 = EntityData::kField493_1;
 		_data->getData()->field_495 = EntityData::kField495_4;
-		_data->getData()->field_4A5 = EntityData::kField4A5_0;
+		_data->getData()->clothes = EntityData::kClothesDefault;
 		_data->getData()->inventoryItem = kItemNone;
 
 		break;
@@ -261,7 +261,7 @@ IMPLEMENT_FUNCTION(Francois, chapter5, 28) {
 		_data->getData()->field_491 = EntityData::kField491_3969;
 		_data->getData()->field_493 = EntityData::kField493_1;
 		_data->getData()->field_495 = EntityData::kField495_5;
-		_data->getData()->field_4A5 = EntityData::kField4A5_0;
+		_data->getData()->clothes = EntityData::kClothesDefault;
 		_data->getData()->inventoryItem = kItemNone;
 
 		break;

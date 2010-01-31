@@ -122,7 +122,7 @@ IMPLEMENT_FUNCTION(Mertens, function6, 6) {
 		break;
 
 	case kActionNone:
-		if (_data->getData()->field_49A != 4) {
+		if (_data->getData()->direction != 4) {
 			CALL_PREVIOUS_SAVEPOINT(kEntityMertens)
 			break;
 		}

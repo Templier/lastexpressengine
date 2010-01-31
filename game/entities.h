@@ -100,10 +100,10 @@ private:
 	void executeCallbacks();
 	void processEntity(EntityIndex entity);
 
-	void drawSequenceInternal(EntityIndex index, const char* sequence, EntityData::Field49AValue field_49A);
-	void drawSequencesInternal(EntityIndex index, EntityData::Field49AValue field_49A, bool unknown);
+	void drawSequenceInternal(EntityIndex index, const char* sequence, EntityData::Direction direction);
+	void drawSequencesInternal(EntityIndex index, EntityData::Direction direction, bool unknown);
 
-	void getSequenceName(EntityIndex index, EntityData::Field49AValue field_49A, char *sequence1, char *sequence2);
+	void getSequenceName(EntityIndex index, EntityData::Direction direction, char *sequence1, char *sequence2);
 };
 
 } // End of namespace LastExpress

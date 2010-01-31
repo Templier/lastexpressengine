@@ -48,7 +48,7 @@ namespace LastExpress {
 		_data->getData()->field_491 = EntityData::kField491_4840; \
 		_data->getData()->field_493 = EntityData::kField493_1; \
 		_data->getData()->field_495 = EntityData::kField495_4; \
-		_data->getData()->field_4A5 = EntityData::kField4A5_0; \
+		_data->getData()->clothes = EntityData::kClothesDefault; \
 		_data->getData()->inventoryItem = kItemNone; \
 		break; \
 	}
@@ -91,7 +91,7 @@ IMPLEMENT_FUNCTION_II(Sophie, function2, 2) {
 		CURRENT_PARAM(3) = 0;
 
 		// Sophie
-		byte field_49A = _data->getData()->field_49A;
+		byte direction = _data->getData()->direction;
 		EntityData::Field491Value field_491 = _data->getData()->field_491;
 		EntityData::Field495Value field_495 = _data->getData()->field_495;
 
@@ -100,8 +100,8 @@ IMPLEMENT_FUNCTION_II(Sophie, function2, 2) {
 		EntityData::Field495Value rebecca_field_495 = getEntityData(kEntityRebecca)->field_495;
 
 		if (getEntities()->checkFields9(kEntitySophie, kEntityRebecca, 500)
-		 || (field_49A == 1 && field_495 >= rebecca_field_495 && field_491 > rebecca_field_491)
-		 || (field_49A == 2 && field_495 <= rebecca_field_495 && field_491 < rebecca_field_491)) {
+		|| (direction == EntityData::kDirectionUp && field_495 >= rebecca_field_495 && field_491 > rebecca_field_491)
+		|| (direction == EntityData::kDirectionDown && field_495 <= rebecca_field_495 && field_491 < rebecca_field_491)) {
 			 _data->getData()->field_49B = 0;
 			 CURRENT_PARAM(3) = 1;
 		}

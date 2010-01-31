@@ -160,7 +160,7 @@ IMPLEMENT_FUNCTION(Vesna, chapter2, 16) {
 		_data->getData()->field_491 = EntityData::kField491_3050;
 		_data->getData()->field_493 = EntityData::kField493_1;
 		_data->getData()->field_495 = EntityData::kField495_4;
-		_data->getData()->field_4A5 = EntityData::kField4A5_0;
+		_data->getData()->clothes = EntityData::kClothesDefault;
 		_data->getData()->inventoryItem = kItemNone;
 
 		break;
@@ -190,7 +190,7 @@ IMPLEMENT_FUNCTION(Vesna, chapter3, 19) {
 		_data->getData()->field_491 = EntityData::kField491_3050;
 		_data->getData()->field_493 = EntityData::kField493_1;
 		_data->getData()->field_495 = EntityData::kField495_4;
-		_data->getData()->field_4A5 = EntityData::kField4A5_0;
+		_data->getData()->clothes = EntityData::kClothesDefault;
 		_data->getData()->inventoryItem = kItemNone;
 
 		break;

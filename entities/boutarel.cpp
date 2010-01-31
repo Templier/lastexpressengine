@@ -232,7 +232,7 @@ IMPLEMENT_FUNCTION(Boutarel, chapter3, 26) {
 
 		_data->getData()->field_493 = EntityData::kField493_1;
 		_data->getData()->field_495 = EntityData::kField495_4;
-		_data->getData()->field_4A5 = EntityData::kField4A5_0;
+		_data->getData()->clothes = EntityData::kClothesDefault;
 		_data->getData()->inventoryItem = kItemNone;
 
 		getObjects()->update(kObjectCompartmentC, kEntityNone, kLocation2, kCursorKeepValue, kCursorKeepValue);
@@ -273,7 +273,7 @@ IMPLEMENT_FUNCTION(Boutarel, chapter4, 31) {
 		_data->getData()->field_491 = EntityData::kField491_6470;
 		_data->getData()->field_493 = EntityData::kField493_1;
 		_data->getData()->field_495 = EntityData::kField495_4;
-		_data->getData()->field_4A5 = EntityData::kField4A5_0;
+		_data->getData()->clothes = EntityData::kClothesDefault;
 		_data->getData()->inventoryItem = kItemNone;
 
 		getObjects()->update(kObjectCompartmentC, kEntityNone, kLocation2, kCursorKeepValue, kCursorKeepValue);
@@ -314,7 +314,7 @@ IMPLEMENT_FUNCTION(Boutarel, chapter5, 36) {
 		_data->getData()->field_491 = EntityData::kField491_3969;
 		_data->getData()->field_493 = EntityData::kField493_1;
 		_data->getData()->field_495 = EntityData::kField495_5;
-		_data->getData()->field_4A5 = EntityData::kField4A5_0;
+		_data->getData()->clothes = EntityData::kClothesDefault;
 		_data->getData()->inventoryItem = kItemNone;
 
 		break;

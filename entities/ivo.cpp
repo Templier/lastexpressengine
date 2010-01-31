@@ -173,7 +173,7 @@ IMPLEMENT_FUNCTION(Ivo, chapter2, 18) {
 		_data->getData()->field_491 = EntityData::kField491_2740;
 		_data->getData()->field_493 = EntityData::kField493_1;
 		_data->getData()->field_495 = EntityData::kField495_4;
-		_data->getData()->field_4A5 = EntityData::kField4A5_0;
+		_data->getData()->clothes = EntityData::kClothesDefault;
 		_data->getData()->inventoryItem = kItemNone;
 
 		getObjects()->update(kObjectCompartmentH, kEntityNone, kLocation3, kCursorHandKnock, kCursorHand);
@@ -210,7 +210,7 @@ IMPLEMENT_FUNCTION(Ivo, chapter3, 22) {
 		_data->getData()->field_491 = EntityData::kField491_2740;
 		_data->getData()->field_493 = EntityData::kField493_1;
 		_data->getData()->field_495 = EntityData::kField495_4;
-		_data->getData()->field_4A5 = EntityData::kField4A5_0;
+		_data->getData()->clothes = EntityData::kClothesDefault;
 		_data->getData()->inventoryItem = kItemNone;
 
 		break;

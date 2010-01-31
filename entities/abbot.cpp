@@ -173,7 +173,7 @@ IMPLEMENT_FUNCTION(Abbot, chapter3, 17) {
 		_data->getData()->field_493 = EntityData::kField493_1;
 		_data->getData()->field_495 = EntityData::kField495_5;
 		_data->getData()->inventoryItem = kItemNone;
-		_data->getData()->field_4A5 = EntityData::kField4A5_0;
+		_data->getData()->clothes = EntityData::kClothesDefault;
 
 		break;
 	}
@@ -340,7 +340,7 @@ IMPLEMENT_FUNCTION(Abbot, chapter5, 50) {
 		_data->getData()->field_493 = EntityData::kField493_1;
 		_data->getData()->field_495 = EntityData::kField495_5;
 		_data->getData()->inventoryItem = kItemNone;
-		_data->getData()->field_4A5 = EntityData::kField4A5_0;
+		_data->getData()->clothes = EntityData::kClothesDefault;
 
 		break;
 	}

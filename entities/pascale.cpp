@@ -181,7 +181,7 @@ IMPLEMENT_FUNCTION(Pascale, chapter2, 20) {
 		_data->getData()->field_491 = EntityData::kField491_5900;
 		_data->getData()->field_493 = EntityData::kField493_0;
 		_data->getData()->field_495 = EntityData::kField495_5;
-		_data->getData()->field_4A5 = EntityData::kField4A5_1;
+		_data->getData()->clothes = EntityData::kClothes1;
 		_data->getData()->inventoryItem = kItemNone;
 
 		getObjects()->update(kObject65, kEntityNone, kLocationNone, kCursorNormal, kCursorForward);

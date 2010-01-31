@@ -211,7 +211,7 @@ IMPLEMENT_FUNCTION(Milos, chapter3, 22) {
 	case kActionDefault:
 		getEntities()->drawSequences(kEntityMilos);
 
-		_data->getData()->field_4A5 = EntityData::kField4A5_0;
+		_data->getData()->clothes = EntityData::kClothesDefault;
 		_data->getData()->inventoryItem = kItemNone;
 
 		getObjects()->update(kObjectCompartmentG, kEntityMilos, kLocation3, kCursorHandKnock, kCursorHand);

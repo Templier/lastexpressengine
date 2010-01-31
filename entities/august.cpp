@@ -209,7 +209,7 @@ IMPLEMENT_FUNCTION(August, chapter1, 22) {
 		_data->getData()->field_491 = EntityData::kField491_4691;
 		_data->getData()->field_493 = EntityData::kField493_1;
 		_data->getData()->field_495 = EntityData::kField495_5;
-		_data->getData()->field_4A5 = EntityData::kField4A5_0;
+		_data->getData()->clothes = EntityData::kClothesDefault;
 
 		getProgress().event_august_met = 0;
 		break;
@@ -279,7 +279,7 @@ IMPLEMENT_FUNCTION(August, chapter2, 35) {
 		_data->getData()->field_491 = EntityData::kField491_3970;
 		_data->getData()->field_493 = EntityData::kField493_1;
 		_data->getData()->field_495 = EntityData::kField495_5;
-		_data->getData()->field_4A5 = EntityData::kField4A5_1;
+		_data->getData()->clothes = EntityData::kClothes1;
 		_data->getData()->inventoryItem = kItemNone;
 
 		getObjects()->update(kObjectCompartment3, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
@@ -320,7 +320,7 @@ IMPLEMENT_FUNCTION(August, chapter3, 40) {
 		_data->getData()->field_491 = EntityData::kField491_6470;
 		_data->getData()->field_493 = EntityData::kField493_0;
 		_data->getData()->field_495 = EntityData::kField495_3;
-		_data->getData()->field_4A5 = EntityData::kField4A5_1;
+		_data->getData()->clothes = EntityData::kClothes1;
 		_data->getData()->inventoryItem = kItemNone;
 
 		break;
@@ -406,7 +406,7 @@ IMPLEMENT_FUNCTION(August, chapter4, 57) {
 		_data->getData()->field_491 = EntityData::kField491_6470;
 		_data->getData()->field_493 = EntityData::kField493_1;
 		_data->getData()->field_495 = EntityData::kField495_3;
-		_data->getData()->field_4A5 = EntityData::kField4A5_2;
+		_data->getData()->clothes = EntityData::kClothes2;
 		_data->getData()->inventoryItem = kItemNone;
 
 		getObjects()->update(kObjectCompartment3, kEntityNone, kLocation2, kCursorNormal, kCursorNormal);
@@ -462,7 +462,7 @@ IMPLEMENT_FUNCTION(August, chapter5, 66) {
 		_data->getData()->field_491 = EntityData::kField491_3969;
 		_data->getData()->field_493 = EntityData::kField493_1;
 		_data->getData()->field_495 = EntityData::kField495_5;
-		_data->getData()->field_4A5 = EntityData::kField4A5_2;
+		_data->getData()->clothes = EntityData::kClothes2;
 		_data->getData()->inventoryItem = kItemNone;
 
 		break;

@@ -195,7 +195,7 @@ void Entities::updateFields() {
 			continue;
 
 		EntityData::Field491Value field_491 = _entities[i]->getData()->getData()->field_491;
-		byte field_49A = _entities[i]->getData()->getData()->field_49A;
+		byte field_49A = _entities[i]->getData()->getData()->direction;
 		int16 field_4A3 = _entities[i]->getData()->getData()->field_4A3;
 		int16 field_4AB = _entities[i]->getData()->getData()->field_49B;
 
@@ -338,11 +338,11 @@ void Entities::saveLoadWithSerializer(Common::Serializer &ser) {
 // Drawing
 //////////////////////////////////////////////////////////////////////////
 void Entities::drawSequence(EntityIndex index, const char* sequence) {
-	drawSequenceInternal(index, sequence, EntityData::kField49A_3);
+	drawSequenceInternal(index, sequence, EntityData::kDirectionLeft);
 }
 
 void Entities::drawSequence2(EntityIndex index, const char* sequence) {
-	drawSequenceInternal(index, sequence, EntityData::kField49A_4);
+	drawSequenceInternal(index, sequence, EntityData::kDirectionRight);
 }
 
 void Entities::drawSequences(EntityIndex index) {
@@ -353,27 +353,25 @@ void Entities::drawSequences(EntityIndex index) {
 	warning("Entities::drawSequences: not implemented!");
 }
 
-void Entities::drawSequenceInternal(EntityIndex index, const char* sequence, EntityData::Field49AValue field_49A) {
-	debugC(8, kLastExpressDebugLogic, "Drawing sequence %s for entity %d (%d)", sequence, index, field_49A);
-
-	Entity *entity = _entities[index];
+void Entities::drawSequenceInternal(EntityIndex index, const char* sequence, EntityData::Direction direction) {
+	debugC(8, kLastExpressDebugLogic, "Drawing sequence %s for entity %d (%d)", sequence, index, direction);
 
 	// Copy sequence name
 	Common::String processedName(sequence);
 	processedName.toUppercase();
 	processedName += "-";
 	
-	strcpy(entity->getData()->getData()->sequenceName, processedName.c_str());
+	strcpy(getData(index)->getData()->sequenceName, processedName.c_str());
 
 	// Reset fields	
-	entity->getData()->getData()->field_49B = 0;
-	entity->getData()->getData()->field_49D = 0;
-	entity->getData()->getData()->field_4A1 = 0;
+	getData(index)->getData()->field_49B = 0;
+	getData(index)->getData()->field_49D = 0;
+	getData(index)->getData()->field_4A1 = 0;
 
-	drawSequencesInternal(index, field_49A, true);
+	drawSequencesInternal(index, direction, true);
 }
 
-void Entities::drawSequencesInternal(EntityIndex index, EntityData::Field49AValue field_49A, bool unknown) {	
+void Entities::drawSequencesInternal(EntityIndex index, EntityData::Direction direction, bool unknown) {	
 	//debugC(8, kLastExpressDebugLogic, "Drawing sequences for entity %d (%d)", index, field_49A);
 
 	// HACK draw the sequence stored in SequenceName
@@ -382,7 +380,7 @@ void Entities::drawSequencesInternal(EntityIndex index, EntityData::Field49AValu
 	memset(&seq1, 0, 13 * sizeof(char));
 	memset(&seq2, 0, 13 * sizeof(char));
 
-	getSequenceName(index, field_49A, (char*)&seq1, (char*)&seq2);
+	getSequenceName(index, direction, (char*)&seq1, (char*)&seq2);
 
 	debugC(8, kLastExpressDebugLogic, "  sequence1: %s", seq1);	
 		
@@ -400,30 +398,192 @@ void Entities::drawSequencesInternal(EntityIndex index, EntityData::Field49AValu
 	warning("Entities::drawSequencesInternal: not implemented!");
 }
 
-void Entities::getSequenceName(EntityIndex index, EntityData::Field49AValue field_49A, char *sequence1, char *sequence2) {
-	Entity *entity = _entities[index];
-	EntityData::EntityCallData *data = entity->getData()->getData();
+void Entities::getSequenceName(EntityIndex index, EntityData::Direction direction, char *sequence1, char *sequence2) {	
+	EntityData::EntityCallData *data = getData(index)->getData();
 	Scene *_currentScene = getSceneObject(getState()->scene);
+	int position = _currentScene->getHeader()->position;
 
 	// reset fields
 	data->field_4A9 = 0;
 	data->field_4AA = 0;
 
-	switch (field_49A) {
+	switch (direction) {
 	default:
-		error("Invalid value for field_49A: %d", field_49A);
+		error("Entities::getSequenceName: Invalid value for field_49A: %d", direction);
 		break;
 
-	case EntityData::kField49A_1:
+	case EntityData::kDirectionUp:	
+		switch (position) {
+		default:
+			error("Entities::getSequenceName: Invalid scene position %d (Direction UP)", position, direction);
+			break;
+
+		case 1:
+			if (data->field_491 < EntityData::kField491_2587)
+				sprintf(sequence1, "%02d%01d-01u.seq", index, data->clothes);
+			break;
+
+		case 2:
+		case 3:
+		case 5:
+		case 6:
+		case 7:
+		case 8:
+		case 9:
+		case 10:
+		case 11:
+		case 12:
+		case 13:
+		case 14:
+		case 15:
+		case 16:
+		case 17:
+			if (data->field_491 >= EntityData::kField491_9270)
+				break;
+
+			if (data->field_491 >= EntityData::kField491_8513) {
+				sprintf(sequence1, "%02d%01d-%02deu.seq", index, data->clothes, position);
+			} else {
+				sprintf(sequence1, "%02d%01d-03u.seq", index, data->clothes);
+				sprintf(sequence2, "%02d%01d-%02deu.seq", index, data->clothes, position);
+				data->field_4A9 = 1;
+			}
+			break;
+
+		case 18:
+			if (data->field_491 >= EntityData::kField491_2436)
+				sprintf(sequence1, "%02d%01d-18u.seq", index, data->clothes);
+			break;
+
+		case 22:
+			if (_header->getData()->field_491 > data->field_491)
+				sprintf(sequence1, "%02d%01d-22u.seq", index, data->clothes);
+			break;
+
+		case 23:
+		case 25:
+		case 26:
+		case 27:
+		case 28:
+		case 29:
+		case 30:
+		case 31:
+		case 32:
+		case 33:
+		case 34:
+		case 35:
+		case 36:
+		case 37:
+		case 38:
+		case 39:
+			if (_header->getData()->field_491 <= data->field_491)
+				break;
+
+			if (data->field_491 >= EntityData::kField491_2087) {
+				sprintf(sequence1, "%02d%01d-38u.seq", index, data->clothes);
+				data->field_4A9 = 1;
+			} else {
+				sprintf(sequence1, "%02d%01d-%02deu.seq", index, data->clothes, position);
+				sprintf(sequence2, "%02d%01d-38u.seq", index, data->clothes);
+				data->field_4AA = 1;
+			}
+			break;
+
+		case 40:
+			if (_header->getData()->field_491 > data->field_491)
+				sprintf(sequence1, "%02d%01d-40u.seq", index, data->clothes);
+			break;
+		}
 		break;
 
-	case EntityData::kField49A_2:
+	case EntityData::kDirectionDown:
+		switch (position) {
+		default:
+			error("Entities::getSequenceName: Invalid scene position %d (Direction DOWN)", position, direction);
+			break;
+
+		case 1:
+			if (_header->getData()->field_491 < data->field_491)
+				sprintf(sequence1, "%02d%01d-01d.seq", index, data->clothes);
+			break;
+
+		case 2:
+		case 3:
+		case 5:
+		case 6:
+		case 7:
+		case 8:
+		case 9:
+		case 10:
+		case 11:
+		case 12:
+		case 13:
+		case 14:
+		case 15:
+		case 16:
+		case 17:
+			if (_header->getData()->field_491 >= data->field_491)
+				break;
+
+			if (data->field_491 <= EntityData::kField491_8513) {
+				sprintf(sequence1, "%02d%01d-03d.seq", index, data->clothes);
+				data->field_4A9 = 1;
+			} else {
+				sprintf(sequence1, "%02d%01d-%02ded.seq", index, data->clothes, position);
+				sprintf(sequence2, "%02d%01d-03d.seq", index, data->clothes);
+				data->field_4AA = 1;
+			}
+			break;
+
+		case 18:
+			if (_header->getData()->field_491 < data->field_491)
+				sprintf(sequence1, "%02d%01d-18d.seq", index, data->clothes);
+			break;
+
+		case 22:
+			if (data->field_491 > EntityData::kField491_850)
+				sprintf(sequence1, "%02d%01d-22d.seq", index, data->clothes);
+			break;
+
+		case 23:
+		case 25:
+		case 26:
+		case 27:
+		case 28:
+		case 29:
+		case 30:
+		case 31:
+		case 32:
+		case 33:
+		case 34:
+		case 35:
+		case 36:
+		case 37:
+		case 38:
+		case 39:
+			if (data->field_491 <= EntityData::kField491_850)
+				break;
+
+			if (data->field_491 <= EntityData::kField491_2087) {
+				sprintf(sequence1, "%02d%01d-%02ded.seq", index, data->clothes, position);				
+			} else {
+				sprintf(sequence1, "%02d%01d-38d.seq", index, data->clothes);
+				sprintf(sequence2, "%02d%01d-%02ded.seq", index, data->clothes, position);
+				data->field_4A9 = 1;
+			}
+			break;
+
+		case 40:
+			if (_header->getData()->field_491 > EntityData::kField491_8013)
+				sprintf(sequence1, "%02d%01d-40d.seq", index, data->clothes);
+			break;
+		}
 		break;
 
 	// First part of sequence is already set
-	case EntityData::kField49A_3:
-	case EntityData::kField49A_4:
-		sprintf(sequence1, "%s%02d.seq", data->sequenceName, _currentScene->getHeader()->position);
+	case EntityData::kDirectionLeft:
+	case EntityData::kDirectionRight:
+		sprintf(sequence1, "%s%02d.seq", data->sequenceName, position);
 		break;
 	}
 
@@ -542,7 +702,7 @@ bool Entities::checkFields7(EntityData::Field495Value field495) {
 }
 
 bool Entities::checkFields8(EntityIndex entity) {
-	return getData(entity)->getData()->field_49A == 1 || getData(entity)->getData()->field_49A == 2;
+	return getData(entity)->getData()->direction == 1 || getData(entity)->getData()->direction == 2;
 }
 
 bool Entities::checkFields9(EntityIndex entity1, EntityIndex entity2, int value) {

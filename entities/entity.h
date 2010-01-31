@@ -46,6 +46,9 @@ public:
 		kField491_850   = 850,
 		kField491_1500  = 1500,
 		kField491_1750  = 1750,
+		kField491_2087  = 2087,
+		kField491_2436  = 2436,
+		kField491_2587  = 2587,
 		kField491_2740  = 2740,
 		kField491_2830  = 2830,
 		kField491_3050  = 3050,
@@ -65,7 +68,9 @@ public:
 		kField491_6470  = 6470,
 		kField491_7500  = 7500,
 		kField491_8000  = 8000,
+		kField491_8013  = 8013,
 		kField491_8200  = 8200,
+		kField491_8513  = 8513,
 		kField491_9270  = 9270,
 		kField491_9460  = 9460,
 		kField491_30000 = 30000
@@ -90,19 +95,19 @@ public:
 		kField495_7 = 7
 	};
 
-	enum Field49AValue {
-		kField49A_0 = 0,
-		kField49A_1 = 1,
-		kField49A_2 = 2,
-		kField49A_3 = 3,
-		kField49A_4 = 4
+	enum Direction {	
+		kDirectionNone = 0,
+		kDirectionUp = 1,
+		kDirectionDown = 2,
+		kDirectionLeft = 3,
+		kDirectionRight = 4
 	};
 
-	enum Field4A5Value {
-		kField4A5_0 = 0,
-		kField4A5_1 = 1,
-		kField4A5_2 = 2,
-		kField4A5_3 = 3
+	enum ClothesIndex {
+		kClothesDefault = 0,
+		kClothes1 = 1,
+		kClothes2 = 2,
+		kClothes3 = 3
 	};
 
 	enum ParameterValue {
@@ -267,13 +272,13 @@ public:
 		Field495Value field_495;
 		//int16 field_497;
 		InventoryItem inventoryItem;
-		Field49AValue field_49A;
+		Direction direction;
 		int16 field_49B;
 		int16 field_49D;
 
 		int16 field_4A1;
 		int16 field_4A3;
-		Field4A5Value field_4A5;
+		ClothesIndex clothes;
 		byte field_4A8;
 		byte field_4A9;
 		byte field_4AA;
@@ -295,13 +300,13 @@ public:
 			field_495 = EntityData::kField495_0;
 			//field_497 = 0;
 			inventoryItem = kItemNone;
-			field_49A = EntityData::kField49A_0;
+			direction = EntityData::kDirectionNone;
 			field_49B = 0;
 			field_49D = 0;
 
 			field_4A1 = 0;
 			field_4A3 = 30;
-			field_4A5 = EntityData::kField4A5_0;
+			clothes = EntityData::kClothesDefault;
 			field_4A8 = 0;
 			field_4A9 = 0;
 			field_4AA = 0;

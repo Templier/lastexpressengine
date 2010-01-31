@@ -200,7 +200,7 @@ IMPLEMENT_FUNCTION(Anna, chapter1, 16) {
 		_data->getData()->field_491 = EntityData::kField491_8200;
 		_data->getData()->field_493 = EntityData::kField493_1;
 		_data->getData()->field_495 = EntityData::kField495_3;
-		_data->getData()->field_4A5 = EntityData::kField4A5_0;
+		_data->getData()->clothes = EntityData::kClothesDefault;
 
 		break;
 	}
@@ -321,7 +321,7 @@ IMPLEMENT_FUNCTION(Anna, chapter2, 42) {
 		_data->getData()->field_491 = EntityData::kField491_4070;
 		_data->getData()->field_493 = EntityData::kField493_1;
 		_data->getData()->field_495 = EntityData::kField495_4;
-		_data->getData()->field_4A5 = EntityData::kField4A5_1;
+		_data->getData()->clothes = EntityData::kClothes1;
 		_data->getData()->inventoryItem = kItemNone;
 
 		break;
@@ -347,7 +347,7 @@ IMPLEMENT_FUNCTION(Anna, chapter3, 44) {
 		_data->getData()->field_491 = EntityData::kField491_4070;
 		_data->getData()->field_493 = EntityData::kField493_1;
 		_data->getData()->field_495 = EntityData::kField495_4;
-		_data->getData()->field_4A5 = EntityData::kField4A5_3;
+		_data->getData()->clothes = EntityData::kClothes3;
 		_data->getData()->inventoryItem = kItemNone;
 
 		getObjects()->update(kObjectCompartmentF, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
@@ -457,7 +457,7 @@ IMPLEMENT_FUNCTION(Anna, chapter4, 66) {
 		_data->getData()->field_491 = EntityData::kField491_4070;
 		_data->getData()->field_493 = EntityData::kField493_1;
 		_data->getData()->field_495 = EntityData::kField495_4;
-		_data->getData()->field_4A5 = EntityData::kField4A5_2;
+		_data->getData()->clothes = EntityData::kClothes2;
 		_data->getData()->inventoryItem = kItemNone;
 
 		break;
@@ -507,7 +507,7 @@ IMPLEMENT_FUNCTION(Anna, chapter5, 74) {
 		_data->getData()->field_491 = EntityData::kField491_3969;
 		_data->getData()->field_493 = EntityData::kField493_1;
 		_data->getData()->field_495 = EntityData::kField495_1;
-		_data->getData()->field_4A5 = EntityData::kField4A5_3;
+		_data->getData()->clothes = EntityData::kClothes3;
 		_data->getData()->inventoryItem = kItemNone;
 
 		getObjects()->update(kObject45, kEntityNone, kLocationNone, kCursorKeepValue, kCursorKeepValue);

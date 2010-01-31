@@ -229,7 +229,7 @@ IMPLEMENT_FUNCTION(Tatiana, chapter2, 25) {
 		_data->getData()->field_491 = EntityData::kField491_5420;
 		_data->getData()->field_493 = EntityData::kField493_1;
 		_data->getData()->field_495 = EntityData::kField495_5;
-		_data->getData()->field_4A5 = EntityData::kField4A5_2;
+		_data->getData()->clothes = EntityData::kClothes2;
 		break;
 	}
 }
@@ -272,7 +272,7 @@ IMPLEMENT_FUNCTION(Tatiana, chapter3, 31) {
 		_data->getData()->field_491 = EntityData::kField491_1750;
 		_data->getData()->field_493 = EntityData::kField493_1;
 		_data->getData()->field_495 = EntityData::kField495_5;
-		_data->getData()->field_4A5 = EntityData::kField4A5_2;
+		_data->getData()->clothes = EntityData::kClothes2;
 		_data->getData()->inventoryItem = kItemNone;
 
 		// Update inventory
@@ -347,7 +347,7 @@ IMPLEMENT_FUNCTION(Tatiana, chapter4, 43) {
 		_data->getData()->field_491 = EntityData::kField491_7500;
 		_data->getData()->field_493 = EntityData::kField493_1;
 		_data->getData()->field_495 = EntityData::kField495_4;
-		_data->getData()->field_4A5 = EntityData::kField4A5_2;
+		_data->getData()->clothes = EntityData::kClothes2;
 		_data->getData()->inventoryItem = kItemNone;
 
 		ENTITY_PARAM(0, 1) = 0;
@@ -402,7 +402,7 @@ IMPLEMENT_FUNCTION(Tatiana, chapter5, 52) {
 		_data->getData()->field_491 = EntityData::kField491_3969;
 		_data->getData()->field_493 = EntityData::kField493_1;
 		_data->getData()->field_495 = EntityData::kField495_5;
-		_data->getData()->field_4A5 = EntityData::kField4A5_0;
+		_data->getData()->clothes = EntityData::kClothesDefault;
 		_data->getData()->inventoryItem = kItemNone;
 		break;
 	}
