@@ -43,7 +43,7 @@ SceneHeader *SceneHeader::load(Common::SeekableReadStream *stream) {
 	sh->count = stream->readUint16LE();;
 	sh->field_11 = stream->readUint16LE();
 	sh->field_13 = stream->readUint16LE();
-	sh->field_15 = stream->readByte();
+	sh->position = stream->readByte();
 	sh->type = stream->readByte();
 	sh->param1 = stream->readByte();
 	sh->param2 = stream->readByte();
@@ -97,8 +97,8 @@ Scene *Scene::load(Common::SeekableReadStream *stream, SceneHeader *header) {
 		return NULL;
 
 	debugC(10, kLastExpressDebugScenes, "Scene:  name=%s, sig=%02d, count=%d, field_11=%d", header->name, header->sig, header->count, header->field_11);
-	debugC(10, kLastExpressDebugScenes, "\tfield_13=%02d, type=%02d, param1=%02d, param2=%02d", header->field_13, header->type, header->param1, header->param2);
-	debugC(10, kLastExpressDebugScenes, "\tparam3=%02d, hotspot=%d\n", header->param3, header->hotspot);
+	debugC(10, kLastExpressDebugScenes, "\tfield_13=%02d, position=%02d, type=%02d, param1=%02d", header->field_13, header->position, header->type, header->param1);
+	debugC(10, kLastExpressDebugScenes, "\tparam2=%02d, param3=%02d, hotspot=%d\n", header->param2, header->param3, header->hotspot);
 
 	// Read all hotspots
 	if (header->hotspot != 0) {

@@ -301,7 +301,7 @@ void Logic::processScene() {
 
 	Scene *backup = getSceneObject(getState()->sceneBackup);
 
-	if (getState()->field1000[backup->getHeader()->field_15 + 100 * backup->getHeader()->field_13])
+	if (getState()->field1000[backup->getHeader()->position + 100 * backup->getHeader()->field_13])
 		loadScene(getLogic()->processIndex(getState()->sceneBackup));
 	else
 		loadScene(getState()->sceneBackup);
@@ -719,16 +719,16 @@ bool Logic::checkSceneFields(uint32 index, bool isSecondCheck) {
 	Scene *scene = getSceneObject((index ? index : getState()->scene));
 
 	uint16 field13 = scene->getHeader()->field_13;
-	byte field15 = scene->getHeader()->field_15;
+	byte position = scene->getHeader()->position;
 
 	delete scene;
 
 	result = (field13 == 3 || field13 == 4);
 
 	if (!isSecondCheck)
-		return result && (field15 >= 1 && field15 <= 19);
+		return result && (position >= 1 && position <= 19);
 
-	return result && (field15 >= 21 && field15 <= 40);
+	return result && (position >= 21 && position <= 40);
 }
 
 } // End of namespace LastExpress

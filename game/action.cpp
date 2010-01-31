@@ -413,7 +413,7 @@ IMPLEMENT_ACTION(inventory) {
 
 		Scene *backup = getSceneObject(getState()->sceneBackup);
 
-		if (getState()->field1000[backup->getHeader()->field_15 + 100 * backup->getHeader()->field_13])
+		if (getState()->field1000[backup->getHeader()->position + 100 * backup->getHeader()->field_13])
 			index = getLogic()->processIndex(getState()->sceneBackup);
 
 		delete backup;

@@ -423,7 +423,7 @@ void Entities::getSequenceName(EntityIndex index, EntityData::Field49AValue fiel
 	// First part of sequence is already set
 	case EntityData::kField49A_3:
 	case EntityData::kField49A_4:
-		sprintf(sequence1, "%s%02d.seq", data->sequenceName, _currentScene->getHeader()->field_15);
+		sprintf(sequence1, "%s%02d.seq", data->sequenceName, _currentScene->getHeader()->position);
 		break;
 	}
 
@@ -522,7 +522,7 @@ bool Entities::checkFields3(EntityIndex entity) {
 bool Entities::checkFields4(EntityData::Field495Value field495, int field15) {
 
 	Scene *scene = getSceneObject(getState()->scene);
-	bool ret = getData(kEntityNone)->getData()->field_495 == field495 && scene->getHeader()->field_15 == field15;
+	bool ret = getData(kEntityNone)->getData()->field_495 == field495 && scene->getHeader()->position == field15;
 	delete scene;
 
 	return ret;

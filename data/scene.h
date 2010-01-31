@@ -36,7 +36,7 @@
 		uint16 {2}  - number of scenes (for first entry - always 0 after?)
 		uint16 {2}  - 11 ??
 		uint16 {2}  - 13 ??
-		byte {1}    - 15 ??
+		byte {1}    - camera position (used to get the proper sequences to show)
 		byte {1}    - type
 		byte {1}    - param1
 		byte {1}    - param2
@@ -88,13 +88,13 @@ public:
 private:
 	SceneHeader() {}
 
-public: // XXX
+public:
 	char name[8];
 	byte sig;
 	uint16 count;
 	uint16 field_11;
 	uint16 field_13;
-	byte field_15;
+	byte position;
 	byte type;
 	byte param1;
 	byte param2;
