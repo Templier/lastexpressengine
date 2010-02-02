@@ -540,7 +540,7 @@ void Logic::preProcessScene(uint32 *index) {
 
 		if (getState()->field16[scene->getHeader()->param1] || getState()->field16_2[scene->getHeader()->param1]) {
 
-			_currentScene = getSceneObject(getState()->scene);
+			Scene *currentScene = getSceneObject(getState()->scene);
 
 			if ((checkSceneFields(getState()->scene, false) && checkSceneFields(*index, false) && _currentScene->getHeader()->count < scene->getHeader()->count)
 			 || (checkSceneFields(getState()->scene, true)  && checkSceneFields(*index, true)  && _currentScene->getHeader()->count > scene->getHeader()->count)) {
@@ -554,7 +554,7 @@ void Logic::preProcessScene(uint32 *index) {
 				*index = scene->getHotspot(1)->scene;
 			}
 
-			delete _currentScene;
+			delete currentScene;
 
 			preProcessScene(index);
 		} else {

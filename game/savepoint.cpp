@@ -171,7 +171,7 @@ bool SavePoints::updateEntityFromData(SavePoint savepoint) {
 
 		// Found our data!
 		if (_data[i].entity1 == savepoint.entity1 && _data[i].action == savepoint.action) {
-			debugC(8, kLastExpressDebugLogic, "Update entity from data: entity1=%d, action=%d, param=%d", savepoint.entity1, savepoint.action, savepoint.param.intValue);
+			debugC(8, kLastExpressDebugLogic, "Update entity from data: entity1=%d, action=%d, param=%d", _data[i].entity1, _data[i].action, _data[i].param);
 
 			// the savepoint param is the index of the entity call parameter to update
 			EntityData::EntityParameters *params = getEntities()->getData(_data[i].entity1)->getParameters(8, 0);
