@@ -79,14 +79,17 @@ void SavePoints::pushAll(EntityIndex entity, ActionIndex action, uint32 param) {
 // Process all savepoints
 void SavePoints::process() {
 	while (_savepoints.size() > 0 && getFlags()->gameRunning) {
-		SavePoint point = pop();
+		SavePoint savepoint = pop();
 
-		// Call requested callback
-		if (!updateEntity(point)) {					
-			Entity::Callback *callback = getCallback(point.entity1);
+		// If this is a data savepoint, update the entity
+		// otherwise, execute the callback
+		if (!updateEntityFromData(savepoint)) {
+
+			// Call requested callback
+			Entity::Callback *callback = getCallback(savepoint.entity1);
 			if (callback) {
-				debugC(8, kLastExpressDebugLogic, "Executing savepoint: entity1=%d, action=%d, entity2=%d", point.entity1, point.action, point.entity2);
-				(*callback)(&point);
+				debugC(8, kLastExpressDebugLogic, "Executing savepoint: entity1=%d, action=%d, entity2=%d", savepoint.entity1, savepoint.action, savepoint.entity2);
+				(*callback)(&savepoint);
 			}
 		}
 	}
@@ -156,29 +159,30 @@ void SavePoints::call(EntityIndex entity2, EntityIndex entity1, ActionIndex acti
 //////////////////////////////////////////////////////////////////////////
 // Misc
 //////////////////////////////////////////////////////////////////////////
-bool SavePoints::updateEntity(SavePoint savepoint) {
+bool SavePoints::updateEntityFromData(SavePoint savepoint) {
 
 	int index = 0;
 
 	for (uint i = 0; i < _data.size(); i++) {
 
-		// No entity to test for
+		// Not a data savepoint!
 		if (!_data[i].entity1)
 			return false;
 
-		// Found our savepoint!
+		// Found our data!
 		if (_data[i].entity1 == savepoint.entity1 && _data[i].action == savepoint.action) {
+			debugC(8, kLastExpressDebugLogic, "Update entity from data: entity1=%d, action=%d, param=%d", savepoint.entity1, savepoint.action, savepoint.param);
 
-			// the savepoint param is the index of the entity call parameter to update			
+			// the savepoint param is the index of the entity call parameter to update
 			EntityData::EntityParameters *params = getEntities()->getData(_data[i].entity1)->getParameters(8, 0);
 
 			// TODO: any way for that not to be ugly?
-			*((int*)params + _data[i].param) = 1;			
+			*((int*)params + _data[i].param) = 1;
 			return true;
 		}
 
 		index++;
-	}	
+	}
 
 	return false;
 }

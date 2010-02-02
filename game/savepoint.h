@@ -122,7 +122,7 @@ private:
 	Callback* _callbacks[40];
 
 	SavePoint pop();
-	bool updateEntity(SavePoint point);
+	bool updateEntityFromData(SavePoint point);
 };
 
 } // End of namespace LastExpress
