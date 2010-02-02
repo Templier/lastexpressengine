@@ -207,7 +207,7 @@ bool Debugger::cmd_playsnd(int argc, const char **argv) {
 
 		_engine->_system->getMixer()->stopAll();
 		// FIXME: use another sound stream for debug (the one in the engine is not setup for playing a single sound)
-		_engine->getSoundManager()->getSfxStream()->load(_engine->getResourceManager()->getFileStream(filename));
+		getSoundMgr()->getSfxStream()->load(_engine->getResourceManager()->getFileStream(filename));
 	} else {
 		DebugPrintf("Syntax: playsnd <sndname>\n");
 	}

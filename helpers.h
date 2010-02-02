@@ -37,6 +37,8 @@
 #define getEntityData(entity) getEntities()->getData(entity)->getData()
 #define getSound() getLogic()->getGameSound()
 
+#define getSoundMgr() _engine->getSoundManager()
+
 #define getState() _engine->getGameState()->getGameState()
 #define getEvent(id) getState()->events[id]
 #define getProgress() getState()->progress

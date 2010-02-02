@@ -963,7 +963,7 @@ void Menu::goToTime(uint32 time) {
 	_engine->getCursor()->show(true);
 
 	// Stop sound
-	_engine->getSoundManager()->getSfxStream()->stop();
+	getSoundMgr()->getSfxStream()->stop();
 }
 
 void Menu::moveToCity(CityButton city, bool clicked) {

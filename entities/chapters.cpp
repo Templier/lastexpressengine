@@ -25,12 +25,14 @@
 
 #include "lastexpress/entities/chapters.h"
 
+#include "lastexpress/game/action.h"
 #include "lastexpress/game/entities.h"
 #include "lastexpress/game/inventory.h"
 #include "lastexpress/game/logic.h"
 #include "lastexpress/game/object.h"
 #include "lastexpress/game/savepoint.h"
 #include "lastexpress/game/soundmanager.h"
+#include "lastexpress/game/sound.h"
 #include "lastexpress/game/state.h"
 
 #include "lastexpress/helpers.h"
@@ -40,32 +42,32 @@
 namespace LastExpress {
 
 Chapters::Chapters(LastExpressEngine *engine) : Entity(engine, kEntityChapters) {
-	ADD_CALLBACK_FUNCTION(Chapters, function1);
+	ADD_CALLBACK_FUNCTION(Chapters, savegame);
 	ADD_CALLBACK_FUNCTION(Chapters, function2);
 	ADD_CALLBACK_FUNCTION(Chapters, function3);
 	ADD_CALLBACK_FUNCTION(Chapters, chapter1);
 	ADD_CALLBACK_FUNCTION(Chapters, function5);
 	ADD_CALLBACK_FUNCTION(Chapters, function6);
 	ADD_CALLBACK_FUNCTION(Chapters, chapter1_init);
-	ADD_CALLBACK_FUNCTION(Chapters, function8);
+	ADD_CALLBACK_FUNCTION(Chapters, chapter1_handler);
 	ADD_CALLBACK_FUNCTION(Chapters, function9);
 	ADD_CALLBACK_FUNCTION(Chapters, chapter2);
-	ADD_CALLBACK_FUNCTION(Chapters, function11);
-	ADD_CALLBACK_FUNCTION(Chapters, function12);
+	ADD_CALLBACK_FUNCTION(Chapters, chapter2_init);
+	ADD_CALLBACK_FUNCTION(Chapters, chapter2_handler);
 	ADD_CALLBACK_FUNCTION(Chapters, chapter3);
-	ADD_CALLBACK_FUNCTION(Chapters, function14);
-	ADD_CALLBACK_FUNCTION(Chapters, function15);
+	ADD_CALLBACK_FUNCTION(Chapters, chapter3_init);
+	ADD_CALLBACK_FUNCTION(Chapters, chapter3_handler);
 	ADD_CALLBACK_FUNCTION(Chapters, function16);
 	ADD_CALLBACK_FUNCTION(Chapters, chapter4);
-	ADD_CALLBACK_FUNCTION(Chapters, function18);
-	ADD_CALLBACK_FUNCTION(Chapters, function19);
+	ADD_CALLBACK_FUNCTION(Chapters, chapter4_init);
+	ADD_CALLBACK_FUNCTION(Chapters, chapter4_handler);
 	ADD_CALLBACK_FUNCTION(Chapters, chapter5);
-	ADD_CALLBACK_FUNCTION(Chapters, function21);
-	ADD_CALLBACK_FUNCTION(Chapters, function22);
+	ADD_CALLBACK_FUNCTION(Chapters, chapter4_init);
+	ADD_CALLBACK_FUNCTION(Chapters, chapter4_handler);
 }
 
-IMPLEMENT_FUNCTION_II(Chapters, function1, 1) {
-	error("Chapters: callback function 1 not implemented!");
+IMPLEMENT_FUNCTION_II(Chapters, savegame, 1) {
+	CALL_SAVEGAME(kEntityChapters)
 }
 
 IMPLEMENT_FUNCTION_SI(Chapters, function2, 2) {
@@ -96,7 +98,7 @@ IMPLEMENT_FUNCTION(Chapters, chapter1_init, 7) {
 		return;
 
 	getProgress().chapter = kChapter1;
-	_engine->getSoundManager()->resetState();
+	getSoundMgr()->resetState();
 
 	getState()->time = kTimeChapter1;
 	getState()->timeDelta = 0;
@@ -156,10 +158,10 @@ IMPLEMENT_FUNCTION(Chapters, chapter1_init, 7) {
 	getObjects()->update(kObjectHandleOutsideRight, kEntityNone, kLocation1, kCursorNormal, kCursorHandKnock);
 	getObjects()->update(kObject101, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
 
-	setup_function8();
+	setup_chapter1_handler();
 }
 
-IMPLEMENT_FUNCTION(Chapters, function8, 8) {
+IMPLEMENT_FUNCTION(Chapters, chapter1_handler, 8) {
 	switch (savepoint->action) {
 	default:
 		error("Chapters: callback function 8 not implemented!");
@@ -172,7 +174,22 @@ IMPLEMENT_FUNCTION(Chapters, function8, 8) {
 }
 
 IMPLEMENT_FUNCTION(Chapters, function9, 9) {
-	error("Chapters: callback function 9 not implemented!");
+	if (savepoint->action == kActionDefault) {
+		// Reset sound cache
+		if (ENTITY_PARAM(0, 2) || ENTITY_PARAM(0, 3)) {
+			getSoundMgr()->reset(kEntityChapters);
+			ENTITY_PARAM(0, 2) = 0;
+			ENTITY_PARAM(0, 3) = 0;
+		}
+
+		getSound()->playSound(kEntityNone, "MUS008", 16, 0);
+		getInventory()->unselectItem();
+
+		while (getSoundMgr()->isFileInQueue("MUS008"))
+			getSoundMgr()->unknownFunction1();
+
+		setup_chapter2();
+	}
 }
 
 IMPLEMENT_FUNCTION(Chapters, chapter2, 10) {
@@ -191,8 +208,9 @@ IMPLEMENT_FUNCTION(Chapters, chapter2, 10) {
 		getState()->time = kTimeChapter2;
 		getState()->timeDelta = 5;
 
+		// Save game
 		_data->setNextCallback(1);
-		call(new ENTITY_SETUP_DEFAULT(Chapters, setup_function1), 1, 0);
+		call(new ENTITY_SETUP_DEFAULT(Chapters, setup_savegame), 1, 0);
 		break;
 
 	case kAction18:
@@ -204,18 +222,71 @@ IMPLEMENT_FUNCTION(Chapters, chapter2, 10) {
 
 			// Load scene data
 			getLogic()->loadSceneDataFile(kArchiveCd2);
-			setup_function18();
+			setup_chapter2_init();
 		}
 		break;
-
 	}
 }
 
-IMPLEMENT_FUNCTION(Chapters, function11, 11) {
-	error("Chapters: callback function 11 not implemented!");
+IMPLEMENT_FUNCTION(Chapters, chapter2_init, 11) {
+	if (savepoint->action != kActionDefault)
+		return;
+	
+	getProgress().field_8 = 1;
+	getProgress().field_18 = 1;	
+	getProgress().field_50 = 1;
+	getProgress().event_found_corpse = 1;
+
+	// Switch to green jacket/portrait
+	getProgress().jacket = kJacketGreen;
+	getProgress().portrait = kPortraitGreen;
+
+	// Setup inventory & items location
+	getInventory()->addItem(kItemGreenJacket);
+
+	getObjects()->update(kObjectHandleOutsideLeft, kEntityNone, kLocation1, kCursorNormal, kCursorHand);
+	getObjects()->update(kObjectHandleOutsideRight, kEntityNone, kLocation1, kCursorNormal, kCursorHand);
+
+	getInventory()->setLocationAndProcess(kItemBeetle, kLocation3);
+	getInventory()->setLocationAndProcess(kItem3, kLocation1);
+
+	for (uint i = 1; i < 9; i++) {
+		getObjects()->updateLocation2((ObjectIndex)i, kLocation2);
+	}
+
+	for (uint i = 33; i < 40; i++) {
+		getObjects()->updateLocation2((ObjectIndex)i, kLocation2);
+	}
+
+	CURRENT_PARAM(1) = 40;
+
+	getSavePoints()->push(kEntityChapters, kEntityTables0, kAction103798704, 0);
+	getSavePoints()->push(kEntityChapters, kEntityTables1, kAction103798704, 0);
+	getSavePoints()->push(kEntityChapters, kEntityTables2, kAction103798704, 0);
+	getSavePoints()->push(kEntityChapters, kEntityTables3, kAction103798704, 0);
+	getSavePoints()->push(kEntityChapters, kEntityTables4, kAction103798704, 0);
+
+	getObjects()->update(kObjectCompartment1, kEntityNone, kLocationNone, kCursorHandKnock, kCursorHand);
+	getObjects()->update(kObjectOutside, kEntityNone, kLocationNone, kCursorKeepValue, kCursorKeepValue);
+
+	// Reset sound cache
+	if (ENTITY_PARAM(0, 2) || ENTITY_PARAM(0, 3)) {
+		getSoundMgr()->reset(kEntityChapters);
+		ENTITY_PARAM(0, 2) = 0;
+		ENTITY_PARAM(0, 3) = 0;
+	}
+
+	getAction()->playAnimation(kEventTrainPassing);
+
+	if (getInventory()->hasItem(kItemScarf))
+		getLogic()->loadScene(41);
+	else
+		getLogic()->loadSceneFromData(3, 79, -1);
+
+	setup_chapter2_handler();
 }
 
-IMPLEMENT_FUNCTION(Chapters, function12, 12) {
+IMPLEMENT_FUNCTION(Chapters, chapter2_handler, 12) {
 	error("Chapters: callback function 12 not implemented!");
 }
 
@@ -231,15 +302,15 @@ IMPLEMENT_FUNCTION(Chapters, chapter3, 13) {
 		getState()->time = kTimeChapter3;
 		getState()->timeDelta = 5;
 
-		setup_function14();
+		setup_chapter3_init();
 	}
 }
 
-IMPLEMENT_FUNCTION(Chapters, function14, 14) {
+IMPLEMENT_FUNCTION(Chapters, chapter3_init, 14) {
 	error("Chapters: callback function 14 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Chapters, function15, 15) {
+IMPLEMENT_FUNCTION(Chapters, chapter3_handler, 15) {
 	error("Chapters: callback function 15 not implemented!");
 }
 
@@ -263,8 +334,9 @@ IMPLEMENT_FUNCTION(Chapters, chapter4, 17) {
 		getState()->time = kTimeChapter4;
 		getState()->timeDelta = 5;
 
+		// Save game
 		_data->setNextCallback(1);
-		call(new ENTITY_SETUP_DEFAULT(Chapters, setup_function1), 1, 0);
+		call(new ENTITY_SETUP_DEFAULT(Chapters, setup_savegame), 1, 0);
 		break;
 
 	case kAction18:
@@ -276,18 +348,18 @@ IMPLEMENT_FUNCTION(Chapters, chapter4, 17) {
 
 			// Load scene data
 			getLogic()->loadSceneDataFile(kArchiveCd3);
-			setup_function18();
+			setup_chapter4_init();
 		}
 		break;
 
 	}
 }
 
-IMPLEMENT_FUNCTION(Chapters, function18, 18) {
+IMPLEMENT_FUNCTION(Chapters, chapter4_init, 18) {
 	error("Chapters: callback function 18 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Chapters, function19, 19) {
+IMPLEMENT_FUNCTION(Chapters, chapter4_handler, 19) {
 	error("Chapters: callback function 19 not implemented!");
 }
 
@@ -303,15 +375,15 @@ IMPLEMENT_FUNCTION(Chapters, chapter5, 20) {
 		getState()->time = kTimeChapter5;
 		getState()->timeDelta = 2;
 
-		setup_function21();
+		setup_chapter5_init();
 	}
 }
 
-IMPLEMENT_FUNCTION(Chapters, function21, 21) {
+IMPLEMENT_FUNCTION(Chapters, chapter5_init, 21) {
 	error("Chapters: callback function 21 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Chapters, function22, 22) {
+IMPLEMENT_FUNCTION(Chapters, chapter5_handler, 22) {
 	error("Chapters: callback function 22 not implemented!");
 }
 

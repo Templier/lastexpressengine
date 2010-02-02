@@ -26,6 +26,8 @@
 #ifndef LASTEXPRESS_SOUNDMANAGER_H
 #define LASTEXPRESS_SOUNDMANAGER_H
 
+#include "lastexpress/shared.h"
+
 /*
 	Sound entry format
 	------------------
@@ -85,8 +87,16 @@ public:
 
 	// State (FIXME: to be renamed when we know more about it)
 	void resetState() { _state |= 1; }
+	void reset(EntityIndex entity);
+
+	// Sound queue
+	bool isFileInQueue(const char* filename);
+
+	// Misc
+	void unknownFunction1();
 
 	// Sound streams
+	// TODO: encapsulate
 	StreamedSound *getMusicStream() const { return _music; }
 	StreamedSound *getSfxStream() const { return _sfx; }
 

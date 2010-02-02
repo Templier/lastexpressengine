@@ -39,4 +39,16 @@ SoundManager::~SoundManager() {
 	delete _music;
 }
 
+void SoundManager::reset(EntityIndex entity) {
+	error("SoundManager::reset: not implemented!");
+}
+
+bool SoundManager::isFileInQueue(const char* filename) {
+	error("SoundManager::isFileInQueue: not implemented!");
+}
+
+void SoundManager::unknownFunction1() {
+	error("SoundManager::unknownFunction1: not implemented!");
+}
+
 } // End of namespace LastExpress
