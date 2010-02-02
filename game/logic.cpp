@@ -540,7 +540,7 @@ void Logic::preProcessScene(uint32 *index) {
 
 		if (getState()->field16[scene->getHeader()->param1] || getState()->field16_2[scene->getHeader()->param1]) {
 
-			Scene *_currentScene = getSceneObject(getState()->scene);
+			_currentScene = getSceneObject(getState()->scene);
 
 			if ((checkSceneFields(getState()->scene, false) && checkSceneFields(*index, false) && _currentScene->getHeader()->count < scene->getHeader()->count)
 			 || (checkSceneFields(getState()->scene, true)  && checkSceneFields(*index, true)  && _currentScene->getHeader()->count > scene->getHeader()->count)) {
@@ -640,8 +640,6 @@ void Logic::postProcessScene() {
 			int progress = 0;
 
 			for (uint i = 1; i < (unsigned)_entities->count(); i++) {
-
-				EntityData::Field491Value field491 = getEntityData((EntityIndex)i)->field_491;
 				EntityData::Field495Value field495 = getEntityData((EntityIndex)i)->field_495;
 
 				// FIXME doesn't make sense to test field491 twice...
