@@ -31,17 +31,6 @@ namespace LastExpress {
 #include "common/func.h"
 
 //////////////////////////////////////////////////////////////////////////
-// Time values
-//////////////////////////////////////////////////////////////////////////
-enum TimeValue {
-	kTimeChapter1 = 1062000,
-	kTimeChapter2 = 1750500,
-	kTimeChapter3 = 1944000,
-	kTimeChapter4 = 2353500,
-	kTimeChapter5 = 2844000
-};
-
-//////////////////////////////////////////////////////////////////////////
 // Callbacks
 #define ENTITY_CALLBACK(class, name, pointer) \
 	Common::Functor1Mem<SavePoint*, void, class>(pointer, &class::name)

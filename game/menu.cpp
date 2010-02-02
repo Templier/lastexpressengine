@@ -406,7 +406,7 @@ Menu::~Menu() {
 //
 // The main menu screen is a background plus 8 overlay elements
 // .text:00448590 (EN)
-void Menu::showMenu() {
+void Menu::showMenu(bool savegame, TimeType type, uint32 time) {
 	// TODO: need to ask graphics manager to transition between current screen and menu
 	_engine->getGraphicsManager()->clear(GraphicsManager::kBackgroundAll);
 
@@ -441,6 +441,9 @@ void Menu::showMenu() {
 			_showStartScreen = false;
 		}
 	}
+
+	// Init savegame
+	// getSavegame()->init(savegame, type, time);
 
 	// Set Cursor type
 	_engine->getCursor()->setStyle(kCursorNormal);

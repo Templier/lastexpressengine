@@ -40,6 +40,7 @@
 
 #include "common/serializer.h"
 
+
 namespace LastExpress {
 
 class LastExpressEngine;
@@ -51,7 +52,8 @@ public:
 
 	void setup(ChapterIndex chapter);
 
-	void reset(EntityIndex entity);
+	void reset();
+	void resetEntity(EntityIndex entity);
 
 	// Update & drawing
 	void updateFields();
@@ -92,6 +94,8 @@ public:
 
 	bool checkSequence0(EntityIndex entity);
 
+	int count() const { return _entities.size(); }
+
 private:
 	LastExpressEngine	    *_engine;
 	EntityData 			    *_header;
@@ -100,10 +104,10 @@ private:
 	void executeCallbacks();
 	void processEntity(EntityIndex entity);
 
-	void drawSequenceInternal(EntityIndex index, const char* sequence, EntityData::Direction direction);
-	void drawSequencesInternal(EntityIndex index, EntityData::Direction direction, bool unknown);
+	void drawSequenceInternal(EntityIndex index, const char* sequence, EntityDirection direction);
+	void drawSequencesInternal(EntityIndex index, EntityDirection direction, bool unknown);
 
-	void getSequenceName(EntityIndex index, EntityData::Direction direction, char *sequence1, char *sequence2);
+	void getSequenceName(EntityIndex index, EntityDirection direction, char *sequence1, char *sequence2);
 };
 
 } // End of namespace LastExpress

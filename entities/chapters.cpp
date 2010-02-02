@@ -170,6 +170,16 @@ IMPLEMENT_FUNCTION(Chapters, chapter1_handler, 8) {
 	case kActionDefault:
 		CURRENT_PARAM(2) = 225 * (4 * random(5) + 20);
 		break;
+
+
+	case kAction17:
+		if (CURRENT_PARAM(3))
+			break;
+
+		getState()->time = kTimeChapter1;
+		getState()->timeDelta = 3;
+		CURRENT_PARAM(3) = 1;
+		break;
 	}	
 }
 

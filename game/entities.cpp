@@ -68,6 +68,7 @@
 #include "lastexpress/entities/yasmin.h"
 
 // Game
+#include "lastexpress/game/logic.h"
 #include "lastexpress/game/savepoint.h"
 #include "lastexpress/game/state.h"
 
@@ -170,7 +171,18 @@ void Entities::setup(ChapterIndex chapter) {
 	}
 }
 
-void Entities::reset(EntityIndex entity) {
+void Entities::reset() {
+	// Reset header
+	delete _header;
+	_header = new EntityData();
+
+	for (uint i = 1; i < _entities.size(); i++)
+		resetEntity((EntityIndex)i);
+
+	warning("Entities::reset: not implemented!");
+}
+
+void Entities::resetEntity(EntityIndex entity) {
 	EntityData *data = getData(entity);
 
 	data->getData()->current_call = 0;
@@ -181,12 +193,14 @@ void Entities::reset(EntityIndex entity) {
 	drawSequences(entity);
 
 	// update fields 4x1000, 4x16 & 4x16_2
+
+	warning("Entities::resetEntity: not implemented!");
 }
 
 //////////////////////////////////////////////////////////////////////////
 // Scene setup & drawing
 void Entities::updateFields() {
-	if (!getFlags()->flag_1)
+	if (!getFlags()->gameRunning)
 		return;
 
 	for (uint i = 0; i < _entities.size(); i++) {
@@ -234,15 +248,69 @@ void Entities::updateFields() {
 }
 
 void Entities::setupSequences() {
-	if (!getFlags()->flag_1)
+	if (!getFlags()->gameRunning)
 		return;
 
-	error("Entities::setupSequences: not implemented!");
+	// Update the train clock
+	getLogic()->updateTrainClock();
+
+	//////////////////////////////////////////////////////////////////////////
+	// First pass: Drawing
+	//////////////////////////////////////////////////////////////////////////
+	for (uint i = 1; i < _entities.size(); i++) {
+		EntityIndex entityIndex = (EntityIndex)i;
+
+		if (!getSavePoints()->getCallback(entityIndex))
+			continue;
+
+		EntityData::EntityCallData *data = getData(entityIndex)->getData();
+
+		if (data->sequence0) {
+			// TODO Queue sequence for drawing
+			/* data->sequence0 = NULL; */
+		}
+
+		if (data->sequence1) {
+			// TODO Queue sequence for drawing
+			/* data->sequence1 = NULL; */
+		}
+
+		if (data->direction == kDirection5) {
+
+			// Clear sequence 2
+			if (data->sequence2) {
+				delete data->sequence2;
+				data->sequence2 = NULL;
+			}
+
+			// Replace by sequence 3 if available
+			if (data->sequence3) {
+				data->sequence2 = data->sequence3;
+				strcpy(data->sequenceName2, data->sequenceName3);
+
+				data->sequence3 = NULL;
+				strcpy(data->sequenceName3, "");
+			}
+
+			data->direction = data->field_4AB;
+			data->field_49D = -1;
+			data->field_49B = 0;
+		}
+
+		// Draw sequences
+		drawSequencesInternal(entityIndex, data->direction, false);
+	}
+
+	//////////////////////////////////////////////////////////////////////////
+	// Second pass: Load sequences for next pass
+	//////////////////////////////////////////////////////////////////////////
+
+	warning("Entities::setupSequences: not implemented!");
 
 }
 
 void Entities::setupCallbacks() {
-	if (!getFlags()->flag_1)
+	if (!getFlags()->gameRunning)
 		return;
 
 	getFlags()->flag_entities_0 = false;
@@ -269,7 +337,6 @@ void Entities::executeCallbacks() {
 	if (getFlags()->flag_entities_0)
 		return;
 
-
 	bool processed = false;
 	do {
 		for (uint i = 1; i < _entities.size(); i++) {
@@ -287,7 +354,8 @@ void Entities::executeCallbacks() {
 }
 
 void Entities::processEntity(EntityIndex entity) {
-	error("Entities::processEntity: not implemented!");
+	getFlags()->flag_entities_0 = true;
+	warning("Entities::processEntity: not implemented!");
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -338,11 +406,11 @@ void Entities::saveLoadWithSerializer(Common::Serializer &ser) {
 // Drawing
 //////////////////////////////////////////////////////////////////////////
 void Entities::drawSequence(EntityIndex index, const char* sequence) {
-	drawSequenceInternal(index, sequence, EntityData::kDirectionLeft);
+	drawSequenceInternal(index, sequence, kDirectionLeft);
 }
 
 void Entities::drawSequence2(EntityIndex index, const char* sequence) {
-	drawSequenceInternal(index, sequence, EntityData::kDirectionRight);
+	drawSequenceInternal(index, sequence, kDirectionRight);
 }
 
 void Entities::drawSequences(EntityIndex index) {
@@ -353,7 +421,7 @@ void Entities::drawSequences(EntityIndex index) {
 	warning("Entities::drawSequences: not implemented!");
 }
 
-void Entities::drawSequenceInternal(EntityIndex index, const char* sequence, EntityData::Direction direction) {
+void Entities::drawSequenceInternal(EntityIndex index, const char* sequence, EntityDirection direction) {
 	debugC(8, kLastExpressDebugLogic, "Drawing sequence %s for entity %d (%d)", sequence, index, direction);
 
 	// Copy sequence name
@@ -371,18 +439,18 @@ void Entities::drawSequenceInternal(EntityIndex index, const char* sequence, Ent
 	drawSequencesInternal(index, direction, true);
 }
 
-void Entities::drawSequencesInternal(EntityIndex index, EntityData::Direction direction, bool unknown) {	
+void Entities::drawSequencesInternal(EntityIndex index, EntityDirection direction, bool unknown) {	
 	//debugC(8, kLastExpressDebugLogic, "Drawing sequences for entity %d (%d)", index, field_49A);
 
 	// HACK draw the sequence stored in SequenceName
-	char seq1[13];
-	char seq2[13];
-	memset(&seq1, 0, 13 * sizeof(char));
-	memset(&seq2, 0, 13 * sizeof(char));
+	//char seq1[13];
+	//char seq2[13];
+	//memset(&seq1, 0, 13 * sizeof(char));
+	//memset(&seq2, 0, 13 * sizeof(char));
 
-	getSequenceName(index, direction, (char*)&seq1, (char*)&seq2);
+	//getSequenceName(index, direction, (char*)&seq1, (char*)&seq2);
 
-	debugC(8, kLastExpressDebugLogic, "  sequence1: %s", seq1);	
+	//debugC(8, kLastExpressDebugLogic, "  sequence1: %s", seq1);	
 		
 	//Sequence sequence;
 	//if (sequence.loadFile(seq1)) {
@@ -398,7 +466,7 @@ void Entities::drawSequencesInternal(EntityIndex index, EntityData::Direction di
 	warning("Entities::drawSequencesInternal: not implemented!");
 }
 
-void Entities::getSequenceName(EntityIndex index, EntityData::Direction direction, char *sequence1, char *sequence2) {	
+void Entities::getSequenceName(EntityIndex index, EntityDirection direction, char *sequence1, char *sequence2) {	
 	EntityData::EntityCallData *data = getData(index)->getData();
 	Scene *_currentScene = getSceneObject(getState()->scene);
 	int position = _currentScene->getHeader()->position;
@@ -412,7 +480,7 @@ void Entities::getSequenceName(EntityIndex index, EntityData::Direction directio
 		error("Entities::getSequenceName: Invalid value for field_49A: %d", direction);
 		break;
 
-	case EntityData::kDirectionUp:	
+	case kDirectionUp:	
 		switch (position) {
 		default:
 			error("Entities::getSequenceName: Invalid scene position %d (Direction UP)", position, direction);
@@ -496,7 +564,7 @@ void Entities::getSequenceName(EntityIndex index, EntityData::Direction directio
 		}
 		break;
 
-	case EntityData::kDirectionDown:
+	case kDirectionDown:
 		switch (position) {
 		default:
 			error("Entities::getSequenceName: Invalid scene position %d (Direction DOWN)", position, direction);
@@ -581,8 +649,8 @@ void Entities::getSequenceName(EntityIndex index, EntityData::Direction directio
 		break;
 
 	// First part of sequence is already set
-	case EntityData::kDirectionLeft:
-	case EntityData::kDirectionRight:
+	case kDirectionLeft:
+	case kDirectionRight:
 		sprintf(sequence1, "%s%02d.seq", data->sequenceName, position);
 		break;
 	}

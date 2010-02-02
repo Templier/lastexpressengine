@@ -37,15 +37,15 @@
 	----------------
 
 	Save point: max: 127 - FIFO list (ie. goes back and overwrites first save point when full)
-		uint32 {4}      - index of function pointer inside savePointFunctions array
-		uint32 {4}      - action
-		uint32 {4}      - time
-		uint32 {4}      - 0 or 1 ?
+		uint32 {4}      - Entity 1
+		uint32 {4}      - Action
+		uint32 {4}      - Entity 2
+		uint32 {4}      - Parameter
 
-	?? array: 16 bytes
-		uint32 {4}		- ??
-		uint32 {4}		- ??
-		uint32 {4}		- ??
+	Save point Data
+		uint32 {4}		- Entity 1
+		uint32 {4}		- Action
+		uint32 {4}		- Entity 2
 		uint32 {4}		- function pointer to ??
 
 */

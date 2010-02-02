@@ -42,9 +42,12 @@ public:
 	enum Field491Value {
 		kField491_0     = 0,
 		kField491_1     = 1,
+		kField491_3     = 3,
+		kField491_4     = 4,
 		kField491_540   = 540,
 		kField491_850   = 850,
 		kField491_1500  = 1500,
+		kField491_1540  = 1540,
 		kField491_1750  = 1750,
 		kField491_2087  = 2087,
 		kField491_2436  = 2436,
@@ -92,15 +95,8 @@ public:
 		kField495_4 = 4,
 		kField495_5 = 5,
 		kField495_6 = 6,
-		kField495_7 = 7
-	};
-
-	enum Direction {	
-		kDirectionNone = 0,
-		kDirectionUp = 1,
-		kDirectionDown = 2,
-		kDirectionLeft = 3,
-		kDirectionRight = 4
+		kField495_7 = 7,
+		kField495_9 = 9
 	};
 
 	enum ClothesIndex {
@@ -272,7 +268,7 @@ public:
 		Field495Value field_495;
 		//int16 field_497;
 		InventoryItem inventoryItem;
-		Direction direction;
+		EntityDirection direction;
 		int16 field_49B;
 		int16 field_49D;
 
@@ -282,6 +278,7 @@ public:
 		byte field_4A8;
 		byte field_4A9;
 		byte field_4AA;
+		EntityDirection field_4AB;
 
 		char sequenceName3[9];
 		char sequenceName2[9];
@@ -300,7 +297,7 @@ public:
 			field_495 = EntityData::kField495_0;
 			//field_497 = 0;
 			inventoryItem = kItemNone;
-			direction = EntityData::kDirectionNone;
+			direction = kDirectionNone;
 			field_49B = 0;
 			field_49D = 0;
 
@@ -310,6 +307,7 @@ public:
 			field_4A8 = 0;
 			field_4A9 = 0;
 			field_4AA = 0;
+			field_4AB = kDirectionNone;
 
 			memset(&sequenceName3, 0, 9 * sizeof(char));
 			memset(&sequenceName2, 0, 9 * sizeof(char));

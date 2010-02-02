@@ -100,8 +100,8 @@ IMPLEMENT_FUNCTION_II(Sophie, function2, 2) {
 		EntityData::Field495Value rebecca_field_495 = getEntityData(kEntityRebecca)->field_495;
 
 		if (getEntities()->checkFields9(kEntitySophie, kEntityRebecca, 500)
-		|| (direction == EntityData::kDirectionUp && field_495 >= rebecca_field_495 && field_491 > rebecca_field_491)
-		|| (direction == EntityData::kDirectionDown && field_495 <= rebecca_field_495 && field_491 < rebecca_field_491)) {
+		|| (direction == kDirectionUp && field_495 >= rebecca_field_495 && field_491 > rebecca_field_491)
+		|| (direction == kDirectionDown && field_495 <= rebecca_field_495 && field_491 < rebecca_field_491)) {
 			 _data->getData()->field_49B = 0;
 			 CURRENT_PARAM(3) = 1;
 		}

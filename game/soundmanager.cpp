@@ -43,6 +43,11 @@ void SoundManager::reset(EntityIndex entity) {
 	error("SoundManager::reset: not implemented!");
 }
 
+bool SoundManager::isBuffered(EntityIndex entityIndex) {
+	warning("SoundManager::isBuffered: not implemented!");
+	return false;
+}
+
 bool SoundManager::isFileInQueue(const char* filename) {
 	error("SoundManager::isFileInQueue: not implemented!");
 }

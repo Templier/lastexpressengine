@@ -653,7 +653,7 @@ IMPLEMENT_ACTION(pickItem) {
 		break;
 
 	case kItemBomb:
-		getEntities()->reset(kEntityAbbot);
+		getEntities()->resetEntity(kEntityAbbot);
 		((Abbot*)getEntities()->get(kEntityAbbot))->setup_pickBomb();
 		break;
 
@@ -996,7 +996,7 @@ IMPLEMENT_ACTION(25) {
 		getSound()->playSoundEvent(0, 43, 0);
 		if (!getInventory()->hasItem(kItemKey)) {
 			if (!getEvent(kEventAnnaBagageArgument)) {
-				getEntities()->reset(kEntityAnna);
+				getEntities()->resetEntity(kEntityAnna);
 				((Anna*)getEntities()->get(kEntityAnna))->setup_bagage();
 				hotspot->scene = 0;
 			}

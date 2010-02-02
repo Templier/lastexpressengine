@@ -54,12 +54,12 @@ public:
 	void switchGame();
 
 	void savegame(int param1, EntityIndex entity, EventIndex event);
-	void gameOver(int a1, int a2, int scene, bool showScene);
+	void gameOver(TimeType type, uint32 time, SceneIndex sceneIndex, bool showScene);
 
 	// Scene
 	void loadSceneDataFile(ArchiveIndex archive);
-	void loadScene(uint32 index);
-	void setScene(uint32 index);
+	void loadScene(SceneIndex sceneIndex);
+	void setScene(SceneIndex sceneIndex);
 
 	void loadSceneFromObject(ObjectIndex object);
 	void loadSceneFromObject2(ObjectIndex object);
@@ -67,12 +67,12 @@ public:
 	void loadSceneFromItem(InventoryItem item);
 
 	void updateTrainClock();
-	void updateCursor();
+	void updateCursor(bool redraw = true);
 
 	// Index processing
 	void processScene();
-	uint32 processIndex(uint32 index);
-	bool checkSceneFields(uint32 index, bool isSecondCheck);
+	uint32 processIndex(SceneIndex sceneIndex);
+	bool checkSceneFields(SceneIndex sceneIndex, bool isSecondCheck);
 
 	// Accessors
 	bool isGameStarted() { return _runState.gameStarted; }
@@ -92,7 +92,7 @@ private:
 		GameId gameId;
 		bool gameStarted;
 		bool showingMenu;
-		CursorStyle cursorStyle;	// necessary to remember current cursor when inside inventory TODO remove?
+		CursorStyle cursorStyle;    // necessary to remember current cursor when inside inventory TODO remove?
 
 		// flags
 		bool flag_no_entity;
@@ -111,18 +111,18 @@ private:
 
 	LastExpressEngine *_engine;
 
-	RunState _runState;     	///< State of the game session (this data won't be stored in savegames)
+	RunState _runState;         ///< State of the game session (this data won't be stored in savegames)
 
-	Action *_action;			///< Actions
-	Beetle *_beetle;			///< Beetle catching
-	Entities *_entities;		///< Entities
-	Menu *_menu;            	///< Main menu handling
-	Scene *_scene;				///< Current scene
-	Sound *_sound;				///< Sound
+	Action *_action;            ///< Actions
+	Beetle *_beetle;            ///< Beetle catching
+	Entities *_entities;        ///< Entities
+	Menu *_menu;                ///< Main menu handling
+	Scene *_currentScene;       ///< Current scene
+	Sound *_sound;              ///< Sound
 
-	void drawScene(uint32 index);
-	void preProcessScene(uint32 *index);
-	void postProcessScene(uint32 *index);
+	void drawScene(SceneIndex sceneIndex);
+	void preProcessScene(SceneIndex *index);
+	void postProcessScene();
 
 	void switchChapter();
 	void playFinalSequence();

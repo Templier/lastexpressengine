@@ -272,21 +272,27 @@ public:
 
 	struct Flags {
 		bool flag_0;
-		bool flag_1;
+		bool gameRunning;
 		bool flag_2;
 		bool flag_3;
+		bool shouldRedraw;
 
 		bool flag_entities_0;
 		bool flag_entities_1;
 
+		bool shouldDrawEggOrHourGlass;
+
 		Flags() {
 			flag_0 = false;
-			flag_1 = false;
+			gameRunning = false;
 			flag_2 = false;
 			flag_3 = false;
+			shouldRedraw = false;
 
 			flag_entities_0 = false;
 			flag_entities_1 = false;
+
+			shouldDrawEggOrHourGlass = false;
 		}
 	};
 

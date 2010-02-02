@@ -51,11 +51,11 @@
 
 namespace LastExpress {
 
-Logic::Logic(LastExpressEngine *engine) : _engine(engine), _scene(NULL) {
+Logic::Logic(LastExpressEngine *engine) : _engine(engine), _currentScene(NULL) {
 	_action = new Action(engine);
-	_beetle = new Beetle(engine);
-	_entities = new Entities(engine);
+	_beetle = new Beetle(engine);	
 	_menu = new Menu(engine);
+	_entities = new Entities(_engine);
 	_sound = new Sound(engine);
 }
 
@@ -64,7 +64,7 @@ Logic::~Logic() {
 	delete _beetle;
 	delete _entities;
 	delete _menu;
-	delete _scene;
+	delete _currentScene;
 	delete _sound;
 }
 
@@ -81,14 +81,17 @@ void Logic::startGame() {
 
 	_entities->setup(kChapter1);
 
+	// DEBUG
 	showMenu(false);
-	loadScene(kSceneDefault);
-
+	getFlags()->gameRunning = true;
+	
 	// Set Cursor type
 	_engine->getCursor()->setStyle(kCursorNormal);
 	_engine->getCursor()->show(true);
 
 	getInventory()->show(true);
+
+	loadScene(kSceneDefault);
 
 	askForRedraw();
 }
@@ -108,7 +111,7 @@ void Logic::showMenu(bool visible) {
 	// TODO: load scene and set current scene
 	_runState.showingMenu = true;
 	getState()->scene = _menu->getSceneIndex();
-	_menu->showMenu();
+	_menu->showMenu(false, kTimeType0, 0);
 
 	// TODO reset showingMenu to false when starting/returning to a game and show inventory
 
@@ -148,10 +151,38 @@ void Logic::switchGame() {
 }
 
 // Handle game over
-void Logic::gameOver(int a1, int a2, int scene, bool showScene) {
+void Logic::gameOver(TimeType type, uint32 time, SceneIndex sceneIndex, bool showScene)
+{
 
 	warning("Logic::gameOver: not implemented!");
-	loadScene(scene);
+
+	// TODO Sound call
+	_entities->reset();
+	//getFlags()->unkown_flag_1 = 0;
+	getSavePoints()->reset();
+	getFlags()->flag_entities_0 = true;
+
+	if (showScene) {
+
+		// Adjust luminosity
+		// Loop over sound cache
+		// Check if kEntityTrain is buffered
+		// Call unknown function 1 and loop
+
+		if (sceneIndex && !getFlags()->flag_2) {			
+			loadScene(sceneIndex);
+
+			while (getSoundMgr()->isBuffered(kEntityTables4)) {
+				if (getFlags()->flag_2)
+					break;
+
+				getSoundMgr()->unknownFunction1();
+			}
+		}
+	}
+
+	// Show Menu
+	_menu->showMenu(false, type, time);
 }
 
 // Save game
@@ -174,7 +205,7 @@ bool Logic::handleMouseEvent(Common::Event ev) {
 
 	// Check hitbox & event from scene data
 	SceneHotspot *hotspot = NULL;
-	if (_scene && _scene->checkHotSpot(ev.mouse, &hotspot)) {
+	if (_currentScene && _currentScene->checkHotSpot(ev.mouse, &hotspot)) {
 		// Change mouse cursor
 		_runState.cursorStyle = _action->getCursor(hotspot->action, (ObjectIndex)hotspot->param1, hotspot->param2, hotspot->param3, hotspot->cursor);
 
@@ -217,6 +248,9 @@ void Logic::loadSceneDataFile(ArchiveIndex archive) {
 void Logic::loadScene(uint32 index) {
 
 	getFlags()->flag_0 = false;
+
+	// TODO update list of values for field 491
+
 	if (getState()->sceneUseBackup) {
 		Scene *scene = getSceneObject(index);
 
@@ -228,7 +262,27 @@ void Logic::loadScene(uint32 index) {
 		delete scene;
 	}
 
+	// Save shouldRedraw state and redraw if necessary
+	bool shouldRedraw = getFlags()->shouldRedraw;
+	if (shouldRedraw) {
+		shouldRedraw = 0;
+		// TODO check whether we need to do that here
+		askForRedraw();
+		redrawScreen();
+	}
+
+	// Set the scene
 	setScene(index);
+
+	// TODO events
+
+	if (getFlags()->gameRunning) 
+		if (getFlags()->shouldDrawEggOrHourGlass) {
+			//getInventory()->drawEgg();
+		}
+
+	// Restore shouldRedraw flag
+	getFlags()->shouldRedraw = shouldRedraw;
 
 	updateCursor();
 }
@@ -237,7 +291,7 @@ void Logic::setScene(uint32 index) {
 	_runState.flag_no_entity = false;
 
 	if (_runState.flag_draw_entities) {
-		// TODO Setup screen size (is it necessary for our animations?)
+		// TODO Setup screen size (0, 80)x(480x480) (is it necessary for our animations?)
 		drawScene(index);
 		_runState.flag_no_entity = true;
 	} else {
@@ -251,21 +305,22 @@ void Logic::drawScene(uint32 index) {
 	preProcessScene(&index);
 
 	// Draw background
-	delete _scene;
-	_scene = getSceneObject(index);
-	_engine->getGraphicsManager()->draw(_scene, GraphicsManager::kBackgroundC, true);
+	delete _currentScene;
+	_currentScene = getSceneObject(index);
+	_engine->getGraphicsManager()->draw(_currentScene, GraphicsManager::kBackgroundC, true);
 	getState()->scene = index;
 
 	// Update entities
-	Scene *scene = (getState()->sceneUseBackup ? getSceneObject(getState()->sceneBackup) : _scene);
+	Scene *scene = (getState()->sceneUseBackup ? getSceneObject(getState()->sceneBackup) : _currentScene);
 
 	getEntityData(kEntityNone)->field_491 = (EntityData::Field491Value)scene->getHeader()->count;
 	getEntityData(kEntityNone)->field_495 = (EntityData::Field495Value)scene->getHeader()->field_13;
 
+	// If we used the backup scene, we don't need the scene object anymore beyond this point
 	if (getState()->sceneUseBackup)
 		delete scene;
 
-	if (getFlags()->flag_1) {
+	if (getFlags()->gameRunning) {
 		getSavePoints()->pushAll(kEntityNone, kAction17);
 		getSavePoints()->process();
 
@@ -283,7 +338,7 @@ void Logic::drawScene(uint32 index) {
 	_engine->_system->updateScreen();
 	_engine->_system->delayMillis(10);
 
-	postProcessScene(&getState()->scene);
+	postProcessScene();
 }
 
 void Logic::processScene() {
@@ -540,20 +595,29 @@ void Logic::preProcessScene(uint32 *index) {
 	delete scene;
 }
 
-void Logic::postProcessScene(uint32 *index) {
+void Logic::postProcessScene() {
 
-	Scene* scene = getSceneObject(*index);
+	Scene* scene = getSceneObject(getState()->scene);
 
 	switch (scene->getHeader()->type) {
 	case Scene::kTypeList: {
+
 		// Adjust time
 		getState()->time += (scene->getHeader()->param1 + 10) * getState()->timeDelta;
 		getState()->timeTicks += (scene->getHeader()->param1 + 10);
 
-		// Some stuff related to menu?
+		//// FIXME Some stuff related to menu?
+		//if (!getFlags()->flag_2) {
+		//	while ((unknown + 4 * scene->getHeader()->param1) > unknown) {
+		//		if (getFlags()->flag_2)
+		//			break;
 
-		Scene *currentScene = getSceneObject(getState()->scene);
-		SceneHotspot *hotspot = currentScene->getHotspot();
+		//		getSoundMgr()->unknownFunction1();
+		//		// TODO Subtitle drawing function
+		//	}
+		//}
+
+		SceneHotspot *hotspot = scene->getHotspot();
 		_action->processHotspot(hotspot);
 
 		if (getFlags()->flag_2) {
@@ -570,20 +634,24 @@ void Logic::postProcessScene(uint32 *index) {
 		}
 
 		EntityData::Field491Value field491 = getEntityData(kEntityNone)->field_491;
-		if (getEntityData(kEntityNone)->field_495 == 9 && (field491 == 4 || field491 == 3)) {
+		if (getEntityData(kEntityNone)->field_495 == EntityData::kField495_9 && (field491 == EntityData::kField491_4 || field491 == EntityData::kField491_3)) {
 			EntityIndex entities[39];
 
 			int progress = 0;
 
-			for (uint i = 1; i < 40; i++) {
+			for (uint i = 1; i < (unsigned)_entities->count(); i++) {
 
-				EntityData::Field493Value field493 = getEntityData((EntityIndex)i)->field_493;
+				EntityData::Field491Value field491 = getEntityData((EntityIndex)i)->field_491;
 				EntityData::Field495Value field495 = getEntityData((EntityIndex)i)->field_495;
-				if (field491 == 4) {
-					if (!(field495 != 4 || field493 <= 9270) || !(field495 != 5 || field493 >= 1540))
+
+				// FIXME doesn't make sense to test field491 twice...
+				if (field491 == EntityData::kField491_4) {
+					if (!(field495 != EntityData::kField495_4 || field491 <= EntityData::kField491_9270) 
+					 || !(field495 != EntityData::kField495_5 || field491 >= EntityData::kField491_1540))
 						entities[progress++] = (EntityIndex)i;
 				} else {
-					if (!(field495 != 3 || field493 <= 9270) || !(field495 != 4 || field493 >= 850))
+					if (!(field495 != EntityData::kField495_3 || field491 <= EntityData::kField491_9270) 
+					 || !(field495 != EntityData::kField495_4 || field491 >= EntityData::kField491_850))
 						entities[progress++] = (EntityIndex)i;
 				}
 			}
@@ -595,7 +663,6 @@ void Logic::postProcessScene(uint32 *index) {
 		if (hotspot && hotspot->scene)
 			setScene(hotspot->scene);
 
-		delete currentScene;
 		break;
 	}
 
@@ -606,43 +673,46 @@ void Logic::postProcessScene(uint32 *index) {
 
 	case Scene::kTypeLoadBeetleSequences:
 		if ((getProgress().chapter == kChapter2 || getProgress().chapter == kChapter3)
-		  && getInventory()->getEntry(kItemBeetle)->location == 3) {
+		  && getInventory()->getEntry(kItemBeetle)->location == kLocation3) {
 			if (!_beetle->isLoaded())
 				_beetle->load();
 		}
 		break;
 
 	case Scene::kTypeGameOver:
-		if (getState()->time >= 2418300 || getProgress().field_18 == 4)
+		if (getState()->time >= kTimeGameOver || getProgress().field_18 == 4)
 			break;
+
+		// TODO: Sound cache handling
 
 		playSfxStream("LIB050");
 		switch (getProgress().chapter) {
 		case kChapter1:
-			gameOver(0, 0, 62, 1);
+			gameOver(kTimeType0, 0, kSceneGameOver62, true);
 			break;
 
 		case kChapter4:
-			gameOver(0, 0, 64, 1);
+			gameOver(kTimeType0, 0, kSceneGameOver64, true);
 			break;
 
 		default:
-			gameOver(0, 0, 63, 1);
+			gameOver(kTimeType0, 0, kSceneGameOver63, true);
 			break;
 		}
 		break;
 
-	case Scene::kTypeReadText: {
-		const char *text = _sound->readText(scene->getHeader()->param1);
-		if (text)
-			playSfxStream(text);
-
+	case Scene::kTypeReadText:
+		if (!getSoundMgr()->isBuffered(kEntityTables4)) {
+			const char *text = _sound->readText(scene->getHeader()->param1);
+			if (text)
+				playSfxStream(text);
+		}
 		break;
-	}
 
 	case Scene::kType133:
 		if (getFlags()->flag_0) {
 			getFlags()->flag_0 = false;
+			getFlags()->shouldRedraw = true;
 			updateCursor();
 		}
 		break;
@@ -710,7 +780,7 @@ void Logic::updateTrainClock() {
 	//warning("Logic::updateTrainClock: not implemented!");
 }
 
-void Logic::updateCursor() {
+void Logic::updateCursor(bool redraw) {
 	//warning("Logic::updateCursor: not implemented!");
 }
 

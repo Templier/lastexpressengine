@@ -45,7 +45,7 @@ public:
 	Menu(LastExpressEngine *engine);
 	~Menu();
 
-	void showMenu();
+	void showMenu(bool savegame, TimeType type, uint32 time);
 
 	bool handleStartMenuEvent(Common::Event ev);
 	uint32 getSceneIndex();
