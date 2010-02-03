@@ -56,6 +56,7 @@ public:
 	void resetEntity(EntityIndex entity);
 
 	// Update & drawing
+	void resetEntityState(EntityIndex entity);
 	void updateFields();
 	void setupSequences();
 	void setupCallbacks();

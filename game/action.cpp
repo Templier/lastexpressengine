@@ -452,10 +452,12 @@ IMPLEMENT_ACTION(knock) {
 	if (object >= 128)
 		return;
 
-	if (getObjects()->get(object).entity)
+	if (getObjects()->get(object).entity) {
 		getSavePoints()->push(kEntityNone, getObjects()->get(object).entity, kAction8, object);
-	else
-		getSound()->playSoundEvent(0, 12, 0);
+	} else {
+		if (!getSoundMgr()->isFileInQueue("LIB012"))
+			getSound()->playSoundEvent(0, 12, 0);
+	}
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -653,7 +655,7 @@ IMPLEMENT_ACTION(pickItem) {
 		break;
 
 	case kItemBomb:
-		getEntities()->resetEntity(kEntityAbbot);
+		getEntities()->resetEntityState(kEntityAbbot);
 		((Abbot*)getEntities()->get(kEntityAbbot))->setup_pickBomb();
 		break;
 
@@ -996,7 +998,7 @@ IMPLEMENT_ACTION(25) {
 		getSound()->playSoundEvent(0, 43, 0);
 		if (!getInventory()->hasItem(kItemKey)) {
 			if (!getEvent(kEventAnnaBagageArgument)) {
-				getEntities()->resetEntity(kEntityAnna);
+				getEntities()->resetEntityState(kEntityAnna);
 				((Anna*)getEntities()->get(kEntityAnna))->setup_bagage();
 				hotspot->scene = 0;
 			}

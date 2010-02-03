@@ -70,6 +70,7 @@
 // Game
 #include "lastexpress/game/logic.h"
 #include "lastexpress/game/savepoint.h"
+#include "lastexpress/game/soundmanager.h"
 #include "lastexpress/game/state.h"
 
 #include "lastexpress/graphics.h"
@@ -183,22 +184,29 @@ void Entities::reset() {
 }
 
 void Entities::resetEntity(EntityIndex entity) {
-	EntityData *data = getData(entity);
+	warning("Entities::resetEntity: not implemented!");
+}
+
+//////////////////////////////////////////////////////////////////////////
+// Scene setup & drawing
+//////////////////////////////////////////////////////////////////////////
+
+void Entities::resetEntityState(EntityIndex entityIndex) {
+	EntityData *data = getData(entityIndex);
 
 	data->getData()->current_call = 0;
 	data->getData()->inventoryItem = kItemNone;
 
-	// TODO clear sound cache for entity
+	if (getSoundMgr()->isBuffered(entityIndex))
+		getSoundMgr()->reset(entityIndex);
 
-	drawSequences(entity);
+	drawSequences(entityIndex);
 
 	// update fields 4x1000, 4x16 & 4x16_2
 
 	warning("Entities::resetEntity: not implemented!");
 }
 
-//////////////////////////////////////////////////////////////////////////
-// Scene setup & drawing
 void Entities::updateFields() {
 	if (!getFlags()->gameRunning)
 		return;

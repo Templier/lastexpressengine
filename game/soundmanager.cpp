@@ -49,7 +49,8 @@ bool SoundManager::isBuffered(EntityIndex entityIndex) {
 }
 
 bool SoundManager::isFileInQueue(const char* filename) {
-	error("SoundManager::isFileInQueue: not implemented!");
+	warning("SoundManager::isFileInQueue: not implemented!");
+	return false;	
 }
 
 void SoundManager::unknownFunction1() {
