@@ -35,12 +35,19 @@
  * This is the namespace of the LastExpress engine.
  *
  * Status of this engine:
- * The basic framework for the engine is done and you can navigate through the train and interact with objects. Close to no logic for characters and entities has been
- * implemented, so characters do not appear in-game and background sounds and animations are missing.
- *  - Resources: classes for the resource formats used by the game are mostly complete (subtitles integration/cursor transparency are missing)
- *  - Display: basic graphic manager functionality is implemented (transitions and dirty rects handling are missing)
- *  - Menu/Navigation: main menu is almost complete. Navigation and hotspot handling is also mostly implemented (with remaining bugs)
- *  - Logic: the framework is in place (with helper classes mostly complete), but very little logic has been implemented (it is mostly hardcoded in the original)
+ *  The basic framework for the engine is done and you can navigate through the
+ *  train and interact with objects. Some logic for characters and entities has
+ *  been implemented, but characters do not appear in-game yet and background
+ *  sounds and animations are missing.
+ *    - Resources: classes for the resource formats used by the game are mostly
+ *      complete (subtitles integration/cursor transparency are missing)
+ *    - Display: basic graphic manager functionality is implemented (transitions
+ *      and dirty rects handling are missing)
+ *    - Menu/Navigation: main menu is almost complete. Navigation and hotspot
+ *      handling is also mostly implemented (with remaining bugs)
+ *    - Logic: the framework is in place (with helper classes mostly complete),
+ *      and some logic has been implemented (it is mostly hardcoded in the original)
+ *      The shared entity code for drawing/handling of entities remains to be done.
  *
  * Maintainers:
  * clone2727, jvprat, littleboy
@@ -75,11 +82,11 @@ public:
 	// Game
 	Cursor          *getCursor()          const { return _cursor; }
 	Font            *getFont()            const { return _font; }
-	Logic           *getGameLogic()       const { return _logic; }	
+	Logic           *getGameLogic()       const { return _logic; }
 
 	// Managers
 	GraphicsManager *getGraphicsManager() const { return _graphicsMan; }
-	ResourceManager *getResourceManager() const { return _resMan; }	
+	ResourceManager *getResourceManager() const { return _resMan; }
 	SceneManager    *getSceneManager()    const { return _sceneMan; }
 
 private:
