@@ -32,14 +32,14 @@
 #include "lastexpress/data/scene.h"
 
 #include "lastexpress/game/logic.h"
-#include "lastexpress/game/soundmanager.h"
+#include "lastexpress/game/savegame.h"
+#include "lastexpress/game/sound.h"
 #include "lastexpress/game/state.h"
 
 #include "lastexpress/graphics.h"
 #include "lastexpress/helpers.h"
 #include "lastexpress/lastexpress.h"
 #include "lastexpress/resource.h"
-#include "lastexpress/savegame.h"
 
 #define getNextGameId() (GameId)((getLogic()->getGameId() + 1) % 6)
 #define drawSeqFrame(drawable, index, type) { \
@@ -453,7 +453,7 @@ void Menu::showMenu(bool savegame, TimeType type, uint32 time) {
 	_currentTime = getState()->time;
 
 	// Load main scene
-	_scene = getSceneObject(getSceneIndex());
+	_scene = _engine->getSceneManager()->getScene(getSceneIndex());
 	_engine->getGraphicsManager()->draw(_scene, GraphicsManager::kBackgroundC);
 	drawElements();
 
@@ -966,7 +966,7 @@ void Menu::goToTime(uint32 time) {
 	_engine->getCursor()->show(true);
 
 	// Stop sound
-	getSoundMgr()->getSfxStream()->stop();
+	getSound()->getSfxStream()->stop();
 }
 
 void Menu::moveToCity(CityButton city, bool clicked) {

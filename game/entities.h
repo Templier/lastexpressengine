@@ -85,7 +85,7 @@ public:
 	bool checkFields1(EntityIndex entity, EntityData::Field495Value field495, EntityData::Field491Value field491);
 	bool checkFields2(ObjectIndex object);
 	bool checkFields3(EntityIndex entity);
-	bool checkFields4(EntityData::Field495Value field495, int field15);
+	bool checkFields4(EntityData::Field495Value field495, int position);
 	bool checkFields5(EntityIndex entity, EntityData::Field495Value field495);
 	bool checkFields6(EntityIndex entity);
 	bool checkFields7(EntityData::Field495Value field495);

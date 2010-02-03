@@ -29,42 +29,44 @@
 //////////////////////////////////////////////////////////////////////////
 // Misc helpers
 //////////////////////////////////////////////////////////////////////////
-// Logic & subclasses
+// Engine subclasses
 #define getLogic() _engine->getGameLogic()
+
+// Logic
 #define getAction() getLogic()->getGameAction()
 #define getBeetle() getLogic()->getGameBeetle()
 #define getEntities() getLogic()->getGameEntities()
-#define getEntityData(entity) getEntities()->getData(entity)->getData()
 #define getSound() getLogic()->getGameSound()
+#define getSaveLoad() getLogic()->getGameSaveLoad()
+#define getState() getLogic()->getGameState()->getGameState()
 
-#define getSoundMgr() _engine->getSoundManager()
-
-#define getState() _engine->getGameState()->getGameState()
+// State
 #define getEvent(id) getState()->events[id]
+#define getFlags() getLogic()->getGameState()->getGameFlags()
+#define getInventory() getLogic()->getGameState()->getGameInventory()
+#define getObjects() getLogic()->getGameState()->getGameObjects()
 #define getProgress() getState()->progress
+#define getSavePoints() getLogic()->getGameState()->getGameSavePoints()
 
-#define getSceneObject(sceneId) _engine->getSceneManager()->getScene(sceneId)
-
-#define getFlags() _engine->getGameState()->getGameFlags()
-#define getInventory() _engine->getGameState()->getGameInventory()
-#define getObjects() _engine->getGameState()->getGameObjects()
-#define getSavePoints() _engine->getGameState()->getGameSavePoints()
+// Misc
+#define getEntityData(entity) getEntities()->getData(entity)->getData()
+#define loadSceneObject(name, sceneId) Scene name; _engine->getSceneManager()->loadScene(&name, sceneId);
 
 // Utilities
 #define loadFile(name) load(_engine->getResourceManager()->getFileStream(name))
-#define playMusicStream(name) _engine->getSoundManager()->getMusicStream()->load(_engine->getResourceManager()->getFileStream(name));
-#define playSfxStream(name) _engine->getSoundManager()->getSfxStream()->load(_engine->getResourceManager()->getFileStream(Common::String(name) + ".snd"));
+#define playMusicStream(name) getSound()->getMusicStream()->load(_engine->getResourceManager()->getFileStream(name));
+#define playSfxStream(name) getSound()->getSfxStream()->load(_engine->getResourceManager()->getFileStream(Common::String(name) + ".snd"));
 
 // Misc
-#define save(entity, a2, event) getLogic()->savegame(a2, entity, event)
+#define save(entity, a2, event) getSaveLoad()->saveGame(a2, entity, event)
 #define random(value) _engine->getRandom().getRandomNumber(value)
-#define isDay() _engine->getGameState()->isDayTime()
+#define isDay() getLogic()->getGameState()->isDayTime()
 
 //////////////////////////////////////////////////////////////////////////
 // Graphics
 //////////////////////////////////////////////////////////////////////////
 #define clearBg(type) _engine->getGraphicsManager()->clear(type)
-#define showScene(index, type) { Scene *s = getSceneObject(index); _engine->getGraphicsManager()->draw(s, type); delete s; }
+#define showScene(index, type) { loadSceneObject(s, index); _engine->getGraphicsManager()->draw(&s, type); }
 
 #define askForRedraw() _engine->getGraphicsManager()->change();
 #define redrawScreen() _engine->getGraphicsManager()->update(); _engine->_system->updateScreen();

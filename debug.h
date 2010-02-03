@@ -66,6 +66,7 @@ private:
 	bool cmd_showbg(int argc, const char **argv);
 	bool cmd_clear(int argc, const char **argv);
 	bool cmd_listfiles(int argc, const char **argv);
+	bool cmd_loadgame(int argc, const char **argv);
 
 	void resetCommand();
 	void copyCommand(int argc, const char **argv);

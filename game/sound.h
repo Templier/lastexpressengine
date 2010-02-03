@@ -33,11 +33,23 @@
 namespace LastExpress {
 
 class LastExpressEngine;
+class StreamedSound;
 
 class Sound {
 public:
 	Sound(LastExpressEngine *engine);
 	~Sound();
+
+	// State (FIXME: to be renamed when we know more about it)
+	void resetState() { _state |= 1; }
+	void reset(EntityIndex entity);
+
+	// Sound queue
+	bool isFileInQueue(const char* filename);
+	bool isBuffered(EntityIndex entityIndex);
+
+	// Misc
+	void unknownFunction1();
 
 	// Sound playing
 	void playSound(EntityIndex entity, const char *filename, int a3 = -1, byte a4 = 0);
@@ -62,8 +74,29 @@ public:
 	// Tests
 	static bool testParameter(int param);
 
+	// Sound streams TODO make private
+	StreamedSound *getMusicStream() const { return _music; }
+	StreamedSound *getSfxStream() const { return _sfx; }
+
 private:
 	LastExpressEngine* _engine;
+
+	enum SoundState {
+		kSoundState0 = 0,
+		kSoundState1 = 1,
+		kSoundState2 = 2
+	};
+
+	struct SoundEntry_t {
+
+	};
+
+	// State
+	int _state;
+
+	// Sound streams
+	StreamedSound *_music;
+	StreamedSound *_sfx;
 };
 
 } // End of namespace LastExpress

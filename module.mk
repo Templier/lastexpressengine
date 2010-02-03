@@ -52,16 +52,15 @@ MODULE_OBJS := \
 	game/logic.o \
 	game/menu.o \
 	game/object.o \
+	game/savegame.o \
 	game/savepoint.o \
 	game/sound.o \
-	game/soundmanager.o \
 	game/state.o \
 	debug.o \
 	detection.o \
 	graphics.o \
 	lastexpress.o \
-	resource.o \
-	savegame.o
+	resource.o
 
 # This module can be built as a plugin
 ifeq ($(ENABLE_LASTEXPRESS), DYNAMIC_PLUGIN)

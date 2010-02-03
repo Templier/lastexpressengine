@@ -84,17 +84,35 @@ SceneHotspot *SceneHotspot::load(Common::SeekableReadStream *stream) {
 }
 
 // Scene
+Scene::Scene() : _header(NULL) {}
 
 Scene::~Scene() {
+	clear();
+}
+
+void Scene::clear() {
 	// Free the hotspots
 	for (uint i = 0; i < _hotspots.size(); i++)
 		delete _hotspots[i];
 }
 
-Scene *Scene::load(Common::SeekableReadStream *stream, SceneHeader *header) {
-	Scene *s = new Scene(header);
-	if (!s)
+Scene *Scene::get(Common::SeekableReadStream *stream, SceneHeader *header) {
+	Scene *s = new Scene();
+
+	if (!load(s, stream, header))
 		return NULL;
+
+	return s;
+}
+
+bool Scene::load(Scene *s, Common::SeekableReadStream *stream, SceneHeader *header) {	
+	if (!s)
+		return false;
+
+	// Clear existing data
+	s->clear();
+
+	s->_header = header;
 
 	debugC(10, kLastExpressDebugScenes, "Scene:  name=%s, sig=%02d, count=%d, field_11=%d", header->name, header->sig, header->count, header->field_11);
 	debugC(10, kLastExpressDebugScenes, "\tfield_13=%02d, position=%02d, type=%02d, param1=%02d", header->field_13, header->position, header->type, header->param1);
@@ -115,7 +133,14 @@ Scene *Scene::load(Common::SeekableReadStream *stream, SceneHeader *header) {
 		}
 	}
 
-	return s;
+	return true;
+}
+
+SceneHeader* Scene::getHeader() {
+	if (_header == NULL)
+		error("Scene::getHeader: Trying to get the header from an uninitialized scene. Did you forgot to call Scene::load()?");
+
+	return _header; 
 }
 
 bool Scene::checkHotSpot(Common::Point coord, SceneHotspot **hotspot) {
@@ -203,6 +228,10 @@ bool SceneManager::load(Common::SeekableReadStream *stream) {
 	return true;
 }
 
+bool SceneManager::loadScene(Scene *scene, int index) {
+	return Scene::load(scene, _stream, _headers[index - 1]);
+}
+
 Scene *SceneManager::getScene(int index) {
 	if (_headers.empty())
 		return NULL;
@@ -211,7 +240,7 @@ Scene *SceneManager::getScene(int index) {
 		return NULL;
 
 	debugC(9, kLastExpressDebugScenes, "Loading scene %d", index);
-	return Scene::load(_stream, _headers[index - 1]);
+	return Scene::get(_stream, _headers[index - 1]);
 }
 
 } // End of namespace LastExpress

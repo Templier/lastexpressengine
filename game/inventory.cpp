@@ -30,7 +30,7 @@
 #include "lastexpress/data/snd.h"
 
 #include "lastexpress/game/logic.h"
-#include "lastexpress/game/soundmanager.h"
+#include "lastexpress/game/sound.h"
 #include "lastexpress/game/state.h"
 
 #include "lastexpress/graphics.h"
@@ -447,41 +447,39 @@ InventoryItem Inventory::getFirstExaminableItem() {
 }
 
 bool Inventory::isItemSceneParameter(InventoryItem item) {
-	Scene *currentScene = getSceneObject(getState()->scene);
-	bool equal = false;
+	loadSceneObject(scene, getState()->scene);
 
-	switch(currentScene->getHeader()->type) {
+	switch(scene.getHeader()->type) {
 	default:
-		break;
+		return false;
 
 	case Scene::kTypeItem:
-		if (currentScene->getHeader()->param1 == item)
-			equal = true;
+		if (scene.getHeader()->param1 == item)
+			return true;
 		break;
 
 	case Scene::kTypeItem2:
-		if (currentScene->getHeader()->param1 == item || currentScene->getHeader()->param2 == item)
-			equal = true;
+		if (scene.getHeader()->param1 == item || scene.getHeader()->param2 == item)
+			return true;
 		break;
 
 	case Scene::kTypeEntityItem:
-		if (currentScene->getHeader()->param2 == item)
-			equal = true;
+		if (scene.getHeader()->param2 == item)
+			return true;
 		break;
 
 	case Scene::kTypeItem3:
-		if (currentScene->getHeader()->param1 == item || currentScene->getHeader()->param2 == item || currentScene->getHeader()->param3 == item)
-			equal = true;
+		if (scene.getHeader()->param1 == item || scene.getHeader()->param2 == item || scene.getHeader()->param3 == item)
+			return true;
 		break;
 
 	case Scene::kType8:
-		if (currentScene->getHeader()->param2 == item)
-			equal = true;
+		if (scene.getHeader()->param2 == item)
+			return true;
 		break;
 	}
 
-	delete currentScene;
-	return equal;
+	return false;
 }
 
 // Examine an inventory item

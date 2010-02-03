@@ -30,8 +30,8 @@
 #include "lastexpress/game/inventory.h"
 #include "lastexpress/game/logic.h"
 #include "lastexpress/game/object.h"
+#include "lastexpress/game/savegame.h"
 #include "lastexpress/game/savepoint.h"
-#include "lastexpress/game/soundmanager.h"
 #include "lastexpress/game/sound.h"
 #include "lastexpress/game/state.h"
 
@@ -98,7 +98,7 @@ IMPLEMENT_FUNCTION(Chapters, chapter1_init, 7) {
 		return;
 
 	getProgress().chapter = kChapter1;
-	getSoundMgr()->resetState();
+	getSound()->resetState();
 
 	getState()->time = kTimeChapter1;
 	getState()->timeDelta = 0;
@@ -187,7 +187,7 @@ IMPLEMENT_FUNCTION(Chapters, function9, 9) {
 	if (savepoint->action == kActionDefault) {
 		// Reset sound cache
 		if (ENTITY_PARAM(0, 2) || ENTITY_PARAM(0, 3)) {
-			getSoundMgr()->reset(kEntityChapters);
+			getSound()->reset(kEntityChapters);
 			ENTITY_PARAM(0, 2) = 0;
 			ENTITY_PARAM(0, 3) = 0;
 		}
@@ -195,8 +195,8 @@ IMPLEMENT_FUNCTION(Chapters, function9, 9) {
 		getSound()->playSound(kEntityNone, "MUS008", 16, 0);
 		getInventory()->unselectItem();
 
-		while (getSoundMgr()->isFileInQueue("MUS008"))
-			getSoundMgr()->unknownFunction1();
+		while (getSound()->isFileInQueue("MUS008"))
+			getSound()->unknownFunction1();
 
 		setup_chapter2();
 	}
@@ -281,7 +281,7 @@ IMPLEMENT_FUNCTION(Chapters, chapter2_init, 11) {
 
 	// Reset sound cache
 	if (ENTITY_PARAM(0, 2) || ENTITY_PARAM(0, 3)) {
-		getSoundMgr()->reset(kEntityChapters);
+		getSound()->reset(kEntityChapters);
 		ENTITY_PARAM(0, 2) = 0;
 		ENTITY_PARAM(0, 3) = 0;
 	}

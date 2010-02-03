@@ -190,21 +190,24 @@ public:
 		kType133 = 133
 	};
 
+	Scene();
 	~Scene();
 
-	static Scene *load(Common::SeekableReadStream *stream, SceneHeader *header);
+	static bool load(Scene *scene, Common::SeekableReadStream *stream, SceneHeader *header);
+	static Scene *get(Common::SeekableReadStream *stream, SceneHeader *header);
+	
 	bool checkHotSpot(Common::Point coord, SceneHotspot **hotspot);
 	Common::Rect draw(Graphics::Surface *surface);
 
-	SceneHeader* getHeader() { return _header; }
+	SceneHeader* getHeader();
 	Common::Array<SceneHotspot *> *getHotspots() { return &_hotspots; }
 	SceneHotspot *getHotspot(uint index = 0);
 
-private:
-	Scene(SceneHeader *header) : _header(header) {}
-
+private:	
 	SceneHeader *_header;
 	Common::Array<SceneHotspot *> _hotspots;
+
+	void clear();
 };
 
 class SceneManager {
@@ -214,6 +217,7 @@ public:
 
 	bool load(Common::SeekableReadStream *stream);
 	Scene *getScene(int index);
+	bool loadScene(Scene *scene, int index);
 
 private:
 	Common::SeekableReadStream *_stream;

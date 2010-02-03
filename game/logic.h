@@ -38,8 +38,10 @@ class Action;
 class Beetle;
 class Entities;
 class Menu;
+class SaveLoad;
 class Scene;
 class Sound;
+class State;
 
 class Logic {
 public:
@@ -52,8 +54,7 @@ public:
 	void showMenu(bool visible);
 	void startGame();
 	void switchGame();
-
-	void savegame(int param1, EntityIndex entity, EventIndex event);
+	
 	void gameOver(TimeType type, uint32 time, SceneIndex sceneIndex, bool showScene);
 
 	// Scene
@@ -78,12 +79,14 @@ public:
 	bool isGameStarted() { return _runState.gameStarted; }
 	bool isShowingMenu() { return _runState.showingMenu; }
 	GameId getGameId() { return _runState.gameId; }
-
-	Action 	   *getGameAction() { return _action; }
 	CursorStyle getCursorStyle() { return _runState.cursorStyle; }
+
+	Action 	   *getGameAction() { return _action; }	
 	Beetle     *getGameBeetle() { return _beetle; }
 	Entities   *getGameEntities() { return _entities; }
+	SaveLoad   *getGameSaveLoad() { return _saveload; }
 	Sound 	   *getGameSound() { return _sound; }
+	State      *getGameState() { return _state; }
 
 private:
 
@@ -111,14 +114,16 @@ private:
 
 	LastExpressEngine *_engine;
 
-	RunState _runState;         ///< State of the game session (this data won't be stored in savegames)
+	RunState  _runState;        ///< State of the game session (this data won't be stored in savegames)
 
-	Action *_action;            ///< Actions
-	Beetle *_beetle;            ///< Beetle catching
+	Action   *_action;          ///< Actions
+	Beetle   *_beetle;          ///< Beetle catching
 	Entities *_entities;        ///< Entities
-	Menu *_menu;                ///< Main menu handling
-	Scene *_currentScene;       ///< Current scene
-	Sound *_sound;              ///< Sound
+	Menu     *_menu;            ///< Main menu handling
+	SaveLoad *_saveload;        ///< Save & loading
+	Scene    *_currentScene;    ///< Current scene
+	Sound    *_sound;           ///< Sound
+	State    *_state;           ///< Game state
 
 	void drawScene(SceneIndex sceneIndex);
 	void preProcessScene(SceneIndex *index);

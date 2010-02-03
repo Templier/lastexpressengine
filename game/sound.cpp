@@ -31,7 +31,6 @@
 #include "lastexpress/game/entities.h"
 #include "lastexpress/game/inventory.h"
 #include "lastexpress/game/logic.h"
-#include "lastexpress/game/soundmanager.h"
 #include "lastexpress/game/state.h"
 
 #include "lastexpress/helpers.h"
@@ -68,9 +67,41 @@ const char *messages[24] = {
 	"ENDALRM3"  // 65
 };
 
-Sound::Sound(LastExpressEngine *engine) : _engine(engine) {}
+Sound::Sound(LastExpressEngine *engine) : _engine(engine) {
+	_sfx = new StreamedSound();
+	_music = new StreamedSound();
+}
 
-Sound::~Sound() {}
+Sound::~Sound() {
+	delete _sfx;
+	delete _music;
+}
+
+//////////////////////////////////////////////////////////////////////////
+// Sound queue management
+//////////////////////////////////////////////////////////////////////////
+
+void Sound::reset(EntityIndex entity) {
+	error("SoundManager::reset: not implemented!");
+}
+
+bool Sound::isBuffered(EntityIndex entityIndex) {
+	warning("SoundManager::isBuffered: not implemented!");
+	return false;
+}
+
+bool Sound::isFileInQueue(const char* filename) {
+	warning("SoundManager::isFileInQueue: not implemented!");
+	return false;	
+}
+
+void Sound::unknownFunction1() {
+	error("SoundManager::unknownFunction1: not implemented!");
+}
+
+//////////////////////////////////////////////////////////////////////////
+// Game-related functions
+//////////////////////////////////////////////////////////////////////////
 
 void Sound::playSound(EntityIndex entity, const char *filename, int a3, byte a4) {
 	warning("Sound::playSound: no implemented!");

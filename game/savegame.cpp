@@ -23,7 +23,7 @@
  *
  */
 
-#include "lastexpress/savegame.h"
+#include "lastexpress/game/savegame.h"
 
 #include "lastexpress/debug.h"
 
@@ -46,6 +46,43 @@ const static struct {
 	{"teal.egg"},
 	{"gold.egg"}
 };
+
+//////////////////////////////////////////////////////////////////////////
+// Constructors
+//////////////////////////////////////////////////////////////////////////
+
+SaveLoad::SaveLoad(LastExpressEngine *engine) : _engine(engine) {}
+
+SaveLoad::~SaveLoad() {}
+
+//////////////////////////////////////////////////////////////////////////
+// Save & Load
+//////////////////////////////////////////////////////////////////////////
+
+// Load game
+bool SaveLoad::loadGame(GameId id) {
+	
+	if (!SaveLoad::isSavegamePresent(id))
+		return false;
+
+	//Common::InSaveFile *save = SaveLoad::openForLoading(id);
+	// Validate header
+
+
+
+
+	warning("SaveLoad::loadgame: not implemented!");
+	return false;
+}
+
+// Save game
+void SaveLoad::saveGame(int param1, EntityIndex entity, EventIndex event) {
+	warning("SaveLoad::savegame: not implemented!");
+}
+
+//////////////////////////////////////////////////////////////////////////
+// Static Members
+//////////////////////////////////////////////////////////////////////////
 
 // Check if a specific savegame exists
 bool SaveLoad::isSavegamePresent(GameId id) {

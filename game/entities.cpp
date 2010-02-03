@@ -70,7 +70,7 @@
 // Game
 #include "lastexpress/game/logic.h"
 #include "lastexpress/game/savepoint.h"
-#include "lastexpress/game/soundmanager.h"
+#include "lastexpress/game/sound.h"
 #include "lastexpress/game/state.h"
 
 #include "lastexpress/graphics.h"
@@ -197,8 +197,8 @@ void Entities::resetEntityState(EntityIndex entityIndex) {
 	data->getData()->current_call = 0;
 	data->getData()->inventoryItem = kItemNone;
 
-	if (getSoundMgr()->isBuffered(entityIndex))
-		getSoundMgr()->reset(entityIndex);
+	if (getSound()->isBuffered(entityIndex))
+		getSound()->reset(entityIndex);
 
 	drawSequences(entityIndex);
 
@@ -476,8 +476,8 @@ void Entities::drawSequencesInternal(EntityIndex index, EntityDirection directio
 
 void Entities::getSequenceName(EntityIndex index, EntityDirection direction, char *sequence1, char *sequence2) {	
 	EntityData::EntityCallData *data = getData(index)->getData();
-	Scene *_currentScene = getSceneObject(getState()->scene);
-	int position = _currentScene->getHeader()->position;
+	loadSceneObject(currentScene, getState()->scene);	
+	int position = currentScene.getHeader()->position;
 
 	// reset fields
 	data->field_4A9 = 0;
@@ -662,8 +662,6 @@ void Entities::getSequenceName(EntityIndex index, EntityDirection direction, cha
 		sprintf(sequence1, "%s%02d.seq", data->sequenceName, position);
 		break;
 	}
-
-	delete _currentScene;
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -755,13 +753,10 @@ bool Entities::checkFields3(EntityIndex entity) {
 		 || getData(entity)->getData()->field_495 == EntityData::kField495_4) && getData(entity)->getData()->field_493 == EntityData::kField493_1;
 }
 
-bool Entities::checkFields4(EntityData::Field495Value field495, int field15) {
+bool Entities::checkFields4(EntityData::Field495Value field495, int position) {
+	loadSceneObject(scene, getState()->scene);
 
-	Scene *scene = getSceneObject(getState()->scene);
-	bool ret = getData(kEntityNone)->getData()->field_495 == field495 && scene->getHeader()->position == field15;
-	delete scene;
-
-	return ret;
+	return getData(kEntityNone)->getData()->field_495 == field495 && scene.getHeader()->position == position;
 }
 
 bool Entities::checkFields5(EntityIndex entity, EntityData::Field495Value field495) {

@@ -30,6 +30,7 @@
 #include "lastexpress/game/inventory.h"
 #include "lastexpress/game/logic.h"
 #include "lastexpress/game/object.h"
+#include "lastexpress/game/savegame.h"
 #include "lastexpress/game/savepoint.h"
 #include "lastexpress/game/state.h"
 #include "lastexpress/game/sound.h"

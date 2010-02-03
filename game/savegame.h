@@ -41,7 +41,7 @@
 		uint32 {4}      - ?? needs to be = 9
 
 	data:
-		Game state (see logic.h)
+		Game state (see state.h)
 */
 
 #include "lastexpress/shared.h"
@@ -50,22 +50,33 @@
 
 namespace LastExpress {
 
+class LastExpressEngine;
+
 class SaveLoad {
 public:
 
-	// Init & Access
+	SaveLoad(LastExpressEngine *engine);
+	~SaveLoad();
+
+	// Save & Load
+	bool loadGame(GameId id);
+	void saveGame(int param1, EntityIndex entity, EventIndex event);
+
+	// Init
 	static bool initSavegame(GameId id);
 
 	// Getting information
 	static bool isSavegamePresent(GameId id);
 	static bool isSavegameValid(GameId id);
 
-private:
-	static Common::String getSavegameName(GameId id);
-
 	// Opening save files
 	static Common::InSaveFile *openForLoading(GameId id);
 	static Common::OutSaveFile *openForSaving(GameId id);
+
+private:
+	LastExpressEngine *_engine;
+
+	static Common::String getSavegameName(GameId id);
 };
 
 } // End of namespace LastExpress

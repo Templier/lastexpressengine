@@ -55,10 +55,7 @@ class Font;
 class GraphicsManager;
 class Logic;
 class ResourceManager;
-class Scene;
 class SceneManager;
-class SoundManager;
-class State;
 
 class LastExpressEngine : public Engine {
 protected:
@@ -74,38 +71,34 @@ public:
 
 	// Misc
 	Common::RandomSource getRandom() const {return _random; }
-	Cursor *getCursor() const { return _cursor; }
-	Font *getFont() const { return _font; }
 
 	// Game
-	Logic *getGameLogic() const { return _logic; }
-	State *getGameState() const { return _state; }
+	Cursor          *getCursor()          const { return _cursor; }
+	Font            *getFont()            const { return _font; }
+	Logic           *getGameLogic()       const { return _logic; }	
 
 	// Managers
 	GraphicsManager *getGraphicsManager() const { return _graphicsMan; }
 	ResourceManager *getResourceManager() const { return _resMan; }	
-	SceneManager *getSceneManager() const { return _sceneMan; }
-	SoundManager *getSoundManager() const { return _soundMan; }
+	SceneManager    *getSceneManager()    const { return _sceneMan; }
 
 private:
 	const ADGameDescription *_gameDescription;
 	Graphics::PixelFormat _pixelFormat;
 
 	// Misc
-	Cursor *_cursor;
 	Debugger *_debugger;
-	Font *_font;
 	Common::RandomSource _random;
 
 	// Game
-	Logic *_logic;
-	State *_state;
+	Cursor *_cursor;
+	Font   *_font;
+	Logic  *_logic;
 
 	// Managers
 	GraphicsManager *_graphicsMan;
 	ResourceManager *_resMan;
-	SceneManager *_sceneMan;
-	SoundManager *_soundMan;
+	SceneManager    *_sceneMan;
 };
 
 } // End of namespace LastExpress

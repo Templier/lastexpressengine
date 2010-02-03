@@ -38,34 +38,37 @@
 #include "lastexpress/game/inventory.h"
 #include "lastexpress/game/menu.h"
 #include "lastexpress/game/object.h"
-#include "lastexpress/game/sound.h"
+#include "lastexpress/game/savegame.h"
 #include "lastexpress/game/savepoint.h"
-#include "lastexpress/game/soundmanager.h"
+#include "lastexpress/game/sound.h"
 #include "lastexpress/game/state.h"
 
 #include "lastexpress/graphics.h"
 #include "lastexpress/helpers.h"
 #include "lastexpress/lastexpress.h"
 #include "lastexpress/resource.h"
-#include "lastexpress/savegame.h"
 
 namespace LastExpress {
 
 Logic::Logic(LastExpressEngine *engine) : _engine(engine), _currentScene(NULL) {
-	_action = new Action(engine);
-	_beetle = new Beetle(engine);	
-	_menu = new Menu(engine);
-	_entities = new Entities(_engine);
-	_sound = new Sound(engine);
+	_action   = new Action(engine);
+	_beetle   = new Beetle(engine);	
+	_entities = new Entities(engine);
+	_menu     = new Menu(engine);	
+	_saveload = new SaveLoad(engine);
+	_sound    = new Sound(engine);
+	_state    = new State(engine);
 }
 
 Logic::~Logic() {
 	delete _action;
 	delete _beetle;
-	delete _entities;
-	delete _menu;
 	delete _currentScene;
+	delete _entities;
+	delete _menu;	
+	delete _saveload;
 	delete _sound;
+	delete _state;
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -81,17 +84,18 @@ void Logic::startGame() {
 
 	_entities->setup(kChapter1);
 
-	// DEBUG
-	showMenu(false);
+	// DEBUG	
+	_menu->setShowStartup(false);
+	_runState.showingMenu = false;
 	getFlags()->gameRunning = true;
 	
 	// Set Cursor type
 	_engine->getCursor()->setStyle(kCursorNormal);
-	_engine->getCursor()->show(true);
-
-	getInventory()->show(true);
+	_engine->getCursor()->show(true);	
 
 	loadScene(kSceneDefault);
+
+	getInventory()->show(true);
 
 	askForRedraw();
 }
@@ -172,22 +176,17 @@ void Logic::gameOver(TimeType type, uint32 time, SceneIndex sceneIndex, bool sho
 		if (sceneIndex && !getFlags()->flag_2) {			
 			loadScene(sceneIndex);
 
-			while (getSoundMgr()->isBuffered(kEntityTables4)) {
+			while (getSound()->isBuffered(kEntityTables4)) {
 				if (getFlags()->flag_2)
 					break;
 
-				getSoundMgr()->unknownFunction1();
+				getSound()->unknownFunction1();
 			}
 		}
 	}
 
 	// Show Menu
 	_menu->showMenu(false, type, time);
-}
-
-// Save game
-void Logic::savegame(int param1, EntityIndex entity, EventIndex event) {
-	warning("Logic::savegame: not implemented!");
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -252,14 +251,12 @@ void Logic::loadScene(uint32 index) {
 	// TODO update list of values for field 491
 
 	if (getState()->sceneUseBackup) {
-		Scene *scene = getSceneObject(index);
-
-		if (scene->getHeader()->param3 != 255) {
+		loadSceneObject(scene, index);
+		
+		if (scene.getHeader()->param3 != 255) {
 			getState()->sceneUseBackup = 0;
 			getState()->sceneBackup2 = 0;
 		}
-
-		delete scene;
 	}
 
 	// Save shouldRedraw state and redraw if necessary
@@ -306,12 +303,12 @@ void Logic::drawScene(uint32 index) {
 
 	// Draw background
 	delete _currentScene;
-	_currentScene = getSceneObject(index);
+	_currentScene = _engine->getSceneManager()->getScene(index);
 	_engine->getGraphicsManager()->draw(_currentScene, GraphicsManager::kBackgroundC, true);
 	getState()->scene = index;
 
 	// Update entities
-	Scene *scene = (getState()->sceneUseBackup ? getSceneObject(getState()->sceneBackup) : _currentScene);
+	Scene *scene = (getState()->sceneUseBackup ? _engine->getSceneManager()->getScene(getState()->sceneBackup) : _currentScene);
 
 	getEntityData(kEntityNone)->field_491 = (EntityData::Field491Value)scene->getHeader()->count;
 	getEntityData(kEntityNone)->field_495 = (EntityData::Field495Value)scene->getHeader()->field_13;
@@ -354,14 +351,13 @@ void Logic::processScene() {
 	if (item && getInventory()->getSelectedItem() == item)
 		getInventory()->selectItem(item);
 
-	Scene *backup = getSceneObject(getState()->sceneBackup);
 
-	if (getState()->field1000[backup->getHeader()->position + 100 * backup->getHeader()->field_13])
+	loadSceneObject(backup, getState()->sceneBackup);
+
+	if (getState()->field1000[backup.getHeader()->position + 100 * backup.getHeader()->field_13])
 		loadScene(getLogic()->processIndex(getState()->sceneBackup));
 	else
 		loadScene(getState()->sceneBackup);
-
-	delete backup;
 }
 
 uint32 Logic::processIndex(uint32 index) {
@@ -423,10 +419,10 @@ void Logic::loadSceneFromItem(InventoryItem item) {
 	}
 
 #define GET_ENTITY_LOCATION(scene) \
-	getObjects()->get((ObjectIndex)scene->getHeader()->param1).location
+	getObjects()->get((ObjectIndex)scene.getHeader()->param1).location
 
 #define GET_ITEM_LOCATION(scene, parameter) \
-	getInventory()->getEntry((InventoryItem)scene->getHeader()->parameter)->location
+	getInventory()->getEntry((InventoryItem)scene.getHeader()->parameter)->location
 
 void Logic::preProcessScene(uint32 *index) {
 
@@ -434,9 +430,9 @@ void Logic::preProcessScene(uint32 *index) {
 	if (*index == 0 || *index > 2500)
 		*index = 1;
 
-	Scene* scene = getSceneObject(*index);
+	loadSceneObject(scene, *index);
 
-	switch (scene->getHeader()->type) {
+	switch (scene.getHeader()->type) {
 	case Scene::kTypeItem:
 	case Scene::kTypeItem2:
 	case Scene::kTypeItem3:
@@ -444,16 +440,16 @@ void Logic::preProcessScene(uint32 *index) {
 	case Scene::kTypeEntityItem: {
 		int location = 0;
 		ObjectLocation location1 = kLocationNone, location2 = kLocationNone, location3 = kLocationNone;
-		byte type = scene->getHeader()->type;
+		byte type = scene.getHeader()->type;
 
 		// Check bounds
-		if (scene->getHeader()->param1 >= ((type == Scene::kTypeEntity || type == Scene::kTypeEntityItem) ? 128 : 32))
+		if (scene.getHeader()->param1 >= ((type == Scene::kTypeEntity || type == Scene::kTypeEntityItem) ? 128 : 32))
 			break;
 
-		if (type != Scene::kTypeItem && scene->getHeader()->param2 >= 32)
+		if (type != Scene::kTypeItem && scene.getHeader()->param2 >= 32)
 			break;
 
-		if (type == Scene::kTypeItem3 && scene->getHeader()->param3 >= 32)
+		if (type == Scene::kTypeItem3 && scene.getHeader()->param3 >= 32)
 			break;
 
 		// Check location
@@ -480,7 +476,7 @@ void Logic::preProcessScene(uint32 *index) {
 		if (!location)
 			break;
 
-		for (Common::Array<SceneHotspot *>::iterator it = scene->getHotspots()->begin(); it != scene->getHotspots()->end(); ++it) {
+		for (Common::Array<SceneHotspot *>::iterator it = scene.getHotspots()->begin(); it != scene.getHotspots()->end(); ++it) {
 
 			if ((type == Scene::kTypeItem || type == Scene::kTypeEntity)) {
 				if ((*it)->location != location1) {
@@ -505,70 +501,66 @@ void Logic::preProcessScene(uint32 *index) {
 	}
 
 	case Scene::kType6: {
-		if (scene->getHeader()->param1 >= 128)
+		if (scene.getHeader()->param1 >= 128)
 			break;
 
 		bool found = false;
-		if (scene->getHotspots()->size() > 0) {
-			for (Common::Array<SceneHotspot *>::iterator it = scene->getHotspots()->begin(); it != scene->getHotspots()->end(); ++it) {
+		if (scene.getHotspots()->size() > 0) {
+			for (Common::Array<SceneHotspot *>::iterator it = scene.getHotspots()->begin(); it != scene.getHotspots()->end(); ++it) {
+				// The index might be modified by the action, so reload the scene on each iteration
+				loadSceneObject(currentScene, *index);
 
-				Scene *currentScene = getSceneObject(*index);
-				if (getObjects()->get((ObjectIndex)currentScene->getHeader()->param1).location2 == (*it)->location) {
+				if (getObjects()->get((ObjectIndex)currentScene.getHeader()->param1).location2 == (*it)->location) {
 					PROCESS_HOTSPOT_SCENE(*it, index);
 					found = true;
 				}
-				delete currentScene;
 			}
 		}
 
 		// If the scene has no hotspot or if we haven't found a proper hotspot, use the first hotspot from the current scene
 		if (!found) {
-			Scene *hotspotScene = getSceneObject(*index);
-			SceneHotspot *hotspot = scene->getHotspot();
+			loadSceneObject(sceneHotspot, *index);
+			SceneHotspot *hotspot = sceneHotspot.getHotspot();
 
 			PROCESS_HOTSPOT_SCENE(hotspot, index);
-
-			delete hotspotScene;
 		}
 		break;
 	}
 
 	case Scene::kType7:
 	case Scene::kType8:
-		if (scene->getHeader()->param1 >= 16)
+		if (scene.getHeader()->param1 >= 16)
 			break;
 
-		if (getState()->field16[scene->getHeader()->param1] || getState()->field16_2[scene->getHeader()->param1]) {
+		if (getState()->field16[scene.getHeader()->param1] || getState()->field16_2[scene.getHeader()->param1]) {
 
-			Scene *currentScene = getSceneObject(getState()->scene);
+			loadSceneObject(currentScene, getState()->scene);
 
-			if ((checkSceneFields(getState()->scene, false) && checkSceneFields(*index, false) && _currentScene->getHeader()->count < scene->getHeader()->count)
-			 || (checkSceneFields(getState()->scene, true)  && checkSceneFields(*index, true)  && _currentScene->getHeader()->count > scene->getHeader()->count)) {
+			if ((checkSceneFields(getState()->scene, false) && checkSceneFields(*index, false) && currentScene.getHeader()->count < scene.getHeader()->count)
+			 || (checkSceneFields(getState()->scene, true)  && checkSceneFields(*index, true)  && currentScene.getHeader()->count > scene.getHeader()->count)) {
 
-				if (State::getPowerOfTwo(getState()->field16[scene->getHeader()->param1]) != 30
-				 && State::getPowerOfTwo(getState()->field16_2[scene->getHeader()->param1]) != 30 )
+				if (State::getPowerOfTwo(getState()->field16[scene.getHeader()->param1]) != 30
+				 && State::getPowerOfTwo(getState()->field16_2[scene.getHeader()->param1]) != 30 )
 					getSound()->playSound(kEntityNone, "CAT1126A");
 
-				*index = scene->getHotspot()->scene;
+				*index = scene.getHotspot()->scene;
 			} else {
-				*index = scene->getHotspot(1)->scene;
+				*index = scene.getHotspot(1)->scene;
 			}
-
-			delete currentScene;
 
 			preProcessScene(index);
 		} else {
-			if (scene->getHeader()->type == Scene::kType7)
+			if (scene.getHeader()->type == Scene::kType7)
 				break;
 
-			if (scene->getHeader()->param2 >= 32)
+			if (scene.getHeader()->param2 >= 32)
 				break;
 
-			ObjectLocation location = getInventory()->getEntry((InventoryItem)scene->getHeader()->param2)->location;
+			ObjectLocation location = getInventory()->getEntry((InventoryItem)scene.getHeader()->param2)->location;
 			if (!location)
 				break;
 
-			for (Common::Array<SceneHotspot *>::iterator it = scene->getHotspots()->begin(); it != scene->getHotspots()->end(); ++it) {
+			for (Common::Array<SceneHotspot *>::iterator it = scene.getHotspots()->begin(); it != scene.getHotspots()->end(); ++it) {
 				if ((*it)->location == location) {
 					PROCESS_HOTSPOT_SCENE(*it, index);
 					break;
@@ -583,28 +575,22 @@ void Logic::preProcessScene(uint32 *index) {
 
 	// Cleanup
 	if (_beetle->isLoaded()) {
-		// Get scene type
-		Scene *currentScene = getSceneObject(*index);
-
-		if (currentScene->getHeader()->type != Scene::kTypeLoadBeetleSequences)
+		loadSceneObject(currentScene, *index);
+		if (currentScene.getHeader()->type != Scene::kTypeLoadBeetleSequences)
 			_beetle->unload();
-
-		delete currentScene;
 	}
-
-	delete scene;
 }
 
 void Logic::postProcessScene() {
 
-	Scene* scene = getSceneObject(getState()->scene);
+	loadSceneObject(scene, getState()->scene);
 
-	switch (scene->getHeader()->type) {
+	switch (scene.getHeader()->type) {
 	case Scene::kTypeList: {
 
 		// Adjust time
-		getState()->time += (scene->getHeader()->param1 + 10) * getState()->timeDelta;
-		getState()->timeTicks += (scene->getHeader()->param1 + 10);
+		getState()->time += (scene.getHeader()->param1 + 10) * getState()->timeDelta;
+		getState()->timeTicks += (scene.getHeader()->param1 + 10);
 
 		//// FIXME Some stuff related to menu?
 		//if (!getFlags()->flag_2) {
@@ -617,20 +603,19 @@ void Logic::postProcessScene() {
 		//	}
 		//}
 
-		SceneHotspot *hotspot = scene->getHotspot();
+		SceneHotspot *hotspot = scene.getHotspot();
 		_action->processHotspot(hotspot);
 
 		if (getFlags()->flag_2) {
-			Scene *hotspotScene = getSceneObject(hotspot->scene);
-			while (hotspotScene->getHeader()->type == Scene::kTypeList) {
-				hotspot = hotspotScene->getHotspot();
+			loadSceneObject(hotspotScene, hotspot->scene);
+
+			while (hotspotScene.getHeader()->type == Scene::kTypeList) {
+				hotspot = hotspotScene.getHotspot();
 				_action->processHotspot(hotspot);
 
-				uint16 nextScene = hotspot->scene;
-				delete hotspotScene;
-				hotspotScene = getSceneObject(nextScene);
+				// reload the scene
+				_engine->getSceneManager()->loadScene(&hotspotScene, hotspot->scene);
 			}
-			delete hotspotScene;
 		}
 
 		EntityData::Field491Value field491 = getEntityData(kEntityNone)->field_491;
@@ -700,8 +685,8 @@ void Logic::postProcessScene() {
 		break;
 
 	case Scene::kTypeReadText:
-		if (!getSoundMgr()->isBuffered(kEntityTables4)) {
-			const char *text = _sound->readText(scene->getHeader()->param1);
+		if (!getSound()->isBuffered(kEntityTables4)) {
+			const char *text = _sound->readText(scene.getHeader()->param1);
 			if (text)
 				playSfxStream(text);
 		}
@@ -718,9 +703,6 @@ void Logic::postProcessScene() {
 	default:
 		break;
 	}
-
-	// Cleanup
-	delete scene;
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -784,12 +766,10 @@ void Logic::updateCursor(bool redraw) {
 
 bool Logic::checkSceneFields(uint32 index, bool isSecondCheck) {
 	bool result = false;
-	Scene *scene = getSceneObject((index ? index : getState()->scene));
+	loadSceneObject(scene, (index ? index : getState()->scene));
 
-	uint16 field13 = scene->getHeader()->field_13;
-	byte position = scene->getHeader()->position;
-
-	delete scene;
+	uint16 field13 = scene.getHeader()->field_13;
+	byte position = scene.getHeader()->position;
 
 	result = (field13 == 3 || field13 == 4);
 

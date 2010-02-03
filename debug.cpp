@@ -34,7 +34,9 @@
 #include "lastexpress/data/snd.h"
 #include "lastexpress/data/subtitle.h"
 
-#include "lastexpress/game/soundmanager.h"
+#include "lastexpress/game/logic.h"
+#include "lastexpress/game/savegame.h"
+#include "lastexpress/game/sound.h"
 
 #include "lastexpress/graphics.h"
 #include "lastexpress/helpers.h"
@@ -57,6 +59,7 @@ Debugger::Debugger(LastExpressEngine *engine) : _engine(engine) {
 	DCmd_Register("loadscene", WRAP_METHOD(Debugger, cmd_loadscene));
 	DCmd_Register("clear",     WRAP_METHOD(Debugger, cmd_clear));
 	DCmd_Register("listfiles", WRAP_METHOD(Debugger, cmd_listfiles));
+	DCmd_Register("loadgame",  WRAP_METHOD(Debugger, cmd_loadgame));
 
 	resetCommand();
 }
@@ -206,8 +209,9 @@ bool Debugger::cmd_playsnd(int argc, const char **argv) {
 		}
 
 		_engine->_system->getMixer()->stopAll();
+
 		// FIXME: use another sound stream for debug (the one in the engine is not setup for playing a single sound)
-		getSoundMgr()->getSfxStream()->load(_engine->getResourceManager()->getFileStream(filename));
+		getSound()->getSfxStream()->load(_engine->getResourceManager()->getFileStream(filename));
 	} else {
 		DebugPrintf("Syntax: playsnd <sndname>\n");
 	}
@@ -364,32 +368,27 @@ bool Debugger::cmd_loadscene(int argc, const char **argv) {
 
 			return false;
 		} else {
+
+			// TODO check for cd and load the proper data file in the fly (and restore after)
+
 			clearBg(GraphicsManager::kBackgroundAll);
 
-			//SceneManager scene;
-			//if (scene.loadScene(cd)) {
-				Scene *s = getSceneObject(index);
-				_engine->getGraphicsManager()->draw(s, GraphicsManager::kBackgroundC);
-				delete s;
+			Scene s;
+			if (!_engine->getSceneManager()->loadScene(&s, index))
+				DebugPrintf("Cannot load scene %i from CD %i", index, cd);
+			
+			_engine->getGraphicsManager()->draw(&s, GraphicsManager::kBackgroundC);
 
-				askForRedraw();
-				redrawScreen();
-
-				// Pause for a second to be able to see the scene
-				_engine->_system->delayMillis(1000);
-			//} else {
-				//DebugPrintf("Cannot load scene %i from CD %i", index, cd);
-			//}
-
+			askForRedraw();
 			redrawScreen();
 
-			// Pause for a second to be able to see the background
+			// Pause for a second to be able to see the scene
 			_engine->_system->delayMillis(1000);
 
 			resetCommand();
 		}
 	} else {
-		DebugPrintf("Syntax: loadscene <cd number> <scene index>\n");
+		DebugPrintf("Syntax: loadscene (<cd number>) <scene index>\n");
 	}
 	return true;
 }
@@ -397,7 +396,9 @@ bool Debugger::cmd_loadscene(int argc, const char **argv) {
 
 bool Debugger::cmd_clear(int argc, const char **argv) {
 	if (argc == 1) {
-
+		clearBg(GraphicsManager::kBackgroundAll);
+		askForRedraw();
+		redrawScreen();
 	} else {
 		DebugPrintf("Syntax: clear - clear the screen\n");
 	}
@@ -418,6 +419,24 @@ bool Debugger::cmd_listfiles(int argc, const char **argv) {
 		}
 	} else {
 		DebugPrintf("Syntax: listfiles <filter> (use * for all)\n");
+	}
+
+	return true;
+}
+
+bool Debugger::cmd_loadgame(int argc, const char **argv) {
+	if (argc == 2) {
+		int id = getNumber(argv[1]);
+
+		if (id == 0 || id > 6)
+			goto error;
+
+		if (!getSaveLoad()->loadGame((GameId)(id - 1)))
+			DebugPrintf("Error loading game with id=%d", id);
+
+	} else {
+error:
+		DebugPrintf("Syntax: loadgame <id> (id=1-6)\n");
 	}
 
 	return true;

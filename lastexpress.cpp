@@ -30,7 +30,6 @@
 #include "lastexpress/data/scene.h"
 
 #include "lastexpress/game/logic.h"
-#include "lastexpress/game/soundmanager.h"
 #include "lastexpress/game/state.h"
 
 #include "lastexpress/graphics.h"
@@ -38,21 +37,11 @@
 
 #include "common/EventRecorder.h"
 
-//#define LOAD_RESOURCES_LIST
-#ifdef LOAD_RESOURCES_LIST
-#include "lastexpress/helpers.h"
-#include "lastexpress/background.h"
-#include "lastexpress/subtitle.h"
-#include "lastexpress/animation.h"
-#include "lastexpress/sequence.h"
-#endif
-
 namespace LastExpress {
 
 LastExpressEngine::LastExpressEngine(OSystem *syst, const ADGameDescription *gd) :
-	Engine(syst), _gameDescription(gd), _debugger(NULL), _resMan(NULL),
-	_cursor(NULL), _font(NULL), _logic(NULL), _graphicsMan(NULL), _sceneMan(NULL),
-	_soundMan(NULL), _state(NULL) {
+    Engine(syst), _gameDescription(gd), _debugger(NULL), _resMan(NULL), _cursor(NULL),
+    _font(NULL), _logic(NULL), _graphicsMan(NULL), _sceneMan(NULL) {
 	// Adding the default directories
 	SearchMan.addSubDirectoryMatching(_gameDataDir, "data");
 
@@ -80,8 +69,6 @@ LastExpressEngine::~LastExpressEngine() {
 	delete _logic;
 	delete _resMan;
 	delete _sceneMan;
-	delete _soundMan;
-	delete _state;
 }
 
 // TODO: which error should we return when some game files are missing/corrupted?
@@ -113,52 +100,13 @@ Common::Error LastExpressEngine::run() {
 	_font = _resMan->loadFont();
 	if (!_font)
 		return Common::kUnknownError;
-	
+
+	// Start scene manager
 	_sceneMan = new SceneManager();
-	_state = new State(this);
-	_soundMan = new SoundManager(this);
+	
+	// Game logic
 	_logic = new Logic(this);
-
 	_logic->startGame();
-
-	//////////////////////////////////////////////////////////////////////////
-	// DEBUG
-	int style = 0;
-	//////////////////////////////////////////////////////////////////////////
-
-#ifdef LOAD_RESOURCES_LIST
-	// Test Backgrounds
-	Common::ArchiveMemberList list_bg;
-	int num_bg = _resMan->listMatchingMembers(list_bg, "*.bg");
-	warning("found %d bg's", num_bg);
-	Common::ArchiveMemberList::iterator i_bg = list_bg.begin();
-
-	// Test SEQ
-	Common::ArchiveMemberList list_seq;
-	int n_seq = _resMan->listMatchingMembers(list_seq, "*.seq");
-	warning("found %d seq's", n_seq);
-	Common::ArchiveMemberList::iterator i_seq = list_seq.begin();
-
-	// Test NIS
-	Common::ArchiveMemberList list_nis;
-	int n_nis = _resMan->listMatchingMembers(list_nis, "*.nis");
-	warning("found %d nis's", n_nis);
-	Common::ArchiveMemberList::iterator i_nis = list_nis.begin();
-
-	// Test subtitles
-	Common::ArchiveMemberList list_sbe;
-	int n_sbe = _resMan->listMatchingMembers(list_sbe, "*.sbe");
-	warning("found %d sbe's", n_sbe);
-	Common::ArchiveMemberList::iterator i_sbe = list_sbe.begin();
-
-	// Test sound
-	Common::ArchiveMemberList list_snd;
-	int n_snd = _resMan->listMatchingMembers(list_snd, "*.snd");
-	warning("found %d snd's", n_snd);
-	Common::ArchiveMemberList::iterator i_snd = list_snd.begin();
-
-	debugC(2, kLastExpressDebugResource, "Resource debugging:\n  b: background\n  m: music/sound\n  n: animation\n  s: sequence\n  t: subtitle\n  +/-: cursor");
-#endif
 
 	while (!shouldQuit()) {
 		// Show the debugger if required
@@ -187,122 +135,6 @@ Common::Error LastExpressEngine::run() {
 				if (ev.kbd.keycode == Common::KEYCODE_ESCAPE)
 					quitGame();
 
-				// DEBUG: cursors
-				if (ev.kbd.keycode == Common::KEYCODE_PLUS || ev.kbd.keycode == Common::KEYCODE_KP_PLUS)
-					if (_cursor->setStyle((CursorStyle)(style + 1)))
-						style++;
-
-				if (ev.kbd.keycode == Common::KEYCODE_MINUS || ev.kbd.keycode == Common::KEYCODE_KP_MINUS)
-					if (_cursor->setStyle((CursorStyle)(style - 1)))
-						style--;
-
-				// DEBUG: time
-				if (ev.kbd.keycode == Common::KEYCODE_KP_DIVIDE) {
-					_state->getGameState()->time -= 4984;
-					_logic->showMenu(true);
-				}
-
-				if (ev.kbd.keycode == Common::KEYCODE_KP_MULTIPLY) {
-					_state->getGameState()->time += 5167;
-					_logic->showMenu(true);
-				}
-
-				// Play intro
-				if (ev.kbd.keycode == Common::KEYCODE_RETURN || ev.kbd.keycode == Common::KEYCODE_KP_ENTER)
-					_logic->showMenu(true);
-
-#ifdef LOAD_RESOURCES_LIST
-				{
-				LastExpressEngine *_engine = this;
-				// DEBUG: show data files
-				if (ev.kbd.keycode == Common::KEYCODE_b) {
-					if (i_bg != list_bg.end()) {
-						clearBg(GraphicsManager::kBackgroundC);
-
-						Common::String bgName = (*i_bg)->getName();
-						bgName.deleteLastChar();
-						bgName.deleteLastChar();
-						bgName.deleteLastChar();
-						Background *background = _resMan->loadBackground(bgName);
-						if (background) {
-							background->showBg(GraphicsManager::kBackgroundC);
-							delete background;
-							askForRedraw();
-						}
-						i_bg++;
-					}
-				}
-
-				if (ev.kbd.keycode == Common::KEYCODE_s) {
-					if (i_seq != list_seq.end()) {
-						Sequence sequence;
-						if (sequence.load(_resMan->getFileStream((*i_seq)->getName()))) {
-							for (uint32 i = 0; i < sequence.count(); i++) {
-								// Clear screen
-								clearBg(GraphicsManager::kBackgroundA);
-
-								sequence.showFrameBg(GraphicsManager::kBackgroundA, i);
-
-								askForRedraw();
-								redrawScreen();
-
-								// Handle right-click to interrupt sequence
-								Common::Event ev;
-								_eventMan->pollEvent(ev);
-								if (ev.type == Common::EVENT_RBUTTONDOWN)
-									break;
-
-								_system->delayMillis(175);
-							}
-						}
-						i_seq++;
-					}
-				}
-
-				if (ev.kbd.keycode == Common::KEYCODE_n) {
-					if (i_nis != list_nis.end()) {
-						Animation animation;
-						if (animation.load(_resMan->getFileStream((*i_nis)->getName()))) {
-							animation.draw();
-						}
-						i_nis++;
-					}
-				}
-
-				if (ev.kbd.keycode == Common::KEYCODE_m) {
-					if (i_snd != list_snd.end()) {
-						_system->getMixer()->stopAll();
-
-						_sfx->load(_resMan->getFileStream((*i_snd)->getName()));
-						i_snd++;
-					}
-				}
-
-				if (ev.kbd.keycode == Common::KEYCODE_t) {
-					if (i_sbe != list_sbe.end()) {
-						SubtitleManager subtitle(_font);
-						if (subtitle.load(_resMan->getFileStream((*i_sbe)->getName()))) {
-							for (uint i = 0; i < subtitle.count(); i++) {
-								_graphicsMan->clear(GraphicsManager::kBackgroundAll);
-								subtitle.showFrameOverlay(i);
-
-								askForRedraw();
-								redrawScreen();
-
-								// Handle right-click to interrupt sequence
-								Common::Event ev;
-								_eventMan->pollEvent(ev);
-								if (ev.type == Common::EVENT_RBUTTONDOWN)
-									break;
-
-								_system->delayMillis(500);
-							}
-						}
-						i_sbe++;
-					}
-				}
-				}
-#endif
 				break;
 
 			case Common::EVENT_MAINMENU:

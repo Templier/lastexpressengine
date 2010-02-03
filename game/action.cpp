@@ -39,6 +39,7 @@
 #include "lastexpress/game/inventory.h"
 #include "lastexpress/game/logic.h"
 #include "lastexpress/game/object.h"
+#include "lastexpress/game/savegame.h"
 #include "lastexpress/game/savepoint.h"
 #include "lastexpress/game/sound.h"
 #include "lastexpress/game/state.h"
@@ -411,12 +412,10 @@ IMPLEMENT_ACTION(inventory) {
 		getState()->sceneUseBackup = 0;
 		index = getState()->sceneBackup;
 
-		Scene *backup = getSceneObject(getState()->sceneBackup);
+		loadSceneObject(backup, getState()->sceneBackup);		
 
-		if (getState()->field1000[backup->getHeader()->position + 100 * backup->getHeader()->field_13])
+		if (getState()->field1000[backup.getHeader()->position + 100 * backup.getHeader()->field_13])
 			index = getLogic()->processIndex(getState()->sceneBackup);
-
-		delete backup;
 	}
 
 	getLogic()->loadScene(index);
@@ -455,7 +454,7 @@ IMPLEMENT_ACTION(knock) {
 	if (getObjects()->get(object).entity) {
 		getSavePoints()->push(kEntityNone, getObjects()->get(object).entity, kAction8, object);
 	} else {
-		if (!getSoundMgr()->isFileInQueue("LIB012"))
+		if (!getSound()->isFileInQueue("LIB012"))
 			getSound()->playSoundEvent(0, 12, 0);
 	}
 }
@@ -706,7 +705,7 @@ IMPLEMENT_ACTION(dropItem) {
 
 		if (location == kLocation2) {
 			if (!getProgress().field_58) {
-				getLogic()->savegame(0, kEntityNone, kEventNone);
+				save(kEntityNone, 0, kEventNone);
 				getProgress().field_58 = 1;
 			}
 
@@ -751,7 +750,7 @@ IMPLEMENT_ACTION(enterCompartment) {
 			hotspot->scene = 0;
 		}
 	} else {
-		getLogic()->savegame(0, kEntityNone, kEventNone);
+		save(kEntityNone, 0, kEventNone);
 		getSound()->playSound(kEntityNone, "LIB014");
 		playAnimation(kEventCathFindCorpse);
 		getSound()->playSound(kEntityNone, "LIB015");
@@ -1099,7 +1098,7 @@ IMPLEMENT_ACTION(catchBeetle) {
 //////////////////////////////////////////////////////////////////////////
 IMPLEMENT_ACTION(exitCompartment) {
 	if (!getProgress().field_30 && getProgress().jacket != 0) {
-		getLogic()->savegame(0, kEntityNone, kEventNone);
+		save(kEntityNone, 0, kEventNone);
 		getProgress().field_30 = 1;
 	}
 
@@ -1164,12 +1163,10 @@ IMPLEMENT_ACTION(useWhistle) {
 		if (getEntities()->checkFields1(kEntityNone, EntityData::kField495_3, EntityData::kField491_8200)) {
 			evt = kEventCathOpenEgg;
 
-			Scene *scene = getSceneObject(hotspot->scene);
+			loadSceneObject(scene, hotspot->scene);
 
-			if (scene->getHotspot())
-				hotspot->scene = scene->getHotspot()->scene;
-
-			delete scene;
+			if (scene.getHotspot())
+				hotspot->scene = scene.getHotspot()->scene;
 		} else {
 			evt = kEventCathOpenEggNoBackground;
 		}

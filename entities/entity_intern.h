@@ -322,12 +322,12 @@ namespace LastExpress {
 //////////////////////////////////////////////////////////////////////////
 // Setup helpers
 #define BEGIN_SETUP(class, name, index) \
-		_engine->getGameState()->getGameSavePoints()->setCallback(_entityIndex, new ENTITY_CALLBACK(class, name, this)); \
+		_engine->getGameLogic()->getGameState()->getGameSavePoints()->setCallback(_entityIndex, new ENTITY_CALLBACK(class, name, this)); \
 		_data->setCurrentCallback(index); \
 		_data->resetCurrentParameters();
 
 #define END_SETUP() \
-		_engine->getGameState()->getGameSavePoints()->call(_entityIndex, _entityIndex, kActionDefault);
+		_engine->getGameLogic()->getGameState()->getGameSavePoints()->call(_entityIndex, _entityIndex, kActionDefault);
 
 
 //////////////////////////////////////////////////////////////////////////

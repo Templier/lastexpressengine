@@ -50,6 +50,9 @@ public:
 	bool handleStartMenuEvent(Common::Event ev);
 	uint32 getSceneIndex();
 
+	// DEBUG ONLY - TO BE REMOVED
+	void setShowStartup(bool show) { _showStartScreen = show; }
+
 private:
 	LastExpressEngine *_engine;
 
