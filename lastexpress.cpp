@@ -103,7 +103,7 @@ Common::Error LastExpressEngine::run() {
 
 	// Start scene manager
 	_sceneMan = new SceneManager();
-	
+
 	// Game logic
 	_logic = new Logic(this);
 	_logic->startGame();

@@ -59,20 +59,6 @@
 
 	... more unknown stuff
 
-
-	Sound cache entry: 68 bytes
-		uint32 {4}      - ??
-		uint32 {4}      - ??
-		uint32 {4}      - ??
-		uint32 {4}      - ??
-		uint32 {4}      - ??
-		uint32 {4}      - ??
-		uint32 {4}      - entity
-		uint32 {4}      - ??
-		uint32 {4}      - ??
-		char {16}       - name 1
-		char {16}       - name 2
-
 */
 
 #include "lastexpress/shared.h"

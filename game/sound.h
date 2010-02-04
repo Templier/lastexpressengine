@@ -26,6 +26,51 @@
 #ifndef LASTEXPRESS_SOUND_H
 #define LASTEXPRESS_SOUND_H
 
+/*
+
+	Sound entry: 68 bytes (this is what appears in the savegames)
+	    uint32 {4}      - ??
+	    uint32 {4}      - ??
+	    uint32 {4}      - ??
+	    uint32 {4}      - ??
+	    uint32 {4}      - ??
+	    uint32 {4}      - ??
+	    uint32 {4}      - entity
+	    uint32 {4}      - ??
+	    uint32 {4}      - ??
+	    char {16}       - name 1
+	    char {16}       - name 2
+
+
+	Sound queue entry: 120 bytes
+	    byte {1}        - is on disk
+	    byte {1}        - ??
+	    byte {1}        - ??
+	    byte {1}        - ??
+	    uint32 {4}      - ??
+	    uint32 {4}      - ??
+	    uint32 {4}      - ??
+	    uint32 {4}      - file data pointer
+	    uint32 {4}      - ??
+	    uint32 {4}      - ??
+	    uint32 {4}      - ??
+	    uint32 {4}      - ??
+	    uint32 {4}      - archive structure pointer
+	    uint32 {4}      - ??
+	    uint32 {4}      - ??
+	    uint32 {4}      - ??
+	    uint32 {4}      - ??
+	    uint32 {4}      - ??
+	    uint32 {4}      - entity
+	    uint32 {4}      - ??
+	    uint32 {4}      - ??
+	    char {16}       - name 1
+	    char {16}       - name 2
+	    uint32 {4}      - pointer to next entry in the queue
+	    uint32 {4}      - subtitle data pointer
+
+*/
+
 #include "lastexpress/shared.h"
 
 #include "common/system.h"

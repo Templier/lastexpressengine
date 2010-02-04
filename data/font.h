@@ -34,7 +34,7 @@
 	uint16 {2}    - Number of glyphs
 
 	// For each glyph
-		byte {18*8}   - Glyph data
+	    byte {18*8}   - Glyph data
 
 	byte {x}      - Unknown data (probably just garbage)
 */

@@ -33,39 +33,39 @@
 
 	frames headers:
 	// for each frame
-		uint32 {4}    - Data offset (from beginning of file)
-		uint32 {4}    - Unknown
-		uint32 {4}    - Palette offset (from beginning of file)
-		uint32 {4}    - Top-left X coordinate
-		uint32 {4}    - Top-left Y coordinate
-		uint32 {4}    - Bottom-right X coordinate
-		uint32 {4}    - Bottom-right Y coordinate
-		uint32 {4}    - Initial offset of decompressed data (doubled, since each pixel occupies one color word)
-		uint32 {4}    - End of data after decompression
+	    uint32 {4}    - Data offset (from beginning of file)
+	    uint32 {4}    - Unknown
+	    uint32 {4}    - Palette offset (from beginning of file)
+	    uint32 {4}    - Top-left X coordinate
+	    uint32 {4}    - Top-left Y coordinate
+	    uint32 {4}    - Bottom-right X coordinate
+	    uint32 {4}    - Bottom-right Y coordinate
+	    uint32 {4}    - Initial offset of decompressed data (doubled, since each pixel occupies one color word)
+	    uint32 {4}    - End of data after decompression
 
-		(for SEQ files only)
-		uint16 {2}    - Hotspot left
-		uint16 {2}    - Hotspot right
-		uint16 {2}    - Hotspot top
-		uint16 {2}    - Hotspot bottom
-		byte {1}      - Compression type
-		byte {1}      - Subtype (determines which set of decompression functions will be called) => 0, 1, 2, 3
-		uint16 {2}    - Unknown
-		uint32 {4}    - Unknown
-		uint32 {4}    - Unknown
-		uint32 {4}    - Unknown
-		uint16 {2}    - Set to 1 in some places
-		uint16 {2}    - location (z-order?)
-		uint32 {4}    - Unknown
+	    (for SEQ files only)
+	    uint16 {2}    - Hotspot left
+	    uint16 {2}    - Hotspot right
+	    uint16 {2}    - Hotspot top
+	    uint16 {2}    - Hotspot bottom
+	    byte {1}      - Compression type
+	    byte {1}      - Subtype (determines which set of decompression functions will be called) => 0, 1, 2, 3
+	    uint16 {2}    - Unknown
+	    uint32 {4}    - Unknown
+	    uint32 {4}    - Unknown
+	    uint32 {4}    - Unknown
+	    uint16 {2}    - Set to 1 in some places
+	    uint16 {2}    - location (z-order?)
+	    uint32 {4}    - Unknown
 
-		(for NIS files: found at 0x124)
-		byte {1}      - Compression type
+	    (for NIS files: found at 0x124)
+	    byte {1}      - Compression type
 
 	palette data:
-		uint16 {x}    - palette data (max size: 256)
+	    uint16 {x}    - palette data (max size: 256)
 
 	data
-		byte {x}      - compressed image data
+	    byte {x}      - compressed image data
 */
 
 #include "lastexpress/drawable.h"
@@ -94,7 +94,7 @@ struct FrameInfo {
 	Common::Rect hotspot;
 
 	byte compressionType;         ///< Type of frame compression (0x03, 0x04, 0x05, 0x07, 0xFF)
-	byte subType;        		  ///< Subtype
+	byte subType;                 ///< Subtype
 
 	uint16 unknown1;
 	uint32 unknown2;

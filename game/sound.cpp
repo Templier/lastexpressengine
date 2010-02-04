@@ -42,24 +42,24 @@ namespace LastExpress {
 // Letters & messages
 const char *messages[24] = {
 	"",
-	"TXT1001",	// 1
-	"TXT1001A",	// 2
-	"TXT1011",	// 3
-	"TXT1012",	// 4
-	"TXT1013",	// 5
-	"TXT1014",	// 6
-	"TXT1020",	// 7
-	"TXT1030",	// 8
-	"END1009B",	// 50
-	"END1046",	// 51
-	"END1047",	// 52
-	"END1112",	// 53
-	"END1112A",	// 54
-	"END1503",	// 55
-	"END1505A",	// 56
-	"END1505B",	// 57
-	"END1610",	// 58
-	"END1612A",	// 59
+	"TXT1001",  // 1
+	"TXT1001A", // 2
+	"TXT1011",  // 3
+	"TXT1012",  // 4
+	"TXT1013",  // 5
+	"TXT1014",  // 6
+	"TXT1020",  // 7
+	"TXT1030",  // 8
+	"END1009B", // 50
+	"END1046",  // 51
+	"END1047",  // 52
+	"END1112",  // 53
+	"END1112A", // 54
+	"END1503",  // 55
+	"END1505A", // 56
+	"END1505B", // 57
+	"END1610",  // 58
+	"END1612A", // 59
 	"END1612C", // 61
 	"END1612D", // 62
 	"ENDALRM1", // 63
@@ -92,7 +92,7 @@ bool Sound::isBuffered(EntityIndex entityIndex) {
 
 bool Sound::isFileInQueue(const char* filename) {
 	warning("SoundManager::isFileInQueue: not implemented!");
-	return false;	
+	return false;
 }
 
 void Sound::unknownFunction1() {
@@ -871,7 +871,7 @@ const char *Sound::justAMinuteCath() {
 	case 1:
 		return "CAT1521";
 	case 2:
-		return "CAT1125";	// ?? is this a bug in the original?
+		return "CAT1125";    // ?? is this a bug in the original?
 	}
 
 	return "CAT1520";

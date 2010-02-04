@@ -31,47 +31,47 @@
 
 	(text:00484750)
 	header (24 bytes)
-		char {8}    - entry name (null terminated)
-		byte {1}    - 0xCD
-		uint16 {2}  - number of scenes (for first entry - always 0 after?)
-		uint16 {2}  - 11 ??
-		uint16 {2}  - 13 ??
-		byte {1}    - camera position (used to get the proper sequences to show)
-		byte {1}    - type
-		byte {1}    - param1
-		byte {1}    - param2
-		byte {1}    - param3
-		uint32 {4}  - Offset to hotspot info struct
+	    char {8}    - entry name (null terminated)
+	    byte {1}    - 0xCD
+	    uint16 {2}  - number of scenes (for first entry - always 0 after?)
+	    uint16 {2}  - 11 ??
+	    uint16 {2}  - 13 ??
+	    byte {1}    - camera position (used to get the proper sequences to show)
+	    byte {1}    - type
+	    byte {1}    - param1
+	    byte {1}    - param2
+	    byte {1}    - param3
+	    uint32 {4}  - Offset to hotspot info struct
 
-		probably contains cursor type too / scene index : 0 - 2500 (max)
+	    probably contains cursor type too / scene index : 0 - 2500 (max)
 
 	hotspot info (24 bytes)
-		uint16 {2}  - left
-		uint16 {2}  - right
-		uint16 {2}  - top
-		uint16 {2}  - bottom
-		uint16 {2}  - offset to another struct
-		uint16 {2}  - unknownA
-		uint16 {2}  - scene
-		byte {1}    - location;
-		byte {1}    - action;
-		byte {1}    - param1;
-		byte {1}    - param2;
-		byte {1}    - param3
-		byte {1}    - cursor
-		uint16 {2}  - offset to next hotpost
-		uint16 {2}  - unknown16
+	    uint16 {2}  - left
+	    uint16 {2}  - right
+	    uint16 {2}  - top
+	    uint16 {2}  - bottom
+	    uint16 {2}  - offset to another struct
+	    uint16 {2}  - unknownA
+	    uint16 {2}  - scene
+	    byte {1}    - location;
+	    byte {1}    - action;
+	    byte {1}    - param1;
+	    byte {1}    - param2;
+	    byte {1}    - param3
+	    byte {1}    - cursor
+	    uint16 {2}  - offset to next hotpost
+	    uint16 {2}  - unknown16
 
 	??? (9 bytes)
-		byte {1}
-		byte {1}
-		byte {1}
-		byte {1}
-		byte {1}
-		byte {1}
-		byte {1}
-		byte {1}
-		byte {1}
+	    byte {1}
+	    byte {1}
+	    byte {1}
+	    byte {1}
+	    byte {1}
+	    byte {1}
+	    byte {1}
+	    byte {1}
+	    byte {1}
 
 */
 
@@ -195,7 +195,7 @@ public:
 
 	static bool load(Scene *scene, Common::SeekableReadStream *stream, SceneHeader *header);
 	static Scene *get(Common::SeekableReadStream *stream, SceneHeader *header);
-	
+
 	bool checkHotSpot(Common::Point coord, SceneHotspot **hotspot);
 	Common::Rect draw(Graphics::Surface *surface);
 
@@ -203,7 +203,7 @@ public:
 	Common::Array<SceneHotspot *> *getHotspots() { return &_hotspots; }
 	SceneHotspot *getHotspot(uint index = 0);
 
-private:	
+private:
 	SceneHeader *_header;
 	Common::Array<SceneHotspot *> _hotspots;
 

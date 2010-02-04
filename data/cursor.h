@@ -30,13 +30,13 @@
 	Cursor format (CURSORS.TBM)
 
 	style table:
-		(for each cursor)
-		uint16 {2}       - hotspot X
-		uint16 {2}       - hotspot Y
+	    (for each cursor)
+	    uint16 {2}       - hotspot X
+	    uint16 {2}       - hotspot Y
 
 	data:
-		(for each cursor)
-		uint16 {32*32}   - cursor data
+	    (for each cursor)
+	    uint16 {32*32}   - cursor data
 */
 
 #include "lastexpress/drawable.h"

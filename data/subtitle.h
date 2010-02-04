@@ -32,12 +32,12 @@
 	uint16 {2}   - number of subtitles
 
 	// for each subtitle
-		uint16 {2}   - display start time
-		uint16 {2}   - display stop time
-		uint16 {2}   - top line length
-		uint16 {2}   - bottom line length
-		byte {x}     - top line (UTF-16 string)
-		byte {x}     - bottom line (UTF-16 string)
+	    uint16 {2}   - display start time
+	    uint16 {2}   - display stop time
+	    uint16 {2}   - top line length
+	    uint16 {2}   - bottom line length
+	    byte {x}     - top line (UTF-16 string)
+	    byte {x}     - bottom line (UTF-16 string)
 
 	Subtitles seem to be drawn on screen at (80, 420) x (560, 458)
 */

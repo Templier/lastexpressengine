@@ -61,7 +61,7 @@ SaveLoad::~SaveLoad() {}
 
 // Load game
 bool SaveLoad::loadGame(GameId id) {
-	
+
 	if (!SaveLoad::isSavegamePresent(id))
 		return false;
 

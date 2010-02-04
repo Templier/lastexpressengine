@@ -105,7 +105,7 @@ Scene *Scene::get(Common::SeekableReadStream *stream, SceneHeader *header) {
 	return s;
 }
 
-bool Scene::load(Scene *s, Common::SeekableReadStream *stream, SceneHeader *header) {	
+bool Scene::load(Scene *s, Common::SeekableReadStream *stream, SceneHeader *header) {
 	if (!s)
 		return false;
 
@@ -140,7 +140,7 @@ SceneHeader* Scene::getHeader() {
 	if (_header == NULL)
 		error("Scene::getHeader: Trying to get the header from an uninitialized scene. Did you forgot to call Scene::load()?");
 
-	return _header; 
+	return _header;
 }
 
 bool Scene::checkHotSpot(Common::Point coord, SceneHotspot **hotspot) {

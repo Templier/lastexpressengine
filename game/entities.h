@@ -66,7 +66,7 @@ public:
 	void updateFields2(EntityIndex entity1, EntityIndex entity2);
 	void updateFields3(EntityIndex entity1, EntityIndex entity2);
 
-	// Sequences	
+	// Sequences
 	void drawSequence(EntityIndex index, const char* sequence);
 	void drawSequence2(EntityIndex index, const char* sequence);
 	void drawSequences(EntityIndex index);

@@ -56,7 +56,7 @@ public:
 private:
 	LastExpressEngine *_engine;
 
-	Scene *_scene;			///< Menu scene
+	Scene *_scene;          ///< Menu scene
 
 	// Sequences
 	Sequence _seqTooltips;

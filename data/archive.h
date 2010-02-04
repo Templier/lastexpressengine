@@ -32,10 +32,10 @@
 	uint32 {4}   - number of files
 
 	// for each file
-		char {12}    - name (zero-terminated)
-		uint32 {4}   - offset (expressed in sectors of 2048 bytes)
-		uint32 {4}   - size (expressed in sectors of 2048 bytes)
-		byte {2}     - file status: 1 = on disk (ie. in HD.HPF), 0 = on CD
+	    char {12}    - name (zero-terminated)
+	    uint32 {4}   - offset (expressed in sectors of 2048 bytes)
+	    uint32 {4}   - size (expressed in sectors of 2048 bytes)
+	    byte {2}     - file status: 1 = on disk (ie. in HD.HPF), 0 = on CD
 */
 
 #include "common/archive.h"

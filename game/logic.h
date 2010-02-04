@@ -54,7 +54,7 @@ public:
 	void showMenu(bool visible);
 	void startGame();
 	void switchGame();
-	
+
 	void gameOver(TimeType type, uint32 time, SceneIndex sceneIndex, bool showScene);
 
 	// Scene
@@ -81,7 +81,7 @@ public:
 	GameId getGameId() { return _runState.gameId; }
 	CursorStyle getCursorStyle() { return _runState.cursorStyle; }
 
-	Action 	   *getGameAction() { return _action; }	
+	Action 	   *getGameAction() { return _action; }
 	Beetle     *getGameBeetle() { return _beetle; }
 	Entities   *getGameEntities() { return _entities; }
 	SaveLoad   *getGameSaveLoad() { return _saveload; }

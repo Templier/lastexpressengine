@@ -376,7 +376,7 @@ bool Debugger::cmd_loadscene(int argc, const char **argv) {
 			Scene s;
 			if (!_engine->getSceneManager()->loadScene(&s, index))
 				DebugPrintf("Cannot load scene %i from CD %i", index, cd);
-			
+
 			_engine->getGraphicsManager()->draw(&s, GraphicsManager::kBackgroundC);
 
 			askForRedraw();

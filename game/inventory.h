@@ -30,13 +30,13 @@
 	Inventory entry (32 entries)
 	----------------------------
 
-		byte {1}        - Item ID (set to 0 for "undefined" items)
-		byte {1}        - Scene ID
-		byte {1}        - ??
-		byte {1}        - Selectable (1 if item is selectable, 0 otherwise)
-		byte {1}        - Is item in inventory (set to 1 for telegram and article)
-		byte {1}        - Auto selection (1 for no auto selection, 0 otherwise)
-		byte {1}        - Location
+	    byte {1}        - Item ID (set to 0 for "undefined" items)
+	    byte {1}        - Scene ID
+	    byte {1}        - ??
+	    byte {1}        - Selectable (1 if item is selectable, 0 otherwise)
+	    byte {1}        - Is item in inventory (set to 1 for telegram and article)
+	    byte {1}        - Auto selection (1 for no auto selection, 0 otherwise)
+	    byte {1}        - Location
 
 */
 

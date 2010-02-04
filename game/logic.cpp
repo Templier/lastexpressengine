@@ -52,9 +52,9 @@ namespace LastExpress {
 
 Logic::Logic(LastExpressEngine *engine) : _engine(engine), _currentScene(NULL) {
 	_action   = new Action(engine);
-	_beetle   = new Beetle(engine);	
+	_beetle   = new Beetle(engine);
 	_entities = new Entities(engine);
-	_menu     = new Menu(engine);	
+	_menu     = new Menu(engine);
 	_saveload = new SaveLoad(engine);
 	_sound    = new Sound(engine);
 	_state    = new State(engine);
@@ -65,7 +65,7 @@ Logic::~Logic() {
 	delete _beetle;
 	delete _currentScene;
 	delete _entities;
-	delete _menu;	
+	delete _menu;
 	delete _saveload;
 	delete _sound;
 	delete _state;
@@ -84,14 +84,14 @@ void Logic::startGame() {
 
 	_entities->setup(kChapter1);
 
-	// DEBUG	
+	// DEBUG
 	_menu->setShowStartup(false);
 	_runState.showingMenu = false;
 	getFlags()->gameRunning = true;
-	
+
 	// Set Cursor type
 	_engine->getCursor()->setStyle(kCursorNormal);
-	_engine->getCursor()->show(true);	
+	_engine->getCursor()->show(true);
 
 	loadScene(kSceneDefault);
 
@@ -173,7 +173,7 @@ void Logic::gameOver(TimeType type, uint32 time, SceneIndex sceneIndex, bool sho
 		// Check if kEntityTrain is buffered
 		// Call unknown function 1 and loop
 
-		if (sceneIndex && !getFlags()->flag_2) {			
+		if (sceneIndex && !getFlags()->flag_2) {
 			loadScene(sceneIndex);
 
 			while (getSound()->isBuffered(kEntityTables4)) {
@@ -252,7 +252,7 @@ void Logic::loadScene(uint32 index) {
 
 	if (getState()->sceneUseBackup) {
 		loadSceneObject(scene, index);
-		
+
 		if (scene.getHeader()->param3 != 255) {
 			getState()->sceneUseBackup = 0;
 			getState()->sceneBackup2 = 0;
@@ -273,7 +273,7 @@ void Logic::loadScene(uint32 index) {
 
 	// TODO events
 
-	if (getFlags()->gameRunning) 
+	if (getFlags()->gameRunning)
 		if (getFlags()->shouldDrawEggOrHourGlass) {
 			//getInventory()->drawEgg();
 		}
@@ -629,11 +629,11 @@ void Logic::postProcessScene() {
 
 				// FIXME doesn't make sense to test field491 twice...
 				if (field491 == EntityData::kField491_4) {
-					if (!(field495 != EntityData::kField495_4 || field491 <= EntityData::kField491_9270) 
+					if (!(field495 != EntityData::kField495_4 || field491 <= EntityData::kField491_9270)
 					 || !(field495 != EntityData::kField495_5 || field491 >= EntityData::kField491_1540))
 						entities[progress++] = (EntityIndex)i;
 				} else {
-					if (!(field495 != EntityData::kField495_3 || field491 <= EntityData::kField491_9270) 
+					if (!(field495 != EntityData::kField495_3 || field491 <= EntityData::kField491_9270)
 					 || !(field495 != EntityData::kField495_4 || field491 >= EntityData::kField491_850))
 						entities[progress++] = (EntityIndex)i;
 				}

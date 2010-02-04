@@ -33,10 +33,10 @@
 	uint16 {2}   - number of blocks
 
 	// for each block
-		int16 {2}    - initial sample
-		byte {1}     - initial index
-		byte {1}     - unused (00)
-		byte {x}     - IMA ADPCM sample codes
+	    int16 {2}    - initial sample
+	    byte {1}     - initial index
+	    byte {1}     - unused (00)
+	    byte {x}     - IMA ADPCM sample codes
 */
 
 #include "common/stream.h"

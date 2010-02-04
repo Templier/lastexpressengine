@@ -32,10 +32,10 @@
 	uint32 {4}    - Number of chunks
 
 	// for each chunk
-		uint16 {2}    - Type
-		uint16 {2}    - Tag
-		uint32 {4}    - Size of chunk
-		byte {x}      - Data (for "data" chunks: backgrounds, overlay & audio data)
+	    uint16 {2}    - Type
+	    uint16 {2}    - Tag
+	    uint32 {4}    - Size of chunk
+	    byte {x}      - Data (for "data" chunks: backgrounds, overlay & audio data)
 */
 
 #include "lastexpress/drawable.h"

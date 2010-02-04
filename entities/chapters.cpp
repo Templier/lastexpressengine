@@ -180,7 +180,7 @@ IMPLEMENT_FUNCTION(Chapters, chapter1_handler, 8) {
 		getState()->timeDelta = 3;
 		CURRENT_PARAM(3) = 1;
 		break;
-	}	
+	}
 }
 
 IMPLEMENT_FUNCTION(Chapters, function9, 9) {
@@ -241,9 +241,9 @@ IMPLEMENT_FUNCTION(Chapters, chapter2, 10) {
 IMPLEMENT_FUNCTION(Chapters, chapter2_init, 11) {
 	if (savepoint->action != kActionDefault)
 		return;
-	
+
 	getProgress().field_8 = 1;
-	getProgress().field_18 = 1;	
+	getProgress().field_18 = 1;
 	getProgress().field_50 = 1;
 	getProgress().event_found_corpse = 1;
 

@@ -117,7 +117,7 @@ enum CursorStyle {
 	kCursorLeft,
 	kCursorRight,
 	kCursorHand,
-	kCursorHandKnock, // 10
+	kCursorHandKnock,                     // 10
 	kCursorMagnifier,
 	kCursorHandPointer,
 	kCursorSleep,
@@ -141,7 +141,7 @@ enum CursorStyle {
 	kCursorCorpse,
 
 	// Combat
-	kCursorPunchLeft, // 30
+	kCursorPunchLeft,                      // 30
 	kCursorPunchRight,
 
 	// Portraits
@@ -153,7 +153,7 @@ enum CursorStyle {
 	kCursorPortraitYellowSelected,
 	kCursorHourGlass,
 	kCursorEggBlue,
-	kCursorEggRed,    // 40
+	kCursorEggRed,                        // 40
 	kCursorEggGreen,
 	kCursorEggPurple,
 	kCursorEggTeal,
@@ -246,127 +246,127 @@ enum ObjectIndex {
 	kObjectCompartment2,
 	kObjectCompartment3,
 	kObjectCompartment4,
-	kObjectCompartment5,				// 5
+	kObjectCompartment5,                 // 5
 	kObjectCompartment6,
 	kObjectCompartment7,
 	kObjectCompartment8,
 	kObjectOutside,
-	kObject10,							// 10
+	kObject10,                           // 10
 	kObject11,
 	kObject12,
 	kObject13,
 	kObject14,
-	kObject15,							// 15
+	kObject15,                           // 15
 	kObject16,
 	kObjectHandleBathroom,
 	kObjectHandleInsideBathroom,
 	kObjectKitchen,
-	kObject20,							// 20
+	kObject20,                          // 20
 	kObject21,
 	kObject22,
 	kObjectGreenSleepingCar,
 	kObjectRedSleepingCar,
-	kObject25,							// 25
+	kObject25,                          // 25
 	kObjectHandleOutsideLeft,
 	kObjectHandleOutsideRight,
 	kObject28,
 	kObject29,
-	kObject30,							// 30
+	kObject30,                          // 30
 	kObject31,
 	kObjectCompartmentA,
 	kObjectCompartmentB,
 	kObjectCompartmentC,
-	kObjectCompartmentD,			 	// 35
+	kObjectCompartmentD,                // 35
 	kObjectCompartmentE,
 	kObjectCompartmentF,
 	kObjectCompartmentG,
 	kObjectCompartmentH,
-	kObject40,						    // 40
+	kObject40,                          // 40
 	kObject41,
 	kObject42,
 	kObject43,
 	kObject44,
-	kObject45,							// 45
+	kObject45,                          // 45
 	kObject46,
 	kObject47,
 	kObject48,
 	kObject49,
-	kObject50,							// 50
+	kObject50,                          // 50
 	kObject51,
 	kObject52,
 	kObject53,
 	kObject54,
-	kObjectRestaurantCar = 55,			// 55
+	kObjectRestaurantCar = 55,          // 55
 	kObject56,
 	kObject57,
 	kObject58,
 	kObject59,
-	kObject60,							// 60
+	kObject60,                          // 60
 	kObject61,
 	kObject62,
 	kObject63,
 	kObject64,
-	kObject65,							// 65
+	kObject65,                          // 65
 	kObject66,
 	kObject67,
 	kObject68,
 	kObject69,
-	kObject70,							// 70
+	kObject70,                          // 70
 	kObject71,
 	kObject72,
 	kObjectCeiling,
 	kObject74,
-	kObjectCompartmentKronos,			// 75
+	kObjectCompartmentKronos,           // 75
 	kObject76,
 	kObject77,
 	kObject78,
 	kObject79,
-	kObject80,							// 80
+	kObject80,                          // 80
 	kObject81,
 	kObject82,
 	kObject83,
 	kObject84,
-	kObject85,							// 85
+	kObject85,                          // 85
 	kObject86,
 	kObject87,
 	kObject88,
 	kObject89,
-	kObject90,							// 90
+	kObject90,                          // 90
 	kObject91,
 	kObject92,
 	kObject93,
 	kObject94,
-	kObject95,							// 95
+	kObject95,                          // 95
 	kObject96,
 	kObject97,
 	kObject98,
 	kObject99,
-	kObject100,							// 100
+	kObject100,                         // 100
 	kObject101,
 	kObject102,
 	kObject103,
 	kObject104,
-	kObject105,							// 105
+	kObject105,                         // 105
 	kObject106,
 	kObject107,
 	kObject108,
 	kObjectCageMax,
-	kObject110,							// 110
+	kObject110,                         // 110
 	kObject111,
 	kObject112,
 	kObject113,
 	kObject114,
-	kObject115,							// 115
+	kObject115,                         // 115
 	kObject116,
 	kObject117,
 	kObject118,
 	kObject119,
-	kObject120,							// 120
+	kObject120,                         // 120
 	kObject121,
 	kObject122,
 	kObject123,
 	kObject124,
-	kObject125,							// 125
+	kObject125,                         // 125
 	kObject126,
 	kObject127,
 	kObject128
@@ -381,37 +381,37 @@ enum EntityIndex {
 	kEntityAugust,
 	kEntityMertens,
 	kEntityCoudert,
-	kEntityPascale,				// 5
+	kEntityPascale,             // 5
 	kEntityServers0,
 	kEntityServers1,
 	kEntityCooks,
 	kEntityVerges,
-	kEntityTatiana,				// 10
+	kEntityTatiana,             // 10
 	kEntityVassili,
 	kEntityAlexei,
 	kEntityAbbot,
 	kEntityMilos,
-	kEntityVesna,				// 15
+	kEntityVesna,               // 15
 	kEntityIvo,
 	kEntitySalko,
 	kEntityKronos,
 	kEntityKahina,
-	kEntityFrancois,			// 20
+	kEntityFrancois,            // 20
 	kEntityMmeBoutarel,
 	kEntityBoutarel,
 	kEntityRebecca,
 	kEntitySophie,
-	kEntityMahmud,				// 25
+	kEntityMahmud,              // 25
 	kEntityYasmin,
 	kEntityHadija,
 	kEntityAlouan,
 	kEntityGendarmes,
-	kEntityMax,					// 30
+	kEntityMax,                 // 30
 	kEntityChapters,
 	kEntityTrain,
 	kEntityTables0,
 	kEntityTables1,
-	kEntityTables2,				// 35
+	kEntityTables2,             // 35
 	kEntityTables3,
 	kEntityTables4,
 	kEntityTables5,
@@ -746,18 +746,18 @@ enum ActionIndex {
 	kAction157026693 = 157026693,
 	kAction168254872 = 168254872,
 	kAction169557824 = 169557824,
-	kAction171394341 = 171394341,	// Coudert / Mertens
+	kAction171394341 = 171394341,    // Coudert / Mertens
 	kAction185671840 = 185671840,
 	kAction185737168 = 185737168,
 	kAction188570113 = 188570113,
 	kAction189026624 = 189026624,
 	kAction189750912 = 189750912,
-	kAction201431954 = 201431954,	// Coudert / Mertens / Verges
+	kAction201431954 = 201431954,    // Coudert / Mertens / Verges
 	kAction205033696 = 205033696,
-	kAction226031488 = 226031488,	// Coudert / Verges
+	kAction226031488 = 226031488,    // Coudert / Verges
 	kAction292048641 = 292048641,
 	kAction326348944 = 326348944,
-	kAction339669520 = 339669520,	// Coudert / Verges
+	kAction339669520 = 339669520,    // Coudert / Verges
 
 	/////////////////////////////
 	// Mahmud

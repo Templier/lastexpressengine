@@ -37,16 +37,16 @@
 	----------------
 
 	Save point: max: 127 - FIFO list (ie. goes back and overwrites first save point when full)
-		uint32 {4}      - Entity 1
-		uint32 {4}      - Action
-		uint32 {4}      - Entity 2
-		uint32 {4}      - Parameter
+	    uint32 {4}      - Entity 1
+	    uint32 {4}      - Action
+	    uint32 {4}      - Entity 2
+	    uint32 {4}      - Parameter
 
 	Save point Data
-		uint32 {4}		- Entity 1
-		uint32 {4}		- Action
-		uint32 {4}		- Entity 2
-		uint32 {4}		- function pointer to ??
+	    uint32 {4}      - Entity 1
+	    uint32 {4}      - Action
+	    uint32 {4}      - Entity 2
+	    uint32 {4}      - function pointer to ??
 
 */
 
@@ -117,7 +117,7 @@ private:
 
 	LastExpressEngine *_engine;
 
-	Common::List<SavePoint> _savepoints;	///< could be a queue, but we need to be able to iterate on the items
+	Common::List<SavePoint> _savepoints;    ///< could be a queue, but we need to be able to iterate on the items
 	Common::Array<SavePointData> _data;
 	Callback* _callbacks[40];
 

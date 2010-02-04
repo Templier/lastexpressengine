@@ -37,7 +37,7 @@ enum {
 	kLastExpressDebugCursor   = 1 << 3,
 	kLastExpressDebugSound    = 1 << 4,
 	kLastExpressDebugSubtitle = 1 << 5,
-	kLastExpressDebugSavegame = 1 << 6,	
+	kLastExpressDebugSavegame = 1 << 6,
 	kLastExpressDebugLogic    = 1 << 7,
 	kLastExpressDebugScenes   = 1 << 8,
 	kLastExpressDebugUnknown  = 1 << 9

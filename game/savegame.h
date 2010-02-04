@@ -31,17 +31,17 @@
 	---------------
 
 	header: 32 bytes
-		uint32 {4}      - signature: 0x12001200
-		uint32 {4}      - ?? needs to be [0; 5]
-		uint32 {4}      - ?? needs to be >= 32 [1061100; timeMax]
-		uint32 {4}      - ?? needs to be >= 32
-		uint32 {4}      - ?? needs to be = 1
-		uint32 {4}      - Brigthness (needs to be [0-6])
-		uint32 {4}      - Volume (needs to be [0-7])
-		uint32 {4}      - ?? needs to be = 9
+	    uint32 {4}      - signature: 0x12001200
+	    uint32 {4}      - ?? needs to be [0; 5]
+	    uint32 {4}      - ?? needs to be >= 32 [1061100; timeMax]
+	    uint32 {4}      - ?? needs to be >= 32
+	    uint32 {4}      - ?? needs to be = 1
+	    uint32 {4}      - Brigthness (needs to be [0-6])
+	    uint32 {4}      - Volume (needs to be [0-7])
+	    uint32 {4}      - ?? needs to be = 9
 
 	data:
-		Game state (see state.h)
+	    Game state (see state.h)
 */
 
 #include "lastexpress/shared.h"

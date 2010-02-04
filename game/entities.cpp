@@ -91,7 +91,7 @@ const static EntityData::Field491Value field491_values[9] = {EntityData::kField4
 Entities::Entities(LastExpressEngine *engine) : _engine(engine) {
 	_header = new EntityData();
 
-	_entities.push_back(NULL);		// Header
+	_entities.push_back(NULL);      // Header
 	ADD_ENTITY(Anna);
 	ADD_ENTITY(August);
 	ADD_ENTITY(Mertens);
@@ -436,10 +436,10 @@ void Entities::drawSequenceInternal(EntityIndex index, const char* sequence, Ent
 	Common::String processedName(sequence);
 	processedName.toUppercase();
 	processedName += "-";
-	
+
 	strcpy(getData(index)->getData()->sequenceName, processedName.c_str());
 
-	// Reset fields	
+	// Reset fields
 	getData(index)->getData()->field_49B = 0;
 	getData(index)->getData()->field_49D = 0;
 	getData(index)->getData()->field_4A1 = 0;
@@ -447,7 +447,7 @@ void Entities::drawSequenceInternal(EntityIndex index, const char* sequence, Ent
 	drawSequencesInternal(index, direction, true);
 }
 
-void Entities::drawSequencesInternal(EntityIndex index, EntityDirection direction, bool unknown) {	
+void Entities::drawSequencesInternal(EntityIndex index, EntityDirection direction, bool unknown) {
 	//debugC(8, kLastExpressDebugLogic, "Drawing sequences for entity %d (%d)", index, field_49A);
 
 	// HACK draw the sequence stored in SequenceName
@@ -458,8 +458,8 @@ void Entities::drawSequencesInternal(EntityIndex index, EntityDirection directio
 
 	//getSequenceName(index, direction, (char*)&seq1, (char*)&seq2);
 
-	//debugC(8, kLastExpressDebugLogic, "  sequence1: %s", seq1);	
-		
+	//debugC(8, kLastExpressDebugLogic, "  sequence1: %s", seq1);
+
 	//Sequence sequence;
 	//if (sequence.loadFile(seq1)) {
 	//	clearBg(GraphicsManager::kBackgroundOverlay);
@@ -474,9 +474,9 @@ void Entities::drawSequencesInternal(EntityIndex index, EntityDirection directio
 	warning("Entities::drawSequencesInternal: not implemented!");
 }
 
-void Entities::getSequenceName(EntityIndex index, EntityDirection direction, char *sequence1, char *sequence2) {	
+void Entities::getSequenceName(EntityIndex index, EntityDirection direction, char *sequence1, char *sequence2) {
 	EntityData::EntityCallData *data = getData(index)->getData();
-	loadSceneObject(currentScene, getState()->scene);	
+	loadSceneObject(currentScene, getState()->scene);
 	int position = currentScene.getHeader()->position;
 
 	// reset fields
@@ -488,7 +488,7 @@ void Entities::getSequenceName(EntityIndex index, EntityDirection direction, cha
 		error("Entities::getSequenceName: Invalid value for field_49A: %d", direction);
 		break;
 
-	case kDirectionUp:	
+	case kDirectionUp:
 		switch (position) {
 		default:
 			error("Entities::getSequenceName: Invalid scene position %d (Direction UP)", position);
@@ -641,7 +641,7 @@ void Entities::getSequenceName(EntityIndex index, EntityDirection direction, cha
 				break;
 
 			if (data->field_491 <= EntityData::kField491_2087) {
-				sprintf(sequence1, "%02d%01d-%02ded.seq", index, data->clothes, position);				
+				sprintf(sequence1, "%02d%01d-%02ded.seq", index, data->clothes, position);
 			} else {
 				sprintf(sequence1, "%02d%01d-38d.seq", index, data->clothes);
 				sprintf(sequence2, "%02d%01d-%02ded.seq", index, data->clothes, position);
