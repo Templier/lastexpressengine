@@ -26,41 +26,6 @@
 #ifndef LASTEXPRESS_STATE_H
 #define LASTEXPRESS_STATE_H
 
-/*
-	Game data Format
-	-----------------
-
-	uint32 {4}      - ??
-	uint32 {4}      - current time
-	uint32 {4}      - time delta (how much a tick is in "real" time)
-	uint32 {4}      - time ticks
-	uint32 {4}      - Scene Index               max: 2600
-	byte {1}        - Use backup scene
-	uint32 {4}      - Backup Scene Index 1
-	uint32 {4}      - Backup Scene Index 2
-	uint32 {4}      - Selected inventory item
-	uint32 {4*1000} - ??
-	uint32 {4*16}   - ??
-	uint32 {4*16}   - ??
-	uint32 {4*128}  - Game progress
-	byte {512}      - Game events
-	byte {7*32}     - Inventory
-	byte {5*128}    - Objects
-	byte {1262*40}  - Entities (characters and train entities)
-
-	uint32 {4}      - ??
-	uint32 {4}      - ??
-	uint32 {4}      - Number of sound entries
-	byte {count*68} - Sound entries
-
-	byte {16*128}   - Save point data
-	uint32 {4}      - Number of save points (max: 128)
-	byte {count*16} - Save points
-
-	... more unknown stuff
-
-*/
-
 #include "lastexpress/shared.h"
 
 #include "common/system.h"

@@ -36,12 +36,42 @@
 	    uint32 {4}      - ?? needs to be >= 32 [1061100; timeMax]
 	    uint32 {4}      - ?? needs to be >= 32
 	    uint32 {4}      - ?? needs to be = 1
-	    uint32 {4}      - Brigthness (needs to be [0-6])
+	    uint32 {4}      - Brightness (needs to be [0-6])
 	    uint32 {4}      - Volume (needs to be [0-7])
 	    uint32 {4}      - ?? needs to be = 9
 
-	data:
-	    Game state (see state.h)
+	Game data Format
+	-----------------
+
+	uint32 {4}      - entity
+	uint32 {4}      - current time
+	uint32 {4}      - time delta (how much a tick is in "real" time)
+	uint32 {4}      - time ticks
+	uint32 {4}      - scene Index               max: 2500
+	byte {1}        - use backup scene
+	uint32 {4}      - backup Scene Index 1      max: 2500
+	uint32 {4}      - backup Scene Index 2      max: 2500
+	uint32 {4}      - selected inventory item   max: 32
+	uint32 {4*1000} - ??
+	uint32 {4*16}   - ??
+	uint32 {4*16}   - ??
+	uint32 {4*128}  - game progress
+	byte {512}      - game events
+	byte {7*32}     - inventory
+	byte {5*128}    - objects
+	byte {1262*40}  - entities (characters and train entities)
+
+	uint32 {4}      - sound queue state
+	uint32 {4}      - ??
+	uint32 {4}      - number of sound entries
+	byte {count*68} - sound entries
+
+	byte {16*128}   - save point data
+	uint32 {4}      - number of save points (max: 128)
+	byte {count*16} - save points
+
+	... more unknown stuff
+
 */
 
 #include "lastexpress/shared.h"

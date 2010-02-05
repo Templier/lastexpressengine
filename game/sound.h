@@ -41,7 +41,6 @@
 	    char {16}       - name 1
 	    char {16}       - name 2
 
-
 	Sound queue entry: 120 bytes
 	    byte {1}        - is on disk
 	    byte {1}        - ??

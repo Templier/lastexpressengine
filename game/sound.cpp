@@ -542,6 +542,9 @@ const char *Sound::getDialogName(EntityIndex entity) {
 // Letters & Messages
 //////////////////////////////////////////////////////////////////////////
 const char *Sound::readText(int id) {
+	if (id < 0 || (id > 8 && id < 50) || id > 64)
+		error("Sound::readText - attempting to use invalid id. Valid values [1;8] - [50;64], was %d", id);
+
 	// names are stored in sequence in the array but id is [1;8] - [50;64]
 	return messages[id <= 8 ? id : id - 41];
 }

@@ -178,7 +178,8 @@ bool SaveLoad::initSavegame(GameId id) {
 
 // Get the file name from the savegame ID
 Common::String SaveLoad::getSavegameName(GameId id) {
-	assert(id >= 0 && id < 6);
+	if (id < 0 || id >= 6)
+		error("SaveLoad::getSavegameName - attempting to use an invalid game id. Valid values: 0 - 5, was %d", id);
 
 	return gameInfo[id].saveFile;
 }

@@ -36,7 +36,8 @@ Objects::Objects(LastExpressEngine *engine) : _engine(engine) {}
 
 
 const Objects::Object Objects::get(ObjectIndex index) {
-	assert(index < 128);
+	if (index >= 128)
+		error("Objects::get - internal error: invalid object index (%d)", index);
 
 	return _objects[index];
 }
