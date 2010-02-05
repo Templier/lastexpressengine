@@ -47,32 +47,32 @@ Tables::Tables(LastExpressEngine *engine, EntityIndex id) : Entity(engine, id) {
 	ADD_CALLBACK_FUNCTION(Tables, draw);
 }
 
-IMPLEMENT_FUNCTION(Tables, chapter1, 1) {
+IMPLEMENT_FUNCTION(Tables, chapter1, 1)
 	if (savepoint->action == kActionDefault)
 		setup_draw();
 }
 
-IMPLEMENT_FUNCTION(Tables, chapter2, 2) {
+IMPLEMENT_FUNCTION(Tables, chapter2, 2)
 	if (savepoint->action == kActionDefault)
 		setup_draw();
 }
 
-IMPLEMENT_FUNCTION(Tables, chapter3, 3) {
+IMPLEMENT_FUNCTION(Tables, chapter3, 3)
 	if (savepoint->action == kActionDefault)
 		setup_draw();
 }
 
-IMPLEMENT_FUNCTION(Tables, chapter4, 4) {
+IMPLEMENT_FUNCTION(Tables, chapter4, 4)
 	if (savepoint->action == kActionDefault)
 		setup_draw();
 }
 
-IMPLEMENT_FUNCTION(Tables, chapter5, 5) {
+IMPLEMENT_FUNCTION(Tables, chapter5, 5)
 	if (savepoint->action == kActionDefault)
 		setup_draw();
 }
 
-IMPLEMENT_FUNCTION(Tables, draw, 6) {
+IMPLEMENT_FUNCTION(Tables, draw, 6)
 	switch (savepoint->action) {
 	default:
 		break;

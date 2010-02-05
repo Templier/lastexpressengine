@@ -65,31 +65,31 @@ Kronos::Kronos(LastExpressEngine *engine) : Entity(engine, kEntityKronos) {
 	ADD_CALLBACK_FUNCTION(Kronos, chapter5);
 }
 
-IMPLEMENT_FUNCTION(Kronos, function1, 1) {
+IMPLEMENT_FUNCTION(Kronos, function1, 1)
 	error("Kronos: callback function 1 not implemented!");
 }
 
-IMPLEMENT_FUNCTION_II(Kronos, function2, 2) {
+IMPLEMENT_FUNCTION_II(Kronos, function2, 2)
 	error("Kronos: callback function 2 not implemented!");
 }
 
-IMPLEMENT_FUNCTION_II(Kronos, function3, 3) {
+IMPLEMENT_FUNCTION_II(Kronos, function3, 3)
 	error("Kronos: callback function 3 not implemented!");
 }
 
-IMPLEMENT_FUNCTION_NOSETUP(Kronos, function4, 4) {
+IMPLEMENT_FUNCTION_NOSETUP(Kronos, function4, 4)
 	error("Kronos: callback function 4 not implemented!");
 }
 
-IMPLEMENT_FUNCTION_NOSETUP(Kronos, function5, 5) {
+IMPLEMENT_FUNCTION_NOSETUP(Kronos, function5, 5)
 	error("Kronos: callback function 5 not implemented!");
 }
 
-IMPLEMENT_FUNCTION_NOSETUP(Kronos, function6, 6) {
+IMPLEMENT_FUNCTION_NOSETUP(Kronos, function6, 6)
 	error("Kronos: callback function 6 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Kronos, chapter1, 7) {
+IMPLEMENT_FUNCTION(Kronos, chapter1, 7)
 	switch (savepoint->action) {
 	default:
 		break;
@@ -109,28 +109,28 @@ IMPLEMENT_FUNCTION(Kronos, chapter1, 7) {
 	}
 }
 
-IMPLEMENT_FUNCTION(Kronos, function8, 8) {
+IMPLEMENT_FUNCTION(Kronos, function8, 8)
 	error("Kronos: callback function 8 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Kronos, function9, 9) {
+IMPLEMENT_FUNCTION(Kronos, function9, 9)
 	error("Kronos: callback function 9 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Kronos, function10, 10) {
+IMPLEMENT_FUNCTION(Kronos, function10, 10)
 	error("Kronos: callback function 10 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Kronos, function11, 11) {
+IMPLEMENT_FUNCTION(Kronos, function11, 11)
 	error("Kronos: callback function 11 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Kronos, chapter2, 12) {
+IMPLEMENT_FUNCTION(Kronos, chapter2, 12)
 	if (savepoint->action == kActionDefault)
 		getEntities()->drawSequences(kEntityKronos);
 }
 
-IMPLEMENT_FUNCTION(Kronos, chapter3, 13) {
+IMPLEMENT_FUNCTION(Kronos, chapter3, 13)
 	switch (savepoint->action) {
 	default:
 		break;
@@ -154,52 +154,52 @@ IMPLEMENT_FUNCTION(Kronos, chapter3, 13) {
 	}
 }
 
-IMPLEMENT_FUNCTION(Kronos, function14, 14) {
+IMPLEMENT_FUNCTION(Kronos, function14, 14)
 	error("Kronos: callback function 14 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Kronos, function15, 15) {
+IMPLEMENT_FUNCTION(Kronos, function15, 15)
 	error("Kronos: callback function 15 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Kronos, function16, 16) {
+IMPLEMENT_FUNCTION(Kronos, function16, 16)
 	error("Kronos: callback function 16 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Kronos, function17, 17) {
+IMPLEMENT_FUNCTION(Kronos, function17, 17)
 	error("Kronos: callback function 17 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Kronos, function18, 18) {
+IMPLEMENT_FUNCTION(Kronos, function18, 18)
 	error("Kronos: callback function 18 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Kronos, function19, 19) {
+IMPLEMENT_FUNCTION(Kronos, function19, 19)
 	error("Kronos: callback function 19 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Kronos, function20, 20) {
+IMPLEMENT_FUNCTION(Kronos, function20, 20)
 	error("Kronos: callback function 20 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Kronos, function21, 21) {
+IMPLEMENT_FUNCTION(Kronos, function21, 21)
 	error("Kronos: callback function 21 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Kronos, function22, 22) {
+IMPLEMENT_FUNCTION(Kronos, function22, 22)
 	error("Kronos: callback function 22 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Kronos, function23, 23) {
+IMPLEMENT_FUNCTION(Kronos, function23, 23)
 	error("Kronos: callback function 23 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Kronos, chapter4, 24) {
+IMPLEMENT_FUNCTION(Kronos, chapter4, 24)
 	if (savepoint->action == kActionDefault)
 		getEntities()->drawSequences(kEntityKronos);
 }
 
-IMPLEMENT_FUNCTION(Kronos, chapter5, 25) {
+IMPLEMENT_FUNCTION(Kronos, chapter5, 25)
 	if (savepoint->action == kActionDefault)
 		getEntities()->drawSequences(kEntityKronos);
 }

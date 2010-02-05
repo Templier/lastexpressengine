@@ -129,25 +129,30 @@ namespace LastExpress {
 //////////////////////////////////////////////////////////////////////////
 // Implementation
 
+#define IMPLEMENT_SETUP(class, callback_class, name, index) \
+	void class::setup_##name(int param1, int param2, int param3, int param4) { \
+	BEGIN_SETUP(callback_class, name, index) \
+	debugC(6, kLastExpressDebugLogic, "Entity: " #class "::setup_" #name "()"); \
+	END_SETUP() \
+	 }
+
+#define IMPLEMENT_CALL(class, name, index) \
+	void class::name(SavePoint *savepoint) { \
+		if (!savepoint) \
+			error(#class "::" #name ": trying to call an entity callback function with a NULL savepoint!");
+
 // nullfunction call
 #define IMPLEMENT_NULL_FUNCTION(class, index) \
 	IMPLEMENT_SETUP(class, Entity, nullfunction, index)
 
 // function signature without setup (we keep the index for consistency but never use it)
 #define IMPLEMENT_FUNCTION_NOSETUP(class, name, index) \
-	void class::name(SavePoint *savepoint)
+	IMPLEMENT_CALL(class, name, index)
 
 // simple setup with no parameters
 #define IMPLEMENT_FUNCTION(class, name, index) \
 	IMPLEMENT_SETUP(class, class, name, index) \
-	void class::name(SavePoint *savepoint)
-
-#define IMPLEMENT_SETUP(class, callback_class, name, index) \
-	void class::setup_##name(int param1, int param2, int param3, int param4) { \
-		BEGIN_SETUP(callback_class, name, index) \
-		debugC(6, kLastExpressDebugLogic, "Entity: " #class "::setup_" #name "()"); \
-		END_SETUP() \
-	 }
+	IMPLEMENT_CALL(class, name, index)
 
 // setup with one int parameter
 #define IMPLEMENT_FUNCTION_I(class, name, index) \
@@ -158,7 +163,7 @@ namespace LastExpress {
 	params->param1 = param1; \
 	END_SETUP() \
 	} \
-	void class::name(SavePoint *savepoint)
+	IMPLEMENT_CALL(class, name, index)
 
 // setup with two int parameters
 #define IMPLEMENT_FUNCTION_II(class, name, index) \
@@ -170,7 +175,7 @@ namespace LastExpress {
 		params->param2 = param2; \
 		END_SETUP() \
 	} \
-	void class::name(SavePoint *savepoint)
+	IMPLEMENT_CALL(class, name, index)
 
 // setup with three int parameters
 #define IMPLEMENT_FUNCTION_III(class, name, index) \
@@ -183,7 +188,7 @@ namespace LastExpress {
 		params->param3 = param3; \
 		END_SETUP() \
 	} \
-	void class::name(SavePoint *savepoint)
+	IMPLEMENT_CALL(class, name, index)
 
 // setup with on char* parameter
 #define IMPLEMENT_FUNCTION_S(class, name, index) \
@@ -194,7 +199,7 @@ namespace LastExpress {
 		strncpy((char *)&params->seq1, seq1, 12); \
 		END_SETUP() \
 	} \
-	void class::name(SavePoint *savepoint)
+	IMPLEMENT_CALL(class, name, index)
 
 // setup with on char* parameter and one int
 #define IMPLEMENT_FUNCTION_SI(class, name, index) \
@@ -206,7 +211,7 @@ namespace LastExpress {
 		params->param2 = param2; \
 		END_SETUP() \
 	} \
-	void class::name(SavePoint *savepoint)
+	IMPLEMENT_CALL(class, name, index)
 
 // setup with on char* parameter and two ints
 #define IMPLEMENT_FUNCTION_SII(class, name, index) \
@@ -219,7 +224,7 @@ namespace LastExpress {
 		params->param3 = param3; \
 		END_SETUP() \
 	} \
-	void class::name(SavePoint *savepoint)
+	IMPLEMENT_CALL(class, name, index)
 
 // setup with on char* parameter and three ints
 #define IMPLEMENT_FUNCTION_SIII(class, name, index) \
@@ -233,7 +238,7 @@ namespace LastExpress {
 		params->param4 = param4; \
 		END_SETUP() \
 	} \
-	void class::name(SavePoint *savepoint)
+	IMPLEMENT_CALL(class, name, index)
 
 #define IMPLEMENT_FUNCTION_SIIS(class, name, index) \
 	void class::setup_##name(const char* seq1, int param2, int param3, const char* seq2) { \
@@ -246,7 +251,7 @@ namespace LastExpress {
 		strncpy((char *)&params->seq2, seq2, 12); \
 		END_SETUP() \
 	} \
-	void class::name(SavePoint *savepoint)
+	IMPLEMENT_CALL(class, name, index)
 
 #define IMPLEMENT_FUNCTION_SS(class, name, index) \
 	void class::setup_##name(const char* seq1, const char* seq2, int param3, int param4) { \
@@ -257,7 +262,7 @@ namespace LastExpress {
 		strncpy((char *)&params->seq2, seq2, 12); \
 		END_SETUP() \
 	} \
-	void class::name(SavePoint *savepoint)
+	IMPLEMENT_CALL(class, name, index)
 
 #define IMPLEMENT_FUNCTION_SSI(class, name, index) \
 	void class::setup_##name(const char* seq1, const char* seq2, int param3, int param4) { \
@@ -269,7 +274,7 @@ namespace LastExpress {
 		params->param3 = param3; \
 		END_SETUP() \
 	} \
-	void class::name(SavePoint *savepoint)
+	IMPLEMENT_CALL(class, name, index)
 
 #define IMPLEMENT_FUNCTION_IS(class, name, index) \
 	void class::setup_##name(int param1, const char* seq1, const char* seq2, int param4) { \
@@ -280,7 +285,7 @@ namespace LastExpress {
 		strncpy((char *)&params->seq1, seq1, 12); \
 		END_SETUP() \
 	} \
-	void class::name(SavePoint *savepoint)
+	IMPLEMENT_CALL(class, name, index)
 
 #define IMPLEMENT_FUNCTION_ISS(class, name, index) \
 	void class::setup_##name(int param1, const char* seq1, const char* seq2, int param4) { \
@@ -292,7 +297,7 @@ namespace LastExpress {
 		strncpy((char *)&params->seq2, seq2, 12); \
 		END_SETUP() \
 	} \
-	void class::name(SavePoint *savepoint)
+	IMPLEMENT_CALL(class, name, index)
 
 #define IMPLEMENT_FUNCTION_IIS(class, name, index) \
 	void class::setup_##name(int param1, int param2, const char* seq1, const char* seq2) { \
@@ -304,7 +309,7 @@ namespace LastExpress {
 		strncpy((char *)&params->seq1, seq1, 12); \
 		END_SETUP() \
 	} \
-	void class::name(SavePoint *savepoint)
+	IMPLEMENT_CALL(class, name, index)
 
 #define IMPLEMENT_FUNCTION_IISS(class, name, index) \
 	void class::setup_##name(int param1, int param2, const char* seq1, const char* seq2) { \
@@ -317,7 +322,7 @@ namespace LastExpress {
 		strncpy((char *)&params->seq2, seq2, 12); \
 		END_SETUP() \
 	} \
-	void class::name(SavePoint *savepoint)
+	IMPLEMENT_CALL(class, name, index)
 
 //////////////////////////////////////////////////////////////////////////
 // Setup helpers

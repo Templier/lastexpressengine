@@ -95,71 +95,71 @@ Tatiana::Tatiana(LastExpressEngine *engine) : Entity(engine, kEntityTatiana) {
 	ADD_CALLBACK_FUNCTION(Tatiana, function55);
 }
 
-IMPLEMENT_FUNCTION(Tatiana, function1, 1) {
+IMPLEMENT_FUNCTION(Tatiana, function1, 1)
 	error("Tatiana: callback function 1 not implemented!");
 }
 
-IMPLEMENT_FUNCTION_S(Tatiana, function2, 2) {
+IMPLEMENT_FUNCTION_S(Tatiana, function2, 2)
 	error("Tatiana: callback function 2 not implemented!");
 }
 
-IMPLEMENT_FUNCTION_S(Tatiana, function3, 3) {
+IMPLEMENT_FUNCTION_S(Tatiana, function3, 3)
 	error("Tatiana: callback function 3 not implemented!");
 }
 
-IMPLEMENT_FUNCTION_SII(Tatiana, function4, 4) {
+IMPLEMENT_FUNCTION_SII(Tatiana, function4, 4)
 	error("Tatiana: callback function 4 not implemented!");
 }
 
-IMPLEMENT_FUNCTION_SI(Tatiana, function5, 5) {
+IMPLEMENT_FUNCTION_SI(Tatiana, function5, 5)
 	error("Tatiana: callback function 5 not implemented!");
 }
 
-IMPLEMENT_FUNCTION_SI(Tatiana, function6, 6) {
+IMPLEMENT_FUNCTION_SI(Tatiana, function6, 6)
 	error("Tatiana: callback function 6 not implemented!");
 }
 
-IMPLEMENT_FUNCTION_SIIS(Tatiana, function7, 7) {
+IMPLEMENT_FUNCTION_SIIS(Tatiana, function7, 7)
 	error("Tatiana: callback function 7 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Tatiana, function8, 8) {
+IMPLEMENT_FUNCTION(Tatiana, function8, 8)
 	error("Tatiana: callback function 8 not implemented!");
 }
 
-IMPLEMENT_FUNCTION_NOSETUP(Tatiana, function9, 9) {
+IMPLEMENT_FUNCTION_NOSETUP(Tatiana, function9, 9)
 	error("Tatiana: callback function 9 not implemented!");
 }
 
-IMPLEMENT_FUNCTION_I(Tatiana, function10, 10) {
+IMPLEMENT_FUNCTION_I(Tatiana, function10, 10)
 	error("Tatiana: callback function 10 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Tatiana, function11, 11) {
+IMPLEMENT_FUNCTION(Tatiana, function11, 11)
 	error("Tatiana: callback function 11 not implemented!");
 }
 
-IMPLEMENT_FUNCTION_II(Tatiana, function12, 12) {
+IMPLEMENT_FUNCTION_II(Tatiana, function12, 12)
 	error("Tatiana: callback function 12 not implemented!");
 }
 
-IMPLEMENT_FUNCTION_II(Tatiana, function13, 13) {
+IMPLEMENT_FUNCTION_II(Tatiana, function13, 13)
 	error("Tatiana: callback function 13 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Tatiana, function14, 14) {
+IMPLEMENT_FUNCTION(Tatiana, function14, 14)
 	error("Tatiana: callback function 14 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Tatiana, function15, 15) {
+IMPLEMENT_FUNCTION(Tatiana, function15, 15)
 	error("Tatiana: callback function 15 not implemented!");
 }
 
-IMPLEMENT_FUNCTION_I(Tatiana, function16, 16) {
+IMPLEMENT_FUNCTION_I(Tatiana, function16, 16)
 	error("Tatiana: callback function 16 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Tatiana, chapter1, 17) {
+IMPLEMENT_FUNCTION(Tatiana, chapter1, 17)
 	switch (savepoint->action) {
 	default:
 		break;
@@ -182,35 +182,35 @@ IMPLEMENT_FUNCTION(Tatiana, chapter1, 17) {
 	}
 }
 
-IMPLEMENT_FUNCTION(Tatiana, function18, 18) {
+IMPLEMENT_FUNCTION(Tatiana, function18, 18)
 	error("Tatiana: callback function 18 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Tatiana, function19, 19) {
+IMPLEMENT_FUNCTION(Tatiana, function19, 19)
 	error("Tatiana: callback function 19 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Tatiana, function20, 20) {
+IMPLEMENT_FUNCTION(Tatiana, function20, 20)
 	error("Tatiana: callback function 20 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Tatiana, function21, 21) {
+IMPLEMENT_FUNCTION(Tatiana, function21, 21)
 	error("Tatiana: callback function 21 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Tatiana, function22, 22) {
+IMPLEMENT_FUNCTION(Tatiana, function22, 22)
 	error("Tatiana: callback function 22 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Tatiana, function23, 23) {
+IMPLEMENT_FUNCTION(Tatiana, function23, 23)
 	error("Tatiana: callback function 23 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Tatiana, function24, 24) {
+IMPLEMENT_FUNCTION(Tatiana, function24, 24)
 	error("Tatiana: callback function 24 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Tatiana, chapter2, 25) {
+IMPLEMENT_FUNCTION(Tatiana, chapter2, 25)
 	switch (savepoint->action) {
 	default:
 		break;
@@ -234,27 +234,27 @@ IMPLEMENT_FUNCTION(Tatiana, chapter2, 25) {
 	}
 }
 
-IMPLEMENT_FUNCTION(Tatiana, function26, 26) {
+IMPLEMENT_FUNCTION(Tatiana, function26, 26)
 	error("Tatiana: callback function 26 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Tatiana, function27, 27) {
+IMPLEMENT_FUNCTION(Tatiana, function27, 27)
 	error("Tatiana: callback function 27 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Tatiana, function28, 28) {
+IMPLEMENT_FUNCTION(Tatiana, function28, 28)
 	error("Tatiana: callback function 28 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Tatiana, function29, 29) {
+IMPLEMENT_FUNCTION(Tatiana, function29, 29)
 	error("Tatiana: callback function 29 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Tatiana, function30, 30) {
+IMPLEMENT_FUNCTION(Tatiana, function30, 30)
 	error("Tatiana: callback function 30 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Tatiana, chapter3, 31) {
+IMPLEMENT_FUNCTION(Tatiana, chapter3, 31)
 	switch (savepoint->action) {
 	default:
 		break;
@@ -285,51 +285,51 @@ IMPLEMENT_FUNCTION(Tatiana, chapter3, 31) {
 	}
 }
 
-IMPLEMENT_FUNCTION(Tatiana, function32, 32) {
+IMPLEMENT_FUNCTION(Tatiana, function32, 32)
 	error("Tatiana: callback function 32 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Tatiana, function33, 33) {
+IMPLEMENT_FUNCTION(Tatiana, function33, 33)
 	error("Tatiana: callback function 33 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Tatiana, function34, 34) {
+IMPLEMENT_FUNCTION(Tatiana, function34, 34)
 	error("Tatiana: callback function 34 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Tatiana, function35, 35) {
+IMPLEMENT_FUNCTION(Tatiana, function35, 35)
 	error("Tatiana: callback function 35 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Tatiana, function36, 36) {
+IMPLEMENT_FUNCTION(Tatiana, function36, 36)
 	error("Tatiana: callback function 36 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Tatiana, function37, 37) {
+IMPLEMENT_FUNCTION(Tatiana, function37, 37)
 	error("Tatiana: callback function 37 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Tatiana, function38, 38) {
+IMPLEMENT_FUNCTION(Tatiana, function38, 38)
 	error("Tatiana: callback function 38 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Tatiana, function39, 39) {
+IMPLEMENT_FUNCTION(Tatiana, function39, 39)
 	error("Tatiana: callback function 39 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Tatiana, function40, 40) {
+IMPLEMENT_FUNCTION(Tatiana, function40, 40)
 	error("Tatiana: callback function 40 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Tatiana, function41, 41) {
+IMPLEMENT_FUNCTION(Tatiana, function41, 41)
 	error("Tatiana: callback function 41 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Tatiana, function42, 42) {
+IMPLEMENT_FUNCTION(Tatiana, function42, 42)
 	error("Tatiana: callback function 42 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Tatiana, chapter4, 43) {
+IMPLEMENT_FUNCTION(Tatiana, chapter4, 43)
 	switch (savepoint->action) {
 	default:
 		break;
@@ -355,39 +355,39 @@ IMPLEMENT_FUNCTION(Tatiana, chapter4, 43) {
 	}
 }
 
-IMPLEMENT_FUNCTION(Tatiana, function44, 44) {
+IMPLEMENT_FUNCTION(Tatiana, function44, 44)
 	error("Tatiana: callback function 44 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Tatiana, function45, 45) {
+IMPLEMENT_FUNCTION(Tatiana, function45, 45)
 	error("Tatiana: callback function 45 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Tatiana, function46, 46) {
+IMPLEMENT_FUNCTION(Tatiana, function46, 46)
 	error("Tatiana: callback function 46 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Tatiana, function47, 47) {
+IMPLEMENT_FUNCTION(Tatiana, function47, 47)
 	error("Tatiana: callback function 47 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Tatiana, function48, 48) {
+IMPLEMENT_FUNCTION(Tatiana, function48, 48)
 	error("Tatiana: callback function 48 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Tatiana, function49, 49) {
+IMPLEMENT_FUNCTION(Tatiana, function49, 49)
 	error("Tatiana: callback function 49 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Tatiana, function50, 50) {
+IMPLEMENT_FUNCTION(Tatiana, function50, 50)
 	error("Tatiana: callback function 50 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Tatiana, function51, 51) {
+IMPLEMENT_FUNCTION(Tatiana, function51, 51)
 	error("Tatiana: callback function 51 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Tatiana, chapter5, 52) {
+IMPLEMENT_FUNCTION(Tatiana, chapter5, 52)
 	switch (savepoint->action) {
 	default:
 		break;
@@ -408,15 +408,15 @@ IMPLEMENT_FUNCTION(Tatiana, chapter5, 52) {
 	}
 }
 
-IMPLEMENT_FUNCTION(Tatiana, function53, 53) {
+IMPLEMENT_FUNCTION(Tatiana, function53, 53)
 	error("Tatiana: callback function 53 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Tatiana, function54, 54) {
+IMPLEMENT_FUNCTION(Tatiana, function54, 54)
 	error("Tatiana: callback function 54 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Tatiana, function55, 55) {
+IMPLEMENT_FUNCTION(Tatiana, function55, 55)
 	error("Tatiana: callback function 55 not implemented!");
 }
 

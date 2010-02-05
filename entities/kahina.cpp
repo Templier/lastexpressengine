@@ -68,43 +68,43 @@ Kahina::Kahina(LastExpressEngine *engine) : Entity(engine, kEntityKahina) {
 	ADD_CALLBACK_FUNCTION(Kahina, chapter5);
 }
 
-IMPLEMENT_FUNCTION(Kahina, function1, 1) {
+IMPLEMENT_FUNCTION(Kahina, function1, 1)
 	error("Kahina: callback function 1 not implemented!");
 }
 
-IMPLEMENT_FUNCTION_S(Kahina, function2, 2) {
+IMPLEMENT_FUNCTION_S(Kahina, function2, 2)
 	error("Kahina: callback function 2 not implemented!");
 }
 
-IMPLEMENT_FUNCTION_II(Kahina, function3, 3) {
+IMPLEMENT_FUNCTION_II(Kahina, function3, 3)
 	error("Kahina: callback function 3 not implemented!");
 }
 
-IMPLEMENT_FUNCTION_I(Kahina, function4, 4) {
+IMPLEMENT_FUNCTION_I(Kahina, function4, 4)
 	error("Kahina: callback function 4 not implemented!");
 }
 
-IMPLEMENT_FUNCTION_NOSETUP(Kahina, function5, 5) {
+IMPLEMENT_FUNCTION_NOSETUP(Kahina, function5, 5)
 	error("Kahina: callback function 5 not implemented!");
 }
 
-IMPLEMENT_FUNCTION_I(Kahina, function6, 6) {
+IMPLEMENT_FUNCTION_I(Kahina, function6, 6)
 	error("Kahina: callback function 6 not implemented!");
 }
 
-IMPLEMENT_FUNCTION_II(Kahina, function7, 7) {
+IMPLEMENT_FUNCTION_II(Kahina, function7, 7)
 	error("Kahina: callback function 7 not implemented!");
 }
 
-IMPLEMENT_FUNCTION_II(Kahina, function8, 8) {
+IMPLEMENT_FUNCTION_II(Kahina, function8, 8)
 	error("Kahina: callback function 8 not implemented!");
 }
 
-IMPLEMENT_FUNCTION_SI(Kahina, function9, 9) {
+IMPLEMENT_FUNCTION_SI(Kahina, function9, 9)
 	error("Kahina: callback function 9 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Kahina, chapter1, 10) {
+IMPLEMENT_FUNCTION(Kahina, chapter1, 10)
 	switch (savepoint->action) {
 	default:
 		break;
@@ -124,27 +124,27 @@ IMPLEMENT_FUNCTION(Kahina, chapter1, 10) {
 	}
 }
 
-IMPLEMENT_FUNCTION(Kahina, function11, 11) {
+IMPLEMENT_FUNCTION(Kahina, function11, 11)
 	error("Kahina: callback function 11 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Kahina, function12, 12) {
+IMPLEMENT_FUNCTION(Kahina, function12, 12)
 	error("Kahina: callback function 12 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Kahina, function13, 13) {
+IMPLEMENT_FUNCTION(Kahina, function13, 13)
 	error("Kahina: callback function 13 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Kahina, function14, 14) {
+IMPLEMENT_FUNCTION(Kahina, function14, 14)
 	error("Kahina: callback function 14 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Kahina, function15, 15) {
+IMPLEMENT_FUNCTION(Kahina, function15, 15)
 	error("Kahina: callback function 15 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Kahina, chapter2, 16) {
+IMPLEMENT_FUNCTION(Kahina, chapter2, 16)
 	switch (savepoint->action) {
 	default:
 		break;
@@ -168,11 +168,11 @@ IMPLEMENT_FUNCTION(Kahina, chapter2, 16) {
 	}
 }
 
-IMPLEMENT_FUNCTION(Kahina, function17, 17) {
+IMPLEMENT_FUNCTION(Kahina, function17, 17)
 	error("Kahina: callback function 17 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Kahina, chapter3, 18) {
+IMPLEMENT_FUNCTION(Kahina, chapter3, 18)
 	switch (savepoint->action) {
 	default:
 		break;
@@ -194,48 +194,48 @@ IMPLEMENT_FUNCTION(Kahina, chapter3, 18) {
 	}
 }
 
-IMPLEMENT_FUNCTION_II(Kahina, function19, 19) {
+IMPLEMENT_FUNCTION_II(Kahina, function19, 19)
 	error("Kahina: callback function 19 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Kahina, function20, 20) {
+IMPLEMENT_FUNCTION(Kahina, function20, 20)
 	error("Kahina: callback function 20 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Kahina, function21, 21) {
+IMPLEMENT_FUNCTION(Kahina, function21, 21)
 	error("Kahina: callback function 21 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Kahina, function22, 22) {
+IMPLEMENT_FUNCTION(Kahina, function22, 22)
 	error("Kahina: callback function 22 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Kahina, function23, 23) {
+IMPLEMENT_FUNCTION(Kahina, function23, 23)
 	error("Kahina: callback function 23 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Kahina, function24, 24) {
+IMPLEMENT_FUNCTION(Kahina, function24, 24)
 	error("Kahina: callback function 24 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Kahina, function25, 25) {
+IMPLEMENT_FUNCTION(Kahina, function25, 25)
 	error("Kahina: callback function 25 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Kahina, function26, 26) {
+IMPLEMENT_FUNCTION(Kahina, function26, 26)
 	error("Kahina: callback function 26 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Kahina, function27, 27) {
+IMPLEMENT_FUNCTION(Kahina, function27, 27)
 	error("Kahina: callback function 27 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Kahina, chapter4, 28) {
+IMPLEMENT_FUNCTION(Kahina, chapter4, 28)
 	if (savepoint->action == kActionDefault)
 		getEntities()->drawSequences(kEntityKahina);
 }
 
-IMPLEMENT_FUNCTION(Kahina, chapter5, 29) {
+IMPLEMENT_FUNCTION(Kahina, chapter5, 29)
 	if (savepoint->action == kActionDefault)
 		getEntities()->drawSequences(kEntityKahina);
 }

@@ -56,11 +56,11 @@ Gendarmes::Gendarmes(LastExpressEngine *engine) : Entity(engine, kEntityGendarme
 	ADD_CALLBACK_FUNCTION(Gendarmes, chapter5);
 }
 
-IMPLEMENT_FUNCTION(Gendarmes, function1, 1) {
+IMPLEMENT_FUNCTION(Gendarmes, function1, 1)
 	error("Gendarmes: callback function 1 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Gendarmes, chapter1, 2) {
+IMPLEMENT_FUNCTION(Gendarmes, chapter1, 2)
 	switch (savepoint->action) {
 	default:
 		break;
@@ -75,66 +75,66 @@ IMPLEMENT_FUNCTION(Gendarmes, chapter1, 2) {
 	}
 }
 
-IMPLEMENT_FUNCTION_S(Gendarmes, function3, 3) {
+IMPLEMENT_FUNCTION_S(Gendarmes, function3, 3)
 	error("Gendarmes: callback function 3 not implemented!");
 }
 
-IMPLEMENT_FUNCTION_S(Gendarmes, function4, 4) {
+IMPLEMENT_FUNCTION_S(Gendarmes, function4, 4)
 	error("Gendarmes: callback function 4 not implemented!");
 }
 
-IMPLEMENT_FUNCTION_S(Gendarmes, function5, 5) {
+IMPLEMENT_FUNCTION_S(Gendarmes, function5, 5)
 	error("Gendarmes: callback function 5 not implemented!");
 }
 
-IMPLEMENT_FUNCTION_I(Gendarmes, function6, 6) {
+IMPLEMENT_FUNCTION_I(Gendarmes, function6, 6)
 	error("Gendarmes: callback function 6 not implemented!");
 }
 
-IMPLEMENT_FUNCTION_II(Gendarmes, function7, 7) {
+IMPLEMENT_FUNCTION_II(Gendarmes, function7, 7)
 	error("Gendarmes: callback function 7 not implemented!");
 }
 
-IMPLEMENT_FUNCTION_II(Gendarmes, function8, 8) {
+IMPLEMENT_FUNCTION_II(Gendarmes, function8, 8)
 	error("Gendarmes: callback function 8 not implemented!");
 }
 
-IMPLEMENT_FUNCTION_IISS(Gendarmes, function9, 9) {
+IMPLEMENT_FUNCTION_IISS(Gendarmes, function9, 9)
 	error("Gendarmes: callback function 9 not implemented!");
 }
 
-IMPLEMENT_FUNCTION_III(Gendarmes, function10, 10) {
+IMPLEMENT_FUNCTION_III(Gendarmes, function10, 10)
 	error("Gendarmes: callback function 10 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Gendarmes, function11, 11) {
+IMPLEMENT_FUNCTION(Gendarmes, function11, 11)
 	error("Gendarmes: callback function 11 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Gendarmes, function12, 12) {
+IMPLEMENT_FUNCTION(Gendarmes, function12, 12)
 	error("Gendarmes: callback function 12 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Gendarmes, function13, 13) {
+IMPLEMENT_FUNCTION(Gendarmes, function13, 13)
 	error("Gendarmes: callback function 13 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Gendarmes, chapter2, 14) {
+IMPLEMENT_FUNCTION(Gendarmes, chapter2, 14)
 	if (savepoint->action == kActionDefault)
 		getEntities()->drawSequences(kEntityGendarmes);
 }
 
-IMPLEMENT_FUNCTION(Gendarmes, chapter3, 15) {
+IMPLEMENT_FUNCTION(Gendarmes, chapter3, 15)
 	if (savepoint->action == kActionDefault)
 		getEntities()->drawSequences(kEntityGendarmes);
 }
 
-IMPLEMENT_FUNCTION(Gendarmes, chapter4, 16) {
+IMPLEMENT_FUNCTION(Gendarmes, chapter4, 16)
 	if (savepoint->action == kActionDefault)
 		getEntities()->drawSequences(kEntityGendarmes);
 }
 
-IMPLEMENT_FUNCTION(Gendarmes, chapter5, 17) {
+IMPLEMENT_FUNCTION(Gendarmes, chapter5, 17)
 	if (savepoint->action == kActionDefault)
 		getEntities()->drawSequences(kEntityGendarmes);
 }

@@ -64,39 +64,39 @@ Salko::Salko(LastExpressEngine *engine) : Entity(engine, kEntitySalko) {
 	ADD_NULL_FUNCTION();
 }
 
-IMPLEMENT_FUNCTION(Salko, function1, 1) {
+IMPLEMENT_FUNCTION(Salko, function1, 1)
 	error("Salko: callback function 1 not implemented!");
 }
 
-IMPLEMENT_FUNCTION_SI(Salko, function2, 2) {
+IMPLEMENT_FUNCTION_SI(Salko, function2, 2)
 	error("Salko: callback function 2 not implemented!");
 }
 
-IMPLEMENT_FUNCTION_NOSETUP(Salko, function3, 3) {
+IMPLEMENT_FUNCTION_NOSETUP(Salko, function3, 3)
 	error("Salko: callback function 3 not implemented!");
 }
 
-IMPLEMENT_FUNCTION_II(Salko, function4, 4) {
+IMPLEMENT_FUNCTION_II(Salko, function4, 4)
 	error("Salko: callback function 4 not implemented!");
 }
 
-IMPLEMENT_FUNCTION_I(Salko, function5, 5) {
+IMPLEMENT_FUNCTION_I(Salko, function5, 5)
 	error("Salko: callback function 5 not implemented!");
 }
 
-IMPLEMENT_FUNCTION_II(Salko, function6, 6) {
+IMPLEMENT_FUNCTION_II(Salko, function6, 6)
 	error("Salko: callback function 6 not implemented!");
 }
 
-IMPLEMENT_FUNCTION_II(Salko, function7, 7) {
+IMPLEMENT_FUNCTION_II(Salko, function7, 7)
 	error("Salko: callback function 7 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Salko, function8, 8) {
+IMPLEMENT_FUNCTION(Salko, function8, 8)
 	error("Salko: callback function 8 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Salko, chapter1, 9) {
+IMPLEMENT_FUNCTION(Salko, chapter1, 9)
 	switch (savepoint->action) {
 	default:
 		break;
@@ -113,15 +113,15 @@ IMPLEMENT_FUNCTION(Salko, chapter1, 9) {
 	}
 }
 
-IMPLEMENT_FUNCTION(Salko, function10, 10) {
+IMPLEMENT_FUNCTION(Salko, function10, 10)
 	error("Salko: callback function 10 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Salko, function11, 11) {
+IMPLEMENT_FUNCTION(Salko, function11, 11)
 	error("Salko: callback function 11 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Salko, chapter2, 12) {
+IMPLEMENT_FUNCTION(Salko, chapter2, 12)
 	switch (savepoint->action) {
 	default:
 		break;
@@ -143,11 +143,11 @@ IMPLEMENT_FUNCTION(Salko, chapter2, 12) {
 	}
 }
 
-IMPLEMENT_FUNCTION(Salko, function13, 13) {
+IMPLEMENT_FUNCTION(Salko, function13, 13)
 	error("Salko: callback function 13 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Salko, chapter3, 14) {
+IMPLEMENT_FUNCTION(Salko, chapter3, 14)
 	switch (savepoint->action) {
 	default:
 		break;
@@ -168,19 +168,19 @@ IMPLEMENT_FUNCTION(Salko, chapter3, 14) {
 	}
 }
 
-IMPLEMENT_FUNCTION(Salko, function15, 15) {
+IMPLEMENT_FUNCTION(Salko, function15, 15)
 	error("Salko: callback function 15 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Salko, function16, 16) {
+IMPLEMENT_FUNCTION(Salko, function16, 16)
 	error("Salko: callback function 16 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Salko, function17, 17) {
+IMPLEMENT_FUNCTION(Salko, function17, 17)
 	error("Salko: callback function 17 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Salko, chapter4, 18) {
+IMPLEMENT_FUNCTION(Salko, chapter4, 18)
 	switch (savepoint->action) {
 	default:
 		break;
@@ -200,23 +200,23 @@ IMPLEMENT_FUNCTION(Salko, chapter4, 18) {
 	}
 }
 
-IMPLEMENT_FUNCTION(Salko, function19, 19) {
+IMPLEMENT_FUNCTION(Salko, function19, 19)
 	error("Salko: callback function 19 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Salko, function20, 20) {
+IMPLEMENT_FUNCTION(Salko, function20, 20)
 	error("Salko: callback function 20 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Salko, function21, 21) {
+IMPLEMENT_FUNCTION(Salko, function21, 21)
 	error("Salko: callback function 21 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Salko, function22, 22) {
+IMPLEMENT_FUNCTION(Salko, function22, 22)
 	error("Salko: callback function 22 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Salko, chapter5, 23) {
+IMPLEMENT_FUNCTION(Salko, chapter5, 23)
 	switch (savepoint->action) {
 	default:
 		break;
@@ -236,7 +236,7 @@ IMPLEMENT_FUNCTION(Salko, chapter5, 23) {
 	}
 }
 
-IMPLEMENT_FUNCTION(Salko, function24, 24) {
+IMPLEMENT_FUNCTION(Salko, function24, 24)
 	error("Salko: callback function 24 not implemented!");
 }
 

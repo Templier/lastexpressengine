@@ -91,73 +91,73 @@ Abbot::Abbot(LastExpressEngine *engine) : Entity(engine, kEntityAbbot) {
 	ADD_CALLBACK_FUNCTION(Abbot, function53);
 }
 
-IMPLEMENT_FUNCTION(Abbot, function1, 1) {
+IMPLEMENT_FUNCTION(Abbot, function1, 1)
 	error("Abbot: callback function 1 not implemented!");
 }
 
-IMPLEMENT_FUNCTION_S(Abbot, function2, 2) {
+IMPLEMENT_FUNCTION_S(Abbot, function2, 2)
 	error("Abbot: callback function 2 not implemented!");
 }
 
-IMPLEMENT_FUNCTION_SI(Abbot, function3, 3) {
+IMPLEMENT_FUNCTION_SI(Abbot, function3, 3)
 	error("Abbot: callback function 3 not implemented!");
 }
 
-IMPLEMENT_FUNCTION_SI(Abbot, function4, 4) {
+IMPLEMENT_FUNCTION_SI(Abbot, function4, 4)
 	error("Abbot: callback function 4 not implemented!");
 }
 
-IMPLEMENT_FUNCTION_I(Abbot, function5, 5) {
+IMPLEMENT_FUNCTION_I(Abbot, function5, 5)
 	error("Abbot: callback function 5 not implemented!");
 }
 
-IMPLEMENT_FUNCTION_SSI(Abbot, function6, 6) {
+IMPLEMENT_FUNCTION_SSI(Abbot, function6, 6)
 	error("Abbot: callback function 6 not implemented!");
 }
 
-IMPLEMENT_FUNCTION_I(Abbot, function7, 7) {
+IMPLEMENT_FUNCTION_I(Abbot, function7, 7)
 	error("Abbot: callback function 7 not implemented!");
 }
 
-IMPLEMENT_FUNCTION_I(Abbot, function8, 8) {
+IMPLEMENT_FUNCTION_I(Abbot, function8, 8)
 	error("Abbot: callback function 8 not implemented!");
 }
 
-IMPLEMENT_FUNCTION_S(Abbot, function9, 9) {
+IMPLEMENT_FUNCTION_S(Abbot, function9, 9)
 	error("Abbot: callback function 9 not implemented!");
 }
 
-IMPLEMENT_FUNCTION_II(Abbot, function10, 10) {
+IMPLEMENT_FUNCTION_II(Abbot, function10, 10)
 	error("Abbot: callback function 10 not implemented!");
 }
 
-IMPLEMENT_FUNCTION_II(Abbot, function11, 11) {
+IMPLEMENT_FUNCTION_II(Abbot, function11, 11)
 	error("Abbot: callback function 11 not implemented!");
 }
 
-IMPLEMENT_FUNCTION_SIIS(Abbot, function12, 12) {
+IMPLEMENT_FUNCTION_SIIS(Abbot, function12, 12)
 	error("Abbot: callback function 12 not implemented!");
 }
 
-IMPLEMENT_FUNCTION_SII(Abbot, function13, 13) {
+IMPLEMENT_FUNCTION_SII(Abbot, function13, 13)
 	error("Abbot: callback function 13 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Abbot, function14, 14) {
+IMPLEMENT_FUNCTION(Abbot, function14, 14)
 	error("Abbot: callback function 14 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Abbot, chapter1, 15) {
+IMPLEMENT_FUNCTION(Abbot, chapter1, 15)
 	if (savepoint->action == kActionDefault)
 		getSavePoints()->addData(kEntityAbbot, kAction203073664, 0);
 }
 
-IMPLEMENT_FUNCTION(Abbot, chapter2, 16) {
+IMPLEMENT_FUNCTION(Abbot, chapter2, 16)
 	if (savepoint->action == kActionDefault)
 		getEntities()->drawSequences(kEntityAbbot);
 }
 
-IMPLEMENT_FUNCTION(Abbot, chapter3, 17) {
+IMPLEMENT_FUNCTION(Abbot, chapter3, 17)
 	switch (savepoint->action) {
 	default:
 		break;
@@ -179,91 +179,91 @@ IMPLEMENT_FUNCTION(Abbot, chapter3, 17) {
 	}
 }
 
-IMPLEMENT_FUNCTION(Abbot, function18, 18) {
+IMPLEMENT_FUNCTION(Abbot, function18, 18)
 	error("Abbot: callback function 18 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Abbot, function19, 19) {
+IMPLEMENT_FUNCTION(Abbot, function19, 19)
 	error("Abbot: callback function 19 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Abbot, function20, 20) {
+IMPLEMENT_FUNCTION(Abbot, function20, 20)
 	error("Abbot: callback function 20 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Abbot, function21, 21) {
+IMPLEMENT_FUNCTION(Abbot, function21, 21)
 	error("Abbot: callback function 21 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Abbot, function22, 22) {
+IMPLEMENT_FUNCTION(Abbot, function22, 22)
 	error("Abbot: callback function 22 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Abbot, function23, 23) {
+IMPLEMENT_FUNCTION(Abbot, function23, 23)
 	error("Abbot: callback function 23 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Abbot, function24, 24) {
+IMPLEMENT_FUNCTION(Abbot, function24, 24)
 	error("Abbot: callback function 24 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Abbot, function25, 25) {
+IMPLEMENT_FUNCTION(Abbot, function25, 25)
 	error("Abbot: callback function 25 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Abbot, function26, 26) {
+IMPLEMENT_FUNCTION(Abbot, function26, 26)
 	error("Abbot: callback function 26 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Abbot, function27, 27) {
+IMPLEMENT_FUNCTION(Abbot, function27, 27)
 	error("Abbot: callback function 27 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Abbot, function28, 28) {
+IMPLEMENT_FUNCTION(Abbot, function28, 28)
 	error("Abbot: callback function 28 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Abbot, function29, 29) {
+IMPLEMENT_FUNCTION(Abbot, function29, 29)
 	error("Abbot: callback function 29 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Abbot, function30, 30) {
+IMPLEMENT_FUNCTION(Abbot, function30, 30)
 	error("Abbot: callback function 30 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Abbot, function31, 31) {
+IMPLEMENT_FUNCTION(Abbot, function31, 31)
 	error("Abbot: callback function 31 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Abbot, function32, 32) {
+IMPLEMENT_FUNCTION(Abbot, function32, 32)
 	error("Abbot: callback function 32 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Abbot, function33, 33) {
+IMPLEMENT_FUNCTION(Abbot, function33, 33)
 	error("Abbot: callback function 33 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Abbot, function34, 34) {
+IMPLEMENT_FUNCTION(Abbot, function34, 34)
 	error("Abbot: callback function 34 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Abbot, function35, 35) {
+IMPLEMENT_FUNCTION(Abbot, function35, 35)
 	error("Abbot: callback function 35 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Abbot, function36, 36) {
+IMPLEMENT_FUNCTION(Abbot, function36, 36)
 	error("Abbot: callback function 36 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Abbot, function37, 37) {
+IMPLEMENT_FUNCTION(Abbot, function37, 37)
 	error("Abbot: callback function 37 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Abbot, function38, 38) {
+IMPLEMENT_FUNCTION(Abbot, function38, 38)
 	error("Abbot: callback function 38 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Abbot, chapter4, 39) {
+IMPLEMENT_FUNCTION(Abbot, chapter4, 39)
 	switch (savepoint->action) {
 	default:
 		break;
@@ -284,47 +284,47 @@ IMPLEMENT_FUNCTION(Abbot, chapter4, 39) {
 	}
 }
 
-IMPLEMENT_FUNCTION_II(Abbot, function40, 40) {
+IMPLEMENT_FUNCTION_II(Abbot, function40, 40)
 	error("Abbot: callback function 40 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Abbot, function41, 41) {
+IMPLEMENT_FUNCTION(Abbot, function41, 41)
 	error("Abbot: callback function 41 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Abbot, function42, 42) {
+IMPLEMENT_FUNCTION(Abbot, function42, 42)
 	error("Abbot: callback function 42 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Abbot, function43, 43) {
+IMPLEMENT_FUNCTION(Abbot, function43, 43)
 	error("Abbot: callback function 43 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Abbot, function44, 44) {
+IMPLEMENT_FUNCTION(Abbot, function44, 44)
 	error("Abbot: callback function 44 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Abbot, function45, 45) {
+IMPLEMENT_FUNCTION(Abbot, function45, 45)
 	error("Abbot: callback function 45 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Abbot, function46, 46) {
+IMPLEMENT_FUNCTION(Abbot, function46, 46)
 	error("Abbot: callback function 46 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Abbot, function47, 47) {
+IMPLEMENT_FUNCTION(Abbot, function47, 47)
 	error("Abbot: callback function 47 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Abbot, function48, 48) {
+IMPLEMENT_FUNCTION(Abbot, function48, 48)
 	error("Abbot: callback function 48 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Abbot, pickBomb, 49) {
+IMPLEMENT_FUNCTION(Abbot, pickBomb, 49)
 	error("Abbot::pickBomb: callback 49 function not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Abbot, chapter5, 50) {
+IMPLEMENT_FUNCTION(Abbot, chapter5, 50)
 	switch (savepoint->action) {
 	default:
 		break;
@@ -346,15 +346,15 @@ IMPLEMENT_FUNCTION(Abbot, chapter5, 50) {
 	}
 }
 
-IMPLEMENT_FUNCTION(Abbot, function51, 51) {
+IMPLEMENT_FUNCTION(Abbot, function51, 51)
 	error("Abbot: callback function 51 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Abbot, function52, 52) {
+IMPLEMENT_FUNCTION(Abbot, function52, 52)
 	error("Abbot: callback function 52 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Abbot, function53, 53) {
+IMPLEMENT_FUNCTION(Abbot, function53, 53)
 	error("Abbot: callback function 53 not implemented!");
 }
 

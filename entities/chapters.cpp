@@ -66,34 +66,34 @@ Chapters::Chapters(LastExpressEngine *engine) : Entity(engine, kEntityChapters) 
 	ADD_CALLBACK_FUNCTION(Chapters, chapter4_handler);
 }
 
-IMPLEMENT_FUNCTION_II(Chapters, savegame, 1) {
+IMPLEMENT_FUNCTION_II(Chapters, savegame, 1)
 	CALL_SAVEGAME(kEntityChapters)
 }
 
-IMPLEMENT_FUNCTION_SI(Chapters, function2, 2) {
+IMPLEMENT_FUNCTION_SI(Chapters, function2, 2)
 	error("Chapters: callback function 2 not implemented!");
 }
 
-IMPLEMENT_FUNCTION_S(Chapters, function3, 3) {
+IMPLEMENT_FUNCTION_S(Chapters, function3, 3)
 	error("Chapters: callback function 3 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Chapters, chapter1, 4) {
+IMPLEMENT_FUNCTION(Chapters, chapter1, 4)
 	if (savepoint->action == kActionDefault) {
 		getSavePoints()->addData(kEntityChapters, kAction171843264, 0);
 		setup_chapter1_init();
 	}
 }
 
-IMPLEMENT_FUNCTION(Chapters, function5, 5) {
+IMPLEMENT_FUNCTION(Chapters, function5, 5)
 	error("Chapters: callback function 5 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Chapters, function6, 6) {
+IMPLEMENT_FUNCTION(Chapters, function6, 6)
 	error("Chapters: callback function 6 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Chapters, chapter1_init, 7) {
+IMPLEMENT_FUNCTION(Chapters, chapter1_init, 7)
 	if (savepoint->action != kActionDefault)
 		return;
 
@@ -161,7 +161,7 @@ IMPLEMENT_FUNCTION(Chapters, chapter1_init, 7) {
 	setup_chapter1_handler();
 }
 
-IMPLEMENT_FUNCTION(Chapters, chapter1_handler, 8) {
+IMPLEMENT_FUNCTION(Chapters, chapter1_handler, 8)
 	switch (savepoint->action) {
 	default:
 		error("Chapters: callback function 8 not implemented!");
@@ -183,7 +183,7 @@ IMPLEMENT_FUNCTION(Chapters, chapter1_handler, 8) {
 	}
 }
 
-IMPLEMENT_FUNCTION(Chapters, function9, 9) {
+IMPLEMENT_FUNCTION(Chapters, function9, 9)
 	if (savepoint->action == kActionDefault) {
 		// Reset sound cache
 		if (ENTITY_PARAM(0, 2) || ENTITY_PARAM(0, 3)) {
@@ -202,7 +202,7 @@ IMPLEMENT_FUNCTION(Chapters, function9, 9) {
 	}
 }
 
-IMPLEMENT_FUNCTION(Chapters, chapter2, 10) {
+IMPLEMENT_FUNCTION(Chapters, chapter2, 10)
 	switch (savepoint->action) {
 	default:
 		break;
@@ -238,7 +238,7 @@ IMPLEMENT_FUNCTION(Chapters, chapter2, 10) {
 	}
 }
 
-IMPLEMENT_FUNCTION(Chapters, chapter2_init, 11) {
+IMPLEMENT_FUNCTION(Chapters, chapter2_init, 11)
 	if (savepoint->action != kActionDefault)
 		return;
 
@@ -296,11 +296,11 @@ IMPLEMENT_FUNCTION(Chapters, chapter2_init, 11) {
 	setup_chapter2_handler();
 }
 
-IMPLEMENT_FUNCTION(Chapters, chapter2_handler, 12) {
+IMPLEMENT_FUNCTION(Chapters, chapter2_handler, 12)
 	error("Chapters: callback function 12 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Chapters, chapter3, 13) {
+IMPLEMENT_FUNCTION(Chapters, chapter3, 13)
 	if (savepoint->action == kActionDefault) {
 		// Setup for chapter 3 in case it hasn't been done before
 		if (getProgress().chapter != kChapter3) {
@@ -316,19 +316,19 @@ IMPLEMENT_FUNCTION(Chapters, chapter3, 13) {
 	}
 }
 
-IMPLEMENT_FUNCTION(Chapters, chapter3_init, 14) {
+IMPLEMENT_FUNCTION(Chapters, chapter3_init, 14)
 	error("Chapters: callback function 14 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Chapters, chapter3_handler, 15) {
+IMPLEMENT_FUNCTION(Chapters, chapter3_handler, 15)
 	error("Chapters: callback function 15 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Chapters, function16, 16) {
+IMPLEMENT_FUNCTION(Chapters, function16, 16)
 	error("Chapters: callback function 16 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Chapters, chapter4, 17) {
+IMPLEMENT_FUNCTION(Chapters, chapter4, 17)
 	switch (savepoint->action) {
 	default:
 		break;
@@ -365,15 +365,15 @@ IMPLEMENT_FUNCTION(Chapters, chapter4, 17) {
 	}
 }
 
-IMPLEMENT_FUNCTION(Chapters, chapter4_init, 18) {
+IMPLEMENT_FUNCTION(Chapters, chapter4_init, 18)
 	error("Chapters: callback function 18 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Chapters, chapter4_handler, 19) {
+IMPLEMENT_FUNCTION(Chapters, chapter4_handler, 19)
 	error("Chapters: callback function 19 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Chapters, chapter5, 20) {
+IMPLEMENT_FUNCTION(Chapters, chapter5, 20)
 	if (savepoint->action == kActionDefault) {
 		// Setup for chapter 5 in case it hasn't been done before
 		if (getProgress().chapter != kChapter5) {
@@ -389,11 +389,11 @@ IMPLEMENT_FUNCTION(Chapters, chapter5, 20) {
 	}
 }
 
-IMPLEMENT_FUNCTION(Chapters, chapter5_init, 21) {
+IMPLEMENT_FUNCTION(Chapters, chapter5_init, 21)
 	error("Chapters: callback function 21 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Chapters, chapter5_handler, 22) {
+IMPLEMENT_FUNCTION(Chapters, chapter5_handler, 22)
 	error("Chapters: callback function 22 not implemented!");
 }
 

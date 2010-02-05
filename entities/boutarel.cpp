@@ -78,79 +78,79 @@ Boutarel::Boutarel(LastExpressEngine *engine) : Entity(engine, kEntityBoutarel) 
 	ADD_NULL_FUNCTION();
 }
 
-IMPLEMENT_FUNCTION(Boutarel, function1, 1) {
+IMPLEMENT_FUNCTION(Boutarel, function1, 1)
 	error("Boutarel: callback function 1 not implemented!");
 }
 
-IMPLEMENT_FUNCTION_S(Boutarel, function2, 2) {
+IMPLEMENT_FUNCTION_S(Boutarel, function2, 2)
 	error("Boutarel: callback function 2 not implemented!");
 }
 
-IMPLEMENT_FUNCTION_S(Boutarel, function3, 3) {
+IMPLEMENT_FUNCTION_S(Boutarel, function3, 3)
 	error("Boutarel: callback function 3 not implemented!");
 }
 
-IMPLEMENT_FUNCTION_I(Boutarel, function4, 4) {
+IMPLEMENT_FUNCTION_I(Boutarel, function4, 4)
 	error("Boutarel: callback function 4 not implemented!");
 }
 
-IMPLEMENT_FUNCTION_SII(Boutarel, function5, 5) {
+IMPLEMENT_FUNCTION_SII(Boutarel, function5, 5)
 	error("Boutarel: callback function 5 not implemented!");
 }
 
-IMPLEMENT_FUNCTION_SI(Boutarel, function6, 6) {
+IMPLEMENT_FUNCTION_SI(Boutarel, function6, 6)
 	error("Boutarel: callback function 6 not implemented!");
 }
 
-IMPLEMENT_FUNCTION_SI(Boutarel, function7, 7) {
+IMPLEMENT_FUNCTION_SI(Boutarel, function7, 7)
 	error("Boutarel: callback function 7 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Boutarel, function8, 8) {
+IMPLEMENT_FUNCTION(Boutarel, function8, 8)
 	error("Boutarel: callback function 8 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Boutarel, function9, 9) {
+IMPLEMENT_FUNCTION(Boutarel, function9, 9)
 	error("Boutarel: callback function 9 not implemented!");
 }
 
-IMPLEMENT_FUNCTION_II(Boutarel, function10, 10) {
+IMPLEMENT_FUNCTION_II(Boutarel, function10, 10)
 	error("Boutarel: callback function 10 not implemented!");
 }
 
-IMPLEMENT_FUNCTION_I(Boutarel, function11, 11) {
+IMPLEMENT_FUNCTION_I(Boutarel, function11, 11)
 	error("Boutarel: callback function 11 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Boutarel, function12, 12) {
+IMPLEMENT_FUNCTION(Boutarel, function12, 12)
 	error("Boutarel: callback function 12 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Boutarel, function13, 13) {
+IMPLEMENT_FUNCTION(Boutarel, function13, 13)
 	error("Boutarel: callback function 13 not implemented!");
 }
 
-IMPLEMENT_FUNCTION_I(Boutarel, function14, 14) {
+IMPLEMENT_FUNCTION_I(Boutarel, function14, 14)
 	error("Boutarel: callback function 14 not implemented!");
 }
 
-IMPLEMENT_FUNCTION_IS(Boutarel, function15, 15) {
+IMPLEMENT_FUNCTION_IS(Boutarel, function15, 15)
 	error("Boutarel: callback function 15 not implemented!");
 }
 
-IMPLEMENT_FUNCTION_IS(Boutarel, function16, 16) {
+IMPLEMENT_FUNCTION_IS(Boutarel, function16, 16)
 	error("Boutarel: callback function 16 not implemented!");
 }
 
-IMPLEMENT_FUNCTION_IS(Boutarel, function17, 17) {
+IMPLEMENT_FUNCTION_IS(Boutarel, function17, 17)
 	error("Boutarel: callback function 17 not implemented!");
 }
 
-IMPLEMENT_FUNCTION_I(Boutarel, function18, 18) {
+IMPLEMENT_FUNCTION_I(Boutarel, function18, 18)
 	error("Boutarel: callback function 18 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Boutarel, chapter1, 19) {
+IMPLEMENT_FUNCTION(Boutarel, chapter1, 19)
 	switch (savepoint->action) {
 	default:
 		break;
@@ -174,19 +174,19 @@ IMPLEMENT_FUNCTION(Boutarel, chapter1, 19) {
 	}
 }
 
-IMPLEMENT_FUNCTION(Boutarel, function20, 20) {
+IMPLEMENT_FUNCTION(Boutarel, function20, 20)
 	error("Boutarel: callback function 20 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Boutarel, function21, 21) {
+IMPLEMENT_FUNCTION(Boutarel, function21, 21)
 	error("Boutarel: callback function 21 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Boutarel, function22, 22) {
+IMPLEMENT_FUNCTION(Boutarel, function22, 22)
 	error("Boutarel: callback function 22 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Boutarel, chapter2, 23) {
+IMPLEMENT_FUNCTION(Boutarel, chapter2, 23)
 	switch (savepoint->action) {
 	default:
 		break;
@@ -210,15 +210,15 @@ IMPLEMENT_FUNCTION(Boutarel, chapter2, 23) {
 	}
 }
 
-IMPLEMENT_FUNCTION(Boutarel, function24, 24) {
+IMPLEMENT_FUNCTION(Boutarel, function24, 24)
 	error("Boutarel: callback function 24 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Boutarel, function25, 25) {
+IMPLEMENT_FUNCTION(Boutarel, function25, 25)
 	error("Boutarel: callback function 25 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Boutarel, chapter3, 26) {
+IMPLEMENT_FUNCTION(Boutarel, chapter3, 26)
 	switch (savepoint->action) {
 	default:
 		break;
@@ -242,23 +242,23 @@ IMPLEMENT_FUNCTION(Boutarel, chapter3, 26) {
 	}
 }
 
-IMPLEMENT_FUNCTION(Boutarel, function27, 27) {
+IMPLEMENT_FUNCTION(Boutarel, function27, 27)
 	error("Boutarel: callback function 27 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Boutarel, function28, 28) {
+IMPLEMENT_FUNCTION(Boutarel, function28, 28)
 	error("Boutarel: callback function 28 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Boutarel, function29, 29) {
+IMPLEMENT_FUNCTION(Boutarel, function29, 29)
 	error("Boutarel: callback function 29 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Boutarel, function30, 30) {
+IMPLEMENT_FUNCTION(Boutarel, function30, 30)
 	error("Boutarel: callback function 30 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Boutarel, chapter4, 31) {
+IMPLEMENT_FUNCTION(Boutarel, chapter4, 31)
 	switch (savepoint->action) {
 	default:
 		break;
@@ -283,23 +283,23 @@ IMPLEMENT_FUNCTION(Boutarel, chapter4, 31) {
 	}
 }
 
-IMPLEMENT_FUNCTION(Boutarel, function32, 32) {
+IMPLEMENT_FUNCTION(Boutarel, function32, 32)
 	error("Boutarel: callback function 32 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Boutarel, function33, 33) {
+IMPLEMENT_FUNCTION(Boutarel, function33, 33)
 	error("Boutarel: callback function 33 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Boutarel, function34, 34) {
+IMPLEMENT_FUNCTION(Boutarel, function34, 34)
 	error("Boutarel: callback function 34 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Boutarel, function35, 35) {
+IMPLEMENT_FUNCTION(Boutarel, function35, 35)
 	error("Boutarel: callback function 35 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Boutarel, chapter5, 36) {
+IMPLEMENT_FUNCTION(Boutarel, chapter5, 36)
 	switch (savepoint->action) {
 	default:
 		break;
@@ -321,11 +321,11 @@ IMPLEMENT_FUNCTION(Boutarel, chapter5, 36) {
 	}
 }
 
-IMPLEMENT_FUNCTION(Boutarel, function37, 37) {
+IMPLEMENT_FUNCTION(Boutarel, function37, 37)
 	error("Boutarel: callback function 37 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Boutarel, function38, 38) {
+IMPLEMENT_FUNCTION(Boutarel, function38, 38)
 	error("Boutarel: callback function 38 not implemented!");
 }
 

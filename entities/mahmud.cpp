@@ -59,63 +59,63 @@ Mahmud::Mahmud(LastExpressEngine *engine) : Entity(engine, kEntityMahmud) {
 	ADD_CALLBACK_FUNCTION(Mahmud, chapter5);
 }
 
-IMPLEMENT_FUNCTION(Mahmud, function1, 1) {
+IMPLEMENT_FUNCTION(Mahmud, function1, 1)
 	error("Mahmud: callback function 1 not implemented!");
 }
 
-IMPLEMENT_FUNCTION_NOSETUP(Mahmud, function2, 2) {
+IMPLEMENT_FUNCTION_NOSETUP(Mahmud, function2, 2)
 	error("Mahmud: callback function 2 not implemented!");
 }
 
-IMPLEMENT_FUNCTION_SI(Mahmud, function3, 3) {
+IMPLEMENT_FUNCTION_SI(Mahmud, function3, 3)
 	error("Mahmud: callback function 3 not implemented!");
 }
 
-IMPLEMENT_FUNCTION_SIII(Mahmud, function4, 4) {
+IMPLEMENT_FUNCTION_SIII(Mahmud, function4, 4)
 	error("Mahmud: callback function 4 not implemented!");
 }
 
-IMPLEMENT_FUNCTION_S(Mahmud, function5, 5) {
+IMPLEMENT_FUNCTION_S(Mahmud, function5, 5)
 	error("Mahmud: callback function 5 not implemented!");
 }
 
-IMPLEMENT_FUNCTION_S(Mahmud, function6, 6) {
+IMPLEMENT_FUNCTION_S(Mahmud, function6, 6)
 	error("Mahmud: callback function 6 not implemented!");
 }
 
-IMPLEMENT_FUNCTION_NOSETUP(Mahmud, function7, 7) {
+IMPLEMENT_FUNCTION_NOSETUP(Mahmud, function7, 7)
 	error("Mahmud: callback function 7 not implemented!");
 }
 
-IMPLEMENT_FUNCTION_II(Mahmud, function8, 8) {
+IMPLEMENT_FUNCTION_II(Mahmud, function8, 8)
 	error("Mahmud: callback function 8 not implemented!");
 }
 
-IMPLEMENT_FUNCTION_II(Mahmud, function9, 9) {
+IMPLEMENT_FUNCTION_II(Mahmud, function9, 9)
 	error("Mahmud: callback function 9 not implemented!");
 }
 
-IMPLEMENT_FUNCTION_II(Mahmud, function10, 10) {
+IMPLEMENT_FUNCTION_II(Mahmud, function10, 10)
 	error("Mahmud: callback function 10 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Mahmud, function11, 11) {
+IMPLEMENT_FUNCTION(Mahmud, function11, 11)
 	error("Mahmud: callback function 11 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Mahmud, function12, 12) {
+IMPLEMENT_FUNCTION(Mahmud, function12, 12)
 	error("Mahmud: callback function 12 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Mahmud, function13, 13) {
+IMPLEMENT_FUNCTION(Mahmud, function13, 13)
 	error("Mahmud: callback function 13 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Mahmud, function14, 14) {
+IMPLEMENT_FUNCTION(Mahmud, function14, 14)
 	error("Mahmud: callback function 14 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Mahmud, chapter1, 15) {
+IMPLEMENT_FUNCTION(Mahmud, chapter1, 15)
 	switch (savepoint->action) {
 	default:
 		break;
@@ -138,11 +138,11 @@ IMPLEMENT_FUNCTION(Mahmud, chapter1, 15) {
 	}
 }
 
-IMPLEMENT_FUNCTION(Mahmud, function16, 16) {
+IMPLEMENT_FUNCTION(Mahmud, function16, 16)
 	error("Mahmud: callback function 16 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Mahmud, chapter2, 17) {
+IMPLEMENT_FUNCTION(Mahmud, chapter2, 17)
 	switch (savepoint->action) {
 	default:
 		break;
@@ -164,7 +164,7 @@ IMPLEMENT_FUNCTION(Mahmud, chapter2, 17) {
 	}
 }
 
-IMPLEMENT_FUNCTION(Mahmud, chapter3, 18) {
+IMPLEMENT_FUNCTION(Mahmud, chapter3, 18)
 	switch (savepoint->action) {
 	default:
 		break;
@@ -186,7 +186,7 @@ IMPLEMENT_FUNCTION(Mahmud, chapter3, 18) {
 	}
 }
 
-IMPLEMENT_FUNCTION(Mahmud, chapter4, 19) {
+IMPLEMENT_FUNCTION(Mahmud, chapter4, 19)
 	switch (savepoint->action) {
 	default:
 		break;
@@ -208,7 +208,7 @@ IMPLEMENT_FUNCTION(Mahmud, chapter4, 19) {
 	}
 }
 
-IMPLEMENT_FUNCTION(Mahmud, chapter5, 20) {
+IMPLEMENT_FUNCTION(Mahmud, chapter5, 20)
 	if (savepoint->action == kActionDefault)
 		getEntities()->drawSequences(kEntityMahmud);
 }

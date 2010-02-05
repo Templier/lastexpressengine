@@ -97,27 +97,27 @@ Mertens::Mertens(LastExpressEngine *engine) : Entity(engine, kEntityMertens) {
 	ADD_NULL_FUNCTION();
 }
 
-IMPLEMENT_FUNCTION(Mertens, function1, 1) {
+IMPLEMENT_FUNCTION(Mertens, function1, 1)
 	error("Mertens: callback function 1 not implemented!");
 }
 
-IMPLEMENT_FUNCTION_S(Mertens, function2, 2) {
+IMPLEMENT_FUNCTION_S(Mertens, function2, 2)
 	error("Mertens: callback function 2 not implemented!");
 }
 
-IMPLEMENT_FUNCTION_SI(Mertens, function3, 3) {
+IMPLEMENT_FUNCTION_SI(Mertens, function3, 3)
 	error("Mertens: callback function 3 not implemented!");
 }
 
-IMPLEMENT_FUNCTION_SI(Mertens, function4, 4) {
+IMPLEMENT_FUNCTION_SI(Mertens, function4, 4)
 	error("Mertens: callback function 4 not implemented!");
 }
 
-IMPLEMENT_FUNCTION_SIII(Mertens, function5, 5) {
+IMPLEMENT_FUNCTION_SIII(Mertens, function5, 5)
 	error("Mertens: callback function 5 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Mertens, function6, 6) {
+IMPLEMENT_FUNCTION(Mertens, function6, 6)
 	switch (savepoint->action) {
 	default:
 		break;
@@ -150,23 +150,23 @@ IMPLEMENT_FUNCTION(Mertens, function6, 6) {
 	}
 }
 
-IMPLEMENT_FUNCTION_S(Mertens, function7, 7) {
+IMPLEMENT_FUNCTION_S(Mertens, function7, 7)
 	error("Mertens: callback function 7 not implemented!");
 }
 
-IMPLEMENT_FUNCTION_S(Mertens, function8, 8) {
+IMPLEMENT_FUNCTION_S(Mertens, function8, 8)
 	error("Mertens: callback function  8 not implemented!");
 }
 
-IMPLEMENT_FUNCTION_II(Mertens, savegame, 9) {
+IMPLEMENT_FUNCTION_II(Mertens, savegame, 9)
 	CALL_SAVEGAME(kEntityMertens)
 }
 
-IMPLEMENT_FUNCTION_II(Mertens, function10, 10) {
+IMPLEMENT_FUNCTION_II(Mertens, function10, 10)
 	error("Mertens: callback function 10 not implemented!");
 }
 
-IMPLEMENT_FUNCTION_I(Mertens, function11, 11) {
+IMPLEMENT_FUNCTION_I(Mertens, function11, 11)
 	switch (savepoint->action) {
 	default:
 		break;
@@ -202,27 +202,27 @@ IMPLEMENT_FUNCTION_I(Mertens, function11, 11) {
 	}
 }
 
-IMPLEMENT_FUNCTION_I(Mertens, bonsoir, 12) {
+IMPLEMENT_FUNCTION_I(Mertens, bonsoir, 12)
 	error("Mertens: callback function 12 not implemented!");
 }
 
-IMPLEMENT_FUNCTION_II(Mertens, function13, 13) {
+IMPLEMENT_FUNCTION_II(Mertens, function13, 13)
 	error("Mertens: callback function 13 not implemented!");
 }
 
-IMPLEMENT_FUNCTION_I(Mertens, function14, 14) {
+IMPLEMENT_FUNCTION_I(Mertens, function14, 14)
 	error("Mertens: callback function 14 not implemented!");
 }
 
-IMPLEMENT_FUNCTION_I(Mertens, function15, 15) {
+IMPLEMENT_FUNCTION_I(Mertens, function15, 15)
 	error("Mertens: callback function 15 not implemented!");
 }
 
-IMPLEMENT_FUNCTION_I(Mertens, function16, 16) {
+IMPLEMENT_FUNCTION_I(Mertens, function16, 16)
 	error("Mertens: callback function 16 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Mertens, function17, 17) {
+IMPLEMENT_FUNCTION(Mertens, function17, 17)
 	switch (savepoint->action) {
 	default:
 		break;
@@ -307,71 +307,71 @@ IMPLEMENT_FUNCTION(Mertens, function17, 17) {
 	}
 }
 
-IMPLEMENT_FUNCTION(Mertens, function18, 18) {
+IMPLEMENT_FUNCTION(Mertens, function18, 18)
 	error("Mertens: callback function 18 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Mertens, function19, 19) {
+IMPLEMENT_FUNCTION(Mertens, function19, 19)
 	error("Mertens: callback function 19 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Mertens, function20, 20) {
+IMPLEMENT_FUNCTION(Mertens, function20, 20)
 	error("Mertens: callback function 20 not implemented!");
 }
 
-IMPLEMENT_FUNCTION_II(Mertens, function21, 21) {
+IMPLEMENT_FUNCTION_II(Mertens, function21, 21)
 	error("Mertens: callback function 21 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Mertens, function22, 22) {
+IMPLEMENT_FUNCTION(Mertens, function22, 22)
 	error("Mertens: callback function 22 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Mertens, function23, 23) {
+IMPLEMENT_FUNCTION(Mertens, function23, 23)
 	error("Mertens: callback function 23 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Mertens, function24, 24) {
+IMPLEMENT_FUNCTION(Mertens, function24, 24)
 	error("Mertens: callback function 24 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Mertens, function25, 25) {
+IMPLEMENT_FUNCTION(Mertens, function25, 25)
 	error("Mertens: callback function 25 not implemented!");
 }
 
-IMPLEMENT_FUNCTION_I(Mertens, function26, 26) {
+IMPLEMENT_FUNCTION_I(Mertens, function26, 26)
 	error("Mertens: callback function 26 not implemented!");
 }
 
-IMPLEMENT_FUNCTION_I(Mertens, function27, 27) {
+IMPLEMENT_FUNCTION_I(Mertens, function27, 27)
 	error("Mertens: callback function 27 not implemented!");
 }
 
-IMPLEMENT_FUNCTION_S(Mertens, function28, 28) {
+IMPLEMENT_FUNCTION_S(Mertens, function28, 28)
 	error("Mertens: callback function 28 not implemented!");
 }
 
-IMPLEMENT_FUNCTION_SS(Mertens, function29, 29) {
+IMPLEMENT_FUNCTION_SS(Mertens, function29, 29)
 	error("Mertens: callback function 29 not implemented!");
 }
 
-IMPLEMENT_FUNCTION_I(Mertens, function30, 30) {
+IMPLEMENT_FUNCTION_I(Mertens, function30, 30)
 	error("Mertens: callback function 30 not implemented!");
 }
 
-IMPLEMENT_FUNCTION_I(Mertens, function31, 31) {
+IMPLEMENT_FUNCTION_I(Mertens, function31, 31)
 	error("Mertens: callback function 31 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Mertens, function32, 32) {
+IMPLEMENT_FUNCTION(Mertens, function32, 32)
 	error("Mertens: callback function 32 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Mertens, function33, 33) {
+IMPLEMENT_FUNCTION(Mertens, function33, 33)
 	error("Mertens: callback function 33 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Mertens, chapter1, 34) {
+IMPLEMENT_FUNCTION(Mertens, chapter1, 34)
 	switch (savepoint->action) {
 	default:
 		break;
@@ -405,31 +405,31 @@ IMPLEMENT_FUNCTION(Mertens, chapter1, 34) {
 
 }
 
-IMPLEMENT_FUNCTION(Mertens, function35, 35) {
+IMPLEMENT_FUNCTION(Mertens, function35, 35)
 	error("Mertens: callback function 35 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Mertens, function36, 36) {
+IMPLEMENT_FUNCTION(Mertens, function36, 36)
 	error("Mertens: callback function 36 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Mertens, function37, 37) {
+IMPLEMENT_FUNCTION(Mertens, function37, 37)
 	error("Mertens: callback function 37 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Mertens, function38, 38) {
+IMPLEMENT_FUNCTION(Mertens, function38, 38)
 	error("Mertens: callback function 38 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Mertens, function39, 39) {
+IMPLEMENT_FUNCTION(Mertens, function39, 39)
 	error("Mertens: callback function 39 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Mertens, function40, 40) {
+IMPLEMENT_FUNCTION(Mertens, function40, 40)
 	error("Mertens: callback function 40 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Mertens, function41, 41) {
+IMPLEMENT_FUNCTION(Mertens, function41, 41)
 	switch (savepoint->action) {
 	default:
 		break;
@@ -456,12 +456,12 @@ IMPLEMENT_FUNCTION(Mertens, function41, 41) {
 	}
 }
 
-IMPLEMENT_FUNCTION(Mertens, function42, 42) {
+IMPLEMENT_FUNCTION(Mertens, function42, 42)
 	error("Mertens: callback function 42 not implemented!");
 
 }
 
-IMPLEMENT_FUNCTION(Mertens, chapter2, 43) {
+IMPLEMENT_FUNCTION(Mertens, chapter2, 43)
 	switch (savepoint->action) {
 	default:
 		break;
@@ -498,11 +498,11 @@ IMPLEMENT_FUNCTION(Mertens, chapter2, 43) {
 	}
 }
 
-IMPLEMENT_FUNCTION(Mertens, function44, 44) {
+IMPLEMENT_FUNCTION(Mertens, function44, 44)
 	error("Mertens: callback function 44 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Mertens, chapter3, 45) {
+IMPLEMENT_FUNCTION(Mertens, chapter3, 45)
 	switch (savepoint->action) {
 	default:
 		break;
@@ -539,11 +539,11 @@ IMPLEMENT_FUNCTION(Mertens, chapter3, 45) {
 	}
 }
 
-IMPLEMENT_FUNCTION(Mertens, function46, 46) {
+IMPLEMENT_FUNCTION(Mertens, function46, 46)
 	error("Mertens: callback function 46 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Mertens, chapter4, 47) {
+IMPLEMENT_FUNCTION(Mertens, chapter4, 47)
 	switch (savepoint->action) {
 	default:
 		break;
@@ -582,15 +582,15 @@ IMPLEMENT_FUNCTION(Mertens, chapter4, 47) {
 	}
 }
 
-IMPLEMENT_FUNCTION(Mertens, function48, 48) {
+IMPLEMENT_FUNCTION(Mertens, function48, 48)
 	error("Mertens: callback function 48 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Mertens, function49, 49) {
+IMPLEMENT_FUNCTION(Mertens, function49, 49)
 	error("Mertens: callback function 49 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Mertens, chapter5, 50) {
+IMPLEMENT_FUNCTION(Mertens, chapter5, 50)
 	switch (savepoint->action) {
 	default:
 		break;
@@ -610,16 +610,16 @@ IMPLEMENT_FUNCTION(Mertens, chapter5, 50) {
 	}
 }
 
-IMPLEMENT_FUNCTION(Mertens, function51, 51) {
+IMPLEMENT_FUNCTION(Mertens, function51, 51)
 	if (savepoint->action == kAction70549068)
 		setup_function52();
 }
 
-IMPLEMENT_FUNCTION(Mertens, function52, 52) {
+IMPLEMENT_FUNCTION(Mertens, function52, 52)
 	error("Mertens: callback function 52 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Mertens, function53, 53) {
+IMPLEMENT_FUNCTION(Mertens, function53, 53)
 	error("Mertens: callback function 53 not implemented!");
 }
 

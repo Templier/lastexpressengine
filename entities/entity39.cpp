@@ -45,32 +45,32 @@ Entity39::Entity39(LastExpressEngine *engine) : Entity(engine, kEntity39) {
 	ADD_CALLBACK_FUNCTION(Entity39, process);
 }
 
-IMPLEMENT_FUNCTION(Entity39, chapter1, 1) {
+IMPLEMENT_FUNCTION(Entity39, chapter1, 1)
 	if (savepoint->action == kActionDefault)
 		setup_process();
 }
 
-IMPLEMENT_FUNCTION(Entity39, chapter2, 2) {
+IMPLEMENT_FUNCTION(Entity39, chapter2, 2)
 	if (savepoint->action == kActionDefault)
 		setup_process();
 }
 
-IMPLEMENT_FUNCTION(Entity39, chapter3, 3) {
+IMPLEMENT_FUNCTION(Entity39, chapter3, 3)
 	if (savepoint->action == kActionDefault)
 		setup_process();
 }
 
-IMPLEMENT_FUNCTION(Entity39, chapter4, 4) {
+IMPLEMENT_FUNCTION(Entity39, chapter4, 4)
 	if (savepoint->action == kActionDefault)
 		setup_process();
 }
 
-IMPLEMENT_FUNCTION(Entity39, chapter5, 5) {
+IMPLEMENT_FUNCTION(Entity39, chapter5, 5)
 	if (savepoint->action == kActionDefault)
 		setup_process();
 }
 
-IMPLEMENT_FUNCTION(Entity39, process, 6) {
+IMPLEMENT_FUNCTION(Entity39, process, 6)
 
 	warning("Entity39: callback function 6 not implemented!");
 

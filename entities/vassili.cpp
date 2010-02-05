@@ -57,19 +57,19 @@ Vassili::Vassili(LastExpressEngine *engine) : Entity(engine, kEntityVassili) {
 	ADD_CALLBACK_FUNCTION(Vassili, chapter5);
 }
 
-IMPLEMENT_FUNCTION(Vassili, function1, 1) {
+IMPLEMENT_FUNCTION(Vassili, function1, 1)
 	error("Vassili: callback function 1 not implemented!");
 }
 
-IMPLEMENT_FUNCTION_S(Vassili, function2, 2) {
+IMPLEMENT_FUNCTION_S(Vassili, function2, 2)
 	error("Vassili: callback function 2 not implemented!");
 }
 
-IMPLEMENT_FUNCTION_II(Vassili, function3, 3) {
+IMPLEMENT_FUNCTION_II(Vassili, function3, 3)
 	error("Vassili: callback function 3 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Vassili, chapter1, 4) {
+IMPLEMENT_FUNCTION(Vassili, chapter1, 4)
 	switch (savepoint->action) {
 	default:
 		break;
@@ -85,35 +85,35 @@ IMPLEMENT_FUNCTION(Vassili, chapter1, 4) {
 	}
 }
 
-IMPLEMENT_FUNCTION(Vassili, function5, 5) {
+IMPLEMENT_FUNCTION(Vassili, function5, 5)
 	error("Vassili: callback function 5 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Vassili, function6, 6) {
+IMPLEMENT_FUNCTION(Vassili, function6, 6)
 	error("Vassili: callback function 6 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Vassili, function7, 7) {
+IMPLEMENT_FUNCTION(Vassili, function7, 7)
 	error("Vassili: callback function 7 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Vassili, function8, 8) {
+IMPLEMENT_FUNCTION(Vassili, function8, 8)
 	error("Vassili: callback function 8 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Vassili, function9, 9) {
+IMPLEMENT_FUNCTION(Vassili, function9, 9)
 	error("Vassili: callback function 9 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Vassili, function10, 10) {
+IMPLEMENT_FUNCTION(Vassili, function10, 10)
 	error("Vassili: callback function 10 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Vassili, function11, 11) {
+IMPLEMENT_FUNCTION(Vassili, function11, 11)
 	error("Vassili: callback function 11 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Vassili, chapter2, 12) {
+IMPLEMENT_FUNCTION(Vassili, chapter2, 12)
 	switch (savepoint->action) {
 	default:
 		break;
@@ -137,11 +137,11 @@ IMPLEMENT_FUNCTION(Vassili, chapter2, 12) {
 	}
 }
 
-IMPLEMENT_FUNCTION(Vassili, function13, 13) {
+IMPLEMENT_FUNCTION(Vassili, function13, 13)
 	error("Vassili: callback function 13 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Vassili, chapter3, 14) {
+IMPLEMENT_FUNCTION(Vassili, chapter3, 14)
 	switch (savepoint->action) {
 	default:
 		break;
@@ -164,11 +164,11 @@ IMPLEMENT_FUNCTION(Vassili, chapter3, 14) {
 	}
 }
 
-IMPLEMENT_FUNCTION(Vassili, function15, 15) {
+IMPLEMENT_FUNCTION(Vassili, function15, 15)
 	error("Vassili: callback function 15 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Vassili, chapter4, 16) {
+IMPLEMENT_FUNCTION(Vassili, chapter4, 16)
 	switch (savepoint->action) {
 	default:
 		break;
@@ -192,11 +192,11 @@ IMPLEMENT_FUNCTION(Vassili, chapter4, 16) {
 	}
 }
 
-IMPLEMENT_FUNCTION(Vassili, function17, 17) {
+IMPLEMENT_FUNCTION(Vassili, function17, 17)
 	error("Vassili: callback function 17 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Vassili, chapter5, 18) {
+IMPLEMENT_FUNCTION(Vassili, chapter5, 18)
 	if (savepoint->action == kActionDefault) {
 		getEntities()->drawSequences(kEntityVassili);
 

@@ -62,43 +62,43 @@ Hadija::Hadija(LastExpressEngine *engine) : Entity(engine, kEntityHadija) {
 	ADD_NULL_FUNCTION();
 }
 
-IMPLEMENT_FUNCTION(Hadija, function1, 1) {
+IMPLEMENT_FUNCTION(Hadija, function1, 1)
 	error("Hadija: callback function 1 not implemented!");
 }
 
-IMPLEMENT_FUNCTION_SI(Hadija, function2, 2) {
+IMPLEMENT_FUNCTION_SI(Hadija, function2, 2)
 	error("Hadija: callback function 2 not implemented!");
 }
 
-IMPLEMENT_FUNCTION_S(Hadija, function3, 3) {
+IMPLEMENT_FUNCTION_S(Hadija, function3, 3)
 	error("Hadija: callback function 3 not implemented!");
 }
 
-IMPLEMENT_FUNCTION_NOSETUP(Hadija, function4, 4) {
+IMPLEMENT_FUNCTION_NOSETUP(Hadija, function4, 4)
 	error("Hadija: callback function 4 not implemented!");
 }
 
-IMPLEMENT_FUNCTION_II(Hadija, function5, 5) {
+IMPLEMENT_FUNCTION_II(Hadija, function5, 5)
 	error("Hadija: callback function 5 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Hadija, function6, 6) {
+IMPLEMENT_FUNCTION(Hadija, function6, 6)
 	error("Hadija: callback function 6 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Hadija, function7, 7) {
+IMPLEMENT_FUNCTION(Hadija, function7, 7)
 	error("Hadija: callback function 7 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Hadija, function8, 8) {
+IMPLEMENT_FUNCTION(Hadija, function8, 8)
 	error("Hadija: callback function 8 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Hadija, function9, 9) {
+IMPLEMENT_FUNCTION(Hadija, function9, 9)
 	error("Hadija: callback function 9 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Hadija, chapter1, 10) {
+IMPLEMENT_FUNCTION(Hadija, chapter1, 10)
 	switch (savepoint->action) {
 	default:
 		break;
@@ -116,15 +116,15 @@ IMPLEMENT_FUNCTION(Hadija, chapter1, 10) {
 	}
 }
 
-IMPLEMENT_FUNCTION(Hadija, function11, 11) {
+IMPLEMENT_FUNCTION(Hadija, function11, 11)
 	error("Hadija: callback function 11 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Hadija, function12, 12) {
+IMPLEMENT_FUNCTION(Hadija, function12, 12)
 	error("Hadija: callback function 12 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Hadija, chapter2, 13) {
+IMPLEMENT_FUNCTION(Hadija, chapter2, 13)
 	if (savepoint->action == kActionDefault) {
 
 		getEntities()->drawSequences(kEntityHadija);
@@ -139,11 +139,11 @@ IMPLEMENT_FUNCTION(Hadija, chapter2, 13) {
 	}
 }
 
-IMPLEMENT_FUNCTION(Hadija, function14, 14) {
+IMPLEMENT_FUNCTION(Hadija, function14, 14)
 	error("Hadija: callback function 14 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Hadija, chapter3, 15) {
+IMPLEMENT_FUNCTION(Hadija, chapter3, 15)
 	switch (savepoint->action) {
 	default:
 		break;
@@ -163,11 +163,11 @@ IMPLEMENT_FUNCTION(Hadija, chapter3, 15) {
 	}
 }
 
-IMPLEMENT_FUNCTION(Hadija, function16, 16) {
+IMPLEMENT_FUNCTION(Hadija, function16, 16)
 	error("Hadija: callback function 16 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Hadija, chapter4, 17) {
+IMPLEMENT_FUNCTION(Hadija, chapter4, 17)
 	switch (savepoint->action) {
 	default:
 		break;
@@ -184,15 +184,15 @@ IMPLEMENT_FUNCTION(Hadija, chapter4, 17) {
 	}
 }
 
-IMPLEMENT_FUNCTION(Hadija, function18, 18) {
+IMPLEMENT_FUNCTION(Hadija, function18, 18)
 	error("Hadija: callback function 18 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Hadija, function19, 19) {
+IMPLEMENT_FUNCTION(Hadija, function19, 19)
 	error("Hadija: callback function 19 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Hadija, chapter5, 20) {
+IMPLEMENT_FUNCTION(Hadija, chapter5, 20)
 	switch (savepoint->action) {
 	default:
 		break;
@@ -214,15 +214,15 @@ IMPLEMENT_FUNCTION(Hadija, chapter5, 20) {
 	}
 }
 
-IMPLEMENT_FUNCTION(Hadija, function21, 21) {
+IMPLEMENT_FUNCTION(Hadija, function21, 21)
 	error("Hadija: callback function 21 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Hadija, function22, 22) {
+IMPLEMENT_FUNCTION(Hadija, function22, 22)
 	error("Hadija: callback function 22 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Hadija, function23, 23) {
+IMPLEMENT_FUNCTION(Hadija, function23, 23)
 	error("Hadija: callback function 23 not implemented!");
 }
 

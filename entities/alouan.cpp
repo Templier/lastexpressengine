@@ -63,43 +63,43 @@ Alouan::Alouan(LastExpressEngine *engine) : Entity(engine, kEntityAlouan) {
 	ADD_NULL_FUNCTION();
 }
 
-IMPLEMENT_FUNCTION(Alouan, function1, 1) {
+IMPLEMENT_FUNCTION(Alouan, function1, 1)
 	error("Alouan: callback function 1 not implemented!");
 }
 
-IMPLEMENT_FUNCTION_SI(Alouan, function2, 2) {
+IMPLEMENT_FUNCTION_SI(Alouan, function2, 2)
 	error("Alouan: callback function 2 not implemented!");
 }
 
-IMPLEMENT_FUNCTION_S(Alouan, function3, 3) {
+IMPLEMENT_FUNCTION_S(Alouan, function3, 3)
 	error("Alouan: callback function 3 not implemented!");
 }
 
-IMPLEMENT_FUNCTION_I(Alouan, function4, 4) {
+IMPLEMENT_FUNCTION_I(Alouan, function4, 4)
 	error("Alouan: callback function 4 not implemented!");
 }
 
-IMPLEMENT_FUNCTION_II(Alouan, function5, 5) {
+IMPLEMENT_FUNCTION_II(Alouan, function5, 5)
 	error("Alouan: callback function 5 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Alouan, function6, 6) {
+IMPLEMENT_FUNCTION(Alouan, function6, 6)
 	error("Alouan: callback function 6 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Alouan, function7, 7) {
+IMPLEMENT_FUNCTION(Alouan, function7, 7)
 	error("Alouan: callback function 7 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Alouan, function8, 8) {
+IMPLEMENT_FUNCTION(Alouan, function8, 8)
 	error("Alouan: callback function 8 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Alouan, function9, 9) {
+IMPLEMENT_FUNCTION(Alouan, function9, 9)
 	error("Alouan: callback function 9 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Alouan, chapter1, 10) {
+IMPLEMENT_FUNCTION(Alouan, chapter1, 10)
 	switch (savepoint->action) {
 	default:
 		break;
@@ -117,15 +117,15 @@ IMPLEMENT_FUNCTION(Alouan, chapter1, 10) {
 	}
 }
 
-IMPLEMENT_FUNCTION(Alouan, function11, 11) {
+IMPLEMENT_FUNCTION(Alouan, function11, 11)
 	error("Alouan: callback function 11 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Alouan, function12, 12) {
+IMPLEMENT_FUNCTION(Alouan, function12, 12) 
 	error("Alouan: callback function 12 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Alouan, chapter2, 13) {
+IMPLEMENT_FUNCTION(Alouan, chapter2, 13)
 	if (savepoint->action != kActionDefault)
 		return;
 
@@ -140,11 +140,11 @@ IMPLEMENT_FUNCTION(Alouan, chapter2, 13) {
 	setup_function14();
 }
 
-IMPLEMENT_FUNCTION(Alouan, function14, 14) {
+IMPLEMENT_FUNCTION(Alouan, function14, 14)
 	error("Alouan: callback function 14 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Alouan, chapter3, 15) {
+IMPLEMENT_FUNCTION(Alouan, chapter3, 15)
 	switch (savepoint->action) {
 	default:
 		break;
@@ -164,11 +164,11 @@ IMPLEMENT_FUNCTION(Alouan, chapter3, 15) {
 	}
 }
 
-IMPLEMENT_FUNCTION(Alouan, function16, 16) {
+IMPLEMENT_FUNCTION(Alouan, function16, 16)
 	error("Alouan: callback function 16 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Alouan, chapter4, 17) {
+IMPLEMENT_FUNCTION(Alouan, chapter4, 17)
 	switch (savepoint->action) {
 	default:
 		break;
@@ -188,15 +188,15 @@ IMPLEMENT_FUNCTION(Alouan, chapter4, 17) {
 	}
 }
 
-IMPLEMENT_FUNCTION(Alouan, function18, 18) {
+IMPLEMENT_FUNCTION(Alouan, function18, 18)
 	error("Alouan: callback function 18 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Alouan, function19, 19) {
+IMPLEMENT_FUNCTION(Alouan, function19, 19)
 	error("Alouan: callback function 19 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Alouan, chapter5, 20) {
+IMPLEMENT_FUNCTION(Alouan, chapter5, 20)
 	switch (savepoint->action) {
 	default:
 		break;
@@ -218,15 +218,15 @@ IMPLEMENT_FUNCTION(Alouan, chapter5, 20) {
 	}
 }
 
-IMPLEMENT_FUNCTION(Alouan, function21, 21) {
+IMPLEMENT_FUNCTION(Alouan, function21, 21)
 	error("Alouan: callback function 21 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Alouan, function22, 22) {
+IMPLEMENT_FUNCTION(Alouan, function22, 22)
 	error("Alouan: callback function 22 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Alouan, function23, 23) {
+IMPLEMENT_FUNCTION(Alouan, function23, 23)
 	error("Alouan: callback function 23 not implemented!");
 }
 

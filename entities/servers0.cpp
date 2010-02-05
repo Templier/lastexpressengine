@@ -77,47 +77,47 @@ Servers0::Servers0(LastExpressEngine *engine) : Entity(engine, kEntityServers0) 
 	ADD_NULL_FUNCTION();
 }
 
-IMPLEMENT_FUNCTION_SIIS(Servers0, function1, 1) {
+IMPLEMENT_FUNCTION_SIIS(Servers0, function1, 1)
 	error("Servers0: callback function 1 not implemented!");
 }
 
-IMPLEMENT_FUNCTION_NOSETUP(Servers0, function2, 2) {
+IMPLEMENT_FUNCTION_NOSETUP(Servers0, function2, 2)
 	error("Servers0: callback function 2 not implemented!");
 }
 
-IMPLEMENT_FUNCTION_S(Servers0, function3, 3) {
+IMPLEMENT_FUNCTION_S(Servers0, function3, 3)
 	error("Servers0: callback function 3 not implemented!");
 }
 
-IMPLEMENT_FUNCTION_NOSETUP(Servers0, function4, 4) {
+IMPLEMENT_FUNCTION_NOSETUP(Servers0, function4, 4)
 	error("Servers0: callback function 4 not implemented!");
 }
 
-IMPLEMENT_FUNCTION_NOSETUP(Servers0, function5, 5) {
+IMPLEMENT_FUNCTION_NOSETUP(Servers0, function5, 5)
 	error("Servers0: callback function 5 not implemented!");
 }
 
-IMPLEMENT_FUNCTION_S(Servers0, function6, 6) {
+IMPLEMENT_FUNCTION_S(Servers0, function6, 6)
 	error("Servers0: callback function 6 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Servers0, function7, 7) {
+IMPLEMENT_FUNCTION(Servers0, function7, 7)
 	error("Servers0: callback function 7 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Servers0, function8, 8) {
+IMPLEMENT_FUNCTION(Servers0, function8, 8)
 	error("Servers0: callback function 8 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Servers0, function9, 9) {
+IMPLEMENT_FUNCTION(Servers0, function9, 9)
 	error("Servers0: callback function 9 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Servers0, function10, 10) {
+IMPLEMENT_FUNCTION(Servers0, function10, 10)
 	error("Servers0: callback function 10 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Servers0, chapter1, 11) {
+IMPLEMENT_FUNCTION(Servers0, chapter1, 11)
 	switch (savepoint->action) {
 	default:
 		break;
@@ -151,51 +151,51 @@ IMPLEMENT_FUNCTION(Servers0, chapter1, 11) {
 	}
 }
 
-IMPLEMENT_FUNCTION(Servers0, function12, 12) {
+IMPLEMENT_FUNCTION(Servers0, function12, 12)
 	error("Servers0: callback function 12 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Servers0, function13, 13) {
+IMPLEMENT_FUNCTION(Servers0, function13, 13)
 	error("Servers0: callback function 13 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Servers0, function14, 14) {
+IMPLEMENT_FUNCTION(Servers0, function14, 14)
 	error("Servers0: callback function 14 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Servers0, function15, 15) {
+IMPLEMENT_FUNCTION(Servers0, function15, 15)
 	error("Servers0: callback function 15 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Servers0, function16, 16) {
+IMPLEMENT_FUNCTION(Servers0, function16, 16)
 	error("Servers0: callback function 16 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Servers0, function17, 17) {
+IMPLEMENT_FUNCTION(Servers0, function17, 17)
 	error("Servers0: callback function 17 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Servers0, function18, 18) {
+IMPLEMENT_FUNCTION(Servers0, function18, 18)
 	error("Servers0: callback function 18 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Servers0, function19, 19) {
+IMPLEMENT_FUNCTION(Servers0, function19, 19)
 	error("Servers0: callback function 19 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Servers0, function20, 20) {
+IMPLEMENT_FUNCTION(Servers0, function20, 20)
 	error("Servers0: callback function 20 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Servers0, function21, 21) {
+IMPLEMENT_FUNCTION(Servers0, function21, 21)
 	error("Servers0: callback function 21 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Servers0, function22, 22) {
+IMPLEMENT_FUNCTION(Servers0, function22, 22)
 	error("Servers0: callback function 22 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Servers0, chapter2, 23) {
+IMPLEMENT_FUNCTION(Servers0, chapter2, 23)
 	switch (savepoint->action) {
 	default:
 		break;
@@ -219,19 +219,19 @@ IMPLEMENT_FUNCTION(Servers0, chapter2, 23) {
 	}
 }
 
-IMPLEMENT_FUNCTION(Servers0, function24, 24) {
+IMPLEMENT_FUNCTION(Servers0, function24, 24)
 	error("Servers0: callback function 24 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Servers0, function25, 25) {
+IMPLEMENT_FUNCTION(Servers0, function25, 25)
 	error("Servers0: callback function 25 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Servers0, function26, 26) {
+IMPLEMENT_FUNCTION(Servers0, function26, 26)
 	error("Servers0: callback function 26 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Servers0, chapter3, 27) {
+IMPLEMENT_FUNCTION(Servers0, chapter3, 27)
 	switch (savepoint->action) {
 	default:
 		break;
@@ -259,19 +259,19 @@ IMPLEMENT_FUNCTION(Servers0, chapter3, 27) {
 	}
 }
 
-IMPLEMENT_FUNCTION(Servers0, function28, 28) {
+IMPLEMENT_FUNCTION(Servers0, function28, 28)
 	error("Servers0: callback function 28 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Servers0, function29, 29) {
+IMPLEMENT_FUNCTION(Servers0, function29, 29)
 	error("Servers0: callback function 29 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Servers0, function30, 30) {
+IMPLEMENT_FUNCTION(Servers0, function30, 30)
 	error("Servers0: callback function 30 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Servers0, chapter4, 31) {
+IMPLEMENT_FUNCTION(Servers0, chapter4, 31)
 	switch (savepoint->action) {
 	default:
 		break;
@@ -299,23 +299,23 @@ IMPLEMENT_FUNCTION(Servers0, chapter4, 31) {
 	}
 }
 
-IMPLEMENT_FUNCTION(Servers0, function32, 32) {
+IMPLEMENT_FUNCTION(Servers0, function32, 32)
 	error("Servers0: callback function 32 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Servers0, function33, 33) {
+IMPLEMENT_FUNCTION(Servers0, function33, 33)
 	error("Servers0: callback function 33 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Servers0, function34, 34) {
+IMPLEMENT_FUNCTION(Servers0, function34, 34)
 	error("Servers0: callback function 34 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Servers0, function35, 35) {
+IMPLEMENT_FUNCTION(Servers0, function35, 35)
 	error("Servers0: callback function 35 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Servers0, chapter5, 36) {
+IMPLEMENT_FUNCTION(Servers0, chapter5, 36)
 	switch (savepoint->action) {
 	default:
 		break;
@@ -335,7 +335,7 @@ IMPLEMENT_FUNCTION(Servers0, chapter5, 36) {
 	}
 }
 
-IMPLEMENT_FUNCTION(Servers0, function37, 37) {
+IMPLEMENT_FUNCTION(Servers0, function37, 37)
 	error("Servers0: callback function 37 not implemented!");
 }
 

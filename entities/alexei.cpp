@@ -87,71 +87,71 @@ Alexei::Alexei(LastExpressEngine *engine) : Entity(engine, kEntityAlexei) {
 	ADD_CALLBACK_FUNCTION(Alexei, chapter5);
 }
 
-IMPLEMENT_FUNCTION(Alexei, function1, 1) {
+IMPLEMENT_FUNCTION(Alexei, function1, 1)
 	error("Alexei: callback function 1 not implemented!");
 }
 
-IMPLEMENT_FUNCTION_S(Alexei, function2, 2) {
+IMPLEMENT_FUNCTION_S(Alexei, function2, 2)
 	error("Alexei: callback function 2 not implemented!");
 }
 
-IMPLEMENT_FUNCTION_I(Alexei, function3, 3) {
+IMPLEMENT_FUNCTION_I(Alexei, function3, 3)
 	error("Alexei: callback function 3 not implemented!");
 }
 
-IMPLEMENT_FUNCTION_S(Alexei, function4, 4) {
+IMPLEMENT_FUNCTION_S(Alexei, function4, 4)
 	error("Alexei: callback function 4 not implemented!");
 }
 
-IMPLEMENT_FUNCTION_SII(Alexei, function5, 5) {
+IMPLEMENT_FUNCTION_SII(Alexei, function5, 5)
 	error("Alexei: callback function 5 not implemented!");
 }
 
-IMPLEMENT_FUNCTION_SI(Alexei, function6, 6) {
+IMPLEMENT_FUNCTION_SI(Alexei, function6, 6)
 	error("Alexei: callback function 6 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Alexei, function7, 7) {
+IMPLEMENT_FUNCTION(Alexei, function7, 7)
 	error("Alexei: callback function 7 not implemented!");
 }
 
-IMPLEMENT_FUNCTION_SIIS(Alexei, function8, 8) {
+IMPLEMENT_FUNCTION_SIIS(Alexei, function8, 8)
 	error("Alexei: callback function 8 not implemented!");
 }
 
-IMPLEMENT_FUNCTION_II(Alexei, function9, 9) {
+IMPLEMENT_FUNCTION_II(Alexei, function9, 9)
 	error("Alexei: callback function 9 not implemented!");
 }
 
-IMPLEMENT_FUNCTION_II(Alexei, function10, 10) {
+IMPLEMENT_FUNCTION_II(Alexei, function10, 10)
 	error("Alexei: callback function 10 not implemented!");
 }
 
-IMPLEMENT_FUNCTION_NOSETUP(Alexei, function11, 11) {
+IMPLEMENT_FUNCTION_NOSETUP(Alexei, function11, 11)
 	error("Alexei: callback function 11 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Alexei, function12, 12) {
+IMPLEMENT_FUNCTION(Alexei, function12, 12)
 	error("Alexei: callback function 12 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Alexei, function13, 13) {
+IMPLEMENT_FUNCTION(Alexei, function13, 13)
 	error("Alexei: callback function 13 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Alexei, function14, 14) {
+IMPLEMENT_FUNCTION(Alexei, function14, 14)
 	error("Alexei: callback function 14 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Alexei, function15, 15) {
+IMPLEMENT_FUNCTION(Alexei, function15, 15)
 	error("Alexei: callback function 15 not implemented!");
 }
 
-IMPLEMENT_FUNCTION_IS(Alexei, function16, 16) {
+IMPLEMENT_FUNCTION_IS(Alexei, function16, 16)
 	error("Alexei: callback function 16 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Alexei, chapter1, 17) {
+IMPLEMENT_FUNCTION(Alexei, chapter1, 17)
 	switch (savepoint->action) {
 	default:
 		break;
@@ -173,47 +173,47 @@ IMPLEMENT_FUNCTION(Alexei, chapter1, 17) {
 	}
 }
 
-IMPLEMENT_FUNCTION(Alexei, function18, 18) {
+IMPLEMENT_FUNCTION(Alexei, function18, 18)
 	error("Alexei: callback function 18 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Alexei, function19, 19) {
+IMPLEMENT_FUNCTION(Alexei, function19, 19)
 	error("Alexei: callback function 19 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Alexei, function20, 20) {
+IMPLEMENT_FUNCTION(Alexei, function20, 20)
 	error("Alexei: callback function 20 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Alexei, function21, 21) {
+IMPLEMENT_FUNCTION(Alexei, function21, 21)
 	error("Alexei: callback function 21 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Alexei, function22, 22) {
+IMPLEMENT_FUNCTION(Alexei, function22, 22)
 	error("Alexei: callback function 22 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Alexei, function23, 23) {
+IMPLEMENT_FUNCTION(Alexei, function23, 23)
 	error("Alexei: callback function 23 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Alexei, function24, 24) {
+IMPLEMENT_FUNCTION(Alexei, function24, 24)
 	error("Alexei: callback function 24 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Alexei, function25, 25) {
+IMPLEMENT_FUNCTION(Alexei, function25, 25)
 	error("Alexei: callback function 25 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Alexei, function26, 26) {
+IMPLEMENT_FUNCTION(Alexei, function26, 26)
 	error("Alexei: callback function 26 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Alexei, function27, 27) {
+IMPLEMENT_FUNCTION(Alexei, function27, 27)
 	error("Alexei: callback function 27 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Alexei, chapter2, 28) {
+IMPLEMENT_FUNCTION(Alexei, chapter2, 28)
 	switch (savepoint->action) {
 	default:
 		break;
@@ -239,19 +239,19 @@ IMPLEMENT_FUNCTION(Alexei, chapter2, 28) {
 	}
 }
 
-IMPLEMENT_FUNCTION(Alexei, function29, 29) {
+IMPLEMENT_FUNCTION(Alexei, function29, 29)
 	error("Alexei: callback function 29 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Alexei, function30, 30) {
+IMPLEMENT_FUNCTION(Alexei, function30, 30)
 	error("Alexei: callback function 30 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Alexei, function31, 31) {
+IMPLEMENT_FUNCTION(Alexei, function31, 31)
 	error("Alexei: callback function 31 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Alexei, chapter3, 32) {
+IMPLEMENT_FUNCTION(Alexei, chapter3, 32)
 	switch (savepoint->action) {
 	default:
 		break;
@@ -276,23 +276,23 @@ IMPLEMENT_FUNCTION(Alexei, chapter3, 32) {
 	}
 }
 
-IMPLEMENT_FUNCTION(Alexei, function33, 33) {
+IMPLEMENT_FUNCTION(Alexei, function33, 33)
 	error("Alexei: callback function 33 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Alexei, function34, 34) {
+IMPLEMENT_FUNCTION(Alexei, function34, 34)
 	error("Alexei: callback function 34 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Alexei, function35, 35) {
+IMPLEMENT_FUNCTION(Alexei, function35, 35)
 	error("Alexei: callback function 35 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Alexei, function36, 36) {
+IMPLEMENT_FUNCTION(Alexei, function36, 36)
 	error("Alexei: callback function 36 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Alexei, chapter4, 37) {
+IMPLEMENT_FUNCTION(Alexei, chapter4, 37)
 	switch (savepoint->action) {
 	default:
 		break;
@@ -317,47 +317,47 @@ IMPLEMENT_FUNCTION(Alexei, chapter4, 37) {
 	}
 }
 
-IMPLEMENT_FUNCTION(Alexei, function38, 38) {
+IMPLEMENT_FUNCTION(Alexei, function38, 38)
 	error("Alexei: callback function 38 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Alexei, function39, 39) {
+IMPLEMENT_FUNCTION(Alexei, function39, 39)
 	error("Alexei: callback function 39 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Alexei, function40, 40) {
+IMPLEMENT_FUNCTION(Alexei, function40, 40)
 	error("Alexei: callback function 40 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Alexei, function41, 41) {
+IMPLEMENT_FUNCTION(Alexei, function41, 41)
 	error("Alexei: callback function 41 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Alexei, function42, 42) {
+IMPLEMENT_FUNCTION(Alexei, function42, 42)
 	error("Alexei: callback function 42 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Alexei, function43, 43) {
+IMPLEMENT_FUNCTION(Alexei, function43, 43)
 	error("Alexei: callback function 43 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Alexei, function44, 44) {
+IMPLEMENT_FUNCTION(Alexei, function44, 44)
 	error("Alexei: callback function 44 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Alexei, function45, 45) {
+IMPLEMENT_FUNCTION(Alexei, function45, 45)
 	error("Alexei: callback function 45 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Alexei, function46, 46) {
+IMPLEMENT_FUNCTION(Alexei, function46, 46)
 	error("Alexei: callback function 46 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Alexei, function47, 47) {
+IMPLEMENT_FUNCTION(Alexei, function47, 47)
 	error("Alexei: callback function 47 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Alexei, chapter5, 48) {
+IMPLEMENT_FUNCTION(Alexei, chapter5, 48)
 	if (savepoint->action == kActionDefault)
 		getEntities()->drawSequences(kEntityAlexei);
 }

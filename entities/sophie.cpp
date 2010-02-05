@@ -77,12 +77,12 @@ Sophie::Sophie(LastExpressEngine *engine) : Entity(engine, kEntitySophie) {
 }
 
 //////////////////////////////////////////////////////////////////////////
-IMPLEMENT_FUNCTION(Sophie, function1, 1) {
+IMPLEMENT_FUNCTION(Sophie, function1, 1)
 	FUNCTION_1_IMPLEMENTATION(kEntitySophie)
 }
 
 //////////////////////////////////////////////////////////////////////////
-IMPLEMENT_FUNCTION_II(Sophie, function2, 2) {
+IMPLEMENT_FUNCTION_II(Sophie, function2, 2)
 	switch (savepoint->action) {
 	default:
 		break;
@@ -131,7 +131,7 @@ IMPLEMENT_FUNCTION_II(Sophie, function2, 2) {
 }
 
 //////////////////////////////////////////////////////////////////////////
-IMPLEMENT_FUNCTION(Sophie, function3, 3) {
+IMPLEMENT_FUNCTION(Sophie, function3, 3)
 	switch (savepoint->action) {
 	default:
 		break;
@@ -203,7 +203,7 @@ IMPLEMENT_FUNCTION(Sophie, function3, 3) {
 }
 
 //////////////////////////////////////////////////////////////////////////
-IMPLEMENT_FUNCTION(Sophie, chapter1, 4) {
+IMPLEMENT_FUNCTION(Sophie, chapter1, 4)
 	switch (savepoint->action) {
 	default:
 		break;
@@ -221,32 +221,32 @@ IMPLEMENT_FUNCTION(Sophie, chapter1, 4) {
 }
 
 //////////////////////////////////////////////////////////////////////////
-IMPLEMENT_FUNCTION(Sophie, function5, 5) {
+IMPLEMENT_FUNCTION(Sophie, function5, 5)
 	DEFAULT_ACTION_IMPLEMENTATION()
 }
 
 //////////////////////////////////////////////////////////////////////////
-IMPLEMENT_FUNCTION(Sophie, chapter2, 6) {
+IMPLEMENT_FUNCTION(Sophie, chapter2, 6)
 	CHAPTER_IMPLEMENTATION()
 }
 
 //////////////////////////////////////////////////////////////////////////
-IMPLEMENT_FUNCTION(Sophie, chapter3, 7) {
+IMPLEMENT_FUNCTION(Sophie, chapter3, 7)
 	CHAPTER_IMPLEMENTATION()
 }
 
 //////////////////////////////////////////////////////////////////////////
-IMPLEMENT_FUNCTION(Sophie, chapter4, 8) {
+IMPLEMENT_FUNCTION(Sophie, chapter4, 8)
 	CHAPTER_IMPLEMENTATION()
 }
 
 //////////////////////////////////////////////////////////////////////////
-IMPLEMENT_FUNCTION(Sophie, function9, 9) {
+IMPLEMENT_FUNCTION(Sophie, function9, 9)
 	DEFAULT_ACTION_IMPLEMENTATION()
 }
 
 //////////////////////////////////////////////////////////////////////////
-IMPLEMENT_FUNCTION(Sophie, chapter5, 10){
+IMPLEMENT_FUNCTION(Sophie, chapter5, 10)
 	switch (savepoint->action) {
 	default:
 		break;
@@ -268,7 +268,7 @@ IMPLEMENT_FUNCTION(Sophie, chapter5, 10){
 }
 
 //////////////////////////////////////////////////////////////////////////
-IMPLEMENT_FUNCTION(Sophie, function11, 11) {
+IMPLEMENT_FUNCTION(Sophie, function11, 11)
 	if (savepoint->action == kAction70549068)
 		setup_nullfunction();
 }

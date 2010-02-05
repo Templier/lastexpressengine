@@ -73,51 +73,51 @@ Pascale::Pascale(LastExpressEngine *engine) : Entity(engine, kEntityPascale) {
 	ADD_NULL_FUNCTION();
 }
 
-IMPLEMENT_FUNCTION_S(Pascale, function1, 1) {
+IMPLEMENT_FUNCTION_S(Pascale, function1, 1)
 	error("Pascale: callback function 1 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Pascale, function2, 2) {
+IMPLEMENT_FUNCTION(Pascale, function2, 2)
 	error("Pascale: callback function 2 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Pascale, function3, 3) {
+IMPLEMENT_FUNCTION(Pascale, function3, 3)
 	error("Pascale: callback function 3 not implemented!");
 }
 
-IMPLEMENT_FUNCTION_I(Pascale, function4, 4) {
+IMPLEMENT_FUNCTION_I(Pascale, function4, 4)
 	error("Pascale: callback function 4 not implemented!");
 }
 
-IMPLEMENT_FUNCTION_NOSETUP(Pascale, function5, 5) {
+IMPLEMENT_FUNCTION_NOSETUP(Pascale, function5, 5)
 	error("Pascale: callback function 5 not implemented!");
 }
 
-IMPLEMENT_FUNCTION_S(Pascale, function6, 6) {
+IMPLEMENT_FUNCTION_S(Pascale, function6, 6)
 	error("Pascale: callback function 6 not implemented!");
 }
 
-IMPLEMENT_FUNCTION_NOSETUP(Pascale, function7, 7) {
+IMPLEMENT_FUNCTION_NOSETUP(Pascale, function7, 7)
 	error("Pascale: callback function 7 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Pascale, function8, 8) {
+IMPLEMENT_FUNCTION(Pascale, function8, 8)
 	error("Pascale: callback function 8 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Pascale, function9, 9) {
+IMPLEMENT_FUNCTION(Pascale, function9, 9)
 	error("Pascale: callback function 9 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Pascale, function10, 10) {
+IMPLEMENT_FUNCTION(Pascale, function10, 10)
 	error("Pascale: callback function 10 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Pascale, function11, 11) {
+IMPLEMENT_FUNCTION(Pascale, function11, 11)
 	error("Pascale: callback function 11 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Pascale, chapter1, 12) {
+IMPLEMENT_FUNCTION(Pascale, chapter1, 12)
 	switch (savepoint->action) {
 	default:
 		break;
@@ -146,35 +146,35 @@ IMPLEMENT_FUNCTION(Pascale, chapter1, 12) {
 	}
 }
 
-IMPLEMENT_FUNCTION(Pascale, function13, 13) {
+IMPLEMENT_FUNCTION(Pascale, function13, 13)
 	error("Pascale: callback function 13 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Pascale, function14, 14) {
+IMPLEMENT_FUNCTION(Pascale, function14, 14)
 	error("Pascale: callback function 14 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Pascale, function15, 15) {
+IMPLEMENT_FUNCTION(Pascale, function15, 15)
 	error("Pascale: callback function 15 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Pascale, function16, 16) {
+IMPLEMENT_FUNCTION(Pascale, function16, 16)
 	error("Pascale: callback function 16 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Pascale, function17, 17) {
+IMPLEMENT_FUNCTION(Pascale, function17, 17)
 	error("Pascale: callback function 17 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Pascale, function18, 18) {
+IMPLEMENT_FUNCTION(Pascale, function18, 18)
 	error("Pascale: callback function 18 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Pascale, function19, 19) {
+IMPLEMENT_FUNCTION(Pascale, function19, 19)
 	error("Pascale: callback function 19 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Pascale, chapter2, 20) {
+IMPLEMENT_FUNCTION(Pascale, chapter2, 20)
 	if (savepoint->action == kActionDefault) {
 		getEntities()->drawSequences(kEntityPascale);
 
@@ -188,7 +188,7 @@ IMPLEMENT_FUNCTION(Pascale, chapter2, 20) {
 	}
 }
 
-IMPLEMENT_FUNCTION(Pascale, chapter3, 21) {
+IMPLEMENT_FUNCTION(Pascale, chapter3, 21)
 	switch (savepoint->action) {
 	default:
 		break;
@@ -211,19 +211,19 @@ IMPLEMENT_FUNCTION(Pascale, chapter3, 21) {
 	}
 }
 
-IMPLEMENT_FUNCTION(Pascale, function22, 22) {
+IMPLEMENT_FUNCTION(Pascale, function22, 22)
 	error("Pascale: callback function 22 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Pascale, function23, 23) {
+IMPLEMENT_FUNCTION(Pascale, function23, 23)
 	error("Pascale: callback function 23 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Pascale, function24, 24) {
+IMPLEMENT_FUNCTION(Pascale, function24, 24)
 	error("Pascale: callback function 24 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Pascale, chapter4, 25) {
+IMPLEMENT_FUNCTION(Pascale, chapter4, 25)
 	switch (savepoint->action) {
 	default:
 		break;
@@ -249,27 +249,27 @@ IMPLEMENT_FUNCTION(Pascale, chapter4, 25) {
 	}
 }
 
-IMPLEMENT_FUNCTION(Pascale, function26, 26) {
+IMPLEMENT_FUNCTION(Pascale, function26, 26)
 	error("Pascale: callback function 26 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Pascale, function27, 27) {
+IMPLEMENT_FUNCTION(Pascale, function27, 27)
 	error("Pascale: callback function 27 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Pascale, function28, 28) {
+IMPLEMENT_FUNCTION(Pascale, function28, 28)
 	error("Pascale: callback function 28 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Pascale, function29, 29) {
+IMPLEMENT_FUNCTION(Pascale, function29, 29)
 	error("Pascale: callback function 29 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Pascale, function30, 30) {
+IMPLEMENT_FUNCTION(Pascale, function30, 30)
 	error("Pascale: callback function 30 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Pascale, chapter5, 31) {
+IMPLEMENT_FUNCTION(Pascale, chapter5, 31)
 	switch (savepoint->action) {
 	default:
 		break;
@@ -289,11 +289,11 @@ IMPLEMENT_FUNCTION(Pascale, chapter5, 31) {
 	}
 }
 
-IMPLEMENT_FUNCTION(Pascale, function32, 32) {
+IMPLEMENT_FUNCTION(Pascale, function32, 32)
 	error("Pascale: callback function 32 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Pascale, function33, 33) {
+IMPLEMENT_FUNCTION(Pascale, function33, 33)
 	error("Pascale: callback function 33 not implemented!");
 }
 

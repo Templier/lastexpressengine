@@ -50,7 +50,7 @@ Train::Train(LastExpressEngine *engine) : Entity(engine, kEntityTrain) {
 	ADD_CALLBACK_FUNCTION(Train, process);
 }
 
-IMPLEMENT_FUNCTION_II(Train, savegame, 1) {
+IMPLEMENT_FUNCTION_II(Train, savegame, 1)
 	switch (savepoint->action) {
 	default:
 		break;
@@ -67,32 +67,32 @@ IMPLEMENT_FUNCTION_II(Train, savegame, 1) {
 	}
 }
 
-IMPLEMENT_FUNCTION(Train, chapter1, 2) {
+IMPLEMENT_FUNCTION(Train, chapter1, 2)
 	if (savepoint->action == kActionDefault)
 		setup_process();
 }
 
-IMPLEMENT_FUNCTION(Train, chapter2, 3) {
+IMPLEMENT_FUNCTION(Train, chapter2, 3)
 	if (savepoint->action == kActionDefault)
 		setup_process();
 }
 
-IMPLEMENT_FUNCTION(Train, chapter3, 4) {
+IMPLEMENT_FUNCTION(Train, chapter3, 4)
 	if (savepoint->action == kActionDefault)
 		setup_process();
 }
 
-IMPLEMENT_FUNCTION(Train, chapter4, 5) {
+IMPLEMENT_FUNCTION(Train, chapter4, 5)
 	if (savepoint->action == kActionDefault)
 		setup_process();
 }
 
-IMPLEMENT_FUNCTION(Train, chapter5, 6) {
+IMPLEMENT_FUNCTION(Train, chapter5, 6)
 	if (savepoint->action == kActionDefault)
 		setup_process();
 }
 
-IMPLEMENT_FUNCTION_II(Train, harem, 7) {
+IMPLEMENT_FUNCTION_II(Train, harem, 7)
 	if (savepoint->action != kActionDefault)
 		return;
 
@@ -134,7 +134,7 @@ IMPLEMENT_FUNCTION_II(Train, harem, 7) {
 	//	return;
 }
 
-IMPLEMENT_FUNCTION(Train, process, 8) {
+IMPLEMENT_FUNCTION(Train, process, 8)
 
 	EntityData::EntityParametersIIIS *parameters1 = (EntityData::EntityParametersIIIS*)_data->getCurrentParameters(1);
 

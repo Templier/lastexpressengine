@@ -53,23 +53,23 @@ Cooks::Cooks(LastExpressEngine *engine) : Entity(engine, kEntityCooks) {
 	ADD_CALLBACK_FUNCTION(Cooks, chapter5);
 }
 
-IMPLEMENT_FUNCTION_S(Cooks, function1, 1) {
+IMPLEMENT_FUNCTION_S(Cooks, function1, 1)
 	error("Cooks: callback function 1 not implemented!");
 }
 
-IMPLEMENT_FUNCTION_S(Cooks, function2, 2) {
+IMPLEMENT_FUNCTION_S(Cooks, function2, 2)
 	error("Cooks: callback function 2 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Cooks, function3, 3) {
+IMPLEMENT_FUNCTION(Cooks, function3, 3)
 	error("Cooks: callback function 3 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Cooks, function4, 4) {
+IMPLEMENT_FUNCTION(Cooks, function4, 4)
 	error("Cooks: callback function 4 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Cooks, chapter1, 5) {
+IMPLEMENT_FUNCTION(Cooks, chapter1, 5)
 	switch (savepoint->action) {
 	default:
 		break;
@@ -89,15 +89,15 @@ IMPLEMENT_FUNCTION(Cooks, chapter1, 5) {
 	}
 }
 
-IMPLEMENT_FUNCTION(Cooks, function6, 6) {
+IMPLEMENT_FUNCTION(Cooks, function6, 6)
 	error("Cooks: callback function 6 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Cooks, function7, 7) {
+IMPLEMENT_FUNCTION(Cooks, function7, 7)
 	error("Cooks: callback function 7 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Cooks, chapter2, 8) {
+IMPLEMENT_FUNCTION(Cooks, chapter2, 8)
 	switch (savepoint->action) {
 	default:
 		break;
@@ -120,11 +120,11 @@ IMPLEMENT_FUNCTION(Cooks, chapter2, 8) {
 	}
 }
 
-IMPLEMENT_FUNCTION(Cooks, function9, 9) {
+IMPLEMENT_FUNCTION(Cooks, function9, 9)
 	error("Cooks: callback function 9 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Cooks, chapter3, 10) {
+IMPLEMENT_FUNCTION(Cooks, chapter3, 10)
 	switch (savepoint->action) {
 	default:
 		break;
@@ -146,11 +146,11 @@ IMPLEMENT_FUNCTION(Cooks, chapter3, 10) {
 	}
 }
 
-IMPLEMENT_FUNCTION(Cooks, function11, 11) {
+IMPLEMENT_FUNCTION(Cooks, function11, 11)
 	error("Cooks: callback function 11 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Cooks, chapter4, 12) {
+IMPLEMENT_FUNCTION(Cooks, chapter4, 12)
 	switch (savepoint->action) {
 	default:
 		break;
@@ -173,11 +173,11 @@ IMPLEMENT_FUNCTION(Cooks, chapter4, 12) {
 	}
 }
 
-IMPLEMENT_FUNCTION(Cooks, function13, 13) {
+IMPLEMENT_FUNCTION(Cooks, function13, 13)
 	error("Cooks: callback function 13 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Cooks, chapter5, 14) {
+IMPLEMENT_FUNCTION(Cooks, chapter5, 14)
 	if (savepoint->action == kActionDefault)
 		getEntities()->drawSequences(kEntityCooks);
 }

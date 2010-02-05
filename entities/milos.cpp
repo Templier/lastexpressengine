@@ -74,51 +74,51 @@ Milos::Milos(LastExpressEngine *engine) : Entity(engine, kEntityMilos) {
 	ADD_CALLBACK_FUNCTION(Milos, function35);
 }
 
-IMPLEMENT_FUNCTION(Milos, function1, 1) {
+IMPLEMENT_FUNCTION(Milos, function1, 1)
 	error("Milos: callback function 1 not implemented!");
 }
 
-IMPLEMENT_FUNCTION_S(Milos, function2, 2) {
+IMPLEMENT_FUNCTION_S(Milos, function2, 2)
 	error("Milos: callback function 2 not implemented!");
 }
 
-IMPLEMENT_FUNCTION_SI(Milos, function3, 3) {
+IMPLEMENT_FUNCTION_SI(Milos, function3, 3)
 	error("Milos: callback function 3 not implemented!");
 }
 
-IMPLEMENT_FUNCTION_SI(Milos, function4, 4) {
+IMPLEMENT_FUNCTION_SI(Milos, function4, 4)
 	error("Milos: callback function 4 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Milos, function5, 5) {
+IMPLEMENT_FUNCTION(Milos, function5, 5)
 	error("Milos: callback function 5 not implemented!");
 }
 
-IMPLEMENT_FUNCTION_S(Milos, function6, 6) {
+IMPLEMENT_FUNCTION_S(Milos, function6, 6)
 	error("Milos: callback function 6 not implemented!");
 }
 
-IMPLEMENT_FUNCTION_S(Milos, function7, 7) {
+IMPLEMENT_FUNCTION_S(Milos, function7, 7)
 	error("Milos: callback function 7 not implemented!");
 }
 
-IMPLEMENT_FUNCTION_II(Milos, function8, 8) {
+IMPLEMENT_FUNCTION_II(Milos, function8, 8)
 	error("Milos: callback function 8 not implemented!");
 }
 
-IMPLEMENT_FUNCTION_I(Milos, function9, 9) {
+IMPLEMENT_FUNCTION_I(Milos, function9, 9)
 	error("Milos: callback function 9 not implemented!");
 }
 
-IMPLEMENT_FUNCTION_II(Milos, function10, 10) {
+IMPLEMENT_FUNCTION_II(Milos, function10, 10)
 	error("Milos: callback function 10 not implemented!");
 }
 
-IMPLEMENT_FUNCTION_I(Milos, function11, 11) {
+IMPLEMENT_FUNCTION_I(Milos, function11, 11)
 	error("Milos: callback function 11 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Milos, chapter1, 12) {
+IMPLEMENT_FUNCTION(Milos, chapter1, 12)
 	switch (savepoint->action) {
 	default:
 		break;
@@ -142,31 +142,31 @@ IMPLEMENT_FUNCTION(Milos, chapter1, 12) {
 	}
 }
 
-IMPLEMENT_FUNCTION(Milos, function13, 13) {
+IMPLEMENT_FUNCTION(Milos, function13, 13)
 	error("Milos: callback function 13 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Milos, function14, 14) {
+IMPLEMENT_FUNCTION(Milos, function14, 14)
 	error("Milos: callback function 14 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Milos, function15, 15) {
+IMPLEMENT_FUNCTION(Milos, function15, 15)
 	error("Milos: callback function 15 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Milos, function16, 16) {
+IMPLEMENT_FUNCTION(Milos, function16, 16)
 	error("Milos: callback function 16 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Milos, function17, 17) {
+IMPLEMENT_FUNCTION(Milos, function17, 17)
 	error("Milos: callback function 17 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Milos, function18, 18) {
+IMPLEMENT_FUNCTION(Milos, function18, 18)
 	error("Milos: callback function 18 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Milos, chapter2, 19) {
+IMPLEMENT_FUNCTION(Milos, chapter2, 19)
 	switch (savepoint->action) {
 	default:
 		break;
@@ -188,15 +188,15 @@ IMPLEMENT_FUNCTION(Milos, chapter2, 19) {
 	}
 }
 
-IMPLEMENT_FUNCTION(Milos, function20, 20) {
+IMPLEMENT_FUNCTION(Milos, function20, 20)
 	error("Milos: callback function 20 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Milos, function21, 21) {
+IMPLEMENT_FUNCTION(Milos, function21, 21)
 	error("Milos: callback function 21 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Milos, chapter3, 22) {
+IMPLEMENT_FUNCTION(Milos, chapter3, 22)
 	switch (savepoint->action) {
 	default:
 		break;
@@ -222,27 +222,27 @@ IMPLEMENT_FUNCTION(Milos, chapter3, 22) {
 	}
 }
 
-IMPLEMENT_FUNCTION(Milos, function23, 23) {
+IMPLEMENT_FUNCTION(Milos, function23, 23)
 	error("Milos: callback function 23 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Milos, function24, 24) {
+IMPLEMENT_FUNCTION(Milos, function24, 24)
 	error("Milos: callback function 24 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Milos, function25, 25) {
+IMPLEMENT_FUNCTION(Milos, function25, 25)
 	error("Milos: callback function 25 not implemented!");
 }
 
-IMPLEMENT_FUNCTION_I(Milos, function26, 26) {
+IMPLEMENT_FUNCTION_I(Milos, function26, 26)
 	error("Milos: callback function 26 not implemented!");
 }
 
-IMPLEMENT_FUNCTION_II(Milos, function27, 27) {
+IMPLEMENT_FUNCTION_II(Milos, function27, 27)
 	error("Milos: callback function 27 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Milos, chapter4, 28) {
+IMPLEMENT_FUNCTION(Milos, chapter4, 28)
 	switch (savepoint->action) {
 	default:
 		break;
@@ -263,23 +263,23 @@ IMPLEMENT_FUNCTION(Milos, chapter4, 28) {
 	}
 }
 
-IMPLEMENT_FUNCTION(Milos, function29, 29) {
+IMPLEMENT_FUNCTION(Milos, function29, 29)
 	error("Milos: callback function 29 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Milos, function30, 30) {
+IMPLEMENT_FUNCTION(Milos, function30, 30)
 	error("Milos: callback function 30 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Milos, function31, 31) {
+IMPLEMENT_FUNCTION(Milos, function31, 31)
 	error("Milos: callback function 31 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Milos, function32, 32) {
+IMPLEMENT_FUNCTION(Milos, function32, 32)
 	error("Milos: callback function 32 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Milos, chapter5, 33) {
+IMPLEMENT_FUNCTION(Milos, chapter5, 33)
 	switch (savepoint->action) {
 	default:
 		break;
@@ -300,11 +300,11 @@ IMPLEMENT_FUNCTION(Milos, chapter5, 33) {
 	}
 }
 
-IMPLEMENT_FUNCTION(Milos, function34, 34) {
+IMPLEMENT_FUNCTION(Milos, function34, 34)
 	error("Milos: callback function 34 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Milos, function35, 35) {
+IMPLEMENT_FUNCTION(Milos, function35, 35)
 	error("Milos: callback function 35 not implemented!");
 }
 
