@@ -109,15 +109,17 @@ Common::Error LastExpressEngine::run() {
 	_logic->startGame();
 
 	while (!shouldQuit()) {
+		// Execute stored commands
+		if (_debugger->hasCommand()) {
+			_debugger->callCommand();
+
+			// re-attach the debugger
+			_debugger->attach();
+		}
+
 		// Show the debugger if required
 		if (_debugger->isAttached()) {
 			_debugger->onFrame();
-			if (_debugger->hasCommand()) {
-				_debugger->callCommand();
-
-				// re-attach the debugger
-				_debugger->attach();
-			}
 		}
 
 		// Handle input
@@ -128,8 +130,7 @@ Common::Error LastExpressEngine::run() {
 			case Common::EVENT_KEYDOWN:
 				// CTRL-D: Attach the debugger
 				if ((ev.kbd.flags & Common::KBD_CTRL) && ev.kbd.keycode == Common::KEYCODE_d)
-					if (!_debugger->isAttached())
-						_debugger->attach();
+					_debugger->attach();
 
 				// DEBUG: Quit game on escape
 				if (ev.kbd.keycode == Common::KEYCODE_ESCAPE)

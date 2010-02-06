@@ -94,6 +94,9 @@ void Debugger::copyCommand(int argc, const char **argv) {
 		strcpy(command_params[i], "");
 		strcpy(command_params[i], argv[i]);
 	}
+
+	// Exit the debugger!
+	Cmd_Exit(0, 0);
 }
 
 void Debugger::callCommand() {
