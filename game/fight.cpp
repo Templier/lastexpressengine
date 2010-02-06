@@ -53,6 +53,14 @@ Fight::~Fight() {
 //////////////////////////////////////////////////////////////////////////
 
 void Fight::eventMouseClick(Common::Event ev) {
+	if (_data->field_C)
+		return;
+
+	getFlags()->flag_5 = false;
+	getFlags()->shouldRedraw = false;
+	getFlags()->flag_2 = false;
+
+
 	_data->isRunning = false;
 }
 
@@ -318,11 +326,8 @@ void Fight::loadData(FightType type) {
 	if (!_data->player || !_data->opponent)
 		error("Fight::loadData - error loading fight data (type=%d)", type);
 
-	if (!setOpponentAndCheckSequences()) {
-		bailout(false);
-		goto end_load;
-	}
-
+	//////////////////////////////////////////////////////////////////////////
+	// Start running the fight
 	_data->isRunning = true;
 
 	if (_state < 5) {
@@ -352,24 +357,9 @@ void Fight::loadData(FightType type) {
 		break;
 	}
 
-
-
 end_load:
 	// TODO set unknown flag to 0
 	return;
-}
-
-bool Fight::setOpponentAndCheckSequences() {
-
-	// Set opponent
-	_data->player->opponent = _data->opponent;
-	_data->opponent->opponent = _data->player;
-
-	// Check sequence count
-	if (_data->player->sequences.size() != _data->opponent->sequences.size())
-		return false;	
-		
-	return true;
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -408,28 +398,134 @@ void Fight::loadMilosOpponent() {
 // Anna
 //////////////////////////////////////////////////////////////////////////
 
-void Fight::loadAnnaPlayer() {}
-void Fight::loadAnnaOpponent() {}
+void Fight::loadAnnaPlayer() {
+	// TODO set function pointer
+
+	_data->player->sequences.push_back(newSequence("2002cr.seq"));
+	_data->player->sequences.push_back(newSequence("2002cdl.seq"));
+	_data->player->sequences.push_back(newSequence("2002cdr.seq"));
+	_data->player->sequences.push_back(newSequence("2002cdm.seq"));
+	_data->player->sequences.push_back(newSequence("2002lbk.seq"));
+}
+
+void Fight::loadAnnaOpponent() {
+	// TODO set function pointer
+
+	_data->opponent->sequences.push_back(newSequence("2002or.seq"));
+	_data->opponent->sequences.push_back(newSequence("2002oal.seq"));
+	_data->opponent->sequences.push_back(newSequence("2002oam.seq"));
+	_data->opponent->sequences.push_back(newSequence("2002oar.seq"));
+	_data->opponent->sequences.push_back(newSequence("2002okr.seq"));
+	_data->opponent->sequences.push_back(newSequence("2002okml.seq"));	
+	_data->opponent->sequences.push_back(newSequence("2002okm.seq"));
+
+	getSound()->playSound(kEntityTables0, "MUS030", 16);
+
+	_data->opponent->field_38 = 30;
+}
 
 //////////////////////////////////////////////////////////////////////////
 // Ivo
 //////////////////////////////////////////////////////////////////////////
 
-void Fight::loadIvoPlayer() {}
-void Fight::loadIvoOpponent() {}
+void Fight::loadIvoPlayer() {
+	// TODO set function pointer
+
+	_data->player->sequences.push_back(newSequence("2003cr.seq"));
+	_data->player->sequences.push_back(newSequence("2003car.seq"));
+	_data->player->sequences.push_back(newSequence("2003cal.seq"));
+	_data->player->sequences.push_back(newSequence("2003cdr.seq"));
+	_data->player->sequences.push_back(newSequence("2003cdm.seq"));
+	_data->player->sequences.push_back(newSequence("2003chr.seq"));
+	_data->player->sequences.push_back(newSequence("2003chl.seq"));
+	_data->player->sequences.push_back(newSequence("2003ckr.seq"));
+	_data->player->sequences.push_back(newSequence("2003lbk.seq"));
+	_data->player->sequences.push_back(newSequence("2003fbk.seq"));
+
+	_data->player->field_30 = 5;
+}
+
+void Fight::loadIvoOpponent() {
+	// TODO set function pointer
+
+	_data->opponent->sequences.push_back(newSequence("2003or.seq"));
+	_data->opponent->sequences.push_back(newSequence("2003oal.seq"));
+	_data->opponent->sequences.push_back(newSequence("2003oar.seq"));
+	_data->opponent->sequences.push_back(newSequence("2003odm.seq"));
+	_data->opponent->sequences.push_back(newSequence("2003okl.seq"));
+	_data->opponent->sequences.push_back(newSequence("2003okj.seq"));
+	_data->opponent->sequences.push_back(newSequence("blank.seq"));
+	_data->opponent->sequences.push_back(newSequence("csdr.seq"));
+	_data->opponent->sequences.push_back(newSequence("2003l.seq"));	
+
+	getSound()->playSound(kEntityTables0, "MUS032", 16);
+
+	_data->opponent->field_30 = 5;
+	_data->opponent->field_38 = 15;
+}
 
 //////////////////////////////////////////////////////////////////////////
 // Salko
 //////////////////////////////////////////////////////////////////////////
 
-void Fight::loadSalkoPlayer() {}
-void Fight::loadSalkoOpponent() {}
+void Fight::loadSalkoPlayer() {
+	// TODO set function pointer
+
+	_data->player->sequences.push_back(newSequence("2004cr.seq"));
+	_data->player->sequences.push_back(newSequence("2004cdr.seq"));
+	_data->player->sequences.push_back(newSequence("2004chj.seq"));
+	_data->player->sequences.push_back(newSequence("2004bk.seq"));
+
+	_data->player->field_30 = 2;
+}
+
+void Fight::loadSalkoOpponent() {
+	// TODO set function pointer
+
+	_data->opponent->sequences.push_back(newSequence("2004or.seq"));
+	_data->opponent->sequences.push_back(newSequence("2004oam.seq"));
+	_data->opponent->sequences.push_back(newSequence("2004oar.seq"));
+	_data->opponent->sequences.push_back(newSequence("2004okr.seq"));
+	_data->opponent->sequences.push_back(newSequence("2004ohm.seq"));
+	_data->opponent->sequences.push_back(newSequence("blank.seq"));
+
+	getSound()->playSound(kEntityTables0, "MUS035", 16);
+
+	_data->opponent->field_30 = 3;
+	_data->opponent->field_38 = 30;
+}
 
 //////////////////////////////////////////////////////////////////////////
 // Vesna
 //////////////////////////////////////////////////////////////////////////
 
-void Fight::loadVesnaPlayer() {}
-void Fight::loadVesnaOpponent() {}
+void Fight::loadVesnaPlayer() {
+	// TODO set function pointer
+
+	_data->player->sequences.push_back(newSequence("2005cr.seq"));
+	_data->player->sequences.push_back(newSequence("2005cdr.seq"));
+	_data->player->sequences.push_back(newSequence("2005cbr.seq"));
+	_data->player->sequences.push_back(newSequence("2005bk.seq"));
+	_data->player->sequences.push_back(newSequence("2005cdm1.seq"));
+	_data->player->sequences.push_back(newSequence("2005chl.seq"));
+}
+
+void Fight::loadVesnaOpponent() {
+	// TODO set function pointer
+
+	_data->opponent->sequences.push_back(newSequence("2005or.seq"));
+	_data->opponent->sequences.push_back(newSequence("2005oam.seq"));
+	_data->opponent->sequences.push_back(newSequence("2005oar.seq"));
+	_data->opponent->sequences.push_back(newSequence("2005okml.seq"));
+	_data->opponent->sequences.push_back(newSequence("2005okr.seq"));
+	_data->opponent->sequences.push_back(newSequence("2005odm1.seq"));
+	_data->opponent->sequences.push_back(newSequence("2005csbm.seq"));
+	_data->opponent->sequences.push_back(newSequence("2005oam4.seq"));
+
+	getSound()->playSound(kEntityTables0, "MUS038", 16);
+
+	_data->opponent->field_30 = 4;
+	_data->opponent->field_38 = 30;
+}
 
 } // End of namespace LastExpress

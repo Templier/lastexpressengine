@@ -156,6 +156,11 @@ private:
 		FightData() {
 			player = new FightCombatant();
 			opponent = new FightOpponent();
+
+			// Set opponents
+			player->opponent = opponent;
+			opponent->opponent = player;
+
 			field_C = 0;
 
 			isRunning = false;
@@ -183,7 +188,6 @@ private:
 
 	// Loading
 	void loadData(FightType type);
-	bool setOpponentAndCheckSequences();
 
 	void loadMilosPlayer();
 	void loadMilosOpponent();
