@@ -313,7 +313,7 @@ label_skip:
 
 		case 5:
 			getAction()->playAnimation(kEventLocomotiveConductorsDiscovered);
-			getLogic()->gameOver(kTimeType0, 1, kSceneGameOver63, true);
+			getLogic()->gameOver(kTimeType0, 1, kSceneGameOverPolice, true);
 			break;
 
 		case 6:

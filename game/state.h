@@ -227,6 +227,7 @@ public:
 		bool flag_2;
 		bool flag_3;
 		bool shouldRedraw;
+		bool flag_5;
 
 		bool flag_entities_0;
 		bool flag_entities_1;
@@ -239,6 +240,7 @@ public:
 			flag_2 = false;
 			flag_3 = false;
 			shouldRedraw = false;
+			flag_5 = false;
 
 			flag_entities_0 = false;
 			flag_entities_1 = false;

@@ -84,8 +84,8 @@ enum SceneIndexes {
 	kSceneFightVesna          = 48,
 	kSceneGameOverBloodJacket = 55,
 	kSceneGameOverAlarm       = 62,
-	kSceneGameOver63          = 63,
-	kSceneGameOver64          = 64,
+	kSceneGameOverPolice      = 63,
+	kSceneGameOverAlarm2      = 64,
 	kSceneMenu                = 65,
 	kSceneFightDefault        = 820
 };
