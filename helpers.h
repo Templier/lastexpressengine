@@ -66,6 +66,8 @@
 //////////////////////////////////////////////////////////////////////////
 // Graphics
 //////////////////////////////////////////////////////////////////////////
+#define newSequence(name) new Sequence(_engine->getResourceManager()->getFileStream(name))
+
 #define clearBg(type) _engine->getGraphicsManager()->clear(type)
 #define showScene(index, type) { loadSceneObject(s, index); _engine->getGraphicsManager()->draw(&s, type); }
 

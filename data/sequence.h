@@ -128,7 +128,7 @@ private:
 
 class Sequence {
 public:
-	Sequence();
+	Sequence(Common::SeekableReadStream *stream = NULL);
 	~Sequence();
 
 	bool load(Common::SeekableReadStream *stream);

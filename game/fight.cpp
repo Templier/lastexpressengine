@@ -38,6 +38,7 @@
 #include "lastexpress/graphics.h"
 #include "lastexpress/helpers.h"
 #include "lastexpress/lastexpress.h"
+#include "lastexpress/resource.h"
 
 namespace LastExpress {
 
@@ -48,7 +49,23 @@ Fight::~Fight() {
 }
 
 //////////////////////////////////////////////////////////////////////////
-// Public methods
+// Events
+//////////////////////////////////////////////////////////////////////////
+
+void Fight::eventMouseClick(Common::Event ev) {
+	_data->isRunning = false;
+}
+
+void Fight::eventMouseMove(Common::Event ev) {
+	handleMouseMove(ev, true);
+}
+
+void Fight::handleMouseMove(Common::Event ev, bool isProcessing) {
+
+}
+
+//////////////////////////////////////////////////////////////////////////
+// Setup
 //////////////////////////////////////////////////////////////////////////
 
 bool Fight::setup(FightType type) {
@@ -113,6 +130,9 @@ bool Fight::setup(FightType type) {
 
 	// Draw the scene
 	_engine->getGraphicsManager()->draw(&scene, GraphicsManager::kBackgroundC);
+	// FIXME move to start of fight?
+	askForRedraw();
+	redrawScreen();
 
 	//////////////////////////////////////////////////////////////////////////
 	// Setup the fight	
@@ -150,6 +170,9 @@ bool Fight::setup(FightType type) {
 			}
 
 			g_engine->_system->delayMillis(10);
+			// FIXME Temporary
+			askForRedraw();
+			redrawScreen();
 		}		
 	}	
 
@@ -159,13 +182,23 @@ bool Fight::setup(FightType type) {
 	return _hasLost;
 }
 
+//////////////////////////////////////////////////////////////////////////
+// Status
+//////////////////////////////////////////////////////////////////////////
+
 void Fight::setStopped() {
 	if (_data)
 		_data->isRunning = false;
 }
 
+void Fight::bailout(bool hasLost) {
+	_state = 0;
+	_hasLost = hasLost;
+	setStopped();
+}
+
 //////////////////////////////////////////////////////////////////////////
-// Private methods
+// Cleanup
 //////////////////////////////////////////////////////////////////////////
 
 void Fight::clear() {
@@ -195,26 +228,208 @@ void Fight::clearSequences(FightCombatant *combatant) {
 		delete combatant->sequences[i];
 }
 
+//////////////////////////////////////////////////////////////////////////
+// Drawing
+//////////////////////////////////////////////////////////////////////////
+
+void Fight::setSequenceAndDraw(FightCombatant *combatant, uint32 sequenceIndex, FightSequenceType type) {	
+	if (combatant->sequences.size() < sequenceIndex)
+		return;
+
+	switch (type) {
+	default:
+		break;
+
+	case kFightSequenceType0:
+		if (combatant->sequenceIndex)
+			return;
+
+		combatant->currentSequence = combatant->sequences[sequenceIndex];
+		combatant->sequenceIndex = sequenceIndex;
+		draw(combatant);
+		break;
+
+	case kFightSequenceType1:
+		combatant->currentSequence = combatant->sequences[sequenceIndex];
+		combatant->sequenceIndex = sequenceIndex;
+		combatant->sequenceIndex2 = 0;
+		draw(combatant);
+		break;
+
+	case kFightSequenceType2:
+		combatant->sequenceIndex2 = sequenceIndex;
+		break;
+	}	
+}
+
+void Fight::draw(FightCombatant *combatant) {
+	Sequence* sequence = combatant->currentSequence2;
+
+	if (!sequence)
+		return;
+
+	//////////////////////////////////////////////////////////////////////////
+	// TODO redo to call drawSequence shared function?
+	AnimFrame *frame = sequence->getFrame(0);
+	_engine->getGraphicsManager()->draw(frame, GraphicsManager::kBackgroundOverlay);
+	delete frame;
+	//////////////////////////////////////////////////////////////////////////
+
+	combatant->field_20 = 0;
+	combatant->field_24 = 0;
+}
+
+//////////////////////////////////////////////////////////////////////////
+// Loading
+//////////////////////////////////////////////////////////////////////////
 
 void Fight::loadData(FightType type) {
 
+	switch (type) {
+	default:
+		break;
+
+	case kFightMilos:
+		loadMilosPlayer();
+		loadMilosOpponent();
+		break;
+
+	case kFightAnna:
+		loadAnnaPlayer();
+		loadAnnaOpponent();
+		break;
+
+	case kFightIvo:
+		loadIvoPlayer();
+		loadIvoOpponent();
+		break;
+
+	case kFightSalko:
+		loadSalkoPlayer();
+		loadSalkoOpponent();
+		break;
+
+	case kFightVesna:
+		loadVesnaPlayer();
+		loadVesnaOpponent();
+		break;
+	}
+
+	if (!_data->player || !_data->opponent)
+		error("Fight::loadData - error loading fight data (type=%d)", type);
+
+	if (!setOpponentAndCheckSequences()) {
+		bailout(false);
+		goto end_load;
+	}
+
+	_data->isRunning = true;
+
+	if (_state < 5) {
+		setSequenceAndDraw(_data->player, 0, kFightSequenceType0);
+		setSequenceAndDraw(_data->opponent, 0, kFightSequenceType0);
+		goto end_load;		
+	}
+
+	switch(type) {
+	case kFightMilos:
+		_data->opponent->field_30 = 1;
+		setSequenceAndDraw(_data->player, 4, kFightSequenceType0);
+		setSequenceAndDraw(_data->opponent, 0, kFightSequenceType0);
+		break;
+
+	case kFightIvo:
+		_data->opponent->field_30 = 1;
+		setSequenceAndDraw(_data->player, 3, kFightSequenceType0);
+		setSequenceAndDraw(_data->opponent, 6, kFightSequenceType0);
+		break;
+
+	case kFightVesna:
+		_data->opponent->field_30 = 1;
+		setSequenceAndDraw(_data->player, 0, kFightSequenceType0);
+		setSequenceAndDraw(_data->player, 3, kFightSequenceType2);
+		setSequenceAndDraw(_data->opponent, 5, kFightSequenceType0);
+		break;
+	}
+
+
+
+end_load:
+	// TODO set unknown flag to 0
+	return;
+}
+
+bool Fight::setOpponentAndCheckSequences() {
+
+	// Set opponent
+	_data->player->opponent = _data->opponent;
+	_data->opponent->opponent = _data->player;
+
+	// Check sequence count
+	if (_data->player->sequences.size() != _data->opponent->sequences.size())
+		return false;	
+		
+	return true;
 }
 
 //////////////////////////////////////////////////////////////////////////
-// Events
+// Milos
 //////////////////////////////////////////////////////////////////////////
 
-void Fight::eventMouseClick(Common::Event ev) {
+void Fight::loadMilosPlayer() {	
+	// TODO set function pointer
 
+	_data->player->sequences.push_back(newSequence("2001cr.seq"));
+	_data->player->sequences.push_back(newSequence("2001cdl.seq"));
+	_data->player->sequences.push_back(newSequence("2001cdr.seq"));
+	_data->player->sequences.push_back(newSequence("2001cdm.seq"));
+	_data->player->sequences.push_back(newSequence("2001csgr.seq"));
+	_data->player->sequences.push_back(newSequence("2001csgl.seq"));
+	_data->player->sequences.push_back(newSequence("2001dbk.seq"));
 }
 
-void Fight::eventMouseMove(Common::Event ev) {
-	handleMouseMove(ev, true);
+void Fight::loadMilosOpponent() {
+	// TODO set function pointer
+
+	_data->opponent->sequences.push_back(newSequence("2001or.seq"));
+	_data->opponent->sequences.push_back(newSequence("2001oal.seq"));
+	_data->opponent->sequences.push_back(newSequence("2001oam.seq"));
+	_data->opponent->sequences.push_back(newSequence("2001okl.seq"));
+	_data->opponent->sequences.push_back(newSequence("2001okm.seq"));
+	_data->opponent->sequences.push_back(newSequence("2001dbk.seq"));
+	_data->opponent->sequences.push_back(newSequence("2001wbk.seq"));
+
+	getSound()->playSound(kEntityTables0, "MUS027", 16);
+
+	_data->opponent->field_38 = 35;
 }
 
-void Fight::handleMouseMove(Common::Event ev, bool isProcessing) {
+//////////////////////////////////////////////////////////////////////////
+// Anna
+//////////////////////////////////////////////////////////////////////////
 
-}
+void Fight::loadAnnaPlayer() {}
+void Fight::loadAnnaOpponent() {}
 
+//////////////////////////////////////////////////////////////////////////
+// Ivo
+//////////////////////////////////////////////////////////////////////////
+
+void Fight::loadIvoPlayer() {}
+void Fight::loadIvoOpponent() {}
+
+//////////////////////////////////////////////////////////////////////////
+// Salko
+//////////////////////////////////////////////////////////////////////////
+
+void Fight::loadSalkoPlayer() {}
+void Fight::loadSalkoOpponent() {}
+
+//////////////////////////////////////////////////////////////////////////
+// Vesna
+//////////////////////////////////////////////////////////////////////////
+
+void Fight::loadVesnaPlayer() {}
+void Fight::loadVesnaOpponent() {}
 
 } // End of namespace LastExpress

@@ -29,7 +29,11 @@
 /*
 	Fight structure
 	---------------
+	uint32 {4}      - player struct
+	uint32 {4}      - opponent struct
+	uint32 {4}      - hasLost flag
 
+	byte {1}        - isRunning
 
 	Fight participant structure
 	---------------------------
@@ -77,39 +81,120 @@ public:
 
 	void setStopped();
 
-private:
+	int getState() { return _state; }
+
+private:	
+	enum FightSequenceType {
+		kFightSequenceType0 = 0,
+		kFightSequenceType1 = 1,
+		kFightSequenceType2 = 2
+	};
+
+	enum FightAction {
+		kFightAction101 = 101,
+		kFightAction102 = 102,
+		kFightAction103 = 103
+	};
+
 	struct FightCombatant {
 		// Function pointer
 		//FightData *fight;
-		//FightCombatant* opponent;
+		FightCombatant* opponent;
 		Common::Array<Sequence *> sequences;
-		// sequences_count
+		uint32 sequenceIndex;
+		Sequence *currentSequence;
+		Sequence *currentSequence2;
+		uint32 field_20;
+		uint32 field_24;
+		FightAction action;
+		uint32 sequenceIndex2;
+		int32 field_30;
+		uint16 field_34;
 
+		FightCombatant() {
+			// TODO init function pointer to NULL
+			//fight = NULL;
+			opponent = NULL;
+
+			action = kFightAction101;
+
+			currentSequence = NULL;
+			currentSequence2 = NULL;
+
+			field_20 = 0;
+			field_24 = 0;
+
+			sequenceIndex = 0;
+			sequenceIndex2 = 0;
+
+			field_30 = 1;
+
+			field_34 = 0;
+		}
 	};
 
+	// Opponent struct
 	struct FightOpponent : FightCombatant {
-		
+		uint16 field_36;
+		uint32 field_38;
+
+		FightOpponent() : FightCombatant() {
+			field_36 = 0;
+			field_38 = 0;
+		}
 	};
 
 	struct FightData {
 		FightCombatant *player;
-		FightCombatant *opponent;
-		//bool hasLost;
+		FightOpponent *opponent;
+		int32 field_C;
+
+
 
 		bool isRunning;
+
+		FightData() {
+			player = new FightCombatant();
+			opponent = new FightOpponent();
+			field_C = 0;
+
+			isRunning = false;
+		}
 	};
 
 	LastExpressEngine* _engine;
 	FightData *_data;
 	bool _hasLost;
+	int _state;
 
-
-	void loadData(FightType type);
-
+	// Events
 	void handleMouseMove(Common::Event ev, bool unknown);
+
+	// State
+	void bailout(bool hasLost);
+
+	// Drawing
+	void setSequenceAndDraw(FightCombatant *combatant, uint32 sequenceIndex, FightSequenceType type);
+	void draw(FightCombatant *combatant);
 	
+	// Cleanup
 	void clear();
 	void clearSequences(FightCombatant *combatant);
+
+	// Loading
+	void loadData(FightType type);
+	bool setOpponentAndCheckSequences();
+
+	void loadMilosPlayer();
+	void loadMilosOpponent();
+	void loadAnnaPlayer();
+	void loadAnnaOpponent();
+	void loadIvoPlayer();
+	void loadIvoOpponent();
+	void loadSalkoPlayer();
+	void loadSalkoOpponent();
+	void loadVesnaPlayer();
+	void loadVesnaOpponent();
 
 };
 
