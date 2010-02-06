@@ -121,7 +121,7 @@ IMPLEMENT_FUNCTION(Alouan, function11, 11)
 	error("Alouan: callback function 11 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Alouan, function12, 12) 
+IMPLEMENT_FUNCTION(Alouan, function12, 12)
 	error("Alouan: callback function 12 not implemented!");
 }
 

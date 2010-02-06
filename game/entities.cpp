@@ -398,7 +398,7 @@ Entity *Entities::get(EntityIndex entity) {
 EntityData *Entities::getData(EntityIndex entity) {
 	assert((uint)entity < _entities.size());
 
-	if (entity == 0)
+	if (entity == kEntityNone)
 		return _header;
 
 	return _entities[entity]->getData();

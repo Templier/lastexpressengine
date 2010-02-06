@@ -451,7 +451,25 @@ bool Debugger::cmd_fight(int argc, const char **argv) {
 		if (type < kFightMilos || type > kFightVesna)
 			goto error;
 
-		getFight()->setup(type) ? DebugPrintf("Lost fight!\n") : DebugPrintf("Won fight!\n");
+
+		// Store command
+		if (!hasCommand()) {
+			command = WRAP_METHOD(Debugger, cmd_fight);
+			copyCommand(argc, argv);
+
+			return false;
+		} else {
+			clearBg(GraphicsManager::kBackgroundAll);
+			askForRedraw();
+			redrawScreen();
+
+			getFight()->setup(type) ? DebugPrintf("Lost fight!\n") : DebugPrintf("Won fight!\n");
+
+			// Pause for a second to be able to see the final scene
+			_engine->_system->delayMillis(1000);
+
+			resetCommand();
+		}
 	} else {
 error:
 		DebugPrintf("Syntax: fight <id> (id=2001-2005)\n");

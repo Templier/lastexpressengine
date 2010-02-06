@@ -89,8 +89,9 @@ bool Cursor::setStyle(CursorStyle style) {
 
 	// Reuse the screen pixel format
 	Graphics::PixelFormat pf = g_system->getScreenFormat();
-	CursorMan.replaceCursor((const byte *)getCursorImage(_current), 32, 32,
-		_cursors[_current].hotspotX, _cursors[_current].hotspotY, 0, 1, &pf);
+	CursorMan.replaceCursor((const byte *)getCursorImage(style),
+	                        32, 32, _cursors[style].hotspotX, _cursors[style].hotspotY,
+	                        0, 1, &pf);
 
 	return true;
 }
