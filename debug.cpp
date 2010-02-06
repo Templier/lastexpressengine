@@ -374,13 +374,24 @@ bool Debugger::cmd_loadscene(int argc, const char **argv) {
 			return false;
 		} else {
 
-			// TODO check for cd and load the proper data file in the fly (and restore after)
-
+			// Check for cd and load the proper data file in the fly
+			// instead of relying on the engine scene manager which could have
+			// loaded a different cd
+			SceneManager *_sceneMan = new SceneManager();
+			if (!_sceneMan->load(_engine->getResourceManager()->getFileStream(Common::String::printf("CD%iTRAIN.DAT", cd)))) {
+				DebugPrintf("Cannot load data for CD %i", cd);
+				resetCommand();
+				return true;
+			}
+			
 			clearBg(GraphicsManager::kBackgroundAll);
 
 			Scene s;
-			if (!_engine->getSceneManager()->loadScene(&s, index))
+			if (!_sceneMan->loadScene(&s, index)) {
 				DebugPrintf("Cannot load scene %i from CD %i", index, cd);
+				resetCommand();
+				return true;
+			}
 
 			_engine->getGraphicsManager()->draw(&s, GraphicsManager::kBackgroundC);
 
@@ -389,6 +400,8 @@ bool Debugger::cmd_loadscene(int argc, const char **argv) {
 
 			// Pause for a second to be able to see the scene
 			_engine->_system->delayMillis(1000);
+
+			delete _sceneMan;
 
 			resetCommand();
 		}
