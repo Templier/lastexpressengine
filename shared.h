@@ -74,13 +74,20 @@ enum ChapterIndex {
 typedef unsigned int SceneIndex;
 
 enum SceneIndexes {
-	kSceneNone = 0,
-	kSceneDefault = 40,
+	kSceneNone                = 0,
+	kSceneDefault             = 40,
+	kSceneFightMilos          = 43,
+	kSceneFightMilosBedOpened = 44,
+	kSceneFightAnna           = 45,
+	kSceneFightIvo            = 46,
+	kSceneFightSalko          = 47,
+	kSceneFightVesna          = 48,
 	kSceneGameOverBloodJacket = 55,
-	kSceneGameOver62 = 62,
-	kSceneGameOver63 = 63,
-	kSceneGameOver64 = 64,
-	kSceneMenu = 65
+	kSceneGameOverAlarm       = 62,
+	kSceneGameOver63          = 63,
+	kSceneGameOver64          = 64,
+	kSceneMenu                = 65,
+	kSceneFightDefault        = 820
 };
 
 //////////////////////////////////////////////////////////////////////////
@@ -192,6 +199,17 @@ enum EntityDirection {
 	kDirectionLeft = 3,
 	kDirectionRight = 4,
 	kDirection5 = 5
+};
+
+//////////////////////////////////////////////////////////////////////////
+// Combat
+//////////////////////////////////////////////////////////////////////////
+enum FightType {
+	kFightMilos = 2001,
+	kFightAnna = 2002,
+	kFightIvo = 2003,
+	kFightSalko = 2004,
+	kFightVesna = 2005
 };
 
 //////////////////////////////////////////////////////////////////////////

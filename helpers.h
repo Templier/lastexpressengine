@@ -35,6 +35,7 @@
 // Logic
 #define getAction() getLogic()->getGameAction()
 #define getBeetle() getLogic()->getGameBeetle()
+#define getFight() getLogic()->getGameFight()
 #define getEntities() getLogic()->getGameEntities()
 #define getSound() getLogic()->getGameSound()
 #define getSaveLoad() getLogic()->getGameSaveLoad()

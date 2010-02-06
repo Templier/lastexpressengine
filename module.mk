@@ -48,6 +48,7 @@ MODULE_OBJS := \
 	game/action.o \
 	game/beetle.o \
 	game/entities.o \
+	game/fight.o \
 	game/inventory.o \
 	game/logic.o \
 	game/menu.o \

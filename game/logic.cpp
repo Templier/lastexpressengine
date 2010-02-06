@@ -35,6 +35,7 @@
 #include "lastexpress/game/action.h"
 #include "lastexpress/game/beetle.h"
 #include "lastexpress/game/entities.h"
+#include "lastexpress/game/fight.h"
 #include "lastexpress/game/inventory.h"
 #include "lastexpress/game/menu.h"
 #include "lastexpress/game/object.h"
@@ -54,6 +55,7 @@ Logic::Logic(LastExpressEngine *engine) : _engine(engine), _currentScene(NULL) {
 	_action   = new Action(engine);
 	_beetle   = new Beetle(engine);
 	_entities = new Entities(engine);
+	_fight    = new Fight(engine);
 	_menu     = new Menu(engine);
 	_saveload = new SaveLoad(engine);
 	_sound    = new Sound(engine);
@@ -63,6 +65,7 @@ Logic::Logic(LastExpressEngine *engine) : _engine(engine), _currentScene(NULL) {
 Logic::~Logic() {
 	delete _action;
 	delete _beetle;
+	delete _fight;
 	delete _currentScene;
 	delete _entities;
 	delete _menu;
@@ -670,16 +673,16 @@ void Logic::postProcessScene() {
 
 		playSfxStream("LIB050");
 		switch (getProgress().chapter) {
+		default:
+			gameOver(kTimeType0, 0, kSceneGameOver63, true);
+			break;
+
 		case kChapter1:
-			gameOver(kTimeType0, 0, kSceneGameOver62, true);
+			gameOver(kTimeType0, 0, kSceneGameOverAlarm, true);
 			break;
 
 		case kChapter4:
 			gameOver(kTimeType0, 0, kSceneGameOver64, true);
-			break;
-
-		default:
-			gameOver(kTimeType0, 0, kSceneGameOver63, true);
 			break;
 		}
 		break;

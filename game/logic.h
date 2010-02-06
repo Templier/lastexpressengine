@@ -37,6 +37,7 @@ class LastExpressEngine;
 class Action;
 class Beetle;
 class Entities;
+class Fight;
 class Menu;
 class SaveLoad;
 class Scene;
@@ -81,12 +82,13 @@ public:
 	GameId getGameId() { return _runState.gameId; }
 	CursorStyle getCursorStyle() { return _runState.cursorStyle; }
 
-	Action 	   *getGameAction() { return _action; }
-	Beetle     *getGameBeetle() { return _beetle; }
+	Action 	   *getGameAction()   { return _action; }
+	Beetle     *getGameBeetle()   { return _beetle; }
 	Entities   *getGameEntities() { return _entities; }
+	Fight      *getGameFight()    { return _fight; }
 	SaveLoad   *getGameSaveLoad() { return _saveload; }
-	Sound 	   *getGameSound() { return _sound; }
-	State      *getGameState() { return _state; }
+	Sound 	   *getGameSound()    { return _sound; }
+	State      *getGameState()    { return _state; }
 
 private:
 
@@ -119,6 +121,7 @@ private:
 	Action   *_action;          ///< Actions
 	Beetle   *_beetle;          ///< Beetle catching
 	Entities *_entities;        ///< Entities
+	Fight    *_fight;           ///< Fight handling
 	Menu     *_menu;            ///< Main menu handling
 	SaveLoad *_saveload;        ///< Save & loading
 	Scene    *_currentScene;    ///< Current scene

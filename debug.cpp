@@ -34,6 +34,7 @@
 #include "lastexpress/data/snd.h"
 #include "lastexpress/data/subtitle.h"
 
+#include "lastexpress/game/fight.h"
 #include "lastexpress/game/logic.h"
 #include "lastexpress/game/savegame.h"
 #include "lastexpress/game/sound.h"
@@ -60,6 +61,7 @@ Debugger::Debugger(LastExpressEngine *engine) : _engine(engine) {
 	DCmd_Register("clear",     WRAP_METHOD(Debugger, cmd_clear));
 	DCmd_Register("listfiles", WRAP_METHOD(Debugger, cmd_listfiles));
 	DCmd_Register("loadgame",  WRAP_METHOD(Debugger, cmd_loadgame));
+	DCmd_Register("fight",     WRAP_METHOD(Debugger, cmd_fight));
 
 	resetCommand();
 }
@@ -437,6 +439,22 @@ bool Debugger::cmd_loadgame(int argc, const char **argv) {
 	} else {
 error:
 		DebugPrintf("Syntax: loadgame <id> (id=1-6)\n");
+	}
+
+	return true;
+}
+
+bool Debugger::cmd_fight(int argc, const char **argv) {
+	if (argc == 2) {
+		FightType type = (FightType)getNumber(argv[1]);
+
+		if (type < kFightMilos || type > kFightVesna)
+			goto error;
+
+		getFight()->setup(type) ? DebugPrintf("Lost fight!\n") : DebugPrintf("Won fight!\n");
+	} else {
+error:
+		DebugPrintf("Syntax: fight <id> (id=2001-2005)\n");
 	}
 
 	return true;
