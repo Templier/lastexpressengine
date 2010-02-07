@@ -159,7 +159,7 @@ IMPLEMENT_FUNCTION_S(Mertens, function8, 8)
 }
 
 IMPLEMENT_FUNCTION_II(Mertens, savegame, 9)
-	CALL_SAVEGAME()
+	SAVEGAME()
 }
 
 IMPLEMENT_FUNCTION_II(Mertens, function10, 10)

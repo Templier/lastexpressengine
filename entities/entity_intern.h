@@ -30,6 +30,8 @@ namespace LastExpress {
 
 #include "common/func.h"
 
+#include "lastexpress/entities/entity_functions.h"
+
 //////////////////////////////////////////////////////////////////////////
 // Callbacks
 #define ENTITY_CALLBACK(class, name, pointer) \
@@ -353,84 +355,6 @@ namespace LastExpress {
 
 #define END_SETUP() \
 		_engine->getGameLogic()->getGameState()->getGameSavePoints()->call(_entityIndex, _entityIndex, kActionDefault);
-
-
-//////////////////////////////////////////////////////////////////////////
-// Function logic
-#define FUNCTION_1_IMPLEMENTATION() \
-	switch (savepoint->action) { \
-	default: \
-		break; \
-	case kActionNone: \
-		if (getEntities()->checkEntity(_entityIndex, EntityData::kField495_3, (EntityData::Field491Value)CURRENT_PARAM(1))) \
-			CURRENT_PARAM(1) = (CURRENT_PARAM(1) == 10000) ? 0 : 10000; \
-		break; \
-	case kActionDefault:  \
-		_data->getData()->field_491 = EntityData::kField491_0; \
-		_data->getData()->field_493 = EntityData::kField493_0; \
-		_data->getData()->field_495 = EntityData::kField495_3; \
-		CURRENT_PARAM(1) = 10000; \
-		break; \
-	}
-
-#define CALL_CHAPTER_ACTION_NONE(id) \
-	CALL_CHAPTER_ACTION(id, kTimeChapter1)
-
-#define CALL_CHAPTER_ACTION(id, timeValue) \
-	if (getState()->time > timeValue) { \
-		if (!CURRENT_PARAM(1)) { \
-			CURRENT_PARAM(1) = 1; \
-			setup_function##id(); \
-		} \
-	}
-
-#define CALL_PREVIOUS_SAVEPOINT() { \
-	_data->getData()->current_call--; \
-	getSavePoints()->setCallback(_entityIndex, _callbacks[_data->getCurrentCallback()]); \
-	getSavePoints()->call(_entityIndex, _entityIndex, kAction18); \
-	}
-
-#define CALL_SAVEGAME() \
-	switch (savepoint->action) { \
-	default: \
-		break; \
-	case kActionNone: \
-		CALL_PREVIOUS_SAVEPOINT() \
-		break; \
-	case kActionDefault: \
-		save(_entityIndex, params->param1, (EventIndex)params->param2); \
-		CALL_PREVIOUS_SAVEPOINT() \
-		break; \
-	}
-
-#define UPDATE_PARAM_FROM_TIME(param1, param2) \
-	if (CURRENT_PARAM(param1)) { \
-		if (CURRENT_PARAM(param1) > (int)getState()->time) \
-			break; \
-		CURRENT_PARAM(param1) = EntityData::kParamTime; \
-	} else { \
-		CURRENT_PARAM(param1) = CURRENT_PARAM(param2) + getState()->time; \
-	} \
-
-#define UPDATE_PARAM_FROM_TICKS(param1, param2) \
-	if (CURRENT_PARAM(param1)) { \
-		if (CURRENT_PARAM(param1) > (int)getState()->timeTicks) \
-			break; \
-		CURRENT_PARAM(param1) = EntityData::kParamTime; \
-	} else { \
-		CURRENT_PARAM(param1) = CURRENT_PARAM(param2) + getState()->timeTicks; \
-	} \
-
-//////////////////////////////////////////////////////////////////////////
-// Parameters macros (for default IIII parameters)
-#define CURRENT_PARAM(id) \
-	((EntityData::EntityParametersIIII*)_data->getCurrentParameters())->param##id
-
-#define CURRENT_PARAMS(index, id) \
-	((EntityData::EntityParametersIIII*)_data->getCurrentParameters(index))->param##id
-
-#define ENTITY_PARAM(index, id) \
-	((EntityData::EntityParametersIIII*)_data->getParameters(8, index))->param##id
 
 //////////////////////////////////////////////////////////////////////////
 // Functors class for setup functions

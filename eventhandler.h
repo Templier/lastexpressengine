@@ -35,7 +35,7 @@ public:
 	virtual ~EventHandler() {}
 
 	virtual void eventMouseClick(Common::Event ev) {};    // Event type 1
-	virtual void eventMouseMove(Common::Event ev) {};     // Event type 3	
+	virtual void eventMouseMove(Common::Event ev) {};     // Event type 3
 };
 
 } // End of namespace LastExpress

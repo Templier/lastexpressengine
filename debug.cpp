@@ -383,7 +383,7 @@ bool Debugger::cmd_loadscene(int argc, const char **argv) {
 				resetCommand();
 				return true;
 			}
-			
+
 			clearBg(GraphicsManager::kBackgroundAll);
 
 			Scene s;

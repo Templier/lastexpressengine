@@ -41,8 +41,8 @@ namespace LastExpress {
 
 Max::Max(LastExpressEngine *engine) : Entity(engine, kEntityMax) {
 	ADD_CALLBACK_FUNCTION(Max, function1);
-	ADD_CALLBACK_FUNCTION(Max, function2);
-	ADD_CALLBACK_FUNCTION(Max, function3);
+	ADD_CALLBACK_FUNCTION(Max, playSound);
+	ADD_CALLBACK_FUNCTION(Max, passingRight);
 	ADD_CALLBACK_FUNCTION(Max, function4);
 	ADD_CALLBACK_FUNCTION(Max, savegame);
 	ADD_CALLBACK_FUNCTION(Max, function6);
@@ -61,61 +61,24 @@ Max::Max(LastExpressEngine *engine) : Entity(engine, kEntityMax) {
 }
 
 IMPLEMENT_FUNCTION(Max, function1, 1)
-	FUNCTION_1_IMPLEMENTATION()
+	FUNCTION1()
 }
 
-IMPLEMENT_FUNCTION_S(Max, function2, 2)
-	switch (savepoint->action) {
-	default:
-		break;
-
-	case kAction2:
-		CALL_PREVIOUS_SAVEPOINT()
-		break;
-
-	case kActionDefault:
-		getSound()->playSound(kEntityMax, params->seq1, -1 , 0);
-		break;
-	}
+IMPLEMENT_FUNCTION_S(Max, playSound, 2)
+	PLAYSOUND()
 }
 
-IMPLEMENT_FUNCTION_NOSETUP(Max, function3, 3)
+IMPLEMENT_FUNCTION_NOSETUP(Max, passingRight, 3)
 	EntityData::EntityParametersSIIS *params = (EntityData::EntityParametersSIIS*)_data->getCurrentParameters();
-
-	switch (savepoint->action) {
-	default:
-		break;
-
-	case kAction3:
-		CALL_PREVIOUS_SAVEPOINT()
-		break;
-
-	case kActionDefault:
-		getEntities()->drawSequenceRight(kEntityMax, params->seq1);
-		break;
-	}
+	PASSING_RIGHT()
 }
 
 IMPLEMENT_FUNCTION_SI(Max, function4, 4)
-	switch (savepoint->action) {
-	default:
-		break;
-
-	case kAction3:
-		getEntities()->updateFields1(kEntityMax, (EntityIndex)params->param2);
-
-		CALL_PREVIOUS_SAVEPOINT()
-		break;
-
-	case kActionDefault:
-		getEntities()->drawSequenceRight(kEntityMax, params->seq1);
-		getEntities()->updateFields0(kEntityMax, (EntityIndex)params->param2);
-		break;
-	}
+	UPDATE_FIELDS()
 }
 
 IMPLEMENT_FUNCTION_II(Max, savegame, 5)
-	CALL_SAVEGAME()
+	SAVEGAME()
 }
 
 IMPLEMENT_FUNCTION(Max, function6, 6)
@@ -166,7 +129,7 @@ IMPLEMENT_FUNCTION(Max, function7, 7)
 		getObjects()->update(kObject53, kEntityMax, kLocation1, kCursorNormal, kCursorNormal);
 
 		_data->setNextCallback((savepoint->action == kAction8) ? 1 : 2);
-		call(new ENTITY_SETUP(Max, setup_function2, const char*, int, int, const char*), (savepoint->action == kAction8) ? "LIB012" : "LIB013");
+		call(new ENTITY_SETUP(Max, setup_playSound, const char*, int, int, const char*), (savepoint->action == kAction8) ? "LIB012" : "LIB013");
 		break;
 
 	case kActionDefault:
@@ -194,7 +157,7 @@ IMPLEMENT_FUNCTION(Max, function7, 7)
 		case 1:
 		case 2:
 			_data->setNextCallback(3);
-			call(new ENTITY_SETUP(Max, setup_function2, const char*, int, int, const char*), "Max1122");
+			call(new ENTITY_SETUP(Max, setup_playSound, const char*, int, int, const char*), "Max1122");
 			break;
 
 		case 3:

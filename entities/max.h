@@ -38,8 +38,8 @@ public:
 	Max(LastExpressEngine *engine);
 
 	DECLARE_FUNCTION(function1)
-	DECLARE_FUNCTION_S(function2)
-	DECLARE_FUNCTION_NOSETUP(function3)
+	DECLARE_FUNCTION_S(playSound)
+	DECLARE_FUNCTION_NOSETUP(passingRight)
 	DECLARE_FUNCTION_SI(function4)
 	DECLARE_FUNCTION_II(savegame)
 	DECLARE_FUNCTION(function6)

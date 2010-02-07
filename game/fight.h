@@ -77,13 +77,13 @@ public:
 	bool setup(FightType type);
 
 	void eventMouseClick(Common::Event ev);
-	void eventMouseMove(Common::Event ev);	
+	void eventMouseMove(Common::Event ev);
 
 	void setStopped();
 
 	int getState() { return _state; }
 
-private:	
+private:
 	enum FightSequenceType {
 		kFightSequenceType0 = 0,
 		kFightSequenceType1 = 1,
@@ -181,7 +181,7 @@ private:
 	// Drawing
 	void setSequenceAndDraw(FightCombatant *combatant, uint32 sequenceIndex, FightSequenceType type);
 	void draw(FightCombatant *combatant);
-	
+
 	// Cleanup
 	void clear();
 	void clearSequences(FightCombatant *combatant);

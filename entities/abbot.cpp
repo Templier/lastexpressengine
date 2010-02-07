@@ -40,14 +40,14 @@ namespace LastExpress {
 
 Abbot::Abbot(LastExpressEngine *engine) : Entity(engine, kEntityAbbot) {
 	ADD_CALLBACK_FUNCTION(Abbot, function1);
-	ADD_CALLBACK_FUNCTION(Abbot, function2);
+	ADD_CALLBACK_FUNCTION(Abbot, passingRight);
 	ADD_CALLBACK_FUNCTION(Abbot, function3);
 	ADD_CALLBACK_FUNCTION(Abbot, function4);
 	ADD_CALLBACK_FUNCTION(Abbot, function5);
-	ADD_CALLBACK_FUNCTION(Abbot, function6);
+	ADD_CALLBACK_FUNCTION(Abbot, crossing);
 	ADD_CALLBACK_FUNCTION(Abbot, function7);
-	ADD_CALLBACK_FUNCTION(Abbot, function8);
-	ADD_CALLBACK_FUNCTION(Abbot, function9);
+	ADD_CALLBACK_FUNCTION(Abbot, updateFromTicks);
+	ADD_CALLBACK_FUNCTION(Abbot, playSound);
 	ADD_CALLBACK_FUNCTION(Abbot, savegame);
 	ADD_CALLBACK_FUNCTION(Abbot, function11);
 	ADD_CALLBACK_FUNCTION(Abbot, function12);
@@ -95,39 +95,15 @@ Abbot::Abbot(LastExpressEngine *engine) : Entity(engine, kEntityAbbot) {
 }
 
 IMPLEMENT_FUNCTION(Abbot, function1, 1)
-	FUNCTION_1_IMPLEMENTATION()
+	FUNCTION1()
 }
 
-IMPLEMENT_FUNCTION_S(Abbot, function2, 2)
-	switch (savepoint->action) {
-	default:
-		break;
-
-	case kAction3:
-		CALL_PREVIOUS_SAVEPOINT()
-		break;
-
-	case kActionDefault:
-		getEntities()->drawSequenceRight(kEntityAbbot, params->seq1);
-		break;
-	}
+IMPLEMENT_FUNCTION_S(Abbot, passingRight, 2)
+	PASSING_RIGHT()
 }
 
 IMPLEMENT_FUNCTION_SI(Abbot, function3, 3)
-	switch (savepoint->action) {
-	default:
-		break;
-
-	case kAction3:
-		getEntities()->updateFields1(kEntityAbbot, (EntityIndex)params->param2);
-		CALL_PREVIOUS_SAVEPOINT()
-		break;
-
-	case kActionDefault:
-		getEntities()->drawSequenceRight(kEntityAbbot, params->seq1);
-		getEntities()->updateFields0(kEntityAbbot, (EntityIndex)params->param2);
-		break;
-	}
+	UPDATE_FIELDS()
 }
 
 IMPLEMENT_FUNCTION_SI(Abbot, function4, 4)
@@ -159,35 +135,11 @@ IMPLEMENT_FUNCTION_SI(Abbot, function4, 4)
 }
 
 IMPLEMENT_FUNCTION(Abbot, function5, 5)
-	switch (savepoint->action) {
-	default:
-		break;
-
-	case kAction3:		
-		CALL_PREVIOUS_SAVEPOINT()
-		break;
-
-	case kActionDefault:
-		if (_data->getData()->direction != kDirectionRight)
-			CALL_PREVIOUS_SAVEPOINT()
-		break;
-	}
+	SAVEPOINT_NOTRIGHT()
 }
 
-IMPLEMENT_FUNCTION_SSI(Abbot, function6, 6)
-	switch (savepoint->action) {
-	default:
-		break;
-
-	case kAction3:		
-		CALL_PREVIOUS_SAVEPOINT()
-		break;
-
-	case kActionDefault:
-		getEntities()->drawSequenceRight(kEntityAbbot, params->seq1);
-		getEntities()->drawSequenceRight((EntityIndex)params->param3, params->seq2);
-		break;
-	}
+IMPLEMENT_FUNCTION_SSI(Abbot, crossing, 6)
+	CROSSING()
 }
 
 IMPLEMENT_FUNCTION_I(Abbot, function7, 7)
@@ -202,35 +154,16 @@ IMPLEMENT_FUNCTION_I(Abbot, function7, 7)
 	}
 }
 
-IMPLEMENT_FUNCTION_I(Abbot, function8, 8)
-	switch (savepoint->action) {
-	default:
-		break;
-
-	case kActionNone:
-		UPDATE_PARAM_FROM_TICKS(2, 1)
-		CALL_PREVIOUS_SAVEPOINT()
-		break;
-	}
+IMPLEMENT_FUNCTION_I(Abbot, updateFromTicks, 8)
+	UPDATE_FROMTICKS()
 }
 
-IMPLEMENT_FUNCTION_S(Abbot, function9, 9)
-	switch (savepoint->action) {
-	default:
-		break;
-
-	case kAction2:		
-		CALL_PREVIOUS_SAVEPOINT()
-		break;
-
-	case kActionDefault:
-		getSound()->playSound(kEntityAbbot, params->seq1);
-		break;
-	}
+IMPLEMENT_FUNCTION_S(Abbot, playSound, 9)
+	PLAYSOUND()
 }
 
 IMPLEMENT_FUNCTION_II(Abbot, savegame, 10)
-	CALL_SAVEGAME()
+	SAVEGAME()
 }
 
 IMPLEMENT_FUNCTION_II(Abbot, function11, 11)
@@ -270,7 +203,7 @@ IMPLEMENT_FUNCTION_SIIS(Abbot, function12, 12)
 	default:
 		break;
 
-	case kAction3:		
+	case kAction3:
 		if (!CURRENT_PARAMS(1, 1))
 			getSavePoints()->call(kEntityAbbot, (EntityIndex)params->param2, (ActionIndex)params->param3, params->seq2);
 
@@ -291,33 +224,11 @@ IMPLEMENT_FUNCTION_SIIS(Abbot, function12, 12)
 }
 
 IMPLEMENT_FUNCTION_SII(Abbot, function13, 13)
-	switch (savepoint->action) {
-	default:
-		break;
-
-	case kAction3:		
-		getEntities()->updateField1000(kEntityAbbot, params->param2, params->param3);
-		CALL_PREVIOUS_SAVEPOINT()
-		break;
-
-	case kActionDefault:
-		getEntities()->drawSequenceRight(kEntityAbbot, params->seq1);
-		getEntities()->updateField1000(kEntityAbbot, params->param2, params->param3);
-		break;
-	}
+	UPDATE_FIELD1000()
 }
 
 IMPLEMENT_FUNCTION(Abbot, function14, 14)
-	switch (savepoint->action) {
-	default:
-		break;
-
-	case kActionNone:		
-	case kActionDefault:
-		if (getEntities()->checkFields11())
-			CALL_PREVIOUS_SAVEPOINT()
-		break;
-	}
+	SAVEPOINT_CHECKFIELDS11()
 }
 
 IMPLEMENT_FUNCTION(Abbot, chapter1, 15)

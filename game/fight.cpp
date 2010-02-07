@@ -86,7 +86,7 @@ bool Fight::setup(FightType type) {
 	getInventory()->showHourGlass(true);
 	// TODO events function
 	// TODO global var
-	getFlags()->flag_0 = 0;	
+	getFlags()->flag_0 = 0;
 	getFlags()->flag_2 = 0;
 	getEntities()->reset();
 
@@ -143,7 +143,7 @@ bool Fight::setup(FightType type) {
 	redrawScreen();
 
 	//////////////////////////////////////////////////////////////////////////
-	// Setup the fight	
+	// Setup the fight
 	_data = new FightData();
 	if (!_data)
 		error("Fight::setup - cannot create fight data structure!");
@@ -181,8 +181,8 @@ bool Fight::setup(FightType type) {
 			// FIXME Temporary
 			askForRedraw();
 			redrawScreen();
-		}		
-	}	
+		}
+	}
 
 	// Cleanup after fight is over
 	clear();
@@ -240,7 +240,7 @@ void Fight::clearSequences(FightCombatant *combatant) {
 // Drawing
 //////////////////////////////////////////////////////////////////////////
 
-void Fight::setSequenceAndDraw(FightCombatant *combatant, uint32 sequenceIndex, FightSequenceType type) {	
+void Fight::setSequenceAndDraw(FightCombatant *combatant, uint32 sequenceIndex, FightSequenceType type) {
 	if (combatant->sequences.size() < sequenceIndex)
 		return;
 
@@ -267,7 +267,7 @@ void Fight::setSequenceAndDraw(FightCombatant *combatant, uint32 sequenceIndex, 
 	case kFightSequenceType2:
 		combatant->sequenceIndex2 = sequenceIndex;
 		break;
-	}	
+	}
 }
 
 void Fight::draw(FightCombatant *combatant) {
@@ -333,7 +333,7 @@ void Fight::loadData(FightType type) {
 	if (_state < 5) {
 		setSequenceAndDraw(_data->player, 0, kFightSequenceType0);
 		setSequenceAndDraw(_data->opponent, 0, kFightSequenceType0);
-		goto end_load;		
+		goto end_load;
 	}
 
 	switch(type) {
@@ -366,7 +366,7 @@ end_load:
 // Milos
 //////////////////////////////////////////////////////////////////////////
 
-void Fight::loadMilosPlayer() {	
+void Fight::loadMilosPlayer() {
 	// TODO set function pointer
 
 	_data->player->sequences.push_back(newSequence("2001cr.seq"));
@@ -416,7 +416,7 @@ void Fight::loadAnnaOpponent() {
 	_data->opponent->sequences.push_back(newSequence("2002oam.seq"));
 	_data->opponent->sequences.push_back(newSequence("2002oar.seq"));
 	_data->opponent->sequences.push_back(newSequence("2002okr.seq"));
-	_data->opponent->sequences.push_back(newSequence("2002okml.seq"));	
+	_data->opponent->sequences.push_back(newSequence("2002okml.seq"));
 	_data->opponent->sequences.push_back(newSequence("2002okm.seq"));
 
 	getSound()->playSound(kEntityTables0, "MUS030", 16);
@@ -456,7 +456,7 @@ void Fight::loadIvoOpponent() {
 	_data->opponent->sequences.push_back(newSequence("2003okj.seq"));
 	_data->opponent->sequences.push_back(newSequence("blank.seq"));
 	_data->opponent->sequences.push_back(newSequence("csdr.seq"));
-	_data->opponent->sequences.push_back(newSequence("2003l.seq"));	
+	_data->opponent->sequences.push_back(newSequence("2003l.seq"));
 
 	getSound()->playSound(kEntityTables0, "MUS032", 16);
 

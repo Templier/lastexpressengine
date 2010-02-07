@@ -67,7 +67,7 @@ Chapters::Chapters(LastExpressEngine *engine) : Entity(engine, kEntityChapters) 
 }
 
 IMPLEMENT_FUNCTION_II(Chapters, savegame, 1)
-	CALL_SAVEGAME()
+	SAVEGAME()
 }
 
 IMPLEMENT_FUNCTION_SI(Chapters, function2, 2)

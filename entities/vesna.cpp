@@ -71,7 +71,7 @@ Vesna::Vesna(LastExpressEngine *engine) : Entity(engine, kEntityVesna) {
 }
 
 IMPLEMENT_FUNCTION(Vesna, function1, 1)
-	FUNCTION_1_IMPLEMENTATION()
+	FUNCTION1()
 }
 
 IMPLEMENT_FUNCTION_S(Vesna, function2, 2)
