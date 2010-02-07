@@ -25,9 +25,12 @@
 
 #include "lastexpress/entities/abbot.h"
 
+#include "lastexpress/game/action.h"
 #include "lastexpress/game/entities.h"
 #include "lastexpress/game/logic.h"
+#include "lastexpress/game/savegame.h"
 #include "lastexpress/game/savepoint.h"
+#include "lastexpress/game/sound.h"
 #include "lastexpress/game/state.h"
 
 #include "lastexpress/helpers.h"
@@ -45,7 +48,7 @@ Abbot::Abbot(LastExpressEngine *engine) : Entity(engine, kEntityAbbot) {
 	ADD_CALLBACK_FUNCTION(Abbot, function7);
 	ADD_CALLBACK_FUNCTION(Abbot, function8);
 	ADD_CALLBACK_FUNCTION(Abbot, function9);
-	ADD_CALLBACK_FUNCTION(Abbot, function10);
+	ADD_CALLBACK_FUNCTION(Abbot, savegame);
 	ADD_CALLBACK_FUNCTION(Abbot, function11);
 	ADD_CALLBACK_FUNCTION(Abbot, function12);
 	ADD_CALLBACK_FUNCTION(Abbot, function13);
@@ -92,59 +95,229 @@ Abbot::Abbot(LastExpressEngine *engine) : Entity(engine, kEntityAbbot) {
 }
 
 IMPLEMENT_FUNCTION(Abbot, function1, 1)
-	error("Abbot: callback function 1 not implemented!");
+	FUNCTION_1_IMPLEMENTATION(kEntityAbbot)
 }
 
 IMPLEMENT_FUNCTION_S(Abbot, function2, 2)
-	error("Abbot: callback function 2 not implemented!");
+	switch (savepoint->action) {
+	default:
+		break;
+
+	case kAction3:
+		CALL_PREVIOUS_SAVEPOINT(kEntityAbbot)
+		break;
+
+	case kActionDefault:
+		getEntities()->drawSequenceRight(kEntityAbbot, params->seq1);
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION_SI(Abbot, function3, 3)
-	error("Abbot: callback function 3 not implemented!");
+	switch (savepoint->action) {
+	default:
+		break;
+
+	case kAction3:
+		getEntities()->updateFields1(kEntityAbbot, (EntityIndex)params->param2);
+		CALL_PREVIOUS_SAVEPOINT(kEntityAbbot)
+		break;
+
+	case kActionDefault:
+		getEntities()->drawSequenceRight(kEntityAbbot, params->seq1);
+		getEntities()->updateFields0(kEntityAbbot, (EntityIndex)params->param2);
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION_SI(Abbot, function4, 4)
-	error("Abbot: callback function 4 not implemented!");
+	switch (savepoint->action) {
+	default:
+		break;
+
+	case kAction3:
+		getEntities()->updateFields1(kEntityAbbot, (EntityIndex)params->param2);
+		_data->getData()->field_491 = EntityData::kField491_6470;
+		_data->getData()->field_493 = EntityData::kField493_1;
+
+		CALL_PREVIOUS_SAVEPOINT(kEntityAbbot)
+		break;
+
+	case kActionDefault:
+		getEntities()->drawSequenceRight(kEntityAbbot, params->seq1);
+		getEntities()->updateFields0(kEntityAbbot, (EntityIndex)params->param2);
+
+		_data->getData()->field_493 = EntityData::kField493_1;
+		if (getEntities()->checkFields1(kEntityNone, EntityData::kField495_4, EntityData::kField491_6470)
+		 || getEntities()->checkFields1(kEntityNone, EntityData::kField495_4, EntityData::kField491_6130)) {
+			getAction()->playAnimation(isDay() ? kEventCathTurningDay : kEventCathTurningNight);
+			getSound()->playSound(kEntityNone, "BUMP");
+			getLogic()->loadSceneFromObject2(kObjectCompartmentC);
+		}
+		break;
+	}
 }
 
-IMPLEMENT_FUNCTION_I(Abbot, function5, 5)
-	error("Abbot: callback function 5 not implemented!");
+IMPLEMENT_FUNCTION(Abbot, function5, 5)
+	switch (savepoint->action) {
+	default:
+		break;
+
+	case kAction3:		
+		CALL_PREVIOUS_SAVEPOINT(kEntityAbbot)
+		break;
+
+	case kActionDefault:
+		if (_data->getData()->direction != kDirectionRight)
+			CALL_PREVIOUS_SAVEPOINT(kEntityAbbot)
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION_SSI(Abbot, function6, 6)
-	error("Abbot: callback function 6 not implemented!");
+	switch (savepoint->action) {
+	default:
+		break;
+
+	case kAction3:		
+		CALL_PREVIOUS_SAVEPOINT(kEntityAbbot)
+		break;
+
+	case kActionDefault:
+		getEntities()->drawSequenceRight(kEntityAbbot, params->seq1);
+		getEntities()->drawSequenceRight((EntityIndex)params->param3, params->seq2);
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION_I(Abbot, function7, 7)
-	error("Abbot: callback function 7 not implemented!");
+	switch (savepoint->action) {
+	default:
+		break;
+
+	case kActionNone:
+		UPDATE_PARAM_FROM_TIME(2, 1)
+		CALL_PREVIOUS_SAVEPOINT(kEntityAbbot)
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION_I(Abbot, function8, 8)
-	error("Abbot: callback function 8 not implemented!");
+	switch (savepoint->action) {
+	default:
+		break;
+
+	case kActionNone:
+		UPDATE_PARAM_FROM_TICKS(2, 1)
+		CALL_PREVIOUS_SAVEPOINT(kEntityAbbot)
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION_S(Abbot, function9, 9)
-	error("Abbot: callback function 9 not implemented!");
+	switch (savepoint->action) {
+	default:
+		break;
+
+	case kAction2:		
+		CALL_PREVIOUS_SAVEPOINT(kEntityAbbot)
+		break;
+
+	case kActionDefault:
+		getSound()->playSound(kEntityAbbot, params->seq1);
+		break;
+	}
 }
 
-IMPLEMENT_FUNCTION_II(Abbot, function10, 10)
-	error("Abbot: callback function 10 not implemented!");
+IMPLEMENT_FUNCTION_II(Abbot, savegame, 10)
+	CALL_SAVEGAME(kEntityAbbot)
 }
 
 IMPLEMENT_FUNCTION_II(Abbot, function11, 11)
-	error("Abbot: callback function 11 not implemented!");
+	switch (savepoint->action) {
+	default:
+		break;
+
+	case kActionNone:
+		if (getEntities()->checkEntity(kEntityAbbot, (EntityData::Field495Value)params->param1, (EntityData::Field491Value)params->param2))
+			CALL_PREVIOUS_SAVEPOINT(kEntityAbbot)
+		break;
+
+	case kAction5:
+		if (getEntities()->checkFields4(EntityData::kField495_3, 18) || getEntities()->checkFields4(EntityData::kField495_4, 18)) {
+			getSound()->excuseMe(kEntityAbbot);
+		} else {
+			if (getEvent(kEventAbbotIntroduction))
+				getSound()->playSound(kEntityNone, "CAT1013");
+			else
+				getSound()->excuseMeCath();
+		}
+		break;
+
+	case kAction6:
+		getSound()->excuseMe(kEntityAbbot);
+		break;
+
+	case kActionDefault:
+		if (getEntities()->checkEntity(kEntityAbbot, (EntityData::Field495Value)params->param1, (EntityData::Field491Value)params->param2))
+			CALL_PREVIOUS_SAVEPOINT(kEntityAbbot)
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION_SIIS(Abbot, function12, 12)
-	error("Abbot: callback function 12 not implemented!");
+	switch (savepoint->action) {
+	default:
+		break;
+
+	case kAction3:		
+		if (!CURRENT_PARAMS(1, 1))
+			getSavePoints()->call(kEntityAbbot, (EntityIndex)params->param2, (ActionIndex)params->param3, params->seq2);
+
+		CALL_PREVIOUS_SAVEPOINT(kEntityAbbot)
+		break;
+
+	case kAction10:
+		if (!CURRENT_PARAMS(1, 1)) {
+			getSavePoints()->call(kEntityAbbot, (EntityIndex)params->param2, (ActionIndex)params->param3, params->seq2);
+			CURRENT_PARAMS(1, 1) = 1;
+		}
+		break;
+
+	case kActionDefault:
+		getEntities()->drawSequenceRight(kEntityAbbot, params->seq1);
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION_SII(Abbot, function13, 13)
-	error("Abbot: callback function 13 not implemented!");
+	switch (savepoint->action) {
+	default:
+		break;
+
+	case kAction3:		
+		getEntities()->updateField1000(kEntityAbbot, params->param2, params->param3);
+		CALL_PREVIOUS_SAVEPOINT(kEntityAbbot)
+		break;
+
+	case kActionDefault:
+		getEntities()->drawSequenceRight(kEntityAbbot, params->seq1);
+		getEntities()->updateField1000(kEntityAbbot, params->param2, params->param3);
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Abbot, function14, 14)
-	error("Abbot: callback function 14 not implemented!");
+	switch (savepoint->action) {
+	default:
+		break;
+
+	case kActionNone:		
+	case kActionDefault:
+		if (getEntities()->checkFields11())
+			CALL_PREVIOUS_SAVEPOINT(kEntityAbbot)
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Abbot, chapter1, 15)

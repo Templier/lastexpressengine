@@ -181,14 +181,7 @@ IMPLEMENT_FUNCTION_I(Mertens, function11, 11)
 				break;
 		}
 
-		if (CURRENT_PARAM(2)) {
-			if (CURRENT_PARAM(2)  > (int)getState()->time)
-				break;
-
-			CURRENT_PARAM(2) = EntityData::kParamTime;
-		} else {
-			CURRENT_PARAM(2) = CURRENT_PARAM(1) + getState()->time;
-		}
+		UPDATE_PARAM_FROM_TIME(2, 1)
 
 		CALL_PREVIOUS_SAVEPOINT(kEntityMertens)
 		break;

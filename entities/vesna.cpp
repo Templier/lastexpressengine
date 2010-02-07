@@ -71,7 +71,7 @@ Vesna::Vesna(LastExpressEngine *engine) : Entity(engine, kEntityVesna) {
 }
 
 IMPLEMENT_FUNCTION(Vesna, function1, 1)
-	error("Vesna: callback function 1 not implemented!");
+	FUNCTION_1_IMPLEMENTATION(kEntityVesna)
 }
 
 IMPLEMENT_FUNCTION_S(Vesna, function2, 2)

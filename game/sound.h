@@ -109,7 +109,7 @@ public:
 	const char *readText(int id);
 
 	// Sound bites
-	void excuseMe(EntityIndex entity, int param2, int param3);
+	void excuseMe(EntityIndex entity, int param2 = 0, int param3 = 0);
 	const char *excuseMeCath();
 	const char *justCheckingCath();
 	const char *wrongDoorCath();

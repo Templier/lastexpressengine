@@ -74,13 +74,14 @@ IMPLEMENT_FUNCTION_S(Max, function2, 2)
 		break;
 
 	case kActionDefault:
-		getSound()->playSound(kEntityMax, ((EntityData::EntityParametersSIIS*)_data->getCurrentParameters())->seq1, -1 , 0);
+		getSound()->playSound(kEntityMax, params->seq1, -1 , 0);
 		break;
 	}
 }
 
-// There doesn't seem to be a setup part for function 3 (no idea why), so we skip that part too
 IMPLEMENT_FUNCTION_NOSETUP(Max, function3, 3)
+	EntityData::EntityParametersSIIS *params = (EntityData::EntityParametersSIIS*)_data->getCurrentParameters();
+
 	switch (savepoint->action) {
 	default:
 		break;
@@ -90,14 +91,12 @@ IMPLEMENT_FUNCTION_NOSETUP(Max, function3, 3)
 		break;
 
 	case kActionDefault:
-		getEntities()->drawSequenceRight(kEntityMax, ((EntityData::EntityParametersSIIS*)_data->getCurrentParameters())->seq1);
+		getEntities()->drawSequenceRight(kEntityMax, params->seq1);
 		break;
 	}
 }
 
 IMPLEMENT_FUNCTION_SI(Max, function4, 4)
-	EntityData::EntityParametersSIIS *params = (EntityData::EntityParametersSIIS*)_data->getCurrentParameters();
-
 	switch (savepoint->action) {
 	default:
 		break;
@@ -125,14 +124,7 @@ IMPLEMENT_FUNCTION(Max, function6, 6)
 		break;
 
 	case kActionNone:
-		if (CURRENT_PARAM(2)) {
-			if (CURRENT_PARAM(2) > (int)getState()->time)
-				break;
-
-			CURRENT_PARAM(2) = EntityData::kParamTime;
-		} else {
-			CURRENT_PARAM(2) = CURRENT_PARAM(1) + getState()->time;
-		}
+		UPDATE_PARAM_FROM_TIME(2, 1)
 
 		getSound()->playSound(kEntityMax, "Max1122");
 		CURRENT_PARAM(1) = 255 * ( 4 * random(20) + 40);
@@ -161,14 +153,7 @@ IMPLEMENT_FUNCTION(Max, function7, 7)
 		break;
 
 	case kActionNone:
-		if (CURRENT_PARAM(2)) {
-			if (CURRENT_PARAM(2) > (int)getState()->time)
-				break;
-
-			CURRENT_PARAM(2) = EntityData::kParamTime;
-		} else {
-			CURRENT_PARAM(2) = CURRENT_PARAM(1) + getState()->time;
-		}
+		UPDATE_PARAM_FROM_TIME(2, 1)
 
 		getSound()->playSound(kEntityMax, "Max1122");
 		CURRENT_PARAM(1) = 255 * (4 * random(20) + 40);
@@ -247,15 +232,7 @@ IMPLEMENT_FUNCTION(Max, function8, 8)
 		break;
 
 	case kActionNone:
-		if (!CURRENT_PARAM(3)) {
-			CURRENT_PARAM(3) = CURRENT_PARAM(2) + getState()->time;
-
-			if (CURRENT_PARAM(3) == 0)
-				break;
-
-		} else if (CURRENT_PARAM(3) < (int)getState()->time) {
-			CURRENT_PARAM(3) = EntityData::kParamTime;
-		}
+		UPDATE_PARAM_FROM_TIME(3, 2)
 
 		getSound()->playSound(kEntityMax, "Max3101");
 		CURRENT_PARAM(2) = 255 * ( 4 * random(20) + 40);
@@ -414,14 +391,7 @@ IMPLEMENT_FUNCTION(Max, function13, 13)
 			break;
 		}
 
-		if (CURRENT_PARAM(3)) {
-			if (CURRENT_PARAM(3) > (int)getState()->time)
-				break;
-
-			CURRENT_PARAM(3) = EntityData::kParamTime;
-		} else {
-			CURRENT_PARAM(3) = CURRENT_PARAM(1) + getState()->time;
-		}
+		UPDATE_PARAM_FROM_TIME(3, 1)
 
 		getSound()->playSound(kEntityMax, "Max1122");
 		CURRENT_PARAM(1) = 255 * ( 4 * random(20) + 40);

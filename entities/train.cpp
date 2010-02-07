@@ -115,7 +115,7 @@ IMPLEMENT_FUNCTION_II(Train, harem, 7)
 	}
 
 	CURRENT_PARAM(4) = getEntities()->checkFields1(kEntityAlouan, EntityData::kField495_3, (EntityData::Field491Value)CURRENT_PARAM(3));
-	CURRENT_PARAM(5) = (((EntityData::EntityParametersIIII*)_data->getParameters(8, 0))->param7 - CURRENT_PARAM(3)) <= 0;
+	CURRENT_PARAM(5) = (ENTITY_PARAM(0, 7) - CURRENT_PARAM(3)) <= 0;
 	CURRENT_PARAM(6) = getEntities()->checkFields1(kEntityYasmin, EntityData::kField495_3, (EntityData::Field491Value)CURRENT_PARAM(3));
 	CURRENT_PARAM(7) = getEntities()->checkFields1(kEntityHadija, EntityData::kField495_3, (EntityData::Field491Value)CURRENT_PARAM(3));
 

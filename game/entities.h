@@ -61,6 +61,8 @@ public:
 	void setupSequences();
 	void setupCallbacks();
 
+	void updateField1000(EntityIndex entity, int index, int value);
+
 	void updateFields0(EntityIndex entity1, EntityIndex entity2);
 	void updateFields1(EntityIndex entity1, EntityIndex entity2);
 	void updateFields2(EntityIndex entity1, EntityIndex entity2);
@@ -92,6 +94,7 @@ public:
 	bool checkFields8(EntityIndex entity);
 	bool checkFields9(EntityIndex entity1, EntityIndex entity2, int value);
 	bool checkFields10(EntityIndex entity);
+	bool checkFields11();
 
 	bool checkSequence0(EntityIndex entity);
 

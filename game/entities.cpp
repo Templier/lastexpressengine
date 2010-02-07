@@ -368,6 +368,11 @@ void Entities::processEntity(EntityIndex entity) {
 
 //////////////////////////////////////////////////////////////////////////
 /// Fields update
+
+void Entities::updateField1000(EntityIndex entity, int index, int value) {
+	error("Entities::updateField1000: not implemented!");
+}
+
 void Entities::updateFields0(EntityIndex entity1, EntityIndex entity2) {
 	error("Entities::updateFields0: not implemented!");
 }
@@ -782,6 +787,10 @@ bool Entities::checkFields9(EntityIndex entity1, EntityIndex entity2, int value)
 
 bool Entities::checkFields10(EntityIndex entity) {
 	return getData(entity)->getData()->field_493 < EntityData::kField493_3;
+}
+
+bool Entities::checkFields11() {
+	error("Entities::checkFields11: not implemented!");
 }
 
 bool Entities::checkSequence0(EntityIndex entity) {

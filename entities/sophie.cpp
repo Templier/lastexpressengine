@@ -117,7 +117,7 @@ IMPLEMENT_FUNCTION_II(Sophie, function2, 2)
 		break;
 
 	case kAction6:
-		getSound()->excuseMe(kEntitySophie, 0, 0);
+		getSound()->excuseMe(kEntitySophie);
 		break;
 
 	case kActionDefault:
