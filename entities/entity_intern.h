@@ -357,12 +357,12 @@ namespace LastExpress {
 
 //////////////////////////////////////////////////////////////////////////
 // Function logic
-#define FUNCTION_1_IMPLEMENTATION(entity) \
+#define FUNCTION_1_IMPLEMENTATION() \
 	switch (savepoint->action) { \
 	default: \
 		break; \
 	case kActionNone: \
-		if (getEntities()->checkEntity(entity, EntityData::kField495_3, (EntityData::Field491Value)CURRENT_PARAM(1))) \
+		if (getEntities()->checkEntity(_entityIndex, EntityData::kField495_3, (EntityData::Field491Value)CURRENT_PARAM(1))) \
 			CURRENT_PARAM(1) = (CURRENT_PARAM(1) == 10000) ? 0 : 10000; \
 		break; \
 	case kActionDefault:  \
@@ -384,22 +384,22 @@ namespace LastExpress {
 		} \
 	}
 
-#define CALL_PREVIOUS_SAVEPOINT(entity) { \
+#define CALL_PREVIOUS_SAVEPOINT() { \
 	_data->getData()->current_call--; \
-	getSavePoints()->setCallback(entity, _callbacks[_data->getCurrentCallback()]); \
-	getSavePoints()->call(entity, entity, kAction18); \
+	getSavePoints()->setCallback(_entityIndex, _callbacks[_data->getCurrentCallback()]); \
+	getSavePoints()->call(_entityIndex, _entityIndex, kAction18); \
 	}
 
-#define CALL_SAVEGAME(entity) \
+#define CALL_SAVEGAME() \
 	switch (savepoint->action) { \
 	default: \
 		break; \
 	case kActionNone: \
-		CALL_PREVIOUS_SAVEPOINT(entity) \
+		CALL_PREVIOUS_SAVEPOINT() \
 		break; \
 	case kActionDefault: \
-		save(entity, params->param1, (EventIndex)params->param2); \
-		CALL_PREVIOUS_SAVEPOINT(entity) \
+		save(_entityIndex, params->param1, (EventIndex)params->param2); \
+		CALL_PREVIOUS_SAVEPOINT() \
 		break; \
 	}
 

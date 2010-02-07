@@ -56,13 +56,13 @@ IMPLEMENT_FUNCTION_II(Train, savegame, 1)
 		break;
 
 	case kActionNone:
-		CALL_PREVIOUS_SAVEPOINT(kEntityTrain)
+		CALL_PREVIOUS_SAVEPOINT()
 		break;
 
 	case kActionDefault:
 		save(kEntityTrain, CURRENT_PARAM(1), (EventIndex)CURRENT_PARAM(2));
 
-		CALL_PREVIOUS_SAVEPOINT(kEntityTrain)
+		CALL_PREVIOUS_SAVEPOINT()
 		break;
 	}
 }

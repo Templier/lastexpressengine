@@ -78,7 +78,7 @@ Sophie::Sophie(LastExpressEngine *engine) : Entity(engine, kEntitySophie) {
 
 //////////////////////////////////////////////////////////////////////////
 IMPLEMENT_FUNCTION(Sophie, function1, 1)
-	FUNCTION_1_IMPLEMENTATION(kEntitySophie)
+	FUNCTION_1_IMPLEMENTATION()
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -125,7 +125,7 @@ IMPLEMENT_FUNCTION_II(Sophie, function2, 2)
 		break;
 
 	case kAction123668192:
-		CALL_PREVIOUS_SAVEPOINT(kEntitySophie)
+		CALL_PREVIOUS_SAVEPOINT()
 		break;
 	}
 }

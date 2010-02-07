@@ -124,7 +124,7 @@ IMPLEMENT_FUNCTION(Mertens, function6, 6)
 
 	case kActionNone:
 		if (_data->getData()->direction != 4) {
-			CALL_PREVIOUS_SAVEPOINT(kEntityMertens)
+			CALL_PREVIOUS_SAVEPOINT()
 			break;
 		}
 
@@ -138,7 +138,7 @@ IMPLEMENT_FUNCTION(Mertens, function6, 6)
 		break;
 
 	case kAction3:
-		CALL_PREVIOUS_SAVEPOINT(kEntityMertens)
+		CALL_PREVIOUS_SAVEPOINT()
 		break;
 
 	case kAction18:
@@ -159,7 +159,7 @@ IMPLEMENT_FUNCTION_S(Mertens, function8, 8)
 }
 
 IMPLEMENT_FUNCTION_II(Mertens, savegame, 9)
-	CALL_SAVEGAME(kEntityMertens)
+	CALL_SAVEGAME()
 }
 
 IMPLEMENT_FUNCTION_II(Mertens, function10, 10)
@@ -183,7 +183,7 @@ IMPLEMENT_FUNCTION_I(Mertens, function11, 11)
 
 		UPDATE_PARAM_FROM_TIME(2, 1)
 
-		CALL_PREVIOUS_SAVEPOINT(kEntityMertens)
+		CALL_PREVIOUS_SAVEPOINT()
 		break;
 
 	case kAction18:
@@ -237,7 +237,7 @@ IMPLEMENT_FUNCTION(Mertens, function17, 17)
 				getLogic()->loadSceneFromItem(kItem7);
 
 				ENTITY_PARAM(2, 1) = 1;
-				CALL_PREVIOUS_SAVEPOINT(kEntityMertens)
+				CALL_PREVIOUS_SAVEPOINT()
 
 			} else {	// Mertens sits on his chair at the back of the train
 				if (getInventory()->hasItem(kItemPassengerList) || ENTITY_PARAM(0, 2))
@@ -275,7 +275,7 @@ IMPLEMENT_FUNCTION(Mertens, function17, 17)
 			break;
 
 		case 2:
-			CALL_PREVIOUS_SAVEPOINT(kEntityMertens)
+			CALL_PREVIOUS_SAVEPOINT()
 			break;
 
 		case 3:
@@ -293,7 +293,7 @@ IMPLEMENT_FUNCTION(Mertens, function17, 17)
 
 			getSavePoints()->push(kEntityMertens, kEntityMertens, kAction17);
 
-			CALL_PREVIOUS_SAVEPOINT(kEntityMertens)
+			CALL_PREVIOUS_SAVEPOINT()
 			break;
 		}
 		break;

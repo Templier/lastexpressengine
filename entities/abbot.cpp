@@ -95,7 +95,7 @@ Abbot::Abbot(LastExpressEngine *engine) : Entity(engine, kEntityAbbot) {
 }
 
 IMPLEMENT_FUNCTION(Abbot, function1, 1)
-	FUNCTION_1_IMPLEMENTATION(kEntityAbbot)
+	FUNCTION_1_IMPLEMENTATION()
 }
 
 IMPLEMENT_FUNCTION_S(Abbot, function2, 2)
@@ -104,7 +104,7 @@ IMPLEMENT_FUNCTION_S(Abbot, function2, 2)
 		break;
 
 	case kAction3:
-		CALL_PREVIOUS_SAVEPOINT(kEntityAbbot)
+		CALL_PREVIOUS_SAVEPOINT()
 		break;
 
 	case kActionDefault:
@@ -120,7 +120,7 @@ IMPLEMENT_FUNCTION_SI(Abbot, function3, 3)
 
 	case kAction3:
 		getEntities()->updateFields1(kEntityAbbot, (EntityIndex)params->param2);
-		CALL_PREVIOUS_SAVEPOINT(kEntityAbbot)
+		CALL_PREVIOUS_SAVEPOINT()
 		break;
 
 	case kActionDefault:
@@ -140,7 +140,7 @@ IMPLEMENT_FUNCTION_SI(Abbot, function4, 4)
 		_data->getData()->field_491 = EntityData::kField491_6470;
 		_data->getData()->field_493 = EntityData::kField493_1;
 
-		CALL_PREVIOUS_SAVEPOINT(kEntityAbbot)
+		CALL_PREVIOUS_SAVEPOINT()
 		break;
 
 	case kActionDefault:
@@ -164,12 +164,12 @@ IMPLEMENT_FUNCTION(Abbot, function5, 5)
 		break;
 
 	case kAction3:		
-		CALL_PREVIOUS_SAVEPOINT(kEntityAbbot)
+		CALL_PREVIOUS_SAVEPOINT()
 		break;
 
 	case kActionDefault:
 		if (_data->getData()->direction != kDirectionRight)
-			CALL_PREVIOUS_SAVEPOINT(kEntityAbbot)
+			CALL_PREVIOUS_SAVEPOINT()
 		break;
 	}
 }
@@ -180,7 +180,7 @@ IMPLEMENT_FUNCTION_SSI(Abbot, function6, 6)
 		break;
 
 	case kAction3:		
-		CALL_PREVIOUS_SAVEPOINT(kEntityAbbot)
+		CALL_PREVIOUS_SAVEPOINT()
 		break;
 
 	case kActionDefault:
@@ -197,7 +197,7 @@ IMPLEMENT_FUNCTION_I(Abbot, function7, 7)
 
 	case kActionNone:
 		UPDATE_PARAM_FROM_TIME(2, 1)
-		CALL_PREVIOUS_SAVEPOINT(kEntityAbbot)
+		CALL_PREVIOUS_SAVEPOINT()
 		break;
 	}
 }
@@ -209,7 +209,7 @@ IMPLEMENT_FUNCTION_I(Abbot, function8, 8)
 
 	case kActionNone:
 		UPDATE_PARAM_FROM_TICKS(2, 1)
-		CALL_PREVIOUS_SAVEPOINT(kEntityAbbot)
+		CALL_PREVIOUS_SAVEPOINT()
 		break;
 	}
 }
@@ -220,7 +220,7 @@ IMPLEMENT_FUNCTION_S(Abbot, function9, 9)
 		break;
 
 	case kAction2:		
-		CALL_PREVIOUS_SAVEPOINT(kEntityAbbot)
+		CALL_PREVIOUS_SAVEPOINT()
 		break;
 
 	case kActionDefault:
@@ -230,7 +230,7 @@ IMPLEMENT_FUNCTION_S(Abbot, function9, 9)
 }
 
 IMPLEMENT_FUNCTION_II(Abbot, savegame, 10)
-	CALL_SAVEGAME(kEntityAbbot)
+	CALL_SAVEGAME()
 }
 
 IMPLEMENT_FUNCTION_II(Abbot, function11, 11)
@@ -240,7 +240,7 @@ IMPLEMENT_FUNCTION_II(Abbot, function11, 11)
 
 	case kActionNone:
 		if (getEntities()->checkEntity(kEntityAbbot, (EntityData::Field495Value)params->param1, (EntityData::Field491Value)params->param2))
-			CALL_PREVIOUS_SAVEPOINT(kEntityAbbot)
+			CALL_PREVIOUS_SAVEPOINT()
 		break;
 
 	case kAction5:
@@ -260,7 +260,7 @@ IMPLEMENT_FUNCTION_II(Abbot, function11, 11)
 
 	case kActionDefault:
 		if (getEntities()->checkEntity(kEntityAbbot, (EntityData::Field495Value)params->param1, (EntityData::Field491Value)params->param2))
-			CALL_PREVIOUS_SAVEPOINT(kEntityAbbot)
+			CALL_PREVIOUS_SAVEPOINT()
 		break;
 	}
 }
@@ -274,7 +274,7 @@ IMPLEMENT_FUNCTION_SIIS(Abbot, function12, 12)
 		if (!CURRENT_PARAMS(1, 1))
 			getSavePoints()->call(kEntityAbbot, (EntityIndex)params->param2, (ActionIndex)params->param3, params->seq2);
 
-		CALL_PREVIOUS_SAVEPOINT(kEntityAbbot)
+		CALL_PREVIOUS_SAVEPOINT()
 		break;
 
 	case kAction10:
@@ -297,7 +297,7 @@ IMPLEMENT_FUNCTION_SII(Abbot, function13, 13)
 
 	case kAction3:		
 		getEntities()->updateField1000(kEntityAbbot, params->param2, params->param3);
-		CALL_PREVIOUS_SAVEPOINT(kEntityAbbot)
+		CALL_PREVIOUS_SAVEPOINT()
 		break;
 
 	case kActionDefault:
@@ -315,7 +315,7 @@ IMPLEMENT_FUNCTION(Abbot, function14, 14)
 	case kActionNone:		
 	case kActionDefault:
 		if (getEntities()->checkFields11())
-			CALL_PREVIOUS_SAVEPOINT(kEntityAbbot)
+			CALL_PREVIOUS_SAVEPOINT()
 		break;
 	}
 }

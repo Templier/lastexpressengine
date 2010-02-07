@@ -61,7 +61,7 @@ Max::Max(LastExpressEngine *engine) : Entity(engine, kEntityMax) {
 }
 
 IMPLEMENT_FUNCTION(Max, function1, 1)
-	FUNCTION_1_IMPLEMENTATION(kEntityMax)
+	FUNCTION_1_IMPLEMENTATION()
 }
 
 IMPLEMENT_FUNCTION_S(Max, function2, 2)
@@ -70,7 +70,7 @@ IMPLEMENT_FUNCTION_S(Max, function2, 2)
 		break;
 
 	case kAction2:
-		CALL_PREVIOUS_SAVEPOINT(kEntityMax)
+		CALL_PREVIOUS_SAVEPOINT()
 		break;
 
 	case kActionDefault:
@@ -87,7 +87,7 @@ IMPLEMENT_FUNCTION_NOSETUP(Max, function3, 3)
 		break;
 
 	case kAction3:
-		CALL_PREVIOUS_SAVEPOINT(kEntityMax)
+		CALL_PREVIOUS_SAVEPOINT()
 		break;
 
 	case kActionDefault:
@@ -104,7 +104,7 @@ IMPLEMENT_FUNCTION_SI(Max, function4, 4)
 	case kAction3:
 		getEntities()->updateFields1(kEntityMax, (EntityIndex)params->param2);
 
-		CALL_PREVIOUS_SAVEPOINT(kEntityMax)
+		CALL_PREVIOUS_SAVEPOINT()
 		break;
 
 	case kActionDefault:
@@ -115,7 +115,7 @@ IMPLEMENT_FUNCTION_SI(Max, function4, 4)
 }
 
 IMPLEMENT_FUNCTION_II(Max, savegame, 5)
-	CALL_SAVEGAME(kEntityMax)
+	CALL_SAVEGAME()
 }
 
 IMPLEMENT_FUNCTION(Max, function6, 6)
@@ -207,7 +207,7 @@ IMPLEMENT_FUNCTION(Max, function7, 7)
 	case kAction101687594:
 		getEntities()->drawSequences(kEntityMax);
 
-		CALL_PREVIOUS_SAVEPOINT(kEntityMax)
+		CALL_PREVIOUS_SAVEPOINT()
 		break;
 
 	case kAction122358304:
@@ -216,7 +216,7 @@ IMPLEMENT_FUNCTION(Max, function7, 7)
 		getObjects()->update(kObjectCompartmentF, kEntityNone, kLocationNone, kCursorHandKnock, kCursorHand);
 		getObjects()->update(kObject53, kEntityNone, kLocationNone, kCursorHandKnock, kCursorHand);
 
-		CALL_PREVIOUS_SAVEPOINT(kEntityMax)
+		CALL_PREVIOUS_SAVEPOINT()
 		break;
 
 	case kAction158007856:
