@@ -147,7 +147,10 @@ namespace LastExpress {
 
 // function signature without setup (we keep the index for consistency but never use it)
 #define IMPLEMENT_FUNCTION_NOSETUP(class, name, index) \
-	IMPLEMENT_CALL(class, name, index)
+	void class::name(SavePoint *savepoint) { \
+		debugC(6, kLastExpressDebugLogic, "Entity: " #class "::" #name); \
+		if (!savepoint) \
+			error(#class "::" #name ": trying to call an entity callback function with a NULL savepoint!");
 
 // simple setup with no parameters
 #define IMPLEMENT_FUNCTION(class, name, index) \
