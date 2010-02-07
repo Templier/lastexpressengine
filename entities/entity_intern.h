@@ -430,7 +430,7 @@ namespace LastExpress {
 	((EntityData::EntityParametersIIII*)_data->getCurrentParameters(index))->param##id
 
 #define ENTITY_PARAM(index, id) \
-	((EntityData::EntityParametersIIII*)_data->getParameters(8, id))->param##id
+	((EntityData::EntityParametersIIII*)_data->getParameters(8, index))->param##id
 
 //////////////////////////////////////////////////////////////////////////
 // Functors class for setup functions
