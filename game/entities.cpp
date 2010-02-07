@@ -413,18 +413,16 @@ void Entities::saveLoadWithSerializer(Common::Serializer &ser) {
 //////////////////////////////////////////////////////////////////////////
 // Drawing
 //////////////////////////////////////////////////////////////////////////
-void Entities::drawSequence(EntityIndex index, const char* sequence) {
+void Entities::drawSequenceLeft(EntityIndex index, const char* sequence) {
 	drawSequenceInternal(index, sequence, kDirectionLeft);
 }
 
-void Entities::drawSequence2(EntityIndex index, const char* sequence) {
+void Entities::drawSequenceRight(EntityIndex index, const char* sequence) {
 	drawSequenceInternal(index, sequence, kDirectionRight);
 }
 
 void Entities::drawSequences(EntityIndex index) {
 	debugC(8, kLastExpressDebugLogic, "Drawing sequences for entity %d", index);
-
-	//
 
 	warning("Entities::drawSequences: not implemented!");
 }

@@ -151,7 +151,7 @@ IMPLEMENT_FUNCTION(Sophie, function3, 3)
 			break;
 
 		case 2:
-			getEntities()->drawSequence(kEntitySophie, "BLANK");
+			getEntities()->drawSequenceLeft(kEntitySophie, "BLANK");
 			break;
 
 		case 3:
@@ -159,7 +159,7 @@ IMPLEMENT_FUNCTION(Sophie, function3, 3)
 			break;
 
 		case 4:
-			getEntities()->drawSequence(kEntitySophie, "BLANK");
+			getEntities()->drawSequenceLeft(kEntitySophie, "BLANK");
 			break;
 		}
 		break;

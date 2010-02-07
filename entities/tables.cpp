@@ -116,27 +116,27 @@ IMPLEMENT_FUNCTION(Tables, draw, 6)
 			break;
 
 		case kEntityTables0:
-			getEntities()->drawSequence(_id, "001P");
+			getEntities()->drawSequenceLeft(_id, "001P");
 			break;
 
 		case kEntityTables1:
-			getEntities()->drawSequence(_id, "005J");
+			getEntities()->drawSequenceLeft(_id, "005J");
 			break;
 
 		case kEntityTables2:
-			getEntities()->drawSequence(_id, "009G");
+			getEntities()->drawSequenceLeft(_id, "009G");
 			break;
 
 		case kEntityTables3:
-			getEntities()->drawSequence(_id, "010M");
+			getEntities()->drawSequenceLeft(_id, "010M");
 			break;
 
 		case kEntityTables4:
-			getEntities()->drawSequence(_id, "014F");
+			getEntities()->drawSequenceLeft(_id, "014F");
 			break;
 
 		case kEntityTables5:
-			getEntities()->drawSequence(_id, "024D");
+			getEntities()->drawSequenceLeft(_id, "024D");
 			break;
 		}
 
@@ -144,41 +144,41 @@ IMPLEMENT_FUNCTION(Tables, draw, 6)
 
 	case kAction103798704:
 		if (savepoint->param.charValue) {
-			getEntities()->drawSequence(_id, savepoint->param.charValue);
+			getEntities()->drawSequenceLeft(_id, savepoint->param.charValue);
 		} else {
 			switch(_id) {
 			default:
 				break;
 
 			case kEntityTables0:
-				getEntities()->drawSequence(_id, "001P");
+				getEntities()->drawSequenceLeft(_id, "001P");
 				break;
 
 			case kEntityTables1:
-				getEntities()->drawSequence(_id, "005J");
+				getEntities()->drawSequenceLeft(_id, "005J");
 				break;
 
 			case kEntityTables2:
-				getEntities()->drawSequence(_id, "009G");
+				getEntities()->drawSequenceLeft(_id, "009G");
 				break;
 
 			case kEntityTables3:
-				getEntities()->drawSequence(_id, "010M");
+				getEntities()->drawSequenceLeft(_id, "010M");
 				break;
 
 			case kEntityTables4:
-				getEntities()->drawSequence(_id, "014F");
+				getEntities()->drawSequenceLeft(_id, "014F");
 				break;
 
 			case kEntityTables5:
-				getEntities()->drawSequence(_id, "024D");
+				getEntities()->drawSequenceLeft(_id, "024D");
 				break;
 			}
 		}
 		break;
 
 	case kAction136455232:
-		getEntities()->drawSequence(_id, "BLANK");
+		getEntities()->drawSequenceLeft(_id, "BLANK");
 		break;
 	}
 }

@@ -240,7 +240,7 @@ IMPLEMENT_FUNCTION(Mertens, function17, 17)
 
 			if (ENTITY_PARAM(0, 8)) {
 
-				getEntities()->drawSequence(kEntityMertens, "601K");
+				getEntities()->drawSequenceLeft(kEntityMertens, "601K");
 				getLogic()->loadSceneFromItem(kItem7);
 
 				ENTITY_PARAM(2, 1) = 1;
@@ -248,11 +248,11 @@ IMPLEMENT_FUNCTION(Mertens, function17, 17)
 
 			} else {	// Mertens sits on his chair at the back of the train
 				if (getInventory()->hasItem(kItemPassengerList) || ENTITY_PARAM(0, 2))
-					getEntities()->drawSequence2(kEntityMertens, "601A");
+					getEntities()->drawSequenceRight(kEntityMertens, "601A");
 				else {	// Got the passenger list, Mertens is looking for it before sitting
 					ENTITY_PARAM(0, 2) = 1;
 					getSound()->playSound(kEntityMertens, "CON1058", -1, 75);
-					getEntities()->drawSequence2(kEntityMertens, "601D");
+					getEntities()->drawSequenceRight(kEntityMertens, "601D");
 				}
 
 				getLogic()->loadSceneFromItem(kItem7);
@@ -293,7 +293,7 @@ IMPLEMENT_FUNCTION(Mertens, function17, 17)
 				 ENTITY_PARAM(0, 3) = 1;
 			}
 
-			getEntities()->drawSequence(kEntityMertens, "601B");
+			getEntities()->drawSequenceLeft(kEntityMertens, "601B");
 
 			ENTITY_PARAM(0, 1) = 0;
 			_data->getData()->inventoryItem = kItemNone;

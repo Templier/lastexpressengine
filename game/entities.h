@@ -67,8 +67,8 @@ public:
 	void updateFields3(EntityIndex entity1, EntityIndex entity2);
 
 	// Sequences
-	void drawSequence(EntityIndex index, const char* sequence);
-	void drawSequence2(EntityIndex index, const char* sequence);
+	void drawSequenceLeft(EntityIndex index, const char* sequence);
+	void drawSequenceRight(EntityIndex index, const char* sequence);
 	void drawSequences(EntityIndex index);
 
 	// Accessors

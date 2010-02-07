@@ -251,21 +251,21 @@ label_skip:
 				case EntityData::kField493_1:
 				case EntityData::kField495_6:
 					if (getProgress().is_nighttime)
-						getEntities()->drawSequence(kEntityTrain, "B1WNM");
+						getEntities()->drawSequenceLeft(kEntityTrain, "B1WNM");
 					else
-						getEntities()->drawSequence(kEntityTrain, isDay() ? "B1WNM" : "B1WND");
+						getEntities()->drawSequenceLeft(kEntityTrain, isDay() ? "B1WNM" : "B1WND");
 					break;
 
 				case EntityData::kField495_3:
 				case EntityData::kField495_4:
 					if (getProgress().is_nighttime)
-						getEntities()->drawSequence(kEntityTrain, "S1WNM");
+						getEntities()->drawSequenceLeft(kEntityTrain, "S1WNM");
 					else
-						getEntities()->drawSequence(kEntityTrain, isDay() ? "S1WNM" : "S1WND");
+						getEntities()->drawSequenceLeft(kEntityTrain, isDay() ? "S1WNM" : "S1WND");
 					break;
 
 				case EntityData::kField495_5:
-					getEntities()->drawSequence(kEntityTrain, isDay() ? "RCWNN" : "RCWND");
+					getEntities()->drawSequenceLeft(kEntityTrain, isDay() ? "RCWNN" : "RCWND");
 					break;
 				}
 

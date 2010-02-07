@@ -90,7 +90,7 @@ IMPLEMENT_FUNCTION_NOSETUP(Max, function3, 3)
 		break;
 
 	case kActionDefault:
-		getEntities()->drawSequence2(kEntityMax, ((EntityData::EntityParametersSIIS*)_data->getCurrentParameters())->seq1);
+		getEntities()->drawSequenceRight(kEntityMax, ((EntityData::EntityParametersSIIS*)_data->getCurrentParameters())->seq1);
 		break;
 	}
 }
@@ -109,7 +109,7 @@ IMPLEMENT_FUNCTION_SI(Max, function4, 4)
 		break;
 
 	case kActionDefault:
-		getEntities()->drawSequence2(kEntityMax, params->seq1);
+		getEntities()->drawSequenceRight(kEntityMax, params->seq1);
 		getEntities()->updateFields0(kEntityMax, (EntityIndex)params->param2);
 		break;
 	}
@@ -334,7 +334,7 @@ IMPLEMENT_FUNCTION(Max, function9, 9)
 		_data->getData()->field_493 = EntityData::kField493_0;
 		_data->getData()->field_495 = EntityData::kField495_4;
 
-		getEntities()->drawSequence(kEntityMax, "630Af");
+		getEntities()->drawSequenceLeft(kEntityMax, "630Af");
 		getEntities()->updateFields2(kEntityMax, kEntityTables4);
 
 		CURRENT_PARAM(1) = getState()->time + 2700;
@@ -565,7 +565,7 @@ IMPLEMENT_FUNCTION(Max, function15, 15)
 
 	case kAction18:
 		if (_data->getNextCallback() == 1) {
-			getEntities()->drawSequence(kEntityMax, "630Af");
+			getEntities()->drawSequenceLeft(kEntityMax, "630Af");
 			getEntities()->updateFields2(kEntityMax, kEntityTables4);
 			getSavePoints()->push(kEntityMax, kEntityAnna, kAction156622016);
 		}
@@ -574,7 +574,7 @@ IMPLEMENT_FUNCTION(Max, function15, 15)
 	case kAction122358304:
 		(savepoint->entity2 == kEntityAnna) ? CURRENT_PARAM(1) = 1 : CURRENT_PARAM(2) = 1;
 		getEntities()->updateFields3(kEntityMax, kEntityTables4);
-		getEntities()->drawSequence(kEntityMax, "BLANK");
+		getEntities()->drawSequenceLeft(kEntityMax, "BLANK");
 		break;
 
 	case kActionMaxFreeFromCage:
@@ -620,14 +620,14 @@ IMPLEMENT_FUNCTION(Max, function17, 17)
 		_data->getData()->field_493 = EntityData::kField493_0;
 		_data->getData()->field_495 = EntityData::kField495_4;
 
-		getEntities()->drawSequence(kEntityMax, "630Af");
+		getEntities()->drawSequenceLeft(kEntityMax, "630Af");
 		getSavePoints()->push(kEntityMax, kEntityCoudert, kAction157026693);
 		break;
 
 	case kAction122358304:
 		CURRENT_PARAM(1) = 1;
 		getEntities()->updateFields3(kEntityMax, kEntityTables4);
-		getEntities()->drawSequence(kEntityMax, "BLANK");
+		getEntities()->drawSequenceLeft(kEntityMax, "BLANK");
 		break;
 
 	case kActionMaxFreeFromCage:
