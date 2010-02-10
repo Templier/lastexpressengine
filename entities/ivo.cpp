@@ -38,15 +38,15 @@ namespace LastExpress {
 
 Ivo::Ivo(LastExpressEngine *engine) : Entity(engine, kEntityIvo) {
 	ADD_CALLBACK_FUNCTION(Ivo, function1);
-	ADD_CALLBACK_FUNCTION(Ivo, function2);
+	ADD_CALLBACK_FUNCTION(Ivo, draw);
 	ADD_CALLBACK_FUNCTION(Ivo, function3);
-	ADD_CALLBACK_FUNCTION(Ivo, function4);
-	ADD_CALLBACK_FUNCTION(Ivo, function5);
+	ADD_CALLBACK_FUNCTION(Ivo, updateFromTime);
+	ADD_CALLBACK_FUNCTION(Ivo, updateFromTicks);
 	ADD_CALLBACK_FUNCTION(Ivo, function6);
 	ADD_CALLBACK_FUNCTION(Ivo, function7);
-	ADD_CALLBACK_FUNCTION(Ivo, function8);
+	ADD_CALLBACK_FUNCTION(Ivo, playSound);
 	ADD_CALLBACK_FUNCTION(Ivo, function9);
-	ADD_CALLBACK_FUNCTION(Ivo, function10);
+	ADD_CALLBACK_FUNCTION(Ivo, savegame);
 	ADD_CALLBACK_FUNCTION(Ivo, function11);
 	ADD_CALLBACK_FUNCTION(Ivo, function12);
 	ADD_CALLBACK_FUNCTION(Ivo, function13);
@@ -74,23 +74,23 @@ Ivo::Ivo(LastExpressEngine *engine) : Entity(engine, kEntityIvo) {
 }
 
 IMPLEMENT_FUNCTION(Ivo, function1, 1)
-	error("Ivo: callback function 1 not implemented!");
+	Entity::function1(savepoint);
 }
 
-IMPLEMENT_FUNCTION_S(Ivo, function2, 2)
-	error("Ivo: callback function 2 not implemented!");
+IMPLEMENT_FUNCTION_S(Ivo, draw, 2)
+	Entity::draw(savepoint);
 }
 
 IMPLEMENT_FUNCTION_SI(Ivo, function3, 3)
-	error("Ivo: callback function 3 not implemented!");
+	Entity::updateFields(savepoint);
 }
 
-IMPLEMENT_FUNCTION_I(Ivo, function4, 4)
-	error("Ivo: callback function 4 not implemented!");
+IMPLEMENT_FUNCTION_I(Ivo, updateFromTime, 4)
+	Entity::updateFromTime(savepoint);
 }
 
-IMPLEMENT_FUNCTION_I(Ivo, function5, 5)
-	error("Ivo: callback function 5 not implemented!");
+IMPLEMENT_FUNCTION_I(Ivo, updateFromTicks, 5)
+	Entity::updateFromTicks(savepoint);
 }
 
 IMPLEMENT_FUNCTION_II(Ivo, function6, 6)
@@ -98,19 +98,19 @@ IMPLEMENT_FUNCTION_II(Ivo, function6, 6)
 }
 
 IMPLEMENT_FUNCTION(Ivo, function7, 7)
-	error("Ivo: callback function 7 not implemented!");
+	Entity::savepointDirection(savepoint);
 }
 
-IMPLEMENT_FUNCTION_NOSETUP(Ivo, function8, 8)
-	error("Ivo: callback function 8 not implemented!");
+IMPLEMENT_FUNCTION_NOSETUP(Ivo, playSound, 8)
+	Entity::playSound(savepoint, true);
 }
 
 IMPLEMENT_FUNCTION(Ivo, function9, 9)
-	error("Ivo: callback function 9 not implemented!");
+	Entity::savepointCheckFields11(savepoint);
 }
 
-IMPLEMENT_FUNCTION_II(Ivo, function10, 10)
-	error("Ivo: callback function 10 not implemented!");
+IMPLEMENT_FUNCTION_II(Ivo, savegame, 10)
+	Entity::savegame(savepoint);
 }
 
 IMPLEMENT_FUNCTION(Ivo, function11, 11)

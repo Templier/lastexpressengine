@@ -30,7 +30,6 @@
 #include "lastexpress/game/inventory.h"
 #include "lastexpress/game/logic.h"
 #include "lastexpress/game/object.h"
-#include "lastexpress/game/savegame.h"
 #include "lastexpress/game/savepoint.h"
 #include "lastexpress/game/sound.h"
 #include "lastexpress/game/state.h"
@@ -67,7 +66,7 @@ Chapters::Chapters(LastExpressEngine *engine) : Entity(engine, kEntityChapters) 
 }
 
 IMPLEMENT_FUNCTION_II(Chapters, savegame, 1)
-	SAVEGAME()
+	Entity::savegame(savepoint);
 }
 
 IMPLEMENT_FUNCTION_SI(Chapters, function2, 2)

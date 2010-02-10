@@ -28,7 +28,6 @@
 #include "lastexpress/game/action.h"
 #include "lastexpress/game/entities.h"
 #include "lastexpress/game/logic.h"
-#include "lastexpress/game/savegame.h"
 #include "lastexpress/game/savepoint.h"
 #include "lastexpress/game/sound.h"
 #include "lastexpress/game/state.h"
@@ -40,12 +39,12 @@ namespace LastExpress {
 
 Abbot::Abbot(LastExpressEngine *engine) : Entity(engine, kEntityAbbot) {
 	ADD_CALLBACK_FUNCTION(Abbot, function1);
-	ADD_CALLBACK_FUNCTION(Abbot, passingRight);
+	ADD_CALLBACK_FUNCTION(Abbot, draw);
 	ADD_CALLBACK_FUNCTION(Abbot, function3);
 	ADD_CALLBACK_FUNCTION(Abbot, function4);
 	ADD_CALLBACK_FUNCTION(Abbot, function5);
-	ADD_CALLBACK_FUNCTION(Abbot, crossing);
-	ADD_CALLBACK_FUNCTION(Abbot, function7);
+	ADD_CALLBACK_FUNCTION(Abbot, draw2);
+	ADD_CALLBACK_FUNCTION(Abbot, updateFromTime);
 	ADD_CALLBACK_FUNCTION(Abbot, updateFromTicks);
 	ADD_CALLBACK_FUNCTION(Abbot, playSound);
 	ADD_CALLBACK_FUNCTION(Abbot, savegame);
@@ -95,15 +94,15 @@ Abbot::Abbot(LastExpressEngine *engine) : Entity(engine, kEntityAbbot) {
 }
 
 IMPLEMENT_FUNCTION(Abbot, function1, 1)
-	FUNCTION1()
+	Entity::function1(savepoint);
 }
 
-IMPLEMENT_FUNCTION_S(Abbot, passingRight, 2)
-	PASSING_RIGHT()
+IMPLEMENT_FUNCTION_S(Abbot, draw, 2)
+	Entity::draw(savepoint);
 }
 
 IMPLEMENT_FUNCTION_SI(Abbot, function3, 3)
-	UPDATE_FIELDS()
+	Entity::updateFields(savepoint);
 }
 
 IMPLEMENT_FUNCTION_SI(Abbot, function4, 4)
@@ -135,35 +134,27 @@ IMPLEMENT_FUNCTION_SI(Abbot, function4, 4)
 }
 
 IMPLEMENT_FUNCTION(Abbot, function5, 5)
-	SAVEPOINT_NOTRIGHT()
+	Entity::savepointDirection(savepoint);
 }
 
-IMPLEMENT_FUNCTION_SSI(Abbot, crossing, 6)
-	CROSSING()
+IMPLEMENT_FUNCTION_SSI(Abbot, draw2, 6)
+	Entity::draw2(savepoint);
 }
 
-IMPLEMENT_FUNCTION_I(Abbot, function7, 7)
-	switch (savepoint->action) {
-	default:
-		break;
-
-	case kActionNone:
-		UPDATE_PARAM_FROM_TIME(2, 1)
-		CALL_PREVIOUS_SAVEPOINT()
-		break;
-	}
+IMPLEMENT_FUNCTION_I(Abbot, updateFromTime, 7)
+	Entity::updateFromTime(savepoint);
 }
 
 IMPLEMENT_FUNCTION_I(Abbot, updateFromTicks, 8)
-	UPDATE_FROMTICKS()
+	Entity::updateFromTicks(savepoint);
 }
 
 IMPLEMENT_FUNCTION_S(Abbot, playSound, 9)
-	PLAYSOUND()
+	Entity::playSound(savepoint);
 }
 
 IMPLEMENT_FUNCTION_II(Abbot, savegame, 10)
-	SAVEGAME()
+	Entity::savegame(savepoint);
 }
 
 IMPLEMENT_FUNCTION_II(Abbot, function11, 11)
@@ -199,36 +190,15 @@ IMPLEMENT_FUNCTION_II(Abbot, function11, 11)
 }
 
 IMPLEMENT_FUNCTION_SIIS(Abbot, function12, 12)
-	switch (savepoint->action) {
-	default:
-		break;
-
-	case kAction3:
-		if (!CURRENT_PARAMS(1, 1))
-			getSavePoints()->call(kEntityAbbot, (EntityIndex)params->param2, (ActionIndex)params->param3, params->seq2);
-
-		CALL_PREVIOUS_SAVEPOINT()
-		break;
-
-	case kAction10:
-		if (!CURRENT_PARAMS(1, 1)) {
-			getSavePoints()->call(kEntityAbbot, (EntityIndex)params->param2, (ActionIndex)params->param3, params->seq2);
-			CURRENT_PARAMS(1, 1) = 1;
-		}
-		break;
-
-	case kActionDefault:
-		getEntities()->drawSequenceRight(kEntityAbbot, params->seq1);
-		break;
-	}
+	Entity::savepointCall(savepoint);
 }
 
 IMPLEMENT_FUNCTION_SII(Abbot, function13, 13)
-	UPDATE_FIELD1000()
+	Entity::updateField1000(savepoint);
 }
 
 IMPLEMENT_FUNCTION(Abbot, function14, 14)
-	SAVEPOINT_CHECKFIELDS11()
+	Entity::savepointCheckFields11(savepoint);
 }
 
 IMPLEMENT_FUNCTION(Abbot, chapter1, 15)

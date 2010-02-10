@@ -29,6 +29,7 @@
 #include "lastexpress/game/logic.h"
 #include "lastexpress/game/object.h"
 #include "lastexpress/game/savepoint.h"
+#include "lastexpress/game/sound.h"
 #include "lastexpress/game/state.h"
 
 #include "lastexpress/lastexpress.h"
@@ -37,12 +38,12 @@
 namespace LastExpress {
 
 Servers1::Servers1(LastExpressEngine *engine) : Entity(engine, kEntityServers1) {
-	ADD_CALLBACK_FUNCTION(Servers1, function1);
+	ADD_CALLBACK_FUNCTION(Servers1, updateFromTime);
 	ADD_CALLBACK_FUNCTION(Servers1, function2);
 	ADD_CALLBACK_FUNCTION(Servers1, function3);
 	ADD_CALLBACK_FUNCTION(Servers1, function4);
 	ADD_CALLBACK_FUNCTION(Servers1, function5);
-	ADD_CALLBACK_FUNCTION(Servers1, function6);
+	ADD_CALLBACK_FUNCTION(Servers1, playSound);
 	ADD_CALLBACK_FUNCTION(Servers1, function7);
 	ADD_CALLBACK_FUNCTION(Servers1, chapter1);
 	ADD_CALLBACK_FUNCTION(Servers1, function9);
@@ -71,8 +72,8 @@ Servers1::Servers1(LastExpressEngine *engine) : Entity(engine, kEntityServers1) 
 	ADD_NULL_FUNCTION()
 }
 
-IMPLEMENT_FUNCTION_NOSETUP(Servers1, function1, 1)
-	error("Servers1: callback function 1 not implemented!");
+IMPLEMENT_FUNCTION_NOSETUP(Servers1, updateFromTime, 1)
+	Entity::updateFromTime(savepoint);
 }
 
 IMPLEMENT_FUNCTION(Servers1, function2, 2)
@@ -91,8 +92,8 @@ IMPLEMENT_FUNCTION_SIIS(Servers1, function5, 5)
 	error("Servers1: callback function 5 not implemented!");
 }
 
-IMPLEMENT_FUNCTION_S(Servers1, function6, 6)
-	error("Servers1: callback function 6 not implemented!");
+IMPLEMENT_FUNCTION_S(Servers1, playSound, 6)
+	Entity::playSound(savepoint);
 }
 
 IMPLEMENT_FUNCTION(Servers1, function7, 7)

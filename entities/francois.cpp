@@ -38,12 +38,12 @@ namespace LastExpress {
 
 Francois::Francois(LastExpressEngine *engine) : Entity(engine, kEntityFrancois) {
 	ADD_CALLBACK_FUNCTION(Francois, function1);
-	ADD_CALLBACK_FUNCTION(Francois, function2);
-	ADD_CALLBACK_FUNCTION(Francois, function3);
+	ADD_CALLBACK_FUNCTION(Francois, updateFromTime);
+	ADD_CALLBACK_FUNCTION(Francois, draw);
 	ADD_CALLBACK_FUNCTION(Francois, function4);
 	ADD_CALLBACK_FUNCTION(Francois, function5);
-	ADD_CALLBACK_FUNCTION(Francois, function6);
-	ADD_CALLBACK_FUNCTION(Francois, function7);
+	ADD_CALLBACK_FUNCTION(Francois, playSound);
+	ADD_CALLBACK_FUNCTION(Francois, savegame);
 	ADD_CALLBACK_FUNCTION(Francois, function8);
 	ADD_CALLBACK_FUNCTION(Francois, function9);
 	ADD_CALLBACK_FUNCTION(Francois, function10);
@@ -74,28 +74,28 @@ IMPLEMENT_FUNCTION(Francois, function1, 1)
 	error("Francois: callback function 1 not implemented!");
 }
 
-IMPLEMENT_FUNCTION_I(Francois, function2, 2)
-	error("Francois: callback function 2 not implemented!");
+IMPLEMENT_FUNCTION_I(Francois, updateFromTime, 2)
+	Entity::updateFromTime(savepoint);
 }
 
-IMPLEMENT_FUNCTION_S(Francois, function3, 3)
-	error("Francois: callback function 3 not implemented!");
+IMPLEMENT_FUNCTION_S(Francois, draw, 3)
+	Entity::draw(savepoint);
 }
 
 IMPLEMENT_FUNCTION_SI(Francois, function4, 4)
-	error("Francois: callback function 4 not implemented!");
+	Entity::updateFields(savepoint);
 }
 
 IMPLEMENT_FUNCTION_SI(Francois, function5, 5)
 	error("Francois: callback function 5 not implemented!");
 }
 
-IMPLEMENT_FUNCTION_S(Francois, function6, 6)
-	error("Francois: callback function 6 not implemented!");
+IMPLEMENT_FUNCTION_S(Francois, playSound, 6)
+	Entity::playSound(savepoint);
 }
 
-IMPLEMENT_FUNCTION_II(Francois, function7, 7)
-	error("Francois: callback function 7 not implemented!");
+IMPLEMENT_FUNCTION_II(Francois, savegame, 7)
+	Entity::savegame(savepoint);
 }
 
 IMPLEMENT_FUNCTION_II(Francois, function8, 8)

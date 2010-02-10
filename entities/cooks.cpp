@@ -29,6 +29,7 @@
 #include "lastexpress/game/logic.h"
 #include "lastexpress/game/object.h"
 #include "lastexpress/game/savepoint.h"
+#include "lastexpress/game/sound.h"
 #include "lastexpress/game/state.h"
 
 #include "lastexpress/helpers.h"
@@ -37,8 +38,8 @@
 namespace LastExpress {
 
 Cooks::Cooks(LastExpressEngine *engine) : Entity(engine, kEntityCooks) {
-	ADD_CALLBACK_FUNCTION(Cooks, function1);
-	ADD_CALLBACK_FUNCTION(Cooks, function2);
+	ADD_CALLBACK_FUNCTION(Cooks, draw);
+	ADD_CALLBACK_FUNCTION(Cooks, playSound);
 	ADD_CALLBACK_FUNCTION(Cooks, function3);
 	ADD_CALLBACK_FUNCTION(Cooks, function4);
 	ADD_CALLBACK_FUNCTION(Cooks, chapter1);
@@ -53,12 +54,12 @@ Cooks::Cooks(LastExpressEngine *engine) : Entity(engine, kEntityCooks) {
 	ADD_CALLBACK_FUNCTION(Cooks, chapter5);
 }
 
-IMPLEMENT_FUNCTION_S(Cooks, function1, 1)
-	error("Cooks: callback function 1 not implemented!");
+IMPLEMENT_FUNCTION_S(Cooks, draw, 1)
+	Entity::draw(savepoint);
 }
 
-IMPLEMENT_FUNCTION_S(Cooks, function2, 2)
-	error("Cooks: callback function 2 not implemented!");
+IMPLEMENT_FUNCTION_S(Cooks, playSound, 2)
+	Entity::playSound(savepoint);
 }
 
 IMPLEMENT_FUNCTION(Cooks, function3, 3)

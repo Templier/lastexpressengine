@@ -29,7 +29,6 @@
 #include "lastexpress/game/entities.h"
 #include "lastexpress/game/logic.h"
 #include "lastexpress/game/object.h"
-#include "lastexpress/game/savegame.h"
 #include "lastexpress/game/savepoint.h"
 #include "lastexpress/game/sound.h"
 #include "lastexpress/game/state.h"
@@ -42,7 +41,7 @@ namespace LastExpress {
 Max::Max(LastExpressEngine *engine) : Entity(engine, kEntityMax) {
 	ADD_CALLBACK_FUNCTION(Max, function1);
 	ADD_CALLBACK_FUNCTION(Max, playSound);
-	ADD_CALLBACK_FUNCTION(Max, passingRight);
+	ADD_CALLBACK_FUNCTION(Max, draw);
 	ADD_CALLBACK_FUNCTION(Max, function4);
 	ADD_CALLBACK_FUNCTION(Max, savegame);
 	ADD_CALLBACK_FUNCTION(Max, function6);
@@ -61,24 +60,23 @@ Max::Max(LastExpressEngine *engine) : Entity(engine, kEntityMax) {
 }
 
 IMPLEMENT_FUNCTION(Max, function1, 1)
-	FUNCTION1()
+	Entity::function1(savepoint);
 }
 
 IMPLEMENT_FUNCTION_S(Max, playSound, 2)
-	PLAYSOUND()
+	Entity::playSound(savepoint);
 }
 
-IMPLEMENT_FUNCTION_NOSETUP(Max, passingRight, 3)
-	EntityData::EntityParametersSIIS *params = (EntityData::EntityParametersSIIS*)_data->getCurrentParameters();
-	PASSING_RIGHT()
+IMPLEMENT_FUNCTION_NOSETUP(Max, draw, 3)
+	Entity::draw(savepoint);
 }
 
 IMPLEMENT_FUNCTION_SI(Max, function4, 4)
-	UPDATE_FIELDS()
+	Entity::updateFields(savepoint);
 }
 
 IMPLEMENT_FUNCTION_II(Max, savegame, 5)
-	SAVEGAME()
+	Entity::savegame(savepoint);
 }
 
 IMPLEMENT_FUNCTION(Max, function6, 6)

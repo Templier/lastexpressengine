@@ -29,6 +29,7 @@
 #include "lastexpress/game/logic.h"
 #include "lastexpress/game/object.h"
 #include "lastexpress/game/savepoint.h"
+#include "lastexpress/game/sound.h"
 #include "lastexpress/game/state.h"
 
 #include "lastexpress/helpers.h"
@@ -38,8 +39,8 @@ namespace LastExpress {
 
 August::August(LastExpressEngine *engine) : Entity(engine, kEntityAugust) {
 	ADD_CALLBACK_FUNCTION(August, function1);
-	ADD_CALLBACK_FUNCTION(August, function2);
-	ADD_CALLBACK_FUNCTION(August, function3);
+	ADD_CALLBACK_FUNCTION(August, updateFromTime);
+	ADD_CALLBACK_FUNCTION(August, draw);
 	ADD_CALLBACK_FUNCTION(August, function4);
 	ADD_CALLBACK_FUNCTION(August, function5);
 	ADD_CALLBACK_FUNCTION(August, function6);
@@ -47,11 +48,11 @@ August::August(LastExpressEngine *engine) : Entity(engine, kEntityAugust) {
 	ADD_CALLBACK_FUNCTION(August, function8);
 	ADD_CALLBACK_FUNCTION(August, function9);
 	ADD_CALLBACK_FUNCTION(August, function10);
-	ADD_CALLBACK_FUNCTION(August, function11);
-	ADD_CALLBACK_FUNCTION(August, function12);
+	ADD_CALLBACK_FUNCTION(August, draw2);
+	ADD_CALLBACK_FUNCTION(August, playSound);
 	ADD_CALLBACK_FUNCTION(August, function13);
 	ADD_CALLBACK_FUNCTION(August, function14);
-	ADD_CALLBACK_FUNCTION(August, function15);
+	ADD_CALLBACK_FUNCTION(August, savegame);
 	ADD_CALLBACK_FUNCTION(August, function16);
 	ADD_CALLBACK_FUNCTION(August, function17);
 	ADD_CALLBACK_FUNCTION(August, function18);
@@ -113,20 +114,20 @@ IMPLEMENT_FUNCTION(August, function1, 1)
 	error("August: callback function 1 not implemented!");
 }
 
-IMPLEMENT_FUNCTION_I(August, function2, 2)
-	error("August: callback function 2 not implemented!");
+IMPLEMENT_FUNCTION_I(August, updateFromTime, 2)
+	Entity::updateFromTime(savepoint);
 }
 
-IMPLEMENT_FUNCTION_S(August, function3, 3)
-	error("August: callback function 3 not implemented!");
+IMPLEMENT_FUNCTION_S(August, draw, 3)
+	Entity::draw(savepoint);
 }
 
 IMPLEMENT_FUNCTION_SII(August, function4, 4)
-	error("August: callback function 4 not implemented!");
+	Entity::updateField1000(savepoint);
 }
 
 IMPLEMENT_FUNCTION_SI(August, function5, 5)
-	error("August: callback function 5 not implemented!");
+	Entity::updateFields(savepoint);
 }
 
 IMPLEMENT_FUNCTION_SI(August, function6, 6)
@@ -138,23 +139,23 @@ IMPLEMENT_FUNCTION_SI(August, function7, 7)
 }
 
 IMPLEMENT_FUNCTION(August, function8, 8)
-	error("August: callback function 8 not implemented!");
+	Entity::savepointDirection(savepoint);
 }
 
 IMPLEMENT_FUNCTION_SIIS(August, function9, 9)
-	error("August: callback function 9 not implemented!");
+	Entity::savepointCall(savepoint);
 }
 
 IMPLEMENT_FUNCTION_IIS(August, function10, 10)
 	error("August: callback function 10 not implemented!");
 }
 
-IMPLEMENT_FUNCTION_SSI(August, function11, 11)
-	error("August: callback function 11 not implemented!");
+IMPLEMENT_FUNCTION_SSI(August, draw2, 11)
+	Entity::draw2(savepoint);
 }
 
-IMPLEMENT_FUNCTION_S(August, function12, 12)
-	error("August: callback function 12 not implemented!");
+IMPLEMENT_FUNCTION_S(August, playSound, 12)
+	Entity::playSound(savepoint);
 }
 
 IMPLEMENT_FUNCTION_S(August, function13, 13)
@@ -162,11 +163,11 @@ IMPLEMENT_FUNCTION_S(August, function13, 13)
 }
 
 IMPLEMENT_FUNCTION(August, function14, 14)
-	error("August: callback function 14 not implemented!");
+	Entity::savepointCheckFields11(savepoint);
 }
 
-IMPLEMENT_FUNCTION_II(August, function15, 15)
-	error("August: callback function 15 not implemented!");
+IMPLEMENT_FUNCTION_II(August, savegame, 15)
+	Entity::savegame(savepoint);
 }
 
 IMPLEMENT_FUNCTION_II(August, function16, 16)

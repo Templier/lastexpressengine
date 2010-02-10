@@ -29,7 +29,9 @@
 #include "lastexpress/game/logic.h"
 #include "lastexpress/game/object.h"
 #include "lastexpress/game/savepoint.h"
+#include "lastexpress/game/sound.h"
 #include "lastexpress/game/state.h"
+
 #include "lastexpress/lastexpress.h"
 #include "lastexpress/helpers.h"
 
@@ -38,8 +40,8 @@ namespace LastExpress {
 Hadija::Hadija(LastExpressEngine *engine) : Entity(engine, kEntityHadija) {
 	ADD_CALLBACK_FUNCTION(Hadija, function1);
 	ADD_CALLBACK_FUNCTION(Hadija, function2);
-	ADD_CALLBACK_FUNCTION(Hadija, function3);
-	ADD_CALLBACK_FUNCTION(Hadija, function4);
+	ADD_CALLBACK_FUNCTION(Hadija, playSound);
+	ADD_CALLBACK_FUNCTION(Hadija, updateFromTime);
 	ADD_CALLBACK_FUNCTION(Hadija, function5);
 	ADD_CALLBACK_FUNCTION(Hadija, function6);
 	ADD_CALLBACK_FUNCTION(Hadija, function7);
@@ -63,19 +65,19 @@ Hadija::Hadija(LastExpressEngine *engine) : Entity(engine, kEntityHadija) {
 }
 
 IMPLEMENT_FUNCTION(Hadija, function1, 1)
-	error("Hadija: callback function 1 not implemented!");
+	Entity::function1(savepoint);
 }
 
 IMPLEMENT_FUNCTION_SI(Hadija, function2, 2)
-	error("Hadija: callback function 2 not implemented!");
+	Entity::updateFields(savepoint);
 }
 
-IMPLEMENT_FUNCTION_S(Hadija, function3, 3)
-	error("Hadija: callback function 3 not implemented!");
+IMPLEMENT_FUNCTION_S(Hadija, playSound, 3)
+	Entity::playSound(savepoint);
 }
 
-IMPLEMENT_FUNCTION_NOSETUP(Hadija, function4, 4)
-	error("Hadija: callback function 4 not implemented!");
+IMPLEMENT_FUNCTION_NOSETUP(Hadija, updateFromTime, 4)
+	Entity::updateFromTime(savepoint);
 }
 
 IMPLEMENT_FUNCTION_II(Hadija, function5, 5)

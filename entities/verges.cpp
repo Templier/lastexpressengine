@@ -29,6 +29,7 @@
 #include "lastexpress/game/logic.h"
 #include "lastexpress/game/object.h"
 #include "lastexpress/game/savepoint.h"
+#include "lastexpress/game/sound.h"
 #include "lastexpress/game/state.h"
 
 #include "lastexpress/lastexpress.h"
@@ -40,17 +41,17 @@ Verges::Verges(LastExpressEngine *engine) : Entity(engine, kEntityVerges) {
 	ADD_CALLBACK_FUNCTION(Verges, function1);
 	ADD_CALLBACK_FUNCTION(Verges, function2);
 	ADD_CALLBACK_FUNCTION(Verges, function3);
-	ADD_CALLBACK_FUNCTION(Verges, function4);
-	ADD_CALLBACK_FUNCTION(Verges, function5);
+	ADD_CALLBACK_FUNCTION(Verges, playSound);
+	ADD_CALLBACK_FUNCTION(Verges, playSound16);
 	ADD_CALLBACK_FUNCTION(Verges, function6);
-	ADD_CALLBACK_FUNCTION(Verges, function7);
+	ADD_CALLBACK_FUNCTION(Verges, savegame);
 	ADD_CALLBACK_FUNCTION(Verges, function8);
 	ADD_CALLBACK_FUNCTION(Verges, function9);
 	ADD_CALLBACK_FUNCTION(Verges, function10);
 	ADD_CALLBACK_FUNCTION(Verges, function11);
 	ADD_CALLBACK_FUNCTION(Verges, function12);
 	ADD_CALLBACK_FUNCTION(Verges, function13);
-	ADD_CALLBACK_FUNCTION(Verges, function14);
+	ADD_CALLBACK_FUNCTION(Verges, updateFromTime);
 	ADD_CALLBACK_FUNCTION(Verges, function15);
 	ADD_CALLBACK_FUNCTION(Verges, function16);
 	ADD_CALLBACK_FUNCTION(Verges, function17);
@@ -82,7 +83,7 @@ Verges::Verges(LastExpressEngine *engine) : Entity(engine, kEntityVerges) {
 }
 
 IMPLEMENT_FUNCTION(Verges, function1, 1)
-	error("Verges: callback function 1 not implemented!");
+	Entity::function1(savepoint);
 }
 
 IMPLEMENT_FUNCTION_S(Verges, function2, 2)
@@ -93,20 +94,20 @@ IMPLEMENT_FUNCTION(Verges, function3, 3)
 	error("Verges: callback function 3 not implemented!");
 }
 
-IMPLEMENT_FUNCTION_S(Verges, function4, 4)
-	error("Verges: callback function 4 not implemented!");
+IMPLEMENT_FUNCTION_S(Verges, playSound, 4)
+	Entity::playSound(savepoint);
 }
 
-IMPLEMENT_FUNCTION_NOSETUP(Verges, function5, 5)
-	error("Verges: callback function 5 not implemented!");
+IMPLEMENT_FUNCTION_NOSETUP(Verges, playSound16, 5)
+	Entity::playSound(savepoint, false, 16);
 }
 
 IMPLEMENT_FUNCTION(Verges, function6, 6)
-	error("Verges: callback function 6 not implemented!");
+	Entity::savepointCheckFields11(savepoint);
 }
 
-IMPLEMENT_FUNCTION_II(Verges, function7, 7)
-	error("Verges: callback function 7 not implemented!");
+IMPLEMENT_FUNCTION_II(Verges, savegame, 7)
+	Entity::savegame(savepoint);
 }
 
 IMPLEMENT_FUNCTION_II(Verges, function8, 8)
@@ -133,8 +134,8 @@ IMPLEMENT_FUNCTION_I(Verges, function13, 13)
 	error("Verges: callback function 13 not implemented!");
 }
 
-IMPLEMENT_FUNCTION_I(Verges, function14, 14)
-	error("Verges: callback function 14 not implemented!");
+IMPLEMENT_FUNCTION_I(Verges, updateFromTime, 14)
+	Entity::updateFromTime(savepoint);
 }
 
 IMPLEMENT_FUNCTION_IS(Verges, function15, 15)

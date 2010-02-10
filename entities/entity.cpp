@@ -25,9 +25,15 @@
 
 #include "lastexpress/entities/entity.h"
 
+#include "lastexpress/entities/entity_intern.h"
+
+#include "lastexpress/game/entities.h"
 #include "lastexpress/game/logic.h"
 #include "lastexpress/game/state.h"
+#include "lastexpress/game/savegame.h"
 #include "lastexpress/game/savepoint.h"
+#include "lastexpress/game/sound.h"
+#include "lastexpress/game/state.h"
 
 #include "lastexpress/helpers.h"
 #include "lastexpress/lastexpress.h"
@@ -97,6 +103,235 @@ void Entity::setup(ChapterIndex index) {
 		break;
 
 	default:
+		break;
+	}
+}
+
+//////////////////////////////////////////////////////////////////////////
+// Shared functions
+//////////////////////////////////////////////////////////////////////////
+
+void Entity::function1(SavePoint *savepoint) {
+	switch (savepoint->action) {
+	default:
+		break;
+
+	case kActionNone:
+		if (getEntities()->checkEntity(_entityIndex, EntityData::kField495_3, (EntityData::Field491Value)CURRENT_PARAM(1)))
+			CURRENT_PARAM(1) = (CURRENT_PARAM(1) == 10000) ? 0 : 10000;
+		break;
+
+	case kActionDefault:
+		_data->getData()->field_491 = EntityData::kField491_0;
+		_data->getData()->field_493 = EntityData::kField493_0;
+		_data->getData()->field_495 = EntityData::kField495_3;
+		CURRENT_PARAM(1) = 10000;
+		break;
+	}
+}
+
+void Entity::savegame(SavePoint *savepoint) {
+	EntityData::EntityParametersIIII *params = (EntityData::EntityParametersIIII*)_data->getCurrentParameters();
+
+	switch (savepoint->action) {
+	default:
+		break;
+
+	case kActionNone:
+		CALL_PREVIOUS_SAVEPOINT()
+		break;
+
+	case kActionDefault:
+		save(_entityIndex, params->param1, (EventIndex)params->param2);
+		CALL_PREVIOUS_SAVEPOINT()
+		break;
+	}
+}
+
+void Entity::playSound(SavePoint *savepoint, bool resetItem, int param3) {
+	EntityData::EntityParametersSIIS *params = (EntityData::EntityParametersSIIS*)_data->getCurrentParameters();
+
+	switch (savepoint->action) {
+	default:
+		break;
+
+	case kAction2:
+		CALL_PREVIOUS_SAVEPOINT()
+		break;
+
+	case kActionDefault:
+		if (resetItem)
+			_data->getData()->inventoryItem = kItemNone;
+
+		getSound()->playSound(_entityIndex, params->seq1, param3);
+		break;
+	}
+}
+
+void Entity::draw(SavePoint *savepoint) {
+	EntityData::EntityParametersSIIS *params = (EntityData::EntityParametersSIIS*)_data->getCurrentParameters();
+
+	switch (savepoint->action) {
+	default:
+		break;
+
+	case kAction3:
+		CALL_PREVIOUS_SAVEPOINT()
+		break;
+
+	case kActionDefault:
+		getEntities()->drawSequenceRight(_entityIndex, params->seq1);
+		break;
+	}
+}
+
+void Entity::draw2(SavePoint *savepoint) {
+	EntityData::EntityParametersSSII *params = (EntityData::EntityParametersSSII*)_data->getCurrentParameters();
+
+	switch (savepoint->action) {
+	default:
+		break;
+
+	case kAction3:
+		CALL_PREVIOUS_SAVEPOINT()
+		break;
+
+	case kActionDefault:
+		getEntities()->drawSequenceRight(_entityIndex, params->seq1);
+		getEntities()->drawSequenceRight((EntityIndex)params->param3, params->seq2);
+		break;
+	}
+}
+
+void Entity::updateFromTicks(SavePoint *savepoint) {
+	switch (savepoint->action) {
+	default:
+		break;
+
+	case kActionNone:
+		UPDATE_PARAM_FROM_TICKS(2, 1)
+		CALL_PREVIOUS_SAVEPOINT()
+		break;
+	}
+}
+
+void Entity::updateFromTime(SavePoint *savepoint) {
+	switch (savepoint->action) {
+	default:
+		break;
+
+	case kActionNone:
+		UPDATE_PARAM_FROM_TIME(2, 1)
+		CALL_PREVIOUS_SAVEPOINT()
+		break;
+	}
+}
+
+
+void Entity::savepointDirection(SavePoint *savepoint) {
+	switch (savepoint->action) {
+	default:
+		break;
+
+	case kAction3:
+		CALL_PREVIOUS_SAVEPOINT()
+		break;
+
+	case kActionDefault:
+		if (_data->getData()->direction != kDirectionRight)
+			CALL_PREVIOUS_SAVEPOINT()
+		break;
+	}
+}
+
+void Entity::savepointCheckFields11(SavePoint *savepoint) {
+	switch (savepoint->action) {
+	default:
+		break;
+
+	case kActionNone:
+	case kActionDefault:
+		if (getEntities()->checkFields11())
+			CALL_PREVIOUS_SAVEPOINT()
+		break;
+	}
+}
+
+void Entity::savepointCheckEntity(SavePoint *savepoint) {
+	EntityData::EntityParametersIIII *params = (EntityData::EntityParametersIIII*)_data->getCurrentParameters();
+
+	switch (savepoint->action) {
+	default:
+		break;
+
+	case kActionNone:
+	case kActionDefault:
+		if (getEntities()->checkEntity(_entityIndex, (EntityData::Field495Value)params->param1, (EntityData::Field491Value)params->param2))
+			CALL_PREVIOUS_SAVEPOINT()
+		break;
+	}
+}
+
+void Entity::savepointCall(SavePoint *savepoint) {
+	EntityData::EntityParametersSIIS *params = (EntityData::EntityParametersSIIS*)_data->getCurrentParameters();
+
+	switch (savepoint->action) {
+	default:
+		break;
+
+	case kAction3:
+		if (!CURRENT_PARAMS(1, 1))
+			getSavePoints()->call(_entityIndex, (EntityIndex)params->param2, (ActionIndex)params->param3, params->seq2);
+		CALL_PREVIOUS_SAVEPOINT()
+		break;
+
+	case kAction10:
+		if (!CURRENT_PARAMS(1, 1)) {
+			getSavePoints()->call(_entityIndex, (EntityIndex)params->param2, (ActionIndex)params->param3, params->seq2);
+			CURRENT_PARAMS(1, 1) = 1;
+		}
+		break;
+
+	case kActionDefault:
+		getEntities()->drawSequenceRight(_entityIndex, params->seq1);
+		break;
+	}
+}
+
+void Entity::updateFields(SavePoint *savepoint) {
+	EntityData::EntityParametersSIIS *params = (EntityData::EntityParametersSIIS*)_data->getCurrentParameters();
+
+	switch (savepoint->action) {
+	default:
+		break;
+
+	case kAction3:
+		getEntities()->updateFields1(_entityIndex, (EntityIndex)params->param2);
+		CALL_PREVIOUS_SAVEPOINT()
+		break;
+
+	case kActionDefault:
+		getEntities()->drawSequenceRight(_entityIndex, params->seq1);
+		getEntities()->updateFields0(_entityIndex, (EntityIndex)params->param2);
+		break;
+	}
+}
+
+void Entity::updateField1000(SavePoint *savepoint) {
+	EntityData::EntityParametersSIIS *params = (EntityData::EntityParametersSIIS*)_data->getCurrentParameters();
+
+	switch (savepoint->action) {
+	default:
+		break;
+
+	case kAction3:
+		getEntities()->updateField1000(_entityIndex, params->param2, params->param3);
+		CALL_PREVIOUS_SAVEPOINT()
+		break;
+
+	case kActionDefault:
+		getEntities()->drawSequenceRight(_entityIndex, params->seq1);
+		getEntities()->updateField1000ProcessScene(_entityIndex, params->param2, params->param3);
 		break;
 	}
 }

@@ -38,12 +38,12 @@ public:
 	Servers1(LastExpressEngine *engine);
 
 	// Setup
-	DECLARE_FUNCTION_NOSETUP(function1)
+	DECLARE_FUNCTION_NOSETUP(updateFromTime)
 	DECLARE_FUNCTION(function2)
 	DECLARE_FUNCTION_SII(function3)
 	DECLARE_FUNCTION(function4)
 	DECLARE_FUNCTION_SIIS(function5)
-	DECLARE_FUNCTION_S(function6)
+	DECLARE_FUNCTION_S(playSound)
 	DECLARE_FUNCTION(function7)
 	DECLARE_FUNCTION(chapter1)
 	DECLARE_FUNCTION(function9)

@@ -29,6 +29,7 @@
 #include "lastexpress/game/logic.h"
 #include "lastexpress/game/object.h"
 #include "lastexpress/game/savepoint.h"
+#include "lastexpress/game/sound.h"
 #include "lastexpress/game/state.h"
 
 #include "lastexpress/lastexpress.h"
@@ -38,11 +39,11 @@ namespace LastExpress {
 
 Rebecca::Rebecca(LastExpressEngine *engine) : Entity(engine, kEntityRebecca) {
 	ADD_CALLBACK_FUNCTION(Rebecca, function1);
-	ADD_CALLBACK_FUNCTION(Rebecca, function2);
-	ADD_CALLBACK_FUNCTION(Rebecca, function3);
+	ADD_CALLBACK_FUNCTION(Rebecca, updateFromTime);
+	ADD_CALLBACK_FUNCTION(Rebecca, playSound);
 	ADD_CALLBACK_FUNCTION(Rebecca, function4);
 	ADD_CALLBACK_FUNCTION(Rebecca, function5);
-	ADD_CALLBACK_FUNCTION(Rebecca, function6);
+	ADD_CALLBACK_FUNCTION(Rebecca, draw);
 	ADD_CALLBACK_FUNCTION(Rebecca, function7);
 	ADD_CALLBACK_FUNCTION(Rebecca, function8);
 	ADD_CALLBACK_FUNCTION(Rebecca, function9);
@@ -50,7 +51,7 @@ Rebecca::Rebecca(LastExpressEngine *engine) : Entity(engine, kEntityRebecca) {
 	ADD_CALLBACK_FUNCTION(Rebecca, function11);
 	ADD_CALLBACK_FUNCTION(Rebecca, function12);
 	ADD_CALLBACK_FUNCTION(Rebecca, function13);
-	ADD_CALLBACK_FUNCTION(Rebecca, function14);
+	ADD_CALLBACK_FUNCTION(Rebecca, draw2);
 	ADD_CALLBACK_FUNCTION(Rebecca, function15);
 	ADD_CALLBACK_FUNCTION(Rebecca, function16);
 	ADD_CALLBACK_FUNCTION(Rebecca, function17);
@@ -89,15 +90,15 @@ Rebecca::Rebecca(LastExpressEngine *engine) : Entity(engine, kEntityRebecca) {
 }
 
 IMPLEMENT_FUNCTION(Rebecca, function1, 1)
-	error("Rebecca: callback function 1 not implemented!");
+	Entity::function1(savepoint);
 }
 
-IMPLEMENT_FUNCTION_I(Rebecca, function2, 2)
-	error("Rebecca: callback function 2 not implemented!");
+IMPLEMENT_FUNCTION_I(Rebecca, updateFromTime, 2)
+	Entity::updateFromTime(savepoint);
 }
 
-IMPLEMENT_FUNCTION_S(Rebecca, function3, 3)
-	error("Rebecca: callback function 3 not implemented!");
+IMPLEMENT_FUNCTION_S(Rebecca, playSound, 3)
+	Entity::playSound(savepoint);
 }
 
 IMPLEMENT_FUNCTION_S(Rebecca, function4, 4)
@@ -108,12 +109,12 @@ IMPLEMENT_FUNCTION_SIIS(Rebecca, function5, 5)
 	error("Rebecca: callback function 5 not implemented!");
 }
 
-IMPLEMENT_FUNCTION_S(Rebecca, function6, 6)
-	error("Rebecca: callback function 6 not implemented!");
+IMPLEMENT_FUNCTION_S(Rebecca, draw, 6)
+	Entity::draw(savepoint);
 }
 
 IMPLEMENT_FUNCTION_SI(Rebecca, function7, 7)
-	error("Rebecca: callback function 7 not implemented!");
+	Entity::updateFields(savepoint);
 }
 
 IMPLEMENT_FUNCTION_SI(Rebecca, function8, 8)
@@ -125,11 +126,11 @@ IMPLEMENT_FUNCTION_SI(Rebecca, function9, 9)
 }
 
 IMPLEMENT_FUNCTION(Rebecca, function10, 10)
-	error("Rebecca: callback function 10 not implemented!");
+	Entity::savepointDirection(savepoint);
 }
 
 IMPLEMENT_FUNCTION(Rebecca, function11, 11)
-	error("Rebecca: callback function 11 not implemented!");
+	Entity::savepointCheckFields11(savepoint);
 }
 
 IMPLEMENT_FUNCTION_II(Rebecca, function12, 12)
@@ -137,11 +138,11 @@ IMPLEMENT_FUNCTION_II(Rebecca, function12, 12)
 }
 
 IMPLEMENT_FUNCTION_SII(Rebecca, function13, 13)
-	error("Rebecca: callback function 13 not implemented!");
+	Entity::updateField1000(savepoint);
 }
 
-IMPLEMENT_FUNCTION_SSI(Rebecca, function14, 14)
-	error("Rebecca: callback function 14 not implemented!");
+IMPLEMENT_FUNCTION_SSI(Rebecca, draw2, 14)
+	Entity::draw2(savepoint);
 }
 
 IMPLEMENT_FUNCTION(Rebecca, function15, 15)

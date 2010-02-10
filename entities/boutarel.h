@@ -39,9 +39,9 @@ public:
 
 	// Setup
 	DECLARE_FUNCTION(function1)
-	DECLARE_FUNCTION_S(function2)
-	DECLARE_FUNCTION_S(function3)
-	DECLARE_FUNCTION_I(function4)
+	DECLARE_FUNCTION_S(playSound)
+	DECLARE_FUNCTION_S(draw)
+	DECLARE_FUNCTION_I(updateFromTime)
 	DECLARE_FUNCTION_SII(function5)
 	DECLARE_FUNCTION_SI(function6)
 	DECLARE_FUNCTION_SI(function7)

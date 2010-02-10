@@ -29,6 +29,7 @@
 #include "lastexpress/game/logic.h"
 #include "lastexpress/game/object.h"
 #include "lastexpress/game/savepoint.h"
+#include "lastexpress/game/sound.h"
 #include "lastexpress/game/state.h"
 
 #include "lastexpress/lastexpress.h"
@@ -38,9 +39,9 @@ namespace LastExpress {
 
 MmeBoutarel::MmeBoutarel(LastExpressEngine *engine) : Entity(engine, kEntityMmeBoutarel) {
 	ADD_CALLBACK_FUNCTION(MmeBoutarel, function1);
-	ADD_CALLBACK_FUNCTION(MmeBoutarel, function2);
-	ADD_CALLBACK_FUNCTION(MmeBoutarel, function3);
-	ADD_CALLBACK_FUNCTION(MmeBoutarel, function4);
+	ADD_CALLBACK_FUNCTION(MmeBoutarel, playSound);
+	ADD_CALLBACK_FUNCTION(MmeBoutarel, draw);
+	ADD_CALLBACK_FUNCTION(MmeBoutarel, updateFromTime);
 	ADD_CALLBACK_FUNCTION(MmeBoutarel, function5);
 	ADD_CALLBACK_FUNCTION(MmeBoutarel, function6);
 	ADD_CALLBACK_FUNCTION(MmeBoutarel, function7);
@@ -69,23 +70,23 @@ MmeBoutarel::MmeBoutarel(LastExpressEngine *engine) : Entity(engine, kEntityMmeB
 }
 
 IMPLEMENT_FUNCTION(MmeBoutarel, function1, 1)
-	error("MmeBoutarel: callback function 1 not implemented!");
+	Entity::function1(savepoint);
 }
 
-IMPLEMENT_FUNCTION_S(MmeBoutarel, function2, 2)
-	error("MmeBoutarel: callback function 2 not implemented!");
+IMPLEMENT_FUNCTION_S(MmeBoutarel, playSound, 2)
+	Entity::playSound(savepoint);
 }
 
-IMPLEMENT_FUNCTION_S(MmeBoutarel, function3, 3)
-	error("MmeBoutarel: callback function 3 not implemented!");
+IMPLEMENT_FUNCTION_S(MmeBoutarel, draw, 3)
+	Entity::draw(savepoint);
 }
 
-IMPLEMENT_FUNCTION_I(MmeBoutarel, function4, 4)
-	error("MmeBoutarel: callback function 4 not implemented!");
+IMPLEMENT_FUNCTION_I(MmeBoutarel, updateFromTime, 4)
+	Entity::updateFromTime(savepoint);
 }
 
 IMPLEMENT_FUNCTION_SI(MmeBoutarel, function5, 5)
-	error("MmeBoutarel: callback function 5 not implemented!");
+	Entity::updateFields(savepoint);
 }
 
 IMPLEMENT_FUNCTION_SI(MmeBoutarel, function6, 6)

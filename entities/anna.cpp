@@ -29,6 +29,7 @@
 #include "lastexpress/game/logic.h"
 #include "lastexpress/game/object.h"
 #include "lastexpress/game/savepoint.h"
+#include "lastexpress/game/sound.h"
 #include "lastexpress/game/state.h"
 
 #include "lastexpress/helpers.h"
@@ -38,19 +39,19 @@ namespace LastExpress {
 
 Anna::Anna(LastExpressEngine *engine) : Entity(engine, kEntityAnna) {
 	ADD_CALLBACK_FUNCTION(Anna, function1);
-	ADD_CALLBACK_FUNCTION(Anna, function2);
+	ADD_CALLBACK_FUNCTION(Anna, draw);
 	ADD_CALLBACK_FUNCTION(Anna, function3);
 	ADD_CALLBACK_FUNCTION(Anna, function4);
 	ADD_CALLBACK_FUNCTION(Anna, function5);
 	ADD_CALLBACK_FUNCTION(Anna, function6);
-	ADD_CALLBACK_FUNCTION(Anna, function7);
+	ADD_CALLBACK_FUNCTION(Anna, playSound);
 	ADD_CALLBACK_FUNCTION(Anna, function8);
-	ADD_CALLBACK_FUNCTION(Anna, function9);
+	ADD_CALLBACK_FUNCTION(Anna, savegame);
 	ADD_CALLBACK_FUNCTION(Anna, function10);
-	ADD_CALLBACK_FUNCTION(Anna, function11);
+	ADD_CALLBACK_FUNCTION(Anna, updateFromTime);
 	ADD_CALLBACK_FUNCTION(Anna, function12);
-	ADD_CALLBACK_FUNCTION(Anna, function13);
-	ADD_CALLBACK_FUNCTION(Anna, function14);
+	ADD_CALLBACK_FUNCTION(Anna, draw2);
+	ADD_CALLBACK_FUNCTION(Anna, updateFromTicks);
 	ADD_CALLBACK_FUNCTION(Anna, function15);
 	ADD_CALLBACK_FUNCTION(Anna, chapter1);
 	ADD_CALLBACK_FUNCTION(Anna, function17);
@@ -124,56 +125,56 @@ IMPLEMENT_FUNCTION(Anna, function1, 1)
 	error("Anna: callback function 1 not implemented!");
 }
 
-IMPLEMENT_FUNCTION_S(Anna, function2, 2)
-	error("Anna: callback function 2 not implemented!");
+IMPLEMENT_FUNCTION_S(Anna, draw, 2)
+	Entity::draw(savepoint);
 }
 
 IMPLEMENT_FUNCTION_SII(Anna, function3, 3)
-	error("Anna: callback function 3 not implemented!");
+	Entity::updateField1000(savepoint);
 }
 
 IMPLEMENT_FUNCTION_SI(Anna, function4, 4)
-	error("Anna: callback function 4 not implemented!");
+	Entity::updateFields(savepoint);
 }
 
 IMPLEMENT_FUNCTION(Anna, function5, 5)
-	error("Anna: callback function 5 not implemented!");
+	Entity::savepointDirection(savepoint);
 }
 
 IMPLEMENT_FUNCTION_SIIS(Anna, function6, 6)
-	error("Anna: callback function 6 not implemented!");
+	Entity::savepointCall(savepoint);
 }
 
-IMPLEMENT_FUNCTION_S(Anna, function7, 7)
-	error("Anna: callback function 7 not implemented!");
+IMPLEMENT_FUNCTION_S(Anna, playSound, 7)
+	Entity::playSound(savepoint);
 }
 
 IMPLEMENT_FUNCTION(Anna, function8, 8)
-	error("Anna: callback function 8 not implemented!");
+	Entity::savepointCheckFields11(savepoint);
 }
 
-IMPLEMENT_FUNCTION_II(Anna, function9, 9)
-	error("Anna: callback function 9 not implemented!");
+IMPLEMENT_FUNCTION_II(Anna, savegame, 9)
+	Entity::savegame(savepoint);
 }
 
 IMPLEMENT_FUNCTION_II(Anna, function10, 10)
 	error("Anna: callback function 10 not implemented!");
 }
 
-IMPLEMENT_FUNCTION_I(Anna, function11, 11)
-	error("Anna: callback function 11 not implemented!");
+IMPLEMENT_FUNCTION_I(Anna, updateFromTime, 11)
+	Entity::updateFromTime(savepoint);
 }
 
 IMPLEMENT_FUNCTION(Anna, function12, 12)
 	error("Anna: callback function 12 not implemented!");
 }
 
-IMPLEMENT_FUNCTION_SSI(Anna, function13, 13)
-	error("Anna: callback function 13 not implemented!");
+IMPLEMENT_FUNCTION_SSI(Anna, draw2, 13)
+	Entity::draw2(savepoint);
 }
 
-IMPLEMENT_FUNCTION_I(Anna, function14, 14)
-	error("Anna: callback function 14 not implemented!");
+IMPLEMENT_FUNCTION_I(Anna, updateFromTicks, 14)
+	Entity::updateFromTicks(savepoint);
 }
 
 IMPLEMENT_FUNCTION_IS(Anna, function15, 15)

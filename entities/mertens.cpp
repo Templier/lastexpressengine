@@ -30,7 +30,6 @@
 #include "lastexpress/game/inventory.h"
 #include "lastexpress/game/logic.h"
 #include "lastexpress/game/object.h"
-#include "lastexpress/game/savegame.h"
 #include "lastexpress/game/savepoint.h"
 #include "lastexpress/game/state.h"
 #include "lastexpress/game/sound.h"
@@ -98,7 +97,7 @@ Mertens::Mertens(LastExpressEngine *engine) : Entity(engine, kEntityMertens) {
 }
 
 IMPLEMENT_FUNCTION(Mertens, function1, 1)
-	error("Mertens: callback function 1 not implemented!");
+	Entity::function1(savepoint);
 }
 
 IMPLEMENT_FUNCTION_S(Mertens, function2, 2)
@@ -159,7 +158,7 @@ IMPLEMENT_FUNCTION_S(Mertens, function8, 8)
 }
 
 IMPLEMENT_FUNCTION_II(Mertens, savegame, 9)
-	SAVEGAME()
+	Entity::savegame(savepoint);
 }
 
 IMPLEMENT_FUNCTION_II(Mertens, function10, 10)

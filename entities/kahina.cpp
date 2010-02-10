@@ -29,6 +29,7 @@
 #include "lastexpress/game/logic.h"
 #include "lastexpress/game/object.h"
 #include "lastexpress/game/savepoint.h"
+#include "lastexpress/game/sound.h"
 #include "lastexpress/game/state.h"
 
 #include "lastexpress/lastexpress.h"
@@ -38,10 +39,10 @@ namespace LastExpress {
 
 Kahina::Kahina(LastExpressEngine *engine) : Entity(engine, kEntityKahina) {
 	ADD_CALLBACK_FUNCTION(Kahina, function1);
-	ADD_CALLBACK_FUNCTION(Kahina, function2);
-	ADD_CALLBACK_FUNCTION(Kahina, function3);
-	ADD_CALLBACK_FUNCTION(Kahina, function4);
-	ADD_CALLBACK_FUNCTION(Kahina, function5);
+	ADD_CALLBACK_FUNCTION(Kahina, playSound);
+	ADD_CALLBACK_FUNCTION(Kahina, savegame);
+	ADD_CALLBACK_FUNCTION(Kahina, updateFromTime);
+	ADD_CALLBACK_FUNCTION(Kahina, updateFromTicks);
 	ADD_CALLBACK_FUNCTION(Kahina, function6);
 	ADD_CALLBACK_FUNCTION(Kahina, function7);
 	ADD_CALLBACK_FUNCTION(Kahina, function8);
@@ -69,23 +70,28 @@ Kahina::Kahina(LastExpressEngine *engine) : Entity(engine, kEntityKahina) {
 }
 
 IMPLEMENT_FUNCTION(Kahina, function1, 1)
-	error("Kahina: callback function 1 not implemented!");
+	Entity::function1(savepoint);
 }
 
-IMPLEMENT_FUNCTION_S(Kahina, function2, 2)
-	error("Kahina: callback function 2 not implemented!");
+IMPLEMENT_FUNCTION_S(Kahina, playSound, 2)
+	Entity::playSound(savepoint);
 }
 
-IMPLEMENT_FUNCTION_II(Kahina, function3, 3)
-	error("Kahina: callback function 3 not implemented!");
+IMPLEMENT_FUNCTION_II(Kahina, savegame, 3)
+	Entity::savegame(savepoint);
 }
 
-IMPLEMENT_FUNCTION_I(Kahina, function4, 4)
-	error("Kahina: callback function 4 not implemented!");
+IMPLEMENT_FUNCTION_I(Kahina, updateFromTime, 4)
+	if (savepoint->action == kAction137503360) {
+		ENTITY_PARAM(0, 2) = 1;
+		CALL_PREVIOUS_SAVEPOINT()
+	}
+
+	Entity::updateFromTime(savepoint);
 }
 
-IMPLEMENT_FUNCTION_NOSETUP(Kahina, function5, 5)
-	error("Kahina: callback function 5 not implemented!");
+IMPLEMENT_FUNCTION_NOSETUP(Kahina, updateFromTicks, 5)
+	Entity::updateFromTicks(savepoint);
 }
 
 IMPLEMENT_FUNCTION_I(Kahina, function6, 6)
@@ -101,7 +107,7 @@ IMPLEMENT_FUNCTION_II(Kahina, function8, 8)
 }
 
 IMPLEMENT_FUNCTION_SI(Kahina, function9, 9)
-	error("Kahina: callback function 9 not implemented!");
+	Entity::updateFields(savepoint);
 }
 
 IMPLEMENT_FUNCTION(Kahina, chapter1, 10)

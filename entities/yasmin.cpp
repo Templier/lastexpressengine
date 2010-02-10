@@ -29,6 +29,7 @@
 #include "lastexpress/game/logic.h"
 #include "lastexpress/game/object.h"
 #include "lastexpress/game/savepoint.h"
+#include "lastexpress/game/sound.h"
 #include "lastexpress/game/state.h"
 
 #include "lastexpress/lastexpress.h"
@@ -39,8 +40,8 @@ namespace LastExpress {
 Yasmin::Yasmin(LastExpressEngine *engine) : Entity(engine, kEntityYasmin) {
 	ADD_CALLBACK_FUNCTION(Yasmin, function1);
 	ADD_CALLBACK_FUNCTION(Yasmin, function2);
-	ADD_CALLBACK_FUNCTION(Yasmin, function3);
-	ADD_CALLBACK_FUNCTION(Yasmin, function4);
+	ADD_CALLBACK_FUNCTION(Yasmin, playSound);
+	ADD_CALLBACK_FUNCTION(Yasmin, updateFromTime);
 	ADD_CALLBACK_FUNCTION(Yasmin, function5);
 	ADD_CALLBACK_FUNCTION(Yasmin, function6);
 	ADD_CALLBACK_FUNCTION(Yasmin, function7);
@@ -66,15 +67,15 @@ IMPLEMENT_FUNCTION(Yasmin, function1, 1)
 }
 
 IMPLEMENT_FUNCTION_SI(Yasmin, function2, 2)
-	error("Yasmin: callback function 2 not implemented!");
+	Entity::updateFields(savepoint);
 }
 
-IMPLEMENT_FUNCTION_S(Yasmin, function3, 3)
-	error("Yasmin: callback function 3 not implemented!");
+IMPLEMENT_FUNCTION_S(Yasmin, playSound, 3)
+	Entity::playSound(savepoint);
 }
 
-IMPLEMENT_FUNCTION_NOSETUP(Yasmin, function4, 4)
-	error("Yasmin: callback function 4 not implemented!");
+IMPLEMENT_FUNCTION_NOSETUP(Yasmin, updateFromTime, 4)
+	Entity::updateFromTime(savepoint);
 }
 
 IMPLEMENT_FUNCTION_II(Yasmin, function5, 5)

@@ -44,7 +44,7 @@ Coudert::Coudert(LastExpressEngine *engine) : Entity(engine, kEntityCoudert) {
 	ADD_CALLBACK_FUNCTION(Coudert, function5);
 	ADD_CALLBACK_FUNCTION(Coudert, function6);
 	ADD_CALLBACK_FUNCTION(Coudert, function7);
-	ADD_CALLBACK_FUNCTION(Coudert, function8);
+	ADD_CALLBACK_FUNCTION(Coudert, savegame);
 	ADD_CALLBACK_FUNCTION(Coudert, function9);
 	ADD_CALLBACK_FUNCTION(Coudert, function10);
 	ADD_CALLBACK_FUNCTION(Coudert, function11);
@@ -130,8 +130,8 @@ IMPLEMENT_FUNCTION_NOSETUP(Coudert, function7, 7)
 	error("Coudert: callback function 7 not implemented!");
 }
 
-IMPLEMENT_FUNCTION_II(Coudert, function8, 8)
-	error("Coudert: callback function 8 not implemented!");
+IMPLEMENT_FUNCTION_II(Coudert, savegame, 8)
+	Entity::savegame(savepoint);
 }
 
 IMPLEMENT_FUNCTION_II(Coudert, function9, 9)

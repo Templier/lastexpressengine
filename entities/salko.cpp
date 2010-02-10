@@ -29,6 +29,7 @@
 #include "lastexpress/game/logic.h"
 #include "lastexpress/game/object.h"
 #include "lastexpress/game/savepoint.h"
+#include "lastexpress/game/sound.h"
 #include "lastexpress/game/state.h"
 
 #include "lastexpress/lastexpress.h"
@@ -39,10 +40,10 @@ namespace LastExpress {
 Salko::Salko(LastExpressEngine *engine) : Entity(engine, kEntitySalko) {
 	ADD_CALLBACK_FUNCTION(Salko, function1);
 	ADD_CALLBACK_FUNCTION(Salko, function2);
-	ADD_CALLBACK_FUNCTION(Salko, function3);
+	ADD_CALLBACK_FUNCTION(Salko, draw);
 	ADD_CALLBACK_FUNCTION(Salko, function4);
-	ADD_CALLBACK_FUNCTION(Salko, function5);
-	ADD_CALLBACK_FUNCTION(Salko, function6);
+	ADD_CALLBACK_FUNCTION(Salko, updateFromTime);
+	ADD_CALLBACK_FUNCTION(Salko, savegame);
 	ADD_CALLBACK_FUNCTION(Salko, function7);
 	ADD_CALLBACK_FUNCTION(Salko, function8);
 	ADD_CALLBACK_FUNCTION(Salko, chapter1);
@@ -65,27 +66,27 @@ Salko::Salko(LastExpressEngine *engine) : Entity(engine, kEntitySalko) {
 }
 
 IMPLEMENT_FUNCTION(Salko, function1, 1)
-	error("Salko: callback function 1 not implemented!");
+	Entity::function1(savepoint);
 }
 
 IMPLEMENT_FUNCTION_SI(Salko, function2, 2)
-	error("Salko: callback function 2 not implemented!");
+	Entity::updateFields(savepoint);
 }
 
-IMPLEMENT_FUNCTION_NOSETUP(Salko, function3, 3)
-	error("Salko: callback function 3 not implemented!");
+IMPLEMENT_FUNCTION_NOSETUP(Salko, draw, 3)
+	Entity::draw(savepoint);
 }
 
 IMPLEMENT_FUNCTION_II(Salko, function4, 4)
-	error("Salko: callback function 4 not implemented!");
+	Entity::savepointCheckEntity(savepoint);
 }
 
-IMPLEMENT_FUNCTION_I(Salko, function5, 5)
-	error("Salko: callback function 5 not implemented!");
+IMPLEMENT_FUNCTION_I(Salko, updateFromTime, 5)
+	Entity::updateFromTime(savepoint);
 }
 
-IMPLEMENT_FUNCTION_II(Salko, function6, 6)
-	error("Salko: callback function 6 not implemented!");
+IMPLEMENT_FUNCTION_II(Salko, savegame, 6)
+	Entity::savegame(savepoint);
 }
 
 IMPLEMENT_FUNCTION_II(Salko, function7, 7)

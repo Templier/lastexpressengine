@@ -373,6 +373,10 @@ void Entities::updateField1000(EntityIndex entity, int index, int value) {
 	error("Entities::updateField1000: not implemented!");
 }
 
+void Entities::updateField1000ProcessScene(EntityIndex entity, int index, int value) {
+	error("Entities::updateField1000: not implemented!");
+}
+
 void Entities::updateFields0(EntityIndex entity1, EntityIndex entity2) {
 	error("Entities::updateFields0: not implemented!");
 }

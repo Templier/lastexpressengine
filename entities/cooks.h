@@ -38,8 +38,8 @@ public:
 	Cooks(LastExpressEngine *engine);
 
 	// Setup
-	DECLARE_FUNCTION_S(function1)
-	DECLARE_FUNCTION_S(function2)
+	DECLARE_FUNCTION_S(draw)
+	DECLARE_FUNCTION_S(playSound)
 	DECLARE_FUNCTION(function3)
 	DECLARE_FUNCTION(function4)
 	DECLARE_FUNCTION(chapter1)

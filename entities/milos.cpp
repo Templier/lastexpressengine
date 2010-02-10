@@ -29,6 +29,7 @@
 #include "lastexpress/game/logic.h"
 #include "lastexpress/game/object.h"
 #include "lastexpress/game/savepoint.h"
+#include "lastexpress/game/sound.h"
 #include "lastexpress/game/state.h"
 
 #include "lastexpress/lastexpress.h"
@@ -38,14 +39,14 @@ namespace LastExpress {
 
 Milos::Milos(LastExpressEngine *engine) : Entity(engine, kEntityMilos) {
 	ADD_CALLBACK_FUNCTION(Milos, function1);
-	ADD_CALLBACK_FUNCTION(Milos, function2);
+	ADD_CALLBACK_FUNCTION(Milos, draw);
 	ADD_CALLBACK_FUNCTION(Milos, function3);
 	ADD_CALLBACK_FUNCTION(Milos, function4);
 	ADD_CALLBACK_FUNCTION(Milos, function5);
-	ADD_CALLBACK_FUNCTION(Milos, function6);
-	ADD_CALLBACK_FUNCTION(Milos, function7);
-	ADD_CALLBACK_FUNCTION(Milos, function8);
-	ADD_CALLBACK_FUNCTION(Milos, function9);
+	ADD_CALLBACK_FUNCTION(Milos, playSound);
+	ADD_CALLBACK_FUNCTION(Milos, playSound16);
+	ADD_CALLBACK_FUNCTION(Milos, savegame);
+	ADD_CALLBACK_FUNCTION(Milos, updateFromTime);
 	ADD_CALLBACK_FUNCTION(Milos, function10);
 	ADD_CALLBACK_FUNCTION(Milos, function11);
 	ADD_CALLBACK_FUNCTION(Milos, chapter1);
@@ -75,39 +76,40 @@ Milos::Milos(LastExpressEngine *engine) : Entity(engine, kEntityMilos) {
 }
 
 IMPLEMENT_FUNCTION(Milos, function1, 1)
-	error("Milos: callback function 1 not implemented!");
+	Entity::function1(savepoint);
 }
 
-IMPLEMENT_FUNCTION_S(Milos, function2, 2)
-	error("Milos: callback function 2 not implemented!");
+IMPLEMENT_FUNCTION_S(Milos, draw, 2)
+	Entity::draw(savepoint);
 }
 
 IMPLEMENT_FUNCTION_SI(Milos, function3, 3)
-	error("Milos: callback function 3 not implemented!");
+	Entity::updateFields(savepoint);
 }
 
+// Seems to be exactly the same as the previous function
 IMPLEMENT_FUNCTION_SI(Milos, function4, 4)
-	error("Milos: callback function 4 not implemented!");
+	Entity::updateFields(savepoint);
 }
 
 IMPLEMENT_FUNCTION(Milos, function5, 5)
-	error("Milos: callback function 5 not implemented!");
+	Entity::savepointDirection(savepoint);
 }
 
-IMPLEMENT_FUNCTION_S(Milos, function6, 6)
-	error("Milos: callback function 6 not implemented!");
+IMPLEMENT_FUNCTION_S(Milos, playSound, 6)
+	Entity::playSound(savepoint);
 }
 
-IMPLEMENT_FUNCTION_S(Milos, function7, 7)
-	error("Milos: callback function 7 not implemented!");
+IMPLEMENT_FUNCTION_S(Milos, playSound16, 7)
+	Entity::playSound(savepoint, false, 16);
 }
 
-IMPLEMENT_FUNCTION_II(Milos, function8, 8)
-	error("Milos: callback function 8 not implemented!");
+IMPLEMENT_FUNCTION_II(Milos, savegame, 8)
+	Entity::savegame(savepoint);
 }
 
-IMPLEMENT_FUNCTION_I(Milos, function9, 9)
-	error("Milos: callback function 9 not implemented!");
+IMPLEMENT_FUNCTION_I(Milos, updateFromTime, 9)
+	Entity::updateFromTime(savepoint);
 }
 
 IMPLEMENT_FUNCTION_II(Milos, function10, 10)

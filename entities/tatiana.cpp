@@ -30,6 +30,7 @@
 #include "lastexpress/game/logic.h"
 #include "lastexpress/game/object.h"
 #include "lastexpress/game/savepoint.h"
+#include "lastexpress/game/sound.h"
 #include "lastexpress/game/state.h"
 
 #include "lastexpress/lastexpress.h"
@@ -39,17 +40,17 @@ namespace LastExpress {
 
 Tatiana::Tatiana(LastExpressEngine *engine) : Entity(engine, kEntityTatiana) {
 	ADD_CALLBACK_FUNCTION(Tatiana, function1);
-	ADD_CALLBACK_FUNCTION(Tatiana, function2);
-	ADD_CALLBACK_FUNCTION(Tatiana, function3);
+	ADD_CALLBACK_FUNCTION(Tatiana, playSound);
+	ADD_CALLBACK_FUNCTION(Tatiana, draw);
 	ADD_CALLBACK_FUNCTION(Tatiana, function4);
 	ADD_CALLBACK_FUNCTION(Tatiana, function5);
 	ADD_CALLBACK_FUNCTION(Tatiana, function6);
 	ADD_CALLBACK_FUNCTION(Tatiana, function7);
 	ADD_CALLBACK_FUNCTION(Tatiana, function8);
-	ADD_CALLBACK_FUNCTION(Tatiana, function9);
-	ADD_CALLBACK_FUNCTION(Tatiana, function10);
+	ADD_CALLBACK_FUNCTION(Tatiana, updateFromTicks);
+	ADD_CALLBACK_FUNCTION(Tatiana, updateFromTime);
 	ADD_CALLBACK_FUNCTION(Tatiana, function11);
-	ADD_CALLBACK_FUNCTION(Tatiana, function12);
+	ADD_CALLBACK_FUNCTION(Tatiana, savegame);
 	ADD_CALLBACK_FUNCTION(Tatiana, function13);
 	ADD_CALLBACK_FUNCTION(Tatiana, function14);
 	ADD_CALLBACK_FUNCTION(Tatiana, function15);
@@ -99,20 +100,20 @@ IMPLEMENT_FUNCTION(Tatiana, function1, 1)
 	error("Tatiana: callback function 1 not implemented!");
 }
 
-IMPLEMENT_FUNCTION_S(Tatiana, function2, 2)
-	error("Tatiana: callback function 2 not implemented!");
+IMPLEMENT_FUNCTION_S(Tatiana, playSound, 2)
+	Entity::playSound(savepoint);
 }
 
-IMPLEMENT_FUNCTION_S(Tatiana, function3, 3)
-	error("Tatiana: callback function 3 not implemented!");
+IMPLEMENT_FUNCTION_S(Tatiana, draw, 3)
+	Entity::draw(savepoint);
 }
 
 IMPLEMENT_FUNCTION_SII(Tatiana, function4, 4)
-	error("Tatiana: callback function 4 not implemented!");
+	Entity::updateField1000(savepoint);
 }
 
 IMPLEMENT_FUNCTION_SI(Tatiana, function5, 5)
-	error("Tatiana: callback function 5 not implemented!");
+	Entity::updateFields(savepoint);
 }
 
 IMPLEMENT_FUNCTION_SI(Tatiana, function6, 6)
@@ -124,23 +125,23 @@ IMPLEMENT_FUNCTION_SIIS(Tatiana, function7, 7)
 }
 
 IMPLEMENT_FUNCTION(Tatiana, function8, 8)
-	error("Tatiana: callback function 8 not implemented!");
+	Entity::savepointDirection(savepoint);
 }
 
-IMPLEMENT_FUNCTION_NOSETUP(Tatiana, function9, 9)
-	error("Tatiana: callback function 9 not implemented!");
+IMPLEMENT_FUNCTION_NOSETUP(Tatiana, updateFromTicks, 9)
+	Entity::updateFromTicks(savepoint);
 }
 
-IMPLEMENT_FUNCTION_I(Tatiana, function10, 10)
-	error("Tatiana: callback function 10 not implemented!");
+IMPLEMENT_FUNCTION_I(Tatiana, updateFromTime, 10)
+	Entity::updateFromTime(savepoint);
 }
 
 IMPLEMENT_FUNCTION(Tatiana, function11, 11)
-	error("Tatiana: callback function 11 not implemented!");
+	Entity::savepointCheckFields11(savepoint);
 }
 
-IMPLEMENT_FUNCTION_II(Tatiana, function12, 12)
-	error("Tatiana: callback function 12 not implemented!");
+IMPLEMENT_FUNCTION_II(Tatiana, savegame, 12)
+	Entity::savegame(savepoint);
 }
 
 IMPLEMENT_FUNCTION_II(Tatiana, function13, 13)

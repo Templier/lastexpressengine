@@ -57,7 +57,7 @@ Gendarmes::Gendarmes(LastExpressEngine *engine) : Entity(engine, kEntityGendarme
 }
 
 IMPLEMENT_FUNCTION(Gendarmes, function1, 1)
-	error("Gendarmes: callback function 1 not implemented!");
+	Entity::function1(savepoint);
 }
 
 IMPLEMENT_FUNCTION(Gendarmes, chapter1, 2)

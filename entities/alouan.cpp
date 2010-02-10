@@ -29,6 +29,7 @@
 #include "lastexpress/game/logic.h"
 #include "lastexpress/game/object.h"
 #include "lastexpress/game/savepoint.h"
+#include "lastexpress/game/sound.h"
 #include "lastexpress/game/state.h"
 
 #include "lastexpress/helpers.h"
@@ -39,8 +40,8 @@ namespace LastExpress {
 Alouan::Alouan(LastExpressEngine *engine) : Entity(engine, kEntityAlouan) {
 	ADD_CALLBACK_FUNCTION(Alouan, function1);
 	ADD_CALLBACK_FUNCTION(Alouan, function2);
-	ADD_CALLBACK_FUNCTION(Alouan, function3);
-	ADD_CALLBACK_FUNCTION(Alouan, function4);
+	ADD_CALLBACK_FUNCTION(Alouan, playSound);
+	ADD_CALLBACK_FUNCTION(Alouan, updateFromTime);
 	ADD_CALLBACK_FUNCTION(Alouan, function5);
 	ADD_CALLBACK_FUNCTION(Alouan, function6);
 	ADD_CALLBACK_FUNCTION(Alouan, function7);
@@ -64,19 +65,19 @@ Alouan::Alouan(LastExpressEngine *engine) : Entity(engine, kEntityAlouan) {
 }
 
 IMPLEMENT_FUNCTION(Alouan, function1, 1)
-	error("Alouan: callback function 1 not implemented!");
+	Entity::function1(savepoint);
 }
 
 IMPLEMENT_FUNCTION_SI(Alouan, function2, 2)
-	error("Alouan: callback function 2 not implemented!");
+	Entity::updateFields(savepoint);
 }
 
-IMPLEMENT_FUNCTION_S(Alouan, function3, 3)
-	error("Alouan: callback function 3 not implemented!");
+IMPLEMENT_FUNCTION_S(Alouan, playSound, 3)
+	Entity::playSound(savepoint);
 }
 
-IMPLEMENT_FUNCTION_I(Alouan, function4, 4)
-	error("Alouan: callback function 4 not implemented!");
+IMPLEMENT_FUNCTION_I(Alouan, updateFromTime, 4)
+	Entity::updateFromTime(savepoint);
 }
 
 IMPLEMENT_FUNCTION_II(Alouan, function5, 5)

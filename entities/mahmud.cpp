@@ -29,6 +29,7 @@
 #include "lastexpress/game/logic.h"
 #include "lastexpress/game/object.h"
 #include "lastexpress/game/savepoint.h"
+#include "lastexpress/game/sound.h"
 #include "lastexpress/game/state.h"
 
 #include "lastexpress/lastexpress.h"
@@ -38,13 +39,13 @@ namespace LastExpress {
 
 Mahmud::Mahmud(LastExpressEngine *engine) : Entity(engine, kEntityMahmud) {
 	ADD_CALLBACK_FUNCTION(Mahmud, function1);
-	ADD_CALLBACK_FUNCTION(Mahmud, function2);
+	ADD_CALLBACK_FUNCTION(Mahmud, draw);
 	ADD_CALLBACK_FUNCTION(Mahmud, function3);
 	ADD_CALLBACK_FUNCTION(Mahmud, function4);
-	ADD_CALLBACK_FUNCTION(Mahmud, function5);
+	ADD_CALLBACK_FUNCTION(Mahmud, playSound);
 	ADD_CALLBACK_FUNCTION(Mahmud, function6);
-	ADD_CALLBACK_FUNCTION(Mahmud, function7);
-	ADD_CALLBACK_FUNCTION(Mahmud, function8);
+	ADD_CALLBACK_FUNCTION(Mahmud, updateFromTime);
+	ADD_CALLBACK_FUNCTION(Mahmud, savegame);
 	ADD_CALLBACK_FUNCTION(Mahmud, function9);
 	ADD_CALLBACK_FUNCTION(Mahmud, function10);
 	ADD_CALLBACK_FUNCTION(Mahmud, function11);
@@ -60,35 +61,35 @@ Mahmud::Mahmud(LastExpressEngine *engine) : Entity(engine, kEntityMahmud) {
 }
 
 IMPLEMENT_FUNCTION(Mahmud, function1, 1)
-	error("Mahmud: callback function 1 not implemented!");
+	Entity::function1(savepoint);
 }
 
-IMPLEMENT_FUNCTION_NOSETUP(Mahmud, function2, 2)
-	error("Mahmud: callback function 2 not implemented!");
+IMPLEMENT_FUNCTION_NOSETUP(Mahmud, draw, 2)
+	Entity::draw(savepoint);
 }
 
 IMPLEMENT_FUNCTION_SI(Mahmud, function3, 3)
-	error("Mahmud: callback function 3 not implemented!");
+	Entity::updateFields(savepoint);
 }
 
 IMPLEMENT_FUNCTION_SIII(Mahmud, function4, 4)
 	error("Mahmud: callback function 4 not implemented!");
 }
 
-IMPLEMENT_FUNCTION_S(Mahmud, function5, 5)
-	error("Mahmud: callback function 5 not implemented!");
+IMPLEMENT_FUNCTION_S(Mahmud, playSound, 5)
+	Entity::playSound(savepoint);
 }
 
 IMPLEMENT_FUNCTION_S(Mahmud, function6, 6)
 	error("Mahmud: callback function 6 not implemented!");
 }
 
-IMPLEMENT_FUNCTION_NOSETUP(Mahmud, function7, 7)
-	error("Mahmud: callback function 7 not implemented!");
+IMPLEMENT_FUNCTION_NOSETUP(Mahmud, updateFromTime, 7)
+	Entity::updateFromTime(savepoint);
 }
 
-IMPLEMENT_FUNCTION_II(Mahmud, function8, 8)
-	error("Mahmud: callback function 8 not implemented!");
+IMPLEMENT_FUNCTION_II(Mahmud, savegame, 8)
+	Entity::savegame(savepoint);
 }
 
 IMPLEMENT_FUNCTION_II(Mahmud, function9, 9)

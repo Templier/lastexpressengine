@@ -377,6 +377,22 @@ protected:
 	EntityIndex				  _entityIndex;
 	EntityData 				 *_data;
 	Common::Array<Callback *> _callbacks;
+
+	// Shared functions
+	void savegame(SavePoint *savepoint);
+	void playSound(SavePoint *savepoint, bool resetItem = false, int param3 = -1);
+	void draw(SavePoint *savepoint);
+	void draw2(SavePoint *savepoint);
+	void updateFromTicks(SavePoint *savepoint);
+	void updateFromTime(SavePoint *savepoint);
+
+	void function1(SavePoint *savepoint);
+	void savepointDirection(SavePoint *savepoint);
+	void savepointCheckFields11(SavePoint *savepoint);
+	void savepointCheckEntity(SavePoint *savepoint);
+	void savepointCall(SavePoint *savepoint);
+	void updateFields(SavePoint *savepoint);
+	void updateField1000(SavePoint *savepoint);
 };
 
 

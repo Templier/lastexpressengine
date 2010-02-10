@@ -39,11 +39,11 @@ namespace LastExpress {
 
 Kronos::Kronos(LastExpressEngine *engine) : Entity(engine, kEntityKronos) {
 	ADD_CALLBACK_FUNCTION(Kronos, function1);
-	ADD_CALLBACK_FUNCTION(Kronos, function2);
+	ADD_CALLBACK_FUNCTION(Kronos, savegame);
 	ADD_CALLBACK_FUNCTION(Kronos, function3);
-	ADD_CALLBACK_FUNCTION(Kronos, function4);
-	ADD_CALLBACK_FUNCTION(Kronos, function5);
-	ADD_CALLBACK_FUNCTION(Kronos, function6);
+	ADD_CALLBACK_FUNCTION(Kronos, playSound);
+	ADD_CALLBACK_FUNCTION(Kronos, updateFromTime);
+	ADD_CALLBACK_FUNCTION(Kronos, updateFromTicks);
 	ADD_CALLBACK_FUNCTION(Kronos, chapter1);
 	ADD_CALLBACK_FUNCTION(Kronos, function8);
 	ADD_CALLBACK_FUNCTION(Kronos, function9);
@@ -66,27 +66,27 @@ Kronos::Kronos(LastExpressEngine *engine) : Entity(engine, kEntityKronos) {
 }
 
 IMPLEMENT_FUNCTION(Kronos, function1, 1)
-	error("Kronos: callback function 1 not implemented!");
+	Entity::function1(savepoint);
 }
 
-IMPLEMENT_FUNCTION_II(Kronos, function2, 2)
-	error("Kronos: callback function 2 not implemented!");
+IMPLEMENT_FUNCTION_II(Kronos, savegame, 2)
+	Entity::savegame(savepoint);
 }
 
 IMPLEMENT_FUNCTION_II(Kronos, function3, 3)
-	error("Kronos: callback function 3 not implemented!");
+	Entity::savepointCheckEntity(savepoint);
 }
 
-IMPLEMENT_FUNCTION_NOSETUP(Kronos, function4, 4)
-	error("Kronos: callback function 4 not implemented!");
+IMPLEMENT_FUNCTION_NOSETUP(Kronos, playSound, 4)
+	Entity::playSound(savepoint);
 }
 
-IMPLEMENT_FUNCTION_NOSETUP(Kronos, function5, 5)
-	error("Kronos: callback function 5 not implemented!");
+IMPLEMENT_FUNCTION_NOSETUP(Kronos, updateFromTime, 5)
+	Entity::updateFromTime(savepoint);
 }
 
-IMPLEMENT_FUNCTION_NOSETUP(Kronos, function6, 6)
-	error("Kronos: callback function 6 not implemented!");
+IMPLEMENT_FUNCTION_NOSETUP(Kronos, updateFromTicks, 6)
+	Entity::updateFromTicks(savepoint);
 }
 
 IMPLEMENT_FUNCTION(Kronos, chapter1, 7)

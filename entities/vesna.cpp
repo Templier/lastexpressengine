@@ -29,6 +29,7 @@
 #include "lastexpress/game/logic.h"
 #include "lastexpress/game/object.h"
 #include "lastexpress/game/savepoint.h"
+#include "lastexpress/game/sound.h"
 #include "lastexpress/game/state.h"
 
 #include "lastexpress/lastexpress.h"
@@ -38,15 +39,15 @@ namespace LastExpress {
 
 Vesna::Vesna(LastExpressEngine *engine) : Entity(engine, kEntityVesna) {
 	ADD_CALLBACK_FUNCTION(Vesna, function1);
-	ADD_CALLBACK_FUNCTION(Vesna, function2);
+	ADD_CALLBACK_FUNCTION(Vesna, playSound);
 	ADD_CALLBACK_FUNCTION(Vesna, function3);
-	ADD_CALLBACK_FUNCTION(Vesna, function4);
+	ADD_CALLBACK_FUNCTION(Vesna, draw);
 	ADD_CALLBACK_FUNCTION(Vesna, function5);
-	ADD_CALLBACK_FUNCTION(Vesna, function6);
+	ADD_CALLBACK_FUNCTION(Vesna, updateFromTime);
 	ADD_CALLBACK_FUNCTION(Vesna, function7);
 	ADD_CALLBACK_FUNCTION(Vesna, function8);
 	ADD_CALLBACK_FUNCTION(Vesna, function9);
-	ADD_CALLBACK_FUNCTION(Vesna, function10);
+	ADD_CALLBACK_FUNCTION(Vesna, savegame);
 	ADD_CALLBACK_FUNCTION(Vesna, function11);
 	ADD_CALLBACK_FUNCTION(Vesna, chapter1);
 	ADD_CALLBACK_FUNCTION(Vesna, function13);
@@ -71,27 +72,27 @@ Vesna::Vesna(LastExpressEngine *engine) : Entity(engine, kEntityVesna) {
 }
 
 IMPLEMENT_FUNCTION(Vesna, function1, 1)
-	FUNCTION1()
+	Entity::function1(savepoint);
 }
 
-IMPLEMENT_FUNCTION_S(Vesna, function2, 2)
-	error("Vesna: callback function 2 not implemented!");
+IMPLEMENT_FUNCTION_S(Vesna, playSound, 2)
+	Entity::playSound(savepoint);
 }
 
 IMPLEMENT_FUNCTION_SI(Vesna, function3, 3)
-	error("Vesna: callback function 3 not implemented!");
+	Entity::updateFields(savepoint);
 }
 
-IMPLEMENT_FUNCTION_S(Vesna, function4, 4)
-	error("Vesna: callback function 4 not implemented!");
+IMPLEMENT_FUNCTION_S(Vesna, draw, 4)
+	Entity::draw(savepoint);
 }
 
 IMPLEMENT_FUNCTION_II(Vesna, function5, 5)
 	error("Vesna: callback function 5 not implemented!");
 }
 
-IMPLEMENT_FUNCTION_I(Vesna, function6, 6)
-	error("Vesna: callback function 6 not implemented!");
+IMPLEMENT_FUNCTION_I(Vesna, updateFromTime, 6)
+	Entity::updateFromTime(savepoint);
 }
 
 IMPLEMENT_FUNCTION_II(Vesna, function7, 7)
@@ -99,15 +100,15 @@ IMPLEMENT_FUNCTION_II(Vesna, function7, 7)
 }
 
 IMPLEMENT_FUNCTION(Vesna, function8, 8)
-	error("Vesna: callback function 8 not implemented!");
+	Entity::savepointCheckFields11(savepoint);
 }
 
 IMPLEMENT_FUNCTION(Vesna, function9, 9)
-	error("Vesna: callback function 9 not implemented!");
+	Entity::savepointDirection(savepoint);
 }
 
-IMPLEMENT_FUNCTION_II(Vesna, function10, 10)
-	error("Vesna: callback function 10 not implemented!");
+IMPLEMENT_FUNCTION_II(Vesna, savegame, 10)
+	Entity::savegame(savepoint);
 }
 
 IMPLEMENT_FUNCTION(Vesna, function11, 11)

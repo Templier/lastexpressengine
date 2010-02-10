@@ -62,6 +62,7 @@ public:
 	void setupCallbacks();
 
 	void updateField1000(EntityIndex entity, int index, int value);
+	void updateField1000ProcessScene(EntityIndex entity, int index, int value);
 
 	void updateFields0(EntityIndex entity1, EntityIndex entity2);
 	void updateFields1(EntityIndex entity1, EntityIndex entity2);

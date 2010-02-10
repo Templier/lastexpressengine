@@ -29,6 +29,7 @@
 #include "lastexpress/game/logic.h"
 #include "lastexpress/game/object.h"
 #include "lastexpress/game/savepoint.h"
+#include "lastexpress/game/sound.h"
 #include "lastexpress/game/state.h"
 
 #include "lastexpress/lastexpress.h"
@@ -40,10 +41,10 @@ Pascale::Pascale(LastExpressEngine *engine) : Entity(engine, kEntityPascale) {
 	ADD_CALLBACK_FUNCTION(Pascale, function1);
 	ADD_CALLBACK_FUNCTION(Pascale, function2);
 	ADD_CALLBACK_FUNCTION(Pascale, function3);
-	ADD_CALLBACK_FUNCTION(Pascale, function4);
+	ADD_CALLBACK_FUNCTION(Pascale, updateFromTime);
 	ADD_CALLBACK_FUNCTION(Pascale, function5);
-	ADD_CALLBACK_FUNCTION(Pascale, function6);
-	ADD_CALLBACK_FUNCTION(Pascale, function7);
+	ADD_CALLBACK_FUNCTION(Pascale, playSound);
+	ADD_CALLBACK_FUNCTION(Pascale, draw2);
 	ADD_CALLBACK_FUNCTION(Pascale, function8);
 	ADD_CALLBACK_FUNCTION(Pascale, function9);
 	ADD_CALLBACK_FUNCTION(Pascale, function10);
@@ -78,27 +79,34 @@ IMPLEMENT_FUNCTION_S(Pascale, function1, 1)
 }
 
 IMPLEMENT_FUNCTION(Pascale, function2, 2)
-	error("Pascale: callback function 2 not implemented!");
+	Entity::savepointCheckFields11(savepoint);
 }
 
 IMPLEMENT_FUNCTION(Pascale, function3, 3)
-	error("Pascale: callback function 3 not implemented!");
+	if (savepoint->action == kAction5) {
+		if (!CURRENT_PARAM(1)) {
+			getSound()->excuseMe(kEntityPascale);
+			CURRENT_PARAM(1) = 1;
+		}
+	}
+
+	Entity::savepointDirection(savepoint);
 }
 
-IMPLEMENT_FUNCTION_I(Pascale, function4, 4)
-	error("Pascale: callback function 4 not implemented!");
+IMPLEMENT_FUNCTION_I(Pascale, updateFromTime, 4)
+	Entity::updateFromTime(savepoint);
 }
 
 IMPLEMENT_FUNCTION_NOSETUP(Pascale, function5, 5)
 	error("Pascale: callback function 5 not implemented!");
 }
 
-IMPLEMENT_FUNCTION_S(Pascale, function6, 6)
-	error("Pascale: callback function 6 not implemented!");
+IMPLEMENT_FUNCTION_S(Pascale, playSound, 6)
+	Entity::playSound(savepoint);
 }
 
-IMPLEMENT_FUNCTION_NOSETUP(Pascale, function7, 7)
-	error("Pascale: callback function 7 not implemented!");
+IMPLEMENT_FUNCTION_NOSETUP(Pascale, draw2, 7)
+	Entity::draw2(savepoint);
 }
 
 IMPLEMENT_FUNCTION(Pascale, function8, 8)

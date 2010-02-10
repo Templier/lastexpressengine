@@ -29,6 +29,7 @@
 #include "lastexpress/game/logic.h"
 #include "lastexpress/game/object.h"
 #include "lastexpress/game/savepoint.h"
+#include "lastexpress/game/sound.h"
 #include "lastexpress/game/state.h"
 
 #include "lastexpress/helpers.h"
@@ -38,16 +39,16 @@ namespace LastExpress {
 
 Alexei::Alexei(LastExpressEngine *engine) : Entity(engine, kEntityAlexei) {
 	ADD_CALLBACK_FUNCTION(Alexei, function1);
-	ADD_CALLBACK_FUNCTION(Alexei, function2);
-	ADD_CALLBACK_FUNCTION(Alexei, function3);
-	ADD_CALLBACK_FUNCTION(Alexei, function4);
+	ADD_CALLBACK_FUNCTION(Alexei, playSound);
+	ADD_CALLBACK_FUNCTION(Alexei, updateFromTicks);
+	ADD_CALLBACK_FUNCTION(Alexei, draw);
 	ADD_CALLBACK_FUNCTION(Alexei, function5);
 	ADD_CALLBACK_FUNCTION(Alexei, function6);
 	ADD_CALLBACK_FUNCTION(Alexei, function7);
 	ADD_CALLBACK_FUNCTION(Alexei, function8);
-	ADD_CALLBACK_FUNCTION(Alexei, function9);
+	ADD_CALLBACK_FUNCTION(Alexei, savegame);
 	ADD_CALLBACK_FUNCTION(Alexei, function10);
-	ADD_CALLBACK_FUNCTION(Alexei, function11);
+	ADD_CALLBACK_FUNCTION(Alexei, draw2);
 	ADD_CALLBACK_FUNCTION(Alexei, function12);
 	ADD_CALLBACK_FUNCTION(Alexei, function13);
 	ADD_CALLBACK_FUNCTION(Alexei, function14);
@@ -88,51 +89,51 @@ Alexei::Alexei(LastExpressEngine *engine) : Entity(engine, kEntityAlexei) {
 }
 
 IMPLEMENT_FUNCTION(Alexei, function1, 1)
-	error("Alexei: callback function 1 not implemented!");
+	Entity::function1(savepoint);
 }
 
-IMPLEMENT_FUNCTION_S(Alexei, function2, 2)
-	error("Alexei: callback function 2 not implemented!");
+IMPLEMENT_FUNCTION_S(Alexei, playSound, 2)
+	Entity::playSound(savepoint);
 }
 
-IMPLEMENT_FUNCTION_I(Alexei, function3, 3)
-	error("Alexei: callback function 3 not implemented!");
+IMPLEMENT_FUNCTION_I(Alexei, updateFromTicks, 3)
+	Entity::updateFromTicks(savepoint);
 }
 
-IMPLEMENT_FUNCTION_S(Alexei, function4, 4)
-	error("Alexei: callback function 4 not implemented!");
+IMPLEMENT_FUNCTION_S(Alexei, draw, 4)
+	Entity::draw(savepoint);
 }
 
 IMPLEMENT_FUNCTION_SII(Alexei, function5, 5)
-	error("Alexei: callback function 5 not implemented!");
+	Entity::updateField1000(savepoint);
 }
 
 IMPLEMENT_FUNCTION_SI(Alexei, function6, 6)
-	error("Alexei: callback function 6 not implemented!");
+	Entity::updateFields(savepoint);
 }
 
 IMPLEMENT_FUNCTION(Alexei, function7, 7)
-	error("Alexei: callback function 7 not implemented!");
+	Entity::savepointDirection(savepoint);
 }
 
 IMPLEMENT_FUNCTION_SIIS(Alexei, function8, 8)
-	error("Alexei: callback function 8 not implemented!");
+	Entity::savepointCall(savepoint);
 }
 
-IMPLEMENT_FUNCTION_II(Alexei, function9, 9)
-	error("Alexei: callback function 9 not implemented!");
+IMPLEMENT_FUNCTION_II(Alexei, savegame, 9)
+	Entity::savegame(savepoint);
 }
 
 IMPLEMENT_FUNCTION_II(Alexei, function10, 10)
 	error("Alexei: callback function 10 not implemented!");
 }
 
-IMPLEMENT_FUNCTION_NOSETUP(Alexei, function11, 11)
-	error("Alexei: callback function 11 not implemented!");
+IMPLEMENT_FUNCTION_NOSETUP(Alexei, draw2, 11)
+	Entity::draw2(savepoint);
 }
 
 IMPLEMENT_FUNCTION(Alexei, function12, 12)
-	error("Alexei: callback function 12 not implemented!");
+	Entity::savepointCheckFields11(savepoint);
 }
 
 IMPLEMENT_FUNCTION(Alexei, function13, 13)
