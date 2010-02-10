@@ -151,8 +151,8 @@ bool Fight::setup(FightType type) {
 	loadData(type);
 
 	// Show opponents & egg button
-	Common::Event ev;
-	handleMouseMove(ev, false);
+	Common::Event emptyEvent;
+	handleMouseMove(emptyEvent, false);
 	getInventory()->showHourGlass(false);
 
 	// Start fight
@@ -337,6 +337,9 @@ void Fight::loadData(FightType type) {
 	}
 
 	switch(type) {
+	default:
+		break;
+
 	case kFightMilos:
 		_data->opponent->field_30 = 1;
 		setSequenceAndDraw(_data->player, 4, kFightSequenceType0);
