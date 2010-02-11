@@ -377,19 +377,19 @@ void Entities::updateField1000ProcessScene(EntityIndex entity, int index, int va
 	error("Entities::updateField1000: not implemented!");
 }
 
-void Entities::updateFields0(EntityIndex entity1, EntityIndex entity2) {
+void Entities::updateFields0(EntityIndex entity1, ObjectIndex entity2) {
 	error("Entities::updateFields0: not implemented!");
 }
 
-void Entities::updateFields1(EntityIndex entity1, EntityIndex entity2) {
+void Entities::updateFields1(EntityIndex entity1, ObjectIndex entity2) {
 	error("Entities::updateFields1: not implemented!");
 }
 
-void Entities::updateFields2(EntityIndex entity1, EntityIndex entity2) {
+void Entities::updateFields2(EntityIndex entity1, ObjectIndex entity2) {
 	error("Entities::updateFields2: not implemented!");
 }
 
-void Entities::updateFields3(EntityIndex entity1, EntityIndex entity2) {
+void Entities::updateFields3(EntityIndex entity1, ObjectIndex entity2) {
 	error("Entities::updateFields2: not implemented!");
 }
 

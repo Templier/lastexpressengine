@@ -111,7 +111,7 @@ IMPLEMENT_FUNCTION_SI(Abbot, function4, 4)
 		break;
 
 	case kAction3:
-		getEntities()->updateFields1(kEntityAbbot, (EntityIndex)params->param2);
+		getEntities()->updateFields1(kEntityAbbot, (ObjectIndex)params->param2);
 		_data->getData()->field_491 = EntityData::kField491_6470;
 		_data->getData()->field_493 = EntityData::kField493_1;
 
@@ -120,7 +120,7 @@ IMPLEMENT_FUNCTION_SI(Abbot, function4, 4)
 
 	case kActionDefault:
 		getEntities()->drawSequenceRight(kEntityAbbot, params->seq1);
-		getEntities()->updateFields0(kEntityAbbot, (EntityIndex)params->param2);
+		getEntities()->updateFields0(kEntityAbbot, (ObjectIndex)params->param2);
 
 		_data->getData()->field_493 = EntityData::kField493_1;
 		if (getEntities()->checkFields1(kEntityNone, EntityData::kField495_4, EntityData::kField491_6470)

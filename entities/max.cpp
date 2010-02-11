@@ -273,7 +273,7 @@ IMPLEMENT_FUNCTION(Max, function9, 9)
 		_data->getData()->field_495 = EntityData::kField495_4;
 
 		getEntities()->drawSequenceLeft(kEntityMax, "630Af");
-		getEntities()->updateFields2(kEntityMax, kEntityTables4);
+		getEntities()->updateFields2(kEntityMax, kObjectCompartmentF);
 
 		CURRENT_PARAM(1) = getState()->time + 2700;
 		break;
@@ -497,19 +497,19 @@ IMPLEMENT_FUNCTION(Max, function15, 15)
 	case kAction18:
 		if (_data->getNextCallback() == 1) {
 			getEntities()->drawSequenceLeft(kEntityMax, "630Af");
-			getEntities()->updateFields2(kEntityMax, kEntityTables4);
+			getEntities()->updateFields2(kEntityMax, kObjectCompartmentF);
 			getSavePoints()->push(kEntityMax, kEntityAnna, kAction156622016);
 		}
 		break;
 
 	case kAction122358304:
 		(savepoint->entity2 == kEntityAnna) ? CURRENT_PARAM(1) = 1 : CURRENT_PARAM(2) = 1;
-		getEntities()->updateFields3(kEntityMax, kEntityTables4);
+		getEntities()->updateFields3(kEntityMax, kObjectCompartmentF);
 		getEntities()->drawSequenceLeft(kEntityMax, "BLANK");
 		break;
 
 	case kActionMaxFreeFromCage:
-		getEntities()->updateFields3(kEntityMax, kEntityTables4);
+		getEntities()->updateFields3(kEntityMax, kObjectCompartmentF);
 		setup_function8();
 		break;
 	}
@@ -557,12 +557,12 @@ IMPLEMENT_FUNCTION(Max, function17, 17)
 
 	case kAction122358304:
 		CURRENT_PARAM(1) = 1;
-		getEntities()->updateFields3(kEntityMax, kEntityTables4);
+		getEntities()->updateFields3(kEntityMax, kObjectCompartmentF);
 		getEntities()->drawSequenceLeft(kEntityMax, "BLANK");
 		break;
 
 	case kActionMaxFreeFromCage:
-		getEntities()->updateFields3(kEntityMax, kEntityTables4);
+		getEntities()->updateFields3(kEntityMax, kObjectCompartmentF);
 		setup_function8();
 		break;
 	}

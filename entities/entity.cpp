@@ -306,13 +306,13 @@ void Entity::updateFields(SavePoint *savepoint) {
 		break;
 
 	case kAction3:
-		getEntities()->updateFields1(_entityIndex, (EntityIndex)params->param2);
+		getEntities()->updateFields1(_entityIndex, (ObjectIndex)params->param2);
 		CALL_PREVIOUS_SAVEPOINT()
 		break;
 
 	case kActionDefault:
 		getEntities()->drawSequenceRight(_entityIndex, params->seq1);
-		getEntities()->updateFields0(_entityIndex, (EntityIndex)params->param2);
+		getEntities()->updateFields0(_entityIndex, (ObjectIndex)params->param2);
 		break;
 	}
 }

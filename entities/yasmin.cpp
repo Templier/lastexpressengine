@@ -39,7 +39,7 @@ namespace LastExpress {
 
 Yasmin::Yasmin(LastExpressEngine *engine) : Entity(engine, kEntityYasmin) {
 	ADD_CALLBACK_FUNCTION(Yasmin, function1);
-	ADD_CALLBACK_FUNCTION(Yasmin, function2);
+	ADD_CALLBACK_FUNCTION(Yasmin, enterExitCompartement);
 	ADD_CALLBACK_FUNCTION(Yasmin, playSound);
 	ADD_CALLBACK_FUNCTION(Yasmin, updateFromTime);
 	ADD_CALLBACK_FUNCTION(Yasmin, function5);
@@ -63,10 +63,24 @@ Yasmin::Yasmin(LastExpressEngine *engine) : Entity(engine, kEntityYasmin) {
 }
 
 IMPLEMENT_FUNCTION(Yasmin, function1, 1)
-	error("Yasmin: callback function 1 not implemented!");
+	switch (savepoint->action) {
+	default:
+		break;
+
+	case kAction5:
+		getSound()->excuseMeCath();
+		break;
+
+	case kAction6:
+		getSound()->excuseMe(kEntityYasmin);
+		break;
+	}
+
+	// Process default actions
+	Entity::function1(savepoint);
 }
 
-IMPLEMENT_FUNCTION_SI(Yasmin, function2, 2)
+IMPLEMENT_FUNCTION_SI(Yasmin, enterExitCompartement, 2)
 	Entity::updateFields(savepoint);
 }
 
@@ -79,15 +93,99 @@ IMPLEMENT_FUNCTION_NOSETUP(Yasmin, updateFromTime, 4)
 }
 
 IMPLEMENT_FUNCTION_II(Yasmin, function5, 5)
-	error("Yasmin: callback function 5 not implemented!");
+	switch (savepoint->action) {
+	default:
+		break;
+
+	case kAction5:
+		getSound()->excuseMeCath();
+		break;
+
+	case kAction6:
+		getSound()->excuseMe(kEntityYasmin);
+		break;
+	}
+
+	// Process default actions
+	Entity::savepointCheckEntity(savepoint);
 }
 
 IMPLEMENT_FUNCTION(Yasmin, function6, 6)
-	error("Yasmin: callback function 6 not implemented!");
+	switch (savepoint->action) {
+	default:
+		break;
+
+	case kActionDefault:
+		_data->getData()->field_491 = EntityData::kField491_4840;
+		_data->getData()->field_493 = EntityData::kField493_0;
+
+		_data->setNextCallback(1);
+		// Exit compartement
+		call(new ENTITY_SETUP(Yasmin, setup_enterExitCompartement, const char*, int, int, const char*), "615Be", kObjectCompartment5);
+		break;
+
+	case kAction18:
+		switch (_data->getNextCallback()) {
+		default:
+			break;
+
+		case 1:
+			call(new ENTITY_SETUP_DEFAULT(Yasmin, setup_function5), EntityData::kField495_3, EntityData::kField491_3050);
+			break;
+
+		case 2:
+			// Enter compartement
+			call(new ENTITY_SETUP(Yasmin, setup_enterExitCompartement, const char*, int, int, const char*), "615Ag", kObjectCompartment7);
+			break;
+
+		case 3:
+			_data->getData()->field_493 = EntityData::kField493_1;
+			getEntities()->drawSequences(kEntityYasmin);
+
+			CALL_PREVIOUS_SAVEPOINT()
+			break;
+		}		
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Yasmin, function7, 7)
-	error("Yasmin: callback function 7 not implemented!");
+	switch (savepoint->action) {
+	default:
+		break;
+
+	case kActionDefault:
+		_data->getData()->field_491 = EntityData::kField491_3050;
+		_data->getData()->field_493 = EntityData::kField493_0;
+
+		_data->setNextCallback(1);
+		// Exit compartement
+		call(new ENTITY_SETUP(Yasmin, setup_enterExitCompartement, const char*, int, int, const char*), "615Bg", kObjectCompartment7);
+		break;
+
+	case kAction18:
+		switch (_data->getNextCallback()) {
+		default:
+			break;
+
+		case 1:
+			call(new ENTITY_SETUP_DEFAULT(Yasmin, setup_function5), EntityData::kField495_3, EntityData::kField491_4840);
+			break;
+
+		case 2:
+			// Enter compartement
+			call(new ENTITY_SETUP(Yasmin, setup_enterExitCompartement, const char*, int, int, const char*), "615Ae", kObjectCompartment5);
+			break;
+
+		case 3:
+			_data->getData()->field_493 = EntityData::kField493_1;
+			getEntities()->drawSequences(kEntityYasmin);
+
+			CALL_PREVIOUS_SAVEPOINT()
+			break;
+		}		
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Yasmin, chapter1, 8)
@@ -112,7 +210,14 @@ IMPLEMENT_FUNCTION(Yasmin, function9, 9)
 }
 
 IMPLEMENT_FUNCTION(Yasmin, function10, 10)
-	error("Yasmin: callback function 10 not implemented!");
+	if (savepoint->action == kActionDefault) {
+		getObjects()->update(kObjectCompartment7, kEntityNone, kLocation3, kCursorHandKnock, kCursorHand);
+		_data->getData()->field_491 = EntityData::kField491_3050;
+		_data->getData()->field_493 = EntityData::kField493_1;
+		_data->getData()->field_495 = EntityData::kField495_3;
+
+		getEntities()->drawSequences(kEntityYasmin);
+	}
 }
 
 IMPLEMENT_FUNCTION(Yasmin, chapter2, 11)
@@ -177,8 +282,9 @@ IMPLEMENT_FUNCTION(Yasmin, function16, 16)
 	error("Yasmin: callback function 16 not implemented!");
 }
 
+// Same as existing function 10 ?
 IMPLEMENT_FUNCTION(Yasmin, function17, 17)
-	error("Yasmin: callback function 17 not implemented!");
+	function10(savepoint);
 }
 
 IMPLEMENT_FUNCTION(Yasmin, chapter5, 18)
@@ -203,7 +309,8 @@ IMPLEMENT_FUNCTION(Yasmin, chapter5, 18)
 }
 
 IMPLEMENT_FUNCTION(Yasmin, function19, 19)
-	error("Yasmin: callback function 19 not implemented!");
+	if (savepoint->action == kAction70549068)
+		setup_function20();
 }
 
 IMPLEMENT_FUNCTION(Yasmin, function20, 20)

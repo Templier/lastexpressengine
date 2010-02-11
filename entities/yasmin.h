@@ -39,7 +39,7 @@ public:
 
 	// Setup
 	DECLARE_FUNCTION(function1)
-	DECLARE_FUNCTION_SI(function2)
+	DECLARE_FUNCTION_SI(enterExitCompartement)
 	DECLARE_FUNCTION_S(playSound)
 	DECLARE_FUNCTION_NOSETUP(updateFromTime)
 	DECLARE_FUNCTION_II(function5)
@@ -60,6 +60,10 @@ public:
 	DECLARE_FUNCTION(function20)
 	DECLARE_FUNCTION(function21)
 	DECLARE_NULL_FUNCTION()
+
+private:
+	DECLARE_CALL_FUNCTION(default, Yasmin, int, int, int, int)
+	DECLARE_CALL_FUNCTION(char, Yasmin, const char*, int, int, const char*)
 };
 
 } // End of namespace LastExpress
