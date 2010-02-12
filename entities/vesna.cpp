@@ -221,7 +221,7 @@ IMPLEMENT_FUNCTION(Vesna, chapter4, 24)
 
 	case kActionNone:
 		_data->setNextCallback(1);
-		call(new ENTITY_SETUP_DEFAULT(Vesna, setup_function11));
+		call(new ENTITY_SETUP(Vesna, setup_function11));
 		break;
 
 	case kActionDefault:

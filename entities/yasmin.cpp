@@ -121,7 +121,7 @@ IMPLEMENT_FUNCTION(Yasmin, function6, 6)
 
 		_data->setNextCallback(1);
 		// Exit compartement
-		call(new ENTITY_SETUP(Yasmin, setup_enterExitCompartement, const char*, int, int, const char*), "615Be", kObjectCompartment5);
+		call(new ENTITY_SETUP_SIIS(Yasmin, setup_enterExitCompartement), "615Be", kObjectCompartment5);
 		break;
 
 	case kAction18:
@@ -130,12 +130,12 @@ IMPLEMENT_FUNCTION(Yasmin, function6, 6)
 			break;
 
 		case 1:
-			call(new ENTITY_SETUP_DEFAULT(Yasmin, setup_function5), EntityData::kField495_3, EntityData::kField491_3050);
+			call(new ENTITY_SETUP(Yasmin, setup_function5), EntityData::kField495_3, EntityData::kField491_3050);
 			break;
 
 		case 2:
 			// Enter compartement
-			call(new ENTITY_SETUP(Yasmin, setup_enterExitCompartement, const char*, int, int, const char*), "615Ag", kObjectCompartment7);
+			call(new ENTITY_SETUP_SIIS(Yasmin, setup_enterExitCompartement), "615Ag", kObjectCompartment7);
 			break;
 
 		case 3:
@@ -144,7 +144,7 @@ IMPLEMENT_FUNCTION(Yasmin, function6, 6)
 
 			CALL_PREVIOUS_SAVEPOINT()
 			break;
-		}		
+		}
 		break;
 	}
 }
@@ -160,7 +160,7 @@ IMPLEMENT_FUNCTION(Yasmin, function7, 7)
 
 		_data->setNextCallback(1);
 		// Exit compartement
-		call(new ENTITY_SETUP(Yasmin, setup_enterExitCompartement, const char*, int, int, const char*), "615Bg", kObjectCompartment7);
+		call(new ENTITY_SETUP_SIIS(Yasmin, setup_enterExitCompartement), "615Bg", kObjectCompartment7);
 		break;
 
 	case kAction18:
@@ -169,12 +169,12 @@ IMPLEMENT_FUNCTION(Yasmin, function7, 7)
 			break;
 
 		case 1:
-			call(new ENTITY_SETUP_DEFAULT(Yasmin, setup_function5), EntityData::kField495_3, EntityData::kField491_4840);
+			call(new ENTITY_SETUP(Yasmin, setup_function5), EntityData::kField495_3, EntityData::kField491_4840);
 			break;
 
 		case 2:
 			// Enter compartement
-			call(new ENTITY_SETUP(Yasmin, setup_enterExitCompartement, const char*, int, int, const char*), "615Ae", kObjectCompartment5);
+			call(new ENTITY_SETUP_SIIS(Yasmin, setup_enterExitCompartement), "615Ae", kObjectCompartment5);
 			break;
 
 		case 3:
@@ -183,7 +183,7 @@ IMPLEMENT_FUNCTION(Yasmin, function7, 7)
 
 			CALL_PREVIOUS_SAVEPOINT()
 			break;
-		}		
+		}
 		break;
 	}
 }

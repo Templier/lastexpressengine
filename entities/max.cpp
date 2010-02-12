@@ -88,22 +88,22 @@ IMPLEMENT_FUNCTION(Max, function6, 6)
 		UPDATE_PARAM_FROM_TIME(2, 1)
 
 		getSound()->playSound(kEntityMax, "Max1122");
-		CURRENT_PARAM(1) = 255 * ( 4 * random(20) + 40);
+		CURRENT_PARAM(1) = 255 * (4 * random(20) + 40);
 		CURRENT_PARAM(2) = 0;
 		break;
 
 	case kActionDefault:
-		CURRENT_PARAM(1) = 255 * ( 4 * random(20) + 40);
+		CURRENT_PARAM(1) = 255 * (4 * random(20) + 40);
 		break;
 
 	case kAction71277948:
 		_data->setNextCallback(1);
-		call(new ENTITY_SETUP_DEFAULT(Max, setup_function7));
+		call(new ENTITY_SETUP(Max, setup_function7));
 		break;
 
 	case kAction158007856:
 		getSound()->playSound(kEntityMax, "Max1122");
-		CURRENT_PARAM(1) = 255 * ( 4 * random(20) + 40);
+		CURRENT_PARAM(1) = 255 * (4 * random(20) + 40);
 		break;
 	}
 }
@@ -127,11 +127,11 @@ IMPLEMENT_FUNCTION(Max, function7, 7)
 		getObjects()->update(kObject53, kEntityMax, kLocation1, kCursorNormal, kCursorNormal);
 
 		_data->setNextCallback((savepoint->action == kAction8) ? 1 : 2);
-		call(new ENTITY_SETUP(Max, setup_playSound, const char*, int, int, const char*), (savepoint->action == kAction8) ? "LIB012" : "LIB013");
+		call(new ENTITY_SETUP_SIIS(Max, setup_playSound), (savepoint->action == kAction8) ? "LIB012" : "LIB013");
 		break;
 
 	case kActionDefault:
-		CURRENT_PARAM(1) = 255 * ( 4 * random(20) + 40);
+		CURRENT_PARAM(1) = 255 * (4 * random(20) + 40);
 
 		_data->getData()->field_491 = EntityData::kField491_4070;
 		_data->getData()->field_493 = EntityData::kField493_1;
@@ -155,7 +155,7 @@ IMPLEMENT_FUNCTION(Max, function7, 7)
 		case 1:
 		case 2:
 			_data->setNextCallback(3);
-			call(new ENTITY_SETUP(Max, setup_playSound, const char*, int, int, const char*), "Max1122");
+			call(new ENTITY_SETUP_SIIS(Max, setup_playSound), "Max1122");
 			break;
 
 		case 3:
@@ -182,7 +182,7 @@ IMPLEMENT_FUNCTION(Max, function7, 7)
 
 	case kAction158007856:
 		getSound()->playSound(kEntityMax, "Max1122");
-		CURRENT_PARAM(1) = 255 * ( 4 * random(20) + 40);
+		CURRENT_PARAM(1) = 255 * (4 * random(20) + 40);
 		break;
 	}
 }
@@ -196,14 +196,14 @@ IMPLEMENT_FUNCTION(Max, function8, 8)
 		UPDATE_PARAM_FROM_TIME(3, 2)
 
 		getSound()->playSound(kEntityMax, "Max3101");
-		CURRENT_PARAM(2) = 255 * ( 4 * random(20) + 40);
+		CURRENT_PARAM(2) = 255 * (4 * random(20) + 40);
 		CURRENT_PARAM(3) = 0;
 		break;
 
 	case kAction9:
 		if (CURRENT_PARAM(1)) {
 			_data->setNextCallback(1);
-			call(new ENTITY_SETUP_DEFAULT(Max, setup_savegame), 2, kEventCathMaxLickHand);
+			call(new ENTITY_SETUP(Max, setup_savegame), 2, kEventCathMaxLickHand);
 			break;
 		}
 
@@ -214,7 +214,7 @@ IMPLEMENT_FUNCTION(Max, function8, 8)
 		break;
 
 	case kActionDefault:
-		CURRENT_PARAM(2) = 255 * ( 4 * random(20) + 40);
+		CURRENT_PARAM(2) = 255 * (4 * random(20) + 40);
 
 		getObjects()->update(kObjectCageMax, kEntityMax, kLocationNone, kCursorNormal, kCursorHand);
 		getEntities()->drawSequences(kEntityMax);
@@ -355,12 +355,12 @@ IMPLEMENT_FUNCTION(Max, function13, 13)
 		UPDATE_PARAM_FROM_TIME(3, 1)
 
 		getSound()->playSound(kEntityMax, "Max1122");
-		CURRENT_PARAM(1) = 255 * ( 4 * random(20) + 40);
+		CURRENT_PARAM(1) = 255 * (4 * random(20) + 40);
 		CURRENT_PARAM(3) = 0;
 		break;
 
 	case kActionDefault:
-		CURRENT_PARAM(1) = 255 * ( 4 * random(20) + 40);
+		CURRENT_PARAM(1) = 255 * (4 * random(20) + 40);
 
 		_data->getData()->field_491 = EntityData::kField491_4070;
 		_data->getData()->field_493 = EntityData::kField493_1;
@@ -369,7 +369,7 @@ IMPLEMENT_FUNCTION(Max, function13, 13)
 
 	case kAction71277948:
 		_data->setNextCallback(1);
-		call(new ENTITY_SETUP_DEFAULT(Max, setup_function7));
+		call(new ENTITY_SETUP(Max, setup_function7));
 		break;
 
 	case kAction122358304:
@@ -385,7 +385,7 @@ IMPLEMENT_FUNCTION(Max, function13, 13)
 			break;
 
 		getSound()->playSound(kEntityMax, "Max1122");
-		CURRENT_PARAM(1) = 255 * ( 4 * random(20) + 40);
+		CURRENT_PARAM(1) = 255 * (4 * random(20) + 40);
 		break;
 	}
 }
@@ -408,12 +408,12 @@ IMPLEMENT_FUNCTION(Max, freeFromCage, 14)
 		if (getEvent(kEventCathMaxCage)) {
 			if (getEvent(kEventCathMaxFree)) {
 				_data->setNextCallback(2);
-				call(new ENTITY_SETUP_DEFAULT(Max, setup_savegame), 2, kEventCathMaxFree);
+				call(new ENTITY_SETUP(Max, setup_savegame), 2, kEventCathMaxFree);
 			}
 
 		} else {
 			_data->setNextCallback(1);
-			call(new ENTITY_SETUP_DEFAULT(Max, setup_savegame), 2, kEventCathMaxCage);
+			call(new ENTITY_SETUP(Max, setup_savegame), 2, kEventCathMaxCage);
 		}
 		break;
 
@@ -491,7 +491,7 @@ IMPLEMENT_FUNCTION(Max, function15, 15)
 		getSound()->playSound(kEntityMax, "Max3010");
 
 		_data->setNextCallback(1);
-		call(new ENTITY_SETUP(Max, setup_function4, const char*, int, int, const char*), "630Bf", kEntityTables4);
+		call(new ENTITY_SETUP_SIIS(Max, setup_function4), "630Bf", kEntityTables4);
 		break;
 
 	case kAction18:

@@ -132,7 +132,7 @@ IMPLEMENT_FUNCTION(Mertens, function6, 6)
 		 && !getEntities()->checkFields3(kEntityNone)
 		 && !getEntities()->checkFields10(kEntityNone)) {
 			 _data->setNextCallback(1);
-			 call(new ENTITY_SETUP_DEFAULT(Mertens, setup_savegame), 2, kEventMertensBloodJacket);
+			 call(new ENTITY_SETUP(Mertens, setup_savegame), 2, kEventMertensBloodJacket);
 		}
 		break;
 
@@ -176,7 +176,7 @@ IMPLEMENT_FUNCTION_I(Mertens, function11, 11)
 			&& !getEntities()->checkFields3(kEntityNone)
 			&& !getEntities()->checkFields10(kEntityNone)) {
 				_data->setNextCallback(1);
-				call(new ENTITY_SETUP_DEFAULT(Mertens, setup_savegame), 2, kEventMertensBloodJacket);
+				call(new ENTITY_SETUP(Mertens, setup_savegame), 2, kEventMertensBloodJacket);
 				break;
 		}
 
@@ -226,7 +226,7 @@ IMPLEMENT_FUNCTION(Mertens, function17, 17)
 			getInventory()->setLocationAndProcess(kItem7, kLocation1);
 
 			_data->setNextCallback(1);
-			call(new ENTITY_SETUP_DEFAULT(Mertens, setup_function10), 3, 540);
+			call(new ENTITY_SETUP(Mertens, setup_function10), 3, 540);
 
 		} else {
 
@@ -255,7 +255,7 @@ IMPLEMENT_FUNCTION(Mertens, function17, 17)
 				}
 
 				_data->setNextCallback(3);
-				call(new ENTITY_SETUP_DEFAULT(Mertens, setup_function6));
+				call(new ENTITY_SETUP(Mertens, setup_function6));
 			}
 
 		}
@@ -270,7 +270,7 @@ IMPLEMENT_FUNCTION(Mertens, function17, 17)
 			getEntities()->drawSequences(kEntityMertens);
 			ENTITY_PARAM(2, 1) = 1;
 			_data->setNextCallback(2);
-			call(new ENTITY_SETUP_DEFAULT(Mertens, setup_function11), 75);
+			call(new ENTITY_SETUP(Mertens, setup_function11), 75);
 			break;
 
 		case 2:
@@ -428,7 +428,7 @@ IMPLEMENT_FUNCTION(Mertens, function41, 41)
 
 	case kActionDefault:
 		_data->setNextCallback(1);
-		call(new ENTITY_SETUP_DEFAULT(Mertens, setup_function10), 3, 2000);
+		call(new ENTITY_SETUP(Mertens, setup_function10), 3, 2000);
 		break;
 
 	case kAction18:
@@ -437,7 +437,7 @@ IMPLEMENT_FUNCTION(Mertens, function41, 41)
 			break;
 
 		case 1:
-			call(new ENTITY_SETUP_DEFAULT(Mertens, setup_function17));
+			call(new ENTITY_SETUP(Mertens, setup_function17));
 			break;
 
 		case 2:
@@ -460,7 +460,7 @@ IMPLEMENT_FUNCTION(Mertens, chapter2, 43)
 
 	case kActionNone:
 		_data->setNextCallback(1);
-		call(new ENTITY_SETUP_DEFAULT(Mertens, setup_function17));
+		call(new ENTITY_SETUP(Mertens, setup_function17));
 		break;
 
 	case kActionDefault:
@@ -501,7 +501,7 @@ IMPLEMENT_FUNCTION(Mertens, chapter3, 45)
 
 	case kActionNone:
 		_data->setNextCallback(1);
-		call(new ENTITY_SETUP_DEFAULT(Mertens, setup_function17));
+		call(new ENTITY_SETUP(Mertens, setup_function17));
 		break;
 
 	case kActionDefault:
@@ -542,7 +542,7 @@ IMPLEMENT_FUNCTION(Mertens, chapter4, 47)
 
 	case kActionNone:
 		_data->setNextCallback(1);
-		call(new ENTITY_SETUP_DEFAULT(Mertens, setup_function17));
+		call(new ENTITY_SETUP(Mertens, setup_function17));
 		break;
 
 	case kActionDefault:

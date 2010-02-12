@@ -37,11 +37,11 @@ namespace LastExpress {
 #define ENTITY_CALLBACK(class, name, pointer) \
 	Common::Functor1Mem<SavePoint*, void, class>(pointer, &class::name)
 
-#define ENTITY_SETUP_DEFAULT(class, name) \
+#define ENTITY_SETUP(class, name) \
 	Functor4Mem<int, int, int, int, void, class>(this, &class::name)
 
-#define ENTITY_SETUP(class, name, type1, type2, type3, type4) \
-	Functor4Mem<type1, type2, type3, type4, void, class>(this, &class::name)
+#define ENTITY_SETUP_SIIS(class, name) \
+	Functor4Mem<const char*, int, int, const char*, void, class>(this, &class::name)
 
 #define ADD_CALLBACK_FUNCTION(class, name) \
 	_callbacks.push_back(new ENTITY_CALLBACK(class, name, this));

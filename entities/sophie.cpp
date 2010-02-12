@@ -170,7 +170,7 @@ IMPLEMENT_FUNCTION(Sophie, function3, 3)
 		_data->getData()->field_495 = getEntityData(kEntityRebecca)->field_495;
 
 		_data->setNextCallback(1);
-		call(new ENTITY_SETUP_DEFAULT(Sophie, setup_function2), 5, 850);
+		call(new ENTITY_SETUP(Sophie, setup_function2), 5, 850);
 		break;
 
 	case kAction136654208:
@@ -179,7 +179,7 @@ IMPLEMENT_FUNCTION(Sophie, function3, 3)
 		_data->getData()->field_495 = getEntityData(kEntityRebecca)->field_495;
 
 		_data->setNextCallback(2);
-		call(new ENTITY_SETUP_DEFAULT(Sophie, setup_function2), 4, EntityData::kField491_4840);
+		call(new ENTITY_SETUP(Sophie, setup_function2), 4, EntityData::kField491_4840);
 		break;
 
 	case kAction259921280:
@@ -188,7 +188,7 @@ IMPLEMENT_FUNCTION(Sophie, function3, 3)
 		_data->getData()->field_495 = getEntityData(kEntityRebecca)->field_495;
 
 		_data->setNextCallback(3);
-		call(new ENTITY_SETUP_DEFAULT(Sophie, setup_function2), 2, 9640);
+		call(new ENTITY_SETUP(Sophie, setup_function2), 2, 9640);
 		break;
 
 	case kAction292775040:
@@ -197,7 +197,7 @@ IMPLEMENT_FUNCTION(Sophie, function3, 3)
 		_data->getData()->field_495 = EntityData::kField495_2;
 
 		_data->setNextCallback(4);
-		call(new ENTITY_SETUP_DEFAULT(Sophie, setup_function2), 4, EntityData::kField491_4840);
+		call(new ENTITY_SETUP(Sophie, setup_function2), 4, EntityData::kField491_4840);
 		break;
 	}
 }

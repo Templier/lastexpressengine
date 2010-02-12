@@ -219,7 +219,7 @@ IMPLEMENT_FUNCTION(Chapters, chapter2, 10)
 
 		// Save game
 		_data->setNextCallback(1);
-		call(new ENTITY_SETUP_DEFAULT(Chapters, setup_savegame), 1, 0);
+		call(new ENTITY_SETUP(Chapters, setup_savegame), 1, 0);
 		break;
 
 	case kAction18:
@@ -345,7 +345,7 @@ IMPLEMENT_FUNCTION(Chapters, chapter4, 17)
 
 		// Save game
 		_data->setNextCallback(1);
-		call(new ENTITY_SETUP_DEFAULT(Chapters, setup_savegame), 1, 0);
+		call(new ENTITY_SETUP(Chapters, setup_savegame), 1, 0);
 		break;
 
 	case kAction18:

@@ -214,7 +214,7 @@ label_skip:
 	case kAction9:
 		if (savepoint->param.intValue == 5 || savepoint->param.intValue == 6 || savepoint->param.intValue == 7 || savepoint->param.intValue == 8) {
 			_data->setNextCallback(savepoint->action == 8 ? 3 : 4);
-			call(new ENTITY_SETUP_DEFAULT(Train, setup_harem), savepoint->param.intValue, savepoint->action);
+			call(new ENTITY_SETUP(Train, setup_harem), savepoint->param.intValue, savepoint->action);
 		}
 		break;
 
@@ -283,13 +283,13 @@ label_skip:
 		if (getProgress().jacket == kJacketOriginal) {
 			if (getEntities()->checkFields4(EntityData::kField495_4, 18)) {
 				_data->setNextCallback(1);
-				call(new ENTITY_SETUP_DEFAULT(Train, setup_savegame), 2, kEventMertensBloodJacket);
+				call(new ENTITY_SETUP(Train, setup_savegame), 2, kEventMertensBloodJacket);
 				break;
 			}
 
 			if (getEntities()->checkFields4(EntityData::kField495_3, 22)) {
 				_data->setNextCallback(2);
-				call(new ENTITY_SETUP_DEFAULT(Train, setup_savegame), 2, kEventMertensBloodJacket);
+				call(new ENTITY_SETUP(Train, setup_savegame), 2, kEventMertensBloodJacket);
 				break;
 			}
 		}
@@ -346,13 +346,13 @@ label_skip:
 
 	case kAction202613084:
 		_data->setNextCallback(8);
-		call(new ENTITY_SETUP_DEFAULT(Train, setup_savegame), 2, kEventCloseMatchbox);
+		call(new ENTITY_SETUP(Train, setup_savegame), 2, kEventCloseMatchbox);
 		break;
 
 	case kAction203339360:
 		if (!CURRENT_PARAM(7)) {
 			_data->setNextCallback(5);
-			call(new ENTITY_SETUP_DEFAULT(Train, setup_savegame), 2, kEventLocomotiveConductorsDiscovered);
+			call(new ENTITY_SETUP(Train, setup_savegame), 2, kEventLocomotiveConductorsDiscovered);
 		} else {
 			CURRENT_PARAM(7) = 1;
 			getAction()->playAnimation(kEventLocomotiveConductorsLook);
@@ -420,12 +420,12 @@ label_skip:
 
 	case kActionBreakCeiling:
 		_data->setNextCallback(6);
-		call(new ENTITY_SETUP_DEFAULT(Train, setup_savegame), 2, kEventCathBreakCeiling);
+		call(new ENTITY_SETUP(Train, setup_savegame), 2, kEventCathBreakCeiling);
 		break;
 
 	case kActionJumpDownCeiling:
 		_data->setNextCallback(7);
-		call(new ENTITY_SETUP_DEFAULT(Train, setup_savegame), 2, kEventCathJumpDownCeiling);
+		call(new ENTITY_SETUP(Train, setup_savegame), 2, kEventCathJumpDownCeiling);
 		break;
 	}
 }

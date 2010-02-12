@@ -139,7 +139,7 @@ IMPLEMENT_FUNCTION(Salko, chapter2, 12)
 
 	case kAction136184016:
 		_data->setNextCallback(1);
-		call(new ENTITY_SETUP_DEFAULT(Salko, setup_function13));
+		call(new ENTITY_SETUP(Salko, setup_function13));
 		break;
 	}
 }

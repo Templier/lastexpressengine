@@ -253,7 +253,7 @@ IMPLEMENT_FUNCTION(Coudert, chapter1, 36)
 			if (!CURRENT_PARAM(1)) {
 				CURRENT_PARAM(1) = 1;
 				_data->setNextCallback(1);
-				call(new ENTITY_SETUP_DEFAULT(Coudert, setup_function40));
+				call(new ENTITY_SETUP(Coudert, setup_function40));
 			}
 		}
 		break;
@@ -320,7 +320,7 @@ IMPLEMENT_FUNCTION(Coudert, chapter2, 42)
 
 	case kActionNone:
 		_data->setNextCallback(1);
-		call(new ENTITY_SETUP_DEFAULT(Coudert, setup_function18));
+		call(new ENTITY_SETUP(Coudert, setup_function18));
 		break;
 
 	case kActionDefault:
@@ -369,7 +369,7 @@ IMPLEMENT_FUNCTION(Coudert, chapter3, 44)
 
 	case kActionNone:
 		_data->setNextCallback(1);
-		call(new ENTITY_SETUP_DEFAULT(Coudert, setup_function18));
+		call(new ENTITY_SETUP(Coudert, setup_function18));
 		break;
 
 	case kActionDefault:
@@ -444,7 +444,7 @@ IMPLEMENT_FUNCTION(Coudert, chapter4, 52)
 
 	case kActionNone:
 		_data->setNextCallback(1);
-		call(new ENTITY_SETUP_DEFAULT(Coudert, setup_function18));
+		call(new ENTITY_SETUP(Coudert, setup_function18));
 		break;
 
 	case kActionDefault:
