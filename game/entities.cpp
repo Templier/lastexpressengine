@@ -366,6 +366,10 @@ void Entities::processEntity(EntityIndex entity) {
 	warning("Entities::processEntity: not implemented!");
 }
 
+int Entities::getSoundValue(EntityIndex index) {
+	error("Entities::getSoundValue: not implemented!");
+}
+
 //////////////////////////////////////////////////////////////////////////
 /// Fields update
 
@@ -671,6 +675,10 @@ void Entities::getSequenceName(EntityIndex index, EntityDirection direction, cha
 	}
 }
 
+bool Entities::checkSequence0(EntityIndex entity) {
+	return (getData(entity)->getData()->sequence0 && (getData(entity)->getData()->sequence0->getFrameInfo(0)->subType != 3));
+}
+
 //////////////////////////////////////////////////////////////////////////
 //	Checks
 //////////////////////////////////////////////////////////////////////////
@@ -779,8 +787,8 @@ bool Entities::checkFields7(EntityData::Field495Value field495) {
 	return checkFields5(kEntityNone, field495) && !getData(kEntityNone)->getData()->field_493 && !checkFields6(kEntityNone);
 }
 
-bool Entities::checkFields8(EntityIndex entity) {
-	return getData(entity)->getData()->direction == 1 || getData(entity)->getData()->direction == 2;
+bool Entities::isDirectionUpOrDown(EntityIndex entity) {
+	return getData(entity)->getData()->direction == kDirectionUp || getData(entity)->getData()->direction == kDirectionDown;
 }
 
 bool Entities::checkFields9(EntityIndex entity1, EntityIndex entity2, int value) {
@@ -797,8 +805,61 @@ bool Entities::checkFields11() {
 	error("Entities::checkFields11: not implemented!");
 }
 
-bool Entities::checkSequence0(EntityIndex entity) {
-	return (getData(entity)->getData()->sequence0 && (getData(entity)->getData()->sequence0->getFrameInfo(0)->subType != 3));
+bool Entities::checkFields12(EntityIndex entity) {
+	error("Entities::checkFields12: not implemented!");
 }
+
+bool Entities::checkFields13(EntityIndex entity) {
+	error("Entities::checkFields13: not implemented!");
+}
+
+bool Entities::checkFields14(EntityIndex entity) {
+	error("Entities::checkFields14: not implemented!");
+}
+
+bool Entities::checkFields15() {
+	error("Entities::checkFields15: not implemented!");
+}
+
+bool Entities::checkFields16() {
+	error("Entities::checkFields16: not implemented!");
+}
+
+bool Entities::checkFields17(EntityIndex entity) {
+	error("Entities::checkFields17: not implemented!");
+}
+
+bool Entities::checkFields18(EntityData::Field495Value field495, EntityData::Field491Value field491) {
+	error("Entities::checkFields18: not implemented!");
+}
+
+bool Entities::checkFields19(EntityIndex entity, EntityData::Field495Value field495, EntityData::Field491Value field491) {
+	error("Entities::checkFields19: not implemented!");
+}
+
+bool Entities::checkFields20(EntityIndex entity) {
+	error("Entities::checkFields20: not implemented!");
+}
+
+bool Entities::checkFields21(EntityIndex entity) {
+	error("Entities::checkFields21: not implemented!");
+}
+
+bool Entities::checkFields22(EntityIndex entity) {
+	error("Entities::checkFields22: not implemented!");
+}
+
+bool Entities::checkFields23(EntityIndex entity) {
+	error("Entities::checkFields23: not implemented!");
+}
+
+bool Entities::checkFields24(EntityIndex entity, EntityData::Field491Value field491, unsigned int absValue) {
+	error("Entities::checkFields24: not implemented!");
+}
+
+bool Entities::checkFields25(EntityIndex entity) {
+	error("Entities::checkFields25: not implemented!");
+}
+
 
 } // End of namespace LastExpress

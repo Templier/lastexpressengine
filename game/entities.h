@@ -74,12 +74,16 @@ public:
 	void drawSequenceRight(EntityIndex index, const char* sequence);
 	void drawSequences(EntityIndex index);
 
+	bool checkSequence0(EntityIndex entity);
+
 	// Accessors
 	Entity *get(EntityIndex entity);
 	EntityData *getData(EntityIndex entity);
 
-	// Serializable
-	void saveLoadWithSerializer(Common::Serializer &ser);
+	int count() const { return _entities.size(); }
+
+	// Sound
+	int getSoundValue(EntityIndex index);
 
 	// Checks
 	bool checkEntity(EntityIndex entity, EntityData::Field495Value field495, EntityData::Field491Value field491);
@@ -92,14 +96,28 @@ public:
 	bool checkFields5(EntityIndex entity, EntityData::Field495Value field495);
 	bool checkFields6(EntityIndex entity);
 	bool checkFields7(EntityData::Field495Value field495);
-	bool checkFields8(EntityIndex entity);
+	bool isDirectionUpOrDown(EntityIndex entity);
 	bool checkFields9(EntityIndex entity1, EntityIndex entity2, int value);
 	bool checkFields10(EntityIndex entity);
 	bool checkFields11();
+	bool checkFields12(EntityIndex entity);
+	bool checkFields13(EntityIndex entity);
+	bool checkFields14(EntityIndex entity);
+	bool checkFields15();
+	bool checkFields16();
+	bool checkFields17(EntityIndex entity);
+	bool checkFields18(EntityData::Field495Value field495, EntityData::Field491Value field491);
+	bool checkFields19(EntityIndex entity, EntityData::Field495Value field495, EntityData::Field491Value field491);
+	bool checkFields20(EntityIndex entity);
+	bool checkFields21(EntityIndex entity);
+	bool checkFields22(EntityIndex entity);
+	bool checkFields23(EntityIndex entity);
+	bool checkFields24(EntityIndex entity, EntityData::Field491Value field491, unsigned int absValue);
+	bool checkFields25(EntityIndex entity);
 
-	bool checkSequence0(EntityIndex entity);
 
-	int count() const { return _entities.size(); }
+	// Serializable
+	void saveLoadWithSerializer(Common::Serializer &ser);
 
 private:
 	LastExpressEngine	    *_engine;
