@@ -41,8 +41,6 @@ SavePoints::SavePoints(LastExpressEngine *engine) : _engine(engine) {
 }
 
 SavePoints::~SavePoints() {
-	for (int i = 0; i < 40; i++)
-		delete _callbacks[i];
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -87,7 +85,7 @@ void SavePoints::process() {
 
 			// Call requested callback
 			Entity::Callback *callback = getCallback(savepoint.entity1);
-			if (callback) {
+			if (callback && callback->isValid()) {
 				debugC(8, kLastExpressDebugLogic, "Executing savepoint: entity1=%d, action=%d, entity2=%d", savepoint.entity1, savepoint.action, savepoint.entity2);
 				(*callback)(&savepoint);
 			}
@@ -121,8 +119,8 @@ void SavePoints::setCallback(EntityIndex index, Entity::Callback* callback) {
 	if (index < 0 || index >= 40)
 		error ("SavePoints::setCallback - attempting to use an invalid entity index. Valid values 0-39, was %d", index);
 
-	// Clear previous callback
-	delete _callbacks[index];
+	if (!callback->isValid())
+		error("SavePoints::setCallback - attempting to set an invalid callback for entity %d", index);
 
 	_callbacks[index] = callback;
 }
@@ -142,8 +140,10 @@ void SavePoints::call(EntityIndex entity2, EntityIndex entity1, ActionIndex acti
 	point.param.intValue = param;
 
 	Entity::Callback *callback = getCallback(entity1);
-	if (callback)
+	if (callback && callback->isValid()) {
+		debugC(8, kLastExpressDebugLogic, "Executing savepoint: entity1=%d, action=%d, entity2=%d, param=%d", entity1, action, entity2, param);
 		(*callback)(&point);
+	}
 }
 
 void SavePoints::call(EntityIndex entity2, EntityIndex entity1, ActionIndex action, char* param) {
@@ -154,8 +154,10 @@ void SavePoints::call(EntityIndex entity2, EntityIndex entity1, ActionIndex acti
 	strcpy((char *)&point.param.charValue, param);
 
 	Entity::Callback *callback = getCallback(entity1);
-	if (callback)
+	if (callback && callback->isValid()) {
+		debugC(8, kLastExpressDebugLogic, "Executing savepoint: entity1=%d, action=%d, entity2=%d, param=%s", entity1, action, entity2, param);
 		(*callback)(&point);
+	}
 }
 
 //////////////////////////////////////////////////////////////////////////
