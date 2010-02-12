@@ -59,6 +59,9 @@ public:
 	// Animation
 	void playAnimation(int index);
 
+	// Compartement action
+	bool handleOtherCompartment(ObjectIndex object, byte param2, byte param3);
+
 private:
 	typedef Common::Functor1<SceneHotspot*, void> ActionFunctor;
 
@@ -120,7 +123,8 @@ private:
 	void pickScarf(bool process);
 	void pickCorpse(byte bedPosition, bool process);
 	void dropCorpse(bool process);
-	bool handleOtherCompartment(ObjectIndex object, byte param2, byte param3);
+
+	void playCompartmentSoundEvents(EntityIndex entityIndex, ObjectIndex object, byte param2, byte param3, bool loadSceneFunction);
 };
 
 } // End of namespace LastExpress

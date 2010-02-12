@@ -37,6 +37,7 @@
 #include "lastexpress/lastexpress.h"
 #include "lastexpress/helpers.h"
 
+bool handleCompartementAction();
 namespace LastExpress {
 
 Train::Train(LastExpressEngine *engine) : Entity(engine, kEntityTrain) {
@@ -92,6 +93,18 @@ IMPLEMENT_FUNCTION(Train, chapter5, 6)
 		setup_process();
 }
 
+
+void Train::handleCompartementAction() {
+	if (CURRENT_PARAM(8))
+		getSavePoints()->push(kEntityTrain, kEntityMahmud, kAction290410610, CURRENT_PARAM(1));
+
+	getAction()->handleOtherCompartment((ObjectIndex)CURRENT_PARAM(1), 0, ENTITY_PARAM(0, 8) ? 0 : 1);
+
+	ENTITY_PARAM(0, 8) = CURRENT_PARAM(1);
+
+	CALL_PREVIOUS_SAVEPOINT();
+}
+
 IMPLEMENT_FUNCTION_II(Train, harem, 7)
 	if (savepoint->action != kActionDefault)
 		return;
@@ -120,18 +133,142 @@ IMPLEMENT_FUNCTION_II(Train, harem, 7)
 	CURRENT_PARAM(7) = getEntities()->checkFields1(kEntityHadija, EntityData::kField495_3, (EntityData::Field491Value)CURRENT_PARAM(3));
 
 	getObjects()->update((ObjectIndex)CURRENT_PARAM(1), kEntityTrain, kLocation3, kCursorNormal, kCursorNormal);
+
+	// Knock / closed door sound
 	getSound()->playSound(kEntityTables5, (CURRENT_PARAM(2) == 8) ? "LIB012" : "LIB013", 16);
 
+	if (CURRENT_PARAM(4) && CURRENT_PARAM(5)) {
 
-	error("Train::harem: implementation is incomplete!");
+		ENTITY_PARAM(0, 5) += 1;
 
-	// TODO finish implementation
+		switch (ENTITY_PARAM(0, 5)) {
+		default:
+			CURRENT_PARAM(8) = 1;
+			break;
 
-	//if (!_data->getCurrentParameters()->param4 || !_data->getCurrentParameters()->param5)
-	//	return;
+		case 1:
+			getSound()->playSound(kEntityTables5, "Har1014", 16, 15);
+			break;
 
-	//if (!_data->getCurrentParameters()->param6 || !_data->getCurrentParameters()->param7)
-	//	return;
+		case 2:
+			getSound()->playSound(kEntityTables5, "Har1013", 16, 15);
+			getSound()->playSound(kEntityTables5, "Har1016", 16, 150);
+			break;
+
+		case 3:
+			getSound()->playSound(kEntityTables5, "Har1015A", 16, 15);
+			getSound()->playSound(kEntityTables5, "Har1015", 16, 150);
+			break;
+		}
+
+		// Update progress
+		getProgress().field_DC = 1;
+		getProgress().field_E0 = 1;
+
+		handleCompartementAction();
+
+		// Done with it!
+		return;
+	}
+
+	if (CURRENT_PARAM(6) && CURRENT_PARAM(7)) {
+
+		ENTITY_PARAM(0, 6) += 1;
+
+		switch(ENTITY_PARAM(0, 6)) {
+		default:
+			CURRENT_PARAM(8) = 1;
+			break;
+
+		case 1:
+			getSound()->playSound(kEntityTables5, "Har1014", 16, 15);
+			break;
+
+		case 2:
+			getSound()->playSound(kEntityTables5, "Har1013", 16, 15);
+			break;
+
+		case 3:
+			getSound()->playSound(kEntityTables5, "Har1013A", 16, 15);
+			break;
+		}
+
+		handleCompartementAction();		
+		return;
+	}
+
+	if (!CURRENT_PARAM(5) && CURRENT_PARAM(6)) {
+
+		ENTITY_PARAM(0, 3) += 1;
+
+		switch(ENTITY_PARAM(0, 3)) {
+		default:
+			CURRENT_PARAM(8) = 1;
+			break;
+
+		case 1:
+			getSound()->playSound(kEntityTables5, "Har1012", 16, 15);
+			break;
+
+		case 2:
+			getSound()->playSound(kEntityTables5, "Har1012A", 16, 15);
+			break;
+		}
+
+		handleCompartementAction();		
+		return;
+	}
+
+	if (!CURRENT_PARAM(5) && !CURRENT_PARAM(6)) {
+
+		if (CURRENT_PARAM(4)) {
+			ENTITY_PARAM(0, 1) += 1;
+
+			if (ENTITY_PARAM(0, 1) <= 1)
+				getSound()->playSound(kEntityTables5, "Har1014", 16, 15);
+			else
+				CURRENT_PARAM(8) = 1;
+
+			getProgress().field_DC = 1;
+
+			handleCompartementAction();
+			return;
+		}
+
+		if (CURRENT_PARAM(7)) {
+			ENTITY_PARAM(0, 4) += 1;
+
+			if (ENTITY_PARAM(0, 4) <= 1) {
+				getSound()->playSound(kEntityTables5, "Har1011", 16, 15);
+				handleCompartementAction();
+				return;
+			}
+		}
+
+		CURRENT_PARAM(8) = 1;
+		handleCompartementAction();		
+		return;
+	}
+
+	ENTITY_PARAM(0, 2) += 1;
+
+	switch (ENTITY_PARAM(0, 2)) {
+	default:
+		CURRENT_PARAM(8) = 1;
+		break;
+
+	case 1:
+		getSound()->playSound(kEntityTables5, "Har1013", 16, 15);
+		break;
+
+	case 2:
+		getSound()->playSound(kEntityTables5, "Har1013A", 16, 15);
+		break;
+	}
+
+	getProgress().field_E0 = 1;
+
+	handleCompartementAction();
 }
 
 IMPLEMENT_FUNCTION(Train, process, 8)

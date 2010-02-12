@@ -925,6 +925,7 @@ enum ActionIndex {
 	kAction203863200 = 203863200,
 	kAction222746496 = 222746496,
 	kActionBreakCeiling = 225056224,
+	kAction290410610 = 290410610,
 	kActionJumpDownCeiling = 338494260,
 
 	/////////////////////////////

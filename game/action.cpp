@@ -1435,7 +1435,9 @@ void Action::dropCorpse(bool process) {
 
 bool Action::handleOtherCompartment(ObjectIndex object, byte param2, byte param3) {
 
-	if (getEntityData(kEntityNone)->field_493 || ((object < 2 || object > 8) && (object < 32 || object > 39)))
+	// Only handle compartments
+	if (getEntityData(kEntityNone)->field_493 
+	|| ((object < kObjectCompartment2 || object > kObjectCompartment8) && (object < kObjectCompartmentA || object > kObjectCompartmentH)))
 		return false;
 
 	//////////////////////////////////////////////////////////////////////////
@@ -1443,36 +1445,77 @@ bool Action::handleOtherCompartment(ObjectIndex object, byte param2, byte param3
 	if (getEntityData(kEntityNone)->field_495 == getEntityData(kEntityGendarmes)->field_495
 	&& !getEntityData(kEntityGendarmes)->field_493
 	&& !getEntities()->compare(kEntityNone, kEntityGendarmes)) {
-		if (param2) {
-			if (getObjects()->get(object).location == 1 || getObjects()->get(object).location == 3 || getEntities()->checkFields2(object)) {
-				getSound()->playSoundEvent(kEntityNone, 13, 0);
-			} else {
-				getSound()->playSoundEvent(kEntityNone, 14, 0);
-				getSound()->playSoundEvent(kEntityNone, 15, 3);
-			}
-		}
-
-		if (param3)
-			getLogic()->loadSceneFromObject(object);
-
+		playCompartmentSoundEvents(kEntityNone, object, param2, param3, true);
 		return true;
 	}
 
 	//////////////////////////////////////////////////////////////////////////
 	// Mertens
+	if (getEntityData(kEntityNone)->field_493 == EntityData::kField493_3
+	 && getEntityData(kEntityMertens)->field_495 == EntityData::kField495_3
+	 && !getEntityData(kEntityMertens)->field_493
+	 && !((EntityData::EntityParametersIIII*)getEntities()->getData(kEntityMertens)->getParameters(8, 0))->param1) {
 
+		 error("Action::handleOtherCompartment: not implemented!");
 
-
+		 return true;
+	}
 
 	//////////////////////////////////////////////////////////////////////////
 	// Coudert
+	if (getEntityData(kEntityNone)->field_493 != EntityData::kField493_4
+	 || !getEntityData(kEntityCoudert)->field_495
+	 || getEntityData(kEntityCoudert)->field_493
+	 || ((EntityData::EntityParametersIIII*)getEntities()->getData(kEntityCoudert)->getParameters(8, 0))->param1)
+	 return false;
 
-	//if (param3)
-	//	getLogic()->loadSceneFromObject2(object);
+	if (!getEntities()->compare(kEntityNone, kEntityCoudert)) {
+		error("Action::handleOtherCompartment: not implemented!");
+	}
 
-	error("Action::handleOtherCompartment: not implemented!");
+	// Direction = Up
+	if (!getEntities()->compare(kEntityNone, kEntityCoudert)
+	&& getEntityData(kEntityCoudert)->direction == kDirectionUp
+	&& getEntityData(kEntityCoudert)->field_491 < getEntityData(kEntityNone)->field_491) {	
+		playCompartmentSoundEvents(kEntityCoudert, object, param2, param3, true);
 
-	//return false;
+		return true;
+	}
+
+	// Direction = down
+	if (!getEntities()->compare(kEntityNone, kEntityCoudert)
+	&& getEntityData(kEntityCoudert)->direction == kDirectionDown
+	&& getEntityData(kEntityCoudert)->field_491 > getEntityData(kEntityNone)->field_491) {	
+		playCompartmentSoundEvents(kEntityCoudert, object, param2, param3, false);
+
+		return true;
+	}
+
+	return false;
+}
+
+void Action::playCompartmentSoundEvents(EntityIndex entityIndex, ObjectIndex object, byte param2, byte param3, bool loadSceneFunction) {
+	if (param2) {
+		if (getObjects()->get(object).location == 1 || getObjects()->get(object).location == 3 || getEntities()->checkFields2(object)) {
+			getSound()->playSoundEvent(kEntityNone, 13, 0);
+		} else {
+			getSound()->playSoundEvent(kEntityNone, 14, 0);
+			getSound()->playSoundEvent(kEntityNone, 15, 3);
+		}
+	}
+
+	if (entityIndex != kEntityNone) {
+		// HmHmmm...
+		if (!getSound()->isBuffered(entityIndex))
+			getSound()->playSound(entityIndex, (random(2)) ? "JAC1000" : "JAC1000A");
+	}
+
+	if (param3) {
+		if (loadSceneFunction)
+			getLogic()->loadSceneFromObject(object);
+		else
+			getLogic()->loadSceneFromObject2(object);
+	}
 }
 
 //////////////////////////////////////////////////////////////////////////
