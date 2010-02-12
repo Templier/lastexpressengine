@@ -67,7 +67,88 @@ IMPLEMENT_FUNCTION(Cooks, function3, 3)
 }
 
 IMPLEMENT_FUNCTION(Cooks, function4, 4)
-	error("Cooks: callback function 4 not implemented!");
+	switch (savepoint->action) {
+	default:
+		break;
+
+	case kActionDefault:
+		getEntities()->drawSequenceLeft(kEntityCooks, "308A");
+		getEntities()->updateField1000ProcessScene(kEntityCooks, EntityData::kField495_5, 75);
+		getEntities()->updateField1000ProcessScene(kEntityCooks, EntityData::kField495_5, 78);
+
+		switch (getProgress().chapter) {
+		default:
+			break;
+
+		case kChapter1:
+			_data->setNextCallback(2);
+			call(new ENTITY_SETUP_SIIS(Cooks, setup_playSound), "ZFX1011");
+			break;
+
+		case kChapter3:
+			_data->setNextCallback(2);
+			call(new ENTITY_SETUP_SIIS(Cooks, setup_playSound), "ZFX1011");
+			break;
+		}
+
+		getSound()->playSound(kEntityCooks, "KIT1011");
+		_data->setNextCallback(3);
+		call(new ENTITY_SETUP_SIIS(Cooks, setup_draw), "308B");
+		break;
+
+	case kAction17:
+		if (!getEntities()->checkFields17(kEntityNone)) {
+			getEntities()->drawSequences(kEntityCooks);
+			CALL_PREVIOUS_SAVEPOINT()
+			break;
+		}
+
+		if (getEntities()->checkFields4(EntityData::kField495_5, 80)) {
+			getEntities()->drawSequenceLeft(kEntityCooks, "308D");
+
+			if (!getSound()->isBuffered(kEntityCooks)) {
+				if (CURRENT_PARAM(1)) {
+					if (!getEntities()->checkSequence0(kEntityCooks)) {
+						getSound()->playSound(kEntityCooks, "LIB015");
+						getEntities()->drawSequences(kEntityCooks);
+						CALL_PREVIOUS_SAVEPOINT()
+					}
+					break;
+				}
+
+				// Kitchen apprentice getting a lesson :D
+				getSound()->playSound(kEntityCooks, "KIT1011A");
+				CURRENT_PARAM(1) = 1;
+			}
+		}
+
+		if (CURRENT_PARAM(1) && !getEntities()->checkSequence0(kEntityCooks)) {
+			getSound()->playSound(kEntityCooks, "LIB015");
+			getEntities()->drawSequences(kEntityCooks);
+			CALL_PREVIOUS_SAVEPOINT()
+		}		
+		break;
+
+	case kAction18:
+		switch (_data->getNextCallback()) {
+		default:
+			break;
+
+		case 1:
+		case 2:
+			getSound()->playSound(kEntityCooks, "KIT1011");
+			_data->setNextCallback(3);
+			call(new ENTITY_SETUP_SIIS(Cooks, setup_draw), "308B");
+			break;
+		
+		case 3:
+			getEntities()->drawSequenceLeft(kEntityCooks, "308C");
+			getEntities()->updateField1000(kEntityCooks, EntityData::kField495_5, 75);
+			getEntities()->updateField1000ProcessScene(kEntityCooks, EntityData::kField495_5, 78);
+			break;
+		}
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Cooks, chapter1, 5)
@@ -91,11 +172,90 @@ IMPLEMENT_FUNCTION(Cooks, chapter1, 5)
 }
 
 IMPLEMENT_FUNCTION(Cooks, function6, 6)
-	error("Cooks: callback function 6 not implemented!");
+	switch (savepoint->action) {
+	default:
+		break;
+
+	case kActionNone:
+		UPDATE_PARAM_FROM_TIME(4, 2);
+
+		// Broken plate sound
+		getSound()->playSound(kEntityNone, "LIB122",  getEntities()->getSoundValue(kEntityCooks));
+		CURRENT_PARAM(2) = 225 * (4 * random(30) + 120);
+		CURRENT_PARAM(4) = 0;
+		break;
+
+	case kActionDefault:
+		CURRENT_PARAM(1) = 1;
+		CURRENT_PARAM(2) = 225 * (4 * random(30) + 120);		
+		break;
+
+	case kAction17:
+		if (!getEntities()->checkFields17(kEntityNone))
+			break;
+
+		if (CURRENT_PARAM(1)) {
+			if (getEntities()->checkFields4(EntityData::kField495_5, 73)) {
+				_data->setNextCallback(1);
+				call(new ENTITY_SETUP(Cooks, setup_function3));
+			}
+		} else {
+			if (CURRENT_PARAM(3)) {
+				_data->setNextCallback(2);
+				call(new ENTITY_SETUP_SIIS(Cooks, setup_playSound), "ZFX1011");
+			} else {
+				_data->setNextCallback(3);
+				call(new ENTITY_SETUP_SIIS(Cooks, setup_playSound), "ZFX1012");
+			}
+		}
+		break;
+
+	case kAction18:
+		switch (_data->getNextCallback()) {
+		default:
+			break;
+
+		case 1:
+			CURRENT_PARAM(1) = 0;
+			break;
+
+		case 2:
+		case 3:
+			CURRENT_PARAM(3) = !CURRENT_PARAM(3);
+			break;
+		}
+		break;
+
+	case kAction101632192:
+		setup_function7();
+		break;
+
+	case kAction224849280:
+		getProgress().field_4C = 1;
+		CURRENT_PARAM(1) = 1;
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Cooks, function7, 7)
-	error("Cooks: callback function 7 not implemented!");
+	switch (savepoint->action) {
+	default:
+		break;
+
+	case kActionNone:
+		// Snoring...
+		_data->setNextCallback(1);
+		call(new ENTITY_SETUP_SIIS(Cooks, setup_playSound), "WAT1200");
+		break;
+
+	case kActionDefault:
+		_data->getData()->field_491 = EntityData::kField491_3650;
+		_data->getData()->field_493 = EntityData::kField493_0;
+		_data->getData()->field_495 = EntityData::kField495_5;
+
+		getEntities()->drawSequences(kEntityCooks);
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Cooks, chapter2, 8)
@@ -122,7 +282,38 @@ IMPLEMENT_FUNCTION(Cooks, chapter2, 8)
 }
 
 IMPLEMENT_FUNCTION(Cooks, function9, 9)
-	error("Cooks: callback function 9 not implemented!");
+	switch (savepoint->action) {
+	default:
+		break;
+
+	case kActionNone:
+		UPDATE_PARAM_FROM_TIME(3, 1);
+
+		// Broken plate sound
+		getSound()->playSound(kEntityNone, "LIB122",  getEntities()->getSoundValue(kEntityCooks));
+		CURRENT_PARAM(1) = 225 * (4 * random(30) + 120);
+		CURRENT_PARAM(3) = 0;
+		break;
+
+	case kActionDefault:
+		CURRENT_PARAM(1) = 225 * (4 * random(30) + 120);		
+		break;
+
+	case kAction17:
+		if (CURRENT_PARAM(2)) {
+			_data->setNextCallback(1);
+			call(new ENTITY_SETUP_SIIS(Cooks, setup_playSound), "ZFX1011");
+		} else {
+			_data->setNextCallback(2);
+			call(new ENTITY_SETUP_SIIS(Cooks, setup_playSound), "ZFX1012");
+		}
+		break;
+
+	case kAction18:
+		if (_data->getNextCallback() == 1 || _data->getNextCallback() == 2)
+			CURRENT_PARAM(2) = !CURRENT_PARAM(2);
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Cooks, chapter3, 10)
@@ -148,7 +339,79 @@ IMPLEMENT_FUNCTION(Cooks, chapter3, 10)
 }
 
 IMPLEMENT_FUNCTION(Cooks, function11, 11)
-	error("Cooks: callback function 11 not implemented!");
+	switch (savepoint->action) {
+	default:
+		break;
+
+	case kActionNone:
+		if (CURRENT_PARAM(4)) {
+			if (CURRENT_PARAM(4) > (int)getState()->time)
+				goto update_params;
+			CURRENT_PARAM(4) = EntityData::kParamTime;
+		} else {
+			CURRENT_PARAM(4) = CURRENT_PARAM(2) + getState()->time;
+		}
+
+		// Broken plate sound
+		getSound()->playSound(kEntityNone, "LIB122",  getEntities()->getSoundValue(kEntityCooks));
+		CURRENT_PARAM(2) = 225 * (4 * random(30) + 120);
+		CURRENT_PARAM(4) = 0;
+
+update_params:
+		if (getState()->time > kTimeUnknown1) {
+			if (!CURRENT_PARAM(5)) {
+				CURRENT_PARAM(1) = 0;
+				CURRENT_PARAM(5) = 1;
+			}
+		}
+		break;
+
+	case kActionDefault:
+		CURRENT_PARAM(1) = 1;
+		CURRENT_PARAM(2) = 225 * (4 * random(30) + 120);
+		break;
+
+	case kAction17:
+		if (!getEntities()->checkFields17(kEntityNone))
+			break;
+
+		if (CURRENT_PARAM(1)) {
+			if (getEntities()->checkFields4(EntityData::kField495_5, 80)) {
+				_data->setNextCallback(1);
+				call(new ENTITY_SETUP(Cooks, setup_function4));
+			}
+		} else {
+			if (CURRENT_PARAM(3)) {
+				_data->setNextCallback(2);
+				call(new ENTITY_SETUP_SIIS(Cooks, setup_playSound), "ZFX1011");
+			} else {
+				_data->setNextCallback(3);
+				call(new ENTITY_SETUP_SIIS(Cooks, setup_playSound), "ZFX1012");
+			}
+		}
+		break;
+
+	case kAction18:
+		switch (_data->getNextCallback()) {
+		default:
+			break;
+
+		case 1:
+			CURRENT_PARAM(1) = 0;
+			break;
+
+		case 2:
+		case 3:
+			CURRENT_PARAM(3) = !CURRENT_PARAM(3);
+			break;
+		}
+		break;
+
+	case kAction236976550:
+		getProgress().field_4C = 1;
+		break;
+
+	}
 }
 
 IMPLEMENT_FUNCTION(Cooks, chapter4, 12)
@@ -175,7 +438,44 @@ IMPLEMENT_FUNCTION(Cooks, chapter4, 12)
 }
 
 IMPLEMENT_FUNCTION(Cooks, function13, 13)
-	error("Cooks: callback function 13 not implemented!");
+	switch (savepoint->action) {
+	default:
+		break;
+
+	case kActionNone:
+		UPDATE_PARAM_FROM_TIME(3, 1)
+
+		// Broken plate sound
+		getSound()->playSound(kEntityNone, "LIB122",  getEntities()->getSoundValue(kEntityCooks));
+		CURRENT_PARAM(1) = 225 * (4 * random(30) + 120);
+		CURRENT_PARAM(3) = 0;
+		break;
+
+	case kActionDefault:
+		CURRENT_PARAM(1) = 225 * (4 * random(30) + 120);
+		break;
+
+	case kAction17:
+		if (!getEntities()->checkFields17(kEntityNone))
+			break;
+		
+		// Kitchen background sound
+		if (CURRENT_PARAM(2)) {
+			_data->setNextCallback(1);
+			call(new ENTITY_SETUP_SIIS(Cooks, setup_playSound), "ZFX1011");
+		} else {
+			_data->setNextCallback(2);
+			call(new ENTITY_SETUP_SIIS(Cooks, setup_playSound), "ZFX1012");
+		}
+		break;
+
+
+	case kAction18:
+		// Play the next part of background sound
+		if (_data->getNextCallback() == 1 || _data->getNextCallback() == 2) {
+			CURRENT_PARAM(2) = !CURRENT_PARAM(2);
+		}
+	}	
 }
 
 IMPLEMENT_FUNCTION(Cooks, chapter5, 14)

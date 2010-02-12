@@ -38,6 +38,8 @@ enum TimeValue {
 	kTimeChapter4 = 2353500,
 	kTimeChapter5 = 2844000,
 
+	kTimeUnknown1 = 2079000,
+
 	kTimeGameOver = 2418300
 };
 
@@ -757,6 +759,13 @@ enum ActionIndex {
 	// Chapters
 	/////////////////////////////
 	kAction171843264 = 171843264,
+
+	/////////////////////////////
+	// Cooks
+	/////////////////////////////
+	kAction101632192 = 101632192,
+	kAction224849280 = 224849280,
+	kAction236976550 = 236976550,
 
 	/////////////////////////////
 	// Coudert
