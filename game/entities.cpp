@@ -699,7 +699,9 @@ bool Entities::checkEntity(EntityIndex entity, EntityData::Field495Value field49
 }
 
 bool Entities::checkFields1(EntityIndex entity, EntityData::Field495Value field495, EntityData::Field491Value field491) {
-	return (getData(entity)->getData()->field_491 == field491 && getData(entity)->getData()->field_493 == EntityData::kField493_1 && getData(entity)->getData()->field_495 == field495);
+	return (getEntityData(entity)->field_491 == field491 
+		 && getEntityData(entity)->field_493 == EntityData::kField493_1 
+		 && getEntityData(entity)->field_495 == field495);
 }
 
 bool Entities::checkFields2(ObjectIndex object) {
@@ -772,101 +774,156 @@ bool Entities::checkFields2(ObjectIndex object) {
 }
 
 bool Entities::checkFields3(EntityIndex entity) {
-	return (getData(entity)->getData()->field_495 == EntityData::kField495_3
-		 || getData(entity)->getData()->field_495 == EntityData::kField495_4) && getData(entity)->getData()->field_493 == EntityData::kField493_1;
+	return (getEntityData(entity)->field_495 == EntityData::kField495_3 
+		 || getEntityData(entity)->field_495 == EntityData::kField495_4)
+		 && getEntityData(entity)->field_493 == EntityData::kField493_1;
 }
 
 bool Entities::checkFields4(EntityData::Field495Value field495, int position) {
 	loadSceneObject(scene, getState()->scene);
 
-	return getData(kEntityNone)->getData()->field_495 == field495 && scene.getHeader()->position == position;
+	return getEntityData(kEntityNone)->field_495 == field495 && scene.getHeader()->position == position;
 }
 
 bool Entities::checkFields5(EntityIndex entity, EntityData::Field495Value field495) {
-	return getData(entity)->getData()->field_495 == field495 && getData(entity)->getData()->field_493 < EntityData::kField493_2;
+	return getEntityData(entity)->field_495 == field495 && getEntityData(entity)->field_493 < EntityData::kField493_2;
 }
 
-
 bool Entities::checkFields6(EntityIndex entity) {
-	return checkFields5(entity, EntityData::kField495_3) && getData(entity)->getData()->field_491 < EntityData::kField491_850;
+	return checkFields5(entity, EntityData::kField495_3) && getEntityData(entity)->field_491 < EntityData::kField491_850;
 }
 
 bool Entities::checkFields7(EntityData::Field495Value field495) {
-	return checkFields5(kEntityNone, field495) && !getData(kEntityNone)->getData()->field_493 && !checkFields6(kEntityNone);
+	return checkFields5(kEntityNone, field495) && !getEntityData(kEntityNone)->field_493 && !checkFields6(kEntityNone);
 }
 
 bool Entities::isDirectionUpOrDown(EntityIndex entity) {
-	return getData(entity)->getData()->direction == kDirectionUp || getData(entity)->getData()->direction == kDirectionDown;
+	return getEntityData(entity)->direction == kDirectionUp || getEntityData(entity)->direction == kDirectionDown;
 }
 
-bool Entities::checkFields9(EntityIndex entity1, EntityIndex entity2, int value) {
-	return getData(entity1)->getData()->field_495 == getData(entity2)->getData()->field_495
-		&& abs(getData(entity1)->getData()->field_491 - getData(entity2)->getData()->field_491) <= value
-		&& (getData(entity1)->getData()->field_493 != EntityData::kField493_2 || getData(entity2)->getData()->field_493 != EntityData::kField493_2);
+bool Entities::checkFields9(EntityIndex entity1, EntityIndex entity2, int absValue) {
+	return getEntityData(entity1)->field_495 == getEntityData(entity2)->field_495
+	    && abs(getEntityData(entity1)->field_491 - getEntityData(entity2)->field_491) <= absValue
+		&& (getEntityData(entity1)->field_493 != EntityData::kField493_2 || getEntityData(entity2)->field_493 != EntityData::kField493_2);
 }
 
 bool Entities::checkFields10(EntityIndex entity) {
-	return getData(entity)->getData()->field_493 < EntityData::kField493_3;
+	return getEntityData(entity)->field_493 < EntityData::kField493_3;
 }
 
 bool Entities::checkFields11() {
-	error("Entities::checkFields11: not implemented!");
+	for (uint i = 1; i < _entities.size(); i++) {
+		EntityIndex index = (EntityIndex)i;
+
+		if (!getEntityData(index)->field_493
+		 && checkFields12(index)
+		 || checkFields13(index))
+			return false;
+	}	
+	return true;
 }
 
 bool Entities::checkFields12(EntityIndex entity) {
-	error("Entities::checkFields12: not implemented!");
+	return checkFields5(entity, EntityData::kField495_5)
+		&& getEntityData(entity)->field_491 >= EntityData::kField491_1540
+		&& getEntityData(entity)->field_491 <= EntityData::kField491_3650;
 }
 
 bool Entities::checkFields13(EntityIndex entity) {
-	error("Entities::checkFields13: not implemented!");
+	return checkFields5(entity, EntityData::kField495_5)
+		&& getEntityData(entity)->field_491 >= EntityData::kField491_3650
+		&& getEntityData(entity)->field_491 <= EntityData::kField491_5800;
 }
 
 bool Entities::checkFields14(EntityIndex entity) {
-	error("Entities::checkFields14: not implemented!");
+	return checkFields5(entity, EntityData::kField495_2)
+		&& getEntityData(entity)->field_491 >= EntityData::kField491_5500
+		&& getEntityData(entity)->field_491 <= EntityData::kField491_7500;
 }
 
 bool Entities::checkFields15() {
-	error("Entities::checkFields15: not implemented!");
+	return (getEntityData(kEntityNone)->field_491 == EntityData::kField491_7500 || getEntityData(kEntityNone)->field_491 == EntityData::kField491_8200)
+		 && getEntityData(kEntityNone)->field_493 == EntityData::kField493_2
+		 && getEntityData(kEntityNone)->field_495 == EntityData::kField495_3;
 }
 
 bool Entities::checkFields16() {
-	error("Entities::checkFields16: not implemented!");
+	return (getEntityData(kEntityNone)->field_491 == EntityData::kField491_4070 || getEntityData(kEntityNone)->field_491 == EntityData::kField491_4840)
+		 && getEntityData(kEntityNone)->field_493 == EntityData::kField493_2
+		 && getEntityData(kEntityNone)->field_495 == EntityData::kField495_4;
 }
 
 bool Entities::checkFields17(EntityIndex entity) {
-	error("Entities::checkFields17: not implemented!");
+	return checkFields5(entity, EntityData::kField495_5) && getEntityData(entity)->field_491 > EntityData::kField491_5800;
 }
 
 bool Entities::checkFields18(EntityData::Field495Value field495, EntityData::Field491Value field491) {
-	error("Entities::checkFields18: not implemented!");
+	for (uint i = 1; i < _entities.size(); i++) {
+		
+		if (checkFields1((EntityIndex)i, field495, field491))
+			return false;
+	}	
+	return true;
 }
 
 bool Entities::checkFields19(EntityIndex entity, EntityData::Field495Value field495, EntityData::Field491Value field491) {
-	error("Entities::checkFields19: not implemented!");
+	
+	if (getEntityData(entity)->field_495 != field495 ||  getEntityData(entity)->field_493 != EntityData::kField493_1)
+		return false;
+
+	EntityData::Field491Value entity_field491 = getEntityData(entity)->field_491;
+
+	// Test values
+	if (field491 == EntityData::kField491_4455) {		
+		if (entity_field491 == EntityData::kField491_4070 || entity_field491 == EntityData::kField491_4455 || entity_field491 == EntityData::kField491_4840)
+			return true;
+
+		return false;
+	}
+
+	if (field491 == EntityData::kField491_6130) {		
+		if (entity_field491 == EntityData::kField491_5790 || entity_field491 == EntityData::kField491_6130 || entity_field491 == EntityData::kField491_6470)
+			return true;
+
+		return false;
+	}
+
+	if (field491 != EntityData::kField491_7850 
+	 || (entity_field491 != EntityData::kField491_7500 && entity_field491 != EntityData::kField491_7850 && entity_field491 != EntityData::kField491_8200))
+		return false;
+
+	return true;
 }
 
 bool Entities::checkFields20(EntityIndex entity) {
-	error("Entities::checkFields20: not implemented!");
+	return checkFields5(entity, EntityData::kField495_6)
+		&& getEntityData(entity)->field_491 >= EntityData::kField491_4500
+		&& getEntityData(entity)->field_491 <= EntityData::kField491_5500;
 }
 
 bool Entities::checkFields21(EntityIndex entity) {
-	error("Entities::checkFields21: not implemented!");
+	return checkFields5(entity, EntityData::kField495_6) && getEntityData(entity)->field_491 < EntityData::kField491_4500;
 }
 
 bool Entities::checkFields22(EntityIndex entity) {
-	error("Entities::checkFields22: not implemented!");
+	return checkFields5(entity, EntityData::kField495_2)
+		&& getEntityData(entity)->field_491 >= EntityData::kField491_3500
+		&& getEntityData(entity)->field_491 <= EntityData::kField491_5500;
 }
 
 bool Entities::checkFields23(EntityIndex entity) {
-	error("Entities::checkFields23: not implemented!");
+	return checkFields5(entity, EntityData::kField495_2) && getEntityData(entity)->field_491 > EntityData::kField491_7900;
 }
 
-bool Entities::checkFields24(EntityIndex entity, EntityData::Field491Value field491, unsigned int absValue) {
-	error("Entities::checkFields24: not implemented!");
+bool Entities::checkFields24(EntityIndex entity, EntityData::Field491Value field491, int absValue) {
+	return absValue >= abs(getEntityData(entity)->field_491 - field491);
 }
 
 bool Entities::checkFields25(EntityIndex entity) {
-	error("Entities::checkFields25: not implemented!");
+	if (getEntityData(entity)->direction == kDirectionUp && getLogic()->checkSceneFields(0, true))
+		return true;
+
+	return (getEntityData(entity)->direction == kDirectionDown && getLogic()->checkSceneFields(0, false));
 }
 
 

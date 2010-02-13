@@ -99,7 +99,7 @@ public:
 	bool checkFields6(EntityIndex entity);
 	bool checkFields7(EntityData::Field495Value field495);
 	bool isDirectionUpOrDown(EntityIndex entity);
-	bool checkFields9(EntityIndex entity1, EntityIndex entity2, int value);
+	bool checkFields9(EntityIndex entity1, EntityIndex entity2, int absValue);
 	bool checkFields10(EntityIndex entity);
 	bool checkFields11();
 	bool checkFields12(EntityIndex entity);
@@ -114,7 +114,7 @@ public:
 	bool checkFields21(EntityIndex entity);
 	bool checkFields22(EntityIndex entity);
 	bool checkFields23(EntityIndex entity);
-	bool checkFields24(EntityIndex entity, EntityData::Field491Value field491, unsigned int absValue);
+	bool checkFields24(EntityIndex entity, EntityData::Field491Value field491, int absValue);
 	bool checkFields25(EntityIndex entity);
 
 
