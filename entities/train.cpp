@@ -342,7 +342,8 @@ label_skip:
 
 		// Play clock sound
 		if (CURRENT_PARAM(6)) {
-			getSound()->playSound(kEntityNone, "ZFX1001");
+			if (!getSound()->isFileInQueue("ZFX1001"))
+				getSound()->playSound(kEntityNone, "ZFX1001");
 		}
 
 		break;

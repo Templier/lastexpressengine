@@ -43,6 +43,9 @@ Entity39::Entity39(LastExpressEngine *engine) : Entity(engine, kEntity39) {
 	ADD_CALLBACK_FUNCTION(Entity39, chapter4);
 	ADD_CALLBACK_FUNCTION(Entity39, chapter5);
 	ADD_CALLBACK_FUNCTION(Entity39, process);
+
+	memset(&_sequence, 0, 12);
+	_counter = 0;
 }
 
 IMPLEMENT_FUNCTION(Entity39, chapter1, 1)
@@ -70,28 +73,25 @@ IMPLEMENT_FUNCTION(Entity39, chapter5, 5)
 		setup_process();
 }
 
+// TODO: _sequence & counter do not seem to be touched anywhere else in the code :(
 IMPLEMENT_FUNCTION(Entity39, process, 6)
-
-	warning("Entity39: callback function 6 not implemented!");
-
-	/*
 	switch (savepoint->action) {
 	default:
 		break;
 
 	case kAction3:
-		getEntities()->storeSequenceName(kEntity39, &unknownValue);
+		getEntities()->drawSequenceRight(kEntity39, (char *)&_sequence);
 		break;
 
 	case kActionNone:
-		getData()->field_495 = getEntities()->getData(kEntityNone)->field_495;
+		_data->getData()->field_495 = getEntityData(kEntityNone)->field_495;
 
-		if (unknownValue && !unknownValue2) {
-			unknownValue2++;
-			getEntities()->storeSequenceName(kEntity39, &unknownValue);
+		if (_sequence && !_counter) {
+			_counter++;
+			getEntities()->drawSequenceRight(kEntity39, (char *)&_sequence);
 		}
 		break;
-	}*/
+	}
 }
 
 } // End of namespace LastExpress

@@ -44,6 +44,10 @@ public:
 	DECLARE_FUNCTION(chapter4)
 	DECLARE_FUNCTION(chapter5)
 	DECLARE_FUNCTION(process)
+
+private:
+	char _sequence[12];
+	int _counter;
 };
 
 } // End of namespace LastExpress
