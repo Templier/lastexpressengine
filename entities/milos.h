@@ -47,7 +47,7 @@ public:
 	DECLARE_FUNCTION_S(playSound16)
 	DECLARE_FUNCTION_II(savegame)
 	DECLARE_FUNCTION_I(updateFromTime)
-	DECLARE_FUNCTION_II(function10)
+	DECLARE_FUNCTION_II(enterCompartementDialog)
 	DECLARE_FUNCTION_I(function11)
 	DECLARE_FUNCTION(chapter1)
 	DECLARE_FUNCTION(function13)
@@ -72,7 +72,11 @@ public:
 	DECLARE_FUNCTION(function32)
 	DECLARE_FUNCTION(chapter5)
 	DECLARE_FUNCTION(function34)
-	DECLARE_FUNCTION(function35)
+	DECLARE_FUNCTION(drawSequences)
+
+private:
+	DECLARE_CALL_FUNCTION(default, Milos, int, int, int, int)
+	DECLARE_CALL_FUNCTION(char, Milos, const char*, int, int, const char*)
 };
 
 } // End of namespace LastExpress

@@ -63,11 +63,13 @@ public:
 
 	void updateField1000(EntityIndex entity, int index, int value);
 	void updateField1000ProcessScene(EntityIndex entity, int index, int value);
+	void updateField1000_4(EntityIndex entity, ObjectIndex object);
+	void updateField1000_5(EntityIndex entity, ObjectIndex object);
 
-	void updateFields0(EntityIndex entity1, ObjectIndex entity2);
-	void updateFields1(EntityIndex entity1, ObjectIndex entity2);
-	void updateFields2(EntityIndex entity1, ObjectIndex entity2);
-	void updateFields3(EntityIndex entity1, ObjectIndex entity2);
+	void updateFields0(EntityIndex entity, ObjectIndex object);
+	void updateFields1(EntityIndex entity, ObjectIndex object);
+	void updateFields2(EntityIndex entity, ObjectIndex object);
+	void updateFields3(EntityIndex entity, ObjectIndex object);
 
 	// Sequences
 	void drawSequenceLeft(EntityIndex index, const char* sequence);

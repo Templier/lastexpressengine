@@ -47,7 +47,7 @@ Milos::Milos(LastExpressEngine *engine) : Entity(engine, kEntityMilos) {
 	ADD_CALLBACK_FUNCTION(Milos, playSound16);
 	ADD_CALLBACK_FUNCTION(Milos, savegame);
 	ADD_CALLBACK_FUNCTION(Milos, updateFromTime);
-	ADD_CALLBACK_FUNCTION(Milos, function10);
+	ADD_CALLBACK_FUNCTION(Milos, enterCompartementDialog);
 	ADD_CALLBACK_FUNCTION(Milos, function11);
 	ADD_CALLBACK_FUNCTION(Milos, chapter1);
 	ADD_CALLBACK_FUNCTION(Milos, function13);
@@ -72,7 +72,7 @@ Milos::Milos(LastExpressEngine *engine) : Entity(engine, kEntityMilos) {
 	ADD_CALLBACK_FUNCTION(Milos, function32);
 	ADD_CALLBACK_FUNCTION(Milos, chapter5);
 	ADD_CALLBACK_FUNCTION(Milos, function34);
-	ADD_CALLBACK_FUNCTION(Milos, function35);
+	ADD_CALLBACK_FUNCTION(Milos, drawSequences);
 }
 
 IMPLEMENT_FUNCTION(Milos, function1, 1)
@@ -112,12 +112,151 @@ IMPLEMENT_FUNCTION_I(Milos, updateFromTime, 9)
 	Entity::updateFromTime(savepoint);
 }
 
-IMPLEMENT_FUNCTION_II(Milos, function10, 10)
-	error("Milos: callback function 10 not implemented!");
+IMPLEMENT_FUNCTION_II(Milos, enterCompartementDialog, 10)
+	switch (savepoint->action) {
+	default:
+		break;
+
+	case kActionNone:
+	case kActionDefault:
+		if (getEntities()->checkEntity(kEntityMilos, (EntityData::Field495Value)CURRENT_PARAM(1), (EntityData::Field491Value)CURRENT_PARAM(2)))
+			CALL_PREVIOUS_SAVEPOINT()
+		break;
+
+	case kAction5:
+	case kAction6:
+		if (getEvent(kEventMilosTylerCompartmentDefeat)) {
+			// Robert saying: "Milos"
+			switch(random(3)) {
+			default:
+			case 0:
+				getSound()->playSound(kEntityNone, "CAT1014");
+				break;
+
+			case 1:
+				getSound()->playSound(kEntityNone, "CAT1014A");
+				break;
+
+			case 2:
+				getSound()->playSound(kEntityNone, "CAT1014B");
+				break;
+			}
+		} else {
+			getSound()->excuseMeCath();
+		}
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION_I(Milos, function11, 11)
-	error("Milos: callback function 11 not implemented!");
+	switch (savepoint->action) {
+	default:
+		break;
+
+	case kActionNone:
+		break;
+
+	case kAction8:
+		break;
+
+	case kActionDefault:
+		break;
+
+	case kAction17:
+		break;
+
+	case kAction18:
+		switch(_data->getNextCallback()) {
+		default:
+			break;
+
+		case 1:
+			_data->getData()->field_493 = EntityData::kField493_0;
+			_data->setNextCallback(2);
+			call(new ENTITY_SETUP(Milos, setup_enterCompartementDialog), 3, 8200);
+			break;
+
+		case 2:
+			_data->setNextCallback(3);
+			call(new ENTITY_SETUP(Milos, setup_function14));
+			break;
+
+		case 3:
+			if (getProgress().field_14 == 14)
+				getProgress().field_14 = 0;
+
+			CURRENT_PARAM(6) = 1;
+			_data->setNextCallback(4);
+			call(new ENTITY_SETUP(Milos, setup_enterCompartementDialog), 4, 3050);
+			break;
+
+		case 4:
+			_data->setNextCallback(5);
+			call(new ENTITY_SETUP_SIIS(Milos, setup_function3), "609Bg", 38);
+			break;
+
+		case 5:
+			_data->getData()->field_493 = EntityData::kField493_1;
+			getEntities()->drawSequences(kEntityMilos);
+			getSavePoints()->push(kEntityMilos, kEntityVesna, kAction101687594);
+			getObjects()->update(kObjectCompartmentG, kEntityMilos, kLocation3, kCursorHandKnock, kCursorHand);
+			break;
+
+		case 6:
+			getObjects()->update(kObjectCompartmentG, kEntityMilos, kLocation3, kCursorHandKnock, kCursorHand);
+			break;
+
+		case 7:
+		case 8:
+			_data->setNextCallback(9);
+			// Milos asking: "Yeah? Who is it?"
+			call(new ENTITY_SETUP_SIIS(Milos, setup_playSound), "MIL1117A");
+			break;
+
+		case 9:
+			getObjects()->update(kObjectCompartmentG, kEntityMilos, kLocation3, kCursorTalk, kCursorNormal);
+			CURRENT_PARAM(2) = 1;
+			break;
+
+		case 10:
+		case 11:
+			CURRENT_PARAM(2) = 0;
+			CURRENT_PARAM(3) = 1;
+			break;
+
+		case 12:
+			getEntities()->drawSequenceLeft(kEntityMilos, "611Cg");
+			getEntities()->updateField1000_4(kEntityMilos, kObjectCompartmentG);
+			getSavePoints()->push(kEntityMilos, kEntityCoudert, kAction88652208);
+			break;
+
+		case 13:
+			getEntities()->updateField1000_5(kEntityMilos, kObjectCompartmentG);
+			_data->getData()->field_493 = EntityData::kField493_1;
+			getEntities()->drawSequences(kEntityMilos);
+			getObjects()->update(kObjectCompartmentG, kEntityMilos, kLocation3, kCursorHandKnock, kCursorHand);
+			CURRENT_PARAM(5) = 0;
+			break;
+
+		}
+		break;
+
+	case kAction122865568:
+		_data->getData()->field_493 = EntityData::kField493_0;
+		_data->setNextCallback(12);
+		call(new ENTITY_SETUP_SIIS(Milos, setup_function3), "611Bg", 38);
+		break;
+
+	case kAction123852928:
+		CURRENT_PARAM(1) = 13;
+		call(new ENTITY_SETUP_SIIS(Milos, setup_function3), "611Dg", 38);
+		break;
+
+	case kAction221683008:
+		CURRENT_PARAM(5) = 1;
+		getSavePoints()->push(kEntityMilos, kEntityCoudert, kAction123199584);
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Milos, chapter1, 12)
@@ -278,7 +417,15 @@ IMPLEMENT_FUNCTION(Milos, function31, 31)
 }
 
 IMPLEMENT_FUNCTION(Milos, function32, 32)
-	error("Milos: callback function 32 not implemented!");
+	if (savepoint->action == kActionDefault) {
+		getEntities()->drawSequences(kEntityMilos);
+		getObjects()->update(kObjectCompartmentG, kEntityNone, kLocation3, kCursorHandKnock, kCursorHand);
+
+		_data->getData()->field_491 = EntityData::kField491_540;
+		_data->getData()->field_493 = EntityData::kField493_1;
+		_data->getData()->field_495 = EntityData::kField495_7;
+		_data->getData()->inventoryItem = kItemNone;
+	}
 }
 
 IMPLEMENT_FUNCTION(Milos, chapter5, 33)
@@ -306,8 +453,10 @@ IMPLEMENT_FUNCTION(Milos, function34, 34)
 	error("Milos: callback function 34 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Milos, function35, 35)
-	error("Milos: callback function 35 not implemented!");
+IMPLEMENT_FUNCTION(Milos, drawSequences, 35)
+	if (savepoint->action == kActionDefault) {
+		getEntities()->drawSequences(kEntityMilos);
+	}
 }
 
 } // End of namespace LastExpress
