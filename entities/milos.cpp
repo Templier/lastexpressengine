@@ -26,6 +26,7 @@
 #include "lastexpress/entities/milos.h"
 
 #include "lastexpress/game/entities.h"
+#include "lastexpress/game/inventory.h"
 #include "lastexpress/game/logic.h"
 #include "lastexpress/game/object.h"
 #include "lastexpress/game/savepoint.h"
@@ -154,15 +155,42 @@ IMPLEMENT_FUNCTION_I(Milos, function11, 11)
 		break;
 
 	case kActionNone:
+		error("Milos: callback function 11 not implemented!");
 		break;
 
 	case kAction8:
+	case kAction9:
+		getObjects()->update(kObjectCompartmentG, kEntityMilos, kLocation3, kCursorNormal, kCursorNormal);
+
+		if (CURRENT_PARAM(2)) {			
+			if (getInventory()->hasItem(kItemPassengerList)) {
+				_data->setNextCallback(10);
+				call(new ENTITY_SETUP_SIIS(Milos, setup_playSound), (random(2) ? "CAT1504" : getSound()->wrongDoorCath()));
+			} else {
+				_data->setNextCallback(11);
+				call(new ENTITY_SETUP_SIIS(Milos, setup_playSound), getSound()->wrongDoorCath());
+			}
+		} else {
+			if (savepoint->action == kAction8) {
+				_data->setNextCallback(7);
+				call(new ENTITY_SETUP_SIIS(Milos, setup_playSound), "LIB012");
+			} else {
+				_data->setNextCallback(8);
+				call(new ENTITY_SETUP_SIIS(Milos, setup_playSound), "LIB013");
+			}
+		}
 		break;
 
 	case kActionDefault:
+		getObjects()->update(kObjectCompartmentG, kEntityMilos, kLocation3, kCursorHandKnock, kCursorHand);
 		break;
 
 	case kAction17:
+		if (CURRENT_PARAM(3) || CURRENT_PARAM(2)) {
+			getObjects()->update(kObjectCompartmentG, kEntityMilos, kLocation3, kCursorHandKnock, kCursorHand);
+			CURRENT_PARAM(3) = 0;
+			CURRENT_PARAM(2) = 0;
+		}
 		break;
 
 	case kAction18:
