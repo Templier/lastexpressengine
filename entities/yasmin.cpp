@@ -140,7 +140,7 @@ IMPLEMENT_FUNCTION(Yasmin, function6, 6)
 
 		case 3:
 			_data->getData()->field_493 = EntityData::kField493_1;
-			getEntities()->drawSequences(kEntityYasmin);
+			getEntities()->prepareSequences(kEntityYasmin);
 
 			CALL_PREVIOUS_SAVEPOINT()
 			break;
@@ -179,7 +179,7 @@ IMPLEMENT_FUNCTION(Yasmin, function7, 7)
 
 		case 3:
 			_data->getData()->field_493 = EntityData::kField493_1;
-			getEntities()->drawSequences(kEntityYasmin);
+			getEntities()->prepareSequences(kEntityYasmin);
 
 			CALL_PREVIOUS_SAVEPOINT()
 			break;
@@ -216,13 +216,13 @@ IMPLEMENT_FUNCTION(Yasmin, function10, 10)
 		_data->getData()->field_493 = EntityData::kField493_1;
 		_data->getData()->field_495 = EntityData::kField495_3;
 
-		getEntities()->drawSequences(kEntityYasmin);
+		getEntities()->prepareSequences(kEntityYasmin);
 	}
 }
 
 IMPLEMENT_FUNCTION(Yasmin, chapter2, 11)
 	if (savepoint->action == kActionDefault) {
-		getEntities()->drawSequences(kEntityYasmin);
+		getEntities()->prepareSequences(kEntityYasmin);
 
 		_data->getData()->field_491 = EntityData::kField491_3050;
 		_data->getData()->field_493 = EntityData::kField493_1;
@@ -248,7 +248,7 @@ IMPLEMENT_FUNCTION(Yasmin, chapter3, 13)
 		break;
 
 	case kActionDefault:
-		getEntities()->drawSequences(kEntityYasmin);
+		getEntities()->prepareSequences(kEntityYasmin);
 
 		_data->getData()->field_491 = EntityData::kField491_3050;
 		_data->getData()->field_493 = EntityData::kField493_1;
@@ -297,7 +297,7 @@ IMPLEMENT_FUNCTION(Yasmin, chapter5, 18)
 		break;
 
 	case kActionDefault:
-		getEntities()->drawSequences(kEntityYasmin);
+		getEntities()->prepareSequences(kEntityYasmin);
 
 		_data->getData()->field_491 = EntityData::kField491_3969;
 		_data->getData()->field_493 = EntityData::kField493_1;

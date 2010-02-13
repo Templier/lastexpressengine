@@ -221,7 +221,7 @@ IMPLEMENT_FUNCTION(Tatiana, chapter2, 25)
 		break;
 
 	case kActionDefault:
-		getEntities()->drawSequences(kEntityTatiana);
+		getEntities()->prepareSequences(kEntityTatiana);
 
 		getObjects()->update(kObjectCompartmentB, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
 		getObjects()->update(kObject49, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
@@ -265,7 +265,7 @@ IMPLEMENT_FUNCTION(Tatiana, chapter3, 31)
 		break;
 
 	case kActionDefault:
-		getEntities()->drawSequences(kEntityTatiana);
+		getEntities()->prepareSequences(kEntityTatiana);
 
 		getObjects()->update(kObjectCompartmentB, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
 		getObjects()->update(kObject49, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
@@ -340,7 +340,7 @@ IMPLEMENT_FUNCTION(Tatiana, chapter4, 43)
 		break;
 
 	case kActionDefault:
-		getEntities()->drawSequences(kEntityTatiana);
+		getEntities()->prepareSequences(kEntityTatiana);
 
 		getObjects()->update(kObjectCompartmentB, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
 		getObjects()->update(kObject49, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
@@ -398,7 +398,7 @@ IMPLEMENT_FUNCTION(Tatiana, chapter5, 52)
 		break;
 
 	case kActionDefault:
-		getEntities()->drawSequences(kEntityTatiana);
+		getEntities()->prepareSequences(kEntityTatiana);
 
 		_data->getData()->field_491 = EntityData::kField491_3969;
 		_data->getData()->field_493 = EntityData::kField493_1;

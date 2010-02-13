@@ -127,7 +127,7 @@ IMPLEMENT_FUNCTION(Kronos, function11, 11)
 
 IMPLEMENT_FUNCTION(Kronos, chapter2, 12)
 	if (savepoint->action == kActionDefault)
-		getEntities()->drawSequences(kEntityKronos);
+		getEntities()->prepareSequences(kEntityKronos);
 }
 
 IMPLEMENT_FUNCTION(Kronos, chapter3, 13)
@@ -140,7 +140,7 @@ IMPLEMENT_FUNCTION(Kronos, chapter3, 13)
 		break;
 
 	case kActionDefault:
-		getEntities()->drawSequences(kEntityKronos);
+		getEntities()->prepareSequences(kEntityKronos);
 
 		_data->getData()->field_491 = EntityData::kField491_6000;
 		_data->getData()->field_493 = EntityData::kField493_0;
@@ -196,12 +196,12 @@ IMPLEMENT_FUNCTION(Kronos, function23, 23)
 
 IMPLEMENT_FUNCTION(Kronos, chapter4, 24)
 	if (savepoint->action == kActionDefault)
-		getEntities()->drawSequences(kEntityKronos);
+		getEntities()->prepareSequences(kEntityKronos);
 }
 
 IMPLEMENT_FUNCTION(Kronos, chapter5, 25)
 	if (savepoint->action == kActionDefault)
-		getEntities()->drawSequences(kEntityKronos);
+		getEntities()->prepareSequences(kEntityKronos);
 }
 
 } // End of namespace LastExpress

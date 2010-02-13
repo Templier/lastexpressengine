@@ -166,7 +166,7 @@ IMPLEMENT_FUNCTION(Max, function7, 7)
 		break;
 
 	case kAction101687594:
-		getEntities()->drawSequences(kEntityMax);
+		getEntities()->prepareSequences(kEntityMax);
 
 		CALL_PREVIOUS_SAVEPOINT()
 		break;
@@ -217,7 +217,7 @@ IMPLEMENT_FUNCTION(Max, function8, 8)
 		CURRENT_PARAM(2) = 255 * (4 * random(20) + 40);
 
 		getObjects()->update(kObjectCageMax, kEntityMax, kLocationNone, kCursorNormal, kCursorHand);
-		getEntities()->drawSequences(kEntityMax);
+		getEntities()->prepareSequences(kEntityMax);
 
 		_data->getData()->field_491 = EntityData::kField491_8000;
 		_data->getData()->field_493 = EntityData::kField493_1;
@@ -308,7 +308,7 @@ IMPLEMENT_FUNCTION(Max, chapter2, 11)
 		break;
 
 	case kActionDefault:
-		getEntities()->drawSequences(kEntityMax);
+		getEntities()->prepareSequences(kEntityMax);
 
 		_data->getData()->field_491 = EntityData::kField491_4070;
 		_data->getData()->field_493 = EntityData::kField493_1;
@@ -330,7 +330,7 @@ IMPLEMENT_FUNCTION(Max, chapter3, 12)
 		break;
 
 	case kActionDefault:
-		getEntities()->drawSequences(kEntityMax);
+		getEntities()->prepareSequences(kEntityMax);
 
 		_data->getData()->field_491 = EntityData::kField491_4070;
 		_data->getData()->field_493 = EntityData::kField493_1;
@@ -525,7 +525,7 @@ IMPLEMENT_FUNCTION(Max, chapter4, 16)
 		break;
 
 	case kActionDefault:
-		getEntities()->drawSequences(kEntityMax);
+		getEntities()->prepareSequences(kEntityMax);
 
 		_data->getData()->field_491 = EntityData::kField491_8000;
 		_data->getData()->field_493 = EntityData::kField493_1;
@@ -570,7 +570,7 @@ IMPLEMENT_FUNCTION(Max, function17, 17)
 
 IMPLEMENT_FUNCTION(Max, chapter5, 18)
 	if (savepoint->action == kActionDefault) {
-		getEntities()->drawSequences(kEntityMax);
+		getEntities()->prepareSequences(kEntityMax);
 
 		_data->getData()->field_491 = EntityData::kField491_0;
 		_data->getData()->field_493 = EntityData::kField493_0;

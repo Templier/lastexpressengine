@@ -130,7 +130,7 @@ IMPLEMENT_FUNCTION(Alouan, chapter2, 13)
 	if (savepoint->action != kActionDefault)
 		return;
 
-	getEntities()->drawSequences(kEntityAlouan);
+	getEntities()->prepareSequences(kEntityAlouan);
 
 	_data->getData()->field_491 = EntityData::kField491_2740;
 	_data->getData()->field_493 = EntityData::kField493_1;
@@ -155,7 +155,7 @@ IMPLEMENT_FUNCTION(Alouan, chapter3, 15)
 		break;
 
 	case kActionDefault:
-		getEntities()->drawSequences(kEntityAlouan);
+		getEntities()->prepareSequences(kEntityAlouan);
 
 		_data->getData()->field_491 = EntityData::kField491_2740;
 		_data->getData()->field_493 = EntityData::kField493_1;
@@ -179,7 +179,7 @@ IMPLEMENT_FUNCTION(Alouan, chapter4, 17)
 		break;
 
 	case kActionDefault:
-		getEntities()->drawSequences(kEntityAlouan);
+		getEntities()->prepareSequences(kEntityAlouan);
 
 		_data->getData()->field_491 = EntityData::kField491_2740;
 		_data->getData()->field_493 = EntityData::kField493_1;
@@ -207,7 +207,7 @@ IMPLEMENT_FUNCTION(Alouan, chapter5, 20)
 		break;
 
 	case kActionDefault:
-		getEntities()->drawSequences(kEntityAlouan);
+		getEntities()->prepareSequences(kEntityAlouan);
 
 		_data->getData()->field_491 = EntityData::kField491_3969;
 		_data->getData()->field_493 = EntityData::kField493_1;

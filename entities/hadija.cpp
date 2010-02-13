@@ -129,7 +129,7 @@ IMPLEMENT_FUNCTION(Hadija, function12, 12)
 IMPLEMENT_FUNCTION(Hadija, chapter2, 13)
 	if (savepoint->action == kActionDefault) {
 
-		getEntities()->drawSequences(kEntityHadija);
+		getEntities()->prepareSequences(kEntityHadija);
 
 		_data->getData()->field_491 = EntityData::kField491_3050;
 		_data->getData()->field_493 = EntityData::kField493_1;
@@ -155,7 +155,7 @@ IMPLEMENT_FUNCTION(Hadija, chapter3, 15)
 		break;
 
 	case kActionDefault:
-		getEntities()->drawSequences(kEntityHadija);
+		getEntities()->prepareSequences(kEntityHadija);
 
 		_data->getData()->field_491 = EntityData::kField491_4070;
 		_data->getData()->field_493 = EntityData::kField493_1;
@@ -204,7 +204,7 @@ IMPLEMENT_FUNCTION(Hadija, chapter5, 20)
 		break;
 
 	case kActionDefault:
-		getEntities()->drawSequences(kEntityHadija);
+		getEntities()->prepareSequences(kEntityHadija);
 
 		_data->getData()->field_491 = EntityData::kField491_3969;
 		_data->getData()->field_493 = EntityData::kField493_1;

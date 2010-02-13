@@ -230,7 +230,7 @@ IMPLEMENT_FUNCTION(Rebecca, chapter2, 28)
 		break;
 
 	case kActionDefault:
-		getEntities()->drawSequences(kEntityRebecca);
+		getEntities()->prepareSequences(kEntityRebecca);
 
 		_data->getData()->field_491 = EntityData::kField491_4840;
 		_data->getData()->field_493 = EntityData::kField493_1;
@@ -270,7 +270,7 @@ IMPLEMENT_FUNCTION(Rebecca, chapter3, 32)
 		break;
 
 	case kActionDefault:
-		getEntities()->drawSequences(kEntityRebecca);
+		getEntities()->prepareSequences(kEntityRebecca);
 
 		_data->getData()->field_491 = EntityData::kField491_4840;
 		_data->getData()->field_493 = EntityData::kField493_1;
@@ -328,7 +328,7 @@ IMPLEMENT_FUNCTION(Rebecca, chapter4, 42)
 		break;
 
 	case kActionDefault:
-		getEntities()->drawSequences(kEntityRebecca);
+		getEntities()->prepareSequences(kEntityRebecca);
 
 		_data->getData()->field_491 = EntityData::kField491_4840;
 		_data->getData()->field_493 = EntityData::kField493_1;
@@ -366,7 +366,7 @@ IMPLEMENT_FUNCTION(Rebecca, chapter5, 46)
 		break;
 
 	case kActionDefault:
-		getEntities()->drawSequences(kEntityRebecca);
+		getEntities()->prepareSequences(kEntityRebecca);
 
 		_data->getData()->field_491 = EntityData::kField491_3969;
 		_data->getData()->field_493 = EntityData::kField493_1;

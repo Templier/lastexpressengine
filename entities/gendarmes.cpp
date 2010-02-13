@@ -121,22 +121,22 @@ IMPLEMENT_FUNCTION(Gendarmes, function13, 13)
 
 IMPLEMENT_FUNCTION(Gendarmes, chapter2, 14)
 	if (savepoint->action == kActionDefault)
-		getEntities()->drawSequences(kEntityGendarmes);
+		getEntities()->prepareSequences(kEntityGendarmes);
 }
 
 IMPLEMENT_FUNCTION(Gendarmes, chapter3, 15)
 	if (savepoint->action == kActionDefault)
-		getEntities()->drawSequences(kEntityGendarmes);
+		getEntities()->prepareSequences(kEntityGendarmes);
 }
 
 IMPLEMENT_FUNCTION(Gendarmes, chapter4, 16)
 	if (savepoint->action == kActionDefault)
-		getEntities()->drawSequences(kEntityGendarmes);
+		getEntities()->prepareSequences(kEntityGendarmes);
 }
 
 IMPLEMENT_FUNCTION(Gendarmes, chapter5, 17)
 	if (savepoint->action == kActionDefault)
-		getEntities()->drawSequences(kEntityGendarmes);
+		getEntities()->prepareSequences(kEntityGendarmes);
 }
 
 } // End of namespace LastExpress

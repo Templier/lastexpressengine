@@ -153,7 +153,7 @@ IMPLEMENT_FUNCTION(Mahmud, chapter2, 17)
 		break;
 
 	case kActionDefault:
-		getEntities()->drawSequences(kEntityMahmud);
+		getEntities()->prepareSequences(kEntityMahmud);
 
 		_data->getData()->field_491 = EntityData::kField491_5790;
 		_data->getData()->field_493 = EntityData::kField493_1;
@@ -175,7 +175,7 @@ IMPLEMENT_FUNCTION(Mahmud, chapter3, 18)
 		break;
 
 	case kActionDefault:
-		getEntities()->drawSequences(kEntityMahmud);
+		getEntities()->prepareSequences(kEntityMahmud);
 
 		_data->getData()->field_491 = EntityData::kField491_5790;
 		_data->getData()->field_493 = EntityData::kField493_1;
@@ -197,7 +197,7 @@ IMPLEMENT_FUNCTION(Mahmud, chapter4, 19)
 		break;
 
 	case kActionDefault:
-		getEntities()->drawSequences(kEntityMahmud);
+		getEntities()->prepareSequences(kEntityMahmud);
 
 		_data->getData()->field_491 = EntityData::kField491_2740;
 		_data->getData()->field_493 = EntityData::kField493_1;
@@ -211,7 +211,7 @@ IMPLEMENT_FUNCTION(Mahmud, chapter4, 19)
 
 IMPLEMENT_FUNCTION(Mahmud, chapter5, 20)
 	if (savepoint->action == kActionDefault)
-		getEntities()->drawSequences(kEntityMahmud);
+		getEntities()->prepareSequences(kEntityMahmud);
 }
 
 } // End of namespace LastExpress

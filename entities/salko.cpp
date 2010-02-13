@@ -128,7 +128,7 @@ IMPLEMENT_FUNCTION(Salko, chapter2, 12)
 		break;
 
 	case kActionDefault:
-		getEntities()->drawSequences(kEntitySalko);
+		getEntities()->prepareSequences(kEntitySalko);
 
 		_data->getData()->field_491 = EntityData::kField491_2740;
 		_data->getData()->field_493 = EntityData::kField493_1;
@@ -158,7 +158,7 @@ IMPLEMENT_FUNCTION(Salko, chapter3, 14)
 		break;
 
 	case kActionDefault:
-		getEntities()->drawSequences(kEntitySalko);
+		getEntities()->prepareSequences(kEntitySalko);
 
 		_data->getData()->field_491 = EntityData::kField491_2740;
 		_data->getData()->field_493 = EntityData::kField493_1;
@@ -191,7 +191,7 @@ IMPLEMENT_FUNCTION(Salko, chapter4, 18)
 		break;
 
 	case kActionDefault:
-		getEntities()->drawSequences(kEntitySalko);
+		getEntities()->prepareSequences(kEntitySalko);
 
 		_data->getData()->field_491 = EntityData::kField491_5420;
 		_data->getData()->field_493 = EntityData::kField493_1;
@@ -227,7 +227,7 @@ IMPLEMENT_FUNCTION(Salko, chapter5, 23)
 		break;
 
 	case kActionDefault:
-		getEntities()->drawSequences(kEntitySalko);
+		getEntities()->prepareSequences(kEntitySalko);
 
 		_data->getData()->field_491 = EntityData::kField491_9460;
 		_data->getData()->field_493 = EntityData::kField493_1;

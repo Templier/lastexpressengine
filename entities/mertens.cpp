@@ -267,7 +267,7 @@ IMPLEMENT_FUNCTION(Mertens, function17, 17)
 			break;
 
 		case 1:
-			getEntities()->drawSequences(kEntityMertens);
+			getEntities()->prepareSequences(kEntityMertens);
 			ENTITY_PARAM(2, 1) = 1;
 			_data->setNextCallback(2);
 			call(new ENTITY_SETUP(Mertens, setup_function11), 75);
@@ -464,7 +464,7 @@ IMPLEMENT_FUNCTION(Mertens, chapter2, 43)
 		break;
 
 	case kActionDefault:
-		getEntities()->drawSequences(kEntityMertens);
+		getEntities()->prepareSequences(kEntityMertens);
 
 		_data->getData()->field_491 = EntityData::kField491_1500;
 		_data->getData()->field_493 = EntityData::kField493_0;
@@ -546,7 +546,7 @@ IMPLEMENT_FUNCTION(Mertens, chapter4, 47)
 		break;
 
 	case kActionDefault:
-		getEntities()->drawSequences(kEntityMertens);
+		getEntities()->prepareSequences(kEntityMertens);
 
 		_data->getData()->field_491 = EntityData::kField491_1500;
 		_data->getData()->field_493 = EntityData::kField493_0;
@@ -592,7 +592,7 @@ IMPLEMENT_FUNCTION(Mertens, chapter5, 50)
 		break;
 
 	case kActionDefault:
-		getEntities()->drawSequences(kEntityMertens);
+		getEntities()->prepareSequences(kEntityMertens);
 
 		_data->getData()->field_491 = EntityData::kField491_3969;
 		_data->getData()->field_493 = EntityData::kField493_1;

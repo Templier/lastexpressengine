@@ -197,7 +197,7 @@ IMPLEMENT_FUNCTION(Boutarel, chapter2, 23)
 		break;
 
 	case kActionDefault:
-		getEntities()->drawSequences(kEntityBoutarel);
+		getEntities()->prepareSequences(kEntityBoutarel);
 
 		_data->getData()->field_491 = EntityData::kField491_4689;
 		_data->getData()->field_493 = EntityData::kField493_1;
@@ -229,7 +229,7 @@ IMPLEMENT_FUNCTION(Boutarel, chapter3, 26)
 		break;
 
 	case kActionDefault:
-		getEntities()->drawSequences(kEntityBoutarel);
+		getEntities()->prepareSequences(kEntityBoutarel);
 
 		_data->getData()->field_493 = EntityData::kField493_1;
 		_data->getData()->field_495 = EntityData::kField495_4;
@@ -269,7 +269,7 @@ IMPLEMENT_FUNCTION(Boutarel, chapter4, 31)
 		break;
 
 	case kActionDefault:
-		getEntities()->drawSequences(kEntityBoutarel);
+		getEntities()->prepareSequences(kEntityBoutarel);
 
 		_data->getData()->field_491 = EntityData::kField491_6470;
 		_data->getData()->field_493 = EntityData::kField493_1;
@@ -310,7 +310,7 @@ IMPLEMENT_FUNCTION(Boutarel, chapter5, 36)
 		break;
 
 	case kActionDefault:
-		getEntities()->drawSequences(kEntityBoutarel);
+		getEntities()->prepareSequences(kEntityBoutarel);
 
 		_data->getData()->field_491 = EntityData::kField491_3969;
 		_data->getData()->field_493 = EntityData::kField493_1;

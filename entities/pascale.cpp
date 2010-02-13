@@ -184,7 +184,7 @@ IMPLEMENT_FUNCTION(Pascale, function19, 19)
 
 IMPLEMENT_FUNCTION(Pascale, chapter2, 20)
 	if (savepoint->action == kActionDefault) {
-		getEntities()->drawSequences(kEntityPascale);
+		getEntities()->prepareSequences(kEntityPascale);
 
 		_data->getData()->field_491 = EntityData::kField491_5900;
 		_data->getData()->field_493 = EntityData::kField493_0;
@@ -206,7 +206,7 @@ IMPLEMENT_FUNCTION(Pascale, chapter3, 21)
  		break;
 
 	case kActionDefault:
-		getEntities()->drawSequences(kEntityPascale);
+		getEntities()->prepareSequences(kEntityPascale);
 
 		_data->getData()->field_491 = EntityData::kField491_5900;
 		_data->getData()->field_493 = EntityData::kField493_0;
@@ -241,7 +241,7 @@ IMPLEMENT_FUNCTION(Pascale, chapter4, 25)
  		break;
 
 	case kActionDefault:
-		getEntities()->drawSequences(kEntityPascale);
+		getEntities()->prepareSequences(kEntityPascale);
 
 		_data->getData()->field_491 = EntityData::kField491_5900;
 		_data->getData()->field_493 = EntityData::kField493_0;
@@ -287,7 +287,7 @@ IMPLEMENT_FUNCTION(Pascale, chapter5, 31)
  		break;
 
 	case kActionDefault:
-		getEntities()->drawSequences(kEntityPascale);
+		getEntities()->prepareSequences(kEntityPascale);
 
 		_data->getData()->field_491 = EntityData::kField491_3969;
 		_data->getData()->field_493 = EntityData::kField493_1;

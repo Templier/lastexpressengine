@@ -150,7 +150,7 @@ void Entities::setup(ChapterIndex chapter) {
 			_entities[i]->getData()->getData()->current_call = 0;
 			_entities[i]->getData()->getData()->inventoryItem = kItemNone;
 
-			drawSequences((EntityIndex)i);
+			prepareSequences((EntityIndex)i);
 		}
 
 		// Move that to reset method in state
@@ -200,7 +200,7 @@ void Entities::resetEntityState(EntityIndex entityIndex) {
 	if (getSound()->isBuffered(entityIndex))
 		getSound()->reset(entityIndex);
 
-	drawSequences(entityIndex);
+	prepareSequences(entityIndex);
 
 	// update fields 4x1000, 4x16 & 4x16_2
 
@@ -276,11 +276,13 @@ void Entities::setupSequences() {
 		if (data->sequence0) {
 			// TODO Queue sequence for drawing
 			/* data->sequence0 = NULL; */
+			warning("Entities::setupSequences: not implemented!");
 		}
 
 		if (data->sequence1) {
 			// TODO Queue sequence for drawing
 			/* data->sequence1 = NULL; */
+			warning("Entities::setupSequences: not implemented!");
 		}
 
 		if (data->direction == kDirection5) {
@@ -442,8 +444,10 @@ void Entities::drawSequenceRight(EntityIndex index, const char* sequence) {
 	drawSequenceInternal(index, sequence, kDirectionRight);
 }
 
-void Entities::drawSequences(EntityIndex index) {
+void Entities::prepareSequences(EntityIndex index) {
 	debugC(8, kLastExpressDebugLogic, "Drawing sequences for entity %d", index);
+
+
 
 	warning("Entities::drawSequences: not implemented!");
 }

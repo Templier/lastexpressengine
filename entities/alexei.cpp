@@ -224,7 +224,7 @@ IMPLEMENT_FUNCTION(Alexei, chapter2, 28)
 		break;
 
 	case kActionDefault:
-		getEntities()->drawSequences(kEntityAlexei);
+		getEntities()->prepareSequences(kEntityAlexei);
 
 		getObjects()->update(kObjectCompartment2, kEntityAlexei, kLocation1, kCursorHandKnock, kCursorHand);
 		getObjects()->update(kObject10, kEntityNone, kLocationNone, kCursorKeepValue, kCursorKeepValue);
@@ -262,7 +262,7 @@ IMPLEMENT_FUNCTION(Alexei, chapter3, 32)
 		break;
 
 	case kActionDefault:
-		getEntities()->drawSequences(kEntityAlexei);
+		getEntities()->prepareSequences(kEntityAlexei);
 
 		getObjects()->update(kObjectCompartment2, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
 		getObjects()->update(kObject10, kEntityNone, kLocationNone, kCursorKeepValue, kCursorKeepValue);
@@ -303,7 +303,7 @@ IMPLEMENT_FUNCTION(Alexei, chapter4, 37)
 		break;
 
 	case kActionDefault:
-		getEntities()->drawSequences(kEntityAlexei);
+		getEntities()->prepareSequences(kEntityAlexei);
 
 		getObjects()->update(kObjectCompartment2, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
 		getObjects()->update(kObject10, kEntityNone, kLocationNone, kCursorKeepValue, kCursorKeepValue);
@@ -360,7 +360,7 @@ IMPLEMENT_FUNCTION(Alexei, function47, 47)
 
 IMPLEMENT_FUNCTION(Alexei, chapter5, 48)
 	if (savepoint->action == kActionDefault)
-		getEntities()->drawSequences(kEntityAlexei);
+		getEntities()->prepareSequences(kEntityAlexei);
 }
 
 } // End of namespace LastExpress

@@ -317,7 +317,7 @@ IMPLEMENT_FUNCTION(Anna, chapter2, 42)
 		break;
 
 	case kActionDefault:
-		getEntities()->drawSequences(kEntityAnna);
+		getEntities()->prepareSequences(kEntityAnna);
 
 		_data->getData()->field_491 = EntityData::kField491_4070;
 		_data->getData()->field_493 = EntityData::kField493_1;
@@ -343,7 +343,7 @@ IMPLEMENT_FUNCTION(Anna, chapter3, 44)
 		break;
 
 	case kActionDefault:
-		getEntities()->drawSequences(kEntityAnna);
+		getEntities()->prepareSequences(kEntityAnna);
 
 		_data->getData()->field_491 = EntityData::kField491_4070;
 		_data->getData()->field_493 = EntityData::kField493_1;
@@ -453,7 +453,7 @@ IMPLEMENT_FUNCTION(Anna, chapter4, 66)
 		break;
 
 	case kActionDefault:
-		getEntities()->drawSequences(kEntityAnna);
+		getEntities()->prepareSequences(kEntityAnna);
 
 		_data->getData()->field_491 = EntityData::kField491_4070;
 		_data->getData()->field_493 = EntityData::kField493_1;
@@ -503,7 +503,7 @@ IMPLEMENT_FUNCTION(Anna, chapter5, 74)
 		break;
 
 	case kActionDefault:
-		getEntities()->drawSequences(kEntityAnna);
+		getEntities()->prepareSequences(kEntityAnna);
 
 		_data->getData()->field_491 = EntityData::kField491_3969;
 		_data->getData()->field_493 = EntityData::kField493_1;

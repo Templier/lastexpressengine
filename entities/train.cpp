@@ -383,7 +383,7 @@ label_skip:
 			if (getEntityData(kEntityNone)->field_495 != CURRENT_PARAM(1) || isDay() != (CURRENT_PARAM(2) > 0)) {
 				switch (getEntityData(kEntityNone)->field_495) {
 				default:
-					getEntities()->drawSequences(kEntityTrain);
+					getEntities()->prepareSequences(kEntityTrain);
 					break;
 
 				case EntityData::kField493_1:
@@ -479,7 +479,7 @@ label_skip:
 
 	case kAction191350523:
 		CURRENT_PARAM(3) = 0;
-		getEntities()->drawSequences(kEntityTrain);
+		getEntities()->prepareSequences(kEntityTrain);
 		break;
 
 	case kAction202613084:

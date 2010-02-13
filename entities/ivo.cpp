@@ -168,7 +168,7 @@ IMPLEMENT_FUNCTION(Ivo, chapter2, 18)
 		break;
 
 	case kActionDefault:
-		getEntities()->drawSequences(kEntityIvo);
+		getEntities()->prepareSequences(kEntityIvo);
 
 		_data->getData()->field_491 = EntityData::kField491_2740;
 		_data->getData()->field_493 = EntityData::kField493_1;
@@ -205,7 +205,7 @@ IMPLEMENT_FUNCTION(Ivo, chapter3, 22)
 		break;
 
 	case kActionDefault:
-		getEntities()->drawSequences(kEntityIvo);
+		getEntities()->prepareSequences(kEntityIvo);
 
 		_data->getData()->field_491 = EntityData::kField491_2740;
 		_data->getData()->field_493 = EntityData::kField493_1;
@@ -268,7 +268,7 @@ IMPLEMENT_FUNCTION(Ivo, chapter5, 30)
 		break;
 
 	case kActionDefault:
-		getEntities()->drawSequences(kEntityIvo);
+		getEntities()->prepareSequences(kEntityIvo);
 
 		_data->getData()->field_491 = EntityData::kField491_540;
 		_data->getData()->field_493 = EntityData::kField493_1;

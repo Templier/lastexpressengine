@@ -225,7 +225,7 @@ IMPLEMENT_FUNCTION_I(Milos, function11, 11)
 
 		case 5:
 			_data->getData()->field_493 = EntityData::kField493_1;
-			getEntities()->drawSequences(kEntityMilos);
+			getEntities()->prepareSequences(kEntityMilos);
 			getSavePoints()->push(kEntityMilos, kEntityVesna, kAction101687594);
 			getObjects()->update(kObjectCompartmentG, kEntityMilos, kLocation3, kCursorHandKnock, kCursorHand);
 			break;
@@ -261,7 +261,7 @@ IMPLEMENT_FUNCTION_I(Milos, function11, 11)
 		case 13:
 			getEntities()->updateField1000_5(kEntityMilos, kObjectCompartmentG);
 			_data->getData()->field_493 = EntityData::kField493_1;
-			getEntities()->drawSequences(kEntityMilos);
+			getEntities()->prepareSequences(kEntityMilos);
 			getObjects()->update(kObjectCompartmentG, kEntityMilos, kLocation3, kCursorHandKnock, kCursorHand);
 			CURRENT_PARAM(5) = 0;
 			break;
@@ -345,7 +345,7 @@ IMPLEMENT_FUNCTION(Milos, chapter2, 19)
 		break;
 
 	case kActionDefault:
-		getEntities()->drawSequences(kEntityMilos);
+		getEntities()->prepareSequences(kEntityMilos);
 
 		_data->getData()->field_491 = EntityData::kField491_4689;
 		_data->getData()->field_493 = EntityData::kField493_1;
@@ -378,7 +378,7 @@ IMPLEMENT_FUNCTION(Milos, chapter3, 22)
 		break;
 
 	case kActionDefault:
-		getEntities()->drawSequences(kEntityMilos);
+		getEntities()->prepareSequences(kEntityMilos);
 
 		_data->getData()->clothes = EntityData::kClothesDefault;
 		_data->getData()->inventoryItem = kItemNone;
@@ -421,7 +421,7 @@ IMPLEMENT_FUNCTION(Milos, chapter4, 28)
 		break;
 
 	case kActionDefault:
-		getEntities()->drawSequences(kEntityMilos);
+		getEntities()->prepareSequences(kEntityMilos);
 
 		_data->getData()->field_491 = EntityData::kField491_3050;
 		_data->getData()->field_493 = EntityData::kField493_1;
@@ -446,7 +446,7 @@ IMPLEMENT_FUNCTION(Milos, function31, 31)
 
 IMPLEMENT_FUNCTION(Milos, function32, 32)
 	if (savepoint->action == kActionDefault) {
-		getEntities()->drawSequences(kEntityMilos);
+		getEntities()->prepareSequences(kEntityMilos);
 		getObjects()->update(kObjectCompartmentG, kEntityNone, kLocation3, kCursorHandKnock, kCursorHand);
 
 		_data->getData()->field_491 = EntityData::kField491_540;
@@ -466,7 +466,7 @@ IMPLEMENT_FUNCTION(Milos, chapter5, 33)
 		break;
 
 	case kActionDefault:
-		getEntities()->drawSequences(kEntityMilos);
+		getEntities()->prepareSequences(kEntityMilos);
 
 		_data->getData()->field_491 = EntityData::kField491_540;
 		_data->getData()->field_493 = EntityData::kField493_1;
@@ -483,7 +483,7 @@ IMPLEMENT_FUNCTION(Milos, function34, 34)
 
 IMPLEMENT_FUNCTION(Milos, drawSequences, 35)
 	if (savepoint->action == kActionDefault) {
-		getEntities()->drawSequences(kEntityMilos);
+		getEntities()->prepareSequences(kEntityMilos);
 	}
 }
 

@@ -156,7 +156,7 @@ IMPLEMENT_FUNCTION(Vesna, chapter2, 16)
 		break;
 
 	case kActionDefault:
-		getEntities()->drawSequences(kEntityVesna);
+		getEntities()->prepareSequences(kEntityVesna);
 
 		_data->getData()->field_491 = EntityData::kField491_3050;
 		_data->getData()->field_493 = EntityData::kField493_1;
@@ -186,7 +186,7 @@ IMPLEMENT_FUNCTION(Vesna, chapter3, 19)
 		break;
 
 	case kActionDefault:
-		getEntities()->drawSequences(kEntityVesna);
+		getEntities()->prepareSequences(kEntityVesna);
 
 		_data->getData()->field_491 = EntityData::kField491_3050;
 		_data->getData()->field_493 = EntityData::kField493_1;
@@ -225,7 +225,7 @@ IMPLEMENT_FUNCTION(Vesna, chapter4, 24)
 		break;
 
 	case kActionDefault:
-		getEntities()->drawSequences(kEntityVesna);
+		getEntities()->prepareSequences(kEntityVesna);
 
 		_data->getData()->field_491 = EntityData::kField491_3050;
 		_data->getData()->field_493 = EntityData::kField493_1;
@@ -263,7 +263,7 @@ IMPLEMENT_FUNCTION(Vesna, chapter5, 28)
 		break;
 
 	case kActionDefault:
-		getEntities()->drawSequences(kEntityVesna);
+		getEntities()->prepareSequences(kEntityVesna);
 
 		_data->getData()->field_493 = EntityData::kField493_1;
 		_data->getData()->field_495 = EntityData::kField495_5;

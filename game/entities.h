@@ -74,7 +74,7 @@ public:
 	// Sequences
 	void drawSequenceLeft(EntityIndex index, const char* sequence);
 	void drawSequenceRight(EntityIndex index, const char* sequence);
-	void drawSequences(EntityIndex index);
+	void prepareSequences(EntityIndex index);
 
 	bool checkSequence0(EntityIndex entity);
 

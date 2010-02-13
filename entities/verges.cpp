@@ -221,7 +221,7 @@ IMPLEMENT_FUNCTION(Verges, chapter2, 27)
 		break;
 
 	case kActionDefault:
-		getEntities()->drawSequences(kEntityVerges);
+		getEntities()->prepareSequences(kEntityVerges);
 
 		_data->getData()->field_491 = EntityData::kField491_5000;
 		_data->getData()->field_493 = EntityData::kField493_0;
@@ -250,7 +250,7 @@ IMPLEMENT_FUNCTION(Verges, chapter3, 29)
 		break;
 
 	case kActionDefault:
-		getEntities()->drawSequences(kEntityVerges);
+		getEntities()->prepareSequences(kEntityVerges);
 
 		_data->getData()->field_491 = EntityData::kField491_540;
 		_data->getData()->field_493 = EntityData::kField493_0;
@@ -301,7 +301,7 @@ IMPLEMENT_FUNCTION(Verges, chapter4, 36)
 		break;
 
 	case kActionDefault:
-		getEntities()->drawSequences(kEntityVerges);
+		getEntities()->prepareSequences(kEntityVerges);
 
 		_data->getData()->field_491 = EntityData::kField491_5000;
 		_data->getData()->field_493 = EntityData::kField493_0;
@@ -336,7 +336,7 @@ IMPLEMENT_FUNCTION(Verges, chapter5, 39)
 		break;
 
 	case kActionDefault:
-		getEntities()->drawSequences(kEntityVerges);
+		getEntities()->prepareSequences(kEntityVerges);
 
 		_data->getData()->field_491 = EntityData::kField491_3650;
 		_data->getData()->field_493 = EntityData::kField493_1;

@@ -98,7 +98,7 @@ IMPLEMENT_FUNCTION(Cooks, function4, 4)
 
 	case kAction17:
 		if (!getEntities()->checkFields17(kEntityNone)) {
-			getEntities()->drawSequences(kEntityCooks);
+			getEntities()->prepareSequences(kEntityCooks);
 			CALL_PREVIOUS_SAVEPOINT()
 			break;
 		}
@@ -110,7 +110,7 @@ IMPLEMENT_FUNCTION(Cooks, function4, 4)
 				if (CURRENT_PARAM(1)) {
 					if (!getEntities()->checkSequence0(kEntityCooks)) {
 						getSound()->playSound(kEntityCooks, "LIB015");
-						getEntities()->drawSequences(kEntityCooks);
+						getEntities()->prepareSequences(kEntityCooks);
 						CALL_PREVIOUS_SAVEPOINT()
 					}
 					break;
@@ -124,7 +124,7 @@ IMPLEMENT_FUNCTION(Cooks, function4, 4)
 
 		if (CURRENT_PARAM(1) && !getEntities()->checkSequence0(kEntityCooks)) {
 			getSound()->playSound(kEntityCooks, "LIB015");
-			getEntities()->drawSequences(kEntityCooks);
+			getEntities()->prepareSequences(kEntityCooks);
 			CALL_PREVIOUS_SAVEPOINT()
 		}		
 		break;
@@ -253,7 +253,7 @@ IMPLEMENT_FUNCTION(Cooks, function7, 7)
 		_data->getData()->field_493 = EntityData::kField493_0;
 		_data->getData()->field_495 = EntityData::kField495_5;
 
-		getEntities()->drawSequences(kEntityCooks);
+		getEntities()->prepareSequences(kEntityCooks);
 		break;
 	}
 }
@@ -268,7 +268,7 @@ IMPLEMENT_FUNCTION(Cooks, chapter2, 8)
 		break;
 
 	case kActionDefault:
-		getEntities()->drawSequences(kEntityCooks);
+		getEntities()->prepareSequences(kEntityCooks);
 
 		_data->getData()->field_491 = EntityData::kField491_5900;
 		_data->getData()->field_493 = EntityData::kField493_0;
@@ -326,7 +326,7 @@ IMPLEMENT_FUNCTION(Cooks, chapter3, 10)
 		break;
 
 	case kActionDefault:
-		getEntities()->drawSequences(kEntityCooks);
+		getEntities()->prepareSequences(kEntityCooks);
 
 		_data->getData()->field_491 = EntityData::kField491_5900;
 		_data->getData()->field_495 = EntityData::kField495_5;
@@ -424,7 +424,7 @@ IMPLEMENT_FUNCTION(Cooks, chapter4, 12)
 		break;
 
 	case kActionDefault:
-		getEntities()->drawSequences(kEntityCooks);
+		getEntities()->prepareSequences(kEntityCooks);
 
 		_data->getData()->field_491 = EntityData::kField491_5900;
 		_data->getData()->field_493 = EntityData::kField493_0;
@@ -480,7 +480,7 @@ IMPLEMENT_FUNCTION(Cooks, function13, 13)
 
 IMPLEMENT_FUNCTION(Cooks, chapter5, 14)
 	if (savepoint->action == kActionDefault)
-		getEntities()->drawSequences(kEntityCooks);
+		getEntities()->prepareSequences(kEntityCooks);
 }
 
 } // End of namespace LastExpress

@@ -44,7 +44,7 @@ namespace LastExpress {
 		setup_function3(); \
 		break; \
 	case kActionDefault: \
-		getEntities()->drawSequences(kEntitySophie); \
+		getEntities()->prepareSequences(kEntitySophie); \
 		_data->getData()->field_491 = EntityData::kField491_4840; \
 		_data->getData()->field_493 = EntityData::kField493_1; \
 		_data->getData()->field_495 = EntityData::kField495_4; \
@@ -58,7 +58,7 @@ namespace LastExpress {
 		_data->getData()->field_491 = EntityData::kField491_4840; \
 		_data->getData()->field_493 = EntityData::kField493_1; \
 		_data->getData()->field_495 = EntityData::kField495_4; \
-		getEntities()->drawSequences(kEntitySophie); \
+		getEntities()->prepareSequences(kEntitySophie); \
 	}
 
 Sophie::Sophie(LastExpressEngine *engine) : Entity(engine, kEntitySophie) {
@@ -147,7 +147,7 @@ IMPLEMENT_FUNCTION(Sophie, function3, 3)
 			break;
 
 		case 1:
-			getEntities()->drawSequences(kEntitySophie);
+			getEntities()->prepareSequences(kEntitySophie);
 			break;
 
 		case 2:
@@ -155,7 +155,7 @@ IMPLEMENT_FUNCTION(Sophie, function3, 3)
 			break;
 
 		case 3:
-			getEntities()->drawSequences(kEntitySophie);
+			getEntities()->prepareSequences(kEntitySophie);
 			break;
 
 		case 4:
@@ -256,7 +256,7 @@ IMPLEMENT_FUNCTION(Sophie, chapter5, 10)
 		break;
 
 	case kActionDefault:
-		getEntities()->drawSequences(kEntitySophie);
+		getEntities()->prepareSequences(kEntitySophie);
 
 		_data->getData()->field_491 = EntityData::kField491_3969;
 		_data->getData()->field_493 = EntityData::kField493_1;

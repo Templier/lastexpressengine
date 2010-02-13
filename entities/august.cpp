@@ -275,7 +275,7 @@ IMPLEMENT_FUNCTION(August, chapter2, 35)
 		break;
 
 	case kActionDefault:
-		getEntities()->drawSequences(kEntityAugust);
+		getEntities()->prepareSequences(kEntityAugust);
 
 		_data->getData()->field_491 = EntityData::kField491_3970;
 		_data->getData()->field_493 = EntityData::kField493_1;
@@ -316,7 +316,7 @@ IMPLEMENT_FUNCTION(August, chapter3, 40)
 		break;
 
 	case kActionDefault:
-		getEntities()->drawSequences(kEntityAugust);
+		getEntities()->prepareSequences(kEntityAugust);
 
 		_data->getData()->field_491 = EntityData::kField491_6470;
 		_data->getData()->field_493 = EntityData::kField493_0;
@@ -402,7 +402,7 @@ IMPLEMENT_FUNCTION(August, chapter4, 57)
 		break;
 
 	case kActionDefault:
-		getEntities()->drawSequences(kEntityAugust);
+		getEntities()->prepareSequences(kEntityAugust);
 
 		_data->getData()->field_491 = EntityData::kField491_6470;
 		_data->getData()->field_493 = EntityData::kField493_1;
@@ -458,7 +458,7 @@ IMPLEMENT_FUNCTION(August, chapter5, 66)
 		break;
 
 	case kActionDefault:
-		getEntities()->drawSequences(kEntityAugust);
+		getEntities()->prepareSequences(kEntityAugust);
 
 		_data->getData()->field_491 = EntityData::kField491_3969;
 		_data->getData()->field_493 = EntityData::kField493_1;

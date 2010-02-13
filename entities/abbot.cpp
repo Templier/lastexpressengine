@@ -208,7 +208,7 @@ IMPLEMENT_FUNCTION(Abbot, chapter1, 15)
 
 IMPLEMENT_FUNCTION(Abbot, chapter2, 16)
 	if (savepoint->action == kActionDefault)
-		getEntities()->drawSequences(kEntityAbbot);
+		getEntities()->prepareSequences(kEntityAbbot);
 }
 
 IMPLEMENT_FUNCTION(Abbot, chapter3, 17)
@@ -221,7 +221,7 @@ IMPLEMENT_FUNCTION(Abbot, chapter3, 17)
 		break;
 
 	case kActionDefault:
-		getEntities()->drawSequences(kEntityAbbot);
+		getEntities()->prepareSequences(kEntityAbbot);
 
 		_data->getData()->field_491 = EntityData::kField491_5900;
 		_data->getData()->field_493 = EntityData::kField493_1;
@@ -327,7 +327,7 @@ IMPLEMENT_FUNCTION(Abbot, chapter4, 39)
 		break;
 
 	case kActionDefault:
-		getEntities()->drawSequences(kEntityAbbot);
+		getEntities()->prepareSequences(kEntityAbbot);
 
 		_data->getData()->field_495 = EntityData::kField495_5;
 		_data->getData()->inventoryItem = kItemNone;
@@ -388,7 +388,7 @@ IMPLEMENT_FUNCTION(Abbot, chapter5, 50)
 		break;
 
 	case kActionDefault:
-		getEntities()->drawSequences(kEntityAbbot);
+		getEntities()->prepareSequences(kEntityAbbot);
 
 		_data->getData()->field_491 = EntityData::kField491_3969;
 		_data->getData()->field_493 = EntityData::kField493_1;

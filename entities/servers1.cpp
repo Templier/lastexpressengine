@@ -171,7 +171,7 @@ IMPLEMENT_FUNCTION(Servers1, chapter2, 17)
 		break;
 
 	case kActionDefault:
-		getEntities()->drawSequences(kEntityServers1);
+		getEntities()->prepareSequences(kEntityServers1);
 
 		_data->getData()->field_491 = EntityData::kField491_5900;
 		_data->getData()->field_493 = EntityData::kField493_0;
@@ -212,7 +212,7 @@ IMPLEMENT_FUNCTION(Servers1, chapter3, 22)
 		break;
 
 	case kActionDefault:
-		getEntities()->drawSequences(kEntityServers1);
+		getEntities()->prepareSequences(kEntityServers1);
 
 		_data->getData()->field_491 = EntityData::kField491_5900;
 		_data->getData()->field_493 = EntityData::kField493_0;
@@ -244,7 +244,7 @@ IMPLEMENT_FUNCTION(Servers1, chapter4, 25)
 		break;
 
 	case kActionDefault:
-		getEntities()->drawSequences(kEntityServers1);
+		getEntities()->prepareSequences(kEntityServers1);
 
 		_data->getData()->field_491 = EntityData::kField491_5900;
 		_data->getData()->field_493 = EntityData::kField493_0;
@@ -252,7 +252,7 @@ IMPLEMENT_FUNCTION(Servers1, chapter4, 25)
 		_data->getData()->inventoryItem = kItemNone;
 
 		// TODO: there is a second call to drawSequences in the original code (is it really needed?)
-		getEntities()->drawSequences(kEntityServers1);
+		getEntities()->prepareSequences(kEntityServers1);
 
 		ENTITY_PARAM(1, 2) = 0;
 		ENTITY_PARAM(1, 3) = 0;
@@ -288,7 +288,7 @@ IMPLEMENT_FUNCTION(Servers1, chapter5, 30)
 		break;
 
 	case kActionDefault:
-		getEntities()->drawSequences(kEntityServers1);
+		getEntities()->prepareSequences(kEntityServers1);
 
 		_data->getData()->field_491 = EntityData::kField491_3969;
 		_data->getData()->field_493 = EntityData::kField493_1;

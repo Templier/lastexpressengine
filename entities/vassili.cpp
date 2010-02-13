@@ -123,7 +123,7 @@ IMPLEMENT_FUNCTION(Vassili, chapter2, 12)
 		break;
 
 	case kActionDefault:
-		getEntities()->drawSequences(kEntityVassili);
+		getEntities()->prepareSequences(kEntityVassili);
 
 		_data->getData()->field_491 = EntityData::kField491_8200;
 		_data->getData()->field_493 = EntityData::kField493_1;
@@ -151,7 +151,7 @@ IMPLEMENT_FUNCTION(Vassili, chapter3, 14)
 		break;
 
 	case kActionDefault:
-		getEntities()->drawSequences(kEntityVassili);
+		getEntities()->prepareSequences(kEntityVassili);
 
 		_data->getData()->field_491 = EntityData::kField491_8200;
 		_data->getData()->field_493 = EntityData::kField493_1;
@@ -178,7 +178,7 @@ IMPLEMENT_FUNCTION(Vassili, chapter4, 16)
 		break;
 
 	case kActionDefault:
-		getEntities()->drawSequences(kEntityVassili);
+		getEntities()->prepareSequences(kEntityVassili);
 
 		_data->getData()->field_491 = EntityData::kField491_8200;
 		_data->getData()->field_493 = EntityData::kField493_1;
@@ -198,7 +198,7 @@ IMPLEMENT_FUNCTION(Vassili, function17, 17)
 
 IMPLEMENT_FUNCTION(Vassili, chapter5, 18)
 	if (savepoint->action == kActionDefault) {
-		getEntities()->drawSequences(kEntityVassili);
+		getEntities()->prepareSequences(kEntityVassili);
 
 		_data->getData()->field_491 = EntityData::kField491_3969;
 		_data->getData()->field_493 = EntityData::kField493_1;
