@@ -237,7 +237,8 @@ void Logic::loadSceneDataFile(ArchiveIndex archive) {
 	case kArchiveCd1:
 	case kArchiveCd2:
 	case kArchiveCd3:
-		_engine->getSceneManager()->load(_engine->getResourceManager()->getFileStream(Common::String::printf("CD%iTRAIN.DAT", archive)));
+		if (!_engine->getSceneManager()->load(_engine->getResourceManager()->getFileStream(Common::String::printf("CD%iTRAIN.DAT", archive))))
+			error("Logic::loadSceneDataFile: cannot load data file CD%iTRAIN.DAT", archive);
 		break;
 
 	default:
