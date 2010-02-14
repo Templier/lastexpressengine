@@ -39,7 +39,7 @@ public:
 
 	// Setup
 	DECLARE_FUNCTION_NOSETUP(updateFromTime)
-	DECLARE_FUNCTION(function2)
+	DECLARE_FUNCTION_S(draw)
 	DECLARE_FUNCTION_SII(function3)
 	DECLARE_FUNCTION(function4)
 	DECLARE_FUNCTION_SIIS(function5)
@@ -70,6 +70,10 @@ public:
 	DECLARE_FUNCTION(chapter5)
 	DECLARE_FUNCTION(function31)
 	DECLARE_NULL_FUNCTION()
+
+private:
+	DECLARE_CALL_FUNCTION(default, Servers1, int, int, int, int)
+	DECLARE_CALL_FUNCTION(char, Servers1, const char*, int, int, const char*)
 };
 
 } // End of namespace LastExpress

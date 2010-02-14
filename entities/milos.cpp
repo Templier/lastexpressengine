@@ -73,7 +73,7 @@ Milos::Milos(LastExpressEngine *engine) : Entity(engine, kEntityMilos) {
 	ADD_CALLBACK_FUNCTION(Milos, function32);
 	ADD_CALLBACK_FUNCTION(Milos, chapter5);
 	ADD_CALLBACK_FUNCTION(Milos, function34);
-	ADD_CALLBACK_FUNCTION(Milos, drawSequences);
+	ADD_CALLBACK_FUNCTION(Milos, prepareSequences);
 }
 
 IMPLEMENT_FUNCTION(Milos, function1, 1)
@@ -481,7 +481,7 @@ IMPLEMENT_FUNCTION(Milos, function34, 34)
 	error("Milos: callback function 34 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Milos, drawSequences, 35)
+IMPLEMENT_FUNCTION(Milos, prepareSequences, 35)
 	if (savepoint->action == kActionDefault) {
 		getEntities()->prepareSequences(kEntityMilos);
 	}

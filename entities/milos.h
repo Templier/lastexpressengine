@@ -72,7 +72,7 @@ public:
 	DECLARE_FUNCTION(function32)
 	DECLARE_FUNCTION(chapter5)
 	DECLARE_FUNCTION(function34)
-	DECLARE_FUNCTION(drawSequences)
+	DECLARE_FUNCTION(prepareSequences)
 
 private:
 	DECLARE_CALL_FUNCTION(default, Milos, int, int, int, int)

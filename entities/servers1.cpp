@@ -39,7 +39,7 @@ namespace LastExpress {
 
 Servers1::Servers1(LastExpressEngine *engine) : Entity(engine, kEntityServers1) {
 	ADD_CALLBACK_FUNCTION(Servers1, updateFromTime);
-	ADD_CALLBACK_FUNCTION(Servers1, function2);
+	ADD_CALLBACK_FUNCTION(Servers1, draw);
 	ADD_CALLBACK_FUNCTION(Servers1, function3);
 	ADD_CALLBACK_FUNCTION(Servers1, function4);
 	ADD_CALLBACK_FUNCTION(Servers1, function5);
@@ -76,20 +76,69 @@ IMPLEMENT_FUNCTION_NOSETUP(Servers1, updateFromTime, 1)
 	Entity::updateFromTime(savepoint);
 }
 
-IMPLEMENT_FUNCTION(Servers1, function2, 2)
-	error("Servers1: callback function 2 not implemented!");
+IMPLEMENT_FUNCTION_S(Servers1, draw, 2)
+	if (savepoint->action == kAction5) {
+		if (!params->param2) {
+			getSound()->excuseMe(kEntityServers1);
+			params->param2 = 1;
+		}
+	}
+
+	Entity::draw(savepoint);
 }
 
 IMPLEMENT_FUNCTION_SII(Servers1, function3, 3)
-	error("Servers1: callback function 3 not implemented!");
+	if (savepoint->action == kAction5) {
+		if (!params->param3) {
+			getSound()->excuseMe(kEntityServers1);
+			params->param3 = 1;
+		}
+	}
+
+	Entity::updateField1000(savepoint);
 }
 
 IMPLEMENT_FUNCTION(Servers1, function4, 4)
-	error("Servers1: callback function 4 not implemented!");
+	if (savepoint->action == kAction5) {
+		if (!CURRENT_PARAM(1)) {
+			getSound()->excuseMe(kEntityServers1);
+			CURRENT_PARAM(1) = 1;
+		}
+	}
+
+	Entity::savepointDirection(savepoint);
 }
 
 IMPLEMENT_FUNCTION_SIIS(Servers1, function5, 5)
-	error("Servers1: callback function 5 not implemented!");
+	switch (savepoint->action) {
+	default:
+		break;
+
+	case kAction3:
+		if (!CURRENT_PARAMS(1, 1))
+			getSavePoints()->call(kEntityServers1, (EntityIndex)params->param2, (ActionIndex)params->param3, params->seq2);
+
+		CALL_PREVIOUS_SAVEPOINT()
+		break;
+
+	case kAction5:
+		if (!CURRENT_PARAMS(1, 2)) {
+			getSound()->excuseMe(kEntityServers1);
+			CURRENT_PARAMS(1, 2) = 1;
+		}
+		break;
+
+	case kAction10:
+		if (!CURRENT_PARAMS(1, 1)) {
+			getSavePoints()->call(kEntityServers1, (EntityIndex)params->param2, (ActionIndex)params->param3, params->seq2);
+			CURRENT_PARAMS(1, 1) = 1;
+		}
+		break;
+
+	case kActionDefault:
+		getEntities()->drawSequenceRight(kEntityServers1, params->seq1);
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION_S(Servers1, playSound, 6)
@@ -97,7 +146,45 @@ IMPLEMENT_FUNCTION_S(Servers1, playSound, 6)
 }
 
 IMPLEMENT_FUNCTION(Servers1, function7, 7)
-	error("Servers1: callback function 7 not implemented!");
+	switch (savepoint->action) {
+	default:
+		break;
+
+	case kActionDefault:
+		_data->getData()->field_491 = EntityData::kField491_5800;
+		_data->getData()->field_493 = EntityData::kField493_0;
+
+		_data->setNextCallback(1);
+		call(new ENTITY_SETUP_SIIS(Servers1, setup_draw), "924");
+		break;
+
+	case kAction18:
+		switch (_data->getNextCallback()) {
+		default:
+			break;
+
+		case 1:
+			getSavePoints()->push(kEntityServers1, kEntityBoutarel, kAction122358304);
+			_data->setNextCallback(2);
+			call(new ENTITY_SETUP_SIIS(Servers1, setup_draw), "008C");
+			break;
+
+		case 2:
+			getSavePoints()->push(kEntityServers1, kEntityBoutarel, kAction122288808);
+			_data->setNextCallback(2);
+			call(new ENTITY_SETUP_SIIS(Servers1, setup_draw), "926");
+			break;
+
+		case 3:
+			getEntities()->prepareSequences(kEntityServers1);
+			_data->getData()->field_491 = EntityData::kField491_5900;
+			ENTITY_PARAM(1, 2) = 0;
+
+			CALL_PREVIOUS_SAVEPOINT()
+			break;
+		}
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Servers1, chapter1, 8)

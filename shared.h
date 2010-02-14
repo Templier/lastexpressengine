@@ -803,7 +803,7 @@ enum ActionIndex {
 	kAction71277948  = 71277948,
 	kAction158007856 = 158007856,
 	kAction101687594 = 101687594,
-	kAction122358304 = 122358304,
+	kAction122358304 = 122358304,  // also Servers1/Boutarel?
 	kActionMaxFreeFromCage = 135204609,
 	kAction156622016 = 156622016,
 
@@ -886,6 +886,7 @@ enum ActionIndex {
 	/////////////////////////////
 	// Servers 1
 	/////////////////////////////
+	kAction122288808 = 122288808,	// Servers1/Boutarel
 	kAction189688608 = 189688608,
 	kAction219377792 = 219377792,
 	kAction223002560 = 223002560,
