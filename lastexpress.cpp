@@ -142,12 +142,13 @@ Common::Error LastExpressEngine::run() {
 				// Closing the GMM
 
 			case Common::EVENT_MOUSEMOVE:
+				_logic->eventMouseMove(ev);
+				break;
+
 			case Common::EVENT_LBUTTONDOWN:
 			case Common::EVENT_LBUTTONUP:
 			case Common::EVENT_RBUTTONDOWN:
-				// Cleanup and quit game is the quit button has been pressed
-				if (!_logic->handleMouseEvent(ev))
-					quitGame();
+				_logic->eventMouseClick(ev);
 				break;
 
 			case Common::EVENT_QUIT:

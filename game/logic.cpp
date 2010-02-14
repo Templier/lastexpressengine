@@ -51,7 +51,8 @@
 
 namespace LastExpress {
 
-Logic::Logic(LastExpressEngine *engine) : _engine(engine), _currentScene(NULL) {
+Logic::Logic(LastExpressEngine *engine)
+	: _engine(engine), _currentScene(NULL) {
 	_action   = new Action(engine);
 	_beetle   = new Beetle(engine);
 	_entities = new Entities(engine);
@@ -195,38 +196,47 @@ void Logic::gameOver(TimeType type, uint32 time, SceneIndex sceneIndex, bool sho
 //////////////////////////////////////////////////////////////////////////
 // Event Handling
 //////////////////////////////////////////////////////////////////////////
-bool Logic::handleMouseEvent(Common::Event ev) {
-
+void Logic::eventMouseClick(Common::Event ev) {
 	// Special case for the main menu scene
 	if (isShowingMenu()) {
-		return _menu->handleStartMenuEvent(ev);
+		_menu->eventMouseClick(ev);
+		return;
 	}
 
 	if (getInventory()->handleMouseEvent(ev))
-		return true;
+		return;
 
 	// Check hitbox & event from scene data
 	SceneHotspot *hotspot = NULL;
-	if (_currentScene && _currentScene->checkHotSpot(ev.mouse, &hotspot)) {
-		// Change mouse cursor
-		_runState.cursorStyle = _action->getCursor(hotspot->action, (ObjectIndex)hotspot->param1, hotspot->param2, hotspot->param3, hotspot->cursor);
+	if (_currentScene && _currentScene->checkHotSpot(ev.mouse, &hotspot) && ev.type == Common::EVENT_LBUTTONUP) {
+		_action->processHotspot(hotspot);
+		if (hotspot->scene)
+			setScene(hotspot->scene);
 
-		// Handle click
-		if ((ev.type == Common::EVENT_LBUTTONDOWN)) {
-			_action->processHotspot(hotspot);
-			if (hotspot->scene)
-				setScene(hotspot->scene);
-
-			// Switch to next chapter if necessary
-			if (hotspot->action == SceneHotspot::kActionSwitchChapter && hotspot->param1 == getState()->progress.chapter)
-				switchChapter();
-		}
-	} else {
-		_runState.cursorStyle = kCursorNormal;
+		// Switch to next chapter if necessary
+		if (hotspot->action == SceneHotspot::kActionSwitchChapter && hotspot->param1 == getState()->progress.chapter)
+			switchChapter();	
 	}
-	_engine->getCursor()->setStyle(_runState.cursorStyle);
+}
 
-	return true;
+void Logic::eventMouseMove(Common::Event ev) {
+	// Special case for the main menu scene
+	if (isShowingMenu()) {
+		_menu->eventMouseMove(ev);
+		return;
+	}
+
+	if (getInventory()->handleMouseEvent(ev))
+		return;
+
+	// Check hitbox & event from scene data
+	SceneHotspot *hotspot = NULL;
+	if (_currentScene && _currentScene->checkHotSpot(ev.mouse, &hotspot))
+		_runState.cursorStyle = _action->getCursor(hotspot->action, (ObjectIndex)hotspot->param1, hotspot->param2, hotspot->param3, hotspot->cursor);
+	else
+		_runState.cursorStyle = kCursorNormal;
+
+	_engine->getCursor()->setStyle(_runState.cursorStyle);
 }
 
 //////////////////////////////////////////////////////////////////////////

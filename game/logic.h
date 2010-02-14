@@ -28,6 +28,8 @@
 
 #include "lastexpress/shared.h"
 
+#include "lastexpress/eventhandler.h"
+
 #include "common/events.h"
 
 namespace LastExpress {
@@ -44,13 +46,14 @@ class Scene;
 class Sound;
 class State;
 
-class Logic {
+class Logic : public EventHandler {
 public:
 
 	Logic(LastExpressEngine *engine);
 	~Logic();
 
-	bool handleMouseEvent(Common::Event ev);
+	void eventMouseClick(Common::Event ev);
+	void eventMouseMove(Common::Event ev);
 
 	void showMenu(bool visible);
 	void startGame();

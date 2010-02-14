@@ -469,8 +469,17 @@ uint32 Menu::getSceneIndex() {
 	return (SaveLoad::isSavegameValid(getLogic()->getGameId())) ? getLogic()->getGameId() * 5 + 1 : getLogic()->getGameId() * 5 + 2;
 }
 
+//////////////////////////////////////////////////////////////////////////
 // Handle events
-bool Menu::handleStartMenuEvent(Common::Event ev) {
+void Menu::eventMouseClick(Common::Event ev) {
+	handleEvent(ev);
+}
+
+void Menu::eventMouseMove(Common::Event ev) {
+	handleEvent(ev);
+}
+
+void Menu::handleEvent(Common::Event ev) {
 	// Special case if we are showing credits (only allow left & right-click)
 	if (_isShowingCredits) {
 		// Interrupt on right click
@@ -481,7 +490,7 @@ bool Menu::handleStartMenuEvent(Common::Event ev) {
 				showCredits();
 				askForRedraw();
 			default:
-				return true;
+				return; //true;
 		}
 	}
 
@@ -491,11 +500,11 @@ bool Menu::handleStartMenuEvent(Common::Event ev) {
 	if (_scene && !_scene->checkHotSpot(ev.mouse, &hotspot)) {
 		clearBg(GraphicsManager::kBackgroundOverlay);
 		askForRedraw();
-		return true;
+		return; //true;
 	}
 
 	if (!hotspot)
-		return true;
+		return; //true;
 
 	action = (StartMenuAction)hotspot->action;
 
@@ -590,7 +599,7 @@ bool Menu::handleStartMenuEvent(Common::Event ev) {
 			playSfxStream("LIB046");
 
 			//TODO some stuff... see disasm
-			return false;
+			return; // false;
 		} else {
 			drawSeqFrame(&_seqButtons, kButtonQuit, GraphicsManager::kBackgroundOverlay);
 		}
@@ -796,7 +805,7 @@ bool Menu::handleStartMenuEvent(Common::Event ev) {
 	// All cases should break apart from the Quit case, so we can ask for redraw only once here
 	askForRedraw();
 
-	return true;
+	return; // true;
 }
 
 //////////////////////////////////////////////////////////////////////////

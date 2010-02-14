@@ -28,6 +28,8 @@
 
 #include "lastexpress/data/sequence.h"
 
+#include "lastexpress/eventhandler.h"
+
 #include "lastexpress/shared.h"
 
 #include "common/events.h"
@@ -40,14 +42,17 @@ class Scene;
 class Clock;
 class TrainLine;
 
-class Menu {
+class Menu : public EventHandler {
 public:
 	Menu(LastExpressEngine *engine);
 	~Menu();
 
 	void showMenu(bool savegame, TimeType type, uint32 time);
 
-	bool handleStartMenuEvent(Common::Event ev);
+	// Event handling
+	void eventMouseClick(Common::Event ev);
+	void eventMouseMove(Common::Event ev);
+
 	uint32 getSceneIndex();
 
 	// DEBUG ONLY - TO BE REMOVED
@@ -76,6 +81,7 @@ private:
 	uint32 _creditsSequenceIndex;
 
 	void loadData();
+	void handleEvent(Common::Event ev);
 
 	// Overlays & elements
 	void drawElements();
