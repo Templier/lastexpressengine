@@ -132,8 +132,8 @@ IMPLEMENT_FUNCTION(Chapters, chapter1_init, 7)
 	for (uint i = 32; i < 40; i++) {
 		getObjects()->updateLocation2((ObjectIndex)i, kLocation2);
 	}
-
-	CURRENT_PARAM(1) = 40;
+	
+	params->param1 = 40;
 
 	getObjects()->updateLocation2(kObject25, kLocation1);
 	getObjects()->updateLocation2(kObjectGreenSleepingCar, kLocation1);
@@ -167,17 +167,17 @@ IMPLEMENT_FUNCTION(Chapters, chapter1_handler, 8)
 		break;
 
 	case kActionDefault:
-		CURRENT_PARAM(2) = 225 * (4 * random(5) + 20);
+		params->param2 = 225 * (4 * random(5) + 20);
 		break;
 
 
 	case kAction17:
-		if (CURRENT_PARAM(3))
+		if (params->param3)
 			break;
 
 		getState()->time = kTimeChapter1;
 		getState()->timeDelta = 3;
-		CURRENT_PARAM(3) = 1;
+		params->param3 = 1;
 		break;
 	}
 }
@@ -267,7 +267,7 @@ IMPLEMENT_FUNCTION(Chapters, chapter2_init, 11)
 		getObjects()->updateLocation2((ObjectIndex)i, kLocation2);
 	}
 
-	CURRENT_PARAM(1) = 40;
+	params->param1 = 40;
 
 	getSavePoints()->push(kEntityChapters, kEntityTables0, kAction103798704, 0);
 	getSavePoints()->push(kEntityChapters, kEntityTables1, kAction103798704, 0);

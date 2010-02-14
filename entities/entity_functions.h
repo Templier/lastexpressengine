@@ -29,9 +29,6 @@
 //////////////////////////////////////////////////////////////////////////
 // Parameters macros (for default IIII parameters)
 //////////////////////////////////////////////////////////////////////////
-#define CURRENT_PARAM(id) \
-	((EntityData::EntityParametersIIII*)_data->getCurrentParameters())->param##id
-
 #define CURRENT_PARAMS(index, id) \
 	((EntityData::EntityParametersIIII*)_data->getCurrentParameters(index))->param##id
 
@@ -46,8 +43,8 @@
 
 #define CALL_CHAPTER_ACTION(id, timeValue) \
 	if (getState()->time > timeValue) { \
-		if (!CURRENT_PARAM(1)) { \
-			CURRENT_PARAM(1) = 1; \
+		if (!params->param1) { \
+			params->param1 = 1; \
 			setup_function##id(); \
 		} \
 	}
@@ -59,21 +56,21 @@
 	}
 
 #define UPDATE_PARAM_FROM_TIME(param1, param2) \
-	if (CURRENT_PARAM(param1)) { \
-		if (CURRENT_PARAM(param1) > (int)getState()->time) \
+	if (params->param##param1) { \
+		if (params->param##param1 > (int)getState()->time) \
 			break; \
-		CURRENT_PARAM(param1) = EntityData::kParamTime; \
+		params->param##param1 = EntityData::kParamTime; \
 	} else { \
-		CURRENT_PARAM(param1) = CURRENT_PARAM(param2) + getState()->time; \
+		params->param##param1 = params->param##param2 + getState()->time; \
 	} \
 
 #define UPDATE_PARAM_FROM_TICKS(param1, param2) \
-	if (CURRENT_PARAM(param1)) { \
-		if (CURRENT_PARAM(param1) > (int)getState()->timeTicks) \
+	if (params->param##param1) { \
+		if (params->param##param1 > (int)getState()->timeTicks) \
 			break; \
-		CURRENT_PARAM(param1) = EntityData::kParamTime; \
+		params->param##param1 = EntityData::kParamTime; \
 	} else { \
-		CURRENT_PARAM(param1) = CURRENT_PARAM(param2) + getState()->timeTicks; \
+		params->param##param1 = params->param##param2 + getState()->timeTicks; \
 	} \
 
 #endif // LASTEXPRESS_ENTITY_FUNCTIONS_H

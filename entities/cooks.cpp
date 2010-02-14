@@ -63,7 +63,86 @@ IMPLEMENT_FUNCTION_S(Cooks, playSound, 2)
 }
 
 IMPLEMENT_FUNCTION(Cooks, function3, 3)
-	error("Cooks: callback function 3 not implemented!");
+	switch (savepoint->action) {
+	default:
+		break;
+
+	case kActionDefault:
+		getEntities()->drawSequenceLeft(kEntityCooks, "308A");
+		getEntities()->updateField1000ProcessScene(kEntityCooks, 5, 75);
+		getEntities()->updateField1000ProcessScene(kEntityCooks, 5, 78);
+
+		switch (getProgress().chapter) {
+		default:
+			getSound()->playSound(kEntityCooks, "KIT1011");
+			_data->setNextCallback(3);
+			call(new ENTITY_SETUP_SIIS(Cooks, setup_draw), "308B");
+			break;
+
+		case kChapter1:
+			_data->setNextCallback(1);
+			call(new ENTITY_SETUP_SIIS(Cooks, setup_playSound), "KIT1010");
+			break;
+
+		case kChapter3:
+			_data->setNextCallback(2);
+			call(new ENTITY_SETUP_SIIS(Cooks, setup_playSound), "KIT1012");
+			break;
+		}
+		break;
+
+	case kAction17:
+		if (!getEntities()->checkFields17(kEntityNone)) {
+			getEntities()->prepareSequences(kEntityCooks);
+			CALL_PREVIOUS_SAVEPOINT()
+			break;
+		}
+
+		if (getEntities()->checkFields4(EntityData::kField495_5, 46)) {
+			getEntities()->drawSequenceLeft(kEntityCooks, "308D");
+
+			if (!getSound()->isBuffered(kEntityCooks)) {
+				if (params->param1) {
+					if (!getEntities()->checkSequence0(kEntityCooks)) {
+						getSound()->playSound(kEntityCooks, "LIB015");
+						getEntities()->prepareSequences(kEntityCooks);
+						CALL_PREVIOUS_SAVEPOINT()
+					}
+					break;
+				}
+
+				// Kitchen apprentice getting a lesson :D
+				getSound()->playSound(kEntityCooks, "KIT1011A");
+				params->param1 = 1;
+			}
+		}
+
+		if (params->param1 && !getEntities()->checkSequence0(kEntityCooks)) {
+			getSound()->playSound(kEntityCooks, "LIB015");
+			getEntities()->prepareSequences(kEntityCooks);
+			CALL_PREVIOUS_SAVEPOINT()
+		}	
+		break;
+
+	case kAction18:
+		switch (_data->getNextCallback()) {
+		default:
+			break;
+
+		case 1:
+		case 2:
+			getSound()->playSound(kEntityCooks, "KIT1011");
+			_data->setNextCallback(3);
+			call(new ENTITY_SETUP_SIIS(Cooks, setup_draw), "308B");
+		break;
+
+		case 3:
+			getEntities()->drawSequenceLeft(kEntityCooks, "308C");
+			getEntities()->updateField1000(kEntityCooks, 5, 75);
+			getEntities()->updateField1000(kEntityCooks, 5, 78);
+			break;			
+		}
+	}
 }
 
 IMPLEMENT_FUNCTION(Cooks, function4, 4)
@@ -107,7 +186,7 @@ IMPLEMENT_FUNCTION(Cooks, function4, 4)
 			getEntities()->drawSequenceLeft(kEntityCooks, "308D");
 
 			if (!getSound()->isBuffered(kEntityCooks)) {
-				if (CURRENT_PARAM(1)) {
+				if (params->param1) {
 					if (!getEntities()->checkSequence0(kEntityCooks)) {
 						getSound()->playSound(kEntityCooks, "LIB015");
 						getEntities()->prepareSequences(kEntityCooks);
@@ -118,11 +197,11 @@ IMPLEMENT_FUNCTION(Cooks, function4, 4)
 
 				// Kitchen apprentice getting a lesson :D
 				getSound()->playSound(kEntityCooks, "KIT1011A");
-				CURRENT_PARAM(1) = 1;
+				params->param1 = 1;
 			}
 		}
 
-		if (CURRENT_PARAM(1) && !getEntities()->checkSequence0(kEntityCooks)) {
+		if (params->param1 && !getEntities()->checkSequence0(kEntityCooks)) {
 			getSound()->playSound(kEntityCooks, "LIB015");
 			getEntities()->prepareSequences(kEntityCooks);
 			CALL_PREVIOUS_SAVEPOINT()
@@ -181,26 +260,26 @@ IMPLEMENT_FUNCTION(Cooks, function6, 6)
 
 		// Broken plate sound
 		getSound()->playSound(kEntityNone, "LIB122",  getEntities()->getSoundValue(kEntityCooks));
-		CURRENT_PARAM(2) = 225 * (4 * random(30) + 120);
-		CURRENT_PARAM(4) = 0;
+		params->param2 = 225 * (4 * random(30) + 120);
+		params->param4 = 0;
 		break;
 
 	case kActionDefault:
-		CURRENT_PARAM(1) = 1;
-		CURRENT_PARAM(2) = 225 * (4 * random(30) + 120);		
+		params->param1 = 1;
+		params->param2 = 225 * (4 * random(30) + 120);		
 		break;
 
 	case kAction17:
 		if (!getEntities()->checkFields17(kEntityNone))
 			break;
 
-		if (CURRENT_PARAM(1)) {
+		if (params->param1) {
 			if (getEntities()->checkFields4(EntityData::kField495_5, 73)) {
 				_data->setNextCallback(1);
 				call(new ENTITY_SETUP(Cooks, setup_function3));
 			}
 		} else {
-			if (CURRENT_PARAM(3)) {
+			if (params->param3) {
 				_data->setNextCallback(2);
 				call(new ENTITY_SETUP_SIIS(Cooks, setup_playSound), "ZFX1011");
 			} else {
@@ -216,12 +295,12 @@ IMPLEMENT_FUNCTION(Cooks, function6, 6)
 			break;
 
 		case 1:
-			CURRENT_PARAM(1) = 0;
+			params->param1 = 0;
 			break;
 
 		case 2:
 		case 3:
-			CURRENT_PARAM(3) = !CURRENT_PARAM(3);
+			params->param3 = !params->param3;
 			break;
 		}
 		break;
@@ -232,7 +311,7 @@ IMPLEMENT_FUNCTION(Cooks, function6, 6)
 
 	case kAction224849280:
 		getProgress().field_4C = 1;
-		CURRENT_PARAM(1) = 1;
+		params->param1 = 1;
 		break;
 	}
 }
@@ -291,16 +370,16 @@ IMPLEMENT_FUNCTION(Cooks, function9, 9)
 
 		// Broken plate sound
 		getSound()->playSound(kEntityNone, "LIB122",  getEntities()->getSoundValue(kEntityCooks));
-		CURRENT_PARAM(1) = 225 * (4 * random(30) + 120);
-		CURRENT_PARAM(3) = 0;
+		params->param1 = 225 * (4 * random(30) + 120);
+		params->param3 = 0;
 		break;
 
 	case kActionDefault:
-		CURRENT_PARAM(1) = 225 * (4 * random(30) + 120);		
+		params->param1 = 225 * (4 * random(30) + 120);		
 		break;
 
 	case kAction17:
-		if (CURRENT_PARAM(2)) {
+		if (params->param2) {
 			_data->setNextCallback(1);
 			call(new ENTITY_SETUP_SIIS(Cooks, setup_playSound), "ZFX1011");
 		} else {
@@ -311,7 +390,7 @@ IMPLEMENT_FUNCTION(Cooks, function9, 9)
 
 	case kAction18:
 		if (_data->getNextCallback() == 1 || _data->getNextCallback() == 2)
-			CURRENT_PARAM(2) = !CURRENT_PARAM(2);
+			params->param2 = !params->param2;
 		break;
 	}
 }
@@ -344,44 +423,44 @@ IMPLEMENT_FUNCTION(Cooks, function11, 11)
 		break;
 
 	case kActionNone:
-		if (CURRENT_PARAM(4)) {
-			if (CURRENT_PARAM(4) > (int)getState()->time)
+		if (params->param4) {
+			if (params->param4 > (int)getState()->time)
 				goto update_params;
-			CURRENT_PARAM(4) = EntityData::kParamTime;
+			params->param4 = EntityData::kParamTime;
 		} else {
-			CURRENT_PARAM(4) = CURRENT_PARAM(2) + getState()->time;
+			params->param4 = params->param2 + getState()->time;
 		}
 
 		// Broken plate sound
 		getSound()->playSound(kEntityNone, "LIB122",  getEntities()->getSoundValue(kEntityCooks));
-		CURRENT_PARAM(2) = 225 * (4 * random(30) + 120);
-		CURRENT_PARAM(4) = 0;
+		params->param2 = 225 * (4 * random(30) + 120);
+		params->param4 = 0;
 
 update_params:
 		if (getState()->time > kTimeUnknown1) {
-			if (!CURRENT_PARAM(5)) {
-				CURRENT_PARAM(1) = 0;
-				CURRENT_PARAM(5) = 1;
+			if (!params->param5) {
+				params->param1 = 0;
+				params->param5 = 1;
 			}
 		}
 		break;
 
 	case kActionDefault:
-		CURRENT_PARAM(1) = 1;
-		CURRENT_PARAM(2) = 225 * (4 * random(30) + 120);
+		params->param1 = 1;
+		params->param2 = 225 * (4 * random(30) + 120);
 		break;
 
 	case kAction17:
 		if (!getEntities()->checkFields17(kEntityNone))
 			break;
 
-		if (CURRENT_PARAM(1)) {
+		if (params->param1) {
 			if (getEntities()->checkFields4(EntityData::kField495_5, 80)) {
 				_data->setNextCallback(1);
 				call(new ENTITY_SETUP(Cooks, setup_function4));
 			}
 		} else {
-			if (CURRENT_PARAM(3)) {
+			if (params->param3) {
 				_data->setNextCallback(2);
 				call(new ENTITY_SETUP_SIIS(Cooks, setup_playSound), "ZFX1011");
 			} else {
@@ -397,12 +476,12 @@ update_params:
 			break;
 
 		case 1:
-			CURRENT_PARAM(1) = 0;
+			params->param1 = 0;
 			break;
 
 		case 2:
 		case 3:
-			CURRENT_PARAM(3) = !CURRENT_PARAM(3);
+			params->param3 = !params->param3;
 			break;
 		}
 		break;
@@ -447,12 +526,12 @@ IMPLEMENT_FUNCTION(Cooks, function13, 13)
 
 		// Broken plate sound
 		getSound()->playSound(kEntityNone, "LIB122",  getEntities()->getSoundValue(kEntityCooks));
-		CURRENT_PARAM(1) = 225 * (4 * random(30) + 120);
-		CURRENT_PARAM(3) = 0;
+		params->param1 = 225 * (4 * random(30) + 120);
+		params->param3 = 0;
 		break;
 
 	case kActionDefault:
-		CURRENT_PARAM(1) = 225 * (4 * random(30) + 120);
+		params->param1 = 225 * (4 * random(30) + 120);
 		break;
 
 	case kAction17:
@@ -460,7 +539,7 @@ IMPLEMENT_FUNCTION(Cooks, function13, 13)
 			break;
 		
 		// Kitchen background sound
-		if (CURRENT_PARAM(2)) {
+		if (params->param2) {
 			_data->setNextCallback(1);
 			call(new ENTITY_SETUP_SIIS(Cooks, setup_playSound), "ZFX1011");
 		} else {
@@ -473,7 +552,7 @@ IMPLEMENT_FUNCTION(Cooks, function13, 13)
 	case kAction18:
 		// Play the next part of background sound
 		if (_data->getNextCallback() == 1 || _data->getNextCallback() == 2) {
-			CURRENT_PARAM(2) = !CURRENT_PARAM(2);
+			params->param2 = !params->param2;
 		}
 	}	
 }

@@ -88,7 +88,7 @@ IMPLEMENT_FUNCTION_II(Sophie, function2, 2)
 		break;
 
 	case kActionNone: {
-		CURRENT_PARAM(3) = 0;
+		params->param3 = 0;
 
 		// Sophie
 		byte direction = _data->getData()->direction;
@@ -103,11 +103,11 @@ IMPLEMENT_FUNCTION_II(Sophie, function2, 2)
 		|| (direction == kDirectionUp && field_495 >= rebecca_field_495 && field_491 > rebecca_field_491)
 		|| (direction == kDirectionDown && field_495 <= rebecca_field_495 && field_491 < rebecca_field_491)) {
 			 _data->getData()->field_49B = 0;
-			 CURRENT_PARAM(3) = 1;
+			 params->param3 = 1;
 		}
 
-		if (!CURRENT_PARAM(3))
-			getEntities()->checkEntity(kEntitySophie, (EntityData::Field495Value)CURRENT_PARAM(1), (EntityData::Field491Value)CURRENT_PARAM(2));
+		if (!params->param3)
+			getEntities()->checkEntity(kEntitySophie, (EntityData::Field495Value)params->param1, (EntityData::Field491Value)params->param2);
 
 		break;
 	}
@@ -121,7 +121,7 @@ IMPLEMENT_FUNCTION_II(Sophie, function2, 2)
 		break;
 
 	case kActionDefault:
-		getEntities()->checkEntity(kEntitySophie, (EntityData::Field495Value)CURRENT_PARAM(1), (EntityData::Field491Value)CURRENT_PARAM(2));
+		getEntities()->checkEntity(kEntitySophie, (EntityData::Field495Value)params->param1, (EntityData::Field491Value)params->param2);
 		break;
 
 	case kAction123668192:

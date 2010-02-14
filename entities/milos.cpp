@@ -120,7 +120,7 @@ IMPLEMENT_FUNCTION_II(Milos, enterCompartementDialog, 10)
 
 	case kActionNone:
 	case kActionDefault:
-		if (getEntities()->checkEntity(kEntityMilos, (EntityData::Field495Value)CURRENT_PARAM(1), (EntityData::Field491Value)CURRENT_PARAM(2)))
+		if (getEntities()->checkEntity(kEntityMilos, (EntityData::Field495Value)params->param1, (EntityData::Field491Value)params->param2))
 			CALL_PREVIOUS_SAVEPOINT()
 		break;
 
@@ -162,7 +162,7 @@ IMPLEMENT_FUNCTION_I(Milos, function11, 11)
 	case kAction9:
 		getObjects()->update(kObjectCompartmentG, kEntityMilos, kLocation3, kCursorNormal, kCursorNormal);
 
-		if (CURRENT_PARAM(2)) {			
+		if (params->param2) {			
 			if (getInventory()->hasItem(kItemPassengerList)) {
 				_data->setNextCallback(10);
 				call(new ENTITY_SETUP_SIIS(Milos, setup_playSound), (random(2) ? "CAT1504" : getSound()->wrongDoorCath()));
@@ -186,10 +186,10 @@ IMPLEMENT_FUNCTION_I(Milos, function11, 11)
 		break;
 
 	case kAction17:
-		if (CURRENT_PARAM(3) || CURRENT_PARAM(2)) {
+		if (params->param3 || params->param2) {
 			getObjects()->update(kObjectCompartmentG, kEntityMilos, kLocation3, kCursorHandKnock, kCursorHand);
-			CURRENT_PARAM(3) = 0;
-			CURRENT_PARAM(2) = 0;
+			params->param3 = 0;
+			params->param2 = 0;
 		}
 		break;
 
@@ -213,7 +213,7 @@ IMPLEMENT_FUNCTION_I(Milos, function11, 11)
 			if (getProgress().field_14 == 14)
 				getProgress().field_14 = 0;
 
-			CURRENT_PARAM(6) = 1;
+			params->param6 = 1;
 			_data->setNextCallback(4);
 			call(new ENTITY_SETUP(Milos, setup_enterCompartementDialog), 4, 3050);
 			break;
@@ -243,13 +243,13 @@ IMPLEMENT_FUNCTION_I(Milos, function11, 11)
 
 		case 9:
 			getObjects()->update(kObjectCompartmentG, kEntityMilos, kLocation3, kCursorTalk, kCursorNormal);
-			CURRENT_PARAM(2) = 1;
+			params->param2 = 1;
 			break;
 
 		case 10:
 		case 11:
-			CURRENT_PARAM(2) = 0;
-			CURRENT_PARAM(3) = 1;
+			params->param2 = 0;
+			params->param3 = 1;
 			break;
 
 		case 12:
@@ -263,7 +263,7 @@ IMPLEMENT_FUNCTION_I(Milos, function11, 11)
 			_data->getData()->field_493 = EntityData::kField493_1;
 			getEntities()->prepareSequences(kEntityMilos);
 			getObjects()->update(kObjectCompartmentG, kEntityMilos, kLocation3, kCursorHandKnock, kCursorHand);
-			CURRENT_PARAM(5) = 0;
+			params->param5 = 0;
 			break;
 
 		}
@@ -276,12 +276,12 @@ IMPLEMENT_FUNCTION_I(Milos, function11, 11)
 		break;
 
 	case kAction123852928:
-		CURRENT_PARAM(1) = 13;
+		params->param1 = 13;
 		call(new ENTITY_SETUP_SIIS(Milos, setup_function3), "611Dg", 38);
 		break;
 
 	case kAction221683008:
-		CURRENT_PARAM(5) = 1;
+		params->param5 = 1;
 		getSavePoints()->push(kEntityMilos, kEntityCoudert, kAction123199584);
 		break;
 	}

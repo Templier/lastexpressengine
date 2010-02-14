@@ -112,20 +112,22 @@ void Entity::setup(ChapterIndex index) {
 //////////////////////////////////////////////////////////////////////////
 
 void Entity::function1(SavePoint *savepoint) {
+	EXPOSE_PARAMS(EntityData::EntityParametersIIII)
+
 	switch (savepoint->action) {
 	default:
 		break;
 
 	case kActionNone:
-		if (getEntities()->checkEntity(_entityIndex, EntityData::kField495_3, (EntityData::Field491Value)CURRENT_PARAM(1)))
-			CURRENT_PARAM(1) = (CURRENT_PARAM(1) == 10000) ? 0 : 10000;
+		if (getEntities()->checkEntity(_entityIndex, EntityData::kField495_3, (EntityData::Field491Value)params->param1))
+			params->param1 = (params->param1 == 10000) ? 0 : 10000;
 		break;
 
 	case kActionDefault:
 		_data->getData()->field_491 = EntityData::kField491_0;
 		_data->getData()->field_493 = EntityData::kField493_0;
 		_data->getData()->field_495 = EntityData::kField495_3;
-		CURRENT_PARAM(1) = 10000;
+		params->param1 = 10000;
 		break;
 	}
 }
@@ -204,6 +206,8 @@ void Entity::draw2(SavePoint *savepoint) {
 }
 
 void Entity::updateFromTicks(SavePoint *savepoint) {
+	EXPOSE_PARAMS(EntityData::EntityParametersIIII)
+
 	switch (savepoint->action) {
 	default:
 		break;
@@ -216,6 +220,8 @@ void Entity::updateFromTicks(SavePoint *savepoint) {
 }
 
 void Entity::updateFromTime(SavePoint *savepoint) {
+	EXPOSE_PARAMS(EntityData::EntityParametersIIII)
+
 	switch (savepoint->action) {
 	default:
 		break;

@@ -160,7 +160,8 @@ namespace LastExpress {
 // simple setup with no parameters
 #define IMPLEMENT_FUNCTION(class, name, index) \
 	IMPLEMENT_SETUP(class, class, name, index) \
-	IMPLEMENT_CALL(class, name, index)
+	IMPLEMENT_CALL(class, name, index) \
+	EXPOSE_PARAMS(EntityData::EntityParametersIIII)
 
 // setup with one int parameter
 #define IMPLEMENT_FUNCTION_I(class, name, index) \

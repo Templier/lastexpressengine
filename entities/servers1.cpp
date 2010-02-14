@@ -100,9 +100,9 @@ IMPLEMENT_FUNCTION_SII(Servers1, function3, 3)
 
 IMPLEMENT_FUNCTION(Servers1, function4, 4)
 	if (savepoint->action == kAction5) {
-		if (!CURRENT_PARAM(1)) {
+		if (!params->param1) {
 			getSound()->excuseMe(kEntityServers1);
-			CURRENT_PARAM(1) = 1;
+			params->param1 = 1;
 		}
 	}
 
