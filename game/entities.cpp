@@ -703,8 +703,8 @@ bool Entities::checkEntity(EntityIndex entity, EntityData::Field495Value field49
 }
 
 bool Entities::checkFields1(EntityIndex entity, EntityData::Field495Value field495, EntityData::Field491Value field491) {
-	return (getEntityData(entity)->field_491 == field491 
-		 && getEntityData(entity)->field_493 == EntityData::kField493_1 
+	return (getEntityData(entity)->field_491 == field491
+		 && getEntityData(entity)->field_493 == EntityData::kField493_1
 		 && getEntityData(entity)->field_495 == field495);
 }
 
@@ -778,7 +778,7 @@ bool Entities::checkFields2(ObjectIndex object) {
 }
 
 bool Entities::checkFields3(EntityIndex entity) {
-	return (getEntityData(entity)->field_495 == EntityData::kField495_3 
+	return (getEntityData(entity)->field_495 == EntityData::kField495_3
 		 || getEntityData(entity)->field_495 == EntityData::kField495_4)
 		 && getEntityData(entity)->field_493 == EntityData::kField493_1;
 }
@@ -823,7 +823,7 @@ bool Entities::checkFields11() {
 		 && checkFields12(index)
 		 || checkFields13(index))
 			return false;
-	}	
+	}
 	return true;
 }
 
@@ -863,36 +863,36 @@ bool Entities::checkFields17(EntityIndex entity) {
 
 bool Entities::checkFields18(EntityData::Field495Value field495, EntityData::Field491Value field491) {
 	for (uint i = 1; i < _entities.size(); i++) {
-		
+
 		if (checkFields1((EntityIndex)i, field495, field491))
 			return false;
-	}	
+	}
 	return true;
 }
 
 bool Entities::checkFields19(EntityIndex entity, EntityData::Field495Value field495, EntityData::Field491Value field491) {
-	
+
 	if (getEntityData(entity)->field_495 != field495 ||  getEntityData(entity)->field_493 != EntityData::kField493_1)
 		return false;
 
 	EntityData::Field491Value entity_field491 = getEntityData(entity)->field_491;
 
 	// Test values
-	if (field491 == EntityData::kField491_4455) {		
+	if (field491 == EntityData::kField491_4455) {
 		if (entity_field491 == EntityData::kField491_4070 || entity_field491 == EntityData::kField491_4455 || entity_field491 == EntityData::kField491_4840)
 			return true;
 
 		return false;
 	}
 
-	if (field491 == EntityData::kField491_6130) {		
+	if (field491 == EntityData::kField491_6130) {
 		if (entity_field491 == EntityData::kField491_5790 || entity_field491 == EntityData::kField491_6130 || entity_field491 == EntityData::kField491_6470)
 			return true;
 
 		return false;
 	}
 
-	if (field491 != EntityData::kField491_7850 
+	if (field491 != EntityData::kField491_7850
 	 || (entity_field491 != EntityData::kField491_7500 && entity_field491 != EntityData::kField491_7850 && entity_field491 != EntityData::kField491_8200))
 		return false;
 

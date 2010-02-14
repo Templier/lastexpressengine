@@ -121,7 +121,7 @@ IMPLEMENT_FUNCTION(Cooks, function3, 3)
 			getSound()->playSound(kEntityCooks, "LIB015");
 			getEntities()->prepareSequences(kEntityCooks);
 			CALL_PREVIOUS_SAVEPOINT()
-		}	
+		}
 		break;
 
 	case kAction18:
@@ -140,7 +140,7 @@ IMPLEMENT_FUNCTION(Cooks, function3, 3)
 			getEntities()->drawSequenceLeft(kEntityCooks, "308C");
 			getEntities()->updateField1000(kEntityCooks, 5, 75);
 			getEntities()->updateField1000(kEntityCooks, 5, 78);
-			break;			
+			break;
 		}
 	}
 }
@@ -205,7 +205,7 @@ IMPLEMENT_FUNCTION(Cooks, function4, 4)
 			getSound()->playSound(kEntityCooks, "LIB015");
 			getEntities()->prepareSequences(kEntityCooks);
 			CALL_PREVIOUS_SAVEPOINT()
-		}		
+		}
 		break;
 
 	case kAction18:
@@ -219,7 +219,7 @@ IMPLEMENT_FUNCTION(Cooks, function4, 4)
 			_data->setNextCallback(3);
 			call(new ENTITY_SETUP_SIIS(Cooks, setup_draw), "308B");
 			break;
-		
+
 		case 3:
 			getEntities()->drawSequenceLeft(kEntityCooks, "308C");
 			getEntities()->updateField1000(kEntityCooks, EntityData::kField495_5, 75);
@@ -266,7 +266,7 @@ IMPLEMENT_FUNCTION(Cooks, function6, 6)
 
 	case kActionDefault:
 		params->param1 = 1;
-		params->param2 = 225 * (4 * random(30) + 120);		
+		params->param2 = 225 * (4 * random(30) + 120);
 		break;
 
 	case kAction17:
@@ -375,7 +375,7 @@ IMPLEMENT_FUNCTION(Cooks, function9, 9)
 		break;
 
 	case kActionDefault:
-		params->param1 = 225 * (4 * random(30) + 120);		
+		params->param1 = 225 * (4 * random(30) + 120);
 		break;
 
 	case kAction17:
@@ -537,7 +537,7 @@ IMPLEMENT_FUNCTION(Cooks, function13, 13)
 	case kAction17:
 		if (!getEntities()->checkFields17(kEntityNone))
 			break;
-		
+
 		// Kitchen background sound
 		if (params->param2) {
 			_data->setNextCallback(1);
@@ -554,7 +554,7 @@ IMPLEMENT_FUNCTION(Cooks, function13, 13)
 		if (_data->getNextCallback() == 1 || _data->getNextCallback() == 2) {
 			params->param2 = !params->param2;
 		}
-	}	
+	}
 }
 
 IMPLEMENT_FUNCTION(Cooks, chapter5, 14)

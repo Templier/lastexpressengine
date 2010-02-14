@@ -1436,7 +1436,7 @@ void Action::dropCorpse(bool process) {
 bool Action::handleOtherCompartment(ObjectIndex object, byte param2, byte param3) {
 
 	// Only handle compartments
-	if (getEntityData(kEntityNone)->field_493 
+	if (getEntityData(kEntityNone)->field_493
 	|| ((object < kObjectCompartment2 || object > kObjectCompartment8) && (object < kObjectCompartmentA || object > kObjectCompartmentH)))
 		return false;
 
@@ -1476,7 +1476,7 @@ bool Action::handleOtherCompartment(ObjectIndex object, byte param2, byte param3
 	// Direction = Up
 	if (!getEntities()->compare(kEntityNone, kEntityCoudert)
 	&& getEntityData(kEntityCoudert)->direction == kDirectionUp
-	&& getEntityData(kEntityCoudert)->field_491 < getEntityData(kEntityNone)->field_491) {	
+	&& getEntityData(kEntityCoudert)->field_491 < getEntityData(kEntityNone)->field_491) {
 		playCompartmentSoundEvents(kEntityCoudert, object, param2, param3, true);
 
 		return true;
@@ -1485,7 +1485,7 @@ bool Action::handleOtherCompartment(ObjectIndex object, byte param2, byte param3
 	// Direction = down
 	if (!getEntities()->compare(kEntityNone, kEntityCoudert)
 	&& getEntityData(kEntityCoudert)->direction == kDirectionDown
-	&& getEntityData(kEntityCoudert)->field_491 > getEntityData(kEntityNone)->field_491) {	
+	&& getEntityData(kEntityCoudert)->field_491 > getEntityData(kEntityNone)->field_491) {
 		playCompartmentSoundEvents(kEntityCoudert, object, param2, param3, false);
 
 		return true;

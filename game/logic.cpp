@@ -215,7 +215,7 @@ void Logic::eventMouseClick(Common::Event ev) {
 
 		// Switch to next chapter if necessary
 		if (hotspot->action == SceneHotspot::kActionSwitchChapter && hotspot->param1 == getState()->progress.chapter)
-			switchChapter();	
+			switchChapter();
 	}
 }
 

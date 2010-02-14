@@ -132,7 +132,7 @@ IMPLEMENT_FUNCTION(Chapters, chapter1_init, 7)
 	for (uint i = 32; i < 40; i++) {
 		getObjects()->updateLocation2((ObjectIndex)i, kLocation2);
 	}
-	
+
 	params->param1 = 40;
 
 	getObjects()->updateLocation2(kObject25, kLocation1);

@@ -162,7 +162,7 @@ IMPLEMENT_FUNCTION_I(Milos, function11, 11)
 	case kAction9:
 		getObjects()->update(kObjectCompartmentG, kEntityMilos, kLocation3, kCursorNormal, kCursorNormal);
 
-		if (params->param2) {			
+		if (params->param2) {
 			if (getInventory()->hasItem(kItemPassengerList)) {
 				_data->setNextCallback(10);
 				call(new ENTITY_SETUP_SIIS(Milos, setup_playSound), (random(2) ? "CAT1504" : getSound()->wrongDoorCath()));

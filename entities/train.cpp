@@ -195,7 +195,7 @@ IMPLEMENT_FUNCTION_II(Train, harem, 7)
 			break;
 		}
 
-		handleCompartementAction();		
+		handleCompartementAction();
 		return;
 	}
 
@@ -217,7 +217,7 @@ IMPLEMENT_FUNCTION_II(Train, harem, 7)
 			break;
 		}
 
-		handleCompartementAction();		
+		handleCompartementAction();
 		return;
 	}
 
@@ -248,7 +248,7 @@ IMPLEMENT_FUNCTION_II(Train, harem, 7)
 		}
 
 		params->param8 = 1;
-		handleCompartementAction();		
+		handleCompartementAction();
 		return;
 	}
 
