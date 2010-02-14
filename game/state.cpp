@@ -33,7 +33,7 @@
 
 namespace LastExpress {
 
-State::State(LastExpressEngine *engine) : _engine(engine) {
+State::State(LastExpressEngine *engine) : _engine(engine), timer(0) {
 	_inventory = new Inventory(engine);
 	_objects = new Objects(engine);
 	_savepoints = new SavePoints(engine);

@@ -83,6 +83,17 @@ SceneHotspot *SceneHotspot::load(Common::SeekableReadStream *stream) {
 	return hs;
 }
 
+bool SceneHotspot::isInside(Common::Point point) {
+
+	bool contains = rect.contains(point);
+
+	if (contains)
+		warning("SceneHotspot::isInside - offset checking not implemented!");
+
+	return contains;
+}
+
+//////////////////////////////////////////////////////////////////////////
 // Scene
 Scene::Scene() : _header(NULL) {}
 
@@ -145,12 +156,15 @@ SceneHeader* Scene::getHeader() {
 
 bool Scene::checkHotSpot(Common::Point coord, SceneHotspot **hotspot) {
 	bool found = false;
+	int location = 0;
 
 	for (uint i = 0; i < _hotspots.size(); i++) {
-		if (_hotspots[i]->rect.contains(coord)) {
-			found = true;
-			*hotspot = _hotspots[i];
-			break;
+		if (_hotspots[i]->isInside(coord)) {
+			if (location <= _hotspots[i]->location) {
+				location = _hotspots[i]->location;
+				*hotspot = _hotspots[i];
+				found = true;
+			}
 		}
 	}
 

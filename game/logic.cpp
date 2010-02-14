@@ -177,11 +177,11 @@ void Logic::gameOver(TimeType type, uint32 time, SceneIndex sceneIndex, bool sho
 		// Check if kEntityTrain is buffered
 		// Call unknown function 1 and loop
 
-		if (sceneIndex && !getFlags()->flag_2) {
+		if (sceneIndex && !getFlags()->mouseRightClick) {
 			loadScene(sceneIndex);
 
 			while (getSound()->isBuffered(kEntityTables4)) {
-				if (getFlags()->flag_2)
+				if (getFlags()->mouseRightClick)
 					break;
 
 				getSound()->unknownFunction1();
@@ -620,7 +620,7 @@ void Logic::postProcessScene() {
 		SceneHotspot *hotspot = scene.getHotspot();
 		_action->processHotspot(hotspot);
 
-		if (getFlags()->flag_2) {
+		if (getFlags()->mouseRightClick) {
 			loadSceneObject(hotspotScene, hotspot->scene);
 
 			while (hotspotScene.getHeader()->type == Scene::kTypeList) {

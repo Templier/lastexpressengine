@@ -516,6 +516,7 @@ void Inventory::drawEgg() {
 		drawItem(608, 448, getLogic()->getGameId() + 39, _blinkingBrightness)
 
 		// TODO if delta time > _blinkingInterval, update egg & ask for redraw then adjust blinking time and remaining time
+		warning("Inventory::drawEgg - blinking not implemented!");
 
 		// Reset values and stop blinking
 		if (_blinkingTime == 0)

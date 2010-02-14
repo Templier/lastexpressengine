@@ -84,6 +84,9 @@ public:
 	int getState() { return _state; }
 
 private:
+	typedef Common::Functor1<byte, int> Callback;
+	typedef Common::Functor0<void> Callback_NoParam;
+
 	enum FightSequenceType {
 		kFightSequenceType0 = 0,
 		kFightSequenceType1 = 1,
@@ -96,9 +99,16 @@ private:
 		kFightAction103 = 103
 	};
 
+	enum FightEndType {
+		kFightEndWin  = 0,
+		kFightEndLost = 1,
+		kFightEndExit    = 2
+	};
+
 	struct FightCombatant {
-		// Function pointer
-		//FightData *fight;
+		Callback *function0;
+		Callback_NoParam *function1;
+		Callback *function2;
 		FightCombatant* opponent;
 		Common::Array<Sequence *> sequences;
 		uint32 sequenceIndex;
@@ -112,8 +122,10 @@ private:
 		uint16 field_34;
 
 		FightCombatant() {
-			// TODO init function pointer to NULL
-			//fight = NULL;
+			function0 = NULL;
+			function1 = NULL;
+			function2 = NULL;
+
 			opponent = NULL;
 
 			action = kFightAction101;
@@ -147,9 +159,10 @@ private:
 	struct FightData {
 		FightCombatant *player;
 		FightOpponent *opponent;
-		int32 field_C;
+		int32 index;
 
-
+		Sequence *sequences[20];
+		Common::String names[20];
 
 		bool isRunning;
 
@@ -161,7 +174,7 @@ private:
 			player->opponent = opponent;
 			opponent->opponent = player;
 
-			field_C = 0;
+			index = 0;
 
 			isRunning = false;
 		}
@@ -169,14 +182,16 @@ private:
 
 	LastExpressEngine* _engine;
 	FightData *_data;
-	bool _hasLost;
+	FightEndType _endType;
 	int _state;
+
+	bool _handleTimer;
 
 	// Events
 	void handleMouseMove(Common::Event ev, bool unknown);
 
 	// State
-	void bailout(bool hasLost);
+	void bailout(FightEndType type);
 
 	// Drawing
 	void setSequenceAndDraw(FightCombatant *combatant, uint32 sequenceIndex, FightSequenceType type);
@@ -186,20 +201,64 @@ private:
 	void clear();
 	void clearSequences(FightCombatant *combatant);
 
+	//////////////////////////////////////////////////////////////////////////
 	// Loading
 	void loadData(FightType type);
 
+	// Default
+	int DefaultFunction0(byte action);
+	void DefaultFunction1();
+	int DefaultFunction2(byte action);
+
+	// Milos
 	void loadMilosPlayer();
 	void loadMilosOpponent();
+	int MilosFunction0(byte action);
+	void MilosFunction1();
+	int MilosFunction2(byte action);
+	int MilosOpponentFunction0(byte action);
+	void MilosOpponentFunction1();
+	int MilosOpponentFunction2(byte action);
+
+	// Anna
 	void loadAnnaPlayer();
 	void loadAnnaOpponent();
+	int AnnaFunction0(byte action);
+	void AnnaFunction1();
+	int AnnaFunction2(byte action);
+	int AnnaOpponentFunction0(byte action);
+	void AnnaOpponentFunction1();
+	int AnnaOpponentFunction2(byte action);
+
+	// Ivo
 	void loadIvoPlayer();
 	void loadIvoOpponent();
+	int IvoFunction0(byte action);
+	void IvoFunction1();
+	int IvoFunction2(byte action);
+	int IvoOpponentFunction0(byte action);
+	void IvoOpponentFunction1();
+	int IvoOpponentFunction2(byte action);
+
+	// Salko
 	void loadSalkoPlayer();
 	void loadSalkoOpponent();
+	int SalkoFunction0(byte action);
+	void SalkoFunction1();
+	int SalkoFunction2(byte action);
+	int SalkoOpponentFunction0(byte action);
+	void SalkoOpponentFunction1();
+	int SalkoOpponentFunction2(byte action);
+
+	// Vesna
 	void loadVesnaPlayer();
 	void loadVesnaOpponent();
-
+	int VesnaFunction0(byte action);
+	void VesnaFunction1();
+	int VesnaFunction2(byte action);
+	int VesnaOpponentFunction0(byte action);
+	void VesnaOpponentFunction1();
+	int VesnaOpponentFunction2(byte action);
 };
 
 } // End of namespace LastExpress

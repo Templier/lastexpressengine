@@ -25,6 +25,7 @@
 
 #include "lastexpress/game/fight.h"
 
+#include "lastexpress/data/cursor.h"
 #include "lastexpress/data/scene.h"
 #include "lastexpress/data/sequence.h"
 
@@ -40,9 +41,19 @@
 #include "lastexpress/lastexpress.h"
 #include "lastexpress/resource.h"
 
+#include "common/func.h"
+
 namespace LastExpress {
 
-Fight::Fight(LastExpressEngine *engine) : _engine(engine), _data(NULL) {}
+#define CALL_FUNCTION(fighter, name, ...) \
+	(*_data->##fighter->##name)(__VA_ARGS__)
+
+#define REGISTER_FUNCTIONS(figher, name) \
+	_data->##figher->function0 = new Common::Functor1Mem<byte, int, Fight>(this, &Fight::##name##Function0); \
+	_data->##figher->function1 = new Common::Functor0Mem<void, Fight>(this, &Fight::##name##Function1); \
+	_data->##figher->function2 = new Common::Functor1Mem<byte, int, Fight>(this, &Fight::##name##Function2); \
+
+Fight::Fight(LastExpressEngine *engine) : _engine(engine), _data(NULL), _handleTimer(false) {}
 
 Fight::~Fight() {
 	clear();
@@ -53,15 +64,82 @@ Fight::~Fight() {
 //////////////////////////////////////////////////////////////////////////
 
 void Fight::eventMouseClick(Common::Event ev) {
-	if (_data->field_C)
+	if (_data->index)
 		return;
 
-	getFlags()->flag_5 = false;
+	// TODO move all the egg handling to inventory functions
+
+	getFlags()->mouseLeftClick = false;
 	getFlags()->shouldRedraw = false;
-	getFlags()->flag_2 = false;
+	getFlags()->mouseRightClick = false;
 
+	if (ev.mouse.x < 608 || ev.mouse.y < 448 || ev.mouse.x >= 640 || ev.mouse.x >= 480) {
 
-	_data->isRunning = false;
+		// Handle right button click
+		if (ev.type == Common::EVENT_RBUTTONUP) {
+			getSound()->reset(kEntityTables0);
+			setStopped();
+
+			getTimer() ? _state = 0 : ++_state;
+
+			getFlags()->mouseRightClick = 1;
+		}
+
+		if (_handleTimer) {
+			// Timer expired => show with full brightness
+			if (!getTimer())
+				getInventory()->drawEgg();			
+
+			_handleTimer = false;
+		}
+
+		// Check hotspots
+		loadSceneObject(scene, getState()->scene);
+		SceneHotspot *hotspot = NULL;
+
+		if (!scene.checkHotSpot(ev.mouse, &hotspot)) {
+			_engine->getCursor()->setStyle(kCursorNormal);
+		} else {
+			_engine->getCursor()->setStyle((CursorStyle)hotspot->cursor);
+
+			// Call player function
+			if (CALL_FUNCTION(player, function2, hotspot->action)) {
+				if (ev.type == Common::EVENT_LBUTTONUP)
+					CALL_FUNCTION(player, function0, hotspot->action);
+			} else {
+				_engine->getCursor()->setStyle(kCursorNormal);
+			}
+		}
+	} else {
+		// Handle clicks on menu icon
+
+		if (!_handleTimer) {
+			// Timer expired => show with full brightness
+			if (!getTimer())
+				getInventory()->drawEgg();			
+
+			_handleTimer = true;
+		}
+
+		// Stop fight if clicked
+		if (ev.type == Common::EVENT_LBUTTONUP) {
+			_handleTimer = false;
+			getSound()->reset(kEntityTables0);
+			bailout(kFightEndExit);
+		}
+
+		// Reset timer on right click
+		if (ev.type == Common::EVENT_RBUTTONUP) {
+			if (getTimer()) {
+				if (getSound()->isFileInQueue("TIMER"))
+					getSound()->removeFromQueue("TIMER");
+
+				getTimer() = 900;
+			}		
+		}
+	}
+	
+	getFlags()->shouldRedraw = true;
 }
 
 void Fight::eventMouseMove(Common::Event ev) {
@@ -69,7 +147,52 @@ void Fight::eventMouseMove(Common::Event ev) {
 }
 
 void Fight::handleMouseMove(Common::Event ev, bool isProcessing) {
+	getFlags()->mouseMove = false;
 
+	// TODO move all the egg handling to inventory functions
+
+	// Blink egg
+	if (getTimer()) {
+		warning("Fight::handleMouseMove - egg blinking not implemented!");
+	}
+
+	if (_data->index)
+		return;
+
+	loadSceneObject(scene, getState()->scene);
+	SceneHotspot *hotspot = NULL;
+
+	if (!scene.checkHotSpot(ev.mouse, &hotspot)) {
+		_engine->getCursor()->setStyle(kCursorNormal);
+	} else {
+
+		_engine->getCursor()->setStyle((CursorStyle)hotspot->cursor);
+
+		// Call player function
+		if (!CALL_FUNCTION(player, function2, hotspot->action))
+			_engine->getCursor()->setStyle(kCursorNormal);
+
+		CALL_FUNCTION(player, function1);
+		CALL_FUNCTION(opponent, function1);
+
+		// Draw sequences
+		if (!_data->isRunning)
+			return;
+
+		if (isProcessing) {
+			warning("Fight::handleMouseMove - isProcessing mode not implemented!");
+		} else {
+			warning("Fight::handleMouseMove - normal mode not implemented!");
+		}
+
+		if (_data->index) {
+
+			// Set next sequence name index
+			_data->index--;
+			_data->sequences[_data->index] = newSequence(_data->names[_data->index]);
+		}
+		
+	}
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -87,7 +210,7 @@ bool Fight::setup(FightType type) {
 	// TODO events function
 	// TODO global var
 	getFlags()->flag_0 = 0;
-	getFlags()->flag_2 = 0;
+	getFlags()->mouseRightClick = 0;
 	getEntities()->reset();
 
 	// Compute scene to use
@@ -156,7 +279,7 @@ bool Fight::setup(FightType type) {
 	getInventory()->showHourGlass(false);
 
 	// Start fight
-	_hasLost = true;
+	_endType = kFightEndLost;
 	while (_data->isRunning) {
 		// process events
 		Common::Event ev;
@@ -187,7 +310,7 @@ bool Fight::setup(FightType type) {
 	// Cleanup after fight is over
 	clear();
 
-	return _hasLost;
+	return _endType;
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -199,9 +322,9 @@ void Fight::setStopped() {
 		_data->isRunning = false;
 }
 
-void Fight::bailout(bool hasLost) {
+void Fight::bailout(FightEndType type) {
 	_state = 0;
-	_hasLost = hasLost;
+	_endType = type;
 	setStopped();
 }
 
@@ -361,7 +484,7 @@ void Fight::loadData(FightType type) {
 	}
 
 end_load:
-	// TODO set unknown flag to 0
+	getFlags()->mouseMove = false;
 	return;
 }
 
@@ -370,7 +493,7 @@ end_load:
 //////////////////////////////////////////////////////////////////////////
 
 void Fight::loadMilosPlayer() {
-	// TODO set function pointer
+	REGISTER_FUNCTIONS(player, Milos)
 
 	_data->player->sequences.push_back(newSequence("2001cr.seq"));
 	_data->player->sequences.push_back(newSequence("2001cdl.seq"));
@@ -382,7 +505,7 @@ void Fight::loadMilosPlayer() {
 }
 
 void Fight::loadMilosOpponent() {
-	// TODO set function pointer
+	REGISTER_FUNCTIONS(opponent, Milos)
 
 	_data->opponent->sequences.push_back(newSequence("2001or.seq"));
 	_data->opponent->sequences.push_back(newSequence("2001oal.seq"));
@@ -397,12 +520,36 @@ void Fight::loadMilosOpponent() {
 	_data->opponent->field_38 = 35;
 }
 
+int Fight::MilosFunction0(byte action) {
+	error("Fight::MilosFunction0 - not implemented!");
+}
+
+void Fight::MilosFunction1() {
+	error("Fight::MilosFunction1 - not implemented!");
+}
+
+int Fight::MilosFunction2(byte action) {
+	error("Fight::MilosFunction2 - not implemented!");
+}
+
+int Fight::MilosOpponentFunction0(byte action) {
+	error("Fight::MilosOpponentFunction0 - not implemented!");
+}
+
+void Fight::MilosOpponentFunction1() {
+	error("Fight::MilosOpponentFunction1 - not implemented!");
+}
+
+int Fight::MilosOpponentFunction2(byte action) {
+	error("Fight::MilosOpponentFunction2 - not implemented!");
+}
+
 //////////////////////////////////////////////////////////////////////////
 // Anna
 //////////////////////////////////////////////////////////////////////////
 
 void Fight::loadAnnaPlayer() {
-	// TODO set function pointer
+	REGISTER_FUNCTIONS(player, Anna)
 
 	_data->player->sequences.push_back(newSequence("2002cr.seq"));
 	_data->player->sequences.push_back(newSequence("2002cdl.seq"));
@@ -412,7 +559,7 @@ void Fight::loadAnnaPlayer() {
 }
 
 void Fight::loadAnnaOpponent() {
-	// TODO set function pointer
+	REGISTER_FUNCTIONS(opponent, Anna)
 
 	_data->opponent->sequences.push_back(newSequence("2002or.seq"));
 	_data->opponent->sequences.push_back(newSequence("2002oal.seq"));
@@ -427,12 +574,36 @@ void Fight::loadAnnaOpponent() {
 	_data->opponent->field_38 = 30;
 }
 
+int Fight::AnnaFunction0(byte action) {
+	error("Fight::AnnaFunction0 - not implemented!");
+}
+
+void Fight::AnnaFunction1() {
+	error("Fight::AnnaFunction1 - not implemented!");
+}
+
+int Fight::AnnaFunction2(byte action) {
+	error("Fight::AnnaFunction2 - not implemented!");
+}
+
+int Fight::AnnaOpponentFunction0(byte action) {
+	error("Fight::AnnaOpponentFunction0 - not implemented!");
+}
+
+void Fight::AnnaOpponentFunction1() {
+	error("Fight::AnnaOpponentFunction1 - not implemented!");
+}
+
+int Fight::AnnaOpponentFunction2(byte action) {
+	error("Fight::AnnaOpponentFunction2 - not implemented!");
+}
+
 //////////////////////////////////////////////////////////////////////////
 // Ivo
 //////////////////////////////////////////////////////////////////////////
 
 void Fight::loadIvoPlayer() {
-	// TODO set function pointer
+	REGISTER_FUNCTIONS(player, Ivo)
 
 	_data->player->sequences.push_back(newSequence("2003cr.seq"));
 	_data->player->sequences.push_back(newSequence("2003car.seq"));
@@ -449,7 +620,7 @@ void Fight::loadIvoPlayer() {
 }
 
 void Fight::loadIvoOpponent() {
-	// TODO set function pointer
+	REGISTER_FUNCTIONS(opponent, Ivo)
 
 	_data->opponent->sequences.push_back(newSequence("2003or.seq"));
 	_data->opponent->sequences.push_back(newSequence("2003oal.seq"));
@@ -467,12 +638,36 @@ void Fight::loadIvoOpponent() {
 	_data->opponent->field_38 = 15;
 }
 
+int Fight::IvoFunction0(byte action) {
+	error("Fight::IvoFunction0 - not implemented!");
+}
+
+void Fight::IvoFunction1() {
+	error("Fight::IvoFunction1 - not implemented!");
+}
+
+int Fight::IvoFunction2(byte action) {
+	error("Fight::IvoFunction2 - not implemented!");
+}
+
+int Fight::IvoOpponentFunction0(byte action) {
+	error("Fight::IvoOpponentFunction0 - not implemented!");
+}
+
+void Fight::IvoOpponentFunction1() {
+	error("Fight::IvoOpponentFunction1 - not implemented!");
+}
+
+int Fight::IvoOpponentFunction2(byte action) {
+	error("Fight::IvoOpponentFunction2 - not implemented!");
+}
+
 //////////////////////////////////////////////////////////////////////////
 // Salko
 //////////////////////////////////////////////////////////////////////////
 
 void Fight::loadSalkoPlayer() {
-	// TODO set function pointer
+	REGISTER_FUNCTIONS(player, Salko)
 
 	_data->player->sequences.push_back(newSequence("2004cr.seq"));
 	_data->player->sequences.push_back(newSequence("2004cdr.seq"));
@@ -483,7 +678,7 @@ void Fight::loadSalkoPlayer() {
 }
 
 void Fight::loadSalkoOpponent() {
-	// TODO set function pointer
+	REGISTER_FUNCTIONS(opponent, Salko)
 
 	_data->opponent->sequences.push_back(newSequence("2004or.seq"));
 	_data->opponent->sequences.push_back(newSequence("2004oam.seq"));
@@ -498,12 +693,36 @@ void Fight::loadSalkoOpponent() {
 	_data->opponent->field_38 = 30;
 }
 
+int Fight::SalkoFunction0(byte action) {
+	error("Fight::SalkoFunction0 - not implemented!");
+}
+
+void Fight::SalkoFunction1() {
+	error("Fight::SalkoFunction1 - not implemented!");
+}
+
+int Fight::SalkoFunction2(byte action) {
+	error("Fight::SalkoFunction2 - not implemented!");
+}
+
+int Fight::SalkoOpponentFunction0(byte action) {
+	error("Fight::SalkoOpponentFunction0 - not implemented!");
+}
+
+void Fight::SalkoOpponentFunction1() {
+	error("Fight::SalkoOpponentFunction1 - not implemented!");
+}
+
+int Fight::SalkoOpponentFunction2(byte action) {
+	error("Fight::SalkoOpponentFunction2 - not implemented!");
+}
+
 //////////////////////////////////////////////////////////////////////////
 // Vesna
 //////////////////////////////////////////////////////////////////////////
 
 void Fight::loadVesnaPlayer() {
-	// TODO set function pointer
+	REGISTER_FUNCTIONS(player, Vesna)
 
 	_data->player->sequences.push_back(newSequence("2005cr.seq"));
 	_data->player->sequences.push_back(newSequence("2005cdr.seq"));
@@ -514,7 +733,7 @@ void Fight::loadVesnaPlayer() {
 }
 
 void Fight::loadVesnaOpponent() {
-	// TODO set function pointer
+	REGISTER_FUNCTIONS(opponent, Vesna)
 
 	_data->opponent->sequences.push_back(newSequence("2005or.seq"));
 	_data->opponent->sequences.push_back(newSequence("2005oam.seq"));
@@ -529,6 +748,30 @@ void Fight::loadVesnaOpponent() {
 
 	_data->opponent->field_30 = 4;
 	_data->opponent->field_38 = 30;
+}
+
+int Fight::VesnaFunction0(byte action) {
+	error("Fight::VesnaFunction0 - not implemented!");
+}
+
+void Fight::VesnaFunction1() {
+	error("Fight::VesnaFunction1 - not implemented!");
+}
+
+int Fight::VesnaFunction2(byte action) {
+	error("Fight::VesnaFunction2 - not implemented!");
+}
+
+int Fight::VesnaOpponentFunction0(byte action) {
+	error("Fight::VesnaOpponentFunction0 - not implemented!");
+}
+
+void Fight::VesnaOpponentFunction1() {
+	error("Fight::VesnaOpponentFunction1 - not implemented!");
+}
+
+int Fight::VesnaOpponentFunction2(byte action) {
+	error("Fight::VesnaOpponentFunction2 - not implemented!");
 }
 
 } // End of namespace LastExpress

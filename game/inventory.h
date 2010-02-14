@@ -99,6 +99,7 @@ public:
 	void showHourGlass(bool enabled);
 	void setPortrait(InventoryItem item);
 	void showItem(InventoryItem item);
+	void drawEgg();
 
 	// Handle inventory UI events.
 	bool handleMouseEvent(Common::Event ev);
@@ -132,8 +133,7 @@ private:
 
 	void open();
 	void close();
-	void examine(InventoryItem item);
-	void drawEgg();
+	void examine(InventoryItem item);	
 	Common::Rect getItemRect(int16 index);
 
 	bool isItemSceneParameter(InventoryItem item);

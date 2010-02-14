@@ -152,6 +152,8 @@ public:
 	SceneHotspot() {}
 	static SceneHotspot *load(Common::SeekableReadStream *stream);
 
+	bool isInside(Common::Point point);
+
 public:
 	Common::Rect rect;
 	uint16 offset;

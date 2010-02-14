@@ -222,35 +222,45 @@ public:
 	};
 
 	struct Flags {
-		bool flag_0;
-		bool gameRunning;
-		bool flag_2;
+		bool flag_0;		
 		bool flag_3;
-		bool shouldRedraw;
-		bool flag_5;
+
+		bool gameRunning;		
+		
+		// Mouse flags
+		bool mouseLeftClick;
+		bool mouseRightClick;
+		bool mouseMove;
 
 		bool flag_entities_0;
 		bool flag_entities_1;
 
+		bool shouldRedraw;
 		bool shouldDrawEggOrHourGlass;
 
 		Flags() {
 			flag_0 = false;
-			gameRunning = false;
-			flag_2 = false;
 			flag_3 = false;
-			shouldRedraw = false;
-			flag_5 = false;
+
+			gameRunning = false;
+			
+			mouseRightClick = false;
+			mouseLeftClick = false;
+			mouseMove = false;
 
 			flag_entities_0 = false;
 			flag_entities_1 = false;
 
+			shouldRedraw = false;
 			shouldDrawEggOrHourGlass = false;
 		}
 	};
 
 	State(LastExpressEngine *engine);
 	~State();
+
+	// Timer
+	int timer;
 
 	// Accessors
 	Inventory  *getGameInventory() { return _inventory; }

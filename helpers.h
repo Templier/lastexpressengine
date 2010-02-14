@@ -35,11 +35,13 @@
 // Logic
 #define getAction() getLogic()->getGameAction()
 #define getBeetle() getLogic()->getGameBeetle()
+
 #define getFight() getLogic()->getGameFight()
 #define getEntities() getLogic()->getGameEntities()
 #define getSound() getLogic()->getGameSound()
 #define getSaveLoad() getLogic()->getGameSaveLoad()
 #define getState() getLogic()->getGameState()->getGameState()
+#define getTimer() getLogic()->getGameState()->timer
 
 // State
 #define getEvent(id) getState()->events[id]

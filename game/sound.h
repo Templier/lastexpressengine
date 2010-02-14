@@ -90,6 +90,7 @@ public:
 
 	// Sound queue
 	bool isFileInQueue(const char* filename);
+	void removeFromQueue(const char* filename);
 	bool isBuffered(EntityIndex entityIndex);
 
 	// Misc

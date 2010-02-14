@@ -95,6 +95,10 @@ bool Sound::isFileInQueue(const char* filename) {
 	return false;
 }
 
+void Sound::removeFromQueue(const char* filename) {
+	warning("SoundManager::removeFromQueue: not implemented!");
+}
+
 void Sound::unknownFunction1() {
 	error("SoundManager::unknownFunction1: not implemented!");
 }
