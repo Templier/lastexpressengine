@@ -59,13 +59,17 @@ void FrameInfo::read(Common::SeekableReadStream *in, bool isSequence) {
 	subType = in->readByte();
 
 	// Sequence information
-	unknown1 = in->readUint16LE();
-	unknown2 = in->readUint32LE();
-	unknown3 = in->readUint32LE();
-	unknown4 = in->readUint32LE();
-	unknown5 = in->readUint16LE();
+	field_2E = in->readUint16LE();
+	field_30 = in->readByte();
+	field_31 = in->readByte();
+	field_32 = in->readByte();
+	field_33 = in->readByte();
+	field_34 = in->readUint32LE();
+	field_38 = in->readUint32LE();
+	field_3C = in->readUint16LE();
 	location = in->readUint16LE();
-	//unknown6 = in->readUint32LE();
+	field_40 = in->readUint16LE();
+	field_42 = in->readUint32LE();
 }
 
 
@@ -82,8 +86,9 @@ AnimFrame::AnimFrame(Common::SeekableReadStream *in, FrameInfo *f) : _palette(NU
 	debugC(6, kLastExpressDebugGraphics, "    Decompressed end offset: %d", f->decompressedEndOffset);
 	debugC(6, kLastExpressDebugGraphics, "    Compression type: %u / %u", f->compressionType, f->subType);
 	debugC(6, kLastExpressDebugGraphics, "    Hotspot: (%d, %d) x (%d, %d)\n", f->hotspot.left, f->hotspot.top, f->hotspot.right, f->hotspot.bottom);
-	debugC(6, kLastExpressDebugGraphics, "    Unknown: %d - %d - %d - %d - %d", f->unknown1, f->unknown2, f->unknown3, f->unknown4, f->unknown5);
+	debugC(6, kLastExpressDebugGraphics, "    Unknown: %d - %u - %u - %u - %u - %d - %d - %d", f->field_2E, f->field_30, f->field_31, f->field_32, f->field_33, f->field_34, f->field_38, f->field_3C);
 	debugC(6, kLastExpressDebugGraphics, "    Location: %d", f->location);
+	debugC(6, kLastExpressDebugGraphics, "    Unknown: %d - %d", f->field_40, f->field_42);
 
 	switch (f->compressionType) {
 	case 0:

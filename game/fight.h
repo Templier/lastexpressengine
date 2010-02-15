@@ -64,29 +64,29 @@
 
 namespace LastExpress {
 
-
 class LastExpressEngine;
 class Sequence;
 
+//////////////////////////////////////////////////////////////////////////
+// TODO : objectify!
 class Fight : public EventHandler {
 public:
+	enum FightEndType {
+		kFightEndWin  = 0,
+		kFightEndLost = 1,
+		kFightEndExit    = 2
+	};
 
 	Fight(LastExpressEngine *engine);
 	~Fight();
 
-	bool setup(FightType type);
+	FightEndType setup(FightType type);
 
 	void eventMouseClick(Common::Event ev);
 	void eventMouseMove(Common::Event ev);
 
 	void setStopped();
-
-	int getState() { return _state; }
-
 private:
-	typedef Common::Functor1<byte, int> Callback;
-	typedef Common::Functor0<void> Callback_NoParam;
-
 	enum FightSequenceType {
 		kFightSequenceType0 = 0,
 		kFightSequenceType1 = 1,
@@ -94,37 +94,40 @@ private:
 	};
 
 	enum FightAction {
+		kFightAction1 = 1,
+		kFightAction2 = 2,
+		kFightAction4 = 4,
 		kFightAction101 = 101,
-		kFightAction102 = 102,
-		kFightAction103 = 103
+		kFightActionResetFrame = 102,
+		kFightAction103 = 103,
+		kFightActionWin = 104,
+		kFightActionLost = 105,
+		kFightAction128 = 128,
+		kFightAction131 = 131
 	};
 
-	enum FightEndType {
-		kFightEndWin  = 0,
-		kFightEndLost = 1,
-		kFightEndExit    = 2
-	};
+	typedef struct Fighter;
 
-	struct FightCombatant {
-		Callback *function0;
-		Callback_NoParam *function1;
-		Callback *function2;
-		FightCombatant* opponent;
+	struct Fighter {
+		Common::Functor2<Fighter *, FightAction, void> *handleAction;
+		Common::Functor1<Fighter *, void> *update;
+		Common::Functor2<Fighter *, FightAction, int> *canInteract;
+		Fighter* opponent;
 		Common::Array<Sequence *> sequences;
 		uint32 sequenceIndex;
 		Sequence *currentSequence;
 		Sequence *currentSequence2;
-		uint32 field_20;
+		uint32 frameIndex;
 		uint32 field_24;
 		FightAction action;
 		uint32 sequenceIndex2;
-		int32 field_30;
+		int32 countdown;  // countdown before loosing ?
 		uint16 field_34;
 
-		FightCombatant() {
-			function0 = NULL;
-			function1 = NULL;
-			function2 = NULL;
+		Fighter() {
+			handleAction = NULL;
+			update = NULL;
+			canInteract = NULL;
 
 			opponent = NULL;
 
@@ -133,32 +136,32 @@ private:
 			currentSequence = NULL;
 			currentSequence2 = NULL;
 
-			field_20 = 0;
+			frameIndex = 0;
 			field_24 = 0;
 
 			sequenceIndex = 0;
 			sequenceIndex2 = 0;
 
-			field_30 = 1;
+			countdown = 1;
 
 			field_34 = 0;
 		}
 	};
 
 	// Opponent struct
-	struct FightOpponent : FightCombatant {
+	struct Opponent : Fighter {
 		uint16 field_36;
 		uint32 field_38;
 
-		FightOpponent() : FightCombatant() {
+		Opponent() : Fighter() {
 			field_36 = 0;
 			field_38 = 0;
 		}
 	};
 
 	struct FightData {
-		FightCombatant *player;
-		FightOpponent *opponent;
+		Fighter *player;
+		Opponent *opponent;
 		int32 index;
 
 		Sequence *sequences[20];
@@ -167,8 +170,8 @@ private:
 		bool isRunning;
 
 		FightData() {
-			player = new FightCombatant();
-			opponent = new FightOpponent();
+			player = new Fighter();
+			opponent = new Opponent();
 
 			// Set opponents
 			player->opponent = opponent;
@@ -192,73 +195,70 @@ private:
 
 	// State
 	void bailout(FightEndType type);
+	
 
 	// Drawing
-	void setSequenceAndDraw(FightCombatant *combatant, uint32 sequenceIndex, FightSequenceType type);
-	void draw(FightCombatant *combatant);
+	void setSequenceAndDraw(Fighter *fighter, uint32 sequenceIndex, FightSequenceType type);
+	void draw(Fighter *fighter);
 
 	// Cleanup
 	void clear();
-	void clearSequences(FightCombatant *combatant);
+	void clearSequences(Fighter *fighter);
 
 	//////////////////////////////////////////////////////////////////////////
 	// Loading
 	void loadData(FightType type);
 
-	// Default
-	int DefaultFunction0(byte action);
-	void DefaultFunction1();
-	int DefaultFunction2(byte action);
+	// Shared
+	void processFighter(Fighter *fighter);
+		
+	// Default functions
+	void handleAction(Fighter *fighter, FightAction action);
+	void update(Fighter *fighter);
+	int canInteract(Fighter *fighter, FightAction = (FightAction)0);
+	void updateOpponent(Fighter *fighter);
 
 	// Milos
 	void loadMilosPlayer();
 	void loadMilosOpponent();
-	int MilosFunction0(byte action);
-	void MilosFunction1();
-	int MilosFunction2(byte action);
-	int MilosOpponentFunction0(byte action);
-	void MilosOpponentFunction1();
-	int MilosOpponentFunction2(byte action);
+	void handleActionMilos(Fighter *fighter, FightAction action);
+	void updateMilos(Fighter *fighter);
+	int canInteractMilos(Fighter *fighter, FightAction action);
+	void handleOpponentActionMilos(Fighter *fighter, FightAction action);
+	void updateOpponentMilos(Fighter *fighter);
 
 	// Anna
 	void loadAnnaPlayer();
 	void loadAnnaOpponent();
-	int AnnaFunction0(byte action);
-	void AnnaFunction1();
-	int AnnaFunction2(byte action);
-	int AnnaOpponentFunction0(byte action);
-	void AnnaOpponentFunction1();
-	int AnnaOpponentFunction2(byte action);
+	void handleActionAnna(Fighter *fighter, FightAction action);
+	void updateOpponentAnna(Fighter *fighter);
 
 	// Ivo
 	void loadIvoPlayer();
 	void loadIvoOpponent();
-	int IvoFunction0(byte action);
-	void IvoFunction1();
-	int IvoFunction2(byte action);
-	int IvoOpponentFunction0(byte action);
-	void IvoOpponentFunction1();
-	int IvoOpponentFunction2(byte action);
+	void handleActionIvo(Fighter *fighter, FightAction action);
+	void updateIvo(Fighter *fighter);
+	int canInteractIvo(Fighter *fighter, FightAction action);
+	void handleOpponentActionIvo(Fighter *fighter, FightAction action);
+	void updateOpponentIvo(Fighter *fighter);
 
 	// Salko
 	void loadSalkoPlayer();
 	void loadSalkoOpponent();
-	int SalkoFunction0(byte action);
-	void SalkoFunction1();
-	int SalkoFunction2(byte action);
-	int SalkoOpponentFunction0(byte action);
-	void SalkoOpponentFunction1();
-	int SalkoOpponentFunction2(byte action);
+	void handleActionSalko(Fighter *fighter, FightAction action);
+	void updateSalko(Fighter *fighter);
+	int canInteractSalko(Fighter *fighter, FightAction action);
+	void handleOpponentActionSalko(Fighter *fighter, FightAction action);
+	void updateOpponentSalko(Fighter *fighter);
 
 	// Vesna
 	void loadVesnaPlayer();
 	void loadVesnaOpponent();
-	int VesnaFunction0(byte action);
-	void VesnaFunction1();
-	int VesnaFunction2(byte action);
-	int VesnaOpponentFunction0(byte action);
-	void VesnaOpponentFunction1();
-	int VesnaOpponentFunction2(byte action);
+	void handleActionVesna(Fighter *fighter, FightAction action);
+	void updateVesna(Fighter *fighter);
+	int canInteractVesna(Fighter *fighter, FightAction action);
+	void handleOpponentActionVesna(Fighter *fighter, FightAction action);
+	void updateOpponentVesna(Fighter *fighter);
 };
 
 } // End of namespace LastExpress

@@ -48,14 +48,18 @@
 	    uint16 {2}    - Hotspot right
 	    uint16 {2}    - Hotspot top
 	    uint16 {2}    - Hotspot bottom
-	    byte {1}      - Compression type
-	    byte {1}      - Subtype (determines which set of decompression functions will be called) => 0, 1, 2, 3
+	    byte {1}       - Compression type
+	    byte {1}       - Subtype (determines which set of decompression functions will be called) => 0, 1, 2, 3
 	    uint16 {2}    - Unknown
-	    uint32 {4}    - Unknown
+	    byte {1}       - Unknown
+	    byte {1}       - Unknown
+	    byte {1}       - Unknown
+	    byte {1}       - Unknown
 	    uint32 {4}    - Unknown
 	    uint32 {4}    - Unknown
 	    uint16 {2}    - Set to 1 in some places
 	    uint16 {2}    - location (z-order?)
+	    uint16 {2}    - Unknown
 	    uint32 {4}    - Unknown
 
 	    (for NIS files: found at 0x124)
@@ -96,13 +100,17 @@ struct FrameInfo {
 	byte compressionType;         ///< Type of frame compression (0x03, 0x04, 0x05, 0x07, 0xFF)
 	byte subType;                 ///< Subtype
 
-	uint16 unknown1;
-	uint32 unknown2;
-	uint32 unknown3;
-	uint32 unknown4;
-	uint16 unknown5;
+	uint16 field_2E;
+	byte field_30;
+	byte field_31;
+	byte field_32;
+	byte field_33;
+	uint32 field_34;
+	uint32 field_38;
+	uint16 field_3C;
 	uint16 location;
-	uint32 unknown6;
+	uint16 field_40;
+	uint32 field_42;
 };
 
 class AnimFrame : public Drawable {
@@ -133,8 +141,8 @@ public:
 
 	bool load(Common::SeekableReadStream *stream);
 	uint32 count();
-	AnimFrame *getFrame(uint32 index);
-	FrameInfo *getFrameInfo(uint32 index);
+	AnimFrame *getFrame(uint32 index = 0);
+	FrameInfo *getFrameInfo(uint32 index = 0);
 
 private:
 	static const uint32 _sequenceHeaderSize = 8;

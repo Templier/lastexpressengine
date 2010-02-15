@@ -46,12 +46,20 @@
 namespace LastExpress {
 
 #define CALL_FUNCTION(fighter, name, ...) \
-	(*_data->##fighter->##name)(__VA_ARGS__)
+	(*##fighter->##name)(##fighter, __VA_ARGS__)
 
-#define REGISTER_FUNCTIONS(figher, name) \
-	_data->##figher->function0 = new Common::Functor1Mem<byte, int, Fight>(this, &Fight::##name##Function0); \
-	_data->##figher->function1 = new Common::Functor0Mem<void, Fight>(this, &Fight::##name##Function1); \
-	_data->##figher->function2 = new Common::Functor1Mem<byte, int, Fight>(this, &Fight::##name##Function2); \
+#define REGISTER_PLAYER_FUNCTIONS(name) \
+	_data->player->handleAction = new Common::Functor2Mem<Fighter *, FightAction, void, Fight>(this, &Fight::handleAction##name); \
+	_data->player->update = new Common::Functor1Mem<Fighter *, void, Fight>(this, &Fight::update##name); \
+	_data->player->canInteract = new Common::Functor2Mem<Fighter *, FightAction, int, Fight>(this, &Fight::canInteract##name);
+
+#define REGISTER_OPPONENT_FUNCTIONS(name) \
+	_data->opponent->handleAction = new Common::Functor2Mem<Fighter *, FightAction, void, Fight>(this, &Fight::handleOpponentAction##name); \
+	_data->opponent->update = new Common::Functor1Mem<Fighter *, void, Fight>(this, &Fight::updateOpponent##name); \
+	_data->opponent->canInteract = new Common::Functor2Mem<Fighter *, FightAction, int, Fight>(this, &Fight::canInteract);
+
+#define CHECK_SEQUENCE2(fighter, value) \
+	fighter->currentSequence2->getFrameInfo()->field_33 & value
 
 Fight::Fight(LastExpressEngine *engine) : _engine(engine), _data(NULL), _handleTimer(false) {}
 
@@ -103,9 +111,9 @@ void Fight::eventMouseClick(Common::Event ev) {
 			_engine->getCursor()->setStyle((CursorStyle)hotspot->cursor);
 
 			// Call player function
-			if (CALL_FUNCTION(player, function2, hotspot->action)) {
+			if (CALL_FUNCTION(_data->player, canInteract, (FightAction)hotspot->action)) {
 				if (ev.type == Common::EVENT_LBUTTONUP)
-					CALL_FUNCTION(player, function0, hotspot->action);
+					CALL_FUNCTION(_data->player, handleAction, (FightAction)hotspot->action);
 			} else {
 				_engine->getCursor()->setStyle(kCursorNormal);
 			}
@@ -169,24 +177,23 @@ void Fight::handleMouseMove(Common::Event ev, bool isProcessing) {
 		_engine->getCursor()->setStyle((CursorStyle)hotspot->cursor);
 
 		// Call player function
-		if (!CALL_FUNCTION(player, function2, hotspot->action))
+		if (!CALL_FUNCTION(_data->player, canInteract, (FightAction)hotspot->action))
 			_engine->getCursor()->setStyle(kCursorNormal);
 
-		CALL_FUNCTION(player, function1);
-		CALL_FUNCTION(opponent, function1);
+		CALL_FUNCTION(_data->player, update);
+		CALL_FUNCTION(_data->opponent, update);
 
 		// Draw sequences
 		if (!_data->isRunning)
 			return;
 
 		if (isProcessing) {
-			warning("Fight::handleMouseMove - isProcessing mode not implemented!");
+			warning("Fight::handleMouseMove - processing mode not implemented!");
 		} else {
-			warning("Fight::handleMouseMove - normal mode not implemented!");
+			warning("Fight::handleMouseMove - setup mode not implemented!");
 		}
 
 		if (_data->index) {
-
 			// Set next sequence name index
 			_data->index--;
 			_data->sequences[_data->index] = newSequence(_data->names[_data->index]);
@@ -199,7 +206,7 @@ void Fight::handleMouseMove(Common::Event ev, bool isProcessing) {
 // Setup
 //////////////////////////////////////////////////////////////////////////
 
-bool Fight::setup(FightType type) {
+Fight::FightEndType Fight::setup(FightType type) {
 	if (_data)
 		error("Fight::setup - calling fight setup again while a fight is already in progress!");
 
@@ -289,6 +296,16 @@ bool Fight::setup(FightType type) {
 				// default graphic handling?
 				break;
 
+#ifdef _DEBUG
+			// Allow exiting the fight with ESCAPE in debug mode
+			case Common::EVENT_KEYDOWN:
+				if (ev.kbd.keycode == Common::KEYCODE_ESCAPE) {
+					clear();
+					return kFightEndExit;
+				}
+				break;
+#endif
+
 			case Common::EVENT_MOUSEMOVE:
 				eventMouseMove(ev);
 				break;
@@ -347,7 +364,7 @@ void Fight::clear() {
 	_data = NULL;
 }
 
-void Fight::clearSequences(FightCombatant *combatant) {
+void Fight::clearSequences(Fighter *combatant) {
 	if (!combatant)
 		return;
 
@@ -363,7 +380,7 @@ void Fight::clearSequences(FightCombatant *combatant) {
 // Drawing
 //////////////////////////////////////////////////////////////////////////
 
-void Fight::setSequenceAndDraw(FightCombatant *combatant, uint32 sequenceIndex, FightSequenceType type) {
+void Fight::setSequenceAndDraw(Fighter *combatant, uint32 sequenceIndex, FightSequenceType type) {
 	if (combatant->sequences.size() < sequenceIndex)
 		return;
 
@@ -393,7 +410,7 @@ void Fight::setSequenceAndDraw(FightCombatant *combatant, uint32 sequenceIndex, 
 	}
 }
 
-void Fight::draw(FightCombatant *combatant) {
+void Fight::draw(Fighter *combatant) {
 	Sequence* sequence = combatant->currentSequence2;
 
 	if (!sequence)
@@ -406,7 +423,7 @@ void Fight::draw(FightCombatant *combatant) {
 	delete frame;
 	//////////////////////////////////////////////////////////////////////////
 
-	combatant->field_20 = 0;
+	combatant->frameIndex = 0;
 	combatant->field_24 = 0;
 }
 
@@ -464,19 +481,19 @@ void Fight::loadData(FightType type) {
 		break;
 
 	case kFightMilos:
-		_data->opponent->field_30 = 1;
+		_data->opponent->countdown = 1;
 		setSequenceAndDraw(_data->player, 4, kFightSequenceType0);
 		setSequenceAndDraw(_data->opponent, 0, kFightSequenceType0);
 		break;
 
 	case kFightIvo:
-		_data->opponent->field_30 = 1;
+		_data->opponent->countdown = 1;
 		setSequenceAndDraw(_data->player, 3, kFightSequenceType0);
 		setSequenceAndDraw(_data->opponent, 6, kFightSequenceType0);
 		break;
 
 	case kFightVesna:
-		_data->opponent->field_30 = 1;
+		_data->opponent->countdown = 1;
 		setSequenceAndDraw(_data->player, 0, kFightSequenceType0);
 		setSequenceAndDraw(_data->player, 3, kFightSequenceType2);
 		setSequenceAndDraw(_data->opponent, 5, kFightSequenceType0);
@@ -489,11 +506,126 @@ end_load:
 }
 
 //////////////////////////////////////////////////////////////////////////
+// Shared
+//////////////////////////////////////////////////////////////////////////
+void Fight::processFighter(Fighter *fighter) {
+	Sequence *sequence2 = NULL;
+
+	if (!fighter->currentSequence)
+		goto label_sequence2;
+
+	if (fighter->currentSequence->count() <= fighter->frameIndex) {
+		switch(fighter->action) {
+		default:
+			break;
+
+		case kFightAction101:
+			setSequenceAndDraw(fighter, fighter->sequenceIndex2, kFightSequenceType1);
+			fighter->sequenceIndex2 = 0;
+			break;
+
+		case kFightActionResetFrame:
+			fighter->frameIndex = 0;
+			break;
+
+		case kFightAction103:
+			setSequenceAndDraw(fighter, 0, kFightSequenceType1);
+			CALL_FUNCTION(fighter, handleAction, kFightAction101);
+			setSequenceAndDraw(fighter->opponent, 0, kFightSequenceType1);
+			CALL_FUNCTION(fighter->opponent, handleAction, kFightAction101);
+			CALL_FUNCTION(fighter->opponent, update);
+			break;
+
+		case kFightActionWin:
+			bailout(kFightEndWin);
+			break;
+
+		case kFightActionLost:
+			bailout(kFightEndLost);
+			break;
+		}
+	}
+	
+	if (_data->isRunning) {
+	
+		warning("Fight::processFighter - not implemented!");
+
+		if (fighter->currentSequence2 != sequence2) {
+
+
+			fighter->frameIndex++;
+label_sequence2:
+			if (fighter->currentSequence2) {
+				// TODO: prepare for decompressing not useful to us, but there is a check for a sequence file before a call to setting screen coordinates
+			}
+			fighter->currentSequence2 = sequence2;
+		}
+	}
+}
+
+void Fight::handleAction(Fighter *fighter, FightAction action) {
+	switch (action) {
+	default:
+		return;
+
+	case kFightAction101:		
+		break;
+
+	case kFightActionResetFrame:
+		fighter->countdown--;
+		break;
+
+	case kFightAction103:
+		CALL_FUNCTION(fighter->opponent, handleAction, kFightActionResetFrame);
+		break;
+
+	case kFightActionWin:
+		_endType = kFightEndWin;
+		CALL_FUNCTION(fighter->opponent, handleAction, kFightActionResetFrame);
+		break;
+
+	case kFightActionLost:
+		_endType = kFightEndLost;
+		CALL_FUNCTION(fighter->opponent, handleAction, kFightActionResetFrame);
+		break;
+	}
+
+	// Update action
+	fighter->action = action;
+}
+
+int Fight::canInteract(Fighter *fighter, FightAction) {
+	return (fighter->action == kFightAction101 && !fighter->sequenceIndex);
+}
+
+void Fight::update(Fighter *fighter) {
+
+	processFighter(fighter);
+
+	if (fighter->currentSequence2)
+		fighter->currentSequence2->getFrameInfo()->location = (fighter->action == kFightActionResetFrame ? 2 : 0);
+}
+
+void Fight::updateOpponent(Fighter *fighter) {
+
+	// This is an opponent struct!
+	Opponent *opponent = (Opponent *)fighter;
+
+	processFighter(opponent);
+
+	if (opponent->field_38 && !opponent->sequenceIndex)
+		opponent->field_38--;
+
+	if (fighter->currentSequence2)
+		fighter->currentSequence2->getFrameInfo()->location = 1;
+}
+
+//////////////////////////////////////////////////////////////////////////
 // Milos
 //////////////////////////////////////////////////////////////////////////
 
 void Fight::loadMilosPlayer() {
-	REGISTER_FUNCTIONS(player, Milos)
+	REGISTER_PLAYER_FUNCTIONS(Milos)
 
 	_data->player->sequences.push_back(newSequence("2001cr.seq"));
 	_data->player->sequences.push_back(newSequence("2001cdl.seq"));
@@ -505,7 +637,7 @@ void Fight::loadMilosPlayer() {
 }
 
 void Fight::loadMilosOpponent() {
-	REGISTER_FUNCTIONS(opponent, Milos)
+	REGISTER_OPPONENT_FUNCTIONS(Milos)
 
 	_data->opponent->sequences.push_back(newSequence("2001or.seq"));
 	_data->opponent->sequences.push_back(newSequence("2001oal.seq"));
@@ -520,28 +652,161 @@ void Fight::loadMilosOpponent() {
 	_data->opponent->field_38 = 35;
 }
 
-int Fight::MilosFunction0(byte action) {
-	error("Fight::MilosFunction0 - not implemented!");
+void Fight::handleActionMilos(Fighter *fighter, FightAction action) {
+	switch (action) {
+	default:
+		handleAction(fighter, action);
+		return;
+
+	case kFightAction1:
+		if (fighter->sequenceIndex != 1 || CHECK_SEQUENCE2(fighter, 4)) {
+			setSequenceAndDraw(fighter, 6, kFightSequenceType1);
+			setSequenceAndDraw(fighter->opponent, 3, kFightSequenceType1);
+
+			CALL_FUNCTION(fighter->opponent, handleAction, kFightAction103);
+			CALL_FUNCTION(fighter, update);
+		} else {
+			fighter->field_34++;
+		}
+		break;
+
+	case kFightAction2:
+		if (fighter->sequenceIndex != 2 && fighter->sequenceIndex != 3 || CHECK_SEQUENCE2(fighter, 4)) {
+			setSequenceAndDraw(fighter, 6, kFightSequenceType1);
+			setSequenceAndDraw(fighter->opponent, 4, kFightSequenceType1);
+
+			CALL_FUNCTION(fighter->opponent, handleAction, kFightAction103);
+			CALL_FUNCTION(fighter, update);
+		} else {
+			fighter->field_34++;
+		}
+		break;
+
+	case kFightAction128:
+		if (fighter->sequenceIndex != 1 || CHECK_SEQUENCE2(fighter, 4) || fighter->opponent->sequenceIndex != 1) {
+			switch (fighter->opponent->sequenceIndex) {
+			default:
+				setSequenceAndDraw(fighter, random(3) + 1, kFightSequenceType0);
+				break;
+
+			case 1:
+				setSequenceAndDraw(fighter, 1, kFightSequenceType0);
+				break;
+
+			case 2:
+				setSequenceAndDraw(fighter, 3, kFightSequenceType0);
+				break;
+			}
+		} else {
+			setSequenceAndDraw(fighter, 4, kFightSequenceType1);
+			CALL_FUNCTION(fighter, update);
+		}
+		break;
+	}
 }
 
-void Fight::MilosFunction1() {
-	error("Fight::MilosFunction1 - not implemented!");
+void Fight::updateMilos(Fighter *fighter) {
+	if (fighter->currentSequence2 && CHECK_SEQUENCE2(fighter, 2)) {
+
+		// Draw sequences
+		if (fighter->opponent->countdown <= 0) {
+			setSequenceAndDraw(fighter, 5, kFightSequenceType1);
+			setSequenceAndDraw(fighter->opponent, 6, kFightSequenceType1);
+
+			getSound()->reset(kEntityTables0);
+			getSound()->playSound(kEntityTrain, "MUS029", 16);
+
+			CALL_FUNCTION(fighter, handleAction, kFightActionWin);
+		}
+
+		if (fighter->sequenceIndex == 4) {
+			CALL_FUNCTION(fighter->opponent, handleAction, kFightAction4);
+			_endType = kFightEndLost;
+		}
+	}
+
+	update(fighter);
 }
 
-int Fight::MilosFunction2(byte action) {
-	error("Fight::MilosFunction2 - not implemented!");
+int Fight::canInteractMilos(Fighter *fighter, FightAction action) {
+	if (action != 128 || _data->player->sequenceIndex != 1
+	 || !fighter->currentSequence2
+	 || CHECK_SEQUENCE2(fighter, 4)
+	 || fighter->opponent->sequenceIndex != 1) {
+		 return canInteract(fighter);
+	} else {
+		_engine->getCursor()->setStyle(kCursorHand);
+		return true;
+	}
 }
 
-int Fight::MilosOpponentFunction0(byte action) {
-	error("Fight::MilosOpponentFunction0 - not implemented!");
+void Fight::handleOpponentActionMilos(Fighter *fighter, FightAction action) {
+	if (action == kFightAction4) {
+		setSequenceAndDraw(fighter, 5, kFightSequenceType1);
+		CALL_FUNCTION(fighter->opponent, handleAction, kFightAction103);
+	} else {
+		if (action != kFightAction131)
+			handleAction(fighter, action);
+	}
 }
 
-void Fight::MilosOpponentFunction1() {
-	error("Fight::MilosOpponentFunction1 - not implemented!");
-}
+void Fight::updateOpponentMilos(Fighter *fighter) {
 
-int Fight::MilosOpponentFunction2(byte action) {
-	error("Fight::MilosOpponentFunction2 - not implemented!");
+	// This is an opponent struct!
+	Opponent *opponent = (Opponent *)fighter;
+
+	if (!opponent->field_38 && CALL_FUNCTION(opponent, canInteract, kFightAction1) && !opponent->sequenceIndex2) {
+
+		if (opponent->opponent->field_34 >= 2) {
+			switch (random(5)) {
+			default:
+				break;
+
+			case 0:
+				setSequenceAndDraw(opponent, 1, kFightSequenceType0);
+				break;
+
+			case 1:
+				setSequenceAndDraw(opponent, 2, kFightSequenceType0);
+				break;
+
+			case 2:
+				setSequenceAndDraw(opponent, 2, kFightSequenceType0);
+				setSequenceAndDraw(opponent, 2, kFightSequenceType1);
+				break;
+
+			case 3:
+				setSequenceAndDraw(opponent, 1, kFightSequenceType0);
+				setSequenceAndDraw(opponent, 2, kFightSequenceType2);
+				break;
+
+			case 4:
+				setSequenceAndDraw(opponent, 1, kFightSequenceType0);
+				setSequenceAndDraw(opponent, 1, kFightSequenceType2);
+				break;
+			}
+		} else {
+			setSequenceAndDraw(opponent, 2, kFightSequenceType0);
+		}
+
+		// Update field_38
+		if (opponent->opponent->field_34 < 5)
+			opponent->field_38 = 6 * (5 - opponent->opponent->field_34);
+		else
+			opponent->field_38 = 0;
+	}
+
+	if (opponent->currentSequence2 && CHECK_SEQUENCE2(opponent, 2)) {
+		if (opponent->sequenceIndex == 1 || opponent->sequenceIndex == 2)
+			CALL_FUNCTION(opponent->opponent, handleAction, (FightAction)opponent->sequenceIndex);
+
+		if (opponent->opponent->countdown <= 0) {
+			getSound()->reset(kEntityTables0);
+			CALL_FUNCTION(opponent, handleAction, kFightActionLost);
+		}
+	}
+
+	updateOpponent(opponent);
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -549,7 +814,10 @@ int Fight::MilosOpponentFunction2(byte action) {
 //////////////////////////////////////////////////////////////////////////
 
 void Fight::loadAnnaPlayer() {
-	REGISTER_FUNCTIONS(player, Anna)
+	// Special case: we are using some shared functions directly
+	_data->player->handleAction = new Common::Functor2Mem<Fighter *, FightAction, void, Fight>(this, &Fight::handleActionAnna);
+	_data->player->update = new Common::Functor1Mem<Fighter *, void, Fight>(this, &Fight::update);
+	_data->player->canInteract = new Common::Functor2Mem<Fighter *, FightAction, int, Fight>(this, &Fight::canInteract);
 
 	_data->player->sequences.push_back(newSequence("2002cr.seq"));
 	_data->player->sequences.push_back(newSequence("2002cdl.seq"));
@@ -559,7 +827,10 @@ void Fight::loadAnnaPlayer() {
 }
 
 void Fight::loadAnnaOpponent() {
-	REGISTER_FUNCTIONS(opponent, Anna)
+	// Special case: we are using some shared functions directly
+	_data->opponent->handleAction = new Common::Functor2Mem<Fighter *, FightAction, void, Fight>(this, &Fight::handleAction);
+	_data->opponent->update = new Common::Functor1Mem<Fighter *, void, Fight>(this, &Fight::updateOpponentAnna);
+	_data->opponent->canInteract = new Common::Functor2Mem<Fighter *, FightAction, int, Fight>(this, &Fight::canInteract);
 
 	_data->opponent->sequences.push_back(newSequence("2002or.seq"));
 	_data->opponent->sequences.push_back(newSequence("2002oal.seq"));
@@ -574,28 +845,12 @@ void Fight::loadAnnaOpponent() {
 	_data->opponent->field_38 = 30;
 }
 
-int Fight::AnnaFunction0(byte action) {
-	error("Fight::AnnaFunction0 - not implemented!");
+void Fight::handleActionAnna(Fighter *fighter, FightAction action) {
+	error("Fight::handleActionAnna - not implemented!");
 }
 
-void Fight::AnnaFunction1() {
-	error("Fight::AnnaFunction1 - not implemented!");
-}
-
-int Fight::AnnaFunction2(byte action) {
-	error("Fight::AnnaFunction2 - not implemented!");
-}
-
-int Fight::AnnaOpponentFunction0(byte action) {
-	error("Fight::AnnaOpponentFunction0 - not implemented!");
-}
-
-void Fight::AnnaOpponentFunction1() {
-	error("Fight::AnnaOpponentFunction1 - not implemented!");
-}
-
-int Fight::AnnaOpponentFunction2(byte action) {
-	error("Fight::AnnaOpponentFunction2 - not implemented!");
+void Fight::updateOpponentAnna(Fighter *fighter) {
+	error("Fight::updateOpponentAnna - not implemented!");
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -603,7 +858,7 @@ int Fight::AnnaOpponentFunction2(byte action) {
 //////////////////////////////////////////////////////////////////////////
 
 void Fight::loadIvoPlayer() {
-	REGISTER_FUNCTIONS(player, Ivo)
+	REGISTER_PLAYER_FUNCTIONS(Ivo)
 
 	_data->player->sequences.push_back(newSequence("2003cr.seq"));
 	_data->player->sequences.push_back(newSequence("2003car.seq"));
@@ -616,11 +871,11 @@ void Fight::loadIvoPlayer() {
 	_data->player->sequences.push_back(newSequence("2003lbk.seq"));
 	_data->player->sequences.push_back(newSequence("2003fbk.seq"));
 
-	_data->player->field_30 = 5;
+	_data->player->countdown = 5;
 }
 
 void Fight::loadIvoOpponent() {
-	REGISTER_FUNCTIONS(opponent, Ivo)
+	REGISTER_OPPONENT_FUNCTIONS(Ivo)
 
 	_data->opponent->sequences.push_back(newSequence("2003or.seq"));
 	_data->opponent->sequences.push_back(newSequence("2003oal.seq"));
@@ -634,32 +889,28 @@ void Fight::loadIvoOpponent() {
 
 	getSound()->playSound(kEntityTables0, "MUS032", 16);
 
-	_data->opponent->field_30 = 5;
+	_data->opponent->countdown = 5;
 	_data->opponent->field_38 = 15;
 }
 
-int Fight::IvoFunction0(byte action) {
-	error("Fight::IvoFunction0 - not implemented!");
+void Fight::handleActionIvo(Fighter *fighter, FightAction action) {
+	error("Fight::handleActionIvo - not implemented!");
 }
 
-void Fight::IvoFunction1() {
-	error("Fight::IvoFunction1 - not implemented!");
+void Fight::updateIvo(Fighter *fighter) {
+	error("Fight::updateIvo - not implemented!");
 }
 
-int Fight::IvoFunction2(byte action) {
-	error("Fight::IvoFunction2 - not implemented!");
+int Fight::canInteractIvo(Fighter *fighter, FightAction action) {
+	error("Fight::canInteractIvo - not implemented!");
 }
 
-int Fight::IvoOpponentFunction0(byte action) {
-	error("Fight::IvoOpponentFunction0 - not implemented!");
+void Fight::handleOpponentActionIvo(Fighter *fighter, FightAction action) {
+	error("Fight::handleOpponentActionIvo - not implemented!");
 }
 
-void Fight::IvoOpponentFunction1() {
-	error("Fight::IvoOpponentFunction1 - not implemented!");
-}
-
-int Fight::IvoOpponentFunction2(byte action) {
-	error("Fight::IvoOpponentFunction2 - not implemented!");
+void Fight::updateOpponentIvo(Fighter *fighter) {
+	error("Fight::updateOpponentIvo - not implemented!");
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -667,18 +918,18 @@ int Fight::IvoOpponentFunction2(byte action) {
 //////////////////////////////////////////////////////////////////////////
 
 void Fight::loadSalkoPlayer() {
-	REGISTER_FUNCTIONS(player, Salko)
+	REGISTER_PLAYER_FUNCTIONS(Salko)
 
 	_data->player->sequences.push_back(newSequence("2004cr.seq"));
 	_data->player->sequences.push_back(newSequence("2004cdr.seq"));
 	_data->player->sequences.push_back(newSequence("2004chj.seq"));
 	_data->player->sequences.push_back(newSequence("2004bk.seq"));
 
-	_data->player->field_30 = 2;
+	_data->player->countdown = 2;
 }
 
 void Fight::loadSalkoOpponent() {
-	REGISTER_FUNCTIONS(opponent, Salko)
+	REGISTER_OPPONENT_FUNCTIONS(Salko)
 
 	_data->opponent->sequences.push_back(newSequence("2004or.seq"));
 	_data->opponent->sequences.push_back(newSequence("2004oam.seq"));
@@ -689,32 +940,28 @@ void Fight::loadSalkoOpponent() {
 
 	getSound()->playSound(kEntityTables0, "MUS035", 16);
 
-	_data->opponent->field_30 = 3;
+	_data->opponent->countdown = 3;
 	_data->opponent->field_38 = 30;
 }
 
-int Fight::SalkoFunction0(byte action) {
-	error("Fight::SalkoFunction0 - not implemented!");
+void Fight::handleActionSalko(Fighter *fighter, FightAction action) {
+	error("Fight::handleActionSalko - not implemented!");
 }
 
-void Fight::SalkoFunction1() {
-	error("Fight::SalkoFunction1 - not implemented!");
+void Fight::updateSalko(Fighter *fighter) {
+	error("Fight::updateSalko - not implemented!");
 }
 
-int Fight::SalkoFunction2(byte action) {
-	error("Fight::SalkoFunction2 - not implemented!");
+int Fight::canInteractSalko(Fighter *fighter, FightAction action) {
+	error("Fight::canInteractSalko - not implemented!");
 }
 
-int Fight::SalkoOpponentFunction0(byte action) {
-	error("Fight::SalkoOpponentFunction0 - not implemented!");
+void Fight::handleOpponentActionSalko(Fighter *fighter, FightAction action) {
+	error("Fight::handleOpponentActionSalko - not implemented!");
 }
 
-void Fight::SalkoOpponentFunction1() {
-	error("Fight::SalkoOpponentFunction1 - not implemented!");
-}
-
-int Fight::SalkoOpponentFunction2(byte action) {
-	error("Fight::SalkoOpponentFunction2 - not implemented!");
+void Fight::updateOpponentSalko(Fighter *fighter) {
+	error("Fight::updateOpponentSalko - not implemented!");
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -722,7 +969,7 @@ int Fight::SalkoOpponentFunction2(byte action) {
 //////////////////////////////////////////////////////////////////////////
 
 void Fight::loadVesnaPlayer() {
-	REGISTER_FUNCTIONS(player, Vesna)
+	REGISTER_PLAYER_FUNCTIONS(Vesna)
 
 	_data->player->sequences.push_back(newSequence("2005cr.seq"));
 	_data->player->sequences.push_back(newSequence("2005cdr.seq"));
@@ -733,7 +980,7 @@ void Fight::loadVesnaPlayer() {
 }
 
 void Fight::loadVesnaOpponent() {
-	REGISTER_FUNCTIONS(opponent, Vesna)
+	REGISTER_OPPONENT_FUNCTIONS(Vesna)
 
 	_data->opponent->sequences.push_back(newSequence("2005or.seq"));
 	_data->opponent->sequences.push_back(newSequence("2005oam.seq"));
@@ -746,32 +993,28 @@ void Fight::loadVesnaOpponent() {
 
 	getSound()->playSound(kEntityTables0, "MUS038", 16);
 
-	_data->opponent->field_30 = 4;
+	_data->opponent->countdown = 4;
 	_data->opponent->field_38 = 30;
 }
 
-int Fight::VesnaFunction0(byte action) {
-	error("Fight::VesnaFunction0 - not implemented!");
+void Fight::handleActionVesna(Fighter *fighter, FightAction action) {
+	error("Fight::handleActionVesna - not implemented!");
 }
 
-void Fight::VesnaFunction1() {
-	error("Fight::VesnaFunction1 - not implemented!");
+void Fight::updateVesna(Fighter *fighter) {
+	error("Fight::updateVesna - not implemented!");
 }
 
-int Fight::VesnaFunction2(byte action) {
-	error("Fight::VesnaFunction2 - not implemented!");
+int Fight::canInteractVesna(Fighter *fighter, FightAction action) {
+	error("Fight::canInteractVesna - not implemented!");
 }
 
-int Fight::VesnaOpponentFunction0(byte action) {
-	error("Fight::VesnaOpponentFunction0 - not implemented!");
+void Fight::handleOpponentActionVesna(Fighter *fighter, FightAction action) {
+	error("Fight::handleOpponentActionVesna - not implemented!");
 }
 
-void Fight::VesnaOpponentFunction1() {
-	error("Fight::VesnaOpponentFunction1 - not implemented!");
-}
-
-int Fight::VesnaOpponentFunction2(byte action) {
-	error("Fight::VesnaOpponentFunction2 - not implemented!");
+void Fight::updateOpponentVesna(Fighter *fighter) {
+	error("Fight::updateOpponentVesna - not implemented!");
 }
 
 } // End of namespace LastExpress
