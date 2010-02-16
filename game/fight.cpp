@@ -847,11 +847,129 @@ void Fight::loadAnnaOpponent() {
 }
 
 void Fight::handleActionAnna(Fighter *fighter, FightAction action) {
-	error("Fight::handleActionAnna - not implemented!");
+	switch (action) {
+	default:
+		handleAction(fighter, action);
+		return;
+
+	case kFightAction1:
+		if (fighter->sequenceIndex != 1 && fighter->sequenceIndex != 3 || CHECK_SEQUENCE2(fighter, 4)) {
+			setSequenceAndDraw(fighter, 4, kFightSequenceType1);
+			setSequenceAndDraw(fighter->opponent, 4, kFightSequenceType1);
+
+			CALL_FUNCTION(fighter->opponent, handleAction, kFightAction103);
+			CALL_FUNCTION(fighter, update);
+		} else {
+			fighter->field_34++;
+		}
+		break;
+
+	case kFightAction2:
+		if (fighter->sequenceIndex != 2 && fighter->sequenceIndex != 3 || CHECK_SEQUENCE2(fighter, 4)) {
+			setSequenceAndDraw(fighter, 4, kFightSequenceType1);
+			setSequenceAndDraw(fighter->opponent, 5, kFightSequenceType1);
+
+			CALL_FUNCTION(fighter->opponent, handleAction, kFightAction103);
+			CALL_FUNCTION(fighter, update);
+		} else {
+			fighter->field_34++;
+		}
+		break;
+
+	case kFightAction3:
+		if (fighter->sequenceIndex != 2 && fighter->sequenceIndex != 1 || CHECK_SEQUENCE2(fighter, 4)) {
+			setSequenceAndDraw(fighter, 4, kFightSequenceType1);
+			setSequenceAndDraw(fighter->opponent, 6, kFightSequenceType1);
+
+			CALL_FUNCTION(fighter->opponent, handleAction, kFightAction103);
+			CALL_FUNCTION(fighter, update);
+		} else {
+			fighter->field_34++;
+		}
+		break;
+
+	case kFightAction128:		
+		switch (fighter->opponent->sequenceIndex) {
+		default:
+			setSequenceAndDraw(fighter, 3, kFightSequenceType0);
+			break;
+
+		case 1:
+			setSequenceAndDraw(fighter, 1, kFightSequenceType0);
+			break;
+
+		case 2:
+			setSequenceAndDraw(fighter, 3, kFightSequenceType0);
+			break;
+
+		case 3:
+			setSequenceAndDraw(fighter, 2, kFightSequenceType0);
+			break;
+		}
+		break;
+	}
+
+	if (fighter->field_34 > 4) {
+		getSound()->reset(kEntityTables0);
+		bailout(kFightEndWin);
+	}
 }
 
 void Fight::updateOpponentAnna(Fighter *fighter) {
-	error("Fight::updateOpponentAnna - not implemented!");
+	// This is an opponent struct!
+	Opponent *opponent = (Opponent *)fighter;
+
+	if (!opponent->field_38 && CALL_FUNCTION(opponent, canInteract, kFightAction1) && !opponent->sequenceIndex2) {
+
+		if (opponent->opponent->field_34 >= 2) {
+			switch (random(6)) {
+			default:
+				break;
+
+			case 0:
+				setSequenceAndDraw(opponent, 1, kFightSequenceType0);
+				break;
+
+			case 1:
+				setSequenceAndDraw(opponent, 2, kFightSequenceType0);
+				break;
+
+			case 2:
+				setSequenceAndDraw(opponent, 3, kFightSequenceType0);				
+				break;
+
+			case 3:
+				setSequenceAndDraw(opponent, 3, kFightSequenceType0);
+				setSequenceAndDraw(opponent, 2, kFightSequenceType2);
+				break;
+
+			case 4:
+				setSequenceAndDraw(opponent, 1, kFightSequenceType0);
+				setSequenceAndDraw(opponent, 2, kFightSequenceType2);
+				break;
+
+			case 5:
+				setSequenceAndDraw(opponent, 3, kFightSequenceType0);
+				setSequenceAndDraw(opponent, 2, kFightSequenceType2);
+				break;
+			}
+		}
+
+		// Update field_38
+		opponent->field_38 = random(15);
+	}
+
+	if (opponent->currentSequence2 && CHECK_SEQUENCE2(opponent, 2)) {
+		if (opponent->sequenceIndex == 1 || opponent->sequenceIndex == 2 || opponent->sequenceIndex == 3)
+			CALL_FUNCTION(opponent->opponent, handleAction, (FightAction)opponent->sequenceIndex);
+
+		if (opponent->opponent->countdown <= 0) {
+			getSound()->reset(kEntityTables0);
+			CALL_FUNCTION(opponent, handleAction, kFightActionLost);
+		}
+	}
+
+	updateOpponent(opponent);
 }
 
 //////////////////////////////////////////////////////////////////////////
