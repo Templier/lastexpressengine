@@ -574,7 +574,7 @@ IMPLEMENT_ACTION(10) {
 
 	getObjects()->updateLocation2(object, (ObjectLocation)hotspot->param2);
 
-	if (object != 112 /* TODO: or LIB096 does not exist -> is it needed, say if the HPF is not loaded or something */) {
+	if (object != kObject112 /* TODO: or LIB096 does not exist -> is it needed, say if the HPF is not loaded or something */) {
 		if (object == 1)
 			getSound()->playSoundEvent(0, 73, 0);
 	} else {
@@ -621,7 +621,7 @@ IMPLEMENT_ACTION(pickItem) {
 	byte location = hotspot->param2;
 	bool process = (hotspot->scene == 0);
 
-	if (item >= 32 || !entry->location)
+	if (item >= kPortraitOriginal || !entry->location)
 		return;
 
 	// Special case for corpse
@@ -690,7 +690,7 @@ IMPLEMENT_ACTION(dropItem) {
 	ObjectLocation location = (ObjectLocation)hotspot->param2;
 	bool process = (hotspot->scene == 0);
 
-	if (item >= 32)
+	if (item >= kPortraitOriginal)
 		return;
 
 	if (!getInventory()->hasItem(item))

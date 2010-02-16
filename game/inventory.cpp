@@ -351,7 +351,7 @@ void Inventory::showItem(InventoryItem item) {
 // Items
 //////////////////////////////////////////////////////////////////////////
 Inventory::InventoryEntry *Inventory::getEntry(InventoryItem item) {
-	assert(item < 32);
+	assert(item < kPortraitOriginal);
 
 	return &_entries[item];
 }
@@ -407,7 +407,7 @@ void Inventory::unselectItem() {
 }
 
 void Inventory::setLocationAndProcess(InventoryItem item, ObjectLocation location) {
-	if (item >= 32)
+	if (item >= kPortraitOriginal)
 		return;
 
 	if (getEntry(item)->location == location)
@@ -439,7 +439,7 @@ InventoryItem Inventory::getFirstExaminableItem() {
 		index++;
 		entry = _entries[index];
 
-		if (index >= 32)
+		if (index >= kPortraitOriginal)
 			return kItemNone;
 	}
 
