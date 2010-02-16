@@ -173,6 +173,7 @@ enum CursorStyle {
 	kCursorMAX,
 
 	// Special
+	kCursorProcess = 128,
 	kCursorKeepValue = 255
 };
 
@@ -389,7 +390,7 @@ enum ObjectIndex {
 	kObject125,                         // 125
 	kObject126,
 	kObject127,
-	kObject128
+	kObjectMax
 };
 
 //////////////////////////////////////////////////////////////////////////

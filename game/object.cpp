@@ -36,14 +36,14 @@ Objects::Objects(LastExpressEngine *engine) : _engine(engine) {}
 
 
 const Objects::Object Objects::get(ObjectIndex index) {
-	if (index >= 128)
+	if (index >= kObjectMax)
 		error("Objects::get - internal error: invalid object index (%d)", index);
 
 	return _objects[index];
 }
 
 void Objects::update(ObjectIndex index, EntityIndex entity, ObjectLocation location, CursorStyle cursor, CursorStyle cursor2) {
-	if (index >= 128)
+	if (index >= kObjectMax)
 		return;
 
 	Object *object = &_objects[index];
@@ -73,7 +73,7 @@ void Objects::update(ObjectIndex index, EntityIndex entity, ObjectLocation locat
 }
 
 void Objects::updateLocation2(ObjectIndex index, ObjectLocation location2) {
-	if (index >= 128)
+	if (index >= kObjectMax)
 		return;
 
 	_objects[index].location2 = location2;

@@ -66,7 +66,7 @@ public:
 private:
 	LastExpressEngine* _engine;
 
-	Object _objects[128];
+	Object _objects[kObjectMax];
 };
 
 } // End of namespace LastExpress

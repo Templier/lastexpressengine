@@ -448,7 +448,7 @@ IMPLEMENT_ACTION(playMusic) {
 IMPLEMENT_ACTION(knock) {
 	ObjectIndex object = (ObjectIndex)hotspot->param1;
 
-	if (object >= 128)
+	if (object >= kObjectMax)
 		return;
 
 	if (getObjects()->get(object).entity) {
@@ -463,7 +463,7 @@ IMPLEMENT_ACTION(knock) {
 IMPLEMENT_ACTION(compartment) {
 	ObjectIndex object = (ObjectIndex)hotspot->param1;
 
-	if (object >= 128)
+	if (object >= kObjectMax)
 		return;
 
 	if (getObjects()->get(object).entity) {
@@ -538,7 +538,7 @@ IMPLEMENT_ACTION(openCloseObject) {
 	ObjectIndex object = (ObjectIndex)hotspot->param1;
 	ObjectLocation location = (ObjectLocation)hotspot->param2;
 
-	if (object >= 128)
+	if (object >= kObjectMax)
 		return;
 
 	getObjects()->update(object, getObjects()->get(object).entity, location, kCursorKeepValue, kCursorKeepValue);
@@ -569,7 +569,7 @@ IMPLEMENT_ACTION(openCloseObject) {
 IMPLEMENT_ACTION(10) {
 	ObjectIndex object = (ObjectIndex)hotspot->param1;
 
-	if (object >= 128)
+	if (object >= kObjectMax)
 		return;
 
 	getObjects()->updateLocation2(object, (ObjectLocation)hotspot->param2);
@@ -606,7 +606,7 @@ IMPLEMENT_ACTION(setItemLocation) {
 IMPLEMENT_ACTION(12) {
 	ObjectIndex object = (ObjectIndex)hotspot->param1;
 
-	if (object >= 128)
+	if (object >= kObjectMax)
 		return;
 
 	if (getObjects()->get(object).entity)
@@ -1524,7 +1524,7 @@ void Action::playCompartmentSoundEvents(EntityIndex entityIndex, ObjectIndex obj
 CursorStyle Action::getCursor(byte action, ObjectIndex object, byte param2, byte param3, byte cursor)
 {
 	// Simple cursor style
-	if (cursor != 128)
+	if (cursor != kCursorProcess)
 		return (CursorStyle)cursor;
 
 	//warning("================================= OBJECT %03d =================================", object);
@@ -1540,13 +1540,13 @@ CursorStyle Action::getCursor(byte action, ObjectIndex object, byte param2, byte
 			return kCursorBackward;
 
 	case SceneHotspot::kActionKnockOnDoor:
-		if (object >= 128)
+		if (object >= kObjectMax)
 			return kCursorNormal;
 		else
 			return (CursorStyle)getObjects()->get(object).cursor;
 
 	case SceneHotspot::kAction12:
-		if (object >= 128)
+		if (object >= kObjectMax)
 			return kCursorNormal;
 
 		if (getObjects()->get(object).entity)
@@ -1555,32 +1555,32 @@ CursorStyle Action::getCursor(byte action, ObjectIndex object, byte param2, byte
 			return kCursorNormal;
 
 	case SceneHotspot::kActionPickItem:
-		if (object >= 32)
+		if (object >= kObjectCompartmentA)
 			return kCursorNormal;
 
 		if ((!getInventory()->getSelectedItem() || getInventory()->getSelectedEntry()->no_autoselect)
-			&& (object != 21 || getProgress().field_8 == 1))
+		 && (object != kObject21 || getProgress().field_8 == 1))
 			return kCursorHand;
 		else
 			return kCursorNormal;
 
 	case SceneHotspot::kActionDropItem:
-		if (object >= 32)
+		if (object >= kObjectCompartmentA)
 			return kCursorNormal;
 
 		if (getInventory()->getSelectedItem() != (InventoryItem)object)
 			return kCursorNormal;
 
-		if (object == 20 && param2 == 4 && !getProgress().field_50)
+		if (object == kObject20 && param2 == 4 && !getProgress().field_50)
 			return kCursorNormal;
 
-		if (object == 18  && param2 == 1 && getProgress().field_5C)
+		if (object == kObjectHandleInsideBathroom  && param2 == 1 && getProgress().field_5C)
 			return kCursorNormal;
 
 		return (CursorStyle)getInventory()->getSelectedEntry()->item_id;
 
 	case SceneHotspot::kAction15:
-		if (object >= 128)
+		if (object >= kObjectMax)
 			return kCursorNormal;
 
 		if (*(&getProgress().field_0 + object) == param2)
@@ -1594,7 +1594,7 @@ CursorStyle Action::getCursor(byte action, ObjectIndex object, byte param2, byte
 		 ||	(getInventory()->getSelectedItem() != kItemFirebird && getInventory()->getSelectedItem() != kItemBriefcase)))
 			goto LABEL_KEY;
 
-		return (CursorStyle)getInventory()->getEntry(kItemKey)->item_id; // TODO is that always the same as kCursorKey
+		return (CursorStyle)getInventory()->getEntry(kItemKey)->item_id; // TODO is that always the same as kCursorKey ?
 
 	case SceneHotspot::kActionGetOutsideTrain:
 		if (getProgress().jacket != kJacketGreen)
@@ -1602,7 +1602,7 @@ CursorStyle Action::getCursor(byte action, ObjectIndex object, byte param2, byte
 
 		if ((getEvent(kEventCathLookOutsideWindowDay) || getEvent(kEventCathLookOutsideWindowDay) || getObjects()->get(kObjectCompartment1).location2 == kLocation1)
 			&& getProgress().field_50
-			&& (object != 45 || (getEntities()->checkFields1(kEntityRebecca, EntityData::kField495_4, EntityData::kField491_4840) && getObjects()->get(kObject44).location == 2))
+			&& (object != kObject45 || (getEntities()->checkFields1(kEntityRebecca, EntityData::kField495_4, EntityData::kField491_4840) && getObjects()->get(kObject44).location == 2))
 			&& getInventory()->getSelectedItem() != kItemBriefcase && getInventory()->getSelectedItem() != kItemFirebird)
 			return kCursorForward;
 
@@ -1623,7 +1623,7 @@ CursorStyle Action::getCursor(byte action, ObjectIndex object, byte param2, byte
 		return kCursorNormal;
 
 	case SceneHotspot::kActionJumpUpDownTrain:
-		if (object != 1)
+		if (object != kObjectCompartment1)
 			return kCursorNormal;
 
 		// FIXME convert to something readable
@@ -1683,7 +1683,7 @@ CursorStyle Action::getCursor(byte action, ObjectIndex object, byte param2, byte
 LABEL_KEY:
 	case SceneHotspot::kActionCompartment:
 	case SceneHotspot::kActionExitCompartment:
-		if (object >= 128)
+		if (object >= kObjectMax)
 			return kCursorNormal;
 
 		if (getInventory()->getSelectedItem() != kItemKey
