@@ -224,6 +224,8 @@ public:
 private:
 	Common::SeekableReadStream *_stream;
 	Common::Array<SceneHeader *> _headers;
+
+	void clear();
 };
 
 } // End of namespace LastExpress

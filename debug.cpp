@@ -38,6 +38,7 @@
 #include "lastexpress/game/logic.h"
 #include "lastexpress/game/savegame.h"
 #include "lastexpress/game/sound.h"
+#include "lastexpress/game/state.h"
 
 #include "lastexpress/graphics.h"
 #include "lastexpress/helpers.h"
@@ -464,9 +465,28 @@ bool Debugger::cmd_fight(int argc, const char **argv) {
 	if (argc == 2) {
 		FightType type = (FightType)getNumber(argv[1]);
 
-		if (type < kFightMilos || type > kFightVesna)
+		// Load proper data file
+		ArchiveIndex index = kArchiveCd1;
+		switch (type) {
+		default:
 			goto error;
 
+		case kFightMilos:
+			index = kArchiveCd1;
+			break;
+
+		case kFightAnna:		
+			index = kArchiveCd2;
+			break;
+
+		case kFightIvo:
+		case kFightSalko:
+		case kFightVesna:
+			index = kArchiveCd3;
+			break;
+		}
+
+		getLogic()->loadSceneDataFile(index);
 
 		// Store command
 		if (!hasCommand()) {
@@ -479,10 +499,45 @@ bool Debugger::cmd_fight(int argc, const char **argv) {
 			askForRedraw();
 			redrawScreen();
 
+			int lastScene = getState()->scene;
+
 			getFight()->setup(type) ? DebugPrintf("Lost fight!\n") : DebugPrintf("Won fight!\n");
 
 			// Pause for a second to be able to see the final scene
 			_engine->_system->delayMillis(1000);
+
+			// Restore loaded archive
+			switch (getProgress().chapter) {
+			default:
+			case kChapter1:
+				index = kArchiveCd1;
+				break;
+
+			case kChapter2:
+			case kChapter3:
+				index = kArchiveCd2;
+				break;
+
+			case kChapter4:
+			case kChapter5:
+				index = kArchiveCd3;
+				break;
+			}
+
+			getLogic()->loadSceneDataFile(index);
+
+			// Stop audio and restore scene
+			getSound()->getSfxStream()->stop();
+			getSound()->getMusicStream()->stop();
+
+			clearBg(GraphicsManager::kBackgroundAll);
+
+			loadSceneObject(scene, lastScene);			
+			_engine->getGraphicsManager()->draw(&scene, GraphicsManager::kBackgroundC);
+
+			askForRedraw();
+			redrawScreen();
+
 
 			resetCommand();
 		}

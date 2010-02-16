@@ -206,18 +206,22 @@ Common::Rect Scene::draw(Graphics::Surface *surface) {
 SceneManager::SceneManager() : _stream(NULL) {}
 
 SceneManager::~SceneManager() {
-	delete _stream;
+	clear();
+}
 
+void SceneManager::clear() {
 	// Free the headers
-	for (uint i = 0; i < _headers.size(); i++)
-		delete _headers[i];
+	_headers.clear();
+
+	delete _stream;
 }
 
 bool SceneManager::load(Common::SeekableReadStream *stream) {
 	if (!stream)
 		return false;
 
-	delete _stream;
+	clear();
+
 	_stream = stream;
 
 	// Read the number of scenes (the first entry is a dummy one)
