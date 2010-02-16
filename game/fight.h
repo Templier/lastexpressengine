@@ -96,14 +96,17 @@ private:
 	enum FightAction {
 		kFightAction1 = 1,
 		kFightAction2 = 2,
+		kFightAction3 = 3,
 		kFightAction4 = 4,
+		kFightAction5 = 5,
 		kFightAction101 = 101,
 		kFightActionResetFrame = 102,
 		kFightAction103 = 103,
 		kFightActionWin = 104,
 		kFightActionLost = 105,
 		kFightAction128 = 128,
-		kFightAction131 = 131
+		kFightAction131 = 131,
+		kFightAction132 = 132
 	};
 
 	typedef struct Fighter;
@@ -111,7 +114,7 @@ private:
 	struct Fighter {
 		Common::Functor2<Fighter *, FightAction, void> *handleAction;
 		Common::Functor1<Fighter *, void> *update;
-		Common::Functor2<Fighter *, FightAction, int> *canInteract;
+		Common::Functor2<Fighter *, FightAction, bool> *canInteract;
 		Fighter* opponent;
 		Common::Array<Sequence *> sequences;
 		uint32 sequenceIndex;
@@ -215,7 +218,7 @@ private:
 	// Default functions
 	void handleAction(Fighter *fighter, FightAction action);
 	void update(Fighter *fighter);
-	int canInteract(Fighter *fighter, FightAction = (FightAction)0);
+	bool canInteract(Fighter *fighter, FightAction = (FightAction)0);
 	void updateOpponent(Fighter *fighter);
 
 	// Milos
@@ -223,7 +226,7 @@ private:
 	void loadMilosOpponent();
 	void handleActionMilos(Fighter *fighter, FightAction action);
 	void updateMilos(Fighter *fighter);
-	int canInteractMilos(Fighter *fighter, FightAction action);
+	bool canInteractMilos(Fighter *fighter, FightAction action);
 	void handleOpponentActionMilos(Fighter *fighter, FightAction action);
 	void updateOpponentMilos(Fighter *fighter);
 
@@ -238,7 +241,7 @@ private:
 	void loadIvoOpponent();
 	void handleActionIvo(Fighter *fighter, FightAction action);
 	void updateIvo(Fighter *fighter);
-	int canInteractIvo(Fighter *fighter, FightAction action);
+	bool canInteractIvo(Fighter *fighter, FightAction action);
 	void handleOpponentActionIvo(Fighter *fighter, FightAction action);
 	void updateOpponentIvo(Fighter *fighter);
 
@@ -247,7 +250,7 @@ private:
 	void loadSalkoOpponent();
 	void handleActionSalko(Fighter *fighter, FightAction action);
 	void updateSalko(Fighter *fighter);
-	int canInteractSalko(Fighter *fighter, FightAction action);
+	bool canInteractSalko(Fighter *fighter, FightAction action);
 	void handleOpponentActionSalko(Fighter *fighter, FightAction action);
 	void updateOpponentSalko(Fighter *fighter);
 
@@ -256,7 +259,7 @@ private:
 	void loadVesnaOpponent();
 	void handleActionVesna(Fighter *fighter, FightAction action);
 	void updateVesna(Fighter *fighter);
-	int canInteractVesna(Fighter *fighter, FightAction action);
+	bool canInteractVesna(Fighter *fighter, FightAction action);
 	void handleOpponentActionVesna(Fighter *fighter, FightAction action);
 	void updateOpponentVesna(Fighter *fighter);
 };
