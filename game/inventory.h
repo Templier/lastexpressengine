@@ -133,7 +133,7 @@ private:
 
 	void open();
 	void close();
-	void examine(InventoryItem item);	
+	void examine(InventoryItem item);
 	Common::Rect getItemRect(int16 index);
 
 	bool isItemSceneParameter(InventoryItem item);

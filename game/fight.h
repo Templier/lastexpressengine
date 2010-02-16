@@ -74,7 +74,7 @@ public:
 	enum FightEndType {
 		kFightEndWin  = 0,
 		kFightEndLost = 1,
-		kFightEndExit    = 2
+		kFightEndExit = 2
 	};
 
 	Fight(LastExpressEngine *engine);

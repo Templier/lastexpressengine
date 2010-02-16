@@ -222,11 +222,11 @@ public:
 	};
 
 	struct Flags {
-		bool flag_0;		
+		bool flag_0;
 		bool flag_3;
 
-		bool gameRunning;		
-		
+		bool gameRunning;
+
 		// Mouse flags
 		bool mouseLeftClick;
 		bool mouseRightClick;
@@ -243,7 +243,7 @@ public:
 			flag_3 = false;
 
 			gameRunning = false;
-			
+
 			mouseRightClick = false;
 			mouseLeftClick = false;
 			mouseMove = false;

@@ -771,11 +771,11 @@ void Logic::playFinalSequence() {
 }
 
 void Logic::updateTrainClock() {
-	//warning("Logic::updateTrainClock: not implemented!");
+	warning("Logic::updateTrainClock: not implemented!");
 }
 
 void Logic::updateCursor(bool redraw) {
-	//warning("Logic::updateCursor: not implemented!");
+	warning("Logic::updateCursor: not implemented!");
 }
 
 bool Logic::checkSceneFields(uint32 index, bool isSecondCheck) {
