@@ -1013,23 +1013,181 @@ void Fight::loadIvoOpponent() {
 }
 
 void Fight::handleActionIvo(Fighter *fighter, FightAction action) {
-	error("Fight::handleActionIvo - not implemented!");
+	switch (action) {
+	default:
+		handleAction(fighter, action);
+		return;
+
+	case kFightAction1:
+		if (fighter->sequenceIndex != 1 || CHECK_SEQUENCE2(fighter, 4)) {
+			setSequenceAndDraw(fighter, 7, kFightSequenceType1);
+			setSequenceAndDraw(fighter->opponent, 4, kFightSequenceType1);
+
+			CALL_FUNCTION(fighter->opponent, handleAction, kFightAction103);
+			CALL_FUNCTION(fighter, update);
+		}
+		break;
+
+	case kFightAction2:
+		if (fighter->sequenceIndex != 2 && fighter->sequenceIndex != 3 || CHECK_SEQUENCE2(fighter, 4)) {
+			setSequenceAndDraw(fighter, 7, kFightSequenceType1);
+			setSequenceAndDraw(fighter->opponent, 5, kFightSequenceType1);
+
+			CALL_FUNCTION(fighter->opponent, handleAction, kFightAction103);
+			CALL_FUNCTION(fighter, update);
+		}
+		break;
+
+	case kFightAction128:		
+		switch (fighter->opponent->sequenceIndex) {
+		default:
+		case 1:
+			setSequenceAndDraw(fighter, 1, kFightSequenceType0);
+			break;
+
+		case 2:
+			setSequenceAndDraw(fighter, 2, kFightSequenceType0);
+			break;
+		}
+		break;
+
+	case kFightAction129:
+		setSequenceAndDraw(fighter, (fighter->opponent->countdown > 1) ? 4 : 3, fighter->sequenceIndex ? kFightSequenceType2 : kFightSequenceType0);
+		break;
+
+	case kFightAction130:
+		setSequenceAndDraw(fighter, 3, fighter->sequenceIndex ? kFightSequenceType2 : kFightSequenceType0);
+		break;
+	}
 }
 
 void Fight::updateIvo(Fighter *fighter) {
-	error("Fight::updateIvo - not implemented!");
+
+	if ((fighter->sequenceIndex == 3 || fighter->sequenceIndex == 4) && !fighter->frameIndex)
+		CALL_FUNCTION(fighter->opponent, handleAction, kFightAction131);
+
+	if (fighter->currentSequence2 && CHECK_SEQUENCE2(fighter, 2)) {
+
+		// Draw sequences
+		if (fighter->opponent->countdown <= 0) {
+			setSequenceAndDraw(fighter, 9, kFightSequenceType1);
+			setSequenceAndDraw(fighter->opponent, 8, kFightSequenceType1);
+			getSound()->reset(kEntityTables0);
+
+			CALL_FUNCTION(fighter, handleAction, kFightActionWin);
+
+			return;
+		}
+
+		if (fighter->sequenceIndex == 3 || fighter->sequenceIndex == 4)
+			CALL_FUNCTION(fighter->opponent, handleAction, (FightAction)fighter->sequenceIndex);
+	}
+
+	update(fighter);
 }
 
 bool Fight::canInteractIvo(Fighter *fighter, FightAction action) {
-	error("Fight::canInteractIvo - not implemented!");
+	if (action == kFightAction129 || action == kFightAction130)
+		return (fighter->sequenceIndex >= 8);
+
+	return canInteract(fighter);
 }
 
 void Fight::handleOpponentActionIvo(Fighter *fighter, FightAction action) {
-	error("Fight::handleOpponentActionIvo - not implemented!");
+	// This is an opponent struct!
+	Opponent *opponent = (Opponent *)fighter;
+
+	switch (action) {
+	default:
+		handleAction(fighter, action);
+		break;
+
+	case kFightAction3:
+		if (opponent->sequenceIndex != 1 && opponent->sequenceIndex != 3 || CHECK_SEQUENCE2(opponent, 4)) {
+			setSequenceAndDraw(opponent, 6, kFightSequenceType1);
+			setSequenceAndDraw(opponent->opponent, 6, kFightSequenceType1);
+			CALL_FUNCTION(opponent->opponent, handleAction, kFightAction103);
+		}
+		break;
+
+	case kFightAction4:
+		if (opponent->sequenceIndex != 2 && opponent->sequenceIndex != 3 || CHECK_SEQUENCE2(opponent, 4)) {
+			setSequenceAndDraw(opponent, 6, kFightSequenceType1);
+			setSequenceAndDraw(opponent->opponent, 5, kFightSequenceType1);
+			CALL_FUNCTION(opponent->opponent, handleAction, kFightAction103);
+		}
+		break;
+
+	case kFightAction131:
+		if (opponent->sequenceIndex)
+			break;
+
+		if (random(100) <= (unsigned int)(opponent->countdown > 2 ? 60 : 75)) {
+			setSequenceAndDraw(opponent, 3 , kFightSequenceType1);
+			if (opponent->opponent->sequenceIndex == 4)
+				setSequenceAndDraw(opponent, 2, kFightSequenceType2);
+		}
+		break;
+	}
 }
 
 void Fight::updateOpponentIvo(Fighter *fighter) {
-	error("Fight::updateOpponentIvo - not implemented!");
+	// This is an opponent struct!
+	Opponent *opponent = (Opponent *)fighter;
+
+	if (!opponent->field_38 && CALL_FUNCTION(opponent, canInteract, kFightAction1) && !opponent->sequenceIndex2) {
+
+		if (opponent->opponent->field_34 >= 2) {
+			switch (random(5)) {
+			default:
+				break;
+
+			case 0:
+				setSequenceAndDraw(opponent, 1, kFightSequenceType0);
+				break;
+
+			case 1:
+				setSequenceAndDraw(opponent, 2, kFightSequenceType0);
+				break;
+
+			case 2:
+				setSequenceAndDraw(opponent, 1, kFightSequenceType0);
+				setSequenceAndDraw(opponent, 2, kFightSequenceType2);
+				break;
+
+			case 3:
+				setSequenceAndDraw(opponent, 0, kFightSequenceType2);
+				setSequenceAndDraw(opponent, 1, kFightSequenceType2);
+				break;
+
+			case 4:
+				setSequenceAndDraw(opponent, 0, kFightSequenceType1);
+				setSequenceAndDraw(opponent, 1, kFightSequenceType2);
+				break;
+			}
+		} 
+
+		// Update field_38
+		opponent->field_38 = 3 * opponent->countdown + random(10);
+	}
+
+	if (opponent->currentSequence2 && CHECK_SEQUENCE2(opponent, 2)) {
+
+		if (opponent->opponent->countdown <= 0) {
+			setSequenceAndDraw(opponent, 7, kFightSequenceType1);
+			setSequenceAndDraw(opponent->opponent, 8, kFightSequenceType1);
+			getSound()->reset(kEntityTables0);
+
+			CALL_FUNCTION(opponent->opponent, handleAction, kFightActionWin);
+
+			return;
+		}
+
+		if (opponent->sequenceIndex == 1 || opponent->sequenceIndex == 2)
+			CALL_FUNCTION(opponent->opponent, handleAction, (FightAction)opponent->sequenceIndex);
+	}
+
+	updateOpponent(opponent);
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -1064,23 +1222,142 @@ void Fight::loadSalkoOpponent() {
 }
 
 void Fight::handleActionSalko(Fighter *fighter, FightAction action) {
-	error("Fight::handleActionSalko - not implemented!");
+	switch (action) {
+	default:
+		handleAction(fighter, action);
+		return;
+
+	case kFightAction1:
+	case kFightAction2:
+		if (fighter->sequenceIndex != 1 && CHECK_SEQUENCE2(fighter, 4)) {
+			fighter->field_34 = 0;
+
+			setSequenceAndDraw(fighter, 3, kFightSequenceType1);
+			setSequenceAndDraw(fighter->opponent, (action == kFightAction1 ? 3 : 4), kFightSequenceType1);
+
+			CALL_FUNCTION(fighter->opponent, handleAction, kFightAction103);
+
+			if (action == kFightAction2)
+				fighter->countdown= 0;
+
+			CALL_FUNCTION(fighter, update);
+		} else {
+			fighter->field_34++;
+		}
+		break;
+
+	case kFightAction5:
+		if (fighter->sequenceIndex != 3) {
+			CALL_FUNCTION(fighter->opponent, handleAction, kFightAction103);
+			CALL_FUNCTION(fighter, update);
+		}
+		break;
+
+	case kFightAction128:
+		setSequenceAndDraw(fighter, 1, kFightSequenceType0);
+		fighter->field_34 = 0;
+		break;
+
+	case kFightAction131:
+		setSequenceAndDraw(fighter, 2, (fighter->sequenceIndex ? kFightSequenceType2 : kFightSequenceType0));
+		break;
+	}
 }
 
 void Fight::updateSalko(Fighter *fighter) {
-	error("Fight::updateSalko - not implemented!");
+	update(fighter);
+
+	// The original doesn't check for currentSequence2 != NULL (might not happen when everything is working properly, but crashes with our current implementation)
+	if (fighter->currentSequence2 && CHECK_SEQUENCE2(fighter, 2)) {
+
+		if (fighter->opponent->countdown <= 0) {			
+			getSound()->reset(kEntityTables0);
+			bailout(kFightEndWin);
+
+			return;
+		}
+
+		if (fighter->sequenceIndex == 2)
+			CALL_FUNCTION(fighter->opponent, handleAction, kFightAction2);
+	}
 }
 
 bool Fight::canInteractSalko(Fighter *fighter, FightAction action) {
-	error("Fight::canInteractSalko - not implemented!");
+	if (action == kFightAction131) {
+		if (fighter->sequenceIndex == 1) {
+			if (fighter->opponent->countdown <= 0)
+				_engine->getCursor()->setStyle(kCursorHand);
+
+			return true;
+		}
+		
+		return false;
+	}
+
+	return canInteract(fighter);
 }
 
 void Fight::handleOpponentActionSalko(Fighter *fighter, FightAction action) {
-	error("Fight::handleOpponentActionSalko - not implemented!");
+	if (action == kFightAction2) {
+		setSequenceAndDraw(fighter, 5, kFightSequenceType1);
+		CALL_FUNCTION(fighter->opponent, handleAction, kFightAction103);
+	} else {
+		handleAction(fighter, action);
+	}
 }
 
 void Fight::updateOpponentSalko(Fighter *fighter) {
-	error("Fight::updateOpponentSalko - not implemented!");
+	// This is an opponent struct
+	Opponent *opponent = (Opponent *)fighter;
+
+	if (!opponent->field_38 && CALL_FUNCTION(opponent, canInteract, kFightAction1) && !opponent->sequenceIndex2) {
+
+		switch (random(5)) {
+		default:
+			break;
+
+		case 0:
+			setSequenceAndDraw(opponent, 1, kFightSequenceType0);
+			break;
+
+		case 1:
+			setSequenceAndDraw(opponent, 2, kFightSequenceType0);
+			break;
+
+		case 2:
+			setSequenceAndDraw(opponent, 1, kFightSequenceType0);
+			setSequenceAndDraw(opponent, 2, kFightSequenceType2);
+			break;
+
+		case 3:
+			setSequenceAndDraw(opponent, 2, kFightSequenceType0);
+			setSequenceAndDraw(opponent, 1, kFightSequenceType2);
+			break;
+
+		case 4:
+			setSequenceAndDraw(opponent, 1, kFightSequenceType0);
+			setSequenceAndDraw(opponent, 1, kFightSequenceType2);
+			break;
+		}		
+
+		// Update field_38
+		opponent->field_38 = 4 * opponent->countdown;
+	}
+
+	if (opponent->currentSequence2 && CHECK_SEQUENCE2(opponent, 2)) {
+		if (opponent->opponent->countdown <= 0) {
+			getSound()->reset(kEntityTables0);
+			bailout(kFightEndLost);
+
+			// Stop processing
+			return;
+		}
+
+		if (opponent->sequenceIndex == 1 || opponent->sequenceIndex == 2)
+			CALL_FUNCTION(opponent->opponent, handleAction, (FightAction)opponent->sequenceIndex);
+	}
+
+	updateOpponent(opponent);
 }
 
 //////////////////////////////////////////////////////////////////////////

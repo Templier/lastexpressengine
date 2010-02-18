@@ -105,6 +105,8 @@ private:
 		kFightActionWin = 104,
 		kFightActionLost = 105,
 		kFightAction128 = 128,
+		kFightAction129 = 129,
+		kFightAction130 = 130,
 		kFightAction131 = 131,
 		kFightAction132 = 132
 	};
