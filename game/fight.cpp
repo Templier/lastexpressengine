@@ -45,8 +45,11 @@
 
 namespace LastExpress {
 
-#define CALL_FUNCTION(fighter, name, ...) \
-	(*##fighter->##name)(##fighter, __VA_ARGS__)
+#define CALL_FUNCTION0(fighter, name) \
+	(*fighter->name)(fighter)
+
+#define CALL_FUNCTION1(fighter, name, a) \
+	(*fighter->name)(fighter, a)
 
 #define REGISTER_PLAYER_FUNCTIONS(name) \
 	_data->player->handleAction = new Common::Functor2Mem<Fighter *, FightAction, void, Fight>(this, &Fight::handleAction##name); \
@@ -111,9 +114,9 @@ void Fight::eventMouseClick(Common::Event ev) {
 			_engine->getCursor()->setStyle((CursorStyle)hotspot->cursor);
 
 			// Call player function
-			if (CALL_FUNCTION(_data->player, canInteract, (FightAction)hotspot->action)) {
+			if (CALL_FUNCTION1(_data->player, canInteract, (FightAction)hotspot->action)) {
 				if (ev.type == Common::EVENT_LBUTTONUP)
-					CALL_FUNCTION(_data->player, handleAction, (FightAction)hotspot->action);
+					CALL_FUNCTION1(_data->player, handleAction, (FightAction)hotspot->action);
 			} else {
 				_engine->getCursor()->setStyle(kCursorNormal);
 			}
@@ -177,11 +180,11 @@ void Fight::handleMouseMove(Common::Event ev, bool isProcessing) {
 		_engine->getCursor()->setStyle((CursorStyle)hotspot->cursor);
 
 		// Call player function
-		if (!CALL_FUNCTION(_data->player, canInteract, (FightAction)hotspot->action))
+		if (!CALL_FUNCTION1(_data->player, canInteract, (FightAction)hotspot->action))
 			_engine->getCursor()->setStyle(kCursorNormal);
 
-		CALL_FUNCTION(_data->player, update);
-		CALL_FUNCTION(_data->opponent, update);
+		CALL_FUNCTION0(_data->player, update);
+		CALL_FUNCTION0(_data->opponent, update);
 
 		// Draw sequences
 		if (!_data->isRunning)
@@ -530,10 +533,10 @@ void Fight::processFighter(Fighter *fighter) {
 
 		case kFightAction103:
 			setSequenceAndDraw(fighter, 0, kFightSequenceType1);
-			CALL_FUNCTION(fighter, handleAction, kFightAction101);
+			CALL_FUNCTION1(fighter, handleAction, kFightAction101);
 			setSequenceAndDraw(fighter->opponent, 0, kFightSequenceType1);
-			CALL_FUNCTION(fighter->opponent, handleAction, kFightAction101);
-			CALL_FUNCTION(fighter->opponent, update);
+			CALL_FUNCTION1(fighter->opponent, handleAction, kFightAction101);
+			CALL_FUNCTION0(fighter->opponent, update);
 			break;
 
 		case kFightActionWin:
@@ -576,17 +579,17 @@ void Fight::handleAction(Fighter *fighter, FightAction action) {
 		break;
 
 	case kFightAction103:
-		CALL_FUNCTION(fighter->opponent, handleAction, kFightActionResetFrame);
+		CALL_FUNCTION1(fighter->opponent, handleAction, kFightActionResetFrame);
 		break;
 
 	case kFightActionWin:
 		_endType = kFightEndWin;
-		CALL_FUNCTION(fighter->opponent, handleAction, kFightActionResetFrame);
+		CALL_FUNCTION1(fighter->opponent, handleAction, kFightActionResetFrame);
 		break;
 
 	case kFightActionLost:
 		_endType = kFightEndLost;
-		CALL_FUNCTION(fighter->opponent, handleAction, kFightActionResetFrame);
+		CALL_FUNCTION1(fighter->opponent, handleAction, kFightActionResetFrame);
 		break;
 	}
 
@@ -663,8 +666,8 @@ void Fight::handleActionMilos(Fighter *fighter, FightAction action) {
 			setSequenceAndDraw(fighter, 6, kFightSequenceType1);
 			setSequenceAndDraw(fighter->opponent, 3, kFightSequenceType1);
 
-			CALL_FUNCTION(fighter->opponent, handleAction, kFightAction103);
-			CALL_FUNCTION(fighter, update);
+			CALL_FUNCTION1(fighter->opponent, handleAction, kFightAction103);
+			CALL_FUNCTION0(fighter, update);
 		} else {
 			fighter->field_34++;
 		}
@@ -675,8 +678,8 @@ void Fight::handleActionMilos(Fighter *fighter, FightAction action) {
 			setSequenceAndDraw(fighter, 6, kFightSequenceType1);
 			setSequenceAndDraw(fighter->opponent, 4, kFightSequenceType1);
 
-			CALL_FUNCTION(fighter->opponent, handleAction, kFightAction103);
-			CALL_FUNCTION(fighter, update);
+			CALL_FUNCTION1(fighter->opponent, handleAction, kFightAction103);
+			CALL_FUNCTION0(fighter, update);
 		} else {
 			fighter->field_34++;
 		}
@@ -699,7 +702,7 @@ void Fight::handleActionMilos(Fighter *fighter, FightAction action) {
 			}
 		} else {
 			setSequenceAndDraw(fighter, 4, kFightSequenceType1);
-			CALL_FUNCTION(fighter, update);
+			CALL_FUNCTION0(fighter, update);
 		}
 		break;
 	}
@@ -716,11 +719,11 @@ void Fight::updateMilos(Fighter *fighter) {
 			getSound()->reset(kEntityTables0);
 			getSound()->playSound(kEntityTrain, "MUS029", 16);
 
-			CALL_FUNCTION(fighter, handleAction, kFightActionWin);
+			CALL_FUNCTION1(fighter, handleAction, kFightActionWin);
 		}
 
 		if (fighter->sequenceIndex == 4) {
-			CALL_FUNCTION(fighter->opponent, handleAction, kFightAction4);
+			CALL_FUNCTION1(fighter->opponent, handleAction, kFightAction4);
 			_endType = kFightEndLost;
 		}
 	}
@@ -745,7 +748,7 @@ bool Fight::canInteractMilos(Fighter *fighter, FightAction action) {
 void Fight::handleOpponentActionMilos(Fighter *fighter, FightAction action) {
 	if (action == kFightAction4) {
 		setSequenceAndDraw(fighter, 5, kFightSequenceType1);
-		CALL_FUNCTION(fighter->opponent, handleAction, kFightAction103);
+		CALL_FUNCTION1(fighter->opponent, handleAction, kFightAction103);
 	} else {
 		if (action != kFightAction131)
 			handleAction(fighter, action);
@@ -756,7 +759,7 @@ void Fight::updateOpponentMilos(Fighter *fighter) {
 	// This is an opponent struct!
 	Opponent *opponent = (Opponent *)fighter;
 
-	if (!opponent->field_38 && CALL_FUNCTION(opponent, canInteract, kFightAction1) && !opponent->sequenceIndex2) {
+	if (!opponent->field_38 && CALL_FUNCTION1(opponent, canInteract, kFightAction1) && !opponent->sequenceIndex2) {
 
 		if (opponent->opponent->field_34 >= 2) {
 			switch (random(5)) {
@@ -799,11 +802,11 @@ void Fight::updateOpponentMilos(Fighter *fighter) {
 
 	if (opponent->currentSequence2 && CHECK_SEQUENCE2(opponent, 2)) {
 		if (opponent->sequenceIndex == 1 || opponent->sequenceIndex == 2)
-			CALL_FUNCTION(opponent->opponent, handleAction, (FightAction)opponent->sequenceIndex);
+			CALL_FUNCTION1(opponent->opponent, handleAction, (FightAction)opponent->sequenceIndex);
 
 		if (opponent->opponent->countdown <= 0) {
 			getSound()->reset(kEntityTables0);
-			CALL_FUNCTION(opponent, handleAction, kFightActionLost);
+			CALL_FUNCTION1(opponent, handleAction, kFightActionLost);
 		}
 	}
 
@@ -857,8 +860,8 @@ void Fight::handleActionAnna(Fighter *fighter, FightAction action) {
 			setSequenceAndDraw(fighter, 4, kFightSequenceType1);
 			setSequenceAndDraw(fighter->opponent, 4, kFightSequenceType1);
 
-			CALL_FUNCTION(fighter->opponent, handleAction, kFightAction103);
-			CALL_FUNCTION(fighter, update);
+			CALL_FUNCTION1(fighter->opponent, handleAction, kFightAction103);
+			CALL_FUNCTION0(fighter, update);
 		} else {
 			fighter->field_34++;
 		}
@@ -869,8 +872,8 @@ void Fight::handleActionAnna(Fighter *fighter, FightAction action) {
 			setSequenceAndDraw(fighter, 4, kFightSequenceType1);
 			setSequenceAndDraw(fighter->opponent, 5, kFightSequenceType1);
 
-			CALL_FUNCTION(fighter->opponent, handleAction, kFightAction103);
-			CALL_FUNCTION(fighter, update);
+			CALL_FUNCTION1(fighter->opponent, handleAction, kFightAction103);
+			CALL_FUNCTION0(fighter, update);
 		} else {
 			fighter->field_34++;
 		}
@@ -881,8 +884,8 @@ void Fight::handleActionAnna(Fighter *fighter, FightAction action) {
 			setSequenceAndDraw(fighter, 4, kFightSequenceType1);
 			setSequenceAndDraw(fighter->opponent, 6, kFightSequenceType1);
 
-			CALL_FUNCTION(fighter->opponent, handleAction, kFightAction103);
-			CALL_FUNCTION(fighter, update);
+			CALL_FUNCTION1(fighter->opponent, handleAction, kFightAction103);
+			CALL_FUNCTION0(fighter, update);
 		} else {
 			fighter->field_34++;
 		}
@@ -919,7 +922,7 @@ void Fight::updateOpponentAnna(Fighter *fighter) {
 	// This is an opponent struct!
 	Opponent *opponent = (Opponent *)fighter;
 
-	if (!opponent->field_38 && CALL_FUNCTION(opponent, canInteract, kFightAction1) && !opponent->sequenceIndex2) {
+	if (!opponent->field_38 && CALL_FUNCTION1(opponent, canInteract, kFightAction1) && !opponent->sequenceIndex2) {
 
 		if (opponent->opponent->field_34 >= 2) {
 			switch (random(6)) {
@@ -961,11 +964,11 @@ void Fight::updateOpponentAnna(Fighter *fighter) {
 
 	if (opponent->currentSequence2 && CHECK_SEQUENCE2(opponent, 2)) {
 		if (opponent->sequenceIndex == 1 || opponent->sequenceIndex == 2 || opponent->sequenceIndex == 3)
-			CALL_FUNCTION(opponent->opponent, handleAction, (FightAction)opponent->sequenceIndex);
+			CALL_FUNCTION1(opponent->opponent, handleAction, (FightAction)opponent->sequenceIndex);
 
 		if (opponent->opponent->countdown <= 0) {
 			getSound()->reset(kEntityTables0);
-			CALL_FUNCTION(opponent, handleAction, kFightActionLost);
+			CALL_FUNCTION1(opponent, handleAction, kFightActionLost);
 		}
 	}
 
@@ -1023,8 +1026,8 @@ void Fight::handleActionIvo(Fighter *fighter, FightAction action) {
 			setSequenceAndDraw(fighter, 7, kFightSequenceType1);
 			setSequenceAndDraw(fighter->opponent, 4, kFightSequenceType1);
 
-			CALL_FUNCTION(fighter->opponent, handleAction, kFightAction103);
-			CALL_FUNCTION(fighter, update);
+			CALL_FUNCTION1(fighter->opponent, handleAction, kFightAction103);
+			CALL_FUNCTION0(fighter, update);
 		}
 		break;
 
@@ -1033,8 +1036,8 @@ void Fight::handleActionIvo(Fighter *fighter, FightAction action) {
 			setSequenceAndDraw(fighter, 7, kFightSequenceType1);
 			setSequenceAndDraw(fighter->opponent, 5, kFightSequenceType1);
 
-			CALL_FUNCTION(fighter->opponent, handleAction, kFightAction103);
-			CALL_FUNCTION(fighter, update);
+			CALL_FUNCTION1(fighter->opponent, handleAction, kFightAction103);
+			CALL_FUNCTION0(fighter, update);
 		}
 		break;
 
@@ -1064,7 +1067,7 @@ void Fight::handleActionIvo(Fighter *fighter, FightAction action) {
 void Fight::updateIvo(Fighter *fighter) {
 
 	if ((fighter->sequenceIndex == 3 || fighter->sequenceIndex == 4) && !fighter->frameIndex)
-		CALL_FUNCTION(fighter->opponent, handleAction, kFightAction131);
+		CALL_FUNCTION1(fighter->opponent, handleAction, kFightAction131);
 
 	if (fighter->currentSequence2 && CHECK_SEQUENCE2(fighter, 2)) {
 
@@ -1074,13 +1077,12 @@ void Fight::updateIvo(Fighter *fighter) {
 			setSequenceAndDraw(fighter->opponent, 8, kFightSequenceType1);
 			getSound()->reset(kEntityTables0);
 
-			CALL_FUNCTION(fighter, handleAction, kFightActionWin);
-
+			CALL_FUNCTION1(fighter, handleAction, kFightActionWin);
 			return;
 		}
 
 		if (fighter->sequenceIndex == 3 || fighter->sequenceIndex == 4)
-			CALL_FUNCTION(fighter->opponent, handleAction, (FightAction)fighter->sequenceIndex);
+			CALL_FUNCTION1(fighter->opponent, handleAction, (FightAction)fighter->sequenceIndex);
 	}
 
 	update(fighter);
@@ -1106,7 +1108,7 @@ void Fight::handleOpponentActionIvo(Fighter *fighter, FightAction action) {
 		if (opponent->sequenceIndex != 1 && opponent->sequenceIndex != 3 || CHECK_SEQUENCE2(opponent, 4)) {
 			setSequenceAndDraw(opponent, 6, kFightSequenceType1);
 			setSequenceAndDraw(opponent->opponent, 6, kFightSequenceType1);
-			CALL_FUNCTION(opponent->opponent, handleAction, kFightAction103);
+			CALL_FUNCTION1(opponent->opponent, handleAction, kFightAction103);
 		}
 		break;
 
@@ -1114,7 +1116,7 @@ void Fight::handleOpponentActionIvo(Fighter *fighter, FightAction action) {
 		if (opponent->sequenceIndex != 2 && opponent->sequenceIndex != 3 || CHECK_SEQUENCE2(opponent, 4)) {
 			setSequenceAndDraw(opponent, 6, kFightSequenceType1);
 			setSequenceAndDraw(opponent->opponent, 5, kFightSequenceType1);
-			CALL_FUNCTION(opponent->opponent, handleAction, kFightAction103);
+			CALL_FUNCTION1(opponent->opponent, handleAction, kFightAction103);
 		}
 		break;
 
@@ -1135,7 +1137,7 @@ void Fight::updateOpponentIvo(Fighter *fighter) {
 	// This is an opponent struct!
 	Opponent *opponent = (Opponent *)fighter;
 
-	if (!opponent->field_38 && CALL_FUNCTION(opponent, canInteract, kFightAction1) && !opponent->sequenceIndex2) {
+	if (!opponent->field_38 && CALL_FUNCTION1(opponent, canInteract, kFightAction1) && !opponent->sequenceIndex2) {
 
 		if (opponent->opponent->field_34 >= 2) {
 			switch (random(5)) {
@@ -1178,13 +1180,13 @@ void Fight::updateOpponentIvo(Fighter *fighter) {
 			setSequenceAndDraw(opponent->opponent, 8, kFightSequenceType1);
 			getSound()->reset(kEntityTables0);
 
-			CALL_FUNCTION(opponent->opponent, handleAction, kFightActionWin);
+			CALL_FUNCTION1(opponent->opponent, handleAction, kFightActionWin);
 
 			return;
 		}
 
 		if (opponent->sequenceIndex == 1 || opponent->sequenceIndex == 2)
-			CALL_FUNCTION(opponent->opponent, handleAction, (FightAction)opponent->sequenceIndex);
+			CALL_FUNCTION1(opponent->opponent, handleAction, (FightAction)opponent->sequenceIndex);
 	}
 
 	updateOpponent(opponent);
@@ -1235,12 +1237,12 @@ void Fight::handleActionSalko(Fighter *fighter, FightAction action) {
 			setSequenceAndDraw(fighter, 3, kFightSequenceType1);
 			setSequenceAndDraw(fighter->opponent, (action == kFightAction1 ? 3 : 4), kFightSequenceType1);
 
-			CALL_FUNCTION(fighter->opponent, handleAction, kFightAction103);
+			CALL_FUNCTION1(fighter->opponent, handleAction, kFightAction103);
 
 			if (action == kFightAction2)
 				fighter->countdown= 0;
 
-			CALL_FUNCTION(fighter, update);
+			CALL_FUNCTION0(fighter, update);
 		} else {
 			fighter->field_34++;
 		}
@@ -1248,8 +1250,8 @@ void Fight::handleActionSalko(Fighter *fighter, FightAction action) {
 
 	case kFightAction5:
 		if (fighter->sequenceIndex != 3) {
-			CALL_FUNCTION(fighter->opponent, handleAction, kFightAction103);
-			CALL_FUNCTION(fighter, update);
+			CALL_FUNCTION1(fighter->opponent, handleAction, kFightAction103);
+			CALL_FUNCTION0(fighter, update);
 		}
 		break;
 
@@ -1278,7 +1280,7 @@ void Fight::updateSalko(Fighter *fighter) {
 		}
 
 		if (fighter->sequenceIndex == 2)
-			CALL_FUNCTION(fighter->opponent, handleAction, kFightAction2);
+			CALL_FUNCTION1(fighter->opponent, handleAction, kFightAction2);
 	}
 }
 
@@ -1300,7 +1302,7 @@ bool Fight::canInteractSalko(Fighter *fighter, FightAction action) {
 void Fight::handleOpponentActionSalko(Fighter *fighter, FightAction action) {
 	if (action == kFightAction2) {
 		setSequenceAndDraw(fighter, 5, kFightSequenceType1);
-		CALL_FUNCTION(fighter->opponent, handleAction, kFightAction103);
+		CALL_FUNCTION1(fighter->opponent, handleAction, kFightAction103);
 	} else {
 		handleAction(fighter, action);
 	}
@@ -1310,7 +1312,7 @@ void Fight::updateOpponentSalko(Fighter *fighter) {
 	// This is an opponent struct
 	Opponent *opponent = (Opponent *)fighter;
 
-	if (!opponent->field_38 && CALL_FUNCTION(opponent, canInteract, kFightAction1) && !opponent->sequenceIndex2) {
+	if (!opponent->field_38 && CALL_FUNCTION1(opponent, canInteract, kFightAction1) && !opponent->sequenceIndex2) {
 
 		switch (random(5)) {
 		default:
@@ -1354,7 +1356,7 @@ void Fight::updateOpponentSalko(Fighter *fighter) {
 		}
 
 		if (opponent->sequenceIndex == 1 || opponent->sequenceIndex == 2)
-			CALL_FUNCTION(opponent->opponent, handleAction, (FightAction)opponent->sequenceIndex);
+			CALL_FUNCTION1(opponent->opponent, handleAction, (FightAction)opponent->sequenceIndex);
 	}
 
 	updateOpponent(opponent);
@@ -1401,8 +1403,8 @@ void Fight::handleActionVesna(Fighter *fighter, FightAction action) {
 
 	case kFightAction1:
 		if (fighter->sequenceIndex != 1) {
-			CALL_FUNCTION(fighter->opponent, handleAction, kFightAction103);
-			CALL_FUNCTION(fighter, update);
+			CALL_FUNCTION1(fighter->opponent, handleAction, kFightAction103);
+			CALL_FUNCTION0(fighter, update);
 		} else {
 			fighter->field_34++;
 		}
@@ -1410,8 +1412,8 @@ void Fight::handleActionVesna(Fighter *fighter, FightAction action) {
 
 	case kFightAction2:
 		if (fighter->sequenceIndex != 2) {
-			CALL_FUNCTION(fighter->opponent, handleAction, kFightAction103);
-			CALL_FUNCTION(fighter, update);
+			CALL_FUNCTION1(fighter->opponent, handleAction, kFightAction103);
+			CALL_FUNCTION0(fighter, update);
 		} else {
 			fighter->field_34++;
 		}
@@ -1419,8 +1421,8 @@ void Fight::handleActionVesna(Fighter *fighter, FightAction action) {
 
 	case kFightAction5:
 		if (fighter->sequenceIndex != 3) {
-			CALL_FUNCTION(fighter->opponent, handleAction, kFightAction103);
-			CALL_FUNCTION(fighter, update);
+			CALL_FUNCTION1(fighter->opponent, handleAction, kFightAction103);
+			CALL_FUNCTION0(fighter, update);
 		}
 		break;
 
@@ -1448,7 +1450,7 @@ void Fight::updateVesna(Fighter *fighter) {
 	if (fighter->currentSequence2 && CHECK_SEQUENCE2(fighter, 2)) {
 
 		if (fighter->sequenceIndex == 3)
-			CALL_FUNCTION(fighter->opponent, handleAction, kFightAction3);
+			CALL_FUNCTION1(fighter->opponent, handleAction, kFightAction3);
 		
 		if (fighter->opponent->countdown <= 0) {			
 			getSound()->reset(kEntityTables0);
@@ -1457,7 +1459,7 @@ void Fight::updateVesna(Fighter *fighter) {
 		}
 
 		if (fighter->sequenceIndex == 5)
-			CALL_FUNCTION(fighter->opponent, handleAction, kFightAction5);
+			CALL_FUNCTION1(fighter->opponent, handleAction, kFightAction5);
 	}
 
 	update(fighter);
@@ -1492,12 +1494,12 @@ void Fight::handleOpponentActionVesna(Fighter *fighter, FightAction action) {
 		break;
 
 	case kFightAction3:
-		CALL_FUNCTION(fighter->opponent, handleAction, kFightAction103);
+		CALL_FUNCTION1(fighter->opponent, handleAction, kFightAction103);
 		break;
 
 	case kFightAction5:
 		setSequenceAndDraw(fighter, 7, kFightSequenceType1);
-		CALL_FUNCTION(fighter->opponent, handleAction, kFightAction103);
+		CALL_FUNCTION1(fighter->opponent, handleAction, kFightAction103);
 		if (fighter->countdown <= 1)
 			fighter->countdown = 1;
 		break;
@@ -1511,7 +1513,7 @@ void Fight::updateOpponentVesna(Fighter *fighter) {
 	// This is an opponent struct
 	Opponent *opponent = (Opponent *)fighter;
 
-	if (!opponent->field_38 && CALL_FUNCTION(opponent, canInteract, kFightAction1) && !opponent->sequenceIndex2) {
+	if (!opponent->field_38 && CALL_FUNCTION1(opponent, canInteract, kFightAction1) && !opponent->sequenceIndex2) {
 
 		if (opponent->opponent->field_34 == 1) {
 			setSequenceAndDraw(opponent, 2, kFightSequenceType0);
@@ -1556,7 +1558,7 @@ void Fight::updateOpponentVesna(Fighter *fighter) {
 
 	if (opponent->currentSequence2 && CHECK_SEQUENCE2(opponent, 2)) {
 		if (opponent->sequenceIndex == 1 || opponent->sequenceIndex == 2 || opponent->sequenceIndex == 5)
-			CALL_FUNCTION(opponent->opponent, handleAction, (FightAction)opponent->sequenceIndex);
+			CALL_FUNCTION1(opponent->opponent, handleAction, (FightAction)opponent->sequenceIndex);
 
 		if (opponent->opponent->countdown <= 0) {
 
@@ -1579,9 +1581,9 @@ void Fight::updateOpponentVesna(Fighter *fighter) {
 
 			setSequenceAndDraw(opponent->opponent, 4, kFightSequenceType1);
 
-			CALL_FUNCTION(opponent, handleAction, kFightActionLost);
-			CALL_FUNCTION(opponent->opponent, update);
-			CALL_FUNCTION(opponent, update);
+			CALL_FUNCTION1(opponent, handleAction, kFightActionLost);
+			CALL_FUNCTION0(opponent->opponent, update);
+			CALL_FUNCTION0(opponent, update);
 
 			getSound()->reset(kEntityTables0);
 
