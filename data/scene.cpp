@@ -64,7 +64,7 @@ SceneHotspot *SceneHotspot::load(Common::SeekableReadStream *stream) {
 	hs->rect.top = stream->readUint16LE();
 	hs->rect.bottom = stream->readUint16LE();
 
-	hs->offset = stream->readUint16LE();
+	hs->coord = stream->readUint16LE();
 	hs->unknownA = stream->readUint16LE();
 	hs->scene = stream->readUint16LE();
 	hs->location = stream->readByte();
@@ -77,8 +77,31 @@ SceneHotspot *SceneHotspot::load(Common::SeekableReadStream *stream) {
 
 	debugC(10, kLastExpressDebugScenes, "\thotspot: scene=%d location=%02d action=%02d param1=%02d param2=%02d param3=%02d cursor=%02d rect=(%d, %d)x(%d,%d)",
 	                                   hs->scene, hs->location, hs->action, hs->param1, hs->param2, hs->param3, hs->cursor, hs->rect.left, hs->rect.top, hs->rect.right, hs->rect.bottom);
-	debugC(10, kLastExpressDebugScenes, "\t         uA=%d, next=%d offset=%d ",
-	                                   hs->unknownA, hs->next, hs->offset);
+	debugC(10, kLastExpressDebugScenes, "\t         uA=%d, next=%d coord=%d ",
+	                                   hs->unknownA, hs->next, hs->coord);
+
+	// Read all coords data
+	uint16 offset = hs->coord;
+	while (offset != NULL)  {
+		sceneCoord *coord = new sceneCoord();
+		if (!coord) {
+			delete hs;
+			return NULL;
+		}
+
+		stream->seek(offset, SEEK_SET);
+
+		coord->field_0 = stream->readUint32LE();
+		coord->field_4 = stream->readUint32LE();
+		coord->field_8 = stream->readByte();
+		coord->next = stream->readUint32LE();
+
+		hs->_coords.push_back(coord);
+
+		offset = coord->next;
+	}
+
+	
 
 	return hs;
 }
@@ -86,11 +109,28 @@ SceneHotspot *SceneHotspot::load(Common::SeekableReadStream *stream) {
 bool SceneHotspot::isInside(Common::Point point) {
 
 	bool contains = rect.contains(point);
+	
+	if (!_coords.empty() && contains) {
 
-	if (contains)
-		warning("SceneHotspot::isInside - offset checking not implemented!");
+		for (uint i = 0; i < _coords.size(); i++) {
 
-	return contains;
+			sceneCoord *coord = _coords[i];
+
+			// Check coords
+			bool cont;
+			if (coord->field_8)
+				cont = coord->field_4 + point.x * coord->field_0 + 1000 * point.y >= 0;
+			else
+				cont = coord->field_4 + point.x * coord->field_0 + 1000 * point.y <= 0;
+
+			if (!cont)
+				return false;
+		}
+
+		return true;
+	}
+
+	return false;
 }
 
 //////////////////////////////////////////////////////////////////////////

@@ -50,7 +50,7 @@
 	    uint16 {2}  - right
 	    uint16 {2}  - top
 	    uint16 {2}  - bottom
-	    uint16 {2}  - offset to another struct
+	    uint16 {2}  - scene coords data
 	    uint16 {2}  - unknownA
 	    uint16 {2}  - scene
 	    byte {1}    - location;
@@ -62,21 +62,17 @@
 	    uint16 {2}  - offset to next hotpost
 	    uint16 {2}  - unknown16
 
-	??? (9 bytes)
-	    byte {1}
-	    byte {1}
-	    byte {1}
-	    byte {1}
-	    byte {1}
-	    byte {1}
-	    byte {1}
-	    byte {1}
-	    byte {1}
+	coords data (9 bytes)
+	    uint32 {4}    - ??
+	    uint32 {4}    - ??
+	    byte {1}       - ??
+	   uint32 {4}     - offset to next coords data structure
 
 */
 
 #include "lastexpress/drawable.h"
 
+#include "common/array.h"
 #include "common/stream.h"
 
 namespace LastExpress {
@@ -149,14 +145,15 @@ public:
 		kAction44 = 44
 	};
 
-	SceneHotspot() {}
-	static SceneHotspot *load(Common::SeekableReadStream *stream);
+	struct sceneCoord {
+		uint32 field_0;
+		uint32 field_4;
+		byte field_8;
+		uint32 next;
+	};
 
-	bool isInside(Common::Point point);
-
-public:
 	Common::Rect rect;
-	uint16 offset;
+	uint16 coord;
 	uint16 unknownA;
 	uint16 scene;
 	byte location;
@@ -166,6 +163,14 @@ public:
 	byte param3;
 	byte cursor;
 	uint32 next;
+
+	SceneHotspot() {}
+	static SceneHotspot *load(Common::SeekableReadStream *stream);
+
+	bool isInside(Common::Point point);
+
+private:
+	Common::Array<sceneCoord *> _coords;
 };
 
 class Scene : public Drawable {
