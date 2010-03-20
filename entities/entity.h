@@ -28,6 +28,8 @@
 
 #include "lastexpress/shared.h"
 
+#include "common/array.h"
+#include "common/func.h"
 #include "common/serializer.h"
 
 namespace LastExpress {

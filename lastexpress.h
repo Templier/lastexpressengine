@@ -28,6 +28,8 @@
 
 #include "lastexpress/debug.h"
 
+#include "common/random.h"
+
 #include "engines/advancedDetector.h"
 #include "engines/engine.h"
 
