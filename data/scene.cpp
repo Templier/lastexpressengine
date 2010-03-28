@@ -82,7 +82,7 @@ SceneHotspot *SceneHotspot::load(Common::SeekableReadStream *stream) {
 
 	// Read all coords data
 	uint16 offset = hs->coord;
-	while (offset != NULL)  {
+	while (offset != 0) {
 		sceneCoord *coord = new sceneCoord();
 		if (!coord) {
 			delete hs;
@@ -114,14 +114,15 @@ bool SceneHotspot::isInside(Common::Point point) {
 
 		for (uint i = 0; i < _coords.size(); i++) {
 
-			sceneCoord *coord = _coords[i];
+			sceneCoord *sCoord = _coords[i];
 
 			// Check coords
+			// FIXME: gcc warns that the first statement in the if here always evaluates to true
 			bool cont;
-			if (coord->field_8)
-				cont = coord->field_4 + point.x * coord->field_0 + 1000 * point.y >= 0;
+			if (sCoord->field_8)
+				cont = sCoord->field_4 + point.x * sCoord->field_0 + 1000 * point.y >= 0;
 			else
-				cont = coord->field_4 + point.x * coord->field_0 + 1000 * point.y <= 0;
+				cont = sCoord->field_4 + point.x * sCoord->field_0 + 1000 * point.y <= 0;
 
 			if (!cont)
 				return false;
