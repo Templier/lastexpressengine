@@ -63,7 +63,7 @@ Audio::AudioStream *SimpleSound::makeDecoder(Common::SeekableReadStream *in, uin
 }
 
 void SimpleSound::play(Audio::AudioStream *as) {
-	g_system->getMixer()->playInputStream(Audio::Mixer::kPlainSoundType, &_handle, as);
+	g_system->getMixer()->playStream(Audio::Mixer::kPlainSoundType, &_handle, as);
 }
 
 //////////////////////////////////////////////////////////////////////////
