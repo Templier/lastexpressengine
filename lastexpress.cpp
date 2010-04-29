@@ -46,16 +46,16 @@ LastExpressEngine::LastExpressEngine(OSystem *syst, const ADGameDescription *gd)
 	SearchMan.addSubDirectoryMatching(_gameDataDir, "data");
 
 	// Initialize the custom debug levels
-	Common::addDebugChannel(kLastExpressDebugAll, "All", "Debug everything");
-	Common::addDebugChannel(kLastExpressDebugGraphics, "Graphics", "Debug graphics & animation/sequence playback");
-	Common::addDebugChannel(kLastExpressDebugResource, "Resource", "Debug resource management");
-	Common::addDebugChannel(kLastExpressDebugCursor, "Cursor", "Debug cursor handling");
-	Common::addDebugChannel(kLastExpressDebugSound, "Sound", "Debug sound playback");
-	Common::addDebugChannel(kLastExpressDebugSubtitle, "Subtitle", "Debug subtitles");
-	Common::addDebugChannel(kLastExpressDebugSavegame, "Savegame", "Debug savegames");
-	Common::addDebugChannel(kLastExpressDebugLogic, "Logic", "Debug logic");
-	Common::addDebugChannel(kLastExpressDebugScenes, "Scenes", "Debug scenes & hotspots");
-	Common::addDebugChannel(kLastExpressDebugUnknown, "Unknown", "Debug unknown data");
+	DebugMan.addDebugChannel(kLastExpressDebugAll, "All", "Debug everything");
+	DebugMan.addDebugChannel(kLastExpressDebugGraphics, "Graphics", "Debug graphics & animation/sequence playback");
+	DebugMan.addDebugChannel(kLastExpressDebugResource, "Resource", "Debug resource management");
+	DebugMan.addDebugChannel(kLastExpressDebugCursor, "Cursor", "Debug cursor handling");
+	DebugMan.addDebugChannel(kLastExpressDebugSound, "Sound", "Debug sound playback");
+	DebugMan.addDebugChannel(kLastExpressDebugSubtitle, "Subtitle", "Debug subtitles");
+	DebugMan.addDebugChannel(kLastExpressDebugSavegame, "Savegame", "Debug savegames");
+	DebugMan.addDebugChannel(kLastExpressDebugLogic, "Logic", "Debug logic");
+	DebugMan.addDebugChannel(kLastExpressDebugScenes, "Scenes", "Debug scenes & hotspots");
+	DebugMan.addDebugChannel(kLastExpressDebugUnknown, "Unknown", "Debug unknown data");
 
 	g_eventRec.registerRandomSource(_random, "lastexpress");
 }

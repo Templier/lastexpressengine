@@ -68,7 +68,7 @@ Debugger::Debugger(LastExpressEngine *engine) : _engine(engine) {
 }
 
 Debugger::~Debugger() {
-	Common::clearAllDebugChannels();
+	DebugMan.clearAllDebugChannels();
 }
 
 bool Debugger::hasCommand() {
