@@ -100,6 +100,9 @@ bool ResourceManager::loadArchive(const Common::String &name) {
 
 	if (archive->count() == 0) {
 		debugC(2, kLastExpressDebugResource, "Error opening archive: %s", name.c_str());
+
+		delete archive;
+
 		return false;
 	}
 
