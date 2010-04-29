@@ -35,8 +35,6 @@ namespace LastExpress {
 // SceneHeader
 SceneHeader *SceneHeader::load(Common::SeekableReadStream *stream) {
 	SceneHeader *sh = new SceneHeader();
-	if (!sh)
-		return NULL;
 
 	stream->read(&sh->name, sizeof(sh->name));
 	sh->sig = stream->readByte();
@@ -55,8 +53,6 @@ SceneHeader *SceneHeader::load(Common::SeekableReadStream *stream) {
 
 SceneHotspot *SceneHotspot::load(Common::SeekableReadStream *stream) {
 	SceneHotspot *hs = new SceneHotspot();
-	if (!hs)
-		return NULL;
 
 	// Rect
 	hs->rect.left = stream->readUint16LE();
@@ -83,25 +79,21 @@ SceneHotspot *SceneHotspot::load(Common::SeekableReadStream *stream) {
 	// Read all coords data
 	uint16 offset = hs->coord;
 	while (offset != 0) {
-		sceneCoord *coord = new sceneCoord();
-		if (!coord) {
-			delete hs;
-			return NULL;
-		}
+
+		SceneCoord *sceneCoord = new SceneCoord;
 
 		stream->seek(offset, SEEK_SET);
 
-		coord->field_0 = stream->readUint32LE();
-		coord->field_4 = stream->readUint32LE();
-		coord->field_8 = stream->readByte();
-		coord->next = stream->readUint32LE();
+		sceneCoord->field_0 = stream->readUint32LE();
+		sceneCoord->field_4 = stream->readUint32LE();
+		sceneCoord->field_8 = stream->readByte();
+		sceneCoord->next = stream->readUint32LE();
 
-		hs->_coords.push_back(coord);
+		hs->_coords.push_back(sceneCoord);
 
-		offset = coord->next;
+		// FIXME: read 32 bits but the next offset is 16 bits?
+		offset = sceneCoord->next;
 	}
-
-	
 
 	return hs;
 }
@@ -114,7 +106,7 @@ bool SceneHotspot::isInside(Common::Point point) {
 
 		for (uint i = 0; i < _coords.size(); i++) {
 
-			sceneCoord *sCoord = _coords[i];
+			SceneCoord *sCoord = _coords[i];
 
 			// Check coords
 			// FIXME: gcc warns that the first statement in the if here always evaluates to true

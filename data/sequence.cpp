@@ -385,13 +385,11 @@ uint32 Sequence::count() {
 }
 
 FrameInfo *Sequence::getFrameInfo(uint32 index) {
-	if (_frames.size() == 0) {
+	if (_frames.size() == 0)
 		error("Trying to decode a sequence before loading its data");
-	}
 
-	if (index > _frames.size() - 1) {
+	if (index > _frames.size() - 1)
 		error("Invalid sequence frame requested: %d, max %d", index, _frames.size() - 1);
-	}
 
 	// Skip "invalid" frames
 	if (_frames[index].compressionType == 0)

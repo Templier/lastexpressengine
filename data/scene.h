@@ -145,7 +145,7 @@ public:
 		kAction44 = 44
 	};
 
-	struct sceneCoord {
+	struct SceneCoord {
 		uint32 field_0;
 		uint32 field_4;
 		byte field_8;
@@ -170,7 +170,7 @@ public:
 	bool isInside(Common::Point point);
 
 private:
-	Common::Array<sceneCoord *> _coords;
+	Common::Array<SceneCoord *> _coords;
 };
 
 class Scene : public Drawable {

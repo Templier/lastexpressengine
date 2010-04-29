@@ -108,19 +108,15 @@ Graphics::Surface *GraphicsManager::getSurface(BackgroundType type) {
 
 		case kBackgroundA:
 			return &_backgroundA;
-			break;
 
 		case kBackgroundC:
 			return &_backgroundC;
-			break;
 
 		case kBackgroundOverlay:
 			return &_overlay;
-			break;
 
 		case kBackgroundInventory:
 			return &_inventory;
-			break;
 
 		case kBackgroundAll:
 			error("GraphicsManager::getSurface() - cannot return a surface for kBackgroundAll!");

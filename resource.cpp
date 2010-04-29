@@ -177,16 +177,11 @@ Background *ResourceManager::loadBackground(const Common::String &name) {
 	if (!stream)
 		return NULL;
 
-	// Create the new background
+	// Create the new background & load the data
 	Background *bg = new Background();
-	if (!bg) {
-		delete stream;
-		return NULL;
-	}
-
-	// Load the data
 	if (!bg->load(stream)) {
 		delete bg;
+		// stream should be freed by the Background instance
 		return NULL;
 	}
 
@@ -201,14 +196,9 @@ Cursor *ResourceManager::loadCursor() {
 
 	// Create the new background
 	Cursor *c = new Cursor();
-	if (!c) {
-		delete stream;
-		return NULL;
-	}
-
-	// Load the data
 	if (!c->load(stream)) {
 		delete c;
+		// stream should be freed by the Cursor instance
 		return NULL;
 	}
 
@@ -223,14 +213,9 @@ Font *ResourceManager::loadFont() {
 
 	// Create the new background
 	Font *f = new Font();
-	if (!f) {
-		delete stream;
-		return NULL;
-	}
-
-	// Load the data
 	if (!f->load(stream)) {
 		delete f;
+		// stream should be freed by the Font instance
 		return NULL;
 	}
 
