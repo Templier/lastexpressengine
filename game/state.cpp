@@ -46,6 +46,7 @@ State::~State() {
 	delete _objects;
 	delete _savepoints;
 	delete _state;
+	delete _flags;
 }
 
 bool State::isDayTime() {

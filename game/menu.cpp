@@ -396,6 +396,7 @@ Menu::Menu(LastExpressEngine *engine) : _engine(engine), _clock(NULL), _trainLin
 }
 
 Menu::~Menu() {
+	delete _scene;
 	delete _clock;
 	delete _trainLine;
 	for (int i = 0; i < 7; i++)

@@ -147,8 +147,10 @@ void Scene::clear() {
 Scene *Scene::get(Common::SeekableReadStream *stream, SceneHeader *header) {
 	Scene *s = new Scene();
 
-	if (!load(s, stream, header))
+	if (!load(s, stream, header)) {
+		delete s;
 		return NULL;
+	}
 
 	return s;
 }

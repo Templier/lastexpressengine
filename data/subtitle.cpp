@@ -179,6 +179,8 @@ bool SubtitleManager::load(Common::SeekableReadStream *stream) {
 			// Failed to read this line
 			reset();
 
+			delete subtitle;
+
 			return false;
 		}
 

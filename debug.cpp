@@ -152,6 +152,8 @@ bool Debugger::cmd_playseq(int argc, const char **argv) {
 				_engine->getCursor()->show(true);
 			}
 
+			delete sequence;
+
 			resetCommand();
 		}
 	} else {
@@ -385,6 +387,8 @@ bool Debugger::cmd_loadscene(int argc, const char **argv) {
 			if (!_sceneMan->load(_engine->getResourceManager()->getFileStream(Common::String::printf("CD%iTRAIN.DAT", cd)))) {
 				DebugPrintf("Cannot load data for CD %i", cd);
 				resetCommand();
+
+				delete _sceneMan;
 				return true;
 			}
 
@@ -394,6 +398,8 @@ bool Debugger::cmd_loadscene(int argc, const char **argv) {
 			if (!_sceneMan->loadScene(&s, index)) {
 				DebugPrintf("Cannot load scene %i from CD %i", index, cd);
 				resetCommand();
+
+				delete _sceneMan;
 				return true;
 			}
 
