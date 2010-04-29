@@ -52,19 +52,23 @@ namespace LastExpress {
 	(*fighter->name)(fighter, a)
 
 #define REGISTER_PLAYER_FUNCTIONS(name) \
+	if (!_data) \
+		error("Fight::load##namePlayer - invalid data!"); \
 	_data->player->handleAction = new Common::Functor2Mem<Fighter *, FightAction, void, Fight>(this, &Fight::handleAction##name); \
 	_data->player->update = new Common::Functor1Mem<Fighter *, void, Fight>(this, &Fight::update##name); \
 	_data->player->canInteract = new Common::Functor2Mem<Fighter *, FightAction, bool, Fight>(this, &Fight::canInteract##name);
 
 #define REGISTER_OPPONENT_FUNCTIONS(name) \
+	if (!_data) \
+		error("Fight::load##nameOpponent - invalid data!"); \
 	_data->opponent->handleAction = new Common::Functor2Mem<Fighter *, FightAction, void, Fight>(this, &Fight::handleOpponentAction##name); \
 	_data->opponent->update = new Common::Functor1Mem<Fighter *, void, Fight>(this, &Fight::updateOpponent##name); \
 	_data->opponent->canInteract = new Common::Functor2Mem<Fighter *, FightAction, bool, Fight>(this, &Fight::canInteract);
 
 #define CHECK_SEQUENCE2(fighter, value) \
-	fighter->currentSequence2->getFrameInfo()->field_33 & value
+	(fighter->currentSequence2->getFrameInfo()->field_33 & value)
 
-Fight::Fight(LastExpressEngine *engine) : _engine(engine), _data(NULL), _handleTimer(false) {}
+Fight::Fight(LastExpressEngine *engine) : _engine(engine), _data(NULL), _endType(kFightEndLost), _state(0), _handleTimer(false) {}
 
 Fight::~Fight() {
 	clear();
@@ -75,7 +79,7 @@ Fight::~Fight() {
 //////////////////////////////////////////////////////////////////////////
 
 void Fight::eventMouseClick(Common::Event ev) {
-	if (_data->index)
+	if (!_data || _data->index)
 		return;
 
 	// TODO move all the egg handling to inventory functions
@@ -167,7 +171,7 @@ void Fight::handleMouseMove(Common::Event ev, bool isProcessing) {
 		warning("Fight::handleMouseMove - egg blinking not implemented!");
 	}
 
-	if (_data->index)
+	if (!_data || _data->index)
 		return;
 
 	loadSceneObject(scene, getState()->scene);
@@ -277,10 +281,7 @@ Fight::FightEndType Fight::setup(FightType type) {
 
 	//////////////////////////////////////////////////////////////////////////
 	// Setup the fight
-	_data = new FightData();
-	if (!_data)
-		error("Fight::setup - cannot create fight data structure!");
-
+	_data = new FightData;
 	loadData(type);
 
 	// Show opponents & egg button
@@ -435,6 +436,8 @@ void Fight::draw(Fighter *combatant) {
 //////////////////////////////////////////////////////////////////////////
 
 void Fight::loadData(FightType type) {
+	if (!_data)
+		error("Fight::loadData - invalid data!");
 
 	switch (type) {
 	default:
@@ -512,6 +515,9 @@ end_load:
 // Shared
 //////////////////////////////////////////////////////////////////////////
 void Fight::processFighter(Fighter *fighter) {
+	if (!_data)
+		error("Fight::processFighter - invalid data!");
+
 	Sequence *sequence2 = NULL;
 
 	if (!fighter->currentSequence)
@@ -732,6 +738,9 @@ void Fight::updateMilos(Fighter *fighter) {
 }
 
 bool Fight::canInteractMilos(Fighter *fighter, FightAction action) {
+	if (!_data)
+		error("Fight::canInteractMilos - invalid data!");
+
 	if (action != kFightAction128 
 	 || _data->player->sequenceIndex != 1
 	 || !fighter->currentSequence2
@@ -818,6 +827,9 @@ void Fight::updateOpponentMilos(Fighter *fighter) {
 //////////////////////////////////////////////////////////////////////////
 
 void Fight::loadAnnaPlayer() {
+	if (!_data)
+		error("Fight::loadAnnaPlayer - invalid data!");
+
 	// Special case: we are using some shared functions directly
 	_data->player->handleAction = new Common::Functor2Mem<Fighter *, FightAction, void, Fight>(this, &Fight::handleActionAnna);
 	_data->player->update = new Common::Functor1Mem<Fighter *, void, Fight>(this, &Fight::update);
@@ -831,6 +843,9 @@ void Fight::loadAnnaPlayer() {
 }
 
 void Fight::loadAnnaOpponent() {
+	if (!_data)
+		error("Fight::loadAnnaOpponent - invalid data!");
+
 	// Special case: we are using some shared functions directly
 	_data->opponent->handleAction = new Common::Functor2Mem<Fighter *, FightAction, void, Fight>(this, &Fight::handleAction);
 	_data->opponent->update = new Common::Functor1Mem<Fighter *, void, Fight>(this, &Fight::updateOpponentAnna);

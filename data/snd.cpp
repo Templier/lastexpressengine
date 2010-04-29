@@ -38,7 +38,7 @@ namespace LastExpress {
 //////////////////////////////////////////////////////////////////////////
 // Sound
 //////////////////////////////////////////////////////////////////////////
-SimpleSound::SimpleSound() {}
+SimpleSound::SimpleSound() : _size(0), _blocks(0), _blockSize(0) {}
 
 SimpleSound::~SimpleSound() {
 	stop();
@@ -108,6 +108,8 @@ AppendableSound::AppendableSound() : SimpleSound() {
 
 AppendableSound::~AppendableSound() {
 	finish();
+
+	_as = NULL;
 }
 
 void AppendableSound::queueBuffer(byte *data, uint32 size) {

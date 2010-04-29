@@ -102,28 +102,30 @@ bool SceneHotspot::isInside(Common::Point point) {
 
 	bool contains = rect.contains(point);
 	
-	if (!_coords.empty() && contains) {
+	//if (!_coords.empty() && contains) {
 
-		for (uint i = 0; i < _coords.size(); i++) {
+	//	for (uint i = 0; i < _coords.size(); i++) {
 
-			SceneCoord *sCoord = _coords[i];
+	//		SceneCoord *sCoord = _coords[i];
 
-			// Check coords
-			// FIXME: gcc warns that the first statement in the if here always evaluates to true
-			bool cont;
-			if (sCoord->field_8)
-				cont = sCoord->field_4 + point.x * sCoord->field_0 + 1000 * point.y >= 0;
-			else
-				cont = sCoord->field_4 + point.x * sCoord->field_0 + 1000 * point.y <= 0;
+	//		// Check coords
+	//		// FIXME: gcc warns that the first statement in the if here always evaluates to true
+	//		bool cont;
+	//		if (sCoord->field_8)
+	//			cont = sCoord->field_4 + point.x * sCoord->field_0 + 1000 * point.y >= 0;
+	//		else
+	//			cont = sCoord->field_4 + point.x * sCoord->field_0 + 1000 * point.y <= 0;
 
-			if (!cont)
-				return false;
-		}
+	//		if (!cont)
+	//			return false;
+	//	}
 
-		return true;
-	}
+	//	return true;
+	//}
 
-	return false;
+	//return false;
+
+	return contains;
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -138,6 +140,8 @@ void Scene::clear() {
 	// Free the hotspots
 	for (uint i = 0; i < _hotspots.size(); i++)
 		delete _hotspots[i];
+
+	_header = NULL;
 }
 
 Scene *Scene::get(Common::SeekableReadStream *stream, SceneHeader *header) {
@@ -216,15 +220,18 @@ SceneHotspot *Scene::getHotspot(uint index) {
 
 Common::Rect Scene::draw(Graphics::Surface *surface) {
 	// Safety checks
+	Common::Rect rect;
+
+	if (!_header)
+		error("Scene::draw: Invalid header data!");
+
 	Common::String name(_header->name);
 	name.trim();
-	if (name.empty()) {
-		error("This scene is not a valid drawing scene!");
-	}
+	if (name.empty())
+		error("Scene::draw: This scene is not a valid drawing scene!");
 
 	// Load background
 	Background *background = ((LastExpressEngine *)g_engine)->getResourceManager()->loadBackground(name);
-	Common::Rect rect;
 	if (background) {
 		rect = background->draw(surface);
 		delete background;

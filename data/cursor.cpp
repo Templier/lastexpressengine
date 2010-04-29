@@ -32,7 +32,9 @@
 
 namespace LastExpress {
 
-Cursor::Cursor() : _current(kCursorMAX) {}
+Cursor::Cursor() : _current(kCursorMAX) {
+	memset(&_cursors, 0, sizeof(_cursors));
+}
 
 bool Cursor::load(Common::SeekableReadStream *stream) {
 	if (!stream)
@@ -67,7 +69,7 @@ void Cursor::show(bool visible) {
 }
 
 bool Cursor::checkStyle(CursorStyle style) {
-	if ((int)style < 0 || (int)style >= kCursorMAX) {
+	if (style >= kCursorMAX) {
 		debugC(2, kLastExpressDebugGraphics, "Trying to use an invalid cursor style: was %d, max %d", (int)style, kCursorMAX);
 		return false;
 	}
@@ -103,7 +105,7 @@ uint16 *Cursor::getCursorImage(CursorStyle style) {
 }
 
 
-Icon::Icon(CursorStyle style) : _style(style), _brightness(100) {}
+Icon::Icon(CursorStyle style) : _style(style), _x(0), _y(0), _brightness(100) {}
 
 void Icon::setPosition(int16 x, int16 y) {
 	_x = x;

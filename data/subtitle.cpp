@@ -139,6 +139,8 @@ SubtitleManager::SubtitleManager(Font *font) : _font(font) {}
 
 SubtitleManager::~SubtitleManager() {
 	reset();
+
+	_font = NULL;
 }
 
 void SubtitleManager::reset() {

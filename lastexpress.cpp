@@ -40,8 +40,8 @@
 namespace LastExpress {
 
 LastExpressEngine::LastExpressEngine(OSystem *syst, const ADGameDescription *gd) :
-    Engine(syst), _gameDescription(gd), _debugger(NULL), _resMan(NULL), _cursor(NULL),
-    _font(NULL), _logic(NULL), _graphicsMan(NULL), _sceneMan(NULL) {
+    Engine(syst), _gameDescription(gd), _debugger(NULL), _cursor(NULL),
+    _font(NULL), _logic(NULL), _graphicsMan(NULL), _resMan(NULL), _sceneMan(NULL) {
 	// Adding the default directories
 	SearchMan.addSubDirectoryMatching(_gameDataDir, "data");
 

@@ -73,9 +73,9 @@ private:
 	void copyCommand(int argc, const char **argv);
 	int getNumber(const char *arg);
 
-	Debuglet *command;
-	int num_params;
-	char **command_params;
+	Debuglet *_command;
+	int _numParams;
+	char **_commandParams;
 };
 
 } // End of namespace LastExpress

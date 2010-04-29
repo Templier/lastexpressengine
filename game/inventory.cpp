@@ -43,9 +43,8 @@
 
 namespace LastExpress {
 
-Inventory::Inventory(LastExpressEngine *engine) : _engine(engine),
-	_showingHourGlass(false), _blinkingEgg(false), _blinkingTime(0), _blinkingBrightness(100), _blinkingInterval(_defaultBlinkingInterval),
-	_opened(false), _selectedItem(kItemNone), _itemScene(NULL) {
+Inventory::Inventory(LastExpressEngine *engine) : _engine(engine), _selectedItem(kItemNone), _highlightedItem(kItemNone), _opened(false), _visible(false),
+	_showingHourGlass(false), _blinkingEgg(false), _blinkingTime(0), _blinkingInterval(_defaultBlinkingInterval), _blinkingBrightness(100), _itemScene(NULL) {
 
 	_inventoryRect = Common::Rect(0, 0, 32, 32);
 	_menuRect = Common::Rect(608, 448, 640, 480);
@@ -351,7 +350,8 @@ void Inventory::showItem(InventoryItem item) {
 // Items
 //////////////////////////////////////////////////////////////////////////
 Inventory::InventoryEntry *Inventory::getEntry(InventoryItem item) {
-	assert(item < kPortraitOriginal);
+	if (item >= kPortraitOriginal)
+		error("Inventory::getEntry: Invalid inventory item!");
 
 	return &_entries[item];
 }

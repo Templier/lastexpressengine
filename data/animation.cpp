@@ -37,7 +37,7 @@
 
 namespace LastExpress {
 
-Animation::Animation() : _stream(NULL), _overlay(NULL), _background1(NULL), _background2(NULL), _backgroundCurrent(0), _audio(NULL) {
+Animation::Animation() : _stream(NULL), _currentChunk(NULL), _overlay(NULL), _background1(NULL), _background2(NULL), _backgroundCurrent(0), _audio(NULL), _startTime(NULL), _changed(false) {
 }
 
 Animation::~Animation() {
@@ -56,6 +56,8 @@ void Animation::reset() {
 
 	_backgroundCurrent = 0;
 	_chunks.clear();
+
+	_currentChunk = NULL;
 
 	delete _stream;
 }
@@ -98,6 +100,9 @@ bool Animation::load(Common::SeekableReadStream *stream) {
 }
 
 bool Animation::process() {
+	if (!_currentChunk)
+		error("Animation::process - internal error: the current chunk iterator is invalid!");
+
 	if (_stream == NULL || _chunks.size() == 0)
 		error("Trying to show an animation before loading data");
 
@@ -197,6 +202,9 @@ bool Animation::hasEnded() {
 }
 
 Common::Rect Animation::draw(Graphics::Surface *surface) {
+	if (!_overlay)
+		error("Animation::draw - internal error: the current overlay animation frame is invalid!");
+
 	// Paint the background
 	if (_backgroundCurrent == 1 && _background1)
 		_background1->draw(surface);
@@ -230,10 +238,16 @@ AnimFrame *Animation::processChunkFrame(Common::SeekableReadStream *in, Chunk *c
 }
 
 void Animation::processChunkAudio(Common::SeekableReadStream *in, Chunk *c) {
+	if (!_audio)
+		error("Animation::processChunkAudio - internal error: the audio stream is invalid!");
+
 	// Skip the Snd header, to queue just the audio blocks
 	uint32 size = c->size;
 	if ((c->size % 739) != 0) {
-		warning("Start ADPCM: %d, %d", in->readUint32LE(), in->readUint16LE());
+		// Read Snd header
+		uint32 header1 = in->readUint32LE();
+		uint16 header2 = in->readUint16LE();
+		warning("Start ADPCM: %d, %d", header1, header2);
 		size -= 6;
 	}
 

@@ -33,13 +33,11 @@
 
 namespace LastExpress {
 
-Background::Background() : _data(NULL) {}
-
-Background::~Background() {
-	reset();
+Background::Background() : _data(NULL) {
+	memset(&_header, 0, sizeof(BackgroundHeader));
 }
 
-void Background::reset() {
+Background::~Background() {
 	delete[] _data;
 }
 
@@ -48,7 +46,7 @@ bool Background::load(Common::SeekableReadStream *stream) {
 		return false;
 
 	// Reset data
-	reset();
+	delete[] _data;
 
 	// Load Background header
 	_header.posX = stream->readUint32LE();
@@ -106,7 +104,7 @@ byte *Background::decodeComponent(Common::SeekableReadStream *in, uint32 inSize,
 	// Create the destination array
 	byte *out = new byte[outSize];
 	if (!out)
-		return false;
+		return NULL;
 
 	// Initialize the decoding
 	uint32 inPos = 0;

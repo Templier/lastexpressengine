@@ -363,14 +363,12 @@ bool Sequence::load(Common::SeekableReadStream *stream) {
 
 		// Move stream to start of frame
 		_stream->seek(_sequenceHeaderSize + i * _sequenceFrameSize, SEEK_SET);
-		if (_stream->eos()) {
+		if (_stream->eos())
 			error("Couldn't seek to the current frame data");
-		}
 
 		// Check if there is enough data
-		if ((unsigned)(_stream->size() - _stream->pos()) < _sequenceFrameSize) {
+		if ((unsigned)(_stream->size() - _stream->pos()) < _sequenceFrameSize)
 			error("The sequence frame does not have a valid header");
-		}
 
 		FrameInfo info;
 		info.read(_stream, true);

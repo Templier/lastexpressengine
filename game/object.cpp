@@ -82,8 +82,8 @@ void Objects::updateLocation2(ObjectIndex index, ObjectLocation location2) {
 //////////////////////////////////////////////////////////////////////////
 // Serializable
 //////////////////////////////////////////////////////////////////////////
-void Objects::saveLoadWithSerializer(Common::Serializer &ser) {
-
+void Objects::saveLoadWithSerializer(Common::Serializer &) {
+	error("Objects::saveLoadWithSerializer: not implemented!");
 }
 
 } // End of namespace LastExpress

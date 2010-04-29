@@ -49,7 +49,7 @@
 
 namespace LastExpress {
 
-Debugger::Debugger(LastExpressEngine *engine) : _engine(engine) {
+Debugger::Debugger(LastExpressEngine *engine) : _engine(engine), _command(NULL), _numParams(0), _commandParams(NULL) {
 
 	// Register the debugger commands
 	DCmd_Register("playseq",   WRAP_METHOD(Debugger, cmd_playseq));
@@ -72,13 +72,13 @@ Debugger::~Debugger() {
 }
 
 bool Debugger::hasCommand() {
-	return (num_params != 0);
+	return (_numParams != 0);
 }
 
 void Debugger::resetCommand() {
-	command = NULL;
-	command_params = NULL;
-	num_params = 0;
+	_command = NULL;
+	_commandParams = NULL;
+	_numParams = 0;
 }
 
 int Debugger::getNumber(const char *arg) {
@@ -86,14 +86,16 @@ int Debugger::getNumber(const char *arg) {
 }
 
 void Debugger::copyCommand(int argc, const char **argv) {
-	num_params = argc;
+	_commandParams = (char **)malloc((uint)argc);
+	if (!_commandParams)
+		return;
 
-	command_params = (char **)malloc(argc);
+	_numParams = argc;
 
-	for (int i = 0; i < num_params; i++) {
-		command_params[i] = (char *)malloc(strlen(argv[i]));
-		strcpy(command_params[i], "");
-		strcpy(command_params[i], argv[i]);
+	for (int i = 0; i < _numParams; i++) {
+		_commandParams[i] = (char *)malloc(strlen(argv[i]));
+		strcpy(_commandParams[i], "");
+		strcpy(_commandParams[i], argv[i]);
 	}
 
 	// Exit the debugger!
@@ -101,7 +103,8 @@ void Debugger::copyCommand(int argc, const char **argv) {
 }
 
 void Debugger::callCommand() {
-	(*command)(num_params, const_cast<const char **>(command_params));
+	if (_command)
+		(*_command)(_numParams, const_cast<const char **>(_commandParams));
 }
 
 bool Debugger::cmd_playseq(int argc, const char **argv) {
@@ -117,7 +120,7 @@ bool Debugger::cmd_playseq(int argc, const char **argv) {
 
 		// Store command
 		if (!hasCommand()) {
-			command = WRAP_METHOD(Debugger, cmd_playseq);
+			_command = WRAP_METHOD(Debugger, cmd_playseq);
 			copyCommand(argc, argv);
 
 			return false;
@@ -170,7 +173,7 @@ bool Debugger::cmd_showframe(int argc, const char **argv) {
 
 		// Store command
 		if (!hasCommand()) {
-			command = WRAP_METHOD(Debugger, cmd_showframe);
+			_command = WRAP_METHOD(Debugger, cmd_showframe);
 			copyCommand(argc, argv);
 
 			return false;
@@ -237,7 +240,7 @@ bool Debugger::cmd_playsbe(int argc, const char **argv) {
 
 		// Store command
 		if (!hasCommand()) {
-			command = WRAP_METHOD(Debugger, cmd_playsbe);
+			_command = WRAP_METHOD(Debugger, cmd_playsbe);
 			copyCommand(argc, argv);
 
 			return false;
@@ -287,7 +290,7 @@ bool Debugger::cmd_playnis(int argc, const char **argv) {
 
 		// Store command
 		if (!hasCommand()) {
-			command = WRAP_METHOD(Debugger, cmd_playnis);
+			_command = WRAP_METHOD(Debugger, cmd_playnis);
 			copyCommand(argc, argv);
 
 			return false;
@@ -318,7 +321,7 @@ bool Debugger::cmd_showbg(int argc, const char **argv) {
 
 		// Store command
 		if (!hasCommand()) {
-			command = WRAP_METHOD(Debugger, cmd_showbg);
+			_command = WRAP_METHOD(Debugger, cmd_showbg);
 			copyCommand(argc, argv);
 
 			return false;
@@ -369,7 +372,7 @@ bool Debugger::cmd_loadscene(int argc, const char **argv) {
 
 		// Store command
 		if (!hasCommand()) {
-			command = WRAP_METHOD(Debugger, cmd_loadscene);
+			_command = WRAP_METHOD(Debugger, cmd_loadscene);
 			copyCommand(argc, argv);
 
 			return false;
@@ -413,7 +416,7 @@ bool Debugger::cmd_loadscene(int argc, const char **argv) {
 }
 
 
-bool Debugger::cmd_clear(int argc, const char **argv) {
+bool Debugger::cmd_clear(int argc, const char **) {
 	if (argc == 1) {
 		clearBg(GraphicsManager::kBackgroundAll);
 		askForRedraw();
@@ -490,7 +493,7 @@ bool Debugger::cmd_fight(int argc, const char **argv) {
 
 		// Store command
 		if (!hasCommand()) {
-			command = WRAP_METHOD(Debugger, cmd_fight);
+			_command = WRAP_METHOD(Debugger, cmd_fight);
 			copyCommand(argc, argv);
 
 			return false;

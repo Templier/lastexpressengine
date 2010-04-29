@@ -180,11 +180,12 @@ bool SavePoints::updateEntityFromData(SavePoint savepoint) {
 			// the savepoint param is the index of the entity call parameter to update
 			EntityData::EntityParameters *params = getEntities()->getData(_data[i].entity1)->getParameters(8, 0);
 
-			// TODO: any way for that not to be ugly?
+			// TODO: any way for that not to be ugly? - seems very wrong too
 			*((int*)params + _data[i].param) = 1;
 			return true;
 		}
 
+		// TODO: index is never accessed?
 		index++;
 	}
 

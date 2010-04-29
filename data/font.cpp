@@ -29,7 +29,10 @@
 
 namespace LastExpress {
 
-Font::Font() : _glyphs(NULL), _glyphWidths(NULL) {}
+Font::Font() : _numGlyphs(NULL), _glyphs(NULL), _glyphWidths(NULL) {
+	memset(&_palette, NULL, sizeof(_palette));
+	memset(&_charMap, NULL, sizeof(_charMap));
+}
 
 Font::~Font() {
 	reset();
@@ -92,8 +95,11 @@ uint16 Font::getCharGlyph(uint16 c) {
 }
 
 byte *Font::getGlyphImg(uint16 g) {
+	if (!_glyphs)
+		error("Express::getGlyphImg: Invalid glyphs!");
+
 	if (g >= _numGlyphs)
-		error("Express::Font: Invalid glyph %d (%d available)", g, _numGlyphs);
+		error("Express::getGlyphImg: Invalid glyph %d (%d available)", g, _numGlyphs);
 
 	return _glyphs + g * 18 * 8;
 }
@@ -133,6 +139,9 @@ uint8 Font::getCharWidth(uint16 c) {
 		// TODO: this is an arbitrary value
 		return 10;
 	} else {
+		if (!_glyphWidths)
+			error("Express::getCharWidth: Invalid glyphs widths!");
+
 		return _glyphWidths[getCharGlyph(c)];
 	}
 }

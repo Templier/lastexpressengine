@@ -67,7 +67,7 @@ const char *messages[24] = {
 	"ENDALRM3"  // 65
 };
 
-Sound::Sound(LastExpressEngine *engine) : _engine(engine) {
+Sound::Sound(LastExpressEngine *engine) : _engine(engine), _state(0) {
 	_sfx = new StreamedSound();
 	_music = new StreamedSound();
 }
