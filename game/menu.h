@@ -50,8 +50,8 @@ public:
 	void showMenu(bool savegame, TimeType type, uint32 time);
 
 	// Event handling
-	void eventMouseClick(Common::Event ev);
-	void eventMouseMove(Common::Event ev);
+	void eventMouseClick(const Common::Event &ev);
+	void eventMouseMove(const Common::Event &ev);
 
 	uint32 getSceneIndex();
 
@@ -81,7 +81,7 @@ private:
 	uint32 _creditsSequenceIndex;
 
 	void loadData();
-	void handleEvent(Common::Event ev);
+	void handleEvent(const Common::Event &ev);
 
 	// Overlays & elements
 	void drawElements();

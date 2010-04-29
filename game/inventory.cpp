@@ -126,7 +126,7 @@ void Inventory::init() {
 
 // TODO if we draw inventory objects on screen, we need to load a new scene.
 // Signal that the inventory has taken over the screen and stop processing mouse events after we have been called
-bool Inventory::handleMouseEvent(Common::Event ev) {
+bool Inventory::handleMouseEvent(const Common::Event &ev) {
 
 	// Do not show inventory when on the menu screen
 	if (getLogic()->isShowingMenu() || !_visible)

@@ -78,7 +78,7 @@ Fight::~Fight() {
 // Events
 //////////////////////////////////////////////////////////////////////////
 
-void Fight::eventMouseClick(Common::Event ev) {
+void Fight::eventMouseClick(const Common::Event &ev) {
 	if (!_data || _data->index)
 		return;
 
@@ -157,11 +157,11 @@ void Fight::eventMouseClick(Common::Event ev) {
 	getFlags()->shouldRedraw = true;
 }
 
-void Fight::eventMouseMove(Common::Event ev) {
+void Fight::eventMouseMove(const Common::Event &ev) {
 	handleMouseMove(ev, true);
 }
 
-void Fight::handleMouseMove(Common::Event ev, bool isProcessing) {
+void Fight::handleMouseMove(const Common::Event &ev, bool isProcessing) {
 	getFlags()->mouseMove = false;
 
 	// TODO move all the egg handling to inventory functions

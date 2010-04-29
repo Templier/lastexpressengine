@@ -196,7 +196,7 @@ void Logic::gameOver(TimeType type, uint32 time, SceneIndex sceneIndex, bool sho
 //////////////////////////////////////////////////////////////////////////
 // Event Handling
 //////////////////////////////////////////////////////////////////////////
-void Logic::eventMouseClick(Common::Event ev) {
+void Logic::eventMouseClick(const Common::Event &ev) {
 	// Special case for the main menu scene
 	if (isShowingMenu()) {
 		_menu->eventMouseClick(ev);
@@ -219,7 +219,7 @@ void Logic::eventMouseClick(Common::Event ev) {
 	}
 }
 
-void Logic::eventMouseMove(Common::Event ev) {
+void Logic::eventMouseMove(const Common::Event &ev) {
 	// Special case for the main menu scene
 	if (isShowingMenu()) {
 		_menu->eventMouseMove(ev);

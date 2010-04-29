@@ -42,6 +42,8 @@
 
 #include "lastexpress/shared.h"
 
+#include "lastexpress/eventhandler.h"
+
 #include "common/events.h"
 #include "common/serializer.h"
 
@@ -50,7 +52,7 @@ namespace LastExpress {
 class LastExpressEngine;
 class Scene;
 
-class Inventory : Common::Serializable {
+class Inventory : Common::Serializable, public EventHandler {
 public:
 
 	// Entry
@@ -102,7 +104,7 @@ public:
 	void drawEgg();
 
 	// Handle inventory UI events.
-	bool handleMouseEvent(Common::Event ev);
+	bool handleMouseEvent(const Common::Event &ev);
 
 	// Serializable
 	void saveLoadWithSerializer(Common::Serializer &ser);

@@ -473,15 +473,15 @@ uint32 Menu::getSceneIndex() {
 
 //////////////////////////////////////////////////////////////////////////
 // Handle events
-void Menu::eventMouseClick(Common::Event ev) {
+void Menu::eventMouseClick(const Common::Event &ev) {
 	handleEvent(ev);
 }
 
-void Menu::eventMouseMove(Common::Event ev) {
+void Menu::eventMouseMove(const Common::Event &ev) {
 	handleEvent(ev);
 }
 
-void Menu::handleEvent(Common::Event ev) {
+void Menu::handleEvent(const Common::Event &ev) {
 	// Special case if we are showing credits (only allow left & right-click)
 	if (_isShowingCredits) {
 		// Interrupt on right click

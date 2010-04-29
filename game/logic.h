@@ -52,8 +52,8 @@ public:
 	Logic(LastExpressEngine *engine);
 	~Logic();
 
-	void eventMouseClick(Common::Event ev);
-	void eventMouseMove(Common::Event ev);
+	void eventMouseClick(const Common::Event &ev);
+	void eventMouseMove(const Common::Event &ev);
 
 	void showMenu(bool visible);
 	void startGame();
