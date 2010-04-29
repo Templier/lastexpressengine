@@ -41,7 +41,8 @@
 #define getSound() getLogic()->getGameSound()
 #define getSaveLoad() getLogic()->getGameSaveLoad()
 #define getState() getLogic()->getGameState()->getGameState()
-#define getTimer() getLogic()->getGameState()->timer
+#define getGlobalTimer() getLogic()->getGameState()->getTimer()
+#define setGlobalTimer(timer) getLogic()->getGameState()->setTimer(timer)
 
 // State
 #define getEvent(id) getState()->events[id]

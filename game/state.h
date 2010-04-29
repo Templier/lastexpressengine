@@ -259,9 +259,6 @@ public:
 	State(LastExpressEngine *engine);
 	~State();
 
-	// Timer
-	int timer;
-
 	// Accessors
 	Inventory  *getGameInventory() { return _inventory; }
 	Objects    *getGameObjects() { return _objects; }
@@ -271,6 +268,10 @@ public:
 
 	// Time checks
 	bool isDayTime();
+
+	// Timer
+	int getTimer() { return _timer; }
+	void setTimer(int val) { _timer = val; }
 
 	// Helpers
 	static uint32 getPowerOfTwo(uint32 x);
@@ -283,6 +284,9 @@ private:
 	static const uint32 _defaultPortrait = 32;
 
 	LastExpressEngine *_engine;
+
+	// Timer
+	int _timer;
 
 	Flags *_flags;				///< Flags
 	Inventory *_inventory;  	///< Inventory

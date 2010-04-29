@@ -95,14 +95,14 @@ void Fight::eventMouseClick(Common::Event ev) {
 			getSound()->reset(kEntityTables0);
 			setStopped();
 
-			getTimer() ? _state = 0 : ++_state;
+			getGlobalTimer() ? _state = 0 : ++_state;
 
 			getFlags()->mouseRightClick = 1;
 		}
 
 		if (_handleTimer) {
 			// Timer expired => show with full brightness
-			if (!getTimer())
+			if (!getGlobalTimer())
 				getInventory()->drawEgg();			
 
 			_handleTimer = false;
@@ -130,7 +130,7 @@ void Fight::eventMouseClick(Common::Event ev) {
 
 		if (!_handleTimer) {
 			// Timer expired => show with full brightness
-			if (!getTimer())
+			if (!getGlobalTimer())
 				getInventory()->drawEgg();			
 
 			_handleTimer = true;
@@ -145,11 +145,11 @@ void Fight::eventMouseClick(Common::Event ev) {
 
 		// Reset timer on right click
 		if (ev.type == Common::EVENT_RBUTTONUP) {
-			if (getTimer()) {
+			if (getGlobalTimer()) {
 				if (getSound()->isFileInQueue("TIMER"))
 					getSound()->removeFromQueue("TIMER");
 
-				getTimer() = 900;
+				setGlobalTimer(900);
 			}		
 		}
 	}
@@ -167,7 +167,7 @@ void Fight::handleMouseMove(Common::Event ev, bool isProcessing) {
 	// TODO move all the egg handling to inventory functions
 
 	// Blink egg
-	if (getTimer()) {
+	if (getGlobalTimer()) {
 		warning("Fight::handleMouseMove - egg blinking not implemented!");
 	}
 
