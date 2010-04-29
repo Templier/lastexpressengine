@@ -53,7 +53,7 @@ public:
 
 	bool load(Common::SeekableReadStream *stream);
 	void show(bool visible) const;
-	bool setStyle(CursorStyle style);
+	void setStyle(CursorStyle style);
 	const uint16 *getCursorImage(CursorStyle style) const;
 
 private:

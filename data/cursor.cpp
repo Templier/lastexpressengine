@@ -41,7 +41,7 @@ bool Cursor::load(Common::SeekableReadStream *stream) {
 		return false;
 
 	// Load the whole file to memory
-	Common::MemoryReadStream *data = stream->readStream(stream->size());
+	Common::MemoryReadStream *data = stream->readStream((uint32) stream->size());
 	delete stream;
 	if (!data)
 		return false;
@@ -77,12 +77,12 @@ bool Cursor::checkStyle(CursorStyle style) const {
 	return true;
 }
 
-bool Cursor::setStyle(CursorStyle style) {
+void Cursor::setStyle(CursorStyle style) {
 	if (!checkStyle(style))
-		return false;
+		return;
 
 	if (style == _current)
-		return true;
+		return;
 
 	debugC(10, kLastExpressDebugCursor | kLastExpressDebugAll, "Cursor: setting style: %d", style);
 
@@ -94,8 +94,6 @@ bool Cursor::setStyle(CursorStyle style) {
 	CursorMan.replaceCursor((const byte *)getCursorImage(style),
 	                        32, 32, _cursors[style].hotspotX, _cursors[style].hotspotY,
 	                        0, 1, &pf);
-
-	return true;
 }
 
 const uint16 *Cursor::getCursorImage(CursorStyle style) const {
