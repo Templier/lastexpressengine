@@ -48,10 +48,13 @@ public:
 	bool load(Common::SeekableReadStream *in);
 	Common::Rect draw(Graphics::Surface *surface, Font *font);
 
+	uint16 getTimeStart() const { return _timeStart; }	
+	uint16 getTimeStop() const { return _timeStop; }
+
+private:
 	uint16 _timeStart;    ///< display start time
 	uint16 _timeStop;     ///< display stop time
 
-private:
 	uint16 _topLength;    ///< top line length
 	uint16 *_topText;     ///< bottom line length
 
@@ -135,7 +138,7 @@ Common::Rect Subtitle::draw(Graphics::Surface *surface, Font *font) {
 //////////////////////////////////////////////////////////////////////////
 // SubtitleManager
 //////////////////////////////////////////////////////////////////////////
-SubtitleManager::SubtitleManager(Font *font) : _font(font) {}
+SubtitleManager::SubtitleManager(Font *font) : _font(font), _maxTime(0), _currentIndex(-1), _lastIndex(-1) {}
 
 SubtitleManager::~SubtitleManager() {
 	reset();
@@ -185,8 +188,8 @@ bool SubtitleManager::load(Common::SeekableReadStream *stream) {
 		}
 
 		// Update the max time
-		if (subtitle->_timeStop > _maxTime)
-			_maxTime = subtitle->_timeStop;
+		if (subtitle->getTimeStop() > _maxTime)
+			_maxTime = subtitle->getTimeStop();
 
 		_subtitles.push_back(subtitle);
 	}
@@ -205,7 +208,7 @@ void SubtitleManager::setTime(uint16 time) {
 
 	// Find the appropriate line to show
 	for (uint16 i = 0; i < _subtitles.size(); i++) {
-		if ((time >= _subtitles[i]->_timeStart) && (time <= _subtitles[i]->_timeStop)) {
+		if ((time >= _subtitles[i]->getTimeStart()) && (time <= _subtitles[i]->getTimeStop())) {
 			// Keep the index of the line to show
 			_currentIndex = i;
 			return;
