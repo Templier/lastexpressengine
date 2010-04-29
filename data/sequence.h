@@ -116,18 +116,18 @@ struct FrameInfo {
 
 class AnimFrame : public Drawable {
 public:
-	AnimFrame(Common::SeekableReadStream *in, FrameInfo *f);
+	AnimFrame(Common::SeekableReadStream *in, const FrameInfo &f);
 	~AnimFrame();
 	Common::Rect draw(Graphics::Surface *s);
 
 private:
-	void decomp3(Common::SeekableReadStream *in, FrameInfo *f);
-	void decomp4(Common::SeekableReadStream *in, FrameInfo *f);
-	void decomp34(Common::SeekableReadStream *in, FrameInfo *f, byte mask, byte shift);
-	void decomp5(Common::SeekableReadStream *in, FrameInfo *f);
-	void decomp7(Common::SeekableReadStream *in, FrameInfo *f);
-	void decompFF(Common::SeekableReadStream *in, FrameInfo *f);
-	void readPalette(Common::SeekableReadStream *in, FrameInfo *f);
+	void decomp3(Common::SeekableReadStream *in, const FrameInfo &f);
+	void decomp4(Common::SeekableReadStream *in, const FrameInfo &f);
+	void decomp34(Common::SeekableReadStream *in, const FrameInfo &f, byte mask, byte shift);
+	void decomp5(Common::SeekableReadStream *in, const FrameInfo &f);
+	void decomp7(Common::SeekableReadStream *in, const FrameInfo &f);
+	void decompFF(Common::SeekableReadStream *in, const FrameInfo &f);
+	void readPalette(Common::SeekableReadStream *in, const FrameInfo &f);
 
 	Graphics::Surface _image;
 	uint16 _palSize;
@@ -141,7 +141,7 @@ public:
 	~Sequence();
 
 	bool load(Common::SeekableReadStream *stream);
-	uint32 count();
+	uint32 count() const;
 	AnimFrame *getFrame(uint32 index = 0);
 	FrameInfo *getFrameInfo(uint32 index = 0);
 
@@ -161,7 +161,7 @@ public:
 	~SequencePlayer();
 
 	bool processTime();
-	bool hasEnded();
+	bool hasEnded() const;
 	Common::Rect draw(Graphics::Surface *surface);
 
 	// TODO: options to go to a concrete frame, play forwards, play backwards...

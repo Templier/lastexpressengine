@@ -100,7 +100,7 @@ Common::Rect Background::draw(Graphics::Surface *surface) {
 	return Common::Rect((uint16)_header.posX, (uint16)_header.posY, (uint16)(_header.posX + _header.width), (uint16)(_header.posY + _header.height));
 }
 
-byte *Background::decodeComponent(Common::SeekableReadStream *in, uint32 inSize, uint32 outSize) {
+byte *Background::decodeComponent(Common::SeekableReadStream *in, uint32 inSize, uint32 outSize) const {
 	// Create the destination array
 	byte *out = new byte[outSize];
 	if (!out)

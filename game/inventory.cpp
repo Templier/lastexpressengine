@@ -293,7 +293,7 @@ void Inventory::show(bool visible) {
 	drawEgg();
 }
 
-void Inventory::setPortrait(InventoryItem item) {
+void Inventory::setPortrait(InventoryItem item) const {
 	getProgress().portrait = item;
 	drawItem(0, 0, getProgress().portrait, 50);
 }
@@ -424,14 +424,14 @@ void Inventory::setLocationAndProcess(InventoryItem item, ObjectLocation locatio
 //////////////////////////////////////////////////////////////////////////
 // Serializable
 //////////////////////////////////////////////////////////////////////////
-void Inventory::saveLoadWithSerializer(Common::Serializer &s) {
+void Inventory::saveLoadWithSerializer(Common::Serializer &) {
 	// TODO implement
 }
 
 //////////////////////////////////////////////////////////////////////////
 // Private methods
 //////////////////////////////////////////////////////////////////////////
-InventoryItem Inventory::getFirstExaminableItem() {
+InventoryItem Inventory::getFirstExaminableItem() const {
 
 	int index = 0;
 	InventoryEntry entry = _entries[index];
@@ -446,7 +446,7 @@ InventoryItem Inventory::getFirstExaminableItem() {
 	return (InventoryItem)index;
 }
 
-bool Inventory::isItemSceneParameter(InventoryItem item) {
+bool Inventory::isItemSceneParameter(InventoryItem item) const {
 	loadSceneObject(scene, getState()->scene);
 
 	switch(scene.getHeader()->type) {
@@ -569,7 +569,7 @@ void Inventory::close() {
 	askForRedraw();
 }
 
-Common::Rect Inventory::getItemRect(int16 index) {
+Common::Rect Inventory::getItemRect(int16 index) const{
 	return Common::Rect(0, (32 + 12) * (index + 1), 32, (32 + 12) * (index + 2)); // space between items = 12px
 }
 

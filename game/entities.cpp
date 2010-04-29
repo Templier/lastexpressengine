@@ -80,7 +80,7 @@
 
 namespace LastExpress {
 
-const static EntityData::Field491Value field491_values[9] = {EntityData::kField491_0, EntityData::kField491_8200, EntityData::kField491_7500, EntityData::kField491_6470, EntityData::kField491_5790, EntityData::kField491_4840, EntityData::kField491_4070, EntityData::kField491_3050, EntityData::kField491_2740};
+static const EntityData::Field491Value field491_values[9] = {EntityData::kField491_0, EntityData::kField491_8200, EntityData::kField491_7500, EntityData::kField491_6470, EntityData::kField491_5790, EntityData::kField491_4840, EntityData::kField491_4070, EntityData::kField491_3050, EntityData::kField491_2740};
 
 #define ADD_ENTITY(class) \
 	_entities.push_back(new class(engine));
@@ -702,13 +702,13 @@ bool Entities::checkEntity(EntityIndex entity, EntityData::Field495Value field49
 	error("Entities::checkEntity: not implemented!");
 }
 
-bool Entities::checkFields1(EntityIndex entity, EntityData::Field495Value field495, EntityData::Field491Value field491) {
+bool Entities::checkFields1(EntityIndex entity, EntityData::Field495Value field495, EntityData::Field491Value field491) const {
 	return (getEntityData(entity)->field_491 == field491
 		 && getEntityData(entity)->field_493 == EntityData::kField493_1
 		 && getEntityData(entity)->field_495 == field495);
 }
 
-bool Entities::checkFields2(ObjectIndex object) {
+bool Entities::checkFields2(ObjectIndex object) const {
 
 	EntityData::Field491Value field491 = EntityData::kField491_0;
 	EntityData::Field495Value field495 = EntityData::kField495_0;
@@ -777,45 +777,45 @@ bool Entities::checkFields2(ObjectIndex object) {
 	return true;
 }
 
-bool Entities::checkFields3(EntityIndex entity) {
+bool Entities::checkFields3(EntityIndex entity) const {
 	return (getEntityData(entity)->field_495 == EntityData::kField495_3
 		 || getEntityData(entity)->field_495 == EntityData::kField495_4)
 		 && getEntityData(entity)->field_493 == EntityData::kField493_1;
 }
 
-bool Entities::checkFields4(EntityData::Field495Value field495, int position) {
+bool Entities::checkFields4(EntityData::Field495Value field495, int position) const {
 	loadSceneObject(scene, getState()->scene);
 
 	return getEntityData(kEntityNone)->field_495 == field495 && scene.getHeader()->position == position;
 }
 
-bool Entities::checkFields5(EntityIndex entity, EntityData::Field495Value field495) {
+bool Entities::checkFields5(EntityIndex entity, EntityData::Field495Value field495) const {
 	return getEntityData(entity)->field_495 == field495 && getEntityData(entity)->field_493 < EntityData::kField493_2;
 }
 
-bool Entities::checkFields6(EntityIndex entity) {
+bool Entities::checkFields6(EntityIndex entity) const {
 	return checkFields5(entity, EntityData::kField495_3) && getEntityData(entity)->field_491 < EntityData::kField491_850;
 }
 
-bool Entities::checkFields7(EntityData::Field495Value field495) {
+bool Entities::checkFields7(EntityData::Field495Value field495) const {
 	return checkFields5(kEntityNone, field495) && !getEntityData(kEntityNone)->field_493 && !checkFields6(kEntityNone);
 }
 
-bool Entities::isDirectionUpOrDown(EntityIndex entity) {
+bool Entities::isDirectionUpOrDown(EntityIndex entity) const {
 	return getEntityData(entity)->direction == kDirectionUp || getEntityData(entity)->direction == kDirectionDown;
 }
 
-bool Entities::checkFields9(EntityIndex entity1, EntityIndex entity2, int absValue) {
+bool Entities::checkFields9(EntityIndex entity1, EntityIndex entity2, int absValue) const {
 	return getEntityData(entity1)->field_495 == getEntityData(entity2)->field_495
 	    && abs(getEntityData(entity1)->field_491 - getEntityData(entity2)->field_491) <= absValue
 		&& (getEntityData(entity1)->field_493 != EntityData::kField493_2 || getEntityData(entity2)->field_493 != EntityData::kField493_2);
 }
 
-bool Entities::checkFields10(EntityIndex entity) {
+bool Entities::checkFields10(EntityIndex entity) const {
 	return getEntityData(entity)->field_493 < EntityData::kField493_3;
 }
 
-bool Entities::checkFields11() {
+bool Entities::checkFields11() const {
 	for (uint i = 1; i < _entities.size(); i++) {
 		EntityIndex index = (EntityIndex)i;
 
@@ -827,41 +827,41 @@ bool Entities::checkFields11() {
 	return true;
 }
 
-bool Entities::checkFields12(EntityIndex entity) {
+bool Entities::checkFields12(EntityIndex entity) const {
 	return checkFields5(entity, EntityData::kField495_5)
 		&& getEntityData(entity)->field_491 >= EntityData::kField491_1540
 		&& getEntityData(entity)->field_491 <= EntityData::kField491_3650;
 }
 
-bool Entities::checkFields13(EntityIndex entity) {
+bool Entities::checkFields13(EntityIndex entity) const {
 	return checkFields5(entity, EntityData::kField495_5)
 		&& getEntityData(entity)->field_491 >= EntityData::kField491_3650
 		&& getEntityData(entity)->field_491 <= EntityData::kField491_5800;
 }
 
-bool Entities::checkFields14(EntityIndex entity) {
+bool Entities::checkFields14(EntityIndex entity) const {
 	return checkFields5(entity, EntityData::kField495_2)
 		&& getEntityData(entity)->field_491 >= EntityData::kField491_5500
 		&& getEntityData(entity)->field_491 <= EntityData::kField491_7500;
 }
 
-bool Entities::checkFields15() {
+bool Entities::checkFields15() const {
 	return (getEntityData(kEntityNone)->field_491 == EntityData::kField491_7500 || getEntityData(kEntityNone)->field_491 == EntityData::kField491_8200)
 		 && getEntityData(kEntityNone)->field_493 == EntityData::kField493_2
 		 && getEntityData(kEntityNone)->field_495 == EntityData::kField495_3;
 }
 
-bool Entities::checkFields16() {
+bool Entities::checkFields16() const {
 	return (getEntityData(kEntityNone)->field_491 == EntityData::kField491_4070 || getEntityData(kEntityNone)->field_491 == EntityData::kField491_4840)
 		 && getEntityData(kEntityNone)->field_493 == EntityData::kField493_2
 		 && getEntityData(kEntityNone)->field_495 == EntityData::kField495_4;
 }
 
-bool Entities::checkFields17(EntityIndex entity) {
+bool Entities::checkFields17(EntityIndex entity) const {
 	return checkFields5(entity, EntityData::kField495_5) && getEntityData(entity)->field_491 > EntityData::kField491_5800;
 }
 
-bool Entities::checkFields18(EntityData::Field495Value field495, EntityData::Field491Value field491) {
+bool Entities::checkFields18(EntityData::Field495Value field495, EntityData::Field491Value field491) const {
 	for (uint i = 1; i < _entities.size(); i++) {
 
 		if (checkFields1((EntityIndex)i, field495, field491))
@@ -870,7 +870,7 @@ bool Entities::checkFields18(EntityData::Field495Value field495, EntityData::Fie
 	return true;
 }
 
-bool Entities::checkFields19(EntityIndex entity, EntityData::Field495Value field495, EntityData::Field491Value field491) {
+bool Entities::checkFields19(EntityIndex entity, EntityData::Field495Value field495, EntityData::Field491Value field491) const {
 
 	if (getEntityData(entity)->field_495 != field495 ||  getEntityData(entity)->field_493 != EntityData::kField493_1)
 		return false;
@@ -899,31 +899,31 @@ bool Entities::checkFields19(EntityIndex entity, EntityData::Field495Value field
 	return true;
 }
 
-bool Entities::checkFields20(EntityIndex entity) {
+bool Entities::checkFields20(EntityIndex entity) const {
 	return checkFields5(entity, EntityData::kField495_6)
 		&& getEntityData(entity)->field_491 >= EntityData::kField491_4500
 		&& getEntityData(entity)->field_491 <= EntityData::kField491_5500;
 }
 
-bool Entities::checkFields21(EntityIndex entity) {
+bool Entities::checkFields21(EntityIndex entity) const {
 	return checkFields5(entity, EntityData::kField495_6) && getEntityData(entity)->field_491 < EntityData::kField491_4500;
 }
 
-bool Entities::checkFields22(EntityIndex entity) {
+bool Entities::checkFields22(EntityIndex entity) const {
 	return checkFields5(entity, EntityData::kField495_2)
 		&& getEntityData(entity)->field_491 >= EntityData::kField491_3500
 		&& getEntityData(entity)->field_491 <= EntityData::kField491_5500;
 }
 
-bool Entities::checkFields23(EntityIndex entity) {
+bool Entities::checkFields23(EntityIndex entity) const {
 	return checkFields5(entity, EntityData::kField495_2) && getEntityData(entity)->field_491 > EntityData::kField491_7900;
 }
 
-bool Entities::checkFields24(EntityIndex entity, EntityData::Field491Value field491, int absValue) {
+bool Entities::checkFields24(EntityIndex entity, EntityData::Field491Value field491, int absValue) const {
 	return absValue >= abs(getEntityData(entity)->field_491 - field491);
 }
 
-bool Entities::checkFields25(EntityIndex entity) {
+bool Entities::checkFields25(EntityIndex entity) const {
 	if (getEntityData(entity)->direction == kDirectionUp && getLogic()->checkSceneFields(0, true))
 		return true;
 

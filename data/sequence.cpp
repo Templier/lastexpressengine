@@ -75,22 +75,22 @@ void FrameInfo::read(Common::SeekableReadStream *in, bool isSequence) {
 
 // AnimFrame
 
-AnimFrame::AnimFrame(Common::SeekableReadStream *in, FrameInfo *f) : _palette(NULL) {
+AnimFrame::AnimFrame(Common::SeekableReadStream *in, const FrameInfo &f) : _palette(NULL) {
 	_palSize = 1;
 	// TODO: use just the needed rectangle
 	_image.create(640, 480, 1);
 
-	debugC(6, kLastExpressDebugGraphics, "    Offsets: data=%d, unknown=%d, palette=%d", f->dataOffset, f->unknown, f->paletteOffset);
-	debugC(6, kLastExpressDebugGraphics, "    Position: (%d, %d) - (%d, %d)", f->xPos1, f->yPos1, f->xPos2, f->yPos2);
-	debugC(6, kLastExpressDebugGraphics, "    Initial Skip: %d", f->initialSkip);
-	debugC(6, kLastExpressDebugGraphics, "    Decompressed end offset: %d", f->decompressedEndOffset);
-	debugC(6, kLastExpressDebugGraphics, "    Compression type: %u / %u", f->compressionType, f->subType);
-	debugC(6, kLastExpressDebugGraphics, "    Hotspot: (%d, %d) x (%d, %d)\n", f->hotspot.left, f->hotspot.top, f->hotspot.right, f->hotspot.bottom);
-	debugC(6, kLastExpressDebugGraphics, "    Unknown: %d - %u - %u - %u - %u - %d - %d - %d", f->field_2E, f->field_30, f->field_31, f->field_32, f->field_33, f->field_34, f->field_38, f->field_3C);
-	debugC(6, kLastExpressDebugGraphics, "    Location: %d", f->location);
-	debugC(6, kLastExpressDebugGraphics, "    Unknown: %d - %d", f->field_40, f->field_42);
+	debugC(6, kLastExpressDebugGraphics, "    Offsets: data=%d, unknown=%d, palette=%d", f.dataOffset, f.unknown, f.paletteOffset);
+	debugC(6, kLastExpressDebugGraphics, "    Position: (%d, %d) - (%d, %d)", f.xPos1, f.yPos1, f.xPos2, f.yPos2);
+	debugC(6, kLastExpressDebugGraphics, "    Initial Skip: %d", f.initialSkip);
+	debugC(6, kLastExpressDebugGraphics, "    Decompressed end offset: %d", f.decompressedEndOffset);
+	debugC(6, kLastExpressDebugGraphics, "    Compression type: %u / %u", f.compressionType, f.subType);
+	debugC(6, kLastExpressDebugGraphics, "    Hotspot: (%d, %d) x (%d, %d)\n", f.hotspot.left, f.hotspot.top, f.hotspot.right, f.hotspot.bottom);
+	debugC(6, kLastExpressDebugGraphics, "    Unknown: %d - %u - %u - %u - %u - %d - %d - %d", f.field_2E, f.field_30, f.field_31, f.field_32, f.field_33, f.field_34, f.field_38, f.field_3C);
+	debugC(6, kLastExpressDebugGraphics, "    Location: %d", f.location);
+	debugC(6, kLastExpressDebugGraphics, "    Unknown: %d - %d", f.field_40, f.field_42);
 
-	switch (f->compressionType) {
+	switch (f.compressionType) {
 	case 0:
 		// Empty frame
 		break;
@@ -110,11 +110,11 @@ AnimFrame::AnimFrame(Common::SeekableReadStream *in, FrameInfo *f) : _palette(NU
 		decompFF(in, f);
 		break;
 	default:
-		error("Unknown frame compression: %d", f->compressionType);
+		error("Unknown frame compression: %d", f.compressionType);
 	}
 
 	readPalette(in, f);
-	_rect = Common::Rect((int16)f->xPos1, (int16)f->yPos1, (int16)f->xPos2, (int16)f->yPos2);
+	_rect = Common::Rect((int16)f.xPos1, (int16)f.yPos1, (int16)f.xPos2, (int16)f.yPos2);
 	//_rect.debugPrint(0, "Frame rect:");
 }
 
@@ -133,36 +133,36 @@ Common::Rect AnimFrame::draw(Graphics::Surface *s) {
 	return _rect;
 }
 
-void AnimFrame::readPalette(Common::SeekableReadStream *in, FrameInfo *f) {
+void AnimFrame::readPalette(Common::SeekableReadStream *in, const FrameInfo &f) {
 	// Read the palette
-	in->seek(f->paletteOffset);
+	in->seek((int)f.paletteOffset);
 	_palette = new uint16[_palSize];
 	for (uint32 i = 0; i < _palSize; i++) {
 		_palette[i] = in->readUint16LE();
 	}
 }
 
-void AnimFrame::decomp3(Common::SeekableReadStream *in, FrameInfo *f) {
+void AnimFrame::decomp3(Common::SeekableReadStream *in, const FrameInfo &f) {
 	decomp34(in, f, 0x7, 3);
 }
 
-void AnimFrame::decomp4(Common::SeekableReadStream *in, FrameInfo *f) {
+void AnimFrame::decomp4(Common::SeekableReadStream *in, const FrameInfo &f) {
 	decomp34(in, f, 0xf, 4);
 }
 
-void AnimFrame::decomp34(Common::SeekableReadStream *in, FrameInfo *f, byte mask, byte shift) {
+void AnimFrame::decomp34(Common::SeekableReadStream *in, const FrameInfo &f, byte mask, byte shift) {
 	byte *p = (byte *)_image.getBasePtr(0, 0);
 
-	uint32 skip = f->initialSkip / 2;
-	uint32 size = f->decompressedEndOffset / 2;
+	uint32 skip = f.initialSkip / 2;
+	uint32 size = f.decompressedEndOffset / 2;
 	//warning("skip: %d, %d", skip % 640, skip / 640);
 	//warning("size: %d, %d", size % 640, size / 640);
-	//assert (f->yPos1 == skip / 640);
-	//assert (f->yPos2 == size / 640);
+	//assert (f.yPos1 == skip / 640);
+	//assert (f.yPos2 == size / 640);
 
-	uint32 numBlanks = 640 - (f->xPos2 - f->xPos1);
+	uint32 numBlanks = 640 - (f.xPos2 - f.xPos1);
 
-	in->seek(f->dataOffset);
+	in->seek((int)f.dataOffset);
 	for (uint32 out = skip; out < size; ) {
 		uint16 opcode = in->readByte();
 
@@ -195,17 +195,17 @@ void AnimFrame::decomp34(Common::SeekableReadStream *in, FrameInfo *f, byte mask
 	}
 }
 
-void AnimFrame::decomp5(Common::SeekableReadStream *in, FrameInfo *f) {
+void AnimFrame::decomp5(Common::SeekableReadStream *in, const FrameInfo &f) {
 	byte *p = (byte *)_image.getBasePtr(0, 0);
 
-	uint32 skip = f->initialSkip / 2;
-	uint32 size = f->decompressedEndOffset / 2;
+	uint32 skip = f.initialSkip / 2;
+	uint32 size = f.decompressedEndOffset / 2;
 	//warning("skip: %d, %d", skip % 640, skip / 640);
 	//warning("size: %d, %d", size % 640, size / 640);
-	//assert (f->yPos1 == skip / 640);
-	//assert (f->yPos2 == size / 640);
+	//assert (f.yPos1 == skip / 640);
+	//assert (f.yPos2 == size / 640);
 
-	in->seek(f->dataOffset);
+	in->seek((int)f.dataOffset);
 	for (uint32 out = skip; out < size; ) {
 		uint16 opcode = in->readByte();
 		if (!(opcode & 0x1f)) {
@@ -230,19 +230,19 @@ void AnimFrame::decomp5(Common::SeekableReadStream *in, FrameInfo *f) {
 	}
 }
 
-void AnimFrame::decomp7(Common::SeekableReadStream *in, FrameInfo *f) {
+void AnimFrame::decomp7(Common::SeekableReadStream *in, const FrameInfo &f) {
 	byte *p = (byte *)_image.getBasePtr(0, 0);
 
-	uint32 skip = f->initialSkip / 2;
-	uint32 size = f->decompressedEndOffset / 2;
+	uint32 skip = f.initialSkip / 2;
+	uint32 size = f.decompressedEndOffset / 2;
 	//warning("skip: %d, %d", skip % 640, skip / 640);
 	//warning("size: %d, %d", size % 640, size / 640);
-	//assert (f->yPos1 == skip / 640);
-	//assert (f->yPos2 == size / 640);
+	//assert (f.yPos1 == skip / 640);
+	//assert (f.yPos2 == size / 640);
 
-	uint32 numBlanks = 640 - (f->xPos2 - f->xPos1);
+	uint32 numBlanks = 640 - (f.xPos2 - f.xPos1);
 
-	in->seek(f->dataOffset);
+	in->seek((int)f.dataOffset);
 	for (uint32 out = skip; out < size; ) {
 		uint16 opcode = in->readByte();
 		if (opcode & 0x80) {
@@ -283,13 +283,13 @@ void AnimFrame::decomp7(Common::SeekableReadStream *in, FrameInfo *f) {
 	}
 }
 
-void AnimFrame::decompFF(Common::SeekableReadStream *in, FrameInfo *f) {
+void AnimFrame::decompFF(Common::SeekableReadStream *in, const FrameInfo &f) {
 	byte *p = (byte *)_image.getBasePtr(0, 0);
 
-	uint32 skip = f->initialSkip / 2;
-	uint32 size = f->decompressedEndOffset / 2;
+	uint32 skip = f.initialSkip / 2;
+	uint32 size = f.decompressedEndOffset / 2;
 
-	in->seek(f->dataOffset);
+	in->seek((int)f.dataOffset);
 	for (uint32 out = skip; out < size; ) {
 		uint16 opcode = in->readByte();
 
@@ -378,7 +378,7 @@ bool Sequence::load(Common::SeekableReadStream *stream) {
 	return true;
 }
 
-uint32 Sequence::count() {
+uint32 Sequence::count() const {
 	return _frames.size();
 }
 
@@ -405,7 +405,7 @@ AnimFrame *Sequence::getFrame(uint32 index) {
 
 	debugC(4, kLastExpressDebugGraphics, "Decoding frame %d / %d", index + 1, _frames.size());
 
-	return new AnimFrame(_stream, frame);
+	return new AnimFrame(_stream, *frame);
 }
 
 
@@ -428,7 +428,7 @@ bool SequencePlayer::processTime() {
 		return true;
 }
 
-bool SequencePlayer::hasEnded() {
+bool SequencePlayer::hasEnded() const {
 	return _currentFrame >= _sequence->count();
 }
 

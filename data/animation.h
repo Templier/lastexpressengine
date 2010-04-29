@@ -89,8 +89,8 @@ private:
 	};
 
 	void reset();
-	AnimFrame *processChunkFrame(Common::SeekableReadStream *in, Chunk *c);
-	void processChunkAudio(Common::SeekableReadStream *in, Chunk *c);
+	AnimFrame *processChunkFrame(Common::SeekableReadStream *in, const Chunk &c) const;
+	void processChunkAudio(Common::SeekableReadStream *in, const Chunk &c);
 
 	Common::SeekableReadStream *_stream;
 	Common::Array<Chunk> _chunks;

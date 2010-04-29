@@ -52,9 +52,9 @@ public:
 	Cursor();
 
 	bool load(Common::SeekableReadStream *stream);
-	void show(bool visible);
+	void show(bool visible) const;
 	bool setStyle(CursorStyle style);
-	uint16 *getCursorImage(CursorStyle style);
+	const uint16 *getCursorImage(CursorStyle style) const;
 
 private:
 	// Style
@@ -66,7 +66,7 @@ private:
 		uint16 hotspotX, hotspotY;
 	} _cursors[kCursorMAX];
 
-	bool checkStyle(CursorStyle style);
+	bool checkStyle(CursorStyle style) const;
 };
 
 class Icon : public Drawable {

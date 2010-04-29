@@ -143,7 +143,7 @@ enum StartMenuTooltips {
 //////////////////////////////////////////////////////////////////////////
 
 // Information about the cities on the train line
-const static struct {
+static const struct {
 	uint8 frame;
 	uint32 time;
 } trainCities[31] = {
@@ -180,7 +180,7 @@ const static struct {
 	{198, 4320900}, // Adrianople
 	{210, 4941000}}; // Constantinople
 
-const static struct {
+static const struct {
 	uint32 time;
 	StartMenuTooltips rewind;
 	StartMenuTooltips forward;
@@ -287,6 +287,7 @@ Common::Rect Clock::draw(Graphics::Surface *surface) {
 	_seqSun->draw(surface);
 	_seqDate->draw(surface);
 
+	// TODO return proper drawing rect
 	return Common::Rect();
 }
 
@@ -851,7 +852,7 @@ void Menu::loadData() {
 }
 
 // Get the sequence name to use for the acorn highlight, depending of the currently loaded savegame
-Common::String Menu::getAcornSequenceName(GameId id) {
+Common::String Menu::getAcornSequenceName(GameId id) const {
 
 	// end of text:00449d80 (also sets up the main menu scene)
 
@@ -1009,7 +1010,7 @@ void Menu::moveToCity(CityButton city, bool clicked) {
 //////////////////////////////////////////////////////////////////////////
 
 // Get current volume (converted to in-game value)
-int Menu::getVolume() {
+int Menu::getVolume() const {
 	int volume = _engine->_mixer->getVolumeForSoundType(Audio::Mixer::kPlainSoundType);
 
 	// Convert to in-game value [0-7]
@@ -1019,7 +1020,7 @@ int Menu::getVolume() {
 }
 
 // Set the volume (converts to ScummVM values)
-void Menu::setVolume(int volume) {
+void Menu::setVolume(int volume) const {
 	getState()->volume = volume;
 
 	// Clamp volume
@@ -1034,11 +1035,11 @@ void Menu::setVolume(int volume) {
 	// TODO: write to savegame ?
 }
 
-int Menu::getBrightness() {
+int Menu::getBrightness() const {
 	return getState()->brightness;
 }
 
-void Menu::setBrightness(int brightness) {
+void Menu::setBrightness(int brightness) const {
 	getState()->brightness = brightness;
 
 	// TODO: write to savegame

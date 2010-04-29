@@ -35,7 +35,7 @@ namespace LastExpress {
 Objects::Objects(LastExpressEngine *engine) : _engine(engine) {}
 
 
-const Objects::Object Objects::get(ObjectIndex index) {
+const Objects::Object Objects::get(ObjectIndex index) const {
 	if (index >= kObjectMax)
 		error("Objects::get - internal error: invalid object index (%d)", index);
 

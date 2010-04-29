@@ -36,7 +36,7 @@ namespace LastExpress {
 const uint32 SAVEGAME_SIGNATURE = 0x12001200;
 
 // Names of savegames
-const static struct {
+static const struct {
 	const char *saveFile;
 } gameInfo[6] = {
 	{"blue.egg"},

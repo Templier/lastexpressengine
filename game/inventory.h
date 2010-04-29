@@ -90,14 +90,14 @@ public:
 	InventoryEntry *getEntry(InventoryItem item);
 	InventoryEntry *getSelectedEntry() { return getEntry(_selectedItem); }
 
-	InventoryItem getFirstExaminableItem();
+	InventoryItem getFirstExaminableItem() const;
 	void setLocationAndProcess(InventoryItem item, ObjectLocation location);
 
 	// UI Control
 	void show(bool visible);
 	void blinkEgg(bool enabled);
 	void showHourGlass(bool enabled);
-	void setPortrait(InventoryItem item);
+	void setPortrait(InventoryItem item) const;
 	void showItem(InventoryItem item);
 	void drawEgg();
 
@@ -134,9 +134,9 @@ private:
 	void open();
 	void close();
 	void examine(InventoryItem item);
-	Common::Rect getItemRect(int16 index);
+	Common::Rect getItemRect(int16 index) const;
 
-	bool isItemSceneParameter(InventoryItem item);
+	bool isItemSceneParameter(InventoryItem item) const;
 };
 
 } // End of namespace LastExpress

@@ -267,7 +267,7 @@ public:
 	Flags      *getGameFlags() { return _flags; }
 
 	// Time checks
-	bool isDayTime();
+	bool isDayTime() const;
 
 	// Timer
 	int getTimer() { return _timer; }

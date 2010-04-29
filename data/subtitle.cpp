@@ -196,7 +196,7 @@ bool SubtitleManager::load(Common::SeekableReadStream *stream) {
 	return true;
 }
 
-uint16 SubtitleManager::getMaxTime() {
+uint16 SubtitleManager::getMaxTime() const {
 	return _maxTime;
 }
 
@@ -213,7 +213,7 @@ void SubtitleManager::setTime(uint16 time) {
 	}
 }
 
-bool SubtitleManager::hasChanged() {
+bool SubtitleManager::hasChanged() const {
 	// TODO: mark the old line rect as dirty
 	if (_currentIndex != _lastIndex)
 		return true;

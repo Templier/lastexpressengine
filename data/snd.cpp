@@ -45,7 +45,7 @@ SimpleSound::~SimpleSound() {
 }
 
 // Stop the sound
-void SimpleSound::stop() {
+void SimpleSound::stop() const {
 	g_system->getMixer()->stopHandle(_handle);
 }
 
@@ -112,7 +112,7 @@ AppendableSound::~AppendableSound() {
 	_as = NULL;
 }
 
-void AppendableSound::queueBuffer(byte *data, uint32 size) {
+void AppendableSound::queueBuffer(const byte *data, uint32 size) {
 	Common::MemoryReadStream *buffer = new Common::MemoryReadStream(data, size);
 	queueBuffer(buffer);
 }

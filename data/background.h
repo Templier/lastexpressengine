@@ -73,7 +73,7 @@ private:
 	BackgroundHeader _header;
 	uint16 *_data;         ///< decoded background data
 
-	byte *decodeComponent(Common::SeekableReadStream *in, uint32 inSize, uint32 outSize);
+	byte *decodeComponent(Common::SeekableReadStream *in, uint32 inSize, uint32 outSize) const;
 };
 
 } // End of namespace LastExpress

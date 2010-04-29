@@ -242,7 +242,7 @@ void Logic::eventMouseMove(Common::Event ev) {
 //////////////////////////////////////////////////////////////////////////
 // Scene
 //////////////////////////////////////////////////////////////////////////
-void Logic::loadSceneDataFile(ArchiveIndex archive) {
+void Logic::loadSceneDataFile(ArchiveIndex archive) const {
 	switch(archive) {
 	case kArchiveCd1:
 	case kArchiveCd2:
@@ -778,7 +778,7 @@ void Logic::updateCursor(bool redraw) {
 	warning("Logic::updateCursor: not implemented!");
 }
 
-bool Logic::checkSceneFields(uint32 index, bool isSecondCheck) {
+bool Logic::checkSceneFields(SceneIndex index, bool isSecondCheck) const {
 	bool result = false;
 	loadSceneObject(scene, (index ? index : getState()->scene));
 

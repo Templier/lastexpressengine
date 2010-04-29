@@ -167,7 +167,7 @@ public:
 	SceneHotspot() {}
 	static SceneHotspot *load(Common::SeekableReadStream *stream);
 
-	bool isInside(Common::Point point);
+	bool isInside(const Common::Point &point);
 
 private:
 	Common::Array<SceneCoord *> _coords;
@@ -203,7 +203,7 @@ public:
 	static bool load(Scene *scene, Common::SeekableReadStream *stream, SceneHeader *header);
 	static Scene *get(Common::SeekableReadStream *stream, SceneHeader *header);
 
-	bool checkHotSpot(Common::Point coord, SceneHotspot **hotspot);
+	bool checkHotSpot(const Common::Point &coord, SceneHotspot **hotspot);
 	Common::Rect draw(Graphics::Surface *surface);
 
 	SceneHeader* getHeader();

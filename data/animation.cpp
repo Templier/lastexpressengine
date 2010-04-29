@@ -137,7 +137,7 @@ bool Animation::process() {
 		case kChunkTypeBackground1:
 			debugC(9, kLastExpressDebugGraphics, "  background frame 1 (%d bytes, frame %d)", _currentChunk->size, _currentChunk->frame);
 			delete _background1;
-			_background1 = processChunkFrame(_stream, _currentChunk);
+			_background1 = processChunkFrame(_stream, *_currentChunk);
 			break;
 
 		case kChunkTypeSelectBackground1:
@@ -149,7 +149,7 @@ bool Animation::process() {
 		case kChunkTypeBackground2:
 			debugC(9, kLastExpressDebugGraphics, "  background frame 2 (%d bytes, frame %d)", _currentChunk->size, _currentChunk->frame);
 			delete _background2;
-			_background2 = processChunkFrame(_stream, _currentChunk);
+			_background2 = processChunkFrame(_stream, *_currentChunk);
 			break;
 
 		case kChunkTypeSelectBackground2:
@@ -161,7 +161,7 @@ bool Animation::process() {
 		case kChunkTypeOverlay:
 			debugC(9, kLastExpressDebugGraphics, "  overlay frame (%d bytes, frame %d)", _currentChunk->size, _currentChunk->frame);
 			delete _overlay;
-			_overlay = processChunkFrame(_stream, _currentChunk);
+			_overlay = processChunkFrame(_stream, *_currentChunk);
 			break;
 
 		case kChunkTypeUpdate:
@@ -173,7 +173,7 @@ bool Animation::process() {
 
 		case kChunkTypeAudioData:
 			debugC(9, kLastExpressDebugGraphics, "  audio (%d blocks, %d bytes, frame %d)", _currentChunk->size / _soundBlockSize, _currentChunk->size, _currentChunk->frame);
-			processChunkAudio(_stream, _currentChunk);
+			processChunkAudio(_stream, *_currentChunk);
 
 			// Synchronize the audio by resetting the start time
 			if (_currentChunk->frame == 0)
@@ -218,18 +218,18 @@ Common::Rect Animation::draw(Graphics::Surface *surface) {
 	return Common::Rect();
 }
 
-AnimFrame *Animation::processChunkFrame(Common::SeekableReadStream *in, Chunk *c) {
-	assert (c->frame == 0);
+AnimFrame *Animation::processChunkFrame(Common::SeekableReadStream *in, const Chunk &c) const {
+	assert (c.frame == 0);
 
 	// Create a temporary chunk buffer
-	Common::MemoryReadStream *str = in->readStream(c->size);
+	Common::MemoryReadStream *str = in->readStream(c.size);
 
 	// Read the frame information
 	FrameInfo i;
 	i.read(str, false);
 
 	// Decode the frame
-	AnimFrame *f = new AnimFrame(str, &i);
+	AnimFrame *f = new AnimFrame(str, i);
 
 	// Delete the temporary chunk buffer
 	delete str;
@@ -237,13 +237,13 @@ AnimFrame *Animation::processChunkFrame(Common::SeekableReadStream *in, Chunk *c
 	return f;
 }
 
-void Animation::processChunkAudio(Common::SeekableReadStream *in, Chunk *c) {
+void Animation::processChunkAudio(Common::SeekableReadStream *in, const Chunk &c) {
 	if (!_audio)
 		error("Animation::processChunkAudio - internal error: the audio stream is invalid!");
 
 	// Skip the Snd header, to queue just the audio blocks
-	uint32 size = c->size;
-	if ((c->size % 739) != 0) {
+	uint32 size = c.size;
+	if ((c.size % 739) != 0) {
 		// Read Snd header
 		uint32 header1 = in->readUint32LE();
 		uint16 header2 = in->readUint16LE();

@@ -49,7 +49,7 @@ State::~State() {
 	delete _flags;
 }
 
-bool State::isDayTime() {
+bool State::isDayTime() const {
 	return (_state->progress.chapter == kChapter1
 		|| _state->progress.chapter == kChapter4
 		|| (_state->progress.chapter == kChapter5 && _state->progress.is_nighttime));

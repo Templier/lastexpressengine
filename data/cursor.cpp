@@ -64,11 +64,11 @@ bool Cursor::load(Common::SeekableReadStream *stream) {
 	return true;
 }
 
-void Cursor::show(bool visible) {
+void Cursor::show(bool visible) const {
 	CursorMan.showMouse(visible);
 }
 
-bool Cursor::checkStyle(CursorStyle style) {
+bool Cursor::checkStyle(CursorStyle style) const {
 	if (style >= kCursorMAX) {
 		debugC(2, kLastExpressDebugGraphics, "Trying to use an invalid cursor style: was %d, max %d", (int)style, kCursorMAX);
 		return false;
@@ -98,9 +98,10 @@ bool Cursor::setStyle(CursorStyle style) {
 	return true;
 }
 
-uint16 *Cursor::getCursorImage(CursorStyle style) {
+const uint16 *Cursor::getCursorImage(CursorStyle style) const {
 	if (!checkStyle(style))
 		return NULL;
+
 	return _cursors[style].image;
 }
 
@@ -119,7 +120,7 @@ void Icon::setBrightness(uint brightness) {
 }
 
 Common::Rect Icon::draw(Graphics::Surface *surface) {
-	uint16 *image = ((LastExpressEngine *)g_engine)->getCursor()->getCursorImage((CursorStyle)_style);
+	const uint16 *image = ((LastExpressEngine *)g_engine)->getCursor()->getCursorImage((CursorStyle)_style);
 	if (!image)
 		return Common::Rect();
 

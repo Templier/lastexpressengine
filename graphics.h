@@ -51,7 +51,7 @@ public:
 
 	// Clear some screen parts
 	void clear(BackgroundType type);
-	void clear(BackgroundType type, Common::Rect rect);
+	void clear(BackgroundType type, const Common::Rect &rect);
 
 	// FIXME this is there for animation until we change it to use the graphic surface here instead of its private ones.
 	Graphics::Surface _screen;      // Actual screen surface

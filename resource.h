@@ -51,9 +51,9 @@ public:
 	Common::SeekableReadStream *createReadStreamForMember(const Common::String &name) const;
 
 	// Resource loading
-	Background *loadBackground(const Common::String &name);
-	Cursor *loadCursor();
-	Font *loadFont();
+	Background *loadBackground(const Common::String &name) const;
+	Cursor *loadCursor() const;
+	Font *loadFont() const;
 
 private:
 	bool _demo;

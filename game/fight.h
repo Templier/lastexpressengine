@@ -203,12 +203,12 @@ private:
 	
 
 	// Drawing
-	void setSequenceAndDraw(Fighter *fighter, uint32 sequenceIndex, FightSequenceType type);
-	void draw(Fighter *fighter);
+	void setSequenceAndDraw(Fighter *fighter, uint32 sequenceIndex, FightSequenceType type) const;
+	void draw(Fighter *fighter) const;
 
 	// Cleanup
 	void clear();
-	void clearSequences(Fighter *fighter);
+	void clearSequences(Fighter *fighter) const;
 
 	//////////////////////////////////////////////////////////////////////////
 	// Loading

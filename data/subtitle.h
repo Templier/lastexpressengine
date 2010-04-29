@@ -58,9 +58,9 @@ public:
 	~SubtitleManager();
 
 	bool load(Common::SeekableReadStream *stream);
-	uint16 getMaxTime();
+	uint16 getMaxTime() const;
 	void setTime(uint16 time);
-	bool hasChanged();
+	bool hasChanged() const;
 	Common::Rect draw(Graphics::Surface *surface);
 
 private:

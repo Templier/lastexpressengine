@@ -368,7 +368,7 @@ void Fight::clear() {
 	_data = NULL;
 }
 
-void Fight::clearSequences(Fighter *combatant) {
+void Fight::clearSequences(Fighter *combatant) const {
 	if (!combatant)
 		return;
 
@@ -384,7 +384,7 @@ void Fight::clearSequences(Fighter *combatant) {
 // Drawing
 //////////////////////////////////////////////////////////////////////////
 
-void Fight::setSequenceAndDraw(Fighter *combatant, uint32 sequenceIndex, FightSequenceType type) {
+void Fight::setSequenceAndDraw(Fighter *combatant, uint32 sequenceIndex, FightSequenceType type) const {
 	if (combatant->sequences.size() < sequenceIndex)
 		return;
 
@@ -414,7 +414,7 @@ void Fight::setSequenceAndDraw(Fighter *combatant, uint32 sequenceIndex, FightSe
 	}
 }
 
-void Fight::draw(Fighter *combatant) {
+void Fight::draw(Fighter *combatant) const {
 	Sequence* sequence = combatant->currentSequence2;
 
 	if (!sequence)

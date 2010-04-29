@@ -71,7 +71,7 @@ Debugger::~Debugger() {
 	DebugMan.clearAllDebugChannels();
 }
 
-bool Debugger::hasCommand() {
+bool Debugger::hasCommand() const {
 	return (_numParams != 0);
 }
 
@@ -81,7 +81,7 @@ void Debugger::resetCommand() {
 	_numParams = 0;
 }
 
-int Debugger::getNumber(const char *arg) {
+int Debugger::getNumber(const char *arg) const {
 	return strtol(arg, (char **)NULL, 0);
 }
 

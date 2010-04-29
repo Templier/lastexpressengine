@@ -51,7 +51,7 @@ public:
 
 	bool load(Common::SeekableReadStream *stream);
 	Common::Rect drawString(Graphics::Surface *surface, int16 x, int16 y, Common::String str);
-	Common::Rect drawString(Graphics::Surface *surface, int16 x, int16 y, uint16 *str, uint16 length);
+	Common::Rect drawString(Graphics::Surface *surface, int16 x, int16 y, const uint16 *str, uint16 length);
 
 private:
 	static const uint32 _paletteSize = 0x10;
@@ -60,13 +60,13 @@ private:
 
 	void reset();
 
-	uint16 getCharGlyph(uint16 c);
+	uint16 getCharGlyph(uint16 c) const;
 	byte *getGlyphImg(uint16 g);
 	uint8 getGlyphWidth(uint16 g);
 	byte *getCharImg(uint16 c);
-	uint8 getCharWidth(uint16 c);
-	uint16 getStringWidth(Common::String str);
-	uint16 getStringWidth(uint16 *str, uint16 length);
+	uint8 getCharWidth(uint16 c) const;
+	uint16 getStringWidth(Common::String str) const;
+	uint16 getStringWidth(const uint16 *str, uint16 length) const;
 	void drawChar(Graphics::Surface *surface, int16 x, int16 y, uint16 c);
 
 	// Font data

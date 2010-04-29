@@ -171,7 +171,7 @@ Common::SeekableReadStream *ResourceManager::createReadStreamForMember(const Com
 
 // Resource loading
 
-Background *ResourceManager::loadBackground(const Common::String &name) {
+Background *ResourceManager::loadBackground(const Common::String &name) const {
 	// Open the resource
 	Common::SeekableReadStream *stream = createReadStreamForMember(name + ".bg");
 	if (!stream)
@@ -188,7 +188,7 @@ Background *ResourceManager::loadBackground(const Common::String &name) {
 	return bg;
 }
 
-Cursor *ResourceManager::loadCursor() {
+Cursor *ResourceManager::loadCursor() const {
 	// Open the resource
 	Common::SeekableReadStream *stream = createReadStreamForMember("cursors.tbm");
 	if (!stream)
@@ -205,7 +205,7 @@ Cursor *ResourceManager::loadCursor() {
 	return c;
 }
 
-Font *ResourceManager::loadFont() {
+Font *ResourceManager::loadFont() const {
 	// Open the resource
 	Common::SeekableReadStream *stream = createReadStreamForMember("font.dat");
 	if (!stream)

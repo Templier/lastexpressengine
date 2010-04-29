@@ -54,7 +54,7 @@ public:
 	SimpleSound();
 	virtual ~SimpleSound();
 
-	void stop();
+	void stop() const;
 
 protected:
 	void loadHeader(Common::SeekableReadStream *in);
@@ -83,7 +83,7 @@ public:
 	AppendableSound();
 	~AppendableSound();
 
-	void queueBuffer(byte *data, uint32 size);
+	void queueBuffer(const byte *data, uint32 size);
 	void queueBuffer(Common::SeekableReadStream *bufferIn);
 	void finish();
 

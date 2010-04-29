@@ -87,7 +87,7 @@ private:
 	void drawElements();
 	Clock *_clock;
 	TrainLine *_trainLine;
-	Common::String getAcornSequenceName(GameId id);
+	Common::String getAcornSequenceName(GameId id) const;
 	void showCredits();
 
 	enum CityButton {
@@ -106,10 +106,10 @@ private:
 	void moveToCity(CityButton city, bool clicked);
 
 	// Sound/Brightness related
-	int getVolume();
-	void setVolume(int volume);
-	int getBrightness();
-	void setBrightness(int brightness);
+	int getVolume() const;
+	void setVolume(int volume) const;
+	int getBrightness() const;
+	void setBrightness(int brightness) const;
 };
 
 } // End of namespace LastExpress

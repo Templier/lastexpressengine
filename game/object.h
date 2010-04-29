@@ -56,7 +56,7 @@ public:
 
 	Objects(LastExpressEngine *engine);
 
-	const Object get(ObjectIndex index);
+	const Object get(ObjectIndex index) const;
 	void update(ObjectIndex index, EntityIndex entity, ObjectLocation location, CursorStyle cursor, CursorStyle cursor2);
 	void updateLocation2(ObjectIndex index, ObjectLocation location2);
 

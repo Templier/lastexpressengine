@@ -51,7 +51,7 @@ public:
 	Debugger(LastExpressEngine *engine);
 	~Debugger();
 
-	bool hasCommand();
+	bool hasCommand() const;
 	void callCommand();
 
 private:
@@ -71,7 +71,7 @@ private:
 
 	void resetCommand();
 	void copyCommand(int argc, const char **argv);
-	int getNumber(const char *arg);
+	int getNumber(const char *arg) const;
 
 	Debuglet *_command;
 	int _numParams;

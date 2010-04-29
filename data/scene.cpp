@@ -98,7 +98,7 @@ SceneHotspot *SceneHotspot::load(Common::SeekableReadStream *stream) {
 	return hs;
 }
 
-bool SceneHotspot::isInside(Common::Point point) {
+bool SceneHotspot::isInside(const Common::Point &point) {
 
 	bool contains = rect.contains(point);
 	
@@ -193,7 +193,7 @@ SceneHeader* Scene::getHeader() {
 	return _header;
 }
 
-bool Scene::checkHotSpot(Common::Point coord, SceneHotspot **hotspot) {
+bool Scene::checkHotSpot(const Common::Point &coord, SceneHotspot **hotspot) {
 	bool found = false;
 	int location = 0;
 

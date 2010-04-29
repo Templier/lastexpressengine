@@ -86,7 +86,7 @@ bool Font::load(Common::SeekableReadStream *stream) {
 }
 
 
-uint16 Font::getCharGlyph(uint16 c) {
+uint16 Font::getCharGlyph(uint16 c) const {
 	//warning("%c", c);
 	if (c >= 0x200)
 		error("Express::Font: Invalid character %d", c);
@@ -133,7 +133,7 @@ byte *Font::getCharImg(uint16 c) {
 	return getGlyphImg(getCharGlyph(c));
 }
 
-uint8 Font::getCharWidth(uint16 c) {
+uint8 Font::getCharWidth(uint16 c) const{
 	if (c == 0x20) {
 		// Space is a special case
 		// TODO: this is an arbitrary value
@@ -146,7 +146,7 @@ uint8 Font::getCharWidth(uint16 c) {
 	}
 }
 
-uint16 Font::getStringWidth(Common::String str) {
+uint16 Font::getStringWidth(Common::String str) const {
 	uint16 width = 0;
 	for (uint i = 0; i < str.size(); i++)
 		width += getCharWidth(str[i]);
@@ -154,7 +154,7 @@ uint16 Font::getStringWidth(Common::String str) {
 	return width;
 }
 
-uint16 Font::getStringWidth(uint16 *str, uint16 length) {
+uint16 Font::getStringWidth(const uint16 *str, uint16 length) const {
 	uint16 width = 0;
 	for (uint i = 0; i < length; i++)
 		width += getCharWidth(str[i]);
@@ -192,7 +192,7 @@ Common::Rect Font::drawString(Graphics::Surface *surface, int16 x, int16 y, Comm
 	return Common::Rect(x, y, x + currentX, y + _charHeight);
 }
 
-Common::Rect Font::drawString(Graphics::Surface *surface, int16 x, int16 y, uint16 *str, uint16 length) {
+Common::Rect Font::drawString(Graphics::Surface *surface, int16 x, int16 y, const uint16 *str, uint16 length) {
 	int16 currentX = x;
 	for (uint i = 0; i < length; i++) {
 		drawChar(surface, currentX, y, str[i]);

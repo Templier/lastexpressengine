@@ -62,7 +62,7 @@ public:
 	void gameOver(TimeType type, uint32 time, SceneIndex sceneIndex, bool showScene);
 
 	// Scene
-	void loadSceneDataFile(ArchiveIndex archive);
+	void loadSceneDataFile(ArchiveIndex archive) const;
 	void loadScene(SceneIndex sceneIndex);
 	void setScene(SceneIndex sceneIndex);
 
@@ -77,7 +77,7 @@ public:
 	// Index processing
 	void processScene();
 	uint32 processIndex(SceneIndex sceneIndex);
-	bool checkSceneFields(SceneIndex sceneIndex, bool isSecondCheck);
+	bool checkSceneFields(SceneIndex sceneIndex, bool isSecondCheck) const;
 
 	// Accessors
 	bool isGameStarted() { return _runState.gameStarted; }

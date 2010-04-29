@@ -67,7 +67,7 @@ void GraphicsManager::clear(BackgroundType type) {
 	clear(type, Common::Rect(640, 480));
 }
 
-void GraphicsManager::clear(BackgroundType type, Common::Rect rect) {
+void GraphicsManager::clear(BackgroundType type, const Common::Rect &rect) {
 	switch (type) {
 		default:
 			error("GraphicsManager::clear() - Unknown background type: %d", type);
