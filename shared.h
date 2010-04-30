@@ -73,23 +73,44 @@ enum ChapterIndex {
 // Index of scenes
 //////////////////////////////////////////////////////////////////////////
 
-typedef unsigned int SceneIndex;
-
-enum SceneIndexes {
+enum SceneIndex {
 	kSceneNone                = 0,
+	kSceneMenu                = 1,
+
+	// Inventory
+	kSceneMatchbox            = 31,	
+	kSceneTelegram            = 32,
+	kScenePassengerList       = 33,
+	kSceneScarf               = 34,
+	kSceneParchemin           = 35,
+	kSceneArticle             = 36,
+	kScenePaper               = 37,
+	kSceneFirebird            = 38,
+	kSceneBriefcase           = 39,
+
+	// Normal scenes
 	kSceneDefault             = 40,
+	kScene41                  = 41,
+	kSceneCompartmentCorpse   = 42,     // Tyler compartment with corpse on floor
+
+	// Fight
 	kSceneFightMilos          = 43,
 	kSceneFightMilosBedOpened = 44,
 	kSceneFightAnna           = 45,
 	kSceneFightIvo            = 46,
 	kSceneFightSalko          = 47,
 	kSceneFightVesna          = 48,
+
+	// Game over
 	kSceneGameOverBloodJacket = 55,
 	kSceneGameOverAlarm       = 62,
 	kSceneGameOverPolice      = 63,
 	kSceneGameOverAlarm2      = 64,
-	kSceneMenu                = 65,
-	kSceneFightDefault        = 820
+	kSceneStartScreen         = 65,
+
+	kSceneFightDefault        = 820,
+
+	kSceneInvalid             = 0xffffffff
 };
 
 //////////////////////////////////////////////////////////////////////////

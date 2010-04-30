@@ -186,10 +186,10 @@ public:
 		uint32 time;
 		uint32 timeDelta;
 		uint32 timeTicks;
-		byte sceneUseBackup;
-		uint32 scene;
-		uint32 sceneBackup;
-		uint32 sceneBackup2;
+		bool sceneUseBackup;       // byte
+		SceneIndex scene;          // uint32
+		SceneIndex sceneBackup;    // uint32
+		SceneIndex sceneBackup2;   // uin32
 
 		GameProgress progress;
 		byte events[512];
@@ -207,10 +207,10 @@ public:
 			time = _defaultTime;
 			timeDelta = _defaultTimeDelta;
 			timeTicks = 0;
-			sceneUseBackup = 0;
+			sceneUseBackup = false;
 			scene = kSceneDefault;
-			sceneBackup = 0;
-			sceneBackup2 = 0;
+			sceneBackup = kSceneNone;
+			sceneBackup2 = kSceneNone;
 
 			// Clear game events
 			memset(events, 0, 512*sizeof(byte));

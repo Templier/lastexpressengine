@@ -357,14 +357,15 @@ bool Debugger::cmd_loadscene(int argc, const char **argv) {
 			return true;
 		}
 
-		int cd = 1, index = 0;
+		int cd = 1;
+		SceneIndex index = kSceneNone;
 
 		// Check args
 		if (argc == 3) {
 			cd = getNumber(argv[1]);
-			index = getNumber(argv[2]);
+			index = (SceneIndex)getNumber(argv[2]);
 		} else {
-			index = getNumber(argv[1]);
+			index = (SceneIndex)getNumber(argv[1]);
 		}
 
 		if (cd <= 0 || cd > 3 || index < 0 || index > 2500) {

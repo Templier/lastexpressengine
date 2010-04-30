@@ -62,7 +62,7 @@ SceneHotspot *SceneHotspot::load(Common::SeekableReadStream *stream) {
 
 	hs->coord = stream->readUint16LE();
 	hs->unknownA = stream->readUint16LE();
-	hs->scene = stream->readUint16LE();
+	hs->scene = (SceneIndex)stream->readUint16LE();
 	hs->location = stream->readByte();
 	hs->action = stream->readByte();
 	hs->param1 = stream->readByte();
@@ -210,7 +210,7 @@ bool Scene::checkHotSpot(const Common::Point &coord, SceneHotspot **hotspot) {
 	return found;
 }
 
-SceneHotspot *Scene::getHotspot(uint index) {
+SceneHotspot *Scene::getHotspot(SceneIndex index) {
 	if (_hotspots.empty())
 		return NULL;
 
@@ -288,11 +288,11 @@ bool SceneManager::load(Common::SeekableReadStream *stream) {
 	return true;
 }
 
-bool SceneManager::loadScene(Scene *scene, int index) {
+bool SceneManager::loadScene(Scene *scene, SceneIndex index) {
 	return Scene::load(scene, _stream, _headers[index - 1]);
 }
 
-Scene *SceneManager::getScene(int index) {
+Scene *SceneManager::getScene(SceneIndex index) {
 	if (_headers.empty())
 		return NULL;
 

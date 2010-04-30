@@ -924,10 +924,10 @@ bool Entities::checkFields24(EntityIndex entity, EntityData::Field491Value field
 }
 
 bool Entities::checkFields25(EntityIndex entity) const {
-	if (getEntityData(entity)->direction == kDirectionUp && getLogic()->checkSceneFields(0, true))
+	if (getEntityData(entity)->direction == kDirectionUp && getLogic()->checkSceneFields(kSceneNone, true))
 		return true;
 
-	return (getEntityData(entity)->direction == kDirectionDown && getLogic()->checkSceneFields(0, false));
+	return (getEntityData(entity)->direction == kDirectionDown && getLogic()->checkSceneFields(kSceneNone, false));
 }
 
 

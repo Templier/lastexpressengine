@@ -54,7 +54,7 @@
 
 // Misc
 #define getEntityData(entity) getEntities()->getData(entity)->getData()
-#define loadSceneObject(name, sceneId) Scene name; _engine->getSceneManager()->loadScene(&name, sceneId);
+#define loadSceneObject(name, sceneId) Scene name; _engine->getSceneManager()->loadScene(&name, (SceneIndex)sceneId);
 
 // Utilities
 #define loadFile(name) load(_engine->getResourceManager()->getFileStream(name))

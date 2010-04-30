@@ -71,6 +71,7 @@
 */
 
 #include "lastexpress/drawable.h"
+#include "lastexpress/shared.h"
 
 #include "common/array.h"
 #include "common/stream.h"
@@ -155,7 +156,7 @@ public:
 	Common::Rect rect;
 	uint16 coord;
 	uint16 unknownA;
-	uint16 scene;
+	SceneIndex scene;
 	byte location;
 	byte action;
 	byte param1;
@@ -208,7 +209,7 @@ public:
 
 	SceneHeader* getHeader();
 	Common::Array<SceneHotspot *> *getHotspots() { return &_hotspots; }
-	SceneHotspot *getHotspot(uint index = 0);
+	SceneHotspot *getHotspot(SceneIndex index = kSceneNone);
 
 private:
 	SceneHeader *_header;
@@ -223,8 +224,8 @@ public:
 	~SceneManager();
 
 	bool load(Common::SeekableReadStream *stream);
-	Scene *getScene(int index);
-	bool loadScene(Scene *scene, int index);
+	Scene *getScene(SceneIndex index);
+	bool loadScene(Scene *scene, SceneIndex index);
 
 private:
 	Common::SeekableReadStream *_stream;

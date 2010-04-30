@@ -85,7 +85,7 @@ Common::Error LastExpressEngine::run() {
 	_debugger = new Debugger(this);
 
 	// Start the resource and graphics managers
-	_resMan = new ResourceManager(_gameDescription->flags & ADGF_DEMO);
+	_resMan = new ResourceManager((bool)(_gameDescription->flags & ADGF_DEMO));
 	if (!_resMan->loadArchive(kArchiveAll))
 		return Common::kUnknownError;
 
@@ -180,7 +180,7 @@ bool LastExpressEngine::hasFeature(EngineFeature f) const {
 }
 
 void LastExpressEngine::errorString(const char *buf_input, char *buf_output, int buf_output_size) {
-	snprintf(buf_output, buf_output_size, "%s", buf_input);
+	snprintf(buf_output, (uint)buf_output_size, "%s", buf_input);
 }
 
 } // End of namespace LastExpress

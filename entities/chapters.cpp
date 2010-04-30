@@ -288,7 +288,7 @@ IMPLEMENT_FUNCTION(Chapters, chapter2_init, 11)
 	getAction()->playAnimation(kEventTrainPassing);
 
 	if (getInventory()->hasItem(kItemScarf))
-		getLogic()->loadScene(41);
+		getLogic()->loadScene(kScene41);
 	else
 		getLogic()->loadSceneFromData(3, 79, -1);
 

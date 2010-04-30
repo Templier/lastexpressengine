@@ -258,7 +258,7 @@ void Logic::loadSceneDataFile(ArchiveIndex archive) const {
 	}
 }
 
-void Logic::loadScene(uint32 index) {
+void Logic::loadScene(SceneIndex index) {
 
 	getFlags()->flag_0 = false;
 
@@ -269,7 +269,7 @@ void Logic::loadScene(uint32 index) {
 
 		if (scene.getHeader()->param3 != 255) {
 			getState()->sceneUseBackup = 0;
-			getState()->sceneBackup2 = 0;
+			getState()->sceneBackup2 = kSceneNone;
 		}
 	}
 
@@ -298,7 +298,7 @@ void Logic::loadScene(uint32 index) {
 	updateCursor();
 }
 
-void Logic::setScene(uint32 index) {
+void Logic::setScene(SceneIndex index) {
 	_runState.flag_no_entity = false;
 
 	if (_runState.flag_draw_entities) {
@@ -312,7 +312,7 @@ void Logic::setScene(uint32 index) {
 	}
 }
 
-void Logic::drawScene(uint32 index) {
+void Logic::drawScene(SceneIndex index) {
 	preProcessScene(&index);
 
 	// Draw background
@@ -374,8 +374,8 @@ void Logic::processScene() {
 		loadScene(getState()->sceneBackup);
 }
 
-uint32 Logic::processIndex(uint32 index) {
-	error("Logic::processItem is not implemented!");
+LastExpress::SceneIndex Logic::processIndex( SceneIndex sceneIndex ) {
+	error("Logic::processIndex is not implemented!");
 }
 
 void Logic::loadSceneFromObject(ObjectIndex object) {
@@ -438,11 +438,11 @@ void Logic::loadSceneFromItem(InventoryItem item) {
 #define GET_ITEM_LOCATION(scene, parameter) \
 	getInventory()->getEntry((InventoryItem)scene.getHeader()->parameter)->location
 
-void Logic::preProcessScene(uint32 *index) {
+void Logic::preProcessScene(SceneIndex *index) {
 
 	// Check index validity
 	if (*index == 0 || *index > 2500)
-		*index = 1;
+		*index = kSceneMenu;
 
 	loadSceneObject(scene, *index);
 
@@ -559,7 +559,7 @@ void Logic::preProcessScene(uint32 *index) {
 
 				*index = scene.getHotspot()->scene;
 			} else {
-				*index = scene.getHotspot(1)->scene;
+				*index = scene.getHotspot(kSceneMenu)->scene;
 			}
 
 			preProcessScene(index);

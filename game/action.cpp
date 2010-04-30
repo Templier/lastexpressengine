@@ -404,12 +404,12 @@ IMPLEMENT_ACTION(inventory) {
 	if (!getState()->sceneUseBackup)
 		return;
 
-	int index = 0;
+	SceneIndex index = kSceneNone;
 	if (getState()->sceneBackup2) {
 		index = getState()->sceneBackup2;
-		getState()->sceneBackup2 = 0;
+		getState()->sceneBackup2 = kSceneNone;
 	} else {
-		getState()->sceneUseBackup = 0;
+		getState()->sceneUseBackup = false;
 		index = getState()->sceneBackup;
 
 		loadSceneObject(backup, getState()->sceneBackup);
@@ -468,12 +468,12 @@ IMPLEMENT_ACTION(compartment) {
 
 	if (getObjects()->get(object).entity) {
 		getSavePoints()->push(kEntityNone, getObjects()->get(object).entity, kAction9, object);
-		hotspot->scene = 0;
+		hotspot->scene = kSceneNone;
 		return;
 	}
 
 	if (handleOtherCompartment(object, 1, 1)) {
-		hotspot->scene = 0;
+		hotspot->scene = kSceneNone;
 		return;
 	}
 
@@ -485,7 +485,7 @@ IMPLEMENT_ACTION(compartment) {
 		&& (location != 1 || !getInventory()->hasItem(kItemKey)
 		|| getInventory()->getSelectedItem() != kItemFirebird || getInventory()->getSelectedItem() != kItemBriefcase))) {
 				getSound()->playSoundEvent(0, 13, 0);
-				hotspot->scene = 0;
+				hotspot->scene = kSceneNone;
 				return;
 		}
 
@@ -513,7 +513,7 @@ IMPLEMENT_ACTION(compartment) {
 	getObjects()->update(kObjectCompartment1, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
 	getSound()->playSoundEvent(0, 16, 0);
 	getInventory()->unselectItem();
-	hotspot->scene = 0;
+	hotspot->scene = kSceneNone;
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -674,7 +674,7 @@ IMPLEMENT_ACTION(pickItem) {
 		}
 
 		getLogic()->loadScene(getInventory()->getEntry(item)->scene_id);
-		hotspot->scene = 0;
+		hotspot->scene = kSceneNone;
 	}
 
 	// Select item
@@ -747,7 +747,7 @@ IMPLEMENT_ACTION(enterCompartment) {
 			}
 
 			getLogic()->loadSceneFromData(3, 77, 255);
-			hotspot->scene = 0;
+			hotspot->scene = kSceneNone;
 		}
 	} else {
 		save(kEntityNone, 0, kEventNone);
@@ -755,7 +755,7 @@ IMPLEMENT_ACTION(enterCompartment) {
 		playAnimation(kEventCathFindCorpse);
 		getSound()->playSound(kEntityNone, "LIB015");
 		getProgress().event_found_corpse = 1;
-		hotspot->scene = 42; // Tyler compartment with corpse on floor
+		hotspot->scene = kSceneCompartmentCorpse;
 	}
 }
 
@@ -796,7 +796,7 @@ IMPLEMENT_ACTION(getOutsideTrain) {
 		if (action == 9 || action == 44 || action == 45) {
 			playAnimation(isDay() ? kEventCathLookOutsideWindowDay : kEventCathLookOutsideWindowNight);
 			getLogic()->processScene();
-			hotspot->scene = 0;
+			hotspot->scene = kSceneNone;
 		}
 	}
 }
@@ -959,7 +959,7 @@ IMPLEMENT_ACTION(unbound) {
 			playAnimation(kEventCathRemoveBonds);
 			getProgress().field_84 = 0;
 			getLogic()->loadSceneFromData(1, 89, 255);
-			hotspot->scene = 0;
+			hotspot->scene = kSceneNone;
 		}
 		break;
 
@@ -999,7 +999,7 @@ IMPLEMENT_ACTION(25) {
 			if (!getEvent(kEventAnnaBagageArgument)) {
 				getEntities()->resetEntityState(kEntityAnna);
 				((Anna*)getEntities()->get(kEntityAnna))->setup_bagage();
-				hotspot->scene = 0;
+				hotspot->scene = kSceneNone;
 			}
 		}
 		break;
@@ -1019,22 +1019,22 @@ IMPLEMENT_ACTION(26) {
 	case 2:
 		getSavePoints()->push(kEntityNone, kEntityChapters, kAction225367984);
 		getInventory()->unselectItem();
-		hotspot->scene = 0;
+		hotspot->scene = kSceneNone;
 		break;
 
 	case 3:
 		getSavePoints()->push(kEntityNone, kEntityChapters, kAction191001984);
-		hotspot->scene = 0;
+		hotspot->scene = kSceneNone;
 		break;
 
 	case 4:
 		getSavePoints()->push(kEntityNone, kEntityChapters, kAction201959744);
-		hotspot->scene = 0;
+		hotspot->scene = kSceneNone;
 		break;
 
 	case 5:
 		getSavePoints()->push(kEntityNone, kEntityChapters, kAction169300225);
-		hotspot->scene = 0;
+		hotspot->scene = kSceneNone;
 		break;
 	}
 }
@@ -1129,7 +1129,7 @@ IMPLEMENT_ACTION(32) {
 		} else {
 			getSavePoints()->push(kEntityNone, kEntityTrain, kAction203339360);
 		}
-		hotspot->scene = 0;
+		hotspot->scene = kSceneNone;
 		break;
 
 	case 4:

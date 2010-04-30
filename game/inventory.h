@@ -58,7 +58,7 @@ public:
 	// Entry
 	struct InventoryEntry {
 		byte item_id;
-		byte scene_id;
+		SceneIndex scene_id;
 		byte field_2;
 		byte is_selectable;
 		byte has_item;
@@ -67,7 +67,7 @@ public:
 
 		InventoryEntry() {
 			item_id = 0;
-			scene_id = 0;
+			scene_id = kSceneNone;
 			field_2 = 0;
 			is_selectable = 0;
 			has_item = 0;

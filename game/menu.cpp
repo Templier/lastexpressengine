@@ -436,7 +436,7 @@ void Menu::showMenu(bool savegame, TimeType type, uint32 time) {
 		} else {
 			playMusicStream("mus018.snd");
 
-			showScene(kSceneMenu, GraphicsManager::kBackgroundC);
+			showScene(kSceneStartScreen, GraphicsManager::kBackgroundC);
 			askForRedraw(); redrawScreen();
 			//_engine->_system->delayMillis(1000);
 
@@ -463,12 +463,13 @@ void Menu::showMenu(bool savegame, TimeType type, uint32 time) {
 }
 
 // Get menu scene index
-uint32 Menu::getSceneIndex() {
+LastExpress::SceneIndex Menu::getSceneIndex()
+{
 	// TODO Do check for DWORD at text:004ADF70 < 0x1030EC
 
 	// + 1 = normal menu with open egg / clock
 	// + 2 = shield menu, when no savegame exists (no game has been started)
-	return (SaveLoad::isSavegameValid(getLogic()->getGameId())) ? getLogic()->getGameId() * 5 + 1 : getLogic()->getGameId() * 5 + 2;
+	return (SceneIndex)((SaveLoad::isSavegameValid(getLogic()->getGameId())) ? getLogic()->getGameId() * 5 + 1 : getLogic()->getGameId() * 5 + 2);
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -551,18 +552,18 @@ void Menu::handleEvent(const Common::Event &ev) {
 		//  - Reset save game & "save points"
 		//  - etc.
 		{
-			getState()->scene = 255; // HACK to not show menu after we are finished
+			getState()->scene = kSceneDefault; // HACK to not show menu after we are finished
 			clearBg(GraphicsManager::kBackgroundAll);
 
-			showScene(5 * getLogic()->getGameId() + 3, GraphicsManager::kBackgroundC);
+			showScene((SceneIndex)(5 * getLogic()->getGameId() + 3), GraphicsManager::kBackgroundC);
 			askForRedraw(); redrawScreen();
 			_engine->_system->delayMillis(1000);
 
-			showScene(5 * getLogic()->getGameId() + 4, GraphicsManager::kBackgroundC);
+			showScene((SceneIndex)(5 * getLogic()->getGameId() + 3), GraphicsManager::kBackgroundC);
 			askForRedraw(); redrawScreen();
 			_engine->_system->delayMillis(1000);
 
-			showScene(5 * getLogic()->getGameId() + 5, GraphicsManager::kBackgroundC);
+			showScene((SceneIndex)(5 * getLogic()->getGameId() + 3), GraphicsManager::kBackgroundC);
 			askForRedraw(); redrawScreen();
 			_engine->_system->delayMillis(1000);
 

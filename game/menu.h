@@ -53,7 +53,7 @@ public:
 	void eventMouseClick(const Common::Event &ev);
 	void eventMouseMove(const Common::Event &ev);
 
-	uint32 getSceneIndex();
+	SceneIndex getSceneIndex();
 
 	// DEBUG ONLY - TO BE REMOVED
 	void setShowStartup(bool show) { _showStartScreen = show; }

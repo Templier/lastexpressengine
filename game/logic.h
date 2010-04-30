@@ -76,7 +76,7 @@ public:
 
 	// Index processing
 	void processScene();
-	uint32 processIndex(SceneIndex sceneIndex);
+	SceneIndex processIndex(SceneIndex sceneIndex);
 	bool checkSceneFields(SceneIndex sceneIndex, bool isSecondCheck) const;
 
 	// Accessors

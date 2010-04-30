@@ -104,15 +104,15 @@ void Inventory::init() {
 	_entries[kItem22].no_autoselect = 0;
 
 	// Scene
-	_entries[kItemMatchBox].scene_id = 31;
-	_entries[kItemTelegram].scene_id = 32;
-	_entries[kItemPassengerList].scene_id = 33;
-	_entries[kItemScarf].scene_id = 34;
-	_entries[kItemParchemin].scene_id = 35;
-	_entries[kItemArticle].scene_id = 36;
-	_entries[kItemPaper].scene_id = 37;
-	_entries[kItemFirebird].scene_id = 38;
-	_entries[kItemBriefcase].scene_id = 39;
+	_entries[kItemMatchBox].scene_id = kSceneMatchbox;
+	_entries[kItemTelegram].scene_id = kSceneTelegram;
+	_entries[kItemPassengerList].scene_id = kScenePassengerList;
+	_entries[kItemScarf].scene_id = kSceneScarf;
+	_entries[kItemParchemin].scene_id = kSceneParchemin;
+	_entries[kItemArticle].scene_id = kSceneArticle;
+	_entries[kItemPaper].scene_id = kScenePaper;
+	_entries[kItemFirebird].scene_id = kSceneFirebird;
+	_entries[kItemBriefcase].scene_id = kSceneBriefcase;
 
 	// Has item
 	_entries[kItemTelegram].has_item = 1;
@@ -334,7 +334,7 @@ void Inventory::showHourGlass(bool enabled) {
 
 // Show an item scene
 void Inventory::showItem(InventoryItem item) {
-	uint32 scene = getEntry(item)->scene_id;
+	SceneIndex scene = getEntry(item)->scene_id;
 	if (!scene )
 		return;
 
@@ -484,7 +484,7 @@ bool Inventory::isItemSceneParameter(InventoryItem item) const {
 
 // Examine an inventory item
 void Inventory::examine(InventoryItem item) {
-	uint32 index = getEntry(item)->scene_id;
+	SceneIndex index = getEntry(item)->scene_id;
 	if (!index)
 		return;
 
@@ -504,7 +504,7 @@ void Inventory::examine(InventoryItem item) {
 
 		if (getFirstExaminableItem() == _selectedItem) {
 			index = getState()->sceneBackup2;
-			getState()->sceneBackup2 = 0;
+			getState()->sceneBackup2 = kSceneNone;
 			getLogic()->loadScene(index);
 		}
 	}
