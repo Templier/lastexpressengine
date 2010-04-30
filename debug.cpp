@@ -368,7 +368,7 @@ bool Debugger::cmd_loadscene(int argc, const char **argv) {
 			index = (SceneIndex)getNumber(argv[1]);
 		}
 
-		if (cd <= 0 || cd > 3 || index < 0 || index > 2500) {
+		if (cd <= 0 || cd > 3 || index > 2500) {
 			DebugPrintf("Error: invalid cd number (1-3) or index value (0-2500)");
 			return true;
 		}

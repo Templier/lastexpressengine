@@ -378,7 +378,7 @@ void Inventory::removeItem(InventoryItem item, ObjectLocation newLocation) {
 	getEntry(item)->isPresent = 0;
 	getEntry(item)->location = newLocation;
 
-	if (getEntry(item)->cursor == _selectedItem) {
+	if (getEntry(item)->cursor == (CursorStyle)_selectedItem) {
 		_selectedItem = kItemNone;
 		_engine->getGraphicsManager()->clear(GraphicsManager::kBackgroundInventory, Common::Rect(44, 0, 44 + 32, 32));
 		askForRedraw();

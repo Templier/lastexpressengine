@@ -680,7 +680,7 @@ void Fight::handleActionMilos(Fighter *fighter, FightAction action) {
 		break;
 
 	case kFightAction2:
-		if (fighter->sequenceIndex != 2 && fighter->sequenceIndex != 3 || CHECK_SEQUENCE2(fighter, 4)) {
+		if ((fighter->sequenceIndex != 2 && fighter->sequenceIndex != 3) || CHECK_SEQUENCE2(fighter, 4)) {
 			setSequenceAndDraw(fighter, 6, kFightSequenceType1);
 			setSequenceAndDraw(fighter->opponent, 4, kFightSequenceType1);
 
@@ -871,7 +871,7 @@ void Fight::handleActionAnna(Fighter *fighter, FightAction action) {
 		return;
 
 	case kFightAction1:
-		if (fighter->sequenceIndex != 1 && fighter->sequenceIndex != 3 || CHECK_SEQUENCE2(fighter, 4)) {
+		if ((fighter->sequenceIndex != 1 && fighter->sequenceIndex != 3) || CHECK_SEQUENCE2(fighter, 4)) {
 			setSequenceAndDraw(fighter, 4, kFightSequenceType1);
 			setSequenceAndDraw(fighter->opponent, 4, kFightSequenceType1);
 
@@ -883,7 +883,7 @@ void Fight::handleActionAnna(Fighter *fighter, FightAction action) {
 		break;
 
 	case kFightAction2:
-		if (fighter->sequenceIndex != 2 && fighter->sequenceIndex != 3 || CHECK_SEQUENCE2(fighter, 4)) {
+		if ((fighter->sequenceIndex != 2 && fighter->sequenceIndex != 3) || CHECK_SEQUENCE2(fighter, 4)) {
 			setSequenceAndDraw(fighter, 4, kFightSequenceType1);
 			setSequenceAndDraw(fighter->opponent, 5, kFightSequenceType1);
 
@@ -895,7 +895,7 @@ void Fight::handleActionAnna(Fighter *fighter, FightAction action) {
 		break;
 
 	case kFightAction3:
-		if (fighter->sequenceIndex != 2 && fighter->sequenceIndex != 1 || CHECK_SEQUENCE2(fighter, 4)) {
+		if ((fighter->sequenceIndex != 2 && fighter->sequenceIndex != 1) || CHECK_SEQUENCE2(fighter, 4)) {
 			setSequenceAndDraw(fighter, 4, kFightSequenceType1);
 			setSequenceAndDraw(fighter->opponent, 6, kFightSequenceType1);
 
@@ -1047,7 +1047,7 @@ void Fight::handleActionIvo(Fighter *fighter, FightAction action) {
 		break;
 
 	case kFightAction2:
-		if (fighter->sequenceIndex != 2 && fighter->sequenceIndex != 3 || CHECK_SEQUENCE2(fighter, 4)) {
+		if ((fighter->sequenceIndex != 2 && fighter->sequenceIndex != 3) || CHECK_SEQUENCE2(fighter, 4)) {
 			setSequenceAndDraw(fighter, 7, kFightSequenceType1);
 			setSequenceAndDraw(fighter->opponent, 5, kFightSequenceType1);
 
@@ -1120,7 +1120,7 @@ void Fight::handleOpponentActionIvo(Fighter *fighter, FightAction action) {
 		break;
 
 	case kFightAction3:
-		if (opponent->sequenceIndex != 1 && opponent->sequenceIndex != 3 || CHECK_SEQUENCE2(opponent, 4)) {
+		if ((opponent->sequenceIndex != 1 && opponent->sequenceIndex != 3) || CHECK_SEQUENCE2(opponent, 4)) {
 			setSequenceAndDraw(opponent, 6, kFightSequenceType1);
 			setSequenceAndDraw(opponent->opponent, 6, kFightSequenceType1);
 			CALL_FUNCTION1(opponent->opponent, handleAction, kFightAction103);
@@ -1128,7 +1128,7 @@ void Fight::handleOpponentActionIvo(Fighter *fighter, FightAction action) {
 		break;
 
 	case kFightAction4:
-		if (opponent->sequenceIndex != 2 && opponent->sequenceIndex != 3 || CHECK_SEQUENCE2(opponent, 4)) {
+		if ((opponent->sequenceIndex != 2 && opponent->sequenceIndex != 3) || CHECK_SEQUENCE2(opponent, 4)) {
 			setSequenceAndDraw(opponent, 6, kFightSequenceType1);
 			setSequenceAndDraw(opponent->opponent, 5, kFightSequenceType1);
 			CALL_FUNCTION1(opponent->opponent, handleAction, kFightAction103);

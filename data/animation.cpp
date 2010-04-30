@@ -37,7 +37,7 @@
 
 namespace LastExpress {
 
-Animation::Animation() : _stream(NULL), _currentChunk(NULL), _overlay(NULL), _background1(NULL), _background2(NULL), _backgroundCurrent(0), _audio(NULL), _startTime(NULL), _changed(false) {
+Animation::Animation() : _stream(NULL), _currentChunk(NULL), _overlay(NULL), _background1(NULL), _background2(NULL), _backgroundCurrent(0), _audio(NULL), _startTime(0), _changed(false) {
 }
 
 Animation::~Animation() {

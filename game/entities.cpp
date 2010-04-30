@@ -819,11 +819,10 @@ bool Entities::checkFields11() const {
 	for (uint i = 1; i < _entities.size(); i++) {
 		EntityIndex index = (EntityIndex)i;
 
-		if (!getEntityData(index)->field_493
-		 && checkFields12(index)
-		 || checkFields13(index))
+		if ((!getEntityData(index)->field_493 && checkFields12(index)) || checkFields13(index))
 			return false;
 	}
+	
 	return true;
 }
 

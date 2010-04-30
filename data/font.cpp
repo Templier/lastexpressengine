@@ -29,9 +29,9 @@
 
 namespace LastExpress {
 
-Font::Font() : _numGlyphs(NULL), _glyphs(NULL), _glyphWidths(NULL) {
-	memset(&_palette, NULL, sizeof(_palette));
-	memset(&_charMap, NULL, sizeof(_charMap));
+Font::Font() : _numGlyphs(0), _glyphs(NULL), _glyphWidths(0) {
+	memset(&_palette, 0, sizeof(_palette));
+	memset(&_charMap, 0, sizeof(_charMap));
 }
 
 Font::~Font() {

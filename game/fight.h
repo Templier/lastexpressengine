@@ -111,8 +111,6 @@ private:
 		kFightAction132 = 132
 	};
 
-	typedef struct Fighter;
-
 	struct Fighter {
 		Common::Functor2<Fighter *, FightAction, void> *handleAction;
 		Common::Functor1<Fighter *, void> *update;
