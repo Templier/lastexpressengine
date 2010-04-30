@@ -37,7 +37,6 @@
 #include "lastexpress/lastexpress.h"
 #include "lastexpress/helpers.h"
 
-bool handleCompartementAction();
 namespace LastExpress {
 
 Train::Train(LastExpressEngine *engine) : Entity(engine, kEntityTrain) {
@@ -52,7 +51,7 @@ Train::Train(LastExpressEngine *engine) : Entity(engine, kEntityTrain) {
 }
 
 IMPLEMENT_FUNCTION_II(Train, savegame, 1)
-	switch (savepoint->action) {
+	switch (savepoint.action) {
 	default:
 		break;
 
@@ -69,27 +68,27 @@ IMPLEMENT_FUNCTION_II(Train, savegame, 1)
 }
 
 IMPLEMENT_FUNCTION(Train, chapter1, 2)
-	if (savepoint->action == kActionDefault)
+	if (savepoint.action == kActionDefault)
 		setup_process();
 }
 
 IMPLEMENT_FUNCTION(Train, chapter2, 3)
-	if (savepoint->action == kActionDefault)
+	if (savepoint.action == kActionDefault)
 		setup_process();
 }
 
 IMPLEMENT_FUNCTION(Train, chapter3, 4)
-	if (savepoint->action == kActionDefault)
+	if (savepoint.action == kActionDefault)
 		setup_process();
 }
 
 IMPLEMENT_FUNCTION(Train, chapter4, 5)
-	if (savepoint->action == kActionDefault)
+	if (savepoint.action == kActionDefault)
 		setup_process();
 }
 
 IMPLEMENT_FUNCTION(Train, chapter5, 6)
-	if (savepoint->action == kActionDefault)
+	if (savepoint.action == kActionDefault)
 		setup_process();
 }
 
@@ -98,7 +97,7 @@ void Train::handleCompartementAction() {
 	EXPOSE_PARAMS(EntityData::EntityParametersIIII)
 
 	if (params->param8)
-		getSavePoints()->push(kEntityTrain, kEntityMahmud, kAction290410610, params->param1);
+		getSavePoints()->push(kEntityTrain, kEntityMahmud, kAction290410610, (uint32)params->param1);
 
 	getAction()->handleOtherCompartment((ObjectIndex)params->param1, 0, ENTITY_PARAM(0, 8) ? 0 : 1);
 
@@ -108,10 +107,14 @@ void Train::handleCompartementAction() {
 }
 
 IMPLEMENT_FUNCTION_II(Train, harem, 7)
-	if (savepoint->action != kActionDefault)
+	if (savepoint.action != kActionDefault)
 		return;
 
 	switch (params->param1) {
+	default:
+		error("Train::harem: Invalid value for parameter 1: %d", params->param1);
+		break;
+
 	case 5:
 		params->param3 = EntityData::kField491_4840;
 		break;
@@ -277,7 +280,7 @@ IMPLEMENT_FUNCTION(Train, process, 8)
 
 	EntityData::EntityParametersIIIS *parameters1 = (EntityData::EntityParametersIIIS*)_data->getCurrentParameters(1);
 
-	switch (savepoint->action) {
+	switch (savepoint.action) {
 	default:
 		break;
 
@@ -301,7 +304,7 @@ IMPLEMENT_FUNCTION(Train, process, 8)
 		if (params->param6) {
 
 			if (params->param7) {
-				parameters1->param7 = getState()->time + 900;
+				parameters1->param7 = (int)getState()->time + 900;
 
 				if (parameters1->param7 >= (int)getState()->time)
 					goto label_skip;
@@ -318,7 +321,7 @@ label_skip:
 		// FIXME make sense of all this crap
 		if (params->param7) {
 			if (!parameters1->param8) {
-				parameters1->param8 = getState()->time + 4500;
+				parameters1->param8 = (int)getState()->time + 4500;
 
 				if (parameters1->param8) {
 					params->param7 = 0;
@@ -352,9 +355,9 @@ label_skip:
 
 	case kAction8:
 	case kAction9:
-		if (savepoint->param.intValue == 5 || savepoint->param.intValue == 6 || savepoint->param.intValue == 7 || savepoint->param.intValue == 8) {
-			_data->setNextCallback(savepoint->action == 8 ? 3 : 4);
-			call(new ENTITY_SETUP(Train, setup_harem), savepoint->param.intValue, savepoint->action);
+		if (savepoint.param.intValue == 5 || savepoint.param.intValue == 6 || savepoint.param.intValue == 7 || savepoint.param.intValue == 8) {
+			_data->setNextCallback(savepoint.action == 8 ? 3 : 4);
+			call(new ENTITY_SETUP(Train, setup_harem), (int)savepoint.param.intValue, savepoint.action);
 		}
 		break;
 
@@ -381,6 +384,7 @@ label_skip:
 		}
 
 		// Draw moving background behind windows
+		// TODO change boolean check
 		if (params->param3) {
 			if (getEntityData(kEntityNone)->field_495 != params->param1 || isDay() != (params->param2 > 0)) {
 				switch (getEntityData(kEntityNone)->field_495) {
@@ -388,7 +392,7 @@ label_skip:
 					getEntities()->prepareSequences(kEntityTrain);
 					break;
 
-				case EntityData::kField493_1:
+				case EntityData::kField495_1:
 				case EntityData::kField495_6:
 					if (getProgress().is_nighttime)
 						getEntities()->drawSequenceLeft(kEntityTrain, "B1WNM");
@@ -476,7 +480,7 @@ label_skip:
 	}
 
 	case kAction191070912:
-		ENTITY_PARAM(0, 7) = savepoint->param.intValue;
+		ENTITY_PARAM(0, 7) = (int)savepoint.param.intValue;
 		break;
 
 	case kAction191350523:
@@ -509,14 +513,14 @@ label_skip:
 		break;
 
 	case kAction203863200:
-		if (savepoint->param.charValue) {
+		if (!strcmp(savepoint.param.charValue, "")) {
 			params->param8 = 1;
-			strcpy((char *)&parameters1->seq, savepoint->param.charValue);	// this is the sound file name
+			strcpy((char *)&parameters1->seq, savepoint.param.charValue);	// this is the sound file name
 		}
 		break;
 
 	case kAction222746496:
-		switch(savepoint->param.intValue) {
+		switch(savepoint.param.intValue) {
 		default:
 			break;
 
@@ -524,8 +528,8 @@ label_skip:
 		case kObjectCompartment2:
 		case kObjectCompartmentA:
 		case kObjectCompartmentB:
-			parameters1->param1 = (savepoint->param.intValue == kObjectCompartment1 || savepoint->param.intValue == kObjectCompartment2) ? 3 : 4;
-			parameters1->param2 = (savepoint->param.intValue == kObjectCompartment1 || savepoint->param.intValue == kObjectCompartmentA) ? EntityData::kField491_8200 : EntityData::kField491_7500;
+			parameters1->param1 = (savepoint.param.intValue == kObjectCompartment1 || savepoint.param.intValue == kObjectCompartment2) ? 3 : 4;
+			parameters1->param2 = (savepoint.param.intValue == kObjectCompartment1 || savepoint.param.intValue == kObjectCompartmentA) ? EntityData::kField491_8200 : EntityData::kField491_7500;
 			parameters1->param3 = 7850;
 			break;
 
@@ -533,8 +537,8 @@ label_skip:
 		case kObjectCompartment4:
 		case kObjectCompartmentC:
 		case kObjectCompartmentD:
-			parameters1->param1 = (savepoint->param.intValue == kObjectCompartment1 || savepoint->param.intValue == kObjectCompartment2) ? 3 : 4;
-			parameters1->param2 = (savepoint->param.intValue == kObjectCompartment3 || savepoint->param.intValue == kObjectCompartmentC) ? EntityData::kField491_6470 : EntityData::kField491_5790;
+			parameters1->param1 = (savepoint.param.intValue == kObjectCompartment1 || savepoint.param.intValue == kObjectCompartment2) ? 3 : 4;
+			parameters1->param2 = (savepoint.param.intValue == kObjectCompartment3 || savepoint.param.intValue == kObjectCompartmentC) ? EntityData::kField491_6470 : EntityData::kField491_5790;
 			parameters1->param3 = 6130;
 			break;
 
@@ -542,8 +546,8 @@ label_skip:
 		case kObjectCompartment6:
 		case kObjectCompartmentE:
 		case kObjectCompartmentF:
-			parameters1->param1 = (savepoint->param.intValue == kObjectCompartment1 || savepoint->param.intValue == kObjectCompartment2) ? 3 : 4;
-			parameters1->param2 = (savepoint->param.intValue == kObjectCompartment5 || savepoint->param.intValue == kObjectCompartmentE) ? EntityData::kField491_4840 : EntityData::kField491_4070;
+			parameters1->param1 = (savepoint.param.intValue == kObjectCompartment1 || savepoint.param.intValue == kObjectCompartment2) ? 3 : 4;
+			parameters1->param2 = (savepoint.param.intValue == kObjectCompartment5 || savepoint.param.intValue == kObjectCompartmentE) ? EntityData::kField491_4840 : EntityData::kField491_4070;
 			parameters1->param3 = 4455;
 			break;
 
@@ -551,8 +555,8 @@ label_skip:
 		case kObjectCompartment8:
 		case kObjectCompartmentG:
 		case kObjectCompartmentH:
-			parameters1->param1 = (savepoint->param.intValue == kObjectCompartment1 || savepoint->param.intValue == kObjectCompartment2) ? 3 : 4;
-			parameters1->param2 = (savepoint->param.intValue == kObjectCompartment7 || savepoint->param.intValue == kObjectCompartmentG) ? EntityData::kField491_3050 : EntityData::kField491_2740;
+			parameters1->param1 = (savepoint.param.intValue == kObjectCompartment1 || savepoint.param.intValue == kObjectCompartment2) ? 3 : 4;
+			parameters1->param2 = (savepoint.param.intValue == kObjectCompartment7 || savepoint.param.intValue == kObjectCompartmentG) ? EntityData::kField491_3050 : EntityData::kField491_2740;
 			parameters1->param3 = 0;
 			break;
 		}

@@ -61,7 +61,7 @@ IMPLEMENT_FUNCTION(Gendarmes, function1, 1)
 }
 
 IMPLEMENT_FUNCTION(Gendarmes, chapter1, 2)
-	switch (savepoint->action) {
+	switch (savepoint.action) {
 	default:
 		break;
 
@@ -120,22 +120,22 @@ IMPLEMENT_FUNCTION(Gendarmes, function13, 13)
 }
 
 IMPLEMENT_FUNCTION(Gendarmes, chapter2, 14)
-	if (savepoint->action == kActionDefault)
+	if (savepoint.action == kActionDefault)
 		getEntities()->prepareSequences(kEntityGendarmes);
 }
 
 IMPLEMENT_FUNCTION(Gendarmes, chapter3, 15)
-	if (savepoint->action == kActionDefault)
+	if (savepoint.action == kActionDefault)
 		getEntities()->prepareSequences(kEntityGendarmes);
 }
 
 IMPLEMENT_FUNCTION(Gendarmes, chapter4, 16)
-	if (savepoint->action == kActionDefault)
+	if (savepoint.action == kActionDefault)
 		getEntities()->prepareSequences(kEntityGendarmes);
 }
 
 IMPLEMENT_FUNCTION(Gendarmes, chapter5, 17)
-	if (savepoint->action == kActionDefault)
+	if (savepoint.action == kActionDefault)
 		getEntities()->prepareSequences(kEntityGendarmes);
 }
 

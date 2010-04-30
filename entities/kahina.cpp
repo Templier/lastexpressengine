@@ -82,7 +82,7 @@ IMPLEMENT_FUNCTION_II(Kahina, savegame, 3)
 }
 
 IMPLEMENT_FUNCTION_I(Kahina, updateFromTime, 4)
-	if (savepoint->action == kAction137503360) {
+	if (savepoint.action == kAction137503360) {
 		ENTITY_PARAM(0, 2) = 1;
 		CALL_PREVIOUS_SAVEPOINT()
 	}
@@ -111,7 +111,7 @@ IMPLEMENT_FUNCTION_SI(Kahina, function9, 9)
 }
 
 IMPLEMENT_FUNCTION(Kahina, chapter1, 10)
-	switch (savepoint->action) {
+	switch (savepoint.action) {
 	default:
 		break;
 
@@ -151,7 +151,7 @@ IMPLEMENT_FUNCTION(Kahina, function15, 15)
 }
 
 IMPLEMENT_FUNCTION(Kahina, chapter2, 16)
-	switch (savepoint->action) {
+	switch (savepoint.action) {
 	default:
 		break;
 
@@ -179,7 +179,7 @@ IMPLEMENT_FUNCTION(Kahina, function17, 17)
 }
 
 IMPLEMENT_FUNCTION(Kahina, chapter3, 18)
-	switch (savepoint->action) {
+	switch (savepoint.action) {
 	default:
 		break;
 
@@ -237,12 +237,12 @@ IMPLEMENT_FUNCTION(Kahina, function27, 27)
 }
 
 IMPLEMENT_FUNCTION(Kahina, chapter4, 28)
-	if (savepoint->action == kActionDefault)
+	if (savepoint.action == kActionDefault)
 		getEntities()->prepareSequences(kEntityKahina);
 }
 
 IMPLEMENT_FUNCTION(Kahina, chapter5, 29)
-	if (savepoint->action == kActionDefault)
+	if (savepoint.action == kActionDefault)
 		getEntities()->prepareSequences(kEntityKahina);
 }
 

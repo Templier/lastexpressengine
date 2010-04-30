@@ -43,11 +43,6 @@ namespace LastExpress {
 //////////////////////////////////////////////////////////////////////////
 // EntityData
 //////////////////////////////////////////////////////////////////////////
-void EntityData::setParameters(int callback, int index, EntityData::EntityParameters* parameters) {
-	delete _parameters[_data.current_call].parameters[index];
-	_parameters[_data.current_call].parameters[index] = parameters;
-}
-
 void EntityData::resetCurrentParameters() {
 	// TODO see if this ever called without setting the call parameters just after
 	// if not, we can optimize the thing and not instantiate an EntityCallParameters just to delete it afterwards
@@ -55,7 +50,7 @@ void EntityData::resetCurrentParameters() {
 	_parameters[_data.current_call].create();
 }
 
-void EntityData::saveLoadWithSerializer(Common::Serializer &ser) {
+void EntityData::saveLoadWithSerializer(Common::Serializer &) {
 	error("EntityData::saveLoadWithSerializer: not implemented!");
 }
 
@@ -111,10 +106,10 @@ void Entity::setup(ChapterIndex index) {
 // Shared functions
 //////////////////////////////////////////////////////////////////////////
 
-void Entity::function1(SavePoint *savepoint) {
+void Entity::function1(const SavePoint &savepoint) {
 	EXPOSE_PARAMS(EntityData::EntityParametersIIII)
 
-	switch (savepoint->action) {
+	switch (savepoint.action) {
 	default:
 		break;
 
@@ -132,10 +127,10 @@ void Entity::function1(SavePoint *savepoint) {
 	}
 }
 
-void Entity::savegame(SavePoint *savepoint) {
+void Entity::savegame(const SavePoint &savepoint) {
 	EntityData::EntityParametersIIII *params = (EntityData::EntityParametersIIII*)_data->getCurrentParameters();
 
-	switch (savepoint->action) {
+	switch (savepoint.action) {
 	default:
 		break;
 
@@ -150,10 +145,10 @@ void Entity::savegame(SavePoint *savepoint) {
 	}
 }
 
-void Entity::playSound(SavePoint *savepoint, bool resetItem, int param3) {
+void Entity::playSound(const SavePoint &savepoint, bool resetItem, int param3) {
 	EntityData::EntityParametersSIIS *params = (EntityData::EntityParametersSIIS*)_data->getCurrentParameters();
 
-	switch (savepoint->action) {
+	switch (savepoint.action) {
 	default:
 		break;
 
@@ -170,10 +165,10 @@ void Entity::playSound(SavePoint *savepoint, bool resetItem, int param3) {
 	}
 }
 
-void Entity::draw(SavePoint *savepoint) {
+void Entity::draw(const SavePoint &savepoint) {
 	EntityData::EntityParametersSIIS *params = (EntityData::EntityParametersSIIS*)_data->getCurrentParameters();
 
-	switch (savepoint->action) {
+	switch (savepoint.action) {
 	default:
 		break;
 
@@ -187,10 +182,10 @@ void Entity::draw(SavePoint *savepoint) {
 	}
 }
 
-void Entity::draw2(SavePoint *savepoint) {
+void Entity::draw2(const SavePoint &savepoint) {
 	EntityData::EntityParametersSSII *params = (EntityData::EntityParametersSSII*)_data->getCurrentParameters();
 
-	switch (savepoint->action) {
+	switch (savepoint.action) {
 	default:
 		break;
 
@@ -205,10 +200,10 @@ void Entity::draw2(SavePoint *savepoint) {
 	}
 }
 
-void Entity::updateFromTicks(SavePoint *savepoint) {
+void Entity::updateFromTicks(const SavePoint &savepoint) {
 	EXPOSE_PARAMS(EntityData::EntityParametersIIII)
 
-	switch (savepoint->action) {
+	switch (savepoint.action) {
 	default:
 		break;
 
@@ -219,10 +214,10 @@ void Entity::updateFromTicks(SavePoint *savepoint) {
 	}
 }
 
-void Entity::updateFromTime(SavePoint *savepoint) {
+void Entity::updateFromTime(const SavePoint &savepoint) {
 	EXPOSE_PARAMS(EntityData::EntityParametersIIII)
 
-	switch (savepoint->action) {
+	switch (savepoint.action) {
 	default:
 		break;
 
@@ -234,8 +229,8 @@ void Entity::updateFromTime(SavePoint *savepoint) {
 }
 
 
-void Entity::savepointDirection(SavePoint *savepoint) {
-	switch (savepoint->action) {
+void Entity::savepointDirection(const SavePoint &savepoint) {
+	switch (savepoint.action) {
 	default:
 		break;
 
@@ -250,8 +245,8 @@ void Entity::savepointDirection(SavePoint *savepoint) {
 	}
 }
 
-void Entity::savepointCheckFields11(SavePoint *savepoint) {
-	switch (savepoint->action) {
+void Entity::savepointCheckFields11(const SavePoint &savepoint) {
+	switch (savepoint.action) {
 	default:
 		break;
 
@@ -263,10 +258,10 @@ void Entity::savepointCheckFields11(SavePoint *savepoint) {
 	}
 }
 
-void Entity::savepointCheckEntity(SavePoint *savepoint) {
+void Entity::savepointCheckEntity(const SavePoint &savepoint) {
 	EntityData::EntityParametersIIII *params = (EntityData::EntityParametersIIII*)_data->getCurrentParameters();
 
-	switch (savepoint->action) {
+	switch (savepoint.action) {
 	default:
 		break;
 
@@ -278,10 +273,10 @@ void Entity::savepointCheckEntity(SavePoint *savepoint) {
 	}
 }
 
-void Entity::savepointCall(SavePoint *savepoint) {
+void Entity::savepointCall(const SavePoint &savepoint) {
 	EntityData::EntityParametersSIIS *params = (EntityData::EntityParametersSIIS*)_data->getCurrentParameters();
 
-	switch (savepoint->action) {
+	switch (savepoint.action) {
 	default:
 		break;
 
@@ -304,10 +299,10 @@ void Entity::savepointCall(SavePoint *savepoint) {
 	}
 }
 
-void Entity::updateFields(SavePoint *savepoint) {
+void Entity::updateFields(const SavePoint &savepoint) {
 	EntityData::EntityParametersSIIS *params = (EntityData::EntityParametersSIIS*)_data->getCurrentParameters();
 
-	switch (savepoint->action) {
+	switch (savepoint.action) {
 	default:
 		break;
 
@@ -323,10 +318,10 @@ void Entity::updateFields(SavePoint *savepoint) {
 	}
 }
 
-void Entity::updateField1000(SavePoint *savepoint) {
+void Entity::updateField1000(const SavePoint &savepoint) {
 	EntityData::EntityParametersSIIS *params = (EntityData::EntityParametersSIIS*)_data->getCurrentParameters();
 
-	switch (savepoint->action) {
+	switch (savepoint.action) {
 	default:
 		break;
 

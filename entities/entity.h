@@ -336,7 +336,6 @@ public:
 
 	EntityParameters  *getParameters(int callback, int index) { return _parameters[callback].parameters[index]; }
 	EntityParameters  *getCurrentParameters(int index = 0) { return getParameters(_data.current_call, index); }
-	void 			   setParameters(int callback, int index, EntityParameters* parameters);
 	void 			   resetCurrentParameters();
 
 	int 			   getCallback(int callback) { return _data.callbacks[callback]; }
@@ -358,7 +357,7 @@ private:
 class Entity : Common::Serializable {
 public:
 
-	typedef Common::Functor1<SavePoint*, void> Callback;
+	typedef Common::Functor1<const SavePoint&, void> Callback;
 
 	Entity(LastExpressEngine *engine, EntityIndex index);
 	virtual ~Entity();
@@ -378,7 +377,7 @@ public:
 	// Serializable
  	void saveLoadWithSerializer(Common::Serializer &ser) { _data->saveLoadWithSerializer(ser); }
 
-	void nullfunction(SavePoint *savepoint) {}
+	void nullfunction(const SavePoint &savepoint) {}
 
 protected:
 	LastExpressEngine* _engine;
@@ -388,20 +387,20 @@ protected:
 	Common::Array<Callback *> _callbacks;
 
 	// Shared functions
-	void savegame(SavePoint *savepoint);
-	void playSound(SavePoint *savepoint, bool resetItem = false, int param3 = -1);
-	void draw(SavePoint *savepoint);
-	void draw2(SavePoint *savepoint);
-	void updateFromTicks(SavePoint *savepoint);
-	void updateFromTime(SavePoint *savepoint);
+	void savegame(const SavePoint &savepoint);
+	void playSound(const SavePoint &savepoint, bool resetItem = false, int param3 = -1);
+	void draw(const SavePoint &savepoint);
+	void draw2(const SavePoint &savepoint);
+	void updateFromTicks(const SavePoint &savepoint);
+	void updateFromTime(const SavePoint &savepoint);
 
-	void function1(SavePoint *savepoint);
-	void savepointDirection(SavePoint *savepoint);
-	void savepointCheckFields11(SavePoint *savepoint);
-	void savepointCheckEntity(SavePoint *savepoint);
-	void savepointCall(SavePoint *savepoint);
-	void updateFields(SavePoint *savepoint);
-	void updateField1000(SavePoint *savepoint);
+	void function1(const SavePoint &savepoint);
+	void savepointDirection(const SavePoint &savepoint);
+	void savepointCheckFields11(const SavePoint &savepoint);
+	void savepointCheckEntity(const SavePoint &savepoint);
+	void savepointCall(const SavePoint &savepoint);
+	void updateFields(const SavePoint &savepoint);
+	void updateField1000(const SavePoint &savepoint);
 };
 
 

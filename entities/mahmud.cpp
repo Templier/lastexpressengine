@@ -117,7 +117,7 @@ IMPLEMENT_FUNCTION(Mahmud, function14, 14)
 }
 
 IMPLEMENT_FUNCTION(Mahmud, chapter1, 15)
-	switch (savepoint->action) {
+	switch (savepoint.action) {
 	default:
 		break;
 
@@ -144,7 +144,7 @@ IMPLEMENT_FUNCTION(Mahmud, function16, 16)
 }
 
 IMPLEMENT_FUNCTION(Mahmud, chapter2, 17)
-	switch (savepoint->action) {
+	switch (savepoint.action) {
 	default:
 		break;
 
@@ -166,7 +166,7 @@ IMPLEMENT_FUNCTION(Mahmud, chapter2, 17)
 }
 
 IMPLEMENT_FUNCTION(Mahmud, chapter3, 18)
-	switch (savepoint->action) {
+	switch (savepoint.action) {
 	default:
 		break;
 
@@ -188,7 +188,7 @@ IMPLEMENT_FUNCTION(Mahmud, chapter3, 18)
 }
 
 IMPLEMENT_FUNCTION(Mahmud, chapter4, 19)
-	switch (savepoint->action) {
+	switch (savepoint.action) {
 	default:
 		break;
 
@@ -210,7 +210,7 @@ IMPLEMENT_FUNCTION(Mahmud, chapter4, 19)
 }
 
 IMPLEMENT_FUNCTION(Mahmud, chapter5, 20)
-	if (savepoint->action == kActionDefault)
+	if (savepoint.action == kActionDefault)
 		getEntities()->prepareSequences(kEntityMahmud);
 }
 

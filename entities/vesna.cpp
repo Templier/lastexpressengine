@@ -116,7 +116,7 @@ IMPLEMENT_FUNCTION(Vesna, function11, 11)
 }
 
 IMPLEMENT_FUNCTION(Vesna, chapter1, 12)
-	switch (savepoint->action) {
+	switch (savepoint.action) {
 	default:
 		break;
 
@@ -147,7 +147,7 @@ IMPLEMENT_FUNCTION(Vesna, function15, 15)
 }
 
 IMPLEMENT_FUNCTION(Vesna, chapter2, 16)
-	switch (savepoint->action) {
+	switch (savepoint.action) {
 	default:
 		break;
 
@@ -177,7 +177,7 @@ IMPLEMENT_FUNCTION(Vesna, function18, 18)
 }
 
 IMPLEMENT_FUNCTION(Vesna, chapter3, 19)
-	switch (savepoint->action) {
+	switch (savepoint.action) {
 	default:
 		break;
 
@@ -215,7 +215,7 @@ IMPLEMENT_FUNCTION(Vesna, function23, 23)
 }
 
 IMPLEMENT_FUNCTION(Vesna, chapter4, 24)
-	switch (savepoint->action) {
+	switch (savepoint.action) {
 	default:
 		break;
 
@@ -254,7 +254,7 @@ IMPLEMENT_FUNCTION(Vesna, function27, 27)
 }
 
 IMPLEMENT_FUNCTION(Vesna, chapter5, 28)
-	switch (savepoint->action) {
+	switch (savepoint.action) {
 	default:
 		break;
 

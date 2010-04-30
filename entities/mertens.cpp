@@ -117,7 +117,7 @@ IMPLEMENT_FUNCTION_SIII(Mertens, function5, 5)
 }
 
 IMPLEMENT_FUNCTION(Mertens, function6, 6)
-	switch (savepoint->action) {
+	switch (savepoint.action) {
 	default:
 		break;
 
@@ -166,7 +166,7 @@ IMPLEMENT_FUNCTION_II(Mertens, function10, 10)
 }
 
 IMPLEMENT_FUNCTION_I(Mertens, function11, 11)
-	switch (savepoint->action) {
+	switch (savepoint.action) {
 	default:
 		break;
 
@@ -215,7 +215,7 @@ IMPLEMENT_FUNCTION_I(Mertens, function16, 16)
 }
 
 IMPLEMENT_FUNCTION(Mertens, function17, 17)
-	switch (savepoint->action) {
+	switch (savepoint.action) {
 	default:
 		break;
 
@@ -364,7 +364,7 @@ IMPLEMENT_FUNCTION(Mertens, function33, 33)
 }
 
 IMPLEMENT_FUNCTION(Mertens, chapter1, 34)
-	switch (savepoint->action) {
+	switch (savepoint.action) {
 	default:
 		break;
 
@@ -422,7 +422,7 @@ IMPLEMENT_FUNCTION(Mertens, function40, 40)
 }
 
 IMPLEMENT_FUNCTION(Mertens, function41, 41)
-	switch (savepoint->action) {
+	switch (savepoint.action) {
 	default:
 		break;
 
@@ -454,7 +454,7 @@ IMPLEMENT_FUNCTION(Mertens, function42, 42)
 }
 
 IMPLEMENT_FUNCTION(Mertens, chapter2, 43)
-	switch (savepoint->action) {
+	switch (savepoint.action) {
 	default:
 		break;
 
@@ -495,7 +495,7 @@ IMPLEMENT_FUNCTION(Mertens, function44, 44)
 }
 
 IMPLEMENT_FUNCTION(Mertens, chapter3, 45)
-	switch (savepoint->action) {
+	switch (savepoint.action) {
 	default:
 		break;
 
@@ -536,7 +536,7 @@ IMPLEMENT_FUNCTION(Mertens, function46, 46)
 }
 
 IMPLEMENT_FUNCTION(Mertens, chapter4, 47)
-	switch (savepoint->action) {
+	switch (savepoint.action) {
 	default:
 		break;
 
@@ -583,7 +583,7 @@ IMPLEMENT_FUNCTION(Mertens, function49, 49)
 }
 
 IMPLEMENT_FUNCTION(Mertens, chapter5, 50)
-	switch (savepoint->action) {
+	switch (savepoint.action) {
 	default:
 		break;
 
@@ -603,7 +603,7 @@ IMPLEMENT_FUNCTION(Mertens, chapter5, 50)
 }
 
 IMPLEMENT_FUNCTION(Mertens, function51, 51)
-	if (savepoint->action == kAction70549068)
+	if (savepoint.action == kAction70549068)
 		setup_function52();
 }
 

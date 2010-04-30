@@ -119,7 +119,7 @@ IMPLEMENT_FUNCTION(Servers0, function10, 10)
 }
 
 IMPLEMENT_FUNCTION(Servers0, chapter1, 11)
-	switch (savepoint->action) {
+	switch (savepoint.action) {
 	default:
 		break;
 
@@ -197,7 +197,7 @@ IMPLEMENT_FUNCTION(Servers0, function22, 22)
 }
 
 IMPLEMENT_FUNCTION(Servers0, chapter2, 23)
-	switch (savepoint->action) {
+	switch (savepoint.action) {
 	default:
 		break;
 
@@ -233,7 +233,7 @@ IMPLEMENT_FUNCTION(Servers0, function26, 26)
 }
 
 IMPLEMENT_FUNCTION(Servers0, chapter3, 27)
-	switch (savepoint->action) {
+	switch (savepoint.action) {
 	default:
 		break;
 
@@ -273,7 +273,7 @@ IMPLEMENT_FUNCTION(Servers0, function30, 30)
 }
 
 IMPLEMENT_FUNCTION(Servers0, chapter4, 31)
-	switch (savepoint->action) {
+	switch (savepoint.action) {
 	default:
 		break;
 
@@ -317,7 +317,7 @@ IMPLEMENT_FUNCTION(Servers0, function35, 35)
 }
 
 IMPLEMENT_FUNCTION(Servers0, chapter5, 36)
-	switch (savepoint->action) {
+	switch (savepoint.action) {
 	default:
 		break;
 

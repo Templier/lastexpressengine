@@ -114,7 +114,7 @@ IMPLEMENT_FUNCTION_I(Milos, updateFromTime, 9)
 }
 
 IMPLEMENT_FUNCTION_II(Milos, enterCompartementDialog, 10)
-	switch (savepoint->action) {
+	switch (savepoint.action) {
 	default:
 		break;
 
@@ -150,7 +150,7 @@ IMPLEMENT_FUNCTION_II(Milos, enterCompartementDialog, 10)
 }
 
 IMPLEMENT_FUNCTION_I(Milos, function11, 11)
-	switch (savepoint->action) {
+	switch (savepoint.action) {
 	default:
 		break;
 
@@ -171,7 +171,7 @@ IMPLEMENT_FUNCTION_I(Milos, function11, 11)
 				call(new ENTITY_SETUP_SIIS(Milos, setup_playSound), getSound()->wrongDoorCath());
 			}
 		} else {
-			if (savepoint->action == kAction8) {
+			if (savepoint.action == kAction8) {
 				_data->setNextCallback(7);
 				call(new ENTITY_SETUP_SIIS(Milos, setup_playSound), "LIB012");
 			} else {
@@ -288,7 +288,7 @@ IMPLEMENT_FUNCTION_I(Milos, function11, 11)
 }
 
 IMPLEMENT_FUNCTION(Milos, chapter1, 12)
-	switch (savepoint->action) {
+	switch (savepoint.action) {
 	default:
 		break;
 
@@ -336,7 +336,7 @@ IMPLEMENT_FUNCTION(Milos, function18, 18)
 }
 
 IMPLEMENT_FUNCTION(Milos, chapter2, 19)
-	switch (savepoint->action) {
+	switch (savepoint.action) {
 	default:
 		break;
 
@@ -366,7 +366,7 @@ IMPLEMENT_FUNCTION(Milos, function21, 21)
 }
 
 IMPLEMENT_FUNCTION(Milos, chapter3, 22)
-	switch (savepoint->action) {
+	switch (savepoint.action) {
 	default:
 		break;
 
@@ -412,7 +412,7 @@ IMPLEMENT_FUNCTION_II(Milos, function27, 27)
 }
 
 IMPLEMENT_FUNCTION(Milos, chapter4, 28)
-	switch (savepoint->action) {
+	switch (savepoint.action) {
 	default:
 		break;
 
@@ -445,7 +445,7 @@ IMPLEMENT_FUNCTION(Milos, function31, 31)
 }
 
 IMPLEMENT_FUNCTION(Milos, function32, 32)
-	if (savepoint->action == kActionDefault) {
+	if (savepoint.action == kActionDefault) {
 		getEntities()->prepareSequences(kEntityMilos);
 		getObjects()->update(kObjectCompartmentG, kEntityNone, kLocation3, kCursorHandKnock, kCursorHand);
 
@@ -457,7 +457,7 @@ IMPLEMENT_FUNCTION(Milos, function32, 32)
 }
 
 IMPLEMENT_FUNCTION(Milos, chapter5, 33)
-	switch (savepoint->action) {
+	switch (savepoint.action) {
 	default:
 		break;
 
@@ -482,7 +482,7 @@ IMPLEMENT_FUNCTION(Milos, function34, 34)
 }
 
 IMPLEMENT_FUNCTION(Milos, prepareSequences, 35)
-	if (savepoint->action == kActionDefault) {
+	if (savepoint.action == kActionDefault) {
 		getEntities()->prepareSequences(kEntityMilos);
 	}
 }

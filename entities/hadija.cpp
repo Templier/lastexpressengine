@@ -101,7 +101,7 @@ IMPLEMENT_FUNCTION(Hadija, function9, 9)
 }
 
 IMPLEMENT_FUNCTION(Hadija, chapter1, 10)
-	switch (savepoint->action) {
+	switch (savepoint.action) {
 	default:
 		break;
 
@@ -127,7 +127,7 @@ IMPLEMENT_FUNCTION(Hadija, function12, 12)
 }
 
 IMPLEMENT_FUNCTION(Hadija, chapter2, 13)
-	if (savepoint->action == kActionDefault) {
+	if (savepoint.action == kActionDefault) {
 
 		getEntities()->prepareSequences(kEntityHadija);
 
@@ -146,7 +146,7 @@ IMPLEMENT_FUNCTION(Hadija, function14, 14)
 }
 
 IMPLEMENT_FUNCTION(Hadija, chapter3, 15)
-	switch (savepoint->action) {
+	switch (savepoint.action) {
 	default:
 		break;
 
@@ -170,7 +170,7 @@ IMPLEMENT_FUNCTION(Hadija, function16, 16)
 }
 
 IMPLEMENT_FUNCTION(Hadija, chapter4, 17)
-	switch (savepoint->action) {
+	switch (savepoint.action) {
 	default:
 		break;
 
@@ -195,7 +195,7 @@ IMPLEMENT_FUNCTION(Hadija, function19, 19)
 }
 
 IMPLEMENT_FUNCTION(Hadija, chapter5, 20)
-	switch (savepoint->action) {
+	switch (savepoint.action) {
 	default:
 		break;
 

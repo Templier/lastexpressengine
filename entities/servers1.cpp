@@ -77,7 +77,7 @@ IMPLEMENT_FUNCTION_NOSETUP(Servers1, updateFromTime, 1)
 }
 
 IMPLEMENT_FUNCTION_S(Servers1, draw, 2)
-	if (savepoint->action == kAction5) {
+	if (savepoint.action == kAction5) {
 		if (!params->param2) {
 			getSound()->excuseMe(kEntityServers1);
 			params->param2 = 1;
@@ -88,7 +88,7 @@ IMPLEMENT_FUNCTION_S(Servers1, draw, 2)
 }
 
 IMPLEMENT_FUNCTION_SII(Servers1, function3, 3)
-	if (savepoint->action == kAction5) {
+	if (savepoint.action == kAction5) {
 		if (!params->param3) {
 			getSound()->excuseMe(kEntityServers1);
 			params->param3 = 1;
@@ -99,7 +99,7 @@ IMPLEMENT_FUNCTION_SII(Servers1, function3, 3)
 }
 
 IMPLEMENT_FUNCTION(Servers1, function4, 4)
-	if (savepoint->action == kAction5) {
+	if (savepoint.action == kAction5) {
 		if (!params->param1) {
 			getSound()->excuseMe(kEntityServers1);
 			params->param1 = 1;
@@ -110,7 +110,7 @@ IMPLEMENT_FUNCTION(Servers1, function4, 4)
 }
 
 IMPLEMENT_FUNCTION_SIIS(Servers1, function5, 5)
-	switch (savepoint->action) {
+	switch (savepoint.action) {
 	default:
 		break;
 
@@ -146,7 +146,7 @@ IMPLEMENT_FUNCTION_S(Servers1, playSound, 6)
 }
 
 IMPLEMENT_FUNCTION(Servers1, function7, 7)
-	switch (savepoint->action) {
+	switch (savepoint.action) {
 	default:
 		break;
 
@@ -188,7 +188,7 @@ IMPLEMENT_FUNCTION(Servers1, function7, 7)
 }
 
 IMPLEMENT_FUNCTION(Servers1, chapter1, 8)
-	switch (savepoint->action) {
+	switch (savepoint.action) {
 	default:
 		break;
 
@@ -249,7 +249,7 @@ IMPLEMENT_FUNCTION(Servers1, function16, 16)
 }
 
 IMPLEMENT_FUNCTION(Servers1, chapter2, 17)
-	switch (savepoint->action) {
+	switch (savepoint.action) {
 	default:
 		break;
 
@@ -290,7 +290,7 @@ IMPLEMENT_FUNCTION(Servers1, function21, 21)
 }
 
 IMPLEMENT_FUNCTION(Servers1, chapter3, 22)
-	switch (savepoint->action) {
+	switch (savepoint.action) {
 	default:
 		break;
 
@@ -322,7 +322,7 @@ IMPLEMENT_FUNCTION(Servers1, function24, 24)
 }
 
 IMPLEMENT_FUNCTION(Servers1, chapter4, 25)
-	switch (savepoint->action) {
+	switch (savepoint.action) {
 	default:
 		break;
 
@@ -366,7 +366,7 @@ IMPLEMENT_FUNCTION(Servers1, function29, 29)
 }
 
 IMPLEMENT_FUNCTION(Servers1, chapter5, 30)
-	switch (savepoint->action) {
+	switch (savepoint.action) {
 	default:
 		break;
 

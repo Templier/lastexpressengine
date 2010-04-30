@@ -152,7 +152,7 @@ IMPLEMENT_FUNCTION_I(Boutarel, function18, 18)
 }
 
 IMPLEMENT_FUNCTION(Boutarel, chapter1, 19)
-	switch (savepoint->action) {
+	switch (savepoint.action) {
 	default:
 		break;
 
@@ -188,7 +188,7 @@ IMPLEMENT_FUNCTION(Boutarel, function22, 22)
 }
 
 IMPLEMENT_FUNCTION(Boutarel, chapter2, 23)
-	switch (savepoint->action) {
+	switch (savepoint.action) {
 	default:
 		break;
 
@@ -220,7 +220,7 @@ IMPLEMENT_FUNCTION(Boutarel, function25, 25)
 }
 
 IMPLEMENT_FUNCTION(Boutarel, chapter3, 26)
-	switch (savepoint->action) {
+	switch (savepoint.action) {
 	default:
 		break;
 
@@ -260,7 +260,7 @@ IMPLEMENT_FUNCTION(Boutarel, function30, 30)
 }
 
 IMPLEMENT_FUNCTION(Boutarel, chapter4, 31)
-	switch (savepoint->action) {
+	switch (savepoint.action) {
 	default:
 		break;
 
@@ -301,7 +301,7 @@ IMPLEMENT_FUNCTION(Boutarel, function35, 35)
 }
 
 IMPLEMENT_FUNCTION(Boutarel, chapter5, 36)
-	switch (savepoint->action) {
+	switch (savepoint.action) {
 	default:
 		break;
 

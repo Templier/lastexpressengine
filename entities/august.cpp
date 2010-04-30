@@ -195,7 +195,7 @@ IMPLEMENT_FUNCTION_I(August, function21, 21)
 }
 
 IMPLEMENT_FUNCTION(August, chapter1, 22)
-	switch (savepoint->action) {
+	switch (savepoint.action) {
 	default:
 		break;
 
@@ -266,7 +266,7 @@ IMPLEMENT_FUNCTION(August, function34, 34)
 }
 
 IMPLEMENT_FUNCTION(August, chapter2, 35)
-	switch (savepoint->action) {
+	switch (savepoint.action) {
 	default:
 		break;
 
@@ -307,7 +307,7 @@ IMPLEMENT_FUNCTION(August, function39, 39)
 }
 
 IMPLEMENT_FUNCTION(August, chapter3, 40)
-	switch (savepoint->action) {
+	switch (savepoint.action) {
 	default:
 		break;
 
@@ -393,7 +393,7 @@ IMPLEMENT_FUNCTION(August, function56, 56)
 }
 
 IMPLEMENT_FUNCTION(August, chapter4, 57)
-	switch (savepoint->action) {
+	switch (savepoint.action) {
 	default:
 		break;
 
@@ -449,7 +449,7 @@ IMPLEMENT_FUNCTION(August, function65, 65)
 }
 
 IMPLEMENT_FUNCTION(August, chapter5, 66)
-	switch (savepoint->action) {
+	switch (savepoint.action) {
 	default:
 		break;
 

@@ -70,7 +70,7 @@ IMPLEMENT_FUNCTION_II(Vassili, savegame, 3)
 }
 
 IMPLEMENT_FUNCTION(Vassili, chapter1, 4)
-	switch (savepoint->action) {
+	switch (savepoint.action) {
 	default:
 		break;
 
@@ -114,7 +114,7 @@ IMPLEMENT_FUNCTION(Vassili, function11, 11)
 }
 
 IMPLEMENT_FUNCTION(Vassili, chapter2, 12)
-	switch (savepoint->action) {
+	switch (savepoint.action) {
 	default:
 		break;
 
@@ -142,7 +142,7 @@ IMPLEMENT_FUNCTION(Vassili, function13, 13)
 }
 
 IMPLEMENT_FUNCTION(Vassili, chapter3, 14)
-	switch (savepoint->action) {
+	switch (savepoint.action) {
 	default:
 		break;
 
@@ -169,7 +169,7 @@ IMPLEMENT_FUNCTION(Vassili, function15, 15)
 }
 
 IMPLEMENT_FUNCTION(Vassili, chapter4, 16)
-	switch (savepoint->action) {
+	switch (savepoint.action) {
 	default:
 		break;
 
@@ -197,7 +197,7 @@ IMPLEMENT_FUNCTION(Vassili, function17, 17)
 }
 
 IMPLEMENT_FUNCTION(Vassili, chapter5, 18)
-	if (savepoint->action == kActionDefault) {
+	if (savepoint.action == kActionDefault) {
 		getEntities()->prepareSequences(kEntityVassili);
 
 		_data->getData()->field_491 = EntityData::kField491_3969;

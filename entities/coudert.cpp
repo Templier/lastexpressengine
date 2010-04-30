@@ -243,7 +243,7 @@ IMPLEMENT_FUNCTION_I(Coudert, function35, 35)
 }
 
 IMPLEMENT_FUNCTION(Coudert, chapter1, 36)
-	switch (savepoint->action) {
+	switch (savepoint.action) {
 	default:
 		break;
 
@@ -314,7 +314,7 @@ IMPLEMENT_FUNCTION(Coudert, function41, 41)
 }
 
 IMPLEMENT_FUNCTION(Coudert, chapter2, 42)
-	switch (savepoint->action) {
+	switch (savepoint.action) {
 	default:
 		break;
 
@@ -363,7 +363,7 @@ IMPLEMENT_FUNCTION(Coudert, function43, 43)
 }
 
 IMPLEMENT_FUNCTION(Coudert, chapter3, 44)
-	switch (savepoint->action) {
+	switch (savepoint.action) {
 	default:
 		break;
 
@@ -438,7 +438,7 @@ IMPLEMENT_FUNCTION(Coudert, function51, 51)
 }
 
 IMPLEMENT_FUNCTION(Coudert, chapter4, 52)
-	switch (savepoint->action) {
+	switch (savepoint.action) {
 	default:
 		break;
 
@@ -502,7 +502,7 @@ IMPLEMENT_FUNCTION(Coudert, function56, 56)
 }
 
 IMPLEMENT_FUNCTION(Coudert, chapter5, 57)
-	switch (savepoint->action) {
+	switch (savepoint.action) {
 	default:
 		break;
 

@@ -98,7 +98,7 @@ IMPLEMENT_FUNCTION(Salko, function8, 8)
 }
 
 IMPLEMENT_FUNCTION(Salko, chapter1, 9)
-	switch (savepoint->action) {
+	switch (savepoint.action) {
 	default:
 		break;
 
@@ -123,7 +123,7 @@ IMPLEMENT_FUNCTION(Salko, function11, 11)
 }
 
 IMPLEMENT_FUNCTION(Salko, chapter2, 12)
-	switch (savepoint->action) {
+	switch (savepoint.action) {
 	default:
 		break;
 
@@ -149,7 +149,7 @@ IMPLEMENT_FUNCTION(Salko, function13, 13)
 }
 
 IMPLEMENT_FUNCTION(Salko, chapter3, 14)
-	switch (savepoint->action) {
+	switch (savepoint.action) {
 	default:
 		break;
 
@@ -182,7 +182,7 @@ IMPLEMENT_FUNCTION(Salko, function17, 17)
 }
 
 IMPLEMENT_FUNCTION(Salko, chapter4, 18)
-	switch (savepoint->action) {
+	switch (savepoint.action) {
 	default:
 		break;
 
@@ -218,7 +218,7 @@ IMPLEMENT_FUNCTION(Salko, function22, 22)
 }
 
 IMPLEMENT_FUNCTION(Salko, chapter5, 23)
-	switch (savepoint->action) {
+	switch (savepoint.action) {
 	default:
 		break;
 

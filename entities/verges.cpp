@@ -151,7 +151,7 @@ IMPLEMENT_FUNCTION(Verges, function17, 17)
 }
 
 IMPLEMENT_FUNCTION(Verges, chapter1, 18)
-	switch (savepoint->action) {
+	switch (savepoint.action) {
 	default:
 		break;
 
@@ -212,7 +212,7 @@ IMPLEMENT_FUNCTION(Verges, function26, 26)
 }
 
 IMPLEMENT_FUNCTION(Verges, chapter2, 27)
-	switch (savepoint->action) {
+	switch (savepoint.action) {
 	default:
 		break;
 
@@ -241,7 +241,7 @@ IMPLEMENT_FUNCTION(Verges, function28, 28)
 }
 
 IMPLEMENT_FUNCTION(Verges, chapter3, 29)
-	switch (savepoint->action) {
+	switch (savepoint.action) {
 	default:
 		break;
 
@@ -292,7 +292,7 @@ IMPLEMENT_FUNCTION(Verges, function35, 35)
 }
 
 IMPLEMENT_FUNCTION(Verges, chapter4, 36)
-	switch (savepoint->action) {
+	switch (savepoint.action) {
 	default:
 		break;
 
@@ -327,7 +327,7 @@ IMPLEMENT_FUNCTION(Verges, function38, 38)
 }
 
 IMPLEMENT_FUNCTION(Verges, chapter5, 39)
-	switch (savepoint->action) {
+	switch (savepoint.action) {
 	default:
 		break;
 

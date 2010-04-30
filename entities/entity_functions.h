@@ -61,7 +61,7 @@
 			break; \
 		params->param##param1 = EntityData::kParamTime; \
 	} else { \
-		params->param##param1 = params->param##param2 + getState()->time; \
+		params->param##param1 = params->param##param2 + (int)getState()->time; \
 	} \
 
 #define UPDATE_PARAM_FROM_TICKS(param1, param2) \
@@ -70,7 +70,7 @@
 			break; \
 		params->param##param1 = EntityData::kParamTime; \
 	} else { \
-		params->param##param1 = params->param##param2 + getState()->timeTicks; \
+		params->param##param1 = params->param##param2 + (int)getState()->timeTicks; \
 	} \
 
 #endif // LASTEXPRESS_ENTITY_FUNCTIONS_H

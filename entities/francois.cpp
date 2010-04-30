@@ -135,7 +135,7 @@ IMPLEMENT_FUNCTION(Francois, function16, 16)
 }
 
 IMPLEMENT_FUNCTION(Francois, chapter1, 17)
-	switch (savepoint->action) {
+	switch (savepoint.action) {
 	default:
 		break;
 
@@ -165,7 +165,7 @@ IMPLEMENT_FUNCTION(Francois, function20, 20)
 }
 
 IMPLEMENT_FUNCTION(Francois, chapter2, 21)
-	switch (savepoint->action) {
+	switch (savepoint.action) {
 	default:
 		break;
 
@@ -195,7 +195,7 @@ IMPLEMENT_FUNCTION(Francois, function23, 23)
 }
 
 IMPLEMENT_FUNCTION(Francois, chapter3, 24)
-	switch (savepoint->action) {
+	switch (savepoint.action) {
 	default:
 		break;
 
@@ -221,7 +221,7 @@ IMPLEMENT_FUNCTION(Francois, function25, 25)
 }
 
 IMPLEMENT_FUNCTION(Francois, chapter4, 26)
-	switch (savepoint->action) {
+	switch (savepoint.action) {
 	default:
 		break;
 
@@ -247,7 +247,7 @@ IMPLEMENT_FUNCTION(Francois, function27, 27)
 }
 
 IMPLEMENT_FUNCTION(Francois, chapter5, 28)
-	switch (savepoint->action) {
+	switch (savepoint.action) {
 	default:
 		break;
 

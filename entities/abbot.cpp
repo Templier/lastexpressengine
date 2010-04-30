@@ -106,7 +106,7 @@ IMPLEMENT_FUNCTION_SI(Abbot, function3, 3)
 }
 
 IMPLEMENT_FUNCTION_SI(Abbot, function4, 4)
-	switch (savepoint->action) {
+	switch (savepoint.action) {
 	default:
 		break;
 
@@ -158,7 +158,7 @@ IMPLEMENT_FUNCTION_II(Abbot, savegame, 10)
 }
 
 IMPLEMENT_FUNCTION_II(Abbot, function11, 11)
-	switch (savepoint->action) {
+	switch (savepoint.action) {
 	default:
 		break;
 
@@ -202,17 +202,17 @@ IMPLEMENT_FUNCTION(Abbot, function14, 14)
 }
 
 IMPLEMENT_FUNCTION(Abbot, chapter1, 15)
-	if (savepoint->action == kActionDefault)
+	if (savepoint.action == kActionDefault)
 		getSavePoints()->addData(kEntityAbbot, kAction203073664, 0);
 }
 
 IMPLEMENT_FUNCTION(Abbot, chapter2, 16)
-	if (savepoint->action == kActionDefault)
+	if (savepoint.action == kActionDefault)
 		getEntities()->prepareSequences(kEntityAbbot);
 }
 
 IMPLEMENT_FUNCTION(Abbot, chapter3, 17)
-	switch (savepoint->action) {
+	switch (savepoint.action) {
 	default:
 		break;
 
@@ -318,7 +318,7 @@ IMPLEMENT_FUNCTION(Abbot, function38, 38)
 }
 
 IMPLEMENT_FUNCTION(Abbot, chapter4, 39)
-	switch (savepoint->action) {
+	switch (savepoint.action) {
 	default:
 		break;
 
@@ -379,7 +379,7 @@ IMPLEMENT_FUNCTION(Abbot, pickBomb, 49)
 }
 
 IMPLEMENT_FUNCTION(Abbot, chapter5, 50)
-	switch (savepoint->action) {
+	switch (savepoint.action) {
 	default:
 		break;
 

@@ -63,7 +63,7 @@ IMPLEMENT_FUNCTION_S(Cooks, playSound, 2)
 }
 
 IMPLEMENT_FUNCTION(Cooks, function3, 3)
-	switch (savepoint->action) {
+	switch (savepoint.action) {
 	default:
 		break;
 
@@ -146,7 +146,7 @@ IMPLEMENT_FUNCTION(Cooks, function3, 3)
 }
 
 IMPLEMENT_FUNCTION(Cooks, function4, 4)
-	switch (savepoint->action) {
+	switch (savepoint.action) {
 	default:
 		break;
 
@@ -231,7 +231,7 @@ IMPLEMENT_FUNCTION(Cooks, function4, 4)
 }
 
 IMPLEMENT_FUNCTION(Cooks, chapter1, 5)
-	switch (savepoint->action) {
+	switch (savepoint.action) {
 	default:
 		break;
 
@@ -251,7 +251,7 @@ IMPLEMENT_FUNCTION(Cooks, chapter1, 5)
 }
 
 IMPLEMENT_FUNCTION(Cooks, function6, 6)
-	switch (savepoint->action) {
+	switch (savepoint.action) {
 	default:
 		break;
 
@@ -317,7 +317,7 @@ IMPLEMENT_FUNCTION(Cooks, function6, 6)
 }
 
 IMPLEMENT_FUNCTION(Cooks, function7, 7)
-	switch (savepoint->action) {
+	switch (savepoint.action) {
 	default:
 		break;
 
@@ -338,7 +338,7 @@ IMPLEMENT_FUNCTION(Cooks, function7, 7)
 }
 
 IMPLEMENT_FUNCTION(Cooks, chapter2, 8)
-	switch (savepoint->action) {
+	switch (savepoint.action) {
 	default:
 		break;
 
@@ -361,7 +361,7 @@ IMPLEMENT_FUNCTION(Cooks, chapter2, 8)
 }
 
 IMPLEMENT_FUNCTION(Cooks, function9, 9)
-	switch (savepoint->action) {
+	switch (savepoint.action) {
 	default:
 		break;
 
@@ -396,7 +396,7 @@ IMPLEMENT_FUNCTION(Cooks, function9, 9)
 }
 
 IMPLEMENT_FUNCTION(Cooks, chapter3, 10)
-	switch (savepoint->action) {
+	switch (savepoint.action) {
 	default:
 		break;
 
@@ -418,7 +418,7 @@ IMPLEMENT_FUNCTION(Cooks, chapter3, 10)
 }
 
 IMPLEMENT_FUNCTION(Cooks, function11, 11)
-	switch (savepoint->action) {
+	switch (savepoint.action) {
 	default:
 		break;
 
@@ -494,7 +494,7 @@ update_params:
 }
 
 IMPLEMENT_FUNCTION(Cooks, chapter4, 12)
-	switch (savepoint->action) {
+	switch (savepoint.action) {
 	default:
 		break;
 
@@ -517,7 +517,7 @@ IMPLEMENT_FUNCTION(Cooks, chapter4, 12)
 }
 
 IMPLEMENT_FUNCTION(Cooks, function13, 13)
-	switch (savepoint->action) {
+	switch (savepoint.action) {
 	default:
 		break;
 
@@ -558,7 +558,7 @@ IMPLEMENT_FUNCTION(Cooks, function13, 13)
 }
 
 IMPLEMENT_FUNCTION(Cooks, chapter5, 14)
-	if (savepoint->action == kActionDefault)
+	if (savepoint.action == kActionDefault)
 		getEntities()->prepareSequences(kEntityCooks);
 }
 

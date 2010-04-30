@@ -48,32 +48,32 @@ Tables::Tables(LastExpressEngine *engine, EntityIndex id) : Entity(engine, id) {
 }
 
 IMPLEMENT_FUNCTION(Tables, chapter1, 1)
-	if (savepoint->action == kActionDefault)
+	if (savepoint.action == kActionDefault)
 		setup_draw();
 }
 
 IMPLEMENT_FUNCTION(Tables, chapter2, 2)
-	if (savepoint->action == kActionDefault)
+	if (savepoint.action == kActionDefault)
 		setup_draw();
 }
 
 IMPLEMENT_FUNCTION(Tables, chapter3, 3)
-	if (savepoint->action == kActionDefault)
+	if (savepoint.action == kActionDefault)
 		setup_draw();
 }
 
 IMPLEMENT_FUNCTION(Tables, chapter4, 4)
-	if (savepoint->action == kActionDefault)
+	if (savepoint.action == kActionDefault)
 		setup_draw();
 }
 
 IMPLEMENT_FUNCTION(Tables, chapter5, 5)
-	if (savepoint->action == kActionDefault)
+	if (savepoint.action == kActionDefault)
 		setup_draw();
 }
 
 IMPLEMENT_FUNCTION(Tables, draw, 6)
-	switch (savepoint->action) {
+	switch (savepoint.action) {
 	default:
 		break;
 
@@ -143,8 +143,8 @@ IMPLEMENT_FUNCTION(Tables, draw, 6)
 		break;
 
 	case kAction103798704:
-		if (savepoint->param.charValue) {
-			getEntities()->drawSequenceLeft(_id, savepoint->param.charValue);
+		if (!strcmp(savepoint.param.charValue, "")) {
+			getEntities()->drawSequenceLeft(_id, savepoint.param.charValue);
 		} else {
 			switch(_id) {
 			default:

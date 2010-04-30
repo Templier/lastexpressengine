@@ -126,7 +126,7 @@ IMPLEMENT_FUNCTION(Ivo, function13, 13)
 }
 
 IMPLEMENT_FUNCTION(Ivo, chapter1, 14)
-	switch (savepoint->action) {
+	switch (savepoint.action) {
 	default:
 		break;
 
@@ -159,7 +159,7 @@ IMPLEMENT_FUNCTION(Ivo, function17, 17)
 }
 
 IMPLEMENT_FUNCTION(Ivo, chapter2, 18)
-	switch (savepoint->action) {
+	switch (savepoint.action) {
 	default:
 		break;
 
@@ -196,7 +196,7 @@ IMPLEMENT_FUNCTION(Ivo, function21, 21)
 }
 
 IMPLEMENT_FUNCTION(Ivo, chapter3, 22)
-	switch (savepoint->action) {
+	switch (savepoint.action) {
 	default:
 		break;
 
@@ -222,7 +222,7 @@ IMPLEMENT_FUNCTION(Ivo, function23, 23)
 }
 
 IMPLEMENT_FUNCTION(Ivo, chapter4, 24)
-	switch (savepoint->action) {
+	switch (savepoint.action) {
 	default:
 		break;
 
@@ -259,7 +259,7 @@ IMPLEMENT_FUNCTION(Ivo, function29, 29)
 }
 
 IMPLEMENT_FUNCTION(Ivo, chapter5, 30)
-	switch (savepoint->action) {
+	switch (savepoint.action) {
 	default:
 		break;
 

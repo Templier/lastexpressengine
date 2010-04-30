@@ -153,7 +153,7 @@ IMPLEMENT_FUNCTION_IS(Alexei, function16, 16)
 }
 
 IMPLEMENT_FUNCTION(Alexei, chapter1, 17)
-	switch (savepoint->action) {
+	switch (savepoint.action) {
 	default:
 		break;
 
@@ -215,7 +215,7 @@ IMPLEMENT_FUNCTION(Alexei, function27, 27)
 }
 
 IMPLEMENT_FUNCTION(Alexei, chapter2, 28)
-	switch (savepoint->action) {
+	switch (savepoint.action) {
 	default:
 		break;
 
@@ -253,7 +253,7 @@ IMPLEMENT_FUNCTION(Alexei, function31, 31)
 }
 
 IMPLEMENT_FUNCTION(Alexei, chapter3, 32)
-	switch (savepoint->action) {
+	switch (savepoint.action) {
 	default:
 		break;
 
@@ -294,7 +294,7 @@ IMPLEMENT_FUNCTION(Alexei, function36, 36)
 }
 
 IMPLEMENT_FUNCTION(Alexei, chapter4, 37)
-	switch (savepoint->action) {
+	switch (savepoint.action) {
 	default:
 		break;
 
@@ -359,7 +359,7 @@ IMPLEMENT_FUNCTION(Alexei, function47, 47)
 }
 
 IMPLEMENT_FUNCTION(Alexei, chapter5, 48)
-	if (savepoint->action == kActionDefault)
+	if (savepoint.action == kActionDefault)
 		getEntities()->prepareSequences(kEntityAlexei);
 }
 

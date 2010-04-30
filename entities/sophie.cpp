@@ -37,7 +37,7 @@
 namespace LastExpress {
 
 #define CHAPTER_IMPLEMENTATION() \
-	switch (savepoint->action) { \
+	switch (savepoint.action) { \
 	default: \
 		break; \
 	case kActionNone: \
@@ -54,7 +54,7 @@ namespace LastExpress {
 	}
 
 #define DEFAULT_ACTION_IMPLEMENTATION() \
-	if (savepoint->action == kActionDefault) { \
+	if (savepoint.action == kActionDefault) { \
 		_data->getData()->field_491 = EntityData::kField491_4840; \
 		_data->getData()->field_493 = EntityData::kField493_1; \
 		_data->getData()->field_495 = EntityData::kField495_4; \
@@ -83,7 +83,7 @@ IMPLEMENT_FUNCTION(Sophie, function1, 1)
 
 //////////////////////////////////////////////////////////////////////////
 IMPLEMENT_FUNCTION_II(Sophie, function2, 2)
-	switch (savepoint->action) {
+	switch (savepoint.action) {
 	default:
 		break;
 
@@ -132,7 +132,7 @@ IMPLEMENT_FUNCTION_II(Sophie, function2, 2)
 
 //////////////////////////////////////////////////////////////////////////
 IMPLEMENT_FUNCTION(Sophie, function3, 3)
-	switch (savepoint->action) {
+	switch (savepoint.action) {
 	default:
 		break;
 
@@ -204,7 +204,7 @@ IMPLEMENT_FUNCTION(Sophie, function3, 3)
 
 //////////////////////////////////////////////////////////////////////////
 IMPLEMENT_FUNCTION(Sophie, chapter1, 4)
-	switch (savepoint->action) {
+	switch (savepoint.action) {
 	default:
 		break;
 
@@ -247,7 +247,7 @@ IMPLEMENT_FUNCTION(Sophie, function9, 9)
 
 //////////////////////////////////////////////////////////////////////////
 IMPLEMENT_FUNCTION(Sophie, chapter5, 10)
-	switch (savepoint->action) {
+	switch (savepoint.action) {
 	default:
 		break;
 
@@ -269,7 +269,7 @@ IMPLEMENT_FUNCTION(Sophie, chapter5, 10)
 
 //////////////////////////////////////////////////////////////////////////
 IMPLEMENT_FUNCTION(Sophie, function11, 11)
-	if (savepoint->action == kAction70549068)
+	if (savepoint.action == kAction70549068)
 		setup_nullfunction();
 }
 

@@ -83,7 +83,7 @@ IMPLEMENT_FUNCTION(Pascale, function2, 2)
 }
 
 IMPLEMENT_FUNCTION(Pascale, function3, 3)
-	if (savepoint->action == kAction5) {
+	if (savepoint.action == kAction5) {
 		if (!params->param1) {
 			getSound()->excuseMe(kEntityPascale);
 			params->param1 = 1;
@@ -126,7 +126,7 @@ IMPLEMENT_FUNCTION(Pascale, function11, 11)
 }
 
 IMPLEMENT_FUNCTION(Pascale, chapter1, 12)
-	switch (savepoint->action) {
+	switch (savepoint.action) {
 	default:
 		break;
 
@@ -183,7 +183,7 @@ IMPLEMENT_FUNCTION(Pascale, function19, 19)
 }
 
 IMPLEMENT_FUNCTION(Pascale, chapter2, 20)
-	if (savepoint->action == kActionDefault) {
+	if (savepoint.action == kActionDefault) {
 		getEntities()->prepareSequences(kEntityPascale);
 
 		_data->getData()->field_491 = EntityData::kField491_5900;
@@ -197,7 +197,7 @@ IMPLEMENT_FUNCTION(Pascale, chapter2, 20)
 }
 
 IMPLEMENT_FUNCTION(Pascale, chapter3, 21)
-	switch (savepoint->action) {
+	switch (savepoint.action) {
 	default:
 		break;
 
@@ -232,7 +232,7 @@ IMPLEMENT_FUNCTION(Pascale, function24, 24)
 }
 
 IMPLEMENT_FUNCTION(Pascale, chapter4, 25)
-	switch (savepoint->action) {
+	switch (savepoint.action) {
 	default:
 		break;
 
@@ -278,7 +278,7 @@ IMPLEMENT_FUNCTION(Pascale, function30, 30)
 }
 
 IMPLEMENT_FUNCTION(Pascale, chapter5, 31)
-	switch (savepoint->action) {
+	switch (savepoint.action) {
 	default:
 		break;
 

@@ -101,7 +101,7 @@ IMPLEMENT_FUNCTION(Alouan, function9, 9)
 }
 
 IMPLEMENT_FUNCTION(Alouan, chapter1, 10)
-	switch (savepoint->action) {
+	switch (savepoint.action) {
 	default:
 		break;
 
@@ -127,7 +127,7 @@ IMPLEMENT_FUNCTION(Alouan, function12, 12)
 }
 
 IMPLEMENT_FUNCTION(Alouan, chapter2, 13)
-	if (savepoint->action != kActionDefault)
+	if (savepoint.action != kActionDefault)
 		return;
 
 	getEntities()->prepareSequences(kEntityAlouan);
@@ -146,7 +146,7 @@ IMPLEMENT_FUNCTION(Alouan, function14, 14)
 }
 
 IMPLEMENT_FUNCTION(Alouan, chapter3, 15)
-	switch (savepoint->action) {
+	switch (savepoint.action) {
 	default:
 		break;
 
@@ -170,7 +170,7 @@ IMPLEMENT_FUNCTION(Alouan, function16, 16)
 }
 
 IMPLEMENT_FUNCTION(Alouan, chapter4, 17)
-	switch (savepoint->action) {
+	switch (savepoint.action) {
 	default:
 		break;
 
@@ -198,7 +198,7 @@ IMPLEMENT_FUNCTION(Alouan, function19, 19)
 }
 
 IMPLEMENT_FUNCTION(Alouan, chapter5, 20)
-	switch (savepoint->action) {
+	switch (savepoint.action) {
 	default:
 		break;
 

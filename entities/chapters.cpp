@@ -78,7 +78,7 @@ IMPLEMENT_FUNCTION_S(Chapters, function3, 3)
 }
 
 IMPLEMENT_FUNCTION(Chapters, chapter1, 4)
-	if (savepoint->action == kActionDefault) {
+	if (savepoint.action == kActionDefault) {
 		getSavePoints()->addData(kEntityChapters, kAction171843264, 0);
 		setup_chapter1_init();
 	}
@@ -93,7 +93,7 @@ IMPLEMENT_FUNCTION(Chapters, function6, 6)
 }
 
 IMPLEMENT_FUNCTION(Chapters, chapter1_init, 7)
-	if (savepoint->action != kActionDefault)
+	if (savepoint.action != kActionDefault)
 		return;
 
 	getProgress().chapter = kChapter1;
@@ -161,7 +161,7 @@ IMPLEMENT_FUNCTION(Chapters, chapter1_init, 7)
 }
 
 IMPLEMENT_FUNCTION(Chapters, chapter1_handler, 8)
-	switch (savepoint->action) {
+	switch (savepoint.action) {
 	default:
 		error("Chapters: callback function 8 not implemented!");
 		break;
@@ -183,7 +183,7 @@ IMPLEMENT_FUNCTION(Chapters, chapter1_handler, 8)
 }
 
 IMPLEMENT_FUNCTION(Chapters, function9, 9)
-	if (savepoint->action == kActionDefault) {
+	if (savepoint.action == kActionDefault) {
 		// Reset sound cache
 		if (ENTITY_PARAM(0, 2) || ENTITY_PARAM(0, 3)) {
 			getSound()->reset(kEntityChapters);
@@ -202,7 +202,7 @@ IMPLEMENT_FUNCTION(Chapters, function9, 9)
 }
 
 IMPLEMENT_FUNCTION(Chapters, chapter2, 10)
-	switch (savepoint->action) {
+	switch (savepoint.action) {
 	default:
 		break;
 
@@ -238,7 +238,7 @@ IMPLEMENT_FUNCTION(Chapters, chapter2, 10)
 }
 
 IMPLEMENT_FUNCTION(Chapters, chapter2_init, 11)
-	if (savepoint->action != kActionDefault)
+	if (savepoint.action != kActionDefault)
 		return;
 
 	getProgress().field_8 = 1;
@@ -300,7 +300,7 @@ IMPLEMENT_FUNCTION(Chapters, chapter2_handler, 12)
 }
 
 IMPLEMENT_FUNCTION(Chapters, chapter3, 13)
-	if (savepoint->action == kActionDefault) {
+	if (savepoint.action == kActionDefault) {
 		// Setup for chapter 3 in case it hasn't been done before
 		if (getProgress().chapter != kChapter3) {
 			getProgress().chapter = kChapter3;
@@ -328,7 +328,7 @@ IMPLEMENT_FUNCTION(Chapters, function16, 16)
 }
 
 IMPLEMENT_FUNCTION(Chapters, chapter4, 17)
-	switch (savepoint->action) {
+	switch (savepoint.action) {
 	default:
 		break;
 
@@ -373,7 +373,7 @@ IMPLEMENT_FUNCTION(Chapters, chapter4_handler, 19)
 }
 
 IMPLEMENT_FUNCTION(Chapters, chapter5, 20)
-	if (savepoint->action == kActionDefault) {
+	if (savepoint.action == kActionDefault) {
 		// Setup for chapter 5 in case it hasn't been done before
 		if (getProgress().chapter != kChapter5) {
 			getProgress().chapter = kChapter5;

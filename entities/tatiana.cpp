@@ -161,7 +161,7 @@ IMPLEMENT_FUNCTION_I(Tatiana, function16, 16)
 }
 
 IMPLEMENT_FUNCTION(Tatiana, chapter1, 17)
-	switch (savepoint->action) {
+	switch (savepoint.action) {
 	default:
 		break;
 
@@ -212,7 +212,7 @@ IMPLEMENT_FUNCTION(Tatiana, function24, 24)
 }
 
 IMPLEMENT_FUNCTION(Tatiana, chapter2, 25)
-	switch (savepoint->action) {
+	switch (savepoint.action) {
 	default:
 		break;
 
@@ -256,7 +256,7 @@ IMPLEMENT_FUNCTION(Tatiana, function30, 30)
 }
 
 IMPLEMENT_FUNCTION(Tatiana, chapter3, 31)
-	switch (savepoint->action) {
+	switch (savepoint.action) {
 	default:
 		break;
 
@@ -331,7 +331,7 @@ IMPLEMENT_FUNCTION(Tatiana, function42, 42)
 }
 
 IMPLEMENT_FUNCTION(Tatiana, chapter4, 43)
-	switch (savepoint->action) {
+	switch (savepoint.action) {
 	default:
 		break;
 
@@ -389,7 +389,7 @@ IMPLEMENT_FUNCTION(Tatiana, function51, 51)
 }
 
 IMPLEMENT_FUNCTION(Tatiana, chapter5, 52)
-	switch (savepoint->action) {
+	switch (savepoint.action) {
 	default:
 		break;
 

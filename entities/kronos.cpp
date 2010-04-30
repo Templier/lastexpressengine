@@ -90,7 +90,7 @@ IMPLEMENT_FUNCTION_NOSETUP(Kronos, updateFromTicks, 6)
 }
 
 IMPLEMENT_FUNCTION(Kronos, chapter1, 7)
-	switch (savepoint->action) {
+	switch (savepoint.action) {
 	default:
 		break;
 
@@ -126,12 +126,12 @@ IMPLEMENT_FUNCTION(Kronos, function11, 11)
 }
 
 IMPLEMENT_FUNCTION(Kronos, chapter2, 12)
-	if (savepoint->action == kActionDefault)
+	if (savepoint.action == kActionDefault)
 		getEntities()->prepareSequences(kEntityKronos);
 }
 
 IMPLEMENT_FUNCTION(Kronos, chapter3, 13)
-	switch (savepoint->action) {
+	switch (savepoint.action) {
 	default:
 		break;
 
@@ -195,12 +195,12 @@ IMPLEMENT_FUNCTION(Kronos, function23, 23)
 }
 
 IMPLEMENT_FUNCTION(Kronos, chapter4, 24)
-	if (savepoint->action == kActionDefault)
+	if (savepoint.action == kActionDefault)
 		getEntities()->prepareSequences(kEntityKronos);
 }
 
 IMPLEMENT_FUNCTION(Kronos, chapter5, 25)
-	if (savepoint->action == kActionDefault)
+	if (savepoint.action == kActionDefault)
 		getEntities()->prepareSequences(kEntityKronos);
 }
 

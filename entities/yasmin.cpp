@@ -63,7 +63,7 @@ Yasmin::Yasmin(LastExpressEngine *engine) : Entity(engine, kEntityYasmin) {
 }
 
 IMPLEMENT_FUNCTION(Yasmin, function1, 1)
-	switch (savepoint->action) {
+	switch (savepoint.action) {
 	default:
 		break;
 
@@ -93,7 +93,7 @@ IMPLEMENT_FUNCTION_NOSETUP(Yasmin, updateFromTime, 4)
 }
 
 IMPLEMENT_FUNCTION_II(Yasmin, function5, 5)
-	switch (savepoint->action) {
+	switch (savepoint.action) {
 	default:
 		break;
 
@@ -111,7 +111,7 @@ IMPLEMENT_FUNCTION_II(Yasmin, function5, 5)
 }
 
 IMPLEMENT_FUNCTION(Yasmin, function6, 6)
-	switch (savepoint->action) {
+	switch (savepoint.action) {
 	default:
 		break;
 
@@ -150,7 +150,7 @@ IMPLEMENT_FUNCTION(Yasmin, function6, 6)
 }
 
 IMPLEMENT_FUNCTION(Yasmin, function7, 7)
-	switch (savepoint->action) {
+	switch (savepoint.action) {
 	default:
 		break;
 
@@ -189,7 +189,7 @@ IMPLEMENT_FUNCTION(Yasmin, function7, 7)
 }
 
 IMPLEMENT_FUNCTION(Yasmin, chapter1, 8)
-	switch (savepoint->action) {
+	switch (savepoint.action) {
 	default:
 		break;
 
@@ -210,7 +210,7 @@ IMPLEMENT_FUNCTION(Yasmin, function9, 9)
 }
 
 IMPLEMENT_FUNCTION(Yasmin, function10, 10)
-	if (savepoint->action == kActionDefault) {
+	if (savepoint.action == kActionDefault) {
 		getObjects()->update(kObjectCompartment7, kEntityNone, kLocation3, kCursorHandKnock, kCursorHand);
 		_data->getData()->field_491 = EntityData::kField491_3050;
 		_data->getData()->field_493 = EntityData::kField493_1;
@@ -221,7 +221,7 @@ IMPLEMENT_FUNCTION(Yasmin, function10, 10)
 }
 
 IMPLEMENT_FUNCTION(Yasmin, chapter2, 11)
-	if (savepoint->action == kActionDefault) {
+	if (savepoint.action == kActionDefault) {
 		getEntities()->prepareSequences(kEntityYasmin);
 
 		_data->getData()->field_491 = EntityData::kField491_3050;
@@ -239,7 +239,7 @@ IMPLEMENT_FUNCTION(Yasmin, function12, 12)
 }
 
 IMPLEMENT_FUNCTION(Yasmin, chapter3, 13)
-	switch (savepoint->action) {
+	switch (savepoint.action) {
 	default:
 		break;
 
@@ -262,7 +262,7 @@ IMPLEMENT_FUNCTION(Yasmin, function14, 14)
 }
 
 IMPLEMENT_FUNCTION(Yasmin, chapter4, 15)
-	switch (savepoint->action) {
+	switch (savepoint.action) {
 	default:
 		break;
 
@@ -288,7 +288,7 @@ IMPLEMENT_FUNCTION(Yasmin, function17, 17)
 }
 
 IMPLEMENT_FUNCTION(Yasmin, chapter5, 18)
-	switch (savepoint->action) {
+	switch (savepoint.action) {
 	default:
 		break;
 
@@ -309,7 +309,7 @@ IMPLEMENT_FUNCTION(Yasmin, chapter5, 18)
 }
 
 IMPLEMENT_FUNCTION(Yasmin, function19, 19)
-	if (savepoint->action == kAction70549068)
+	if (savepoint.action == kAction70549068)
 		setup_function20();
 }
 

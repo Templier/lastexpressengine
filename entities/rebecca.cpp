@@ -170,7 +170,7 @@ IMPLEMENT_FUNCTION_I(Rebecca, function20, 20)
 }
 
 IMPLEMENT_FUNCTION(Rebecca, chapter1, 21)
-	switch (savepoint->action) {
+	switch (savepoint.action) {
 	default:
 		break;
 
@@ -221,7 +221,7 @@ IMPLEMENT_FUNCTION(Rebecca, function27, 27)
 }
 
 IMPLEMENT_FUNCTION(Rebecca, chapter2, 28)
-	switch (savepoint->action) {
+	switch (savepoint.action) {
 	default:
 		break;
 
@@ -261,7 +261,7 @@ IMPLEMENT_FUNCTION(Rebecca, function31, 31)
 }
 
 IMPLEMENT_FUNCTION(Rebecca, chapter3, 32)
-	switch (savepoint->action) {
+	switch (savepoint.action) {
 	default:
 		break;
 
@@ -319,7 +319,7 @@ IMPLEMENT_FUNCTION(Rebecca, function41, 41)
 }
 
 IMPLEMENT_FUNCTION(Rebecca, chapter4, 42)
-	switch (savepoint->action) {
+	switch (savepoint.action) {
 	default:
 		break;
 
@@ -357,7 +357,7 @@ IMPLEMENT_FUNCTION(Rebecca, function45, 45)
 }
 
 IMPLEMENT_FUNCTION(Rebecca, chapter5, 46)
-	switch (savepoint->action) {
+	switch (savepoint.action) {
 	default:
 		break;
 

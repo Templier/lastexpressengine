@@ -182,7 +182,7 @@ IMPLEMENT_FUNCTION_IS(Anna, function15, 15)
 }
 
 IMPLEMENT_FUNCTION(Anna, chapter1, 16)
-	switch (savepoint->action) {
+	switch (savepoint.action) {
 	default:
 		break;
 
@@ -308,7 +308,7 @@ IMPLEMENT_FUNCTION(Anna, function41, 41)
 }
 
 IMPLEMENT_FUNCTION(Anna, chapter2, 42)
-	switch (savepoint->action) {
+	switch (savepoint.action) {
 	default:
 		break;
 
@@ -334,7 +334,7 @@ IMPLEMENT_FUNCTION(Anna, function43, 43)
 }
 
 IMPLEMENT_FUNCTION(Anna, chapter3, 44)
-	switch (savepoint->action) {
+	switch (savepoint.action) {
 	default:
 		break;
 
@@ -444,7 +444,7 @@ IMPLEMENT_FUNCTION(Anna, function65, 65)
 }
 
 IMPLEMENT_FUNCTION(Anna, chapter4, 66)
-	switch (savepoint->action) {
+	switch (savepoint.action) {
 	default:
 		break;
 
@@ -494,7 +494,7 @@ IMPLEMENT_FUNCTION(Anna, function73, 73)
 }
 
 IMPLEMENT_FUNCTION(Anna, chapter5, 74)
-	switch (savepoint->action) {
+	switch (savepoint.action) {
 	default:
 		break;
 
