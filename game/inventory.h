@@ -57,21 +57,21 @@ public:
 
 	// Entry
 	struct InventoryEntry {
-		byte item_id;
-		SceneIndex scene_id;
+		CursorStyle cursor;
+		SceneIndex scene;
 		byte field_2;
-		byte is_selectable;
-		byte has_item;
-		byte no_autoselect;
+		bool isSelectable;
+		bool isPresent;
+		bool manualSelect;
 		ObjectLocation location;
 
 		InventoryEntry() {
-			item_id = 0;
-			scene_id = kSceneNone;
+			cursor = kCursorNormal;
+			scene = kSceneNone;
 			field_2 = 0;
-			is_selectable = 0;
-			has_item = 0;
-			no_autoselect = 1;
+			isSelectable = false;
+			isPresent = false;
+			manualSelect = true;
 			location = kLocationNone;
 		}
 	};
@@ -124,7 +124,7 @@ private:
 	bool _blinkingEgg;
 	uint32 _blinkingTime;
 	uint32 _blinkingInterval;
-	int _blinkingBrightness;
+	uint32 _blinkingBrightness;
 
 	Scene *_itemScene;
 

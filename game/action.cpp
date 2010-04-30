@@ -423,7 +423,7 @@ IMPLEMENT_ACTION(inventory) {
 	if (!getInventory()->getSelectedItem())
 		return;
 
-	if (!getInventory()->getSelectedEntry()->is_selectable || (!getState()->sceneBackup2 && getInventory()->getFirstExaminableItem()))
+	if (!getInventory()->getSelectedEntry()->isSelectable || (!getState()->sceneBackup2 && getInventory()->getFirstExaminableItem()))
 		getInventory()->selectItem(getInventory()->getFirstExaminableItem());
 }
 
@@ -587,7 +587,7 @@ IMPLEMENT_ACTION(setItemLocation) {
 	InventoryItem item = (InventoryItem)hotspot->param1;
 	Inventory::InventoryEntry* entry = getInventory()->getEntry(item);
 
-	if (!entry->has_item)
+	if (!entry->isPresent)
 		return;
 
 	entry->location = (ObjectLocation)hotspot->param2;
@@ -667,20 +667,20 @@ IMPLEMENT_ACTION(pickItem) {
 	}
 
 	// Load item scene
-	if (getInventory()->getEntry(item)->scene_id) {
+	if (getInventory()->getEntry(item)->scene) {
 		if (!getState()->sceneUseBackup) {
 			getState()->sceneUseBackup = 1;
 			getState()->sceneBackup = (hotspot->scene ? hotspot->scene : getState()->scene);
 		}
 
-		getLogic()->loadScene(getInventory()->getEntry(item)->scene_id);
+		getLogic()->loadScene(getInventory()->getEntry(item)->scene);
 		hotspot->scene = kSceneNone;
 	}
 
 	// Select item
-	if (getInventory()->getEntry(item)->is_selectable) {
+	if (getInventory()->getEntry(item)->isSelectable) {
 		getInventory()->selectItem(item);
-		_engine->getCursor()->setStyle((CursorStyle)getInventory()->getEntry(item)->item_id);
+		_engine->getCursor()->setStyle(getInventory()->getEntry(item)->cursor);
 	}
 }
 
@@ -1205,7 +1205,7 @@ IMPLEMENT_ACTION(useWhistle) {
 IMPLEMENT_ACTION(openMatchBox) {
 	// If the match is already in the inventory, do nothing
 	if (!getInventory()->getEntry(kItemMatch)->location
-		|| getInventory()->getEntry(kItemMatch)->has_item)
+		|| getInventory()->getEntry(kItemMatch)->isPresent)
 		return;
 
 	getInventory()->addItem(kItemMatch);
@@ -1558,7 +1558,7 @@ CursorStyle Action::getCursor(byte action, ObjectIndex object, byte param2, byte
 		if (object >= kObjectCompartmentA)
 			return kCursorNormal;
 
-		if ((!getInventory()->getSelectedItem() || getInventory()->getSelectedEntry()->no_autoselect)
+		if ((!getInventory()->getSelectedItem() || getInventory()->getSelectedEntry()->manualSelect)
 		 && (object != kObject21 || getProgress().field_8 == 1))
 			return kCursorHand;
 		else
@@ -1577,7 +1577,7 @@ CursorStyle Action::getCursor(byte action, ObjectIndex object, byte param2, byte
 		if (object == kObjectHandleInsideBathroom  && param2 == 1 && getProgress().field_5C)
 			return kCursorNormal;
 
-		return (CursorStyle)getInventory()->getSelectedEntry()->item_id;
+		return (CursorStyle)getInventory()->getSelectedEntry()->cursor;
 
 	case SceneHotspot::kAction15:
 		if (object >= kObjectMax)
@@ -1594,7 +1594,7 @@ CursorStyle Action::getCursor(byte action, ObjectIndex object, byte param2, byte
 		 ||	(getInventory()->getSelectedItem() != kItemFirebird && getInventory()->getSelectedItem() != kItemBriefcase)))
 			goto LABEL_KEY;
 
-		return (CursorStyle)getInventory()->getEntry(kItemKey)->item_id; // TODO is that always the same as kCursorKey ?
+		return (CursorStyle)getInventory()->getEntry(kItemKey)->cursor; // TODO is that always the same as kCursorKey ?
 
 	case SceneHotspot::kActionGetOutsideTrain:
 		if (getProgress().jacket != kJacketGreen)
@@ -1646,7 +1646,7 @@ CursorStyle Action::getCursor(byte action, ObjectIndex object, byte param2, byte
 			return kCursorNormal;
 
 		if (getInventory()->getSelectedItem() == kItemMatchBox && getInventory()->hasItem(kItemMatch))
-			return (CursorStyle)getInventory()->getEntry(kItemMatchBox)->item_id;
+			return (CursorStyle)getInventory()->getEntry(kItemMatchBox)->cursor;
 
 		return kCursorHandPointer;
 
@@ -1694,7 +1694,7 @@ LABEL_KEY:
 		|| getEntities()->checkFields2(object))
 			return (CursorStyle)getObjects()->get(object).cursor2;
 		else
-			return (CursorStyle)getInventory()->getEntry(kItemKey)->item_id;
+			return (CursorStyle)getInventory()->getEntry(kItemKey)->cursor;
 	}
 }
 

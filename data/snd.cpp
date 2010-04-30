@@ -122,7 +122,7 @@ void AppendableSound::queueBuffer(Common::SeekableReadStream *bufferIn) {
 		error("AppendableSound::queueBuffer - internal error: the audio stream is invalid!");
 
 	// Setup the ADPCM decoder
-	uint32 sizeIn = bufferIn->size();
+	uint32 sizeIn = (uint32)bufferIn->size();
 	Audio::AudioStream *adpcm = makeDecoder(bufferIn, sizeIn);
 
 	// Queue the stream

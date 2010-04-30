@@ -25,9 +25,11 @@
 
 #include "lastexpress/game/beetle.h"
 
+#include "lastexpress/lastexpress.h"
+
 namespace LastExpress {
 
-Beetle::Beetle(LastExpressEngine *engine) : _engine(engine) {}
+Beetle::Beetle(LastExpressEngine *engine) : _engine(engine), _sequences(NULL) {}
 
 Beetle::~Beetle() {
 	unload();

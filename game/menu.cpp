@@ -463,8 +463,7 @@ void Menu::showMenu(bool savegame, TimeType type, uint32 time) {
 }
 
 // Get menu scene index
-LastExpress::SceneIndex Menu::getSceneIndex()
-{
+LastExpress::SceneIndex Menu::getSceneIndex() {
 	// TODO Do check for DWORD at text:004ADF70 < 0x1030EC
 
 	// + 1 = normal menu with open egg / clock

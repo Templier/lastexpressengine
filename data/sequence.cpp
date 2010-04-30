@@ -33,7 +33,7 @@ namespace LastExpress {
 
 void FrameInfo::read(Common::SeekableReadStream *in, bool isSequence) {
 	// Save the current position
-	uint32 basePos = in->pos();
+	int32 basePos = in->pos();
 
 	dataOffset = in->readUint32LE();
 	unknown = in->readUint32LE();
@@ -49,10 +49,10 @@ void FrameInfo::read(Common::SeekableReadStream *in, bool isSequence) {
 	if (!isSequence) {
 		in->seek(basePos + 0x124);
 	} else {
-		hotspot.left = in->readUint16LE();
-		hotspot.right = in->readUint16LE();
-		hotspot.top = in->readUint16LE();
-		hotspot.bottom = in->readUint16LE();
+		hotspot.left = (int16)in->readUint16LE();
+		hotspot.right = (int16)in->readUint16LE();
+		hotspot.top = (int16)in->readUint16LE();
+		hotspot.bottom = (int16)in->readUint16LE();
 	}
 
 	compressionType = in->readByte();
@@ -209,7 +209,7 @@ void AnimFrame::decomp5(Common::SeekableReadStream *in, const FrameInfo &f) {
 	for (uint32 out = skip; out < size; ) {
 		uint16 opcode = in->readByte();
 		if (!(opcode & 0x1f)) {
-			opcode = (opcode << 3) + in->readByte();
+			opcode = (uint16)((opcode << 3) + in->readByte());
 			if (opcode & 0x400) {
 				// skip these 10 bits
 				out += (opcode & 0x3ff);
@@ -362,7 +362,7 @@ bool Sequence::load(Common::SeekableReadStream *stream) {
 	for (uint i = 0; i < numframes; i++) {
 
 		// Move stream to start of frame
-		_stream->seek(_sequenceHeaderSize + i * _sequenceFrameSize, SEEK_SET);
+		_stream->seek((int32)(_sequenceHeaderSize + i * _sequenceFrameSize), SEEK_SET);
 		if (_stream->eos())
 			error("Couldn't seek to the current frame data");
 

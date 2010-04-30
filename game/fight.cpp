@@ -97,7 +97,7 @@ void Fight::eventMouseClick(const Common::Event &ev) {
 
 			getGlobalTimer() ? _state = 0 : ++_state;
 
-			getFlags()->mouseRightClick = 1;
+			getFlags()->mouseRightClick = true;
 		}
 
 		if (_handleTimer) {
@@ -223,8 +223,8 @@ Fight::FightEndType Fight::setup(FightType type) {
 	getInventory()->showHourGlass(true);
 	// TODO events function
 	// TODO global var
-	getFlags()->flag_0 = 0;
-	getFlags()->mouseRightClick = 0;
+	getFlags()->flag_0 = false;
+	getFlags()->mouseRightClick = false;
 	getEntities()->reset();
 
 	// Compute scene to use
@@ -271,7 +271,7 @@ Fight::FightEndType Fight::setup(FightType type) {
 
 	getState()->scene = sceneIndex;
 
-	getFlags()->flag_3 = 1;
+	getFlags()->flag_3 = true;
 
 	// Draw the scene
 	_engine->getGraphicsManager()->draw(&scene, GraphicsManager::kBackgroundC);

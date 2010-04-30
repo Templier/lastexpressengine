@@ -189,7 +189,7 @@ Common::Rect Font::drawString(Graphics::Surface *surface, int16 x, int16 y, Comm
 		currentX += getCharWidth(str[i]);
 	}
 
-	return Common::Rect(x, y, x + currentX, y + _charHeight);
+	return Common::Rect(x, y, x + currentX, y + (int16)_charHeight);
 }
 
 Common::Rect Font::drawString(Graphics::Surface *surface, int16 x, int16 y, const uint16 *str, uint16 length) {
@@ -199,7 +199,7 @@ Common::Rect Font::drawString(Graphics::Surface *surface, int16 x, int16 y, cons
 		currentX += getCharWidth(str[i]);
 	}
 
-	return Common::Rect(x, y, x + currentX, y + _charHeight);
+	return Common::Rect(x, y, x + currentX, y + (int16)_charHeight);
 }
 
 } // End of namespace LastExpress

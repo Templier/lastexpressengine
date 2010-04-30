@@ -71,7 +71,7 @@ bool Background::load(Common::SeekableReadStream *stream) {
 	// FIXME handle big-endian case
 	_data = new uint16[_header.width * _header.height];
 	for (uint i = 0; i < _header.width * _header.height; i++)
-		_data[i] = (dataR[i] << 10) + (dataG[i] << 5) + dataB[i];
+		_data[i] = (uint16)((dataR[i] << 10) + (dataG[i] << 5) + dataB[i]);
 
 	// Cleanup buffers
 	delete[] dataR;
@@ -92,12 +92,12 @@ Common::Rect Background::draw(Graphics::Surface *surface) {
 	int i = 0;
 	for (uint16 y = 0; y < _header.height; y++) {
 		for (uint16 x = 0; x < _header.width; x++) {
-			surface->fillRect(Common::Rect((uint16)_header.posX + x, (uint16)_header.posY + y, (uint16)_header.posX + x + 1, (uint16)_header.posY + y + 1), _data[i]);
+			surface->fillRect(Common::Rect((int16)(_header.posX + x), (int16)(_header.posY + y), (int16)(_header.posX + x + 1), (int16)(_header.posY + y + 1)), _data[i]);
 			i ++;
 		}
 	}
 
-	return Common::Rect((uint16)_header.posX, (uint16)_header.posY, (uint16)(_header.posX + _header.width), (uint16)(_header.posY + _header.height));
+	return Common::Rect((int16)_header.posX, (int16)_header.posY, (int16)(_header.posX + _header.width), (int16)(_header.posY + _header.height));
 }
 
 byte *Background::decodeComponent(Common::SeekableReadStream *in, uint32 inSize, uint32 outSize) const {
@@ -129,7 +129,7 @@ byte *Background::decodeComponent(Common::SeekableReadStream *in, uint32 inSize,
 			inPos++;
 
 			int32 len = (ofsLen >> 12) + 3;
-			int32 hisPos = outPos + (ofsLen & 0x0FFF) - 4096;
+			int32 hisPos = (int32)(outPos + (ofsLen & 0x0FFF) - 4096);
 			for (int i = 0; i < len && outPos < outSize; i++)
 				out[outPos++] = out[hisPos++];
 		}

@@ -740,7 +740,7 @@ void Logic::switchChapter() {
 
 	case kChapter3:
 		getInventory()->getEntry(kItemFirebird)->location = kLocation4;
-		getInventory()->getEntry(kItemFirebird)->has_item = 0;
+		getInventory()->getEntry(kItemFirebird)->isPresent = 0;
 		getInventory()->getEntry(kItem11)->location = kLocation1;
 
 		getInventory()->addItem(kItemWhistle);

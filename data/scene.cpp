@@ -55,10 +55,10 @@ SceneHotspot *SceneHotspot::load(Common::SeekableReadStream *stream) {
 	SceneHotspot *hs = new SceneHotspot();
 
 	// Rect
-	hs->rect.left = stream->readUint16LE();
-	hs->rect.right = stream->readUint16LE();
-	hs->rect.top = stream->readUint16LE();
-	hs->rect.bottom = stream->readUint16LE();
+	hs->rect.left = (int16)stream->readUint16LE();
+	hs->rect.right = (int16)stream->readUint16LE();
+	hs->rect.top = (int16)stream->readUint16LE();
+	hs->rect.bottom = (int16)stream->readUint16LE();
 
 	hs->coord = stream->readUint16LE();
 	hs->unknownA = stream->readUint16LE();
@@ -170,7 +170,7 @@ bool Scene::load(Scene *s, Common::SeekableReadStream *stream, SceneHeader *head
 
 	// Read all hotspots
 	if (header->hotspot != 0) {
-		stream->seek(header->hotspot, SEEK_SET);
+		stream->seek((int32)header->hotspot, SEEK_SET);
 		SceneHotspot *hotspot = SceneHotspot::load(stream);
 		while (hotspot) {
 			s->_hotspots.push_back(hotspot);
@@ -178,7 +178,7 @@ bool Scene::load(Scene *s, Common::SeekableReadStream *stream, SceneHeader *head
 			if (hotspot->next == 0)
 				break;
 
-			stream->seek(hotspot->next, SEEK_SET);
+			stream->seek((int32)hotspot->next, SEEK_SET);
 			hotspot = SceneHotspot::load(stream);
 		}
 	}

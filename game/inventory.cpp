@@ -62,61 +62,61 @@ Inventory::~Inventory() {
 // Init inventory contents
 void Inventory::init() {
 	// ID
-	_entries[kItemMatchBox].item_id = kCursorMatchBox;
-	_entries[kItemTelegram].item_id = kCursorTelegram;
-	_entries[kItemPassengerList].item_id = kCursorPassengerList;
-	_entries[kItemArticle].item_id = kCursorArticle;
-	_entries[kItemScarf].item_id = kCursorScarf;
-	_entries[kItemPaper].item_id = kCursorPaper;
-	_entries[kItemParchemin].item_id = kCursorParchemin;
-	_entries[kItemMatch].item_id = kCursorMatch;
-	_entries[kItemWhistle].item_id = kCursorWhistle;
-	_entries[kItemKey].item_id = kCursorKey;
-	_entries[kItemBomb].item_id = kCursorBomb;
-	_entries[kItemFirebird].item_id = kCursorFirebird;
-	_entries[kItemBriefcase].item_id = kCursorBriefcase;
-	_entries[kItemCorpse].item_id = kCursorCorpse;
+	_entries[kItemMatchBox].cursor = kCursorMatchBox;
+	_entries[kItemTelegram].cursor = kCursorTelegram;
+	_entries[kItemPassengerList].cursor = kCursorPassengerList;
+	_entries[kItemArticle].cursor = kCursorArticle;
+	_entries[kItemScarf].cursor = kCursorScarf;
+	_entries[kItemPaper].cursor = kCursorPaper;
+	_entries[kItemParchemin].cursor = kCursorParchemin;
+	_entries[kItemMatch].cursor = kCursorMatch;
+	_entries[kItemWhistle].cursor = kCursorWhistle;
+	_entries[kItemKey].cursor = kCursorKey;
+	_entries[kItemBomb].cursor = kCursorBomb;
+	_entries[kItemFirebird].cursor = kCursorFirebird;
+	_entries[kItemBriefcase].cursor = kCursorBriefcase;
+	_entries[kItemCorpse].cursor = kCursorCorpse;
 
 	// Selectable
-	_entries[kItemMatchBox].is_selectable = 1;
-	_entries[kItemMatch].is_selectable = 1;
-	_entries[kItemTelegram].is_selectable = 1;
-	_entries[kItemWhistle].is_selectable = 1;
-	_entries[kItemKey].is_selectable = 1;
-	_entries[kItemFirebird].is_selectable = 1;
-	_entries[kItemBriefcase].is_selectable = 1;
-	_entries[kItemCorpse].is_selectable = 1;
-	_entries[kItemPassengerList].is_selectable = 1;
+	_entries[kItemMatchBox].isSelectable = true;
+	_entries[kItemMatch].isSelectable = true;
+	_entries[kItemTelegram].isSelectable = true;
+	_entries[kItemWhistle].isSelectable = true;
+	_entries[kItemKey].isSelectable = true;
+	_entries[kItemFirebird].isSelectable = true;
+	_entries[kItemBriefcase].isSelectable = true;
+	_entries[kItemCorpse].isSelectable = true;
+	_entries[kItemPassengerList].isSelectable = true;
 
-	// Autoselection
-	_entries[kItem2].no_autoselect = 0;
-	_entries[kItem3].no_autoselect = 0;
-	_entries[kItem5].no_autoselect = 0;
-	_entries[kItem7].no_autoselect = 0;
-	_entries[kItem9].no_autoselect = 0;
-	_entries[kItem11].no_autoselect = 0;
-	_entries[kItemBeetle].no_autoselect = 0;
-	_entries[kItem17].no_autoselect = 0;
-	_entries[kItemFirebird].no_autoselect = 0;
-	_entries[kItemBriefcase].no_autoselect = 0;
-	_entries[kItemCorpse].no_autoselect = 0;
-	_entries[kItemGreenJacket].no_autoselect = 0;
-	_entries[kItem22].no_autoselect = 0;
+	// Auto selection
+	_entries[kItem2].manualSelect = false;
+	_entries[kItem3].manualSelect = false;
+	_entries[kItem5].manualSelect = false;
+	_entries[kItem7].manualSelect = false;
+	_entries[kItem9].manualSelect = false;
+	_entries[kItem11].manualSelect = false;
+	_entries[kItemBeetle].manualSelect = false;
+	_entries[kItem17].manualSelect = false;
+	_entries[kItemFirebird].manualSelect = false;
+	_entries[kItemBriefcase].manualSelect = false;
+	_entries[kItemCorpse].manualSelect = false;
+	_entries[kItemGreenJacket].manualSelect = false;
+	_entries[kItem22].manualSelect = false;
 
 	// Scene
-	_entries[kItemMatchBox].scene_id = kSceneMatchbox;
-	_entries[kItemTelegram].scene_id = kSceneTelegram;
-	_entries[kItemPassengerList].scene_id = kScenePassengerList;
-	_entries[kItemScarf].scene_id = kSceneScarf;
-	_entries[kItemParchemin].scene_id = kSceneParchemin;
-	_entries[kItemArticle].scene_id = kSceneArticle;
-	_entries[kItemPaper].scene_id = kScenePaper;
-	_entries[kItemFirebird].scene_id = kSceneFirebird;
-	_entries[kItemBriefcase].scene_id = kSceneBriefcase;
+	_entries[kItemMatchBox].scene = kSceneMatchbox;
+	_entries[kItemTelegram].scene = kSceneTelegram;
+	_entries[kItemPassengerList].scene = kScenePassengerList;
+	_entries[kItemScarf].scene = kSceneScarf;
+	_entries[kItemParchemin].scene = kSceneParchemin;
+	_entries[kItemArticle].scene = kSceneArticle;
+	_entries[kItemPaper].scene = kScenePaper;
+	_entries[kItemFirebird].scene = kSceneFirebird;
+	_entries[kItemBriefcase].scene = kSceneBriefcase;
 
 	// Has item
-	_entries[kItemTelegram].has_item = 1;
-	_entries[kItemArticle].has_item = 1;
+	_entries[kItemTelegram].isPresent = true;
+	_entries[kItemArticle].isPresent = true;
 
 	_selectedItem = kItemNone;
 }
@@ -210,17 +210,17 @@ bool Inventory::handleMouseEvent(const Common::Event &ev) {
 
 				// If released with an item highlighted, show this item
 				if (ev.type == Common::EVENT_LBUTTONUP) {
-					if (_entries[i].is_selectable) {
+					if (_entries[i].isSelectable) {
 						selected = true;
 						_selectedItem = (InventoryItem)i;
-						drawItem(44, 0, getEntry(_selectedItem)->item_id, 100)
+						drawItem(44, 0, getEntry(_selectedItem)->cursor, 100)
 					}
 
 					examine((InventoryItem)i);
 					break;
 				} else {
 					if (_highlightedItem != i) {
-						drawItem(0, y, _entries[i].item_id, 100)
+						drawItem(0, y, _entries[i].cursor, 100)
 						_highlightedItem = (InventoryItem)i;
 						askForRedraw();
 					}
@@ -228,7 +228,7 @@ bool Inventory::handleMouseEvent(const Common::Event &ev) {
 			} else {
 				// Remove highlight if necessary
 				if (_highlightedItem == i) {
-					drawItem(0, y, _entries[i].item_id, 50)
+					drawItem(0, y, _entries[i].cursor, 50)
 					_highlightedItem = kItemNone;
 					askForRedraw();
 				}
@@ -334,7 +334,7 @@ void Inventory::showHourGlass(bool enabled) {
 
 // Show an item scene
 void Inventory::showItem(InventoryItem item) {
-	SceneIndex scene = getEntry(item)->scene_id;
+	SceneIndex scene = getEntry(item)->scene;
 	if (!scene )
 		return;
 
@@ -360,12 +360,12 @@ void Inventory::addItem(InventoryItem item) {
 	if (hasItem(item))
 		return;
 
-	getEntry(item)->has_item = 1;
+	getEntry(item)->isPresent = 1;
 	getEntry(item)->location = kLocationNone;
 
 	// Autoselect item if necessary
-	if (!getEntry(item)->no_autoselect) {
-		_selectedItem = (InventoryItem)getEntry(item)->item_id;
+	if (!getEntry(item)->manualSelect) {
+		_selectedItem = (InventoryItem)getEntry(item)->cursor;
 		drawItem(44, 0, _selectedItem, 100)
 		askForRedraw();
 	}
@@ -375,10 +375,10 @@ void Inventory::removeItem(InventoryItem item, ObjectLocation newLocation) {
 	if (!hasItem(item))
 		return;
 
-	getEntry(item)->has_item = 0;
+	getEntry(item)->isPresent = 0;
 	getEntry(item)->location = newLocation;
 
-	if (getEntry(item)->item_id == _selectedItem) {
+	if (getEntry(item)->cursor == _selectedItem) {
 		_selectedItem = kItemNone;
 		_engine->getGraphicsManager()->clear(GraphicsManager::kBackgroundInventory, Common::Rect(44, 0, 44 + 32, 32));
 		askForRedraw();
@@ -386,7 +386,7 @@ void Inventory::removeItem(InventoryItem item, ObjectLocation newLocation) {
 }
 
 bool Inventory::hasItem(InventoryItem item) {
-	if (getEntry(item)->has_item)
+	if (getEntry(item)->isPresent)
 			return true;
 
 	return false;
@@ -395,7 +395,7 @@ bool Inventory::hasItem(InventoryItem item) {
 void Inventory::selectItem(InventoryItem item) {
 	_selectedItem = item;
 
-	drawItem(44, 0, getEntry(_selectedItem)->item_id, 100)
+	drawItem(44, 0, getEntry(_selectedItem)->cursor, 100)
 	askForRedraw();
 }
 
@@ -435,7 +435,7 @@ InventoryItem Inventory::getFirstExaminableItem() const {
 
 	int index = 0;
 	InventoryEntry entry = _entries[index];
-	while (!entry.has_item || !entry.no_autoselect || !entry.scene_id) {
+	while (!entry.isPresent || !entry.manualSelect || !entry.scene) {
 		index++;
 		entry = _entries[index];
 
@@ -484,7 +484,7 @@ bool Inventory::isItemSceneParameter(InventoryItem item) const {
 
 // Examine an inventory item
 void Inventory::examine(InventoryItem item) {
-	SceneIndex index = getEntry(item)->scene_id;
+	SceneIndex index = getEntry(item)->scene;
 	if (!index)
 		return;
 
@@ -540,8 +540,8 @@ void Inventory::open() {
 
 	// Iterate over items
 	for (uint i = 1; i < 32; i++) {
-		if (_entries[i].has_item) {
-			drawItem(0, y, _entries[i].item_id, 50)
+		if (_entries[i].isPresent) {
+			drawItem(0, y, _entries[i].cursor, 50)
 			y += 40;
 		}
 	}
@@ -559,18 +559,18 @@ void Inventory::close() {
 	// Erase rectangle for all inventory items
 	int count = 0;
 	for (uint i = 1; i < 32; i++) {
-		if (_entries[i].has_item) {
+		if (_entries[i].isPresent) {
 			count++;
 		}
 	}
 
-	_engine->getGraphicsManager()->clear(GraphicsManager::kBackgroundInventory, Common::Rect(0, 44, 32, 44 + 44 * (int16)count));
+	_engine->getGraphicsManager()->clear(GraphicsManager::kBackgroundInventory, Common::Rect(0, 44, 32, (int16)(44 + 44 * count)));
 
 	askForRedraw();
 }
 
 Common::Rect Inventory::getItemRect(int16 index) const{
-	return Common::Rect(0, (32 + 12) * (index + 1), 32, (32 + 12) * (index + 2)); // space between items = 12px
+	return Common::Rect(0, (int16)((32 + 12) * (index + 1)), 32, (int16)((32 + 12) * (index + 2))); // space between items = 12px
 }
 
 } // End of namespace LastExpress

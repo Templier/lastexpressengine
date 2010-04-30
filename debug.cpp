@@ -509,7 +509,7 @@ bool Debugger::cmd_fight(int argc, const char **argv) {
 			askForRedraw();
 			redrawScreen();
 
-			int lastScene = getState()->scene;
+			SceneIndex lastScene = getState()->scene;
 
 			getFight()->setup(type) ? DebugPrintf("Lost fight!\n") : DebugPrintf("Won fight!\n");
 
