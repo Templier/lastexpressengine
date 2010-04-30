@@ -73,7 +73,7 @@ struct SavePoint {
 
 class SavePoints : Common::Serializable {
 private:
-	typedef Common::Functor1<SavePoint*, void> Callback;
+	typedef Common::Functor1<const SavePoint&, void> Callback;
 
 public:
 
@@ -98,16 +98,16 @@ public:
 	void push(EntityIndex entity2, EntityIndex entity1, ActionIndex action, uint32 param = 0);
 	void pushAll(EntityIndex entity, ActionIndex action, uint32 param = 0);
 	void process();
-	void reset();
+	void reset() const;
 
 	// Data
 	void addData(EntityIndex entity, ActionIndex action, uint32 param);
 
 	// Callbacks
 	void setCallback(EntityIndex index, Entity::Callback* callback);
-	Callback *getCallback(EntityIndex entity);
-	void call(EntityIndex entity2, EntityIndex entity1, ActionIndex action, uint32 param = 0);
-	void call(EntityIndex entity2, EntityIndex entity1, ActionIndex action, char* param);
+	Callback *getCallback(EntityIndex entity) const;
+	void call(EntityIndex entity2, EntityIndex entity1, ActionIndex action, uint32 param = 0) const;
+	void call(EntityIndex entity2, EntityIndex entity1, ActionIndex action, char* param) const;
 
 	// Serializable
 	void saveLoadWithSerializer(Common::Serializer &s);
@@ -122,7 +122,7 @@ private:
 	Callback* _callbacks[40];
 
 	SavePoint pop();
-	bool updateEntityFromData(SavePoint point);
+	bool updateEntityFromData(const SavePoint &point);
 };
 
 } // End of namespace LastExpress

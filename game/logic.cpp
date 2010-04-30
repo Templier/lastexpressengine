@@ -209,7 +209,10 @@ void Logic::eventMouseClick(const Common::Event &ev) {
 	// Check hitbox & event from scene data
 	SceneHotspot *hotspot = NULL;
 	if (_currentScene && _currentScene->checkHotSpot(ev.mouse, &hotspot) && ev.type == Common::EVENT_LBUTTONUP) {
-		_action->processHotspot(hotspot);
+		SceneIndex scene = _action->processHotspot(*hotspot);
+		if (scene != kSceneInvalid)
+			hotspot->scene = scene;
+
 		if (hotspot->scene)
 			setScene(hotspot->scene);
 
@@ -426,8 +429,10 @@ void Logic::loadSceneFromItem(InventoryItem item) {
 // Scene pre/post & hotspots
 //////////////////////////////////////////////////////////////////////////
 #define PROCESS_HOTSPOT_SCENE(hotspot, index) \
-	_action->processHotspot(hotspot); \
-	if ((hotspot)->scene) { \
+	SceneIndex newScene = _action->processHotspot(*hotspot); \
+	if (newScene != kSceneInvalid || newScene != kSceneStopProcessing) \
+		(hotspot)->scene = newScene; \
+	if ((hotspot)->scene && newScene != kSceneStopProcessing) { \
 		*index = (hotspot)->scene; \
 		preProcessScene(index); \
 	}
@@ -618,14 +623,14 @@ void Logic::postProcessScene() {
 		//}
 
 		SceneHotspot *hotspot = scene.getHotspot();
-		_action->processHotspot(hotspot);
+		_action->processHotspot(*hotspot);
 
 		if (getFlags()->mouseRightClick) {
 			loadSceneObject(hotspotScene, hotspot->scene);
 
 			while (hotspotScene.getHeader()->type == Scene::kTypeList) {
 				hotspot = hotspotScene.getHotspot();
-				_action->processHotspot(hotspot);
+				_action->processHotspot(*hotspot);
 
 				// reload the scene
 				_engine->getSceneManager()->loadScene(&hotspotScene, hotspot->scene);
@@ -635,6 +640,9 @@ void Logic::postProcessScene() {
 		EntityData::Field491Value field491 = getEntityData(kEntityNone)->field_491;
 		if (getEntityData(kEntityNone)->field_495 == EntityData::kField495_9 && (field491 == EntityData::kField491_4 || field491 == EntityData::kField491_3)) {
 			EntityIndex entities[39];
+
+			// Init entities
+			entities[0] = kEntityNone;
 
 			int progress = 0;
 

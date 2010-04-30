@@ -524,7 +524,7 @@ void Entities::getSequenceName(EntityIndex index, EntityDirection direction, cha
 
 		case 2:
 		case 3:
-		case 5:
+		case kDirection5:
 		case 6:
 		case 7:
 		case 8:
@@ -608,7 +608,7 @@ void Entities::getSequenceName(EntityIndex index, EntityDirection direction, cha
 
 		case 2:
 		case 3:
-		case 5:
+		case kDirection5:
 		case 6:
 		case 7:
 		case 8:
@@ -682,7 +682,7 @@ void Entities::getSequenceName(EntityIndex index, EntityDirection direction, cha
 	// First part of sequence is already set
 	case kDirectionLeft:
 	case kDirectionRight:
-		sprintf(sequence1, "%s%02d.seq", data->sequenceName, position);
+		sprintf(sequence1, "%s%02d.seq", (char*)&data->sequenceName, position);
 		break;
 	}
 }

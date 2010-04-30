@@ -87,13 +87,13 @@ void SavePoints::process() {
 			Entity::Callback *callback = getCallback(savepoint.entity1);
 			if (callback && callback->isValid()) {
 				debugC(8, kLastExpressDebugLogic, "Executing savepoint: entity1=%d, action=%d, entity2=%d", savepoint.entity1, savepoint.action, savepoint.entity2);
-				(*callback)(&savepoint);
+				(*callback)(savepoint);
 			}
 		}
 	}
 }
 
-void SavePoints::reset() {
+void SavePoints::reset() const {
 	_savepoints.empty();
 }
 
@@ -125,14 +125,14 @@ void SavePoints::setCallback(EntityIndex index, Entity::Callback* callback) {
 	_callbacks[index] = callback;
 }
 
-Entity::Callback *SavePoints::getCallback(EntityIndex index) {
+Entity::Callback *SavePoints::getCallback(EntityIndex index) const {
 	if (index >= 40)
 		error ("SavePoints::getCallback - attempting to use an invalid entity index. Valid values 0-39, was %d", index);
 
 	return _callbacks[index];
 }
 
-void SavePoints::call(EntityIndex entity2, EntityIndex entity1, ActionIndex action, uint32 param) {
+void SavePoints::call(EntityIndex entity2, EntityIndex entity1, ActionIndex action, uint32 param) const {
 	SavePoint point;
 	point.entity1 = entity1;
 	point.action = action;
@@ -142,11 +142,11 @@ void SavePoints::call(EntityIndex entity2, EntityIndex entity1, ActionIndex acti
 	Entity::Callback *callback = getCallback(entity1);
 	if (callback && callback->isValid()) {
 		debugC(8, kLastExpressDebugLogic, "Executing savepoint: entity1=%d, action=%d, entity2=%d, param=%d", entity1, action, entity2, param);
-		(*callback)(&point);
+		(*callback)(point);
 	}
 }
 
-void SavePoints::call(EntityIndex entity2, EntityIndex entity1, ActionIndex action, char* param) {
+void SavePoints::call(EntityIndex entity2, EntityIndex entity1, ActionIndex action, char* param) const {
 	SavePoint point;
 	point.entity1 = entity1;
 	point.action = action;
@@ -156,14 +156,14 @@ void SavePoints::call(EntityIndex entity2, EntityIndex entity1, ActionIndex acti
 	Entity::Callback *callback = getCallback(entity1);
 	if (callback && callback->isValid()) {
 		debugC(8, kLastExpressDebugLogic, "Executing savepoint: entity1=%d, action=%d, entity2=%d, param=%s", entity1, action, entity2, param);
-		(*callback)(&point);
+		(*callback)(point);
 	}
 }
 
 //////////////////////////////////////////////////////////////////////////
 // Misc
 //////////////////////////////////////////////////////////////////////////
-bool SavePoints::updateEntityFromData(SavePoint savepoint) {
+bool SavePoints::updateEntityFromData(const SavePoint &savepoint) {
 
 	int index = 0;
 

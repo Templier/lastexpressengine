@@ -35,13 +35,13 @@
 namespace LastExpress {
 
 #define DECLARE_ACTION(name) \
-	void action_##name(SceneHotspot *hotspot)
+	SceneIndex action_##name(const SceneHotspot &hotspot)
 
 #define ADD_ACTION(name) \
-	_actions.push_back(new Common::Functor1Mem<SceneHotspot*, void, Action>(this, &Action::action_##name));
+	_actions.push_back(new Common::Functor1Mem<const SceneHotspot &, SceneIndex, Action>(this, &Action::action_##name));
 
 #define IMPLEMENT_ACTION(name) \
-	void Action::action_##name(SceneHotspot *hotspot)
+	SceneIndex Action::action_##name(const SceneHotspot &hotspot)
 
 class LastExpressEngine;
 class SceneHotspot;
@@ -52,19 +52,19 @@ public:
 	~Action();
 
 	// Hotspot action
-	void processHotspot(SceneHotspot *hotspot);
+	SceneIndex processHotspot(const SceneHotspot &hotspot);
 
 	// Cursor
-	CursorStyle getCursor(byte action, ObjectIndex object, byte param2, byte param3, byte cursor);
+	CursorStyle getCursor(byte action, ObjectIndex object, byte param2, byte param3, byte cursor) const;
 
 	// Animation
-	void playAnimation(int index);
+	void playAnimation(int index) const;
 
 	// Compartement action
-	bool handleOtherCompartment(ObjectIndex object, byte param2, byte param3);
+	bool handleOtherCompartment(ObjectIndex object, byte param2, byte param3) const;
 
 private:
-	typedef Common::Functor1<SceneHotspot*, void> ActionFunctor;
+	typedef Common::Functor1<const SceneHotspot &, SceneIndex> ActionFunctor;
 
 	LastExpressEngine* _engine;
 	Common::Array<ActionFunctor *> _actions;
@@ -120,12 +120,12 @@ private:
 	DECLARE_ACTION(dummy);
 
 	// Helpers
-	void pickGreenJacket(bool process);
-	void pickScarf(bool process);
-	void pickCorpse(byte bedPosition, bool process);
-	void dropCorpse(bool process);
+	void pickGreenJacket(bool process) const;
+	void pickScarf(bool process) const;
+	void pickCorpse(byte bedPosition, bool process) const;
+	void dropCorpse(bool process) const;
 
-	void playCompartmentSoundEvents(EntityIndex entityIndex, ObjectIndex object, byte param2, byte param3, bool loadSceneFunction);
+	void playCompartmentSoundEvents(EntityIndex entityIndex, ObjectIndex object, byte param2, byte param3, bool loadSceneFunction) const;
 };
 
 } // End of namespace LastExpress

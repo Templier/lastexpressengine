@@ -110,6 +110,7 @@ enum SceneIndex {
 
 	kSceneFightDefault        = 820,
 
+	kSceneStopProcessing      = 0xfffffffe,
 	kSceneInvalid             = 0xffffffff
 };
 
