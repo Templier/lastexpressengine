@@ -27,7 +27,9 @@
 
 #include "lastexpress/game/action.h"
 #include "lastexpress/game/entities.h"
+#include "lastexpress/game/inventory.h"
 #include "lastexpress/game/logic.h"
+#include "lastexpress/game/object.h"
 #include "lastexpress/game/savepoint.h"
 #include "lastexpress/game/sound.h"
 #include "lastexpress/game/state.h"
@@ -234,43 +236,487 @@ IMPLEMENT_FUNCTION(Abbot, chapter3, 17)
 }
 
 IMPLEMENT_FUNCTION(Abbot, function18, 18)
-	error("Abbot: callback function 18 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kAction18:
+		switch (_data->getNextCallback()) {
+		default:
+			break;
+
+		case 1:
+			_data->getData()->field_491 = EntityData::kField491_5800;
+			_data->getData()->field_493 = EntityData::kField493_0;
+
+			_data->setNextCallback(2);
+			call(new ENTITY_SETUP_SIIS(Abbot, setup_draw), "804DD");
+			break;
+
+		case 2:
+			getSavePoints()->push(kEntityAbbot, kEntityCooks, kAction236976550);
+			getEntities()->drawSequenceRight(kEntityAbbot, "804DS");
+
+			if (getEntities()->checkFields13(kEntityNone))
+				getEntities()->updateEntity(kEntityAbbot);
+
+			_data->setNextCallback(3);
+			call(new ENTITY_SETUP(Abbot, setup_function5));
+			break;
+
+		case 3:
+			_data->setNextCallback(4);
+			call(new ENTITY_SETUP(Abbot, setup_function11), 4, EntityData::kField491_6470);
+			break;
+
+		case 4:
+			getObjects()->update(kObjectCompartmentC, kEntityNone, kLocation1, kCursorKeepValue, kCursorKeepValue);
+
+			_data->setNextCallback(5);
+			call(new ENTITY_SETUP_SIIS(Abbot, setup_function3), "617AC", 34);
+			break;
+
+		case 5:
+			getObjects()->update(kObjectCompartmentC, kEntityNone, kLocation2, kCursorKeepValue, kCursorKeepValue);
+			_data->getData()->field_491 = EntityData::kField491_6470;
+			_data->getData()->field_493 = EntityData::kField493_1;
+
+			setup_function19();			
+			break;
+		}
+		break;
+
+	case kAction192054567:
+		_data->setNextCallback(1);
+        call(new ENTITY_SETUP(Abbot, setup_function14));
+		break;	
+	}
 }
 
 IMPLEMENT_FUNCTION(Abbot, function19, 19)
-	error("Abbot: callback function 19 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionNone:
+		if (getState()->time > kTimeAbbot) {
+			if (!params->param1) {
+				params->param1 = 1;
+				_data->setNextCallback(3);
+				call(new ENTITY_SETUP_SIIS(Abbot, setup_playSound), "MrB3010");
+			}
+		}
+		break;
+
+	case kActionDefault:
+		getEntities()->drawSequenceLeft(kEntityAbbot, "508A");
+		getSavePoints()->push(kEntityAbbot, kEntityBoutarel, kAction122358304);
+
+		_data->setNextCallback(1);
+		call(new ENTITY_SETUP_SIIS(Abbot, setup_playSound), "Abb3010");
+		break;
+
+	case kAction18:
+		switch (_data->getNextCallback()) {
+		default:
+			break;
+
+		case 1:
+			_data->setNextCallback(2);
+			call(new ENTITY_SETUP(Abbot, setup_updateFromTime), 900);
+			break;
+
+		case 2:
+			getEntities()->drawSequenceLeft(kEntityAbbot, "508B");
+			break;
+
+		case 3:
+			getSavePoints()->push(kEntityAbbot, kEntityBoutarel, kAction122288808);
+			setup_function20();
+			break;
+		}
+	}
 }
 
 IMPLEMENT_FUNCTION(Abbot, function20, 20)
-	error("Abbot: callback function 20 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionNone:
+		if (getState()->time > kTimeAbbot2)
+			if (getEntities()->checkFields13(kEntityBoutarel))
+				setup_function21();
+		break;
+
+	case kActionDefault:
+		getEntities()->drawSequenceLeft(kEntityAbbot, "509A");
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Abbot, function21, 21)
-	error("Abbot: callback function 21 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionDefault:
+		_data->setNextCallback(1);
+		call(new ENTITY_SETUP_SIIS(Abbot, setup_draw), "509B");
+		break;
+
+	case kAction18:
+		switch (_data->getNextCallback()) {
+		default:
+			break;
+
+		case 1:
+			getObjects()->update(kObjectCompartmentC, kEntityNone, kLocationNone, kCursorHandKnock, kCursorHand);
+			getObjects()->update(kObject50, kEntityNone, kLocationNone, kCursorHandKnock, kCursorHand);
+
+			_data->setNextCallback(2);
+			call(new ENTITY_SETUP_SIIS(Abbot, setup_function3), "617Mc", 34);
+			break;
+
+		case 2:
+			_data->getData()->field_493 = EntityData::kField493_0;
+
+			_data->setNextCallback(3);
+			call(new ENTITY_SETUP(Abbot, setup_function11), 5, 850);
+			break;
+
+		case 3:
+			_data->setNextCallback(4);
+			call(new ENTITY_SETUP(Abbot, setup_function14));
+			break;
+
+		case 4:
+			_data->getData()->field_491 = EntityData::kField491_1540;
+			_data->getData()->field_493 = EntityData::kField493_0;
+
+			_data->setNextCallback(5);
+			call(new ENTITY_SETUP_SIIS(Abbot, setup_draw), "804US");
+			break;
+
+		case 5:
+			getEntities()->drawSequenceRight(kEntityAbbot, "029J");
+			if (getEntities()->checkFields12(kEntityNone))
+				getEntities()->updateEntity(kEntityAbbot);
+
+			_data->setNextCallback(6);
+			call(new ENTITY_SETUP(Abbot, setup_function5));
+			break;
+
+		case 6:
+			getEntities()->drawSequenceLeft(kEntityAbbot, "029H");
+			getSavePoints()->push(kEntityAbbot, kEntityPascale, kAction207769280);
+			break;
+
+		case 7:
+			setup_function22();
+			break;
+		}
+		break;
+
+	case kAction122288808:
+		getSavePoints()->push(kEntityAbbot, kEntityTables4, kAction136455232);
+		_data->getData()->field_493 = EntityData::kField493_1;
+
+		_data->setNextCallback(7);
+        call(new ENTITY_SETUP_SIIS(Abbot, setup_draw), "029B");
+		break;	
+	}
 }
 
 IMPLEMENT_FUNCTION(Abbot, function22, 22)
-	error("Abbot: callback function 22 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionNone:
+		if (getState()->time > kTimeAbbot3) {
+			if (!params->param1) {
+				params->param1 = 1;
+				getSavePoints()->push(kEntityAbbot, kEntityServers0, kAction218586752);
+			}
+		}
+
+		if (getState()->time > kTimeAbbot4) {
+			if (getEntities()->checkFields11()) {
+				_data->getData()->inventoryItem = kItemNone;
+
+				setup_function23();
+			}
+		}
+		break;
+
+	case kAction1:
+		_data->getData()->inventoryItem = kItemNone;
+
+		_data->setNextCallback(1);
+		call(new ENTITY_SETUP(Abbot, setup_savegame), 2, 110);
+		break;
+
+	case kActionDefault:
+		getEntities()->drawSequenceLeft(kEntityAbbot, "029E");
+		if (!getEvent(kEventAbbotIntroduction))
+			_data->getData()->inventoryItem = (InventoryItem)kCursorProcess;
+		break;
+
+	case kAction18:
+		if (_data->getNextCallback() != 1)
+			break;
+
+		getAction()->playAnimation(kEventAbbotIntroduction);
+		getSound()->playSound(kEntityNone, "LIB036");
+		getLogic()->loadSceneFromData(5, 61, 255);
+		break;
+
+	case kAction122288808:
+		getEntities()->drawSequenceLeft(kEntityAbbot, "029E");
+		break;
+
+	case kAction122358304:
+		getEntities()->drawSequenceLeft(kEntityAbbot, "BLANK");
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Abbot, function23, 23)
-	error("Abbot: callback function 23 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionDefault:
+		_data->getData()->field_493 = EntityData::kField493_0;
+		getEntities()->updateField1000ProcessScene(kEntityAbbot, 5, 67);
+
+		_data->setNextCallback(1);
+		call(new ENTITY_SETUP_SIIS(Abbot, setup_function12), "029F", kEntityTables4, kAction103798704, "029G");
+		break;
+
+	case kAction18:
+		switch (_data->getNextCallback()) {
+		default:
+			break;
+
+		case 1:
+			getEntities()->updateField1000(kEntityAbbot, 5, 67);
+			getSavePoints()->push(kEntityAbbot, kEntityServers0, kAction270068760);
+			getSavePoints()->push(kEntityAbbot, kEntityAnna, kAction238936000);
+			getEntities()->drawSequenceRight(kEntityAbbot, "804DS");
+
+			if (getEntities()->checkFields13(kEntityNone))
+				getEntities()->updateEntity(kEntityAbbot);
+
+			_data->setNextCallback(2);
+			call(new ENTITY_SETUP(Abbot, setup_function5));
+			break;
+
+		case 2:
+			_data->setNextCallback(3);
+			call(new ENTITY_SETUP(Abbot, setup_function11), 4, EntityData::kField491_6470);
+			break;
+
+		case 3:
+			_data->setNextCallback(4);
+			call(new ENTITY_SETUP_SIIS(Abbot, setup_function4), "617Cc", 34);
+			break;
+
+		case 4:
+			_data->getData()->field_493 = EntityData::kField493_1;
+
+			setup_function24();
+			break;
+		}
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Abbot, function24, 24)
-	error("Abbot: callback function 24 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionNone:
+		if (!params->param1) {
+			params->param1 = (int)getState()->time + 900;
+
+			if (params->param3 >= (int)getState()->time)
+				break;
+
+			params->param1 = EntityData::kParamTime;
+		}
+
+		setup_function25();
+		break;
+
+	case kAction8:
+	case kAction9:
+		getObjects()->update(kObjectCompartmentC, kEntityAbbot, kLocation1, kCursorNormal, kCursorNormal);
+		getObjects()->update(kObject50, kEntityAbbot, kLocation1, kCursorNormal, kCursorNormal);
+
+		if (savepoint.action == kAction8) {
+			_data->setNextCallback(1);
+			call(new ENTITY_SETUP_SIIS(Abbot, setup_playSound), "LIB012");
+		} else {
+			_data->setNextCallback(2);
+			call(new ENTITY_SETUP_SIIS(Abbot, setup_playSound), "LIB013");
+		}
+		break;
+
+	case kActionDefault:
+		getEntities()->prepareSequences(kEntityAbbot);
+		getObjects()->update(kObjectCompartmentC, kEntityAbbot, kLocationNone, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObject50, kEntityAbbot, kLocationNone, kCursorHandKnock, kCursorHand);
+		break;
+
+	case kAction18:
+		switch (_data->getNextCallback()) {
+		default:
+			break;
+
+		case 1:
+		case 2:
+			_data->setNextCallback(3);
+			call(new ENTITY_SETUP_SIIS(Abbot, setup_playSound), "Abb3001");
+			break;
+
+		case 3:
+			getObjects()->update(kObjectCompartmentC, kEntityAbbot, kLocation1, kCursorHandKnock, kCursorHand);
+			getObjects()->update(kObject50, kEntityAbbot, kLocation1, kCursorHandKnock, kCursorHand);
+			break;
+		}
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Abbot, function25, 25)
-	error("Abbot: callback function 25 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionDefault:
+		_data->setNextCallback(1);
+		call(new ENTITY_SETUP_SIIS(Abbot, setup_function3), "617Dc", 34);
+		break;
+
+	case kAction18:
+		switch (_data->getNextCallback()) {
+		default:
+			break;
+
+		case 1:
+			_data->getData()->field_493 = EntityData::kField493_0;
+			getObjects()->update(kObjectCompartmentC, kEntityNone, kLocationNone, kCursorHandKnock, kCursorHand);
+			getObjects()->update(kObject50, kEntityNone, kLocationNone, kCursorHandKnock, kCursorHand);
+
+			_data->setNextCallback(2);
+			call(new ENTITY_SETUP(Abbot, setup_function11), 5,  EntityData::kField491_850);
+			break;
+
+		case 2:
+			_data->setNextCallback(3);
+			call(new ENTITY_SETUP(Abbot, setup_function14));
+			break;
+
+		case 3:
+			_data->getData()->field_491 = EntityData::kField491_1540;
+			_data->getData()->field_493 = EntityData::kField493_0;
+
+			_data->setNextCallback(4);
+			call(new ENTITY_SETUP_SIIS(Abbot, setup_function13), "115A", 5, 56);
+			break;
+
+		case 4:
+			_data->getData()->field_493 = EntityData::kField493_1;
+			getLogic()->loadSceneFromItem(kItem3);
+
+			setup_function26();
+			break;
+		}
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Abbot, function26, 26)
-	error("Abbot: callback function 26 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionNone:
+		if (!params->param2) {
+			params->param2 = (int)getState()->time + 4500;
+
+			if (!params->param2)
+				break;
+		} else {
+			if (params->param2 >= (int)getState()->time)
+				break;
+		}
+
+		if (getEntities()->checkFields11())
+			setup_function27();
+		break;
+
+	case kActionDefault:
+		getSavePoints()->push(kEntityAbbot, kEntityKronos, kAction157159392);
+		getEntities()->drawSequenceLeft(kEntityAbbot, "115B");
+		break;
+
+	case kAction101169422:
+		params->param1 = 1;
+		break;
+
+	}
 }
 
 IMPLEMENT_FUNCTION(Abbot, function27, 27)
-	error("Abbot: callback function 27 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionDefault:
+		_data->setNextCallback(1);
+		call(new ENTITY_SETUP(Abbot, setup_function14));
+		break;
+
+	case kAction18:
+		switch (_data->getNextCallback()) {
+		default:
+			break;
+
+		case 1:
+			_data->getData()->field_493 = EntityData::kField493_0;
+
+			_data->setNextCallback(2);
+			call(new ENTITY_SETUP_SIIS(Abbot, setup_function13), "115C", 5, 56);
+			break;
+
+		case 2:
+			getInventory()->setLocationAndProcess(kItem3, kLocation1);
+
+			_data->setNextCallback(3);
+			call(new ENTITY_SETUP(Abbot, setup_function11), 4, EntityData::kField491_6470);
+			break;
+
+		case 3:
+			getObjects()->update(kObjectCompartmentC, kEntityNone, kLocation1, kCursorKeepValue, kCursorKeepValue);
+
+			_data->setNextCallback(4);
+			call(new ENTITY_SETUP_SIIS(Abbot, setup_function3), "617Ac", 34);
+			break;
+
+		case 4:
+			getObjects()->update(kObjectCompartmentC, kEntityNone, kLocation2, kCursorKeepValue, kCursorKeepValue);
+			_data->getData()->field_491 = EntityData::kField491_6470;
+			_data->getData()->field_493 = EntityData::kField493_1;
+
+			setup_function28();
+			break;
+		}
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Abbot, function28, 28)
@@ -314,7 +760,22 @@ IMPLEMENT_FUNCTION(Abbot, function37, 37)
 }
 
 IMPLEMENT_FUNCTION(Abbot, function38, 38)
-	error("Abbot: callback function 38 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionDefault:
+		getEntities()->drawSequenceLeft(kEntityAbbot, "508A");
+
+		_data->setNextCallback(1);
+		call(new ENTITY_SETUP_SIIS(Abbot, setup_playSound), "Abb3014A");
+		break;
+
+	case kAction18:
+		if (_data->getNextCallback() == 1)
+			getEntities()->drawSequenceLeft(kEntityAbbot, "508B");
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Abbot, chapter4, 39)
