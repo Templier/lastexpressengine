@@ -45,6 +45,7 @@
 #include "lastexpress/lastexpress.h"
 #include "lastexpress/resource.h"
 
+#include "common/debug-channels.h"
 #include "common/events.h"
 
 namespace LastExpress {

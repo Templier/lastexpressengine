@@ -33,6 +33,8 @@
 #include "engines/advancedDetector.h"
 #include "engines/engine.h"
 
+#include "graphics/pixelformat.h"
+
 /**
  * This is the namespace of the LastExpress engine.
  *

@@ -35,15 +35,21 @@
 #include "lastexpress/graphics.h"
 #include "lastexpress/resource.h"
 
+#include "common/config-manager.h"
+#include "common/debug-channels.h"
 #include "common/EventRecorder.h"
+
+#include "engines/util.h"
 
 namespace LastExpress {
 
 LastExpressEngine::LastExpressEngine(OSystem *syst, const ADGameDescription *gd) :
     Engine(syst), _gameDescription(gd), _debugger(NULL), _cursor(NULL),
     _font(NULL), _logic(NULL), _graphicsMan(NULL), _resMan(NULL), _sceneMan(NULL) {
+
 	// Adding the default directories
-	SearchMan.addSubDirectoryMatching(_gameDataDir, "data");
+	const Common::FSNode gameDataDir(ConfMan.get("path"));
+	SearchMan.addSubDirectoryMatching(gameDataDir, "data");
 
 	// Initialize the custom debug levels
 	DebugMan.addDebugChannel(kLastExpressDebugAll, "All", "Debug everything");
