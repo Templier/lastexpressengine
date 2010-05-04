@@ -249,7 +249,7 @@ IMPLEMENT_FUNCTION(Coudert, chapter1, 36)
 
 	case kActionNone:
 		// We have some specific callback code here, so we cannot use the existing macro
-		if (getState()->time > 1062000) {
+		if (getState()->time > kTimeChapter1) {
 			if (!params->param1) {
 				params->param1 = 1;
 				_data->setNextCallback(1);

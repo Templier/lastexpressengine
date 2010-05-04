@@ -217,7 +217,7 @@ SceneHotspot *Scene::getHotspot(SceneIndex index) {
 	if (index >= _hotspots.size())
 		return NULL;
 
-	return _hotspots[(int)index];
+	return _hotspots[index];
 }
 
 Common::Rect Scene::draw(Graphics::Surface *surface) {
@@ -289,7 +289,7 @@ bool SceneManager::load(Common::SeekableReadStream *stream) {
 }
 
 bool SceneManager::loadScene(Scene *scene, SceneIndex index) {
-	return Scene::load(scene, _stream, _headers[(int)(index - 1)]);
+	return Scene::load(scene, _stream, _headers[index - 1]);
 }
 
 Scene *SceneManager::getScene(SceneIndex index) {
@@ -300,7 +300,7 @@ Scene *SceneManager::getScene(SceneIndex index) {
 		return NULL;
 
 	debugC(9, kLastExpressDebugScenes, "Loading scene %d", index);
-	return Scene::get(_stream, _headers[(int)(index - 1)]);
+	return Scene::get(_stream, _headers[index - 1]);
 }
 
 } // End of namespace LastExpress

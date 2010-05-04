@@ -73,6 +73,9 @@ Logic::~Logic() {
 	delete _saveload;
 	delete _sound;
 	delete _state;
+
+	// Zero-out passed pointers
+	_engine = NULL;
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -271,7 +274,7 @@ void Logic::loadScene(SceneIndex index) {
 		loadSceneObject(scene, index);
 
 		if (scene.getHeader()->param3 != 255) {
-			getState()->sceneUseBackup = 0;
+			getState()->sceneUseBackup = false;
 			getState()->sceneBackup2 = kSceneNone;
 		}
 	}
@@ -279,7 +282,7 @@ void Logic::loadScene(SceneIndex index) {
 	// Save shouldRedraw state and redraw if necessary
 	bool shouldRedraw = getFlags()->shouldRedraw;
 	if (shouldRedraw) {
-		shouldRedraw = 0;
+		shouldRedraw = false;
 		// TODO check whether we need to do that here
 		askForRedraw();
 		redrawScreen();
@@ -361,7 +364,7 @@ void Logic::processScene() {
 		return;
 	}
 
-	getState()->sceneUseBackup = 0;
+	getState()->sceneUseBackup = false;
 
 	// Select item if needed
 	InventoryItem item = getInventory()->getFirstExaminableItem();
@@ -748,7 +751,7 @@ void Logic::switchChapter() {
 
 	case kChapter3:
 		getInventory()->getEntry(kItemFirebird)->location = kLocation4;
-		getInventory()->getEntry(kItemFirebird)->isPresent = 0;
+		getInventory()->getEntry(kItemFirebird)->isPresent = false;
 		getInventory()->getEntry(kItem11)->location = kLocation1;
 
 		getInventory()->addItem(kItemWhistle);
@@ -787,13 +790,12 @@ void Logic::updateCursor(bool redraw) {
 }
 
 bool Logic::checkSceneFields(SceneIndex index, bool isSecondCheck) const {
-	bool result = false;
 	loadSceneObject(scene, (index ? index : getState()->scene));
 
 	uint16 field13 = scene.getHeader()->field_13;
 	byte position = scene.getHeader()->position;
 
-	result = (field13 == 3 || field13 == 4);
+	bool result = (field13 == 3 || field13 == 4);
 
 	if (!isSecondCheck)
 		return result && (position >= 1 && position <= 19);

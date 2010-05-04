@@ -47,6 +47,9 @@ State::~State() {
 	delete _savepoints;
 	delete _state;
 	delete _flags;
+
+	// Zero passed pointers
+	_engine = NULL;
 }
 
 bool State::isDayTime() const {

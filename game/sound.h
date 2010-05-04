@@ -104,16 +104,16 @@ public:
 	void playSoundEvent(int index, byte action, byte a3);
 
 	// Dialog
-	const char *getDialogName(EntityIndex entity);
+	const char *getDialogName(EntityIndex entity) const;
 
 	// Letters
-	const char *readText(int id);
+	const char *readText(int id) const;
 
 	// Sound bites
 	void excuseMe(EntityIndex entity, int param2 = 0, int param3 = 0);
-	const char *excuseMeCath();
-	const char *justCheckingCath();
-	const char *wrongDoorCath();
+	const char *excuseMeCath() const;
+	const char *justCheckingCath() const;
+	const char *wrongDoorCath() const;
 	const char *justAMinuteCath() const;
 
 	// Tests

@@ -69,6 +69,9 @@ LastExpressEngine::~LastExpressEngine() {
 	delete _logic;
 	delete _resMan;
 	delete _sceneMan;
+
+	// Zero passed pointers
+	_gameDescription = NULL;
 }
 
 // TODO: which error should we return when some game files are missing/corrupted?

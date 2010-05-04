@@ -87,19 +87,19 @@ IMPLEMENT_FUNCTION(Tables, draw, 6)
 			break;
 
 		case kChapter1:
-			if (getState()->time > 1165500)
+			if (getState()->time > kTimeTables1)
 				if (!params->param1)
 					params->param1 = 1;
 			break;
 
 		case kChapter3:
-			if (getState()->time > 2052000)
+			if (getState()->time > kTimeTables2)
 				if (!params->param2)
 					params->param2 = 1;
 			break;
 
 		case kChapter4:
-			if (getState()->time > 2488500)
+			if (getState()->time > kTimeTables3)
 				if (!params->param3)
 					params->param3 = 1;
 			break;

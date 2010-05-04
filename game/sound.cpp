@@ -245,7 +245,7 @@ void Sound::playDialog(EntityIndex entity, EntityIndex entityDialog, int a3, byt
 	playSound(entity, getDialogName(entityDialog), a3, a4);
 }
 
-const char *Sound::getDialogName(EntityIndex entity) {
+const char *Sound::getDialogName(EntityIndex entity) const {
 	switch (entity) {
 	case kEntityAnna:
 		if (getEvent(kEventAnnaDialogGoToJerusalem))
@@ -298,7 +298,7 @@ const char *Sound::getDialogName(EntityIndex entity) {
 			return "XAUG5";
 
 		// Getting closer to Vienna...
-		if (getState()->time > 2200500 && !getEvent(kEventAugustMerchandise))
+		if (getState()->time > kTimeAugustVienna && !getEvent(kEventAugustMerchandise))
 			return "XAUG4A";
 
 		if (getEvent(kEventAugustMerchandise))
@@ -452,7 +452,7 @@ const char *Sound::getDialogName(EntityIndex entity) {
 		 || getEvent(kEventFrancoisWhistleNight) || getEvent(kEventFrancoisWhistleNightD))
 			return "XFRA2";
 
-		if (getState()->time > 1075500) // Between Paris and Epernay
+		if (getState()->time > kTimeParisEpernay) // Between Paris and Epernay
 			return "XFRA1";
 
 		break;
@@ -548,7 +548,7 @@ const char *Sound::getDialogName(EntityIndex entity) {
 //////////////////////////////////////////////////////////////////////////
 // Letters & Messages
 //////////////////////////////////////////////////////////////////////////
-const char *Sound::readText(int id) {
+const char *Sound::readText(int id) const {
 	if (id < 0 || (id > 8 && id < 50) || id > 64)
 		error("Sound::readText - attempting to use invalid id. Valid values [1;8] - [50;64], was %d", id);
 
@@ -829,12 +829,17 @@ void Sound::excuseMe(EntityIndex entity, int param2, int param3) {
 	}
 }
 
-const char *Sound::excuseMeCath() {
+const char *Sound::excuseMeCath() const {
 	switch(random(3)) {
+	default:
+		break;
+
 	case 0:
 		return "CAT1126B";
+
 	case 1:
 		return "CAT1126C";
+
 	case 2:
 		return "CAT1126D";
 	}
@@ -842,14 +847,20 @@ const char *Sound::excuseMeCath() {
 	return "CAT1126B";
 }
 
-const char *Sound::justCheckingCath() {
+const char *Sound::justCheckingCath() const {
 	switch(random(4)) {
+	default:
+		break;
+
 	case 0:
 		return "CAT5001";
+
 	case 1:
 		return "CAT5001A";
+
 	case 2:
 		return "CAT5001B";
+
 	case 3:
 		return "CAT5001C";
 	}
@@ -857,16 +868,23 @@ const char *Sound::justCheckingCath() {
 	return "CAT5001";
 }
 
-const char *Sound::wrongDoorCath() {
+const char *Sound::wrongDoorCath() const {
 	switch(random(5)) {
+	default:
+		break;
+
 	case 0:
 		return "CAT1125";
+
 	case 1:
 		return "CAT1125A";
+
 	case 2:
 		return "CAT1125B";
+
 	case 3:
 		return "CAT1125C";
+
 	case 4:
 		return "CAT1125D";
 	}
@@ -876,10 +894,15 @@ const char *Sound::wrongDoorCath() {
 
 const char *Sound::justAMinuteCath() const {
 	switch(random(3)) {
+	default:
+		break;
+
 	case 0:
 		return "CAT1520";
+
 	case 1:
 		return "CAT1521";
+
 	case 2:
 		return "CAT1125";    // ?? is this a bug in the original?
 	}

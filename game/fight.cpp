@@ -400,13 +400,13 @@ void Fight::setSequenceAndDraw(Fighter *combatant, uint32 sequenceIndex, FightSe
 		if (combatant->sequenceIndex)
 			return;
 
-		combatant->currentSequence = combatant->sequences[(int)sequenceIndex];
+		combatant->currentSequence = combatant->sequences[sequenceIndex];
 		combatant->sequenceIndex = sequenceIndex;
 		draw(combatant);
 		break;
 
 	case kFightSequenceType1:
-		combatant->currentSequence = combatant->sequences[(int)sequenceIndex];
+		combatant->currentSequence = combatant->sequences[sequenceIndex];
 		combatant->sequenceIndex = sequenceIndex;
 		combatant->sequenceIndex2 = 0;
 		draw(combatant);

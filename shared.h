@@ -38,7 +38,20 @@ enum TimeValue {
 	kTimeChapter4 = 2353500,
 	kTimeChapter5 = 2844000,
 
-	kTimeUnknown1 = 2079000,
+	kTimeAbbot = 1953000,
+	kTimeAbbot2 = 1966500,
+	kTimeAbbot3 = 1971000,
+	kTimeAbbot4 = 1989000,
+
+	kTimeTables1 = 1165500,
+	kTimeTables2 = 2052000,
+	kTimeTables3 = 2488500,
+
+	kTimeBedTime = 1404000,
+	kTimeAugustVienna = 2200500,
+	kTimeParisEpernay = 1075500,
+
+	kTimeCooks = 2079000,
 
 	kTimeGameOver = 2418300
 };
@@ -750,6 +763,7 @@ enum EventIndex {
 //////////////////////////////////////////////////////////////////////////
 enum ActionIndex {
 	kActionNone = 0,
+	kAction1 = 1,
 	kAction2 = 2,
 	kAction3 = 3,
 	kAction5 = 5,
@@ -764,6 +778,9 @@ enum ActionIndex {
 	/////////////////////////////
 	// Abbot
 	/////////////////////////////
+	kAction101169422 = 101169422,
+	kAction157159392 = 157159392,
+	kAction192054567 = 192054567,
 	kAction203073664 = 203073664,
 
 	/////////////////////////////

@@ -1754,7 +1754,7 @@ CursorStyle Action::getCursor(byte action, ObjectIndex object, byte param2, byte
 
 	case SceneHotspot::kActionBed:
 		if (getProgress().field_18 == 2 && !getProgress().field_E4
-			&& (getState()->time > 1404000
+			&& (getState()->time > kTimeBedTime
 			|| (getProgress().event_august_met && getProgress().field_CC
 			&& (!getProgress().field_24 || getProgress().field_3C))))
 			return kCursorSleep;

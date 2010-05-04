@@ -375,6 +375,10 @@ int Entities::getSoundValue(EntityIndex index) {
 	error("Entities::getSoundValue: not implemented!");
 }
 
+void Entities::updateEntity(EntityIndex entity) {
+	error("Entities::updateEntity: not implemented!");
+}
+
 //////////////////////////////////////////////////////////////////////////
 /// Fields update
 

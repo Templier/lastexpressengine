@@ -69,6 +69,9 @@ Entity::~Entity() {
 		delete _callbacks[i];
 
 	delete _data;
+
+	// Zero-out passed pointers
+	_engine = NULL;
 }
 
 void Entity::setup(ChapterIndex index) {

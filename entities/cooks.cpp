@@ -134,7 +134,7 @@ IMPLEMENT_FUNCTION(Cooks, function3, 3)
 			getSound()->playSound(kEntityCooks, "KIT1011");
 			_data->setNextCallback(3);
 			call(new ENTITY_SETUP_SIIS(Cooks, setup_draw), "308B");
-		break;
+			break;
 
 		case 3:
 			getEntities()->drawSequenceLeft(kEntityCooks, "308C");
@@ -142,6 +142,7 @@ IMPLEMENT_FUNCTION(Cooks, function3, 3)
 			getEntities()->updateField1000(kEntityCooks, 5, 78);
 			break;
 		}
+		break;
 	}
 }
 
@@ -428,7 +429,7 @@ IMPLEMENT_FUNCTION(Cooks, function11, 11)
 				goto update_params;
 			params->param4 = EntityData::kParamTime;
 		} else {
-			params->param4 = params->param2 + getState()->time;
+			params->param4 = params->param2 + (int)getState()->time;
 		}
 
 		// Broken plate sound
@@ -437,7 +438,7 @@ IMPLEMENT_FUNCTION(Cooks, function11, 11)
 		params->param4 = 0;
 
 update_params:
-		if (getState()->time > kTimeUnknown1) {
+		if (getState()->time > kTimeCooks) {
 			if (!params->param5) {
 				params->param1 = 0;
 				params->param5 = 1;
