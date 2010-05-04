@@ -36,6 +36,7 @@ class LastExpressEngine;
 class August : public Entity {
 public:
 	August(LastExpressEngine *engine);
+	~August() {};
 
 	// Setup
 	DECLARE_FUNCTION(function1)

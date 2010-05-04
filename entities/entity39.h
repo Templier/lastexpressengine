@@ -36,6 +36,7 @@ class LastExpressEngine;
 class Entity39 : public Entity {
 public:
 	Entity39(LastExpressEngine *engine);
+	~Entity39() {};
 
 	// Setup
 	DECLARE_FUNCTION(chapter1)

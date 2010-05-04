@@ -36,6 +36,7 @@ class LastExpressEngine;
 class Kahina : public Entity {
 public:
 	Kahina(LastExpressEngine *engine);
+	~Kahina() {};
 
 	// Setup
 	DECLARE_FUNCTION(function1)

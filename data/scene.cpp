@@ -138,7 +138,7 @@ Scene::~Scene() {
 
 void Scene::clear() {
 	// Free the hotspots
-	for (uint i = 0; i < _hotspots.size(); i++)
+	for (int i = 0; i < (int)_hotspots.size(); i++)
 		delete _hotspots[i];
 
 	_header = NULL;
@@ -197,7 +197,7 @@ bool Scene::checkHotSpot(const Common::Point &coord, SceneHotspot **hotspot) {
 	bool found = false;
 	int location = 0;
 
-	for (uint i = 0; i < _hotspots.size(); i++) {
+	for (int i = 0; i < (int)_hotspots.size(); i++) {
 		if (_hotspots[i]->isInside(coord)) {
 			if (location <= _hotspots[i]->location) {
 				location = _hotspots[i]->location;
@@ -217,7 +217,7 @@ SceneHotspot *Scene::getHotspot(SceneIndex index) {
 	if (index >= _hotspots.size())
 		return NULL;
 
-	return _hotspots[index];
+	return _hotspots[(int)index];
 }
 
 Common::Rect Scene::draw(Graphics::Surface *surface) {
@@ -289,7 +289,7 @@ bool SceneManager::load(Common::SeekableReadStream *stream) {
 }
 
 bool SceneManager::loadScene(Scene *scene, SceneIndex index) {
-	return Scene::load(scene, _stream, _headers[index - 1]);
+	return Scene::load(scene, _stream, _headers[(int)(index - 1)]);
 }
 
 Scene *SceneManager::getScene(SceneIndex index) {
@@ -300,7 +300,7 @@ Scene *SceneManager::getScene(SceneIndex index) {
 		return NULL;
 
 	debugC(9, kLastExpressDebugScenes, "Loading scene %d", index);
-	return Scene::get(_stream, _headers[index - 1]);
+	return Scene::get(_stream, _headers[(int)(index - 1)]);
 }
 
 } // End of namespace LastExpress

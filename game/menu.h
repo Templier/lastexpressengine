@@ -53,7 +53,7 @@ public:
 	void eventMouseClick(const Common::Event &ev);
 	void eventMouseMove(const Common::Event &ev);
 
-	SceneIndex getSceneIndex();
+	SceneIndex getSceneIndex() const;
 
 	// DEBUG ONLY - TO BE REMOVED
 	void setShowStartup(bool show) { _showStartScreen = show; }
@@ -106,10 +106,10 @@ private:
 	void moveToCity(CityButton city, bool clicked);
 
 	// Sound/Brightness related
-	int getVolume() const;
-	void setVolume(int volume) const;
-	int getBrightness() const;
-	void setBrightness(int brightness) const;
+	uint32 getVolume() const;
+	void setVolume(uint32 volume) const;
+	uint32 getBrightness() const;
+	void setBrightness(uint32 brightness) const;
 };
 
 } // End of namespace LastExpress

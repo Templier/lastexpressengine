@@ -36,6 +36,7 @@ class LastExpressEngine;
 class Ivo : public Entity {
 public:
 	Ivo(LastExpressEngine *engine);
+	~Ivo() {};
 
 	// Setup
 	DECLARE_FUNCTION(function1)

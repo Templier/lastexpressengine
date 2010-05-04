@@ -60,7 +60,7 @@ public:
 	// Animation
 	void playAnimation(int index) const;
 
-	// Compartement action
+	// Compartment action
 	bool handleOtherCompartment(ObjectIndex object, byte param2, byte param3) const;
 
 private:

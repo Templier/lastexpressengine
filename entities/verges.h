@@ -36,6 +36,7 @@ class LastExpressEngine;
 class Verges : public Entity {
 public:
 	Verges(LastExpressEngine *engine);
+	~Verges() {};
 
 	// Setup
 	DECLARE_FUNCTION(function1)

@@ -36,6 +36,7 @@ class LastExpressEngine;
 class Tables : public Entity {
 public:
 	Tables(LastExpressEngine *engine, EntityIndex id);
+	~Tables() {};
 
 	// Setup
 	DECLARE_FUNCTION(chapter1)

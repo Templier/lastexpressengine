@@ -36,6 +36,7 @@ class LastExpressEngine;
 class Chapters : public Entity {
 public:
 	Chapters(LastExpressEngine *engine);
+	~Chapters() {};
 
 	// Setup
 	DECLARE_FUNCTION_II(savegame)

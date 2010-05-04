@@ -36,6 +36,7 @@ class LastExpressEngine;
 class Mertens : public Entity {
 public:
 	Mertens(LastExpressEngine *engine);
+	~Mertens() {};
 
 	// Setup
 	DECLARE_FUNCTION(function1)

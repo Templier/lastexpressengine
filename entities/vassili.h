@@ -36,6 +36,7 @@ class LastExpressEngine;
 class Vassili : public Entity {
 public:
 	Vassili(LastExpressEngine *engine);
+	~Vassili() {};
 
 	// Setup
 	DECLARE_FUNCTION(function1)

@@ -36,6 +36,7 @@ class LastExpressEngine;
 class Coudert : public Entity {
 public:
 	Coudert(LastExpressEngine *engine);
+	~Coudert() {};
 
 	// Setup
 	DECLARE_FUNCTION(function1)

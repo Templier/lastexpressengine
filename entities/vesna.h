@@ -36,6 +36,7 @@ class LastExpressEngine;
 class Vesna : public Entity {
 public:
 	Vesna(LastExpressEngine *engine);
+	~Vesna() {};
 
 	// Setup
 	DECLARE_FUNCTION(function1)

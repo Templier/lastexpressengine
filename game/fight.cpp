@@ -71,7 +71,11 @@ namespace LastExpress {
 Fight::Fight(LastExpressEngine *engine) : _engine(engine), _data(NULL), _endType(kFightEndLost), _state(0), _handleTimer(false) {}
 
 Fight::~Fight() {
-	clear();
+	clearData();
+	_data = NULL;
+
+	// Zero passed pointers
+	_engine = NULL;
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -304,7 +308,7 @@ Fight::FightEndType Fight::setup(FightType type) {
 			// Allow exiting the fight with ESCAPE in debug mode
 			case Common::EVENT_KEYDOWN:
 				if (ev.kbd.keycode == Common::KEYCODE_ESCAPE) {
-					clear();
+					clearData();
 					return kFightEndExit;
 				}
 				break;
@@ -329,7 +333,7 @@ Fight::FightEndType Fight::setup(FightType type) {
 	}
 
 	// Cleanup after fight is over
-	clear();
+	clearData();
 
 	return _endType;
 }
@@ -353,7 +357,7 @@ void Fight::bailout(FightEndType type) {
 // Cleanup
 //////////////////////////////////////////////////////////////////////////
 
-void Fight::clear() {
+void Fight::clearData() {
 	if (!_data)
 		return;
 
@@ -376,7 +380,7 @@ void Fight::clearSequences(Fighter *combatant) const {
 	// TODO Draw sequence (field 1C)
 
 	// Free sequences
-	for (uint i = 0; i < combatant->sequences.size(); i++)
+	for (int i = 0; i < (int)combatant->sequences.size(); i++)
 		delete combatant->sequences[i];
 }
 
@@ -396,13 +400,13 @@ void Fight::setSequenceAndDraw(Fighter *combatant, uint32 sequenceIndex, FightSe
 		if (combatant->sequenceIndex)
 			return;
 
-		combatant->currentSequence = combatant->sequences[sequenceIndex];
+		combatant->currentSequence = combatant->sequences[(int)sequenceIndex];
 		combatant->sequenceIndex = sequenceIndex;
 		draw(combatant);
 		break;
 
 	case kFightSequenceType1:
-		combatant->currentSequence = combatant->sequences[sequenceIndex];
+		combatant->currentSequence = combatant->sequences[(int)sequenceIndex];
 		combatant->sequenceIndex = sequenceIndex;
 		combatant->sequenceIndex2 = 0;
 		draw(combatant);
@@ -974,7 +978,7 @@ void Fight::updateOpponentAnna(Fighter *fighter) {
 		}
 
 		// Update field_38
-		opponent->field_38 = random(15);
+		opponent->field_38 = (int32)random(15);
 	}
 
 	if (opponent->currentSequence2 && CHECK_SEQUENCE2(opponent, 2)) {
@@ -1185,7 +1189,7 @@ void Fight::updateOpponentIvo(Fighter *fighter) {
 		} 
 
 		// Update field_38
-		opponent->field_38 = 3 * opponent->countdown + random(10);
+		opponent->field_38 = 3 * opponent->countdown + (int32)random(10);
 	}
 
 	if (opponent->currentSequence2 && CHECK_SEQUENCE2(opponent, 2)) {

@@ -36,6 +36,7 @@ class LastExpressEngine;
 class Boutarel : public Entity {
 public:
 	Boutarel(LastExpressEngine *engine);
+	~Boutarel() {};
 
 	// Setup
 	DECLARE_FUNCTION(function1)

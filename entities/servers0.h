@@ -36,6 +36,7 @@ class LastExpressEngine;
 class Servers0 : public Entity {
 public:
 	Servers0(LastExpressEngine *engine);
+	~Servers0() {};
 
 	// Setup
 	DECLARE_FUNCTION_SIIS(function1)

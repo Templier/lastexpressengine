@@ -36,6 +36,7 @@ class LastExpressEngine;
 class Cooks : public Entity {
 public:
 	Cooks(LastExpressEngine *engine);
+	~Cooks() {};
 
 	// Setup
 	DECLARE_FUNCTION_S(draw)

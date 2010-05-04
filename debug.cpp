@@ -69,6 +69,11 @@ Debugger::Debugger(LastExpressEngine *engine) : _engine(engine), _command(NULL),
 
 Debugger::~Debugger() {
 	DebugMan.clearAllDebugChannels();
+
+	// Zero passed pointers
+	_engine = NULL;
+	_command = NULL;
+	_commandParams = NULL;
 }
 
 bool Debugger::hasCommand() const {
@@ -185,7 +190,7 @@ bool Debugger::cmd_showframe(int argc, const char **argv) {
 				_engine->getCursor()->show(false);
 				clearBg(GraphicsManager::kBackgroundOverlay);
 
-				AnimFrame *frame = sequence.getFrame(getNumber(argv[2]));
+				AnimFrame *frame = sequence.getFrame((uint32)getNumber(argv[2]));
 				if (!frame) {
 					DebugPrintf("Invalid frame index: %i\n", filename.c_str());
 					resetCommand();
@@ -250,7 +255,7 @@ bool Debugger::cmd_playsbe(int argc, const char **argv) {
 			SubtitleManager subtitle(_engine->getFont());
 			if (subtitle.loadFile(filename)) {
 				_engine->getCursor()->show(false);
-				for (uint16 i = 0; i < subtitle.getMaxTime(); i++) {
+				for (uint16 i = 0; i < subtitle.getMaxTime(); i += 25) {
 					clearBg(GraphicsManager::kBackgroundAll);
 
 					subtitle.setTime(i);
@@ -266,7 +271,6 @@ bool Debugger::cmd_playsbe(int argc, const char **argv) {
 						break;
 
 					_engine->_system->delayMillis(500);
-					i += 25;
 				}
 				_engine->getCursor()->show(true);
 			}

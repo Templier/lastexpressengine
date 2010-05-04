@@ -36,6 +36,7 @@ class LastExpressEngine;
 class Servers1 : public Entity {
 public:
 	Servers1(LastExpressEngine *engine);
+	~Servers1() {};
 
 	// Setup
 	DECLARE_FUNCTION_NOSETUP(updateFromTime)

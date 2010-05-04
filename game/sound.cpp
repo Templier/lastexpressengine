@@ -75,6 +75,9 @@ Sound::Sound(LastExpressEngine *engine) : _engine(engine), _state(0) {
 Sound::~Sound() {
 	delete _sfx;
 	delete _music;
+
+	// Zero passed pointers
+	_engine = NULL;
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -871,7 +874,7 @@ const char *Sound::wrongDoorCath() {
 	return "CAT1125";
 }
 
-const char *Sound::justAMinuteCath() {
+const char *Sound::justAMinuteCath() const {
 	switch(random(3)) {
 	case 0:
 		return "CAT1520";

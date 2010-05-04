@@ -379,8 +379,11 @@ Action::Action(LastExpressEngine *engine) : _engine(engine) {
 }
 
 Action::~Action() {
-	for (uint i = 0; i < _actions.size(); i++)
+	for (int i = 0; i < (int)_actions.size(); i++)
 		delete _actions[i];
+
+	// Zero-out passed pointers
+	_engine = NULL;
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -397,7 +400,7 @@ SceneIndex Action::processHotspot(const SceneHotspot &hotspot) {
 // Actions
 //////////////////////////////////////////////////////////////////////////
 IMPLEMENT_ACTION(dummy) {
-	error("Action::action_dummy: Function should never be called!");
+	error("Action::action_dummy: Function should never be called (hotspot action: %d)!", hotspot.action);
 }
 
 IMPLEMENT_ACTION(inventory) {
@@ -695,7 +698,7 @@ IMPLEMENT_ACTION(pickItem) {
 	// Load item scene
 	if (getInventory()->getEntry(item)->scene) {
 		if (!getState()->sceneUseBackup) {
-			getState()->sceneUseBackup = 1;
+			getState()->sceneUseBackup = true;
 			getState()->sceneBackup = (hotspot.scene ? hotspot.scene : getState()->scene);
 		}
 
@@ -1325,6 +1328,9 @@ IMPLEMENT_ACTION(bed) {
 IMPLEMENT_ACTION(41) {
 	byte id = 0;
 	switch (getProgress().chapter) {
+	default:
+		error("Action::action_41: Invalid chapter %d", getProgress().chapter);
+
 	case kChapter1:
 		id = hotspot.param1;
 		break;
@@ -1657,6 +1663,7 @@ CursorStyle Action::getCursor(byte action, ObjectIndex object, byte param2, byte
 		if (object >= kObjectMax)
 			return kCursorNormal;
 
+		// FIXME that looks horrid. Add check for boundaries.
 		if (*(&getProgress().field_0 + object) == param2)
 			return (CursorStyle)param3;
 
@@ -1755,6 +1762,7 @@ CursorStyle Action::getCursor(byte action, ObjectIndex object, byte param2, byte
 		return kCursorNormal;
 
 LABEL_KEY:
+	// Handle department action
 	case SceneHotspot::kActionCompartment:
 	case SceneHotspot::kActionExitCompartment:
 		if (object >= kObjectMax)

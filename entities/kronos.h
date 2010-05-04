@@ -36,6 +36,7 @@ class LastExpressEngine;
 class Kronos : public Entity {
 public:
 	Kronos(LastExpressEngine *engine);
+	~Kronos() {};
 
 	// Setup
 	DECLARE_FUNCTION(function1)

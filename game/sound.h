@@ -114,7 +114,7 @@ public:
 	const char *excuseMeCath();
 	const char *justCheckingCath();
 	const char *wrongDoorCath();
-	const char *justAMinuteCath();
+	const char *justAMinuteCath() const;
 
 	// Tests
 	static bool testParameter(int param);

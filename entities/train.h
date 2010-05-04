@@ -36,6 +36,7 @@ class LastExpressEngine;
 class Train : public Entity {
 public:
 	Train(LastExpressEngine *engine);
+	~Train() {};
 
 	// Setup
 	DECLARE_FUNCTION_II(savegame)

@@ -53,6 +53,9 @@ Inventory::Inventory(LastExpressEngine *engine) : _engine(engine), _selectedItem
 
 Inventory::~Inventory() {
 	delete _itemScene;
+
+	// Zero passed pointers
+	_engine = NULL;
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -340,7 +343,7 @@ void Inventory::showItem(InventoryItem item) {
 
 	if (!getState()->sceneUseBackup) {
 		getState()->sceneBackup = getState()->scene;
-		getState()->sceneUseBackup = 1;
+		getState()->sceneUseBackup = true;
 	}
 
 	getLogic()->loadScene(scene);
@@ -360,7 +363,7 @@ void Inventory::addItem(InventoryItem item) {
 	if (hasItem(item))
 		return;
 
-	getEntry(item)->isPresent = 1;
+	getEntry(item)->isPresent = true;
 	getEntry(item)->location = kLocationNone;
 
 	// Autoselect item if necessary
@@ -375,7 +378,7 @@ void Inventory::removeItem(InventoryItem item, ObjectLocation newLocation) {
 	if (!hasItem(item))
 		return;
 
-	getEntry(item)->isPresent = 0;
+	getEntry(item)->isPresent = false;
 	getEntry(item)->location = newLocation;
 
 	if (getEntry(item)->cursor == (CursorStyle)_selectedItem) {
@@ -494,7 +497,7 @@ void Inventory::examine(InventoryItem item) {
 
 	if (!getState()->sceneUseBackup) {
 		getState()->sceneBackup = getState()->scene;
-		getState()->sceneUseBackup = 1;
+		getState()->sceneUseBackup = true;
 
 		getLogic()->loadScene(index);
 	} else {

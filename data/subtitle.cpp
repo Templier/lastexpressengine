@@ -147,12 +147,15 @@ SubtitleManager::~SubtitleManager() {
 }
 
 void SubtitleManager::reset() {
-	for (uint i = 0; i < _subtitles.size(); i++)
+	for (int i = 0; i < (int)_subtitles.size(); i++)
 		delete _subtitles[i];
 
 	_subtitles.clear();
 	_currentIndex = -1;
 	_lastIndex = -1;
+
+	// Zero passed pointers
+	_font = NULL;
 }
 
 bool SubtitleManager::load(Common::SeekableReadStream *stream) {
@@ -207,7 +210,7 @@ void SubtitleManager::setTime(uint16 time) {
 	_currentIndex = -1;
 
 	// Find the appropriate line to show
-	for (uint16 i = 0; i < _subtitles.size(); i++) {
+	for (int16 i = 0; i < (int16)_subtitles.size(); i++) {
 		if ((time >= _subtitles[i]->getTimeStart()) && (time <= _subtitles[i]->getTimeStop())) {
 			// Keep the index of the line to show
 			_currentIndex = i;

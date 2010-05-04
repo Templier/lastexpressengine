@@ -36,6 +36,7 @@ class LastExpressEngine;
 class Salko : public Entity {
 public:
 	Salko(LastExpressEngine *engine);
+	~Salko() {};
 
 	// Setup
 	DECLARE_FUNCTION(function1)

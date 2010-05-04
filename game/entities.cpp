@@ -139,14 +139,17 @@ Entities::Entities(LastExpressEngine *engine) : _engine(engine) {
 Entities::~Entities() {
 	delete _header;
 
-	for (uint i = 0; i < _entities.size(); i++)
+	for (int i = 0; i < (int)_entities.size(); i++)
 		delete _entities[i];
+
+	// Zero passed pointers
+	_engine = NULL;
 }
 
 void Entities::setup(ChapterIndex chapter) {
 	if (chapter) {
 		// Reset current call, inventory item & draw sequences
-		for (uint i = 1; i < _entities.size(); i++) {
+		for (int i = 1; i < (int)_entities.size(); i++) {
 			_entities[i]->getData()->getData()->current_call = 0;
 			_entities[i]->getData()->getData()->inventoryItem = kItemNone;
 
@@ -211,7 +214,7 @@ void Entities::updateFields() {
 	if (!getFlags()->gameRunning)
 		return;
 
-	for (uint i = 0; i < _entities.size(); i++) {
+	for (int i = 0; i < (int)_entities.size(); i++) {
 
 		if (!getSavePoints()->getCallback((EntityIndex)i))
 			continue;
@@ -349,7 +352,7 @@ void Entities::executeCallbacks() {
 
 	bool processed = false;
 	do {
-		for (uint i = 1; i < _entities.size(); i++) {
+		for (int i = 1; i < (int)_entities.size(); i++) {
 			if (getFlags()->flag_entities_0)
 				break;
 
@@ -682,7 +685,7 @@ void Entities::getSequenceName(EntityIndex index, EntityDirection direction, cha
 	// First part of sequence is already set
 	case kDirectionLeft:
 	case kDirectionRight:
-		sprintf(sequence1, "%s%02d.seq", (char*)&data->sequenceName, position);
+		sprintf(sequence1, (char*)"%s%02d.seq", (char*)&data->sequenceName, position);
 		break;
 	}
 }

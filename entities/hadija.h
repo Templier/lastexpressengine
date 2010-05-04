@@ -36,6 +36,7 @@ class LastExpressEngine;
 class Hadija : public Entity {
 public:
 	Hadija(LastExpressEngine *engine);
+	~Hadija() {};
 
 	// Setup
 	DECLARE_FUNCTION(function1)

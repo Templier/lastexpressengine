@@ -154,7 +154,7 @@ private:
 	// Opponent struct
 	struct Opponent : Fighter {
 		uint16 field_36;
-		uint32 field_38;
+		int32 field_38;
 
 		Opponent() : Fighter() {
 			field_36 = 0;
@@ -205,7 +205,7 @@ private:
 	void draw(Fighter *fighter) const;
 
 	// Cleanup
-	void clear();
+	void clearData();
 	void clearSequences(Fighter *fighter) const;
 
 	//////////////////////////////////////////////////////////////////////////

@@ -226,6 +226,10 @@ Clock::~Clock() {
 	delete _seqMinutes;
 	delete _seqSun;
 	delete _seqDate;
+
+	// Zero passed pointers
+	_engine = NULL;
+	_time = NULL;
 }
 
 bool Clock::load() {
@@ -251,6 +255,11 @@ bool Clock::load() {
 
 bool Clock::process() {
 	assert(*_time >= 1037700 && *_time <= 4941000);
+
+	// Check that sequences have been loaded
+	if (!_seqMinutes || !_seqHour || !_seqSun || !_seqDate)
+		error("Clock::process: clock sequences have not been loaded correctly!");
+
 	// Game starts at: 1037700 = 7:13 p.m. on July 24, 1914
 	// Game ends at:   4941000 = 7:30 p.m. on July 26, 1914
 	// Game lasts for: 3903300 = 2 days + 17 mins = 2897 mins
@@ -281,6 +290,10 @@ bool Clock::process() {
 
 // Draw the clock hands at the time
 Common::Rect Clock::draw(Graphics::Surface *surface) {
+	// Check that sequences have been loaded
+	if (!_seqMinutes || !_seqHour || !_seqSun || !_seqDate)
+		error("Clock::process: clock sequences have not been loaded correctly!");
+
 	// Draw each element
 	_seqHour->draw(surface);
 	_seqMinutes->draw(surface);
@@ -318,6 +331,10 @@ TrainLine::TrainLine(LastExpressEngine *engine, uint32 *time) : _engine(engine),
 TrainLine::~TrainLine() {
 	delete _seqLine1;
 	delete _seqLine2;
+
+	// Zero passed pointers
+	_engine = NULL;
+	_time = NULL;
 }
 
 bool TrainLine::load() {
@@ -339,6 +356,10 @@ bool TrainLine::load() {
 // text:0042E710
 bool TrainLine::process() {
 	assert(*_time >= 1037700 && *_time <= 4941000);
+
+	// Check that sequences have been loaded
+	if (!_seqLine1 || !_seqLine2)
+		error("TrainLine::process: Line sequences have not been loaded correctly!");
 
 	// Get the index of the last city the train has visited
 	uint index = 0;
@@ -372,6 +393,10 @@ bool TrainLine::process() {
 }
 
 Common::Rect TrainLine::draw(Graphics::Surface *surface) {
+	// Check that sequences have been loaded
+	if (!_seqLine1 || !_seqLine2)
+		error("TrainLine::draw: Line sequences have not been loaded correctly!");
+
 	// Draw each element
 	_seqLine1->draw(surface);
 	if (_line2Visible)
@@ -383,7 +408,7 @@ Common::Rect TrainLine::draw(Graphics::Surface *surface) {
 
 //////////////////////////////////////////////////////////////////////////
 
-Menu::Menu(LastExpressEngine *engine) : _engine(engine), _clock(NULL), _trainLine(NULL), _scene(NULL) {
+Menu::Menu(LastExpressEngine *engine) : _engine(engine), _scene(NULL), _clock(NULL), _trainLine(NULL) {
 	_showStartScreen = true;
 	_creditsSequenceIndex = 0;
 	_isShowingCredits = false;
@@ -400,8 +425,12 @@ Menu::~Menu() {
 	delete _scene;
 	delete _clock;
 	delete _trainLine;
+
 	for (int i = 0; i < 7; i++)
 		delete _cityButtonFrames[i];
+
+	// Zero passed pointers
+	_engine = NULL;
 }
 
 // Show the intro and load the main menu scene
@@ -463,7 +492,7 @@ void Menu::showMenu(bool savegame, TimeType type, uint32 time) {
 }
 
 // Get menu scene index
-LastExpress::SceneIndex Menu::getSceneIndex() {
+LastExpress::SceneIndex Menu::getSceneIndex() const {
 	// TODO Do check for DWORD at text:004ADF70 < 0x1030EC
 
 	// + 1 = normal menu with open egg / clock
@@ -842,7 +871,7 @@ void Menu::loadData() {
 
 	loaded &= s.loadFile("jlinecen.seq");
 	for (int i = 0; i < 5; i++)
-		_cityButtonFrames[i + 1] = s.getFrame(i);
+		_cityButtonFrames[i + 1] = s.getFrame((uint32)i);
 
 	loaded &= s.loadFile("jlinebr.seq");
 	_cityButtonFrames[6] = s.getFrame(0);
@@ -947,7 +976,7 @@ void Menu::goToTime(uint32 time) {
 	_engine->getCursor()->show(false);
 
 	while (_currentTime != time) {
-		_currentTime = _currentTime + direction * 500 * speed;
+		_currentTime = (uint32)((int32)_currentTime + direction * 500 * speed);
 		if (speed < 10)
 			speed++;
 
@@ -1010,36 +1039,35 @@ void Menu::moveToCity(CityButton city, bool clicked) {
 //////////////////////////////////////////////////////////////////////////
 
 // Get current volume (converted to in-game value)
-int Menu::getVolume() const {
-	int volume = _engine->_mixer->getVolumeForSoundType(Audio::Mixer::kPlainSoundType);
+uint32 Menu::getVolume() const {
+	uint32 volume = (uint32)_engine->_mixer->getVolumeForSoundType(Audio::Mixer::kPlainSoundType);
 
 	// Convert to in-game value [0-7]
-	volume *= 7 / Audio::Mixer::kMaxMixerVolume;
+	volume = (uint32)(volume * (7.0f / Audio::Mixer::kMaxMixerVolume));
 
 	return volume;
 }
 
 // Set the volume (converts to ScummVM values)
-void Menu::setVolume(int volume) const {
+void Menu::setVolume(uint32 volume) const {
 	getState()->volume = volume;
 
 	// Clamp volume
-	int value = volume * Audio::Mixer::kMaxMixerVolume / 7;
-	if (value < 0)
-		value = 0;
+	uint32 value = volume * Audio::Mixer::kMaxMixerVolume / 7;
+
 	if (value > Audio::Mixer::kMaxMixerVolume)
 		value = Audio::Mixer::kMaxMixerVolume;
 
-	_engine->_mixer->setVolumeForSoundType(Audio::Mixer::kPlainSoundType, value);
+	_engine->_mixer->setVolumeForSoundType(Audio::Mixer::kPlainSoundType, (int32)value);
 
 	// TODO: write to savegame ?
 }
 
-int Menu::getBrightness() const {
+uint32 Menu::getBrightness() const {
 	return getState()->brightness;
 }
 
-void Menu::setBrightness(int brightness) const {
+void Menu::setBrightness(uint32 brightness) const {
 	getState()->brightness = brightness;
 
 	// TODO: write to savegame

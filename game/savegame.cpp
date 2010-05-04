@@ -53,7 +53,10 @@ static const struct {
 
 SaveLoad::SaveLoad(LastExpressEngine *engine) : _engine(engine) {}
 
-SaveLoad::~SaveLoad() {}
+SaveLoad::~SaveLoad() {
+	//Zero passed pointers
+	_engine = NULL;
+}
 
 //////////////////////////////////////////////////////////////////////////
 // Save & Load

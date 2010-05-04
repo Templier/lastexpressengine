@@ -36,6 +36,7 @@ class LastExpressEngine;
 class Max : public Entity {
 public:
 	Max(LastExpressEngine *engine);
+	~Max() {};
 
 	DECLARE_FUNCTION(function1)
 	DECLARE_FUNCTION_S(playSound)

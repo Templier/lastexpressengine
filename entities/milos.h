@@ -36,6 +36,7 @@ class LastExpressEngine;
 class Milos : public Entity {
 public:
 	Milos(LastExpressEngine *engine);
+	~Milos() {};
 
 	// Setup
 	DECLARE_FUNCTION(function1)

@@ -36,6 +36,7 @@ class LastExpressEngine;
 class Gendarmes : public Entity {
 public:
 	Gendarmes(LastExpressEngine *engine);
+	~Gendarmes() {};
 
 	// Setup
 	DECLARE_FUNCTION(function1)

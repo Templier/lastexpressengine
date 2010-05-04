@@ -36,6 +36,7 @@ class LastExpressEngine;
 class MmeBoutarel : public Entity {
 public:
 	MmeBoutarel(LastExpressEngine *engine);
+	~MmeBoutarel() {};
 
 	// Setup
 	DECLARE_FUNCTION(function1)

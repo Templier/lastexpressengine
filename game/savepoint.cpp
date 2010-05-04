@@ -41,6 +41,8 @@ SavePoints::SavePoints(LastExpressEngine *engine) : _engine(engine) {
 }
 
 SavePoints::~SavePoints() {
+	// Zero passed pointers
+	_engine = NULL;
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -167,7 +169,7 @@ bool SavePoints::updateEntityFromData(const SavePoint &savepoint) {
 
 	int index = 0;
 
-	for (uint i = 0; i < _data.size(); i++) {
+	for (int i = 0; i < (int)_data.size(); i++) {
 
 		// Not a data savepoint!
 		if (!_data[i].entity1)
@@ -199,7 +201,7 @@ void SavePoints::saveLoadWithSerializer(Common::Serializer &s) {
 
 	// Serialize savepoint data
 	uint32 dataSize = (s.isLoading() ? _savePointsMaxSize : _data.size());
-	for (uint i = 0; i < dataSize; i++) {
+	for (int i = 0; i < (int)dataSize; i++) {
 		if (s.isLoading()) {
 			SavePointData data;
 			_data.push_back(data);
