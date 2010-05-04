@@ -116,8 +116,9 @@ enum SceneIndex {
 
 	// Game over
 	kSceneGameOverBloodJacket = 55,
+	kSceneGameOverPolice1     = 57,
 	kSceneGameOverAlarm       = 62,
-	kSceneGameOverPolice      = 63,
+	kSceneGameOverPolice2     = 63,
 	kSceneGameOverAlarm2      = 64,
 	kSceneStartScreen         = 65,
 

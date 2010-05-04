@@ -539,14 +539,7 @@ IMPLEMENT_FUNCTION(Abbot, function24, 24)
 		break;
 
 	case kActionNone:
-		if (!params->param1) {
-			params->param1 = (int)getState()->time + 900;
-
-			if (params->param3 >= (int)getState()->time)
-				break;
-
-			params->param1 = EntityData::kParamTime;
-		}
+		UPDATE_PARAM_FROM_TIME(1, 900);
 
 		setup_function25();
 		break;
@@ -645,15 +638,7 @@ IMPLEMENT_FUNCTION(Abbot, function26, 26)
 		break;
 
 	case kActionNone:
-		if (!params->param2) {
-			params->param2 = (int)getState()->time + 4500;
-
-			if (!params->param2)
-				break;
-		} else {
-			if (params->param2 >= (int)getState()->time)
-				break;
-		}
+		UPDATE_PARAM_FROM_TIME(2, 4500);
 
 		if (getEntities()->checkFields11())
 			setup_function27();

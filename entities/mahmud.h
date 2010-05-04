@@ -44,7 +44,7 @@ public:
 	DECLARE_FUNCTION_SI(function3)
 	DECLARE_FUNCTION_SIII(function4)
 	DECLARE_FUNCTION_S(playSound)
-	DECLARE_FUNCTION_S(function6)
+	DECLARE_FUNCTION_S(playSoundMertens)
 	DECLARE_FUNCTION_NOSETUP(updateFromTime)
 	DECLARE_FUNCTION_II(savegame)
 	DECLARE_FUNCTION_II(function9)
@@ -59,6 +59,11 @@ public:
 	DECLARE_FUNCTION(chapter3)
 	DECLARE_FUNCTION(chapter4)
 	DECLARE_FUNCTION(chapter5)
+
+private:
+	DECLARE_CALL_FUNCTION(char, Mahmud, const char*, int, int, const char*)
+	DECLARE_CALL_FUNCTION(char2, Mahmud, const char*, int, int, int)
+	DECLARE_CALL_FUNCTION(default, Mahmud, int, int, int, int)
 };
 
 } // End of namespace LastExpress

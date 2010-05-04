@@ -225,7 +225,7 @@ void Entity::updateFromTime(const SavePoint &savepoint) {
 		break;
 
 	case kActionNone:
-		UPDATE_PARAM_FROM_TIME(2, 1)
+		UPDATE_PARAM_FROM_TIME(2, params->param1)
 		CALL_PREVIOUS_SAVEPOINT()
 		break;
 	}

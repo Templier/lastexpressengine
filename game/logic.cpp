@@ -696,7 +696,7 @@ void Logic::postProcessScene() {
 		playSfxStream("LIB050");
 		switch (getProgress().chapter) {
 		default:
-			gameOver(kTimeType0, 0, kSceneGameOverPolice, true);
+			gameOver(kTimeType0, 0, kSceneGameOverPolice2, true);
 			break;
 
 		case kChapter1:

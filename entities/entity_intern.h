@@ -40,6 +40,9 @@ namespace LastExpress {
 #define ENTITY_SETUP(class, name) \
 	Functor4Mem<int, int, int, int, void, class>(this, &class::name)
 
+#define ENTITY_SETUP_SIII(class, name) \
+	Functor4Mem<const char*, int, int, int, void, class>(this, &class::name)
+
 #define ENTITY_SETUP_SIIS(class, name) \
 	Functor4Mem<const char*, int, int, const char*, void, class>(this, &class::name)
 

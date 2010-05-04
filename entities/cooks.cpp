@@ -424,13 +424,7 @@ IMPLEMENT_FUNCTION(Cooks, function11, 11)
 		break;
 
 	case kActionNone:
-		if (params->param4) {
-			if (params->param4 > (int)getState()->time)
-				goto update_params;
-			params->param4 = EntityData::kParamTime;
-		} else {
-			params->param4 = params->param2 + (int)getState()->time;
-		}
+		UPDATE_PARAM_FROM_TIME(4, params->param2);
 
 		// Broken plate sound
 		getSound()->playSound(kEntityNone, "LIB122",  getEntities()->getSoundValue(kEntityCooks));

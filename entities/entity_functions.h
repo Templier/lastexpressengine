@@ -55,22 +55,32 @@
 	getSavePoints()->call(_entityIndex, _entityIndex, kAction18); \
 	}
 
-#define UPDATE_PARAM_FROM_TIME(param1, param2) \
+#define UPDATE_PARAM_FROM_TIME(param1, value) \
 	if (params->param##param1) { \
-		if (params->param##param1 > (int)getState()->time) \
+		if (params->param##param1 >= (int)getState()->time) \
 			break; \
 		params->param##param1 = EntityData::kParamTime; \
 	} else { \
-		params->param##param1 = params->param##param2 + (int)getState()->time; \
-	} \
+		params->param##param1 = (int)getState()->time + value; \
+		if (params->param##param1 == 0) \
+			return; \
+		if (params->param##param1 >= (int)getState()->time) \
+			break; \
+		params->param##param1 = EntityData::kParamTime; \
+	}
 
-#define UPDATE_PARAM_FROM_TICKS(param1, param2) \
+#define UPDATE_PARAM_FROM_TICKS(param1, value) \
 	if (params->param##param1) { \
 		if (params->param##param1 > (int)getState()->timeTicks) \
 			break; \
 		params->param##param1 = EntityData::kParamTime; \
 	} else { \
-		params->param##param1 = params->param##param2 + (int)getState()->timeTicks; \
-	} \
+		params->param##param1 = (int)getState()->timeTicks + value; \
+		if (params->param##param1 == 0) \
+			return; \
+		if (params->param##param1 >= (int)getState()->timeTicks) \
+			break; \
+		params->param##param1 = EntityData::kParamTime; \
+	}
 
 #endif // LASTEXPRESS_ENTITY_FUNCTIONS_H
