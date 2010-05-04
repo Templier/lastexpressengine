@@ -155,9 +155,11 @@ bool Debugger::cmd_playseq(int argc, const char **argv) {
 					player.processTime();
 				}
 				_engine->getCursor()->show(true);
+			} else {
+				// Sequence player is deleting his reference to the sequence, but we need to take care of it if the
+				// sequence could not be loaded
+				delete sequence;
 			}
-
-			delete sequence;
 
 			resetCommand();
 		}
