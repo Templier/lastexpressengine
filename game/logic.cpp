@@ -778,8 +778,8 @@ void Logic::playFinalSequence() {
 	showMenu(true);
 }
 
-void Logic::updateTrainClock() {
-	warning("Logic::updateTrainClock: not implemented!");
+void Logic::updateDoorsAndClock() {
+	warning("Logic::updateDoorsAndClock: not implemented!");
 }
 
 void Logic::updateCursor(bool redraw) {

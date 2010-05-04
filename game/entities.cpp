@@ -263,7 +263,7 @@ void Entities::setupSequences() {
 		return;
 
 	// Update the train clock
-	getLogic()->updateTrainClock();
+	getLogic()->updateDoorsAndClock();
 
 	//////////////////////////////////////////////////////////////////////////
 	// First pass: Drawing

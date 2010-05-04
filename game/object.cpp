@@ -64,11 +64,13 @@ void Objects::update(ObjectIndex index, EntityIndex entity, ObjectLocation locat
 		getLogic()->updateCursor();
 	}
 
+	// TODO: update flag 3 (related to sound?)
+
 	// Compartments
 	if (original_location != location && (original_location == kLocation2 || location == kLocation2))
 		if ((index >= kObjectCompartment1 && index <= kObjectCompartment8)
 	     || (index >= kObjectCompartmentA && index <= kObjectCompartmentF)) {
-		 	getLogic()->updateTrainClock();
+		 	getLogic()->updateDoorsAndClock();
 		}
 }
 

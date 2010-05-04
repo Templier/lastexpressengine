@@ -71,7 +71,7 @@ public:
 	void loadSceneFromData(int param1, int param2, int param3);
 	void loadSceneFromItem(InventoryItem item);
 
-	void updateTrainClock();
+	void updateDoorsAndClock();
 	void updateCursor(bool redraw = true);
 
 	// Index processing
