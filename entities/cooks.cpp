@@ -424,7 +424,14 @@ IMPLEMENT_FUNCTION(Cooks, function11, 11)
 		break;
 
 	case kActionNone:
-		UPDATE_PARAM_FROM_TIME(4, params->param2);
+		// FIXME review code and add missing path
+		if (params->param4) {
+			if (params->param4 > (int)getState()->time)
+				goto update_params;
+			params->param4 = EntityData::kParamTime;
+		} else {
+			params->param4 = params->param2 + (int)getState()->time;
+		}
 
 		// Broken plate sound
 		getSound()->playSound(kEntityNone, "LIB122",  getEntities()->getSoundValue(kEntityCooks));
