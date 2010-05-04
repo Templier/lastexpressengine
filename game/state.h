@@ -273,6 +273,10 @@ public:
 	int getTimer() { return _timer; }
 	void setTimer(int val) { _timer = val; }
 
+	// Coordinates
+	void setCoordinates(Common::Point coords) { _coords = coords; }
+	const Common::Point getCoordinates() { return _coords; }
+
 	// Helpers
 	static uint32 getPowerOfTwo(uint32 x);
 
@@ -293,6 +297,7 @@ private:
 	Objects *_objects;			///< Objects
 	SavePoints *_savepoints;	///< SavePoints
 	GameState *_state;			///< State
+	Common::Point _coords;		///< Current coordinates
 };
 
 } // End of namespace LastExpress

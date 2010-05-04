@@ -25,34 +25,280 @@
 
 #include "lastexpress/game/beetle.h"
 
+#include "lastexpress/game/inventory.h"
+#include "lastexpress/game/logic.h"
+#include "lastexpress/game/state.h"
+
+#include "lastexpress/helpers.h"
 #include "lastexpress/lastexpress.h"
+#include "lastexpress/resource.h"
 
 namespace LastExpress {
 
-Beetle::Beetle(LastExpressEngine *engine) : _engine(engine), _sequences(NULL) {}
+Beetle::Beetle(LastExpressEngine *engine) : _engine(engine), _data(NULL) {}
 
 Beetle::~Beetle() {
 	unload();
+
+	// Make sure we clean up, even if unload has not been called
+	delete _data;
+	_data = NULL;
+
+	// Free passed pointers
+	_engine = NULL;
 }
 
 void Beetle::load() {
+	// Only load in chapter 2 & 3
+	if (getProgress().chapter != kChapter2 &&  getProgress().chapter != kChapter3)
+		return;
 
+	// Already loaded
+	if (_data)
+		return;
+
+	// Do not load if beetle is in the wrong location
+	if (getInventory()->getEntry(kItemBeetle)->location != kLocation3)
+		return;
+
+	///////////////////////
+	// Load Beetle data
+	_data = new BeetleData();
+	
+	// Load sequences
+	_data->sequences.push_back(newSequence("BW000.seq"));        // 0
+	_data->sequences.push_back(newSequence("BT000045.seq"));
+	_data->sequences.push_back(newSequence("BT045000.seq"));
+	_data->sequences.push_back(newSequence("BW045.seq"));
+	_data->sequences.push_back(newSequence("BT045090.seq"));
+	_data->sequences.push_back(newSequence("BT090045.seq"));     // 5
+	_data->sequences.push_back(newSequence("BW090.seq"));
+	_data->sequences.push_back(newSequence("BT090135.seq"));
+	_data->sequences.push_back(newSequence("BT135090.seq"));
+	_data->sequences.push_back(newSequence("BW135.seq"));
+	_data->sequences.push_back(newSequence("BT135180.seq"));     // 10
+	_data->sequences.push_back(newSequence("BT180135.seq"));
+	_data->sequences.push_back(newSequence("BW180.seq"));
+	_data->sequences.push_back(newSequence("BT180225.seq"));
+	_data->sequences.push_back(newSequence("BT225180.seq"));
+	_data->sequences.push_back(newSequence("BW225.seq"));        // 15
+	_data->sequences.push_back(newSequence("BT225270.seq"));
+	_data->sequences.push_back(newSequence("BT270225.seq"));
+	_data->sequences.push_back(newSequence("BW270.seq"));
+	_data->sequences.push_back(newSequence("BT270315.seq"));
+	_data->sequences.push_back(newSequence("BT315270.seq"));     // 20
+	_data->sequences.push_back(newSequence("BW315.seq"));
+	_data->sequences.push_back(newSequence("BT315000.seq"));
+	_data->sequences.push_back(newSequence("BT000315.seq"));
+	_data->sequences.push_back(newSequence("BA135.seq"));
+	_data->sequences.push_back(newSequence("BL045.seq"));        // 25
+	_data->sequences.push_back(newSequence("BL000.seq"));
+	_data->sequences.push_back(newSequence("BL315.seq"));
+	_data->sequences.push_back(newSequence("BL180.seq"));
+
+	// Init fields
+	_data->field_74 = 0;
+
+	// Check that all sequences are loaded properly
+	_data->isLoaded = true;
+	for (int i = 0; i < (int)_data->sequences.size(); i++) {
+		if (!_data->sequences[i]->isLoaded()) {
+			_data->isLoaded = false;
+			break;
+		}
+	}
+
+	_data->field_D9 = 10;
+	_data->field_84 = 5;
+	_data->coordY = 178;
+	_data->currentSequence = 0;
+	_data->offset = 0;
+	_data->field_D0 = 0;
+	_data->field_D5 = 0;
+	_data->indexes[0] = 29;
+	_data->field_DD = 0;
 }
 
 void Beetle::unload() {
-
+	// Delete all loaded sequences
+	delete _data;
+	_data = NULL;
 }
 
-bool Beetle::isLoaded() {
-	return false;
+bool Beetle::isLoaded() const {
+	if (!_data)
+		error("Beetle::catchBeetle: sequences have not been loaded!");
+
+	return _data->isLoaded;
 }
 
 bool Beetle::catchBeetle() {
+	if (!_data)
+		error("Beetle::catchBeetle: sequences have not been loaded!");
+
+	if (getInventory()->getSelectedItem() == kItemMatchBox
+	 && getInventory()->hasItem(kItemMatch)
+	 && abs((int16)(getCoords().x - _data->coordX)) < 10
+	 && abs((int16)(getCoords().y - _data->coordY)) < 10) {
+		return true;
+	}
+
+	_data->field_D5 = 0;
+	move();
+
 	return false;
 }
 
-bool Beetle::isCatchable() {
-	return false;
+bool Beetle::isCatchable() const {
+	if (!_data)
+		error("Beetle::catchBeetle: sequences have not been loaded!");
+
+	return (_data->indexes[_data->offset] >= 30);
+}
+
+void Beetle::update() {
+	if (!_data)
+		error("Beetle::catchBeetle: sequences have not been loaded!");
+
+	if (!_data->isLoaded)
+		return;
+
+	move();
+}
+
+
+void Beetle::move() {
+	if (!_data)
+		error("Beetle::catchBeetle: sequences have not been loaded!");
+
+	if (_data->indexes[_data->offset] >= 24 && _data->indexes[_data->offset] <= 29)
+		return;
+
+	if (_data->field_D5)
+		return;
+
+	if (abs((int)(getCoords().x - _data->coordX)) > 35)
+		return;
+	
+	if (abs((int)(getCoords().y - _data->coordY)) > 35)
+		return;
+
+	int32 deltaX = getCoords().x - _data->coordX;
+	int32 deltaY = -getCoords().y - _data->coordY;
+	uint32 index = 0;
+
+	// FIXME: check code path
+	if (deltaX >= 0) {
+		if (deltaY > 0) {			
+			if (100 * deltaY - 241 * deltaX <= 0) {
+				if (100 * deltaY  - 41 * deltaX <= 0)
+					index = 18;
+				else
+					index = 15;
+			} else {
+				index = 12;
+			}
+
+			goto update_data;
+		}
+	}
+
+	if (deltaX < 0) {
+
+		if (deltaY > 0) {
+			if (100 * deltaY + 241 * deltaX <= 0) {
+				if (100 * deltaY + 41 * deltaX <= 0)
+					index = 6;
+				else
+					index = 9;
+			} else {
+				index = 12;
+			}
+
+			goto update_data;
+		}
+
+		if (deltaY <= 0) {
+			if (100 * deltaY - 41 * deltaX <= 0) {
+				if (100 * deltaY - 241 * deltaX <= 0)
+					index = 0;
+				else
+					index = 3;
+			} else {
+				index = 6;
+			}
+
+			goto update_data;
+		}
+	}
+
+update_data:
+	updateData(index);
+
+	if (_data->field_84 >= 15) {
+		_data->field_D5 = 0;
+		return;
+	}
+
+	_data->field_84 = _data->field_84 + 4 * random(100)/100 + _data->field_D9;
+	_data->field_D5 = 0;
+}
+
+void Beetle::updateSequence(Sequence *sequence) {
+}
+
+void Beetle::updateData(uint32 index) {
+	if (!_data)
+		error("Beetle::catchBeetle: sequences have not been loaded!");
+
+	if (!_data->isLoaded)
+		return;
+
+	if (index == 25 || index == 26 || index == 27 || index == 28) {
+		_data->indexes[0] = index;
+		_data->indexes[1] = 29;
+		_data->offset = 0;
+
+		_data->currentSequence = _data->sequences[index];
+		_data->field_7C = 0;
+		_data->index = index;
+	} else {
+		if (!_data->sequences[index])
+			return;
+
+		if (_data->index == index)
+			return;
+
+		_data->offset = 0;
+
+		// Special case for sequence 24
+		if (index == 24) {
+			_data->indexes[0] = index;
+			_data->coordY = 178;
+			_data->index = _data->indexes[1];
+			_data->indexes[1] = (_data->coordX >= 265) ? 15 : 9;
+			_data->field_7C = 0;
+			_data->currentSequence = _data->sequences[index];
+		} else {
+			if (index <= _data->index) {
+				for (uint32 i = _data->index - 1; i > index; ++_data->offset) {
+					_data->indexes[_data->offset] = i;
+					i -= 3;
+				}
+			} else {
+				for (uint32 i = _data->index + 1; i < index; ++_data->offset) {
+					_data->indexes[_data->offset] = i;
+					i += 3;
+				}
+			}
+
+			_data->index = index;
+			_data->indexes[_data->offset] = index;
+			_data->field_7C = 0;
+			_data->offset = 0;
+			_data->currentSequence = _data->sequences[_data->indexes[0]];
+		}
+	}
 }
 
 } // End of namespace LastExpress

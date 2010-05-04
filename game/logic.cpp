@@ -200,6 +200,9 @@ void Logic::gameOver(TimeType type, uint32 time, SceneIndex sceneIndex, bool sho
 // Event Handling
 //////////////////////////////////////////////////////////////////////////
 void Logic::eventMouseClick(const Common::Event &ev) {
+	// Update state
+	getGameState()->setCoordinates(ev.mouse);
+
 	// Special case for the main menu scene
 	if (isShowingMenu()) {
 		_menu->eventMouseClick(ev);

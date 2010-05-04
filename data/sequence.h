@@ -145,6 +145,8 @@ public:
 	AnimFrame *getFrame(uint32 index = 0);
 	FrameInfo *getFrameInfo(uint32 index = 0);
 
+	bool isLoaded() { return _isLoaded; }
+
 private:
 	static const uint32 _sequenceHeaderSize = 8;
 	static const uint32 _sequenceFrameSize = 68;
@@ -153,6 +155,7 @@ private:
 
 	Common::Array<FrameInfo> _frames;
 	Common::SeekableReadStream *_stream;
+	bool _isLoaded;
 };
 
 class SequencePlayer : public Drawable {

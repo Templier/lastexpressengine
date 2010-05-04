@@ -26,10 +26,14 @@
 #ifndef LASTEXPRESS_BEETLE_H
 #define LASTEXPRESS_BEETLE_H
 
+#include "lastexpress/data/sequence.h"
+
+#include "common/array.h"
+#include "common/system.h"
+
 namespace LastExpress {
 
 class LastExpressEngine;
-class Sequence;
 
 class Beetle {
 public:
@@ -37,26 +41,71 @@ public:
 	Beetle(LastExpressEngine *engine);
 	~Beetle();
 
+	void update();
+
 	void load();
 	void unload();
 
-	bool isLoaded();
+	bool isLoaded() const;
 
 	bool catchBeetle();
-	bool isCatchable();
+	bool isCatchable() const;
 
 private:
-	struct BeetleSequences {
-		Sequence *_sequence0;
-		Sequence *_sequence1;
-		Sequence *_sequence2;
-		Sequence *_sequence3;
-		// TODO add all members
+	struct BeetleData {
+		Common::Array<Sequence *> sequences;
+			
+		uint32 field_74;
+		Sequence * currentSequence;
+		uint32 field_7C;
+		uint32 index;
+		uint32 field_84;
+
+		int16 coordX;
+		int16 coordY;
+
+		uint32 indexes[16];		
+
+		uint32 offset;
+		uint32 field_D0;
+		bool isLoaded;
+		uint32 field_D5;
+		uint32 field_D9;
+		uint32 field_DD;
+
+		BeetleData() {
+			field_74 = 0;
+			currentSequence = NULL;
+			field_7C = 0;
+			index = 0;
+			field_84 = 0;
+
+			coordX = 0;
+			coordY = 0;
+
+			memset(indexes, 0, sizeof(indexes)); 
+			offset = 0;
+
+			field_D0 = 0;
+			isLoaded = false;
+			field_D5 = 0;
+			field_D9 = 0;
+			field_DD = 0;
+		}
+
+		~BeetleData() {
+			for (int i = 0; i < (int)sequences.size(); i++)
+				delete sequences[i];
+		}
 	};
 
 	LastExpressEngine* _engine;
 
-	BeetleSequences *_sequences;
+	BeetleData *_data;
+
+	void move();
+	void updateSequence(Sequence *sequence);
+	void updateData(uint32 index);
 };
 
 } // End of namespace LastExpress
