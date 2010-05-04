@@ -296,7 +296,7 @@ Scene *SceneManager::getScene(SceneIndex index) {
 	if (_headers.empty())
 		return NULL;
 
-	if (index == 0 || index > (int)_headers.size())
+	if (index == 0 || index > _headers.size())
 		return NULL;
 
 	debugC(9, kLastExpressDebugScenes, "Loading scene %d", index);

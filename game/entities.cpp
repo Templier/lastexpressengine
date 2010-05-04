@@ -689,7 +689,7 @@ void Entities::getSequenceName(EntityIndex index, EntityDirection direction, cha
 	// First part of sequence is already set
 	case kDirectionLeft:
 	case kDirectionRight:
-		sprintf(sequence1, (char*)"%s%02d.seq", (char*)&data->sequenceName, position);
+		sprintf(sequence1, "%s%02d.seq", (char*)&data->sequenceName, position);
 		break;
 	}
 }
