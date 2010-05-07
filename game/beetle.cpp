@@ -127,7 +127,7 @@ void Beetle::unload() {
 
 bool Beetle::isLoaded() const {
 	if (!_data)
-		error("Beetle::catchBeetle: sequences have not been loaded!");
+		return false;
 
 	return _data->isLoaded;
 }
@@ -164,6 +164,8 @@ void Beetle::update() {
 		return;
 
 	move();
+
+	error("Beetle::update: not implemented!");
 }
 
 
