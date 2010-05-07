@@ -151,27 +151,27 @@ bool Beetle::catchBeetle() {
 
 bool Beetle::isCatchable() const {
 	if (!_data)
-		error("Beetle::catchBeetle: sequences have not been loaded!");
+		error("Beetle::isCatchable: sequences have not been loaded!");
 
 	return (_data->indexes[_data->offset] >= 30);
 }
 
 void Beetle::update() {
 	if (!_data)
-		error("Beetle::catchBeetle: sequences have not been loaded!");
+		error("Beetle::update: sequences have not been loaded!");
 
 	if (!_data->isLoaded)
 		return;
 
 	move();
 
-	error("Beetle::update: not implemented!");
+	warning("Beetle::update: not implemented!");
 }
 
 
 void Beetle::move() {
 	if (!_data)
-		error("Beetle::catchBeetle: sequences have not been loaded!");
+		error("Beetle::move: sequences have not been loaded!");
 
 	if (_data->indexes[_data->offset] >= 24 && _data->indexes[_data->offset] <= 29)
 		return;
@@ -251,7 +251,7 @@ void Beetle::updateSequence(Sequence *sequence) {
 
 void Beetle::updateData(uint32 index) {
 	if (!_data)
-		error("Beetle::catchBeetle: sequences have not been loaded!");
+		error("Beetle::updateData: sequences have not been loaded!");
 
 	if (!_data->isLoaded)
 		return;

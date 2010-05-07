@@ -34,7 +34,10 @@
 #include "lastexpress/data/snd.h"
 #include "lastexpress/data/subtitle.h"
 
+#include "lastexpress/game/action.h"
+#include "lastexpress/game/beetle.h"
 #include "lastexpress/game/fight.h"
+#include "lastexpress/game/inventory.h"
 #include "lastexpress/game/logic.h"
 #include "lastexpress/game/savegame.h"
 #include "lastexpress/game/sound.h"
@@ -64,6 +67,7 @@ Debugger::Debugger(LastExpressEngine *engine) : _engine(engine), _command(NULL),
 	DCmd_Register("listfiles", WRAP_METHOD(Debugger, cmd_listfiles));
 	DCmd_Register("loadgame",  WRAP_METHOD(Debugger, cmd_loadgame));
 	DCmd_Register("fight",     WRAP_METHOD(Debugger, cmd_fight));
+	DCmd_Register("beetle",    WRAP_METHOD(Debugger, cmd_beetle));
 
 	resetCommand();
 }
@@ -555,12 +559,147 @@ bool Debugger::cmd_fight(int argc, const char **argv) {
 			askForRedraw();
 			redrawScreen();
 
-
 			resetCommand();
 		}
 	} else {
 error:
 		DebugPrintf("Syntax: fight <id> (id=2001-2005)\n");
+	}
+
+	return true;
+}
+
+bool Debugger::cmd_beetle(int argc, const char **argv) {
+	if (argc == 1) {		
+		// Load proper data file (beetle game in in Cd2)
+		getLogic()->loadSceneDataFile(kArchiveCd2);
+
+		// Store command
+		if (!hasCommand()) {
+			_command = WRAP_METHOD(Debugger, cmd_beetle);
+			copyCommand(argc, argv);
+
+			return false;
+		} else {
+			clearBg(GraphicsManager::kBackgroundAll);
+			askForRedraw();
+			redrawScreen();
+
+			// Save current state
+			SceneIndex previousScene = getState()->scene;
+			ObjectLocation previousLocation = getInventory()->getEntry(kItemBeetle)->location;
+			ChapterIndex previousChapter = (ChapterIndex)getProgress().chapter;
+
+			// Setup scene & inventory
+			getProgress().chapter = kChapter2;
+			loadSceneObject(scene, 128);
+			getInventory()->getEntry(kItemBeetle)->location = kLocation3;
+
+			askForRedraw();
+			redrawScreen();
+
+			// Load the beetle game
+			Action *action   = new Action(_engine);
+			Beetle *beetle = new Beetle(_engine);
+			if (!beetle->isLoaded())
+				beetle->load();
+
+			// Play the game
+			Common::Event ev;
+			while (true) {				
+				// Update beetle
+				beetle->update();
+
+				askForRedraw();
+				redrawScreen();				
+
+				while (g_engine->getEventManager()->pollEvent(ev)) {
+
+					switch (ev.type) {
+					case Common::EVENT_KEYDOWN:
+						// Exit beetle game on escape
+						if (ev.kbd.keycode == Common::KEYCODE_ESCAPE)
+							goto beetle_cleanup;
+
+						break;
+				
+					case Common::EVENT_MOUSEMOVE: {
+						// Update cursor
+						CursorStyle style = kCursorNormal;
+						SceneHotspot *hotspot = NULL;
+						if (scene.checkHotSpot(ev.mouse, &hotspot))
+							style = action->getCursor(hotspot->action, (ObjectIndex)hotspot->param1, hotspot->param2, hotspot->param3, hotspot->cursor);
+
+						_engine->getCursor()->setStyle(style);
+						break;
+					}
+					
+
+					case Common::EVENT_LBUTTONDOWN:
+					case Common::EVENT_LBUTTONUP:
+					case Common::EVENT_RBUTTONDOWN:
+						// Update coordinates
+						getLogic()->getGameState()->setCoordinates(ev.mouse);
+
+						if (beetle->catchBeetle())
+							goto beetle_cleanup;
+						break;
+					}	
+
+					_engine->_system->delayMillis(10);
+				}
+			}
+
+beetle_cleanup:
+			// Cleanup
+			beetle->unload();
+			delete beetle;
+			delete action;
+
+			// Pause for a second to be able to see the final scene
+			_engine->_system->delayMillis(1000);
+
+			// Restore state
+			getProgress().chapter = previousChapter;
+			getInventory()->getEntry(kItemBeetle)->location = previousLocation;
+
+			// Restore loaded archive
+			ArchiveIndex index = kArchiveCd1;
+			switch (getProgress().chapter) {
+			default:
+			case kChapter1:
+				index = kArchiveCd1;
+				break;
+
+			case kChapter2:
+			case kChapter3:
+				index = kArchiveCd2;
+				break;
+
+			case kChapter4:
+			case kChapter5:
+				index = kArchiveCd3;
+				break;
+			}
+
+			getLogic()->loadSceneDataFile(index);
+
+			// Stop audio and restore scene
+			getSound()->getSfxStream()->stop();
+			getSound()->getMusicStream()->stop();
+
+			clearBg(GraphicsManager::kBackgroundAll);
+
+			loadSceneObject(oldscene, previousScene);			
+			_engine->getGraphicsManager()->draw(&oldscene, GraphicsManager::kBackgroundC);
+
+			askForRedraw();
+			redrawScreen();
+
+			resetCommand();
+		}
+	} else {
+		DebugPrintf("Syntax: beetle\n");
 	}
 
 	return true;

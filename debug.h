@@ -68,6 +68,7 @@ private:
 	bool cmd_listfiles(int argc, const char **argv);
 	bool cmd_loadgame(int argc, const char **argv);
 	bool cmd_fight(int argc, const char **argv);
+	bool cmd_beetle(int argc, const char **argv);
 
 	void resetCommand();
 	void copyCommand(int argc, const char **argv);
