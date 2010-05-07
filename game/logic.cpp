@@ -325,6 +325,7 @@ void Logic::drawScene(SceneIndex index) {
 	preProcessScene(&index);
 
 	// Draw background
+	debugC(9, kLastExpressDebugScenes, "== Drawing scene: %d ==", index);
 	delete _currentScene;
 	_currentScene = _engine->getSceneManager()->getScene(index);
 	_engine->getGraphicsManager()->draw(_currentScene, GraphicsManager::kBackgroundC, true);
@@ -436,7 +437,7 @@ void Logic::loadSceneFromItem(InventoryItem item) {
 //////////////////////////////////////////////////////////////////////////
 #define PROCESS_HOTSPOT_SCENE(hotspot, index) \
 	SceneIndex newScene = _action->processHotspot(*hotspot); \
-	if (newScene != kSceneInvalid || newScene != kSceneStopProcessing) \
+	if (newScene != kSceneInvalid && newScene != kSceneStopProcessing) \
 		(hotspot)->scene = newScene; \
 	if ((hotspot)->scene && newScene != kSceneStopProcessing) { \
 		*index = (hotspot)->scene; \
