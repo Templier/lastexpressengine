@@ -289,6 +289,12 @@ bool SceneManager::load(Common::SeekableReadStream *stream) {
 }
 
 bool SceneManager::loadScene(Scene *scene, SceneIndex index) {
+	if (!index)
+		error("SceneManager::loadScene: scene index cannot be 0!");
+
+	if (index > _headers.size() + 1)
+		error("SceneManager::loadScene: scene index is too high! (was=%d, max=%d)", index, _headers.size() + 1);
+
 	return Scene::load(scene, _stream, _headers[index - 1]);
 }
 
