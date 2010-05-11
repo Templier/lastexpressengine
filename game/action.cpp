@@ -546,7 +546,7 @@ IMPLEMENT_ACTION(playAnimation) {
 	if (getEvent(hotspot.param1))
 		return kSceneInvalid;
 
-	playAnimation(hotspot.param1);
+	playAnimation((EventIndex)hotspot.param1);
 
 	if (!hotspot.scene)
 		getLogic()->processScene();
@@ -1663,7 +1663,7 @@ CursorStyle Action::getCursor(byte action, ObjectIndex object, byte param2, byte
 		if (object >= kObjectMax)
 			return kCursorNormal;
 
-		if (&getProgress())[object]) == param2)
+		if ((&getProgress().field_0)[object] == param2)
 			return (CursorStyle)param3;
 
 		return kCursorNormal;
@@ -1784,7 +1784,7 @@ LABEL_KEY:
 //////////////////////////////////////////////////////////////////////////
 
 // Play an animation and add delta time to global game time
-void Action::playAnimation(int index) const {
+void Action::playAnimation(EventIndex index) const {
 	assert(index > 0 || (uint)index < sizeof(animationList));
 
 	// FIXME NIS animations need to be passed one more parameter than currently

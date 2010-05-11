@@ -58,7 +58,7 @@ public:
 	CursorStyle getCursor(byte action, ObjectIndex object, byte param2, byte param3, byte cursor) const;
 
 	// Animation
-	void playAnimation(int index) const;
+	void playAnimation(EventIndex index) const;
 
 	// Compartment action
 	bool handleOtherCompartment(ObjectIndex object, byte param2, byte param3) const;
