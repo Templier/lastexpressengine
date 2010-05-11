@@ -1663,8 +1663,7 @@ CursorStyle Action::getCursor(byte action, ObjectIndex object, byte param2, byte
 		if (object >= kObjectMax)
 			return kCursorNormal;
 
-		// FIXME that looks horrid. Add check for boundaries.
-		if (*(&getProgress().field_0 + object) == param2)
+		if (&getProgress())[object]) == param2)
 			return (CursorStyle)param3;
 
 		return kCursorNormal;

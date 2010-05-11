@@ -246,7 +246,25 @@ update_data:
 	_data->field_D5 = 0;
 }
 
+// Update the beetle sequence to show the correct frames in the correct place
 void Beetle::updateSequence(Sequence *sequence) {
+	if (!_data)
+		error("Beetle::updateSequence: sequences have not been loaded!");
+
+	if (!sequence)
+		return;
+
+	FrameInfo *header = sequence->getFrameInfo();
+
+	// Update coordinates
+	if (_data->coordX > 0)
+		header->xPos1 = _data->coordX;
+
+	if (_data->coordY > 0)
+		header->yPos1 = _data->coordY;
+	
+	// TODO: finish update info
+	error("Beetle::updateSequence: not implemented!");
 }
 
 void Beetle::updateData(uint32 index) {
