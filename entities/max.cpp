@@ -232,7 +232,7 @@ IMPLEMENT_FUNCTION(Max, function8, 8)
 
 		getSound()->playSound(kEntityNone, "LIB026");
 		getAction()->playAnimation(kEventCathMaxFree);
-		getLogic()->loadSceneFromData(6, 92, 255);
+		getLogic()->loadSceneFromPosition(EntityData::kField495_6, 92);
 		getObjects()->update(kObjectCageMax, kEntityNone, kLocationNone, kCursorNormal, kCursorHand);
 		setup_function9();
 		break;
@@ -442,7 +442,7 @@ IMPLEMENT_FUNCTION(Max, freeFromCage, 14)
 		case 2:
 			getSound()->playSound(kEntityNone, "LIB026");
 			getAction()->playAnimation(kEventCathMaxFree);
-			getLogic()->loadSceneFromData(6, 92, 255);
+			getLogic()->loadSceneFromPosition(EntityData::kField495_6, 92);
 			getObjects()->update(kObjectCageMax, kEntityNone, kLocationNone, kCursorNormal, kCursorHand);
 			setup_function9();
 			break;

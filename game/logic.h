@@ -28,6 +28,8 @@
 
 #include "lastexpress/shared.h"
 
+#include "lastexpress/game/entities.h"
+
 #include "lastexpress/eventhandler.h"
 
 #include "common/events.h"
@@ -67,9 +69,10 @@ public:
 	void setScene(SceneIndex sceneIndex);
 
 	void loadSceneFromObject(ObjectIndex object);
-	void loadSceneFromObject2(ObjectIndex object);
-	void loadSceneFromData(int param1, int param2, int param3);
+	void loadSceneFromObject2(ObjectIndex object);	
 	void loadSceneFromItem(InventoryItem item);
+	void loadSceneFromPosition(EntityData::Field495Value field495, byte position, int param3 = -1);
+    SceneIndex getIndexFromPosition(EntityData::Field495Value field495, byte position, int param3 = -1);
 
 	void updateDoorsAndClock();
 	void updateCursor(bool redraw = true);

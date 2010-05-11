@@ -472,7 +472,7 @@ IMPLEMENT_FUNCTION(Abbot, function22, 22)
 
 		getAction()->playAnimation(kEventAbbotIntroduction);
 		getSound()->playSound(kEntityNone, "LIB036");
-		getLogic()->loadSceneFromData(5, 61, 255);
+		getLogic()->loadSceneFromPosition(EntityData::kField495_5, 61);
 		break;
 
 	case kAction122288808:

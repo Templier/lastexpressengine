@@ -312,7 +312,7 @@ IMPLEMENT_FUNCTION(Train, process, 8)
 				parameters1->param7 = EntityData::kParamTime;
 			}
 
-			getLogic()->loadSceneFromData(5, 58, 255);
+			getLogic()->loadSceneFromPosition(EntityData::kField495_5, 58);
 		}
 
 		parameters1->param7 = 0;
@@ -468,12 +468,12 @@ label_skip:
 
 		case 7:
 			getAction()->playAnimation(kEventCathJumpDownCeiling);
-			getLogic()->loadSceneFromData(2, 89, 255);
+			getLogic()->loadSceneFromPosition(EntityData::kField495_2, 89);
 			break;
 
 		case 8:
 			getAction()->playAnimation(kEventCloseMatchbox);
-			getLogic()->loadSceneFromData(5, 51, 255);
+			getLogic()->loadSceneFromPosition(EntityData::kField495_5, 51);
 			break;
 		}
 		break;
@@ -500,7 +500,7 @@ label_skip:
 		} else {
 			params->param7 = 1;
 			getAction()->playAnimation(kEventLocomotiveConductorsLook);
-			getLogic()->loadSceneFromData(7, 2, 255);
+			getLogic()->loadSceneFromPosition(EntityData::kField495_7, 2);
 		}
 		break;
 

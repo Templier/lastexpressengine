@@ -34,7 +34,6 @@
 // Game
 #include "lastexpress/game/action.h"
 #include "lastexpress/game/beetle.h"
-#include "lastexpress/game/entities.h"
 #include "lastexpress/game/fight.h"
 #include "lastexpress/game/inventory.h"
 #include "lastexpress/game/menu.h"
@@ -212,7 +211,7 @@ void Logic::eventMouseClick(const Common::Event &ev) {
 	if (getInventory()->handleMouseEvent(ev))
 		return;
 
-	// Check hitbox & event from scene data
+	// Check hit box & event from scene data
 	SceneHotspot *hotspot = NULL;
 	if (_currentScene && _currentScene->checkHotSpot(ev.mouse, &hotspot) && ev.type == Common::EVENT_LBUTTONUP) {
 		SceneIndex scene = _action->processHotspot(*hotspot);
@@ -238,7 +237,7 @@ void Logic::eventMouseMove(const Common::Event &ev) {
 	if (getInventory()->handleMouseEvent(ev))
 		return;
 
-	// Check hitbox & event from scene data
+	// Check hit box & event from scene data
 	SceneHotspot *hotspot = NULL;
 	if (_currentScene && _currentScene->checkHotSpot(ev.mouse, &hotspot))
 		_runState.cursorStyle = _action->getCursor(hotspot->action, (ObjectIndex)hotspot->param1, hotspot->param2, hotspot->param3, hotspot->cursor);
@@ -407,29 +406,73 @@ void Logic::loadSceneFromObject(ObjectIndex object) {
 	case kObjectCompartmentE:
 	case kObjectCompartmentF:
 	case kObjectCompartmentG:
-		loadSceneFromData((object < 10 ? 3 : 4), 38 - (object - 1) * 2, 255);
+		loadSceneFromPosition((object < 10 ? EntityData::kField495_3 : EntityData::kField495_4), 38 - (object - 1) * 2);
 		break;
 
 	case kObjectCompartment8:
 	case kObjectCompartmentH:
-		loadSceneFromData(3, 25, 255);
+		loadSceneFromPosition(EntityData::kField495_3, 25);
 		break;
 	}
 }
 
 void Logic::loadSceneFromObject2(ObjectIndex object) {
-	loadSceneFromData((object < 10 ? 3 : 4), 17 - (object - 1) * 2, 255);
-}
-
-void Logic::loadSceneFromData(int param1, int param2, int param3) {
-	error("Logic::loadSceneFromData is not implemented!");
-
-	// index = get index from fields
-	// loadScene(index);
+	loadSceneFromPosition((object < 10 ? EntityData::kField495_3 : EntityData::kField495_4), 17 - (object - 1) * 2);
 }
 
 void Logic::loadSceneFromItem(InventoryItem item) {
-	error("Logic::loadSceneFromItem is not implemented!");
+	if (item >= 32)
+		return;
+
+	// Check item location
+	Inventory::InventoryEntry *entry = _state->getGameInventory()->getEntry(item);
+	if (!entry->location)
+		return;
+
+	// Reset location
+	entry->location = kLocationNone;
+
+	if (item != kItem3 && item != kItem5 && item != kItem7)
+		return;
+	
+	// Set field value
+	EntityData::Field495Value field = EntityData::kField495_5;
+	if (item == kItem5) field = EntityData::kField495_4;
+	if (item == kItem7) field = EntityData::kField495_3;
+
+	if (!getEntities()->checkFields5(kEntityNone, field))
+		return;
+
+	if (getFlags()->flag_0)
+		return;
+
+	// Get current scene position
+	loadSceneObject(scene, getState()->scene);
+	byte position = scene.getHeader()->position;
+
+    if (getState()->sceneUseBackup) {
+		loadSceneObject(sceneBackup, getState()->sceneBackup);
+		position = sceneBackup.getHeader()->position;
+	}
+ 
+	// Checks are different for each item
+	if ((item == kItem3 && position == 56)
+	 || (item == kItem5 && (position >= 23 && position <= 32))	
+	 || (item == kItem7 && (position == 1 || (position >= 22 && position <= 33)))) {
+		if (getState()->sceneUseBackup)
+			getState()->sceneBackup = getIndexFromPosition(field, position);
+		else
+           loadSceneFromPosition(field, position);        
+    }
+
+}
+
+void Logic::loadSceneFromPosition(EntityData::Field495Value field495, byte position, int param3) {
+	loadScene(getIndexFromPosition(field495, position, param3));
+}
+
+SceneIndex Logic::getIndexFromPosition(EntityData::Field495Value field495, byte position, int param3) {
+	error("Logic::getIndexFromFields is not implemented!");
 }
 
 //////////////////////////////////////////////////////////////////////////

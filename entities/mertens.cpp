@@ -251,7 +251,7 @@ IMPLEMENT_FUNCTION(Mertens, function17, 17)
 
 				if (getEntities()->checkFields4(EntityData::kField495_3, 68)) {
 					getSound()->playSound(kEntityNone, "CON1110");
-					getLogic()->loadSceneFromData(EntityData::kField495_3, 25, 255);
+					getLogic()->loadSceneFromPosition(EntityData::kField495_3, 25);
 				}
 
 				_data->setNextCallback(3);

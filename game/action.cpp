@@ -780,7 +780,7 @@ IMPLEMENT_ACTION(enterCompartment) {
 				getProgress().field_78 = 0;
 			}
 
-			getLogic()->loadSceneFromData(3, 77, 255);
+			getLogic()->loadSceneFromPosition(EntityData::kField495_3, 77);
 			return kSceneNone;
 		}
 	} else {
@@ -1009,7 +1009,7 @@ IMPLEMENT_ACTION(unbound) {
 		if (getEvent(kEventCathBurnRope)) {
 			playAnimation(kEventCathRemoveBonds);
 			getProgress().field_84 = 0;
-			getLogic()->loadSceneFromData(1, 89, 255);
+			getLogic()->loadSceneFromPosition(EntityData::kField495_1, 89);
 			return kSceneNone;
 		}
 		break;

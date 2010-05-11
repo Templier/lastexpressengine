@@ -290,7 +290,7 @@ IMPLEMENT_FUNCTION(Chapters, chapter2_init, 11)
 	if (getInventory()->hasItem(kItemScarf))
 		getLogic()->loadScene(kScene41);
 	else
-		getLogic()->loadSceneFromData(3, 79, -1);
+		getLogic()->loadSceneFromPosition(EntityData::kField495_3, 79);
 
 	setup_chapter2_handler();
 }
