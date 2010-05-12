@@ -673,6 +673,9 @@ void Logic::postProcessScene() {
 		//}
 
 		SceneHotspot *hotspot = scene.getHotspot();
+		if (!hotspot)
+			break;
+
 		_action->processHotspot(*hotspot);
 
 		if (getFlags()->mouseRightClick) {
@@ -680,10 +683,12 @@ void Logic::postProcessScene() {
 
 			while (hotspotScene.getHeader()->type == Scene::kTypeList) {
 				hotspot = hotspotScene.getHotspot();
-				_action->processHotspot(*hotspot);
+				if (hotspot) {
+					_action->processHotspot(*hotspot);
 
-				// reload the scene
-				_engine->getSceneManager()->loadScene(&hotspotScene, hotspot->scene);
+					// reload the scene
+					_engine->getSceneManager()->loadScene(&hotspotScene, hotspot->scene);
+				}
 			}
 		}
 
