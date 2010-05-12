@@ -50,11 +50,13 @@
 
 namespace LastExpress {
 
+static const int _animationListSize = 273;
+
 // List of animations
 static const struct {
 	const char *filename;
 	uint16 time;
-} animationList[273] = {
+} animationList[_animationListSize] = {
 	{"", 0},
 	{"1002",    255},
 	{"1002D",   255},
@@ -1785,18 +1787,36 @@ LABEL_KEY:
 
 // Play an animation and add delta time to global game time
 void Action::playAnimation(EventIndex index) const {
-	if ((uint)index >= sizeof(animationList))
-		error("Action::playAnimation: invalid event index (value=%i, max=%i)", index, sizeof(animationList));
+	if (index >= _animationListSize)
+		error("Action::playAnimation: invalid event index (value=%i, max=%i)", index, _animationListSize);
 
-	// FIXME NIS animations need to be passed one more parameter than currently
+	getFlags()->flag_3 = true;
 
 	// Show inventory & hourglass
 	getInventory()->show(true);
 	getInventory()->showHourGlass(true);
 
-	Animation animation;
-	if (animation.loadFile(Common::String(animationList[index].filename) + ".nis"))
-		animation.play();
+	// TODO: not sure how it is supposed to work
+	if (!getFlags()->mouseRightClick) {
+
+		if (getGlobalTimer()) {
+			if (getSound()->isFileInQueue("TIMER", true)) {
+				getSound()->unknownFunction2("TIMER");
+				setGlobalTimer(105);
+			}
+		}
+
+		// TODO adjust screen coordinates for drawing animation
+		// TODO compute arg to animation
+		
+		// FIXME NIS animations need to be passed one more parameter than currently
+		Animation animation;
+		if (animation.loadFile(Common::String(animationList[index].filename) + ".nis"))
+			animation.play();
+
+		if (getSound()->isFileInQueue("TIMER", true))
+			getSound()->removeFromQueue("TIMER");
+	}
 
 	// Adjust game time
 	getEvent(index) = 1;

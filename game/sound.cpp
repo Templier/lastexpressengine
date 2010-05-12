@@ -133,6 +133,10 @@ void Sound::unknownFunction1() {
 	error("SoundManager::unknownFunction1: not implemented!");
 }
 
+void Sound::unknownFunction2(const char* filename) {
+	warning("SoundManager::unknownFunction2: not implemented!");
+}
+
 //////////////////////////////////////////////////////////////////////////
 // Game-related functions
 //////////////////////////////////////////////////////////////////////////

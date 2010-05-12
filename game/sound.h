@@ -99,6 +99,7 @@ public:
 
 	// Misc
 	void unknownFunction1();
+	void unknownFunction2(const char* filename);
 
 	// Sound playing
 	void playSound(EntityIndex entity, const char *filename, int a3 = -1, byte a4 = 0);
