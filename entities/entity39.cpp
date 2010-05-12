@@ -86,7 +86,7 @@ IMPLEMENT_FUNCTION(Entity39, process, 6)
 	case kActionNone:
 		_data->getData()->field_495 = getEntityData(kEntityNone)->field_495;
 
-		if (_sequence && !_counter) {
+		if (*_sequence && !_counter) {
 			_counter++;
 			getEntities()->drawSequenceRight(kEntity39, (char *)&_sequence);
 		}
