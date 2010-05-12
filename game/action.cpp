@@ -1785,7 +1785,8 @@ LABEL_KEY:
 
 // Play an animation and add delta time to global game time
 void Action::playAnimation(EventIndex index) const {
-	assert(index > 0 || (uint)index < sizeof(animationList));
+	if ((uint)index >= sizeof(animationList))
+		error("Action::playAnimation: invalid event index (value=%i, max=%i)", index, sizeof(animationList));
 
 	// FIXME NIS animations need to be passed one more parameter than currently
 

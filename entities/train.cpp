@@ -384,9 +384,8 @@ label_skip:
 		}
 
 		// Draw moving background behind windows
-		// TODO change boolean check
 		if (params->param3) {
-			if (getEntityData(kEntityNone)->field_495 != params->param1 || isDay() != (params->param2 > 0)) {
+			if (getEntityData(kEntityNone)->field_495 != params->param1 || isDay() != (bool)(params->param2 > 0)) {
 				switch (getEntityData(kEntityNone)->field_495) {
 				default:
 					getEntities()->prepareSequences(kEntityTrain);

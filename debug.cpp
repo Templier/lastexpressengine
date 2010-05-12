@@ -616,6 +616,9 @@ bool Debugger::cmd_beetle(int argc, const char **argv) {
 				while (g_engine->getEventManager()->pollEvent(ev)) {
 
 					switch (ev.type) {
+					default:
+						break;
+
 					case Common::EVENT_KEYDOWN:
 						// Exit beetle game on escape
 						if (ev.kbd.keycode == Common::KEYCODE_ESCAPE)
