@@ -48,15 +48,19 @@ public:
 	DECLARE_FUNCTION(function7)
 	DECLARE_FUNCTION(function8)
 	DECLARE_FUNCTION(function9)
-	DECLARE_FUNCTION(function10)
-	DECLARE_FUNCTION(function11)
+	DECLARE_FUNCTION(seizure)
+	DECLARE_FUNCTION(drawInBed)
 	DECLARE_FUNCTION(chapter2)
-	DECLARE_FUNCTION(function13)
+	DECLARE_FUNCTION(sleeping)
 	DECLARE_FUNCTION(chapter3)
-	DECLARE_FUNCTION(function15)
+	DECLARE_FUNCTION(stealEgg)
 	DECLARE_FUNCTION(chapter4)
 	DECLARE_FUNCTION(function17)
 	DECLARE_FUNCTION(chapter5)
+
+private:
+	DECLARE_CALL_FUNCTION(char, Vassili, const char*, int, int, const char*)
+	DECLARE_CALL_FUNCTION(default, Vassili, int, int, int, int)
 };
 
 } // End of namespace LastExpress

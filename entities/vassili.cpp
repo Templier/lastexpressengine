@@ -25,10 +25,16 @@
 
 #include "lastexpress/entities/vassili.h"
 
+#include "lastexpress/entities/anna.h"
+#include "lastexpress/entities/coudert.h"
+
+#include "lastexpress/game/action.h"
 #include "lastexpress/game/entities.h"
+#include "lastexpress/game/inventory.h"
 #include "lastexpress/game/logic.h"
 #include "lastexpress/game/object.h"
 #include "lastexpress/game/savepoint.h"
+#include "lastexpress/game/sound.h"
 #include "lastexpress/game/state.h"
 
 #include "lastexpress/lastexpress.h"
@@ -46,12 +52,12 @@ Vassili::Vassili(LastExpressEngine *engine) : Entity(engine, kEntityVassili) {
 	ADD_CALLBACK_FUNCTION(Vassili, function7);
 	ADD_CALLBACK_FUNCTION(Vassili, function8);
 	ADD_CALLBACK_FUNCTION(Vassili, function9);
-	ADD_CALLBACK_FUNCTION(Vassili, function10);
-	ADD_CALLBACK_FUNCTION(Vassili, function11);
+	ADD_CALLBACK_FUNCTION(Vassili, seizure);
+	ADD_CALLBACK_FUNCTION(Vassili, drawInBed);
 	ADD_CALLBACK_FUNCTION(Vassili, chapter2);
-	ADD_CALLBACK_FUNCTION(Vassili, function13);
+	ADD_CALLBACK_FUNCTION(Vassili, sleeping);
 	ADD_CALLBACK_FUNCTION(Vassili, chapter3);
-	ADD_CALLBACK_FUNCTION(Vassili, function15);
+	ADD_CALLBACK_FUNCTION(Vassili, stealEgg);
 	ADD_CALLBACK_FUNCTION(Vassili, chapter4);
 	ADD_CALLBACK_FUNCTION(Vassili, function17);
 	ADD_CALLBACK_FUNCTION(Vassili, chapter5);
@@ -98,19 +104,120 @@ IMPLEMENT_FUNCTION(Vassili, function7, 7)
 }
 
 IMPLEMENT_FUNCTION(Vassili, function8, 8)
-	error("Vassili: callback function 8 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kAction2:
+		setup_function9();
+		break;
+
+	case kActionDefault:
+		if (!getEntities()->checkFields5(kEntityNone, EntityData::kField495_4)) {
+			getSound()->playSound(kEntityNone, "BUMP");
+			getLogic()->loadSceneFromPosition(EntityData::kField495_4, (getEntities()->getData(kEntityNone)->getData()->field_495 <= EntityData::kField495_4) ? 1 : 40);
+		}
+
+		getSavePoints()->push(kEntityVassili, kEntityAnna, kAction226031488);
+		getSavePoints()->push(kEntityVassili, kEntityVerges, kAction226031488);
+		getSavePoints()->push(kEntityVassili, kEntityCoudert, kAction226031488);
+		getSound()->playSound(kEntityVassili, "VAS1027", 16);
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Vassili, function9, 9)
-	error("Vassili: callback function 9 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kAction2:
+		if (!getEntities()->checkFields9(kEntityVassili, kEntityNone, 2500))
+			getSound()->playSound(kEntityNone, "BUMP");
+
+		setup_seizure();
+		break;
+
+	case kActionDefault:
+	case kAction17:
+		if ( getObjects()->get(kObjectCompartmentA).location == kLocation2 && getEntities()->checkFields4(EntityData::kField495_4, 17)
+		|| getEntities()->checkFields4(EntityData::kField495_4, 18)
+		|| getEntities()->checkFields4(EntityData::kField495_4, 37)
+		|| getEntities()->checkFields4(EntityData::kField495_4, 38)
+		|| getEntities()->checkFields4(EntityData::kField495_4, 41)) {
+
+			if (savepoint.action == kAction17)
+				getSound()->processEntry(kEntityVassili);
+
+			setup_seizure();
+		} else {
+			if (savepoint.action == kActionDefault)
+				getSound()->playSound(kEntityVassili, "VAS1028", 16);
+		}
+		break;
+	}
 }
 
-IMPLEMENT_FUNCTION(Vassili, function10, 10)
-	error("Vassili: callback function 10 not implemented!");
+IMPLEMENT_FUNCTION(Vassili, seizure, 10)
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionDefault:
+		// Check that we have removed the body from the train and changed jacket
+		if (!getProgress().event_corpse_moved_from_floor) {
+			getAction()->playAnimation(kEventMertensCorpseFloor);
+			getLogic()->gameOver(kTimeType0, 0, kSceneNone, false);
+			break;
+		}
+
+		if (!getProgress().event_corpse_thrown) {
+			getAction()->playAnimation(kEventMertensCorpseBed);
+			getLogic()->gameOver(kTimeType0, 0, kSceneNone, false);
+			break;
+		}
+
+		if (getProgress().jacket == kJacketOriginal) {
+			getAction()->playAnimation(kEventMertensBloodJacket);
+			getLogic()->gameOver(kTimeType0, 0, kSceneNone, false);
+			break;
+		}
+
+		// Setup Anna & Coudert
+		getEntities()->resetEntityState(kEntityAnna);
+		((Anna*)getEntities()->get(kEntityAnna))->setup_function37();
+
+		getEntities()->resetEntityState(kEntityAnna);
+		((Coudert*)getEntities()->get(kEntityCoudert))->setup_function38();
+		
+		_data->setNextCallback(1);
+		call(new ENTITY_SETUP(Vassili, setup_savegame), 2, kEventVassiliSeizure);
+		break;
+
+	case kAction18:
+		if (_data->getNextCallback() != 1)
+			break;
+
+		getEntities()->getData(kEntityNone)->getData()->field_493 = EntityData::kField493_1;
+		getAction()->playAnimation(kEventVassiliSeizure);    
+
+        getObjects()->update(kObjectCompartmentA, kEntityNone, kLocationNone, kCursorHandKnock, kCursorHand);
+        getObjects()->update(kObjectCompartment1, kEntityNone, kLocationNone, kCursorHandKnock, kCursorHand);
+        getProgress().field_18 = 2;
+
+        getSavePoints()->push(kEntityVassili, kEntityAnna, kAction191477936, 0);
+        getSavePoints()->push(kEntityVassili, kEntityVerges, kAction191477936, 0);
+        getSavePoints()->push(kEntityVassili, kEntityCoudert, kAction191477936, 0);
+        getLogic()->loadSceneFromObject(kObjectCompartmentA);
+
+        setup_drawInBed();
+		break;
+	}
 }
 
-IMPLEMENT_FUNCTION(Vassili, function11, 11)
-	error("Vassili: callback function 11 not implemented!");
+IMPLEMENT_FUNCTION(Vassili, drawInBed, 11)
+	if (savepoint.action == kActionDefault)
+		getEntities()->drawSequenceLeft(kEntityVassili, "303A");
 }
 
 IMPLEMENT_FUNCTION(Vassili, chapter2, 12)
@@ -119,7 +226,7 @@ IMPLEMENT_FUNCTION(Vassili, chapter2, 12)
 		break;
 
 	case kActionNone:
-		setup_function13();
+		setup_sleeping();
 		break;
 
 	case kActionDefault:
@@ -137,8 +244,38 @@ IMPLEMENT_FUNCTION(Vassili, chapter2, 12)
 	}
 }
 
-IMPLEMENT_FUNCTION(Vassili, function13, 13)
-	error("Vassili: callback function 13 not implemented!");
+IMPLEMENT_FUNCTION(Vassili, sleeping, 13)
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionNone:
+		if (getEntities()->checkFields1(kEntityNone, EntityData::kField495_4, EntityData::kField491_8200)) {			
+			UPDATE_PARAM_FROM_TICKS(3, params->param1);
+
+			_data->setNextCallback(1);
+			call(new ENTITY_SETUP_SIIS(Vassili, setup_draw), "303B");
+		} else {
+			params->param3 = 0;
+			if (params->param2)
+				getEntities()->drawSequenceLeft(kEntityVassili, "303A");
+		}
+		break;
+
+	case kActionDefault:
+		params->param5 = 5 * (3 * random(25) + 15);
+		getEntities()->drawSequenceLeft(kEntityVassili, "303A");
+		break;
+
+	case kAction18:
+		if (_data->getNextCallback() != 1)
+			break;
+
+		getEntities()->drawSequenceLeft(kEntityVassili, "303C");
+		params->param1 = 5 * (3 * random(25) + 15);
+		params->param2 = 1;
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Vassili, chapter3, 14)
@@ -147,7 +284,7 @@ IMPLEMENT_FUNCTION(Vassili, chapter3, 14)
 		break;
 
 	case kActionNone:
-		setup_function15();
+		setup_stealEgg();
 		break;
 
 	case kActionDefault:
@@ -164,8 +301,61 @@ IMPLEMENT_FUNCTION(Vassili, chapter3, 14)
 	}
 }
 
-IMPLEMENT_FUNCTION(Vassili, function15, 15)
-	error("Vassili: callback function 15 not implemented!");
+IMPLEMENT_FUNCTION(Vassili, stealEgg, 15)
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionNone:
+		if (getEntities()->checkFields1(kEntityNone, EntityData::kField495_4, EntityData::kField491_8200)) {			
+			UPDATE_PARAM_FROM_TICKS(3, params->param1);
+
+			_data->setNextCallback(1);
+			call(new ENTITY_SETUP_SIIS(Vassili, setup_draw), "303B");
+		} else {
+			params->param3 = 0;
+			if (params->param2)
+				getEntities()->drawSequenceLeft(kEntityVassili, "303A");
+		}
+		break;
+
+	case kAction9:
+		_data->setNextCallback(2);
+		call(new ENTITY_SETUP(Vassili, setup_savegame), 2, kEventVassiliCompartmentStealEgg);
+		break;
+
+	case kActionDefault:
+		params->param5 = 5 * (3 * random(25) + 15);
+		getEntities()->drawSequenceLeft(kEntityVassili, "303A");
+		break;
+
+	case kAction17:
+		if (getEntities()->checkFields1(kEntityNone, EntityData::kField495_4, EntityData::kField491_7850)
+		 && getInventory()->hasItem(kItemFirebird) 
+		 && !getEvent(kEventVassiliCompartmentStealEgg))
+			getObjects()->update(kObject48, kEntityVassili, kLocationNone, kCursorNormal, kCursorHand);
+		else
+			getObjects()->update(kObject48, kEntityNone, kLocationNone, kCursorNormal, kCursorHand);
+		break;
+
+	case kAction18:
+		switch (_data->getNextCallback()) {
+		default:
+			break;
+
+		case 1:
+			getEntities()->drawSequenceLeft(kEntityVassili, "303C");
+			params->param1 = 5 * (3 * random(25) + 15);
+			params->param2 = 1;
+			break;
+
+		case 2:
+			getAction()->playAnimation(kEventVassiliCompartmentStealEgg);
+			getLogic()->loadSceneFromPosition(EntityData::kField495_4, 67);
+			break;
+		}
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Vassili, chapter4, 16)
@@ -192,8 +382,39 @@ IMPLEMENT_FUNCTION(Vassili, chapter4, 16)
 	}
 }
 
+// Looks identical to sleeping (#13)
 IMPLEMENT_FUNCTION(Vassili, function17, 17)
-	error("Vassili: callback function 17 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionNone:
+		if (getEntities()->checkFields1(kEntityNone, EntityData::kField495_4, EntityData::kField491_8200)) {			
+			UPDATE_PARAM_FROM_TICKS(3, params->param1);
+
+			_data->setNextCallback(1);
+			call(new ENTITY_SETUP_SIIS(Vassili, setup_draw), "303B");
+		} else {
+			params->param3 = 0;
+			if (params->param2)
+				getEntities()->drawSequenceLeft(kEntityVassili, "303A");
+		}
+		break;
+
+	case kActionDefault:
+		params->param5 = 5 * (3 * random(25) + 15);
+		getEntities()->drawSequenceLeft(kEntityVassili, "303A");
+		break;
+
+	case kAction18:
+		if (_data->getNextCallback() != 1)
+			break;
+
+		getEntities()->drawSequenceLeft(kEntityVassili, "303C");
+		params->param1 = 5 * (3 * random(25) + 15);
+		params->param2 = 1;
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Vassili, chapter5, 18)

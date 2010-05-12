@@ -219,7 +219,7 @@ IMPLEMENT_FUNCTION(Chapters, chapter2, 10)
 
 		// Save game
 		_data->setNextCallback(1);
-		call(new ENTITY_SETUP(Chapters, setup_savegame), 1, 0);
+		call(new ENTITY_SETUP(Chapters, setup_savegame), 1, kEventNone);
 		break;
 
 	case kAction18:
@@ -241,10 +241,10 @@ IMPLEMENT_FUNCTION(Chapters, chapter2_init, 11)
 	if (savepoint.action != kActionDefault)
 		return;
 
-	getProgress().field_8 = 1;
+	getProgress().event_corpse_moved_from_floor = 1;
 	getProgress().field_18 = 1;
 	getProgress().field_50 = 1;
-	getProgress().event_found_corpse = 1;
+	getProgress().event_corpse_found = 1;
 
 	// Switch to green jacket/portrait
 	getProgress().jacket = kJacketGreen;
@@ -345,7 +345,7 @@ IMPLEMENT_FUNCTION(Chapters, chapter4, 17)
 
 		// Save game
 		_data->setNextCallback(1);
-		call(new ENTITY_SETUP(Chapters, setup_savegame), 1, 0);
+		call(new ENTITY_SETUP(Chapters, setup_savegame), 1, kEventNone);
 		break;
 
 	case kAction18:

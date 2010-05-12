@@ -457,7 +457,7 @@ IMPLEMENT_FUNCTION(Abbot, function22, 22)
 		_data->getData()->inventoryItem = kItemNone;
 
 		_data->setNextCallback(1);
-		call(new ENTITY_SETUP(Abbot, setup_savegame), 2, 110);
+		call(new ENTITY_SETUP(Abbot, setup_savegame), 2, kEventAbbotIntroduction);
 		break;
 
 	case kActionDefault:

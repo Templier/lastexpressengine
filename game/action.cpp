@@ -623,9 +623,9 @@ IMPLEMENT_ACTION(setItemLocation) {
 		ObjectLocation corpseLocation = getInventory()->getEntry(kItemCorpse)->location;
 
 		if (corpseLocation == kLocation3 || corpseLocation == kLocation4)
-			getProgress().field_8 = 1;
+			getProgress().event_corpse_moved_from_floor = 1;
 		else
-			getProgress().field_8 = 0;
+			getProgress().event_corpse_moved_from_floor = 0;
 	}
 
 	return kSceneInvalid;
@@ -770,7 +770,7 @@ IMPLEMENT_ACTION(enterCompartment) {
 		return kSceneInvalid;
 	}
 
-	if (getProgress().event_found_corpse) {
+	if (getProgress().event_corpse_found) {
 		if (hotspot.action != 16 || getInventory()->getEntry(kItemBriefcase)->location != 2) {
 			action_compartment(hotspot);
 		} else {
@@ -790,7 +790,7 @@ IMPLEMENT_ACTION(enterCompartment) {
 		getSound()->playSound(kEntityNone, "LIB014");
 		playAnimation(kEventCathFindCorpse);
 		getSound()->playSound(kEntityNone, "LIB015");
-		getProgress().event_found_corpse = 1;
+		getProgress().event_corpse_found = 1;
 		return kSceneCompartmentCorpse;
 	}
 
@@ -1499,7 +1499,7 @@ void Action::dropCorpse(bool process) const {
 	case kLocation4: // Window
 		// Say goodbye to an old friend
 		getInventory()->getEntry(kItemCorpse)->location = kLocationNone;
-		getProgress().field_20 = 1;
+		getProgress().event_corpse_thrown = 1;
 
 		if (getState()->time <= 1138500) {
 
@@ -1513,7 +1513,7 @@ void Action::dropCorpse(bool process) const {
 			playAnimation(kEventCorpseDropBridge);
 		}
 
-		getProgress().field_8 = 1;
+		getProgress().event_corpse_moved_from_floor = 1;
 		break;
 	}
 
@@ -1641,7 +1641,7 @@ CursorStyle Action::getCursor(byte action, ObjectIndex object, byte param2, byte
 			return kCursorNormal;
 
 		if ((!getInventory()->getSelectedItem() || getInventory()->getSelectedEntry()->manualSelect)
-		 && (object != kObject21 || getProgress().field_8 == 1))
+		 && (object != kObject21 || getProgress().event_corpse_moved_from_floor == 1))
 			return kCursorHand;
 		else
 			return kCursorNormal;

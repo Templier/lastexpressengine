@@ -346,7 +346,7 @@ enum ObjectIndex {
 	kObject45,                          // 45
 	kObject46,
 	kObject47,
-	kObject48,
+	kObject48, // might be the egg
 	kObject49,
 	kObject50,                          // 50
 	kObject51,
@@ -988,8 +988,13 @@ enum ActionIndex {
 	kAction191337656 = 191337656,
 
 	/////////////////////////////
-	// Vesna
+	// Vassili
 	/////////////////////////////
+	kAction191477936 = 191477936,
+
+	/////////////////////////////
+	// Vesna
+	/////////////////////////////	
 	kAction124190740 = 124190740,
 
 	/////////////////////////////

@@ -43,13 +43,13 @@ public:
 	struct GameProgress {
 		uint32 field_0;
 		JacketType jacket;
-		uint32 field_8;
+		uint32 event_corpse_moved_from_floor;
 		uint32 field_C;
-		uint32 event_found_corpse;
+		uint32 event_corpse_found;
 		uint32 field_14;
 		uint32 field_18;
 		uint32 portrait;
-		uint32 field_20;
+		uint32 event_corpse_thrown;
 		uint32 field_24;
 		uint32 field_28;
 		uint32 chapter;
@@ -173,13 +173,13 @@ public:
 		GameProgress() {
 			field_0 = 0;
 			jacket = kJacketOriginal;
-			field_8 = 0;
+			event_corpse_moved_from_floor = 0;
 			field_C = 0;
-			event_found_corpse = 0;
+			event_corpse_found = 0;
 			field_14 = 0;
 			field_18 = 0;
 			portrait = _defaultPortrait;
-			field_20 = 0;
+			event_corpse_thrown = 0;
 			field_24 = 0;
 			field_28 = 0;
 			chapter = kChapter1;
