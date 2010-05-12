@@ -102,6 +102,10 @@ void Sound::removeFromQueue(const char* filename) {
 	warning("SoundManager::removeFromQueue: not implemented!");
 }
 
+void Sound::processEntry(EntityIndex entityIndex) {
+	error("SoundManager::processEntry: not implemented!");
+}
+
 void Sound::unknownFunction1() {
 	error("SoundManager::unknownFunction1: not implemented!");
 }

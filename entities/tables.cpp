@@ -29,6 +29,7 @@
 #include "lastexpress/game/logic.h"
 #include "lastexpress/game/object.h"
 #include "lastexpress/game/savepoint.h"
+#include "lastexpress/game/sound.h"
 #include "lastexpress/game/state.h"
 
 #include "lastexpress/lastexpress.h"
@@ -78,37 +79,42 @@ IMPLEMENT_FUNCTION(Tables, draw, 6)
 		break;
 
 	case kActionNone:
+		// Only applicable to Tables2 entity
 		if (_id != kEntityTables2)
 			break;
 
-		// TODO sound cache handling
 		switch (getProgress().chapter) {
 		default:
 			break;
 
 		case kChapter1:
 			if (getState()->time > kTimeTables1)
-				if (!params->param1)
+				if (!params->param1) {
 					params->param1 = 1;
+					getSound()->processEntry(kEntityTables2);
+				}
 			break;
 
 		case kChapter3:
 			if (getState()->time > kTimeTables2)
-				if (!params->param2)
+				if (!params->param2) {
 					params->param2 = 1;
+					getSound()->processEntry(kEntityTables2);
+				}
 			break;
 
 		case kChapter4:
 			if (getState()->time > kTimeTables3)
-				if (!params->param3)
+				if (!params->param3) {
 					params->param3 = 1;
+					getSound()->processEntry(kEntityTables2);
+				}
 			break;
 
 		}
 		break;
 
-	case kActionDefault:
-		_data->getData()->field_491 = EntityData::kField491_3970;
+	case kActionDefault:		
 		_data->getData()->field_493 = EntityData::kField493_1;
 		_data->getData()->field_495 = EntityData::kField495_5;
 		switch(_id) {
@@ -116,26 +122,32 @@ IMPLEMENT_FUNCTION(Tables, draw, 6)
 			break;
 
 		case kEntityTables0:
+			_data->getData()->field_491 = EntityData::kField491_3970;
 			getEntities()->drawSequenceLeft(_id, "001P");
 			break;
 
 		case kEntityTables1:
+			_data->getData()->field_491 = EntityData::kField491_3970;
 			getEntities()->drawSequenceLeft(_id, "005J");
 			break;
 
 		case kEntityTables2:
+			_data->getData()->field_491 = EntityData::kField491_4690;
 			getEntities()->drawSequenceLeft(_id, "009G");
 			break;
 
 		case kEntityTables3:
+			_data->getData()->field_491 = EntityData::kField491_4690;
 			getEntities()->drawSequenceLeft(_id, "010M");
 			break;
 
 		case kEntityTables4:
+			_data->getData()->field_491 = EntityData::kField491_5420;
 			getEntities()->drawSequenceLeft(_id, "014F");
 			break;
 
 		case kEntityTables5:
+			_data->getData()->field_491 = EntityData::kField491_5420;
 			getEntities()->drawSequenceLeft(_id, "024D");
 			break;
 		}

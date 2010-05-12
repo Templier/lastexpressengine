@@ -92,6 +92,7 @@ public:
 	bool isFileInQueue(const char* filename);
 	void removeFromQueue(const char* filename);
 	bool isBuffered(EntityIndex entityIndex);
+	void processEntry(EntityIndex entityIndex);
 
 	// Misc
 	void unknownFunction1();
