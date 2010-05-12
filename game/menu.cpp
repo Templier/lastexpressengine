@@ -572,7 +572,7 @@ void Menu::handleEvent(const Common::Event &ev) {
 		if (!clicked)
 			break;
 
-		playSfxStream("LIB046");
+		playSfxStream("LIB046.SND");
 
 		// TODO: to implement in logic...
 		//  - load new data file
@@ -611,7 +611,7 @@ void Menu::handleEvent(const Common::Event &ev) {
 	case kActionCredits:
 		if (clicked) {
 			drawSeqFrame(&_seqTooltips, kButtonCreditsPushed, GraphicsManager::kBackgroundOverlay);
-			playSfxStream("LIB046");
+			playSfxStream("LIB046.SND");
 			_isShowingCredits = true;
 			_creditsSequenceIndex = 0;
 			showCredits();
@@ -627,9 +627,9 @@ void Menu::handleEvent(const Common::Event &ev) {
 
 		if (clicked) {
 			drawSeqFrame(&_seqButtons, kButtonQuitPushed, GraphicsManager::kBackgroundOverlay);
-			playSfxStream("LIB046");
-
-			//TODO some stuff... see disasm
+			playSfxStream("LIB046.SND");
+			
+			warning("Menu::handleEvent / kActionQuitGame: implementation not finished!");
 			return; // false;
 		} else {
 			drawSeqFrame(&_seqButtons, kButtonQuit, GraphicsManager::kBackgroundOverlay);
@@ -640,7 +640,7 @@ void Menu::handleEvent(const Common::Event &ev) {
 	case kActionSwitchSaveGame:
 		if (clicked) {
 			drawSeqFrame(&_seqAcorn, 1, GraphicsManager::kBackgroundOverlay);
-			playSfxStream("LIB046");
+			playSfxStream("LIB046.SND");
 			getLogic()->switchGame();
 			// the menu should have been reset & redrawn, so don't do anything else here
 		} else {
@@ -688,7 +688,7 @@ void Menu::handleEvent(const Common::Event &ev) {
 		//if (_currentTime <= getState()->time)
 		if (clicked) {
 			drawSeqFrame(&_seqEggButtons, kButtonRewindPushed, GraphicsManager::kBackgroundOverlay);
-			playSfxStream("LIB046");
+			playSfxStream("LIB046.SND");
 			// TODO rewind clock
 			//goToTime(XXX + 8);
 		} else {
@@ -705,7 +705,7 @@ void Menu::handleEvent(const Common::Event &ev) {
 
 		if (clicked) {
 			drawSeqFrame(&_seqEggButtons, kButtonForwardPushed, GraphicsManager::kBackgroundOverlay);
-			playSfxStream("LIB046");
+			playSfxStream("LIB046.SND");
 
 			// TODO advance clock
 			//goToTime(32 * ??? + XXX + 8);
@@ -764,7 +764,7 @@ void Menu::handleEvent(const Common::Event &ev) {
 		// Show highlight on button & adjust volume if needed
 		if (clicked) {
 			drawSeqFrame(&_seqButtons, kButtonVolumeDownPushed, GraphicsManager::kBackgroundOverlay);
-			playSfxStream("LIB046");
+			playSfxStream("LIB046.SND");
 			setVolume(getVolume() - 1);
 		} else {
 			drawSeqFrame(&_seqButtons, kButtonVolumeDown, GraphicsManager::kBackgroundOverlay);
@@ -784,7 +784,7 @@ void Menu::handleEvent(const Common::Event &ev) {
 		// Show highlight on button & adjust volume if needed
 		if (clicked) {
 			drawSeqFrame(&_seqButtons, kButtonVolumeUpPushed, GraphicsManager::kBackgroundOverlay);
-			playSfxStream("LIB046");
+			playSfxStream("LIB046.SND");
 			setVolume(getVolume() + 1);
 		} else {
 			drawSeqFrame(&_seqButtons, kButtonVolumeUp, GraphicsManager::kBackgroundOverlay);
@@ -804,7 +804,7 @@ void Menu::handleEvent(const Common::Event &ev) {
 		// Show highlight on button & adjust brightness if needed
 		if (clicked) {
 			drawSeqFrame(&_seqButtons, kButtonBrightnessDownPushed, GraphicsManager::kBackgroundOverlay);
-			playSfxStream("LIB046");
+			playSfxStream("LIB046.SND");
 
 			setBrightness(getBrightness() - 1);
 		} else {
@@ -825,7 +825,7 @@ void Menu::handleEvent(const Common::Event &ev) {
 		// Show highlight on button & adjust brightness if needed
 		if (clicked) {
 			drawSeqFrame(&_seqButtons, kButtonBrightnessUpPushed, GraphicsManager::kBackgroundOverlay);
-			playSfxStream("LIB046");
+			playSfxStream("LIB046.SND");
 			setBrightness(getBrightness() + 1);
 		} else {
 			drawSeqFrame(&_seqButtons, kButtonBrightnessUp, GraphicsManager::kBackgroundOverlay);
@@ -967,9 +967,9 @@ void Menu::goToTime(uint32 time) {
 	int speed = 1;
 
 	if (_currentTime <= time) {
-		playSfxStream("LIB042");
+		playSfxStream("LIB042.SND");
 	} else {
-		playSfxStream("LIB041");
+		playSfxStream("LIB041.SND");
 		direction = -1;
 	}
 
@@ -1021,7 +1021,7 @@ void Menu::moveToCity(CityButton city, bool clicked) {
 	_engine->getGraphicsManager()->draw(_cityButtonFrames[city], GraphicsManager::kBackgroundOverlay);
 
 	if (clicked) {
-		playSfxStream("LIB046");
+		playSfxStream("LIB046.SND");
 		goToTime(time);
 		// TODO set some global var to 1
 	} else {

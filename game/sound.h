@@ -86,29 +86,36 @@ public:
 
 	// State (FIXME: to be renamed when we know more about it)
 	void resetState() { _state |= 1; }
-	void reset(EntityIndex entity);
+	
 
 	// Sound queue
-	bool isFileInQueue(const char* filename);
+	bool isFileInQueue(const char* filename, bool testForEntity = false);
+	
 	void removeFromQueue(const char* filename);
-	bool isBuffered(EntityIndex entityIndex);
-	void processEntry(EntityIndex entityIndex);
+	void removeFromQueue(EntityIndex entity);
+
+	bool isBuffered(EntityIndex entity);
+	void processEntry(EntityIndex entity);
 
 	// Misc
 	void unknownFunction1();
 
 	// Sound playing
 	void playSound(EntityIndex entity, const char *filename, int a3 = -1, byte a4 = 0);
+	bool playSoundWithSubtitles(const char *filename, int param3, EntityIndex entity, byte a4 = 0);
 
 	void playMusic(EntityIndex entity, byte id, int a3, byte a4);
 	void playDialog(EntityIndex entity, EntityIndex entityDialog, int a3, byte a4);
-	void playSoundEvent(int index, byte action, byte a3);
+	void playSoundEvent(EntityIndex entity, byte action, byte a3 = 0);
+
+
+	int getSoundValue(EntityIndex entity);
 
 	// Dialog
 	const char *getDialogName(EntityIndex entity) const;
 
 	// Letters
-	const char *readText(int id) const;
+	void readText(int id);
 
 	// Sound bites
 	void excuseMe(EntityIndex entity, int param2 = 0, int param3 = 0);
@@ -143,6 +150,11 @@ private:
 	// Sound streams
 	StreamedSound *_music;
 	StreamedSound *_sfx;
+
+	// Unknown data
+	uint32 _data0;
+	uint32 _data1;
+	uint32 _data2;
 };
 
 } // End of namespace LastExpress

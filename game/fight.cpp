@@ -96,7 +96,7 @@ void Fight::eventMouseClick(const Common::Event &ev) {
 
 		// Handle right button click
 		if (ev.type == Common::EVENT_RBUTTONUP) {
-			getSound()->reset(kEntityTables0);
+			getSound()->removeFromQueue(kEntityTables0);
 			setStopped();
 
 			getGlobalTimer() ? _state = 0 : ++_state;
@@ -143,7 +143,7 @@ void Fight::eventMouseClick(const Common::Event &ev) {
 		// Stop fight if clicked
 		if (ev.type == Common::EVENT_LBUTTONUP) {
 			_handleTimer = false;
-			getSound()->reset(kEntityTables0);
+			getSound()->removeFromQueue(kEntityTables0);
 			bailout(kFightEndExit);
 		}
 
@@ -726,7 +726,7 @@ void Fight::updateMilos(Fighter *fighter) {
 			setSequenceAndDraw(fighter, 5, kFightSequenceType1);
 			setSequenceAndDraw(fighter->opponent, 6, kFightSequenceType1);
 
-			getSound()->reset(kEntityTables0);
+			getSound()->removeFromQueue(kEntityTables0);
 			getSound()->playSound(kEntityTrain, "MUS029", 16);
 
 			CALL_FUNCTION1(fighter, handleAction, kFightActionWin);
@@ -818,7 +818,7 @@ void Fight::updateOpponentMilos(Fighter *fighter) {
 			CALL_FUNCTION1(opponent->opponent, handleAction, (FightAction)opponent->sequenceIndex);
 
 		if (opponent->opponent->countdown <= 0) {
-			getSound()->reset(kEntityTables0);
+			getSound()->removeFromQueue(kEntityTables0);
 			CALL_FUNCTION1(opponent, handleAction, kFightActionLost);
 		}
 	}
@@ -932,7 +932,7 @@ void Fight::handleActionAnna(Fighter *fighter, FightAction action) {
 	}
 
 	if (fighter->field_34 > 4) {
-		getSound()->reset(kEntityTables0);
+		getSound()->removeFromQueue(kEntityTables0);
 		bailout(kFightEndWin);
 	}
 }
@@ -986,7 +986,7 @@ void Fight::updateOpponentAnna(Fighter *fighter) {
 			CALL_FUNCTION1(opponent->opponent, handleAction, (FightAction)opponent->sequenceIndex);
 
 		if (opponent->opponent->countdown <= 0) {
-			getSound()->reset(kEntityTables0);
+			getSound()->removeFromQueue(kEntityTables0);
 			CALL_FUNCTION1(opponent, handleAction, kFightActionLost);
 		}
 	}
@@ -1094,7 +1094,7 @@ void Fight::updateIvo(Fighter *fighter) {
 		if (fighter->opponent->countdown <= 0) {
 			setSequenceAndDraw(fighter, 9, kFightSequenceType1);
 			setSequenceAndDraw(fighter->opponent, 8, kFightSequenceType1);
-			getSound()->reset(kEntityTables0);
+			getSound()->removeFromQueue(kEntityTables0);
 
 			CALL_FUNCTION1(fighter, handleAction, kFightActionWin);
 			return;
@@ -1197,7 +1197,7 @@ void Fight::updateOpponentIvo(Fighter *fighter) {
 		if (opponent->opponent->countdown <= 0) {
 			setSequenceAndDraw(opponent, 7, kFightSequenceType1);
 			setSequenceAndDraw(opponent->opponent, 8, kFightSequenceType1);
-			getSound()->reset(kEntityTables0);
+			getSound()->removeFromQueue(kEntityTables0);
 
 			CALL_FUNCTION1(opponent->opponent, handleAction, kFightActionWin);
 
@@ -1292,7 +1292,7 @@ void Fight::updateSalko(Fighter *fighter) {
 	if (fighter->currentSequence2 && CHECK_SEQUENCE2(fighter, 2)) {
 
 		if (fighter->opponent->countdown <= 0) {			
-			getSound()->reset(kEntityTables0);
+			getSound()->removeFromQueue(kEntityTables0);
 			bailout(kFightEndWin);
 
 			return;
@@ -1367,7 +1367,7 @@ void Fight::updateOpponentSalko(Fighter *fighter) {
 
 	if (opponent->currentSequence2 && CHECK_SEQUENCE2(opponent, 2)) {
 		if (opponent->opponent->countdown <= 0) {
-			getSound()->reset(kEntityTables0);
+			getSound()->removeFromQueue(kEntityTables0);
 			bailout(kFightEndLost);
 
 			// Stop processing
@@ -1472,7 +1472,7 @@ void Fight::updateVesna(Fighter *fighter) {
 			CALL_FUNCTION1(fighter->opponent, handleAction, kFightAction3);
 		
 		if (fighter->opponent->countdown <= 0) {			
-			getSound()->reset(kEntityTables0);
+			getSound()->removeFromQueue(kEntityTables0);
 			bailout(kFightEndWin);
 			return;
 		}
@@ -1604,7 +1604,7 @@ void Fight::updateOpponentVesna(Fighter *fighter) {
 			CALL_FUNCTION0(opponent->opponent, update);
 			CALL_FUNCTION0(opponent, update);
 
-			getSound()->reset(kEntityTables0);
+			getSound()->removeFromQueue(kEntityTables0);
 
 			// Stop processing
 			return;

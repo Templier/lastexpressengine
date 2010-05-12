@@ -60,7 +60,7 @@
 // Utilities
 #define loadFile(name) load(_engine->getResourceManager()->getFileStream(name))
 #define playMusicStream(name) getSound()->getMusicStream()->load(_engine->getResourceManager()->getFileStream(name));
-#define playSfxStream(name) getSound()->getSfxStream()->load(_engine->getResourceManager()->getFileStream(Common::String(name) + ".snd"));
+#define playSfxStream(name) getSound()->getSfxStream()->load(_engine->getResourceManager()->getFileStream(Common::String(name)));
 
 // Misc
 #define save(entity, a2, event) getSaveLoad()->saveGame(a2, entity, event)

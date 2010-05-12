@@ -194,6 +194,7 @@ void Entities::resetEntity(EntityIndex entity) {
 // Scene setup & drawing
 //////////////////////////////////////////////////////////////////////////
 
+// Note: remember to call the function pointer (we do not pass it our implementation)
 void Entities::resetEntityState(EntityIndex entityIndex) {
 	EntityData *data = getData(entityIndex);
 
@@ -201,7 +202,7 @@ void Entities::resetEntityState(EntityIndex entityIndex) {
 	data->getData()->inventoryItem = kItemNone;
 
 	if (getSound()->isBuffered(entityIndex))
-		getSound()->reset(entityIndex);
+		getSound()->removeFromQueue(entityIndex);
 
 	prepareSequences(entityIndex);
 
@@ -456,7 +457,7 @@ void Entities::prepareSequences(EntityIndex index) {
 
 
 
-	warning("Entities::drawSequences: not implemented!");
+	warning("Entities::prepareSequences: not implemented!");
 }
 
 void Entities::drawSequenceInternal(EntityIndex index, const char* sequence, EntityDirection direction) {

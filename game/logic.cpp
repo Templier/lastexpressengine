@@ -662,9 +662,9 @@ void Logic::postProcessScene() {
 		getState()->timeTicks += (scene.getHeader()->param1 + 10);
 
 		//// FIXME Some stuff related to menu?
-		//if (!getFlags()->flag_2) {
+		//if (!getFlags()->mouse_right_click) {
 		//	while ((unknown + 4 * scene->getHeader()->param1) > unknown) {
-		//		if (getFlags()->flag_2)
+		//		if (getFlags()->mouse_right_click)
 		//			break;
 
 		//		getSoundMgr()->unknownFunction1();
@@ -740,7 +740,7 @@ void Logic::postProcessScene() {
 
 		// TODO: Sound cache handling
 
-		playSfxStream("LIB050");
+		playSfxStream("LIB050.SND");
 		switch (getProgress().chapter) {
 		default:
 			gameOver(kTimeType0, 0, kSceneGameOverPolice2, true);
@@ -757,11 +757,7 @@ void Logic::postProcessScene() {
 		break;
 
 	case Scene::kTypeReadText:
-		if (!getSound()->isBuffered(kEntityTables4)) {
-			const char *text = _sound->readText(scene.getHeader()->param1);
-			if (text)
-				playSfxStream(text);
-		}
+        _sound->readText(scene.getHeader()->param1);
 		break;
 
 	case Scene::kType133:

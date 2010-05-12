@@ -186,12 +186,12 @@ IMPLEMENT_FUNCTION(Chapters, function9, 9)
 	if (savepoint.action == kActionDefault) {
 		// Reset sound cache
 		if (ENTITY_PARAM(0, 2) || ENTITY_PARAM(0, 3)) {
-			getSound()->reset(kEntityChapters);
+			getSound()->removeFromQueue(kEntityChapters);
 			ENTITY_PARAM(0, 2) = 0;
 			ENTITY_PARAM(0, 3) = 0;
 		}
 
-		getSound()->playSound(kEntityNone, "MUS008", 16, 0);
+		getSound()->playSound(kEntityNone, "MUS008", 16);
 		getInventory()->unselectItem();
 
 		while (getSound()->isFileInQueue("MUS008"))
@@ -280,7 +280,7 @@ IMPLEMENT_FUNCTION(Chapters, chapter2_init, 11)
 
 	// Reset sound cache
 	if (ENTITY_PARAM(0, 2) || ENTITY_PARAM(0, 3)) {
-		getSound()->reset(kEntityChapters);
+		getSound()->removeFromQueue(kEntityChapters);
 		ENTITY_PARAM(0, 2) = 0;
 		ENTITY_PARAM(0, 3) = 0;
 	}

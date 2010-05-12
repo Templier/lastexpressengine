@@ -442,7 +442,7 @@ IMPLEMENT_ACTION(savePoint) {
 //////////////////////////////////////////////////////////////////////////
 IMPLEMENT_ACTION(playSound) {
 	if (hotspot.param2)
-		getSound()->playSoundEvent(0, hotspot.param1, hotspot.param2);
+		getSound()->playSoundEvent(kEntityNone, hotspot.param1, hotspot.param2);
 
 	return kSceneInvalid;
 }
@@ -466,7 +466,7 @@ IMPLEMENT_ACTION(knock) {
 		getSavePoints()->push(kEntityNone, getObjects()->get(object).entity, kAction8, object);
 	} else {
 		if (!getSound()->isFileInQueue("LIB012"))
-			getSound()->playSoundEvent(0, 12, 0);
+			getSound()->playSoundEvent(kEntityNone, 12);
 	}
 
 	return kSceneInvalid;
@@ -498,18 +498,18 @@ IMPLEMENT_ACTION(compartment) {
 		if (location != 1 || getEntities()->checkFields2(object) || (getInventory()->getSelectedItem() != kItemKey
 		&& (location != 1 || !getInventory()->hasItem(kItemKey)
 		|| getInventory()->getSelectedItem() != kItemFirebird || getInventory()->getSelectedItem() != kItemBriefcase))) {
-				getSound()->playSoundEvent(0, 13, 0);
+				getSound()->playSoundEvent(kEntityNone, 13);
 				
 				// Stop processing further
 				return kSceneNone;
 		}
 
-		getSound()->playSoundEvent(0, 32, 0);
+		getSound()->playSoundEvent(kEntityNone, 32);
 
 		if ((object >= 1 && object <= 3) || (object >= 32 && object <= 37))
 			getObjects()->update(object, kEntityNone, kLocationNone, kCursorHandKnock, kCursorHand);
 
-		getSound()->playSoundEvent(0, 15, 22);
+		getSound()->playSoundEvent(kEntityNone, 15, 22);
 		getInventory()->unselectItem();
 
 		return kSceneInvalid;
@@ -517,16 +517,16 @@ IMPLEMENT_ACTION(compartment) {
 
 	if (hotspot.action != 16 || getInventory()->getSelectedItem() != kItemKey) {
 		if (object == 109) {
-			getSound()->playSoundEvent(0, 26, 0);
+			getSound()->playSoundEvent(kEntityNone, 26);
 		} else {
-			getSound()->playSoundEvent(0, 14, 0);
-			getSound()->playSoundEvent(0, 15, 22);
+			getSound()->playSoundEvent(kEntityNone, 14);
+			getSound()->playSoundEvent(kEntityNone, 15, 22);
 		}
 		return kSceneInvalid;
 	}
 
 	getObjects()->update(kObjectCompartment1, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
-	getSound()->playSoundEvent(0, 16, 0);
+	getSound()->playSoundEvent(kEntityNone, 16);
 	getInventory()->unselectItem();
 	
 	// Stop processing further
@@ -535,8 +535,8 @@ IMPLEMENT_ACTION(compartment) {
 
 //////////////////////////////////////////////////////////////////////////
 IMPLEMENT_ACTION(playSounds) {
-	getSound()->playSoundEvent(0, hotspot.param1, 0);
-	getSound()->playSoundEvent(0, hotspot.param3, hotspot.param2);
+	getSound()->playSoundEvent(kEntityNone, hotspot.param1);
+	getSound()->playSoundEvent(kEntityNone, hotspot.param3, hotspot.param2);
 
 	return kSceneInvalid;
 }
@@ -569,16 +569,16 @@ IMPLEMENT_ACTION(openCloseObject) {
 	switch (location) {
 	case kLocation1:
 		if (isNotWindow)
-			getSound()->playSoundEvent(0, 24, 0);
+			getSound()->playSoundEvent(kEntityNone, 24);
 		else
-			getSound()->playSoundEvent(0, 21, 0);
+			getSound()->playSoundEvent(kEntityNone, 21);
 		break;
 
 	case kLocation2:
 		if (isNotWindow)
-			getSound()->playSoundEvent(0, 36, 0);
+			getSound()->playSoundEvent(kEntityNone, 36);
 		else
-			getSound()->playSoundEvent(0, 20, 0);
+			getSound()->playSoundEvent(kEntityNone, 20);
 		break;
 
 	default:
@@ -599,9 +599,9 @@ IMPLEMENT_ACTION(10) {
 
 	if (object != kObject112 /* TODO: or LIB096 does not exist -> is it needed, say if the HPF is not loaded or something */) {
 		if (object == 1)
-			getSound()->playSoundEvent(0, 73, 0);
+			getSound()->playSoundEvent(kEntityNone, 73);
 	} else {
-		getSound()->playSoundEvent(0, 96, 0);
+		getSound()->playSoundEvent(kEntityNone, 96);
 	}
 
 	return kSceneInvalid;
@@ -679,7 +679,7 @@ IMPLEMENT_ACTION(pickItem) {
 
 		getInventory()->addItem(kItemParchemin);
 		getInventory()->getEntry(kItem11)->location = kLocation1;
-		getSound()->playSoundEvent(0, 9, 0);
+		getSound()->playSoundEvent(kEntityNone, 9);
 		break;
 
 	case kItemBomb:
@@ -688,7 +688,7 @@ IMPLEMENT_ACTION(pickItem) {
 		break;
 
 	case kItemBriefcase:
-		getSound()->playSoundEvent(0, 83, 0);
+		getSound()->playSoundEvent(kEntityNone, 83);
 		break;
 
 	default:
@@ -733,7 +733,7 @@ IMPLEMENT_ACTION(dropItem) {
 
 	// Handle actions
 	if (item == kItemBriefcase) {
-		getSound()->playSoundEvent(0, 82, 0);
+		getSound()->playSoundEvent(kEntityNone, 82);
 
 		if (location == kLocation2) {
 			if (!getProgress().field_58) {
@@ -744,7 +744,7 @@ IMPLEMENT_ACTION(dropItem) {
 			if (getInventory()->getEntry(kItemParchemin)->location == kLocation2) {
 				getInventory()->addItem(kItemParchemin);
 				getInventory()->getEntry(kItem11)->location = kLocation11;
-				getSound()->playSoundEvent(0, 9, 0);
+				getSound()->playSoundEvent(kEntityNone, 9);
 			}
 		}
 	}
@@ -772,11 +772,11 @@ IMPLEMENT_ACTION(enterCompartment) {
 		if (hotspot.action != 16 || getInventory()->getEntry(kItemBriefcase)->location != 2) {
 			action_compartment(hotspot);
 		} else {
-			getSound()->playSoundEvent(0, 14, 0);
-			getSound()->playSoundEvent(0, 15, 22);
+			getSound()->playSoundEvent(kEntityNone, 14);
+			getSound()->playSoundEvent(kEntityNone, 15, 22);
 
 			if (getProgress().field_78) {
-				getSound()->playSound(kEntityNone, "MUS003", 16, 0);
+				getSound()->playSound(kEntityNone, "MUS003", 16);
 				getProgress().field_78 = 0;
 			}
 
@@ -939,7 +939,7 @@ IMPLEMENT_ACTION(climbDownTrain) {
 
 	playAnimation(evt);
 	if (evt == kEventCathClimbDownTrainNoJacketDay)
-		getSound()->playSoundEvent(0, 37, 0);
+		getSound()->playSoundEvent(kEntityNone, 37);
 
 	if (!hotspot.scene)
 		getLogic()->processScene();
@@ -964,7 +964,7 @@ IMPLEMENT_ACTION(jumpUpDownTrain) {
 	case 3:
 		if (getInventory()->getSelectedItem() == kItemBriefcase) {
 			getInventory()->removeItem(kItemBriefcase, kLocation3);
-			getSound()->playSoundEvent(0, 82, 0);
+			getSound()->playSoundEvent(kEntityNone, 82);
 			getInventory()->unselectItem();
 		}
 
@@ -1017,7 +1017,7 @@ IMPLEMENT_ACTION(unbound) {
 	case 4:
 		if (!getEvent(kEventCathStruggleWithBonds2)) {
 			playAnimation(kEventCathStruggleWithBonds2);
-			getSound()->playSoundEvent(0, 101, 0);
+			getSound()->playSoundEvent(kEntityNone, 101);
 			getInventory()->setLocationAndProcess(kItemMatch, kLocation2);
 			if (!hotspot.scene)
 				getLogic()->processScene();
@@ -1043,11 +1043,11 @@ IMPLEMENT_ACTION(25) {
 		break;
 
 	case 2:
-		getSound()->playSound(kEntityNone, "MUS021", 16, 0);
+		getSound()->playSound(kEntityNone, "MUS021", 16);
 		break;
 
 	case 3:
-		getSound()->playSoundEvent(0, 43, 0);
+		getSound()->playSoundEvent(kEntityNone, 43);
 		if (!getInventory()->hasItem(kItemKey)) {
 			if (!getEvent(kEventAnnaBagageArgument)) {
 				getEntities()->resetEntityState(kEntityAnna);
@@ -1094,7 +1094,7 @@ IMPLEMENT_ACTION(26) {
 
 //////////////////////////////////////////////////////////////////////////
 IMPLEMENT_ACTION(27) {
-	getSound()->playSoundEvent(0, 31, 0);
+	getSound()->playSoundEvent(kEntityNone, 31);
 
 	switch (getEntityData(kEntityNone)->field_495) {
 	default:
@@ -1136,7 +1136,7 @@ IMPLEMENT_ACTION(concertSitCough) {
 //////////////////////////////////////////////////////////////////////////
 IMPLEMENT_ACTION(29) {
 	getProgress().field_C = 1;
-	getSound()->playSoundEvent(0, hotspot.param1, hotspot.param2);
+	getSound()->playSoundEvent(kEntityNone, hotspot.param1, hotspot.param2);
 	getSound()->playMusic(kEntityNone, hotspot.param3, 16, 0);
 
 	return kSceneInvalid;
@@ -1276,14 +1276,14 @@ IMPLEMENT_ACTION(openMatchBox) {
 		return kSceneInvalid;
 
 	getInventory()->addItem(kItemMatch);
-	getSound()->playSoundEvent(0, 102, 0);
+	getSound()->playSoundEvent(kEntityNone, 102);
 
 	return kSceneInvalid;
 }
 
 //////////////////////////////////////////////////////////////////////////
 IMPLEMENT_ACTION(openBed) {
-	getSound()->playSoundEvent(0, 59, 0);
+	getSound()->playSoundEvent(kEntityNone, 59);
 
 	return kSceneInvalid;
 }
@@ -1297,9 +1297,9 @@ IMPLEMENT_ACTION(dialog) {
 
 //////////////////////////////////////////////////////////////////////////
 IMPLEMENT_ACTION(eggBox) {
-	getSound()->playSoundEvent(0, 43, 0);
+	getSound()->playSoundEvent(kEntityNone, 43);
 	if (getProgress().field_7C) {
-		getSound()->playSound(kEntityNone, "MUS003", 16, 0);
+		getSound()->playSound(kEntityNone, "MUS003", 16);
 		getProgress().field_7C = 0;
 	}
 
@@ -1308,9 +1308,9 @@ IMPLEMENT_ACTION(eggBox) {
 
 //////////////////////////////////////////////////////////////////////////
 IMPLEMENT_ACTION(39) {
-	getSound()->playSoundEvent(0, 24, 0);
+	getSound()->playSoundEvent(kEntityNone, 24);
 	if (getProgress().field_80) {
-		getSound()->playSound(kEntityNone, "MUS003", 16, 0);
+		getSound()->playSound(kEntityNone, "MUS003", 16);
 		getProgress().field_80 = 0;
 	}
 
@@ -1319,7 +1319,7 @@ IMPLEMENT_ACTION(39) {
 
 //////////////////////////////////////////////////////////////////////////
 IMPLEMENT_ACTION(bed) {
-	getSound()->playSoundEvent(0, 85, 0);
+	getSound()->playSoundEvent(kEntityNone, 85);
 	// falls to case 12
 	return action_12(hotspot);
 }
@@ -1578,9 +1578,9 @@ bool Action::handleOtherCompartment(ObjectIndex object, byte param2, byte param3
 void Action::playCompartmentSoundEvents(EntityIndex entityIndex, ObjectIndex object, byte param2, byte param3, bool loadSceneFunction) const {
 	if (param2) {
 		if (getObjects()->get(object).location == 1 || getObjects()->get(object).location == 3 || getEntities()->checkFields2(object)) {
-			getSound()->playSoundEvent(kEntityNone, 13, 0);
+			getSound()->playSoundEvent(kEntityNone, 13);
 		} else {
-			getSound()->playSoundEvent(kEntityNone, 14, 0);
+			getSound()->playSoundEvent(kEntityNone, 14);
 			getSound()->playSoundEvent(kEntityNone, 15, 3);
 		}
 	}
