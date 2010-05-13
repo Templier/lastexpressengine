@@ -113,6 +113,7 @@ IMPLEMENT_FUNCTION(Vassili, function5, 5)
 			//		break;
 			//	params->param3 = EntityData::kParamTime;
 			//}
+
 			// TODO adapt UPDATE_FROM_TIME
 			error("Vassili: callback function 5 not implemented!");
 
@@ -141,7 +142,39 @@ IMPLEMENT_FUNCTION(Vassili, function5, 5)
 }
 
 IMPLEMENT_FUNCTION(Vassili, function6, 6)
-	error("Vassili: callback function 6 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionNone:
+		// TODO adapt UPDATE_FROM_TICKS
+		error("Vassili: callback function 6 not implemented!");
+		break;
+
+	case kActionDefault:
+		_data->getData()->field_491 = EntityData::kField491_8200;
+		_data->getData()->field_493 = EntityData::kField493_1;
+		_data->getData()->field_495 = EntityData::kField495_4;
+
+		getObjects()->update(kObjectCompartmentA, kEntityNone, kLocationNone, kCursorHandKnock, kCursorHand);
+
+		params->param1 = 5 * (3 * random(25) + 15);
+
+		getEntities()->drawSequenceLeft(kEntityVassili, "303A");
+		break;
+
+	case kAction18:
+		if (_data->getNextCallback() != 1)
+			break;
+
+		getEntities()->drawSequenceLeft(kEntityVassili, "303C");
+		params->param1 = 5 * (3 * random(25) + 15);
+		params->param2 = 1;
+
+		// TODO: Call shared part with kActionNone
+		error("Vassili: callback function 6 not implemented!");
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Vassili, function7, 7)
@@ -225,7 +258,7 @@ IMPLEMENT_FUNCTION(Vassili, function9, 9)
 
 	case kActionDefault:
 	case kAction17:
-		if (getObjects()->get(kObjectCompartmentA).location == kLocation2 && getEntities()->checkFields4(EntityData::kField495_4, 17)
+		if ((getObjects()->get(kObjectCompartmentA).location == kLocation2 && getEntities()->checkFields4(EntityData::kField495_4, 17))
 		|| getEntities()->checkFields4(EntityData::kField495_4, 18)
 		|| getEntities()->checkFields4(EntityData::kField495_4, 37)
 		|| getEntities()->checkFields4(EntityData::kField495_4, 38)
