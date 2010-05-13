@@ -82,6 +82,8 @@ IMPLEMENT_FUNCTION(Sophie, function1, 1)
 }
 
 //////////////////////////////////////////////////////////////////////////
+// param1: Field495Value
+// param2: Field491Value
 IMPLEMENT_FUNCTION_II(Sophie, function2, 2)
 	switch (savepoint.action) {
 	default:
@@ -170,7 +172,7 @@ IMPLEMENT_FUNCTION(Sophie, function3, 3)
 		_data->getData()->field_495 = getEntityData(kEntityRebecca)->field_495;
 
 		_data->setNextCallback(1);
-		call(new ENTITY_SETUP(Sophie, setup_function2), 5, 850);
+		call(new ENTITY_SETUP(Sophie, setup_function2), EntityData::kField495_5, EntityData::kField491_850);
 		break;
 
 	case kAction136654208:
@@ -179,7 +181,7 @@ IMPLEMENT_FUNCTION(Sophie, function3, 3)
 		_data->getData()->field_495 = getEntityData(kEntityRebecca)->field_495;
 
 		_data->setNextCallback(2);
-		call(new ENTITY_SETUP(Sophie, setup_function2), 4, EntityData::kField491_4840);
+		call(new ENTITY_SETUP(Sophie, setup_function2), EntityData::kField495_4, EntityData::kField491_4840);
 		break;
 
 	case kAction259921280:
@@ -188,7 +190,7 @@ IMPLEMENT_FUNCTION(Sophie, function3, 3)
 		_data->getData()->field_495 = getEntityData(kEntityRebecca)->field_495;
 
 		_data->setNextCallback(3);
-		call(new ENTITY_SETUP(Sophie, setup_function2), 2, 9640);
+		call(new ENTITY_SETUP(Sophie, setup_function2), EntityData::kField495_2, EntityData::kField491_9460);
 		break;
 
 	case kAction292775040:
@@ -197,7 +199,7 @@ IMPLEMENT_FUNCTION(Sophie, function3, 3)
 		_data->getData()->field_495 = EntityData::kField495_2;
 
 		_data->setNextCallback(4);
-		call(new ENTITY_SETUP(Sophie, setup_function2), 4, EntityData::kField491_4840);
+		call(new ENTITY_SETUP(Sophie, setup_function2), EntityData::kField495_4, EntityData::kField491_4840);
 		break;
 	}
 }
