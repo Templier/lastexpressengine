@@ -396,6 +396,7 @@ protected:
 	void updateFromTime(const SavePoint &savepoint);
 
 	void function1(const SavePoint &savepoint);
+	void function1Clothes(const SavePoint &savepoint);
 	void savepointDirection(const SavePoint &savepoint);
 	void savepointCheckFields11(const SavePoint &savepoint);
 	void savepointCheckEntity(const SavePoint &savepoint);

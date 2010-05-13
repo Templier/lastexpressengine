@@ -122,7 +122,7 @@ Anna::Anna(LastExpressEngine *engine) : Entity(engine, kEntityAnna) {
 }
 
 IMPLEMENT_FUNCTION(Anna, function1, 1)
-	error("Anna: callback function 1 not implemented!");
+	Entity::function1Clothes(savepoint);
 }
 
 IMPLEMENT_FUNCTION_S(Anna, draw, 2)

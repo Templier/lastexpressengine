@@ -130,6 +130,22 @@ void Entity::function1(const SavePoint &savepoint) {
 	}
 }
 
+void Entity::function1Clothes(const SavePoint &savepoint) {
+	// Handle kAction1
+	if (savepoint.action == kAction1) {
+
+		// Select next available clothes
+		_data->getData()->clothes = (EntityData::ClothesIndex)(_data->getData()->clothes + 1);
+		if (_data->getData()->clothes > 3)
+			_data->getData()->clothes = EntityData::kClothesDefault;
+
+		return;
+	}
+
+	// Let the default function handle the other actions
+	function1(savepoint);
+}
+
 void Entity::savegame(const SavePoint &savepoint) {
 	EntityData::EntityParametersIIII *params = (EntityData::EntityParametersIIII*)_data->getCurrentParameters();
 

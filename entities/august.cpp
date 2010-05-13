@@ -111,7 +111,7 @@ August::August(LastExpressEngine *engine) : Entity(engine, kEntityAugust) {
 }
 
 IMPLEMENT_FUNCTION(August, function1, 1)
-	error("August: callback function 1 not implemented!");
+	Entity::function1Clothes(savepoint);
 }
 
 IMPLEMENT_FUNCTION_I(August, updateFromTime, 2)

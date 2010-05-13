@@ -71,7 +71,7 @@ Francois::Francois(LastExpressEngine *engine) : Entity(engine, kEntityFrancois) 
 }
 
 IMPLEMENT_FUNCTION(Francois, function1, 1)
-	error("Francois: callback function 1 not implemented!");
+	Entity::function1Clothes(savepoint);
 }
 
 IMPLEMENT_FUNCTION_I(Francois, updateFromTime, 2)

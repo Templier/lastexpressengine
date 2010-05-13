@@ -103,7 +103,7 @@ Coudert::Coudert(LastExpressEngine *engine) : Entity(engine, kEntityCoudert) {
 }
 
 IMPLEMENT_FUNCTION(Coudert, function1, 1)
-	error("Coudert: callback function 1 not implemented!");
+	Entity::function1Clothes(savepoint);
 }
 
 IMPLEMENT_FUNCTION_S(Coudert, function2, 2)

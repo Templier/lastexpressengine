@@ -97,7 +97,7 @@ Tatiana::Tatiana(LastExpressEngine *engine) : Entity(engine, kEntityTatiana) {
 }
 
 IMPLEMENT_FUNCTION(Tatiana, function1, 1)
-	error("Tatiana: callback function 1 not implemented!");
+	Entity::function1Clothes(savepoint);
 }
 
 IMPLEMENT_FUNCTION_S(Tatiana, playSound, 2)
