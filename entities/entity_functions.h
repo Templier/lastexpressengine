@@ -63,7 +63,7 @@
 	} else { \
 		params->param##param1 = (int)getState()->time + value; \
 		if (params->param##param1 == 0) \
-			return; \
+			break; \
 		if (params->param##param1 >= (int)getState()->time) \
 			break; \
 		params->param##param1 = EntityData::kParamTime; \
@@ -77,7 +77,7 @@
 	} else { \
 		params->param##param1 = (int)getState()->timeTicks + value; \
 		if (params->param##param1 == 0) \
-			return; \
+			break; \
 		if (params->param##param1 >= (int)getState()->timeTicks) \
 			break; \
 		params->param##param1 = EntityData::kParamTime; \

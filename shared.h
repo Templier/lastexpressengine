@@ -43,6 +43,9 @@ enum TimeValue {
 	kTimeAbbot3 = 1971000,
 	kTimeAbbot4 = 1989000,
 
+	kTimeVassili = 1503000,
+	kTimeVassili2 = 1512000,
+
 	kTimeTables1 = 1165500,
 	kTimeTables2 = 2052000,
 	kTimeTables3 = 2488500,
@@ -990,6 +993,8 @@ enum ActionIndex {
 	/////////////////////////////
 	// Vassili
 	/////////////////////////////
+	kAction122732000 = 122732000,
+	kAction168459827 = 168459827,
 	kAction191477936 = 191477936,
 
 	/////////////////////////////

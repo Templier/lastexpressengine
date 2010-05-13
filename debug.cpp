@@ -606,7 +606,8 @@ bool Debugger::cmd_beetle(int argc, const char **argv) {
 
 			// Play the game
 			Common::Event ev;
-			while (true) {				
+			bool playgame = true;
+			while (playgame) {				
 				// Update beetle
 				beetle->update();
 
@@ -622,7 +623,7 @@ bool Debugger::cmd_beetle(int argc, const char **argv) {
 					case Common::EVENT_KEYDOWN:
 						// Exit beetle game on escape
 						if (ev.kbd.keycode == Common::KEYCODE_ESCAPE)
-							goto beetle_cleanup;
+							playgame = false;
 
 						break;
 				
@@ -645,7 +646,7 @@ bool Debugger::cmd_beetle(int argc, const char **argv) {
 						getLogic()->getGameState()->setCoordinates(ev.mouse);
 
 						if (beetle->catchBeetle())
-							goto beetle_cleanup;
+							playgame = false;
 						break;
 					}	
 
@@ -653,7 +654,6 @@ bool Debugger::cmd_beetle(int argc, const char **argv) {
 				}
 			}
 
-beetle_cleanup:
 			// Cleanup
 			beetle->unload();
 			delete beetle;

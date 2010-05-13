@@ -92,7 +92,52 @@ IMPLEMENT_FUNCTION(Vassili, chapter1, 4)
 }
 
 IMPLEMENT_FUNCTION(Vassili, function5, 5)
-	error("Vassili: callback function 5 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionNone:
+		if (params->param1) {
+			_data->getData()->field_491 = getEntities()->getData(kEntityTatiana)->getData()->field_491;
+			_data->getData()->field_493 = getEntities()->getData(kEntityTatiana)->getData()->field_493;
+		} else {
+			//if (params->param3) {
+			//	if (params->param3 >= (int)getState()->time)
+			//		break;
+			//	params->param3 = EntityData::kParamTime;
+			//} else {
+			//	params->param3 = (int)getState()->time + 450;
+			//	if (params->param3 == 0)
+			//		return;
+			//	if (params->param3 >= (int)getState()->time)
+			//		break;
+			//	params->param3 = EntityData::kParamTime;
+			//}
+			// TODO adapt UPDATE_FROM_TIME
+			error("Vassili: callback function 5 not implemented!");
+
+			//if (!params->param2 && getObjects()->get(kObjectCompartmentA).location == kLocation1) {
+			//	params->param2 = 1;
+			//	getEntities()->drawSequenceLeft(kEntityVassili, "303A");
+			//	getObjects()->update(kObjectCompartmentA, kEntityNone, kLocationNone, kCursorHandKnock, kCursorHand);
+			//}
+			break;
+		}
+		break;
+
+	case kActionDefault:
+		params->param1 = 1;
+		break;
+
+	case kAction122732000:
+		setup_function6();
+		break;
+
+	case kAction168459827:
+		params->param1 = 0;
+		getObjects()->update(kObjectCompartmentA, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Vassili, function6, 6)
@@ -100,7 +145,47 @@ IMPLEMENT_FUNCTION(Vassili, function6, 6)
 }
 
 IMPLEMENT_FUNCTION(Vassili, function7, 7)
-	error("Vassili: callback function 7 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionNone:
+		if (params->param1 != EntityData::kParamTime
+		 && getState()->time > kTimeVassili) {
+			 if (getState()->time <= kTimeVassili2) {
+				 if (getEntities()->checkFields7(EntityData::kField495_4) || !params->param1) {
+					 params->param1 = getState()->time + 150;
+					 if (params->param1) {
+						 setup_function8();
+						 break;
+					 }
+				 }
+
+				 if (params->param1 >= (int)getState()->time)
+					 break;
+			 }
+
+			 params->param1 = EntityData::kParamTime;
+			 setup_function8();
+		} 		
+		break;
+
+	case kActionDefault:
+		_data->getData()->field_491 = EntityData::kField491_8200;
+		_data->getData()->field_493 = EntityData::kField493_1;
+		_data->getData()->field_495 = EntityData::kField495_4;
+
+		getEntities()->prepareSequences(kEntityVassili);
+		if (getEntities()->checkFields1(kEntityNone, EntityData::kField495_4, EntityData::kField491_8200))
+			getLogic()->loadSceneFromObject(kObjectCompartmentA);
+
+		getObjects()->update(kObjectCompartmentA, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
+		break;
+
+	case kAction339669520:
+		setup_function9();
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Vassili, function8, 8)
@@ -140,7 +225,7 @@ IMPLEMENT_FUNCTION(Vassili, function9, 9)
 
 	case kActionDefault:
 	case kAction17:
-		if ( getObjects()->get(kObjectCompartmentA).location == kLocation2 && getEntities()->checkFields4(EntityData::kField495_4, 17)
+		if (getObjects()->get(kObjectCompartmentA).location == kLocation2 && getEntities()->checkFields4(EntityData::kField495_4, 17)
 		|| getEntities()->checkFields4(EntityData::kField495_4, 18)
 		|| getEntities()->checkFields4(EntityData::kField495_4, 37)
 		|| getEntities()->checkFields4(EntityData::kField495_4, 38)
@@ -198,7 +283,7 @@ IMPLEMENT_FUNCTION(Vassili, seizure, 10)
 		if (_data->getNextCallback() != 1)
 			break;
 
-		getEntities()->getData(kEntityNone)->getData()->field_493 = EntityData::kField493_1;
+		_data->getData()->field_493 = EntityData::kField493_1;
 		getAction()->playAnimation(kEventVassiliSeizure);    
 
         getObjects()->update(kObjectCompartmentA, kEntityNone, kLocationNone, kCursorHandKnock, kCursorHand);
