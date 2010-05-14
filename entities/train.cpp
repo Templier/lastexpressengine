@@ -450,13 +450,13 @@ label_skip:
 		case 1:
 		case 2:
 			getAction()->playAnimation(action == 1 ? kEventCoudertBloodJacket : kEventMertensBloodJacket);
-			getLogic()->gameOver(kTimeType0, 1, kSceneGameOverBloodJacket, true);
+			getLogic()->gameOver(kTimeType0, kTime1, kSceneGameOverBloodJacket, true);
 			resetParam8();
 			break;
 
 		case 5:
 			getAction()->playAnimation(kEventLocomotiveConductorsDiscovered);
-			getLogic()->gameOver(kTimeType0, 1, kSceneGameOverPolice2, true);
+			getLogic()->gameOver(kTimeType0, kTime1, kSceneGameOverPolice2, true);
 			break;
 
 		case 6:

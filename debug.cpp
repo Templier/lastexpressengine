@@ -421,7 +421,7 @@ bool Debugger::cmd_loadscene(int argc, const char **argv) {
 			redrawScreen();
 
 			// Pause for a second to be able to see the scene
-			_engine->_system->delayMillis(1000);
+			_engine->_system->delayMillis(3000);
 
 			delete _sceneMan;
 

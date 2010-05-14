@@ -61,7 +61,7 @@ public:
 	void startGame();
 	void switchGame();
 
-	void gameOver(TimeType type, uint32 time, SceneIndex sceneIndex, bool showScene);
+	void gameOver(TimeType type, TimeValue time, SceneIndex sceneIndex, bool showScene);
 
 	// Scene
 	void loadSceneDataFile(ArchiveIndex archive) const;

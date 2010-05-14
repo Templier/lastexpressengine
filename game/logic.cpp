@@ -161,7 +161,7 @@ void Logic::switchGame() {
 }
 
 // Handle game over
-void Logic::gameOver(TimeType type, uint32 time, SceneIndex sceneIndex, bool showScene)
+void Logic::gameOver(TimeType type, TimeValue time, SceneIndex sceneIndex, bool showScene)
 {
 
 	warning("Logic::gameOver: not implemented!");
@@ -748,15 +748,15 @@ void Logic::postProcessScene() {
 		playSfxStream("LIB050.SND");
 		switch (getProgress().chapter) {
 		default:
-			gameOver(kTimeType0, 0, kSceneGameOverPolice2, true);
+			gameOver(kTimeType0, kTime0, kSceneGameOverPolice2, true);
 			break;
 
 		case kChapter1:
-			gameOver(kTimeType0, 0, kSceneGameOverAlarm, true);
+			gameOver(kTimeType0, kTime0, kSceneGameOverAlarm, true);
 			break;
 
 		case kChapter4:
-			gameOver(kTimeType0, 0, kSceneGameOverAlarm2, true);
+			gameOver(kTimeType0, kTime0, kSceneGameOverAlarm2, true);
 			break;
 		}
 		break;

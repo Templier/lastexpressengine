@@ -11,7 +11,7 @@
 
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.	 See the
  * GNU General Public License for more details.
 
  * You should have received a copy of the GNU General Public License
@@ -25,6 +25,7 @@
 
 #include "lastexpress/entities/anna.h"
 
+#include "lastexpress/game/action.h"
 #include "lastexpress/game/entities.h"
 #include "lastexpress/game/logic.h"
 #include "lastexpress/game/object.h"
@@ -158,7 +159,27 @@ IMPLEMENT_FUNCTION_II(Anna, savegame, 9)
 }
 
 IMPLEMENT_FUNCTION_II(Anna, function10, 10)
-	error("Anna: callback function 10 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionExcuseMeCath:
+		if (getEvent(kEventAugustPresentAnna) || getEvent(kEventAugustPresentAnnaFirstIntroduction) || getProgress().chapter >= kChapter2)
+			getSound()->playSound(kEntityNone, "CAT1001");
+		else
+			getSound()->excuseMeCath();
+		break;
+
+	case kActionExcuseMe:
+		getSound()->excuseMe(kEntityAnna);
+		break;
+
+	case kActionNone:
+	case kActionDefault:
+		if (getEntities()->checkEntity(kEntityAnna, (EntityData::Field495Value)params->param1, (EntityData::Field491Value)params->param2))
+			CALL_PREVIOUS_SAVEPOINT()
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION_I(Anna, updateFromTime, 11)
@@ -220,7 +241,30 @@ IMPLEMENT_FUNCTION(Anna, function19, 19)
 }
 
 IMPLEMENT_FUNCTION(Anna, function20, 20)
-	error("Anna: callback function 20 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionDefault:
+		_data->setNextCallback(1);
+		call(new ENTITY_SETUP_ISSI(Anna, setup_function15), kTimeAnna, "NONE");
+		break;
+
+	case kAction18:
+		switch (_data->getNextCallback()) {
+		case 1:
+			_data->setNextCallback(2);
+			call(new ENTITY_SETUP_SIIS(Anna, setup_function4), "618Bf", kObjectCompartmentF);
+			break;
+
+		case 2:
+			_data->getData()->field_493 = EntityData::kField493_0;
+			getSavePoints()->push(kEntityAnna, kEntityMax, kAction71277948);
+			setup_function21();
+			break;
+		}
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Anna, function21, 21)
@@ -288,7 +332,20 @@ IMPLEMENT_FUNCTION(Anna, function36, 36)
 }
 
 IMPLEMENT_FUNCTION(Anna, function37, 37)
-	error("Anna: callback function 37 not implemented!");
+  switch (savepoint.action) {
+  default:
+	break;
+
+  case kActionDefault:
+	_data->getData()->field_491 = EntityData::kField491_8200;
+	_data->getData()->field_493 = EntityData::kField493_0;
+	_data->getData()->field_495 = EntityData::kField495_4;
+	break;
+
+  case kAction191477936:
+	setup_function38();
+	break;
+  }
 }
 
 IMPLEMENT_FUNCTION(Anna, function38, 38)
@@ -432,7 +489,31 @@ IMPLEMENT_FUNCTION(Anna, function62, 62)
 }
 
 IMPLEMENT_FUNCTION(Anna, function63, 63)
-	error("Anna: callback function 63 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionDefault:
+		getSavePoints()->push(kEntityAnna, kEntityChapters, kAction171843264);
+		break;
+
+	// Game Over with Anna killed!
+	case kAction18:
+		if (_data->getNextCallback() == 1) {
+			getAction()->playAnimation(kEventAnnaKilled);
+			getLogic()->gameOver(kTimeType1, kTimeAnna2, kSceneGameOverAnnaDied, true);
+		}
+		break;
+
+	// Anna will get killed...
+	case kAction272177921:
+		if (getSound()->isFileInQueue("MUS012", true))
+			getSound()->unknownFunction2("MUS012");
+
+		_data->setNextCallback(1);
+		call(new ENTITY_SETUP(Anna, setup_savegame), 2, kEventAnnaKilled);
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Anna, bagage, 64)
@@ -522,7 +603,8 @@ IMPLEMENT_FUNCTION(Anna, function75, 75)
 }
 
 IMPLEMENT_FUNCTION(Anna, function76, 76)
-	error("Anna: callback function 76 not implemented!");
+	if (savepoint.action == kAction158480160)
+		setup_function77();
 }
 
 IMPLEMENT_FUNCTION(Anna, function77, 77)

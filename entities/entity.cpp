@@ -146,6 +146,9 @@ void Entity::function1Clothes(const SavePoint &savepoint) {
 	function1(savepoint);
 }
 
+//////////////////////////////////////////////////////////////////////////
+// param1: ??
+// param2: EventIndex
 void Entity::savegame(const SavePoint &savepoint) {
 	EntityData::EntityParametersIIII *params = (EntityData::EntityParametersIIII*)_data->getCurrentParameters();
 
@@ -318,6 +321,9 @@ void Entity::savepointCall(const SavePoint &savepoint) {
 	}
 }
 
+//////////////////////////////////////////////////////////////////////////
+// param1: sequence
+// param2: object index
 void Entity::updateFields(const SavePoint &savepoint) {
 	EntityData::EntityParametersSIIS *params = (EntityData::EntityParametersSIIS*)_data->getCurrentParameters();
 

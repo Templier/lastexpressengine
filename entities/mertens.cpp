@@ -143,7 +143,7 @@ IMPLEMENT_FUNCTION(Mertens, function6, 6)
 	case kAction18:
 		if (_data->getNextCallback() == 1) {
 			getAction()->playAnimation(kEventMertensBloodJacket);
-			getLogic()->gameOver(kTimeType0, 1, kSceneGameOverBloodJacket, true);
+			getLogic()->gameOver(kTimeType0, kTime1, kSceneGameOverBloodJacket, true);
 		}
 		break;
 	}
@@ -188,7 +188,7 @@ IMPLEMENT_FUNCTION_I(Mertens, function11, 11)
 	case kAction18:
 		if (_data->getNextCallback() == 1) {
 			getAction()->playAnimation(kEventMertensBloodJacket);
-			getLogic()->gameOver(kTimeType0, 1, kSceneGameOverBloodJacket, true);
+			getLogic()->gameOver(kTimeType0, kTime1, kSceneGameOverBloodJacket, true);
 		}
 		break;
 	}

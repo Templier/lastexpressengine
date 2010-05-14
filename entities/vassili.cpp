@@ -285,19 +285,19 @@ IMPLEMENT_FUNCTION(Vassili, seizure, 10)
 		// Check that we have removed the body from the train and changed jacket
 		if (!getProgress().event_corpse_moved_from_floor) {
 			getAction()->playAnimation(kEventMertensCorpseFloor);
-			getLogic()->gameOver(kTimeType0, 0, kSceneNone, false);
+			getLogic()->gameOver(kTimeType0, kTime0, kSceneNone, false);
 			break;
 		}
 
 		if (!getProgress().event_corpse_thrown) {
 			getAction()->playAnimation(kEventMertensCorpseBed);
-			getLogic()->gameOver(kTimeType0, 0, kSceneNone, false);
+			getLogic()->gameOver(kTimeType0, kTime0, kSceneNone, false);
 			break;
 		}
 
 		if (getProgress().jacket == kJacketOriginal) {
 			getAction()->playAnimation(kEventMertensBloodJacket);
-			getLogic()->gameOver(kTimeType0, 0, kSceneNone, false);
+			getLogic()->gameOver(kTimeType0, kTime0, kSceneNone, false);
 			break;
 		}
 

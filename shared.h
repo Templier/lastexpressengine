@@ -32,31 +32,40 @@ namespace LastExpress {
 // Time values
 //////////////////////////////////////////////////////////////////////////
 enum TimeValue {
-	kTimeChapter1 = 1062000,
-	kTimeChapter2 = 1750500,
-	kTimeChapter3 = 1944000,
-	kTimeChapter4 = 2353500,
-	kTimeChapter5 = 2844000,
+	kTime0              = 0,
+	kTime1              = 1,
+	kTimeStart          = 1061100,
 
-	kTimeAbbot = 1953000,
-	kTimeAbbot2 = 1966500,
-	kTimeAbbot3 = 1971000,
-	kTimeAbbot4 = 1989000,
+	// Chapter 1
+	kTimeChapter1       = 1062000,
+	kTimeParisEpernay   = 1075500,
+	kTimeAnna           = 1093500,
+	kTimeTables1        = 1165500,
+	kTimeBedTime        = 1404000,
+	kTimeVassili        = 1503000,
+	kTimeVassili2       = 1512000,
 
-	kTimeVassili = 1503000,
-	kTimeVassili2 = 1512000,
+	// Chapter 2
+	kTimeChapter2       = 1750500,
 
-	kTimeTables1 = 1165500,
-	kTimeTables2 = 2052000,
-	kTimeTables3 = 2488500,
+	// Chapter 3
+	kTimeChapter3       = 1944000,
+	kTimeAbbot          = 1953000,
+	kTimeAbbot2         = 1966500,
+	kTimeAbbot3         = 1971000,
+	kTimeAbbot4         = 1989000,
+	kTimeTables2        = 2052000,
+	kTimeCooks          = 2079000,
+	kTimeAugustVienna   = 2200500,
+	kTimeAnna2          = 2250000,
 
-	kTimeBedTime = 1404000,
-	kTimeAugustVienna = 2200500,
-	kTimeParisEpernay = 1075500,
+	// Chapter 4
+	kTimeChapter4       = 2353500,
+	kTimeGameOver       = 2418300,
+	kTimeTables3        = 2488500,
 
-	kTimeCooks = 2079000,
-
-	kTimeGameOver = 2418300
+	// Chapter 5
+	kTimeChapter5       = 2844000
 };
 
 enum TimeType {
@@ -78,11 +87,11 @@ enum ArchiveIndex {
 
 enum ChapterIndex {
 	kChapterAll = 0,
-	kChapter1 = 1,
-	kChapter2 = 2,
-	kChapter3 = 3,
-	kChapter4 = 4,
-	kChapter5 = 5
+	kChapter1   = 1,
+	kChapter2   = 2,
+	kChapter3   = 3,
+	kChapter4   = 4,
+	kChapter5   = 5
 };
 
 //////////////////////////////////////////////////////////////////////////
@@ -119,10 +128,17 @@ enum SceneIndex {
 
 	// Game over
 	kSceneGameOverBloodJacket = 55,
+	kSceneGameOverPolice      = 56,
 	kSceneGameOverPolice1     = 57,
+	kSceneGameOverAnnaDied    = 58,
+	kSceneGameOverVienna      = 59,
+	kSceneGameOverVienna1     = 60,
+	kSceneGameOverVienna2     = 61,
 	kSceneGameOverAlarm       = 62,
 	kSceneGameOverPolice2     = 63,
 	kSceneGameOverAlarm2      = 64,
+
+	// Start screen
 	kSceneStartScreen         = 65,
 
 	kSceneFightDefault        = 820,
@@ -136,7 +152,7 @@ enum SceneIndex {
 //////////////////////////////////////////////////////////////////////////
 enum JacketType {
 	kJacketOriginal = 1,
-	kJacketGreen = 2
+	kJacketGreen    = 2
 };
 
 //////////////////////////////////////////////////////////////////////////
@@ -221,37 +237,37 @@ enum CursorStyle {
 //////////////////////////////////////////////////////////////////////////
 enum ObjectLocation {
 	kLocationNone = 0,
-	kLocation1 = 1,	// Floor?
-	kLocation2 = 2, // Bed ?
-	kLocation3 = 3,
-	kLocation4 = 4, // Window ?
-	kLocation5 = 5,
-	kLocation6 = 6,
-	kLocation10 = 10,
-	kLocation11 = 11
+	kLocation1    = 1, // Floor?
+	kLocation2    = 2, // Bed ?
+	kLocation3    = 3,
+	kLocation4    = 4, // Window ?
+	kLocation5    = 5,
+	kLocation6    = 6,
+	kLocation10   = 10,
+	kLocation11   = 11
 };
 
 //////////////////////////////////////////////////////////////////////////
 // Entity direction
 //////////////////////////////////////////////////////////////////////////
 enum EntityDirection {
-	kDirectionNone = 0,
-	kDirectionUp = 1,
-	kDirectionDown = 2,
-	kDirectionLeft = 3,
+	kDirectionNone  = 0,
+	kDirectionUp    = 1,
+	kDirectionDown  = 2,
+	kDirectionLeft  = 3,
 	kDirectionRight = 4,
-	kDirection5 = 5
+	kDirection5     = 5
 };
 
 //////////////////////////////////////////////////////////////////////////
 // Combat
 //////////////////////////////////////////////////////////////////////////
 enum FightType {
-	kFightMilos = 2001,
-	kFightAnna = 2002,
-	kFightIvo = 2003,
-	kFightSalko = 2004,
-	kFightVesna = 2005
+	kFightMilos   = 2001,
+	kFightAnna    = 2002,
+	kFightIvo     = 2003,
+	kFightSalko   = 2004,
+	kFightVesna   = 2005
 };
 
 //////////////////////////////////////////////////////////////////////////
@@ -292,11 +308,11 @@ enum InventoryItem {
 	kItem31,
 
 	// Portrait (not an index)
-	kPortraitOriginal = 32,
-	kPortraitGreen = 34,
-	kPortraitYellow = 36,
+	kPortraitOriginal  = 32,
+	kPortraitGreen     = 34,
+	kPortraitYellow    = 36,
 
-	kInventoryInvalid = 128
+	kInventoryInvalid  = 128
 };
 
 //////////////////////////////////////////////////////////////////////////
@@ -358,7 +374,7 @@ enum ObjectIndex {
 	kObject52,
 	kObject53,
 	kObject54,
-	kObjectRestaurantCar = 55,          // 55
+	kObjectRestaurantCar,               // 55
 	kObject56,
 	kObject57,
 	kObject58,
@@ -768,18 +784,18 @@ enum EventIndex {
 // Action ID (used by entity logic)
 //////////////////////////////////////////////////////////////////////////
 enum ActionIndex {
-	kActionNone = 0,
-	kAction1 = 1,
-	kAction2 = 2,
-	kAction3 = 3,
+	kActionNone         = 0,
+	kAction1            = 1,
+	kAction2            = 2,
+	kAction3            = 3,
 	kActionExcuseMeCath = 5,
-	kActionExcuseMe = 6,
-	kAction8 = 8,
-	kAction9 = 9,
-	kAction10 = 10,
-	kActionDefault = 12,
-	kAction17 = 17,
-	kAction18 = 18,
+	kActionExcuseMe     = 6,
+	kAction8            = 8,
+	kAction9            = 9,
+	kAction10           = 10,
+	kActionDefault      = 12,
+	kAction17           = 17,
+	kAction18           = 18,
 
 	/////////////////////////////
 	// Abbot
@@ -852,7 +868,7 @@ enum ActionIndex {
 	kAction71277948  = 71277948,
 	kAction158007856 = 158007856,
 	kAction101687594 = 101687594,
-	kAction122358304 = 122358304,  // also Servers1/Boutarel?
+	kAction122358304 = 122358304,    // also Servers1/Boutarel?
 	kActionMaxFreeFromCage = 135204609,
 	kAction156622016 = 156622016,
 
@@ -873,10 +889,10 @@ enum ActionIndex {
 	/////////////////////////////
 	// Milos
 	/////////////////////////////
-	kAction88652208 = 88652208,    // Milos/Coudert
+	kAction88652208 = 88652208,      // Milos/Coudert
 	kAction122865568 = 122865568,
 	kAction123852928 = 123852928,
-	kAction123199584 = 123199584,  // Milos/Coudert
+	kAction123199584 = 123199584,    // Milos/Coudert
 	kAction157691176 = 157691176,
 	kAction208228224 = 208228224,
 	kAction221683008 = 221683008,
@@ -935,7 +951,7 @@ enum ActionIndex {
 	/////////////////////////////
 	// Servers 1
 	/////////////////////////////
-	kAction122288808 = 122288808,	// Servers1/Boutarel
+	kAction122288808 = 122288808,    // Servers1/Boutarel
 	kAction189688608 = 189688608,
 	kAction219377792 = 219377792,
 	kAction223002560 = 223002560,
@@ -1001,7 +1017,7 @@ enum ActionIndex {
 
 	/////////////////////////////
 	// Vesna
-	/////////////////////////////	
+	/////////////////////////////
 	kAction124190740 = 124190740,
 
 	/////////////////////////////
