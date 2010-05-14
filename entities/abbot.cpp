@@ -172,7 +172,7 @@ IMPLEMENT_FUNCTION_II(Abbot, function11, 11)
 			CALL_PREVIOUS_SAVEPOINT()
 		break;
 
-	case kAction5:
+	case kActionExcuseMeCath:
 		if (getEntities()->checkFields4(EntityData::kField495_3, 18) || getEntities()->checkFields4(EntityData::kField495_4, 18)) {
 			getSound()->excuseMe(kEntityAbbot);
 		} else {
@@ -183,7 +183,7 @@ IMPLEMENT_FUNCTION_II(Abbot, function11, 11)
 		}
 		break;
 
-	case kAction6:
+	case kActionExcuseMe:
 		getSound()->excuseMe(kEntityAbbot);
 		break;
 

@@ -135,14 +135,14 @@ IMPLEMENT_FUNCTION_II(Mahmud, function9, 9)
 			CALL_PREVIOUS_SAVEPOINT();
 		break;
 
-	case kAction5:
+	case kActionExcuseMeCath:
 		if (getInventory()->hasItem(kItemPassengerList))
 			getSound()->playSound(kEntityNone, (random(2) == 0 ? "CAT1025A" : "CAT1025"));
 		else
 			getSound()->excuseMeCath();
 		break;
 
-	case kAction6:
+	case kActionExcuseMe:
 		getSound()->excuseMe(kEntityMahmud);
 		break;
 	}

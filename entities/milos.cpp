@@ -124,8 +124,8 @@ IMPLEMENT_FUNCTION_II(Milos, enterCompartementDialog, 10)
 			CALL_PREVIOUS_SAVEPOINT()
 		break;
 
-	case kAction5:
-	case kAction6:
+	case kActionExcuseMeCath:
+	case kActionExcuseMe:
 		if (getEvent(kEventMilosTylerCompartmentDefeat)) {
 			// Robert saying: "Milos"
 			switch(random(3)) {

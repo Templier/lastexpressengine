@@ -114,11 +114,11 @@ IMPLEMENT_FUNCTION_II(Sophie, function2, 2)
 		break;
 	}
 
-	case kAction5:
+	case kActionExcuseMeCath:
 		getSound()->excuseMeCath();
 		break;
 
-	case kAction6:
+	case kActionExcuseMe:
 		getSound()->excuseMe(kEntitySophie);
 		break;
 

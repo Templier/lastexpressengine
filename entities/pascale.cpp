@@ -83,7 +83,7 @@ IMPLEMENT_FUNCTION(Pascale, function2, 2)
 }
 
 IMPLEMENT_FUNCTION(Pascale, function3, 3)
-	if (savepoint.action == kAction5) {
+	if (savepoint.action == kActionExcuseMeCath) {
 		if (!params->param1) {
 			getSound()->excuseMe(kEntityPascale);
 			params->param1 = 1;

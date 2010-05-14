@@ -77,7 +77,7 @@ IMPLEMENT_FUNCTION_NOSETUP(Servers1, updateFromTime, 1)
 }
 
 IMPLEMENT_FUNCTION_S(Servers1, draw, 2)
-	if (savepoint.action == kAction5) {
+	if (savepoint.action == kActionExcuseMeCath) {
 		if (!params->param2) {
 			getSound()->excuseMe(kEntityServers1);
 			params->param2 = 1;
@@ -88,7 +88,7 @@ IMPLEMENT_FUNCTION_S(Servers1, draw, 2)
 }
 
 IMPLEMENT_FUNCTION_SII(Servers1, function3, 3)
-	if (savepoint.action == kAction5) {
+	if (savepoint.action == kActionExcuseMeCath) {
 		if (!params->param3) {
 			getSound()->excuseMe(kEntityServers1);
 			params->param3 = 1;
@@ -99,7 +99,7 @@ IMPLEMENT_FUNCTION_SII(Servers1, function3, 3)
 }
 
 IMPLEMENT_FUNCTION(Servers1, function4, 4)
-	if (savepoint.action == kAction5) {
+	if (savepoint.action == kActionExcuseMeCath) {
 		if (!params->param1) {
 			getSound()->excuseMe(kEntityServers1);
 			params->param1 = 1;
@@ -121,7 +121,7 @@ IMPLEMENT_FUNCTION_SIIS(Servers1, function5, 5)
 		CALL_PREVIOUS_SAVEPOINT()
 		break;
 
-	case kAction5:
+	case kActionExcuseMeCath:
 		if (!CURRENT_PARAMS(1, 2)) {
 			getSound()->excuseMe(kEntityServers1);
 			CURRENT_PARAMS(1, 2) = 1;

@@ -67,11 +67,11 @@ IMPLEMENT_FUNCTION(Yasmin, function1, 1)
 	default:
 		break;
 
-	case kAction5:
+	case kActionExcuseMeCath:
 		getSound()->excuseMeCath();
 		break;
 
-	case kAction6:
+	case kActionExcuseMe:
 		getSound()->excuseMe(kEntityYasmin);
 		break;
 	}
@@ -97,11 +97,11 @@ IMPLEMENT_FUNCTION_II(Yasmin, function5, 5)
 	default:
 		break;
 
-	case kAction5:
+	case kActionExcuseMeCath:
 		getSound()->excuseMeCath();
 		break;
 
-	case kAction6:
+	case kActionExcuseMe:
 		getSound()->excuseMe(kEntityYasmin);
 		break;
 	}
