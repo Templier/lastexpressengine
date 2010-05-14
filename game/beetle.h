@@ -83,7 +83,7 @@ private:
 			coordX = 0;
 			coordY = 0;
 
-			memset(indexes, 0, sizeof(indexes)); 
+			memset(indexes, 0, sizeof(indexes));
 			offset = 0;
 
 			field_D0 = 0;

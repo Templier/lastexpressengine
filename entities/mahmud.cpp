@@ -79,7 +79,7 @@ IMPLEMENT_FUNCTION_SI(Mahmud, function3, 3)
 // param1: sequence
 // param2: object index
 // param3: game ticks
-// param4: object index 
+// param4: object index
 IMPLEMENT_FUNCTION_SIII(Mahmud, function4, 4)
 	switch (savepoint.action) {
 	default:

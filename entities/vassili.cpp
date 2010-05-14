@@ -317,7 +317,7 @@ IMPLEMENT_FUNCTION(Vassili, seizure, 10)
 			break;
 
 		_data->getData()->field_493 = EntityData::kField493_1;
-		getAction()->playAnimation(kEventVassiliSeizure);    
+		getAction()->playAnimation(kEventVassiliSeizure);
 
         getObjects()->update(kObjectCompartmentA, kEntityNone, kLocationNone, kCursorHandKnock, kCursorHand);
         getObjects()->update(kObjectCompartment1, kEntityNone, kLocationNone, kCursorHandKnock, kCursorHand);
@@ -449,7 +449,7 @@ IMPLEMENT_FUNCTION(Vassili, stealEgg, 15)
 
 	case kAction17:
 		if (getEntities()->checkFields1(kEntityNone, EntityData::kField495_4, EntityData::kField491_7850)
-		 && getInventory()->hasItem(kItemFirebird) 
+		 && getInventory()->hasItem(kItemFirebird)
 		 && !getEvent(kEventVassiliCompartmentStealEgg))
 			getObjects()->update(kObject48, kEntityVassili, kLocationNone, kCursorNormal, kCursorHand);
 		else

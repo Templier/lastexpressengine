@@ -454,7 +454,7 @@ void Logic::loadSceneFromItem(InventoryItem item) {
 		loadSceneObject(sceneBackup, getState()->sceneBackup);
 		position = sceneBackup.getHeader()->position;
 	}
- 
+
 	// Checks are different for each item
 	if ((item == kItem3 && position == 56)
 	 || (item == kItem5 && (position >= 23 && position <= 32))	
@@ -462,7 +462,7 @@ void Logic::loadSceneFromItem(InventoryItem item) {
 		if (getState()->sceneUseBackup)
 			getState()->sceneBackup = getIndexFromPosition(field, position);
 		else
-           loadSceneFromPosition(field, position);        
+           loadSceneFromPosition(field, position);
     }
 
 }
