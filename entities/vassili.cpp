@@ -200,7 +200,7 @@ IMPLEMENT_FUNCTION(Vassili, function7, 7)
 
 			 params->param1 = EntityData::kParamTime;
 			 setup_function8();
-		} 		
+		}
 		break;
 
 	case kActionDefault:
@@ -307,7 +307,7 @@ IMPLEMENT_FUNCTION(Vassili, seizure, 10)
 
 		getEntities()->resetEntityState(kEntityAnna);
 		((Coudert*)getEntities()->get(kEntityCoudert))->setup_function38();
-		
+
 		_data->setNextCallback(1);
 		call(new ENTITY_SETUP(Vassili, setup_savegame), 2, kEventVassiliSeizure);
 		break;
@@ -368,7 +368,7 @@ IMPLEMENT_FUNCTION(Vassili, sleeping, 13)
 		break;
 
 	case kActionNone:
-		if (getEntities()->checkFields1(kEntityNone, EntityData::kField495_4, EntityData::kField491_8200)) {			
+		if (getEntities()->checkFields1(kEntityNone, EntityData::kField495_4, EntityData::kField491_8200)) {
 			UPDATE_PARAM_FROM_TICKS(3, params->param1);
 
 			_data->setNextCallback(1);
@@ -425,7 +425,7 @@ IMPLEMENT_FUNCTION(Vassili, stealEgg, 15)
 		break;
 
 	case kActionNone:
-		if (getEntities()->checkFields1(kEntityNone, EntityData::kField495_4, EntityData::kField491_8200)) {			
+		if (getEntities()->checkFields1(kEntityNone, EntityData::kField495_4, EntityData::kField491_8200)) {
 			UPDATE_PARAM_FROM_TICKS(3, params->param1);
 
 			_data->setNextCallback(1);
@@ -507,7 +507,7 @@ IMPLEMENT_FUNCTION(Vassili, function17, 17)
 		break;
 
 	case kActionNone:
-		if (getEntities()->checkFields1(kEntityNone, EntityData::kField495_4, EntityData::kField491_8200)) {			
+		if (getEntities()->checkFields1(kEntityNone, EntityData::kField495_4, EntityData::kField491_8200)) {
 			UPDATE_PARAM_FROM_TICKS(3, params->param1);
 
 			_data->setNextCallback(1);

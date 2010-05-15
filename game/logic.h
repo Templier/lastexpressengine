@@ -69,7 +69,7 @@ public:
 	void setScene(SceneIndex sceneIndex);
 
 	void loadSceneFromObject(ObjectIndex object);
-	void loadSceneFromObject2(ObjectIndex object);	
+	void loadSceneFromObject2(ObjectIndex object);
 	void loadSceneFromItem(InventoryItem item);
 	void loadSceneFromPosition(EntityData::Field495Value field495, byte position, int param3 = -1);
     SceneIndex getIndexFromPosition(EntityData::Field495Value field495, byte position, int param3 = -1);

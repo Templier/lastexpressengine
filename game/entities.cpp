@@ -830,7 +830,7 @@ bool Entities::checkFields11() const {
 		if ((!getEntityData(index)->field_493 && checkFields12(index)) || checkFields13(index))
 			return false;
 	}
-	
+
 	return true;
 }
 

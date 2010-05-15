@@ -284,7 +284,7 @@ IMPLEMENT_FUNCTION(Abbot, function18, 18)
 			_data->getData()->field_491 = EntityData::kField491_6470;
 			_data->getData()->field_493 = EntityData::kField493_1;
 
-			setup_function19();			
+			setup_function19();
 			break;
 		}
 		break;
@@ -292,7 +292,7 @@ IMPLEMENT_FUNCTION(Abbot, function18, 18)
 	case kAction192054567:
 		_data->setNextCallback(1);
         call(new ENTITY_SETUP(Abbot, setup_function14));
-		break;	
+		break;
 	}
 }
 
@@ -427,7 +427,7 @@ IMPLEMENT_FUNCTION(Abbot, function21, 21)
 
 		_data->setNextCallback(7);
         call(new ENTITY_SETUP_SIIS(Abbot, setup_draw), "029B");
-		break;	
+		break;
 	}
 }
 
@@ -787,7 +787,7 @@ IMPLEMENT_FUNCTION(Abbot, function29, 29)
 
 		case 6:
 			getObjects()->update(kObjectCompartmentC, kEntityNone, kLocation1, kCursorKeepValue, kCursorKeepValue);
-			
+
 			_data->setNextCallback(7);
 			call(new ENTITY_SETUP_SIIS(Abbot, setup_function3), "617Ac", 34);
 			break;
@@ -851,9 +851,9 @@ switch (savepoint.action) {
 		case 5:
 			getLogic()->loadSceneFromItem(kItem3);
 			_data->getData()->field_493 = EntityData::kField493_1;
-			
+
 			setup_function31();
-			break;		
+			break;
 		}
 		break;
 	}

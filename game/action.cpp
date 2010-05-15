@@ -501,7 +501,7 @@ IMPLEMENT_ACTION(compartment) {
 		&& (location != 1 || !getInventory()->hasItem(kItemKey)
 		|| getInventory()->getSelectedItem() != kItemFirebird || getInventory()->getSelectedItem() != kItemBriefcase))) {
 				getSound()->playSoundEvent(kEntityNone, 13);
-				
+
 				// Stop processing further
 				return kSceneNone;
 		}
@@ -530,7 +530,7 @@ IMPLEMENT_ACTION(compartment) {
 	getObjects()->update(kObjectCompartment1, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
 	getSound()->playSoundEvent(kEntityNone, 16);
 	getInventory()->unselectItem();
-	
+
 	// Stop processing further
 	return kSceneNone;
 }
@@ -1808,7 +1808,7 @@ void Action::playAnimation(EventIndex index) const {
 
 		// TODO adjust screen coordinates for drawing animation
 		// TODO compute arg to animation
-		
+
 		// FIXME NIS animations need to be passed one more parameter than currently
 		Animation animation;
 		if (animation.loadFile(Common::String(animationList[index].filename) + ".nis"))

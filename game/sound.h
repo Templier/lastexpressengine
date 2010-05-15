@@ -86,11 +86,11 @@ public:
 
 	// State (FIXME: to be renamed when we know more about it)
 	void resetState() { _state |= 1; }
-	
+
 
 	// Sound queue
 	bool isFileInQueue(const char* filename, bool testForEntity = false);
-	
+
 	void removeFromQueue(const char* filename);
 	void removeFromQueue(EntityIndex entity);
 

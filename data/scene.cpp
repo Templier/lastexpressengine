@@ -101,7 +101,7 @@ SceneHotspot *SceneHotspot::load(Common::SeekableReadStream *stream) {
 bool SceneHotspot::isInside(const Common::Point &point) {
 
 	bool contains = rect.contains(point);
-	
+
 	//if (!_coords.empty() && contains) {
 
 	//	for (uint i = 0; i < _coords.size(); i++) {

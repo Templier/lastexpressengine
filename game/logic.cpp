@@ -434,7 +434,7 @@ void Logic::loadSceneFromItem(InventoryItem item) {
 
 	if (item != kItem3 && item != kItem5 && item != kItem7)
 		return;
-	
+
 	// Set field value
 	EntityData::Field495Value field = EntityData::kField495_5;
 	if (item == kItem5) field = EntityData::kField495_4;
@@ -457,7 +457,7 @@ void Logic::loadSceneFromItem(InventoryItem item) {
 
 	// Checks are different for each item
 	if ((item == kItem3 && position == 56)
-	 || (item == kItem5 && (position >= 23 && position <= 32))	
+	 || (item == kItem5 && (position >= 23 && position <= 32))
 	 || (item == kItem7 && (position == 1 || (position >= 22 && position <= 33)))) {
 		if (getState()->sceneUseBackup)
 			getState()->sceneBackup = getIndexFromPosition(field, position);

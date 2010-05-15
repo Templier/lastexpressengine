@@ -198,7 +198,7 @@ private:
 
 	// State
 	void bailout(FightEndType type);
-	
+
 
 	// Drawing
 	void setSequenceAndDraw(Fighter *fighter, uint32 sequenceIndex, FightSequenceType type) const;
@@ -214,7 +214,7 @@ private:
 
 	// Shared
 	void processFighter(Fighter *fighter);
-		
+
 	// Default functions
 	void handleAction(Fighter *fighter, FightAction action);
 	void update(Fighter *fighter);

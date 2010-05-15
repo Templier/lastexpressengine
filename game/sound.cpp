@@ -152,7 +152,7 @@ void Sound::playSound(EntityIndex entity, const char *filename, int a3, byte a4)
 	if (strchr(filename, '.'))
 		strcpy((char*)&name, filename);
 	else
-		sprintf((char*)&name, "%s.SND", filename);	
+		sprintf((char*)&name, "%s.SND", filename);
 
 	if (!playSoundWithSubtitles(filename, param3, entity, a4))
 		if (entity)
@@ -176,7 +176,7 @@ int Sound::getSoundValue(EntityIndex entity) {
 
 	// Compute sound value
 	int ret = 2;
-	
+
 	// Get default value if valid
 	int index = abs(getEntities()->getData(entity)->getData()->field_491 - getEntities()->getData(kEntityNone)->getData()->field_491) / 230;
 	if (index < 32)
@@ -245,14 +245,14 @@ void Sound::playSoundEvent(EntityIndex entity, byte action, byte a3) {
 	switch (action) {
 	case 36: {
 		int _param3 = (param3 <= 9) ? param3 + 7 : 16;
-		
+
 		if (_param3 > 7) {
 			_data0 = _param3;
-			_data1 = _data2 + 2 * a3;	
+			_data1 = _data2 + 2 * a3;
 		}
 		break;
 		}
-	
+
 	case 37:
 		_data0 = 7;
 		_data1 = _data2 + 2 * a3;
@@ -678,12 +678,12 @@ void Sound::readText(int id){
 
 	// Get proper message file (names are stored in sequence in the array but id is [1;8] - [50;64])
 	const char* text = messages[id <= 8 ? id : id - 41];
-		
+
 	// Check if file is in cache for id [1;8]
 	if (id <= 8)
 		if (isFileInQueue(text, true))
 			removeFromQueue(text);
-	
+
 	playSound(kEntityTables4, text, 16);
 }
 

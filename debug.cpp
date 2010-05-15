@@ -496,7 +496,7 @@ bool Debugger::cmd_fight(int argc, const char **argv) {
 			index = kArchiveCd1;
 			break;
 
-		case kFightAnna:		
+		case kFightAnna:
 			index = kArchiveCd2;
 			break;
 
@@ -553,7 +553,7 @@ bool Debugger::cmd_fight(int argc, const char **argv) {
 
 			clearBg(GraphicsManager::kBackgroundAll);
 
-			loadSceneObject(scene, lastScene);			
+			loadSceneObject(scene, lastScene);
 			_engine->getGraphicsManager()->draw(&scene, GraphicsManager::kBackgroundC);
 
 			askForRedraw();
@@ -570,7 +570,7 @@ error:
 }
 
 bool Debugger::cmd_beetle(int argc, const char **argv) {
-	if (argc == 1) {		
+	if (argc == 1) {
 		// Load proper data file (beetle game in in Cd2)
 		getLogic()->loadSceneDataFile(kArchiveCd2);
 
@@ -607,12 +607,12 @@ bool Debugger::cmd_beetle(int argc, const char **argv) {
 			// Play the game
 			Common::Event ev;
 			bool playgame = true;
-			while (playgame) {				
+			while (playgame) {
 				// Update beetle
 				beetle->update();
 
 				askForRedraw();
-				redrawScreen();				
+				redrawScreen();
 
 				while (g_engine->getEventManager()->pollEvent(ev)) {
 
@@ -626,7 +626,7 @@ bool Debugger::cmd_beetle(int argc, const char **argv) {
 							playgame = false;
 
 						break;
-				
+
 					case Common::EVENT_MOUSEMOVE: {
 						// Update cursor
 						CursorStyle style = kCursorNormal;
@@ -637,7 +637,7 @@ bool Debugger::cmd_beetle(int argc, const char **argv) {
 						_engine->getCursor()->setStyle(style);
 						break;
 					}
-					
+
 
 					case Common::EVENT_LBUTTONDOWN:
 					case Common::EVENT_LBUTTONUP:
@@ -648,7 +648,7 @@ bool Debugger::cmd_beetle(int argc, const char **argv) {
 						if (beetle->catchBeetle())
 							playgame = false;
 						break;
-					}	
+					}
 
 					_engine->_system->delayMillis(10);
 				}
@@ -693,7 +693,7 @@ bool Debugger::cmd_beetle(int argc, const char **argv) {
 
 			clearBg(GraphicsManager::kBackgroundAll);
 
-			loadSceneObject(oldscene, previousScene);			
+			loadSceneObject(oldscene, previousScene);
 			_engine->getGraphicsManager()->draw(&oldscene, GraphicsManager::kBackgroundC);
 
 			askForRedraw();

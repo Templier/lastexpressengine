@@ -64,7 +64,7 @@ void Beetle::load() {
 	///////////////////////
 	// Load Beetle data
 	_data = new BeetleData();
-	
+
 	// Load sequences
 	_data->sequences.push_back(newSequence("BW000.seq"));        // 0
 	_data->sequences.push_back(newSequence("BT000045.seq"));
@@ -181,7 +181,7 @@ void Beetle::move() {
 
 	if (abs((int)(getCoords().x - _data->coordX)) > 35)
 		return;
-	
+
 	if (abs((int)(getCoords().y - _data->coordY)) > 35)
 		return;
 
@@ -191,7 +191,7 @@ void Beetle::move() {
 
 	// FIXME: check code path
 	if (deltaX >= 0) {
-		if (deltaY > 0) {			
+		if (deltaY > 0) {
 			if (100 * deltaY - 241 * deltaX <= 0) {
 				if (100 * deltaY  - 41 * deltaX <= 0)
 					index = 18;
@@ -262,7 +262,7 @@ void Beetle::updateSequence(Sequence *sequence) {
 
 	if (_data->coordY > 0)
 		header->yPos1 = _data->coordY;
-	
+
 	// TODO: finish update info
 	error("Beetle::updateSequence: not implemented!");
 }

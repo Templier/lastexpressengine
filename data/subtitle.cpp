@@ -48,7 +48,7 @@ public:
 	bool load(Common::SeekableReadStream *in);
 	Common::Rect draw(Graphics::Surface *surface, Font *font);
 
-	uint16 getTimeStart() const { return _timeStart; }	
+	uint16 getTimeStart() const { return _timeStart; }
 	uint16 getTimeStop() const { return _timeStop; }
 
 private:

@@ -628,7 +628,7 @@ void Menu::handleEvent(const Common::Event &ev) {
 		if (clicked) {
 			drawSeqFrame(&_seqButtons, kButtonQuitPushed, GraphicsManager::kBackgroundOverlay);
 			playSfxStream("LIB046.SND");
-			
+
 			warning("Menu::handleEvent / kActionQuitGame: implementation not finished!");
 			return; // false;
 		} else {

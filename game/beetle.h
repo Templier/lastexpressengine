@@ -54,7 +54,7 @@ public:
 private:
 	struct BeetleData {
 		Common::Array<Sequence *> sequences;
-			
+
 		uint32 field_74;
 		Sequence * currentSequence;
 		uint32 field_7C;
@@ -64,7 +64,7 @@ private:
 		int16 coordX;
 		int16 coordY;
 
-		uint32 indexes[16];		
+		uint32 indexes[16];
 
 		uint32 offset;
 		uint32 field_D0;
