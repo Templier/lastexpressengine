@@ -85,9 +85,11 @@ IMPLEMENT_FUNCTION(Max, function6, 6)
 		break;
 
 	case kActionNone:
-		UPDATE_PARAM_FROM_TIME(2, 1)
+		UPDATE_PARAM_FROM_TIME(2, 1);
 
-		getSound()->playSound(kEntityMax, "Max1122");
+		if (!getSound()->isBuffered(kEntityMax))
+			getSound()->playSound(kEntityMax, "Max1122");
+
 		params->param1 = 255 * (4 * random(20) + 40);
 		params->param2 = 0;
 		break;
@@ -102,8 +104,10 @@ IMPLEMENT_FUNCTION(Max, function6, 6)
 		break;
 
 	case kAction158007856:
-		getSound()->playSound(kEntityMax, "Max1122");
-		params->param1 = 255 * (4 * random(20) + 40);
+		if (!getSound()->isBuffered(kEntityMax)) {
+			getSound()->playSound(kEntityMax, "Max1122");
+			params->param1 = 255 * (4 * random(20) + 40);
+		}
 		break;
 	}
 }
@@ -116,7 +120,9 @@ IMPLEMENT_FUNCTION(Max, function7, 7)
 	case kActionNone:
 		UPDATE_PARAM_FROM_TIME(2, 1)
 
-		getSound()->playSound(kEntityMax, "Max1122");
+		if (!getSound()->isBuffered(kEntityMax))
+			getSound()->playSound(kEntityMax, "Max1122");
+
 		params->param1 = 255 * (4 * random(20) + 40);
 		params->param2 = 0;
 		break;
@@ -125,6 +131,9 @@ IMPLEMENT_FUNCTION(Max, function7, 7)
 	case kAction9:
 		getObjects()->update(kObjectCompartmentF, kEntityMax, kLocation1, kCursorNormal, kCursorNormal);
 		getObjects()->update(kObject53, kEntityMax, kLocation1, kCursorNormal, kCursorNormal);
+
+		if (getSound()->isBuffered(kEntityMax))
+			getSound()->processEntry(kEntityMax);
 
 		_data->setNextCallback((savepoint.action == kAction8) ? 1 : 2);
 		call(new ENTITY_SETUP_SIIS(Max, setup_playSound), (savepoint.action == kAction8) ? "LIB012" : "LIB013");
@@ -142,8 +151,10 @@ IMPLEMENT_FUNCTION(Max, function7, 7)
 		break;
 
 	case kAction17:
-		if (getEntities()->checkFields4(EntityData::kField495_4, 56) || getEntities()->checkFields4(EntityData::kField495_4, 78))
-			getSound()->playSound(kEntityMax, "Max1120");
+		if (!getSound()->isBuffered(kEntityMax)) {
+			if (getEntities()->checkFields4(EntityData::kField495_4, 56) || getEntities()->checkFields4(EntityData::kField495_4, 78))
+				getSound()->playSound(kEntityMax, "Max1120");
+		}
 		break;
 
 	case kAction18:
@@ -181,8 +192,10 @@ IMPLEMENT_FUNCTION(Max, function7, 7)
 		break;
 
 	case kAction158007856:
-		getSound()->playSound(kEntityMax, "Max1122");
-		params->param1 = 255 * (4 * random(20) + 40);
+		if (!getSound()->isBuffered(kEntityMax)) {
+			getSound()->playSound(kEntityMax, "Max1122");
+			params->param1 = 255 * (4 * random(20) + 40);
+		}
 		break;
 	}
 }
@@ -195,7 +208,9 @@ IMPLEMENT_FUNCTION(Max, function8, 8)
 	case kActionNone:
 		UPDATE_PARAM_FROM_TIME(3, 2)
 
-		getSound()->playSound(kEntityMax, "Max3101");
+		if (!getSound()->isBuffered(kEntityMax))
+			getSound()->playSound(kEntityMax, "Max3101");
+
 		params->param2 = 255 * (4 * random(20) + 40);
 		params->param3 = 0;
 		break;
@@ -206,6 +221,9 @@ IMPLEMENT_FUNCTION(Max, function8, 8)
 			call(new ENTITY_SETUP(Max, setup_savegame), 2, kEventCathMaxLickHand);
 			break;
 		}
+
+		if (getSound()->isBuffered(kEntityMax))
+			getSound()->processEntry(kEntityMax);
 
 		getAction()->playAnimation(kEventCathMaxLickHand);
 		getLogic()->processScene();
@@ -223,12 +241,16 @@ IMPLEMENT_FUNCTION(Max, function8, 8)
 		_data->getData()->field_493 = EntityData::kField493_1;
 		_data->getData()->field_495 = EntityData::kField495_6;
 
-		getSound()->playSound(kEntityMax, "Max3101");
+		if (!getSound()->isBuffered(kEntityMax))
+			getSound()->playSound(kEntityMax, "Max3101");
 		break;
 
 	case kAction18:
 		if (_data->getNextCallback() != 1)
 			break;
+
+		if (getSound()->isBuffered(kEntityMax))
+			getSound()->processEntry(kEntityMax);
 
 		getSound()->playSound(kEntityNone, "LIB026");
 		getAction()->playAnimation(kEventCathMaxFree);
@@ -245,19 +267,24 @@ IMPLEMENT_FUNCTION(Max, function9, 9)
 		break;
 
 	case kActionNone:
-		if (params->param2 == EntityData::kParamTime)
+		if (params->param2 == EntityData::kParamTime || !getState()->time)
 			break;
 
-		if (!getEntities()->checkSequence0(kEntityMax) || !params->param2) {
+		if (params->param1 >= getState()->time) {
+			if (!getEntities()->checkSequence0(kEntityMax) || !params->param2) {
 
-			params->param2 = getState()->time;
+				params->param2 = getState()->time;
+				if (!params->param2)
+					goto setup_functions;
+			}
 
-			if (params->param2)
+			if (params->param2 >= getState()->time)
 				break;
-		} else {
-			params->param2 = EntityData::kParamTime;
 		}
 
+		params->param2 = EntityData::kParamTime;
+
+setup_functions:
 		if (getProgress().chapter == 3)
 			setup_function15();
 
@@ -273,7 +300,7 @@ IMPLEMENT_FUNCTION(Max, function9, 9)
 		_data->getData()->field_495 = EntityData::kField495_4;
 
 		getEntities()->drawSequenceLeft(kEntityMax, "630Af");
-		getEntities()->updateFields2(kEntityMax, kObjectCompartmentF);
+		getEntities()->updateField1000_4(kEntityMax, kObjectCompartmentF);
 
 		params->param1 = getState()->time + 2700;
 		break;
@@ -352,9 +379,11 @@ IMPLEMENT_FUNCTION(Max, function13, 13)
 			break;
 		}
 
-		UPDATE_PARAM_FROM_TIME(3, 1)
+		UPDATE_PARAM_FROM_TIME(3, 1);
 
-		getSound()->playSound(kEntityMax, "Max1122");
+		if (!getSound()->isBuffered(kEntityMax))
+			getSound()->playSound(kEntityMax, "Max1122");
+
 		params->param1 = 255 * (4 * random(20) + 40);
 		params->param3 = 0;
 		break;
@@ -384,8 +413,10 @@ IMPLEMENT_FUNCTION(Max, function13, 13)
 		if (params->param2)
 			break;
 
-		getSound()->playSound(kEntityMax, "Max1122");
-		params->param1 = 255 * (4 * random(20) + 40);
+		if (!getSound()->isBuffered(kEntityMax)) {
+			getSound()->playSound(kEntityMax, "Max1122");
+			params->param1 = 255 * (4 * random(20) + 40);
+		}
 		break;
 	}
 }
@@ -424,7 +455,8 @@ IMPLEMENT_FUNCTION(Max, freeFromCage, 14)
 		_data->getData()->field_493 = EntityData::kField493_1;
 		_data->getData()->field_495 = EntityData::kField495_6;
 
-		getSound()->playSound(kEntityMax, "Max1122");
+		if (!getSound()->isBuffered(kEntityMax))
+			getSound()->playSound(kEntityMax, "Max1122");
 		break;
 
 	//////////////////////////////////////////////////////////////////////////
@@ -435,11 +467,17 @@ IMPLEMENT_FUNCTION(Max, freeFromCage, 14)
 			break;
 
 		case 1:
+			if (getSound()->isBuffered(kEntityMax))
+				getSound()->removeFromQueue(kEntityMax);
+
 			getAction()->playAnimation(kEventCathMaxCage);
 			getLogic()->processScene();
 			break;
 
 		case 2:
+			if (getSound()->isBuffered(kEntityMax))
+				getSound()->processEntry(kEntityMax));
+
 			getSound()->playSound(kEntityNone, "LIB026");
 			getAction()->playAnimation(kEventCathMaxFree);
 			getLogic()->loadSceneFromPosition(EntityData::kField495_6, 92);
@@ -463,23 +501,9 @@ IMPLEMENT_FUNCTION(Max, function15, 15)
 		}
 
 		if (!params->param1) {
-			if (!params->param3) {
-				params->param3 = getState()->time + 900;
+			UPDATE_PARAM_FROM_TIME(3, 900);
 
-				if (!params->param3) {
-					getSavePoints()->push(kEntityMax, kEntityCoudert, kAction157026693);
-					break;
-				}
-			}
-
-			// FIXME seems wrong
-			_data->getData()->current_call = (byte)getState()->time;
-
-			if (params->param3 < (int)getState()->time) {
-				params->param3 = EntityData::kParamTime;
-
-				getSavePoints()->push(kEntityMax, kEntityCoudert, kAction157026693);
-			}
+			getSavePoints()->push(kEntityMax, kEntityCoudert, kAction157026693);
 		}
 		break;
 
@@ -488,7 +512,8 @@ IMPLEMENT_FUNCTION(Max, function15, 15)
 		_data->getData()->field_493 = EntityData::kField493_0;
 		_data->getData()->field_495 = EntityData::kField495_4;
 
-		getSound()->playSound(kEntityMax, "Max3010");
+		if (!getSound()->isBuffered(kEntityMax))
+			getSound()->playSound(kEntityMax, "Max3010");
 
 		_data->setNextCallback(1);
 		call(new ENTITY_SETUP_SIIS(Max, setup_function4), "630Bf", kEntityTables4);
@@ -497,19 +522,19 @@ IMPLEMENT_FUNCTION(Max, function15, 15)
 	case kAction18:
 		if (_data->getNextCallback() == 1) {
 			getEntities()->drawSequenceLeft(kEntityMax, "630Af");
-			getEntities()->updateFields2(kEntityMax, kObjectCompartmentF);
+			getEntities()->updateField1000_4(kEntityMax, kObjectCompartmentF);
 			getSavePoints()->push(kEntityMax, kEntityAnna, kAction156622016);
 		}
 		break;
 
 	case kAction122358304:
 		(savepoint.entity2 == kEntityAnna) ? (params->param1 = 1) : (params->param2 = 1);
-		getEntities()->updateFields3(kEntityMax, kObjectCompartmentF);
+		getEntities()->updateField1000_5(kEntityMax, kObjectCompartmentF);
 		getEntities()->drawSequenceLeft(kEntityMax, "BLANK");
 		break;
 
 	case kActionMaxFreeFromCage:
-		getEntities()->updateFields3(kEntityMax, kObjectCompartmentF);
+		getEntities()->updateField1000_5(kEntityMax, kObjectCompartmentF);
 		setup_function8();
 		break;
 	}
@@ -557,12 +582,12 @@ IMPLEMENT_FUNCTION(Max, function17, 17)
 
 	case kAction122358304:
 		params->param1 = 1;
-		getEntities()->updateFields3(kEntityMax, kObjectCompartmentF);
+		getEntities()->updateField1000_5(kEntityMax, kObjectCompartmentF);
 		getEntities()->drawSequenceLeft(kEntityMax, "BLANK");
 		break;
 
 	case kActionMaxFreeFromCage:
-		getEntities()->updateFields3(kEntityMax, kObjectCompartmentF);
+		getEntities()->updateField1000_5(kEntityMax, kObjectCompartmentF);
 		setup_function8();
 		break;
 	}

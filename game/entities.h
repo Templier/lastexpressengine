@@ -70,8 +70,6 @@ public:
 
 	void updateFields0(EntityIndex entity, ObjectIndex object);
 	void updateFields1(EntityIndex entity, ObjectIndex object);
-	void updateFields2(EntityIndex entity, ObjectIndex object);
-	void updateFields3(EntityIndex entity, ObjectIndex object);
 
 	// Sequences
 	void drawSequenceLeft(EntityIndex index, const char* sequence);

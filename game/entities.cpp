@@ -407,14 +407,6 @@ void Entities::updateFields1(EntityIndex entity, ObjectIndex object) {
 	error("Entities::updateFields1: not implemented!");
 }
 
-void Entities::updateFields2(EntityIndex entity, ObjectIndex object) {
-	error("Entities::updateFields2: not implemented!");
-}
-
-void Entities::updateFields3(EntityIndex entity, ObjectIndex object) {
-	error("Entities::updateFields2: not implemented!");
-}
-
 //////////////////////////////////////////////////////////////////////////
 // Accessors
 Entity *Entities::get(EntityIndex entity) {
