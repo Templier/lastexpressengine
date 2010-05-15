@@ -685,8 +685,7 @@ IMPLEMENT_ACTION(pickItem) {
 		break;
 
 	case kItemBomb:
-		getEntities()->resetEntityState(kEntityAbbot);
-		((Abbot*)getEntities()->get(kEntityAbbot))->setup_pickBomb();
+		RESET_ENTITY_STATE(kEntityAbbot, Abbot, setup_pickBomb);
 		break;
 
 	case kItemBriefcase:
@@ -1052,8 +1051,7 @@ IMPLEMENT_ACTION(25) {
 		getSound()->playSoundEvent(kEntityNone, 43);
 		if (!getInventory()->hasItem(kItemKey)) {
 			if (!getEvent(kEventAnnaBagageArgument)) {
-				getEntities()->resetEntityState(kEntityAnna);
-				((Anna*)getEntities()->get(kEntityAnna))->setup_bagage();
+				RESET_ENTITY_STATE(kEntityAnna, Anna, setup_bagage);
 				return kSceneNone;
 			}
 		}

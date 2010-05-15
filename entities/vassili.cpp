@@ -302,11 +302,8 @@ IMPLEMENT_FUNCTION(Vassili, seizure, 10)
 		}
 
 		// Setup Anna & Coudert
-		getEntities()->resetEntityState(kEntityAnna);
-		((Anna*)getEntities()->get(kEntityAnna))->setup_function37();
-
-		getEntities()->resetEntityState(kEntityAnna);
-		((Coudert*)getEntities()->get(kEntityCoudert))->setup_function38();
+		RESET_ENTITY_STATE(kEntityAnna, Anna, setup_function37);
+		RESET_ENTITY_STATE(kEntityCoudert, Coudert, setup_function38);
 
 		_data->setNextCallback(1);
 		call(new ENTITY_SETUP(Vassili, setup_savegame), 2, kEventVassiliSeizure);
