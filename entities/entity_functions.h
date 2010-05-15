@@ -71,7 +71,7 @@
 
 #define UPDATE_PARAM_FROM_TICKS(param1, value) \
 	if (params->param##param1) { \
-		if (params->param##param1 > (int)getState()->timeTicks) \
+		if (params->param##param1 >= (int)getState()->timeTicks) \
 			break; \
 		params->param##param1 = EntityData::kParamTime; \
 	} else { \

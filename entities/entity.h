@@ -114,7 +114,9 @@ public:
 		kClothesDefault = 0,
 		kClothes1 = 1,
 		kClothes2 = 2,
-		kClothes3 = 3
+		kClothes3 = 3,
+
+		kClothesInvalid
 	};
 
 	enum ParameterValue {

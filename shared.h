@@ -40,7 +40,9 @@ enum TimeValue {
 	kTimeChapter1       = 1062000,
 	kTimeParisEpernay   = 1075500,
 	kTimeAnna           = 1093500,
+	kTimeMahmud1        = 1098000,
 	kTimeTables1        = 1165500,
+	kTimeMahmud         = 1167300,
 	kTimeBedTime        = 1404000,
 	kTimeVassili        = 1503000,
 	kTimeVassili2       = 1512000,
@@ -103,7 +105,7 @@ enum SceneIndex {
 	kSceneMenu                = 1,
 
 	// Inventory
-	kSceneMatchbox            = 31,	
+	kSceneMatchbox            = 31,
 	kSceneTelegram            = 32,
 	kScenePassengerList       = 33,
 	kSceneScarf               = 34,
@@ -860,7 +862,10 @@ enum ActionIndex {
 	/////////////////////////////
 	// Mahmud
 	/////////////////////////////
+	kAction102227384 = 102227384,    // Mahmud / Mertens
+	kAction156567128 = 156567128,
 	kAction170483072 = 170483072,
+	kAction225563840 = 225563840,
 
 	/////////////////////////////
 	// Max

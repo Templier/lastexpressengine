@@ -136,7 +136,7 @@ void Entity::function1Clothes(const SavePoint &savepoint) {
 
 		// Select next available clothes
 		_data->getData()->clothes = (EntityData::ClothesIndex)(_data->getData()->clothes + 1);
-		if (_data->getData()->clothes > 3)
+		if (_data->getData()->clothes > EntityData::kClothes3)
 			_data->getData()->clothes = EntityData::kClothesDefault;
 
 		return;
