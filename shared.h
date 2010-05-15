@@ -32,42 +32,49 @@ namespace LastExpress {
 // Time values
 //////////////////////////////////////////////////////////////////////////
 enum TimeValue {
-	kTime0              = 0,
-	kTime1              = 1,
-	kTimeStart          = 1061100,
+	kTime0                    = 0,
+	kTime1                    = 1,
+	kTimeStart                = 1061100,
 
 	// Chapter 1
-	kTimeChapter1       = 1062000,
-	kTimeParisEpernay   = 1075500,
-	kTimeAnna           = 1093500,
-	kTimeMahmud1        = 1098000,
-	kTimeTables1        = 1165500,
-	kTimeMahmud         = 1167300,
-	kTimeBedTime        = 1404000,
-	kTimeVassili        = 1503000,
-	kTimeVassili2       = 1512000,
+	kTimeChapter1             = 1062000,
+	kTimeParisEpernay         = 1075500,
+	kTimeAnna                 = 1093500,
+	kTimeMahmud1              = 1098000,
+	kTimeTables1              = 1165500,
+	kTimeMahmud               = 1167300,
+	kTimeBedTime              = 1404000,
+	kTimeChapter1_0           = 1424700,
+	kTimeChapter1_1           = 1494000,
+	kTimeVassili              = 1503000,
+	kTimeVassili2             = 1512000,
 
 	// Chapter 2
-	kTimeChapter2       = 1750500,
+	kTimeChapter2             = 1750500,
 
 	// Chapter 3
-	kTimeChapter3       = 1944000,
-	kTimeAbbot          = 1953000,
-	kTimeAbbot2         = 1966500,
-	kTimeAbbot3         = 1971000,
-	kTimeAbbot4         = 1989000,
-	kTimeTables2        = 2052000,
-	kTimeCooks          = 2079000,
-	kTimeAugustVienna   = 2200500,
-	kTimeAnna2          = 2250000,
+	kTimeChapter3             = 1944000,
+	kTimeAbbot                = 1953000,
+	kTimeAbbot2               = 1966500,
+	kTimeAbbot3               = 1971000,
+	kTimeAbbot4               = 1989000,
+	kTimeTables2              = 2052000,
+	kTimeCooks                = 2079000,
+	kTimeAugustVienna         = 2200500,
+	kTimeAnna2                = 2250000,
 
 	// Chapter 4
-	kTimeChapter4       = 2353500,
-	kTimeGameOver       = 2418300,
-	kTimeTables3        = 2488500,
+	kTimeChapter4             = 2353500,
+	kTimeGameOver             = 2418300,
+	kTimeTables3              = 2488500,
 
 	// Chapter 5
-	kTimeChapter5       = 2844000
+	kTimeChapter5             = 2844000,
+	kTimeTrainStopped         = 2898000,
+	kTimeChapter5_0           = 2907000,
+	kTimeChapter5_1           = 2916000,
+	kTimeTrainStopped2        = 2943000
+
 };
 
 enum TimeType {
@@ -101,52 +108,59 @@ enum ChapterIndex {
 //////////////////////////////////////////////////////////////////////////
 
 enum SceneIndex {
-	kSceneNone                = 0,
-	kSceneMenu                = 1,
+	kSceneNone                    = 0,
+	kSceneMenu                    = 1,
 
 	// Inventory
-	kSceneMatchbox            = 31,
-	kSceneTelegram            = 32,
-	kScenePassengerList       = 33,
-	kSceneScarf               = 34,
-	kSceneParchemin           = 35,
-	kSceneArticle             = 36,
-	kScenePaper               = 37,
-	kSceneFirebird            = 38,
-	kSceneBriefcase           = 39,
+	kSceneMatchbox                = 31,
+	kSceneTelegram                = 32,
+	kScenePassengerList           = 33,
+	kSceneScarf                   = 34,
+	kSceneParchemin               = 35,
+	kSceneArticle                 = 36,
+	kScenePaper                   = 37,
+	kSceneFirebird                = 38,
+	kSceneBriefcase               = 39,
 
 	// Normal scenes
-	kSceneDefault             = 40,
-	kScene41                  = 41,
-	kSceneCompartmentCorpse   = 42,     // Tyler compartment with corpse on floor
+	kSceneDefault                 = 40,
+	kScene41                      = 41,
+	kSceneCompartmentCorpse       = 42,     // Tyler compartment with corpse on floor
 
 	// Fight
-	kSceneFightMilos          = 43,
-	kSceneFightMilosBedOpened = 44,
-	kSceneFightAnna           = 45,
-	kSceneFightIvo            = 46,
-	kSceneFightSalko          = 47,
-	kSceneFightVesna          = 48,
+	kSceneFightMilos              = 43,
+	kSceneFightMilosBedOpened     = 44,
+	kSceneFightAnna               = 45,
+	kSceneFightIvo                = 46,
+	kSceneFightSalko              = 47,
+	kSceneFightVesna              = 48,
+
+	//kSceneEuropeMap               = 49,
 
 	// Game over
-	kSceneGameOverBloodJacket = 55,
-	kSceneGameOverPolice      = 56,
-	kSceneGameOverPolice1     = 57,
-	kSceneGameOverAnnaDied    = 58,
-	kSceneGameOverVienna      = 59,
-	kSceneGameOverVienna1     = 60,
-	kSceneGameOverVienna2     = 61,
-	kSceneGameOverAlarm       = 62,
-	kSceneGameOverPolice2     = 63,
-	kSceneGameOverAlarm2      = 64,
+	kSceneGameOverStopPolice      = 50,
+	kSceneGameOverTrainStopped    = 51,
+	kSceneGameOverTrainStopped2   = 52,
+	kSceneGameOverTrainExplosion  = 53,
+	kSceneGameOverTrainExplosion2 = 54,
+	kSceneGameOverBloodJacket     = 55,
+	kSceneGameOverPolice          = 56,
+	kSceneGameOverPolice1         = 57,
+	kSceneGameOverAnnaDied        = 58,
+	kSceneGameOverVienna          = 59,
+	kSceneGameOverVienna1         = 60,
+	kSceneGameOverVienna2         = 61,
+	kSceneGameOverAlarm           = 62,
+	kSceneGameOverPolice2         = 63,
+	kSceneGameOverAlarm2          = 64,
 
 	// Start screen
-	kSceneStartScreen         = 65,
+	kSceneStartScreen             = 65,
 
-	kSceneFightDefault        = 820,
+	kSceneFightDefault            = 820,
 
-	kSceneStopProcessing      = 0xfffffffe,
-	kSceneInvalid             = 0xffffffff
+	kSceneStopProcessing          = 0xfffffffe,
+	kSceneInvalid                 = 0xffffffff
 };
 
 //////////////////////////////////////////////////////////////////////////
@@ -211,7 +225,7 @@ enum CursorStyle {
 	kCursorPunchRight,
 
 	// Portraits
-	kCursorPortrait,
+	kCursorPortrait,                      // 32
 	kCursorPortraitSelected,
 	kCursorPortraitGreen,
 	kCursorPortraitGreenSelected,
@@ -825,6 +839,9 @@ enum ActionIndex {
 	/////////////////////////////
 	// Chapters
 	/////////////////////////////
+	kAction135800432 = 135800432,
+	kActionChapter3  = 139122728,
+	kAction169629818 = 169629818,
 	kAction171843264 = 171843264,
 
 	/////////////////////////////

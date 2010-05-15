@@ -40,10 +40,10 @@ public:
 
 	// Setup
 	DECLARE_FUNCTION_II(savegame)
-	DECLARE_FUNCTION_SI(function2)
-	DECLARE_FUNCTION_S(function3)
+	DECLARE_FUNCTION_SI(enterStation)
+	DECLARE_FUNCTION_S(exitStation)
 	DECLARE_FUNCTION(chapter1)
-	DECLARE_FUNCTION(function5)
+	DECLARE_FUNCTION(resetMainEntities)
 	DECLARE_FUNCTION(function6)
 	DECLARE_FUNCTION(chapter1_init)
 	DECLARE_FUNCTION(chapter1_handler)
@@ -63,6 +63,7 @@ public:
 	DECLARE_FUNCTION(chapter5_handler)
 
 private:
+	DECLARE_CALL_FUNCTION(char, Chapters, const char*, int, int, const char*)
 	DECLARE_CALL_FUNCTION(default, Chapters, int, int, int, int)
 };
 
