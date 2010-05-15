@@ -270,7 +270,7 @@ IMPLEMENT_FUNCTION(Max, function9, 9)
 		if (params->param2 == EntityData::kParamTime || !getState()->time)
 			break;
 
-		if (params->param1 >= getState()->time) {
+		if (params->param1 >= (int)getState()->time) {
 			if (!getEntities()->checkSequence0(kEntityMax) || !params->param2) {
 
 				params->param2 = getState()->time;
@@ -278,7 +278,7 @@ IMPLEMENT_FUNCTION(Max, function9, 9)
 					goto setup_functions;
 			}
 
-			if (params->param2 >= getState()->time)
+			if (params->param2 >= (int)getState()->time)
 				break;
 		}
 
@@ -476,7 +476,7 @@ IMPLEMENT_FUNCTION(Max, freeFromCage, 14)
 
 		case 2:
 			if (getSound()->isBuffered(kEntityMax))
-				getSound()->processEntry(kEntityMax));
+				getSound()->processEntry(kEntityMax);
 
 			getSound()->playSound(kEntityNone, "LIB026");
 			getAction()->playAnimation(kEventCathMaxFree);
