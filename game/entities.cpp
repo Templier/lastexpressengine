@@ -223,9 +223,22 @@ void Entities::resetEntityState(EntityIndex entityIndex) {
 
 	prepareSequences(entityIndex);
 
-	// update fields 4x1000, 4x16 & 4x16_2
+	if (entityIndex == kEntity39)
+		entityIndex = kEntityNone;
 
-	warning("Entities::resetEntity: not implemented!");
+	if (entityIndex > kEntityChapters)
+		return;
+
+	// reset compartments and positions for this entity
+	for (int i = 0; i < sizeof(_positions); i++)
+		_positions[i] &= ~(1 << entityIndex);
+
+	for (int i = 0; i < sizeof(_compartments); i++) {
+		_compartments[i] &= ~(1 << entityIndex);
+		_compartments1[i] &= ~(1 << entityIndex);
+	}
+
+	getLogic()->updateCursor();
 }
 
 void Entities::updateFields() {
@@ -238,19 +251,19 @@ void Entities::updateFields() {
 			continue;
 
 		EntityData::Field491Value field_491 = _entities[i]->getData()->getData()->field_491;
-		byte field_49A = _entities[i]->getData()->getData()->direction;
+		EntityDirection direction = _entities[i]->getData()->getData()->direction;
 		int16 field_4A3 = _entities[i]->getData()->getData()->field_4A3;
-		int16 field_4AB = _entities[i]->getData()->getData()->field_49B;
+		int16 field_4AB = _entities[i]->getData()->getData()->field_4AB;
 
-		switch (field_49A) {
+		switch (direction) {
 		default:
 			break;
 
-		case 1:
-		case 2:	// Replace calls to CheckFields8
-			if (field_49A != 1 || (field_491 + field_4A3 * 10) >= 10000)
+		case kDirectionUp:
+		case kDirectionDown:	// Replace calls to CheckFields8
+			if (direction != kDirectionUp || (field_491 + field_4A3 * 10) >= 10000)
 			{
-				if (field_49A == 2) {
+				if (direction == kDirectionDown) {
 					if (field_491 > field_4A3 * 10)
 						_entities[i]->getData()->getData()->field_491 = (EntityData::Field491Value)(_entities[i]->getData()->getData()->field_491 - field_4A3 * 10);
 				}
@@ -259,15 +272,15 @@ void Entities::updateFields() {
 			}
 			break;
 
-		case 3:
+		case kDirectionLeft:
 			_entities[i]->getData()->getData()->field_49D += 1;
 			break;
 
-		case 4:
+		case kDirectionRight:
 			_entities[i]->getData()->getData()->field_4A1 += 9;
 			break;
 
-		case 5:
+		case kDirection5:
 			if (field_4AB == 4)
 				_entities[i]->getData()->getData()->field_4A1 += 9;
 			break;
@@ -731,22 +744,219 @@ void Entities::getSequenceName(EntityIndex index, EntityDirection direction, cha
 //////////////////////////////////////////////////////////////////////////
 /// Compartments
 void Entities::updatePosition(EntityIndex entity, CarIndex car, Position position, bool processScene) {
-	error("Entities::updateField1000: not implemented!");
+	if (entity == kEntity39)
+		entity = kEntityNone;
+
+	if (entity > kEntityChapters)
+		return;
+
+	_positions[100 * car + position] &= ~(1 << entity);
+
+	if (processScene && (checkFields4(car, position) || car == kCarRestaurant && position == 57 && checkFields4(kCarRestaurant, 50))) {
+		getSound()->excuseMe(entity);
+		getLogic()->loadScene(getLogic()->processIndex(getState()->scene));
+		getSound()->playSound(kEntityNone, "CAT1127A");
+	} else {
+		getLogic()->updateCursor();
+	}
 }
 
 void Entities::enterCompartment(EntityIndex entity, ObjectIndex compartment, bool useFirstCompartments) {
 	if (entity > kEntityChapters)
 		return;
 
-	error("Entities::updateFields0: not implemented!");
+	switch (compartment) {
+	default:
+		// Return here so we do not update the compartments
+		return;
+
+	case kObjectCompartment1:
+		updatePositionsEnter(entity, kCarGreenSleeping, 41, 51, 17, 38);
+		break;
+
+	case kObjectCompartment2:
+		updatePositionsEnter(entity, kCarGreenSleeping, 42, 52, 15, 36);
+		break;
+
+	case kObjectCompartment3:
+		updatePositionsEnter(entity, kCarGreenSleeping, 43, 53, 13, 34);
+		break;
+
+	case kObjectCompartment4:
+		updatePositionsEnter(entity, kCarGreenSleeping, 44, 54, 11, 32);
+		break;
+
+	case kObjectCompartment5:
+		updatePositionsEnter(entity, kCarGreenSleeping, 45, 55, 9, 30);
+		break;
+
+	case kObjectCompartment6:
+		updatePositionsEnter(entity, kCarGreenSleeping, 46, 56, 7, 28);
+		break;
+
+	case kObjectCompartment7:
+		updatePositionsEnter(entity, kCarGreenSleeping, 47, 57, 5, 26);
+		break;
+
+	case kObjectCompartment8:
+		updatePositionsEnter(entity, kCarGreenSleeping, 48, 58, 3, 25);
+		break;
+
+	case kObjectCompartmentA:
+		updatePositionsEnter(entity, kCarRedSleeping, 41, 51, 17, 38);
+		break;
+
+	case kObjectCompartmentB:
+		updatePositionsEnter(entity, kCarRedSleeping, 42, 52, 15, 36);
+		break;
+
+	case kObjectCompartmentC:
+		updatePositionsEnter(entity, kCarRedSleeping, 43, 53, 13, 34);
+		break;
+
+	case kObjectCompartmentD:
+		updatePositionsEnter(entity, kCarRedSleeping, 44, 54, 11, 32);
+		break;
+
+	case kObjectCompartmentE:
+		updatePositionsEnter(entity, kCarRedSleeping, 45, 55, 9, 30);
+		break;
+
+	case kObjectCompartmentF:
+		updatePositionsEnter(entity, kCarRedSleeping, 46, 56, 7, 28);
+		break;
+
+	case kObjectCompartmentG:
+		updatePositionsEnter(entity, kCarRedSleeping, 47, 57, 5, 26);
+		break;
+
+	case kObjectCompartmentH:
+		updatePositionsEnter(entity, kCarRedSleeping, 48, 58, 3, 25);
+		break;
+	}
+
+	// Update compartments
+	int index = (compartment < 32 ? compartment - 1 : compartment - 24);
+	if (useFirstCompartments)
+		_compartments[index] |= (1 << entity);
+	else
+		_compartments1[index] |= (1 << entity);
 }
 
 void Entities::exitCompartment(EntityIndex entity, ObjectIndex compartment, bool useFirstCompartments) {
+if (entity > kEntityChapters)
+		return;
+
+	// TODO factorize in one line
+	switch (compartment) {
+	default:
+		// Return here so we do not update the compartments
+		return;
+
+	case kObjectCompartment1:
+		updatePositionsExit(entity, kCarGreenSleeping, 41, 51);
+		break;
+
+	case kObjectCompartment2:
+		updatePositionsExit(entity, kCarGreenSleeping, 42, 52);
+		break;
+
+	case kObjectCompartment3:
+		updatePositionsExit(entity, kCarGreenSleeping, 43, 53);
+		break;
+
+	case kObjectCompartment4:
+		updatePositionsExit(entity, kCarGreenSleeping, 44, 54);
+		break;
+
+	case kObjectCompartment5:
+		updatePositionsExit(entity, kCarGreenSleeping, 45, 55);
+		break;
+
+	case kObjectCompartment6:
+		updatePositionsExit(entity, kCarGreenSleeping, 46, 56);
+		break;
+
+	case kObjectCompartment7:
+		updatePositionsExit(entity, kCarGreenSleeping, 47, 57);
+		break;
+
+	case kObjectCompartment8:
+		updatePositionsExit(entity, kCarGreenSleeping, 48, 58);
+		break;
+
+	case kObjectCompartmentA:
+		updatePositionsExit(entity, kCarRedSleeping, 41, 51);
+		break;
+
+	case kObjectCompartmentB:
+		updatePositionsExit(entity, kCarRedSleeping, 42, 52);
+		break;
+
+	case kObjectCompartmentC:
+		updatePositionsExit(entity, kCarRedSleeping, 43, 53);
+		break;
+
+	case kObjectCompartmentD:
+		updatePositionsExit(entity, kCarRedSleeping, 44, 54);
+		break;
+
+	case kObjectCompartmentE:
+		updatePositionsExit(entity, kCarRedSleeping, 45, 55);
+		break;
+
+	case kObjectCompartmentF:
+		updatePositionsExit(entity, kCarRedSleeping, 46, 56);
+		break;
+
+	case kObjectCompartmentG:
+		updatePositionsExit(entity, kCarRedSleeping, 47, 57);
+		break;
+
+	case kObjectCompartmentH:
+		updatePositionsExit(entity, kCarRedSleeping, 48, 58);
+		break;
+	}
+
+	// Update compartments
+	int index = (compartment < 32 ? compartment - 1 : compartment - 24);
+	if (useFirstCompartments)
+		_compartments[index] &= ~(1 << entity);
+	else
+		_compartments1[index] &= ~(1 << entity);
+}
+
+void Entities::updatePositionsEnter(EntityIndex entity, CarIndex car, Position position1, Position position2, Position position3, Position position4) {
+	if (entity == kEntity39)
+		entity = kEntityNone;
+
 	if (entity > kEntityChapters)
 		return;
 
+	_positions[100 * car + position1] |= (1 << entity);
+	_positions[100 * car + position2] |= (1 << entity);
 
-	error("Entities::updateFields1: not implemented!");
+	// FIXME: also checking two DWORD values that do not seem to updated anywhere...
+	if (checkFields4(car, position1) || checkFields4(car, position2) || checkFields4(car, position3) || checkFields4(car, position4)) {
+		getSound()->excuseMe(entity);
+		getLogic()->loadScene(getLogic()->processIndex(getState()->scene));
+		getSound()->playSound(kEntityNone, "CAT1127A");
+	} else {
+		getLogic()->updateCursor();
+	}
+}
+
+void Entities::updatePositionsExit(EntityIndex entity, CarIndex car, Position position1, Position position2) {
+	if (entity == kEntity39)
+		entity = kEntityNone;
+
+	if (entity > kEntityChapters)
+		return;
+
+	_positions[100 * car + position1] &= ~(1 << entity);
+	_positions[100 * car + position2] &= ~(1 << entity);
+
+	getLogic()->updateCursor();
 }
 
 //////////////////////////////////////////////////////////////////////////

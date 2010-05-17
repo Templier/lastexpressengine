@@ -124,7 +124,7 @@ private:
 	Common::Array<Entity *>  _entities;
 	int _compartments[16];
 	int _compartments1[16];
-	int _position[100*10];
+	int _positions[100*10];
 
 	void executeCallbacks();
 	void processEntity(EntityIndex entity);
@@ -134,7 +134,7 @@ private:
 
 	void getSequenceName(EntityIndex index, EntityDirection direction, char *sequence1, char *sequence2);
 
-	void updatePositionsEnter();
+	void updatePositionsEnter(EntityIndex entity, CarIndex car, Position position1, Position position2, Position position3, Position position4);
 	void updatePositionsExit(EntityIndex entity, CarIndex car, Position position1, Position position2);
 };
 
