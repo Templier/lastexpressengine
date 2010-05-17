@@ -44,7 +44,7 @@ namespace LastExpress {
 Mahmud::Mahmud(LastExpressEngine *engine) : Entity(engine, kEntityMahmud) {
 	ADD_CALLBACK_FUNCTION(Mahmud, function1);
 	ADD_CALLBACK_FUNCTION(Mahmud, draw);
-	ADD_CALLBACK_FUNCTION(Mahmud, function3);
+	ADD_CALLBACK_FUNCTION(Mahmud, enterExitCompartment);
 	ADD_CALLBACK_FUNCTION(Mahmud, function4);
 	ADD_CALLBACK_FUNCTION(Mahmud, playSound);
 	ADD_CALLBACK_FUNCTION(Mahmud, playSoundMertens);
@@ -75,8 +75,8 @@ IMPLEMENT_FUNCTION_NOSETUP(Mahmud, draw, 2)
 }
 
 //////////////////////////////////////////////////////////////////////////
-IMPLEMENT_FUNCTION_SI(Mahmud, function3, 3)
-	Entity::updateFields(savepoint);
+IMPLEMENT_FUNCTION_SI(Mahmud, enterExitCompartment, 3)
+	Entity::enterExitCompartment(savepoint);
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -97,15 +97,15 @@ IMPLEMENT_FUNCTION_SIII(Mahmud, function4, 4)
 
 		break;
 
-	case kAction3:
-		getEntities()->updateFields1(kEntityMahmud, (ObjectIndex)params->param2);
+	case kActionExitCompartment:
+		getEntities()->exitCompartment(kEntityMahmud, (ObjectIndex)params->param2);
 
 		CALL_PREVIOUS_SAVEPOINT();
 		break;
 
 	case kActionDefault:
 		getEntities()->drawSequenceRight(kEntityMahmud, params->seq);
-		getEntities()->updateFields0(kEntityMahmud, (ObjectIndex)params->param2);
+		getEntities()->enterCompartment(kEntityMahmud, (ObjectIndex)params->param2);
 		break;
 	}
 }
@@ -131,7 +131,7 @@ IMPLEMENT_FUNCTION_II(Mahmud, savegame, 8)
 }
 
 //////////////////////////////////////////////////////////////////////////
-// param1: field495
+// param1: CarIndex
 // param2: field491
 IMPLEMENT_FUNCTION_II(Mahmud, function9, 9)
 	switch (savepoint.action) {
@@ -140,7 +140,7 @@ IMPLEMENT_FUNCTION_II(Mahmud, function9, 9)
 
 	case kActionNone:
 	case kActionDefault:
-		if (getEntities()->checkEntity(kEntityMahmud, (EntityData::Field495Value)params->param1, (EntityData::Field491Value)params->param2))
+		if (getEntities()->checkEntity(kEntityMahmud, (CarIndex)params->param1, (EntityData::Field491Value)params->param2))
 			CALL_PREVIOUS_SAVEPOINT();
 		break;
 
@@ -172,7 +172,7 @@ IMPLEMENT_FUNCTION_II(Mahmud, function10, 10)
 		getObjects()->update(kObjectCompartment8, kEntityTrain, kLocation3, kCursorHandKnock, kCursorHand);
 
 		_data->setNextCallback(2);
-		call(new ENTITY_SETUP_SIIS(Mahmud, setup_function3), "614Ed", kObjectCompartment4);
+		call(new ENTITY_SETUP_SIIS(Mahmud, setup_enterExitCompartment), "614Ed", kObjectCompartment4);
 		break;
 
 	case kAction2:
@@ -188,7 +188,7 @@ IMPLEMENT_FUNCTION_II(Mahmud, function10, 10)
 			getObjects()->update(kObjectCompartment8, kEntityTrain, kLocation3, kCursorHandKnock, kCursorHand);
 
 			_data->setNextCallback(3);
-			call(new ENTITY_SETUP_SIIS(Mahmud, setup_function3), "614Ed", 4);
+			call(new ENTITY_SETUP_SIIS(Mahmud, setup_enterExitCompartment), "614Ed", kObjectCompartment4);
 		}
 		break;
 	}
@@ -279,12 +279,12 @@ IMPLEMENT_FUNCTION_II(Mahmud, function10, 10)
 			_data->getData()->field_493 = EntityData::kField493_0;
 
 			getEntities()->drawSequenceLeft(kEntityMahmud, "614Md");
-			getEntities()->updateField1000_4(kEntityMahmud, kObjectCompartment4);
+			getEntities()->enterCompartment(kEntityMahmud, kObjectCompartment4, false);
 			break;
 
 		case 2:
 		case 3:
-			getEntities()->updateField1000_5(kEntityMahmud, kObjectCompartment4);
+			getEntities()->exitCompartment(kEntityMahmud, kObjectCompartment4, false);
 			_data->getData()->field_493 = EntityData::kField493_1;
 			getEntities()->prepareSequences(kEntityMahmud);
 
@@ -338,7 +338,7 @@ IMPLEMENT_FUNCTION(Mahmud, function11, 11)
 	case kActionDefault:
 		getSavePoints()->push(kEntityMahmud, kEntityMertens, kAction102227384);
 		_data->setNextCallback(1);
-		call(new ENTITY_SETUP_SIIS(Mahmud, setup_function3), "614Ad", kObjectCompartment4);
+		call(new ENTITY_SETUP_SIIS(Mahmud, setup_enterExitCompartment), "614Ad", kObjectCompartment4);
 		break;
 
 	case kAction18:
@@ -350,7 +350,7 @@ IMPLEMENT_FUNCTION(Mahmud, function11, 11)
 			_data->getData()->field_493 = EntityData::kField493_0;
 			getObjects()->update(kObjectCompartment4, kEntityNone, kLocation3, kCursorHandKnock, kCursorHand);
 			getEntities()->drawSequenceLeft(kEntityMahmud, "614Kd");
-			getEntities()->updateField1000_4(kEntityMahmud, kObjectCompartment4);
+			getEntities()->enterCompartment(kEntityMahmud, kObjectCompartment4, false);
 
 			_data->setNextCallback(2);
 			call(new ENTITY_SETUP_SIIS(Mahmud, setup_playSound), "MAH1170A");
@@ -383,13 +383,13 @@ IMPLEMENT_FUNCTION(Mahmud, function11, 11)
 
 		case 7:
 			_data->setNextCallback(8);
-			call(new ENTITY_SETUP_SIIS(Mahmud, setup_function3), "614Ld", kObjectCompartment4);
+			call(new ENTITY_SETUP_SIIS(Mahmud, setup_enterExitCompartment), "614Ld", kObjectCompartment4);
 			break;
 
 		case 8:
 			getSavePoints()->push(kEntityMahmud, kEntityMertens, kAction156567128);
 			getEntities()->drawSequenceLeft(kEntityMahmud, "614Bd");
-			getEntities()->updateField1000_4(kEntityMahmud, kObjectCompartment4);
+			getEntities()->enterCompartment(kEntityMahmud, kObjectCompartment4, false);
 
 			_data->setNextCallback(9);
 			call(new ENTITY_SETUP_SIIS(Mahmud, setup_playSound), "MAH1170G");
@@ -408,7 +408,7 @@ IMPLEMENT_FUNCTION(Mahmud, function11, 11)
 			break;
 
 		case 11:
-			getEntities()->updateField1000_5(kEntityMahmud, kObjectCompartment4);
+			getEntities()->exitCompartment(kEntityMahmud, kObjectCompartment4, false);
 			_data->getData()->field_493 = EntityData::kField493_1;
 
 			getEntities()->prepareSequences(kEntityMahmud);
@@ -429,7 +429,7 @@ IMPLEMENT_FUNCTION(Mahmud, function11, 11)
 		getObjects()->update(kObjectCompartment8, kEntityTrain, kLocation3, kCursorHandKnock, kCursorHand);
 
 		_data->setNextCallback(11);
-		call(new ENTITY_SETUP_SIIS(Mahmud, setup_function3), "614Cd", kObjectCompartment4);
+		call(new ENTITY_SETUP_SIIS(Mahmud, setup_enterExitCompartment), "614Cd", kObjectCompartment4);
 		break;
 	}
 }
@@ -443,7 +443,7 @@ IMPLEMENT_FUNCTION(Mahmud, function12, 12)
 
 	case kActionDefault:
 		_data->setNextCallback(1);
-		call(new ENTITY_SETUP_SIIS(Mahmud, setup_function3), "614Gd", kObjectCompartment4);
+		call(new ENTITY_SETUP_SIIS(Mahmud, setup_enterExitCompartment), "614Gd", kObjectCompartment4);
 		break;
 
 	case kAction18:
@@ -456,12 +456,12 @@ IMPLEMENT_FUNCTION(Mahmud, function12, 12)
 			getObjects()->update(kObjectCompartment4, kEntityNone, kLocation3, kCursorHandKnock, kCursorHand);
 
 			_data->setNextCallback(2);
-			call(new ENTITY_SETUP(Mahmud, setup_function9), EntityData::kField495_3, EntityData::kField491_4070);
+			call(new ENTITY_SETUP(Mahmud, setup_function9), kCarGreenSleeping, EntityData::kField491_4070);
 			break;
 
 		case 2:
 			_data->setNextCallback(3);
-			call(new ENTITY_SETUP_SIIS(Mahmud, setup_function3), "614Ff", kObjectCompartment6);
+			call(new ENTITY_SETUP_SIIS(Mahmud, setup_enterExitCompartment), "614Ff", kObjectCompartment6);
 			break;
 
 		case 3:
@@ -474,19 +474,19 @@ IMPLEMENT_FUNCTION(Mahmud, function12, 12)
 
 		case 4:
 			_data->setNextCallback(5);
-			call(new ENTITY_SETUP_SIIS(Mahmud, setup_function3), "614Gf", kObjectCompartment6);
+			call(new ENTITY_SETUP_SIIS(Mahmud, setup_enterExitCompartment), "614Gf", kObjectCompartment6);
 			break;
 
 		case 5:
 			_data->getData()->field_493 = EntityData::kField493_0;
 
 			_data->setNextCallback(6);
-			call(new ENTITY_SETUP(Mahmud, setup_function9), EntityData::kField495_3, EntityData::kField491_5790);
+			call(new ENTITY_SETUP(Mahmud, setup_function9), kCarGreenSleeping, EntityData::kField491_5790);
 			break;
 
 		case 6:
 			_data->setNextCallback(7);
-			call(new ENTITY_SETUP_SIIS(Mahmud, setup_function3), "614Fd", kObjectCompartment4);
+			call(new ENTITY_SETUP_SIIS(Mahmud, setup_enterExitCompartment), "614Fd", kObjectCompartment4);
 			break;
 
 		case 7:
@@ -509,7 +509,7 @@ IMPLEMENT_FUNCTION(Mahmud, function13, 13)
 
 	case kActionDefault:
 		_data->setNextCallback(1);
-		call(new ENTITY_SETUP_SIIS(Mahmud, setup_function3), "614Gd", kObjectCompartment4);
+		call(new ENTITY_SETUP_SIIS(Mahmud, setup_enterExitCompartment), "614Gd", kObjectCompartment4);
 		break;
 
 	case kAction18:
@@ -522,12 +522,12 @@ IMPLEMENT_FUNCTION(Mahmud, function13, 13)
 			getObjects()->update(kObjectCompartment4, kEntityNone, kLocation3, kCursorHandKnock, kCursorHand);
 
 			_data->setNextCallback(2);
-			call(new ENTITY_SETUP(Mahmud, setup_function9), EntityData::kField495_3, EntityData::kField491_2740);
+			call(new ENTITY_SETUP(Mahmud, setup_function9), kCarGreenSleeping, EntityData::kField491_2740);
 			break;
 
 		case 2:
 			_data->setNextCallback(3);
-			call(new ENTITY_SETUP_SIIS(Mahmud, setup_function3), "614Fh", kObjectCompartment8);
+			call(new ENTITY_SETUP_SIIS(Mahmud, setup_enterExitCompartment), "614Fh", kObjectCompartment8);
 			break;
 
 		case 3:
@@ -540,19 +540,19 @@ IMPLEMENT_FUNCTION(Mahmud, function13, 13)
 
 		case 4:
 			_data->setNextCallback(5);
-			call(new ENTITY_SETUP_SIIS(Mahmud, setup_function3), "614Gh", kObjectCompartment8);
+			call(new ENTITY_SETUP_SIIS(Mahmud, setup_enterExitCompartment), "614Gh", kObjectCompartment8);
 			break;
 
 		case 5:
 			_data->getData()->field_493 = EntityData::kField493_0;
 
 			_data->setNextCallback(6);
-			call(new ENTITY_SETUP(Mahmud, setup_function9), EntityData::kField495_3, EntityData::kField491_5790);
+			call(new ENTITY_SETUP(Mahmud, setup_function9), kCarGreenSleeping, EntityData::kField491_5790);
 			break;
 
 		case 6:
 			_data->setNextCallback(7);
-			call(new ENTITY_SETUP_SIIS(Mahmud, setup_function3), "614Fd", kObjectCompartment4);
+			call(new ENTITY_SETUP_SIIS(Mahmud, setup_enterExitCompartment), "614Fd", kObjectCompartment4);
 			break;
 
 		case 7:
@@ -643,7 +643,7 @@ IMPLEMENT_FUNCTION(Mahmud, function14, 14)
 	case kActionDefault:
 		_data->getData()->field_491 = EntityData::kField491_5790;
 		_data->getData()->field_493 = EntityData::kField493_1;
-		_data->getData()->field_495 = EntityData::kField495_3;
+		_data->getData()->car = kCarGreenSleeping;
 
 		getEntities()->prepareSequences(kEntityMahmud);
 		params->param3 = 1;
@@ -772,7 +772,7 @@ IMPLEMENT_FUNCTION(Mahmud, chapter1, 15)
 
 		_data->getData()->field_491 = EntityData::kField491_540;
 		_data->getData()->field_493 = EntityData::kField493_0;
-		_data->getData()->field_495 = EntityData::kField495_3;
+		_data->getData()->car = kCarGreenSleeping;
 
 		getObjects()->update(kObjectCompartment4, kEntityNone, kLocation3, kCursorHandKnock, kCursorHand);
 		getObjects()->update(kObject20, kEntityNone, kLocation3, kCursorHandKnock, kCursorHand);
@@ -787,7 +787,7 @@ IMPLEMENT_FUNCTION(Mahmud, function16, 16)
 
 	_data->getData()->field_491 = EntityData::kField491_5790;
 	_data->getData()->field_493 = EntityData::kField493_1;
-	_data->getData()->field_495 = EntityData::kField495_3;
+	_data->getData()->car = kCarGreenSleeping;
 
 	getObjects()->update(kObjectCompartment4, kEntityNone, kLocation3, kCursorHandKnock, kCursorHand);
 	getEntities()->prepareSequences(kEntityMahmud);
@@ -808,8 +808,8 @@ IMPLEMENT_FUNCTION(Mahmud, chapter2, 17)
 
 		_data->getData()->field_491 = EntityData::kField491_5790;
 		_data->getData()->field_493 = EntityData::kField493_1;
-		_data->getData()->field_495 = EntityData::kField495_3;
-		_data->getData()->clothes = EntityData::kClothesDefault;
+		_data->getData()->car = kCarGreenSleeping;
+		_data->getData()->clothes = kClothesDefault;
 		_data->getData()->inventoryItem = kItemNone;
 		break;
 	}
@@ -830,8 +830,8 @@ IMPLEMENT_FUNCTION(Mahmud, chapter3, 18)
 
 		_data->getData()->field_491 = EntityData::kField491_5790;
 		_data->getData()->field_493 = EntityData::kField493_1;
-		_data->getData()->field_495 = EntityData::kField495_3;
-		_data->getData()->clothes = EntityData::kClothesDefault;
+		_data->getData()->car = kCarGreenSleeping;
+		_data->getData()->clothes = kClothesDefault;
 		_data->getData()->inventoryItem = kItemNone;
 
 		break;
@@ -853,8 +853,8 @@ IMPLEMENT_FUNCTION(Mahmud, chapter4, 19)
 
 		_data->getData()->field_491 = EntityData::kField491_2740;
 		_data->getData()->field_493 = EntityData::kField493_1;
-		_data->getData()->field_495 = EntityData::kField495_3;
-		_data->getData()->clothes = EntityData::kClothesDefault;
+		_data->getData()->car = kCarGreenSleeping;
+		_data->getData()->clothes = kClothesDefault;
 		_data->getData()->inventoryItem = kItemNone;
 
 		break;

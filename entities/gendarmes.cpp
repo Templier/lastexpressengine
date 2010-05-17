@@ -70,7 +70,7 @@ IMPLEMENT_FUNCTION(Gendarmes, chapter1, 2)
 		break;
 
 	case kActionDefault:
-		_data->getData()->field_495 = EntityData::kField495_0;
+		_data->getData()->car = kCarNone;
 		break;
 	}
 }

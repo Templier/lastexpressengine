@@ -39,7 +39,7 @@ namespace LastExpress {
 Ivo::Ivo(LastExpressEngine *engine) : Entity(engine, kEntityIvo) {
 	ADD_CALLBACK_FUNCTION(Ivo, function1);
 	ADD_CALLBACK_FUNCTION(Ivo, draw);
-	ADD_CALLBACK_FUNCTION(Ivo, function3);
+	ADD_CALLBACK_FUNCTION(Ivo, enterExitCompartment);
 	ADD_CALLBACK_FUNCTION(Ivo, updateFromTime);
 	ADD_CALLBACK_FUNCTION(Ivo, updateFromTicks);
 	ADD_CALLBACK_FUNCTION(Ivo, function6);
@@ -81,8 +81,8 @@ IMPLEMENT_FUNCTION_S(Ivo, draw, 2)
 	Entity::draw(savepoint);
 }
 
-IMPLEMENT_FUNCTION_SI(Ivo, function3, 3)
-	Entity::updateFields(savepoint);
+IMPLEMENT_FUNCTION_SI(Ivo, enterExitCompartment, 3)
+	Entity::enterExitCompartment(savepoint);
 }
 
 IMPLEMENT_FUNCTION_I(Ivo, updateFromTime, 4)
@@ -140,7 +140,7 @@ IMPLEMENT_FUNCTION(Ivo, chapter1, 14)
 
 		_data->getData()->field_491 = EntityData::kField491_4691;
 		_data->getData()->field_493 = EntityData::kField493_1;
-		_data->getData()->field_495 = EntityData::kField495_5;
+		_data->getData()->car = kCarRestaurant;
 
 		break;
 	}
@@ -172,8 +172,8 @@ IMPLEMENT_FUNCTION(Ivo, chapter2, 18)
 
 		_data->getData()->field_491 = EntityData::kField491_2740;
 		_data->getData()->field_493 = EntityData::kField493_1;
-		_data->getData()->field_495 = EntityData::kField495_4;
-		_data->getData()->clothes = EntityData::kClothesDefault;
+		_data->getData()->car = kCarRedSleeping;
+		_data->getData()->clothes = kClothesDefault;
 		_data->getData()->inventoryItem = kItemNone;
 
 		getObjects()->update(kObjectCompartmentH, kEntityNone, kLocation3, kCursorHandKnock, kCursorHand);
@@ -209,8 +209,8 @@ IMPLEMENT_FUNCTION(Ivo, chapter3, 22)
 
 		_data->getData()->field_491 = EntityData::kField491_2740;
 		_data->getData()->field_493 = EntityData::kField493_1;
-		_data->getData()->field_495 = EntityData::kField495_4;
-		_data->getData()->clothes = EntityData::kClothesDefault;
+		_data->getData()->car = kCarRedSleeping;
+		_data->getData()->clothes = kClothesDefault;
 		_data->getData()->inventoryItem = kItemNone;
 
 		break;
@@ -232,7 +232,7 @@ IMPLEMENT_FUNCTION(Ivo, chapter4, 24)
 
 	case kActionDefault:
 		_data->getData()->field_493 = EntityData::kField493_1;
-		_data->getData()->field_495 = EntityData::kField495_5;
+		_data->getData()->car = kCarRestaurant;
 		_data->getData()->inventoryItem = kItemNone;
 		break;
 	}
@@ -272,7 +272,7 @@ IMPLEMENT_FUNCTION(Ivo, chapter5, 30)
 
 		_data->getData()->field_491 = EntityData::kField491_540;
 		_data->getData()->field_493 = EntityData::kField493_1;
-		_data->getData()->field_495 = EntityData::kField495_1;
+		_data->getData()->car = kCarBaggageRear;
 		_data->getData()->inventoryItem = kItemNone;
 
 		break;

@@ -44,7 +44,7 @@ public:
 	DECLARE_FUNCTION_I(updateFromTicks)
 	DECLARE_FUNCTION_S(draw)
 	DECLARE_FUNCTION_SII(function5)
-	DECLARE_FUNCTION_SI(function6)
+	DECLARE_FUNCTION_SI(enterExitCompartment)
 	DECLARE_FUNCTION(function7)
 	DECLARE_FUNCTION_SIIS(function8)
 	DECLARE_FUNCTION_II(savegame)

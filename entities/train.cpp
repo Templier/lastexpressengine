@@ -132,10 +132,10 @@ IMPLEMENT_FUNCTION_II(Train, harem, 7)
 		break;
 	}
 
-	params->param4 = getEntities()->checkFields1(kEntityAlouan, EntityData::kField495_3, (EntityData::Field491Value)params->param3);
+	params->param4 = getEntities()->checkFields1(kEntityAlouan, kCarGreenSleeping, (EntityData::Field491Value)params->param3);
 	params->param5 = (ENTITY_PARAM(0, 7) - params->param3) <= 0;
-	params->param6 = getEntities()->checkFields1(kEntityYasmin, EntityData::kField495_3, (EntityData::Field491Value)params->param3);
-	params->param7 = getEntities()->checkFields1(kEntityHadija, EntityData::kField495_3, (EntityData::Field491Value)params->param3);
+	params->param6 = getEntities()->checkFields1(kEntityYasmin, kCarGreenSleeping, (EntityData::Field491Value)params->param3);
+	params->param7 = getEntities()->checkFields1(kEntityHadija, kCarGreenSleeping, (EntityData::Field491Value)params->param3);
 
 	getObjects()->update((ObjectIndex)params->param1, kEntityTrain, kLocation3, kCursorNormal, kCursorNormal);
 
@@ -286,7 +286,7 @@ IMPLEMENT_FUNCTION(Train, process, 8)
 
 	case kActionNone:
 		// Play smoke animation
-		if ((getEntities()->checkFields7(EntityData::kField495_3) || getEntities()->checkFields7(EntityData::kField495_4))
+		if ((getEntities()->checkFields7(kCarGreenSleeping) || getEntities()->checkFields7(kCarRedSleeping))
 		  && params->param4
 		  && !params->param5) {
 
@@ -312,7 +312,7 @@ IMPLEMENT_FUNCTION(Train, process, 8)
 				parameters1->param7 = EntityData::kParamTime;
 			}
 
-			getLogic()->loadSceneFromPosition(EntityData::kField495_5, 58);
+			getLogic()->loadSceneFromPosition(kCarRestaurant, 58);
 		}
 
 		parameters1->param7 = 0;
@@ -373,10 +373,10 @@ label_skip:
 		break;
 
 	case kAction17:
-		_data->getData()->field_495 = getEntityData(kEntityNone)->field_495;
+		_data->getData()->car = getEntityData(kEntityNone)->car;
 
 		// Play clock sound
-		if (getEntities()->checkFields4(EntityData::kField495_5, 81)) {
+		if (getEntities()->checkFields4(kCarRestaurant, 81)) {
 			params->param6 = 1;
 			getSound()->playSound(kEntityNone, "ZFX1001");
 		} else {
@@ -385,35 +385,35 @@ label_skip:
 
 		// Draw moving background behind windows
 		if (params->param3) {
-			if (getEntityData(kEntityNone)->field_495 != params->param1 || isDay() != (bool)(params->param2 > 0)) {
-				switch (getEntityData(kEntityNone)->field_495) {
+			if (getEntityData(kEntityNone)->car != params->param1 || isDay() != (bool)(params->param2 > 0)) {
+				switch (getEntityData(kEntityNone)->car) {
 				default:
 					getEntities()->prepareSequences(kEntityTrain);
 					break;
 
-				case EntityData::kField495_1:
-				case EntityData::kField495_6:
+				case kCarBaggageRear:
+				case kCarBaggage:
 					if (getProgress().is_nighttime)
 						getEntities()->drawSequenceLeft(kEntityTrain, "B1WNM");
 					else
 						getEntities()->drawSequenceLeft(kEntityTrain, isDay() ? "B1WNM" : "B1WND");
 					break;
 
-				case EntityData::kField495_3:
-				case EntityData::kField495_4:
+				case kCarGreenSleeping:
+				case kCarRedSleeping:
 					if (getProgress().is_nighttime)
 						getEntities()->drawSequenceLeft(kEntityTrain, "S1WNM");
 					else
 						getEntities()->drawSequenceLeft(kEntityTrain, isDay() ? "S1WNM" : "S1WND");
 					break;
 
-				case EntityData::kField495_5:
+				case kCarRestaurant:
 					getEntities()->drawSequenceLeft(kEntityTrain, isDay() ? "RCWNN" : "RCWND");
 					break;
 				}
 
 				// Set parameters so we do not get called twice
-				params->param1 = getEntityData(kEntityNone)->field_495;
+				params->param1 = getEntityData(kEntityNone)->car;
 				params->param2 = isDay();
 			}
 		}
@@ -424,13 +424,13 @@ label_skip:
 		}
 
 		if (getProgress().jacket == kJacketOriginal) {
-			if (getEntities()->checkFields4(EntityData::kField495_4, 18)) {
+			if (getEntities()->checkFields4(kCarRedSleeping, 18)) {
 				_data->setNextCallback(1);
 				call(new ENTITY_SETUP(Train, setup_savegame), 2, kEventMertensBloodJacket);
 				break;
 			}
 
-			if (getEntities()->checkFields4(EntityData::kField495_3, 22)) {
+			if (getEntities()->checkFields4(kCarGreenSleeping, 22)) {
 				_data->setNextCallback(2);
 				call(new ENTITY_SETUP(Train, setup_savegame), 2, kEventMertensBloodJacket);
 				break;
@@ -467,12 +467,12 @@ label_skip:
 
 		case 7:
 			getAction()->playAnimation(kEventCathJumpDownCeiling);
-			getLogic()->loadSceneFromPosition(EntityData::kField495_2, 89);
+			getLogic()->loadSceneFromPosition(kCarKronos, 89);
 			break;
 
 		case 8:
 			getAction()->playAnimation(kEventCloseMatchbox);
-			getLogic()->loadSceneFromPosition(EntityData::kField495_5, 51);
+			getLogic()->loadSceneFromPosition(kCarRestaurant, 51);
 			break;
 		}
 		break;
@@ -499,7 +499,7 @@ label_skip:
 		} else {
 			params->param7 = 1;
 			getAction()->playAnimation(kEventLocomotiveConductorsLook);
-			getLogic()->loadSceneFromPosition(EntityData::kField495_7, 2);
+			getLogic()->loadSceneFromPosition(kCarCoalTender, 2);
 		}
 		break;
 
@@ -578,8 +578,8 @@ void Train::resetParam8() {
 	EntityData::EntityParametersIIIS *params2 = (EntityData::EntityParametersIIIS*)_data->getCurrentParameters(1);
 
 	if (params->param8
-		&& getEntities()->checkFields1(kEntityNone, (EntityData::Field495Value)params2->param1, (EntityData::Field491Value)params2->param2)
-		&& getEntities()->checkFields1(kEntityNone, (EntityData::Field495Value)params2->param1, (EntityData::Field491Value)params2->param3)) {
+		&& getEntities()->checkFields1(kEntityNone, (CarIndex)params2->param1, (EntityData::Field491Value)params2->param2)
+		&& getEntities()->checkFields1(kEntityNone, (CarIndex)params2->param1, (EntityData::Field491Value)params2->param3)) {
 			// loads a file in the sound cache (param4)
 			params->param8 = 0;
 	}

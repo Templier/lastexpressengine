@@ -114,7 +114,7 @@ IMPLEMENT_FUNCTION_SIIS(Servers1, function5, 5)
 	default:
 		break;
 
-	case kAction3:
+	case kActionExitCompartment:
 		if (!CURRENT_PARAMS(1, 1))
 			getSavePoints()->call(kEntityServers1, (EntityIndex)params->param2, (ActionIndex)params->param3, params->seq2);
 
@@ -211,7 +211,7 @@ IMPLEMENT_FUNCTION(Servers1, chapter1, 8)
 
 		_data->getData()->field_491 = EntityData::kField491_5900;
 		_data->getData()->field_493 = EntityData::kField493_0;
-		_data->getData()->field_495 = EntityData::kField495_5;
+		_data->getData()->car = kCarRestaurant;
 		break;
 	}
 }
@@ -262,8 +262,8 @@ IMPLEMENT_FUNCTION(Servers1, chapter2, 17)
 
 		_data->getData()->field_491 = EntityData::kField491_5900;
 		_data->getData()->field_493 = EntityData::kField493_0;
-		_data->getData()->field_495 = EntityData::kField495_5;
-		_data->getData()->clothes = EntityData::kClothes1;
+		_data->getData()->car = kCarRestaurant;
+		_data->getData()->clothes = kClothes1;
 		_data->getData()->inventoryItem = kItemNone;
 
 		ENTITY_PARAM(0, 6) = 0;
@@ -303,8 +303,8 @@ IMPLEMENT_FUNCTION(Servers1, chapter3, 22)
 
 		_data->getData()->field_491 = EntityData::kField491_5900;
 		_data->getData()->field_493 = EntityData::kField493_0;
-		_data->getData()->field_495 = EntityData::kField495_5;
-		_data->getData()->clothes = EntityData::kClothes1;
+		_data->getData()->car = kCarRestaurant;
+		_data->getData()->clothes = kClothes1;
 		_data->getData()->inventoryItem = kItemNone;
 
 		ENTITY_PARAM(1, 1) = 0;
@@ -335,7 +335,7 @@ IMPLEMENT_FUNCTION(Servers1, chapter4, 25)
 
 		_data->getData()->field_491 = EntityData::kField491_5900;
 		_data->getData()->field_493 = EntityData::kField493_0;
-		_data->getData()->field_495 = EntityData::kField495_5;
+		_data->getData()->car = kCarRestaurant;
 		_data->getData()->inventoryItem = kItemNone;
 
 		// TODO: there is a second call to drawSequences in the original code (is it really needed?)
@@ -379,7 +379,7 @@ IMPLEMENT_FUNCTION(Servers1, chapter5, 30)
 
 		_data->getData()->field_491 = EntityData::kField491_3969;
 		_data->getData()->field_493 = EntityData::kField493_1;
-		_data->getData()->field_495 = EntityData::kField495_5;
+		_data->getData()->car = kCarRestaurant;
 		_data->getData()->inventoryItem = kItemNone;
 		break;
 	}

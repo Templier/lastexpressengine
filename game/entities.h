@@ -63,13 +63,10 @@ public:
 
 	void updateEntity(EntityIndex entity);
 
-	void updateField1000(EntityIndex entity, int index, int value);
-	void updateField1000ProcessScene(EntityIndex entity, int index, int value);
-	void updateField1000_4(EntityIndex entity, ObjectIndex object);
-	void updateField1000_5(EntityIndex entity, ObjectIndex object);
+	void updatePosition(EntityIndex entity, CarIndex car, Position position, bool processScene = false);
 
-	void updateFields0(EntityIndex entity, ObjectIndex object);
-	void updateFields1(EntityIndex entity, ObjectIndex object);
+	void enterCompartment(EntityIndex entity, ObjectIndex compartment, bool useFirstCompartments = true);
+	void exitCompartment(EntityIndex entity, ObjectIndex compartment, bool useFirstCompartments = true);
 
 	// Sequences
 	void drawSequenceLeft(EntityIndex index, const char* sequence);
@@ -88,16 +85,16 @@ public:
 	int getSoundValue(EntityIndex index);
 
 	// Checks
-	bool checkEntity(EntityIndex entity, EntityData::Field495Value field495, EntityData::Field491Value field491);
+	bool checkEntity(EntityIndex entity, CarIndex car, EntityData::Field491Value field491);
 	bool compare(EntityIndex entity1, EntityIndex entity2);
 
-	bool checkFields1(EntityIndex entity, EntityData::Field495Value field495, EntityData::Field491Value field491) const;
+	bool checkFields1(EntityIndex entity, CarIndex car, EntityData::Field491Value field491) const;
 	bool checkFields2(ObjectIndex object) const;
 	bool checkFields3(EntityIndex entity) const;
-	bool checkFields4(EntityData::Field495Value field495, int position) const;
-	bool checkFields5(EntityIndex entity, EntityData::Field495Value field495) const;
+	bool checkFields4(CarIndex car, Position position) const;
+	bool checkFields5(EntityIndex entity, CarIndex car) const;
 	bool checkFields6(EntityIndex entity) const;
-	bool checkFields7(EntityData::Field495Value field495) const;
+	bool checkFields7(CarIndex car) const;
 	bool isDirectionUpOrDown(EntityIndex entity) const;
 	bool checkFields9(EntityIndex entity1, EntityIndex entity2, int absValue) const;
 	bool checkFields10(EntityIndex entity) const;
@@ -108,8 +105,8 @@ public:
 	bool checkFields15() const;
 	bool checkFields16() const;
 	bool checkFields17(EntityIndex entity) const;
-	bool checkFields18(EntityData::Field495Value field495, EntityData::Field491Value field491) const;
-	bool checkFields19(EntityIndex entity, EntityData::Field495Value field495, EntityData::Field491Value field491) const;
+	bool checkFields18(CarIndex car, EntityData::Field491Value field491) const;
+	bool checkFields19(EntityIndex entity, CarIndex car, EntityData::Field491Value field491) const;
 	bool checkFields20(EntityIndex entity) const;
 	bool checkFields21(EntityIndex entity) const;
 	bool checkFields22(EntityIndex entity) const;
@@ -125,6 +122,9 @@ private:
 	LastExpressEngine	    *_engine;
 	EntityData 			    *_header;
 	Common::Array<Entity *>  _entities;
+	int _compartments[16];
+	int _compartments1[16];
+	int _position[100*10];
 
 	void executeCallbacks();
 	void processEntity(EntityIndex entity);
@@ -133,6 +133,9 @@ private:
 	void drawSequencesInternal(EntityIndex index, EntityDirection direction, bool unknown);
 
 	void getSequenceName(EntityIndex index, EntityDirection direction, char *sequence1, char *sequence2);
+
+	void updatePositionsEnter();
+	void updatePositionsExit(EntityIndex entity, CarIndex car, Position position1, Position position2);
 };
 
 } // End of namespace LastExpress

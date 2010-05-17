@@ -39,7 +39,7 @@ namespace LastExpress {
 
 Alouan::Alouan(LastExpressEngine *engine) : Entity(engine, kEntityAlouan) {
 	ADD_CALLBACK_FUNCTION(Alouan, function1);
-	ADD_CALLBACK_FUNCTION(Alouan, function2);
+	ADD_CALLBACK_FUNCTION(Alouan, enterExitCompartment);
 	ADD_CALLBACK_FUNCTION(Alouan, playSound);
 	ADD_CALLBACK_FUNCTION(Alouan, updateFromTime);
 	ADD_CALLBACK_FUNCTION(Alouan, function5);
@@ -68,8 +68,8 @@ IMPLEMENT_FUNCTION(Alouan, function1, 1)
 	Entity::function1(savepoint);
 }
 
-IMPLEMENT_FUNCTION_SI(Alouan, function2, 2)
-	Entity::updateFields(savepoint);
+IMPLEMENT_FUNCTION_SI(Alouan, enterExitCompartment, 2)
+	Entity::enterExitCompartment(savepoint);
 }
 
 IMPLEMENT_FUNCTION_S(Alouan, playSound, 3)
@@ -112,7 +112,7 @@ IMPLEMENT_FUNCTION(Alouan, chapter1, 10)
 	case kActionDefault:
 		_data->getData()->field_491 = EntityData::kField491_2740;
 		_data->getData()->field_493 = EntityData::kField493_1;
-		_data->getData()->field_495 = EntityData::kField495_3;
+		_data->getData()->car = kCarGreenSleeping;
 
 		break;
 	}
@@ -134,8 +134,8 @@ IMPLEMENT_FUNCTION(Alouan, chapter2, 13)
 
 	_data->getData()->field_491 = EntityData::kField491_2740;
 	_data->getData()->field_493 = EntityData::kField493_1;
-	_data->getData()->field_495 = EntityData::kField495_3;
-	_data->getData()->clothes = EntityData::kClothesDefault;
+	_data->getData()->car = kCarGreenSleeping;
+	_data->getData()->clothes = kClothesDefault;
 	_data->getData()->inventoryItem = kItemNone;
 
 	setup_function14();
@@ -159,7 +159,7 @@ IMPLEMENT_FUNCTION(Alouan, chapter3, 15)
 
 		_data->getData()->field_491 = EntityData::kField491_2740;
 		_data->getData()->field_493 = EntityData::kField493_1;
-		_data->getData()->field_495 = EntityData::kField495_3;
+		_data->getData()->car = kCarGreenSleeping;
 
 		break;
 	}
@@ -183,7 +183,7 @@ IMPLEMENT_FUNCTION(Alouan, chapter4, 17)
 
 		_data->getData()->field_491 = EntityData::kField491_2740;
 		_data->getData()->field_493 = EntityData::kField493_1;
-		_data->getData()->field_495 = EntityData::kField495_3;
+		_data->getData()->car = kCarGreenSleeping;
 
 		break;
 	}
@@ -211,8 +211,8 @@ IMPLEMENT_FUNCTION(Alouan, chapter5, 20)
 
 		_data->getData()->field_491 = EntityData::kField491_3969;
 		_data->getData()->field_493 = EntityData::kField493_1;
-		_data->getData()->field_495 = EntityData::kField495_5;
-		_data->getData()->clothes = EntityData::kClothesDefault;
+		_data->getData()->car = kCarRestaurant;
+		_data->getData()->clothes = kClothesDefault;
 		_data->getData()->inventoryItem = kItemNone;
 
 		break;

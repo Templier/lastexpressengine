@@ -71,8 +71,8 @@ public:
 	void loadSceneFromObject(ObjectIndex object);
 	void loadSceneFromObject2(ObjectIndex object);
 	void loadSceneFromItem(InventoryItem item);
-	void loadSceneFromPosition(EntityData::Field495Value field495, byte position, int param3 = -1);
-    SceneIndex getIndexFromPosition(EntityData::Field495Value field495, byte position, int param3 = -1);
+	void loadSceneFromPosition(CarIndex car, Position position, int param3 = -1);
+    SceneIndex getIndexFromPosition(CarIndex car, Position position, int param3 = -1);
 
 	void updateDoorsAndClock();
 	void updateCursor(bool redraw = true);

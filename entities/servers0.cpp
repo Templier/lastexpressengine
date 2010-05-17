@@ -147,7 +147,7 @@ IMPLEMENT_FUNCTION(Servers0, chapter1, 11)
 
 		_data->getData()->field_491 = EntityData::kField491_5900;
 		_data->getData()->field_493 = EntityData::kField493_0;
-		_data->getData()->field_495 = EntityData::kField495_5;
+		_data->getData()->car = kCarRestaurant;
 		break;
 	}
 }
@@ -210,8 +210,8 @@ IMPLEMENT_FUNCTION(Servers0, chapter2, 23)
 
 		_data->getData()->field_491 = EntityData::kField491_5900;
 		_data->getData()->field_493 = EntityData::kField493_0;
-		_data->getData()->field_495 = EntityData::kField495_5;
-		_data->getData()->clothes = EntityData::kClothes1;
+		_data->getData()->car = kCarRestaurant;
+		_data->getData()->clothes = kClothes1;
 		_data->getData()->inventoryItem = kItemNone;
 
 		ENTITY_PARAM(1, 3) = 0;
@@ -246,8 +246,8 @@ IMPLEMENT_FUNCTION(Servers0, chapter3, 27)
 
 		_data->getData()->field_491 = EntityData::kField491_5900;
 		_data->getData()->field_493 = EntityData::kField493_0;
-		_data->getData()->field_495 = EntityData::kField495_5;
-		_data->getData()->clothes = EntityData::kClothes1;
+		_data->getData()->car = kCarRestaurant;
+		_data->getData()->clothes = kClothes1;
 		_data->getData()->inventoryItem = kItemNone;
 
 		ENTITY_PARAM(0, 3) = 0;
@@ -286,8 +286,8 @@ IMPLEMENT_FUNCTION(Servers0, chapter4, 31)
 
 		_data->getData()->field_491 = EntityData::kField491_5900;
 		_data->getData()->field_493 = EntityData::kField493_0;
-		_data->getData()->field_495 = EntityData::kField495_5;
-		_data->getData()->clothes = EntityData::kClothesDefault;
+		_data->getData()->car = kCarRestaurant;
+		_data->getData()->clothes = kClothesDefault;
 		_data->getData()->inventoryItem = kItemNone;
 
 		ENTITY_PARAM(0, 3) = 0;
@@ -330,7 +330,7 @@ IMPLEMENT_FUNCTION(Servers0, chapter5, 36)
 
 		_data->getData()->field_491 = EntityData::kField491_3969;
 		_data->getData()->field_493 = EntityData::kField493_1;
-		_data->getData()->field_495 = EntityData::kField495_5;
+		_data->getData()->car = kCarRestaurant;
 		_data->getData()->inventoryItem = kItemNone;
 		break;
 	}

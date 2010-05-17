@@ -43,7 +43,7 @@ Tatiana::Tatiana(LastExpressEngine *engine) : Entity(engine, kEntityTatiana) {
 	ADD_CALLBACK_FUNCTION(Tatiana, playSound);
 	ADD_CALLBACK_FUNCTION(Tatiana, draw);
 	ADD_CALLBACK_FUNCTION(Tatiana, function4);
-	ADD_CALLBACK_FUNCTION(Tatiana, function5);
+	ADD_CALLBACK_FUNCTION(Tatiana, enterExitCompartment);
 	ADD_CALLBACK_FUNCTION(Tatiana, function6);
 	ADD_CALLBACK_FUNCTION(Tatiana, function7);
 	ADD_CALLBACK_FUNCTION(Tatiana, function8);
@@ -112,8 +112,8 @@ IMPLEMENT_FUNCTION_SII(Tatiana, function4, 4)
 	Entity::updateField1000(savepoint);
 }
 
-IMPLEMENT_FUNCTION_SI(Tatiana, function5, 5)
-	Entity::updateFields(savepoint);
+IMPLEMENT_FUNCTION_SI(Tatiana, enterExitCompartment, 5)
+	Entity::enterExitCompartment(savepoint);
 }
 
 IMPLEMENT_FUNCTION_SI(Tatiana, function6, 6)
@@ -178,7 +178,7 @@ IMPLEMENT_FUNCTION(Tatiana, chapter1, 17)
 
 		_data->getData()->field_491 = EntityData::kField491_5419;
 		_data->getData()->field_493 = EntityData::kField493_1;
-		_data->getData()->field_495 = EntityData::kField495_5;
+		_data->getData()->car = kCarRestaurant;
 		break;
 	}
 }
@@ -229,8 +229,8 @@ IMPLEMENT_FUNCTION(Tatiana, chapter2, 25)
 
 		_data->getData()->field_491 = EntityData::kField491_5420;
 		_data->getData()->field_493 = EntityData::kField493_1;
-		_data->getData()->field_495 = EntityData::kField495_5;
-		_data->getData()->clothes = EntityData::kClothes2;
+		_data->getData()->car = kCarRestaurant;
+		_data->getData()->clothes = kClothes2;
 		break;
 	}
 }
@@ -272,8 +272,8 @@ IMPLEMENT_FUNCTION(Tatiana, chapter3, 31)
 
 		_data->getData()->field_491 = EntityData::kField491_1750;
 		_data->getData()->field_493 = EntityData::kField493_1;
-		_data->getData()->field_495 = EntityData::kField495_5;
-		_data->getData()->clothes = EntityData::kClothes2;
+		_data->getData()->car = kCarRestaurant;
+		_data->getData()->clothes = kClothes2;
 		_data->getData()->inventoryItem = kItemNone;
 
 		// Update inventory
@@ -347,8 +347,8 @@ IMPLEMENT_FUNCTION(Tatiana, chapter4, 43)
 
 		_data->getData()->field_491 = EntityData::kField491_7500;
 		_data->getData()->field_493 = EntityData::kField493_1;
-		_data->getData()->field_495 = EntityData::kField495_4;
-		_data->getData()->clothes = EntityData::kClothes2;
+		_data->getData()->car = kCarRedSleeping;
+		_data->getData()->clothes = kClothes2;
 		_data->getData()->inventoryItem = kItemNone;
 
 		ENTITY_PARAM(0, 1) = 0;
@@ -402,8 +402,8 @@ IMPLEMENT_FUNCTION(Tatiana, chapter5, 52)
 
 		_data->getData()->field_491 = EntityData::kField491_3969;
 		_data->getData()->field_493 = EntityData::kField493_1;
-		_data->getData()->field_495 = EntityData::kField495_5;
-		_data->getData()->clothes = EntityData::kClothesDefault;
+		_data->getData()->car = kCarRestaurant;
+		_data->getData()->clothes = kClothesDefault;
 		_data->getData()->inventoryItem = kItemNone;
 		break;
 	}

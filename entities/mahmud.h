@@ -41,7 +41,7 @@ public:
 	// Setup
 	DECLARE_FUNCTION(function1)
 	DECLARE_FUNCTION_NOSETUP(draw)
-	DECLARE_FUNCTION_SI(function3)
+	DECLARE_FUNCTION_SI(enterExitCompartment)
 	DECLARE_FUNCTION_SIII(function4)
 	DECLARE_FUNCTION_S(playSound)
 	DECLARE_FUNCTION_S(playSoundMertens)

@@ -68,23 +68,6 @@ const char *messages[24] = {
 	"ENDALRM3"  // 65
 };
 
-const int soundValues[32] = {
-	16,
-	15,
-	14,
-	13,
-	12,
-	11, 11,
-	10, 10,
-	9, 9,
-	8, 8,
-	7, 7, 7,
-	6, 6, 6,
-	5, 5, 5, 5,
-	4, 4, 4, 4,
-	3, 3, 3, 3, 3
-};
-
 Sound::Sound(LastExpressEngine *engine) : _engine(engine), _state(0) {
 	_sfx = new StreamedSound();
 	_music = new StreamedSound();
@@ -149,7 +132,7 @@ void Sound::playSound(EntityIndex entity, const char *filename, int a3, byte a4)
 	if (isBuffered(entity) && entity)
 		removeFromQueue(entity);
 
-	int param3 = (a3 == -1) ? getSoundValue(entity) : ( a3 | 0x80000);
+	int param3 = (a3 == -1) ? getEntities()->getSoundValue(entity) : ( a3 | 0x80000);
 
 	// Add .SND at the end of the filename if needed
 	char name[16];
@@ -170,62 +153,6 @@ bool Sound::playSoundWithSubtitles(const char *filename, int param3, EntityIndex
 	return true;
 }
 
-
-int Sound::getSoundValue(EntityIndex entity) {
-	if (entity == kEntityNone)
-		return 16;
-
-	if (getEntities()->getData(entity)->getData()->field_495 != getEntities()->getData(kEntityNone)->getData()->field_495)
-		return 0;
-
-	// Compute sound value
-	int ret = 2;
-
-	// Get default value if valid
-	int index = abs(getEntities()->getData(entity)->getData()->field_491 - getEntities()->getData(kEntityNone)->getData()->field_491) / 230;
-	if (index < 32)
-		ret = soundValues[index];
-
-	if (getEntities()->getData(entity)->getData()->field_493 == EntityData::kField493_2) {
-		if (getEntities()->getData(entity)->getData()->field_495 != EntityData::kField495_2
-		&& !getEntities()->checkFields15()
-		&& !getEntities()->checkFields16())
-			return 0;
-
-		return ret / 6;
-	}
-
-	switch (getEntities()->getData(entity)->getData()->field_495) {
-	default:
-		break;
-
-	case EntityData::kField495_2:
-		if (getEntities()->checkFields14(entity) != getEntities()->checkFields14(kEntityNone))
-			ret >>= 1;
-		break;
-
-	case EntityData::kField495_3:
-	case EntityData::kField495_4:
-		if (getEntities()->checkFields6(kEntityNone) && !getEntities()->checkFields14(entity))
-			ret >>= 1;
-
-		if (getEntities()->getData(kEntityNone)->getData()->field_493
-		&& (getEntities()->getData(entity)->getData()->field_491 != EntityData::kField491_1 || !getEntities()->checkFields9(kEntityNone, entity, 400)))
-			ret >>=1;
-		break;
-
-	case EntityData::kField495_5:
-		if (getEntities()->checkFields12(entity) == getEntities()->checkFields12(kEntityNone)
-		&& (getEntities()->checkFields13(entity) != getEntities()->checkFields13(kEntityNone)))
-			ret >>=1;
-		else
-			ret >>=2;
-		break;
-	}
-
-	return ret;
-}
-
 void Sound::playMusic(EntityIndex entity, byte id, int a3, byte a4) {
 	char filename[7];
 	sprintf((char *)&filename, "MUS%03d", id);
@@ -237,14 +164,14 @@ void Sound::playSoundEvent(EntityIndex entity, byte action, byte a3) {
 	char filename[12];
 	int values[5];
 
-	if (getEntities()->getData(entity)->getData()->field_495 != getEntities()->getData(kEntityNone)->getData()->field_495)
+	if (getEntities()->getData(entity)->getData()->car != getEntities()->getData(kEntityNone)->getData()->car)
 		return;
 
 	if (getEntities()->checkFields12(entity) != getEntities()->checkFields12(kEntityNone))
 		return;
 
 	int _action = (int)action;
-	int param3 = getSoundValue(entity);
+	int param3 = getEntities()->getSoundValue(entity);
 
 	switch (action) {
 	case 36: {
@@ -705,7 +632,7 @@ void Sound::excuseMe(EntityIndex entity, int param2, int param3) {
 		return;
 
 	if (!param3)
-		param3 = getSoundValue(entity);
+		param3 = getEntities()->getSoundValue(entity);
 
 	switch (entity) {
 	default:

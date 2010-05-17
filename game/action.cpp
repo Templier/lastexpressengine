@@ -419,7 +419,7 @@ IMPLEMENT_ACTION(inventory) {
 
 		loadSceneObject(backup, getState()->sceneBackup);
 
-		if (getState()->field1000[backup.getHeader()->position + 100 * backup.getHeader()->field_13])
+		if (getState()->field1000[backup.getHeader()->position + 100 * backup.getHeader()->car])
 			index = getLogic()->processIndex(getState()->sceneBackup);
 	}
 
@@ -781,7 +781,7 @@ IMPLEMENT_ACTION(enterCompartment) {
 				getProgress().field_78 = 0;
 			}
 
-			getLogic()->loadSceneFromPosition(EntityData::kField495_3, 77);
+			getLogic()->loadSceneFromPosition(kCarGreenSleeping, 77);
 			return kSceneNone;
 		}
 	} else {
@@ -802,7 +802,7 @@ IMPLEMENT_ACTION(getOutsideTrain) {
 
 	if ((getEvent(kEventCathLookOutsideWindowDay) || getEvent(kEventCathLookOutsideWindowNight) || getObjects()->get(kObjectCompartment1).location2)
 	  && getProgress().field_50
-	  && (action != 45 || (!getEntities()->checkFields1(kEntityRebecca, EntityData::kField495_4, EntityData::kField491_4840) && getObjects()->get(kObject44).location == 2))
+	  && (action != 45 || (!getEntities()->checkFields1(kEntityRebecca, kCarRedSleeping, EntityData::kField491_4840) && getObjects()->get(kObject44).location == 2))
 	  && getInventory()->getSelectedItem() != kItemFirebird
 	  && getInventory()->getSelectedItem() != kItemBriefcase) {
 
@@ -1010,7 +1010,7 @@ IMPLEMENT_ACTION(unbound) {
 		if (getEvent(kEventCathBurnRope)) {
 			playAnimation(kEventCathRemoveBonds);
 			getProgress().field_84 = 0;
-			getLogic()->loadSceneFromPosition(EntityData::kField495_1, 89);
+			getLogic()->loadSceneFromPosition(kCarBaggageRear, 89);
 			return kSceneNone;
 		}
 		break;
@@ -1096,15 +1096,15 @@ IMPLEMENT_ACTION(26) {
 IMPLEMENT_ACTION(27) {
 	getSound()->playSoundEvent(kEntityNone, 31);
 
-	switch (getEntityData(kEntityNone)->field_495) {
+	switch (getEntityData(kEntityNone)->car) {
 	default:
 		break;
 
-	case EntityData::kField495_3:
+	case kCarGreenSleeping:
 		getSavePoints()->push(kEntityNone, kEntityMertens, kAction225358684, hotspot.param1);
 		break;
 
-	case EntityData::kField495_4:
+	case kCarRedSleeping:
 		getSavePoints()->push(kEntityNone, kEntityCoudert, kAction225358684, hotspot.param1);
 		break;
 	}
@@ -1225,7 +1225,7 @@ IMPLEMENT_ACTION(useWhistle) {
 			break;
 		}
 
-		if (getEntities()->checkFields1(kEntityNone, EntityData::kField495_3, EntityData::kField491_8200)) {
+		if (getEntities()->checkFields1(kEntityNone, kCarGreenSleeping, EntityData::kField491_8200)) {
 			evt = kEventCathOpenEgg;
 
 			loadSceneObject(scene, hotspot.scene);
@@ -1244,7 +1244,7 @@ IMPLEMENT_ACTION(useWhistle) {
 			break;
 		}
 
-		evt = (getEntities()->checkFields1(kEntityNone, EntityData::kField495_3, EntityData::kField491_8200)) ? kEventCathCloseEgg : kEventCathCloseEggNoBackground;
+		evt = (getEntities()->checkFields1(kEntityNone, kCarGreenSleeping, EntityData::kField491_8200)) ? kEventCathCloseEgg : kEventCathCloseEggNoBackground;
 		getProgress().is_egg_open = 0;
 		break;
 
@@ -1254,7 +1254,7 @@ IMPLEMENT_ACTION(useWhistle) {
 			break;
 		}
 
-		evt = (getEntities()->checkFields1(kEntityNone, EntityData::kField495_3, EntityData::kField491_8200)) ? kEventCathUseWhistleOpenEgg : kEventCathUseWhistleOpenEggNoBackground;
+		evt = (getEntities()->checkFields1(kEntityNone, kCarGreenSleeping, EntityData::kField491_8200)) ? kEventCathUseWhistleOpenEgg : kEventCathUseWhistleOpenEggNoBackground;
 		break;
 
 	}
@@ -1528,7 +1528,7 @@ bool Action::handleOtherCompartment(ObjectIndex object, byte param2, byte param3
 
 	//////////////////////////////////////////////////////////////////////////
 	// Gendarmes
-	if (getEntityData(kEntityNone)->field_495 == getEntityData(kEntityGendarmes)->field_495
+	if (getEntityData(kEntityNone)->car == getEntityData(kEntityGendarmes)->car
 	&& !getEntityData(kEntityGendarmes)->field_493
 	&& !getEntities()->compare(kEntityNone, kEntityGendarmes)) {
 		playCompartmentSoundEvents(kEntityNone, object, param2, param3, true);
@@ -1538,7 +1538,7 @@ bool Action::handleOtherCompartment(ObjectIndex object, byte param2, byte param3
 	//////////////////////////////////////////////////////////////////////////
 	// Mertens
 	if (getEntityData(kEntityNone)->field_493 == EntityData::kField493_3
-	 && getEntityData(kEntityMertens)->field_495 == EntityData::kField495_3
+	 && getEntityData(kEntityMertens)->car == kCarGreenSleeping
 	 && !getEntityData(kEntityMertens)->field_493
 	 && !((EntityData::EntityParametersIIII*)getEntities()->getData(kEntityMertens)->getParameters(8, 0))->param1)
 		 error("Action::handleOtherCompartment: not implemented!");
@@ -1546,7 +1546,7 @@ bool Action::handleOtherCompartment(ObjectIndex object, byte param2, byte param3
 	//////////////////////////////////////////////////////////////////////////
 	// Coudert
 	if (getEntityData(kEntityNone)->field_493 != EntityData::kField493_4
-	 || !getEntityData(kEntityCoudert)->field_495
+	 || !getEntityData(kEntityCoudert)->car
 	 || getEntityData(kEntityCoudert)->field_493
 	 || ((EntityData::EntityParametersIIII*)getEntities()->getData(kEntityCoudert)->getParameters(8, 0))->param1)
 	 return false;
@@ -1682,7 +1682,7 @@ CursorStyle Action::getCursor(byte action, ObjectIndex object, byte param2, byte
 
 		if ((getEvent(kEventCathLookOutsideWindowDay) || getEvent(kEventCathLookOutsideWindowDay) || getObjects()->get(kObjectCompartment1).location2 == kLocation1)
 			&& getProgress().field_50
-			&& (object != kObject45 || (getEntities()->checkFields1(kEntityRebecca, EntityData::kField495_4, EntityData::kField491_4840) && getObjects()->get(kObject44).location == 2))
+			&& (object != kObject45 || (getEntities()->checkFields1(kEntityRebecca, kCarRedSleeping, EntityData::kField491_4840) && getObjects()->get(kObject44).location == 2))
 			&& getInventory()->getSelectedItem() != kItemBriefcase && getInventory()->getSelectedItem() != kItemFirebird)
 			return kCursorForward;
 

@@ -81,7 +81,7 @@ IMPLEMENT_FUNCTION(Yasmin, function1, 1)
 }
 
 IMPLEMENT_FUNCTION_SI(Yasmin, enterExitCompartement, 2)
-	Entity::updateFields(savepoint);
+	Entity::enterExitCompartment(savepoint);
 }
 
 IMPLEMENT_FUNCTION_S(Yasmin, playSound, 3)
@@ -130,7 +130,7 @@ IMPLEMENT_FUNCTION(Yasmin, function6, 6)
 			break;
 
 		case 1:
-			call(new ENTITY_SETUP(Yasmin, setup_function5), EntityData::kField495_3, EntityData::kField491_3050);
+			call(new ENTITY_SETUP(Yasmin, setup_function5), kCarGreenSleeping, EntityData::kField491_3050);
 			break;
 
 		case 2:
@@ -169,7 +169,7 @@ IMPLEMENT_FUNCTION(Yasmin, function7, 7)
 			break;
 
 		case 1:
-			call(new ENTITY_SETUP(Yasmin, setup_function5), EntityData::kField495_3, EntityData::kField491_4840);
+			call(new ENTITY_SETUP(Yasmin, setup_function5), kCarGreenSleeping, EntityData::kField491_4840);
 			break;
 
 		case 2:
@@ -200,7 +200,7 @@ IMPLEMENT_FUNCTION(Yasmin, chapter1, 8)
 	case kActionDefault:
 		_data->getData()->field_491 = EntityData::kField491_4840;
 		_data->getData()->field_493 = EntityData::kField493_1;
-		_data->getData()->field_495 = EntityData::kField495_3;
+		_data->getData()->car = kCarGreenSleeping;
 		break;
 	}
 }
@@ -214,7 +214,7 @@ IMPLEMENT_FUNCTION(Yasmin, function10, 10)
 		getObjects()->update(kObjectCompartment7, kEntityNone, kLocation3, kCursorHandKnock, kCursorHand);
 		_data->getData()->field_491 = EntityData::kField491_3050;
 		_data->getData()->field_493 = EntityData::kField493_1;
-		_data->getData()->field_495 = EntityData::kField495_3;
+		_data->getData()->car = kCarGreenSleeping;
 
 		getEntities()->prepareSequences(kEntityYasmin);
 	}
@@ -226,8 +226,8 @@ IMPLEMENT_FUNCTION(Yasmin, chapter2, 11)
 
 		_data->getData()->field_491 = EntityData::kField491_3050;
 		_data->getData()->field_493 = EntityData::kField493_1;
-		_data->getData()->field_495 = EntityData::kField495_3;
-		_data->getData()->clothes = EntityData::kClothesDefault;
+		_data->getData()->car = kCarGreenSleeping;
+		_data->getData()->clothes = kClothesDefault;
 		_data->getData()->inventoryItem = kItemNone;
 
 		setup_function12();
@@ -252,7 +252,7 @@ IMPLEMENT_FUNCTION(Yasmin, chapter3, 13)
 
 		_data->getData()->field_491 = EntityData::kField491_3050;
 		_data->getData()->field_493 = EntityData::kField493_1;
-		_data->getData()->field_495 = EntityData::kField495_3;
+		_data->getData()->car = kCarGreenSleeping;
 		break;
 	}
 }
@@ -273,7 +273,7 @@ IMPLEMENT_FUNCTION(Yasmin, chapter4, 15)
 	case kActionDefault:
 		_data->getData()->field_491 = EntityData::kField491_3050;
 		_data->getData()->field_493 = EntityData::kField493_1;
-		_data->getData()->field_495 = EntityData::kField495_3;
+		_data->getData()->car = kCarGreenSleeping;
 		break;
 	}
 }
@@ -301,8 +301,8 @@ IMPLEMENT_FUNCTION(Yasmin, chapter5, 18)
 
 		_data->getData()->field_491 = EntityData::kField491_3969;
 		_data->getData()->field_493 = EntityData::kField493_1;
-		_data->getData()->field_495 = EntityData::kField495_5;
-		_data->getData()->clothes = EntityData::kClothesDefault;
+		_data->getData()->car = kCarRestaurant;
+		_data->getData()->clothes = kClothesDefault;
 		_data->getData()->inventoryItem = kItemNone;
 		break;
 	}

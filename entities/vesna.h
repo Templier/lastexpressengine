@@ -41,7 +41,7 @@ public:
 	// Setup
 	DECLARE_FUNCTION(function1)
 	DECLARE_FUNCTION_S(playSound)
-	DECLARE_FUNCTION_SI(function3)
+	DECLARE_FUNCTION_SI(enterExitCompartment)
 	DECLARE_FUNCTION_S(draw)
 	DECLARE_FUNCTION_II(function5)
 	DECLARE_FUNCTION_I(updateFromTime)

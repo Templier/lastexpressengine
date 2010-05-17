@@ -40,7 +40,7 @@ Francois::Francois(LastExpressEngine *engine) : Entity(engine, kEntityFrancois) 
 	ADD_CALLBACK_FUNCTION(Francois, function1);
 	ADD_CALLBACK_FUNCTION(Francois, updateFromTime);
 	ADD_CALLBACK_FUNCTION(Francois, draw);
-	ADD_CALLBACK_FUNCTION(Francois, function4);
+	ADD_CALLBACK_FUNCTION(Francois, enterExitCompartment);
 	ADD_CALLBACK_FUNCTION(Francois, function5);
 	ADD_CALLBACK_FUNCTION(Francois, playSound);
 	ADD_CALLBACK_FUNCTION(Francois, savegame);
@@ -82,8 +82,8 @@ IMPLEMENT_FUNCTION_S(Francois, draw, 3)
 	Entity::draw(savepoint);
 }
 
-IMPLEMENT_FUNCTION_SI(Francois, function4, 4)
-	Entity::updateFields(savepoint);
+IMPLEMENT_FUNCTION_SI(Francois, enterExitCompartment, 4)
+	Entity::enterExitCompartment(savepoint);
 }
 
 IMPLEMENT_FUNCTION_SI(Francois, function5, 5)
@@ -146,7 +146,7 @@ IMPLEMENT_FUNCTION(Francois, chapter1, 17)
 	case kActionDefault:
 		_data->getData()->field_491 = EntityData::kField491_5790;
 		_data->getData()->field_493 = EntityData::kField493_1;
-		_data->getData()->field_495 = EntityData::kField495_4;
+		_data->getData()->car = kCarRedSleeping;
 
 		break;
 	}
@@ -178,8 +178,8 @@ IMPLEMENT_FUNCTION(Francois, chapter2, 21)
 
 		_data->getData()->field_491 = EntityData::kField491_4689;
 		_data->getData()->field_493 = EntityData::kField493_1;
-		_data->getData()->field_495 = EntityData::kField495_5;
-		_data->getData()->clothes = EntityData::kClothesDefault;
+		_data->getData()->car = kCarRestaurant;
+		_data->getData()->clothes = kClothesDefault;
 		_data->getData()->inventoryItem = kItemNone;
 
 		break;
@@ -208,8 +208,8 @@ IMPLEMENT_FUNCTION(Francois, chapter3, 24)
 
 		_data->getData()->field_491 = EntityData::kField491_5790;
 		_data->getData()->field_493 = EntityData::kField493_1;
-		_data->getData()->field_495 = EntityData::kField495_4;
-		_data->getData()->clothes = EntityData::kClothesDefault;
+		_data->getData()->car = kCarRedSleeping;
+		_data->getData()->clothes = kClothesDefault;
 		_data->getData()->inventoryItem = kItemNone;
 
 		break;
@@ -234,8 +234,8 @@ IMPLEMENT_FUNCTION(Francois, chapter4, 26)
 
 		_data->getData()->field_491 = EntityData::kField491_5790;
 		_data->getData()->field_493 = EntityData::kField493_1;
-		_data->getData()->field_495 = EntityData::kField495_4;
-		_data->getData()->clothes = EntityData::kClothesDefault;
+		_data->getData()->car = kCarRedSleeping;
+		_data->getData()->clothes = kClothesDefault;
 		_data->getData()->inventoryItem = kItemNone;
 
 		break;
@@ -260,8 +260,8 @@ IMPLEMENT_FUNCTION(Francois, chapter5, 28)
 
 		_data->getData()->field_491 = EntityData::kField491_3969;
 		_data->getData()->field_493 = EntityData::kField493_1;
-		_data->getData()->field_495 = EntityData::kField495_5;
-		_data->getData()->clothes = EntityData::kClothesDefault;
+		_data->getData()->car = kCarRestaurant;
+		_data->getData()->clothes = kClothesDefault;
 		_data->getData()->inventoryItem = kItemNone;
 
 		break;

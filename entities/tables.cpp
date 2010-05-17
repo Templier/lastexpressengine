@@ -116,7 +116,7 @@ IMPLEMENT_FUNCTION(Tables, draw, 6)
 
 	case kActionDefault:
 		_data->getData()->field_493 = EntityData::kField493_1;
-		_data->getData()->field_495 = EntityData::kField495_5;
+		_data->getData()->car = kCarRestaurant;
 		switch(_id) {
 		default:
 			break;

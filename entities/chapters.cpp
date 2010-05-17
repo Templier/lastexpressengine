@@ -75,7 +75,7 @@ Chapters::Chapters(LastExpressEngine *engine) : Entity(engine, kEntityChapters) 
 	ADD_CALLBACK_FUNCTION(Chapters, function6);
 	ADD_CALLBACK_FUNCTION(Chapters, chapter1_init);
 	ADD_CALLBACK_FUNCTION(Chapters, chapter1_handler);
-	ADD_CALLBACK_FUNCTION(Chapters, function9);
+	ADD_CALLBACK_FUNCTION(Chapters, chapter1_end);
 	ADD_CALLBACK_FUNCTION(Chapters, chapter2);
 	ADD_CALLBACK_FUNCTION(Chapters, chapter2_init);
 	ADD_CALLBACK_FUNCTION(Chapters, chapter2_handler);
@@ -264,7 +264,7 @@ label_callback_21:
 		if (params->param3)
 			break;
 
-		if (getEntities()->checkFields4(EntityData::kField495_3, 1)) {
+		if (getEntities()->checkFields4(kCarGreenSleeping, 1)) {
 			getState()->time = kTimeChapter1;
 			getState()->timeDelta = 3;
 			params->param3 = 1;
@@ -364,7 +364,7 @@ label_callback_21:
 		getProgress().field_18 = 3;
 
 		if (getState()->time >= kTimeChapter1_1) {
-			setup_function9();
+			setup_chapter1_end();
 		} else {
 			_data->setNextCallback(23);
 			call(new ENTITY_SETUP(Chapters, setup_function6));
@@ -374,7 +374,7 @@ label_callback_21:
 }
 
 //////////////////////////////////////////////////////////////////////////
-IMPLEMENT_FUNCTION(Chapters, function9, 9)
+IMPLEMENT_FUNCTION(Chapters, chapter1_end, 9)
 	if (savepoint.action == kActionDefault) {
 		// Reset sound cache
 		if (ENTITY_PARAM(0, 2) || ENTITY_PARAM(0, 3)) {
@@ -484,7 +484,7 @@ IMPLEMENT_FUNCTION(Chapters, chapter2_init, 11)
 	if (getInventory()->hasItem(kItemScarf))
 		getLogic()->loadScene(kScene41);
 	else
-		getLogic()->loadSceneFromPosition(EntityData::kField495_3, 79);
+		getLogic()->loadSceneFromPosition(kCarGreenSleeping, 79);
 
 	setup_chapter2_handler();
 }
@@ -582,7 +582,7 @@ IMPLEMENT_FUNCTION(Chapters, chapter3_init, 14)
 			ENTITY_PARAM(0, 3) = 0;
 		}
 
-		getLogic()->loadSceneFromPosition(EntityData::kField495_5, 60);
+		getLogic()->loadSceneFromPosition(kCarRestaurant, 60);
 		getInventory()->show(true);
 
 		_data->setNextCallback(1);
@@ -682,9 +682,9 @@ IMPLEMENT_FUNCTION(Chapters, chapter4_init, 18)
 	}
 
 	if (getInventory()->hasItem(kItemFirebird))
-		getLogic()->loadSceneFromPosition(EntityData::kField495_3, 76);
+		getLogic()->loadSceneFromPosition(kCarGreenSleeping, 76);
 	else
-		getLogic()->loadSceneFromPosition(EntityData::kField495_5, 69);
+		getLogic()->loadSceneFromPosition(kCarRestaurant, 69);
 
 	getInventory()->show(true);
 	setup_chapter4_handler();
@@ -794,7 +794,7 @@ IMPLEMENT_FUNCTION(Chapters, chapter5_init, 21)
 			ENTITY_PARAM(0, 3) = 0;
 		}
 
-		getLogic()->loadSceneFromPosition(EntityData::kField495_1, 95);
+		getLogic()->loadSceneFromPosition(kCarBaggageRear, 95);
 		getInventory()->show(true);
 
 		_data->setNextCallback(1);

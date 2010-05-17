@@ -69,8 +69,8 @@ IMPLEMENT_FUNCTION(Cooks, function3, 3)
 
 	case kActionDefault:
 		getEntities()->drawSequenceLeft(kEntityCooks, "308A");
-		getEntities()->updateField1000ProcessScene(kEntityCooks, 5, 75);
-		getEntities()->updateField1000ProcessScene(kEntityCooks, 5, 78);
+		getEntities()->updatePosition(kEntityCooks, kCarRestaurant, 75, true);
+		getEntities()->updatePosition(kEntityCooks, kCarRestaurant, 78, true);
 
 		switch (getProgress().chapter) {
 		default:
@@ -98,7 +98,7 @@ IMPLEMENT_FUNCTION(Cooks, function3, 3)
 			break;
 		}
 
-		if (getEntities()->checkFields4(EntityData::kField495_5, 46)) {
+		if (getEntities()->checkFields4(kCarRestaurant, 46)) {
 			getEntities()->drawSequenceLeft(kEntityCooks, "308D");
 
 			if (!getSound()->isBuffered(kEntityCooks)) {
@@ -138,8 +138,8 @@ IMPLEMENT_FUNCTION(Cooks, function3, 3)
 
 		case 3:
 			getEntities()->drawSequenceLeft(kEntityCooks, "308C");
-			getEntities()->updateField1000(kEntityCooks, 5, 75);
-			getEntities()->updateField1000(kEntityCooks, 5, 78);
+			getEntities()->updatePosition(kEntityCooks, kCarRestaurant, 75);
+			getEntities()->updatePosition(kEntityCooks, kCarRestaurant, 78);
 			break;
 		}
 		break;
@@ -153,8 +153,8 @@ IMPLEMENT_FUNCTION(Cooks, function4, 4)
 
 	case kActionDefault:
 		getEntities()->drawSequenceLeft(kEntityCooks, "308A");
-		getEntities()->updateField1000ProcessScene(kEntityCooks, EntityData::kField495_5, 75);
-		getEntities()->updateField1000ProcessScene(kEntityCooks, EntityData::kField495_5, 78);
+		getEntities()->updatePosition(kEntityCooks, kCarRestaurant, 75, true);
+		getEntities()->updatePosition(kEntityCooks, kCarRestaurant, 78, true);
 
 		switch (getProgress().chapter) {
 		default:
@@ -183,7 +183,7 @@ IMPLEMENT_FUNCTION(Cooks, function4, 4)
 			break;
 		}
 
-		if (getEntities()->checkFields4(EntityData::kField495_5, 80)) {
+		if (getEntities()->checkFields4(kCarRestaurant, 80)) {
 			getEntities()->drawSequenceLeft(kEntityCooks, "308D");
 
 			if (!getSound()->isBuffered(kEntityCooks)) {
@@ -223,8 +223,8 @@ IMPLEMENT_FUNCTION(Cooks, function4, 4)
 
 		case 3:
 			getEntities()->drawSequenceLeft(kEntityCooks, "308C");
-			getEntities()->updateField1000(kEntityCooks, EntityData::kField495_5, 75);
-			getEntities()->updateField1000ProcessScene(kEntityCooks, EntityData::kField495_5, 78);
+			getEntities()->updatePosition(kEntityCooks, kCarRestaurant, 75);
+			getEntities()->updatePosition(kEntityCooks, kCarRestaurant, 78, true);
 			break;
 		}
 		break;
@@ -243,7 +243,7 @@ IMPLEMENT_FUNCTION(Cooks, chapter1, 5)
 	case kActionDefault:
 		_data->getData()->field_491 = EntityData::kField491_5900;
 		_data->getData()->field_493 = EntityData::kField493_0;
-		_data->getData()->field_495 = EntityData::kField495_5;
+		_data->getData()->car = kCarRestaurant;
 
 		getProgress().field_4C = 0;
 
@@ -275,7 +275,7 @@ IMPLEMENT_FUNCTION(Cooks, function6, 6)
 			break;
 
 		if (params->param1) {
-			if (getEntities()->checkFields4(EntityData::kField495_5, 73)) {
+			if (getEntities()->checkFields4(kCarRestaurant, 73)) {
 				_data->setNextCallback(1);
 				call(new ENTITY_SETUP(Cooks, setup_function3));
 			}
@@ -331,7 +331,7 @@ IMPLEMENT_FUNCTION(Cooks, function7, 7)
 	case kActionDefault:
 		_data->getData()->field_491 = EntityData::kField491_3650;
 		_data->getData()->field_493 = EntityData::kField493_0;
-		_data->getData()->field_495 = EntityData::kField495_5;
+		_data->getData()->car = kCarRestaurant;
 
 		getEntities()->prepareSequences(kEntityCooks);
 		break;
@@ -352,7 +352,7 @@ IMPLEMENT_FUNCTION(Cooks, chapter2, 8)
 
 		_data->getData()->field_491 = EntityData::kField491_5900;
 		_data->getData()->field_493 = EntityData::kField493_0;
-		_data->getData()->field_495 = EntityData::kField495_5;
+		_data->getData()->car = kCarRestaurant;
 		_data->getData()->inventoryItem = kItemNone;
 
 		getProgress().field_4C = 1;
@@ -409,7 +409,7 @@ IMPLEMENT_FUNCTION(Cooks, chapter3, 10)
 		getEntities()->prepareSequences(kEntityCooks);
 
 		_data->getData()->field_491 = EntityData::kField491_5900;
-		_data->getData()->field_495 = EntityData::kField495_5;
+		_data->getData()->car = kCarRestaurant;
 		_data->getData()->inventoryItem = kItemNone;
 
 		getProgress().field_4C = 0;
@@ -457,7 +457,7 @@ update_params:
 			break;
 
 		if (params->param1) {
-			if (getEntities()->checkFields4(EntityData::kField495_5, 80)) {
+			if (getEntities()->checkFields4(kCarRestaurant, 80)) {
 				_data->setNextCallback(1);
 				call(new ENTITY_SETUP(Cooks, setup_function4));
 			}
@@ -509,7 +509,7 @@ IMPLEMENT_FUNCTION(Cooks, chapter4, 12)
 
 		_data->getData()->field_491 = EntityData::kField491_5900;
 		_data->getData()->field_493 = EntityData::kField493_0;
-		_data->getData()->field_495 = EntityData::kField495_5;
+		_data->getData()->car = kCarRestaurant;
 		_data->getData()->inventoryItem = kItemNone;
 
 		getProgress().field_4C = 1;

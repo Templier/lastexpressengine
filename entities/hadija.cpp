@@ -39,7 +39,7 @@ namespace LastExpress {
 
 Hadija::Hadija(LastExpressEngine *engine) : Entity(engine, kEntityHadija) {
 	ADD_CALLBACK_FUNCTION(Hadija, function1);
-	ADD_CALLBACK_FUNCTION(Hadija, function2);
+	ADD_CALLBACK_FUNCTION(Hadija, enterExitCompartment);
 	ADD_CALLBACK_FUNCTION(Hadija, playSound);
 	ADD_CALLBACK_FUNCTION(Hadija, updateFromTime);
 	ADD_CALLBACK_FUNCTION(Hadija, function5);
@@ -68,8 +68,8 @@ IMPLEMENT_FUNCTION(Hadija, function1, 1)
 	Entity::function1(savepoint);
 }
 
-IMPLEMENT_FUNCTION_SI(Hadija, function2, 2)
-	Entity::updateFields(savepoint);
+IMPLEMENT_FUNCTION_SI(Hadija, enterExitCompartment, 2)
+	Entity::enterExitCompartment(savepoint);
 }
 
 IMPLEMENT_FUNCTION_S(Hadija, playSound, 3)
@@ -112,7 +112,7 @@ IMPLEMENT_FUNCTION(Hadija, chapter1, 10)
 	case kActionDefault:
 		_data->getData()->field_491 = EntityData::kField491_4070;
 		_data->getData()->field_493 = EntityData::kField493_1;
-		_data->getData()->field_495 = EntityData::kField495_3;
+		_data->getData()->car = kCarGreenSleeping;
 
 		break;
 	}
@@ -133,8 +133,8 @@ IMPLEMENT_FUNCTION(Hadija, chapter2, 13)
 
 		_data->getData()->field_491 = EntityData::kField491_3050;
 		_data->getData()->field_493 = EntityData::kField493_1;
-		_data->getData()->field_495 = EntityData::kField495_3;
-		_data->getData()->clothes = EntityData::kClothesDefault;
+		_data->getData()->car = kCarGreenSleeping;
+		_data->getData()->clothes = kClothesDefault;
 		_data->getData()->inventoryItem = kItemNone;
 
 		setup_function14();
@@ -159,7 +159,7 @@ IMPLEMENT_FUNCTION(Hadija, chapter3, 15)
 
 		_data->getData()->field_491 = EntityData::kField491_4070;
 		_data->getData()->field_493 = EntityData::kField493_1;
-		_data->getData()->field_495 = EntityData::kField495_3;
+		_data->getData()->car = kCarGreenSleeping;
 
 		break;
 	}
@@ -181,7 +181,7 @@ IMPLEMENT_FUNCTION(Hadija, chapter4, 17)
 	case kActionDefault:
 		_data->getData()->field_491 = EntityData::kField491_4070;
 		_data->getData()->field_493 = EntityData::kField493_1;
-		_data->getData()->field_495 = EntityData::kField495_3;
+		_data->getData()->car = kCarGreenSleeping;
 		break;
 	}
 }
@@ -208,8 +208,8 @@ IMPLEMENT_FUNCTION(Hadija, chapter5, 20)
 
 		_data->getData()->field_491 = EntityData::kField491_3969;
 		_data->getData()->field_493 = EntityData::kField493_1;
-		_data->getData()->field_495 = EntityData::kField495_5;
-		_data->getData()->clothes = EntityData::kClothesDefault;
+		_data->getData()->car = kCarRestaurant;
+		_data->getData()->clothes = kClothesDefault;
 		_data->getData()->inventoryItem = kItemNone;
 
 		break;

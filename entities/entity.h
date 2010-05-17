@@ -98,27 +98,6 @@ public:
 		kField493_4 = 4
 	};
 
-	enum Field495Value {
-		kField495_0 = 0,
-		kField495_1 = 1,
-		kField495_2 = 2,
-		kField495_3 = 3,
-		kField495_4 = 4,
-		kField495_5 = 5,
-		kField495_6 = 6,
-		kField495_7 = 7,
-		kField495_9 = 9
-	};
-
-	enum ClothesIndex {
-		kClothesDefault = 0,
-		kClothes1 = 1,
-		kClothes2 = 2,
-		kClothes3 = 3,
-
-		kClothesInvalid
-	};
-
 	enum ParameterValue {
 		kParamTime = 2147483647
 	};
@@ -278,7 +257,7 @@ public:
 		byte current_call;
 		Field491Value field_491;
 		Field493Value field_493;
-		Field495Value field_495;
+		CarIndex car;
 		//int16 field_497;
 		InventoryItem inventoryItem;
 		EntityDirection direction;
@@ -307,7 +286,7 @@ public:
 			current_call = 0;
 			field_491 = EntityData::kField491_0;
 			field_493 = EntityData::kField493_0;
-			field_495 = EntityData::kField495_0;
+			car = kCarNone;
 			//field_497 = 0;
 			inventoryItem = kItemNone;
 			direction = kDirectionNone;
@@ -316,7 +295,7 @@ public:
 
 			field_4A1 = 0;
 			field_4A3 = 30;
-			clothes = EntityData::kClothesDefault;
+			clothes = kClothesDefault;
 			field_4A8 = 0;
 			field_4A9 = 0;
 			field_4AA = 0;
@@ -403,7 +382,7 @@ protected:
 	void savepointCheckFields11(const SavePoint &savepoint);
 	void savepointCheckEntity(const SavePoint &savepoint);
 	void savepointCall(const SavePoint &savepoint);
-	void updateFields(const SavePoint &savepoint);
+	void enterExitCompartment(const SavePoint &savepoint);
 	void updateField1000(const SavePoint &savepoint);
 };
 

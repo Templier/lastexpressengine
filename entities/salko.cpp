@@ -39,7 +39,7 @@ namespace LastExpress {
 
 Salko::Salko(LastExpressEngine *engine) : Entity(engine, kEntitySalko) {
 	ADD_CALLBACK_FUNCTION(Salko, function1);
-	ADD_CALLBACK_FUNCTION(Salko, function2);
+	ADD_CALLBACK_FUNCTION(Salko, enterExitCompartment);
 	ADD_CALLBACK_FUNCTION(Salko, draw);
 	ADD_CALLBACK_FUNCTION(Salko, function4);
 	ADD_CALLBACK_FUNCTION(Salko, updateFromTime);
@@ -69,8 +69,8 @@ IMPLEMENT_FUNCTION(Salko, function1, 1)
 	Entity::function1(savepoint);
 }
 
-IMPLEMENT_FUNCTION_SI(Salko, function2, 2)
-	Entity::updateFields(savepoint);
+IMPLEMENT_FUNCTION_SI(Salko, enterExitCompartment, 2)
+	Entity::enterExitCompartment(savepoint);
 }
 
 IMPLEMENT_FUNCTION_NOSETUP(Salko, draw, 3)
@@ -109,7 +109,7 @@ IMPLEMENT_FUNCTION(Salko, chapter1, 9)
 	case kActionDefault:
 		_data->getData()->field_491 = EntityData::kField491_4691;
 		_data->getData()->field_493 = EntityData::kField493_0;
-		_data->getData()->field_495 = EntityData::kField495_5;
+		_data->getData()->car = kCarRestaurant;
 		break;
 	}
 }
@@ -132,8 +132,8 @@ IMPLEMENT_FUNCTION(Salko, chapter2, 12)
 
 		_data->getData()->field_491 = EntityData::kField491_2740;
 		_data->getData()->field_493 = EntityData::kField493_1;
-		_data->getData()->field_495 = EntityData::kField495_4;
-		_data->getData()->clothes = EntityData::kClothesDefault;
+		_data->getData()->car = kCarRedSleeping;
+		_data->getData()->clothes = kClothesDefault;
 		_data->getData()->inventoryItem = kItemNone;
 		break;
 
@@ -162,8 +162,8 @@ IMPLEMENT_FUNCTION(Salko, chapter3, 14)
 
 		_data->getData()->field_491 = EntityData::kField491_2740;
 		_data->getData()->field_493 = EntityData::kField493_1;
-		_data->getData()->field_495 = EntityData::kField495_4;
-		_data->getData()->clothes = EntityData::kClothesDefault;
+		_data->getData()->car = kCarRedSleeping;
+		_data->getData()->clothes = kClothesDefault;
 		_data->getData()->inventoryItem = kItemNone;
 		break;
 	}
@@ -195,7 +195,7 @@ IMPLEMENT_FUNCTION(Salko, chapter4, 18)
 
 		_data->getData()->field_491 = EntityData::kField491_5420;
 		_data->getData()->field_493 = EntityData::kField493_1;
-		_data->getData()->field_495 = EntityData::kField495_5;
+		_data->getData()->car = kCarRestaurant;
 		_data->getData()->inventoryItem = kItemNone;
 		break;
 	}
@@ -231,7 +231,7 @@ IMPLEMENT_FUNCTION(Salko, chapter5, 23)
 
 		_data->getData()->field_491 = EntityData::kField491_9460;
 		_data->getData()->field_493 = EntityData::kField493_1;
-		_data->getData()->field_495 = EntityData::kField495_5;
+		_data->getData()->car = kCarRestaurant;
 		_data->getData()->inventoryItem = kItemNone;
 		break;
 	}

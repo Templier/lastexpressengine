@@ -46,7 +46,7 @@ Kahina::Kahina(LastExpressEngine *engine) : Entity(engine, kEntityKahina) {
 	ADD_CALLBACK_FUNCTION(Kahina, function6);
 	ADD_CALLBACK_FUNCTION(Kahina, function7);
 	ADD_CALLBACK_FUNCTION(Kahina, function8);
-	ADD_CALLBACK_FUNCTION(Kahina, function9);
+	ADD_CALLBACK_FUNCTION(Kahina, enterExitCompartment);
 	ADD_CALLBACK_FUNCTION(Kahina, chapter1);
 	ADD_CALLBACK_FUNCTION(Kahina, function11);
 	ADD_CALLBACK_FUNCTION(Kahina, function12);
@@ -106,8 +106,8 @@ IMPLEMENT_FUNCTION_II(Kahina, function8, 8)
 	error("Kahina: callback function 8 not implemented!");
 }
 
-IMPLEMENT_FUNCTION_SI(Kahina, function9, 9)
-	Entity::updateFields(savepoint);
+IMPLEMENT_FUNCTION_SI(Kahina, enterExitCompartment, 9)
+	Entity::enterExitCompartment(savepoint);
 }
 
 IMPLEMENT_FUNCTION(Kahina, chapter1, 10)
@@ -124,7 +124,7 @@ IMPLEMENT_FUNCTION(Kahina, chapter1, 10)
 
 		_data->getData()->field_491 = EntityData::kField491_5000;
 		_data->getData()->field_493 = EntityData::kField493_0;
-		_data->getData()->field_495 = EntityData::kField495_2;
+		_data->getData()->car = kCarKronos;
 
 		break;
 	}
@@ -164,8 +164,8 @@ IMPLEMENT_FUNCTION(Kahina, chapter2, 16)
 
 		_data->getData()->field_491 = EntityData::kField491_6000;
 		_data->getData()->field_493 = EntityData::kField493_0;
-		_data->getData()->field_495 = EntityData::kField495_2;
-		_data->getData()->clothes = EntityData::kClothesDefault;
+		_data->getData()->car = kCarKronos;
+		_data->getData()->clothes = kClothesDefault;
 		_data->getData()->inventoryItem = kItemNone;
 
 		getObjects()->update(kObjectCompartmentKronos, kEntityKahina, kLocation1, kCursorHandKnock, kCursorHand);
@@ -192,8 +192,8 @@ IMPLEMENT_FUNCTION(Kahina, chapter3, 18)
 
 		_data->getData()->field_491 = EntityData::kField491_5000;
 		_data->getData()->field_493 = EntityData::kField493_0;
-		_data->getData()->field_495 = EntityData::kField495_2;
-		_data->getData()->clothes = EntityData::kClothesDefault;
+		_data->getData()->car = kCarKronos;
+		_data->getData()->clothes = kClothesDefault;
 		_data->getData()->inventoryItem = kItemNone;
 
 		break;

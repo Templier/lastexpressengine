@@ -42,7 +42,7 @@ MmeBoutarel::MmeBoutarel(LastExpressEngine *engine) : Entity(engine, kEntityMmeB
 	ADD_CALLBACK_FUNCTION(MmeBoutarel, playSound);
 	ADD_CALLBACK_FUNCTION(MmeBoutarel, draw);
 	ADD_CALLBACK_FUNCTION(MmeBoutarel, updateFromTime);
-	ADD_CALLBACK_FUNCTION(MmeBoutarel, function5);
+	ADD_CALLBACK_FUNCTION(MmeBoutarel, enterExitCompartment);
 	ADD_CALLBACK_FUNCTION(MmeBoutarel, function6);
 	ADD_CALLBACK_FUNCTION(MmeBoutarel, function7);
 	ADD_CALLBACK_FUNCTION(MmeBoutarel, function8);
@@ -85,8 +85,8 @@ IMPLEMENT_FUNCTION_I(MmeBoutarel, updateFromTime, 4)
 	Entity::updateFromTime(savepoint);
 }
 
-IMPLEMENT_FUNCTION_SI(MmeBoutarel, function5, 5)
-	Entity::updateFields(savepoint);
+IMPLEMENT_FUNCTION_SI(MmeBoutarel, enterExitCompartment, 5)
+	Entity::enterExitCompartment(savepoint);
 }
 
 IMPLEMENT_FUNCTION_SI(MmeBoutarel, function6, 6)
@@ -122,7 +122,7 @@ IMPLEMENT_FUNCTION(MmeBoutarel, chapter1, 10)
 
 		_data->getData()->field_491 = EntityData::kField491_5790;
 		_data->getData()->field_493 = EntityData::kField493_1;
-		_data->getData()->field_495 = EntityData::kField495_4;
+		_data->getData()->car = kCarRedSleeping;
 		break;
 	}
 }
@@ -165,8 +165,8 @@ IMPLEMENT_FUNCTION(MmeBoutarel, chapter2, 17)
 
 		_data->getData()->field_491 = EntityData::kField491_4689;
 		_data->getData()->field_493 = EntityData::kField493_1;
-		_data->getData()->field_495 = EntityData::kField495_5;
-		_data->getData()->clothes = EntityData::kClothesDefault;
+		_data->getData()->car = kCarRestaurant;
+		_data->getData()->clothes = kClothesDefault;
 		_data->getData()->inventoryItem = kItemNone;
 
 		getObjects()->update(kObjectCompartmentD, kEntityNone, kLocationNone, kCursorHandKnock, kCursorHand);
@@ -199,8 +199,8 @@ IMPLEMENT_FUNCTION(MmeBoutarel, chapter3, 20)
 
 		_data->getData()->field_491 = EntityData::kField491_5790;
 		_data->getData()->field_493 = EntityData::kField493_1;
-		_data->getData()->field_495 = EntityData::kField495_4;
-		_data->getData()->clothes = EntityData::kClothesDefault;
+		_data->getData()->car = kCarRedSleeping;
+		_data->getData()->clothes = kClothesDefault;
 		_data->getData()->inventoryItem = kItemNone;
 
 		break;
@@ -225,8 +225,8 @@ IMPLEMENT_FUNCTION(MmeBoutarel, chapter4, 22)
 
 		_data->getData()->field_491 = EntityData::kField491_5790;
 		_data->getData()->field_493 = EntityData::kField493_1;
-		_data->getData()->field_495 = EntityData::kField495_4;
-		_data->getData()->clothes = EntityData::kClothesDefault;
+		_data->getData()->car = kCarRedSleeping;
+		_data->getData()->clothes = kClothesDefault;
 		_data->getData()->inventoryItem = kItemNone;
 
 		break;
@@ -259,8 +259,8 @@ IMPLEMENT_FUNCTION(MmeBoutarel, chapter5, 26)
 
 		_data->getData()->field_491 = EntityData::kField491_3969;
 		_data->getData()->field_493 = EntityData::kField493_1;
-		_data->getData()->field_495 = EntityData::kField495_5;
-		_data->getData()->clothes = EntityData::kClothesDefault;
+		_data->getData()->car = kCarRestaurant;
+		_data->getData()->clothes = kClothesDefault;
 		_data->getData()->inventoryItem = kItemNone;
 
 		break;

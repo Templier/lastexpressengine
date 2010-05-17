@@ -281,7 +281,7 @@ IMPLEMENT_FUNCTION(Coudert, chapter1, 36)
 
 		_data->getData()->field_491 = EntityData::kField491_1500;
 		_data->getData()->field_493 = EntityData::kField493_0;
-		_data->getData()->field_495 = EntityData::kField495_4;
+		_data->getData()->car = kCarRedSleeping;
 
 		getObjects()->updateLocation2(kObject111, kLocation1);
 		break;
@@ -328,7 +328,7 @@ IMPLEMENT_FUNCTION(Coudert, chapter2, 42)
 
 		_data->getData()->field_491 = EntityData::kField491_1500;
 		_data->getData()->field_493 = EntityData::kField493_0;
-		_data->getData()->field_495 = EntityData::kField495_4;
+		_data->getData()->car = kCarRedSleeping;
 		_data->getData()->inventoryItem = kItemNone;
 
 		ENTITY_PARAM(0, 2) = 0;
@@ -377,8 +377,8 @@ IMPLEMENT_FUNCTION(Coudert, chapter3, 44)
 
 		_data->getData()->field_491 = EntityData::kField491_1500;
 		_data->getData()->field_493 = EntityData::kField493_0;
-		_data->getData()->field_495 = EntityData::kField495_4;
-		_data->getData()->clothes = EntityData::kClothesDefault;
+		_data->getData()->car = kCarRedSleeping;
+		_data->getData()->clothes = kClothesDefault;
 		_data->getData()->inventoryItem = kItemNone;
 
 		ENTITY_PARAM(0, 2) = 0;
@@ -452,8 +452,8 @@ IMPLEMENT_FUNCTION(Coudert, chapter4, 52)
 
 		_data->getData()->field_491 = EntityData::kField491_1500;
 		_data->getData()->field_493 = EntityData::kField493_0;
-		_data->getData()->field_495 = EntityData::kField495_4;
-		_data->getData()->clothes = EntityData::kClothesDefault;
+		_data->getData()->car = kCarRedSleeping;
+		_data->getData()->clothes = kClothesDefault;
 		_data->getData()->inventoryItem = kItemNone;
 
 		ENTITY_PARAM(0, 2) = 0;
@@ -515,7 +515,7 @@ IMPLEMENT_FUNCTION(Coudert, chapter5, 57)
 
 		_data->getData()->field_491 = EntityData::kField491_3969;
 		_data->getData()->field_493 = EntityData::kField493_1;
-		_data->getData()->field_495 = EntityData::kField495_5;
+		_data->getData()->car = kCarRestaurant;
 		_data->getData()->inventoryItem = kItemNone;
 		break;
 	}

@@ -43,7 +43,7 @@ Alexei::Alexei(LastExpressEngine *engine) : Entity(engine, kEntityAlexei) {
 	ADD_CALLBACK_FUNCTION(Alexei, updateFromTicks);
 	ADD_CALLBACK_FUNCTION(Alexei, draw);
 	ADD_CALLBACK_FUNCTION(Alexei, function5);
-	ADD_CALLBACK_FUNCTION(Alexei, function6);
+	ADD_CALLBACK_FUNCTION(Alexei, enterExitCompartment);
 	ADD_CALLBACK_FUNCTION(Alexei, function7);
 	ADD_CALLBACK_FUNCTION(Alexei, function8);
 	ADD_CALLBACK_FUNCTION(Alexei, savegame);
@@ -108,8 +108,8 @@ IMPLEMENT_FUNCTION_SII(Alexei, function5, 5)
 	Entity::updateField1000(savepoint);
 }
 
-IMPLEMENT_FUNCTION_SI(Alexei, function6, 6)
-	Entity::updateFields(savepoint);
+IMPLEMENT_FUNCTION_SI(Alexei, enterExitCompartment, 6)
+	Entity::enterExitCompartment(savepoint);
 }
 
 IMPLEMENT_FUNCTION(Alexei, function7, 7)
@@ -168,7 +168,7 @@ IMPLEMENT_FUNCTION(Alexei, chapter1, 17)
 
 		_data->getData()->field_491 = EntityData::kField491_3969;
 		_data->getData()->field_493 = EntityData::kField493_1;
-		_data->getData()->field_495 = EntityData::kField495_5;
+		_data->getData()->car = kCarRestaurant;
 
 		break;
 	}
@@ -232,8 +232,8 @@ IMPLEMENT_FUNCTION(Alexei, chapter2, 28)
 
 		_data->getData()->field_491 = EntityData::kField491_7500;
 		_data->getData()->field_493 = EntityData::kField493_1;
-		_data->getData()->field_495 = EntityData::kField495_3;
-		_data->getData()->clothes = EntityData::kClothesDefault;
+		_data->getData()->car = kCarGreenSleeping;
+		_data->getData()->clothes = kClothesDefault;
 		_data->getData()->inventoryItem = kItemNone;
 
 		break;
@@ -269,8 +269,8 @@ IMPLEMENT_FUNCTION(Alexei, chapter3, 32)
 		getObjects()->update(kObjectHandleInsideBathroom, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
 
 		_data->getData()->field_493 = EntityData::kField493_1;
-		_data->getData()->field_495 = EntityData::kField495_5;
-		_data->getData()->clothes = EntityData::kClothesDefault;
+		_data->getData()->car = kCarRestaurant;
+		_data->getData()->clothes = kClothesDefault;
 		_data->getData()->inventoryItem = kItemNone;
 
 		break;
@@ -311,7 +311,7 @@ IMPLEMENT_FUNCTION(Alexei, chapter4, 37)
 
 		_data->getData()->field_491 = EntityData::kField491_7500;
 		_data->getData()->field_493 = EntityData::kField493_1;
-		_data->getData()->field_495 = EntityData::kField495_3;
+		_data->getData()->car = kCarGreenSleeping;
 		_data->getData()->inventoryItem = kItemNone;
 
 		break;

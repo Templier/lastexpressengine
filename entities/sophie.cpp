@@ -47,8 +47,8 @@ namespace LastExpress {
 		getEntities()->prepareSequences(kEntitySophie); \
 		_data->getData()->field_491 = EntityData::kField491_4840; \
 		_data->getData()->field_493 = EntityData::kField493_1; \
-		_data->getData()->field_495 = EntityData::kField495_4; \
-		_data->getData()->clothes = EntityData::kClothesDefault; \
+		_data->getData()->car = kCarRedSleeping; \
+		_data->getData()->clothes = kClothesDefault; \
 		_data->getData()->inventoryItem = kItemNone; \
 		break; \
 	}
@@ -57,7 +57,7 @@ namespace LastExpress {
 	if (savepoint.action == kActionDefault) { \
 		_data->getData()->field_491 = EntityData::kField491_4840; \
 		_data->getData()->field_493 = EntityData::kField493_1; \
-		_data->getData()->field_495 = EntityData::kField495_4; \
+		_data->getData()->car = kCarRedSleeping; \
 		getEntities()->prepareSequences(kEntitySophie); \
 	}
 
@@ -82,7 +82,7 @@ IMPLEMENT_FUNCTION(Sophie, function1, 1)
 }
 
 //////////////////////////////////////////////////////////////////////////
-// param1: Field495Value
+// param1: CarIndex
 // param2: Field491Value
 IMPLEMENT_FUNCTION_II(Sophie, function2, 2)
 	switch (savepoint.action) {
@@ -95,21 +95,21 @@ IMPLEMENT_FUNCTION_II(Sophie, function2, 2)
 		// Sophie
 		byte direction = _data->getData()->direction;
 		EntityData::Field491Value field_491 = _data->getData()->field_491;
-		EntityData::Field495Value field_495 = _data->getData()->field_495;
+		CarIndex car = _data->getData()->car;
 
 		// Rebecca
 		EntityData::Field491Value rebecca_field_491 = getEntityData(kEntityRebecca)->field_491;
-		EntityData::Field495Value rebecca_field_495 = getEntityData(kEntityRebecca)->field_495;
+		CarIndex rebeccaCar = getEntityData(kEntityRebecca)->car;
 
 		if (getEntities()->checkFields9(kEntitySophie, kEntityRebecca, 500)
-		|| (direction == kDirectionUp && field_495 >= rebecca_field_495 && field_491 > rebecca_field_491)
-		|| (direction == kDirectionDown && field_495 <= rebecca_field_495 && field_491 < rebecca_field_491)) {
+		|| (direction == kDirectionUp && car >= rebeccaCar && field_491 > rebecca_field_491)
+		|| (direction == kDirectionDown && car <= rebeccaCar && field_491 < rebecca_field_491)) {
 			 _data->getData()->field_49B = 0;
 			 params->param3 = 1;
 		}
 
 		if (!params->param3)
-			getEntities()->checkEntity(kEntitySophie, (EntityData::Field495Value)params->param1, (EntityData::Field491Value)params->param2);
+			getEntities()->checkEntity(kEntitySophie, (CarIndex)params->param1, (EntityData::Field491Value)params->param2);
 
 		break;
 	}
@@ -123,7 +123,7 @@ IMPLEMENT_FUNCTION_II(Sophie, function2, 2)
 		break;
 
 	case kActionDefault:
-		getEntities()->checkEntity(kEntitySophie, (EntityData::Field495Value)params->param1, (EntityData::Field491Value)params->param2);
+		getEntities()->checkEntity(kEntitySophie, (CarIndex)params->param1, (EntityData::Field491Value)params->param2);
 		break;
 
 	case kAction123668192:
@@ -140,7 +140,7 @@ IMPLEMENT_FUNCTION(Sophie, function3, 3)
 
 	case kActionNone:
 		_data->getData()->field_491 = getEntityData(kEntityRebecca)->field_491;
-		_data->getData()->field_495 = getEntityData(kEntityRebecca)->field_495;
+		_data->getData()->car = getEntityData(kEntityRebecca)->car;
 		break;
 
 	case kAction18:
@@ -169,37 +169,37 @@ IMPLEMENT_FUNCTION(Sophie, function3, 3)
 	case kAction125242096:
 		_data->getData()->field_491 = (EntityData::Field491Value)(getEntityData(kEntityRebecca)->field_491 - 100);
 		_data->getData()->field_493 = getEntityData(kEntityRebecca)->field_493;
-		_data->getData()->field_495 = getEntityData(kEntityRebecca)->field_495;
+		_data->getData()->car = getEntityData(kEntityRebecca)->car;
 
 		_data->setNextCallback(1);
-		call(new ENTITY_SETUP(Sophie, setup_function2), EntityData::kField495_5, EntityData::kField491_850);
+		call(new ENTITY_SETUP(Sophie, setup_function2), kCarRestaurant, EntityData::kField491_850);
 		break;
 
 	case kAction136654208:
 		_data->getData()->field_491 = (EntityData::Field491Value)(getEntityData(kEntityRebecca)->field_491 + 100);
 		_data->getData()->field_493 = getEntityData(kEntityRebecca)->field_493;
-		_data->getData()->field_495 = getEntityData(kEntityRebecca)->field_495;
+		_data->getData()->car = getEntityData(kEntityRebecca)->car;
 
 		_data->setNextCallback(2);
-		call(new ENTITY_SETUP(Sophie, setup_function2), EntityData::kField495_4, EntityData::kField491_4840);
+		call(new ENTITY_SETUP(Sophie, setup_function2), kCarRedSleeping, EntityData::kField491_4840);
 		break;
 
 	case kAction259921280:
 		_data->getData()->field_491 = (EntityData::Field491Value)(getEntityData(kEntityRebecca)->field_491 + 100);
 		_data->getData()->field_493 = getEntityData(kEntityRebecca)->field_493;
-		_data->getData()->field_495 = getEntityData(kEntityRebecca)->field_495;
+		_data->getData()->car = getEntityData(kEntityRebecca)->car;
 
 		_data->setNextCallback(3);
-		call(new ENTITY_SETUP(Sophie, setup_function2), EntityData::kField495_2, EntityData::kField491_9460);
+		call(new ENTITY_SETUP(Sophie, setup_function2), kCarKronos, EntityData::kField491_9460);
 		break;
 
 	case kAction292775040:
 		_data->getData()->field_491 = EntityData::kField491_9270;
 		_data->getData()->field_493 = EntityData::kField493_0;
-		_data->getData()->field_495 = EntityData::kField495_2;
+		_data->getData()->car = kCarKronos;
 
 		_data->setNextCallback(4);
-		call(new ENTITY_SETUP(Sophie, setup_function2), EntityData::kField495_4, EntityData::kField491_4840);
+		call(new ENTITY_SETUP(Sophie, setup_function2), kCarRedSleeping, EntityData::kField491_4840);
 		break;
 	}
 }
@@ -217,7 +217,7 @@ IMPLEMENT_FUNCTION(Sophie, chapter1, 4)
 	case kActionDefault:
 		_data->getData()->field_491 = EntityData::kField491_4840;
 		_data->getData()->field_493 = EntityData::kField493_1;
-		_data->getData()->field_495 = EntityData::kField495_4;
+		_data->getData()->car = kCarRedSleeping;
 		break;
 	}
 }
@@ -262,7 +262,7 @@ IMPLEMENT_FUNCTION(Sophie, chapter5, 10)
 
 		_data->getData()->field_491 = EntityData::kField491_3969;
 		_data->getData()->field_493 = EntityData::kField493_1;
-		_data->getData()->field_495 = EntityData::kField495_5;
+		_data->getData()->car = kCarRestaurant;
 		_data->getData()->inventoryItem = kItemNone;
 
 		break;

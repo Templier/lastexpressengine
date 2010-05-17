@@ -42,7 +42,7 @@ Max::Max(LastExpressEngine *engine) : Entity(engine, kEntityMax) {
 	ADD_CALLBACK_FUNCTION(Max, function1);
 	ADD_CALLBACK_FUNCTION(Max, playSound);
 	ADD_CALLBACK_FUNCTION(Max, draw);
-	ADD_CALLBACK_FUNCTION(Max, function4);
+	ADD_CALLBACK_FUNCTION(Max, enterExitCompartment);
 	ADD_CALLBACK_FUNCTION(Max, savegame);
 	ADD_CALLBACK_FUNCTION(Max, function6);
 	ADD_CALLBACK_FUNCTION(Max, function7);
@@ -71,8 +71,8 @@ IMPLEMENT_FUNCTION_NOSETUP(Max, draw, 3)
 	Entity::draw(savepoint);
 }
 
-IMPLEMENT_FUNCTION_SI(Max, function4, 4)
-	Entity::updateFields(savepoint);
+IMPLEMENT_FUNCTION_SI(Max, enterExitCompartment, 4)
+	Entity::enterExitCompartment(savepoint);
 }
 
 IMPLEMENT_FUNCTION_II(Max, savegame, 5)
@@ -144,7 +144,7 @@ IMPLEMENT_FUNCTION(Max, function7, 7)
 
 		_data->getData()->field_491 = EntityData::kField491_4070;
 		_data->getData()->field_493 = EntityData::kField493_1;
-		_data->getData()->field_495 = EntityData::kField495_4;
+		_data->getData()->car = kCarRedSleeping;
 
 		getObjects()->update(kObjectCompartmentF, kEntityMax, kLocation1, kCursorHandKnock, kCursorHand);
 		getObjects()->update(kObject53, kEntityMax, kLocation1, kCursorHandKnock, kCursorHand);
@@ -152,7 +152,7 @@ IMPLEMENT_FUNCTION(Max, function7, 7)
 
 	case kAction17:
 		if (!getSound()->isBuffered(kEntityMax)) {
-			if (getEntities()->checkFields4(EntityData::kField495_4, 56) || getEntities()->checkFields4(EntityData::kField495_4, 78))
+			if (getEntities()->checkFields4(kCarRedSleeping, 56) || getEntities()->checkFields4(kCarRedSleeping, 78))
 				getSound()->playSound(kEntityMax, "Max1120");
 		}
 		break;
@@ -239,7 +239,7 @@ IMPLEMENT_FUNCTION(Max, function8, 8)
 
 		_data->getData()->field_491 = EntityData::kField491_8000;
 		_data->getData()->field_493 = EntityData::kField493_1;
-		_data->getData()->field_495 = EntityData::kField495_6;
+		_data->getData()->car = kCarBaggage;
 
 		if (!getSound()->isBuffered(kEntityMax))
 			getSound()->playSound(kEntityMax, "Max3101");
@@ -254,7 +254,7 @@ IMPLEMENT_FUNCTION(Max, function8, 8)
 
 		getSound()->playSound(kEntityNone, "LIB026");
 		getAction()->playAnimation(kEventCathMaxFree);
-		getLogic()->loadSceneFromPosition(EntityData::kField495_6, 92);
+		getLogic()->loadSceneFromPosition(kCarBaggage, 92);
 		getObjects()->update(kObjectCageMax, kEntityNone, kLocationNone, kCursorNormal, kCursorHand);
 		setup_function9();
 		break;
@@ -297,10 +297,10 @@ setup_functions:
 	case kActionDefault:
 		_data->getData()->field_491 = EntityData::kField491_4070;
 		_data->getData()->field_493 = EntityData::kField493_0;
-		_data->getData()->field_495 = EntityData::kField495_4;
+		_data->getData()->car = kCarRedSleeping;
 
 		getEntities()->drawSequenceLeft(kEntityMax, "630Af");
-		getEntities()->updateField1000_4(kEntityMax, kObjectCompartmentF);
+		getEntities()->enterCompartment(kEntityMax, kObjectCompartmentF, false);
 
 		params->param1 = getState()->time + 2700;
 		break;
@@ -319,8 +319,8 @@ IMPLEMENT_FUNCTION(Max, chapter1, 10)
 	case kActionDefault:
 		_data->getData()->field_491 = EntityData::kField491_4070;
 		_data->getData()->field_493 = EntityData::kField493_1;
-		_data->getData()->field_495 = EntityData::kField495_4;
-		_data->getData()->clothes = EntityData::kClothesDefault;
+		_data->getData()->car = kCarRedSleeping;
+		_data->getData()->clothes = kClothesDefault;
 		break;
 	}
 }
@@ -339,8 +339,8 @@ IMPLEMENT_FUNCTION(Max, chapter2, 11)
 
 		_data->getData()->field_491 = EntityData::kField491_4070;
 		_data->getData()->field_493 = EntityData::kField493_1;
-		_data->getData()->field_495 = EntityData::kField495_4;
-		_data->getData()->clothes = EntityData::kClothesDefault;
+		_data->getData()->car = kCarRedSleeping;
+		_data->getData()->clothes = kClothesDefault;
 		_data->getData()->inventoryItem = kItemNone;
 
 		break;
@@ -361,8 +361,8 @@ IMPLEMENT_FUNCTION(Max, chapter3, 12)
 
 		_data->getData()->field_491 = EntityData::kField491_4070;
 		_data->getData()->field_493 = EntityData::kField493_1;
-		_data->getData()->field_495 = EntityData::kField495_4;
-		_data->getData()->clothes = EntityData::kClothesDefault;
+		_data->getData()->car = kCarRedSleeping;
+		_data->getData()->clothes = kClothesDefault;
 		_data->getData()->inventoryItem = kItemNone;
 		break;
 	}
@@ -393,7 +393,7 @@ IMPLEMENT_FUNCTION(Max, function13, 13)
 
 		_data->getData()->field_491 = EntityData::kField491_4070;
 		_data->getData()->field_493 = EntityData::kField493_1;
-		_data->getData()->field_495 = EntityData::kField495_4;
+		_data->getData()->car = kCarRedSleeping;
 		break;
 
 	case kAction71277948:
@@ -453,7 +453,7 @@ IMPLEMENT_FUNCTION(Max, freeFromCage, 14)
 
 		_data->getData()->field_491 = EntityData::kField491_8000;
 		_data->getData()->field_493 = EntityData::kField493_1;
-		_data->getData()->field_495 = EntityData::kField495_6;
+		_data->getData()->car = kCarBaggage;
 
 		if (!getSound()->isBuffered(kEntityMax))
 			getSound()->playSound(kEntityMax, "Max1122");
@@ -480,7 +480,7 @@ IMPLEMENT_FUNCTION(Max, freeFromCage, 14)
 
 			getSound()->playSound(kEntityNone, "LIB026");
 			getAction()->playAnimation(kEventCathMaxFree);
-			getLogic()->loadSceneFromPosition(EntityData::kField495_6, 92);
+			getLogic()->loadSceneFromPosition(kCarBaggage, 92);
 			getObjects()->update(kObjectCageMax, kEntityNone, kLocationNone, kCursorNormal, kCursorHand);
 			setup_function9();
 			break;
@@ -497,7 +497,7 @@ IMPLEMENT_FUNCTION(Max, function15, 15)
 	case kActionNone:
 		if (params->param2) {
 			_data->getData()->field_491 = getEntityData(kEntityCoudert)->field_491;
-			_data->getData()->field_495 = getEntityData(kEntityCoudert)->field_495;
+			_data->getData()->car = getEntityData(kEntityCoudert)->car;
 		}
 
 		if (!params->param1) {
@@ -510,31 +510,31 @@ IMPLEMENT_FUNCTION(Max, function15, 15)
 	case kActionDefault:
 		_data->getData()->field_491 = EntityData::kField491_4070;
 		_data->getData()->field_493 = EntityData::kField493_0;
-		_data->getData()->field_495 = EntityData::kField495_4;
+		_data->getData()->car = kCarRedSleeping;
 
 		if (!getSound()->isBuffered(kEntityMax))
 			getSound()->playSound(kEntityMax, "Max3010");
 
 		_data->setNextCallback(1);
-		call(new ENTITY_SETUP_SIIS(Max, setup_function4), "630Bf", kEntityTables4);
+		call(new ENTITY_SETUP_SIIS(Max, setup_enterExitCompartment), "630Bf", kObjectCompartment4);
 		break;
 
 	case kAction18:
 		if (_data->getNextCallback() == 1) {
 			getEntities()->drawSequenceLeft(kEntityMax, "630Af");
-			getEntities()->updateField1000_4(kEntityMax, kObjectCompartmentF);
+			getEntities()->enterCompartment(kEntityMax, kObjectCompartmentF, false);
 			getSavePoints()->push(kEntityMax, kEntityAnna, kAction156622016);
 		}
 		break;
 
 	case kAction122358304:
 		(savepoint.entity2 == kEntityAnna) ? (params->param1 = 1) : (params->param2 = 1);
-		getEntities()->updateField1000_5(kEntityMax, kObjectCompartmentF);
+		getEntities()->exitCompartment(kEntityMax, kObjectCompartmentF, false);
 		getEntities()->drawSequenceLeft(kEntityMax, "BLANK");
 		break;
 
 	case kActionMaxFreeFromCage:
-		getEntities()->updateField1000_5(kEntityMax, kObjectCompartmentF);
+		getEntities()->exitCompartment(kEntityMax, kObjectCompartmentF, false);
 		setup_function8();
 		break;
 	}
@@ -554,7 +554,7 @@ IMPLEMENT_FUNCTION(Max, chapter4, 16)
 
 		_data->getData()->field_491 = EntityData::kField491_8000;
 		_data->getData()->field_493 = EntityData::kField493_1;
-		_data->getData()->field_495 = EntityData::kField495_6;
+		_data->getData()->car = kCarBaggage;
 		break;
 	}
 }
@@ -567,14 +567,14 @@ IMPLEMENT_FUNCTION(Max, function17, 17)
 	case kActionNone:
 		if (params->param1) {
 			_data->getData()->field_491 = getEntityData(kEntityCoudert)->field_491;
-			_data->getData()->field_495 = getEntityData(kEntityCoudert)->field_495;
+			_data->getData()->car = getEntityData(kEntityCoudert)->car;
 		}
 		break;
 
 	case kActionDefault:
 		_data->getData()->field_491 = EntityData::kField491_4070;
 		_data->getData()->field_493 = EntityData::kField493_0;
-		_data->getData()->field_495 = EntityData::kField495_4;
+		_data->getData()->car = kCarRedSleeping;
 
 		getEntities()->drawSequenceLeft(kEntityMax, "630Af");
 		getSavePoints()->push(kEntityMax, kEntityCoudert, kAction157026693);
@@ -582,12 +582,12 @@ IMPLEMENT_FUNCTION(Max, function17, 17)
 
 	case kAction122358304:
 		params->param1 = 1;
-		getEntities()->updateField1000_5(kEntityMax, kObjectCompartmentF);
+		getEntities()->exitCompartment(kEntityMax, kObjectCompartmentF, false);
 		getEntities()->drawSequenceLeft(kEntityMax, "BLANK");
 		break;
 
 	case kActionMaxFreeFromCage:
-		getEntities()->updateField1000_5(kEntityMax, kObjectCompartmentF);
+		getEntities()->exitCompartment(kEntityMax, kObjectCompartmentF, false);
 		setup_function8();
 		break;
 	}
@@ -599,7 +599,7 @@ IMPLEMENT_FUNCTION(Max, chapter5, 18)
 
 		_data->getData()->field_491 = EntityData::kField491_0;
 		_data->getData()->field_493 = EntityData::kField493_0;
-		_data->getData()->field_495 = EntityData::kField495_0;
+		_data->getData()->car = kCarNone;
 
 		getObjects()->update(kObjectCageMax, kEntityNone, kLocationNone, kCursorNormal, kCursorHand);
 	}

@@ -43,7 +43,7 @@ Boutarel::Boutarel(LastExpressEngine *engine) : Entity(engine, kEntityBoutarel) 
 	ADD_CALLBACK_FUNCTION(Boutarel, draw);
 	ADD_CALLBACK_FUNCTION(Boutarel, updateFromTime);
 	ADD_CALLBACK_FUNCTION(Boutarel, function5);
-	ADD_CALLBACK_FUNCTION(Boutarel, function6);
+	ADD_CALLBACK_FUNCTION(Boutarel, enterExitCompartment);
 	ADD_CALLBACK_FUNCTION(Boutarel, function7);
 	ADD_CALLBACK_FUNCTION(Boutarel, function8);
 	ADD_CALLBACK_FUNCTION(Boutarel, function9);
@@ -99,8 +99,8 @@ IMPLEMENT_FUNCTION_SII(Boutarel, function5, 5)
 	Entity::updateField1000(savepoint);
 }
 
-IMPLEMENT_FUNCTION_SI(Boutarel, function6, 6)
-	Entity::updateFields(savepoint);
+IMPLEMENT_FUNCTION_SI(Boutarel, enterExitCompartment, 6)
+	Entity::enterExitCompartment(savepoint);
 }
 
 IMPLEMENT_FUNCTION_SI(Boutarel, function7, 7)
@@ -170,7 +170,7 @@ IMPLEMENT_FUNCTION(Boutarel, chapter1, 19)
 
 		_data->getData()->field_491 = EntityData::kField491_1750;
 		_data->getData()->field_493 = EntityData::kField493_1;
-		_data->getData()->field_495 = EntityData::kField495_5;
+		_data->getData()->car = kCarRestaurant;
 		break;
 	}
 }
@@ -201,7 +201,7 @@ IMPLEMENT_FUNCTION(Boutarel, chapter2, 23)
 
 		_data->getData()->field_491 = EntityData::kField491_4689;
 		_data->getData()->field_493 = EntityData::kField493_1;
-		_data->getData()->field_495 = EntityData::kField495_5;
+		_data->getData()->car = kCarRestaurant;
 		_data->getData()->inventoryItem = kItemNone;
 
 		getObjects()->update(kObjectCompartmentC, kEntityNone, kLocationNone, kCursorHandKnock, kCursorHand);
@@ -232,8 +232,8 @@ IMPLEMENT_FUNCTION(Boutarel, chapter3, 26)
 		getEntities()->prepareSequences(kEntityBoutarel);
 
 		_data->getData()->field_493 = EntityData::kField493_1;
-		_data->getData()->field_495 = EntityData::kField495_4;
-		_data->getData()->clothes = EntityData::kClothesDefault;
+		_data->getData()->car = kCarRedSleeping;
+		_data->getData()->clothes = kClothesDefault;
 		_data->getData()->inventoryItem = kItemNone;
 
 		getObjects()->update(kObjectCompartmentC, kEntityNone, kLocation2, kCursorKeepValue, kCursorKeepValue);
@@ -273,8 +273,8 @@ IMPLEMENT_FUNCTION(Boutarel, chapter4, 31)
 
 		_data->getData()->field_491 = EntityData::kField491_6470;
 		_data->getData()->field_493 = EntityData::kField493_1;
-		_data->getData()->field_495 = EntityData::kField495_4;
-		_data->getData()->clothes = EntityData::kClothesDefault;
+		_data->getData()->car = kCarRedSleeping;
+		_data->getData()->clothes = kClothesDefault;
 		_data->getData()->inventoryItem = kItemNone;
 
 		getObjects()->update(kObjectCompartmentC, kEntityNone, kLocation2, kCursorKeepValue, kCursorKeepValue);
@@ -314,8 +314,8 @@ IMPLEMENT_FUNCTION(Boutarel, chapter5, 36)
 
 		_data->getData()->field_491 = EntityData::kField491_3969;
 		_data->getData()->field_493 = EntityData::kField493_1;
-		_data->getData()->field_495 = EntityData::kField495_5;
-		_data->getData()->clothes = EntityData::kClothesDefault;
+		_data->getData()->car = kCarRestaurant;
+		_data->getData()->clothes = kClothesDefault;
 		_data->getData()->inventoryItem = kItemNone;
 
 		break;

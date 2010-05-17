@@ -42,7 +42,7 @@ August::August(LastExpressEngine *engine) : Entity(engine, kEntityAugust) {
 	ADD_CALLBACK_FUNCTION(August, updateFromTime);
 	ADD_CALLBACK_FUNCTION(August, draw);
 	ADD_CALLBACK_FUNCTION(August, function4);
-	ADD_CALLBACK_FUNCTION(August, function5);
+	ADD_CALLBACK_FUNCTION(August, enterExitCompartment);
 	ADD_CALLBACK_FUNCTION(August, function6);
 	ADD_CALLBACK_FUNCTION(August, function7);
 	ADD_CALLBACK_FUNCTION(August, function8);
@@ -126,8 +126,8 @@ IMPLEMENT_FUNCTION_SII(August, function4, 4)
 	Entity::updateField1000(savepoint);
 }
 
-IMPLEMENT_FUNCTION_SI(August, function5, 5)
-	Entity::updateFields(savepoint);
+IMPLEMENT_FUNCTION_SI(August, enterExitCompartment, 5)
+	Entity::enterExitCompartment(savepoint);
 }
 
 IMPLEMENT_FUNCTION_SI(August, function6, 6)
@@ -209,8 +209,8 @@ IMPLEMENT_FUNCTION(August, chapter1, 22)
 
 		_data->getData()->field_491 = EntityData::kField491_4691;
 		_data->getData()->field_493 = EntityData::kField493_1;
-		_data->getData()->field_495 = EntityData::kField495_5;
-		_data->getData()->clothes = EntityData::kClothesDefault;
+		_data->getData()->car = kCarRestaurant;
+		_data->getData()->clothes = kClothesDefault;
 
 		getProgress().event_august_met = 0;
 		break;
@@ -279,8 +279,8 @@ IMPLEMENT_FUNCTION(August, chapter2, 35)
 
 		_data->getData()->field_491 = EntityData::kField491_3970;
 		_data->getData()->field_493 = EntityData::kField493_1;
-		_data->getData()->field_495 = EntityData::kField495_5;
-		_data->getData()->clothes = EntityData::kClothes1;
+		_data->getData()->car = kCarRestaurant;
+		_data->getData()->clothes = kClothes1;
 		_data->getData()->inventoryItem = kItemNone;
 
 		getObjects()->update(kObjectCompartment3, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
@@ -320,8 +320,8 @@ IMPLEMENT_FUNCTION(August, chapter3, 40)
 
 		_data->getData()->field_491 = EntityData::kField491_6470;
 		_data->getData()->field_493 = EntityData::kField493_0;
-		_data->getData()->field_495 = EntityData::kField495_3;
-		_data->getData()->clothes = EntityData::kClothes1;
+		_data->getData()->car = kCarGreenSleeping;
+		_data->getData()->clothes = kClothes1;
 		_data->getData()->inventoryItem = kItemNone;
 
 		break;
@@ -406,8 +406,8 @@ IMPLEMENT_FUNCTION(August, chapter4, 57)
 
 		_data->getData()->field_491 = EntityData::kField491_6470;
 		_data->getData()->field_493 = EntityData::kField493_1;
-		_data->getData()->field_495 = EntityData::kField495_3;
-		_data->getData()->clothes = EntityData::kClothes2;
+		_data->getData()->car = kCarGreenSleeping;
+		_data->getData()->clothes = kClothes2;
 		_data->getData()->inventoryItem = kItemNone;
 
 		getObjects()->update(kObjectCompartment3, kEntityNone, kLocation2, kCursorNormal, kCursorNormal);
@@ -462,8 +462,8 @@ IMPLEMENT_FUNCTION(August, chapter5, 66)
 
 		_data->getData()->field_491 = EntityData::kField491_3969;
 		_data->getData()->field_493 = EntityData::kField493_1;
-		_data->getData()->field_495 = EntityData::kField495_5;
-		_data->getData()->clothes = EntityData::kClothes2;
+		_data->getData()->car = kCarRestaurant;
+		_data->getData()->clothes = kClothes2;
 		_data->getData()->inventoryItem = kItemNone;
 
 		break;

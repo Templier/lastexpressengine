@@ -40,7 +40,7 @@ namespace LastExpress {
 Vesna::Vesna(LastExpressEngine *engine) : Entity(engine, kEntityVesna) {
 	ADD_CALLBACK_FUNCTION(Vesna, function1);
 	ADD_CALLBACK_FUNCTION(Vesna, playSound);
-	ADD_CALLBACK_FUNCTION(Vesna, function3);
+	ADD_CALLBACK_FUNCTION(Vesna, enterExitCompartment);
 	ADD_CALLBACK_FUNCTION(Vesna, draw);
 	ADD_CALLBACK_FUNCTION(Vesna, function5);
 	ADD_CALLBACK_FUNCTION(Vesna, updateFromTime);
@@ -79,8 +79,8 @@ IMPLEMENT_FUNCTION_S(Vesna, playSound, 2)
 	Entity::playSound(savepoint);
 }
 
-IMPLEMENT_FUNCTION_SI(Vesna, function3, 3)
-	Entity::updateFields(savepoint);
+IMPLEMENT_FUNCTION_SI(Vesna, enterExitCompartment, 3)
+	Entity::enterExitCompartment(savepoint);
 }
 
 IMPLEMENT_FUNCTION_S(Vesna, draw, 4)
@@ -129,7 +129,7 @@ IMPLEMENT_FUNCTION(Vesna, chapter1, 12)
 
 		_data->getData()->field_491 = EntityData::kField491_4689;
 		_data->getData()->field_493 = EntityData::kField493_1;
-		_data->getData()->field_495 = EntityData::kField495_5;
+		_data->getData()->car = kCarRestaurant;
 		break;
 	}
 }
@@ -160,8 +160,8 @@ IMPLEMENT_FUNCTION(Vesna, chapter2, 16)
 
 		_data->getData()->field_491 = EntityData::kField491_3050;
 		_data->getData()->field_493 = EntityData::kField493_1;
-		_data->getData()->field_495 = EntityData::kField495_4;
-		_data->getData()->clothes = EntityData::kClothesDefault;
+		_data->getData()->car = kCarRedSleeping;
+		_data->getData()->clothes = kClothesDefault;
 		_data->getData()->inventoryItem = kItemNone;
 
 		break;
@@ -190,8 +190,8 @@ IMPLEMENT_FUNCTION(Vesna, chapter3, 19)
 
 		_data->getData()->field_491 = EntityData::kField491_3050;
 		_data->getData()->field_493 = EntityData::kField493_1;
-		_data->getData()->field_495 = EntityData::kField495_4;
-		_data->getData()->clothes = EntityData::kClothesDefault;
+		_data->getData()->car = kCarRedSleeping;
+		_data->getData()->clothes = kClothesDefault;
 		_data->getData()->inventoryItem = kItemNone;
 
 		break;
@@ -229,7 +229,7 @@ IMPLEMENT_FUNCTION(Vesna, chapter4, 24)
 
 		_data->getData()->field_491 = EntityData::kField491_3050;
 		_data->getData()->field_493 = EntityData::kField493_1;
-		_data->getData()->field_495 = EntityData::kField495_4;
+		_data->getData()->car = kCarRedSleeping;
 		_data->getData()->inventoryItem = kItemNone;
 
 		getObjects()->update(kObjectCompartmentG, kEntityVesna, kLocation3, kCursorHandKnock, kCursorHand);
@@ -266,7 +266,7 @@ IMPLEMENT_FUNCTION(Vesna, chapter5, 28)
 		getEntities()->prepareSequences(kEntityVesna);
 
 		_data->getData()->field_493 = EntityData::kField493_1;
-		_data->getData()->field_495 = EntityData::kField495_5;
+		_data->getData()->car = kCarRestaurant;
 		_data->getData()->inventoryItem = kItemNone;
 		break;
 	}

@@ -44,7 +44,7 @@ Rebecca::Rebecca(LastExpressEngine *engine) : Entity(engine, kEntityRebecca) {
 	ADD_CALLBACK_FUNCTION(Rebecca, function4);
 	ADD_CALLBACK_FUNCTION(Rebecca, function5);
 	ADD_CALLBACK_FUNCTION(Rebecca, draw);
-	ADD_CALLBACK_FUNCTION(Rebecca, function7);
+	ADD_CALLBACK_FUNCTION(Rebecca, enterExitCompartment);
 	ADD_CALLBACK_FUNCTION(Rebecca, function8);
 	ADD_CALLBACK_FUNCTION(Rebecca, function9);
 	ADD_CALLBACK_FUNCTION(Rebecca, function10);
@@ -113,8 +113,8 @@ IMPLEMENT_FUNCTION_S(Rebecca, draw, 6)
 	Entity::draw(savepoint);
 }
 
-IMPLEMENT_FUNCTION_SI(Rebecca, function7, 7)
-	Entity::updateFields(savepoint);
+IMPLEMENT_FUNCTION_SI(Rebecca, enterExitCompartment, 7)
+	Entity::enterExitCompartment(savepoint);
 }
 
 IMPLEMENT_FUNCTION_SI(Rebecca, function8, 8)
@@ -189,7 +189,7 @@ IMPLEMENT_FUNCTION(Rebecca, chapter1, 21)
 
 		_data->getData()->field_491 = EntityData::kField491_2830;
 		_data->getData()->field_493 = EntityData::kField493_1;
-		_data->getData()->field_495 = EntityData::kField495_5;
+		_data->getData()->car = kCarRestaurant;
 
 		ENTITY_PARAM(0, 2) = 1;
 		break;
@@ -234,8 +234,8 @@ IMPLEMENT_FUNCTION(Rebecca, chapter2, 28)
 
 		_data->getData()->field_491 = EntityData::kField491_4840;
 		_data->getData()->field_493 = EntityData::kField493_1;
-		_data->getData()->field_495 = EntityData::kField495_4;
-		_data->getData()->clothes = EntityData::kClothesDefault;
+		_data->getData()->car = kCarRedSleeping;
+		_data->getData()->clothes = kClothesDefault;
 		_data->getData()->inventoryItem = kItemNone;
 
 		getObjects()->update(kObjectCompartmentE, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
@@ -274,8 +274,8 @@ IMPLEMENT_FUNCTION(Rebecca, chapter3, 32)
 
 		_data->getData()->field_491 = EntityData::kField491_4840;
 		_data->getData()->field_493 = EntityData::kField493_1;
-		_data->getData()->field_495 = EntityData::kField495_4;
-		_data->getData()->clothes = EntityData::kClothesDefault;
+		_data->getData()->car = kCarRedSleeping;
+		_data->getData()->clothes = kClothesDefault;
 		_data->getData()->inventoryItem = kItemNone;
 
 		break;
@@ -332,8 +332,8 @@ IMPLEMENT_FUNCTION(Rebecca, chapter4, 42)
 
 		_data->getData()->field_491 = EntityData::kField491_4840;
 		_data->getData()->field_493 = EntityData::kField493_1;
-		_data->getData()->field_495 = EntityData::kField495_4;
-		_data->getData()->clothes = EntityData::kClothesDefault;
+		_data->getData()->car = kCarRedSleeping;
+		_data->getData()->clothes = kClothesDefault;
 		_data->getData()->inventoryItem = kItemNone;
 
 		getObjects()->updateLocation2(kObject110, kLocation3);
@@ -370,7 +370,7 @@ IMPLEMENT_FUNCTION(Rebecca, chapter5, 46)
 
 		_data->getData()->field_491 = EntityData::kField491_3969;
 		_data->getData()->field_493 = EntityData::kField493_1;
-		_data->getData()->field_495 = EntityData::kField495_5;
+		_data->getData()->car = kCarRestaurant;
 		_data->getData()->inventoryItem = kItemNone;
 
 		getObjects()->updateLocation2(kObject110, kLocation4);

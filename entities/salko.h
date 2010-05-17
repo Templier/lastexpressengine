@@ -40,7 +40,7 @@ public:
 
 	// Setup
 	DECLARE_FUNCTION(function1)
-	DECLARE_FUNCTION_SI(function2)
+	DECLARE_FUNCTION_SI(enterExitCompartment)
 	DECLARE_FUNCTION_NOSETUP(draw)
 	DECLARE_FUNCTION_II(function4)
 	DECLARE_FUNCTION_I(updateFromTime)

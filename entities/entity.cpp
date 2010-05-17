@@ -117,14 +117,14 @@ void Entity::function1(const SavePoint &savepoint) {
 		break;
 
 	case kActionNone:
-		if (getEntities()->checkEntity(_entityIndex, EntityData::kField495_3, (EntityData::Field491Value)params->param1))
+		if (getEntities()->checkEntity(_entityIndex, kCarGreenSleeping, (EntityData::Field491Value)params->param1))
 			params->param1 = (params->param1 == 10000) ? 0 : 10000;
 		break;
 
 	case kActionDefault:
 		_data->getData()->field_491 = EntityData::kField491_0;
 		_data->getData()->field_493 = EntityData::kField493_0;
-		_data->getData()->field_495 = EntityData::kField495_3;
+		_data->getData()->car = kCarGreenSleeping;
 		params->param1 = 10000;
 		break;
 	}
@@ -135,9 +135,9 @@ void Entity::function1Clothes(const SavePoint &savepoint) {
 	if (savepoint.action == kAction1) {
 
 		// Select next available clothes
-		_data->getData()->clothes = (EntityData::ClothesIndex)(_data->getData()->clothes + 1);
-		if (_data->getData()->clothes > EntityData::kClothes3)
-			_data->getData()->clothes = EntityData::kClothesDefault;
+		_data->getData()->clothes = (ClothesIndex)(_data->getData()->clothes + 1);
+		if (_data->getData()->clothes > kClothes3)
+			_data->getData()->clothes = kClothesDefault;
 
 		return;
 	}
@@ -194,7 +194,7 @@ void Entity::draw(const SavePoint &savepoint) {
 	default:
 		break;
 
-	case kAction3:
+	case kActionExitCompartment:
 		CALL_PREVIOUS_SAVEPOINT()
 		break;
 
@@ -211,7 +211,7 @@ void Entity::draw2(const SavePoint &savepoint) {
 	default:
 		break;
 
-	case kAction3:
+	case kActionExitCompartment:
 		CALL_PREVIOUS_SAVEPOINT()
 		break;
 
@@ -256,7 +256,7 @@ void Entity::savepointDirection(const SavePoint &savepoint) {
 	default:
 		break;
 
-	case kAction3:
+	case kActionExitCompartment:
 		CALL_PREVIOUS_SAVEPOINT()
 		break;
 
@@ -289,7 +289,7 @@ void Entity::savepointCheckEntity(const SavePoint &savepoint) {
 
 	case kActionNone:
 	case kActionDefault:
-		if (getEntities()->checkEntity(_entityIndex, (EntityData::Field495Value)params->param1, (EntityData::Field491Value)params->param2))
+		if (getEntities()->checkEntity(_entityIndex, (CarIndex)params->param1, (EntityData::Field491Value)params->param2))
 			CALL_PREVIOUS_SAVEPOINT()
 		break;
 	}
@@ -302,7 +302,7 @@ void Entity::savepointCall(const SavePoint &savepoint) {
 	default:
 		break;
 
-	case kAction3:
+	case kActionExitCompartment:
 		if (!CURRENT_PARAMS(1, 1))
 			getSavePoints()->call(_entityIndex, (EntityIndex)params->param2, (ActionIndex)params->param3, params->seq2);
 		CALL_PREVIOUS_SAVEPOINT()
@@ -324,21 +324,21 @@ void Entity::savepointCall(const SavePoint &savepoint) {
 //////////////////////////////////////////////////////////////////////////
 // param1: sequence
 // param2: object index
-void Entity::updateFields(const SavePoint &savepoint) {
+void Entity::enterExitCompartment(const SavePoint &savepoint) {
 	EntityData::EntityParametersSIIS *params = (EntityData::EntityParametersSIIS*)_data->getCurrentParameters();
 
 	switch (savepoint.action) {
 	default:
 		break;
 
-	case kAction3:
-		getEntities()->updateFields1(_entityIndex, (ObjectIndex)params->param2);
+	case kActionExitCompartment:
+		getEntities()->exitCompartment(_entityIndex, (ObjectIndex)params->param2);
 		CALL_PREVIOUS_SAVEPOINT()
 		break;
 
 	case kActionDefault:
 		getEntities()->drawSequenceRight(_entityIndex, params->seq1);
-		getEntities()->updateFields0(_entityIndex, (ObjectIndex)params->param2);
+		getEntities()->enterCompartment(_entityIndex, (ObjectIndex)params->param2);
 		break;
 	}
 }
@@ -350,14 +350,14 @@ void Entity::updateField1000(const SavePoint &savepoint) {
 	default:
 		break;
 
-	case kAction3:
-		getEntities()->updateField1000(_entityIndex, params->param2, params->param3);
+	case kActionExitCompartment:
+		getEntities()->updatePosition(_entityIndex, (CarIndex)params->param2, params->param3);
 		CALL_PREVIOUS_SAVEPOINT()
 		break;
 
 	case kActionDefault:
 		getEntities()->drawSequenceRight(_entityIndex, params->seq1);
-		getEntities()->updateField1000ProcessScene(_entityIndex, params->param2, params->param3);
+		getEntities()->updatePosition(_entityIndex, (CarIndex)params->param2, params->param3, true);
 		break;
 	}
 }

@@ -47,7 +47,7 @@ public:
 	DECLARE_FUNCTION_I(function6)
 	DECLARE_FUNCTION_II(function7)
 	DECLARE_FUNCTION_II(function8)
-	DECLARE_FUNCTION_SI(function9)
+	DECLARE_FUNCTION_SI(enterExitCompartment)
 	DECLARE_FUNCTION(chapter1)
 	DECLARE_FUNCTION(function11)
 	DECLARE_FUNCTION(function12)

@@ -79,12 +79,12 @@ IMPLEMENT_FUNCTION(Entity39, process, 6)
 	default:
 		break;
 
-	case kAction3:
+	case kActionExitCompartment:
 		getEntities()->drawSequenceRight(kEntity39, (char *)&_sequence);
 		break;
 
 	case kActionNone:
-		_data->getData()->field_495 = getEntityData(kEntityNone)->field_495;
+		_data->getData()->car = getEntityData(kEntityNone)->car;
 
 		if (*_sequence && !_counter) {
 			_counter++;

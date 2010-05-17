@@ -52,9 +52,9 @@
 	uint32 {4}      - backup Scene Index 1      max: 2500
 	uint32 {4}      - backup Scene Index 2      max: 2500
 	uint32 {4}      - selected inventory item   max: 32
-	uint32 {4*1000} - ??
-	uint32 {4*16}   - ??
-	uint32 {4*16}   - ??
+	uint32 {4*100*10} - positions (by car)
+	uint32 {4*16}   - compartments
+	uint32 {4*16}   - compartments ??
 	uint32 {4*128}  - game progress
 	byte {512}      - game events
 	byte {7*32}     - inventory

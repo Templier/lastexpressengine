@@ -334,7 +334,7 @@ void Logic::drawScene(SceneIndex index) {
 	Scene *scene = (getState()->sceneUseBackup ? _engine->getSceneManager()->getScene(getState()->sceneBackup) : _currentScene);
 
 	getEntityData(kEntityNone)->field_491 = (EntityData::Field491Value)scene->getHeader()->count;
-	getEntityData(kEntityNone)->field_495 = (EntityData::Field495Value)scene->getHeader()->field_13;
+	getEntityData(kEntityNone)->car = (CarIndex)scene->getHeader()->car;
 
 	// If we used the backup scene, we don't need the scene object anymore beyond this point
 	if (getState()->sceneUseBackup)
@@ -377,13 +377,13 @@ void Logic::processScene() {
 
 	loadSceneObject(backup, getState()->sceneBackup);
 
-	if (getState()->field1000[backup.getHeader()->position + 100 * backup.getHeader()->field_13])
+	if (getState()->field1000[backup.getHeader()->position + 100 * backup.getHeader()->car])
 		loadScene(getLogic()->processIndex(getState()->sceneBackup));
 	else
 		loadScene(getState()->sceneBackup);
 }
 
-LastExpress::SceneIndex Logic::processIndex( SceneIndex sceneIndex ) {
+LastExpress::SceneIndex Logic::processIndex(SceneIndex sceneIndex) {
 	error("Logic::processIndex is not implemented!");
 }
 
@@ -406,18 +406,18 @@ void Logic::loadSceneFromObject(ObjectIndex object) {
 	case kObjectCompartmentE:
 	case kObjectCompartmentF:
 	case kObjectCompartmentG:
-		loadSceneFromPosition((object < 10 ? EntityData::kField495_3 : EntityData::kField495_4), 38 - (object - 1) * 2);
+		loadSceneFromPosition((object < 10 ? kCarGreenSleeping : kCarRedSleeping), 38 - (object - 1) * 2);
 		break;
 
 	case kObjectCompartment8:
 	case kObjectCompartmentH:
-		loadSceneFromPosition(EntityData::kField495_3, 25);
+		loadSceneFromPosition(kCarGreenSleeping, 25);
 		break;
 	}
 }
 
 void Logic::loadSceneFromObject2(ObjectIndex object) {
-	loadSceneFromPosition((object < 10 ? EntityData::kField495_3 : EntityData::kField495_4), 17 - (object - 1) * 2);
+	loadSceneFromPosition((object < 10 ? kCarGreenSleeping : kCarRedSleeping), 17 - (object - 1) * 2);
 }
 
 void Logic::loadSceneFromItem(InventoryItem item) {
@@ -436,11 +436,11 @@ void Logic::loadSceneFromItem(InventoryItem item) {
 		return;
 
 	// Set field value
-	EntityData::Field495Value field = EntityData::kField495_5;
-	if (item == kItem5) field = EntityData::kField495_4;
-	if (item == kItem7) field = EntityData::kField495_3;
+	CarIndex car = kCarRestaurant;
+	if (item == kItem5) car = kCarRedSleeping;
+	if (item == kItem7) car = kCarGreenSleeping;
 
-	if (!getEntities()->checkFields5(kEntityNone, field))
+	if (!getEntities()->checkFields5(kEntityNone, car))
 		return;
 
 	if (getFlags()->flag_0)
@@ -448,7 +448,7 @@ void Logic::loadSceneFromItem(InventoryItem item) {
 
 	// Get current scene position
 	loadSceneObject(scene, getState()->scene);
-	byte position = scene.getHeader()->position;
+	Position position = scene.getHeader()->position;
 
     if (getState()->sceneUseBackup) {
 		loadSceneObject(sceneBackup, getState()->sceneBackup);
@@ -460,18 +460,18 @@ void Logic::loadSceneFromItem(InventoryItem item) {
 	 || (item == kItem5 && (position >= 23 && position <= 32))
 	 || (item == kItem7 && (position == 1 || (position >= 22 && position <= 33)))) {
 		if (getState()->sceneUseBackup)
-			getState()->sceneBackup = getIndexFromPosition(field, position);
+			getState()->sceneBackup = getIndexFromPosition(car, position);
 		else
-           loadSceneFromPosition(field, position);
+           loadSceneFromPosition(car, position);
     }
 
 }
 
-void Logic::loadSceneFromPosition(EntityData::Field495Value field495, byte position, int param3) {
-	loadScene(getIndexFromPosition(field495, position, param3));
+void Logic::loadSceneFromPosition(CarIndex car, Position position, int param3) {
+	loadScene(getIndexFromPosition(car, position, param3));
 }
 
-SceneIndex Logic::getIndexFromPosition(EntityData::Field495Value field495, byte position, int param3) {
+SceneIndex Logic::getIndexFromPosition(CarIndex car, Position position, int param3) {
 	error("Logic::getIndexFromFields is not implemented!");
 }
 
@@ -693,7 +693,7 @@ void Logic::postProcessScene() {
 		}
 
 		EntityData::Field491Value field491 = getEntityData(kEntityNone)->field_491;
-		if (getEntityData(kEntityNone)->field_495 == EntityData::kField495_9 && (field491 == EntityData::kField491_4 || field491 == EntityData::kField491_3)) {
+		if (getEntityData(kEntityNone)->car == kCar9 && (field491 == EntityData::kField491_4 || field491 == EntityData::kField491_3)) {
 			EntityIndex entities[39];
 
 			// Init entities
@@ -702,16 +702,16 @@ void Logic::postProcessScene() {
 			int progress = 0;
 
 			for (uint i = 1; i < (unsigned)_entities->count(); i++) {
-				EntityData::Field495Value field495 = getEntityData((EntityIndex)i)->field_495;
+				CarIndex car = getEntityData((EntityIndex)i)->car;
 
 				// FIXME doesn't make sense to test field491 twice...
 				if (field491 == EntityData::kField491_4) {
-					if (!(field495 != EntityData::kField495_4 || field491 <= EntityData::kField491_9270)
-					 || !(field495 != EntityData::kField495_5 || field491 >= EntityData::kField491_1540))
+					if (!(car != kCarRedSleeping || field491 <= EntityData::kField491_9270)
+					 || !(car != kCarRestaurant || field491 >= EntityData::kField491_1540))
 						entities[progress++] = (EntityIndex)i;
 				} else {
-					if (!(field495 != EntityData::kField495_3 || field491 <= EntityData::kField491_9270)
-					 || !(field495 != EntityData::kField495_4 || field491 >= EntityData::kField491_850))
+					if (!(car != kCarGreenSleeping || field491 <= EntityData::kField491_9270)
+					 || !(car != kCarRedSleeping || field491 >= EntityData::kField491_850))
 						entities[progress++] = (EntityIndex)i;
 				}
 			}
@@ -840,10 +840,10 @@ void Logic::updateCursor(bool redraw) {
 bool Logic::checkSceneFields(SceneIndex index, bool isSecondCheck) const {
 	loadSceneObject(scene, (index ? index : getState()->scene));
 
-	uint16 field13 = scene.getHeader()->field_13;
-	byte position = scene.getHeader()->position;
+	CarIndex car = (CarIndex)scene.getHeader()->car;
+	Position position = scene.getHeader()->position;
 
-	bool result = (field13 == 3 || field13 == 4);
+	bool result = (car == kCarGreenSleeping || car == kCarRedSleeping);
 
 	if (!isSecondCheck)
 		return result && (position >= 1 && position <= 19);

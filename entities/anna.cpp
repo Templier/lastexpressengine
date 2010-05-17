@@ -42,7 +42,7 @@ Anna::Anna(LastExpressEngine *engine) : Entity(engine, kEntityAnna) {
 	ADD_CALLBACK_FUNCTION(Anna, function1);
 	ADD_CALLBACK_FUNCTION(Anna, draw);
 	ADD_CALLBACK_FUNCTION(Anna, function3);
-	ADD_CALLBACK_FUNCTION(Anna, function4);
+	ADD_CALLBACK_FUNCTION(Anna, enterExitCompartment);
 	ADD_CALLBACK_FUNCTION(Anna, function5);
 	ADD_CALLBACK_FUNCTION(Anna, function6);
 	ADD_CALLBACK_FUNCTION(Anna, playSound);
@@ -134,8 +134,8 @@ IMPLEMENT_FUNCTION_SII(Anna, function3, 3)
 	Entity::updateField1000(savepoint);
 }
 
-IMPLEMENT_FUNCTION_SI(Anna, function4, 4)
-	Entity::updateFields(savepoint);
+IMPLEMENT_FUNCTION_SI(Anna, enterExitCompartment, 4)
+	Entity::enterExitCompartment(savepoint);
 }
 
 IMPLEMENT_FUNCTION(Anna, function5, 5)
@@ -176,7 +176,7 @@ IMPLEMENT_FUNCTION_II(Anna, function10, 10)
 
 	case kActionNone:
 	case kActionDefault:
-		if (getEntities()->checkEntity(kEntityAnna, (EntityData::Field495Value)params->param1, (EntityData::Field491Value)params->param2))
+		if (getEntities()->checkEntity(kEntityAnna, (CarIndex)params->param1, (EntityData::Field491Value)params->param2))
 			CALL_PREVIOUS_SAVEPOINT()
 		break;
 	}
@@ -221,8 +221,8 @@ IMPLEMENT_FUNCTION(Anna, chapter1, 16)
 
 		_data->getData()->field_491 = EntityData::kField491_8200;
 		_data->getData()->field_493 = EntityData::kField493_1;
-		_data->getData()->field_495 = EntityData::kField495_3;
-		_data->getData()->clothes = EntityData::kClothesDefault;
+		_data->getData()->car = kCarGreenSleeping;
+		_data->getData()->clothes = kClothesDefault;
 
 		break;
 	}
@@ -254,7 +254,7 @@ IMPLEMENT_FUNCTION(Anna, function20, 20)
 		switch (_data->getNextCallback()) {
 		case 1:
 			_data->setNextCallback(2);
-			call(new ENTITY_SETUP_SIIS(Anna, setup_function4), "618Bf", kObjectCompartmentF);
+			call(new ENTITY_SETUP_SIIS(Anna, setup_enterExitCompartment), "618Bf", kObjectCompartmentF);
 			break;
 
 		case 2:
@@ -339,7 +339,7 @@ IMPLEMENT_FUNCTION(Anna, function37, 37)
   case kActionDefault:
 	_data->getData()->field_491 = EntityData::kField491_8200;
 	_data->getData()->field_493 = EntityData::kField493_0;
-	_data->getData()->field_495 = EntityData::kField495_4;
+	_data->getData()->car = kCarRedSleeping;
 	break;
 
   case kAction191477936:
@@ -378,8 +378,8 @@ IMPLEMENT_FUNCTION(Anna, chapter2, 42)
 
 		_data->getData()->field_491 = EntityData::kField491_4070;
 		_data->getData()->field_493 = EntityData::kField493_1;
-		_data->getData()->field_495 = EntityData::kField495_4;
-		_data->getData()->clothes = EntityData::kClothes1;
+		_data->getData()->car = kCarRedSleeping;
+		_data->getData()->clothes = kClothes1;
 		_data->getData()->inventoryItem = kItemNone;
 
 		break;
@@ -404,8 +404,8 @@ IMPLEMENT_FUNCTION(Anna, chapter3, 44)
 
 		_data->getData()->field_491 = EntityData::kField491_4070;
 		_data->getData()->field_493 = EntityData::kField493_1;
-		_data->getData()->field_495 = EntityData::kField495_4;
-		_data->getData()->clothes = EntityData::kClothes3;
+		_data->getData()->car = kCarRedSleeping;
+		_data->getData()->clothes = kClothes3;
 		_data->getData()->inventoryItem = kItemNone;
 
 		getObjects()->update(kObjectCompartmentF, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
@@ -538,8 +538,8 @@ IMPLEMENT_FUNCTION(Anna, chapter4, 66)
 
 		_data->getData()->field_491 = EntityData::kField491_4070;
 		_data->getData()->field_493 = EntityData::kField493_1;
-		_data->getData()->field_495 = EntityData::kField495_4;
-		_data->getData()->clothes = EntityData::kClothes2;
+		_data->getData()->car = kCarRedSleeping;
+		_data->getData()->clothes = kClothes2;
 		_data->getData()->inventoryItem = kItemNone;
 
 		break;
@@ -588,8 +588,8 @@ IMPLEMENT_FUNCTION(Anna, chapter5, 74)
 
 		_data->getData()->field_491 = EntityData::kField491_3969;
 		_data->getData()->field_493 = EntityData::kField493_1;
-		_data->getData()->field_495 = EntityData::kField495_1;
-		_data->getData()->clothes = EntityData::kClothes3;
+		_data->getData()->car = kCarBaggageRear;
+		_data->getData()->clothes = kClothes3;
 		_data->getData()->inventoryItem = kItemNone;
 
 		getObjects()->update(kObject45, kEntityNone, kLocationNone, kCursorKeepValue, kCursorKeepValue);

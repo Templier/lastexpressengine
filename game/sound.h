@@ -110,9 +110,6 @@ public:
 	void playDialog(EntityIndex entity, EntityIndex entityDialog, int a3, byte a4);
 	void playSoundEvent(EntityIndex entity, byte action, byte a3 = 0);
 
-
-	int getSoundValue(EntityIndex entity);
-
 	// Dialog
 	const char *getDialogName(EntityIndex entity) const;
 

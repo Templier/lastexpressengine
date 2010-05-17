@@ -136,7 +136,7 @@ IMPLEMENT_FUNCTION(Mertens, function6, 6)
 		}
 		break;
 
-	case kAction3:
+	case kActionExitCompartment:
 		CALL_PREVIOUS_SAVEPOINT()
 		break;
 
@@ -249,9 +249,9 @@ IMPLEMENT_FUNCTION(Mertens, function17, 17)
 
 				getLogic()->loadSceneFromItem(kItem7);
 
-				if (getEntities()->checkFields4(EntityData::kField495_3, 68)) {
+				if (getEntities()->checkFields4(kCarGreenSleeping, 68)) {
 					getSound()->playSound(kEntityNone, "CON1110");
-					getLogic()->loadSceneFromPosition(EntityData::kField495_3, 25);
+					getLogic()->loadSceneFromPosition(kCarGreenSleeping, 25);
 				}
 
 				_data->setNextCallback(3);
@@ -390,7 +390,7 @@ IMPLEMENT_FUNCTION(Mertens, chapter1, 34)
 
 		_data->getData()->field_491 = EntityData::kField491_9460;
 		_data->getData()->field_493 = EntityData::kField493_0;
-		_data->getData()->field_495 = EntityData::kField495_3;
+		_data->getData()->car = kCarGreenSleeping;
 
 		break;
 	}
@@ -468,7 +468,7 @@ IMPLEMENT_FUNCTION(Mertens, chapter2, 43)
 
 		_data->getData()->field_491 = EntityData::kField491_1500;
 		_data->getData()->field_493 = EntityData::kField493_0;
-		_data->getData()->field_495 = EntityData::kField495_3;
+		_data->getData()->car = kCarGreenSleeping;
 		_data->getData()->inventoryItem = kItemNone;
 
 		ENTITY_PARAM(0, 6) = 0;
@@ -507,7 +507,7 @@ IMPLEMENT_FUNCTION(Mertens, chapter3, 45)
 	case kActionDefault:
 		_data->getData()->field_491 = EntityData::kField491_1500;
 		_data->getData()->field_493 = EntityData::kField493_0;
-		_data->getData()->field_495 = EntityData::kField495_3;
+		_data->getData()->car = kCarGreenSleeping;
 		_data->getData()->inventoryItem = kItemNone;
 
 		ENTITY_PARAM(0, 6) = 0;
@@ -550,7 +550,7 @@ IMPLEMENT_FUNCTION(Mertens, chapter4, 47)
 
 		_data->getData()->field_491 = EntityData::kField491_1500;
 		_data->getData()->field_493 = EntityData::kField493_0;
-		_data->getData()->field_495 = EntityData::kField495_3;
+		_data->getData()->car = kCarGreenSleeping;
 		_data->getData()->inventoryItem = kItemNone;
 
 		ENTITY_PARAM(0, 6) = 0;
@@ -596,7 +596,7 @@ IMPLEMENT_FUNCTION(Mertens, chapter5, 50)
 
 		_data->getData()->field_491 = EntityData::kField491_3969;
 		_data->getData()->field_493 = EntityData::kField493_1;
-		_data->getData()->field_495 = EntityData::kField495_5;
+		_data->getData()->car = kCarRestaurant;
 		_data->getData()->inventoryItem = kItemNone;
 		break;
 	}
