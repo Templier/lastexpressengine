@@ -99,9 +99,9 @@ IMPLEMENT_FUNCTION(Kronos, chapter1, 7)
 		break;
 
 	case kActionDefault:
-		_data->getData()->field_491 = EntityData::kField491_6000;
-		_data->getData()->field_493 = EntityData::kField493_1;
-		_data->getData()->car = kCarKronos;
+		getData()->field_491 = EntityData::kField491_6000;
+		getData()->field_493 = EntityData::kField493_1;
+		getData()->car = kCarKronos;
 
 		getObjects()->update(kObjectCeiling, kEntityNone, kLocation1, kCursorKeepValue, kCursorKeepValue);
 
@@ -142,11 +142,11 @@ IMPLEMENT_FUNCTION(Kronos, chapter3, 13)
 	case kActionDefault:
 		getEntities()->prepareSequences(kEntityKronos);
 
-		_data->getData()->field_491 = EntityData::kField491_6000;
-		_data->getData()->field_493 = EntityData::kField493_0;
-		_data->getData()->car = kCarKronos;
-		_data->getData()->clothes = kClothesDefault;
-		_data->getData()->inventoryItem = kItemNone;
+		getData()->field_491 = EntityData::kField491_6000;
+		getData()->field_493 = EntityData::kField493_0;
+		getData()->car = kCarKronos;
+		getData()->clothes = kClothesDefault;
+		getData()->inventoryItem = kItemNone;
 
 		getObjects()->update(kObjectCeiling, kEntityNone, kLocationNone, kCursorKeepValue, kCursorKeepValue);
 

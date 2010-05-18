@@ -53,10 +53,10 @@ public:
 	void setup(ChapterIndex chapter);
 
 	void reset();
-	void resetEntity(EntityIndex entity);
+	void resetSequences(EntityIndex entity);
 
 	// Update & drawing
-	void resetEntityState(EntityIndex entity);
+	void resetState(EntityIndex entity);
 	void updateFields();
 	void setupSequences();
 	void setupCallbacks();
@@ -77,7 +77,7 @@ public:
 
 	// Accessors
 	Entity *get(EntityIndex entity);
-	EntityData *getData(EntityIndex entity);
+	EntityData::EntityCallData *getData(EntityIndex entity) const;
 
 	int count() const { return _entities.size(); }
 
@@ -126,12 +126,15 @@ public:
 	void saveLoadWithSerializer(Common::Serializer &ser);
 
 private:
+	static const int _compartmentsNumber = 16;
+	static const int _positionsNumber = 100 * 10;  // 100 positions per train car
+
 	LastExpressEngine	    *_engine;
 	EntityData 			    *_header;
 	Common::Array<Entity *>  _entities;
-	int _compartments[16];
-	int _compartments1[16];
-	int _positions[100*10];
+	int _compartments[_compartmentsNumber];
+	int _compartments1[_compartmentsNumber];
+	int _positions[_positionsNumber];
 
 	void executeCallbacks();
 	void processEntity(EntityIndex entity);

@@ -138,9 +138,9 @@ IMPLEMENT_FUNCTION(Ivo, chapter1, 14)
 		getObjects()->update(kObjectCompartmentH, kEntityNone, kLocation3, kCursorHandKnock, kCursorHand);
 		getObjects()->update(kObject47, kEntityNone, kLocationNone, kCursorKeepValue, kCursorKeepValue);
 
-		_data->getData()->field_491 = EntityData::kField491_4691;
-		_data->getData()->field_493 = EntityData::kField493_1;
-		_data->getData()->car = kCarRestaurant;
+		getData()->field_491 = EntityData::kField491_4691;
+		getData()->field_493 = EntityData::kField493_1;
+		getData()->car = kCarRestaurant;
 
 		break;
 	}
@@ -170,11 +170,11 @@ IMPLEMENT_FUNCTION(Ivo, chapter2, 18)
 	case kActionDefault:
 		getEntities()->prepareSequences(kEntityIvo);
 
-		_data->getData()->field_491 = EntityData::kField491_2740;
-		_data->getData()->field_493 = EntityData::kField493_1;
-		_data->getData()->car = kCarRedSleeping;
-		_data->getData()->clothes = kClothesDefault;
-		_data->getData()->inventoryItem = kItemNone;
+		getData()->field_491 = EntityData::kField491_2740;
+		getData()->field_493 = EntityData::kField493_1;
+		getData()->car = kCarRedSleeping;
+		getData()->clothes = kClothesDefault;
+		getData()->inventoryItem = kItemNone;
 
 		getObjects()->update(kObjectCompartmentH, kEntityNone, kLocation3, kCursorHandKnock, kCursorHand);
 		getObjects()->update(kObject47, kEntityNone, kLocationNone, kCursorKeepValue, kCursorKeepValue);
@@ -207,11 +207,11 @@ IMPLEMENT_FUNCTION(Ivo, chapter3, 22)
 	case kActionDefault:
 		getEntities()->prepareSequences(kEntityIvo);
 
-		_data->getData()->field_491 = EntityData::kField491_2740;
-		_data->getData()->field_493 = EntityData::kField493_1;
-		_data->getData()->car = kCarRedSleeping;
-		_data->getData()->clothes = kClothesDefault;
-		_data->getData()->inventoryItem = kItemNone;
+		getData()->field_491 = EntityData::kField491_2740;
+		getData()->field_493 = EntityData::kField493_1;
+		getData()->car = kCarRedSleeping;
+		getData()->clothes = kClothesDefault;
+		getData()->inventoryItem = kItemNone;
 
 		break;
 	}
@@ -231,9 +231,9 @@ IMPLEMENT_FUNCTION(Ivo, chapter4, 24)
 		break;
 
 	case kActionDefault:
-		_data->getData()->field_493 = EntityData::kField493_1;
-		_data->getData()->car = kCarRestaurant;
-		_data->getData()->inventoryItem = kItemNone;
+		getData()->field_493 = EntityData::kField493_1;
+		getData()->car = kCarRestaurant;
+		getData()->inventoryItem = kItemNone;
 		break;
 	}
 }
@@ -270,10 +270,10 @@ IMPLEMENT_FUNCTION(Ivo, chapter5, 30)
 	case kActionDefault:
 		getEntities()->prepareSequences(kEntityIvo);
 
-		_data->getData()->field_491 = EntityData::kField491_540;
-		_data->getData()->field_493 = EntityData::kField493_1;
-		_data->getData()->car = kCarBaggageRear;
-		_data->getData()->inventoryItem = kItemNone;
+		getData()->field_491 = EntityData::kField491_540;
+		getData()->field_493 = EntityData::kField493_1;
+		getData()->car = kCarBaggageRear;
+		getData()->inventoryItem = kItemNone;
 
 		break;
 	}

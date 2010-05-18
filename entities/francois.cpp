@@ -144,9 +144,9 @@ IMPLEMENT_FUNCTION(Francois, chapter1, 17)
 		break;
 
 	case kActionDefault:
-		_data->getData()->field_491 = EntityData::kField491_5790;
-		_data->getData()->field_493 = EntityData::kField493_1;
-		_data->getData()->car = kCarRedSleeping;
+		getData()->field_491 = EntityData::kField491_5790;
+		getData()->field_493 = EntityData::kField493_1;
+		getData()->car = kCarRedSleeping;
 
 		break;
 	}
@@ -176,11 +176,11 @@ IMPLEMENT_FUNCTION(Francois, chapter2, 21)
 	case kActionDefault:
 		getEntities()->prepareSequences(kEntityFrancois);
 
-		_data->getData()->field_491 = EntityData::kField491_4689;
-		_data->getData()->field_493 = EntityData::kField493_1;
-		_data->getData()->car = kCarRestaurant;
-		_data->getData()->clothes = kClothesDefault;
-		_data->getData()->inventoryItem = kItemNone;
+		getData()->field_491 = EntityData::kField491_4689;
+		getData()->field_493 = EntityData::kField493_1;
+		getData()->car = kCarRestaurant;
+		getData()->clothes = kClothesDefault;
+		getData()->inventoryItem = kItemNone;
 
 		break;
 	}
@@ -206,11 +206,11 @@ IMPLEMENT_FUNCTION(Francois, chapter3, 24)
 	case kActionDefault:
 		getEntities()->prepareSequences(kEntityFrancois);
 
-		_data->getData()->field_491 = EntityData::kField491_5790;
-		_data->getData()->field_493 = EntityData::kField493_1;
-		_data->getData()->car = kCarRedSleeping;
-		_data->getData()->clothes = kClothesDefault;
-		_data->getData()->inventoryItem = kItemNone;
+		getData()->field_491 = EntityData::kField491_5790;
+		getData()->field_493 = EntityData::kField493_1;
+		getData()->car = kCarRedSleeping;
+		getData()->clothes = kClothesDefault;
+		getData()->inventoryItem = kItemNone;
 
 		break;
 	}
@@ -232,11 +232,11 @@ IMPLEMENT_FUNCTION(Francois, chapter4, 26)
 	case kActionDefault:
 		getEntities()->prepareSequences(kEntityFrancois);
 
-		_data->getData()->field_491 = EntityData::kField491_5790;
-		_data->getData()->field_493 = EntityData::kField493_1;
-		_data->getData()->car = kCarRedSleeping;
-		_data->getData()->clothes = kClothesDefault;
-		_data->getData()->inventoryItem = kItemNone;
+		getData()->field_491 = EntityData::kField491_5790;
+		getData()->field_493 = EntityData::kField493_1;
+		getData()->car = kCarRedSleeping;
+		getData()->clothes = kClothesDefault;
+		getData()->inventoryItem = kItemNone;
 
 		break;
 	}
@@ -258,11 +258,11 @@ IMPLEMENT_FUNCTION(Francois, chapter5, 28)
 	case kActionDefault:
 		getEntities()->prepareSequences(kEntityFrancois);
 
-		_data->getData()->field_491 = EntityData::kField491_3969;
-		_data->getData()->field_493 = EntityData::kField493_1;
-		_data->getData()->car = kCarRestaurant;
-		_data->getData()->clothes = kClothesDefault;
-		_data->getData()->inventoryItem = kItemNone;
+		getData()->field_491 = EntityData::kField491_3969;
+		getData()->field_493 = EntityData::kField493_1;
+		getData()->car = kCarRestaurant;
+		getData()->clothes = kClothesDefault;
+		getData()->inventoryItem = kItemNone;
 
 		break;
 	}

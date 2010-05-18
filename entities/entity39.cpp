@@ -84,7 +84,7 @@ IMPLEMENT_FUNCTION(Entity39, process, 6)
 		break;
 
 	case kActionNone:
-		_data->getData()->car = getEntityData(kEntityNone)->car;
+		getData()->car = getEntityData(kEntityNone)->car;
 
 		if (*_sequence && !_counter) {
 			_counter++;

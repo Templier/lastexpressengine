@@ -207,10 +207,10 @@ IMPLEMENT_FUNCTION(August, chapter1, 22)
 		getObjects()->update(kObjectCompartment3, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
 		getObjects()->update(kObject11, kEntityNone, kLocationNone, kCursorKeepValue, kCursorKeepValue);
 
-		_data->getData()->field_491 = EntityData::kField491_4691;
-		_data->getData()->field_493 = EntityData::kField493_1;
-		_data->getData()->car = kCarRestaurant;
-		_data->getData()->clothes = kClothesDefault;
+		getData()->field_491 = EntityData::kField491_4691;
+		getData()->field_493 = EntityData::kField493_1;
+		getData()->car = kCarRestaurant;
+		getData()->clothes = kClothesDefault;
 
 		getProgress().event_august_met = 0;
 		break;
@@ -277,11 +277,11 @@ IMPLEMENT_FUNCTION(August, chapter2, 35)
 	case kActionDefault:
 		getEntities()->prepareSequences(kEntityAugust);
 
-		_data->getData()->field_491 = EntityData::kField491_3970;
-		_data->getData()->field_493 = EntityData::kField493_1;
-		_data->getData()->car = kCarRestaurant;
-		_data->getData()->clothes = kClothes1;
-		_data->getData()->inventoryItem = kItemNone;
+		getData()->field_491 = EntityData::kField491_3970;
+		getData()->field_493 = EntityData::kField493_1;
+		getData()->car = kCarRestaurant;
+		getData()->clothes = kClothes1;
+		getData()->inventoryItem = kItemNone;
 
 		getObjects()->update(kObjectCompartment3, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
 		getObjects()->update(kObject11, kEntityNone, kLocationNone, kCursorKeepValue, kCursorKeepValue);
@@ -318,11 +318,11 @@ IMPLEMENT_FUNCTION(August, chapter3, 40)
 	case kActionDefault:
 		getEntities()->prepareSequences(kEntityAugust);
 
-		_data->getData()->field_491 = EntityData::kField491_6470;
-		_data->getData()->field_493 = EntityData::kField493_0;
-		_data->getData()->car = kCarGreenSleeping;
-		_data->getData()->clothes = kClothes1;
-		_data->getData()->inventoryItem = kItemNone;
+		getData()->field_491 = EntityData::kField491_6470;
+		getData()->field_493 = EntityData::kField493_0;
+		getData()->car = kCarGreenSleeping;
+		getData()->clothes = kClothes1;
+		getData()->inventoryItem = kItemNone;
 
 		break;
 	}
@@ -404,11 +404,11 @@ IMPLEMENT_FUNCTION(August, chapter4, 57)
 	case kActionDefault:
 		getEntities()->prepareSequences(kEntityAugust);
 
-		_data->getData()->field_491 = EntityData::kField491_6470;
-		_data->getData()->field_493 = EntityData::kField493_1;
-		_data->getData()->car = kCarGreenSleeping;
-		_data->getData()->clothes = kClothes2;
-		_data->getData()->inventoryItem = kItemNone;
+		getData()->field_491 = EntityData::kField491_6470;
+		getData()->field_493 = EntityData::kField493_1;
+		getData()->car = kCarGreenSleeping;
+		getData()->clothes = kClothes2;
+		getData()->inventoryItem = kItemNone;
 
 		getObjects()->update(kObjectCompartment3, kEntityNone, kLocation2, kCursorNormal, kCursorNormal);
 
@@ -460,11 +460,11 @@ IMPLEMENT_FUNCTION(August, chapter5, 66)
 	case kActionDefault:
 		getEntities()->prepareSequences(kEntityAugust);
 
-		_data->getData()->field_491 = EntityData::kField491_3969;
-		_data->getData()->field_493 = EntityData::kField493_1;
-		_data->getData()->car = kCarRestaurant;
-		_data->getData()->clothes = kClothes2;
-		_data->getData()->inventoryItem = kItemNone;
+		getData()->field_491 = EntityData::kField491_3969;
+		getData()->field_493 = EntityData::kField493_1;
+		getData()->car = kCarRestaurant;
+		getData()->clothes = kClothes2;
+		getData()->inventoryItem = kItemNone;
 
 		break;
 	}

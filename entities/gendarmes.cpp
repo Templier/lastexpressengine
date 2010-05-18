@@ -70,7 +70,7 @@ IMPLEMENT_FUNCTION(Gendarmes, chapter1, 2)
 		break;
 
 	case kActionDefault:
-		_data->getData()->car = kCarNone;
+		getData()->car = kCarNone;
 		break;
 	}
 }

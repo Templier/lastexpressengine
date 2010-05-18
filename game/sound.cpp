@@ -164,7 +164,7 @@ void Sound::playSoundEvent(EntityIndex entity, byte action, byte a3) {
 	char filename[12];
 	int values[5];
 
-	if (getEntities()->getData(entity)->getData()->car != getEntities()->getData(kEntityNone)->getData()->car)
+	if (getEntityData(entity)->car != getEntityData(kEntityNone)->car)
 		return;
 
 	if (getEntities()->checkFields12(entity) != getEntities()->checkFields12(kEntityNone))

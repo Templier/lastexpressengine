@@ -122,9 +122,9 @@ IMPLEMENT_FUNCTION(Kahina, chapter1, 10)
 	case kActionDefault:
 		getObjects()->update(kObjectCompartmentKronos, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
 
-		_data->getData()->field_491 = EntityData::kField491_5000;
-		_data->getData()->field_493 = EntityData::kField493_0;
-		_data->getData()->car = kCarKronos;
+		getData()->field_491 = EntityData::kField491_5000;
+		getData()->field_493 = EntityData::kField493_0;
+		getData()->car = kCarKronos;
 
 		break;
 	}
@@ -162,11 +162,11 @@ IMPLEMENT_FUNCTION(Kahina, chapter2, 16)
 	case kActionDefault:
 		getEntities()->prepareSequences(kEntityKahina);
 
-		_data->getData()->field_491 = EntityData::kField491_6000;
-		_data->getData()->field_493 = EntityData::kField493_0;
-		_data->getData()->car = kCarKronos;
-		_data->getData()->clothes = kClothesDefault;
-		_data->getData()->inventoryItem = kItemNone;
+		getData()->field_491 = EntityData::kField491_6000;
+		getData()->field_493 = EntityData::kField493_0;
+		getData()->car = kCarKronos;
+		getData()->clothes = kClothesDefault;
+		getData()->inventoryItem = kItemNone;
 
 		getObjects()->update(kObjectCompartmentKronos, kEntityKahina, kLocation1, kCursorHandKnock, kCursorHand);
 
@@ -190,11 +190,11 @@ IMPLEMENT_FUNCTION(Kahina, chapter3, 18)
 	case kActionDefault:
 		getEntities()->prepareSequences(kEntityKahina);
 
-		_data->getData()->field_491 = EntityData::kField491_5000;
-		_data->getData()->field_493 = EntityData::kField493_0;
-		_data->getData()->car = kCarKronos;
-		_data->getData()->clothes = kClothesDefault;
-		_data->getData()->inventoryItem = kItemNone;
+		getData()->field_491 = EntityData::kField491_5000;
+		getData()->field_493 = EntityData::kField493_0;
+		getData()->car = kCarKronos;
+		getData()->clothes = kClothesDefault;
+		getData()->inventoryItem = kItemNone;
 
 		break;
 	}

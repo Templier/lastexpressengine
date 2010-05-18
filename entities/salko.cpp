@@ -107,9 +107,9 @@ IMPLEMENT_FUNCTION(Salko, chapter1, 9)
 		break;
 
 	case kActionDefault:
-		_data->getData()->field_491 = EntityData::kField491_4691;
-		_data->getData()->field_493 = EntityData::kField493_0;
-		_data->getData()->car = kCarRestaurant;
+		getData()->field_491 = EntityData::kField491_4691;
+		getData()->field_493 = EntityData::kField493_0;
+		getData()->car = kCarRestaurant;
 		break;
 	}
 }
@@ -130,11 +130,11 @@ IMPLEMENT_FUNCTION(Salko, chapter2, 12)
 	case kActionDefault:
 		getEntities()->prepareSequences(kEntitySalko);
 
-		_data->getData()->field_491 = EntityData::kField491_2740;
-		_data->getData()->field_493 = EntityData::kField493_1;
-		_data->getData()->car = kCarRedSleeping;
-		_data->getData()->clothes = kClothesDefault;
-		_data->getData()->inventoryItem = kItemNone;
+		getData()->field_491 = EntityData::kField491_2740;
+		getData()->field_493 = EntityData::kField493_1;
+		getData()->car = kCarRedSleeping;
+		getData()->clothes = kClothesDefault;
+		getData()->inventoryItem = kItemNone;
 		break;
 
 	case kAction136184016:
@@ -160,11 +160,11 @@ IMPLEMENT_FUNCTION(Salko, chapter3, 14)
 	case kActionDefault:
 		getEntities()->prepareSequences(kEntitySalko);
 
-		_data->getData()->field_491 = EntityData::kField491_2740;
-		_data->getData()->field_493 = EntityData::kField493_1;
-		_data->getData()->car = kCarRedSleeping;
-		_data->getData()->clothes = kClothesDefault;
-		_data->getData()->inventoryItem = kItemNone;
+		getData()->field_491 = EntityData::kField491_2740;
+		getData()->field_493 = EntityData::kField493_1;
+		getData()->car = kCarRedSleeping;
+		getData()->clothes = kClothesDefault;
+		getData()->inventoryItem = kItemNone;
 		break;
 	}
 }
@@ -193,10 +193,10 @@ IMPLEMENT_FUNCTION(Salko, chapter4, 18)
 	case kActionDefault:
 		getEntities()->prepareSequences(kEntitySalko);
 
-		_data->getData()->field_491 = EntityData::kField491_5420;
-		_data->getData()->field_493 = EntityData::kField493_1;
-		_data->getData()->car = kCarRestaurant;
-		_data->getData()->inventoryItem = kItemNone;
+		getData()->field_491 = EntityData::kField491_5420;
+		getData()->field_493 = EntityData::kField493_1;
+		getData()->car = kCarRestaurant;
+		getData()->inventoryItem = kItemNone;
 		break;
 	}
 }
@@ -229,10 +229,10 @@ IMPLEMENT_FUNCTION(Salko, chapter5, 23)
 	case kActionDefault:
 		getEntities()->prepareSequences(kEntitySalko);
 
-		_data->getData()->field_491 = EntityData::kField491_9460;
-		_data->getData()->field_493 = EntityData::kField493_1;
-		_data->getData()->car = kCarRestaurant;
-		_data->getData()->inventoryItem = kItemNone;
+		getData()->field_491 = EntityData::kField491_9460;
+		getData()->field_493 = EntityData::kField493_1;
+		getData()->car = kCarRestaurant;
+		getData()->inventoryItem = kItemNone;
 		break;
 	}
 }

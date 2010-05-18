@@ -241,9 +241,9 @@ IMPLEMENT_FUNCTION(Cooks, chapter1, 5)
 		break;
 
 	case kActionDefault:
-		_data->getData()->field_491 = EntityData::kField491_5900;
-		_data->getData()->field_493 = EntityData::kField493_0;
-		_data->getData()->car = kCarRestaurant;
+		getData()->field_491 = EntityData::kField491_5900;
+		getData()->field_493 = EntityData::kField493_0;
+		getData()->car = kCarRestaurant;
 
 		getProgress().field_4C = 0;
 
@@ -329,9 +329,9 @@ IMPLEMENT_FUNCTION(Cooks, function7, 7)
 		break;
 
 	case kActionDefault:
-		_data->getData()->field_491 = EntityData::kField491_3650;
-		_data->getData()->field_493 = EntityData::kField493_0;
-		_data->getData()->car = kCarRestaurant;
+		getData()->field_491 = EntityData::kField491_3650;
+		getData()->field_493 = EntityData::kField493_0;
+		getData()->car = kCarRestaurant;
 
 		getEntities()->prepareSequences(kEntityCooks);
 		break;
@@ -350,10 +350,10 @@ IMPLEMENT_FUNCTION(Cooks, chapter2, 8)
 	case kActionDefault:
 		getEntities()->prepareSequences(kEntityCooks);
 
-		_data->getData()->field_491 = EntityData::kField491_5900;
-		_data->getData()->field_493 = EntityData::kField493_0;
-		_data->getData()->car = kCarRestaurant;
-		_data->getData()->inventoryItem = kItemNone;
+		getData()->field_491 = EntityData::kField491_5900;
+		getData()->field_493 = EntityData::kField493_0;
+		getData()->car = kCarRestaurant;
+		getData()->inventoryItem = kItemNone;
 
 		getProgress().field_4C = 1;
 
@@ -408,9 +408,9 @@ IMPLEMENT_FUNCTION(Cooks, chapter3, 10)
 	case kActionDefault:
 		getEntities()->prepareSequences(kEntityCooks);
 
-		_data->getData()->field_491 = EntityData::kField491_5900;
-		_data->getData()->car = kCarRestaurant;
-		_data->getData()->inventoryItem = kItemNone;
+		getData()->field_491 = EntityData::kField491_5900;
+		getData()->car = kCarRestaurant;
+		getData()->inventoryItem = kItemNone;
 
 		getProgress().field_4C = 0;
 
@@ -507,10 +507,10 @@ IMPLEMENT_FUNCTION(Cooks, chapter4, 12)
 	case kActionDefault:
 		getEntities()->prepareSequences(kEntityCooks);
 
-		_data->getData()->field_491 = EntityData::kField491_5900;
-		_data->getData()->field_493 = EntityData::kField493_0;
-		_data->getData()->car = kCarRestaurant;
-		_data->getData()->inventoryItem = kItemNone;
+		getData()->field_491 = EntityData::kField491_5900;
+		getData()->field_493 = EntityData::kField493_0;
+		getData()->car = kCarRestaurant;
+		getData()->inventoryItem = kItemNone;
 
 		getProgress().field_4C = 1;
 

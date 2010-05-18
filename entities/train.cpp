@@ -369,11 +369,11 @@ label_skip:
 			getObjects()->update(kObjectCompartment7, kEntityTrain, kLocation3, kCursorHandKnock, kCursorHand);
 			getObjects()->update(kObjectCompartment8, kEntityTrain, kLocation3, kCursorHandKnock, kCursorHand);
 		}
-		_data->getData()->field_491 = EntityData::kField491_30000;
+		getData()->field_491 = EntityData::kField491_30000;
 		break;
 
 	case kAction17:
-		_data->getData()->car = getEntityData(kEntityNone)->car;
+		getData()->car = getEntityData(kEntityNone)->car;
 
 		// Play clock sound
 		if (getEntities()->isPlayerPosition(kCarRestaurant, 81)) {

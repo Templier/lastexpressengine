@@ -1540,7 +1540,7 @@ bool Action::handleOtherCompartment(ObjectIndex object, byte param2, byte param3
 	if (getEntityData(kEntityNone)->field_493 == EntityData::kField493_3
 	 && getEntityData(kEntityMertens)->car == kCarGreenSleeping
 	 && !getEntityData(kEntityMertens)->field_493
-	 && !((EntityData::EntityParametersIIII*)getEntities()->getData(kEntityMertens)->getParameters(8, 0))->param1)
+	 && !((EntityData::EntityParametersIIII*)getEntities()->get(kEntityMertens)->getParamData()->getParameters(8, 0))->param1)
 		 error("Action::handleOtherCompartment: not implemented!");
 
 	//////////////////////////////////////////////////////////////////////////
@@ -1548,7 +1548,7 @@ bool Action::handleOtherCompartment(ObjectIndex object, byte param2, byte param3
 	if (getEntityData(kEntityNone)->field_493 != EntityData::kField493_4
 	 || !getEntityData(kEntityCoudert)->car
 	 || getEntityData(kEntityCoudert)->field_493
-	 || ((EntityData::EntityParametersIIII*)getEntities()->getData(kEntityCoudert)->getParameters(8, 0))->param1)
+	 || ((EntityData::EntityParametersIIII*)getEntities()->get(kEntityCoudert)->getParamData()->getParameters(8, 0))->param1)
 	 return false;
 
 	if (!getEntities()->compare(kEntityNone, kEntityCoudert))

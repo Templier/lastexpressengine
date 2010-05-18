@@ -110,9 +110,9 @@ IMPLEMENT_FUNCTION(Hadija, chapter1, 10)
 		break;
 
 	case kActionDefault:
-		_data->getData()->field_491 = EntityData::kField491_4070;
-		_data->getData()->field_493 = EntityData::kField493_1;
-		_data->getData()->car = kCarGreenSleeping;
+		getData()->field_491 = EntityData::kField491_4070;
+		getData()->field_493 = EntityData::kField493_1;
+		getData()->car = kCarGreenSleeping;
 
 		break;
 	}
@@ -131,11 +131,11 @@ IMPLEMENT_FUNCTION(Hadija, chapter2, 13)
 
 		getEntities()->prepareSequences(kEntityHadija);
 
-		_data->getData()->field_491 = EntityData::kField491_3050;
-		_data->getData()->field_493 = EntityData::kField493_1;
-		_data->getData()->car = kCarGreenSleeping;
-		_data->getData()->clothes = kClothesDefault;
-		_data->getData()->inventoryItem = kItemNone;
+		getData()->field_491 = EntityData::kField491_3050;
+		getData()->field_493 = EntityData::kField493_1;
+		getData()->car = kCarGreenSleeping;
+		getData()->clothes = kClothesDefault;
+		getData()->inventoryItem = kItemNone;
 
 		setup_function14();
 	}
@@ -157,9 +157,9 @@ IMPLEMENT_FUNCTION(Hadija, chapter3, 15)
 	case kActionDefault:
 		getEntities()->prepareSequences(kEntityHadija);
 
-		_data->getData()->field_491 = EntityData::kField491_4070;
-		_data->getData()->field_493 = EntityData::kField493_1;
-		_data->getData()->car = kCarGreenSleeping;
+		getData()->field_491 = EntityData::kField491_4070;
+		getData()->field_493 = EntityData::kField493_1;
+		getData()->car = kCarGreenSleeping;
 
 		break;
 	}
@@ -179,9 +179,9 @@ IMPLEMENT_FUNCTION(Hadija, chapter4, 17)
 		break;
 
 	case kActionDefault:
-		_data->getData()->field_491 = EntityData::kField491_4070;
-		_data->getData()->field_493 = EntityData::kField493_1;
-		_data->getData()->car = kCarGreenSleeping;
+		getData()->field_491 = EntityData::kField491_4070;
+		getData()->field_493 = EntityData::kField493_1;
+		getData()->car = kCarGreenSleeping;
 		break;
 	}
 }
@@ -206,11 +206,11 @@ IMPLEMENT_FUNCTION(Hadija, chapter5, 20)
 	case kActionDefault:
 		getEntities()->prepareSequences(kEntityHadija);
 
-		_data->getData()->field_491 = EntityData::kField491_3969;
-		_data->getData()->field_493 = EntityData::kField493_1;
-		_data->getData()->car = kCarRestaurant;
-		_data->getData()->clothes = kClothesDefault;
-		_data->getData()->inventoryItem = kItemNone;
+		getData()->field_491 = EntityData::kField491_3969;
+		getData()->field_493 = EntityData::kField493_1;
+		getData()->car = kCarRestaurant;
+		getData()->clothes = kClothesDefault;
+		getData()->inventoryItem = kItemNone;
 
 		break;
 	}

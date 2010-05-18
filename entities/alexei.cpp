@@ -166,9 +166,9 @@ IMPLEMENT_FUNCTION(Alexei, chapter1, 17)
 		getObjects()->update(kObject10, kEntityNone, kLocationNone, kCursorKeepValue, kCursorKeepValue);
 		getObjects()->update(kObjectHandleInsideBathroom, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
 
-		_data->getData()->field_491 = EntityData::kField491_3969;
-		_data->getData()->field_493 = EntityData::kField493_1;
-		_data->getData()->car = kCarRestaurant;
+		getData()->field_491 = EntityData::kField491_3969;
+		getData()->field_493 = EntityData::kField493_1;
+		getData()->car = kCarRestaurant;
 
 		break;
 	}
@@ -230,11 +230,11 @@ IMPLEMENT_FUNCTION(Alexei, chapter2, 28)
 		getObjects()->update(kObject10, kEntityNone, kLocationNone, kCursorKeepValue, kCursorKeepValue);
 		getObjects()->update(kObjectHandleInsideBathroom, kEntityAlexei, kLocation1, kCursorHandKnock, kCursorHand);
 
-		_data->getData()->field_491 = EntityData::kField491_7500;
-		_data->getData()->field_493 = EntityData::kField493_1;
-		_data->getData()->car = kCarGreenSleeping;
-		_data->getData()->clothes = kClothesDefault;
-		_data->getData()->inventoryItem = kItemNone;
+		getData()->field_491 = EntityData::kField491_7500;
+		getData()->field_493 = EntityData::kField493_1;
+		getData()->car = kCarGreenSleeping;
+		getData()->clothes = kClothesDefault;
+		getData()->inventoryItem = kItemNone;
 
 		break;
 	}
@@ -268,10 +268,10 @@ IMPLEMENT_FUNCTION(Alexei, chapter3, 32)
 		getObjects()->update(kObject10, kEntityNone, kLocationNone, kCursorKeepValue, kCursorKeepValue);
 		getObjects()->update(kObjectHandleInsideBathroom, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
 
-		_data->getData()->field_493 = EntityData::kField493_1;
-		_data->getData()->car = kCarRestaurant;
-		_data->getData()->clothes = kClothesDefault;
-		_data->getData()->inventoryItem = kItemNone;
+		getData()->field_493 = EntityData::kField493_1;
+		getData()->car = kCarRestaurant;
+		getData()->clothes = kClothesDefault;
+		getData()->inventoryItem = kItemNone;
 
 		break;
 	}
@@ -309,10 +309,10 @@ IMPLEMENT_FUNCTION(Alexei, chapter4, 37)
 		getObjects()->update(kObject10, kEntityNone, kLocationNone, kCursorKeepValue, kCursorKeepValue);
 		getObjects()->update(kObjectHandleInsideBathroom, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
 
-		_data->getData()->field_491 = EntityData::kField491_7500;
-		_data->getData()->field_493 = EntityData::kField493_1;
-		_data->getData()->car = kCarGreenSleeping;
-		_data->getData()->inventoryItem = kItemNone;
+		getData()->field_491 = EntityData::kField491_7500;
+		getData()->field_493 = EntityData::kField493_1;
+		getData()->car = kCarGreenSleeping;
+		getData()->inventoryItem = kItemNone;
 
 		break;
 	}

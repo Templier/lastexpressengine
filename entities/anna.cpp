@@ -219,10 +219,10 @@ IMPLEMENT_FUNCTION(Anna, chapter1, 16)
 		getObjects()->update(kObject53, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
 		getObjects()->update(kObject45, kEntityNone, kLocation1, kCursorKeepValue, kCursorKeepValue);
 
-		_data->getData()->field_491 = EntityData::kField491_8200;
-		_data->getData()->field_493 = EntityData::kField493_1;
-		_data->getData()->car = kCarGreenSleeping;
-		_data->getData()->clothes = kClothesDefault;
+		getData()->field_491 = EntityData::kField491_8200;
+		getData()->field_493 = EntityData::kField493_1;
+		getData()->car = kCarGreenSleeping;
+		getData()->clothes = kClothesDefault;
 
 		break;
 	}
@@ -258,7 +258,7 @@ IMPLEMENT_FUNCTION(Anna, function20, 20)
 			break;
 
 		case 2:
-			_data->getData()->field_493 = EntityData::kField493_0;
+			getData()->field_493 = EntityData::kField493_0;
 			getSavePoints()->push(kEntityAnna, kEntityMax, kAction71277948);
 			setup_function21();
 			break;
@@ -337,9 +337,9 @@ IMPLEMENT_FUNCTION(Anna, function37, 37)
 	break;
 
   case kActionDefault:
-	_data->getData()->field_491 = EntityData::kField491_8200;
-	_data->getData()->field_493 = EntityData::kField493_0;
-	_data->getData()->car = kCarRedSleeping;
+	getData()->field_491 = EntityData::kField491_8200;
+	getData()->field_493 = EntityData::kField493_0;
+	getData()->car = kCarRedSleeping;
 	break;
 
   case kAction191477936:
@@ -376,11 +376,11 @@ IMPLEMENT_FUNCTION(Anna, chapter2, 42)
 	case kActionDefault:
 		getEntities()->prepareSequences(kEntityAnna);
 
-		_data->getData()->field_491 = EntityData::kField491_4070;
-		_data->getData()->field_493 = EntityData::kField493_1;
-		_data->getData()->car = kCarRedSleeping;
-		_data->getData()->clothes = kClothes1;
-		_data->getData()->inventoryItem = kItemNone;
+		getData()->field_491 = EntityData::kField491_4070;
+		getData()->field_493 = EntityData::kField493_1;
+		getData()->car = kCarRedSleeping;
+		getData()->clothes = kClothes1;
+		getData()->inventoryItem = kItemNone;
 
 		break;
 	}
@@ -402,11 +402,11 @@ IMPLEMENT_FUNCTION(Anna, chapter3, 44)
 	case kActionDefault:
 		getEntities()->prepareSequences(kEntityAnna);
 
-		_data->getData()->field_491 = EntityData::kField491_4070;
-		_data->getData()->field_493 = EntityData::kField493_1;
-		_data->getData()->car = kCarRedSleeping;
-		_data->getData()->clothes = kClothes3;
-		_data->getData()->inventoryItem = kItemNone;
+		getData()->field_491 = EntityData::kField491_4070;
+		getData()->field_493 = EntityData::kField493_1;
+		getData()->car = kCarRedSleeping;
+		getData()->clothes = kClothes3;
+		getData()->inventoryItem = kItemNone;
 
 		getObjects()->update(kObjectCompartmentF, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
 		getObjects()->update(kObject45, kEntityNone, kLocationNone, kCursorKeepValue, kCursorKeepValue);
@@ -536,11 +536,11 @@ IMPLEMENT_FUNCTION(Anna, chapter4, 66)
 	case kActionDefault:
 		getEntities()->prepareSequences(kEntityAnna);
 
-		_data->getData()->field_491 = EntityData::kField491_4070;
-		_data->getData()->field_493 = EntityData::kField493_1;
-		_data->getData()->car = kCarRedSleeping;
-		_data->getData()->clothes = kClothes2;
-		_data->getData()->inventoryItem = kItemNone;
+		getData()->field_491 = EntityData::kField491_4070;
+		getData()->field_493 = EntityData::kField493_1;
+		getData()->car = kCarRedSleeping;
+		getData()->clothes = kClothes2;
+		getData()->inventoryItem = kItemNone;
 
 		break;
 	}
@@ -586,11 +586,11 @@ IMPLEMENT_FUNCTION(Anna, chapter5, 74)
 	case kActionDefault:
 		getEntities()->prepareSequences(kEntityAnna);
 
-		_data->getData()->field_491 = EntityData::kField491_3969;
-		_data->getData()->field_493 = EntityData::kField493_1;
-		_data->getData()->car = kCarBaggageRear;
-		_data->getData()->clothes = kClothes3;
-		_data->getData()->inventoryItem = kItemNone;
+		getData()->field_491 = EntityData::kField491_3969;
+		getData()->field_493 = EntityData::kField493_1;
+		getData()->car = kCarBaggageRear;
+		getData()->clothes = kClothes3;
+		getData()->inventoryItem = kItemNone;
 
 		getObjects()->update(kObject45, kEntityNone, kLocationNone, kCursorKeepValue, kCursorKeepValue);
 

@@ -30,7 +30,7 @@
 // Misc
 //////////////////////////////////////////////////////////////////////////
 #define RESET_ENTITY_STATE(entity, class, function) \
-	getEntities()->resetEntityState(entity); \
+	getEntities()->resetState(entity); \
 	((class*)getEntities()->get(entity))->function();
 
 //////////////////////////////////////////////////////////////////////////
@@ -57,7 +57,7 @@
 	}
 
 #define CALL_PREVIOUS_SAVEPOINT() { \
-	_data->getData()->current_call--; \
+	getData()->current_call--; \
 	getSavePoints()->setCallback(_entityIndex, _callbacks[_data->getCurrentCallback()]); \
 	getSavePoints()->call(_entityIndex, _entityIndex, kAction18); \
 	}

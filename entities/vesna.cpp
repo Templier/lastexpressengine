@@ -127,9 +127,9 @@ IMPLEMENT_FUNCTION(Vesna, chapter1, 12)
 	case kActionDefault:
 		getSavePoints()->addData(kEntityVesna, kAction124190740, 0);
 
-		_data->getData()->field_491 = EntityData::kField491_4689;
-		_data->getData()->field_493 = EntityData::kField493_1;
-		_data->getData()->car = kCarRestaurant;
+		getData()->field_491 = EntityData::kField491_4689;
+		getData()->field_493 = EntityData::kField493_1;
+		getData()->car = kCarRestaurant;
 		break;
 	}
 }
@@ -158,11 +158,11 @@ IMPLEMENT_FUNCTION(Vesna, chapter2, 16)
 	case kActionDefault:
 		getEntities()->prepareSequences(kEntityVesna);
 
-		_data->getData()->field_491 = EntityData::kField491_3050;
-		_data->getData()->field_493 = EntityData::kField493_1;
-		_data->getData()->car = kCarRedSleeping;
-		_data->getData()->clothes = kClothesDefault;
-		_data->getData()->inventoryItem = kItemNone;
+		getData()->field_491 = EntityData::kField491_3050;
+		getData()->field_493 = EntityData::kField493_1;
+		getData()->car = kCarRedSleeping;
+		getData()->clothes = kClothesDefault;
+		getData()->inventoryItem = kItemNone;
 
 		break;
 	}
@@ -188,11 +188,11 @@ IMPLEMENT_FUNCTION(Vesna, chapter3, 19)
 	case kActionDefault:
 		getEntities()->prepareSequences(kEntityVesna);
 
-		_data->getData()->field_491 = EntityData::kField491_3050;
-		_data->getData()->field_493 = EntityData::kField493_1;
-		_data->getData()->car = kCarRedSleeping;
-		_data->getData()->clothes = kClothesDefault;
-		_data->getData()->inventoryItem = kItemNone;
+		getData()->field_491 = EntityData::kField491_3050;
+		getData()->field_493 = EntityData::kField493_1;
+		getData()->car = kCarRedSleeping;
+		getData()->clothes = kClothesDefault;
+		getData()->inventoryItem = kItemNone;
 
 		break;
 	}
@@ -227,10 +227,10 @@ IMPLEMENT_FUNCTION(Vesna, chapter4, 24)
 	case kActionDefault:
 		getEntities()->prepareSequences(kEntityVesna);
 
-		_data->getData()->field_491 = EntityData::kField491_3050;
-		_data->getData()->field_493 = EntityData::kField493_1;
-		_data->getData()->car = kCarRedSleeping;
-		_data->getData()->inventoryItem = kItemNone;
+		getData()->field_491 = EntityData::kField491_3050;
+		getData()->field_493 = EntityData::kField493_1;
+		getData()->car = kCarRedSleeping;
+		getData()->inventoryItem = kItemNone;
 
 		getObjects()->update(kObjectCompartmentG, kEntityVesna, kLocation3, kCursorHandKnock, kCursorHand);
 		break;
@@ -265,9 +265,9 @@ IMPLEMENT_FUNCTION(Vesna, chapter5, 28)
 	case kActionDefault:
 		getEntities()->prepareSequences(kEntityVesna);
 
-		_data->getData()->field_493 = EntityData::kField493_1;
-		_data->getData()->car = kCarRestaurant;
-		_data->getData()->inventoryItem = kItemNone;
+		getData()->field_493 = EntityData::kField493_1;
+		getData()->car = kCarRestaurant;
+		getData()->inventoryItem = kItemNone;
 		break;
 	}
 }

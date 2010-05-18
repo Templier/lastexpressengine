@@ -129,7 +129,7 @@ namespace LastExpress {
 #define DECLARE_CALL_FUNCTION(id, class, type1, type2, type3, type4) \
 	typedef Functor4Mem<type1, type2, type3, type4, void, class> SetupFunction_##id; \
 	void call(SetupFunction_##id *func, type1 param1 = 0, type2 param2 = 0, type3 param3 = 0, type4 param4 = 0) { \
-		_data->getData()->current_call++; \
+		getData()->current_call++; \
 		(*func)(param1, param2, param3, param4); \
 		delete func; \
 	}

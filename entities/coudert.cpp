@@ -279,9 +279,9 @@ IMPLEMENT_FUNCTION(Coudert, chapter1, 36)
 		ENTITY_PARAM(0, 1) = 0;
 		ENTITY_PARAM(0, 2) = 1;
 
-		_data->getData()->field_491 = EntityData::kField491_1500;
-		_data->getData()->field_493 = EntityData::kField493_0;
-		_data->getData()->car = kCarRedSleeping;
+		getData()->field_491 = EntityData::kField491_1500;
+		getData()->field_493 = EntityData::kField493_0;
+		getData()->car = kCarRedSleeping;
 
 		getObjects()->updateLocation2(kObject111, kLocation1);
 		break;
@@ -326,10 +326,10 @@ IMPLEMENT_FUNCTION(Coudert, chapter2, 42)
 	case kActionDefault:
 		getEntities()->prepareSequences(kEntityCoudert);
 
-		_data->getData()->field_491 = EntityData::kField491_1500;
-		_data->getData()->field_493 = EntityData::kField493_0;
-		_data->getData()->car = kCarRedSleeping;
-		_data->getData()->inventoryItem = kItemNone;
+		getData()->field_491 = EntityData::kField491_1500;
+		getData()->field_493 = EntityData::kField493_0;
+		getData()->car = kCarRedSleeping;
+		getData()->inventoryItem = kItemNone;
 
 		ENTITY_PARAM(0, 2) = 0;
 		ENTITY_PARAM(0, 3) = 0;
@@ -375,11 +375,11 @@ IMPLEMENT_FUNCTION(Coudert, chapter3, 44)
 	case kActionDefault:
 		getEntities()->prepareSequences(kEntityCoudert);
 
-		_data->getData()->field_491 = EntityData::kField491_1500;
-		_data->getData()->field_493 = EntityData::kField493_0;
-		_data->getData()->car = kCarRedSleeping;
-		_data->getData()->clothes = kClothesDefault;
-		_data->getData()->inventoryItem = kItemNone;
+		getData()->field_491 = EntityData::kField491_1500;
+		getData()->field_493 = EntityData::kField493_0;
+		getData()->car = kCarRedSleeping;
+		getData()->clothes = kClothesDefault;
+		getData()->inventoryItem = kItemNone;
 
 		ENTITY_PARAM(0, 2) = 0;
 		ENTITY_PARAM(0, 3) = 0;
@@ -450,11 +450,11 @@ IMPLEMENT_FUNCTION(Coudert, chapter4, 52)
 	case kActionDefault:
 		getEntities()->prepareSequences(kEntityCoudert);
 
-		_data->getData()->field_491 = EntityData::kField491_1500;
-		_data->getData()->field_493 = EntityData::kField493_0;
-		_data->getData()->car = kCarRedSleeping;
-		_data->getData()->clothes = kClothesDefault;
-		_data->getData()->inventoryItem = kItemNone;
+		getData()->field_491 = EntityData::kField491_1500;
+		getData()->field_493 = EntityData::kField493_0;
+		getData()->car = kCarRedSleeping;
+		getData()->clothes = kClothesDefault;
+		getData()->inventoryItem = kItemNone;
 
 		ENTITY_PARAM(0, 2) = 0;
 		ENTITY_PARAM(0, 3) = 0;
@@ -513,10 +513,10 @@ IMPLEMENT_FUNCTION(Coudert, chapter5, 57)
 	case kActionDefault:
 		getEntities()->prepareSequences(kEntityCoudert);
 
-		_data->getData()->field_491 = EntityData::kField491_3969;
-		_data->getData()->field_493 = EntityData::kField493_1;
-		_data->getData()->car = kCarRestaurant;
-		_data->getData()->inventoryItem = kItemNone;
+		getData()->field_491 = EntityData::kField491_3969;
+		getData()->field_493 = EntityData::kField493_1;
+		getData()->car = kCarRestaurant;
+		getData()->inventoryItem = kItemNone;
 		break;
 	}
 }

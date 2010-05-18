@@ -180,7 +180,7 @@ bool SavePoints::updateEntityFromData(const SavePoint &savepoint) {
 			debugC(8, kLastExpressDebugLogic, "Update entity from data: entity1=%d, action=%d, param=%d", _data[i].entity1, _data[i].action, _data[i].param);
 
 			// the savepoint param is the index of the entity call parameter to update
-			EntityData::EntityParameters *params = getEntities()->getData(_data[i].entity1)->getParameters(8, 0);
+			EntityData::EntityParameters *params = getEntities()->get(_data[i].entity1)->getParamData()->getParameters(8, 0);
 
 			// TODO: any way for that not to be ugly? - seems very wrong too
 			*((int*)params + _data[i].param) = 1;

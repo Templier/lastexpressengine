@@ -54,7 +54,7 @@
 #define getSavePoints() getLogic()->getGameState()->getGameSavePoints()
 
 // Misc
-#define getEntityData(entity) getEntities()->getData(entity)->getData()
+#define getEntityData(entity) getEntities()->getData(entity)
 #define loadSceneObject(name, sceneId) Scene name; _engine->getSceneManager()->loadScene(&name, (SceneIndex)sceneId);
 
 // Utilities

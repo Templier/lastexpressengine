@@ -145,9 +145,9 @@ IMPLEMENT_FUNCTION(Servers0, chapter1, 11)
 		getSavePoints()->addData(kEntityServers0, kAction292758554, 7);
 		getSavePoints()->addData(kEntityServers0, kAction337548856, 9);
 
-		_data->getData()->field_491 = EntityData::kField491_5900;
-		_data->getData()->field_493 = EntityData::kField493_0;
-		_data->getData()->car = kCarRestaurant;
+		getData()->field_491 = EntityData::kField491_5900;
+		getData()->field_493 = EntityData::kField493_0;
+		getData()->car = kCarRestaurant;
 		break;
 	}
 }
@@ -208,11 +208,11 @@ IMPLEMENT_FUNCTION(Servers0, chapter2, 23)
 	case kActionDefault:
 		getEntities()->prepareSequences(kEntityServers0);
 
-		_data->getData()->field_491 = EntityData::kField491_5900;
-		_data->getData()->field_493 = EntityData::kField493_0;
-		_data->getData()->car = kCarRestaurant;
-		_data->getData()->clothes = kClothes1;
-		_data->getData()->inventoryItem = kItemNone;
+		getData()->field_491 = EntityData::kField491_5900;
+		getData()->field_493 = EntityData::kField493_0;
+		getData()->car = kCarRestaurant;
+		getData()->clothes = kClothes1;
+		getData()->inventoryItem = kItemNone;
 
 		ENTITY_PARAM(1, 3) = 0;
 		ENTITY_PARAM(1, 4) = 0;
@@ -244,11 +244,11 @@ IMPLEMENT_FUNCTION(Servers0, chapter3, 27)
 	case kActionDefault:
 		getEntities()->prepareSequences(kEntityServers0);
 
-		_data->getData()->field_491 = EntityData::kField491_5900;
-		_data->getData()->field_493 = EntityData::kField493_0;
-		_data->getData()->car = kCarRestaurant;
-		_data->getData()->clothes = kClothes1;
-		_data->getData()->inventoryItem = kItemNone;
+		getData()->field_491 = EntityData::kField491_5900;
+		getData()->field_493 = EntityData::kField493_0;
+		getData()->car = kCarRestaurant;
+		getData()->clothes = kClothes1;
+		getData()->inventoryItem = kItemNone;
 
 		ENTITY_PARAM(0, 3) = 0;
 		ENTITY_PARAM(1, 2) = 0;
@@ -284,11 +284,11 @@ IMPLEMENT_FUNCTION(Servers0, chapter4, 31)
 	case kActionDefault:
 		getEntities()->prepareSequences(kEntityServers0);
 
-		_data->getData()->field_491 = EntityData::kField491_5900;
-		_data->getData()->field_493 = EntityData::kField493_0;
-		_data->getData()->car = kCarRestaurant;
-		_data->getData()->clothes = kClothesDefault;
-		_data->getData()->inventoryItem = kItemNone;
+		getData()->field_491 = EntityData::kField491_5900;
+		getData()->field_493 = EntityData::kField493_0;
+		getData()->car = kCarRestaurant;
+		getData()->clothes = kClothesDefault;
+		getData()->inventoryItem = kItemNone;
 
 		ENTITY_PARAM(0, 3) = 0;
 		ENTITY_PARAM(1, 7) = 0;
@@ -328,10 +328,10 @@ IMPLEMENT_FUNCTION(Servers0, chapter5, 36)
 	case kActionDefault:
 		getEntities()->prepareSequences(kEntityServers0);
 
-		_data->getData()->field_491 = EntityData::kField491_3969;
-		_data->getData()->field_493 = EntityData::kField493_1;
-		_data->getData()->car = kCarRestaurant;
-		_data->getData()->inventoryItem = kItemNone;
+		getData()->field_491 = EntityData::kField491_3969;
+		getData()->field_493 = EntityData::kField493_1;
+		getData()->car = kCarRestaurant;
+		getData()->inventoryItem = kItemNone;
 		break;
 	}
 }

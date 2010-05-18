@@ -147,9 +147,9 @@ IMPLEMENT_FUNCTION(Pascale, chapter1, 12)
 		getSavePoints()->addData(kEntityPascale, kAction191604416, 10);
 		getSavePoints()->addData(kEntityPascale, kAction190605184, 11);
 
-		_data->getData()->field_491 = EntityData::kField491_5900;
-		_data->getData()->field_493 = EntityData::kField493_0;
-		_data->getData()->car = kCarRestaurant;
+		getData()->field_491 = EntityData::kField491_5900;
+		getData()->field_493 = EntityData::kField493_0;
+		getData()->car = kCarRestaurant;
 		break;
 	}
 }
@@ -186,11 +186,11 @@ IMPLEMENT_FUNCTION(Pascale, chapter2, 20)
 	if (savepoint.action == kActionDefault) {
 		getEntities()->prepareSequences(kEntityPascale);
 
-		_data->getData()->field_491 = EntityData::kField491_5900;
-		_data->getData()->field_493 = EntityData::kField493_0;
-		_data->getData()->car = kCarRestaurant;
-		_data->getData()->clothes = kClothes1;
-		_data->getData()->inventoryItem = kItemNone;
+		getData()->field_491 = EntityData::kField491_5900;
+		getData()->field_493 = EntityData::kField493_0;
+		getData()->car = kCarRestaurant;
+		getData()->clothes = kClothes1;
+		getData()->inventoryItem = kItemNone;
 
 		getObjects()->update(kObject65, kEntityNone, kLocationNone, kCursorNormal, kCursorForward);
 	}
@@ -208,10 +208,10 @@ IMPLEMENT_FUNCTION(Pascale, chapter3, 21)
 	case kActionDefault:
 		getEntities()->prepareSequences(kEntityPascale);
 
-		_data->getData()->field_491 = EntityData::kField491_5900;
-		_data->getData()->field_493 = EntityData::kField493_0;
-		_data->getData()->car = kCarRestaurant;
-		_data->getData()->inventoryItem = kItemNone;
+		getData()->field_491 = EntityData::kField491_5900;
+		getData()->field_493 = EntityData::kField493_0;
+		getData()->car = kCarRestaurant;
+		getData()->inventoryItem = kItemNone;
 
 		ENTITY_PARAM(0, 4) = 0;
 		ENTITY_PARAM(0, 7) = 0;
@@ -243,10 +243,10 @@ IMPLEMENT_FUNCTION(Pascale, chapter4, 25)
 	case kActionDefault:
 		getEntities()->prepareSequences(kEntityPascale);
 
-		_data->getData()->field_491 = EntityData::kField491_5900;
-		_data->getData()->field_493 = EntityData::kField493_0;
-		_data->getData()->car = kCarRestaurant;
-		_data->getData()->inventoryItem = kItemNone;
+		getData()->field_491 = EntityData::kField491_5900;
+		getData()->field_493 = EntityData::kField493_0;
+		getData()->car = kCarRestaurant;
+		getData()->inventoryItem = kItemNone;
 
 		ENTITY_PARAM(0, 4) = 0;
 		ENTITY_PARAM(0, 8) = 0;
@@ -289,10 +289,10 @@ IMPLEMENT_FUNCTION(Pascale, chapter5, 31)
 	case kActionDefault:
 		getEntities()->prepareSequences(kEntityPascale);
 
-		_data->getData()->field_491 = EntityData::kField491_3969;
-		_data->getData()->field_493 = EntityData::kField493_1;
-		_data->getData()->car = kCarRestaurant;
-		_data->getData()->inventoryItem = kItemNone;
+		getData()->field_491 = EntityData::kField491_3969;
+		getData()->field_493 = EntityData::kField493_1;
+		getData()->car = kCarRestaurant;
+		getData()->inventoryItem = kItemNone;
 		break;
 	}
 }

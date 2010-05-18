@@ -314,7 +314,7 @@ public:
 
 	EntityData() {}
 
-	EntityCallData 	  *getData() { return &_data; }
+	EntityCallData 	  *getCallData() { return &_data; }
 
 	EntityParameters  *getParameters(int callback, int index) { return _parameters[callback].parameters[index]; }
 	EntityParameters  *getCurrentParameters(int index = 0) { return getParameters(_data.current_call, index); }
@@ -345,7 +345,8 @@ public:
 	virtual ~Entity();
 
 	// Accessors
-	EntityData *getData() { return _data; }
+	EntityData *getParamData() { return _data; }
+	EntityData::EntityCallData *getData() { return _data->getCallData(); }
 
 	// Setup
 	void setup(ChapterIndex index);

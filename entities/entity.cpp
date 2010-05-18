@@ -122,9 +122,9 @@ void Entity::function1(const SavePoint &savepoint) {
 		break;
 
 	case kActionDefault:
-		_data->getData()->field_491 = EntityData::kField491_0;
-		_data->getData()->field_493 = EntityData::kField493_0;
-		_data->getData()->car = kCarGreenSleeping;
+		getData()->field_491 = EntityData::kField491_0;
+		getData()->field_493 = EntityData::kField493_0;
+		getData()->car = kCarGreenSleeping;
 		params->param1 = 10000;
 		break;
 	}
@@ -135,9 +135,9 @@ void Entity::function1Clothes(const SavePoint &savepoint) {
 	if (savepoint.action == kAction1) {
 
 		// Select next available clothes
-		_data->getData()->clothes = (ClothesIndex)(_data->getData()->clothes + 1);
-		if (_data->getData()->clothes > kClothes3)
-			_data->getData()->clothes = kClothesDefault;
+		getData()->clothes = (ClothesIndex)(getData()->clothes + 1);
+		if (getData()->clothes > kClothes3)
+			getData()->clothes = kClothesDefault;
 
 		return;
 	}
@@ -180,7 +180,7 @@ void Entity::playSound(const SavePoint &savepoint, bool resetItem, int param3) {
 
 	case kActionDefault:
 		if (resetItem)
-			_data->getData()->inventoryItem = kItemNone;
+			getData()->inventoryItem = kItemNone;
 
 		getSound()->playSound(_entityIndex, params->seq1, param3);
 		break;
@@ -261,7 +261,7 @@ void Entity::savepointDirection(const SavePoint &savepoint) {
 		break;
 
 	case kActionDefault:
-		if (_data->getData()->direction != kDirectionRight)
+		if (getData()->direction != kDirectionRight)
 			CALL_PREVIOUS_SAVEPOINT()
 		break;
 	}

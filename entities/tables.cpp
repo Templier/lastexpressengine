@@ -115,39 +115,39 @@ IMPLEMENT_FUNCTION(Tables, draw, 6)
 		break;
 
 	case kActionDefault:
-		_data->getData()->field_493 = EntityData::kField493_1;
-		_data->getData()->car = kCarRestaurant;
+		getData()->field_493 = EntityData::kField493_1;
+		getData()->car = kCarRestaurant;
 		switch(_id) {
 		default:
 			break;
 
 		case kEntityTables0:
-			_data->getData()->field_491 = EntityData::kField491_3970;
+			getData()->field_491 = EntityData::kField491_3970;
 			getEntities()->drawSequenceLeft(_id, "001P");
 			break;
 
 		case kEntityTables1:
-			_data->getData()->field_491 = EntityData::kField491_3970;
+			getData()->field_491 = EntityData::kField491_3970;
 			getEntities()->drawSequenceLeft(_id, "005J");
 			break;
 
 		case kEntityTables2:
-			_data->getData()->field_491 = EntityData::kField491_4690;
+			getData()->field_491 = EntityData::kField491_4690;
 			getEntities()->drawSequenceLeft(_id, "009G");
 			break;
 
 		case kEntityTables3:
-			_data->getData()->field_491 = EntityData::kField491_4690;
+			getData()->field_491 = EntityData::kField491_4690;
 			getEntities()->drawSequenceLeft(_id, "010M");
 			break;
 
 		case kEntityTables4:
-			_data->getData()->field_491 = EntityData::kField491_5420;
+			getData()->field_491 = EntityData::kField491_5420;
 			getEntities()->drawSequenceLeft(_id, "014F");
 			break;
 
 		case kEntityTables5:
-			_data->getData()->field_491 = EntityData::kField491_5420;
+			getData()->field_491 = EntityData::kField491_5420;
 			getEntities()->drawSequenceLeft(_id, "024D");
 			break;
 		}

@@ -176,9 +176,9 @@ IMPLEMENT_FUNCTION(Tatiana, chapter1, 17)
 		getObjects()->update(kObject49, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
 		getObjects()->update(kObject41, kEntityNone, kLocationNone, kCursorKeepValue, kCursorKeepValue);
 
-		_data->getData()->field_491 = EntityData::kField491_5419;
-		_data->getData()->field_493 = EntityData::kField493_1;
-		_data->getData()->car = kCarRestaurant;
+		getData()->field_491 = EntityData::kField491_5419;
+		getData()->field_493 = EntityData::kField493_1;
+		getData()->car = kCarRestaurant;
 		break;
 	}
 }
@@ -227,10 +227,10 @@ IMPLEMENT_FUNCTION(Tatiana, chapter2, 25)
 		getObjects()->update(kObject49, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
 		getObjects()->update(kObject41, kEntityNone, kLocationNone, kCursorKeepValue, kCursorKeepValue);
 
-		_data->getData()->field_491 = EntityData::kField491_5420;
-		_data->getData()->field_493 = EntityData::kField493_1;
-		_data->getData()->car = kCarRestaurant;
-		_data->getData()->clothes = kClothes2;
+		getData()->field_491 = EntityData::kField491_5420;
+		getData()->field_493 = EntityData::kField493_1;
+		getData()->car = kCarRestaurant;
+		getData()->clothes = kClothes2;
 		break;
 	}
 }
@@ -270,11 +270,11 @@ IMPLEMENT_FUNCTION(Tatiana, chapter3, 31)
 		getObjects()->update(kObjectCompartmentB, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
 		getObjects()->update(kObject49, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
 
-		_data->getData()->field_491 = EntityData::kField491_1750;
-		_data->getData()->field_493 = EntityData::kField493_1;
-		_data->getData()->car = kCarRestaurant;
-		_data->getData()->clothes = kClothes2;
-		_data->getData()->inventoryItem = kItemNone;
+		getData()->field_491 = EntityData::kField491_1750;
+		getData()->field_493 = EntityData::kField493_1;
+		getData()->car = kCarRestaurant;
+		getData()->clothes = kClothes2;
+		getData()->inventoryItem = kItemNone;
 
 		// Update inventory
 		getInventory()->getEntry(kItemFirebird)->location = kLocation2;
@@ -345,11 +345,11 @@ IMPLEMENT_FUNCTION(Tatiana, chapter4, 43)
 		getObjects()->update(kObjectCompartmentB, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
 		getObjects()->update(kObject49, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
 
-		_data->getData()->field_491 = EntityData::kField491_7500;
-		_data->getData()->field_493 = EntityData::kField493_1;
-		_data->getData()->car = kCarRedSleeping;
-		_data->getData()->clothes = kClothes2;
-		_data->getData()->inventoryItem = kItemNone;
+		getData()->field_491 = EntityData::kField491_7500;
+		getData()->field_493 = EntityData::kField493_1;
+		getData()->car = kCarRedSleeping;
+		getData()->clothes = kClothes2;
+		getData()->inventoryItem = kItemNone;
 
 		ENTITY_PARAM(0, 1) = 0;
 		break;
@@ -400,11 +400,11 @@ IMPLEMENT_FUNCTION(Tatiana, chapter5, 52)
 	case kActionDefault:
 		getEntities()->prepareSequences(kEntityTatiana);
 
-		_data->getData()->field_491 = EntityData::kField491_3969;
-		_data->getData()->field_493 = EntityData::kField493_1;
-		_data->getData()->car = kCarRestaurant;
-		_data->getData()->clothes = kClothesDefault;
-		_data->getData()->inventoryItem = kItemNone;
+		getData()->field_491 = EntityData::kField491_3969;
+		getData()->field_493 = EntityData::kField493_1;
+		getData()->car = kCarRestaurant;
+		getData()->clothes = kClothesDefault;
+		getData()->inventoryItem = kItemNone;
 		break;
 	}
 }

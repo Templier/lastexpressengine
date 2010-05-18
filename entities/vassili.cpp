@@ -98,8 +98,8 @@ IMPLEMENT_FUNCTION(Vassili, function5, 5)
 
 	case kActionNone:
 		if (params->param1) {
-			_data->getData()->field_491 = getEntities()->getData(kEntityTatiana)->getData()->field_491;
-			_data->getData()->field_493 = getEntities()->getData(kEntityTatiana)->getData()->field_493;
+			getData()->field_491 = getEntityData(kEntityTatiana)->field_491;
+			getData()->field_493 = getEntityData(kEntityTatiana)->field_493;
 		} else {
 			//if (params->param3) {
 			//	if (params->param3 >= (int)getState()->time)
@@ -152,9 +152,9 @@ IMPLEMENT_FUNCTION(Vassili, function6, 6)
 		break;
 
 	case kActionDefault:
-		_data->getData()->field_491 = EntityData::kField491_8200;
-		_data->getData()->field_493 = EntityData::kField493_1;
-		_data->getData()->car = kCarRedSleeping;
+		getData()->field_491 = EntityData::kField491_8200;
+		getData()->field_493 = EntityData::kField493_1;
+		getData()->car = kCarRedSleeping;
 
 		getObjects()->update(kObjectCompartmentA, kEntityNone, kLocationNone, kCursorHandKnock, kCursorHand);
 
@@ -204,9 +204,9 @@ IMPLEMENT_FUNCTION(Vassili, function7, 7)
 		break;
 
 	case kActionDefault:
-		_data->getData()->field_491 = EntityData::kField491_8200;
-		_data->getData()->field_493 = EntityData::kField493_1;
-		_data->getData()->car = kCarRedSleeping;
+		getData()->field_491 = EntityData::kField491_8200;
+		getData()->field_493 = EntityData::kField493_1;
+		getData()->car = kCarRedSleeping;
 
 		getEntities()->prepareSequences(kEntityVassili);
 		if (getEntities()->checkFields1(kEntityNone, kCarRedSleeping, EntityData::kField491_8200))
@@ -233,7 +233,7 @@ IMPLEMENT_FUNCTION(Vassili, function8, 8)
 	case kActionDefault:
 		if (!getEntities()->checkFields5(kEntityNone, kCarRedSleeping)) {
 			getSound()->playSound(kEntityNone, "BUMP");
-			getLogic()->loadSceneFromPosition(kCarRedSleeping, (getEntities()->getData(kEntityNone)->getData()->car <= kCarRedSleeping) ? 1 : 40);
+			getLogic()->loadSceneFromPosition(kCarRedSleeping, (getEntityData(kEntityNone)->car <= kCarRedSleeping) ? 1 : 40);
 		}
 
 		getSavePoints()->push(kEntityVassili, kEntityAnna, kAction226031488);
@@ -313,7 +313,7 @@ IMPLEMENT_FUNCTION(Vassili, seizure, 10)
 		if (_data->getNextCallback() != 1)
 			break;
 
-		_data->getData()->field_493 = EntityData::kField493_1;
+		getData()->field_493 = EntityData::kField493_1;
 		getAction()->playAnimation(kEventVassiliSeizure);
 
         getObjects()->update(kObjectCompartmentA, kEntityNone, kLocationNone, kCursorHandKnock, kCursorHand);
@@ -347,11 +347,11 @@ IMPLEMENT_FUNCTION(Vassili, chapter2, 12)
 	case kActionDefault:
 		getEntities()->prepareSequences(kEntityVassili);
 
-		_data->getData()->field_491 = EntityData::kField491_8200;
-		_data->getData()->field_493 = EntityData::kField493_1;
-		_data->getData()->car = kCarRedSleeping;
-		_data->getData()->clothes = kClothesDefault;
-		_data->getData()->inventoryItem = kItemNone;
+		getData()->field_491 = EntityData::kField491_8200;
+		getData()->field_493 = EntityData::kField493_1;
+		getData()->car = kCarRedSleeping;
+		getData()->clothes = kClothesDefault;
+		getData()->inventoryItem = kItemNone;
 
 		getObjects()->update(kObjectCompartmentA, kEntityNone, kLocationNone, kCursorHandKnock, kCursorHand);
 		getObjects()->updateLocation2(kObjectCompartmentA, kLocation1);
@@ -405,11 +405,11 @@ IMPLEMENT_FUNCTION(Vassili, chapter3, 14)
 	case kActionDefault:
 		getEntities()->prepareSequences(kEntityVassili);
 
-		_data->getData()->field_491 = EntityData::kField491_8200;
-		_data->getData()->field_493 = EntityData::kField493_1;
-		_data->getData()->car = kCarRedSleeping;
-		_data->getData()->clothes = kClothesDefault;
-		_data->getData()->inventoryItem = kItemNone;
+		getData()->field_491 = EntityData::kField491_8200;
+		getData()->field_493 = EntityData::kField493_1;
+		getData()->car = kCarRedSleeping;
+		getData()->clothes = kClothesDefault;
+		getData()->inventoryItem = kItemNone;
 
 		getObjects()->update(kObjectCompartmentA, kEntityNone, kLocationNone, kCursorHandKnock, kCursorHand);
 		break;
@@ -485,11 +485,11 @@ IMPLEMENT_FUNCTION(Vassili, chapter4, 16)
 	case kActionDefault:
 		getEntities()->prepareSequences(kEntityVassili);
 
-		_data->getData()->field_491 = EntityData::kField491_8200;
-		_data->getData()->field_493 = EntityData::kField493_1;
-		_data->getData()->car = kCarRedSleeping;
-		_data->getData()->clothes = kClothesDefault;
-		_data->getData()->inventoryItem = kItemNone;
+		getData()->field_491 = EntityData::kField491_8200;
+		getData()->field_493 = EntityData::kField493_1;
+		getData()->car = kCarRedSleeping;
+		getData()->clothes = kClothesDefault;
+		getData()->inventoryItem = kItemNone;
 
 		getObjects()->update(kObjectCompartmentA, kEntityNone, kLocationNone, kCursorHandKnock, kCursorHand);
 		getObjects()->updateLocation2(kObjectCompartmentA, kLocation1);
@@ -536,11 +536,11 @@ IMPLEMENT_FUNCTION(Vassili, chapter5, 18)
 	if (savepoint.action == kActionDefault) {
 		getEntities()->prepareSequences(kEntityVassili);
 
-		_data->getData()->field_491 = EntityData::kField491_3969;
-		_data->getData()->field_493 = EntityData::kField493_1;
-		_data->getData()->car = kCarRestaurant;
-		_data->getData()->clothes = kClothesDefault;
-		_data->getData()->inventoryItem = kItemNone;
+		getData()->field_491 = EntityData::kField491_3969;
+		getData()->field_493 = EntityData::kField493_1;
+		getData()->car = kCarRestaurant;
+		getData()->clothes = kClothesDefault;
+		getData()->inventoryItem = kItemNone;
 	}
 }
 

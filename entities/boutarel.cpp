@@ -168,9 +168,9 @@ IMPLEMENT_FUNCTION(Boutarel, chapter1, 19)
 		getObjects()->update(kObject50, kEntityNone, kLocationNone, kCursorHandKnock, kCursorHand);
 		getObjects()->update(kObject42, kEntityNone, kLocationNone, kCursorKeepValue, kCursorKeepValue);
 
-		_data->getData()->field_491 = EntityData::kField491_1750;
-		_data->getData()->field_493 = EntityData::kField493_1;
-		_data->getData()->car = kCarRestaurant;
+		getData()->field_491 = EntityData::kField491_1750;
+		getData()->field_493 = EntityData::kField493_1;
+		getData()->car = kCarRestaurant;
 		break;
 	}
 }
@@ -199,10 +199,10 @@ IMPLEMENT_FUNCTION(Boutarel, chapter2, 23)
 	case kActionDefault:
 		getEntities()->prepareSequences(kEntityBoutarel);
 
-		_data->getData()->field_491 = EntityData::kField491_4689;
-		_data->getData()->field_493 = EntityData::kField493_1;
-		_data->getData()->car = kCarRestaurant;
-		_data->getData()->inventoryItem = kItemNone;
+		getData()->field_491 = EntityData::kField491_4689;
+		getData()->field_493 = EntityData::kField493_1;
+		getData()->car = kCarRestaurant;
+		getData()->inventoryItem = kItemNone;
 
 		getObjects()->update(kObjectCompartmentC, kEntityNone, kLocationNone, kCursorHandKnock, kCursorHand);
 		getObjects()->update(kObject50, kEntityNone, kLocationNone, kCursorHandKnock, kCursorHand);
@@ -231,10 +231,10 @@ IMPLEMENT_FUNCTION(Boutarel, chapter3, 26)
 	case kActionDefault:
 		getEntities()->prepareSequences(kEntityBoutarel);
 
-		_data->getData()->field_493 = EntityData::kField493_1;
-		_data->getData()->car = kCarRedSleeping;
-		_data->getData()->clothes = kClothesDefault;
-		_data->getData()->inventoryItem = kItemNone;
+		getData()->field_493 = EntityData::kField493_1;
+		getData()->car = kCarRedSleeping;
+		getData()->clothes = kClothesDefault;
+		getData()->inventoryItem = kItemNone;
 
 		getObjects()->update(kObjectCompartmentC, kEntityNone, kLocation2, kCursorKeepValue, kCursorKeepValue);
 		getObjects()->update(kObject50, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
@@ -271,11 +271,11 @@ IMPLEMENT_FUNCTION(Boutarel, chapter4, 31)
 	case kActionDefault:
 		getEntities()->prepareSequences(kEntityBoutarel);
 
-		_data->getData()->field_491 = EntityData::kField491_6470;
-		_data->getData()->field_493 = EntityData::kField493_1;
-		_data->getData()->car = kCarRedSleeping;
-		_data->getData()->clothes = kClothesDefault;
-		_data->getData()->inventoryItem = kItemNone;
+		getData()->field_491 = EntityData::kField491_6470;
+		getData()->field_493 = EntityData::kField493_1;
+		getData()->car = kCarRedSleeping;
+		getData()->clothes = kClothesDefault;
+		getData()->inventoryItem = kItemNone;
 
 		getObjects()->update(kObjectCompartmentC, kEntityNone, kLocation2, kCursorKeepValue, kCursorKeepValue);
 		getObjects()->update(kObject50, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
@@ -312,11 +312,11 @@ IMPLEMENT_FUNCTION(Boutarel, chapter5, 36)
 	case kActionDefault:
 		getEntities()->prepareSequences(kEntityBoutarel);
 
-		_data->getData()->field_491 = EntityData::kField491_3969;
-		_data->getData()->field_493 = EntityData::kField493_1;
-		_data->getData()->car = kCarRestaurant;
-		_data->getData()->clothes = kClothesDefault;
-		_data->getData()->inventoryItem = kItemNone;
+		getData()->field_491 = EntityData::kField491_3969;
+		getData()->field_493 = EntityData::kField493_1;
+		getData()->car = kCarRestaurant;
+		getData()->clothes = kClothesDefault;
+		getData()->inventoryItem = kItemNone;
 
 		break;
 	}
