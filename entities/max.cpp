@@ -152,7 +152,7 @@ IMPLEMENT_FUNCTION(Max, function7, 7)
 
 	case kAction17:
 		if (!getSound()->isBuffered(kEntityMax)) {
-			if (getEntities()->checkFields4(kCarRedSleeping, 56) || getEntities()->checkFields4(kCarRedSleeping, 78))
+			if (getEntities()->isPlayerPosition(kCarRedSleeping, 56) || getEntities()->isPlayerPosition(kCarRedSleeping, 78))
 				getSound()->playSound(kEntityMax, "Max1120");
 		}
 		break;

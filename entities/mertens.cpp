@@ -249,7 +249,7 @@ IMPLEMENT_FUNCTION(Mertens, function17, 17)
 
 				getLogic()->loadSceneFromItem(kItem7);
 
-				if (getEntities()->checkFields4(kCarGreenSleeping, 68)) {
+				if (getEntities()->isPlayerPosition(kCarGreenSleeping, 68)) {
 					getSound()->playSound(kEntityNone, "CON1110");
 					getLogic()->loadSceneFromPosition(kCarGreenSleeping, 25);
 				}

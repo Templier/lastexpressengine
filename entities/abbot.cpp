@@ -173,7 +173,7 @@ IMPLEMENT_FUNCTION_II(Abbot, function11, 11)
 		break;
 
 	case kActionExcuseMeCath:
-		if (getEntities()->checkFields4(kCarGreenSleeping, 18) || getEntities()->checkFields4(kCarRedSleeping, 18)) {
+		if (getEntities()->isPlayerPosition(kCarGreenSleeping, 18) || getEntities()->isPlayerPosition(kCarRedSleeping, 18)) {
 			getSound()->excuseMe(kEntityAbbot);
 		} else {
 			if (getEvent(kEventAbbotIntroduction))

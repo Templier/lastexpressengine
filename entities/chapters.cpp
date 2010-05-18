@@ -264,7 +264,7 @@ label_callback_21:
 		if (params->param3)
 			break;
 
-		if (getEntities()->checkFields4(kCarGreenSleeping, 1)) {
+		if (getEntities()->isPlayerPosition(kCarGreenSleeping, 1)) {
 			getState()->time = kTimeChapter1;
 			getState()->timeDelta = 3;
 			params->param3 = 1;

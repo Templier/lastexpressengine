@@ -91,7 +91,14 @@ public:
 	bool checkFields1(EntityIndex entity, CarIndex car, EntityData::Field491Value field491) const;
 	bool checkFields2(ObjectIndex object) const;
 	bool checkFields3(EntityIndex entity) const;
-	bool checkFields4(CarIndex car, Position position) const;
+
+	/**
+	 * Check if the player is in the specified position
+	 * @param car 		The car. 
+	 * @param position  The position. 
+	 * @return true if player is in that position, false if not. 
+	*/
+	bool isPlayerPosition(CarIndex car, Position position) const;
 	bool checkFields5(EntityIndex entity, CarIndex car) const;
 	bool checkFields6(EntityIndex entity) const;
 	bool checkFields7(CarIndex car) const;

@@ -376,7 +376,7 @@ label_skip:
 		_data->getData()->car = getEntityData(kEntityNone)->car;
 
 		// Play clock sound
-		if (getEntities()->checkFields4(kCarRestaurant, 81)) {
+		if (getEntities()->isPlayerPosition(kCarRestaurant, 81)) {
 			params->param6 = 1;
 			getSound()->playSound(kEntityNone, "ZFX1001");
 		} else {
@@ -424,13 +424,13 @@ label_skip:
 		}
 
 		if (getProgress().jacket == kJacketOriginal) {
-			if (getEntities()->checkFields4(kCarRedSleeping, 18)) {
+			if (getEntities()->isPlayerPosition(kCarRedSleeping, 18)) {
 				_data->setNextCallback(1);
 				call(new ENTITY_SETUP(Train, setup_savegame), 2, kEventMertensBloodJacket);
 				break;
 			}
 
-			if (getEntities()->checkFields4(kCarGreenSleeping, 22)) {
+			if (getEntities()->isPlayerPosition(kCarGreenSleeping, 22)) {
 				_data->setNextCallback(2);
 				call(new ENTITY_SETUP(Train, setup_savegame), 2, kEventMertensBloodJacket);
 				break;

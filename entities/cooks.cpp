@@ -98,7 +98,7 @@ IMPLEMENT_FUNCTION(Cooks, function3, 3)
 			break;
 		}
 
-		if (getEntities()->checkFields4(kCarRestaurant, 46)) {
+		if (getEntities()->isPlayerPosition(kCarRestaurant, 46)) {
 			getEntities()->drawSequenceLeft(kEntityCooks, "308D");
 
 			if (!getSound()->isBuffered(kEntityCooks)) {
@@ -183,7 +183,7 @@ IMPLEMENT_FUNCTION(Cooks, function4, 4)
 			break;
 		}
 
-		if (getEntities()->checkFields4(kCarRestaurant, 80)) {
+		if (getEntities()->isPlayerPosition(kCarRestaurant, 80)) {
 			getEntities()->drawSequenceLeft(kEntityCooks, "308D");
 
 			if (!getSound()->isBuffered(kEntityCooks)) {
@@ -275,7 +275,7 @@ IMPLEMENT_FUNCTION(Cooks, function6, 6)
 			break;
 
 		if (params->param1) {
-			if (getEntities()->checkFields4(kCarRestaurant, 73)) {
+			if (getEntities()->isPlayerPosition(kCarRestaurant, 73)) {
 				_data->setNextCallback(1);
 				call(new ENTITY_SETUP(Cooks, setup_function3));
 			}
@@ -457,7 +457,7 @@ update_params:
 			break;
 
 		if (params->param1) {
-			if (getEntities()->checkFields4(kCarRestaurant, 80)) {
+			if (getEntities()->isPlayerPosition(kCarRestaurant, 80)) {
 				_data->setNextCallback(1);
 				call(new ENTITY_SETUP(Cooks, setup_function4));
 			}

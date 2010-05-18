@@ -258,11 +258,11 @@ IMPLEMENT_FUNCTION(Vassili, function9, 9)
 
 	case kActionDefault:
 	case kAction17:
-		if ((getObjects()->get(kObjectCompartmentA).location == kLocation2 && getEntities()->checkFields4(kCarRedSleeping, 17))
-		|| getEntities()->checkFields4(kCarRedSleeping, 18)
-		|| getEntities()->checkFields4(kCarRedSleeping, 37)
-		|| getEntities()->checkFields4(kCarRedSleeping, 38)
-		|| getEntities()->checkFields4(kCarRedSleeping, 41)) {
+		if ((getObjects()->get(kObjectCompartmentA).location == kLocation2 && getEntities()->isPlayerPosition(kCarRedSleeping, 17))
+		|| getEntities()->isPlayerPosition(kCarRedSleeping, 18)
+		|| getEntities()->isPlayerPosition(kCarRedSleeping, 37)
+		|| getEntities()->isPlayerPosition(kCarRedSleeping, 38)
+		|| getEntities()->isPlayerPosition(kCarRedSleeping, 41)) {
 
 			if (savepoint.action == kAction17)
 				getSound()->processEntry(kEntityVassili);

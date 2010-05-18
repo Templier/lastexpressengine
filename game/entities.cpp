@@ -350,7 +350,6 @@ void Entities::setupSequences() {
 	//////////////////////////////////////////////////////////////////////////
 
 	warning("Entities::setupSequences: not implemented!");
-
 }
 
 void Entities::setupCallbacks() {
@@ -752,7 +751,7 @@ void Entities::updatePosition(EntityIndex entity, CarIndex car, Position positio
 
 	_positions[100 * car + position] &= ~(1 << entity);
 
-	if (processScene && (checkFields4(car, position) || car == kCarRestaurant && position == 57 && checkFields4(kCarRestaurant, 50))) {
+	if (processScene && (isPlayerPosition(car, position) || car == kCarRestaurant && position == 57 && isPlayerPosition(kCarRestaurant, 50))) {
 		getSound()->excuseMe(entity);
 		getLogic()->loadScene(getLogic()->processIndex(getState()->scene));
 		getSound()->playSound(kEntityNone, "CAT1127A");
@@ -937,7 +936,7 @@ void Entities::updatePositionsEnter(EntityIndex entity, CarIndex car, Position p
 	_positions[100 * car + position2] |= (1 << entity);
 
 	// FIXME: also checking two DWORD values that do not seem to updated anywhere...
-	if (checkFields4(car, position1) || checkFields4(car, position2) || checkFields4(car, position3) || checkFields4(car, position4)) {
+	if (isPlayerPosition(car, position1) || isPlayerPosition(car, position2) || isPlayerPosition(car, position3) || isPlayerPosition(car, position4)) {
 		getSound()->excuseMe(entity);
 		getLogic()->loadScene(getLogic()->processIndex(getState()->scene));
 		getSound()->playSound(kEntityNone, "CAT1127A");
@@ -1055,7 +1054,7 @@ bool Entities::checkFields3(EntityIndex entity) const {
 		 && getEntityData(entity)->field_493 == EntityData::kField493_1;
 }
 
-bool Entities::checkFields4(CarIndex car, Position position) const {
+bool Entities::isPlayerPosition(CarIndex car, Position position) const {
 	loadSceneObject(scene, getState()->scene);
 
 	return getEntityData(kEntityNone)->car == car && scene.getHeader()->position == position;
