@@ -341,6 +341,7 @@ public:
 	struct Flags {
 		bool flag_0;
 		bool flag_3;
+		bool flag_4;
 
 		bool gameRunning;
 
@@ -358,6 +359,7 @@ public:
 		Flags() {
 			flag_0 = false;
 			flag_3 = false;
+			flag_4 = false;
 
 			gameRunning = false;
 

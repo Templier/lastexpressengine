@@ -31,9 +31,13 @@
 #include "lastexpress/data/scene.h"
 #include "lastexpress/data/snd.h"
 
+// Entities
+#include "lastexpress/entities/chapters.h"
+
 // Game
 #include "lastexpress/game/action.h"
 #include "lastexpress/game/beetle.h"
+#include "lastexpress/game/entities.h"
 #include "lastexpress/game/fight.h"
 #include "lastexpress/game/inventory.h"
 #include "lastexpress/game/menu.h"
@@ -82,10 +86,10 @@ Logic::~Logic() {
 //////////////////////////////////////////////////////////////////////////
 
 void Logic::startGame() {
-	// Load scene data for the first cd
+	// Load scene data for the first CD
 	loadSceneDataFile(kArchiveCd1);
 
-	// Init data
+	// Initialize data
 	getInventory()->init();
 
 	_entities->setup(kChapter1);
@@ -126,7 +130,7 @@ void Logic::showMenu(bool visible) {
 	// TODO reset showingMenu to false when starting/returning to a game and show inventory
 
 	// TODO: move to shared method
-	// Init the first savegame if needed
+	// Initialize the first savegame if needed
 	if (!SaveLoad::isSavegamePresent(kGameBlue))
 		SaveLoad::initSavegame(kGameBlue);
 }
@@ -140,7 +144,7 @@ void Logic::switchGame() {
 		_runState.gameId = (GameId)((_runState.gameId + 1) % 6);
 	}
 
-	// Init savegame if needed
+	// Initialize savegame if needed
 	if (!SaveLoad::isSavegamePresent(_runState.gameId))
 		SaveLoad::initSavegame(_runState.gameId);
 
@@ -158,41 +162,6 @@ void Logic::switchGame() {
 
 	// Redraw all menu elements
 	showMenu(true);
-}
-
-// Handle game over
-void Logic::gameOver(TimeType type, TimeValue time, SceneIndex sceneIndex, bool showScene)
-{
-
-	warning("Logic::gameOver: not implemented!");
-
-	// TODO Sound call
-	_entities->reset();
-	//getFlags()->unkown_flag_1 = 0;
-	getSavePoints()->reset();
-	getFlags()->flag_entities_0 = true;
-
-	if (showScene) {
-
-		// Adjust luminosity
-		// Loop over sound cache
-		// Check if kEntityTrain is buffered
-		// Call unknown function 1 and loop
-
-		if (sceneIndex && !getFlags()->mouseRightClick) {
-			loadScene(sceneIndex);
-
-			while (getSound()->isBuffered(kEntityTables4)) {
-				if (getFlags()->mouseRightClick)
-					break;
-
-				getSound()->unknownFunction1();
-			}
-		}
-	}
-
-	// Show Menu
-	_menu->showMenu(false, type, time);
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -269,8 +238,7 @@ void Logic::loadSceneDataFile(ArchiveIndex archive) const {
 void Logic::loadScene(SceneIndex index) {
 
 	getFlags()->flag_0 = false;
-
-	// TODO update list of values for field 491
+	getFlags()->flag_4 = true;
 
 	if (getState()->sceneUseBackup) {
 		loadSceneObject(scene, index);
@@ -293,11 +261,11 @@ void Logic::loadScene(SceneIndex index) {
 	// Set the scene
 	setScene(index);
 
-	// TODO events
+	// TODO Events method call (might be a low level graphic that we don't need)
 
 	if (getFlags()->gameRunning)
 		if (getFlags()->shouldDrawEggOrHourGlass) {
-			//getInventory()->drawEgg();
+			getInventory()->drawEgg();
 		}
 
 	// Restore shouldRedraw flag
@@ -321,15 +289,22 @@ void Logic::setScene(SceneIndex index) {
 }
 
 void Logic::drawScene(SceneIndex index) {
+
+	//////////////////////////////////////////////////////////////////////////
+	// Preprocess
 	preProcessScene(&index);
 
+	//////////////////////////////////////////////////////////////////////////
 	// Draw background
 	debugC(9, kLastExpressDebugScenes, "== Drawing scene: %d ==", index);
+
+	// Update scene
 	delete _currentScene;
 	_currentScene = _engine->getSceneManager()->getScene(index);
 	_engine->getGraphicsManager()->draw(_currentScene, GraphicsManager::kBackgroundC, true);
 	getState()->scene = index;
 
+	//////////////////////////////////////////////////////////////////////////
 	// Update entities
 	Scene *scene = (getState()->sceneUseBackup ? _engine->getSceneManager()->getScene(getState()->sceneBackup) : _currentScene);
 
@@ -339,6 +314,8 @@ void Logic::drawScene(SceneIndex index) {
 	// If we used the backup scene, we don't need the scene object anymore beyond this point
 	if (getState()->sceneUseBackup)
 		delete scene;
+
+	getFlags()->flag_3 = true;
 
 	if (getFlags()->gameRunning) {
 		getSavePoints()->pushAll(kEntityNone, kAction17);
@@ -352,12 +329,14 @@ void Logic::drawScene(SceneIndex index) {
 		getEntities()->setupCallbacks();
 	}
 
+	//////////////////////////////////////////////////////////////////////////
 	// Show the scene
 	askForRedraw();
 	_engine->getGraphicsManager()->update();
 	_engine->_system->updateScreen();
-	_engine->_system->delayMillis(10);
 
+	////////////////////////////////////////////////////////////
+	// Post process scene
 	postProcessScene();
 }
 
@@ -388,11 +367,8 @@ LastExpress::SceneIndex Logic::processIndex(SceneIndex sceneIndex) {
 }
 
 //////////////////////////////////////////////////////////////////////////
-// Loading Scences
+// Loading Scenes from Object/Items
 //////////////////////////////////////////////////////////////////////////
-void Logic::loadSceneFromCar(CarIndex car, int index, bool alternate) {
-	error("Logic::loadSceneFromCar is not implemented!");
-}
 
 void Logic::loadSceneFromObject(ObjectIndex object, bool alternate) {
 	if (alternate) {
@@ -468,7 +444,7 @@ void Logic::loadSceneFromItem(InventoryItem item) {
 	 || (item == kItem5 && (position >= 23 && position <= 32))
 	 || (item == kItem7 && (position == 1 || (position >= 22 && position <= 33)))) {
 		if (getState()->sceneUseBackup)
-			getState()->sceneBackup = getIndexFromPosition(car, position);
+			getState()->sceneBackup = getSceneIndexFromPosition(car, position);
 		else
            loadSceneFromPosition(car, position);
     }
@@ -476,11 +452,40 @@ void Logic::loadSceneFromItem(InventoryItem item) {
 }
 
 void Logic::loadSceneFromPosition(CarIndex car, Position position, int param3) {
-	loadScene(getIndexFromPosition(car, position, param3));
+	loadScene(getSceneIndexFromPosition(car, position, param3));
 }
 
-SceneIndex Logic::getIndexFromPosition(CarIndex car, Position position, int param3) {
-	error("Logic::getIndexFromFields is not implemented!");
+SceneIndex Logic::getSceneIndexFromPosition(CarIndex car, Position position, int param3) {
+
+	// Probably can't happen (can we be called during cd-swap?)
+	if (_engine->getSceneManager()->count() <= 1)
+		return getState()->scene;
+
+	SceneIndex index = kSceneMenu;
+	loadSceneObject(firstScene, index);
+	SceneHeader *header = firstScene.getHeader();
+
+	while (header->car != car
+		|| header->position != position
+		|| ((param3 != -1 || header->param3) && header->param3 != param3 && header->type != Scene::kTypeItem3)) {
+
+		// Increment index and look at the next scene
+		index = (SceneIndex)(index + 1);
+
+		// Load the next scene
+		loadSceneObject(scene, index);
+		header = scene.getHeader();
+
+		if (index >= _engine->getSceneManager()->count())
+			return getState()->scene;
+	}
+
+	// Process index if necessary
+	loadSceneObject(scene, index);
+	if (getEntities()->getPosition(100 * scene.getHeader()->car + scene.getHeader()->position))
+		return processIndex(index);
+
+	return index;
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -613,8 +618,8 @@ void Logic::preProcessScene(SceneIndex *index) {
 
 			loadSceneObject(currentScene, getState()->scene);
 
-			if ((checkSceneFields(getState()->scene, false) && checkSceneFields(*index, false) && currentScene.getHeader()->count < scene.getHeader()->count)
-			 || (checkSceneFields(getState()->scene, true)  && checkSceneFields(*index, true)  && currentScene.getHeader()->count > scene.getHeader()->count)) {
+			if ((checkPosition(getState()->scene, false) && checkPosition(*index, false) && currentScene.getHeader()->count < scene.getHeader()->count)
+			 || (checkPosition(getState()->scene, true)  && checkPosition(*index, true)  && currentScene.getHeader()->count > scene.getHeader()->count)) {
 
 				if (State::getPowerOfTwo(getEntities()->getCompartments(scene.getHeader()->param1)) != 30
 				 && State::getPowerOfTwo(getEntities()->getCompartments1(scene.getHeader()->param1)) != 30 )
@@ -648,6 +653,13 @@ void Logic::preProcessScene(SceneIndex *index) {
 
 	default:
 		break;
+	}
+
+	// Sound processing
+	if (getSound()->isBuffered(kEntityTables4)) {
+		loadSceneObject(currentScene, *index);
+		if (currentScene.getHeader()->type != Scene::kTypeReadText || currentScene.getHeader()->param1)
+			getSound()->processEntry(kEntityTables4);
 	}
 
 	// Cleanup
@@ -751,9 +763,9 @@ void Logic::postProcessScene() {
 		if (getState()->time >= kTimeGameOver || getProgress().field_18 == 4)
 			break;
 
-		// TODO: Sound cache handling
+		getSound()->unknownGameOver();
+		getSound()->playSound(kEntityTrain, "LIB050.SND", 16);
 
-		playSfxStream("LIB050.SND");
 		switch (getProgress().chapter) {
 		default:
 			gameOver(kTimeType0, kTime0, kSceneGameOverPolice2, true);
@@ -787,8 +799,39 @@ void Logic::postProcessScene() {
 }
 
 //////////////////////////////////////////////////////////////////////////
-// Misc
+// Game over, Chapters & credits
 //////////////////////////////////////////////////////////////////////////
+
+// Handle game over
+void Logic::gameOver(TimeType type, TimeValue time, SceneIndex sceneIndex, bool showScene)
+{
+
+	getSound()->unknownFunction3();
+	getEntities()->reset();
+	getFlags()->gameRunning = false;
+	getSavePoints()->reset();
+	getFlags()->flag_entities_0 = true;
+
+	if (showScene) {
+
+		getSound()->unknownGameOver(false);
+
+		if (sceneIndex && !getFlags()->mouseRightClick) {
+			loadScene(sceneIndex);
+
+			while (getSound()->isBuffered(kEntityTables4)) {
+				if (getFlags()->mouseRightClick)
+					break;
+
+				getSound()->unknownFunction1();
+			}
+		}
+	}
+
+	// Show Menu
+	_menu->showMenu(false, type, time);
+}
+
 void Logic::switchChapter() {
 	switch(getState()->progress.chapter) {
 	default:
@@ -797,26 +840,28 @@ void Logic::switchChapter() {
 	case kChapter1:
 		getInventory()->addItem(kItemParchemin);
 		getInventory()->addItem(kItemMatchBox);
-		// TODO call game logic
+
+		RESET_ENTITY_STATE(kEntityChapters, Chapters, setup_chapter2);
 		break;
 
 	case kChapter2:
 		getInventory()->addItem(kItemScarf);
-		// TODO call game logic
+
+		RESET_ENTITY_STATE(kEntityChapters, Chapters, setup_chapter3);
 		break;
 
 	case kChapter3:
 		getInventory()->getEntry(kItemFirebird)->location = kLocation4;
 		getInventory()->getEntry(kItemFirebird)->isPresent = false;
 		getInventory()->getEntry(kItem11)->location = kLocation1;
-
 		getInventory()->addItem(kItemWhistle);
 		getInventory()->addItem(kItemKey);
-		// TODO call game logic
+
+		RESET_ENTITY_STATE(kEntityChapters, Chapters, setup_chapter4);
 		break;
 
 	case kChapter4:
-		// TODO call game logic
+		RESET_ENTITY_STATE(kEntityChapters, Chapters, setup_chapter5);
 		break;
 
 	case kChapter5:
@@ -826,17 +871,25 @@ void Logic::switchChapter() {
 }
 
 void Logic::playFinalSequence() {
-	// TODO function call
+	getSound()->unknownFunction3();
+
 	_action->playAnimation(kEventFinalSequence);
-	// TODO
-	// - function call
-	// - reset game state
-	// - reset save points
-	// - ??value = 1
+	showCredits();
+
+	getEntities()->reset();
+	getSavePoints()->reset();
+	getFlags()->flag_entities_0 = true;
 
 	showMenu(true);
 }
 
+void Logic::showCredits() {
+	error("Logic::showCredits: not implemented!");
+}
+
+//////////////////////////////////////////////////////////////////////////
+// Misc
+//////////////////////////////////////////////////////////////////////////
 void Logic::updateDoorsAndClock() {
 	warning("Logic::updateDoorsAndClock: not implemented!");
 }
@@ -845,7 +898,7 @@ void Logic::updateCursor(bool redraw) {
 	warning("Logic::updateCursor: not implemented!");
 }
 
-bool Logic::checkSceneFields(SceneIndex index, bool isSecondCheck) const {
+bool Logic::checkPosition(SceneIndex index, bool isSecondCheck) const {
 	loadSceneObject(scene, (index ? index : getState()->scene));
 
 	CarIndex car = (CarIndex)scene.getHeader()->car;

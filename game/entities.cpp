@@ -88,11 +88,21 @@ static const int soundValues[32] = {
 	3, 3, 3, 3, 3
 };
 
-static const EntityData::Field491Value field491_values[9] = {EntityData::kField491_0, EntityData::kField491_8200,
+static const EntityData::Field491Value field491Objects[9] = {EntityData::kField491_0, EntityData::kField491_8200,
 	                                                         EntityData::kField491_7500, EntityData::kField491_6470,
 	                                                         EntityData::kField491_5790, EntityData::kField491_4840,
 	                                                         EntityData::kField491_4070, EntityData::kField491_3050,
 	                                                         EntityData::kField491_2740};
+
+static const int field491Positions[41] = {0,     851, 1430, 2110,   0,
+                                          2410, 2980, 3450, 3760, 4100,
+                                          4680, 5140, 5440, 5810, 6410,
+                                          6850, 7160, 7510, 8514,    0,
+                                             0,    0, 2086, 2690,    0,
+                                          3110, 3390, 3890, 4460, 4770,
+                                          5090, 5610, 6160, 6460, 6800,
+                                          7320, 7870, 8160, 8500, 9020,
+                                          9269};
 
 #define ADD_ENTITY(class) \
 	_entities.push_back(new class(engine));
@@ -1037,6 +1047,56 @@ int Entities::getSoundValue(EntityIndex entity) {
 	return ret;
 }
 
+void Entities::loadSceneFromField491(CarIndex car, EntityData::Field491Value field491, bool alternate) {
+
+	// Determine position
+	Position position = (alternate ? 1 : 40);
+	do {
+		if (field491 > field491Positions[position]) {
+			if (alternate)
+				break;
+
+			// For default value, we ignore position 24
+			if (position != 24)
+				break;
+		}
+
+		alternate ? ++position : --position;
+
+	} while (alternate ? position <= 18 : position >= 22);
+
+	// For position outside bounds, use minimal value
+	if ((alternate && position > 18) || (alternate && position < 22)) {
+		getLogic()->loadSceneFromPosition(car, alternate ? 18 : 22);
+		return;
+	}
+
+	// Load scene from position
+	switch (position) {
+	default:
+		getLogic()->loadSceneFromPosition(car, position + (alternate ? - 1 : 1));
+		break;
+
+	// Alternate
+	case 1:
+		if (alternate) getLogic()->loadSceneFromPosition(car, 1);
+		break;
+
+	case 5:
+		if (alternate) getLogic()->loadSceneFromPosition(car, 3);
+		break;
+
+	// Default
+	case 23:
+		if (!alternate) getLogic()->loadSceneFromPosition(car, 25);
+		break;
+
+	case 40:
+		if (!alternate) getLogic()->loadSceneFromPosition(car, 40);
+		break;
+	}
+}
+
 //////////////////////////////////////////////////////////////////////////
 //	Checks
 //////////////////////////////////////////////////////////////////////////
@@ -1075,7 +1135,7 @@ bool Entities::checkFields2(ObjectIndex object) const {
 	case kObjectCompartment6:
 	case kObjectCompartment7:
 	case kObjectCompartment8:
-		field491 = field491_values[object];
+		field491 = field491Objects[object];
 		car = kCarGreenSleeping;
 		if (checkFields1(kEntityNone, car, field491))
 			return false;
@@ -1087,7 +1147,7 @@ bool Entities::checkFields2(ObjectIndex object) const {
 	case kObject20:
 	case kObject21:
 	case kObject22:
-		field491 = field491_values[object-17];
+		field491 = field491Objects[object-17];
 		car = kCarGreenSleeping;
 		break;
 
@@ -1099,7 +1159,7 @@ bool Entities::checkFields2(ObjectIndex object) const {
 	case kObjectCompartmentF:
 	case kObjectCompartmentG:
 	case kObjectCompartmentH:
-		field491 = field491_values[object-32];
+		field491 = field491Objects[object-32];
 		car = kCarRedSleeping;
 		if (checkFields1(kEntityNone, car, field491))
 			return false;
@@ -1111,7 +1171,7 @@ bool Entities::checkFields2(ObjectIndex object) const {
 	case kObject51:
 	case kObject52:
 	case kObject53:
-		field491 = field491_values[object-48];
+		field491 = field491Objects[object-48];
 		car = kCarRedSleeping;
 		break;
 
@@ -1273,10 +1333,10 @@ bool Entities::checkFields24(EntityIndex entity, EntityData::Field491Value field
 }
 
 bool Entities::checkFields25(EntityIndex entity) const {
-	if (getData(entity)->direction == kDirectionUp && getLogic()->checkSceneFields(kSceneNone, true))
+	if (getData(entity)->direction == kDirectionUp && getLogic()->checkPosition(kSceneNone, true))
 		return true;
 
-	return (getData(entity)->direction == kDirectionDown && getLogic()->checkSceneFields(kSceneNone, false));
+	return (getData(entity)->direction == kDirectionDown && getLogic()->checkPosition(kSceneNone, false));
 }
 
 

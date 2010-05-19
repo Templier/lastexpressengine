@@ -92,7 +92,7 @@ IMPLEMENT_FUNCTION_SIII(Mahmud, function4, 4)
 	case kActionNone:
 		UPDATE_PARAM_FROM_TICKS(5, params->param3);
 
-		if (!getLogic()->checkSceneFields(kSceneNone, false))
+		if (!getLogic()->checkPosition(kSceneNone, false))
 			getLogic()->loadSceneFromObject((ObjectIndex)params->param4, true);
 
 		break;

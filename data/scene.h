@@ -227,6 +227,8 @@ public:
 	Scene *getScene(SceneIndex index);
 	bool loadScene(Scene *scene, SceneIndex index);
 
+	uint32 count() const { return _headers.size(); };
+
 private:
 	Common::SeekableReadStream *_stream;
 	Common::Array<SceneHeader *> _headers;

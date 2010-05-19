@@ -68,11 +68,10 @@ public:
 	void loadScene(SceneIndex sceneIndex);
 	void setScene(SceneIndex sceneIndex);
 
-	void loadSceneFromCar(CarIndex car, int index, bool alternate);
 	void loadSceneFromObject(ObjectIndex object, bool alternate = false);
 	void loadSceneFromItem(InventoryItem item);
 	void loadSceneFromPosition(CarIndex car, Position position, int param3 = -1);
-    SceneIndex getIndexFromPosition(CarIndex car, Position position, int param3 = -1);
+    SceneIndex getSceneIndexFromPosition(CarIndex car, Position position, int param3 = -1);
 
 	void updateDoorsAndClock();
 	void updateCursor(bool redraw = true);
@@ -80,7 +79,7 @@ public:
 	// Index processing
 	void processScene();
 	SceneIndex processIndex(SceneIndex sceneIndex);
-	bool checkSceneFields(SceneIndex sceneIndex, bool isSecondCheck) const;
+	bool checkPosition(SceneIndex sceneIndex, bool isSecondCheck) const;
 
 	// Accessors
 	bool isGameStarted() { return _runState.gameStarted; }
@@ -140,6 +139,7 @@ private:
 
 	void switchChapter();
 	void playFinalSequence();
+	void showCredits();
 };
 
 } // End of namespace LastExpress

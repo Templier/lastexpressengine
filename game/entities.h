@@ -94,6 +94,9 @@ public:
 
 	int count() const { return _entities.size(); }
 
+	// Scene
+	void loadSceneFromField491(CarIndex car, EntityData::Field491Value field491, bool alternate = false);
+
 	// Sound
 	int getSoundValue(EntityIndex index);
 
