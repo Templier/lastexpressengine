@@ -62,14 +62,14 @@ void FrameInfo::read(Common::SeekableReadStream *in, bool isSequence) {
 	field_2E = in->readUint16LE();
 	field_30 = in->readByte();
 	field_31 = in->readByte();
-	field_32 = in->readByte();
+	soundAction = in->readByte();
 	field_33 = in->readByte();
-	field_34 = in->readUint32LE();
+	position = in->readUint32LE();
 	field_38 = in->readUint32LE();
 	field_3C = in->readUint16LE();
 	location = in->readUint16LE();
 	field_40 = in->readUint16LE();
-	field_42 = in->readUint32LE();
+	field_42 = in->readUint16LE();
 }
 
 
@@ -86,7 +86,8 @@ AnimFrame::AnimFrame(Common::SeekableReadStream *in, const FrameInfo &f) : _pale
 	debugC(6, kLastExpressDebugGraphics, "    Decompressed end offset: %d", f.decompressedEndOffset);
 	debugC(6, kLastExpressDebugGraphics, "    Compression type: %u / %u", f.compressionType, f.subType);
 	debugC(6, kLastExpressDebugGraphics, "    Hotspot: (%d, %d) x (%d, %d)\n", f.hotspot.left, f.hotspot.top, f.hotspot.right, f.hotspot.bottom);
-	debugC(6, kLastExpressDebugGraphics, "    Unknown: %d - %u - %u - %u - %u - %d - %d - %d", f.field_2E, f.field_30, f.field_31, f.field_32, f.field_33, f.field_34, f.field_38, f.field_3C);
+	debugC(6, kLastExpressDebugGraphics, "    Unknown: %d - %u - %u - %u - %d - %d - %d", f.field_2E, f.field_30, f.field_31, f.field_33, f.position, f.field_38, f.field_3C);
+	debugC(6, kLastExpressDebugGraphics, "    Sound action: %d", f.soundAction);
 	debugC(6, kLastExpressDebugGraphics, "    Location: %d", f.location);
 	debugC(6, kLastExpressDebugGraphics, "    Unknown: %d - %d", f.field_40, f.field_42);
 

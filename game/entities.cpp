@@ -81,23 +81,18 @@
 namespace LastExpress {
 
 static const int soundValues[32] = {
-	16,
-	15,
-	14,
-	13,
-	12,
-	11, 11,
-	10, 10,
-	9, 9,
-	8, 8,
-	7, 7, 7,
-	6, 6, 6,
-	5, 5, 5, 5,
-	4, 4, 4, 4,
+	16,	15,	14,	13,	12,
+	11, 11,	10, 10,	9, 9, 8, 8,
+	7, 7, 7, 6, 6, 6,
+	5, 5, 5, 5,	4, 4, 4, 4,
 	3, 3, 3, 3, 3
 };
 
-static const EntityData::Field491Value field491_values[9] = {EntityData::kField491_0, EntityData::kField491_8200, EntityData::kField491_7500, EntityData::kField491_6470, EntityData::kField491_5790, EntityData::kField491_4840, EntityData::kField491_4070, EntityData::kField491_3050, EntityData::kField491_2740};
+static const EntityData::Field491Value field491_values[9] = {EntityData::kField491_0, EntityData::kField491_8200,
+	                                                         EntityData::kField491_7500, EntityData::kField491_6470,
+	                                                         EntityData::kField491_5790, EntityData::kField491_4840,
+	                                                         EntityData::kField491_4070, EntityData::kField491_3050,
+	                                                         EntityData::kField491_2740};
 
 #define ADD_ENTITY(class) \
 	_entities.push_back(new class(engine));
@@ -189,6 +184,9 @@ EntityData::EntityCallData *Entities::getData(EntityIndex entity) const {
 	return _entities[entity]->getData();
 }
 
+//////////////////////////////////////////////////////////////////////////
+// Savegame
+//////////////////////////////////////////////////////////////////////////
 void Entities::saveLoadWithSerializer(Common::Serializer &ser) {
 	_header->saveLoadWithSerializer(ser);
 	for (uint i = 1; i < _entities.size(); i++)
@@ -208,17 +206,16 @@ void Entities::setup(ChapterIndex chapter) {
 			prepareSequences((EntityIndex)i);
 		}
 
-		// Move that to reset method in state
-		memset(getState()->field1000, 0, 1000*sizeof(int));
-		memset(getState()->field16, 0, 16*sizeof(int));
-		memset(getState()->field16_2, 0, 16*sizeof(int));
+		// Init compartments & positions
+		memset(&_compartments, 0, sizeof(_compartments));
+		memset(&_compartments1, 0, sizeof(_compartments1));
+		memset(&_positions, 0, sizeof(_positions));
 
-		// FIXME call to sound cache
+		getSound()->setupQueue(13);
 	}
 
-	// Skip "header"
+	// we skip the header when doing entity setup
 	for (uint i = 1; i < _entities.size(); i++) {
-
 		// Special case of chapters (prevents infinite loop as we will be called from Chapters functions when changing chapters)
 		if (i == kEntityChapters && chapter >= 2)
 			continue;
@@ -240,10 +237,9 @@ void Entities::reset() {
 }
 
 //////////////////////////////////////////////////////////////////////////
-// Scene setup & drawing
+// State & Sequences
 //////////////////////////////////////////////////////////////////////////
 
-// Note: remember to call the function pointer (we do not pass it our implementation)
 void Entities::resetState(EntityIndex entityIndex) {
 	getData(entityIndex)->current_call = 0;
 	getData(entityIndex)->inventoryItem = kItemNone;
@@ -273,6 +269,7 @@ void Entities::resetState(EntityIndex entityIndex) {
 	getLogic()->updateCursor();
 }
 
+
 void Entities::updateFields() {
 	if (!getFlags()->gameRunning)
 		return;
@@ -288,7 +285,7 @@ void Entities::updateFields() {
 			break;
 
 		case kDirectionUp:
-		case kDirectionDown:	// Replace calls to CheckFields8
+		case kDirectionDown:	// Replaces calls to CheckFields8
 			if (data->direction != kDirectionUp || (data->field_491 + data->field_4A3 * 10) >= 10000)
 			{
 				if (data->direction == kDirectionDown) {
@@ -301,19 +298,67 @@ void Entities::updateFields() {
 			break;
 
 		case kDirectionLeft:
-			data->field_49D += 1;
+			data->currentFrame2 += 1;
 			break;
 
 		case kDirectionRight:
 			data->field_4A1 += 9;
 			break;
 
-		case kDirection5:
-			if (data->field_4AB == 4)
+		case kDirectionSwitch:
+			if (data->direction2 == kDirectionRight)
 				data->field_4A1 += 9;
 			break;
 
 		}
+	}
+}
+
+void Entities::updateEntity(EntityIndex entityIndex) {
+	Sequence *sequence = NULL;
+	int16 *currentFrame = NULL;
+	bool found = false;
+
+	if (getData(entityIndex)->direction == kDirectionSwitch) {
+		sequence = getData(entityIndex)->sequence3;
+		currentFrame = &getData(entityIndex)->currentFrame3;
+	} else {
+		sequence = getData(entityIndex)->sequence2;
+		currentFrame = &getData(entityIndex)->currentFrame2;
+	}
+
+	if (!sequence)
+		return;
+
+	// Save current values
+	int16 oldFrame = *currentFrame;
+	int16 field_4A1 = getData(entityIndex)->field_4A1;
+
+	do {
+		// Check we do not get past the end
+		if (*currentFrame >= (int)sequence->count() - 1)
+			break;
+
+		// Get the proper frame
+		FrameInfo *info = sequence->getFrameInfo(*currentFrame);
+
+		if (info->field_33 & 8) {
+			found = true;
+		} else {
+			if (info->soundAction == 35)
+				found = true;
+
+			getData(entityIndex)->field_4A1 += info->field_30;
+
+			// Progress to the next frame
+			++*currentFrame;
+		}
+	} while (!found);
+
+	// Restore old values
+	if (!found) {
+		*currentFrame = oldFrame;
+		getData(entityIndex)->field_4A1 = field_4A1;
 	}
 }
 
@@ -347,7 +392,7 @@ void Entities::setupSequences() {
 			warning("Entities::setupSequences: not implemented!");
 		}
 
-		if (data->direction == kDirection5) {
+		if (data->direction == kDirectionSwitch) {
 
 			// Clear sequence 2
 			if (data->sequence2) {
@@ -364,8 +409,8 @@ void Entities::setupSequences() {
 				strcpy(data->sequenceName3, "");
 			}
 
-			data->direction = data->field_4AB;
-			data->field_49D = -1;
+			data->direction = data->direction2;
+			data->currentFrame2 = -1;
 			data->field_49B = 0;
 		}
 
@@ -380,15 +425,37 @@ void Entities::setupSequences() {
 	warning("Entities::setupSequences: not implemented!");
 }
 
-void Entities::resetSequences(EntityIndex entityIndex) {
-	Entity *entity = get(entityIndex);
+void Entities::resetSequences(EntityIndex entityIndex) const {
 
-	if (getData(entityIndex)->direction == kDirection5) {
-
+	// Reset direction
+	if (getData(entityIndex)->direction == kDirectionSwitch) {
+		getData(entityIndex)->direction = getData(entityIndex)->direction2;
+		getData(entityIndex)->field_49B = 0;
+		getData(entityIndex)->currentFrame2 = -1;
 	}
 
+	// FIXME: in the original engine, the sequence pointers might just be copies,
+	// make sure we free the associated memory at some point
+	getData(entityIndex)->sequence0 = NULL;
+	getData(entityIndex)->sequence1 = NULL;
+
+	SAFE_DELETE(getData(entityIndex)->sequence2);
+	SAFE_DELETE(getData(entityIndex)->sequence3);
+	SAFE_DELETE(getData(entityIndex)->sequence4);
+
+	getData(entityIndex)->field_4A9 = 0;
+	getData(entityIndex)->field_4AA = 0;
+	getData(entityIndex)->field_4CD = 0;
+
+	strcpy((char*)&getData(entityIndex)->sequenceName2, "");
+	strcpy((char*)&getData(entityIndex)->sequenceName3, "");
+
+	// Original engine resets flag to decompress data on the fly (we don't need to do that)
 }
 
+//////////////////////////////////////////////////////////////////////////
+// Callbacks
+//////////////////////////////////////////////////////////////////////////
 void Entities::setupCallbacks() {
 	if (!getFlags()->gameRunning)
 		return;
@@ -433,68 +500,12 @@ void Entities::executeCallbacks() {
 	} while (!processed);
 }
 
+//////////////////////////////////////////////////////////////////////////
+// Processing
+//////////////////////////////////////////////////////////////////////////
 void Entities::processEntity(EntityIndex entity) {
 	getFlags()->flag_entities_0 = true;
 	warning("Entities::processEntity: not implemented!");
-}
-
-int Entities::getSoundValue(EntityIndex entity) {
-	if (entity == kEntityNone)
-		return 16;
-
-	if (getData(entity)->car != getData(kEntityNone)->car)
-		return 0;
-
-	// Compute sound value
-	int ret = 2;
-
-	// Get default value if valid
-	int index = abs(getData(entity)->field_491 - getData(kEntityNone)->field_491) / 230;
-	if (index < 32)
-		ret = soundValues[index];
-
-	if (getData(entity)->field_493 == EntityData::kField493_2) {
-		if (getData(entity)->car != kCarKronos
-		&& !getEntities()->checkFields15()
-		&& !getEntities()->checkFields16())
-			return 0;
-
-		return ret / 6;
-	}
-
-	switch (getData(entity)->car) {
-	default:
-		break;
-
-	case kCarKronos:
-		if (getEntities()->checkFields14(entity) != getEntities()->checkFields14(kEntityNone))
-			ret >>= 1;
-		break;
-
-	case kCarGreenSleeping:
-	case kCarRedSleeping:
-		if (getEntities()->checkFields6(kEntityNone) && !getEntities()->checkFields14(entity))
-			ret >>= 1;
-
-		if (getData(kEntityNone)->field_493
-		&& (getData(entity)->field_491 != EntityData::kField491_1 || !getEntities()->checkFields9(kEntityNone, entity, 400)))
-			ret >>=1;
-		break;
-
-	case kCarRestaurant:
-		if (getEntities()->checkFields12(entity) == getEntities()->checkFields12(kEntityNone)
-		&& (getEntities()->checkFields13(entity) != getEntities()->checkFields13(kEntityNone)))
-			ret >>=1;
-		else
-			ret >>=2;
-		break;
-	}
-
-	return ret;
-}
-
-void Entities::updateEntity(EntityIndex entity) {
-	error("Entities::updateEntity: not implemented!");
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -509,9 +520,7 @@ void Entities::drawSequenceRight(EntityIndex index, const char* sequence) {
 }
 
 void Entities::prepareSequences(EntityIndex index) {
-	debugC(8, kLastExpressDebugLogic, "Drawing sequences for entity %d", index);
-
-
+	debugC(8, kLastExpressDebugLogic, "Prepare sequences for entity %d", index);
 
 	warning("Entities::prepareSequences: not implemented!");
 }
@@ -528,7 +537,7 @@ void Entities::drawSequenceInternal(EntityIndex index, const char* sequence, Ent
 
 	// Reset fields
 	getData(index)->field_49B = 0;
-	getData(index)->field_49D = 0;
+	getData(index)->currentFrame2 = 0;
 	getData(index)->field_4A1 = 0;
 
 	drawSequencesInternal(index, direction, true);
@@ -588,7 +597,7 @@ void Entities::getSequenceName(EntityIndex index, EntityDirection direction, cha
 
 		case 2:
 		case 3:
-		case kDirection5:
+		case 5:
 		case 6:
 		case 7:
 		case 8:
@@ -672,7 +681,7 @@ void Entities::getSequenceName(EntityIndex index, EntityDirection direction, cha
 
 		case 2:
 		case 3:
-		case kDirection5:
+		case 5:
 		case 6:
 		case 7:
 		case 8:
@@ -753,6 +762,7 @@ void Entities::getSequenceName(EntityIndex index, EntityDirection direction, cha
 
 //////////////////////////////////////////////////////////////////////////
 /// Compartments
+//////////////////////////////////////////////////////////////////////////
 void Entities::updatePosition(EntityIndex entity, CarIndex car, Position position, bool processScene) {
 	if (entity == kEntity39)
 		entity = kEntityNone;
@@ -762,7 +772,7 @@ void Entities::updatePosition(EntityIndex entity, CarIndex car, Position positio
 
 	_positions[100 * car + position] &= ~(1 << entity);
 
-	if (processScene && (isPlayerPosition(car, position) || car == kCarRestaurant && position == 57 && isPlayerPosition(kCarRestaurant, 50))) {
+	if (processScene && (isPlayerPosition(car, position) || (car == kCarRestaurant && position == 57 && isPlayerPosition(kCarRestaurant, 50)))) {
 		getSound()->excuseMe(entity);
 		getLogic()->loadScene(getLogic()->processIndex(getState()->scene));
 		getSound()->playSound(kEntityNone, "CAT1127A");
@@ -967,6 +977,64 @@ void Entities::updatePositionsExit(EntityIndex entity, CarIndex car, Position po
 	_positions[100 * car + position2] &= ~(1 << entity);
 
 	getLogic()->updateCursor();
+}
+
+//////////////////////////////////////////////////////////////////////////
+// Misc (Sound, etc.)
+//////////////////////////////////////////////////////////////////////////
+int Entities::getSoundValue(EntityIndex entity) {
+	if (entity == kEntityNone)
+		return 16;
+
+	if (getData(entity)->car != getData(kEntityNone)->car)
+		return 0;
+
+	// Compute sound value
+	int ret = 2;
+
+	// Get default value if valid
+	int index = abs(getData(entity)->field_491 - getData(kEntityNone)->field_491) / 230;
+	if (index < 32)
+		ret = soundValues[index];
+
+	if (getData(entity)->field_493 == EntityData::kField493_2) {
+		if (getData(entity)->car != kCarKronos
+		&& !getEntities()->checkFields15()
+		&& !getEntities()->checkFields16())
+			return 0;
+
+		return ret / 6;
+	}
+
+	switch (getData(entity)->car) {
+	default:
+		break;
+
+	case kCarKronos:
+		if (getEntities()->checkFields14(entity) != getEntities()->checkFields14(kEntityNone))
+			ret >>= 1;
+		break;
+
+	case kCarGreenSleeping:
+	case kCarRedSleeping:
+		if (getEntities()->checkFields6(kEntityNone) && !getEntities()->checkFields14(entity))
+			ret >>= 1;
+
+		if (getData(kEntityNone)->field_493
+		&& (getData(entity)->field_491 != EntityData::kField491_1 || !getEntities()->checkFields9(kEntityNone, entity, 400)))
+			ret >>=1;
+		break;
+
+	case kCarRestaurant:
+		if (getEntities()->checkFields12(entity) == getEntities()->checkFields12(kEntityNone)
+		&& (getEntities()->checkFields13(entity) != getEntities()->checkFields13(kEntityNone)))
+			ret >>=1;
+		else
+			ret >>=2;
+		break;
+	}
+
+	return ret;
 }
 
 //////////////////////////////////////////////////////////////////////////

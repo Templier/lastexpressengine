@@ -89,6 +89,9 @@ Sound::~Sound() {
 //////////////////////////////////////////////////////////////////////////
 // Sound queue management
 //////////////////////////////////////////////////////////////////////////
+void Sound::setupQueue(int a1, int a2) {
+	warning("SoundManager::setupQueue: not implemented!");
+}
 
 void Sound::removeFromQueue(EntityIndex entity) {
 	error("SoundManager::reset: not implemented!");

@@ -300,12 +300,12 @@ enum ObjectLocation {
 // Entity direction
 //////////////////////////////////////////////////////////////////////////
 enum EntityDirection {
-	kDirectionNone  = 0,
-	kDirectionUp    = 1,
-	kDirectionDown  = 2,
-	kDirectionLeft  = 3,
-	kDirectionRight = 4,
-	kDirection5     = 5
+	kDirectionNone   = 0,
+	kDirectionUp     = 1,
+	kDirectionDown   = 2,
+	kDirectionLeft   = 3,
+	kDirectionRight  = 4,
+	kDirectionSwitch = 5
 };
 
 //////////////////////////////////////////////////////////////////////////

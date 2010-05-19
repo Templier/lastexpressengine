@@ -93,7 +93,7 @@ IMPLEMENT_FUNCTION_SIII(Mahmud, function4, 4)
 		UPDATE_PARAM_FROM_TICKS(5, params->param3);
 
 		if (!getLogic()->checkSceneFields(kSceneNone, false))
-			getLogic()->loadSceneFromObject2((ObjectIndex)params->param4);
+			getLogic()->loadSceneFromObject((ObjectIndex)params->param4, true);
 
 		break;
 
@@ -238,19 +238,19 @@ IMPLEMENT_FUNCTION_II(Mahmud, function10, 10)
 				break;
 
 			case 55:
-				getLogic()->loadSceneFromObject2(kObjectCompartment5);
+				getLogic()->loadSceneFromObject(kObjectCompartment5, true);
 				break;
 
 			case 56:
-				getLogic()->loadSceneFromObject2(kObjectCompartment6);
+				getLogic()->loadSceneFromObject(kObjectCompartment6, true);
 				break;
 
 			case 57:
-				getLogic()->loadSceneFromObject2(kObjectCompartment7);
+				getLogic()->loadSceneFromObject(kObjectCompartment7, true);
 				break;
 
 			case 58:
-				getLogic()->loadSceneFromObject2(kObjectCompartment8);
+				getLogic()->loadSceneFromObject(kObjectCompartment8, true);
 				break;
 			}
 		}
@@ -317,19 +317,19 @@ IMPLEMENT_FUNCTION(Mahmud, function11, 11)
 			break;
 
 		case 55:
-			getLogic()->loadSceneFromObject2(kObjectCompartment5);
+			getLogic()->loadSceneFromObject(kObjectCompartment5, true);
 			break;
 
 		case 56:
-			getLogic()->loadSceneFromObject2(kObjectCompartment6);
+			getLogic()->loadSceneFromObject(kObjectCompartment6, true);
 			break;
 
 		case 57:
-			getLogic()->loadSceneFromObject2(kObjectCompartment7);
+			getLogic()->loadSceneFromObject(kObjectCompartment7, true);
 			break;
 
 		case 58:
-			getLogic()->loadSceneFromObject2(kObjectCompartment8);
+			getLogic()->loadSceneFromObject(kObjectCompartment8, true);
 			break;
 		}
 		break;

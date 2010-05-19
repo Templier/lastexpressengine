@@ -251,59 +251,84 @@ public:
 
 	struct EntityCallData {
 		byte callbacks[9];
-		// uint32 ??
-		// uint16 ??
-		// byte ??
+		uint32 field_489;
+		uint16 field_48D;
+		byte field_48F;
 		byte current_call;
 		Field491Value field_491;
 		Field493Value field_493;
-		CarIndex car;
-		//int16 field_497;
-		InventoryItem inventoryItem;
-		EntityDirection direction;
+		CarIndex car;					// byte
+		byte field_496;
+		byte field_497;
+		byte field_498;
+		InventoryItem inventoryItem;	// byte
+		EntityDirection direction;		// byte
 		int16 field_49B;
-		int16 field_49D;
-
+		int16 currentFrame2;
+		int16 currentFrame3;
 		int16 field_4A1;
 		int16 field_4A3;
-		ClothesIndex clothes;
+		ClothesIndex clothes;			// byte
+		byte position;
+		CarIndex car2;                  // byte
 		byte field_4A8;
 		byte field_4A9;
 		byte field_4AA;
-		EntityDirection field_4AB;
-
-		char sequenceName3[9];
+		EntityDirection direction2;
 		char sequenceName2[9];
-		char sequenceName[9];
-
+		uint32 field_4B5;
+		char sequenceName3[9];
+		uint32 field_4C2;
+		char sequenceName[6];
+		byte field_4CC;
+		byte field_4CD;
+		uint32 field_4CE;
+		uint32 field_4D2;
+		uint32 field_4D6;
 		Sequence *sequence0;
 		Sequence *sequence1;
 		Sequence *sequence2;
 		Sequence *sequence3;
+		Sequence *sequence4;
 
 		EntityCallData() {
 			memset(&callbacks, 0, 9 * sizeof(byte));
+			field_489 = 0;
+			field_48D = 0;
+			field_48F = 0;
 			current_call = 0;
 			field_491 = EntityData::kField491_0;
 			field_493 = EntityData::kField493_0;
 			car = kCarNone;
-			//field_497 = 0;
+			field_496 = 0;
+			field_497 = 0;
+			field_498 = 0;
 			inventoryItem = kItemNone;
 			direction = kDirectionNone;
 			field_49B = 0;
-			field_49D = 0;
-
+			currentFrame2 = 0;
+			currentFrame3 = 0;
 			field_4A1 = 0;
 			field_4A3 = 30;
 			clothes = kClothesDefault;
+			position = 0;
+			car2 = kCarNone;
 			field_4A8 = 0;
 			field_4A9 = 0;
 			field_4AA = 0;
-			field_4AB = kDirectionNone;
+			direction2 = kDirectionNone;
 
 			memset(&sequenceName3, 0, 9 * sizeof(char));
 			memset(&sequenceName2, 0, 9 * sizeof(char));
-			memset(&sequenceName, 0, 9 * sizeof(char));
+			memset(&sequenceName, 0, 6 * sizeof(char));
+
+			field_4B5 = 0;
+			field_4C2 = 0;
+			field_4CC = 0;
+			field_4CD = 0;
+			field_4CE = 0;
+			field_4D2 = 0;
+			field_4D6 = 0;
 
 			sequence0 = NULL;
 			sequence1 = NULL;

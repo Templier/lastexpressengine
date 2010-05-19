@@ -68,8 +68,8 @@ public:
 	void loadScene(SceneIndex sceneIndex);
 	void setScene(SceneIndex sceneIndex);
 
-	void loadSceneFromObject(ObjectIndex object);
-	void loadSceneFromObject2(ObjectIndex object);
+	void loadSceneFromCar(CarIndex car, int index, bool alternate);
+	void loadSceneFromObject(ObjectIndex object, bool alternate = false);
 	void loadSceneFromItem(InventoryItem item);
 	void loadSceneFromPosition(CarIndex car, Position position, int param3 = -1);
     SceneIndex getIndexFromPosition(CarIndex car, Position position, int param3 = -1);

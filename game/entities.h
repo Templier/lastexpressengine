@@ -51,16 +51,26 @@ public:
 	~Entities();
 
 	void setup(ChapterIndex chapter);
-
 	void reset();
-	void resetSequences(EntityIndex entity);
 
 	// Update & drawing
+
+	/**
+	 * Reset an entity state
+	 *
+	 * @param entityIndex entity index
+	 * @note remember to call the function pointer (we do not pass it our implementation)
+	 */
 	void resetState(EntityIndex entity);
 	void updateFields();
 	void setupSequences();
 	void setupCallbacks();
 
+	/**
+	 * Update an entity current sequence frame (and related fields)
+	 *
+	 * @param entityIndex entity index
+	 */
 	void updateEntity(EntityIndex entity);
 
 	void updatePosition(EntityIndex entity, CarIndex car, Position position, bool processScene = false);
@@ -78,6 +88,9 @@ public:
 	// Accessors
 	Entity *get(EntityIndex entity);
 	EntityData::EntityCallData *getData(EntityIndex entity) const;
+	int getPosition(int index) { assert(index < _positionsNumber); return _positions[index]; }
+	int getCompartments(int index) { assert(index < _compartmentsNumber); return _compartments[index]; }
+	int getCompartments1(int index) { assert(index < _compartmentsNumber); return _compartments1[index]; }
 
 	int count() const { return _entities.size(); }
 
@@ -94,9 +107,9 @@ public:
 
 	/**
 	 * Check if the player is in the specified position
-	 * @param car 		The car. 
-	 * @param position  The position. 
-	 * @return true if player is in that position, false if not. 
+	 * @param car 		The car.
+	 * @param position  The position.
+	 * @return true if player is in that position, false if not.
 	*/
 	bool isPlayerPosition(CarIndex car, Position position) const;
 	bool checkFields5(EntityIndex entity, CarIndex car) const;
@@ -121,7 +134,6 @@ public:
 	bool checkFields24(EntityIndex entity, EntityData::Field491Value field491, int absValue) const;
 	bool checkFields25(EntityIndex entity) const;
 
-
 	// Serializable
 	void saveLoadWithSerializer(Common::Serializer &ser);
 
@@ -132,6 +144,8 @@ private:
 	LastExpressEngine	    *_engine;
 	EntityData 			    *_header;
 	Common::Array<Entity *>  _entities;
+
+	// Compartments & positions
 	int _compartments[_compartmentsNumber];
 	int _compartments1[_compartmentsNumber];
 	int _positions[_positionsNumber];
@@ -146,6 +160,8 @@ private:
 
 	void updatePositionsEnter(EntityIndex entity, CarIndex car, Position position1, Position position2, Position position3, Position position4);
 	void updatePositionsExit(EntityIndex entity, CarIndex car, Position position1, Position position2);
+
+	void resetSequences(EntityIndex entity) const;
 };
 
 } // End of namespace LastExpress

@@ -129,7 +129,7 @@ IMPLEMENT_FUNCTION_SI(Abbot, function4, 4)
 		 || getEntities()->checkFields1(kEntityNone, kCarRedSleeping, EntityData::kField491_6130)) {
 			getAction()->playAnimation(isDay() ? kEventCathTurningDay : kEventCathTurningNight);
 			getSound()->playSound(kEntityNone, "BUMP");
-			getLogic()->loadSceneFromObject2(kObjectCompartmentC);
+			getLogic()->loadSceneFromObject(kObjectCompartmentC, true);
 		}
 		break;
 	}

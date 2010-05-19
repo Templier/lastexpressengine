@@ -60,7 +60,7 @@
 	    uint16 {2}    - Set to 1 in some places
 	    uint16 {2}    - location (z-order?)
 	    uint16 {2}    - Unknown
-	    uint32 {4}    - Unknown
+	    uint32 {2}    - Unknown
 
 	    (for NIS files: found at 0x124)
 	    byte {1}      - Compression type
@@ -89,7 +89,7 @@ struct FrameInfo {
 	uint32 yPos1;                 ///< Top-left Y coordinate
 	uint32 xPos2;                 ///< Bottom-right X coordinate
 	uint32 yPos2;                 ///< Bottom-right Y coordinate
-	uint32 initialSkip;           ///< Initial offset of decompressed data (doubled, since each pixel occupies one color word)
+	uint32 initialSkip;           ///< Initial on-screen offset of decompressed data (doubled, since each pixel occupies one color word)
 	uint32 decompressedEndOffset; ///< End of data after decompression
 
 	// NIS frame headers end here. SEQ frame headers have additional 32 bytes of
@@ -104,14 +104,14 @@ struct FrameInfo {
 	uint16 field_2E;
 	byte field_30;
 	byte field_31;
-	byte field_32;
+	byte soundAction;
 	byte field_33;
-	uint32 field_34;
+	uint32 position;
 	uint32 field_38;
 	uint16 field_3C;
 	uint16 location;
 	uint16 field_40;
-	uint32 field_42;
+	uint16 field_42;
 };
 
 class AnimFrame : public Drawable {

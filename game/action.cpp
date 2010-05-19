@@ -419,7 +419,7 @@ IMPLEMENT_ACTION(inventory) {
 
 		loadSceneObject(backup, getState()->sceneBackup);
 
-		if (getState()->field1000[backup.getHeader()->position + 100 * backup.getHeader()->car])
+		if (getEntities()->getPosition(backup.getHeader()->position + 100 * backup.getHeader()->car))
 			index = getLogic()->processIndex(getState()->sceneBackup);
 	}
 
@@ -1591,12 +1591,8 @@ void Action::playCompartmentSoundEvents(EntityIndex entityIndex, ObjectIndex obj
 			getSound()->playSound(entityIndex, (random(2)) ? "JAC1000" : "JAC1000A");
 	}
 
-	if (param3) {
-		if (loadSceneFunction)
-			getLogic()->loadSceneFromObject(object);
-		else
-			getLogic()->loadSceneFromObject2(object);
-	}
+	if (param3)
+		getLogic()->loadSceneFromObject(object, !loadSceneFunction);
 }
 
 //////////////////////////////////////////////////////////////////////////

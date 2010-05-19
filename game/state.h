@@ -320,11 +320,6 @@ public:
 		GameProgress progress;
 		byte events[512];
 
-		// Needs to be figured out
-		int field1000[1000];
-		int field16[16];
-		int field16_2[16];
-
 		GameState() {
 			brightness = _defaultBrigthness;
 			volume = _defaultVolume;
@@ -340,10 +335,6 @@ public:
 
 			// Clear game events
 			memset(events, 0, 512*sizeof(byte));
-
-			memset(field1000, 0, 1000*sizeof(int));
-			memset(field16, 0, 16*sizeof(int));
-			memset(field16_2, 0, 16*sizeof(int));
 		}
 	};
 

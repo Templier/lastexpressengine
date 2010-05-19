@@ -78,4 +78,7 @@
 #define askForRedraw() _engine->getGraphicsManager()->change();
 #define redrawScreen() _engine->getGraphicsManager()->update(); _engine->_system->updateScreen();
 
+// Used to delete entity sequences
+#define SAFE_DELETE(_p) { if(_p) { delete _p; _p=NULL; } }
+
 #endif // LASTEXPRESS_HELPERS_H

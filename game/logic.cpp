@@ -377,7 +377,7 @@ void Logic::processScene() {
 
 	loadSceneObject(backup, getState()->sceneBackup);
 
-	if (getState()->field1000[backup.getHeader()->position + 100 * backup.getHeader()->car])
+	if (getEntities()->getPosition(backup.getHeader()->position + 100 * backup.getHeader()->car))
 		loadScene(getLogic()->processIndex(getState()->sceneBackup));
 	else
 		loadScene(getState()->sceneBackup);
@@ -387,7 +387,19 @@ LastExpress::SceneIndex Logic::processIndex(SceneIndex sceneIndex) {
 	error("Logic::processIndex is not implemented!");
 }
 
-void Logic::loadSceneFromObject(ObjectIndex object) {
+//////////////////////////////////////////////////////////////////////////
+// Loading Scences
+//////////////////////////////////////////////////////////////////////////
+void Logic::loadSceneFromCar(CarIndex car, int index, bool alternate) {
+	error("Logic::loadSceneFromCar is not implemented!");
+}
+
+void Logic::loadSceneFromObject(ObjectIndex object, bool alternate) {
+	if (alternate) {
+		loadSceneFromPosition((object < 10 ? kCarGreenSleeping : kCarRedSleeping), 17 - (object - 1) * 2);
+		return;
+	}
+
 	switch (object) {
 	default:
 		break;
@@ -414,10 +426,6 @@ void Logic::loadSceneFromObject(ObjectIndex object) {
 		loadSceneFromPosition(kCarGreenSleeping, 25);
 		break;
 	}
-}
-
-void Logic::loadSceneFromObject2(ObjectIndex object) {
-	loadSceneFromPosition((object < 10 ? kCarGreenSleeping : kCarRedSleeping), 17 - (object - 1) * 2);
 }
 
 void Logic::loadSceneFromItem(InventoryItem item) {
@@ -601,15 +609,15 @@ void Logic::preProcessScene(SceneIndex *index) {
 		if (scene.getHeader()->param1 >= 16)
 			break;
 
-		if (getState()->field16[scene.getHeader()->param1] || getState()->field16_2[scene.getHeader()->param1]) {
+		if (getEntities()->getCompartments(scene.getHeader()->param1) || getEntities()->getCompartments1(scene.getHeader()->param1)) {
 
 			loadSceneObject(currentScene, getState()->scene);
 
 			if ((checkSceneFields(getState()->scene, false) && checkSceneFields(*index, false) && currentScene.getHeader()->count < scene.getHeader()->count)
 			 || (checkSceneFields(getState()->scene, true)  && checkSceneFields(*index, true)  && currentScene.getHeader()->count > scene.getHeader()->count)) {
 
-				if (State::getPowerOfTwo(getState()->field16[scene.getHeader()->param1]) != 30
-				 && State::getPowerOfTwo(getState()->field16_2[scene.getHeader()->param1]) != 30 )
+				if (State::getPowerOfTwo(getEntities()->getCompartments(scene.getHeader()->param1)) != 30
+				 && State::getPowerOfTwo(getEntities()->getCompartments1(scene.getHeader()->param1)) != 30 )
 					getSound()->playSound(kEntityNone, "CAT1126A");
 
 				*index = scene.getHotspot()->scene;
