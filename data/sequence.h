@@ -141,7 +141,7 @@ public:
 	~Sequence();
 
 	bool load(Common::SeekableReadStream *stream);
-	uint32 count() const;
+	uint32 count() const { return _frames.size(); };
 	AnimFrame *getFrame(uint32 index = 0);
 	FrameInfo *getFrameInfo(uint32 index = 0);
 

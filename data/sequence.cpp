@@ -379,10 +379,6 @@ bool Sequence::load(Common::SeekableReadStream *stream) {
 	return true;
 }
 
-uint32 Sequence::count() const {
-	return _frames.size();
-}
-
 FrameInfo *Sequence::getFrameInfo(uint32 index) {
 	if (_frames.size() == 0)
 		error("Trying to decode a sequence before loading its data");
