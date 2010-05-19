@@ -50,6 +50,11 @@ class State;
 
 class Logic : public EventHandler {
 public:
+	enum CheckPositionType {
+		kCheckPositionType0,
+		kCheckPositionType1,
+		kCheckPositionType2
+	};
 
 	Logic(LastExpressEngine *engine);
 	~Logic();
@@ -79,7 +84,8 @@ public:
 	// Index processing
 	void processScene();
 	SceneIndex processIndex(SceneIndex sceneIndex);
-	bool checkPosition(SceneIndex sceneIndex, bool isSecondCheck) const;
+	bool checkPosition(SceneIndex sceneIndex, CheckPositionType kCheckPositionType0) const;
+	bool checkCurrentPosition(bool doCheckOtherCars) const;
 
 	// Accessors
 	bool isGameStarted() { return _runState.gameStarted; }

@@ -1333,10 +1333,10 @@ bool Entities::checkFields24(EntityIndex entity, EntityData::Field491Value field
 }
 
 bool Entities::checkFields25(EntityIndex entity) const {
-	if (getData(entity)->direction == kDirectionUp && getLogic()->checkPosition(kSceneNone, true))
+	if (getData(entity)->direction == kDirectionUp && getLogic()->checkPosition(kSceneNone, Logic::kCheckPositionType1))
 		return true;
 
-	return (getData(entity)->direction == kDirectionDown && getLogic()->checkPosition(kSceneNone, false));
+	return (getData(entity)->direction == kDirectionDown && getLogic()->checkPosition(kSceneNone, Logic::kCheckPositionType0));
 }
 
 

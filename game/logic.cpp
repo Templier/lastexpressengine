@@ -618,8 +618,8 @@ void Logic::preProcessScene(SceneIndex *index) {
 
 			loadSceneObject(currentScene, getState()->scene);
 
-			if ((checkPosition(getState()->scene, false) && checkPosition(*index, false) && currentScene.getHeader()->count < scene.getHeader()->count)
-			 || (checkPosition(getState()->scene, true)  && checkPosition(*index, true)  && currentScene.getHeader()->count > scene.getHeader()->count)) {
+			if ((checkPosition(getState()->scene, kCheckPositionType0) && checkPosition(*index, kCheckPositionType0) && currentScene.getHeader()->count < scene.getHeader()->count)
+			 || (checkPosition(getState()->scene, kCheckPositionType1)  && checkPosition(*index, kCheckPositionType1)  && currentScene.getHeader()->count > scene.getHeader()->count)) {
 
 				if (State::getPowerOfTwo(getEntities()->getCompartments(scene.getHeader()->param1)) != 30
 				 && State::getPowerOfTwo(getEntities()->getCompartments1(scene.getHeader()->param1)) != 30 )
@@ -898,7 +898,7 @@ void Logic::updateCursor(bool redraw) {
 	warning("Logic::updateCursor: not implemented!");
 }
 
-bool Logic::checkPosition(SceneIndex index, bool isSecondCheck) const {
+bool Logic::checkPosition(SceneIndex index, CheckPositionType type) const {
 	loadSceneObject(scene, (index ? index : getState()->scene));
 
 	CarIndex car = (CarIndex)scene.getHeader()->car;
@@ -906,10 +906,78 @@ bool Logic::checkPosition(SceneIndex index, bool isSecondCheck) const {
 
 	bool result = (car == kCarGreenSleeping || car == kCarRedSleeping);
 
-	if (!isSecondCheck)
+
+	switch (type){
+	default:
+	case kCheckPositionType0:
 		return result && (position >= 1 && position <= 19);
 
-	return result && (position >= 21 && position <= 40);
+	case kCheckPositionType1:
+		return result && (position >= 21 && position <= 40);
+
+	case kCheckPositionType2:
+		return result && ((position >= 2 && position <= 17) || (position >= 23 && position <= 39));
+	}
+}
+
+bool Logic::checkCurrentPosition(bool doCheckOtherCars) const {
+	loadSceneObject(scene, getState()->scene);
+
+	Position position = scene.getHeader()->position;
+	CarIndex car = (CarIndex)scene.getHeader()->car;
+
+	if (!doCheckOtherCars)
+		return (car == kCarGreenSleeping || car == kCarRedSleeping)
+		   && ((position >= 41 && position <= 48) || (position >= 51 && position <= 58));
+
+	if (position == 99)
+		return true;
+
+	switch (car){
+	default:
+		break;
+
+	case kCarGreenSleeping:
+	case kCarRedSleeping:
+	case kCarLocomotive:
+		if ((position >= 1 && position <= 18) || (position >= 22 && position <= 40))
+			return true;
+		break;
+
+	case kCarRestaurant:
+		if (position >= 73 && position <= 80)
+			return true;
+
+		if (position == 10 || position == 11)
+			return true;
+
+		break;
+
+	case kCarBaggage:
+		switch (position) {
+		default:
+			break;
+
+		case 10:
+		case 11:
+		case 80:
+		case 81:
+		case 82:
+		case 83:
+		case 84:
+		case 90:
+		case 91:
+			return true;
+		}
+		break;
+
+	case kCarCoalTender:
+		if (position == 2 || position == 10 || position == 11)
+			return true;
+		break;
+	}
+
+	return false;
 }
 
 } // End of namespace LastExpress
