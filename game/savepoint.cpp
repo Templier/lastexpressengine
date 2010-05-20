@@ -119,7 +119,7 @@ void SavePoints::addData(EntityIndex entity, ActionIndex action, uint32 param) {
 //////////////////////////////////////////////////////////////////////////
 void SavePoints::setCallback(EntityIndex index, Entity::Callback* callback) {
 	if (index >= 40)
-		error ("SavePoints::setCallback - attempting to use an invalid entity index. Valid values 0-39, was %d", index);
+		error("SavePoints::setCallback - attempting to use an invalid entity index. Valid values 0-39, was %d", index);
 
 	if (!callback->isValid())
 		error("SavePoints::setCallback - attempting to set an invalid callback for entity %d", index);
@@ -129,7 +129,7 @@ void SavePoints::setCallback(EntityIndex index, Entity::Callback* callback) {
 
 Entity::Callback *SavePoints::getCallback(EntityIndex index) const {
 	if (index >= 40)
-		error ("SavePoints::getCallback - attempting to use an invalid entity index. Valid values 0-39, was %d", index);
+		error("SavePoints::getCallback - attempting to use an invalid entity index. Valid values 0-39, was %d", index);
 
 	return _callbacks[index];
 }
@@ -162,13 +162,34 @@ void SavePoints::call(EntityIndex entity2, EntityIndex entity1, ActionIndex acti
 	}
 }
 
+void SavePoints::callAndProcess() {
+	SavePoint savepoint; // empty parameters
+
+	// We ignore the kEntityNone callback in the list
+	EntityIndex index = kEntityAbbot;
+
+	// Call all callbacks with empty parameters
+	bool isRunning = getFlags()->gameRunning;
+	while (isRunning) {
+
+		Entity::Callback *callback = getCallback(index);
+		if (callback && callback->isValid()) {
+			(*callback)(savepoint);
+			isRunning = getFlags()->gameRunning;
+		}
+
+		index = (EntityIndex)(index + 1);
+
+		// Process all savepoints when done
+		if (index >= 40 && isRunning)
+			process();
+	}
+}
+
 //////////////////////////////////////////////////////////////////////////
 // Misc
 //////////////////////////////////////////////////////////////////////////
 bool SavePoints::updateEntityFromData(const SavePoint &savepoint) {
-
-	int index = 0;
-
 	for (int i = 0; i < (int)_data.size(); i++) {
 
 		// Not a data savepoint!
@@ -179,16 +200,12 @@ bool SavePoints::updateEntityFromData(const SavePoint &savepoint) {
 		if (_data[i].entity1 == savepoint.entity1 && _data[i].action == savepoint.action) {
 			debugC(8, kLastExpressDebugLogic, "Update entity from data: entity1=%d, action=%d, param=%d", _data[i].entity1, _data[i].action, _data[i].param);
 
-			// the savepoint param is the index of the entity call parameter to update
+			// the SavePoint param value is the index of the entity call parameter to update
 			EntityData::EntityParameters *params = getEntities()->get(_data[i].entity1)->getParamData()->getParameters(8, 0);
-
-			// TODO: any way for that not to be ugly? - seems very wrong too
 			*((int*)params + _data[i].param) = 1;
+
 			return true;
 		}
-
-		// TODO: index is never accessed?
-		index++;
 	}
 
 	return false;
