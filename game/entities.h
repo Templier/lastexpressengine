@@ -38,8 +38,8 @@
 
 #include "lastexpress/shared.h"
 
+#include "common/rect.h"
 #include "common/serializer.h"
-
 
 namespace LastExpress {
 
@@ -62,16 +62,18 @@ public:
 	 * @note remember to call the function pointer (we do not pass it our implementation)
 	 */
 	void resetState(EntityIndex entity);
-	void updateFields();
+	void updateFields() const;
 	void setupSequences();
 	void setupCallbacks();
+
+	bool canInteractWith(const Common::Point &point) const;
 
 	/**
 	 * Update an entity current sequence frame (and related fields)
 	 *
 	 * @param entityIndex entity index
 	 */
-	void updateEntity(EntityIndex entity);
+	void updateEntity(EntityIndex entity) const;
 
 	void updatePosition(EntityIndex entity, CarIndex car, Position position, bool processScene = false);
 
@@ -159,7 +161,7 @@ private:
 	void drawSequenceInternal(EntityIndex index, const char* sequence, EntityDirection direction);
 	void drawSequencesInternal(EntityIndex index, EntityDirection direction, bool unknown);
 
-	void getSequenceName(EntityIndex index, EntityDirection direction, char *sequence1, char *sequence2);
+	void getSequenceName(EntityIndex index, EntityDirection direction, char *sequence1, char *sequence2) const;
 
 	void updatePositionsEnter(EntityIndex entity, CarIndex car, Position position1, Position position2, Position position3, Position position4);
 	void updatePositionsExit(EntityIndex entity, CarIndex car, Position position1, Position position2);

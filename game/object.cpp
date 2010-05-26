@@ -26,6 +26,7 @@
 #include "lastexpress/game/object.h"
 
 #include "lastexpress/game/logic.h"
+#include "lastexpress/game/state.h"
 
 #include "lastexpress/helpers.h"
 #include "lastexpress/lastexpress.h"
@@ -64,7 +65,7 @@ void Objects::update(ObjectIndex index, EntityIndex entity, ObjectLocation locat
 		getLogic()->updateCursor();
 	}
 
-	// TODO: update flag 3 (related to sound?)
+	getFlags()->flag_3 = true;
 
 	// Compartments
 	if (original_location != location && (original_location == kLocation2 || location == kLocation2))

@@ -209,7 +209,7 @@ void Entities::saveLoadWithSerializer(Common::Serializer &ser) {
 void Entities::setup(ChapterIndex chapter) {
 	if (chapter) {
 		// Reset current call, inventory item & draw sequences
-		for (int i = 1; i < (int)_entities.size(); i++) {
+		for (uint i = 1; i < _entities.size(); i++) {
 			getData((EntityIndex)i)->current_call = 0;
 			getData((EntityIndex)i)->inventoryItem = kItemNone;
 
@@ -250,6 +250,45 @@ void Entities::reset() {
 // State & Sequences
 //////////////////////////////////////////////////////////////////////////
 
+bool Entities::canInteractWith(const Common::Point &point) const {
+	if (!getFlags()->gameRunning)
+		return false;
+
+	EntityIndex index = kEntityNone;
+	int location = 10000;
+
+	// Check if there is an entity we can interact with
+	for (uint i = 1; i < _entities.size(); i++) {
+
+		Sequence *sequence = getData((EntityIndex)i)->sequence0;
+		FrameInfo *info = sequence->getFrameInfo();
+
+		// Skip sequences with no frames
+		if (!sequence->count())
+			continue;
+
+		// Check the hotspot
+		if (info->hotspot.contains(point)) {
+
+			// If closer to us, update with its values
+			if (location > info->location) {
+				location = info->location;
+				index = (EntityIndex)i;
+			}
+		}
+	}
+
+	// Check if we found an entity
+	if (!index)
+		return false;
+
+	// Check that there is an item to interact with
+	if (!getData(index)->inventoryItem)
+		return false;
+
+	return true;
+}
+
 void Entities::resetState(EntityIndex entityIndex) {
 	getData(entityIndex)->current_call = 0;
 	getData(entityIndex)->inventoryItem = kItemNone;
@@ -280,7 +319,7 @@ void Entities::resetState(EntityIndex entityIndex) {
 }
 
 
-void Entities::updateFields() {
+void Entities::updateFields() const {
 	if (!getFlags()->gameRunning)
 		return;
 
@@ -324,7 +363,7 @@ void Entities::updateFields() {
 	}
 }
 
-void Entities::updateEntity(EntityIndex entityIndex) {
+void Entities::updateEntity(EntityIndex entityIndex) const {
 	Sequence *sequence = NULL;
 	int16 *currentFrame = NULL;
 	bool found = false;
@@ -580,7 +619,7 @@ void Entities::drawSequencesInternal(EntityIndex index, EntityDirection directio
 	warning("Entities::drawSequencesInternal: not implemented!");
 }
 
-void Entities::getSequenceName(EntityIndex index, EntityDirection direction, char *sequence1, char *sequence2) {
+void Entities::getSequenceName(EntityIndex index, EntityDirection direction, char *sequence1, char *sequence2) const {
 	EntityData::EntityCallData *data = getData(index);
 	loadSceneObject(currentScene, getState()->scene);
 	int position = currentScene.getHeader()->position;

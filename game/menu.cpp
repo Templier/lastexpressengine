@@ -517,11 +517,15 @@ void Menu::handleEvent(const Common::Event &ev) {
 		switch(ev.type) {
 			case Common::EVENT_RBUTTONDOWN:
 				_isShowingCredits = false; // Will cause credits to stop & reset overlays
+
+			// Fall through to hide/show credits
 			case Common::EVENT_LBUTTONDOWN:
 				showCredits();
 				askForRedraw();
+				return;
+
 			default:
-				return; //true;
+				return;
 		}
 	}
 
@@ -947,6 +951,50 @@ void Menu::showCredits() {
 
 	drawSeqFrame(&_seqCredits, _creditsSequenceIndex, GraphicsManager::kBackgroundA);
 	_creditsSequenceIndex++;
+}
+
+bool Menu::isGameFinished() const {
+	assert(_timeData.size() > _index4);
+
+	TimeData *data = _timeData[_index4];
+
+	if (_index3 != _index4)
+		return false;
+
+	if (data->field_4 != 2)
+		return false;
+
+	return (data->event == kEventAnnaKilled
+		 || data->event == kEventKronosHostageAnnaNoFirebird
+		 || data->event == kEventKahinaPunch
+		 || data->event == kEventKahinaPunchBlue
+		 || data->event == kEventKahinaPunchYellow
+		 || data->event == kEventKahinaPunchSuite
+		 || data->event == kEventKahinaPunchSuite2
+		 || data->event == kEventKahinaPunchSuite3
+		 || data->event == kEventKahinaPunchCar
+		 || data->event == kEventKahinaPunchSuite4
+		 || data->event == kEventKahinaPunchSuite5
+		 || data->event == kEventKahinaPunchRestaurant
+		 || data->event == kEventKronosGiveFirebird
+		 || data->event == kEventAugustFindCorpse
+		 || data->event == kEventMertensBloodJacket
+		 || data->event == kEventMertensCorpseFloor
+		 || data->event == kEventMertensCorpseBed
+		 || data->event == kEventCoudertBloodJacket
+		 || data->event == kEventGendarmesArrestation
+		 || data->event == kEventAbbotDrinkGiveDetonator
+		 || data->event == kEventMilosCorpseFloor
+		 || data->event == kEventLocomotiveAnnaStopsTrain
+		 || data->event == kEventTrainStopped
+		 || data->event == kEventCathVesnaRestaurantKilled
+		 || data->event == kEventCathVesnaTrainTopKilled
+		 || data->event == kEventLocomotiveConductorsDiscovered
+		 || data->event == kEventViennaAugustUnloadGuns
+		 || data->event == kEventViennaKronosFirebird
+		 || data->event == kEventVergesAnnaDead
+		 || data->event == kEventTrainExplosionBridge
+		 || data->event == kEventKronosBringNothing);
 }
 
 //////////////////////////////////////////////////////////////////////////

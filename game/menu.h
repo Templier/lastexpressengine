@@ -90,6 +90,8 @@ private:
 	Common::String getAcornSequenceName(GameId id) const;
 	void showCredits();
 
+	bool isGameFinished() const;
+
 	enum CityButton {
 		kParis = 0,
 		kStrasbourg = 1,
@@ -104,6 +106,25 @@ private:
 	uint32 _currentTime; // internal time for the menu (to handle rewind/forward)
 	void goToTime(uint32 time);
 	void moveToCity(CityButton city, bool clicked);
+
+	// TODO figure out what each of those do
+	struct TimeData {
+		uint32 field_0;
+		uint32 field_4;
+		uint32 time;
+		uint32 field_C;
+		uint32 chapter;
+		uint32 event;
+		uint32 field_18;
+		uint32 field_1C;
+	};
+
+	// Indexes into menu data
+	uint32 _index3;
+	uint32 _index4;
+
+	Common::Array<TimeData *> _timeData;
+
 
 	// Sound/Brightness related
 	uint32 getVolume() const;
