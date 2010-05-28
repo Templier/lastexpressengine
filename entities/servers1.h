@@ -73,8 +73,8 @@ public:
 	DECLARE_NULL_FUNCTION()
 
 private:
-	DECLARE_CALL_FUNCTION(default, Servers1, int, int, int, int)
-	DECLARE_CALL_FUNCTION(char, Servers1, const char*, int, int, const char*)
+	DECLARE_CALL_FUNCTION(siis, Servers1, const char*, int, int, const char*)
+	DECLARE_CALL_FUNCTION(iiii, Servers1, int, int, int, int)
 };
 
 } // End of namespace LastExpress

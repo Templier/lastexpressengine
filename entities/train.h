@@ -48,9 +48,9 @@ public:
 	DECLARE_FUNCTION_II(harem)
 	DECLARE_FUNCTION(process)
 
-private:
-	DECLARE_CALL_FUNCTION(default, Train, int, int, int, int)
-	DECLARE_CALL_FUNCTION(seq, Train, int, int, int, char*)
+private:	
+	DECLARE_CALL_FUNCTION(iiis, Train, int, int, int, char*)
+	DECLARE_CALL_FUNCTION(iiii, Train, int, int, int, int)
 
 	// Helper methods
 	void resetParam8();

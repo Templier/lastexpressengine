@@ -61,9 +61,9 @@ public:
 	DECLARE_FUNCTION(chapter5)
 
 private:
-	DECLARE_CALL_FUNCTION(char, Mahmud, const char*, int, int, const char*)
-	DECLARE_CALL_FUNCTION(char2, Mahmud, const char*, int, int, int)
-	DECLARE_CALL_FUNCTION(default, Mahmud, int, int, int, int)
+	DECLARE_CALL_FUNCTION(siis, Mahmud, const char*, int, int, const char*)
+	DECLARE_CALL_FUNCTION(siii, Mahmud, const char*, int, int, int)
+	DECLARE_CALL_FUNCTION(iiii, Mahmud, int, int, int, int)
 };
 
 } // End of namespace LastExpress

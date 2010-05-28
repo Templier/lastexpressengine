@@ -72,7 +72,7 @@ public:
 	DECLARE_NULL_FUNCTION()
 
 private:
-	DECLARE_CALL_FUNCTION(default, Vesna, int, int, int, int)
+	DECLARE_CALL_FUNCTION(iiii, Vesna, int, int, int, int)
 };
 
 } // End of namespace LastExpress

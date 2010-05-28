@@ -122,9 +122,9 @@ public:
 	DECLARE_FUNCTION(function81)
 
 private:
-	DECLARE_CALL_FUNCTION(char2, Anna, int, const char*, const char*, int)
-	DECLARE_CALL_FUNCTION(char, Anna, const char*, int, int, const char*)
-	DECLARE_CALL_FUNCTION(default, Anna, int, int, int, int)
+	DECLARE_CALL_FUNCTION(issi, Anna, int, const char*, const char*, int)
+	DECLARE_CALL_FUNCTION(siis, Anna, const char*, int, int, const char*)
+	DECLARE_CALL_FUNCTION(iiii, Anna, int, int, int, int)
 };
 
 } // End of namespace LastExpress

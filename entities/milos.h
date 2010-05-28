@@ -76,8 +76,8 @@ public:
 	DECLARE_FUNCTION(prepareSequences)
 
 private:
-	DECLARE_CALL_FUNCTION(default, Milos, int, int, int, int)
-	DECLARE_CALL_FUNCTION(char, Milos, const char*, int, int, const char*)
+	DECLARE_CALL_FUNCTION(siis, Milos, const char*, int, int, const char*)
+	DECLARE_CALL_FUNCTION(iiii, Milos, int, int, int, int)
 };
 
 } // End of namespace LastExpress
