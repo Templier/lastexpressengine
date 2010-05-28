@@ -48,19 +48,18 @@
 	    uint16 {2}    - Hotspot right
 	    uint16 {2}    - Hotspot top
 	    uint16 {2}    - Hotspot bottom
-	    byte {1}       - Compression type
-	    byte {1}       - Subtype (determines which set of decompression functions will be called) => 0, 1, 2, 3
+	    byte {1}      - Compression type
+	    byte {1}      - Subtype (determines which set of decompression functions will be called) => 0, 1, 2, 3
 	    uint16 {2}    - Unknown
-	    byte {1}       - Unknown
-	    byte {1}       - Unknown
-	    byte {1}       - Unknown
-	    byte {1}       - Unknown
+	    byte {1}      - Unknown
+	    byte {1}      - Unknown
+	    byte {1}      - Unknown
+	    byte {1}      - Unknown
 	    uint32 {4}    - Unknown
 	    uint32 {4}    - Unknown
 	    uint16 {2}    - Set to 1 in some places
-	    uint16 {2}    - location (z-order?)
-	    uint16 {2}    - Unknown
-	    uint32 {2}    - Unknown
+	    uint16 {2}    - Location (z-order?)
+	    uint32 {2}    - Next sequence in the linked list
 
 	    (for NIS files: found at 0x124)
 	    byte {1}      - Compression type
@@ -110,8 +109,7 @@ struct FrameInfo {
 	uint32 field_38;
 	uint16 field_3C;
 	uint16 location;
-	uint16 field_40;
-	uint16 field_42;
+	uint32 next;
 };
 
 class AnimFrame : public Drawable {

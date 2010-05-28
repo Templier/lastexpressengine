@@ -32,8 +32,8 @@
 
 	header: 32 bytes
 	    uint32 {4}      - signature: 0x12001200
-	    uint32 {4}      - ?? needs to be [0; 5]
-	    uint32 {4}      - ?? needs to be >= 32 [1061100; timeMax]
+	    uint32 {4}      - chapter - needs to be [0; 5]
+	    uint32 {4}      - time - needs to be >= 32 [1061100; timeMax]
 	    uint32 {4}      - ?? needs to be >= 32
 	    uint32 {4}      - ?? needs to be = 1
 	    uint32 {4}      - Brightness (needs to be [0-6])
