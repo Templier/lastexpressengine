@@ -94,7 +94,11 @@ IMPLEMENT_FUNCTION_II(Salko, function7, 7)
 }
 
 IMPLEMENT_FUNCTION(Salko, function8, 8)
-	error("Salko: callback function 8 not implemented!");
+	if (savepoint.action == kActionDefault) {
+		getData()->field_491 = EntityData::kField491_2740;
+		getData()->field_493 = EntityData::kField493_1;
+		getData()->car = kCarRedSleeping;
+	}
 }
 
 IMPLEMENT_FUNCTION(Salko, chapter1, 9)
@@ -119,7 +123,14 @@ IMPLEMENT_FUNCTION(Salko, function10, 10)
 }
 
 IMPLEMENT_FUNCTION(Salko, function11, 11)
-	error("Salko: callback function 11 not implemented!");
+	if (savepoint.action == kActionDefault) {
+		getData()->field_491 = EntityData::kField491_2740;
+		getData()->field_493 = EntityData::kField493_1;
+		getData()->car = kCarRedSleeping;
+
+		getEntities()->prepareSequences(kEntitySalko);
+		getObjects()->update(kObjectCompartmentH, kEntityNone, kLocation3, kCursorHandKnock, kCursorHand);
+	}
 }
 
 IMPLEMENT_FUNCTION(Salko, chapter2, 12)
@@ -214,7 +225,15 @@ IMPLEMENT_FUNCTION(Salko, function21, 21)
 }
 
 IMPLEMENT_FUNCTION(Salko, function22, 22)
-	error("Salko: callback function 22 not implemented!");
+	if (savepoint.action == kActionDefault) {
+		getEntities()->prepareSequences(kEntitySalko);
+		getObjects()->update(kObjectCompartmentH, kEntityNone, kLocation3, kCursorHandKnock, kCursorHand);
+
+		getData()->field_491 = EntityData::kField491_2740;
+		getData()->field_493 = EntityData::kField493_1;
+		getData()->car = kCarRedSleeping;
+		getData()->inventoryItem = kItemNone;
+	}
 }
 
 IMPLEMENT_FUNCTION(Salko, chapter5, 23)

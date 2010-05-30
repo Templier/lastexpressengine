@@ -96,6 +96,7 @@ public:
 
 	// Savepoints
 	void push(EntityIndex entity2, EntityIndex entity1, ActionIndex action, uint32 param = 0);
+	void push(EntityIndex entity2, EntityIndex entity1, ActionIndex action, char* param);
 	void pushAll(EntityIndex entity, ActionIndex action, uint32 param = 0);
 	void process();
 	void reset() const;

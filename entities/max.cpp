@@ -184,7 +184,7 @@ IMPLEMENT_FUNCTION(Max, function7, 7)
 
 	case kAction122358304:
 	case kActionMaxFreeFromCage:
-		getSavePoints()->push(kEntityMax, kEntityMax, kActionMaxFreeFromCage, 0);
+		getSavePoints()->push(kEntityMax, kEntityMax, kActionMaxFreeFromCage);
 		getObjects()->update(kObjectCompartmentF, kEntityNone, kLocationNone, kCursorHandKnock, kCursorHand);
 		getObjects()->update(kObject53, kEntityNone, kLocationNone, kCursorHandKnock, kCursorHand);
 

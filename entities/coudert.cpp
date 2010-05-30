@@ -522,7 +522,8 @@ IMPLEMENT_FUNCTION(Coudert, chapter5, 57)
 }
 
 IMPLEMENT_FUNCTION(Coudert, function58, 58)
-	error("Coudert: callback function 58 not implemented!");
+	if (savepoint.action == kAction70549068)
+		setup_function59();
 }
 
 IMPLEMENT_FUNCTION(Coudert, function59, 59)

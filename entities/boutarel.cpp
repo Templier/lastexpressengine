@@ -216,7 +216,10 @@ IMPLEMENT_FUNCTION(Boutarel, function24, 24)
 }
 
 IMPLEMENT_FUNCTION(Boutarel, function25, 25)
-	error("Boutarel: callback function 25 not implemented!");
+	if (savepoint.action == kActionDefault) {
+		getObjects()->update(kObjectCompartmentC, kEntityNone, kLocation2, kCursorKeepValue, kCursorKeepValue);
+		getEntities()->drawSequenceLeft(kEntityBoutarel, "510");
+	}
 }
 
 IMPLEMENT_FUNCTION(Boutarel, chapter3, 26)
@@ -323,11 +326,25 @@ IMPLEMENT_FUNCTION(Boutarel, chapter5, 36)
 }
 
 IMPLEMENT_FUNCTION(Boutarel, function37, 37)
-	error("Boutarel: callback function 37 not implemented!");
+	if (savepoint.action == kAction70549068)
+		setup_function38();
 }
 
 IMPLEMENT_FUNCTION(Boutarel, function38, 38)
-	error("Boutarel: callback function 38 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionDefault:
+		getData()->field_491 = EntityData::kField491_5790;
+		getData()->field_493 = EntityData::kField493_1;
+		getData()->car = kCarRedSleeping;
+		break;
+
+	case kAction135800432:
+		setup_nullfunction();
+		break;
+	}
 }
 
 IMPLEMENT_NULL_FUNCTION(Boutarel, 39)

@@ -185,7 +185,18 @@ IMPLEMENT_FUNCTION(Servers0, function19, 19)
 }
 
 IMPLEMENT_FUNCTION(Servers0, function20, 20)
-	error("Servers0: callback function 20 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionDefault:
+		getData()->field_491 = EntityData::kField491_5900;
+		break;
+
+	case kAction101632192:
+		setup_function22();
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Servers0, function21, 21)
@@ -193,7 +204,13 @@ IMPLEMENT_FUNCTION(Servers0, function21, 21)
 }
 
 IMPLEMENT_FUNCTION(Servers0, function22, 22)
-	error("Servers0: callback function 22 not implemented!");
+	if (savepoint.action == kActionDefault) {
+		getData()->field_491 = EntityData::kField491_5900;
+		getData()->field_493 = EntityData::kField493_0;
+		getData()->car = kCarRestaurant;
+
+		getEntities()->prepareSequences(kEntityServers0);
+	}
 }
 
 IMPLEMENT_FUNCTION(Servers0, chapter2, 23)
@@ -337,7 +354,8 @@ IMPLEMENT_FUNCTION(Servers0, chapter5, 36)
 }
 
 IMPLEMENT_FUNCTION(Servers0, function37, 37)
-	error("Servers0: callback function 37 not implemented!");
+	if (savepoint.action == kAction70549068)
+		setup_nullfunction();
 }
 
 IMPLEMENT_NULL_FUNCTION(Servers0, 38)

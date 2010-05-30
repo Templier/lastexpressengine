@@ -149,6 +149,7 @@ IMPLEMENT_FUNCTION_II(Milos, enterCompartementDialog, 10)
 	}
 }
 
+//
 IMPLEMENT_FUNCTION_I(Milos, function11, 11)
 	switch (savepoint.action) {
 	default:
@@ -328,11 +329,21 @@ IMPLEMENT_FUNCTION(Milos, function16, 16)
 }
 
 IMPLEMENT_FUNCTION(Milos, function17, 17)
-	error("Milos: callback function 17 not implemented!");
+	if (savepoint.action == kActionDefault) {
+		_data->setNextCallback(1);
+		call(new ENTITY_SETUP(Milos, setup_function11), kTimeBedTime);
+	}
 }
 
 IMPLEMENT_FUNCTION(Milos, function18, 18)
-	error("Milos: callback function 18 not implemented!");
+	if (savepoint.action == kActionDefault) {
+		getData()->field_491 = EntityData::kField491_3050;
+		getData()->field_493 = EntityData::kField493_1;
+		getData()->car = kCarRedSleeping;
+
+		getEntities()->prepareSequences(kEntityMilos);
+		getObjects()->update(kObjectCompartmentG, kEntityNone, kLocation3, kCursorHandKnock, kCursorHand);
+	}
 }
 
 IMPLEMENT_FUNCTION(Milos, chapter2, 19)

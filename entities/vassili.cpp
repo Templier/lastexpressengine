@@ -320,9 +320,9 @@ IMPLEMENT_FUNCTION(Vassili, seizure, 10)
         getObjects()->update(kObjectCompartment1, kEntityNone, kLocationNone, kCursorHandKnock, kCursorHand);
         getProgress().field_18 = 2;
 
-        getSavePoints()->push(kEntityVassili, kEntityAnna, kAction191477936, 0);
-        getSavePoints()->push(kEntityVassili, kEntityVerges, kAction191477936, 0);
-        getSavePoints()->push(kEntityVassili, kEntityCoudert, kAction191477936, 0);
+        getSavePoints()->push(kEntityVassili, kEntityAnna, kAction191477936);
+        getSavePoints()->push(kEntityVassili, kEntityVerges, kAction191477936);
+        getSavePoints()->push(kEntityVassili, kEntityCoudert, kAction191477936);
         getLogic()->loadSceneFromObject(kObjectCompartmentA);
 
         setup_drawInBed();

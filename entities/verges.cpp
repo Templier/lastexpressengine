@@ -359,7 +359,8 @@ IMPLEMENT_FUNCTION(Verges, function41, 41)
 }
 
 IMPLEMENT_FUNCTION(Verges, function42, 42)
-	error("Verges: callback function 42 not implemented!");
+	if (savepoint.action == kActionDefault)
+		getEntities()->prepareSequences(kEntityVerges);
 }
 
 } // End of namespace LastExpress

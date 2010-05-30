@@ -385,7 +385,10 @@ IMPLEMENT_FUNCTION(Tatiana, function50, 50)
 }
 
 IMPLEMENT_FUNCTION(Tatiana, function51, 51)
-	error("Tatiana: callback function 51 not implemented!");
+	if (savepoint.action == kActionDefault) {
+		getObjects()->update(kObjectCompartmentA, kEntityNone, kLocation1, kCursorNormal, kCursorNormal);
+		getObjects()->update(kObject48, kEntityNone, kLocation1, kCursorNormal, kCursorNormal);
+	}
 }
 
 IMPLEMENT_FUNCTION(Tatiana, chapter5, 52)
@@ -410,7 +413,8 @@ IMPLEMENT_FUNCTION(Tatiana, chapter5, 52)
 }
 
 IMPLEMENT_FUNCTION(Tatiana, function53, 53)
-	error("Tatiana: callback function 53 not implemented!");
+	if (savepoint.action == kAction70549068)
+		setup_function54();
 }
 
 IMPLEMENT_FUNCTION(Tatiana, function54, 54)

@@ -155,7 +155,14 @@ IMPLEMENT_FUNCTION(Ivo, function16, 16)
 }
 
 IMPLEMENT_FUNCTION(Ivo, function17, 17)
-	error("Ivo: callback function 17 not implemented!");
+	if (savepoint.action == kActionDefault) {
+		getData()->field_491 = EntityData::kField491_2740;
+		getData()->field_493 = EntityData::kField493_1;
+		getData()->car = kCarRedSleeping;
+
+		getEntities()->prepareSequences(kEntityIvo);
+		getObjects()->update(kObjectCompartmentH, kEntityNone, kLocation3, kCursorHandKnock, kCursorHand);
+	}
 }
 
 IMPLEMENT_FUNCTION(Ivo, chapter2, 18)
@@ -192,7 +199,13 @@ IMPLEMENT_FUNCTION(Ivo, function20, 20)
 }
 
 IMPLEMENT_FUNCTION(Ivo, function21, 21)
-	error("Ivo: callback function 21 not implemented!");
+	if (savepoint.action == kActionDefault) {
+		getData()->field_491 = EntityData::kField491_2740;
+		getData()->field_493 = EntityData::kField493_1;
+		getData()->car = kCarRedSleeping;
+
+		getObjects()->update(kObjectCompartmentH, kEntityNone, kLocation3, kCursorHandKnock, kCursorHand);
+	}
 }
 
 IMPLEMENT_FUNCTION(Ivo, chapter3, 22)
@@ -218,7 +231,8 @@ IMPLEMENT_FUNCTION(Ivo, chapter3, 22)
 }
 
 IMPLEMENT_FUNCTION(Ivo, function23, 23)
-	error("Ivo: callback function 23 not implemented!");
+	if (savepoint.action == kActionDefault)
+		getObjects()->update(kObjectCompartmentH, kEntityNone, kLocation3, kCursorHandKnock, kCursorHand);
 }
 
 IMPLEMENT_FUNCTION(Ivo, chapter4, 24)
@@ -255,7 +269,15 @@ IMPLEMENT_FUNCTION(Ivo, function28, 28)
 }
 
 IMPLEMENT_FUNCTION(Ivo, function29, 29)
-	error("Ivo: callback function 29 not implemented!");
+	if (savepoint.action == kActionDefault) {
+		getEntities()->prepareSequences(kEntityIvo);
+		getObjects()->update(kObjectCompartmentH, kEntityNone, kLocation3, kCursorHandKnock, kCursorHand);
+
+		getData()->field_491 = EntityData::kField491_2740;
+		getData()->field_493 = EntityData::kField493_1;
+		getData()->car = kCarRedSleeping;
+		getData()->inventoryItem = kItemNone;
+	}
 }
 
 IMPLEMENT_FUNCTION(Ivo, chapter5, 30)
@@ -280,7 +302,8 @@ IMPLEMENT_FUNCTION(Ivo, chapter5, 30)
 }
 
 IMPLEMENT_FUNCTION(Ivo, function31, 31)
-	error("Ivo: callback function 31 not implemented!");
+	if (savepoint.action == kAction70549068)
+		setup_function32();
 }
 
 IMPLEMENT_FUNCTION(Ivo, function32, 32)
@@ -292,7 +315,8 @@ IMPLEMENT_FUNCTION(Ivo, function33, 33)
 }
 
 IMPLEMENT_FUNCTION(Ivo, function34, 34)
-	error("Ivo: callback function 34 not implemented!");
+	if (savepoint.action == kActionDefault)
+		getEntities()->prepareSequences(kEntityIvo);
 }
 
 } // End of namespace LastExpress

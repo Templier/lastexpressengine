@@ -268,7 +268,8 @@ IMPLEMENT_FUNCTION(MmeBoutarel, chapter5, 26)
 }
 
 IMPLEMENT_FUNCTION(MmeBoutarel, function27, 27)
-	error("MmeBoutarel: callback function 27 not implemented!");
+	if (savepoint.action == kAction70549068)
+		setup_function28();
 }
 
 IMPLEMENT_FUNCTION(MmeBoutarel, function28, 28)

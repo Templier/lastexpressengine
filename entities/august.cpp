@@ -471,7 +471,8 @@ IMPLEMENT_FUNCTION(August, chapter5, 66)
 }
 
 IMPLEMENT_FUNCTION(August, function67, 67)
-	error("August: callback function 67 not implemented!");
+	if (savepoint.action == kAction70549068)
+		setup_function68();
 }
 
 IMPLEMENT_FUNCTION(August, function68, 68)

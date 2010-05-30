@@ -94,6 +94,7 @@ IMPLEMENT_FUNCTION(Train, chapter5, 6)
 
 
 void Train::handleCompartementAction() {
+	// TODO check that those are the proper parameters
 	EXPOSE_PARAMS(EntityData::EntityParametersIIII)
 
 	if (params->param8)

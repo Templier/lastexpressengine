@@ -49,7 +49,6 @@ SavePoints::~SavePoints() {
 // Savepoints
 //////////////////////////////////////////////////////////////////////////
 void SavePoints::push(EntityIndex entity2, EntityIndex entity1, ActionIndex action, uint32 param) {
-
 	if (_savepoints.size() >= _savePointsMaxSize)
 		return;
 
@@ -58,6 +57,19 @@ void SavePoints::push(EntityIndex entity2, EntityIndex entity1, ActionIndex acti
 	point.action = action;
 	point.entity2 = entity2;
 	point.param.intValue = param;
+
+	_savepoints.push_back(point);
+}
+
+void SavePoints::push(EntityIndex entity2, EntityIndex entity1, ActionIndex action, char* param) {
+	if (_savepoints.size() >= _savePointsMaxSize)
+		return;
+
+	SavePoint point;
+	point.entity1 = entity1;
+	point.action = action;
+	point.entity2 = entity2;
+	strcpy((char *)&point.param.charValue, param);
 
 	_savepoints.push_back(point);
 }

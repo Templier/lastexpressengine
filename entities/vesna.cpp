@@ -143,7 +143,14 @@ IMPLEMENT_FUNCTION(Vesna, function14, 14)
 }
 
 IMPLEMENT_FUNCTION(Vesna, function15, 15)
-	error("Vesna: callback function 15 not implemented!");
+	if (savepoint.action == kActionDefault) {
+		getData()->field_491 = EntityData::kField491_3050;
+		getData()->field_493 = EntityData::kField493_1;
+		getData()->car = kCarRedSleeping;
+
+		getEntities()->prepareSequences(kEntityVesna);
+		getObjects()->update(kObjectCompartmentG, kEntityNone, kLocation3, kCursorHandKnock, kCursorHand);
+	}
 }
 
 IMPLEMENT_FUNCTION(Vesna, chapter2, 16)
@@ -250,7 +257,15 @@ IMPLEMENT_FUNCTION(Vesna, function26, 26)
 }
 
 IMPLEMENT_FUNCTION(Vesna, function27, 27)
-	error("Vesna: callback function 27 not implemented!");
+	if (savepoint.action == kActionDefault) {
+		getEntities()->prepareSequences(kEntityVesna);
+		getObjects()->update(kObjectCompartmentG, kEntityNone, kLocation3, kCursorHandKnock, kCursorHand);
+
+		getData()->field_491 = EntityData::kField491_3050;
+		getData()->field_493 = EntityData::kField493_1;
+		getData()->car = kCarRedSleeping;
+		getData()->inventoryItem = kItemNone;
+	}
 }
 
 IMPLEMENT_FUNCTION(Vesna, chapter5, 28)

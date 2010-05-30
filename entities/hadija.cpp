@@ -123,7 +123,15 @@ IMPLEMENT_FUNCTION(Hadija, function11, 11)
 }
 
 IMPLEMENT_FUNCTION(Hadija, function12, 12)
-	error("Hadija: callback function 12 not implemented!");
+	if (savepoint.action == kActionDefault) {
+		getObjects()->update(kObjectCompartment8, kEntityNone, kLocation3, kCursorHandKnock, kCursorHand);
+
+		getData()->field_491 = EntityData::kField491_2740;
+		getData()->field_493 = EntityData::kField493_1;
+		getData()->car = kCarGreenSleeping;
+
+		getEntities()->prepareSequences(kEntityHadija);
+	}
 }
 
 IMPLEMENT_FUNCTION(Hadija, chapter2, 13)
@@ -191,7 +199,15 @@ IMPLEMENT_FUNCTION(Hadija, function18, 18)
 }
 
 IMPLEMENT_FUNCTION(Hadija, function19, 19)
-	error("Hadija: callback function 19 not implemented!");
+	if (savepoint.action == kActionDefault) {
+		getObjects()->update(kObjectCompartment8, kEntityNone, kLocation3, kCursorHandKnock, kCursorHand);
+
+		getData()->field_491 = EntityData::kField491_4070;
+		getData()->field_493 = EntityData::kField493_1;
+		getData()->car = kCarGreenSleeping;
+
+		getEntities()->prepareSequences(kEntityHadija);
+	}
 }
 
 IMPLEMENT_FUNCTION(Hadija, chapter5, 20)
@@ -217,7 +233,8 @@ IMPLEMENT_FUNCTION(Hadija, chapter5, 20)
 }
 
 IMPLEMENT_FUNCTION(Hadija, function21, 21)
-	error("Hadija: callback function 21 not implemented!");
+	if (savepoint.action == kAction70549068)
+		setup_function22();
 }
 
 IMPLEMENT_FUNCTION(Hadija, function22, 22)

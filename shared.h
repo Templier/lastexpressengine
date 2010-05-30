@@ -62,9 +62,12 @@ enum TimeValue {
 	kTimeCooks                = 2079000,
 	kTimeAugustVienna         = 2200500,
 	kTimeAnna2                = 2250000,
+	kTimeAnna3                = 2259000,
 
 	// Chapter 4
 	kTimeChapter4             = 2353500,
+	kTimeAlexei               = 2354400,
+	kTimeAlexei1              = 2403000,
 	kTimeGameOver             = 2418300,
 	kTimeTables3              = 2488500,
 
@@ -73,8 +76,8 @@ enum TimeValue {
 	kTimeTrainStopped         = 2898000,
 	kTimeChapter5_0           = 2907000,
 	kTimeChapter5_1           = 2916000,
-	kTimeTrainStopped2        = 2943000
-
+	kTimeTrainStopped2        = 2943000,
+	kTimeEnd                  = 15803100
 };
 
 enum TimeType {
@@ -850,6 +853,7 @@ enum ActionIndex {
 	// Abbot
 	/////////////////////////////
 	kAction101169422 = 101169422,
+	kAction104060776 = 104060776,
 	kAction135600432 = 135600432,
 	kAction157159392 = 157159392,
 	kAction158480160 = 158480160,
@@ -860,6 +864,10 @@ enum ActionIndex {
 	/////////////////////////////
 	// Anna
 	/////////////////////////////
+	kAction157370960 = 157370960,
+	kAction189299008 = 189299008,
+	kAction191668032 = 191668032,
+	kAction235856512 = 235856512,
 	kAction238936000 = 238936000,
 	kAction291662081 = 291662081,
 
@@ -903,6 +911,11 @@ enum ActionIndex {
 	kAction292048641 = 292048641,
 	kAction326348944 = 326348944,
 	kAction339669520 = 339669520,    // Coudert / Verges
+
+	/////////////////////////////
+	// Francois
+	/////////////////////////////
+	kAction101107728 = 101107728,
 
 	/////////////////////////////
 	// Kahina

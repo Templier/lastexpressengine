@@ -26,6 +26,7 @@
 #include "lastexpress/entities/francois.h"
 
 #include "lastexpress/game/entities.h"
+#include "lastexpress/game/inventory.h"
 #include "lastexpress/game/logic.h"
 #include "lastexpress/game/object.h"
 #include "lastexpress/game/savepoint.h"
@@ -161,7 +162,13 @@ IMPLEMENT_FUNCTION(Francois, function19, 19)
 }
 
 IMPLEMENT_FUNCTION(Francois, function20, 20)
-	error("Francois: callback function 20 not implemented!");
+	if (savepoint.action == kActionDefault) {
+		getData()->field_491 = EntityData::kField491_5790;
+		getData()->field_493 = EntityData::kField493_1;
+		getData()->car = kCarRedSleeping;
+
+		getEntities()->prepareSequences(kEntityFrancois);
+	}
 }
 
 IMPLEMENT_FUNCTION(Francois, chapter2, 21)
@@ -243,7 +250,10 @@ IMPLEMENT_FUNCTION(Francois, chapter4, 26)
 }
 
 IMPLEMENT_FUNCTION(Francois, function27, 27)
-	error("Francois: callback function 27 not implemented!");
+	if (savepoint.action == kAction101107728) {
+		_data->setNextCallback(1);
+		call(new ENTITY_SETUP(Francois, setup_function16));
+	}
 }
 
 IMPLEMENT_FUNCTION(Francois, chapter5, 28)
@@ -269,7 +279,13 @@ IMPLEMENT_FUNCTION(Francois, chapter5, 28)
 }
 
 IMPLEMENT_FUNCTION(Francois, function29, 29)
-	error("Francois: callback function 29 not implemented!");
+	if (savepoint.action == kAction70549068) {
+		if (!getInventory()->hasItem(kItemWhistle)
+		  && getInventory()->getEntry(kItemWhistle)->location != kLocation3)
+		  getInventory()->setLocationAndProcess(kItemWhistle, kLocation1);
+
+		setup_function30();
+	}
 }
 
 IMPLEMENT_FUNCTION(Francois, function30, 30)

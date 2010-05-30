@@ -927,6 +927,8 @@ IMPLEMENT_FUNCTION(Abbot, chapter4, 39)
 	}
 }
 
+// car
+// restaurant
 IMPLEMENT_FUNCTION_II(Abbot, function40, 40)
 	error("Abbot: callback function 40 not implemented!");
 }
@@ -944,7 +946,25 @@ IMPLEMENT_FUNCTION(Abbot, function43, 43)
 }
 
 IMPLEMENT_FUNCTION(Abbot, function44, 44)
-	error("Abbot: callback function 44 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionDefault:
+		getData()->field_491 = EntityData::kField491_6470;
+		getData()->field_493 = EntityData::kField493_1;
+		getData()->car = kCarRedSleeping;
+
+		getEntities()->prepareSequences(kEntityAbbot);
+
+		getObjects()->update(kObjectCompartmentC, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObject50, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
+		break;
+
+	case kAction104060776:
+		setup_function45();
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Abbot, function45, 45)
@@ -952,7 +972,22 @@ IMPLEMENT_FUNCTION(Abbot, function45, 45)
 }
 
 IMPLEMENT_FUNCTION(Abbot, function46, 46)
-	error("Abbot: callback function 46 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionDefault:
+		getData()->field_491 = EntityData::kField491_6471;
+
+		_data->setNextCallback(1);
+		call(new ENTITY_SETUP(Abbot, setup_function40), kCarRestaurant, EntityData::kField491_850);
+		break;
+
+	case kAction18:
+		if (_data->getNextCallback() == 1)
+			setup_function47();
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Abbot, function47, 47)
@@ -984,7 +1019,6 @@ IMPLEMENT_FUNCTION(Abbot, chapter5, 50)
 		getData()->car = kCarRestaurant;
 		getData()->inventoryItem = kItemNone;
 		getData()->clothes = kClothesDefault;
-
 		break;
 	}
 }

@@ -88,6 +88,9 @@ public:
 	DECLARE_FUNCTION(function47)
 	DECLARE_FUNCTION(function48)
 	DECLARE_NULL_FUNCTION()
+
+private:
+	DECLARE_CALL_FUNCTION(iiii, Rebecca, int, int, int, int)
 };
 
 } // End of namespace LastExpress

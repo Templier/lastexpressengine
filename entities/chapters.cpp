@@ -463,11 +463,11 @@ IMPLEMENT_FUNCTION(Chapters, chapter2_init, 11)
 
 	params->param1 = 40;
 
-	getSavePoints()->push(kEntityChapters, kEntityTables0, kAction103798704, 0);
-	getSavePoints()->push(kEntityChapters, kEntityTables1, kAction103798704, 0);
-	getSavePoints()->push(kEntityChapters, kEntityTables2, kAction103798704, 0);
-	getSavePoints()->push(kEntityChapters, kEntityTables3, kAction103798704, 0);
-	getSavePoints()->push(kEntityChapters, kEntityTables4, kAction103798704, 0);
+	getSavePoints()->push(kEntityChapters, kEntityTables0, kAction103798704);
+	getSavePoints()->push(kEntityChapters, kEntityTables1, kAction103798704);
+	getSavePoints()->push(kEntityChapters, kEntityTables2, kAction103798704);
+	getSavePoints()->push(kEntityChapters, kEntityTables3, kAction103798704);
+	getSavePoints()->push(kEntityChapters, kEntityTables4, kAction103798704);
 
 	getObjects()->update(kObjectCompartment1, kEntityNone, kLocationNone, kCursorHandKnock, kCursorHand);
 	getObjects()->update(kObjectOutside, kEntityNone, kLocationNone, kCursorKeepValue, kCursorKeepValue);

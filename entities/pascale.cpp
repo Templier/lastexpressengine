@@ -298,7 +298,8 @@ IMPLEMENT_FUNCTION(Pascale, chapter5, 31)
 }
 
 IMPLEMENT_FUNCTION(Pascale, function32, 32)
-	error("Pascale: callback function 32 not implemented!");
+	if (savepoint.action == kAction70549068)
+		setup_function33();
 }
 
 IMPLEMENT_FUNCTION(Pascale, function33, 33)

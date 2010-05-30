@@ -315,7 +315,12 @@ IMPLEMENT_FUNCTION(Rebecca, function40, 40)
 }
 
 IMPLEMENT_FUNCTION(Rebecca, function41, 41)
-	error("Rebecca: callback function 41 not implemented!");
+	if (savepoint.action == kActionDefault) {
+		ENTITY_PARAM(0, 2) = 1;
+
+		_data->setNextCallback(1);
+		call(new ENTITY_SETUP(Rebecca, setup_function20), kTimeEnd);
+	}
 }
 
 IMPLEMENT_FUNCTION(Rebecca, chapter4, 42)
@@ -380,7 +385,8 @@ IMPLEMENT_FUNCTION(Rebecca, chapter5, 46)
 }
 
 IMPLEMENT_FUNCTION(Rebecca, function47, 47)
-	error("Rebecca: callback function 47 not implemented!");
+	if (savepoint.action == kAction70549068)
+		setup_function48();
 }
 
 IMPLEMENT_FUNCTION(Rebecca, function48, 48)

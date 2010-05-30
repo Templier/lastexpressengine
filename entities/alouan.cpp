@@ -123,7 +123,16 @@ IMPLEMENT_FUNCTION(Alouan, function11, 11)
 }
 
 IMPLEMENT_FUNCTION(Alouan, function12, 12)
-	error("Alouan: callback function 12 not implemented!");
+	if (savepoint.action == kActionDefault) {
+		getObjects()->update(kObjectCompartment7, kEntityNone, kLocation3, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObjectCompartment5, kEntityNone, kLocation3, kCursorHandKnock, kCursorHand);
+
+		getData()->field_491 = EntityData::kField491_4070;
+		getData()->field_493 = EntityData::kField493_1;
+		getData()->car = kCarGreenSleeping;
+
+		getEntities()->prepareSequences(kEntityAlouan);
+	}
 }
 
 IMPLEMENT_FUNCTION(Alouan, chapter2, 13)
@@ -194,7 +203,16 @@ IMPLEMENT_FUNCTION(Alouan, function18, 18)
 }
 
 IMPLEMENT_FUNCTION(Alouan, function19, 19)
-	error("Alouan: callback function 19 not implemented!");
+	if (savepoint.action == kActionDefault) {
+		getObjects()->update(kObjectCompartment7, kEntityNone, kLocation3, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObjectCompartment5, kEntityNone, kLocation3, kCursorHandKnock, kCursorHand);
+
+		getData()->field_491 = EntityData::kField491_2740;
+		getData()->field_493 = EntityData::kField493_1;
+		getData()->car = kCarGreenSleeping;
+
+		getEntities()->prepareSequences(kEntityAlouan);
+	}
 }
 
 IMPLEMENT_FUNCTION(Alouan, chapter5, 20)
@@ -220,7 +238,8 @@ IMPLEMENT_FUNCTION(Alouan, chapter5, 20)
 }
 
 IMPLEMENT_FUNCTION(Alouan, function21, 21)
-	error("Alouan: callback function 21 not implemented!");
+	if (savepoint.action == kAction70549068)
+		setup_function22();
 }
 
 IMPLEMENT_FUNCTION(Alouan, function22, 22)

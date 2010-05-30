@@ -108,7 +108,10 @@ IMPLEMENT_FUNCTION_III(Gendarmes, function10, 10)
 }
 
 IMPLEMENT_FUNCTION(Gendarmes, function11, 11)
-	error("Gendarmes: callback function 11 not implemented!");
+	if (savepoint.action == kActionDefault) {
+		getSavePoints()->push(kEntityGendarmes, kEntityMertens, kAction190082817);
+		setup_function12();
+	}
 }
 
 IMPLEMENT_FUNCTION(Gendarmes, function12, 12)
@@ -116,7 +119,8 @@ IMPLEMENT_FUNCTION(Gendarmes, function12, 12)
 }
 
 IMPLEMENT_FUNCTION(Gendarmes, function13, 13)
-	error("Gendarmes: callback function 13 not implemented!");
+	if (savepoint.action == kActionDefault)
+		getData()->car = kCarNone;
 }
 
 IMPLEMENT_FUNCTION(Gendarmes, chapter2, 14)
