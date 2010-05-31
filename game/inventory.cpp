@@ -402,7 +402,7 @@ void Inventory::setLocationAndProcess(InventoryItem item, ObjectLocation locatio
 // Serializable
 //////////////////////////////////////////////////////////////////////////
 void Inventory::saveLoadWithSerializer(Common::Serializer &) {
-	// TODO implement
+	error("Inventory::saveLoadWithSerializer: not implemented!");
 }
 
 //////////////////////////////////////////////////////////////////////////

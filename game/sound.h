@@ -74,13 +74,14 @@
 
 #include "common/array.h"
 #include "common/system.h"
+#include "common/serializer.h"
 
 namespace LastExpress {
 
 class LastExpressEngine;
 class StreamedSound;
 
-class Sound {
+class Sound : Common::Serializable {
 public:
 	Sound(LastExpressEngine *engine);
 	~Sound();
@@ -128,9 +129,13 @@ public:
 	// Tests
 	static bool testParameter(int param);
 
-	// Sound streams TODO make private
+	// Sound streams 
+	// TODO make private
 	StreamedSound *getMusicStream() const { return _music; }
 	StreamedSound *getSfxStream() const { return _sfx; }
+
+	// Serializable
+	void saveLoadWithSerializer(Common::Serializer &ser);
 
 private:
 	LastExpressEngine* _engine;

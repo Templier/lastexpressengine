@@ -665,12 +665,12 @@ IMPLEMENT_FUNCTION(Chapters, chapter4_init, 18)
 	getSavePoints()->push(kEntityChapters, kEntityTables4, kAction103798704);
 	getSavePoints()->push(kEntityChapters, kEntityTables5, kAction103798704);
 
-	getLogic()->loadSceneFromItem(kItem3);
+	getLogic()->loadSceneFromItemPosition(kItem3);
 
 	getInventory()->setLocationAndProcess(kItemBomb, kLocation1);
 
 	if (getInventory()->getEntry(kItemBeetle)->location == kLocation3)
-		getLogic()->loadSceneFromItem(kItemBeetle);
+		getLogic()->loadSceneFromItemPosition(kItemBeetle);
 
 	getObjects()->updateLocation2(kObject25, kLocation2);
 	getObjects()->update(kObject107, kEntityNone, kLocation3, kCursorKeepValue, kCursorKeepValue);

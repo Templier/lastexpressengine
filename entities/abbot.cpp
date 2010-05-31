@@ -626,7 +626,7 @@ IMPLEMENT_FUNCTION(Abbot, function25, 25)
 
 		case 4:
 			getData()->field_493 = EntityData::kField493_1;
-			getLogic()->loadSceneFromItem(kItem3);
+			getLogic()->loadSceneFromItemPosition(kItem3);
 
 			setup_function26();
 			break;
@@ -849,7 +849,7 @@ switch (savepoint.action) {
 			break;
 
 		case 5:
-			getLogic()->loadSceneFromItem(kItem3);
+			getLogic()->loadSceneFromItemPosition(kItem3);
 			getData()->field_493 = EntityData::kField493_1;
 
 			setup_function31();

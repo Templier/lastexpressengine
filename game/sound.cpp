@@ -90,7 +90,7 @@ Sound::~Sound() {
 // Sound queue management
 //////////////////////////////////////////////////////////////////////////
 void Sound::setupQueue(int a1, int a2) {
-	warning("SoundManager::setupQueue: not implemented!");
+	warning("Sound::setupQueue: not implemented!");
 }
 
 bool Sound::isBuffered(EntityIndex entity) {
@@ -112,31 +112,31 @@ bool Sound::isBuffered(const char* filename, bool testForEntity) {
 }
 
 void Sound::removeFromQueue(EntityIndex entity) {
-	error("SoundManager::reset: not implemented!");
+	error("Sound::reset: not implemented!");
 }
 
 void Sound::removeFromQueue(const char* filename) {
-	warning("SoundManager::removeFromQueue: not implemented!");
+	warning("Sound::removeFromQueue: not implemented!");
 }
 
 void Sound::processEntry(EntityIndex entity) {
-	error("SoundManager::processEntry: not implemented!");
+	error("Sound::processEntry: not implemented!");
 }
 
 void Sound::unknownFunction1() {
-	warning("SoundManager::unknownFunction1: not implemented!");
+	warning("Sound::unknownFunction1: not implemented!");
 }
 
 void Sound::unknownFunction2(const char* filename) {
-	warning("SoundManager::unknownFunction2: not implemented!");
+	warning("Sound::unknownFunction2: not implemented!");
 }
 
 void Sound::unknownFunction3() {
-	warning("SoundManager::unknownFunction3: not implemented!");
+	warning("Sound::unknownFunction3: not implemented!");
 }
 
 void Sound::unknownGameOver(bool isProcessing) {
-	warning("SoundManager::unknownGameOver: not implemented!");
+	warning("Sound::unknownGameOver: not implemented!");
 }
 
 Sound::SoundEntry *Sound::getEntry(EntityIndex index) {
@@ -155,6 +155,13 @@ Sound::SoundEntry *Sound::getEntry(const char *name) {
 	}
 
 	return NULL;
+}
+
+//////////////////////////////////////////////////////////////////////////
+// Savegame
+//////////////////////////////////////////////////////////////////////////
+void Sound::saveLoadWithSerializer(Common::Serializer &ser) {
+	error("Sound::saveLoadWithSerializer: not implemented!");
 }
 
 //////////////////////////////////////////////////////////////////////////

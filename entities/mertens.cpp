@@ -233,7 +233,7 @@ IMPLEMENT_FUNCTION(Mertens, function17, 17)
 			if (ENTITY_PARAM(0, 8)) {
 
 				getEntities()->drawSequenceLeft(kEntityMertens, "601K");
-				getLogic()->loadSceneFromItem(kItem7);
+				getLogic()->loadSceneFromItemPosition(kItem7);
 
 				ENTITY_PARAM(2, 1) = 1;
 				CALLBACK_ACTION()
@@ -247,7 +247,7 @@ IMPLEMENT_FUNCTION(Mertens, function17, 17)
 					getEntities()->drawSequenceRight(kEntityMertens, "601D");
 				}
 
-				getLogic()->loadSceneFromItem(kItem7);
+				getLogic()->loadSceneFromItemPosition(kItem7);
 
 				if (getEntities()->isPlayerPosition(kCarGreenSleeping, 68)) {
 					getSound()->playSound(kEntityNone, "CON1110");
