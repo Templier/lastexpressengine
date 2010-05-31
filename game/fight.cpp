@@ -150,7 +150,7 @@ void Fight::eventMouseClick(const Common::Event &ev) {
 		// Reset timer on right click
 		if (ev.type == Common::EVENT_RBUTTONUP) {
 			if (getGlobalTimer()) {
-				if (getSound()->isFileInQueue("TIMER"))
+				if (getSound()->isBuffered("TIMER"))
 					getSound()->removeFromQueue("TIMER");
 
 				setGlobalTimer(900);

@@ -72,6 +72,7 @@
 
 #include "lastexpress/shared.h"
 
+#include "common/array.h"
 #include "common/system.h"
 
 namespace LastExpress {
@@ -89,7 +90,7 @@ public:
 	void setupQueue(int a1, int a2 = 0);
 
 	// Sound queue
-	bool isFileInQueue(const char* filename, bool testForEntity = false);
+	bool isBuffered(const char* filename, bool testForEntity = false);
 
 	void removeFromQueue(const char* filename);
 	void removeFromQueue(EntityIndex entity);
@@ -140,8 +141,40 @@ private:
 		kSoundState2 = 2
 	};
 
-	struct SoundEntry_t {
+	struct SoundEntry {
+		//bool isOnDisk;
+		//byte field_1;
+		//byte field_2;
+		//byte field_3;
+		//int field_4;
+		//int field_8;
+		//int field_C;
+		//int field_10;
+		//int fileData;
+		//int field_18;
+		//int field_1C;
+		//int field_20;
+		//int field_24;
+		//int field_28;
+		//int archive;
+		//int field_30;
+		//int field_34;
+		//int field_38;
+		//int field_3C;
+		//int field_40;
+		EntityIndex entity;
+		//int field_48;
+		//int field_4C;
+		char name1[16];
+		char name2[16];
+		//int next; // offset to the next structure in the list (not used)
+		//Subtitle subtitle;
 
+		SoundEntry() {
+			entity = kEntityNone;
+			strcpy((char*)&name1, "");
+			strcpy((char*)&name2, "");
+		};
 	};
 
 	// State
@@ -155,6 +188,12 @@ private:
 	uint32 _data0;
 	uint32 _data1;
 	uint32 _data2;
+
+	// Sound cache
+	Common::Array<SoundEntry *> _cache;
+
+	SoundEntry *getEntry(EntityIndex index);
+	SoundEntry *getEntry(const char *name);
 };
 
 } // End of namespace LastExpress

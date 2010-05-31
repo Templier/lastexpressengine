@@ -278,7 +278,6 @@ IMPLEMENT_FUNCTION_II(Train, harem, 7)
 }
 
 IMPLEMENT_FUNCTION(Train, process, 8)
-
 	EntityData::EntityParametersIIIS *parameters1 = (EntityData::EntityParametersIIIS*)_data->getCurrentParameters(1);
 
 	switch (savepoint.action) {
@@ -348,7 +347,7 @@ label_skip:
 
 		// Play clock sound
 		if (params->param6) {
-			if (!getSound()->isFileInQueue("ZFX1001"))
+			if (!getSound()->isBuffered("ZFX1001", true))
 				getSound()->playSound(kEntityNone, "ZFX1001");
 		}
 
@@ -379,9 +378,12 @@ label_skip:
 		// Play clock sound
 		if (getEntities()->isPlayerPosition(kCarRestaurant, 81)) {
 			params->param6 = 1;
-			getSound()->playSound(kEntityNone, "ZFX1001");
+			if (!getSound()->isBuffered("ZFX1001"))
+				getSound()->playSound(kEntityNone, "ZFX1001");
 		} else {
 			params->param6 = 0;
+			if (getSound()->isBuffered("ZFX1001", true))
+				getSound()->removeFromQueue("ZFX1001");
 		}
 
 		// Draw moving background behind windows

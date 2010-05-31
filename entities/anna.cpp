@@ -624,7 +624,7 @@ IMPLEMENT_FUNCTION(Anna, function63, 63)
 
 	// Anna will get killed...
 	case kAction272177921:
-		if (getSound()->isFileInQueue("MUS012", true))
+		if (getSound()->isBuffered("MUS012"))
 			getSound()->unknownFunction2("MUS012");
 
 		_data->setNextCallback(1);

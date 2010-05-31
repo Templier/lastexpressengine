@@ -386,7 +386,7 @@ IMPLEMENT_FUNCTION(Chapters, chapter1_end, 9)
 		getSound()->playSound(kEntityNone, "MUS008", 16);
 		getInventory()->unselectItem();
 
-		while (getSound()->isFileInQueue("MUS008"))
+		while (getSound()->isBuffered("MUS008"))
 			getSound()->unknownFunction1();
 
 		setup_chapter2();
@@ -583,7 +583,7 @@ IMPLEMENT_FUNCTION(Chapters, chapter3_init, 14)
 		}
 
 		getLogic()->loadSceneFromPosition(kCarRestaurant, 60);
-		getInventory()->show(true);
+		getInventory()->show();
 
 		_data->setNextCallback(1);
 		call(new ENTITY_SETUP(Chapters, setup_savegame), 1, kEventNone);
@@ -686,7 +686,7 @@ IMPLEMENT_FUNCTION(Chapters, chapter4_init, 18)
 	else
 		getLogic()->loadSceneFromPosition(kCarRestaurant, 69);
 
-	getInventory()->show(true);
+	getInventory()->show();
 	setup_chapter4_handler();
 }
 
@@ -795,7 +795,7 @@ IMPLEMENT_FUNCTION(Chapters, chapter5_init, 21)
 		}
 
 		getLogic()->loadSceneFromPosition(kCarBaggageRear, 95);
-		getInventory()->show(true);
+		getInventory()->show();
 
 		_data->setNextCallback(1);
 		call(new ENTITY_SETUP(Chapters, setup_savegame), 1, kEventNone);

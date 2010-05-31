@@ -93,18 +93,26 @@ void Sound::setupQueue(int a1, int a2) {
 	warning("SoundManager::setupQueue: not implemented!");
 }
 
+bool Sound::isBuffered(EntityIndex entity) {
+	return (getEntry(entity) != NULL);
+}
+
+bool Sound::isBuffered(const char* filename, bool testForEntity) {
+	Common::String name(filename);
+
+	if (!name.contains('.'))
+		name += ".SND";
+
+	SoundEntry *entry = getEntry(name.c_str());
+
+	if (testForEntity)
+		return entry && !entry->entity;
+
+	return (entry != NULL);
+}
+
 void Sound::removeFromQueue(EntityIndex entity) {
 	error("SoundManager::reset: not implemented!");
-}
-
-bool Sound::isBuffered(EntityIndex entity) {
-	warning("SoundManager::isBuffered: not implemented!");
-	return false;
-}
-
-bool Sound::isFileInQueue(const char* filename, bool testForEntity) {
-	warning("SoundManager::isFileInQueue: not implemented!");
-	return false;
 }
 
 void Sound::removeFromQueue(const char* filename) {
@@ -131,6 +139,24 @@ void Sound::unknownGameOver(bool isProcessing) {
 	warning("SoundManager::unknownGameOver: not implemented!");
 }
 
+Sound::SoundEntry *Sound::getEntry(EntityIndex index) {
+	for (uint i = 0; i < _cache.size(); i++) {
+		if (_cache[i]->entity == index)
+			return _cache[i];
+	}
+
+	return NULL;
+}
+
+Sound::SoundEntry *Sound::getEntry(const char *name) {
+	for (uint i = 0; i < _cache.size(); i++) {
+		if (stricmp(_cache[i]->name2, name))
+			return _cache[i];
+	}
+
+	return NULL;
+}
+
 //////////////////////////////////////////////////////////////////////////
 // Game-related functions
 //////////////////////////////////////////////////////////////////////////
@@ -142,13 +168,11 @@ void Sound::playSound(EntityIndex entity, const char *filename, int a3, byte a4)
 	int param3 = (a3 == -1) ? getEntities()->getSoundValue(entity) : ( a3 | 0x80000);
 
 	// Add .SND at the end of the filename if needed
-	char name[16];
-	if (strchr(filename, '.'))
-		strcpy((char*)&name, filename);
-	else
-		sprintf((char*)&name, "%s.SND", filename);
+	Common::String name(filename);
+	if (!name.contains('.'))
+		name += ".SND";
 
-	if (!playSoundWithSubtitles(filename, param3, entity, a4))
+	if (!playSoundWithSubtitles(name.c_str(), param3, entity, a4))
 		if (entity)
 			getSavePoints()->push(kEntityNone, entity, kAction2);
 }
@@ -185,7 +209,7 @@ void Sound::playSoundEvent(EntityIndex entity, byte action, byte a3) {
 		int _param3 = (param3 <= 9) ? param3 + 7 : 16;
 
 		if (_param3 > 7) {
-			_data0 = _param3;
+			_data0 = (uint32)_param3;
 			_data1 = _data2 + 2 * a3;
 		}
 		break;
@@ -202,17 +226,17 @@ void Sound::playSoundEvent(EntityIndex entity, byte action, byte a3) {
 	case 168:
 	case 188:
 	case 198:
-		_action += 1 + random(5);
+		_action += 1 + (int)random(5);
 		break;
 
 	case 174:
 	case 184:
 	case 194:
-		_action += 1 + random(3);
+		_action += 1 + (int)random(3);
 		break;
 
 	case 180:
-		_action += 1 + random(4);
+		_action += 1 + (int)random(4);
 		break;
 
 	case 246:
@@ -619,7 +643,7 @@ void Sound::readText(int id){
 
 	// Check if file is in cache for id [1;8]
 	if (id <= 8)
-		if (isFileInQueue(text, true))
+		if (isBuffered(text))
 			removeFromQueue(text);
 
 	playSound(kEntityTables4, text, 16);

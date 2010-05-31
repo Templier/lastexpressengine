@@ -195,7 +195,7 @@ IMPLEMENT_FUNCTION_II(Mahmud, function10, 10)
 
 	case kAction8:
 	case kAction9:
-		if (!getSound()->isFileInQueue((savepoint.action == kAction8) ? "LIB012" : "LIB013"))
+		if (!getSound()->isBuffered((savepoint.action == kAction8) ? "LIB012" : "LIB013", true))
 			getSound()->playSound(kEntityNone, (savepoint.action == kAction8) ? "LIB012" : "LIB013");
 
 		params->param5 = savepoint.param.intValue;
@@ -266,10 +266,6 @@ IMPLEMENT_FUNCTION_II(Mahmud, function10, 10)
 
 	case kAction18:
 		switch (_data->getNextCallback()) {
-		default:
-			error("Mahmud::function10: invalid callback value (%d)!", _data->getNextCallback());
-			break;
-
 		case 1:
 			getObjects()->update(kObjectCompartment5, kEntityMahmud, kLocation3, kCursorHandKnock, kCursorHand);
 			getObjects()->update(kObjectCompartment6, kEntityMahmud, kLocation3, kCursorHandKnock, kCursorHand);
@@ -590,7 +586,7 @@ IMPLEMENT_FUNCTION(Mahmud, function14, 14)
 				break;
 			}
 
-			if (!getSound()->isFileInQueue("HAR1104", true) && getState()->time > kTimeMahmud && !params->param7) {
+			if (!getSound()->isBuffered("HAR1104") && getState()->time > kTimeMahmud && !params->param7) {
 				params->param7 = 1;
 
 				_data->setNextCallback(2);
@@ -670,7 +666,7 @@ IMPLEMENT_FUNCTION(Mahmud, function14, 14)
 			params->param4 = 0;
 			params->param5 = 0;
 
-			if (!getSound()->isFileInQueue("HAR1104", true) && getState()->time > kTimeMahmud && !params->param7) {
+			if (!getSound()->isBuffered("HAR1104") && getState()->time > kTimeMahmud && !params->param7) {
 				params->param7 = 1;
 				_data->setNextCallback(2);
 				call(new ENTITY_SETUP(Mahmud, setup_function12));

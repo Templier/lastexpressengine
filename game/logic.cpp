@@ -829,6 +829,8 @@ void Logic::gameOver(TimeType type, TimeValue time, SceneIndex sceneIndex, bool 
 }
 
 void Logic::switchChapter() {
+	// Original engine clears the onDisk status for the sound cache here, which we don't need
+
 	switch(getState()->progress.chapter) {
 	default:
 		break;

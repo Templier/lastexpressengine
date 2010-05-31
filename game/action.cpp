@@ -376,7 +376,7 @@ Action::Action(LastExpressEngine *engine) : _engine(engine) {
 	ADD_ACTION(bed);
 	ADD_ACTION(41);
 	ADD_ACTION(42);
-	ADD_ACTION(dummy);
+	ADD_ACTION(clickPainting);
 	ADD_ACTION(44);
 }
 
@@ -443,7 +443,12 @@ IMPLEMENT_ACTION(savePoint) {
 
 //////////////////////////////////////////////////////////////////////////
 IMPLEMENT_ACTION(playSound) {
-	if (hotspot.param2)
+	
+	// Check that the file is not already buffered
+	char filename[8];
+	sprintf((char *)&filename, "LIB%03d", hotspot.param1);
+
+	if (hotspot.param2 || !getSound()->isBuffered(filename, true))
 		getSound()->playSoundEvent(kEntityNone, hotspot.param1, hotspot.param2);
 
 	return kSceneInvalid;
@@ -467,7 +472,7 @@ IMPLEMENT_ACTION(knock) {
 	if (getObjects()->get(object).entity) {
 		getSavePoints()->push(kEntityNone, getObjects()->get(object).entity, kAction8, object);
 	} else {
-		if (!getSound()->isFileInQueue("LIB012"))
+		if (!getSound()->isBuffered("LIB012", true))
 			getSound()->playSoundEvent(kEntityNone, 12);
 	}
 
@@ -1094,7 +1099,8 @@ IMPLEMENT_ACTION(26) {
 
 //////////////////////////////////////////////////////////////////////////
 IMPLEMENT_ACTION(27) {
-	getSound()->playSoundEvent(kEntityNone, 31);
+	if (!getSound()->isBuffered("LIB031", true))
+		getSound()->playSoundEvent(kEntityNone, 31);
 
 	switch (getEntityData(kEntityNone)->car) {
 	default:
@@ -1386,6 +1392,11 @@ IMPLEMENT_ACTION(42) {
 	return kSceneInvalid;
 }
 
+IMPLEMENT_ACTION(clickPainting) {
+	// This does not seem to do anything in the english version
+	return kSceneInvalid;
+}
+
 //////////////////////////////////////////////////////////////////////////
 IMPLEMENT_ACTION(44) {
 	switch (hotspot.param1) {
@@ -1576,6 +1587,7 @@ bool Action::handleOtherCompartment(ObjectIndex object, byte param2, byte param3
 }
 
 void Action::playCompartmentSoundEvents(EntityIndex entityIndex, ObjectIndex object, byte param2, byte param3, bool loadSceneFunction) const {
+	// FIXME missing tons of code here!
 	if (param2) {
 		if (getObjects()->get(object).location == 1 || getObjects()->get(object).location == 3 || getEntities()->checkFields2(object)) {
 			getSound()->playSoundEvent(kEntityNone, 13);
@@ -1794,7 +1806,7 @@ void Action::playAnimation(EventIndex index) const {
 	if (!getFlags()->mouseRightClick) {
 
 		if (getGlobalTimer()) {
-			if (getSound()->isFileInQueue("TIMER", true)) {
+			if (getSound()->isBuffered("TIMER")) {
 				getSound()->unknownFunction2("TIMER");
 				setGlobalTimer(105);
 			}
@@ -1815,7 +1827,7 @@ void Action::playAnimation(EventIndex index) const {
 		if (animation.loadFile(Common::String(animationList[index].filename) + ".nis"))
 			animation.play();
 
-		if (getSound()->isFileInQueue("TIMER", true))
+		if (getSound()->isBuffered("TIMER"))
 			getSound()->removeFromQueue("TIMER");
 	}
 
