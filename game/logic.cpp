@@ -402,7 +402,24 @@ void Logic::loadSceneFromObject(ObjectIndex object, bool alternate) {
 }
 
 void Logic::loadSceneFromItem(InventoryItem item) {
-	if (item >= 32)
+	if (item >= kPortraitOriginal)
+		return;
+
+	// Get the scene index from the item
+	SceneIndex index = _state->getGameInventory()->getEntry(item)->scene;
+	if (!index)
+		return;
+
+	if (!getState()->sceneUseBackup) {
+		getState()->sceneUseBackup = true;
+		getState()->sceneBackup = getState()->scene;
+	}
+
+	loadScene(index);
+}
+
+void Logic::loadSceneFromItemPosition(InventoryItem item) {
+	if (item >= kPortraitOriginal)
 		return;
 
 	// Check item location

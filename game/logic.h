@@ -75,6 +75,7 @@ public:
 
 	void loadSceneFromObject(ObjectIndex object, bool alternate = false);
 	void loadSceneFromItem(InventoryItem item);
+	void loadSceneFromItemPosition(InventoryItem item);
 	void loadSceneFromPosition(CarIndex car, Position position, int param3 = -1);
     SceneIndex getSceneIndexFromPosition(CarIndex car, Position position, int param3 = -1);
 
