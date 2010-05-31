@@ -224,17 +224,20 @@ bool Debugger::cmd_showframe(int argc, const char **argv) {
 
 bool Debugger::cmd_playsnd(int argc, const char **argv) {
 	if (argc == 2) {
-		Common::String filename(const_cast<char *>(argv[1]));
+		// Add .SND at the end of the filename if needed
+		Common::String name(const_cast<char *>(argv[1]));
+		if (!name.contains('.'))
+			name += ".SND";
 
-		if (!_engine->getResourceManager()->hasFile(filename)) {
-			DebugPrintf("Cannot find file: %s\n", filename.c_str());
+		if (!_engine->getResourceManager()->hasFile(name)) {
+			DebugPrintf("Cannot find file: %s\n", name.c_str());
 			return true;
 		}
 
 		_engine->_system->getMixer()->stopAll();
 
 		// FIXME: use another sound stream for debug (the one in the engine is not setup for playing a single sound)
-		getSound()->getSfxStream()->load(_engine->getResourceManager()->getFileStream(filename));
+		getSound()->getSfxStream()->load(_engine->getResourceManager()->getFileStream(name));
 	} else {
 		DebugPrintf("Syntax: playsnd <sndname>\n");
 	}
