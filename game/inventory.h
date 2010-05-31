@@ -96,12 +96,12 @@ public:
 	void setLocationAndProcess(InventoryItem item, ObjectLocation location);
 
 	// UI Control
-	void show(bool visible);
+	void show();
 	void blinkEgg(bool enabled);
-	void showHourGlass(bool enabled);
+	void showHourGlass();
 	void setPortrait(InventoryItem item) const;
-	void showItem(InventoryItem item);
-	void drawEgg();
+	void drawEgg() const;
+	void drawBlinkingEgg();
 
 	// Handle inventory UI events.
 	bool handleMouseEvent(const Common::Event &ev);

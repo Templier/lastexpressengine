@@ -1787,8 +1787,8 @@ void Action::playAnimation(EventIndex index) const {
 	getFlags()->flag_3 = true;
 
 	// Show inventory & hourglass
-	getInventory()->show(true);
-	getInventory()->showHourGlass(true);
+	getInventory()->show();
+	getInventory()->showHourGlass();
 
 	// TODO: not sure how it is supposed to work
 	if (!getFlags()->mouseRightClick) {
@@ -1802,6 +1802,13 @@ void Action::playAnimation(EventIndex index) const {
 
 		// TODO adjust screen coordinates for drawing animation
 		// TODO compute arg to animation
+		bool processSound = false;
+		if (index >= kEventCorpseDropFloorOriginal
+		 || index == kEventCathWakingUp
+		 || index == kEventConcertCough
+		 || index == kEventConcertSit
+		 || index == kEventConcertLeaveWithBriefcase)
+			processSound = true;
 
 		// FIXME NIS animations need to be passed one more parameter than currently
 		Animation animation;
@@ -1816,8 +1823,6 @@ void Action::playAnimation(EventIndex index) const {
 	getEvent(index) = 1;
 	getState()->timeTicks += animationList[index].time;
 	getState()->time += animationList[index].time * getState()->timeDelta;
-
-	getInventory()->showHourGlass(false);
 }
 
 } // End of namespace LastExpress

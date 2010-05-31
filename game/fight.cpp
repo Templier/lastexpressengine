@@ -224,7 +224,7 @@ Fight::FightEndType Fight::setup(FightType type) {
 	//////////////////////////////////////////////////////////////////////////
 	// Prepare UI & state
 
-	getInventory()->showHourGlass(true);
+	getInventory()->showHourGlass();
 	// TODO events function
 	// TODO global var
 	getFlags()->flag_0 = false;
@@ -268,7 +268,7 @@ Fight::FightEndType Fight::setup(FightType type) {
 	// Load the scene object
 	loadSceneObject(scene, sceneIndex);
 
-	// Update game entities and state	
+	// Update game entities and state
 	getEntityData(kEntityNone)->field_491 = (EntityData::Field491Value)scene.getHeader()->count;
 	getEntityData(kEntityNone)->field_493 = (EntityData::Field493Value)scene.getHeader()->field_11;
 
@@ -290,7 +290,7 @@ Fight::FightEndType Fight::setup(FightType type) {
 	// Show opponents & egg button
 	Common::Event emptyEvent;
 	handleMouseMove(emptyEvent, false);
-	getInventory()->showHourGlass(false);
+	// FIXME getInventory()->showHourGlass(false);
 
 	// Start fight
 	_endType = kFightEndLost;

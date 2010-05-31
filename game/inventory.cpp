@@ -62,7 +62,7 @@ Inventory::~Inventory() {
 // Inventory handling
 //////////////////////////////////////////////////////////////////////////
 
-// Init inventory contents
+// Initialize inventory contents
 void Inventory::init() {
 	// ID
 	_entries[kItemMatchBox].cursor = kCursorMatchBox;
@@ -277,14 +277,9 @@ bool Inventory::handleMouseEvent(const Common::Event &ev) {
 //////////////////////////////////////////////////////////////////////////
 // UI
 //////////////////////////////////////////////////////////////////////////
-void Inventory::show(bool visible) {
-	_visible = visible;
-
+void Inventory::show() {
 	clearBg(GraphicsManager::kBackgroundInventory);
 	askForRedraw();
-
-	if (!visible)
-		return;
 
 	// Show portrait (first draw, cannot be highlighted)
 	drawItem(0, 0, getProgress().portrait, 50)
@@ -320,33 +315,14 @@ void Inventory::blinkEgg(bool enabled) {
 	askForRedraw();
 }
 
-void Inventory::showHourGlass(bool enabled) {
-	_showingHourGlass = enabled;
-
-	// Reset state
-	_blinkingEgg = false;
-
-	// Show/Hide hour glass and ask for redraw
-	if (_showingHourGlass)
-		drawItem(608, 448, kCursorHourGlass, 100)
-	else
-		drawItem(608, 448, getLogic()->getGameId() + 39, 100) // normal egg state
-
-	askForRedraw();
-}
-
-// Show an item scene
-void Inventory::showItem(InventoryItem item) {
-	SceneIndex scene = getEntry(item)->scene;
-	if (!scene )
-		return;
-
-	if (!getState()->sceneUseBackup) {
-		getState()->sceneBackup = getState()->scene;
-		getState()->sceneUseBackup = true;
+void Inventory::showHourGlass() {
+	if (!getFlags()->flag_5) {
+		drawItem(608, 448, kCursorHourGlass, 100);
 	}
 
-	getLogic()->loadScene(scene);
+	askForRedraw();
+
+	getFlags()->shouldDrawEggOrHourGlass = true;
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -360,14 +336,14 @@ Inventory::InventoryEntry *Inventory::getEntry(InventoryItem item) {
 }
 
 void Inventory::addItem(InventoryItem item) {
-	if (hasItem(item))
+	if (item >= kPortraitOriginal)
 		return;
 
 	getEntry(item)->isPresent = true;
 	getEntry(item)->location = kLocationNone;
 
-	// Autoselect item if necessary
-	if (!getEntry(item)->manualSelect) {
+	// Auto-select item if necessary
+	if (getEntry(item)->cursor && !getEntry(item)->manualSelect) {
 		_selectedItem = (InventoryItem)getEntry(item)->cursor;
 		drawItem(44, 0, _selectedItem, 100)
 		askForRedraw();
@@ -375,7 +351,7 @@ void Inventory::addItem(InventoryItem item) {
 }
 
 void Inventory::removeItem(InventoryItem item, ObjectLocation newLocation) {
-	if (!hasItem(item))
+	if (item >= kPortraitOriginal)
 		return;
 
 	getEntry(item)->isPresent = false;
@@ -389,8 +365,8 @@ void Inventory::removeItem(InventoryItem item, ObjectLocation newLocation) {
 }
 
 bool Inventory::hasItem(InventoryItem item) {
-	if (getEntry(item)->isPresent)
-			return true;
+	if (getEntry(item)->isPresent && item < kPortraitOriginal)
+		return true;
 
 	return false;
 }
@@ -418,10 +394,8 @@ void Inventory::setLocationAndProcess(InventoryItem item, ObjectLocation locatio
 
 	getEntry(item)->location = location;
 
-	if (isItemSceneParameter(item)) {
-		if (getFlags()->flag_0)
-			getLogic()->processScene();
-	}
+	if (isItemSceneParameter(item) && !getFlags()->flag_0)
+		getLogic()->processScene();
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -438,7 +412,7 @@ InventoryItem Inventory::getFirstExaminableItem() const {
 
 	int index = 0;
 	InventoryEntry entry = _entries[index];
-	while (!entry.isPresent || !entry.manualSelect || !entry.scene) {
+	while (!entry.isPresent || !entry.cursor || entry.manualSelect) {
 		index++;
 		entry = _entries[index];
 
@@ -513,23 +487,25 @@ void Inventory::examine(InventoryItem item) {
 	}
 }
 
-void Inventory::drawEgg() {
-	// Blinking egg: we need to blink the egg for delta time, with the blinking getting faster until it's always lit.
-	if (_blinkingEgg) {
-		drawItem(608, 448, getLogic()->getGameId() + 39, _blinkingBrightness)
-
-		// TODO if delta time > _blinkingInterval, update egg & ask for redraw then adjust blinking time and remaining time
-		warning("Inventory::drawEgg - blinking not implemented!");
-
-		// Reset values and stop blinking
-		if (_blinkingTime == 0)
-			blinkEgg(false);
-
-		askForRedraw();
-	} else {
-		// TODO do not draw if not needed (ie no blink and already drawn)
+void Inventory::drawEgg() const {
+	if (!getFlags()->flag_5)
 		drawItem(608, 448, getLogic()->getGameId() + 39, 50)
-	}
+
+	getFlags()->shouldDrawEggOrHourGlass = false;
+}
+
+// Blinking egg: we need to blink the egg for delta time, with the blinking getting faster until it's always lit.
+void Inventory::drawBlinkingEgg() {
+	drawItem(608, 448, getLogic()->getGameId() + 39, _blinkingBrightness)
+
+	// TODO if delta time > _blinkingInterval, update egg & ask for redraw then adjust blinking time and remaining time
+	warning("Inventory::drawEgg - blinking not implemented!");
+
+	// Reset values and stop blinking
+	if (_blinkingTime == 0)
+		blinkEgg(false);
+
+	askForRedraw();
 }
 
 // Close inventory: clear items and reset icon

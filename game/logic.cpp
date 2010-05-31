@@ -105,7 +105,7 @@ void Logic::startGame() {
 
 	loadScene(kSceneDefault);
 
-	getInventory()->show(true);
+	getInventory()->show();
 
 	askForRedraw();
 }
@@ -114,13 +114,13 @@ void Logic::startGame() {
 void Logic::showMenu(bool visible) {
 
 	if (!visible) {
-		getInventory()->show(true);
+		getInventory()->show();
 		_runState.showingMenu = false;
 		return;
 	}
 
 	// Hide inventory
-	getInventory()->show(false);
+	// FIXME getInventory()->show(false);
 
 	// TODO: load scene and set current scene
 	_runState.showingMenu = true;
@@ -263,10 +263,8 @@ void Logic::loadScene(SceneIndex index) {
 
 	// TODO Events method call (might be a low level graphic that we don't need)
 
-	if (getFlags()->gameRunning)
-		if (getFlags()->shouldDrawEggOrHourGlass) {
-			getInventory()->drawEgg();
-		}
+	if (getFlags()->gameRunning && getFlags()->shouldDrawEggOrHourGlass)
+		getInventory()->drawEgg();
 
 	// Restore shouldRedraw flag
 	getFlags()->shouldRedraw = shouldRedraw;
@@ -352,7 +350,6 @@ void Logic::processScene() {
 	InventoryItem item = getInventory()->getFirstExaminableItem();
 	if (item && getInventory()->getSelectedItem() == item)
 		getInventory()->selectItem(item);
-
 
 	loadSceneObject(backup, getState()->sceneBackup);
 
@@ -803,8 +800,7 @@ void Logic::postProcessScene() {
 //////////////////////////////////////////////////////////////////////////
 
 // Handle game over
-void Logic::gameOver(TimeType type, TimeValue time, SceneIndex sceneIndex, bool showScene)
-{
+void Logic::gameOver(TimeType type, TimeValue time, SceneIndex sceneIndex, bool showScene) {
 
 	getSound()->unknownFunction3();
 	getEntities()->reset();
