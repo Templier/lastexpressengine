@@ -204,7 +204,31 @@ IMPLEMENT_FUNCTION(Tatiana, function22, 22)
 }
 
 IMPLEMENT_FUNCTION(Tatiana, function23, 23)
-	error("Tatiana: callback function 23 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionDefault:
+		_data->setNextCallback(1);
+		call(new ENTITY_SETUP(Tatiana, setup_function13), kCarRedSleeping, EntityData::kField491_7500);
+		break;
+
+	case kActionCallback:
+		switch (_data->getNextCallback()) {
+		default:
+			break;
+
+		case 1:
+			_data->setNextCallback(2);
+			call(new ENTITY_SETUP(Tatiana, setup_function14));
+			break;
+
+		case 2:
+			setup_function24();
+			break;
+		}
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Tatiana, function24, 24)
@@ -315,7 +339,22 @@ IMPLEMENT_FUNCTION(Tatiana, function38, 38)
 }
 
 IMPLEMENT_FUNCTION(Tatiana, function39, 39)
-	error("Tatiana: callback function 39 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionNone:
+		if (!params->param1 && getEntities()->checkFields9(kEntityTatiana, kEntityNone, 1000)) {
+			params->param1 = 1;
+			getSound()->playSound(kEntityTatiana, "Tat3164");	// Tatiana weeping 
+		}
+		break;
+
+	case kActionDefault:
+		getObjects()->update(kObjectCompartmentB, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObject49, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Tatiana, function40, 40)
@@ -357,7 +396,20 @@ IMPLEMENT_FUNCTION(Tatiana, chapter4, 43)
 }
 
 IMPLEMENT_FUNCTION(Tatiana, function44, 44)
-	error("Tatiana: callback function 44 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionDefault:
+		_data->setNextCallback(1);
+		call(new ENTITY_SETUP(Tatiana, setup_function16), kTimeTatiana);
+		break;
+
+	case kActionCallback:
+		if (_data->getNextCallback() == 1)
+			setup_function45();
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Tatiana, function45, 45)
@@ -377,7 +429,23 @@ IMPLEMENT_FUNCTION(Tatiana, function48, 48)
 }
 
 IMPLEMENT_FUNCTION(Tatiana, function49, 49)
-	error("Tatiana: callback function 49 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionDefault:
+		getData()->field_491 = EntityData::kField491_7500;
+		getData()->field_493 = EntityData::kField493_1;
+		getData()->car = kCarRedSleeping;
+
+		getObjects()->update(kObjectCompartmentB, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObject49, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
+		break;
+
+	case kAction169360385:
+		setup_function50();
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Tatiana, function50, 50)
@@ -422,7 +490,19 @@ IMPLEMENT_FUNCTION(Tatiana, function54, 54)
 }
 
 IMPLEMENT_FUNCTION(Tatiana, function55, 55)
-	error("Tatiana: callback function 55 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionDefault:
+		getEntities()->prepareSequences(kEntityTatiana);
+		// fall back to next action
+
+	case kAction17:
+		if (getEntities()->isPlayerPosition(kCarRestaurant, 72))
+			getLogic()->loadSceneFromPosition(kCarRestaurant, 86);
+		break;
+	}
 }
 
 } // End of namespace LastExpress

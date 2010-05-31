@@ -100,7 +100,7 @@ IMPLEMENT_FUNCTION_SIII(Mahmud, function4, 4)
 	case kActionExitCompartment:
 		getEntities()->exitCompartment(kEntityMahmud, (ObjectIndex)params->param2);
 
-		CALL_PREVIOUS_SAVEPOINT();
+		CALLBACK_ACTION();
 		break;
 
 	case kActionDefault:
@@ -141,7 +141,7 @@ IMPLEMENT_FUNCTION_II(Mahmud, function9, 9)
 	case kActionNone:
 	case kActionDefault:
 		if (getEntities()->checkEntity(kEntityMahmud, (CarIndex)params->param1, (EntityData::Field491Value)params->param2))
-			CALL_PREVIOUS_SAVEPOINT();
+			CALLBACK_ACTION();
 		break;
 
 	case kActionExcuseMeCath:
@@ -264,7 +264,7 @@ IMPLEMENT_FUNCTION_II(Mahmud, function10, 10)
 		call(new ENTITY_SETUP_SIII(Mahmud, setup_function4), "614Dd", kObjectCompartment4, 30, params->param1);
 		break;
 
-	case kAction18:
+	case kActionCallback:
 		switch (_data->getNextCallback()) {
 		case 1:
 			getObjects()->update(kObjectCompartment5, kEntityMahmud, kLocation3, kCursorHandKnock, kCursorHand);
@@ -284,7 +284,7 @@ IMPLEMENT_FUNCTION_II(Mahmud, function10, 10)
 			getData()->field_493 = EntityData::kField493_1;
 			getEntities()->prepareSequences(kEntityMahmud);
 
-			CALL_PREVIOUS_SAVEPOINT();
+			CALLBACK_ACTION();
 			break;
 		}
 		break;
@@ -337,7 +337,7 @@ IMPLEMENT_FUNCTION(Mahmud, function11, 11)
 		call(new ENTITY_SETUP_SIIS(Mahmud, setup_enterExitCompartment), "614Ad", kObjectCompartment4);
 		break;
 
-	case kAction18:
+	case kActionCallback:
 		switch (_data->getNextCallback()) {
 		default:
 			break;
@@ -410,7 +410,7 @@ IMPLEMENT_FUNCTION(Mahmud, function11, 11)
 			getEntities()->prepareSequences(kEntityMahmud);
 			getObjects()->update(kObjectCompartment4, kEntityMahmud, kLocation3, kCursorHandKnock, kCursorHand);
 
-			CALL_PREVIOUS_SAVEPOINT();
+			CALLBACK_ACTION();
 			break;
 		}
 		break;
@@ -442,7 +442,7 @@ IMPLEMENT_FUNCTION(Mahmud, function12, 12)
 		call(new ENTITY_SETUP_SIIS(Mahmud, setup_enterExitCompartment), "614Gd", kObjectCompartment4);
 		break;
 
-	case kAction18:
+	case kActionCallback:
 		switch (_data->getNextCallback()) {
 		default:
 			break;
@@ -489,7 +489,7 @@ IMPLEMENT_FUNCTION(Mahmud, function12, 12)
 			getData()->field_493 = EntityData::kField493_1;
 			getEntities()->prepareSequences(kEntityMahmud);
 
-			CALL_PREVIOUS_SAVEPOINT();
+			CALLBACK_ACTION();
 			break;
 
 		}
@@ -508,7 +508,7 @@ IMPLEMENT_FUNCTION(Mahmud, function13, 13)
 		call(new ENTITY_SETUP_SIIS(Mahmud, setup_enterExitCompartment), "614Gd", kObjectCompartment4);
 		break;
 
-	case kAction18:
+	case kActionCallback:
 		switch (_data->getNextCallback()) {
 		default:
 			break;
@@ -555,7 +555,7 @@ IMPLEMENT_FUNCTION(Mahmud, function13, 13)
 			getData()->field_493 = EntityData::kField493_1;
 			getEntities()->prepareSequences(kEntityMahmud);
 
-			CALL_PREVIOUS_SAVEPOINT();
+			CALLBACK_ACTION();
 			break;
 
 		}
@@ -578,7 +578,7 @@ IMPLEMENT_FUNCTION(Mahmud, function14, 14)
 
 		if (!params->param2 && getProgress().chapter == kChapter1) {
 
-			if (getState()->time > kTimeMahmud1 && !params->param6) {
+			if (getState()->time > kTimeMahmud_1 && !params->param6) {
 				params->param6 = 1;
 
 				_data->setNextCallback(1);
@@ -655,7 +655,7 @@ IMPLEMENT_FUNCTION(Mahmud, function14, 14)
 		}
 		break;
 
-	case kAction18:
+	case kActionCallback:
 		switch (_data->getNextCallback()) {
 		default:
 			return;

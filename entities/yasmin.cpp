@@ -124,7 +124,7 @@ IMPLEMENT_FUNCTION(Yasmin, function6, 6)
 		call(new ENTITY_SETUP_SIIS(Yasmin, setup_enterExitCompartement), "615Be", kObjectCompartment5);
 		break;
 
-	case kAction18:
+	case kActionCallback:
 		switch (_data->getNextCallback()) {
 		default:
 			break;
@@ -142,7 +142,7 @@ IMPLEMENT_FUNCTION(Yasmin, function6, 6)
 			getData()->field_493 = EntityData::kField493_1;
 			getEntities()->prepareSequences(kEntityYasmin);
 
-			CALL_PREVIOUS_SAVEPOINT()
+			CALLBACK_ACTION()
 			break;
 		}
 		break;
@@ -163,7 +163,7 @@ IMPLEMENT_FUNCTION(Yasmin, function7, 7)
 		call(new ENTITY_SETUP_SIIS(Yasmin, setup_enterExitCompartement), "615Bg", kObjectCompartment7);
 		break;
 
-	case kAction18:
+	case kActionCallback:
 		switch (_data->getNextCallback()) {
 		default:
 			break;
@@ -181,7 +181,7 @@ IMPLEMENT_FUNCTION(Yasmin, function7, 7)
 			getData()->field_493 = EntityData::kField493_1;
 			getEntities()->prepareSequences(kEntityYasmin);
 
-			CALL_PREVIOUS_SAVEPOINT()
+			CALLBACK_ACTION()
 			break;
 		}
 		break;

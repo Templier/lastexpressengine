@@ -56,13 +56,13 @@ IMPLEMENT_FUNCTION_II(Train, savegame, 1)
 		break;
 
 	case kActionNone:
-		CALL_PREVIOUS_SAVEPOINT()
+		CALLBACK_ACTION()
 		break;
 
 	case kActionDefault:
 		save(kEntityTrain, params->param1, (EventIndex)params->param2);
 
-		CALL_PREVIOUS_SAVEPOINT()
+		CALLBACK_ACTION()
 		break;
 	}
 }
@@ -104,7 +104,7 @@ void Train::handleCompartementAction() {
 
 	ENTITY_PARAM(0, 8) = params->param1;
 
-	CALL_PREVIOUS_SAVEPOINT();
+	CALLBACK_ACTION();
 }
 
 IMPLEMENT_FUNCTION_II(Train, harem, 7)
@@ -444,7 +444,7 @@ label_skip:
 		break;
 
 
-	case kAction18: {
+	case kActionCallback: {
 		int action = _data->getNextCallback();
 		switch(action) {
 		default:

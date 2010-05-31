@@ -117,7 +117,7 @@ IMPLEMENT_FUNCTION_SI(Abbot, function4, 4)
 		getData()->field_491 = EntityData::kField491_6470;
 		getData()->field_493 = EntityData::kField493_1;
 
-		CALL_PREVIOUS_SAVEPOINT()
+		CALLBACK_ACTION()
 		break;
 
 	case kActionDefault:
@@ -169,7 +169,7 @@ IMPLEMENT_FUNCTION_II(Abbot, function11, 11)
 
 	case kActionNone:
 		if (getEntities()->checkEntity(kEntityAbbot, (CarIndex)params->param1, (EntityData::Field491Value)params->param2))
-			CALL_PREVIOUS_SAVEPOINT()
+			CALLBACK_ACTION()
 		break;
 
 	case kActionExcuseMeCath:
@@ -189,7 +189,7 @@ IMPLEMENT_FUNCTION_II(Abbot, function11, 11)
 
 	case kActionDefault:
 		if (getEntities()->checkEntity(kEntityAbbot, (CarIndex)params->param1, (EntityData::Field491Value)params->param2))
-			CALL_PREVIOUS_SAVEPOINT()
+			CALLBACK_ACTION()
 		break;
 	}
 }
@@ -243,7 +243,7 @@ IMPLEMENT_FUNCTION(Abbot, function18, 18)
 	default:
 		break;
 
-	case kAction18:
+	case kActionCallback:
 		switch (_data->getNextCallback()) {
 		default:
 			break;
@@ -319,7 +319,7 @@ IMPLEMENT_FUNCTION(Abbot, function19, 19)
 		call(new ENTITY_SETUP_SIIS(Abbot, setup_playSound), "Abb3010");
 		break;
 
-	case kAction18:
+	case kActionCallback:
 		switch (_data->getNextCallback()) {
 		default:
 			break;
@@ -347,7 +347,7 @@ IMPLEMENT_FUNCTION(Abbot, function20, 20)
 		break;
 
 	case kActionNone:
-		if (getState()->time > kTimeAbbot2)
+		if (getState()->time > kTimeAbbot_2)
 			if (getEntities()->checkFields13(kEntityBoutarel))
 				setup_function21();
 		break;
@@ -368,7 +368,7 @@ IMPLEMENT_FUNCTION(Abbot, function21, 21)
 		call(new ENTITY_SETUP_SIIS(Abbot, setup_draw), "509B");
 		break;
 
-	case kAction18:
+	case kActionCallback:
 		switch (_data->getNextCallback()) {
 		default:
 			break;
@@ -437,14 +437,14 @@ IMPLEMENT_FUNCTION(Abbot, function22, 22)
 		break;
 
 	case kActionNone:
-		if (getState()->time > kTimeAbbot3) {
+		if (getState()->time > kTimeAbbot_3) {
 			if (!params->param1) {
 				params->param1 = 1;
 				getSavePoints()->push(kEntityAbbot, kEntityServers0, kAction218586752);
 			}
 		}
 
-		if (getState()->time > kTimeAbbot4) {
+		if (getState()->time > kTimeAbbot_4) {
 			if (getEntities()->checkFields11()) {
 				getData()->inventoryItem = kItemNone;
 
@@ -466,7 +466,7 @@ IMPLEMENT_FUNCTION(Abbot, function22, 22)
 			getData()->inventoryItem = (InventoryItem)kCursorProcess;
 		break;
 
-	case kAction18:
+	case kActionCallback:
 		if (_data->getNextCallback() != 1)
 			break;
 
@@ -498,7 +498,7 @@ IMPLEMENT_FUNCTION(Abbot, function23, 23)
 		call(new ENTITY_SETUP_SIIS(Abbot, setup_function12), "029F", kEntityTables4, kAction103798704, "029G");
 		break;
 
-	case kAction18:
+	case kActionCallback:
 		switch (_data->getNextCallback()) {
 		default:
 			break;
@@ -567,7 +567,7 @@ IMPLEMENT_FUNCTION(Abbot, function24, 24)
 		getObjects()->update(kObject50, kEntityAbbot, kLocationNone, kCursorHandKnock, kCursorHand);
 		break;
 
-	case kAction18:
+	case kActionCallback:
 		switch (_data->getNextCallback()) {
 		default:
 			break;
@@ -597,7 +597,7 @@ IMPLEMENT_FUNCTION(Abbot, function25, 25)
 		call(new ENTITY_SETUP_SIIS(Abbot, setup_enterExitCompartment), "617Dc", kObjectCompartmentC);
 		break;
 
-	case kAction18:
+	case kActionCallback:
 		switch (_data->getNextCallback()) {
 		default:
 			break;
@@ -669,7 +669,7 @@ IMPLEMENT_FUNCTION(Abbot, function27, 27)
 		call(new ENTITY_SETUP(Abbot, setup_function14));
 		break;
 
-	case kAction18:
+	case kActionCallback:
 		switch (_data->getNextCallback()) {
 		default:
 			break;
@@ -730,7 +730,7 @@ IMPLEMENT_FUNCTION(Abbot, function28, 28)
 		call(new ENTITY_SETUP_SIIS(Abbot, setup_playSound), "abb3013");
 		break;
 
-	case kAction18:
+	case kActionCallback:
 		if (_data->getNextCallback() == 1)
 			getEntities()->drawSequenceLeft(kEntityAbbot, "508B");
 		break;
@@ -753,7 +753,7 @@ IMPLEMENT_FUNCTION(Abbot, function29, 29)
 		call(new ENTITY_SETUP_SIIS(Abbot, setup_enterExitCompartment), "617Bc", kObjectCompartmentC);
 		break;
 
-	case kAction18:
+	case kActionCallback:
 		switch (_data->getNextCallback()) {
 		default:
 			break;
@@ -797,7 +797,7 @@ IMPLEMENT_FUNCTION(Abbot, function29, 29)
 			getSavePoints()->push(kEntityAbbot, kEntityBoutarel, kAction122358304);
 			getEntities()->drawSequenceLeft(kEntityAbbot, "508B");
 
-			CALL_PREVIOUS_SAVEPOINT();
+			CALLBACK_ACTION();
 			break;
 		}
 		break;
@@ -814,7 +814,7 @@ switch (savepoint.action) {
 		call(new ENTITY_SETUP_SIIS(Abbot, setup_playSound), "Abb3030");
 		break;
 
-	case kAction18:
+	case kActionCallback:
 		switch (_data->getNextCallback()) {
 		default:
 			break;
@@ -899,7 +899,7 @@ IMPLEMENT_FUNCTION(Abbot, function38, 38)
 		call(new ENTITY_SETUP_SIIS(Abbot, setup_playSound), "Abb3014A");
 		break;
 
-	case kAction18:
+	case kActionCallback:
 		if (_data->getNextCallback() == 1)
 			getEntities()->drawSequenceLeft(kEntityAbbot, "508B");
 		break;
@@ -983,7 +983,7 @@ IMPLEMENT_FUNCTION(Abbot, function46, 46)
 		call(new ENTITY_SETUP(Abbot, setup_function40), kCarRestaurant, EntityData::kField491_850);
 		break;
 
-	case kAction18:
+	case kActionCallback:
 		if (_data->getNextCallback() == 1)
 			setup_function47();
 		break;
@@ -1057,7 +1057,7 @@ IMPLEMENT_FUNCTION(Abbot, function53, 53)
 		getSavePoints()->push(kEntityAbbot, kEntityAnna, kAction158480160);
 		break;
 
-	case kAction18:
+	case kActionCallback:
 		switch (_data->getNextCallback()) {
 		default:
 			break;

@@ -114,7 +114,20 @@ IMPLEMENT_FUNCTION(Pascale, function8, 8)
 }
 
 IMPLEMENT_FUNCTION(Pascale, function9, 9)
-	error("Pascale: callback function 9 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionExitCompartment:
+		CALLBACK_ACTION();
+ 		break;
+
+	case kActionDefault:
+		getEntities()->drawSequenceLeft(kEntityPascale, "012C1");
+		getEntities()->drawSequenceLeft(kEntityRebecca, "012C2");
+		getEntities()->drawSequenceLeft(kEntityTables3, "012C3");
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Pascale, function10, 10)

@@ -148,7 +148,16 @@ IMPLEMENT_FUNCTION(MmeBoutarel, function15, 15)
 }
 
 IMPLEMENT_FUNCTION(MmeBoutarel, function16, 16)
-	error("MmeBoutarel: callback function 16 not implemented!");
+	if (savepoint.action == kActionDefault) {
+		getData()->field_491 = EntityData::kField491_5790;
+		getData()->field_493 = EntityData::kField493_1;
+		getData()->car = kCarRedSleeping;
+		
+		getObjects()->update(kObjectCompartmentD, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObject51, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
+
+		getEntities()->prepareSequences(kEntityMmeBoutarel);
+	}
 }
 
 IMPLEMENT_FUNCTION(MmeBoutarel, chapter2, 17)
@@ -242,7 +251,16 @@ IMPLEMENT_FUNCTION(MmeBoutarel, function24, 24)
 }
 
 IMPLEMENT_FUNCTION(MmeBoutarel, function25, 25)
-	error("MmeBoutarel: callback function 25 not implemented!");
+	if (savepoint.action == kActionDefault) {
+		getEntities()->prepareSequences(kEntityMmeBoutarel);
+
+		getData()->field_491 = EntityData::kField491_5790;
+		getData()->field_493 = EntityData::kField493_1;
+		getData()->car = kCarRedSleeping;
+		
+		getObjects()->update(kObjectCompartmentD, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObject51, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
+	}
 }
 
 IMPLEMENT_FUNCTION(MmeBoutarel, chapter5, 26)

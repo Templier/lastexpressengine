@@ -253,11 +253,47 @@ IMPLEMENT_FUNCTION(Ivo, chapter4, 24)
 }
 
 IMPLEMENT_FUNCTION(Ivo, function25, 25)
-	error("Ivo: callback function 25 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionNone:
+		if (getState()->time > kTimeIvo && getEntities()->checkFields11()) {
+			getData()->field_493 = EntityData::kField493_0;
+			setup_function26();
+		}
+		break;
+
+	case kActionDefault:
+		getSavePoints()->push(kEntityIvo, kEntityTables2, kAction136455232);
+		getEntities()->drawSequenceLeft(kEntityIvo, "023B");
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Ivo, function26, 26)
-	error("Ivo: callback function 26 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionDefault:
+		_data->setNextCallback(1);
+		call(new ENTITY_SETUP(Ivo, setup_function13));
+		break;
+
+	case kActionCallback:
+		switch (_data->getNextCallback()) {
+		case 1:
+			_data->setNextCallback(2);
+			call(new ENTITY_SETUP(Ivo, setup_function11));
+			break;
+
+		case 2:
+			setup_function27();
+			break;
+		}
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Ivo, function27, 27)

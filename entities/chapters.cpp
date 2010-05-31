@@ -145,7 +145,7 @@ IMPLEMENT_FUNCTION(Chapters, resetMainEntities, 5)
 	RESET_ENTITY_STATE(kEntityVesna, Vesna, setup_function1);
 	RESET_ENTITY_STATE(kEntityYasmin, Yasmin, setup_function1);
 
-	CALL_PREVIOUS_SAVEPOINT();
+	CALLBACK_ACTION();
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -271,7 +271,7 @@ label_callback_21:
 		}
 		break;
 
-	case kAction18:
+	case kActionCallback:
 		switch (_data->getNextCallback()) {
 		default:
 			break;
@@ -415,7 +415,7 @@ IMPLEMENT_FUNCTION(Chapters, chapter2, 10)
 		call(new ENTITY_SETUP(Chapters, setup_savegame), 1, kEventNone);
 		break;
 
-	case kAction18:
+	case kActionCallback:
 		if (_data->getNextCallback() == 1) {
 			if (!_engine->getResourceManager()->loadArchive(kArchiveCd2)) {
 				getLogic()->showMenu(true);
@@ -589,7 +589,7 @@ IMPLEMENT_FUNCTION(Chapters, chapter3_init, 14)
 		call(new ENTITY_SETUP(Chapters, setup_savegame), 1, kEventNone);
 		break;
 
-	case kAction18:
+	case kActionCallback:
 		if (_data->getNextCallback() == 1)
 			setup_chapter3_handler();
 		break;
@@ -628,7 +628,7 @@ IMPLEMENT_FUNCTION(Chapters, chapter4, 17)
 		call(new ENTITY_SETUP(Chapters, setup_savegame), 1, kEventNone);
 		break;
 
-	case kAction18:
+	case kActionCallback:
 		if (_data->getNextCallback() == 1) {
 			if (!_engine->getResourceManager()->loadArchive(kArchiveCd3)) {
 				getLogic()->showMenu(true);
@@ -801,7 +801,7 @@ IMPLEMENT_FUNCTION(Chapters, chapter5_init, 21)
 		call(new ENTITY_SETUP(Chapters, setup_savegame), 1, kEventNone);
 		break;
 
-	case kAction18:
+	case kActionCallback:
 		if (_data->getNextCallback() == 1)
 			setup_chapter5_handler();
 		break;
@@ -826,7 +826,7 @@ IMPLEMENT_FUNCTION(Chapters, chapter5_handler, 22)
 			}
 		}
 
-		if (getState()->time > kTimeTrainStopped2) {
+		if (getState()->time > kTimeTrainStopped_2) {
 			if (!params->param3) {
 				params->param3 = 1;
 
@@ -839,11 +839,11 @@ IMPLEMENT_FUNCTION(Chapters, chapter5_handler, 22)
 		break;
 
 	case kAction2:
-		if (getState()->time <= kTimeTrainStopped2) {
+		if (getState()->time <= kTimeTrainStopped_2) {
 			_data->setNextCallback(1);
 			call(new ENTITY_SETUP(Chapters, setup_savegame), 2, kEventTrainStopped);
 		} else {
-			getLogic()->gameOver(kTimeType1, kTimeTrainStopped2, kSceneGameOverTrainStopped, true);
+			getLogic()->gameOver(kTimeType1, kTimeTrainStopped_2, kSceneGameOverTrainStopped, true);
 		}
 		break;
 
@@ -851,7 +851,7 @@ IMPLEMENT_FUNCTION(Chapters, chapter5_handler, 22)
 		params->param1 = 225 * (4 * random(10) + 20);
 		break;
 
-	case kAction18:
+	case kActionCallback:
 		if (_data->getNextCallback() == 1) {
 			getAction()->playAnimation(kEventTrainStopped);
 			getLogic()->gameOver(kTimeType1, kTimeTrainStopped, kSceneGameOverTrainStopped, true);

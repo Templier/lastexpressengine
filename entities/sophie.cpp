@@ -127,7 +127,7 @@ IMPLEMENT_FUNCTION_II(Sophie, function2, 2)
 		break;
 
 	case kAction123668192:
-		CALL_PREVIOUS_SAVEPOINT()
+		CALLBACK_ACTION()
 		break;
 	}
 }
@@ -143,7 +143,7 @@ IMPLEMENT_FUNCTION(Sophie, function3, 3)
 		getData()->car = getEntityData(kEntityRebecca)->car;
 		break;
 
-	case kAction18:
+	case kActionCallback:
 		switch (_data->getNextCallback()) {
 		default:
 			break;

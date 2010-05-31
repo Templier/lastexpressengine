@@ -56,10 +56,10 @@
 		} \
 	}
 
-#define CALL_PREVIOUS_SAVEPOINT() { \
+#define CALLBACK_ACTION() { \
 	getData()->current_call--; \
 	getSavePoints()->setCallback(_entityIndex, _callbacks[_data->getCurrentCallback()]); \
-	getSavePoints()->call(_entityIndex, _entityIndex, kAction18); \
+	getSavePoints()->call(_entityIndex, _entityIndex, kActionCallback); \
 	}
 
 #define UPDATE_PARAM_FROM_TIME(param1, value) \

@@ -177,7 +177,7 @@ IMPLEMENT_FUNCTION_II(Anna, function10, 10)
 	case kActionNone:
 	case kActionDefault:
 		if (getEntities()->checkEntity(kEntityAnna, (CarIndex)params->param1, (EntityData::Field491Value)params->param2))
-			CALL_PREVIOUS_SAVEPOINT()
+			CALLBACK_ACTION()
 		break;
 	}
 }
@@ -250,7 +250,7 @@ IMPLEMENT_FUNCTION(Anna, function20, 20)
 		call(new ENTITY_SETUP_ISSI(Anna, setup_function15), kTimeAnna, "NONE");
 		break;
 
-	case kAction18:
+	case kActionCallback:
 		switch (_data->getNextCallback()) {
 		case 1:
 			_data->setNextCallback(2);
@@ -341,7 +341,7 @@ IMPLEMENT_FUNCTION(Anna, function33, 33)
 		call(new ENTITY_SETUP_ISSI(Anna, setup_function15), params->param1, "NONE");
 		break;
 
-	case kAction18:
+	case kActionCallback:
 		if (_data->getNextCallback() == 1) {
 			getObjects()->updateLocation2(kObjectCompartmentF, kLocation1);
 			setup_function34();
@@ -391,7 +391,7 @@ IMPLEMENT_FUNCTION(Anna, function38, 38)
 		call(new ENTITY_SETUP_SIIS(Anna, setup_playSound), "ANN1010");
 		break;
 
-	case kAction18:
+	case kActionCallback:
 		if (_data->getNextCallback() == 1) {
 			getSound()->playSound(kEntityNone, "MUS043");
 			setup_function40();
@@ -489,7 +489,7 @@ IMPLEMENT_FUNCTION(Anna, function49, 49)
 		getSavePoints()->push(kEntityAnna, kEntityTables3, kAction103798704, "010M");
 		getEntities()->prepareSequences(kEntityAugust);
 
-		CALL_PREVIOUS_SAVEPOINT();
+		CALLBACK_ACTION();
 		break;
 
 	case kActionDefault:
@@ -556,7 +556,7 @@ IMPLEMENT_FUNCTION(Anna, function58, 58)
 		call(new ENTITY_SETUP(Anna, setup_savegame), 2, kEventAnnaSearchingCompartment);
 		break;
 
-	case kAction18:
+	case kActionCallback:
 		if (_data->getNextCallback() == 1) {
 			getAction()->playAnimation(kEventAnnaSearchingCompartment);
 			getEntities()->prepareSequences(kEntityAnna);
@@ -587,7 +587,7 @@ IMPLEMENT_FUNCTION(Anna, function62, 62)
 		break;
 
 	case kActionNone:
-		if (getState()->time > kTimeAnna3 && !params->param2) {
+		if (getState()->time > kTimeAnna_3 && !params->param2) {
 			params->param2 = 1;
 			getSavePoints()->push(kEntityAnna, kEntityVesna, kAction189299008);
 			setup_function63();
@@ -615,10 +615,10 @@ IMPLEMENT_FUNCTION(Anna, function63, 63)
 		break;
 
 	// Game over with Anna killed!
-	case kAction18:
+	case kActionCallback:
 		if (_data->getNextCallback() == 1) {
 			getAction()->playAnimation(kEventAnnaKilled);
-			getLogic()->gameOver(kTimeType1, kTimeAnna2, kSceneGameOverAnnaDied, true);
+			getLogic()->gameOver(kTimeType1, kTimeAnna_2, kSceneGameOverAnnaDied, true);
 		}
 		break;
 

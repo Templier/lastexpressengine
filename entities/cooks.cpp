@@ -94,7 +94,7 @@ IMPLEMENT_FUNCTION(Cooks, function3, 3)
 	case kAction17:
 		if (!getEntities()->checkFields17(kEntityNone)) {
 			getEntities()->prepareSequences(kEntityCooks);
-			CALL_PREVIOUS_SAVEPOINT()
+			CALLBACK_ACTION()
 			break;
 		}
 
@@ -106,7 +106,7 @@ IMPLEMENT_FUNCTION(Cooks, function3, 3)
 					if (!getEntities()->checkSequence0(kEntityCooks)) {
 						getSound()->playSound(kEntityCooks, "LIB015");
 						getEntities()->prepareSequences(kEntityCooks);
-						CALL_PREVIOUS_SAVEPOINT()
+						CALLBACK_ACTION()
 					}
 					break;
 				}
@@ -120,11 +120,11 @@ IMPLEMENT_FUNCTION(Cooks, function3, 3)
 		if (params->param1 && !getEntities()->checkSequence0(kEntityCooks)) {
 			getSound()->playSound(kEntityCooks, "LIB015");
 			getEntities()->prepareSequences(kEntityCooks);
-			CALL_PREVIOUS_SAVEPOINT()
+			CALLBACK_ACTION()
 		}
 		break;
 
-	case kAction18:
+	case kActionCallback:
 		switch (_data->getNextCallback()) {
 		default:
 			break;
@@ -179,7 +179,7 @@ IMPLEMENT_FUNCTION(Cooks, function4, 4)
 	case kAction17:
 		if (!getEntities()->checkFields17(kEntityNone)) {
 			getEntities()->prepareSequences(kEntityCooks);
-			CALL_PREVIOUS_SAVEPOINT()
+			CALLBACK_ACTION()
 			break;
 		}
 
@@ -191,7 +191,7 @@ IMPLEMENT_FUNCTION(Cooks, function4, 4)
 					if (!getEntities()->checkSequence0(kEntityCooks)) {
 						getSound()->playSound(kEntityCooks, "LIB015");
 						getEntities()->prepareSequences(kEntityCooks);
-						CALL_PREVIOUS_SAVEPOINT()
+						CALLBACK_ACTION()
 					}
 					break;
 				}
@@ -205,11 +205,11 @@ IMPLEMENT_FUNCTION(Cooks, function4, 4)
 		if (params->param1 && !getEntities()->checkSequence0(kEntityCooks)) {
 			getSound()->playSound(kEntityCooks, "LIB015");
 			getEntities()->prepareSequences(kEntityCooks);
-			CALL_PREVIOUS_SAVEPOINT()
+			CALLBACK_ACTION()
 		}
 		break;
 
-	case kAction18:
+	case kActionCallback:
 		switch (_data->getNextCallback()) {
 		default:
 			break;
@@ -290,7 +290,7 @@ IMPLEMENT_FUNCTION(Cooks, function6, 6)
 		}
 		break;
 
-	case kAction18:
+	case kActionCallback:
 		switch (_data->getNextCallback()) {
 		default:
 			break;
@@ -389,7 +389,7 @@ IMPLEMENT_FUNCTION(Cooks, function9, 9)
 		}
 		break;
 
-	case kAction18:
+	case kActionCallback:
 		if (_data->getNextCallback() == 1 || _data->getNextCallback() == 2)
 			params->param2 = !params->param2;
 		break;
@@ -472,7 +472,7 @@ update_params:
 		}
 		break;
 
-	case kAction18:
+	case kActionCallback:
 		switch (_data->getNextCallback()) {
 		default:
 			break;
@@ -551,7 +551,7 @@ IMPLEMENT_FUNCTION(Cooks, function13, 13)
 		break;
 
 
-	case kAction18:
+	case kActionCallback:
 		// Play the next part of background sound
 		if (_data->getNextCallback() == 1 || _data->getNextCallback() == 2) {
 			params->param2 = !params->param2;

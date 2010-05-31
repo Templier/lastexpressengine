@@ -40,34 +40,45 @@ enum TimeValue {
 	kTimeChapter1             = 1062000,
 	kTimeParisEpernay         = 1075500,
 	kTimeAnna                 = 1093500,
-	kTimeMahmud1              = 1098000,
+	kTimeMahmud_1             = 1098000,
+	kTimeKahina               = 1107000,
 	kTimeTables1              = 1165500,
 	kTimeMahmud               = 1167300,
+	kTimeRebecca_3            = 1184400,
 	kTimeBedTime              = 1404000,
 	kTimeChapter1_0           = 1424700,
+	kTimeKronos               = 1489500,
 	kTimeChapter1_1           = 1494000,
 	kTimeVassili              = 1503000,
-	kTimeVassili2             = 1512000,
+	kTimeVassili_2            = 1512000,
 
 	// Chapter 2
 	kTimeChapter2             = 1750500,
+	kTimeRebecca_2            = 1764000,
 
 	// Chapter 3
 	kTimeChapter3             = 1944000,
 	kTimeAbbot                = 1953000,
-	kTimeAbbot2               = 1966500,
-	kTimeAbbot3               = 1971000,
-	kTimeAbbot4               = 1989000,
+	kTimeAbbot_2              = 1966500,
+	kTimeAbbot_3              = 1971000,
+	kTimeAbbot_4              = 1989000,
+	kTimeKronos_0             = 1993500,
+	kTimeRebecca              = 2016000,
 	kTimeTables2              = 2052000,
+	kTimeRebecca_0            = 2070000,
 	kTimeCooks                = 2079000,
+	kTimeRebecca_1            = 2110500,
 	kTimeAugustVienna         = 2200500,
-	kTimeAnna2                = 2250000,
-	kTimeAnna3                = 2259000,
+	kTimeAnna_2               = 2250000,
+	kTimeAnna_3               = 2259000,
 
 	// Chapter 4
 	kTimeChapter4             = 2353500,
 	kTimeAlexei               = 2354400,
-	kTimeAlexei1              = 2403000,
+	kTimeTatiana              = 2362500,
+	kTimeIvo                  = 2361600,
+	kTimeBoutarel             = 2367000,
+	kTimeAlexei_1             = 2403000,
 	kTimeGameOver             = 2418300,
 	kTimeTables3              = 2488500,
 
@@ -76,7 +87,7 @@ enum TimeValue {
 	kTimeTrainStopped         = 2898000,
 	kTimeChapter5_0           = 2907000,
 	kTimeChapter5_1           = 2916000,
-	kTimeTrainStopped2        = 2943000,
+	kTimeTrainStopped_2       = 2943000,
 	kTimeEnd                  = 15803100
 };
 
@@ -847,7 +858,7 @@ enum ActionIndex {
 	kAction10           = 10,
 	kActionDefault      = 12,
 	kAction17           = 17,
-	kAction18           = 18,
+	kActionCallback           = 18,
 
 	/////////////////////////////
 	// Abbot
@@ -866,10 +877,15 @@ enum ActionIndex {
 	/////////////////////////////
 	kAction157370960 = 157370960,
 	kAction189299008 = 189299008,
-	kAction191668032 = 191668032,
+	kAction191668032 = 191668032,	// some action during or before concert?
 	kAction235856512 = 235856512,
 	kAction238936000 = 238936000,
 	kAction291662081 = 291662081,
+
+	/////////////////////////////
+	// August
+	/////////////////////////////
+	kAction123793792 = 123793792,
 
 	/////////////////////////////
 	// Boutarel
@@ -896,6 +912,7 @@ enum ActionIndex {
 	// Coudert
 	/////////////////////////////
 	kAction154005632 = 154005632,
+	kAction155991520 = 155991520,
 	kAction157026693 = 157026693,
 	kAction168254872 = 168254872,
 	kAction169557824 = 169557824,
@@ -919,7 +936,7 @@ enum ActionIndex {
 
 	/////////////////////////////
 	// Kahina
-	/////////////////////////////
+	/////////////////////////////	
 	kAction137503360 = 137503360,
 
 	/////////////////////////////
@@ -1051,6 +1068,7 @@ enum ActionIndex {
 	/////////////////////////////
 	// Tatiana
 	/////////////////////////////
+	kAction169360385 = 169360385,
 	kAction191198209 = 191198209,
 
 	/////////////////////////////
@@ -1087,6 +1105,9 @@ enum ActionIndex {
 	// Vesna
 	/////////////////////////////
 	kAction124190740 = 124190740,
+	kAction135024800 = 135024800,
+	kAction137165825 = 137165825,
+	kAction190412928 = 190412928,
 
 	/////////////////////////////
 	// Misc

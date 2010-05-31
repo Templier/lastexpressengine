@@ -41,7 +41,7 @@ Rebecca::Rebecca(LastExpressEngine *engine) : Entity(engine, kEntityRebecca) {
 	ADD_CALLBACK_FUNCTION(Rebecca, function1);
 	ADD_CALLBACK_FUNCTION(Rebecca, updateFromTime);
 	ADD_CALLBACK_FUNCTION(Rebecca, playSound);
-	ADD_CALLBACK_FUNCTION(Rebecca, function4);
+	ADD_CALLBACK_FUNCTION(Rebecca, playSound16);
 	ADD_CALLBACK_FUNCTION(Rebecca, function5);
 	ADD_CALLBACK_FUNCTION(Rebecca, draw);
 	ADD_CALLBACK_FUNCTION(Rebecca, enterExitCompartment);
@@ -101,8 +101,8 @@ IMPLEMENT_FUNCTION_S(Rebecca, playSound, 3)
 	Entity::playSound(savepoint);
 }
 
-IMPLEMENT_FUNCTION_S(Rebecca, function4, 4)
-	error("Rebecca: callback function 4 not implemented!");
+IMPLEMENT_FUNCTION_S(Rebecca, playSound16, 4)
+	Entity::playSound(savepoint, false, getEntities()->getSoundValue(kEntityCoudert));
 }
 
 IMPLEMENT_FUNCTION_SIIS(Rebecca, function5, 5)
@@ -209,7 +209,31 @@ IMPLEMENT_FUNCTION(Rebecca, function24, 24)
 }
 
 IMPLEMENT_FUNCTION(Rebecca, function25, 25)
-	error("Rebecca: callback function 25 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionDefault:
+		_data->setNextCallback(1);
+		call(new ENTITY_SETUP(Rebecca, setup_function20), kTimeRebecca_3);
+		break;
+
+	case kActionCallback:
+		switch (_data->getNextCallback()) {
+		default:
+			break;
+
+		case 1:
+			_data->setNextCallback(2);
+			call(new ENTITY_SETUP(Rebecca, setup_function17));
+			break;
+
+		case 2:
+			setup_function26();
+			break;
+		}
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Rebecca, function26, 26)
@@ -217,7 +241,16 @@ IMPLEMENT_FUNCTION(Rebecca, function26, 26)
 }
 
 IMPLEMENT_FUNCTION(Rebecca, function27, 27)
-	error("Rebecca: callback function 27 not implemented!");
+	if (savepoint.action == kActionDefault) {
+		getData()->field_491 = EntityData::kField491_4840;
+		getData()->field_493 = EntityData::kField493_1;
+		getData()->car = kCarRedSleeping;
+		
+		getObjects()->update(kObjectCompartmentE, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObject52, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
+
+		getEntities()->prepareSequences(kEntityRebecca);
+	}
 }
 
 IMPLEMENT_FUNCTION(Rebecca, chapter2, 28)
@@ -249,7 +282,31 @@ IMPLEMENT_FUNCTION(Rebecca, chapter2, 28)
 }
 
 IMPLEMENT_FUNCTION(Rebecca, function29, 29)
-	error("Rebecca: callback function 29 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionDefault:
+		_data->setNextCallback(1);
+		call(new ENTITY_SETUP(Rebecca, setup_function20), kTimeRebecca_2);
+		break;
+
+	case kActionCallback:
+		switch (_data->getNextCallback()) {
+		default:
+			break;
+
+		case 1:
+			_data->setNextCallback(2);
+			call(new ENTITY_SETUP(Rebecca, setup_function17));
+			break;
+
+		case 2:
+			setup_function30();
+			break;
+		}
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Rebecca, function30, 30)
@@ -277,13 +334,25 @@ IMPLEMENT_FUNCTION(Rebecca, chapter3, 32)
 		getData()->car = kCarRedSleeping;
 		getData()->clothes = kClothesDefault;
 		getData()->inventoryItem = kItemNone;
-
 		break;
 	}
 }
 
 IMPLEMENT_FUNCTION(Rebecca, function33, 33)
-	error("Rebecca: callback function 33 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionDefault:
+		_data->setNextCallback(1);
+		call(new ENTITY_SETUP(Rebecca, setup_function20), kTimeRebecca);
+		break;
+
+	case kActionCallback:
+		if (_data->getNextCallback() == 1)
+			setup_function34();
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Rebecca, function34, 34)
@@ -291,7 +360,20 @@ IMPLEMENT_FUNCTION(Rebecca, function34, 34)
 }
 
 IMPLEMENT_FUNCTION(Rebecca, function35, 35)
-	error("Rebecca: callback function 35 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionDefault:
+		_data->setNextCallback(1);
+		call(new ENTITY_SETUP(Rebecca, setup_function20), kTimeRebecca_0);
+		break;
+
+	case kActionCallback:
+		if (_data->getNextCallback() == 1)
+			setup_function36();
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Rebecca, function36, 36)
@@ -299,7 +381,20 @@ IMPLEMENT_FUNCTION(Rebecca, function36, 36)
 }
 
 IMPLEMENT_FUNCTION(Rebecca, function37, 37)
-	error("Rebecca: callback function 37 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionDefault:
+		_data->setNextCallback(1);
+		call(new ENTITY_SETUP(Rebecca, setup_function20), kTimeRebecca_1);
+		break;
+
+	case kActionCallback:
+		if (_data->getNextCallback() == 1)
+			setup_function38();
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Rebecca, function38, 38)
@@ -307,7 +402,25 @@ IMPLEMENT_FUNCTION(Rebecca, function38, 38)
 }
 
 IMPLEMENT_FUNCTION(Rebecca, function39, 39)
-	error("Rebecca: callback function 39 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionDefault:
+		getEntities()->prepareSequences(kEntityRebecca);
+
+		getObjects()->update(kObjectCompartmentE, kEntityNone, kLocationNone, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObject52, kEntityNone, kLocationNone, kCursorHandKnock, kCursorHand);
+
+		getData()->field_491 = EntityData::kField491_6000;
+		getData()->field_493 = EntityData::kField493_1;
+		getData()->car = kCarKronos;
+		break;
+
+	case kAction191668032:
+		setup_function40();
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Rebecca, function40, 40)

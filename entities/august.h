@@ -51,7 +51,7 @@ public:
 	DECLARE_FUNCTION_IIS(function10)
 	DECLARE_FUNCTION_SSI(draw2)
 	DECLARE_FUNCTION_S(playSound)
-	DECLARE_FUNCTION_S(function13)
+	DECLARE_FUNCTION_S(playSound16)
 	DECLARE_FUNCTION(function14)
 	DECLARE_FUNCTION_II(savegame)
 	DECLARE_FUNCTION_II(function16)
@@ -109,6 +109,9 @@ public:
 	DECLARE_FUNCTION(function68)
 	DECLARE_FUNCTION(function69)
 	DECLARE_NULL_FUNCTION()
+
+private:
+	DECLARE_CALL_FUNCTION(iiii, August, int, int, int, int)
 };
 
 } // End of namespace LastExpress

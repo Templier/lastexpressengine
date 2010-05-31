@@ -121,7 +121,7 @@ IMPLEMENT_FUNCTION_II(Milos, enterCompartementDialog, 10)
 	case kActionNone:
 	case kActionDefault:
 		if (getEntities()->checkEntity(kEntityMilos, (CarIndex)params->param1, (EntityData::Field491Value)params->param2))
-			CALL_PREVIOUS_SAVEPOINT()
+			CALLBACK_ACTION()
 		break;
 
 	case kActionExcuseMeCath:
@@ -194,7 +194,7 @@ IMPLEMENT_FUNCTION_I(Milos, function11, 11)
 		}
 		break;
 
-	case kAction18:
+	case kActionCallback:
 		switch(_data->getNextCallback()) {
 		default:
 			break;

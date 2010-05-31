@@ -94,6 +94,9 @@ public:
 	DECLARE_FUNCTION(function53)
 	DECLARE_FUNCTION(function54)
 	DECLARE_FUNCTION(function55)
+
+private:
+	DECLARE_CALL_FUNCTION(iiii, Tatiana, int, int, int, int)
 };
 
 } // End of namespace LastExpress

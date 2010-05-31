@@ -157,7 +157,7 @@ IMPLEMENT_FUNCTION(Max, function7, 7)
 		}
 		break;
 
-	case kAction18:
+	case kActionCallback:
 		switch (_data->getNextCallback()) {
 		case 0:
 		default:
@@ -179,7 +179,7 @@ IMPLEMENT_FUNCTION(Max, function7, 7)
 	case kAction101687594:
 		getEntities()->prepareSequences(kEntityMax);
 
-		CALL_PREVIOUS_SAVEPOINT()
+		CALLBACK_ACTION()
 		break;
 
 	case kAction122358304:
@@ -188,7 +188,7 @@ IMPLEMENT_FUNCTION(Max, function7, 7)
 		getObjects()->update(kObjectCompartmentF, kEntityNone, kLocationNone, kCursorHandKnock, kCursorHand);
 		getObjects()->update(kObject53, kEntityNone, kLocationNone, kCursorHandKnock, kCursorHand);
 
-		CALL_PREVIOUS_SAVEPOINT()
+		CALLBACK_ACTION()
 		break;
 
 	case kAction158007856:
@@ -245,7 +245,7 @@ IMPLEMENT_FUNCTION(Max, function8, 8)
 			getSound()->playSound(kEntityMax, "Max3101");
 		break;
 
-	case kAction18:
+	case kActionCallback:
 		if (_data->getNextCallback() != 1)
 			break;
 
@@ -461,7 +461,7 @@ IMPLEMENT_FUNCTION(Max, freeFromCage, 14)
 
 	//////////////////////////////////////////////////////////////////////////
 	// Play animation for Max in the cage and after opening it
-	case kAction18:
+	case kActionCallback:
 		switch (_data->getNextCallback()) {
 		default:
 			break;
@@ -519,7 +519,7 @@ IMPLEMENT_FUNCTION(Max, function15, 15)
 		call(new ENTITY_SETUP_SIIS(Max, setup_enterExitCompartment), "630Bf", kObjectCompartment4);
 		break;
 
-	case kAction18:
+	case kActionCallback:
 		if (_data->getNextCallback() == 1) {
 			getEntities()->drawSequenceLeft(kEntityMax, "630Af");
 			getEntities()->enterCompartment(kEntityMax, kObjectCompartmentF, false);

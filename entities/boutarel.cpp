@@ -184,7 +184,16 @@ IMPLEMENT_FUNCTION(Boutarel, function21, 21)
 }
 
 IMPLEMENT_FUNCTION(Boutarel, function22, 22)
-	error("Boutarel: callback function 22 not implemented!");
+	if (savepoint.action == kActionDefault) {		
+		getData()->field_491 = EntityData::kField491_6470;
+		getData()->field_493 = EntityData::kField493_1;
+		getData()->car = kCarRedSleeping;
+
+		getObjects()->update(kObjectCompartmentC, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObject50, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
+
+		getEntities()->prepareSequences(kEntityBoutarel);
+	}
 }
 
 IMPLEMENT_FUNCTION(Boutarel, chapter2, 23)
@@ -247,11 +256,40 @@ IMPLEMENT_FUNCTION(Boutarel, chapter3, 26)
 }
 
 IMPLEMENT_FUNCTION(Boutarel, function27, 27)
-	error("Boutarel: callback function 27 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionDefault:
+		getObjects()->update(kObjectCompartmentC, kEntityNone, kLocation2, kCursorKeepValue, kCursorKeepValue);
+		getEntities()->drawSequenceLeft(kEntityBoutarel, "510");		
+		break;
+
+	case kAction122288808:
+		setup_function28();
+		break;
+
+	case kAction122358304:
+		getEntities()->drawSequenceLeft(kEntityBoutarel, "BLANK");
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Boutarel, function28, 28)
-	error("Boutarel: callback function 28 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionDefault:
+		_data->setNextCallback(1);
+		call(new ENTITY_SETUP(Boutarel, setup_function11), 1);
+		break;
+
+	case kActionCallback:
+		if (_data->getNextCallback() == 1)
+			setup_function29();
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Boutarel, function29, 29)
@@ -259,7 +297,23 @@ IMPLEMENT_FUNCTION(Boutarel, function29, 29)
 }
 
 IMPLEMENT_FUNCTION(Boutarel, function30, 30)
-	error("Boutarel: callback function 30 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionDefault:
+		getObjects()->update(kObjectCompartmentC, kEntityNone, kLocation2, kCursorKeepValue, kCursorKeepValue);
+		getEntities()->drawSequenceLeft(kEntityBoutarel, "510");		
+		break;
+
+	case kAction122288808:
+		getEntities()->drawSequenceLeft(kEntityBoutarel, "510");
+		break;
+
+	case kAction122358304:
+		getEntities()->drawSequenceLeft(kEntityBoutarel, "BLANK");
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Boutarel, chapter4, 31)
@@ -282,13 +336,27 @@ IMPLEMENT_FUNCTION(Boutarel, chapter4, 31)
 
 		getObjects()->update(kObjectCompartmentC, kEntityNone, kLocation2, kCursorKeepValue, kCursorKeepValue);
 		getObjects()->update(kObject50, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
-
 		break;
 	}
 }
 
 IMPLEMENT_FUNCTION(Boutarel, function32, 32)
-	error("Boutarel: callback function 32 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionNone:
+		if (getState()->time > kTimeBoutarel && !params->param1) {
+			params->param1 = 1;
+			setup_function33();
+		}
+		break;
+
+	case kActionDefault:
+		getObjects()->update(kObjectCompartmentC, kEntityNone, kLocation2, kCursorKeepValue, kCursorKeepValue);
+		getEntities()->drawSequenceLeft(kEntityBoutarel, "510");
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Boutarel, function33, 33)
@@ -300,7 +368,16 @@ IMPLEMENT_FUNCTION(Boutarel, function34, 34)
 }
 
 IMPLEMENT_FUNCTION(Boutarel, function35, 35)
-	error("Boutarel: callback function 35 not implemented!");
+	if (savepoint.action == kActionDefault) {		
+		getData()->field_491 = EntityData::kField491_6470;
+		getData()->field_493 = EntityData::kField493_1;
+		getData()->car = kCarRedSleeping;
+
+		getEntities()->prepareSequences(kEntityBoutarel);
+
+		getObjects()->update(kObjectCompartmentC, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObject50, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
+	}
 }
 
 IMPLEMENT_FUNCTION(Boutarel, chapter5, 36)
@@ -320,7 +397,6 @@ IMPLEMENT_FUNCTION(Boutarel, chapter5, 36)
 		getData()->car = kCarRestaurant;
 		getData()->clothes = kClothesDefault;
 		getData()->inventoryItem = kItemNone;
-
 		break;
 	}
 }

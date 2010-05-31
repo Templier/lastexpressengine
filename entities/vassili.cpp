@@ -163,7 +163,7 @@ IMPLEMENT_FUNCTION(Vassili, function6, 6)
 		getEntities()->drawSequenceLeft(kEntityVassili, "303A");
 		break;
 
-	case kAction18:
+	case kActionCallback:
 		if (_data->getNextCallback() != 1)
 			break;
 
@@ -185,7 +185,7 @@ IMPLEMENT_FUNCTION(Vassili, function7, 7)
 	case kActionNone:
 		if (params->param1 != EntityData::kParamTime
 		 && getState()->time > kTimeVassili) {
-			 if (getState()->time <= kTimeVassili2) {
+			 if (getState()->time <= kTimeVassili_2) {
 				 if (getEntities()->checkFields7(kCarRedSleeping) || !params->param1) {
 					 params->param1 = getState()->time + 150;
 					 if (params->param1) {
@@ -309,7 +309,7 @@ IMPLEMENT_FUNCTION(Vassili, seizure, 10)
 		call(new ENTITY_SETUP(Vassili, setup_savegame), 2, kEventVassiliSeizure);
 		break;
 
-	case kAction18:
+	case kActionCallback:
 		if (_data->getNextCallback() != 1)
 			break;
 
@@ -382,7 +382,7 @@ IMPLEMENT_FUNCTION(Vassili, sleeping, 13)
 		getEntities()->drawSequenceLeft(kEntityVassili, "303A");
 		break;
 
-	case kAction18:
+	case kActionCallback:
 		if (_data->getNextCallback() != 1)
 			break;
 
@@ -453,7 +453,7 @@ IMPLEMENT_FUNCTION(Vassili, stealEgg, 15)
 			getObjects()->update(kObject48, kEntityNone, kLocationNone, kCursorNormal, kCursorHand);
 		break;
 
-	case kAction18:
+	case kActionCallback:
 		switch (_data->getNextCallback()) {
 		default:
 			break;
@@ -521,7 +521,7 @@ IMPLEMENT_FUNCTION(Vassili, function17, 17)
 		getEntities()->drawSequenceLeft(kEntityVassili, "303A");
 		break;
 
-	case kAction18:
+	case kActionCallback:
 		if (_data->getNextCallback() != 1)
 			break;
 

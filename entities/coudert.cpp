@@ -138,6 +138,8 @@ IMPLEMENT_FUNCTION_II(Coudert, function9, 9)
 	error("Coudert: callback function 9 not implemented!");
 }
 
+
+// Parameters: time offset
 IMPLEMENT_FUNCTION_I(Coudert, function10, 10)
 	error("Coudert: callback function 10 not implemented!");
 }
@@ -286,7 +288,7 @@ IMPLEMENT_FUNCTION(Coudert, chapter1, 36)
 		getObjects()->updateLocation2(kObject111, kLocation1);
 		break;
 
-	case kAction18:
+	case kActionCallback:
 		if (_data->getNextCallback() == 1)
 			setup_function40();
 		break;
@@ -351,7 +353,7 @@ IMPLEMENT_FUNCTION(Coudert, chapter2, 42)
 		getObjects()->updateLocation2(kObject111, kLocation5);
 		break;
 
-	case kAction18:
+	case kActionCallback:
 		if (_data->getNextCallback() == 1)
 			setup_function43();
 		break;
@@ -402,7 +404,7 @@ IMPLEMENT_FUNCTION(Coudert, chapter3, 44)
 		getObjects()->updateLocation2(kObject111, kLocation6);
 		break;
 
-	case kAction18:
+	case kActionCallback:
 		if (_data->getNextCallback() == 1)
 			setup_function45();
 		break;
@@ -476,7 +478,7 @@ IMPLEMENT_FUNCTION(Coudert, chapter4, 52)
 		getObjects()->updateLocation2(kObject111, kLocation10);
 		break;
 
-	case kAction18:
+	case kActionCallback:
 		if (_data->getNextCallback() == 1) {
 			ENTITY_PARAM(1, 2) = 1;
 			setup_function53();
@@ -531,7 +533,20 @@ IMPLEMENT_FUNCTION(Coudert, function59, 59)
 }
 
 IMPLEMENT_FUNCTION(Coudert, function60, 60)
-	error("Coudert: callback function 60 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionCallback:
+		if (_data->getNextCallback() == 1)
+			setup_function61();
+		break;
+
+	case kAction155991520:
+		_data->setNextCallback(1);
+		call(new ENTITY_SETUP(Coudert, setup_function10), 225);
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Coudert, function61, 61)

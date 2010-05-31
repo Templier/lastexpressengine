@@ -157,12 +157,12 @@ void Entity::savegame(const SavePoint &savepoint) {
 		break;
 
 	case kActionNone:
-		CALL_PREVIOUS_SAVEPOINT()
+		CALLBACK_ACTION()
 		break;
 
 	case kActionDefault:
 		save(_entityIndex, params->param1, (EventIndex)params->param2);
-		CALL_PREVIOUS_SAVEPOINT()
+		CALLBACK_ACTION()
 		break;
 	}
 }
@@ -175,7 +175,7 @@ void Entity::playSound(const SavePoint &savepoint, bool resetItem, int param3) {
 		break;
 
 	case kAction2:
-		CALL_PREVIOUS_SAVEPOINT()
+		CALLBACK_ACTION()
 		break;
 
 	case kActionDefault:
@@ -195,7 +195,7 @@ void Entity::draw(const SavePoint &savepoint) {
 		break;
 
 	case kActionExitCompartment:
-		CALL_PREVIOUS_SAVEPOINT()
+		CALLBACK_ACTION()
 		break;
 
 	case kActionDefault:
@@ -212,7 +212,7 @@ void Entity::draw2(const SavePoint &savepoint) {
 		break;
 
 	case kActionExitCompartment:
-		CALL_PREVIOUS_SAVEPOINT()
+		CALLBACK_ACTION()
 		break;
 
 	case kActionDefault:
@@ -231,7 +231,7 @@ void Entity::updateFromTicks(const SavePoint &savepoint) {
 
 	case kActionNone:
 		UPDATE_PARAM_FROM_TICKS(2, 1)
-		CALL_PREVIOUS_SAVEPOINT()
+		CALLBACK_ACTION()
 		break;
 	}
 }
@@ -245,7 +245,7 @@ void Entity::updateFromTime(const SavePoint &savepoint) {
 
 	case kActionNone:
 		UPDATE_PARAM_FROM_TIME(2, params->param1)
-		CALL_PREVIOUS_SAVEPOINT()
+		CALLBACK_ACTION()
 		break;
 	}
 }
@@ -257,12 +257,12 @@ void Entity::savepointDirection(const SavePoint &savepoint) {
 		break;
 
 	case kActionExitCompartment:
-		CALL_PREVIOUS_SAVEPOINT()
+		CALLBACK_ACTION()
 		break;
 
 	case kActionDefault:
 		if (getData()->direction != kDirectionRight)
-			CALL_PREVIOUS_SAVEPOINT()
+			CALLBACK_ACTION()
 		break;
 	}
 }
@@ -275,7 +275,7 @@ void Entity::savepointCheckFields11(const SavePoint &savepoint) {
 	case kActionNone:
 	case kActionDefault:
 		if (getEntities()->checkFields11())
-			CALL_PREVIOUS_SAVEPOINT()
+			CALLBACK_ACTION()
 		break;
 	}
 }
@@ -290,7 +290,7 @@ void Entity::savepointCheckEntity(const SavePoint &savepoint) {
 	case kActionNone:
 	case kActionDefault:
 		if (getEntities()->checkEntity(_entityIndex, (CarIndex)params->param1, (EntityData::Field491Value)params->param2))
-			CALL_PREVIOUS_SAVEPOINT()
+			CALLBACK_ACTION()
 		break;
 	}
 }
@@ -305,7 +305,7 @@ void Entity::savepointCall(const SavePoint &savepoint) {
 	case kActionExitCompartment:
 		if (!CURRENT_PARAMS(1, 1))
 			getSavePoints()->call(_entityIndex, (EntityIndex)params->param2, (ActionIndex)params->param3, params->seq2);
-		CALL_PREVIOUS_SAVEPOINT()
+		CALLBACK_ACTION()
 		break;
 
 	case kAction10:
@@ -333,7 +333,7 @@ void Entity::enterExitCompartment(const SavePoint &savepoint) {
 
 	case kActionExitCompartment:
 		getEntities()->exitCompartment(_entityIndex, (ObjectIndex)params->param2);
-		CALL_PREVIOUS_SAVEPOINT()
+		CALLBACK_ACTION()
 		break;
 
 	case kActionDefault:
@@ -352,7 +352,7 @@ void Entity::updateField1000(const SavePoint &savepoint) {
 
 	case kActionExitCompartment:
 		getEntities()->updatePosition(_entityIndex, (CarIndex)params->param2, params->param3);
-		CALL_PREVIOUS_SAVEPOINT()
+		CALLBACK_ACTION()
 		break;
 
 	case kActionDefault:

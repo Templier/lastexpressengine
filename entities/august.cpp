@@ -50,7 +50,7 @@ August::August(LastExpressEngine *engine) : Entity(engine, kEntityAugust) {
 	ADD_CALLBACK_FUNCTION(August, function10);
 	ADD_CALLBACK_FUNCTION(August, draw2);
 	ADD_CALLBACK_FUNCTION(August, playSound);
-	ADD_CALLBACK_FUNCTION(August, function13);
+	ADD_CALLBACK_FUNCTION(August, playSound16);
 	ADD_CALLBACK_FUNCTION(August, function14);
 	ADD_CALLBACK_FUNCTION(August, savegame);
 	ADD_CALLBACK_FUNCTION(August, function16);
@@ -158,8 +158,8 @@ IMPLEMENT_FUNCTION_S(August, playSound, 12)
 	Entity::playSound(savepoint);
 }
 
-IMPLEMENT_FUNCTION_S(August, function13, 13)
-	error("August: callback function 13 not implemented!");
+IMPLEMENT_FUNCTION_S(August, playSound16, 13)
+	Entity::playSound(savepoint, false, 16);
 }
 
 IMPLEMENT_FUNCTION(August, function14, 14)
@@ -262,7 +262,25 @@ IMPLEMENT_FUNCTION(August, function33, 33)
 }
 
 IMPLEMENT_FUNCTION(August, function34, 34)
-	error("August: callback function 34 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionNone:
+		if (!getSound()->isBuffered(kEntityAugust) && getProgress().field_18 != 4)
+			getSound()->playSound(kEntityAugust, "AUG1057");    // August snoring
+		break;
+
+	case kActionDefault:
+		getObjects()->update(kObjectCompartment3, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
+
+		getData()->field_491 = EntityData::kField491_6470;
+		getData()->field_493 = EntityData::kField493_1;
+		getData()->car = kCarGreenSleeping;
+
+		getEntities()->prepareSequences(kEntityAugust);
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(August, chapter2, 35)
@@ -361,11 +379,50 @@ IMPLEMENT_FUNCTION(August, function48, 48)
 }
 
 IMPLEMENT_FUNCTION(August, function49, 49)
-	error("August: callback function 49 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionDefault:
+		_data->setNextCallback(1);
+		call(new ENTITY_SETUP(August, setup_function20));
+		break;
+
+	case kActionCallback:
+		switch (_data->getNextCallback()) {
+		default:
+			break;
+
+		case 1:
+			_data->setNextCallback(2);
+			call(new ENTITY_SETUP(August, setup_function16), kCarKronos, EntityData::kField491_9270);
+			break;
+
+		case 2:
+			setup_function50();
+			break;
+		}
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(August, function50, 50)
-	error("August: callback function 50 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionDefault:
+		getObjects()->update(kObjectCompartment3, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
+		getEntities()->prepareSequences(kEntityAugust);
+
+		getData()->field_491 = EntityData::kField491_6000;
+		getData()->field_493 = EntityData::kField493_1;
+		getData()->car = kCarKronos;
+		break;
+
+	case kAction191668032:
+		setup_function51();
+	}
 }
 
 IMPLEMENT_FUNCTION(August, function51, 51)
@@ -421,7 +478,23 @@ IMPLEMENT_FUNCTION(August, function58, 58)
 }
 
 IMPLEMENT_FUNCTION(August, function59, 59)
-	error("August: callback function 59 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionDefault:
+		getEntities()->drawSequenceLeft(kEntityAugust, "010B3");
+		getSavePoints()->push(kEntityAugust, kEntityPascale, kAction190605184);
+		break;
+
+	case kAction122358304:
+		getEntities()->drawSequenceLeft(kEntityAugust, "BLANK");
+		break;
+
+	case kAction123793792:
+		setup_function60();
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(August, function60, 60)
@@ -445,7 +518,27 @@ IMPLEMENT_FUNCTION(August, function64, 64)
 }
 
 IMPLEMENT_FUNCTION(August, function65, 65)
-	error("August: callback function 65 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kAction2:
+		getSound()->playSound(kEntityAugust, "AUG1057");   // August snoring
+		break;
+
+	case kActionDefault:
+		getData()->field_491 = EntityData::kField491_6470;
+		getData()->field_493 = EntityData::kField493_1;
+		getData()->car = kCarGreenSleeping;
+
+		getEntities()->prepareSequences(kEntityAugust);
+
+		getObjects()->update(kObjectCompartment3, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
+		
+		if (!getSound()->isBuffered(kEntityAugust))
+			getSound()->playSound(kEntityAugust, "AUG1057");   // August snoring
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(August, chapter5, 66)

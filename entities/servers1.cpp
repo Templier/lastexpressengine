@@ -118,7 +118,7 @@ IMPLEMENT_FUNCTION_SIIS(Servers1, function5, 5)
 		if (!CURRENT_PARAMS(1, 1))
 			getSavePoints()->call(kEntityServers1, (EntityIndex)params->param2, (ActionIndex)params->param3, params->seq2);
 
-		CALL_PREVIOUS_SAVEPOINT()
+		CALLBACK_ACTION()
 		break;
 
 	case kActionExcuseMeCath:
@@ -158,7 +158,7 @@ IMPLEMENT_FUNCTION(Servers1, function7, 7)
 		call(new ENTITY_SETUP_SIIS(Servers1, setup_draw), "924");
 		break;
 
-	case kAction18:
+	case kActionCallback:
 		switch (_data->getNextCallback()) {
 		default:
 			break;
@@ -180,7 +180,7 @@ IMPLEMENT_FUNCTION(Servers1, function7, 7)
 			getData()->field_491 = EntityData::kField491_5900;
 			ENTITY_PARAM(1, 2) = 0;
 
-			CALL_PREVIOUS_SAVEPOINT()
+			CALLBACK_ACTION()
 			break;
 		}
 		break;
@@ -331,7 +331,18 @@ IMPLEMENT_FUNCTION(Servers1, chapter3, 22)
 }
 
 IMPLEMENT_FUNCTION(Servers1, function23, 23)
-	error("Servers1: callback function 23 not implemented!");
+	if (savepoint.action != kActionNone)
+		return;
+
+	if (getEntities()->checkFields17(kEntityServers1) && getEntities()->checkFields11()) {
+		if (ENTITY_PARAM(1, 1)) {
+			_data->setNextCallback(1);
+			call(new ENTITY_SETUP(Servers1, setup_function24));
+		} else if (ENTITY_PARAM(1, 2)) {
+			_data->setNextCallback(2);
+			call(new ENTITY_SETUP(Servers1, setup_function7));			
+		}
+	}
 }
 
 IMPLEMENT_FUNCTION(Servers1, function24, 24)

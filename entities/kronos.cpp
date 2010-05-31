@@ -30,6 +30,7 @@
 #include "lastexpress/game/logic.h"
 #include "lastexpress/game/object.h"
 #include "lastexpress/game/savepoint.h"
+#include "lastexpress/game/sound.h"
 #include "lastexpress/game/state.h"
 
 #include "lastexpress/lastexpress.h"
@@ -73,6 +74,9 @@ IMPLEMENT_FUNCTION_II(Kronos, savegame, 2)
 	Entity::savegame(savepoint);
 }
 
+// Parameters:
+//  - car
+//  - field491
 IMPLEMENT_FUNCTION_II(Kronos, function3, 3)
 	Entity::savepointCheckEntity(savepoint);
 }
@@ -118,11 +122,44 @@ IMPLEMENT_FUNCTION(Kronos, function9, 9)
 }
 
 IMPLEMENT_FUNCTION(Kronos, function10, 10)
-	error("Kronos: callback function 10 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionNone:
+		if (getState()->time > kTimeKronos && !params->param1) {
+			params->param1 = 1;
+			setup_function11();
+		}
+		break;
+
+	case kActionDefault:
+		getData()->field_491 = EntityData::kField491_6000;
+		getData()->field_493 = EntityData::kField493_0;
+		getData()->car = kCarKronos;
+
+		getEntities()->prepareSequences(kEntityKronos);
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Kronos, function11, 11)
-	error("Kronos: callback function 11 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kAction2:
+		params->param1++;
+		getSound()->playSound(kEntityKronos, (params->param1 & 1) ? "KRO1001" : "KRO1002");
+		break;
+
+	case kActionDefault:
+		getData()->field_491 = EntityData::kField491_7000;
+		
+		if (!getSound()->isBuffered(kEntityKronos))
+			getSound()->playSound(kEntityKronos, "KRO1001");
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Kronos, chapter2, 12)
@@ -155,7 +192,31 @@ IMPLEMENT_FUNCTION(Kronos, chapter3, 13)
 }
 
 IMPLEMENT_FUNCTION(Kronos, function14, 14)
-	error("Kronos: callback function 14 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionNone:
+		if (getState()->time > kTimeKronos_0 && !params->param1 && !params->param2 && !params->param3)			
+			setup_function15();		
+		break;
+
+	case kAction157159392:
+		switch (savepoint.entity2) {
+		case kEntityAnna:
+			params->param1 = 1;
+			break;
+
+		case kEntityTatiana:
+			params->param2 = 1;
+			break;
+
+		case kEntityAbbot:
+			params->param3 = 1;
+			break;
+		}
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Kronos, function15, 15)
@@ -167,7 +228,24 @@ IMPLEMENT_FUNCTION(Kronos, function16, 16)
 }
 
 IMPLEMENT_FUNCTION(Kronos, function17, 17)
-	error("Kronos: callback function 17 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionDefault:
+		getData()->field_491 = EntityData::kField491_7500;
+		getData()->field_493 = EntityData::kField493_0;
+		getData()->car = kCarRedSleeping;
+		
+		_data->setNextCallback(1);
+		call(new ENTITY_SETUP(Kronos, setup_function3), kCarGreenSleeping, EntityData::kField491_9270);
+		break;
+
+	case kActionCallback:
+		if (_data->getNextCallback() == 1)
+			setup_function18();
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Kronos, function18, 18)

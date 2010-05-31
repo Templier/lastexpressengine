@@ -84,7 +84,7 @@ IMPLEMENT_FUNCTION_II(Kahina, savegame, 3)
 IMPLEMENT_FUNCTION_I(Kahina, updateFromTime, 4)
 	if (savepoint.action == kAction137503360) {
 		ENTITY_PARAM(0, 2) = 1;
-		CALL_PREVIOUS_SAVEPOINT()
+		CALLBACK_ACTION()
 	}
 
 	Entity::updateFromTime(savepoint);
@@ -131,7 +131,16 @@ IMPLEMENT_FUNCTION(Kahina, chapter1, 10)
 }
 
 IMPLEMENT_FUNCTION(Kahina, function11, 11)
-	error("Kahina: callback function 11 not implemented!");
+	if (savepoint.action != kActionNone)
+		return;
+
+	if (getState()->time > kTimeKahina && !params->param1 && getProgress().jacket) {
+		getSavePoints()->push(kEntityKahina, kEntityMertens, kAction238732837);
+		params->param1 = 1;
+	}
+
+	if (getProgress().event_mertens_chronos_invitation)
+		setup_function12();
 }
 
 IMPLEMENT_FUNCTION(Kahina, function12, 12)

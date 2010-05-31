@@ -123,7 +123,7 @@ IMPLEMENT_FUNCTION(Mertens, function6, 6)
 
 	case kActionNone:
 		if (getData()->direction != 4) {
-			CALL_PREVIOUS_SAVEPOINT()
+			CALLBACK_ACTION()
 			break;
 		}
 
@@ -137,10 +137,10 @@ IMPLEMENT_FUNCTION(Mertens, function6, 6)
 		break;
 
 	case kActionExitCompartment:
-		CALL_PREVIOUS_SAVEPOINT()
+		CALLBACK_ACTION()
 		break;
 
-	case kAction18:
+	case kActionCallback:
 		if (_data->getNextCallback() == 1) {
 			getAction()->playAnimation(kEventMertensBloodJacket);
 			getLogic()->gameOver(kTimeType0, kTime1, kSceneGameOverBloodJacket, true);
@@ -182,10 +182,10 @@ IMPLEMENT_FUNCTION_I(Mertens, function11, 11)
 
 		UPDATE_PARAM_FROM_TIME(2, 1)
 
-		CALL_PREVIOUS_SAVEPOINT()
+		CALLBACK_ACTION()
 		break;
 
-	case kAction18:
+	case kActionCallback:
 		if (_data->getNextCallback() == 1) {
 			getAction()->playAnimation(kEventMertensBloodJacket);
 			getLogic()->gameOver(kTimeType0, kTime1, kSceneGameOverBloodJacket, true);
@@ -236,7 +236,7 @@ IMPLEMENT_FUNCTION(Mertens, function17, 17)
 				getLogic()->loadSceneFromItem(kItem7);
 
 				ENTITY_PARAM(2, 1) = 1;
-				CALL_PREVIOUS_SAVEPOINT()
+				CALLBACK_ACTION()
 
 			} else {	// Mertens sits on his chair at the back of the train
 				if (getInventory()->hasItem(kItemPassengerList) || ENTITY_PARAM(0, 2))
@@ -261,7 +261,7 @@ IMPLEMENT_FUNCTION(Mertens, function17, 17)
 		}
 		break;
 
-	case kAction18:
+	case kActionCallback:
 		switch (_data->getNextCallback()) {
 		default:
 			break;
@@ -274,7 +274,7 @@ IMPLEMENT_FUNCTION(Mertens, function17, 17)
 			break;
 
 		case 2:
-			CALL_PREVIOUS_SAVEPOINT()
+			CALLBACK_ACTION()
 			break;
 
 		case 3:
@@ -292,7 +292,7 @@ IMPLEMENT_FUNCTION(Mertens, function17, 17)
 
 			getSavePoints()->push(kEntityMertens, kEntityMertens, kAction17);
 
-			CALL_PREVIOUS_SAVEPOINT()
+			CALLBACK_ACTION()
 			break;
 		}
 		break;
@@ -428,15 +428,16 @@ IMPLEMENT_FUNCTION(Mertens, function41, 41)
 
 	case kActionDefault:
 		_data->setNextCallback(1);
-		call(new ENTITY_SETUP(Mertens, setup_function10), 3, 2000);
+		call(new ENTITY_SETUP(Mertens, setup_function10), kCarGreenSleeping, EntityData::kField491_2000);
 		break;
 
-	case kAction18:
+	case kActionCallback:
 		switch (_data->getNextCallback()) {
 		default:
 			break;
 
 		case 1:
+			_data->setNextCallback(2);
 			call(new ENTITY_SETUP(Mertens, setup_function17));
 			break;
 
@@ -483,7 +484,7 @@ IMPLEMENT_FUNCTION(Mertens, chapter2, 43)
 		ENTITY_PARAM(0, 7) = 0;
 		break;
 
-	case kAction18:
+	case kActionCallback:
 		if (_data->getNextCallback() == 1)
 			setup_function44();
 		break;
@@ -524,7 +525,7 @@ IMPLEMENT_FUNCTION(Mertens, chapter3, 45)
 		ENTITY_PARAM(2, 3) = 0;
 		break;
 
-	case kAction18:
+	case kActionCallback:
 		if (_data->getNextCallback() == 1)
 			setup_function46();
 		break;
@@ -567,7 +568,7 @@ IMPLEMENT_FUNCTION(Mertens, chapter4, 47)
 		ENTITY_PARAM(2, 4) = 0;
 		break;
 
-	case kAction18:
+	case kActionCallback:
 		if (_data->getNextCallback() == 1)
 			setup_function48();
 		break;

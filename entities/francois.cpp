@@ -148,13 +148,28 @@ IMPLEMENT_FUNCTION(Francois, chapter1, 17)
 		getData()->field_491 = EntityData::kField491_5790;
 		getData()->field_493 = EntityData::kField493_1;
 		getData()->car = kCarRedSleeping;
-
 		break;
 	}
 }
 
 IMPLEMENT_FUNCTION(Francois, function18, 18)
-	error("Francois: callback function 18 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionNone:
+		if (getState()->time > kTimeParisEpernay && !params->param1) {
+			params->param1 = 1;
+			_data->setNextCallback(1);
+			call(new ENTITY_SETUP(Francois, setup_function11), kTimeAnna);
+		}
+		break;
+
+	case kActionCallback:
+		if (_data->getNextCallback() == 1)
+			setup_function19();
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Francois, function19, 19)
@@ -188,7 +203,6 @@ IMPLEMENT_FUNCTION(Francois, chapter2, 21)
 		getData()->car = kCarRestaurant;
 		getData()->clothes = kClothesDefault;
 		getData()->inventoryItem = kItemNone;
-
 		break;
 	}
 }
@@ -218,7 +232,6 @@ IMPLEMENT_FUNCTION(Francois, chapter3, 24)
 		getData()->car = kCarRedSleeping;
 		getData()->clothes = kClothesDefault;
 		getData()->inventoryItem = kItemNone;
-
 		break;
 	}
 }
@@ -244,7 +257,6 @@ IMPLEMENT_FUNCTION(Francois, chapter4, 26)
 		getData()->car = kCarRedSleeping;
 		getData()->clothes = kClothesDefault;
 		getData()->inventoryItem = kItemNone;
-
 		break;
 	}
 }
@@ -273,7 +285,6 @@ IMPLEMENT_FUNCTION(Francois, chapter5, 28)
 		getData()->car = kCarRestaurant;
 		getData()->clothes = kClothesDefault;
 		getData()->inventoryItem = kItemNone;
-
 		break;
 	}
 }
@@ -289,7 +300,22 @@ IMPLEMENT_FUNCTION(Francois, function29, 29)
 }
 
 IMPLEMENT_FUNCTION(Francois, function30, 30)
-	error("Francois: callback function 30 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionDefault:
+		getData()->field_491 = EntityData::kField491_5790;
+		getData()->field_493 = EntityData::kField493_1;
+		getData()->car = kCarRedSleeping;
+		getData()->clothes = kClothesDefault;
+		getData()->inventoryItem = kItemNone;
+		break;
+
+	case kAction135800432:
+		setup_nullfunction();
+		break;
+	}
 }
 
 IMPLEMENT_NULL_FUNCTION(Francois, 31)

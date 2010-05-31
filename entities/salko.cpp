@@ -89,6 +89,9 @@ IMPLEMENT_FUNCTION_II(Salko, savegame, 6)
 	Entity::savegame(savepoint);
 }
 
+// Parameters:
+// - Car
+// - field491
 IMPLEMENT_FUNCTION_II(Salko, function7, 7)
 	error("Salko: callback function 7 not implemented!");
 }
@@ -213,7 +216,25 @@ IMPLEMENT_FUNCTION(Salko, chapter4, 18)
 }
 
 IMPLEMENT_FUNCTION(Salko, function19, 19)
-	error("Salko: callback function 19 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionCallback:
+		if (_data->getNextCallback() == 1) {
+			getEntities()->drawSequenceLeft(kEntitySalko, "BLANK");
+
+			getData()->field_493 = EntityData::kField493_1;
+
+			setup_function20();
+		}		
+		break;
+
+	case kAction125242096:
+		_data->setNextCallback(1);
+		call(new ENTITY_SETUP(Salko, setup_function7), kCarRedSleeping, EntityData::kField491_2740);
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Salko, function20, 20)
