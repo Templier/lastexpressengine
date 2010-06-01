@@ -411,7 +411,7 @@ void Entities::updateEntity(EntityIndex entityIndex) const {
 	}
 }
 
-void Entities::setupSequences() {
+void Entities::updateSequences() {
 	if (!getFlags()->gameRunning)
 		return;
 
@@ -505,7 +505,7 @@ void Entities::resetSequences(EntityIndex entityIndex) const {
 //////////////////////////////////////////////////////////////////////////
 // Callbacks
 //////////////////////////////////////////////////////////////////////////
-void Entities::setupCallbacks() {
+void Entities::updateCallbacks() {
 	if (!getFlags()->gameRunning)
 		return;
 

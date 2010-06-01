@@ -63,8 +63,8 @@ public:
 	 */
 	void resetState(EntityIndex entity);
 	void updateFields() const;
-	void setupSequences();
-	void setupCallbacks();
+	void updateSequences();
+	void updateCallbacks();
 
 	bool canInteractWith(const Common::Point &point) const;
 
