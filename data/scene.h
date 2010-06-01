@@ -208,7 +208,7 @@ public:
 	static bool load(Scene * const scene, Common::SeekableReadStream *stream, SceneHeader *header);
 	static Scene *get(Common::SeekableReadStream *stream, SceneHeader *header);
 
-	bool checkHotSpot(const Common::Point &coord, SceneHotspot **hotspot);
+	bool checkHotSpot(const Common::Point &coord, SceneHotspot **hotspot, byte * const location = NULL);
 	Common::Rect draw(Graphics::Surface *surface);
 
 	SceneHeader* getHeader();

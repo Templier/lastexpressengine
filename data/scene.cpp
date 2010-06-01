@@ -185,19 +185,22 @@ SceneHeader* Scene::getHeader() {
 	return _header;
 }
 
-bool Scene::checkHotSpot(const Common::Point &coord, SceneHotspot **hotspot) {
+bool Scene::checkHotSpot(const Common::Point &coord, SceneHotspot **hotspot, byte * const location) {
 	bool found = false;
-	int location = 0;
+	int _location = 0;
 
 	for (int i = 0; i < (int)_hotspots.size(); i++) {
 		if (_hotspots[i]->isInside(coord)) {
-			if (location <= _hotspots[i]->location) {
-				location = _hotspots[i]->location;
+			if (_location <= _hotspots[i]->location) {
+				_location = _hotspots[i]->location;
 				*hotspot = _hotspots[i];
 				found = true;
 			}
 		}
 	}
+
+	if (location != NULL)
+		*location = _location;
 
 	return found;
 }
