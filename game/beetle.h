@@ -61,8 +61,8 @@ private:
 		uint32 index;
 		uint32 field_84;
 
-		int16 coordX;
-		int16 coordY;
+		uint16 coordX;
+		uint16 coordY;
 
 		uint32 indexes[16];
 
@@ -104,7 +104,7 @@ private:
 	BeetleData *_data;
 
 	void move();
-	void updateSequence(Sequence *sequence);
+	void updateSequence(Sequence *sequence) const;
 	void updateData(uint32 index);
 };
 

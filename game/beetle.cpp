@@ -247,7 +247,7 @@ update_data:
 }
 
 // Update the beetle sequence to show the correct frames in the correct place
-void Beetle::updateSequence(Sequence *sequence) {
+void Beetle::updateSequence(Sequence *sequence) const {
 	if (!_data)
 		error("Beetle::updateSequence: sequences have not been loaded!");
 
@@ -262,9 +262,6 @@ void Beetle::updateSequence(Sequence *sequence) {
 
 	if (_data->coordY > 0)
 		header->yPos1 = _data->coordY;
-
-	// TODO: finish update info
-	error("Beetle::updateSequence: not implemented!");
 }
 
 void Beetle::updateData(uint32 index) {
