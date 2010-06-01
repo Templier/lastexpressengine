@@ -224,9 +224,10 @@ Fight::FightEndType Fight::setup(FightType type) {
 	//////////////////////////////////////////////////////////////////////////
 	// Prepare UI & state
 
+	// TODO global var
+
 	getInventory()->showHourGlass();
 	// TODO events function
-	// TODO global var
 	getFlags()->flag_0 = false;
 	getFlags()->mouseRightClick = false;
 	getEntities()->reset();
@@ -290,49 +291,21 @@ Fight::FightEndType Fight::setup(FightType type) {
 	// Show opponents & egg button
 	Common::Event emptyEvent;
 	handleMouseMove(emptyEvent, false);
-	// FIXME getInventory()->showHourGlass(false);
+	getInventory()->drawEgg();
 
 	// Start fight
 	_endType = kFightEndLost;
 	while (_data->isRunning) {
-		// process events
-		Common::Event ev;
-		while (g_engine->getEventManager()->pollEvent(ev)) {
-			switch (ev.type) {
-			default:
-				// default graphic handling?
-				break;
+		if (_engine->handleEvents())
+			continue;
 
-#ifdef _DEBUG
-			// Allow exiting the fight with ESCAPE in debug mode
-			case Common::EVENT_KEYDOWN:
-				if (ev.kbd.keycode == Common::KEYCODE_ESCAPE) {
-					clearData();
-					return kFightEndExit;
-				}
-				break;
-#endif
-
-			case Common::EVENT_MOUSEMOVE:
-				eventMouseMove(ev);
-				break;
-
-			case Common::EVENT_LBUTTONDOWN:
-			case Common::EVENT_LBUTTONUP:
-			case Common::EVENT_RBUTTONDOWN:
-				eventMouseClick(ev);
-				break;
-			}
-
-			g_engine->_system->delayMillis(10);
-			// FIXME Temporary
-			askForRedraw();
-			redrawScreen();
-		}
+		getSound()->unknownFunction1();
 	}
 
 	// Cleanup after fight is over
 	clearData();
+
+	// TODO Graphics function?
 
 	return _endType;
 }
@@ -369,6 +342,8 @@ void Fight::clearData() {
 
 	delete _data;
 	_data = NULL;
+
+	_engine->restoreEventHandlers();
 }
 
 void Fight::clearSequences(Fighter *combatant) const {
@@ -510,6 +485,10 @@ void Fight::loadData(FightType type) {
 	}
 
 end_load:
+	// Setup event handlers
+	_engine->backupEventHandlers();
+	SET_EVENT_HANDLERS(Fight);
+
 	getFlags()->mouseMove = false;
 	return;
 }

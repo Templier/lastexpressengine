@@ -45,7 +45,8 @@ namespace LastExpress {
 
 LastExpressEngine::LastExpressEngine(OSystem *syst, const ADGameDescription *gd) :
     Engine(syst), _gameDescription(gd), _debugger(NULL), _cursor(NULL),
-    _font(NULL), _logic(NULL), _graphicsMan(NULL), _resMan(NULL), _sceneMan(NULL) {
+    _font(NULL), _logic(NULL), _graphicsMan(NULL), _resMan(NULL), _sceneMan(NULL),
+	eventMouseClick(NULL), eventMouseMove(NULL) {
 
 	// Adding the default directories
 	const Common::FSNode gameDataDir(ConfMan.get("path"));
@@ -118,72 +119,102 @@ Common::Error LastExpressEngine::run() {
 	_logic->startGame();
 
 	while (!shouldQuit()) {
-		// Execute stored commands
-		if (_debugger->hasCommand()) {
-			_debugger->callCommand();
-
-			// re-attach the debugger
-			_debugger->attach();
-		}
-
-		// Show the debugger if required
-		if (_debugger->isAttached()) {
-			_debugger->onFrame();
-		}
-
-		// Handle input
-		Common::Event ev;
-		while (_eventMan->pollEvent(ev)) {
-			switch (ev.type) {
-
-			case Common::EVENT_KEYDOWN:
-				// CTRL-D: Attach the debugger
-				if ((ev.kbd.flags & Common::KBD_CTRL) && ev.kbd.keycode == Common::KEYCODE_d)
-					_debugger->attach();
-
-				// DEBUG: Quit game on escape
-				if (ev.kbd.keycode == Common::KEYCODE_ESCAPE)
-					quitGame();
-
-				break;
-
-			case Common::EVENT_MAINMENU:
-				// Closing the GMM
-
-			case Common::EVENT_MOUSEMOVE:
-				_logic->eventMouseMove(ev);
-				break;
-
-			case Common::EVENT_LBUTTONDOWN:
-			case Common::EVENT_LBUTTONUP:
-			case Common::EVENT_RBUTTONDOWN:
-				_logic->eventMouseClick(ev);
-				break;
-
-			case Common::EVENT_QUIT:
-				quitGame();
-				break;
-
-			default:
-				break;
-			}
-		}
-
-		// Update the screen
-		_graphicsMan->update();
-		_system->updateScreen();
-		_system->delayMillis(10);
-
-		// The event loop may have triggered the quit status. In this case,
-		// stop the execution.
-		if (shouldQuit()) {
+		if (handleEvents())
 			continue;
-		}
 	}
 
 	return Common::kNoError;
 }
 
+bool LastExpressEngine::handleEvents() {
+	// Execute stored commands
+	if (_debugger->hasCommand()) {
+		_debugger->callCommand();
+
+		// re-attach the debugger
+		_debugger->attach();
+	}
+
+	// Show the debugger if required
+	if (_debugger->isAttached()) {
+		_debugger->onFrame();
+	}
+
+	// Handle input
+	Common::Event ev;
+	while (_eventMan->pollEvent(ev)) {
+		switch (ev.type) {
+
+		case Common::EVENT_KEYDOWN:
+			// CTRL-D: Attach the debugger
+			if ((ev.kbd.flags & Common::KBD_CTRL) && ev.kbd.keycode == Common::KEYCODE_d)
+				_debugger->attach();
+
+			// DEBUG: Quit game on escape
+			if (ev.kbd.keycode == Common::KEYCODE_ESCAPE)
+				quitGame();
+
+			break;
+
+		case Common::EVENT_MAINMENU:
+			// Closing the GMM
+
+		case Common::EVENT_MOUSEMOVE:				
+			if (eventMouseMove->isValid())
+				(*eventMouseMove)(ev);
+			break;
+
+		case Common::EVENT_LBUTTONDOWN:
+		case Common::EVENT_LBUTTONUP:
+		case Common::EVENT_RBUTTONDOWN:
+			if (eventMouseClick->isValid())
+				(*eventMouseClick)(ev);
+			break;
+
+		case Common::EVENT_QUIT:
+			quitGame();
+			break;
+
+		default:
+			break;
+		}
+	}
+
+	// Update the screen
+	_graphicsMan->update();
+	_system->updateScreen();
+	_system->delayMillis(10);
+
+	// The event loop may have triggered the quit status. In this case,
+	// stop the execution.
+	if (shouldQuit()) {
+		return true;
+	}
+
+	return false;
+}
+
+///////////////////////////////////////////////////////////////////////////////////
+/// Event Handling
+///////////////////////////////////////////////////////////////////////////////////
+void LastExpressEngine::backupEventHandlers() {
+	eventMouseClickBackup = eventMouseClick;
+	eventMouseMoveBackup = eventMouseMove;
+}
+
+void LastExpressEngine::restoreEventHandlers() {
+	eventMouseClick = eventMouseClickBackup;
+	eventMouseMove = eventMouseMoveBackup;
+}
+
+void LastExpressEngine::setEventHandlers(EventHandler::EventFunction *eventMouseClick, EventHandler::EventFunction *eventMouseMove) {
+	this->eventMouseClick = eventMouseClick;
+	this->eventMouseMove = eventMouseMove;
+}
+
+///////////////////////////////////////////////////////////////////////////////////
+/// Misc Engine
+///////////////////////////////////////////////////////////////////////////////////
 bool LastExpressEngine::hasFeature(EngineFeature f) const {
 	return (f == kSupportsRTL);
 }

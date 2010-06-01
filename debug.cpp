@@ -311,6 +311,9 @@ bool Debugger::cmd_playnis(int argc, const char **argv) {
 
 			return false;
 		} else {
+			// Make sure we are not called in a loop
+			_numParams = 0;	
+
 			Animation animation;
 			if (animation.loadFile(filename)) {
 				_engine->getCursor()->show(false);
@@ -519,6 +522,9 @@ bool Debugger::cmd_fight(int argc, const char **argv) {
 
 			return false;
 		} else {
+			// Make sure we are not called in a loop
+			_numParams = 0;	
+
 			clearBg(GraphicsManager::kBackgroundAll);
 			askForRedraw();
 			redrawScreen();

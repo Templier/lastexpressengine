@@ -27,12 +27,22 @@
 #define LASTEXPRESS_EVENTHANDLER_H
 
 #include "common/EventRecorder.h"
+#include "common/func.h"
 
 namespace LastExpress {
+
+#define SET_EVENT_HANDLERS(class) \
+	_engine->setEventHandlers(new EVENT_HANDLER(class, eventMouseClick), new EVENT_HANDLER(class, eventMouseMove));
+
+#define EVENT_HANDLER(class, name) \
+	Common::Functor1Mem<const Common::Event&, void, class>(this, &class::name)
 
 class EventHandler {
 public:
 	virtual ~EventHandler() {}
+
+	// Function pointer for event handler
+	typedef Common::Functor1<const Common::Event&, void> EventFunction;
 
 	virtual void eventMouseClick(const Common::Event &ev) {};    // Event type 1
 	virtual void eventMouseMove(const Common::Event &ev) {};     // Event type 3

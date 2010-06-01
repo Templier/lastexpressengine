@@ -86,6 +86,7 @@ public:
 	void eventMouseMove(const Common::Event &ev);
 
 	void setStopped();
+
 private:
 	enum FightSequenceType {
 		kFightSequenceType0 = 0,

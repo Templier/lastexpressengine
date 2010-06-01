@@ -27,6 +27,7 @@
 #define LASTEXPRESS_H
 
 #include "lastexpress/debug.h"
+#include "lastexpress/eventhandler.h"
 
 #include "common/random.h"
 
@@ -93,6 +94,13 @@ public:
 	ResourceManager *getResourceManager() const { return _resMan; }
 	SceneManager    *getSceneManager()    const { return _sceneMan; }
 
+	// Event handling
+	bool handleEvents();
+
+	void backupEventHandlers();
+	void restoreEventHandlers();
+	void setEventHandlers(EventHandler::EventFunction *eventMouseClick, EventHandler::EventFunction *eventMouseMove);
+
 private:
 	const ADGameDescription *_gameDescription;
 	Graphics::PixelFormat _pixelFormat;
@@ -110,6 +118,13 @@ private:
 	GraphicsManager *_graphicsMan;
 	ResourceManager *_resMan;
 	SceneManager    *_sceneMan;
+
+	// Event handlers
+	EventHandler::EventFunction *eventMouseClick;
+	EventHandler::EventFunction *eventMouseMove;
+
+	EventHandler::EventFunction *eventMouseClickBackup;
+	EventHandler::EventFunction *eventMouseMoveBackup;
 };
 
 } // End of namespace LastExpress

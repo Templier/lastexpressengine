@@ -327,6 +327,7 @@ public:
 
 			field_4B5 = 0;
 			field_4C2 = 0;
+
 			field_4CC = 0;
 			field_4CD = 0;
 			field_4CE = 0;
@@ -337,6 +338,7 @@ public:
 			sequence1 = NULL;
 			sequence2 = NULL;
 			sequence3 = NULL;
+			sequence4 = NULL;
 		}
 	};
 
