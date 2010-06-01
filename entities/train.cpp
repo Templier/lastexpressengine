@@ -31,6 +31,7 @@
 #include "lastexpress/game/object.h"
 #include "lastexpress/game/savegame.h"
 #include "lastexpress/game/savepoint.h"
+#include "lastexpress/game/scenes.h"
 #include "lastexpress/game/state.h"
 #include "lastexpress/game/sound.h"
 
@@ -296,7 +297,7 @@ IMPLEMENT_FUNCTION(Train, process, 8)
 
 			  getAction()->playAnimation(isDay() ? kEventCathSmokeDay : kEventCathSmokeNight);
 			  params->param5 = 1;
-			  getLogic()->processScene();
+			  getScenes()->processScene();
 
 		  }
 		}
@@ -312,7 +313,7 @@ IMPLEMENT_FUNCTION(Train, process, 8)
 				parameters1->param7 = EntityData::kParamTime;
 			}
 
-			getLogic()->loadSceneFromPosition(kCarRestaurant, 58);
+			getScenes()->loadSceneFromPosition(kCarRestaurant, 58);
 		}
 
 		parameters1->param7 = 0;
@@ -465,17 +466,17 @@ label_skip:
 		case 6:
 			getAction()->playAnimation(kEventCathBreakCeiling);
 			getObjects()->update(kObjectCeiling, kEntityNone, kLocation2, kCursorKeepValue, kCursorKeepValue);
-			getLogic()->processScene();
+			getScenes()->processScene();
 			break;
 
 		case 7:
 			getAction()->playAnimation(kEventCathJumpDownCeiling);
-			getLogic()->loadSceneFromPosition(kCarKronos, 89);
+			getScenes()->loadSceneFromPosition(kCarKronos, 89);
 			break;
 
 		case 8:
 			getAction()->playAnimation(kEventCloseMatchbox);
-			getLogic()->loadSceneFromPosition(kCarRestaurant, 51);
+			getScenes()->loadSceneFromPosition(kCarRestaurant, 51);
 			break;
 		}
 		break;
@@ -502,7 +503,7 @@ label_skip:
 		} else {
 			params->param7 = 1;
 			getAction()->playAnimation(kEventLocomotiveConductorsLook);
-			getLogic()->loadSceneFromPosition(kCarCoalTender, 2);
+			getScenes()->loadSceneFromPosition(kCarCoalTender, 2);
 		}
 		break;
 

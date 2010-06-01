@@ -31,6 +31,7 @@
 #include "lastexpress/game/logic.h"
 #include "lastexpress/game/object.h"
 #include "lastexpress/game/savepoint.h"
+#include "lastexpress/game/scenes.h"
 #include "lastexpress/game/state.h"
 #include "lastexpress/game/sound.h"
 
@@ -233,7 +234,7 @@ IMPLEMENT_FUNCTION(Mertens, function17, 17)
 			if (ENTITY_PARAM(0, 8)) {
 
 				getEntities()->drawSequenceLeft(kEntityMertens, "601K");
-				getLogic()->loadSceneFromItemPosition(kItem7);
+				getScenes()->loadSceneFromItemPosition(kItem7);
 
 				ENTITY_PARAM(2, 1) = 1;
 				CALLBACK_ACTION()
@@ -247,11 +248,11 @@ IMPLEMENT_FUNCTION(Mertens, function17, 17)
 					getEntities()->drawSequenceRight(kEntityMertens, "601D");
 				}
 
-				getLogic()->loadSceneFromItemPosition(kItem7);
+				getScenes()->loadSceneFromItemPosition(kItem7);
 
 				if (getEntities()->isPlayerPosition(kCarGreenSleeping, 68)) {
 					getSound()->playSound(kEntityNone, "CON1110");
-					getLogic()->loadSceneFromPosition(kCarGreenSleeping, 25);
+					getScenes()->loadSceneFromPosition(kCarGreenSleeping, 25);
 				}
 
 				setCallback(3);

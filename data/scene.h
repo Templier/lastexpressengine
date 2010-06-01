@@ -222,10 +222,10 @@ private:
 	void clear();
 };
 
-class SceneManager {
+class SceneLoader {
 public:
-	SceneManager();
-	~SceneManager();
+	SceneLoader();
+	~SceneLoader();
 
 	bool load(Common::SeekableReadStream *stream);
 	Scene *getScene(SceneIndex index);

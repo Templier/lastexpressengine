@@ -29,6 +29,7 @@
 #include "lastexpress/game/logic.h"
 #include "lastexpress/game/object.h"
 #include "lastexpress/game/savepoint.h"
+#include "lastexpress/game/scenes.h"
 #include "lastexpress/game/sound.h"
 #include "lastexpress/game/state.h"
 
@@ -217,7 +218,7 @@ IMPLEMENT_FUNCTION(Alexei, function27, 27)
 		getObjects()->update(kObject10, kEntityNone, kLocationNone, kCursorKeepValue, kCursorKeepValue);
 
 		if (getEntities()->isPlayerPosition(kCarGreenSleeping, 66))
-			getLogic()->loadSceneFromPosition(kCarGreenSleeping, 49);
+			getScenes()->loadSceneFromPosition(kCarGreenSleeping, 49);
 
 		getEntities()->drawSequenceLeft(kEntityAlexei, "412");
 	}
@@ -356,7 +357,7 @@ IMPLEMENT_FUNCTION(Alexei, function41, 41)
 
 	case kActionDefault:
 		if (getEntities()->isPlayerPosition(kCarGreenSleeping, 66))
-			getLogic()->loadSceneFromPosition(kCarGreenSleeping, 49);
+			getScenes()->loadSceneFromPosition(kCarGreenSleeping, 49);
 
 		setCallback(1);
 		call(new ENTITY_SETUP_ISSI(Alexei, setup_function16), kTimeAlexei_1, "411");

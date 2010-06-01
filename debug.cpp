@@ -40,6 +40,7 @@
 #include "lastexpress/game/inventory.h"
 #include "lastexpress/game/logic.h"
 #include "lastexpress/game/savegame.h"
+#include "lastexpress/game/scenes.h"
 #include "lastexpress/game/sound.h"
 #include "lastexpress/game/state.h"
 
@@ -401,23 +402,23 @@ bool Debugger::cmd_loadscene(int argc, const char **argv) {
 			// Check for cd and load the proper data file in the fly
 			// instead of relying on the engine scene manager which could have
 			// loaded a different cd
-			SceneManager *_sceneMan = new SceneManager();
-			if (!_sceneMan->load(_engine->getResourceManager()->getFileStream(Common::String::printf("CD%iTRAIN.DAT", cd)))) {
+			SceneLoader *_sceneLoader = new SceneLoader();
+			if (!_sceneLoader->load(_engine->getResourceManager()->getFileStream(Common::String::printf("CD%iTRAIN.DAT", cd)))) {
 				DebugPrintf("Cannot load data for CD %i", cd);
 				resetCommand();
 
-				delete _sceneMan;
+				delete _sceneLoader;
 				return true;
 			}
 
 			clearBg(GraphicsManager::kBackgroundAll);
 
 			Scene s;
-			if (!_sceneMan->loadScene(&s, index)) {
+			if (!_sceneLoader->loadScene(&s, index)) {
 				DebugPrintf("Cannot load scene %i from CD %i", index, cd);
 				resetCommand();
 
-				delete _sceneMan;
+				delete _sceneLoader;
 				return true;
 			}
 
@@ -429,7 +430,7 @@ bool Debugger::cmd_loadscene(int argc, const char **argv) {
 			// Pause for a second to be able to see the scene
 			_engine->_system->delayMillis(3000);
 
-			delete _sceneMan;
+			delete _sceneLoader;
 
 			resetCommand();
 		}
@@ -513,7 +514,7 @@ bool Debugger::cmd_fight(int argc, const char **argv) {
 			break;
 		}
 
-		getLogic()->loadSceneDataFile(index);
+		getScenes()->loadSceneDataFile(index);
 
 		// Store command
 		if (!hasCommand()) {
@@ -554,7 +555,7 @@ bool Debugger::cmd_fight(int argc, const char **argv) {
 				break;
 			}
 
-			getLogic()->loadSceneDataFile(index);
+			getScenes()->loadSceneDataFile(index);
 
 			// Stop audio and restore scene
 			getSound()->getSfxStream()->stop();
@@ -581,7 +582,7 @@ error:
 bool Debugger::cmd_beetle(int argc, const char **argv) {
 	if (argc == 1) {
 		// Load proper data file (beetle game in in Cd2)
-		getLogic()->loadSceneDataFile(kArchiveCd2);
+		getScenes()->loadSceneDataFile(kArchiveCd2);
 
 		// Store command
 		if (!hasCommand()) {
@@ -694,7 +695,7 @@ bool Debugger::cmd_beetle(int argc, const char **argv) {
 				break;
 			}
 
-			getLogic()->loadSceneDataFile(index);
+			getScenes()->loadSceneDataFile(index);
 
 			// Stop audio and restore scene
 			getSound()->getSfxStream()->stop();

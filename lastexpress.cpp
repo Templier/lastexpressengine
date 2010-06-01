@@ -27,9 +27,9 @@
 
 #include "lastexpress/data/cursor.h"
 #include "lastexpress/data/font.h"
-#include "lastexpress/data/scene.h"
 
 #include "lastexpress/game/logic.h"
+#include "lastexpress/game/scenes.h"
 #include "lastexpress/game/state.h"
 
 #include "lastexpress/graphics.h"
@@ -119,7 +119,7 @@ Common::Error LastExpressEngine::run() {
 		return Common::kUnknownError;
 
 	// Start scene manager
-	_sceneMan = new SceneManager();
+	_sceneMan = new SceneManager(this);
 
 	// Game logic
 	_logic = new Logic(this);

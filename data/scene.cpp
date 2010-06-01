@@ -235,22 +235,22 @@ Common::Rect Scene::draw(Graphics::Surface *surface) {
 }
 
 
-// SceneManager
+// SceneLoader
 
-SceneManager::SceneManager() : _stream(NULL) {}
+SceneLoader::SceneLoader() : _stream(NULL) {}
 
-SceneManager::~SceneManager() {
+SceneLoader::~SceneLoader() {
 	clear();
 }
 
-void SceneManager::clear() {
+void SceneLoader::clear() {
 	// Free the headers
 	_headers.clear();
 
 	delete _stream;
 }
 
-bool SceneManager::load(Common::SeekableReadStream *stream) {
+bool SceneLoader::load(Common::SeekableReadStream *stream) {
 	if (!stream)
 		return false;
 
@@ -280,17 +280,17 @@ bool SceneManager::load(Common::SeekableReadStream *stream) {
 	return true;
 }
 
-bool SceneManager::loadScene(Scene * const scene, SceneIndex index) {
+bool SceneLoader::loadScene(Scene * const scene, SceneIndex index) {
 	if (!index)
-		error("SceneManager::loadScene: scene index cannot be 0!");
+		error("SceneLoader::loadScene: scene index cannot be 0!");
 
 	if (index > _headers.size())
-		error("SceneManager::loadScene: scene index is too high! (was=%d, max=%d)", index, _headers.size());
+		error("SceneLoader::loadScene: scene index is too high! (was=%d, max=%d)", index, _headers.size());
 
 	return Scene::load(scene, _stream, _headers[index - 1]);
 }
 
-Scene *SceneManager::getScene(SceneIndex index) {
+Scene *SceneLoader::getScene(SceneIndex index) {
 	if (_headers.empty())
 		return NULL;
 

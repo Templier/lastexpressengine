@@ -41,6 +41,7 @@
 #include "lastexpress/game/object.h"
 #include "lastexpress/game/savegame.h"
 #include "lastexpress/game/savepoint.h"
+#include "lastexpress/game/scenes.h"
 #include "lastexpress/game/sound.h"
 #include "lastexpress/game/state.h"
 
@@ -420,10 +421,10 @@ IMPLEMENT_ACTION(inventory) {
 		loadSceneObject(backup, getState()->sceneBackup);
 
 		if (getEntities()->getPosition(backup.getHeader()->position + 100 * backup.getHeader()->car))
-			index = getLogic()->processIndex(getState()->sceneBackup);
+			index = getScenes()->processIndex(getState()->sceneBackup);
 	}
 
-	getLogic()->loadScene(index);
+	getScenes()->loadScene(index);
 
 	if (!getInventory()->getSelectedItem())
 		return kSceneInvalid;
@@ -556,7 +557,7 @@ IMPLEMENT_ACTION(playAnimation) {
 	playAnimation((EventIndex)hotspot.param1);
 
 	if (!hotspot.scene)
-		getLogic()->processScene();
+		getScenes()->processScene();
 
 	return kSceneInvalid;
 }
@@ -708,7 +709,7 @@ IMPLEMENT_ACTION(pickItem) {
 			getState()->sceneBackup = (hotspot.scene ? hotspot.scene : getState()->scene);
 		}
 
-		getLogic()->loadScene(getInventory()->getEntry(item)->scene);
+		getScenes()->loadScene(getInventory()->getEntry(item)->scene);
 		// do not process further
 		continueProcess = kSceneStopProcessing;
 	}
@@ -786,7 +787,7 @@ IMPLEMENT_ACTION(enterCompartment) {
 				getProgress().field_78 = 0;
 			}
 
-			getLogic()->loadSceneFromPosition(kCarGreenSleeping, 77);
+			getScenes()->loadSceneFromPosition(kCarGreenSleeping, 77);
 			return kSceneNone;
 		}
 	} else {
@@ -831,13 +832,13 @@ IMPLEMENT_ACTION(getOutsideTrain) {
 			getEvent(kEventCathLookOutsideWindowDay) = 1;
 			playAnimation(isDay() ? kEventCathGetInsideDay : kEventCathGetInsideNight);
 			if (!hotspot.scene)
-				getLogic()->processScene();
+				getScenes()->processScene();
 			break;
 		}
 	} else {
 		if (action == 9 || action == 44 || action == 45) {
 			playAnimation(isDay() ? kEventCathLookOutsideWindowDay : kEventCathLookOutsideWindowNight);
-			getLogic()->processScene();
+			getScenes()->processScene();
 			return kSceneNone;
 		}
 	}
@@ -863,7 +864,7 @@ IMPLEMENT_ACTION(slip) {
 	getProgress().field_C8 = 0;
 
 	if (!hotspot.scene)
-		getLogic()->processScene();
+		getScenes()->processScene();
 
 	return kSceneInvalid;
 }
@@ -888,7 +889,7 @@ IMPLEMENT_ACTION(getInsideTrain) {
 	}
 
 	if (!hotspot.scene)
-		getLogic()->processScene();
+		getScenes()->processScene();
 
 	return kSceneInvalid;
 }
@@ -921,7 +922,7 @@ IMPLEMENT_ACTION(climbUpTrain) {
 	}
 
 	if (!hotspot.scene)
-		getLogic()->processScene();
+		getScenes()->processScene();
 
 	return kSceneInvalid;
 }
@@ -948,7 +949,7 @@ IMPLEMENT_ACTION(climbDownTrain) {
 		getSound()->playSoundEvent(kEntityNone, 37);
 
 	if (!hotspot.scene)
-		getLogic()->processScene();
+		getScenes()->processScene();
 
 	return kSceneInvalid;
 }
@@ -978,7 +979,7 @@ IMPLEMENT_ACTION(jumpUpDownTrain) {
 		playAnimation((getInventory()->getEntry(kItemBriefcase)->location - 3) ? kEventCathJumpUpCeilingBriefcase : kEventCathJumpUpCeiling);
 
 		if (!hotspot.scene)
-			getLogic()->processScene();
+			getScenes()->processScene();
 
 		break;
 
@@ -1002,20 +1003,20 @@ IMPLEMENT_ACTION(unbound) {
 	case 1:
 		playAnimation(kEventCathStruggleWithBonds);
 		if (hotspot.scene)
-			getLogic()->processScene();
+			getScenes()->processScene();
 		break;
 
 	case 2:
 		playAnimation(kEventCathBurnRope);
 		if (hotspot.scene)
-			getLogic()->processScene();
+			getScenes()->processScene();
 		break;
 
 	case 3:
 		if (getEvent(kEventCathBurnRope)) {
 			playAnimation(kEventCathRemoveBonds);
 			getProgress().field_84 = 0;
-			getLogic()->loadSceneFromPosition(kCarBaggageRear, 89);
+			getScenes()->loadSceneFromPosition(kCarBaggageRear, 89);
 			return kSceneNone;
 		}
 		break;
@@ -1026,7 +1027,7 @@ IMPLEMENT_ACTION(unbound) {
 			getSound()->playSoundEvent(kEntityNone, 101);
 			getInventory()->setLocationAndProcess(kItemMatch, kLocation2);
 			if (!hotspot.scene)
-				getLogic()->processScene();
+				getScenes()->processScene();
 		}
 		break;
 
@@ -1134,7 +1135,7 @@ IMPLEMENT_ACTION(concertSitCough) {
 	}
 
 	if (!hotspot.scene)
-		getLogic()->processScene();
+		getScenes()->processScene();
 
 	return kSceneInvalid;
 }
@@ -1268,7 +1269,7 @@ IMPLEMENT_ACTION(useWhistle) {
 	if (evt != kEventNone) {
 		playAnimation(evt);
 		if (!hotspot.scene)
-			getLogic()->processScene();
+			getScenes()->processScene();
 	}
 
 	return kSceneInvalid;
@@ -1428,7 +1429,7 @@ void Action::pickGreenJacket(bool process) const {
 	getInventory()->setPortrait(kPortraitGreen);
 
 	if (process)
-		getLogic()->processScene();
+		getScenes()->processScene();
 }
 
 void Action::pickScarf(bool process) const {
@@ -1438,7 +1439,7 @@ void Action::pickScarf(bool process) const {
 		playAnimation(kEventPickScarfOriginal);
 
 	if (process)
-		getLogic()->processScene();
+		getScenes()->processScene();
 }
 
 void Action::pickCorpse(byte bedPosition, bool process) const {
@@ -1474,7 +1475,7 @@ void Action::pickCorpse(byte bedPosition, bool process) const {
 	}
 
 	if (process)
-		getLogic()->processScene();
+		getScenes()->processScene();
 
 	// Add corpse to inventory
 	if (bedPosition != 4) { // bed position
@@ -1527,7 +1528,7 @@ void Action::dropCorpse(bool process) const {
 	}
 
 	if (process)
-		getLogic()->processScene();
+		getScenes()->processScene();
 }
 
 bool Action::handleOtherCompartment(ObjectIndex object, byte param2, byte param3) const {
@@ -1604,7 +1605,7 @@ void Action::playCompartmentSoundEvents(EntityIndex entityIndex, ObjectIndex obj
 	}
 
 	if (param3)
-		getLogic()->loadSceneFromObject(object, !loadSceneFunction);
+		getScenes()->loadSceneFromObject(object, !loadSceneFunction);
 }
 
 //////////////////////////////////////////////////////////////////////////

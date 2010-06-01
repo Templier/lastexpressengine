@@ -30,6 +30,7 @@
 #include "lastexpress/data/snd.h"
 
 #include "lastexpress/game/logic.h"
+#include "lastexpress/game/scenes.h"
 #include "lastexpress/game/sound.h"
 #include "lastexpress/game/state.h"
 
@@ -395,7 +396,7 @@ void Inventory::setLocationAndProcess(InventoryItem item, ObjectLocation locatio
 	getEntry(item)->location = location;
 
 	if (isItemSceneParameter(item) && !getFlags()->flag_0)
-		getLogic()->processScene();
+		getScenes()->processScene();
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -473,7 +474,7 @@ void Inventory::examine(InventoryItem item) {
 		getState()->sceneBackup = getState()->scene;
 		getState()->sceneUseBackup = true;
 
-		getLogic()->loadScene(index);
+		getScenes()->loadScene(index);
 	} else {
 
 		if (!getState()->sceneBackup2)
@@ -482,7 +483,7 @@ void Inventory::examine(InventoryItem item) {
 		if (getFirstExaminableItem() == _selectedItem) {
 			index = getState()->sceneBackup2;
 			getState()->sceneBackup2 = kSceneNone;
-			getLogic()->loadScene(index);
+			getScenes()->loadScene(index);
 		}
 	}
 }

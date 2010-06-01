@@ -34,6 +34,7 @@
 #include "lastexpress/game/logic.h"
 #include "lastexpress/game/object.h"
 #include "lastexpress/game/savepoint.h"
+#include "lastexpress/game/scenes.h"
 #include "lastexpress/game/sound.h"
 #include "lastexpress/game/state.h"
 
@@ -210,7 +211,7 @@ IMPLEMENT_FUNCTION(Vassili, function7, 7)
 
 		getEntities()->prepareSequences(kEntityVassili);
 		if (getEntities()->checkFields1(kEntityNone, kCarRedSleeping, EntityData::kField491_8200))
-			getLogic()->loadSceneFromObject(kObjectCompartmentA);
+			getScenes()->loadSceneFromObject(kObjectCompartmentA);
 
 		getObjects()->update(kObjectCompartmentA, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
 		break;
@@ -233,7 +234,7 @@ IMPLEMENT_FUNCTION(Vassili, function8, 8)
 	case kActionDefault:
 		if (!getEntities()->checkFields5(kEntityNone, kCarRedSleeping)) {
 			getSound()->playSound(kEntityNone, "BUMP");
-			getLogic()->loadSceneFromPosition(kCarRedSleeping, (getEntityData(kEntityNone)->car <= kCarRedSleeping) ? 1 : 40);
+			getScenes()->loadSceneFromPosition(kCarRedSleeping, (getEntityData(kEntityNone)->car <= kCarRedSleeping) ? 1 : 40);
 		}
 
 		getSavePoints()->push(kEntityVassili, kEntityAnna, kAction226031488);
@@ -323,7 +324,7 @@ IMPLEMENT_FUNCTION(Vassili, seizure, 10)
         getSavePoints()->push(kEntityVassili, kEntityAnna, kAction191477936);
         getSavePoints()->push(kEntityVassili, kEntityVerges, kAction191477936);
         getSavePoints()->push(kEntityVassili, kEntityCoudert, kAction191477936);
-        getLogic()->loadSceneFromObject(kObjectCompartmentA);
+        getScenes()->loadSceneFromObject(kObjectCompartmentA);
 
         setup_drawInBed();
 		break;
@@ -466,7 +467,7 @@ IMPLEMENT_FUNCTION(Vassili, stealEgg, 15)
 
 		case 2:
 			getAction()->playAnimation(kEventVassiliCompartmentStealEgg);
-			getLogic()->loadSceneFromPosition(kCarRedSleeping, 67);
+			getScenes()->loadSceneFromPosition(kCarRedSleeping, 67);
 			break;
 		}
 		break;

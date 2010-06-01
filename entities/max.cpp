@@ -30,6 +30,7 @@
 #include "lastexpress/game/logic.h"
 #include "lastexpress/game/object.h"
 #include "lastexpress/game/savepoint.h"
+#include "lastexpress/game/scenes.h"
 #include "lastexpress/game/sound.h"
 #include "lastexpress/game/state.h"
 
@@ -226,7 +227,7 @@ IMPLEMENT_FUNCTION(Max, function8, 8)
 			getSound()->processEntry(kEntityMax);
 
 		getAction()->playAnimation(kEventCathMaxLickHand);
-		getLogic()->processScene();
+		getScenes()->processScene();
 
 		params->param1 = 1;
 		break;
@@ -254,7 +255,7 @@ IMPLEMENT_FUNCTION(Max, function8, 8)
 
 		getSound()->playSound(kEntityNone, "LIB026");
 		getAction()->playAnimation(kEventCathMaxFree);
-		getLogic()->loadSceneFromPosition(kCarBaggage, 92);
+		getScenes()->loadSceneFromPosition(kCarBaggage, 92);
 		getObjects()->update(kObjectCageMax, kEntityNone, kLocationNone, kCursorNormal, kCursorHand);
 		setup_function9();
 		break;
@@ -471,7 +472,7 @@ IMPLEMENT_FUNCTION(Max, freeFromCage, 14)
 				getSound()->removeFromQueue(kEntityMax);
 
 			getAction()->playAnimation(kEventCathMaxCage);
-			getLogic()->processScene();
+			getScenes()->processScene();
 			break;
 
 		case 2:
@@ -480,7 +481,7 @@ IMPLEMENT_FUNCTION(Max, freeFromCage, 14)
 
 			getSound()->playSound(kEntityNone, "LIB026");
 			getAction()->playAnimation(kEventCathMaxFree);
-			getLogic()->loadSceneFromPosition(kCarBaggage, 92);
+			getScenes()->loadSceneFromPosition(kCarBaggage, 92);
 			getObjects()->update(kObjectCageMax, kEntityNone, kLocationNone, kCursorNormal, kCursorHand);
 			setup_function9();
 			break;

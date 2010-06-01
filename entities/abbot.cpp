@@ -31,6 +31,7 @@
 #include "lastexpress/game/logic.h"
 #include "lastexpress/game/object.h"
 #include "lastexpress/game/savepoint.h"
+#include "lastexpress/game/scenes.h"
 #include "lastexpress/game/sound.h"
 #include "lastexpress/game/state.h"
 
@@ -129,7 +130,7 @@ IMPLEMENT_FUNCTION_SI(Abbot, function4, 4)
 		 || getEntities()->checkFields1(kEntityNone, kCarRedSleeping, EntityData::kField491_6130)) {
 			getAction()->playAnimation(isDay() ? kEventCathTurningDay : kEventCathTurningNight);
 			getSound()->playSound(kEntityNone, "BUMP");
-			getLogic()->loadSceneFromObject(kObjectCompartmentC, true);
+			getScenes()->loadSceneFromObject(kObjectCompartmentC, true);
 		}
 		break;
 	}
@@ -472,7 +473,7 @@ IMPLEMENT_FUNCTION(Abbot, function22, 22)
 
 		getAction()->playAnimation(kEventAbbotIntroduction);
 		getSound()->playSound(kEntityNone, "LIB036");
-		getLogic()->loadSceneFromPosition(kCarRestaurant, 61);
+		getScenes()->loadSceneFromPosition(kCarRestaurant, 61);
 		break;
 
 	case kAction122288808:
@@ -626,7 +627,7 @@ IMPLEMENT_FUNCTION(Abbot, function25, 25)
 
 		case 4:
 			getData()->field_493 = EntityData::kField493_1;
-			getLogic()->loadSceneFromItemPosition(kItem3);
+			getScenes()->loadSceneFromItemPosition(kItem3);
 
 			setup_function26();
 			break;
@@ -849,7 +850,7 @@ switch (savepoint.action) {
 			break;
 
 		case 5:
-			getLogic()->loadSceneFromItemPosition(kItem3);
+			getScenes()->loadSceneFromItemPosition(kItem3);
 			getData()->field_493 = EntityData::kField493_1;
 
 			setup_function31();
@@ -1064,12 +1065,12 @@ IMPLEMENT_FUNCTION(Abbot, function53, 53)
 
 		case 1:
 			getAction()->playAnimation(kEventLocomotiveAbbotGetSomeRest);
-			getLogic()->processScene();
+			getScenes()->processScene();
 			break;
 
 		case 2:
 			getAction()->playAnimation(kEventLocomotiveAbbotShoveling);
-			getLogic()->processScene();
+			getScenes()->processScene();
 			break;
 		}
 		break;
@@ -1088,7 +1089,7 @@ IMPLEMENT_FUNCTION(Abbot, function53, 53)
 		}
 
 		getAction()->playAnimation(kEventLocomotiveAbbotShoveling);
-		getLogic()->processScene();
+		getScenes()->processScene();
 		break;
 	}
 }

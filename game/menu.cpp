@@ -33,6 +33,7 @@
 
 #include "lastexpress/game/logic.h"
 #include "lastexpress/game/savegame.h"
+#include "lastexpress/game/scenes.h"
 #include "lastexpress/game/sound.h"
 #include "lastexpress/game/state.h"
 
@@ -484,7 +485,7 @@ void Menu::showMenu(bool savegame, TimeType type, uint32 time) {
 	_currentTime = getState()->time;
 
 	// Load main scene
-	_scene = _engine->getSceneManager()->getScene(getSceneIndex());
+	_scene = getScenes()->getScene(getSceneIndex());
 	_engine->getGraphicsManager()->draw(_scene, GraphicsManager::kBackgroundC);
 	drawElements();
 

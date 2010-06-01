@@ -33,6 +33,7 @@
 #include "lastexpress/game/logic.h"
 #include "lastexpress/game/object.h"
 #include "lastexpress/game/savepoint.h"
+#include "lastexpress/game/scenes.h"
 #include "lastexpress/game/sound.h"
 #include "lastexpress/game/state.h"
 
@@ -92,8 +93,8 @@ IMPLEMENT_FUNCTION_SIII(Mahmud, function4, 4)
 	case kActionNone:
 		UPDATE_PARAM_FROM_TICKS(5, params->param3);
 
-		if (!getLogic()->checkPosition(kSceneNone, Logic::kCheckPositionType0))
-			getLogic()->loadSceneFromObject((ObjectIndex)params->param4, true);
+		if (!getScenes()->checkPosition(kSceneNone, SceneManager::kCheckPositionType0))
+			getScenes()->loadSceneFromObject((ObjectIndex)params->param4, true);
 
 		break;
 
@@ -238,19 +239,19 @@ IMPLEMENT_FUNCTION_II(Mahmud, function10, 10)
 				break;
 
 			case 55:
-				getLogic()->loadSceneFromObject(kObjectCompartment5, true);
+				getScenes()->loadSceneFromObject(kObjectCompartment5, true);
 				break;
 
 			case 56:
-				getLogic()->loadSceneFromObject(kObjectCompartment6, true);
+				getScenes()->loadSceneFromObject(kObjectCompartment6, true);
 				break;
 
 			case 57:
-				getLogic()->loadSceneFromObject(kObjectCompartment7, true);
+				getScenes()->loadSceneFromObject(kObjectCompartment7, true);
 				break;
 
 			case 58:
-				getLogic()->loadSceneFromObject(kObjectCompartment8, true);
+				getScenes()->loadSceneFromObject(kObjectCompartment8, true);
 				break;
 			}
 		}
@@ -316,19 +317,19 @@ IMPLEMENT_FUNCTION(Mahmud, function11, 11)
 			break;
 
 		case 55:
-			getLogic()->loadSceneFromObject(kObjectCompartment5, true);
+			getScenes()->loadSceneFromObject(kObjectCompartment5, true);
 			break;
 
 		case 56:
-			getLogic()->loadSceneFromObject(kObjectCompartment6, true);
+			getScenes()->loadSceneFromObject(kObjectCompartment6, true);
 			break;
 
 		case 57:
-			getLogic()->loadSceneFromObject(kObjectCompartment7, true);
+			getScenes()->loadSceneFromObject(kObjectCompartment7, true);
 			break;
 
 		case 58:
-			getLogic()->loadSceneFromObject(kObjectCompartment8, true);
+			getScenes()->loadSceneFromObject(kObjectCompartment8, true);
 			break;
 		}
 		break;
@@ -721,7 +722,7 @@ IMPLEMENT_FUNCTION(Mahmud, function14, 14)
 		case 10:
 			getAction()->playAnimation((getProgress().jacket == kJacketGreen) ? (isDay() ? kEventMahmudWrongDoorDay : kEventMahmudWrongDoor) : kEventMahmudWrongDoorOriginalJacket);
 			getSound()->playSound(kEntityNone, "LIB015");
-			getLogic()->processScene();
+			getScenes()->processScene();
 
 			params->param4 = 1;
 			break;

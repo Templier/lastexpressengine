@@ -57,6 +57,7 @@
 #include "lastexpress/game/logic.h"
 #include "lastexpress/game/object.h"
 #include "lastexpress/game/savepoint.h"
+#include "lastexpress/game/scenes.h"
 #include "lastexpress/game/sound.h"
 #include "lastexpress/game/state.h"
 
@@ -423,7 +424,7 @@ IMPLEMENT_FUNCTION(Chapters, chapter2, 10)
 			}
 
 			// Load scene data
-			getLogic()->loadSceneDataFile(kArchiveCd2);
+			getScenes()->loadSceneDataFile(kArchiveCd2);
 			setup_chapter2_init();
 		}
 		break;
@@ -482,9 +483,9 @@ IMPLEMENT_FUNCTION(Chapters, chapter2_init, 11)
 	getAction()->playAnimation(kEventTrainPassing);
 
 	if (getInventory()->hasItem(kItemScarf))
-		getLogic()->loadScene(kScene41);
+		getScenes()->loadScene(kScene41);
 	else
-		getLogic()->loadSceneFromPosition(kCarGreenSleeping, 79);
+		getScenes()->loadSceneFromPosition(kCarGreenSleeping, 79);
 
 	setup_chapter2_handler();
 }
@@ -582,7 +583,7 @@ IMPLEMENT_FUNCTION(Chapters, chapter3_init, 14)
 			ENTITY_PARAM(0, 3) = 0;
 		}
 
-		getLogic()->loadSceneFromPosition(kCarRestaurant, 60);
+		getScenes()->loadSceneFromPosition(kCarRestaurant, 60);
 		getInventory()->show();
 
 		setCallback(1);
@@ -636,7 +637,7 @@ IMPLEMENT_FUNCTION(Chapters, chapter4, 17)
 			}
 
 			// Load scene data
-			getLogic()->loadSceneDataFile(kArchiveCd3);
+			getScenes()->loadSceneDataFile(kArchiveCd3);
 			setup_chapter4_init();
 		}
 		break;
@@ -665,12 +666,12 @@ IMPLEMENT_FUNCTION(Chapters, chapter4_init, 18)
 	getSavePoints()->push(kEntityChapters, kEntityTables4, kAction103798704);
 	getSavePoints()->push(kEntityChapters, kEntityTables5, kAction103798704);
 
-	getLogic()->loadSceneFromItemPosition(kItem3);
+	getScenes()->loadSceneFromItemPosition(kItem3);
 
 	getInventory()->setLocationAndProcess(kItemBomb, kLocation1);
 
 	if (getInventory()->getEntry(kItemBeetle)->location == kLocation3)
-		getLogic()->loadSceneFromItemPosition(kItemBeetle);
+		getScenes()->loadSceneFromItemPosition(kItemBeetle);
 
 	getObjects()->updateLocation2(kObject25, kLocation2);
 	getObjects()->update(kObject107, kEntityNone, kLocation3, kCursorKeepValue, kCursorKeepValue);
@@ -682,9 +683,9 @@ IMPLEMENT_FUNCTION(Chapters, chapter4_init, 18)
 	}
 
 	if (getInventory()->hasItem(kItemFirebird))
-		getLogic()->loadSceneFromPosition(kCarGreenSleeping, 76);
+		getScenes()->loadSceneFromPosition(kCarGreenSleeping, 76);
 	else
-		getLogic()->loadSceneFromPosition(kCarRestaurant, 69);
+		getScenes()->loadSceneFromPosition(kCarRestaurant, 69);
 
 	getInventory()->show();
 	setup_chapter4_handler();
@@ -794,7 +795,7 @@ IMPLEMENT_FUNCTION(Chapters, chapter5_init, 21)
 			ENTITY_PARAM(0, 3) = 0;
 		}
 
-		getLogic()->loadSceneFromPosition(kCarBaggageRear, 95);
+		getScenes()->loadSceneFromPosition(kCarBaggageRear, 95);
 		getInventory()->show();
 
 		setCallback(1);

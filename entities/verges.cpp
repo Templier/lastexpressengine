@@ -29,6 +29,7 @@
 #include "lastexpress/game/logic.h"
 #include "lastexpress/game/object.h"
 #include "lastexpress/game/savepoint.h"
+#include "lastexpress/game/scenes.h"
 #include "lastexpress/game/sound.h"
 #include "lastexpress/game/state.h"
 
@@ -201,7 +202,7 @@ IMPLEMENT_FUNCTION(Verges, function23, 23)
 		break;
 
 	case kActionDefault:
-		getLogic()->loadSceneFromItemPosition(kItem9);
+		getScenes()->loadSceneFromItemPosition(kItem9);
 
 		getData()->field_491 = EntityData::kField491_8200;
 		getData()->field_493 = EntityData::kField493_1;

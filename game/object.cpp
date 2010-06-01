@@ -26,6 +26,7 @@
 #include "lastexpress/game/object.h"
 
 #include "lastexpress/game/logic.h"
+#include "lastexpress/game/scenes.h"
 #include "lastexpress/game/state.h"
 
 #include "lastexpress/helpers.h"
@@ -71,7 +72,7 @@ void Objects::update(ObjectIndex index, EntityIndex entity, ObjectLocation locat
 	if (original_location != location && (original_location == kLocation2 || location == kLocation2))
 		if ((index >= kObjectCompartment1 && index <= kObjectCompartment8)
 	     || (index >= kObjectCompartmentA && index <= kObjectCompartmentF)) {
-		 	getLogic()->updateDoorsAndClock();
+		 	getScenes()->updateTrain();
 		}
 }
 

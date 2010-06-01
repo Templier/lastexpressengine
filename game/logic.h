@@ -44,18 +44,11 @@ class Entities;
 class Fight;
 class Menu;
 class SaveLoad;
-class Scene;
 class Sound;
 class State;
 
 class Logic : public EventHandler {
 public:
-	enum CheckPositionType {
-		kCheckPositionType0,
-		kCheckPositionType1,
-		kCheckPositionType2
-	};
-
 	Logic(LastExpressEngine *engine);
 	~Logic();
 
@@ -68,25 +61,7 @@ public:
 
 	void gameOver(TimeType type, TimeValue time, SceneIndex sceneIndex, bool showScene);
 
-	// Scene
-	void loadSceneDataFile(ArchiveIndex archive) const;
-	void loadScene(SceneIndex sceneIndex);
-	void setScene(SceneIndex sceneIndex);
-
-	void loadSceneFromObject(ObjectIndex object, bool alternate = false);
-	void loadSceneFromItem(InventoryItem item);
-	void loadSceneFromItemPosition(InventoryItem item);
-	void loadSceneFromPosition(CarIndex car, Position position, int param3 = -1);
-    SceneIndex getSceneIndexFromPosition(CarIndex car, Position position, int param3 = -1);
-
-	void updateDoorsAndClock();
 	void updateCursor(bool redraw = true);
-
-	// Index processing
-	void processScene();
-	SceneIndex processIndex(SceneIndex sceneIndex);
-	bool checkPosition(SceneIndex sceneIndex, CheckPositionType kCheckPositionType0) const;
-	bool checkCurrentPosition(bool doCheckOtherCars) const;
 
 	// Accessors
 	bool isGameStarted() { return _runState.gameStarted; }
@@ -111,18 +86,13 @@ private:
 		bool showingMenu;
 		CursorStyle cursorStyle;    // necessary to remember current cursor when inside inventory TODO remove?
 
-		// flags
-		bool flag_no_entity;
-		bool flag_draw_entities;
+		
 
 		RunState() {
 			gameId = kGameBlue;
 			gameStarted = false;
 			showingMenu = false;
 			cursorStyle = kCursorNormal;
-
-			flag_no_entity = false;
-			flag_draw_entities = false;
 		}
 	};
 
@@ -135,14 +105,9 @@ private:
 	Entities *_entities;        ///< Entities
 	Fight    *_fight;           ///< Fight handling
 	Menu     *_menu;            ///< Main menu handling
-	SaveLoad *_saveload;        ///< Save & loading
-	Scene    *_currentScene;    ///< Current scene
+	SaveLoad *_saveload;        ///< Save & loading	
 	Sound    *_sound;           ///< Sound
 	State    *_state;           ///< Game state
-
-	void drawScene(SceneIndex sceneIndex);
-	void preProcessScene(SceneIndex *index);
-	void postProcessScene();
 
 	void switchChapter();
 	void playFinalSequence();

@@ -30,6 +30,7 @@
 #include "lastexpress/game/logic.h"
 #include "lastexpress/game/object.h"
 #include "lastexpress/game/savepoint.h"
+#include "lastexpress/game/scenes.h"
 #include "lastexpress/game/sound.h"
 #include "lastexpress/game/state.h"
 
@@ -525,7 +526,7 @@ IMPLEMENT_FUNCTION(Tatiana, function55, 55)
 
 	case kAction17:
 		if (getEntities()->isPlayerPosition(kCarRestaurant, 72))
-			getLogic()->loadSceneFromPosition(kCarRestaurant, 86);
+			getScenes()->loadSceneFromPosition(kCarRestaurant, 86);
 		break;
 	}
 }

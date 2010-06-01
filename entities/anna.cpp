@@ -30,6 +30,7 @@
 #include "lastexpress/game/logic.h"
 #include "lastexpress/game/object.h"
 #include "lastexpress/game/savepoint.h"
+#include "lastexpress/game/scenes.h"
 #include "lastexpress/game/sound.h"
 #include "lastexpress/game/state.h"
 
@@ -560,7 +561,7 @@ IMPLEMENT_FUNCTION(Anna, function58, 58)
 		if (getCallback() == 1) {
 			getAction()->playAnimation(kEventAnnaSearchingCompartment);
 			getEntities()->prepareSequences(kEntityAnna);
-			getLogic()->loadSceneFromPosition(kCarRedSleeping, 8);
+			getScenes()->loadSceneFromPosition(kCarRedSleeping, 8);
 			getSound()->playSound(kEntityAnna, "lib015");
 			getSavePoints()->push(kEntityAnna, kEntityAugust, kAction122288808);
 			setup_function59();

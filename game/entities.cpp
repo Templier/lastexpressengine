@@ -70,6 +70,7 @@
 // Game
 #include "lastexpress/game/logic.h"
 #include "lastexpress/game/savepoint.h"
+#include "lastexpress/game/scenes.h"
 #include "lastexpress/game/sound.h"
 #include "lastexpress/game/state.h"
 
@@ -244,8 +245,7 @@ void Entities::reset() {
 	for (uint i = 1; i < _entities.size(); i++)
 		resetSequences((EntityIndex)i);
 
-	// Original games does some global cleanup of the sequence cache here
-	// This is not needed since the sequences are not stored globally
+	getScenes()->resetTrain();
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -415,8 +415,8 @@ void Entities::setupSequences() {
 	if (!getFlags()->gameRunning)
 		return;
 
-	// Update the train clock
-	getLogic()->updateDoorsAndClock();
+	// Update the train clock & doors
+	getScenes()->updateTrain();
 
 	//////////////////////////////////////////////////////////////////////////
 	// First pass: Drawing
@@ -848,7 +848,7 @@ void Entities::updatePosition(EntityIndex entity, CarIndex car, Position positio
 
 	if (processScene && (isPlayerPosition(car, position) || (car == kCarRestaurant && position == 57 && isPlayerPosition(kCarRestaurant, 50)))) {
 		getSound()->excuseMe(entity);
-		getLogic()->loadScene(getLogic()->processIndex(getState()->scene));
+		getScenes()->loadScene(getScenes()->processIndex(getState()->scene));
 		getSound()->playSound(kEntityNone, "CAT1127A");
 	} else {
 		getLogic()->updateCursor();
@@ -1033,7 +1033,7 @@ void Entities::updatePositionsEnter(EntityIndex entity, CarIndex car, Position p
 	// FIXME: also checking two DWORD values that do not seem to updated anywhere...
 	if (isPlayerPosition(car, position1) || isPlayerPosition(car, position2) || isPlayerPosition(car, position3) || isPlayerPosition(car, position4)) {
 		getSound()->excuseMe(entity);
-		getLogic()->loadScene(getLogic()->processIndex(getState()->scene));
+		getScenes()->loadScene(getScenes()->processIndex(getState()->scene));
 		getSound()->playSound(kEntityNone, "CAT1127A");
 	} else {
 		getLogic()->updateCursor();
@@ -1131,32 +1131,32 @@ void Entities::loadSceneFromField491(CarIndex car, EntityData::Field491Value fie
 
 	// For position outside bounds, use minimal value
 	if ((alternate && position > 18) || (alternate && position < 22)) {
-		getLogic()->loadSceneFromPosition(car, alternate ? 18 : 22);
+		getScenes()->loadSceneFromPosition(car, alternate ? 18 : 22);
 		return;
 	}
 
 	// Load scene from position
 	switch (position) {
 	default:
-		getLogic()->loadSceneFromPosition(car, (Position)(position + (alternate ? - 1 : 1)));
+		getScenes()->loadSceneFromPosition(car, (Position)(position + (alternate ? - 1 : 1)));
 		break;
 
 	// Alternate
 	case 1:
-		if (alternate) getLogic()->loadSceneFromPosition(car, 1);
+		if (alternate) getScenes()->loadSceneFromPosition(car, 1);
 		break;
 
 	case 5:
-		if (alternate) getLogic()->loadSceneFromPosition(car, 3);
+		if (alternate) getScenes()->loadSceneFromPosition(car, 3);
 		break;
 
 	// Default
 	case 23:
-		if (!alternate) getLogic()->loadSceneFromPosition(car, 25);
+		if (!alternate) getScenes()->loadSceneFromPosition(car, 25);
 		break;
 
 	case 40:
-		if (!alternate) getLogic()->loadSceneFromPosition(car, 40);
+		if (!alternate) getScenes()->loadSceneFromPosition(car, 40);
 		break;
 	}
 }
@@ -1397,10 +1397,10 @@ bool Entities::checkFields24(EntityIndex entity, EntityData::Field491Value field
 }
 
 bool Entities::checkFields25(EntityIndex entity) const {
-	if (getData(entity)->direction == kDirectionUp && getLogic()->checkPosition(kSceneNone, Logic::kCheckPositionType1))
+	if (getData(entity)->direction == kDirectionUp && getScenes()->checkPosition(kSceneNone, SceneManager::kCheckPositionType1))
 		return true;
 
-	return (getData(entity)->direction == kDirectionDown && getLogic()->checkPosition(kSceneNone, Logic::kCheckPositionType0));
+	return (getData(entity)->direction == kDirectionDown && getScenes()->checkPosition(kSceneNone, SceneManager::kCheckPositionType0));
 }
 
 
