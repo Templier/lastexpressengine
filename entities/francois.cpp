@@ -158,22 +158,38 @@ IMPLEMENT_FUNCTION(Francois, function18, 18)
 		break;
 
 	case kActionNone:
-		if (getState()->time > kTimeParisEpernay && !params->param1) {
+		if (getState()->time > kTimeFrancois && !params->param1) {
 			params->param1 = 1;
-			_data->setNextCallback(1);
+			setCallback(1);
 			call(new ENTITY_SETUP(Francois, setup_function11), kTimeAnna);
 		}
 		break;
 
 	case kActionCallback:
-		if (_data->getNextCallback() == 1)
+		if (getCallback() == 1)
 			setup_function19();
 		break;
 	}
 }
 
 IMPLEMENT_FUNCTION(Francois, function19, 19)
-	error("Francois: callback function 19 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionNone:
+		if (getState()->time > kTimeFrancois && !params->param1) {
+			params->param1 = 1;
+			setCallback(2);
+			call(new ENTITY_SETUP(Francois, setup_function12));
+		}
+		break;
+
+	case kAction101107728:
+		setCallback(1);
+		call(new ENTITY_SETUP(Francois, setup_function16));
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Francois, function20, 20)
@@ -263,7 +279,7 @@ IMPLEMENT_FUNCTION(Francois, chapter4, 26)
 
 IMPLEMENT_FUNCTION(Francois, function27, 27)
 	if (savepoint.action == kAction101107728) {
-		_data->setNextCallback(1);
+		setCallback(1);
 		call(new ENTITY_SETUP(Francois, setup_function16));
 	}
 }

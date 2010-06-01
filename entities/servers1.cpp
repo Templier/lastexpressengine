@@ -154,24 +154,24 @@ IMPLEMENT_FUNCTION(Servers1, function7, 7)
 		getData()->field_491 = EntityData::kField491_5800;
 		getData()->field_493 = EntityData::kField493_0;
 
-		_data->setNextCallback(1);
+		setCallback(1);
 		call(new ENTITY_SETUP_SIIS(Servers1, setup_draw), "924");
 		break;
 
 	case kActionCallback:
-		switch (_data->getNextCallback()) {
+		switch (getCallback()) {
 		default:
 			break;
 
 		case 1:
 			getSavePoints()->push(kEntityServers1, kEntityBoutarel, kAction122358304);
-			_data->setNextCallback(2);
+			setCallback(2);
 			call(new ENTITY_SETUP_SIIS(Servers1, setup_draw), "008C");
 			break;
 
 		case 2:
 			getSavePoints()->push(kEntityServers1, kEntityBoutarel, kAction122288808);
-			_data->setNextCallback(2);
+			setCallback(2);
 			call(new ENTITY_SETUP_SIIS(Servers1, setup_draw), "926");
 			break;
 
@@ -336,10 +336,10 @@ IMPLEMENT_FUNCTION(Servers1, function23, 23)
 
 	if (getEntities()->checkFields17(kEntityServers1) && getEntities()->checkFields11()) {
 		if (ENTITY_PARAM(1, 1)) {
-			_data->setNextCallback(1);
+			setCallback(1);
 			call(new ENTITY_SETUP(Servers1, setup_function24));
 		} else if (ENTITY_PARAM(1, 2)) {
-			_data->setNextCallback(2);
+			setCallback(2);
 			call(new ENTITY_SETUP(Servers1, setup_function7));			
 		}
 	}

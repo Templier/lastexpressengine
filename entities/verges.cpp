@@ -196,7 +196,27 @@ IMPLEMENT_FUNCTION(Verges, function22, 22)
 }
 
 IMPLEMENT_FUNCTION(Verges, function23, 23)
-	error("Verges: callback function 23 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionDefault:
+		getLogic()->loadSceneFromItemPosition(kItem9);
+
+		getData()->field_491 = EntityData::kField491_8200;
+		getData()->field_493 = EntityData::kField493_1;
+		getData()->car = kCarRedSleeping;
+		break;
+
+	case kAction191477936:
+		getData()->field_491 = EntityData::kField491_8200;
+		getData()->field_493 = EntityData::kField493_0;
+		getData()->car = kCarRedSleeping;
+
+		setCallback(1);
+		call(new ENTITY_SETUP(Verges, setup_function11));
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Verges, function24, 24)

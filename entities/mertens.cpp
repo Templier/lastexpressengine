@@ -131,7 +131,7 @@ IMPLEMENT_FUNCTION(Mertens, function6, 6)
 		 && getEntities()->checkFields9(kEntityMertens, kEntityNone, 1000)
 		 && !getEntities()->checkFields3(kEntityNone)
 		 && !getEntities()->checkFields10(kEntityNone)) {
-			 _data->setNextCallback(1);
+			 setCallback(1);
 			 call(new ENTITY_SETUP(Mertens, setup_savegame), 2, kEventMertensBloodJacket);
 		}
 		break;
@@ -141,7 +141,7 @@ IMPLEMENT_FUNCTION(Mertens, function6, 6)
 		break;
 
 	case kActionCallback:
-		if (_data->getNextCallback() == 1) {
+		if (getCallback() == 1) {
 			getAction()->playAnimation(kEventMertensBloodJacket);
 			getLogic()->gameOver(kTimeType0, kTime1, kSceneGameOverBloodJacket, true);
 		}
@@ -175,7 +175,7 @@ IMPLEMENT_FUNCTION_I(Mertens, function11, 11)
 			&& getEntities()->checkFields9(kEntityMertens, kEntityNone, 1000)
 			&& !getEntities()->checkFields3(kEntityNone)
 			&& !getEntities()->checkFields10(kEntityNone)) {
-				_data->setNextCallback(1);
+				setCallback(1);
 				call(new ENTITY_SETUP(Mertens, setup_savegame), 2, kEventMertensBloodJacket);
 				break;
 		}
@@ -186,7 +186,7 @@ IMPLEMENT_FUNCTION_I(Mertens, function11, 11)
 		break;
 
 	case kActionCallback:
-		if (_data->getNextCallback() == 1) {
+		if (getCallback() == 1) {
 			getAction()->playAnimation(kEventMertensBloodJacket);
 			getLogic()->gameOver(kTimeType0, kTime1, kSceneGameOverBloodJacket, true);
 		}
@@ -225,7 +225,7 @@ IMPLEMENT_FUNCTION(Mertens, function17, 17)
 
 			getInventory()->setLocationAndProcess(kItem7, kLocation1);
 
-			_data->setNextCallback(1);
+			setCallback(1);
 			call(new ENTITY_SETUP(Mertens, setup_function10), 3, 540);
 
 		} else {
@@ -254,7 +254,7 @@ IMPLEMENT_FUNCTION(Mertens, function17, 17)
 					getLogic()->loadSceneFromPosition(kCarGreenSleeping, 25);
 				}
 
-				_data->setNextCallback(3);
+				setCallback(3);
 				call(new ENTITY_SETUP(Mertens, setup_function6));
 			}
 
@@ -262,14 +262,14 @@ IMPLEMENT_FUNCTION(Mertens, function17, 17)
 		break;
 
 	case kActionCallback:
-		switch (_data->getNextCallback()) {
+		switch (getCallback()) {
 		default:
 			break;
 
 		case 1:
 			getEntities()->prepareSequences(kEntityMertens);
 			ENTITY_PARAM(2, 1) = 1;
-			_data->setNextCallback(2);
+			setCallback(2);
 			call(new ENTITY_SETUP(Mertens, setup_function11), 75);
 			break;
 
@@ -427,17 +427,17 @@ IMPLEMENT_FUNCTION(Mertens, function41, 41)
 		break;
 
 	case kActionDefault:
-		_data->setNextCallback(1);
+		setCallback(1);
 		call(new ENTITY_SETUP(Mertens, setup_function10), kCarGreenSleeping, EntityData::kField491_2000);
 		break;
 
 	case kActionCallback:
-		switch (_data->getNextCallback()) {
+		switch (getCallback()) {
 		default:
 			break;
 
 		case 1:
-			_data->setNextCallback(2);
+			setCallback(2);
 			call(new ENTITY_SETUP(Mertens, setup_function17));
 			break;
 
@@ -460,7 +460,7 @@ IMPLEMENT_FUNCTION(Mertens, chapter2, 43)
 		break;
 
 	case kActionNone:
-		_data->setNextCallback(1);
+		setCallback(1);
 		call(new ENTITY_SETUP(Mertens, setup_function17));
 		break;
 
@@ -485,7 +485,7 @@ IMPLEMENT_FUNCTION(Mertens, chapter2, 43)
 		break;
 
 	case kActionCallback:
-		if (_data->getNextCallback() == 1)
+		if (getCallback() == 1)
 			setup_function44();
 		break;
 	}
@@ -501,7 +501,7 @@ IMPLEMENT_FUNCTION(Mertens, chapter3, 45)
 		break;
 
 	case kActionNone:
-		_data->setNextCallback(1);
+		setCallback(1);
 		call(new ENTITY_SETUP(Mertens, setup_function17));
 		break;
 
@@ -526,7 +526,7 @@ IMPLEMENT_FUNCTION(Mertens, chapter3, 45)
 		break;
 
 	case kActionCallback:
-		if (_data->getNextCallback() == 1)
+		if (getCallback() == 1)
 			setup_function46();
 		break;
 	}
@@ -542,7 +542,7 @@ IMPLEMENT_FUNCTION(Mertens, chapter4, 47)
 		break;
 
 	case kActionNone:
-		_data->setNextCallback(1);
+		setCallback(1);
 		call(new ENTITY_SETUP(Mertens, setup_function17));
 		break;
 
@@ -569,7 +569,7 @@ IMPLEMENT_FUNCTION(Mertens, chapter4, 47)
 		break;
 
 	case kActionCallback:
-		if (_data->getNextCallback() == 1)
+		if (getCallback() == 1)
 			setup_function48();
 		break;
 	}

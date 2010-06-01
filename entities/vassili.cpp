@@ -164,7 +164,7 @@ IMPLEMENT_FUNCTION(Vassili, function6, 6)
 		break;
 
 	case kActionCallback:
-		if (_data->getNextCallback() != 1)
+		if (getCallback() != 1)
 			break;
 
 		getEntities()->drawSequenceLeft(kEntityVassili, "303C");
@@ -305,12 +305,12 @@ IMPLEMENT_FUNCTION(Vassili, seizure, 10)
 		RESET_ENTITY_STATE(kEntityAnna, Anna, setup_function37);
 		RESET_ENTITY_STATE(kEntityCoudert, Coudert, setup_function38);
 
-		_data->setNextCallback(1);
+		setCallback(1);
 		call(new ENTITY_SETUP(Vassili, setup_savegame), 2, kEventVassiliSeizure);
 		break;
 
 	case kActionCallback:
-		if (_data->getNextCallback() != 1)
+		if (getCallback() != 1)
 			break;
 
 		getData()->field_493 = EntityData::kField493_1;
@@ -368,7 +368,7 @@ IMPLEMENT_FUNCTION(Vassili, sleeping, 13)
 		if (getEntities()->checkFields1(kEntityNone, kCarRedSleeping, EntityData::kField491_8200)) {
 			UPDATE_PARAM_FROM_TICKS(3, params->param1);
 
-			_data->setNextCallback(1);
+			setCallback(1);
 			call(new ENTITY_SETUP_SIIS(Vassili, setup_draw), "303B");
 		} else {
 			params->param3 = 0;
@@ -383,7 +383,7 @@ IMPLEMENT_FUNCTION(Vassili, sleeping, 13)
 		break;
 
 	case kActionCallback:
-		if (_data->getNextCallback() != 1)
+		if (getCallback() != 1)
 			break;
 
 		getEntities()->drawSequenceLeft(kEntityVassili, "303C");
@@ -425,7 +425,7 @@ IMPLEMENT_FUNCTION(Vassili, stealEgg, 15)
 		if (getEntities()->checkFields1(kEntityNone, kCarRedSleeping, EntityData::kField491_8200)) {
 			UPDATE_PARAM_FROM_TICKS(3, params->param1);
 
-			_data->setNextCallback(1);
+			setCallback(1);
 			call(new ENTITY_SETUP_SIIS(Vassili, setup_draw), "303B");
 		} else {
 			params->param3 = 0;
@@ -435,7 +435,7 @@ IMPLEMENT_FUNCTION(Vassili, stealEgg, 15)
 		break;
 
 	case kAction9:
-		_data->setNextCallback(2);
+		setCallback(2);
 		call(new ENTITY_SETUP(Vassili, setup_savegame), 2, kEventVassiliCompartmentStealEgg);
 		break;
 
@@ -454,7 +454,7 @@ IMPLEMENT_FUNCTION(Vassili, stealEgg, 15)
 		break;
 
 	case kActionCallback:
-		switch (_data->getNextCallback()) {
+		switch (getCallback()) {
 		default:
 			break;
 
@@ -507,7 +507,7 @@ IMPLEMENT_FUNCTION(Vassili, function17, 17)
 		if (getEntities()->checkFields1(kEntityNone, kCarRedSleeping, EntityData::kField491_8200)) {
 			UPDATE_PARAM_FROM_TICKS(3, params->param1);
 
-			_data->setNextCallback(1);
+			setCallback(1);
 			call(new ENTITY_SETUP_SIIS(Vassili, setup_draw), "303B");
 		} else {
 			params->param3 = 0;
@@ -522,7 +522,7 @@ IMPLEMENT_FUNCTION(Vassili, function17, 17)
 		break;
 
 	case kActionCallback:
-		if (_data->getNextCallback() != 1)
+		if (getCallback() != 1)
 			break;
 
 		getEntities()->drawSequenceLeft(kEntityVassili, "303C");

@@ -356,7 +356,7 @@ label_skip:
 	case kAction8:
 	case kAction9:
 		if (savepoint.param.intValue == 5 || savepoint.param.intValue == 6 || savepoint.param.intValue == 7 || savepoint.param.intValue == 8) {
-			_data->setNextCallback(savepoint.action == 8 ? 3 : 4);
+			setCallback(savepoint.action == 8 ? 3 : 4);
 			call(new ENTITY_SETUP(Train, setup_harem), (int)savepoint.param.intValue, savepoint.action);
 		}
 		break;
@@ -428,13 +428,13 @@ label_skip:
 
 		if (getProgress().jacket == kJacketOriginal) {
 			if (getEntities()->isPlayerPosition(kCarRedSleeping, 18)) {
-				_data->setNextCallback(1);
+				setCallback(1);
 				call(new ENTITY_SETUP(Train, setup_savegame), 2, kEventMertensBloodJacket);
 				break;
 			}
 
 			if (getEntities()->isPlayerPosition(kCarGreenSleeping, 22)) {
-				_data->setNextCallback(2);
+				setCallback(2);
 				call(new ENTITY_SETUP(Train, setup_savegame), 2, kEventMertensBloodJacket);
 				break;
 			}
@@ -445,7 +445,7 @@ label_skip:
 
 
 	case kActionCallback: {
-		int action = _data->getNextCallback();
+		int action = getCallback();
 		switch(action) {
 		default:
 			break;
@@ -491,13 +491,13 @@ label_skip:
 		break;
 
 	case kAction202613084:
-		_data->setNextCallback(8);
+		setCallback(8);
 		call(new ENTITY_SETUP(Train, setup_savegame), 2, kEventCloseMatchbox);
 		break;
 
 	case kAction203339360:
 		if (!params->param7) {
-			_data->setNextCallback(5);
+			setCallback(5);
 			call(new ENTITY_SETUP(Train, setup_savegame), 2, kEventLocomotiveConductorsDiscovered);
 		} else {
 			params->param7 = 1;
@@ -565,12 +565,12 @@ label_skip:
 		break;
 
 	case kActionBreakCeiling:
-		_data->setNextCallback(6);
+		setCallback(6);
 		call(new ENTITY_SETUP(Train, setup_savegame), 2, kEventCathBreakCeiling);
 		break;
 
 	case kActionJumpDownCeiling:
-		_data->setNextCallback(7);
+		setCallback(7);
 		call(new ENTITY_SETUP(Train, setup_savegame), 2, kEventCathJumpDownCeiling);
 		break;
 	}

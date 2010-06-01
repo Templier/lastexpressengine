@@ -144,7 +144,7 @@ IMPLEMENT_FUNCTION(Sophie, function3, 3)
 		break;
 
 	case kActionCallback:
-		switch (_data->getNextCallback()) {
+		switch (getCallback()) {
 		default:
 			break;
 
@@ -171,7 +171,7 @@ IMPLEMENT_FUNCTION(Sophie, function3, 3)
 		getData()->field_493 = getEntityData(kEntityRebecca)->field_493;
 		getData()->car = getEntityData(kEntityRebecca)->car;
 
-		_data->setNextCallback(1);
+		setCallback(1);
 		call(new ENTITY_SETUP(Sophie, setup_function2), kCarRestaurant, EntityData::kField491_850);
 		break;
 
@@ -180,7 +180,7 @@ IMPLEMENT_FUNCTION(Sophie, function3, 3)
 		getData()->field_493 = getEntityData(kEntityRebecca)->field_493;
 		getData()->car = getEntityData(kEntityRebecca)->car;
 
-		_data->setNextCallback(2);
+		setCallback(2);
 		call(new ENTITY_SETUP(Sophie, setup_function2), kCarRedSleeping, EntityData::kField491_4840);
 		break;
 
@@ -189,7 +189,7 @@ IMPLEMENT_FUNCTION(Sophie, function3, 3)
 		getData()->field_493 = getEntityData(kEntityRebecca)->field_493;
 		getData()->car = getEntityData(kEntityRebecca)->car;
 
-		_data->setNextCallback(3);
+		setCallback(3);
 		call(new ENTITY_SETUP(Sophie, setup_function2), kCarKronos, EntityData::kField491_9460);
 		break;
 
@@ -198,7 +198,7 @@ IMPLEMENT_FUNCTION(Sophie, function3, 3)
 		getData()->field_493 = EntityData::kField493_0;
 		getData()->car = kCarKronos;
 
-		_data->setNextCallback(4);
+		setCallback(4);
 		call(new ENTITY_SETUP(Sophie, setup_function2), kCarRedSleeping, EntityData::kField491_4840);
 		break;
 	}

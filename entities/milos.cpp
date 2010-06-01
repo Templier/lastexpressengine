@@ -165,18 +165,18 @@ IMPLEMENT_FUNCTION_I(Milos, function11, 11)
 
 		if (params->param2) {
 			if (getInventory()->hasItem(kItemPassengerList)) {
-				_data->setNextCallback(10);
+				setCallback(10);
 				call(new ENTITY_SETUP_SIIS(Milos, setup_playSound), (random(2) ? "CAT1504" : getSound()->wrongDoorCath()));
 			} else {
-				_data->setNextCallback(11);
+				setCallback(11);
 				call(new ENTITY_SETUP_SIIS(Milos, setup_playSound), getSound()->wrongDoorCath());
 			}
 		} else {
 			if (savepoint.action == kAction8) {
-				_data->setNextCallback(7);
+				setCallback(7);
 				call(new ENTITY_SETUP_SIIS(Milos, setup_playSound), "LIB012");
 			} else {
-				_data->setNextCallback(8);
+				setCallback(8);
 				call(new ENTITY_SETUP_SIIS(Milos, setup_playSound), "LIB013");
 			}
 		}
@@ -195,18 +195,18 @@ IMPLEMENT_FUNCTION_I(Milos, function11, 11)
 		break;
 
 	case kActionCallback:
-		switch(_data->getNextCallback()) {
+		switch(getCallback()) {
 		default:
 			break;
 
 		case 1:
 			getData()->field_493 = EntityData::kField493_0;
-			_data->setNextCallback(2);
+			setCallback(2);
 			call(new ENTITY_SETUP(Milos, setup_enterCompartementDialog), 3, 8200);
 			break;
 
 		case 2:
-			_data->setNextCallback(3);
+			setCallback(3);
 			call(new ENTITY_SETUP(Milos, setup_function14));
 			break;
 
@@ -215,12 +215,12 @@ IMPLEMENT_FUNCTION_I(Milos, function11, 11)
 				getProgress().field_14 = 0;
 
 			params->param6 = 1;
-			_data->setNextCallback(4);
+			setCallback(4);
 			call(new ENTITY_SETUP(Milos, setup_enterCompartementDialog), kCarRedSleeping, 3050);
 			break;
 
 		case 4:
-			_data->setNextCallback(5);
+			setCallback(5);
 			call(new ENTITY_SETUP_SIIS(Milos, setup_enterExitCompartment), "609Bg", kObjectCompartmentG);
 			break;
 
@@ -237,7 +237,7 @@ IMPLEMENT_FUNCTION_I(Milos, function11, 11)
 
 		case 7:
 		case 8:
-			_data->setNextCallback(9);
+			setCallback(9);
 			// Milos asking: "Yeah? Who is it?"
 			call(new ENTITY_SETUP_SIIS(Milos, setup_playSound), "MIL1117A");
 			break;
@@ -272,7 +272,7 @@ IMPLEMENT_FUNCTION_I(Milos, function11, 11)
 
 	case kAction122865568:
 		getData()->field_493 = EntityData::kField493_0;
-		_data->setNextCallback(12);
+		setCallback(12);
 		call(new ENTITY_SETUP_SIIS(Milos, setup_enterExitCompartment), "611Bg", kObjectCompartmentG);
 		break;
 
@@ -330,7 +330,7 @@ IMPLEMENT_FUNCTION(Milos, function16, 16)
 
 IMPLEMENT_FUNCTION(Milos, function17, 17)
 	if (savepoint.action == kActionDefault) {
-		_data->setNextCallback(1);
+		setCallback(1);
 		call(new ENTITY_SETUP(Milos, setup_function11), kTimeBedTime);
 	}
 }

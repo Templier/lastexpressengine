@@ -214,17 +214,17 @@ IMPLEMENT_FUNCTION(Rebecca, function25, 25)
 		break;
 
 	case kActionDefault:
-		_data->setNextCallback(1);
+		setCallback(1);
 		call(new ENTITY_SETUP(Rebecca, setup_function20), kTimeRebecca_3);
 		break;
 
 	case kActionCallback:
-		switch (_data->getNextCallback()) {
+		switch (getCallback()) {
 		default:
 			break;
 
 		case 1:
-			_data->setNextCallback(2);
+			setCallback(2);
 			call(new ENTITY_SETUP(Rebecca, setup_function17));
 			break;
 
@@ -287,17 +287,17 @@ IMPLEMENT_FUNCTION(Rebecca, function29, 29)
 		break;
 
 	case kActionDefault:
-		_data->setNextCallback(1);
+		setCallback(1);
 		call(new ENTITY_SETUP(Rebecca, setup_function20), kTimeRebecca_2);
 		break;
 
 	case kActionCallback:
-		switch (_data->getNextCallback()) {
+		switch (getCallback()) {
 		default:
 			break;
 
 		case 1:
-			_data->setNextCallback(2);
+			setCallback(2);
 			call(new ENTITY_SETUP(Rebecca, setup_function17));
 			break;
 
@@ -344,12 +344,12 @@ IMPLEMENT_FUNCTION(Rebecca, function33, 33)
 		break;
 
 	case kActionDefault:
-		_data->setNextCallback(1);
+		setCallback(1);
 		call(new ENTITY_SETUP(Rebecca, setup_function20), kTimeRebecca);
 		break;
 
 	case kActionCallback:
-		if (_data->getNextCallback() == 1)
+		if (getCallback() == 1)
 			setup_function34();
 		break;
 	}
@@ -365,12 +365,12 @@ IMPLEMENT_FUNCTION(Rebecca, function35, 35)
 		break;
 
 	case kActionDefault:
-		_data->setNextCallback(1);
+		setCallback(1);
 		call(new ENTITY_SETUP(Rebecca, setup_function20), kTimeRebecca_0);
 		break;
 
 	case kActionCallback:
-		if (_data->getNextCallback() == 1)
+		if (getCallback() == 1)
 			setup_function36();
 		break;
 	}
@@ -386,12 +386,12 @@ IMPLEMENT_FUNCTION(Rebecca, function37, 37)
 		break;
 
 	case kActionDefault:
-		_data->setNextCallback(1);
+		setCallback(1);
 		call(new ENTITY_SETUP(Rebecca, setup_function20), kTimeRebecca_1);
 		break;
 
 	case kActionCallback:
-		if (_data->getNextCallback() == 1)
+		if (getCallback() == 1)
 			setup_function38();
 		break;
 	}
@@ -431,7 +431,7 @@ IMPLEMENT_FUNCTION(Rebecca, function41, 41)
 	if (savepoint.action == kActionDefault) {
 		ENTITY_PARAM(0, 2) = 1;
 
-		_data->setNextCallback(1);
+		setCallback(1);
 		call(new ENTITY_SETUP(Rebecca, setup_function20), kTimeEnd);
 	}
 }

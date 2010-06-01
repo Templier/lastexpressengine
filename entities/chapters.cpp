@@ -272,7 +272,7 @@ label_callback_21:
 		break;
 
 	case kActionCallback:
-		switch (_data->getNextCallback()) {
+		switch (getCallback()) {
 		default:
 			break;
 
@@ -328,7 +328,7 @@ label_callback_21:
 
 		case 17:
 			getProgress().field_18 = 1;
-			_data->setNextCallback(18);
+			setCallback(18);
 			call(new ENTITY_SETUP_SIIS(Chapters, setup_enterStation), "Strasbou", 7);
 			break;
 
@@ -356,7 +356,7 @@ label_callback_21:
 		break;
 
 	case kAction169629818:
-		_data->setNextCallback(22);
+		setCallback(22);
 		call(new ENTITY_SETUP_SIIS(Chapters, setup_enterStation), "Unschedu", 16);
 		break;
 
@@ -366,7 +366,7 @@ label_callback_21:
 		if (getState()->time >= kTimeChapter1_1) {
 			setup_chapter1_end();
 		} else {
-			_data->setNextCallback(23);
+			setCallback(23);
 			call(new ENTITY_SETUP(Chapters, setup_function6));
 		}
 		break;
@@ -411,12 +411,12 @@ IMPLEMENT_FUNCTION(Chapters, chapter2, 10)
 		getState()->timeDelta = 5;
 
 		// Save game
-		_data->setNextCallback(1);
+		setCallback(1);
 		call(new ENTITY_SETUP(Chapters, setup_savegame), 1, kEventNone);
 		break;
 
 	case kActionCallback:
-		if (_data->getNextCallback() == 1) {
+		if (getCallback() == 1) {
 			if (!_engine->getResourceManager()->loadArchive(kArchiveCd2)) {
 				getLogic()->showMenu(true);
 				return;
@@ -585,12 +585,12 @@ IMPLEMENT_FUNCTION(Chapters, chapter3_init, 14)
 		getLogic()->loadSceneFromPosition(kCarRestaurant, 60);
 		getInventory()->show();
 
-		_data->setNextCallback(1);
+		setCallback(1);
 		call(new ENTITY_SETUP(Chapters, setup_savegame), 1, kEventNone);
 		break;
 
 	case kActionCallback:
-		if (_data->getNextCallback() == 1)
+		if (getCallback() == 1)
 			setup_chapter3_handler();
 		break;
 	}
@@ -624,12 +624,12 @@ IMPLEMENT_FUNCTION(Chapters, chapter4, 17)
 		getState()->timeDelta = 5;
 
 		// Save game
-		_data->setNextCallback(1);
+		setCallback(1);
 		call(new ENTITY_SETUP(Chapters, setup_savegame), 1, kEventNone);
 		break;
 
 	case kActionCallback:
-		if (_data->getNextCallback() == 1) {
+		if (getCallback() == 1) {
 			if (!_engine->getResourceManager()->loadArchive(kArchiveCd3)) {
 				getLogic()->showMenu(true);
 				return;
@@ -797,12 +797,12 @@ IMPLEMENT_FUNCTION(Chapters, chapter5_init, 21)
 		getLogic()->loadSceneFromPosition(kCarBaggageRear, 95);
 		getInventory()->show();
 
-		_data->setNextCallback(1);
+		setCallback(1);
 		call(new ENTITY_SETUP(Chapters, setup_savegame), 1, kEventNone);
 		break;
 
 	case kActionCallback:
-		if (_data->getNextCallback() == 1)
+		if (getCallback() == 1)
 			setup_chapter5_handler();
 		break;
 	}
@@ -840,7 +840,7 @@ IMPLEMENT_FUNCTION(Chapters, chapter5_handler, 22)
 
 	case kAction2:
 		if (getState()->time <= kTimeTrainStopped_2) {
-			_data->setNextCallback(1);
+			setCallback(1);
 			call(new ENTITY_SETUP(Chapters, setup_savegame), 2, kEventTrainStopped);
 		} else {
 			getLogic()->gameOver(kTimeType1, kTimeTrainStopped_2, kSceneGameOverTrainStopped, true);
@@ -852,7 +852,7 @@ IMPLEMENT_FUNCTION(Chapters, chapter5_handler, 22)
 		break;
 
 	case kActionCallback:
-		if (_data->getNextCallback() == 1) {
+		if (getCallback() == 1) {
 			getAction()->playAnimation(kEventTrainStopped);
 			getLogic()->gameOver(kTimeType1, kTimeTrainStopped, kSceneGameOverTrainStopped, true);
 		}

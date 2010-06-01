@@ -277,14 +277,14 @@ IMPLEMENT_FUNCTION(Ivo, function26, 26)
 		break;
 
 	case kActionDefault:
-		_data->setNextCallback(1);
+		setCallback(1);
 		call(new ENTITY_SETUP(Ivo, setup_function13));
 		break;
 
 	case kActionCallback:
-		switch (_data->getNextCallback()) {
+		switch (getCallback()) {
 		case 1:
-			_data->setNextCallback(2);
+			setCallback(2);
 			call(new ENTITY_SETUP(Ivo, setup_function11));
 			break;
 
@@ -347,7 +347,27 @@ IMPLEMENT_FUNCTION(Ivo, function32, 32)
 }
 
 IMPLEMENT_FUNCTION(Ivo, function33, 33)
-	error("Ivo: callback function 33 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionDefault:
+		getState()->time += 1800;
+
+		setCallback(1);
+		call(new ENTITY_SETUP(Ivo, setup_savegame), 1, kEntityNone);
+		break;
+
+	case kActionCallback:
+		if (getCallback() == 1)
+			getObjects()->update(kObject94, kEntityNone, kLocation2, kCursorKeepValue, kCursorKeepValue);
+
+		break;
+
+	case kAction135800432:
+		setup_function34();
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Ivo, function34, 34)

@@ -244,7 +244,7 @@ IMPLEMENT_FUNCTION(Abbot, function18, 18)
 		break;
 
 	case kActionCallback:
-		switch (_data->getNextCallback()) {
+		switch (getCallback()) {
 		default:
 			break;
 
@@ -252,7 +252,7 @@ IMPLEMENT_FUNCTION(Abbot, function18, 18)
 			getData()->field_491 = EntityData::kField491_5800;
 			getData()->field_493 = EntityData::kField493_0;
 
-			_data->setNextCallback(2);
+			setCallback(2);
 			call(new ENTITY_SETUP_SIIS(Abbot, setup_draw), "804DD");
 			break;
 
@@ -263,19 +263,19 @@ IMPLEMENT_FUNCTION(Abbot, function18, 18)
 			if (getEntities()->checkFields13(kEntityNone))
 				getEntities()->updateEntity(kEntityAbbot);
 
-			_data->setNextCallback(3);
+			setCallback(3);
 			call(new ENTITY_SETUP(Abbot, setup_function5));
 			break;
 
 		case 3:
-			_data->setNextCallback(4);
+			setCallback(4);
 			call(new ENTITY_SETUP(Abbot, setup_function11), kCarRedSleeping, EntityData::kField491_6470);
 			break;
 
 		case 4:
 			getObjects()->update(kObjectCompartmentC, kEntityNone, kLocation1, kCursorKeepValue, kCursorKeepValue);
 
-			_data->setNextCallback(5);
+			setCallback(5);
 			call(new ENTITY_SETUP_SIIS(Abbot, setup_enterExitCompartment), "617AC", kObjectCompartmentC);
 			break;
 
@@ -290,7 +290,7 @@ IMPLEMENT_FUNCTION(Abbot, function18, 18)
 		break;
 
 	case kAction192054567:
-		_data->setNextCallback(1);
+		setCallback(1);
         call(new ENTITY_SETUP(Abbot, setup_function14));
 		break;
 	}
@@ -305,7 +305,7 @@ IMPLEMENT_FUNCTION(Abbot, function19, 19)
 		if (getState()->time > kTimeAbbot) {
 			if (!params->param1) {
 				params->param1 = 1;
-				_data->setNextCallback(3);
+				setCallback(3);
 				call(new ENTITY_SETUP_SIIS(Abbot, setup_playSound), "MrB3010");
 			}
 		}
@@ -315,17 +315,17 @@ IMPLEMENT_FUNCTION(Abbot, function19, 19)
 		getEntities()->drawSequenceLeft(kEntityAbbot, "508A");
 		getSavePoints()->push(kEntityAbbot, kEntityBoutarel, kAction122358304);
 
-		_data->setNextCallback(1);
+		setCallback(1);
 		call(new ENTITY_SETUP_SIIS(Abbot, setup_playSound), "Abb3010");
 		break;
 
 	case kActionCallback:
-		switch (_data->getNextCallback()) {
+		switch (getCallback()) {
 		default:
 			break;
 
 		case 1:
-			_data->setNextCallback(2);
+			setCallback(2);
 			call(new ENTITY_SETUP(Abbot, setup_updateFromTime), 900);
 			break;
 
@@ -364,12 +364,12 @@ IMPLEMENT_FUNCTION(Abbot, function21, 21)
 		break;
 
 	case kActionDefault:
-		_data->setNextCallback(1);
+		setCallback(1);
 		call(new ENTITY_SETUP_SIIS(Abbot, setup_draw), "509B");
 		break;
 
 	case kActionCallback:
-		switch (_data->getNextCallback()) {
+		switch (getCallback()) {
 		default:
 			break;
 
@@ -377,19 +377,19 @@ IMPLEMENT_FUNCTION(Abbot, function21, 21)
 			getObjects()->update(kObjectCompartmentC, kEntityNone, kLocationNone, kCursorHandKnock, kCursorHand);
 			getObjects()->update(kObject50, kEntityNone, kLocationNone, kCursorHandKnock, kCursorHand);
 
-			_data->setNextCallback(2);
+			setCallback(2);
 			call(new ENTITY_SETUP_SIIS(Abbot, setup_enterExitCompartment), "617Mc", kObjectCompartmentC);
 			break;
 
 		case 2:
 			getData()->field_493 = EntityData::kField493_0;
 
-			_data->setNextCallback(3);
+			setCallback(3);
 			call(new ENTITY_SETUP(Abbot, setup_function11), kCarRestaurant, EntityData::kField491_850);
 			break;
 
 		case 3:
-			_data->setNextCallback(4);
+			setCallback(4);
 			call(new ENTITY_SETUP(Abbot, setup_function14));
 			break;
 
@@ -397,7 +397,7 @@ IMPLEMENT_FUNCTION(Abbot, function21, 21)
 			getData()->field_491 = EntityData::kField491_1540;
 			getData()->field_493 = EntityData::kField493_0;
 
-			_data->setNextCallback(5);
+			setCallback(5);
 			call(new ENTITY_SETUP_SIIS(Abbot, setup_draw), "804US");
 			break;
 
@@ -406,7 +406,7 @@ IMPLEMENT_FUNCTION(Abbot, function21, 21)
 			if (getEntities()->checkFields12(kEntityNone))
 				getEntities()->updateEntity(kEntityAbbot);
 
-			_data->setNextCallback(6);
+			setCallback(6);
 			call(new ENTITY_SETUP(Abbot, setup_function5));
 			break;
 
@@ -425,7 +425,7 @@ IMPLEMENT_FUNCTION(Abbot, function21, 21)
 		getSavePoints()->push(kEntityAbbot, kEntityTables4, kAction136455232);
 		getData()->field_493 = EntityData::kField493_1;
 
-		_data->setNextCallback(7);
+		setCallback(7);
         call(new ENTITY_SETUP_SIIS(Abbot, setup_draw), "029B");
 		break;
 	}
@@ -456,7 +456,7 @@ IMPLEMENT_FUNCTION(Abbot, function22, 22)
 	case kAction1:
 		getData()->inventoryItem = kItemNone;
 
-		_data->setNextCallback(1);
+		setCallback(1);
 		call(new ENTITY_SETUP(Abbot, setup_savegame), 2, kEventAbbotIntroduction);
 		break;
 
@@ -467,7 +467,7 @@ IMPLEMENT_FUNCTION(Abbot, function22, 22)
 		break;
 
 	case kActionCallback:
-		if (_data->getNextCallback() != 1)
+		if (getCallback() != 1)
 			break;
 
 		getAction()->playAnimation(kEventAbbotIntroduction);
@@ -494,12 +494,12 @@ IMPLEMENT_FUNCTION(Abbot, function23, 23)
 		getData()->field_493 = EntityData::kField493_0;
 		getEntities()->updatePosition(kEntityAbbot, kCarRestaurant, 67, true);
 
-		_data->setNextCallback(1);
+		setCallback(1);
 		call(new ENTITY_SETUP_SIIS(Abbot, setup_function12), "029F", kEntityTables4, kAction103798704, "029G");
 		break;
 
 	case kActionCallback:
-		switch (_data->getNextCallback()) {
+		switch (getCallback()) {
 		default:
 			break;
 
@@ -512,17 +512,17 @@ IMPLEMENT_FUNCTION(Abbot, function23, 23)
 			if (getEntities()->checkFields13(kEntityNone))
 				getEntities()->updateEntity(kEntityAbbot);
 
-			_data->setNextCallback(2);
+			setCallback(2);
 			call(new ENTITY_SETUP(Abbot, setup_function5));
 			break;
 
 		case 2:
-			_data->setNextCallback(3);
+			setCallback(3);
 			call(new ENTITY_SETUP(Abbot, setup_function11), kCarRedSleeping, EntityData::kField491_6470);
 			break;
 
 		case 3:
-			_data->setNextCallback(4);
+			setCallback(4);
 			call(new ENTITY_SETUP_SIIS(Abbot, setup_function4), "617Cc", 34);
 			break;
 
@@ -553,10 +553,10 @@ IMPLEMENT_FUNCTION(Abbot, function24, 24)
 		getObjects()->update(kObject50, kEntityAbbot, kLocation1, kCursorNormal, kCursorNormal);
 
 		if (savepoint.action == kAction8) {
-			_data->setNextCallback(1);
+			setCallback(1);
 			call(new ENTITY_SETUP_SIIS(Abbot, setup_playSound), "LIB012");
 		} else {
-			_data->setNextCallback(2);
+			setCallback(2);
 			call(new ENTITY_SETUP_SIIS(Abbot, setup_playSound), "LIB013");
 		}
 		break;
@@ -568,13 +568,13 @@ IMPLEMENT_FUNCTION(Abbot, function24, 24)
 		break;
 
 	case kActionCallback:
-		switch (_data->getNextCallback()) {
+		switch (getCallback()) {
 		default:
 			break;
 
 		case 1:
 		case 2:
-			_data->setNextCallback(3);
+			setCallback(3);
 			call(new ENTITY_SETUP_SIIS(Abbot, setup_playSound), "Abb3001");
 			break;
 
@@ -593,12 +593,12 @@ IMPLEMENT_FUNCTION(Abbot, function25, 25)
 		break;
 
 	case kActionDefault:
-		_data->setNextCallback(1);
+		setCallback(1);
 		call(new ENTITY_SETUP_SIIS(Abbot, setup_enterExitCompartment), "617Dc", kObjectCompartmentC);
 		break;
 
 	case kActionCallback:
-		switch (_data->getNextCallback()) {
+		switch (getCallback()) {
 		default:
 			break;
 
@@ -607,12 +607,12 @@ IMPLEMENT_FUNCTION(Abbot, function25, 25)
 			getObjects()->update(kObjectCompartmentC, kEntityNone, kLocationNone, kCursorHandKnock, kCursorHand);
 			getObjects()->update(kObject50, kEntityNone, kLocationNone, kCursorHandKnock, kCursorHand);
 
-			_data->setNextCallback(2);
+			setCallback(2);
 			call(new ENTITY_SETUP(Abbot, setup_function11), kCarRestaurant,  EntityData::kField491_850);
 			break;
 
 		case 2:
-			_data->setNextCallback(3);
+			setCallback(3);
 			call(new ENTITY_SETUP(Abbot, setup_function14));
 			break;
 
@@ -620,7 +620,7 @@ IMPLEMENT_FUNCTION(Abbot, function25, 25)
 			getData()->field_491 = EntityData::kField491_1540;
 			getData()->field_493 = EntityData::kField493_0;
 
-			_data->setNextCallback(4);
+			setCallback(4);
 			call(new ENTITY_SETUP_SIIS(Abbot, setup_function13), "115A", 5, 56);
 			break;
 
@@ -665,33 +665,33 @@ IMPLEMENT_FUNCTION(Abbot, function27, 27)
 		break;
 
 	case kActionDefault:
-		_data->setNextCallback(1);
+		setCallback(1);
 		call(new ENTITY_SETUP(Abbot, setup_function14));
 		break;
 
 	case kActionCallback:
-		switch (_data->getNextCallback()) {
+		switch (getCallback()) {
 		default:
 			break;
 
 		case 1:
 			getData()->field_493 = EntityData::kField493_0;
 
-			_data->setNextCallback(2);
+			setCallback(2);
 			call(new ENTITY_SETUP_SIIS(Abbot, setup_function13), "115C", 5, 56);
 			break;
 
 		case 2:
 			getInventory()->setLocationAndProcess(kItem3, kLocation1);
 
-			_data->setNextCallback(3);
+			setCallback(3);
 			call(new ENTITY_SETUP(Abbot, setup_function11), kCarRedSleeping, EntityData::kField491_6470);
 			break;
 
 		case 3:
 			getObjects()->update(kObjectCompartmentC, kEntityNone, kLocation1, kCursorKeepValue, kCursorKeepValue);
 
-			_data->setNextCallback(4);
+			setCallback(4);
 			call(new ENTITY_SETUP_SIIS(Abbot, setup_enterExitCompartment), "617Ac", kObjectCompartmentC);
 			break;
 
@@ -716,7 +716,7 @@ IMPLEMENT_FUNCTION(Abbot, function28, 28)
 		if (getState()->time > kTimeTables2) {
 			if (!params->param1) {
 				params->param1 = 1;
-				_data->setNextCallback(1);
+				setCallback(1);
 				call(new ENTITY_SETUP(Abbot, setup_function29));
 			}
 		}
@@ -726,12 +726,12 @@ IMPLEMENT_FUNCTION(Abbot, function28, 28)
 		getSavePoints()->push(kEntityAbbot, kEntityBoutarel, kAction122358304);
 		getEntities()->drawSequenceLeft(kEntityAbbot, "508A");
 
-		_data->setNextCallback(1);
+		setCallback(1);
 		call(new ENTITY_SETUP_SIIS(Abbot, setup_playSound), "abb3013");
 		break;
 
 	case kActionCallback:
-		if (_data->getNextCallback() == 1)
+		if (getCallback() == 1)
 			getEntities()->drawSequenceLeft(kEntityAbbot, "508B");
 		break;
 
@@ -749,46 +749,46 @@ IMPLEMENT_FUNCTION(Abbot, function29, 29)
 		getSavePoints()->push(kEntityAbbot, kEntityBoutarel, kAction122288808);
 		getObjects()->update(kObjectCompartmentC, kEntityNone, kLocation1, kCursorKeepValue, kCursorKeepValue);
 
-		_data->setNextCallback(1);
+		setCallback(1);
 		call(new ENTITY_SETUP_SIIS(Abbot, setup_enterExitCompartment), "617Bc", kObjectCompartmentC);
 		break;
 
 	case kActionCallback:
-		switch (_data->getNextCallback()) {
+		switch (getCallback()) {
 		default:
 			break;
 
 		case 1:
 			getObjects()->update(kObjectCompartmentC, kEntityNone, kLocation2, kCursorKeepValue, kCursorKeepValue);
 
-			_data->setNextCallback(2);
+			setCallback(2);
 			call(new ENTITY_SETUP(Abbot, setup_function11), kCarRedSleeping, EntityData::kField491_9460);
 			break;
 
 		case 2:
-			_data->setNextCallback(3);
+			setCallback(3);
 			call(new ENTITY_SETUP(Abbot, setup_updateFromTicks), 450);
 			break;
 
 		case 3:
-			_data->setNextCallback(4);
+			setCallback(4);
 			call(new ENTITY_SETUP(Abbot, setup_function11), kCarGreenSleeping, EntityData::kField491_540);
 			break;
 
 		case 4:
-			_data->setNextCallback(5);
+			setCallback(5);
 			call(new ENTITY_SETUP(Abbot, setup_updateFromTime), 225);
 			break;
 
 		case 5:
-			_data->setNextCallback(6);
+			setCallback(6);
 			call(new ENTITY_SETUP(Abbot, setup_function11), kCarRedSleeping, EntityData::kField491_6470);
 			break;
 
 		case 6:
 			getObjects()->update(kObjectCompartmentC, kEntityNone, kLocation1, kCursorKeepValue, kCursorKeepValue);
 
-			_data->setNextCallback(7);
+			setCallback(7);
 			call(new ENTITY_SETUP_SIIS(Abbot, setup_enterExitCompartment), "617Ac", kObjectCompartmentC);
 			break;
 
@@ -810,12 +810,12 @@ switch (savepoint.action) {
 		break;
 
 	case kActionDefault:
-		_data->setNextCallback(1);
+		setCallback(1);
 		call(new ENTITY_SETUP_SIIS(Abbot, setup_playSound), "Abb3030");
 		break;
 
 	case kActionCallback:
-		switch (_data->getNextCallback()) {
+		switch (getCallback()) {
 		default:
 			break;
 
@@ -823,7 +823,7 @@ switch (savepoint.action) {
 			getSavePoints()->push(kEntityAbbot, kEntityBoutarel, kAction122288808);
 			getObjects()->update(kObjectCompartmentC, kEntityNone, kLocation1, kCursorKeepValue, kCursorKeepValue);
 
-			_data->setNextCallback(2);
+			setCallback(2);
 			call(new ENTITY_SETUP_SIIS(Abbot, setup_enterExitCompartment), "617Bc", kObjectCompartmentC);
 			break;
 
@@ -831,12 +831,12 @@ switch (savepoint.action) {
 			getObjects()->update(kObjectCompartmentC, kEntityNone, kLocation2, kCursorKeepValue, kCursorKeepValue);
 			getData()->field_493 = EntityData::kField493_0;
 
-			_data->setNextCallback(3);
+			setCallback(3);
 			call(new ENTITY_SETUP(Abbot, setup_function11), kCarRestaurant, EntityData::kField491_850);
 			break;
 
 		case 3:
-			_data->setNextCallback(4);
+			setCallback(4);
 			call(new ENTITY_SETUP(Abbot, setup_function14));
 			break;
 
@@ -844,7 +844,7 @@ switch (savepoint.action) {
 			getData()->field_491 = EntityData::kField491_1540;
 			getData()->field_493 = EntityData::kField493_0;
 
-			_data->setNextCallback(5);
+			setCallback(5);
 			call(new ENTITY_SETUP_SIIS(Abbot, setup_function13), "115A", 5, 56);
 			break;
 
@@ -895,12 +895,12 @@ IMPLEMENT_FUNCTION(Abbot, function38, 38)
 	case kActionDefault:
 		getEntities()->drawSequenceLeft(kEntityAbbot, "508A");
 
-		_data->setNextCallback(1);
+		setCallback(1);
 		call(new ENTITY_SETUP_SIIS(Abbot, setup_playSound), "Abb3014A");
 		break;
 
 	case kActionCallback:
-		if (_data->getNextCallback() == 1)
+		if (getCallback() == 1)
 			getEntities()->drawSequenceLeft(kEntityAbbot, "508B");
 		break;
 	}
@@ -979,12 +979,12 @@ IMPLEMENT_FUNCTION(Abbot, function46, 46)
 	case kActionDefault:
 		getData()->field_491 = EntityData::kField491_6471;
 
-		_data->setNextCallback(1);
+		setCallback(1);
 		call(new ENTITY_SETUP(Abbot, setup_function40), kCarRestaurant, EntityData::kField491_850);
 		break;
 
 	case kActionCallback:
-		if (_data->getNextCallback() == 1)
+		if (getCallback() == 1)
 			setup_function47();
 		break;
 	}
@@ -1058,7 +1058,7 @@ IMPLEMENT_FUNCTION(Abbot, function53, 53)
 		break;
 
 	case kActionCallback:
-		switch (_data->getNextCallback()) {
+		switch (getCallback()) {
 		default:
 			break;
 
@@ -1076,13 +1076,13 @@ IMPLEMENT_FUNCTION(Abbot, function53, 53)
 
 	case kAction168646401:
 		if (!getEvent(kEventLocomotiveAbbotGetSomeRest)) {
-			_data->setNextCallback(1);
+			setCallback(1);
 			call(new ENTITY_SETUP(Abbot, setup_savegame), 2, kEventLocomotiveAbbotGetSomeRest);
 			break;
 		}
 
 		if (!getEvent(kEventLocomotiveAbbotShoveling)) {
-			_data->setNextCallback(2);
+			setCallback(2);
 			call(new ENTITY_SETUP(Abbot, setup_savegame), 2, kEventLocomotiveAbbotShoveling);
 			break;
 		}

@@ -384,17 +384,17 @@ IMPLEMENT_FUNCTION(August, function49, 49)
 		break;
 
 	case kActionDefault:
-		_data->setNextCallback(1);
+		setCallback(1);
 		call(new ENTITY_SETUP(August, setup_function20));
 		break;
 
 	case kActionCallback:
-		switch (_data->getNextCallback()) {
+		switch (getCallback()) {
 		default:
 			break;
 
 		case 1:
-			_data->setNextCallback(2);
+			setCallback(2);
 			call(new ENTITY_SETUP(August, setup_function16), kCarKronos, EntityData::kField491_9270);
 			break;
 

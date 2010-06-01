@@ -99,7 +99,7 @@ IMPLEMENT_FUNCTION(Max, function6, 6)
 		break;
 
 	case kAction71277948:
-		_data->setNextCallback(1);
+		setCallback(1);
 		call(new ENTITY_SETUP(Max, setup_function7));
 		break;
 
@@ -135,7 +135,7 @@ IMPLEMENT_FUNCTION(Max, function7, 7)
 		if (getSound()->isBuffered(kEntityMax))
 			getSound()->processEntry(kEntityMax);
 
-		_data->setNextCallback((savepoint.action == kAction8) ? 1 : 2);
+		setCallback((savepoint.action == kAction8) ? 1 : 2);
 		call(new ENTITY_SETUP_SIIS(Max, setup_playSound), (savepoint.action == kAction8) ? "LIB012" : "LIB013");
 		break;
 
@@ -158,14 +158,14 @@ IMPLEMENT_FUNCTION(Max, function7, 7)
 		break;
 
 	case kActionCallback:
-		switch (_data->getNextCallback()) {
+		switch (getCallback()) {
 		case 0:
 		default:
 			break;
 
 		case 1:
 		case 2:
-			_data->setNextCallback(3);
+			setCallback(3);
 			call(new ENTITY_SETUP_SIIS(Max, setup_playSound), "Max1122");
 			break;
 
@@ -217,7 +217,7 @@ IMPLEMENT_FUNCTION(Max, function8, 8)
 
 	case kAction9:
 		if (params->param1) {
-			_data->setNextCallback(1);
+			setCallback(1);
 			call(new ENTITY_SETUP(Max, setup_savegame), 2, kEventCathMaxLickHand);
 			break;
 		}
@@ -246,7 +246,7 @@ IMPLEMENT_FUNCTION(Max, function8, 8)
 		break;
 
 	case kActionCallback:
-		if (_data->getNextCallback() != 1)
+		if (getCallback() != 1)
 			break;
 
 		if (getSound()->isBuffered(kEntityMax))
@@ -397,7 +397,7 @@ IMPLEMENT_FUNCTION(Max, function13, 13)
 		break;
 
 	case kAction71277948:
-		_data->setNextCallback(1);
+		setCallback(1);
 		call(new ENTITY_SETUP(Max, setup_function7));
 		break;
 
@@ -438,12 +438,12 @@ IMPLEMENT_FUNCTION(Max, freeFromCage, 14)
 	case kAction9:
 		if (getEvent(kEventCathMaxCage)) {
 			if (getEvent(kEventCathMaxFree)) {
-				_data->setNextCallback(2);
+				setCallback(2);
 				call(new ENTITY_SETUP(Max, setup_savegame), 2, kEventCathMaxFree);
 			}
 
 		} else {
-			_data->setNextCallback(1);
+			setCallback(1);
 			call(new ENTITY_SETUP(Max, setup_savegame), 2, kEventCathMaxCage);
 		}
 		break;
@@ -462,7 +462,7 @@ IMPLEMENT_FUNCTION(Max, freeFromCage, 14)
 	//////////////////////////////////////////////////////////////////////////
 	// Play animation for Max in the cage and after opening it
 	case kActionCallback:
-		switch (_data->getNextCallback()) {
+		switch (getCallback()) {
 		default:
 			break;
 
@@ -515,12 +515,12 @@ IMPLEMENT_FUNCTION(Max, function15, 15)
 		if (!getSound()->isBuffered(kEntityMax))
 			getSound()->playSound(kEntityMax, "Max3010");
 
-		_data->setNextCallback(1);
+		setCallback(1);
 		call(new ENTITY_SETUP_SIIS(Max, setup_enterExitCompartment), "630Bf", kObjectCompartment4);
 		break;
 
 	case kActionCallback:
-		if (_data->getNextCallback() == 1) {
+		if (getCallback() == 1) {
 			getEntities()->drawSequenceLeft(kEntityMax, "630Af");
 			getEntities()->enterCompartment(kEntityMax, kObjectCompartmentF, false);
 			getSavePoints()->push(kEntityMax, kEntityAnna, kAction156622016);

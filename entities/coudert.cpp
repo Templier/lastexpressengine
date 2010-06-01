@@ -254,7 +254,7 @@ IMPLEMENT_FUNCTION(Coudert, chapter1, 36)
 		if (getState()->time > kTimeChapter1) {
 			if (!params->param1) {
 				params->param1 = 1;
-				_data->setNextCallback(1);
+				setCallback(1);
 				call(new ENTITY_SETUP(Coudert, setup_function40));
 			}
 		}
@@ -289,7 +289,7 @@ IMPLEMENT_FUNCTION(Coudert, chapter1, 36)
 		break;
 
 	case kActionCallback:
-		if (_data->getNextCallback() == 1)
+		if (getCallback() == 1)
 			setup_function40();
 		break;
 	}
@@ -321,7 +321,7 @@ IMPLEMENT_FUNCTION(Coudert, chapter2, 42)
 		break;
 
 	case kActionNone:
-		_data->setNextCallback(1);
+		setCallback(1);
 		call(new ENTITY_SETUP(Coudert, setup_function18));
 		break;
 
@@ -354,7 +354,7 @@ IMPLEMENT_FUNCTION(Coudert, chapter2, 42)
 		break;
 
 	case kActionCallback:
-		if (_data->getNextCallback() == 1)
+		if (getCallback() == 1)
 			setup_function43();
 		break;
 	}
@@ -370,7 +370,7 @@ IMPLEMENT_FUNCTION(Coudert, chapter3, 44)
 		break;
 
 	case kActionNone:
-		_data->setNextCallback(1);
+		setCallback(1);
 		call(new ENTITY_SETUP(Coudert, setup_function18));
 		break;
 
@@ -405,7 +405,7 @@ IMPLEMENT_FUNCTION(Coudert, chapter3, 44)
 		break;
 
 	case kActionCallback:
-		if (_data->getNextCallback() == 1)
+		if (getCallback() == 1)
 			setup_function45();
 		break;
 	}
@@ -445,7 +445,7 @@ IMPLEMENT_FUNCTION(Coudert, chapter4, 52)
 		break;
 
 	case kActionNone:
-		_data->setNextCallback(1);
+		setCallback(1);
 		call(new ENTITY_SETUP(Coudert, setup_function18));
 		break;
 
@@ -479,7 +479,7 @@ IMPLEMENT_FUNCTION(Coudert, chapter4, 52)
 		break;
 
 	case kActionCallback:
-		if (_data->getNextCallback() == 1) {
+		if (getCallback() == 1) {
 			ENTITY_PARAM(1, 2) = 1;
 			setup_function53();
 		}
@@ -538,12 +538,12 @@ IMPLEMENT_FUNCTION(Coudert, function60, 60)
 		break;
 
 	case kActionCallback:
-		if (_data->getNextCallback() == 1)
+		if (getCallback() == 1)
 			setup_function61();
 		break;
 
 	case kAction155991520:
-		_data->setNextCallback(1);
+		setCallback(1);
 		call(new ENTITY_SETUP(Coudert, setup_function10), 225);
 		break;
 	}

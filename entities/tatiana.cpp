@@ -209,17 +209,17 @@ IMPLEMENT_FUNCTION(Tatiana, function23, 23)
 		break;
 
 	case kActionDefault:
-		_data->setNextCallback(1);
+		setCallback(1);
 		call(new ENTITY_SETUP(Tatiana, setup_function13), kCarRedSleeping, EntityData::kField491_7500);
 		break;
 
 	case kActionCallback:
-		switch (_data->getNextCallback()) {
+		switch (getCallback()) {
 		default:
 			break;
 
 		case 1:
-			_data->setNextCallback(2);
+			setCallback(2);
 			call(new ENTITY_SETUP(Tatiana, setup_function14));
 			break;
 
@@ -276,7 +276,32 @@ IMPLEMENT_FUNCTION(Tatiana, function29, 29)
 }
 
 IMPLEMENT_FUNCTION(Tatiana, function30, 30)
-	error("Tatiana: callback function 30 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionDefault:
+		setCallback(1);
+		call(new ENTITY_SETUP(Tatiana, setup_function13), kCarRedSleeping, EntityData::kField491_7500);
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			setCallback(2);
+			call(new ENTITY_SETUP(Tatiana, setup_function14));
+			break;
+
+		case 2:
+			setCallback(3);
+			call(new ENTITY_SETUP(Tatiana, setup_function16), kTimeEnd);
+			break;
+		}
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Tatiana, chapter3, 31)
@@ -401,12 +426,12 @@ IMPLEMENT_FUNCTION(Tatiana, function44, 44)
 		break;
 
 	case kActionDefault:
-		_data->setNextCallback(1);
+		setCallback(1);
 		call(new ENTITY_SETUP(Tatiana, setup_function16), kTimeTatiana);
 		break;
 
 	case kActionCallback:
-		if (_data->getNextCallback() == 1)
+		if (getCallback() == 1)
 			setup_function45();
 		break;
 	}

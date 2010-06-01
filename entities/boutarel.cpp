@@ -281,12 +281,12 @@ IMPLEMENT_FUNCTION(Boutarel, function28, 28)
 		break;
 
 	case kActionDefault:
-		_data->setNextCallback(1);
+		setCallback(1);
 		call(new ENTITY_SETUP(Boutarel, setup_function11), 1);
 		break;
 
 	case kActionCallback:
-		if (_data->getNextCallback() == 1)
+		if (getCallback() == 1)
 			setup_function29();
 		break;
 	}

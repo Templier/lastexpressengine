@@ -353,9 +353,7 @@ public:
 	int 			   getCallback(int callback) { return _data.callbacks[callback]; }
 	int				   getCurrentCallback() { return getCallback(_data.current_call); }
 	void 			   setCallback(int callback, byte index) { _data.callbacks[callback] = index; }
-	void 			   setCurrentCallback(byte index) { setCallback(_data.current_call, index); }
-	int			   	   getNextCallback() { return getCallback(getCurrentCallback() + 8); }
-	void			   setNextCallback(byte index) { setCallback(getCurrentCallback() + 8, index); }
+	void 			   setCurrentCallback(byte index) { setCallback(_data.current_call, index); }	
 
 	// Serializable
 	void 			   saveLoadWithSerializer(Common::Serializer &ser);
@@ -377,6 +375,10 @@ public:
 	// Accessors
 	EntityData *getParamData() { return _data; }
 	EntityData::EntityCallData *getData() { return _data->getCallData(); }
+
+	// Callbacks
+	int getCallback() { return _data->getCallback(_data->getCurrentCallback() + 8); }
+	void setCallback(byte index) { _data->setCallback(_data->getCurrentCallback() + 8, index); }
 
 	// Setup
 	void setup(ChapterIndex index);

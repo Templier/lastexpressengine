@@ -188,7 +188,19 @@ IMPLEMENT_FUNCTION(Pascale, function17, 17)
 }
 
 IMPLEMENT_FUNCTION(Pascale, function18, 18)
-	error("Pascale: callback function 18 not implemented!");
+	if (savepoint.action != kActionNone)
+		return;
+
+	if (getState()->time > kTimePascale && !params->param1) {
+		params->param1 = 1;
+
+		getSavePoints()->push(kEntityPascale, kEntityServers0, kAction101632192);
+		getSavePoints()->push(kEntityPascale, kEntityServers1, kAction101632192);
+		getSavePoints()->push(kEntityPascale, kEntityCooks, kAction101632192);
+		getSavePoints()->push(kEntityPascale, kEntityVerges, kAction101632192);
+
+		setup_function19();
+	}
 }
 
 IMPLEMENT_FUNCTION(Pascale, function19, 19)

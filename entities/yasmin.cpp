@@ -119,13 +119,13 @@ IMPLEMENT_FUNCTION(Yasmin, function6, 6)
 		getData()->field_491 = EntityData::kField491_4840;
 		getData()->field_493 = EntityData::kField493_0;
 
-		_data->setNextCallback(1);
+		setCallback(1);
 		// Exit compartement
 		call(new ENTITY_SETUP_SIIS(Yasmin, setup_enterExitCompartement), "615Be", kObjectCompartment5);
 		break;
 
 	case kActionCallback:
-		switch (_data->getNextCallback()) {
+		switch (getCallback()) {
 		default:
 			break;
 
@@ -158,13 +158,13 @@ IMPLEMENT_FUNCTION(Yasmin, function7, 7)
 		getData()->field_491 = EntityData::kField491_3050;
 		getData()->field_493 = EntityData::kField493_0;
 
-		_data->setNextCallback(1);
+		setCallback(1);
 		// Exit compartement
 		call(new ENTITY_SETUP_SIIS(Yasmin, setup_enterExitCompartement), "615Bg", kObjectCompartment7);
 		break;
 
 	case kActionCallback:
-		switch (_data->getNextCallback()) {
+		switch (getCallback()) {
 		default:
 			break;
 

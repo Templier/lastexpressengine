@@ -150,7 +150,7 @@ IMPLEMENT_FUNCTION(Vesna, function14, 14)
 		break;
 
 	case kAction190412928:
-		_data->setNextCallback(1);
+		setCallback(1);
 		call(new ENTITY_SETUP(Vesna, setup_function11));
 		break;
 	}
@@ -195,12 +195,12 @@ IMPLEMENT_FUNCTION(Vesna, function17, 17)
 		break;
 
 	case kAction135024800:
-		_data->setNextCallback(2);
+		setCallback(2);
 		call(new ENTITY_SETUP(Vesna, setup_function18));
 		break;
 
 	case kAction137165825:
-		_data->setNextCallback(1);
+		setCallback(1);
 		call(new ENTITY_SETUP(Vesna, setup_function11));
 		break;
 	}
@@ -254,7 +254,7 @@ IMPLEMENT_FUNCTION(Vesna, chapter4, 24)
 		break;
 
 	case kActionNone:
-		_data->setNextCallback(1);
+		setCallback(1);
 		call(new ENTITY_SETUP(Vesna, setup_function11));
 		break;
 
@@ -270,7 +270,7 @@ IMPLEMENT_FUNCTION(Vesna, chapter4, 24)
 		break;
 
 	case kActionCallback:
-		if (_data->getNextCallback() == 1)
+		if (getCallback() == 1)
 			setup_function25();
 	}
 }

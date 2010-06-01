@@ -246,14 +246,14 @@ IMPLEMENT_FUNCTION(Anna, function20, 20)
 		break;
 
 	case kActionDefault:
-		_data->setNextCallback(1);
+		setCallback(1);
 		call(new ENTITY_SETUP_ISSI(Anna, setup_function15), kTimeAnna, "NONE");
 		break;
 
 	case kActionCallback:
-		switch (_data->getNextCallback()) {
+		switch (getCallback()) {
 		case 1:
-			_data->setNextCallback(2);
+			setCallback(2);
 			call(new ENTITY_SETUP_SIIS(Anna, setup_enterExitCompartment), "618Bf", kObjectCompartmentF);
 			break;
 
@@ -337,12 +337,12 @@ IMPLEMENT_FUNCTION(Anna, function33, 33)
 		getSavePoints()->push(kEntityAnna, kEntityMax, kAction101687594);
 
 		params->param1 = getState()->time + 4500;
-		_data->setNextCallback(1);
+		setCallback(1);
 		call(new ENTITY_SETUP_ISSI(Anna, setup_function15), params->param1, "NONE");
 		break;
 
 	case kActionCallback:
-		if (_data->getNextCallback() == 1) {
+		if (getCallback() == 1) {
 			getObjects()->updateLocation2(kObjectCompartmentF, kLocation1);
 			setup_function34();
 		}
@@ -387,12 +387,12 @@ IMPLEMENT_FUNCTION(Anna, function38, 38)
 	case kActionDefault:
 		getData()->field_491 = EntityData::kField491_7500;
 
-		_data->setNextCallback(1);
+		setCallback(1);
 		call(new ENTITY_SETUP_SIIS(Anna, setup_playSound), "ANN1010");
 		break;
 
 	case kActionCallback:
-		if (_data->getNextCallback() == 1) {
+		if (getCallback() == 1) {
 			getSound()->playSound(kEntityNone, "MUS043");
 			setup_function40();
 		}
@@ -552,12 +552,12 @@ IMPLEMENT_FUNCTION(Anna, function58, 58)
 		break;
 
 	case kActionDefault:
-		_data->setNextCallback(1);
+		setCallback(1);
 		call(new ENTITY_SETUP(Anna, setup_savegame), 2, kEventAnnaSearchingCompartment);
 		break;
 
 	case kActionCallback:
-		if (_data->getNextCallback() == 1) {
+		if (getCallback() == 1) {
 			getAction()->playAnimation(kEventAnnaSearchingCompartment);
 			getEntities()->prepareSequences(kEntityAnna);
 			getLogic()->loadSceneFromPosition(kCarRedSleeping, 8);
@@ -616,7 +616,7 @@ IMPLEMENT_FUNCTION(Anna, function63, 63)
 
 	// Game over with Anna killed!
 	case kActionCallback:
-		if (_data->getNextCallback() == 1) {
+		if (getCallback() == 1) {
 			getAction()->playAnimation(kEventAnnaKilled);
 			getLogic()->gameOver(kTimeType1, kTimeAnna_2, kSceneGameOverAnnaDied, true);
 		}
@@ -627,7 +627,7 @@ IMPLEMENT_FUNCTION(Anna, function63, 63)
 		if (getSound()->isBuffered("MUS012"))
 			getSound()->unknownFunction2("MUS012");
 
-		_data->setNextCallback(1);
+		setCallback(1);
 		call(new ENTITY_SETUP(Anna, setup_savegame), 2, kEventAnnaKilled);
 		break;
 	}
@@ -647,7 +647,7 @@ IMPLEMENT_FUNCTION(Anna, function65, 65)
 
 		getObjects()->update(kObject45, kEntityNone, kLocation1, kCursorKeepValue, kCursorKeepValue);
 
-		_data->setNextCallback(1);
+		setCallback(1);
 		call(new ENTITY_SETUP_ISSI(Anna, setup_function15), kTimeEnd, "NONE");
 	}
 }

@@ -171,7 +171,7 @@ IMPLEMENT_FUNCTION_II(Mahmud, function10, 10)
 		getObjects()->update(kObjectCompartment7, kEntityTrain, kLocation3, kCursorHandKnock, kCursorHand);
 		getObjects()->update(kObjectCompartment8, kEntityTrain, kLocation3, kCursorHandKnock, kCursorHand);
 
-		_data->setNextCallback(2);
+		setCallback(2);
 		call(new ENTITY_SETUP_SIIS(Mahmud, setup_enterExitCompartment), "614Ed", kObjectCompartment4);
 		break;
 
@@ -187,7 +187,7 @@ IMPLEMENT_FUNCTION_II(Mahmud, function10, 10)
 			getObjects()->update(kObjectCompartment7, kEntityTrain, kLocation3, kCursorHandKnock, kCursorHand);
 			getObjects()->update(kObjectCompartment8, kEntityTrain, kLocation3, kCursorHandKnock, kCursorHand);
 
-			_data->setNextCallback(3);
+			setCallback(3);
 			call(new ENTITY_SETUP_SIIS(Mahmud, setup_enterExitCompartment), "614Ed", kObjectCompartment4);
 		}
 		break;
@@ -260,12 +260,12 @@ IMPLEMENT_FUNCTION_II(Mahmud, function10, 10)
 		getSound()->playSound(kEntityMahmud, params->param2 ? "MAH1170A" : "MAH1173", -1, 45);
 		getProgress().field_C4 = 1;
 
-		_data->setNextCallback(1);
+		setCallback(1);
 		call(new ENTITY_SETUP_SIII(Mahmud, setup_function4), "614Dd", kObjectCompartment4, 30, params->param1);
 		break;
 
 	case kActionCallback:
-		switch (_data->getNextCallback()) {
+		switch (getCallback()) {
 		default:
 			break;
 
@@ -336,12 +336,12 @@ IMPLEMENT_FUNCTION(Mahmud, function11, 11)
 
 	case kActionDefault:
 		getSavePoints()->push(kEntityMahmud, kEntityMertens, kAction102227384);
-		_data->setNextCallback(1);
+		setCallback(1);
 		call(new ENTITY_SETUP_SIIS(Mahmud, setup_enterExitCompartment), "614Ad", kObjectCompartment4);
 		break;
 
 	case kActionCallback:
-		switch (_data->getNextCallback()) {
+		switch (getCallback()) {
 		default:
 			break;
 
@@ -351,37 +351,37 @@ IMPLEMENT_FUNCTION(Mahmud, function11, 11)
 			getEntities()->drawSequenceLeft(kEntityMahmud, "614Kd");
 			getEntities()->enterCompartment(kEntityMahmud, kObjectCompartment4, false);
 
-			_data->setNextCallback(2);
+			setCallback(2);
 			call(new ENTITY_SETUP_SIIS(Mahmud, setup_playSound), "MAH1170A");
 			break;
 
 		case 2:
-			_data->setNextCallback(3);
+			setCallback(3);
 			call(new ENTITY_SETUP_SIIS(Mahmud, setup_playSoundMertens), "MAH1170B");
 			break;
 
 		case 3:
-			_data->setNextCallback(4);
+			setCallback(4);
 			call(new ENTITY_SETUP_SIIS(Mahmud, setup_playSound), "MAH1170C");
 			break;
 
 		case 4:
-			_data->setNextCallback(5);
+			setCallback(5);
 			call(new ENTITY_SETUP_SIIS(Mahmud, setup_playSoundMertens), "MAH1170D");
 			break;
 
 		case 5:
-			_data->setNextCallback(6);
+			setCallback(6);
 			call(new ENTITY_SETUP_SIIS(Mahmud, setup_playSound), "MAH1170E");
 			break;
 
 		case 6:
-			_data->setNextCallback(7);
+			setCallback(7);
 			call(new ENTITY_SETUP_SIIS(Mahmud, setup_playSoundMertens), "MAH1170F");
 			break;
 
 		case 7:
-			_data->setNextCallback(8);
+			setCallback(8);
 			call(new ENTITY_SETUP_SIIS(Mahmud, setup_enterExitCompartment), "614Ld", kObjectCompartment4);
 			break;
 
@@ -390,12 +390,12 @@ IMPLEMENT_FUNCTION(Mahmud, function11, 11)
 			getEntities()->drawSequenceLeft(kEntityMahmud, "614Bd");
 			getEntities()->enterCompartment(kEntityMahmud, kObjectCompartment4, false);
 
-			_data->setNextCallback(9);
+			setCallback(9);
 			call(new ENTITY_SETUP_SIIS(Mahmud, setup_playSound), "MAH1170G");
 			break;
 
 		case 9:
-			_data->setNextCallback(10);
+			setCallback(10);
 			call(new ENTITY_SETUP_SIIS(Mahmud, setup_playSoundMertens), "MAH1170H");
 			break;
 
@@ -427,7 +427,7 @@ IMPLEMENT_FUNCTION(Mahmud, function11, 11)
 		getObjects()->update(kObjectCompartment7, kEntityTrain, kLocation3, kCursorHandKnock, kCursorHand);
 		getObjects()->update(kObjectCompartment8, kEntityTrain, kLocation3, kCursorHandKnock, kCursorHand);
 
-		_data->setNextCallback(11);
+		setCallback(11);
 		call(new ENTITY_SETUP_SIIS(Mahmud, setup_enterExitCompartment), "614Cd", kObjectCompartment4);
 		break;
 	}
@@ -441,12 +441,12 @@ IMPLEMENT_FUNCTION(Mahmud, function12, 12)
 		break;
 
 	case kActionDefault:
-		_data->setNextCallback(1);
+		setCallback(1);
 		call(new ENTITY_SETUP_SIIS(Mahmud, setup_enterExitCompartment), "614Gd", kObjectCompartment4);
 		break;
 
 	case kActionCallback:
-		switch (_data->getNextCallback()) {
+		switch (getCallback()) {
 		default:
 			break;
 
@@ -454,12 +454,12 @@ IMPLEMENT_FUNCTION(Mahmud, function12, 12)
 			getData()->field_493 = EntityData::kField493_0;
 			getObjects()->update(kObjectCompartment4, kEntityNone, kLocation3, kCursorHandKnock, kCursorHand);
 
-			_data->setNextCallback(2);
+			setCallback(2);
 			call(new ENTITY_SETUP(Mahmud, setup_function9), kCarGreenSleeping, EntityData::kField491_4070);
 			break;
 
 		case 2:
-			_data->setNextCallback(3);
+			setCallback(3);
 			call(new ENTITY_SETUP_SIIS(Mahmud, setup_enterExitCompartment), "614Ff", kObjectCompartment6);
 			break;
 
@@ -467,24 +467,24 @@ IMPLEMENT_FUNCTION(Mahmud, function12, 12)
 			getData()->field_493 = EntityData::kField493_1;
 			getEntities()->prepareSequences(kEntityMahmud);
 
-			_data->setNextCallback(4);
+			setCallback(4);
 			call(new ENTITY_SETUP_SIIS(Mahmud, setup_playSound), "Har1105");
 			break;
 
 		case 4:
-			_data->setNextCallback(5);
+			setCallback(5);
 			call(new ENTITY_SETUP_SIIS(Mahmud, setup_enterExitCompartment), "614Gf", kObjectCompartment6);
 			break;
 
 		case 5:
 			getData()->field_493 = EntityData::kField493_0;
 
-			_data->setNextCallback(6);
+			setCallback(6);
 			call(new ENTITY_SETUP(Mahmud, setup_function9), kCarGreenSleeping, EntityData::kField491_5790);
 			break;
 
 		case 6:
-			_data->setNextCallback(7);
+			setCallback(7);
 			call(new ENTITY_SETUP_SIIS(Mahmud, setup_enterExitCompartment), "614Fd", kObjectCompartment4);
 			break;
 
@@ -507,12 +507,12 @@ IMPLEMENT_FUNCTION(Mahmud, function13, 13)
 		break;
 
 	case kActionDefault:
-		_data->setNextCallback(1);
+		setCallback(1);
 		call(new ENTITY_SETUP_SIIS(Mahmud, setup_enterExitCompartment), "614Gd", kObjectCompartment4);
 		break;
 
 	case kActionCallback:
-		switch (_data->getNextCallback()) {
+		switch (getCallback()) {
 		default:
 			break;
 
@@ -520,12 +520,12 @@ IMPLEMENT_FUNCTION(Mahmud, function13, 13)
 			getData()->field_493 = EntityData::kField493_0;
 			getObjects()->update(kObjectCompartment4, kEntityNone, kLocation3, kCursorHandKnock, kCursorHand);
 
-			_data->setNextCallback(2);
+			setCallback(2);
 			call(new ENTITY_SETUP(Mahmud, setup_function9), kCarGreenSleeping, EntityData::kField491_2740);
 			break;
 
 		case 2:
-			_data->setNextCallback(3);
+			setCallback(3);
 			call(new ENTITY_SETUP_SIIS(Mahmud, setup_enterExitCompartment), "614Fh", kObjectCompartment8);
 			break;
 
@@ -533,24 +533,24 @@ IMPLEMENT_FUNCTION(Mahmud, function13, 13)
 			getData()->field_493 = EntityData::kField493_1;
 			getEntities()->prepareSequences(kEntityMahmud);
 
-			_data->setNextCallback(4);
+			setCallback(4);
 			call(new ENTITY_SETUP_SIIS(Mahmud, setup_playSound), "Har1107");
 			break;
 
 		case 4:
-			_data->setNextCallback(5);
+			setCallback(5);
 			call(new ENTITY_SETUP_SIIS(Mahmud, setup_enterExitCompartment), "614Gh", kObjectCompartment8);
 			break;
 
 		case 5:
 			getData()->field_493 = EntityData::kField493_0;
 
-			_data->setNextCallback(6);
+			setCallback(6);
 			call(new ENTITY_SETUP(Mahmud, setup_function9), kCarGreenSleeping, EntityData::kField491_5790);
 			break;
 
 		case 6:
-			_data->setNextCallback(7);
+			setCallback(7);
 			call(new ENTITY_SETUP_SIIS(Mahmud, setup_enterExitCompartment), "614Fd", kObjectCompartment4);
 			break;
 
@@ -584,7 +584,7 @@ IMPLEMENT_FUNCTION(Mahmud, function14, 14)
 			if (getState()->time > kTimeMahmud_1 && !params->param6) {
 				params->param6 = 1;
 
-				_data->setNextCallback(1);
+				setCallback(1);
 				call(new ENTITY_SETUP(Mahmud, setup_function13));
 				break;
 			}
@@ -592,7 +592,7 @@ IMPLEMENT_FUNCTION(Mahmud, function14, 14)
 			if (!getSound()->isBuffered("HAR1104") && getState()->time > kTimeMahmud && !params->param7) {
 				params->param7 = 1;
 
-				_data->setNextCallback(2);
+				setCallback(2);
 				call(new ENTITY_SETUP(Mahmud, setup_function12));
 				break;
 			}
@@ -621,20 +621,20 @@ IMPLEMENT_FUNCTION(Mahmud, function14, 14)
 
 				 // Check if we have the passenger list
 				 if (getInventory()->hasItem(kItemPassengerList)) {
-					 _data->setNextCallback(6);
+					 setCallback(6);
 					call(new ENTITY_SETUP_SIIS(Mahmud, setup_playSound), random(2) == 0 ? "CAT1501" : getSound()->wrongDoorCath());
 				 } else {
-					 _data->setNextCallback(7);
+					 setCallback(7);
 					call(new ENTITY_SETUP_SIIS(Mahmud, setup_playSound), getSound()->wrongDoorCath());
 				 }
 			} else {
-				_data->setNextCallback(savepoint.action == kAction8 ? 8 : 9);
+				setCallback(savepoint.action == kAction8 ? 8 : 9);
 				call(new ENTITY_SETUP_SIIS(Mahmud, setup_playSound), savepoint.action == kAction8 ? "LIB012" : "LIB013");
 			}
 		} else {
 			getObjects()->update(kObjectCompartment4, kEntityMahmud, kLocation1, kCursorNormal, kCursorNormal);
 
-			_data->setNextCallback(savepoint.action == kAction8 ? 3 : 4);
+			setCallback(savepoint.action == kAction8 ? 3 : 4);
 			call(new ENTITY_SETUP_SIIS(Mahmud, setup_playSound), savepoint.action == kAction8 ? "LIB012" : "LIB013");
 		}
 		break;
@@ -659,7 +659,7 @@ IMPLEMENT_FUNCTION(Mahmud, function14, 14)
 		break;
 
 	case kActionCallback:
-		switch (_data->getNextCallback()) {
+		switch (getCallback()) {
 		default:
 			return;
 
@@ -671,7 +671,7 @@ IMPLEMENT_FUNCTION(Mahmud, function14, 14)
 
 			if (!getSound()->isBuffered("HAR1104") && getState()->time > kTimeMahmud && !params->param7) {
 				params->param7 = 1;
-				_data->setNextCallback(2);
+				setCallback(2);
 				call(new ENTITY_SETUP(Mahmud, setup_function12));
 			}
 			break;
@@ -686,7 +686,7 @@ IMPLEMENT_FUNCTION(Mahmud, function14, 14)
 
 		case 3:
 		case 4:
-			_data->setNextCallback(5);
+			setCallback(5);
 			call(new ENTITY_SETUP_SIIS(Mahmud, setup_playSound), "MAH1175");
 			break;
 
@@ -714,7 +714,7 @@ IMPLEMENT_FUNCTION(Mahmud, function14, 14)
 
 		case 8:
 		case 9:
-			_data->setNextCallback(10);
+			setCallback(10);
 			call(new ENTITY_SETUP(Mahmud, setup_savegame), 2, kEventMahmudWrongDoor);
 			return;
 
@@ -744,13 +744,13 @@ IMPLEMENT_FUNCTION(Mahmud, function14, 14)
 		break;
 
 	case kAction225563840:
-		_data->setNextCallback(12);
+		setCallback(12);
 		call(new ENTITY_SETUP(Mahmud, setup_function11));
 		break;
 
 	case kAction290410610:
 		params->param3 = (params->param3 < 1) ? 1 : 0;
-		_data->setNextCallback(11);
+		setCallback(11);
 		call(new ENTITY_SETUP(Mahmud, setup_function10), savepoint.param.intValue, params->param3);
 		break;
 	}

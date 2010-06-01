@@ -152,7 +152,7 @@ IMPLEMENT_FUNCTION(Salko, chapter2, 12)
 		break;
 
 	case kAction136184016:
-		_data->setNextCallback(1);
+		setCallback(1);
 		call(new ENTITY_SETUP(Salko, setup_function13));
 		break;
 	}
@@ -221,7 +221,7 @@ IMPLEMENT_FUNCTION(Salko, function19, 19)
 		break;
 
 	case kActionCallback:
-		if (_data->getNextCallback() == 1) {
+		if (getCallback() == 1) {
 			getEntities()->drawSequenceLeft(kEntitySalko, "BLANK");
 
 			getData()->field_493 = EntityData::kField493_1;
@@ -231,7 +231,7 @@ IMPLEMENT_FUNCTION(Salko, function19, 19)
 		break;
 
 	case kAction125242096:
-		_data->setNextCallback(1);
+		setCallback(1);
 		call(new ENTITY_SETUP(Salko, setup_function7), kCarRedSleeping, EntityData::kField491_2740);
 		break;
 	}

@@ -75,17 +75,17 @@ IMPLEMENT_FUNCTION(Cooks, function3, 3)
 		switch (getProgress().chapter) {
 		default:
 			getSound()->playSound(kEntityCooks, "KIT1011");
-			_data->setNextCallback(3);
+			setCallback(3);
 			call(new ENTITY_SETUP_SIIS(Cooks, setup_draw), "308B");
 			break;
 
 		case kChapter1:
-			_data->setNextCallback(1);
+			setCallback(1);
 			call(new ENTITY_SETUP_SIIS(Cooks, setup_playSound), "KIT1010");
 			break;
 
 		case kChapter3:
-			_data->setNextCallback(2);
+			setCallback(2);
 			call(new ENTITY_SETUP_SIIS(Cooks, setup_playSound), "KIT1012");
 			break;
 		}
@@ -125,14 +125,14 @@ IMPLEMENT_FUNCTION(Cooks, function3, 3)
 		break;
 
 	case kActionCallback:
-		switch (_data->getNextCallback()) {
+		switch (getCallback()) {
 		default:
 			break;
 
 		case 1:
 		case 2:
 			getSound()->playSound(kEntityCooks, "KIT1011");
-			_data->setNextCallback(3);
+			setCallback(3);
 			call(new ENTITY_SETUP_SIIS(Cooks, setup_draw), "308B");
 			break;
 
@@ -161,18 +161,18 @@ IMPLEMENT_FUNCTION(Cooks, function4, 4)
 			break;
 
 		case kChapter1:
-			_data->setNextCallback(2);
+			setCallback(2);
 			call(new ENTITY_SETUP_SIIS(Cooks, setup_playSound), "ZFX1011");
 			break;
 
 		case kChapter3:
-			_data->setNextCallback(2);
+			setCallback(2);
 			call(new ENTITY_SETUP_SIIS(Cooks, setup_playSound), "ZFX1011");
 			break;
 		}
 
 		getSound()->playSound(kEntityCooks, "KIT1011");
-		_data->setNextCallback(3);
+		setCallback(3);
 		call(new ENTITY_SETUP_SIIS(Cooks, setup_draw), "308B");
 		break;
 
@@ -210,14 +210,14 @@ IMPLEMENT_FUNCTION(Cooks, function4, 4)
 		break;
 
 	case kActionCallback:
-		switch (_data->getNextCallback()) {
+		switch (getCallback()) {
 		default:
 			break;
 
 		case 1:
 		case 2:
 			getSound()->playSound(kEntityCooks, "KIT1011");
-			_data->setNextCallback(3);
+			setCallback(3);
 			call(new ENTITY_SETUP_SIIS(Cooks, setup_draw), "308B");
 			break;
 
@@ -276,22 +276,22 @@ IMPLEMENT_FUNCTION(Cooks, function6, 6)
 
 		if (params->param1) {
 			if (getEntities()->isPlayerPosition(kCarRestaurant, 73)) {
-				_data->setNextCallback(1);
+				setCallback(1);
 				call(new ENTITY_SETUP(Cooks, setup_function3));
 			}
 		} else {
 			if (params->param3) {
-				_data->setNextCallback(2);
+				setCallback(2);
 				call(new ENTITY_SETUP_SIIS(Cooks, setup_playSound), "ZFX1011");
 			} else {
-				_data->setNextCallback(3);
+				setCallback(3);
 				call(new ENTITY_SETUP_SIIS(Cooks, setup_playSound), "ZFX1012");
 			}
 		}
 		break;
 
 	case kActionCallback:
-		switch (_data->getNextCallback()) {
+		switch (getCallback()) {
 		default:
 			break;
 
@@ -324,7 +324,7 @@ IMPLEMENT_FUNCTION(Cooks, function7, 7)
 
 	case kActionNone:
 		// Snoring...
-		_data->setNextCallback(1);
+		setCallback(1);
 		call(new ENTITY_SETUP_SIIS(Cooks, setup_playSound), "WAT1200");
 		break;
 
@@ -381,16 +381,16 @@ IMPLEMENT_FUNCTION(Cooks, function9, 9)
 
 	case kAction17:
 		if (params->param2) {
-			_data->setNextCallback(1);
+			setCallback(1);
 			call(new ENTITY_SETUP_SIIS(Cooks, setup_playSound), "ZFX1011");
 		} else {
-			_data->setNextCallback(2);
+			setCallback(2);
 			call(new ENTITY_SETUP_SIIS(Cooks, setup_playSound), "ZFX1012");
 		}
 		break;
 
 	case kActionCallback:
-		if (_data->getNextCallback() == 1 || _data->getNextCallback() == 2)
+		if (getCallback() == 1 || getCallback() == 2)
 			params->param2 = !params->param2;
 		break;
 	}
@@ -458,22 +458,22 @@ update_params:
 
 		if (params->param1) {
 			if (getEntities()->isPlayerPosition(kCarRestaurant, 80)) {
-				_data->setNextCallback(1);
+				setCallback(1);
 				call(new ENTITY_SETUP(Cooks, setup_function4));
 			}
 		} else {
 			if (params->param3) {
-				_data->setNextCallback(2);
+				setCallback(2);
 				call(new ENTITY_SETUP_SIIS(Cooks, setup_playSound), "ZFX1011");
 			} else {
-				_data->setNextCallback(3);
+				setCallback(3);
 				call(new ENTITY_SETUP_SIIS(Cooks, setup_playSound), "ZFX1012");
 			}
 		}
 		break;
 
 	case kActionCallback:
-		switch (_data->getNextCallback()) {
+		switch (getCallback()) {
 		default:
 			break;
 
@@ -542,10 +542,10 @@ IMPLEMENT_FUNCTION(Cooks, function13, 13)
 
 		// Kitchen background sound
 		if (params->param2) {
-			_data->setNextCallback(1);
+			setCallback(1);
 			call(new ENTITY_SETUP_SIIS(Cooks, setup_playSound), "ZFX1011");
 		} else {
-			_data->setNextCallback(2);
+			setCallback(2);
 			call(new ENTITY_SETUP_SIIS(Cooks, setup_playSound), "ZFX1012");
 		}
 		break;
@@ -553,7 +553,7 @@ IMPLEMENT_FUNCTION(Cooks, function13, 13)
 
 	case kActionCallback:
 		// Play the next part of background sound
-		if (_data->getNextCallback() == 1 || _data->getNextCallback() == 2) {
+		if (getCallback() == 1 || getCallback() == 2) {
 			params->param2 = !params->param2;
 		}
 	}

@@ -237,12 +237,12 @@ IMPLEMENT_FUNCTION(Kronos, function17, 17)
 		getData()->field_493 = EntityData::kField493_0;
 		getData()->car = kCarRedSleeping;
 		
-		_data->setNextCallback(1);
+		setCallback(1);
 		call(new ENTITY_SETUP(Kronos, setup_function3), kCarGreenSleeping, EntityData::kField491_9270);
 		break;
 
 	case kActionCallback:
-		if (_data->getNextCallback() == 1)
+		if (getCallback() == 1)
 			setup_function18();
 		break;
 	}

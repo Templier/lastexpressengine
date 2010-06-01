@@ -330,12 +330,12 @@ IMPLEMENT_FUNCTION(Alexei, function38, 38)
 		break;
 
 	case kActionDefault:
-		_data->setNextCallback(1);
+		setCallback(1);
 		call(new ENTITY_SETUP_ISSI(Alexei, setup_function16), kTimeAlexei, "411");
 		break;
 
 	case kActionCallback:
-		if (_data->getNextCallback() == 1)
+		if (getCallback() == 1)
 			setup_function39();
 		break;
 	}
@@ -358,12 +358,12 @@ IMPLEMENT_FUNCTION(Alexei, function41, 41)
 		if (getEntities()->isPlayerPosition(kCarGreenSleeping, 66))
 			getLogic()->loadSceneFromPosition(kCarGreenSleeping, 49);
 
-		_data->setNextCallback(1);
+		setCallback(1);
 		call(new ENTITY_SETUP_ISSI(Alexei, setup_function16), kTimeAlexei_1, "411");
 		break;
 
 	case kActionCallback:
-		if (_data->getNextCallback() == 1)
+		if (getCallback() == 1)
 			setup_function42();
 		break;
 	}
