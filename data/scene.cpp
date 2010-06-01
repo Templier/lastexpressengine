@@ -185,7 +185,7 @@ SceneHeader* Scene::getHeader() {
 	return _header;
 }
 
-bool Scene::checkHotSpot(const Common::Point &coord, SceneHotspot **hotspot, byte * const location) {
+bool Scene::checkHotSpot(const Common::Point &coord, SceneHotspot **hotspot) {
 	bool found = false;
 	int _location = 0;
 
@@ -198,9 +198,6 @@ bool Scene::checkHotSpot(const Common::Point &coord, SceneHotspot **hotspot, byt
 			}
 		}
 	}
-
-	if (location != NULL)
-		*location = _location;
 
 	return found;
 }
