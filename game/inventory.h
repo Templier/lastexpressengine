@@ -98,7 +98,7 @@ public:
 	// UI Control
 	void show();
 	void blinkEgg(bool enabled);
-	void showHourGlass();
+	void showHourGlass() const;
 	void setPortrait(InventoryItem item) const;
 	void drawEgg() const;
 	void drawBlinkingEgg();

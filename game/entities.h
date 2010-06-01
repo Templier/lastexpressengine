@@ -85,22 +85,22 @@ public:
 	void drawSequenceRight(EntityIndex index, const char* sequence);
 	void prepareSequences(EntityIndex index);
 
-	bool checkSequence0(EntityIndex entity);
+	bool checkSequence0(EntityIndex entity) const;
 
 	// Accessors
 	Entity *get(EntityIndex entity);
 	EntityData::EntityCallData *getData(EntityIndex entity) const;
-	int getPosition(int index) { assert(index < _positionsNumber); return _positions[index]; }
-	int getCompartments(int index) { assert(index < _compartmentsNumber); return _compartments[index]; }
-	int getCompartments1(int index) { assert(index < _compartmentsNumber); return _compartments1[index]; }
+	int getPosition(int index) { assert(index < _positionsCount); return _positions[index]; }
+	int getCompartments(int index) { assert(index < _compartmentsCount); return _compartments[index]; }
+	int getCompartments1(int index) { assert(index < _compartmentsCount); return _compartments1[index]; }
 
 	int count() const { return _entities.size(); }
 
 	// Scene
-	void loadSceneFromField491(CarIndex car, EntityData::Field491Value field491, bool alternate = false);
+	void loadSceneFromField491(CarIndex car, EntityData::Field491Value field491, bool alternate = false) const;
 
 	// Sound
-	int getSoundValue(EntityIndex index);
+	uint getSoundValue(EntityIndex index) const;
 
 	// Checks
 	bool checkEntity(EntityIndex entity, CarIndex car, EntityData::Field491Value field491);
@@ -143,17 +143,17 @@ public:
 	void saveLoadWithSerializer(Common::Serializer &ser);
 
 private:
-	static const int _compartmentsNumber = 16;
-	static const int _positionsNumber = 100 * 10;  // 100 positions per train car
+	static const int _compartmentsCount = 16;
+	static const int _positionsCount = 100 * 10;  // 100 positions per train car
 
 	LastExpressEngine	    *_engine;
 	EntityData 			    *_header;
 	Common::Array<Entity *>  _entities;
 
 	// Compartments & positions
-	int _compartments[_compartmentsNumber];
-	int _compartments1[_compartmentsNumber];
-	int _positions[_positionsNumber];
+	uint _compartments[_compartmentsCount];
+	uint _compartments1[_compartmentsCount];
+	uint _positions[_positionsCount];
 
 	void executeCallbacks();
 	void processEntity(EntityIndex entity);

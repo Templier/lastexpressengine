@@ -33,6 +33,7 @@
 #include "lastexpress/game/state.h"
 
 #include "lastexpress/graphics.h"
+#include "lastexpress/helpers.h"
 #include "lastexpress/resource.h"
 
 #include "common/config-manager.h"
@@ -46,7 +47,7 @@ namespace LastExpress {
 LastExpressEngine::LastExpressEngine(OSystem *syst, const ADGameDescription *gd) :
     Engine(syst), _gameDescription(gd), _debugger(NULL), _cursor(NULL),
     _font(NULL), _logic(NULL), _graphicsMan(NULL), _resMan(NULL), _sceneMan(NULL),
-	eventMouseClick(NULL), eventMouseMove(NULL) {
+	eventMouseClick(NULL), eventMouseMove(NULL), eventMouseClickBackup(NULL), eventMouseMoveBackup(NULL) {
 
 	// Adding the default directories
 	const Common::FSNode gameDataDir(ConfMan.get("path"));
@@ -76,6 +77,12 @@ LastExpressEngine::~LastExpressEngine() {
 	delete _logic;
 	delete _resMan;
 	delete _sceneMan;
+
+	// Cleanup event handlers
+	SAFE_DELETE(eventMouseClick);
+	SAFE_DELETE(eventMouseMove);
+	SAFE_DELETE(eventMouseClickBackup);
+	SAFE_DELETE(eventMouseMoveBackup);
 
 	// Zero passed pointers
 	_gameDescription = NULL;
@@ -127,6 +134,10 @@ Common::Error LastExpressEngine::run() {
 }
 
 bool LastExpressEngine::handleEvents() {
+	// Make sure all the subsystems have been initialized
+	if (!_debugger || !_graphicsMan)
+		error("LastExpressEngine::handleEvents: called before the required subsystems have been initialized!");
+
 	// Execute stored commands
 	if (_debugger->hasCommand()) {
 		_debugger->callCommand();
@@ -160,14 +171,14 @@ bool LastExpressEngine::handleEvents() {
 			// Closing the GMM
 
 		case Common::EVENT_MOUSEMOVE:				
-			if (eventMouseMove->isValid())
+			if (eventMouseMove && eventMouseMove->isValid())
 				(*eventMouseMove)(ev);
 			break;
 
 		case Common::EVENT_LBUTTONDOWN:
 		case Common::EVENT_LBUTTONUP:
 		case Common::EVENT_RBUTTONDOWN:
-			if (eventMouseClick->isValid())
+			if (eventMouseClick && eventMouseClick->isValid())
 				(*eventMouseClick)(ev);
 			break;
 
@@ -203,13 +214,16 @@ void LastExpressEngine::backupEventHandlers() {
 }
 
 void LastExpressEngine::restoreEventHandlers() {
+	if (eventMouseClickBackup == NULL || eventMouseMoveBackup == NULL)
+		error("LastExpressEngine::restoreEventHandlers: restore called before backing up the event handlers!");
+
 	eventMouseClick = eventMouseClickBackup;
 	eventMouseMove = eventMouseMoveBackup;
 }
 
-void LastExpressEngine::setEventHandlers(EventHandler::EventFunction *eventMouseClick, EventHandler::EventFunction *eventMouseMove) {
-	this->eventMouseClick = eventMouseClick;
-	this->eventMouseMove = eventMouseMove;
+void LastExpressEngine::setEventHandlers(EventHandler::EventFunction *mouseClick, EventHandler::EventFunction *mouseMove) {
+	eventMouseClick = mouseClick;
+	eventMouseMove = mouseMove;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////

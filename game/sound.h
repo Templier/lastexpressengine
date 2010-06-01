@@ -198,7 +198,7 @@ private:
 	Common::Array<SoundEntry *> _cache;
 
 	SoundEntry *getEntry(EntityIndex index);
-	SoundEntry *getEntry(const char *name);
+	SoundEntry *getEntry(Common::String name);
 };
 
 } // End of namespace LastExpress

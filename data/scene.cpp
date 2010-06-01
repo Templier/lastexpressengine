@@ -77,7 +77,7 @@ SceneHotspot *SceneHotspot::load(Common::SeekableReadStream *stream) {
 	                                   hs->unknownA, hs->next, hs->coord);
 
 	// Read all coords data
-	uint16 offset = hs->coord;
+	uint32 offset = hs->coord;
 	while (offset != 0) {
 
 		SceneCoord *sceneCoord = new SceneCoord;
@@ -155,7 +155,7 @@ Scene *Scene::get(Common::SeekableReadStream *stream, SceneHeader *header) {
 	return s;
 }
 
-bool Scene::load(Scene *s, Common::SeekableReadStream *stream, SceneHeader *header) {
+bool Scene::load(Scene * const s, Common::SeekableReadStream *stream, SceneHeader *header) {
 	if (!s)
 		return false;
 
@@ -288,12 +288,12 @@ bool SceneManager::load(Common::SeekableReadStream *stream) {
 	return true;
 }
 
-bool SceneManager::loadScene(Scene *scene, SceneIndex index) {
+bool SceneManager::loadScene(Scene * const scene, SceneIndex index) {
 	if (!index)
 		error("SceneManager::loadScene: scene index cannot be 0!");
 
-	if (index > _headers.size() + 1)
-		error("SceneManager::loadScene: scene index is too high! (was=%d, max=%d)", index, _headers.size() + 1);
+	if (index > _headers.size())
+		error("SceneManager::loadScene: scene index is too high! (was=%d, max=%d)", index, _headers.size());
 
 	return Scene::load(scene, _stream, _headers[index - 1]);
 }

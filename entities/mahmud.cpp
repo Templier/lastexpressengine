@@ -266,6 +266,9 @@ IMPLEMENT_FUNCTION_II(Mahmud, function10, 10)
 
 	case kActionCallback:
 		switch (_data->getNextCallback()) {
+		default:
+			break;
+
 		case 1:
 			getObjects()->update(kObjectCompartment5, kEntityMahmud, kLocation3, kCursorHandKnock, kCursorHand);
 			getObjects()->update(kObjectCompartment6, kEntityMahmud, kLocation3, kCursorHandKnock, kCursorHand);

@@ -376,7 +376,7 @@ Action::Action(LastExpressEngine *engine) : _engine(engine) {
 	ADD_ACTION(bed);
 	ADD_ACTION(41);
 	ADD_ACTION(42);
-	ADD_ACTION(clickPainting);
+	ADD_ACTION(switchChapter);
 	ADD_ACTION(44);
 }
 
@@ -1392,8 +1392,8 @@ IMPLEMENT_ACTION(42) {
 	return kSceneInvalid;
 }
 
-IMPLEMENT_ACTION(clickPainting) {
-	// This does not seem to do anything in the english version
+IMPLEMENT_ACTION(switchChapter) {
+	// Nothing to do here as an hotspot action
 	return kSceneInvalid;
 }
 
@@ -1671,6 +1671,7 @@ CursorStyle Action::getCursor(byte action, ObjectIndex object, byte param2, byte
 		if (object >= kObjectMax)
 			return kCursorNormal;
 
+		// TODO check size of object to make sure we don't have an out of bounds access
 		if ((&getProgress().field_0)[object] == param2)
 			return (CursorStyle)param3;
 

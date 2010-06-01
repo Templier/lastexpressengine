@@ -408,7 +408,7 @@ Common::Rect TrainLine::draw(Graphics::Surface *surface) {
 
 //////////////////////////////////////////////////////////////////////////
 
-Menu::Menu(LastExpressEngine *engine) : _engine(engine), _scene(NULL), _clock(NULL), _trainLine(NULL) {
+Menu::Menu(LastExpressEngine *engine) : _engine(engine), _scene(NULL), _clock(NULL), _trainLine(NULL), _index3(0), _index4(0) {
 	_showStartScreen = true;
 	_creditsSequenceIndex = 0;
 	_isShowingCredits = false;

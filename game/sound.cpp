@@ -103,7 +103,7 @@ bool Sound::isBuffered(const char* filename, bool testForEntity) {
 	if (!name.contains('.'))
 		name += ".SND";
 
-	SoundEntry *entry = getEntry(name.c_str());
+	SoundEntry *entry = getEntry(name);
 
 	if (testForEntity)
 		return entry && !entry->entity;
@@ -148,9 +148,9 @@ Sound::SoundEntry *Sound::getEntry(EntityIndex index) {
 	return NULL;
 }
 
-Sound::SoundEntry *Sound::getEntry(const char *name) {
+Sound::SoundEntry *Sound::getEntry(Common::String name) {
 	for (uint i = 0; i < _cache.size(); i++) {
-		if (stricmp(_cache[i]->name2, name))
+		if (name.compareTo((char *)&_cache[i]->name2))
 			return _cache[i];
 	}
 

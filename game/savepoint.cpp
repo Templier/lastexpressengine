@@ -61,7 +61,7 @@ void SavePoints::push(EntityIndex entity2, EntityIndex entity1, ActionIndex acti
 	_savepoints.push_back(point);
 }
 
-void SavePoints::push(EntityIndex entity2, EntityIndex entity1, ActionIndex action, char* param) {
+void SavePoints::push(EntityIndex entity2, EntityIndex entity1, ActionIndex action, const char* param) {
 	if (_savepoints.size() >= _savePointsMaxSize)
 		return;
 

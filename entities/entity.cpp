@@ -351,13 +351,13 @@ void Entity::updateField1000(const SavePoint &savepoint) {
 		break;
 
 	case kActionExitCompartment:
-		getEntities()->updatePosition(_entityIndex, (CarIndex)params->param2, params->param3);
+		getEntities()->updatePosition(_entityIndex, (CarIndex)params->param2, (Position)params->param3);
 		CALLBACK_ACTION()
 		break;
 
 	case kActionDefault:
 		getEntities()->drawSequenceRight(_entityIndex, params->seq1);
-		getEntities()->updatePosition(_entityIndex, (CarIndex)params->param2, params->param3, true);
+		getEntities()->updatePosition(_entityIndex, (CarIndex)params->param2, (Position)params->param3, true);
 		break;
 	}
 }

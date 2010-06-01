@@ -315,7 +315,7 @@ void Inventory::blinkEgg(bool enabled) {
 	askForRedraw();
 }
 
-void Inventory::showHourGlass() {
+void Inventory::showHourGlass() const{
 	if (!getFlags()->flag_5) {
 		drawItem(608, 448, kCursorHourGlass, 100);
 	}

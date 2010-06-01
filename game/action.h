@@ -114,7 +114,7 @@ private:
 	DECLARE_ACTION(bed);
 	DECLARE_ACTION(41);
 	DECLARE_ACTION(42);
-	DECLARE_ACTION(clickPainting);
+	DECLARE_ACTION(switchChapter);
 	DECLARE_ACTION(44);
 
 	// Special dummy function

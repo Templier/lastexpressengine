@@ -59,8 +59,7 @@
 	    byte {1}    - param2;
 	    byte {1}    - param3
 	    byte {1}    - cursor
-	    uint16 {2}  - offset to next hotpost
-	    uint16 {2}  - unknown16
+	    uint32{2}  - offset to next hotpost
 
 	coords data (9 bytes)
 	    uint32 {4}    - ??
@@ -201,7 +200,7 @@ public:
 	Scene();
 	~Scene();
 
-	static bool load(Scene *scene, Common::SeekableReadStream *stream, SceneHeader *header);
+	static bool load(Scene * const scene, Common::SeekableReadStream *stream, SceneHeader *header);
 	static Scene *get(Common::SeekableReadStream *stream, SceneHeader *header);
 
 	bool checkHotSpot(const Common::Point &coord, SceneHotspot **hotspot);
@@ -225,7 +224,7 @@ public:
 
 	bool load(Common::SeekableReadStream *stream);
 	Scene *getScene(SceneIndex index);
-	bool loadScene(Scene *scene, SceneIndex index);
+	bool loadScene(Scene * const scene, SceneIndex index);
 
 	uint32 count() const { return _headers.size(); };
 

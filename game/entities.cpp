@@ -80,13 +80,15 @@
 
 namespace LastExpress {
 
-static const int soundValues[32] = {
+static const uint soundValues[32] = {
 	16,	15,	14,	13,	12,
 	11, 11,	10, 10,	9, 9, 8, 8,
 	7, 7, 7, 6, 6, 6,
 	5, 5, 5, 5,	4, 4, 4, 4,
 	3, 3, 3, 3, 3
 };
+
+#define STORE_VALUE(data) ((uint)1 << (uint)data)
 
 static const EntityData::Field491Value field491Objects[9] = {EntityData::kField491_0, EntityData::kField491_8200,
 	                                                         EntityData::kField491_7500, EntityData::kField491_6470,
@@ -304,15 +306,13 @@ void Entities::resetState(EntityIndex entityIndex) {
 	if (entityIndex > kEntityChapters)
 		return;
 
-	int field = ~((uint)1 << entityIndex);
-
 	// reset compartments and positions for this entity
-	for (int i = 0; i < _positionsNumber; i++)
-		_positions[i] &= field;
+	for (int i = 0; i < _positionsCount; i++)
+		_positions[i] &= ~STORE_VALUE(entityIndex);
 
-	for (int i = 0; i < _compartmentsNumber; i++) {
-		_compartments[i] &= field;
-		_compartments1[i] &= field;
+	for (int i = 0; i < _compartmentsCount; i++) {
+		_compartments[i] &= ~STORE_VALUE(entityIndex);
+		_compartments1[i] &= ~STORE_VALUE(entityIndex);
 	}
 
 	getLogic()->updateCursor();
@@ -647,7 +647,7 @@ void Entities::drawSequencesInternal(EntityIndex index, EntityDirection directio
 void Entities::getSequenceName(EntityIndex index, EntityDirection direction, char *sequence1, char *sequence2) const {
 	EntityData::EntityCallData *data = getData(index);
 	loadSceneObject(currentScene, getState()->scene);
-	int position = currentScene.getHeader()->position;
+	Position position = currentScene.getHeader()->position;
 
 	// reset fields
 	data->field_4A9 = 0;
@@ -844,7 +844,7 @@ void Entities::updatePosition(EntityIndex entity, CarIndex car, Position positio
 	if (entity > kEntityChapters)
 		return;
 
-	_positions[100 * car + position] &= ~(1 << entity);
+	_positions[100 * car + position] &= ~STORE_VALUE(entity);
 
 	if (processScene && (isPlayerPosition(car, position) || (car == kCarRestaurant && position == 57 && isPlayerPosition(kCarRestaurant, 50)))) {
 		getSound()->excuseMe(entity);
@@ -932,13 +932,13 @@ void Entities::enterCompartment(EntityIndex entity, ObjectIndex compartment, boo
 	// Update compartments
 	int index = (compartment < 32 ? compartment - 1 : compartment - 24);
 	if (useFirstCompartments)
-		_compartments[index] |= (1 << entity);
+		_compartments[index] |= STORE_VALUE(entity);
 	else
-		_compartments1[index] |= (1 << entity);
+		_compartments1[index] |= STORE_VALUE(entity);
 }
 
 void Entities::exitCompartment(EntityIndex entity, ObjectIndex compartment, bool useFirstCompartments) {
-if (entity > kEntityChapters)
+	if (entity > kEntityChapters)
 		return;
 
 	// TODO factorize in one line
@@ -1015,9 +1015,9 @@ if (entity > kEntityChapters)
 	// Update compartments
 	int index = (compartment < 32 ? compartment - 1 : compartment - 24);
 	if (useFirstCompartments)
-		_compartments[index] &= ~(1 << entity);
+		_compartments[index] &= ~STORE_VALUE(entity);
 	else
-		_compartments1[index] &= ~(1 << entity);
+		_compartments1[index] &= ~STORE_VALUE(entity);
 }
 
 void Entities::updatePositionsEnter(EntityIndex entity, CarIndex car, Position position1, Position position2, Position position3, Position position4) {
@@ -1027,8 +1027,8 @@ void Entities::updatePositionsEnter(EntityIndex entity, CarIndex car, Position p
 	if (entity > kEntityChapters)
 		return;
 
-	_positions[100 * car + position1] |= (1 << entity);
-	_positions[100 * car + position2] |= (1 << entity);
+	_positions[100 * car + position1] |= STORE_VALUE(entity);
+	_positions[100 * car + position2] |= STORE_VALUE(entity);
 
 	// FIXME: also checking two DWORD values that do not seem to updated anywhere...
 	if (isPlayerPosition(car, position1) || isPlayerPosition(car, position2) || isPlayerPosition(car, position3) || isPlayerPosition(car, position4)) {
@@ -1047,8 +1047,8 @@ void Entities::updatePositionsExit(EntityIndex entity, CarIndex car, Position po
 	if (entity > kEntityChapters)
 		return;
 
-	_positions[100 * car + position1] &= ~(1 << entity);
-	_positions[100 * car + position2] &= ~(1 << entity);
+	_positions[100 * car + position1] &= ~STORE_VALUE(entity);
+	_positions[100 * car + position2] &= ~STORE_VALUE(entity);
 
 	getLogic()->updateCursor();
 }
@@ -1056,7 +1056,7 @@ void Entities::updatePositionsExit(EntityIndex entity, CarIndex car, Position po
 //////////////////////////////////////////////////////////////////////////
 // Misc (Sound, etc.)
 //////////////////////////////////////////////////////////////////////////
-int Entities::getSoundValue(EntityIndex entity) {
+uint Entities::getSoundValue(EntityIndex entity) const {
 	if (entity == kEntityNone)
 		return 16;
 
@@ -1064,7 +1064,7 @@ int Entities::getSoundValue(EntityIndex entity) {
 		return 0;
 
 	// Compute sound value
-	int ret = 2;
+	uint ret = 2;
 
 	// Get default value if valid
 	int index = abs(getData(entity)->field_491 - getData(kEntityNone)->field_491) / 230;
@@ -1111,7 +1111,7 @@ int Entities::getSoundValue(EntityIndex entity) {
 	return ret;
 }
 
-void Entities::loadSceneFromField491(CarIndex car, EntityData::Field491Value field491, bool alternate) {
+void Entities::loadSceneFromField491(CarIndex car, EntityData::Field491Value field491, bool alternate) const {
 
 	// Determine position
 	Position position = (alternate ? 1 : 40);
@@ -1138,7 +1138,7 @@ void Entities::loadSceneFromField491(CarIndex car, EntityData::Field491Value fie
 	// Load scene from position
 	switch (position) {
 	default:
-		getLogic()->loadSceneFromPosition(car, position + (alternate ? - 1 : 1));
+		getLogic()->loadSceneFromPosition(car, (Position)(position + (alternate ? - 1 : 1)));
 		break;
 
 	// Alternate
@@ -1164,7 +1164,7 @@ void Entities::loadSceneFromField491(CarIndex car, EntityData::Field491Value fie
 //////////////////////////////////////////////////////////////////////////
 //	Checks
 //////////////////////////////////////////////////////////////////////////
-bool Entities::checkSequence0(EntityIndex entity) {
+bool Entities::checkSequence0(EntityIndex entity) const {
 	return (getData(entity)->sequence0 && (getData(entity)->sequence0->getFrameInfo(0)->subType != 3));
 }
 
