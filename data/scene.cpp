@@ -60,8 +60,7 @@ SceneHotspot *SceneHotspot::load(Common::SeekableReadStream *stream) {
 	hs->rect.top = (int16)stream->readUint16LE();
 	hs->rect.bottom = (int16)stream->readUint16LE();
 
-	hs->coord = stream->readUint16LE();
-	hs->unknownA = stream->readUint16LE();
+	hs->coordsOffset = stream->readUint32LE();	
 	hs->scene = (SceneIndex)stream->readUint16LE();
 	hs->location = stream->readByte();
 	hs->action = stream->readByte();
@@ -73,25 +72,23 @@ SceneHotspot *SceneHotspot::load(Common::SeekableReadStream *stream) {
 
 	debugC(10, kLastExpressDebugScenes, "\thotspot: scene=%d location=%02d action=%02d param1=%02d param2=%02d param3=%02d cursor=%02d rect=(%d, %d)x(%d,%d)",
 	                                   hs->scene, hs->location, hs->action, hs->param1, hs->param2, hs->param3, hs->cursor, hs->rect.left, hs->rect.top, hs->rect.right, hs->rect.bottom);
-	debugC(10, kLastExpressDebugScenes, "\t         uA=%d, next=%d coord=%d ",
-	                                   hs->unknownA, hs->next, hs->coord);
+	debugC(10, kLastExpressDebugScenes, "\t         coords=%d next=%d ", hs->coordsOffset, hs->next);
 
 	// Read all coords data
-	uint32 offset = hs->coord;
+	uint32 offset = hs->coordsOffset;
 	while (offset != 0) {
 
 		SceneCoord *sceneCoord = new SceneCoord;
 
 		stream->seek(offset, SEEK_SET);
 
-		sceneCoord->field_0 = stream->readUint32LE();
-		sceneCoord->field_4 = stream->readUint32LE();
+		sceneCoord->field_0 = stream->readSint32LE();
+		sceneCoord->field_4 = stream->readSint32LE();
 		sceneCoord->field_8 = stream->readByte();
 		sceneCoord->next = stream->readUint32LE();
 
 		hs->_coords.push_back(sceneCoord);
 
-		// FIXME: read 32 bits but the next offset is 16 bits?
 		offset = sceneCoord->next;
 	}
 
@@ -102,30 +99,25 @@ bool SceneHotspot::isInside(const Common::Point &point) {
 
 	bool contains = rect.contains(point);
 
-	//if (!_coords.empty() && contains) {
+	if (_coords.empty() || !contains)
+		return contains;
+	
+	// Checks extended coordinates
+	for (uint i = 0; i < _coords.size(); i++) {
 
-	//	for (uint i = 0; i < _coords.size(); i++) {
+		SceneCoord *sCoord = _coords[i];
 
-	//		SceneCoord *sCoord = _coords[i];
+		bool cont;
+		if (sCoord->field_8)
+			cont = (sCoord->field_4 + point.x * sCoord->field_0 + 1000 * point.y) >= 0;
+		else
+			cont = (sCoord->field_4 + point.x * sCoord->field_0 + 1000 * point.y) <= 0;
 
-	//		// Check coords
-	//		// FIXME: gcc warns that the first statement in the if here always evaluates to true
-	//		bool cont;
-	//		if (sCoord->field_8)
-	//			cont = sCoord->field_4 + point.x * sCoord->field_0 + 1000 * point.y >= 0;
-	//		else
-	//			cont = sCoord->field_4 + point.x * sCoord->field_0 + 1000 * point.y <= 0;
+		if (!cont)
+			return false;
+	}
 
-	//		if (!cont)
-	//			return false;
-	//	}
-
-	//	return true;
-	//}
-
-	//return false;
-
-	return contains;
+	return true;
 }
 
 //////////////////////////////////////////////////////////////////////////

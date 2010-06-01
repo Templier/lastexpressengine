@@ -50,8 +50,7 @@
 	    uint16 {2}  - right
 	    uint16 {2}  - top
 	    uint16 {2}  - bottom
-	    uint16 {2}  - scene coords data
-	    uint16 {2}  - unknownA
+	    uint32 {4}  - scene coords data
 	    uint16 {2}  - scene
 	    byte {1}    - location;
 	    byte {1}    - action;
@@ -59,7 +58,7 @@
 	    byte {1}    - param2;
 	    byte {1}    - param3
 	    byte {1}    - cursor
-	    uint32{2}  - offset to next hotpost
+	    uint32{4}  - offset to next hotpost
 
 	coords data (9 bytes)
 	    uint32 {4}    - ??
@@ -146,15 +145,21 @@ public:
 	};
 
 	struct SceneCoord {
-		uint32 field_0;
-		uint32 field_4;
+		int32 field_0;
+		int32 field_4;
 		byte field_8;
 		uint32 next;
+
+		SceneCoord() {
+			field_0 = 0;
+			field_4 = 0;
+			field_8 = 0;
+			next = 0;
+		}
 	};
 
 	Common::Rect rect;
-	uint16 coord;
-	uint16 unknownA;
+	uint32 coordsOffset;
 	SceneIndex scene;
 	byte location;
 	byte action;
