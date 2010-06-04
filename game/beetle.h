@@ -56,8 +56,8 @@ private:
 		Common::Array<Sequence *> sequences;
 
 		uint32 field_74;
-		Sequence * currentSequence;
-		uint32 field_7C;
+		Sequence *currentSequence;
+		uint32 currentFrame;
 		uint32 index;
 		uint32 field_84;
 
@@ -76,7 +76,7 @@ private:
 		BeetleData() {
 			field_74 = 0;
 			currentSequence = NULL;
-			field_7C = 0;
+			currentFrame = 0;
 			index = 0;
 			field_84 = 0;
 
@@ -95,7 +95,8 @@ private:
 
 		~BeetleData() {
 			for (int i = 0; i < (int)sequences.size(); i++)
-				delete sequences[i];
+				if (sequences[i])
+					delete sequences[i];
 		}
 	};
 

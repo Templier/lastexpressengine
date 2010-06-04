@@ -245,7 +245,7 @@ void Entities::reset() {
 	for (uint i = 1; i < _entities.size(); i++)
 		resetSequences((EntityIndex)i);
 
-	getScenes()->resetTrain();
+	getScenes()->resetDoorsAndClock();
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -416,7 +416,7 @@ void Entities::updateSequences() {
 		return;
 
 	// Update the train clock & doors
-	getScenes()->updateTrain();
+	getScenes()->updateDoorsAndClock();
 
 	//////////////////////////////////////////////////////////////////////////
 	// First pass: Drawing

@@ -72,7 +72,7 @@ void Objects::update(ObjectIndex index, EntityIndex entity, ObjectLocation locat
 	if (original_location != location && (original_location == kLocation2 || location == kLocation2))
 		if ((index >= kObjectCompartment1 && index <= kObjectCompartment8)
 	     || (index >= kObjectCompartmentA && index <= kObjectCompartmentF)) {
-		 	getScenes()->updateTrain();
+		 	getScenes()->updateDoorsAndClock();
 		}
 }
 

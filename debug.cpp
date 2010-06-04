@@ -138,9 +138,15 @@ bool Debugger::cmd_playseq(int argc, const char **argv) {
 		} else {
 			Sequence *sequence = new Sequence();
 			if (sequence->loadFile(filename)) {
+
+				// Check that we have at least a frame to show
+				if (sequence->count() == 0)
+					return false;
+
 				_engine->getCursor()->show(false);
-				SequencePlayer player(sequence);
-				while (!player.hasEnded()) {
+
+				SequenceFrame player(sequence);
+				do {
 					// Clear screen
 					clearBg(GraphicsManager::kBackgroundA);
 
@@ -157,9 +163,8 @@ bool Debugger::cmd_playseq(int argc, const char **argv) {
 
 					_engine->_system->delayMillis(175);
 
-					// Update the player status
-					player.processTime();
-				}
+					// go to the next frame						
+				} while (player.setFrame(player.getFrame() + 1));
 				_engine->getCursor()->show(true);
 			} else {
 				// Sequence player is deleting his reference to the sequence, but we need to take care of it if the
@@ -413,6 +418,31 @@ bool Debugger::cmd_loadscene(int argc, const char **argv) {
 
 			clearBg(GraphicsManager::kBackgroundAll);
 
+			/************  DEBUG  *************************/
+			// Use to find scenes with certain values
+			
+			//for (int i = index; i < 2500; i++) {
+			//	loadSceneObject(scene, i);
+		
+			//	if (scene.getHeader() && scene.getHeader()->car == 5 && scene.getHeader()->position == 81) {
+			//		DebugPrintf("Found scene: %d", i);
+
+			//		// Draw scene found
+			//		_engine->getGraphicsManager()->draw(&scene, GraphicsManager::kBackgroundC);
+
+			//		askForRedraw();
+			//		redrawScreen();
+			//		_engine->_system->delayMillis(500);
+
+			//		break;
+			//	}
+			//}
+
+			//delete _sceneLoader;
+			//resetCommand();
+			//return true;
+			
+			/*********************************************/
 			Scene s;
 			if (!_sceneLoader->loadScene(&s, index)) {
 				DebugPrintf("Cannot load scene %i from CD %i", index, cd);
@@ -428,7 +458,7 @@ bool Debugger::cmd_loadscene(int argc, const char **argv) {
 			redrawScreen();
 
 			// Pause for a second to be able to see the scene
-			_engine->_system->delayMillis(3000);
+			_engine->_system->delayMillis(500);
 
 			delete _sceneLoader;
 

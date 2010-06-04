@@ -28,18 +28,22 @@
 
 #include "lastexpress/data/scene.h"
 
+#include "common/list.h"
+
 namespace LastExpress {
 
 class LastExpressEngine;
 class SceneLoader;
 class Sequence;
+class SequenceFrame;
 
 class SceneManager {
 public:
 	enum CheckPositionType {
 		kCheckPositionType0,
 		kCheckPositionType1,
-		kCheckPositionType2
+		kCheckPositionLookingAtDoors,
+		kCheckPositionLookingAtClock
 	};
 
 	SceneManager(LastExpressEngine *engine);
@@ -66,8 +70,15 @@ public:
 	bool checkCurrentPosition(bool doCheckOtherCars) const;
 
 	// Train
-	void updateTrain();
-	void resetTrain();
+	void updateDoorsAndClock();
+	void resetDoorsAndClock();
+
+	// Sequence list
+	void drawFrames(bool refreshScreen);
+	void addToList(Sequence *sequence, uint32 frameIndex = 0);
+	void removeFromList(Sequence *sequence, uint32 frameIndex = 0);
+	void removeSequenceAndRedraw(Sequence *sequence, bool doRedraw, uint32 frameIndex = 0);
+	void resetList();
 
 	// Helpers
 	bool loadScene(Scene * const scene, SceneIndex sceneIndex);	
@@ -83,12 +94,20 @@ private:
 
 	// Flags
 	bool _flagNoEntity;
-	bool _flagDrawEntities;			
+	bool _flagDrawEntities;
+	bool _flagDrawSequences;
 
 	// Train sequences
-	Sequence *_clockHours;
-	Sequence *_clockMinutes;
 	Common::Array<Sequence *> _doors;
+
+	Sequence *_clockHours;
+	Sequence *_clockMinutes;	
+
+	int _hoursIndex;
+	int _minutesIndex;	
+
+	// Sequence list
+	Common::List<SequenceFrame *> _list;
 
 	// Scene processing		
 	void preProcessScene(SceneIndex *index);

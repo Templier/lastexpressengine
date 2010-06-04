@@ -548,7 +548,7 @@ void Fight::processFighter(Fighter *fighter) {
 			fighter->frameIndex++;
 label_sequence2:
 			if (fighter->currentSequence2) {
-				// TODO: prepare for decompressing not useful to us, but there is a check for a sequence file before a call to setting screen coordinates
+				//getSceneManager()->removeFromList(fighter->currentSequence2);
 			}
 			fighter->currentSequence2 = sequence2;
 		}

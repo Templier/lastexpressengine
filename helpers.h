@@ -73,7 +73,13 @@
 //////////////////////////////////////////////////////////////////////////
 // Graphics
 //////////////////////////////////////////////////////////////////////////
+
+// Sequences
 #define newSequence(name) new Sequence(_engine->getResourceManager()->getFileStream(name))
+#define drawSequenceFrame(drawable, index, type) { \
+	AnimFrame *frame = (drawable)->getFrame((index)); \
+	_engine->getGraphicsManager()->draw((frame), (type)); \
+	delete frame; }
 
 #define clearBg(type) _engine->getGraphicsManager()->clear(type)
 #define showScene(index, type) { loadSceneObject(s, index); _engine->getGraphicsManager()->draw(&s, type); }

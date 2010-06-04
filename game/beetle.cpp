@@ -27,6 +27,7 @@
 
 #include "lastexpress/game/inventory.h"
 #include "lastexpress/game/logic.h"
+#include "lastexpress/game/scenes.h"
 #include "lastexpress/game/state.h"
 
 #include "lastexpress/helpers.h"
@@ -38,11 +39,7 @@ namespace LastExpress {
 Beetle::Beetle(LastExpressEngine *engine) : _engine(engine), _data(NULL) {}
 
 Beetle::~Beetle() {
-	unload();
-
-	// Make sure we clean up, even if unload has not been called
-	delete _data;
-	_data = NULL;
+	SAFE_DELETE(_data);
 
 	// Free passed pointers
 	_engine = NULL;
@@ -120,9 +117,11 @@ void Beetle::load() {
 }
 
 void Beetle::unload() {
+	// Remove sequences from display list
+	getScenes()->removeFromList(_data->currentSequence, _data->currentFrame);
+
 	// Delete all loaded sequences
-	delete _data;
-	_data = NULL;
+	SAFE_DELETE(_data);
 }
 
 bool Beetle::isLoaded() const {
@@ -277,7 +276,7 @@ void Beetle::updateData(uint32 index) {
 		_data->offset = 0;
 
 		_data->currentSequence = _data->sequences[index];
-		_data->field_7C = 0;
+		_data->currentFrame = 0;
 		_data->index = index;
 	} else {
 		if (!_data->sequences[index])
@@ -294,7 +293,7 @@ void Beetle::updateData(uint32 index) {
 			_data->coordY = 178;
 			_data->index = _data->indexes[1];
 			_data->indexes[1] = (_data->coordX >= 265) ? 15 : 9;
-			_data->field_7C = 0;
+			_data->currentFrame = 0;
 			_data->currentSequence = _data->sequences[index];
 		} else {
 			if (index <= _data->index) {
@@ -311,7 +310,7 @@ void Beetle::updateData(uint32 index) {
 
 			_data->index = index;
 			_data->indexes[_data->offset] = index;
-			_data->field_7C = 0;
+			_data->currentFrame = 0;
 			_data->offset = 0;
 			_data->currentSequence = _data->sequences[_data->indexes[0]];
 		}

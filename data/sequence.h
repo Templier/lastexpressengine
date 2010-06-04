@@ -30,6 +30,7 @@
 	Sequence format (.SEQ / .NIS (frame header & data only))
 
 	uint32 {4}    - Number of frames in sequence
+	uint32 {4}    - Unknown
 
 	frames headers:
 	// for each frame
@@ -156,21 +157,22 @@ private:
 	bool _isLoaded;
 };
 
-class SequencePlayer : public Drawable {
+class SequenceFrame : public Drawable {
 public:
-	SequencePlayer(Sequence *sequence);
-	~SequencePlayer();
+	SequenceFrame(Sequence *sequence, bool dispose = true);
+	~SequenceFrame();
 
-	bool processTime();
-	bool hasEnded() const;
-	Common::Rect draw(Graphics::Surface *surface);
+	Common::Rect draw(Graphics::Surface *surface);	
 
-	// TODO: options to go to a concrete frame, play forwards, play backwards...
-	bool setFrame(uint32);
+	bool setFrame(uint32 frame);
+	uint32 getFrame() { return _frame; }
+
+	bool isSequenceFrame(Sequence *sequence, uint32 frame);
 
 private:
 	Sequence *_sequence;
-	uint32 _currentFrame;
+	uint32 _frame;
+	bool _dispose;
 };
 
 } // End of namespace LastExpress

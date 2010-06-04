@@ -406,33 +406,22 @@ AnimFrame *Sequence::getFrame(uint32 index) {
 
 
 // SequencePlayer
-
-SequencePlayer::SequencePlayer(Sequence *sequence) :
-	_sequence(sequence), _currentFrame(0) {
+SequenceFrame::SequenceFrame(Sequence *sequence, bool dispose) :
+	_sequence(sequence), _frame(0), _dispose(false) {
 }
 
-SequencePlayer::~SequencePlayer() {
-	delete _sequence;
+SequenceFrame::~SequenceFrame() {
+	if (_dispose && _sequence) {
+		delete _sequence;
+		_sequence = NULL;
+	}
 }
 
-bool SequencePlayer::processTime() {
-	// TODO: Just increase the current frame when it's the appropiate time
-	if (_currentFrame < _sequence->count()) {
-		_currentFrame++;
-		return true;
-	} else
-		return true;
-}
-
-bool SequencePlayer::hasEnded() const {
-	return _currentFrame >= _sequence->count();
-}
-
-Common::Rect SequencePlayer::draw(Graphics::Surface *surface) {
-	if (hasEnded())
+Common::Rect SequenceFrame::draw(Graphics::Surface *surface) {
+	if (!_sequence || _frame >= _sequence->count())
 		return Common::Rect();
 
-	AnimFrame *f = _sequence->getFrame(_currentFrame);
+	AnimFrame *f = _sequence->getFrame(_frame);
 	if (!f)
 		return Common::Rect();
 
@@ -443,9 +432,12 @@ Common::Rect SequencePlayer::draw(Graphics::Surface *surface) {
 	return rect;
 }
 
-bool SequencePlayer::setFrame(uint32 frame) {
+bool SequenceFrame::setFrame(uint32 frame) {
+	if (!_sequence)
+		return false;
+
 	if (frame < _sequence->count()) {
-		_currentFrame = frame;
+		_frame = frame;
 		return true;
 	} else
 		return false;

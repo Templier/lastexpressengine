@@ -29,6 +29,7 @@
 
 #include "lastexpress/game/action.h"
 #include "lastexpress/game/beetle.h"
+#include "lastexpress/game/entities.h"
 #include "lastexpress/game/inventory.h"
 #include "lastexpress/game/logic.h"
 #include "lastexpress/game/object.h"
@@ -43,8 +44,9 @@
 
 namespace LastExpress {
 
-SceneManager::SceneManager(LastExpressEngine *engine) : _engine(engine), _currentScene(NULL), _flagNoEntity(false), _flagDrawEntities(false),
-	_clockHours(NULL), _clockMinutes(NULL) {
+SceneManager::SceneManager(LastExpressEngine *engine) : _engine(engine), _currentScene(NULL),
+	_flagNoEntity(false), _flagDrawEntities(false), _flagDrawSequences(false),
+	_clockHours(NULL), _clockMinutes(NULL), _hoursIndex(0), _minutesIndex(0) {
 	_sceneLoader = new SceneLoader();
 }
 
@@ -52,8 +54,13 @@ SceneManager::~SceneManager() {
 	delete _currentScene;
 	delete _sceneLoader;
 
-	// cleanup train-related sequences
-	resetTrain();
+	for (int i = 0; i < (int)_doors.size(); i++)
+		delete _doors[i];
+
+	_doors.clear();
+
+	SAFE_DELETE(_clockHours);
+	SAFE_DELETE(_clockMinutes);
 	
 	// Zero-out passed pointers
 	_engine = NULL;
@@ -319,19 +326,23 @@ bool SceneManager::checkPosition(SceneIndex index, CheckPositionType type) const
 	CarIndex car = (CarIndex)scene.getHeader()->car;
 	Position position = scene.getHeader()->position;
 
-	bool result = (car == kCarGreenSleeping || car == kCarRedSleeping);
-
+	bool isInSleepingCar = (car == kCarGreenSleeping || car == kCarRedSleeping);
 
 	switch (type) {
 	default:
+		error("SceneManager::checkPosition: Invalid position type: %d", type);
+
 	case kCheckPositionType0:
-		return result && (position >= 1 && position <= 19);
+		return isInSleepingCar && (position >= 1 && position <= 19);
 
 	case kCheckPositionType1:
-		return result && (position >= 21 && position <= 40);
+		return isInSleepingCar && (position >= 21 && position <= 40);
 
-	case kCheckPositionType2:
-		return result && ((position >= 2 && position <= 17) || (position >= 23 && position <= 39));
+	case kCheckPositionLookingAtDoors:
+		return isInSleepingCar && ((position >= 2 && position <= 17) || (position >= 23 && position <= 39));
+
+	case kCheckPositionLookingAtClock:
+		return car == kCarRestaurant && position == 81;
 	}
 }
 
@@ -398,11 +409,48 @@ bool SceneManager::checkCurrentPosition(bool doCheckOtherCars) const {
 //////////////////////////////////////////////////////////////////////////
 // Train
 //////////////////////////////////////////////////////////////////////////
-void SceneManager::updateTrain() {
-	warning("SceneManager::updateTrain: not implemented!");
+void SceneManager::updateDoorsAndClock() {
+	// Clear all sequences from the list
+	for (int i = 0; i < (int)_doors.size(); i++)
+		removeFromList(_doors[i]);
+
+	// Cleanup doors sequences
+	_doors.clear();
+
+	if (_clockHours)
+		removeFromList(_clockHours, _hoursIndex);
+
+	if (_clockMinutes)
+		removeFromList(_clockMinutes, _minutesIndex);
+
+	// Queue doors sequences for display
+	if (checkPosition(kSceneNone, kCheckPositionLookingAtDoors)) {
+
+		//ObjectIndex objectIndex = getEntityData(kEntityNone)->car == kCarGreenSleeping ?  kObjectCompartment1 : kObjectCompartmentA;
+
+		// Iterate over locations
+		//if (getObjects()->get(objectIndex)->location != kLocation2)
+		//	continue;
+	}
+
+	// Queue clock sequences for display
+	if (checkPosition(kSceneNone, kCheckPositionLookingAtClock)) {
+		// Example scene: 349
+
+		_clockHours = newSequence(Common::String::printf("SCLKH-81.seq"));
+		_clockMinutes = newSequence(Common::String::printf("SCLKM-81.seq"));
+
+		// Compute hours and minutes indexes
+		
+
+		// Adjust z-order and store sequences to list
+
+
+
+	}
 }
 
-void SceneManager::resetTrain() {
+void SceneManager::resetDoorsAndClock() {
 	for (int i = 0; i < (int)_doors.size(); i++)
 		delete _doors[i];
 
@@ -411,7 +459,40 @@ void SceneManager::resetTrain() {
 	SAFE_DELETE(_clockHours);
 	SAFE_DELETE(_clockMinutes);
 
+	// Remove the beetle sequences too if needed
 	getBeetle()->unload();
+}
+
+//////////////////////////////////////////////////////////////////////////
+// Sequence list
+//////////////////////////////////////////////////////////////////////////
+void SceneManager::drawFrames(bool refreshScreen) {
+	error("SceneManager::drawFrames - Not implemented!");
+}
+
+void SceneManager::addToList(Sequence *sequence, uint32 frameIndex) {
+	error("SceneManager::addToList - Not implemented!");
+}
+
+void SceneManager::removeFromList(Sequence *sequence, uint32 frameIndex) {
+	error("SceneManager::removeFromList - Not implemented!");
+}
+
+void SceneManager::removeSequenceAndRedraw(Sequence *sequence, bool doRedraw, uint32 frameIndex) {
+	if (!sequence)
+		return;
+
+	removeFromList(sequence, frameIndex);
+
+	if (doRedraw)
+		drawFrames(true);
+}
+
+void SceneManager::resetList() {
+	_flagDrawSequences = true;
+
+	// The original engine only deletes decompressed data, not the "sequences" since they are just pointers to a memory pool
+	_list.clear();
 }
 
 //////////////////////////////////////////////////////////////////////////

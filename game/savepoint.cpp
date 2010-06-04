@@ -107,8 +107,8 @@ void SavePoints::process() {
 	}
 }
 
-void SavePoints::reset() const {
-	_savepoints.empty();
+void SavePoints::reset() {
+	_savepoints.clear();
 }
 
 //////////////////////////////////////////////////////////////////////////
