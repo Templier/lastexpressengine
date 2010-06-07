@@ -122,7 +122,21 @@ IMPLEMENT_FUNCTION_SI(Rebecca, function8, 8)
 }
 
 IMPLEMENT_FUNCTION_SI(Rebecca, function9, 9)
-	error("Rebecca: callback function 9 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionExitCompartment:
+	case kAction4:
+		getEntities()->exitCompartment(kEntityRebecca, (ObjectIndex)params->param2);
+		CALLBACK_ACTION();
+		break;
+
+	case kActionDefault:
+		getEntities()->drawSequenceRight(kEntityRebecca, params->seq1);
+		getEntities()->enterCompartment(kEntityRebecca, (ObjectIndex)params->param2);
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Rebecca, function10, 10)
@@ -245,7 +259,7 @@ IMPLEMENT_FUNCTION(Rebecca, function27, 27)
 		getData()->field_491 = EntityData::kField491_4840;
 		getData()->field_493 = EntityData::kField493_1;
 		getData()->car = kCarRedSleeping;
-		
+
 		getObjects()->update(kObjectCompartmentE, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
 		getObjects()->update(kObject52, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
 
@@ -314,7 +328,32 @@ IMPLEMENT_FUNCTION(Rebecca, function30, 30)
 }
 
 IMPLEMENT_FUNCTION(Rebecca, function31, 31)
-	error("Rebecca: callback function 31 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionDefault:
+		setCallback(1);
+		call(new ENTITY_SETUP(Rebecca, setup_updateFromTime), 900);
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			setCallback(2);
+			call(new ENTITY_SETUP_SIIS(Rebecca, setup_enterExitCompartment), "623CE", kObjectCompartmentE);
+			break;
+
+		case 2:
+			getObjects()->update(kObjectCompartmentE, kEntityNone, kLocation2, kCursorNormal, kCursorNormal);
+			getEntities()->drawSequenceLeft(kEntityRebecca, "504");
+			break;
+		}
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Rebecca, chapter3, 32)
@@ -463,7 +502,26 @@ IMPLEMENT_FUNCTION(Rebecca, chapter4, 42)
 }
 
 IMPLEMENT_FUNCTION(Rebecca, function43, 43)
-	error("Rebecca: callback function 43 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionDefault:
+		setCallback(1);
+		call(new ENTITY_SETUP(Rebecca, setup_function20), kTimeRebecca_4);
+		break;
+
+	case kActionCallback:
+		if (getCallback() == 1 || getCallback() == 2) {
+			if (ENTITY_PARAM(0, 1)) {
+				setup_function44();
+			} else {
+				setCallback(2);
+				call(new ENTITY_SETUP(Rebecca, setup_function20), getState()->time + 900);
+			}
+		}
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Rebecca, function44, 44)
@@ -492,7 +550,6 @@ IMPLEMENT_FUNCTION(Rebecca, chapter5, 46)
 		getData()->inventoryItem = kItemNone;
 
 		getObjects()->updateLocation2(kObject110, kLocation4);
-
 		break;
 	}
 }

@@ -50,7 +50,7 @@ Boutarel::Boutarel(LastExpressEngine *engine) : Entity(engine, kEntityBoutarel) 
 	ADD_CALLBACK_FUNCTION(Boutarel, function10);
 	ADD_CALLBACK_FUNCTION(Boutarel, function11);
 	ADD_CALLBACK_FUNCTION(Boutarel, function12);
-	ADD_CALLBACK_FUNCTION(Boutarel, function13);
+	ADD_CALLBACK_FUNCTION(Boutarel, leaveTableWithMmeBoutarel);
 	ADD_CALLBACK_FUNCTION(Boutarel, function14);
 	ADD_CALLBACK_FUNCTION(Boutarel, function15);
 	ADD_CALLBACK_FUNCTION(Boutarel, function16);
@@ -127,8 +127,24 @@ IMPLEMENT_FUNCTION(Boutarel, function12, 12)
 	error("Boutarel: callback function 12 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Boutarel, function13, 13)
-	error("Boutarel: callback function 13 not implemented!");
+IMPLEMENT_FUNCTION(Boutarel, leaveTableWithMmeBoutarel, 13)
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionExitCompartment:		
+		getSavePoints()->push(kEntityBoutarel, kEntityTables2, kAction103798704, "008F");
+		getEntities()->prepareSequences(kEntityMmeBoutarel);
+
+		CALLBACK_ACTION();
+		break;
+
+	case kActionDefault:
+		getEntities()->drawSequenceRight(kEntityTables2, "008E3");
+		getEntities()->drawSequenceRight(kEntityMmeBoutarel, "008E2");
+		getEntities()->drawSequenceRight(kEntityBoutarel, "008E1");
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION_I(Boutarel, function14, 14)
@@ -184,7 +200,7 @@ IMPLEMENT_FUNCTION(Boutarel, function21, 21)
 }
 
 IMPLEMENT_FUNCTION(Boutarel, function22, 22)
-	if (savepoint.action == kActionDefault) {		
+	if (savepoint.action == kActionDefault) {
 		getData()->field_491 = EntityData::kField491_6470;
 		getData()->field_493 = EntityData::kField493_1;
 		getData()->car = kCarRedSleeping;
@@ -262,7 +278,7 @@ IMPLEMENT_FUNCTION(Boutarel, function27, 27)
 
 	case kActionDefault:
 		getObjects()->update(kObjectCompartmentC, kEntityNone, kLocation2, kCursorKeepValue, kCursorKeepValue);
-		getEntities()->drawSequenceLeft(kEntityBoutarel, "510");		
+		getEntities()->drawSequenceLeft(kEntityBoutarel, "510");
 		break;
 
 	case kAction122288808:
@@ -303,7 +319,7 @@ IMPLEMENT_FUNCTION(Boutarel, function30, 30)
 
 	case kActionDefault:
 		getObjects()->update(kObjectCompartmentC, kEntityNone, kLocation2, kCursorKeepValue, kCursorKeepValue);
-		getEntities()->drawSequenceLeft(kEntityBoutarel, "510");		
+		getEntities()->drawSequenceLeft(kEntityBoutarel, "510");
 		break;
 
 	case kAction122288808:
@@ -368,7 +384,7 @@ IMPLEMENT_FUNCTION(Boutarel, function34, 34)
 }
 
 IMPLEMENT_FUNCTION(Boutarel, function35, 35)
-	if (savepoint.action == kActionDefault) {		
+	if (savepoint.action == kActionDefault) {
 		getData()->field_491 = EntityData::kField491_6470;
 		getData()->field_493 = EntityData::kField493_1;
 		getData()->car = kCarRedSleeping;

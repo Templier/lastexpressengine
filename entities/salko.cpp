@@ -122,7 +122,27 @@ IMPLEMENT_FUNCTION(Salko, chapter1, 9)
 }
 
 IMPLEMENT_FUNCTION(Salko, function10, 10)
-	error("Salko: callback function 10 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionNone:
+		getData()->field_491 = getEntityData(kEntityIvo)->field_491;
+		getData()->field_493 = getEntityData(kEntityIvo)->field_493;
+		break;
+
+	case kActionCallback:
+		if (getCallback() == 1) {
+			getEntities()->prepareSequences(kEntitySalko);
+			setup_function8();
+		}
+		break;
+
+	case kAction125242096:
+		setCallback(1);
+		call(new ENTITY_SETUP(Salko, setup_function7), kCarRedSleeping, EntityData::kField491_2740);
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Salko, function11, 11)
@@ -184,7 +204,24 @@ IMPLEMENT_FUNCTION(Salko, chapter3, 14)
 }
 
 IMPLEMENT_FUNCTION(Salko, function15, 15)
-	error("Salko: callback function 15 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionNone:
+		if (getState()->time < kTimeAugustVienna) {
+			UPDATE_PARAM_FROM_TIME(1, 81000);
+
+			setCallback(1);
+			call(new ENTITY_SETUP(Salko, setup_function16));
+		}
+		break;
+
+	case kActionCallback:
+		if (getCallback() == 1)
+			params->param1 = 0;
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Salko, function16, 16)
@@ -227,7 +264,7 @@ IMPLEMENT_FUNCTION(Salko, function19, 19)
 			getData()->field_493 = EntityData::kField493_1;
 
 			setup_function20();
-		}		
+		}
 		break;
 
 	case kAction125242096:

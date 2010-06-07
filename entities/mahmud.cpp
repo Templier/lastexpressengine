@@ -716,7 +716,7 @@ IMPLEMENT_FUNCTION(Mahmud, function14, 14)
 		case 8:
 		case 9:
 			setCallback(10);
-			call(new ENTITY_SETUP(Mahmud, setup_savegame), 2, kEventMahmudWrongDoor);
+			call(new ENTITY_SETUP(Mahmud, setup_savegame), kSavegameType2, kEventMahmudWrongDoor);
 			return;
 
 		case 10:

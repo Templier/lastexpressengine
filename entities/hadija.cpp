@@ -238,7 +238,27 @@ IMPLEMENT_FUNCTION(Hadija, function21, 21)
 }
 
 IMPLEMENT_FUNCTION(Hadija, function22, 22)
-	error("Hadija: callback function 22 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionNone:
+		UPDATE_PARAM_FROM_TIME(1, 2700);
+		setup_function23();
+		break;
+
+	case kActionDefault:
+		getData()->field_491 = EntityData::kField491_5000;
+		getData()->field_493 = EntityData::kField493_0;
+		getData()->car = kCarGreenSleeping;
+		break;
+
+	case kAction17:
+		if (getEntities()->checkFields5(kEntityNone, kCarGreenSleeping)) {
+			setup_function23();
+		}
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Hadija, function23, 23)

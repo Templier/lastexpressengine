@@ -372,7 +372,7 @@ IMPLEMENT_FUNCTION(Tatiana, function39, 39)
 	case kActionNone:
 		if (!params->param1 && getEntities()->checkFields9(kEntityTatiana, kEntityNone, 1000)) {
 			params->param1 = 1;
-			getSound()->playSound(kEntityTatiana, "Tat3164");	// Tatiana weeping 
+			getSound()->playSound(kEntityTatiana, "Tat3164");	// Tatiana weeping
 		}
 		break;
 

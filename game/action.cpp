@@ -744,7 +744,7 @@ IMPLEMENT_ACTION(dropItem) {
 
 		if (location == kLocation2) {
 			if (!getProgress().field_58) {
-				save(kEntityNone, 0, kEventNone);
+				save(kEntityNone, kSavegameType0, kEventNone);
 				getProgress().field_58 = 1;
 			}
 
@@ -791,7 +791,7 @@ IMPLEMENT_ACTION(enterCompartment) {
 			return kSceneNone;
 		}
 	} else {
-		save(kEntityNone, 0, kEventNone);
+		save(kEntityNone, kSavegameType0, kEventNone);
 		getSound()->playSound(kEntityNone, "LIB014");
 		playAnimation(kEventCathFindCorpse);
 		getSound()->playSound(kEntityNone, "LIB015");
@@ -1166,7 +1166,7 @@ IMPLEMENT_ACTION(catchBeetle) {
 //////////////////////////////////////////////////////////////////////////
 IMPLEMENT_ACTION(exitCompartment) {
 	if (!getProgress().field_30 && getProgress().jacket != 0) {
-		save(kEntityNone, 0, kEventNone);
+		save(kEntityNone, kSavegameType0, kEventNone);
 		getProgress().field_30 = 1;
 	}
 

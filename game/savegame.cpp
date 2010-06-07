@@ -79,7 +79,7 @@ bool SaveLoad::loadGame(GameId id) {
 }
 
 // Save game
-void SaveLoad::saveGame(int param1, EntityIndex entity, EventIndex event) {
+void SaveLoad::saveGame(SavegameType type, EntityIndex entity, EventIndex event) {
 	warning("SaveLoad::savegame: not implemented!");
 }
 

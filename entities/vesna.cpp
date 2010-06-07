@@ -135,7 +135,27 @@ IMPLEMENT_FUNCTION(Vesna, chapter1, 12)
 }
 
 IMPLEMENT_FUNCTION(Vesna, function13, 13)
-	error("Vesna: callback function 13 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionNone:
+		getData()->field_491 = getEntityData(kEntityMilos)->field_491;
+		getData()->field_493 = getEntityData(kEntityMilos)->field_493;
+		break;
+
+	case kActionCallback:
+		if (getCallback() == 1) {
+			getEntities()->prepareSequences(kEntityVesna);
+			setup_function14();
+		}
+		break;
+
+	case kAction204832737:
+		setCallback(1);
+		call(new ENTITY_SETUP(Vesna, setup_function7), kCarRedSleeping, EntityData::kField491_3050);
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Vesna, function14, 14)

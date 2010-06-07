@@ -52,7 +52,7 @@ public:
 	DECLARE_FUNCTION(function11)
 	DECLARE_FUNCTION(chapter1)
 	DECLARE_FUNCTION(function13)
-	DECLARE_FUNCTION(function14)
+	DECLARE_FUNCTION(sitAnna)
 	DECLARE_FUNCTION(function15)
 	DECLARE_FUNCTION(function16)
 	DECLARE_FUNCTION(function17)
@@ -73,6 +73,9 @@ public:
 	DECLARE_FUNCTION(function32)
 	DECLARE_FUNCTION(function33)
 	DECLARE_NULL_FUNCTION()
+
+private:
+	DECLARE_CALL_FUNCTION(iiii, Pascale, int, int, int, int)
 };
 
 } // End of namespace LastExpress

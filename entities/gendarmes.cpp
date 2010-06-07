@@ -43,7 +43,7 @@ Gendarmes::Gendarmes(LastExpressEngine *engine) : Entity(engine, kEntityGendarme
 	ADD_CALLBACK_FUNCTION(Gendarmes, function4);
 	ADD_CALLBACK_FUNCTION(Gendarmes, function5);
 	ADD_CALLBACK_FUNCTION(Gendarmes, function6);
-	ADD_CALLBACK_FUNCTION(Gendarmes, function7);
+	ADD_CALLBACK_FUNCTION(Gendarmes, savegame);
 	ADD_CALLBACK_FUNCTION(Gendarmes, function8);
 	ADD_CALLBACK_FUNCTION(Gendarmes, function9);
 	ADD_CALLBACK_FUNCTION(Gendarmes, function10);
@@ -91,8 +91,8 @@ IMPLEMENT_FUNCTION_I(Gendarmes, function6, 6)
 	error("Gendarmes: callback function 6 not implemented!");
 }
 
-IMPLEMENT_FUNCTION_II(Gendarmes, function7, 7)
-	error("Gendarmes: callback function 7 not implemented!");
+IMPLEMENT_FUNCTION_II(Gendarmes, savegame, 7)
+	Entity::savegame(savepoint);
 }
 
 IMPLEMENT_FUNCTION_II(Gendarmes, function8, 8)

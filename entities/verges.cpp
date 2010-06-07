@@ -88,7 +88,25 @@ IMPLEMENT_FUNCTION(Verges, function1, 1)
 }
 
 IMPLEMENT_FUNCTION_S(Verges, function2, 2)
-	error("Verges: callback function 2 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionExitCompartment:
+		CALLBACK_ACTION();
+ 		break;
+
+	case kActionExcuseMeCath:
+		if (!params->param2) {
+			getSound()->excuseMe(kEntityVerges);
+			params->param2 = 1;
+		}
+		break;
+
+	case kActionDefault:
+		getEntities()->drawSequenceRight(kEntityVerges, params->seq1);
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Verges, function3, 3)

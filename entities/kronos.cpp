@@ -25,11 +25,13 @@
 
 #include "lastexpress/entities/kronos.h"
 
+#include "lastexpress/game/action.h"
 #include "lastexpress/game/entities.h"
 #include "lastexpress/game/inventory.h"
 #include "lastexpress/game/logic.h"
 #include "lastexpress/game/object.h"
 #include "lastexpress/game/savepoint.h"
+#include "lastexpress/game/scenes.h"
 #include "lastexpress/game/sound.h"
 #include "lastexpress/game/state.h"
 
@@ -118,7 +120,24 @@ IMPLEMENT_FUNCTION(Kronos, function8, 8)
 }
 
 IMPLEMENT_FUNCTION(Kronos, function9, 9)
-	error("Kronos: callback function 9 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionDefault:
+		setCallback(1);
+		call(new ENTITY_SETUP(Kronos, setup_savegame), kSavegameType2, kEventKronosConversation);
+		break;
+
+	case kActionCallback:
+		if (getCallback() == 1) {
+			getAction()->playAnimation(kEventKronosConversation);
+			getScenes()->loadSceneFromPosition(kCarKronos, 87);
+            getSavePoints()->push(kEntityKronos, kEntityKahina, kAction137685712);
+            setup_function10();
+		}
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Kronos, function10, 10)
@@ -155,7 +174,7 @@ IMPLEMENT_FUNCTION(Kronos, function11, 11)
 
 	case kActionDefault:
 		getData()->field_491 = EntityData::kField491_7000;
-		
+
 		if (!getSound()->isBuffered(kEntityKronos))
 			getSound()->playSound(kEntityKronos, "KRO1001");
 		break;
@@ -197,8 +216,8 @@ IMPLEMENT_FUNCTION(Kronos, function14, 14)
 		break;
 
 	case kActionNone:
-		if (getState()->time > kTimeKronos_0 && !params->param1 && !params->param2 && !params->param3)			
-			setup_function15();		
+		if (getState()->time > kTimeKronos_0 && !params->param1 && !params->param2 && !params->param3)
+			setup_function15();
 		break;
 
 	case kAction157159392:
@@ -224,7 +243,27 @@ IMPLEMENT_FUNCTION(Kronos, function15, 15)
 }
 
 IMPLEMENT_FUNCTION(Kronos, function16, 16)
-	error("Kronos: callback function 16 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionDefault:
+		setCallback(1);
+		call(new ENTITY_SETUP(Kronos, setup_savegame), kSavegameType2, kEventKronosVisit);
+		break;
+
+	case kActionCallback:
+		if (getCallback() == 1) {
+			getAction()->playAnimation(kEventKronosVisit);
+			getSavePoints()->push(kEntityKronos, kEntityAnna, kAction101169422);
+			getSavePoints()->push(kEntityKronos, kEntityTatiana, kAction101169422);
+			getSavePoints()->push(kEntityKronos, kEntityAbbot, kAction101169422);
+			getScenes()->loadSceneFromPosition(kCarRestaurant, 60);	
+
+			setup_function17();
+		}
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Kronos, function17, 17)
@@ -236,7 +275,7 @@ IMPLEMENT_FUNCTION(Kronos, function17, 17)
 		getData()->field_491 = EntityData::kField491_7500;
 		getData()->field_493 = EntityData::kField493_0;
 		getData()->car = kCarRedSleeping;
-		
+
 		setCallback(1);
 		call(new ENTITY_SETUP(Kronos, setup_function3), kCarGreenSleeping, EntityData::kField491_9270);
 		break;

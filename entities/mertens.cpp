@@ -133,7 +133,7 @@ IMPLEMENT_FUNCTION(Mertens, function6, 6)
 		 && !getEntities()->checkFields3(kEntityNone)
 		 && !getEntities()->checkFields10(kEntityNone)) {
 			 setCallback(1);
-			 call(new ENTITY_SETUP(Mertens, setup_savegame), 2, kEventMertensBloodJacket);
+			 call(new ENTITY_SETUP(Mertens, setup_savegame), kSavegameType2, kEventMertensBloodJacket);
 		}
 		break;
 
@@ -177,7 +177,7 @@ IMPLEMENT_FUNCTION_I(Mertens, function11, 11)
 			&& !getEntities()->checkFields3(kEntityNone)
 			&& !getEntities()->checkFields10(kEntityNone)) {
 				setCallback(1);
-				call(new ENTITY_SETUP(Mertens, setup_savegame), 2, kEventMertensBloodJacket);
+				call(new ENTITY_SETUP(Mertens, setup_savegame), kSavegameType2, kEventMertensBloodJacket);
 				break;
 		}
 

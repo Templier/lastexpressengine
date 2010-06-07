@@ -87,7 +87,25 @@ IMPLEMENT_FUNCTION_NOSETUP(Servers0, updateFromTime, 2)
 }
 
 IMPLEMENT_FUNCTION_S(Servers0, function3, 3)
-	error("Servers0: callback function 3 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionExitCompartment:
+		CALLBACK_ACTION();
+ 		break;
+
+	case kActionExcuseMeCath:
+		if (!params->param2) {
+			getSound()->excuseMe(kEntityServers0);
+			params->param2 = 1;
+		}
+		break;
+
+	case kActionDefault:
+		getEntities()->drawSequenceRight(kEntityServers0, params->seq1);
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION_NOSETUP(Servers0, function4, 4)
@@ -238,7 +256,36 @@ IMPLEMENT_FUNCTION(Servers0, chapter2, 23)
 }
 
 IMPLEMENT_FUNCTION(Servers0, function24, 24)
-	error("Servers0: callback function 24 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionNone:
+		if (!getEntities()->checkFields17(kEntityServers0) || !getEntities()->checkFields11())
+			break;
+
+		if (ENTITY_PARAM(1, 3)) {
+			setCallback(1);
+			call(new ENTITY_SETUP(Servers0, setup_function25));
+			break;
+		}
+
+		if (ENTITY_PARAM(1, 4)) {
+			setCallback(2);
+			call(new ENTITY_SETUP(Servers0, setup_function26));
+		}
+ 		break;
+
+	case kActionCallback:
+		if (getCallback() != 1)
+			break;
+
+		if (ENTITY_PARAM(1, 4)) {
+			setCallback(2);
+			call(new ENTITY_SETUP(Servers0, setup_function26));
+		}
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Servers0, function25, 25)

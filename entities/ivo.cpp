@@ -48,8 +48,8 @@ Ivo::Ivo(LastExpressEngine *engine) : Entity(engine, kEntityIvo) {
 	ADD_CALLBACK_FUNCTION(Ivo, function9);
 	ADD_CALLBACK_FUNCTION(Ivo, savegame);
 	ADD_CALLBACK_FUNCTION(Ivo, function11);
-	ADD_CALLBACK_FUNCTION(Ivo, function12);
-	ADD_CALLBACK_FUNCTION(Ivo, function13);
+	ADD_CALLBACK_FUNCTION(Ivo, sitAtTableWithSalko);
+	ADD_CALLBACK_FUNCTION(Ivo, leaveTableWithSalko);
 	ADD_CALLBACK_FUNCTION(Ivo, chapter1);
 	ADD_CALLBACK_FUNCTION(Ivo, function15);
 	ADD_CALLBACK_FUNCTION(Ivo, function16);
@@ -117,12 +117,44 @@ IMPLEMENT_FUNCTION(Ivo, function11, 11)
 	error("Ivo: callback function 11 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Ivo, function12, 12)
-	error("Ivo: callback function 12 not implemented!");
+IMPLEMENT_FUNCTION(Ivo, sitAtTableWithSalko, 12)
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionExitCompartment:
+		getEntities()->prepareSequences(kEntitySalko);
+		getSavePoints()->push(kEntityIvo, kEntityTables2, kAction136455232);
+
+		CALLBACK_ACTION();
+		break;
+
+	case kActionDefault:
+		getEntities()->drawSequenceRight(kEntityIvo, "023A1");
+		getEntities()->drawSequenceRight(kEntitySalko, "023A2");
+		getEntities()->drawSequenceRight(kEntityTables2, "023A3");
+		break;
+	}
 }
 
-IMPLEMENT_FUNCTION(Ivo, function13, 13)
-	error("Ivo: callback function 13 not implemented!");
+IMPLEMENT_FUNCTION(Ivo, leaveTableWithSalko, 13)
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionExitCompartment:
+		getSavePoints()->push(kEntityIvo, kEntityTables2, kAction103798704, "009E");
+		getEntities()->prepareSequences(kEntitySalko);		
+
+		CALLBACK_ACTION();
+		break;
+
+	case kActionDefault:
+		getEntities()->drawSequenceRight(kEntityIvo, "023D1");
+		getEntities()->drawSequenceRight(kEntitySalko, "023D2");
+		getEntities()->drawSequenceRight(kEntityTables2, "023D3");
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Ivo, chapter1, 14)
@@ -278,7 +310,7 @@ IMPLEMENT_FUNCTION(Ivo, function26, 26)
 
 	case kActionDefault:
 		setCallback(1);
-		call(new ENTITY_SETUP(Ivo, setup_function13));
+		call(new ENTITY_SETUP(Ivo, setup_leaveTableWithSalko));
 		break;
 
 	case kActionCallback:
@@ -355,7 +387,7 @@ IMPLEMENT_FUNCTION(Ivo, function33, 33)
 		getState()->time += 1800;
 
 		setCallback(1);
-		call(new ENTITY_SETUP(Ivo, setup_savegame), 1, kEntityNone);
+		call(new ENTITY_SETUP(Ivo, setup_savegame), kSavegameType1, kEntityNone);
 		break;
 
 	case kActionCallback:

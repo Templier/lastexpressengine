@@ -51,7 +51,7 @@ public:
 	DECLARE_FUNCTION_II(function10)
 	DECLARE_FUNCTION_I(function11)
 	DECLARE_FUNCTION(function12)
-	DECLARE_FUNCTION(function13)
+	DECLARE_FUNCTION(leaveTableWithMmeBoutarel)
 	DECLARE_FUNCTION_I(function14)
 	DECLARE_FUNCTION_IS(function15)
 	DECLARE_FUNCTION_IS(function16)
@@ -79,7 +79,7 @@ public:
 	DECLARE_FUNCTION(function38)
 	DECLARE_NULL_FUNCTION()
 
-private:	
+private:
     DECLARE_CALL_FUNCTION(iiii, Boutarel, int, int, int, int)
 };
 

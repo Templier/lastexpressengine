@@ -29,6 +29,7 @@
 #include "lastexpress/game/logic.h"
 #include "lastexpress/game/object.h"
 #include "lastexpress/game/savepoint.h"
+#include "lastexpress/game/sound.h"
 #include "lastexpress/game/state.h"
 
 #include "lastexpress/helpers.h"
@@ -529,7 +530,28 @@ IMPLEMENT_FUNCTION(Coudert, function58, 58)
 }
 
 IMPLEMENT_FUNCTION(Coudert, function59, 59)
-	error("Coudert: callback function 59 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionDefault:
+		getData()->field_491 = EntityData::kField491_7500;
+		getData()->field_493 = EntityData::kField493_0;
+		getData()->car = kCarRedSleeping;
+		
+		getSound()->playSound(kEntityCoudert, "Jac5010"); // Situation is under control, please remain in your compartment
+
+		setCallback(1);
+		call(new ENTITY_SETUP(Coudert, setup_function9), kCarRedSleeping, EntityData::kField491_2000);
+		break;
+
+	case kActionCallback:
+		if (getCallback() == 1) {
+			getEntities()->drawSequenceLeft(kEntityCoudert, "627K");
+			setup_function60();
+		}	
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Coudert, function60, 60)

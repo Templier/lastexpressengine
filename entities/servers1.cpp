@@ -340,7 +340,7 @@ IMPLEMENT_FUNCTION(Servers1, function23, 23)
 			call(new ENTITY_SETUP(Servers1, setup_function24));
 		} else if (ENTITY_PARAM(1, 2)) {
 			setCallback(2);
-			call(new ENTITY_SETUP(Servers1, setup_function7));			
+			call(new ENTITY_SETUP(Servers1, setup_function7));
 		}
 	}
 }

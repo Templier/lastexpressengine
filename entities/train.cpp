@@ -61,7 +61,7 @@ IMPLEMENT_FUNCTION_II(Train, savegame, 1)
 		break;
 
 	case kActionDefault:
-		save(kEntityTrain, params->param1, (EventIndex)params->param2);
+		save(kEntityTrain, (SavegameType)params->param1, (EventIndex)params->param2);
 
 		CALLBACK_ACTION()
 		break;
@@ -430,13 +430,13 @@ label_skip:
 		if (getProgress().jacket == kJacketOriginal) {
 			if (getEntities()->isPlayerPosition(kCarRedSleeping, 18)) {
 				setCallback(1);
-				call(new ENTITY_SETUP(Train, setup_savegame), 2, kEventMertensBloodJacket);
+				call(new ENTITY_SETUP(Train, setup_savegame), kSavegameType2, kEventMertensBloodJacket);
 				break;
 			}
 
 			if (getEntities()->isPlayerPosition(kCarGreenSleeping, 22)) {
 				setCallback(2);
-				call(new ENTITY_SETUP(Train, setup_savegame), 2, kEventMertensBloodJacket);
+				call(new ENTITY_SETUP(Train, setup_savegame), kSavegameType2, kEventMertensBloodJacket);
 				break;
 			}
 		}
@@ -493,13 +493,13 @@ label_skip:
 
 	case kAction202613084:
 		setCallback(8);
-		call(new ENTITY_SETUP(Train, setup_savegame), 2, kEventCloseMatchbox);
+		call(new ENTITY_SETUP(Train, setup_savegame), kSavegameType2, kEventCloseMatchbox);
 		break;
 
 	case kAction203339360:
 		if (!params->param7) {
 			setCallback(5);
-			call(new ENTITY_SETUP(Train, setup_savegame), 2, kEventLocomotiveConductorsDiscovered);
+			call(new ENTITY_SETUP(Train, setup_savegame), kSavegameType2, kEventLocomotiveConductorsDiscovered);
 		} else {
 			params->param7 = 1;
 			getAction()->playAnimation(kEventLocomotiveConductorsLook);
@@ -567,12 +567,12 @@ label_skip:
 
 	case kActionBreakCeiling:
 		setCallback(6);
-		call(new ENTITY_SETUP(Train, setup_savegame), 2, kEventCathBreakCeiling);
+		call(new ENTITY_SETUP(Train, setup_savegame), kSavegameType2, kEventCathBreakCeiling);
 		break;
 
 	case kActionJumpDownCeiling:
 		setCallback(7);
-		call(new ENTITY_SETUP(Train, setup_savegame), 2, kEventCathJumpDownCeiling);
+		call(new ENTITY_SETUP(Train, setup_savegame), kSavegameType2, kEventCathJumpDownCeiling);
 		break;
 	}
 }

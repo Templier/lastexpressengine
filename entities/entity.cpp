@@ -147,7 +147,7 @@ void Entity::function1Clothes(const SavePoint &savepoint) {
 }
 
 //////////////////////////////////////////////////////////////////////////
-// param1: ??
+// param1: savegame entry type
 // param2: EventIndex
 void Entity::savegame(const SavePoint &savepoint) {
 	EntityData::EntityParametersIIII *params = (EntityData::EntityParametersIIII*)_data->getCurrentParameters();
@@ -161,7 +161,7 @@ void Entity::savegame(const SavePoint &savepoint) {
 		break;
 
 	case kActionDefault:
-		save(_entityIndex, params->param1, (EventIndex)params->param2);
+		save(_entityIndex, (SavegameType)params->param1, (EventIndex)params->param2);
 		CALLBACK_ACTION()
 		break;
 	}

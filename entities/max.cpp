@@ -219,7 +219,7 @@ IMPLEMENT_FUNCTION(Max, function8, 8)
 	case kAction9:
 		if (params->param1) {
 			setCallback(1);
-			call(new ENTITY_SETUP(Max, setup_savegame), 2, kEventCathMaxLickHand);
+			call(new ENTITY_SETUP(Max, setup_savegame), kSavegameType2, kEventCathMaxLickHand);
 			break;
 		}
 
@@ -440,12 +440,12 @@ IMPLEMENT_FUNCTION(Max, freeFromCage, 14)
 		if (getEvent(kEventCathMaxCage)) {
 			if (getEvent(kEventCathMaxFree)) {
 				setCallback(2);
-				call(new ENTITY_SETUP(Max, setup_savegame), 2, kEventCathMaxFree);
+				call(new ENTITY_SETUP(Max, setup_savegame), kSavegameType2, kEventCathMaxFree);
 			}
 
 		} else {
 			setCallback(1);
-			call(new ENTITY_SETUP(Max, setup_savegame), 2, kEventCathMaxCage);
+			call(new ENTITY_SETUP(Max, setup_savegame), kSavegameType2, kEventCathMaxCage);
 		}
 		break;
 

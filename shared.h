@@ -56,7 +56,9 @@ enum TimeValue {
 
 	// Chapter 2
 	kTimeChapter2             = 1750500,
+	kTimeYasmin               = 1759500,
 	kTimeRebecca_2            = 1764000,
+	kTimeYasmin_1             = 1800000,
 
 	// Chapter 3
 	kTimeChapter3             = 1944000,
@@ -80,6 +82,7 @@ enum TimeValue {
 	kTimeTatiana              = 2362500,
 	kTimeIvo                  = 2361600,
 	kTimeBoutarel             = 2367000,
+	kTimeRebecca_4            = 2385000,
 	kTimeAlexei_1             = 2403000,
 	kTimeGameOver             = 2418300,
 	kTimeTables3              = 2488500,
@@ -95,9 +98,9 @@ enum TimeValue {
 
 enum TimeType {
 	kTimeType0 = 0,
-	kTimeType1 = 0,
-	kTimeType2 = 0,
-	kTimeType3 = 0
+	kTimeType1 = 1,
+	kTimeType2 = 2,
+	kTimeType3 = 3
 };
 
 //////////////////////////////////////////////////////////////////////////
@@ -122,7 +125,6 @@ enum ChapterIndex {
 //////////////////////////////////////////////////////////////////////////
 // Index of scenes
 //////////////////////////////////////////////////////////////////////////
-
 enum SceneIndex {
 	kSceneNone                    = 0,
 	kSceneMenu                    = 1,
@@ -151,7 +153,7 @@ enum SceneIndex {
 	kSceneFightSalko              = 47,
 	kSceneFightVesna              = 48,
 
-	//kSceneEuropeMap               = 49,
+	kSceneEuropeMap               = 49,
 
 	// Game over
 	kSceneGameOverStopPolice      = 50,
@@ -197,6 +199,12 @@ enum GameId {
 	kGamePurple,
 	kGameTeal,
 	kGameGold
+};
+
+enum SavegameType {
+	kSavegameType0 = 0,
+	kSavegameType1 = 1,
+	kSavegameType2 = 2
 };
 
 //////////////////////////////////////////////////////////////////////////
@@ -853,6 +861,7 @@ enum ActionIndex {
 	kAction1            = 1,
 	kAction2            = 2,
 	kActionExitCompartment = 3,
+	kAction4            = 4,
 	kActionExcuseMeCath = 5,
 	kActionExcuseMe     = 6,
 	kAction8            = 8,
@@ -860,7 +869,7 @@ enum ActionIndex {
 	kAction10           = 10,
 	kActionDefault      = 12,
 	kAction17           = 17,
-	kActionCallback           = 18,
+	kActionCallback     = 18,
 
 	/////////////////////////////
 	// Abbot
@@ -938,8 +947,13 @@ enum ActionIndex {
 
 	/////////////////////////////
 	// Kahina
-	/////////////////////////////	
+	/////////////////////////////
 	kAction137503360 = 137503360,
+
+	/////////////////////////////
+	// Kronos
+	/////////////////////////////
+	kAction137685712 = 137685712,
 
 	/////////////////////////////
 	// Mahmud
@@ -1110,6 +1124,7 @@ enum ActionIndex {
 	kAction135024800 = 135024800,
 	kAction137165825 = 137165825,
 	kAction190412928 = 190412928,
+	kAction204832737 = 204832737,
 
 	/////////////////////////////
 	// Misc

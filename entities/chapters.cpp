@@ -413,7 +413,7 @@ IMPLEMENT_FUNCTION(Chapters, chapter2, 10)
 
 		// Save game
 		setCallback(1);
-		call(new ENTITY_SETUP(Chapters, setup_savegame), 1, kEventNone);
+		call(new ENTITY_SETUP(Chapters, setup_savegame), kSavegameType1, kEventNone);
 		break;
 
 	case kActionCallback:
@@ -587,7 +587,7 @@ IMPLEMENT_FUNCTION(Chapters, chapter3_init, 14)
 		getInventory()->show();
 
 		setCallback(1);
-		call(new ENTITY_SETUP(Chapters, setup_savegame), 1, kEventNone);
+		call(new ENTITY_SETUP(Chapters, setup_savegame), kSavegameType1, kEventNone);
 		break;
 
 	case kActionCallback:
@@ -626,7 +626,7 @@ IMPLEMENT_FUNCTION(Chapters, chapter4, 17)
 
 		// Save game
 		setCallback(1);
-		call(new ENTITY_SETUP(Chapters, setup_savegame), 1, kEventNone);
+		call(new ENTITY_SETUP(Chapters, setup_savegame), kSavegameType1, kEventNone);
 		break;
 
 	case kActionCallback:
@@ -799,7 +799,7 @@ IMPLEMENT_FUNCTION(Chapters, chapter5_init, 21)
 		getInventory()->show();
 
 		setCallback(1);
-		call(new ENTITY_SETUP(Chapters, setup_savegame), 1, kEventNone);
+		call(new ENTITY_SETUP(Chapters, setup_savegame), kSavegameType1, kEventNone);
 		break;
 
 	case kActionCallback:
@@ -842,7 +842,7 @@ IMPLEMENT_FUNCTION(Chapters, chapter5_handler, 22)
 	case kAction2:
 		if (getState()->time <= kTimeTrainStopped_2) {
 			setCallback(1);
-			call(new ENTITY_SETUP(Chapters, setup_savegame), 2, kEventTrainStopped);
+			call(new ENTITY_SETUP(Chapters, setup_savegame), kSavegameType2, kEventTrainStopped);
 		} else {
 			getLogic()->gameOver(kTimeType1, kTimeTrainStopped_2, kSceneGameOverTrainStopped, true);
 		}

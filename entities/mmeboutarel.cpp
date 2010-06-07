@@ -152,7 +152,7 @@ IMPLEMENT_FUNCTION(MmeBoutarel, function16, 16)
 		getData()->field_491 = EntityData::kField491_5790;
 		getData()->field_493 = EntityData::kField493_1;
 		getData()->car = kCarRedSleeping;
-		
+
 		getObjects()->update(kObjectCompartmentD, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
 		getObjects()->update(kObject51, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
 
@@ -257,7 +257,7 @@ IMPLEMENT_FUNCTION(MmeBoutarel, function25, 25)
 		getData()->field_491 = EntityData::kField491_5790;
 		getData()->field_493 = EntityData::kField493_1;
 		getData()->car = kCarRedSleeping;
-		
+
 		getObjects()->update(kObjectCompartmentD, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
 		getObjects()->update(kObject51, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
 	}

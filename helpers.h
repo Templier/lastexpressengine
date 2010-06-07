@@ -66,7 +66,7 @@
 #define playSfxStream(name) getSound()->getSfxStream()->load(_engine->getResourceManager()->getFileStream(Common::String(name)));
 
 // Misc
-#define save(entity, a2, event) getSaveLoad()->saveGame(a2, entity, event)
+#define save(entity, type, event) getSaveLoad()->saveGame(type, entity, event)
 #define random(value) _engine->getRandom().getRandomNumber(value)
 #define isDay() getLogic()->getGameState()->isDayTime()
 

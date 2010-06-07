@@ -90,7 +90,7 @@ public:
 
 	// Save & Load
 	bool loadGame(GameId id);
-	void saveGame(int param1, EntityIndex entity, EventIndex event);
+	void saveGame(SavegameType type, EntityIndex entity, EventIndex event);
 
 	// Init
 	static bool initSavegame(GameId id);

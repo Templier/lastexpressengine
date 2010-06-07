@@ -54,6 +54,7 @@ public:
 		kField491_2000  = 2000,
 		kField491_2087  = 2087,
 		kField491_2436  = 2436,
+		kField491_2500  = 2500,
 		kField491_2587  = 2587,
 		kField491_2740  = 2740,
 		kField491_2830  = 2830,
@@ -208,6 +209,24 @@ public:
 		}
 	};
 
+	struct EntityParametersIISI : EntityParameters {
+		int param1;
+		int param2;
+		char seq1[12];
+		int param3;
+		int param4;
+		int param5;
+
+		EntityParametersIISI() {
+			param1 = 0;
+			param2 = 0;
+			memset(&seq1, 0, 12);
+			param3 = 0;
+			param4 = 0;
+			param5 = 0;
+		}
+	};
+
 	struct EntityParametersIIIS : EntityParameters {
 		int param1;
 		int param2;
@@ -353,7 +372,7 @@ public:
 	int 			   getCallback(int callback) { return _data.callbacks[callback]; }
 	int				   getCurrentCallback() { return getCallback(_data.current_call); }
 	void 			   setCallback(int callback, byte index) { _data.callbacks[callback] = index; }
-	void 			   setCurrentCallback(byte index) { setCallback(_data.current_call, index); }	
+	void 			   setCurrentCallback(byte index) { setCallback(_data.current_call, index); }
 
 	// Serializable
 	void 			   saveLoadWithSerializer(Common::Serializer &ser);
@@ -416,7 +435,7 @@ protected:
 	void savepointCheckEntity(const SavePoint &savepoint);
 	void savepointCall(const SavePoint &savepoint);
 	void enterExitCompartment(const SavePoint &savepoint);
-	void updateField1000(const SavePoint &savepoint);
+	void updateField1000(const SavePoint &savepoint);	
 };
 
 

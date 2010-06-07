@@ -286,7 +286,28 @@ IMPLEMENT_FUNCTION(Alexei, chapter3, 32)
 }
 
 IMPLEMENT_FUNCTION(Alexei, function33, 33)
-	error("Alexei: callback function 33 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionCallback:
+		if (getCallback() == 1)
+			setup_function34();
+		break;
+
+	case kAction122288808:
+		getData()->field_491 = EntityData::kField491_9270;
+		getData()->field_493 = EntityData::kField493_0;
+		getData()->car = kCarRedSleeping;
+
+		setCallback(1);
+		call(new ENTITY_SETUP(Alexei, setup_function13));
+		break;
+
+	case kAction122358304:
+		getEntities()->drawSequenceLeft(kEntityAlexei, "BLANK");
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Alexei, function34, 34)

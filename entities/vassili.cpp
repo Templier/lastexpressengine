@@ -307,7 +307,7 @@ IMPLEMENT_FUNCTION(Vassili, seizure, 10)
 		RESET_ENTITY_STATE(kEntityCoudert, Coudert, setup_function38);
 
 		setCallback(1);
-		call(new ENTITY_SETUP(Vassili, setup_savegame), 2, kEventVassiliSeizure);
+		call(new ENTITY_SETUP(Vassili, setup_savegame), kSavegameType2, kEventVassiliSeizure);
 		break;
 
 	case kActionCallback:
@@ -437,7 +437,7 @@ IMPLEMENT_FUNCTION(Vassili, stealEgg, 15)
 
 	case kAction9:
 		setCallback(2);
-		call(new ENTITY_SETUP(Vassili, setup_savegame), 2, kEventVassiliCompartmentStealEgg);
+		call(new ENTITY_SETUP(Vassili, setup_savegame), kSavegameType2, kEventVassiliCompartmentStealEgg);
 		break;
 
 	case kActionDefault:

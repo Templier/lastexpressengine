@@ -51,7 +51,7 @@ Pascale::Pascale(LastExpressEngine *engine) : Entity(engine, kEntityPascale) {
 	ADD_CALLBACK_FUNCTION(Pascale, function11);
 	ADD_CALLBACK_FUNCTION(Pascale, chapter1);
 	ADD_CALLBACK_FUNCTION(Pascale, function13);
-	ADD_CALLBACK_FUNCTION(Pascale, function14);
+	ADD_CALLBACK_FUNCTION(Pascale, sitAnna);
 	ADD_CALLBACK_FUNCTION(Pascale, function15);
 	ADD_CALLBACK_FUNCTION(Pascale, function16);
 	ADD_CALLBACK_FUNCTION(Pascale, function17);
@@ -75,7 +75,25 @@ Pascale::Pascale(LastExpressEngine *engine) : Entity(engine, kEntityPascale) {
 }
 
 IMPLEMENT_FUNCTION_S(Pascale, function1, 1)
-	error("Pascale: callback function 1 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionExitCompartment:
+		CALLBACK_ACTION();
+ 		break;
+
+	case kActionExcuseMeCath:
+		if (!params->param2) {
+			getSound()->excuseMe(kEntityPascale);
+			params->param2 = 1;
+		}
+		break;
+
+	case kActionDefault:
+		getEntities()->drawSequenceRight(kEntityPascale, params->seq1);
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Pascale, function2, 2)
@@ -171,8 +189,25 @@ IMPLEMENT_FUNCTION(Pascale, function13, 13)
 	error("Pascale: callback function 13 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Pascale, function14, 14)
-	error("Pascale: callback function 14 not implemented!");
+IMPLEMENT_FUNCTION(Pascale, sitAnna, 14)
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionExitCompartment:
+		getEntities()->updatePosition(kEntityPascale, kCarRestaurant, 62);
+
+		CALLBACK_ACTION();
+		break;
+
+	case kActionDefault:
+		getEntities()->drawSequenceRight(kEntityTables0, "001C3");
+		getEntities()->drawSequenceRight(kEntityAnna, "001C2");
+		getEntities()->drawSequenceRight(kEntityPascale, "001C1");
+
+		getEntities()->updatePosition(kEntityPascale, kCarRestaurant, 62, true);
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Pascale, function15, 15)
@@ -245,7 +280,36 @@ IMPLEMENT_FUNCTION(Pascale, chapter3, 21)
 }
 
 IMPLEMENT_FUNCTION(Pascale, function22, 22)
-	error("Pascale: callback function 22 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionNone:
+		if (!getEntities()->checkFields17(kEntityPascale))
+			break;
+
+		if (ENTITY_PARAM(0, 7)) {
+			setCallback(1);
+			call(new ENTITY_SETUP(Pascale, setup_function23));
+			break;
+		}
+
+		if (ENTITY_PARAM(0, 4)) {
+			setCallback(2);
+			call(new ENTITY_SETUP(Pascale, setup_function8));
+		}
+ 		break;
+
+	case kActionCallback:
+		if (getCallback() != 1)
+			break;
+
+		if (ENTITY_PARAM(0, 4)) {
+			setCallback(2);
+			call(new ENTITY_SETUP(Pascale, setup_function8));
+		}
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Pascale, function23, 23)

@@ -48,7 +48,7 @@ public:
 	DECLARE_FUNCTION_II(harem)
 	DECLARE_FUNCTION(process)
 
-private:	
+private:
 	DECLARE_CALL_FUNCTION(iiis, Train, int, int, int, char*)
 	DECLARE_CALL_FUNCTION(iiii, Train, int, int, int, int)
 

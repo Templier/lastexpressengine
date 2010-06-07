@@ -90,6 +90,7 @@ public:
 	DECLARE_NULL_FUNCTION()
 
 private:
+	DECLARE_CALL_FUNCTION(siis, Rebecca, const char*, int, int, const char*)
 	DECLARE_CALL_FUNCTION(iiii, Rebecca, int, int, int, int)
 };
 

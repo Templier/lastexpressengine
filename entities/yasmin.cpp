@@ -235,7 +235,40 @@ IMPLEMENT_FUNCTION(Yasmin, chapter2, 11)
 }
 
 IMPLEMENT_FUNCTION(Yasmin, function12, 12)
-	error("Yasmin: callback function 12 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionNone:
+		if (getState()->time > kTimeYasmin && !params->param1) {
+			params->param1 = 1;
+			setCallback(1);
+			call(new ENTITY_SETUP(Yasmin, setup_function7));
+			break;
+		}
+
+		if (getState()->time > kTimeYasmin_1 && !params->param2) {
+			params->param2 = 1;
+			getData()->field_491 = EntityData::kField491_4070;
+
+			getSavePoints()->push(kEntityYasmin, kEntityTrain, kAction191070912, EntityData::kField491_4070);
+		}
+		break;
+
+	case kActionCallback:
+
+		if (getCallback() != 1)
+			break;
+
+		if (getState()->time > kTimeYasmin_1 && !params->param2) {
+			params->param2 = 1;
+			getData()->field_491 = EntityData::kField491_4070;
+
+			getSavePoints()->push(kEntityYasmin, kEntityTrain, kAction191070912, EntityData::kField491_4070);
+		}
+		
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Yasmin, chapter3, 13)
@@ -314,7 +347,27 @@ IMPLEMENT_FUNCTION(Yasmin, function19, 19)
 }
 
 IMPLEMENT_FUNCTION(Yasmin, function20, 20)
-	error("Yasmin: callback function 20 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionNone:
+		UPDATE_PARAM_FROM_TIME(1, 2700);
+		setup_function21();
+		break;
+
+	case kActionDefault:
+		getData()->field_491 = EntityData::kField491_2500;
+		getData()->field_493 = EntityData::kField493_0;
+		getData()->car = kCarGreenSleeping;
+		break;
+
+	case kAction17:
+		if (getEntities()->checkFields5(kEntityNone, kCarGreenSleeping)) {
+			setup_function21();
+		}
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Yasmin, function21, 21)

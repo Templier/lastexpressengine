@@ -77,6 +77,9 @@ public:
 	DECLARE_FUNCTION(chapter5)
 	DECLARE_FUNCTION(function37)
 	DECLARE_NULL_FUNCTION()
+
+private:
+	DECLARE_CALL_FUNCTION(iiii, Servers0, int, int, int, int)
 };
 
 } // End of namespace LastExpress

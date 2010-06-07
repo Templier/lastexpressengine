@@ -25,6 +25,7 @@
 
 #include "lastexpress/entities/august.h"
 
+#include "lastexpress/game/action.h"
 #include "lastexpress/game/entities.h"
 #include "lastexpress/game/logic.h"
 #include "lastexpress/game/object.h"
@@ -135,7 +136,21 @@ IMPLEMENT_FUNCTION_SI(August, function6, 6)
 }
 
 IMPLEMENT_FUNCTION_SI(August, function7, 7)
-	error("August: callback function 7 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionExitCompartment:
+	case kAction4:
+		getEntities()->exitCompartment(kEntityAugust, (ObjectIndex)params->param2);
+		CALLBACK_ACTION();
+		break;
+
+	case kActionDefault:
+		getEntities()->drawSequenceRight(kEntityAugust, params->seq1);
+		getEntities()->enterCompartment(kEntityAugust, (ObjectIndex)params->param2);
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(August, function8, 8)
@@ -147,7 +162,24 @@ IMPLEMENT_FUNCTION_SIIS(August, function9, 9)
 }
 
 IMPLEMENT_FUNCTION_IIS(August, function10, 10)
-	error("August: callback function 10 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionExitCompartment:		
+		if (!params->param3)
+			getSavePoints()->call(kEntityAugust, (EntityIndex)params->param1, (ActionIndex)params->param2, params->seq1);
+
+		CALLBACK_ACTION();
+		break;
+
+	case kAction10:
+		if (!params->param3) {
+			getSavePoints()->call(kEntityAugust, (EntityIndex)params->param1, (ActionIndex)params->param2, params->seq1);
+			params->param3 = 1;
+		}
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION_SSI(August, draw2, 11)
@@ -258,7 +290,20 @@ IMPLEMENT_FUNCTION(August, function32, 32)
 }
 
 IMPLEMENT_FUNCTION(August, function33, 33)
-	error("August: callback function 33 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionDefault:	
+		setCallback(getProgress().event_august_met ? 1 : 2);
+		call(new ENTITY_SETUP(August, setup_function21), getProgress().event_august_met ? getState()->time + 9000 : kTimeBedTime);
+		break;
+
+	case kActionCallback:
+		if (getCallback() == 1 || getCallback() == 2)			
+			setup_function34();
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(August, function34, 34)
@@ -321,7 +366,26 @@ IMPLEMENT_FUNCTION(August, function38, 38)
 }
 
 IMPLEMENT_FUNCTION(August, function39, 39)
-	error("August: callback function 39 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionDefault:
+		if (!ENTITY_PARAM(0, 1))
+			getSound()->playSound(kEntityNone, "BUMP");
+
+		setCallback(1);
+		call(new ENTITY_SETUP(August, setup_savegame), kSavegameType2, kEventAugustArrivalInMunich);
+		break;
+
+	case kActionCallback:
+		if (getCallback() == 1) {
+			getAction()->playAnimation(kEventAugustArrivalInMunich);
+			getSavePoints()->push(kEntityAugust, kEntityChapters, kActionChapter3);
+			getEntities()->prepareSequences(kEntityAugust);
+		}
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(August, chapter3, 40)
@@ -434,7 +498,36 @@ IMPLEMENT_FUNCTION(August, function52, 52)
 }
 
 IMPLEMENT_FUNCTION(August, function53, 53)
-	error("August: callback function 53 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionDefault:
+		setCallback(1);
+		call(new ENTITY_SETUP(August, setup_updateFromTime), 2700);
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			setCallback(2);
+			call(new ENTITY_SETUP(August, setup_function20));
+			break;
+
+		case 2:
+			setCallback(3);
+			call(new ENTITY_SETUP(August, setup_function16), kCarRestaurant, EntityData::kField491_850);
+			break;
+
+		case 3:
+			setup_function54();
+			break;
+		}
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(August, function54, 54)
@@ -534,7 +627,7 @@ IMPLEMENT_FUNCTION(August, function65, 65)
 		getEntities()->prepareSequences(kEntityAugust);
 
 		getObjects()->update(kObjectCompartment3, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
-		
+
 		if (!getSound()->isBuffered(kEntityAugust))
 			getSound()->playSound(kEntityAugust, "AUG1057");   // August snoring
 		break;

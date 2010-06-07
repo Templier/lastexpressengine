@@ -458,7 +458,7 @@ IMPLEMENT_FUNCTION(Abbot, function22, 22)
 		getData()->inventoryItem = kItemNone;
 
 		setCallback(1);
-		call(new ENTITY_SETUP(Abbot, setup_savegame), 2, kEventAbbotIntroduction);
+		call(new ENTITY_SETUP(Abbot, setup_savegame), kSavegameType2, kEventAbbotIntroduction);
 		break;
 
 	case kActionDefault:
@@ -1078,13 +1078,13 @@ IMPLEMENT_FUNCTION(Abbot, function53, 53)
 	case kAction168646401:
 		if (!getEvent(kEventLocomotiveAbbotGetSomeRest)) {
 			setCallback(1);
-			call(new ENTITY_SETUP(Abbot, setup_savegame), 2, kEventLocomotiveAbbotGetSomeRest);
+			call(new ENTITY_SETUP(Abbot, setup_savegame), kSavegameType2, kEventLocomotiveAbbotGetSomeRest);
 			break;
 		}
 
 		if (!getEvent(kEventLocomotiveAbbotShoveling)) {
 			setCallback(2);
-			call(new ENTITY_SETUP(Abbot, setup_savegame), 2, kEventLocomotiveAbbotShoveling);
+			call(new ENTITY_SETUP(Abbot, setup_savegame), kSavegameType2, kEventLocomotiveAbbotShoveling);
 			break;
 		}
 
