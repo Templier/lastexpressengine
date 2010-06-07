@@ -81,7 +81,7 @@ public:
 	void resetList();
 
 	// Helpers
-	bool loadScene(Scene * const scene, SceneIndex sceneIndex);	
+	bool loadScene(Scene * const scene, SceneIndex sceneIndex);
 	Scene *getScene(SceneIndex sceneIndex);
 	Scene *getCurrentScene() { return _currentScene; }
 	SceneIndex getSceneIndexFromPosition(CarIndex car, Position position, int param3 = -1);
@@ -101,17 +101,17 @@ private:
 	Common::Array<Sequence *> _doors;
 
 	Sequence *_clockHours;
-	Sequence *_clockMinutes;	
+	Sequence *_clockMinutes;
 
 	int _hoursIndex;
-	int _minutesIndex;	
+	int _minutesIndex;
 
 	// Sequence list
 	Common::List<SequenceFrame *> _list;
 
-	// Scene processing		
+	// Scene processing
 	void preProcessScene(SceneIndex *index);
-	void postProcessScene();	
+	void postProcessScene();
 };
 
 } // End of namespace LastExpress

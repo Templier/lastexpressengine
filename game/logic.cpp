@@ -96,7 +96,7 @@ void Logic::startGame() {
 	_menu->setShowStartup(false);
 	_runState.showingMenu = false;
 	getFlags()->gameRunning = true;
-	SET_EVENT_HANDLERS(Logic); 
+	SET_EVENT_HANDLERS(Logic);
 
 	// Set Cursor type
 	_engine->getCursor()->setStyle(kCursorNormal);

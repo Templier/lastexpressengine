@@ -163,7 +163,7 @@ bool Debugger::cmd_playseq(int argc, const char **argv) {
 
 					_engine->_system->delayMillis(175);
 
-					// go to the next frame						
+					// go to the next frame
 				} while (player.setFrame(player.getFrame() + 1));
 				_engine->getCursor()->show(true);
 			} else {
@@ -318,7 +318,7 @@ bool Debugger::cmd_playnis(int argc, const char **argv) {
 			return false;
 		} else {
 			// Make sure we are not called in a loop
-			_numParams = 0;	
+			_numParams = 0;
 
 			Animation animation;
 			if (animation.loadFile(filename)) {
@@ -420,10 +420,10 @@ bool Debugger::cmd_loadscene(int argc, const char **argv) {
 
 			/************  DEBUG  *************************/
 			// Use to find scenes with certain values
-			
+
 			//for (int i = index; i < 2500; i++) {
 			//	loadSceneObject(scene, i);
-		
+
 			//	if (scene.getHeader() && scene.getHeader()->car == 5 && scene.getHeader()->position == 81) {
 			//		DebugPrintf("Found scene: %d", i);
 
@@ -441,7 +441,7 @@ bool Debugger::cmd_loadscene(int argc, const char **argv) {
 			//delete _sceneLoader;
 			//resetCommand();
 			//return true;
-			
+
 			/*********************************************/
 			Scene s;
 			if (!_sceneLoader->loadScene(&s, index)) {
@@ -554,7 +554,7 @@ bool Debugger::cmd_fight(int argc, const char **argv) {
 			return false;
 		} else {
 			// Make sure we are not called in a loop
-			_numParams = 0;	
+			_numParams = 0;
 
 			clearBg(GraphicsManager::kBackgroundAll);
 			askForRedraw();

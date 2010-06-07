@@ -61,7 +61,7 @@ SceneManager::~SceneManager() {
 
 	SAFE_DELETE(_clockHours);
 	SAFE_DELETE(_clockMinutes);
-	
+
 	// Zero-out passed pointers
 	_engine = NULL;
 }
@@ -441,7 +441,7 @@ void SceneManager::updateDoorsAndClock() {
 		_clockMinutes = newSequence(Common::String::printf("SCLKM-81.seq"));
 
 		// Compute hours and minutes indexes
-		
+
 
 		// Adjust z-order and store sequences to list
 

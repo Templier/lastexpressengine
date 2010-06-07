@@ -1336,7 +1336,6 @@ bool Entities::checkFields17(EntityIndex entity) const {
 
 bool Entities::checkFields18(CarIndex car, EntityData::Field491Value field491) const {
 	for (uint i = 1; i < _entities.size(); i++) {
-
 		if (checkFields1((EntityIndex)i, car, field491))
 			return false;
 	}

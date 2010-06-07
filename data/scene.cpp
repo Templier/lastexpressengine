@@ -60,7 +60,7 @@ SceneHotspot *SceneHotspot::load(Common::SeekableReadStream *stream) {
 	hs->rect.top = (int16)stream->readUint16LE();
 	hs->rect.bottom = (int16)stream->readUint16LE();
 
-	hs->coordsOffset = stream->readUint32LE();	
+	hs->coordsOffset = stream->readUint32LE();
 	hs->scene = (SceneIndex)stream->readUint16LE();
 	hs->location = stream->readByte();
 	hs->action = stream->readByte();
@@ -101,7 +101,7 @@ bool SceneHotspot::isInside(const Common::Point &point) {
 
 	if (_coords.empty() || !contains)
 		return contains;
-	
+
 	// Checks extended coordinates
 	for (uint i = 0; i < _coords.size(); i++) {
 

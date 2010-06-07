@@ -86,7 +86,7 @@ private:
 		bool showingMenu;
 		CursorStyle cursorStyle;    // necessary to remember current cursor when inside inventory TODO remove?
 
-		
+
 
 		RunState() {
 			gameId = kGameBlue;
@@ -105,7 +105,7 @@ private:
 	Entities *_entities;        ///< Entities
 	Fight    *_fight;           ///< Fight handling
 	Menu     *_menu;            ///< Main menu handling
-	SaveLoad *_saveload;        ///< Save & loading	
+	SaveLoad *_saveload;        ///< Save & loading
 	Sound    *_sound;           ///< Sound
 	State    *_state;           ///< Game state
 

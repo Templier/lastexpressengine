@@ -170,7 +170,7 @@ bool LastExpressEngine::handleEvents() {
 		case Common::EVENT_MAINMENU:
 			// Closing the GMM
 
-		case Common::EVENT_MOUSEMOVE:				
+		case Common::EVENT_MOUSEMOVE:
 			if (eventMouseMove && eventMouseMove->isValid())
 				(*eventMouseMove)(ev);
 			break;

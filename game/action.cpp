@@ -444,7 +444,7 @@ IMPLEMENT_ACTION(savePoint) {
 
 //////////////////////////////////////////////////////////////////////////
 IMPLEMENT_ACTION(playSound) {
-	
+
 	// Check that the file is not already buffered
 	char filename[8];
 	sprintf((char *)&filename, "LIB%03d", hotspot.param1);

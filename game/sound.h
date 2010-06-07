@@ -129,7 +129,7 @@ public:
 	// Tests
 	static bool testParameter(int param);
 
-	// Sound streams 
+	// Sound streams
 	// TODO make private
 	StreamedSound *getMusicStream() const { return _music; }
 	StreamedSound *getSfxStream() const { return _sfx; }

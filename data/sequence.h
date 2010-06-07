@@ -162,7 +162,7 @@ public:
 	SequenceFrame(Sequence *sequence, bool dispose = true);
 	~SequenceFrame();
 
-	Common::Rect draw(Graphics::Surface *surface);	
+	Common::Rect draw(Graphics::Surface *surface);
 
 	bool setFrame(uint32 frame);
 	uint32 getFrame() { return _frame; }
