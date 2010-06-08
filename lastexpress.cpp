@@ -103,20 +103,20 @@ Common::Error LastExpressEngine::run() {
 
 	// Start the resource and graphics managers
 	_resMan = new ResourceManager((bool)(_gameDescription->flags & ADGF_DEMO));
-	if (!_resMan->loadArchive(kArchiveAll))
-		return Common::kUnknownError;
+	if (!_resMan->loadArchive(kArchiveAll))	// TODO Switch to only Cd 1 (and load everything when opening debugger)
+		return Common::kNoGameDataFoundError;
 
 	_graphicsMan = new GraphicsManager();
 
 	// Load the cursor data
 	_cursor = _resMan->loadCursor();
 	if (!_cursor)
-		return Common::kUnknownError;
+		return Common::kNoGameDataFoundError;
 
 	// Load the font data
 	_font = _resMan->loadFont();
 	if (!_font)
-		return Common::kUnknownError;
+		return Common::kNoGameDataFoundError;
 
 	// Start scene manager
 	_sceneMan = new SceneManager(this);

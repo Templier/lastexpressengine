@@ -140,8 +140,10 @@ bool Debugger::cmd_playseq(int argc, const char **argv) {
 			if (sequence->loadFile(filename)) {
 
 				// Check that we have at least a frame to show
-				if (sequence->count() == 0)
+				if (sequence->count() == 0) {
+					delete sequence;
 					return false;
+				}
 
 				_engine->getCursor()->show(false);
 
