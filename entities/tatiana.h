@@ -42,7 +42,7 @@ public:
 	DECLARE_FUNCTION(function1)
 	DECLARE_FUNCTION_S(playSound)
 	DECLARE_FUNCTION_S(draw)
-	DECLARE_FUNCTION_SII(function4)
+	DECLARE_FUNCTION_SII(updatePosition)
 	DECLARE_FUNCTION_SI(enterExitCompartment)
 	DECLARE_FUNCTION_SI(function6)
 	DECLARE_FUNCTION_SIIS(function7)

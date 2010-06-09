@@ -42,10 +42,10 @@ August::August(LastExpressEngine *engine) : Entity(engine, kEntityAugust) {
 	ADD_CALLBACK_FUNCTION(August, function1);
 	ADD_CALLBACK_FUNCTION(August, updateFromTime);
 	ADD_CALLBACK_FUNCTION(August, draw);
-	ADD_CALLBACK_FUNCTION(August, function4);
+	ADD_CALLBACK_FUNCTION(August, updatePosition);
 	ADD_CALLBACK_FUNCTION(August, enterExitCompartment);
 	ADD_CALLBACK_FUNCTION(August, function6);
-	ADD_CALLBACK_FUNCTION(August, function7);
+	ADD_CALLBACK_FUNCTION(August, enterExitCompartment2);
 	ADD_CALLBACK_FUNCTION(August, function8);
 	ADD_CALLBACK_FUNCTION(August, function9);
 	ADD_CALLBACK_FUNCTION(August, function10);
@@ -123,8 +123,8 @@ IMPLEMENT_FUNCTION_S(August, draw, 3)
 	Entity::draw(savepoint);
 }
 
-IMPLEMENT_FUNCTION_SII(August, function4, 4)
-	Entity::updateField1000(savepoint);
+IMPLEMENT_FUNCTION_SII(August, updatePosition, 4)
+	Entity::updatePosition(savepoint);
 }
 
 IMPLEMENT_FUNCTION_SI(August, enterExitCompartment, 5)
@@ -135,22 +135,14 @@ IMPLEMENT_FUNCTION_SI(August, function6, 6)
 	error("August: callback function 6 not implemented!");
 }
 
-IMPLEMENT_FUNCTION_SI(August, function7, 7)
-	switch (savepoint.action) {
-	default:
-		break;
-
-	case kActionExitCompartment:
-	case kAction4:
+IMPLEMENT_FUNCTION_SI(August, enterExitCompartment2, 7)
+	if (savepoint.action == kAction4) {
 		getEntities()->exitCompartment(kEntityAugust, (ObjectIndex)params->param2);
 		CALLBACK_ACTION();
-		break;
-
-	case kActionDefault:
-		getEntities()->drawSequenceRight(kEntityAugust, params->seq1);
-		getEntities()->enterCompartment(kEntityAugust, (ObjectIndex)params->param2);
-		break;
+		return;
 	}
+
+	Entity::enterExitCompartment(savepoint);
 }
 
 IMPLEMENT_FUNCTION(August, function8, 8)
@@ -166,7 +158,7 @@ IMPLEMENT_FUNCTION_IIS(August, function10, 10)
 	default:
 		break;
 
-	case kActionExitCompartment:		
+	case kActionExitCompartment:
 		if (!params->param3)
 			getSavePoints()->call(kEntityAugust, (EntityIndex)params->param1, (ActionIndex)params->param2, params->seq1);
 
@@ -294,13 +286,13 @@ IMPLEMENT_FUNCTION(August, function33, 33)
 	default:
 		break;
 
-	case kActionDefault:	
+	case kActionDefault:
 		setCallback(getProgress().event_august_met ? 1 : 2);
 		call(new ENTITY_SETUP(August, setup_function21), getProgress().event_august_met ? getState()->time + 9000 : kTimeBedTime);
 		break;
 
 	case kActionCallback:
-		if (getCallback() == 1 || getCallback() == 2)			
+		if (getCallback() == 1 || getCallback() == 2)
 			setup_function34();
 		break;
 	}
@@ -427,7 +419,31 @@ IMPLEMENT_FUNCTION(August, function44, 44)
 }
 
 IMPLEMENT_FUNCTION(August, function45, 45)
-	error("August: callback function 45 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionNone:
+		if (getState()->time > kTimeAugust_1 && !params->param1) {
+			params->param1 = 1;
+			getData()->inventoryItem = kItemNone;
+
+			setup_function46();
+		}
+		break;
+
+	case kAction1:
+		getData()->inventoryItem = kItemNone;
+		getSound()->playSound(kEntityNone, "CAT1002");
+		getSound()->playSound(kEntityAugust, "AUG3102", -1, 15);
+		break;
+
+	case kActionDefault:
+		getObjects()->update(kObjectCompartment3, kEntityNone, kLocation2, kCursorNormal, kCursorNormal);
+		getEntities()->drawSequenceLeft(kEntityAugust, "506A2");
+		getData()->inventoryItem = kItem146;	// TODO which item is that?
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(August, function46, 46)
@@ -539,7 +555,29 @@ IMPLEMENT_FUNCTION(August, function55, 55)
 }
 
 IMPLEMENT_FUNCTION(August, function56, 56)
-	error("August: callback function 56 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionDefault:
+		getObjects()->update(kObjectCompartment3, kEntityNone, kLocation2, kCursorNormal, kCursorNormal);
+		getEntities()->drawSequenceLeft(kEntityAugust, "507A3");
+		break;
+
+	case kAction17:
+		if (!params->param1 && getEntities()->isPlayerPosition(kCarGreenSleeping, 43)) {
+			setCallback(1);
+			call(new ENTITY_SETUP(August, setup_function20));
+		}
+		break;
+
+	case kActionCallback:
+		if (getCallback() == 1) {
+			params->param1 = 1;
+			getEntities()->drawSequenceLeft(kEntityAugust, "507A3");
+		}
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(August, chapter4, 57)

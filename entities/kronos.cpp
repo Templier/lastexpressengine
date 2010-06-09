@@ -258,7 +258,7 @@ IMPLEMENT_FUNCTION(Kronos, function16, 16)
 			getSavePoints()->push(kEntityKronos, kEntityAnna, kAction101169422);
 			getSavePoints()->push(kEntityKronos, kEntityTatiana, kAction101169422);
 			getSavePoints()->push(kEntityKronos, kEntityAbbot, kAction101169422);
-			getScenes()->loadSceneFromPosition(kCarRestaurant, 60);	
+			getScenes()->loadSceneFromPosition(kCarRestaurant, 60);
 
 			setup_function17();
 		}

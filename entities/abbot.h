@@ -51,7 +51,7 @@ public:
 	DECLARE_FUNCTION_II(savegame)
 	DECLARE_FUNCTION_II(function11)
 	DECLARE_FUNCTION_SIIS(function12)
-	DECLARE_FUNCTION_SII(function13)
+	DECLARE_FUNCTION_SII(updatePosition)
 	DECLARE_FUNCTION(function14)
 	DECLARE_FUNCTION(chapter1)
 	DECLARE_FUNCTION(chapter2)
@@ -95,7 +95,7 @@ public:
 
 private:
 	DECLARE_CALL_FUNCTION(siis, Abbot, const char*, int, int, const char*)
-    DECLARE_CALL_FUNCTION(iiii, Abbot, int, int, int, int)
+	DECLARE_CALL_FUNCTION(iiii, Abbot, int, int, int, int)
 };
 
 } // End of namespace LastExpress

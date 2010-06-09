@@ -266,7 +266,7 @@ IMPLEMENT_FUNCTION(Yasmin, function12, 12)
 
 			getSavePoints()->push(kEntityYasmin, kEntityTrain, kAction191070912, EntityData::kField491_4070);
 		}
-		
+
 		break;
 	}
 }

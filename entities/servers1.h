@@ -41,7 +41,7 @@ public:
 	// Setup
 	DECLARE_FUNCTION_NOSETUP(updateFromTime)
 	DECLARE_FUNCTION_S(draw)
-	DECLARE_FUNCTION_SII(function3)
+	DECLARE_FUNCTION_SIII(updatePosition)
 	DECLARE_FUNCTION(function4)
 	DECLARE_FUNCTION_SIIS(function5)
 	DECLARE_FUNCTION_S(playSound)

@@ -435,7 +435,7 @@ protected:
 	void savepointCheckEntity(const SavePoint &savepoint);
 	void savepointCall(const SavePoint &savepoint);
 	void enterExitCompartment(const SavePoint &savepoint);
-	void updateField1000(const SavePoint &savepoint);	
+	void updatePosition(const SavePoint &savepoint);
 };
 
 

@@ -43,7 +43,7 @@ Alexei::Alexei(LastExpressEngine *engine) : Entity(engine, kEntityAlexei) {
 	ADD_CALLBACK_FUNCTION(Alexei, playSound);
 	ADD_CALLBACK_FUNCTION(Alexei, updateFromTicks);
 	ADD_CALLBACK_FUNCTION(Alexei, draw);
-	ADD_CALLBACK_FUNCTION(Alexei, function5);
+	ADD_CALLBACK_FUNCTION(Alexei, updatePosition);
 	ADD_CALLBACK_FUNCTION(Alexei, enterExitCompartment);
 	ADD_CALLBACK_FUNCTION(Alexei, function7);
 	ADD_CALLBACK_FUNCTION(Alexei, function8);
@@ -105,8 +105,8 @@ IMPLEMENT_FUNCTION_S(Alexei, draw, 4)
 	Entity::draw(savepoint);
 }
 
-IMPLEMENT_FUNCTION_SII(Alexei, function5, 5)
-	Entity::updateField1000(savepoint);
+IMPLEMENT_FUNCTION_SII(Alexei, updatePosition, 5)
+	Entity::updatePosition(savepoint);
 }
 
 IMPLEMENT_FUNCTION_SI(Alexei, enterExitCompartment, 6)

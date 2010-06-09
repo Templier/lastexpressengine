@@ -279,7 +279,31 @@ IMPLEMENT_FUNCTION(Salko, function20, 20)
 }
 
 IMPLEMENT_FUNCTION(Salko, function21, 21)
-	error("Salko: callback function 21 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionNone:
+		if (getState()->time > kTimeSalko && !params->param1) {
+			params->param1 = 1;
+			setCallback(1);
+			call(new ENTITY_SETUP(Salko, setup_function4), kCarRedSleeping, EntityData::kField491_2740);
+		}
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		case 1:
+			setCallback(2);
+			call(new ENTITY_SETUP_SIIS(Salko, setup_enterExitCompartment), "612Ch", kObjectCompartmentH);
+			break;
+
+		case 2:
+			setup_function22();
+			break;
+		}
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Salko, function22, 22)

@@ -144,7 +144,7 @@ IMPLEMENT_FUNCTION(Ivo, leaveTableWithSalko, 13)
 
 	case kActionExitCompartment:
 		getSavePoints()->push(kEntityIvo, kEntityTables2, kAction103798704, "009E");
-		getEntities()->prepareSequences(kEntitySalko);		
+		getEntities()->prepareSequences(kEntitySalko);
 
 		CALLBACK_ACTION();
 		break;
@@ -333,7 +333,31 @@ IMPLEMENT_FUNCTION(Ivo, function27, 27)
 }
 
 IMPLEMENT_FUNCTION(Ivo, function28, 28)
-	error("Ivo: callback function 28 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionNone:
+		if (getState()->time > kTimeIvo_1 && !params->param1) {
+			params->param1 = 1;
+			setCallback(1);
+			call(new ENTITY_SETUP(Ivo, setup_function6), kCarRedSleeping, EntityData::kField491_2740);
+		}
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		case 1:
+			setCallback(2);
+			call(new ENTITY_SETUP_SIIS(Ivo, setup_enterExitCompartment), "613EH", kObjectCompartmentH);
+			break;
+
+		case 2:
+			setup_function29();
+			break;
+		}
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Ivo, function29, 29)

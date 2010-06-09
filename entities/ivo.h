@@ -76,6 +76,7 @@ public:
 
 private:
 	DECLARE_CALL_FUNCTION(iiii, Ivo, int, int, int, int)
+	DECLARE_CALL_FUNCTION(siis, Ivo, const char*, int, int, const char*)
 };
 
 } // End of namespace LastExpress

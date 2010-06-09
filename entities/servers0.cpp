@@ -41,7 +41,7 @@ Servers0::Servers0(LastExpressEngine *engine) : Entity(engine, kEntityServers0) 
 	ADD_CALLBACK_FUNCTION(Servers0, function1);
 	ADD_CALLBACK_FUNCTION(Servers0, updateFromTime);
 	ADD_CALLBACK_FUNCTION(Servers0, function3);
-	ADD_CALLBACK_FUNCTION(Servers0, function4);
+	ADD_CALLBACK_FUNCTION(Servers0, updatePosition);
 	ADD_CALLBACK_FUNCTION(Servers0, function5);
 	ADD_CALLBACK_FUNCTION(Servers0, playSound);
 	ADD_CALLBACK_FUNCTION(Servers0, function7);
@@ -108,8 +108,17 @@ IMPLEMENT_FUNCTION_S(Servers0, function3, 3)
 	}
 }
 
-IMPLEMENT_FUNCTION_NOSETUP(Servers0, function4, 4)
-	error("Servers0: callback function 4 not implemented!");
+IMPLEMENT_FUNCTION_NOSETUP(Servers0, updatePosition, 4)
+	EXPOSE_PARAMS(EntityData::EntityParametersSIII)
+
+	if (savepoint.action == kActionExcuseMeCath) {
+		if (!params->param4) {
+			getSound()->excuseMe(kEntityServers1);
+			params->param4 = 1;
+		}
+	}
+
+	Entity::updatePosition(savepoint);
 }
 
 IMPLEMENT_FUNCTION_NOSETUP(Servers0, function5, 5)

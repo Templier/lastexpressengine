@@ -50,7 +50,7 @@ Rebecca::Rebecca(LastExpressEngine *engine) : Entity(engine, kEntityRebecca) {
 	ADD_CALLBACK_FUNCTION(Rebecca, function10);
 	ADD_CALLBACK_FUNCTION(Rebecca, function11);
 	ADD_CALLBACK_FUNCTION(Rebecca, function12);
-	ADD_CALLBACK_FUNCTION(Rebecca, function13);
+	ADD_CALLBACK_FUNCTION(Rebecca, updatePosition);
 	ADD_CALLBACK_FUNCTION(Rebecca, draw2);
 	ADD_CALLBACK_FUNCTION(Rebecca, function15);
 	ADD_CALLBACK_FUNCTION(Rebecca, function16);
@@ -151,8 +151,8 @@ IMPLEMENT_FUNCTION_II(Rebecca, function12, 12)
 	error("Rebecca: callback function 12 not implemented!");
 }
 
-IMPLEMENT_FUNCTION_SII(Rebecca, function13, 13)
-	Entity::updateField1000(savepoint);
+IMPLEMENT_FUNCTION_SII(Rebecca, updatePosition, 13)
+	Entity::updatePosition(savepoint);
 }
 
 IMPLEMENT_FUNCTION_SSI(Rebecca, draw2, 14)

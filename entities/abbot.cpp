@@ -53,7 +53,7 @@ Abbot::Abbot(LastExpressEngine *engine) : Entity(engine, kEntityAbbot) {
 	ADD_CALLBACK_FUNCTION(Abbot, savegame);
 	ADD_CALLBACK_FUNCTION(Abbot, function11);
 	ADD_CALLBACK_FUNCTION(Abbot, function12);
-	ADD_CALLBACK_FUNCTION(Abbot, function13);
+	ADD_CALLBACK_FUNCTION(Abbot, updatePosition);
 	ADD_CALLBACK_FUNCTION(Abbot, function14);
 	ADD_CALLBACK_FUNCTION(Abbot, chapter1);
 	ADD_CALLBACK_FUNCTION(Abbot, chapter2);
@@ -199,8 +199,8 @@ IMPLEMENT_FUNCTION_SIIS(Abbot, function12, 12)
 	Entity::savepointCall(savepoint);
 }
 
-IMPLEMENT_FUNCTION_SII(Abbot, function13, 13)
-	Entity::updateField1000(savepoint);
+IMPLEMENT_FUNCTION_SII(Abbot, updatePosition, 13)
+	Entity::updatePosition(savepoint);
 }
 
 IMPLEMENT_FUNCTION(Abbot, function14, 14)
@@ -622,7 +622,7 @@ IMPLEMENT_FUNCTION(Abbot, function25, 25)
 			getData()->field_493 = EntityData::kField493_0;
 
 			setCallback(4);
-			call(new ENTITY_SETUP_SIIS(Abbot, setup_function13), "115A", 5, 56);
+			call(new ENTITY_SETUP_SIIS(Abbot, setup_updatePosition), "115A", 5, 56);
 			break;
 
 		case 4:
@@ -679,7 +679,7 @@ IMPLEMENT_FUNCTION(Abbot, function27, 27)
 			getData()->field_493 = EntityData::kField493_0;
 
 			setCallback(2);
-			call(new ENTITY_SETUP_SIIS(Abbot, setup_function13), "115C", 5, 56);
+			call(new ENTITY_SETUP_SIIS(Abbot, setup_updatePosition), "115C", 5, 56);
 			break;
 
 		case 2:
@@ -846,7 +846,7 @@ switch (savepoint.action) {
 			getData()->field_493 = EntityData::kField493_0;
 
 			setCallback(5);
-			call(new ENTITY_SETUP_SIIS(Abbot, setup_function13), "115A", 5, 56);
+			call(new ENTITY_SETUP_SIIS(Abbot, setup_updatePosition), "115A", 5, 56);
 			break;
 
 		case 5:

@@ -41,7 +41,7 @@ public:
 	// Setup
 	DECLARE_FUNCTION(function1)
 	DECLARE_FUNCTION_S(draw)
-	DECLARE_FUNCTION_SII(function3)
+	DECLARE_FUNCTION_SII(updatePosition)
 	DECLARE_FUNCTION_SI(enterExitCompartment)
 	DECLARE_FUNCTION(function5)
 	DECLARE_FUNCTION_SIIS(function6)

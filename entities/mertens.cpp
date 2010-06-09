@@ -67,7 +67,7 @@ Mertens::Mertens(LastExpressEngine *engine) : Entity(engine, kEntityMertens) {
 	ADD_CALLBACK_FUNCTION(Mertens, function24);
 	ADD_CALLBACK_FUNCTION(Mertens, function25);
 	ADD_CALLBACK_FUNCTION(Mertens, function26);
-	ADD_CALLBACK_FUNCTION(Mertens, function27);
+	ADD_CALLBACK_FUNCTION(Mertens, tylerCompartment);
 	ADD_CALLBACK_FUNCTION(Mertens, function28);
 	ADD_CALLBACK_FUNCTION(Mertens, function29);
 	ADD_CALLBACK_FUNCTION(Mertens, function30);
@@ -336,7 +336,7 @@ IMPLEMENT_FUNCTION_I(Mertens, function26, 26)
 	error("Mertens: callback function 26 not implemented!");
 }
 
-IMPLEMENT_FUNCTION_I(Mertens, function27, 27)
+IMPLEMENT_FUNCTION_I(Mertens, tylerCompartment, 27)
 	error("Mertens: callback function 27 not implemented!");
 }
 

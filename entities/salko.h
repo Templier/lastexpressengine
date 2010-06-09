@@ -67,6 +67,7 @@ public:
 
 private:
 	DECLARE_CALL_FUNCTION(iiii, Salko, int, int, int, int)
+	DECLARE_CALL_FUNCTION(siis, Salko, const char*, int, int, const char*)
 };
 
 } // End of namespace LastExpress

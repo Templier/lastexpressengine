@@ -343,7 +343,7 @@ void Entity::enterExitCompartment(const SavePoint &savepoint) {
 	}
 }
 
-void Entity::updateField1000(const SavePoint &savepoint) {
+void Entity::updatePosition(const SavePoint &savepoint) {
 	EntityData::EntityParametersSIIS *params = (EntityData::EntityParametersSIIS*)_data->getCurrentParameters();
 
 	switch (savepoint.action) {

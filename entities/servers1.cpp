@@ -40,7 +40,7 @@ namespace LastExpress {
 Servers1::Servers1(LastExpressEngine *engine) : Entity(engine, kEntityServers1) {
 	ADD_CALLBACK_FUNCTION(Servers1, updateFromTime);
 	ADD_CALLBACK_FUNCTION(Servers1, draw);
-	ADD_CALLBACK_FUNCTION(Servers1, function3);
+	ADD_CALLBACK_FUNCTION(Servers1, updatePosition);
 	ADD_CALLBACK_FUNCTION(Servers1, function4);
 	ADD_CALLBACK_FUNCTION(Servers1, function5);
 	ADD_CALLBACK_FUNCTION(Servers1, playSound);
@@ -87,15 +87,15 @@ IMPLEMENT_FUNCTION_S(Servers1, draw, 2)
 	Entity::draw(savepoint);
 }
 
-IMPLEMENT_FUNCTION_SII(Servers1, function3, 3)
+IMPLEMENT_FUNCTION_SIII(Servers1, updatePosition, 3)
 	if (savepoint.action == kActionExcuseMeCath) {
-		if (!params->param3) {
+		if (!params->param4) {
 			getSound()->excuseMe(kEntityServers1);
-			params->param3 = 1;
+			params->param4 = 1;
 		}
 	}
 
-	Entity::updateField1000(savepoint);
+	Entity::updatePosition(savepoint);
 }
 
 IMPLEMENT_FUNCTION(Servers1, function4, 4)

@@ -452,7 +452,31 @@ IMPLEMENT_FUNCTION(Milos, function30, 30)
 }
 
 IMPLEMENT_FUNCTION(Milos, function31, 31)
-	error("Milos: callback function 31 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionNone:
+		setCallback(1);
+		call(new ENTITY_SETUP_SIIS(Milos, setup_enterExitCompartment), "609CG", kObjectCompartmentG);
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		case 1:
+			getData()->field_493 = EntityData::kField493_0;
+			getObjects()->update(kObjectCompartmentG, kEntityNone, kLocation3, kCursorHandKnock, kCursorHand);
+
+			setCallback(2);
+			call(new ENTITY_SETUP(Milos, setup_enterCompartementDialog), kCarGreenSleeping, EntityData::kField491_540);
+			break;
+
+		case 2:
+			setup_function32();
+			break;
+		}
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Milos, function32, 32)

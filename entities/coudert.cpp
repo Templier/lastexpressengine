@@ -538,7 +538,7 @@ IMPLEMENT_FUNCTION(Coudert, function59, 59)
 		getData()->field_491 = EntityData::kField491_7500;
 		getData()->field_493 = EntityData::kField493_0;
 		getData()->car = kCarRedSleeping;
-		
+
 		getSound()->playSound(kEntityCoudert, "Jac5010"); // Situation is under control, please remain in your compartment
 
 		setCallback(1);
@@ -549,7 +549,7 @@ IMPLEMENT_FUNCTION(Coudert, function59, 59)
 		if (getCallback() == 1) {
 			getEntities()->drawSequenceLeft(kEntityCoudert, "627K");
 			setup_function60();
-		}	
+		}
 		break;
 	}
 }

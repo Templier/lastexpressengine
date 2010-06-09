@@ -43,7 +43,7 @@ public:
 	DECLARE_FUNCTION_S(playSound)
 	DECLARE_FUNCTION_I(updateFromTicks)
 	DECLARE_FUNCTION_S(draw)
-	DECLARE_FUNCTION_SII(function5)
+	DECLARE_FUNCTION_SII(updatePosition)
 	DECLARE_FUNCTION_SI(enterExitCompartment)
 	DECLARE_FUNCTION(function7)
 	DECLARE_FUNCTION_SIIS(function8)
@@ -90,7 +90,7 @@ public:
 
 private:
 	DECLARE_CALL_FUNCTION(issi, Alexei, int, const char*, const char*, int)
-    DECLARE_CALL_FUNCTION(iiii, Alexei, int, int, int, int)
+	DECLARE_CALL_FUNCTION(iiii, Alexei, int, int, int, int)
 };
 
 } // End of namespace LastExpress

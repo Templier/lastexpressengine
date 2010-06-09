@@ -69,6 +69,7 @@ enum TimeValue {
 	kTimeKronos_0             = 1993500,
 	kTimeRebecca              = 2016000,
 	kTimeTables2              = 2052000,
+	kTimeAugust_1             = 2061000,
 	kTimeRebecca_0            = 2070000,
 	kTimeCooks                = 2079000,
 	kTimeRebecca_1            = 2110500,
@@ -85,6 +86,8 @@ enum TimeValue {
 	kTimeRebecca_4            = 2385000,
 	kTimeAlexei_1             = 2403000,
 	kTimeGameOver             = 2418300,
+	kTimeSalko                = 2422800,
+	kTimeIvo_1                = 2425500,
 	kTimeTables3              = 2488500,
 
 	// Chapter 5
@@ -385,7 +388,9 @@ enum InventoryItem {
 	kPortraitGreen     = 34,
 	kPortraitYellow    = 36,
 
-	kInventoryInvalid  = 128
+	kInventoryInvalid  = 128,
+
+	kItem146 = 146
 };
 
 //////////////////////////////////////////////////////////////////////////

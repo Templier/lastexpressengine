@@ -42,7 +42,7 @@ Pascale::Pascale(LastExpressEngine *engine) : Entity(engine, kEntityPascale) {
 	ADD_CALLBACK_FUNCTION(Pascale, function2);
 	ADD_CALLBACK_FUNCTION(Pascale, function3);
 	ADD_CALLBACK_FUNCTION(Pascale, updateFromTime);
-	ADD_CALLBACK_FUNCTION(Pascale, function5);
+	ADD_CALLBACK_FUNCTION(Pascale, updatePosition);
 	ADD_CALLBACK_FUNCTION(Pascale, playSound);
 	ADD_CALLBACK_FUNCTION(Pascale, draw2);
 	ADD_CALLBACK_FUNCTION(Pascale, function8);
@@ -115,8 +115,17 @@ IMPLEMENT_FUNCTION_I(Pascale, updateFromTime, 4)
 	Entity::updateFromTime(savepoint);
 }
 
-IMPLEMENT_FUNCTION_NOSETUP(Pascale, function5, 5)
-	error("Pascale: callback function 5 not implemented!");
+IMPLEMENT_FUNCTION_NOSETUP(Pascale, updatePosition, 5)
+	EXPOSE_PARAMS(EntityData::EntityParametersSIII)
+
+	if (savepoint.action == kActionExcuseMeCath) {
+		if (!params->param4) {
+			getSound()->excuseMe(kEntityServers1);
+			params->param3 = 1;
+		}
+	}
+
+	Entity::updatePosition(savepoint);
 }
 
 IMPLEMENT_FUNCTION_S(Pascale, playSound, 6)

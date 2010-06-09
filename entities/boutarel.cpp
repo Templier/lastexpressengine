@@ -42,7 +42,7 @@ Boutarel::Boutarel(LastExpressEngine *engine) : Entity(engine, kEntityBoutarel) 
 	ADD_CALLBACK_FUNCTION(Boutarel, playSound);
 	ADD_CALLBACK_FUNCTION(Boutarel, draw);
 	ADD_CALLBACK_FUNCTION(Boutarel, updateFromTime);
-	ADD_CALLBACK_FUNCTION(Boutarel, function5);
+	ADD_CALLBACK_FUNCTION(Boutarel, updatePosition);
 	ADD_CALLBACK_FUNCTION(Boutarel, enterExitCompartment);
 	ADD_CALLBACK_FUNCTION(Boutarel, function7);
 	ADD_CALLBACK_FUNCTION(Boutarel, function8);
@@ -95,8 +95,8 @@ IMPLEMENT_FUNCTION_I(Boutarel, updateFromTime, 4)
 	Entity::updateFromTime(savepoint);
 }
 
-IMPLEMENT_FUNCTION_SII(Boutarel, function5, 5)
-	Entity::updateField1000(savepoint);
+IMPLEMENT_FUNCTION_SII(Boutarel, updatePosition, 5)
+	Entity::updatePosition(savepoint);
 }
 
 IMPLEMENT_FUNCTION_SI(Boutarel, enterExitCompartment, 6)
@@ -132,7 +132,7 @@ IMPLEMENT_FUNCTION(Boutarel, leaveTableWithMmeBoutarel, 13)
 	default:
 		break;
 
-	case kActionExitCompartment:		
+	case kActionExitCompartment:
 		getSavePoints()->push(kEntityBoutarel, kEntityTables2, kAction103798704, "008F");
 		getEntities()->prepareSequences(kEntityMmeBoutarel);
 

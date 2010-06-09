@@ -43,7 +43,7 @@ Tatiana::Tatiana(LastExpressEngine *engine) : Entity(engine, kEntityTatiana) {
 	ADD_CALLBACK_FUNCTION(Tatiana, function1);
 	ADD_CALLBACK_FUNCTION(Tatiana, playSound);
 	ADD_CALLBACK_FUNCTION(Tatiana, draw);
-	ADD_CALLBACK_FUNCTION(Tatiana, function4);
+	ADD_CALLBACK_FUNCTION(Tatiana, updatePosition);
 	ADD_CALLBACK_FUNCTION(Tatiana, enterExitCompartment);
 	ADD_CALLBACK_FUNCTION(Tatiana, function6);
 	ADD_CALLBACK_FUNCTION(Tatiana, function7);
@@ -109,8 +109,8 @@ IMPLEMENT_FUNCTION_S(Tatiana, draw, 3)
 	Entity::draw(savepoint);
 }
 
-IMPLEMENT_FUNCTION_SII(Tatiana, function4, 4)
-	Entity::updateField1000(savepoint);
+IMPLEMENT_FUNCTION_SII(Tatiana, updatePosition, 4)
+	Entity::updatePosition(savepoint);
 }
 
 IMPLEMENT_FUNCTION_SI(Tatiana, enterExitCompartment, 5)
@@ -341,7 +341,34 @@ IMPLEMENT_FUNCTION(Tatiana, function32, 32)
 }
 
 IMPLEMENT_FUNCTION(Tatiana, function33, 33)
-	error("Tatiana: callback function 33 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionDefault:
+		getEntities()->prepareSequences(kEntityTatiana);
+		setCallback(1);
+		call(new ENTITY_SETUP(Tatiana, setup_updateFromTime), 75);
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		case 1:
+			setCallback(2);
+			call(new ENTITY_SETUP(Tatiana, setup_function13), kCarRedSleeping, EntityData::kField491_7500);
+			break;
+
+		case 2:
+			setCallback(3);
+			call(new ENTITY_SETUP(Tatiana, setup_function14));
+			break;
+
+		case 3:
+			setup_function34();
+			break;
+		}
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Tatiana, function34, 34)
