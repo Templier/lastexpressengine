@@ -288,7 +288,7 @@ IMPLEMENT_FUNCTION(August, function33, 33)
 
 	case kActionDefault:
 		setCallback(getProgress().event_august_met ? 1 : 2);
-		call(new ENTITY_SETUP(August, setup_function21), getProgress().event_august_met ? getState()->time + 9000 : kTimeBedTime);
+		call(new ENTITY_SETUP(August, setup_function21), getProgress().event_august_met ? getState()->time + 9000 : (uint32)kTimeBedTime);
 		break;
 
 	case kActionCallback:

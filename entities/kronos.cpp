@@ -233,6 +233,9 @@ IMPLEMENT_FUNCTION(Kronos, function14, 14)
 		case kEntityAbbot:
 			params->param3 = 1;
 			break;
+
+		default:
+			break;
 		}
 		break;
 	}
