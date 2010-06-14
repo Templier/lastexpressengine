@@ -807,7 +807,7 @@ IMPLEMENT_ACTION(getOutsideTrain) {
 	byte action = hotspot.param1;
 
 	if ((getEvent(kEventCathLookOutsideWindowDay) || getEvent(kEventCathLookOutsideWindowNight) || getObjects()->get(kObjectCompartment1).location2)
-	  && getProgress().field_50
+	  && getProgress().isTrainRunning
 	  && (action != 45 || (!getEntities()->checkFields1(kEntityRebecca, kCarRedSleeping, EntityData::kField491_4840) && getObjects()->get(kObject44).location == 2))
 	  && getInventory()->getSelectedItem() != kItemFirebird
 	  && getInventory()->getSelectedItem() != kItemBriefcase) {
@@ -1660,7 +1660,7 @@ CursorStyle Action::getCursor(byte action, ObjectIndex object, byte param2, byte
 		if (getInventory()->getSelectedItem() != (InventoryItem)object)
 			return kCursorNormal;
 
-		if (object == kObject20 && param2 == 4 && !getProgress().field_50)
+		if (object == kObject20 && param2 == 4 && !getProgress().isTrainRunning)
 			return kCursorNormal;
 
 		if (object == kObjectHandleInsideBathroom  && param2 == 1 && getProgress().field_5C)
@@ -1691,7 +1691,7 @@ CursorStyle Action::getCursor(byte action, ObjectIndex object, byte param2, byte
 			return kCursorNormal;
 
 		if ((getEvent(kEventCathLookOutsideWindowDay) || getEvent(kEventCathLookOutsideWindowDay) || getObjects()->get(kObjectCompartment1).location2 == kLocation1)
-			&& getProgress().field_50
+			&& getProgress().isTrainRunning
 			&& (object != kObject45 || (getEntities()->checkFields1(kEntityRebecca, kCarRedSleeping, EntityData::kField491_4840) && getObjects()->get(kObject44).location == 2))
 			&& getInventory()->getSelectedItem() != kItemBriefcase && getInventory()->getSelectedItem() != kItemFirebird)
 			return kCursorForward;
@@ -1704,7 +1704,7 @@ CursorStyle Action::getCursor(byte action, ObjectIndex object, byte param2, byte
 		return (CursorStyle)(((getProgress().field_C8 < 1) - 1) & 7);
 
 	case SceneHotspot::kActionClimbUpTrain:
-		if (getProgress().field_50
+		if (getProgress().isTrainRunning
 			&& (getProgress().chapter == kChapter2 || getProgress().chapter == kChapter3 || getProgress().chapter == kChapter5)
 			&& getInventory()->getSelectedItem() != kItemFirebird
 			&& getInventory()->getSelectedItem() != kItemBriefcase)

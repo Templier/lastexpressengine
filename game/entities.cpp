@@ -571,13 +571,8 @@ void Entities::drawSequenceRight(EntityIndex index, const char* sequence) {
 void Entities::prepareSequences(EntityIndex index) {
 	debugC(8, kLastExpressDebugLogic, "Prepare sequences for entity %d", index);
 
-	// Draw sequences 0 & 1
-
-	// TODO we are doing more than just drawing sequences:
-	// - update screen coordinates
-	// - chain sequences to draw
-	// - draw sequence list by decompressing background if needed
-	warning("Entities::prepareSequences: not implemented!");
+	getScenes()->removeSequenceAndRedraw(getData(index)->sequence0, false);
+	getScenes()->removeSequenceAndRedraw(getData(index)->sequence1, false);
 
 	if (getData(index)->sequence3) {
 		SAFE_DELETE(getData(index)->sequence3);
@@ -596,7 +591,6 @@ void Entities::prepareSequences(EntityIndex index) {
 	strcpy(getData(index)->sequenceName, "");
 	getData(index)->direction = kDirectionNone;
 	getData(index)->field_4A8 = 1;
-
 }
 
 void Entities::drawSequenceInternal(EntityIndex index, const char* sequence, EntityDirection direction) {

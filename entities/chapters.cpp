@@ -99,12 +99,12 @@ IMPLEMENT_FUNCTION_II(Chapters, savegame, 1)
 
 //////////////////////////////////////////////////////////////////////////
 IMPLEMENT_FUNCTION_SI(Chapters, enterStation, 2)
-	error("Chapters: callback function 2 not implemented!");
+	enterExitStation(savepoint, true);
 }
 
 //////////////////////////////////////////////////////////////////////////
 IMPLEMENT_FUNCTION_S(Chapters, exitStation, 3)
-	error("Chapters: callback function 3 not implemented!");
+	enterExitStation(savepoint, false);
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -164,7 +164,7 @@ IMPLEMENT_FUNCTION(Chapters, chapter1_init, 7)
 
 	getState()->time = kTimeChapter1;
 	getState()->timeDelta = 0;
-	getProgress().field_50 = 1;
+	getProgress().isTrainRunning = 1;
 	getProgress().portrait = kPortraitOriginal;
 	getProgress().field_18 = 1;
 	getProgress().field_7C = 1;
@@ -438,7 +438,7 @@ IMPLEMENT_FUNCTION(Chapters, chapter2_init, 11)
 
 	getProgress().event_corpse_moved_from_floor = 1;
 	getProgress().field_18 = 1;
-	getProgress().field_50 = 1;
+	getProgress().isTrainRunning = true;
 	getProgress().event_corpse_found = 1;
 
 	// Switch to green jacket/portrait
@@ -497,7 +497,7 @@ IMPLEMENT_FUNCTION(Chapters, chapter2_handler, 12)
 		break;
 
 	case kActionNone:
-		if (!getProgress().field_50)
+		if (!getProgress().isTrainRunning)
 			break;
 
 		UPDATE_PARAM_FROM_TICKS(2, params->param1);
@@ -568,7 +568,7 @@ IMPLEMENT_FUNCTION(Chapters, chapter3_init, 14)
 		getSavePoints()->push(kEntityChapters, kEntityTables4, kAction103798704);
 		getSavePoints()->push(kEntityChapters, kEntityTables5, kAction103798704);
 
-		getProgress().field_50 = 1;
+		getProgress().isTrainRunning = 1;
 
 		getObjects()->update(kObjectHandleOutsideLeft, kEntityNone, kLocation1, kCursorNormal, kCursorHand);
 		getObjects()->update(kObjectHandleOutsideRight, kEntityNone, kLocation1, kCursorNormal, kCursorHand);
@@ -653,7 +653,7 @@ IMPLEMENT_FUNCTION(Chapters, chapter4_init, 18)
 	getSound()->unknownFunction3();
 	getSound()->resetState();
 
-	getProgress().field_50 = 1;
+	getProgress().isTrainRunning = 1;
 
 	getObjects()->update(kObjectHandleOutsideLeft, kEntityNone, kLocation1, kCursorNormal, kCursorHand);
 	getObjects()->update(kObjectHandleOutsideRight, kEntityNone, kLocation1, kCursorNormal, kCursorHand);
@@ -727,7 +727,7 @@ IMPLEMENT_FUNCTION(Chapters, chapter5_init, 21)
 		getEntities()->prepareSequences(kEntityTables4);
 		getEntities()->prepareSequences(kEntityTables5);
 
-		getProgress().field_50 = 1;
+		getProgress().isTrainRunning = 1;
 
 		getObjects()->update(kObjectHandleOutsideLeft, kEntityNone, kLocation1, kCursorNormal, kCursorHand);
 		getObjects()->update(kObjectHandleOutsideRight, kEntityNone, kLocation1, kCursorNormal, kCursorHand);
@@ -867,6 +867,98 @@ IMPLEMENT_FUNCTION(Chapters, chapter5_handler, 22)
 			getSound()->removeFromQueue(kEntityChapters);
 		break;
 	}
+}
+
+void Chapters::enterExitStation(const SavePoint &savepoint, bool isEnteringStation) {
+	if (savepoint.action == kActionDefault) {
+		if (!ENTITY_PARAM(0, 2) && !ENTITY_PARAM(0, 3)) {
+			enterExitHelper(savepoint, isEnteringStation);
+			return;
+		}
+
+		getSound()->removeFromQueue(kEntityChapters);
+
+		if (!ENTITY_PARAM(0, 2)) {
+			if (ENTITY_PARAM(0, 3))
+				ENTITY_PARAM(0, 3) = 0;
+
+			enterExitHelper(savepoint, isEnteringStation);
+			return;
+		}
+
+		getSavePoints()->push(kEntityChapters, kEntityTrain, kAction191350523);
+
+		if (getEntityData(kEntityNone)->field_493 != EntityData::kField493_2) {
+			ENTITY_PARAM(0, 2) = 0;
+			enterExitHelper(savepoint, isEnteringStation);
+			return;
+		}
+
+		// Green sleeping car
+		if (getEntities()->checkFields15()) {
+			getScenes()->loadSceneFromPosition(kCarGreenSleeping, 49);			
+			ENTITY_PARAM(0, 2) = 0;
+			enterExitHelper(savepoint, isEnteringStation);
+			return;
+		}
+
+		// Red sleeping car
+		if (getEntities()->checkFields16()) {
+			getScenes()->loadSceneFromPosition(kCarRedSleeping, 49);			
+			ENTITY_PARAM(0, 2) = 0;
+			enterExitHelper(savepoint, isEnteringStation);
+			return;
+		}
+
+		// Other cars
+		if (getEntityData(kEntityNone)->car < kCarRedSleeping || getEntityData(kEntityNone)->car > kCarCoalTender) {
+
+			if (getEntityData(kEntityNone)->car < kCarBaggageRear || getEntityData(kEntityNone)->car > kCarGreenSleeping) {
+				ENTITY_PARAM(0, 2) = 0;
+				enterExitHelper(savepoint, isEnteringStation);
+				return;
+			}
+
+			if (getEntities()->isPlayerPosition(kCarGreenSleeping, 98)) {
+				getSound()->playSound(kEntityNone, "LIB015");
+				getScenes()->loadSceneFromPosition(kCarGreenSleeping, 71);			
+				ENTITY_PARAM(0, 2) = 0;
+				enterExitHelper(savepoint, isEnteringStation);
+				return;
+			}
+
+			getScenes()->loadSceneFromPosition(kCarGreenSleeping, 82);			
+			ENTITY_PARAM(0, 2) = 0;
+			enterExitHelper(savepoint, isEnteringStation);
+			return;
+		}
+
+		getScenes()->loadSceneFromPosition(kCarRestaurant, 82);			
+		ENTITY_PARAM(0, 2) = 0;
+		enterExitHelper(savepoint, isEnteringStation);
+	}
+}
+
+void Chapters::enterExitHelper(const SavePoint &savepoint, bool isEnteringStation) {
+	EXPOSE_PARAMS(EntityData::EntityParametersIIII);
+
+	getSound()->playSound(kEntityChapters, isEnteringStation ? "ARRIVE" : "DEPART", 8);
+	getSound()->unknownFunction3();
+
+	getObjects()->update(kObjectHandleOutsideLeft, kEntityNone, kLocation1, kCursorNormal, isEnteringStation ? kCursorNormal : kCursorHand);
+	getObjects()->update(kObjectHandleOutsideRight, kEntityNone, kLocation1, kCursorNormal, isEnteringStation ? kCursorNormal : kCursorHand);
+
+	getProgress().isTrainRunning = isEnteringStation ? false : true;
+
+	if (isEnteringStation) {
+		ENTITY_PARAM(0, 2) = 1;
+		ENTITY_PARAM(0, 4) = params->param4;
+	} else {
+		getSavePoints()->push(kEntityChapters, kEntityTrain, kAction203419131);
+		ENTITY_PARAM(0, 3) = 1;
+	}
+
+	CALLBACK_ACTION();
 }
 
 } // End of namespace LastExpress

@@ -61,7 +61,7 @@ public:
 		uint32 field_44;
 		uint32 field_48;
 		uint32 field_4C;
-		uint32 field_50;
+		uint32 isTrainRunning;
 		uint32 field_54;
 		uint32 field_58;
 		uint32 field_5C;
@@ -191,7 +191,7 @@ public:
 			field_44 = 0;
 			field_48 = 0;
 			field_4C = 0;
-			field_50 = 0;
+			isTrainRunning = 0;
 			field_54 = 0;
 			field_58 = 0;
 			field_5C = 0;

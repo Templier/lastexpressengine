@@ -279,8 +279,7 @@ public:
 		byte current_call;
 		Field491Value field_491;
 		Field493Value field_493;
-		CarIndex car;					// byte
-		byte field_496;
+		CarIndex car;					// word
 		byte field_497;
 		byte field_498;
 		InventoryItem inventoryItem;	// byte
@@ -322,7 +321,6 @@ public:
 			field_491 = EntityData::kField491_0;
 			field_493 = EntityData::kField493_0;
 			car = kCarNone;
-			field_496 = 0;
 			field_497 = 0;
 			field_498 = 0;
 			inventoryItem = kItemNone;
