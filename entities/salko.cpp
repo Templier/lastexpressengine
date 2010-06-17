@@ -110,7 +110,7 @@ IMPLEMENT_FUNCTION(Salko, chapter1, 9)
 		break;
 
 	case kActionNone:
-		CALL_CHAPTER_ACTION_NONE(10)
+		TIME_CHECK_CHAPTER1(setup_function10);
 		break;
 
 	case kActionDefault:
@@ -275,7 +275,36 @@ IMPLEMENT_FUNCTION(Salko, function19, 19)
 }
 
 IMPLEMENT_FUNCTION(Salko, function20, 20)
-	error("Salko: callback function 20 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			getData()->field_493 = EntityData::kField493_0;
+			if (getData()->field_491 < EntityData::kField491_2087)
+				getData()->field_491 = EntityData::kField491_2088;
+
+			setCallback(2);
+			call(new ENTITY_SETUP(Salko, setup_function4), kCarRestaurant, EntityData::kField491_850);
+			break;
+
+		case 2:
+			getEntities()->prepareSequences(kEntitySalko);
+			setup_function21();
+			break;
+		}
+		break;
+
+	case kAction55996766:
+		setCallback(1);
+		call(new ENTITY_SETUP_SIIS(Salko, setup_enterExitCompartment), "612Dh", kObjectCompartmentH);
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Salko, function21, 21)

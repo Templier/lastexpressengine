@@ -211,7 +211,7 @@ IMPLEMENT_FUNCTION(Sophie, chapter1, 4)
 		break;
 
 	case kActionNone:
-		CALL_CHAPTER_ACTION_NONE(3)
+		TIME_CHECK_CHAPTER1(setup_function3);
 		break;
 
 	case kActionDefault:

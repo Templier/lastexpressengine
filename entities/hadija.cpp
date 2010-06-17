@@ -106,7 +106,7 @@ IMPLEMENT_FUNCTION(Hadija, chapter1, 10)
 		break;
 
 	case kActionNone:
-		CALL_CHAPTER_ACTION_NONE(11)
+		TIME_CHECK_CHAPTER1(setup_function11);
 		break;
 
 	case kActionDefault:

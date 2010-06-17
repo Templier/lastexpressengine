@@ -53,6 +53,7 @@ public:
 		kField491_1750  = 1750,
 		kField491_2000  = 2000,
 		kField491_2087  = 2087,
+		kField491_2088  = 2088,
 		kField491_2436  = 2436,
 		kField491_2500  = 2500,
 		kField491_2587  = 2587,
@@ -407,7 +408,7 @@ public:
 	virtual void setup_chapter5(int param1 = 0, int param2 = 0, int param3 = 0, int param4 = 0) = 0;
 
 	// Serializable
- 	void saveLoadWithSerializer(Common::Serializer &ser) { _data->saveLoadWithSerializer(ser); }
+	void saveLoadWithSerializer(Common::Serializer &ser) { _data->saveLoadWithSerializer(ser); }
 
 	void nullfunction(const SavePoint &savepoint) {}
 

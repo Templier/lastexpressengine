@@ -82,7 +82,7 @@ IMPLEMENT_FUNCTION(Vassili, chapter1, 4)
 		break;
 
 	case kActionNone:
-		CALL_CHAPTER_ACTION_NONE(5)
+		TIME_CHECK_CHAPTER1(setup_function5);
 		break;
 
 	case kActionDefault:

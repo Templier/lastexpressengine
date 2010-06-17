@@ -45,15 +45,21 @@
 //////////////////////////////////////////////////////////////////////////
 // Helpers
 //////////////////////////////////////////////////////////////////////////
-#define CALL_CHAPTER_ACTION_NONE(id) \
-	CALL_CHAPTER_ACTION(id, kTimeChapter1)
+#define TIME_CHECK_CHAPTER1(function) \
+	TIME_CHECK(kTimeChapter1, function)
 
-#define CALL_CHAPTER_ACTION(id, timeValue) \
-	if (getState()->time > timeValue) { \
-		if (!params->param1) { \
-			params->param1 = 1; \
-			setup_function##id(); \
-		} \
+#define TIME_CHECK(timeValue, function) \
+	if (getState()->time > timeValue && !params->param1) { \
+		params->param1 = 1; \
+		function(); \
+	}
+
+#define TIME_CHECK_CALLBACK(class, timeValue, parameter, callback, function) \
+	if (getState()->time > timeValue && !params->parameter) { \
+		params->parameter = 1; \
+		setCallback(callback); \
+		call(new ENTITY_SETUP(class, function)); \
+		break; \
 	}
 
 #define CALLBACK_ACTION() { \

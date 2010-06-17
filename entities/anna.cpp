@@ -209,7 +209,7 @@ IMPLEMENT_FUNCTION(Anna, chapter1, 16)
 		break;
 
 	case kActionNone:
-		CALL_CHAPTER_ACTION_NONE(19)
+		TIME_CHECK_CHAPTER1(setup_function19);
 		break;
 
 	case kActionDefault:

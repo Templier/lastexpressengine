@@ -39,7 +39,7 @@ namespace LastExpress {
 
 Yasmin::Yasmin(LastExpressEngine *engine) : Entity(engine, kEntityYasmin) {
 	ADD_CALLBACK_FUNCTION(Yasmin, function1);
-	ADD_CALLBACK_FUNCTION(Yasmin, enterExitCompartement);
+	ADD_CALLBACK_FUNCTION(Yasmin, enterExitCompartment);
 	ADD_CALLBACK_FUNCTION(Yasmin, playSound);
 	ADD_CALLBACK_FUNCTION(Yasmin, updateFromTime);
 	ADD_CALLBACK_FUNCTION(Yasmin, function5);
@@ -80,7 +80,7 @@ IMPLEMENT_FUNCTION(Yasmin, function1, 1)
 	Entity::function1(savepoint);
 }
 
-IMPLEMENT_FUNCTION_SI(Yasmin, enterExitCompartement, 2)
+IMPLEMENT_FUNCTION_SI(Yasmin, enterExitCompartment, 2)
 	Entity::enterExitCompartment(savepoint);
 }
 
@@ -120,8 +120,8 @@ IMPLEMENT_FUNCTION(Yasmin, function6, 6)
 		getData()->field_493 = EntityData::kField493_0;
 
 		setCallback(1);
-		// Exit compartement
-		call(new ENTITY_SETUP_SIIS(Yasmin, setup_enterExitCompartement), "615Be", kObjectCompartment5);
+		// Exit compartment
+		call(new ENTITY_SETUP_SIIS(Yasmin, setup_enterExitCompartment), "615Be", kObjectCompartment5);
 		break;
 
 	case kActionCallback:
@@ -134,8 +134,8 @@ IMPLEMENT_FUNCTION(Yasmin, function6, 6)
 			break;
 
 		case 2:
-			// Enter compartement
-			call(new ENTITY_SETUP_SIIS(Yasmin, setup_enterExitCompartement), "615Ag", kObjectCompartment7);
+			// Enter compartment
+			call(new ENTITY_SETUP_SIIS(Yasmin, setup_enterExitCompartment), "615Ag", kObjectCompartment7);
 			break;
 
 		case 3:
@@ -159,8 +159,8 @@ IMPLEMENT_FUNCTION(Yasmin, function7, 7)
 		getData()->field_493 = EntityData::kField493_0;
 
 		setCallback(1);
-		// Exit compartement
-		call(new ENTITY_SETUP_SIIS(Yasmin, setup_enterExitCompartement), "615Bg", kObjectCompartment7);
+		// Exit compartment
+		call(new ENTITY_SETUP_SIIS(Yasmin, setup_enterExitCompartment), "615Bg", kObjectCompartment7);
 		break;
 
 	case kActionCallback:
@@ -173,8 +173,8 @@ IMPLEMENT_FUNCTION(Yasmin, function7, 7)
 			break;
 
 		case 2:
-			// Enter compartement
-			call(new ENTITY_SETUP_SIIS(Yasmin, setup_enterExitCompartement), "615Ae", kObjectCompartment5);
+			// Enter compartment
+			call(new ENTITY_SETUP_SIIS(Yasmin, setup_enterExitCompartment), "615Ae", kObjectCompartment5);
 			break;
 
 		case 3:
@@ -194,7 +194,7 @@ IMPLEMENT_FUNCTION(Yasmin, chapter1, 8)
 		break;
 
 	case kActionNone:
-		CALL_CHAPTER_ACTION_NONE(9)
+		TIME_CHECK_CHAPTER1(setup_function9);
 		break;
 
 	case kActionDefault:
@@ -291,7 +291,32 @@ IMPLEMENT_FUNCTION(Yasmin, chapter3, 13)
 }
 
 IMPLEMENT_FUNCTION(Yasmin, function14, 14)
-	error("Yasmin: callback function 14 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionNone:
+		TIME_CHECK_CALLBACK(Yasmin, kTimeYasmin_2, param1, 1, setup_function6);
+		TIME_CHECK_CALLBACK(Yasmin, kTimeYasmin_3, param2, 2, setup_function7);
+		TIME_CHECK_CALLBACK(Yasmin, kTimeYasmin_4, param3, 3, setup_function6);
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			TIME_CHECK_CALLBACK(Yasmin, kTimeYasmin_3, param2, 2, setup_function7);
+			TIME_CHECK_CALLBACK(Yasmin, kTimeYasmin_4, param3, 3, setup_function6);
+			break;
+
+		case 2:
+			TIME_CHECK_CALLBACK(Yasmin, kTimeYasmin_4, param3, 3, setup_function6);
+			break;
+		}
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Yasmin, chapter4, 15)

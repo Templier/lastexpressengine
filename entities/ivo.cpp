@@ -163,7 +163,7 @@ IMPLEMENT_FUNCTION(Ivo, chapter1, 14)
 		break;
 
 	case kActionNone:
-		CALL_CHAPTER_ACTION_NONE(15)
+		TIME_CHECK_CHAPTER1(setup_function15);
 		break;
 
 	case kActionDefault:
@@ -179,7 +179,37 @@ IMPLEMENT_FUNCTION(Ivo, chapter1, 14)
 }
 
 IMPLEMENT_FUNCTION(Ivo, function15, 15)
-	error("Ivo: callback function 15 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionNone:
+		getData()->field_491 = getEntityData(kEntityMilos)->field_491;
+		getData()->field_493 = getEntityData(kEntityMilos)->field_493;
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			setCallback(2);
+			call(new ENTITY_SETUP(Ivo, setup_function11));
+			break;
+
+		case 2:
+			getSavePoints()->push(kEntityIvo, kEntityMilos, kAction135024800);
+			setup_function16();
+			break;
+		}
+		break;
+
+	case kAction125242096:
+		setCallback(1);
+		call(new ENTITY_SETUP(Ivo, setup_updateFromTicks), 75);
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Ivo, function16, 16)
@@ -203,7 +233,7 @@ IMPLEMENT_FUNCTION(Ivo, chapter2, 18)
 		break;
 
 	case kActionNone:
-		CALL_CHAPTER_ACTION(19, 1777500)
+		TIME_CHECK(kTimeIvo_2, setup_function19);
 		break;
 
 	case kActionDefault:

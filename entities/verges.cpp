@@ -175,7 +175,7 @@ IMPLEMENT_FUNCTION(Verges, chapter1, 18)
 		break;
 
 	case kActionNone:
-		CALL_CHAPTER_ACTION_NONE(26)
+		TIME_CHECK_CHAPTER1(setup_function26);
 		break;
 
 	case kActionDefault:

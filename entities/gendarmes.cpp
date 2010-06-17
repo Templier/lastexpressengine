@@ -25,10 +25,12 @@
 
 #include "lastexpress/entities/gendarmes.h"
 
+#include "lastexpress/game/action.h"
 #include "lastexpress/game/entities.h"
 #include "lastexpress/game/logic.h"
 #include "lastexpress/game/object.h"
 #include "lastexpress/game/savepoint.h"
+#include "lastexpress/game/sound.h"
 #include "lastexpress/game/state.h"
 
 #include "lastexpress/lastexpress.h"
@@ -39,9 +41,9 @@ namespace LastExpress {
 Gendarmes::Gendarmes(LastExpressEngine *engine) : Entity(engine, kEntityGendarmes) {
 	ADD_CALLBACK_FUNCTION(Gendarmes, function1);
 	ADD_CALLBACK_FUNCTION(Gendarmes, chapter1);
-	ADD_CALLBACK_FUNCTION(Gendarmes, function3);
-	ADD_CALLBACK_FUNCTION(Gendarmes, function4);
-	ADD_CALLBACK_FUNCTION(Gendarmes, function5);
+	ADD_CALLBACK_FUNCTION(Gendarmes, arrestDraw);
+	ADD_CALLBACK_FUNCTION(Gendarmes, arrestPlaysound);
+	ADD_CALLBACK_FUNCTION(Gendarmes, arrestPlaysound16);
 	ADD_CALLBACK_FUNCTION(Gendarmes, function6);
 	ADD_CALLBACK_FUNCTION(Gendarmes, savegame);
 	ADD_CALLBACK_FUNCTION(Gendarmes, function8);
@@ -66,7 +68,7 @@ IMPLEMENT_FUNCTION(Gendarmes, chapter1, 2)
 		break;
 
 	case kActionNone:
-		CALL_CHAPTER_ACTION_NONE(11)
+		TIME_CHECK_CHAPTER1(setup_function11);
 		break;
 
 	case kActionDefault:
@@ -75,16 +77,16 @@ IMPLEMENT_FUNCTION(Gendarmes, chapter1, 2)
 	}
 }
 
-IMPLEMENT_FUNCTION_S(Gendarmes, function3, 3)
-	error("Gendarmes: callback function 3 not implemented!");
+IMPLEMENT_FUNCTION_S(Gendarmes, arrestDraw, 3)
+	arrest(savepoint);
 }
 
-IMPLEMENT_FUNCTION_S(Gendarmes, function4, 4)
-	error("Gendarmes: callback function 4 not implemented!");
+IMPLEMENT_FUNCTION_S(Gendarmes, arrestPlaysound, 4)
+	arrest(savepoint, true);
 }
 
-IMPLEMENT_FUNCTION_S(Gendarmes, function5, 5)
-	error("Gendarmes: callback function 5 not implemented!");
+IMPLEMENT_FUNCTION_S(Gendarmes, arrestPlaysound16, 5)
+	arrest(savepoint, true, 16);
 }
 
 IMPLEMENT_FUNCTION_I(Gendarmes, function6, 6)
@@ -141,6 +143,46 @@ IMPLEMENT_FUNCTION(Gendarmes, chapter4, 16)
 IMPLEMENT_FUNCTION(Gendarmes, chapter5, 17)
 	if (savepoint.action == kActionDefault)
 		getEntities()->prepareSequences(kEntityGendarmes);
+}
+
+void Gendarmes::arrest(const SavePoint &savepoint, bool playSound, int a3) {
+	EXPOSE_PARAMS(EntityData::EntityParametersSIIS);
+
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionNone:
+	case kAction17:
+		if (!ENTITY_PARAM(0, 1) && getEntities()->checkSequence0(kEntityGendarmes)) {
+			getSound()->playSound(kEntityNone, "MUS007");
+			ENTITY_PARAM(0, 1) = 1;
+		}
+
+		if (getEntities()->checkFields9(kEntityGendarmes, kEntityNone, 1000) && !getEntityData(kEntityNone)->field_493) {
+			setCallback(1);
+			call(new ENTITY_SETUP(Gendarmes, setup_savegame), kSavegameType2, kEventGendarmesArrestation);
+		}
+		break;
+
+	case kActionExitCompartment:
+		CALLBACK_ACTION();
+		break;
+
+	case kActionDefault:
+		if (!playSound)
+			getEntities()->drawSequenceRight(kEntityGendarmes, params->seq1);
+		else
+			getSound()->playSound(kEntityGendarmes, params->seq1, a3);
+		break;
+
+	case kActionCallback:
+		if (getCallback() == 1) {
+			getAction()->playAnimation(kEventGendarmesArrestation);
+			getLogic()->gameOver(kTimeType0, kTime1, kSceneGameOverPolice1, true);
+		}
+		break;
+	}
 }
 
 } // End of namespace LastExpress

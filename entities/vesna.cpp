@@ -25,6 +25,7 @@
 
 #include "lastexpress/entities/vesna.h"
 
+#include "lastexpress/game/action.h"
 #include "lastexpress/game/entities.h"
 #include "lastexpress/game/logic.h"
 #include "lastexpress/game/object.h"
@@ -121,7 +122,7 @@ IMPLEMENT_FUNCTION(Vesna, chapter1, 12)
 		break;
 
 	case kActionNone:
-		CALL_CHAPTER_ACTION_NONE(13)
+		TIME_CHECK_CHAPTER1(setup_function13);
 		break;
 
 	case kActionDefault:
@@ -247,7 +248,6 @@ IMPLEMENT_FUNCTION(Vesna, chapter3, 19)
 		getData()->car = kCarRedSleeping;
 		getData()->clothes = kClothesDefault;
 		getData()->inventoryItem = kItemNone;
-
 		break;
 	}
 }
@@ -335,7 +335,31 @@ IMPLEMENT_FUNCTION(Vesna, chapter5, 28)
 }
 
 IMPLEMENT_FUNCTION(Vesna, function29, 29)
-	error("Vesna: callback function 29 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kAction9:
+		setCallback(1);
+		call(new ENTITY_SETUP(Vesna, setup_savegame), kSavegameType2, kEventCathVesnaRestaurantKilled);
+		break;
+
+	case kActionDefault:
+		getObjects()->update(kObject64, kEntityVesna, kLocationNone, kCursorNormal, kCursorForward);
+		break;
+
+	case kActionCallback:
+		if (getCallback() == 1) {
+			getAction()->playAnimation(kEventCathVesnaRestaurantKilled);
+			getLogic()->gameOver(kTimeType0, kTime1, kSceneNone, true);
+		}
+		break;
+
+	case kAction134427424:
+		getObjects()->update(kObject64, kEntityNone, kLocationNone, kCursorNormal, kCursorForward);
+		setup_function30();
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Vesna, function30, 30)

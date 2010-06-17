@@ -111,7 +111,7 @@ IMPLEMENT_FUNCTION(MmeBoutarel, chapter1, 10)
 		break;
 
 	case kActionNone:
-		CALL_CHAPTER_ACTION_NONE(12)
+		TIME_CHECK_CHAPTER1(setup_function12);
 		break;
 
 	case kActionDefault:

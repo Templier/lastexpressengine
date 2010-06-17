@@ -58,6 +58,7 @@ enum TimeValue {
 	kTimeChapter2             = 1750500,
 	kTimeYasmin               = 1759500,
 	kTimeRebecca_2            = 1764000,
+	kTimeIvo_2                = 1777500,
 	kTimeYasmin_1             = 1800000,
 
 	// Chapter 3
@@ -70,9 +71,12 @@ enum TimeValue {
 	kTimeRebecca              = 2016000,
 	kTimeTables2              = 2052000,
 	kTimeAugust_1             = 2061000,
+	kTimeYasmin_2             = 2062800,
 	kTimeRebecca_0            = 2070000,
 	kTimeCooks                = 2079000,
+	kTimeYasmin_3             = 2106000,
 	kTimeRebecca_1            = 2110500,
+	kTimeYasmin_4             = 2160000,
 	kTimeAugustVienna         = 2200500,
 	kTimeAnna_2               = 2250000,
 	kTimeAnna_3               = 2259000,
@@ -1034,6 +1038,7 @@ enum ActionIndex {
 	/////////////////////////////
 	// Salko
 	/////////////////////////////
+	kAction55996766  = 55996766,
 	kAction136184016 = 136184016,
 
 	/////////////////////////////
@@ -1128,6 +1133,7 @@ enum ActionIndex {
 	// Vesna
 	/////////////////////////////
 	kAction124190740 = 124190740,
+	kAction134427424 = 134427424,
 	kAction135024800 = 135024800,
 	kAction137165825 = 137165825,
 	kAction190412928 = 190412928,

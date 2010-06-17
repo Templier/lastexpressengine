@@ -54,7 +54,7 @@ private:
 
 	// Helper methods
 	void resetParam8();
-	void handleCompartementAction();
+	void handleCompartmentAction();
 };
 
 } // End of namespace LastExpress

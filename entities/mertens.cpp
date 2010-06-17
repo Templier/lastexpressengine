@@ -370,7 +370,7 @@ IMPLEMENT_FUNCTION(Mertens, chapter1, 34)
 		break;
 
 	case kActionNone:
-		CALL_CHAPTER_ACTION_NONE(41)
+		TIME_CHECK_CHAPTER1(setup_function41);
 		break;
 
 	case kActionDefault:

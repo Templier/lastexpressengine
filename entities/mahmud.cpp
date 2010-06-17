@@ -764,7 +764,7 @@ IMPLEMENT_FUNCTION(Mahmud, chapter1, 15)
 		break;
 
 	case kActionNone:
-		CALL_CHAPTER_ACTION_NONE(14)
+		TIME_CHECK_CHAPTER1(setup_function14);
 		break;
 
 	case kActionDefault:

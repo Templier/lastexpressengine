@@ -48,7 +48,7 @@ public:
 	DECLARE_FUNCTION_S(playSound16)
 	DECLARE_FUNCTION_II(savegame)
 	DECLARE_FUNCTION_I(updateFromTime)
-	DECLARE_FUNCTION_II(enterCompartementDialog)
+	DECLARE_FUNCTION_II(enterCompartmentDialog)
 	DECLARE_FUNCTION_I(function11)
 	DECLARE_FUNCTION(chapter1)
 	DECLARE_FUNCTION(function13)

@@ -141,7 +141,7 @@ IMPLEMENT_FUNCTION(Francois, chapter1, 17)
 		break;
 
 	case kActionNone:
-		CALL_CHAPTER_ACTION_NONE(18)
+		TIME_CHECK_CHAPTER1(setup_function18);
 		break;
 
 	case kActionDefault:
@@ -224,7 +224,36 @@ IMPLEMENT_FUNCTION(Francois, chapter2, 21)
 }
 
 IMPLEMENT_FUNCTION(Francois, function22, 22)
-	error("Francois: callback function 22 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			setCallback(2);
+			call(new ENTITY_SETUP_SIIS(Francois, setup_enterExitCompartment), "605Id", kObjectCompartmentD);
+			break;
+
+		case 2:
+			getObjects()->update(kObjectCompartmentD, kEntityNone, kLocation2, kCursorKeepValue, kCursorKeepValue);
+			getSavePoints()->push(kEntityFrancois, kEntityMmeBoutarel, kAction100957716);			
+			getData()->field_491 = EntityData::kField491_5790;
+			getData()->field_493 = EntityData::kField493_1;
+			getEntities()->prepareSequences(kEntityFrancois);
+			setup_function23();
+			break;
+		}
+		break;
+
+	case kAction100901266:
+		setCallback(1);
+		call(new ENTITY_SETUP(Francois, setup_function8), kCarRedSleeping, EntityData::kField491_5790);
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Francois, function23, 23)

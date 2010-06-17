@@ -48,7 +48,7 @@ Milos::Milos(LastExpressEngine *engine) : Entity(engine, kEntityMilos) {
 	ADD_CALLBACK_FUNCTION(Milos, playSound16);
 	ADD_CALLBACK_FUNCTION(Milos, savegame);
 	ADD_CALLBACK_FUNCTION(Milos, updateFromTime);
-	ADD_CALLBACK_FUNCTION(Milos, enterCompartementDialog);
+	ADD_CALLBACK_FUNCTION(Milos, enterCompartmentDialog);
 	ADD_CALLBACK_FUNCTION(Milos, function11);
 	ADD_CALLBACK_FUNCTION(Milos, chapter1);
 	ADD_CALLBACK_FUNCTION(Milos, function13);
@@ -113,7 +113,7 @@ IMPLEMENT_FUNCTION_I(Milos, updateFromTime, 9)
 	Entity::updateFromTime(savepoint);
 }
 
-IMPLEMENT_FUNCTION_II(Milos, enterCompartementDialog, 10)
+IMPLEMENT_FUNCTION_II(Milos, enterCompartmentDialog, 10)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -202,7 +202,7 @@ IMPLEMENT_FUNCTION_I(Milos, function11, 11)
 		case 1:
 			getData()->field_493 = EntityData::kField493_0;
 			setCallback(2);
-			call(new ENTITY_SETUP(Milos, setup_enterCompartementDialog), 3, 8200);
+			call(new ENTITY_SETUP(Milos, setup_enterCompartmentDialog), 3, 8200);
 			break;
 
 		case 2:
@@ -216,7 +216,7 @@ IMPLEMENT_FUNCTION_I(Milos, function11, 11)
 
 			params->param6 = 1;
 			setCallback(4);
-			call(new ENTITY_SETUP(Milos, setup_enterCompartementDialog), kCarRedSleeping, 3050);
+			call(new ENTITY_SETUP(Milos, setup_enterCompartmentDialog), kCarRedSleeping, 3050);
 			break;
 
 		case 4:
@@ -294,7 +294,7 @@ IMPLEMENT_FUNCTION(Milos, chapter1, 12)
 		break;
 
 	case kActionNone:
-		CALL_CHAPTER_ACTION_NONE(15)
+		TIME_CHECK_CHAPTER1(setup_function15);
 		break;
 
 	case kActionDefault:
@@ -468,7 +468,7 @@ IMPLEMENT_FUNCTION(Milos, function31, 31)
 			getObjects()->update(kObjectCompartmentG, kEntityNone, kLocation3, kCursorHandKnock, kCursorHand);
 
 			setCallback(2);
-			call(new ENTITY_SETUP(Milos, setup_enterCompartementDialog), kCarGreenSleeping, EntityData::kField491_540);
+			call(new ENTITY_SETUP(Milos, setup_enterCompartmentDialog), kCarGreenSleeping, EntityData::kField491_540);
 			break;
 
 		case 2:

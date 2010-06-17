@@ -106,7 +106,7 @@ IMPLEMENT_FUNCTION_S(Rebecca, playSound16, 4)
 }
 
 IMPLEMENT_FUNCTION_SIIS(Rebecca, function5, 5)
-	error("Rebecca: callback function 5 not implemented!");
+	Entity::savepointCall(savepoint);
 }
 
 IMPLEMENT_FUNCTION_S(Rebecca, draw, 6)
@@ -189,7 +189,7 @@ IMPLEMENT_FUNCTION(Rebecca, chapter1, 21)
 		break;
 
 	case kActionNone:
-		CALL_CHAPTER_ACTION_NONE(22)
+		TIME_CHECK_CHAPTER1(setup_function22);
 		break;
 
 	case kActionDefault:

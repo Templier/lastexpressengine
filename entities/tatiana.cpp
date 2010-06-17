@@ -122,7 +122,7 @@ IMPLEMENT_FUNCTION_SI(Tatiana, function6, 6)
 }
 
 IMPLEMENT_FUNCTION_SIIS(Tatiana, function7, 7)
-	error("Tatiana: callback function 7 not implemented!");
+	Entity::savepointCall(savepoint);
 }
 
 IMPLEMENT_FUNCTION(Tatiana, function8, 8)
@@ -167,7 +167,7 @@ IMPLEMENT_FUNCTION(Tatiana, chapter1, 17)
 		break;
 
 	case kActionNone:
-		CALL_CHAPTER_ACTION_NONE(19)
+		TIME_CHECK_CHAPTER1(setup_function19);
 		break;
 
 	case kActionDefault:
@@ -233,7 +233,23 @@ IMPLEMENT_FUNCTION(Tatiana, function23, 23)
 }
 
 IMPLEMENT_FUNCTION(Tatiana, function24, 24)
-	error("Tatiana: callback function 24 not implemented!");
+	if (savepoint.action == kActionDefault) {
+
+		getData()->field_491 = EntityData::kField491_7500;
+		getData()->field_493 = EntityData::kField493_1;
+		getData()->car = kCarRedSleeping;
+
+		getObjects()->update(kObject25, kEntityNone, kLocationNone, kCursorKeepValue, kCursorKeepValue);
+		getObjects()->update(kObjectGreenSleepingCar, kEntityNone, kLocationNone, kCursorKeepValue, kCursorKeepValue);
+
+		getEntities()->updatePosition(kEntityTatiana, kCarGreenSleeping, 70);
+		getEntities()->updatePosition(kEntityTatiana, kCarGreenSleeping, 71);
+		getEntities()->prepareSequences(kEntityTatiana);
+		
+		getObjects()->update(kObjectCompartmentB, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObject49, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObject41, kEntityNone, kLocationNone, kCursorKeepValue, kCursorKeepValue);
+	}
 }
 
 IMPLEMENT_FUNCTION(Tatiana, chapter2, 25)

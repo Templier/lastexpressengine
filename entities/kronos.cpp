@@ -101,7 +101,7 @@ IMPLEMENT_FUNCTION(Kronos, chapter1, 7)
 		break;
 
 	case kActionNone:
-		CALL_CHAPTER_ACTION_NONE(8)
+		TIME_CHECK_CHAPTER1(setup_function8);
 		break;
 
 	case kActionDefault:

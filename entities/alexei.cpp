@@ -162,7 +162,7 @@ IMPLEMENT_FUNCTION(Alexei, chapter1, 17)
 		break;
 
 	case kActionNone:
-		CALL_CHAPTER_ACTION_NONE(18)
+		TIME_CHECK_CHAPTER1(setup_function18)
 		break;
 
 	case kActionDefault:

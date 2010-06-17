@@ -173,7 +173,7 @@ IMPLEMENT_FUNCTION(Boutarel, chapter1, 19)
 		break;
 
 	case kActionNone:
-		CALL_CHAPTER_ACTION_NONE(21)
+		TIME_CHECK_CHAPTER1(setup_function21);
 		break;
 
 	case kActionDefault:

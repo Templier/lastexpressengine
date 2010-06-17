@@ -94,7 +94,7 @@ IMPLEMENT_FUNCTION(Train, chapter5, 6)
 }
 
 
-void Train::handleCompartementAction() {
+void Train::handleCompartmentAction() {
 	// TODO check that those are the proper parameters
 	EXPOSE_PARAMS(EntityData::EntityParametersIIII)
 
@@ -172,7 +172,7 @@ IMPLEMENT_FUNCTION_II(Train, harem, 7)
 		getProgress().field_DC = 1;
 		getProgress().field_E0 = 1;
 
-		handleCompartementAction();
+		handleCompartmentAction();
 
 		// Done with it!
 		return;
@@ -200,7 +200,7 @@ IMPLEMENT_FUNCTION_II(Train, harem, 7)
 			break;
 		}
 
-		handleCompartementAction();
+		handleCompartmentAction();
 		return;
 	}
 
@@ -222,7 +222,7 @@ IMPLEMENT_FUNCTION_II(Train, harem, 7)
 			break;
 		}
 
-		handleCompartementAction();
+		handleCompartmentAction();
 		return;
 	}
 
@@ -238,7 +238,7 @@ IMPLEMENT_FUNCTION_II(Train, harem, 7)
 
 			getProgress().field_DC = 1;
 
-			handleCompartementAction();
+			handleCompartmentAction();
 			return;
 		}
 
@@ -247,13 +247,13 @@ IMPLEMENT_FUNCTION_II(Train, harem, 7)
 
 			if (ENTITY_PARAM(0, 4) <= 1) {
 				getSound()->playSound(kEntityTables5, "Har1011", 16, 15);
-				handleCompartementAction();
+				handleCompartmentAction();
 				return;
 			}
 		}
 
 		params->param8 = 1;
-		handleCompartementAction();
+		handleCompartmentAction();
 		return;
 	}
 
@@ -275,7 +275,7 @@ IMPLEMENT_FUNCTION_II(Train, harem, 7)
 
 	getProgress().field_E0 = 1;
 
-	handleCompartementAction();
+	handleCompartmentAction();
 }
 
 IMPLEMENT_FUNCTION(Train, process, 8)

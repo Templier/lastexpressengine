@@ -314,7 +314,7 @@ IMPLEMENT_FUNCTION(Max, chapter1, 10)
 		break;
 
 	case kActionNone:
-		CALL_CHAPTER_ACTION_NONE(6)
+		TIME_CHECK_CHAPTER1(setup_function6);
 		break;
 
 	case kActionDefault:

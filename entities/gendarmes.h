@@ -41,9 +41,9 @@ public:
 	// Setup
 	DECLARE_FUNCTION(function1)
 	DECLARE_FUNCTION(chapter1)
-	DECLARE_FUNCTION_S(function3)
-	DECLARE_FUNCTION_S(function4)
-	DECLARE_FUNCTION_S(function5)
+	DECLARE_FUNCTION_S(arrestDraw)
+	DECLARE_FUNCTION_S(arrestPlaysound)
+	DECLARE_FUNCTION_S(arrestPlaysound16)
 	DECLARE_FUNCTION_I(function6)
 	DECLARE_FUNCTION_II(savegame)
 	DECLARE_FUNCTION_II(function8)
@@ -56,6 +56,11 @@ public:
 	DECLARE_FUNCTION(chapter3)
 	DECLARE_FUNCTION(chapter4)
 	DECLARE_FUNCTION(chapter5)
+
+private:	
+	DECLARE_CALL_FUNCTION(iiii, Gendarmes, int, int, int, int)
+
+	void arrest(const SavePoint &savepoint, bool playSound = false, int a3 = -1);
 };
 
 } // End of namespace LastExpress

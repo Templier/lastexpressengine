@@ -224,7 +224,7 @@ IMPLEMENT_FUNCTION(August, chapter1, 22)
 		break;
 
 	case kActionNone:
-		CALL_CHAPTER_ACTION_NONE(25)
+		TIME_CHECK_CHAPTER1(setup_function25);
 		break;
 
 	case kActionDefault:
