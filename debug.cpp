@@ -166,7 +166,7 @@ bool Debugger::cmd_playseq(int argc, const char **argv) {
 					_engine->_system->delayMillis(175);
 
 					// go to the next frame
-				} while (player.setFrame(player.getFrame() + 1));
+				} while (player.nextFrame());
 				_engine->getCursor()->show(true);
 			} else {
 				// Sequence player is deleting his reference to the sequence, but we need to take care of it if the

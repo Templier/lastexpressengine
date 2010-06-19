@@ -73,12 +73,14 @@ public:
 	void updateDoorsAndClock();
 	void resetDoorsAndClock();
 
-	// Sequence list
+	// Sequence queue
 	void drawFrames(bool refreshScreen);
-	void addToList(Sequence *sequence, uint32 frameIndex = 0);
-	void removeFromList(Sequence *sequence, uint32 frameIndex = 0);
-	void removeSequenceAndRedraw(Sequence *sequence, bool doRedraw, uint32 frameIndex = 0);
-	void resetList();
+	void addToQueue(SequenceFrame *frame);
+	void removeFromQueue(SequenceFrame *frame);
+	void removeFromQueue(Sequence *sequence, uint32 index = 0);
+	void removeAndRedraw(SequenceFrame *frame, bool doRedraw);
+	void resetQueue();
+	void setCoordinates(SequenceFrame *frame);
 
 	// Helpers
 	bool loadScene(Scene * const scene, SceneIndex sceneIndex);
@@ -92,10 +94,13 @@ private:
 	SceneLoader       *_sceneLoader;  ///< Scene loader
 	Scene             *_currentScene;    ///< Current scene
 
+	Common::Rect coordinates;
+
 	// Flags
 	bool _flagNoEntity;
 	bool _flagDrawEntities;
 	bool _flagDrawSequences;
+	bool _flagCoordinates;
 
 	// Train sequences
 	Common::Array<Sequence *> _doors;

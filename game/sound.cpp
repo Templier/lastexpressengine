@@ -329,6 +329,53 @@ void Sound::playSoundEvent(EntityIndex entity, byte action, byte a3) {
 	}
 }
 
+void Sound::playFightSound(byte action, byte a4) {
+	int _action = (int)action;
+	char filename[12];
+	int values[5];
+
+	switch (action) {
+	default:
+		break;
+
+	case 174:
+	case 184:
+	case 194:
+		values[0] = action + 1;
+		values[1] = action + 2;
+		values[2] = action + 3;
+		_action = values[random(3)];
+		break;
+
+	case 180:
+		values[0] = action + 1;
+		values[1] = action + 2;
+		values[2] = action + 3;
+		values[3] = action + 4;
+		_action = values[random(4)];
+		break;
+
+	case 150:
+	case 156:
+	case 162:
+	case 168:
+	case 188:
+	case 198:
+		values[0] = action + 1;
+		values[1] = action + 2;
+		values[2] = action + 3;
+		values[3] = action + 4;
+		values[4] = action + 5;
+		_action = values[random(5)];
+		break;
+	}
+
+	if (_action) {
+		sprintf((char *)&filename, "LIB%03d.SND", _action);
+		playSound(kEntityTrain, (char*)&filename, 16, a4);
+	}
+}
+
 void Sound::playDialog(EntityIndex entity, EntityIndex entityDialog, int a3, byte a4) {
 	playSound(entity, getDialogName(entityDialog), a3, a4);
 }

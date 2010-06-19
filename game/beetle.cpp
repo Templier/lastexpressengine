@@ -119,7 +119,7 @@ void Beetle::load() {
 void Beetle::unload() {
 	// Remove sequences from display list
 	if (_data)
-		getScenes()->removeFromList(_data->currentSequence, _data->currentFrame);
+		getScenes()->removeFromQueue(_data->currentSequence, _data->currentFrame);
 
 	// Delete all loaded sequences
 	SAFE_DELETE(_data);

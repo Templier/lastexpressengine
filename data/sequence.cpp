@@ -59,7 +59,8 @@ void FrameInfo::read(Common::SeekableReadStream *in, bool isSequence) {
 	subType = in->readByte();
 
 	// Sequence information
-	field_2E = in->readUint16LE();
+	field_2E = in->readByte();
+	field_2F = in->readByte();
 	field_30 = in->readByte();
 	field_31 = in->readByte();
 	soundAction = in->readByte();
@@ -85,7 +86,7 @@ AnimFrame::AnimFrame(Common::SeekableReadStream *in, const FrameInfo &f) : _pale
 	debugC(6, kLastExpressDebugGraphics, "    Decompressed end offset: %d", f.decompressedEndOffset);
 	debugC(6, kLastExpressDebugGraphics, "    Hotspot: (%d, %d) x (%d, %d)\n", f.hotspot.left, f.hotspot.top, f.hotspot.right, f.hotspot.bottom);
 	debugC(6, kLastExpressDebugGraphics, "    Compression type: %u / %u", f.compressionType, f.subType);	
-	debugC(6, kLastExpressDebugGraphics, "    Unknown: %d - %u - %u - %u - %d", f.field_2E, f.field_30, f.field_31, f.field_33, f.field_38);
+	debugC(6, kLastExpressDebugGraphics, "    Unknown: %u - %u - %u - %u - %u - %d", f.field_2E, f.field_2F, f.field_30, f.field_31, f.field_33, f.field_38);
 	debugC(6, kLastExpressDebugGraphics, "    Sound action: %u", f.soundAction);
 	debugC(6, kLastExpressDebugGraphics, "    Position: %d", f.position);	
 	debugC(6, kLastExpressDebugGraphics, "    Field491: %d", f.field491);	
@@ -408,8 +409,8 @@ AnimFrame *Sequence::getFrame(uint32 index) {
 
 
 // SequencePlayer
-SequenceFrame::SequenceFrame(Sequence *sequence, bool dispose) :
-	_sequence(sequence), _frame(0), _dispose(false) {
+SequenceFrame::SequenceFrame(Sequence *sequence, uint32 frame, bool dispose) :
+	_sequence(sequence), _frame(frame), _dispose(false) {
 }
 
 SequenceFrame::~SequenceFrame() {
@@ -443,6 +444,21 @@ bool SequenceFrame::setFrame(uint32 frame) {
 		return true;
 	} else
 		return false;
+}
+
+bool SequenceFrame::nextFrame() {
+	return setFrame(_frame + 1);
+}
+
+FrameInfo *SequenceFrame::getInfo() {
+	if (!_sequence)
+		error("SequenceFrame::getFrameInfo: Invalid sequence!");
+
+	return _sequence->getFrameInfo(_frame);
+}
+
+bool SequenceFrame::operator==(const SequenceFrame& other) const {
+	return _sequence == other._sequence && _frame == other._frame;
 }
 
 } // End of namespace LastExpress

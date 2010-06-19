@@ -66,6 +66,7 @@ namespace LastExpress {
 
 class LastExpressEngine;
 class Sequence;
+class SequenceFrame;
 
 //////////////////////////////////////////////////////////////////////////
 // TODO : objectify!
@@ -119,31 +120,30 @@ private:
 		Fighter* opponent;
 		Common::Array<Sequence *> sequences;
 		uint32 sequenceIndex;
-		Sequence *currentSequence;
-		Sequence *currentSequence2;
+		Sequence *sequence;
+		SequenceFrame *frame;
 		uint32 frameIndex;
 		uint32 field_24;
 		FightAction action;
 		uint32 sequenceIndex2;
 		int32 countdown;  // countdown before loosing ?
-		uint16 field_34;
+		uint32 field_34;
 
 		Fighter() {
 			handleAction = NULL;
 			update = NULL;
 			canInteract = NULL;
 
-			opponent = NULL;
-
-			action = kFightAction101;
-
-			currentSequence = NULL;
-			currentSequence2 = NULL;
-
-			frameIndex = 0;
-			field_24 = 0;
+			opponent = NULL;			
 
 			sequenceIndex = 0;
+			sequence = NULL;
+			frame = NULL;				
+			frameIndex = 0;
+
+			field_24 = 0;
+
+			action = kFightAction101;
 			sequenceIndex2 = 0;
 
 			countdown = 1;
@@ -154,11 +154,9 @@ private:
 
 	// Opponent struct
 	struct Opponent : Fighter {
-		uint16 field_36;
 		int32 field_38;
 
 		Opponent() : Fighter() {
-			field_36 = 0;
 			field_38 = 0;
 		}
 	};

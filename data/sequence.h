@@ -101,7 +101,8 @@ struct FrameInfo {
 	byte compressionType;         ///< Type of frame compression (0x03, 0x04, 0x05, 0x07, 0xFF)
 	byte subType;                 ///< Subtype
 
-	uint16 field_2E;
+	byte field_2E;
+	byte field_2F;
 	byte field_30;
 	byte field_31;
 	byte soundAction;
@@ -158,16 +159,18 @@ private:
 };
 
 class SequenceFrame : public Drawable {
-public:
-	SequenceFrame(Sequence *sequence, bool dispose = true);
+public:	
+	SequenceFrame(Sequence *sequence, uint32 frame = 0, bool dispose = true);
 	~SequenceFrame();
 
 	Common::Rect draw(Graphics::Surface *surface);
 
 	bool setFrame(uint32 frame);
-	uint32 getFrame() { return _frame; }
+	bool nextFrame();
 
-	bool isSequenceFrame(Sequence *sequence, uint32 frame);
+	FrameInfo *getInfo();
+
+	bool operator==(const SequenceFrame& other) const;
 
 private:
 	Sequence *_sequence;

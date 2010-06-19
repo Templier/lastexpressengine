@@ -45,7 +45,7 @@
 namespace LastExpress {
 
 SceneManager::SceneManager(LastExpressEngine *engine) : _engine(engine), _currentScene(NULL),
-	_flagNoEntity(false), _flagDrawEntities(false), _flagDrawSequences(false),
+	_flagNoEntity(false), _flagDrawEntities(false), _flagDrawSequences(false), _flagCoordinates(false),
 	_clockHours(NULL), _clockMinutes(NULL), _hoursIndex(0), _minutesIndex(0) {
 	_sceneLoader = new SceneLoader();
 }
@@ -412,16 +412,16 @@ bool SceneManager::checkCurrentPosition(bool doCheckOtherCars) const {
 void SceneManager::updateDoorsAndClock() {
 	// Clear all sequences from the list
 	for (int i = 0; i < (int)_doors.size(); i++)
-		removeFromList(_doors[i]);
+		removeFromQueue(_doors[i]);
 
 	// Cleanup doors sequences
 	_doors.clear();
 
 	if (_clockHours)
-		removeFromList(_clockHours, _hoursIndex);
+		removeFromQueue(_clockHours, _hoursIndex);
 
 	if (_clockMinutes)
-		removeFromList(_clockMinutes, _minutesIndex);
+		removeFromQueue(_clockMinutes, _minutesIndex);
 
 	// Queue doors sequences for display
 	if (checkPosition(kSceneNone, kCheckPositionLookingAtDoors)) {
@@ -470,29 +470,38 @@ void SceneManager::drawFrames(bool refreshScreen) {
 	error("SceneManager::drawFrames - Not implemented!");
 }
 
-void SceneManager::addToList(Sequence *sequence, uint32 frameIndex) {
-	error("SceneManager::addToList - Not implemented!");
+void SceneManager::addToQueue(SequenceFrame *frame) {
+	error("SceneManager::addToQueue - Not implemented!");
 }
 
-void SceneManager::removeFromList(Sequence *sequence, uint32 frameIndex) {
-	error("SceneManager::removeFromList - Not implemented!");
+void SceneManager::removeFromQueue(SequenceFrame *frame) {
+	error("SceneManager::removeFromQueue - Not implemented!");
 }
 
-void SceneManager::removeSequenceAndRedraw(Sequence *sequence, bool doRedraw, uint32 frameIndex) {
-	if (!sequence)
+// HACK: temporary hack until Menu is redone
+void SceneManager::removeFromQueue(Sequence *sequence, uint32 index) {
+	error("SceneManager::removeFromQueue - Not implemented!");
+}
+
+void SceneManager::removeAndRedraw(SequenceFrame *frame, bool doRedraw) {
+	if (!frame)
 		return;
 
-	removeFromList(sequence, frameIndex);
+	removeFromQueue(frame);
 
 	if (doRedraw)
 		drawFrames(true);
 }
 
-void SceneManager::resetList() {
+void SceneManager::resetQueue() {
 	_flagDrawSequences = true;
 
 	// The original engine only deletes decompressed data, not the "sequences" since they are just pointers to a memory pool
 	_list.clear();
+}
+
+void SceneManager::setCoordinates(SequenceFrame *frame) {
+	error("SceneManager::setCoordinates - Not implemented!");
 }
 
 //////////////////////////////////////////////////////////////////////////

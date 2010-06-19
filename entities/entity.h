@@ -36,6 +36,7 @@ namespace LastExpress {
 
 class LastExpressEngine;
 class Sequence;
+class SequenceFrame;
 struct SavePoint;
 
 class EntityData : Common::Serializable {
@@ -342,8 +343,8 @@ public:
 		uint32 field_4CE;
 		uint32 field_4D2;
 		uint32 field_4D6;
-		Sequence *sequence0;
-		Sequence *sequence1;
+		SequenceFrame *frame;
+		SequenceFrame *frame1;
 		Sequence *sequence2;
 		Sequence *sequence3;
 		Sequence *sequence4;
@@ -387,8 +388,8 @@ public:
 			field_4D2 = 0;
 			field_4D6 = 0;
 
-			sequence0 = NULL;
-			sequence1 = NULL;
+			frame = NULL;
+			frame1 = NULL;
 			sequence2 = NULL;
 			sequence3 = NULL;
 			sequence4 = NULL;

@@ -262,12 +262,10 @@ bool Entities::canInteractWith(const Common::Point &point) const {
 
 	// Check if there is an entity we can interact with
 	for (uint i = 1; i < _entities.size(); i++) {
+		FrameInfo *info =  getData((EntityIndex)i)->frame->getInfo();
 
-		Sequence *sequence = getData((EntityIndex)i)->sequence0;
-		FrameInfo *info = sequence->getFrameInfo();
-
-		// Skip sequences with no frames
-		if (!sequence->count())
+		// Skip frames with no data
+		if (!info->dataOffset)
 			continue;
 
 		// Check the hotspot
@@ -430,13 +428,13 @@ void Entities::updateSequences() {
 
 		EntityData::EntityCallData *data = getData(entityIndex);
 
-		if (data->sequence0) {
+		if (data->frame) {
 			// TODO Queue sequence for drawing
 			/* data->sequence0 = NULL; */
 			warning("Entities::setupSequences: not implemented!");
 		}
 
-		if (data->sequence1) {
+		if (data->frame1) {
 			// TODO Queue sequence for drawing
 			/* data->sequence1 = NULL; */
 			warning("Entities::setupSequences: not implemented!");
@@ -486,8 +484,8 @@ void Entities::resetSequences(EntityIndex entityIndex) const {
 
 	// FIXME: in the original engine, the sequence pointers might just be copies,
 	// make sure we free the associated memory at some point
-	getData(entityIndex)->sequence0 = NULL;
-	getData(entityIndex)->sequence1 = NULL;
+	getData(entityIndex)->frame = NULL;
+	getData(entityIndex)->frame1 = NULL;
 
 	SAFE_DELETE(getData(entityIndex)->sequence2);
 	SAFE_DELETE(getData(entityIndex)->sequence3);
@@ -572,8 +570,8 @@ void Entities::drawSequenceRight(EntityIndex index, const char* sequence) {
 void Entities::prepareSequences(EntityIndex index) {
 	debugC(8, kLastExpressDebugLogic, "Prepare sequences for entity %d", index);
 
-	getScenes()->removeSequenceAndRedraw(getData(index)->sequence0, false);
-	getScenes()->removeSequenceAndRedraw(getData(index)->sequence1, false);
+	getScenes()->removeAndRedraw(getData(index)->frame, false);
+	getScenes()->removeAndRedraw(getData(index)->frame1, false);
 
 	if (getData(index)->sequence3) {
 		SAFE_DELETE(getData(index)->sequence3);
@@ -1160,7 +1158,7 @@ void Entities::loadSceneFromField491(CarIndex car, EntityData::Field491Value fie
 //	Checks
 //////////////////////////////////////////////////////////////////////////
 bool Entities::checkSequence0(EntityIndex entity) const {
-	return (getData(entity)->sequence0 && (getData(entity)->sequence0->getFrameInfo(0)->subType != 3));
+	return (getData(entity)->frame && (getData(entity)->frame->getInfo()->subType != 3));
 }
 
 bool Entities::compare(EntityIndex entity1, EntityIndex entity2) {

@@ -67,7 +67,7 @@ namespace LastExpress {
 	_data->opponent->canInteract = new Common::Functor2Mem<Fighter *, FightAction, bool, Fight>(this, &Fight::canInteract);
 
 #define CHECK_SEQUENCE2(fighter, value) \
-	(fighter->currentSequence2->getFrameInfo()->field_33 & value)
+	(fighter->frame->getInfo()->field_33 & value)
 
 Fight::Fight(LastExpressEngine *engine) : _engine(engine), _data(NULL), _endType(kFightEndLost), _state(0), _handleTimer(false) {}
 
@@ -199,11 +199,8 @@ void Fight::handleMouseMove(const Common::Event &ev, bool isProcessing) {
 		if (!_data->isRunning)
 			return;
 
-		if (isProcessing) {
-			warning("Fight::handleMouseMove - processing mode not implemented!");
-		} else {
-			warning("Fight::handleMouseMove - setup mode not implemented!");
-		}
+		if (isProcessing)
+			getScenes()->drawFrames(true);		
 
 		if (_data->index) {
 			// Set next sequence name index
@@ -224,8 +221,10 @@ Fight::FightEndType Fight::setup(FightType type) {
 
 	//////////////////////////////////////////////////////////////////////////
 	// Prepare UI & state
-
-	// TODO global var
+	if (_state >= 5 && (type == kFightSalko || type == kFightVesna)) {
+		_state = 0;
+		return kFightEndWin;
+	}
 
 	getInventory()->showHourGlass();
 	// TODO events function
@@ -306,8 +305,6 @@ Fight::FightEndType Fight::setup(FightType type) {
 	// Cleanup after fight is over
 	clearData();
 
-	// TODO Graphics function?
-
 	return _endType;
 }
 
@@ -351,8 +348,8 @@ void Fight::clearSequences(Fighter *combatant) const {
 	if (!combatant)
 		return;
 
-	// TODO Set function pointer
-	// TODO Draw sequence (field 1C)
+	// The original game resets the function pointers to default values, just before deleting the struct
+	getScenes()->removeAndRedraw(combatant->frame, false);
 
 	// Free sequences
 	for (int i = 0; i < (int)combatant->sequences.size(); i++)
@@ -375,13 +372,13 @@ void Fight::setSequenceAndDraw(Fighter *combatant, uint32 sequenceIndex, FightSe
 		if (combatant->sequenceIndex)
 			return;
 
-		combatant->currentSequence = combatant->sequences[sequenceIndex];
+		combatant->sequence = combatant->sequences[sequenceIndex];
 		combatant->sequenceIndex = sequenceIndex;
 		draw(combatant);
 		break;
 
 	case kFightSequenceType1:
-		combatant->currentSequence = combatant->sequences[sequenceIndex];
+		combatant->sequence = combatant->sequences[sequenceIndex];
 		combatant->sequenceIndex = sequenceIndex;
 		combatant->sequenceIndex2 = 0;
 		draw(combatant);
@@ -394,17 +391,7 @@ void Fight::setSequenceAndDraw(Fighter *combatant, uint32 sequenceIndex, FightSe
 }
 
 void Fight::draw(Fighter *combatant) const {
-	Sequence* sequence = combatant->currentSequence2;
-
-	if (!sequence)
-		return;
-
-	//////////////////////////////////////////////////////////////////////////
-	// TODO redo to call drawSequence shared function?
-	AnimFrame *frame = sequence->getFrame(0);
-	_engine->getGraphicsManager()->draw(frame, GraphicsManager::kBackgroundOverlay);
-	delete frame;
-	//////////////////////////////////////////////////////////////////////////
+	getScenes()->removeAndRedraw(combatant->frame, false);
 
 	combatant->frameIndex = 0;
 	combatant->field_24 = 0;
@@ -501,12 +488,16 @@ void Fight::processFighter(Fighter *fighter) {
 	if (!_data)
 		error("Fight::processFighter - invalid data!");
 
-	Sequence *sequence2 = NULL;
+	if (!fighter->sequence) {
+		if (fighter->frame) {
+			getScenes()->removeFromQueue(fighter->frame);
+			getScenes()->setCoordinates(fighter->frame);			
+		}
+		SAFE_DELETE(fighter->frame);
+		return;
+	}
 
-	if (!fighter->currentSequence)
-		goto label_sequence2;
-
-	if (fighter->currentSequence->count() <= fighter->frameIndex) {
+	if (fighter->sequence->count() <= fighter->frameIndex) {
 		switch(fighter->action) {
 		default:
 			break;
@@ -540,18 +531,31 @@ void Fight::processFighter(Fighter *fighter) {
 
 	if (_data->isRunning) {
 
-		warning("Fight::processFighter - not implemented!");
+		// Get the current sequence frame
+		SequenceFrame *frame = new SequenceFrame(fighter->sequence, fighter->frameIndex, false);
+		frame->getInfo()->location = 1;
 
-		if (fighter->currentSequence2 != sequence2) {
-
-
-			fighter->frameIndex++;
-label_sequence2:
-			if (fighter->currentSequence2) {
-				//getSceneManager()->removeFromList(fighter->currentSequence2);
-			}
-			fighter->currentSequence2 = sequence2;
+		if (fighter->frame == frame) {
+			delete frame;
+			return;
 		}
+
+		getSound()->playFightSound(frame->getInfo()->soundAction, frame->getInfo()->field_31);
+
+		// Add current frame to queue and advance
+		getScenes()->addToQueue(frame);
+		fighter->frameIndex++;
+
+		if (fighter->frame) {
+			getScenes()->removeFromQueue(fighter->frame);
+
+			if (!frame->getInfo()->field_2E)
+				getScenes()->setCoordinates(fighter->frame);			
+		}
+
+		// Replace by new frame
+		delete fighter->frame;
+		fighter->frame = frame;
 	}
 }
 
@@ -594,8 +598,8 @@ void Fight::update(Fighter *fighter) {
 
 	processFighter(fighter);
 
-	if (fighter->currentSequence2)
-		fighter->currentSequence2->getFrameInfo()->location = (fighter->action == kFightActionResetFrame ? 2 : 0);
+	if (fighter->frame)
+		fighter->frame->getInfo()->location = (fighter->action == kFightActionResetFrame ? 2 : 0);
 }
 
 void Fight::updateOpponent(Fighter *fighter) {
@@ -608,8 +612,8 @@ void Fight::updateOpponent(Fighter *fighter) {
 	if (opponent->field_38 && !opponent->sequenceIndex)
 		opponent->field_38--;
 
-	if (fighter->currentSequence2)
-		fighter->currentSequence2->getFrameInfo()->location = 1;
+	if (fighter->frame)
+		fighter->frame->getInfo()->location = 1;
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -698,7 +702,7 @@ void Fight::handleActionMilos(Fighter *fighter, FightAction action) {
 }
 
 void Fight::updateMilos(Fighter *fighter) {
-	if (fighter->currentSequence2 && CHECK_SEQUENCE2(fighter, 2)) {
+	if (fighter->frame && CHECK_SEQUENCE2(fighter, 2)) {
 
 		// Draw sequences
 		if (fighter->opponent->countdown <= 0) {
@@ -726,7 +730,7 @@ bool Fight::canInteractMilos(Fighter *fighter, FightAction action) {
 
 	if (action != kFightAction128
 	 || _data->player->sequenceIndex != 1
-	 || !fighter->currentSequence2
+	 || !fighter->frame
 	 || CHECK_SEQUENCE2(fighter, 4)
 	 || fighter->opponent->sequenceIndex != 1) {
 		 return canInteract(fighter);
@@ -792,7 +796,7 @@ void Fight::updateOpponentMilos(Fighter *fighter) {
 			opponent->field_38 = 0;
 	}
 
-	if (opponent->currentSequence2 && CHECK_SEQUENCE2(opponent, 2)) {
+	if (opponent->frame && CHECK_SEQUENCE2(opponent, 2)) {
 		if (opponent->sequenceIndex == 1 || opponent->sequenceIndex == 2)
 			CALL_FUNCTION1(opponent->opponent, handleAction, (FightAction)opponent->sequenceIndex);
 
@@ -960,7 +964,7 @@ void Fight::updateOpponentAnna(Fighter *fighter) {
 		opponent->field_38 = (int32)random(15);
 	}
 
-	if (opponent->currentSequence2 && CHECK_SEQUENCE2(opponent, 2)) {
+	if (opponent->frame && CHECK_SEQUENCE2(opponent, 2)) {
 		if (opponent->sequenceIndex == 1 || opponent->sequenceIndex == 2 || opponent->sequenceIndex == 3)
 			CALL_FUNCTION1(opponent->opponent, handleAction, (FightAction)opponent->sequenceIndex);
 
@@ -1067,7 +1071,7 @@ void Fight::updateIvo(Fighter *fighter) {
 	if ((fighter->sequenceIndex == 3 || fighter->sequenceIndex == 4) && !fighter->frameIndex)
 		CALL_FUNCTION1(fighter->opponent, handleAction, kFightAction131);
 
-	if (fighter->currentSequence2 && CHECK_SEQUENCE2(fighter, 2)) {
+	if (fighter->frame && CHECK_SEQUENCE2(fighter, 2)) {
 
 		// Draw sequences
 		if (fighter->opponent->countdown <= 0) {
@@ -1171,7 +1175,7 @@ void Fight::updateOpponentIvo(Fighter *fighter) {
 		opponent->field_38 = 3 * opponent->countdown + (int32)random(10);
 	}
 
-	if (opponent->currentSequence2 && CHECK_SEQUENCE2(opponent, 2)) {
+	if (opponent->frame && CHECK_SEQUENCE2(opponent, 2)) {
 
 		if (opponent->opponent->countdown <= 0) {
 			setSequenceAndDraw(opponent, 7, kFightSequenceType1);
@@ -1268,7 +1272,7 @@ void Fight::updateSalko(Fighter *fighter) {
 	update(fighter);
 
 	// The original doesn't check for currentSequence2 != NULL (might not happen when everything is working properly, but crashes with our current implementation)
-	if (fighter->currentSequence2 && CHECK_SEQUENCE2(fighter, 2)) {
+	if (fighter->frame && CHECK_SEQUENCE2(fighter, 2)) {
 
 		if (fighter->opponent->countdown <= 0) {
 			getSound()->removeFromQueue(kEntityTables0);
@@ -1344,7 +1348,7 @@ void Fight::updateOpponentSalko(Fighter *fighter) {
 		opponent->field_38 = 4 * opponent->countdown;
 	}
 
-	if (opponent->currentSequence2 && CHECK_SEQUENCE2(opponent, 2)) {
+	if (opponent->frame && CHECK_SEQUENCE2(opponent, 2)) {
 		if (opponent->opponent->countdown <= 0) {
 			getSound()->removeFromQueue(kEntityTables0);
 			bailout(kFightEndLost);
@@ -1445,7 +1449,7 @@ void Fight::handleActionVesna(Fighter *fighter, FightAction action) {
 }
 
 void Fight::updateVesna(Fighter *fighter) {
-	if (fighter->currentSequence2 && CHECK_SEQUENCE2(fighter, 2)) {
+	if (fighter->frame && CHECK_SEQUENCE2(fighter, 2)) {
 
 		if (fighter->sequenceIndex == 3)
 			CALL_FUNCTION1(fighter->opponent, handleAction, kFightAction3);
@@ -1554,7 +1558,7 @@ void Fight::updateOpponentVesna(Fighter *fighter) {
 		opponent->field_38 = 4 * opponent->countdown;
 	}
 
-	if (opponent->currentSequence2 && CHECK_SEQUENCE2(opponent, 2)) {
+	if (opponent->frame && CHECK_SEQUENCE2(opponent, 2)) {
 		if (opponent->sequenceIndex == 1 || opponent->sequenceIndex == 2 || opponent->sequenceIndex == 5)
 			CALL_FUNCTION1(opponent->opponent, handleAction, (FightAction)opponent->sequenceIndex);
 
