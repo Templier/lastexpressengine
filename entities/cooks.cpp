@@ -439,11 +439,9 @@ IMPLEMENT_FUNCTION(Cooks, function11, 11)
 		params->param4 = 0;
 
 update_params:
-		if (getState()->time > kTimeCooks) {
-			if (!params->param5) {
-				params->param1 = 0;
-				params->param5 = 1;
-			}
+		if (getState()->time > kTimeCooks && !params->param5) {
+			params->param1 = 0;
+			params->param5 = 1;
 		}
 		break;
 

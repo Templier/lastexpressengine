@@ -582,13 +582,7 @@ IMPLEMENT_FUNCTION(Mahmud, function14, 14)
 
 		if (!params->param2 && getProgress().chapter == kChapter1) {
 
-			if (getState()->time > kTimeMahmud_1 && !params->param6) {
-				params->param6 = 1;
-
-				setCallback(1);
-				call(new ENTITY_SETUP(Mahmud, setup_function13));
-				break;
-			}
+			TIME_CHECK_CALLBACK(Mahmud, kTimeMahmud_1, param6, 1, setup_function13);
 
 			if (!getSound()->isBuffered("HAR1104") && getState()->time > kTimeMahmud && !params->param7) {
 				params->param7 = 1;

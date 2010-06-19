@@ -43,8 +43,11 @@ enum TimeValue {
 	kTimeMahmud_1             = 1098000,
 	kTimeKahina               = 1107000,
 	kTimeFrancois             = 1161000,
+	kTimeYasmin_7             = 1162800,
 	kTimeTables1              = 1165500,
 	kTimeMahmud               = 1167300,
+	kTimeYasmin_8             = 1174500,
+	kTimeYasmin_9             = 1183500,
 	kTimeRebecca_3            = 1184400,
 	kTimePascale              = 1242000,
 	kTimeBedTime              = 1404000,
@@ -92,7 +95,9 @@ enum TimeValue {
 	kTimeGameOver             = 2418300,
 	kTimeSalko                = 2422800,
 	kTimeIvo_1                = 2425500,
-	kTimeTables3              = 2488500,
+	kTimeYasmin_5             = 2457000,
+	kTimeYasmin_6             = 2479500,
+	kTimeTables3              = 2488500,	
 
 	// Chapter 5
 	kTimeChapter5             = 2844000,

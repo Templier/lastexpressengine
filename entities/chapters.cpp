@@ -816,25 +816,21 @@ IMPLEMENT_FUNCTION(Chapters, chapter5_handler, 22)
 		break;
 
 	case kActionNone:
-		if (getState()->time > kTimeChapter5_0) {
-			if (!params->param2) {
-				params->param2 = 1;
+		if (getState()->time > kTimeChapter5_0 && !params->param2) {
+			params->param2 = 1;
 
-				if (!getProgress().is_nighttime) {
-					getSound()->playSound(kEntityChapters, "ARRIVE", 8);
-					getSound()->unknownFunction3();
-				}
+			if (!getProgress().is_nighttime) {
+				getSound()->playSound(kEntityChapters, "ARRIVE", 8);
+				getSound()->unknownFunction3();
 			}
 		}
 
-		if (getState()->time > kTimeTrainStopped_2) {
-			if (!params->param3) {
-				params->param3 = 1;
+		if (getState()->time > kTimeTrainStopped_2 && !params->param3) {
+			params->param3 = 1;
 
-				if (!getEvent(kEventLocomotiveMilos) && !getEvent(kEventLocomotiveMilosNight)) {
-					getSound()->playSound(kEntityChapters, "ARRIVE", 8);
-					getSound()->unknownFunction3();
-				}
+			if (!getEvent(kEventLocomotiveMilos) && !getEvent(kEventLocomotiveMilosNight)) {
+				getSound()->playSound(kEntityChapters, "ARRIVE", 8);
+				getSound()->unknownFunction3();
 			}
 		}
 		break;

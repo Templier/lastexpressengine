@@ -361,11 +361,8 @@ IMPLEMENT_FUNCTION(Boutarel, function32, 32)
 	default:
 		break;
 
-	case kActionNone:
-		if (getState()->time > kTimeBoutarel && !params->param1) {
-			params->param1 = 1;
-			setup_function33();
-		}
+	case kActionNone:		
+		TIME_CHECK(kTimeBoutarel, setup_function33);
 		break;
 
 	case kActionDefault:

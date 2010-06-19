@@ -88,27 +88,24 @@ IMPLEMENT_FUNCTION(Tables, draw, 6)
 			break;
 
 		case kChapter1:
-			if (getState()->time > kTimeTables1)
-				if (!params->param1) {
-					params->param1 = 1;
-					getSound()->processEntry(kEntityTables2);
-				}
+			if (getState()->time > kTimeTables1 && !params->param1) {
+				params->param1 = 1;
+				getSound()->processEntry(kEntityTables2);
+			}
 			break;
 
 		case kChapter3:
-			if (getState()->time > kTimeTables2)
-				if (!params->param2) {
-					params->param2 = 1;
-					getSound()->processEntry(kEntityTables2);
-				}
+			if (getState()->time > kTimeTables2 && !params->param2) {
+				params->param2 = 1;
+				getSound()->processEntry(kEntityTables2);
+			}
 			break;
 
 		case kChapter4:
-			if (getState()->time > kTimeTables3)
-				if (!params->param3) {
-					params->param3 = 1;
-					getSound()->processEntry(kEntityTables2);
-				}
+			if (getState()->time > kTimeTables3 && !params->param3) {
+				params->param3 = 1;
+				getSound()->processEntry(kEntityTables2);
+			}
 			break;
 
 		}

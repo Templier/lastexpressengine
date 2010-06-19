@@ -348,9 +348,8 @@ IMPLEMENT_FUNCTION(Abbot, function20, 20)
 		break;
 
 	case kActionNone:
-		if (getState()->time > kTimeAbbot_2)
-			if (getEntities()->checkFields13(kEntityBoutarel))
-				setup_function21();
+		if (getState()->time > kTimeAbbot_2 && getEntities()->checkFields13(kEntityBoutarel))
+			setup_function21();
 		break;
 
 	case kActionDefault:
@@ -438,19 +437,14 @@ IMPLEMENT_FUNCTION(Abbot, function22, 22)
 		break;
 
 	case kActionNone:
-		if (getState()->time > kTimeAbbot_3) {
-			if (!params->param1) {
-				params->param1 = 1;
-				getSavePoints()->push(kEntityAbbot, kEntityServers0, kAction218586752);
-			}
+		if (getState()->time > kTimeAbbot_3 && !params->param1) {
+			params->param1 = 1;
+			getSavePoints()->push(kEntityAbbot, kEntityServers0, kAction218586752);
 		}
 
-		if (getState()->time > kTimeAbbot_4) {
-			if (getEntities()->checkFields11()) {
-				getData()->inventoryItem = kItemNone;
-
-				setup_function23();
-			}
+		if (getState()->time > kTimeAbbot_4 && getEntities()->checkFields11()) {
+			getData()->inventoryItem = kItemNone;
+			setup_function23();
 		}
 		break;
 
@@ -714,13 +708,7 @@ IMPLEMENT_FUNCTION(Abbot, function28, 28)
 		break;
 
 	case kActionNone:
-		if (getState()->time > kTimeTables2) {
-			if (!params->param1) {
-				params->param1 = 1;
-				setCallback(1);
-				call(new ENTITY_SETUP(Abbot, setup_function29));
-			}
-		}
+		TIME_CHECK_CALLBACK(Abbot, kTimeTables2, param1, 1, setup_function29);
 		break;
 
 	case kActionDefault:

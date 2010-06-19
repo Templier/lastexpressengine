@@ -326,7 +326,31 @@ IMPLEMENT_FUNCTION(Pascale, function23, 23)
 }
 
 IMPLEMENT_FUNCTION(Pascale, function24, 24)
-	error("Pascale: callback function 24 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionNone:
+		if (!params->param1) {
+			getSound()->playSound(kEntityPascale, "ABB3015A");
+			params->param1 = 1;
+		}
+		break;
+
+	case kActionExitCompartment:
+		CALLBACK_ACTION();
+		break;
+
+	case kAction10:
+		getSavePoints()->push(kEntityPascale, kEntityTables4, kAction136455232);
+		break;
+
+	case kActionDefault:
+		getSound()->playSound(kEntityPascale, "ABB3015", -1, 105u);
+		getEntities()->drawSequenceRight(kEntityPascale, "029A1");
+		getEntities()->drawSequenceRight(kEntityAbbot, "029A2");
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Pascale, chapter4, 25)

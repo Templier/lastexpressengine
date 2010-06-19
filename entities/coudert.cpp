@@ -250,15 +250,8 @@ IMPLEMENT_FUNCTION(Coudert, chapter1, 36)
 	default:
 		break;
 
-	case kActionNone:
-		// We have some specific callback code here, so we cannot use the existing macro
-		if (getState()->time > kTimeChapter1) {
-			if (!params->param1) {
-				params->param1 = 1;
-				setCallback(1);
-				call(new ENTITY_SETUP(Coudert, setup_function40));
-			}
-		}
+	case kActionNone:		
+		TIME_CHECK_CALLBACK(Coudert, kTimeChapter1, param1, 1, setup_function40)
 		break;
 
 	case kActionDefault:

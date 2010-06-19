@@ -62,6 +62,23 @@
 		break; \
 	}
 
+#define TIME_CHECK_PLAYSOUND(class, timeValue, parameter, callback, sound) \
+	if (getState()->time > timeValue && !params->parameter) { \
+		params->parameter = 1; \
+		setCallback(callback); \
+		call(new ENTITY_SETUP_SIIS(class, setup_playSound), sound); \
+		break; \
+	}
+
+#define TIME_CHECK_PLAYSOUND_2(class, timeValue, parameter, callback, sound, field491) \
+	if (getState()->time > timeValue && !params->parameter) { \
+		params->parameter = 1; \
+		getData()->field_491 = field491; \
+		setCallback(callback); \
+		call(new ENTITY_SETUP_SIIS(class, setup_playSound), sound); \
+		break; \
+	}
+
 #define CALLBACK_ACTION() { \
 	getData()->current_call--; \
 	getSavePoints()->setCallback(_entityIndex, _callbacks[_data->getCurrentCallback()]); \

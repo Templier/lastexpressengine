@@ -206,7 +206,48 @@ IMPLEMENT_FUNCTION(Yasmin, chapter1, 8)
 }
 
 IMPLEMENT_FUNCTION(Yasmin, function9, 9)
-	error("Yasmin: callback function 9 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionNone:
+		TIME_CHECK_CALLBACK(Yasmin, kTimeAnna, param1, 1, setup_function6);
+		TIME_CHECK_CALLBACK(Yasmin, kTimeFrancois, param2, 3, setup_function7);
+		TIME_CHECK_PLAYSOUND_2(Yasmin, kTimeYasmin_7, param3, 4, "Har1102", EntityData::kField491_4070);
+		TIME_CHECK_PLAYSOUND(Yasmin, kTimeTables1, param4, 5, "Har1104");
+		TIME_CHECK_PLAYSOUND(Yasmin, kTimeYasmin_8, param5, 6, "Har1106");			
+		TIME_CHECK_CALLBACK(Yasmin, kTimeYasmin_9, param6, 7, setup_function6);
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			getData()->field_491 = EntityData::kField491_2740;
+			setCallback(2);
+			call(new ENTITY_SETUP_SIIS(Yasmin, setup_playSound), "Har1102");
+			break;
+
+		case 2:
+			TIME_CHECK_CALLBACK(Yasmin, kTimeFrancois, param2, 3, setup_function7);
+
+		case 3:			
+			TIME_CHECK_PLAYSOUND_2(Yasmin, kTimeYasmin_7, param3, 4, "Har1102", EntityData::kField491_4070);
+
+		case 4:
+			TIME_CHECK_PLAYSOUND(Yasmin, kTimeTables1, param4, 5, "Har1104");
+
+		case 5:			
+			TIME_CHECK_PLAYSOUND(Yasmin, kTimeYasmin_8, param5, 6, "Har1106");	
+
+		case 6:					
+			TIME_CHECK_CALLBACK(Yasmin, kTimeYasmin_9, param6, 7, setup_function6);
+			break;
+		}
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Yasmin, function10, 10)
@@ -240,13 +281,8 @@ IMPLEMENT_FUNCTION(Yasmin, function12, 12)
 		break;
 
 	case kActionNone:
-		if (getState()->time > kTimeYasmin && !params->param1) {
-			params->param1 = 1;
-			setCallback(1);
-			call(new ENTITY_SETUP(Yasmin, setup_function7));
-			break;
-		}
-
+		TIME_CHECK_CALLBACK(Yasmin, kTimeYasmin, param1, 1, setup_function7);
+		
 		if (getState()->time > kTimeYasmin_1 && !params->param2) {
 			params->param2 = 1;
 			getData()->field_491 = EntityData::kField491_4070;
@@ -337,7 +373,32 @@ IMPLEMENT_FUNCTION(Yasmin, chapter4, 15)
 }
 
 IMPLEMENT_FUNCTION(Yasmin, function16, 16)
-	error("Yasmin: callback function 16 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionNone:
+		TIME_CHECK_CALLBACK(Yasmin, kTimeYasmin_5, param1, 1, setup_function7);
+		TIME_CHECK_CALLBACK(Yasmin, kTimeYasmin_6, param2, 3, setup_function6);
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			getData()->field_491 = EntityData::kField491_4070;
+			setCallback(2);
+			call(new ENTITY_SETUP_SIIS(Yasmin, setup_playSound), "Har1110");
+			break;
+
+		case 2:
+			TIME_CHECK_CALLBACK(Yasmin, kTimeYasmin_6, param2, 3, setup_function6);
+			break;
+		}
+		break;
+	}
 }
 
 // Same as existing function 10 ?
@@ -396,7 +457,24 @@ IMPLEMENT_FUNCTION(Yasmin, function20, 20)
 }
 
 IMPLEMENT_FUNCTION(Yasmin, function21, 21)
-	error("Yasmin: callback function 21 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionNone:
+	case kActionDefault:
+		if (getEntities()->checkEntity(kEntityYasmin, (CarIndex)params->param1, (EntityData::Field491Value)params->param2))
+			CALLBACK_ACTION();
+		break;
+
+	case kActionExcuseMeCath:
+		getSound()->excuseMeCath();
+		break;
+
+	case kActionExcuseMe:
+		getSound()->excuseMe(kEntityYasmin);
+		break;
+	}
 }
 
 IMPLEMENT_NULL_FUNCTION(Yasmin, 22)

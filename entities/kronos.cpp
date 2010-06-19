@@ -146,11 +146,8 @@ IMPLEMENT_FUNCTION(Kronos, function10, 10)
 		break;
 
 	case kActionNone:
-		if (getState()->time > kTimeKronos && !params->param1) {
-			params->param1 = 1;
-			setup_function11();
-		}
-		break;
+		TIME_CHECK(kTimeKronos, setup_function11);
+	break;
 
 	case kActionDefault:
 		getData()->field_491 = EntityData::kField491_6000;
