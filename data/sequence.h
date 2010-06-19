@@ -32,7 +32,7 @@
 	uint32 {4}    - Number of frames in sequence
 	uint32 {4}    - Unknown
 
-	frames headers:
+	frames headers (68 bytes):
 	// for each frame
 	    uint32 {4}    - Data offset (from beginning of file)
 	    uint32 {4}    - Unknown
@@ -54,13 +54,13 @@
 	    uint16 {2}    - Unknown
 	    byte {1}      - Unknown
 	    byte {1}      - Unknown
+	    byte {1}      - Sound action
 	    byte {1}      - Unknown
-	    byte {1}      - Unknown
+	    uint32 {4}    - Position
 	    uint32 {4}    - Unknown
-	    uint32 {4}    - Unknown
-	    uint16 {2}    - Set to 1 in some places
-	    uint16 {2}    - Location (z-order?)
-	    uint32 {2}    - Next sequence in the linked list
+	    uint16 {2}    - Field 491
+	    uint16 {2}    - Location (~z-order)
+	    uint32 {4}    - Next sequence in the linked list
 
 	    (for NIS files: found at 0x124)
 	    byte {1}      - Compression type
@@ -108,7 +108,7 @@ struct FrameInfo {
 	byte field_33;
 	uint32 position;
 	uint32 field_38;
-	uint16 field_3C;
+	uint16 field491;
 	uint16 location;
 	uint32 next;
 };

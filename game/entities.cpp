@@ -91,21 +91,22 @@ static const uint soundValues[32] = {
 
 #define STORE_VALUE(data) ((uint)1 << (uint)data)
 
-static const EntityData::Field491Value field491Objects[9] = {EntityData::kField491_0, EntityData::kField491_8200,
+static const EntityData::Field491Value field491Objects[9] = {EntityData::kField491_0,    EntityData::kField491_8200,
 	                                                         EntityData::kField491_7500, EntityData::kField491_6470,
 	                                                         EntityData::kField491_5790, EntityData::kField491_4840,
 	                                                         EntityData::kField491_4070, EntityData::kField491_3050,
 	                                                         EntityData::kField491_2740};
 
-static const int field491Positions[41] = {0,     851, 1430, 2110,   0,
-                                          2410, 2980, 3450, 3760, 4100,
-                                          4680, 5140, 5440, 5810, 6410,
-                                          6850, 7160, 7510, 8514,    0,
-                                             0,    0, 2086, 2690,    0,
-                                          3110, 3390, 3890, 4460, 4770,
-                                          5090, 5610, 6160, 6460, 6800,
-                                          7320, 7870, 8160, 8500, 9020,
-                                          9269};
+static const EntityData::Field491Value field491Positions[41] = {
+            EntityData::kField491_0,    EntityData::kField491_851,  EntityData::kField491_1430, EntityData::kField491_2110, EntityData::kField491_0,
+            EntityData::kField491_2410, EntityData::kField491_2980, EntityData::kField491_3450, EntityData::kField491_3760, EntityData::kField491_4100,
+            EntityData::kField491_4680, EntityData::kField491_5140, EntityData::kField491_5440, EntityData::kField491_5810, EntityData::kField491_6410,
+            EntityData::kField491_6850, EntityData::kField491_7160, EntityData::kField491_7510, EntityData::kField491_8514, EntityData::kField491_0,
+            EntityData::kField491_0,    EntityData::kField491_0,    EntityData::kField491_2086, EntityData::kField491_2690, EntityData::kField491_0,
+            EntityData::kField491_3110, EntityData::kField491_3390, EntityData::kField491_3890, EntityData::kField491_4460, EntityData::kField491_4770,
+            EntityData::kField491_5090, EntityData::kField491_5610, EntityData::kField491_6160, EntityData::kField491_6460, EntityData::kField491_6800,
+            EntityData::kField491_7320, EntityData::kField491_7870, EntityData::kField491_8160, EntityData::kField491_8500, EntityData::kField491_9020,
+            EntityData::kField491_9269};
 
 #define ADD_ENTITY(class) \
 	_entities.push_back(new class(engine));
@@ -1396,5 +1397,92 @@ bool Entities::checkFields25(EntityIndex entity) const {
 	return (getData(entity)->direction == kDirectionDown && getScenes()->checkPosition(kSceneNone, SceneManager::kCheckPositionType0));
 }
 
+bool Entities::checkField491(EntityData::Field491Value field491) const {
+	Position position1 = 0;
+	Position position2 = 0;
+
+	switch (field491) {
+	default:
+		return true;
+
+	case EntityData::kField491_1500:
+		position1 = 1;
+		position2 = 23;
+		break;
+
+	case EntityData::kField491_2740:
+		position1 = 3;
+		position2 = 25;
+		break;
+
+	case EntityData::kField491_3050:
+		position1 = 5;
+		position2 = 26;
+		break;
+
+	case EntityData::kField491_4070:
+		position1 = 7;
+		position2 = 28;
+		break;
+
+	case EntityData::kField491_4840:
+		position1 = 9;
+		position2 = 30;
+		break;
+
+	case EntityData::kField491_5790:
+		position1 = 11;
+		position2 = 32;
+		break;
+
+	case EntityData::kField491_6470:
+		position1 = 13;
+		position2 = 34;
+		break;
+
+	case EntityData::kField491_7500:
+		position1 = 15;
+		position2 = 36;
+		break;
+
+	case EntityData::kField491_8200:
+		position1 = 17;
+		position2 = 38;
+		break;
+	}
+
+	if (getScenes()->checkPosition(kSceneNone, SceneManager::kCheckPositionType0) && field491Positions[position1] >= getEntityData(kEntityNone)->field_491)
+		return true;
+	else
+		return (getScenes()->checkPosition(kSceneNone, SceneManager::kCheckPositionType1) && field491Positions[position2] <= getEntityData(kEntityNone)->field_491);
+}
+
+bool Entities::checkSequenceFromPosition(EntityIndex entity) const {
+	FrameInfo *info = getEntityData(entity)->sequence2->getFrameInfo(getEntityData(entity)->currentFrame2);
+
+	if (getEntityData(entity)->direction == kDirectionUp)
+		return (getScenes()->checkPosition(kSceneNone, SceneManager::kCheckPositionType0)
+			 && info->field491 + getField491FromCurrentPosition() > EntityData::kField491_8513);
+
+	if (getEntityData(entity)->direction == kDirectionDown)
+		return (getScenes()->checkPosition(kSceneNone, SceneManager::kCheckPositionType1)
+			 && info->field491 + getField491FromCurrentPosition() < EntityData::kField491_2087);
+
+	return false;
+}
+
+EntityData::Field491Value Entities::getField491FromCurrentPosition() const {
+	// Get the scene position first
+	loadSceneObject(scene, getState()->scene);
+	
+
+	if (getScenes()->checkPosition(kSceneNone, SceneManager::kCheckPositionType0))
+		return (EntityData::Field491Value)(field491Positions[scene.getHeader()->position] - EntityData::kField491_1430);
+
+	if (getScenes()->checkPosition(kSceneNone, SceneManager::kCheckPositionType1))
+		return (EntityData::Field491Value)(field491Positions[scene.getHeader()->position] - EntityData::kField491_9020);
+
+	return EntityData::kField491_0;
+}
 
 } // End of namespace LastExpress

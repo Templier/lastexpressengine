@@ -66,7 +66,7 @@ public:
 	SceneIndex processIndex(SceneIndex sceneIndex);
 
 	// Checks
-	bool checkPosition(SceneIndex sceneIndex, CheckPositionType kCheckPositionType0) const;
+	bool checkPosition(SceneIndex sceneIndex, CheckPositionType type) const;
 	bool checkCurrentPosition(bool doCheckOtherCars) const;
 
 	// Train

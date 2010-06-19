@@ -167,6 +167,10 @@ private:
 	void updatePositionsExit(EntityIndex entity, CarIndex car, Position position1, Position position2);
 
 	void resetSequences(EntityIndex entity) const;
+
+	bool checkField491(EntityData::Field491Value field491) const;
+	bool checkSequenceFromPosition(EntityIndex entity) const;
+	EntityData::Field491Value getField491FromCurrentPosition() const;
 };
 
 } // End of namespace LastExpress
