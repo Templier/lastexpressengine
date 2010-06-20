@@ -59,7 +59,7 @@ private:
 		Sequence *currentSequence;
 		uint32 currentFrame;
 		uint32 index;
-		uint32 field_84;
+		uint32 coordOffset;
 
 		uint16 coordX;
 		uint16 coordY;
@@ -67,7 +67,7 @@ private:
 		uint32 indexes[16];
 
 		uint32 offset;
-		uint32 field_D0;
+		SequenceFrame* frame;
 		bool isLoaded;
 		uint32 field_D5;
 		uint32 field_D9;
@@ -78,7 +78,7 @@ private:
 			currentSequence = NULL;
 			currentFrame = 0;
 			index = 0;
-			field_84 = 0;
+			coordOffset = 0;
 
 			coordX = 0;
 			coordY = 0;
@@ -86,7 +86,7 @@ private:
 			memset(indexes, 0, sizeof(indexes));
 			offset = 0;
 
-			field_D0 = 0;
+			frame = NULL;
 			isLoaded = false;
 			field_D5 = 0;
 			field_D9 = 0;
@@ -105,8 +105,9 @@ private:
 	BeetleData *_data;
 
 	void move();
-	void updateSequence(Sequence *sequence) const;
+	void updateFrame(SequenceFrame *frame) const;
 	void updateData(uint32 index);
+	void drawUpdate();
 };
 
 } // End of namespace LastExpress

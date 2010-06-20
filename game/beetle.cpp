@@ -106,11 +106,11 @@ void Beetle::load() {
 	}
 
 	_data->field_D9 = 10;
-	_data->field_84 = 5;
+	_data->coordOffset = 5;
 	_data->coordY = 178;
 	_data->currentSequence = 0;
 	_data->offset = 0;
-	_data->field_D0 = 0;
+	_data->frame = NULL;
 	_data->field_D5 = 0;
 	_data->indexes[0] = 29;
 	_data->field_DD = 0;
@@ -165,9 +165,204 @@ void Beetle::update() {
 
 	move();
 
-	warning("Beetle::update: not implemented!");
+	if (_data->field_D5)
+		_data->field_D5--;
+
+	if (_data->currentSequence && _data->indexes[_data->offset] != 29) {
+		drawUpdate();
+		return;
+	}
+
+	if (getInventory()->getEntry(kItemBeetle)->location == kLocation3) {
+		if ((!_data->field_DD && random(10) < 1)
+		  || (_data->field_DD && random(30) < 1)
+		  || random(100) < 1) {
+			
+			_data->field_DD++;
+			if (_data->field_DD > 3)
+				_data->field_DD = 0;
+
+			updateData(24);
+
+			_data->coordX = random(250) + 190;
+			_data->coordOffset = random(5) + 5;
+
+			if (_data->field_D9 > 1)
+				_data->field_D9--;
+
+			drawUpdate();
+		}
+	}
 }
 
+void Beetle::drawUpdate() {
+	if (_data->frame != NULL) {
+		getScenes()->setCoordinates(_data->frame);
+		getScenes()->removeFromQueue(_data->frame);
+	}
+
+	// Update current frame
+	switch (_data->indexes[_data->offset]) {
+	default:
+		_data->currentFrame = _data->currentFrame + 10;
+		break;
+
+	case 3:
+	case 6:
+	case 9:
+	case 12:
+	case 15:
+	case 18:
+	case 21:
+	case 24:
+	case 25:
+	case 26:
+	case 27:
+	case 28:
+		_data->currentFrame++;
+		break;
+	}
+
+	// Update current sequence
+	if (_data->currentSequence->count() <= _data->currentFrame) {
+		switch (_data->indexes[_data->offset]) {
+		default:
+			_data->offset++;
+			_data->currentSequence = _data->sequences[_data->indexes[_data->offset]];
+			break;
+
+		case 3:
+		case 6:
+		case 9:
+		case 12:
+		case 15:
+		case 18:
+		case 21:
+			break;
+		}
+
+		_data->currentFrame = 0;
+		if (_data->indexes[_data->offset] == 29) {
+			SAFE_DELETE(_data->frame);
+			_data->currentSequence = NULL; // pointer to existing sequence
+			return;
+		}
+	}
+
+	// Update coordinates
+	switch (_data->indexes[_data->offset]) {
+	default:
+		break;
+
+	case 0:
+		_data->coordY -= _data->coordOffset;
+		break;
+
+	case 3:
+		_data->coordX += _data->coordOffset;
+		_data->coordY -= _data->coordOffset;
+		break;
+
+	case 6:
+		_data->coordX += _data->coordOffset;		
+		break;
+
+	case 9:
+		_data->coordX += _data->coordOffset;
+		_data->coordY += _data->coordOffset;
+		break;
+
+	case 12:		
+		_data->coordY += _data->coordOffset;
+		break;
+
+	case 15:
+		_data->coordX -= _data->coordOffset;
+		_data->coordY += _data->coordOffset;
+		break;
+
+	case 18:
+		_data->coordX -= _data->coordOffset;		
+		break;
+
+	case 21:
+		_data->coordX -= _data->coordOffset;
+		_data->coordY -= _data->coordOffset;
+		break;
+	}
+
+	// Update beetle data
+	int rnd = random(100);	
+	if (_data->coordX < 165 || _data->coordX > 465) {
+		int index = 0;
+
+		if (rnd >= 30) {
+			if (rnd >= 70)
+				index = (_data->coordX < 165) ? 9 : 15;
+			else
+				index = (_data->coordX < 165) ? 6 : 18;
+		} else {
+			index = (_data->coordX < 165) ? 3 : 21;
+		}
+
+		updateData(index);
+	}
+
+	if (_data->coordY < 178) {
+		switch (_data->indexes[_data->offset]) {
+		default:
+			updateData(26);
+			break;
+
+		case 3:
+			updateData(25);
+			break;
+
+		case 21:
+			updateData(27);
+			break;
+		}
+	}
+
+	if (_data->coordY > 354) {
+		switch (_data->indexes[_data->offset]) {
+		default:			
+			break;
+
+		case 9:
+		case 12:
+		case 15:
+			updateData(28);
+			break;
+		}
+	}
+
+#define INVERT_Y() \
+	switch (_data->indexes[_data->offset]) { \
+	default: \
+		break; \
+	case 24: \
+	case 25: \
+	case 26: \
+	case 27: \
+	case 28: \
+		_data->coordY = -_data->coordY; \
+		break; \
+	}
+
+	// Invert direction
+	INVERT_Y();
+
+	SequenceFrame *frame = new SequenceFrame(_data->currentSequence, _data->currentFrame, false);
+	updateFrame(frame);
+
+	INVERT_Y();
+
+	getScenes()->addToQueue(frame);
+
+	SAFE_DELETE(_data->frame);
+	_data->frame = frame;
+}
 
 void Beetle::move() {
 	if (!_data)
@@ -237,31 +432,29 @@ void Beetle::move() {
 update_data:
 	updateData(index);
 
-	if (_data->field_84 >= 15) {
+	if (_data->coordOffset >= 15) {
 		_data->field_D5 = 0;
 		return;
 	}
 
-	_data->field_84 = _data->field_84 + 4 * random(100)/100 + _data->field_D9;
+	_data->coordOffset = _data->coordOffset + 4 * random(100)/100 + _data->field_D9;
 	_data->field_D5 = 0;
 }
 
 // Update the beetle sequence to show the correct frames in the correct place
-void Beetle::updateSequence(Sequence *sequence) const {
+void Beetle::updateFrame(SequenceFrame *frame) const {
 	if (!_data)
 		error("Beetle::updateSequence: sequences have not been loaded!");
 
-	if (!sequence)
+	if (!frame)
 		return;
-
-	FrameInfo *header = sequence->getFrameInfo();
 
 	// Update coordinates
 	if (_data->coordX > 0)
-		header->xPos1 = _data->coordX;
+		frame->getInfo()->xPos1 = _data->coordX;
 
 	if (_data->coordY > 0)
-		header->yPos1 = _data->coordY;
+		frame->getInfo()->yPos1 = _data->coordY;
 }
 
 void Beetle::updateData(uint32 index) {
