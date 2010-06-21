@@ -66,6 +66,7 @@ class Cursor;
 class Font;
 class GraphicsManager;
 class Logic;
+class Menu;
 class ResourceManager;
 class SceneManager;
 
@@ -86,8 +87,9 @@ public:
 
 	// Game
 	Cursor          *getCursor()          const { return _cursor; }
-	Font            *getFont()            const { return _font; }
+	Font            *getFont()            const { return _font; }	
 	Logic           *getGameLogic()       const { return _logic; }
+	Menu            *getMenu()            const { return _menu; }
 
 	// Managers
 	GraphicsManager *getGraphicsManager() const { return _graphicsMan; }
@@ -113,6 +115,7 @@ private:
 	Cursor *_cursor;
 	Font   *_font;
 	Logic  *_logic;
+	Menu   *_menu;
 
 	// Managers
 	GraphicsManager *_graphicsMan;

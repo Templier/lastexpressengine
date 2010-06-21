@@ -59,7 +59,6 @@ Logic::Logic(LastExpressEngine *engine) : _engine(engine) {
 	_beetle   = new Beetle(engine);
 	_entities = new Entities(engine);
 	_fight    = new Fight(engine);
-	_menu     = new Menu(engine);
 	_saveload = new SaveLoad(engine);
 	_sound    = new Sound(engine);
 	_state    = new State(engine);
@@ -70,7 +69,6 @@ Logic::~Logic() {
 	delete _beetle;
 	delete _fight;
 	delete _entities;
-	delete _menu;
 	delete _saveload;
 	delete _sound;
 	delete _state;
@@ -93,7 +91,7 @@ void Logic::startGame() {
 	_entities->setup(kChapter1);
 
 	// DEBUG
-	_menu->setShowStartup(false);
+	_engine->getMenu()->setShowStartup(false);
 	_runState.showingMenu = false;
 	getFlags()->gameRunning = true;
 	SET_EVENT_HANDLERS(Logic);
@@ -123,8 +121,8 @@ void Logic::showMenu(bool visible) {
 
 	// TODO: load scene and set current scene
 	_runState.showingMenu = true;
-	getState()->scene = _menu->getSceneIndex();
-	_menu->showMenu(false, kTimeType0, 0);
+	getState()->scene = _engine->getMenu()->getSceneIndex();
+	_engine->getMenu()->showMenu(false, kTimeType0, 0);
 
 	// TODO reset showingMenu to false when starting/returning to a game and show inventory
 
@@ -172,7 +170,7 @@ void Logic::eventMouseClick(const Common::Event &ev) {
 
 	// Special case for the main menu scene
 	if (isShowingMenu()) {
-		_menu->eventMouseClick(ev);
+		_engine->getMenu()->eventMouseClick(ev);
 		return;
 	}
 
@@ -198,7 +196,7 @@ void Logic::eventMouseClick(const Common::Event &ev) {
 void Logic::eventTick(const Common::Event &ev) {
 	// Special case for the main menu scene
 	if (isShowingMenu()) {
-		_menu->eventTick(ev);
+		_engine->getMenu()->eventTick(ev);
 		return;
 	}
 
@@ -245,7 +243,7 @@ void Logic::gameOver(TimeType type, TimeValue time, SceneIndex sceneIndex, bool 
 	}
 
 	// Show Menu
-	_menu->showMenu(false, type, time);
+	_engine->getMenu()->showMenu(false, type, time);
 }
 
 void Logic::switchChapter() {

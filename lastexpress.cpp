@@ -29,6 +29,7 @@
 #include "lastexpress/data/font.h"
 
 #include "lastexpress/game/logic.h"
+#include "lastexpress/game/menu.h"
 #include "lastexpress/game/scenes.h"
 #include "lastexpress/game/state.h"
 
@@ -46,7 +47,7 @@ namespace LastExpress {
 
 LastExpressEngine::LastExpressEngine(OSystem *syst, const ADGameDescription *gd) :
     Engine(syst), _gameDescription(gd), _debugger(NULL), _cursor(NULL),
-    _font(NULL), _logic(NULL), _graphicsMan(NULL), _resMan(NULL), _sceneMan(NULL),
+    _font(NULL), _logic(NULL), _menu(NULL), _graphicsMan(NULL), _resMan(NULL), _sceneMan(NULL),
 	eventMouseClick(NULL), eventTick(NULL), eventMouseClickBackup(NULL), eventTickBackup(NULL) {
 
 	// Adding the default directories
@@ -72,9 +73,10 @@ LastExpressEngine::~LastExpressEngine() {
 	// Delete the remaining objects
 	delete _cursor;
 	delete _debugger;
-	delete _font;
-	delete _graphicsMan;
+	delete _font;	
 	delete _logic;
+	delete _menu;
+	delete _graphicsMan;
 	delete _resMan;
 	delete _sceneMan;
 
@@ -120,6 +122,11 @@ Common::Error LastExpressEngine::run() {
 
 	// Start scene manager
 	_sceneMan = new SceneManager(this);
+
+	// Menu
+	_menu = new Menu(this);
+
+	// FIXME: Should start on the menu and not in logic code
 
 	// Game logic
 	_logic = new Logic(this);

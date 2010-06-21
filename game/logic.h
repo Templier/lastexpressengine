@@ -42,7 +42,6 @@ class Action;
 class Beetle;
 class Entities;
 class Fight;
-class Menu;
 class SaveLoad;
 class Sound;
 class State;
@@ -86,12 +85,10 @@ private:
 		bool showingMenu;
 		CursorStyle cursorStyle;    // necessary to remember current cursor when inside inventory TODO remove?
 
-
-
 		RunState() {
 			gameId = kGameBlue;
 			gameStarted = false;
-			showingMenu = false;
+			showingMenu = false;	// FIXME remove (use event handlers instead)
 			cursorStyle = kCursorNormal;
 		}
 	};
@@ -104,7 +101,6 @@ private:
 	Beetle   *_beetle;          ///< Beetle catching
 	Entities *_entities;        ///< Entities
 	Fight    *_fight;           ///< Fight handling
-	Menu     *_menu;            ///< Main menu handling
 	SaveLoad *_saveload;        ///< Save & loading
 	Sound    *_sound;           ///< Sound
 	State    *_state;           ///< Game state
