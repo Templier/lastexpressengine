@@ -67,7 +67,7 @@
 
 // Misc
 #define save(entity, type, event) getSaveLoad()->saveGame(type, entity, event)
-#define random(value) _engine->getRandom().getRandomNumber(value)
+#define random(value) _engine->getRandom().getRandomNumber(value - 1)
 #define isDay() getLogic()->getGameState()->isDayTime()
 
 //////////////////////////////////////////////////////////////////////////

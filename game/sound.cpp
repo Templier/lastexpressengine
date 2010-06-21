@@ -112,7 +112,7 @@ bool Sound::isBuffered(const char* filename, bool testForEntity) {
 }
 
 void Sound::removeFromQueue(EntityIndex entity) {
-	error("Sound::reset: not implemented!");
+	warning("Sound::removeFromQueue: not implemented!");
 }
 
 void Sound::removeFromQueue(const char* filename) {
