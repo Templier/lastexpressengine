@@ -66,7 +66,7 @@ public:
 	void updateSequences();
 	void updateCallbacks();
 
-	bool canInteractWith(const Common::Point &point) const;
+	EntityIndex canInteractWith(const Common::Point &point) const;
 
 	/**
 	 * Update an entity current sequence frame (and related fields)

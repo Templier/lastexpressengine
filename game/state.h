@@ -70,7 +70,7 @@ public:
 		uint32 field_68;
 		uint32 event_mertens_august_waiting;
 		uint32 event_mertens_chronos_invitation;
-		uint32 is_egg_open;
+		uint32 isEggOpen;
 		uint32 field_78;	// time?
 		uint32 field_7C;
 		uint32 field_80;
@@ -200,7 +200,7 @@ public:
 			field_68 = 0;
 			event_mertens_august_waiting = 0;
 			event_mertens_chronos_invitation = 0;
-			is_egg_open = 0;
+			isEggOpen = 0;
 			field_78 = 0;
 			field_7C = 0;
 			field_80 = 0;

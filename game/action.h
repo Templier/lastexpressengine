@@ -55,7 +55,7 @@ public:
 	SceneIndex processHotspot(const SceneHotspot &hotspot);
 
 	// Cursor
-	CursorStyle getCursor(byte action, ObjectIndex object, byte param2, byte param3, byte cursor) const;
+	CursorStyle getCursor(const SceneHotspot &hotspot) const;
 
 	// Animation
 	void playAnimation(EventIndex index) const;

@@ -43,7 +43,6 @@ class Beetle;
 class Entities;
 class Fight;
 class SaveLoad;
-class Sound;
 class State;
 
 class Logic : public EventHandler {
@@ -72,8 +71,7 @@ public:
 	Beetle     *getGameBeetle()   { return _beetle; }
 	Entities   *getGameEntities() { return _entities; }
 	Fight      *getGameFight()    { return _fight; }
-	SaveLoad   *getGameSaveLoad() { return _saveload; }
-	Sound 	   *getGameSound()    { return _sound; }
+	SaveLoad   *getGameSaveLoad() { return _saveload; }	
 	State      *getGameState()    { return _state; }
 
 private:
@@ -102,7 +100,6 @@ private:
 	Entities *_entities;        ///< Entities
 	Fight    *_fight;           ///< Fight handling
 	SaveLoad *_saveload;        ///< Save & loading
-	Sound    *_sound;           ///< Sound
 	State    *_state;           ///< Game state
 
 	void switchChapter();

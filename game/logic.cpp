@@ -60,7 +60,6 @@ Logic::Logic(LastExpressEngine *engine) : _engine(engine) {
 	_entities = new Entities(engine);
 	_fight    = new Fight(engine);
 	_saveload = new SaveLoad(engine);
-	_sound    = new Sound(engine);
 	_state    = new State(engine);
 }
 
@@ -70,7 +69,6 @@ Logic::~Logic() {
 	delete _fight;
 	delete _entities;
 	delete _saveload;
-	delete _sound;
 	delete _state;
 
 	// Zero-out passed pointers
@@ -206,7 +204,7 @@ void Logic::eventTick(const Common::Event &ev) {
 	// Check hit box & event from scene data
 	SceneHotspot *hotspot = NULL;
 	if (getScenes()->getCurrentScene() && getScenes()->getCurrentScene()->checkHotSpot(ev.mouse, &hotspot))
-		_runState.cursorStyle = _action->getCursor(hotspot->action, (ObjectIndex)hotspot->param1, hotspot->param2, hotspot->param3, hotspot->cursor);
+		_runState.cursorStyle = _action->getCursor(*hotspot);
 	else
 		_runState.cursorStyle = kCursorNormal;
 
@@ -307,7 +305,86 @@ void Logic::showCredits() {
 // Misc
 //////////////////////////////////////////////////////////////////////////
 void Logic::updateCursor(bool redraw) {
-	warning("Logic::updateCursor: not implemented!");
+	CursorStyle style = kCursorNormal;
+	bool interact = false;
+
+	if (getInventory()->getSelectedItem() != kItemWhistle
+	 || getProgress().isEggOpen
+	 || getEntities()->isPlayerPosition(kCarGreenSleeping, 59)
+	 || getEntities()->isPlayerPosition(kCarGreenSleeping, 76)
+	 || getInventory()->isFlag1() 
+	 || getInventory()->isFlag2() 
+	 || getInventory()->isEggHighlighted()
+	 || getInventory()->isMagnifierInUse()) {
+
+		if (getInventory()->getSelectedItem() != kItemWhistle
+		 || (!getEntities()->checkFields7(kCarGreenSleeping) && !getEntities()->checkFields7(kCarRedSleeping))
+		 || getProgress().jacket != kJacketGreen
+		 || getInventory()->isFlag1() 
+		 || getInventory()->isFlag2() 
+		 || getInventory()->isEggHighlighted()
+		 || getInventory()->isMagnifierInUse()
+		 || (getInventory()->getEntry(kItem2)->location 
+		  && getEntityData(kEntityNone)->car == kCarRedSleeping 
+		  && getEntityData(kEntityNone)->field_491 == EntityData::kField491_2300)) {
+
+			EntityIndex entity = getEntities()->canInteractWith(getCoords());
+			if (entity
+			 && !getInventory()->isFlag1()
+			 && !getInventory()->isFlag2()
+			 && !getInventory()->isEggHighlighted()
+			 && !getInventory()->isMagnifierInUse()) {
+				 if (getInventory()->hasItem(getEntityData(entity)->inventoryItem)) {
+					 interact = true;
+					 style = getInventory()->getEntry(getEntityData(entity)->inventoryItem)->cursor;
+				 } else if (getEntityData(entity)->inventoryItem == kCursorProcess) {
+					 interact = true;
+					 style = kCursorTalk2;
+				 }
+			}
+
+			if (!interact
+			 && !getInventory()->isFlag1()
+			 && !getInventory()->isFlag2()
+			 && !getInventory()->isEggHighlighted()
+			 && !getInventory()->isMagnifierInUse()) {
+				int location = 0;
+				SceneHotspot *hotspot = NULL;
+				loadSceneObject(scene, getState()->scene);
+
+				// Check all hotspots
+				for (Common::Array<SceneHotspot *>::iterator i = scene.getHotspots()->begin(); i != scene.getHotspots()->end(); ++i) {
+					if ((*i)->isInside(getCoords()) && (*i)->location >= location) {
+						if (getAction()->getCursor(**i)) {
+							loadSceneObject(hotspotScene, (*i)->scene);
+
+							if (!getEntities()->getPosition(hotspotScene.getHeader()->position + 100 * hotspotScene.getHeader()->car)
+							 || (*i)->cursor == kCursorTurnRight
+							 || (*i)->cursor == kCursorTurnLeft) {								
+								hotspot = *i;
+								location = (*i)->location;
+							}
+						}					
+					}
+				}
+
+				style = (hotspot) ? getAction()->getCursor(*hotspot) : kCursorNormal;
+			}
+		} else {
+			style = getInventory()->getEntry(kItemMatch)->cursor;
+		}
+		
+	} else {
+		style = getInventory()->getEntry(kItemWhistle)->cursor;
+	}
+
+	if (getInventory()->isMagnifierInUse())
+		style = kCursorMagnifier;
+
+	if (getInventory()->isFlag1() || getInventory()->isFlag2() || getInventory()->isEggHighlighted())
+		style = kCursorNormal;
+
+	_engine->getCursor()->setStyle(style);
 }
 
 

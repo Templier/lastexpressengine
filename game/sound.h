@@ -81,10 +81,13 @@ namespace LastExpress {
 class LastExpressEngine;
 class StreamedSound;
 
-class Sound : Common::Serializable {
+class SoundManager : Common::Serializable {
 public:
-	Sound(LastExpressEngine *engine);
-	~Sound();
+	SoundManager(LastExpressEngine *engine);
+	~SoundManager();
+
+	// Timer
+	void handleTimer();
 
 	// State (FIXME: to be renamed when we know more about it)
 	void resetState() { _state |= 1; }

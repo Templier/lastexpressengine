@@ -35,23 +35,21 @@
 // Logic
 #define getAction() getLogic()->getGameAction()
 #define getBeetle() getLogic()->getGameBeetle()
-
 #define getFight() getLogic()->getGameFight()
 #define getEntities() getLogic()->getGameEntities()
-#define getSound() getLogic()->getGameSound()
 #define getSaveLoad() getLogic()->getGameSaveLoad()
-#define getState() getLogic()->getGameState()->getGameState()
-#define getCoords() getLogic()->getGameState()->getCoordinates()
-#define getGlobalTimer() getLogic()->getGameState()->getTimer()
-#define setGlobalTimer(timer) getLogic()->getGameState()->setTimer(timer)
 
 // State
+#define getState() getLogic()->getGameState()->getGameState()
 #define getEvent(id) getState()->events[id]
 #define getFlags() getLogic()->getGameState()->getGameFlags()
 #define getInventory() getLogic()->getGameState()->getGameInventory()
 #define getObjects() getLogic()->getGameState()->getGameObjects()
 #define getProgress() getState()->progress
 #define getSavePoints() getLogic()->getGameState()->getGameSavePoints()
+#define getGlobalTimer() getLogic()->getGameState()->getTimer()
+#define setGlobalTimer(timer) getLogic()->getGameState()->setTimer(timer)
+#define getCoords() getLogic()->getGameState()->getCoordinates()
 
 // Misc
 #define getEntityData(entity) getEntities()->getData(entity)
@@ -61,9 +59,11 @@
 #define loadSceneObject(name, sceneId) Scene name; getScenes()->loadScene(&name, (SceneIndex)sceneId);
 
 // Utilities
-#define loadFile(name) load(_engine->getResourceManager()->getFileStream(name))
+#define getSound() _engine->getSoundManager()
 #define playMusicStream(name) getSound()->getMusicStream()->load(_engine->getResourceManager()->getFileStream(name));
 #define playSfxStream(name) getSound()->getSfxStream()->load(_engine->getResourceManager()->getFileStream(Common::String(name)));
+
+#define loadFile(name) load(_engine->getResourceManager()->getFileStream(name))
 
 // Misc
 #define save(entity, type, event) getSaveLoad()->saveGame(type, entity, event)

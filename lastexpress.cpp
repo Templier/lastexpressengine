@@ -32,6 +32,7 @@
 #include "lastexpress/game/menu.h"
 #include "lastexpress/game/scenes.h"
 #include "lastexpress/game/state.h"
+#include "lastexpress/game/sound.h"
 
 #include "lastexpress/graphics.h"
 #include "lastexpress/helpers.h"
@@ -70,6 +71,8 @@ LastExpressEngine::LastExpressEngine(OSystem *syst, const ADGameDescription *gd)
 }
 
 LastExpressEngine::~LastExpressEngine() {
+	_timer->removeTimerProc(&soundTimer);
+
 	// Delete the remaining objects
 	delete _cursor;
 	delete _debugger;
@@ -79,6 +82,7 @@ LastExpressEngine::~LastExpressEngine() {
 	delete _graphicsMan;
 	delete _resMan;
 	delete _sceneMan;
+	delete _soundMan;
 
 	// Cleanup event handlers
 	SAFE_DELETE(eventMouseClick);
@@ -119,6 +123,10 @@ Common::Error LastExpressEngine::run() {
 	_font = _resMan->loadFont();
 	if (!_font)
 		return Common::kNoGameDataFoundError;
+
+	// Start sound manager and setup timer
+	_soundMan = new SoundManager(this);
+	_timer->installTimerProc(&soundTimer, 17, this);
 
 	// Start scene manager
 	_sceneMan = new SceneManager(this);
@@ -203,7 +211,7 @@ bool LastExpressEngine::handleEvents() {
 	// Update the screen
 	_graphicsMan->update();
 	_system->updateScreen();
-	_system->delayMillis(10);
+	_system->delayMillis(50);
 
 	// The event loop may have triggered the quit status. In this case,
 	// stop the execution.
@@ -212,6 +220,17 @@ bool LastExpressEngine::handleEvents() {
 	}
 
 	return false;
+}
+
+///////////////////////////////////////////////////////////////////////////////////
+/// Timer
+///////////////////////////////////////////////////////////////////////////////////
+void LastExpressEngine::soundTimer(void *refCon) {
+	((LastExpressEngine *)refCon)->handleSoundTimer();
+}
+
+void LastExpressEngine::handleSoundTimer() {
+	_soundMan->handleTimer();
 }
 
 ///////////////////////////////////////////////////////////////////////////////////

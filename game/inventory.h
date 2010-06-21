@@ -106,6 +106,12 @@ public:
 	// Handle inventory UI events.
 	bool handleMouseEvent(const Common::Event &ev);
 
+	// State
+	bool isMagnifierInUse() { return _flagUseMagnifier; }
+	bool isFlag1() { return _flag1; }
+	bool isFlag2() { return _flag2; }
+	bool isEggHighlighted() { return _flagEggHightlighted; }
+
 	// Serializable
 	void saveLoadWithSerializer(Common::Serializer &ser);
 
@@ -125,6 +131,12 @@ private:
 	uint32 _blinkingTime;
 	uint32 _blinkingInterval;
 	uint32 _blinkingBrightness;
+
+	// Flags
+	bool _flagUseMagnifier;
+	bool _flag1;
+	bool _flag2;
+	bool _flagEggHightlighted;
 
 	Scene *_itemScene;
 

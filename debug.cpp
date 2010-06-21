@@ -674,7 +674,7 @@ bool Debugger::cmd_beetle(int argc, const char **argv) {
 						CursorStyle style = kCursorNormal;
 						SceneHotspot *hotspot = NULL;
 						if (scene.checkHotSpot(ev.mouse, &hotspot))
-							style = action->getCursor(hotspot->action, (ObjectIndex)hotspot->param1, hotspot->param2, hotspot->param3, hotspot->cursor);
+							style = action->getCursor(*hotspot);
 
 						_engine->getCursor()->setStyle(style);
 						break;

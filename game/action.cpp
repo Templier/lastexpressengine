@@ -1242,7 +1242,7 @@ IMPLEMENT_ACTION(useWhistle) {
 		} else {
 			evt = kEventCathOpenEggNoBackground;
 		}
-		getProgress().is_egg_open = 1;
+		getProgress().isEggOpen = 1;
 		break;
 
 	case 2:
@@ -1252,7 +1252,7 @@ IMPLEMENT_ACTION(useWhistle) {
 		}
 
 		evt = (getEntities()->checkFields1(kEntityNone, kCarGreenSleeping, EntityData::kField491_8200)) ? kEventCathCloseEgg : kEventCathCloseEggNoBackground;
-		getProgress().is_egg_open = 0;
+		getProgress().isEggOpen = 0;
 		break;
 
 	case 3:
@@ -1611,19 +1611,21 @@ void Action::playCompartmentSoundEvents(EntityIndex entityIndex, ObjectIndex obj
 //////////////////////////////////////////////////////////////////////////
 // Cursors
 //////////////////////////////////////////////////////////////////////////
-CursorStyle Action::getCursor(byte action, ObjectIndex object, byte param2, byte param3, byte cursor) const {
+CursorStyle Action::getCursor(const SceneHotspot &hotspot) const {
 	// Simple cursor style
-	if (cursor != kCursorProcess)
-		return (CursorStyle)cursor;
+	if (hotspot.cursor != kCursorProcess)
+		return (CursorStyle)hotspot.cursor;
+
+	ObjectIndex object = (ObjectIndex)hotspot.param1;
 
 	//warning("================================= OBJECT %03d =================================", object);
 
-	switch (action) {
+	switch (hotspot.action) {
 	default:
 		return kCursorNormal;
 
 	case SceneHotspot::kActionInventory:
-		if (!getState()->sceneBackup2 && (getEvent(kEventKronosBringFirebird) || getProgress().is_egg_open))
+		if (!getState()->sceneBackup2 && (getEvent(kEventKronosBringFirebird) || getProgress().isEggOpen))
 			return kCursorNormal;
 		else
 			return kCursorBackward;
@@ -1660,10 +1662,10 @@ CursorStyle Action::getCursor(byte action, ObjectIndex object, byte param2, byte
 		if (getInventory()->getSelectedItem() != (InventoryItem)object)
 			return kCursorNormal;
 
-		if (object == kObject20 && param2 == 4 && !getProgress().isTrainRunning)
+		if (object == kObject20 && hotspot.param2 == 4 && !getProgress().isTrainRunning)
 			return kCursorNormal;
 
-		if (object == kObjectHandleInsideBathroom  && param2 == 1 && getProgress().field_5C)
+		if (object == kObjectHandleInsideBathroom  && hotspot.param2 == 1 && getProgress().field_5C)
 			return kCursorNormal;
 
 		return (CursorStyle)getInventory()->getSelectedEntry()->cursor;
@@ -1673,8 +1675,8 @@ CursorStyle Action::getCursor(byte action, ObjectIndex object, byte param2, byte
 			return kCursorNormal;
 
 		// TODO check size of object to make sure we don't have an out of bounds access
-		if ((&getProgress().field_0)[object] == param2)
-			return (CursorStyle)param3;
+		if ((&getProgress().field_0)[object] == hotspot.param2)
+			return (CursorStyle)hotspot.param3;
 
 		return kCursorNormal;
 
@@ -1720,7 +1722,7 @@ CursorStyle Action::getCursor(byte action, ObjectIndex object, byte param2, byte
 		return (CursorStyle)(-(getObjects()->get(kObjectCeiling).location < 1) & 9);
 
 	case SceneHotspot::kActionUnbound:
-		if (param2 != 2)
+		if (hotspot.param2 != 2)
 			return kCursorNormal;
 
 		if (getEvent(kEventCathBurnRope) || !getEvent(kEventCathStruggleWithBonds2))

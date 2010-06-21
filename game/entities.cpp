@@ -253,15 +253,20 @@ void Entities::reset() {
 // State & Sequences
 //////////////////////////////////////////////////////////////////////////
 
-bool Entities::canInteractWith(const Common::Point &point) const {
+EntityIndex Entities::canInteractWith(const Common::Point &point) const {
 	if (!getFlags()->gameRunning)
-		return false;
+		return kEntityNone;
 
 	EntityIndex index = kEntityNone;
 	int location = 10000;
 
 	// Check if there is an entity we can interact with
 	for (uint i = 1; i < _entities.size(); i++) {
+
+		// Skip entities with no current frame
+		if (!getData((EntityIndex)i)->frame)
+			continue;
+
 		FrameInfo *info =  getData((EntityIndex)i)->frame->getInfo();
 
 		// Skip frames with no data
@@ -281,13 +286,13 @@ bool Entities::canInteractWith(const Common::Point &point) const {
 
 	// Check if we found an entity
 	if (!index)
-		return false;
+		return kEntityNone;
 
 	// Check that there is an item to interact with
 	if (!getData(index)->inventoryItem)
-		return false;
+		return kEntityNone;
 
-	return true;
+	return index;
 }
 
 void Entities::resetState(EntityIndex entityIndex) {

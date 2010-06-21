@@ -68,7 +68,7 @@ const char *messages[24] = {
 	"ENDALRM3"  // 65
 };
 
-Sound::Sound(LastExpressEngine *engine) : _engine(engine), _state(0) {
+SoundManager::SoundManager(LastExpressEngine *engine) : _engine(engine), _state(0) {
 	_sfx = new StreamedSound();
 	_music = new StreamedSound();
 
@@ -78,7 +78,7 @@ Sound::Sound(LastExpressEngine *engine) : _engine(engine), _state(0) {
 	_data2 = 0;
 }
 
-Sound::~Sound() {
+SoundManager::~SoundManager() {
 	delete _sfx;
 	delete _music;
 
@@ -87,17 +87,24 @@ Sound::~Sound() {
 }
 
 //////////////////////////////////////////////////////////////////////////
+// Timer
+//////////////////////////////////////////////////////////////////////////
+void SoundManager::handleTimer() {
+	// TODO: stream any sound in the queue after filtering
+}
+
+//////////////////////////////////////////////////////////////////////////
 // Sound queue management
 //////////////////////////////////////////////////////////////////////////
-void Sound::setupQueue(int a1, int a2) {
+void SoundManager::setupQueue(int a1, int a2) {
 	warning("Sound::setupQueue: not implemented!");
 }
 
-bool Sound::isBuffered(EntityIndex entity) {
+bool SoundManager::isBuffered(EntityIndex entity) {
 	return (getEntry(entity) != NULL);
 }
 
-bool Sound::isBuffered(const char* filename, bool testForEntity) {
+bool SoundManager::isBuffered(const char* filename, bool testForEntity) {
 	Common::String name(filename);
 
 	if (!name.contains('.'))
@@ -111,35 +118,35 @@ bool Sound::isBuffered(const char* filename, bool testForEntity) {
 	return (entry != NULL);
 }
 
-void Sound::removeFromQueue(EntityIndex entity) {
+void SoundManager::removeFromQueue(EntityIndex entity) {
 	warning("Sound::removeFromQueue: not implemented!");
 }
 
-void Sound::removeFromQueue(const char* filename) {
+void SoundManager::removeFromQueue(const char* filename) {
 	warning("Sound::removeFromQueue: not implemented!");
 }
 
-void Sound::processEntry(EntityIndex entity) {
+void SoundManager::processEntry(EntityIndex entity) {
 	error("Sound::processEntry: not implemented!");
 }
 
-void Sound::unknownFunction1() {
+void SoundManager::unknownFunction1() {
 	warning("Sound::unknownFunction1: not implemented!");
 }
 
-void Sound::unknownFunction2(const char* filename) {
+void SoundManager::unknownFunction2(const char* filename) {
 	warning("Sound::unknownFunction2: not implemented!");
 }
 
-void Sound::unknownFunction3() {
+void SoundManager::unknownFunction3() {
 	warning("Sound::unknownFunction3: not implemented!");
 }
 
-void Sound::unknownGameOver(bool isProcessing) {
+void SoundManager::unknownGameOver(bool isProcessing) {
 	warning("Sound::unknownGameOver: not implemented!");
 }
 
-Sound::SoundEntry *Sound::getEntry(EntityIndex index) {
+SoundManager::SoundEntry *SoundManager::getEntry(EntityIndex index) {
 	for (uint i = 0; i < _cache.size(); i++) {
 		if (_cache[i]->entity == index)
 			return _cache[i];
@@ -148,7 +155,7 @@ Sound::SoundEntry *Sound::getEntry(EntityIndex index) {
 	return NULL;
 }
 
-Sound::SoundEntry *Sound::getEntry(Common::String name) {
+SoundManager::SoundEntry *SoundManager::getEntry(Common::String name) {
 	for (uint i = 0; i < _cache.size(); i++) {
 		if (name.compareTo((char *)&_cache[i]->name2))
 			return _cache[i];
@@ -160,7 +167,7 @@ Sound::SoundEntry *Sound::getEntry(Common::String name) {
 //////////////////////////////////////////////////////////////////////////
 // Savegame
 //////////////////////////////////////////////////////////////////////////
-void Sound::saveLoadWithSerializer(Common::Serializer &ser) {
+void SoundManager::saveLoadWithSerializer(Common::Serializer &ser) {
 	error("Sound::saveLoadWithSerializer: not implemented!");
 }
 
@@ -168,7 +175,7 @@ void Sound::saveLoadWithSerializer(Common::Serializer &ser) {
 // Game-related functions
 //////////////////////////////////////////////////////////////////////////
 
-void Sound::playSound(EntityIndex entity, const char *filename, int a3, byte a4) {
+void SoundManager::playSound(EntityIndex entity, const char *filename, int a3, byte a4) {
 	if (isBuffered(entity) && entity)
 		removeFromQueue(entity);
 
@@ -184,21 +191,21 @@ void Sound::playSound(EntityIndex entity, const char *filename, int a3, byte a4)
 			getSavePoints()->push(kEntityNone, entity, kAction2);
 }
 
-bool Sound::playSoundWithSubtitles(const char *filename, int param3, EntityIndex entity, byte a4) {
+bool SoundManager::playSoundWithSubtitles(const char *filename, int param3, EntityIndex entity, byte a4) {
 	playSfxStream(filename);
 
 	warning("Sound::playSoundWithSubtitles: no implemented!");
 	return true;
 }
 
-void Sound::playMusic(EntityIndex entity, byte id, int a3, byte a4) {
+void SoundManager::playMusic(EntityIndex entity, byte id, int a3, byte a4) {
 	char filename[7];
 	sprintf((char *)&filename, "MUS%03d", id);
 
 	playSound(entity, filename, a3, a4);
 }
 
-void Sound::playSoundEvent(EntityIndex entity, byte action, byte a3) {
+void SoundManager::playSoundEvent(EntityIndex entity, byte action, byte a3) {
 	char filename[12];
 	int values[5];
 
@@ -329,7 +336,7 @@ void Sound::playSoundEvent(EntityIndex entity, byte action, byte a3) {
 	}
 }
 
-void Sound::playFightSound(byte action, byte a4) {
+void SoundManager::playFightSound(byte action, byte a4) {
 	int _action = (int)action;
 	char filename[12];
 	int values[5];
@@ -376,11 +383,11 @@ void Sound::playFightSound(byte action, byte a4) {
 	}
 }
 
-void Sound::playDialog(EntityIndex entity, EntityIndex entityDialog, int a3, byte a4) {
+void SoundManager::playDialog(EntityIndex entity, EntityIndex entityDialog, int a3, byte a4) {
 	playSound(entity, getDialogName(entityDialog), a3, a4);
 }
 
-const char *Sound::getDialogName(EntityIndex entity) const {
+const char *SoundManager::getDialogName(EntityIndex entity) const {
 	switch (entity) {
 	case kEntityAnna:
 		if (getEvent(kEventAnnaDialogGoToJerusalem))
@@ -683,7 +690,7 @@ const char *Sound::getDialogName(EntityIndex entity) const {
 //////////////////////////////////////////////////////////////////////////
 // Letters & Messages
 //////////////////////////////////////////////////////////////////////////
-void Sound::readText(int id){
+void SoundManager::readText(int id){
 	if (!isBuffered(kEntityTables4))
 		return;
 
@@ -706,7 +713,7 @@ void Sound::readText(int id){
 //////////////////////////////////////////////////////////////////////////
 // Sound bites
 //////////////////////////////////////////////////////////////////////////
-void Sound::excuseMe(EntityIndex entity, int param2, int param3) {
+void SoundManager::excuseMe(EntityIndex entity, int param2, int param3) {
 	if (isBuffered(entity) && entity != kEntityNone && entity != kEntityChapters && entity != kEntityTrain)
 		return;
 
@@ -975,7 +982,7 @@ void Sound::excuseMe(EntityIndex entity, int param2, int param3) {
 	}
 }
 
-const char *Sound::excuseMeCath() const {
+const char *SoundManager::excuseMeCath() const {
 	switch(random(3)) {
 	default:
 		break;
@@ -993,7 +1000,7 @@ const char *Sound::excuseMeCath() const {
 	return "CAT1126B";
 }
 
-const char *Sound::justCheckingCath() const {
+const char *SoundManager::justCheckingCath() const {
 	switch(random(4)) {
 	default:
 		break;
@@ -1014,7 +1021,7 @@ const char *Sound::justCheckingCath() const {
 	return "CAT5001";
 }
 
-const char *Sound::wrongDoorCath() const {
+const char *SoundManager::wrongDoorCath() const {
 	switch(random(5)) {
 	default:
 		break;
@@ -1038,7 +1045,7 @@ const char *Sound::wrongDoorCath() const {
 	return "CAT1125";
 }
 
-const char *Sound::justAMinuteCath() const {
+const char *SoundManager::justAMinuteCath() const {
 	switch(random(3)) {
 	default:
 		break;
@@ -1059,7 +1066,7 @@ const char *Sound::justAMinuteCath() const {
 //////////////////////////////////////////////////////////////////////////
 // Tests
 //////////////////////////////////////////////////////////////////////////
-bool Sound::testParameter(int param) {
+bool SoundManager::testParameter(int param) {
 	return (param == 1 || param == 10 || param == 15 || param == 19 || param == 21 || param == 23 || param == 24 || param == 26 || param == 27 || param == 28);
 }
 

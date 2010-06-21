@@ -30,6 +30,7 @@
 #include "lastexpress/eventhandler.h"
 
 #include "common/random.h"
+#include "common/timer.h"
 
 #include "engines/advancedDetector.h"
 #include "engines/engine.h"
@@ -69,6 +70,7 @@ class Logic;
 class Menu;
 class ResourceManager;
 class SceneManager;
+class SoundManager;
 
 class LastExpressEngine : public Engine {
 protected:
@@ -89,12 +91,13 @@ public:
 	Cursor          *getCursor()          const { return _cursor; }
 	Font            *getFont()            const { return _font; }	
 	Logic           *getGameLogic()       const { return _logic; }
-	Menu            *getMenu()            const { return _menu; }
+	Menu            *getMenu()            const { return _menu; }	
 
 	// Managers
 	GraphicsManager *getGraphicsManager() const { return _graphicsMan; }
 	ResourceManager *getResourceManager() const { return _resMan; }
 	SceneManager    *getSceneManager()    const { return _sceneMan; }
+	SoundManager    *getSoundManager()    const { return _soundMan; }
 
 	// Event handling
 	bool handleEvents();
@@ -102,6 +105,11 @@ public:
 	void backupEventHandlers();
 	void restoreEventHandlers();
 	void setEventHandlers(EventHandler::EventFunction *eventMouseClick, EventHandler::EventFunction *eventTick);
+
+protected:
+	// Sound Timer
+	static void soundTimer(void *ptr);
+	void handleSoundTimer();
 
 private:
 	const ADGameDescription *_gameDescription;
@@ -116,11 +124,12 @@ private:
 	Font   *_font;
 	Logic  *_logic;
 	Menu   *_menu;
-
+	
 	// Managers
 	GraphicsManager *_graphicsMan;
 	ResourceManager *_resMan;
 	SceneManager    *_sceneMan;
+	SoundManager    *_soundMan;
 
 	// Event handlers
 	EventHandler::EventFunction *eventMouseClick;
