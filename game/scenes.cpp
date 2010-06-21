@@ -467,15 +467,62 @@ void SceneManager::resetDoorsAndClock() {
 // Sequence list
 //////////////////////////////////////////////////////////////////////////
 void SceneManager::drawFrames(bool refreshScreen) {
-	error("SceneManager::drawFrames - Not implemented!");
+	if (!_flagDrawSequences)
+		return;
+
+	for (Common::List<SequenceFrame *>::iterator i = _queue.begin(); i != _queue.end(); ++i)
+		_engine->getGraphicsManager()->draw(*i, GraphicsManager::kBackgroundOverlay);
+
+	if (refreshScreen) {
+		askForRedraw();
+		redrawScreen();
+
+		_flagDrawSequences = false;
+	}
 }
 
 void SceneManager::addToQueue(SequenceFrame *frame) {
-	error("SceneManager::addToQueue - Not implemented!");
+	if (!frame)
+		return;
+
+	// First check that the frame is not already in the queue
+	for (Common::List<SequenceFrame *>::iterator i = _queue.begin(); i != _queue.end(); ++i) {
+		if (*i == frame)
+			return;
+	}
+
+	// Set flag
+	_flagDrawSequences = true;
+
+	// Queue empty: just insert the frame
+	if (_queue.empty()) {
+		_queue.push_back(frame);
+		return;
+	}
+
+	// Frame is closer: insert in first place
+	if (frame->getInfo()->location > _queue.front()->getInfo()->location) {
+		_queue.push_front(frame);
+		return;
+	}
+
+	// Insert the frame in the queue based on location
+	for (Common::List<SequenceFrame *>::iterator i = _queue.begin(); i != _queue.end(); ++i) {
+		if (frame->getInfo()->location > _queue.front()->getInfo()->location) {
+			_queue.insert(i, frame);
+			return;
+		}
+	}
+	
+	// We are the last frame in location order, insert at the back of the queue
+	_queue.push_back(frame);
 }
 
 void SceneManager::removeFromQueue(SequenceFrame *frame) {
-	error("SceneManager::removeFromQueue - Not implemented!");
+	if (!frame)
+		return;
+
+	_queue.remove(frame);
 }
 
 // HACK: temporary hack until Menu is redone
@@ -497,11 +544,11 @@ void SceneManager::resetQueue() {
 	_flagDrawSequences = true;
 
 	// The original engine only deletes decompressed data, not the "sequences" since they are just pointers to a memory pool
-	_list.clear();
+	_queue.clear();
 }
 
 void SceneManager::setCoordinates(SequenceFrame *frame) {
-	error("SceneManager::setCoordinates - Not implemented!");
+	warning("SceneManager::setCoordinates - Not implemented!");
 }
 
 //////////////////////////////////////////////////////////////////////////

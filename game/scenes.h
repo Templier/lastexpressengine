@@ -111,8 +111,8 @@ private:
 	int _hoursIndex;
 	int _minutesIndex;
 
-	// Sequence list
-	Common::List<SequenceFrame *> _list;
+	// Sequence queue
+	Common::List<SequenceFrame *> _queue;
 
 	// Scene processing
 	void preProcessScene(SceneIndex *index);
