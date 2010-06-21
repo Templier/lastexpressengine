@@ -182,7 +182,7 @@ IMPLEMENT_FUNCTION_II(Mahmud, function10, 10)
 			break;
 
 		EntityData::Field491Value field491 = getEntityData(kEntityNone)->field_491;
-		if (field491 < 1500 || field491 >= 5790 || (field491 > 4455 && params->param5 != 5)) {
+		if (field491 < EntityData::kField491_1500 || field491 >= EntityData::kField491_5790 || (field491 > EntityData::kField491_4455 && params->param5 != 5)) {
 			getObjects()->update(kObjectCompartment5, kEntityTrain, kLocation3, kCursorHandKnock, kCursorHand);
 			getObjects()->update(kObjectCompartment6, kEntityTrain, kLocation3, kCursorHandKnock, kCursorHand);
 			getObjects()->update(kObjectCompartment7, kEntityTrain, kLocation3, kCursorHandKnock, kCursorHand);

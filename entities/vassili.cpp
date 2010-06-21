@@ -102,27 +102,19 @@ IMPLEMENT_FUNCTION(Vassili, function5, 5)
 			getData()->field_491 = getEntityData(kEntityTatiana)->field_491;
 			getData()->field_493 = getEntityData(kEntityTatiana)->field_493;
 		} else {
-			//if (params->param3) {
-			//	if (params->param3 >= (int)getState()->time)
-			//		break;
-			//	params->param3 = EntityData::kParamTime;
-			//} else {
-			//	params->param3 = (int)getState()->time + 450;
-			//	if (params->param3 == 0)
-			//		return;
-			//	if (params->param3 >= (int)getState()->time)
-			//		break;
-			//	params->param3 = EntityData::kParamTime;
-			//}
+			if (params->param3 && params->param3 >= (int)getState()->time) {
+				break;
+			}else {
+				params->param3 = (int)getState()->time + 450;
+				if (params->param3 == 0)
+					break;
+			}
 
-			// TODO adapt UPDATE_FROM_TIME
-			error("Vassili: callback function 5 not implemented!");
-
-			//if (!params->param2 && getObjects()->get(kObjectCompartmentA).location == kLocation1) {
-			//	params->param2 = 1;
-			//	getEntities()->drawSequenceLeft(kEntityVassili, "303A");
-			//	getObjects()->update(kObjectCompartmentA, kEntityNone, kLocationNone, kCursorHandKnock, kCursorHand);
-			//}
+			if (!params->param2 && getObjects()->get(kObjectCompartmentA).location == kLocation1) {
+				params->param2 = 1;
+				getEntities()->drawSequenceLeft(kEntityVassili, "303A");
+				getObjects()->update(kObjectCompartmentA, kEntityNone, kLocationNone, kCursorHandKnock, kCursorHand);
+			}
 			break;
 		}
 		break;
@@ -148,8 +140,49 @@ IMPLEMENT_FUNCTION(Vassili, function6, 6)
 		break;
 
 	case kActionNone:
-		// TODO adapt UPDATE_FROM_TICKS
-		error("Vassili: callback function 6 not implemented!");
+		if (getEntities()->checkFields1(kEntityNone, kCarRedSleeping, EntityData::kField491_8200)) {
+
+			if (params->param3) {
+				if (params->param3 >= (int)getState()->timeTicks)
+					goto label_function7;
+
+				params->param3 = EntityData::kParamTime;
+			} else {
+				params->param3 = (int)getState()->timeTicks + params->param1;
+				if (!params->param3) {					
+					if (params->param3 >= (int)getState()->timeTicks)
+						goto label_function7;
+
+					params->param3 = EntityData::kParamTime;
+				}
+			}
+
+			setCallback(1);
+			call(new ENTITY_SETUP_SIIS(Vassili, setup_draw), "303B");
+			break;
+		}
+
+label_function7:
+		if (params->param4 != EntityData::kParamTime && getState()->time > kTimeKronos) {
+
+			if (getState()->time <= kTimeVassili) {
+
+				if (getEntities()->checkFields1(kEntityNone, kCarRedSleeping, EntityData::kField491_8200) || !params->param4) {
+
+					params->param4 = getState()->time;
+					if (!params->param4) {
+						setup_function7();
+						break;
+					}
+				}
+				
+				if (params->param4 >= getState()->time)
+					break;
+			}
+			
+			params->param4 = EntityData::kParamTime;
+			setup_function7();
+		}
 		break;
 
 	case kActionDefault:
@@ -165,15 +198,14 @@ IMPLEMENT_FUNCTION(Vassili, function6, 6)
 		break;
 
 	case kActionCallback:
-		if (getCallback() != 1)
-			break;
+		if (getCallback() == 1) {
+			getEntities()->drawSequenceLeft(kEntityVassili, "303C");
+			params->param1 = 5 * (3 * random(25) + 15);
+			params->param2 = 1;
 
-		getEntities()->drawSequenceLeft(kEntityVassili, "303C");
-		params->param1 = 5 * (3 * random(25) + 15);
-		params->param2 = 1;
-
-		// TODO: Call shared part with kActionNone
-		error("Vassili: callback function 6 not implemented!");
+			// Shared part with kActionNone
+			goto label_function7;
+		}
 		break;
 	}
 }
