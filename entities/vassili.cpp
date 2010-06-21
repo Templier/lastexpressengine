@@ -176,7 +176,7 @@ label_function7:
 					}
 				}
 				
-				if (params->param4 >= getState()->time)
+				if (params->param4 >= (int)getState()->time)
 					break;
 			}
 			
