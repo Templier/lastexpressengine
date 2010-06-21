@@ -503,7 +503,7 @@ void Menu::eventMouseClick(const Common::Event &ev) {
 	handleEvent(ev);
 }
 
-void Menu::eventMouseMove(const Common::Event &ev) {
+void Menu::eventTick(const Common::Event &ev) {
 	handleEvent(ev);
 }
 

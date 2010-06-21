@@ -47,7 +47,7 @@ namespace LastExpress {
 LastExpressEngine::LastExpressEngine(OSystem *syst, const ADGameDescription *gd) :
     Engine(syst), _gameDescription(gd), _debugger(NULL), _cursor(NULL),
     _font(NULL), _logic(NULL), _graphicsMan(NULL), _resMan(NULL), _sceneMan(NULL),
-	eventMouseClick(NULL), eventMouseMove(NULL), eventMouseClickBackup(NULL), eventMouseMoveBackup(NULL) {
+	eventMouseClick(NULL), eventTick(NULL), eventMouseClickBackup(NULL), eventTickBackup(NULL) {
 
 	// Adding the default directories
 	const Common::FSNode gameDataDir(ConfMan.get("path"));
@@ -80,9 +80,9 @@ LastExpressEngine::~LastExpressEngine() {
 
 	// Cleanup event handlers
 	SAFE_DELETE(eventMouseClick);
-	SAFE_DELETE(eventMouseMove);
+	SAFE_DELETE(eventTick);
 	SAFE_DELETE(eventMouseClickBackup);
-	SAFE_DELETE(eventMouseMoveBackup);
+	SAFE_DELETE(eventTickBackup);
 
 	// Zero passed pointers
 	_gameDescription = NULL;
@@ -170,9 +170,7 @@ bool LastExpressEngine::handleEvents() {
 		case Common::EVENT_MAINMENU:
 			// Closing the GMM
 
-		case Common::EVENT_MOUSEMOVE:
-			if (eventMouseMove && eventMouseMove->isValid())
-				(*eventMouseMove)(ev);
+		case Common::EVENT_MOUSEMOVE:			
 			break;
 
 		case Common::EVENT_LBUTTONDOWN:
@@ -190,6 +188,10 @@ bool LastExpressEngine::handleEvents() {
 			break;
 		}
 	}
+
+	// Game tick event
+	if (eventTick && eventTick->isValid())
+		(*eventTick)(ev);
 
 	// Update the screen
 	_graphicsMan->update();
@@ -210,20 +212,20 @@ bool LastExpressEngine::handleEvents() {
 ///////////////////////////////////////////////////////////////////////////////////
 void LastExpressEngine::backupEventHandlers() {
 	eventMouseClickBackup = eventMouseClick;
-	eventMouseMoveBackup = eventMouseMove;
+	eventTickBackup = eventTick;
 }
 
 void LastExpressEngine::restoreEventHandlers() {
-	if (eventMouseClickBackup == NULL || eventMouseMoveBackup == NULL)
+	if (eventMouseClickBackup == NULL || eventTickBackup == NULL)
 		error("LastExpressEngine::restoreEventHandlers: restore called before backing up the event handlers!");
 
 	eventMouseClick = eventMouseClickBackup;
-	eventMouseMove = eventMouseMoveBackup;
+	eventTick = eventTickBackup;
 }
 
-void LastExpressEngine::setEventHandlers(EventHandler::EventFunction *mouseClick, EventHandler::EventFunction *mouseMove) {
+void LastExpressEngine::setEventHandlers(EventHandler::EventFunction *mouseClick, EventHandler::EventFunction *gameTick) {
 	eventMouseClick = mouseClick;
-	eventMouseMove = mouseMove;
+	eventTick = gameTick;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////

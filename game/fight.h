@@ -84,7 +84,7 @@ public:
 	FightEndType setup(FightType type);
 
 	void eventMouseClick(const Common::Event &ev);
-	void eventMouseMove(const Common::Event &ev);
+	void eventTick(const Common::Event &ev);
 
 	void setStopped();
 
@@ -193,7 +193,7 @@ private:
 	bool _handleTimer;
 
 	// Events
-	void handleMouseMove(const Common::Event &ev, bool unknown);
+	void handleTick(const Common::Event &ev, bool unknown);
 
 	// State
 	void bailout(FightEndType type);

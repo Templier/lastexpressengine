@@ -99,7 +99,7 @@ public:
 
 	void backupEventHandlers();
 	void restoreEventHandlers();
-	void setEventHandlers(EventHandler::EventFunction *eventMouseClick, EventHandler::EventFunction *eventMouseMove);
+	void setEventHandlers(EventHandler::EventFunction *eventMouseClick, EventHandler::EventFunction *eventTick);
 
 private:
 	const ADGameDescription *_gameDescription;
@@ -121,10 +121,10 @@ private:
 
 	// Event handlers
 	EventHandler::EventFunction *eventMouseClick;
-	EventHandler::EventFunction *eventMouseMove;
+	EventHandler::EventFunction *eventTick;
 
 	EventHandler::EventFunction *eventMouseClickBackup;
-	EventHandler::EventFunction *eventMouseMoveBackup;
+	EventHandler::EventFunction *eventTickBackup;
 };
 
 } // End of namespace LastExpress

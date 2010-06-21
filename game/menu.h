@@ -51,7 +51,7 @@ public:
 
 	// Event handling
 	void eventMouseClick(const Common::Event &ev);
-	void eventMouseMove(const Common::Event &ev);
+	void eventTick(const Common::Event &ev);
 
 	SceneIndex getSceneIndex() const;
 

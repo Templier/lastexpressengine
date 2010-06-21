@@ -349,7 +349,7 @@ public:
 		// Mouse flags
 		bool mouseLeftClick;
 		bool mouseRightClick;
-		bool mouseMove;
+		bool gameTick;
 
 		bool flag_entities_0;
 		bool flag_entities_1;
@@ -367,7 +367,7 @@ public:
 
 			mouseRightClick = false;
 			mouseLeftClick = false;
-			mouseMove = false;
+			gameTick = false;
 
 			flag_entities_0 = false;
 			flag_entities_1 = false;

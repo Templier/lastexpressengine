@@ -162,12 +162,12 @@ void Fight::eventMouseClick(const Common::Event &ev) {
 	getFlags()->shouldRedraw = true;
 }
 
-void Fight::eventMouseMove(const Common::Event &ev) {
-	handleMouseMove(ev, true);
+void Fight::eventTick(const Common::Event &ev) {
+	handleTick(ev, true);
 }
 
-void Fight::handleMouseMove(const Common::Event &ev, bool isProcessing) {
-	getFlags()->mouseMove = false;
+void Fight::handleTick(const Common::Event &ev, bool isProcessing) {
+	getFlags()->gameTick = false;
 
 	// TODO move all the egg handling to inventory functions
 
@@ -182,32 +182,26 @@ void Fight::handleMouseMove(const Common::Event &ev, bool isProcessing) {
 	loadSceneObject(scene, getState()->scene);
 	SceneHotspot *hotspot = NULL;
 
-	if (!scene.checkHotSpot(ev.mouse, &hotspot)) {
+	if (!scene.checkHotSpot(ev.mouse, &hotspot) || !CALL_FUNCTION1(_data->player, canInteract, (FightAction)hotspot->action)) {
 		_engine->getCursor()->setStyle(kCursorNormal);
 	} else {
-
 		_engine->getCursor()->setStyle((CursorStyle)hotspot->cursor);
+	}
 
-		// Call player function
-		if (!CALL_FUNCTION1(_data->player, canInteract, (FightAction)hotspot->action))
-			_engine->getCursor()->setStyle(kCursorNormal);
+	CALL_FUNCTION0(_data->player, update);
+	CALL_FUNCTION0(_data->opponent, update);
 
-		CALL_FUNCTION0(_data->player, update);
-		CALL_FUNCTION0(_data->opponent, update);
+	// Draw sequences
+	if (!_data->isRunning)
+		return;
 
-		// Draw sequences
-		if (!_data->isRunning)
-			return;
+	if (isProcessing)
+		getScenes()->drawFrames(true);		
 
-		if (isProcessing)
-			getScenes()->drawFrames(true);		
-
-		if (_data->index) {
-			// Set next sequence name index
-			_data->index--;
-			_data->sequences[_data->index] = newSequence(_data->names[_data->index]);
-		}
-
+	if (_data->index) {
+		// Set next sequence name index
+		_data->index--;
+		_data->sequences[_data->index] = newSequence(_data->names[_data->index]);
 	}
 }
 
@@ -290,7 +284,7 @@ Fight::FightEndType Fight::setup(FightType type) {
 
 	// Show opponents & egg button
 	Common::Event emptyEvent;
-	handleMouseMove(emptyEvent, false);
+	handleTick(emptyEvent, false);
 	getInventory()->drawEgg();
 
 	// Start fight
@@ -477,7 +471,7 @@ end_load:
 	_engine->backupEventHandlers();
 	SET_EVENT_HANDLERS(Fight);
 
-	getFlags()->mouseMove = false;
+	getFlags()->gameTick = false;
 	return;
 }
 

@@ -195,10 +195,10 @@ void Logic::eventMouseClick(const Common::Event &ev) {
 	}
 }
 
-void Logic::eventMouseMove(const Common::Event &ev) {
+void Logic::eventTick(const Common::Event &ev) {
 	// Special case for the main menu scene
 	if (isShowingMenu()) {
-		_menu->eventMouseMove(ev);
+		_menu->eventTick(ev);
 		return;
 	}
 

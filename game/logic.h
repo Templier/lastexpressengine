@@ -53,7 +53,7 @@ public:
 	~Logic();
 
 	void eventMouseClick(const Common::Event &ev);
-	void eventMouseMove(const Common::Event &ev);
+	void eventTick(const Common::Event &ev);
 
 	void showMenu(bool visible);
 	void startGame();
