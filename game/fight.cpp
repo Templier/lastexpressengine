@@ -469,7 +469,7 @@ void Fight::loadData(FightType type) {
 end_load:
 	// Setup event handlers
 	_engine->backupEventHandlers();
-	SET_EVENT_HANDLERS(Fight);
+	SET_EVENT_HANDLERS(Fight, this);
 
 	getFlags()->gameTick = false;
 	return;

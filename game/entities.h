@@ -50,7 +50,8 @@ public:
 	Entities(LastExpressEngine *engine);
 	~Entities();
 
-	void setup(ChapterIndex chapter);
+	void setup(bool isFirstChapter, EntityIndex entity);
+	void setupChapter(ChapterIndex chapter);	
 	void reset();
 
 	// Update & drawing

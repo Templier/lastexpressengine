@@ -405,7 +405,7 @@ IMPLEMENT_FUNCTION(Chapters, chapter2, 10)
 		// Setup for chapter 2 in case it hasn't been done before
 		if (getProgress().chapter != kChapter2) {
 			getProgress().chapter = kChapter2;
-			getEntities()->setup(kChapter2);
+			getEntities()->setupChapter(kChapter2);
 		}
 
 		// Set game time & delta
@@ -544,7 +544,7 @@ IMPLEMENT_FUNCTION(Chapters, chapter3, 13)
 		// Setup for chapter 3 in case it hasn't been done before
 		if (getProgress().chapter != kChapter3) {
 			getProgress().chapter = kChapter3;
-			getEntities()->setup(kChapter3);
+			getEntities()->setupChapter(kChapter3);
 		}
 
 		// Set game time & delta
@@ -618,7 +618,7 @@ IMPLEMENT_FUNCTION(Chapters, chapter4, 17)
 		// Setup for chapter 4 in case it hasn't been done before
 		if (getProgress().chapter != kChapter4) {
 			getProgress().chapter = kChapter4;
-			getEntities()->setup(kChapter4);
+			getEntities()->setupChapter(kChapter4);
 		}
 
 		// Set game time & delta
@@ -703,7 +703,7 @@ IMPLEMENT_FUNCTION(Chapters, chapter5, 20)
 		// Setup for chapter 5 in case it hasn't been done before
 		if (getProgress().chapter != kChapter5) {
 			getProgress().chapter = kChapter5;
-			getEntities()->setup(kChapter5);
+			getEntities()->setupChapter(kChapter5);
 		}
 
 		// Set game time & delta

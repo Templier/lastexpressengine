@@ -31,11 +31,11 @@
 
 namespace LastExpress {
 
-#define SET_EVENT_HANDLERS(class) \
-	_engine->setEventHandlers(new EVENT_HANDLER(class, eventMouseClick), new EVENT_HANDLER(class, eventTick));
+#define SET_EVENT_HANDLERS(class, inst) \
+	_engine->setEventHandlers(new EVENT_HANDLER(class, eventMouseClick, inst), new EVENT_HANDLER(class, eventTick, inst));
 
-#define EVENT_HANDLER(class, name) \
-	Common::Functor1Mem<const Common::Event&, void, class>(this, &class::name)
+#define EVENT_HANDLER(class, name, inst) \
+	Common::Functor1Mem<const Common::Event&, void, class>(inst, &class::name)
 
 class EventHandler {
 public:

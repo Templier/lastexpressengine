@@ -210,7 +210,18 @@ void Entities::saveLoadWithSerializer(Common::Serializer &ser) {
 //////////////////////////////////////////////////////////////////////////
 // Setup
 //////////////////////////////////////////////////////////////////////////
-void Entities::setup(ChapterIndex chapter) {
+void Entities::setup(bool isFirstChapter, EntityIndex entity) {
+	setupChapter(isFirstChapter ? kChapter1 : kChapterAll);
+
+	getFlags()->flag_4 = false;
+	if (!isFirstChapter && entity)
+		getSavePoints()->call(kEntityNone, entity, kActionNone);
+
+	if (!getFlags()->flag_4)
+		getScenes()->loadScene(getState()->scene);
+}
+
+void Entities::setupChapter(ChapterIndex chapter) {
 	if (chapter) {
 		// Reset current call, inventory item & draw sequences
 		for (uint i = 1; i < _entities.size(); i++) {

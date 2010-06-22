@@ -31,8 +31,10 @@
 #include "lastexpress/data/snd.h"
 #include "lastexpress/data/scene.h"
 
+#include "lastexpress/game/inventory.h"
 #include "lastexpress/game/logic.h"
 #include "lastexpress/game/savegame.h"
+#include "lastexpress/game/savepoint.h"
 #include "lastexpress/game/scenes.h"
 #include "lastexpress/game/sound.h"
 #include "lastexpress/game/state.h"
@@ -502,7 +504,7 @@ void Menu::show(bool savegame, TimeType type, uint32 time) {
 	askForRedraw();
 
 	// Set event handlers
-	SET_EVENT_HANDLERS(Menu);
+	SET_EVENT_HANDLERS(Menu, this);
 }
 
 // Get menu scene index
@@ -621,6 +623,10 @@ void Menu::handleEvent(const Common::Event &ev) {
 
 		playSfxStream("LIB046.SND");
 
+		// Set event callbacks for logic
+		SET_EVENT_HANDLERS(Logic, getLogic());
+		getSavePoints()->reset();
+
 		// TODO: to implement in logic...
 		//  - load new data file
 		//  - show intro if new game
@@ -649,8 +655,14 @@ void Menu::handleEvent(const Common::Event &ev) {
 
 			clearBg(GraphicsManager::kBackgroundAll);
 
-			// Reset scene
-			//getLogic()->startGame();
+
+			// Setup game
+			getState()->scene = kSceneDefault;
+			// TODO reset all game data
+			getEntities()->setup(true, kEntityNone);
+			
+			getInventory()->show();
+			askForRedraw();
 		}
 		break;
 
