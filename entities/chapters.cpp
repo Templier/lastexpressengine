@@ -55,6 +55,7 @@
 #include "lastexpress/game/entities.h"
 #include "lastexpress/game/inventory.h"
 #include "lastexpress/game/logic.h"
+#include "lastexpress/game/menu.h"
 #include "lastexpress/game/object.h"
 #include "lastexpress/game/savepoint.h"
 #include "lastexpress/game/scenes.h"
@@ -419,7 +420,7 @@ IMPLEMENT_FUNCTION(Chapters, chapter2, 10)
 	case kActionCallback:
 		if (getCallback() == 1) {
 			if (!_engine->getResourceManager()->loadArchive(kArchiveCd2)) {
-				getLogic()->showMenu(true);
+				getMenu()->show(false, kTimeType0, 0);
 				return;
 			}
 
@@ -632,7 +633,7 @@ IMPLEMENT_FUNCTION(Chapters, chapter4, 17)
 	case kActionCallback:
 		if (getCallback() == 1) {
 			if (!_engine->getResourceManager()->loadArchive(kArchiveCd3)) {
-				getLogic()->showMenu(true);
+				getMenu()->show(false, kTimeType0, 0);
 				return;
 			}
 

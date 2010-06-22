@@ -47,7 +47,7 @@ public:
 	Menu(LastExpressEngine *engine);
 	~Menu();
 
-	void showMenu(bool savegame, TimeType type, uint32 time);
+	void show(bool savegame, TimeType type, uint32 time);
 
 	// Event handling
 	void eventMouseClick(const Common::Event &ev);
@@ -55,8 +55,10 @@ public:
 
 	SceneIndex getSceneIndex() const;
 
-	// DEBUG ONLY - TO BE REMOVED
-	void setShowStartup(bool show) { _showStartScreen = show; }
+	bool isShown() const { return _isShowingMenu; }
+
+	GameId getGameId() const { return _gameId; }
+
 
 private:
 	LastExpressEngine *_engine;
@@ -75,9 +77,16 @@ private:
 	// Cached decoded frames
 	AnimFrame *_cityButtonFrames[7];
 
+	GameId _gameId;
+
 	// Indicator to know if we need to show the start animation when showMenu is called
-	bool _showStartScreen;
+	bool _hasShownStartScreen;
+	bool _hasShownIntro;
+
 	bool _isShowingCredits;
+	bool _isGameStarted;
+	bool _isShowingMenu;
+
 	uint32 _creditsSequenceIndex;
 
 	void loadData();
@@ -89,6 +98,8 @@ private:
 	TrainLine *_trainLine;
 	Common::String getAcornSequenceName(GameId id) const;
 	void showCredits();
+
+	void switchGame();
 
 	bool isGameFinished() const;
 

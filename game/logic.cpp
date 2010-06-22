@@ -79,84 +79,27 @@ Logic::~Logic() {
 // Game & Menu
 //////////////////////////////////////////////////////////////////////////
 
-void Logic::startGame() {
-	// Load scene data for the first CD
-	getScenes()->loadSceneDataFile(kArchiveCd1);
-
+void Logic::init() {
 	// Initialize data
 	getInventory()->init();
 
-	_entities->setup(kChapter1);
+	//_entities->setup(kChapter1);
 
 	// DEBUG
-	_engine->getMenu()->setShowStartup(false);
-	_runState.showingMenu = false;
-	getFlags()->gameRunning = true;
-	SET_EVENT_HANDLERS(Logic);
+	//_engine->getMenu()->setShowStartup(false);
+	//_runState.showingMenu = false;
+	//getFlags()->gameRunning = true;
+	//SET_EVENT_HANDLERS(Logic);
 
-	// Set Cursor type
-	_engine->getCursor()->setStyle(kCursorNormal);
-	_engine->getCursor()->show(true);
+	//// Set Cursor type
+	//_engine->getCursor()->setStyle(kCursorNormal);
+	//_engine->getCursor()->show(true);
 
-	getScenes()->loadScene(kSceneDefault);
+	//getScenes()->loadScene(kSceneDefault);
 
-	getInventory()->show();
+	//getInventory()->show();
 
-	askForRedraw();
-}
-
-// Show main menu
-void Logic::showMenu(bool visible) {
-
-	if (!visible) {
-		getInventory()->show();
-		_runState.showingMenu = false;
-		return;
-	}
-
-	// Hide inventory
-	// FIXME getInventory()->show(false);
-
-	// TODO: load scene and set current scene
-	_runState.showingMenu = true;
-	getState()->scene = _engine->getMenu()->getSceneIndex();
-	_engine->getMenu()->showMenu(false, kTimeType0, 0);
-
-	// TODO reset showingMenu to false when starting/returning to a game and show inventory
-
-	// TODO: move to shared method
-	// Initialize the first savegame if needed
-	if (!SaveLoad::isSavegamePresent(kGameBlue))
-		SaveLoad::initSavegame(kGameBlue);
-}
-
-// Switch to the next savegame
-void Logic::switchGame() {
-	// Switch back to blue game is the current game is not started
-	if (!_runState.gameStarted) {
-		_runState.gameId = kGameBlue;
-	} else {
-		_runState.gameId = (GameId)((_runState.gameId + 1) % 6);
-	}
-
-	// Initialize savegame if needed
-	if (!SaveLoad::isSavegamePresent(_runState.gameId))
-		SaveLoad::initSavegame(_runState.gameId);
-
-	// Reset run state
-	_runState.gameStarted = false;
-
-	// TODO load data from savegame, adjust volume & luminosity, etc...
-	//////////////////////////////////////////////////////////////////////////
-	// HACK for debug
-	if (_runState.gameId == kGameBlue) {
-		getState()->time = 2383200;
-		_runState.gameStarted = true;
-	}
-	//////////////////////////////////////////////////////////////////////////
-
-	// Redraw all menu elements
-	showMenu(true);
+	//askForRedraw();
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -165,12 +108,6 @@ void Logic::switchGame() {
 void Logic::eventMouseClick(const Common::Event &ev) {
 	// Update state
 	getGameState()->setCoordinates(ev.mouse);
-
-	// Special case for the main menu scene
-	if (isShowingMenu()) {
-		_engine->getMenu()->eventMouseClick(ev);
-		return;
-	}
 
 	if (getInventory()->handleMouseEvent(ev))
 		return;
@@ -192,23 +129,15 @@ void Logic::eventMouseClick(const Common::Event &ev) {
 }
 
 void Logic::eventTick(const Common::Event &ev) {
-	// Special case for the main menu scene
-	if (isShowingMenu()) {
-		_engine->getMenu()->eventTick(ev);
-		return;
-	}
-
 	if (getInventory()->handleMouseEvent(ev))
 		return;
 
 	// Check hit box & event from scene data
 	SceneHotspot *hotspot = NULL;
 	if (getScenes()->getCurrentScene() && getScenes()->getCurrentScene()->checkHotSpot(ev.mouse, &hotspot))
-		_runState.cursorStyle = _action->getCursor(*hotspot);
+		_engine->getCursor()->setStyle(_action->getCursor(*hotspot));
 	else
-		_runState.cursorStyle = kCursorNormal;
-
-	_engine->getCursor()->setStyle(_runState.cursorStyle);
+		_engine->getCursor()->setStyle(kCursorNormal);
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -241,7 +170,7 @@ void Logic::gameOver(TimeType type, TimeValue time, SceneIndex sceneIndex, bool 
 	}
 
 	// Show Menu
-	_engine->getMenu()->showMenu(false, type, time);
+	getMenu()->show(false, type, time);
 }
 
 void Logic::switchChapter() {
@@ -294,7 +223,7 @@ void Logic::playFinalSequence() {
 	getSavePoints()->reset();
 	getFlags()->flag_entities_0 = true;
 
-	showMenu(true);
+	getMenu()->show(false, kTimeType0, 0);
 }
 
 void Logic::showCredits() {

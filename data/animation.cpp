@@ -287,7 +287,8 @@ void Animation::play() {
 		while (g_engine->getEventManager()->pollEvent(ev)) {
 			if (ev.type == Common::EVENT_RBUTTONDOWN) {
 				// Stop audio
-				_audio->finish();
+				if (_audio)
+					_audio->finish();
 
 				// TODO start LNK file sound?
 				return;

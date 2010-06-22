@@ -106,6 +106,7 @@ public:
 	void unknownFunction1();
 	void unknownFunction2(const char* filename);
 	void unknownFunction3();
+	void unknownFunction4();
 	void unknownGameOver(bool isProcessing = true);
 
 	// Sound playing

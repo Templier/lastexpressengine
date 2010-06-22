@@ -31,6 +31,7 @@
 //////////////////////////////////////////////////////////////////////////
 // Engine subclasses
 #define getLogic() _engine->getGameLogic()
+#define getMenu() _engine->getGameMenu()
 
 // Logic
 #define getAction() getLogic()->getGameAction()
@@ -51,24 +52,21 @@
 #define setGlobalTimer(timer) getLogic()->getGameState()->setTimer(timer)
 #define getCoords() getLogic()->getGameState()->getCoordinates()
 
-// Misc
-#define getEntityData(entity) getEntities()->getData(entity)
-
 // Scenes
 #define getScenes() _engine->getSceneManager()
 #define loadSceneObject(name, sceneId) Scene name; getScenes()->loadScene(&name, (SceneIndex)sceneId);
 
-// Utilities
+// Sound
 #define getSound() _engine->getSoundManager()
 #define playMusicStream(name) getSound()->getMusicStream()->load(_engine->getResourceManager()->getFileStream(name));
 #define playSfxStream(name) getSound()->getSfxStream()->load(_engine->getResourceManager()->getFileStream(Common::String(name)));
-
-#define loadFile(name) load(_engine->getResourceManager()->getFileStream(name))
 
 // Misc
 #define save(entity, type, event) getSaveLoad()->saveGame(type, entity, event)
 #define random(value) _engine->getRandom().getRandomNumber(value - 1)
 #define isDay() getLogic()->getGameState()->isDayTime()
+#define loadFile(name) load(_engine->getResourceManager()->getFileStream(name))
+#define getEntityData(entity) getEntities()->getData(entity)
 
 //////////////////////////////////////////////////////////////////////////
 // Graphics

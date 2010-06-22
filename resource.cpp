@@ -41,7 +41,7 @@ const char *archiveCD1Path = "cd1.hpf";
 const char *archiveCD2Path = "cd2.hpf";
 const char *archiveCD3Path = "cd3.hpf";
 
-ResourceManager::ResourceManager(bool demo) : _demo(demo) {
+ResourceManager::ResourceManager(bool isDemo) : _isDemo(isDemo) {
 }
 
 ResourceManager::~ResourceManager() {
@@ -58,7 +58,7 @@ bool ResourceManager::loadArchive(ArchiveIndex type) {
 	reset();
 
 	// Demo version
-	if (_demo)
+	if (_isDemo)
 		return loadArchive(archiveDemoPath);
 
 	bool loadedOk = true;

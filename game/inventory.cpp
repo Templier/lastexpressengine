@@ -30,6 +30,7 @@
 #include "lastexpress/data/snd.h"
 
 #include "lastexpress/game/logic.h"
+#include "lastexpress/game/menu.h"
 #include "lastexpress/game/scenes.h"
 #include "lastexpress/game/sound.h"
 #include "lastexpress/game/state.h"
@@ -134,7 +135,7 @@ void Inventory::init() {
 bool Inventory::handleMouseEvent(const Common::Event &ev) {
 
 	// Do not show inventory when on the menu screen
-	if (getLogic()->isShowingMenu() || !_visible)
+	if (getMenu()->isShown() || !_visible)
 		return false;
 
 	// Flag to know whether to restore the current cursor or not
@@ -148,14 +149,14 @@ bool Inventory::handleMouseEvent(const Common::Event &ev) {
 		// If clicked, show the menu
 		if (ev.type == Common::EVENT_LBUTTONDOWN) {
 			playSfxStream("LIB039.SND");
-			getLogic()->showMenu(true);
+			getMenu()->show(false, kTimeType0, 0);
 
 			// TODO can we return directly or do we need to make sure the state will be "valid" when we come back from the menu
 			return true;
 		} else {
 			// Highlight if needed
-			if (_highlightedItem != getLogic()->getGameId() + 39) {
-				_highlightedItem = (InventoryItem)(getLogic()->getGameId() + 39);
+			if (_highlightedItem != getMenu()->getGameId() + 39) {
+				_highlightedItem = (InventoryItem)(getMenu()->getGameId() + 39);
 				drawItem(608, 448, _highlightedItem, 100)
 
 				askForRedraw();
@@ -163,7 +164,7 @@ bool Inventory::handleMouseEvent(const Common::Event &ev) {
 		}
 	} else {
 		// remove highlight if needed
-		if (_highlightedItem == getLogic()->getGameId() + 39) {
+		if (_highlightedItem == getMenu()->getGameId() + 39) {
 			drawItem(608, 448, _highlightedItem, 50)
 			_highlightedItem = kItemNone;
 			askForRedraw();
@@ -270,8 +271,8 @@ bool Inventory::handleMouseEvent(const Common::Event &ev) {
 		drawEgg();
 
 	// Restore cursor
-	if (!insideInventory)
-		_engine->getCursor()->setStyle(getLogic()->getCursorStyle());
+	//if (!insideInventory)
+	//	_engine->getCursor()->setStyle(getLogic()->getCursorStyle());
 
 	return insideInventory;
 }
@@ -306,12 +307,12 @@ void Inventory::blinkEgg(bool enabled) {
 
 	// Show egg at full brightness for first step if blinking
 	if (_blinkingEgg)
-		drawItem(608, 448, getLogic()->getGameId() + 39, _blinkingBrightness)
+		drawItem(608, 448, getMenu()->getGameId() + 39, _blinkingBrightness)
 	else {
 		// Reset values
 		_blinkingBrightness = 100;
 		_blinkingInterval = _defaultBlinkingInterval;
-		drawItem(608, 448, getLogic()->getGameId() + 39, 50) // normal egg state
+		drawItem(608, 448, getMenu()->getGameId() + 39, 50) // normal egg state
 	}
 
 	askForRedraw();
@@ -491,14 +492,14 @@ void Inventory::examine(InventoryItem item) {
 
 void Inventory::drawEgg() const {
 	if (!getFlags()->flag_5)
-		drawItem(608, 448, getLogic()->getGameId() + 39, 50)
+		drawItem(608, 448, getMenu()->getGameId() + 39, 50)
 
 	getFlags()->shouldDrawEggOrHourGlass = false;
 }
 
 // Blinking egg: we need to blink the egg for delta time, with the blinking getting faster until it's always lit.
 void Inventory::drawBlinkingEgg() {
-	drawItem(608, 448, getLogic()->getGameId() + 39, _blinkingBrightness)
+	drawItem(608, 448, getMenu()->getGameId() + 39, _blinkingBrightness)
 
 	// TODO if delta time > _blinkingInterval, update egg & ask for redraw then adjust blinking time and remaining time
 	warning("Inventory::drawEgg - blinking not implemented!");

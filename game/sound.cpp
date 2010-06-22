@@ -131,7 +131,7 @@ void SoundManager::processEntry(EntityIndex entity) {
 }
 
 void SoundManager::unknownFunction1() {
-	warning("Sound::unknownFunction1: not implemented!");
+	//warning("Sound::unknownFunction1: not implemented!");
 }
 
 void SoundManager::unknownFunction2(const char* filename) {
@@ -140,6 +140,10 @@ void SoundManager::unknownFunction2(const char* filename) {
 
 void SoundManager::unknownFunction3() {
 	warning("Sound::unknownFunction3: not implemented!");
+}
+
+void SoundManager::unknownFunction4() {
+	warning("Sound::unknownFunction4: not implemented!");
 }
 
 void SoundManager::unknownGameOver(bool isProcessing) {

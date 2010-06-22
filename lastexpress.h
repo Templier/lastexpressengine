@@ -91,7 +91,7 @@ public:
 	Cursor          *getCursor()          const { return _cursor; }
 	Font            *getFont()            const { return _font; }	
 	Logic           *getGameLogic()       const { return _logic; }
-	Menu            *getMenu()            const { return _menu; }	
+	Menu            *getGameMenu()        const { return _menu; }	
 
 	// Managers
 	GraphicsManager *getGraphicsManager() const { return _graphicsMan; }
@@ -105,6 +105,8 @@ public:
 	void backupEventHandlers();
 	void restoreEventHandlers();
 	void setEventHandlers(EventHandler::EventFunction *eventMouseClick, EventHandler::EventFunction *eventTick);
+
+	bool isDemo() const { return (bool)(_gameDescription->flags & ADGF_DEMO); }
 
 protected:
 	// Sound Timer

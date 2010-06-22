@@ -56,7 +56,7 @@ public:
 	Font *loadFont() const;
 
 private:
-	bool _demo;
+	bool _isDemo;
 
 	bool loadArchive(const Common::String &name);
 	void reset();

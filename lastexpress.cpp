@@ -108,8 +108,8 @@ Common::Error LastExpressEngine::run() {
 	_debugger = new Debugger(this);
 
 	// Start the resource and graphics managers
-	_resMan = new ResourceManager((bool)(_gameDescription->flags & ADGF_DEMO));
-	if (!_resMan->loadArchive(kArchiveAll))	// TODO Switch to only Cd 1 (and load everything when opening debugger)
+	_resMan = new ResourceManager(isDemo());
+	if (!_resMan->loadArchive(kArchiveCd1))
 		return Common::kNoGameDataFoundError;
 
 	_graphicsMan = new GraphicsManager();
@@ -129,18 +129,21 @@ Common::Error LastExpressEngine::run() {
 	_timer->installTimerProc(&soundTimer, 17, this);
 
 	// Start scene manager
-	_sceneMan = new SceneManager(this);
-
-	// Menu
-	_menu = new Menu(this);
-
-	// FIXME: Should start on the menu and not in logic code
+	_sceneMan = new SceneManager(this);	
+	_sceneMan->loadSceneDataFile(kArchiveCd1);
 
 	// Game logic
 	_logic = new Logic(this);
-	_logic->startGame();
+	_logic->init();
+
+	// Menu
+	_menu = new Menu(this);
+	_menu->show(false, kTimeType0, 0);
 
 	while (!shouldQuit()) {
+		_soundMan->unknownFunction1();
+		// TODO: call subtitle function
+
 		if (handleEvents())
 			continue;
 	}

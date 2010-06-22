@@ -53,19 +53,9 @@ public:
 	void eventMouseClick(const Common::Event &ev);
 	void eventTick(const Common::Event &ev);
 
-	void showMenu(bool visible);
-	void startGame();
-	void switchGame();
-
+	void init();	
 	void gameOver(TimeType type, TimeValue time, SceneIndex sceneIndex, bool showScene);
-
 	void updateCursor(bool redraw = true);
-
-	// Accessors
-	bool isGameStarted() { return _runState.gameStarted; }
-	bool isShowingMenu() { return _runState.showingMenu; }
-	GameId getGameId() { return _runState.gameId; }
-	CursorStyle getCursorStyle() { return _runState.cursorStyle; }
 
 	Action 	   *getGameAction()   { return _action; }
 	Beetle     *getGameBeetle()   { return _beetle; }
@@ -75,25 +65,7 @@ public:
 	State      *getGameState()    { return _state; }
 
 private:
-
-	// State
-	struct RunState {
-		GameId gameId;
-		bool gameStarted;
-		bool showingMenu;
-		CursorStyle cursorStyle;    // necessary to remember current cursor when inside inventory TODO remove?
-
-		RunState() {
-			gameId = kGameBlue;
-			gameStarted = false;
-			showingMenu = false;	// FIXME remove (use event handlers instead)
-			cursorStyle = kCursorNormal;
-		}
-	};
-
 	LastExpressEngine *_engine;
-
-	RunState  _runState;        ///< State of the game session (this data won't be stored in savegames)
 
 	Action   *_action;          ///< Actions
 	Beetle   *_beetle;          ///< Beetle catching

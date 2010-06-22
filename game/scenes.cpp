@@ -70,6 +70,10 @@ SceneManager::~SceneManager() {
 // DataFile
 //////////////////////////////////////////////////////////////////////////
 void SceneManager::loadSceneDataFile(ArchiveIndex archive) const {
+	// Demo only has CD2TRAIN.DAT file
+	if (_engine->isDemo())
+		archive = kArchiveCd2;
+
 	switch(archive) {
 	case kArchiveCd1:
 	case kArchiveCd2:
