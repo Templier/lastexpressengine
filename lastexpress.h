@@ -104,7 +104,7 @@ public:
 
 	void backupEventHandlers();
 	void restoreEventHandlers();
-	void setEventHandlers(EventHandler::EventFunction *eventMouseClick, EventHandler::EventFunction *eventTick);
+	void setEventHandlers(EventHandler::EventFunction *eventMouse, EventHandler::EventFunction *eventTick);
 
 	bool isDemo() const { return (bool)(_gameDescription->flags & ADGF_DEMO); }
 
@@ -134,10 +134,10 @@ private:
 	SoundManager    *_soundMan;
 
 	// Event handlers
-	EventHandler::EventFunction *eventMouseClick;
+	EventHandler::EventFunction *eventMouse;
 	EventHandler::EventFunction *eventTick;
 
-	EventHandler::EventFunction *eventMouseClickBackup;
+	EventHandler::EventFunction *eventMouseBackup;
 	EventHandler::EventFunction *eventTickBackup;
 };
 

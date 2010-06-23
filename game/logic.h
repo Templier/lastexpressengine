@@ -50,7 +50,7 @@ public:
 	Logic(LastExpressEngine *engine);
 	~Logic();
 
-	void eventMouseClick(const Common::Event &ev);
+	void eventMouse(const Common::Event &ev);
 	void eventTick(const Common::Event &ev);
 
 	void init();	
@@ -79,7 +79,7 @@ private:
 	void showCredits();
 
 	// Flags & Members
-	bool _flag8;
+	bool _flagActionPerformed;
 	int _ticksSinceLastSavegame;
 };
 

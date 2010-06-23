@@ -66,7 +66,7 @@ Logic::Logic(LastExpressEngine *engine) : _engine(engine) {
 	_state    = new State(engine);
 
 	// Flags
-	_flag8 = false;
+	_flagActionPerformed = false;
 	_ticksSinceLastSavegame = EVENT_TICKS_BEETWEEN_SAVEGAMES;
 }
 
@@ -112,41 +112,114 @@ void Logic::init() {
 //////////////////////////////////////////////////////////////////////////
 // Event Handling
 //////////////////////////////////////////////////////////////////////////
-void Logic::eventMouseClick(const Common::Event &ev) {
-	// Update state
+void Logic::eventMouse(const Common::Event &ev) {
+	bool hotspotHandled = false;
+
+	// Reset mouse flags
+	getFlags()->mouseLeftClick = false;
+	getFlags()->mouseRightClick = false;
+
+	// TODO process event flags
+	//warning("Logic::eventMouse: event flag processing not implemented!");
+
+	// Update coordinates
 	getGameState()->setCoordinates(ev.mouse);
 
 	if (getInventory()->handleMouseEvent(ev))
 		return;
 
-	// Check hit box & event from scene data
-	SceneHotspot *hotspot = NULL;
-	if (getScenes()->getCurrentScene() && getScenes()->getCurrentScene()->checkHotSpot(ev.mouse, &hotspot) && ev.type == Common::EVENT_LBUTTONUP) {
-		SceneIndex scene = _action->processHotspot(*hotspot);
-		if (scene != kSceneInvalid)
-			hotspot->scene = scene;
+	// Stop processing is inside the menu
+	if (getMenu()->isShown())
+		return;
 
-		if (hotspot->scene)
-			getScenes()->setScene(hotspot->scene);
+	// TODO handle whistle case
 
-		// Switch to next chapter if necessary
-		if (hotspot->action == SceneHotspot::kActionSwitchChapter && hotspot->param1 == getState()->progress.chapter)
-			switchChapter();
+	// TODO handle match case
+
+	// TODO handle entity item case
+
+	//////////////////////////////////////////////////////////////////////////
+	// Handle standard actions
+	if (hotspotHandled)
+		return;
+
+	// Magnifier in use
+	if (getInventory()->isMagnifierInUse()) {
+		_engine->getCursor()->setStyle(kCursorMagnifier);
+		return;
 	}
+
+	// Check hotspots
+	int location = 0;
+	SceneHotspot *hotspot = NULL;
+	loadSceneObject(scene, getState()->scene);
+
+	for (Common::Array<SceneHotspot *>::iterator it = scene.getHotspots()->begin(); it != scene.getHotspots()->end(); ++it) {
+		if (!(*it)->isInside(ev.mouse))
+			continue;
+
+		if ((*it)->location < location)
+			continue;
+
+		if (!getAction()->getCursor(**it))
+			continue;
+
+		loadSceneObject(hotspotScene, (*it)->scene);
+
+		if (!getEntities()->getPosition(hotspotScene.getHeader()->car, hotspotScene.getHeader()->position)
+		 || (*it)->cursor == kCursorTurnRight
+		 || (*it)->cursor == kCursorTurnLeft) {
+			 location = (*it)->location;
+			 hotspot = *it;
+		}
+	}
+
+	// No hotspot found: show the normal cursor
+	if (!hotspot) {
+		_engine->getCursor()->setStyle(kCursorNormal);
+		return;
+	}
+
+	// Found an hotspot: update the cursor and perform the action if the user clicked the mouse
+	_engine->getCursor()->setStyle(getAction()->getCursor(*hotspot));
+
+	if (ev.type != Common::EVENT_LBUTTONUP || _flagActionPerformed)
+		return;
+
+	_flagActionPerformed = true;
+
+	SceneIndex index = _action->processHotspot(*hotspot);
+	if (index != kSceneInvalid || hotspot->scene) {
+		getFlags()->shouldRedraw = false;
+
+		getScenes()->setScene((index != kSceneInvalid && index != kSceneStopProcessing) ? index : hotspot->scene);
+
+		if (getFlags()->shouldDrawEggOrHourGlass)
+			getInventory()->drawEgg();
+
+		getFlags()->shouldRedraw = true;
+		updateCursor(true);
+	}
+	
+	// Switch to next chapter if necessary
+	if (hotspot->action == SceneHotspot::kActionSwitchChapter && hotspot->param1 == getState()->progress.chapter)
+		switchChapter();
 }
 
 void Logic::eventTick(const Common::Event &ev) {
 	int ticks = 1;
 
-	if (_flag8)
+	//////////////////////////////////////////////////////////////////////////
+	// Adjust ticks if an action has been performed
+	if (_flagActionPerformed)
 		ticks = 10;
 
-	_flag8 = 0;
-	if (getGlobalTimer() && !getFlags()->shouldDrawEggOrHourGlass) {
-		warning("Logic::eventTick: not implemented");
+	_flagActionPerformed = false;
 
-		// TODO show egg (with or without mouseover)
-	}
+	//////////////////////////////////////////////////////////////////////////
+	// Draw the blinking egg if needed
+	if (getGlobalTimer() && !getFlags()->shouldDrawEggOrHourGlass)
+		getInventory()->drawBlinkingEgg();
 
 	//////////////////////////////////////////////////////////////////////////
 	// Adjust time and save game if needed
@@ -168,6 +241,8 @@ void Logic::eventTick(const Common::Event &ev) {
 		}
 	}
 
+	//////////////////////////////////////////////////////////////////////////
+	// Load scene and process hotspot
 	if (getFlags()->flag_0 && !getFlags()->mouseLeftClick && !getFlags()->mouseRightClick) {
 		loadSceneObject(scene, getState()->scene);
 

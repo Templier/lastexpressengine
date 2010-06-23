@@ -545,7 +545,7 @@ void Menu::switchGame() {
 
 //////////////////////////////////////////////////////////////////////////
 // Handle events
-void Menu::eventMouseClick(const Common::Event &ev) {
+void Menu::eventMouse(const Common::Event &ev) {
 	handleEvent(ev);
 }
 
@@ -653,6 +653,7 @@ void Menu::handleEvent(const Common::Event &ev) {
 
 			clearBg(GraphicsManager::kBackgroundAll);
 
+			_isShowingMenu = false;
 
 			// Setup game
 			getFlags()->isGameRunning = true;

@@ -83,7 +83,7 @@ Fight::~Fight() {
 // Events
 //////////////////////////////////////////////////////////////////////////
 
-void Fight::eventMouseClick(const Common::Event &ev) {
+void Fight::eventMouse(const Common::Event &ev) {
 	if (!_data || _data->index)
 		return;
 

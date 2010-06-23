@@ -490,6 +490,8 @@ void Inventory::examine(InventoryItem item) {
 	}
 }
 
+// FIXME: see different callers and adjust
+// - draw with different brightness if mousing over
 void Inventory::drawEgg() const {
 	if (!getFlags()->flag_5)
 		drawItem(608, 448, getMenu()->getGameId() + 39, 50)
@@ -499,14 +501,34 @@ void Inventory::drawEgg() const {
 
 // Blinking egg: we need to blink the egg for delta time, with the blinking getting faster until it's always lit.
 void Inventory::drawBlinkingEgg() {
-	drawItem(608, 448, getMenu()->getGameId() + 39, _blinkingBrightness)
 
-	// TODO if delta time > _blinkingInterval, update egg & ask for redraw then adjust blinking time and remaining time
 	warning("Inventory::drawEgg - blinking not implemented!");
 
-	// Reset values and stop blinking
-	if (_blinkingTime == 0)
-		blinkEgg(false);
+	//// TODO show egg (with or without mouseover)
+
+	//// Play timer sound
+	//if (getGlobalTimer() < 90) {
+	//	if (getGlobalTimer() + ticks >= 90)
+	//		getSound()->playSoundWithSubtitles("TIMER.SND", 50331664, kEntityNone);
+
+	//	if (getSound()->isBuffered("TIMER"))
+	//		setGlobalTimer(0);
+	//}
+
+	//// Restore egg to standard brightness
+	//if (!getGlobalTimer()) {
+	//		
+	//}
+
+
+	//drawItem(608, 448, getMenu()->getGameId() + 39, _blinkingBrightness)
+
+	//// TODO if delta time > _blinkingInterval, update egg & ask for redraw then adjust blinking time and remaining time
+	//
+
+	//// Reset values and stop blinking
+	//if (_blinkingTime == 0)
+	//	blinkEgg(false);
 
 	askForRedraw();
 }

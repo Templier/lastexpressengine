@@ -50,7 +50,7 @@ public:
 	void show(bool savegame, TimeType type, uint32 time);
 
 	// Event handling
-	void eventMouseClick(const Common::Event &ev);
+	void eventMouse(const Common::Event &ev);
 	void eventTick(const Common::Event &ev);
 
 	SceneIndex getSceneIndex() const;

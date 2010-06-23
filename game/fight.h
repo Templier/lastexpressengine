@@ -83,7 +83,7 @@ public:
 
 	FightEndType setup(FightType type);
 
-	void eventMouseClick(const Common::Event &ev);
+	void eventMouse(const Common::Event &ev);
 	void eventTick(const Common::Event &ev);
 
 	void setStopped();

@@ -32,7 +32,7 @@
 namespace LastExpress {
 
 #define SET_EVENT_HANDLERS(class, inst) \
-	_engine->setEventHandlers(new EVENT_HANDLER(class, eventMouseClick, inst), new EVENT_HANDLER(class, eventTick, inst));
+	_engine->setEventHandlers(new EVENT_HANDLER(class, eventMouse, inst), new EVENT_HANDLER(class, eventTick, inst));
 
 #define EVENT_HANDLER(class, name, inst) \
 	Common::Functor1Mem<const Common::Event&, void, class>(inst, &class::name)
@@ -44,7 +44,7 @@ public:
 	// Function pointer for event handler
 	typedef Common::Functor1<const Common::Event&, void> EventFunction;
 
-	virtual void eventMouseClick(const Common::Event &ev) {};    // Event type 1
+	virtual void eventMouse(const Common::Event &ev) {};    // Event type 1
 	virtual void eventTick(const Common::Event &ev) {};     // Event type 3
 };
 

@@ -49,7 +49,7 @@ namespace LastExpress {
 LastExpressEngine::LastExpressEngine(OSystem *syst, const ADGameDescription *gd) :
     Engine(syst), _gameDescription(gd), _debugger(NULL), _cursor(NULL),
     _font(NULL), _logic(NULL), _menu(NULL), _graphicsMan(NULL), _resMan(NULL), _sceneMan(NULL),
-	eventMouseClick(NULL), eventTick(NULL), eventMouseClickBackup(NULL), eventTickBackup(NULL) {
+	eventMouse(NULL), eventTick(NULL), eventMouseBackup(NULL), eventTickBackup(NULL) {
 
 	// Adding the default directories
 	const Common::FSNode gameDataDir(ConfMan.get("path"));
@@ -85,9 +85,9 @@ LastExpressEngine::~LastExpressEngine() {
 	delete _soundMan;
 
 	// Cleanup event handlers
-	SAFE_DELETE(eventMouseClick);
+	SAFE_DELETE(eventMouse);
 	SAFE_DELETE(eventTick);
-	SAFE_DELETE(eventMouseClickBackup);
+	SAFE_DELETE(eventMouseBackup);
 	SAFE_DELETE(eventTickBackup);
 
 	// Zero passed pointers
@@ -189,13 +189,11 @@ bool LastExpressEngine::handleEvents() {
 			// Closing the GMM
 
 		case Common::EVENT_MOUSEMOVE:			
-			break;
-
 		case Common::EVENT_LBUTTONDOWN:
 		case Common::EVENT_LBUTTONUP:
 		case Common::EVENT_RBUTTONDOWN:
-			if (eventMouseClick && eventMouseClick->isValid())
-				(*eventMouseClick)(ev);
+			if (eventMouse && eventMouse->isValid())
+				(*eventMouse)(ev);
 			break;
 
 		case Common::EVENT_QUIT:
@@ -240,21 +238,21 @@ void LastExpressEngine::handleSoundTimer() {
 /// Event Handling
 ///////////////////////////////////////////////////////////////////////////////////
 void LastExpressEngine::backupEventHandlers() {
-	eventMouseClickBackup = eventMouseClick;
+	eventMouseBackup = eventMouse;
 	eventTickBackup = eventTick;
 }
 
 void LastExpressEngine::restoreEventHandlers() {
-	if (eventMouseClickBackup == NULL || eventTickBackup == NULL)
+	if (eventMouseBackup == NULL || eventTickBackup == NULL)
 		error("LastExpressEngine::restoreEventHandlers: restore called before backing up the event handlers!");
 
-	eventMouseClick = eventMouseClickBackup;
+	eventMouse = eventMouseBackup;
 	eventTick = eventTickBackup;
 }
 
-void LastExpressEngine::setEventHandlers(EventHandler::EventFunction *mouseClick, EventHandler::EventFunction *gameTick) {
-	eventMouseClick = mouseClick;
-	eventTick = gameTick;
+void LastExpressEngine::setEventHandlers(EventHandler::EventFunction *mouse, EventHandler::EventFunction *tick) {
+	eventMouse = mouse;
+	eventTick = tick;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////
