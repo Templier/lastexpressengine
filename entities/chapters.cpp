@@ -187,7 +187,7 @@ IMPLEMENT_FUNCTION(Chapters, chapter1_init, 7)
 	getInventory()->setLocationAndProcess(kItemPaper, kLocation1);
 
 	getObjects()->update(kObjectCompartment1, kEntityNone, kLocationNone, kCursorHandKnock, kCursorHand);
-	getObjects()->update(kObjectOutside, kEntityNone, kLocationNone, kCursorKeepValue, kCursorKeepValue);
+	getObjects()->update(kObjectOutsideTylerCompartment, kEntityNone, kLocationNone, kCursorKeepValue, kCursorKeepValue);
 
 	for (uint i = kObjectCompartment1; i <= kObjectCompartment8; i++) {
 		getObjects()->updateLocation2((ObjectIndex)i, kLocation2);
@@ -437,10 +437,10 @@ IMPLEMENT_FUNCTION(Chapters, chapter2_init, 11)
 	if (savepoint.action != kActionDefault)
 		return;
 
-	getProgress().event_corpse_moved_from_floor = 1;
+	getProgress().eventCorpseMovedFromFloor = 1;
 	getProgress().field_18 = 1;
 	getProgress().isTrainRunning = true;
-	getProgress().event_corpse_found = 1;
+	getProgress().eventCorpseFound = 1;
 
 	// Switch to green jacket/portrait
 	getProgress().jacket = kJacketGreen;
@@ -472,7 +472,7 @@ IMPLEMENT_FUNCTION(Chapters, chapter2_init, 11)
 	getSavePoints()->push(kEntityChapters, kEntityTables4, kAction103798704);
 
 	getObjects()->update(kObjectCompartment1, kEntityNone, kLocationNone, kCursorHandKnock, kCursorHand);
-	getObjects()->update(kObjectOutside, kEntityNone, kLocationNone, kCursorKeepValue, kCursorKeepValue);
+	getObjects()->update(kObjectOutsideTylerCompartment, kEntityNone, kLocationNone, kCursorKeepValue, kCursorKeepValue);
 
 	// Reset sound cache
 	if (ENTITY_PARAM(0, 2) || ENTITY_PARAM(0, 3)) {
@@ -820,7 +820,7 @@ IMPLEMENT_FUNCTION(Chapters, chapter5_handler, 22)
 		if (getState()->time > kTimeChapter5_0 && !params->param2) {
 			params->param2 = 1;
 
-			if (!getProgress().is_nighttime) {
+			if (!getProgress().isNightTime) {
 				getSound()->playSound(kEntityChapters, "ARRIVE", 8);
 				getSound()->unknownFunction3();
 			}
@@ -857,7 +857,7 @@ IMPLEMENT_FUNCTION(Chapters, chapter5_handler, 22)
 		break;
 
 	case kAction135800432:
-		getProgress().is_nighttime = 1;
+		getProgress().isNightTime = 1;
 		getState()->time = kTimeChapter5_1;
 
 		if (getSound()->isBuffered(kEntityChapters))

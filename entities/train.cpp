@@ -397,7 +397,7 @@ label_skip:
 
 				case kCarBaggageRear:
 				case kCarBaggage:
-					if (getProgress().is_nighttime)
+					if (getProgress().isNightTime)
 						getEntities()->drawSequenceLeft(kEntityTrain, "B1WNM");
 					else
 						getEntities()->drawSequenceLeft(kEntityTrain, isDay() ? "B1WNM" : "B1WND");
@@ -405,7 +405,7 @@ label_skip:
 
 				case kCarGreenSleeping:
 				case kCarRedSleeping:
-					if (getProgress().is_nighttime)
+					if (getProgress().isNightTime)
 						getEntities()->drawSequenceLeft(kEntityTrain, "S1WNM");
 					else
 						getEntities()->drawSequenceLeft(kEntityTrain, isDay() ? "S1WNM" : "S1WND");

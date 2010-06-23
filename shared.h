@@ -417,7 +417,7 @@ enum ObjectIndex {
 	kObjectCompartment6,
 	kObjectCompartment7,
 	kObjectCompartment8,
-	kObjectOutside,
+	kObjectOutsideTylerCompartment,
 	kObject10,                           // 10
 	kObject11,
 	kObject12,
@@ -452,8 +452,8 @@ enum ObjectIndex {
 	kObject41,
 	kObject42,
 	kObject43,
-	kObject44,
-	kObject45,                          // 45
+	kObjectOutsideBetweenCompartments,
+	kObjectOutsideAnnaCompartment,     // 45
 	kObject46,
 	kObject47,
 	kObject48, // might be the egg

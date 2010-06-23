@@ -202,13 +202,6 @@ bool SoundManager::playSoundWithSubtitles(const char *filename, int param3, Enti
 	return true;
 }
 
-void SoundManager::playMusic(EntityIndex entity, byte id, int a3, byte a4) {
-	char filename[7];
-	sprintf((char *)&filename, "MUS%03d", id);
-
-	playSound(entity, filename, a3, a4);
-}
-
 void SoundManager::playSoundEvent(EntityIndex entity, byte action, byte a3) {
 	char filename[12];
 	int values[5];
@@ -457,7 +450,7 @@ const char *SoundManager::getDialogName(EntityIndex entity) const {
 		if (getEvent(kEventAugustPresentAnnaFirstIntroduction))
 			return "XAUG2";
 
-		if (getProgress().event_mertens_august_waiting)
+		if (getProgress().eventMertensAugustWaiting)
 			return "XAUG1";
 
 		break;
@@ -584,7 +577,7 @@ const char *SoundManager::getDialogName(EntityIndex entity) const {
 				return "XKRO2";
 		}
 
-		if (getProgress().event_mertens_chronos_invitation)
+		if (getProgress().eventMertensChronosInvitation)
 			return "XKRO1";
 
 		break;
@@ -619,7 +612,7 @@ const char *SoundManager::getDialogName(EntityIndex entity) const {
 		break;
 
 	case kEntityBoutarel:
-		if (getProgress().event_met_boutarel)
+		if (getProgress().eventMetBoutarel)
 			return "XMRB1";
 
 		break;
@@ -655,13 +648,13 @@ const char *SoundManager::getDialogName(EntityIndex entity) const {
 		break;
 
 	case kEntityYasmin:
-		if (getProgress().event_met_yasmin)
+		if (getProgress().eventMetYasmin)
 			return "XHAR2";
 
 		break;
 
 	case kEntityHadija:
-		if (getProgress().event_met_hadija)
+		if (getProgress().eventMetHadija)
 			return "XHAR1";
 
 		break;
@@ -699,7 +692,7 @@ void SoundManager::readText(int id){
 		return;
 
 	if (id < 0 || (id > 8 && id < 50) || id > 64) {
-		warning("Sound::readText - attempting to use invalid id. Valid values [1;8] - [50;64], was %d", id);
+		error("Sound::readText - attempting to use invalid id. Valid values [1;8] - [50;64], was %d", id);
 		return;
 	}
 
@@ -936,7 +929,7 @@ void SoundManager::excuseMe(EntityIndex entity, int param2, int param3) {
 	case kEntityBoutarel:
 		playSound(kEntityNone, "MRB1104", param3);
 		if (param3 > 2)
-			getProgress().event_met_boutarel = 1;
+			getProgress().eventMetBoutarel = 1;
 		break;
 
 	case kEntityRebecca:
@@ -971,13 +964,13 @@ void SoundManager::excuseMe(EntityIndex entity, int param2, int param3) {
 	case kEntityYasmin:
 		playSound(kEntityNone, "HAR1002", param3);
 		if (param3 > 2)
-			getProgress().event_met_yasmin = 1;
+			getProgress().eventMetYasmin = 1;
 		break;
 
 	case kEntityHadija:
 		playSound(kEntityNone, (random(2) ? "HAR1001" : "HAR1001A"), param3);
 		if (param3 > 2)
-			getProgress().event_met_hadija = 1;
+			getProgress().eventMetHadija = 1;
 		break;
 
 	case kEntityAlouan:

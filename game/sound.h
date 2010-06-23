@@ -113,7 +113,6 @@ public:
 	void playSound(EntityIndex entity, const char *filename, int a3 = -1, byte a4 = 0);
 	bool playSoundWithSubtitles(const char *filename, int param3, EntityIndex entity, byte a4 = 0);
 
-	void playMusic(EntityIndex entity, byte id, int a3, byte a4);
 	void playDialog(EntityIndex entity, EntityIndex entityDialog, int a3, byte a4);
 	void playSoundEvent(EntityIndex entity, byte action, byte a3 = 0);
 

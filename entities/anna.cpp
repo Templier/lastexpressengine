@@ -218,7 +218,7 @@ IMPLEMENT_FUNCTION(Anna, chapter1, 16)
 
 		getObjects()->update(kObjectCompartmentF, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
 		getObjects()->update(kObject53, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
-		getObjects()->update(kObject45, kEntityNone, kLocation1, kCursorKeepValue, kCursorKeepValue);
+		getObjects()->update(kObjectOutsideAnnaCompartment, kEntityNone, kLocation1, kCursorKeepValue, kCursorKeepValue);
 
 		getData()->field_491 = EntityData::kField491_8200;
 		getData()->field_493 = EntityData::kField493_1;
@@ -484,7 +484,7 @@ IMPLEMENT_FUNCTION(Anna, chapter3, 44)
 		getData()->inventoryItem = kItemNone;
 
 		getObjects()->update(kObjectCompartmentF, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
-		getObjects()->update(kObject45, kEntityNone, kLocationNone, kCursorKeepValue, kCursorKeepValue);
+		getObjects()->update(kObjectOutsideAnnaCompartment, kEntityNone, kLocationNone, kCursorKeepValue, kCursorKeepValue);
 		getObjects()->update(kObject53, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
 
 		break;
@@ -699,7 +699,7 @@ IMPLEMENT_FUNCTION(Anna, function65, 65)
 		getData()->clothes = kClothes3;
 		getData()->inventoryItem = kItemNone;
 
-		getObjects()->update(kObject45, kEntityNone, kLocation1, kCursorKeepValue, kCursorKeepValue);
+		getObjects()->update(kObjectOutsideAnnaCompartment, kEntityNone, kLocation1, kCursorKeepValue, kCursorKeepValue);
 
 		setCallback(1);
 		call(new ENTITY_SETUP_ISSI(Anna, setup_function15), kTimeEnd, "NONE");
@@ -800,7 +800,7 @@ IMPLEMENT_FUNCTION(Anna, chapter5, 74)
 		getData()->clothes = kClothes3;
 		getData()->inventoryItem = kItemNone;
 
-		getObjects()->update(kObject45, kEntityNone, kLocationNone, kCursorKeepValue, kCursorKeepValue);
+		getObjects()->update(kObjectOutsideAnnaCompartment, kEntityNone, kLocationNone, kCursorKeepValue, kCursorKeepValue);
 
 		break;
 	}

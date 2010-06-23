@@ -402,10 +402,15 @@ SceneIndex Action::processHotspot(const SceneHotspot &hotspot) {
 //////////////////////////////////////////////////////////////////////////
 // Actions
 //////////////////////////////////////////////////////////////////////////
+
+//////////////////////////////////////////////////////////////////////////
+// Action 0
 IMPLEMENT_ACTION(dummy) {
 	error("Action::action_dummy: Function should never be called (hotspot action: %d)!", hotspot.action);
 }
 
+//////////////////////////////////////////////////////////////////////////
+// Action 1
 IMPLEMENT_ACTION(inventory) {
 	if (!getState()->sceneUseBackup)
 		return kSceneInvalid;
@@ -436,6 +441,7 @@ IMPLEMENT_ACTION(inventory) {
 }
 
 //////////////////////////////////////////////////////////////////////////
+// Action 2
 IMPLEMENT_ACTION(savePoint) {
 	getSavePoints()->push(kEntityNone, (EntityIndex)hotspot.param1, (ActionIndex)hotspot.param2);
 
@@ -443,6 +449,7 @@ IMPLEMENT_ACTION(savePoint) {
 }
 
 //////////////////////////////////////////////////////////////////////////
+// Action 3
 IMPLEMENT_ACTION(playSound) {
 
 	// Check that the file is not already buffered
@@ -456,14 +463,21 @@ IMPLEMENT_ACTION(playSound) {
 }
 
 //////////////////////////////////////////////////////////////////////////
+// Action 4
 IMPLEMENT_ACTION(playMusic) {
-	if (hotspot.param1 != 50 || getProgress().chapter == kChapter5)
-		getSound()->playMusic(kEntityNone, hotspot.param1, 16, hotspot.param2);
+	// Check that the file is not already buffered
+	char filename[8];
+	sprintf((char *)&filename, "MUS%03d", hotspot.param1);
+
+	if (!getSound()->isBuffered(filename) &&
+	   (hotspot.param1 != 50 || getProgress().chapter == kChapter5))
+		getSound()->playSound(kEntityNone, filename, 16, hotspot.param2);
 
 	return kSceneInvalid;
 }
 
 //////////////////////////////////////////////////////////////////////////
+// Action 5
 IMPLEMENT_ACTION(knock) {
 	ObjectIndex object = (ObjectIndex)hotspot.param1;
 
@@ -481,6 +495,7 @@ IMPLEMENT_ACTION(knock) {
 }
 
 //////////////////////////////////////////////////////////////////////////
+// Action 6
 IMPLEMENT_ACTION(compartment) {
 	ObjectIndex object = (ObjectIndex)hotspot.param1;
 
@@ -542,6 +557,7 @@ IMPLEMENT_ACTION(compartment) {
 }
 
 //////////////////////////////////////////////////////////////////////////
+// Action 7
 IMPLEMENT_ACTION(playSounds) {
 	getSound()->playSoundEvent(kEntityNone, hotspot.param1);
 	getSound()->playSoundEvent(kEntityNone, hotspot.param3, hotspot.param2);
@@ -550,6 +566,7 @@ IMPLEMENT_ACTION(playSounds) {
 }
 
 //////////////////////////////////////////////////////////////////////////
+// Action 8
 IMPLEMENT_ACTION(playAnimation) {
 	if (getEvent(hotspot.param1))
 		return kSceneInvalid;
@@ -563,6 +580,7 @@ IMPLEMENT_ACTION(playAnimation) {
 }
 
 //////////////////////////////////////////////////////////////////////////
+// Action 9
 IMPLEMENT_ACTION(openCloseObject) {
 	ObjectIndex object = (ObjectIndex)hotspot.param1;
 	ObjectLocation location = (ObjectLocation)hotspot.param2;
@@ -572,7 +590,7 @@ IMPLEMENT_ACTION(openCloseObject) {
 
 	getObjects()->update(object, getObjects()->get(object).entity, location, kCursorKeepValue, kCursorKeepValue);
 
-	bool isNotWindow = ((object < 9  || object > 16) && (object < 40 || object > 47));
+	bool isNotWindow = ((object <= kObjectCompartment8  || object >= kObjectHandleBathroom) && (object <= kObjectCompartmentH || object >= kObject48));
 
 	switch (location) {
 	case kLocation1:
@@ -597,6 +615,7 @@ IMPLEMENT_ACTION(openCloseObject) {
 }
 
 //////////////////////////////////////////////////////////////////////////
+// Action 10
 IMPLEMENT_ACTION(10) {
 	ObjectIndex object = (ObjectIndex)hotspot.param1;
 
@@ -605,7 +624,7 @@ IMPLEMENT_ACTION(10) {
 
 	getObjects()->updateLocation2(object, (ObjectLocation)hotspot.param2);
 
-	if (object != kObject112 /* TODO: or LIB096 does not exist -> is it needed, say if the HPF is not loaded or something */) {
+	if (object != kObject112 || getSound()->isBuffered("LIB096")) {
 		if (object == 1)
 			getSound()->playSoundEvent(kEntityNone, 73);
 	} else {
@@ -616,6 +635,7 @@ IMPLEMENT_ACTION(10) {
 }
 
 //////////////////////////////////////////////////////////////////////////
+// Action 11
 IMPLEMENT_ACTION(setItemLocation) {
 	InventoryItem item = (InventoryItem)hotspot.param1;
 	Inventory::InventoryEntry* entry = getInventory()->getEntry(item);
@@ -629,15 +649,16 @@ IMPLEMENT_ACTION(setItemLocation) {
 		ObjectLocation corpseLocation = getInventory()->getEntry(kItemCorpse)->location;
 
 		if (corpseLocation == kLocation3 || corpseLocation == kLocation4)
-			getProgress().event_corpse_moved_from_floor = 1;
+			getProgress().eventCorpseMovedFromFloor = 1;
 		else
-			getProgress().event_corpse_moved_from_floor = 0;
+			getProgress().eventCorpseMovedFromFloor = 0;
 	}
 
 	return kSceneInvalid;
 }
 
 //////////////////////////////////////////////////////////////////////////
+// Action 12
 IMPLEMENT_ACTION(12) {
 	ObjectIndex object = (ObjectIndex)hotspot.param1;
 
@@ -651,6 +672,7 @@ IMPLEMENT_ACTION(12) {
 }
 
 //////////////////////////////////////////////////////////////////////////
+// Action 13
 IMPLEMENT_ACTION(pickItem) {
 	InventoryItem item = (InventoryItem)hotspot.param1;
 	Inventory::InventoryEntry* entry = getInventory()->getEntry(item);
@@ -710,6 +732,7 @@ IMPLEMENT_ACTION(pickItem) {
 		}
 
 		getScenes()->loadScene(getInventory()->getEntry(item)->scene);
+
 		// do not process further
 		continueProcess = kSceneStopProcessing;
 	}
@@ -724,6 +747,7 @@ IMPLEMENT_ACTION(pickItem) {
 }
 
 //////////////////////////////////////////////////////////////////////////
+// Action 14
 IMPLEMENT_ACTION(dropItem) {
 	InventoryItem item = (InventoryItem)hotspot.param1;
 	ObjectLocation location = (ObjectLocation)hotspot.param2;
@@ -769,13 +793,17 @@ IMPLEMENT_ACTION(dropItem) {
 }
 
 //////////////////////////////////////////////////////////////////////////
+// Action 15: Dummy action
+
+//////////////////////////////////////////////////////////////////////////
+// Action 16
 IMPLEMENT_ACTION(enterCompartment) {
 	if (getObjects()->get(kObjectCompartment1).location == 1 || getObjects()->get(kObjectCompartment1).location == 3 || getInventory()->getSelectedItem() == kItemKey) {
 		action_compartment(hotspot);
 		return kSceneInvalid;
 	}
 
-	if (getProgress().event_corpse_found) {
+	if (getProgress().eventCorpseFound) {
 		if (hotspot.action != 16 || getInventory()->getEntry(kItemBriefcase)->location != 2) {
 			action_compartment(hotspot);
 		} else {
@@ -795,7 +823,7 @@ IMPLEMENT_ACTION(enterCompartment) {
 		getSound()->playSound(kEntityNone, "LIB014");
 		playAnimation(kEventCathFindCorpse);
 		getSound()->playSound(kEntityNone, "LIB015");
-		getProgress().event_corpse_found = 1;
+		getProgress().eventCorpseFound = 1;
 		return kSceneCompartmentCorpse;
 	}
 
@@ -803,32 +831,36 @@ IMPLEMENT_ACTION(enterCompartment) {
 }
 
 //////////////////////////////////////////////////////////////////////////
+// Action 17: Dummy action
+
+//////////////////////////////////////////////////////////////////////////
+// Action 18
 IMPLEMENT_ACTION(getOutsideTrain) {
-	byte action = hotspot.param1;
+	ObjectIndex object = (ObjectIndex)hotspot.param1;
 
 	if ((getEvent(kEventCathLookOutsideWindowDay) || getEvent(kEventCathLookOutsideWindowNight) || getObjects()->get(kObjectCompartment1).location2)
 	  && getProgress().isTrainRunning
-	  && (action != 45 || (!getEntities()->checkFields1(kEntityRebecca, kCarRedSleeping, EntityData::kField491_4840) && getObjects()->get(kObject44).location == 2))
+	  && (object != kObjectOutsideAnnaCompartment || (!getEntities()->checkFields1(kEntityRebecca, kCarRedSleeping, EntityData::kField491_4840) && getObjects()->get(kObjectOutsideBetweenCompartments).location == kLocation2))
 	  && getInventory()->getSelectedItem() != kItemFirebird
 	  && getInventory()->getSelectedItem() != kItemBriefcase) {
 
-		switch (action) {
+		switch (object) {
 		default:
 			return kSceneInvalid;
 
-		case 9:
+		case kObjectOutsideTylerCompartment:
 			getEvent(kEventCathLookOutsideWindowDay) = 1;
 			playAnimation(isDay() ? kEventCathGoOutsideTylerCompartmentDay : kEventCathGoOutsideTylerCompartmentNight);
 			getProgress().field_C8 = 1;
 			break;
 
-		case 44:
+		case kObjectOutsideBetweenCompartments:
 			getEvent(kEventCathLookOutsideWindowDay) = 1;
 			playAnimation(isDay() ? kEventCathGoOutsideDay : kEventCathGoOutsideNight);
 			getProgress().field_C8 = 1;
 			break;
 
-		case 45:
+		case kObjectOutsideAnnaCompartment:
 			getEvent(kEventCathLookOutsideWindowDay) = 1;
 			playAnimation(isDay() ? kEventCathGetInsideDay : kEventCathGetInsideNight);
 			if (!hotspot.scene)
@@ -836,7 +868,7 @@ IMPLEMENT_ACTION(getOutsideTrain) {
 			break;
 		}
 	} else {
-		if (action == 9 || action == 44 || action == 45) {
+		if (object == kObjectOutsideTylerCompartment || object == kObjectOutsideBetweenCompartments || object == kObjectOutsideAnnaCompartment) {
 			playAnimation(isDay() ? kEventCathLookOutsideWindowDay : kEventCathLookOutsideWindowNight);
 			getScenes()->processScene();
 			return kSceneNone;
@@ -847,16 +879,17 @@ IMPLEMENT_ACTION(getOutsideTrain) {
 }
 
 //////////////////////////////////////////////////////////////////////////
+// Action 19
 IMPLEMENT_ACTION(slip) {
-	switch(hotspot.param1) {
+	switch((ObjectIndex)hotspot.param1) {
 	default:
 		return kSceneInvalid;
 
-	case 9:
+	case kObjectOutsideTylerCompartment:
 		playAnimation(isDay() ? kEventCathSlipTylerCompartmentDay : kEventCathSlipTylerCompartmentNight);
 		break;
 
-	case 44:
+	case kObjectOutsideBetweenCompartments:
 		playAnimation(isDay() ? kEventCathSlipDay : kEventCathSlipNight);
 		break;
 	}
@@ -870,20 +903,21 @@ IMPLEMENT_ACTION(slip) {
 }
 
 //////////////////////////////////////////////////////////////////////////
+// Action 20
 IMPLEMENT_ACTION(getInsideTrain) {
-	switch (hotspot.param1) {
+	switch ((ObjectIndex)hotspot.param1) {
 	default:
 		return kSceneInvalid;
 
-	case 9:
+	case kObjectOutsideTylerCompartment:
 		playAnimation(isDay() ? kEventCathGetInsideTylerCompartmentDay : kEventCathGetInsideTylerCompartmentNight);
 		break;
 
-	case 44:
+	case kObjectOutsideBetweenCompartments:
 		playAnimation(isDay() ? kEventCathGetInsideDay : kEventCathGetInsideNight);
 		break;
 
-	case 45:
+	case kObjectOutsideAnnaCompartment:
 		playAnimation(kEventCathGettingInsideAnnaCompartment);
 		break;
 	}
@@ -895,6 +929,7 @@ IMPLEMENT_ACTION(getInsideTrain) {
 }
 
 //////////////////////////////////////////////////////////////////////////
+// Action 21
 IMPLEMENT_ACTION(climbUpTrain) {
 	byte action = hotspot.param1;
 
@@ -915,9 +950,9 @@ IMPLEMENT_ACTION(climbUpTrain) {
 
 	case 5:
 		if (action == 2)
-			playAnimation(getProgress().is_nighttime ? kEventCathClimbUpTrainNoJacketNight : kEventCathClimbUpTrainNoJacketDay);
+			playAnimation(getProgress().isNightTime ? kEventCathClimbUpTrainNoJacketNight : kEventCathClimbUpTrainNoJacketDay);
 
-		playAnimation(getProgress().is_nighttime ? kEventCathTopTrainNoJacketNight : kEventCathTopTrainNoJacketDay);
+		playAnimation(getProgress().isNightTime ? kEventCathTopTrainNoJacketNight : kEventCathTopTrainNoJacketDay);
 		break;
 	}
 
@@ -928,6 +963,7 @@ IMPLEMENT_ACTION(climbUpTrain) {
 }
 
 //////////////////////////////////////////////////////////////////////////
+// Action 22
 IMPLEMENT_ACTION(climbDownTrain) {
 	EventIndex evt = kEventNone;
 	switch (getProgress().chapter) {
@@ -940,7 +976,7 @@ IMPLEMENT_ACTION(climbDownTrain) {
 		break;
 
 	case 5:
-		evt = (getProgress().is_nighttime ? kEventCathClimbDownTrainNoJacketNight : kEventCathClimbDownTrainNoJacketDay);
+		evt = (getProgress().isNightTime ? kEventCathClimbDownTrainNoJacketNight : kEventCathClimbDownTrainNoJacketDay);
 		break;
 	}
 
@@ -955,6 +991,7 @@ IMPLEMENT_ACTION(climbDownTrain) {
 }
 
 //////////////////////////////////////////////////////////////////////////
+// Action 23
 IMPLEMENT_ACTION(jumpUpDownTrain) {
 	switch (hotspot.param1) {
 	default:
@@ -993,6 +1030,7 @@ IMPLEMENT_ACTION(jumpUpDownTrain) {
 }
 
 //////////////////////////////////////////////////////////////////////////
+// Action 24
 IMPLEMENT_ACTION(unbound) {
 	byte action = hotspot.param1;
 
@@ -1040,6 +1078,7 @@ IMPLEMENT_ACTION(unbound) {
 }
 
 //////////////////////////////////////////////////////////////////////////
+// Action 25
 IMPLEMENT_ACTION(25) {
 	switch(hotspot.param1) {
 	default:
@@ -1050,7 +1089,8 @@ IMPLEMENT_ACTION(25) {
 		break;
 
 	case 2:
-		getSound()->playSound(kEntityNone, "MUS021", 16);
+		if (!getSound()->isBuffered("MUS021"))
+			getSound()->playSound(kEntityNone, "MUS021", 16);
 		break;
 
 	case 3:
@@ -1068,6 +1108,7 @@ IMPLEMENT_ACTION(25) {
 }
 
 //////////////////////////////////////////////////////////////////////////
+// Action 26
 IMPLEMENT_ACTION(26) {
 	switch(hotspot.param1) {
 	default:
@@ -1099,6 +1140,7 @@ IMPLEMENT_ACTION(26) {
 }
 
 //////////////////////////////////////////////////////////////////////////
+// Action 27
 IMPLEMENT_ACTION(27) {
 	if (!getSound()->isBuffered("LIB031", true))
 		getSound()->playSoundEvent(kEntityNone, 31);
@@ -1120,6 +1162,7 @@ IMPLEMENT_ACTION(27) {
 }
 
 //////////////////////////////////////////////////////////////////////////
+// Action 28
 IMPLEMENT_ACTION(concertSitCough) {
 	switch(hotspot.param1) {
 	default:
@@ -1141,15 +1184,22 @@ IMPLEMENT_ACTION(concertSitCough) {
 }
 
 //////////////////////////////////////////////////////////////////////////
+// Action 29
 IMPLEMENT_ACTION(29) {
 	getProgress().field_C = 1;
 	getSound()->playSoundEvent(kEntityNone, hotspot.param1, hotspot.param2);
-	getSound()->playMusic(kEntityNone, hotspot.param3, 16, 0);
+
+	char filename[8];
+	sprintf((char *)&filename, "MUS%03d", hotspot.param3);
+
+	if (!getSound()->isBuffered(filename))
+		getSound()->playSound(kEntityNone, filename, 16);
 
 	return kSceneInvalid;
 }
 
 //////////////////////////////////////////////////////////////////////////
+// Action 30
 IMPLEMENT_ACTION(catchBeetle) {
 	if (!getBeetle()->isLoaded())
 		return kSceneInvalid;
@@ -1164,6 +1214,7 @@ IMPLEMENT_ACTION(catchBeetle) {
 }
 
 //////////////////////////////////////////////////////////////////////////
+// Action 31
 IMPLEMENT_ACTION(exitCompartment) {
 	if (!getProgress().field_30 && getProgress().jacket != 0) {
 		save(kEntityNone, kSavegameType0, kEventNone);
@@ -1179,6 +1230,7 @@ IMPLEMENT_ACTION(exitCompartment) {
 }
 
 //////////////////////////////////////////////////////////////////////////
+// Action 32
 IMPLEMENT_ACTION(32) {
 	switch(hotspot.param1) {
 	default:
@@ -1219,6 +1271,7 @@ IMPLEMENT_ACTION(32) {
 }
 
 //////////////////////////////////////////////////////////////////////////
+// Action 33
 IMPLEMENT_ACTION(useWhistle) {
 	EventIndex evt = kEventNone;
 
@@ -1276,6 +1329,7 @@ IMPLEMENT_ACTION(useWhistle) {
 }
 
 //////////////////////////////////////////////////////////////////////////
+// Action 34
 IMPLEMENT_ACTION(openMatchBox) {
 	// If the match is already in the inventory, do nothing
 	if (!getInventory()->getEntry(kItemMatch)->location
@@ -1289,6 +1343,7 @@ IMPLEMENT_ACTION(openMatchBox) {
 }
 
 //////////////////////////////////////////////////////////////////////////
+// Action 35
 IMPLEMENT_ACTION(openBed) {
 	getSound()->playSoundEvent(kEntityNone, 59);
 
@@ -1296,6 +1351,10 @@ IMPLEMENT_ACTION(openBed) {
 }
 
 //////////////////////////////////////////////////////////////////////////
+// Action 36: Dummy action
+
+//////////////////////////////////////////////////////////////////////////
+// Action 37
 IMPLEMENT_ACTION(dialog) {
 	getSound()->playDialog(kEntityTables4, (EntityIndex)hotspot.param1, 16, 0);
 
@@ -1303,28 +1362,36 @@ IMPLEMENT_ACTION(dialog) {
 }
 
 //////////////////////////////////////////////////////////////////////////
+// Action 38
 IMPLEMENT_ACTION(eggBox) {
 	getSound()->playSoundEvent(kEntityNone, 43);
 	if (getProgress().field_7C) {
-		getSound()->playSound(kEntityNone, "MUS003", 16);
-		getProgress().field_7C = 0;
+
+		if (!getSound()->isBuffered("MUS003")) {
+			getSound()->playSound(kEntityNone, "MUS003", 16);
+			getProgress().field_7C = 0;
+		}
 	}
 
 	return kSceneInvalid;
 }
 
 //////////////////////////////////////////////////////////////////////////
+// Action 39
 IMPLEMENT_ACTION(39) {
 	getSound()->playSoundEvent(kEntityNone, 24);
 	if (getProgress().field_80) {
-		getSound()->playSound(kEntityNone, "MUS003", 16);
-		getProgress().field_80 = 0;
+		if (!getSound()->isBuffered("MUS003")) {
+			getSound()->playSound(kEntityNone, "MUS003", 16);
+			getProgress().field_80 = 0;
+		}
 	}
 
 	return kSceneInvalid;
 }
 
 //////////////////////////////////////////////////////////////////////////
+// Action 40
 IMPLEMENT_ACTION(bed) {
 	getSound()->playSoundEvent(kEntityNone, 85);
 	// falls to case 12
@@ -1332,6 +1399,7 @@ IMPLEMENT_ACTION(bed) {
 }
 
 //////////////////////////////////////////////////////////////////////////
+// Action 41
 IMPLEMENT_ACTION(41) {
 	byte id = 0;
 	switch (getProgress().chapter) {
@@ -1353,13 +1421,19 @@ IMPLEMENT_ACTION(41) {
 		break;
 	}
 
-	if (id)
-		getSound()->playMusic(kEntityNone, id, 16, 0);
+	if (id) {
+		char filename[8];
+		sprintf((char *)&filename, "MUS%03d", id);
+		
+		if (!getSound()->isBuffered(filename))
+			getSound()->playSound(kEntityNone, filename, 16);
+	}
 
 	return kSceneInvalid;
 }
 
 //////////////////////////////////////////////////////////////////////////
+// Action 42
 IMPLEMENT_ACTION(42) {
 	int value = 0;
 	switch (getProgress().chapter) {
@@ -1381,11 +1455,12 @@ IMPLEMENT_ACTION(42) {
 		break;
 	}
 
-	if (hotspot.param3 & value) {
-		getSound()->playMusic(kEntityNone, hotspot.param1, 16, 0);
+	char filename[8];
+	sprintf((char *)&filename, "MUS%03d", value);
 
-		char filename[6];
-		sprintf((char*)&filename, "MUS%03d", hotspot.param1);
+	if (!getSound()->isBuffered(filename) && hotspot.param3 & value) {
+		getSound()->playSound(kEntityNone, filename, 16);
+
 		getSavePoints()->call(kEntityNone, kEntityTrain, kAction203863200, (char *)&filename);
 		getSavePoints()->push(kEntityNone, kEntityTrain, kAction222746496, hotspot.param2);
 	}
@@ -1393,12 +1468,15 @@ IMPLEMENT_ACTION(42) {
 	return kSceneInvalid;
 }
 
+//////////////////////////////////////////////////////////////////////////
+// // Action 43
 IMPLEMENT_ACTION(switchChapter) {
 	// Nothing to do here as an hotspot action
 	return kSceneInvalid;
 }
 
 //////////////////////////////////////////////////////////////////////////
+// Action 44
 IMPLEMENT_ACTION(44) {
 	switch (hotspot.param1) {
 	default:
@@ -1423,7 +1501,7 @@ void Action::pickGreenJacket(bool process) const {
 	getProgress().jacket = kJacketGreen;
 	getInventory()->addItem(kItemMatchBox);
 
-	getObjects()->update(kObjectOutside, kEntityNone, kLocation2, kCursorKeepValue, kCursorKeepValue);
+	getObjects()->update(kObjectOutsideTylerCompartment, kEntityNone, kLocation2, kCursorKeepValue, kCursorKeepValue);
 	playAnimation(kEventPickGreenJacket);
 
 	getInventory()->setPortrait(kPortraitGreen);
@@ -1509,7 +1587,7 @@ void Action::dropCorpse(bool process) const {
 	case kLocation4: // Window
 		// Say goodbye to an old friend
 		getInventory()->getEntry(kItemCorpse)->location = kLocationNone;
-		getProgress().event_corpse_thrown = 1;
+		getProgress().eventCorpseThrown = 1;
 
 		if (getState()->time <= 1138500) {
 
@@ -1523,7 +1601,7 @@ void Action::dropCorpse(bool process) const {
 			playAnimation(kEventCorpseDropBridge);
 		}
 
-		getProgress().event_corpse_moved_from_floor = 1;
+		getProgress().eventCorpseMovedFromFloor = 1;
 		break;
 	}
 
@@ -1650,7 +1728,7 @@ CursorStyle Action::getCursor(const SceneHotspot &hotspot) const {
 			return kCursorNormal;
 
 		if ((!getInventory()->getSelectedItem() || getInventory()->getSelectedEntry()->manualSelect)
-		 && (object != kObject21 || getProgress().event_corpse_moved_from_floor == 1))
+		 && (object != kObject21 || getProgress().eventCorpseMovedFromFloor == 1))
 			return kCursorHand;
 		else
 			return kCursorNormal;
@@ -1694,7 +1772,7 @@ CursorStyle Action::getCursor(const SceneHotspot &hotspot) const {
 
 		if ((getEvent(kEventCathLookOutsideWindowDay) || getEvent(kEventCathLookOutsideWindowDay) || getObjects()->get(kObjectCompartment1).location2 == kLocation1)
 			&& getProgress().isTrainRunning
-			&& (object != kObject45 || (getEntities()->checkFields1(kEntityRebecca, kCarRedSleeping, EntityData::kField491_4840) && getObjects()->get(kObject44).location == 2))
+			&& (object != kObjectOutsideAnnaCompartment || (getEntities()->checkFields1(kEntityRebecca, kCarRedSleeping, EntityData::kField491_4840) && getObjects()->get(kObjectOutsideBetweenCompartments).location == 2))
 			&& getInventory()->getSelectedItem() != kItemBriefcase && getInventory()->getSelectedItem() != kItemFirebird)
 			return kCursorForward;
 
@@ -1766,7 +1844,7 @@ CursorStyle Action::getCursor(const SceneHotspot &hotspot) const {
 	case SceneHotspot::kActionBed:
 		if (getProgress().field_18 == 2 && !getProgress().field_E4
 			&& (getState()->time > kTimeBedTime
-			|| (getProgress().event_august_met && getProgress().field_CC
+			|| (getProgress().eventMetAugust && getProgress().field_CC
 			&& (!getProgress().field_24 || getProgress().field_3C))))
 			return kCursorSleep;
 

@@ -197,7 +197,7 @@ IMPLEMENT_FUNCTION(Rebecca, chapter1, 21)
 
 		getObjects()->update(kObjectCompartmentE, kEntityNone, kLocationNone, kCursorHandKnock, kCursorHand);
 		getObjects()->update(kObject52, kEntityNone, kLocationNone, kCursorHandKnock, kCursorHand);
-		getObjects()->update(kObject44, kEntityNone, kLocationNone, kCursorKeepValue, kCursorKeepValue);
+		getObjects()->update(kObjectOutsideBetweenCompartments, kEntityNone, kLocationNone, kCursorKeepValue, kCursorKeepValue);
 
 		getObjects()->updateLocation2(kObject110, kLocation1);
 

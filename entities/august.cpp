@@ -236,7 +236,7 @@ IMPLEMENT_FUNCTION(August, chapter1, 22)
 		getData()->car = kCarRestaurant;
 		getData()->clothes = kClothesDefault;
 
-		getProgress().event_august_met = 0;
+		getProgress().eventMetAugust = 0;
 		break;
 	}
 }
@@ -287,8 +287,8 @@ IMPLEMENT_FUNCTION(August, function33, 33)
 		break;
 
 	case kActionDefault:
-		setCallback(getProgress().event_august_met ? 1 : 2);
-		call(new ENTITY_SETUP(August, setup_function21), getProgress().event_august_met ? getState()->time + 9000 : (uint32)kTimeBedTime);
+		setCallback(getProgress().eventMetAugust ? 1 : 2);
+		call(new ENTITY_SETUP(August, setup_function21), getProgress().eventMetAugust ? getState()->time + 9000 : (uint32)kTimeBedTime);
 		break;
 
 	case kActionCallback:

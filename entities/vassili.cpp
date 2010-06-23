@@ -316,13 +316,13 @@ IMPLEMENT_FUNCTION(Vassili, seizure, 10)
 
 	case kActionDefault:
 		// Check that we have removed the body from the train and changed jacket
-		if (!getProgress().event_corpse_moved_from_floor) {
+		if (!getProgress().eventCorpseMovedFromFloor) {
 			getAction()->playAnimation(kEventMertensCorpseFloor);
 			getLogic()->gameOver(kTimeType0, kTime0, kSceneNone, false);
 			break;
 		}
 
-		if (!getProgress().event_corpse_thrown) {
+		if (!getProgress().eventCorpseThrown) {
 			getAction()->playAnimation(kEventMertensCorpseBed);
 			getLogic()->gameOver(kTimeType0, kTime0, kSceneNone, false);
 			break;

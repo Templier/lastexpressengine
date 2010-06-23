@@ -139,7 +139,7 @@ IMPLEMENT_FUNCTION(Kahina, function11, 11)
 		params->param1 = 1;
 	}
 
-	if (getProgress().event_mertens_chronos_invitation)
+	if (getProgress().eventMertensChronosInvitation)
 		setup_function12();
 }
 

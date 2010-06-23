@@ -43,19 +43,19 @@ public:
 	struct GameProgress {
 		uint32 field_0;
 		JacketType jacket;
-		uint32 event_corpse_moved_from_floor;
+		uint32 eventCorpseMovedFromFloor;
 		uint32 field_C;
-		uint32 event_corpse_found;
+		uint32 eventCorpseFound;
 		uint32 field_14;
 		uint32 field_18;
 		uint32 portrait;
-		uint32 event_corpse_thrown;
+		uint32 eventCorpseThrown;
 		uint32 field_24;
 		uint32 field_28;
 		uint32 chapter;
 		uint32 field_30;
-		uint32 event_august_met;
-		uint32 is_nighttime;					///< 0 = day / 1 = night
+		uint32 eventMetAugust;
+		uint32 isNightTime;					///< 0 = day / 1 = night
 		uint32 field_3C;
 		uint32 field_40;
 		uint32 field_44;
@@ -68,8 +68,8 @@ public:
 		uint32 field_60;
 		uint32 field_64;
 		uint32 field_68;
-		uint32 event_mertens_august_waiting;
-		uint32 event_mertens_chronos_invitation;
+		uint32 eventMertensAugustWaiting;
+		uint32 eventMertensChronosInvitation;
 		uint32 isEggOpen;
 		uint32 field_78;	// time?
 		uint32 field_7C;
@@ -93,9 +93,9 @@ public:
 		uint32 field_C4;
 		uint32 field_C8;
 		uint32 field_CC;
-		uint32 event_met_boutarel;
-		uint32 event_met_hadija;
-		uint32 event_met_yasmin;
+		uint32 eventMetBoutarel;
+		uint32 eventMetHadija;
+		uint32 eventMetYasmin;
 		uint32 field_DC;
 		uint32 field_E0;
 		uint32 field_E4;
@@ -173,19 +173,19 @@ public:
 		GameProgress() {
 			field_0 = 0;
 			jacket = kJacketOriginal;
-			event_corpse_moved_from_floor = 0;
+			eventCorpseMovedFromFloor = 0;
 			field_C = 0;
-			event_corpse_found = 0;
+			eventCorpseFound = 0;
 			field_14 = 0;
 			field_18 = 0;
 			portrait = _defaultPortrait;
-			event_corpse_thrown = 0;
+			eventCorpseThrown = 0;
 			field_24 = 0;
 			field_28 = 0;
 			chapter = kChapter1;
 			field_30 = 0;
-			event_august_met = 0;
-			is_nighttime = 0;
+			eventMetAugust = 0;
+			isNightTime = 0;
 			field_3C = 0;
 			field_40 = 0;
 			field_44 = 0;
@@ -198,8 +198,8 @@ public:
 			field_60 = 0;
 			field_64 = 0;
 			field_68 = 0;
-			event_mertens_august_waiting = 0;
-			event_mertens_chronos_invitation = 0;
+			eventMertensAugustWaiting = 0;
+			eventMertensChronosInvitation = 0;
 			isEggOpen = 0;
 			field_78 = 0;
 			field_7C = 0;
@@ -223,9 +223,9 @@ public:
 			field_C4 = 0;
 			field_C8 = 0;
 			field_CC = 0;
-			event_met_boutarel = 0;
-			event_met_hadija = 0;
-			event_met_yasmin = 0;
+			eventMetBoutarel = 0;
+			eventMetHadija = 0;
+			eventMetYasmin = 0;
 			field_DC = 0;
 			field_E0 = 0;
 			field_E4 = 0;

@@ -55,7 +55,7 @@ State::~State() {
 bool State::isDayTime() const {
 	return (_state->progress.chapter == kChapter1
 		|| _state->progress.chapter == kChapter4
-		|| (_state->progress.chapter == kChapter5 && _state->progress.is_nighttime));
+		|| (_state->progress.chapter == kChapter5 && _state->progress.isNightTime));
 }
 
 uint32 State::getPowerOfTwo(uint32 x) {

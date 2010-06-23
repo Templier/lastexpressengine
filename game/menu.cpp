@@ -636,15 +636,15 @@ void Menu::handleEvent(const Common::Event &ev) {
 
 			showScene((SceneIndex)(5 * _gameId + 3), GraphicsManager::kBackgroundC);
 			askForRedraw(); redrawScreen();
-			_engine->_system->delayMillis(1000);
+			_engine->_system->delayMillis(200);
 
 			showScene((SceneIndex)(5 * _gameId + 3), GraphicsManager::kBackgroundC);
 			askForRedraw(); redrawScreen();
-			_engine->_system->delayMillis(1000);
+			_engine->_system->delayMillis(200);
 
 			showScene((SceneIndex)(5 * _gameId + 3), GraphicsManager::kBackgroundC);
 			askForRedraw(); redrawScreen();
-			_engine->_system->delayMillis(1000);
+			_engine->_system->delayMillis(200);
 
 			// Show intro
 			Animation animation;
