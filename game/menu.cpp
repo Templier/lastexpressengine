@@ -442,24 +442,24 @@ void Menu::show(bool savegame, TimeType type, uint32 time) {
 	_isShowingMenu = true;
 	getEntities()->reset();
 
-	
-
 	// If no blue savegame exists, this might be the first time we start the game, so we show the full intro	
-	if (!SaveLoad::isSavegameValid(kGameBlue) && !_hasShownIntro) {
-		Animation animation;
+	if (!SaveLoad::isSavegameValid(kGameBlue)) {
+		if (!_hasShownIntro) {
+			
+			// Show Broderbrund logo
+			Animation animation;
+			if (animation.loadFile("1930.nis"))
+				animation.play();
 
-		// Show Broderbrund logo
-		if (animation.loadFile("1930.nis"))
-			animation.play();
+			// Play intro music
+			getSound()->playSoundWithSubtitles("MUS001.SND", 83886096, kEntityNone);
 
-		// Play intro music
-		getSound()->playSoundWithSubtitles("MUS001.SND", 83886096, kEntityNone);
+			// Show The Smoking Car logo
+			if (animation.loadFile("1931.nis"))
+				animation.play();
 
-		// Show The Smoking Car logo
-		if (animation.loadFile("1931.nis"))
-			animation.play();
-
-		_hasShownIntro = false;
+			_hasShownIntro = true;
+		}
 	} else {
 		// Only show the quick intro
 		if (!_hasShownStartScreen) {
