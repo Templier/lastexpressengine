@@ -105,7 +105,9 @@ enum TimeValue {
 	kTimeChapter5_0           = 2907000,
 	kTimeChapter5_1           = 2916000,
 	kTimeTrainStopped_2       = 2943000,
-	kTimeEnd                  = 15803100
+	kTimeEnd                  = 4941000,
+
+	kTimeInvalid              = 15803100	
 };
 
 enum TimeType {

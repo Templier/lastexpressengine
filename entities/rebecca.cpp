@@ -471,7 +471,7 @@ IMPLEMENT_FUNCTION(Rebecca, function41, 41)
 		ENTITY_PARAM(0, 2) = 1;
 
 		setCallback(1);
-		call(new ENTITY_SETUP(Rebecca, setup_function20), kTimeEnd);
+		call(new ENTITY_SETUP(Rebecca, setup_function20), kTimeInvalid);
 	}
 }
 

@@ -106,9 +106,44 @@ public:
 	int getLastSavegameTicks() const { return _gameTicksLastSavegame; }
 
 private:
+	enum HeaderType {
+		kHeaderType1 = 1,
+		kHeaderType2 = 2,
+		kHeaderType3 = 3,
+		kHeaderType4 = 4,
+		kHeaderType5 = 5
+	};
+
+	struct SavegameMainHeader {
+		uint32 signature;
+		ChapterIndex chapter;
+		uint32 time;
+		uint32 field_C;
+		uint32 field_10;
+		int32 brightness;
+		int32 volume;
+		uint32 field_1C;
+	};
+
+	struct SavegameEntryHeader {
+		int signature;
+		HeaderType type;
+		int time;
+		int field_C;
+		ChapterIndex chapter;
+		EventIndex event;
+		int field_18;
+		int field_1C;
+	};
+
 	LastExpressEngine *_engine;
 
 	static Common::String getSavegameName(GameId id);
+	static bool loadMainHeader(GameId id, SavegameMainHeader* header);
+	static void loadEntryHeader(Common::InSaveFile *save, SavegameEntryHeader* header);
+
+	static bool validateMainHeader(SavegameMainHeader &header);
+	static bool validateEntryHeader(SavegameEntryHeader &header);
 
 	int _gameTicksLastSavegame;
 };

@@ -32,8 +32,9 @@
 
 namespace LastExpress {
 
-// Savegame signature
-const uint32 SAVEGAME_SIGNATURE = 0x12001200;
+// Savegame signatures
+#define SAVEGAME_SIGNATURE 0x12001200
+#define SAVEGAME_HEADER    0xE660E660
 
 // Names of savegames
 static const struct {
@@ -99,13 +100,23 @@ bool SaveLoad::isSavegamePresent(GameId id) {
 
 // Check if the game has been started in the specific savegame
 bool SaveLoad::isSavegameValid(GameId id) {
-	uint32 brightness, volume, field_10;
-
 	if (!isSavegamePresent(id)) {
 		debugC(2, kLastExpressDebugSavegame, "SaveLoad::isSavegameValid - Savegame does not exist: %s", getSavegameName(id).c_str());
 		return false;
 	}
 
+	SavegameMainHeader header;
+	if (!loadMainHeader(id, &header))
+		return false;
+
+	return validateMainHeader(header);
+}
+
+
+//////////////////////////////////////////////////////////////////////////
+// Headers
+//////////////////////////////////////////////////////////////////////////
+bool SaveLoad::loadMainHeader(GameId id, SavegameMainHeader* header) {
 	// Read first 32 bytes of savegame
 	Common::InSaveFile *save = openForLoading(id);
 	if (!save) {
@@ -119,49 +130,79 @@ bool SaveLoad::isSavegameValid(GameId id) {
 		return false;
 	}
 
-	bool isOk = false;
+	header->signature = save->readUint32LE();
+	header->chapter = (ChapterIndex)save->readUint32LE();
+	header->time = save->readUint32LE();
+	header->field_C = save->readUint32LE();
+	header->field_10 = save->readUint32LE();
+	header->brightness = save->readSint32LE();
+	header->volume = save->readSint32LE();
+	header->field_1C = save->readUint32LE();
 
-	if (save->readUint32LE() != SAVEGAME_SIGNATURE)
-		goto EXIT;
-
-	// Chapter
-	if (save->readUint32LE() < 0)
-		goto EXIT;
-
-	// Time
-	if (save->readUint32LE() < 32)
-		goto EXIT;
-
-	// ??
-	if (save->readUint32LE() < 32)
-		goto EXIT;
-
-	// ??
-	field_10 = save->readUint32LE();
-	if (field_10 != 1 && field_10)
-		goto EXIT;
-
-	// Brightness
-	brightness = save->readUint32LE();
-	if (brightness > 6)
-		goto EXIT;
-
-	// Volume
-	volume = save->readUint32LE();
-	if (volume > 7)
-		goto EXIT;
-
-	// Field_1C
-	if (save->readUint32LE() != 9)
-		goto EXIT;
-
-	isOk = true;
-
-EXIT:
-	delete save;
-	return isOk;
+	return true;
 }
 
+void SaveLoad::loadEntryHeader(Common::InSaveFile *save, SavegameEntryHeader* header) {
+	header->signature = save->readUint32LE();
+	header->type = (HeaderType)save->readUint32LE();
+	header->time = save->readUint32LE();
+	header->field_C = save->readUint32LE();
+	header->chapter = (ChapterIndex)save->readUint32LE();
+	header->event = (EventIndex)save->readUint32LE();
+	header->field_18 = save->readUint32LE();
+	header->field_1C = save->readUint32LE();
+}
+
+bool SaveLoad::validateMainHeader(SavegameMainHeader &header) {
+	if (header.signature != SAVEGAME_SIGNATURE)
+		return false;
+
+	if (header.chapter < 0)
+		return false;
+
+	if (header.time < 32)
+		return false;
+
+	if (header.field_C < 32)
+		return false;
+
+	if (header.field_10 != 1 && header.field_10)
+		return false;
+
+	if (header.brightness < 0 || header.brightness > 6)
+		return false;
+
+	if (header.volume < 0 || header.volume > 7)
+		return false;
+
+	if (header.field_1C != 9)
+		return false;
+
+	return true;
+}
+
+bool SaveLoad::validateEntryHeader(SavegameEntryHeader &header) {
+	if (header.signature != SAVEGAME_HEADER)
+		return false;
+
+	if (header.type < kHeaderType1 || header.type > kHeaderType5)
+		return false;
+
+	if (header.time < kTimeStart || header.time > kTimeEnd)
+		return false;
+
+	if (header.field_C <= 0 || header.field_C >= 15)
+		return false;
+
+	if (header.chapter <= 0)
+		return false;
+
+	return true;
+}
+
+//////////////////////////////////////////////////////////////////////////
+// Init
+//////////////////////////////////////////////////////////////////////////
 bool SaveLoad::initSavegame(GameId id) {
 	assert(!isSavegamePresent(id));
 
