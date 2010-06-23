@@ -167,8 +167,6 @@ void Fight::eventTick(const Common::Event &ev) {
 }
 
 void Fight::handleTick(const Common::Event &ev, bool isProcessing) {
-	getFlags()->gameTick = false;
-
 	// TODO move all the egg handling to inventory functions
 
 	// Blink egg
@@ -470,9 +468,6 @@ end_load:
 	// Setup event handlers
 	_engine->backupEventHandlers();
 	SET_EVENT_HANDLERS(Fight, this);
-
-	getFlags()->gameTick = false;
-	return;
 }
 
 //////////////////////////////////////////////////////////////////////////

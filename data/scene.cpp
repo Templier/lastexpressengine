@@ -40,7 +40,7 @@ SceneHeader *SceneHeader::load(Common::SeekableReadStream *stream) {
 	sh->sig = stream->readByte();
 	sh->count = stream->readUint16LE();;
 	sh->field_11 = stream->readUint16LE();
-	sh->car = stream->readUint16LE();
+	sh->car = (CarIndex)stream->readUint16LE();
 	sh->position = stream->readByte();
 	sh->type = stream->readByte();
 	sh->param1 = stream->readByte();
@@ -202,11 +202,11 @@ bool Scene::checkHotSpot(const Common::Point &coord, SceneHotspot **hotspot) {
 	return found;
 }
 
-SceneHotspot *Scene::getHotspot(SceneIndex index) {
+SceneHotspot *Scene::getHotspot(int index) {
 	if (_hotspots.empty())
 		return NULL;
 
-	if (index >= _hotspots.size())
+	if (index >= (int)_hotspots.size())
 		return NULL;
 
 	return _hotspots[index];

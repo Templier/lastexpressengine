@@ -420,7 +420,7 @@ IMPLEMENT_ACTION(inventory) {
 
 		loadSceneObject(backup, getState()->sceneBackup);
 
-		if (getEntities()->getPosition(backup.getHeader()->position + 100 * backup.getHeader()->car))
+		if (getEntities()->getPosition(backup.getHeader()->car, backup.getHeader()->position))
 			index = getScenes()->processIndex(getState()->sceneBackup);
 	}
 

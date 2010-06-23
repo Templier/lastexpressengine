@@ -91,7 +91,7 @@ public:
 	// Accessors
 	Entity *get(EntityIndex entity);
 	EntityData::EntityCallData *getData(EntityIndex entity) const;
-	int getPosition(int index) { assert(index < _positionsCount); return _positions[index]; }
+	int getPosition(CarIndex car, Position position) { int index = 100 * car + position; assert(index < _positionsCount); return _positions[index]; }
 	int getCompartments(int index) { assert(index < _compartmentsCount); return _compartments[index]; }
 	int getCompartments1(int index) { assert(index < _compartmentsCount); return _compartments1[index]; }
 

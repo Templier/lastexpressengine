@@ -482,9 +482,7 @@ void Menu::show(bool savegame, TimeType type, uint32 time) {
 		getSound()->removeFromQueue("TIMER");
 
 	// TODO more initialization
-
-	// Init flags
-	getFlags()->gameTick = false;
+	// TODO Init flags
 
 	// Set Cursor type
 	_engine->getCursor()->setStyle(kCursorNormal);
@@ -657,8 +655,10 @@ void Menu::handleEvent(const Common::Event &ev) {
 
 
 			// Setup game
+			getFlags()->isGameRunning = true;
+
 			getState()->scene = kSceneDefault;
-			// TODO reset all game data
+			// TODO reset all game data			
 			getEntities()->setup(true, kEntityNone);
 			
 			getInventory()->show();

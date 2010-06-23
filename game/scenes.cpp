@@ -119,7 +119,7 @@ void SceneManager::loadScene(SceneIndex index) {
 
 	// TODO Events method call (might be a low level graphic that we don't need)
 
-	if (getFlags()->gameRunning && getFlags()->shouldDrawEggOrHourGlass)
+	if (getFlags()->isGameRunning && getFlags()->shouldDrawEggOrHourGlass)
 		getInventory()->drawEgg();
 
 	getFlags()->shouldRedraw = shouldRedraw;
@@ -236,11 +236,11 @@ void SceneManager::setScene(SceneIndex index) {
 
 	if (_flagDrawEntities) {
 		// TODO Setup screen size (0, 80)x(480x480) (is it necessary for our animations?)
-		getScenes()->drawScene(index);
+		drawScene(index);
 		_flagNoEntity = true;
 	} else {
 		_flagDrawEntities = true;
-		getScenes()->drawScene(index);
+		drawScene(index);
 		_flagDrawEntities = false;
 	}
 }
@@ -274,7 +274,7 @@ void SceneManager::drawScene(SceneIndex index) {
 
 	getFlags()->flag_3 = true;
 
-	if (getFlags()->gameRunning) {
+	if (getFlags()->isGameRunning) {
 		getSavePoints()->pushAll(kEntityNone, kAction17);
 		getSavePoints()->process();
 
@@ -311,7 +311,7 @@ void SceneManager::processScene() {
 
 	loadSceneObject(backup, getState()->sceneBackup);
 
-	if (getEntities()->getPosition(backup.getHeader()->position + 100 * backup.getHeader()->car))
+	if (getEntities()->getPosition(backup.getHeader()->car, backup.getHeader()->position))
 		loadScene(processIndex(getState()->sceneBackup));
 	else
 		loadScene(getState()->sceneBackup);
@@ -593,7 +593,7 @@ SceneIndex SceneManager::getSceneIndexFromPosition(CarIndex car, Position positi
 
 	// Process index if necessary
 	loadSceneObject(scene, index);
-	if (getEntities()->getPosition(100 * scene.getHeader()->car + scene.getHeader()->position))
+	if (getEntities()->getPosition(scene.getHeader()->car, scene.getHeader()->position))
 		return processIndex(index);
 
 	return index;

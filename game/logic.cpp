@@ -54,6 +54,9 @@
 
 namespace LastExpress {
 
+#define EVENT_TICKS_BEETWEEN_SAVEGAMES 450
+#define GAME_TICKS_BEETWEEN_SAVEGAMES 2700
+
 Logic::Logic(LastExpressEngine *engine) : _engine(engine) {
 	_action   = new Action(engine);
 	_beetle   = new Beetle(engine);
@@ -61,6 +64,10 @@ Logic::Logic(LastExpressEngine *engine) : _engine(engine) {
 	_fight    = new Fight(engine);
 	_saveload = new SaveLoad(engine);
 	_state    = new State(engine);
+
+	// Flags
+	_flag8 = false;
+	_ticksSinceLastSavegame = EVENT_TICKS_BEETWEEN_SAVEGAMES;
 }
 
 Logic::~Logic() {
@@ -129,15 +136,98 @@ void Logic::eventMouseClick(const Common::Event &ev) {
 }
 
 void Logic::eventTick(const Common::Event &ev) {
-	if (getInventory()->handleMouseEvent(ev))
+	int ticks = 1;
+
+	if (_flag8)
+		ticks = 10;
+
+	_flag8 = 0;
+	if (getGlobalTimer() && !getFlags()->shouldDrawEggOrHourGlass) {
+		warning("Logic::eventTick: not implemented");
+
+		// TODO show egg (with or without mouseover)
+	}
+
+	//////////////////////////////////////////////////////////////////////////
+	// Adjust time and save game if needed
+	if (getFlags()->isGameRunning) {
+		getState()->timeTicks += ticks;
+		getState()->time += ticks * getState()->timeDelta;
+
+		if (getState()->timeDelta) {
+
+			// Auto-save 
+			if (!_ticksSinceLastSavegame) {
+				_ticksSinceLastSavegame = EVENT_TICKS_BEETWEEN_SAVEGAMES;
+				save(kEntityChapters, kSavegameTypeAuto, kEventNone);
+			}
+
+			// Save after game ticks interval
+			if (getSaveLoad()->getLastSavegameTicks() - getState()->timeTicks > GAME_TICKS_BEETWEEN_SAVEGAMES)
+				save(kEntityChapters, kSavegameTypeTickInterval, kEventNone);
+		}
+	}
+
+	if (getFlags()->flag_0 && !getFlags()->mouseLeftClick && !getFlags()->mouseRightClick) {
+		loadSceneObject(scene, getState()->scene);
+
+		if (getScenes()->checkCurrentPosition(true) 
+		 && scene.getHeader()->car
+		 && !getEntities()->getPosition(scene.getHeader()->car, scene.getHeader()->position)) {
+
+			// Process hotspot
+			SceneHotspot *hotspot = scene.getHotspot();
+			SceneIndex index = getAction()->processHotspot(*hotspot);
+			if (index) {
+				getScenes()->setScene(index);
+			} else {
+				getFlags()->flag_0 = false;
+				getFlags()->shouldRedraw = true;
+				updateCursor(true);
+			}
+
+			if (getFlags()->isGameRunning)
+				getSavePoints()->callAndProcess();
+		} else {
+			getFlags()->flag_0 = false;
+			getFlags()->shouldRedraw = true;
+			updateCursor(true);
+		}
+
+		return;
+	}
+
+	// Stop processing if the game is paused
+	if (!getFlags()->isGameRunning)
 		return;
 
-	// Check hit box & event from scene data
-	SceneHotspot *hotspot = NULL;
-	if (getScenes()->getCurrentScene() && getScenes()->getCurrentScene()->checkHotSpot(ev.mouse, &hotspot))
-		_engine->getCursor()->setStyle(_action->getCursor(*hotspot));
-	else
-		_engine->getCursor()->setStyle(kCursorNormal);
+	//////////////////////////////////////////////////////////////////////////
+	// Update beetle, savepoints, entities and draw frames
+	if (_beetle->isLoaded())
+		_beetle->update();
+
+	getSavePoints()->callAndProcess();
+	getEntities()->updateCallbacks();
+	getScenes()->drawFrames(true);
+
+	//////////////////////////////////////////////////////////////////////////
+	// Update cursor if we can interact with an entity
+	EntityIndex entity = getEntities()->canInteractWith(getCoords());
+	if (!entity) {
+		if (_engine->getCursor()->getStyle() >= kCursorTalk2)
+			updateCursor(false);
+
+		return;
+	}
+
+	// Show item cursor on entity
+	if (getInventory()->hasItem(getEntityData(entity)->inventoryItem) && getEntityData(entity)->inventoryItem != kCursorTalk2) {
+		_engine->getCursor()->setStyle(getInventory()->getEntry(getEntityData(entity)->inventoryItem)->cursor);
+		return;
+	}
+
+	getLogic()->updateCursor(false);
+	_engine->getCursor()->setStyle(kCursorTalk2);
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -149,7 +239,7 @@ void Logic::gameOver(TimeType type, TimeValue time, SceneIndex sceneIndex, bool 
 
 	getSound()->unknownFunction3();
 	getEntities()->reset();
-	getFlags()->gameRunning = false;
+	getFlags()->isGameRunning = false;
 	getSavePoints()->reset();
 	getFlags()->flag_entities_0 = true;
 
@@ -287,7 +377,7 @@ void Logic::updateCursor(bool redraw) {
 						if (getAction()->getCursor(**i)) {
 							loadSceneObject(hotspotScene, (*i)->scene);
 
-							if (!getEntities()->getPosition(hotspotScene.getHeader()->position + 100 * hotspotScene.getHeader()->car)
+							if (!getEntities()->getPosition(hotspotScene.getHeader()->car, hotspotScene.getHeader()->position)
 							 || (*i)->cursor == kCursorTurnRight
 							 || (*i)->cursor == kCursorTurnLeft) {								
 								hotspot = *i;

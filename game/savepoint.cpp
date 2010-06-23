@@ -90,7 +90,7 @@ void SavePoints::pushAll(EntityIndex entity, ActionIndex action, uint32 param) {
 
 // Process all savepoints
 void SavePoints::process() {
-	while (_savepoints.size() > 0 && getFlags()->gameRunning) {
+	while (_savepoints.size() > 0 && getFlags()->isGameRunning) {
 		SavePoint savepoint = pop();
 
 		// If this is a data savepoint, update the entity
@@ -181,20 +181,24 @@ void SavePoints::callAndProcess() {
 	EntityIndex index = kEntityAbbot;
 
 	// Call all callbacks with empty parameters
-	bool isRunning = getFlags()->gameRunning;
+	bool isRunning = getFlags()->isGameRunning;
 	while (isRunning) {
 
 		Entity::Callback *callback = getCallback(index);
 		if (callback && callback->isValid()) {
 			(*callback)(savepoint);
-			isRunning = getFlags()->gameRunning;
+			isRunning = getFlags()->isGameRunning;
 		}
 
 		index = (EntityIndex)(index + 1);
 
 		// Process all savepoints when done
-		if (index >= 40 && isRunning)
-			process();
+		if (index >= 40) {
+			if (isRunning)
+				process();
+
+			return;
+		}
 	}
 }
 

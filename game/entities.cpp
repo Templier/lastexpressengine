@@ -265,7 +265,7 @@ void Entities::reset() {
 //////////////////////////////////////////////////////////////////////////
 
 EntityIndex Entities::canInteractWith(const Common::Point &point) const {
-	if (!getFlags()->gameRunning)
+	if (!getFlags()->isGameRunning)
 		return kEntityNone;
 
 	EntityIndex index = kEntityNone;
@@ -335,7 +335,7 @@ void Entities::resetState(EntityIndex entityIndex) {
 
 
 void Entities::updateFields() const {
-	if (!getFlags()->gameRunning)
+	if (!getFlags()->isGameRunning)
 		return;
 
 	for (int i = 0; i < (int)_entities.size(); i++) {
@@ -427,7 +427,7 @@ void Entities::updateEntity(EntityIndex entityIndex) const {
 }
 
 void Entities::updateSequences() {
-	if (!getFlags()->gameRunning)
+	if (!getFlags()->isGameRunning)
 		return;
 
 	// Update the train clock & doors
@@ -521,7 +521,7 @@ void Entities::resetSequences(EntityIndex entityIndex) const {
 // Callbacks
 //////////////////////////////////////////////////////////////////////////
 void Entities::updateCallbacks() {
-	if (!getFlags()->gameRunning)
+	if (!getFlags()->isGameRunning)
 		return;
 
 	getFlags()->flag_entities_0 = false;
@@ -846,24 +846,6 @@ void Entities::getSequenceName(EntityIndex index, EntityDirection direction, cha
 //////////////////////////////////////////////////////////////////////////
 /// Compartments
 //////////////////////////////////////////////////////////////////////////
-void Entities::updatePosition(EntityIndex entity, CarIndex car, Position position, bool processScene) {
-	if (entity == kEntity39)
-		entity = kEntityNone;
-
-	if (entity > kEntityChapters)
-		return;
-
-	_positions[100 * car + position] &= ~STORE_VALUE(entity);
-
-	if (processScene && (isPlayerPosition(car, position) || (car == kCarRestaurant && position == 57 && isPlayerPosition(kCarRestaurant, 50)))) {
-		getSound()->excuseMe(entity);
-		getScenes()->loadScene(getScenes()->processIndex(getState()->scene));
-		getSound()->playSound(kEntityNone, "CAT1127A");
-	} else {
-		getLogic()->updateCursor();
-	}
-}
-
 void Entities::enterCompartment(EntityIndex entity, ObjectIndex compartment, bool useFirstCompartments) {
 	if (entity > kEntityChapters)
 		return;
@@ -1027,6 +1009,24 @@ void Entities::exitCompartment(EntityIndex entity, ObjectIndex compartment, bool
 		_compartments[index] &= ~STORE_VALUE(entity);
 	else
 		_compartments1[index] &= ~STORE_VALUE(entity);
+}
+
+void Entities::updatePosition(EntityIndex entity, CarIndex car, Position position, bool processScene) {
+	if (entity == kEntity39)
+		entity = kEntityNone;
+
+	if (entity > kEntityChapters)
+		return;
+
+	_positions[100 * car + position] &= ~STORE_VALUE(entity);
+
+	if (processScene && (isPlayerPosition(car, position) || (car == kCarRestaurant && position == 57 && isPlayerPosition(kCarRestaurant, 50)))) {
+		getSound()->excuseMe(entity);
+		getScenes()->loadScene(getScenes()->processIndex(getState()->scene));
+		getSound()->playSound(kEntityNone, "CAT1127A");
+	} else {
+		getLogic()->updateCursor();
+	}
 }
 
 void Entities::updatePositionsEnter(EntityIndex entity, CarIndex car, Position position1, Position position2, Position position3, Position position4) {

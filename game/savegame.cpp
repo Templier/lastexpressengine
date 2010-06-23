@@ -51,7 +51,9 @@ static const struct {
 // Constructors
 //////////////////////////////////////////////////////////////////////////
 
-SaveLoad::SaveLoad(LastExpressEngine *engine) : _engine(engine) {}
+SaveLoad::SaveLoad(LastExpressEngine *engine) : _engine(engine) {
+	_gameTicksLastSavegame = 0;
+}
 
 SaveLoad::~SaveLoad() {
 	//Zero passed pointers

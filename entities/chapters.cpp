@@ -251,7 +251,7 @@ label_callback_18:
 label_callback_19:
 label_callback_20:
 label_callback_21:
-		error("Chapters::chapter1_handler: action kActionNone not implemented!");
+		warning("Chapters::chapter1_handler: action kActionNone not implemented!");
 		break;
 
 	case kAction2:

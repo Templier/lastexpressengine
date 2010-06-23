@@ -103,10 +103,14 @@ public:
 	static Common::InSaveFile *openForLoading(GameId id);
 	static Common::OutSaveFile *openForSaving(GameId id);
 
+	int getLastSavegameTicks() const { return _gameTicksLastSavegame; }
+
 private:
 	LastExpressEngine *_engine;
 
 	static Common::String getSavegameName(GameId id);
+
+	int _gameTicksLastSavegame;
 };
 
 } // End of namespace LastExpress

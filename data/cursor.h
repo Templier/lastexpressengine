@@ -47,28 +47,6 @@
 
 namespace LastExpress {
 
-class Cursor {
-public:
-	Cursor();
-
-	bool load(Common::SeekableReadStream *stream);
-	void show(bool visible) const;
-	void setStyle(CursorStyle style);
-	const uint16 *getCursorImage(CursorStyle style) const;
-
-private:
-	// Style
-	CursorStyle _current;
-
-	// Cursors data
-	struct {
-		uint16 image[32 * 32];
-		uint16 hotspotX, hotspotY;
-	} _cursors[kCursorMAX];
-
-	bool checkStyle(CursorStyle style) const;
-};
-
 class Icon : public Drawable {
 public:
 	Icon(CursorStyle style);
@@ -81,6 +59,33 @@ private:
 	CursorStyle _style;
 	int16 _x, _y;
 	uint8 _brightness;
+};
+
+class Cursor {
+public:
+	Cursor();
+
+	bool load(Common::SeekableReadStream *stream);
+	void show(bool visible) const;	
+	
+	void setStyle(CursorStyle style);
+	CursorStyle getStyle() const { return _current; }
+
+private:
+	// Style
+	CursorStyle _current;
+
+	// Cursors data
+	struct {
+		uint16 image[32 * 32];
+		uint16 hotspotX, hotspotY;
+	} _cursors[kCursorMAX];
+
+	bool checkStyle(CursorStyle style) const;
+	const uint16 *getCursorImage(CursorStyle style) const;
+
+	// Only allow full access for drawing (needed for getCursorImage)
+	friend Common::Rect Icon::draw(Graphics::Surface *surface);
 };
 
 } // End of namespace LastExpress

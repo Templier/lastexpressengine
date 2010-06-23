@@ -77,6 +77,10 @@ private:
 	void switchChapter();
 	void playFinalSequence();
 	void showCredits();
+
+	// Flags & Members
+	bool _flag8;
+	int _ticksSinceLastSavegame;
 };
 
 } // End of namespace LastExpress

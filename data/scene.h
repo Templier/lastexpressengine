@@ -88,7 +88,7 @@ public:
 	byte sig;
 	uint16 count;
 	uint16 field_11;
-	uint16 car;
+	CarIndex car;			// uin16
 	Position position;
 	byte type;
 	byte param1;
@@ -213,7 +213,7 @@ public:
 
 	SceneHeader* getHeader();
 	Common::Array<SceneHotspot *> *getHotspots() { return &_hotspots; }
-	SceneHotspot *getHotspot(SceneIndex index = kSceneNone);
+	SceneHotspot *getHotspot(int index = 0);
 
 private:
 	SceneHeader *_header;

@@ -344,12 +344,11 @@ public:
 		bool flag_4;
 		bool flag_5;
 
-		bool gameRunning;
+		bool isGameRunning;
 
 		// Mouse flags
 		bool mouseLeftClick;
 		bool mouseRightClick;
-		bool gameTick;
 
 		bool flag_entities_0;
 		bool flag_entities_1;
@@ -363,11 +362,10 @@ public:
 			flag_4 = false;
 			flag_5 = false;
 
-			gameRunning = false;
+			isGameRunning = false;
 
 			mouseRightClick = false;
 			mouseLeftClick = false;
-			gameTick = false;
 
 			flag_entities_0 = false;
 			flag_entities_1 = false;
