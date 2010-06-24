@@ -116,6 +116,7 @@ public:
 	void playDialog(EntityIndex entity, EntityIndex entityDialog, int a3, byte a4);
 	void playSteam(CityIndex index);
 	void playFightSound(byte action, byte a4);
+	void playLocomotiveSound();
 
 	// Dialog & Letters
 	void readText(int id);

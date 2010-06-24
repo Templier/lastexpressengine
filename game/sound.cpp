@@ -88,6 +88,14 @@ const char *cities[17] = {
 	"POLICE"
 };
 
+const char *locomotiveSounds[5] = {
+	"ZFX1005",
+	"ZFX1006",
+	"ZFX1007",
+	"ZFX1007A",
+	"ZFX1007B"
+};
+
 SoundManager::SoundManager(LastExpressEngine *engine) : _engine(engine), _state(0) {
 	_sfx = new StreamedSound();
 	_music = new StreamedSound();
@@ -429,6 +437,10 @@ void SoundManager::playFightSound(byte action, byte a4) {
 
 void SoundManager::playDialog(EntityIndex entity, EntityIndex entityDialog, int a3, byte a4) {
 	playSound(entity, getDialogName(entityDialog), a3, a4);
+}
+
+void SoundManager::playLocomotiveSound() {
+	playSound(kEntityNone, locomotiveSounds[random(5)], random(15) + 2);
 }
 
 const char *SoundManager::getDialogName(EntityIndex entity) const {

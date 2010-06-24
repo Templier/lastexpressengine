@@ -43,7 +43,7 @@
 	((EntityData::EntityParametersIIII*)_data->getParameters(8, index))->param##id
 
 //////////////////////////////////////////////////////////////////////////
-// Helpers
+// Time check macros
 //////////////////////////////////////////////////////////////////////////
 #define TIME_CHECK_CHAPTER1(function) \
 	TIME_CHECK(kTimeChapter1, function)
@@ -55,30 +55,74 @@
 	}
 
 #define TIME_CHECK_CALLBACK(class, timeValue, parameter, callback, function) \
-	if (getState()->time > timeValue && !params->parameter) { \
-		params->parameter = 1; \
+	if (getState()->time > timeValue && !parameter) { \
+		parameter = 1; \
 		setCallback(callback); \
 		call(new ENTITY_SETUP(class, function)); \
 		break; \
 	}
 
+#define TIME_CHECK_SAVEGAME(class, timeValue, parameter, callback, type, event) \
+	if (getState()->time > timeValue && !parameter) { \
+		parameter = 1; \
+		setCallback(callback); \
+		call(new ENTITY_SETUP(class, setup_savegame), type, event); \
+		break; \
+	}
+
+#define TIME_CHECK_ENTERSTATION(class, timeValue, parameter, callback, name, param2) \
+	if (getState()->time > timeValue && !parameter) { \
+		parameter = 1; \
+		setCallback(callback); \
+		call(new ENTITY_SETUP_SIIS(class, setup_enterStation), name, param2); \
+		break; \
+	}
+
+#define TIME_CHECK_EXITSTATION(class, timeValue, parameter, callback, name) \
+	if (getState()->time > timeValue && !parameter) { \
+		parameter = 1; \
+		setCallback(callback); \
+		call(new ENTITY_SETUP_SIIS(class, setup_exitStation), name); \
+		break; \
+	}
+
+#define TIME_CHECK_EXITSTATION_2(class, timeValue, parameter1, parameter2, callback, name) \
+	if (getState()->time > timeValue && !parameter1) { \
+		parameter1 = 1; \
+		parameter2 = 1; \
+		setCallback(callback); \
+		call(new ENTITY_SETUP_SIIS(class, setup_exitStation), name); \
+		break; \
+	}
+
+#define TIME_CHECK_EXITSTATION_0(class, parameter1, parameter2, callback, name) \
+	if (parameter1 && !parameter2) { \
+		setCallback(callback); \
+		call(new ENTITY_SETUP_SIIS(class, setup_exitStation), name); \
+		break; \
+	}
+
 #define TIME_CHECK_PLAYSOUND(class, timeValue, parameter, callback, sound) \
-	if (getState()->time > timeValue && !params->parameter) { \
-		params->parameter = 1; \
+	if (getState()->time > timeValue && !parameter) { \
+		parameter = 1; \
 		setCallback(callback); \
 		call(new ENTITY_SETUP_SIIS(class, setup_playSound), sound); \
 		break; \
 	}
 
 #define TIME_CHECK_PLAYSOUND_2(class, timeValue, parameter, callback, sound, field491) \
-	if (getState()->time > timeValue && !params->parameter) { \
-		params->parameter = 1; \
+	if (getState()->time > timeValue && !parameter) { \
+		parameter = 1; \
 		getData()->field_491 = field491; \
 		setCallback(callback); \
 		call(new ENTITY_SETUP_SIIS(class, setup_playSound), sound); \
 		break; \
 	}
 
+
+//////////////////////////////////////////////////////////////////////////
+// Helpers
+//////////////////////////////////////////////////////////////////////////
 #define CALLBACK_ACTION() { \
 	getData()->current_call--; \
 	getSavePoints()->setCallback(_entityIndex, _callbacks[_data->getCurrentCallback()]); \

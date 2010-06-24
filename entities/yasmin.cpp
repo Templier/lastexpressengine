@@ -211,12 +211,12 @@ IMPLEMENT_FUNCTION(Yasmin, function9, 9)
 		break;
 
 	case kActionNone:
-		TIME_CHECK_CALLBACK(Yasmin, kTimeAnna, param1, 1, setup_function6);
-		TIME_CHECK_CALLBACK(Yasmin, kTimeFrancois, param2, 3, setup_function7);
-		TIME_CHECK_PLAYSOUND_2(Yasmin, kTimeYasmin_7, param3, 4, "Har1102", EntityData::kField491_4070);
-		TIME_CHECK_PLAYSOUND(Yasmin, kTimeTables1, param4, 5, "Har1104");
-		TIME_CHECK_PLAYSOUND(Yasmin, kTimeYasmin_8, param5, 6, "Har1106");			
-		TIME_CHECK_CALLBACK(Yasmin, kTimeYasmin_9, param6, 7, setup_function6);
+		TIME_CHECK_CALLBACK(Yasmin, kTimeAnna, params->param1, 1, setup_function6);
+		TIME_CHECK_CALLBACK(Yasmin, kTimeFrancois, params->param2, 3, setup_function7);
+		TIME_CHECK_PLAYSOUND_2(Yasmin, kTimeYasmin_7, params->param3, 4, "Har1102", EntityData::kField491_4070);
+		TIME_CHECK_PLAYSOUND(Yasmin, kTimeTables1, params->param4, 5, "Har1104");
+		TIME_CHECK_PLAYSOUND(Yasmin, kTimeYasmin_8, params->param5, 6, "Har1106");			
+		TIME_CHECK_CALLBACK(Yasmin, kTimeYasmin_9, params->param6, 7, setup_function6);
 		break;
 
 	case kActionCallback:
@@ -231,19 +231,19 @@ IMPLEMENT_FUNCTION(Yasmin, function9, 9)
 			break;
 
 		case 2:
-			TIME_CHECK_CALLBACK(Yasmin, kTimeFrancois, param2, 3, setup_function7);
+			TIME_CHECK_CALLBACK(Yasmin, kTimeFrancois, params->param2, 3, setup_function7);
 
 		case 3:			
-			TIME_CHECK_PLAYSOUND_2(Yasmin, kTimeYasmin_7, param3, 4, "Har1102", EntityData::kField491_4070);
+			TIME_CHECK_PLAYSOUND_2(Yasmin, kTimeYasmin_7, params->param3, 4, "Har1102", EntityData::kField491_4070);
 
 		case 4:
-			TIME_CHECK_PLAYSOUND(Yasmin, kTimeTables1, param4, 5, "Har1104");
+			TIME_CHECK_PLAYSOUND(Yasmin, kTimeTables1, params->param4, 5, "Har1104");
 
 		case 5:			
-			TIME_CHECK_PLAYSOUND(Yasmin, kTimeYasmin_8, param5, 6, "Har1106");	
+			TIME_CHECK_PLAYSOUND(Yasmin, kTimeYasmin_8, params->param5, 6, "Har1106");	
 
 		case 6:					
-			TIME_CHECK_CALLBACK(Yasmin, kTimeYasmin_9, param6, 7, setup_function6);
+			TIME_CHECK_CALLBACK(Yasmin, kTimeYasmin_9, params->param6, 7, setup_function6);
 			break;
 		}
 		break;
@@ -281,7 +281,7 @@ IMPLEMENT_FUNCTION(Yasmin, function12, 12)
 		break;
 
 	case kActionNone:
-		TIME_CHECK_CALLBACK(Yasmin, kTimeYasmin, param1, 1, setup_function7);
+		TIME_CHECK_CALLBACK(Yasmin, kTimeYasmin, params->param1, 1, setup_function7);
 		
 		if (getState()->time > kTimeYasmin_1 && !params->param2) {
 			params->param2 = 1;
@@ -332,9 +332,9 @@ IMPLEMENT_FUNCTION(Yasmin, function14, 14)
 		break;
 
 	case kActionNone:
-		TIME_CHECK_CALLBACK(Yasmin, kTimeYasmin_2, param1, 1, setup_function6);
-		TIME_CHECK_CALLBACK(Yasmin, kTimeYasmin_3, param2, 2, setup_function7);
-		TIME_CHECK_CALLBACK(Yasmin, kTimeYasmin_4, param3, 3, setup_function6);
+		TIME_CHECK_CALLBACK(Yasmin, kTimeYasmin_2, params->param1, 1, setup_function6);
+		TIME_CHECK_CALLBACK(Yasmin, kTimeYasmin_3, params->param2, 2, setup_function7);
+		TIME_CHECK_CALLBACK(Yasmin, kTimeYasmin_4, params->param3, 3, setup_function6);
 		break;
 
 	case kActionCallback:
@@ -343,12 +343,10 @@ IMPLEMENT_FUNCTION(Yasmin, function14, 14)
 			break;
 
 		case 1:
-			TIME_CHECK_CALLBACK(Yasmin, kTimeYasmin_3, param2, 2, setup_function7);
-			TIME_CHECK_CALLBACK(Yasmin, kTimeYasmin_4, param3, 3, setup_function6);
-			break;
+			TIME_CHECK_CALLBACK(Yasmin, kTimeYasmin_3, params->param2, 2, setup_function7);			
 
 		case 2:
-			TIME_CHECK_CALLBACK(Yasmin, kTimeYasmin_4, param3, 3, setup_function6);
+			TIME_CHECK_CALLBACK(Yasmin, kTimeYasmin_4, params->param3, 3, setup_function6);
 			break;
 		}
 		break;
@@ -378,8 +376,8 @@ IMPLEMENT_FUNCTION(Yasmin, function16, 16)
 		break;
 
 	case kActionNone:
-		TIME_CHECK_CALLBACK(Yasmin, kTimeYasmin_5, param1, 1, setup_function7);
-		TIME_CHECK_CALLBACK(Yasmin, kTimeYasmin_6, param2, 3, setup_function6);
+		TIME_CHECK_CALLBACK(Yasmin, kTimeYasmin_5, params->param1, 1, setup_function7);
+		TIME_CHECK_CALLBACK(Yasmin, kTimeYasmin_6, params->param2, 3, setup_function6);
 		break;
 
 	case kActionCallback:
@@ -394,7 +392,7 @@ IMPLEMENT_FUNCTION(Yasmin, function16, 16)
 			break;
 
 		case 2:
-			TIME_CHECK_CALLBACK(Yasmin, kTimeYasmin_6, param2, 3, setup_function6);
+			TIME_CHECK_CALLBACK(Yasmin, kTimeYasmin_6, params->param2, 3, setup_function6);
 			break;
 		}
 		break;

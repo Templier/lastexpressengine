@@ -178,7 +178,7 @@ IMPLEMENT_FUNCTION(Francois, function19, 19)
 		break;
 
 	case kActionNone:
-		TIME_CHECK_CALLBACK(Francois, kTimeFrancois, param1, 2, setup_function12);
+		TIME_CHECK_CALLBACK(Francois, kTimeFrancois, params->param1, 2, setup_function12);
 		break;
 
 	case kAction101107728:
