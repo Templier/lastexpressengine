@@ -34,7 +34,8 @@ namespace LastExpress {
 enum TimeValue {
 	kTime0                    = 0,
 	kTime1                    = 1,
-	kTimeStart                = 1061100,
+	kTimeCityParis            = 1037700,
+	kTimeStartGame            = 1061100,
 
 	// Chapter 1
 	kTimeChapter1             = 1062000,
@@ -42,20 +43,33 @@ enum TimeValue {
 	kTimeAnna                 = 1093500,
 	kTimeMahmud_1             = 1098000,
 	kTimeKahina               = 1107000,
+	kTimeCityEpernay          = 1148400,
 	kTimeFrancois             = 1161000,
 	kTimeYasmin_7             = 1162800,
 	kTimeTables1              = 1165500,
 	kTimeMahmud               = 1167300,
+	kTimeCityChalons          = 1170900,
 	kTimeYasmin_8             = 1174500,
 	kTimeYasmin_9             = 1183500,
 	kTimeRebecca_3            = 1184400,
+	kTimeCityBarLeDuc         = 1228500,
 	kTimePascale              = 1242000,
+	kTimeCityNancy            = 1303200,
+	kTimeCityLuneville        = 1335600,
+	kTimeCityAvricourt        = 1359900,
+	kTimeCityDeutschAvricourt = 1367100,
 	kTimeBedTime              = 1404000,
 	kTimeChapter1_0           = 1424700,
 	kTimeKronos               = 1489500,
-	kTimeChapter1_1           = 1494000,
+	kTimeCityStrasbourg       = 1490400,
+	kTimeChapter1End          = 1494000,
 	kTimeVassili              = 1503000,
 	kTimeVassili_2            = 1512000,
+	kTimeCityBadenOos         = 1539000,
+	kTimeCityKarlsruhe        = 1563300,
+	kTimeCityStuttgart        = 1656000,
+	kTimeCityGeislingen       = 1713600,
+	kTimeCityUlm              = 1739700,
 
 	// Chapter 2
 	kTimeChapter2             = 1750500,
@@ -63,26 +77,34 @@ enum TimeValue {
 	kTimeRebecca_2            = 1764000,
 	kTimeIvo_2                = 1777500,
 	kTimeYasmin_1             = 1800000,
+	kTimeCityAugsburg         = 1809900,
+	kTimeCityMunich           = 1852200,
 
 	// Chapter 3
 	kTimeChapter3             = 1944000,
 	kTimeAbbot                = 1953000,
 	kTimeAbbot_2              = 1966500,
 	kTimeAbbot_3              = 1971000,
+	kTimeCitySalzbourg        = 1984500,
 	kTimeAbbot_4              = 1989000,
 	kTimeKronos_0             = 1993500,
 	kTimeRebecca              = 2016000,
+	kTimeCityAttnangPuchheim  = 2049300,
 	kTimeTables2              = 2052000,
 	kTimeAugust_1             = 2061000,
 	kTimeYasmin_2             = 2062800,
 	kTimeRebecca_0            = 2070000,
+	kTimeCityWels             = 2075400,
 	kTimeCooks                = 2079000,
+	kTimeCityLinz             = 2101500,
 	kTimeYasmin_3             = 2106000,
 	kTimeRebecca_1            = 2110500,
+	kTimeCityAmstetten        = 2154600,
 	kTimeYasmin_4             = 2160000,
 	kTimeAugustVienna         = 2200500,
 	kTimeAnna_2               = 2250000,
 	kTimeAnna_3               = 2259000,
+	kTimeCityVienna           = 2268000,
 
 	// Chapter 4
 	kTimeChapter4             = 2353500,
@@ -91,23 +113,31 @@ enum TimeValue {
 	kTimeIvo                  = 2361600,
 	kTimeBoutarel             = 2367000,
 	kTimeRebecca_4            = 2385000,
+	kTimeCityPoszony          = 2383200,
 	kTimeAlexei_1             = 2403000,
-	kTimeGameOver             = 2418300,
+	kTimeCityGalanta          = 2418300,
 	kTimeSalko                = 2422800,
 	kTimeIvo_1                = 2425500,
 	kTimeYasmin_5             = 2457000,
 	kTimeYasmin_6             = 2479500,
-	kTimeTables3              = 2488500,	
+	kTimeTables3              = 2488500,
+	kTimeCityBudapest         = 2551500,
 
 	// Chapter 5
 	kTimeChapter5             = 2844000,
 	kTimeTrainStopped         = 2898000,
 	kTimeChapter5_0           = 2907000,
 	kTimeChapter5_1           = 2916000,
+	kTimeCityBelgrade         = 2952000,
 	kTimeTrainStopped_2       = 2943000,
-	kTimeEnd                  = 4941000,
+	kTimeCityNish             = 3205800,
+	kTimeCityTzaribrod        = 3492000,
+	kTimeCitySofia            = 3690000,
+	kTimeCityAdrianople       = 4320900,
+	kTimeCityConstantinople   = 4941000,
 
-	kTimeInvalid              = 15803100	
+	// Bug in original game?
+	kTimeEnd                  = 15803100	
 };
 
 enum TimeType {
@@ -201,6 +231,29 @@ enum SceneIndex {
 enum JacketType {
 	kJacketOriginal = 1,
 	kJacketGreen    = 2
+};
+
+//////////////////////////////////////////////////////////////////////////
+// City
+//////////////////////////////////////////////////////////////////////////
+enum CityIndex {
+	kCityEpernay,
+	kCityChalons,
+	kCityBarleduc,
+	kCityNancy,
+	kCityLuneville,
+	kCityAvricourt,
+	kCityDeutschAvricourt,
+	kCityStrasbourg,
+	kCityBadenOos,
+	kCitySalzbourg,
+	kCityAttnangPuchheim,
+	kCityWels,
+	kCityLinz,
+	kCityVienna,
+	kCityPoszony,
+	kCityGalanta,
+	kCityPolice
 };
 
 //////////////////////////////////////////////////////////////////////////
@@ -584,7 +637,9 @@ enum EntityIndex {
 	kEntityTables3,
 	kEntityTables4,
 	kEntityTables5,
-	kEntity39
+	kEntity39,
+
+	kEntitySteam = 255
 };
 
 //////////////////////////////////////////////////////////////////////////

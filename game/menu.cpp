@@ -144,53 +144,53 @@ enum StartMenuTooltips {
 // Information about the cities on the train line
 static const struct {
 	uint8 frame;
-	uint32 time;
+	TimeValue time;
 } trainCities[31] = {
-	{0, 1037700}, // Paris
-	{9, 1148400}, // Epernay
-	{11, 1170900}, // Chalons
-	{16, 1228500}, // Bar Le Duc
-	{21, 1303200}, // Nancy
-	{25, 1335600}, // Luneville
-	{35, 1359900}, // Avricourt
-	{37, 1367100}, // Deutsch Avricourt
-	{40, 1490400}, // Strasbourg
-	{53, 1539000}, // Baden Oos
-	{56, 1563300}, // Karlsruhe
-	{60, 1656000}, // Stuttgart
-	{63, 1713600}, // Geislingen
-	{66, 1739700}, // Ulm
-	{68, 1809900}, // Augsburg
-	{73, 1852200}, // Munich
-	{84, 1984500}, // Salzbourg
-	{89, 2049300}, // Attnang-Puchheim
-	{97, 2075400}, // Wels
-	{100, 2101500}, // Linz
-	{104, 2154600}, // Amstetten
-	{111, 2268000}, // Vienna
-	{120, 2383200}, // Poszony
-	{124, 2418300}, // Galanta
-	{132, 2551500}, // Budapest
-	{148, 2952000}, // Belgrade
+	{0, kTimeCityParis},
+	{9, kTimeCityEpernay},
+	{11, kTimeCityChalons},
+	{16, kTimeCityBarLeDuc},
+	{21, kTimeCityNancy},
+	{25, kTimeCityLuneville},
+	{35, kTimeCityAvricourt},
+	{37, kTimeCityDeutschAvricourt},
+	{40, kTimeCityStrasbourg},
+	{53, kTimeCityBadenOos},
+	{56, kTimeCityKarlsruhe},
+	{60, kTimeCityStuttgart},
+	{63, kTimeCityGeislingen},
+	{66, kTimeCityUlm},
+	{68, kTimeCityAugsburg},
+	{73, kTimeCityMunich},
+	{84, kTimeCitySalzbourg},
+	{89, kTimeCityAttnangPuchheim},
+	{97, kTimeCityWels},
+	{100, kTimeCityLinz},
+	{104, kTimeCityAmstetten},
+	{111, kTimeCityVienna},
+	{120, kTimeCityPoszony},
+	{124, kTimeCityGalanta},
+	{132, kTimeCityBudapest},
+	{148, kTimeCityBelgrade},
 	/* Line 1 ends at 150 - line 2 begins at 0 */
-	{157, 3205800}, // Nish
-	{165, 3492000}, // Tzaribrod
-	{174, 3690000}, // Sofia
-	{198, 4320900}, // Adrianople
-	{210, 4941000}}; // Constantinople
+	{157, kTimeCityNish},
+	{165, kTimeCityTzaribrod},
+	{174, kTimeCitySofia},
+	{198, kTimeCityAdrianople},
+	{210, kTimeCityConstantinople}};
 
 static const struct {
-	uint32 time;
+	TimeValue time;
 	StartMenuTooltips rewind;
 	StartMenuTooltips forward;
 } cityButtonsInfo[7] = {
-	{1037700, kTooltipRewindParis, kTooltipRewindParis},
-	{1490400, kTooltipRewindStrasbourg, kTooltipForwardStrasbourg},
-	{1852200, kTooltipRewindMunich, kTooltipForwardMunich},
-	{2268000, kTooltipRewindVienna, kTooltipForwardVienna},
-	{2551500, kTooltipRewindBudapest, kTooltipForwardBudapest},
-	{2952000, kTooltipRewindBelgrade, kTooltipForwardBelgrade},
-	{4941000, kTooltipForwardConstantinople, kTooltipForwardConstantinople}
+	{kTimeCityParis, kTooltipRewindParis, kTooltipRewindParis},
+	{kTimeCityStrasbourg, kTooltipRewindStrasbourg, kTooltipForwardStrasbourg},
+	{kTimeCityMunich, kTooltipRewindMunich, kTooltipForwardMunich},
+	{kTimeCityVienna, kTooltipRewindVienna, kTooltipForwardVienna},
+	{kTimeCityBudapest, kTooltipRewindBudapest, kTooltipForwardBudapest},
+	{kTimeCityBelgrade, kTooltipRewindBelgrade, kTooltipForwardBelgrade},
+	{kTimeCityConstantinople, kTooltipForwardConstantinople, kTooltipForwardConstantinople}
 };
 
 
@@ -253,7 +253,7 @@ bool Clock::load() {
 }
 
 bool Clock::process() {
-	assert(*_time >= 1037700 && *_time <= 4941000);
+	assert(*_time >= kTimeCityParis && *_time <= kTimeCityConstantinople);
 
 	// Check that sequences have been loaded
 	if (!_seqMinutes || !_seqHour || !_seqSun || !_seqDate)
@@ -353,7 +353,7 @@ bool TrainLine::load() {
 //  line2: 61 frames (=> Constantinople)
 // text:0042E710
 bool TrainLine::process() {
-	assert(*_time >= 1037700 && *_time <= 4941000);
+	assert(*_time >= kTimeCityParis && *_time <= kTimeCityConstantinople);
 
 	// Check that sequences have been loaded
 	if (!_seqLine1 || !_seqLine2)
@@ -362,11 +362,11 @@ bool TrainLine::process() {
 	// Get the index of the last city the train has visited
 	uint index = 0;
 	for (uint i = 0; i < ARRAYSIZE(trainCities); i++)
-		if (trainCities[i].time <= *_time)
+		if ((uint32)trainCities[i].time <= *_time)
 			index = i;
 
 	uint16 frame;
-	if (*_time > trainCities[index].time) {
+	if (*_time > (uint32)trainCities[index].time) {
 		// Interpolate linearly to use a frame between the cities
 		uint8 diffFrames = trainCities[index + 1].frame - trainCities[index].frame;
 		uint diffTimeCities = (trainCities[index + 1].time - trainCities[index].time);
@@ -463,7 +463,7 @@ void Menu::show(bool savegame, TimeType type, uint32 time) {
 	} else {
 		// Only show the quick intro
 		if (!_hasShownStartScreen) {
-			getSound()->playSoundWithSubtitles("mus018.SND", 83886096, kEntityNone);
+			getSound()->playSoundWithSubtitles("MUS018.SND", 83886096, kEntityNone);
 			getScenes()->loadScene(kSceneStartScreen);
 
 			// FIXME: Original game waits 60 frames and loops Sound::unknownFunction1 unless the right button is pressed
@@ -534,7 +534,7 @@ void Menu::switchGame() {
 	//////////////////////////////////////////////////////////////////////////
 	// HACK for debug
 	if (_gameId == kGameBlue) {
-		getState()->time = 2383200;
+		getState()->time = kTimeCityPoszony;
 		_isGameStarted = true;
 	}
 	//////////////////////////////////////////////////////////////////////////
@@ -630,7 +630,7 @@ void Menu::handleEvent(const Common::Event &ev) {
 		//  - show intro if new game
 		//  - Reset save game & "save points"
 		//  - etc.
-		{
+		if (!SaveLoad::isSavegameValid(kGameBlue)) {
 			getState()->scene = kSceneDefault; // HACK to not show menu after we are finished
 			clearBg(GraphicsManager::kBackgroundAll);
 
@@ -650,21 +650,21 @@ void Menu::handleEvent(const Common::Event &ev) {
 			Animation animation;
 			if (animation.loadFile("1601.nis"))
 				animation.play();
-
-			clearBg(GraphicsManager::kBackgroundAll);
-
-			_isShowingMenu = false;
-
-			// Setup game
-			getFlags()->isGameRunning = true;
-
-			getState()->scene = kSceneDefault;
-			// TODO reset all game data			
-			getEntities()->setup(true, kEntityNone);
-			
-			getInventory()->show();
-			askForRedraw();
 		}
+
+		clearBg(GraphicsManager::kBackgroundAll);
+
+		_isShowingMenu = false;
+
+		// Setup game
+		getFlags()->isGameRunning = true;
+
+		getState()->scene = kSceneDefault;
+		// TODO reset all game data			
+		getEntities()->setup(true, kEntityNone);
+			
+		getInventory()->show();
+		askForRedraw();
 		break;
 
 	//////////////////////////////////////////////////////////////////////////

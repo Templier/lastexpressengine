@@ -871,7 +871,7 @@ void SceneManager::postProcessScene() {
 		break;
 
 	case Scene::kTypeGameOver:
-		if (getState()->time >= kTimeGameOver || getProgress().field_18 == 4)
+		if (getState()->time >= kTimeCityGalanta || getProgress().field_18 == 4)
 			break;
 
 		getSound()->unknownGameOver();

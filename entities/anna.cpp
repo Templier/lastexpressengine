@@ -702,7 +702,7 @@ IMPLEMENT_FUNCTION(Anna, function65, 65)
 		getObjects()->update(kObjectOutsideAnnaCompartment, kEntityNone, kLocation1, kCursorKeepValue, kCursorKeepValue);
 
 		setCallback(1);
-		call(new ENTITY_SETUP_ISSI(Anna, setup_function15), kTimeInvalid, "NONE");
+		call(new ENTITY_SETUP_ISSI(Anna, setup_function15), kTimeEnd, "NONE");
 	}
 }
 

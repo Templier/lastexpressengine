@@ -68,6 +68,26 @@ const char *messages[24] = {
 	"ENDALRM3"  // 65
 };
 
+const char *cities[17] = {
+	"EPERNAY",
+	"CHALONS",
+	"BARLEDUC",
+	"NANCY",
+	"LUNEVILL",
+	"AVRICOUR",
+	"DEUTSCHA",
+	"STRASBOU",
+	"BADENOOS",
+	"SALZBURG",
+	"ATTNANG",
+	"WELS",
+	"LINZ",
+	"VIENNA",
+	"POZSONY",
+	"GALANTA",
+	"POLICE"
+};
+
 SoundManager::SoundManager(LastExpressEngine *engine) : _engine(engine), _state(0) {
 	_sfx = new StreamedSound();
 	_music = new StreamedSound();
@@ -150,6 +170,9 @@ void SoundManager::unknownGameOver(bool isProcessing) {
 	warning("Sound::unknownGameOver: not implemented!");
 }
 
+//////////////////////////////////////////////////////////////////////////
+// Entry search
+//////////////////////////////////////////////////////////////////////////
 SoundManager::SoundEntry *SoundManager::getEntry(EntityIndex index) {
 	for (uint i = 0; i < _cache.size(); i++) {
 		if (_cache[i]->entity == index)
@@ -162,6 +185,15 @@ SoundManager::SoundEntry *SoundManager::getEntry(EntityIndex index) {
 SoundManager::SoundEntry *SoundManager::getEntry(Common::String name) {
 	for (uint i = 0; i < _cache.size(); i++) {
 		if (name.compareTo((char *)&_cache[i]->name2))
+			return _cache[i];
+	}
+
+	return NULL;
+}
+
+SoundManager::SoundEntry *SoundManager::getEntry(SoundType type) {
+	for (uint i = 0; i < _cache.size(); i++) {
+		if (_cache[i]->type == type)
 			return _cache[i];
 	}
 
@@ -331,6 +363,21 @@ void SoundManager::playSoundEvent(EntityIndex entity, byte action, byte a3) {
 		if (param3)
 			playSoundWithSubtitles((char*)&filename, param3, kEntityNone, a3);
 	}
+}
+
+void SoundManager::playSteam(CityIndex index) {
+	if (index >= sizeof(cities))
+		error("SoundManager::playSteam: invalid city index (was %d, max %d)", index, sizeof(cities));
+
+	_state |= kSoundState2;
+
+	if (!getEntry((kSoundType1)))
+		playSoundWithSubtitles("STEAM.SND", 16781319, kEntitySteam);
+
+	// Get the new sound entry and show subtitles
+	SoundEntry *entry = getEntry(kSoundType1);
+	if (entry)
+		showSubtitles(entry, cities[index]);	
 }
 
 void SoundManager::playFightSound(byte action, byte a4) {
@@ -1065,6 +1112,13 @@ const char *SoundManager::justAMinuteCath() const {
 //////////////////////////////////////////////////////////////////////////
 bool SoundManager::testParameter(int param) {
 	return (param == 1 || param == 10 || param == 15 || param == 19 || param == 21 || param == 23 || param == 24 || param == 26 || param == 27 || param == 28);
+}
+
+//////////////////////////////////////////////////////////////////////////
+// Subtitles
+//////////////////////////////////////////////////////////////////////////
+void SoundManager::showSubtitles(SoundEntry *entry, const char* filename) {
+	warning("SoundManager::showSubtitles: not implemented!");
 }
 
 } // End of namespace LastExpress

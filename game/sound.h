@@ -112,17 +112,14 @@ public:
 	// Sound playing
 	void playSound(EntityIndex entity, const char *filename, int a3 = -1, byte a4 = 0);
 	bool playSoundWithSubtitles(const char *filename, int param3, EntityIndex entity, byte a4 = 0);
-
-	void playDialog(EntityIndex entity, EntityIndex entityDialog, int a3, byte a4);
 	void playSoundEvent(EntityIndex entity, byte action, byte a3 = 0);
-
+	void playDialog(EntityIndex entity, EntityIndex entityDialog, int a3, byte a4);
+	void playSteam(CityIndex index);
 	void playFightSound(byte action, byte a4);
 
-	// Dialog
-	const char *getDialogName(EntityIndex entity) const;
-
-	// Letters
+	// Dialog & Letters
 	void readText(int id);
+	const char *getDialogName(EntityIndex entity) const;	
 
 	// Sound bites
 	void excuseMe(EntityIndex entity, int param2 = 0, int param3 = 0);
@@ -151,12 +148,25 @@ private:
 		kSoundState2 = 2
 	};
 
+	enum SoundType {
+		kSoundTypeNone,
+		kSoundType1,
+		kSoundType2,
+		kSoundType3,
+		kSoundType4,
+		kSoundType5,
+		kSoundType6,
+		kSoundType7,
+		kSoundType8,
+		kSoundType9
+	};
+
 	struct SoundEntry {
 		//bool isOnDisk;
 		//byte field_1;
 		//byte field_2;
 		//byte field_3;
-		//int field_4;
+		SoundType type;    // int
 		//int field_8;
 		//int field_C;
 		//int field_10;
@@ -181,13 +191,14 @@ private:
 		//Subtitle subtitle;
 
 		SoundEntry() {
+			type = kSoundTypeNone;
 			entity = kEntityNone;
 			strcpy((char*)&name1, "");
 			strcpy((char*)&name2, "");
 		};
 	};
 
-	// State
+	// State flag
 	int _state;
 
 	// Sound streams
@@ -204,6 +215,10 @@ private:
 
 	SoundEntry *getEntry(EntityIndex index);
 	SoundEntry *getEntry(Common::String name);
+	SoundEntry *getEntry(SoundType type);
+
+	// Subtitles
+	void showSubtitles(SoundEntry *entry, const char* filename);
 };
 
 } // End of namespace LastExpress

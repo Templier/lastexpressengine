@@ -225,12 +225,22 @@ IMPLEMENT_FUNCTION(Chapters, chapter1_init, 7)
 }
 
 //////////////////////////////////////////////////////////////////////////
+#define PLAY_STEAM() { \
+	getSound()->resetState(); \
+	getSound()->playSteam((CityIndex)ENTITY_PARAM(0, 4)); \
+	ENTITY_PARAM(0, 2) = 0; \
+	}
+
 IMPLEMENT_FUNCTION(Chapters, chapter1_handler, 8)
 	switch (savepoint.action) {
 	default:
 		break;
 
 	case kActionNone:
+
+
+
+
 label_callback_1:
 label_callback_2:
 label_callback_3:
@@ -255,7 +265,60 @@ label_callback_21:
 		break;
 
 	case kAction2:
-		error("Chapters::chapter1_handler: action kAction2 not implemented!");
+		if (ENTITY_PARAM(0, 2)) {
+
+			getSavePoints()->push(kEntityChapters, kEntityTrain, kAction191350523);
+
+			if (getEntityData(kEntityNone)->field_493 != EntityData::kField493_2) {
+				PLAY_STEAM();
+				break;
+			}
+
+			if (getEntities()->checkFields15()) {
+				getScenes()->loadSceneFromPosition(kCarGreenSleeping, 49);
+				PLAY_STEAM();
+				break;
+			}
+
+			if (getEntities()->checkFields16()) {
+				getScenes()->loadSceneFromPosition(kCarRedSleeping, 49);
+				PLAY_STEAM();
+				break;
+			}
+
+			CarIndex car = getEntityData(kEntityNone)->car;
+			if (car < kCarRedSleeping || car > kCarCoalTender) {
+				if (car < kCarBaggageRear || car > kCarGreenSleeping) {
+					PLAY_STEAM();
+					break;
+				}
+
+				if (getEntities()->isPlayerPosition(kCarGreenSleeping, 98)) {
+					getSound()->playSound(kEntityNone, "LIB015");
+					getScenes()->loadSceneFromPosition(kCarGreenSleeping, 71);
+					PLAY_STEAM();
+					break;
+				}
+				
+				getScenes()->loadSceneFromPosition(kCarGreenSleeping, 82);
+				PLAY_STEAM();
+				break;				
+			}
+
+			getScenes()->loadSceneFromPosition(kCarRestaurant, 82);
+			PLAY_STEAM();	
+			break;
+		}
+
+		if (ENTITY_PARAM(0, 3)) {
+			getSound()->resetState();
+			ENTITY_PARAM(0, 3) = 0;
+
+			if (params->param4) {
+				getSavePoints()->push(kEntityChapters, getProgress().field_24 ? kEntityVerges : kEntityMertens, getProgress().field_24 ? kAction168187490 : kAction224122407);
+				params->param4 = 0;
+			}
+		}
 		break;
 
 	case kActionDefault:
@@ -365,7 +428,7 @@ label_callback_21:
 	case kAction190346110:
 		getProgress().field_18 = 3;
 
-		if (getState()->time >= kTimeChapter1_1) {
+		if (getState()->time >= kTimeChapter1End) {
 			setup_chapter1_end();
 		} else {
 			setCallback(23);

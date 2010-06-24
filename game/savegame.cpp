@@ -188,7 +188,7 @@ bool SaveLoad::validateEntryHeader(SavegameEntryHeader &header) {
 	if (header.type < kHeaderType1 || header.type > kHeaderType5)
 		return false;
 
-	if (header.time < kTimeStart || header.time > kTimeEnd)
+	if (header.time < kTimeStartGame || header.time > kTimeCityConstantinople)
 		return false;
 
 	if (header.field_C <= 0 || header.field_C >= 15)

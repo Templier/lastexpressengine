@@ -224,7 +224,7 @@ IMPLEMENT_FUNCTION_II(Mahmud, function10, 10)
 		}
 
 		if (params->param4) {
-			if (getState()->time >= kTimeGameOver) {
+			if (getState()->time >= kTimeCityGalanta) {
 				params->param3 = 0;
 			} else {
 				getSound()->playSound(kEntityTrain, "LIB050", 16);

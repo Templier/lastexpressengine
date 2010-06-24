@@ -314,7 +314,7 @@ IMPLEMENT_FUNCTION(Tatiana, function30, 30)
 
 		case 2:
 			setCallback(3);
-			call(new ENTITY_SETUP(Tatiana, setup_function16), kTimeInvalid);
+			call(new ENTITY_SETUP(Tatiana, setup_function16), kTimeEnd);
 			break;
 		}
 		break;
