@@ -48,7 +48,7 @@ Kronos::Kronos(LastExpressEngine *engine) : Entity(engine, kEntityKronos) {
 	ADD_CALLBACK_FUNCTION(Kronos, updateFromTime);
 	ADD_CALLBACK_FUNCTION(Kronos, updateFromTicks);
 	ADD_CALLBACK_FUNCTION(Kronos, chapter1);
-	ADD_CALLBACK_FUNCTION(Kronos, function8);
+	ADD_CALLBACK_FUNCTION(Kronos, chapter1_handler);
 	ADD_CALLBACK_FUNCTION(Kronos, function9);
 	ADD_CALLBACK_FUNCTION(Kronos, function10);
 	ADD_CALLBACK_FUNCTION(Kronos, function11);
@@ -101,7 +101,7 @@ IMPLEMENT_FUNCTION(Kronos, chapter1, 7)
 		break;
 
 	case kActionNone:
-		TIME_CHECK_CHAPTER1(setup_function8);
+		TIME_CHECK_CHAPTER1(setup_chapter1_handler);
 		break;
 
 	case kActionDefault:
@@ -115,8 +115,23 @@ IMPLEMENT_FUNCTION(Kronos, chapter1, 7)
 	}
 }
 
-IMPLEMENT_FUNCTION(Kronos, function8, 8)
-	error("Kronos: callback function 8 not implemented!");
+IMPLEMENT_FUNCTION(Kronos, chapter1_handler, 8)
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionNone:
+		TIME_CHECK(kTimeKronos, params->param2, setup_function11);
+		break;
+
+	case kAction171849314:
+		params->param1 = 1;
+		break;
+
+	case kAction202621266:
+		setup_function9();
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Kronos, function9, 9)
@@ -146,7 +161,12 @@ IMPLEMENT_FUNCTION(Kronos, function10, 10)
 		break;
 
 	case kActionNone:
-		TIME_CHECK(kTimeKronos, setup_function11);
+		TIME_CHECK(kTimeKronos, params->param1, setup_function11);
+		
+		if (params->param1 && getEntities()->checkFields5(kEntityNone, kCarKronos)) {
+			UPDATE_PARAM(params->param3, getState()->timeTicks, 150);
+			setup_function9();
+		}
 	break;
 
 	case kActionDefault:

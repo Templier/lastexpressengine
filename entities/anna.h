@@ -57,7 +57,7 @@ public:
 	DECLARE_FUNCTION(chapter1)
 	DECLARE_FUNCTION_II(function17)
 	DECLARE_FUNCTION_I(function18)
-	DECLARE_FUNCTION(function19)
+	DECLARE_FUNCTION(chapter1_handler)
 	DECLARE_FUNCTION(function20)
 	DECLARE_FUNCTION(function21)
 	DECLARE_FUNCTION(function22)
@@ -122,9 +122,9 @@ public:
 	DECLARE_FUNCTION(function81)
 
 private:
-	DECLARE_CALL_FUNCTION(issi, Anna, int, const char*, const char*, int)
-	DECLARE_CALL_FUNCTION(siis, Anna, const char*, int, int, const char*)
 	DECLARE_CALL_FUNCTION(iiii, Anna, int, int, int, int)
+	DECLARE_CALL_FUNCTION(isii, Anna, int, const char*, int, int)
+	DECLARE_CALL_FUNCTION(siis, Anna, const char*, int, int, const char*)
 };
 
 } // End of namespace LastExpress

@@ -48,7 +48,7 @@ Alouan::Alouan(LastExpressEngine *engine) : Entity(engine, kEntityAlouan) {
 	ADD_CALLBACK_FUNCTION(Alouan, function8);
 	ADD_CALLBACK_FUNCTION(Alouan, function9);
 	ADD_CALLBACK_FUNCTION(Alouan, chapter1);
-	ADD_CALLBACK_FUNCTION(Alouan, function11);
+	ADD_CALLBACK_FUNCTION(Alouan, chapter1_handler);
 	ADD_CALLBACK_FUNCTION(Alouan, function12);
 	ADD_CALLBACK_FUNCTION(Alouan, chapter2);
 	ADD_CALLBACK_FUNCTION(Alouan, function14);
@@ -106,7 +106,7 @@ IMPLEMENT_FUNCTION(Alouan, chapter1, 10)
 		break;
 
 	case kActionNone:
-		TIME_CHECK_CHAPTER1(setup_function11);
+		TIME_CHECK_CHAPTER1(setup_chapter1_handler);
 		break;
 
 	case kActionDefault:
@@ -118,8 +118,19 @@ IMPLEMENT_FUNCTION(Alouan, chapter1, 10)
 	}
 }
 
-IMPLEMENT_FUNCTION(Alouan, function11, 11)
-	error("Alouan: callback function 11 not implemented!");
+IMPLEMENT_FUNCTION(Alouan, chapter1_handler, 11)
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionNone:
+		error("Alouan: callback function 11 not implemented!");
+		break;
+
+	case kActionCallback:
+		error("Alouan: callback function 11 not implemented!");
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Alouan, function12, 12)

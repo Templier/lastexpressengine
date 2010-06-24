@@ -46,7 +46,7 @@ public:
 		uint32 eventCorpseMovedFromFloor;
 		uint32 field_C;
 		uint32 eventCorpseFound;
-		uint32 field_14;
+		uint32 field_14;                  ///< EntityIndex (used in Gendarmes)
 		uint32 field_18;
 		uint32 portrait;
 		uint32 eventCorpseThrown;

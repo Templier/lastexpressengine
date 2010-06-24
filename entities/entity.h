@@ -48,8 +48,10 @@ public:
 		kField491_3     = 3,
 		kField491_4     = 4,
 		kField491_540   = 540,
+		kField491_750  = 750,
 		kField491_850   = 850,
 		kField491_851   = 851,
+		kField491_1200  = 1200,
 		kField491_1430  = 1430,
 		kField491_1500  = 1500,
 		kField491_1540  = 1540,
@@ -96,6 +98,7 @@ public:
 		kField491_5420  = 5420,
 		kField491_5440  = 5440,
 		kField491_5500  = 5500,
+		kField491_5540  = 5540,
 		kField491_5610  = 5610,
 		kField491_5790  = 5790,
 		kField491_5800  = 5800,
@@ -125,8 +128,10 @@ public:
 		kField491_8500  = 8500,
 		kField491_8513  = 8513,		
 		kField491_8514  = 8514,
+		kField491_8800  = 8800,
 		kField491_9020  = 9020,
 		kField491_9269  = 9269,
+		kField491_9250  = 9250,
 		kField491_9270  = 9270,
 		kField491_9460  = 9460,
 		kField491_30000 = 30000
@@ -216,6 +221,22 @@ public:
 			memset(&seq1, 0, 12);
 			memset(&seq2, 0, 12);
 			param8 = 0;
+		}
+	};
+
+	struct EntityParametersISII : EntityParameters {
+		int param1;
+		char seq[12];
+		int param2;
+		int param3;
+		int param4;
+
+		EntityParametersISII() {
+			param1 = 0;
+			memset(&seq, 0, 12);
+			param2 = 0;
+			param3 = 0;
+			param4 = 0;
 		}
 	};
 

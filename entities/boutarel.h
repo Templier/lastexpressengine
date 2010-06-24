@@ -59,7 +59,7 @@ public:
 	DECLARE_FUNCTION_I(function18)
 	DECLARE_FUNCTION(chapter1)
 	DECLARE_FUNCTION(function20)
-	DECLARE_FUNCTION(function21)
+	DECLARE_FUNCTION(chapter1_handler)
 	DECLARE_FUNCTION(function22)
 	DECLARE_FUNCTION(chapter2)
 	DECLARE_FUNCTION(function24)
@@ -81,6 +81,8 @@ public:
 
 private:
     DECLARE_CALL_FUNCTION(iiii, Boutarel, int, int, int, int)
+	DECLARE_CALL_FUNCTION(siis, Boutarel, const char*, int, int, const char*)
+	DECLARE_CALL_FUNCTION(isii, Boutarel, int, const char*, int, int)
 };
 
 } // End of namespace LastExpress

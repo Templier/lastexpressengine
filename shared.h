@@ -40,9 +40,14 @@ enum TimeValue {
 
 	// Chapter 1
 	kTimeChapter1             = 1062000,
+	kTimeMilos1_0             = 1071000,
 	kTimeParisEpernay         = 1075500,
+	kTimeRebecca_1_0          = 1080000,
+	kTimeRebecca_1_1          = 1084500,
+	kTimeMilos1_1             = 1089000,
 	kTimeAnna                 = 1093500,
 	kTimeMahmud_1             = 1098000,
+	kTimeBoutarel1_0          = 1102500,
 	kTimeKahina               = 1107000,
 	kTimeEnterEpernay         = 1147500,
 	kTimeCityEpernay          = 1148400,
@@ -57,6 +62,7 @@ enum TimeValue {
 	kTimeYasmin_8             = 1174500,
 	kTimeYasmin_9             = 1183500,
 	kTimeRebecca_3            = 1184400,
+	kTimeBoutarel1_1          = 1215000,
 	kTimeCityBarLeDuc         = 1228500,
 	kTimeExitBarLeDuc         = 1231200,
 	kTimePascale              = 1242000,
@@ -1045,6 +1051,7 @@ enum ActionIndex {
 	// Kronos
 	/////////////////////////////
 	kAction137685712 = 137685712,
+	kAction171849314 = 171849314,
 
 	/////////////////////////////
 	// Mahmud
@@ -1092,7 +1099,12 @@ enum ActionIndex {
 
 	/////////////////////////////
 	// Mme Boutarel
-	/////////////////////////////
+	/////////////////////////////	
+	kAction102484312 = 102484312,
+	kAction102752636 = 102752636,
+	kAction134289824 = 134289824,
+	kAction168986720 = 168986720,
+	kAction202221040 = 202221040,
 	kAction242526416 = 242526416,
 
 	/////////////////////////////

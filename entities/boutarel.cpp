@@ -28,6 +28,7 @@
 #include "lastexpress/game/entities.h"
 #include "lastexpress/game/logic.h"
 #include "lastexpress/game/object.h"
+#include "lastexpress/game/scenes.h"
 #include "lastexpress/game/savepoint.h"
 #include "lastexpress/game/sound.h"
 #include "lastexpress/game/state.h"
@@ -58,7 +59,7 @@ Boutarel::Boutarel(LastExpressEngine *engine) : Entity(engine, kEntityBoutarel) 
 	ADD_CALLBACK_FUNCTION(Boutarel, function18);
 	ADD_CALLBACK_FUNCTION(Boutarel, chapter1);
 	ADD_CALLBACK_FUNCTION(Boutarel, function20);
-	ADD_CALLBACK_FUNCTION(Boutarel, function21);
+	ADD_CALLBACK_FUNCTION(Boutarel, chapter1_handler);
 	ADD_CALLBACK_FUNCTION(Boutarel, function22);
 	ADD_CALLBACK_FUNCTION(Boutarel, chapter2);
 	ADD_CALLBACK_FUNCTION(Boutarel, function24);
@@ -155,12 +156,42 @@ IMPLEMENT_FUNCTION_IS(Boutarel, function15, 15)
 	error("Boutarel: callback function 15 not implemented!");
 }
 
+//////////////////////////////////////////////////////////////////////////
+// bool
+// const char *
 IMPLEMENT_FUNCTION_IS(Boutarel, function16, 16)
 	error("Boutarel: callback function 16 not implemented!");
 }
 
 IMPLEMENT_FUNCTION_IS(Boutarel, function17, 17)
-	error("Boutarel: callback function 17 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionNone:
+		if (params->param1 < (int)getState()->time && !params->param3) {
+			params->param3 = 1;
+			CALLBACK_ACTION();
+			break;
+		}
+
+		if (!params->param2) {
+			params->param4 = 0;
+			break;
+		}
+
+		UPDATE_PARAM(params->param4, getState()->timeTicks, 90)
+		getScenes()->loadSceneFromPosition(kCarRestaurant, 51);
+		break;
+
+	case kActionDefault:		
+		getEntities()->drawSequenceLeft(kEntityMmeBoutarel, params->seq);
+		break;
+
+	case kAction17:
+		params->param2 = (getEntities()->isPlayerPosition(kCarRestaurant, 52) ? 1 : 0);
+		break;
+	}	
 }
 
 IMPLEMENT_FUNCTION_I(Boutarel, function18, 18)
@@ -173,7 +204,7 @@ IMPLEMENT_FUNCTION(Boutarel, chapter1, 19)
 		break;
 
 	case kActionNone:
-		TIME_CHECK_CHAPTER1(setup_function21);
+		TIME_CHECK_CHAPTER1(setup_chapter1_handler);
 		break;
 
 	case kActionDefault:
@@ -195,8 +226,84 @@ IMPLEMENT_FUNCTION(Boutarel, function20, 20)
 	error("Boutarel: callback function 20 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Boutarel, function21, 21)
-	error("Boutarel: callback function 21 not implemented!");
+IMPLEMENT_FUNCTION(Boutarel, chapter1_handler, 21)
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionDefault:
+		setCallback(1);
+		call(new ENTITY_SETUP_ISII(Boutarel, setup_function17), kTimeMilos1_0, "101A");
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			setCallback(2);
+			call(new ENTITY_SETUP_ISII(Boutarel, setup_function16), false, "101B");
+			break;
+
+		case 2:
+			setCallback(3);
+			call(new ENTITY_SETUP(Boutarel, setup_function18), kTimeBoutarel1_0);
+			break;
+
+		case 3:
+			getObjects()->update(kObjectCompartmentC, kEntityNone, kLocation1, kCursorNormal, kCursorNormal);
+			getObjects()->update(kObject50, kEntityNone, kLocation1, kCursorNormal, kCursorNormal);
+
+			if (getEntities()->isPlayerPosition(kCarRedSleeping, 54) || getEntities()->isPlayerPosition(kCarRedSleeping, 44))
+				getScenes()->loadSceneFromPosition(kCarRedSleeping, 10);
+
+			getEntities()->updatePosition(kEntityBoutarel, kCarRedSleeping, 54, true);
+			getEntities()->updatePosition(kEntityBoutarel, kCarRedSleeping, 44, true);
+
+			setCallback(4);
+			call(new ENTITY_SETUP_SIIS(Boutarel, setup_playSound), "MRB1074");
+			break;
+
+		case 4:
+			getEntities()->updatePosition(kEntityBoutarel, kCarRedSleeping, 54);
+			getEntities()->updatePosition(kEntityBoutarel, kCarRedSleeping, 44);
+
+			setCallback(5);
+			call(new ENTITY_SETUP(Boutarel, setup_function20));
+			break;
+
+		case 5:
+			setCallback(6);
+			call(new ENTITY_SETUP(Boutarel, setup_function18), kTimeEnterChalons);
+			break;
+
+		case 6:
+			setCallback(7);
+			call(new ENTITY_SETUP_ISII(Boutarel, setup_function15), false, "102A");			
+			break;
+
+		case 7:
+			setCallback(8);
+			call(new ENTITY_SETUP_ISII(Boutarel, setup_function17), kTimeYasmin_9, "102B");					
+			break;
+
+		case 8:
+			setCallback(9);
+			call(new ENTITY_SETUP_ISII(Boutarel, setup_function16), false, "102C");		
+			break;
+
+		case 9:
+			setCallback(10);
+			call(new ENTITY_SETUP(Boutarel, setup_function18), kTimeBoutarel1_1);
+			break;
+
+		case 10:
+			setup_function22();
+			break;
+		}
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Boutarel, function22, 22)
@@ -362,7 +469,7 @@ IMPLEMENT_FUNCTION(Boutarel, function32, 32)
 		break;
 
 	case kActionNone:		
-		TIME_CHECK(kTimeBoutarel, setup_function33);
+		TIME_CHECK(kTimeBoutarel, params->param1, setup_function33);
 		break;
 
 	case kActionDefault:

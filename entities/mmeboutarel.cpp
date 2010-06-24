@@ -49,7 +49,7 @@ MmeBoutarel::MmeBoutarel(LastExpressEngine *engine) : Entity(engine, kEntityMmeB
 	ADD_CALLBACK_FUNCTION(MmeBoutarel, function9);
 	ADD_CALLBACK_FUNCTION(MmeBoutarel, chapter1);
 	ADD_CALLBACK_FUNCTION(MmeBoutarel, function11);
-	ADD_CALLBACK_FUNCTION(MmeBoutarel, function12);
+	ADD_CALLBACK_FUNCTION(MmeBoutarel, chapter1_handler);
 	ADD_CALLBACK_FUNCTION(MmeBoutarel, function13);
 	ADD_CALLBACK_FUNCTION(MmeBoutarel, function14);
 	ADD_CALLBACK_FUNCTION(MmeBoutarel, function15);
@@ -111,7 +111,7 @@ IMPLEMENT_FUNCTION(MmeBoutarel, chapter1, 10)
 		break;
 
 	case kActionNone:
-		TIME_CHECK_CHAPTER1(setup_function12);
+		TIME_CHECK_CHAPTER1(setup_chapter1_handler);
 		break;
 
 	case kActionDefault:
@@ -131,8 +131,78 @@ IMPLEMENT_FUNCTION(MmeBoutarel, function11, 11)
 	error("MmeBoutarel: callback function 11 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(MmeBoutarel, function12, 12)
-	error("MmeBoutarel: callback function 12 not implemented!");
+IMPLEMENT_FUNCTION(MmeBoutarel, chapter1_handler, 12)
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionDefault:
+		params->param1 = 1;
+		getEntities()->drawSequenceLeft(kEntityMmeBoutarel, "501");
+		break;
+
+	case kAction17:
+		if (getEntities()->isPlayerPosition(kCarRedSleeping, 44)) {
+			setCallback(1);
+			call(new ENTITY_SETUP_SIIS(MmeBoutarel, setup_draw), "502B");
+		}
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			getEntities()->drawSequenceLeft(kEntityMmeBoutarel, "502A");
+			break;
+
+		case 2:
+			getEntities()->drawSequenceLeft(kEntityMmeBoutarel, "606Qd");
+			getEntities()->enterCompartment(kEntityMmeBoutarel, kObjectCompartmentD);
+			break;
+
+		case 3:
+			getData()->field_493 = EntityData::kField493_1;
+			params->param1 = 1;
+			getEntities()->prepareSequences(kEntityMmeBoutarel);
+			setup_function13();
+			break;
+		}
+		break;
+
+	case kAction102484312:
+		getEntities()->drawSequenceLeft(kEntityMmeBoutarel, "501");
+		params->param1 = 1;
+		break;
+
+	case kAction134289824:
+		getEntities()->drawSequenceLeft(kEntityMmeBoutarel, "502A");
+		params->param1 = 0;
+		break;
+
+	case kAction168986720:
+		getSavePoints()->push(kEntityMmeBoutarel, kEntityFrancois, kAction102752636);
+		getSound()->playSound(kEntityMmeBoutarel, "MME1036");
+		getEntities()->exitCompartment(kEntityMmeBoutarel, kObjectCompartmentD);
+
+		setCallback(3);
+		call(new ENTITY_SETUP_SIIS(MmeBoutarel, setup_enterExitCompartment), "606Fd", kObjectCompartmentD);
+		break;
+
+	case kAction202221040:
+		getObjects()->update(kObjectCompartmentD, kEntityNone, kLocationNone, kCursorKeepValue, kCursorKeepValue);
+		getData()->field_493 = EntityData::kField493_0;
+
+		getSound()->playSound(kEntityMmeBoutarel, "MME1035A");
+
+		if (getEntities()->checkSequence0(kEntityMmeBoutarel) || getEntities()->checkFields9(kEntityMmeBoutarel, kEntityNone, 2000) )
+			getProgress().field_AC = 1;
+
+		setCallback(2);
+		call(new ENTITY_SETUP_SIIS(MmeBoutarel, setup_enterExitCompartment), "606Ed", kObjectCompartmentD);
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(MmeBoutarel, function13, 13)
@@ -211,7 +281,6 @@ IMPLEMENT_FUNCTION(MmeBoutarel, chapter3, 20)
 		getData()->car = kCarRedSleeping;
 		getData()->clothes = kClothesDefault;
 		getData()->inventoryItem = kItemNone;
-
 		break;
 	}
 }
@@ -237,7 +306,6 @@ IMPLEMENT_FUNCTION(MmeBoutarel, chapter4, 22)
 		getData()->car = kCarRedSleeping;
 		getData()->clothes = kClothesDefault;
 		getData()->inventoryItem = kItemNone;
-
 		break;
 	}
 }
@@ -280,7 +348,6 @@ IMPLEMENT_FUNCTION(MmeBoutarel, chapter5, 26)
 		getData()->car = kCarRestaurant;
 		getData()->clothes = kClothesDefault;
 		getData()->inventoryItem = kItemNone;
-
 		break;
 	}
 }

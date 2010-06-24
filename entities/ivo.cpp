@@ -51,7 +51,7 @@ Ivo::Ivo(LastExpressEngine *engine) : Entity(engine, kEntityIvo) {
 	ADD_CALLBACK_FUNCTION(Ivo, sitAtTableWithSalko);
 	ADD_CALLBACK_FUNCTION(Ivo, leaveTableWithSalko);
 	ADD_CALLBACK_FUNCTION(Ivo, chapter1);
-	ADD_CALLBACK_FUNCTION(Ivo, function15);
+	ADD_CALLBACK_FUNCTION(Ivo, chapter1_handler);
 	ADD_CALLBACK_FUNCTION(Ivo, function16);
 	ADD_CALLBACK_FUNCTION(Ivo, function17);
 	ADD_CALLBACK_FUNCTION(Ivo, chapter2);
@@ -163,7 +163,7 @@ IMPLEMENT_FUNCTION(Ivo, chapter1, 14)
 		break;
 
 	case kActionNone:
-		TIME_CHECK_CHAPTER1(setup_function15);
+		TIME_CHECK_CHAPTER1(setup_chapter1_handler);
 		break;
 
 	case kActionDefault:
@@ -178,7 +178,7 @@ IMPLEMENT_FUNCTION(Ivo, chapter1, 14)
 	}
 }
 
-IMPLEMENT_FUNCTION(Ivo, function15, 15)
+IMPLEMENT_FUNCTION(Ivo, chapter1_handler, 15)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -233,7 +233,7 @@ IMPLEMENT_FUNCTION(Ivo, chapter2, 18)
 		break;
 
 	case kActionNone:
-		TIME_CHECK(kTimeIvo_2, setup_function19);
+		TIME_CHECK(kTimeIvo_2, params->param1, setup_function19);
 		break;
 
 	case kActionDefault:

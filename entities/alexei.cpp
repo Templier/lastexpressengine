@@ -353,7 +353,7 @@ IMPLEMENT_FUNCTION(Alexei, function38, 38)
 
 	case kActionDefault:
 		setCallback(1);
-		call(new ENTITY_SETUP_ISSI(Alexei, setup_function16), kTimeAlexei, "411");
+		call(new ENTITY_SETUP_ISII(Alexei, setup_function16), kTimeAlexei, "411");
 		break;
 
 	case kActionCallback:
@@ -381,7 +381,7 @@ IMPLEMENT_FUNCTION(Alexei, function41, 41)
 			getScenes()->loadSceneFromPosition(kCarGreenSleeping, 49);
 
 		setCallback(1);
-		call(new ENTITY_SETUP_ISSI(Alexei, setup_function16), kTimeAlexei_1, "411");
+		call(new ENTITY_SETUP_ISII(Alexei, setup_function16), kTimeAlexei_1, "411");
 		break;
 
 	case kActionCallback:

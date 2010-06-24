@@ -29,6 +29,7 @@
 #include "lastexpress/game/logic.h"
 #include "lastexpress/game/object.h"
 #include "lastexpress/game/savepoint.h"
+#include "lastexpress/game/scenes.h"
 #include "lastexpress/game/sound.h"
 #include "lastexpress/game/state.h"
 
@@ -59,7 +60,7 @@ Rebecca::Rebecca(LastExpressEngine *engine) : Entity(engine, kEntityRebecca) {
 	ADD_CALLBACK_FUNCTION(Rebecca, function19);
 	ADD_CALLBACK_FUNCTION(Rebecca, function20);
 	ADD_CALLBACK_FUNCTION(Rebecca, chapter1);
-	ADD_CALLBACK_FUNCTION(Rebecca, function22);
+	ADD_CALLBACK_FUNCTION(Rebecca, chapter1_handler);
 	ADD_CALLBACK_FUNCTION(Rebecca, function23);
 	ADD_CALLBACK_FUNCTION(Rebecca, function24);
 	ADD_CALLBACK_FUNCTION(Rebecca, function25);
@@ -189,7 +190,7 @@ IMPLEMENT_FUNCTION(Rebecca, chapter1, 21)
 		break;
 
 	case kActionNone:
-		TIME_CHECK_CHAPTER1(setup_function22);
+		TIME_CHECK_CHAPTER1(setup_chapter1_handler);
 		break;
 
 	case kActionDefault:
@@ -210,8 +211,109 @@ IMPLEMENT_FUNCTION(Rebecca, chapter1, 21)
 	}
 }
 
-IMPLEMENT_FUNCTION(Rebecca, function22, 22)
-	error("Rebecca: callback function 22 not implemented!");
+IMPLEMENT_FUNCTION(Rebecca, chapter1_handler, 22)
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionNone:
+		TIME_CHECK_PLAYSOUND(Rebecca, kTimeRebecca_1_1, params->param3, 1, "REB1015");
+
+		if (params->param4 == EntityData::kParamTime || !getState()->time)
+			goto label_function22_callback_5;
+
+		if (getState()->time > kTimeRebecca_1_0) {
+			params->param4 = EntityData::kParamTime;
+			if (getEntities()->checkFields12(kEntityNone))
+				getProgress().field_B8 = 1;
+
+			setCallback(4);
+			call(new ENTITY_SETUP_SIIS(Rebecca, setup_playSound), "REB1012");
+			break;
+		}
+
+		if (!getEntities()->checkFields12(kEntityNone) || !params->param4) {
+			params->param4 = getState()->time + 150;
+			if (!params->param4) {
+				if (getEntities()->checkFields12(kEntityNone))
+					getProgress().field_B8 = 1;
+
+				setCallback(4);
+				call(new ENTITY_SETUP_SIIS(Rebecca, setup_playSound), "REB1012");
+				break;
+			}
+		}
+
+		if (params->param4 >= (int)getState()->time) {
+label_function22_callback_4:
+			if (params->param1) {
+				if ((params->param5 && !(getState()->time + 900)) || params->param5 < (int)getState()->time) {
+					if (params->param5 >= (int)getState()->time)
+						params->param5 = (int)getState()->time + 900;
+
+					if (getEntities()->checkFields12(kEntityNone)) {
+						setCallback(5);
+						call(new ENTITY_SETUP_SIIS(Rebecca, setup_playSound), "REB1013");
+						break;
+					}
+				}
+			}
+
+label_function22_callback_5:
+			if (params->param2) {
+				UPDATE_PARAM(params->param6, getState()->timeTicks, 90);
+				getScenes()->loadSceneFromPosition(kCarRestaurant, 55);
+			} else {
+				params->param6 = 0;
+			}	
+		} else {
+			params->param4 = EntityData::kParamTime;
+			if (getEntities()->checkFields12(kEntityNone))
+				getProgress().field_B8 = 1;
+
+			setCallback(4);
+			call(new ENTITY_SETUP_SIIS(Rebecca, setup_playSound), "REB1012");
+		}			
+		break;
+
+	case kActionDefault:
+		getEntities()->drawSequenceLeft(kEntityRebecca, "107B");
+		break;
+
+	case kAction17:
+		params->param2 = (getEntities()->isPlayerPosition(kCarRestaurant, 57) ? 1 : 0);
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			setCallback(2);
+			call(new ENTITY_SETUP_SIIS(Rebecca, setup_updatePosition), "107C", kCarRestaurant, 57);
+			break;
+
+		case 2:
+			setCallback(3);
+			call(new ENTITY_SETUP(Rebecca, setup_function18));
+			break;
+
+		case 3:
+			setup_function23();
+			break;
+
+		case 4:
+			params->param1 = 1;
+			goto label_function22_callback_4;
+
+		case 5:
+			getProgress().field_B4 = 1;
+			params->param1 = 0;
+			goto label_function22_callback_5;			
+		}		
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Rebecca, function23, 23)

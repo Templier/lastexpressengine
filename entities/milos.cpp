@@ -53,7 +53,7 @@ Milos::Milos(LastExpressEngine *engine) : Entity(engine, kEntityMilos) {
 	ADD_CALLBACK_FUNCTION(Milos, chapter1);
 	ADD_CALLBACK_FUNCTION(Milos, function13);
 	ADD_CALLBACK_FUNCTION(Milos, function14);
-	ADD_CALLBACK_FUNCTION(Milos, function15);
+	ADD_CALLBACK_FUNCTION(Milos, chapter1_handler);
 	ADD_CALLBACK_FUNCTION(Milos, function16);
 	ADD_CALLBACK_FUNCTION(Milos, function17);
 	ADD_CALLBACK_FUNCTION(Milos, function18);
@@ -294,7 +294,7 @@ IMPLEMENT_FUNCTION(Milos, chapter1, 12)
 		break;
 
 	case kActionNone:
-		TIME_CHECK_CHAPTER1(setup_function15);
+		TIME_CHECK_CHAPTER1(setup_chapter1_handler);
 		break;
 
 	case kActionDefault:
@@ -320,8 +320,62 @@ IMPLEMENT_FUNCTION(Milos, function14, 14)
 	error("Milos: callback function 14 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Milos, function15, 15)
-	error("Milos: callback function 15 not implemented!");
+IMPLEMENT_FUNCTION(Milos, chapter1_handler, 15)
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionNone:
+		if (getState()->time > kTimeMilos1_0 && !params->param3) {
+			params->param3 = 1;
+			getSavePoints()->push(kEntityMilos, kEntityServers1, kAction223002560);
+		}
+
+		if (getState()->time > kTimeMilos1_1 && getEntities()->checkFields11()) {
+			setup_function16();
+			break;
+		}
+
+		if (getEntities()->isPlayerPosition(kCarRestaurant, 61) && !params->param1) {
+			UPDATE_PARAM_FUNCTION(params->param4, getState()->timeTicks, 45, label_checkNextPosition);
+
+			setCallback(1);
+			call(new ENTITY_SETUP_SIIS(Milos, setup_draw), "009C");
+			break;
+		}
+
+label_checkNextPosition:
+		if (getEntities()->isPlayerPosition(kCarRestaurant, 70) && !params->param2) {
+			UPDATE_PARAM(params->param5, getState()->timeTicks, 45);
+
+			setCallback(2);
+			call(new ENTITY_SETUP_SIIS(Milos, setup_draw), "009C");
+		}
+		break;
+
+	case kActionDefault:
+		getSavePoints()->push(kEntityMilos, kEntityTables2, kAction136455232);
+		getEntities()->drawSequenceLeft(kEntityMilos, "009A");	
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			getEntities()->drawSequenceLeft(kEntityMilos, "009A");
+			params->param1 = 1;
+			break;
+
+		case 2:
+			getEntities()->drawSequenceLeft(kEntityMilos, "009A");
+			params->param2 = 1;
+			break;		
+		}
+		break;
+	}
+
 }
 
 IMPLEMENT_FUNCTION(Milos, function16, 16)

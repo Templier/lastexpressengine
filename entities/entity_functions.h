@@ -46,11 +46,11 @@
 // Time check macros
 //////////////////////////////////////////////////////////////////////////
 #define TIME_CHECK_CHAPTER1(function) \
-	TIME_CHECK(kTimeChapter1, function)
+	TIME_CHECK(kTimeChapter1, params->param1, function)
 
-#define TIME_CHECK(timeValue, function) \
-	if (getState()->time > timeValue && !params->param1) { \
-		params->param1 = 1; \
+#define TIME_CHECK(timeValue, parameter, function) \
+	if (getState()->time > timeValue && !parameter) { \
+		parameter = 1; \
 		function(); \
 	}
 

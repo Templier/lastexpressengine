@@ -58,7 +58,7 @@ Anna::Anna(LastExpressEngine *engine) : Entity(engine, kEntityAnna) {
 	ADD_CALLBACK_FUNCTION(Anna, chapter1);
 	ADD_CALLBACK_FUNCTION(Anna, function17);
 	ADD_CALLBACK_FUNCTION(Anna, function18);
-	ADD_CALLBACK_FUNCTION(Anna, function19);
+	ADD_CALLBACK_FUNCTION(Anna, chapter1_handler);
 	ADD_CALLBACK_FUNCTION(Anna, function20);
 	ADD_CALLBACK_FUNCTION(Anna, function21);
 	ADD_CALLBACK_FUNCTION(Anna, function22);
@@ -209,7 +209,7 @@ IMPLEMENT_FUNCTION(Anna, chapter1, 16)
 		break;
 
 	case kActionNone:
-		TIME_CHECK_CHAPTER1(setup_function19);
+		TIME_CHECK_CHAPTER1(setup_chapter1_handler);
 		break;
 
 	case kActionDefault:
@@ -237,7 +237,7 @@ IMPLEMENT_FUNCTION_I(Anna, function18, 18)
 	error("Anna: callback function 18 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Anna, function19, 19)
+IMPLEMENT_FUNCTION(Anna, chapter1_handler, 19)
 	error("Anna: callback function 19 not implemented!");
 }
 
@@ -248,7 +248,7 @@ IMPLEMENT_FUNCTION(Anna, function20, 20)
 
 	case kActionDefault:
 		setCallback(1);
-		call(new ENTITY_SETUP_ISSI(Anna, setup_function15), kTimeAnna, "NONE");
+		call(new ENTITY_SETUP_ISII(Anna, setup_function15), kTimeAnna, "NONE");
 		break;
 
 	case kActionCallback:
@@ -365,7 +365,7 @@ IMPLEMENT_FUNCTION(Anna, function33, 33)
 
 		params->param1 = getState()->time + 4500;
 		setCallback(1);
-		call(new ENTITY_SETUP_ISSI(Anna, setup_function15), params->param1, "NONE");
+		call(new ENTITY_SETUP_ISII(Anna, setup_function15), params->param1, "NONE");
 		break;
 
 	case kActionCallback:
@@ -702,7 +702,7 @@ IMPLEMENT_FUNCTION(Anna, function65, 65)
 		getObjects()->update(kObjectOutsideAnnaCompartment, kEntityNone, kLocation1, kCursorKeepValue, kCursorKeepValue);
 
 		setCallback(1);
-		call(new ENTITY_SETUP_ISSI(Anna, setup_function15), kTimeEnd, "NONE");
+		call(new ENTITY_SETUP_ISII(Anna, setup_function15), kTimeEnd, "NONE");
 	}
 }
 

@@ -664,7 +664,7 @@ void Entities::getSequenceName(EntityIndex index, EntityDirection direction, cha
 
 	switch (direction) {
 	default:
-		error("Entities::getSequenceName: Invalid value for field_49A: %d", direction);
+		error("Entities::getSequenceName: Invalid value for direction: %d", direction);
 		break;
 
 	case kDirectionUp:
@@ -1181,8 +1181,130 @@ bool Entities::compare(EntityIndex entity1, EntityIndex entity2) {
 	error("Entities::compare: not implemented!");
 }
 
-bool Entities::checkEntity(EntityIndex entity, CarIndex car, EntityData::Field491Value field491) {
-	error("Entities::checkEntity: not implemented!");
+bool Entities::checkEntity(EntityIndex entity, CarIndex car, EntityData::Field491Value field_491) {
+	EntityData::EntityCallData *data = getData(entity);
+	EntityDirection direction = kDirectionNone;
+	int delta = 0;
+	bool flag1 = false;
+	bool flag2 = false;
+	bool flag3 = false;
+
+	if (field_491 == EntityData::kField491_2000
+	 && !isPlayerPosition(kCarGreenSleeping, 1)
+	 && !isPlayerPosition(kCarRedSleeping, 2))
+		 field_491 = EntityData::kField491_1500;
+	
+	if (data->direction != kDirectionUp && data->direction != kDirectionDown)
+		data->field_497 = 0;
+
+	if (data->field_497) {
+		data->field_497--;
+
+		if (data->field_497 == -128)
+			data->field_497 = 0;
+
+		if ((data->field_497 & 127) != 8) {
+			data->field_49B = 0;
+			return false;
+		}
+
+		flag1 = true;
+
+		if (data->field_497 & 128)
+			flag2 = true;
+	}
+
+	if (data->car != car)
+		goto label_process_entity;
+	
+
+	// Calculate delta
+	delta = abs(data->field_491 - field_491);
+	if (delta < 100 || (field_491 > EntityData::kField491_850 && field_491 < EntityData::kField491_9270 && delta < 300))
+		flag3 = true;
+
+	if (!flag3) {
+
+		if ((getScenes()->checkPosition(kSceneNone, SceneManager::kCheckPositionType0) && data->direction == kDirectionUp)
+		 || (getScenes()->checkPosition(kSceneNone, SceneManager::kCheckPositionType1) && data->direction == kDirectionDown)) {
+			 if (!checkField491(field_491) && checkFields9(entity, kEntityNone, 250))
+				 flag3 = true;
+		}
+
+		if (!flag3)
+			goto label_process_entity;
+	}
+
+	if (getEntities()->checkSequence0(entity) && getEntities()->checkFields25(entity)) {
+		if (!getEntities()->checkField491(field_491)) {
+			flag3 = false;
+			field_491 = (EntityData::Field491Value)(getData(kEntityNone)->field_491 + 250 * (data->direction == kDirectionUp ? 1 : -1));
+		}
+	}
+
+	if (!flag3) {
+label_process_entity:
+		
+		// Calculate direction
+		if (data->car < car)
+			direction = kDirectionUp;
+		else if (data->car > car)
+			direction = kDirectionDown;
+		else // same car
+			direction = (data->field_491 < field_491) ? kDirectionUp : kDirectionDown;			
+
+		if (data->direction == direction) {
+			error("Entities::checkEntity: not implemented!");
+
+		} else {
+			if (!flag1) {
+				drawSequencesInternal(entity, direction, true);
+				return false;
+			}
+		}
+
+		//////////////////////////////////////////////////////////////////////////
+		// Adjust positions
+
+		// Direction Up
+		if (direction == kDirectionUp) {
+			if (data->field_491 < (flag2 ? EntityData::kField491_8800 : EntityData::kField491_9250))
+				data->field_491 = (EntityData::Field491Value)(data->field_491 + (flag2 ? EntityData::kField491_1200 : EntityData::kField491_750));
+
+			if (data->car == car && data->field_491 >= field_491) {
+				data->field_491 = field_491;
+				data->direction = kDirectionNone;
+				data->field_498 = 0;
+				return true;
+			}
+
+			drawSequencesInternal(entity, direction, true);
+			return false;
+		}
+
+		// Direction Down
+		if (direction == kDirectionDown) {
+			if (data->field_491 > (flag2 ? EntityData::kField491_1200 : EntityData::kField491_750))
+				data->field_491 = (EntityData::Field491Value)(data->field_491 - (flag2 ? EntityData::kField491_1200 : EntityData::kField491_750));
+
+			if (data->car == car && data->field_491 <= field_491) {
+				data->field_491 = field_491;
+				data->direction = kDirectionNone;
+				data->field_498 = 0;
+				return true;
+			}
+
+			drawSequencesInternal(entity, direction, true);
+			return false;
+		}
+	}
+
+	data->field_491 = field_491;
+	if (data->direction == kDirectionUp || data->direction == kDirectionDown)
+		data->direction = kDirectionNone;
+	data->field_498 = 0;
+
+	return true;
 }
 
 bool Entities::checkFields1(EntityIndex entity, CarIndex car, EntityData::Field491Value field491) const {

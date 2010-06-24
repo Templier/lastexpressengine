@@ -49,7 +49,7 @@ Gendarmes::Gendarmes(LastExpressEngine *engine) : Entity(engine, kEntityGendarme
 	ADD_CALLBACK_FUNCTION(Gendarmes, function8);
 	ADD_CALLBACK_FUNCTION(Gendarmes, function9);
 	ADD_CALLBACK_FUNCTION(Gendarmes, function10);
-	ADD_CALLBACK_FUNCTION(Gendarmes, function11);
+	ADD_CALLBACK_FUNCTION(Gendarmes, chapter1_handler);
 	ADD_CALLBACK_FUNCTION(Gendarmes, function12);
 	ADD_CALLBACK_FUNCTION(Gendarmes, function13);
 	ADD_CALLBACK_FUNCTION(Gendarmes, chapter2);
@@ -68,7 +68,7 @@ IMPLEMENT_FUNCTION(Gendarmes, chapter1, 2)
 		break;
 
 	case kActionNone:
-		TIME_CHECK_CHAPTER1(setup_function11);
+		TIME_CHECK_CHAPTER1(setup_chapter1_handler);
 		break;
 
 	case kActionDefault:
@@ -98,7 +98,44 @@ IMPLEMENT_FUNCTION_II(Gendarmes, savegame, 7)
 }
 
 IMPLEMENT_FUNCTION_II(Gendarmes, function8, 8)
-	error("Gendarmes: callback function 8 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionNone:
+		if (getEntities()->checkEntity(kEntityGendarmes, (CarIndex)params->param1, (EntityData::Field491Value)params->param2)) {
+			CALLBACK_ACTION();
+			break;
+		}
+		// fallback to action 17
+
+	case kAction17:
+		if (!ENTITY_PARAM(0, 1) && getEntities()->checkSequence0(kEntityGendarmes)) {
+			getSound()->playSound(kEntityNone, "MUS007");
+			ENTITY_PARAM(0, 1) = 1;
+		}
+
+		if (getEntities()->checkFields9(kEntityGendarmes, kEntityNone, 1750)
+		 && getEntityData(kEntityNone)->field_493 == 0) {
+			if (!getEntities()->isPlayerPosition(kCarRedSleeping, 22) || getEntities()->checkFields9(kEntityGendarmes, kEntityNone, 250)) {
+				setCallback(1);
+				call(new ENTITY_SETUP(Gendarmes, setup_savegame), kSavegameType2, kEventGendarmesArrestation);
+			}
+		}
+		break;
+
+	case kActionDefault:
+		if (getEntities()->checkEntity(kEntityGendarmes, (CarIndex)params->param1, (EntityData::Field491Value)params->param2))
+			CALLBACK_ACTION();
+		break;
+
+	case kActionCallback:
+		if (getCallback() == 1) {
+			getAction()->playAnimation(kEventGendarmesArrestation);
+			getLogic()->gameOver(kTimeType0, kTime1, kSceneGameOverPolice1, true);
+		}
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION_IISS(Gendarmes, function9, 9)
@@ -109,7 +146,7 @@ IMPLEMENT_FUNCTION_III(Gendarmes, function10, 10)
 	error("Gendarmes: callback function 10 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Gendarmes, function11, 11)
+IMPLEMENT_FUNCTION(Gendarmes, chapter1_handler, 11)
 	if (savepoint.action == kActionDefault) {
 		getSavePoints()->push(kEntityGendarmes, kEntityMertens, kAction190082817);
 		setup_function12();
@@ -117,7 +154,25 @@ IMPLEMENT_FUNCTION(Gendarmes, function11, 11)
 }
 
 IMPLEMENT_FUNCTION(Gendarmes, function12, 12)
-	error("Gendarmes: callback function 12 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionDefault:		
+		getData()->field_491 = EntityData::kField491_540;
+		getData()->field_493 = EntityData::kField493_0;
+		getData()->car = kCarGreenSleeping;
+
+		getProgress().field_14 = 29;
+
+		setCallback(1);
+		call(new ENTITY_SETUP(Gendarmes, setup_function8), kCarGreenSleeping, EntityData::kField491_5540);
+		break;
+
+	case kActionCallback:
+		error("Gendarmes: callback function 12 not implemented!");
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Gendarmes, function13, 13)
