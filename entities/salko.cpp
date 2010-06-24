@@ -210,7 +210,7 @@ IMPLEMENT_FUNCTION(Salko, function15, 15)
 
 	case kActionNone:
 		if (getState()->time < kTimeAugustVienna) {
-			UPDATE_PARAM_FROM_TIME(1, 81000);
+			UPDATE_PARAM(params->param1, getState()->time, 81000);
 
 			setCallback(1);
 			call(new ENTITY_SETUP(Salko, setup_function16));

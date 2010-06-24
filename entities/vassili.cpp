@@ -142,6 +142,8 @@ IMPLEMENT_FUNCTION(Vassili, function6, 6)
 	case kActionNone:
 		if (getEntities()->checkFields1(kEntityNone, kCarRedSleeping, EntityData::kField491_8200)) {
 
+			// FIXME: use UPDATE_PARAM_FUNCTION
+			error("Vassili::function6: not implemented!");
 			if (params->param3) {
 				if (params->param3 >= (int)getState()->timeTicks)
 					goto label_function7;
@@ -216,8 +218,9 @@ IMPLEMENT_FUNCTION(Vassili, function7, 7)
 		break;
 
 	case kActionNone:
-		if (params->param1 != EntityData::kParamTime
-		 && getState()->time > kTimeVassili) {
+		// FIXME: use UPDATE_PARAM_FUNCTION
+		error("Vassili::function7: not implemented!");
+		if (params->param1 != EntityData::kParamTime && getState()->time > kTimeVassili) {
 			 if (getState()->time <= kTimeVassili_2) {
 				 if (getEntities()->checkFields7(kCarRedSleeping) || !params->param1) {
 					 params->param1 = getState()->time + 150;
@@ -399,7 +402,7 @@ IMPLEMENT_FUNCTION(Vassili, sleeping, 13)
 
 	case kActionNone:
 		if (getEntities()->checkFields1(kEntityNone, kCarRedSleeping, EntityData::kField491_8200)) {
-			UPDATE_PARAM_FROM_TICKS(3, params->param1);
+			UPDATE_PARAM(params->param3, getState()->timeTicks, params->param1);
 
 			setCallback(1);
 			call(new ENTITY_SETUP_SIIS(Vassili, setup_draw), "303B");
@@ -456,7 +459,7 @@ IMPLEMENT_FUNCTION(Vassili, stealEgg, 15)
 
 	case kActionNone:
 		if (getEntities()->checkFields1(kEntityNone, kCarRedSleeping, EntityData::kField491_8200)) {
-			UPDATE_PARAM_FROM_TICKS(3, params->param1);
+			UPDATE_PARAM(params->param3, getState()->timeTicks, params->param1);
 
 			setCallback(1);
 			call(new ENTITY_SETUP_SIIS(Vassili, setup_draw), "303B");
@@ -538,7 +541,7 @@ IMPLEMENT_FUNCTION(Vassili, function17, 17)
 
 	case kActionNone:
 		if (getEntities()->checkFields1(kEntityNone, kCarRedSleeping, EntityData::kField491_8200)) {
-			UPDATE_PARAM_FROM_TICKS(3, params->param1);
+			UPDATE_PARAM(params->param3, getState()->timeTicks, params->param1);
 
 			setCallback(1);
 			call(new ENTITY_SETUP_SIIS(Vassili, setup_draw), "303B");

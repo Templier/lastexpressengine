@@ -181,7 +181,7 @@ IMPLEMENT_FUNCTION_I(Mertens, function11, 11)
 				break;
 		}
 
-		UPDATE_PARAM_FROM_TIME(2, 1)
+		UPDATE_PARAM(params->param2, getState()->time, 1)
 
 		CALLBACK_ACTION()
 		break;

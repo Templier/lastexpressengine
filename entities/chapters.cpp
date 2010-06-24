@@ -238,116 +238,9 @@ IMPLEMENT_FUNCTION(Chapters, chapter1_handler, 8)
 
 	case kActionNone:
 		if (!getProgress().isTrainRunning || getState()->time >= kTimeChapter1_101)
-			goto label_chapter1_savegame;
+			goto label_processStations;
 
-		if (params->param6 || getState()->timeTicks + params->param2) {
-
-			if (!params->param6)
-				params->param6 = getState()->timeTicks + params->param2;
-
-			if (params->param6 >= (int)getState()->timeTicks) {
-label_chapter1_savegame:
-				TIME_CHECK_SAVEGAME(Chapters, kTimeChapter1_0, params->param7, 1, kSavegameType1, kEventNone);
-
-label_enter_epernay:
-				// Entering Epernay station
-				TIME_CHECK_ENTERSTATION(Chapters, kTimeEnterEpernay, params->param8, 1, "Epernay", 0);
-
-label_exit_epernay:
-				// Exiting Epernay station
-				TIME_CHECK_EXITSTATION_2(Chapters, kTimeExitEpernay, ENTITY_PARAM(1, 1), params->param4, 3, "Epernay");
-
-label_epernay_police:
-				TIME_CHECK_EXITSTATION_0(Chapters, params->param5, ENTITY_PARAM(0, 2), 4, "Unschedu");
-
-label_enter_chalons:
-				if (getState()->time > kTimeEnterChalons && !ENTITY_PARAM(1, 2)) {
-					ENTITY_PARAM(1, 2) = 1;
-					getProgress().field_18 = 2;
-				}
-
-				// Skip to callback 18 checks
-				if (params->param1)
-					goto label_exit_strasbourg;
-
-				// Entering Chalons station
-				TIME_CHECK_ENTERSTATION(Chapters, kTimeEnterChalons, ENTITY_PARAM(1, 3), 5, "Chalons", kCityChalons);
-
-label_exit_chalons:
-				// Exiting Chalons station
-				TIME_CHECK_EXITSTATION(Chapters, kTimeExitChalons, ENTITY_PARAM(1, 4), 6, "Chalons");
-
-label_enter_barleduc:
-				// Entering Bar-Le-Duc station
-				TIME_CHECK_ENTERSTATION(Chapters, kTimeCityBarLeDuc, ENTITY_PARAM(1, 5), 7, "BarLeDuc", kCityBarleduc);
-
-label_exit_barleduc:
-				// Exiting Bar-Le-Duc station
-				TIME_CHECK_EXITSTATION(Chapters, kTimeExitBarLeDuc, ENTITY_PARAM(1, 6), 8, "BarLeDuc");
-
-label_enter_nancy:
-				if (getState()->time > kTimeChapter1_1 && !ENTITY_PARAM(1, 7)) {
-					ENTITY_PARAM(1, 7) = 1;
-					getState()->timeDelta = 1;
-				}
-
-				// Entering Nancy station
-				TIME_CHECK_ENTERSTATION(Chapters, kTimeCityNancy, ENTITY_PARAM(1, 8), 9, "Nancy", kCityNancy);
-
-label_exit_nancy:
-				// Exiting Nancy station
-				TIME_CHECK_EXITSTATION(Chapters, kTimeExitNancy, ENTITY_PARAM(2, 1), 10, "Nancy");
-
-label_enter_luneville:
-				// Entering Luneville station
-				TIME_CHECK_ENTERSTATION(Chapters, kTimeCityLuneville, ENTITY_PARAM(2, 2), 11, "Luneville", kCityLuneville);
-				
-label_exit_luneville:
-				// Exiting Luneville station
-				TIME_CHECK_EXITSTATION(Chapters, kTimeExitLuneville, ENTITY_PARAM(2, 3), 12, "Luneville");
-
-label_enter_avricourt:
-				// Entering Avricourt station
-				TIME_CHECK_ENTERSTATION(Chapters, kTimeCityAvricourt, ENTITY_PARAM(2, 4), 13, "Avricourt", kCityAvricourt);
-
-label_exit_avricourt:
-				// Exiting Avricourt station
-				TIME_CHECK_EXITSTATION(Chapters, kTimeExitAvricourt, ENTITY_PARAM(2, 5), 14, "Avricourt");
-
-label_enter_deutschavricourt:
-				// Entering Deutsch-Avricourt station
-				TIME_CHECK_ENTERSTATION(Chapters, kTimeCityDeutschAvricourt, ENTITY_PARAM(2, 6), 15, "DeutschA", kCityDeutschAvricourt);
-
-label_exit_deutschavricourt:
-				// Exiting Avricourt station
-				TIME_CHECK_EXITSTATION(Chapters, kTimeExitDeutschAvricourt, ENTITY_PARAM(2, 7), 16, "DeutschA");
-
-label_savegame_strasbourg:
-				TIME_CHECK_SAVEGAME(Chapters, kTimeCityStrasbourg, ENTITY_PARAM(2, 8), 17, kSavegameType1, kEventNone);
-
-label_exit_strasbourg:
-				// Exiting Strasbourg station
-				TIME_CHECK_EXITSTATION(Chapters, kTimeExitStrasbourg, ENTITY_PARAM(3, 1), 19, "Strasbou");
-
-label_enter_badenoos:
-				// Entering Baden Oos station
-				TIME_CHECK_ENTERSTATION(Chapters, kTimeCityBadenOos, ENTITY_PARAM(3, 2), 20, "BadenOos", kCityBadenOos);
-
-label_exit_badenoos:
-				// Exiting Baden Oos station
-				TIME_CHECK_EXITSTATION(Chapters, kTimeExitBadenOos, ENTITY_PARAM(3, 3), 21, "BadenOos");
-
-label_chapter1_end:
-				if (getState()->time > kTimeChapter1End3 && ! ENTITY_PARAM(3, 4)) {
-					ENTITY_PARAM(3, 4) = 1;
-					setup_chapter1_end();
-				}
-
-				// Stop processing
-				break;
-			}
-			params->param6 = EntityData::kParamTime;
-		}
+		UPDATE_PARAM_FUNCTION(params->param6, getState()->timeTicks, params->param2, label_processStations)
 
 		// Play sound FX
 		getSound()->playLocomotiveSound();
@@ -355,8 +248,103 @@ label_chapter1_end:
 		params->param2 = 225 * (4 * random(5) + 20);
 		params->param6 = 0;
 
+label_processStations:
 		// Process stations
-		goto label_chapter1_savegame;
+		TIME_CHECK_SAVEGAME(Chapters, kTimeChapter1_0, params->param7, 1, kSavegameType1, kEventNone);
+
+label_enter_epernay:
+		// Entering Epernay station
+		TIME_CHECK_ENTERSTATION(Chapters, kTimeEnterEpernay, params->param8, 1, "Epernay", 0);
+
+label_exit_epernay:
+		// Exiting Epernay station
+		TIME_CHECK_EXITSTATION_2(Chapters, kTimeExitEpernay, ENTITY_PARAM(1, 1), params->param4, 3, "Epernay");
+
+label_epernay_police:
+		TIME_CHECK_EXITSTATION_0(Chapters, params->param5, ENTITY_PARAM(0, 2), 4, "Unschedu");
+
+label_enter_chalons:
+		if (getState()->time > kTimeEnterChalons && !ENTITY_PARAM(1, 2)) {
+			ENTITY_PARAM(1, 2) = 1;
+			getProgress().field_18 = 2;
+		}
+
+		// Skip to callback 18 checks
+		if (params->param1)
+			goto label_exit_strasbourg;
+
+		// Entering Chalons station
+		TIME_CHECK_ENTERSTATION(Chapters, kTimeEnterChalons, ENTITY_PARAM(1, 3), 5, "Chalons", kCityChalons);
+
+label_exit_chalons:
+		// Exiting Chalons station
+		TIME_CHECK_EXITSTATION(Chapters, kTimeExitChalons, ENTITY_PARAM(1, 4), 6, "Chalons");
+
+label_enter_barleduc:
+		// Entering Bar-Le-Duc station
+		TIME_CHECK_ENTERSTATION(Chapters, kTimeCityBarLeDuc, ENTITY_PARAM(1, 5), 7, "BarLeDuc", kCityBarleduc);
+
+label_exit_barleduc:
+		// Exiting Bar-Le-Duc station
+		TIME_CHECK_EXITSTATION(Chapters, kTimeExitBarLeDuc, ENTITY_PARAM(1, 6), 8, "BarLeDuc");
+
+label_enter_nancy:
+		if (getState()->time > kTimeChapter1_1 && !ENTITY_PARAM(1, 7)) {
+			ENTITY_PARAM(1, 7) = 1;
+			getState()->timeDelta = 1;
+		}
+
+		// Entering Nancy station
+		TIME_CHECK_ENTERSTATION(Chapters, kTimeCityNancy, ENTITY_PARAM(1, 8), 9, "Nancy", kCityNancy);
+
+label_exit_nancy:
+		// Exiting Nancy station
+		TIME_CHECK_EXITSTATION(Chapters, kTimeExitNancy, ENTITY_PARAM(2, 1), 10, "Nancy");
+
+label_enter_luneville:
+		// Entering Luneville station
+		TIME_CHECK_ENTERSTATION(Chapters, kTimeCityLuneville, ENTITY_PARAM(2, 2), 11, "Luneville", kCityLuneville);
+				
+label_exit_luneville:
+		// Exiting Luneville station
+		TIME_CHECK_EXITSTATION(Chapters, kTimeExitLuneville, ENTITY_PARAM(2, 3), 12, "Luneville");
+
+label_enter_avricourt:
+		// Entering Avricourt station
+		TIME_CHECK_ENTERSTATION(Chapters, kTimeCityAvricourt, ENTITY_PARAM(2, 4), 13, "Avricourt", kCityAvricourt);
+
+label_exit_avricourt:
+		// Exiting Avricourt station
+		TIME_CHECK_EXITSTATION(Chapters, kTimeExitAvricourt, ENTITY_PARAM(2, 5), 14, "Avricourt");
+
+label_enter_deutschavricourt:
+		// Entering Deutsch-Avricourt station
+		TIME_CHECK_ENTERSTATION(Chapters, kTimeCityDeutschAvricourt, ENTITY_PARAM(2, 6), 15, "DeutschA", kCityDeutschAvricourt);
+
+label_exit_deutschavricourt:
+		// Exiting Avricourt station
+		TIME_CHECK_EXITSTATION(Chapters, kTimeExitDeutschAvricourt, ENTITY_PARAM(2, 7), 16, "DeutschA");
+
+label_savegame_strasbourg:
+		TIME_CHECK_SAVEGAME(Chapters, kTimeCityStrasbourg, ENTITY_PARAM(2, 8), 17, kSavegameType1, kEventNone);
+
+label_exit_strasbourg:
+		// Exiting Strasbourg station
+		TIME_CHECK_EXITSTATION(Chapters, kTimeExitStrasbourg, ENTITY_PARAM(3, 1), 19, "Strasbou");
+
+label_enter_badenoos:
+		// Entering Baden Oos station
+		TIME_CHECK_ENTERSTATION(Chapters, kTimeCityBadenOos, ENTITY_PARAM(3, 2), 20, "BadenOos", kCityBadenOos);
+
+label_exit_badenoos:
+		// Exiting Baden Oos station
+		TIME_CHECK_EXITSTATION(Chapters, kTimeExitBadenOos, ENTITY_PARAM(3, 3), 21, "BadenOos");
+
+label_chapter1_end:
+		if (getState()->time > kTimeChapter1End3 && ! ENTITY_PARAM(3, 4)) {
+			ENTITY_PARAM(3, 4) = 1;
+			setup_chapter1_end();
+		}
 		break;
 
 	case kAction2:
@@ -659,7 +647,7 @@ IMPLEMENT_FUNCTION(Chapters, chapter2_handler, 12)
 		if (!getProgress().isTrainRunning)
 			break;
 
-		UPDATE_PARAM_FROM_TICKS(2, params->param1);
+		UPDATE_PARAM(params->param2, getState()->timeTicks, params->param1);
 
 		getSound()->playLocomotiveSound();
 

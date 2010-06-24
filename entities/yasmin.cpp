@@ -436,7 +436,7 @@ IMPLEMENT_FUNCTION(Yasmin, function20, 20)
 		break;
 
 	case kActionNone:
-		UPDATE_PARAM_FROM_TIME(1, 2700);
+		UPDATE_PARAM(params->param1, getState()->time, 2700);
 		setup_function21();
 		break;
 

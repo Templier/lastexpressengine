@@ -243,7 +243,7 @@ IMPLEMENT_FUNCTION(Hadija, function22, 22)
 		break;
 
 	case kActionNone:
-		UPDATE_PARAM_FROM_TIME(1, 2700);
+		UPDATE_PARAM(params->param1, getState()->time, 2700);
 		setup_function23();
 		break;
 

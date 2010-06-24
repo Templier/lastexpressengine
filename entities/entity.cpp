@@ -230,7 +230,7 @@ void Entity::updateFromTicks(const SavePoint &savepoint) {
 		break;
 
 	case kActionNone:
-		UPDATE_PARAM_FROM_TICKS(2, 1)
+		UPDATE_PARAM(params->param2, getState()->timeTicks, 1)
 		CALLBACK_ACTION()
 		break;
 	}
@@ -244,7 +244,7 @@ void Entity::updateFromTime(const SavePoint &savepoint) {
 		break;
 
 	case kActionNone:
-		UPDATE_PARAM_FROM_TIME(2, params->param1)
+		UPDATE_PARAM(params->param2, getState()->time, params->param1)
 		CALLBACK_ACTION()
 		break;
 	}

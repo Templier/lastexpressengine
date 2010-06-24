@@ -257,7 +257,7 @@ IMPLEMENT_FUNCTION(Cooks, function6, 6)
 		break;
 
 	case kActionNone:
-		UPDATE_PARAM_FROM_TIME(4, 2);
+		UPDATE_PARAM(params->param4, getState()->time, 2);
 
 		// Broken plate sound
 		getSound()->playSound(kEntityNone, "LIB122",  getEntities()->getSoundValue(kEntityCooks));
@@ -367,7 +367,7 @@ IMPLEMENT_FUNCTION(Cooks, function9, 9)
 		break;
 
 	case kActionNone:
-		UPDATE_PARAM_FROM_TIME(3, 1);
+		UPDATE_PARAM(params->param3, getState()->time, 1);
 
 		// Broken plate sound
 		getSound()->playSound(kEntityNone, "LIB122",  getEntities()->getSoundValue(kEntityCooks));
@@ -424,7 +424,8 @@ IMPLEMENT_FUNCTION(Cooks, function11, 11)
 		break;
 
 	case kActionNone:
-		// FIXME review code and add missing path
+		// FIXME: use UPDATE_PARAM_FUNCTION
+		error("Cooks::function11: not implemented!");
 		if (params->param4) {
 			if (params->param4 > (int)getState()->time)
 				goto update_params;
@@ -522,7 +523,7 @@ IMPLEMENT_FUNCTION(Cooks, function13, 13)
 		break;
 
 	case kActionNone:
-		UPDATE_PARAM_FROM_TIME(3, 1)
+		UPDATE_PARAM(params->param3, getState()->time, 1)
 
 		// Broken plate sound
 		getSound()->playSound(kEntityNone, "LIB122",  getEntities()->getSoundValue(kEntityCooks));

@@ -298,59 +298,38 @@ IMPLEMENT_FUNCTION(Train, process, 8)
 			  getAction()->playAnimation(isDay() ? kEventCathSmokeDay : kEventCathSmokeNight);
 			  params->param5 = 1;
 			  getScenes()->processScene();
-
 		  }
 		}
 
 		if (params->param6) {
-
-			if (params->param7) {
-				parameters1->param7 = (int)getState()->time + 900;
-
-				if (parameters1->param7 >= (int)getState()->time)
-					goto label_skip;
-
-				parameters1->param7 = EntityData::kParamTime;
-			}
-
+			UPDATE_PARAM_FUNCTION(parameters1->param7, getState()->time, 900, label_process);
 			getScenes()->loadSceneFromPosition(kCarRestaurant, 58);
 		}
 
 		parameters1->param7 = 0;
 
-label_skip:
-		// FIXME make sense of all this crap
+label_process:
 		if (params->param7) {
 			if (!parameters1->param8) {
 				parameters1->param8 = (int)getState()->time + 4500;
 
-				if (parameters1->param8) {
+				if (!parameters1->param8)
 					params->param7 = 0;
-					parameters1->param8 = 0;
-				}
 			}
 
-			if (parameters1->param8 && parameters1->param8 < (int)getState()->time) {
-				//_data->getCurrentParameters(1)->param8 = EntityData::kParameterTime;
+			if (parameters1->param8 && parameters1->param8 < (int)getState()->time)				
 				params->param7 = 0;
-				parameters1->param8 = 0;
-				// Why does it sets it back to 0?
-			}
 		}
 
-		if (ENTITY_PARAM(0, 8)) {
-			ObjectIndex param8 = (ObjectIndex)ENTITY_PARAM(0, 8);
-
-			// TODO check if sound is cached
-			getObjects()->update(param8, getObjects()->get(param8).entity, kLocation3, kCursorHandKnock, kCursorHand);
-			ENTITY_PARAM(0, 8) = 0;
+		// Update object
+		if (ENTITY_PARAM(0, 8) && !getSound()->isBuffered(kEntityTables5)) {
+			getObjects()->update((ObjectIndex)ENTITY_PARAM(0, 8), getObjects()->get((ObjectIndex)ENTITY_PARAM(0, 8)).entity, kLocation3, kCursorHandKnock, kCursorHand);
+			ENTITY_PARAM(0, 8) = 0;			
 		}
 
 		// Play clock sound
-		if (params->param6) {
-			if (!getSound()->isBuffered("ZFX1001", true))
-				getSound()->playSound(kEntityNone, "ZFX1001");
-		}
+		if (params->param6 && !getSound()->isBuffered("ZFX1001", true))
+			getSound()->playSound(kEntityNone, "ZFX1001");
 
 		break;
 
@@ -533,7 +512,7 @@ label_skip:
 		case kObjectCompartmentB:
 			parameters1->param1 = (savepoint.param.intValue == kObjectCompartment1 || savepoint.param.intValue == kObjectCompartment2) ? 3 : 4;
 			parameters1->param2 = (savepoint.param.intValue == kObjectCompartment1 || savepoint.param.intValue == kObjectCompartmentA) ? EntityData::kField491_8200 : EntityData::kField491_7500;
-			parameters1->param3 = 7850;
+			parameters1->param3 = EntityData::kField491_7850;
 			break;
 
 		case kObjectCompartment3:
@@ -542,7 +521,7 @@ label_skip:
 		case kObjectCompartmentD:
 			parameters1->param1 = (savepoint.param.intValue == kObjectCompartment1 || savepoint.param.intValue == kObjectCompartment2) ? 3 : 4;
 			parameters1->param2 = (savepoint.param.intValue == kObjectCompartment3 || savepoint.param.intValue == kObjectCompartmentC) ? EntityData::kField491_6470 : EntityData::kField491_5790;
-			parameters1->param3 = 6130;
+			parameters1->param3 = EntityData::kField491_6130;
 			break;
 
 		case kObjectCompartment5:
@@ -551,7 +530,7 @@ label_skip:
 		case kObjectCompartmentF:
 			parameters1->param1 = (savepoint.param.intValue == kObjectCompartment1 || savepoint.param.intValue == kObjectCompartment2) ? 3 : 4;
 			parameters1->param2 = (savepoint.param.intValue == kObjectCompartment5 || savepoint.param.intValue == kObjectCompartmentE) ? EntityData::kField491_4840 : EntityData::kField491_4070;
-			parameters1->param3 = 4455;
+			parameters1->param3 = EntityData::kField491_4455;
 			break;
 
 		case kObjectCompartment7:
@@ -560,7 +539,7 @@ label_skip:
 		case kObjectCompartmentH:
 			parameters1->param1 = (savepoint.param.intValue == kObjectCompartment1 || savepoint.param.intValue == kObjectCompartment2) ? 3 : 4;
 			parameters1->param2 = (savepoint.param.intValue == kObjectCompartment7 || savepoint.param.intValue == kObjectCompartmentG) ? EntityData::kField491_3050 : EntityData::kField491_2740;
-			parameters1->param3 = 0;
+			parameters1->param3 = EntityData::kField491_0;
 			break;
 		}
 		break;

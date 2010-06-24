@@ -91,7 +91,7 @@ IMPLEMENT_FUNCTION_SIII(Mahmud, function4, 4)
 		break;
 
 	case kActionNone:
-		UPDATE_PARAM_FROM_TICKS(5, params->param3);
+		UPDATE_PARAM(params->param5, getState()->timeTicks, params->param3);
 
 		if (!getScenes()->checkPosition(kSceneNone, SceneManager::kCheckPositionType0))
 			getScenes()->loadSceneFromObject((ObjectIndex)params->param4, true);
@@ -165,7 +165,7 @@ IMPLEMENT_FUNCTION_II(Mahmud, function10, 10)
 		break;
 
 	case kActionNone:
-		UPDATE_PARAM_FROM_TIME(6, 13500);
+		UPDATE_PARAM(params->param6, getState()->time, 13500);
 
 		getObjects()->update(kObjectCompartment5, kEntityTrain, kLocation3, kCursorHandKnock, kCursorHand);
 		getObjects()->update(kObjectCompartment6, kEntityTrain, kLocation3, kCursorHandKnock, kCursorHand);
@@ -594,7 +594,7 @@ IMPLEMENT_FUNCTION(Mahmud, function14, 14)
 		}
 
 		if (params->param5) {
-			UPDATE_PARAM_FROM_TICKS(8, 75);
+			UPDATE_PARAM(params->param8, getState()->timeTicks, 75);
 
 			params->param4 = 1;
 			params->param5 = 0;

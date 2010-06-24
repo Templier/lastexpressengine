@@ -537,7 +537,7 @@ IMPLEMENT_FUNCTION(Abbot, function24, 24)
 		break;
 
 	case kActionNone:
-		UPDATE_PARAM_FROM_TIME(1, 900);
+		UPDATE_PARAM(params->param1, getState()->time, 900);
 
 		setup_function25();
 		break;
@@ -636,7 +636,7 @@ IMPLEMENT_FUNCTION(Abbot, function26, 26)
 		break;
 
 	case kActionNone:
-		UPDATE_PARAM_FROM_TIME(2, 4500);
+		UPDATE_PARAM(params->param2, getState()->time, 4500);
 
 		if (getEntities()->checkFields11())
 			setup_function27();

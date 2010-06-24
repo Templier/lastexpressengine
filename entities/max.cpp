@@ -86,7 +86,7 @@ IMPLEMENT_FUNCTION(Max, function6, 6)
 		break;
 
 	case kActionNone:
-		UPDATE_PARAM_FROM_TIME(2, 1);
+		UPDATE_PARAM(params->param2, getState()->time, 1);
 
 		if (!getSound()->isBuffered(kEntityMax))
 			getSound()->playSound(kEntityMax, "Max1122");
@@ -119,7 +119,7 @@ IMPLEMENT_FUNCTION(Max, function7, 7)
 		break;
 
 	case kActionNone:
-		UPDATE_PARAM_FROM_TIME(2, 1)
+		UPDATE_PARAM(params->param2, getState()->time, 1)
 
 		if (!getSound()->isBuffered(kEntityMax))
 			getSound()->playSound(kEntityMax, "Max1122");
@@ -207,7 +207,7 @@ IMPLEMENT_FUNCTION(Max, function8, 8)
 		break;
 
 	case kActionNone:
-		UPDATE_PARAM_FROM_TIME(3, 2)
+		UPDATE_PARAM(params->param3, getState()->time, 2);
 
 		if (!getSound()->isBuffered(kEntityMax))
 			getSound()->playSound(kEntityMax, "Max3101");
@@ -268,6 +268,9 @@ IMPLEMENT_FUNCTION(Max, function9, 9)
 		break;
 
 	case kActionNone:
+		// FIXME: use UPDATE_PARAM_FUNCTION
+		error("Max::function9: not implemented!");
+
 		if (params->param2 == EntityData::kParamTime || !getState()->time)
 			break;
 
@@ -380,7 +383,7 @@ IMPLEMENT_FUNCTION(Max, function13, 13)
 			break;
 		}
 
-		UPDATE_PARAM_FROM_TIME(3, 1);
+		UPDATE_PARAM(params->param3, getState()->time, 1);
 
 		if (!getSound()->isBuffered(kEntityMax))
 			getSound()->playSound(kEntityMax, "Max1122");
@@ -502,7 +505,7 @@ IMPLEMENT_FUNCTION(Max, function15, 15)
 		}
 
 		if (!params->param1) {
-			UPDATE_PARAM_FROM_TIME(3, 900);
+			UPDATE_PARAM(params->param3, getState()->time, 900);
 
 			getSavePoints()->push(kEntityMax, kEntityCoudert, kAction157026693);
 		}

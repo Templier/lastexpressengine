@@ -129,32 +129,22 @@
 	getSavePoints()->call(_entityIndex, _entityIndex, kActionCallback); \
 	}
 
-#define UPDATE_PARAM_FROM_TIME(param1, value) \
-	if (params->param##param1) { \
-		if (params->param##param1 >= (int)getState()->time) \
+#define UPDATE_PARAM(parameter, type, value) \
+	if (parameter || (type + value)) { \
+		if (!parameter) \
+			parameter = (int)(type + value); \
+		if (parameter >= (int)type) \
 			break; \
-		params->param##param1 = EntityData::kParamTime; \
-	} else { \
-		params->param##param1 = (int)getState()->time + value; \
-		if (params->param##param1 == 0) \
-			break; \
-		if (params->param##param1 >= (int)getState()->time) \
-			break; \
-		params->param##param1 = EntityData::kParamTime; \
+		parameter = EntityData::kParamTime; \
 	}
 
-#define UPDATE_PARAM_FROM_TICKS(param1, value) \
-	if (params->param##param1) { \
-		if (params->param##param1 >= (int)getState()->timeTicks) \
-			break; \
-		params->param##param1 = EntityData::kParamTime; \
-	} else { \
-		params->param##param1 = (int)getState()->timeTicks + value; \
-		if (params->param##param1 == 0) \
-			break; \
-		if (params->param##param1 >= (int)getState()->timeTicks) \
-			break; \
-		params->param##param1 = EntityData::kParamTime; \
+#define UPDATE_PARAM_FUNCTION(parameter, type, value, label) \
+	if (parameter || (type + value)) { \
+		if (!parameter) \
+			parameter = (int)(type + value); \
+		if (parameter >= (int)type) \
+			goto label; \
+		parameter = EntityData::kParamTime; \
 	}
 
 #endif // LASTEXPRESS_ENTITY_FUNCTIONS_H
