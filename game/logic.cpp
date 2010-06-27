@@ -296,7 +296,7 @@ void Logic::eventTick(const Common::Event &ev) {
 	}
 
 	// Show item cursor on entity
-	if (getInventory()->hasItem(getEntityData(entity)->inventoryItem) && getEntityData(entity)->inventoryItem != kCursorTalk2) {
+	if (getInventory()->hasItem(getEntityData(entity)->inventoryItem) && (int)getEntityData(entity)->inventoryItem != (int)kCursorTalk2) {
 		_engine->getCursor()->setStyle(getInventory()->getEntry(getEntityData(entity)->inventoryItem)->cursor);
 		return;
 	}
@@ -431,7 +431,7 @@ void Logic::updateCursor(bool redraw) {
 				 if (getInventory()->hasItem(getEntityData(entity)->inventoryItem)) {
 					 interact = true;
 					 style = getInventory()->getEntry(getEntityData(entity)->inventoryItem)->cursor;
-				 } else if (getEntityData(entity)->inventoryItem == kCursorProcess) {
+				 } else if ((int)getEntityData(entity)->inventoryItem == (int)kCursorProcess) {
 					 interact = true;
 					 style = kCursorTalk2;
 				 }

@@ -126,7 +126,7 @@ private:
 	};
 
 	struct SavegameEntryHeader {
-		int signature;
+		uint32 signature;
 		HeaderType type;
 		int time;
 		int field_C;

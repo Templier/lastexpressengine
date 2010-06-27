@@ -1200,6 +1200,7 @@ bool Entities::checkEntity(EntityIndex entity, CarIndex car, EntityData::Field49
 	if (data->field_497) {
 		data->field_497--;
 
+		// FIXME: This comparison is always false
 		if (data->field_497 == -128)
 			data->field_497 = 0;
 

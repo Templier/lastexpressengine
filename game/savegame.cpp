@@ -142,7 +142,7 @@ bool SaveLoad::loadMainHeader(GameId id, SavegameMainHeader* header) {
 	return true;
 }
 
-void SaveLoad::loadEntryHeader(Common::InSaveFile *save, SavegameEntryHeader* header) {
+void SaveLoad::loadEntryHeader(Common::InSaveFile *save, SavegameEntryHeader *header) {
 	header->signature = save->readUint32LE();
 	header->type = (HeaderType)save->readUint32LE();
 	header->time = save->readUint32LE();

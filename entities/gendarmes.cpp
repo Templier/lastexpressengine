@@ -200,7 +200,7 @@ IMPLEMENT_FUNCTION(Gendarmes, chapter5, 17)
 		getEntities()->prepareSequences(kEntityGendarmes);
 }
 
-void Gendarmes::arrest(const SavePoint &savepoint, bool playSound, int a3) {
+void Gendarmes::arrest(const SavePoint &savepoint, bool shouldPlaySound, int a3) {
 	EXPOSE_PARAMS(EntityData::EntityParametersSIIS);
 
 	switch (savepoint.action) {
@@ -225,7 +225,7 @@ void Gendarmes::arrest(const SavePoint &savepoint, bool playSound, int a3) {
 		break;
 
 	case kActionDefault:
-		if (!playSound)
+		if (!shouldPlaySound)
 			getEntities()->drawSequenceRight(kEntityGendarmes, params->seq1);
 		else
 			getSound()->playSound(kEntityGendarmes, params->seq1, a3);
