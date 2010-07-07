@@ -361,9 +361,7 @@ public:
 		uint32 field_4C2;
 		char sequenceName[6];
 		byte field_4CC;
-		byte field_4CD;
-		uint32 field_4CE;
-		uint32 field_4D2;
+		char sequenceNameCopy[9];
 		uint32 field_4D6;
 		SequenceFrame *frame;
 		SequenceFrame *frame1;
@@ -400,14 +398,12 @@ public:
 			memset(&sequenceName3, 0, 9 * sizeof(char));
 			memset(&sequenceName2, 0, 9 * sizeof(char));
 			memset(&sequenceName, 0, 6 * sizeof(char));
+			memset(&sequenceNameCopy, 0, 9 * sizeof(char));
 
 			field_4B5 = 0;
 			field_4C2 = 0;
 
 			field_4CC = 0;
-			field_4CD = 0;
-			field_4CE = 0;
-			field_4D2 = 0;
 			field_4D6 = 0;
 
 			frame = NULL;

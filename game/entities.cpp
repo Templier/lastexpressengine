@@ -445,24 +445,20 @@ void Entities::updateSequences() {
 		EntityData::EntityCallData *data = getData(entityIndex);
 
 		if (data->frame) {
-			// TODO Queue sequence for drawing
-			/* data->sequence0 = NULL; */
-			warning("Entities::setupSequences: not implemented!");
+			getScenes()->removeFromQueue(data->frame);
+			SAFE_DELETE(data->frame);
 		}
 
 		if (data->frame1) {
-			// TODO Queue sequence for drawing
-			/* data->sequence1 = NULL; */
-			warning("Entities::setupSequences: not implemented!");
+			getScenes()->removeFromQueue(data->frame1);
+			SAFE_DELETE(data->frame1);
 		}
 
 		if (data->direction == kDirectionSwitch) {
 
 			// Clear sequence 2
-			if (data->sequence2) {
-				delete data->sequence2;
-				data->sequence2 = NULL;
-			}
+			if (data->sequence2)
+				SAFE_DELETE(data->sequence2);
 
 			// Replace by sequence 3 if available
 			if (data->sequence3) {
@@ -485,8 +481,85 @@ void Entities::updateSequences() {
 	//////////////////////////////////////////////////////////////////////////
 	// Second pass: Load sequences for next pass
 	//////////////////////////////////////////////////////////////////////////
+	for (uint i = 1; i < _entities.size(); i++) {
+		EntityIndex entityIndex = (EntityIndex)i;
 
-	warning("Entities::setupSequences: not implemented!");
+		if (!getSavePoints()->getCallback(entityIndex))
+			continue;
+
+		EntityData::EntityCallData *data = getData(entityIndex);
+
+		// TODO use computed value when loading sequence (updates a frame-related value)
+		// (data->direction == kDirectionLeft ? entityIndex + 35 : 15)
+		char sequenceName[9];
+
+		if (strcmp(data->sequenceName2, "") != 0 && !data->sequence2) {			
+			strcpy((char *)&sequenceName, "");
+
+			data->sequence2 = newSequence(data->sequenceName2);
+
+			// If sequence 2 was loaded correctly, remove the copied name
+			// otherwise, compute new name
+			if (data->sequence2) {				
+				strcpy(data->sequenceNameCopy, "");
+			} else {
+				
+				// Left and down directions
+				if (data->direction == kDirectionLeft || data->direction == kDirectionRight) {
+					// Get proper postfix and extension
+					strncpy((char *)&sequenceName, data->sequenceName2, strlen(data->sequenceName2) - 7);
+
+					if (checkFields5(entityIndex, kCarGreenSleeping) || checkFields5(entityIndex, kCarGreenSleeping)) {
+						if (data->car < getData(kEntityNone)->car || (data->car == getData(kEntityNone)->car && data->field_491 < getData(kEntityNone)->field_491))
+							strcat((char *)&sequenceName, "R.SEQ");
+						else
+							strcat((char *)&sequenceName, "F.SEQ");
+					} else {
+						strcat((char *)&sequenceName, ".SEQ");
+					}
+
+					// Try loading the sequence
+					data->sequence2 = newSequence((char *)&sequenceName);
+				}
+
+				// Update sequence names
+				strcpy(data->sequenceNameCopy, data->sequence2 ? "" : data->sequenceName2);
+				strcpy(data->sequenceName2, data->sequence2 ? (char *)&sequenceName : "");		
+			}
+		}
+
+		// Update sequence 3
+		if (strcmp(data->sequenceName3, "") != 0 && !data->sequence3) {			
+			strcpy((char *)&sequenceName, "");
+
+			if (data->car == getData(kEntityNone)->car)
+				data->sequence3 = newSequence(data->sequenceName3);
+
+			if (!data->sequence3) {
+
+				// Left and down directions
+				if (data->direction2 == kDirectionLeft || data->direction2 == kDirectionRight) {
+					// Get proper postfix and extension
+					strncpy((char *)&sequenceName, data->sequenceName3, strlen(data->sequenceName3) - 7);
+
+					if (checkFields5(entityIndex, kCarGreenSleeping) || checkFields5(entityIndex, kCarGreenSleeping)) {
+						if (data->car < getData(kEntityNone)->car || (data->car == getData(kEntityNone)->car && data->field_491 < getData(kEntityNone)->field_491))
+							strcat((char *)&sequenceName, "R.SEQ");
+						else
+							strcat((char *)&sequenceName, "F.SEQ");
+					} else {
+						strcat((char *)&sequenceName, ".SEQ");
+					}
+
+					// Try loading the sequence
+					data->sequence3 = newSequence((char *)&sequenceName);
+				}
+
+				// Update sequence names
+				strcpy(data->sequenceName3, data->sequence3 ? (char *)&sequenceName : "");
+			}
+		}		
+	}
 }
 
 void Entities::resetSequences(EntityIndex entityIndex) const {
@@ -509,8 +582,8 @@ void Entities::resetSequences(EntityIndex entityIndex) const {
 
 	getData(entityIndex)->field_4A9 = 0;
 	getData(entityIndex)->field_4AA = 0;
-	getData(entityIndex)->field_4CD = 0;
 
+	strcpy((char*)&getData(entityIndex)->sequenceNameCopy, "");
 	strcpy((char*)&getData(entityIndex)->sequenceName2, "");
 	strcpy((char*)&getData(entityIndex)->sequenceName3, "");
 
