@@ -51,7 +51,7 @@ public:
 	~Entities();
 
 	void setup(bool isFirstChapter, EntityIndex entity);
-	void setupChapter(ChapterIndex chapter);	
+	void setupChapter(ChapterIndex chapter);
 	void reset();
 
 	// Update & drawing
@@ -159,10 +159,17 @@ private:
 	void executeCallbacks();
 	void processEntity(EntityIndex entity);
 
-	void drawSequenceInternal(EntityIndex index, const char* sequence, EntityDirection direction);
-	void drawSequencesInternal(EntityIndex index, EntityDirection direction, bool unknown);
+	void drawSequenceInternal(EntityIndex entity, const char* sequence, EntityDirection direction);
+	void drawSequencesInternal(EntityIndex entity, EntityDirection direction, bool unknown);
 
-	void getSequenceName(EntityIndex index, EntityDirection direction, char *sequence1, char *sequence2) const;
+	void clearEntitySequenceData(EntityData::EntityCallData * data, EntityDirection direction);
+	void computeCurrentFrame2(EntityIndex entityIndex);
+	void processEntitySub(EntityIndex entityIndex, bool dontClearQueue, bool dontPlaySound);
+	void processEntitySub2(EntityIndex entityIndex);
+	void processEntitySub3(EntityIndex entityIndex);
+	void copySequenceData3To2(EntityIndex entityIndex);
+
+	void getSequenceName(EntityIndex entity, EntityDirection direction, char *sequence1, char *sequence2) const;
 
 	void updatePositionsEnter(EntityIndex entity, CarIndex car, Position position1, Position position2, Position position3, Position position4);
 	void updatePositionsExit(EntityIndex entity, CarIndex car, Position position1, Position position2);
@@ -172,6 +179,7 @@ private:
 	bool checkField491(EntityData::Field491Value field491) const;
 	bool checkSequenceFromPosition(EntityIndex entity) const;
 	EntityData::Field491Value getField491FromCurrentPosition() const;
+
 };
 
 } // End of namespace LastExpress

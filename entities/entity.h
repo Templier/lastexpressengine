@@ -126,7 +126,7 @@ public:
 		kField491_8160  = 8160,
 		kField491_8200  = 8200,
 		kField491_8500  = 8500,
-		kField491_8513  = 8513,		
+		kField491_8513  = 8513,
 		kField491_8514  = 8514,
 		kField491_8800  = 8800,
 		kField491_9020  = 9020,
@@ -351,7 +351,7 @@ public:
 		ClothesIndex clothes;			// byte
 		byte position;
 		CarIndex car2;                  // byte
-		byte field_4A8;
+		bool doProcessEntity;					// byte
 		byte field_4A9;
 		byte field_4AA;
 		EntityDirection direction2;
@@ -390,7 +390,7 @@ public:
 			clothes = kClothesDefault;
 			position = 0;
 			car2 = kCarNone;
-			field_4A8 = 0;
+			doProcessEntity = false;
 			field_4A9 = 0;
 			field_4AA = 0;
 			direction2 = kDirectionNone;
