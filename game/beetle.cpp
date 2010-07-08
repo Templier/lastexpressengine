@@ -177,7 +177,7 @@ void Beetle::update() {
 		if ((!_data->field_DD && random(10) < 1)
 		  || (_data->field_DD && random(30) < 1)
 		  || random(100) < 1) {
-			
+
 			_data->field_DD++;
 			if (_data->field_DD > 3)
 				_data->field_DD = 0;
@@ -264,7 +264,7 @@ void Beetle::drawUpdate() {
 		break;
 
 	case 6:
-		_data->coordX += _data->coordOffset;		
+		_data->coordX += _data->coordOffset;
 		break;
 
 	case 9:
@@ -272,7 +272,7 @@ void Beetle::drawUpdate() {
 		_data->coordY += _data->coordOffset;
 		break;
 
-	case 12:		
+	case 12:
 		_data->coordY += _data->coordOffset;
 		break;
 
@@ -282,7 +282,7 @@ void Beetle::drawUpdate() {
 		break;
 
 	case 18:
-		_data->coordX -= _data->coordOffset;		
+		_data->coordX -= _data->coordOffset;
 		break;
 
 	case 21:
@@ -292,7 +292,7 @@ void Beetle::drawUpdate() {
 	}
 
 	// Update beetle data
-	int rnd = random(100);	
+	int rnd = random(100);
 	if (_data->coordX < 165 || _data->coordX > 465) {
 		int index = 0;
 
@@ -326,7 +326,7 @@ void Beetle::drawUpdate() {
 
 	if (_data->coordY > 354) {
 		switch (_data->indexes[_data->offset]) {
-		default:			
+		default:
 			break;
 
 		case 9:

@@ -134,11 +134,11 @@ private:
 			update = NULL;
 			canInteract = NULL;
 
-			opponent = NULL;			
+			opponent = NULL;
 
 			sequenceIndex = 0;
 			sequence = NULL;
-			frame = NULL;				
+			frame = NULL;
 			frameIndex = 0;
 
 			field_24 = 0;

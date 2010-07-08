@@ -90,7 +90,7 @@ public:
 
 private:
 	DECLARE_CALL_FUNCTION(iiii, Alexei, int, int, int, int)
-	DECLARE_CALL_FUNCTION(isii, Alexei, int, const char*, int, int)	
+	DECLARE_CALL_FUNCTION(isii, Alexei, int, const char*, int, int)
 };
 
 } // End of namespace LastExpress

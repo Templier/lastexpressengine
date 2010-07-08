@@ -355,7 +355,7 @@ label_checkNextPosition:
 
 	case kActionDefault:
 		getSavePoints()->push(kEntityMilos, kEntityTables2, kAction136455232);
-		getEntities()->drawSequenceLeft(kEntityMilos, "009A");	
+		getEntities()->drawSequenceLeft(kEntityMilos, "009A");
 		break;
 
 	case kActionCallback:
@@ -371,7 +371,7 @@ label_checkNextPosition:
 		case 2:
 			getEntities()->drawSequenceLeft(kEntityMilos, "009A");
 			params->param2 = 1;
-			break;		
+			break;
 		}
 		break;
 	}

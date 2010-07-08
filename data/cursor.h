@@ -66,8 +66,8 @@ public:
 	Cursor();
 
 	bool load(Common::SeekableReadStream *stream);
-	void show(bool visible) const;	
-	
+	void show(bool visible) const;
+
 	void setStyle(CursorStyle style);
 	CursorStyle getStyle() const { return _current; }
 

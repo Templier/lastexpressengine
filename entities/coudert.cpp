@@ -250,7 +250,7 @@ IMPLEMENT_FUNCTION(Coudert, chapter1, 36)
 	default:
 		break;
 
-	case kActionNone:		
+	case kActionNone:
 		TIME_CHECK_CALLBACK(Coudert, kTimeChapter1, params->param1, 1, setup_function40)
 		break;
 

@@ -194,7 +194,7 @@ void Fight::handleTick(const Common::Event &ev, bool isProcessing) {
 		return;
 
 	if (isProcessing)
-		getScenes()->drawFrames(true);		
+		getScenes()->drawFrames(true);
 
 	if (_data->index) {
 		// Set next sequence name index
@@ -480,7 +480,7 @@ void Fight::processFighter(Fighter *fighter) {
 	if (!fighter->sequence) {
 		if (fighter->frame) {
 			getScenes()->removeFromQueue(fighter->frame);
-			getScenes()->setCoordinates(fighter->frame);			
+			getScenes()->setCoordinates(fighter->frame);
 		}
 		SAFE_DELETE(fighter->frame);
 		return;
@@ -539,7 +539,7 @@ void Fight::processFighter(Fighter *fighter) {
 			getScenes()->removeFromQueue(fighter->frame);
 
 			if (!frame->getInfo()->field_2E)
-				getScenes()->setCoordinates(fighter->frame);			
+				getScenes()->setCoordinates(fighter->frame);
 		}
 
 		// Replace by new frame

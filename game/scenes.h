@@ -84,8 +84,10 @@ public:
 
 	// Helpers
 	bool loadScene(Scene * const scene, SceneIndex sceneIndex);
-	Scene *getScene(SceneIndex sceneIndex);	
+	Scene *getScene(SceneIndex sceneIndex);
 	SceneIndex getSceneIndexFromPosition(CarIndex car, Position position, int param3 = -1);
+
+	void setFlagDrawSequences() { _flagDrawSequences = true; }
 
 private:
 	LastExpressEngine *_engine;

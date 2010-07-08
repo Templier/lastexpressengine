@@ -120,7 +120,7 @@ public:
 
 	// Dialog & Letters
 	void readText(int id);
-	const char *getDialogName(EntityIndex entity) const;	
+	const char *getDialogName(EntityIndex entity) const;
 
 	// Sound bites
 	void excuseMe(EntityIndex entity, int param2 = 0, int param3 = 0);

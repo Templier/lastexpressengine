@@ -89,9 +89,9 @@ public:
 
 	// Game
 	Cursor          *getCursor()          const { return _cursor; }
-	Font            *getFont()            const { return _font; }	
+	Font            *getFont()            const { return _font; }
 	Logic           *getGameLogic()       const { return _logic; }
-	Menu            *getGameMenu()        const { return _menu; }	
+	Menu            *getGameMenu()        const { return _menu; }
 
 	// Managers
 	GraphicsManager *getGraphicsManager() const { return _graphicsMan; }
@@ -126,7 +126,7 @@ private:
 	Font   *_font;
 	Logic  *_logic;
 	Menu   *_menu;
-	
+
 	// Managers
 	GraphicsManager *_graphicsMan;
 	ResourceManager *_resMan;

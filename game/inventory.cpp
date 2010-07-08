@@ -517,7 +517,7 @@ void Inventory::drawBlinkingEgg() {
 
 	//// Restore egg to standard brightness
 	//if (!getGlobalTimer()) {
-	//		
+	//
 	//}
 
 

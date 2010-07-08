@@ -517,7 +517,7 @@ void SceneManager::addToQueue(SequenceFrame *frame) {
 			return;
 		}
 	}
-	
+
 	// We are the last frame in location order, insert at the back of the queue
 	_queue.push_back(frame);
 }

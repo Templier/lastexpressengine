@@ -76,7 +76,7 @@ LastExpressEngine::~LastExpressEngine() {
 	// Delete the remaining objects
 	delete _cursor;
 	delete _debugger;
-	delete _font;	
+	delete _font;
 	delete _logic;
 	delete _menu;
 	delete _graphicsMan;
@@ -129,7 +129,7 @@ Common::Error LastExpressEngine::run() {
 	_timer->installTimerProc(&soundTimer, 17, this);
 
 	// Start scene manager
-	_sceneMan = new SceneManager(this);	
+	_sceneMan = new SceneManager(this);
 	_sceneMan->loadSceneDataFile(kArchiveCd1);
 
 	// Game logic
@@ -188,7 +188,7 @@ bool LastExpressEngine::handleEvents() {
 		case Common::EVENT_MAINMENU:
 			// Closing the GMM
 
-		case Common::EVENT_MOUSEMOVE:			
+		case Common::EVENT_MOUSEMOVE:
 		case Common::EVENT_LBUTTONDOWN:
 		case Common::EVENT_LBUTTONUP:
 		case Common::EVENT_RBUTTONDOWN:

@@ -159,7 +159,7 @@ private:
 };
 
 class SequenceFrame : public Drawable {
-public:	
+public:
 	SequenceFrame(Sequence *sequence, uint32 frame = 0, bool dispose = true);
 	~SequenceFrame();
 

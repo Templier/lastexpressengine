@@ -1424,7 +1424,7 @@ IMPLEMENT_ACTION(41) {
 	if (id) {
 		char filename[8];
 		sprintf((char *)&filename, "MUS%03d", id);
-		
+
 		if (!getSound()->isBuffered(filename))
 			getSound()->playSound(kEntityNone, filename, 16);
 	}

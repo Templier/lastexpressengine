@@ -245,7 +245,7 @@ IMPLEMENT_FUNCTION(Tatiana, function24, 24)
 		getEntities()->updatePosition(kEntityTatiana, kCarGreenSleeping, 70);
 		getEntities()->updatePosition(kEntityTatiana, kCarGreenSleeping, 71);
 		getEntities()->prepareSequences(kEntityTatiana);
-		
+
 		getObjects()->update(kObjectCompartmentB, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
 		getObjects()->update(kObject49, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
 		getObjects()->update(kObject41, kEntityNone, kLocationNone, kCursorKeepValue, kCursorKeepValue);

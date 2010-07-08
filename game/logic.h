@@ -53,7 +53,7 @@ public:
 	void eventMouse(const Common::Event &ev);
 	void eventTick(const Common::Event &ev);
 
-	void init();	
+	void init();
 	void gameOver(TimeType type, TimeValue time, SceneIndex sceneIndex, bool showScene);
 	void updateCursor(bool redraw = true);
 
@@ -61,7 +61,7 @@ public:
 	Beetle     *getGameBeetle()   { return _beetle; }
 	Entities   *getGameEntities() { return _entities; }
 	Fight      *getGameFight()    { return _fight; }
-	SaveLoad   *getGameSaveLoad() { return _saveload; }	
+	SaveLoad   *getGameSaveLoad() { return _saveload; }
 	State      *getGameState()    { return _state; }
 
 private:

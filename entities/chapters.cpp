@@ -304,7 +304,7 @@ label_exit_nancy:
 label_enter_luneville:
 		// Entering Luneville station
 		TIME_CHECK_ENTERSTATION(Chapters, kTimeCityLuneville, ENTITY_PARAM(2, 2), 11, "Luneville", kCityLuneville);
-				
+
 label_exit_luneville:
 		// Exiting Luneville station
 		TIME_CHECK_EXITSTATION(Chapters, kTimeExitLuneville, ENTITY_PARAM(2, 3), 12, "Luneville");
@@ -382,14 +382,14 @@ label_chapter1_end:
 					PLAY_STEAM();
 					break;
 				}
-				
+
 				getScenes()->loadSceneFromPosition(kCarGreenSleeping, 82);
 				PLAY_STEAM();
-				break;				
+				break;
 			}
 
 			getScenes()->loadSceneFromPosition(kCarRestaurant, 82);
-			PLAY_STEAM();	
+			PLAY_STEAM();
 			break;
 		}
 
@@ -1020,7 +1020,7 @@ void Chapters::enterExitStation(const SavePoint &savepoint, bool isEnteringStati
 
 		// Green sleeping car
 		if (getEntities()->checkFields15()) {
-			getScenes()->loadSceneFromPosition(kCarGreenSleeping, 49);			
+			getScenes()->loadSceneFromPosition(kCarGreenSleeping, 49);
 			ENTITY_PARAM(0, 2) = 0;
 			enterExitHelper(savepoint, isEnteringStation);
 			return;
@@ -1028,7 +1028,7 @@ void Chapters::enterExitStation(const SavePoint &savepoint, bool isEnteringStati
 
 		// Red sleeping car
 		if (getEntities()->checkFields16()) {
-			getScenes()->loadSceneFromPosition(kCarRedSleeping, 49);			
+			getScenes()->loadSceneFromPosition(kCarRedSleeping, 49);
 			ENTITY_PARAM(0, 2) = 0;
 			enterExitHelper(savepoint, isEnteringStation);
 			return;
@@ -1045,19 +1045,19 @@ void Chapters::enterExitStation(const SavePoint &savepoint, bool isEnteringStati
 
 			if (getEntities()->isPlayerPosition(kCarGreenSleeping, 98)) {
 				getSound()->playSound(kEntityNone, "LIB015");
-				getScenes()->loadSceneFromPosition(kCarGreenSleeping, 71);			
+				getScenes()->loadSceneFromPosition(kCarGreenSleeping, 71);
 				ENTITY_PARAM(0, 2) = 0;
 				enterExitHelper(savepoint, isEnteringStation);
 				return;
 			}
 
-			getScenes()->loadSceneFromPosition(kCarGreenSleeping, 82);			
+			getScenes()->loadSceneFromPosition(kCarGreenSleeping, 82);
 			ENTITY_PARAM(0, 2) = 0;
 			enterExitHelper(savepoint, isEnteringStation);
 			return;
 		}
 
-		getScenes()->loadSceneFromPosition(kCarRestaurant, 82);			
+		getScenes()->loadSceneFromPosition(kCarRestaurant, 82);
 		ENTITY_PARAM(0, 2) = 0;
 		enterExitHelper(savepoint, isEnteringStation);
 	}

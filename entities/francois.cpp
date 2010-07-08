@@ -236,7 +236,7 @@ IMPLEMENT_FUNCTION(Francois, function22, 22)
 
 		case 2:
 			getObjects()->update(kObjectCompartmentD, kEntityNone, kLocation2, kCursorKeepValue, kCursorKeepValue);
-			getSavePoints()->push(kEntityFrancois, kEntityMmeBoutarel, kAction100957716);			
+			getSavePoints()->push(kEntityFrancois, kEntityMmeBoutarel, kAction100957716);
 			getData()->field_491 = EntityData::kField491_5790;
 			getData()->field_493 = EntityData::kField493_1;
 			getEntities()->prepareSequences(kEntityFrancois);

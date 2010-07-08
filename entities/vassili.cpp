@@ -151,7 +151,7 @@ IMPLEMENT_FUNCTION(Vassili, function6, 6)
 				params->param3 = EntityData::kParamTime;
 			} else {
 				params->param3 = (int)getState()->timeTicks + params->param1;
-				if (!params->param3) {					
+				if (!params->param3) {
 					if (params->param3 >= (int)getState()->timeTicks)
 						goto label_function7;
 
@@ -177,11 +177,11 @@ label_function7:
 						break;
 					}
 				}
-				
+
 				if (params->param4 >= (int)getState()->time)
 					break;
 			}
-			
+
 			params->param4 = EntityData::kParamTime;
 			setup_function7();
 		}

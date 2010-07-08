@@ -158,7 +158,7 @@ IMPLEMENT_FUNCTION(Gendarmes, function12, 12)
 	default:
 		break;
 
-	case kActionDefault:		
+	case kActionDefault:
 		getData()->field_491 = EntityData::kField491_540;
 		getData()->field_493 = EntityData::kField493_0;
 		getData()->car = kCarGreenSleeping;

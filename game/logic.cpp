@@ -200,7 +200,7 @@ void Logic::eventMouse(const Common::Event &ev) {
 		getFlags()->shouldRedraw = true;
 		updateCursor(true);
 	}
-	
+
 	// Switch to next chapter if necessary
 	if (hotspot->action == SceneHotspot::kActionSwitchChapter && hotspot->param1 == getState()->progress.chapter)
 		switchChapter();
@@ -229,7 +229,7 @@ void Logic::eventTick(const Common::Event &ev) {
 
 		if (getState()->timeDelta) {
 
-			// Auto-save 
+			// Auto-save
 			if (!_ticksSinceLastSavegame) {
 				_ticksSinceLastSavegame = EVENT_TICKS_BEETWEEN_SAVEGAMES;
 				save(kEntityChapters, kSavegameTypeAuto, kEventNone);
@@ -246,7 +246,7 @@ void Logic::eventTick(const Common::Event &ev) {
 	if (getFlags()->flag_0 && !getFlags()->mouseLeftClick && !getFlags()->mouseRightClick) {
 		loadSceneObject(scene, getState()->scene);
 
-		if (getScenes()->checkCurrentPosition(true) 
+		if (getScenes()->checkCurrentPosition(true)
 		 && scene.getHeader()->car
 		 && !getEntities()->getPosition(scene.getHeader()->car, scene.getHeader()->position)) {
 
@@ -406,20 +406,20 @@ void Logic::updateCursor(bool redraw) {
 	 || getProgress().isEggOpen
 	 || getEntities()->isPlayerPosition(kCarGreenSleeping, 59)
 	 || getEntities()->isPlayerPosition(kCarGreenSleeping, 76)
-	 || getInventory()->isFlag1() 
-	 || getInventory()->isFlag2() 
+	 || getInventory()->isFlag1()
+	 || getInventory()->isFlag2()
 	 || getInventory()->isEggHighlighted()
 	 || getInventory()->isMagnifierInUse()) {
 
 		if (getInventory()->getSelectedItem() != kItemWhistle
 		 || (!getEntities()->checkFields7(kCarGreenSleeping) && !getEntities()->checkFields7(kCarRedSleeping))
 		 || getProgress().jacket != kJacketGreen
-		 || getInventory()->isFlag1() 
-		 || getInventory()->isFlag2() 
+		 || getInventory()->isFlag1()
+		 || getInventory()->isFlag2()
 		 || getInventory()->isEggHighlighted()
 		 || getInventory()->isMagnifierInUse()
-		 || (getInventory()->getEntry(kItem2)->location 
-		  && getEntityData(kEntityNone)->car == kCarRedSleeping 
+		 || (getInventory()->getEntry(kItem2)->location
+		  && getEntityData(kEntityNone)->car == kCarRedSleeping
 		  && getEntityData(kEntityNone)->field_491 == EntityData::kField491_2300)) {
 
 			EntityIndex entity = getEntities()->canInteractWith(getCoords());
@@ -454,11 +454,11 @@ void Logic::updateCursor(bool redraw) {
 
 							if (!getEntities()->getPosition(hotspotScene.getHeader()->car, hotspotScene.getHeader()->position)
 							 || (*i)->cursor == kCursorTurnRight
-							 || (*i)->cursor == kCursorTurnLeft) {								
+							 || (*i)->cursor == kCursorTurnLeft) {
 								hotspot = *i;
 								location = (*i)->location;
 							}
-						}					
+						}
 					}
 				}
 
@@ -467,7 +467,7 @@ void Logic::updateCursor(bool redraw) {
 		} else {
 			style = getInventory()->getEntry(kItemMatch)->cursor;
 		}
-		
+
 	} else {
 		style = getInventory()->getEntry(kItemWhistle)->cursor;
 	}

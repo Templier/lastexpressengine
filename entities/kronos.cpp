@@ -162,7 +162,7 @@ IMPLEMENT_FUNCTION(Kronos, function10, 10)
 
 	case kActionNone:
 		TIME_CHECK(kTimeKronos, params->param1, setup_function11);
-		
+
 		if (params->param1 && getEntities()->checkFields5(kEntityNone, kCarKronos)) {
 			UPDATE_PARAM(params->param3, getState()->timeTicks, 150);
 			setup_function9();

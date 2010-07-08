@@ -215,7 +215,7 @@ IMPLEMENT_FUNCTION(Yasmin, function9, 9)
 		TIME_CHECK_CALLBACK(Yasmin, kTimeFrancois, params->param2, 3, setup_function7);
 		TIME_CHECK_PLAYSOUND_2(Yasmin, kTimeYasmin_7, params->param3, 4, "Har1102", EntityData::kField491_4070);
 		TIME_CHECK_PLAYSOUND(Yasmin, kTimeTables1, params->param4, 5, "Har1104");
-		TIME_CHECK_PLAYSOUND(Yasmin, kTimeYasmin_8, params->param5, 6, "Har1106");			
+		TIME_CHECK_PLAYSOUND(Yasmin, kTimeYasmin_8, params->param5, 6, "Har1106");
 		TIME_CHECK_CALLBACK(Yasmin, kTimeYasmin_9, params->param6, 7, setup_function6);
 		break;
 
@@ -233,16 +233,16 @@ IMPLEMENT_FUNCTION(Yasmin, function9, 9)
 		case 2:
 			TIME_CHECK_CALLBACK(Yasmin, kTimeFrancois, params->param2, 3, setup_function7);
 
-		case 3:			
+		case 3:
 			TIME_CHECK_PLAYSOUND_2(Yasmin, kTimeYasmin_7, params->param3, 4, "Har1102", EntityData::kField491_4070);
 
 		case 4:
 			TIME_CHECK_PLAYSOUND(Yasmin, kTimeTables1, params->param4, 5, "Har1104");
 
-		case 5:			
-			TIME_CHECK_PLAYSOUND(Yasmin, kTimeYasmin_8, params->param5, 6, "Har1106");	
+		case 5:
+			TIME_CHECK_PLAYSOUND(Yasmin, kTimeYasmin_8, params->param5, 6, "Har1106");
 
-		case 6:					
+		case 6:
 			TIME_CHECK_CALLBACK(Yasmin, kTimeYasmin_9, params->param6, 7, setup_function6);
 			break;
 		}
@@ -282,7 +282,7 @@ IMPLEMENT_FUNCTION(Yasmin, function12, 12)
 
 	case kActionNone:
 		TIME_CHECK_CALLBACK(Yasmin, kTimeYasmin, params->param1, 1, setup_function7);
-		
+
 		if (getState()->time > kTimeYasmin_1 && !params->param2) {
 			params->param2 = 1;
 			getData()->field_491 = EntityData::kField491_4070;
@@ -343,7 +343,7 @@ IMPLEMENT_FUNCTION(Yasmin, function14, 14)
 			break;
 
 		case 1:
-			TIME_CHECK_CALLBACK(Yasmin, kTimeYasmin_3, params->param2, 2, setup_function7);			
+			TIME_CHECK_CALLBACK(Yasmin, kTimeYasmin_3, params->param2, 2, setup_function7);
 
 		case 2:
 			TIME_CHECK_CALLBACK(Yasmin, kTimeYasmin_4, params->param3, 3, setup_function6);

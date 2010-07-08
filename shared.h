@@ -80,7 +80,7 @@ enum TimeValue {
 	kTimeChapter1_101         = 1458000,
 	kTimeKronos               = 1489500,
 	kTimeCityStrasbourg       = 1490400,
-	kTimeExitStrasbourg       = 1493100,	
+	kTimeExitStrasbourg       = 1493100,
 	kTimeChapter1End          = 1494000,
 	kTimeVassili              = 1503000,
 	kTimeVassili_2            = 1512000,
@@ -159,7 +159,7 @@ enum TimeValue {
 	kTimeCityConstantinople   = 4941000,
 
 	// Bug in original game?
-	kTimeEnd                  = 15803100	
+	kTimeEnd                  = 15803100
 };
 
 enum TimeType {
@@ -1099,7 +1099,7 @@ enum ActionIndex {
 
 	/////////////////////////////
 	// Mme Boutarel
-	/////////////////////////////	
+	/////////////////////////////
 	kAction102484312 = 102484312,
 	kAction102752636 = 102752636,
 	kAction134289824 = 134289824,

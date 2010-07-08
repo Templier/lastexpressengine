@@ -57,7 +57,7 @@ public:
 	DECLARE_FUNCTION(chapter4)
 	DECLARE_FUNCTION(chapter5)
 
-private:	
+private:
 	DECLARE_CALL_FUNCTION(iiii, Gendarmes, int, int, int, int)
 
 	void arrest(const SavePoint &savepoint, bool playSound = false, int a3 = -1);

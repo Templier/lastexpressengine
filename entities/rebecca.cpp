@@ -265,7 +265,7 @@ label_function22_callback_5:
 				getScenes()->loadSceneFromPosition(kCarRestaurant, 55);
 			} else {
 				params->param6 = 0;
-			}	
+			}
 		} else {
 			params->param4 = EntityData::kParamTime;
 			if (getEntities()->checkFields12(kEntityNone))
@@ -273,7 +273,7 @@ label_function22_callback_5:
 
 			setCallback(4);
 			call(new ENTITY_SETUP_SIIS(Rebecca, setup_playSound), "REB1012");
-		}			
+		}
 		break;
 
 	case kActionDefault:
@@ -310,8 +310,8 @@ label_function22_callback_5:
 		case 5:
 			getProgress().field_B4 = 1;
 			params->param1 = 0;
-			goto label_function22_callback_5;			
-		}		
+			goto label_function22_callback_5;
+		}
 		break;
 	}
 }

@@ -184,14 +184,14 @@ IMPLEMENT_FUNCTION_IS(Boutarel, function17, 17)
 		getScenes()->loadSceneFromPosition(kCarRestaurant, 51);
 		break;
 
-	case kActionDefault:		
+	case kActionDefault:
 		getEntities()->drawSequenceLeft(kEntityMmeBoutarel, params->seq);
 		break;
 
 	case kAction17:
 		params->param2 = (getEntities()->isPlayerPosition(kCarRestaurant, 52) ? 1 : 0);
 		break;
-	}	
+	}
 }
 
 IMPLEMENT_FUNCTION_I(Boutarel, function18, 18)
@@ -280,17 +280,17 @@ IMPLEMENT_FUNCTION(Boutarel, chapter1_handler, 21)
 
 		case 6:
 			setCallback(7);
-			call(new ENTITY_SETUP_ISII(Boutarel, setup_function15), false, "102A");			
+			call(new ENTITY_SETUP_ISII(Boutarel, setup_function15), false, "102A");
 			break;
 
 		case 7:
 			setCallback(8);
-			call(new ENTITY_SETUP_ISII(Boutarel, setup_function17), kTimeYasmin_9, "102B");					
+			call(new ENTITY_SETUP_ISII(Boutarel, setup_function17), kTimeYasmin_9, "102B");
 			break;
 
 		case 8:
 			setCallback(9);
-			call(new ENTITY_SETUP_ISII(Boutarel, setup_function16), false, "102C");		
+			call(new ENTITY_SETUP_ISII(Boutarel, setup_function16), false, "102C");
 			break;
 
 		case 9:
@@ -468,7 +468,7 @@ IMPLEMENT_FUNCTION(Boutarel, function32, 32)
 	default:
 		break;
 
-	case kActionNone:		
+	case kActionNone:
 		TIME_CHECK(kTimeBoutarel, params->param1, setup_function33);
 		break;
 

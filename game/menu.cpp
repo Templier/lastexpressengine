@@ -410,7 +410,7 @@ Common::Rect TrainLine::draw(Graphics::Surface *surface) {
 Menu::Menu(LastExpressEngine *engine) : _engine(engine), _scene(NULL), _clock(NULL), _trainLine(NULL), _index3(0), _index4(0),
 	_gameId(kGameBlue), _hasShownStartScreen(false), _hasShownIntro(false),
 	_isShowingCredits(false), _isGameStarted(false), _isShowingMenu(false) {
-	
+
 	_creditsSequenceIndex = 0;
 	for (int i = 0; i < 7; i++)
 		_cityButtonFrames[i] = NULL;
@@ -442,10 +442,10 @@ void Menu::show(bool savegame, TimeType type, uint32 time) {
 	_isShowingMenu = true;
 	getEntities()->reset();
 
-	// If no blue savegame exists, this might be the first time we start the game, so we show the full intro	
+	// If no blue savegame exists, this might be the first time we start the game, so we show the full intro
 	if (!SaveLoad::isSavegameValid(kGameBlue)) {
 		if (!_hasShownIntro) {
-			
+
 			// Show Broderbrund logo
 			Animation animation;
 			if (animation.loadFile("1930.nis"))
@@ -491,7 +491,7 @@ void Menu::show(bool savegame, TimeType type, uint32 time) {
 	// Load all menu-related data
 	loadData();
 
-	
+
 	//_currentTime = getState()->time;
 
 	// Load main scene
@@ -660,9 +660,9 @@ void Menu::handleEvent(const Common::Event &ev) {
 		getFlags()->isGameRunning = true;
 
 		getState()->scene = kSceneDefault;
-		// TODO reset all game data			
+		// TODO reset all game data
 		getEntities()->setup(true, kEntityNone);
-			
+
 		getInventory()->show();
 		askForRedraw();
 		break;

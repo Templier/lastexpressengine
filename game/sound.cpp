@@ -385,7 +385,7 @@ void SoundManager::playSteam(CityIndex index) {
 	// Get the new sound entry and show subtitles
 	SoundEntry *entry = getEntry(kSoundType1);
 	if (entry)
-		showSubtitles(entry, cities[index]);	
+		showSubtitles(entry, cities[index]);
 }
 
 void SoundManager::playFightSound(byte action, byte a4) {

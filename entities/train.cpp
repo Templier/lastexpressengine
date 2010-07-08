@@ -317,14 +317,14 @@ label_process:
 					params->param7 = 0;
 			}
 
-			if (parameters1->param8 && parameters1->param8 < (int)getState()->time)				
+			if (parameters1->param8 && parameters1->param8 < (int)getState()->time)
 				params->param7 = 0;
 		}
 
 		// Update object
 		if (ENTITY_PARAM(0, 8) && !getSound()->isBuffered(kEntityTables5)) {
 			getObjects()->update((ObjectIndex)ENTITY_PARAM(0, 8), getObjects()->get((ObjectIndex)ENTITY_PARAM(0, 8)).entity, kLocation3, kCursorHandKnock, kCursorHand);
-			ENTITY_PARAM(0, 8) = 0;			
+			ENTITY_PARAM(0, 8) = 0;
 		}
 
 		// Play clock sound
