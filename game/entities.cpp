@@ -621,15 +621,15 @@ void Entities::executeCallbacks() {
 	if (getFlags()->flag_entities_0)
 		return;
 
-	bool processed = false;
-	do {
+	bool processed = true;
+	do {		
 		for (int i = 1; i < (int)_entities.size(); i++) {
 			if (getFlags()->flag_entities_0)
 				break;
 
 			if (getSavePoints()->getCallback((EntityIndex)i)) {
 				if (getData((EntityIndex)i)->doProcessEntity) {
-					processed = true;
+					processed = false;
 					processEntity((EntityIndex)i);
 				}
 			}
