@@ -774,23 +774,126 @@ label_nosequence:
 }
 
 void Entities::computeCurrentFrame2(EntityIndex entityIndex) {
-	warning("Entities::computeCurrentFrame2: not implemented!");
+	EntityData::EntityCallData *data = getData(entityIndex);
+
+	if (!data->sequence2) {
+		data->currentFrame2 = -1;
+		return;
+	}
+
+	switch (data->direction) {
+	default:
+		break;
+
+	case kDirectionNone:
+	case kDirectionSwitch:
+		data->currentFrame2 = -1;
+		break;
+
+	case kDirectionUp:
+	case kDirectionDown: {
+		loadSceneObject(scene, getState()->scene);
+
+		if (scene.getHeader()->position > 40)
+			break;
+
+		switch (scene.getHeader()->position) {
+		default:
+		case 4:
+		case 19:
+		case 20:
+		case 21:
+		case 24:
+			break;
+
+		case 1:
+		case 18:
+		case 22:
+		case 40:
+			data->currentFrame2 = getCurrentFrame2(entityIndex, data->sequence2, EntityData::kField491_0, false);
+			break;
+
+		case 2:
+		case 3:
+		case 5:
+		case 6:
+		case 7:
+		case 8:
+		case 9:
+		case 10:
+		case 11:
+		case 12:
+		case 13:
+		case 14:
+		case 15:
+		case 16:
+		case 17:
+			error("Entities::computeCurrentFrame2: not implemented!");
+			break;
+
+		case 23:
+		case 25:
+		case 26:
+		case 27:
+		case 28:
+		case 29:
+		case 30:
+		case 31:
+		case 32:
+		case 33:
+		case 34:
+		case 35:
+		case 36:
+		case 37:
+		case 38:
+		case 39:
+			error("Entities::computeCurrentFrame2: not implemented!");
+			break;
+		}
+		
+		}
+		break;
+
+
+	case kDirectionLeft:
+		if (data->currentFrame2 == -1 || data->sequence2->count() <= (uint32)data->currentFrame2) {
+			data->currentFrame2 = 0;
+			data->field_49B = 0;
+		}		
+		break;
+
+	case kDirectionRight:
+		error("Entities::computeCurrentFrame2: not implemented!");
+		break;
+	}	
+}
+
+int Entities::getCurrentFrame2(EntityIndex entity, Sequence *sequence, EntityData::Field491Value field491, bool doProcessing) {
+
+	if (doProcessing) {
+		error("Entities::getCurrentFrame2: not implemented!");
+	}
+
+	//if (sequence->getFrameInfo()->field491 >= )
+	warning("Entities::getCurrentFrame2: not implemented!");
+
+	return -1;
 }
 
 void Entities::processEntitySub(EntityIndex entityIndex, bool dontClearQueue, bool dontPlaySound) {
-	warning("Entities::processEntitySub: not implemented!");
+	error("Entities::processEntitySub: not implemented!");
 }
 
 void Entities::processEntitySub2(EntityIndex entityIndex) {
-	warning("Entities::processEntitySub2: not implemented!");
+	error("Entities::processEntitySub2: not implemented!");
 }
 
 void Entities::processEntitySub3(EntityIndex entityIndex) {
-	warning("Entities::processEntitySub2: not implemented!");
+	error("Entities::processEntitySub2: not implemented!");
 }
 
 void Entities::copySequenceData3To2(EntityIndex entityIndex) {
-	warning("Entities::copySequenceData3To2: not implemented!");
+	error("Entities::copySequenceData3To2: not implemented!");
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -848,12 +951,11 @@ void Entities::drawSequenceInternal(EntityIndex index, const char* sequence, Ent
 }
 
 void Entities::drawSequencesInternal(EntityIndex entityIndex, EntityDirection direction, bool unknown) {
-	debugC(8, kLastExpressDebugLogic, "Drawing sequences for entity %s with direction %s", ENTITY_NAME(entityIndex), DIRECTION_NAME(direction));
-
-	// TODO compute value for loading sequence depending on direction
-	// (direction == kDirectionLeft ? index + 35 : 15)
 
 	EntityData::EntityCallData *data = getData(entityIndex);
+
+	// Compute value for loading sequence depending on direction
+	int16 field30 = (direction == kDirectionLeft ? entityIndex + 35 : 15);
 
 	// First case: different car and not going right: cleanup and return
 	if (data->car != getData(kEntityNone)->car && direction != kDirectionRight) {
@@ -864,37 +966,156 @@ void Entities::drawSequencesInternal(EntityIndex entityIndex, EntityDirection di
 	data->direction2 = kDirectionNone;
 
 	// Process sequence names
-	char sequence1[12];
-	char sequence2[12];
-	strcpy((char *)&sequence1, "");
-	strcpy((char *)&sequence2, "");
+	char sequenceName[12];
+	char sequenceName1[12];
+	char sequenceName2[12];
+	char sequenceName3[12];
+	strcpy((char *)&sequenceName, "");
+	strcpy((char *)&sequenceName1, "");
+	strcpy((char *)&sequenceName2, "");
 
-	getSequenceName(entityIndex, direction, (char *)&sequence1, (char *)&sequence2);
+	getSequenceName(entityIndex, direction, (char *)&sequenceName1, (char *)&sequenceName2);
 
 	// No sequence 1: cleanup and return
-	if (strcmp(sequence1, "") == 0) {
+	if (strcmp((char *)&sequenceName1, "") == 0) {
 		clearEntitySequenceData(data, direction);
 		return;
 	}
 
-	if (!strcmp((char *)&sequence1, (char *)&data->sequenceNameCopy)) {
+	if (!strcmp((char *)&sequenceName1, (char *)&data->sequenceNameCopy)) {
 		data->direction = direction;
 		return;
 	}
 
-	//if (direction == kDirectionLeft || direction == kDirectionRight) {
-	//
-	//}
+	if (direction == kDirectionLeft || direction == kDirectionRight) {
+		error("Entities::drawSequencesInternal: not implemented!");
+	}
 
-	//if (!data->frame) {
-	//	data->direction = direction;
+	if (!data->frame) {
+		data->direction = direction;
 
-	//	// TODO finish implemeting
-	//}
+		if (!strcmp((char *)&sequenceName1, (char *)&data->sequenceName2)) {
+			if (!sequenceName2)
+				return;
 
-	warning("Entities::drawSequencesInternal: not implemented!");
+			drawSequencesInternalSub(entityIndex, (char *)&sequenceName2, (char *)&sequenceName3, field30, unknown);
+			return;
+		}
 
+		SAFE_DELETE(data->sequence2);
 
+		if (strcmp((char *)&sequenceName1, (char *)&data->sequenceName3)) {	
+
+			if (unknown) {
+
+				if (data->car == getData(kEntityNone)->car)
+					data->sequence2 = newSequence((char *)&sequenceName1, field30);
+
+				if (data->sequence2) {
+					strcpy((char *)&data->sequenceName2, (char *)&sequenceName1);
+					strcpy((char *)&data->sequenceNameCopy, "");
+				} else {
+					if (strcmp((char *)&sequenceName, "") != 0)
+						data->sequence2 = newSequence((char *)&sequenceName, field30);
+
+					if (data->sequence2) {
+						strcpy((char *)&data->sequenceName2, (char *)&sequenceName);
+						strcpy((char *)&data->sequenceNameCopy, "");
+					} else {
+						strcpy((char *)&data->sequenceName2, "");
+						strcpy((char *)&data->sequenceNameCopy, (char *)&sequenceName1);
+					}
+				}
+			} else {
+				strcpy((char *)&data->sequenceName2, (char *)&sequenceName1);
+			}
+
+			if (strcmp((char *)&sequenceName2, "") != 0) {
+				drawSequencesInternalSub(entityIndex, (char *)&sequenceName2, (char *)&sequenceName3, field30, unknown);
+				return;
+			}
+
+			if (!data->sequence3) {
+				if (strcmp((char *)&sequenceName2, ""))
+					return;
+				
+				drawSequencesInternalSub(entityIndex, (char *)&sequenceName2, (char *)&sequenceName3, field30, unknown);
+				return;
+			}
+
+			SAFE_DELETE(data->sequence3);
+		} else {
+			data->sequence2 = data->sequence3;
+			strcpy(data->sequenceName2, data->sequenceName3);
+			data->sequence3 = NULL;
+		}
+
+		strcpy(data->sequenceName3, "");
+
+		if (!sequenceName2)
+			return;
+
+		drawSequencesInternalSub(entityIndex, (char *)&sequenceName2, (char *)&sequenceName3, field30, unknown);
+		return;
+	}
+
+	if (strcmp((char *)&data->sequenceName2, (char *)&sequenceName1)) {
+		error("Entities::drawSequencesInternal: not implemented!");
+	} else {
+		SAFE_DELETE(data->sequence3);
+
+		data->sequence3 = copySequence(data->sequence2);
+
+		strcpy(data->sequenceName3, data->sequenceName2);
+		data->field_4AA = data->field_4A9;
+		data->field_49B = data->frame->getInfo()->field_30;
+		data->currentFrame2 = data->sequence2->count() - 1;
+		data->direction = kDirectionSwitch;
+		data->direction2 = direction;
+
+		if ((direction != kDirectionUp && direction != kDirectionDown) || data->field_4AA || !data->currentFrame3) {
+			data->currentFrame3 = 0;
+		} else {
+			data->currentFrame3 = getCurrentFrame2(entityIndex, data->sequence3, EntityData::kField491_0, false);
+
+			if (data->currentFrame3 == -1)
+				prepareSequences(entityIndex);
+		}
+	}
+}
+
+void Entities::drawSequencesInternalSub(EntityIndex entityIndex, const char *sequenceName, const char *sequenceName2, int16 field30, bool unknown) {
+	EntityData::EntityCallData *data = getData(entityIndex);
+
+	if (!strcmp((char *)&data->sequenceName3, sequenceName))
+		return;
+
+	if (data->sequence3)
+		SAFE_DELETE(data->sequence3);
+
+	if (unknown) {
+
+		if (data->car == getData(kEntityNone)->car)
+			data->sequence3 = newSequence(sequenceName, field30);
+
+		if (data->sequence3) {
+			strcpy((char *)&data->sequenceName3, sequenceName);
+		} else {
+			if (!strcmp(sequenceName2, ""))
+				data->sequence3 = newSequence(sequenceName2, field30);
+
+			if (data->sequence3)
+				strcpy((char *)&data->sequenceName3, sequenceName2);
+			else
+				strcpy((char *)&data->sequenceName3, "");
+		}
+	} else {
+		strcpy((char *)&data->sequenceName3, sequenceName);
+	}
+}
+
+Sequence *Entities::copySequence(Sequence *sequence) {
+	error("Entities::copySequence: not implemented!");
 }
 
 void Entities::getSequenceName(EntityIndex index, EntityDirection direction, char *sequence1, char *sequence2) const {

@@ -44,6 +44,7 @@
 namespace LastExpress {
 
 class LastExpressEngine;
+class Sequence;
 
 class Entities : Common::Serializable {
 public:
@@ -161,14 +162,17 @@ private:
 
 	void drawSequenceInternal(EntityIndex entity, const char* sequence, EntityDirection direction);
 	void drawSequencesInternal(EntityIndex entity, EntityDirection direction, bool unknown);
+	void drawSequencesInternalSub(EntityIndex entityIndex, const char* sequenceName, const char* sequenceName2, int16 field30, bool unknown);
 
 	void clearEntitySequenceData(EntityData::EntityCallData * data, EntityDirection direction);
 	void computeCurrentFrame2(EntityIndex entityIndex);
+	int getCurrentFrame2(EntityIndex entity, Sequence *sequence, EntityData::Field491Value field491, bool doProcessing);
 	void processEntitySub(EntityIndex entityIndex, bool dontClearQueue, bool dontPlaySound);
 	void processEntitySub2(EntityIndex entityIndex);
 	void processEntitySub3(EntityIndex entityIndex);
 	void copySequenceData3To2(EntityIndex entityIndex);
-
+	
+	Sequence *copySequence(Sequence *sequence);
 	void getSequenceName(EntityIndex entity, EntityDirection direction, char *sequence1, char *sequence2) const;
 
 	void updatePositionsEnter(EntityIndex entity, CarIndex car, Position position1, Position position2, Position position3, Position position4);
@@ -178,8 +182,7 @@ private:
 
 	bool checkField491(EntityData::Field491Value field491) const;
 	bool checkSequenceFromPosition(EntityIndex entity) const;
-	EntityData::Field491Value getField491FromCurrentPosition() const;
-
+	EntityData::Field491Value getField491FromCurrentPosition() const;	
 };
 
 } // End of namespace LastExpress

@@ -73,7 +73,7 @@
 //////////////////////////////////////////////////////////////////////////
 
 // Sequences
-#define newSequence(name) new Sequence(_engine->getResourceManager()->getFileStream(name))
+#define newSequence(name, ...) new Sequence(_engine->getResourceManager()->getFileStream(name))
 #define drawSequenceFrame(drawable, index, type) { \
 	AnimFrame *frame = (drawable)->getFrame((index)); \
 	_engine->getGraphicsManager()->draw((frame), (type)); \
