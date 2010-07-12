@@ -124,11 +124,85 @@ IMPLEMENT_FUNCTION(Hadija, chapter1_handler, 11)
 		break;
 
 	case kActionNone:
-		error("Hadija: callback function 11 not implemented!");
+		TIME_CHECK_PLAYSOUND_2(Hadija, kTimeParisEpernay, params->param1, 1, "Har1100", EntityData::kField491_4840);
+
+label_callback1:
+		TIME_CHECK_CALLBACK(Hadija, kTimeRebecca_1_1, params->param2, 2, setup_function8);
+
+label_callback2:
+		if (params->param3 != EntityData::kParamTime && getState()->time > kTimeAnna) {
+
+			if (getState()->time <= kTimeHadija_1_2) {
+
+				if (!getEntities()->checkFields7(kCarGreenSleeping) || !getEntities()->checkFields1(kEntityMahmud, kCarGreenSleeping, EntityData::kField491_5790) || !params->param3) {
+					params->param3 = getState()->time + 75;
+					
+					if (!params->param3) {
+						setCallback(3);
+						call(new ENTITY_SETUP(Hadija, setup_function7));
+						return;
+					}
+				}
+
+				if (params->param3 >= (int)getState()->time)
+					return;
+			}
+
+			params->param3 = EntityData::kParamTime;
+
+			setCallback(3);
+			call(new ENTITY_SETUP(Hadija, setup_function7));		
+		}
+
+label_callback3:
+		TIME_CHECK_CALLBACK(Hadija, kTimeHadija_1, params->param4, 4, setup_function9);
+
+label_callback4:
+		if (params->param5 != EntityData::kParamTime && getState()->time > kTimeTables1) {
+			if (getState()->time <= kTimeHadija_1_1) {
+
+				if (!getEntities()->checkFields7(kCarGreenSleeping) || !getEntities()->checkFields1(kEntityMahmud, kCarGreenSleeping, EntityData::kField491_5790) || !params->param5) {
+					params->param5 = getState()->time + 75;
+					
+					if (!params->param5) {
+						setCallback(5);
+						call(new ENTITY_SETUP(Hadija, setup_function6));
+						return;
+					}
+				}
+
+				if (params->param5 >= (int)getState()->time)
+					return;
+			}
+
+			params->param5 = EntityData::kParamTime;
+
+			setCallback(5);
+			call(new ENTITY_SETUP(Hadija, setup_function6));
+		}
 		break;
 
 	case kActionCallback:
-		error("Hadija: callback function 11 not implemented!");
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			goto label_callback1;
+			break;
+
+		case 2:
+			goto label_callback2;
+			break;
+
+		case 3:
+			goto label_callback3;
+			break;
+
+		case 4:
+			goto label_callback4;
+			break;
+		}
 		break;
 	}
 }

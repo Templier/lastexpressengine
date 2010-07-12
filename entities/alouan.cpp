@@ -124,11 +124,35 @@ IMPLEMENT_FUNCTION(Alouan, chapter1_handler, 11)
 		break;
 
 	case kActionNone:
-		error("Alouan: callback function 11 not implemented!");
+		
+		TIME_CHECK_CALLBACK(Alouan, kTimeAlouan, params->param1, 1, setup_function9);
+
+label_callback1:
+		if (getState()->time > kTimeYasmin_7 && !params->param2) {
+			params->param2 = 1;			
+			getSavePoints()->push(kEntityAlouan, kEntityTrain, kAction191070912, EntityData::kField491_4070);
+			getData()->field_491 = EntityData::kField491_4070;	
+		}
+
+		if (getState()->time > kTimeAlouan_1 && !params->param3) {
+			params->param3 = 1;			
+			getSavePoints()->push(kEntityAlouan, kEntityTrain, kAction191070912, EntityData::kField491_4840);
+			
+			setCallback(2);
+			call(new ENTITY_SETUP(Alouan, setup_function8));
+		}
 		break;
 
 	case kActionCallback:
-		error("Alouan: callback function 11 not implemented!");
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			getData()->field_491 = EntityData::kField491_4840;
+			goto label_callback1;
+			break;
+		}
 		break;
 	}
 }
