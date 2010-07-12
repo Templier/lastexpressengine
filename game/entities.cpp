@@ -893,7 +893,36 @@ void Entities::processEntitySub3(EntityIndex entityIndex) {
 }
 
 void Entities::copySequenceData3To2(EntityIndex entityIndex) {
-	error("Entities::copySequenceData3To2: not implemented!");
+	EntityData::EntityCallData *data = getData(entityIndex);
+
+	if (data->sequence2)
+		data->sequence4 = data->sequence2;
+
+	data->sequence2 = data->sequence3;
+	strcpy((char *)&data->sequenceName2, (char *)&data->sequenceName3);
+	data->field_4A9 = data->field_4AA;
+
+	if (data->direction2)
+		data->direction = data->direction2;
+
+	// Clear sequence 3
+	data->sequence3 = NULL;
+	strcpy((char *)&data->sequenceName3, "");
+	data->field_4AA = 0;
+	data->direction2 = kDirectionNone;
+
+	if (data->field_4A9) {
+		computeCurrentFrame2(entityIndex);
+
+		if (data->currentFrame2 == -1)
+			data->currentFrame2 = 0;
+	} else {
+		data->currentFrame2 = data->currentFrame3;
+		data->currentFrame3 = 0;
+
+		if (data->currentFrame2 == -1)
+			data->currentFrame2 = 0;
+	}
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -1642,6 +1671,14 @@ bool Entities::checkSequence0(EntityIndex entity) const {
 }
 
 bool Entities::compare(EntityIndex entity1, EntityIndex entity2) {
+	EntityData::EntityCallData *data1 = getData(entity1);
+	EntityData::EntityCallData *data2 = getData(entity2);
+
+	if (data2->car != data1->car
+	 || data1->car < kCarGreenSleeping
+	 || data1->car > kCarRedSleeping)
+		return false;
+
 	error("Entities::compare: not implemented!");
 }
 
