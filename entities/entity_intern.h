@@ -52,6 +52,9 @@ namespace LastExpress {
 #define ENTITY_SETUP_ISII(class, name) \
 	Functor4Mem<int, const char*, int, int, void, class>(this, &class::name)
 
+#define ENTITY_SETUP_IISS(class, name) \
+	Functor4Mem<int, int, const char*, const char*, void, class>(this, &class::name)
+
 #define ADD_CALLBACK_FUNCTION(class, name) \
 	_callbacks.push_back(new ENTITY_CALLBACK(class, name, this));
 

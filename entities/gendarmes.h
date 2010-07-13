@@ -59,6 +59,7 @@ public:
 
 private:
 	DECLARE_CALL_FUNCTION(iiii, Gendarmes, int, int, int, int)
+	DECLARE_CALL_FUNCTION(iiss, Gendarmes, int, int, const char*, const char*)
 
 	void arrest(const SavePoint &savepoint, bool playSound = false, int a3 = -1);
 };

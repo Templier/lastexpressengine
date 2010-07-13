@@ -138,6 +138,9 @@ IMPLEMENT_FUNCTION_II(Gendarmes, function8, 8)
 	}
 }
 
+// Parameters:
+// - CarIndex
+// - Field491
 IMPLEMENT_FUNCTION_IISS(Gendarmes, function9, 9)
 	error("Gendarmes: callback function 9 not implemented!");
 }
@@ -170,7 +173,140 @@ IMPLEMENT_FUNCTION(Gendarmes, function12, 12)
 		break;
 
 	case kActionCallback:
-		error("Gendarmes: callback function 12 not implemented!");
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			setCallback(2);
+			call(new ENTITY_SETUP_IISS(Gendarmes, setup_function9), kCarGreenSleeping, EntityData::kField491_5790, "d", "A");
+			break;
+
+		case 2:
+			setCallback(3);
+			call(new ENTITY_SETUP(Gendarmes, setup_function8), kCarGreenSleeping, EntityData::kField491_6220);
+			break;
+
+		case 3:
+			setCallback(4);
+			call(new ENTITY_SETUP_IISS(Gendarmes, setup_function9), kCarGreenSleeping, EntityData::kField491_6470, "c", "B");
+			break;
+
+		case 4:
+			setCallback(5);
+			call(new ENTITY_SETUP(Gendarmes, setup_function8), kCarGreenSleeping, EntityData::kField491_7250);
+			break;
+
+		case 5:
+			setCallback(6);
+			call(new ENTITY_SETUP_IISS(Gendarmes, setup_function9), kCarGreenSleeping, EntityData::kField491_7500, "b", "C");
+			break;
+
+		case 6:
+			setCallback(7);
+			call(new ENTITY_SETUP(Gendarmes, setup_function8), kCarGreenSleeping, EntityData::kField491_7950);
+			break;
+
+		case 7:
+			setCallback(8);
+			call(new ENTITY_SETUP_IISS(Gendarmes, setup_function9), kCarGreenSleeping, EntityData::kField491_8200, "a", "NODIALOG");
+			break;
+
+		case 8:
+			setCallback(9);
+			call(new ENTITY_SETUP(Gendarmes, setup_function8), kCarGreenSleeping, EntityData::kField491_9460);
+			break;
+
+		case 9:
+			if (getEntityData(kEntityNone)->car == kCarGreenSleeping) {
+				getProgress().field_14 = 0;
+				getEntities()->prepareSequences(kEntityGendarmes);
+				getSavePoints()->push(kEntityGendarmes, kEntityVerges, kAction168710784);
+				setup_function13();
+				break;
+			}
+
+			setCallback(10);
+			call(new ENTITY_SETUP(Gendarmes, setup_function8), kCarRedSleeping, EntityData::kField491_2490);
+			break;
+
+		case 10:
+			setCallback(11);
+			call(new ENTITY_SETUP_IISS(Gendarmes, setup_function9), kCarRedSleeping, EntityData::kField491_2740, "h", "NODIALOG");
+			break;
+
+		case 11:
+			setCallback(12);
+			call(new ENTITY_SETUP(Gendarmes, setup_function8), kCarRedSleeping, EntityData::kField491_3820);
+			break;
+
+		case 12:
+			setCallback(13);
+			call(new ENTITY_SETUP_IISS(Gendarmes, setup_function9), kCarRedSleeping, EntityData::kField491_4070, "f", "E");
+			break;
+
+		case 13:
+			setCallback(14);
+			call(new ENTITY_SETUP(Gendarmes, setup_function8), kCarRedSleeping, EntityData::kField491_4590);
+			break;
+
+		case 14:
+			setCallback(15);
+			call(new ENTITY_SETUP_IISS(Gendarmes, setup_function9), kCarRedSleeping, EntityData::kField491_4840, "e", "F");
+			break;
+
+		case 15:
+			setCallback(16);
+			call(new ENTITY_SETUP(Gendarmes, setup_function8), kCarRedSleeping, EntityData::kField491_5540);
+			break;
+
+		case 16:
+			setCallback(17);
+			call(new ENTITY_SETUP_IISS(Gendarmes, setup_function9), kCarRedSleeping, EntityData::kField491_5790, "d", "G");
+			break;
+
+		case 17:
+			setCallback(18);
+			call(new ENTITY_SETUP(Gendarmes, setup_function8), kCarRedSleeping, EntityData::kField491_6220);
+			break;
+
+		case 18:
+			setCallback(19);
+			call(new ENTITY_SETUP_IISS(Gendarmes, setup_function9), kCarRedSleeping, EntityData::kField491_6470, "c", "H");
+			break;
+
+		case 19:
+			setCallback(20);
+			call(new ENTITY_SETUP(Gendarmes, setup_function8), kCarRedSleeping, EntityData::kField491_7250);
+			break;
+
+		case 20:
+			setCallback(21);
+			call(new ENTITY_SETUP_IISS(Gendarmes, setup_function9), kCarRedSleeping, EntityData::kField491_7500, "b", "J");
+			break;
+
+		case 21:
+			setCallback(22);
+			call(new ENTITY_SETUP(Gendarmes, setup_function8), kCarRedSleeping, EntityData::kField491_7950);
+			break;
+
+		case 22:
+			setCallback(23);
+			call(new ENTITY_SETUP_IISS(Gendarmes, setup_function9), kCarRedSleeping, EntityData::kField491_8200, "a", "NODIALOG");
+			break;
+
+		case 23:
+			setCallback(24);
+			call(new ENTITY_SETUP(Gendarmes, setup_function8), kCarRedSleeping, EntityData::kField491_9460);
+			break;
+
+		case 24:
+			getProgress().field_14 = 0;
+			getEntities()->prepareSequences(kEntityGendarmes);
+			getSavePoints()->push(kEntityGendarmes, kEntityVerges, kAction168710784);
+			setup_function13();
+			break;
+		}		
 		break;
 	}
 }
