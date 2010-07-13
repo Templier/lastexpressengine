@@ -968,6 +968,7 @@ enum ActionIndex {
 	kAction9            = 9,
 	kAction10           = 10,
 	kActionDefault      = 12,
+	kAction16           = 16,
 	kAction17           = 17,
 	kActionCallback     = 18,
 

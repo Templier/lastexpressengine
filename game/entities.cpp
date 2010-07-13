@@ -1754,14 +1754,89 @@ label_process_entity:
 		else // same car
 			direction = (data->field_491 < field_491) ? kDirectionUp : kDirectionDown;
 
-		if (data->direction == direction) {
-			error("Entities::checkEntity: not implemented!");
+		if (!flag1) {
+			if (data->direction == direction) {
+			
+				if (checkFields24(entity, EntityData::kField491_1500, 750) && entity != kEntityFrancois) {
+					error("Entities::checkEntity: not implemented (1)!");
+				} else {
+					if (data->entity) {
+						getSavePoints()->push(entity, data->entity, kAction16);
+						data->entity = kEntityNone;
+					}
+				}
 
-		} else {
-			if (!flag1) {
+				if (checkSequence0(entity)) {
+					error("Entities::checkEntity: not implemented (2)!");
+				}
+
+				if (data->direction == kDirectionUp) {
+					if (data->field_491 + data->field_4A3 < 10000)
+						data->field_491 = (EntityData::Field491Value)(data->field_491 + data->field_4A3);
+				} else {
+					if (data->field_491 > data->field_4A3)
+						data->field_491 = (EntityData::Field491Value)(data->field_491 - data->field_4A3);
+				}
+
+				if (data->field_491 < EntityData::kField491_9270 || data->direction != kDirectionUp) {
+
+					if (getData(kEntityNone)->car == data->car) {
+						getSound()->playSoundEvent(entity, 36);
+						getSound()->playSoundEvent(entity, 37, 30);
+					}
+
+					data->car = (CarIndex)(data->car - 1);
+					data->field_491 = EntityData::kField491_9269;
+
+					if (data->car == kCarKronos) {
+						if (checkFields6(kEntityNone)) {
+							getSound()->playSoundEvent(kEntityNone, 14);
+							getSound()->excuseMe(entity, 0, 16);
+							getScenes()->loadSceneFromPosition(kCarGreenSleeping, 1);
+							getSound()->playSound(kEntityNone, "CAT1127A");
+							getSound()->playSoundEvent(kEntityNone, 15);
+						}
+					}
+
+					if (data->car < car || (data->car == car && data->field_491 < field_491)) {
+						data->car = car;
+						data->field_491 = field_491;
+						data->direction = kDirectionNone;
+						data->entity = kEntityNone;
+
+						return true;
+					}
+
+					if (data->car == kCarKronos) {
+						if (checkFields23(kEntityNone)) {
+							getSound()->playSoundEvent(kEntityNone, 14);
+							getSound()->excuseMe(entity, 0, 16);
+							getScenes()->loadSceneFromPosition(kCarGreenSleeping, 62);
+							getSound()->playSound(kEntityNone, "CAT1127A");
+							getSound()->playSoundEvent(kEntityNone, 15);
+						}
+					}
+
+					if (data->car == getData(kEntityNone)->car) {
+						getSound()->playSoundEvent(entity, 36);
+						getSound()->playSoundEvent(entity, 37, 30);
+						goto label_checkentity_position;
+					}
+
+				} else {
+					error("Entities::checkEntity: not implemented (4)!");
+				}
+
+label_checkentity_position:
+				if (getData(kEntityNone)->car == data->car && !data->field_493) {
+					error("Entities::checkEntity: not implemented! (5)");
+				}
+
+			} else {
 				drawSequencesInternal(entity, direction, true);
-				return false;
 			}
+
+			return false;
 		}
 
 		//////////////////////////////////////////////////////////////////////////
@@ -1775,7 +1850,7 @@ label_process_entity:
 			if (data->car == car && data->field_491 >= field_491) {
 				data->field_491 = field_491;
 				data->direction = kDirectionNone;
-				data->field_498 = 0;
+				data->entity = kEntityNone;
 				return true;
 			}
 
@@ -1791,7 +1866,7 @@ label_process_entity:
 			if (data->car == car && data->field_491 <= field_491) {
 				data->field_491 = field_491;
 				data->direction = kDirectionNone;
-				data->field_498 = 0;
+				data->entity = kEntityNone;
 				return true;
 			}
 
@@ -1803,7 +1878,7 @@ label_process_entity:
 	data->field_491 = field_491;
 	if (data->direction == kDirectionUp || data->direction == kDirectionDown)
 		data->direction = kDirectionNone;
-	data->field_498 = 0;
+	data->entity = kEntityNone;
 
 	return true;
 }

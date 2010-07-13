@@ -340,7 +340,7 @@ public:
 		Field493Value field_493;
 		CarIndex car;					// word
 		byte field_497;
-		byte field_498;
+		EntityIndex entity;             // byte
 		InventoryItem inventoryItem;	// byte
 		EntityDirection direction;		// byte
 		int16 field_49B;
@@ -379,7 +379,7 @@ public:
 			field_493 = EntityData::kField493_0;
 			car = kCarNone;
 			field_497 = 0;
-			field_498 = 0;
+			entity = kEntityNone;
 			inventoryItem = kItemNone;
 			direction = kDirectionNone;
 			field_49B = 0;
