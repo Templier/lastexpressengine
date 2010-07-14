@@ -112,14 +112,16 @@ static const EntityData::Field491Value field491Positions[41] = {
 	_entities.push_back(new class(engine));
 
 #define COMPUTE_SEQUENCE_NAME(sequenceTo, sequenceFrom) { \
-	strncpy(sequenceTo, sequenceFrom, strlen(sequenceFrom) - 7); \
+	sequenceTo = sequenceFrom; \
+	for (int seqIdx = 0; seqIdx < 8; seqIdx++) \
+		sequenceTo.deleteLastChar(); \
 	if (checkFields5(entityIndex, kCarGreenSleeping) || checkFields5(entityIndex, kCarGreenSleeping)) { \
 		if (data->car < getData(kEntityNone)->car || (data->car == getData(kEntityNone)->car && data->field_491 < getData(kEntityNone)->field_491)) \
-			strcat(sequenceTo, "R.SEQ"); \
+			sequenceTo += "R.SEQ"; \
 		else \
-			strcat(sequenceTo, "F.SEQ"); \
+			sequenceTo += "F.SEQ"; \
 	} else { \
-		strcat(sequenceTo, ".SEQ"); \
+		sequenceTo += ".SEQ"; \
 	} \
 }
 
@@ -475,10 +477,10 @@ void Entities::updateSequences() {
 			// Replace by sequence 3 if available
 			if (data->sequence3) {
 				data->sequence2 = data->sequence3;
-				strcpy((char *)&data->sequenceName2, (char *)&data->sequenceName3);
+				data->sequenceName2 = data->sequenceName3;
 
 				data->sequence3 = NULL;
-				strcpy((char *)&data->sequenceName3, "");
+				data->sequenceName3 = "";
 			}
 
 			data->direction = data->direction2;
@@ -500,55 +502,51 @@ void Entities::updateSequences() {
 			continue;
 
 		EntityData::EntityCallData *data = getData(entityIndex);
+		int field30 = (data->direction == kDirectionLeft ? entityIndex + 35 : 15);
 
-		// TODO use computed value when loading sequence (updates a frame-related value)
-		// (data->direction == kDirectionLeft ? entityIndex + 35 : 15)
-		char sequenceName[9];
-
-		if (strcmp((char *)&data->sequenceName2, "") != 0 && !data->sequence2) {
-			strcpy((char *)&sequenceName, "");
-
-			data->sequence2 = newSequence((char *)&data->sequenceName2);
+		if (data->sequenceName2 != "" && !data->sequence2) {		
+			data->sequence2 = newSequence(data->sequenceName2, field30);
 
 			// If sequence 2 was loaded correctly, remove the copied name
 			// otherwise, compute new name
 			if (data->sequence2) {
-				strcpy((char *)&data->sequenceNameCopy, "");
+				data->sequenceNameCopy = "";
 			} else {
+				Common::String sequenceName;
 
 				// Left and down directions
 				if (data->direction == kDirectionLeft || data->direction == kDirectionRight) {
-					COMPUTE_SEQUENCE_NAME((char *)&sequenceName, (char *)&data->sequenceName2);
+					COMPUTE_SEQUENCE_NAME(sequenceName, data->sequenceName2);
 
 					// Try loading the sequence
-					data->sequence2 = newSequence((char *)&sequenceName);
+					data->sequence2 = newSequence(sequenceName, field30);
 				}
 
 				// Update sequence names
-				strcpy((char *)&data->sequenceNameCopy, data->sequence2 ? "" : (char *)&data->sequenceName2);
-				strcpy((char *)&data->sequenceName2, data->sequence2 ? (char *)&sequenceName : "");
+				data->sequenceNameCopy = (data->sequence2 ? "" : data->sequenceName2);
+				data->sequenceName2 = (data->sequence2 ? sequenceName : "");
 			}
 		}
 
 		// Update sequence 3
-		if (strcmp((char *)&data->sequenceName3, "") != 0 && !data->sequence3) {
-			strcpy((char *)&sequenceName, "");
+		if (data->sequenceName3 != "" && !data->sequence3) {
 
 			if (data->car == getData(kEntityNone)->car)
-				data->sequence3 = newSequence((char *)&data->sequenceName3);
+				data->sequence3 = newSequence(data->sequenceName3, field30);
 
 			if (!data->sequence3) {
+				Common::String sequenceName;
 
 				// Left and down directions
 				if (data->direction2 == kDirectionLeft || data->direction2 == kDirectionRight) {
-					COMPUTE_SEQUENCE_NAME((char *)&sequenceName, (char *)&data->sequenceName3);
+					COMPUTE_SEQUENCE_NAME(sequenceName, data->sequenceName3);
 
 					// Try loading the sequence
-					data->sequence3 = newSequence((char *)&sequenceName);
+					data->sequence3 = newSequence(sequenceName, field30);
 				}
 
 				// Update sequence names
-				strcpy((char *)&data->sequenceName3, data->sequence3 ? (char *)&sequenceName : "");
+				data->sequenceName3 = (data->sequence3 ? sequenceName : "");
 			}
 		}
 	}
@@ -889,7 +887,7 @@ void Entities::copySequenceData3To2(EntityIndex entityIndex) {
 		data->sequence4 = data->sequence2;
 
 	data->sequence2 = data->sequence3;
-	strcpy((char *)&data->sequenceName2, (char *)&data->sequenceName3);
+	data->sequenceName2 = data->sequenceName3;
 	data->field_4A9 = data->field_4AA;
 
 	if (data->direction2)
@@ -897,7 +895,7 @@ void Entities::copySequenceData3To2(EntityIndex entityIndex) {
 
 	// Clear sequence 3
 	data->sequence3 = NULL;
-	strcpy((char *)&data->sequenceName3, "");
+	data->sequenceName3 = "";
 	data->field_4AA = 0;
 	data->direction2 = kDirectionNone;
 
@@ -934,19 +932,19 @@ void Entities::prepareSequences(EntityIndex index) {
 
 	if (getData(index)->sequence3) {
 		SAFE_DELETE(getData(index)->sequence3);
-		strcpy(getData(index)->sequenceName3, "");
+		getData(index)->sequenceName3 = "";
 		getData(index)->field_4AA = 0;
 		getData(index)->direction2 = kDirectionNone;
 	}
 
 	if (getData(index)->sequence2) {
 		SAFE_DELETE(getData(index)->sequence2);
-		strcpy(getData(index)->sequenceName2, "");
+		getData(index)->sequenceName2 = "";
 		getData(index)->field_4A9 = 0;
 		getData(index)->currentFrame2 = -1;
 	}
 
-	strcpy(getData(index)->sequenceName, "");
+	getData(index)->sequenceName = "";
 	getData(index)->direction = kDirectionNone;
 	getData(index)->doProcessEntity = true;
 }
@@ -955,11 +953,9 @@ void Entities::drawSequenceInternal(EntityIndex index, const char* sequence, Ent
 	debugC(8, kLastExpressDebugLogic, "Drawing sequence %s for entity %s with direction %s", sequence, ENTITY_NAME(index), DIRECTION_NAME(direction));
 
 	// Copy sequence name
-	Common::String processedName(sequence);
-	processedName.toUppercase();
-	processedName += "-";
-
-	strcpy(getData(index)->sequenceName, processedName.c_str());
+	getData(index)->sequenceName = sequence;
+	getData(index)->sequenceName.toUppercase();
+	getData(index)->sequenceName += "-";
 
 	// Reset fields
 	getData(index)->field_49B = 0;
@@ -985,112 +981,102 @@ void Entities::drawSequencesInternal(EntityIndex entityIndex, EntityDirection di
 	data->direction2 = kDirectionNone;
 
 	// Process sequence names
-	char sequenceName[12];
-	char sequenceName1[12];
-	char sequenceName2[12];
-	char sequenceName3[12];
-	strcpy((char *)&sequenceName, "");
-	strcpy((char *)&sequenceName1, "");
-	strcpy((char *)&sequenceName2, "");
-	strcpy((char *)&sequenceName3, "");
+	Common::String sequenceName;
+	Common::String sequenceName1;
+	Common::String sequenceName2;
+	Common::String sequenceName3;
 
-	getSequenceName(entityIndex, direction, (char *)&sequenceName1, (char *)&sequenceName2);
+	getSequenceName(entityIndex, direction, sequenceName1, sequenceName2);
 
 	// No sequence 1: cleanup and return
-	if (strcmp((char *)&sequenceName1, "") == 0) {
+	if (sequenceName1 == "") {
 		clearEntitySequenceData(data, direction);
 		return;
 	}
 
-	if (!strcmp((char *)&sequenceName1, (char *)&data->sequenceNameCopy)) {
+	if (sequenceName1 == data->sequenceNameCopy) {
 		data->direction = direction;
 		return;
 	}
 
 	if (direction == kDirectionLeft || direction == kDirectionRight) {
+		COMPUTE_SEQUENCE_NAME(sequenceName, sequenceName1);
 
-		COMPUTE_SEQUENCE_NAME((char *)&sequenceName, (char *)&sequenceName1);
-
-		if (!strcmp((char *)sequenceName3, ""))
-			COMPUTE_SEQUENCE_NAME((char *)&sequenceName3, (char *)&sequenceName2);			
+		if (sequenceName3 == "")
+			COMPUTE_SEQUENCE_NAME(sequenceName3, sequenceName2);			
 	}
 
 	if (!data->frame) {
 		data->direction = direction;
 
-		if (!strcmp((char *)&sequenceName1, (char *)&data->sequenceName2)) {
-			if (!sequenceName2)
+		if (sequenceName1 == data->sequenceName2) {
+			if (sequenceName2 == "")
 				return;
 
-			drawSequencesInternalSub(entityIndex, (char *)&sequenceName2, (char *)&sequenceName3, field30, unknown);
+			drawSequencesInternalSub(entityIndex, sequenceName2, sequenceName3, field30, unknown);
 			return;
 		}
 
 		SAFE_DELETE(data->sequence2);
 
-		if (strcmp((char *)&sequenceName1, (char *)&data->sequenceName3)) {	
+		if (sequenceName1 != data->sequenceName3) {
 
 			if (unknown) {
 
 				if (data->car == getData(kEntityNone)->car)
-					data->sequence2 = newSequence((char *)&sequenceName1, field30);
+					data->sequence2 = newSequence(sequenceName1, field30);
 
 				if (data->sequence2) {
-					strcpy((char *)&data->sequenceName2, (char *)&sequenceName1);
-					strcpy((char *)&data->sequenceNameCopy, "");
+					data->sequenceName2 = sequenceName1;
+					data->sequenceNameCopy = "";
 				} else {
-					if (strcmp((char *)&sequenceName, "") != 0)
-						data->sequence2 = newSequence((char *)&sequenceName, field30);
+					if (sequenceName != "")
+						data->sequence2 = newSequence(sequenceName, field30);
 
-					if (data->sequence2) {
-						strcpy((char *)&data->sequenceName2, (char *)&sequenceName);
-						strcpy((char *)&data->sequenceNameCopy, "");
-					} else {
-						strcpy((char *)&data->sequenceName2, "");
-						strcpy((char *)&data->sequenceNameCopy, (char *)&sequenceName1);
-					}
+					data->sequenceName2 = (data->sequence2 ? sequenceName : "");
+					data->sequenceNameCopy = (data->sequence2 ? "" : sequenceName1);
 				}
 			} else {
-				strcpy((char *)&data->sequenceName2, (char *)&sequenceName1);
+				data->sequenceName2 = sequenceName1;
 			}
 
-			if (strcmp((char *)&sequenceName2, "") != 0) {
-				drawSequencesInternalSub(entityIndex, (char *)&sequenceName2, (char *)&sequenceName3, field30, unknown);
+			if (sequenceName2 != "") {
+				drawSequencesInternalSub(entityIndex, sequenceName2, sequenceName3, field30, unknown);
 				return;
 			}
 
 			if (!data->sequence3) {
-				if (strcmp((char *)&sequenceName2, ""))
+				if (sequenceName2 == "")
 					return;
 				
-				drawSequencesInternalSub(entityIndex, (char *)&sequenceName2, (char *)&sequenceName3, field30, unknown);
+				drawSequencesInternalSub(entityIndex, sequenceName2, sequenceName3, field30, unknown);
 				return;
 			}
 
 			SAFE_DELETE(data->sequence3);
 		} else {
 			data->sequence2 = data->sequence3;
-			strcpy(data->sequenceName2, data->sequenceName3);
+			data->sequenceName2 = data->sequenceName3;
 			data->sequence3 = NULL;
 		}
 
-		strcpy(data->sequenceName3, "");
+		data->sequenceName3 = "";
 
-		if (strcmp((char *)sequenceName2, ""))
+		if (sequenceName2 == "")
 			return;
 
-		drawSequencesInternalSub(entityIndex, (char *)&sequenceName2, (char *)&sequenceName3, field30, unknown);
+		drawSequencesInternalSub(entityIndex, sequenceName2, sequenceName3, field30, unknown);
 		return;
 	}
 
-	if (strcmp((char *)&data->sequenceName2, (char *)&sequenceName1)) {
+	if (data->sequenceName2 == sequenceName1) {
 		error("Entities::drawSequencesInternal: not implemented (2)!");
 	} else {
 		SAFE_DELETE(data->sequence3);
 
 		data->sequence3 = copySequence(data->sequence2);
 
-		strcpy(data->sequenceName3, data->sequenceName2);
+		data->sequenceName3 = data->sequenceName2;
 		data->field_4AA = data->field_4A9;
 		data->field_49B = data->frame->getInfo()->field_30;
 		data->currentFrame2 = data->sequence2->count() - 1;
@@ -1108,10 +1094,10 @@ void Entities::drawSequencesInternal(EntityIndex entityIndex, EntityDirection di
 	}
 }
 
-void Entities::drawSequencesInternalSub(EntityIndex entityIndex, const char *sequenceName, const char *sequenceName2, int16 field30, bool unknown) {
+void Entities::drawSequencesInternalSub(EntityIndex entityIndex, Common::String sequenceName, Common::String sequenceName2, int16 field30, bool unknown) {
 	EntityData::EntityCallData *data = getData(entityIndex);
 
-	if (!strcmp((char *)&data->sequenceName3, sequenceName))
+	if (data->sequenceName3 == sequenceName)
 		return;
 
 	if (data->sequence3)
@@ -1123,18 +1109,15 @@ void Entities::drawSequencesInternalSub(EntityIndex entityIndex, const char *seq
 			data->sequence3 = newSequence(sequenceName, field30);
 
 		if (data->sequence3) {
-			strcpy((char *)&data->sequenceName3, sequenceName);
+			data->sequenceName3 = sequenceName;
 		} else {
-			if (!strcmp(sequenceName2, ""))
+			if (sequenceName2 != "")
 				data->sequence3 = newSequence(sequenceName2, field30);
 
-			if (data->sequence3)
-				strcpy((char *)&data->sequenceName3, sequenceName2);
-			else
-				strcpy((char *)&data->sequenceName3, "");
+			data->sequenceName3 = (data->sequence3 ? sequenceName2 : "");
 		}
 	} else {
-		strcpy((char *)&data->sequenceName3, sequenceName);
+		data->sequenceName3 = sequenceName;
 	}
 }
 
@@ -1142,7 +1125,7 @@ Sequence *Entities::copySequence(Sequence *sequence) {
 	error("Entities::copySequence: not implemented!");
 }
 
-void Entities::getSequenceName(EntityIndex index, EntityDirection direction, char *sequence1, char *sequence2) const {
+void Entities::getSequenceName(EntityIndex index, EntityDirection direction, Common::String &sequence1, Common::String &sequence2) const {
 	EntityData::EntityCallData *data = getData(index);
 	loadSceneObject(currentScene, getState()->scene);
 	Position position = currentScene.getHeader()->position;
@@ -1163,7 +1146,7 @@ void Entities::getSequenceName(EntityIndex index, EntityDirection direction, cha
 
 		case 1:
 			if (data->field_491 < EntityData::kField491_2587)
-				sprintf(sequence1, "%02d%01d-01u.seq", index, data->clothes);
+				sequence1 = Common::String::printf("%02d%01d-01u.seq", index, data->clothes);
 			break;
 
 		case 2:
@@ -1185,22 +1168,22 @@ void Entities::getSequenceName(EntityIndex index, EntityDirection direction, cha
 				break;
 
 			if (data->field_491 >= EntityData::kField491_8513) {
-				sprintf(sequence1, "%02d%01d-%02deu.seq", index, data->clothes, position);
+				sequence1 = Common::String::printf("%02d%01d-%02deu.seq", index, data->clothes, position);
 			} else {
-				sprintf(sequence1, "%02d%01d-03u.seq", index, data->clothes);
-				sprintf(sequence2, "%02d%01d-%02deu.seq", index, data->clothes, position);
+				sequence1 = Common::String::printf("%02d%01d-03u.seq", index, data->clothes);
+				sequence2 = Common::String::printf("%02d%01d-%02deu.seq", index, data->clothes, position);
 				data->field_4A9 = 1;
 			}
 			break;
 
 		case 18:
 			if (data->field_491 >= EntityData::kField491_2436)
-				sprintf(sequence1, "%02d%01d-18u.seq", index, data->clothes);
+				sequence1 = Common::String::printf("%02d%01d-18u.seq", index, data->clothes);
 			break;
 
 		case 22:
 			if (getData(kEntityNone)->field_491 > data->field_491)
-				sprintf(sequence1, "%02d%01d-22u.seq", index, data->clothes);
+				sequence1 = Common::String::printf("%02d%01d-22u.seq", index, data->clothes);
 			break;
 
 		case 23:
@@ -1223,18 +1206,18 @@ void Entities::getSequenceName(EntityIndex index, EntityDirection direction, cha
 				break;
 
 			if (data->field_491 >= EntityData::kField491_2087) {
-				sprintf(sequence1, "%02d%01d-38u.seq", index, data->clothes);
+				sequence1 = Common::String::printf("%02d%01d-38u.seq", index, data->clothes);
 				data->field_4A9 = 1;
 			} else {
-				sprintf(sequence1, "%02d%01d-%02deu.seq", index, data->clothes, position);
-				sprintf(sequence2, "%02d%01d-38u.seq", index, data->clothes);
+				sequence1 = Common::String::printf("%02d%01d-%02deu.seq", index, data->clothes, position);
+				sequence2 = Common::String::printf("%02d%01d-38u.seq", index, data->clothes);
 				data->field_4AA = 1;
 			}
 			break;
 
 		case 40:
 			if (getData(kEntityNone)->field_491 > data->field_491)
-				sprintf(sequence1, "%02d%01d-40u.seq", index, data->clothes);
+				sequence1 = Common::String::printf("%02d%01d-40u.seq", index, data->clothes);
 			break;
 		}
 		break;
@@ -1247,7 +1230,7 @@ void Entities::getSequenceName(EntityIndex index, EntityDirection direction, cha
 
 		case 1:
 			if (getData(kEntityNone)->field_491 < data->field_491)
-				sprintf(sequence1, "%02d%01d-01d.seq", index, data->clothes);
+				sequence1 = Common::String::printf("%02d%01d-01d.seq", index, data->clothes);
 			break;
 
 		case 2:
@@ -1269,23 +1252,23 @@ void Entities::getSequenceName(EntityIndex index, EntityDirection direction, cha
 				break;
 
 			if (data->field_491 <= EntityData::kField491_8513) {
-				sprintf(sequence1, "%02d%01d-03d.seq", index, data->clothes);
+				sequence1 = Common::String::printf("%02d%01d-03d.seq", index, data->clothes);
 				data->field_4A9 = 1;
 			} else {
-				sprintf(sequence1, "%02d%01d-%02ded.seq", index, data->clothes, position);
-				sprintf(sequence2, "%02d%01d-03d.seq", index, data->clothes);
+				sequence1 = Common::String::printf("%02d%01d-%02ded.seq", index, data->clothes, position);
+				sequence2 = Common::String::printf("%02d%01d-03d.seq", index, data->clothes);
 				data->field_4AA = 1;
 			}
 			break;
 
 		case 18:
 			if (getData(kEntityNone)->field_491 < data->field_491)
-				sprintf(sequence1, "%02d%01d-18d.seq", index, data->clothes);
+				sequence1 = Common::String::printf("%02d%01d-18d.seq", index, data->clothes);
 			break;
 
 		case 22:
 			if (data->field_491 > EntityData::kField491_850)
-				sprintf(sequence1, "%02d%01d-22d.seq", index, data->clothes);
+				sequence1 = Common::String::printf("%02d%01d-22d.seq", index, data->clothes);
 			break;
 
 		case 23:
@@ -1308,17 +1291,17 @@ void Entities::getSequenceName(EntityIndex index, EntityDirection direction, cha
 				break;
 
 			if (data->field_491 <= EntityData::kField491_2087) {
-				sprintf(sequence1, "%02d%01d-%02ded.seq", index, data->clothes, position);
+				sequence1 = Common::String::printf("%02d%01d-%02ded.seq", index, data->clothes, position);
 			} else {
-				sprintf(sequence1, "%02d%01d-38d.seq", index, data->clothes);
-				sprintf(sequence2, "%02d%01d-%02ded.seq", index, data->clothes, position);
+				sequence1 = Common::String::printf("%02d%01d-38d.seq", index, data->clothes);
+				sequence2 = Common::String::printf("%02d%01d-%02ded.seq", index, data->clothes, position);
 				data->field_4A9 = 1;
 			}
 			break;
 
 		case 40:
 			if (getData(kEntityNone)->field_491 > EntityData::kField491_8013)
-				sprintf(sequence1, "%02d%01d-40d.seq", index, data->clothes);
+				sequence1 = Common::String::printf("%02d%01d-40d.seq", index, data->clothes);
 			break;
 		}
 		break;
@@ -1326,7 +1309,7 @@ void Entities::getSequenceName(EntityIndex index, EntityDirection direction, cha
 	// First part of sequence is already set
 	case kDirectionLeft:
 	case kDirectionRight:
-		sprintf(sequence1, "%s%02d.seq", (char*)&data->sequenceName, position);
+		sequence1 = Common::String::printf("%s%02d.seq", data->sequenceName.c_str(), position);
 		break;
 	}
 }
@@ -2202,8 +2185,8 @@ void Entities::clearEntitySequenceData(EntityData::EntityCallData * data, Entity
 	if (data->sequence3)
 		SAFE_DELETE(data->sequence3);
 
-	strcpy(data->sequenceName2, "");
-	strcpy(data->sequenceName3, "");
+	data->sequenceName2 = "";
+	data->sequenceName3 = "";
 
 	data->field_4A9 = 0;
 	data->field_4AA = 0;

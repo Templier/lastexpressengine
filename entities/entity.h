@@ -357,17 +357,17 @@ public:
 		ClothesIndex clothes;			// byte
 		byte position;
 		CarIndex car2;                  // byte
-		bool doProcessEntity;					// byte
+		bool doProcessEntity;			// byte
 		byte field_4A9;
 		byte field_4AA;
 		EntityDirection direction2;
-		char sequenceName2[9];
+		Common::String sequenceName2;        // char[9]
 		uint32 field_4B5;
-		char sequenceName3[9];
+		Common::String sequenceName3;        // char[9]
 		uint32 field_4C2;
-		char sequenceName[6];
+		Common::String sequenceName;         // char[6]
 		byte field_4CC;
-		char sequenceNameCopy[9];
+		Common::String sequenceNameCopy;     // char[9]
 		uint32 field_4D6;
 		SequenceFrame *frame;
 		SequenceFrame *frame1;
@@ -400,12 +400,7 @@ public:
 			field_4A9 = 0;
 			field_4AA = 0;
 			direction2 = kDirectionNone;
-
-			memset(&sequenceName3, 0, 9 * sizeof(char));
-			memset(&sequenceName2, 0, 9 * sizeof(char));
-			memset(&sequenceName, 0, 6 * sizeof(char));
-			memset(&sequenceNameCopy, 0, 9 * sizeof(char));
-
+			
 			field_4B5 = 0;
 			field_4C2 = 0;
 

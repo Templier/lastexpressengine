@@ -162,7 +162,7 @@ private:
 
 	void drawSequenceInternal(EntityIndex entity, const char* sequence, EntityDirection direction);
 	void drawSequencesInternal(EntityIndex entity, EntityDirection direction, bool unknown);
-	void drawSequencesInternalSub(EntityIndex entityIndex, const char* sequenceName, const char* sequenceName2, int16 field30, bool unknown);
+	void drawSequencesInternalSub(EntityIndex entityIndex, Common::String sequenceName, Common::String sequenceName2, int16 field30, bool unknown);
 
 	void clearEntitySequenceData(EntityData::EntityCallData * data, EntityDirection direction);
 	void computeCurrentFrame2(EntityIndex entityIndex);
@@ -173,7 +173,7 @@ private:
 	void copySequenceData3To2(EntityIndex entityIndex);
 	
 	Sequence *copySequence(Sequence *sequence);
-	void getSequenceName(EntityIndex entity, EntityDirection direction, char *sequence1, char *sequence2) const;
+	void getSequenceName(EntityIndex entity, EntityDirection direction, Common::String &sequence1, Common::String &sequence2) const;
 
 	void updatePositionsEnter(EntityIndex entity, CarIndex car, Position position1, Position position2, Position position3, Position position4);
 	void updatePositionsExit(EntityIndex entity, CarIndex car, Position position1, Position position2);
