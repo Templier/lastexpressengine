@@ -199,7 +199,7 @@ void Fight::handleTick(const Common::Event &ev, bool isProcessing) {
 	if (_data->index) {
 		// Set next sequence name index
 		_data->index--;
-		_data->sequences[_data->index] = newSequence(_data->names[_data->index]);
+		_data->sequences[_data->index] = new Sequence(getArchive(_data->names[_data->index]));
 	}
 }
 
@@ -612,25 +612,25 @@ void Fight::updateOpponent(Fighter *fighter) {
 void Fight::loadMilosPlayer() {
 	REGISTER_PLAYER_FUNCTIONS(Milos)
 
-	_data->player->sequences.push_back(newSequence("2001cr.seq"));
-	_data->player->sequences.push_back(newSequence("2001cdl.seq"));
-	_data->player->sequences.push_back(newSequence("2001cdr.seq"));
-	_data->player->sequences.push_back(newSequence("2001cdm.seq"));
-	_data->player->sequences.push_back(newSequence("2001csgr.seq"));
-	_data->player->sequences.push_back(newSequence("2001csgl.seq"));
-	_data->player->sequences.push_back(newSequence("2001dbk.seq"));
+	_data->player->sequences.push_back(new Sequence(getArchive("2001cr.seq")));
+	_data->player->sequences.push_back(new Sequence(getArchive("2001cdl.seq")));
+	_data->player->sequences.push_back(new Sequence(getArchive("2001cdr.seq")));
+	_data->player->sequences.push_back(new Sequence(getArchive("2001cdm.seq")));
+	_data->player->sequences.push_back(new Sequence(getArchive("2001csgr.seq")));
+	_data->player->sequences.push_back(new Sequence(getArchive("2001csgl.seq")));
+	_data->player->sequences.push_back(new Sequence(getArchive("2001dbk.seq")));
 }
 
 void Fight::loadMilosOpponent() {
 	REGISTER_OPPONENT_FUNCTIONS(Milos)
 
-	_data->opponent->sequences.push_back(newSequence("2001or.seq"));
-	_data->opponent->sequences.push_back(newSequence("2001oal.seq"));
-	_data->opponent->sequences.push_back(newSequence("2001oam.seq"));
-	_data->opponent->sequences.push_back(newSequence("2001okl.seq"));
-	_data->opponent->sequences.push_back(newSequence("2001okm.seq"));
-	_data->opponent->sequences.push_back(newSequence("2001dbk.seq"));
-	_data->opponent->sequences.push_back(newSequence("2001wbk.seq"));
+	_data->opponent->sequences.push_back(new Sequence(getArchive("2001or.seq")));
+	_data->opponent->sequences.push_back(new Sequence(getArchive("2001oal.seq")));
+	_data->opponent->sequences.push_back(new Sequence(getArchive("2001oam.seq")));
+	_data->opponent->sequences.push_back(new Sequence(getArchive("2001okl.seq")));
+	_data->opponent->sequences.push_back(new Sequence(getArchive("2001okm.seq")));
+	_data->opponent->sequences.push_back(new Sequence(getArchive("2001dbk.seq")));
+	_data->opponent->sequences.push_back(new Sequence(getArchive("2001wbk.seq")));
 
 	getSound()->playSound(kEntityTables0, "MUS027", 16);
 
@@ -811,11 +811,11 @@ void Fight::loadAnnaPlayer() {
 	_data->player->update = new Common::Functor1Mem<Fighter *, void, Fight>(this, &Fight::update);
 	_data->player->canInteract = new Common::Functor2Mem<Fighter *, FightAction, bool, Fight>(this, &Fight::canInteract);
 
-	_data->player->sequences.push_back(newSequence("2002cr.seq"));
-	_data->player->sequences.push_back(newSequence("2002cdl.seq"));
-	_data->player->sequences.push_back(newSequence("2002cdr.seq"));
-	_data->player->sequences.push_back(newSequence("2002cdm.seq"));
-	_data->player->sequences.push_back(newSequence("2002lbk.seq"));
+	_data->player->sequences.push_back(new Sequence(getArchive("2002cr.seq")));
+	_data->player->sequences.push_back(new Sequence(getArchive("2002cdl.seq")));
+	_data->player->sequences.push_back(new Sequence(getArchive("2002cdr.seq")));
+	_data->player->sequences.push_back(new Sequence(getArchive("2002cdm.seq")));
+	_data->player->sequences.push_back(new Sequence(getArchive("2002lbk.seq")));
 }
 
 void Fight::loadAnnaOpponent() {
@@ -827,13 +827,13 @@ void Fight::loadAnnaOpponent() {
 	_data->opponent->update = new Common::Functor1Mem<Fighter *, void, Fight>(this, &Fight::updateOpponentAnna);
 	_data->opponent->canInteract = new Common::Functor2Mem<Fighter *, FightAction, bool, Fight>(this, &Fight::canInteract);
 
-	_data->opponent->sequences.push_back(newSequence("2002or.seq"));
-	_data->opponent->sequences.push_back(newSequence("2002oal.seq"));
-	_data->opponent->sequences.push_back(newSequence("2002oam.seq"));
-	_data->opponent->sequences.push_back(newSequence("2002oar.seq"));
-	_data->opponent->sequences.push_back(newSequence("2002okr.seq"));
-	_data->opponent->sequences.push_back(newSequence("2002okml.seq"));
-	_data->opponent->sequences.push_back(newSequence("2002okm.seq"));
+	_data->opponent->sequences.push_back(new Sequence(getArchive("2002or.seq")));
+	_data->opponent->sequences.push_back(new Sequence(getArchive("2002oal.seq")));
+	_data->opponent->sequences.push_back(new Sequence(getArchive("2002oam.seq")));
+	_data->opponent->sequences.push_back(new Sequence(getArchive("2002oar.seq")));
+	_data->opponent->sequences.push_back(new Sequence(getArchive("2002okr.seq")));
+	_data->opponent->sequences.push_back(new Sequence(getArchive("2002okml.seq")));
+	_data->opponent->sequences.push_back(new Sequence(getArchive("2002okm.seq")));
 
 	getSound()->playSound(kEntityTables0, "MUS030", 16);
 
@@ -973,16 +973,16 @@ void Fight::updateOpponentAnna(Fighter *fighter) {
 void Fight::loadIvoPlayer() {
 	REGISTER_PLAYER_FUNCTIONS(Ivo)
 
-	_data->player->sequences.push_back(newSequence("2003cr.seq"));
-	_data->player->sequences.push_back(newSequence("2003car.seq"));
-	_data->player->sequences.push_back(newSequence("2003cal.seq"));
-	_data->player->sequences.push_back(newSequence("2003cdr.seq"));
-	_data->player->sequences.push_back(newSequence("2003cdm.seq"));
-	_data->player->sequences.push_back(newSequence("2003chr.seq"));
-	_data->player->sequences.push_back(newSequence("2003chl.seq"));
-	_data->player->sequences.push_back(newSequence("2003ckr.seq"));
-	_data->player->sequences.push_back(newSequence("2003lbk.seq"));
-	_data->player->sequences.push_back(newSequence("2003fbk.seq"));
+	_data->player->sequences.push_back(new Sequence(getArchive("2003cr.seq")));
+	_data->player->sequences.push_back(new Sequence(getArchive("2003car.seq")));
+	_data->player->sequences.push_back(new Sequence(getArchive("2003cal.seq")));
+	_data->player->sequences.push_back(new Sequence(getArchive("2003cdr.seq")));
+	_data->player->sequences.push_back(new Sequence(getArchive("2003cdm.seq")));
+	_data->player->sequences.push_back(new Sequence(getArchive("2003chr.seq")));
+	_data->player->sequences.push_back(new Sequence(getArchive("2003chl.seq")));
+	_data->player->sequences.push_back(new Sequence(getArchive("2003ckr.seq")));
+	_data->player->sequences.push_back(new Sequence(getArchive("2003lbk.seq")));
+	_data->player->sequences.push_back(new Sequence(getArchive("2003fbk.seq")));
 
 	_data->player->countdown = 5;
 }
@@ -990,15 +990,15 @@ void Fight::loadIvoPlayer() {
 void Fight::loadIvoOpponent() {
 	REGISTER_OPPONENT_FUNCTIONS(Ivo)
 
-	_data->opponent->sequences.push_back(newSequence("2003or.seq"));
-	_data->opponent->sequences.push_back(newSequence("2003oal.seq"));
-	_data->opponent->sequences.push_back(newSequence("2003oar.seq"));
-	_data->opponent->sequences.push_back(newSequence("2003odm.seq"));
-	_data->opponent->sequences.push_back(newSequence("2003okl.seq"));
-	_data->opponent->sequences.push_back(newSequence("2003okj.seq"));
-	_data->opponent->sequences.push_back(newSequence("blank.seq"));
-	_data->opponent->sequences.push_back(newSequence("csdr.seq"));
-	_data->opponent->sequences.push_back(newSequence("2003l.seq"));
+	_data->opponent->sequences.push_back(new Sequence(getArchive("2003or.seq")));
+	_data->opponent->sequences.push_back(new Sequence(getArchive("2003oal.seq")));
+	_data->opponent->sequences.push_back(new Sequence(getArchive("2003oar.seq")));
+	_data->opponent->sequences.push_back(new Sequence(getArchive("2003odm.seq")));
+	_data->opponent->sequences.push_back(new Sequence(getArchive("2003okl.seq")));
+	_data->opponent->sequences.push_back(new Sequence(getArchive("2003okj.seq")));
+	_data->opponent->sequences.push_back(new Sequence(getArchive("blank.seq")));
+	_data->opponent->sequences.push_back(new Sequence(getArchive("csdr.seq")));
+	_data->opponent->sequences.push_back(new Sequence(getArchive("2003l.seq")));
 
 	getSound()->playSound(kEntityTables0, "MUS032", 16);
 
@@ -1190,10 +1190,10 @@ void Fight::updateOpponentIvo(Fighter *fighter) {
 void Fight::loadSalkoPlayer() {
 	REGISTER_PLAYER_FUNCTIONS(Salko)
 
-	_data->player->sequences.push_back(newSequence("2004cr.seq"));
-	_data->player->sequences.push_back(newSequence("2004cdr.seq"));
-	_data->player->sequences.push_back(newSequence("2004chj.seq"));
-	_data->player->sequences.push_back(newSequence("2004bk.seq"));
+	_data->player->sequences.push_back(new Sequence(getArchive("2004cr.seq")));
+	_data->player->sequences.push_back(new Sequence(getArchive("2004cdr.seq")));
+	_data->player->sequences.push_back(new Sequence(getArchive("2004chj.seq")));
+	_data->player->sequences.push_back(new Sequence(getArchive("2004bk.seq")));
 
 	_data->player->countdown = 2;
 }
@@ -1201,12 +1201,12 @@ void Fight::loadSalkoPlayer() {
 void Fight::loadSalkoOpponent() {
 	REGISTER_OPPONENT_FUNCTIONS(Salko)
 
-	_data->opponent->sequences.push_back(newSequence("2004or.seq"));
-	_data->opponent->sequences.push_back(newSequence("2004oam.seq"));
-	_data->opponent->sequences.push_back(newSequence("2004oar.seq"));
-	_data->opponent->sequences.push_back(newSequence("2004okr.seq"));
-	_data->opponent->sequences.push_back(newSequence("2004ohm.seq"));
-	_data->opponent->sequences.push_back(newSequence("blank.seq"));
+	_data->opponent->sequences.push_back(new Sequence(getArchive("2004or.seq")));
+	_data->opponent->sequences.push_back(new Sequence(getArchive("2004oam.seq")));
+	_data->opponent->sequences.push_back(new Sequence(getArchive("2004oar.seq")));
+	_data->opponent->sequences.push_back(new Sequence(getArchive("2004okr.seq")));
+	_data->opponent->sequences.push_back(new Sequence(getArchive("2004ohm.seq")));
+	_data->opponent->sequences.push_back(new Sequence(getArchive("blank.seq")));
 
 	getSound()->playSound(kEntityTables0, "MUS035", 16);
 
@@ -1360,25 +1360,25 @@ void Fight::updateOpponentSalko(Fighter *fighter) {
 void Fight::loadVesnaPlayer() {
 	REGISTER_PLAYER_FUNCTIONS(Vesna)
 
-	_data->player->sequences.push_back(newSequence("2005cr.seq"));
-	_data->player->sequences.push_back(newSequence("2005cdr.seq"));
-	_data->player->sequences.push_back(newSequence("2005cbr.seq"));
-	_data->player->sequences.push_back(newSequence("2005bk.seq"));
-	_data->player->sequences.push_back(newSequence("2005cdm1.seq"));
-	_data->player->sequences.push_back(newSequence("2005chl.seq"));
+	_data->player->sequences.push_back(new Sequence(getArchive("2005cr.seq")));
+	_data->player->sequences.push_back(new Sequence(getArchive("2005cdr.seq")));
+	_data->player->sequences.push_back(new Sequence(getArchive("2005cbr.seq")));
+	_data->player->sequences.push_back(new Sequence(getArchive("2005bk.seq")));
+	_data->player->sequences.push_back(new Sequence(getArchive("2005cdm1.seq")));
+	_data->player->sequences.push_back(new Sequence(getArchive("2005chl.seq")));
 }
 
 void Fight::loadVesnaOpponent() {
 	REGISTER_OPPONENT_FUNCTIONS(Vesna)
 
-	_data->opponent->sequences.push_back(newSequence("2005or.seq"));
-	_data->opponent->sequences.push_back(newSequence("2005oam.seq"));
-	_data->opponent->sequences.push_back(newSequence("2005oar.seq"));
-	_data->opponent->sequences.push_back(newSequence("2005okml.seq"));
-	_data->opponent->sequences.push_back(newSequence("2005okr.seq"));
-	_data->opponent->sequences.push_back(newSequence("2005odm1.seq"));
-	_data->opponent->sequences.push_back(newSequence("2005csbm.seq"));
-	_data->opponent->sequences.push_back(newSequence("2005oam4.seq"));
+	_data->opponent->sequences.push_back(new Sequence(getArchive("2005or.seq")));
+	_data->opponent->sequences.push_back(new Sequence(getArchive("2005oam.seq")));
+	_data->opponent->sequences.push_back(new Sequence(getArchive("2005oar.seq")));
+	_data->opponent->sequences.push_back(new Sequence(getArchive("2005okml.seq")));
+	_data->opponent->sequences.push_back(new Sequence(getArchive("2005okr.seq")));
+	_data->opponent->sequences.push_back(new Sequence(getArchive("2005odm1.seq")));
+	_data->opponent->sequences.push_back(new Sequence(getArchive("2005csbm.seq")));
+	_data->opponent->sequences.push_back(new Sequence(getArchive("2005oam4.seq")));
 
 	getSound()->playSound(kEntityTables0, "MUS038", 16);
 

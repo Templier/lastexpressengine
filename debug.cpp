@@ -137,7 +137,7 @@ bool Debugger::cmd_playseq(int argc, const char **argv) {
 			return false;
 		} else {
 			Sequence *sequence = new Sequence();
-			if (sequence->loadFile(filename)) {
+			if (sequence->load(getArchive(filename))) {
 
 				// Check that we have at least a frame to show
 				if (sequence->count() == 0) {
@@ -201,7 +201,7 @@ bool Debugger::cmd_showframe(int argc, const char **argv) {
 			return false;
 		} else {
 			Sequence sequence;
-			if (sequence.loadFile(filename)) {
+			if (sequence.load(getArchive(filename))) {
 				_engine->getCursor()->show(false);
 				clearBg(GraphicsManager::kBackgroundOverlay);
 
@@ -245,7 +245,7 @@ bool Debugger::cmd_playsnd(int argc, const char **argv) {
 		_engine->_system->getMixer()->stopAll();
 
 		// FIXME: use another sound stream for debug (the one in the engine is not setup for playing a single sound)
-		getSound()->getSfxStream()->load(_engine->getResourceManager()->getFileStream(name));
+		getSound()->getSfxStream()->load(getArchive(name));
 	} else {
 		DebugPrintf("Syntax: playsnd <sndname>\n");
 	}
@@ -271,7 +271,7 @@ bool Debugger::cmd_playsbe(int argc, const char **argv) {
 			return false;
 		} else {
 			SubtitleManager subtitle(_engine->getFont());
-			if (subtitle.loadFile(filename)) {
+			if (subtitle.load(getArchive(filename))) {
 				_engine->getCursor()->show(false);
 				for (uint16 i = 0; i < subtitle.getMaxTime(); i += 25) {
 					clearBg(GraphicsManager::kBackgroundAll);
@@ -323,7 +323,7 @@ bool Debugger::cmd_playnis(int argc, const char **argv) {
 			_numParams = 0;
 
 			Animation animation;
-			if (animation.loadFile(filename)) {
+			if (animation.load(getArchive(filename))) {
 				_engine->getCursor()->show(false);
 				animation.play();
 				_engine->getCursor()->show(true);
@@ -410,7 +410,7 @@ bool Debugger::cmd_loadscene(int argc, const char **argv) {
 			// instead of relying on the engine scene manager which could have
 			// loaded a different cd
 			SceneLoader *_sceneLoader = new SceneLoader();
-			if (!_sceneLoader->load(_engine->getResourceManager()->getFileStream(Common::String::printf("CD%iTRAIN.DAT", cd)))) {
+			if (!_sceneLoader->load(getArchive(Common::String::printf("CD%iTRAIN.DAT", cd)))) {
 				DebugPrintf("Cannot load data for CD %i", cd);
 				resetCommand();
 

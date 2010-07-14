@@ -137,10 +137,11 @@ private:
 
 class Sequence {
 public:
-	Sequence(Common::SeekableReadStream *stream = NULL);
+	Sequence(Common::SeekableReadStream *stream = NULL, byte field30 = 15);
 	~Sequence();
 
-	bool load(Common::SeekableReadStream *stream);
+	bool load(Common::SeekableReadStream *stream, byte field30 = 15);
+
 	uint32 count() const { return _frames.size(); };
 	AnimFrame *getFrame(uint32 index = 0);
 	FrameInfo *getFrameInfo(uint32 index = 0);

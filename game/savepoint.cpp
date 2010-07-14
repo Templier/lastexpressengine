@@ -29,6 +29,7 @@
 #include "lastexpress/game/logic.h"
 #include "lastexpress/game/state.h"
 
+#include "lastexpress/shared.h"
 #include "lastexpress/helpers.h"
 #include "lastexpress/lastexpress.h"
 

@@ -505,7 +505,7 @@ void Entities::updateSequences() {
 		int field30 = (data->direction == kDirectionLeft ? entityIndex + 35 : 15);
 
 		if (data->sequenceName2 != "" && !data->sequence2) {		
-			data->sequence2 = newSequence(data->sequenceName2, field30);
+			data->sequence2 = new Sequence(getArchive(data->sequenceName2), field30);
 
 			// If sequence 2 was loaded correctly, remove the copied name
 			// otherwise, compute new name
@@ -519,7 +519,7 @@ void Entities::updateSequences() {
 					COMPUTE_SEQUENCE_NAME(sequenceName, data->sequenceName2);
 
 					// Try loading the sequence
-					data->sequence2 = newSequence(sequenceName, field30);
+					data->sequence2 = new Sequence(getArchive(sequenceName), field30);
 				}
 
 				// Update sequence names
@@ -532,7 +532,7 @@ void Entities::updateSequences() {
 		if (data->sequenceName3 != "" && !data->sequence3) {
 
 			if (data->car == getData(kEntityNone)->car)
-				data->sequence3 = newSequence(data->sequenceName3, field30);
+				data->sequence3 = new Sequence(getArchive(data->sequenceName3), field30);
 
 			if (!data->sequence3) {
 				Common::String sequenceName;
@@ -542,7 +542,7 @@ void Entities::updateSequences() {
 					COMPUTE_SEQUENCE_NAME(sequenceName, data->sequenceName3);
 
 					// Try loading the sequence
-					data->sequence3 = newSequence(sequenceName, field30);
+					data->sequence3 = new Sequence(getArchive(sequenceName), field30);
 				}
 
 				// Update sequence names
@@ -681,7 +681,7 @@ label_nosequence:
 		if (getFlags()->flag_entities_0 || data->doProcessEntity)
 			return;
 
-		if (data->sequence2 && data->currentFrame2 != -1 && data->sequence2->count() >= (uint32)(data->currentFrame2 + 1)) {
+		if (data->sequence2 && data->currentFrame2 != -1 && (data->currentFrame2 + 1) <= (int32)data->sequence2->count()) {
 			processEntitySub(entityIndex, false, true);
 
 			if (!getFlags()->flag_entities_0 && !data->doProcessEntity) {
@@ -733,7 +733,7 @@ label_nosequence:
 	// Increment current frame
 	data->currentFrame2++;
 
-	if (data->sequence2->count() < (uint32)(data->currentFrame2 + 1) || (data->field_4A9 && checkSequenceFromPosition(entityIndex))) {
+	if ((data->currentFrame2 + 1) > (int32)data->sequence2->count() || (data->field_4A9 && checkSequenceFromPosition(entityIndex))) {
 
 		if (data->direction == kDirectionLeft) {
 			data->currentFrame2 = 0;
@@ -844,7 +844,7 @@ void Entities::computeCurrentFrame2(EntityIndex entityIndex) {
 
 
 	case kDirectionLeft:
-		if (data->currentFrame2 == -1 || data->sequence2->count() <= (uint32)data->currentFrame2) {
+		if (data->currentFrame2 == -1 || data->currentFrame2 >= (int32)data->sequence2->count()) {
 			data->currentFrame2 = 0;
 			data->field_49B = 0;
 		}		
@@ -1024,14 +1024,14 @@ void Entities::drawSequencesInternal(EntityIndex entityIndex, EntityDirection di
 			if (unknown) {
 
 				if (data->car == getData(kEntityNone)->car)
-					data->sequence2 = newSequence(sequenceName1, field30);
+					data->sequence2 = new Sequence(getArchive(sequenceName1), field30);
 
 				if (data->sequence2) {
 					data->sequenceName2 = sequenceName1;
 					data->sequenceNameCopy = "";
 				} else {
 					if (sequenceName != "")
-						data->sequence2 = newSequence(sequenceName, field30);
+						data->sequence2 = new Sequence(getArchive(sequenceName), field30);
 
 					data->sequenceName2 = (data->sequence2 ? sequenceName : "");
 					data->sequenceNameCopy = (data->sequence2 ? "" : sequenceName1);
@@ -1106,13 +1106,13 @@ void Entities::drawSequencesInternalSub(EntityIndex entityIndex, Common::String 
 	if (unknown) {
 
 		if (data->car == getData(kEntityNone)->car)
-			data->sequence3 = newSequence(sequenceName, field30);
+			data->sequence3 = new Sequence(getArchive(sequenceName), field30);
 
 		if (data->sequence3) {
 			data->sequenceName3 = sequenceName;
 		} else {
 			if (sequenceName2 != "")
-				data->sequence3 = newSequence(sequenceName2, field30);
+				data->sequence3 = new Sequence(getArchive(sequenceName2), field30);
 
 			data->sequenceName3 = (data->sequence3 ? sequenceName2 : "");
 		}
@@ -1393,6 +1393,9 @@ void Entities::enterCompartment(EntityIndex entity, ObjectIndex compartment, boo
 
 	// Update compartments
 	int index = (compartment < 32 ? compartment - 1 : compartment - 24);
+	if (index >= 16)
+		error("Entities::exitCompartment: invalid compartment index!");
+
 	if (useFirstCompartments)
 		_compartments[index] |= STORE_VALUE(entity);
 	else
@@ -1476,6 +1479,9 @@ void Entities::exitCompartment(EntityIndex entity, ObjectIndex compartment, bool
 
 	// Update compartments
 	int index = (compartment < 32 ? compartment - 1 : compartment - 24);
+	if (index >= 16)
+		error("Entities::exitCompartment: invalid compartment index!");
+
 	if (useFirstCompartments)
 		_compartments[index] &= ~STORE_VALUE(entity);
 	else

@@ -1269,6 +1269,15 @@ enum ActionIndex {
 	kActionEnd
 };
 
+//////////////////////////////////////////////////////////////////////////
+// Output
+//////////////////////////////////////////////////////////////////////////
+static const char *entityNames[] = { "None", "Anna", "August", "Mertens", "Coudert", "Pascale", "Servers0", "Servers1", "Cooks", "Verges", "Tatiana", "Vassili", "Alexei", "Abbot", "Milos", "Vesna", "Ivo", "Salko", "Kronos", "Kahina", "Francois", "MmeBoutarel", "Boutarel", "Rebecca", "Sophie", "Mahmud", "Yasmin", "Hadija", "Alouan", "Gendarmes", "Max", "Chapters", "Train", "Tables0", "Tables1", "Tables2", "Tables3", "Tables4", "Tables5", "Entity39"};
+static const char *directionNames[] = { "None", "Up", "Down", "Left", "Right", "Switch"};
+
+#define ENTITY_NAME(index) (index >= 40 ? "INVALID" : entityNames[index])
+#define DIRECTION_NAME(direction) (direction >= 6 ? "INVALID" : directionNames[direction])
+
 } // End of namespace LastExpress
 
 #endif // LASTEXPRESS_SHARED_H

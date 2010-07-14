@@ -78,7 +78,7 @@ void SceneManager::loadSceneDataFile(ArchiveIndex archive) const {
 	case kArchiveCd1:
 	case kArchiveCd2:
 	case kArchiveCd3:
-		if (!_sceneLoader->load(_engine->getResourceManager()->getFileStream(Common::String::printf("CD%iTRAIN.DAT", archive))))
+		if (!_sceneLoader->load(getArchive(Common::String::printf("CD%iTRAIN.DAT", archive))))
 			error("SceneManager::loadSceneDataFile: cannot load data file CD%iTRAIN.DAT", archive);
 		break;
 
@@ -441,8 +441,8 @@ void SceneManager::updateDoorsAndClock() {
 	if (checkPosition(kSceneNone, kCheckPositionLookingAtClock)) {
 		// Example scene: 349
 
-		_clockHours = newSequence(Common::String::printf("SCLKH-81.seq"));
-		_clockMinutes = newSequence(Common::String::printf("SCLKM-81.seq"));
+		_clockHours = new Sequence(getArchive("SCLKH-81.seq"), 255);
+		_clockMinutes = new Sequence(getArchive("SCLKM-81.seq"), 255);
 
 		// Compute hours and minutes indexes
 

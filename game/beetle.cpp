@@ -63,35 +63,35 @@ void Beetle::load() {
 	_data = new BeetleData();
 
 	// Load sequences
-	_data->sequences.push_back(newSequence("BW000.seq"));        // 0
-	_data->sequences.push_back(newSequence("BT000045.seq"));
-	_data->sequences.push_back(newSequence("BT045000.seq"));
-	_data->sequences.push_back(newSequence("BW045.seq"));
-	_data->sequences.push_back(newSequence("BT045090.seq"));
-	_data->sequences.push_back(newSequence("BT090045.seq"));     // 5
-	_data->sequences.push_back(newSequence("BW090.seq"));
-	_data->sequences.push_back(newSequence("BT090135.seq"));
-	_data->sequences.push_back(newSequence("BT135090.seq"));
-	_data->sequences.push_back(newSequence("BW135.seq"));
-	_data->sequences.push_back(newSequence("BT135180.seq"));     // 10
-	_data->sequences.push_back(newSequence("BT180135.seq"));
-	_data->sequences.push_back(newSequence("BW180.seq"));
-	_data->sequences.push_back(newSequence("BT180225.seq"));
-	_data->sequences.push_back(newSequence("BT225180.seq"));
-	_data->sequences.push_back(newSequence("BW225.seq"));        // 15
-	_data->sequences.push_back(newSequence("BT225270.seq"));
-	_data->sequences.push_back(newSequence("BT270225.seq"));
-	_data->sequences.push_back(newSequence("BW270.seq"));
-	_data->sequences.push_back(newSequence("BT270315.seq"));
-	_data->sequences.push_back(newSequence("BT315270.seq"));     // 20
-	_data->sequences.push_back(newSequence("BW315.seq"));
-	_data->sequences.push_back(newSequence("BT315000.seq"));
-	_data->sequences.push_back(newSequence("BT000315.seq"));
-	_data->sequences.push_back(newSequence("BA135.seq"));
-	_data->sequences.push_back(newSequence("BL045.seq"));        // 25
-	_data->sequences.push_back(newSequence("BL000.seq"));
-	_data->sequences.push_back(newSequence("BL315.seq"));
-	_data->sequences.push_back(newSequence("BL180.seq"));
+	_data->sequences.push_back(new Sequence(getArchive("BW000.seq")));        // 0
+	_data->sequences.push_back(new Sequence(getArchive("BT000045.seq")));
+	_data->sequences.push_back(new Sequence(getArchive("BT045000.seq")));
+	_data->sequences.push_back(new Sequence(getArchive("BW045.seq")));
+	_data->sequences.push_back(new Sequence(getArchive("BT045090.seq")));
+	_data->sequences.push_back(new Sequence(getArchive("BT090045.seq")));     // 5
+	_data->sequences.push_back(new Sequence(getArchive("BW090.seq")));
+	_data->sequences.push_back(new Sequence(getArchive("BT090135.seq")));
+	_data->sequences.push_back(new Sequence(getArchive("BT135090.seq")));
+	_data->sequences.push_back(new Sequence(getArchive("BW135.seq")));
+	_data->sequences.push_back(new Sequence(getArchive("BT135180.seq")));     // 10
+	_data->sequences.push_back(new Sequence(getArchive("BT180135.seq")));
+	_data->sequences.push_back(new Sequence(getArchive("BW180.seq")));
+	_data->sequences.push_back(new Sequence(getArchive("BT180225.seq")));
+	_data->sequences.push_back(new Sequence(getArchive("BT225180.seq")));
+	_data->sequences.push_back(new Sequence(getArchive("BW225.seq")));        // 15
+	_data->sequences.push_back(new Sequence(getArchive("BT225270.seq")));
+	_data->sequences.push_back(new Sequence(getArchive("BT270225.seq")));
+	_data->sequences.push_back(new Sequence(getArchive("BW270.seq")));
+	_data->sequences.push_back(new Sequence(getArchive("BT270315.seq")));
+	_data->sequences.push_back(new Sequence(getArchive("BT315270.seq")));     // 20
+	_data->sequences.push_back(new Sequence(getArchive("BW315.seq")));
+	_data->sequences.push_back(new Sequence(getArchive("BT315000.seq")));
+	_data->sequences.push_back(new Sequence(getArchive("BT000315.seq")));
+	_data->sequences.push_back(new Sequence(getArchive("BA135.seq")));
+	_data->sequences.push_back(new Sequence(getArchive("BL045.seq")));        // 25
+	_data->sequences.push_back(new Sequence(getArchive("BL000.seq")));
+	_data->sequences.push_back(new Sequence(getArchive("BL315.seq")));
+	_data->sequences.push_back(new Sequence(getArchive("BL180.seq")));
 
 	// Init fields
 	_data->field_74 = 0;
@@ -196,6 +196,9 @@ void Beetle::update() {
 }
 
 void Beetle::drawUpdate() {
+	if (!_data)
+		error("Beetle::drawUpdate: sequences have not been loaded!");
+
 	if (_data->frame != NULL) {
 		getScenes()->setCoordinates(_data->frame);
 		getScenes()->removeFromQueue(_data->frame);

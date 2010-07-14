@@ -234,19 +234,19 @@ Clock::~Clock() {
 bool Clock::load() {
 	bool loaded = true;
 	Sequence *s = new Sequence;
-	loaded &= s->loadFile("egghour.seq");
+	loaded &= s->load(getArchive("egghour.seq"));
 	_seqHour = new SequenceFrame(s);
 
 	s = new Sequence;
-	loaded &= s->loadFile("eggmin.seq");
+	loaded &= s->load(getArchive("eggmin.seq"));
 	_seqMinutes = new SequenceFrame(s);
 
 	s = new Sequence;
-	loaded &= s->loadFile("sun.seq");
+	loaded &= s->load(getArchive("sun.seq"));
 	_seqSun = new SequenceFrame(s);
 
 	s = new Sequence;
-	loaded &= s->loadFile("datenew.seq");
+	loaded &= s->load(getArchive("datenew.seq"));
 	_seqDate = new SequenceFrame(s);
 
 	return loaded;
@@ -338,11 +338,11 @@ TrainLine::~TrainLine() {
 bool TrainLine::load() {
 	bool loaded = true;
 	Sequence *s = new Sequence;
-	loaded &= s->loadFile("line1.seq");
+	loaded &= s->load(getArchive("line1.seq"));
 	_seqLine1 = new SequenceFrame(s);
 
 	s = new Sequence;
-	loaded &= s->loadFile("line2.seq");
+	loaded &= s->load(getArchive("line2.seq"));
 	_seqLine2 = new SequenceFrame(s);
 
 	return loaded;
@@ -448,14 +448,14 @@ void Menu::show(bool savegame, TimeType type, uint32 time) {
 
 			// Show Broderbrund logo
 			Animation animation;
-			if (animation.loadFile("1930.nis"))
+			if (animation.load(getArchive("1930.nis")))
 				animation.play();
 
 			// Play intro music
 			getSound()->playSoundWithSubtitles("MUS001.SND", 83886096, kEntityNone);
 
 			// Show The Smoking Car logo
-			if (animation.loadFile("1931.nis"))
+			if (animation.load(getArchive("1931.nis")))
 				animation.play();
 
 			_hasShownIntro = true;
@@ -648,7 +648,7 @@ void Menu::handleEvent(const Common::Event &ev) {
 
 			// Show intro
 			Animation animation;
-			if (animation.loadFile("1601.nis"))
+			if (animation.load(getArchive("1601.nis")))
 				animation.play();
 		}
 
@@ -908,9 +908,9 @@ void Menu::loadData() {
 
 	// Special case: acorn highlight needs to be reloaded when showing the menu again in case we switched games
 	if (SaveLoad::isSavegameValid(getNextGameId()))
-		loaded &= _seqAcorn.loadFile(getAcornSequenceName(getNextGameId()));
+		loaded &= _seqAcorn.load(getArchive(getAcornSequenceName(getNextGameId())));
 	else
-		loaded &= _seqAcorn.loadFile(getAcornSequenceName(kGameBlue));
+		loaded &= _seqAcorn.load(getArchive(getAcornSequenceName(kGameBlue)));
 	assert(loaded == true);
 
 	// Check if we loaded sequences before
@@ -918,22 +918,22 @@ void Menu::loadData() {
 		return;
 
 	// Load all static data
-	loaded  &= _seqTooltips.loadFile("helpnewr.seq");
-	loaded  &= _seqEggButtons.loadFile("buttns.seq");
-	loaded  &= _seqButtons.loadFile("quit.seq");
+	loaded  &= _seqTooltips.load(getArchive("helpnewr.seq"));
+	loaded  &= _seqEggButtons.load(getArchive("buttns.seq"));
+	loaded  &= _seqButtons.load(getArchive("quit.seq"));
 
-	loaded  &= _seqCredits.loadFile("credits.seq");
+	loaded  &= _seqCredits.load(getArchive("credits.seq"));
 
 	// Load the city buttons
 	Sequence s;
-	loaded &= s.loadFile("jlinetl.seq");
+	loaded &= s.load(getArchive("jlinetl.seq"));
 	_cityButtonFrames[0] = s.getFrame(0);
 
-	loaded &= s.loadFile("jlinecen.seq");
+	loaded &= s.load(getArchive("jlinecen.seq"));
 	for (int i = 0; i < 5; i++)
 		_cityButtonFrames[i + 1] = s.getFrame((uint32)i);
 
-	loaded &= s.loadFile("jlinebr.seq");
+	loaded &= s.load(getArchive("jlinebr.seq"));
 	_cityButtonFrames[6] = s.getFrame(0);
 
 	// We cannot proceed unless all files loaded properly

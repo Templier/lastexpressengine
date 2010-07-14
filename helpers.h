@@ -29,6 +29,11 @@
 //////////////////////////////////////////////////////////////////////////
 // Misc helpers
 //////////////////////////////////////////////////////////////////////////
+
+// Misc
+#define getArchive(name) _engine->getResourceManager()->getFileStream(name)
+#define random(value) _engine->getRandom().getRandomNumber(value - 1)
+
 // Engine subclasses
 #define getLogic() _engine->getGameLogic()
 #define getMenu() _engine->getGameMenu()
@@ -39,6 +44,7 @@
 #define getFight() getLogic()->getGameFight()
 #define getEntities() getLogic()->getGameEntities()
 #define getSaveLoad() getLogic()->getGameSaveLoad()
+#define isDay() getLogic()->getGameState()->isDayTime()
 
 // State
 #define getState() getLogic()->getGameState()->getGameState()
@@ -58,22 +64,18 @@
 
 // Sound
 #define getSound() _engine->getSoundManager()
-#define playMusicStream(name) getSound()->getMusicStream()->load(_engine->getResourceManager()->getFileStream(name));
-#define playSfxStream(name) getSound()->getSfxStream()->load(_engine->getResourceManager()->getFileStream(Common::String(name)));
+#define playMusicStream(name) getSound()->getMusicStream()->load(getArchive(name));
+#define playSfxStream(name) getSound()->getSfxStream()->load(getArchive(name));
 
-// Misc
-#define save(entity, type, event) getSaveLoad()->saveGame(type, entity, event)
-#define random(value) _engine->getRandom().getRandomNumber(value - 1)
-#define isDay() getLogic()->getGameState()->isDayTime()
-#define loadFile(name) load(_engine->getResourceManager()->getFileStream(name))
+// Others
 #define getEntityData(entity) getEntities()->getData(entity)
+#define save(entity, type, event) getSaveLoad()->saveGame(type, entity, event)
 
 //////////////////////////////////////////////////////////////////////////
 // Graphics
 //////////////////////////////////////////////////////////////////////////
 
 // Sequences
-#define newSequence(name, ...) new Sequence(_engine->getResourceManager()->getFileStream(name))
 #define drawSequenceFrame(drawable, index, type) { \
 	AnimFrame *frame = (drawable)->getFrame((index)); \
 	_engine->getGraphicsManager()->draw((frame), (type)); \
@@ -87,13 +89,5 @@
 
 // Used to delete entity sequences
 #define SAFE_DELETE(_p) { if(_p) { delete _p; _p=NULL; } }
-
-//////////////////////////////////////////////////////////////////////////
-// Output
-//////////////////////////////////////////////////////////////////////////
-static const char *entityNames[] = { "None", "Anna", "August", "Mertens", "Coudert", "Pascale", "Servers0", "Servers1", "Cooks", "Verges", "Tatiana", "Vassili", "Alexei", "Abbot", "Milos", "Vesna", "Ivo", "Salko", "Kronos", "Kahina", "Francois", "MmeBoutarel", "Boutarel", "Rebecca", "Sophie", "Mahmud", "Yasmin", "Hadija", "Alouan", "Gendarmes", "Max", "Chapters", "Train", "Tables0", "Tables1", "Tables2", "Tables3", "Tables4", "Tables5", "Entity39"};
-static const char *directionNames[] = { "None", "Up", "Down", "Left", "Right", "Switch"};
-#define ENTITY_NAME(index) (index >= 40 ? "INVALID" : entityNames[index])
-#define DIRECTION_NAME(direction) (direction >= 6 ? "INVALID" : directionNames[direction])
 
 #endif // LASTEXPRESS_HELPERS_H

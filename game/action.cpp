@@ -1906,7 +1906,7 @@ void Action::playAnimation(EventIndex index) const {
 
 		// FIXME NIS animations need to be passed one more parameter than currently
 		Animation animation;
-		if (animation.loadFile(Common::String(animationList[index].filename) + ".nis"))
+		if (animation.load(getArchive(Common::String(animationList[index].filename) + ".nis")))
 			animation.play();
 
 		if (getSound()->isBuffered("TIMER"))
