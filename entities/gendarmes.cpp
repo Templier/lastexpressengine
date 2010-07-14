@@ -30,6 +30,7 @@
 #include "lastexpress/game/logic.h"
 #include "lastexpress/game/object.h"
 #include "lastexpress/game/savepoint.h"
+#include "lastexpress/game/scenes.h"
 #include "lastexpress/game/sound.h"
 #include "lastexpress/game/state.h"
 
@@ -90,13 +91,42 @@ IMPLEMENT_FUNCTION_S(Gendarmes, arrestPlaysound16, 5)
 }
 
 IMPLEMENT_FUNCTION_I(Gendarmes, function6, 6)
-	error("Gendarmes: callback function 6 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionNone:
+		TIME_CHECK_CALLBACK_ACTION(Gendarmes, (uint32)params->param1, params->param2);				
+		// Fallback to action 17
+
+	case kAction17:
+		if (!ENTITY_PARAM(0, 1) && getEntities()->checkSequence0(kEntityGendarmes)) {
+			getSound()->playSound(kEntityNone, "MUS007");
+			ENTITY_PARAM(0, 1) = 1;
+		}
+
+		if (getEntities()->checkFields9(kEntityGendarmes, kEntityNone, 1000) && !getEntityData(kEntityNone)->field_493) {
+			setCallback(1);
+			call(new ENTITY_SETUP(Gendarmes, setup_savegame), kSavegameType2, kEventGendarmesArrestation);
+		}
+		break;
+
+	case kActionCallback:
+		if (getCallback() == 1) {
+			getAction()->playAnimation(kEventGendarmesArrestation);
+			getLogic()->gameOver(kTimeType0, kTime1, kSceneGameOverPolice1, true);
+		}
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION_II(Gendarmes, savegame, 7)
 	Entity::savegame(savepoint);
 }
 
+// Parameters:
+// - CarIndex
+// - Field491
 IMPLEMENT_FUNCTION_II(Gendarmes, function8, 8)
 	switch (savepoint.action) {
 	default:
@@ -115,8 +145,7 @@ IMPLEMENT_FUNCTION_II(Gendarmes, function8, 8)
 			ENTITY_PARAM(0, 1) = 1;
 		}
 
-		if (getEntities()->checkFields9(kEntityGendarmes, kEntityNone, 1750)
-		 && getEntityData(kEntityNone)->field_493 == 0) {
+		if (getEntities()->checkFields9(kEntityGendarmes, kEntityNone, 1750) && !getEntityData(kEntityNone)->field_493) {
 			if (!getEntities()->isPlayerPosition(kCarRedSleeping, 22) || getEntities()->checkFields9(kEntityGendarmes, kEntityNone, 250)) {
 				setCallback(1);
 				call(new ENTITY_SETUP(Gendarmes, setup_savegame), kSavegameType2, kEventGendarmesArrestation);
@@ -141,12 +170,120 @@ IMPLEMENT_FUNCTION_II(Gendarmes, function8, 8)
 // Parameters:
 // - CarIndex
 // - Field491
+// - char *
+// - char *
 IMPLEMENT_FUNCTION_IISS(Gendarmes, function9, 9)
 	error("Gendarmes: callback function 9 not implemented!");
 }
 
+// Parameters:
+// - CarIndex
+// - Field491
+// - ObjectIndex
 IMPLEMENT_FUNCTION_III(Gendarmes, function10, 10)
-	error("Gendarmes: callback function 10 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionNone:		
+		if (!params->param5 || getState()->timeTicks > (uint32)params->param5) {
+			if (!params->param5)
+				params->param5 = getState()->timeTicks + 75;
+
+			if (!getEntities()->checkFields15() && getObjects()->get((ObjectIndex)params->param3).location != kLocation1) {
+				setCallback(2);
+				call(new ENTITY_SETUP(Gendarmes, setup_savegame), kSavegameType2, kEventGendarmesArrestation);
+				break;
+			}
+		}
+
+		if (!params->param6)
+			params->param6 = getState()->timeTicks + 150;
+
+		if (params->param6 == 0 || getState()->timeTicks > (uint32)params->param6) {
+			params->param6 = EntityData::kParamTime;
+
+			getSound()->playSound(kEntityGendarmes, "POL1046A", 16);
+		}
+
+		UPDATE_PARAM(params->param7, getState()->timeTicks, 300);
+
+		if (!params->param4 && getEntities()->checkFields15()) {
+			getObjects()->update((ObjectIndex)params->param3, kEntityNone, kLocationNone, kCursorHandKnock, kCursorHand);
+			CALLBACK_ACTION();			
+		} else {
+			if (getEntities()->checkFields15())
+				getScenes()->loadSceneFromPosition(kCarGreenSleeping, 49);
+
+			getSound()->playSound(kEntityGendarmes, "LIB017", 16);
+
+			setCallback(getProgress().jacket == kJacketOriginal ? 3 : 4);
+			call(new ENTITY_SETUP(Gendarmes, setup_savegame), kSavegameType2, getProgress().jacket == kJacketOriginal ? kEventMertensBloodJacket : kEventGendarmesArrestation);
+		}
+		break;
+
+	case kAction8:
+		getObjects()->update((ObjectIndex)params->param3, kEntityGendarmes, getObjects()->get((ObjectIndex)params->param3).location, kCursorNormal, kCursorNormal);
+
+		setCallback(5);
+		call(new ENTITY_SETUP_SIIS(Gendarmes, setup_arrestPlaysound16), "POL1046B");
+		break;
+
+	case kAction9:
+		setCallback(6);
+		call(new ENTITY_SETUP(Gendarmes, setup_savegame), kSavegameType2, kEventGendarmesArrestation);
+		break;
+
+	case kActionDefault:
+		getObjects()->update((ObjectIndex)params->param3, kEntityGendarmes, getObjects()->get((ObjectIndex)params->param3).location, kCursorNormal, kCursorNormal);
+
+		setCallback(1);
+		call(new ENTITY_SETUP_SIIS(Gendarmes, setup_arrestPlaysound16), "POL1046");
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			getObjects()->update((ObjectIndex)params->param3, kEntityGendarmes, getObjects()->get((ObjectIndex)params->param3).location, kCursorTalk, kCursorNormal);
+			break;
+
+		case 2:
+			getSound()->playSound(kEntityGendarmes, "LIB014", 16);
+			getAction()->playAnimation(kEventGendarmesArrestation);
+			getLogic()->gameOver(kTimeType0, kTime1, kSceneGameOverPolice1, true);
+			break;
+
+		case 3:
+			getAction()->playAnimation((params->param1 < kCarRedSleeping) ? kEventMertensBloodJacket : kEventCoudertBloodJacket);
+			getLogic()->gameOver(kTimeType0, kTime1, kSceneGameOverBloodJacket, true);
+
+			getObjects()->update((ObjectIndex)params->param3, kEntityNone, kLocationNone, kCursorHandKnock, kCursorHand);
+			CALLBACK_ACTION();
+			break;
+
+		case 4:
+			getAction()->playAnimation(kEventGendarmesArrestation);
+			getLogic()->gameOver(kTimeType0, kTime1, kSceneGameOverPolice1, true);
+
+			getObjects()->update((ObjectIndex)params->param3, kEntityNone, kLocationNone, kCursorHandKnock, kCursorHand);
+			CALLBACK_ACTION();
+			break;
+
+		case 5:
+			getObjects()->update((ObjectIndex)params->param3, kEntityGendarmes, getObjects()->get((ObjectIndex)params->param3).location, kCursorNormal, kCursorHand);
+			break;
+
+		case 6:
+			getSound()->playSound(kEntityGendarmes, "LIB014", 16);
+			getAction()->playAnimation(kEventGendarmesArrestation);
+			getLogic()->gameOver(kTimeType0, kTime1, kSceneGameOverPolice1, true);
+			break;
+		}
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Gendarmes, chapter1_handler, 11)
