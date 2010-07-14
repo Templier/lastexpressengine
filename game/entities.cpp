@@ -992,6 +992,7 @@ void Entities::drawSequencesInternal(EntityIndex entityIndex, EntityDirection di
 	strcpy((char *)&sequenceName, "");
 	strcpy((char *)&sequenceName1, "");
 	strcpy((char *)&sequenceName2, "");
+	strcpy((char *)&sequenceName3, "");
 
 	getSequenceName(entityIndex, direction, (char *)&sequenceName1, (char *)&sequenceName2);
 

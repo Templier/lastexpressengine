@@ -62,6 +62,13 @@
 		break; \
 	}
 
+#define TIME_CHECK_CALLBACK_ACTION(class, timeValue, parameter) \
+	if (getState()->time > timeValue && !parameter) { \
+		parameter = 1; \
+		CALLBACK_ACTION(); \
+		break; \
+	}
+
 #define TIME_CHECK_SAVEGAME(class, timeValue, parameter, callback, type, event) \
 	if (getState()->time > timeValue && !parameter) { \
 		parameter = 1; \
@@ -129,22 +136,20 @@
 	getSavePoints()->call(_entityIndex, _entityIndex, kActionCallback); \
 	}
 
-#define UPDATE_PARAM(parameter, type, value) \
-	if (parameter || (type + value)) { \
-		if (!parameter) \
-			parameter = (int)(type + value); \
-		if (parameter >= (int)type) \
-			break; \
-		parameter = EntityData::kParamTime; \
-	}
+#define UPDATE_PARAM(parameter, type, value) { \
+	if (!parameter) \
+		parameter = (int)(type + value); \
+	if (parameter >= (int)type) \
+		break; \
+	parameter = EntityData::kParamTime; \
+}
 
-#define UPDATE_PARAM_FUNCTION(parameter, type, value, label) \
-	if (parameter || (type + value)) { \
-		if (!parameter) \
-			parameter = (int)(type + value); \
-		if (parameter >= (int)type) \
-			goto label; \
-		parameter = EntityData::kParamTime; \
-	}
+#define UPDATE_PARAM_FUNCTION(parameter, type, value, label) { \
+	if (!parameter) \
+		parameter = (int)(type + value); \
+	if (parameter >= (int)type) \
+		goto label; \
+	parameter = EntityData::kParamTime; \
+}
 
 #endif // LASTEXPRESS_ENTITY_FUNCTIONS_H
