@@ -117,6 +117,9 @@ Common::SeekableReadStream *ResourceManager::getFileStream(const Common::String 
 
 	// Check if the file exits in the archive
 	if (!hasFile(name)) {
+#ifdef _DEBUG
+		error("ResourceManager::getFileStream: cannot open file: %s", name.c_str());
+#endif
 		debugC(2, kLastExpressDebugResource, "Error opening file: %s", name.c_str());
 		return NULL;
 	}

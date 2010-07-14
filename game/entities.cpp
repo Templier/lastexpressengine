@@ -475,10 +475,10 @@ void Entities::updateSequences() {
 			// Replace by sequence 3 if available
 			if (data->sequence3) {
 				data->sequence2 = data->sequence3;
-				strcpy(data->sequenceName2, data->sequenceName3);
+				strcpy((char *)&data->sequenceName2, (char *)&data->sequenceName3);
 
 				data->sequence3 = NULL;
-				strcpy(data->sequenceName3, "");
+				strcpy((char *)&data->sequenceName3, "");
 			}
 
 			data->direction = data->direction2;
@@ -505,50 +505,50 @@ void Entities::updateSequences() {
 		// (data->direction == kDirectionLeft ? entityIndex + 35 : 15)
 		char sequenceName[9];
 
-		if (strcmp(data->sequenceName2, "") != 0 && !data->sequence2) {
+		if (strcmp((char *)&data->sequenceName2, "") != 0 && !data->sequence2) {
 			strcpy((char *)&sequenceName, "");
 
-			data->sequence2 = newSequence(data->sequenceName2);
+			data->sequence2 = newSequence((char *)&data->sequenceName2);
 
 			// If sequence 2 was loaded correctly, remove the copied name
 			// otherwise, compute new name
 			if (data->sequence2) {
-				strcpy(data->sequenceNameCopy, "");
+				strcpy((char *)&data->sequenceNameCopy, "");
 			} else {
 
 				// Left and down directions
 				if (data->direction == kDirectionLeft || data->direction == kDirectionRight) {
-					COMPUTE_SEQUENCE_NAME((char *)&sequenceName, data->sequenceName2);
+					COMPUTE_SEQUENCE_NAME((char *)&sequenceName, (char *)&data->sequenceName2);
 
 					// Try loading the sequence
 					data->sequence2 = newSequence((char *)&sequenceName);
 				}
 
 				// Update sequence names
-				strcpy(data->sequenceNameCopy, data->sequence2 ? "" : data->sequenceName2);
-				strcpy(data->sequenceName2, data->sequence2 ? (char *)&sequenceName : "");
+				strcpy((char *)&data->sequenceNameCopy, data->sequence2 ? "" : (char *)&data->sequenceName2);
+				strcpy((char *)&data->sequenceName2, data->sequence2 ? (char *)&sequenceName : "");
 			}
 		}
 
 		// Update sequence 3
-		if (strcmp(data->sequenceName3, "") != 0 && !data->sequence3) {
+		if (strcmp((char *)&data->sequenceName3, "") != 0 && !data->sequence3) {
 			strcpy((char *)&sequenceName, "");
 
 			if (data->car == getData(kEntityNone)->car)
-				data->sequence3 = newSequence(data->sequenceName3);
+				data->sequence3 = newSequence((char *)&data->sequenceName3);
 
 			if (!data->sequence3) {
 
 				// Left and down directions
 				if (data->direction2 == kDirectionLeft || data->direction2 == kDirectionRight) {
-					COMPUTE_SEQUENCE_NAME((char *)&sequenceName, data->sequenceName3);
+					COMPUTE_SEQUENCE_NAME((char *)&sequenceName, (char *)&data->sequenceName3);
 
 					// Try loading the sequence
 					data->sequence3 = newSequence((char *)&sequenceName);
 				}
 
 				// Update sequence names
-				strcpy(data->sequenceName3, data->sequence3 ? (char *)&sequenceName : "");
+				strcpy((char *)&data->sequenceName3, data->sequence3 ? (char *)&sequenceName : "");
 			}
 		}
 	}

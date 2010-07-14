@@ -150,7 +150,7 @@ IMPLEMENT_FUNCTION_III(Gendarmes, function10, 10)
 }
 
 IMPLEMENT_FUNCTION(Gendarmes, chapter1_handler, 11)
-	if (savepoint.action == kActionDefault) {
+	if (savepoint.action == kAction169499649) {
 		getSavePoints()->push(kEntityGendarmes, kEntityMertens, kAction190082817);
 		setup_function12();
 	}
