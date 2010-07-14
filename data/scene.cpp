@@ -234,9 +234,8 @@ Common::Rect Scene::draw(Graphics::Surface *surface) {
 	return rect;
 }
 
-
+//////////////////////////////////////////////////////////////////////////
 // SceneLoader
-
 SceneLoader::SceneLoader() : _stream(NULL) {}
 
 SceneLoader::~SceneLoader() {
@@ -258,47 +257,49 @@ bool SceneLoader::load(Common::SeekableReadStream *stream) {
 
 	_stream = stream;
 
-	// Read the number of scenes (the first entry is a dummy one)
-	_stream->seek(9, SEEK_SET);
-	uint32 numScenes = _stream->readUint32LE();
-	debugC(2, kLastExpressDebugScenes, "   found %d entries", numScenes);
+	// Read the default scene to get the total number of scenes
+	SceneHeader *header = SceneHeader::load(_stream);
+	if (!header)
+		error("SceneLoader::load: Invalid data file!");
+		
+	debugC(2, kLastExpressDebugScenes, "   found %d entries", header->count);
 
-	if (numScenes > 2500)
+	if (header->count > 2500) {
+		delete header;
+
 		return false;
+	}
 
-	// Go to first scene (each header is 24 bytes long)
-	_stream->seek(24, SEEK_SET);
+	_headers.push_back(header);
 
 	// Read all the chunks
-	for (uint32 i = 0; i < numScenes; ++i) {
-		SceneHeader *header = SceneHeader::load(_stream);
-		if (!header)
+	for (uint32 i = 0; i < header->count; ++i) {
+		SceneHeader *scene = SceneHeader::load(_stream);
+		if (!scene)
 			break;
-		_headers.push_back(header);
+
+		_headers.push_back(scene);
 	}
 
 	return true;
 }
 
 bool SceneLoader::loadScene(Scene * const scene, SceneIndex index) {
-	if (!index)
-		error("SceneLoader::loadScene: scene index cannot be 0!");
-
 	if (index > _headers.size())
 		error("SceneLoader::loadScene: scene index is too high! (was=%d, max=%d)", index, _headers.size());
 
-	return Scene::load(scene, _stream, _headers[index - 1]);
+	return Scene::load(scene, _stream, _headers[index]);
 }
 
 Scene *SceneLoader::getScene(SceneIndex index) {
 	if (_headers.empty())
 		return NULL;
 
-	if (index == 0 || index > _headers.size())
+	if (index > _headers.size())
 		return NULL;
 
 	debugC(9, kLastExpressDebugScenes, "Loading scene %d", index);
-	return Scene::get(_stream, _headers[index - 1]);
+	return Scene::get(_stream, _headers[index]);
 }
 
 } // End of namespace LastExpress
