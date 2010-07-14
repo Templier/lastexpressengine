@@ -44,11 +44,14 @@
 
 #include "engines/util.h"
 
+const char *g_entityNames[] = { "None", "Anna", "August", "Mertens", "Coudert", "Pascale", "Servers0", "Servers1", "Cooks", "Verges", "Tatiana", "Vassili", "Alexei", "Abbot", "Milos", "Vesna", "Ivo", "Salko", "Kronos", "Kahina", "Francois", "MmeBoutarel", "Boutarel", "Rebecca", "Sophie", "Mahmud", "Yasmin", "Hadija", "Alouan", "Gendarmes", "Max", "Chapters", "Train", "Tables0", "Tables1", "Tables2", "Tables3", "Tables4", "Tables5", "Entity39"};
+const char *g_directionNames[] = { "None", "Up", "Down", "Left", "Right", "Switch"};
+
 namespace LastExpress {
 
 LastExpressEngine::LastExpressEngine(OSystem *syst, const ADGameDescription *gd) :
     Engine(syst), _gameDescription(gd), _debugger(NULL), _cursor(NULL),
-    _font(NULL), _logic(NULL), _menu(NULL), _graphicsMan(NULL), _resMan(NULL), _sceneMan(NULL),
+    _font(NULL), _logic(NULL), _menu(NULL), _graphicsMan(NULL), _resMan(NULL), _sceneMan(NULL), _soundMan(NULL),
 	eventMouse(NULL), eventTick(NULL), eventMouseBackup(NULL), eventTickBackup(NULL) {
 
 	// Adding the default directories
@@ -231,7 +234,8 @@ void LastExpressEngine::soundTimer(void *refCon) {
 }
 
 void LastExpressEngine::handleSoundTimer() {
-	_soundMan->handleTimer();
+	if (_soundMan)
+		_soundMan->handleTimer();
 }
 
 ///////////////////////////////////////////////////////////////////////////////////

@@ -90,4 +90,12 @@
 // Used to delete entity sequences
 #define SAFE_DELETE(_p) { if(_p) { delete _p; _p=NULL; } }
 
+//////////////////////////////////////////////////////////////////////////
+// Output
+//////////////////////////////////////////////////////////////////////////
+extern const char *g_entityNames[];
+extern const char *g_directionNames[];
+#define ENTITY_NAME(index) (index >= 40 ? "INVALID" : g_entityNames[index])
+#define DIRECTION_NAME(direction) (direction >= 6 ? "INVALID" : g_directionNames[direction])
+
 #endif // LASTEXPRESS_HELPERS_H
