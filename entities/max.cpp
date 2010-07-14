@@ -86,7 +86,7 @@ IMPLEMENT_FUNCTION(Max, function6, 6)
 		break;
 
 	case kActionNone:
-		UPDATE_PARAM(params->param2, getState()->time, 1);
+		UPDATE_PARAM(params->param2, getState()->time, params->param1);
 
 		if (!getSound()->isBuffered(kEntityMax))
 			getSound()->playSound(kEntityMax, "Max1122");

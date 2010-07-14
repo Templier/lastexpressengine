@@ -647,8 +647,6 @@ void Entities::executeCallbacks() {
 	}
 
 void Entities::processEntity(EntityIndex entityIndex) {
-	debugC(8, kLastExpressDebugLogic, "Processing entity %s", ENTITY_NAME(entityIndex));
-
 	EntityData::EntityCallData *data = getData(entityIndex);
 	bool dontClearQueue = false;
 
