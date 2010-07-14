@@ -400,7 +400,7 @@ public:
 			field_4A9 = 0;
 			field_4AA = 0;
 			direction2 = kDirectionNone;
-			
+
 			field_4B5 = 0;
 			field_4C2 = 0;
 

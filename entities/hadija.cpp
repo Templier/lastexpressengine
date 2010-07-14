@@ -136,7 +136,7 @@ label_callback2:
 
 				if (!getEntities()->checkFields7(kCarGreenSleeping) || !getEntities()->checkFields1(kEntityMahmud, kCarGreenSleeping, EntityData::kField491_5790) || !params->param3) {
 					params->param3 = getState()->time + 75;
-					
+
 					if (!params->param3) {
 						setCallback(3);
 						call(new ENTITY_SETUP(Hadija, setup_function7));
@@ -151,7 +151,7 @@ label_callback2:
 			params->param3 = EntityData::kParamTime;
 
 			setCallback(3);
-			call(new ENTITY_SETUP(Hadija, setup_function7));		
+			call(new ENTITY_SETUP(Hadija, setup_function7));
 		}
 
 label_callback3:
@@ -163,7 +163,7 @@ label_callback4:
 
 				if (!getEntities()->checkFields7(kCarGreenSleeping) || !getEntities()->checkFields1(kEntityMahmud, kCarGreenSleeping, EntityData::kField491_5790) || !params->param5) {
 					params->param5 = getState()->time + 75;
-					
+
 					if (!params->param5) {
 						setCallback(5);
 						call(new ENTITY_SETUP(Hadija, setup_function6));

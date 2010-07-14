@@ -96,7 +96,7 @@ IMPLEMENT_FUNCTION_I(Gendarmes, function6, 6)
 		break;
 
 	case kActionNone:
-		TIME_CHECK_CALLBACK_ACTION(Gendarmes, (uint32)params->param1, params->param2);				
+		TIME_CHECK_CALLBACK_ACTION(Gendarmes, (uint32)params->param1, params->param2);
 		// Fallback to action 17
 
 	case kAction17:
@@ -185,7 +185,7 @@ IMPLEMENT_FUNCTION_III(Gendarmes, function10, 10)
 	default:
 		break;
 
-	case kActionNone:		
+	case kActionNone:
 		if (!params->param5 || getState()->timeTicks > (uint32)params->param5) {
 			if (!params->param5)
 				params->param5 = getState()->timeTicks + 75;
@@ -210,7 +210,7 @@ IMPLEMENT_FUNCTION_III(Gendarmes, function10, 10)
 
 		if (!params->param4 && getEntities()->checkFields15()) {
 			getObjects()->update((ObjectIndex)params->param3, kEntityNone, kLocationNone, kCursorHandKnock, kCursorHand);
-			CALLBACK_ACTION();			
+			CALLBACK_ACTION();
 		} else {
 			if (getEntities()->checkFields15())
 				getScenes()->loadSceneFromPosition(kCarGreenSleeping, 49);
@@ -443,7 +443,7 @@ IMPLEMENT_FUNCTION(Gendarmes, function12, 12)
 			getSavePoints()->push(kEntityGendarmes, kEntityVerges, kAction168710784);
 			setup_function13();
 			break;
-		}		
+		}
 		break;
 	}
 }

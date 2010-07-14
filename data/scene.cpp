@@ -261,7 +261,7 @@ bool SceneLoader::load(Common::SeekableReadStream *stream) {
 	SceneHeader *header = SceneHeader::load(_stream);
 	if (!header)
 		error("SceneLoader::load: Invalid data file!");
-		
+
 	debugC(2, kLastExpressDebugScenes, "   found %d entries", header->count);
 
 	if (header->count > 2500) {

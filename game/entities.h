@@ -171,7 +171,7 @@ private:
 	void processEntitySub2(EntityIndex entityIndex);
 	void processEntitySub3(EntityIndex entityIndex);
 	void copySequenceData3To2(EntityIndex entityIndex);
-	
+
 	Sequence *copySequence(Sequence *sequence);
 	void getSequenceName(EntityIndex entity, EntityDirection direction, Common::String &sequence1, Common::String &sequence2) const;
 
@@ -182,7 +182,7 @@ private:
 
 	bool checkField491(EntityData::Field491Value field491) const;
 	bool checkSequenceFromPosition(EntityIndex entity) const;
-	EntityData::Field491Value getField491FromCurrentPosition() const;	
+	EntityData::Field491Value getField491FromCurrentPosition() const;
 };
 
 } // End of namespace LastExpress

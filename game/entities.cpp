@@ -504,7 +504,7 @@ void Entities::updateSequences() {
 		EntityData::EntityCallData *data = getData(entityIndex);
 		int field30 = (data->direction == kDirectionLeft ? entityIndex + 35 : 15);
 
-		if (data->sequenceName2 != "" && !data->sequence2) {		
+		if (data->sequenceName2 != "" && !data->sequence2) {
 			data->sequence2 = new Sequence(getArchive(data->sequenceName2), field30);
 
 			// If sequence 2 was loaded correctly, remove the copied name
@@ -612,7 +612,7 @@ void Entities::executeCallbacks() {
 		return;
 
 	bool processed = true;
-	do {		
+	do {
 		for (int i = 1; i < (int)_entities.size(); i++) {
 			if (getFlags()->flag_entities_0)
 				break;
@@ -838,7 +838,7 @@ void Entities::computeCurrentFrame2(EntityIndex entityIndex) {
 			error("Entities::computeCurrentFrame2: not implemented!");
 			break;
 		}
-		
+
 		}
 		break;
 
@@ -847,13 +847,13 @@ void Entities::computeCurrentFrame2(EntityIndex entityIndex) {
 		if (data->currentFrame2 == -1 || data->currentFrame2 >= (int32)data->sequence2->count()) {
 			data->currentFrame2 = 0;
 			data->field_49B = 0;
-		}		
+		}
 		break;
 
 	case kDirectionRight:
 		error("Entities::computeCurrentFrame2: not implemented!");
 		break;
-	}	
+	}
 }
 
 int Entities::getCurrentFrame2(EntityIndex entity, Sequence *sequence, EntityData::Field491Value field491, bool doProcessing) {
@@ -1003,7 +1003,7 @@ void Entities::drawSequencesInternal(EntityIndex entityIndex, EntityDirection di
 		COMPUTE_SEQUENCE_NAME(sequenceName, sequenceName1);
 
 		if (sequenceName3 == "")
-			COMPUTE_SEQUENCE_NAME(sequenceName3, sequenceName2);			
+			COMPUTE_SEQUENCE_NAME(sequenceName3, sequenceName2);
 	}
 
 	if (!data->frame) {
@@ -1048,7 +1048,7 @@ void Entities::drawSequencesInternal(EntityIndex entityIndex, EntityDirection di
 			if (!data->sequence3) {
 				if (sequenceName2 == "")
 					return;
-				
+
 				drawSequencesInternalSub(entityIndex, sequenceName2, sequenceName3, field30, unknown);
 				return;
 			}
@@ -1740,7 +1740,7 @@ label_process_entity:
 
 		if (!flag1) {
 			if (data->direction == direction) {
-			
+
 				if (checkFields24(entity, EntityData::kField491_1500, 750) && entity != kEntityFrancois) {
 					error("Entities::checkEntity: not implemented (1)!");
 				} else {
