@@ -236,7 +236,7 @@ void Logic::eventTick(const Common::Event &ev) {
 			}
 
 			// Save after game ticks interval
-			if (getSaveLoad()->getLastSavegameTicks() - getState()->timeTicks > GAME_TICKS_BEETWEEN_SAVEGAMES)
+			if (getState()->timeTicks - getSaveLoad()->getLastSavegameTicks() > GAME_TICKS_BEETWEEN_SAVEGAMES)
 				save(kEntityChapters, kSavegameTypeTickInterval, kEventNone);
 		}
 	}

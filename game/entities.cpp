@@ -111,6 +111,18 @@ static const EntityData::Field491Value field491Positions[41] = {
 #define ADD_ENTITY(class) \
 	_entities.push_back(new class(engine));
 
+#define COMPUTE_SEQUENCE_NAME(sequenceTo, sequenceFrom) { \
+	strncpy(sequenceTo, sequenceFrom, strlen(sequenceFrom) - 7); \
+	if (checkFields5(entityIndex, kCarGreenSleeping) || checkFields5(entityIndex, kCarGreenSleeping)) { \
+		if (data->car < getData(kEntityNone)->car || (data->car == getData(kEntityNone)->car && data->field_491 < getData(kEntityNone)->field_491)) \
+			strcat(sequenceTo, "R.SEQ"); \
+		else \
+			strcat(sequenceTo, "F.SEQ"); \
+	} else { \
+		strcat(sequenceTo, ".SEQ"); \
+	} \
+}
+
 //////////////////////////////////////////////////////////////////////////
 // Entities
 //////////////////////////////////////////////////////////////////////////
@@ -506,17 +518,7 @@ void Entities::updateSequences() {
 
 				// Left and down directions
 				if (data->direction == kDirectionLeft || data->direction == kDirectionRight) {
-					// Get proper postfix and extension
-					strncpy((char *)&sequenceName, data->sequenceName2, strlen(data->sequenceName2) - 7);
-
-					if (checkFields5(entityIndex, kCarGreenSleeping) || checkFields5(entityIndex, kCarGreenSleeping)) {
-						if (data->car < getData(kEntityNone)->car || (data->car == getData(kEntityNone)->car && data->field_491 < getData(kEntityNone)->field_491))
-							strcat((char *)&sequenceName, "R.SEQ");
-						else
-							strcat((char *)&sequenceName, "F.SEQ");
-					} else {
-						strcat((char *)&sequenceName, ".SEQ");
-					}
+					COMPUTE_SEQUENCE_NAME((char *)&sequenceName, data->sequenceName2);
 
 					// Try loading the sequence
 					data->sequence2 = newSequence((char *)&sequenceName);
@@ -539,17 +541,7 @@ void Entities::updateSequences() {
 
 				// Left and down directions
 				if (data->direction2 == kDirectionLeft || data->direction2 == kDirectionRight) {
-					// Get proper postfix and extension
-					strncpy((char *)&sequenceName, data->sequenceName3, strlen(data->sequenceName3) - 7);
-
-					if (checkFields5(entityIndex, kCarGreenSleeping) || checkFields5(entityIndex, kCarGreenSleeping)) {
-						if (data->car < getData(kEntityNone)->car || (data->car == getData(kEntityNone)->car && data->field_491 < getData(kEntityNone)->field_491))
-							strcat((char *)&sequenceName, "R.SEQ");
-						else
-							strcat((char *)&sequenceName, "F.SEQ");
-					} else {
-						strcat((char *)&sequenceName, ".SEQ");
-					}
+					COMPUTE_SEQUENCE_NAME((char *)&sequenceName, data->sequenceName3);
 
 					// Try loading the sequence
 					data->sequence3 = newSequence((char *)&sequenceName);
@@ -1015,7 +1007,11 @@ void Entities::drawSequencesInternal(EntityIndex entityIndex, EntityDirection di
 	}
 
 	if (direction == kDirectionLeft || direction == kDirectionRight) {
-		error("Entities::drawSequencesInternal: not implemented!");
+
+		COMPUTE_SEQUENCE_NAME((char *)&sequenceName, (char *)&sequenceName1);
+
+		if (!strcmp((char *)sequenceName3, ""))
+			COMPUTE_SEQUENCE_NAME((char *)&sequenceName3, (char *)&sequenceName2);			
 	}
 
 	if (!data->frame) {
@@ -1079,7 +1075,7 @@ void Entities::drawSequencesInternal(EntityIndex entityIndex, EntityDirection di
 
 		strcpy(data->sequenceName3, "");
 
-		if (!sequenceName2)
+		if (strcmp((char *)sequenceName2, ""))
 			return;
 
 		drawSequencesInternalSub(entityIndex, (char *)&sequenceName2, (char *)&sequenceName3, field30, unknown);
@@ -1087,7 +1083,7 @@ void Entities::drawSequencesInternal(EntityIndex entityIndex, EntityDirection di
 	}
 
 	if (strcmp((char *)&data->sequenceName2, (char *)&sequenceName1)) {
-		error("Entities::drawSequencesInternal: not implemented!");
+		error("Entities::drawSequencesInternal: not implemented (2)!");
 	} else {
 		SAFE_DELETE(data->sequence3);
 

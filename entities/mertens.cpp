@@ -176,12 +176,12 @@ IMPLEMENT_FUNCTION_I(Mertens, function11, 11)
 			&& getEntities()->checkFields9(kEntityMertens, kEntityNone, 1000)
 			&& !getEntities()->checkFields3(kEntityNone)
 			&& !getEntities()->checkFields10(kEntityNone)) {
-				setCallback(1);
-				call(new ENTITY_SETUP(Mertens, setup_savegame), kSavegameType2, kEventMertensBloodJacket);
-				break;
+			setCallback(1);
+			call(new ENTITY_SETUP(Mertens, setup_savegame), kSavegameType2, kEventMertensBloodJacket);
+			break;
 		}
 
-		UPDATE_PARAM(params->param2, getState()->time, 1)
+		UPDATE_PARAM(params->param2, getState()->time, params->param1)
 
 		CALLBACK_ACTION()
 		break;

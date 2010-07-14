@@ -23,9 +23,13 @@
  *
  */
 
+#include "lastexpress/game/logic.h"
 #include "lastexpress/game/savegame.h"
+#include "lastexpress/game/state.h"
 
 #include "lastexpress/debug.h"
+#include "lastexpress/lastexpress.h"
+#include "lastexpress/helpers.h"
 
 #include "common/file.h"
 #include "common/system.h"
@@ -83,6 +87,10 @@ bool SaveLoad::loadGame(GameId id) {
 
 // Save game
 void SaveLoad::saveGame(SavegameType type, EntityIndex entity, EventIndex event) {
+
+	// Save ticks
+	_gameTicksLastSavegame = getState()->timeTicks;
+
 	warning("SaveLoad::savegame: not implemented!");
 }
 
