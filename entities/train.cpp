@@ -565,8 +565,8 @@ void Train::resetParam8() {
 	 && !getEntities()->checkFields1(kEntityNone, (CarIndex)params2->param1, (EntityData::Field491Value)params2->param3)) {
 
 		if (getSound()->isBuffered(params2->seq))
-			getSound()->unknownFunction2(params2->seq);			
-		
+			getSound()->unknownFunction2(params2->seq);
+
 		params->param8 = 0;
 	}
 }

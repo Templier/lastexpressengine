@@ -261,7 +261,7 @@ IMPLEMENT_FUNCTION(August, dinner, 24)
 
 			getAction()->playAnimation(getEntities()->checkFields13(kEntityAlexei) ? kEventDinerAugustAlexeiBackground : kEventDinerAugust);
 			getProgress().eventMetAugust = 1;
-			
+
 			getScenes()->loadSceneFromPosition(kCarRestaurant, 61);
 
 			CALLBACK_ACTION();

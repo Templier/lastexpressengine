@@ -192,9 +192,8 @@ bool LastExpressEngine::handleEvents() {
 			// Closing the GMM
 
 		case Common::EVENT_MOUSEMOVE:
-		case Common::EVENT_LBUTTONDOWN:
 		case Common::EVENT_LBUTTONUP:
-		case Common::EVENT_RBUTTONDOWN:
+		case Common::EVENT_RBUTTONUP:
 			if (eventMouse && eventMouse->isValid())
 				(*eventMouse)(ev);
 			break;

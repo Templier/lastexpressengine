@@ -367,7 +367,7 @@ IMPLEMENT_FUNCTION(Hadija, function23, 23)
 
 			getData()->field_491 = EntityData::kField491_4840;
 			getData()->field_493 = EntityData::kField493_1;
-			
+
 			getObjects()->update(kObjectCompartment5, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
 			break;
 		}

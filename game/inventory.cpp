@@ -147,7 +147,7 @@ bool Inventory::handleMouseEvent(const Common::Event &ev) {
 		_engine->getCursor()->setStyle(kCursorNormal);
 
 		// If clicked, show the menu
-		if (ev.type == Common::EVENT_LBUTTONDOWN) {
+		if (ev.type == Common::EVENT_LBUTTONUP) {
 			playSfxStream("LIB039.SND");
 			getMenu()->show(false, kTimeType0, 0);
 
@@ -177,7 +177,7 @@ bool Inventory::handleMouseEvent(const Common::Event &ev) {
 		_engine->getCursor()->setStyle(kCursorNormal);
 
 		// If clicked, show pressed state and display inventory
-		if (ev.type == Common::EVENT_LBUTTONDOWN) {
+		if (ev.type == Common::EVENT_LBUTTONUP) {
 			open();
 		} else {
 			// Highlight if needed
@@ -261,7 +261,7 @@ bool Inventory::handleMouseEvent(const Common::Event &ev) {
 		// Show magnifier icon
 		_engine->getCursor()->setStyle(kCursorMagnifier);
 
-		if (ev.type == Common::EVENT_LBUTTONDOWN) {
+		if (ev.type == Common::EVENT_LBUTTONUP) {
 			examine((InventoryItem)_selectedItem);
 		}
 	}

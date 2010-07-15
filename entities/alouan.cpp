@@ -325,7 +325,7 @@ IMPLEMENT_FUNCTION(Alouan, function23, 23)
 
 			getData()->field_491 = EntityData::kField491_4070;
 			getData()->field_493 = EntityData::kField493_1;
-			
+
 			getObjects()->update(kObjectCompartment6, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
 			break;
 		}

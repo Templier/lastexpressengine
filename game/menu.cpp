@@ -558,11 +558,11 @@ void Menu::handleEvent(const Common::Event &ev) {
 	if (_isShowingCredits) {
 		// Interrupt on right click
 		switch(ev.type) {
-			case Common::EVENT_RBUTTONDOWN:
+			case Common::EVENT_RBUTTONUP:
 				_isShowingCredits = false; // Will cause credits to stop & reset overlays
 
 			// Fall through to hide/show credits
-			case Common::EVENT_LBUTTONDOWN:
+			case Common::EVENT_LBUTTONUP:
 				showCredits();
 				askForRedraw();
 				return;
@@ -586,7 +586,7 @@ void Menu::handleEvent(const Common::Event &ev) {
 
 	action = (StartMenuAction)hotspot->action;
 
-	bool clicked = (ev.type == Common::EVENT_LBUTTONDOWN);
+	bool clicked = (ev.type == Common::EVENT_LBUTTONUP);
 	clearBg(GraphicsManager::kBackgroundOverlay);
 
 	switch(action) {
@@ -1094,7 +1094,7 @@ void Menu::goToTime(uint32 time) {
 
 		Common::Event ev;
 		_engine->getEventManager()->pollEvent(ev);
-		if (ev.type == Common::EVENT_RBUTTONDOWN) {
+		if (ev.type == Common::EVENT_RBUTTONUP) {
 			break;
 		}
 

@@ -285,7 +285,7 @@ void Animation::play() {
 		// Handle right-click to interrupt animations
 		Common::Event ev;
 		while (g_engine->getEventManager()->pollEvent(ev)) {
-			if (ev.type == Common::EVENT_RBUTTONDOWN) {
+			if (ev.type == Common::EVENT_RBUTTONUP) {
 				// Stop audio
 				if (_audio)
 					_audio->finish();

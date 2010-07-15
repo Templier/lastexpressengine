@@ -129,14 +129,25 @@ void Logic::eventMouse(const Common::Event &ev) {
 	getFlags()->mouseLeftClick = false;
 	getFlags()->mouseRightClick = false;
 
-	// TODO process event flags
+	// TODO process event flags	
 	//warning("Logic::eventMouse: event flag processing not implemented!");
+	if (getFlags()->flag_0) {
+		//warning("Logic::eventMouse: event flag processing not implemented!");
+
+		return;
+	}
+
+	/*if (getScenes()->checkCurrentPosition(true) && _engine->getCursor()->getStyle() == kCursorForward) {
+		getFlags()->shouldRedraw = false;
+		getFlags()->flag_0 = true;
+		return;
+	}*/
 
 	// Update coordinates
 	getGameState()->setCoordinates(ev.mouse);
 
 	// Handle inventory
-	getInventory()->handleMouseEvent(ev);	
+	getInventory()->handleMouseEvent(ev);
 
 	// Stop processing is inside the menu
 	if (getMenu()->isShown())
@@ -156,7 +167,7 @@ void Logic::eventMouse(const Common::Event &ev) {
 		_engine->getCursor()->setStyle(getInventory()->getEntry(kItemWhistle)->cursor);
 
 		// Check if clicked
-		if (ev.type == Common::EVENT_LBUTTONDOWN && !getSound()->isBuffered("LIB045")) {
+		if (ev.type == Common::EVENT_LBUTTONUP && !getSound()->isBuffered("LIB045")) {
 
 			getSound()->playSoundEvent(kEntityNone, 45);
 
@@ -182,11 +193,11 @@ void Logic::eventMouse(const Common::Event &ev) {
 	 && !getInventory()->isEggHighlighted()
 	 && !getInventory()->isMagnifierInUse()
 	 && (getInventory()->getEntry(kItem2)->location == kLocationNone || getEntityData(kEntityNone)->car != kCarRedSleeping || getEntityData(kEntityNone)->field_491 != EntityData::kField491_2300)) {
-		
+
 		// Update cursor
 		_engine->getCursor()->setStyle(getInventory()->getEntry(kItemMatch)->cursor);
 
-		if (ev.type == Common::EVENT_LBUTTONDOWN) {
+		if (ev.type == Common::EVENT_LBUTTONUP) {
 
 			getAction()->playAnimation(isDay() ? kEventCathSmokeDay : kEventCathSmokeNight);
 
@@ -213,7 +224,7 @@ void Logic::eventMouse(const Common::Event &ev) {
 
 			_engine->getCursor()->setStyle((item & kInventoryInvalid) ? kCursorTalk2 : getInventory()->getEntry(item)->cursor);
 
-			if (ev.type == Common::EVENT_LBUTTONDOWN)
+			if (ev.type == Common::EVENT_LBUTTONUP)
 				getSavePoints()->push(kEntityNone, entityIndex, kAction1, (item & kInventoryInvalid) ? 0 : item);
 		}
 	}
@@ -333,17 +344,17 @@ void Logic::eventTick(const Common::Event &ev) {
 		loadSceneObject(scene, getState()->scene);
 
 		if (getScenes()->checkCurrentPosition(true)
-		 && scene.getHeader()->car
-		 && !getEntities()->getPosition(scene.getHeader()->car, scene.getHeader()->position)) {
+		&& !getEntities()->getPosition(scene.getHeader()->car, scene.getHeader()->position)) {
 
 			// Process hotspot
 			SceneHotspot *hotspot = scene.getHotspot();
 			SceneIndex index = getAction()->processHotspot(*hotspot);
-			if (index != kSceneInvalid && index != kSceneStopProcessing)
-				hotspot->scene = index;
+			/*if (index != kSceneInvalid && index != kSceneStopProcessing)
+				hotspot->scene = index;*/
+			// TODO reactivate hotspot handling once auto-loading of scene problem is fixed
 
-			if (hotspot->scene) {
-				getScenes()->setScene(hotspot->scene);
+			if (index) {
+				getScenes()->setScene(index);
 			} else {
 				getFlags()->flag_0 = false;
 				getFlags()->shouldRedraw = true;

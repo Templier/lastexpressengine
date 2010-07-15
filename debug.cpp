@@ -160,7 +160,7 @@ bool Debugger::cmd_playseq(int argc, const char **argv) {
 					// Handle right-click to interrupt sequence
 					Common::Event ev;
 					_engine->getEventManager()->pollEvent(ev);
-					if (ev.type == Common::EVENT_RBUTTONDOWN)
+					if (ev.type == Common::EVENT_RBUTTONUP)
 						break;
 
 					_engine->_system->delayMillis(175);
@@ -285,7 +285,7 @@ bool Debugger::cmd_playsbe(int argc, const char **argv) {
 					// Handle right-click to interrupt sequence
 					Common::Event ev;
 					_engine->getEventManager()->pollEvent(ev);
-					if (ev.type == Common::EVENT_RBUTTONDOWN)
+					if (ev.type == Common::EVENT_RBUTTONUP)
 						break;
 
 					_engine->_system->delayMillis(500);
@@ -681,9 +681,8 @@ bool Debugger::cmd_beetle(int argc, const char **argv) {
 					}
 
 
-					case Common::EVENT_LBUTTONDOWN:
 					case Common::EVENT_LBUTTONUP:
-					case Common::EVENT_RBUTTONDOWN:
+					case Common::EVENT_RBUTTONUP:
 						// Update coordinates
 						getLogic()->getGameState()->setCoordinates(ev.mouse);
 
