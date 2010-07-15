@@ -112,6 +112,16 @@ void Logic::init() {
 //////////////////////////////////////////////////////////////////////////
 // Event Handling
 //////////////////////////////////////////////////////////////////////////
+#define REDRAW_CURSOR() { \
+	if (getInventory()->isMagnifierInUse()) \
+		_engine->getCursor()->setStyle(kCursorMagnifier); \
+	if (getInventory()->isFlag1() \
+	|| getInventory()->isFlag2() \
+	|| getInventory()->isEggHighlighted()) \
+		_engine->getCursor()->setStyle(kCursorNormal); \
+	return; \
+}
+
 void Logic::eventMouse(const Common::Event &ev) {
 	bool hotspotHandled = false;
 
@@ -125,18 +135,88 @@ void Logic::eventMouse(const Common::Event &ev) {
 	// Update coordinates
 	getGameState()->setCoordinates(ev.mouse);
 
-	if (getInventory()->handleMouseEvent(ev))
-		return;
+	// Handle inventory
+	getInventory()->handleMouseEvent(ev);	
 
 	// Stop processing is inside the menu
 	if (getMenu()->isShown())
 		return;
 
-	// TODO handle whistle case
+	// Handle whistle case
+	if (getInventory()->getSelectedItem() == kItemWhistle
+	 && !getProgress().isEggOpen
+	 && !getEntities()->isPlayerPosition(kCarGreenSleeping, 59)
+	 && !getEntities()->isPlayerPosition(kCarGreenSleeping, 76)
+	 && !getInventory()->isFlag1()
+	 && !getInventory()->isFlag2()
+	 && !getInventory()->isEggHighlighted()
+	 && !getInventory()->isMagnifierInUse()) {
 
-	// TODO handle match case
+		 // Update cursor
+		_engine->getCursor()->setStyle(getInventory()->getEntry(kItemWhistle)->cursor);
 
-	// TODO handle entity item case
+		// Check if clicked
+		if (ev.type == Common::EVENT_LBUTTONDOWN && !getSound()->isBuffered("LIB045")) {
+
+			getSound()->playSoundEvent(kEntityNone, 45);
+
+			if (getEntities()->isPlayerPosition(kCarGreenSleeping, 26) || getEntities()->isPlayerPosition(kCarGreenSleeping, 25) || getEntities()->isPlayerPosition(kCarGreenSleeping, 23)) {
+				getSavePoints()->push(kEntityNone, kEntityMertens, kAction226078300);
+			} else if (getEntities()->isPlayerPosition(kCarRedSleeping, 26) || getEntities()->isPlayerPosition(kCarRedSleeping, 25) || getEntities()->isPlayerPosition(kCarRedSleeping, 23)) {
+				getSavePoints()->push(kEntityNone, kEntityCoudert, kAction226078300);
+			}
+
+			if (!getState()->sceneUseBackup)
+				getInventory()->unselectItem();
+		}
+
+		REDRAW_CURSOR();
+	}
+
+	// Handle match case
+	if (getInventory()->getSelectedItem() == kItemMatch
+	 && (getEntities()->checkFields7(kCarGreenSleeping) || getEntities()->checkFields7(kCarRedSleeping))
+	 && getProgress().jacket == kJacketGreen
+	 && !getInventory()->isFlag1()
+	 && !getInventory()->isFlag2()
+	 && !getInventory()->isEggHighlighted()
+	 && !getInventory()->isMagnifierInUse()
+	 && (getInventory()->getEntry(kItem2)->location == kLocationNone || getEntityData(kEntityNone)->car != kCarRedSleeping || getEntityData(kEntityNone)->field_491 != EntityData::kField491_2300)) {
+		
+		// Update cursor
+		_engine->getCursor()->setStyle(getInventory()->getEntry(kItemMatch)->cursor);
+
+		if (ev.type == Common::EVENT_LBUTTONDOWN) {
+
+			getAction()->playAnimation(isDay() ? kEventCathSmokeDay : kEventCathSmokeNight);
+
+			if (!getState()->sceneUseBackup)
+				getInventory()->unselectItem();
+
+			getScenes()->processScene();
+		}
+
+		REDRAW_CURSOR();
+	}
+
+	// Handle entity item case
+	EntityIndex entityIndex = getEntities()->canInteractWith(ev.mouse);
+	if (entityIndex
+	 && !getInventory()->isFlag1()
+	 && !getInventory()->isFlag2()
+	 && !getInventory()->isEggHighlighted()
+	 && !getInventory()->isMagnifierInUse()) {
+
+		InventoryItem item = getEntityData(entityIndex)->inventoryItem;
+		if (getInventory()->hasItem(item) || (item & kInventoryInvalid)) {
+			hotspotHandled = true;
+
+			_engine->getCursor()->setStyle((item & kInventoryInvalid) ? kCursorTalk2 : getInventory()->getEntry(item)->cursor);
+
+			if (ev.type == Common::EVENT_LBUTTONDOWN)
+				getSavePoints()->push(kEntityNone, entityIndex, kAction1, (item & kInventoryInvalid) ? 0 : item);
+		}
+	}
 
 	//////////////////////////////////////////////////////////////////////////
 	// Handle standard actions
@@ -146,6 +226,12 @@ void Logic::eventMouse(const Common::Event &ev) {
 	// Magnifier in use
 	if (getInventory()->isMagnifierInUse()) {
 		_engine->getCursor()->setStyle(kCursorMagnifier);
+
+		if (getInventory()->isFlag1()
+		 || getInventory()->isFlag2()
+		 || getInventory()->isEggHighlighted())
+			_engine->getCursor()->setStyle(kCursorNormal);
+
 		return;
 	}
 
@@ -253,8 +339,11 @@ void Logic::eventTick(const Common::Event &ev) {
 			// Process hotspot
 			SceneHotspot *hotspot = scene.getHotspot();
 			SceneIndex index = getAction()->processHotspot(*hotspot);
-			if (index) {
-				getScenes()->setScene(index);
+			if (index != kSceneInvalid && index != kSceneStopProcessing)
+				hotspot->scene = index;
+
+			if (hotspot->scene) {
+				getScenes()->setScene(hotspot->scene);
 			} else {
 				getFlags()->flag_0 = false;
 				getFlags()->shouldRedraw = true;
@@ -263,6 +352,7 @@ void Logic::eventTick(const Common::Event &ev) {
 
 			if (getFlags()->isGameRunning)
 				getSavePoints()->callAndProcess();
+
 		} else {
 			getFlags()->flag_0 = false;
 			getFlags()->shouldRedraw = true;

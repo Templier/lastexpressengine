@@ -1270,6 +1270,7 @@ enum ActionIndex {
 	kAction224309120 = 224309120,
 	kAction225358684 = 225358684,
 	kAction225367984 = 225367984,
+	kAction226078300 = 226078300, // Whistle
 
 	kActionEnd
 };
