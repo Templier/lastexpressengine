@@ -309,7 +309,28 @@ IMPLEMENT_FUNCTION(Mertens, function19, 19)
 }
 
 IMPLEMENT_FUNCTION(Mertens, function20, 20)
-	error("Mertens: callback function 20 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionDefault:
+		getScenes()->loadSceneFromItemPosition(kItem7);
+
+		if (ENTITY_PARAM(2, 1)) {
+			ENTITY_PARAM(2, 1) = 0;
+
+			CALLBACK_ACTION();
+		} else {
+			setCallback(1);
+			call(new ENTITY_SETUP_SIIS(Mertens, setup_function2), "601C");
+		}
+		break;
+
+	case kActionCallback:
+		if (getCallback() == 1)
+			CALLBACK_ACTION();
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION_II(Mertens, function21, 21)

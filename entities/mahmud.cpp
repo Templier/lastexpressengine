@@ -99,14 +99,14 @@ IMPLEMENT_FUNCTION_SIII(Mahmud, function4, 4)
 		break;
 
 	case kActionExitCompartment:
-		getEntities()->exitCompartment(kEntityMahmud, (ObjectIndex)params->param2);
+		getEntities()->exitCompartment(kEntityMahmud, (ObjectIndex)params->param2, true);
 
 		CALLBACK_ACTION();
 		break;
 
 	case kActionDefault:
 		getEntities()->drawSequenceRight(kEntityMahmud, params->seq);
-		getEntities()->enterCompartment(kEntityMahmud, (ObjectIndex)params->param2);
+		getEntities()->enterCompartment(kEntityMahmud, (ObjectIndex)params->param2, true);
 		break;
 	}
 }

@@ -74,6 +74,7 @@ enum TimeValue {
 	kTimeChapter1_1           = 1260000,
 	kTimeCityNancy            = 1303200,
 	kTimeExitNancy            = 1307700,
+	kTimeAlexei_1_1           = 1323000,
 	kTimeCityLuneville        = 1335600,
 	kTimeExitLuneville        = 1338300,
 	kTimeCityAvricourt        = 1359900,
@@ -136,12 +137,17 @@ enum TimeValue {
 	// Chapter 4
 	kTimeChapter4             = 2353500,
 	kTimeAlexei               = 2354400,
+	kTimeAbbot_4_0            = 2358000,
 	kTimeTatiana              = 2362500,
 	kTimeIvo                  = 2361600,
 	kTimeBoutarel             = 2367000,
 	kTimeRebecca_4            = 2385000,
 	kTimeCityPoszony          = 2383200,
+	kTimeAbbot_4_1            = 3289500,
 	kTimeAlexei_1             = 2403000,
+	kTimeMilos_4_0            = 2410200,
+	kTimeMilos_4_1            = 2412000,
+	kTimeMilos_4_2            = 2415600,
 	kTimeCityGalanta          = 2418300,
 	kTimeSalko                = 2422800,
 	kTimeIvo_1                = 2425500,
@@ -149,6 +155,7 @@ enum TimeValue {
 	kTimeYasmin_6             = 2479500,
 	kTimeTables3              = 2488500,
 	kTimeRebecca_4_1          = 2511000,
+	kTimeAnna_4_0             = 2511900,
 	kTimeCityBudapest         = 2551500,
 
 	// Chapter 5
@@ -1075,20 +1082,20 @@ enum EventIndex {
 // Action ID (used by entity logic)
 //////////////////////////////////////////////////////////////////////////
 enum ActionIndex {
-	kActionNone         = 0,
-	kAction1            = 1,
-	kAction2            = 2,
+	kActionNone            = 0,
+	kAction1               = 1,
+	kAction2               = 2,
 	kActionExitCompartment = 3,
-	kAction4            = 4,
-	kActionExcuseMeCath = 5,
-	kActionExcuseMe     = 6,
-	kAction8            = 8,
-	kAction9            = 9,
-	kAction10           = 10,
-	kActionDefault      = 12,
-	kAction16           = 16,
-	kAction17           = 17,
-	kActionCallback     = 18,
+	kAction4               = 4,
+	kActionExcuseMeCath    = 5,
+	kActionExcuseMe        = 6,
+	kAction8               = 8,
+	kAction9               = 9,
+	kAction10              = 10,
+	kActionDefault         = 12,
+	kAction16              = 16,
+	kAction17              = 17,
+	kActionCallback        = 18,
 
 	/////////////////////////////
 	// Abbot
@@ -1101,6 +1108,11 @@ enum ActionIndex {
 	kAction192054567 = 192054567,
 	kAction203073664 = 203073664,
 	kAction222609266 = 222609266,
+
+	/////////////////////////////
+	// Alexei
+	/////////////////////////////
+	kAction135664192 = 135664192,
 
 	/////////////////////////////
 	// Anna

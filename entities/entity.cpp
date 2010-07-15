@@ -280,11 +280,21 @@ void Entity::savepointCheckFields11(const SavePoint &savepoint) {
 	}
 }
 
-void Entity::checkEntity(const SavePoint &savepoint) {
+void Entity::checkEntity(const SavePoint &savepoint, bool handleExcuseMe) {
 	EntityData::EntityParametersIIII *params = (EntityData::EntityParametersIIII*)_data->getCurrentParameters();
 
 	switch (savepoint.action) {
 	default:
+		break;
+
+	case kActionExcuseMeCath:
+		if (handleExcuseMe)
+			getSound()->excuseMeCath();
+		break;
+
+	case kActionExcuseMe:
+		if (handleExcuseMe)
+			getSound()->excuseMe(_entityIndex);
 		break;
 
 	case kActionNone:
@@ -332,13 +342,13 @@ void Entity::enterExitCompartment(const SavePoint &savepoint) {
 		break;
 
 	case kActionExitCompartment:
-		getEntities()->exitCompartment(_entityIndex, (ObjectIndex)params->param2);
+		getEntities()->exitCompartment(_entityIndex, (ObjectIndex)params->param2, false);
 		CALLBACK_ACTION()
 		break;
 
 	case kActionDefault:
 		getEntities()->drawSequenceRight(_entityIndex, params->seq1);
-		getEntities()->enterCompartment(_entityIndex, (ObjectIndex)params->param2);
+		getEntities()->enterCompartment(_entityIndex, (ObjectIndex)params->param2, false);
 		break;
 	}
 }

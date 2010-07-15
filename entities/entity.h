@@ -373,7 +373,7 @@ protected:
 	void function1Clothes(const SavePoint &savepoint);
 	void savepointDirection(const SavePoint &savepoint);
 	void savepointCheckFields11(const SavePoint &savepoint);
-	void checkEntity(const SavePoint &savepoint);
+	void checkEntity(const SavePoint &savepoint, bool handleExcuseMe = false);
 	void savepointCall(const SavePoint &savepoint);
 	void enterExitCompartment(const SavePoint &savepoint);
 	void updatePosition(const SavePoint &savepoint);

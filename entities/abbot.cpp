@@ -114,7 +114,7 @@ IMPLEMENT_FUNCTION_SI(Abbot, function4, 4)
 		break;
 
 	case kActionExitCompartment:
-		getEntities()->exitCompartment(kEntityAbbot, (ObjectIndex)params->param2);
+		getEntities()->exitCompartment(kEntityAbbot, (ObjectIndex)params->param2, false);
 		getData()->position = kPosition_6470;
 		getData()->field_493 = kField493_1;
 
@@ -123,7 +123,7 @@ IMPLEMENT_FUNCTION_SI(Abbot, function4, 4)
 
 	case kActionDefault:
 		getEntities()->drawSequenceRight(kEntityAbbot, params->seq1);
-		getEntities()->enterCompartment(kEntityAbbot, (ObjectIndex)params->param2);
+		getEntities()->enterCompartment(kEntityAbbot, (ObjectIndex)params->param2, false);
 
 		getData()->field_493 = kField493_1;
 		if (getEntities()->checkFields1(kEntityNone, kCarRedSleeping, kPosition_6470)
@@ -916,14 +916,44 @@ IMPLEMENT_FUNCTION(Abbot, chapter4, 39)
 	}
 }
 
-// car
-// restaurant
+//////////////////////////////////////////////////////////////////////////
+// Parameters
+//  - CarIndex
+//  - ??
 IMPLEMENT_FUNCTION_II(Abbot, function40, 40)
 	error("Abbot: callback function 40 not implemented!");
 }
 
 IMPLEMENT_FUNCTION(Abbot, chapter4_handler, 41)
-	error("Abbot: callback function 41 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionNone:
+		if (getState()->time > kTimeAbbot_4_0 && !params->param1) {
+			params->param1 = 1;
+			getSavePoints()->push(kEntityAbbot, kEntityServers0, kAction218128129);
+		}
+
+		if (getState()->time > kTimeAbbot_4_1 && getEntities()->checkFields11())
+			setup_function42();
+
+		break;
+
+	case kActionDefault:
+		getSavePoints()->push(kEntityAbbot, kEntityTables4, kAction136455232);
+		getEntities()->drawSequenceLeft(kEntityAbbot, "029E");
+		getData()->field_493 = kField493_1;
+		break;
+
+	case kAction122288808:
+		getEntities()->drawSequenceLeft(kEntityAbbot, "029E");
+		break;
+
+	case kAction122358304:
+		getEntities()->drawSequenceLeft(kEntityAbbot, "BLANK");
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Abbot, function42, 42)

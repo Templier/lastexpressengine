@@ -78,8 +78,41 @@ Servers0::Servers0(LastExpressEngine *engine) : Entity(engine, kEntityServers0) 
 	ADD_NULL_FUNCTION();
 }
 
+//////////////////////////////////////////////////////////////////////////
+// Parameters:
+//  - sequence name
+//  - EntityIndex
+//  - ActionIndex
+//  - sequence name
 IMPLEMENT_FUNCTION_SIIS(Servers0, function1, 1)
-	error("Servers0: callback function 1 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionExitCompartment:
+		if (!CURRENT_PARAMS(1, 1))
+			getSavePoints()->call(kEntityServers0, (EntityIndex)params->param2, (ActionIndex)params->param3, params->seq2);
+
+		CALLBACK_ACTION();
+ 		break;
+
+	case kActionExcuseMeCath:
+		if (!CURRENT_PARAMS(1, 2)) {
+			getSound()->excuseMe(kEntityServers0);
+			CURRENT_PARAMS(1, 1) = 1;
+		}
+		break;
+
+	case kAction10:
+		if (!CURRENT_PARAMS(1, 1)) {
+			getSavePoints()->call(kEntityServers0, (EntityIndex)params->param2, (ActionIndex)params->param3, params->seq2);
+			CURRENT_PARAMS(1, 1) = 1;
+		}
+
+	case kActionDefault:
+		getEntities()->drawSequenceRight(kEntityServers0, params->seq1);
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION_NOSETUP(Servers0, updateFromTime, 2)

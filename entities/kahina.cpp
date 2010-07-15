@@ -152,7 +152,26 @@ IMPLEMENT_FUNCTION(Kahina, function13, 13)
 }
 
 IMPLEMENT_FUNCTION(Kahina, function14, 14)
-	error("Kahina: callback function 14 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionExitCompartment:
+		getEntities()->exitCompartment(kEntityKahina, kObjectCompartmentF, true);
+		CALLBACK_ACTION()
+		break;
+
+	case kAction4:
+		getEntities()->exitCompartment(kEntityKahina, kObjectCompartmentF, true);
+		CALLBACK_ACTION()
+		break;
+
+	case kActionDefault:
+		getEntities()->drawSequenceRight(kEntityKahina, "616Cf");
+		getEntities()->enterCompartment(kEntityKahina, kObjectCompartmentF, true);
+		getSavePoints()->push(kEntityKahina, kEntityMax, kAction158007856);
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Kahina, function15, 15)

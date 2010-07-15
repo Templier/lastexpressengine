@@ -79,8 +79,8 @@ public:
 
 	void updatePosition(EntityIndex entity, CarIndex car, Position position, bool processScene = false);
 
-	void enterCompartment(EntityIndex entity, ObjectIndex compartment, bool useFirstCompartments = true);
-	void exitCompartment(EntityIndex entity, ObjectIndex compartment, bool useFirstCompartments = true);
+	void enterCompartment(EntityIndex entity, ObjectIndex compartment, bool useCompartment1 = true);
+	void exitCompartment(EntityIndex entity, ObjectIndex compartment, bool useCompartment1 = true);
 
 	// Sequences
 	void drawSequenceLeft(EntityIndex index, const char* sequence);

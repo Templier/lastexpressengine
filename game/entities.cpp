@@ -1317,7 +1317,7 @@ void Entities::getSequenceName(EntityIndex index, EntityDirection direction, Com
 //////////////////////////////////////////////////////////////////////////
 /// Compartments
 //////////////////////////////////////////////////////////////////////////
-void Entities::enterCompartment(EntityIndex entity, ObjectIndex compartment, bool useFirstCompartments) {
+void Entities::enterCompartment(EntityIndex entity, ObjectIndex compartment, bool useCompartment1) {
 	if (entity > kEntityChapters)
 		return;
 
@@ -1396,13 +1396,13 @@ void Entities::enterCompartment(EntityIndex entity, ObjectIndex compartment, boo
 	if (index >= 16)
 		error("Entities::exitCompartment: invalid compartment index!");
 
-	if (useFirstCompartments)
-		_compartments[index] |= STORE_VALUE(entity);
-	else
+	if (useCompartment1)
 		_compartments1[index] |= STORE_VALUE(entity);
+	else
+		_compartments[index] |= STORE_VALUE(entity);
 }
 
-void Entities::exitCompartment(EntityIndex entity, ObjectIndex compartment, bool useFirstCompartments) {
+void Entities::exitCompartment(EntityIndex entity, ObjectIndex compartment, bool useCompartment1) {
 	if (entity > kEntityChapters)
 		return;
 
@@ -1482,10 +1482,10 @@ void Entities::exitCompartment(EntityIndex entity, ObjectIndex compartment, bool
 	if (index >= 16)
 		error("Entities::exitCompartment: invalid compartment index!");
 
-	if (useFirstCompartments)
-		_compartments[index] &= ~STORE_VALUE(entity);
-	else
+	if (useCompartment1)
 		_compartments1[index] &= ~STORE_VALUE(entity);
+	else
+		_compartments[index] &= ~STORE_VALUE(entity);
 }
 
 void Entities::updatePosition(EntityIndex entity, CarIndex car, Position position, bool processScene) {

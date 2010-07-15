@@ -328,7 +328,36 @@ IMPLEMENT_FUNCTION(Kronos, function22, 22)
 }
 
 IMPLEMENT_FUNCTION(Kronos, function23, 23)
-	error("Kronos: callback function 23 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionNone:
+		if (getEntities()->checkFields22(kEntityNone)) {
+			setCallback(1);
+			call(new ENTITY_SETUP(Kronos, setup_savegame), kSavegameType2, kEventKahinaWrongDoor);
+		}
+		break;
+
+	case kActionDefault:
+		getObjects()->update(kObjectCompartmentKronos, kEntityNone, kLocation3, kCursorHandKnock, kCursorHand);
+		break;
+
+	case kActionCallback:
+		if (getCallback() == 1) {
+			getAction()->playAnimation(kEventKahinaWrongDoor);
+
+			if (getInventory()->hasItem(kItemBriefcase))
+				getInventory()->removeItem(kItemBriefcase);
+
+			getSound()->playSound(kEntityNone, "BUMP");
+
+			getScenes()->loadSceneFromPosition(kCarKronos, 81);
+
+			getSound()->playSound(kEntityNone, "LIB015");
+		}
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Kronos, chapter4, 24)

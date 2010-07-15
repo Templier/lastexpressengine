@@ -44,7 +44,7 @@ public:
 	DECLARE_FUNCTION_SI(enterExitCompartment)
 	DECLARE_FUNCTION_I(updateFromTime)
 	DECLARE_FUNCTION_I(updateFromTicks)
-	DECLARE_FUNCTION_II(function6)
+	DECLARE_FUNCTION_II(checkEntity)
 	DECLARE_FUNCTION(function7)
 	DECLARE_FUNCTION_NOSETUP(playSound)
 	DECLARE_FUNCTION(function9)

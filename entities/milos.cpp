@@ -313,7 +313,27 @@ IMPLEMENT_FUNCTION(Milos, chapter1, 12)
 }
 
 IMPLEMENT_FUNCTION(Milos, function13, 13)
-	error("Milos: callback function 13 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionExitCompartment:
+		getSavePoints()->push(kEntityMilos, kEntityTables2, kAction103798704, "009E");
+		getEntities()->prepareSequences(kEntityVesna);
+		getEntities()->prepareSequences(kEntityIvo);
+		getEntities()->prepareSequences(kEntitySalko);
+
+		CALLBACK_ACTION();
+		break;
+
+	case kActionDefault:
+		getEntities()->drawSequenceRight(kEntitySalko, "009D5");
+		getEntities()->drawSequenceRight(kEntityTables2, "009D4");
+		getEntities()->drawSequenceRight(kEntityIvo, "009D3");
+		getEntities()->drawSequenceRight(kEntityVesna, "009D2");
+		getEntities()->drawSequenceRight(kEntityMilos, "009D1");
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Milos, function14, 14)
@@ -502,7 +522,37 @@ IMPLEMENT_FUNCTION(Milos, function29, 29)
 }
 
 IMPLEMENT_FUNCTION(Milos, function30, 30)
-	error("Milos: callback function 30 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionNone:
+		setCallback(1);
+		call(new ENTITY_SETUP(Milos, setup_function11), kTimeMilos_4_0);
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		case 1:
+			getSavePoints()->push(kEntityMilos, kEntityIvo, kAction55996766);
+
+			setCallback(2);
+			call(new ENTITY_SETUP(Milos, setup_function11), kTimeMilos_4_1);
+			break;
+
+		case 2:
+			getSavePoints()->push(kEntityMilos, kEntitySalko, kAction55996766);
+
+			setCallback(3);
+			call(new ENTITY_SETUP(Milos, setup_function11), kTimeMilos_4_2);
+			break;
+
+		case 3:
+			setup_function31();
+			break;
+		}
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Milos, function31, 31)

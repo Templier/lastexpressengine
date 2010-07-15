@@ -42,7 +42,7 @@ Hadija::Hadija(LastExpressEngine *engine) : Entity(engine, kEntityHadija) {
 	ADD_CALLBACK_FUNCTION(Hadija, enterExitCompartment);
 	ADD_CALLBACK_FUNCTION(Hadija, playSound);
 	ADD_CALLBACK_FUNCTION(Hadija, updateFromTime);
-	ADD_CALLBACK_FUNCTION(Hadija, function5);
+	ADD_CALLBACK_FUNCTION(Hadija, checkEntity);
 	ADD_CALLBACK_FUNCTION(Hadija, function6);
 	ADD_CALLBACK_FUNCTION(Hadija, function7);
 	ADD_CALLBACK_FUNCTION(Hadija, function8);
@@ -80,8 +80,8 @@ IMPLEMENT_FUNCTION_NOSETUP(Hadija, updateFromTime, 4)
 	Entity::updateFromTime(savepoint);
 }
 
-IMPLEMENT_FUNCTION_II(Hadija, function5, 5)
-	error("Hadija: callback function 5 not implemented!");
+IMPLEMENT_FUNCTION_II(Hadija, checkEntity, 5)
+	Entity::checkEntity(savepoint, true);
 }
 
 IMPLEMENT_FUNCTION(Hadija, function6, 6)
@@ -405,7 +405,7 @@ IMPLEMENT_FUNCTION(Hadija, function23, 23)
 
 	case kActionDefault:
 		setCallback(1);
-		call(new ENTITY_SETUP(Hadija, setup_function5), kCarGreenSleeping, kPosition_4070);
+		call(new ENTITY_SETUP(Hadija, setup_checkEntity), kCarGreenSleeping, kPosition_4070);
 		break;
 
 	case kActionCallback:

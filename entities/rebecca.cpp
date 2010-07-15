@@ -47,10 +47,10 @@ Rebecca::Rebecca(LastExpressEngine *engine) : Entity(engine, kEntityRebecca) {
 	ADD_CALLBACK_FUNCTION(Rebecca, draw);
 	ADD_CALLBACK_FUNCTION(Rebecca, enterExitCompartment);
 	ADD_CALLBACK_FUNCTION(Rebecca, function8);
-	ADD_CALLBACK_FUNCTION(Rebecca, function9);
+	ADD_CALLBACK_FUNCTION(Rebecca, enterExitCompartment2);
 	ADD_CALLBACK_FUNCTION(Rebecca, function10);
 	ADD_CALLBACK_FUNCTION(Rebecca, function11);
-	ADD_CALLBACK_FUNCTION(Rebecca, function12);
+	ADD_CALLBACK_FUNCTION(Rebecca, checkEntity);
 	ADD_CALLBACK_FUNCTION(Rebecca, updatePosition);
 	ADD_CALLBACK_FUNCTION(Rebecca, draw2);
 	ADD_CALLBACK_FUNCTION(Rebecca, function15);
@@ -122,22 +122,8 @@ IMPLEMENT_FUNCTION_SI(Rebecca, function8, 8)
 	error("Rebecca: callback function 8 not implemented!");
 }
 
-IMPLEMENT_FUNCTION_SI(Rebecca, function9, 9)
-	switch (savepoint.action) {
-	default:
-		break;
-
-	case kActionExitCompartment:
-	case kAction4:
-		getEntities()->exitCompartment(kEntityRebecca, (ObjectIndex)params->param2);
-		CALLBACK_ACTION();
-		break;
-
-	case kActionDefault:
-		getEntities()->drawSequenceRight(kEntityRebecca, params->seq1);
-		getEntities()->enterCompartment(kEntityRebecca, (ObjectIndex)params->param2);
-		break;
-	}
+IMPLEMENT_FUNCTION_SI(Rebecca, enterExitCompartment2, 9)
+	Entity::enterExitCompartment(savepoint);
 }
 
 IMPLEMENT_FUNCTION(Rebecca, function10, 10)
@@ -148,8 +134,8 @@ IMPLEMENT_FUNCTION(Rebecca, function11, 11)
 	Entity::savepointCheckFields11(savepoint);
 }
 
-IMPLEMENT_FUNCTION_II(Rebecca, function12, 12)
-	error("Rebecca: callback function 12 not implemented!");
+IMPLEMENT_FUNCTION_II(Rebecca, checkEntity, 12)
+	Entity::checkEntity(savepoint, true);
 }
 
 IMPLEMENT_FUNCTION_SII(Rebecca, updatePosition, 13)
@@ -560,7 +546,37 @@ IMPLEMENT_FUNCTION(Rebecca, function37, 37)
 }
 
 IMPLEMENT_FUNCTION(Rebecca, function38, 38)
-	error("Rebecca: callback function 38 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionDefault:
+		getData()->field_493 = kField493_0;
+
+		setCallback(1);
+		call(new ENTITY_SETUP_SIIS(Rebecca, setup_enterExitCompartment2), "624Be", kObjectCompartmentE);
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			getObjects()->update(kObjectCompartmentE, kEntityNone, kLocationNone, kCursorHandKnock, kCursorHand);
+            getSavePoints()->push(kEntityRebecca, kEntitySophie, kAction259921280);
+
+			setCallback(2);
+			call(new ENTITY_SETUP(Rebecca, setup_checkEntity), kCarKronos, kPosition_9270);
+			break;
+
+		case 2:
+			getSavePoints()->push(kEntityRebecca, kEntitySophie, kAction123668192);
+			setup_function39();
+			break;
+		}
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Rebecca, function39, 39)

@@ -47,10 +47,10 @@ public:
 	DECLARE_FUNCTION_S(draw)
 	DECLARE_FUNCTION_SI(enterExitCompartment)
 	DECLARE_FUNCTION_SI(function8)
-	DECLARE_FUNCTION_SI(function9)
+	DECLARE_FUNCTION_SI(enterExitCompartment2)
 	DECLARE_FUNCTION(function10)
 	DECLARE_FUNCTION(function11)
-	DECLARE_FUNCTION_II(function12)
+	DECLARE_FUNCTION_II(checkEntity)
 	DECLARE_FUNCTION_SII(updatePosition)
 	DECLARE_FUNCTION_SSI(draw2)
 	DECLARE_FUNCTION(function15)
@@ -91,7 +91,7 @@ public:
 
 private:
 	DECLARE_CALL_FUNCTION(iiii, Rebecca, int, int, int, int)
-	DECLARE_CALL_FUNCTION(siis, Rebecca, const char*, int, int, const char*)	
+	DECLARE_CALL_FUNCTION(siis, Rebecca, const char*, int, int, const char*)
 };
 
 } // End of namespace LastExpress

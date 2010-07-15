@@ -42,7 +42,7 @@ Alouan::Alouan(LastExpressEngine *engine) : Entity(engine, kEntityAlouan) {
 	ADD_CALLBACK_FUNCTION(Alouan, enterExitCompartment);
 	ADD_CALLBACK_FUNCTION(Alouan, playSound);
 	ADD_CALLBACK_FUNCTION(Alouan, updateFromTime);
-	ADD_CALLBACK_FUNCTION(Alouan, function5);
+	ADD_CALLBACK_FUNCTION(Alouan, checkEntity);
 	ADD_CALLBACK_FUNCTION(Alouan, function6);
 	ADD_CALLBACK_FUNCTION(Alouan, function7);
 	ADD_CALLBACK_FUNCTION(Alouan, function8);
@@ -80,8 +80,8 @@ IMPLEMENT_FUNCTION_I(Alouan, updateFromTime, 4)
 	Entity::updateFromTime(savepoint);
 }
 
-IMPLEMENT_FUNCTION_II(Alouan, function5, 5)
-	error("Alouan: callback function 5 not implemented!");
+IMPLEMENT_FUNCTION_II(Alouan, checkEntity, 5)
+	Entity::checkEntity(savepoint, true);
 }
 
 IMPLEMENT_FUNCTION(Alouan, function6, 6)
@@ -363,7 +363,7 @@ IMPLEMENT_FUNCTION(Alouan, function23, 23)
 
 	case kActionDefault:
 		setCallback(1);
-		call(new ENTITY_SETUP(Alouan, setup_function5), kCarGreenSleeping, kPosition_4070);
+		call(new ENTITY_SETUP(Alouan, setup_checkEntity), kCarGreenSleeping, kPosition_4070);
 		break;
 
 	case kActionCallback:

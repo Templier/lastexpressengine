@@ -238,7 +238,43 @@ IMPLEMENT_FUNCTION_I(Anna, function18, 18)
 }
 
 IMPLEMENT_FUNCTION(Anna, chapter1_handler, 19)
-	error("Anna: callback function 19 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionDefault:
+		setCallback(1);
+		call(new ENTITY_SETUP_SIIS(Anna, setup_enterExitCompartment), "618Ca", kObjectCompartment1);
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			getData()->position = kPosition_8514;
+			getData()->field_493 = kField493_0;
+
+			setCallback(2);
+			call(new ENTITY_SETUP(Anna, setup_function10), kCarRedSleeping, kPosition_4070);
+			break;
+
+		case 2:
+			setCallback(3);
+			call(new ENTITY_SETUP_SIIS(Anna, setup_enterExitCompartment), "618Af", kObjectCompartmentF);
+			break;
+
+		case 3:
+			getEntities()->prepareSequences(kEntityAnna);
+			getData()->position = kPosition_4070;
+			getData()->field_493 = kField493_1;
+
+			setup_function20();
+			break;
+		}
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Anna, function20, 20)
@@ -341,7 +377,41 @@ IMPLEMENT_FUNCTION(Anna, function27, 27)
 }
 
 IMPLEMENT_FUNCTION(Anna, function28, 28)
-	error("Anna: callback function 28 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionDefault:
+		setCallback(1);
+		call(new ENTITY_SETUP(Anna, setup_function17), kCarRestaurant, kPosition_850);
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			setCallback(2);
+			call(new ENTITY_SETUP(Anna, setup_function8));
+			break;
+
+		case 2:
+			getData()->field_493 = kField493_0;
+			getData()->position = kPosition_1540;
+			getScenes()->loadSceneFromItemPosition(kItem3);
+
+			setCallback(3);
+			call(new ENTITY_SETUP_SIIS(Anna, setup_updatePosition), "104A", kCarRestaurant, 56);
+			break;
+
+		case 3:
+			getData()->field_493 = kField493_1;
+			setup_function29();
+			break;
+		}
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Anna, function29, 29)
@@ -786,7 +856,35 @@ IMPLEMENT_FUNCTION(Anna, chapter4_handler, 67)
 }
 
 IMPLEMENT_FUNCTION(Anna, function68, 68)
-	error("Anna: callback function 68 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionNone:
+		if (!params->param1) {
+			setCallback(1);
+			call(new ENTITY_SETUP_ISII(Anna, setup_function15), kTimeAnna_4_0, "NONE");
+		}
+		break;
+
+	case kActionDefault:
+		getObjects()->update(kObjectCompartmentF, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObject53, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
+
+		getData()->car = kCarRedSleeping;
+		getData()->position = kPosition_4070;
+		getData()->field_493 = kField493_1;
+		break;
+
+	case kAction191001984:
+		getObjects()->update(kObjectCompartmentF, kEntityNone, kLocationNone, kCursorHandKnock, kCursorHand);
+		setup_function69();
+		break;
+
+	case kAction201431954:
+		params->param1 = 1;
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Anna, function69, 69)

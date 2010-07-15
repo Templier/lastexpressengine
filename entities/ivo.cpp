@@ -29,6 +29,7 @@
 #include "lastexpress/game/logic.h"
 #include "lastexpress/game/object.h"
 #include "lastexpress/game/savepoint.h"
+#include "lastexpress/game/sound.h"
 #include "lastexpress/game/state.h"
 
 #include "lastexpress/lastexpress.h"
@@ -42,7 +43,7 @@ Ivo::Ivo(LastExpressEngine *engine) : Entity(engine, kEntityIvo) {
 	ADD_CALLBACK_FUNCTION(Ivo, enterExitCompartment);
 	ADD_CALLBACK_FUNCTION(Ivo, updateFromTime);
 	ADD_CALLBACK_FUNCTION(Ivo, updateFromTicks);
-	ADD_CALLBACK_FUNCTION(Ivo, function6);
+	ADD_CALLBACK_FUNCTION(Ivo, checkEntity);
 	ADD_CALLBACK_FUNCTION(Ivo, function7);
 	ADD_CALLBACK_FUNCTION(Ivo, playSound);
 	ADD_CALLBACK_FUNCTION(Ivo, function9);
@@ -93,8 +94,13 @@ IMPLEMENT_FUNCTION_I(Ivo, updateFromTicks, 5)
 	Entity::updateFromTicks(savepoint);
 }
 
-IMPLEMENT_FUNCTION_II(Ivo, function6, 6)
-	error("Ivo: callback function 6 not implemented!");
+IMPLEMENT_FUNCTION_II(Ivo, checkEntity, 6)
+	if (savepoint.action == kActionExcuseMeCath || savepoint.action == kActionExcuseMe) {
+		getSound()->playSound(kEntityNone, "CAT1127A");
+		return;
+	}
+
+	Entity::checkEntity(savepoint);
 }
 
 IMPLEMENT_FUNCTION(Ivo, function7, 7)
@@ -371,7 +377,7 @@ IMPLEMENT_FUNCTION(Ivo, function28, 28)
 		if (getState()->time > kTimeIvo_1 && !params->param1) {
 			params->param1 = 1;
 			setCallback(1);
-			call(new ENTITY_SETUP(Ivo, setup_function6), kCarRedSleeping, kPosition_2740);
+			call(new ENTITY_SETUP(Ivo, setup_checkEntity), kCarRedSleeping, kPosition_2740);
 		}
 		break;
 

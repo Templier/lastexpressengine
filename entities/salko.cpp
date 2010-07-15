@@ -41,7 +41,7 @@ Salko::Salko(LastExpressEngine *engine) : Entity(engine, kEntitySalko) {
 	ADD_CALLBACK_FUNCTION(Salko, function1);
 	ADD_CALLBACK_FUNCTION(Salko, enterExitCompartment);
 	ADD_CALLBACK_FUNCTION(Salko, draw);
-	ADD_CALLBACK_FUNCTION(Salko, function4);
+	ADD_CALLBACK_FUNCTION(Salko, checkEntity);
 	ADD_CALLBACK_FUNCTION(Salko, updateFromTime);
 	ADD_CALLBACK_FUNCTION(Salko, savegame);
 	ADD_CALLBACK_FUNCTION(Salko, function7);
@@ -77,7 +77,7 @@ IMPLEMENT_FUNCTION_NOSETUP(Salko, draw, 3)
 	Entity::draw(savepoint);
 }
 
-IMPLEMENT_FUNCTION_II(Salko, function4, 4)
+IMPLEMENT_FUNCTION_II(Salko, checkEntity, 4)
 	Entity::checkEntity(savepoint);
 }
 
@@ -229,7 +229,42 @@ IMPLEMENT_FUNCTION(Salko, function16, 16)
 }
 
 IMPLEMENT_FUNCTION(Salko, function17, 17)
-	error("Salko: callback function 17 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionDefault:
+		getData()->position = kPosition_6470;
+		getData()->field_493 = kField493_0;
+		getData()->car = kCarGreenSleeping;
+		getData()->clothes = kClothesDefault;
+		getData()->inventoryItem = kItemNone;
+
+		setCallback(1);
+		call(new ENTITY_SETUP(Salko, setup_checkEntity), kCarGreenSleeping, kPosition_2740);
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			setCallback(2);
+			call(new ENTITY_SETUP_SIIS(Salko, setup_enterExitCompartment), "612Ch", kObjectCompartmentH);
+			break;
+
+		case 2:
+			getEntities()->prepareSequences(kEntitySalko);
+			getData()->position = kPosition_2740;
+			getData()->field_493 = kField493_1;
+			getSavePoints()->push(kEntitySalko, kEntityMilos, kAction157691176);
+
+			setup_function15();
+			break;
+		}
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Salko, chapter4, 18)
@@ -290,7 +325,7 @@ IMPLEMENT_FUNCTION(Salko, function20, 20)
 				getData()->position = kPosition_2088;
 
 			setCallback(2);
-			call(new ENTITY_SETUP(Salko, setup_function4), kCarRestaurant, kPosition_850);
+			call(new ENTITY_SETUP(Salko, setup_checkEntity), kCarRestaurant, kPosition_850);
 			break;
 
 		case 2:
@@ -316,7 +351,7 @@ IMPLEMENT_FUNCTION(Salko, function21, 21)
 		if (getState()->time > kTimeSalko && !params->param1) {
 			params->param1 = 1;
 			setCallback(1);
-			call(new ENTITY_SETUP(Salko, setup_function4), kCarRedSleeping, kPosition_2740);
+			call(new ENTITY_SETUP(Salko, setup_checkEntity), kCarRedSleeping, kPosition_2740);
 		}
 		break;
 

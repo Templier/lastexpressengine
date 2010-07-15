@@ -129,7 +129,7 @@ void Logic::eventMouse(const Common::Event &ev) {
 	getFlags()->mouseLeftClick = false;
 	getFlags()->mouseRightClick = false;
 
-	// TODO process event flags	
+	// TODO process event flags
 	//warning("Logic::eventMouse: event flag processing not implemented!");
 	if (getFlags()->flag_0) {
 		//warning("Logic::eventMouse: event flag processing not implemented!");

@@ -138,7 +138,7 @@ IMPLEMENT_FUNCTION_SI(August, function6, 6)
 
 IMPLEMENT_FUNCTION_SI(August, enterExitCompartment2, 7)
 	if (savepoint.action == kAction4) {
-		getEntities()->exitCompartment(kEntityAugust, (ObjectIndex)params->param2);
+		getEntities()->exitCompartment(kEntityAugust, (ObjectIndex)params->param2, true);
 		CALLBACK_ACTION();
 		return;
 	}

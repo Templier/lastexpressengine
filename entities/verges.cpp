@@ -176,6 +176,10 @@ IMPLEMENT_FUNCTION_I(Verges, updateFromTime, 14)
 	Entity::updateFromTime(savepoint);
 }
 
+//////////////////////////////////////////////////////////////////////////
+// Parameters
+//  - EntityIndex
+//  - Sound name
 IMPLEMENT_FUNCTION_IS(Verges, function15, 15)
 	error("Verges: callback function 15 not implemented!");
 }
@@ -184,8 +188,44 @@ IMPLEMENT_FUNCTION_ISS(Verges, function16, 16)
 	error("Verges: callback function 16 not implemented!");
 }
 
+//////////////////////////////////////////////////////////////////////////
 IMPLEMENT_FUNCTION(Verges, function17, 17)
-	error("Verges: callback function 17 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionDefault:
+		setCallback(1);
+		call(new ENTITY_SETUP(Verges, setup_function12));
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			setCallback(2);
+			call(new ENTITY_SETUP(Verges, setup_function8), kCarGreenSleeping, kPosition_2000);
+			break;
+
+		case 2:
+			setCallback(3);
+			call(new ENTITY_SETUP_ISII(Verges, setup_function15), kEntityMertens, "TRA1291");
+			break;
+
+		case 3:
+			setCallback(4);
+			call(new ENTITY_SETUP(Verges, setup_function11));
+			break;
+
+		case 4:
+			ENTITY_PARAM(0, 3) = 0;
+			CALLBACK_ACTION();
+			break;
+		}
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Verges, chapter1, 18)

@@ -344,7 +344,30 @@ IMPLEMENT_FUNCTION(Boutarel, chapter2, 23)
 }
 
 IMPLEMENT_FUNCTION(Boutarel, chapter2_handler, 24)
-	error("Boutarel: callback function 24 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionNone:
+		TIME_CHECK_CALLBACK(Boutarel, kTimeYasmin, params->param2, 1, setup_function14);
+		break;
+
+	case kActionDefault:
+		getEntities()->drawSequenceLeft(kEntityBoutarel, "008D");
+		break;
+
+	case kAction17:
+		if (getEntities()->checkFields13(kEntityNone) && !params->param1) {
+			getSound()->playSound(kEntityBoutarel, "MRB2001");
+			params->param1 = 1;
+		}
+		break;
+
+	case kActionCallback:
+		if (getCallback() == 1)
+			setup_function25();
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Boutarel, function25, 25)

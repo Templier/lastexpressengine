@@ -42,7 +42,7 @@ Yasmin::Yasmin(LastExpressEngine *engine) : Entity(engine, kEntityYasmin) {
 	ADD_CALLBACK_FUNCTION(Yasmin, enterExitCompartment);
 	ADD_CALLBACK_FUNCTION(Yasmin, playSound);
 	ADD_CALLBACK_FUNCTION(Yasmin, updateFromTime);
-	ADD_CALLBACK_FUNCTION(Yasmin, function5);
+	ADD_CALLBACK_FUNCTION(Yasmin, checkEntity);
 	ADD_CALLBACK_FUNCTION(Yasmin, function6);
 	ADD_CALLBACK_FUNCTION(Yasmin, function7);
 	ADD_CALLBACK_FUNCTION(Yasmin, chapter1);
@@ -92,22 +92,8 @@ IMPLEMENT_FUNCTION_NOSETUP(Yasmin, updateFromTime, 4)
 	Entity::updateFromTime(savepoint);
 }
 
-IMPLEMENT_FUNCTION_II(Yasmin, function5, 5)
-	switch (savepoint.action) {
-	default:
-		break;
-
-	case kActionExcuseMeCath:
-		getSound()->excuseMeCath();
-		break;
-
-	case kActionExcuseMe:
-		getSound()->excuseMe(kEntityYasmin);
-		break;
-	}
-
-	// Process default actions
-	Entity::checkEntity(savepoint);
+IMPLEMENT_FUNCTION_II(Yasmin, checkEntity, 5)
+	Entity::checkEntity(savepoint, true);
 }
 
 IMPLEMENT_FUNCTION(Yasmin, function6, 6)
@@ -130,7 +116,7 @@ IMPLEMENT_FUNCTION(Yasmin, function6, 6)
 			break;
 
 		case 1:
-			call(new ENTITY_SETUP(Yasmin, setup_function5), kCarGreenSleeping, kPosition_3050);
+			call(new ENTITY_SETUP(Yasmin, setup_checkEntity), kCarGreenSleeping, kPosition_3050);
 			break;
 
 		case 2:
@@ -169,7 +155,7 @@ IMPLEMENT_FUNCTION(Yasmin, function7, 7)
 			break;
 
 		case 1:
-			call(new ENTITY_SETUP(Yasmin, setup_function5), kCarGreenSleeping, kPosition_4840);
+			call(new ENTITY_SETUP(Yasmin, setup_checkEntity), kCarGreenSleeping, kPosition_4840);
 			break;
 
 		case 2:

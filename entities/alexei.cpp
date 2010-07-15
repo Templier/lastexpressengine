@@ -143,7 +143,31 @@ IMPLEMENT_FUNCTION(Alexei, function13, 13)
 }
 
 IMPLEMENT_FUNCTION(Alexei, function14, 14)
-	error("Alexei: callback function 14 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionDefault:
+		setCallback(1);
+		call(new ENTITY_SETUP_SIIS(Alexei, setup_enterExitCompartment), "602Fb", kObjectCompartment2);
+		break;
+
+	case kActionCallback:
+		if (getCallback() == 1) {
+			getData()->field_493 = kField493_0;
+			getSavePoints()->push(kEntityAlexei, kEntityMertens, kAction302614416);
+			getEntities()->drawSequenceLeft(kEntityAlexei, "602DB");
+			getEntities()->enterCompartment(kEntityAlexei, kObjectCompartment2);
+		}
+		break;
+
+	case kAction135664192:
+		getObjects()->update(kObjectCompartment2, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
+		getEntities()->exitCompartment(kEntityAlexei, kObjectCompartment2);
+
+		CALLBACK_ACTION();
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Alexei, function15, 15)
@@ -187,7 +211,45 @@ IMPLEMENT_FUNCTION(Alexei, function19, 19)
 }
 
 IMPLEMENT_FUNCTION(Alexei, function20, 20)
-	error("Alexei: callback function 20 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionDefault:
+		setCallback(1);
+		call(new ENTITY_SETUP(Alexei, setup_function14));
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			setCallback(2);
+			call(new ENTITY_SETUP(Alexei, setup_function10), kCarRestaurant, kPosition_850);
+			break;
+
+		case 2:
+			setCallback(3);
+			call(new ENTITY_SETUP(Alexei, setup_function12));
+			break;
+
+		case 3:
+			getData()->position = kPosition_1540;
+			getData()->field_493 = kField493_0;
+
+			setCallback(4);
+			call(new ENTITY_SETUP_SIIS(Alexei, setup_updatePosition), "103A", kCarRestaurant, 52);
+			break;
+
+		case 4:
+			getData()->field_493 = kField493_1;
+			setup_function26();
+			break;
+		}
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Alexei, function21, 21)
@@ -207,7 +269,39 @@ IMPLEMENT_FUNCTION(Alexei, function24, 24)
 }
 
 IMPLEMENT_FUNCTION(Alexei, function25, 25)
-	error("Alexei: callback function 25 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionDefault:
+		setCallback(1);
+		call(new ENTITY_SETUP(Alexei, setup_function13));
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			if (getEntities()->isPlayerPosition(kCarGreenSleeping, 61))
+				getScenes()->loadSceneFromPosition(kCarGreenSleeping, 49);
+
+			setCallback(2);
+			call(new ENTITY_SETUP_ISII(Alexei, setup_function16), kTimeAlouan_1, "411");
+			break;
+
+		case 2:
+			setCallback(3);
+			call(new ENTITY_SETUP_ISII(Alexei, setup_function16), kTimeAlexei_1_1, "412");
+			break;
+
+		case 3:
+			setup_function26();
+			break;
+		}
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Alexei, function26, 26)
