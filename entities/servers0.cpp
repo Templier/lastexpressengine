@@ -122,7 +122,28 @@ IMPLEMENT_FUNCTION_NOSETUP(Servers0, updatePosition, 4)
 }
 
 IMPLEMENT_FUNCTION_NOSETUP(Servers0, function5, 5)
-	error("Servers0: callback function 5 not implemented!");
+	EXPOSE_PARAMS(EntityData::EntityParametersIIII);
+
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionNone:
+		if (getData()->direction != kDirectionRight)
+			CALLBACK_ACTION();
+		break;
+
+	case kActionExitCompartment:
+		CALLBACK_ACTION();
+ 		break;
+
+	case kActionExcuseMeCath:
+		if (!params->param1) {
+			getSound()->excuseMe(kEntityServers0);
+			params->param1 = 1;
+		}
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION_S(Servers0, playSound, 6)
@@ -180,19 +201,19 @@ IMPLEMENT_FUNCTION(Servers0, chapter1, 11)
 }
 
 IMPLEMENT_FUNCTION(Servers0, function12, 12)
-	error("Servers0: callback function 12 not implemented!");
+	handleServer(savepoint, "907", kEntityAnna, kAction268773672, &ENTITY_PARAM(0, 1));
 }
 
 IMPLEMENT_FUNCTION(Servers0, function13, 13)
-	error("Servers0: callback function 13 not implemented!");
+	handleServer(savepoint, "911", kEntityAugust, kAction268773672, &ENTITY_PARAM(0, 2), "010F");
 }
 
 IMPLEMENT_FUNCTION(Servers0, function14, 14)
-	error("Servers0: callback function 14 not implemented!");
+	handleServer(savepoint, "908", kEntityAnna, kAction170016384, &ENTITY_PARAM(0, 4));
 }
 
 IMPLEMENT_FUNCTION(Servers0, function15, 15)
-	error("Servers0: callback function 15 not implemented!");
+	handleServer(savepoint, "912", kEntityAugust, kAction170016384, &ENTITY_PARAM(0, 5));
 }
 
 IMPLEMENT_FUNCTION(Servers0, function16, 16)
@@ -415,5 +436,35 @@ IMPLEMENT_FUNCTION(Servers0, function37, 37)
 }
 
 IMPLEMENT_NULL_FUNCTION(Servers0, 38)
+
+void Servers0::handleServer(const SavePoint &savepoint, const char* name, EntityIndex entity, ActionIndex action, int *parameter, const char* name2) {
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionDefault:
+		getData()->field_491 = EntityData::kField491_5800;
+		getData()->field_493 = EntityData::kField493_0;
+
+		setCallback(1);
+		call(new ENTITY_SETUP_SIIS(Servers0, setup_function3), name);
+		break;
+
+	case kActionCallback:
+		if (getCallback() == 1) {
+			// Prepare or draw sequences depending of value of string
+			if (strcmp(name2, ""))
+				getEntities()->prepareSequences(kEntityServers0);
+			else
+				getEntities()->drawSequenceLeft(kEntityServers0, name2);
+
+			getSavePoints()->push(kEntityServers0, entity, action);
+			*parameter = 0;
+
+			CALLBACK_ACTION();
+		}
+		break;
+	}
+}
 
 } // End of namespace LastExpress

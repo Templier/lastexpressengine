@@ -343,7 +343,40 @@ IMPLEMENT_FUNCTION(Hadija, function22, 22)
 }
 
 IMPLEMENT_FUNCTION(Hadija, function23, 23)
-	error("Hadija: callback function 23 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionDefault:
+		setCallback(1);
+		call(new ENTITY_SETUP(Hadija, setup_function5), kCarGreenSleeping, EntityData::kField491_4070);
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			setCallback(2);
+			call(new ENTITY_SETUP_SIIS(Hadija, setup_enterExitCompartment), "619AF", kObjectCompartment6);
+			break;
+
+		case 2:
+			getEntities()->prepareSequences(kEntityHadija);
+
+			getData()->field_491 = EntityData::kField491_4840;
+			getData()->field_493 = EntityData::kField493_1;
+			
+			getObjects()->update(kObjectCompartment5, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
+			break;
+		}
+		break;
+
+	case kAction135800432:
+		setup_nullfunction();
+		break;
+	}
 }
 
 IMPLEMENT_NULL_FUNCTION(Hadija, 24)

@@ -80,6 +80,9 @@ public:
 
 private:
 	DECLARE_CALL_FUNCTION(iiii, Servers0, int, int, int, int)
+	DECLARE_CALL_FUNCTION(siis, Servers0, const char *, int, int, const char*)
+
+	void handleServer(const SavePoint &savepoint, const char* name, EntityIndex entity, ActionIndex action, int *parameter, const char* name2 = "");
 };
 
 } // End of namespace LastExpress

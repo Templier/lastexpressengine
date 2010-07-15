@@ -476,7 +476,7 @@ label_process:
 		break;
 
 	case kAction203339360:
-		if (!params->param7) {
+		if (params->param7) {
 			setCallback(5);
 			call(new ENTITY_SETUP(Train, setup_savegame), kSavegameType2, kEventLocomotiveConductorsDiscovered);
 		} else {
@@ -510,7 +510,7 @@ label_process:
 		case kObjectCompartment2:
 		case kObjectCompartmentA:
 		case kObjectCompartmentB:
-			parameters1->param1 = (savepoint.param.intValue == kObjectCompartment1 || savepoint.param.intValue == kObjectCompartment2) ? 3 : 4;
+			parameters1->param1 = (savepoint.param.intValue == kObjectCompartment1 || savepoint.param.intValue == kObjectCompartment2) ? kCarGreenSleeping : kCarRedSleeping;
 			parameters1->param2 = (savepoint.param.intValue == kObjectCompartment1 || savepoint.param.intValue == kObjectCompartmentA) ? EntityData::kField491_8200 : EntityData::kField491_7500;
 			parameters1->param3 = EntityData::kField491_7850;
 			break;
@@ -519,7 +519,7 @@ label_process:
 		case kObjectCompartment4:
 		case kObjectCompartmentC:
 		case kObjectCompartmentD:
-			parameters1->param1 = (savepoint.param.intValue == kObjectCompartment1 || savepoint.param.intValue == kObjectCompartment2) ? 3 : 4;
+			parameters1->param1 = (savepoint.param.intValue == kObjectCompartment1 || savepoint.param.intValue == kObjectCompartment2) ? kCarGreenSleeping : kCarRedSleeping;
 			parameters1->param2 = (savepoint.param.intValue == kObjectCompartment3 || savepoint.param.intValue == kObjectCompartmentC) ? EntityData::kField491_6470 : EntityData::kField491_5790;
 			parameters1->param3 = EntityData::kField491_6130;
 			break;
@@ -528,7 +528,7 @@ label_process:
 		case kObjectCompartment6:
 		case kObjectCompartmentE:
 		case kObjectCompartmentF:
-			parameters1->param1 = (savepoint.param.intValue == kObjectCompartment1 || savepoint.param.intValue == kObjectCompartment2) ? 3 : 4;
+			parameters1->param1 = (savepoint.param.intValue == kObjectCompartment1 || savepoint.param.intValue == kObjectCompartment2) ? kCarGreenSleeping : kCarRedSleeping;
 			parameters1->param2 = (savepoint.param.intValue == kObjectCompartment5 || savepoint.param.intValue == kObjectCompartmentE) ? EntityData::kField491_4840 : EntityData::kField491_4070;
 			parameters1->param3 = EntityData::kField491_4455;
 			break;
@@ -537,7 +537,7 @@ label_process:
 		case kObjectCompartment8:
 		case kObjectCompartmentG:
 		case kObjectCompartmentH:
-			parameters1->param1 = (savepoint.param.intValue == kObjectCompartment1 || savepoint.param.intValue == kObjectCompartment2) ? 3 : 4;
+			parameters1->param1 = (savepoint.param.intValue == kObjectCompartment1 || savepoint.param.intValue == kObjectCompartment2) ? kCarGreenSleeping : kCarRedSleeping;
 			parameters1->param2 = (savepoint.param.intValue == kObjectCompartment7 || savepoint.param.intValue == kObjectCompartmentG) ? EntityData::kField491_3050 : EntityData::kField491_2740;
 			parameters1->param3 = EntityData::kField491_0;
 			break;
@@ -561,10 +561,13 @@ void Train::resetParam8() {
 	EntityData::EntityParametersIIIS *params2 = (EntityData::EntityParametersIIIS*)_data->getCurrentParameters(1);
 
 	if (params->param8
-		&& getEntities()->checkFields1(kEntityNone, (CarIndex)params2->param1, (EntityData::Field491Value)params2->param2)
-		&& getEntities()->checkFields1(kEntityNone, (CarIndex)params2->param1, (EntityData::Field491Value)params2->param3)) {
-			// loads a file in the sound cache (param4)
-			params->param8 = 0;
+	 && !getEntities()->checkFields1(kEntityNone, (CarIndex)params2->param1, (EntityData::Field491Value)params2->param2)
+	 && !getEntities()->checkFields1(kEntityNone, (CarIndex)params2->param1, (EntityData::Field491Value)params2->param3)) {
+
+		if (getSound()->isBuffered(params2->seq))
+			getSound()->unknownFunction2(params2->seq);			
+		
+		params->param8 = 0;
 	}
 }
 

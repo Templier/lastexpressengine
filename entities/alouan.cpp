@@ -301,7 +301,40 @@ IMPLEMENT_FUNCTION(Alouan, function22, 22)
 }
 
 IMPLEMENT_FUNCTION(Alouan, function23, 23)
-	error("Alouan: callback function 23 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionDefault:
+		setCallback(1);
+		call(new ENTITY_SETUP(Alouan, setup_function5), kCarGreenSleeping, EntityData::kField491_4070);
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			setCallback(2);
+			call(new ENTITY_SETUP_SIIS(Alouan, setup_enterExitCompartment), "619AF", kObjectCompartment5);
+			break;
+
+		case 2:
+			getEntities()->prepareSequences(kEntityAlouan);
+
+			getData()->field_491 = EntityData::kField491_4070;
+			getData()->field_493 = EntityData::kField493_1;
+			
+			getObjects()->update(kObjectCompartment6, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
+			break;
+		}
+		break;
+
+	case kAction135800432:
+		setup_nullfunction();
+		break;
+	}
 }
 
 IMPLEMENT_NULL_FUNCTION(Alouan, 24)

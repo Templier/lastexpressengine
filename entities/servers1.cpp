@@ -300,7 +300,28 @@ IMPLEMENT_FUNCTION(Servers1, function19, 19)
 }
 
 IMPLEMENT_FUNCTION(Servers1, function20, 20)
-	error("Servers1: callback function 20 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionDefault:
+		getData()->field_491 = EntityData::kField491_5800;
+		getData()->field_493 = EntityData::kField493_0;
+
+		setCallback(1);
+		call(new ENTITY_SETUP_SIIS(Servers1, setup_draw), "973");
+		break;
+
+	case kActionCallback:
+		if (getCallback() == 1) {
+			getSavePoints()->push(kEntityServers1, kEntityIvo, kAction123712592);
+			getEntities()->drawSequenceLeft(kEntityServers1, "BLANK");
+			ENTITY_PARAM(0, 7) = 0;
+
+			CALLBACK_ACTION();
+		}
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Servers1, function21, 21)

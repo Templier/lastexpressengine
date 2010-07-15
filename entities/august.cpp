@@ -295,7 +295,42 @@ IMPLEMENT_FUNCTION(August, restaurant, 30)
 }
 
 IMPLEMENT_FUNCTION(August, function31, 31)
-	error("August: callback function 31 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionDefault:
+		setCallback(1);
+		call(new ENTITY_SETUP(August, setup_function16), kCarGreenSleeping, EntityData::kField491_6470);
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			setCallback(2);
+			call(new ENTITY_SETUP(August, setup_function19));
+			break;
+
+		case 2:
+			setCallback(2);
+			call(new ENTITY_SETUP(August, setup_function21), kTimeFrancois);
+			break;
+
+		case 3:
+		case 4:
+			if (getProgress().field_14 == 29) {
+				setCallback(4);
+				call(new ENTITY_SETUP(August, setup_function21), getState()->time + 900);
+			} else {
+				setup_function32();
+			}
+			break;
+		}
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(August, function32, 32)

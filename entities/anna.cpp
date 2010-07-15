@@ -253,6 +253,9 @@ IMPLEMENT_FUNCTION(Anna, function20, 20)
 
 	case kActionCallback:
 		switch (getCallback()) {
+		default:
+			break;
+
 		case 1:
 			setCallback(2);
 			call(new ENTITY_SETUP_SIIS(Anna, setup_enterExitCompartment), "618Bf", kObjectCompartmentF);
@@ -294,7 +297,35 @@ IMPLEMENT_FUNCTION(Anna, function23, 23)
 }
 
 IMPLEMENT_FUNCTION(Anna, function24, 24)
-	error("Anna: callback function 24 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionDefault:
+		getEntities()->drawSequenceLeft(kEntityAnna, "001G");
+
+		setCallback(1);
+		call(new ENTITY_SETUP(Anna, setup_function18));
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			getEntities()->drawSequenceLeft(kEntityAnna, "001H");
+			setCallback(2);
+			call(new ENTITY_SETUP_SIIS(Anna, setup_playSound), "ANN1049");
+			break;
+
+		case 2:
+			getSavePoints()->push(kEntityAnna, kEntityServers0, kAction136702400);
+			setup_function25();
+			break;
+		}
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Anna, function25, 25)
