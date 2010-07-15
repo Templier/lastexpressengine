@@ -518,9 +518,12 @@ IMPLEMENT_ACTION(compartment) {
 	if (location == 1 || location == 3 || getEntities()->checkFields2(object)) {
 
 		// FIXME check again, this might be wrong (and simplify expression)
-		if (location != 1 || getEntities()->checkFields2(object) || (getInventory()->getSelectedItem() != kItemKey
-		&& (location != 1 || !getInventory()->hasItem(kItemKey)
-		|| getInventory()->getSelectedItem() != kItemFirebird || getInventory()->getSelectedItem() != kItemBriefcase))) {
+		if (location != 1
+		 || getEntities()->checkFields2(object)
+		 || (getInventory()->getSelectedItem() != kItemKey
+		  && (location != 1 || !getInventory()->hasItem(kItemKey)
+		   || getInventory()->getSelectedItem() != kItemFirebird
+		   || getInventory()->getSelectedItem() != kItemBriefcase))) {
 				getSound()->playSoundEvent(kEntityNone, 13);
 
 				// Stop processing further

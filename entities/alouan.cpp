@@ -151,7 +151,6 @@ label_callback1:
 		case 1:
 			getData()->field_491 = EntityData::kField491_4840;
 			goto label_callback1;
-			break;
 		}
 		break;
 	}

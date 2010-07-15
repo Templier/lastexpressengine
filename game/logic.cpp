@@ -207,7 +207,7 @@ void Logic::eventMouse(const Common::Event &ev) {
 }
 
 void Logic::eventTick(const Common::Event &ev) {
-	int ticks = 1;
+	uint ticks = 1;
 
 	//////////////////////////////////////////////////////////////////////////
 	// Adjust ticks if an action has been performed
@@ -236,7 +236,7 @@ void Logic::eventTick(const Common::Event &ev) {
 			}
 
 			// Save after game ticks interval
-			if (getState()->timeTicks - getSaveLoad()->getLastSavegameTicks() > GAME_TICKS_BEETWEEN_SAVEGAMES)
+			if ((getState()->timeTicks - getSaveLoad()->getLastSavegameTicks()) > GAME_TICKS_BEETWEEN_SAVEGAMES)
 				save(kEntityChapters, kSavegameTypeTickInterval, kEventNone);
 		}
 	}

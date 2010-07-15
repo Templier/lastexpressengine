@@ -161,12 +161,13 @@ void SaveLoad::loadEntryHeader(Common::InSaveFile *save, SavegameEntryHeader *he
 	header->field_1C = save->readUint32LE();
 }
 
-bool SaveLoad::validateMainHeader(SavegameMainHeader &header) {
+bool SaveLoad::validateMainHeader(const SavegameMainHeader &header) {
 	if (header.signature != SAVEGAME_SIGNATURE)
 		return false;
 
+	/* Check not needed as it can never be < 0
 	if (header.chapter < 0)
-		return false;
+		return false;*/
 
 	if (header.time < 32)
 		return false;
@@ -189,7 +190,7 @@ bool SaveLoad::validateMainHeader(SavegameMainHeader &header) {
 	return true;
 }
 
-bool SaveLoad::validateEntryHeader(SavegameEntryHeader &header) {
+bool SaveLoad::validateEntryHeader(const SavegameEntryHeader &header) {
 	if (header.signature != SAVEGAME_HEADER)
 		return false;
 
@@ -202,7 +203,8 @@ bool SaveLoad::validateEntryHeader(SavegameEntryHeader &header) {
 	if (header.field_C <= 0 || header.field_C >= 15)
 		return false;
 
-	if (header.chapter <= 0)
+	/* No check for < 0, as it cannot happen normaly */
+	if (header.chapter == 0)
 		return false;
 
 	return true;

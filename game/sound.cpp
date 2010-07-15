@@ -750,10 +750,8 @@ void SoundManager::readText(int id){
 	if (!isBuffered(kEntityTables4))
 		return;
 
-	if (id < 0 || (id > 8 && id < 50) || id > 64) {
+	if (id < 0 || (id > 8 && id < 50) || id > 64)
 		error("Sound::readText - attempting to use invalid id. Valid values [1;8] - [50;64], was %d", id);
-		return;
-	}
 
 	// Get proper message file (names are stored in sequence in the array but id is [1;8] - [50;64])
 	const char* text = messages[id <= 8 ? id : id - 41];

@@ -138,7 +138,7 @@
 
 #define UPDATE_PARAM(parameter, type, value) { \
 	if (!parameter) \
-		parameter = (int)(type + value); \
+		parameter = (int)type + (int)value; \
 	if (parameter >= (int)type) \
 		break; \
 	parameter = EntityData::kParamTime; \
@@ -146,7 +146,7 @@
 
 #define UPDATE_PARAM_FUNCTION(parameter, type, value, label) { \
 	if (!parameter) \
-		parameter = (int)(type + value); \
+		parameter = (int)type + (int)value; \
 	if (parameter >= (int)type) \
 		goto label; \
 	parameter = EntityData::kParamTime; \

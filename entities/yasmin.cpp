@@ -232,15 +232,19 @@ IMPLEMENT_FUNCTION(Yasmin, function9, 9)
 
 		case 2:
 			TIME_CHECK_CALLBACK(Yasmin, kTimeFrancois, params->param2, 3, setup_function7);
+			// Fallback to case 3
 
 		case 3:
 			TIME_CHECK_PLAYSOUND_2(Yasmin, kTimeYasmin_7, params->param3, 4, "Har1102", EntityData::kField491_4070);
+			// Fallback to case 4
 
 		case 4:
 			TIME_CHECK_PLAYSOUND(Yasmin, kTimeTables1, params->param4, 5, "Har1104");
+			// Fallback to case 5
 
 		case 5:
 			TIME_CHECK_PLAYSOUND(Yasmin, kTimeYasmin_8, params->param5, 6, "Har1106");
+			// Fallback to case 6
 
 		case 6:
 			TIME_CHECK_CALLBACK(Yasmin, kTimeYasmin_9, params->param6, 7, setup_function6);
@@ -344,6 +348,7 @@ IMPLEMENT_FUNCTION(Yasmin, function14, 14)
 
 		case 1:
 			TIME_CHECK_CALLBACK(Yasmin, kTimeYasmin_3, params->param2, 2, setup_function7);
+			// Fallback to case 2
 
 		case 2:
 			TIME_CHECK_CALLBACK(Yasmin, kTimeYasmin_4, params->param3, 3, setup_function6);

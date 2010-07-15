@@ -288,7 +288,7 @@ bool SceneLoader::loadScene(Scene * const scene, SceneIndex index) {
 	if (index > _headers.size())
 		error("SceneLoader::loadScene: scene index is too high! (was=%d, max=%d)", index, _headers.size());
 
-	return Scene::load(scene, _stream, _headers[index]);
+	return Scene::load(scene, _stream, _headers[(int)index]);
 }
 
 Scene *SceneLoader::getScene(SceneIndex index) {
@@ -299,7 +299,8 @@ Scene *SceneLoader::getScene(SceneIndex index) {
 		return NULL;
 
 	debugC(9, kLastExpressDebugScenes, "Loading scene %d", index);
-	return Scene::get(_stream, _headers[index]);
+
+	return Scene::get(_stream, _headers[(int)index]);
 }
 
 } // End of namespace LastExpress

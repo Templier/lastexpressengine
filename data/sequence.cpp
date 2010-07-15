@@ -410,14 +410,15 @@ AnimFrame *Sequence::getFrame(uint32 index) {
 
 // SequencePlayer
 SequenceFrame::SequenceFrame(Sequence *sequence, uint32 frame, bool dispose) :
-	_sequence(sequence), _frame(frame), _dispose(false) {
+	_sequence(sequence), _frame(frame), _dispose(dispose) {
 }
 
 SequenceFrame::~SequenceFrame() {
 	if (_dispose && _sequence) {
 		delete _sequence;
-		_sequence = NULL;
 	}
+
+	_sequence = NULL;
 }
 
 Common::Rect SequenceFrame::draw(Graphics::Surface *surface) {

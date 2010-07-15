@@ -103,7 +103,7 @@ public:
 	static Common::InSaveFile *openForLoading(GameId id);
 	static Common::OutSaveFile *openForSaving(GameId id);
 
-	int getLastSavegameTicks() const { return _gameTicksLastSavegame; }
+	uint32 getLastSavegameTicks() const { return _gameTicksLastSavegame; }
 
 private:
 	enum HeaderType {
@@ -142,10 +142,10 @@ private:
 	static bool loadMainHeader(GameId id, SavegameMainHeader* header);
 	static void loadEntryHeader(Common::InSaveFile *save, SavegameEntryHeader* header);
 
-	static bool validateMainHeader(SavegameMainHeader &header);
-	static bool validateEntryHeader(SavegameEntryHeader &header);
+	static bool validateMainHeader(const SavegameMainHeader &header);
+	static bool validateEntryHeader(const SavegameEntryHeader &header);
 
-	int _gameTicksLastSavegame;
+	uint32 _gameTicksLastSavegame;
 };
 
 } // End of namespace LastExpress

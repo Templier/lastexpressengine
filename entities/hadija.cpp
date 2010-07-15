@@ -189,19 +189,15 @@ label_callback4:
 
 		case 1:
 			goto label_callback1;
-			break;
 
 		case 2:
 			goto label_callback2;
-			break;
 
 		case 3:
 			goto label_callback3;
-			break;
 
 		case 4:
 			goto label_callback4;
-			break;
 		}
 		break;
 	}
