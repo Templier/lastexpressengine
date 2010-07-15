@@ -99,7 +99,7 @@ IMPLEMENT_FUNCTION_II(Salko, function7, 7)
 IMPLEMENT_FUNCTION(Salko, function8, 8)
 	if (savepoint.action == kActionDefault) {
 		getData()->position = kPosition_2740;
-		getData()->field_493 = EntityData::kField493_1;
+		getData()->field_493 = kField493_1;
 		getData()->car = kCarRedSleeping;
 	}
 }
@@ -115,7 +115,7 @@ IMPLEMENT_FUNCTION(Salko, chapter1, 9)
 
 	case kActionDefault:
 		getData()->position = kPosition_4691;
-		getData()->field_493 = EntityData::kField493_0;
+		getData()->field_493 = kField493_0;
 		getData()->car = kCarRestaurant;
 		break;
 	}
@@ -148,7 +148,7 @@ IMPLEMENT_FUNCTION(Salko, chapter1_handler, 10)
 IMPLEMENT_FUNCTION(Salko, function11, 11)
 	if (savepoint.action == kActionDefault) {
 		getData()->position = kPosition_2740;
-		getData()->field_493 = EntityData::kField493_1;
+		getData()->field_493 = kField493_1;
 		getData()->car = kCarRedSleeping;
 
 		getEntities()->prepareSequences(kEntitySalko);
@@ -165,7 +165,7 @@ IMPLEMENT_FUNCTION(Salko, chapter2, 12)
 		getEntities()->prepareSequences(kEntitySalko);
 
 		getData()->position = kPosition_2740;
-		getData()->field_493 = EntityData::kField493_1;
+		getData()->field_493 = kField493_1;
 		getData()->car = kCarRedSleeping;
 		getData()->clothes = kClothesDefault;
 		getData()->inventoryItem = kItemNone;
@@ -195,7 +195,7 @@ IMPLEMENT_FUNCTION(Salko, chapter3, 14)
 		getEntities()->prepareSequences(kEntitySalko);
 
 		getData()->position = kPosition_2740;
-		getData()->field_493 = EntityData::kField493_1;
+		getData()->field_493 = kField493_1;
 		getData()->car = kCarRedSleeping;
 		getData()->clothes = kClothesDefault;
 		getData()->inventoryItem = kItemNone;
@@ -245,7 +245,7 @@ IMPLEMENT_FUNCTION(Salko, chapter4, 18)
 		getEntities()->prepareSequences(kEntitySalko);
 
 		getData()->position = kPosition_5420;
-		getData()->field_493 = EntityData::kField493_1;
+		getData()->field_493 = kField493_1;
 		getData()->car = kCarRestaurant;
 		getData()->inventoryItem = kItemNone;
 		break;
@@ -261,7 +261,7 @@ IMPLEMENT_FUNCTION(Salko, function19, 19)
 		if (getCallback() == 1) {
 			getEntities()->drawSequenceLeft(kEntitySalko, "BLANK");
 
-			getData()->field_493 = EntityData::kField493_1;
+			getData()->field_493 = kField493_1;
 
 			setup_function20();
 		}
@@ -285,7 +285,7 @@ IMPLEMENT_FUNCTION(Salko, function20, 20)
 			break;
 
 		case 1:
-			getData()->field_493 = EntityData::kField493_0;
+			getData()->field_493 = kField493_0;
 			if (getData()->position < kPosition_2087)
 				getData()->position = kPosition_2088;
 
@@ -341,7 +341,7 @@ IMPLEMENT_FUNCTION(Salko, function22, 22)
 		getObjects()->update(kObjectCompartmentH, kEntityNone, kLocation3, kCursorHandKnock, kCursorHand);
 
 		getData()->position = kPosition_2740;
-		getData()->field_493 = EntityData::kField493_1;
+		getData()->field_493 = kField493_1;
 		getData()->car = kCarRedSleeping;
 		getData()->inventoryItem = kItemNone;
 	}
@@ -360,7 +360,7 @@ IMPLEMENT_FUNCTION(Salko, chapter5, 23)
 		getEntities()->prepareSequences(kEntitySalko);
 
 		getData()->position = kPosition_9460;
-		getData()->field_493 = EntityData::kField493_1;
+		getData()->field_493 = kField493_1;
 		getData()->car = kCarRestaurant;
 		getData()->inventoryItem = kItemNone;
 		break;

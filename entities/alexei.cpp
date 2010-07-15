@@ -172,7 +172,7 @@ IMPLEMENT_FUNCTION(Alexei, chapter1, 17)
 		getObjects()->update(kObjectHandleInsideBathroom, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
 
 		getData()->position = kPosition_3969;
-		getData()->field_493 = EntityData::kField493_1;
+		getData()->field_493 = kField493_1;
 		getData()->car = kCarRestaurant;
 		break;
 	}
@@ -211,7 +211,29 @@ IMPLEMENT_FUNCTION(Alexei, function25, 25)
 }
 
 IMPLEMENT_FUNCTION(Alexei, function26, 26)
-	error("Alexei: callback function 26 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionNone:
+		TIME_CHECK(kTimeVassili_2, params->param1, setup_function27)
+		break;
+
+	case kActionDefault:
+		getData()->position = kPosition_7500;
+		getData()->car = kCarGreenSleeping;
+		getData()->field_493 = kField493_1;
+
+		getObjects()->update(kObjectCompartment2, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObjectHandleInsideBathroom, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObject10, kEntityNone, kLocation1, kCursorKeepValue, kCursorKeepValue);
+
+		if (getEntities()->isPlayerPosition(kCarGreenSleeping, 61))
+			getScenes()->loadSceneFromPosition(kCarGreenSleeping, 66);
+
+		getEntities()->prepareSequences(kEntityAlexei);
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Alexei, function27, 27)
@@ -242,7 +264,7 @@ IMPLEMENT_FUNCTION(Alexei, chapter2, 28)
 		getObjects()->update(kObjectHandleInsideBathroom, kEntityAlexei, kLocation1, kCursorHandKnock, kCursorHand);
 
 		getData()->position = kPosition_7500;
-		getData()->field_493 = EntityData::kField493_1;
+		getData()->field_493 = kField493_1;
 		getData()->car = kCarGreenSleeping;
 		getData()->clothes = kClothesDefault;
 		getData()->inventoryItem = kItemNone;
@@ -278,7 +300,7 @@ IMPLEMENT_FUNCTION(Alexei, chapter3, 32)
 		getObjects()->update(kObject10, kEntityNone, kLocationNone, kCursorKeepValue, kCursorKeepValue);
 		getObjects()->update(kObjectHandleInsideBathroom, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
 
-		getData()->field_493 = EntityData::kField493_1;
+		getData()->field_493 = kField493_1;
 		getData()->car = kCarRestaurant;
 		getData()->clothes = kClothesDefault;
 		getData()->inventoryItem = kItemNone;
@@ -298,7 +320,7 @@ IMPLEMENT_FUNCTION(Alexei, chapter3_handler, 33)
 
 	case kAction122288808:
 		getData()->position = kPosition_9270;
-		getData()->field_493 = EntityData::kField493_0;
+		getData()->field_493 = kField493_0;
 		getData()->car = kCarRedSleeping;
 
 		setCallback(1);
@@ -340,7 +362,7 @@ IMPLEMENT_FUNCTION(Alexei, chapter4, 37)
 		getObjects()->update(kObjectHandleInsideBathroom, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
 
 		getData()->position = kPosition_7500;
-		getData()->field_493 = EntityData::kField493_1;
+		getData()->field_493 = kField493_1;
 		getData()->car = kCarGreenSleeping;
 		getData()->inventoryItem = kItemNone;
 		break;
@@ -393,7 +415,39 @@ IMPLEMENT_FUNCTION(Alexei, function41, 41)
 }
 
 IMPLEMENT_FUNCTION(Alexei, function42, 42)
-	error("Alexei: callback function 42 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionDefault:
+		setCallback(1);
+		call(new ENTITY_SETUP(Alexei, setup_function14));
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			getSavePoints()->push(kEntityAlexei, kEntityTatiana, kAction191198209);
+
+			setCallback(2);
+			call(new ENTITY_SETUP(Alexei, setup_function10), kCarRestaurant, kPosition_850);
+			break;
+
+		case 2:
+			setCallback(3);
+			call(new ENTITY_SETUP_SIIS(Alexei, setup_updatePosition), "103A", kCarRestaurant, 52);
+			break;
+
+		case 3:
+			getData()->field_493 = kField493_1;
+			setup_function43();
+			break;
+		}
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Alexei, function43, 43)
@@ -439,7 +493,7 @@ IMPLEMENT_FUNCTION(Alexei, function47, 47)
 		getEntities()->prepareSequences(kEntityAlexei);
 
 		getData()->position = kPositionNone;
-		getData()->field_493 = EntityData::kField493_0;
+		getData()->field_493 = kField493_0;
 		getData()->car = kCarNone;
 
 		getObjects()->update(kObjectCompartment2, kEntityNone, kLocationNone, kCursorHandKnock, kCursorHand);

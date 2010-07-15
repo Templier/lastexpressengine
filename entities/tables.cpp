@@ -112,7 +112,7 @@ IMPLEMENT_FUNCTION(Tables, draw, 6)
 		break;
 
 	case kActionDefault:
-		getData()->field_493 = EntityData::kField493_1;
+		getData()->field_493 = kField493_1;
 		getData()->car = kCarRestaurant;
 		switch(_id) {
 		default:

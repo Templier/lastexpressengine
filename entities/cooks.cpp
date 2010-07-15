@@ -242,7 +242,7 @@ IMPLEMENT_FUNCTION(Cooks, chapter1, 5)
 
 	case kActionDefault:
 		getData()->position = kPosition_5900;
-		getData()->field_493 = EntityData::kField493_0;
+		getData()->field_493 = kField493_0;
 		getData()->car = kCarRestaurant;
 
 		getProgress().field_4C = 0;
@@ -330,7 +330,7 @@ IMPLEMENT_FUNCTION(Cooks, function7, 7)
 
 	case kActionDefault:
 		getData()->position = kPosition_3650;
-		getData()->field_493 = EntityData::kField493_0;
+		getData()->field_493 = kField493_0;
 		getData()->car = kCarRestaurant;
 
 		getEntities()->prepareSequences(kEntityCooks);
@@ -351,7 +351,7 @@ IMPLEMENT_FUNCTION(Cooks, chapter2, 8)
 		getEntities()->prepareSequences(kEntityCooks);
 
 		getData()->position = kPosition_5900;
-		getData()->field_493 = EntityData::kField493_0;
+		getData()->field_493 = kField493_0;
 		getData()->car = kCarRestaurant;
 		getData()->inventoryItem = kItemNone;
 
@@ -507,7 +507,7 @@ IMPLEMENT_FUNCTION(Cooks, chapter4, 12)
 		getEntities()->prepareSequences(kEntityCooks);
 
 		getData()->position = kPosition_5900;
-		getData()->field_493 = EntityData::kField493_0;
+		getData()->field_493 = kField493_0;
 		getData()->car = kCarRestaurant;
 		getData()->inventoryItem = kItemNone;
 

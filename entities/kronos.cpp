@@ -106,7 +106,7 @@ IMPLEMENT_FUNCTION(Kronos, chapter1, 7)
 
 	case kActionDefault:
 		getData()->position = kPosition_6000;
-		getData()->field_493 = EntityData::kField493_1;
+		getData()->field_493 = kField493_1;
 		getData()->car = kCarKronos;
 
 		getObjects()->update(kObjectCeiling, kEntityNone, kLocation1, kCursorKeepValue, kCursorKeepValue);
@@ -171,7 +171,7 @@ IMPLEMENT_FUNCTION(Kronos, function10, 10)
 
 	case kActionDefault:
 		getData()->position = kPosition_6000;
-		getData()->field_493 = EntityData::kField493_0;
+		getData()->field_493 = kField493_0;
 		getData()->car = kCarKronos;
 
 		getEntities()->prepareSequences(kEntityKronos);
@@ -216,7 +216,7 @@ IMPLEMENT_FUNCTION(Kronos, chapter3, 13)
 		getEntities()->prepareSequences(kEntityKronos);
 
 		getData()->position = kPosition_6000;
-		getData()->field_493 = EntityData::kField493_0;
+		getData()->field_493 = kField493_0;
 		getData()->car = kCarKronos;
 		getData()->clothes = kClothesDefault;
 		getData()->inventoryItem = kItemNone;
@@ -293,7 +293,7 @@ IMPLEMENT_FUNCTION(Kronos, function17, 17)
 
 	case kActionDefault:
 		getData()->position = kPosition_7500;
-		getData()->field_493 = EntityData::kField493_0;
+		getData()->field_493 = kField493_0;
 		getData()->car = kCarRedSleeping;
 
 		setCallback(1);

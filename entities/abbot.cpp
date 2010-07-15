@@ -116,7 +116,7 @@ IMPLEMENT_FUNCTION_SI(Abbot, function4, 4)
 	case kActionExitCompartment:
 		getEntities()->exitCompartment(kEntityAbbot, (ObjectIndex)params->param2);
 		getData()->position = kPosition_6470;
-		getData()->field_493 = EntityData::kField493_1;
+		getData()->field_493 = kField493_1;
 
 		CALLBACK_ACTION()
 		break;
@@ -125,7 +125,7 @@ IMPLEMENT_FUNCTION_SI(Abbot, function4, 4)
 		getEntities()->drawSequenceRight(kEntityAbbot, params->seq1);
 		getEntities()->enterCompartment(kEntityAbbot, (ObjectIndex)params->param2);
 
-		getData()->field_493 = EntityData::kField493_1;
+		getData()->field_493 = kField493_1;
 		if (getEntities()->checkFields1(kEntityNone, kCarRedSleeping, kPosition_6470)
 		 || getEntities()->checkFields1(kEntityNone, kCarRedSleeping, kPosition_6130)) {
 			getAction()->playAnimation(isDay() ? kEventCathTurningDay : kEventCathTurningNight);
@@ -230,7 +230,7 @@ IMPLEMENT_FUNCTION(Abbot, chapter3, 17)
 		getEntities()->prepareSequences(kEntityAbbot);
 
 		getData()->position = kPosition_5900;
-		getData()->field_493 = EntityData::kField493_1;
+		getData()->field_493 = kField493_1;
 		getData()->car = kCarRestaurant;
 		getData()->inventoryItem = kItemNone;
 		getData()->clothes = kClothesDefault;
@@ -251,7 +251,7 @@ IMPLEMENT_FUNCTION(Abbot, chapter3_handler, 18)
 
 		case 1:
 			getData()->position = kPosition_5800;
-			getData()->field_493 = EntityData::kField493_0;
+			getData()->field_493 = kField493_0;
 
 			setCallback(2);
 			call(new ENTITY_SETUP_SIIS(Abbot, setup_draw), "804DD");
@@ -283,7 +283,7 @@ IMPLEMENT_FUNCTION(Abbot, chapter3_handler, 18)
 		case 5:
 			getObjects()->update(kObjectCompartmentC, kEntityNone, kLocation2, kCursorKeepValue, kCursorKeepValue);
 			getData()->position = kPosition_6470;
-			getData()->field_493 = EntityData::kField493_1;
+			getData()->field_493 = kField493_1;
 
 			setup_function19();
 			break;
@@ -382,7 +382,7 @@ IMPLEMENT_FUNCTION(Abbot, function21, 21)
 			break;
 
 		case 2:
-			getData()->field_493 = EntityData::kField493_0;
+			getData()->field_493 = kField493_0;
 
 			setCallback(3);
 			call(new ENTITY_SETUP(Abbot, setup_function11), kCarRestaurant, kPosition_850);
@@ -395,7 +395,7 @@ IMPLEMENT_FUNCTION(Abbot, function21, 21)
 
 		case 4:
 			getData()->position = kPosition_1540;
-			getData()->field_493 = EntityData::kField493_0;
+			getData()->field_493 = kField493_0;
 
 			setCallback(5);
 			call(new ENTITY_SETUP_SIIS(Abbot, setup_draw), "804US");
@@ -423,7 +423,7 @@ IMPLEMENT_FUNCTION(Abbot, function21, 21)
 
 	case kAction122288808:
 		getSavePoints()->push(kEntityAbbot, kEntityTables4, kAction136455232);
-		getData()->field_493 = EntityData::kField493_1;
+		getData()->field_493 = kField493_1;
 
 		setCallback(7);
         call(new ENTITY_SETUP_SIIS(Abbot, setup_draw), "029B");
@@ -486,7 +486,7 @@ IMPLEMENT_FUNCTION(Abbot, function23, 23)
 		break;
 
 	case kActionDefault:
-		getData()->field_493 = EntityData::kField493_0;
+		getData()->field_493 = kField493_0;
 		getEntities()->updatePosition(kEntityAbbot, kCarRestaurant, 67, true);
 
 		setCallback(1);
@@ -522,7 +522,7 @@ IMPLEMENT_FUNCTION(Abbot, function23, 23)
 			break;
 
 		case 4:
-			getData()->field_493 = EntityData::kField493_1;
+			getData()->field_493 = kField493_1;
 
 			setup_function24();
 			break;
@@ -598,7 +598,7 @@ IMPLEMENT_FUNCTION(Abbot, function25, 25)
 			break;
 
 		case 1:
-			getData()->field_493 = EntityData::kField493_0;
+			getData()->field_493 = kField493_0;
 			getObjects()->update(kObjectCompartmentC, kEntityNone, kLocationNone, kCursorHandKnock, kCursorHand);
 			getObjects()->update(kObject50, kEntityNone, kLocationNone, kCursorHandKnock, kCursorHand);
 
@@ -613,14 +613,14 @@ IMPLEMENT_FUNCTION(Abbot, function25, 25)
 
 		case 3:
 			getData()->position = kPosition_1540;
-			getData()->field_493 = EntityData::kField493_0;
+			getData()->field_493 = kField493_0;
 
 			setCallback(4);
 			call(new ENTITY_SETUP_SIIS(Abbot, setup_updatePosition), "115A", 5, 56);
 			break;
 
 		case 4:
-			getData()->field_493 = EntityData::kField493_1;
+			getData()->field_493 = kField493_1;
 			getScenes()->loadSceneFromItemPosition(kItem3);
 
 			setup_function26();
@@ -670,7 +670,7 @@ IMPLEMENT_FUNCTION(Abbot, function27, 27)
 			break;
 
 		case 1:
-			getData()->field_493 = EntityData::kField493_0;
+			getData()->field_493 = kField493_0;
 
 			setCallback(2);
 			call(new ENTITY_SETUP_SIIS(Abbot, setup_updatePosition), "115C", 5, 56);
@@ -693,7 +693,7 @@ IMPLEMENT_FUNCTION(Abbot, function27, 27)
 		case 4:
 			getObjects()->update(kObjectCompartmentC, kEntityNone, kLocation2, kCursorKeepValue, kCursorKeepValue);
 			getData()->position = kPosition_6470;
-			getData()->field_493 = EntityData::kField493_1;
+			getData()->field_493 = kField493_1;
 
 			setup_function28();
 			break;
@@ -818,7 +818,7 @@ switch (savepoint.action) {
 
 		case 2:
 			getObjects()->update(kObjectCompartmentC, kEntityNone, kLocation2, kCursorKeepValue, kCursorKeepValue);
-			getData()->field_493 = EntityData::kField493_0;
+			getData()->field_493 = kField493_0;
 
 			setCallback(3);
 			call(new ENTITY_SETUP(Abbot, setup_function11), kCarRestaurant, kPosition_850);
@@ -831,7 +831,7 @@ switch (savepoint.action) {
 
 		case 4:
 			getData()->position = kPosition_1540;
-			getData()->field_493 = EntityData::kField493_0;
+			getData()->field_493 = kField493_0;
 
 			setCallback(5);
 			call(new ENTITY_SETUP_SIIS(Abbot, setup_updatePosition), "115A", 5, 56);
@@ -839,7 +839,7 @@ switch (savepoint.action) {
 
 		case 5:
 			getScenes()->loadSceneFromItemPosition(kItem3);
-			getData()->field_493 = EntityData::kField493_1;
+			getData()->field_493 = kField493_1;
 
 			setup_function31();
 			break;
@@ -941,7 +941,7 @@ IMPLEMENT_FUNCTION(Abbot, function44, 44)
 
 	case kActionDefault:
 		getData()->position = kPosition_6470;
-		getData()->field_493 = EntityData::kField493_1;
+		getData()->field_493 = kField493_1;
 		getData()->car = kCarRedSleeping;
 
 		getEntities()->prepareSequences(kEntityAbbot);
@@ -1004,7 +1004,7 @@ IMPLEMENT_FUNCTION(Abbot, chapter5, 50)
 		getEntities()->prepareSequences(kEntityAbbot);
 
 		getData()->position = kPosition_3969;
-		getData()->field_493 = EntityData::kField493_1;
+		getData()->field_493 = kField493_1;
 		getData()->car = kCarRestaurant;
 		getData()->inventoryItem = kItemNone;
 		getData()->clothes = kClothesDefault;
@@ -1026,7 +1026,7 @@ IMPLEMENT_FUNCTION(Abbot, function52, 52)
 		getEntities()->prepareSequences(kEntityAbbot);
 
 		getData()->position = kPositionNone;
-		getData()->field_493 = EntityData::kField493_0;
+		getData()->field_493 = kField493_0;
 		getData()->car = kCarNone;
 		break;
 

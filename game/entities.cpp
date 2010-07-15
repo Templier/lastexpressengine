@@ -1557,7 +1557,7 @@ uint Entities::getSoundValue(EntityIndex entity) const {
 	if (index < 32)
 		ret = soundValues[index];
 
-	if (getData(entity)->field_493 == EntityData::kField493_2) {
+	if (getData(entity)->field_493 == kField493_2) {
 		if (getData(entity)->car != kCarKronos
 		&& !getEntities()->checkFields15()
 		&& !getEntities()->checkFields16())
@@ -1869,7 +1869,7 @@ label_checkentity_position:
 
 bool Entities::checkFields1(EntityIndex entity, CarIndex car, EntityPosition position) const {
 	return (getData(entity)->position == position
-		 && getData(entity)->field_493 == EntityData::kField493_1
+		 && getData(entity)->field_493 == kField493_1
 		 && getData(entity)->car == car);
 }
 
@@ -1945,7 +1945,7 @@ bool Entities::checkFields2(ObjectIndex object) const {
 bool Entities::checkFields3(EntityIndex entity) const {
 	return (getData(entity)->car == kCarGreenSleeping
 		 || getData(entity)->car == kCarRedSleeping)
-		 && getData(entity)->field_493 == EntityData::kField493_1;
+		 && getData(entity)->field_493 == kField493_1;
 }
 
 bool Entities::isPlayerPosition(CarIndex car, Position position) const {
@@ -1955,7 +1955,7 @@ bool Entities::isPlayerPosition(CarIndex car, Position position) const {
 }
 
 bool Entities::checkFields5(EntityIndex entity, CarIndex car) const {
-	return getData(entity)->car == car && getData(entity)->field_493 < EntityData::kField493_2;
+	return getData(entity)->car == car && getData(entity)->field_493 < kField493_2;
 }
 
 bool Entities::checkFields6(EntityIndex entity) const {
@@ -1973,11 +1973,11 @@ bool Entities::isDirectionUpOrDown(EntityIndex entity) const {
 bool Entities::checkFields9(EntityIndex entity1, EntityIndex entity2, int absValue) const {
 	return getData(entity1)->car == getData(entity2)->car
 	    && abs(getData(entity1)->position - getData(entity2)->position) <= absValue
-		&& (getData(entity1)->field_493 != EntityData::kField493_2 || getData(entity2)->field_493 != EntityData::kField493_2);
+		&& (getData(entity1)->field_493 != kField493_2 || getData(entity2)->field_493 != kField493_2);
 }
 
 bool Entities::checkFields10(EntityIndex entity) const {
-	return getData(entity)->field_493 < EntityData::kField493_3;
+	return getData(entity)->field_493 < kField493_3;
 }
 
 bool Entities::checkFields11() const {
@@ -2011,13 +2011,13 @@ bool Entities::checkFields14(EntityIndex entity) const {
 
 bool Entities::checkFields15() const {
 	return (getData(kEntityNone)->position == kPosition_7500 || getData(kEntityNone)->position == kPosition_8200)
-		 && getData(kEntityNone)->field_493 == EntityData::kField493_2
+		 && getData(kEntityNone)->field_493 == kField493_2
 		 && getData(kEntityNone)->car == kCarGreenSleeping;
 }
 
 bool Entities::checkFields16() const {
 	return (getData(kEntityNone)->position == kPosition_4070 || getData(kEntityNone)->position == kPosition_4840)
-		 && getData(kEntityNone)->field_493 == EntityData::kField493_2
+		 && getData(kEntityNone)->field_493 == kField493_2
 		 && getData(kEntityNone)->car == kCarRedSleeping;
 }
 
@@ -2035,7 +2035,7 @@ bool Entities::checkFields18(CarIndex car, EntityPosition position) const {
 
 bool Entities::checkFields19(EntityIndex entity, CarIndex car, EntityPosition position) const {
 
-	if (getData(entity)->car != car ||  getData(entity)->field_493 != EntityData::kField493_1)
+	if (getData(entity)->car != car ||  getData(entity)->field_493 != kField493_1)
 		return false;
 
 	EntityPosition entityPosition = getData(entity)->position;

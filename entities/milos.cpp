@@ -200,7 +200,7 @@ IMPLEMENT_FUNCTION_I(Milos, function11, 11)
 			break;
 
 		case 1:
-			getData()->field_493 = EntityData::kField493_0;
+			getData()->field_493 = kField493_0;
 			setCallback(2);
 			call(new ENTITY_SETUP(Milos, setup_enterCompartmentDialog), 3, 8200);
 			break;
@@ -225,7 +225,7 @@ IMPLEMENT_FUNCTION_I(Milos, function11, 11)
 			break;
 
 		case 5:
-			getData()->field_493 = EntityData::kField493_1;
+			getData()->field_493 = kField493_1;
 			getEntities()->prepareSequences(kEntityMilos);
 			getSavePoints()->push(kEntityMilos, kEntityVesna, kAction101687594);
 			getObjects()->update(kObjectCompartmentG, kEntityMilos, kLocation3, kCursorHandKnock, kCursorHand);
@@ -261,7 +261,7 @@ IMPLEMENT_FUNCTION_I(Milos, function11, 11)
 
 		case 13:
 			getEntities()->exitCompartment(kEntityMilos, kObjectCompartmentG, false);
-			getData()->field_493 = EntityData::kField493_1;
+			getData()->field_493 = kField493_1;
 			getEntities()->prepareSequences(kEntityMilos);
 			getObjects()->update(kObjectCompartmentG, kEntityMilos, kLocation3, kCursorHandKnock, kCursorHand);
 			params->param5 = 0;
@@ -271,7 +271,7 @@ IMPLEMENT_FUNCTION_I(Milos, function11, 11)
 		break;
 
 	case kAction122865568:
-		getData()->field_493 = EntityData::kField493_0;
+		getData()->field_493 = kField493_0;
 		setCallback(12);
 		call(new ENTITY_SETUP_SIIS(Milos, setup_enterExitCompartment), "611Bg", kObjectCompartmentG);
 		break;
@@ -302,7 +302,7 @@ IMPLEMENT_FUNCTION(Milos, chapter1, 12)
 		getObjects()->update(kObject46, kEntityNone, kLocationNone, kCursorKeepValue, kCursorKeepValue);
 
 		getData()->position = kPosition_4689;
-		getData()->field_493 = EntityData::kField493_1;
+		getData()->field_493 = kField493_1;
 		getData()->car = kCarRestaurant;
 
 		getSavePoints()->addData(kEntityMilos, kAction157691176, 0);
@@ -392,7 +392,7 @@ IMPLEMENT_FUNCTION(Milos, function17, 17)
 IMPLEMENT_FUNCTION(Milos, function18, 18)
 	if (savepoint.action == kActionDefault) {
 		getData()->position = kPosition_3050;
-		getData()->field_493 = EntityData::kField493_1;
+		getData()->field_493 = kField493_1;
 		getData()->car = kCarRedSleeping;
 
 		getEntities()->prepareSequences(kEntityMilos);
@@ -413,7 +413,7 @@ IMPLEMENT_FUNCTION(Milos, chapter2, 19)
 		getEntities()->prepareSequences(kEntityMilos);
 
 		getData()->position = kPosition_4689;
-		getData()->field_493 = EntityData::kField493_1;
+		getData()->field_493 = kField493_1;
 		getData()->car = kCarRestaurant;
 
 		getObjects()->update(kObjectCompartmentG, kEntityNone, kLocation3, kCursorHandKnock, kCursorHand);
@@ -489,7 +489,7 @@ IMPLEMENT_FUNCTION(Milos, chapter4, 28)
 		getEntities()->prepareSequences(kEntityMilos);
 
 		getData()->position = kPosition_3050;
-		getData()->field_493 = EntityData::kField493_1;
+		getData()->field_493 = kField493_1;
 		getData()->car = kCarRedSleeping;
 		getData()->inventoryItem = kItemNone;
 
@@ -518,7 +518,7 @@ IMPLEMENT_FUNCTION(Milos, function31, 31)
 	case kActionCallback:
 		switch (getCallback()) {
 		case 1:
-			getData()->field_493 = EntityData::kField493_0;
+			getData()->field_493 = kField493_0;
 			getObjects()->update(kObjectCompartmentG, kEntityNone, kLocation3, kCursorHandKnock, kCursorHand);
 
 			setCallback(2);
@@ -539,7 +539,7 @@ IMPLEMENT_FUNCTION(Milos, function32, 32)
 		getObjects()->update(kObjectCompartmentG, kEntityNone, kLocation3, kCursorHandKnock, kCursorHand);
 
 		getData()->position = kPosition_540;
-		getData()->field_493 = EntityData::kField493_1;
+		getData()->field_493 = kField493_1;
 		getData()->car = kCarCoalTender;
 		getData()->inventoryItem = kItemNone;
 	}
@@ -558,7 +558,7 @@ IMPLEMENT_FUNCTION(Milos, chapter5, 33)
 		getEntities()->prepareSequences(kEntityMilos);
 
 		getData()->position = kPosition_540;
-		getData()->field_493 = EntityData::kField493_1;
+		getData()->field_493 = kField493_1;
 		getData()->car = kCarCoalTender;
 		getData()->inventoryItem = kItemNone;
 

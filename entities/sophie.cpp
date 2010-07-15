@@ -46,7 +46,7 @@ namespace LastExpress {
 	case kActionDefault: \
 		getEntities()->prepareSequences(kEntitySophie); \
 		getData()->position = kPosition_4840; \
-		getData()->field_493 = EntityData::kField493_1; \
+		getData()->field_493 = kField493_1; \
 		getData()->car = kCarRedSleeping; \
 		getData()->clothes = kClothesDefault; \
 		getData()->inventoryItem = kItemNone; \
@@ -56,7 +56,7 @@ namespace LastExpress {
 #define DEFAULT_ACTION_IMPLEMENTATION() \
 	if (savepoint.action == kActionDefault) { \
 		getData()->position = kPosition_4840; \
-		getData()->field_493 = EntityData::kField493_1; \
+		getData()->field_493 = kField493_1; \
 		getData()->car = kCarRedSleeping; \
 		getEntities()->prepareSequences(kEntitySophie); \
 	}
@@ -196,7 +196,7 @@ IMPLEMENT_FUNCTION(Sophie, chapters_handler, 3)
 
 	case kAction292775040:
 		getData()->position = kPosition_9270;
-		getData()->field_493 = EntityData::kField493_0;
+		getData()->field_493 = kField493_0;
 		getData()->car = kCarKronos;
 
 		setCallback(4);
@@ -217,7 +217,7 @@ IMPLEMENT_FUNCTION(Sophie, chapter1, 4)
 
 	case kActionDefault:
 		getData()->position = kPosition_4840;
-		getData()->field_493 = EntityData::kField493_1;
+		getData()->field_493 = kField493_1;
 		getData()->car = kCarRedSleeping;
 		break;
 	}
@@ -262,7 +262,7 @@ IMPLEMENT_FUNCTION(Sophie, chapter5, 10)
 		getEntities()->prepareSequences(kEntitySophie);
 
 		getData()->position = kPosition_3969;
-		getData()->field_493 = EntityData::kField493_1;
+		getData()->field_493 = kField493_1;
 		getData()->car = kCarRestaurant;
 		getData()->inventoryItem = kItemNone;
 

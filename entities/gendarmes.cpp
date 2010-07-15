@@ -300,7 +300,7 @@ IMPLEMENT_FUNCTION(Gendarmes, function12, 12)
 
 	case kActionDefault:
 		getData()->position = kPosition_540;
-		getData()->field_493 = EntityData::kField493_0;
+		getData()->field_493 = kField493_0;
 		getData()->car = kCarGreenSleeping;
 
 		getProgress().field_14 = 29;

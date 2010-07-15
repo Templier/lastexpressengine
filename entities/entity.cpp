@@ -123,7 +123,7 @@ void Entity::function1(const SavePoint &savepoint) {
 
 	case kActionDefault:
 		getData()->position = kPositionNone;
-		getData()->field_493 = EntityData::kField493_0;
+		getData()->field_493 = kField493_0;
 		getData()->car = kCarGreenSleeping;
 		params->param1 = 10000;
 		break;
@@ -343,6 +343,11 @@ void Entity::enterExitCompartment(const SavePoint &savepoint) {
 	}
 }
 
+//////////////////////////////////////////////////////////////////////////
+// Parameters
+//  - Sequence
+//  - CarIndex
+//  - Position
 void Entity::updatePosition(const SavePoint &savepoint) {
 	EntityData::EntityParametersSIIS *params = (EntityData::EntityParametersSIIS*)_data->getCurrentParameters();
 

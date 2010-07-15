@@ -161,7 +161,28 @@ IMPLEMENT_FUNCTION_SSI(Rebecca, draw2, 14)
 }
 
 IMPLEMENT_FUNCTION(Rebecca, function15, 15)
-	error("Rebecca: callback function 15 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionDefault:
+		if (getEntities()->checkFields16())
+			getScenes()->loadSceneFromPosition(kCarRedSleeping, 49);
+
+		setCallback(1);
+		call(new ENTITY_SETUP_SIIS(Rebecca, setup_function8), "624Ae", kObjectCompartmentE);
+		break;
+
+	case kActionCallback:
+		if (getCallback() == 1) {
+			getObjects()->update(kObjectOutsideBetweenCompartments, kEntityNone, kLocationNone, kCursorKeepValue, kCursorKeepValue);
+			getData()->field_493 = kField493_1;
+			getEntities()->prepareSequences(kEntityRebecca);
+
+			CALLBACK_ACTION();
+		}
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION_I(Rebecca, function16, 16)
@@ -203,7 +224,7 @@ IMPLEMENT_FUNCTION(Rebecca, chapter1, 21)
 		getObjects()->updateLocation2(kObject110, kLocation1);
 
 		getData()->position = kPosition_2830;
-		getData()->field_493 = EntityData::kField493_1;
+		getData()->field_493 = kField493_1;
 		getData()->car = kCarRestaurant;
 
 		ENTITY_PARAM(0, 2) = 1;
@@ -359,7 +380,7 @@ IMPLEMENT_FUNCTION(Rebecca, function26, 26)
 IMPLEMENT_FUNCTION(Rebecca, function27, 27)
 	if (savepoint.action == kActionDefault) {
 		getData()->position = kPosition_4840;
-		getData()->field_493 = EntityData::kField493_1;
+		getData()->field_493 = kField493_1;
 		getData()->car = kCarRedSleeping;
 
 		getObjects()->update(kObjectCompartmentE, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
@@ -382,7 +403,7 @@ IMPLEMENT_FUNCTION(Rebecca, chapter2, 28)
 		getEntities()->prepareSequences(kEntityRebecca);
 
 		getData()->position = kPosition_4840;
-		getData()->field_493 = EntityData::kField493_1;
+		getData()->field_493 = kField493_1;
 		getData()->car = kCarRedSleeping;
 		getData()->clothes = kClothesDefault;
 		getData()->inventoryItem = kItemNone;
@@ -471,7 +492,7 @@ IMPLEMENT_FUNCTION(Rebecca, chapter3, 32)
 		getEntities()->prepareSequences(kEntityRebecca);
 
 		getData()->position = kPosition_4840;
-		getData()->field_493 = EntityData::kField493_1;
+		getData()->field_493 = kField493_1;
 		getData()->car = kCarRedSleeping;
 		getData()->clothes = kClothesDefault;
 		getData()->inventoryItem = kItemNone;
@@ -554,7 +575,7 @@ IMPLEMENT_FUNCTION(Rebecca, function39, 39)
 		getObjects()->update(kObject52, kEntityNone, kLocationNone, kCursorHandKnock, kCursorHand);
 
 		getData()->position = kPosition_6000;
-		getData()->field_493 = EntityData::kField493_1;
+		getData()->field_493 = kField493_1;
 		getData()->car = kCarKronos;
 		break;
 
@@ -590,7 +611,7 @@ IMPLEMENT_FUNCTION(Rebecca, chapter4, 42)
 		getEntities()->prepareSequences(kEntityRebecca);
 
 		getData()->position = kPosition_4840;
-		getData()->field_493 = EntityData::kField493_1;
+		getData()->field_493 = kField493_1;
 		getData()->car = kCarRedSleeping;
 		getData()->clothes = kClothesDefault;
 		getData()->inventoryItem = kItemNone;
@@ -637,7 +658,7 @@ IMPLEMENT_FUNCTION(Rebecca, function45, 45)
 
 	case kActionDefault:
 		getData()->position = kPosition_4840;
-		getData()->field_493 = EntityData::kField493_1;
+		getData()->field_493 = kField493_1;
 		getData()->car = kCarRedSleeping;
 
 		getObjects()->update(kObjectCompartmentE, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
@@ -673,7 +694,7 @@ IMPLEMENT_FUNCTION(Rebecca, chapter5, 46)
 		getEntities()->prepareSequences(kEntityRebecca);
 
 		getData()->position = kPosition_3969;
-		getData()->field_493 = EntityData::kField493_1;
+		getData()->field_493 = kField493_1;
 		getData()->car = kCarRestaurant;
 		getData()->inventoryItem = kItemNone;
 

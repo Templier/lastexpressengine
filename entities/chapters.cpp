@@ -352,7 +352,7 @@ label_chapter1_end:
 
 			getSavePoints()->push(kEntityChapters, kEntityTrain, kAction191350523);
 
-			if (getEntityData(kEntityNone)->field_493 != EntityData::kField493_2) {
+			if (getEntityData(kEntityNone)->field_493 != kField493_2) {
 				PLAY_STEAM();
 				break;
 			}
@@ -1012,7 +1012,7 @@ void Chapters::enterExitStation(const SavePoint &savepoint, bool isEnteringStati
 
 		getSavePoints()->push(kEntityChapters, kEntityTrain, kAction191350523);
 
-		if (getEntityData(kEntityNone)->field_493 != EntityData::kField493_2) {
+		if (getEntityData(kEntityNone)->field_493 != kField493_2) {
 			ENTITY_PARAM(0, 2) = 0;
 			enterExitHelper(savepoint, isEnteringStation);
 			return;

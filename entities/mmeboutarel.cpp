@@ -121,7 +121,7 @@ IMPLEMENT_FUNCTION(MmeBoutarel, chapter1, 10)
 		getObjects()->update(kObject51, kEntityNone, kLocationNone, kCursorHandKnock, kCursorHand);
 
 		getData()->position = kPosition_5790;
-		getData()->field_493 = EntityData::kField493_1;
+		getData()->field_493 = kField493_1;
 		getData()->car = kCarRedSleeping;
 		break;
 	}
@@ -163,7 +163,7 @@ IMPLEMENT_FUNCTION(MmeBoutarel, chapter1_handler, 12)
 			break;
 
 		case 3:
-			getData()->field_493 = EntityData::kField493_1;
+			getData()->field_493 = kField493_1;
 			params->param1 = 1;
 			getEntities()->prepareSequences(kEntityMmeBoutarel);
 			setup_function13();
@@ -192,7 +192,7 @@ IMPLEMENT_FUNCTION(MmeBoutarel, chapter1_handler, 12)
 
 	case kAction202221040:
 		getObjects()->update(kObjectCompartmentD, kEntityNone, kLocationNone, kCursorKeepValue, kCursorKeepValue);
-		getData()->field_493 = EntityData::kField493_0;
+		getData()->field_493 = kField493_0;
 
 		getSound()->playSound(kEntityMmeBoutarel, "MME1035A");
 
@@ -220,7 +220,7 @@ IMPLEMENT_FUNCTION(MmeBoutarel, function15, 15)
 IMPLEMENT_FUNCTION(MmeBoutarel, function16, 16)
 	if (savepoint.action == kActionDefault) {
 		getData()->position = kPosition_5790;
-		getData()->field_493 = EntityData::kField493_1;
+		getData()->field_493 = kField493_1;
 		getData()->car = kCarRedSleeping;
 
 		getObjects()->update(kObjectCompartmentD, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
@@ -243,7 +243,7 @@ IMPLEMENT_FUNCTION(MmeBoutarel, chapter2, 17)
 		getEntities()->prepareSequences(kEntityMmeBoutarel);
 
 		getData()->position = kPosition_4689;
-		getData()->field_493 = EntityData::kField493_1;
+		getData()->field_493 = kField493_1;
 		getData()->car = kCarRestaurant;
 		getData()->clothes = kClothesDefault;
 		getData()->inventoryItem = kItemNone;
@@ -277,7 +277,7 @@ IMPLEMENT_FUNCTION(MmeBoutarel, chapter3, 20)
 		getEntities()->prepareSequences(kEntityMmeBoutarel);
 
 		getData()->position = kPosition_5790;
-		getData()->field_493 = EntityData::kField493_1;
+		getData()->field_493 = kField493_1;
 		getData()->car = kCarRedSleeping;
 		getData()->clothes = kClothesDefault;
 		getData()->inventoryItem = kItemNone;
@@ -302,7 +302,7 @@ IMPLEMENT_FUNCTION(MmeBoutarel, chapter4, 22)
 		getEntities()->prepareSequences(kEntityMmeBoutarel);
 
 		getData()->position = kPosition_5790;
-		getData()->field_493 = EntityData::kField493_1;
+		getData()->field_493 = kField493_1;
 		getData()->car = kCarRedSleeping;
 		getData()->clothes = kClothesDefault;
 		getData()->inventoryItem = kItemNone;
@@ -323,7 +323,7 @@ IMPLEMENT_FUNCTION(MmeBoutarel, function25, 25)
 		getEntities()->prepareSequences(kEntityMmeBoutarel);
 
 		getData()->position = kPosition_5790;
-		getData()->field_493 = EntityData::kField493_1;
+		getData()->field_493 = kField493_1;
 		getData()->car = kCarRedSleeping;
 
 		getObjects()->update(kObjectCompartmentD, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
@@ -344,7 +344,7 @@ IMPLEMENT_FUNCTION(MmeBoutarel, chapter5, 26)
 		getEntities()->prepareSequences(kEntityMmeBoutarel);
 
 		getData()->position = kPosition_3969;
-		getData()->field_493 = EntityData::kField493_1;
+		getData()->field_493 = kField493_1;
 		getData()->car = kCarRestaurant;
 		getData()->clothes = kClothesDefault;
 		getData()->inventoryItem = kItemNone;

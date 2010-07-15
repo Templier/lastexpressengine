@@ -42,14 +42,6 @@ struct SavePoint;
 class EntityData : Common::Serializable {
 public:
 
-	enum Field493Value {
-		kField493_0 = 0,
-		kField493_1 = 1,
-		kField493_2 = 2,
-		kField493_3 = 3,
-		kField493_4 = 4
-	};
-
 	struct EntityParameters {
 	};
 
@@ -238,7 +230,7 @@ public:
 		byte field_48F;
 		byte current_call;
 		EntityPosition position;
-		Field493Value field_493;
+		EntityField493 field_493;
 		CarIndex car;					// word
 		byte field_497;
 		EntityIndex entity;             // byte
@@ -277,7 +269,7 @@ public:
 			field_48F = 0;
 			current_call = 0;
 			position = kPositionNone;
-			field_493 = EntityData::kField493_0;
+			field_493 = kField493_0;
 			car = kCarNone;
 			field_497 = 0;
 			entity = kEntityNone;

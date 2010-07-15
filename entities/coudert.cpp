@@ -276,7 +276,7 @@ IMPLEMENT_FUNCTION(Coudert, chapter1, 36)
 		ENTITY_PARAM(0, 2) = 1;
 
 		getData()->position = kPosition_1500;
-		getData()->field_493 = EntityData::kField493_0;
+		getData()->field_493 = kField493_0;
 		getData()->car = kCarRedSleeping;
 
 		getObjects()->updateLocation2(kObject111, kLocation1);
@@ -323,7 +323,7 @@ IMPLEMENT_FUNCTION(Coudert, chapter2, 42)
 		getEntities()->prepareSequences(kEntityCoudert);
 
 		getData()->position = kPosition_1500;
-		getData()->field_493 = EntityData::kField493_0;
+		getData()->field_493 = kField493_0;
 		getData()->car = kCarRedSleeping;
 		getData()->inventoryItem = kItemNone;
 
@@ -372,7 +372,7 @@ IMPLEMENT_FUNCTION(Coudert, chapter3, 44)
 		getEntities()->prepareSequences(kEntityCoudert);
 
 		getData()->position = kPosition_1500;
-		getData()->field_493 = EntityData::kField493_0;
+		getData()->field_493 = kField493_0;
 		getData()->car = kCarRedSleeping;
 		getData()->clothes = kClothesDefault;
 		getData()->inventoryItem = kItemNone;
@@ -447,7 +447,7 @@ IMPLEMENT_FUNCTION(Coudert, chapter4, 52)
 		getEntities()->prepareSequences(kEntityCoudert);
 
 		getData()->position = kPosition_1500;
-		getData()->field_493 = EntityData::kField493_0;
+		getData()->field_493 = kField493_0;
 		getData()->car = kCarRedSleeping;
 		getData()->clothes = kClothesDefault;
 		getData()->inventoryItem = kItemNone;
@@ -510,7 +510,7 @@ IMPLEMENT_FUNCTION(Coudert, chapter5, 57)
 		getEntities()->prepareSequences(kEntityCoudert);
 
 		getData()->position = kPosition_3969;
-		getData()->field_493 = EntityData::kField493_1;
+		getData()->field_493 = kField493_1;
 		getData()->car = kCarRestaurant;
 		getData()->inventoryItem = kItemNone;
 		break;
@@ -529,7 +529,7 @@ IMPLEMENT_FUNCTION(Coudert, function59, 59)
 
 	case kActionDefault:
 		getData()->position = kPosition_7500;
-		getData()->field_493 = EntityData::kField493_0;
+		getData()->field_493 = kField493_0;
 		getData()->car = kCarRedSleeping;
 
 		getSound()->playSound(kEntityCoudert, "Jac5010"); // Situation is under control, please remain in your compartment

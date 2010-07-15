@@ -85,11 +85,67 @@ IMPLEMENT_FUNCTION_II(Hadija, function5, 5)
 }
 
 IMPLEMENT_FUNCTION(Hadija, function6, 6)
-	error("Hadija: callback function 6 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionDefault:
+		getData()->position = kPosition_4070;
+
+		setCallback(1);
+		call(new ENTITY_SETUP_SIIS(Hadija, setup_enterExitCompartment), "619Cf", kObjectCompartment6);
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			setCallback(2);
+			call(new ENTITY_SETUP_SIIS(Hadija, setup_enterExitCompartment), "619Df", kObjectCompartment6);
+			break;
+
+		case 2:
+			getData()->position = kPosition_4070;
+			getEntities()->prepareSequences(kEntityHadija);
+
+			CALLBACK_ACTION();
+		}
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Hadija, function7, 7)
-	error("Hadija: callback function 7 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionDefault:
+		getData()->position = kPosition_2740;
+
+		setCallback(1);
+		call(new ENTITY_SETUP_SIIS(Hadija, setup_enterExitCompartment), "619Ch", kObjectCompartment8);
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			setCallback(2);
+			call(new ENTITY_SETUP_SIIS(Hadija, setup_enterExitCompartment), "619Dh", kObjectCompartment8);
+			break;
+
+		case 2:
+			getData()->position = kPosition_2740;
+			getEntities()->prepareSequences(kEntityHadija);
+
+			CALLBACK_ACTION();
+		}
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Hadija, function8, 8)
@@ -111,7 +167,7 @@ IMPLEMENT_FUNCTION(Hadija, chapter1, 10)
 
 	case kActionDefault:
 		getData()->position = kPosition_4070;
-		getData()->field_493 = EntityData::kField493_1;
+		getData()->field_493 = kField493_1;
 		getData()->car = kCarGreenSleeping;
 
 		break;
@@ -208,7 +264,7 @@ IMPLEMENT_FUNCTION(Hadija, function12, 12)
 		getObjects()->update(kObjectCompartment8, kEntityNone, kLocation3, kCursorHandKnock, kCursorHand);
 
 		getData()->position = kPosition_2740;
-		getData()->field_493 = EntityData::kField493_1;
+		getData()->field_493 = kField493_1;
 		getData()->car = kCarGreenSleeping;
 
 		getEntities()->prepareSequences(kEntityHadija);
@@ -221,7 +277,7 @@ IMPLEMENT_FUNCTION(Hadija, chapter2, 13)
 		getEntities()->prepareSequences(kEntityHadija);
 
 		getData()->position = kPosition_3050;
-		getData()->field_493 = EntityData::kField493_1;
+		getData()->field_493 = kField493_1;
 		getData()->car = kCarGreenSleeping;
 		getData()->clothes = kClothesDefault;
 		getData()->inventoryItem = kItemNone;
@@ -247,7 +303,7 @@ IMPLEMENT_FUNCTION(Hadija, chapter3, 15)
 		getEntities()->prepareSequences(kEntityHadija);
 
 		getData()->position = kPosition_4070;
-		getData()->field_493 = EntityData::kField493_1;
+		getData()->field_493 = kField493_1;
 		getData()->car = kCarGreenSleeping;
 
 		break;
@@ -269,7 +325,7 @@ IMPLEMENT_FUNCTION(Hadija, chapter4, 17)
 
 	case kActionDefault:
 		getData()->position = kPosition_4070;
-		getData()->field_493 = EntityData::kField493_1;
+		getData()->field_493 = kField493_1;
 		getData()->car = kCarGreenSleeping;
 		break;
 	}
@@ -284,7 +340,7 @@ IMPLEMENT_FUNCTION(Hadija, function19, 19)
 		getObjects()->update(kObjectCompartment8, kEntityNone, kLocation3, kCursorHandKnock, kCursorHand);
 
 		getData()->position = kPosition_4070;
-		getData()->field_493 = EntityData::kField493_1;
+		getData()->field_493 = kField493_1;
 		getData()->car = kCarGreenSleeping;
 
 		getEntities()->prepareSequences(kEntityHadija);
@@ -304,7 +360,7 @@ IMPLEMENT_FUNCTION(Hadija, chapter5, 20)
 		getEntities()->prepareSequences(kEntityHadija);
 
 		getData()->position = kPosition_3969;
-		getData()->field_493 = EntityData::kField493_1;
+		getData()->field_493 = kField493_1;
 		getData()->car = kCarRestaurant;
 		getData()->clothes = kClothesDefault;
 		getData()->inventoryItem = kItemNone;
@@ -330,7 +386,7 @@ IMPLEMENT_FUNCTION(Hadija, function22, 22)
 
 	case kActionDefault:
 		getData()->position = kPosition_5000;
-		getData()->field_493 = EntityData::kField493_0;
+		getData()->field_493 = kField493_0;
 		getData()->car = kCarGreenSleeping;
 		break;
 
@@ -366,7 +422,7 @@ IMPLEMENT_FUNCTION(Hadija, function23, 23)
 			getEntities()->prepareSequences(kEntityHadija);
 
 			getData()->position = kPosition_4840;
-			getData()->field_493 = EntityData::kField493_1;
+			getData()->field_493 = kField493_1;
 
 			getObjects()->update(kObjectCompartment5, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
 			break;

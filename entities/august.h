@@ -112,6 +112,7 @@ public:
 
 private:
 	DECLARE_CALL_FUNCTION(iiii, August, int, int, int, int)
+	DECLARE_CALL_FUNCTION(siis, August, const char *, int, int, const char *)
 };
 
 } // End of namespace LastExpress

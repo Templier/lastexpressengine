@@ -1630,7 +1630,7 @@ bool Action::handleOtherCompartment(ObjectIndex object, byte param2, byte param3
 
 	//////////////////////////////////////////////////////////////////////////
 	// Mertens
-	if (getEntityData(kEntityNone)->field_493 == EntityData::kField493_3
+	if (getEntityData(kEntityNone)->field_493 == kField493_3
 	 && getEntityData(kEntityMertens)->car == kCarGreenSleeping
 	 && !getEntityData(kEntityMertens)->field_493
 	 && !((EntityData::EntityParametersIIII*)getEntities()->get(kEntityMertens)->getParamData()->getParameters(8, 0))->param1)
@@ -1638,7 +1638,7 @@ bool Action::handleOtherCompartment(ObjectIndex object, byte param2, byte param3
 
 	//////////////////////////////////////////////////////////////////////////
 	// Coudert
-	if (getEntityData(kEntityNone)->field_493 != EntityData::kField493_4
+	if (getEntityData(kEntityNone)->field_493 != kField493_4
 	 || !getEntityData(kEntityCoudert)->car
 	 || getEntityData(kEntityCoudert)->field_493
 	 || ((EntityData::EntityParametersIIII*)getEntities()->get(kEntityCoudert)->getParamData()->getParameters(8, 0))->param1)

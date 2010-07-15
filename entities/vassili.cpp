@@ -189,7 +189,7 @@ label_function7:
 
 	case kActionDefault:
 		getData()->position = kPosition_8200;
-		getData()->field_493 = EntityData::kField493_1;
+		getData()->field_493 = kField493_1;
 		getData()->car = kCarRedSleeping;
 
 		getObjects()->update(kObjectCompartmentA, kEntityNone, kLocationNone, kCursorHandKnock, kCursorHand);
@@ -241,7 +241,7 @@ IMPLEMENT_FUNCTION(Vassili, function7, 7)
 
 	case kActionDefault:
 		getData()->position = kPosition_8200;
-		getData()->field_493 = EntityData::kField493_1;
+		getData()->field_493 = kField493_1;
 		getData()->car = kCarRedSleeping;
 
 		getEntities()->prepareSequences(kEntityVassili);
@@ -349,7 +349,7 @@ IMPLEMENT_FUNCTION(Vassili, seizure, 10)
 		if (getCallback() != 1)
 			break;
 
-		getData()->field_493 = EntityData::kField493_1;
+		getData()->field_493 = kField493_1;
 		getAction()->playAnimation(kEventVassiliSeizure);
 
         getObjects()->update(kObjectCompartmentA, kEntityNone, kLocationNone, kCursorHandKnock, kCursorHand);
@@ -384,7 +384,7 @@ IMPLEMENT_FUNCTION(Vassili, chapter2, 12)
 		getEntities()->prepareSequences(kEntityVassili);
 
 		getData()->position = kPosition_8200;
-		getData()->field_493 = EntityData::kField493_1;
+		getData()->field_493 = kField493_1;
 		getData()->car = kCarRedSleeping;
 		getData()->clothes = kClothesDefault;
 		getData()->inventoryItem = kItemNone;
@@ -442,7 +442,7 @@ IMPLEMENT_FUNCTION(Vassili, chapter3, 14)
 		getEntities()->prepareSequences(kEntityVassili);
 
 		getData()->position = kPosition_8200;
-		getData()->field_493 = EntityData::kField493_1;
+		getData()->field_493 = kField493_1;
 		getData()->car = kCarRedSleeping;
 		getData()->clothes = kClothesDefault;
 		getData()->inventoryItem = kItemNone;
@@ -522,7 +522,7 @@ IMPLEMENT_FUNCTION(Vassili, chapter4, 16)
 		getEntities()->prepareSequences(kEntityVassili);
 
 		getData()->position = kPosition_8200;
-		getData()->field_493 = EntityData::kField493_1;
+		getData()->field_493 = kField493_1;
 		getData()->car = kCarRedSleeping;
 		getData()->clothes = kClothesDefault;
 		getData()->inventoryItem = kItemNone;
@@ -573,7 +573,7 @@ IMPLEMENT_FUNCTION(Vassili, chapter5, 18)
 		getEntities()->prepareSequences(kEntityVassili);
 
 		getData()->position = kPosition_3969;
-		getData()->field_493 = EntityData::kField493_1;
+		getData()->field_493 = kField493_1;
 		getData()->car = kCarRestaurant;
 		getData()->clothes = kClothesDefault;
 		getData()->inventoryItem = kItemNone;

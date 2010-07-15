@@ -194,7 +194,7 @@ IMPLEMENT_FUNCTION(Servers0, chapter1, 11)
 		getSavePoints()->addData(kEntityServers0, kAction337548856, 9);
 
 		getData()->position = kPosition_5900;
-		getData()->field_493 = EntityData::kField493_0;
+		getData()->field_493 = kField493_0;
 		getData()->car = kCarRestaurant;
 		break;
 	}
@@ -254,7 +254,7 @@ IMPLEMENT_FUNCTION(Servers0, function21, 21)
 IMPLEMENT_FUNCTION(Servers0, function22, 22)
 	if (savepoint.action == kActionDefault) {
 		getData()->position = kPosition_5900;
-		getData()->field_493 = EntityData::kField493_0;
+		getData()->field_493 = kField493_0;
 		getData()->car = kCarRestaurant;
 
 		getEntities()->prepareSequences(kEntityServers0);
@@ -274,7 +274,7 @@ IMPLEMENT_FUNCTION(Servers0, chapter2, 23)
 		getEntities()->prepareSequences(kEntityServers0);
 
 		getData()->position = kPosition_5900;
-		getData()->field_493 = EntityData::kField493_0;
+		getData()->field_493 = kField493_0;
 		getData()->car = kCarRestaurant;
 		getData()->clothes = kClothes1;
 		getData()->inventoryItem = kItemNone;
@@ -339,7 +339,7 @@ IMPLEMENT_FUNCTION(Servers0, chapter3, 27)
 		getEntities()->prepareSequences(kEntityServers0);
 
 		getData()->position = kPosition_5900;
-		getData()->field_493 = EntityData::kField493_0;
+		getData()->field_493 = kField493_0;
 		getData()->car = kCarRestaurant;
 		getData()->clothes = kClothes1;
 		getData()->inventoryItem = kItemNone;
@@ -379,7 +379,7 @@ IMPLEMENT_FUNCTION(Servers0, chapter4, 31)
 		getEntities()->prepareSequences(kEntityServers0);
 
 		getData()->position = kPosition_5900;
-		getData()->field_493 = EntityData::kField493_0;
+		getData()->field_493 = kField493_0;
 		getData()->car = kCarRestaurant;
 		getData()->clothes = kClothesDefault;
 		getData()->inventoryItem = kItemNone;
@@ -423,7 +423,7 @@ IMPLEMENT_FUNCTION(Servers0, chapter5, 36)
 		getEntities()->prepareSequences(kEntityServers0);
 
 		getData()->position = kPosition_3969;
-		getData()->field_493 = EntityData::kField493_1;
+		getData()->field_493 = kField493_1;
 		getData()->car = kCarRestaurant;
 		getData()->inventoryItem = kItemNone;
 		break;
@@ -444,7 +444,7 @@ void Servers0::handleServer(const SavePoint &savepoint, const char* name, Entity
 
 	case kActionDefault:
 		getData()->position = kPosition_5800;
-		getData()->field_493 = EntityData::kField493_0;
+		getData()->field_493 = kField493_0;
 
 		setCallback(1);
 		call(new ENTITY_SETUP_SIIS(Servers0, setup_function3), name);
