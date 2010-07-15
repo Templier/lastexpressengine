@@ -42,117 +42,12 @@ struct SavePoint;
 class EntityData : Common::Serializable {
 public:
 
-	enum Field491Value {
-		kField491_0     = 0,
-		kField491_1     = 1,
-		kField491_3     = 3,
-		kField491_4     = 4,
-		kField491_540   = 540,
-		kField491_750  = 750,
-		kField491_850   = 850,
-		kField491_851   = 851,
-		kField491_1200  = 1200,
-		kField491_1430  = 1430,
-		kField491_1500  = 1500,
-		kField491_1540  = 1540,
-		kField491_1750  = 1750,
-		kField491_2000  = 2000,
-		kField491_2087  = 2087,
-		kField491_2086  = 2086,
-		kField491_2088  = 2088,
-		kField491_2110  = 2110,
-		kField491_2300  = 2300,
-		kField491_2410  = 2410,
-		kField491_2436  = 2436,
-		kField491_2490  = 2490,
-		kField491_2500  = 2500,
-		kField491_2587  = 2587,
-		kField491_2690  = 2690,
-		kField491_2740  = 2740,
-		kField491_2830  = 2830,
-		kField491_2980  = 2980,
-		kField491_3050  = 3050,
-		kField491_3110  = 3110,
-		kField491_3390  = 3390,
-		kField491_3450  = 3450,
-		kField491_3500  = 3500,
-		kField491_3650  = 3650,
-		kField491_3760  = 3760,
-		kField491_3820  = 3820,
-		kField491_3890  = 3890,
-		kField491_3969  = 3969,
-		kField491_3970  = 3970,
-		kField491_4070  = 4070,
-		kField491_4100  = 4100,
-		kField491_4455  = 4455,
-		kField491_4460  = 4460,
-		kField491_4500  = 4500,
-		kField491_4590  = 4590,
-		kField491_4680  = 4680,
-		kField491_4689  = 4689,
-		kField491_4690  = 4690,
-		kField491_4691  = 4691,
-		kField491_4770  = 4470,
-		kField491_4840  = 4840,
-		kField491_5000  = 5000,
-		kField491_5090  = 5090,
-		kField491_5140  = 5140,
-		kField491_5419  = 5419,
-		kField491_5420  = 5420,
-		kField491_5440  = 5440,
-		kField491_5500  = 5500,
-		kField491_5540  = 5540,
-		kField491_5610  = 5610,
-		kField491_5790  = 5790,
-		kField491_5800  = 5800,
-		kField491_5810  = 5810,
-		kField491_5900  = 5900,
-		kField491_6000  = 6000,
-		kField491_6130  = 6130,
-		kField491_6160  = 6160,
-		kField491_6220  = 6220,
-		kField491_6410  = 6410,
-		kField491_6460  = 6460,
-		kField491_6470  = 6470,
-		kField491_6471  = 6471,
-		kField491_6800  = 6800,
-		kField491_6850  = 6850,
-		kField491_7000  = 7000,
-		kField491_7160  = 7160,
-		kField491_7250  = 7250,
-		kField491_7320  = 7320,
-		kField491_7500  = 7500,
-		kField491_7510  = 7510,
-		kField491_7850  = 7850,
-		kField491_7870  = 7870,
-		kField491_7900  = 7900,
-		kField491_7950  = 7950,
-		kField491_8000  = 8000,
-		kField491_8013  = 8013,
-		kField491_8160  = 8160,
-		kField491_8200  = 8200,
-		kField491_8500  = 8500,
-		kField491_8513  = 8513,
-		kField491_8514  = 8514,
-		kField491_8800  = 8800,
-		kField491_9020  = 9020,
-		kField491_9269  = 9269,
-		kField491_9250  = 9250,
-		kField491_9270  = 9270,
-		kField491_9460  = 9460,
-		kField491_30000 = 30000
-	};
-
 	enum Field493Value {
 		kField493_0 = 0,
 		kField493_1 = 1,
 		kField493_2 = 2,
 		kField493_3 = 3,
 		kField493_4 = 4
-	};
-
-	enum ParameterValue {
-		kParamTime = 2147483647
 	};
 
 	struct EntityParameters {
@@ -342,7 +237,7 @@ public:
 		uint16 field_48D;
 		byte field_48F;
 		byte current_call;
-		Field491Value field_491;
+		EntityPosition position;
 		Field493Value field_493;
 		CarIndex car;					// word
 		byte field_497;
@@ -355,7 +250,7 @@ public:
 		int16 field_4A1;
 		int16 field_4A3;
 		ClothesIndex clothes;			// byte
-		byte position;
+		byte positionId;
 		CarIndex car2;                  // byte
 		bool doProcessEntity;			// byte
 		byte field_4A9;
@@ -381,7 +276,7 @@ public:
 			field_48D = 0;
 			field_48F = 0;
 			current_call = 0;
-			field_491 = EntityData::kField491_0;
+			position = kPositionNone;
 			field_493 = EntityData::kField493_0;
 			car = kCarNone;
 			field_497 = 0;
@@ -394,7 +289,7 @@ public:
 			field_4A1 = 0;
 			field_4A3 = 30;
 			clothes = kClothesDefault;
-			position = 0;
+			positionId = 0;
 			car2 = kCarNone;
 			doProcessEntity = false;
 			field_4A9 = 0;

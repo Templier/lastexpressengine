@@ -117,12 +117,12 @@ void Entity::function1(const SavePoint &savepoint) {
 		break;
 
 	case kActionNone:
-		if (getEntities()->checkEntity(_entityIndex, kCarGreenSleeping, (EntityData::Field491Value)params->param1))
+		if (getEntities()->checkEntity(_entityIndex, kCarGreenSleeping, (EntityPosition)params->param1))
 			params->param1 = (params->param1 == 10000) ? 0 : 10000;
 		break;
 
 	case kActionDefault:
-		getData()->field_491 = EntityData::kField491_0;
+		getData()->position = kPositionNone;
 		getData()->field_493 = EntityData::kField493_0;
 		getData()->car = kCarGreenSleeping;
 		params->param1 = 10000;
@@ -289,7 +289,7 @@ void Entity::checkEntity(const SavePoint &savepoint) {
 
 	case kActionNone:
 	case kActionDefault:
-		if (getEntities()->checkEntity(_entityIndex, (CarIndex)params->param1, (EntityData::Field491Value)params->param2))
+		if (getEntities()->checkEntity(_entityIndex, (CarIndex)params->param1, (EntityPosition)params->param2))
 			CALLBACK_ACTION()
 		break;
 	}

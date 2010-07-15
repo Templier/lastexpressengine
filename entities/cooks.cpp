@@ -241,7 +241,7 @@ IMPLEMENT_FUNCTION(Cooks, chapter1, 5)
 		break;
 
 	case kActionDefault:
-		getData()->field_491 = EntityData::kField491_5900;
+		getData()->position = kPosition_5900;
 		getData()->field_493 = EntityData::kField493_0;
 		getData()->car = kCarRestaurant;
 
@@ -329,7 +329,7 @@ IMPLEMENT_FUNCTION(Cooks, function7, 7)
 		break;
 
 	case kActionDefault:
-		getData()->field_491 = EntityData::kField491_3650;
+		getData()->position = kPosition_3650;
 		getData()->field_493 = EntityData::kField493_0;
 		getData()->car = kCarRestaurant;
 
@@ -350,7 +350,7 @@ IMPLEMENT_FUNCTION(Cooks, chapter2, 8)
 	case kActionDefault:
 		getEntities()->prepareSequences(kEntityCooks);
 
-		getData()->field_491 = EntityData::kField491_5900;
+		getData()->position = kPosition_5900;
 		getData()->field_493 = EntityData::kField493_0;
 		getData()->car = kCarRestaurant;
 		getData()->inventoryItem = kItemNone;
@@ -408,7 +408,7 @@ IMPLEMENT_FUNCTION(Cooks, chapter3, 10)
 	case kActionDefault:
 		getEntities()->prepareSequences(kEntityCooks);
 
-		getData()->field_491 = EntityData::kField491_5900;
+		getData()->position = kPosition_5900;
 		getData()->car = kCarRestaurant;
 		getData()->inventoryItem = kItemNone;
 
@@ -429,7 +429,7 @@ IMPLEMENT_FUNCTION(Cooks, function11, 11)
 		if (params->param4) {
 			if (params->param4 > (int)getState()->time)
 				goto update_params;
-			params->param4 = EntityData::kParamTime;
+			params->param4 = kTimeInvalid;
 		} else {
 			params->param4 = params->param2 + (int)getState()->time;
 		}
@@ -506,7 +506,7 @@ IMPLEMENT_FUNCTION(Cooks, chapter4, 12)
 	case kActionDefault:
 		getEntities()->prepareSequences(kEntityCooks);
 
-		getData()->field_491 = EntityData::kField491_5900;
+		getData()->position = kPosition_5900;
 		getData()->field_493 = EntityData::kField493_0;
 		getData()->car = kCarRestaurant;
 		getData()->inventoryItem = kItemNone;

@@ -85,7 +85,24 @@ IMPLEMENT_FUNCTION_II(Alouan, function5, 5)
 }
 
 IMPLEMENT_FUNCTION(Alouan, function6, 6)
-	error("Alouan: callback function 6 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionDefault:
+		getData()->position = kPosition_4070;
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			break;
+		}
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Alouan, function7, 7)
@@ -110,7 +127,7 @@ IMPLEMENT_FUNCTION(Alouan, chapter1, 10)
 		break;
 
 	case kActionDefault:
-		getData()->field_491 = EntityData::kField491_2740;
+		getData()->position = kPosition_2740;
 		getData()->field_493 = EntityData::kField493_1;
 		getData()->car = kCarGreenSleeping;
 
@@ -130,13 +147,13 @@ IMPLEMENT_FUNCTION(Alouan, chapter1_handler, 11)
 label_callback1:
 		if (getState()->time > kTimeYasmin_7 && !params->param2) {
 			params->param2 = 1;
-			getSavePoints()->push(kEntityAlouan, kEntityTrain, kAction191070912, EntityData::kField491_4070);
-			getData()->field_491 = EntityData::kField491_4070;
+			getSavePoints()->push(kEntityAlouan, kEntityTrain, kAction191070912, kPosition_4070);
+			getData()->position = kPosition_4070;
 		}
 
 		if (getState()->time > kTimeAlouan_1 && !params->param3) {
 			params->param3 = 1;
-			getSavePoints()->push(kEntityAlouan, kEntityTrain, kAction191070912, EntityData::kField491_4840);
+			getSavePoints()->push(kEntityAlouan, kEntityTrain, kAction191070912, kPosition_4840);
 
 			setCallback(2);
 			call(new ENTITY_SETUP(Alouan, setup_function8));
@@ -149,7 +166,7 @@ label_callback1:
 			break;
 
 		case 1:
-			getData()->field_491 = EntityData::kField491_4840;
+			getData()->position = kPosition_4840;
 			goto label_callback1;
 		}
 		break;
@@ -161,7 +178,7 @@ IMPLEMENT_FUNCTION(Alouan, function12, 12)
 		getObjects()->update(kObjectCompartment7, kEntityNone, kLocation3, kCursorHandKnock, kCursorHand);
 		getObjects()->update(kObjectCompartment5, kEntityNone, kLocation3, kCursorHandKnock, kCursorHand);
 
-		getData()->field_491 = EntityData::kField491_4070;
+		getData()->position = kPosition_4070;
 		getData()->field_493 = EntityData::kField493_1;
 		getData()->car = kCarGreenSleeping;
 
@@ -175,7 +192,7 @@ IMPLEMENT_FUNCTION(Alouan, chapter2, 13)
 
 	getEntities()->prepareSequences(kEntityAlouan);
 
-	getData()->field_491 = EntityData::kField491_2740;
+	getData()->position = kPosition_2740;
 	getData()->field_493 = EntityData::kField493_1;
 	getData()->car = kCarGreenSleeping;
 	getData()->clothes = kClothesDefault;
@@ -200,7 +217,7 @@ IMPLEMENT_FUNCTION(Alouan, chapter3, 15)
 	case kActionDefault:
 		getEntities()->prepareSequences(kEntityAlouan);
 
-		getData()->field_491 = EntityData::kField491_2740;
+		getData()->position = kPosition_2740;
 		getData()->field_493 = EntityData::kField493_1;
 		getData()->car = kCarGreenSleeping;
 
@@ -224,7 +241,7 @@ IMPLEMENT_FUNCTION(Alouan, chapter4, 17)
 	case kActionDefault:
 		getEntities()->prepareSequences(kEntityAlouan);
 
-		getData()->field_491 = EntityData::kField491_2740;
+		getData()->position = kPosition_2740;
 		getData()->field_493 = EntityData::kField493_1;
 		getData()->car = kCarGreenSleeping;
 
@@ -241,7 +258,7 @@ IMPLEMENT_FUNCTION(Alouan, function19, 19)
 		getObjects()->update(kObjectCompartment7, kEntityNone, kLocation3, kCursorHandKnock, kCursorHand);
 		getObjects()->update(kObjectCompartment5, kEntityNone, kLocation3, kCursorHandKnock, kCursorHand);
 
-		getData()->field_491 = EntityData::kField491_2740;
+		getData()->position = kPosition_2740;
 		getData()->field_493 = EntityData::kField493_1;
 		getData()->car = kCarGreenSleeping;
 
@@ -261,7 +278,7 @@ IMPLEMENT_FUNCTION(Alouan, chapter5, 20)
 	case kActionDefault:
 		getEntities()->prepareSequences(kEntityAlouan);
 
-		getData()->field_491 = EntityData::kField491_3969;
+		getData()->position = kPosition_3969;
 		getData()->field_493 = EntityData::kField493_1;
 		getData()->car = kCarRestaurant;
 		getData()->clothes = kClothesDefault;
@@ -287,7 +304,7 @@ IMPLEMENT_FUNCTION(Alouan, function22, 22)
 		break;
 
 	case kActionDefault:
-		getData()->field_491 = EntityData::kField491_5000;
+		getData()->position = kPosition_5000;
 		getData()->field_493 = EntityData::kField493_0;
 		getData()->car = kCarGreenSleeping;
 		break;
@@ -307,7 +324,7 @@ IMPLEMENT_FUNCTION(Alouan, function23, 23)
 
 	case kActionDefault:
 		setCallback(1);
-		call(new ENTITY_SETUP(Alouan, setup_function5), kCarGreenSleeping, EntityData::kField491_4070);
+		call(new ENTITY_SETUP(Alouan, setup_function5), kCarGreenSleeping, kPosition_4070);
 		break;
 
 	case kActionCallback:
@@ -323,7 +340,7 @@ IMPLEMENT_FUNCTION(Alouan, function23, 23)
 		case 2:
 			getEntities()->prepareSequences(kEntityAlouan);
 
-			getData()->field_491 = EntityData::kField491_4070;
+			getData()->position = kPosition_4070;
 			getData()->field_493 = EntityData::kField493_1;
 
 			getObjects()->update(kObjectCompartment6, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);

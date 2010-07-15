@@ -77,8 +77,8 @@ IMPLEMENT_FUNCTION_II(Kronos, savegame, 2)
 }
 
 // Parameters:
-//  - car
-//  - field491
+//  - CarIndex
+//  - EntityPosition
 IMPLEMENT_FUNCTION_II(Kronos, function3, 3)
 	Entity::checkEntity(savepoint);
 }
@@ -105,7 +105,7 @@ IMPLEMENT_FUNCTION(Kronos, chapter1, 7)
 		break;
 
 	case kActionDefault:
-		getData()->field_491 = EntityData::kField491_6000;
+		getData()->position = kPosition_6000;
 		getData()->field_493 = EntityData::kField493_1;
 		getData()->car = kCarKronos;
 
@@ -170,7 +170,7 @@ IMPLEMENT_FUNCTION(Kronos, function10, 10)
 	break;
 
 	case kActionDefault:
-		getData()->field_491 = EntityData::kField491_6000;
+		getData()->position = kPosition_6000;
 		getData()->field_493 = EntityData::kField493_0;
 		getData()->car = kCarKronos;
 
@@ -190,7 +190,7 @@ IMPLEMENT_FUNCTION(Kronos, function11, 11)
 		break;
 
 	case kActionDefault:
-		getData()->field_491 = EntityData::kField491_7000;
+		getData()->position = kPosition_7000;
 
 		if (!getSound()->isBuffered(kEntityKronos))
 			getSound()->playSound(kEntityKronos, "KRO1001");
@@ -215,7 +215,7 @@ IMPLEMENT_FUNCTION(Kronos, chapter3, 13)
 	case kActionDefault:
 		getEntities()->prepareSequences(kEntityKronos);
 
-		getData()->field_491 = EntityData::kField491_6000;
+		getData()->position = kPosition_6000;
 		getData()->field_493 = EntityData::kField493_0;
 		getData()->car = kCarKronos;
 		getData()->clothes = kClothesDefault;
@@ -292,12 +292,12 @@ IMPLEMENT_FUNCTION(Kronos, function17, 17)
 		break;
 
 	case kActionDefault:
-		getData()->field_491 = EntityData::kField491_7500;
+		getData()->position = kPosition_7500;
 		getData()->field_493 = EntityData::kField493_0;
 		getData()->car = kCarRedSleeping;
 
 		setCallback(1);
-		call(new ENTITY_SETUP(Kronos, setup_function3), kCarGreenSleeping, EntityData::kField491_9270);
+		call(new ENTITY_SETUP(Kronos, setup_function3), kCarGreenSleeping, kPosition_9270);
 		break;
 
 	case kActionCallback:

@@ -170,7 +170,7 @@ IMPLEMENT_FUNCTION(Ivo, chapter1, 14)
 		getObjects()->update(kObjectCompartmentH, kEntityNone, kLocation3, kCursorHandKnock, kCursorHand);
 		getObjects()->update(kObject47, kEntityNone, kLocationNone, kCursorKeepValue, kCursorKeepValue);
 
-		getData()->field_491 = EntityData::kField491_4691;
+		getData()->position = kPosition_4691;
 		getData()->field_493 = EntityData::kField493_1;
 		getData()->car = kCarRestaurant;
 
@@ -184,7 +184,7 @@ IMPLEMENT_FUNCTION(Ivo, chapter1_handler, 15)
 		break;
 
 	case kActionNone:
-		getData()->field_491 = getEntityData(kEntityMilos)->field_491;
+		getData()->position = getEntityData(kEntityMilos)->position;
 		getData()->field_493 = getEntityData(kEntityMilos)->field_493;
 		break;
 
@@ -218,7 +218,7 @@ IMPLEMENT_FUNCTION(Ivo, function16, 16)
 
 IMPLEMENT_FUNCTION(Ivo, function17, 17)
 	if (savepoint.action == kActionDefault) {
-		getData()->field_491 = EntityData::kField491_2740;
+		getData()->position = kPosition_2740;
 		getData()->field_493 = EntityData::kField493_1;
 		getData()->car = kCarRedSleeping;
 
@@ -239,7 +239,7 @@ IMPLEMENT_FUNCTION(Ivo, chapter2, 18)
 	case kActionDefault:
 		getEntities()->prepareSequences(kEntityIvo);
 
-		getData()->field_491 = EntityData::kField491_2740;
+		getData()->position = kPosition_2740;
 		getData()->field_493 = EntityData::kField493_1;
 		getData()->car = kCarRedSleeping;
 		getData()->clothes = kClothesDefault;
@@ -262,7 +262,7 @@ IMPLEMENT_FUNCTION(Ivo, function20, 20)
 
 IMPLEMENT_FUNCTION(Ivo, function21, 21)
 	if (savepoint.action == kActionDefault) {
-		getData()->field_491 = EntityData::kField491_2740;
+		getData()->position = kPosition_2740;
 		getData()->field_493 = EntityData::kField493_1;
 		getData()->car = kCarRedSleeping;
 
@@ -282,7 +282,7 @@ IMPLEMENT_FUNCTION(Ivo, chapter3, 22)
 	case kActionDefault:
 		getEntities()->prepareSequences(kEntityIvo);
 
-		getData()->field_491 = EntityData::kField491_2740;
+		getData()->position = kPosition_2740;
 		getData()->field_493 = EntityData::kField493_1;
 		getData()->car = kCarRedSleeping;
 		getData()->clothes = kClothesDefault;
@@ -371,7 +371,7 @@ IMPLEMENT_FUNCTION(Ivo, function28, 28)
 		if (getState()->time > kTimeIvo_1 && !params->param1) {
 			params->param1 = 1;
 			setCallback(1);
-			call(new ENTITY_SETUP(Ivo, setup_function6), kCarRedSleeping, EntityData::kField491_2740);
+			call(new ENTITY_SETUP(Ivo, setup_function6), kCarRedSleeping, kPosition_2740);
 		}
 		break;
 
@@ -395,7 +395,7 @@ IMPLEMENT_FUNCTION(Ivo, function29, 29)
 		getEntities()->prepareSequences(kEntityIvo);
 		getObjects()->update(kObjectCompartmentH, kEntityNone, kLocation3, kCursorHandKnock, kCursorHand);
 
-		getData()->field_491 = EntityData::kField491_2740;
+		getData()->position = kPosition_2740;
 		getData()->field_493 = EntityData::kField493_1;
 		getData()->car = kCarRedSleeping;
 		getData()->inventoryItem = kItemNone;
@@ -414,7 +414,7 @@ IMPLEMENT_FUNCTION(Ivo, chapter5, 30)
 	case kActionDefault:
 		getEntities()->prepareSequences(kEntityIvo);
 
-		getData()->field_491 = EntityData::kField491_540;
+		getData()->position = kPosition_540;
 		getData()->field_493 = EntityData::kField493_1;
 		getData()->car = kCarBaggageRear;
 		getData()->inventoryItem = kItemNone;

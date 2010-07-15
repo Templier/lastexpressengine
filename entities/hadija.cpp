@@ -110,7 +110,7 @@ IMPLEMENT_FUNCTION(Hadija, chapter1, 10)
 		break;
 
 	case kActionDefault:
-		getData()->field_491 = EntityData::kField491_4070;
+		getData()->position = kPosition_4070;
 		getData()->field_493 = EntityData::kField493_1;
 		getData()->car = kCarGreenSleeping;
 
@@ -124,17 +124,17 @@ IMPLEMENT_FUNCTION(Hadija, chapter1_handler, 11)
 		break;
 
 	case kActionNone:
-		TIME_CHECK_PLAYSOUND_2(Hadija, kTimeParisEpernay, params->param1, 1, "Har1100", EntityData::kField491_4840);
+		TIME_CHECK_PLAYSOUND_2(Hadija, kTimeParisEpernay, params->param1, 1, "Har1100", kPosition_4840);
 
 label_callback1:
 		TIME_CHECK_CALLBACK(Hadija, kTimeRebecca_1_1, params->param2, 2, setup_function8);
 
 label_callback2:
-		if (params->param3 != EntityData::kParamTime && getState()->time > kTimeAnna) {
+		if (params->param3 != kTimeInvalid && getState()->time > kTimeAnna) {
 
 			if (getState()->time <= kTimeHadija_1_2) {
 
-				if (!getEntities()->checkFields7(kCarGreenSleeping) || !getEntities()->checkFields1(kEntityMahmud, kCarGreenSleeping, EntityData::kField491_5790) || !params->param3) {
+				if (!getEntities()->checkFields7(kCarGreenSleeping) || !getEntities()->checkFields1(kEntityMahmud, kCarGreenSleeping, kPosition_5790) || !params->param3) {
 					params->param3 = getState()->time + 75;
 
 					if (!params->param3) {
@@ -148,7 +148,7 @@ label_callback2:
 					return;
 			}
 
-			params->param3 = EntityData::kParamTime;
+			params->param3 = kTimeInvalid;
 
 			setCallback(3);
 			call(new ENTITY_SETUP(Hadija, setup_function7));
@@ -158,10 +158,10 @@ label_callback3:
 		TIME_CHECK_CALLBACK(Hadija, kTimeHadija_1, params->param4, 4, setup_function9);
 
 label_callback4:
-		if (params->param5 != EntityData::kParamTime && getState()->time > kTimeTables1) {
+		if (params->param5 != kTimeInvalid && getState()->time > kTimeTables1) {
 			if (getState()->time <= kTimeHadija_1_1) {
 
-				if (!getEntities()->checkFields7(kCarGreenSleeping) || !getEntities()->checkFields1(kEntityMahmud, kCarGreenSleeping, EntityData::kField491_5790) || !params->param5) {
+				if (!getEntities()->checkFields7(kCarGreenSleeping) || !getEntities()->checkFields1(kEntityMahmud, kCarGreenSleeping, kPosition_5790) || !params->param5) {
 					params->param5 = getState()->time + 75;
 
 					if (!params->param5) {
@@ -175,7 +175,7 @@ label_callback4:
 					return;
 			}
 
-			params->param5 = EntityData::kParamTime;
+			params->param5 = kTimeInvalid;
 
 			setCallback(5);
 			call(new ENTITY_SETUP(Hadija, setup_function6));
@@ -207,7 +207,7 @@ IMPLEMENT_FUNCTION(Hadija, function12, 12)
 	if (savepoint.action == kActionDefault) {
 		getObjects()->update(kObjectCompartment8, kEntityNone, kLocation3, kCursorHandKnock, kCursorHand);
 
-		getData()->field_491 = EntityData::kField491_2740;
+		getData()->position = kPosition_2740;
 		getData()->field_493 = EntityData::kField493_1;
 		getData()->car = kCarGreenSleeping;
 
@@ -220,7 +220,7 @@ IMPLEMENT_FUNCTION(Hadija, chapter2, 13)
 
 		getEntities()->prepareSequences(kEntityHadija);
 
-		getData()->field_491 = EntityData::kField491_3050;
+		getData()->position = kPosition_3050;
 		getData()->field_493 = EntityData::kField493_1;
 		getData()->car = kCarGreenSleeping;
 		getData()->clothes = kClothesDefault;
@@ -246,7 +246,7 @@ IMPLEMENT_FUNCTION(Hadija, chapter3, 15)
 	case kActionDefault:
 		getEntities()->prepareSequences(kEntityHadija);
 
-		getData()->field_491 = EntityData::kField491_4070;
+		getData()->position = kPosition_4070;
 		getData()->field_493 = EntityData::kField493_1;
 		getData()->car = kCarGreenSleeping;
 
@@ -268,7 +268,7 @@ IMPLEMENT_FUNCTION(Hadija, chapter4, 17)
 		break;
 
 	case kActionDefault:
-		getData()->field_491 = EntityData::kField491_4070;
+		getData()->position = kPosition_4070;
 		getData()->field_493 = EntityData::kField493_1;
 		getData()->car = kCarGreenSleeping;
 		break;
@@ -283,7 +283,7 @@ IMPLEMENT_FUNCTION(Hadija, function19, 19)
 	if (savepoint.action == kActionDefault) {
 		getObjects()->update(kObjectCompartment8, kEntityNone, kLocation3, kCursorHandKnock, kCursorHand);
 
-		getData()->field_491 = EntityData::kField491_4070;
+		getData()->position = kPosition_4070;
 		getData()->field_493 = EntityData::kField493_1;
 		getData()->car = kCarGreenSleeping;
 
@@ -303,7 +303,7 @@ IMPLEMENT_FUNCTION(Hadija, chapter5, 20)
 	case kActionDefault:
 		getEntities()->prepareSequences(kEntityHadija);
 
-		getData()->field_491 = EntityData::kField491_3969;
+		getData()->position = kPosition_3969;
 		getData()->field_493 = EntityData::kField493_1;
 		getData()->car = kCarRestaurant;
 		getData()->clothes = kClothesDefault;
@@ -329,7 +329,7 @@ IMPLEMENT_FUNCTION(Hadija, function22, 22)
 		break;
 
 	case kActionDefault:
-		getData()->field_491 = EntityData::kField491_5000;
+		getData()->position = kPosition_5000;
 		getData()->field_493 = EntityData::kField493_0;
 		getData()->car = kCarGreenSleeping;
 		break;
@@ -349,7 +349,7 @@ IMPLEMENT_FUNCTION(Hadija, function23, 23)
 
 	case kActionDefault:
 		setCallback(1);
-		call(new ENTITY_SETUP(Hadija, setup_function5), kCarGreenSleeping, EntityData::kField491_4070);
+		call(new ENTITY_SETUP(Hadija, setup_function5), kCarGreenSleeping, kPosition_4070);
 		break;
 
 	case kActionCallback:
@@ -365,7 +365,7 @@ IMPLEMENT_FUNCTION(Hadija, function23, 23)
 		case 2:
 			getEntities()->prepareSequences(kEntityHadija);
 
-			getData()->field_491 = EntityData::kField491_4840;
+			getData()->position = kPosition_4840;
 			getData()->field_493 = EntityData::kField493_1;
 
 			getObjects()->update(kObjectCompartment5, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);

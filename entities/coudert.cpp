@@ -275,7 +275,7 @@ IMPLEMENT_FUNCTION(Coudert, chapter1, 36)
 		ENTITY_PARAM(0, 1) = 0;
 		ENTITY_PARAM(0, 2) = 1;
 
-		getData()->field_491 = EntityData::kField491_1500;
+		getData()->position = kPosition_1500;
 		getData()->field_493 = EntityData::kField493_0;
 		getData()->car = kCarRedSleeping;
 
@@ -322,7 +322,7 @@ IMPLEMENT_FUNCTION(Coudert, chapter2, 42)
 	case kActionDefault:
 		getEntities()->prepareSequences(kEntityCoudert);
 
-		getData()->field_491 = EntityData::kField491_1500;
+		getData()->position = kPosition_1500;
 		getData()->field_493 = EntityData::kField493_0;
 		getData()->car = kCarRedSleeping;
 		getData()->inventoryItem = kItemNone;
@@ -371,7 +371,7 @@ IMPLEMENT_FUNCTION(Coudert, chapter3, 44)
 	case kActionDefault:
 		getEntities()->prepareSequences(kEntityCoudert);
 
-		getData()->field_491 = EntityData::kField491_1500;
+		getData()->position = kPosition_1500;
 		getData()->field_493 = EntityData::kField493_0;
 		getData()->car = kCarRedSleeping;
 		getData()->clothes = kClothesDefault;
@@ -446,7 +446,7 @@ IMPLEMENT_FUNCTION(Coudert, chapter4, 52)
 	case kActionDefault:
 		getEntities()->prepareSequences(kEntityCoudert);
 
-		getData()->field_491 = EntityData::kField491_1500;
+		getData()->position = kPosition_1500;
 		getData()->field_493 = EntityData::kField493_0;
 		getData()->car = kCarRedSleeping;
 		getData()->clothes = kClothesDefault;
@@ -509,7 +509,7 @@ IMPLEMENT_FUNCTION(Coudert, chapter5, 57)
 	case kActionDefault:
 		getEntities()->prepareSequences(kEntityCoudert);
 
-		getData()->field_491 = EntityData::kField491_3969;
+		getData()->position = kPosition_3969;
 		getData()->field_493 = EntityData::kField493_1;
 		getData()->car = kCarRestaurant;
 		getData()->inventoryItem = kItemNone;
@@ -528,14 +528,14 @@ IMPLEMENT_FUNCTION(Coudert, function59, 59)
 		break;
 
 	case kActionDefault:
-		getData()->field_491 = EntityData::kField491_7500;
+		getData()->position = kPosition_7500;
 		getData()->field_493 = EntityData::kField493_0;
 		getData()->car = kCarRedSleeping;
 
 		getSound()->playSound(kEntityCoudert, "Jac5010"); // Situation is under control, please remain in your compartment
 
 		setCallback(1);
-		call(new ENTITY_SETUP(Coudert, setup_function9), kCarRedSleeping, EntityData::kField491_2000);
+		call(new ENTITY_SETUP(Coudert, setup_function9), kCarRedSleeping, kPosition_2000);
 		break;
 
 	case kActionCallback:

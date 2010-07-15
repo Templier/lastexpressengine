@@ -117,10 +117,10 @@
 		break; \
 	}
 
-#define TIME_CHECK_PLAYSOUND_2(class, timeValue, parameter, callback, sound, field491) \
+#define TIME_CHECK_PLAYSOUND_2(class, timeValue, parameter, callback, sound, entityPosition) \
 	if (getState()->time > timeValue && !parameter) { \
 		parameter = 1; \
-		getData()->field_491 = field491; \
+		getData()->position = entityPosition; \
 		setCallback(callback); \
 		call(new ENTITY_SETUP_SIIS(class, setup_playSound), sound); \
 		break; \
@@ -141,7 +141,7 @@
 		parameter = (int)type + (int)value; \
 	if (parameter >= (int)type) \
 		break; \
-	parameter = EntityData::kParamTime; \
+	parameter = kTimeInvalid; \
 }
 
 #define UPDATE_PARAM_FUNCTION(parameter, type, value, label) { \
@@ -149,7 +149,7 @@
 		parameter = (int)type + (int)value; \
 	if (parameter >= (int)type) \
 		goto label; \
-	parameter = EntityData::kParamTime; \
+	parameter = kTimeInvalid; \
 }
 
 #endif // LASTEXPRESS_ENTITY_FUNCTIONS_H

@@ -119,32 +119,32 @@ IMPLEMENT_FUNCTION(Tables, draw, 6)
 			break;
 
 		case kEntityTables0:
-			getData()->field_491 = EntityData::kField491_3970;
+			getData()->position = kPosition_3970;
 			getEntities()->drawSequenceLeft(_id, "001P");
 			break;
 
 		case kEntityTables1:
-			getData()->field_491 = EntityData::kField491_3970;
+			getData()->position = kPosition_3970;
 			getEntities()->drawSequenceLeft(_id, "005J");
 			break;
 
 		case kEntityTables2:
-			getData()->field_491 = EntityData::kField491_4690;
+			getData()->position = kPosition_4690;
 			getEntities()->drawSequenceLeft(_id, "009G");
 			break;
 
 		case kEntityTables3:
-			getData()->field_491 = EntityData::kField491_4690;
+			getData()->position = kPosition_4690;
 			getEntities()->drawSequenceLeft(_id, "010M");
 			break;
 
 		case kEntityTables4:
-			getData()->field_491 = EntityData::kField491_5420;
+			getData()->position = kPosition_5420;
 			getEntities()->drawSequenceLeft(_id, "014F");
 			break;
 
 		case kEntityTables5:
-			getData()->field_491 = EntityData::kField491_5420;
+			getData()->position = kPosition_5420;
 			getEntities()->drawSequenceLeft(_id, "024D");
 			break;
 		}

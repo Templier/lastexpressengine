@@ -56,9 +56,9 @@
 	    byte {1}      - Unknown
 	    byte {1}      - Sound action
 	    byte {1}      - Unknown
-	    uint32 {4}    - Position
+	    uint32 {4}    - positionId
 	    uint32 {4}    - Unknown
-	    uint16 {2}    - Field 491
+	    uint16 {2}    - Entity Position
 	    uint16 {2}    - Location (~z-order)
 	    uint32 {4}    - Next sequence in the linked list
 
@@ -107,9 +107,9 @@ struct FrameInfo {
 	byte field_31;
 	byte soundAction;
 	byte field_33;
-	uint32 position;
+	uint32 positionId;
 	uint32 field_38;
-	uint16 field491;
+	uint16 position;
 	uint16 location;
 	uint32 next;
 };

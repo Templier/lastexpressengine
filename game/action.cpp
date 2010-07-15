@@ -843,7 +843,7 @@ IMPLEMENT_ACTION(getOutsideTrain) {
 
 	if ((getEvent(kEventCathLookOutsideWindowDay) || getEvent(kEventCathLookOutsideWindowNight) || getObjects()->get(kObjectCompartment1).location2)
 	  && getProgress().isTrainRunning
-	  && (object != kObjectOutsideAnnaCompartment || (!getEntities()->checkFields1(kEntityRebecca, kCarRedSleeping, EntityData::kField491_4840) && getObjects()->get(kObjectOutsideBetweenCompartments).location == kLocation2))
+	  && (object != kObjectOutsideAnnaCompartment || (!getEntities()->checkFields1(kEntityRebecca, kCarRedSleeping, kPosition_4840) && getObjects()->get(kObjectOutsideBetweenCompartments).location == kLocation2))
 	  && getInventory()->getSelectedItem() != kItemFirebird
 	  && getInventory()->getSelectedItem() != kItemBriefcase) {
 
@@ -1288,7 +1288,7 @@ IMPLEMENT_ACTION(useWhistle) {
 			break;
 		}
 
-		if (getEntities()->checkFields1(kEntityNone, kCarGreenSleeping, EntityData::kField491_8200)) {
+		if (getEntities()->checkFields1(kEntityNone, kCarGreenSleeping, kPosition_8200)) {
 			evt = kEventCathOpenEgg;
 
 			loadSceneObject(scene, hotspot.scene);
@@ -1307,7 +1307,7 @@ IMPLEMENT_ACTION(useWhistle) {
 			break;
 		}
 
-		evt = (getEntities()->checkFields1(kEntityNone, kCarGreenSleeping, EntityData::kField491_8200)) ? kEventCathCloseEgg : kEventCathCloseEggNoBackground;
+		evt = (getEntities()->checkFields1(kEntityNone, kCarGreenSleeping, kPosition_8200)) ? kEventCathCloseEgg : kEventCathCloseEggNoBackground;
 		getProgress().isEggOpen = 0;
 		break;
 
@@ -1317,7 +1317,7 @@ IMPLEMENT_ACTION(useWhistle) {
 			break;
 		}
 
-		evt = (getEntities()->checkFields1(kEntityNone, kCarGreenSleeping, EntityData::kField491_8200)) ? kEventCathUseWhistleOpenEgg : kEventCathUseWhistleOpenEggNoBackground;
+		evt = (getEntities()->checkFields1(kEntityNone, kCarGreenSleeping, kPosition_8200)) ? kEventCathUseWhistleOpenEgg : kEventCathUseWhistleOpenEggNoBackground;
 		break;
 
 	}
@@ -1650,7 +1650,7 @@ bool Action::handleOtherCompartment(ObjectIndex object, byte param2, byte param3
 	// Direction = Up
 	if (!getEntities()->compare(kEntityNone, kEntityCoudert)
 	&& getEntityData(kEntityCoudert)->direction == kDirectionUp
-	&& getEntityData(kEntityCoudert)->field_491 < getEntityData(kEntityNone)->field_491) {
+	&& getEntityData(kEntityCoudert)->position < getEntityData(kEntityNone)->position) {
 		playCompartmentSoundEvents(kEntityCoudert, object, param2, param3, true);
 
 		return true;
@@ -1659,7 +1659,7 @@ bool Action::handleOtherCompartment(ObjectIndex object, byte param2, byte param3
 	// Direction = down
 	if (!getEntities()->compare(kEntityNone, kEntityCoudert)
 	&& getEntityData(kEntityCoudert)->direction == kDirectionDown
-	&& getEntityData(kEntityCoudert)->field_491 > getEntityData(kEntityNone)->field_491) {
+	&& getEntityData(kEntityCoudert)->position > getEntityData(kEntityNone)->position) {
 		playCompartmentSoundEvents(kEntityCoudert, object, param2, param3, false);
 
 		return true;
@@ -1775,7 +1775,7 @@ CursorStyle Action::getCursor(const SceneHotspot &hotspot) const {
 
 		if ((getEvent(kEventCathLookOutsideWindowDay) || getEvent(kEventCathLookOutsideWindowDay) || getObjects()->get(kObjectCompartment1).location2 == kLocation1)
 			&& getProgress().isTrainRunning
-			&& (object != kObjectOutsideAnnaCompartment || (getEntities()->checkFields1(kEntityRebecca, kCarRedSleeping, EntityData::kField491_4840) && getObjects()->get(kObjectOutsideBetweenCompartments).location == 2))
+			&& (object != kObjectOutsideAnnaCompartment || (getEntities()->checkFields1(kEntityRebecca, kCarRedSleeping, kPosition_4840) && getObjects()->get(kObjectOutsideBetweenCompartments).location == 2))
 			&& getInventory()->getSelectedItem() != kItemBriefcase && getInventory()->getSelectedItem() != kItemFirebird)
 			return kCursorForward;
 

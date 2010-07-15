@@ -116,7 +116,7 @@ IMPLEMENT_FUNCTION(Yasmin, function6, 6)
 		break;
 
 	case kActionDefault:
-		getData()->field_491 = EntityData::kField491_4840;
+		getData()->position = kPosition_4840;
 		getData()->field_493 = EntityData::kField493_0;
 
 		setCallback(1);
@@ -130,7 +130,7 @@ IMPLEMENT_FUNCTION(Yasmin, function6, 6)
 			break;
 
 		case 1:
-			call(new ENTITY_SETUP(Yasmin, setup_function5), kCarGreenSleeping, EntityData::kField491_3050);
+			call(new ENTITY_SETUP(Yasmin, setup_function5), kCarGreenSleeping, kPosition_3050);
 			break;
 
 		case 2:
@@ -155,7 +155,7 @@ IMPLEMENT_FUNCTION(Yasmin, function7, 7)
 		break;
 
 	case kActionDefault:
-		getData()->field_491 = EntityData::kField491_3050;
+		getData()->position = kPosition_3050;
 		getData()->field_493 = EntityData::kField493_0;
 
 		setCallback(1);
@@ -169,7 +169,7 @@ IMPLEMENT_FUNCTION(Yasmin, function7, 7)
 			break;
 
 		case 1:
-			call(new ENTITY_SETUP(Yasmin, setup_function5), kCarGreenSleeping, EntityData::kField491_4840);
+			call(new ENTITY_SETUP(Yasmin, setup_function5), kCarGreenSleeping, kPosition_4840);
 			break;
 
 		case 2:
@@ -198,7 +198,7 @@ IMPLEMENT_FUNCTION(Yasmin, chapter1, 8)
 		break;
 
 	case kActionDefault:
-		getData()->field_491 = EntityData::kField491_4840;
+		getData()->position = kPosition_4840;
 		getData()->field_493 = EntityData::kField493_1;
 		getData()->car = kCarGreenSleeping;
 		break;
@@ -213,7 +213,7 @@ IMPLEMENT_FUNCTION(Yasmin, chapter1_handler, 9)
 	case kActionNone:
 		TIME_CHECK_CALLBACK(Yasmin, kTimeAnna, params->param1, 1, setup_function6);
 		TIME_CHECK_CALLBACK(Yasmin, kTimeFrancois, params->param2, 3, setup_function7);
-		TIME_CHECK_PLAYSOUND_2(Yasmin, kTimeYasmin_7, params->param3, 4, "Har1102", EntityData::kField491_4070);
+		TIME_CHECK_PLAYSOUND_2(Yasmin, kTimeYasmin_7, params->param3, 4, "Har1102", kPosition_4070);
 		TIME_CHECK_PLAYSOUND(Yasmin, kTimeTables1, params->param4, 5, "Har1104");
 		TIME_CHECK_PLAYSOUND(Yasmin, kTimeYasmin_8, params->param5, 6, "Har1106");
 		TIME_CHECK_CALLBACK(Yasmin, kTimeYasmin_9, params->param6, 7, setup_function6);
@@ -225,7 +225,7 @@ IMPLEMENT_FUNCTION(Yasmin, chapter1_handler, 9)
 			break;
 
 		case 1:
-			getData()->field_491 = EntityData::kField491_2740;
+			getData()->position = kPosition_2740;
 			setCallback(2);
 			call(new ENTITY_SETUP_SIIS(Yasmin, setup_playSound), "Har1102");
 			break;
@@ -235,7 +235,7 @@ IMPLEMENT_FUNCTION(Yasmin, chapter1_handler, 9)
 			// Fallback to case 3
 
 		case 3:
-			TIME_CHECK_PLAYSOUND_2(Yasmin, kTimeYasmin_7, params->param3, 4, "Har1102", EntityData::kField491_4070);
+			TIME_CHECK_PLAYSOUND_2(Yasmin, kTimeYasmin_7, params->param3, 4, "Har1102", kPosition_4070);
 			// Fallback to case 4
 
 		case 4:
@@ -257,7 +257,7 @@ IMPLEMENT_FUNCTION(Yasmin, chapter1_handler, 9)
 IMPLEMENT_FUNCTION(Yasmin, function10, 10)
 	if (savepoint.action == kActionDefault) {
 		getObjects()->update(kObjectCompartment7, kEntityNone, kLocation3, kCursorHandKnock, kCursorHand);
-		getData()->field_491 = EntityData::kField491_3050;
+		getData()->position = kPosition_3050;
 		getData()->field_493 = EntityData::kField493_1;
 		getData()->car = kCarGreenSleeping;
 
@@ -269,7 +269,7 @@ IMPLEMENT_FUNCTION(Yasmin, chapter2, 11)
 	if (savepoint.action == kActionDefault) {
 		getEntities()->prepareSequences(kEntityYasmin);
 
-		getData()->field_491 = EntityData::kField491_3050;
+		getData()->position = kPosition_3050;
 		getData()->field_493 = EntityData::kField493_1;
 		getData()->car = kCarGreenSleeping;
 		getData()->clothes = kClothesDefault;
@@ -289,9 +289,9 @@ IMPLEMENT_FUNCTION(Yasmin, chapter2_handler, 12)
 
 		if (getState()->time > kTimeYasmin_1 && !params->param2) {
 			params->param2 = 1;
-			getData()->field_491 = EntityData::kField491_4070;
+			getData()->position = kPosition_4070;
 
-			getSavePoints()->push(kEntityYasmin, kEntityTrain, kAction191070912, EntityData::kField491_4070);
+			getSavePoints()->push(kEntityYasmin, kEntityTrain, kAction191070912, kPosition_4070);
 		}
 		break;
 
@@ -302,9 +302,9 @@ IMPLEMENT_FUNCTION(Yasmin, chapter2_handler, 12)
 
 		if (getState()->time > kTimeYasmin_1 && !params->param2) {
 			params->param2 = 1;
-			getData()->field_491 = EntityData::kField491_4070;
+			getData()->position = kPosition_4070;
 
-			getSavePoints()->push(kEntityYasmin, kEntityTrain, kAction191070912, EntityData::kField491_4070);
+			getSavePoints()->push(kEntityYasmin, kEntityTrain, kAction191070912, kPosition_4070);
 		}
 
 		break;
@@ -323,7 +323,7 @@ IMPLEMENT_FUNCTION(Yasmin, chapter3, 13)
 	case kActionDefault:
 		getEntities()->prepareSequences(kEntityYasmin);
 
-		getData()->field_491 = EntityData::kField491_3050;
+		getData()->position = kPosition_3050;
 		getData()->field_493 = EntityData::kField493_1;
 		getData()->car = kCarGreenSleeping;
 		break;
@@ -368,7 +368,7 @@ IMPLEMENT_FUNCTION(Yasmin, chapter4, 15)
 		break;
 
 	case kActionDefault:
-		getData()->field_491 = EntityData::kField491_3050;
+		getData()->position = kPosition_3050;
 		getData()->field_493 = EntityData::kField493_1;
 		getData()->car = kCarGreenSleeping;
 		break;
@@ -391,7 +391,7 @@ IMPLEMENT_FUNCTION(Yasmin, chapter4_handler, 16)
 			break;
 
 		case 1:
-			getData()->field_491 = EntityData::kField491_4070;
+			getData()->position = kPosition_4070;
 			setCallback(2);
 			call(new ENTITY_SETUP_SIIS(Yasmin, setup_playSound), "Har1110");
 			break;
@@ -421,7 +421,7 @@ IMPLEMENT_FUNCTION(Yasmin, chapter5, 18)
 	case kActionDefault:
 		getEntities()->prepareSequences(kEntityYasmin);
 
-		getData()->field_491 = EntityData::kField491_3969;
+		getData()->position = kPosition_3969;
 		getData()->field_493 = EntityData::kField493_1;
 		getData()->car = kCarRestaurant;
 		getData()->clothes = kClothesDefault;
@@ -446,7 +446,7 @@ IMPLEMENT_FUNCTION(Yasmin, function20, 20)
 		break;
 
 	case kActionDefault:
-		getData()->field_491 = EntityData::kField491_2500;
+		getData()->position = kPosition_2500;
 		getData()->field_493 = EntityData::kField493_0;
 		getData()->car = kCarGreenSleeping;
 		break;
@@ -466,7 +466,7 @@ IMPLEMENT_FUNCTION(Yasmin, function21, 21)
 
 	case kActionNone:
 	case kActionDefault:
-		if (getEntities()->checkEntity(kEntityYasmin, (CarIndex)params->param1, (EntityData::Field491Value)params->param2))
+		if (getEntities()->checkEntity(kEntityYasmin, (CarIndex)params->param1, (EntityPosition)params->param2))
 			CALLBACK_ACTION();
 		break;
 

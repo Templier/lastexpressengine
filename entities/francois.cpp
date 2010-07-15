@@ -145,7 +145,7 @@ IMPLEMENT_FUNCTION(Francois, chapter1, 17)
 		break;
 
 	case kActionDefault:
-		getData()->field_491 = EntityData::kField491_5790;
+		getData()->position = kPosition_5790;
 		getData()->field_493 = EntityData::kField493_1;
 		getData()->car = kCarRedSleeping;
 		break;
@@ -190,7 +190,7 @@ IMPLEMENT_FUNCTION(Francois, function19, 19)
 
 IMPLEMENT_FUNCTION(Francois, function20, 20)
 	if (savepoint.action == kActionDefault) {
-		getData()->field_491 = EntityData::kField491_5790;
+		getData()->position = kPosition_5790;
 		getData()->field_493 = EntityData::kField493_1;
 		getData()->car = kCarRedSleeping;
 
@@ -210,7 +210,7 @@ IMPLEMENT_FUNCTION(Francois, chapter2, 21)
 	case kActionDefault:
 		getEntities()->prepareSequences(kEntityFrancois);
 
-		getData()->field_491 = EntityData::kField491_4689;
+		getData()->position = kPosition_4689;
 		getData()->field_493 = EntityData::kField493_1;
 		getData()->car = kCarRestaurant;
 		getData()->clothes = kClothesDefault;
@@ -237,7 +237,7 @@ IMPLEMENT_FUNCTION(Francois, function22, 22)
 		case 2:
 			getObjects()->update(kObjectCompartmentD, kEntityNone, kLocation2, kCursorKeepValue, kCursorKeepValue);
 			getSavePoints()->push(kEntityFrancois, kEntityMmeBoutarel, kAction100957716);
-			getData()->field_491 = EntityData::kField491_5790;
+			getData()->position = kPosition_5790;
 			getData()->field_493 = EntityData::kField493_1;
 			getEntities()->prepareSequences(kEntityFrancois);
 			setup_function23();
@@ -247,7 +247,7 @@ IMPLEMENT_FUNCTION(Francois, function22, 22)
 
 	case kAction100901266:
 		setCallback(1);
-		call(new ENTITY_SETUP(Francois, setup_function8), kCarRedSleeping, EntityData::kField491_5790);
+		call(new ENTITY_SETUP(Francois, setup_function8), kCarRedSleeping, kPosition_5790);
 		break;
 	}
 }
@@ -268,7 +268,7 @@ IMPLEMENT_FUNCTION(Francois, chapter3, 24)
 	case kActionDefault:
 		getEntities()->prepareSequences(kEntityFrancois);
 
-		getData()->field_491 = EntityData::kField491_5790;
+		getData()->position = kPosition_5790;
 		getData()->field_493 = EntityData::kField493_1;
 		getData()->car = kCarRedSleeping;
 		getData()->clothes = kClothesDefault;
@@ -293,7 +293,7 @@ IMPLEMENT_FUNCTION(Francois, chapter4, 26)
 	case kActionDefault:
 		getEntities()->prepareSequences(kEntityFrancois);
 
-		getData()->field_491 = EntityData::kField491_5790;
+		getData()->position = kPosition_5790;
 		getData()->field_493 = EntityData::kField493_1;
 		getData()->car = kCarRedSleeping;
 		getData()->clothes = kClothesDefault;
@@ -321,7 +321,7 @@ IMPLEMENT_FUNCTION(Francois, chapter5, 28)
 	case kActionDefault:
 		getEntities()->prepareSequences(kEntityFrancois);
 
-		getData()->field_491 = EntityData::kField491_3969;
+		getData()->position = kPosition_3969;
 		getData()->field_493 = EntityData::kField493_1;
 		getData()->car = kCarRestaurant;
 		getData()->clothes = kClothesDefault;
@@ -346,7 +346,7 @@ IMPLEMENT_FUNCTION(Francois, function30, 30)
 		break;
 
 	case kActionDefault:
-		getData()->field_491 = EntityData::kField491_5790;
+		getData()->position = kPosition_5790;
 		getData()->field_493 = EntityData::kField493_1;
 		getData()->car = kCarRedSleeping;
 		getData()->clothes = kClothesDefault;

@@ -171,7 +171,7 @@ IMPLEMENT_FUNCTION(Alexei, chapter1, 17)
 		getObjects()->update(kObject10, kEntityNone, kLocationNone, kCursorKeepValue, kCursorKeepValue);
 		getObjects()->update(kObjectHandleInsideBathroom, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
 
-		getData()->field_491 = EntityData::kField491_3969;
+		getData()->position = kPosition_3969;
 		getData()->field_493 = EntityData::kField493_1;
 		getData()->car = kCarRestaurant;
 		break;
@@ -241,7 +241,7 @@ IMPLEMENT_FUNCTION(Alexei, chapter2, 28)
 		getObjects()->update(kObject10, kEntityNone, kLocationNone, kCursorKeepValue, kCursorKeepValue);
 		getObjects()->update(kObjectHandleInsideBathroom, kEntityAlexei, kLocation1, kCursorHandKnock, kCursorHand);
 
-		getData()->field_491 = EntityData::kField491_7500;
+		getData()->position = kPosition_7500;
 		getData()->field_493 = EntityData::kField493_1;
 		getData()->car = kCarGreenSleeping;
 		getData()->clothes = kClothesDefault;
@@ -297,7 +297,7 @@ IMPLEMENT_FUNCTION(Alexei, chapter3_handler, 33)
 		break;
 
 	case kAction122288808:
-		getData()->field_491 = EntityData::kField491_9270;
+		getData()->position = kPosition_9270;
 		getData()->field_493 = EntityData::kField493_0;
 		getData()->car = kCarRedSleeping;
 
@@ -339,7 +339,7 @@ IMPLEMENT_FUNCTION(Alexei, chapter4, 37)
 		getObjects()->update(kObject10, kEntityNone, kLocationNone, kCursorKeepValue, kCursorKeepValue);
 		getObjects()->update(kObjectHandleInsideBathroom, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
 
-		getData()->field_491 = EntityData::kField491_7500;
+		getData()->position = kPosition_7500;
 		getData()->field_493 = EntityData::kField493_1;
 		getData()->car = kCarGreenSleeping;
 		getData()->inventoryItem = kItemNone;
@@ -438,7 +438,7 @@ IMPLEMENT_FUNCTION(Alexei, function47, 47)
 	if (savepoint.action == kActionDefault) {
 		getEntities()->prepareSequences(kEntityAlexei);
 
-		getData()->field_491 = EntityData::kField491_0;
+		getData()->position = kPositionNone;
 		getData()->field_493 = EntityData::kField493_0;
 		getData()->car = kCarNone;
 

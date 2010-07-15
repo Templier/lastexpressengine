@@ -133,7 +133,7 @@ IMPLEMENT_FUNCTION_II(Mahmud, savegame, 8)
 
 //////////////////////////////////////////////////////////////////////////
 // param1: CarIndex
-// param2: field491
+// param2: EntityPosition
 IMPLEMENT_FUNCTION_II(Mahmud, function9, 9)
 	switch (savepoint.action) {
 	default:
@@ -141,7 +141,7 @@ IMPLEMENT_FUNCTION_II(Mahmud, function9, 9)
 
 	case kActionNone:
 	case kActionDefault:
-		if (getEntities()->checkEntity(kEntityMahmud, (CarIndex)params->param1, (EntityData::Field491Value)params->param2))
+		if (getEntities()->checkEntity(kEntityMahmud, (CarIndex)params->param1, (EntityPosition)params->param2))
 			CALLBACK_ACTION();
 		break;
 
@@ -181,8 +181,8 @@ IMPLEMENT_FUNCTION_II(Mahmud, function10, 10)
 		if (getSound()->isBuffered(kEntityMahmud))
 			break;
 
-		EntityData::Field491Value field491 = getEntityData(kEntityNone)->field_491;
-		if (field491 < EntityData::kField491_1500 || field491 >= EntityData::kField491_5790 || (field491 > EntityData::kField491_4455 && params->param5 != 5)) {
+		EntityPosition position = getEntityData(kEntityNone)->position;
+		if (position < kPosition_1500 || position >= kPosition_5790 || (position > kPosition_4455 && params->param5 != 5)) {
 			getObjects()->update(kObjectCompartment5, kEntityTrain, kLocation3, kCursorHandKnock, kCursorHand);
 			getObjects()->update(kObjectCompartment6, kEntityTrain, kLocation3, kCursorHandKnock, kCursorHand);
 			getObjects()->update(kObjectCompartment7, kEntityTrain, kLocation3, kCursorHandKnock, kCursorHand);
@@ -456,7 +456,7 @@ IMPLEMENT_FUNCTION(Mahmud, function12, 12)
 			getObjects()->update(kObjectCompartment4, kEntityNone, kLocation3, kCursorHandKnock, kCursorHand);
 
 			setCallback(2);
-			call(new ENTITY_SETUP(Mahmud, setup_function9), kCarGreenSleeping, EntityData::kField491_4070);
+			call(new ENTITY_SETUP(Mahmud, setup_function9), kCarGreenSleeping, kPosition_4070);
 			break;
 
 		case 2:
@@ -481,7 +481,7 @@ IMPLEMENT_FUNCTION(Mahmud, function12, 12)
 			getData()->field_493 = EntityData::kField493_0;
 
 			setCallback(6);
-			call(new ENTITY_SETUP(Mahmud, setup_function9), kCarGreenSleeping, EntityData::kField491_5790);
+			call(new ENTITY_SETUP(Mahmud, setup_function9), kCarGreenSleeping, kPosition_5790);
 			break;
 
 		case 6:
@@ -522,7 +522,7 @@ IMPLEMENT_FUNCTION(Mahmud, function13, 13)
 			getObjects()->update(kObjectCompartment4, kEntityNone, kLocation3, kCursorHandKnock, kCursorHand);
 
 			setCallback(2);
-			call(new ENTITY_SETUP(Mahmud, setup_function9), kCarGreenSleeping, EntityData::kField491_2740);
+			call(new ENTITY_SETUP(Mahmud, setup_function9), kCarGreenSleeping, kPosition_2740);
 			break;
 
 		case 2:
@@ -547,7 +547,7 @@ IMPLEMENT_FUNCTION(Mahmud, function13, 13)
 			getData()->field_493 = EntityData::kField493_0;
 
 			setCallback(6);
-			call(new ENTITY_SETUP(Mahmud, setup_function9), kCarGreenSleeping, EntityData::kField491_5790);
+			call(new ENTITY_SETUP(Mahmud, setup_function9), kCarGreenSleeping, kPosition_5790);
 			break;
 
 		case 6:
@@ -635,7 +635,7 @@ IMPLEMENT_FUNCTION(Mahmud, chapters_handler, 14)
 		break;
 
 	case kActionDefault:
-		getData()->field_491 = EntityData::kField491_5790;
+		getData()->position = kPosition_5790;
 		getData()->field_493 = EntityData::kField493_1;
 		getData()->car = kCarGreenSleeping;
 
@@ -764,7 +764,7 @@ IMPLEMENT_FUNCTION(Mahmud, chapter1, 15)
 	case kActionDefault:
 		getSavePoints()->addData(kEntityMahmud, kAction170483072, 0);
 
-		getData()->field_491 = EntityData::kField491_540;
+		getData()->position = kPosition_540;
 		getData()->field_493 = EntityData::kField493_0;
 		getData()->car = kCarGreenSleeping;
 
@@ -779,7 +779,7 @@ IMPLEMENT_FUNCTION(Mahmud, function16, 16)
 	if (savepoint.action != kActionDefault)
 		return;
 
-	getData()->field_491 = EntityData::kField491_5790;
+	getData()->position = kPosition_5790;
 	getData()->field_493 = EntityData::kField493_1;
 	getData()->car = kCarGreenSleeping;
 
@@ -800,7 +800,7 @@ IMPLEMENT_FUNCTION(Mahmud, chapter2, 17)
 	case kActionDefault:
 		getEntities()->prepareSequences(kEntityMahmud);
 
-		getData()->field_491 = EntityData::kField491_5790;
+		getData()->position = kPosition_5790;
 		getData()->field_493 = EntityData::kField493_1;
 		getData()->car = kCarGreenSleeping;
 		getData()->clothes = kClothesDefault;
@@ -822,7 +822,7 @@ IMPLEMENT_FUNCTION(Mahmud, chapter3, 18)
 	case kActionDefault:
 		getEntities()->prepareSequences(kEntityMahmud);
 
-		getData()->field_491 = EntityData::kField491_5790;
+		getData()->position = kPosition_5790;
 		getData()->field_493 = EntityData::kField493_1;
 		getData()->car = kCarGreenSleeping;
 		getData()->clothes = kClothesDefault;
@@ -845,7 +845,7 @@ IMPLEMENT_FUNCTION(Mahmud, chapter4, 19)
 	case kActionDefault:
 		getEntities()->prepareSequences(kEntityMahmud);
 
-		getData()->field_491 = EntityData::kField491_2740;
+		getData()->position = kPosition_2740;
 		getData()->field_493 = EntityData::kField493_1;
 		getData()->car = kCarGreenSleeping;
 		getData()->clothes = kClothesDefault;

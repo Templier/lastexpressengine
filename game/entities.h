@@ -99,16 +99,16 @@ public:
 	int count() const { return _entities.size(); }
 
 	// Scene
-	void loadSceneFromField491(CarIndex car, EntityData::Field491Value field491, bool alternate = false) const;
+	void loadSceneFromEntityPosition(CarIndex car, EntityPosition position, bool alternate = false) const;
 
 	// Sound
 	uint getSoundValue(EntityIndex index) const;
 
 	// Checks
-	bool checkEntity(EntityIndex entity, CarIndex car, EntityData::Field491Value field491);
+	bool checkEntity(EntityIndex entity, CarIndex car, EntityPosition position);
 	bool compare(EntityIndex entity1, EntityIndex entity2);
 
-	bool checkFields1(EntityIndex entity, CarIndex car, EntityData::Field491Value field491) const;
+	bool checkFields1(EntityIndex entity, CarIndex car, EntityPosition position) const;
 	bool checkFields2(ObjectIndex object) const;
 	bool checkFields3(EntityIndex entity) const;
 
@@ -132,13 +132,13 @@ public:
 	bool checkFields15() const;
 	bool checkFields16() const;
 	bool checkFields17(EntityIndex entity) const;
-	bool checkFields18(CarIndex car, EntityData::Field491Value field491) const;
-	bool checkFields19(EntityIndex entity, CarIndex car, EntityData::Field491Value field491) const;
+	bool checkFields18(CarIndex car, EntityPosition position) const;
+	bool checkFields19(EntityIndex entity, CarIndex car, EntityPosition position) const;
 	bool checkFields20(EntityIndex entity) const;
 	bool checkFields21(EntityIndex entity) const;
 	bool checkFields22(EntityIndex entity) const;
 	bool checkFields23(EntityIndex entity) const;
-	bool checkFields24(EntityIndex entity, EntityData::Field491Value field491, int absValue) const;
+	bool checkDistanceFromPosition(EntityIndex entity, EntityPosition position, int distance) const;
 	bool checkFields25(EntityIndex entity) const;
 
 	// Serializable
@@ -166,7 +166,7 @@ private:
 
 	void clearEntitySequenceData(EntityData::EntityCallData * data, EntityDirection direction);
 	void computeCurrentFrame2(EntityIndex entityIndex);
-	int getCurrentFrame2(EntityIndex entity, Sequence *sequence, EntityData::Field491Value field491, bool doProcessing);
+	int getCurrentFrame2(EntityIndex entity, Sequence *sequence, EntityPosition position, bool doProcessing);
 	void processEntitySub(EntityIndex entityIndex, bool dontClearQueue, bool dontPlaySound);
 	void processEntitySub2(EntityIndex entityIndex);
 	void processEntitySub3(EntityIndex entityIndex);
@@ -180,9 +180,9 @@ private:
 
 	void resetSequences(EntityIndex entity) const;
 
-	bool checkField491(EntityData::Field491Value field491) const;
+	bool checkPosition(EntityPosition position) const;
 	bool checkSequenceFromPosition(EntityIndex entity) const;
-	EntityData::Field491Value getField491FromCurrentPosition() const;
+	EntityPosition getEntityPositionFromCurrentPosition() const;
 };
 
 } // End of namespace LastExpress

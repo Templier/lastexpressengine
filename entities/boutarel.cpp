@@ -215,7 +215,7 @@ IMPLEMENT_FUNCTION(Boutarel, chapter1, 19)
 		getObjects()->update(kObject50, kEntityNone, kLocationNone, kCursorHandKnock, kCursorHand);
 		getObjects()->update(kObject42, kEntityNone, kLocationNone, kCursorKeepValue, kCursorKeepValue);
 
-		getData()->field_491 = EntityData::kField491_1750;
+		getData()->position = kPosition_1750;
 		getData()->field_493 = EntityData::kField493_1;
 		getData()->car = kCarRestaurant;
 		break;
@@ -308,7 +308,7 @@ IMPLEMENT_FUNCTION(Boutarel, chapter1_handler, 21)
 
 IMPLEMENT_FUNCTION(Boutarel, function22, 22)
 	if (savepoint.action == kActionDefault) {
-		getData()->field_491 = EntityData::kField491_6470;
+		getData()->position = kPosition_6470;
 		getData()->field_493 = EntityData::kField493_1;
 		getData()->car = kCarRedSleeping;
 
@@ -331,7 +331,7 @@ IMPLEMENT_FUNCTION(Boutarel, chapter2, 23)
 	case kActionDefault:
 		getEntities()->prepareSequences(kEntityBoutarel);
 
-		getData()->field_491 = EntityData::kField491_4689;
+		getData()->position = kPosition_4689;
 		getData()->field_493 = EntityData::kField493_1;
 		getData()->car = kCarRestaurant;
 		getData()->inventoryItem = kItemNone;
@@ -451,7 +451,7 @@ IMPLEMENT_FUNCTION(Boutarel, chapter4, 31)
 	case kActionDefault:
 		getEntities()->prepareSequences(kEntityBoutarel);
 
-		getData()->field_491 = EntityData::kField491_6470;
+		getData()->position = kPosition_6470;
 		getData()->field_493 = EntityData::kField493_1;
 		getData()->car = kCarRedSleeping;
 		getData()->clothes = kClothesDefault;
@@ -489,7 +489,7 @@ IMPLEMENT_FUNCTION(Boutarel, function34, 34)
 
 IMPLEMENT_FUNCTION(Boutarel, function35, 35)
 	if (savepoint.action == kActionDefault) {
-		getData()->field_491 = EntityData::kField491_6470;
+		getData()->position = kPosition_6470;
 		getData()->field_493 = EntityData::kField493_1;
 		getData()->car = kCarRedSleeping;
 
@@ -512,7 +512,7 @@ IMPLEMENT_FUNCTION(Boutarel, chapter5, 36)
 	case kActionDefault:
 		getEntities()->prepareSequences(kEntityBoutarel);
 
-		getData()->field_491 = EntityData::kField491_3969;
+		getData()->position = kPosition_3969;
 		getData()->field_493 = EntityData::kField493_1;
 		getData()->car = kCarRestaurant;
 		getData()->clothes = kClothesDefault;
@@ -532,7 +532,7 @@ IMPLEMENT_FUNCTION(Boutarel, function38, 38)
 		break;
 
 	case kActionDefault:
-		getData()->field_491 = EntityData::kField491_5790;
+		getData()->position = kPosition_5790;
 		getData()->field_493 = EntityData::kField493_1;
 		getData()->car = kCarRedSleeping;
 		break;

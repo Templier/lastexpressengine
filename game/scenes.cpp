@@ -265,7 +265,7 @@ void SceneManager::drawScene(SceneIndex index) {
 	// Update entities
 	Scene *scene = (getState()->sceneUseBackup ? getScene(getState()->sceneBackup) : _currentScene);
 
-	getEntityData(kEntityNone)->field_491 = (EntityData::Field491Value)scene->getHeader()->count;
+	getEntityData(kEntityNone)->position = (EntityPosition)scene->getHeader()->count;
 	getEntityData(kEntityNone)->car = (CarIndex)scene->getHeader()->car;
 
 	// If we used the backup scene, we don't need the scene object anymore beyond this point
@@ -792,7 +792,7 @@ void SceneManager::postProcessScene() {
 		getState()->time += (scene.getHeader()->param1 + 10) * getState()->timeDelta;
 		getState()->timeTicks += (scene.getHeader()->param1 + 10);
 
-		//// FIXME Some stuff related to menu?
+		// TODO wait for a number of frames unless right mouse is clicked
 		//if (!getFlags()->mouse_right_click) {
 		//	while ((unknown + 4 * scene->getHeader()->param1) > unknown) {
 		//		if (getFlags()->mouse_right_click)
@@ -823,8 +823,9 @@ void SceneManager::postProcessScene() {
 			}
 		}
 
-		EntityData::Field491Value field491 = getEntityData(kEntityNone)->field_491;
-		if (getEntityData(kEntityNone)->car == kCar9 && (field491 == EntityData::kField491_4 || field491 == EntityData::kField491_3)) {
+		// If several entities are there, choose one to sound "Excuse me"
+		EntityPosition entityPosition = getEntityData(kEntityNone)->position;
+		if (getEntityData(kEntityNone)->car == kCar9 && (entityPosition == kPosition_4 || entityPosition == kPosition_3)) {
 			EntityIndex entities[39];
 
 			// Init entities
@@ -834,15 +835,13 @@ void SceneManager::postProcessScene() {
 
 			for (uint i = 1; i < (unsigned)getEntities()->count(); i++) {
 				CarIndex car = getEntityData((EntityIndex)i)->car;
+				EntityPosition position = getEntityData((EntityIndex)i)->position;
 
-				// FIXME doesn't make sense to test field491 twice...
-				if (field491 == EntityData::kField491_4) {
-					if (!(car != kCarRedSleeping || field491 <= EntityData::kField491_9270)
-					 || !(car != kCarRestaurant || field491 >= EntityData::kField491_1540))
+				if (entityPosition == kPosition_4) {
+					if ((car == kCarRedSleeping && position > kPosition_9270) || (car == kCarRestaurant && position < kPosition_1540))
 						entities[progress++] = (EntityIndex)i;
 				} else {
-					if (!(car != kCarGreenSleeping || field491 <= EntityData::kField491_9270)
-					 || !(car != kCarRedSleeping || field491 >= EntityData::kField491_850))
+					if ((car == kCarGreenSleeping && position > kPosition_9270) || (car == kCarRedSleeping && position < kPosition_850))
 						entities[progress++] = (EntityIndex)i;
 				}
 			}

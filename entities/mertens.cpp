@@ -389,7 +389,7 @@ IMPLEMENT_FUNCTION(Mertens, chapter1, 34)
 
 		ENTITY_PARAM(0, 1) = 0;
 
-		getData()->field_491 = EntityData::kField491_9460;
+		getData()->position = kPosition_9460;
 		getData()->field_493 = EntityData::kField493_0;
 		getData()->car = kCarGreenSleeping;
 
@@ -429,7 +429,7 @@ IMPLEMENT_FUNCTION(Mertens, chapter1_handler, 41)
 
 	case kActionDefault:
 		setCallback(1);
-		call(new ENTITY_SETUP(Mertens, setup_function10), kCarGreenSleeping, EntityData::kField491_2000);
+		call(new ENTITY_SETUP(Mertens, setup_function10), kCarGreenSleeping, kPosition_2000);
 		break;
 
 	case kActionCallback:
@@ -468,7 +468,7 @@ IMPLEMENT_FUNCTION(Mertens, chapter2, 43)
 	case kActionDefault:
 		getEntities()->prepareSequences(kEntityMertens);
 
-		getData()->field_491 = EntityData::kField491_1500;
+		getData()->position = kPosition_1500;
 		getData()->field_493 = EntityData::kField493_0;
 		getData()->car = kCarGreenSleeping;
 		getData()->inventoryItem = kItemNone;
@@ -507,7 +507,7 @@ IMPLEMENT_FUNCTION(Mertens, chapter3, 45)
 		break;
 
 	case kActionDefault:
-		getData()->field_491 = EntityData::kField491_1500;
+		getData()->position = kPosition_1500;
 		getData()->field_493 = EntityData::kField493_0;
 		getData()->car = kCarGreenSleeping;
 		getData()->inventoryItem = kItemNone;
@@ -550,7 +550,7 @@ IMPLEMENT_FUNCTION(Mertens, chapter4, 47)
 	case kActionDefault:
 		getEntities()->prepareSequences(kEntityMertens);
 
-		getData()->field_491 = EntityData::kField491_1500;
+		getData()->position = kPosition_1500;
 		getData()->field_493 = EntityData::kField493_0;
 		getData()->car = kCarGreenSleeping;
 		getData()->inventoryItem = kItemNone;
@@ -596,7 +596,7 @@ IMPLEMENT_FUNCTION(Mertens, chapter5, 50)
 	case kActionDefault:
 		getEntities()->prepareSequences(kEntityMertens);
 
-		getData()->field_491 = EntityData::kField491_3969;
+		getData()->position = kPosition_3969;
 		getData()->field_493 = EntityData::kField493_1;
 		getData()->car = kCarRestaurant;
 		getData()->inventoryItem = kItemNone;

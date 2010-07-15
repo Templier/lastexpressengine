@@ -232,7 +232,7 @@ IMPLEMENT_FUNCTION(August, chapter1, 22)
 		getObjects()->update(kObjectCompartment3, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
 		getObjects()->update(kObject11, kEntityNone, kLocationNone, kCursorKeepValue, kCursorKeepValue);
 
-		getData()->field_491 = EntityData::kField491_4691;
+		getData()->position = kPosition_4691;
 		getData()->field_493 = EntityData::kField493_1;
 		getData()->car = kCarRestaurant;
 		getData()->clothes = kClothesDefault;
@@ -301,7 +301,7 @@ IMPLEMENT_FUNCTION(August, function31, 31)
 
 	case kActionDefault:
 		setCallback(1);
-		call(new ENTITY_SETUP(August, setup_function16), kCarGreenSleeping, EntityData::kField491_6470);
+		call(new ENTITY_SETUP(August, setup_function16), kCarGreenSleeping, kPosition_6470);
 		break;
 
 	case kActionCallback:
@@ -367,7 +367,7 @@ IMPLEMENT_FUNCTION(August, function34, 34)
 	case kActionDefault:
 		getObjects()->update(kObjectCompartment3, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
 
-		getData()->field_491 = EntityData::kField491_6470;
+		getData()->position = kPosition_6470;
 		getData()->field_493 = EntityData::kField493_1;
 		getData()->car = kCarGreenSleeping;
 
@@ -388,7 +388,7 @@ IMPLEMENT_FUNCTION(August, chapter2, 35)
 	case kActionDefault:
 		getEntities()->prepareSequences(kEntityAugust);
 
-		getData()->field_491 = EntityData::kField491_3970;
+		getData()->position = kPosition_3970;
 		getData()->field_493 = EntityData::kField493_1;
 		getData()->car = kCarRestaurant;
 		getData()->clothes = kClothes1;
@@ -448,7 +448,7 @@ IMPLEMENT_FUNCTION(August, chapter3, 40)
 	case kActionDefault:
 		getEntities()->prepareSequences(kEntityAugust);
 
-		getData()->field_491 = EntityData::kField491_6470;
+		getData()->position = kPosition_6470;
 		getData()->field_493 = EntityData::kField493_0;
 		getData()->car = kCarGreenSleeping;
 		getData()->clothes = kClothes1;
@@ -531,7 +531,7 @@ IMPLEMENT_FUNCTION(August, function49, 49)
 
 		case 1:
 			setCallback(2);
-			call(new ENTITY_SETUP(August, setup_function16), kCarKronos, EntityData::kField491_9270);
+			call(new ENTITY_SETUP(August, setup_function16), kCarKronos, kPosition_9270);
 			break;
 
 		case 2:
@@ -551,7 +551,7 @@ IMPLEMENT_FUNCTION(August, function50, 50)
 		getObjects()->update(kObjectCompartment3, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
 		getEntities()->prepareSequences(kEntityAugust);
 
-		getData()->field_491 = EntityData::kField491_6000;
+		getData()->position = kPosition_6000;
 		getData()->field_493 = EntityData::kField493_1;
 		getData()->car = kCarKronos;
 		break;
@@ -591,7 +591,7 @@ IMPLEMENT_FUNCTION(August, function53, 53)
 
 		case 2:
 			setCallback(3);
-			call(new ENTITY_SETUP(August, setup_function16), kCarRestaurant, EntityData::kField491_850);
+			call(new ENTITY_SETUP(August, setup_function16), kCarRestaurant, kPosition_850);
 			break;
 
 		case 3:
@@ -648,7 +648,7 @@ IMPLEMENT_FUNCTION(August, chapter4, 57)
 	case kActionDefault:
 		getEntities()->prepareSequences(kEntityAugust);
 
-		getData()->field_491 = EntityData::kField491_6470;
+		getData()->position = kPosition_6470;
 		getData()->field_493 = EntityData::kField493_1;
 		getData()->car = kCarGreenSleeping;
 		getData()->clothes = kClothes2;
@@ -714,7 +714,7 @@ IMPLEMENT_FUNCTION(August, function65, 65)
 		break;
 
 	case kActionDefault:
-		getData()->field_491 = EntityData::kField491_6470;
+		getData()->position = kPosition_6470;
 		getData()->field_493 = EntityData::kField493_1;
 		getData()->car = kCarGreenSleeping;
 
@@ -740,7 +740,7 @@ IMPLEMENT_FUNCTION(August, chapter5, 66)
 	case kActionDefault:
 		getEntities()->prepareSequences(kEntityAugust);
 
-		getData()->field_491 = EntityData::kField491_3969;
+		getData()->position = kPosition_3969;
 		getData()->field_493 = EntityData::kField493_1;
 		getData()->car = kCarRestaurant;
 		getData()->clothes = kClothes2;

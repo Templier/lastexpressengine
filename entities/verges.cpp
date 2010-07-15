@@ -210,7 +210,7 @@ IMPLEMENT_FUNCTION(Verges, chapter1, 18)
 		getObjects()->update(kObject104, kEntityVerges, kLocationNone, kCursorNormal, kCursorHand);
 		getObjects()->update(kObject105, kEntityVerges, kLocationNone, kCursorNormal, kCursorHand);
 
-		getData()->field_491 = EntityData::kField491_5000;
+		getData()->position = kPosition_5000;
 		getData()->field_493 = EntityData::kField493_0;
 		getData()->car = kCarBaggage;
 		break;
@@ -241,13 +241,13 @@ IMPLEMENT_FUNCTION(Verges, function23, 23)
 	case kActionDefault:
 		getScenes()->loadSceneFromItemPosition(kItem9);
 
-		getData()->field_491 = EntityData::kField491_8200;
+		getData()->position = kPosition_8200;
 		getData()->field_493 = EntityData::kField493_1;
 		getData()->car = kCarRedSleeping;
 		break;
 
 	case kAction191477936:
-		getData()->field_491 = EntityData::kField491_8200;
+		getData()->position = kPosition_8200;
 		getData()->field_493 = EntityData::kField493_0;
 		getData()->car = kCarRedSleeping;
 
@@ -281,7 +281,7 @@ IMPLEMENT_FUNCTION(Verges, chapter2, 27)
 	case kActionDefault:
 		getEntities()->prepareSequences(kEntityVerges);
 
-		getData()->field_491 = EntityData::kField491_5000;
+		getData()->position = kPosition_5000;
 		getData()->field_493 = EntityData::kField493_0;
 		getData()->car = kCarBaggage;
 		getData()->inventoryItem = kItemNone;
@@ -310,7 +310,7 @@ IMPLEMENT_FUNCTION(Verges, chapter3, 29)
 	case kActionDefault:
 		getEntities()->prepareSequences(kEntityVerges);
 
-		getData()->field_491 = EntityData::kField491_540;
+		getData()->position = kPosition_540;
 		getData()->field_493 = EntityData::kField493_0;
 		getData()->car = kCarRestaurant;
 		getData()->clothes = kClothesDefault;
@@ -361,7 +361,7 @@ IMPLEMENT_FUNCTION(Verges, chapter4, 36)
 	case kActionDefault:
 		getEntities()->prepareSequences(kEntityVerges);
 
-		getData()->field_491 = EntityData::kField491_5000;
+		getData()->position = kPosition_5000;
 		getData()->field_493 = EntityData::kField493_0;
 		getData()->car = kCarBaggage;
 		getData()->clothes = kClothesDefault;
@@ -396,7 +396,7 @@ IMPLEMENT_FUNCTION(Verges, chapter5, 39)
 	case kActionDefault:
 		getEntities()->prepareSequences(kEntityVerges);
 
-		getData()->field_491 = EntityData::kField491_3650;
+		getData()->position = kPosition_3650;
 		getData()->field_493 = EntityData::kField493_1;
 		getData()->car = kCarRestaurant;
 		getData()->clothes = kClothesDefault;

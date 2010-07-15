@@ -65,9 +65,9 @@ void FrameInfo::read(Common::SeekableReadStream *in, bool isSequence) {
 	field_31 = in->readByte();
 	soundAction = in->readByte();
 	field_33 = in->readByte();
-	position = in->readUint32LE();
+	positionId = in->readUint32LE();
 	field_38 = in->readUint32LE();
-	field491 = in->readUint16LE();
+	position = in->readUint16LE();
 	location = in->readUint16LE();
 	next = in->readUint32LE();
 }
@@ -88,8 +88,8 @@ AnimFrame::AnimFrame(Common::SeekableReadStream *in, const FrameInfo &f) : _pale
 	debugC(6, kLastExpressDebugGraphics, "    Compression type: %u / %u", f.compressionType, f.subType);
 	debugC(6, kLastExpressDebugGraphics, "    Unknown: %u - %u - %u - %u - %u - %d", f.field_2E, f.field_2F, f.field_30, f.field_31, f.field_33, f.field_38);
 	debugC(6, kLastExpressDebugGraphics, "    Sound action: %u", f.soundAction);
-	debugC(6, kLastExpressDebugGraphics, "    Position: %d", f.position);
-	debugC(6, kLastExpressDebugGraphics, "    Field491: %d", f.field491);
+	debugC(6, kLastExpressDebugGraphics, "    Position ID: %d", f.positionId);
+	debugC(6, kLastExpressDebugGraphics, "    Entity Position: %d", f.position);
 	debugC(6, kLastExpressDebugGraphics, "    Location: %d", f.location);
 	debugC(6, kLastExpressDebugGraphics, "    next: %d", f.next);
 

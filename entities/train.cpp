@@ -118,26 +118,26 @@ IMPLEMENT_FUNCTION_II(Train, harem, 7)
 		break;
 
 	case 5:
-		params->param3 = EntityData::kField491_4840;
+		params->param3 = kPosition_4840;
 		break;
 
 	case 6:
-		params->param3 = EntityData::kField491_4070;
+		params->param3 = kPosition_4070;
 		break;
 
 	case 7:
-		params->param3 = EntityData::kField491_3050;
+		params->param3 = kPosition_3050;
 		break;
 
 	case 8:
-		params->param3 = EntityData::kField491_2740;
+		params->param3 = kPosition_2740;
 		break;
 	}
 
-	params->param4 = getEntities()->checkFields1(kEntityAlouan, kCarGreenSleeping, (EntityData::Field491Value)params->param3);
+	params->param4 = getEntities()->checkFields1(kEntityAlouan, kCarGreenSleeping, (EntityPosition)params->param3);
 	params->param5 = (ENTITY_PARAM(0, 7) - params->param3) <= 0;
-	params->param6 = getEntities()->checkFields1(kEntityYasmin, kCarGreenSleeping, (EntityData::Field491Value)params->param3);
-	params->param7 = getEntities()->checkFields1(kEntityHadija, kCarGreenSleeping, (EntityData::Field491Value)params->param3);
+	params->param6 = getEntities()->checkFields1(kEntityYasmin, kCarGreenSleeping, (EntityPosition)params->param3);
+	params->param7 = getEntities()->checkFields1(kEntityHadija, kCarGreenSleeping, (EntityPosition)params->param3);
 
 	getObjects()->update((ObjectIndex)params->param1, kEntityTrain, kLocation3, kCursorNormal, kCursorNormal);
 
@@ -349,7 +349,7 @@ label_process:
 			getObjects()->update(kObjectCompartment7, kEntityTrain, kLocation3, kCursorHandKnock, kCursorHand);
 			getObjects()->update(kObjectCompartment8, kEntityTrain, kLocation3, kCursorHandKnock, kCursorHand);
 		}
-		getData()->field_491 = EntityData::kField491_30000;
+		getData()->position = kPosition_30000;
 		break;
 
 	case kAction17:
@@ -511,8 +511,8 @@ label_process:
 		case kObjectCompartmentA:
 		case kObjectCompartmentB:
 			parameters1->param1 = (savepoint.param.intValue == kObjectCompartment1 || savepoint.param.intValue == kObjectCompartment2) ? kCarGreenSleeping : kCarRedSleeping;
-			parameters1->param2 = (savepoint.param.intValue == kObjectCompartment1 || savepoint.param.intValue == kObjectCompartmentA) ? EntityData::kField491_8200 : EntityData::kField491_7500;
-			parameters1->param3 = EntityData::kField491_7850;
+			parameters1->param2 = (savepoint.param.intValue == kObjectCompartment1 || savepoint.param.intValue == kObjectCompartmentA) ? kPosition_8200 : kPosition_7500;
+			parameters1->param3 = kPosition_7850;
 			break;
 
 		case kObjectCompartment3:
@@ -520,8 +520,8 @@ label_process:
 		case kObjectCompartmentC:
 		case kObjectCompartmentD:
 			parameters1->param1 = (savepoint.param.intValue == kObjectCompartment1 || savepoint.param.intValue == kObjectCompartment2) ? kCarGreenSleeping : kCarRedSleeping;
-			parameters1->param2 = (savepoint.param.intValue == kObjectCompartment3 || savepoint.param.intValue == kObjectCompartmentC) ? EntityData::kField491_6470 : EntityData::kField491_5790;
-			parameters1->param3 = EntityData::kField491_6130;
+			parameters1->param2 = (savepoint.param.intValue == kObjectCompartment3 || savepoint.param.intValue == kObjectCompartmentC) ? kPosition_6470 : kPosition_5790;
+			parameters1->param3 = kPosition_6130;
 			break;
 
 		case kObjectCompartment5:
@@ -529,8 +529,8 @@ label_process:
 		case kObjectCompartmentE:
 		case kObjectCompartmentF:
 			parameters1->param1 = (savepoint.param.intValue == kObjectCompartment1 || savepoint.param.intValue == kObjectCompartment2) ? kCarGreenSleeping : kCarRedSleeping;
-			parameters1->param2 = (savepoint.param.intValue == kObjectCompartment5 || savepoint.param.intValue == kObjectCompartmentE) ? EntityData::kField491_4840 : EntityData::kField491_4070;
-			parameters1->param3 = EntityData::kField491_4455;
+			parameters1->param2 = (savepoint.param.intValue == kObjectCompartment5 || savepoint.param.intValue == kObjectCompartmentE) ? kPosition_4840 : kPosition_4070;
+			parameters1->param3 = kPosition_4455;
 			break;
 
 		case kObjectCompartment7:
@@ -538,8 +538,8 @@ label_process:
 		case kObjectCompartmentG:
 		case kObjectCompartmentH:
 			parameters1->param1 = (savepoint.param.intValue == kObjectCompartment1 || savepoint.param.intValue == kObjectCompartment2) ? kCarGreenSleeping : kCarRedSleeping;
-			parameters1->param2 = (savepoint.param.intValue == kObjectCompartment7 || savepoint.param.intValue == kObjectCompartmentG) ? EntityData::kField491_3050 : EntityData::kField491_2740;
-			parameters1->param3 = EntityData::kField491_0;
+			parameters1->param2 = (savepoint.param.intValue == kObjectCompartment7 || savepoint.param.intValue == kObjectCompartmentG) ? kPosition_3050 : kPosition_2740;
+			parameters1->param3 = kPositionNone;
 			break;
 		}
 		break;
@@ -561,8 +561,8 @@ void Train::resetParam8() {
 	EntityData::EntityParametersIIIS *params2 = (EntityData::EntityParametersIIIS*)_data->getCurrentParameters(1);
 
 	if (params->param8
-	 && !getEntities()->checkFields1(kEntityNone, (CarIndex)params2->param1, (EntityData::Field491Value)params2->param2)
-	 && !getEntities()->checkFields1(kEntityNone, (CarIndex)params2->param1, (EntityData::Field491Value)params2->param3)) {
+	 && !getEntities()->checkFields1(kEntityNone, (CarIndex)params2->param1, (EntityPosition)params2->param2)
+	 && !getEntities()->checkFields1(kEntityNone, (CarIndex)params2->param1, (EntityPosition)params2->param3)) {
 
 		if (getSound()->isBuffered(params2->seq))
 			getSound()->unknownFunction2(params2->seq);

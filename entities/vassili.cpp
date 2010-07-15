@@ -99,7 +99,7 @@ IMPLEMENT_FUNCTION(Vassili, chapter1_handler, 5)
 
 	case kActionNone:
 		if (params->param1) {
-			getData()->field_491 = getEntityData(kEntityTatiana)->field_491;
+			getData()->position = getEntityData(kEntityTatiana)->position;
 			getData()->field_493 = getEntityData(kEntityTatiana)->field_493;
 		} else {
 			if (params->param3 && params->param3 >= (int)getState()->time) {
@@ -140,7 +140,7 @@ IMPLEMENT_FUNCTION(Vassili, function6, 6)
 		break;
 
 	case kActionNone:
-		if (getEntities()->checkFields1(kEntityNone, kCarRedSleeping, EntityData::kField491_8200)) {
+		if (getEntities()->checkFields1(kEntityNone, kCarRedSleeping, kPosition_8200)) {
 
 			// FIXME: use UPDATE_PARAM_FUNCTION
 			error("Vassili::function6: not implemented!");
@@ -148,14 +148,14 @@ IMPLEMENT_FUNCTION(Vassili, function6, 6)
 				if (params->param3 >= (int)getState()->timeTicks)
 					goto label_function7;
 
-				params->param3 = EntityData::kParamTime;
+				params->param3 = kTimeInvalid;
 			} else {
 				params->param3 = (int)getState()->timeTicks + params->param1;
 				if (!params->param3) {
 					if (params->param3 >= (int)getState()->timeTicks)
 						goto label_function7;
 
-					params->param3 = EntityData::kParamTime;
+					params->param3 = kTimeInvalid;
 				}
 			}
 
@@ -165,11 +165,11 @@ IMPLEMENT_FUNCTION(Vassili, function6, 6)
 		}
 
 label_function7:
-		if (params->param4 != EntityData::kParamTime && getState()->time > kTimeKronos) {
+		if (params->param4 != kTimeInvalid && getState()->time > kTimeKronos) {
 
 			if (getState()->time <= kTimeVassili) {
 
-				if (getEntities()->checkFields1(kEntityNone, kCarRedSleeping, EntityData::kField491_8200) || !params->param4) {
+				if (getEntities()->checkFields1(kEntityNone, kCarRedSleeping, kPosition_8200) || !params->param4) {
 
 					params->param4 = getState()->time;
 					if (!params->param4) {
@@ -182,13 +182,13 @@ label_function7:
 					break;
 			}
 
-			params->param4 = EntityData::kParamTime;
+			params->param4 = kTimeInvalid;
 			setup_function7();
 		}
 		break;
 
 	case kActionDefault:
-		getData()->field_491 = EntityData::kField491_8200;
+		getData()->position = kPosition_8200;
 		getData()->field_493 = EntityData::kField493_1;
 		getData()->car = kCarRedSleeping;
 
@@ -220,7 +220,7 @@ IMPLEMENT_FUNCTION(Vassili, function7, 7)
 	case kActionNone:
 		// FIXME: use UPDATE_PARAM_FUNCTION
 		error("Vassili::function7: not implemented!");
-		if (params->param1 != EntityData::kParamTime && getState()->time > kTimeVassili) {
+		if (params->param1 != kTimeInvalid && getState()->time > kTimeVassili) {
 			 if (getState()->time <= kTimeVassili_2) {
 				 if (getEntities()->checkFields7(kCarRedSleeping) || !params->param1) {
 					 params->param1 = getState()->time + 150;
@@ -234,18 +234,18 @@ IMPLEMENT_FUNCTION(Vassili, function7, 7)
 					 break;
 			 }
 
-			 params->param1 = EntityData::kParamTime;
+			 params->param1 = kTimeInvalid;
 			 setup_function8();
 		}
 		break;
 
 	case kActionDefault:
-		getData()->field_491 = EntityData::kField491_8200;
+		getData()->position = kPosition_8200;
 		getData()->field_493 = EntityData::kField493_1;
 		getData()->car = kCarRedSleeping;
 
 		getEntities()->prepareSequences(kEntityVassili);
-		if (getEntities()->checkFields1(kEntityNone, kCarRedSleeping, EntityData::kField491_8200))
+		if (getEntities()->checkFields1(kEntityNone, kCarRedSleeping, kPosition_8200))
 			getScenes()->loadSceneFromObject(kObjectCompartmentA);
 
 		getObjects()->update(kObjectCompartmentA, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
@@ -383,7 +383,7 @@ IMPLEMENT_FUNCTION(Vassili, chapter2, 12)
 	case kActionDefault:
 		getEntities()->prepareSequences(kEntityVassili);
 
-		getData()->field_491 = EntityData::kField491_8200;
+		getData()->position = kPosition_8200;
 		getData()->field_493 = EntityData::kField493_1;
 		getData()->car = kCarRedSleeping;
 		getData()->clothes = kClothesDefault;
@@ -401,7 +401,7 @@ IMPLEMENT_FUNCTION(Vassili, sleeping, 13)
 		break;
 
 	case kActionNone:
-		if (getEntities()->checkFields1(kEntityNone, kCarRedSleeping, EntityData::kField491_8200)) {
+		if (getEntities()->checkFields1(kEntityNone, kCarRedSleeping, kPosition_8200)) {
 			UPDATE_PARAM(params->param3, getState()->timeTicks, params->param1);
 
 			setCallback(1);
@@ -441,7 +441,7 @@ IMPLEMENT_FUNCTION(Vassili, chapter3, 14)
 	case kActionDefault:
 		getEntities()->prepareSequences(kEntityVassili);
 
-		getData()->field_491 = EntityData::kField491_8200;
+		getData()->position = kPosition_8200;
 		getData()->field_493 = EntityData::kField493_1;
 		getData()->car = kCarRedSleeping;
 		getData()->clothes = kClothesDefault;
@@ -458,7 +458,7 @@ IMPLEMENT_FUNCTION(Vassili, stealEgg, 15)
 		break;
 
 	case kActionNone:
-		if (getEntities()->checkFields1(kEntityNone, kCarRedSleeping, EntityData::kField491_8200)) {
+		if (getEntities()->checkFields1(kEntityNone, kCarRedSleeping, kPosition_8200)) {
 			UPDATE_PARAM(params->param3, getState()->timeTicks, params->param1);
 
 			setCallback(1);
@@ -481,7 +481,7 @@ IMPLEMENT_FUNCTION(Vassili, stealEgg, 15)
 		break;
 
 	case kAction17:
-		if (getEntities()->checkFields1(kEntityNone, kCarRedSleeping, EntityData::kField491_7850)
+		if (getEntities()->checkFields1(kEntityNone, kCarRedSleeping, kPosition_7850)
 		 && getInventory()->hasItem(kItemFirebird)
 		 && !getEvent(kEventVassiliCompartmentStealEgg))
 			getObjects()->update(kObject48, kEntityVassili, kLocationNone, kCursorNormal, kCursorHand);
@@ -521,7 +521,7 @@ IMPLEMENT_FUNCTION(Vassili, chapter4, 16)
 	case kActionDefault:
 		getEntities()->prepareSequences(kEntityVassili);
 
-		getData()->field_491 = EntityData::kField491_8200;
+		getData()->position = kPosition_8200;
 		getData()->field_493 = EntityData::kField493_1;
 		getData()->car = kCarRedSleeping;
 		getData()->clothes = kClothesDefault;
@@ -540,7 +540,7 @@ IMPLEMENT_FUNCTION(Vassili, function17, 17)
 		break;
 
 	case kActionNone:
-		if (getEntities()->checkFields1(kEntityNone, kCarRedSleeping, EntityData::kField491_8200)) {
+		if (getEntities()->checkFields1(kEntityNone, kCarRedSleeping, kPosition_8200)) {
 			UPDATE_PARAM(params->param3, getState()->timeTicks, params->param1);
 
 			setCallback(1);
@@ -572,7 +572,7 @@ IMPLEMENT_FUNCTION(Vassili, chapter5, 18)
 	if (savepoint.action == kActionDefault) {
 		getEntities()->prepareSequences(kEntityVassili);
 
-		getData()->field_491 = EntityData::kField491_3969;
+		getData()->position = kPosition_3969;
 		getData()->field_493 = EntityData::kField493_1;
 		getData()->car = kCarRestaurant;
 		getData()->clothes = kClothesDefault;

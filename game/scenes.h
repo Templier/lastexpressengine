@@ -109,8 +109,8 @@ private:
 	Sequence *_clockHours;
 	Sequence *_clockMinutes;
 
-	int _hoursIndex;
-	int _minutesIndex;
+	uint _hoursIndex;
+	uint _minutesIndex;
 
 	// Sequence queue
 	Common::List<SequenceFrame *> _queue;
