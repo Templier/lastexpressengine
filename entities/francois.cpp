@@ -55,7 +55,7 @@ Francois::Francois(LastExpressEngine *engine) : Entity(engine, kEntityFrancois) 
 	ADD_CALLBACK_FUNCTION(Francois, function15);
 	ADD_CALLBACK_FUNCTION(Francois, function16);
 	ADD_CALLBACK_FUNCTION(Francois, chapter1);
-	ADD_CALLBACK_FUNCTION(Francois, function18);
+	ADD_CALLBACK_FUNCTION(Francois, chapter1_handler);
 	ADD_CALLBACK_FUNCTION(Francois, function19);
 	ADD_CALLBACK_FUNCTION(Francois, function20);
 	ADD_CALLBACK_FUNCTION(Francois, chapter2);
@@ -141,7 +141,7 @@ IMPLEMENT_FUNCTION(Francois, chapter1, 17)
 		break;
 
 	case kActionNone:
-		TIME_CHECK_CHAPTER1(setup_function18);
+		TIME_CHECK_CHAPTER1(setup_chapter1_handler);
 		break;
 
 	case kActionDefault:
@@ -152,7 +152,7 @@ IMPLEMENT_FUNCTION(Francois, chapter1, 17)
 	}
 }
 
-IMPLEMENT_FUNCTION(Francois, function18, 18)
+IMPLEMENT_FUNCTION(Francois, chapter1_handler, 18)
 	switch (savepoint.action) {
 	default:
 		break;

@@ -52,7 +52,7 @@ public:
 	DECLARE_FUNCTION(function11)
 	DECLARE_FUNCTION(function12)
 	DECLARE_FUNCTION(function13)
-	DECLARE_FUNCTION(function14)
+	DECLARE_FUNCTION(chapters_handler)
 	DECLARE_FUNCTION(chapter1)
 	DECLARE_FUNCTION(function16)
 	DECLARE_FUNCTION(chapter2)

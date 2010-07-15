@@ -58,7 +58,7 @@ Abbot::Abbot(LastExpressEngine *engine) : Entity(engine, kEntityAbbot) {
 	ADD_CALLBACK_FUNCTION(Abbot, chapter1);
 	ADD_CALLBACK_FUNCTION(Abbot, chapter2);
 	ADD_CALLBACK_FUNCTION(Abbot, chapter3);
-	ADD_CALLBACK_FUNCTION(Abbot, function18);
+	ADD_CALLBACK_FUNCTION(Abbot, chapter3_handler);
 	ADD_CALLBACK_FUNCTION(Abbot, function19);
 	ADD_CALLBACK_FUNCTION(Abbot, function20);
 	ADD_CALLBACK_FUNCTION(Abbot, function21);
@@ -81,7 +81,7 @@ Abbot::Abbot(LastExpressEngine *engine) : Entity(engine, kEntityAbbot) {
 	ADD_CALLBACK_FUNCTION(Abbot, function38);
 	ADD_CALLBACK_FUNCTION(Abbot, chapter4);
 	ADD_CALLBACK_FUNCTION(Abbot, function40);
-	ADD_CALLBACK_FUNCTION(Abbot, function41);
+	ADD_CALLBACK_FUNCTION(Abbot, chapter4_handler);
 	ADD_CALLBACK_FUNCTION(Abbot, function42);
 	ADD_CALLBACK_FUNCTION(Abbot, function43);
 	ADD_CALLBACK_FUNCTION(Abbot, function44);
@@ -91,7 +91,7 @@ Abbot::Abbot(LastExpressEngine *engine) : Entity(engine, kEntityAbbot) {
 	ADD_CALLBACK_FUNCTION(Abbot, function48);
 	ADD_CALLBACK_FUNCTION(Abbot, pickBomb);
 	ADD_CALLBACK_FUNCTION(Abbot, chapter5);
-	ADD_CALLBACK_FUNCTION(Abbot, function51);
+	ADD_CALLBACK_FUNCTION(Abbot, chapter5_handler);
 	ADD_CALLBACK_FUNCTION(Abbot, function52);
 	ADD_CALLBACK_FUNCTION(Abbot, function53);
 }
@@ -223,7 +223,7 @@ IMPLEMENT_FUNCTION(Abbot, chapter3, 17)
 		break;
 
 	case kActionNone:
-		setup_function18();
+		setup_chapter3_handler();
 		break;
 
 	case kActionDefault:
@@ -239,7 +239,7 @@ IMPLEMENT_FUNCTION(Abbot, chapter3, 17)
 	}
 }
 
-IMPLEMENT_FUNCTION(Abbot, function18, 18)
+IMPLEMENT_FUNCTION(Abbot, chapter3_handler, 18)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -901,7 +901,7 @@ IMPLEMENT_FUNCTION(Abbot, chapter4, 39)
 		break;
 
 	case kActionNone:
-		setup_function41();
+		setup_chapter4_handler();
 		break;
 
 	case kActionDefault:
@@ -922,7 +922,7 @@ IMPLEMENT_FUNCTION_II(Abbot, function40, 40)
 	error("Abbot: callback function 40 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Abbot, function41, 41)
+IMPLEMENT_FUNCTION(Abbot, chapter4_handler, 41)
 	error("Abbot: callback function 41 not implemented!");
 }
 
@@ -997,7 +997,7 @@ IMPLEMENT_FUNCTION(Abbot, chapter5, 50)
 		break;
 
 	case kActionNone:
-		setup_function51();
+		setup_chapter5_handler();
 		break;
 
 	case kActionDefault:
@@ -1012,7 +1012,7 @@ IMPLEMENT_FUNCTION(Abbot, chapter5, 50)
 	}
 }
 
-IMPLEMENT_FUNCTION(Abbot, function51, 51)
+IMPLEMENT_FUNCTION(Abbot, chapter5_handler, 51)
 	if (savepoint.action == kAction70549068)
 		setup_function52();
 }

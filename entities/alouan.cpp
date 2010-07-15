@@ -51,14 +51,14 @@ Alouan::Alouan(LastExpressEngine *engine) : Entity(engine, kEntityAlouan) {
 	ADD_CALLBACK_FUNCTION(Alouan, chapter1_handler);
 	ADD_CALLBACK_FUNCTION(Alouan, function12);
 	ADD_CALLBACK_FUNCTION(Alouan, chapter2);
-	ADD_CALLBACK_FUNCTION(Alouan, function14);
+	ADD_CALLBACK_FUNCTION(Alouan, chapter2_handler);
 	ADD_CALLBACK_FUNCTION(Alouan, chapter3);
-	ADD_CALLBACK_FUNCTION(Alouan, function16);
+	ADD_CALLBACK_FUNCTION(Alouan, chapter3_handler);
 	ADD_CALLBACK_FUNCTION(Alouan, chapter4);
-	ADD_CALLBACK_FUNCTION(Alouan, function18);
+	ADD_CALLBACK_FUNCTION(Alouan, chapter4_handler);
 	ADD_CALLBACK_FUNCTION(Alouan, function19);
 	ADD_CALLBACK_FUNCTION(Alouan, chapter5);
-	ADD_CALLBACK_FUNCTION(Alouan, function21);
+	ADD_CALLBACK_FUNCTION(Alouan, chapter5_handler);
 	ADD_CALLBACK_FUNCTION(Alouan, function22);
 	ADD_CALLBACK_FUNCTION(Alouan, function23);
 	ADD_NULL_FUNCTION();
@@ -181,10 +181,10 @@ IMPLEMENT_FUNCTION(Alouan, chapter2, 13)
 	getData()->clothes = kClothesDefault;
 	getData()->inventoryItem = kItemNone;
 
-	setup_function14();
+	setup_chapter2_handler();
 }
 
-IMPLEMENT_FUNCTION(Alouan, function14, 14)
+IMPLEMENT_FUNCTION(Alouan, chapter2_handler, 14)
 	error("Alouan: callback function 14 not implemented!");
 }
 
@@ -194,7 +194,7 @@ IMPLEMENT_FUNCTION(Alouan, chapter3, 15)
 		break;
 
 	case kActionNone:
-		setup_function16();
+		setup_chapter3_handler();
 		break;
 
 	case kActionDefault:
@@ -208,7 +208,7 @@ IMPLEMENT_FUNCTION(Alouan, chapter3, 15)
 	}
 }
 
-IMPLEMENT_FUNCTION(Alouan, function16, 16)
+IMPLEMENT_FUNCTION(Alouan, chapter3_handler, 16)
 	error("Alouan: callback function 16 not implemented!");
 }
 
@@ -218,7 +218,7 @@ IMPLEMENT_FUNCTION(Alouan, chapter4, 17)
 		break;
 
 	case kActionNone:
-		setup_function18();
+		setup_chapter4_handler();
 		break;
 
 	case kActionDefault:
@@ -232,7 +232,7 @@ IMPLEMENT_FUNCTION(Alouan, chapter4, 17)
 	}
 }
 
-IMPLEMENT_FUNCTION(Alouan, function18, 18)
+IMPLEMENT_FUNCTION(Alouan, chapter4_handler, 18)
 	error("Alouan: callback function 18 not implemented!");
 }
 
@@ -255,7 +255,7 @@ IMPLEMENT_FUNCTION(Alouan, chapter5, 20)
 		break;
 
 	case kActionNone:
-		setup_function21();
+		setup_chapter5_handler();
 		break;
 
 	case kActionDefault:
@@ -271,7 +271,7 @@ IMPLEMENT_FUNCTION(Alouan, chapter5, 20)
 	}
 }
 
-IMPLEMENT_FUNCTION(Alouan, function21, 21)
+IMPLEMENT_FUNCTION(Alouan, chapter5_handler, 21)
 	if (savepoint.action == kAction70549068)
 		setup_function22();
 }

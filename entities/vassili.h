@@ -43,7 +43,7 @@ public:
 	DECLARE_FUNCTION_S(draw)
 	DECLARE_FUNCTION_II(savegame)
 	DECLARE_FUNCTION(chapter1)
-	DECLARE_FUNCTION(function5)
+	DECLARE_FUNCTION(chapter1_handler)
 	DECLARE_FUNCTION(function6)
 	DECLARE_FUNCTION(function7)
 	DECLARE_FUNCTION(function8)

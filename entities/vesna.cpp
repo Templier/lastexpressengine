@@ -51,7 +51,7 @@ Vesna::Vesna(LastExpressEngine *engine) : Entity(engine, kEntityVesna) {
 	ADD_CALLBACK_FUNCTION(Vesna, savegame);
 	ADD_CALLBACK_FUNCTION(Vesna, function11);
 	ADD_CALLBACK_FUNCTION(Vesna, chapter1);
-	ADD_CALLBACK_FUNCTION(Vesna, function13);
+	ADD_CALLBACK_FUNCTION(Vesna, chapter1_handler);
 	ADD_CALLBACK_FUNCTION(Vesna, function14);
 	ADD_CALLBACK_FUNCTION(Vesna, function15);
 	ADD_CALLBACK_FUNCTION(Vesna, chapter2);
@@ -122,7 +122,7 @@ IMPLEMENT_FUNCTION(Vesna, chapter1, 12)
 		break;
 
 	case kActionNone:
-		TIME_CHECK_CHAPTER1(setup_function13);
+		TIME_CHECK_CHAPTER1(setup_chapter1_handler);
 		break;
 
 	case kActionDefault:
@@ -135,7 +135,7 @@ IMPLEMENT_FUNCTION(Vesna, chapter1, 12)
 	}
 }
 
-IMPLEMENT_FUNCTION(Vesna, function13, 13)
+IMPLEMENT_FUNCTION(Vesna, chapter1_handler, 13)
 	switch (savepoint.action) {
 	default:
 		break;

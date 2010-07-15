@@ -47,7 +47,7 @@ Salko::Salko(LastExpressEngine *engine) : Entity(engine, kEntitySalko) {
 	ADD_CALLBACK_FUNCTION(Salko, function7);
 	ADD_CALLBACK_FUNCTION(Salko, function8);
 	ADD_CALLBACK_FUNCTION(Salko, chapter1);
-	ADD_CALLBACK_FUNCTION(Salko, function10);
+	ADD_CALLBACK_FUNCTION(Salko, chapter1_handler);
 	ADD_CALLBACK_FUNCTION(Salko, function11);
 	ADD_CALLBACK_FUNCTION(Salko, chapter2);
 	ADD_CALLBACK_FUNCTION(Salko, function13);
@@ -78,7 +78,7 @@ IMPLEMENT_FUNCTION_NOSETUP(Salko, draw, 3)
 }
 
 IMPLEMENT_FUNCTION_II(Salko, function4, 4)
-	Entity::savepointCheckEntity(savepoint);
+	Entity::checkEntity(savepoint);
 }
 
 IMPLEMENT_FUNCTION_I(Salko, updateFromTime, 5)
@@ -110,7 +110,7 @@ IMPLEMENT_FUNCTION(Salko, chapter1, 9)
 		break;
 
 	case kActionNone:
-		TIME_CHECK_CHAPTER1(setup_function10);
+		TIME_CHECK_CHAPTER1(setup_chapter1_handler);
 		break;
 
 	case kActionDefault:
@@ -121,7 +121,7 @@ IMPLEMENT_FUNCTION(Salko, chapter1, 9)
 	}
 }
 
-IMPLEMENT_FUNCTION(Salko, function10, 10)
+IMPLEMENT_FUNCTION(Salko, chapter1_handler, 10)
 	switch (savepoint.action) {
 	default:
 		break;

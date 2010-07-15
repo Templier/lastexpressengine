@@ -82,10 +82,10 @@ Anna::Anna(LastExpressEngine *engine) : Entity(engine, kEntityAnna) {
 	ADD_CALLBACK_FUNCTION(Anna, function40);
 	ADD_CALLBACK_FUNCTION(Anna, function41);
 	ADD_CALLBACK_FUNCTION(Anna, chapter2);
-	ADD_CALLBACK_FUNCTION(Anna, function43);
+	ADD_CALLBACK_FUNCTION(Anna, chapter2_handler);
 	ADD_CALLBACK_FUNCTION(Anna, chapter3);
 	ADD_CALLBACK_FUNCTION(Anna, function45);
-	ADD_CALLBACK_FUNCTION(Anna, function46);
+	ADD_CALLBACK_FUNCTION(Anna, chapter3_handler);
 	ADD_CALLBACK_FUNCTION(Anna, function47);
 	ADD_CALLBACK_FUNCTION(Anna, function48);
 	ADD_CALLBACK_FUNCTION(Anna, leaveTableWithAugust);
@@ -106,7 +106,7 @@ Anna::Anna(LastExpressEngine *engine) : Entity(engine, kEntityAnna) {
 	ADD_CALLBACK_FUNCTION(Anna, bagage);
 	ADD_CALLBACK_FUNCTION(Anna, function65);
 	ADD_CALLBACK_FUNCTION(Anna, chapter4);
-	ADD_CALLBACK_FUNCTION(Anna, function67);
+	ADD_CALLBACK_FUNCTION(Anna, chapter4_handler);
 	ADD_CALLBACK_FUNCTION(Anna, function68);
 	ADD_CALLBACK_FUNCTION(Anna, function69);
 	ADD_CALLBACK_FUNCTION(Anna, function70);
@@ -114,7 +114,7 @@ Anna::Anna(LastExpressEngine *engine) : Entity(engine, kEntityAnna) {
 	ADD_CALLBACK_FUNCTION(Anna, function72);
 	ADD_CALLBACK_FUNCTION(Anna, function73);
 	ADD_CALLBACK_FUNCTION(Anna, chapter5);
-	ADD_CALLBACK_FUNCTION(Anna, function75);
+	ADD_CALLBACK_FUNCTION(Anna, chapter5_handler);
 	ADD_CALLBACK_FUNCTION(Anna, function76);
 	ADD_CALLBACK_FUNCTION(Anna, function77);
 	ADD_CALLBACK_FUNCTION(Anna, function78);
@@ -445,7 +445,7 @@ IMPLEMENT_FUNCTION(Anna, chapter2, 42)
 		break;
 
 	case kActionNone:
-		setup_function43();
+		setup_chapter2_handler();
 		break;
 
 	case kActionDefault:
@@ -461,7 +461,7 @@ IMPLEMENT_FUNCTION(Anna, chapter2, 42)
 	}
 }
 
-IMPLEMENT_FUNCTION(Anna, function43, 43)
+IMPLEMENT_FUNCTION(Anna, chapter2_handler, 43)
 	error("Anna: callback function 43 not implemented!");
 }
 
@@ -471,7 +471,7 @@ IMPLEMENT_FUNCTION(Anna, chapter3, 44)
 		break;
 
 	case kActionNone:
-		setup_function46();
+		setup_chapter3_handler();
 		break;
 
 	case kActionDefault:
@@ -495,8 +495,30 @@ IMPLEMENT_FUNCTION_I(Anna, function45, 45)
 	error("Anna: callback function 45 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Anna, function46, 46)
-	error("Anna: callback function 46 not implemented!");
+IMPLEMENT_FUNCTION(Anna, chapter3_handler, 46)
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionDefault:
+		if (getEntities()->isPlayerPosition(kCarRedSleeping, 60))
+			getScenes()->loadSceneFromPosition(kCarRedSleeping, 49);
+
+		setCallback(1);
+		call(new ENTITY_SETUP(Anna, setup_function12));
+		break;
+
+	case kActionCallback:
+		if (getCallback() == 1 || getCallback() == 2) {
+			if (ENTITY_PARAM(0, 1)) {
+				setup_function47();
+			} else {
+				setCallback(2);
+				call(new ENTITY_SETUP_ISII(Anna, setup_function15), getState()->time + 4500, "418C");
+			}
+		}
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Anna, function47, 47)
@@ -712,7 +734,7 @@ IMPLEMENT_FUNCTION(Anna, chapter4, 66)
 		break;
 
 	case kActionNone:
-		setup_function67();
+		setup_chapter4_handler();
 		break;
 
 	case kActionDefault:
@@ -728,7 +750,7 @@ IMPLEMENT_FUNCTION(Anna, chapter4, 66)
 	}
 }
 
-IMPLEMENT_FUNCTION(Anna, function67, 67)
+IMPLEMENT_FUNCTION(Anna, chapter4_handler, 67)
 	error("Anna: callback function 67 not implemented!");
 }
 
@@ -788,7 +810,7 @@ IMPLEMENT_FUNCTION(Anna, chapter5, 74)
 		break;
 
 	case kActionNone:
-		setup_function75();
+		setup_chapter5_handler();
 		break;
 
 	case kActionDefault:
@@ -806,7 +828,7 @@ IMPLEMENT_FUNCTION(Anna, chapter5, 74)
 	}
 }
 
-IMPLEMENT_FUNCTION(Anna, function75, 75)
+IMPLEMENT_FUNCTION(Anna, chapter5_handler, 75)
 	switch (savepoint.action) {
 	default:
 		break;

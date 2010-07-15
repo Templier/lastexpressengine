@@ -41,7 +41,7 @@ public:
 	// Setup
 	DECLARE_FUNCTION(function1)
 	DECLARE_FUNCTION_II(function2)
-	DECLARE_FUNCTION(function3)
+	DECLARE_FUNCTION(chapters_handler)
 	DECLARE_FUNCTION(chapter1)
 	DECLARE_FUNCTION(function5)
 	DECLARE_FUNCTION(chapter2)

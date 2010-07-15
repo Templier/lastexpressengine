@@ -77,7 +77,7 @@ Coudert::Coudert(LastExpressEngine *engine) : Entity(engine, kEntityCoudert) {
 	ADD_CALLBACK_FUNCTION(Coudert, function37);
 	ADD_CALLBACK_FUNCTION(Coudert, function38);
 	ADD_CALLBACK_FUNCTION(Coudert, function39);
-	ADD_CALLBACK_FUNCTION(Coudert, function40);
+	ADD_CALLBACK_FUNCTION(Coudert, chapter1_handler);
 	ADD_CALLBACK_FUNCTION(Coudert, function41);
 	ADD_CALLBACK_FUNCTION(Coudert, chapter2);
 	ADD_CALLBACK_FUNCTION(Coudert, function43);
@@ -251,7 +251,7 @@ IMPLEMENT_FUNCTION(Coudert, chapter1, 36)
 		break;
 
 	case kActionNone:
-		TIME_CHECK_CALLBACK(Coudert, kTimeChapter1, params->param1, 1, setup_function40)
+		TIME_CHECK_CALLBACK(Coudert, kTimeChapter1, params->param1, 1, setup_chapter1_handler)
 		break;
 
 	case kActionDefault:
@@ -284,7 +284,7 @@ IMPLEMENT_FUNCTION(Coudert, chapter1, 36)
 
 	case kActionCallback:
 		if (getCallback() == 1)
-			setup_function40();
+			setup_chapter1_handler();
 		break;
 	}
 }
@@ -301,7 +301,7 @@ IMPLEMENT_FUNCTION(Coudert, function39, 39)
 	error("Coudert: callback function 39 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Coudert, function40, 40)
+IMPLEMENT_FUNCTION(Coudert, chapter1_handler, 40)
 	error("Coudert: callback function 40 not implemented!");
 }
 

@@ -631,7 +631,33 @@ IMPLEMENT_FUNCTION(Rebecca, function44, 44)
 }
 
 IMPLEMENT_FUNCTION(Rebecca, function45, 45)
-	error("Rebecca: callback function 45 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionDefault:
+		getData()->field_491 = EntityData::kField491_4840;
+		getData()->field_493 = EntityData::kField493_1;
+		getData()->car = kCarRedSleeping;
+
+		getObjects()->update(kObjectCompartmentE, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObject52, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
+
+		getEntities()->prepareSequences(kEntityRebecca);
+		break;
+
+	case kActionCallback:
+		if (getCallback() == 1)
+			params->param1 = 1;
+		break;
+
+	case kAction205034665:
+		if (!params->param1 && getState()->time < kTimeRebecca_4_1) {
+			setCallback(1);
+			call(new ENTITY_SETUP_SIIS(Rebecca, setup_playSound), "Reb6969");
+		}
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Rebecca, chapter5, 46)

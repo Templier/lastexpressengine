@@ -26,6 +26,7 @@
 #include "lastexpress/entities/alexei.h"
 
 #include "lastexpress/game/entities.h"
+#include "lastexpress/game/inventory.h"
 #include "lastexpress/game/logic.h"
 #include "lastexpress/game/object.h"
 #include "lastexpress/game/savepoint.h"
@@ -56,7 +57,7 @@ Alexei::Alexei(LastExpressEngine *engine) : Entity(engine, kEntityAlexei) {
 	ADD_CALLBACK_FUNCTION(Alexei, function15);
 	ADD_CALLBACK_FUNCTION(Alexei, function16);
 	ADD_CALLBACK_FUNCTION(Alexei, chapter1);
-	ADD_CALLBACK_FUNCTION(Alexei, function18);
+	ADD_CALLBACK_FUNCTION(Alexei, chapter1_handler);
 	ADD_CALLBACK_FUNCTION(Alexei, function19);
 	ADD_CALLBACK_FUNCTION(Alexei, function20);
 	ADD_CALLBACK_FUNCTION(Alexei, function21);
@@ -67,16 +68,16 @@ Alexei::Alexei(LastExpressEngine *engine) : Entity(engine, kEntityAlexei) {
 	ADD_CALLBACK_FUNCTION(Alexei, function26);
 	ADD_CALLBACK_FUNCTION(Alexei, function27);
 	ADD_CALLBACK_FUNCTION(Alexei, chapter2);
-	ADD_CALLBACK_FUNCTION(Alexei, function29);
+	ADD_CALLBACK_FUNCTION(Alexei, chapter2_handler);
 	ADD_CALLBACK_FUNCTION(Alexei, function30);
 	ADD_CALLBACK_FUNCTION(Alexei, function31);
 	ADD_CALLBACK_FUNCTION(Alexei, chapter3);
-	ADD_CALLBACK_FUNCTION(Alexei, function33);
+	ADD_CALLBACK_FUNCTION(Alexei, chapter3_handler);
 	ADD_CALLBACK_FUNCTION(Alexei, function34);
 	ADD_CALLBACK_FUNCTION(Alexei, function35);
 	ADD_CALLBACK_FUNCTION(Alexei, function36);
 	ADD_CALLBACK_FUNCTION(Alexei, chapter4);
-	ADD_CALLBACK_FUNCTION(Alexei, function38);
+	ADD_CALLBACK_FUNCTION(Alexei, chapter4_handler);
 	ADD_CALLBACK_FUNCTION(Alexei, function39);
 	ADD_CALLBACK_FUNCTION(Alexei, function40);
 	ADD_CALLBACK_FUNCTION(Alexei, function41);
@@ -162,7 +163,7 @@ IMPLEMENT_FUNCTION(Alexei, chapter1, 17)
 		break;
 
 	case kActionNone:
-		TIME_CHECK_CHAPTER1(setup_function18)
+		TIME_CHECK_CHAPTER1(setup_chapter1_handler)
 		break;
 
 	case kActionDefault:
@@ -177,7 +178,7 @@ IMPLEMENT_FUNCTION(Alexei, chapter1, 17)
 	}
 }
 
-IMPLEMENT_FUNCTION(Alexei, function18, 18)
+IMPLEMENT_FUNCTION(Alexei, chapter1_handler, 18)
 	error("Alexei: callback function 18 not implemented!");
 }
 
@@ -230,7 +231,7 @@ IMPLEMENT_FUNCTION(Alexei, chapter2, 28)
 		break;
 
 	case kActionNone:
-		setup_function29();
+		setup_chapter2_handler();
 		break;
 
 	case kActionDefault:
@@ -249,7 +250,7 @@ IMPLEMENT_FUNCTION(Alexei, chapter2, 28)
 	}
 }
 
-IMPLEMENT_FUNCTION(Alexei, function29, 29)
+IMPLEMENT_FUNCTION(Alexei, chapter2_handler, 29)
 	error("Alexei: callback function 29 not implemented!");
 }
 
@@ -267,7 +268,7 @@ IMPLEMENT_FUNCTION(Alexei, chapter3, 32)
 		break;
 
 	case kActionNone:
-		setup_function33();
+		setup_chapter3_handler();
 		break;
 
 	case kActionDefault:
@@ -285,7 +286,7 @@ IMPLEMENT_FUNCTION(Alexei, chapter3, 32)
 	}
 }
 
-IMPLEMENT_FUNCTION(Alexei, function33, 33)
+IMPLEMENT_FUNCTION(Alexei, chapter3_handler, 33)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -328,7 +329,7 @@ IMPLEMENT_FUNCTION(Alexei, chapter4, 37)
 		break;
 
 	case kActionNone:
-		setup_function38();
+		setup_chapter4_handler();
 		break;
 
 	case kActionDefault:
@@ -346,7 +347,7 @@ IMPLEMENT_FUNCTION(Alexei, chapter4, 37)
 	}
 }
 
-IMPLEMENT_FUNCTION(Alexei, function38, 38)
+IMPLEMENT_FUNCTION(Alexei, chapter4_handler, 38)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -404,7 +405,29 @@ IMPLEMENT_FUNCTION(Alexei, function44, 44)
 }
 
 IMPLEMENT_FUNCTION(Alexei, function45, 45)
-	error("Alexei: callback function 45 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionDefault:
+		setCallback(1);
+		call(new ENTITY_SETUP(Alexei, setup_function13));
+		break;
+
+	case kActionCallback:
+		if (getCallback() == 1) {
+			if (getEntities()->isPlayerPosition(kCarGreenSleeping, 66))
+				getScenes()->loadSceneFromPosition(kCarGreenSleeping, 49);
+
+			if (getInventory()->hasItem(kItemBomb)) {
+				setup_function46();
+			} else {
+				setCallback(2);
+				call(new ENTITY_SETUP_ISII(Alexei, setup_function16), kTimeEnd, "412");
+			}
+		}
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Alexei, function46, 46)

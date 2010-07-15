@@ -81,7 +81,7 @@ Mertens::Mertens(LastExpressEngine *engine) : Entity(engine, kEntityMertens) {
 	ADD_CALLBACK_FUNCTION(Mertens, function38);
 	ADD_CALLBACK_FUNCTION(Mertens, function39);
 	ADD_CALLBACK_FUNCTION(Mertens, function40);
-	ADD_CALLBACK_FUNCTION(Mertens, function41);
+	ADD_CALLBACK_FUNCTION(Mertens, chapter1_handler);
 	ADD_CALLBACK_FUNCTION(Mertens, function42);
 	ADD_CALLBACK_FUNCTION(Mertens, chapter2);
 	ADD_CALLBACK_FUNCTION(Mertens, function44);
@@ -370,7 +370,7 @@ IMPLEMENT_FUNCTION(Mertens, chapter1, 34)
 		break;
 
 	case kActionNone:
-		TIME_CHECK_CHAPTER1(setup_function41);
+		TIME_CHECK_CHAPTER1(setup_chapter1_handler);
 		break;
 
 	case kActionDefault:
@@ -422,7 +422,7 @@ IMPLEMENT_FUNCTION(Mertens, function40, 40)
 	error("Mertens: callback function 40 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Mertens, function41, 41)
+IMPLEMENT_FUNCTION(Mertens, chapter1_handler, 41)
 	switch (savepoint.action) {
 	default:
 		break;

@@ -43,7 +43,7 @@ Cooks::Cooks(LastExpressEngine *engine) : Entity(engine, kEntityCooks) {
 	ADD_CALLBACK_FUNCTION(Cooks, function3);
 	ADD_CALLBACK_FUNCTION(Cooks, function4);
 	ADD_CALLBACK_FUNCTION(Cooks, chapter1);
-	ADD_CALLBACK_FUNCTION(Cooks, function6);
+	ADD_CALLBACK_FUNCTION(Cooks, chapter1_handler);
 	ADD_CALLBACK_FUNCTION(Cooks, function7);
 	ADD_CALLBACK_FUNCTION(Cooks, chapter2);
 	ADD_CALLBACK_FUNCTION(Cooks, function9);
@@ -237,7 +237,7 @@ IMPLEMENT_FUNCTION(Cooks, chapter1, 5)
 		break;
 
 	case kActionNone:
-		TIME_CHECK_CHAPTER1(setup_function6);
+		TIME_CHECK_CHAPTER1(setup_chapter1_handler);
 		break;
 
 	case kActionDefault:
@@ -251,7 +251,7 @@ IMPLEMENT_FUNCTION(Cooks, chapter1, 5)
 	}
 }
 
-IMPLEMENT_FUNCTION(Cooks, function6, 6)
+IMPLEMENT_FUNCTION(Cooks, chapter1_handler, 6)
 	switch (savepoint.action) {
 	default:
 		break;

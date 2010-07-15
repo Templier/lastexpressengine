@@ -62,10 +62,10 @@ Boutarel::Boutarel(LastExpressEngine *engine) : Entity(engine, kEntityBoutarel) 
 	ADD_CALLBACK_FUNCTION(Boutarel, chapter1_handler);
 	ADD_CALLBACK_FUNCTION(Boutarel, function22);
 	ADD_CALLBACK_FUNCTION(Boutarel, chapter2);
-	ADD_CALLBACK_FUNCTION(Boutarel, function24);
+	ADD_CALLBACK_FUNCTION(Boutarel, chapter2_handler);
 	ADD_CALLBACK_FUNCTION(Boutarel, function25);
 	ADD_CALLBACK_FUNCTION(Boutarel, chapter3);
-	ADD_CALLBACK_FUNCTION(Boutarel, function27);
+	ADD_CALLBACK_FUNCTION(Boutarel, chapter3_handler);
 	ADD_CALLBACK_FUNCTION(Boutarel, function28);
 	ADD_CALLBACK_FUNCTION(Boutarel, function29);
 	ADD_CALLBACK_FUNCTION(Boutarel, function30);
@@ -325,7 +325,7 @@ IMPLEMENT_FUNCTION(Boutarel, chapter2, 23)
 		break;
 
 	case kActionNone:
-		setup_function24();
+		setup_chapter2_handler();
 		break;
 
 	case kActionDefault:
@@ -343,7 +343,7 @@ IMPLEMENT_FUNCTION(Boutarel, chapter2, 23)
 	}
 }
 
-IMPLEMENT_FUNCTION(Boutarel, function24, 24)
+IMPLEMENT_FUNCTION(Boutarel, chapter2_handler, 24)
 	error("Boutarel: callback function 24 not implemented!");
 }
 
@@ -360,7 +360,7 @@ IMPLEMENT_FUNCTION(Boutarel, chapter3, 26)
 		break;
 
 	case kActionNone:
-		setup_function27();
+		setup_chapter3_handler();
 		break;
 
 	case kActionDefault:
@@ -378,7 +378,7 @@ IMPLEMENT_FUNCTION(Boutarel, chapter3, 26)
 	}
 }
 
-IMPLEMENT_FUNCTION(Boutarel, function27, 27)
+IMPLEMENT_FUNCTION(Boutarel, chapter3_handler, 27)
 	switch (savepoint.action) {
 	default:
 		break;

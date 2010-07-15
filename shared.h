@@ -148,6 +148,7 @@ enum TimeValue {
 	kTimeYasmin_5             = 2457000,
 	kTimeYasmin_6             = 2479500,
 	kTimeTables3              = 2488500,
+	kTimeRebecca_4_1          = 2511000,
 	kTimeCityBudapest         = 2551500,
 
 	// Chapter 5

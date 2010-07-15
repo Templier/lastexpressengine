@@ -56,7 +56,7 @@ Mahmud::Mahmud(LastExpressEngine *engine) : Entity(engine, kEntityMahmud) {
 	ADD_CALLBACK_FUNCTION(Mahmud, function11);
 	ADD_CALLBACK_FUNCTION(Mahmud, function12);
 	ADD_CALLBACK_FUNCTION(Mahmud, function13);
-	ADD_CALLBACK_FUNCTION(Mahmud, function14);
+	ADD_CALLBACK_FUNCTION(Mahmud, chapters_handler);
 	ADD_CALLBACK_FUNCTION(Mahmud, chapter1);
 	ADD_CALLBACK_FUNCTION(Mahmud, function16);
 	ADD_CALLBACK_FUNCTION(Mahmud, chapter2);
@@ -568,7 +568,7 @@ IMPLEMENT_FUNCTION(Mahmud, function13, 13)
 }
 
 //////////////////////////////////////////////////////////////////////////
-IMPLEMENT_FUNCTION(Mahmud, function14, 14)
+IMPLEMENT_FUNCTION(Mahmud, chapters_handler, 14)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -758,7 +758,7 @@ IMPLEMENT_FUNCTION(Mahmud, chapter1, 15)
 		break;
 
 	case kActionNone:
-		TIME_CHECK_CHAPTER1(setup_function14);
+		TIME_CHECK_CHAPTER1(setup_chapters_handler);
 		break;
 
 	case kActionDefault:
@@ -794,7 +794,7 @@ IMPLEMENT_FUNCTION(Mahmud, chapter2, 17)
 		break;
 
 	case kActionNone:
-		setup_function14();
+		setup_chapters_handler();
 		break;
 
 	case kActionDefault:
@@ -816,7 +816,7 @@ IMPLEMENT_FUNCTION(Mahmud, chapter3, 18)
 		break;
 
 	case kActionNone:
-		setup_function14();
+		setup_chapters_handler();
 		break;
 
 	case kActionDefault:
@@ -839,7 +839,7 @@ IMPLEMENT_FUNCTION(Mahmud, chapter4, 19)
 		break;
 
 	case kActionNone:
-		setup_function14();
+		setup_chapters_handler();
 		break;
 
 	case kActionDefault:

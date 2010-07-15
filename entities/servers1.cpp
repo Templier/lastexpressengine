@@ -193,6 +193,7 @@ IMPLEMENT_FUNCTION(Servers1, chapter1, 8)
 		break;
 
 	case kActionNone:
+		error("Servers1:chapter1: not implemented!");
 		// call function 14
 		break;
 

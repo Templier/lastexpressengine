@@ -80,7 +80,7 @@ IMPLEMENT_FUNCTION_II(Kronos, savegame, 2)
 //  - car
 //  - field491
 IMPLEMENT_FUNCTION_II(Kronos, function3, 3)
-	Entity::savepointCheckEntity(savepoint);
+	Entity::checkEntity(savepoint);
 }
 
 IMPLEMENT_FUNCTION_NOSETUP(Kronos, playSound, 4)

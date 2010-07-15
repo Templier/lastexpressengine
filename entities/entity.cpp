@@ -280,7 +280,7 @@ void Entity::savepointCheckFields11(const SavePoint &savepoint) {
 	}
 }
 
-void Entity::savepointCheckEntity(const SavePoint &savepoint) {
+void Entity::checkEntity(const SavePoint &savepoint) {
 	EntityData::EntityParametersIIII *params = (EntityData::EntityParametersIIII*)_data->getCurrentParameters();
 
 	switch (savepoint.action) {

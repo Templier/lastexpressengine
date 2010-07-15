@@ -58,7 +58,7 @@ Tatiana::Tatiana(LastExpressEngine *engine) : Entity(engine, kEntityTatiana) {
 	ADD_CALLBACK_FUNCTION(Tatiana, function16);
 	ADD_CALLBACK_FUNCTION(Tatiana, chapter1);
 	ADD_CALLBACK_FUNCTION(Tatiana, function18);
-	ADD_CALLBACK_FUNCTION(Tatiana, function19);
+	ADD_CALLBACK_FUNCTION(Tatiana, chapter1_handler);
 	ADD_CALLBACK_FUNCTION(Tatiana, function20);
 	ADD_CALLBACK_FUNCTION(Tatiana, function21);
 	ADD_CALLBACK_FUNCTION(Tatiana, function22);
@@ -167,7 +167,7 @@ IMPLEMENT_FUNCTION(Tatiana, chapter1, 17)
 		break;
 
 	case kActionNone:
-		TIME_CHECK_CHAPTER1(setup_function19);
+		TIME_CHECK_CHAPTER1(setup_chapter1_handler);
 		break;
 
 	case kActionDefault:
@@ -188,7 +188,7 @@ IMPLEMENT_FUNCTION(Tatiana, function18, 18)
 	error("Tatiana: callback function 18 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Tatiana, function19, 19)
+IMPLEMENT_FUNCTION(Tatiana, chapter1_handler, 19)
 	error("Tatiana: callback function 19 not implemented!");
 }
 

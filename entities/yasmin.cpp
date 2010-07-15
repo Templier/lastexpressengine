@@ -46,17 +46,17 @@ Yasmin::Yasmin(LastExpressEngine *engine) : Entity(engine, kEntityYasmin) {
 	ADD_CALLBACK_FUNCTION(Yasmin, function6);
 	ADD_CALLBACK_FUNCTION(Yasmin, function7);
 	ADD_CALLBACK_FUNCTION(Yasmin, chapter1);
-	ADD_CALLBACK_FUNCTION(Yasmin, function9);
+	ADD_CALLBACK_FUNCTION(Yasmin, chapter1_handler);
 	ADD_CALLBACK_FUNCTION(Yasmin, function10);
 	ADD_CALLBACK_FUNCTION(Yasmin, chapter2);
-	ADD_CALLBACK_FUNCTION(Yasmin, function12);
+	ADD_CALLBACK_FUNCTION(Yasmin, chapter2_handler);
 	ADD_CALLBACK_FUNCTION(Yasmin, chapter3);
-	ADD_CALLBACK_FUNCTION(Yasmin, function14);
+	ADD_CALLBACK_FUNCTION(Yasmin, chapter3_handler);
 	ADD_CALLBACK_FUNCTION(Yasmin, chapter4);
-	ADD_CALLBACK_FUNCTION(Yasmin, function16);
+	ADD_CALLBACK_FUNCTION(Yasmin, chapter4_handler);
 	ADD_CALLBACK_FUNCTION(Yasmin, function17);
 	ADD_CALLBACK_FUNCTION(Yasmin, chapter5);
-	ADD_CALLBACK_FUNCTION(Yasmin, function19);
+	ADD_CALLBACK_FUNCTION(Yasmin, chapter5_handler);
 	ADD_CALLBACK_FUNCTION(Yasmin, function20);
 	ADD_CALLBACK_FUNCTION(Yasmin, function21);
 	ADD_NULL_FUNCTION();
@@ -107,7 +107,7 @@ IMPLEMENT_FUNCTION_II(Yasmin, function5, 5)
 	}
 
 	// Process default actions
-	Entity::savepointCheckEntity(savepoint);
+	Entity::checkEntity(savepoint);
 }
 
 IMPLEMENT_FUNCTION(Yasmin, function6, 6)
@@ -194,7 +194,7 @@ IMPLEMENT_FUNCTION(Yasmin, chapter1, 8)
 		break;
 
 	case kActionNone:
-		TIME_CHECK_CHAPTER1(setup_function9);
+		TIME_CHECK_CHAPTER1(setup_chapter1_handler);
 		break;
 
 	case kActionDefault:
@@ -205,7 +205,7 @@ IMPLEMENT_FUNCTION(Yasmin, chapter1, 8)
 	}
 }
 
-IMPLEMENT_FUNCTION(Yasmin, function9, 9)
+IMPLEMENT_FUNCTION(Yasmin, chapter1_handler, 9)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -275,11 +275,11 @@ IMPLEMENT_FUNCTION(Yasmin, chapter2, 11)
 		getData()->clothes = kClothesDefault;
 		getData()->inventoryItem = kItemNone;
 
-		setup_function12();
+		setup_chapter2_handler();
 	}
 }
 
-IMPLEMENT_FUNCTION(Yasmin, function12, 12)
+IMPLEMENT_FUNCTION(Yasmin, chapter2_handler, 12)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -317,7 +317,7 @@ IMPLEMENT_FUNCTION(Yasmin, chapter3, 13)
 		break;
 
 	case kActionNone:
-		setup_function14();
+		setup_chapter3_handler();
 		break;
 
 	case kActionDefault:
@@ -330,7 +330,7 @@ IMPLEMENT_FUNCTION(Yasmin, chapter3, 13)
 	}
 }
 
-IMPLEMENT_FUNCTION(Yasmin, function14, 14)
+IMPLEMENT_FUNCTION(Yasmin, chapter3_handler, 14)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -364,7 +364,7 @@ IMPLEMENT_FUNCTION(Yasmin, chapter4, 15)
 		break;
 
 	case kActionNone:
-		setup_function16();
+		setup_chapter4_handler();
 		break;
 
 	case kActionDefault:
@@ -375,7 +375,7 @@ IMPLEMENT_FUNCTION(Yasmin, chapter4, 15)
 	}
 }
 
-IMPLEMENT_FUNCTION(Yasmin, function16, 16)
+IMPLEMENT_FUNCTION(Yasmin, chapter4_handler, 16)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -415,7 +415,7 @@ IMPLEMENT_FUNCTION(Yasmin, chapter5, 18)
 		break;
 
 	case kActionNone:
-		setup_function19();
+		setup_chapter5_handler();
 		break;
 
 	case kActionDefault:
@@ -430,7 +430,7 @@ IMPLEMENT_FUNCTION(Yasmin, chapter5, 18)
 	}
 }
 
-IMPLEMENT_FUNCTION(Yasmin, function19, 19)
+IMPLEMENT_FUNCTION(Yasmin, chapter5_handler, 19)
 	if (savepoint.action == kAction70549068)
 		setup_function20();
 }

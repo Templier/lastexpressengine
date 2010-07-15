@@ -44,7 +44,7 @@ public:
 	DECLARE_FUNCTION(function3)
 	DECLARE_FUNCTION(function4)
 	DECLARE_FUNCTION(chapter1)
-	DECLARE_FUNCTION(function6)
+	DECLARE_FUNCTION(chapter1_handler)
 	DECLARE_FUNCTION(function7)
 	DECLARE_FUNCTION(chapter2)
 	DECLARE_FUNCTION(function9)

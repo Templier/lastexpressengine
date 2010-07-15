@@ -48,7 +48,7 @@ Kahina::Kahina(LastExpressEngine *engine) : Entity(engine, kEntityKahina) {
 	ADD_CALLBACK_FUNCTION(Kahina, function8);
 	ADD_CALLBACK_FUNCTION(Kahina, enterExitCompartment);
 	ADD_CALLBACK_FUNCTION(Kahina, chapter1);
-	ADD_CALLBACK_FUNCTION(Kahina, function11);
+	ADD_CALLBACK_FUNCTION(Kahina, chapter1_handler);
 	ADD_CALLBACK_FUNCTION(Kahina, function12);
 	ADD_CALLBACK_FUNCTION(Kahina, function13);
 	ADD_CALLBACK_FUNCTION(Kahina, function14);
@@ -116,7 +116,7 @@ IMPLEMENT_FUNCTION(Kahina, chapter1, 10)
 		break;
 
 	case kActionNone:
-		TIME_CHECK_CHAPTER1(setup_function11);
+		TIME_CHECK_CHAPTER1(setup_chapter1_handler);
 		break;
 
 	case kActionDefault:
@@ -130,7 +130,7 @@ IMPLEMENT_FUNCTION(Kahina, chapter1, 10)
 	}
 }
 
-IMPLEMENT_FUNCTION(Kahina, function11, 11)
+IMPLEMENT_FUNCTION(Kahina, chapter1_handler, 11)
 	if (savepoint.action != kActionNone)
 		return;
 

@@ -48,7 +48,7 @@ Vassili::Vassili(LastExpressEngine *engine) : Entity(engine, kEntityVassili) {
 	ADD_CALLBACK_FUNCTION(Vassili, draw);
 	ADD_CALLBACK_FUNCTION(Vassili, savegame);
 	ADD_CALLBACK_FUNCTION(Vassili, chapter1);
-	ADD_CALLBACK_FUNCTION(Vassili, function5);
+	ADD_CALLBACK_FUNCTION(Vassili, chapter1_handler);
 	ADD_CALLBACK_FUNCTION(Vassili, function6);
 	ADD_CALLBACK_FUNCTION(Vassili, function7);
 	ADD_CALLBACK_FUNCTION(Vassili, function8);
@@ -82,7 +82,7 @@ IMPLEMENT_FUNCTION(Vassili, chapter1, 4)
 		break;
 
 	case kActionNone:
-		TIME_CHECK_CHAPTER1(setup_function5);
+		TIME_CHECK_CHAPTER1(setup_chapter1_handler);
 		break;
 
 	case kActionDefault:
@@ -92,7 +92,7 @@ IMPLEMENT_FUNCTION(Vassili, chapter1, 4)
 	}
 }
 
-IMPLEMENT_FUNCTION(Vassili, function5, 5)
+IMPLEMENT_FUNCTION(Vassili, chapter1_handler, 5)
 	switch (savepoint.action) {
 	default:
 		break;

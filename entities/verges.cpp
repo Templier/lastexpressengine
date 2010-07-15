@@ -64,7 +64,7 @@ Verges::Verges(LastExpressEngine *engine) : Entity(engine, kEntityVerges) {
 	ADD_CALLBACK_FUNCTION(Verges, function23);
 	ADD_CALLBACK_FUNCTION(Verges, function24);
 	ADD_CALLBACK_FUNCTION(Verges, function25);
-	ADD_CALLBACK_FUNCTION(Verges, function26);
+	ADD_CALLBACK_FUNCTION(Verges, chapter1_handler);
 	ADD_CALLBACK_FUNCTION(Verges, chapter2);
 	ADD_CALLBACK_FUNCTION(Verges, function28);
 	ADD_CALLBACK_FUNCTION(Verges, chapter3);
@@ -175,7 +175,7 @@ IMPLEMENT_FUNCTION(Verges, chapter1, 18)
 		break;
 
 	case kActionNone:
-		TIME_CHECK_CHAPTER1(setup_function26);
+		TIME_CHECK_CHAPTER1(setup_chapter1_handler);
 		break;
 
 	case kActionDefault:
@@ -246,7 +246,7 @@ IMPLEMENT_FUNCTION(Verges, function25, 25)
 	error("Verges: callback function 25 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Verges, function26, 26)
+IMPLEMENT_FUNCTION(Verges, chapter1_handler, 26)
 	error("Verges: callback function 26 not implemented!");
 }
 

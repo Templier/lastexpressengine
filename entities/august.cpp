@@ -30,6 +30,7 @@
 #include "lastexpress/game/logic.h"
 #include "lastexpress/game/object.h"
 #include "lastexpress/game/savepoint.h"
+#include "lastexpress/game/scenes.h"
 #include "lastexpress/game/sound.h"
 #include "lastexpress/game/state.h"
 
@@ -62,8 +63,8 @@ August::August(LastExpressEngine *engine) : Entity(engine, kEntityAugust) {
 	ADD_CALLBACK_FUNCTION(August, function21);
 	ADD_CALLBACK_FUNCTION(August, chapter1);
 	ADD_CALLBACK_FUNCTION(August, function23);
-	ADD_CALLBACK_FUNCTION(August, function24);
-	ADD_CALLBACK_FUNCTION(August, function25);
+	ADD_CALLBACK_FUNCTION(August, dinner);
+	ADD_CALLBACK_FUNCTION(August, chapter1_handler);
 	ADD_CALLBACK_FUNCTION(August, function26);
 	ADD_CALLBACK_FUNCTION(August, function27);
 	ADD_CALLBACK_FUNCTION(August, function28);
@@ -74,14 +75,14 @@ August::August(LastExpressEngine *engine) : Entity(engine, kEntityAugust) {
 	ADD_CALLBACK_FUNCTION(August, function33);
 	ADD_CALLBACK_FUNCTION(August, function34);
 	ADD_CALLBACK_FUNCTION(August, chapter2);
-	ADD_CALLBACK_FUNCTION(August, function36);
+	ADD_CALLBACK_FUNCTION(August, chapter2_handler);
 	ADD_CALLBACK_FUNCTION(August, function37);
 	ADD_CALLBACK_FUNCTION(August, function38);
 	ADD_CALLBACK_FUNCTION(August, function39);
 	ADD_CALLBACK_FUNCTION(August, chapter3);
 	ADD_CALLBACK_FUNCTION(August, function41);
 	ADD_CALLBACK_FUNCTION(August, function42);
-	ADD_CALLBACK_FUNCTION(August, function43);
+	ADD_CALLBACK_FUNCTION(August, chapter3_handler);
 	ADD_CALLBACK_FUNCTION(August, function44);
 	ADD_CALLBACK_FUNCTION(August, function45);
 	ADD_CALLBACK_FUNCTION(August, function46);
@@ -96,7 +97,7 @@ August::August(LastExpressEngine *engine) : Entity(engine, kEntityAugust) {
 	ADD_CALLBACK_FUNCTION(August, function55);
 	ADD_CALLBACK_FUNCTION(August, function56);
 	ADD_CALLBACK_FUNCTION(August, chapter4);
-	ADD_CALLBACK_FUNCTION(August, function58);
+	ADD_CALLBACK_FUNCTION(August, chapter4_handler);
 	ADD_CALLBACK_FUNCTION(August, function59);
 	ADD_CALLBACK_FUNCTION(August, function60);
 	ADD_CALLBACK_FUNCTION(August, function61);
@@ -105,7 +106,7 @@ August::August(LastExpressEngine *engine) : Entity(engine, kEntityAugust) {
 	ADD_CALLBACK_FUNCTION(August, function64);
 	ADD_CALLBACK_FUNCTION(August, function65);
 	ADD_CALLBACK_FUNCTION(August, chapter5);
-	ADD_CALLBACK_FUNCTION(August, function67);
+	ADD_CALLBACK_FUNCTION(August, chapter5_handler);
 	ADD_CALLBACK_FUNCTION(August, function68);
 	ADD_CALLBACK_FUNCTION(August, function69);
 	ADD_NULL_FUNCTION();
@@ -224,7 +225,7 @@ IMPLEMENT_FUNCTION(August, chapter1, 22)
 		break;
 
 	case kActionNone:
-		TIME_CHECK_CHAPTER1(setup_function25);
+		TIME_CHECK_CHAPTER1(setup_chapter1_handler);
 		break;
 
 	case kActionDefault:
@@ -245,11 +246,31 @@ IMPLEMENT_FUNCTION_I(August, function23, 23)
 	error("August: callback function 23 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(August, function24, 24)
-	error("August: callback function 24 not implemented!");
+IMPLEMENT_FUNCTION(August, dinner, 24)
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionDefault:
+		setCallback(1);
+		call(new ENTITY_SETUP(August, setup_savegame), kSavegameType2, kEventDinerAugust);
+		break;
+
+	case kActionCallback:
+		if (getCallback() == 1) {
+
+			getAction()->playAnimation(getEntities()->checkFields13(kEntityAlexei) ? kEventDinerAugustAlexeiBackground : kEventDinerAugust);
+			getProgress().eventMetAugust = 1;
+			
+			getScenes()->loadSceneFromPosition(kCarRestaurant, 61);
+
+			CALLBACK_ACTION();
+		}
+		break;
+	}
 }
 
-IMPLEMENT_FUNCTION(August, function25, 25)
+IMPLEMENT_FUNCTION(August, chapter1_handler, 25)
 	error("August: callback function 25 not implemented!");
 }
 
@@ -326,7 +347,7 @@ IMPLEMENT_FUNCTION(August, chapter2, 35)
 		break;
 
 	case kActionNone:
-		setup_function36();
+		setup_chapter2_handler();
 		break;
 
 	case kActionDefault:
@@ -345,7 +366,7 @@ IMPLEMENT_FUNCTION(August, chapter2, 35)
 	}
 }
 
-IMPLEMENT_FUNCTION(August, function36, 36)
+IMPLEMENT_FUNCTION(August, chapter2_handler, 36)
 	error("August: callback function 36 not implemented!");
 }
 
@@ -386,7 +407,7 @@ IMPLEMENT_FUNCTION(August, chapter3, 40)
 		break;
 
 	case kActionNone:
-		setup_function43();
+		setup_chapter3_handler();
 		break;
 
 	case kActionDefault:
@@ -410,7 +431,7 @@ IMPLEMENT_FUNCTION_III(August, function42, 42)
 	error("August: callback function 42 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(August, function43, 43)
+IMPLEMENT_FUNCTION(August, chapter3_handler, 43)
 	error("August: callback function 43 not implemented!");
 }
 
@@ -586,7 +607,7 @@ IMPLEMENT_FUNCTION(August, chapter4, 57)
 		break;
 
 	case kActionNone:
-		setup_function58();
+		setup_chapter4_handler();
 		break;
 
 	case kActionDefault:
@@ -604,7 +625,7 @@ IMPLEMENT_FUNCTION(August, chapter4, 57)
 	}
 }
 
-IMPLEMENT_FUNCTION(August, function58, 58)
+IMPLEMENT_FUNCTION(August, chapter4_handler, 58)
 	error("August: callback function 58 not implemented!");
 }
 
@@ -678,7 +699,7 @@ IMPLEMENT_FUNCTION(August, chapter5, 66)
 		break;
 
 	case kActionNone:
-		setup_function67();
+		setup_chapter5_handler();
 		break;
 
 	case kActionDefault:
@@ -694,7 +715,7 @@ IMPLEMENT_FUNCTION(August, chapter5, 66)
 	}
 }
 
-IMPLEMENT_FUNCTION(August, function67, 67)
+IMPLEMENT_FUNCTION(August, chapter5_handler, 67)
 	if (savepoint.action == kAction70549068)
 		setup_function68();
 }
