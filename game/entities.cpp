@@ -780,12 +780,12 @@ void Entities::computeCurrentFrame2(EntityIndex entityIndex) {
 
 	case kDirectionUp:
 	case kDirectionDown: {
-		loadSceneObject(scene, getState()->scene);
+		Scene *scene = getScenes()->get(getState()->scene);
 
-		if (scene.getHeader()->position > 40)
+		if (scene->getHeader()->position > 40)
 			break;
 
-		switch (scene.getHeader()->position) {
+		switch (scene->getHeader()->position) {
 		default:
 		case 4:
 		case 19:
@@ -1127,8 +1127,7 @@ Sequence *Entities::copySequence(Sequence *sequence) {
 
 void Entities::getSequenceName(EntityIndex index, EntityDirection direction, Common::String &sequence1, Common::String &sequence2) const {
 	EntityData::EntityCallData *data = getData(index);
-	loadSceneObject(currentScene, getState()->scene);
-	Position position = currentScene.getHeader()->position;
+	Position position = getScenes()->get(getState()->scene)->getHeader()->position;
 
 	// reset fields
 	data->field_4A9 = 0;
@@ -1949,9 +1948,7 @@ bool Entities::checkFields3(EntityIndex entity) const {
 }
 
 bool Entities::isPlayerPosition(CarIndex car, Position position) const {
-	loadSceneObject(scene, getState()->scene);
-
-	return getData(kEntityNone)->car == car && scene.getHeader()->position == position;
+	return getData(kEntityNone)->car == car && getScenes()->get(getState()->scene)->getHeader()->position == position;
 }
 
 bool Entities::checkFields5(EntityIndex entity, CarIndex car) const {
@@ -2169,14 +2166,13 @@ bool Entities::checkSequenceFromPosition(EntityIndex entity) const {
 
 EntityPosition Entities::getEntityPositionFromCurrentPosition() const {
 	// Get the scene position first
-	loadSceneObject(scene, getState()->scene);
-
+	Position position = getScenes()->get(getState()->scene)->getHeader()->position;
 
 	if (getScenes()->checkPosition(kSceneNone, SceneManager::kCheckPositionType0))
-		return (EntityPosition)(entityPositions[scene.getHeader()->position] - kPosition_1430);
+		return (EntityPosition)(entityPositions[position] - kPosition_1430);
 
 	if (getScenes()->checkPosition(kSceneNone, SceneManager::kCheckPositionType1))
-		return (EntityPosition)(entityPositions[scene.getHeader()->position] - kPosition_9020);
+		return (EntityPosition)(entityPositions[position] - kPosition_9020);
 
 	return kPositionNone;
 }

@@ -423,9 +423,8 @@ IMPLEMENT_ACTION(inventory) {
 		getState()->sceneUseBackup = false;
 		index = getState()->sceneBackup;
 
-		loadSceneObject(backup, getState()->sceneBackup);
-
-		if (getEntities()->getPosition(backup.getHeader()->car, backup.getHeader()->position))
+		Scene *backup = getScenes()->get(getState()->sceneBackup);
+		if (getEntities()->getPosition(backup->getHeader()->car, backup->getHeader()->position))
 			index = getScenes()->processIndex(getState()->sceneBackup);
 	}
 
@@ -1290,11 +1289,11 @@ IMPLEMENT_ACTION(useWhistle) {
 
 		if (getEntities()->checkFields1(kEntityNone, kCarGreenSleeping, kPosition_8200)) {
 			evt = kEventCathOpenEgg;
+			
+			Scene *scene = getScenes()->get(hotspot.scene);
+			if (scene->getHotspot())
+				return scene->getHotspot()->scene;
 
-			loadSceneObject(scene, hotspot.scene);
-
-			if (scene.getHotspot())
-				return scene.getHotspot()->scene;
 		} else {
 			evt = kEventCathOpenEggNoBackground;
 		}

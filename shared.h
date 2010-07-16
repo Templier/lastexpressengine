@@ -256,6 +256,8 @@ enum SceneIndex {
 	// Start screen
 	kSceneStartScreen             = 65,
 
+	kSceneBeetle                  = 128,
+
 	kSceneFightDefault            = 820,
 
 	kSceneStopProcessing          = 0xfffffffe,

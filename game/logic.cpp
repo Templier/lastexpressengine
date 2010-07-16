@@ -249,9 +249,9 @@ void Logic::eventMouse(const Common::Event &ev) {
 	// Check hotspots
 	int location = 0;
 	SceneHotspot *hotspot = NULL;
-	loadSceneObject(scene, getState()->scene);
+	Scene *scene = getScenes()->get(getState()->scene);
 
-	for (Common::Array<SceneHotspot *>::iterator it = scene.getHotspots()->begin(); it != scene.getHotspots()->end(); ++it) {
+	for (Common::Array<SceneHotspot *>::iterator it = scene->getHotspots()->begin(); it != scene->getHotspots()->end(); ++it) {
 		if (!(*it)->isInside(ev.mouse))
 			continue;
 
@@ -261,9 +261,9 @@ void Logic::eventMouse(const Common::Event &ev) {
 		if (!getAction()->getCursor(**it))
 			continue;
 
-		loadSceneObject(hotspotScene, (*it)->scene);
+		Scene *hotspotScene = getScenes()->get((*it)->scene);
 
-		if (!getEntities()->getPosition(hotspotScene.getHeader()->car, hotspotScene.getHeader()->position)
+		if (!getEntities()->getPosition(hotspotScene->getHeader()->car, hotspotScene->getHeader()->position)
 		 || (*it)->cursor == kCursorTurnRight
 		 || (*it)->cursor == kCursorTurnLeft) {
 			 location = (*it)->location;
@@ -341,13 +341,13 @@ void Logic::eventTick(const Common::Event &ev) {
 	//////////////////////////////////////////////////////////////////////////
 	// Load scene and process hotspot
 	if (getFlags()->flag_0 && !getFlags()->mouseLeftClick && !getFlags()->mouseRightClick) {
-		loadSceneObject(scene, getState()->scene);
+		Scene *scene = getScenes()->get(getState()->scene);
 
 		if (getScenes()->checkCurrentPosition(true)
-		&& !getEntities()->getPosition(scene.getHeader()->car, scene.getHeader()->position)) {
+		&& !getEntities()->getPosition(scene->getHeader()->car, scene->getHeader()->position)) {
 
 			// Process hotspot
-			SceneHotspot *hotspot = scene.getHotspot();
+			SceneHotspot *hotspot = scene->getHotspot();
 			SceneIndex index = getAction()->processHotspot(*hotspot);
 			/*if (index != kSceneInvalid && index != kSceneStopProcessing)
 				hotspot->scene = index;*/
@@ -545,15 +545,15 @@ void Logic::updateCursor(bool redraw) {
 			 && !getInventory()->isMagnifierInUse()) {
 				int location = 0;
 				SceneHotspot *hotspot = NULL;
-				loadSceneObject(scene, getState()->scene);
+				Scene *scene = getScenes()->get(getState()->scene);
 
 				// Check all hotspots
-				for (Common::Array<SceneHotspot *>::iterator i = scene.getHotspots()->begin(); i != scene.getHotspots()->end(); ++i) {
+				for (Common::Array<SceneHotspot *>::iterator i = scene->getHotspots()->begin(); i != scene->getHotspots()->end(); ++i) {
 					if ((*i)->isInside(getCoords()) && (*i)->location >= location) {
 						if (getAction()->getCursor(**i)) {
-							loadSceneObject(hotspotScene, (*i)->scene);
+							Scene *hotspotScene = getScenes()->get((*i)->scene);
 
-							if (!getEntities()->getPosition(hotspotScene.getHeader()->car, hotspotScene.getHeader()->position)
+							if (!getEntities()->getPosition(hotspotScene->getHeader()->car, hotspotScene->getHeader()->position)
 							 || (*i)->cursor == kCursorTurnRight
 							 || (*i)->cursor == kCursorTurnLeft) {
 								hotspot = *i;

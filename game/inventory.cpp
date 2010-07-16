@@ -55,7 +55,7 @@ Inventory::Inventory(LastExpressEngine *engine) : _engine(engine), _selectedItem
 }
 
 Inventory::~Inventory() {
-	delete _itemScene;
+	_itemScene = NULL;
 
 	// Zero passed pointers
 	_engine = NULL;
@@ -427,34 +427,34 @@ InventoryItem Inventory::getFirstExaminableItem() const {
 }
 
 bool Inventory::isItemSceneParameter(InventoryItem item) const {
-	loadSceneObject(scene, getState()->scene);
+	Scene *scene = getScenes()->get(getState()->scene);
 
-	switch(scene.getHeader()->type) {
+	switch(scene->getHeader()->type) {
 	default:
 		return false;
 
 	case Scene::kTypeItem:
-		if (scene.getHeader()->param1 == item)
+		if (scene->getHeader()->param1 == item)
 			return true;
 		break;
 
 	case Scene::kTypeItem2:
-		if (scene.getHeader()->param1 == item || scene.getHeader()->param2 == item)
+		if (scene->getHeader()->param1 == item || scene->getHeader()->param2 == item)
 			return true;
 		break;
 
 	case Scene::kTypeEntityItem:
-		if (scene.getHeader()->param2 == item)
+		if (scene->getHeader()->param2 == item)
 			return true;
 		break;
 
 	case Scene::kTypeItem3:
-		if (scene.getHeader()->param1 == item || scene.getHeader()->param2 == item || scene.getHeader()->param3 == item)
+		if (scene->getHeader()->param1 == item || scene->getHeader()->param2 == item || scene->getHeader()->param3 == item)
 			return true;
 		break;
 
 	case Scene::kType8:
-		if (scene.getHeader()->param2 == item)
+		if (scene->getHeader()->param2 == item)
 			return true;
 		break;
 	}

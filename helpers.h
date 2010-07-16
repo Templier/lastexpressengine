@@ -60,7 +60,6 @@
 
 // Scenes
 #define getScenes() _engine->getSceneManager()
-#define loadSceneObject(name, sceneId) Scene name; getScenes()->loadScene(&name, (SceneIndex)sceneId);
 
 // Sound
 #define getSound() _engine->getSoundManager()
@@ -82,7 +81,7 @@
 	delete frame; }
 
 #define clearBg(type) _engine->getGraphicsManager()->clear(type)
-#define showScene(index, type) { loadSceneObject(s, index); _engine->getGraphicsManager()->draw(&s, type); }
+#define showScene(index, type) _engine->getGraphicsManager()->draw(getScenes()->get(index), type);
 
 #define askForRedraw() _engine->getGraphicsManager()->change();
 #define redrawScreen() _engine->getGraphicsManager()->update(); _engine->_system->updateScreen();

@@ -114,10 +114,10 @@ void Fight::eventMouse(const Common::Event &ev) {
 		}
 
 		// Check hotspots
-		loadSceneObject(scene, getState()->scene);
+		Scene *scene = getScenes()->get(getState()->scene);
 		SceneHotspot *hotspot = NULL;
 
-		if (!scene.checkHotSpot(ev.mouse, &hotspot)) {
+		if (!scene->checkHotSpot(ev.mouse, &hotspot)) {
 			_engine->getCursor()->setStyle(kCursorNormal);
 		} else {
 			_engine->getCursor()->setStyle((CursorStyle)hotspot->cursor);
@@ -177,10 +177,8 @@ void Fight::handleTick(const Common::Event &ev, bool isProcessing) {
 	if (!_data || _data->index)
 		return;
 
-	loadSceneObject(scene, getState()->scene);
 	SceneHotspot *hotspot = NULL;
-
-	if (!scene.checkHotSpot(ev.mouse, &hotspot) || !CALL_FUNCTION1(_data->player, canInteract, (FightAction)hotspot->action)) {
+	if (!getScenes()->get(getState()->scene)->checkHotSpot(ev.mouse, &hotspot) || !CALL_FUNCTION1(_data->player, canInteract, (FightAction)hotspot->action)) {
 		_engine->getCursor()->setStyle(kCursorNormal);
 	} else {
 		_engine->getCursor()->setStyle((CursorStyle)hotspot->cursor);
@@ -259,18 +257,18 @@ Fight::FightEndType Fight::setup(FightType type) {
 	}
 
 	// Load the scene object
-	loadSceneObject(scene, sceneIndex);
+	Scene *scene = getScenes()->get(sceneIndex);
 
 	// Update game entities and state
-	getEntityData(kEntityNone)->position = (EntityPosition)scene.getHeader()->count;
-	getEntityData(kEntityNone)->field_493 = (EntityField493)scene.getHeader()->field_11;
+	getEntityData(kEntityNone)->position = (EntityPosition)scene->getHeader()->count;
+	getEntityData(kEntityNone)->field_493 = (EntityField493)scene->getHeader()->field_11;
 
 	getState()->scene = sceneIndex;
 
 	getFlags()->flag_3 = true;
 
 	// Draw the scene
-	_engine->getGraphicsManager()->draw(&scene, GraphicsManager::kBackgroundC);
+	_engine->getGraphicsManager()->draw(scene, GraphicsManager::kBackgroundC);
 	// FIXME move to start of fight?
 	askForRedraw();
 	redrawScreen();

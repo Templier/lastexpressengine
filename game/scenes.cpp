@@ -51,9 +51,12 @@ SceneManager::SceneManager(LastExpressEngine *engine) : _engine(engine), _curren
 }
 
 SceneManager::~SceneManager() {
-	delete _currentScene;
+	_currentScene = NULL; /* part of cache */
 	delete _sceneLoader;
 
+	purgeSceneCache();
+
+	// Clear sequences
 	for (int i = 0; i < (int)_doors.size(); i++)
 		delete _doors[i];
 
@@ -69,7 +72,7 @@ SceneManager::~SceneManager() {
 //////////////////////////////////////////////////////////////////////////
 // DataFile
 //////////////////////////////////////////////////////////////////////////
-void SceneManager::loadSceneDataFile(ArchiveIndex archive) const {
+void SceneManager::loadSceneDataFile(ArchiveIndex archive) {
 	// Demo only has CD2TRAIN.DAT file
 	if (_engine->isDemo())
 		archive = kArchiveCd2;
@@ -78,6 +81,9 @@ void SceneManager::loadSceneDataFile(ArchiveIndex archive) const {
 	case kArchiveCd1:
 	case kArchiveCd2:
 	case kArchiveCd3:
+		// Clear the scene cache
+		purgeSceneCache();
+
 		if (!_sceneLoader->load(getArchive(Common::String::printf("CD%iTRAIN.DAT", archive))))
 			error("SceneManager::loadSceneDataFile: cannot load data file CD%iTRAIN.DAT", archive);
 		break;
@@ -90,6 +96,26 @@ void SceneManager::loadSceneDataFile(ArchiveIndex archive) const {
 }
 
 //////////////////////////////////////////////////////////////////////////
+// Scene cache
+//////////////////////////////////////////////////////////////////////////
+Scene *SceneManager::get(SceneIndex sceneIndex) {
+	// Check if the scene is already loaded
+	if (!_scenes.contains(sceneIndex)) {
+		_scenes[sceneIndex] = _sceneLoader->getScene(sceneIndex);
+	}
+	
+	return _scenes[sceneIndex];
+}
+
+void SceneManager::purgeSceneCache() {
+	// Clear scenes
+	for (SceneCache::iterator iter = _scenes.begin(); iter != _scenes.end(); ++iter)
+		SAFE_DELETE(iter->_value);
+
+	_scenes.clear();
+}
+
+//////////////////////////////////////////////////////////////////////////
 // Scene loading
 //////////////////////////////////////////////////////////////////////////
 void SceneManager::loadScene(SceneIndex index) {
@@ -97,9 +123,9 @@ void SceneManager::loadScene(SceneIndex index) {
 	getFlags()->flag_4 = true;
 
 	if (getState()->sceneUseBackup) {
-		loadSceneObject(scene, index);
+		Scene *scene = getScenes()->get(index);
 
-		if (scene.getHeader()->param3 != 255) {
+		if (scene->getHeader()->param3 != 255) {
 			getState()->sceneUseBackup = false;
 			getState()->sceneBackup2 = kSceneNone;
 		}
@@ -209,12 +235,12 @@ void SceneManager::loadSceneFromItemPosition(InventoryItem item) {
 		return;
 
 	// Get current scene position
-	loadSceneObject(scene, getState()->scene);
-	Position position = scene.getHeader()->position;
+	Scene *scene = getScenes()->get(getState()->scene);
+	Position position = scene->getHeader()->position;
 
     if (getState()->sceneUseBackup) {
-		loadSceneObject(sceneBackup, getState()->sceneBackup);
-		position = sceneBackup.getHeader()->position;
+		Scene *sceneBackup = getScenes()->get(getState()->sceneBackup);
+		position = sceneBackup->getHeader()->position;
 	}
 
 	// Checks are different for each item
@@ -256,21 +282,16 @@ void SceneManager::drawScene(SceneIndex index) {
 	debugC(9, kLastExpressDebugScenes, "== Drawing scene: %d ==", index);
 
 	// Update scene
-	delete _currentScene;
-	_currentScene = getScene(index);
+	_currentScene = get(index);
 	_engine->getGraphicsManager()->draw(_currentScene, GraphicsManager::kBackgroundC, true);
 	getState()->scene = index;
 
 	//////////////////////////////////////////////////////////////////////////
 	// Update entities
-	Scene *scene = (getState()->sceneUseBackup ? getScene(getState()->sceneBackup) : _currentScene);
+	Scene *scene = (getState()->sceneUseBackup ? get(getState()->sceneBackup) : _currentScene);
 
 	getEntityData(kEntityNone)->position = (EntityPosition)scene->getHeader()->count;
 	getEntityData(kEntityNone)->car = (CarIndex)scene->getHeader()->car;
-
-	// If we used the backup scene, we don't need the scene object anymore beyond this point
-	if (getState()->sceneUseBackup)
-		delete scene;
 
 	getFlags()->flag_3 = true;
 
@@ -309,9 +330,9 @@ void SceneManager::processScene() {
 	if (item && getInventory()->getSelectedItem() == item)
 		getInventory()->selectItem(item);
 
-	loadSceneObject(backup, getState()->sceneBackup);
+	Scene *backup = getScenes()->get(getState()->sceneBackup);
 
-	if (getEntities()->getPosition(backup.getHeader()->car, backup.getHeader()->position))
+	if (getEntities()->getPosition(backup->getHeader()->car, backup->getHeader()->position))
 		loadScene(processIndex(getState()->sceneBackup));
 	else
 		loadScene(getState()->sceneBackup);
@@ -325,10 +346,10 @@ LastExpress::SceneIndex SceneManager::processIndex(SceneIndex sceneIndex) {
 // Checks
 //////////////////////////////////////////////////////////////////////////
 bool SceneManager::checkPosition(SceneIndex index, CheckPositionType type) const {
-	loadSceneObject(scene, (index ? index : getState()->scene));
+	Scene *scene = getScenes()->get((index ? index : getState()->scene));
 
-	CarIndex car = (CarIndex)scene.getHeader()->car;
-	Position position = scene.getHeader()->position;
+	CarIndex car = (CarIndex)scene->getHeader()->car;
+	Position position = scene->getHeader()->position;
 
 	bool isInSleepingCar = (car == kCarGreenSleeping || car == kCarRedSleeping);
 
@@ -351,10 +372,10 @@ bool SceneManager::checkPosition(SceneIndex index, CheckPositionType type) const
 }
 
 bool SceneManager::checkCurrentPosition(bool doCheckOtherCars) const {
-	loadSceneObject(scene, getState()->scene);
+	Scene *scene = getScenes()->get(getState()->scene);
 
-	Position position = scene.getHeader()->position;
-	CarIndex car = (CarIndex)scene.getHeader()->car;
+	Position position = scene->getHeader()->position;
+	CarIndex car = (CarIndex)scene->getHeader()->car;
 
 	if (!doCheckOtherCars)
 		return (car == kCarGreenSleeping || car == kCarRedSleeping)
@@ -448,8 +469,8 @@ void SceneManager::updateDoorsAndClock() {
 				continue;
 
 			// Load door sequence
-			loadSceneObject(scene, getState()->scene)
-			Common::String name = Common::String::printf("633X%c-%02d.seq", (index - firstIndex + 65), scene.getHeader()->position);
+			Scene *scene = getScenes()->get(getState()->scene);
+			Common::String name = Common::String::printf("633X%c-%02d.seq", (index - firstIndex + 65), scene->getHeader()->position);
 			Sequence *sequence = new Sequence(getArchive(name), 255);
 
 			// If the sequence doesn't exists, skip
@@ -585,22 +606,15 @@ void SceneManager::setCoordinates(SequenceFrame *frame) {
 //////////////////////////////////////////////////////////////////////////
 // Helpers
 //////////////////////////////////////////////////////////////////////////
-bool SceneManager::loadScene(Scene * const scene, SceneIndex sceneIndex) {
-	return _sceneLoader->loadScene(scene, sceneIndex);
-}
-
-Scene *SceneManager::getScene(SceneIndex sceneIndex) {
-	return _sceneLoader->getScene(sceneIndex);
-}
-
 SceneIndex SceneManager::getSceneIndexFromPosition(CarIndex car, Position position, int param3) {
 	// Probably can't happen (can we be called during cd-swap?)
 	if (_sceneLoader->count() <= 1)
 		return getState()->scene;
 
 	SceneIndex index = kSceneMenu;
-	loadSceneObject(firstScene, index);
-	SceneHeader *header = firstScene.getHeader();
+
+	Scene *firstScene = getScenes()->get(index);
+	SceneHeader *header = firstScene->getHeader();
 
 	while (header->car != car
 		|| header->position != position
@@ -610,16 +624,15 @@ SceneIndex SceneManager::getSceneIndexFromPosition(CarIndex car, Position positi
 		index = (SceneIndex)(index + 1);
 
 		// Load the next scene
-		loadSceneObject(scene, index);
-		header = scene.getHeader();
+		header = getScenes()->get(index)->getHeader();
 
 		if (index >= _sceneLoader->count())
 			return getState()->scene;
 	}
 
 	// Process index if necessary
-	loadSceneObject(scene, index);
-	if (getEntities()->getPosition(scene.getHeader()->car, scene.getHeader()->position))
+	Scene *scene = getScenes()->get(index);
+	if (getEntities()->getPosition(scene->getHeader()->car, scene->getHeader()->position))
 		return processIndex(index);
 
 	return index;
@@ -638,10 +651,10 @@ SceneIndex SceneManager::getSceneIndexFromPosition(CarIndex car, Position positi
 	}
 
 #define GET_ENTITY_LOCATION(scene) \
-	getObjects()->get((ObjectIndex)scene.getHeader()->param1).location
+	getObjects()->get((ObjectIndex)scene->getHeader()->param1).location
 
 #define GET_ITEM_LOCATION(scene, parameter) \
-	getInventory()->getEntry((InventoryItem)scene.getHeader()->parameter)->location
+	getInventory()->getEntry((InventoryItem)scene->getHeader()->parameter)->location
 
 void SceneManager::preProcessScene(SceneIndex *index) {
 
@@ -649,9 +662,9 @@ void SceneManager::preProcessScene(SceneIndex *index) {
 	if (*index == 0 || *index > 2500)
 		*index = kSceneMenu;
 
-	loadSceneObject(scene, *index);
+	Scene *scene = getScenes()->get(*index);
 
-	switch (scene.getHeader()->type) {
+	switch (scene->getHeader()->type) {
 	case Scene::kTypeItem:
 	case Scene::kTypeItem2:
 	case Scene::kTypeItem3:
@@ -659,16 +672,16 @@ void SceneManager::preProcessScene(SceneIndex *index) {
 	case Scene::kTypeEntityItem: {
 		int location = 0;
 		ObjectLocation location1 = kLocationNone, location2 = kLocationNone, location3 = kLocationNone;
-		byte type = scene.getHeader()->type;
+		byte type = scene->getHeader()->type;
 
 		// Check bounds
-		if (scene.getHeader()->param1 >= ((type == Scene::kTypeEntity || type == Scene::kTypeEntityItem) ? 128 : 32))
+		if (scene->getHeader()->param1 >= ((type == Scene::kTypeEntity || type == Scene::kTypeEntityItem) ? 128 : 32))
 			break;
 
-		if (type != Scene::kTypeItem && scene.getHeader()->param2 >= 32)
+		if (type != Scene::kTypeItem && scene->getHeader()->param2 >= 32)
 			break;
 
-		if (type == Scene::kTypeItem3 && scene.getHeader()->param3 >= 32)
+		if (type == Scene::kTypeItem3 && scene->getHeader()->param3 >= 32)
 			break;
 
 		// Check location
@@ -695,7 +708,7 @@ void SceneManager::preProcessScene(SceneIndex *index) {
 		if (!location)
 			break;
 
-		for (Common::Array<SceneHotspot *>::iterator it = scene.getHotspots()->begin(); it != scene.getHotspots()->end(); ++it) {
+		for (Common::Array<SceneHotspot *>::iterator it = scene->getHotspots()->begin(); it != scene->getHotspots()->end(); ++it) {
 
 			if ((type == Scene::kTypeItem || type == Scene::kTypeEntity)) {
 				if ((*it)->location != location1) {
@@ -720,16 +733,16 @@ void SceneManager::preProcessScene(SceneIndex *index) {
 	}
 
 	case Scene::kType6: {
-		if (scene.getHeader()->param1 >= 128)
+		if (scene->getHeader()->param1 >= 128)
 			break;
 
 		bool found = false;
-		if (scene.getHotspots()->size() > 0) {
-			for (Common::Array<SceneHotspot *>::iterator it = scene.getHotspots()->begin(); it != scene.getHotspots()->end(); ++it) {
+		if (scene->getHotspots()->size() > 0) {
+			for (Common::Array<SceneHotspot *>::iterator it = scene->getHotspots()->begin(); it != scene->getHotspots()->end(); ++it) {
 				// The index might be modified by the action, so reload the scene on each iteration
-				loadSceneObject(currentScene, *index);
+				Scene *currentScene = getScenes()->get(*index);
 
-				if (getObjects()->get((ObjectIndex)currentScene.getHeader()->param1).location2 == (*it)->location) {
+				if (getObjects()->get((ObjectIndex)currentScene->getHeader()->param1).location2 == (*it)->location) {
 					PROCESS_HOTSPOT_SCENE(*it, index);
 					found = true;
 				}
@@ -738,8 +751,8 @@ void SceneManager::preProcessScene(SceneIndex *index) {
 
 		// If the scene has no hotspot or if we haven't found a proper hotspot, use the first hotspot from the current scene
 		if (!found) {
-			loadSceneObject(sceneHotspot, *index);
-			SceneHotspot *hotspot = sceneHotspot.getHotspot();
+			Scene *sceneHotspot = getScenes()->get(*index);
+			SceneHotspot *hotspot = sceneHotspot->getHotspot();
 
 			PROCESS_HOTSPOT_SCENE(hotspot, index);
 		}
@@ -748,38 +761,38 @@ void SceneManager::preProcessScene(SceneIndex *index) {
 
 	case Scene::kType7:
 	case Scene::kType8:
-		if (scene.getHeader()->param1 >= 16)
+		if (scene->getHeader()->param1 >= 16)
 			break;
 
-		if (getEntities()->getCompartments(scene.getHeader()->param1) || getEntities()->getCompartments1(scene.getHeader()->param1)) {
+		if (getEntities()->getCompartments(scene->getHeader()->param1) || getEntities()->getCompartments1(scene->getHeader()->param1)) {
 
-			loadSceneObject(currentScene, getState()->scene);
+			Scene *currentScene = getScenes()->get(getState()->scene);
 
-			if ((checkPosition(getState()->scene, kCheckPositionType0) && checkPosition(*index, kCheckPositionType0) && currentScene.getHeader()->count < scene.getHeader()->count)
-			 || (checkPosition(getState()->scene, kCheckPositionType1)  && checkPosition(*index, kCheckPositionType1)  && currentScene.getHeader()->count > scene.getHeader()->count)) {
+			if ((checkPosition(getState()->scene, kCheckPositionType0) && checkPosition(*index, kCheckPositionType0) && currentScene->getHeader()->count < scene->getHeader()->count)
+			 || (checkPosition(getState()->scene, kCheckPositionType1)  && checkPosition(*index, kCheckPositionType1)  && currentScene->getHeader()->count > scene->getHeader()->count)) {
 
-				if (State::getPowerOfTwo(getEntities()->getCompartments(scene.getHeader()->param1)) != 30
-				 && State::getPowerOfTwo(getEntities()->getCompartments1(scene.getHeader()->param1)) != 30 )
+				if (State::getPowerOfTwo(getEntities()->getCompartments(scene->getHeader()->param1)) != 30
+				 && State::getPowerOfTwo(getEntities()->getCompartments1(scene->getHeader()->param1)) != 30 )
 					getSound()->playSound(kEntityNone, "CAT1126A");
 
-				*index = scene.getHotspot()->scene;
+				*index = scene->getHotspot()->scene;
 			} else {
-				*index = scene.getHotspot(kSceneMenu)->scene;
+				*index = scene->getHotspot(kSceneMenu)->scene;
 			}
 
 			preProcessScene(index);
 		} else {
-			if (scene.getHeader()->type == Scene::kType7)
+			if (scene->getHeader()->type == Scene::kType7)
 				break;
 
-			if (scene.getHeader()->param2 >= 32)
+			if (scene->getHeader()->param2 >= 32)
 				break;
 
-			ObjectLocation location = getInventory()->getEntry((InventoryItem)scene.getHeader()->param2)->location;
+			ObjectLocation location = getInventory()->getEntry((InventoryItem)scene->getHeader()->param2)->location;
 			if (!location)
 				break;
 
-			for (Common::Array<SceneHotspot *>::iterator it = scene.getHotspots()->begin(); it != scene.getHotspots()->end(); ++it) {
+			for (Common::Array<SceneHotspot *>::iterator it = scene->getHotspots()->begin(); it != scene->getHotspots()->end(); ++it) {
 				if ((*it)->location == location) {
 					PROCESS_HOTSPOT_SCENE(*it, index);
 					break;
@@ -794,29 +807,27 @@ void SceneManager::preProcessScene(SceneIndex *index) {
 
 	// Sound processing
 	if (getSound()->isBuffered(kEntityTables4)) {
-		loadSceneObject(currentScene, *index);
-		if (currentScene.getHeader()->type != Scene::kTypeReadText || currentScene.getHeader()->param1)
+		if (getScenes()->get(*index)->getHeader()->type != Scene::kTypeReadText || getScenes()->get(*index)->getHeader()->param1)
 			getSound()->processEntry(kEntityTables4);
 	}
 
 	// Cleanup
 	if (getBeetle()->isLoaded()) {
-		loadSceneObject(currentScene, *index);
-		if (currentScene.getHeader()->type != Scene::kTypeLoadBeetleSequences)
+		if (getScenes()->get(*index)->getHeader()->type != Scene::kTypeLoadBeetleSequences)
 			getBeetle()->unload();
 	}
 }
 
 void SceneManager::postProcessScene() {
 
-	loadSceneObject(scene, getState()->scene);
+	Scene *scene = getScenes()->get(getState()->scene);
 
-	switch (scene.getHeader()->type) {
+	switch (scene->getHeader()->type) {
 	case Scene::kTypeList: {
 
 		// Adjust time
-		getState()->time += (scene.getHeader()->param1 + 10) * getState()->timeDelta;
-		getState()->timeTicks += (scene.getHeader()->param1 + 10);
+		getState()->time += (scene->getHeader()->param1 + 10) * getState()->timeDelta;
+		getState()->timeTicks += (scene->getHeader()->param1 + 10);
 
 		// TODO wait for a number of frames unless right mouse is clicked
 		//if (!getFlags()->mouse_right_click) {
@@ -829,22 +840,22 @@ void SceneManager::postProcessScene() {
 		//	}
 		//}
 
-		SceneHotspot *hotspot = scene.getHotspot();
+		SceneHotspot *hotspot = scene->getHotspot();
 		if (!hotspot)
 			break;
 
 		getAction()->processHotspot(*hotspot);
 
 		if (getFlags()->mouseRightClick) {
-			loadSceneObject(hotspotScene, hotspot->scene);
+			Scene *hotspotScene = getScenes()->get(hotspot->scene);
 
-			while (hotspotScene.getHeader()->type == Scene::kTypeList) {
-				hotspot = hotspotScene.getHotspot();
+			while (hotspotScene->getHeader()->type == Scene::kTypeList) {
+				hotspot = hotspotScene->getHotspot();
 				if (hotspot) {
 					getAction()->processHotspot(*hotspot);
 
 					// reload the scene
-					loadScene(&hotspotScene, hotspot->scene);
+					hotspotScene = getScenes()->get(hotspot->scene);
 				}
 			}
 		}
@@ -918,7 +929,7 @@ void SceneManager::postProcessScene() {
 		break;
 
 	case Scene::kTypeReadText:
-        getSound()->readText(scene.getHeader()->param1);
+        getSound()->readText(scene->getHeader()->param1);
 		break;
 
 	case Scene::kType133:

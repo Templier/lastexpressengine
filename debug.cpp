@@ -595,8 +595,8 @@ bool Debugger::cmd_fight(int argc, const char **argv) {
 
 			clearBg(GraphicsManager::kBackgroundAll);
 
-			loadSceneObject(scene, lastScene);
-			_engine->getGraphicsManager()->draw(&scene, GraphicsManager::kBackgroundC);
+			Scene *scene = getScenes()->get(lastScene);
+			_engine->getGraphicsManager()->draw(scene, GraphicsManager::kBackgroundC);
 
 			askForRedraw();
 			redrawScreen();
@@ -634,7 +634,7 @@ bool Debugger::cmd_beetle(int argc, const char **argv) {
 
 			// Setup scene & inventory
 			getProgress().chapter = kChapter2;
-			loadSceneObject(scene, 128);
+			Scene *scene = getScenes()->get(kSceneBeetle);
 			getInventory()->getEntry(kItemBeetle)->location = kLocation3;
 
 			askForRedraw();
@@ -673,7 +673,7 @@ bool Debugger::cmd_beetle(int argc, const char **argv) {
 						// Update cursor
 						CursorStyle style = kCursorNormal;
 						SceneHotspot *hotspot = NULL;
-						if (scene.checkHotSpot(ev.mouse, &hotspot))
+						if (scene->checkHotSpot(ev.mouse, &hotspot))
 							style = action->getCursor(*hotspot);
 
 						_engine->getCursor()->setStyle(style);
@@ -734,8 +734,8 @@ bool Debugger::cmd_beetle(int argc, const char **argv) {
 
 			clearBg(GraphicsManager::kBackgroundAll);
 
-			loadSceneObject(oldscene, previousScene);
-			_engine->getGraphicsManager()->draw(&oldscene, GraphicsManager::kBackgroundC);
+			Scene *oldScene = getScenes()->get(previousScene);
+			_engine->getGraphicsManager()->draw(oldScene, GraphicsManager::kBackgroundC);
 
 			askForRedraw();
 			redrawScreen();

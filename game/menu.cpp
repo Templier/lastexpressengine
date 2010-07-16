@@ -422,7 +422,7 @@ Menu::Menu(LastExpressEngine *engine) : _engine(engine), _scene(NULL), _clock(NU
 }
 
 Menu::~Menu() {
-	delete _scene;
+	_scene = NULL;
 	delete _clock;
 	delete _trainLine;
 
@@ -495,7 +495,7 @@ void Menu::show(bool savegame, TimeType type, uint32 time) {
 	//_currentTime = getState()->time;
 
 	// Load main scene
-	_scene = getScenes()->getScene(getSceneIndex());
+	_scene = getScenes()->get(getSceneIndex());
 	_engine->getGraphicsManager()->draw(_scene, GraphicsManager::kBackgroundC);
 	drawElements();
 

@@ -28,6 +28,8 @@
 
 #include "lastexpress/data/scene.h"
 
+#include "common/hashmap.h"
+#include "common/hash-str.h"
 #include "common/list.h"
 
 namespace LastExpress {
@@ -49,8 +51,12 @@ public:
 	SceneManager(LastExpressEngine *engine);
 	~SceneManager();
 
+	
 	// Datafile
-	void loadSceneDataFile(ArchiveIndex archive) const;
+	void loadSceneDataFile(ArchiveIndex archive);
+
+	// Scene cache
+	Scene *get(SceneIndex sceneIndex);
 
 	// Scene loading
 	void setScene(SceneIndex sceneIndex);
@@ -82,16 +88,24 @@ public:
 	void setCoordinates(SequenceFrame *frame);
 
 	// Helpers
-	bool loadScene(Scene * const scene, SceneIndex sceneIndex);
-	Scene *getScene(SceneIndex sceneIndex);
 	SceneIndex getSceneIndexFromPosition(CarIndex car, Position position, int param3 = -1);
 
 	void setFlagDrawSequences() { _flagDrawSequences = true; }
 
 private:
+	struct SceneCache_EqualTo {
+		bool operator()(const SceneIndex& x, const SceneIndex& y) const { return x == y; }
+	};
+
+	struct SceneCache_Hash {
+		uint operator()(const SceneIndex& x) const { return x; }
+	};
+
+	typedef Common::HashMap<SceneIndex, Scene *, SceneCache_Hash, SceneCache_EqualTo> SceneCache;
+
 	LastExpressEngine *_engine;
 
-	SceneLoader       *_sceneLoader;  ///< Scene loader
+	SceneLoader       *_sceneLoader;     ///< Scene loader
 	Scene             *_currentScene;    ///< Current scene
 
 	Common::Rect coordinates;
@@ -101,6 +115,10 @@ private:
 	bool _flagDrawEntities;
 	bool _flagDrawSequences;
 	bool _flagCoordinates;
+
+	// Scene cache
+	SceneCache _scenes;
+	void purgeSceneCache();
 
 	// Train sequences
 	Common::Array<Sequence *> _doors;
@@ -117,6 +135,8 @@ private:
 	// Scene processing
 	void preProcessScene(SceneIndex *index);
 	void postProcessScene();
+	
+	
 };
 
 } // End of namespace LastExpress
