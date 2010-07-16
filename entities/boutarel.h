@@ -81,8 +81,8 @@ public:
 
 private:
     DECLARE_CALL_FUNCTION(iiii, Boutarel, int, int, int, int)
-	DECLARE_CALL_FUNCTION(siis, Boutarel, const char*, int, int, const char*)
-	DECLARE_CALL_FUNCTION(isii, Boutarel, int, const char*, int, int)
+	DECLARE_CALL_FUNCTION(siis, Boutarel, const char *, int, int, const char *)
+	DECLARE_CALL_FUNCTION(isii, Boutarel, int, const char *, int, int)
 };
 
 } // End of namespace LastExpress

@@ -157,10 +157,51 @@ IMPLEMENT_FUNCTION_IS(Boutarel, function15, 15)
 }
 
 //////////////////////////////////////////////////////////////////////////
+// Parameters:
 // bool
 // const char *
 IMPLEMENT_FUNCTION_IS(Boutarel, function16, 16)
-	error("Boutarel: callback function 16 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionDefault:
+		setCallback(1);
+		call(new ENTITY_SETUP(Boutarel, setup_function9));
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			getData()->field_493 = kField493_0;
+
+			setCallback(2);
+			call(new ENTITY_SETUP_SIIS(Boutarel, setup_updatePosition), (const char *)&params->seq, kCarRestaurant, 52);
+			break;
+
+		case 2:
+			setCallback(3);
+			call(new ENTITY_SETUP(Boutarel, setup_function10), kCarGreenSleeping, kPosition_6470);
+			break;
+
+		case 3:			
+			setCallback(params->param1 ? 4 : 5);
+			call(new ENTITY_SETUP_SIIS(Boutarel, setup_function7), params->param1 ? "607Gc" : "607Ac", kObjectCompartmentC);
+			break;
+
+		case 4:
+		case 5:
+			getData()->field_493 = kField493_1;
+			getEntities()->prepareSequences(kEntityBoutarel);
+
+			CALLBACK_ACTION();
+			break;
+		}
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION_IS(Boutarel, function17, 17)
