@@ -445,8 +445,8 @@ bool Debugger::cmd_loadscene(int argc, const char **argv) {
 			//return true;
 
 			/*********************************************/
-			Scene s;
-			if (!_sceneLoader->loadScene(&s, index)) {
+			Scene *s = _sceneLoader->getScene(index);
+			if (!s) {
 				DebugPrintf("Cannot load scene %i from CD %i", index, cd);
 				resetCommand();
 
@@ -454,7 +454,7 @@ bool Debugger::cmd_loadscene(int argc, const char **argv) {
 				return true;
 			}
 
-			_engine->getGraphicsManager()->draw(&s, GraphicsManager::kBackgroundC);
+			_engine->getGraphicsManager()->draw(s, GraphicsManager::kBackgroundC);
 
 			askForRedraw();
 			redrawScreen();

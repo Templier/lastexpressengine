@@ -284,13 +284,6 @@ bool SceneLoader::load(Common::SeekableReadStream *stream) {
 	return true;
 }
 
-bool SceneLoader::loadScene(Scene * const scene, SceneIndex index) {
-	if (index > _headers.size())
-		error("SceneLoader::loadScene: scene index is too high! (was=%d, max=%d)", index, _headers.size());
-
-	return Scene::load(scene, _stream, _headers[(int)index]);
-}
-
 Scene *SceneLoader::getScene(SceneIndex index) {
 	if (_headers.empty())
 		return NULL;

@@ -229,7 +229,6 @@ public:
 
 	bool load(Common::SeekableReadStream *stream);
 	Scene *getScene(SceneIndex index);
-	bool loadScene(Scene * const scene, SceneIndex index);
 
 	uint32 count() const { return _headers.size(); };
 
