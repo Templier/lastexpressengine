@@ -416,25 +416,55 @@ bool SceneManager::checkCurrentPosition(bool doCheckOtherCars) const {
 void SceneManager::updateDoorsAndClock() {
 	// Clear all sequences from the list
 	for (int i = 0; i < (int)_doors.size(); i++)
-		removeFromQueue(_doors[i]);
+		removeFromQueue(new SequenceFrame(_doors[i], 0, false));
 
 	// Cleanup doors sequences
 	_doors.clear();
 
 	if (_clockHours)
-		removeFromQueue(_clockHours, _hoursIndex);
+		removeFromQueue(new SequenceFrame(_clockHours, _hoursIndex, false));
 
 	if (_clockMinutes)
-		removeFromQueue(_clockMinutes, _minutesIndex);
+		removeFromQueue(new SequenceFrame(_clockMinutes, _minutesIndex, false));
 
 	// Queue doors sequences for display
 	if (checkPosition(kSceneNone, kCheckPositionLookingAtDoors)) {
+		
+		ObjectIndex firstIndex = kObjectNone;
 
-		//ObjectIndex objectIndex = getEntityData(kEntityNone)->car == kCarGreenSleeping ?  kObjectCompartment1 : kObjectCompartmentA;
+		// Init objectIndex (or exit if not in one of the two compartment cars
+		if (getEntityData(kEntityNone)->car == kCarGreenSleeping)
+			firstIndex = kObjectCompartment1;
+		else if (getEntityData(kEntityNone)->car == kCarRedSleeping)
+			firstIndex = kObjectCompartmentA;
+		else
+			return;
 
-		// Iterate over locations
-		//if (getObjects()->get(objectIndex)->location != kLocation2)
-		//	continue;
+		// Iterate over each door
+		for (ObjectIndex index = firstIndex; index < (ObjectIndex)(firstIndex + 8); index = (ObjectIndex)(index + 1)) {
+
+			// Doors is not open, nothing to do
+			if (getObjects()->get(index).location != kLocation2)
+				continue;
+
+			// Load door sequence
+			loadSceneObject(scene, getState()->scene)
+			Common::String name = Common::String::printf("633X%c-%02d.seq", (index - firstIndex + 65), scene.getHeader()->position);
+			Sequence *sequence = new Sequence(getArchive(name), 255);
+
+			// If the sequence doesn't exists, skip
+			if (!sequence->isLoaded())
+				continue;
+
+			_doors.push_back(sequence);
+
+			// Adjust frame data and store in frame list
+			SequenceFrame *frame = new SequenceFrame(sequence);
+			frame->getInfo()->location = (checkPosition(kSceneNone, kCheckPositionType0) ? firstIndex - index - 1 : index - firstIndex - 8);
+						
+			// Add frame to list
+			addToQueue(frame);
+		}
 	}
 
 	// Queue clock sequences for display
@@ -443,6 +473,8 @@ void SceneManager::updateDoorsAndClock() {
 
 		_clockHours = new Sequence(getArchive("SCLKH-81.seq"), 255);
 		_clockMinutes = new Sequence(getArchive("SCLKM-81.seq"), 255);
+
+		error("SceneManager::updateDoorsAndClock: not implemented!");
 
 		// Compute hours and minutes indexes
 
@@ -529,11 +561,6 @@ void SceneManager::removeFromQueue(SequenceFrame *frame) {
 	_queue.remove(frame);
 }
 
-// HACK: temporary hack until Menu is redone
-void SceneManager::removeFromQueue(Sequence *sequence, uint32 index) {
-	error("SceneManager::removeFromQueue - Not implemented!");
-}
-
 void SceneManager::removeAndRedraw(SequenceFrame *frame, bool doRedraw) {
 	if (!frame)
 		return;
@@ -565,7 +592,6 @@ bool SceneManager::loadScene(Scene * const scene, SceneIndex sceneIndex) {
 Scene *SceneManager::getScene(SceneIndex sceneIndex) {
 	return _sceneLoader->getScene(sceneIndex);
 }
-
 
 SceneIndex SceneManager::getSceneIndexFromPosition(CarIndex car, Position position, int param3) {
 	// Probably can't happen (can we be called during cd-swap?)
@@ -858,7 +884,7 @@ void SceneManager::postProcessScene() {
 
 	case Scene::kTypeSavePointChapter:
 		if (getProgress().field_18 == 2)
-			getSavePoints()->push(kEntityNone, kEntityChapters, kAction190346110);
+			getSavePoints()->push(kEntityNone, kEntityChapters, kActionEndChapter);
 		break;
 
 	case Scene::kTypeLoadBeetleSequences:

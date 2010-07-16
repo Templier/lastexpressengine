@@ -77,7 +77,6 @@ public:
 	void drawFrames(bool refreshScreen);
 	void addToQueue(SequenceFrame *frame);
 	void removeFromQueue(SequenceFrame *frame);
-	void removeFromQueue(Sequence *sequence, uint32 index = 0);
 	void removeAndRedraw(SequenceFrame *frame, bool doRedraw);
 	void resetQueue();
 	void setCoordinates(SequenceFrame *frame);

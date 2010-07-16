@@ -508,7 +508,7 @@ label_chapter1_end:
 		call(new ENTITY_SETUP_SIIS(Chapters, setup_enterStation), "Unschedu", kCityPolice);
 		break;
 
-	case kAction190346110:
+	case kActionEndChapter:
 		getProgress().field_18 = 3;
 
 		if (getState()->time >= kTimeChapter1End) {
