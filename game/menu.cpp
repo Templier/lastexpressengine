@@ -1127,7 +1127,7 @@ void Menu::adjustIndex(uint32 time1, uint32 time2, bool searchEntry) {
 			if (searchEntry) {
 				uint32 currentIndex = _index;
 
-				if (_index >= 0) {
+				if ((int32)_index >= 0) {
 					do {
 						// Calculate new delta
 						int32 newDelta = time1 - getSaveLoad()->getEntry(currentIndex)->time;
@@ -1138,7 +1138,7 @@ void Menu::adjustIndex(uint32 time1, uint32 time2, bool searchEntry) {
 						}
 
 						--currentIndex;
-					} while (currentIndex >= 0);
+					} while ((int32)currentIndex >= 0);
 				}				
 			} else {
 				index = _index - 1;

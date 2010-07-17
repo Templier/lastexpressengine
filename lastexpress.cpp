@@ -168,7 +168,7 @@ bool LastExpressEngine::handleEvents() {
 	}
 
 	// Show the debugger if required
-	if (_debugger->isAttached()) {
+	if (_debugger->isActive()) {
 		_debugger->onFrame();
 	}
 
