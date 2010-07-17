@@ -967,7 +967,7 @@ int Entities::getCurrentFrame2(EntityIndex entity, Sequence *sequence, EntityPos
 	}
 
 	//if (sequence->getFrameInfo()->position >= )
-	warning("Entities::getCurrentFrame2: not implemented!");
+	error("Entities::getCurrentFrame2: not implemented!");
 
 	return -1;
 }
