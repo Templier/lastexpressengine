@@ -117,10 +117,10 @@
 		break; \
 	}
 
-#define TIME_CHECK_PLAYSOUND_2(class, timeValue, parameter, callback, sound, entityPosition) \
+#define TIME_CHECK_PLAYSOUND_2(class, timeValue, parameter, callback, sound, position) \
 	if (getState()->time > timeValue && !parameter) { \
 		parameter = 1; \
-		getData()->position = entityPosition; \
+		getData()->entityPosition = position; \
 		setCallback(callback); \
 		call(new ENTITY_SETUP_SIIS(class, setup_playSound), sound); \
 		break; \

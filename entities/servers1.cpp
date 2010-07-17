@@ -151,7 +151,7 @@ IMPLEMENT_FUNCTION(Servers1, function7, 7)
 		break;
 
 	case kActionDefault:
-		getData()->position = kPosition_5800;
+		getData()->entityPosition = kPosition_5800;
 		getData()->field_493 = kField493_0;
 
 		setCallback(1);
@@ -177,7 +177,7 @@ IMPLEMENT_FUNCTION(Servers1, function7, 7)
 
 		case 3:
 			getEntities()->prepareSequences(kEntityServers1);
-			getData()->position = kPosition_5900;
+			getData()->entityPosition = kPosition_5900;
 			ENTITY_PARAM(1, 2) = 0;
 
 			CALLBACK_ACTION()
@@ -210,7 +210,7 @@ IMPLEMENT_FUNCTION(Servers1, chapter1, 8)
 		getSavePoints()->addData(kEntityServers1, kAction291721418, 10);
 		getSavePoints()->addData(kEntityServers1, kAction258136010, 11);
 
-		getData()->position = kPosition_5900;
+		getData()->entityPosition = kPosition_5900;
 		getData()->field_493 = kField493_0;
 		getData()->car = kCarRestaurant;
 		break;
@@ -247,7 +247,7 @@ IMPLEMENT_FUNCTION(Servers1, function15, 15)
 		break;
 
 	case kActionDefault:
-		getData()->position = kPosition_5900;
+		getData()->entityPosition = kPosition_5900;
 		break;
 
 	case kAction101632192:
@@ -258,7 +258,7 @@ IMPLEMENT_FUNCTION(Servers1, function15, 15)
 
 IMPLEMENT_FUNCTION(Servers1, function16, 16)
 	if (savepoint.action == kActionDefault) {
-		getData()->position = kPosition_5900;
+		getData()->entityPosition = kPosition_5900;
 		getData()->field_493 = kField493_0;
 		getData()->car = kCarRestaurant;
 
@@ -278,7 +278,7 @@ IMPLEMENT_FUNCTION(Servers1, chapter2, 17)
 	case kActionDefault:
 		getEntities()->prepareSequences(kEntityServers1);
 
-		getData()->position = kPosition_5900;
+		getData()->entityPosition = kPosition_5900;
 		getData()->field_493 = kField493_0;
 		getData()->car = kCarRestaurant;
 		getData()->clothes = kClothes1;
@@ -305,7 +305,7 @@ IMPLEMENT_FUNCTION(Servers1, function20, 20)
 		break;
 
 	case kActionDefault:
-		getData()->position = kPosition_5800;
+		getData()->entityPosition = kPosition_5800;
 		getData()->field_493 = kField493_0;
 
 		setCallback(1);
@@ -340,7 +340,7 @@ IMPLEMENT_FUNCTION(Servers1, chapter3, 22)
 	case kActionDefault:
 		getEntities()->prepareSequences(kEntityServers1);
 
-		getData()->position = kPosition_5900;
+		getData()->entityPosition = kPosition_5900;
 		getData()->field_493 = kField493_0;
 		getData()->car = kCarRestaurant;
 		getData()->clothes = kClothes1;
@@ -383,7 +383,7 @@ IMPLEMENT_FUNCTION(Servers1, chapter4, 25)
 	case kActionDefault:
 		getEntities()->prepareSequences(kEntityServers1);
 
-		getData()->position = kPosition_5900;
+		getData()->entityPosition = kPosition_5900;
 		getData()->field_493 = kField493_0;
 		getData()->car = kCarRestaurant;
 		getData()->inventoryItem = kItemNone;
@@ -427,7 +427,7 @@ IMPLEMENT_FUNCTION(Servers1, chapter5, 30)
 	case kActionDefault:
 		getEntities()->prepareSequences(kEntityServers1);
 
-		getData()->position = kPosition_3969;
+		getData()->entityPosition = kPosition_3969;
 		getData()->field_493 = kField493_1;
 		getData()->car = kCarRestaurant;
 		getData()->inventoryItem = kItemNone;

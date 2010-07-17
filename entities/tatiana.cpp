@@ -177,7 +177,7 @@ IMPLEMENT_FUNCTION(Tatiana, chapter1, 17)
 		getObjects()->update(kObject49, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
 		getObjects()->update(kObject41, kEntityNone, kLocationNone, kCursorKeepValue, kCursorKeepValue);
 
-		getData()->position = kPosition_5419;
+		getData()->entityPosition = kPosition_5419;
 		getData()->field_493 = kField493_1;
 		getData()->car = kCarRestaurant;
 		break;
@@ -235,7 +235,7 @@ IMPLEMENT_FUNCTION(Tatiana, function23, 23)
 IMPLEMENT_FUNCTION(Tatiana, function24, 24)
 	if (savepoint.action == kActionDefault) {
 
-		getData()->position = kPosition_7500;
+		getData()->entityPosition = kPosition_7500;
 		getData()->field_493 = kField493_1;
 		getData()->car = kCarRedSleeping;
 
@@ -268,7 +268,7 @@ IMPLEMENT_FUNCTION(Tatiana, chapter2, 25)
 		getObjects()->update(kObject49, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
 		getObjects()->update(kObject41, kEntityNone, kLocationNone, kCursorKeepValue, kCursorKeepValue);
 
-		getData()->position = kPosition_5420;
+		getData()->entityPosition = kPosition_5420;
 		getData()->field_493 = kField493_1;
 		getData()->car = kCarRestaurant;
 		getData()->clothes = kClothes2;
@@ -336,7 +336,7 @@ IMPLEMENT_FUNCTION(Tatiana, chapter3, 31)
 		getObjects()->update(kObjectCompartmentB, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
 		getObjects()->update(kObject49, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
 
-		getData()->position = kPosition_1750;
+		getData()->entityPosition = kPosition_1750;
 		getData()->field_493 = kField493_1;
 		getData()->car = kCarRestaurant;
 		getData()->clothes = kClothes2;
@@ -453,7 +453,7 @@ IMPLEMENT_FUNCTION(Tatiana, chapter4, 43)
 		getObjects()->update(kObjectCompartmentB, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
 		getObjects()->update(kObject49, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
 
-		getData()->position = kPosition_7500;
+		getData()->entityPosition = kPosition_7500;
 		getData()->field_493 = kField493_1;
 		getData()->car = kCarRedSleeping;
 		getData()->clothes = kClothes2;
@@ -503,7 +503,7 @@ IMPLEMENT_FUNCTION(Tatiana, function49, 49)
 		break;
 
 	case kActionDefault:
-		getData()->position = kPosition_7500;
+		getData()->entityPosition = kPosition_7500;
 		getData()->field_493 = kField493_1;
 		getData()->car = kCarRedSleeping;
 
@@ -540,7 +540,7 @@ IMPLEMENT_FUNCTION(Tatiana, chapter5, 52)
 	case kActionDefault:
 		getEntities()->prepareSequences(kEntityTatiana);
 
-		getData()->position = kPosition_3969;
+		getData()->entityPosition = kPosition_3969;
 		getData()->field_493 = kField493_1;
 		getData()->car = kCarRestaurant;
 		getData()->clothes = kClothesDefault;

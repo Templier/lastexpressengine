@@ -122,7 +122,7 @@ void Entity::function1(const SavePoint &savepoint) {
 		break;
 
 	case kActionDefault:
-		getData()->position = kPositionNone;
+		getData()->entityPosition = kPositionNone;
 		getData()->field_493 = kField493_0;
 		getData()->car = kCarGreenSleeping;
 		params->param1 = 10000;

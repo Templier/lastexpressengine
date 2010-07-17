@@ -102,7 +102,7 @@ IMPLEMENT_FUNCTION(Yasmin, function6, 6)
 		break;
 
 	case kActionDefault:
-		getData()->position = kPosition_4840;
+		getData()->entityPosition = kPosition_4840;
 		getData()->field_493 = kField493_0;
 
 		setCallback(1);
@@ -141,7 +141,7 @@ IMPLEMENT_FUNCTION(Yasmin, function7, 7)
 		break;
 
 	case kActionDefault:
-		getData()->position = kPosition_3050;
+		getData()->entityPosition = kPosition_3050;
 		getData()->field_493 = kField493_0;
 
 		setCallback(1);
@@ -184,7 +184,7 @@ IMPLEMENT_FUNCTION(Yasmin, chapter1, 8)
 		break;
 
 	case kActionDefault:
-		getData()->position = kPosition_4840;
+		getData()->entityPosition = kPosition_4840;
 		getData()->field_493 = kField493_1;
 		getData()->car = kCarGreenSleeping;
 		break;
@@ -211,7 +211,7 @@ IMPLEMENT_FUNCTION(Yasmin, chapter1_handler, 9)
 			break;
 
 		case 1:
-			getData()->position = kPosition_2740;
+			getData()->entityPosition = kPosition_2740;
 			setCallback(2);
 			call(new ENTITY_SETUP_SIIS(Yasmin, setup_playSound), "Har1102");
 			break;
@@ -243,7 +243,7 @@ IMPLEMENT_FUNCTION(Yasmin, chapter1_handler, 9)
 IMPLEMENT_FUNCTION(Yasmin, function10, 10)
 	if (savepoint.action == kActionDefault) {
 		getObjects()->update(kObjectCompartment7, kEntityNone, kLocation3, kCursorHandKnock, kCursorHand);
-		getData()->position = kPosition_3050;
+		getData()->entityPosition = kPosition_3050;
 		getData()->field_493 = kField493_1;
 		getData()->car = kCarGreenSleeping;
 
@@ -255,7 +255,7 @@ IMPLEMENT_FUNCTION(Yasmin, chapter2, 11)
 	if (savepoint.action == kActionDefault) {
 		getEntities()->prepareSequences(kEntityYasmin);
 
-		getData()->position = kPosition_3050;
+		getData()->entityPosition = kPosition_3050;
 		getData()->field_493 = kField493_1;
 		getData()->car = kCarGreenSleeping;
 		getData()->clothes = kClothesDefault;
@@ -275,7 +275,7 @@ IMPLEMENT_FUNCTION(Yasmin, chapter2_handler, 12)
 
 		if (getState()->time > kTimeYasmin_1 && !params->param2) {
 			params->param2 = 1;
-			getData()->position = kPosition_4070;
+			getData()->entityPosition = kPosition_4070;
 
 			getSavePoints()->push(kEntityYasmin, kEntityTrain, kAction191070912, kPosition_4070);
 		}
@@ -288,7 +288,7 @@ IMPLEMENT_FUNCTION(Yasmin, chapter2_handler, 12)
 
 		if (getState()->time > kTimeYasmin_1 && !params->param2) {
 			params->param2 = 1;
-			getData()->position = kPosition_4070;
+			getData()->entityPosition = kPosition_4070;
 
 			getSavePoints()->push(kEntityYasmin, kEntityTrain, kAction191070912, kPosition_4070);
 		}
@@ -309,7 +309,7 @@ IMPLEMENT_FUNCTION(Yasmin, chapter3, 13)
 	case kActionDefault:
 		getEntities()->prepareSequences(kEntityYasmin);
 
-		getData()->position = kPosition_3050;
+		getData()->entityPosition = kPosition_3050;
 		getData()->field_493 = kField493_1;
 		getData()->car = kCarGreenSleeping;
 		break;
@@ -354,7 +354,7 @@ IMPLEMENT_FUNCTION(Yasmin, chapter4, 15)
 		break;
 
 	case kActionDefault:
-		getData()->position = kPosition_3050;
+		getData()->entityPosition = kPosition_3050;
 		getData()->field_493 = kField493_1;
 		getData()->car = kCarGreenSleeping;
 		break;
@@ -377,7 +377,7 @@ IMPLEMENT_FUNCTION(Yasmin, chapter4_handler, 16)
 			break;
 
 		case 1:
-			getData()->position = kPosition_4070;
+			getData()->entityPosition = kPosition_4070;
 			setCallback(2);
 			call(new ENTITY_SETUP_SIIS(Yasmin, setup_playSound), "Har1110");
 			break;
@@ -407,7 +407,7 @@ IMPLEMENT_FUNCTION(Yasmin, chapter5, 18)
 	case kActionDefault:
 		getEntities()->prepareSequences(kEntityYasmin);
 
-		getData()->position = kPosition_3969;
+		getData()->entityPosition = kPosition_3969;
 		getData()->field_493 = kField493_1;
 		getData()->car = kCarRestaurant;
 		getData()->clothes = kClothesDefault;
@@ -432,7 +432,7 @@ IMPLEMENT_FUNCTION(Yasmin, function20, 20)
 		break;
 
 	case kActionDefault:
-		getData()->position = kPosition_2500;
+		getData()->entityPosition = kPosition_2500;
 		getData()->field_493 = kField493_0;
 		getData()->car = kCarGreenSleeping;
 		break;

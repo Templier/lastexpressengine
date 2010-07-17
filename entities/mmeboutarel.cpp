@@ -120,7 +120,7 @@ IMPLEMENT_FUNCTION(MmeBoutarel, chapter1, 10)
 		getObjects()->update(kObjectCompartmentD, kEntityNone, kLocation2, kCursorNormal, kCursorNormal);
 		getObjects()->update(kObject51, kEntityNone, kLocationNone, kCursorHandKnock, kCursorHand);
 
-		getData()->position = kPosition_5790;
+		getData()->entityPosition = kPosition_5790;
 		getData()->field_493 = kField493_1;
 		getData()->car = kCarRedSleeping;
 		break;
@@ -196,7 +196,7 @@ IMPLEMENT_FUNCTION(MmeBoutarel, chapter1_handler, 12)
 
 		getSound()->playSound(kEntityMmeBoutarel, "MME1035A");
 
-		if (getEntities()->checkSequence0(kEntityMmeBoutarel) || getEntities()->checkFields9(kEntityMmeBoutarel, kEntityNone, 2000) )
+		if (getEntities()->hasValidFrame(kEntityMmeBoutarel) || getEntities()->checkFields9(kEntityMmeBoutarel, kEntityNone, 2000) )
 			getProgress().field_AC = 1;
 
 		setCallback(2);
@@ -219,7 +219,7 @@ IMPLEMENT_FUNCTION(MmeBoutarel, function15, 15)
 
 IMPLEMENT_FUNCTION(MmeBoutarel, function16, 16)
 	if (savepoint.action == kActionDefault) {
-		getData()->position = kPosition_5790;
+		getData()->entityPosition = kPosition_5790;
 		getData()->field_493 = kField493_1;
 		getData()->car = kCarRedSleeping;
 
@@ -242,7 +242,7 @@ IMPLEMENT_FUNCTION(MmeBoutarel, chapter2, 17)
 	case kActionDefault:
 		getEntities()->prepareSequences(kEntityMmeBoutarel);
 
-		getData()->position = kPosition_4689;
+		getData()->entityPosition = kPosition_4689;
 		getData()->field_493 = kField493_1;
 		getData()->car = kCarRestaurant;
 		getData()->clothes = kClothesDefault;
@@ -276,7 +276,7 @@ IMPLEMENT_FUNCTION(MmeBoutarel, chapter3, 20)
 	case kActionDefault:
 		getEntities()->prepareSequences(kEntityMmeBoutarel);
 
-		getData()->position = kPosition_5790;
+		getData()->entityPosition = kPosition_5790;
 		getData()->field_493 = kField493_1;
 		getData()->car = kCarRedSleeping;
 		getData()->clothes = kClothesDefault;
@@ -301,7 +301,7 @@ IMPLEMENT_FUNCTION(MmeBoutarel, chapter4, 22)
 	case kActionDefault:
 		getEntities()->prepareSequences(kEntityMmeBoutarel);
 
-		getData()->position = kPosition_5790;
+		getData()->entityPosition = kPosition_5790;
 		getData()->field_493 = kField493_1;
 		getData()->car = kCarRedSleeping;
 		getData()->clothes = kClothesDefault;
@@ -322,7 +322,7 @@ IMPLEMENT_FUNCTION(MmeBoutarel, function25, 25)
 	if (savepoint.action == kActionDefault) {
 		getEntities()->prepareSequences(kEntityMmeBoutarel);
 
-		getData()->position = kPosition_5790;
+		getData()->entityPosition = kPosition_5790;
 		getData()->field_493 = kField493_1;
 		getData()->car = kCarRedSleeping;
 
@@ -343,7 +343,7 @@ IMPLEMENT_FUNCTION(MmeBoutarel, chapter5, 26)
 	case kActionDefault:
 		getEntities()->prepareSequences(kEntityMmeBoutarel);
 
-		getData()->position = kPosition_3969;
+		getData()->entityPosition = kPosition_3969;
 		getData()->field_493 = kField493_1;
 		getData()->car = kCarRestaurant;
 		getData()->clothes = kClothesDefault;

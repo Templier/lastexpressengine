@@ -99,7 +99,7 @@ IMPLEMENT_FUNCTION(Vassili, chapter1_handler, 5)
 
 	case kActionNone:
 		if (params->param1) {
-			getData()->position = getEntityData(kEntityTatiana)->position;
+			getData()->entityPosition = getEntityData(kEntityTatiana)->entityPosition;
 			getData()->field_493 = getEntityData(kEntityTatiana)->field_493;
 		} else {
 			if (params->param3 && params->param3 >= (int)getState()->time) {
@@ -188,7 +188,7 @@ label_function7:
 		break;
 
 	case kActionDefault:
-		getData()->position = kPosition_8200;
+		getData()->entityPosition = kPosition_8200;
 		getData()->field_493 = kField493_1;
 		getData()->car = kCarRedSleeping;
 
@@ -240,7 +240,7 @@ IMPLEMENT_FUNCTION(Vassili, function7, 7)
 		break;
 
 	case kActionDefault:
-		getData()->position = kPosition_8200;
+		getData()->entityPosition = kPosition_8200;
 		getData()->field_493 = kField493_1;
 		getData()->car = kCarRedSleeping;
 
@@ -383,7 +383,7 @@ IMPLEMENT_FUNCTION(Vassili, chapter2, 12)
 	case kActionDefault:
 		getEntities()->prepareSequences(kEntityVassili);
 
-		getData()->position = kPosition_8200;
+		getData()->entityPosition = kPosition_8200;
 		getData()->field_493 = kField493_1;
 		getData()->car = kCarRedSleeping;
 		getData()->clothes = kClothesDefault;
@@ -441,7 +441,7 @@ IMPLEMENT_FUNCTION(Vassili, chapter3, 14)
 	case kActionDefault:
 		getEntities()->prepareSequences(kEntityVassili);
 
-		getData()->position = kPosition_8200;
+		getData()->entityPosition = kPosition_8200;
 		getData()->field_493 = kField493_1;
 		getData()->car = kCarRedSleeping;
 		getData()->clothes = kClothesDefault;
@@ -521,7 +521,7 @@ IMPLEMENT_FUNCTION(Vassili, chapter4, 16)
 	case kActionDefault:
 		getEntities()->prepareSequences(kEntityVassili);
 
-		getData()->position = kPosition_8200;
+		getData()->entityPosition = kPosition_8200;
 		getData()->field_493 = kField493_1;
 		getData()->car = kCarRedSleeping;
 		getData()->clothes = kClothesDefault;
@@ -572,7 +572,7 @@ IMPLEMENT_FUNCTION(Vassili, chapter5, 18)
 	if (savepoint.action == kActionDefault) {
 		getEntities()->prepareSequences(kEntityVassili);
 
-		getData()->position = kPosition_3969;
+		getData()->entityPosition = kPosition_3969;
 		getData()->field_493 = kField493_1;
 		getData()->car = kCarRestaurant;
 		getData()->clothes = kClothesDefault;

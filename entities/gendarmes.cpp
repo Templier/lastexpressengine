@@ -100,7 +100,7 @@ IMPLEMENT_FUNCTION_I(Gendarmes, function6, 6)
 		// Fallback to action 17
 
 	case kAction17:
-		if (!ENTITY_PARAM(0, 1) && getEntities()->checkSequence0(kEntityGendarmes)) {
+		if (!ENTITY_PARAM(0, 1) && getEntities()->hasValidFrame(kEntityGendarmes)) {
 			getSound()->playSound(kEntityNone, "MUS007");
 			ENTITY_PARAM(0, 1) = 1;
 		}
@@ -140,7 +140,7 @@ IMPLEMENT_FUNCTION_II(Gendarmes, function8, 8)
 		// fallback to action 17
 
 	case kAction17:
-		if (!ENTITY_PARAM(0, 1) && getEntities()->checkSequence0(kEntityGendarmes)) {
+		if (!ENTITY_PARAM(0, 1) && getEntities()->hasValidFrame(kEntityGendarmes)) {
 			getSound()->playSound(kEntityNone, "MUS007");
 			ENTITY_PARAM(0, 1) = 1;
 		}
@@ -299,7 +299,7 @@ IMPLEMENT_FUNCTION(Gendarmes, function12, 12)
 		break;
 
 	case kActionDefault:
-		getData()->position = kPosition_540;
+		getData()->entityPosition = kPosition_540;
 		getData()->field_493 = kField493_0;
 		getData()->car = kCarGreenSleeping;
 
@@ -482,7 +482,7 @@ void Gendarmes::arrest(const SavePoint &savepoint, bool shouldPlaySound, int a3)
 
 	case kActionNone:
 	case kAction17:
-		if (!ENTITY_PARAM(0, 1) && getEntities()->checkSequence0(kEntityGendarmes)) {
+		if (!ENTITY_PARAM(0, 1) && getEntities()->hasValidFrame(kEntityGendarmes)) {
 			getSound()->playSound(kEntityNone, "MUS007");
 			ENTITY_PARAM(0, 1) = 1;
 		}

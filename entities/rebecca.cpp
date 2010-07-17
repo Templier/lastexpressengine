@@ -209,7 +209,7 @@ IMPLEMENT_FUNCTION(Rebecca, chapter1, 21)
 
 		getObjects()->updateLocation2(kObject110, kLocation1);
 
-		getData()->position = kPosition_2830;
+		getData()->entityPosition = kPosition_2830;
 		getData()->field_493 = kField493_1;
 		getData()->car = kCarRestaurant;
 
@@ -365,7 +365,7 @@ IMPLEMENT_FUNCTION(Rebecca, function26, 26)
 
 IMPLEMENT_FUNCTION(Rebecca, function27, 27)
 	if (savepoint.action == kActionDefault) {
-		getData()->position = kPosition_4840;
+		getData()->entityPosition = kPosition_4840;
 		getData()->field_493 = kField493_1;
 		getData()->car = kCarRedSleeping;
 
@@ -388,7 +388,7 @@ IMPLEMENT_FUNCTION(Rebecca, chapter2, 28)
 	case kActionDefault:
 		getEntities()->prepareSequences(kEntityRebecca);
 
-		getData()->position = kPosition_4840;
+		getData()->entityPosition = kPosition_4840;
 		getData()->field_493 = kField493_1;
 		getData()->car = kCarRedSleeping;
 		getData()->clothes = kClothesDefault;
@@ -477,7 +477,7 @@ IMPLEMENT_FUNCTION(Rebecca, chapter3, 32)
 	case kActionDefault:
 		getEntities()->prepareSequences(kEntityRebecca);
 
-		getData()->position = kPosition_4840;
+		getData()->entityPosition = kPosition_4840;
 		getData()->field_493 = kField493_1;
 		getData()->car = kCarRedSleeping;
 		getData()->clothes = kClothesDefault;
@@ -590,7 +590,7 @@ IMPLEMENT_FUNCTION(Rebecca, function39, 39)
 		getObjects()->update(kObjectCompartmentE, kEntityNone, kLocationNone, kCursorHandKnock, kCursorHand);
 		getObjects()->update(kObject52, kEntityNone, kLocationNone, kCursorHandKnock, kCursorHand);
 
-		getData()->position = kPosition_6000;
+		getData()->entityPosition = kPosition_6000;
 		getData()->field_493 = kField493_1;
 		getData()->car = kCarKronos;
 		break;
@@ -626,7 +626,7 @@ IMPLEMENT_FUNCTION(Rebecca, chapter4, 42)
 	case kActionDefault:
 		getEntities()->prepareSequences(kEntityRebecca);
 
-		getData()->position = kPosition_4840;
+		getData()->entityPosition = kPosition_4840;
 		getData()->field_493 = kField493_1;
 		getData()->car = kCarRedSleeping;
 		getData()->clothes = kClothesDefault;
@@ -673,7 +673,7 @@ IMPLEMENT_FUNCTION(Rebecca, function45, 45)
 		break;
 
 	case kActionDefault:
-		getData()->position = kPosition_4840;
+		getData()->entityPosition = kPosition_4840;
 		getData()->field_493 = kField493_1;
 		getData()->car = kCarRedSleeping;
 
@@ -709,7 +709,7 @@ IMPLEMENT_FUNCTION(Rebecca, chapter5, 46)
 	case kActionDefault:
 		getEntities()->prepareSequences(kEntityRebecca);
 
-		getData()->position = kPosition_3969;
+		getData()->entityPosition = kPosition_3969;
 		getData()->field_493 = kField493_1;
 		getData()->car = kCarRestaurant;
 		getData()->inventoryItem = kItemNone;

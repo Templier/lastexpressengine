@@ -87,7 +87,7 @@ public:
 	void drawSequenceRight(EntityIndex index, const char* sequence);
 	void prepareSequences(EntityIndex index);
 
-	bool checkSequence0(EntityIndex entity) const;
+	bool hasValidFrame(EntityIndex entity) const;
 
 	// Accessors
 	Entity *get(EntityIndex entity);
@@ -167,7 +167,7 @@ private:
 	void clearEntitySequenceData(EntityData::EntityCallData * data, EntityDirection direction);
 	void computeCurrentFrame2(EntityIndex entityIndex);
 	int getCurrentFrame2(EntityIndex entity, Sequence *sequence, EntityPosition position, bool doProcessing);
-	void processEntitySub(EntityIndex entityIndex, bool dontClearQueue, bool dontPlaySound);
+	void updateFrame(EntityIndex entityIndex, bool dontClearQueue, bool dontPlaySound);
 	void processEntitySub2(EntityIndex entityIndex);
 	void processEntitySub3(EntityIndex entityIndex);
 	void copySequenceData3To2(EntityIndex entityIndex);

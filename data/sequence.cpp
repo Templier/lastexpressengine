@@ -56,7 +56,7 @@ void FrameInfo::read(Common::SeekableReadStream *in, bool isSequence) {
 	}
 
 	compressionType = in->readByte();
-	subType = in->readByte();
+	subType = (FrameSubType)in->readByte();
 
 	// Sequence information
 	field_2E = in->readByte();
@@ -65,9 +65,11 @@ void FrameInfo::read(Common::SeekableReadStream *in, bool isSequence) {
 	field_31 = in->readByte();
 	soundAction = in->readByte();
 	field_33 = in->readByte();
-	positionId = in->readUint32LE();
+	position = in->readByte();
+	field_35 = in->readByte();
+	field_36 = in->readUint16LE();
 	field_38 = in->readUint32LE();
-	position = in->readUint16LE();
+	entityPosition = (EntityPosition)in->readUint16LE();
 	location = in->readUint16LE();
 	next = in->readUint32LE();
 }
@@ -86,10 +88,10 @@ AnimFrame::AnimFrame(Common::SeekableReadStream *in, const FrameInfo &f) : _pale
 	debugC(6, kLastExpressDebugGraphics, "    Decompressed end offset: %d", f.decompressedEndOffset);
 	debugC(6, kLastExpressDebugGraphics, "    Hotspot: (%d, %d) x (%d, %d)\n", f.hotspot.left, f.hotspot.top, f.hotspot.right, f.hotspot.bottom);
 	debugC(6, kLastExpressDebugGraphics, "    Compression type: %u / %u", f.compressionType, f.subType);
-	debugC(6, kLastExpressDebugGraphics, "    Unknown: %u - %u - %u - %u - %u - %d", f.field_2E, f.field_2F, f.field_30, f.field_31, f.field_33, f.field_38);
+	debugC(6, kLastExpressDebugGraphics, "    Unknown: %u - %u - %u - %u - %u - %u - %u - %d", f.field_2E, f.field_2F, f.field_30, f.field_31, f.field_33, f.field_35, f.field_36, f.field_38);
 	debugC(6, kLastExpressDebugGraphics, "    Sound action: %u", f.soundAction);
-	debugC(6, kLastExpressDebugGraphics, "    Position ID: %d", f.positionId);
-	debugC(6, kLastExpressDebugGraphics, "    Entity Position: %d", f.position);
+	debugC(6, kLastExpressDebugGraphics, "    Position: %d", f.position);
+	debugC(6, kLastExpressDebugGraphics, "    Entity Position: %d", f.entityPosition);
 	debugC(6, kLastExpressDebugGraphics, "    Location: %d", f.location);
 	debugC(6, kLastExpressDebugGraphics, "    next: %d", f.next);
 

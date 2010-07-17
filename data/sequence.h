@@ -50,10 +50,10 @@
 	    uint16 {2}    - Hotspot top
 	    uint16 {2}    - Hotspot bottom
 	    byte {1}      - Compression type
-	    byte {1}      - Subtype (determines which set of decompression functions will be called) => 0, 1, 2, 3
-	    uint16 {2}    - Unknown
+	    byte {1}      - Subtype (determines which set of decompression functions will be called) => 0, 1, 2, 3	    
 	    byte {1}      - Unknown
 	    byte {1}      - Unknown
+		uint16 {2}    - Unknown
 	    byte {1}      - Sound action
 	    byte {1}      - Unknown
 	    uint32 {4}    - positionId
@@ -74,10 +74,19 @@
 
 #include "lastexpress/drawable.h"
 
+#include "lastexpress/shared.h"
+
 #include "common/array.h"
 #include "common/stream.h"
 
 namespace LastExpress {
+
+enum FrameSubType {
+	kFrameTypeNone = 0,
+	kFrameType1 = 1,
+	kFrameType2 = 2,
+	kFrameType3 = 3
+};
 
 struct FrameInfo {
 	void read(Common::SeekableReadStream *in, bool isSequence);
@@ -99,7 +108,7 @@ struct FrameInfo {
 	Common::Rect hotspot;
 
 	byte compressionType;         ///< Type of frame compression (0x03, 0x04, 0x05, 0x07, 0xFF)
-	byte subType;                 ///< Subtype
+	FrameSubType subType;         ///< Subtype (byte)
 
 	byte field_2E;
 	byte field_2F;
@@ -107,9 +116,11 @@ struct FrameInfo {
 	byte field_31;
 	byte soundAction;
 	byte field_33;
-	uint32 positionId;
+	Position position;
+	byte field_35;
+	int16 field_36;
 	uint32 field_38;
-	uint16 position;
+	EntityPosition entityPosition;
 	uint16 location;
 	uint32 next;
 };

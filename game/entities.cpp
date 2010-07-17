@@ -116,7 +116,7 @@ static const EntityPosition entityPositions[41] = {
 	for (int seqIdx = 0; seqIdx < 8; seqIdx++) \
 		sequenceTo.deleteLastChar(); \
 	if (checkFields5(entityIndex, kCarGreenSleeping) || checkFields5(entityIndex, kCarGreenSleeping)) { \
-		if (data->car < getData(kEntityNone)->car || (data->car == getData(kEntityNone)->car && data->position < getData(kEntityNone)->position)) \
+		if (data->car < getData(kEntityNone)->car || (data->car == getData(kEntityNone)->car && data->entityPosition < getData(kEntityNone)->entityPosition)) \
 			sequenceTo += "R.SEQ"; \
 		else \
 			sequenceTo += "F.SEQ"; \
@@ -364,14 +364,14 @@ void Entities::updateFields() const {
 
 		case kDirectionUp:
 		case kDirectionDown:	// Replaces calls to CheckFields8
-			if (data->direction != kDirectionUp || (data->position + data->field_4A3 * 10) >= 10000)
+			if (data->direction != kDirectionUp || (data->entityPosition + data->field_4A3 * 10) >= 10000)
 			{
 				if (data->direction == kDirectionDown) {
-					if (data->position > data->field_4A3 * 10)
-						data->position = (EntityPosition)(data->position - data->field_4A3 * 10);
+					if (data->entityPosition > data->field_4A3 * 10)
+						data->entityPosition = (EntityPosition)(data->entityPosition - data->field_4A3 * 10);
 				}
 			} else {
-				data->position = (EntityPosition)(data->position + data->field_4A3 * 10);
+				data->entityPosition = (EntityPosition)(data->entityPosition + data->field_4A3 * 10);
 			}
 			break;
 
@@ -647,7 +647,7 @@ void Entities::processEntity(EntityIndex entityIndex) {
 		if (data->position) {
 			updatePosition(entityIndex, data->car2, data->position);
 			data->car2 = kCarNone;
-			data->positionId = 0;
+			data->position = 0;
 		}
 
 		getScenes()->removeAndRedraw(data->frame, false);
@@ -661,8 +661,8 @@ void Entities::processEntity(EntityIndex entityIndex) {
 	if (data->frame1) {
 		getScenes()->removeAndRedraw(data->frame1, false);
 
-		if (data->frame && data->frame->getInfo()->subType != 3) {
-			data->frame->getInfo()->subType = 0;
+		if (data->frame && data->frame->getInfo()->subType != kFrameType3) {
+			data->frame->getInfo()->subType = kFrameType2;
 			getScenes()->setFlagDrawSequences();
 		}
 	}
@@ -682,7 +682,7 @@ label_nosequence:
 			return;
 
 		if (data->sequence2 && data->currentFrame2 != -1 && (data->currentFrame2 + 1) <= (int32)data->sequence2->count()) {
-			processEntitySub(entityIndex, false, true);
+			updateFrame(entityIndex, false, true);
 
 			if (!getFlags()->flag_entities_0 && !data->doProcessEntity) {
 				INCREMENT_DIRECTION_COUNTER();
@@ -700,9 +700,9 @@ label_nosequence:
 					return;
 
 				if (data->position) {
-					updatePosition(entityIndex, data->car2, (data->position != 0));
+					updatePosition(entityIndex, data->car2, data->position);
 					data->car2 = kCarNone;
-					data->positionId = 0;
+					data->position = 0;
 				}
 
 				INCREMENT_DIRECTION_COUNTER();
@@ -755,7 +755,7 @@ label_nosequence:
 
 	}
 
-	processEntitySub(entityIndex, dontClearQueue, false);
+	updateFrame(entityIndex, dontClearQueue, false);
 
 	if (!getFlags()->flag_entities_0 && !data->doProcessEntity)
 		INCREMENT_DIRECTION_COUNTER();
@@ -818,7 +818,7 @@ void Entities::computeCurrentFrame2(EntityIndex entityIndex) {
 		case 16:
 		case 17:
 			if (data->field_4A9) {
-				if (getData(kEntityNone)->position >= data->position) {
+				if (getData(kEntityNone)->entityPosition >= data->entityPosition) {
 					data->currentFrame2 = -1;
 				} else {
 					data->currentFrame2 = getCurrentFrame2(entityIndex, data->sequence2, getEntityPositionFromCurrentPosition(), true);
@@ -849,7 +849,7 @@ void Entities::computeCurrentFrame2(EntityIndex entityIndex) {
 		case 38:
 		case 39:
 			if (data->field_4A9) {
-				if (getData(kEntityNone)->position <= data->position) {
+				if (getData(kEntityNone)->entityPosition <= data->entityPosition) {
 					data->currentFrame2 = -1;
 				} else {
 					data->currentFrame2 = getCurrentFrame2(entityIndex, data->sequence2, getEntityPositionFromCurrentPosition(), true);
@@ -972,8 +972,106 @@ int Entities::getCurrentFrame2(EntityIndex entity, Sequence *sequence, EntityPos
 	return -1;
 }
 
-void Entities::processEntitySub(EntityIndex entityIndex, bool dontClearQueue, bool dontPlaySound) {
-	error("Entities::processEntitySub: not implemented!");
+void Entities::updateFrame(EntityIndex entityIndex, bool dontClearQueue, bool dontPlaySound) {
+	EntityData::EntityCallData *data = getData(entityIndex);
+
+	// Set frame to be drawn again
+	if (data->frame && dontClearQueue) {
+		if (data->frame->getInfo()->subType != kFrameType3)
+			data->frame->getInfo()->subType = kFrameType2;
+
+		getScenes()->setFlagDrawSequences();
+	}
+
+	// Remove old frame from queue
+	if (data->frame && !dontClearQueue)
+		getScenes()->removeFromQueue(data->frame);
+
+	// Stop if nothing else to draw
+	if (data->currentFrame2 < 0)
+		return;
+
+	if (data->currentFrame2 > (int)data->sequence2->count())
+		return;
+
+	// Get new frame info
+	FrameInfo *info = data->sequence2->getFrameInfo(data->currentFrame2);
+
+	if (data->frame && data->frame->getInfo()->subType != kFrameType3)
+		if (!info->field_2E || dontClearQueue)
+			getScenes()->setCoordinates(data->frame);
+
+	// Update position
+	if (info->entityPosition) {
+		data->entityPosition = info->entityPosition;
+		if (data->field_4A9)
+			data->entityPosition = (EntityPosition)(data->entityPosition + getEntityPositionFromCurrentPosition());
+	}
+
+	info->location = entityIndex + abs(getData(entityIndex)->entityPosition - getData(kEntityNone)->entityPosition);
+
+	if (info->subType != kFrameType3) {
+		info->subType = kFrameType1;
+
+		if (!dontClearQueue)
+			info->subType = kFrameTypeNone;
+	}
+
+	if (info->field_33 & 1)
+		getSavePoints()->push(kEntityNone, entityIndex, kActionExcuseMeCath);
+
+	if (info->field_33 & 2) {
+		getSavePoints()->push(kEntityNone, entityIndex, kAction10);
+		getSavePoints()->process();
+
+		if (getFlags()->flag_entities_0)
+			return;
+
+		if (data->doProcessEntity)
+			return;
+	}
+
+	if (info->field_33 & 16) {
+		getSavePoints()->push(kEntityNone, entityIndex, kAction4);
+		getSavePoints()->process();
+
+		if (getFlags()->flag_entities_0)
+			return;
+
+		if (data->doProcessEntity)
+			return;
+	}
+
+	if (data->position) {
+		updatePosition(entityIndex, data->car2, data->position);
+		data->car2 = kCarNone;
+		data->position = 0;
+	}
+
+	if (info->position) {
+		data->car2 = data->car;
+		data->position = info->position;
+		updatePosition(entityIndex, data->car2, data->position, true);
+
+		if (getFlags()->flag_entities_0)
+			return;
+
+		if (data->doProcessEntity)
+			return;
+	}
+
+	if (info->soundAction && !dontPlaySound)
+		getSound()->playSoundEvent(entityIndex, info->soundAction, info->field_31);
+
+	// Add the new frame to the queue
+	SequenceFrame *frame = new SequenceFrame(data->sequence2, data->currentFrame2, false);
+	getScenes()->addToQueue(frame);
+
+	if (dontClearQueue)
+		data->frame1 = data->frame;
+
+	if (!dontPlaySound)
+		data->field_49B = dontClearQueue ? 0 : 1;
 }
 
 void Entities::processEntitySub2(EntityIndex entityIndex) {
@@ -1248,7 +1346,7 @@ void Entities::getSequenceName(EntityIndex index, EntityDirection direction, Com
 			break;
 
 		case 1:
-			if (data->position < kPosition_2587)
+			if (data->entityPosition < kPosition_2587)
 				sequence1 = Common::String::printf("%02d%01d-01u.seq", index, data->clothes);
 			break;
 
@@ -1267,10 +1365,10 @@ void Entities::getSequenceName(EntityIndex index, EntityDirection direction, Com
 		case 15:
 		case 16:
 		case 17:
-			if (data->position >= kPosition_9270)
+			if (data->entityPosition >= kPosition_9270)
 				break;
 
-			if (data->position >= kPosition_8513) {
+			if (data->entityPosition >= kPosition_8513) {
 				sequence1 = Common::String::printf("%02d%01d-%02deu.seq", index, data->clothes, position);
 			} else {
 				sequence1 = Common::String::printf("%02d%01d-03u.seq", index, data->clothes);
@@ -1280,12 +1378,12 @@ void Entities::getSequenceName(EntityIndex index, EntityDirection direction, Com
 			break;
 
 		case 18:
-			if (data->position >= kPosition_2436)
+			if (data->entityPosition >= kPosition_2436)
 				sequence1 = Common::String::printf("%02d%01d-18u.seq", index, data->clothes);
 			break;
 
 		case 22:
-			if (getData(kEntityNone)->position > data->position)
+			if (getData(kEntityNone)->entityPosition > data->entityPosition)
 				sequence1 = Common::String::printf("%02d%01d-22u.seq", index, data->clothes);
 			break;
 
@@ -1305,10 +1403,10 @@ void Entities::getSequenceName(EntityIndex index, EntityDirection direction, Com
 		case 37:
 		case 38:
 		case 39:
-			if (getData(kEntityNone)->position <= data->position)
+			if (getData(kEntityNone)->entityPosition <= data->entityPosition)
 				break;
 
-			if (data->position >= kPosition_2087) {
+			if (data->entityPosition >= kPosition_2087) {
 				sequence1 = Common::String::printf("%02d%01d-38u.seq", index, data->clothes);
 				data->field_4A9 = 1;
 			} else {
@@ -1319,7 +1417,7 @@ void Entities::getSequenceName(EntityIndex index, EntityDirection direction, Com
 			break;
 
 		case 40:
-			if (getData(kEntityNone)->position > data->position)
+			if (getData(kEntityNone)->entityPosition > data->entityPosition)
 				sequence1 = Common::String::printf("%02d%01d-40u.seq", index, data->clothes);
 			break;
 		}
@@ -1332,7 +1430,7 @@ void Entities::getSequenceName(EntityIndex index, EntityDirection direction, Com
 			break;
 
 		case 1:
-			if (getData(kEntityNone)->position < data->position)
+			if (getData(kEntityNone)->entityPosition < data->entityPosition)
 				sequence1 = Common::String::printf("%02d%01d-01d.seq", index, data->clothes);
 			break;
 
@@ -1351,10 +1449,10 @@ void Entities::getSequenceName(EntityIndex index, EntityDirection direction, Com
 		case 15:
 		case 16:
 		case 17:
-			if (getData(kEntityNone)->position >= data->position)
+			if (getData(kEntityNone)->entityPosition >= data->entityPosition)
 				break;
 
-			if (data->position <= kPosition_8513) {
+			if (data->entityPosition <= kPosition_8513) {
 				sequence1 = Common::String::printf("%02d%01d-03d.seq", index, data->clothes);
 				data->field_4A9 = 1;
 			} else {
@@ -1365,12 +1463,12 @@ void Entities::getSequenceName(EntityIndex index, EntityDirection direction, Com
 			break;
 
 		case 18:
-			if (getData(kEntityNone)->position < data->position)
+			if (getData(kEntityNone)->entityPosition < data->entityPosition)
 				sequence1 = Common::String::printf("%02d%01d-18d.seq", index, data->clothes);
 			break;
 
 		case 22:
-			if (data->position > kPosition_850)
+			if (data->entityPosition > kPosition_850)
 				sequence1 = Common::String::printf("%02d%01d-22d.seq", index, data->clothes);
 			break;
 
@@ -1390,10 +1488,10 @@ void Entities::getSequenceName(EntityIndex index, EntityDirection direction, Com
 		case 37:
 		case 38:
 		case 39:
-			if (data->position <= kPosition_850)
+			if (data->entityPosition <= kPosition_850)
 				break;
 
-			if (data->position <= kPosition_2087) {
+			if (data->entityPosition <= kPosition_2087) {
 				sequence1 = Common::String::printf("%02d%01d-%02ded.seq", index, data->clothes, position);
 			} else {
 				sequence1 = Common::String::printf("%02d%01d-38d.seq", index, data->clothes);
@@ -1403,7 +1501,7 @@ void Entities::getSequenceName(EntityIndex index, EntityDirection direction, Com
 			break;
 
 		case 40:
-			if (getData(kEntityNone)->position > kPosition_8013)
+			if (getData(kEntityNone)->entityPosition > kPosition_8013)
 				sequence1 = Common::String::printf("%02d%01d-40d.seq", index, data->clothes);
 			break;
 		}
@@ -1656,7 +1754,7 @@ uint Entities::getSoundValue(EntityIndex entity) const {
 	uint ret = 2;
 
 	// Get default value if valid
-	int index = abs(getData(entity)->position - getData(kEntityNone)->position) / 230;
+	int index = abs(getData(entity)->entityPosition - getData(kEntityNone)->entityPosition) / 230;
 	if (index < 32)
 		ret = soundValues[index];
 
@@ -1684,7 +1782,7 @@ uint Entities::getSoundValue(EntityIndex entity) const {
 			ret >>= 1;
 
 		if (getData(kEntityNone)->field_493
-		&& (getData(entity)->position != kPosition_1 || !getEntities()->checkFields9(kEntityNone, entity, 400)))
+		&& (getData(entity)->entityPosition != kPosition_1 || !getEntities()->checkFields9(kEntityNone, entity, 400)))
 			ret >>=1;
 		break;
 
@@ -1753,8 +1851,8 @@ void Entities::loadSceneFromEntityPosition(CarIndex car, EntityPosition entityPo
 //////////////////////////////////////////////////////////////////////////
 //	Checks
 //////////////////////////////////////////////////////////////////////////
-bool Entities::checkSequence0(EntityIndex entity) const {
-	return (getData(entity)->frame && (getData(entity)->frame->getInfo()->subType != 3));
+bool Entities::hasValidFrame(EntityIndex entity) const {
+	return (getData(entity)->frame && (getData(entity)->frame->getInfo()->subType != kFrameType3));
 }
 
 bool Entities::compare(EntityIndex entity1, EntityIndex entity2) {
@@ -1807,7 +1905,7 @@ bool Entities::checkEntity(EntityIndex entity, CarIndex car, EntityPosition posi
 
 
 	// Calculate delta
-	delta = abs(data->position - position);
+	delta = abs(data->entityPosition - position);
 	if (delta < 100 || (position > kPosition_850 && position < kPosition_9270 && delta < 300))
 		flag3 = true;
 
@@ -1823,10 +1921,10 @@ bool Entities::checkEntity(EntityIndex entity, CarIndex car, EntityPosition posi
 			goto label_process_entity;
 	}
 
-	if (getEntities()->checkSequence0(entity) && getEntities()->checkFields25(entity)) {
+	if (getEntities()->hasValidFrame(entity) && getEntities()->checkFields25(entity)) {
 		if (!getEntities()->checkPosition(position)) {
 			flag3 = false;
-			position = (EntityPosition)(getData(kEntityNone)->position + 250 * (data->direction == kDirectionUp ? 1 : -1));
+			position = (EntityPosition)(getData(kEntityNone)->entityPosition + 250 * (data->direction == kDirectionUp ? 1 : -1));
 		}
 	}
 
@@ -1839,7 +1937,7 @@ label_process_entity:
 		else if (data->car > car)
 			direction = kDirectionDown;
 		else // same car
-			direction = (data->position < position) ? kDirectionUp : kDirectionDown;
+			direction = (data->entityPosition < position) ? kDirectionUp : kDirectionDown;
 
 		if (!flag1) {
 			if (data->direction == direction) {
@@ -1853,19 +1951,19 @@ label_process_entity:
 					}
 				}
 
-				if (checkSequence0(entity)) {
+				if (hasValidFrame(entity)) {
 					error("Entities::checkEntity: not implemented (2)!");
 				}
 
 				if (data->direction == kDirectionUp) {
-					if (data->position + data->field_4A3 < 10000)
-						data->position = (EntityPosition)(data->position + data->field_4A3);
+					if (data->entityPosition + data->field_4A3 < 10000)
+						data->entityPosition = (EntityPosition)(data->entityPosition + data->field_4A3);
 				} else {
-					if (data->position > data->field_4A3)
-						data->position = (EntityPosition)(data->position - data->field_4A3);
+					if (data->entityPosition > data->field_4A3)
+						data->entityPosition = (EntityPosition)(data->entityPosition - data->field_4A3);
 				}
 
-				if (data->position < kPosition_9270 || data->direction != kDirectionUp) {
+				if (data->entityPosition < kPosition_9270 || data->direction != kDirectionUp) {
 
 					if (getData(kEntityNone)->car == data->car) {
 						getSound()->playSoundEvent(entity, 36);
@@ -1873,7 +1971,7 @@ label_process_entity:
 					}
 
 					data->car = (CarIndex)(data->car - 1);
-					data->position = kPosition_9269;
+					data->entityPosition = kPosition_9269;
 
 					if (data->car == kCarKronos) {
 						if (checkFields6(kEntityNone)) {
@@ -1885,9 +1983,9 @@ label_process_entity:
 						}
 					}
 
-					if (data->car < car || (data->car == car && data->position < position)) {
+					if (data->car < car || (data->car == car && data->entityPosition < position)) {
 						data->car = car;
-						data->position = position;
+						data->entityPosition = position;
 						data->direction = kDirectionNone;
 						data->entity = kEntityNone;
 
@@ -1931,11 +2029,11 @@ label_checkentity_position:
 
 		// Direction Up
 		if (direction == kDirectionUp) {
-			if (data->position < (flag2 ? kPosition_8800 : kPosition_9250))
-				data->position = (EntityPosition)(data->position + (flag2 ? kPosition_1200 : kPosition_750));
+			if (data->entityPosition < (flag2 ? kPosition_8800 : kPosition_9250))
+				data->entityPosition = (EntityPosition)(data->entityPosition + (flag2 ? kPosition_1200 : kPosition_750));
 
-			if (data->car == car && data->position >= position) {
-				data->position = position;
+			if (data->car == car && data->entityPosition >= position) {
+				data->entityPosition = position;
 				data->direction = kDirectionNone;
 				data->entity = kEntityNone;
 				return true;
@@ -1947,11 +2045,11 @@ label_checkentity_position:
 
 		// Direction Down
 		if (direction == kDirectionDown) {
-			if (data->position > (flag2 ? kPosition_1200 : kPosition_750))
-				data->position = (EntityPosition)(data->position - (flag2 ? kPosition_1200 : kPosition_750));
+			if (data->entityPosition > (flag2 ? kPosition_1200 : kPosition_750))
+				data->entityPosition = (EntityPosition)(data->entityPosition - (flag2 ? kPosition_1200 : kPosition_750));
 
-			if (data->car == car && data->position <= position) {
-				data->position = position;
+			if (data->car == car && data->entityPosition <= position) {
+				data->entityPosition = position;
 				data->direction = kDirectionNone;
 				data->entity = kEntityNone;
 				return true;
@@ -1962,7 +2060,7 @@ label_checkentity_position:
 		}
 	}
 
-	data->position = position;
+	data->entityPosition = position;
 	if (data->direction == kDirectionUp || data->direction == kDirectionDown)
 		data->direction = kDirectionNone;
 	data->entity = kEntityNone;
@@ -1971,7 +2069,7 @@ label_checkentity_position:
 }
 
 bool Entities::checkFields1(EntityIndex entity, CarIndex car, EntityPosition position) const {
-	return (getData(entity)->position == position
+	return (getData(entity)->entityPosition == position
 		 && getData(entity)->field_493 == kField493_1
 		 && getData(entity)->car == car);
 }
@@ -2060,7 +2158,7 @@ bool Entities::checkFields5(EntityIndex entity, CarIndex car) const {
 }
 
 bool Entities::checkFields6(EntityIndex entity) const {
-	return checkFields5(entity, kCarGreenSleeping) && getData(entity)->position < kPosition_850;
+	return checkFields5(entity, kCarGreenSleeping) && getData(entity)->entityPosition < kPosition_850;
 }
 
 bool Entities::checkFields7(CarIndex car) const {
@@ -2073,7 +2171,7 @@ bool Entities::isDirectionUpOrDown(EntityIndex entity) const {
 
 bool Entities::checkFields9(EntityIndex entity1, EntityIndex entity2, int absValue) const {
 	return getData(entity1)->car == getData(entity2)->car
-	    && abs(getData(entity1)->position - getData(entity2)->position) <= absValue
+	    && abs(getData(entity1)->entityPosition - getData(entity2)->entityPosition) <= absValue
 		&& (getData(entity1)->field_493 != kField493_2 || getData(entity2)->field_493 != kField493_2);
 }
 
@@ -2094,36 +2192,36 @@ bool Entities::checkFields11() const {
 
 bool Entities::checkFields12(EntityIndex entity) const {
 	return checkFields5(entity, kCarRestaurant)
-		&& getData(entity)->position >= kPosition_1540
-		&& getData(entity)->position <= kPosition_3650;
+		&& getData(entity)->entityPosition >= kPosition_1540
+		&& getData(entity)->entityPosition <= kPosition_3650;
 }
 
 bool Entities::checkFields13(EntityIndex entity) const {
 	return checkFields5(entity, kCarRestaurant)
-		&& getData(entity)->position >= kPosition_3650
-		&& getData(entity)->position <= kPosition_5800;
+		&& getData(entity)->entityPosition >= kPosition_3650
+		&& getData(entity)->entityPosition <= kPosition_5800;
 }
 
 bool Entities::checkFields14(EntityIndex entity) const {
 	return checkFields5(entity, kCarKronos)
-		&& getData(entity)->position >= kPosition_5500
-		&& getData(entity)->position <= kPosition_7500;
+		&& getData(entity)->entityPosition >= kPosition_5500
+		&& getData(entity)->entityPosition <= kPosition_7500;
 }
 
 bool Entities::checkFields15() const {
-	return (getData(kEntityNone)->position == kPosition_7500 || getData(kEntityNone)->position == kPosition_8200)
+	return (getData(kEntityNone)->entityPosition == kPosition_7500 || getData(kEntityNone)->entityPosition == kPosition_8200)
 		 && getData(kEntityNone)->field_493 == kField493_2
 		 && getData(kEntityNone)->car == kCarGreenSleeping;
 }
 
 bool Entities::checkFields16() const {
-	return (getData(kEntityNone)->position == kPosition_4070 || getData(kEntityNone)->position == kPosition_4840)
+	return (getData(kEntityNone)->entityPosition == kPosition_4070 || getData(kEntityNone)->entityPosition == kPosition_4840)
 		 && getData(kEntityNone)->field_493 == kField493_2
 		 && getData(kEntityNone)->car == kCarRedSleeping;
 }
 
 bool Entities::checkFields17(EntityIndex entity) const {
-	return checkFields5(entity, kCarRestaurant) && getData(entity)->position > kPosition_5800;
+	return checkFields5(entity, kCarRestaurant) && getData(entity)->entityPosition > kPosition_5800;
 }
 
 bool Entities::checkFields18(CarIndex car, EntityPosition position) const {
@@ -2139,7 +2237,7 @@ bool Entities::checkFields19(EntityIndex entity, CarIndex car, EntityPosition po
 	if (getData(entity)->car != car ||  getData(entity)->field_493 != kField493_1)
 		return false;
 
-	EntityPosition entityPosition = getData(entity)->position;
+	EntityPosition entityPosition = getData(entity)->entityPosition;
 
 	// Test values
 	if (position == kPosition_4455) {
@@ -2165,26 +2263,26 @@ bool Entities::checkFields19(EntityIndex entity, CarIndex car, EntityPosition po
 
 bool Entities::checkFields20(EntityIndex entity) const {
 	return checkFields5(entity, kCarBaggage)
-		&& getData(entity)->position >= kPosition_4500
-		&& getData(entity)->position <= kPosition_5500;
+		&& getData(entity)->entityPosition >= kPosition_4500
+		&& getData(entity)->entityPosition <= kPosition_5500;
 }
 
 bool Entities::checkFields21(EntityIndex entity) const {
-	return checkFields5(entity, kCarBaggage) && getData(entity)->position < kPosition_4500;
+	return checkFields5(entity, kCarBaggage) && getData(entity)->entityPosition < kPosition_4500;
 }
 
 bool Entities::checkFields22(EntityIndex entity) const {
 	return checkFields5(entity, kCarKronos)
-		&& getData(entity)->position >= kPosition_3500
-		&& getData(entity)->position <= kPosition_5500;
+		&& getData(entity)->entityPosition >= kPosition_3500
+		&& getData(entity)->entityPosition <= kPosition_5500;
 }
 
 bool Entities::checkFields23(EntityIndex entity) const {
-	return checkFields5(entity, kCarKronos) && getData(entity)->position > kPosition_7900;
+	return checkFields5(entity, kCarKronos) && getData(entity)->entityPosition > kPosition_7900;
 }
 
 bool Entities::checkDistanceFromPosition(EntityIndex entity, EntityPosition position, int distance) const {
-	return distance >= abs(getData(entity)->position - position);
+	return distance >= abs(getData(entity)->entityPosition - position);
 }
 
 bool Entities::checkFields25(EntityIndex entity) const {
@@ -2248,10 +2346,10 @@ bool Entities::checkPosition(EntityPosition position) const {
 		break;
 	}
 
-	if (getScenes()->checkPosition(kSceneNone, SceneManager::kCheckPositionType0) && entityPositions[position1] >= getEntityData(kEntityNone)->position)
+	if (getScenes()->checkPosition(kSceneNone, SceneManager::kCheckPositionType0) && entityPositions[position1] >= getEntityData(kEntityNone)->entityPosition)
 		return true;
 	else
-		return (getScenes()->checkPosition(kSceneNone, SceneManager::kCheckPositionType1) && entityPositions[position2] <= getEntityData(kEntityNone)->position);
+		return (getScenes()->checkPosition(kSceneNone, SceneManager::kCheckPositionType1) && entityPositions[position2] <= getEntityData(kEntityNone)->entityPosition);
 }
 
 bool Entities::checkSequenceFromPosition(EntityIndex entity) const {
@@ -2259,11 +2357,11 @@ bool Entities::checkSequenceFromPosition(EntityIndex entity) const {
 
 	if (getEntityData(entity)->direction == kDirectionUp)
 		return (getScenes()->checkPosition(kSceneNone, SceneManager::kCheckPositionType0)
-			 && info->position + getEntityPositionFromCurrentPosition() > kPosition_8513);
+			 && info->entityPosition + getEntityPositionFromCurrentPosition() > kPosition_8513);
 
 	if (getEntityData(entity)->direction == kDirectionDown)
 		return (getScenes()->checkPosition(kSceneNone, SceneManager::kCheckPositionType1)
-			 && info->position + getEntityPositionFromCurrentPosition() < kPosition_2087);
+			 && info->entityPosition + getEntityPositionFromCurrentPosition() < kPosition_2087);
 
 	return false;
 }

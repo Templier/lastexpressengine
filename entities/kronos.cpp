@@ -105,7 +105,7 @@ IMPLEMENT_FUNCTION(Kronos, chapter1, 7)
 		break;
 
 	case kActionDefault:
-		getData()->position = kPosition_6000;
+		getData()->entityPosition = kPosition_6000;
 		getData()->field_493 = kField493_1;
 		getData()->car = kCarKronos;
 
@@ -170,7 +170,7 @@ IMPLEMENT_FUNCTION(Kronos, function10, 10)
 	break;
 
 	case kActionDefault:
-		getData()->position = kPosition_6000;
+		getData()->entityPosition = kPosition_6000;
 		getData()->field_493 = kField493_0;
 		getData()->car = kCarKronos;
 
@@ -190,7 +190,7 @@ IMPLEMENT_FUNCTION(Kronos, function11, 11)
 		break;
 
 	case kActionDefault:
-		getData()->position = kPosition_7000;
+		getData()->entityPosition = kPosition_7000;
 
 		if (!getSound()->isBuffered(kEntityKronos))
 			getSound()->playSound(kEntityKronos, "KRO1001");
@@ -215,7 +215,7 @@ IMPLEMENT_FUNCTION(Kronos, chapter3, 13)
 	case kActionDefault:
 		getEntities()->prepareSequences(kEntityKronos);
 
-		getData()->position = kPosition_6000;
+		getData()->entityPosition = kPosition_6000;
 		getData()->field_493 = kField493_0;
 		getData()->car = kCarKronos;
 		getData()->clothes = kClothesDefault;
@@ -292,7 +292,7 @@ IMPLEMENT_FUNCTION(Kronos, function17, 17)
 		break;
 
 	case kActionDefault:
-		getData()->position = kPosition_7500;
+		getData()->entityPosition = kPosition_7500;
 		getData()->field_493 = kField493_0;
 		getData()->car = kCarRedSleeping;
 

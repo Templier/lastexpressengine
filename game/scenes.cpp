@@ -290,8 +290,8 @@ void SceneManager::drawScene(SceneIndex index) {
 	// Update entities
 	Scene *scene = (getState()->sceneUseBackup ? get(getState()->sceneBackup) : _currentScene);
 
-	getEntityData(kEntityNone)->position = (EntityPosition)scene->getHeader()->count;
-	getEntityData(kEntityNone)->car = (CarIndex)scene->getHeader()->car;
+	getEntityData(kEntityNone)->entityPosition = (EntityPosition)scene->getHeader()->count;
+	getEntityData(kEntityNone)->car = scene->getHeader()->car;
 
 	getFlags()->flag_3 = true;
 
@@ -861,7 +861,7 @@ void SceneManager::postProcessScene() {
 		}
 
 		// If several entities are there, choose one to sound "Excuse me"
-		EntityPosition entityPosition = getEntityData(kEntityNone)->position;
+		EntityPosition entityPosition = getEntityData(kEntityNone)->entityPosition;
 		if (getEntityData(kEntityNone)->car == kCar9 && (entityPosition == kPosition_4 || entityPosition == kPosition_3)) {
 			EntityIndex entities[39];
 
@@ -872,7 +872,7 @@ void SceneManager::postProcessScene() {
 
 			for (uint i = 1; i < (unsigned)getEntities()->count(); i++) {
 				CarIndex car = getEntityData((EntityIndex)i)->car;
-				EntityPosition position = getEntityData((EntityIndex)i)->position;
+				EntityPosition position = getEntityData((EntityIndex)i)->entityPosition;
 
 				if (entityPosition == kPosition_4) {
 					if ((car == kCarRedSleeping && position > kPosition_9270) || (car == kCarRestaurant && position < kPosition_1540))

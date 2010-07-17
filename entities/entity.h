@@ -229,7 +229,7 @@ public:
 		uint16 field_48D;
 		byte field_48F;
 		byte current_call;
-		EntityPosition position;
+		EntityPosition entityPosition;
 		EntityField493 field_493;
 		CarIndex car;					// word
 		byte field_497;
@@ -242,7 +242,7 @@ public:
 		int16 field_4A1;
 		int16 field_4A3;
 		ClothesIndex clothes;			// byte
-		byte positionId;
+		Position position;
 		CarIndex car2;                  // byte
 		bool doProcessEntity;			// byte
 		byte field_4A9;
@@ -268,7 +268,7 @@ public:
 			field_48D = 0;
 			field_48F = 0;
 			current_call = 0;
-			position = kPositionNone;
+			entityPosition = kPositionNone;
 			field_493 = kField493_0;
 			car = kCarNone;
 			field_497 = 0;
@@ -281,7 +281,7 @@ public:
 			field_4A1 = 0;
 			field_4A3 = 30;
 			clothes = kClothesDefault;
-			positionId = 0;
+			position = 0;
 			car2 = kCarNone;
 			doProcessEntity = false;
 			field_4A9 = 0;

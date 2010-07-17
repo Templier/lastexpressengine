@@ -103,7 +103,7 @@ IMPLEMENT_FUNCTION(Cooks, function3, 3)
 
 			if (!getSound()->isBuffered(kEntityCooks)) {
 				if (params->param1) {
-					if (!getEntities()->checkSequence0(kEntityCooks)) {
+					if (!getEntities()->hasValidFrame(kEntityCooks)) {
 						getSound()->playSound(kEntityCooks, "LIB015");
 						getEntities()->prepareSequences(kEntityCooks);
 						CALLBACK_ACTION()
@@ -117,7 +117,7 @@ IMPLEMENT_FUNCTION(Cooks, function3, 3)
 			}
 		}
 
-		if (params->param1 && !getEntities()->checkSequence0(kEntityCooks)) {
+		if (params->param1 && !getEntities()->hasValidFrame(kEntityCooks)) {
 			getSound()->playSound(kEntityCooks, "LIB015");
 			getEntities()->prepareSequences(kEntityCooks);
 			CALLBACK_ACTION()
@@ -188,7 +188,7 @@ IMPLEMENT_FUNCTION(Cooks, function4, 4)
 
 			if (!getSound()->isBuffered(kEntityCooks)) {
 				if (params->param1) {
-					if (!getEntities()->checkSequence0(kEntityCooks)) {
+					if (!getEntities()->hasValidFrame(kEntityCooks)) {
 						getSound()->playSound(kEntityCooks, "LIB015");
 						getEntities()->prepareSequences(kEntityCooks);
 						CALLBACK_ACTION()
@@ -202,7 +202,7 @@ IMPLEMENT_FUNCTION(Cooks, function4, 4)
 			}
 		}
 
-		if (params->param1 && !getEntities()->checkSequence0(kEntityCooks)) {
+		if (params->param1 && !getEntities()->hasValidFrame(kEntityCooks)) {
 			getSound()->playSound(kEntityCooks, "LIB015");
 			getEntities()->prepareSequences(kEntityCooks);
 			CALLBACK_ACTION()
@@ -241,7 +241,7 @@ IMPLEMENT_FUNCTION(Cooks, chapter1, 5)
 		break;
 
 	case kActionDefault:
-		getData()->position = kPosition_5900;
+		getData()->entityPosition = kPosition_5900;
 		getData()->field_493 = kField493_0;
 		getData()->car = kCarRestaurant;
 
@@ -329,7 +329,7 @@ IMPLEMENT_FUNCTION(Cooks, function7, 7)
 		break;
 
 	case kActionDefault:
-		getData()->position = kPosition_3650;
+		getData()->entityPosition = kPosition_3650;
 		getData()->field_493 = kField493_0;
 		getData()->car = kCarRestaurant;
 
@@ -350,7 +350,7 @@ IMPLEMENT_FUNCTION(Cooks, chapter2, 8)
 	case kActionDefault:
 		getEntities()->prepareSequences(kEntityCooks);
 
-		getData()->position = kPosition_5900;
+		getData()->entityPosition = kPosition_5900;
 		getData()->field_493 = kField493_0;
 		getData()->car = kCarRestaurant;
 		getData()->inventoryItem = kItemNone;
@@ -408,7 +408,7 @@ IMPLEMENT_FUNCTION(Cooks, chapter3, 10)
 	case kActionDefault:
 		getEntities()->prepareSequences(kEntityCooks);
 
-		getData()->position = kPosition_5900;
+		getData()->entityPosition = kPosition_5900;
 		getData()->car = kCarRestaurant;
 		getData()->inventoryItem = kItemNone;
 
@@ -506,7 +506,7 @@ IMPLEMENT_FUNCTION(Cooks, chapter4, 12)
 	case kActionDefault:
 		getEntities()->prepareSequences(kEntityCooks);
 
-		getData()->position = kPosition_5900;
+		getData()->entityPosition = kPosition_5900;
 		getData()->field_493 = kField493_0;
 		getData()->car = kCarRestaurant;
 		getData()->inventoryItem = kItemNone;

@@ -192,7 +192,7 @@ void Logic::eventMouse(const Common::Event &ev) {
 	 && !getInventory()->isFlag2()
 	 && !getInventory()->isEggHighlighted()
 	 && !getInventory()->isMagnifierInUse()
-	 && (getInventory()->getEntry(kItem2)->location == kLocationNone || getEntityData(kEntityNone)->car != kCarRedSleeping || getEntityData(kEntityNone)->position != kPosition_2300)) {
+	 && (getInventory()->getEntry(kItem2)->location == kLocationNone || getEntityData(kEntityNone)->car != kCarRedSleeping || getEntityData(kEntityNone)->entityPosition != kPosition_2300)) {
 
 		// Update cursor
 		_engine->getCursor()->setStyle(getInventory()->getEntry(kItemMatch)->cursor);
@@ -521,7 +521,7 @@ void Logic::updateCursor(bool redraw) {
 		 || getInventory()->isMagnifierInUse()
 		 || (getInventory()->getEntry(kItem2)->location
 		  && getEntityData(kEntityNone)->car == kCarRedSleeping
-		  && getEntityData(kEntityNone)->position == kPosition_2300)) {
+		  && getEntityData(kEntityNone)->entityPosition == kPosition_2300)) {
 
 			EntityIndex entity = getEntities()->canInteractWith(getCoords());
 			if (entity

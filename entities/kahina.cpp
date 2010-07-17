@@ -122,7 +122,7 @@ IMPLEMENT_FUNCTION(Kahina, chapter1, 10)
 	case kActionDefault:
 		getObjects()->update(kObjectCompartmentKronos, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
 
-		getData()->position = kPosition_5000;
+		getData()->entityPosition = kPosition_5000;
 		getData()->field_493 = kField493_0;
 		getData()->car = kCarKronos;
 
@@ -190,7 +190,7 @@ IMPLEMENT_FUNCTION(Kahina, chapter2, 16)
 	case kActionDefault:
 		getEntities()->prepareSequences(kEntityKahina);
 
-		getData()->position = kPosition_6000;
+		getData()->entityPosition = kPosition_6000;
 		getData()->field_493 = kField493_0;
 		getData()->car = kCarKronos;
 		getData()->clothes = kClothesDefault;
@@ -218,7 +218,7 @@ IMPLEMENT_FUNCTION(Kahina, chapter3, 18)
 	case kActionDefault:
 		getEntities()->prepareSequences(kEntityKahina);
 
-		getData()->position = kPosition_5000;
+		getData()->entityPosition = kPosition_5000;
 		getData()->field_493 = kField493_0;
 		getData()->car = kCarKronos;
 		getData()->clothes = kClothesDefault;

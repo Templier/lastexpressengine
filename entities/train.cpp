@@ -349,7 +349,7 @@ label_process:
 			getObjects()->update(kObjectCompartment7, kEntityTrain, kLocation3, kCursorHandKnock, kCursorHand);
 			getObjects()->update(kObjectCompartment8, kEntityTrain, kLocation3, kCursorHandKnock, kCursorHand);
 		}
-		getData()->position = kPosition_30000;
+		getData()->entityPosition = kPosition_30000;
 		break;
 
 	case kAction17:

@@ -143,7 +143,7 @@ IMPLEMENT_FUNCTION(Max, function7, 7)
 	case kActionDefault:
 		params->param1 = 255 * (4 * random(20) + 40);
 
-		getData()->position = kPosition_4070;
+		getData()->entityPosition = kPosition_4070;
 		getData()->field_493 = kField493_1;
 		getData()->car = kCarRedSleeping;
 
@@ -238,7 +238,7 @@ IMPLEMENT_FUNCTION(Max, chapter4_handler, 8)
 		getObjects()->update(kObjectCageMax, kEntityMax, kLocationNone, kCursorNormal, kCursorHand);
 		getEntities()->prepareSequences(kEntityMax);
 
-		getData()->position = kPosition_8000;
+		getData()->entityPosition = kPosition_8000;
 		getData()->field_493 = kField493_1;
 		getData()->car = kCarBaggage;
 
@@ -275,7 +275,7 @@ IMPLEMENT_FUNCTION(Max, function9, 9)
 			break;
 
 		if (params->param1 >= (int)getState()->time) {
-			if (!getEntities()->checkSequence0(kEntityMax) || !params->param2) {
+			if (!getEntities()->hasValidFrame(kEntityMax) || !params->param2) {
 
 				params->param2 = getState()->time;
 				if (!params->param2)
@@ -299,7 +299,7 @@ setup_functions:
 	//////////////////////////////////////////////////////////////////////////
 	// Draw Max outside of cage
 	case kActionDefault:
-		getData()->position = kPosition_4070;
+		getData()->entityPosition = kPosition_4070;
 		getData()->field_493 = kField493_0;
 		getData()->car = kCarRedSleeping;
 
@@ -321,7 +321,7 @@ IMPLEMENT_FUNCTION(Max, chapter1, 10)
 		break;
 
 	case kActionDefault:
-		getData()->position = kPosition_4070;
+		getData()->entityPosition = kPosition_4070;
 		getData()->field_493 = kField493_1;
 		getData()->car = kCarRedSleeping;
 		getData()->clothes = kClothesDefault;
@@ -341,7 +341,7 @@ IMPLEMENT_FUNCTION(Max, chapter2, 11)
 	case kActionDefault:
 		getEntities()->prepareSequences(kEntityMax);
 
-		getData()->position = kPosition_4070;
+		getData()->entityPosition = kPosition_4070;
 		getData()->field_493 = kField493_1;
 		getData()->car = kCarRedSleeping;
 		getData()->clothes = kClothesDefault;
@@ -363,7 +363,7 @@ IMPLEMENT_FUNCTION(Max, chapter3, 12)
 	case kActionDefault:
 		getEntities()->prepareSequences(kEntityMax);
 
-		getData()->position = kPosition_4070;
+		getData()->entityPosition = kPosition_4070;
 		getData()->field_493 = kField493_1;
 		getData()->car = kCarRedSleeping;
 		getData()->clothes = kClothesDefault;
@@ -379,7 +379,7 @@ IMPLEMENT_FUNCTION(Max, chapter3_handler, 13)
 
 	case kActionNone:
 		if (params->param2) {
-			getData()->position = getEntityData(kEntityCoudert)->position;
+			getData()->entityPosition = getEntityData(kEntityCoudert)->entityPosition;
 			break;
 		}
 
@@ -395,7 +395,7 @@ IMPLEMENT_FUNCTION(Max, chapter3_handler, 13)
 	case kActionDefault:
 		params->param1 = 255 * (4 * random(20) + 40);
 
-		getData()->position = kPosition_4070;
+		getData()->entityPosition = kPosition_4070;
 		getData()->field_493 = kField493_1;
 		getData()->car = kCarRedSleeping;
 		break;
@@ -455,7 +455,7 @@ IMPLEMENT_FUNCTION(Max, freeFromCage, 14)
 	case kActionDefault:
 		getObjects()->update(kObjectCageMax, kEntityMax, kLocationNone, kCursorNormal, kCursorHand);
 
-		getData()->position = kPosition_8000;
+		getData()->entityPosition = kPosition_8000;
 		getData()->field_493 = kField493_1;
 		getData()->car = kCarBaggage;
 
@@ -500,7 +500,7 @@ IMPLEMENT_FUNCTION(Max, function15, 15)
 
 	case kActionNone:
 		if (params->param2) {
-			getData()->position = getEntityData(kEntityCoudert)->position;
+			getData()->entityPosition = getEntityData(kEntityCoudert)->entityPosition;
 			getData()->car = getEntityData(kEntityCoudert)->car;
 		}
 
@@ -512,7 +512,7 @@ IMPLEMENT_FUNCTION(Max, function15, 15)
 		break;
 
 	case kActionDefault:
-		getData()->position = kPosition_4070;
+		getData()->entityPosition = kPosition_4070;
 		getData()->field_493 = kField493_0;
 		getData()->car = kCarRedSleeping;
 
@@ -556,7 +556,7 @@ IMPLEMENT_FUNCTION(Max, chapter4, 16)
 	case kActionDefault:
 		getEntities()->prepareSequences(kEntityMax);
 
-		getData()->position = kPosition_8000;
+		getData()->entityPosition = kPosition_8000;
 		getData()->field_493 = kField493_1;
 		getData()->car = kCarBaggage;
 		break;
@@ -570,13 +570,13 @@ IMPLEMENT_FUNCTION(Max, function17, 17)
 
 	case kActionNone:
 		if (params->param1) {
-			getData()->position = getEntityData(kEntityCoudert)->position;
+			getData()->entityPosition = getEntityData(kEntityCoudert)->entityPosition;
 			getData()->car = getEntityData(kEntityCoudert)->car;
 		}
 		break;
 
 	case kActionDefault:
-		getData()->position = kPosition_4070;
+		getData()->entityPosition = kPosition_4070;
 		getData()->field_493 = kField493_0;
 		getData()->car = kCarRedSleeping;
 
@@ -601,7 +601,7 @@ IMPLEMENT_FUNCTION(Max, chapter5, 18)
 	if (savepoint.action == kActionDefault) {
 		getEntities()->prepareSequences(kEntityMax);
 
-		getData()->position = kPositionNone;
+		getData()->entityPosition = kPositionNone;
 		getData()->field_493 = kField493_0;
 		getData()->car = kCarNone;
 

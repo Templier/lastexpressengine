@@ -301,7 +301,7 @@ IMPLEMENT_FUNCTION(Milos, chapter1, 12)
 		getObjects()->update(kObjectCompartmentG, kEntityNone, kLocation3, kCursorHandKnock, kCursorHand);
 		getObjects()->update(kObject46, kEntityNone, kLocationNone, kCursorKeepValue, kCursorKeepValue);
 
-		getData()->position = kPosition_4689;
+		getData()->entityPosition = kPosition_4689;
 		getData()->field_493 = kField493_1;
 		getData()->car = kCarRestaurant;
 
@@ -411,7 +411,7 @@ IMPLEMENT_FUNCTION(Milos, function17, 17)
 
 IMPLEMENT_FUNCTION(Milos, function18, 18)
 	if (savepoint.action == kActionDefault) {
-		getData()->position = kPosition_3050;
+		getData()->entityPosition = kPosition_3050;
 		getData()->field_493 = kField493_1;
 		getData()->car = kCarRedSleeping;
 
@@ -432,7 +432,7 @@ IMPLEMENT_FUNCTION(Milos, chapter2, 19)
 	case kActionDefault:
 		getEntities()->prepareSequences(kEntityMilos);
 
-		getData()->position = kPosition_4689;
+		getData()->entityPosition = kPosition_4689;
 		getData()->field_493 = kField493_1;
 		getData()->car = kCarRestaurant;
 
@@ -508,7 +508,7 @@ IMPLEMENT_FUNCTION(Milos, chapter4, 28)
 	case kActionDefault:
 		getEntities()->prepareSequences(kEntityMilos);
 
-		getData()->position = kPosition_3050;
+		getData()->entityPosition = kPosition_3050;
 		getData()->field_493 = kField493_1;
 		getData()->car = kCarRedSleeping;
 		getData()->inventoryItem = kItemNone;
@@ -588,7 +588,7 @@ IMPLEMENT_FUNCTION(Milos, function32, 32)
 		getEntities()->prepareSequences(kEntityMilos);
 		getObjects()->update(kObjectCompartmentG, kEntityNone, kLocation3, kCursorHandKnock, kCursorHand);
 
-		getData()->position = kPosition_540;
+		getData()->entityPosition = kPosition_540;
 		getData()->field_493 = kField493_1;
 		getData()->car = kCarCoalTender;
 		getData()->inventoryItem = kItemNone;
@@ -607,7 +607,7 @@ IMPLEMENT_FUNCTION(Milos, chapter5, 33)
 	case kActionDefault:
 		getEntities()->prepareSequences(kEntityMilos);
 
-		getData()->position = kPosition_540;
+		getData()->entityPosition = kPosition_540;
 		getData()->field_493 = kField493_1;
 		getData()->car = kCarCoalTender;
 		getData()->inventoryItem = kItemNone;

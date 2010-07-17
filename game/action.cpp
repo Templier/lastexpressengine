@@ -1649,7 +1649,7 @@ bool Action::handleOtherCompartment(ObjectIndex object, byte param2, byte param3
 	// Direction = Up
 	if (!getEntities()->compare(kEntityNone, kEntityCoudert)
 	&& getEntityData(kEntityCoudert)->direction == kDirectionUp
-	&& getEntityData(kEntityCoudert)->position < getEntityData(kEntityNone)->position) {
+	&& getEntityData(kEntityCoudert)->entityPosition < getEntityData(kEntityNone)->entityPosition) {
 		playCompartmentSoundEvents(kEntityCoudert, object, param2, param3, true);
 
 		return true;
@@ -1658,7 +1658,7 @@ bool Action::handleOtherCompartment(ObjectIndex object, byte param2, byte param3
 	// Direction = down
 	if (!getEntities()->compare(kEntityNone, kEntityCoudert)
 	&& getEntityData(kEntityCoudert)->direction == kDirectionDown
-	&& getEntityData(kEntityCoudert)->position > getEntityData(kEntityNone)->position) {
+	&& getEntityData(kEntityCoudert)->entityPosition > getEntityData(kEntityNone)->entityPosition) {
 		playCompartmentSoundEvents(kEntityCoudert, object, param2, param3, false);
 
 		return true;

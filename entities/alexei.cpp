@@ -195,7 +195,7 @@ IMPLEMENT_FUNCTION(Alexei, chapter1, 17)
 		getObjects()->update(kObject10, kEntityNone, kLocationNone, kCursorKeepValue, kCursorKeepValue);
 		getObjects()->update(kObjectHandleInsideBathroom, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
 
-		getData()->position = kPosition_3969;
+		getData()->entityPosition = kPosition_3969;
 		getData()->field_493 = kField493_1;
 		getData()->car = kCarRestaurant;
 		break;
@@ -236,7 +236,7 @@ IMPLEMENT_FUNCTION(Alexei, function20, 20)
 			break;
 
 		case 3:
-			getData()->position = kPosition_1540;
+			getData()->entityPosition = kPosition_1540;
 			getData()->field_493 = kField493_0;
 
 			setCallback(4);
@@ -314,7 +314,7 @@ IMPLEMENT_FUNCTION(Alexei, function26, 26)
 		break;
 
 	case kActionDefault:
-		getData()->position = kPosition_7500;
+		getData()->entityPosition = kPosition_7500;
 		getData()->car = kCarGreenSleeping;
 		getData()->field_493 = kField493_1;
 
@@ -357,7 +357,7 @@ IMPLEMENT_FUNCTION(Alexei, chapter2, 28)
 		getObjects()->update(kObject10, kEntityNone, kLocationNone, kCursorKeepValue, kCursorKeepValue);
 		getObjects()->update(kObjectHandleInsideBathroom, kEntityAlexei, kLocation1, kCursorHandKnock, kCursorHand);
 
-		getData()->position = kPosition_7500;
+		getData()->entityPosition = kPosition_7500;
 		getData()->field_493 = kField493_1;
 		getData()->car = kCarGreenSleeping;
 		getData()->clothes = kClothesDefault;
@@ -413,7 +413,7 @@ IMPLEMENT_FUNCTION(Alexei, chapter3_handler, 33)
 		break;
 
 	case kAction122288808:
-		getData()->position = kPosition_9270;
+		getData()->entityPosition = kPosition_9270;
 		getData()->field_493 = kField493_0;
 		getData()->car = kCarRedSleeping;
 
@@ -455,7 +455,7 @@ IMPLEMENT_FUNCTION(Alexei, chapter4, 37)
 		getObjects()->update(kObject10, kEntityNone, kLocationNone, kCursorKeepValue, kCursorKeepValue);
 		getObjects()->update(kObjectHandleInsideBathroom, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
 
-		getData()->position = kPosition_7500;
+		getData()->entityPosition = kPosition_7500;
 		getData()->field_493 = kField493_1;
 		getData()->car = kCarGreenSleeping;
 		getData()->inventoryItem = kItemNone;
@@ -586,7 +586,7 @@ IMPLEMENT_FUNCTION(Alexei, function47, 47)
 	if (savepoint.action == kActionDefault) {
 		getEntities()->prepareSequences(kEntityAlexei);
 
-		getData()->position = kPositionNone;
+		getData()->entityPosition = kPositionNone;
 		getData()->field_493 = kField493_0;
 		getData()->car = kCarNone;
 

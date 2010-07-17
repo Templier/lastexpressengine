@@ -220,7 +220,7 @@ IMPLEMENT_FUNCTION(Anna, chapter1, 16)
 		getObjects()->update(kObject53, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
 		getObjects()->update(kObjectOutsideAnnaCompartment, kEntityNone, kLocation1, kCursorKeepValue, kCursorKeepValue);
 
-		getData()->position = kPosition_8200;
+		getData()->entityPosition = kPosition_8200;
 		getData()->field_493 = kField493_1;
 		getData()->car = kCarGreenSleeping;
 		getData()->clothes = kClothesDefault;
@@ -253,7 +253,7 @@ IMPLEMENT_FUNCTION(Anna, chapter1_handler, 19)
 			break;
 
 		case 1:
-			getData()->position = kPosition_8514;
+			getData()->entityPosition = kPosition_8514;
 			getData()->field_493 = kField493_0;
 
 			setCallback(2);
@@ -267,7 +267,7 @@ IMPLEMENT_FUNCTION(Anna, chapter1_handler, 19)
 
 		case 3:
 			getEntities()->prepareSequences(kEntityAnna);
-			getData()->position = kPosition_4070;
+			getData()->entityPosition = kPosition_4070;
 			getData()->field_493 = kField493_1;
 
 			setup_function20();
@@ -398,7 +398,7 @@ IMPLEMENT_FUNCTION(Anna, function28, 28)
 
 		case 2:
 			getData()->field_493 = kField493_0;
-			getData()->position = kPosition_1540;
+			getData()->entityPosition = kPosition_1540;
 			getScenes()->loadSceneFromItemPosition(kItem3);
 
 			setCallback(3);
@@ -446,7 +446,7 @@ IMPLEMENT_FUNCTION(Anna, function32, 32)
 		case 2:
 			getEntities()->prepareSequences(kEntityAnna);
 
-			getData()->position = kPosition_4070;
+			getData()->entityPosition = kPosition_4070;
 			getData()->field_493 = kField493_1;
 
 			setup_function33();
@@ -496,7 +496,7 @@ IMPLEMENT_FUNCTION(Anna, function37, 37)
 	break;
 
   case kActionDefault:
-	getData()->position = kPosition_8200;
+	getData()->entityPosition = kPosition_8200;
 	getData()->field_493 = kField493_0;
 	getData()->car = kCarRedSleeping;
 	break;
@@ -513,7 +513,7 @@ IMPLEMENT_FUNCTION(Anna, function38, 38)
 		break;
 
 	case kActionDefault:
-		getData()->position = kPosition_7500;
+		getData()->entityPosition = kPosition_7500;
 
 		setCallback(1);
 		call(new ENTITY_SETUP_SIIS(Anna, setup_playSound), "ANN1010");
@@ -552,7 +552,7 @@ IMPLEMENT_FUNCTION(Anna, chapter2, 42)
 	case kActionDefault:
 		getEntities()->prepareSequences(kEntityAnna);
 
-		getData()->position = kPosition_4070;
+		getData()->entityPosition = kPosition_4070;
 		getData()->field_493 = kField493_1;
 		getData()->car = kCarRedSleeping;
 		getData()->clothes = kClothes1;
@@ -578,7 +578,7 @@ IMPLEMENT_FUNCTION(Anna, chapter3, 44)
 	case kActionDefault:
 		getEntities()->prepareSequences(kEntityAnna);
 
-		getData()->position = kPosition_4070;
+		getData()->entityPosition = kPosition_4070;
 		getData()->field_493 = kField493_1;
 		getData()->car = kCarRedSleeping;
 		getData()->clothes = kClothes3;
@@ -708,7 +708,7 @@ IMPLEMENT_FUNCTION(Anna, function56, 56)
 
 	case kActionDefault:
 		getEntities()->prepareSequences(kEntityAnna);
-		getData()->position = kPosition_6000;
+		getData()->entityPosition = kPosition_6000;
 		getData()->field_493 = kField493_1;
 		getData()->car = kCarKronos;
 		break;
@@ -816,7 +816,7 @@ IMPLEMENT_FUNCTION(Anna, bagage, 64)
 
 IMPLEMENT_FUNCTION(Anna, function65, 65)
 	if (savepoint.action == kActionDefault) {
-		getData()->position = kPosition_4070;
+		getData()->entityPosition = kPosition_4070;
 		getData()->field_493 = kField493_1;
 		getData()->car = kCarRedSleeping;
 		getData()->clothes = kClothes3;
@@ -841,7 +841,7 @@ IMPLEMENT_FUNCTION(Anna, chapter4, 66)
 	case kActionDefault:
 		getEntities()->prepareSequences(kEntityAnna);
 
-		getData()->position = kPosition_4070;
+		getData()->entityPosition = kPosition_4070;
 		getData()->field_493 = kField493_1;
 		getData()->car = kCarRedSleeping;
 		getData()->clothes = kClothes2;
@@ -872,7 +872,7 @@ IMPLEMENT_FUNCTION(Anna, function68, 68)
 		getObjects()->update(kObject53, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
 
 		getData()->car = kCarRedSleeping;
-		getData()->position = kPosition_4070;
+		getData()->entityPosition = kPosition_4070;
 		getData()->field_493 = kField493_1;
 		break;
 
@@ -945,7 +945,7 @@ IMPLEMENT_FUNCTION(Anna, chapter5, 74)
 	case kActionDefault:
 		getEntities()->prepareSequences(kEntityAnna);
 
-		getData()->position = kPosition_3969;
+		getData()->entityPosition = kPosition_3969;
 		getData()->field_493 = kField493_1;
 		getData()->car = kCarBaggageRear;
 		getData()->clothes = kClothes3;
