@@ -91,22 +91,22 @@ IMPLEMENT_FUNCTION_SIII(Mahmud, function4, 4)
 		break;
 
 	case kActionNone:
-		UPDATE_PARAM(params->param5, getState()->timeTicks, params->param3);
+		UPDATE_PARAM(params->param7, getState()->timeTicks, params->param5);
 
 		if (!getScenes()->checkPosition(kSceneNone, SceneManager::kCheckPositionType0))
-			getScenes()->loadSceneFromObject((ObjectIndex)params->param4, true);
+			getScenes()->loadSceneFromObject((ObjectIndex)params->param6, true);
 
 		break;
 
 	case kActionExitCompartment:
-		getEntities()->exitCompartment(kEntityMahmud, (ObjectIndex)params->param2, true);
+		getEntities()->exitCompartment(kEntityMahmud, (ObjectIndex)params->param4, true);
 
 		CALLBACK_ACTION();
 		break;
 
 	case kActionDefault:
 		getEntities()->drawSequenceRight(kEntityMahmud, params->seq);
-		getEntities()->enterCompartment(kEntityMahmud, (ObjectIndex)params->param2, true);
+		getEntities()->enterCompartment(kEntityMahmud, (ObjectIndex)params->param4, true);
 		break;
 	}
 }

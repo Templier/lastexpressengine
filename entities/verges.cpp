@@ -40,7 +40,7 @@ namespace LastExpress {
 
 Verges::Verges(LastExpressEngine *engine) : Entity(engine, kEntityVerges) {
 	ADD_CALLBACK_FUNCTION(Verges, function1);
-	ADD_CALLBACK_FUNCTION(Verges, function2);
+	ADD_CALLBACK_FUNCTION(Verges, draw);
 	ADD_CALLBACK_FUNCTION(Verges, function3);
 	ADD_CALLBACK_FUNCTION(Verges, playSound);
 	ADD_CALLBACK_FUNCTION(Verges, playSound16);
@@ -87,26 +87,8 @@ IMPLEMENT_FUNCTION(Verges, function1, 1)
 	Entity::function1(savepoint);
 }
 
-IMPLEMENT_FUNCTION_S(Verges, function2, 2)
-	switch (savepoint.action) {
-	default:
-		break;
-
-	case kActionExitCompartment:
-		CALLBACK_ACTION();
- 		break;
-
-	case kActionExcuseMeCath:
-		if (!params->param2) {
-			getSound()->excuseMe(kEntityVerges);
-			params->param2 = 1;
-		}
-		break;
-
-	case kActionDefault:
-		getEntities()->drawSequenceRight(kEntityVerges, params->seq1);
-		break;
-	}
+IMPLEMENT_FUNCTION_S(Verges, draw, 2)
+	Entity::draw(savepoint, true);
 }
 
 IMPLEMENT_FUNCTION(Verges, function3, 3)

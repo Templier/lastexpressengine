@@ -138,7 +138,7 @@ IMPLEMENT_FUNCTION_SI(August, function6, 6)
 
 IMPLEMENT_FUNCTION_SI(August, enterExitCompartment2, 7)
 	if (savepoint.action == kAction4) {
-		getEntities()->exitCompartment(kEntityAugust, (ObjectIndex)params->param2, true);
+		getEntities()->exitCompartment(kEntityAugust, (ObjectIndex)params->param4, true);
 		CALLBACK_ACTION();
 		return;
 	}
@@ -160,16 +160,16 @@ IMPLEMENT_FUNCTION_IIS(August, function10, 10)
 		break;
 
 	case kActionExitCompartment:
-		if (!params->param3)
+		if (!params->param6)
 			getSavePoints()->call(kEntityAugust, (EntityIndex)params->param1, (ActionIndex)params->param2, params->seq1);
 
 		CALLBACK_ACTION();
 		break;
 
 	case kAction10:
-		if (!params->param3) {
+		if (!params->param6) {
 			getSavePoints()->call(kEntityAugust, (EntityIndex)params->param1, (ActionIndex)params->param2, params->seq1);
-			params->param3 = 1;
+			params->param6 = 1;
 		}
 		break;
 	}

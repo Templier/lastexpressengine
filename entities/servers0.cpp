@@ -38,9 +38,9 @@
 namespace LastExpress {
 
 Servers0::Servers0(LastExpressEngine *engine) : Entity(engine, kEntityServers0) {
-	ADD_CALLBACK_FUNCTION(Servers0, function1);
+	ADD_CALLBACK_FUNCTION(Servers0, savepointCall);
 	ADD_CALLBACK_FUNCTION(Servers0, updateFromTime);
-	ADD_CALLBACK_FUNCTION(Servers0, function3);
+	ADD_CALLBACK_FUNCTION(Servers0, draw);
 	ADD_CALLBACK_FUNCTION(Servers0, updatePosition);
 	ADD_CALLBACK_FUNCTION(Servers0, function5);
 	ADD_CALLBACK_FUNCTION(Servers0, playSound);
@@ -84,74 +84,20 @@ Servers0::Servers0(LastExpressEngine *engine) : Entity(engine, kEntityServers0) 
 //  - EntityIndex
 //  - ActionIndex
 //  - sequence name
-IMPLEMENT_FUNCTION_SIIS(Servers0, function1, 1)
-	switch (savepoint.action) {
-	default:
-		break;
-
-	case kActionExitCompartment:
-		if (!CURRENT_PARAMS(1, 1))
-			getSavePoints()->call(kEntityServers0, (EntityIndex)params->param2, (ActionIndex)params->param3, params->seq2);
-
-		CALLBACK_ACTION();
- 		break;
-
-	case kActionExcuseMeCath:
-		if (!CURRENT_PARAMS(1, 2)) {
-			getSound()->excuseMe(kEntityServers0);
-			CURRENT_PARAMS(1, 1) = 1;
-		}
-		break;
-
-	case kAction10:
-		if (!CURRENT_PARAMS(1, 1)) {
-			getSavePoints()->call(kEntityServers0, (EntityIndex)params->param2, (ActionIndex)params->param3, params->seq2);
-			CURRENT_PARAMS(1, 1) = 1;
-		}
-
-	case kActionDefault:
-		getEntities()->drawSequenceRight(kEntityServers0, params->seq1);
-		break;
-	}
+IMPLEMENT_FUNCTION_SIIS(Servers0, savepointCall, 1)
+	Entity::savepointCall(savepoint, true);
 }
 
 IMPLEMENT_FUNCTION_NOSETUP(Servers0, updateFromTime, 2)
 	Entity::updateFromTime(savepoint);
 }
 
-IMPLEMENT_FUNCTION_S(Servers0, function3, 3)
-	switch (savepoint.action) {
-	default:
-		break;
-
-	case kActionExitCompartment:
-		CALLBACK_ACTION();
- 		break;
-
-	case kActionExcuseMeCath:
-		if (!params->param2) {
-			getSound()->excuseMe(kEntityServers0);
-			params->param2 = 1;
-		}
-		break;
-
-	case kActionDefault:
-		getEntities()->drawSequenceRight(kEntityServers0, params->seq1);
-		break;
-	}
+IMPLEMENT_FUNCTION_S(Servers0, draw, 3)
+	Entity::draw(savepoint, true);
 }
 
-IMPLEMENT_FUNCTION_NOSETUP(Servers0, updatePosition, 4)
-	EXPOSE_PARAMS(EntityData::EntityParametersSIII)
-
-	if (savepoint.action == kActionExcuseMeCath) {
-		if (!params->param4) {
-			getSound()->excuseMe(kEntityServers1);
-			params->param4 = 1;
-		}
-	}
-
-	Entity::updatePosition(savepoint);
+IMPLEMENT_FUNCTION_NOSETUP(Servers0, updatePosition, 4)	
+	Entity::updatePosition(savepoint, true);
 }
 
 IMPLEMENT_FUNCTION_NOSETUP(Servers0, function5, 5)
@@ -480,7 +426,7 @@ void Servers0::handleServer(const SavePoint &savepoint, const char* name, Entity
 		getData()->field_493 = kField493_0;
 
 		setCallback(1);
-		call(new ENTITY_SETUP_SIIS(Servers0, setup_function3), name);
+		call(new ENTITY_SETUP_SIIS(Servers0, setup_draw), name);
 		break;
 
 	case kActionCallback:

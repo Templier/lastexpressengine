@@ -142,7 +142,7 @@ IMPLEMENT_FUNCTION(Vassili, function6, 6)
 	case kActionNone:
 		if (getEntities()->checkFields1(kEntityNone, kCarRedSleeping, kPosition_8200)) {
 
-			// FIXME: use UPDATE_PARAM_FUNCTION
+			// FIXME: use UPDATE_paramFUNCTION
 			error("Vassili::function6: not implemented!");
 			if (params->param3) {
 				if (params->param3 >= (int)getState()->timeTicks)
@@ -218,7 +218,7 @@ IMPLEMENT_FUNCTION(Vassili, function7, 7)
 		break;
 
 	case kActionNone:
-		// FIXME: use UPDATE_PARAM_FUNCTION
+		// FIXME: use UPDATE_paramFUNCTION
 		error("Vassili::function7: not implemented!");
 		if (params->param1 != kTimeInvalid && getState()->time > kTimeVassili) {
 			 if (getState()->time <= kTimeVassili_2) {

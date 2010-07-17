@@ -268,7 +268,7 @@ IMPLEMENT_FUNCTION(Max, function9, 9)
 		break;
 
 	case kActionNone:
-		// FIXME: use UPDATE_PARAM_FUNCTION
+		// FIXME: use UPDATE_paramFUNCTION
 		error("Max::function9: not implemented!");
 
 		if (params->param2 == kTimeInvalid || !getState()->time)

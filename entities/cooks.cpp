@@ -424,7 +424,7 @@ IMPLEMENT_FUNCTION(Cooks, function11, 11)
 		break;
 
 	case kActionNone:
-		// FIXME: use UPDATE_PARAM_FUNCTION
+		// FIXME: use UPDATE_paramFUNCTION
 		error("Cooks::function11: not implemented!");
 		if (params->param4) {
 			if (params->param4 > (int)getState()->time)

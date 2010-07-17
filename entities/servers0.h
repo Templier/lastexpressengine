@@ -39,9 +39,9 @@ public:
 	~Servers0() {};
 
 	// Setup
-	DECLARE_FUNCTION_SIIS(function1)
+	DECLARE_FUNCTION_SIIS(savepointCall)
 	DECLARE_FUNCTION_NOSETUP(updateFromTime)
-	DECLARE_FUNCTION_S(function3)
+	DECLARE_FUNCTION_S(draw)
 	DECLARE_FUNCTION_NOSETUP(updatePosition)
 	DECLARE_FUNCTION_NOSETUP(function5)
 	DECLARE_FUNCTION_S(playSound)

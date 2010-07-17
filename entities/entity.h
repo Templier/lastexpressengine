@@ -73,32 +73,32 @@ public:
 
 	struct EntityParametersSIII : EntityParameters {
 		char seq[12];
-		int param2;
-		int param3;
 		int param4;
 		int param5;
 		int param6;
+		int param7;
+		int param8;
 
 		EntityParametersSIII() {
 			memset(&seq, 0, 12);
-			param2 = 0;
-			param3 = 0;
 			param4 = 0;
 			param5 = 0;
 			param6 = 0;
+			param7 = 0;
+			param8 = 0;
 		}
 	};
 
 	struct EntityParametersSIIS : EntityParameters {
 		char seq1[12];
-		int param2;
-		int param3;
+		int param4;
+		int param5;
 		char seq2[12];
 
 		EntityParametersSIIS() {
 			memset(&seq1, 0, 12);
-			param2 = 0;
-			param3 = 0;
+			param4 = 0;
+			param5 = 0;
 			memset(&seq2, 0, 12);
 		}
 	};
@@ -120,30 +120,32 @@ public:
 	struct EntityParametersISII : EntityParameters {
 		int param1;
 		char seq[12];
-		int param2;
-		int param3;
-		int param4;
+		int param5;
+		int param6;
+		int param7;
+		int param8;
 
 		EntityParametersISII() {
 			param1 = 0;
 			memset(&seq, 0, 12);
-			param2 = 0;
-			param3 = 0;
-			param4 = 0;
+			param5 = 0;
+			param6 = 0;
+			param7 = 0;
+			param8 = 0;
 		}
 	};
 
 	struct EntityParametersSSII : EntityParameters {
 		char seq1[12];
 		char seq2[12];
-		int param3;
-		int param4;
+		int param7;
+		int param8;
 
 		EntityParametersSSII() {
 			memset(&seq1, 0, 12);
 			memset(&seq2, 0, 12);
-			param3 = 0;
-			param4 = 0;
+			param7 = 0;
+			param8 = 0;
 		}
 	};
 
@@ -165,17 +167,17 @@ public:
 		int param1;
 		int param2;
 		char seq1[12];
-		int param3;
-		int param4;
-		int param5;
+		int param6;
+		int param7;
+		int param8;
 
 		EntityParametersIISI() {
 			param1 = 0;
 			param2 = 0;
 			memset(&seq1, 0, 12);
-			param3 = 0;
-			param4 = 0;
-			param5 = 0;
+			param6 = 0;
+			param7 = 0;
+			param8 = 0;
 		}
 	};
 
@@ -364,7 +366,7 @@ protected:
 	// Shared functions
 	void savegame(const SavePoint &savepoint);
 	void playSound(const SavePoint &savepoint, bool resetItem = false, int param3 = -1);
-	void draw(const SavePoint &savepoint);
+	void draw(const SavePoint &savepoint, bool handleExcuseMe = false);
 	void draw2(const SavePoint &savepoint);
 	void updateFromTicks(const SavePoint &savepoint);
 	void updateFromTime(const SavePoint &savepoint);
@@ -374,9 +376,9 @@ protected:
 	void savepointDirection(const SavePoint &savepoint);
 	void savepointCheckFields11(const SavePoint &savepoint);
 	void checkEntity(const SavePoint &savepoint, bool handleExcuseMe = false);
-	void savepointCall(const SavePoint &savepoint);
-	void enterExitCompartment(const SavePoint &savepoint);
-	void updatePosition(const SavePoint &savepoint);
+	void savepointCall(const SavePoint &savepoint, bool handleExcuseMe = false);
+	void enterExitCompartment(const SavePoint &savepoint);	
+	void updatePosition(const SavePoint &savepoint, bool handleExcuseMe = false);
 };
 
 

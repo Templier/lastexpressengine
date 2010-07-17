@@ -184,7 +184,7 @@ public:
 
 	FrameInfo *getInfo();
 
-	bool operator==(const SequenceFrame& other) const;
+	bool equal(const SequenceFrame *other) const;
 
 private:
 	Sequence *_sequence;

@@ -38,7 +38,7 @@
 namespace LastExpress {
 
 Pascale::Pascale(LastExpressEngine *engine) : Entity(engine, kEntityPascale) {
-	ADD_CALLBACK_FUNCTION(Pascale, function1);
+	ADD_CALLBACK_FUNCTION(Pascale, draw);
 	ADD_CALLBACK_FUNCTION(Pascale, function2);
 	ADD_CALLBACK_FUNCTION(Pascale, function3);
 	ADD_CALLBACK_FUNCTION(Pascale, updateFromTime);
@@ -74,26 +74,8 @@ Pascale::Pascale(LastExpressEngine *engine) : Entity(engine, kEntityPascale) {
 	ADD_NULL_FUNCTION();
 }
 
-IMPLEMENT_FUNCTION_S(Pascale, function1, 1)
-	switch (savepoint.action) {
-	default:
-		break;
-
-	case kActionExitCompartment:
-		CALLBACK_ACTION();
- 		break;
-
-	case kActionExcuseMeCath:
-		if (!params->param2) {
-			getSound()->excuseMe(kEntityPascale);
-			params->param2 = 1;
-		}
-		break;
-
-	case kActionDefault:
-		getEntities()->drawSequenceRight(kEntityPascale, params->seq1);
-		break;
-	}
+IMPLEMENT_FUNCTION_S(Pascale, draw, 1)
+	Entity::draw(savepoint, true);
 }
 
 IMPLEMENT_FUNCTION(Pascale, function2, 2)
@@ -116,16 +98,7 @@ IMPLEMENT_FUNCTION_I(Pascale, updateFromTime, 4)
 }
 
 IMPLEMENT_FUNCTION_NOSETUP(Pascale, updatePosition, 5)
-	EXPOSE_PARAMS(EntityData::EntityParametersSIII)
-
-	if (savepoint.action == kActionExcuseMeCath) {
-		if (!params->param4) {
-			getSound()->excuseMe(kEntityServers1);
-			params->param3 = 1;
-		}
-	}
-
-	Entity::updatePosition(savepoint);
+	Entity::updatePosition(savepoint, true);
 }
 
 IMPLEMENT_FUNCTION_S(Pascale, playSound, 6)

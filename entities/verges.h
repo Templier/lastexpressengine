@@ -40,7 +40,7 @@ public:
 
 	// Setup
 	DECLARE_FUNCTION(function1)
-	DECLARE_FUNCTION_S(function2)
+	DECLARE_FUNCTION_S(draw)
 	DECLARE_FUNCTION(function3)
 	DECLARE_FUNCTION_S(playSound)
 	DECLARE_FUNCTION_NOSETUP(playSound16)

@@ -472,8 +472,8 @@ FrameInfo *SequenceFrame::getInfo() {
 	return _sequence->getFrameInfo(_frame);
 }
 
-bool SequenceFrame::operator==(const SequenceFrame& other) const {
-	return _sequence == other._sequence && _frame == other._frame;
+bool SequenceFrame::equal(const SequenceFrame *other) const {
+	return _sequence == other->_sequence && _frame == other->_frame;
 }
 
 } // End of namespace LastExpress

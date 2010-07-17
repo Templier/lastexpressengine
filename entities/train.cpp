@@ -279,7 +279,7 @@ IMPLEMENT_FUNCTION_II(Train, harem, 7)
 }
 
 IMPLEMENT_FUNCTION(Train, process, 8)
-	EntityData::EntityParametersIIIS *parameters1 = (EntityData::EntityParametersIIIS*)_data->getCurrentParameters(1);
+	EntityData::EntityParametersIIIS *params1 = (EntityData::EntityParametersIIIS*)_data->getCurrentParameters(1);
 
 	switch (savepoint.action) {
 	default:
@@ -302,23 +302,25 @@ IMPLEMENT_FUNCTION(Train, process, 8)
 		}
 
 		if (params->param6) {
-			UPDATE_PARAM_FUNCTION(parameters1->param7, getState()->time, 900, label_process);
+			UPDATE_PARAM_FUNCTION(params1->param7, getState()->time, 900, label_process);
 			getScenes()->loadSceneFromPosition(kCarRestaurant, 58);
 		}
 
-		parameters1->param7 = 0;
+		params1->param7 = 0;
 
 label_process:
 		if (params->param7) {
-			if (!parameters1->param8) {
-				parameters1->param8 = (int)getState()->time + 4500;
+			if (!params1->param8) {
+				params1->param8 = (int)getState()->time + 4500;
 
-				if (!parameters1->param8)
+				if (!params1->param8)
 					params->param7 = 0;
 			}
 
-			if (parameters1->param8 && parameters1->param8 < (int)getState()->time)
+			if (params1->param8 && params1->param8 < (int)getState()->time) {				
 				params->param7 = 0;
+				params1->param8 = 0;
+			}
 		}
 
 		// Update object
@@ -367,7 +369,7 @@ label_process:
 		}
 
 		// Draw moving background behind windows
-		if (params->param3) {
+		if (params->param3) {  /* TODO: debug how this is set */
 			if (getEntityData(kEntityNone)->car != params->param1 || isDay() != (bool)(params->param2 > 0)) {
 				switch (getEntityData(kEntityNone)->car) {
 				default:
@@ -379,7 +381,7 @@ label_process:
 					if (getProgress().isNightTime)
 						getEntities()->drawSequenceLeft(kEntityTrain, "B1WNM");
 					else
-						getEntities()->drawSequenceLeft(kEntityTrain, isDay() ? "B1WNM" : "B1WND");
+						getEntities()->drawSequenceLeft(kEntityTrain, isDay() ? "B1WNN" : "B1WND");
 					break;
 
 				case kCarGreenSleeping:
@@ -387,7 +389,7 @@ label_process:
 					if (getProgress().isNightTime)
 						getEntities()->drawSequenceLeft(kEntityTrain, "S1WNM");
 					else
-						getEntities()->drawSequenceLeft(kEntityTrain, isDay() ? "S1WNM" : "S1WND");
+						getEntities()->drawSequenceLeft(kEntityTrain, isDay() ? "S1WNN" : "S1WND");
 					break;
 
 				case kCarRestaurant:
@@ -497,7 +499,7 @@ label_process:
 	case kAction203863200:
 		if (!strcmp(savepoint.param.charValue, "")) {
 			params->param8 = 1;
-			strcpy((char *)&parameters1->seq, savepoint.param.charValue);	// this is the sound file name
+			strcpy((char *)&params1->seq, savepoint.param.charValue);	// this is the sound file name
 		}
 		break;
 
@@ -510,36 +512,36 @@ label_process:
 		case kObjectCompartment2:
 		case kObjectCompartmentA:
 		case kObjectCompartmentB:
-			parameters1->param1 = (savepoint.param.intValue == kObjectCompartment1 || savepoint.param.intValue == kObjectCompartment2) ? kCarGreenSleeping : kCarRedSleeping;
-			parameters1->param2 = (savepoint.param.intValue == kObjectCompartment1 || savepoint.param.intValue == kObjectCompartmentA) ? kPosition_8200 : kPosition_7500;
-			parameters1->param3 = kPosition_7850;
+			params1->param1 = (savepoint.param.intValue == kObjectCompartment1 || savepoint.param.intValue == kObjectCompartment2) ? kCarGreenSleeping : kCarRedSleeping;
+			params1->param2 = (savepoint.param.intValue == kObjectCompartment1 || savepoint.param.intValue == kObjectCompartmentA) ? kPosition_8200 : kPosition_7500;
+			params1->param3 = kPosition_7850;
 			break;
 
 		case kObjectCompartment3:
 		case kObjectCompartment4:
 		case kObjectCompartmentC:
 		case kObjectCompartmentD:
-			parameters1->param1 = (savepoint.param.intValue == kObjectCompartment1 || savepoint.param.intValue == kObjectCompartment2) ? kCarGreenSleeping : kCarRedSleeping;
-			parameters1->param2 = (savepoint.param.intValue == kObjectCompartment3 || savepoint.param.intValue == kObjectCompartmentC) ? kPosition_6470 : kPosition_5790;
-			parameters1->param3 = kPosition_6130;
+			params1->param1 = (savepoint.param.intValue == kObjectCompartment1 || savepoint.param.intValue == kObjectCompartment2) ? kCarGreenSleeping : kCarRedSleeping;
+			params1->param2 = (savepoint.param.intValue == kObjectCompartment3 || savepoint.param.intValue == kObjectCompartmentC) ? kPosition_6470 : kPosition_5790;
+			params1->param3 = kPosition_6130;
 			break;
 
 		case kObjectCompartment5:
 		case kObjectCompartment6:
 		case kObjectCompartmentE:
 		case kObjectCompartmentF:
-			parameters1->param1 = (savepoint.param.intValue == kObjectCompartment1 || savepoint.param.intValue == kObjectCompartment2) ? kCarGreenSleeping : kCarRedSleeping;
-			parameters1->param2 = (savepoint.param.intValue == kObjectCompartment5 || savepoint.param.intValue == kObjectCompartmentE) ? kPosition_4840 : kPosition_4070;
-			parameters1->param3 = kPosition_4455;
+			params1->param1 = (savepoint.param.intValue == kObjectCompartment1 || savepoint.param.intValue == kObjectCompartment2) ? kCarGreenSleeping : kCarRedSleeping;
+			params1->param2 = (savepoint.param.intValue == kObjectCompartment5 || savepoint.param.intValue == kObjectCompartmentE) ? kPosition_4840 : kPosition_4070;
+			params1->param3 = kPosition_4455;
 			break;
 
 		case kObjectCompartment7:
 		case kObjectCompartment8:
 		case kObjectCompartmentG:
 		case kObjectCompartmentH:
-			parameters1->param1 = (savepoint.param.intValue == kObjectCompartment1 || savepoint.param.intValue == kObjectCompartment2) ? kCarGreenSleeping : kCarRedSleeping;
-			parameters1->param2 = (savepoint.param.intValue == kObjectCompartment7 || savepoint.param.intValue == kObjectCompartmentG) ? kPosition_3050 : kPosition_2740;
-			parameters1->param3 = kPositionNone;
+			params1->param1 = (savepoint.param.intValue == kObjectCompartment1 || savepoint.param.intValue == kObjectCompartment2) ? kCarGreenSleeping : kCarRedSleeping;
+			params1->param2 = (savepoint.param.intValue == kObjectCompartment7 || savepoint.param.intValue == kObjectCompartmentG) ? kPosition_3050 : kPosition_2740;
+			params1->param3 = kPositionNone;
 			break;
 		}
 		break;
@@ -558,14 +560,14 @@ label_process:
 
 void Train::resetParam8() {
 	EXPOSE_PARAMS(EntityData::EntityParametersIIII)
-	EntityData::EntityParametersIIIS *params2 = (EntityData::EntityParametersIIIS*)_data->getCurrentParameters(1);
+	EntityData::EntityParametersIIIS *params1 = (EntityData::EntityParametersIIIS*)_data->getCurrentParameters(1);
 
 	if (params->param8
-	 && !getEntities()->checkFields1(kEntityNone, (CarIndex)params2->param1, (EntityPosition)params2->param2)
-	 && !getEntities()->checkFields1(kEntityNone, (CarIndex)params2->param1, (EntityPosition)params2->param3)) {
+	 && !getEntities()->checkFields1(kEntityNone, (CarIndex)params1->param1, (EntityPosition)params1->param2)
+	 && !getEntities()->checkFields1(kEntityNone, (CarIndex)params1->param1, (EntityPosition)params1->param3)) {
 
-		if (getSound()->isBuffered(params2->seq))
-			getSound()->unknownFunction2(params2->seq);
+		if (getSound()->isBuffered(params1->seq))
+			getSound()->unknownFunction2(params1->seq);
 
 		params->param8 = 0;
 	}

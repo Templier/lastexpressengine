@@ -1076,7 +1076,7 @@ void Chapters::enterExitHelper(const SavePoint &savepoint, bool isEnteringStatio
 
 	if (isEnteringStation) {
 		ENTITY_PARAM(0, 2) = 1;
-		ENTITY_PARAM(0, 4) = params->param2;
+		ENTITY_PARAM(0, 4) = params->param4;
 	} else {
 		getSavePoints()->push(kEntityChapters, kEntityTrain, kAction203419131);
 		ENTITY_PARAM(0, 3) = 1;

@@ -210,18 +210,18 @@ IMPLEMENT_FUNCTION_IS(Boutarel, function17, 17)
 		break;
 
 	case kActionNone:
-		if (params->param1 < (int)getState()->time && !params->param3) {
-			params->param3 = 1;
+		if (params->param1 < (int)getState()->time && !params->param6) {
+			params->param6 = 1;
 			CALLBACK_ACTION();
 			break;
 		}
 
-		if (!params->param2) {
-			params->param4 = 0;
+		if (!params->param5) {
+			params->param7 = 0;
 			break;
 		}
 
-		UPDATE_PARAM(params->param4, getState()->timeTicks, 90)
+		UPDATE_PARAM(params->param7, getState()->timeTicks, 90)
 		getScenes()->loadSceneFromPosition(kCarRestaurant, 51);
 		break;
 
@@ -230,7 +230,7 @@ IMPLEMENT_FUNCTION_IS(Boutarel, function17, 17)
 		break;
 
 	case kAction17:
-		params->param2 = (getEntities()->isPlayerPosition(kCarRestaurant, 52) ? 1 : 0);
+		params->param5 = (getEntities()->isPlayerPosition(kCarRestaurant, 52) ? 1 : 0);
 		break;
 	}
 }

@@ -114,7 +114,7 @@ IMPLEMENT_FUNCTION_SI(Abbot, function4, 4)
 		break;
 
 	case kActionExitCompartment:
-		getEntities()->exitCompartment(kEntityAbbot, (ObjectIndex)params->param2, false);
+		getEntities()->exitCompartment(kEntityAbbot, (ObjectIndex)params->param4, false);
 		getData()->entityPosition = kPosition_6470;
 		getData()->field_493 = kField493_1;
 
@@ -123,7 +123,7 @@ IMPLEMENT_FUNCTION_SI(Abbot, function4, 4)
 
 	case kActionDefault:
 		getEntities()->drawSequenceRight(kEntityAbbot, params->seq1);
-		getEntities()->enterCompartment(kEntityAbbot, (ObjectIndex)params->param2, false);
+		getEntities()->enterCompartment(kEntityAbbot, (ObjectIndex)params->param4, false);
 
 		getData()->field_493 = kField493_1;
 		if (getEntities()->checkFields1(kEntityNone, kCarRedSleeping, kPosition_6470)

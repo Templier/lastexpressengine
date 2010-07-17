@@ -544,7 +544,7 @@ void SceneManager::addToQueue(SequenceFrame *frame) {
 
 	// First check that the frame is not already in the queue
 	for (Common::List<SequenceFrame *>::iterator i = _queue.begin(); i != _queue.end(); ++i) {
-		if (*i == frame)
+		if (frame->equal(*i))
 			return;
 	}
 

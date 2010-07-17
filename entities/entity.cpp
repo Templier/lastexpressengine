@@ -150,7 +150,7 @@ void Entity::function1Clothes(const SavePoint &savepoint) {
 // param1: savegame entry type
 // param2: EventIndex
 void Entity::savegame(const SavePoint &savepoint) {
-	EntityData::EntityParametersIIII *params = (EntityData::EntityParametersIIII*)_data->getCurrentParameters();
+	EXPOSE_PARAMS(EntityData::EntityParametersIIII)	
 
 	switch (savepoint.action) {
 	default:
@@ -168,7 +168,7 @@ void Entity::savegame(const SavePoint &savepoint) {
 }
 
 void Entity::playSound(const SavePoint &savepoint, bool resetItem, int param3) {
-	EntityData::EntityParametersSIIS *params = (EntityData::EntityParametersSIIS*)_data->getCurrentParameters();
+	EXPOSE_PARAMS(EntityData::EntityParametersSIIS)	
 
 	switch (savepoint.action) {
 	default:
@@ -187,15 +187,22 @@ void Entity::playSound(const SavePoint &savepoint, bool resetItem, int param3) {
 	}
 }
 
-void Entity::draw(const SavePoint &savepoint) {
-	EntityData::EntityParametersSIIS *params = (EntityData::EntityParametersSIIS*)_data->getCurrentParameters();
-
+void Entity::draw(const SavePoint &savepoint, bool handleExcuseMe) {
+	EXPOSE_PARAMS(EntityData::EntityParametersSIIS)
+	
 	switch (savepoint.action) {
 	default:
 		break;
 
 	case kActionExitCompartment:
 		CALLBACK_ACTION()
+		break;
+
+	case kActionExcuseMeCath:
+		if (handleExcuseMe && !params->param4) {
+			getSound()->excuseMe(_entityIndex);
+			params->param4 = 1;
+		}
 		break;
 
 	case kActionDefault:
@@ -205,7 +212,7 @@ void Entity::draw(const SavePoint &savepoint) {
 }
 
 void Entity::draw2(const SavePoint &savepoint) {
-	EntityData::EntityParametersSSII *params = (EntityData::EntityParametersSSII*)_data->getCurrentParameters();
+	EXPOSE_PARAMS(EntityData::EntityParametersSSII)	
 
 	switch (savepoint.action) {
 	default:
@@ -217,7 +224,7 @@ void Entity::draw2(const SavePoint &savepoint) {
 
 	case kActionDefault:
 		getEntities()->drawSequenceRight(_entityIndex, params->seq1);
-		getEntities()->drawSequenceRight((EntityIndex)params->param3, params->seq2);
+		getEntities()->drawSequenceRight((EntityIndex)params->param7, params->seq2);
 		break;
 	}
 }
@@ -281,7 +288,7 @@ void Entity::savepointCheckFields11(const SavePoint &savepoint) {
 }
 
 void Entity::checkEntity(const SavePoint &savepoint, bool handleExcuseMe) {
-	EntityData::EntityParametersIIII *params = (EntityData::EntityParametersIIII*)_data->getCurrentParameters();
+	EXPOSE_PARAMS(EntityData::EntityParametersIIII)	
 
 	switch (savepoint.action) {
 	default:
@@ -305,8 +312,8 @@ void Entity::checkEntity(const SavePoint &savepoint, bool handleExcuseMe) {
 	}
 }
 
-void Entity::savepointCall(const SavePoint &savepoint) {
-	EntityData::EntityParametersSIIS *params = (EntityData::EntityParametersSIIS*)_data->getCurrentParameters();
+void Entity::savepointCall(const SavePoint &savepoint, bool handleExcuseMe) {
+	EXPOSE_PARAMS(EntityData::EntityParametersSIIS)	
 
 	switch (savepoint.action) {
 	default:
@@ -314,13 +321,20 @@ void Entity::savepointCall(const SavePoint &savepoint) {
 
 	case kActionExitCompartment:
 		if (!CURRENT_PARAMS(1, 1))
-			getSavePoints()->call(_entityIndex, (EntityIndex)params->param2, (ActionIndex)params->param3, params->seq2);
+			getSavePoints()->call(_entityIndex, (EntityIndex)params->param4, (ActionIndex)params->param5, params->seq2);
 		CALLBACK_ACTION()
+		break;
+
+	case kActionExcuseMeCath:
+		if (handleExcuseMe && !CURRENT_PARAMS(1, 2)) {
+			getSound()->excuseMe(_entityIndex);
+			CURRENT_PARAMS(1, 2) = 1;
+		}
 		break;
 
 	case kAction10:
 		if (!CURRENT_PARAMS(1, 1)) {
-			getSavePoints()->call(_entityIndex, (EntityIndex)params->param2, (ActionIndex)params->param3, params->seq2);
+			getSavePoints()->call(_entityIndex, (EntityIndex)params->param4, (ActionIndex)params->param5, params->seq2);
 			CURRENT_PARAMS(1, 1) = 1;
 		}
 		break;
@@ -335,20 +349,20 @@ void Entity::savepointCall(const SavePoint &savepoint) {
 // param1: sequence
 // param2: object index
 void Entity::enterExitCompartment(const SavePoint &savepoint) {
-	EntityData::EntityParametersSIIS *params = (EntityData::EntityParametersSIIS*)_data->getCurrentParameters();
+	EXPOSE_PARAMS(EntityData::EntityParametersSIIS)	
 
 	switch (savepoint.action) {
 	default:
 		break;
 
 	case kActionExitCompartment:
-		getEntities()->exitCompartment(_entityIndex, (ObjectIndex)params->param2, false);
+		getEntities()->exitCompartment(_entityIndex, (ObjectIndex)params->param4, false);
 		CALLBACK_ACTION()
 		break;
 
 	case kActionDefault:
 		getEntities()->drawSequenceRight(_entityIndex, params->seq1);
-		getEntities()->enterCompartment(_entityIndex, (ObjectIndex)params->param2, false);
+		getEntities()->enterCompartment(_entityIndex, (ObjectIndex)params->param4, false);
 		break;
 	}
 }
@@ -358,21 +372,28 @@ void Entity::enterExitCompartment(const SavePoint &savepoint) {
 //  - Sequence
 //  - CarIndex
 //  - Position
-void Entity::updatePosition(const SavePoint &savepoint) {
-	EntityData::EntityParametersSIIS *params = (EntityData::EntityParametersSIIS*)_data->getCurrentParameters();
+void Entity::updatePosition(const SavePoint &savepoint, bool handleExcuseMe) {
+	EXPOSE_PARAMS(EntityData::EntityParametersSIII)
 
 	switch (savepoint.action) {
 	default:
 		break;
 
 	case kActionExitCompartment:
-		getEntities()->updatePosition(_entityIndex, (CarIndex)params->param2, (Position)params->param3);
+		getEntities()->updatePosition(_entityIndex, (CarIndex)params->param4, (Position)params->param5);
 		CALLBACK_ACTION()
 		break;
 
+	case kActionExcuseMeCath:
+		if (handleExcuseMe && !params->param6) {
+			getSound()->excuseMe(_entityIndex);
+			params->param6 = 1;
+		}
+		break;
+
 	case kActionDefault:
-		getEntities()->drawSequenceRight(_entityIndex, params->seq1);
-		getEntities()->updatePosition(_entityIndex, (CarIndex)params->param2, (Position)params->param3, true);
+		getEntities()->drawSequenceRight(_entityIndex, params->seq);
+		getEntities()->updatePosition(_entityIndex, (CarIndex)params->param4, (Position)params->param5, true);
 		break;
 	}
 }

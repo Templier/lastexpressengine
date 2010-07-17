@@ -42,7 +42,7 @@ Servers1::Servers1(LastExpressEngine *engine) : Entity(engine, kEntityServers1) 
 	ADD_CALLBACK_FUNCTION(Servers1, draw);
 	ADD_CALLBACK_FUNCTION(Servers1, updatePosition);
 	ADD_CALLBACK_FUNCTION(Servers1, function4);
-	ADD_CALLBACK_FUNCTION(Servers1, function5);
+	ADD_CALLBACK_FUNCTION(Servers1, savepointCall);
 	ADD_CALLBACK_FUNCTION(Servers1, playSound);
 	ADD_CALLBACK_FUNCTION(Servers1, function7);
 	ADD_CALLBACK_FUNCTION(Servers1, chapter1);
@@ -77,25 +77,11 @@ IMPLEMENT_FUNCTION_NOSETUP(Servers1, updateFromTime, 1)
 }
 
 IMPLEMENT_FUNCTION_S(Servers1, draw, 2)
-	if (savepoint.action == kActionExcuseMeCath) {
-		if (!params->param2) {
-			getSound()->excuseMe(kEntityServers1);
-			params->param2 = 1;
-		}
-	}
-
-	Entity::draw(savepoint);
+	Entity::draw(savepoint, true);
 }
 
 IMPLEMENT_FUNCTION_SIII(Servers1, updatePosition, 3)
-	if (savepoint.action == kActionExcuseMeCath) {
-		if (!params->param4) {
-			getSound()->excuseMe(kEntityServers1);
-			params->param4 = 1;
-		}
-	}
-
-	Entity::updatePosition(savepoint);
+	Entity::updatePosition(savepoint, true);
 }
 
 IMPLEMENT_FUNCTION(Servers1, function4, 4)
@@ -109,36 +95,8 @@ IMPLEMENT_FUNCTION(Servers1, function4, 4)
 	Entity::savepointDirection(savepoint);
 }
 
-IMPLEMENT_FUNCTION_SIIS(Servers1, function5, 5)
-	switch (savepoint.action) {
-	default:
-		break;
-
-	case kActionExitCompartment:
-		if (!CURRENT_PARAMS(1, 1))
-			getSavePoints()->call(kEntityServers1, (EntityIndex)params->param2, (ActionIndex)params->param3, params->seq2);
-
-		CALLBACK_ACTION()
-		break;
-
-	case kActionExcuseMeCath:
-		if (!CURRENT_PARAMS(1, 2)) {
-			getSound()->excuseMe(kEntityServers1);
-			CURRENT_PARAMS(1, 2) = 1;
-		}
-		break;
-
-	case kAction10:
-		if (!CURRENT_PARAMS(1, 1)) {
-			getSavePoints()->call(kEntityServers1, (EntityIndex)params->param2, (ActionIndex)params->param3, params->seq2);
-			CURRENT_PARAMS(1, 1) = 1;
-		}
-		break;
-
-	case kActionDefault:
-		getEntities()->drawSequenceRight(kEntityServers1, params->seq1);
-		break;
-	}
+IMPLEMENT_FUNCTION_SIIS(Servers1, savepointCall, 5)
+	Entity::savepointCall(savepoint, true);
 }
 
 IMPLEMENT_FUNCTION_S(Servers1, playSound, 6)
