@@ -63,35 +63,35 @@ void Beetle::load() {
 	_data = new BeetleData();
 
 	// Load sequences
-	_data->sequences.push_back(new Sequence(getArchive("BW000.seq")));        // 0
-	_data->sequences.push_back(new Sequence(getArchive("BT000045.seq")));
-	_data->sequences.push_back(new Sequence(getArchive("BT045000.seq")));
-	_data->sequences.push_back(new Sequence(getArchive("BW045.seq")));
-	_data->sequences.push_back(new Sequence(getArchive("BT045090.seq")));
-	_data->sequences.push_back(new Sequence(getArchive("BT090045.seq")));     // 5
-	_data->sequences.push_back(new Sequence(getArchive("BW090.seq")));
-	_data->sequences.push_back(new Sequence(getArchive("BT090135.seq")));
-	_data->sequences.push_back(new Sequence(getArchive("BT135090.seq")));
-	_data->sequences.push_back(new Sequence(getArchive("BW135.seq")));
-	_data->sequences.push_back(new Sequence(getArchive("BT135180.seq")));     // 10
-	_data->sequences.push_back(new Sequence(getArchive("BT180135.seq")));
-	_data->sequences.push_back(new Sequence(getArchive("BW180.seq")));
-	_data->sequences.push_back(new Sequence(getArchive("BT180225.seq")));
-	_data->sequences.push_back(new Sequence(getArchive("BT225180.seq")));
-	_data->sequences.push_back(new Sequence(getArchive("BW225.seq")));        // 15
-	_data->sequences.push_back(new Sequence(getArchive("BT225270.seq")));
-	_data->sequences.push_back(new Sequence(getArchive("BT270225.seq")));
-	_data->sequences.push_back(new Sequence(getArchive("BW270.seq")));
-	_data->sequences.push_back(new Sequence(getArchive("BT270315.seq")));
-	_data->sequences.push_back(new Sequence(getArchive("BT315270.seq")));     // 20
-	_data->sequences.push_back(new Sequence(getArchive("BW315.seq")));
-	_data->sequences.push_back(new Sequence(getArchive("BT315000.seq")));
-	_data->sequences.push_back(new Sequence(getArchive("BT000315.seq")));
-	_data->sequences.push_back(new Sequence(getArchive("BA135.seq")));
-	_data->sequences.push_back(new Sequence(getArchive("BL045.seq")));        // 25
-	_data->sequences.push_back(new Sequence(getArchive("BL000.seq")));
-	_data->sequences.push_back(new Sequence(getArchive("BL315.seq")));
-	_data->sequences.push_back(new Sequence(getArchive("BL180.seq")));
+	_data->sequences.push_back(Sequence::loadSequence(getArchive("BW000.seq")));        // 0
+	_data->sequences.push_back(Sequence::loadSequence(getArchive("BT000045.seq")));
+	_data->sequences.push_back(Sequence::loadSequence(getArchive("BT045000.seq")));
+	_data->sequences.push_back(Sequence::loadSequence(getArchive("BW045.seq")));
+	_data->sequences.push_back(Sequence::loadSequence(getArchive("BT045090.seq")));
+	_data->sequences.push_back(Sequence::loadSequence(getArchive("BT090045.seq")));     // 5
+	_data->sequences.push_back(Sequence::loadSequence(getArchive("BW090.seq")));
+	_data->sequences.push_back(Sequence::loadSequence(getArchive("BT090135.seq")));
+	_data->sequences.push_back(Sequence::loadSequence(getArchive("BT135090.seq")));
+	_data->sequences.push_back(Sequence::loadSequence(getArchive("BW135.seq")));
+	_data->sequences.push_back(Sequence::loadSequence(getArchive("BT135180.seq")));     // 10
+	_data->sequences.push_back(Sequence::loadSequence(getArchive("BT180135.seq")));
+	_data->sequences.push_back(Sequence::loadSequence(getArchive("BW180.seq")));
+	_data->sequences.push_back(Sequence::loadSequence(getArchive("BT180225.seq")));
+	_data->sequences.push_back(Sequence::loadSequence(getArchive("BT225180.seq")));
+	_data->sequences.push_back(Sequence::loadSequence(getArchive("BW225.seq")));        // 15
+	_data->sequences.push_back(Sequence::loadSequence(getArchive("BT225270.seq")));
+	_data->sequences.push_back(Sequence::loadSequence(getArchive("BT270225.seq")));
+	_data->sequences.push_back(Sequence::loadSequence(getArchive("BW270.seq")));
+	_data->sequences.push_back(Sequence::loadSequence(getArchive("BT270315.seq")));
+	_data->sequences.push_back(Sequence::loadSequence(getArchive("BT315270.seq")));     // 20
+	_data->sequences.push_back(Sequence::loadSequence(getArchive("BW315.seq")));
+	_data->sequences.push_back(Sequence::loadSequence(getArchive("BT315000.seq")));
+	_data->sequences.push_back(Sequence::loadSequence(getArchive("BT000315.seq")));
+	_data->sequences.push_back(Sequence::loadSequence(getArchive("BA135.seq")));
+	_data->sequences.push_back(Sequence::loadSequence(getArchive("BL045.seq")));        // 25
+	_data->sequences.push_back(Sequence::loadSequence(getArchive("BL000.seq")));
+	_data->sequences.push_back(Sequence::loadSequence(getArchive("BL315.seq")));
+	_data->sequences.push_back(Sequence::loadSequence(getArchive("BL180.seq")));
 
 	// Init fields
 	_data->field_74 = 0;

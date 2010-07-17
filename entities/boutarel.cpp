@@ -187,7 +187,7 @@ IMPLEMENT_FUNCTION_IS(Boutarel, function16, 16)
 			call(new ENTITY_SETUP(Boutarel, setup_function10), kCarGreenSleeping, kPosition_6470);
 			break;
 
-		case 3:			
+		case 3:
 			setCallback(params->param1 ? 4 : 5);
 			call(new ENTITY_SETUP_SIIS(Boutarel, setup_function7), params->param1 ? "607Gc" : "607Ac", kObjectCompartmentC);
 			break;

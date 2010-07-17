@@ -332,8 +332,7 @@ void AnimFrame::decompFF(Common::SeekableReadStream *in, const FrameInfo &f) {
 //  SEQUENCE
 //////////////////////////////////////////////////////////////////////////
 
-Sequence::Sequence(Common::SeekableReadStream *stream, byte field30) : _stream(NULL) {
-	_isLoaded = load(stream);
+Sequence::Sequence() : _stream(NULL), _isLoaded(false) {
 }
 
 Sequence::~Sequence() {
@@ -344,6 +343,17 @@ void Sequence::reset() {
 	_frames.clear();
 	delete _stream;
 	_stream = NULL;
+}
+
+Sequence *Sequence::loadSequence(Common::SeekableReadStream *stream, byte field30) {
+	Sequence *sequence = new Sequence();
+
+	if (!sequence->load(stream, field30)) {
+		delete sequence;
+		return NULL;
+	}
+
+	return sequence;
 }
 
 bool Sequence::load(Common::SeekableReadStream *stream, byte field30) {
@@ -378,6 +388,8 @@ bool Sequence::load(Common::SeekableReadStream *stream, byte field30) {
 		_frames.push_back(info);
 	}
 
+	_isLoaded = true;
+
 	return true;
 }
 
@@ -388,10 +400,6 @@ FrameInfo *Sequence::getFrameInfo(uint32 index) {
 	if (index > _frames.size() - 1)
 		error("Invalid sequence frame requested: %d, max %d", index, _frames.size() - 1);
 
-	// Skip "invalid" frames
-	if (_frames[index].compressionType == 0)
-		return NULL;
-
 	return &_frames[index];
 }
 
@@ -400,6 +408,10 @@ AnimFrame *Sequence::getFrame(uint32 index) {
 	FrameInfo *frame = getFrameInfo(index);
 
 	if (!frame)
+		return NULL;
+
+	// Skip "invalid" frames
+	if (frame->compressionType == 0)
 		return NULL;
 
 	debugC(4, kLastExpressDebugGraphics, "Decoding frame %d / %d", index + 1, _frames.size());

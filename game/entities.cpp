@@ -505,7 +505,7 @@ void Entities::updateSequences() {
 		int field30 = (data->direction == kDirectionLeft ? entityIndex + 35 : 15);
 
 		if (data->sequenceName2 != "" && !data->sequence2) {
-			data->sequence2 = new Sequence(getArchive(data->sequenceName2), field30);
+			data->sequence2 = Sequence::loadSequence(getArchive(data->sequenceName2), field30);
 
 			// If sequence 2 was loaded correctly, remove the copied name
 			// otherwise, compute new name
@@ -519,7 +519,7 @@ void Entities::updateSequences() {
 					COMPUTE_SEQUENCE_NAME(sequenceName, data->sequenceName2);
 
 					// Try loading the sequence
-					data->sequence2 = new Sequence(getArchive(sequenceName), field30);
+					data->sequence2 = Sequence::loadSequence(getArchive(sequenceName), field30);
 				}
 
 				// Update sequence names
@@ -532,7 +532,7 @@ void Entities::updateSequences() {
 		if (data->sequenceName3 != "" && !data->sequence3) {
 
 			if (data->car == getData(kEntityNone)->car)
-				data->sequence3 = new Sequence(getArchive(data->sequenceName3), field30);
+				data->sequence3 = Sequence::loadSequence(getArchive(data->sequenceName3), field30);
 
 			if (!data->sequence3) {
 				Common::String sequenceName;
@@ -542,7 +542,7 @@ void Entities::updateSequences() {
 					COMPUTE_SEQUENCE_NAME(sequenceName, data->sequenceName3);
 
 					// Try loading the sequence
-					data->sequence3 = new Sequence(getArchive(sequenceName), field30);
+					data->sequence3 = Sequence::loadSequence(getArchive(sequenceName), field30);
 				}
 
 				// Update sequence names
@@ -763,6 +763,7 @@ label_nosequence:
 
 void Entities::computeCurrentFrame2(EntityIndex entityIndex) {
 	EntityData::EntityCallData *data = getData(entityIndex);
+	int16 originalCurrentFrame2 = data->currentFrame2;
 
 	if (!data->sequence2) {
 		data->currentFrame2 = -1;
@@ -816,7 +817,19 @@ void Entities::computeCurrentFrame2(EntityIndex entityIndex) {
 		case 15:
 		case 16:
 		case 17:
-			error("Entities::computeCurrentFrame2: not implemented!");
+			if (data->field_4A9) {
+				if (getData(kEntityNone)->position >= data->position) {
+					data->currentFrame2 = -1;
+				} else {
+					data->currentFrame2 = getCurrentFrame2(entityIndex, data->sequence2, getEntityPositionFromCurrentPosition(), true);
+
+					if (data->currentFrame2 != -1 && originalCurrentFrame2 == data->currentFrame2)
+						if (data->currentFrame2 < (int)(data->sequence2->count() - 2))
+							data->currentFrame2 += 2;
+				}				
+			} else {
+				data->currentFrame2 = getCurrentFrame2(entityIndex, data->sequence2, kPositionNone, false);
+			}			
 			break;
 
 		case 23:
@@ -835,7 +848,19 @@ void Entities::computeCurrentFrame2(EntityIndex entityIndex) {
 		case 37:
 		case 38:
 		case 39:
-			error("Entities::computeCurrentFrame2: not implemented!");
+			if (data->field_4A9) {
+				if (getData(kEntityNone)->position <= data->position) {
+					data->currentFrame2 = -1;
+				} else {
+					data->currentFrame2 = getCurrentFrame2(entityIndex, data->sequence2, getEntityPositionFromCurrentPosition(), true);
+
+					if (data->currentFrame2 != -1 && originalCurrentFrame2 == data->currentFrame2)
+						if (data->currentFrame2 < (int)(data->sequence2->count() - 2))
+							data->currentFrame2 += 2;
+				}				
+			} else {
+				data->currentFrame2 = getCurrentFrame2(entityIndex, data->sequence2, kPositionNone, false);
+			}		
 			break;
 		}
 
@@ -850,8 +875,87 @@ void Entities::computeCurrentFrame2(EntityIndex entityIndex) {
 		}
 		break;
 
-	case kDirectionRight:
-		error("Entities::computeCurrentFrame2: not implemented!");
+	case kDirectionRight:				
+		bool found = false;
+		bool flag = false;
+		uint32 frameIndex = 0;
+		int field30 = 0;
+
+		int16 currentFrame2Copy = (!data->currentFrame2 && !data->field_4A1) ? -1 : data->currentFrame2; 			
+
+		// Process frames
+		do {
+			if (frameIndex >= data->sequence2->count())
+				break;
+
+			FrameInfo *info = data->sequence2->getFrameInfo(frameIndex);
+
+			if (field30 + info->field_30 > data->field_4A1) {
+				found = true;
+				break;
+			}
+
+			if (field30 > data->field_4A1 - 10) {
+				if (info->soundAction)
+					getSound()->playSoundEvent(entityIndex, info->soundAction, (field30 <= data->field_4A1 - info->field_31) ? 0 : field30 + info->field_31 - data->field_4A1);
+			}
+
+			field30 += info->field_30;
+
+			if (info->field_33 & 4)
+				flag = true;
+
+			if (info->field_33 & 2) {
+				flag = false;
+
+				getSavePoints()->push(kEntityNone, entityIndex, kAction10);
+				getSavePoints()->process();
+
+				if (!getFlags()->flag_entities_0)
+					return;
+
+				if (!data->doProcessEntity)
+					return;
+			}
+
+			if (info->field_33 & 16) {
+				getSavePoints()->push(kEntityNone, entityIndex, kAction4);
+				getSavePoints()->process();
+
+				if (!getFlags()->flag_entities_0)
+					return;
+
+				if (!data->doProcessEntity)
+					return;
+			}
+
+			frameIndex++;
+
+		} while (!found);
+
+		if (found) {
+
+			if (flag) {
+				error("Entities::computeCurrentFrame2: not implemented (3)!");
+			} else {
+
+				data->currentFrame2 = frameIndex;
+				data->field_49B = data->field_4A1 - field30;
+
+				byte soundAction = data->sequence2->getFrameInfo(data->currentFrame2)->soundAction;
+				byte field31 = data->sequence2->getFrameInfo(data->currentFrame2)->field_31;
+				if (soundAction) {
+					if (data->currentFrame2 != currentFrame2Copy)
+						getSound()->playSoundEvent(entityIndex, soundAction, field31 <= data->field_49B ? 0 : field31 - data->field_49B);
+				}
+			}
+		} else {
+			data->currentFrame2 = data->sequence2->count() - 1;
+			data->field_49B = data->sequence2->getFrameInfo(data->currentFrame2)->field_30;
+
+			getSavePoints()->push(kEntityNone, entityIndex, kActionExitCompartment);
+			getSavePoints()->process();
+		}		
 		break;
 	}
 }
@@ -1024,14 +1128,14 @@ void Entities::drawSequencesInternal(EntityIndex entityIndex, EntityDirection di
 			if (unknown) {
 
 				if (data->car == getData(kEntityNone)->car)
-					data->sequence2 = new Sequence(getArchive(sequenceName1), field30);
+					data->sequence2 = Sequence::loadSequence(getArchive(sequenceName1), field30);
 
 				if (data->sequence2) {
 					data->sequenceName2 = sequenceName1;
 					data->sequenceNameCopy = "";
 				} else {
 					if (sequenceName != "")
-						data->sequence2 = new Sequence(getArchive(sequenceName), field30);
+						data->sequence2 = Sequence::loadSequence(getArchive(sequenceName), field30);
 
 					data->sequenceName2 = (data->sequence2 ? sequenceName : "");
 					data->sequenceNameCopy = (data->sequence2 ? "" : sequenceName1);
@@ -1106,13 +1210,13 @@ void Entities::drawSequencesInternalSub(EntityIndex entityIndex, Common::String 
 	if (unknown) {
 
 		if (data->car == getData(kEntityNone)->car)
-			data->sequence3 = new Sequence(getArchive(sequenceName), field30);
+			data->sequence3 = Sequence::loadSequence(getArchive(sequenceName), field30);
 
 		if (data->sequence3) {
 			data->sequenceName3 = sequenceName;
 		} else {
 			if (sequenceName2 != "")
-				data->sequence3 = new Sequence(getArchive(sequenceName2), field30);
+				data->sequence3 = Sequence::loadSequence(getArchive(sequenceName2), field30);
 
 			data->sequenceName3 = (data->sequence3 ? sequenceName2 : "");
 		}

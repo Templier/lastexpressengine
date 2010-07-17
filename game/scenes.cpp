@@ -103,7 +103,7 @@ Scene *SceneManager::get(SceneIndex sceneIndex) {
 	if (!_scenes.contains(sceneIndex)) {
 		_scenes[sceneIndex] = _sceneLoader->getScene(sceneIndex);
 	}
-	
+
 	return _scenes[sceneIndex];
 }
 
@@ -450,7 +450,7 @@ void SceneManager::updateDoorsAndClock() {
 
 	// Queue doors sequences for display
 	if (checkPosition(kSceneNone, kCheckPositionLookingAtDoors)) {
-		
+
 		ObjectIndex firstIndex = kObjectNone;
 
 		// Init objectIndex (or exit if not in one of the two compartment cars
@@ -471,7 +471,7 @@ void SceneManager::updateDoorsAndClock() {
 			// Load door sequence
 			Scene *scene = getScenes()->get(getState()->scene);
 			Common::String name = Common::String::printf("633X%c-%02d.seq", (index - firstIndex + 65), scene->getHeader()->position);
-			Sequence *sequence = new Sequence(getArchive(name), 255);
+			Sequence *sequence = Sequence::loadSequence(getArchive(name), 255);
 
 			// If the sequence doesn't exists, skip
 			if (!sequence->isLoaded())
@@ -482,7 +482,7 @@ void SceneManager::updateDoorsAndClock() {
 			// Adjust frame data and store in frame list
 			SequenceFrame *frame = new SequenceFrame(sequence);
 			frame->getInfo()->location = (checkPosition(kSceneNone, kCheckPositionType0) ? firstIndex - index - 1 : index - firstIndex - 8);
-						
+
 			// Add frame to list
 			addToQueue(frame);
 		}
@@ -492,8 +492,8 @@ void SceneManager::updateDoorsAndClock() {
 	if (checkPosition(kSceneNone, kCheckPositionLookingAtClock)) {
 		// Example scene: 349
 
-		_clockHours = new Sequence(getArchive("SCLKH-81.seq"), 255);
-		_clockMinutes = new Sequence(getArchive("SCLKM-81.seq"), 255);
+		_clockHours = Sequence::loadSequence(getArchive("SCLKH-81.seq"), 255);
+		_clockMinutes = Sequence::loadSequence(getArchive("SCLKM-81.seq"), 255);
 
 		error("SceneManager::updateDoorsAndClock: not implemented!");
 

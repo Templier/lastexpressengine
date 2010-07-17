@@ -1289,7 +1289,7 @@ IMPLEMENT_ACTION(useWhistle) {
 
 		if (getEntities()->checkFields1(kEntityNone, kCarGreenSleeping, kPosition_8200)) {
 			evt = kEventCathOpenEgg;
-			
+
 			Scene *scene = getScenes()->get(hotspot.scene);
 			if (scene->getHotspot())
 				return scene->getHotspot()->scene;

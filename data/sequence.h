@@ -137,8 +137,10 @@ private:
 
 class Sequence {
 public:
-	Sequence(Common::SeekableReadStream *stream = NULL, byte field30 = 15);
+	Sequence();
 	~Sequence();
+
+	static Sequence *loadSequence(Common::SeekableReadStream *stream = NULL, byte field30 = 15);
 
 	bool load(Common::SeekableReadStream *stream, byte field30 = 15);
 
