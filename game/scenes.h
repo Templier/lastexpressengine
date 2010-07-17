@@ -29,7 +29,6 @@
 #include "lastexpress/data/scene.h"
 
 #include "common/hashmap.h"
-#include "common/hash-str.h"
 #include "common/list.h"
 
 namespace LastExpress {

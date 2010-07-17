@@ -32,12 +32,13 @@
 
 #include "lastexpress/shared.h"
 
-#include "common/events.h"
+#include "common/hashmap.h"
 
 namespace LastExpress {
 
 class LastExpressEngine;
 class Scene;
+class SceneHotspot;
 
 class Clock;
 class TrainLine;
@@ -58,6 +59,29 @@ public:
 	GameId getGameId() const { return _gameId; }
 
 private:
+	// Start menu events
+	enum StartMenuAction {
+		kMenuContinue = 1,
+		kMenuCredits = 2,
+		kMenuQuitGame = 3,
+		kMenuCase4 = 4,
+		kMenuSwitchSaveGame = 6,
+		kMenuRewindGame = 7,
+		kMenuForwardGame = 8,
+		kMenuParis = 10,
+		kMenuStrasBourg = 11,
+		kMenuMunich = 12,
+		kMenuVienna = 13,
+		kMenuBudapest = 14,
+		kMenuBelgrade = 15,
+		kMenuConstantinople = 16,
+		kMenuDecreaseVolume = 17,
+		kMenuIncreaseVolume = 18,
+		kMenuDecreaseBrightness = 19,
+		kMenuIncreaseBrightness = 20
+	};
+
+	// City buttons
 	enum CityButton {
 		kParis = 0,
 		kStrasbourg = 1,
@@ -68,9 +92,19 @@ private:
 		kConstantinople = 6
 	};
 
-	LastExpressEngine *_engine;
+	// Start menu overlay elements
+	enum StartMenuOverlay {
+		kOverlayTooltip,
+		kOverlayEggButtons,
+		kOverlayButtons,
+		kOverlayAcorn,
+		kOverlay4,
+		kOverlay5,
+		kOverlay6,
+		kOverlayCredits
+	};
 
-	Scene *_scene;          ///< Menu scene
+	LastExpressEngine *_engine;
 
 	// Sequences
 	Sequence _seqTooltips;
@@ -97,24 +131,49 @@ private:
 	uint32 _creditsSequenceIndex;
 
 	void loadData();
-	void handleEvent(const Common::Event &ev);
+
+	//////////////////////////////////////////////////////////////////////////
+	// Event handling
+	uint32 _checkHotspotsTicks;
+	Common::EventType _mouseFlags;
+	SceneHotspot *_lastHotspot;
+
+	bool handleEvent(StartMenuAction action, Common::EventType type);
+	void checkHotspots();
+
+	//////////////////////////////////////////////////////////////////////////
+	// Game-related
+	void initGame();
+	void switchGame();
+	bool isGameFinished() const;
 
 	//////////////////////////////////////////////////////////////////////////
 	// Overlays & elements
 	Clock *_clock;
 	TrainLine *_trainLine;
 
-	void checkHotspots();
-	void drawElements();
-	void moveToCity(CityButton city, bool clicked);
-	void switchGame();
+	struct MenuOverlays_EqualTo {
+		bool operator()(const StartMenuOverlay& x, const StartMenuOverlay& y) const { return x == y; }
+	};
+
+	struct MenuOverlays_Hash {
+		uint operator()(const StartMenuOverlay& x) const { return x; }
+	};
+
+	Common::HashMap<StartMenuOverlay, SequenceFrame *, MenuOverlays_Hash, MenuOverlays_EqualTo> _overlays;
+
+	void hideOverlays();
+	void showFrame(StartMenuOverlay overlay, int index, bool redraw);
+
+	// TODO: remove?
+	void moveToCity(CityButton city, bool clicked);	
 	void showCredits();
-	Common::String getAcornSequenceName(GameId id) const;
+	
 
 	//////////////////////////////////////////////////////////////////////////
 	// Misc
 	SceneIndex getSceneIndex() const;
-	bool isGameFinished() const;
+	Common::String getAcornSequenceName(GameId id) const;
 	
 	//////////////////////////////////////////////////////////////////////////
 	// Time
@@ -125,17 +184,19 @@ private:
 	uint32 _index2;
 	uint32 _time;
 	uint32 _delta;
+	bool _handleTimeDelta;
 
 	void initTime(TimeType type, uint32 time);
 	void updateTime(uint32 time);
+	void adjustTime();
 	void adjustIndex(uint32 time1, uint32 time2, bool searchEntry);	
 	void goToTime(uint32 time);	
 	void setTime();
 	void forwardTime();
-	void rewindTime();
-	void updateFromTime();
+	void rewindTime();	
 	bool hasTimeDelta() { return (_currentTime - _time) >= 1; }
 
+	//////////////////////////////////////////////////////////////////////////
 	// Sound/Brightness related
 	uint32 getVolume() const;
 	void setVolume(uint32 volume) const;

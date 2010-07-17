@@ -48,28 +48,6 @@
 
 namespace LastExpress {
 
-// Start menu events
-enum StartMenuAction {
-	kActionContinue = 1,
-	kActionCredits = 2,
-	kActionQuitGame = 3,
-	kActionCase4 = 4,
-	kActionSwitchSaveGame = 6,
-	kActionRewindGame = 7,
-	kActionForwardGame = 8,
-	kActionParis = 10,
-	kActionStrasBourg = 11,
-	kActionMunich = 12,
-	kActionVienna = 13,
-	kActionBudapest = 14,
-	kActionBelgrade = 15,
-	kActionConstantinople = 16,
-	kActionDecreaseVolume = 17,
-	kActionIncreaseVolume = 18,
-	kActionDecreaseBrightness = 19,
-	kActionIncreaseBrightness = 20
-};
-
 // Bottom-left buttons (quit.seq)
 enum StartMenuButtons {
 	kButtonVolumeDownPushed,
@@ -193,71 +171,59 @@ static const struct {
 	{kTimeCityConstantinople, kTooltipForwardConstantinople, kTooltipForwardConstantinople}
 };
 
-
-// Menu elements
-
+//////////////////////////////////////////////////////////////////////////
 // Clock
-
-class Clock : public Drawable {
+class Clock {
 public:
-	Clock(LastExpressEngine *engine, uint32 *time);
+	Clock(LastExpressEngine *engine);
 	~Clock();
 
-	bool load();
-	bool process();
-	Common::Rect draw(Graphics::Surface *surface);
+	void draw(uint32 time);
+	void clear();
 
 private:
 	LastExpressEngine *_engine;
 
-	uint32 *_time;
-	SequenceFrame *_seqHour;
-	SequenceFrame *_seqMinutes;
-	SequenceFrame *_seqSun;
-	SequenceFrame *_seqDate;
+	// Frames
+	SequenceFrame *_frameMinutes;
+	SequenceFrame *_frameHour;	
+	SequenceFrame *_frameSun;
+	SequenceFrame *_frameDate;
 };
 
-Clock::Clock(LastExpressEngine *engine, uint32 *time) : _engine(engine), _time(time),
-	_seqHour(NULL), _seqMinutes(NULL), _seqSun(NULL), _seqDate(NULL) {}
+Clock::Clock(LastExpressEngine *engine) : _engine(engine), _frameMinutes(NULL), _frameHour(NULL), _frameSun(NULL), _frameDate(NULL) {
+	_frameMinutes = new SequenceFrame(Sequence::loadSequence(getArchive("eggmin.seq")));
+	_frameHour = new SequenceFrame(Sequence::loadSequence(getArchive("egghour.seq")));
+	_frameSun = new SequenceFrame(Sequence::loadSequence(getArchive("sun.seq")));
+	_frameDate = new SequenceFrame(Sequence::loadSequence(getArchive("datenew.seq")));
+}
 
 Clock::~Clock() {
-	delete _seqHour;
-	delete _seqMinutes;
-	delete _seqSun;
-	delete _seqDate;
+	delete _frameMinutes;
+	delete _frameHour;	
+	delete _frameSun;
+	delete _frameDate;
 
 	// Zero passed pointers
 	_engine = NULL;
-	_time = NULL;
 }
 
-bool Clock::load() {
-	bool loaded = true;
-	Sequence *s = new Sequence;
-	loaded &= s->load(getArchive("egghour.seq"));
-	_seqHour = new SequenceFrame(s);
-
-	s = new Sequence;
-	loaded &= s->load(getArchive("eggmin.seq"));
-	_seqMinutes = new SequenceFrame(s);
-
-	s = new Sequence;
-	loaded &= s->load(getArchive("sun.seq"));
-	_seqSun = new SequenceFrame(s);
-
-	s = new Sequence;
-	loaded &= s->load(getArchive("datenew.seq"));
-	_seqDate = new SequenceFrame(s);
-
-	return loaded;
+void Clock::clear() {
+	getScenes()->removeAndRedraw(_frameMinutes, false);
+	getScenes()->removeAndRedraw(_frameHour, false);
+	getScenes()->removeAndRedraw(_frameSun, false);
+	getScenes()->removeAndRedraw(_frameDate, false);
 }
 
-bool Clock::process() {
-	assert(*_time >= kTimeCityParis && *_time <= kTimeCityConstantinople);
+void Clock::draw(uint32 time) {
+	assert(time >= kTimeCityParis && time <= kTimeCityConstantinople);
 
 	// Check that sequences have been loaded
-	if (!_seqMinutes || !_seqHour || !_seqSun || !_seqDate)
+	if (!_frameMinutes || !_frameHour || !_frameSun || !_frameDate)
 		error("Clock::process: clock sequences have not been loaded correctly!");
+
+	// Clear existing frames
+	clear();
 
 	// Game starts at: 1037700 = 7:13 p.m. on July 24, 1914
 	// Game ends at:   4941000 = 7:30 p.m. on July 26, 1914
@@ -269,172 +235,205 @@ bool Clock::process() {
 	// 54000 * 24 = 1296000 = 1 day
 
 	// Calculate each sequence index from the current time
-	uint8 hour = (uint8)((*_time % 1296000) / 54000);
-	uint8 minute =  (uint8)((*_time % 54000) / 900);
-	_seqMinutes->setFrame(minute);
-	_seqHour->setFrame((5 * hour + minute / 12) % 60);
-	_seqSun->setFrame((5 * hour + minute / 12) % 120);
-
-	// TODO: verify index_date (60 frames)
-	//uint8 day = *_time / 1296000;
-	uint32 index_date = 18 * *_time / 1296000;
+	uint8 hour = (uint8)((time % 1296000) / 54000);
+	uint8 minute =  (uint8)((time % 54000) / 900);
+	uint32 index_date = 18 * time / 1296000;
 	if (hour == 23)
 		index_date += 18 * minute / 60;
-	_seqDate->setFrame(index_date);
 
-	//warning("%02d:%02d on July %d", hour, minute, day + 24);
+	// Set sequences frames
+	_frameMinutes->setFrame(minute);
+	_frameHour->setFrame((5 * hour + minute / 12) % 60);
+	_frameSun->setFrame((5 * hour + minute / 12) % 120);
+	_frameDate->setFrame(index_date);
 
-	return true;
+	// Adjust z-order and queue
+	_frameMinutes->getInfo()->location = 1;
+	_frameHour->getInfo()->location = 1;
+	_frameSun->getInfo()->location = 1;
+	_frameDate->getInfo()->location = 1;
+
+	getScenes()->addToQueue(_frameMinutes);
+	getScenes()->addToQueue(_frameHour);
+	getScenes()->addToQueue(_frameSun);
+	getScenes()->addToQueue(_frameDate);
 }
-
-// Draw the clock hands at the time
-Common::Rect Clock::draw(Graphics::Surface *surface) {
-	// Check that sequences have been loaded
-	if (!_seqMinutes || !_seqHour || !_seqSun || !_seqDate)
-		error("Clock::process: clock sequences have not been loaded correctly!");
-
-	// Draw each element
-	_seqHour->draw(surface);
-	_seqMinutes->draw(surface);
-	_seqSun->draw(surface);
-	_seqDate->draw(surface);
-
-	// TODO return proper drawing rect
-	return Common::Rect();
-}
-
 
 // TrainLine
-class TrainLine : public Drawable {
+class TrainLine {
 public:
-	TrainLine(LastExpressEngine *engine, uint32 *time);
+	TrainLine(LastExpressEngine *engine);
 	~TrainLine();
 
-	bool load();
-	bool process();
-	Common::Rect draw(Graphics::Surface *surface);
+	void draw(uint32 time);
+	void clear();
 
 private:
 	LastExpressEngine *_engine;
 
-	uint32 *_time;
-	SequenceFrame *_seqLine1;
-	SequenceFrame *_seqLine2;
-	bool _line2Visible;
+	// Frames
+	SequenceFrame *_frameLine1;
+	SequenceFrame *_frameLine2;
 };
 
-TrainLine::TrainLine(LastExpressEngine *engine, uint32 *time) : _engine(engine),
-	_time(time), _seqLine1(NULL), _seqLine2(NULL), _line2Visible(false) {}
+TrainLine::TrainLine(LastExpressEngine *engine) : _engine(engine), _frameLine1(NULL), _frameLine2(NULL) {
+	_frameLine1 = new SequenceFrame(Sequence::loadSequence(getArchive("line1.seq")));
+	_frameLine2 = new SequenceFrame(Sequence::loadSequence(getArchive("line2.seq")));
+}
 
 TrainLine::~TrainLine() {
-	delete _seqLine1;
-	delete _seqLine2;
+	delete _frameLine1;
+	delete _frameLine2;
 
 	// Zero passed pointers
 	_engine = NULL;
-	_time = NULL;
 }
 
-bool TrainLine::load() {
-	bool loaded = true;
-	Sequence *s = new Sequence;
-	loaded &= s->load(getArchive("line1.seq"));
-	_seqLine1 = new SequenceFrame(s);
-
-	s = new Sequence;
-	loaded &= s->load(getArchive("line2.seq"));
-	_seqLine2 = new SequenceFrame(s);
-
-	return loaded;
+void TrainLine::clear() {
+	getScenes()->removeAndRedraw(_frameLine1, false);
+	getScenes()->removeAndRedraw(_frameLine2, false);
 }
 
 // Draw the train line at the time
 //  line1: 150 frames (=> Belgrade)
 //  line2: 61 frames (=> Constantinople)
 // text:0042E710
-bool TrainLine::process() {
-	assert(*_time >= kTimeCityParis && *_time <= kTimeCityConstantinople);
+void TrainLine::draw(uint32 time) {
+	assert(time >= kTimeCityParis && time <= kTimeCityConstantinople);
 
 	// Check that sequences have been loaded
-	if (!_seqLine1 || !_seqLine2)
+	if (!_frameLine1 || !_frameLine2)
 		error("TrainLine::process: Line sequences have not been loaded correctly!");
+
+	// Clear existing frames
+	clear();
 
 	// Get the index of the last city the train has visited
 	uint index = 0;
 	for (uint i = 0; i < ARRAYSIZE(trainCities); i++)
-		if ((uint32)trainCities[i].time <= *_time)
+		if ((uint32)trainCities[i].time <= time)
 			index = i;
 
 	uint16 frame;
-	if (*_time > (uint32)trainCities[index].time) {
+	if (time > (uint32)trainCities[index].time) {
 		// Interpolate linearly to use a frame between the cities
 		uint8 diffFrames = trainCities[index + 1].frame - trainCities[index].frame;
 		uint diffTimeCities = (trainCities[index + 1].time - trainCities[index].time);
-		uint traveledTime = (*_time - trainCities[index].time);
+		uint traveledTime = (time - trainCities[index].time);
 		frame = (uint16)(trainCities[index].frame + (traveledTime * diffFrames) / diffTimeCities);
 	} else {
 		// Exactly on the city
 		frame = trainCities[index].frame;
 	}
 
+	// Set frame, z-order and queue
 	if (frame < 150) {
-		_seqLine1->setFrame(frame);
-		_line2Visible = false;
+		_frameLine1->setFrame(frame);
+
+		_frameLine1->getInfo()->location = 1;
+		getScenes()->addToQueue(_frameLine1);
 	} else {
 		// We passed Belgrade
-		_seqLine1->setFrame(149);
-		_seqLine2->setFrame(frame - 150);
-		_line2Visible = true;
+		_frameLine1->setFrame(149);
+		_frameLine2->setFrame(frame - 150);
+
+		_frameLine1->getInfo()->location = 1;
+		_frameLine2->getInfo()->location = 1;
+
+		getScenes()->addToQueue(_frameLine1);
+		getScenes()->addToQueue(_frameLine2);
 	}
-
-	return true;
-}
-
-Common::Rect TrainLine::draw(Graphics::Surface *surface) {
-	// Check that sequences have been loaded
-	if (!_seqLine1 || !_seqLine2)
-		error("TrainLine::draw: Line sequences have not been loaded correctly!");
-
-	// Draw each element
-	_seqLine1->draw(surface);
-	if (_line2Visible)
-		_seqLine2->draw(surface);
-
-	return Common::Rect();
 }
 
 
 //////////////////////////////////////////////////////////////////////////
 // Menu
 //////////////////////////////////////////////////////////////////////////
-Menu::Menu(LastExpressEngine *engine) : _engine(engine), _scene(NULL),
+Menu::Menu(LastExpressEngine *engine) : _engine(engine),
 	_gameId(kGameBlue), _hasShownStartScreen(false), _hasShownIntro(false),
 	_isShowingCredits(false), _isGameStarted(false), _isShowingMenu(false),
-	_clock(NULL), _trainLine(NULL), 
-	_currentIndex(0), _currentTime(0), _index(0), _index2(0), _time(0), _delta(0) {
+	_clock(NULL), _trainLine(NULL), _checkHotspotsTicks(15), _lastHotspot(NULL), _mouseFlags(Common::EVENT_INVALID),
+	_currentIndex(0), _currentTime(0), _index(0), _index2(0), _time(0), _delta(0), _handleTimeDelta(false) {
 
 	_creditsSequenceIndex = 0;
 	for (int i = 0; i < 7; i++)
 		_cityButtonFrames[i] = NULL;
 
-	_clock = new Clock(_engine, &_currentTime);
-	_clock->load();
-	_trainLine = new TrainLine(_engine, &_currentTime);
-	_trainLine->load();
+	_clock = new Clock(_engine);
+	_trainLine = new TrainLine(_engine);
 }
 
 Menu::~Menu() {
-	_scene = NULL;
 	delete _clock;
 	delete _trainLine;
 
 	for (int i = 0; i < 7; i++)
 		delete _cityButtonFrames[i];
 
+	_lastHotspot = NULL;
+
 	// Zero passed pointers
-	_engine = NULL;
+	_engine = NULL;	
 }
 
+//////////////////////////////////////////////////////////////////////////
+// Handle events
+void Menu::eventMouse(const Common::Event &ev) {
+	//if (!getFlags()->shouldRedraw)
+	//	return;
+
+	bool redraw = true;
+	getFlags()->shouldRedraw = false;
+
+	// Update coordinates
+	setCoords(ev.mouse);
+	_mouseFlags = ev.type;
+
+	if (_isShowingCredits) {
+		error("Menu::eventMouse: not implemented!");
+	} else {
+		// Check for hotspots
+		SceneHotspot *hotspot = NULL;
+		getScenes()->get(getState()->scene)->checkHotSpot(ev.mouse, &hotspot);
+
+		if (_lastHotspot != hotspot || ev.type == Common::EVENT_LBUTTONUP) {
+			_lastHotspot = hotspot;
+
+			if (ev.type == Common::EVENT_MOUSEMOVE) { /* todo check event type */
+				if (!_handleTimeDelta && hasTimeDelta())
+					setTime();
+			}
+
+			if (hotspot) {
+				redraw = handleEvent((StartMenuAction)hotspot->action, ev.type);
+				getFlags()->mouseRightClick = false;
+				getFlags()->mouseLeftClick = false;
+			} else {
+				hideOverlays();
+			}
+		}
+	}	
+
+	if (redraw) {
+		getFlags()->shouldRedraw = true;
+		askForRedraw();
+	}
+}
+
+void Menu::eventTick(const Common::Event&) {
+	if (hasTimeDelta())
+		adjustTime();
+	else if (_handleTimeDelta)
+		_handleTimeDelta = false;
+
+	// Check hotspots
+	if (!--_checkHotspotsTicks) {
+		checkHotspots();
+		_checkHotspotsTicks = 15;
+	}
+}
+
+//////////////////////////////////////////////////////////////////////////
 // Show the intro and load the main menu scene
 void Menu::show(bool savegame, TimeType type, uint32 time) {
 
@@ -497,9 +496,9 @@ void Menu::show(bool savegame, TimeType type, uint32 time) {
 	//_currentTime = getState()->time;
 
 	// Load main scene
-	_scene = getScenes()->get(getSceneIndex());
-	_engine->getGraphicsManager()->draw(_scene, GraphicsManager::kBackgroundC);
-	drawElements();
+	getState()->scene = getSceneIndex();
+	_engine->getGraphicsManager()->draw(getScenes()->get(getState()->scene), GraphicsManager::kBackgroundC);
+	//drawElements();
 
 	askForRedraw();
 
@@ -545,60 +544,36 @@ void Menu::switchGame() {
 	show(false, kTimeType0, 0);
 }
 
-//////////////////////////////////////////////////////////////////////////
-// Handle events
-void Menu::eventMouse(const Common::Event &ev) {
-	handleEvent(ev);
-}
-
-void Menu::eventTick(const Common::Event &ev) {
-	handleEvent(ev);
-}
-
-void Menu::handleEvent(const Common::Event &ev) {
+bool Menu::handleEvent(StartMenuAction action, Common::EventType type) {
 	// Special case if we are showing credits (only allow left & right-click)
-	if (_isShowingCredits) {
-		// Interrupt on right click
-		switch(ev.type) {
-			case Common::EVENT_RBUTTONUP:
-				_isShowingCredits = false; // Will cause credits to stop & reset overlays
+	//if (_isShowingCredits) {
+	//	// Interrupt on right click
+	//	switch(type) {
+	//		case Common::EVENT_RBUTTONUP:
+	//			_isShowingCredits = false; // Will cause credits to stop & reset overlays
 
-			// Fall through to hide/show credits
-			case Common::EVENT_LBUTTONUP:
-				showCredits();
-				askForRedraw();
-				return;
+	//		// Fall through to hide/show credits
+	//		case Common::EVENT_LBUTTONUP:
+	//			showCredits();
+	//			askForRedraw();
+	//			return;
 
-			default:
-				return;
-		}
-	}
+	//		default:
+	//			return;
+	//	}
+	//}
 
-	// Process event (check hit box / etc.)
-	static StartMenuAction action;
-	SceneHotspot *hotspot = NULL;
-	if (_scene && !_scene->checkHotSpot(ev.mouse, &hotspot)) {
-		clearBg(GraphicsManager::kBackgroundOverlay);
-		askForRedraw();
-		return; //true;
-	}
-
-	if (!hotspot)
-		return; //true;
-
-	action = (StartMenuAction)hotspot->action;
-
-	bool clicked = (ev.type == Common::EVENT_LBUTTONUP);
+	bool clicked = (type == Common::EVENT_LBUTTONUP);
 	clearBg(GraphicsManager::kBackgroundOverlay);
 
 	switch(action) {
 	default:
 		break;
 
-	case kActionCase4:
-		// TODO reset time variable (and fall down to kActionContinue)
+	case kMenuCase4:
+		// TODO reset time variable (and fall down to kMenuContinue)
 
-	case kActionContinue:
+	case kMenuContinue:
 		// TODO Check for cd archive: reload the proper archive here if running in single cd mode
 		if (!_isGameStarted) {
 			drawSequenceFrame(&_seqEggButtons, kButtonShield, GraphicsManager::kBackgroundOverlay);
@@ -670,7 +645,7 @@ void Menu::handleEvent(const Common::Event &ev) {
 		break;
 
 	//////////////////////////////////////////////////////////////////////////
-	case kActionCredits:
+	case kMenuCredits:
 		if (clicked) {
 			drawSequenceFrame(&_seqTooltips, kButtonCreditsPushed, GraphicsManager::kBackgroundOverlay);
 			playSfxStream("LIB046.SND");
@@ -684,21 +659,23 @@ void Menu::handleEvent(const Common::Event &ev) {
 		break;
 
 	//////////////////////////////////////////////////////////////////////////
-	case kActionQuitGame:
+	case kMenuQuitGame:
 		drawSequenceFrame(&_seqTooltips, kTooltipQuit, GraphicsManager::kBackgroundOverlay);
 
 		if (clicked) {
 			drawSequenceFrame(&_seqButtons, kButtonQuitPushed, GraphicsManager::kBackgroundOverlay);
 			playSfxStream("LIB046.SND");
 
-			error("Menu::handleEvent / kActionQuitGame: implementation not finished!");
+			error("Menu::handleEvent / kMenuQuitGame: implementation not finished!");
+
+			// return false;
 		} else {
 			drawSequenceFrame(&_seqButtons, kButtonQuit, GraphicsManager::kBackgroundOverlay);
 		}
 		break;
 
 	//////////////////////////////////////////////////////////////////////////
-	case kActionSwitchSaveGame:
+	case kMenuSwitchSaveGame:
 		if (clicked) {
 			drawSequenceFrame(&_seqAcorn, 1, GraphicsManager::kBackgroundOverlay);
 			playSfxStream("LIB046.SND");
@@ -744,7 +721,7 @@ void Menu::handleEvent(const Common::Event &ev) {
 		break;
 
 	//////////////////////////////////////////////////////////////////////////
-	case kActionRewindGame:
+	case kMenuRewindGame:
 		// TODO check that we can actually rewind
 		//if (_currentTime <= getState()->time)
 		if (clicked) {
@@ -759,7 +736,7 @@ void Menu::handleEvent(const Common::Event &ev) {
 		break;
 
 	//////////////////////////////////////////////////////////////////////////
-	case kActionForwardGame:
+	case kMenuForwardGame:
 		// TODO check that we can actually rewind
 		if (_currentTime == getState()->time)
 			break;
@@ -778,42 +755,42 @@ void Menu::handleEvent(const Common::Event &ev) {
 		break;
 
 	//////////////////////////////////////////////////////////////////////////
-	case kActionParis:
+	case kMenuParis:
 		moveToCity(kParis, clicked);
 		break;
 
 	//////////////////////////////////////////////////////////////////////////
-	case kActionStrasBourg:
+	case kMenuStrasBourg:
 		moveToCity(kStrasbourg, clicked);
 		break;
 
 	//////////////////////////////////////////////////////////////////////////
-	case kActionMunich:
+	case kMenuMunich:
 		moveToCity(kMunich, clicked);
 		break;
 
 	//////////////////////////////////////////////////////////////////////////
-	case kActionVienna:
+	case kMenuVienna:
 		moveToCity(kVienna, clicked);
 		break;
 
 	//////////////////////////////////////////////////////////////////////////
-	case kActionBudapest:
+	case kMenuBudapest:
 		moveToCity(kBudapest, clicked);
 		break;
 
 	//////////////////////////////////////////////////////////////////////////
-	case kActionBelgrade:
+	case kMenuBelgrade:
 		moveToCity(kBelgrade, clicked);
 		break;
 
 	//////////////////////////////////////////////////////////////////////////
-	case kActionConstantinople:
+	case kMenuConstantinople:
 		moveToCity(kConstantinople, clicked);
 		break;
 
 	//////////////////////////////////////////////////////////////////////////
-	case kActionDecreaseVolume:
+	case kMenuDecreaseVolume:
 		// Cannot decrease volume further
 		if (getVolume() == 0) {
 			drawSequenceFrame(&_seqButtons, kButtonVolume, GraphicsManager::kBackgroundOverlay);
@@ -833,7 +810,7 @@ void Menu::handleEvent(const Common::Event &ev) {
 		break;
 
 	//////////////////////////////////////////////////////////////////////////
-	case kActionIncreaseVolume:
+	case kMenuIncreaseVolume:
 		// Cannot increase volume further
 		if (getVolume() >= 7) {
 			drawSequenceFrame(&_seqButtons, kButtonVolume, GraphicsManager::kBackgroundOverlay);
@@ -853,7 +830,7 @@ void Menu::handleEvent(const Common::Event &ev) {
 		break;
 
 	//////////////////////////////////////////////////////////////////////////
-	case kActionDecreaseBrightness:
+	case kMenuDecreaseBrightness:
 		// Cannot increase brightness further
 		if (getBrightness() == 0) {
 			drawSequenceFrame(&_seqButtons, kButtonBrightness, GraphicsManager::kBackgroundOverlay);
@@ -874,7 +851,7 @@ void Menu::handleEvent(const Common::Event &ev) {
 		break;
 
 	//////////////////////////////////////////////////////////////////////////
-	case kActionIncreaseBrightness:
+	case kMenuIncreaseBrightness:
 		// Cannot increase brightness further
 		if (getBrightness() >= 6) {
 			drawSequenceFrame(&_seqButtons, kButtonBrightness, GraphicsManager::kBackgroundOverlay);
@@ -894,10 +871,9 @@ void Menu::handleEvent(const Common::Event &ev) {
 		break;
 	}
 
-	// All cases should break apart from the Quit case, so we can ask for redraw only once here
-	askForRedraw();
+	
 
-	return; // true;
+	return true;
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -939,6 +915,14 @@ void Menu::loadData() {
 
 	// We cannot proceed unless all files loaded properly
 	assert(loaded == true);
+
+	// FIXME: rewrite rest of function
+	_overlays[kOverlayTooltip] = new SequenceFrame(&_seqTooltips, 0, false);
+	_overlays[kOverlayEggButtons] = new SequenceFrame(&_seqEggButtons, 0, false);
+	_overlays[kOverlayButtons] = new SequenceFrame(&_seqButtons, 0, false);
+	_overlays[kOverlayAcorn] = new SequenceFrame(&_seqAcorn, 0, false);
+
+	_overlays[kOverlayCredits] = new SequenceFrame(&_seqCredits, 0, false);
 }
 
 // Get the sequence name to use for the acorn highlight, depending of the currently loaded savegame
@@ -982,21 +966,53 @@ Common::String Menu::getAcornSequenceName(GameId id) const {
 // Overlays & elements
 //////////////////////////////////////////////////////////////////////////
 void Menu::checkHotspots() {
-	error("Menu::checkHotspots: not implemented!");
+	if (!_isShowingMenu)
+		return;
+
+	if (!getFlags()->shouldRedraw)
+		return;
+
+	if (_isShowingCredits)
+		return;
+
+	SceneHotspot *hotspot = NULL;
+	getScenes()->get(getState()->scene)->checkHotSpot(getCoords(), &hotspot);
+
+	if (hotspot)
+		handleEvent((StartMenuAction)hotspot->action, _mouseFlags);
+	else
+		hideOverlays();
 }
-void Menu::drawElements() {
-	// Do not draw if the game has not yet started
-	if (!SaveLoad::isSavegameValid(_gameId))
-		return;
-	if (!_isGameStarted)
-		return;
 
-	clearBg(GraphicsManager::kBackgroundA);
+void Menu::hideOverlays() {
+	_lastHotspot = NULL;
 
-	_clock->process();
-	_trainLine->process();
-	_engine->getGraphicsManager()->draw(_clock, GraphicsManager::kBackgroundA);
-	_engine->getGraphicsManager()->draw(_trainLine, GraphicsManager::kBackgroundA);
+	// Hide all menu overlays
+	for (uint32 i = 0; i < _overlays.size(); i++)
+		showFrame((StartMenuOverlay)i, -1, false);
+
+	getScenes()->drawFrames(true);
+}
+
+void Menu::showFrame(StartMenuOverlay overlayType, int index, bool redraw) {
+	if (index == -1) {
+		getScenes()->removeAndRedraw(_overlays[overlayType], redraw);
+	} else {
+		// Check that the overlay is valid or not already showing
+		if (!_overlays[overlayType])
+			return;
+
+		if (_overlays[overlayType]->getFrame() == (uint32)index)
+			return;
+
+		// Remove the frame and add a new one with the proper index
+		getScenes()->removeAndRedraw(_overlays[overlayType], false);		
+		_overlays[overlayType]->setFrame(index);
+		getScenes()->addToQueue(_overlays[overlayType]);
+
+		if (redraw)
+			getScenes()->drawFrames(true);
+	}
 }
 
 // Show credits overlay
@@ -1109,13 +1125,41 @@ void Menu::adjustIndex(uint32 time1, uint32 time2, bool searchEntry) {
 
 		if (time2 >= time1) {
 			if (searchEntry) {
-				error("Menu::adjustIndex: not implemented!");
+				uint32 currentIndex = _index;
+
+				if (_index >= 0) {
+					do {
+						// Calculate new delta
+						int32 newDelta = time1 - getSaveLoad()->getEntry(currentIndex)->time;
+
+						if (newDelta >= 0 && timeDelta >= newDelta) {
+							timeDelta = newDelta;
+							index = currentIndex;
+						}
+
+						--currentIndex;
+					} while (currentIndex >= 0);
+				}				
 			} else {
 				index = _index - 1;
 			}
 		} else {
 			if (searchEntry) {
-				error("Menu::adjustIndex: not implemented!");
+				uint32 currentIndex = _index;
+
+				if (_index2 >= _index) {
+					do {
+						// Calculate new delta
+						int32 newDelta = getSaveLoad()->getEntry(currentIndex)->time - time1;
+
+						if (newDelta >= 0 && timeDelta > newDelta) {
+							timeDelta = newDelta;
+							index = currentIndex;
+						}
+
+						++currentIndex;
+					} while (currentIndex >= _index2);
+				}			
 			} else {
 				index = _index + 1;
 			}
@@ -1156,7 +1200,7 @@ void Menu::setTime() {
 	_currentTime = getSaveLoad()->getEntry(_currentIndex)->time;
 
 	if (_time == _currentTime)
-		updateFromTime();
+		adjustTime();
 }
 
 void Menu::forwardTime() {
@@ -1175,64 +1219,35 @@ void Menu::rewindTime() {
 	updateTime(getSaveLoad()->getEntry(_currentIndex)->time);
 }
 
-void Menu::updateFromTime() {
-	error("Menu::updateFromTime: not implemented!");
+void Menu::adjustTime() {
+	uint32 originalTime = _time;
+
+	// Adjust time delta
+	uint32 timeDelta = (_delta >= 90) ? 9 : (9 * _delta + 89) / 90;
+
+	if (_currentTime < _time) {
+		_time -= 900 * timeDelta;
+
+		if (_time >= _currentTime)
+			_time = _currentTime;
+	} else {
+		_time += 900 * timeDelta;
+
+		if (_time < _currentTime)
+			_time = _currentTime;
+	}
+
+	if (_currentTime == _time && getSound()->isBuffered(kEntityChapters))
+		getSound()->removeFromQueue(kEntityChapters);
+
+	_clock->draw(_time);
+	_trainLine->draw(_time);
+	getScenes()->drawFrames(true);
+
+	adjustIndex(_time, originalTime, true);
+
+	++_delta;
 }
-
-
-	//// TODO implement modifying the current game time
-	//// + adjusting elements on screen : clock + train line
-	////;getState()->time = time; // need to use targetTime var, as modifying the global state will prevent us from going into the other direction later
-
-	//// Nothing to do if the menu time is already set to the correct value
-	//// FIXME can this really happen?
-	//if (_currentTime == time)
-	//	return;
-
-	//int direction = 1;
-	//int speed = 1;
-
-	//if (_currentTime <= time) {
-	//	playSfxStream("LIB042.SND");
-	//} else {
-	//	playSfxStream("LIB041.SND");
-	//	direction = -1;
-	//}
-
-	//_engine->getCursor()->show(false);
-
-	//while (_currentTime != time) {
-	//	_currentTime = (uint32)((int32)_currentTime + direction * 500 * speed);
-	//	if (speed < 10)
-	//		speed++;
-
-	//	// Make sure we don't pass destination
-	//	if ((direction == 1 && _currentTime > time) || (direction == -1 && _currentTime < time))
-	//		_currentTime = time;
-
-	//	drawElements();
-	//	askForRedraw();
-	//	redrawScreen();
-
-	//	Common::Event ev;
-	//	_engine->getEventManager()->pollEvent(ev);
-	//	if (ev.type == Common::EVENT_RBUTTONUP) {
-	//		break;
-	//	}
-
-	//	//g_system->delayMillis(250);
-	//}
-
-	//// Draw final time
-	//_currentTime = time;
-	//drawElements();
-	//askForRedraw();
-	//redrawScreen();
-
-	//_engine->getCursor()->show(true);
-
-	//// Stop sound
-	//getSound()->getSfxStream()->stop();
 
 void Menu::moveToCity(CityButton city, bool clicked) {
 	uint32 time = cityButtonsInfo[city].time;

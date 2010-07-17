@@ -180,6 +180,7 @@ public:
 	Common::Rect draw(Graphics::Surface *surface);
 
 	bool setFrame(uint32 frame);
+	uint32 getFrame() { return _frame; }
 	bool nextFrame();
 
 	FrameInfo *getInfo();

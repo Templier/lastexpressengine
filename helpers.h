@@ -56,6 +56,7 @@
 #define getSavePoints() getLogic()->getGameState()->getGameSavePoints()
 #define getGlobalTimer() getLogic()->getGameState()->getTimer()
 #define setGlobalTimer(timer) getLogic()->getGameState()->setTimer(timer)
+#define setCoords(coords) getLogic()->getGameState()->setCoordinates(coords)
 #define getCoords() getLogic()->getGameState()->getCoordinates()
 
 // Scenes
