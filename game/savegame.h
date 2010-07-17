@@ -84,6 +84,24 @@ class LastExpressEngine;
 
 class SaveLoad {
 public:
+	enum HeaderType {
+		kHeaderType1 = 1,
+		kHeaderType2 = 2,
+		kHeaderType3 = 3,
+		kHeaderType4 = 4,
+		kHeaderType5 = 5
+	};
+
+	struct SavegameEntryHeader {
+		uint32 signature;
+		HeaderType type;
+		uint32 time;
+		int field_C;
+		ChapterIndex chapter;
+		EventIndex event;
+		int field_18;
+		int field_1C;
+	};
 
 	SaveLoad(LastExpressEngine *engine);
 	~SaveLoad();
@@ -105,15 +123,9 @@ public:
 
 	uint32 getLastSavegameTicks() const { return _gameTicksLastSavegame; }
 
-private:
-	enum HeaderType {
-		kHeaderType1 = 1,
-		kHeaderType2 = 2,
-		kHeaderType3 = 3,
-		kHeaderType4 = 4,
-		kHeaderType5 = 5
-	};
+	SavegameEntryHeader *getEntry(uint32 index);
 
+private:
 	struct SavegameMainHeader {
 		uint32 signature;
 		ChapterIndex chapter;
@@ -125,18 +137,10 @@ private:
 		uint32 field_1C;
 	};
 
-	struct SavegameEntryHeader {
-		uint32 signature;
-		HeaderType type;
-		int time;
-		int field_C;
-		ChapterIndex chapter;
-		EventIndex event;
-		int field_18;
-		int field_1C;
-	};
-
 	LastExpressEngine *_engine;
+
+	uint32 _gameTicksLastSavegame;
+	Common::Array<SavegameEntryHeader *> _gameHeaders;
 
 	static Common::String getSavegameName(GameId id);
 	static bool loadMainHeader(GameId id, SavegameMainHeader* header);
@@ -144,8 +148,6 @@ private:
 
 	static bool validateMainHeader(const SavegameMainHeader &header);
 	static bool validateEntryHeader(const SavegameEntryHeader &header);
-
-	uint32 _gameTicksLastSavegame;
 };
 
 } // End of namespace LastExpress

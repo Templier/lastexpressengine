@@ -968,7 +968,7 @@ IMPLEMENT_FUNCTION(Chapters, chapter5_handler, 22)
 			setCallback(1);
 			call(new ENTITY_SETUP(Chapters, setup_savegame), kSavegameType2, kEventTrainStopped);
 		} else {
-			getLogic()->gameOver(kTimeType1, kTimeTrainStopped_2, kSceneGameOverTrainStopped, true);
+			getLogic()->gameOver(kTimeTypeTime, kTimeTrainStopped_2, kSceneGameOverTrainStopped, true);
 		}
 		break;
 
@@ -979,7 +979,7 @@ IMPLEMENT_FUNCTION(Chapters, chapter5_handler, 22)
 	case kActionCallback:
 		if (getCallback() == 1) {
 			getAction()->playAnimation(kEventTrainStopped);
-			getLogic()->gameOver(kTimeType1, kTimeTrainStopped, kSceneGameOverTrainStopped, true);
+			getLogic()->gameOver(kTimeTypeTime, kTimeTrainStopped, kSceneGameOverTrainStopped, true);
 		}
 		break;
 

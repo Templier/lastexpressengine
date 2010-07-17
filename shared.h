@@ -179,8 +179,8 @@ enum TimeValue {
 
 enum TimeType {
 	kTimeType0 = 0,
-	kTimeType1 = 1,
-	kTimeType2 = 2,
+	kTimeTypeTime = 1,
+	kTimeTypeEvent = 2,
 	kTimeType3 = 3
 };
 

@@ -210,6 +210,13 @@ bool SaveLoad::validateEntryHeader(const SavegameEntryHeader &header) {
 	return true;
 }
 
+SaveLoad::SavegameEntryHeader *SaveLoad::getEntry(uint32 index) {
+	if (index >= _gameHeaders.size())
+		error("SaveLoad::getHeader: invalid index (was:%d, max:%d)", index, _gameHeaders.size() - 1);
+
+	return _gameHeaders[index];
+}
+
 //////////////////////////////////////////////////////////////////////////
 // Init
 //////////////////////////////////////////////////////////////////////////

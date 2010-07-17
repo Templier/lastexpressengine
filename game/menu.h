@@ -53,14 +53,21 @@ public:
 	void eventMouse(const Common::Event &ev);
 	void eventTick(const Common::Event &ev);
 
-	SceneIndex getSceneIndex() const;
-
 	bool isShown() const { return _isShowingMenu; }
 
 	GameId getGameId() const { return _gameId; }
 
-
 private:
+	enum CityButton {
+		kParis = 0,
+		kStrasbourg = 1,
+		kMunich = 2,
+		kVienna = 3,
+		kBudapest = 4,
+		kBelgrade = 5,
+		kConstantinople = 6
+	};
+
 	LastExpressEngine *_engine;
 
 	Scene *_scene;          ///< Menu scene
@@ -92,50 +99,42 @@ private:
 	void loadData();
 	void handleEvent(const Common::Event &ev);
 
+	//////////////////////////////////////////////////////////////////////////
 	// Overlays & elements
-	void drawElements();
 	Clock *_clock;
 	TrainLine *_trainLine;
-	Common::String getAcornSequenceName(GameId id) const;
-	void showCredits();
 
-	void switchGame();
-
-	bool isGameFinished() const;
-
-	enum CityButton {
-		kParis = 0,
-		kStrasbourg = 1,
-		kMunich = 2,
-		kVienna = 3,
-		kBudapest = 4,
-		kBelgrade = 5,
-		kConstantinople = 6
-	};
-
-	// Game time
-	uint32 _currentTime; // internal time for the menu (to handle rewind/forward)
-	void goToTime(uint32 time);
+	void checkHotspots();
+	void drawElements();
 	void moveToCity(CityButton city, bool clicked);
+	void switchGame();
+	void showCredits();
+	Common::String getAcornSequenceName(GameId id) const;
 
-	// TODO figure out what each of those do
-	struct TimeData {
-		uint32 field_0;
-		uint32 field_4;
-		uint32 time;
-		uint32 field_C;
-		uint32 chapter;
-		uint32 event;
-		uint32 field_18;
-		uint32 field_1C;
-	};
+	//////////////////////////////////////////////////////////////////////////
+	// Misc
+	SceneIndex getSceneIndex() const;
+	bool isGameFinished() const;
+	
+	//////////////////////////////////////////////////////////////////////////
+	// Time
+	uint32 _currentIndex; // current savegame entry
+	uint32 _currentTime;  // current game time
+	
+	uint32 _index;
+	uint32 _index2;
+	uint32 _time;
+	uint32 _delta;
 
-	// Indexes into menu data
-	uint32 _index3;
-	uint32 _index4;
-
-	Common::Array<TimeData *> _timeData;
-
+	void initTime(TimeType type, uint32 time);
+	void updateTime(uint32 time);
+	void adjustIndex(uint32 time1, uint32 time2, bool searchEntry);	
+	void goToTime(uint32 time);	
+	void setTime();
+	void forwardTime();
+	void rewindTime();
+	void updateFromTime();
+	bool hasTimeDelta() { return (_currentTime - _time) >= 1; }
 
 	// Sound/Brightness related
 	uint32 getVolume() const;

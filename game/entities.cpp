@@ -1008,7 +1008,7 @@ void Entities::updateFrame(EntityIndex entityIndex, bool dontClearQueue, bool do
 			data->entityPosition = (EntityPosition)(data->entityPosition + getEntityPositionFromCurrentPosition());
 	}
 
-	info->location = entityIndex + abs(getData(entityIndex)->entityPosition - getData(kEntityNone)->entityPosition);
+	info->location = entityIndex + ABS(getData(entityIndex)->entityPosition - getData(kEntityNone)->entityPosition);
 
 	if (info->subType != kFrameType3) {
 		info->subType = kFrameType1;
@@ -1754,7 +1754,7 @@ uint Entities::getSoundValue(EntityIndex entity) const {
 	uint ret = 2;
 
 	// Get default value if valid
-	int index = abs(getData(entity)->entityPosition - getData(kEntityNone)->entityPosition) / 230;
+	int index = ABS(getData(entity)->entityPosition - getData(kEntityNone)->entityPosition) / 230;
 	if (index < 32)
 		ret = soundValues[index];
 
@@ -1905,7 +1905,7 @@ bool Entities::checkEntity(EntityIndex entity, CarIndex car, EntityPosition posi
 
 
 	// Calculate delta
-	delta = abs(data->entityPosition - position);
+	delta = ABS(data->entityPosition - position);
 	if (delta < 100 || (position > kPosition_850 && position < kPosition_9270 && delta < 300))
 		flag3 = true;
 
@@ -2171,7 +2171,7 @@ bool Entities::isDirectionUpOrDown(EntityIndex entity) const {
 
 bool Entities::checkFields9(EntityIndex entity1, EntityIndex entity2, int absValue) const {
 	return getData(entity1)->car == getData(entity2)->car
-	    && abs(getData(entity1)->entityPosition - getData(entity2)->entityPosition) <= absValue
+	    && ABS(getData(entity1)->entityPosition - getData(entity2)->entityPosition) <= absValue
 		&& (getData(entity1)->field_493 != kField493_2 || getData(entity2)->field_493 != kField493_2);
 }
 
@@ -2282,7 +2282,7 @@ bool Entities::checkFields23(EntityIndex entity) const {
 }
 
 bool Entities::checkDistanceFromPosition(EntityIndex entity, EntityPosition position, int distance) const {
-	return distance >= abs(getData(entity)->entityPosition - position);
+	return distance >= ABS(getData(entity)->entityPosition - position);
 }
 
 bool Entities::checkFields25(EntityIndex entity) const {

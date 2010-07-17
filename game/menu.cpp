@@ -407,9 +407,11 @@ Common::Rect TrainLine::draw(Graphics::Surface *surface) {
 //////////////////////////////////////////////////////////////////////////
 // Menu
 //////////////////////////////////////////////////////////////////////////
-Menu::Menu(LastExpressEngine *engine) : _engine(engine), _scene(NULL), _clock(NULL), _trainLine(NULL), _index3(0), _index4(0),
+Menu::Menu(LastExpressEngine *engine) : _engine(engine), _scene(NULL),
 	_gameId(kGameBlue), _hasShownStartScreen(false), _hasShownIntro(false),
-	_isShowingCredits(false), _isGameStarted(false), _isShowingMenu(false) {
+	_isShowingCredits(false), _isGameStarted(false), _isShowingMenu(false),
+	_clock(NULL), _trainLine(NULL), 
+	_currentIndex(0), _currentTime(0), _index(0), _index2(0), _time(0), _delta(0) {
 
 	_creditsSequenceIndex = 0;
 	for (int i = 0; i < 7; i++)
@@ -690,7 +692,6 @@ void Menu::handleEvent(const Common::Event &ev) {
 			playSfxStream("LIB046.SND");
 
 			error("Menu::handleEvent / kActionQuitGame: implementation not finished!");
-			return; // false;
 		} else {
 			drawSequenceFrame(&_seqButtons, kButtonQuit, GraphicsManager::kBackgroundOverlay);
 		}
@@ -980,7 +981,9 @@ Common::String Menu::getAcornSequenceName(GameId id) const {
 //////////////////////////////////////////////////////////////////////////
 // Overlays & elements
 //////////////////////////////////////////////////////////////////////////
-
+void Menu::checkHotspots() {
+	error("Menu::checkHotspots: not implemented!");
+}
 void Menu::drawElements() {
 	// Do not draw if the game has not yet started
 	if (!SaveLoad::isSavegameValid(_gameId))
@@ -1009,15 +1012,260 @@ void Menu::showCredits() {
 	_creditsSequenceIndex++;
 }
 
+//////////////////////////////////////////////////////////////////////////
+// Time
+//////////////////////////////////////////////////////////////////////////
+void Menu::initTime(TimeType type, uint32 time) {
+	if (!time)
+		return;
+
+	// The savegame entry index
+	uint32 entryIndex = 0;
+
+	switch (type) {
+	default:
+		break;
+
+	case kTimeType0:
+		entryIndex = (_index <= time) ? 1 : _index - time;
+		break;
+
+	case kTimeTypeTime:
+		if (time < kTimeStartGame)
+			break;
+
+		entryIndex = _index;
+		if (!entryIndex)
+			break;
+
+		// Iterate through existing entries		
+		do {
+			if (getSaveLoad()->getEntry(entryIndex)->time <= time)
+				break;
+
+			entryIndex--;
+		} while (entryIndex);
+		break;
+
+	case kTimeTypeEvent:
+		entryIndex = _index;
+		if (!entryIndex)
+			break;
+
+		do {
+			if (getSaveLoad()->getEntry(entryIndex)->event == (EventIndex)time)
+				break;
+
+			entryIndex--;
+		} while (entryIndex);
+		break;
+
+	case kTimeType3:
+		// TODO rewrite in a more legible way
+		if (_index > 1) {
+			uint32 index = _index;
+			do {
+				if (getSaveLoad()->getEntry(index)->event == (EventIndex)time)
+					break;
+
+				index--;
+			} while (index > 1);
+
+			entryIndex = index - 1;
+		} else {
+			entryIndex = _index - 1;
+		}
+		break;					 
+	}
+
+	if (entryIndex) {
+		_currentIndex = entryIndex;
+		updateTime(getSaveLoad()->getEntry(entryIndex)->time);
+	}
+}
+
+void Menu::updateTime(uint32 time) {
+	if (_currentTime == _time)
+		_delta = 0;
+	
+	_currentTime = time;
+
+	if (_time != time) {
+		if (getSound()->isBuffered(kEntityChapters))
+			getSound()->removeFromQueue(kEntityChapters);
+
+		getSound()->playSoundWithSubtitles((_currentTime >= _time) ? "LIB042.SND" : "LIB041.SND", 50855952, kEntityChapters);
+		adjustIndex(_currentTime, _time, false);
+	}
+}
+
+void Menu::adjustIndex(uint32 time1, uint32 time2, bool searchEntry) {
+	uint32 index = 0;
+	int32 timeDelta = -1;
+
+	if (time1 != time2) {
+
+		index = _index;
+
+		if (time2 >= time1) {
+			if (searchEntry) {
+				error("Menu::adjustIndex: not implemented!");
+			} else {
+				index = _index - 1;
+			}
+		} else {
+			if (searchEntry) {
+				error("Menu::adjustIndex: not implemented!");
+			} else {
+				index = _index + 1;
+			}
+		}
+
+		_index = index;
+		checkHotspots();		
+	}
+
+	if (_index == _currentIndex) {
+		if (getProgress().chapter != getSaveLoad()->getEntry(index)->chapter)
+			getProgress().chapter = getSaveLoad()->getEntry(_index)->chapter;
+	}
+}
+
+void Menu::goToTime(uint32 time) {
+
+	uint32 entryIndex = 0;
+	uint32 deltaTime = ABS((int)(getSaveLoad()->getEntry(0)->time - time));
+	uint32 index = 0;
+
+	do {
+		uint32 deltaTime2 = ABS((int)(getSaveLoad()->getEntry(index)->time - time));
+		if (deltaTime2 < deltaTime) {
+			deltaTime = deltaTime2;
+			entryIndex = index;
+		}
+
+		++index;
+	} while (_index2 >= index);
+
+	_currentIndex = entryIndex;
+	updateTime(getSaveLoad()->getEntry(entryIndex)->time);
+}
+
+void Menu::setTime() {
+	_currentIndex = _index;
+	_currentTime = getSaveLoad()->getEntry(_currentIndex)->time;
+
+	if (_time == _currentTime)
+		updateFromTime();
+}
+
+void Menu::forwardTime() {
+	if (_index2 <= _index)
+		return;
+
+	_currentIndex = _index2;
+	updateTime(getSaveLoad()->getEntry(_currentIndex)->time);
+}
+
+void Menu::rewindTime() {
+	if (!_index)
+		return;
+
+	_currentIndex = 0;
+	updateTime(getSaveLoad()->getEntry(_currentIndex)->time);
+}
+
+void Menu::updateFromTime() {
+	error("Menu::updateFromTime: not implemented!");
+}
+
+
+	//// TODO implement modifying the current game time
+	//// + adjusting elements on screen : clock + train line
+	////;getState()->time = time; // need to use targetTime var, as modifying the global state will prevent us from going into the other direction later
+
+	//// Nothing to do if the menu time is already set to the correct value
+	//// FIXME can this really happen?
+	//if (_currentTime == time)
+	//	return;
+
+	//int direction = 1;
+	//int speed = 1;
+
+	//if (_currentTime <= time) {
+	//	playSfxStream("LIB042.SND");
+	//} else {
+	//	playSfxStream("LIB041.SND");
+	//	direction = -1;
+	//}
+
+	//_engine->getCursor()->show(false);
+
+	//while (_currentTime != time) {
+	//	_currentTime = (uint32)((int32)_currentTime + direction * 500 * speed);
+	//	if (speed < 10)
+	//		speed++;
+
+	//	// Make sure we don't pass destination
+	//	if ((direction == 1 && _currentTime > time) || (direction == -1 && _currentTime < time))
+	//		_currentTime = time;
+
+	//	drawElements();
+	//	askForRedraw();
+	//	redrawScreen();
+
+	//	Common::Event ev;
+	//	_engine->getEventManager()->pollEvent(ev);
+	//	if (ev.type == Common::EVENT_RBUTTONUP) {
+	//		break;
+	//	}
+
+	//	//g_system->delayMillis(250);
+	//}
+
+	//// Draw final time
+	//_currentTime = time;
+	//drawElements();
+	//askForRedraw();
+	//redrawScreen();
+
+	//_engine->getCursor()->show(true);
+
+	//// Stop sound
+	//getSound()->getSfxStream()->stop();
+
+void Menu::moveToCity(CityButton city, bool clicked) {
+	uint32 time = cityButtonsInfo[city].time;
+
+	// TODO Check if we have access (there seems to be more checks on some internal times) - probably : current_time (menu only) / game time / some other?
+	if (getState()->time < time || _currentTime == time) {
+		return;
+	}
+
+	// Show city overlay
+	_engine->getGraphicsManager()->draw(_cityButtonFrames[city], GraphicsManager::kBackgroundOverlay);
+
+	if (clicked) {
+		playSfxStream("LIB046.SND");
+		goToTime(time);
+		// TODO set some global var to 1
+	} else {
+		StartMenuTooltips tooltip;
+		if (_currentTime < time)
+			tooltip = cityButtonsInfo[city].forward;
+		else
+			tooltip = cityButtonsInfo[city].rewind;
+		drawSequenceFrame(&_seqTooltips, tooltip, GraphicsManager::kBackgroundOverlay)
+	}
+}
+
 bool Menu::isGameFinished() const {
-	assert(_timeData.size() > _index4);
+	SaveLoad::SavegameEntryHeader *data = getSaveLoad()->getEntry(_index);
 
-	TimeData *data = _timeData[_index4];
-
-	if (_index3 != _index4)
+	if (_index2 != _index)
 		return false;
 
-	if (data->field_4 != 2)
+	if (data->type != SaveLoad::kHeaderType2)
 		return false;
 
 	return (data->event == kEventAnnaKilled
@@ -1051,91 +1299,6 @@ bool Menu::isGameFinished() const {
 		 || data->event == kEventVergesAnnaDead
 		 || data->event == kEventTrainExplosionBridge
 		 || data->event == kEventKronosBringNothing);
-}
-
-//////////////////////////////////////////////////////////////////////////
-// Time
-//////////////////////////////////////////////////////////////////////////
-
-void Menu::goToTime(uint32 time) {
-	// TODO implement modifying the current game time
-	// + adjusting elements on screen : clock + train line
-	//;getState()->time = time; // need to use targetTime var, as modifying the global state will prevent us from going into the other direction later
-
-	// Nothing to do if the menu time is already set to the correct value
-	// FIXME can this really happen?
-	if (_currentTime == time)
-		return;
-
-	int direction = 1;
-	int speed = 1;
-
-	if (_currentTime <= time) {
-		playSfxStream("LIB042.SND");
-	} else {
-		playSfxStream("LIB041.SND");
-		direction = -1;
-	}
-
-	_engine->getCursor()->show(false);
-
-	while (_currentTime != time) {
-		_currentTime = (uint32)((int32)_currentTime + direction * 500 * speed);
-		if (speed < 10)
-			speed++;
-
-		// Make sure we don't pass destination
-		if ((direction == 1 && _currentTime > time) || (direction == -1 && _currentTime < time))
-			_currentTime = time;
-
-		drawElements();
-		askForRedraw();
-		redrawScreen();
-
-		Common::Event ev;
-		_engine->getEventManager()->pollEvent(ev);
-		if (ev.type == Common::EVENT_RBUTTONUP) {
-			break;
-		}
-
-		//g_system->delayMillis(250);
-	}
-
-	// Draw final time
-	_currentTime = time;
-	drawElements();
-	askForRedraw();
-	redrawScreen();
-
-	_engine->getCursor()->show(true);
-
-	// Stop sound
-	getSound()->getSfxStream()->stop();
-}
-
-void Menu::moveToCity(CityButton city, bool clicked) {
-	uint32 time = cityButtonsInfo[city].time;
-
-	// TODO Check if we have access (there seems to be more checks on some internal times) - probably : current_time (menu only) / game time / some other?
-	if (getState()->time < time || _currentTime == time) {
-		return;
-	}
-
-	// Show city overlay
-	_engine->getGraphicsManager()->draw(_cityButtonFrames[city], GraphicsManager::kBackgroundOverlay);
-
-	if (clicked) {
-		playSfxStream("LIB046.SND");
-		goToTime(time);
-		// TODO set some global var to 1
-	} else {
-		StartMenuTooltips tooltip;
-		if (_currentTime < time)
-			tooltip = cityButtonsInfo[city].forward;
-		else
-			tooltip = cityButtonsInfo[city].rewind;
-		drawSequenceFrame(&_seqTooltips, tooltip, GraphicsManager::kBackgroundOverlay)
-	}
 }
 
 //////////////////////////////////////////////////////////////////////////

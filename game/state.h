@@ -52,7 +52,7 @@ public:
 		uint32 eventCorpseThrown;
 		uint32 field_24;
 		uint32 field_28;
-		uint32 chapter;
+		ChapterIndex chapter;
 		uint32 field_30;
 		uint32 eventMetAugust;
 		uint32 isNightTime;					///< 0 = day / 1 = night

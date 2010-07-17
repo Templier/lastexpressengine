@@ -138,8 +138,8 @@ bool Beetle::catchBeetle() {
 
 	if (getInventory()->getSelectedItem() == kItemMatchBox
 	 && getInventory()->hasItem(kItemMatch)
-	 && abs((int16)(getCoords().x - _data->coordX)) < 10
-	 && abs((int16)(getCoords().y - _data->coordY)) < 10) {
+	 && ABS((int16)(getCoords().x - _data->coordX)) < 10
+	 && ABS((int16)(getCoords().y - _data->coordY)) < 10) {
 		return true;
 	}
 
@@ -377,10 +377,10 @@ void Beetle::move() {
 	if (_data->field_D5)
 		return;
 
-	if (abs((int)(getCoords().x - _data->coordX)) > 35)
+	if (ABS((int)(getCoords().x - _data->coordX)) > 35)
 		return;
 
-	if (abs((int)(getCoords().y - _data->coordY)) > 35)
+	if (ABS((int)(getCoords().y - _data->coordY)) > 35)
 		return;
 
 	int32 deltaX = getCoords().x - _data->coordX;

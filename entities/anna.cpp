@@ -795,7 +795,7 @@ IMPLEMENT_FUNCTION(Anna, function63, 63)
 	case kActionCallback:
 		if (getCallback() == 1) {
 			getAction()->playAnimation(kEventAnnaKilled);
-			getLogic()->gameOver(kTimeType1, kTimeAnna_2, kSceneGameOverAnnaDied, true);
+			getLogic()->gameOver(kTimeTypeTime, kTimeAnna_2, kSceneGameOverAnnaDied, true);
 		}
 		break;
 
