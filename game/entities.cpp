@@ -224,13 +224,21 @@ void Entities::saveLoadWithSerializer(Common::Serializer &ser) {
 //////////////////////////////////////////////////////////////////////////
 // Setup
 //////////////////////////////////////////////////////////////////////////
-void Entities::setup(bool isFirstChapter, EntityIndex entity) {
+void Entities::setup(bool isFirstChapter, EntityIndex entityIndex) {
 	setupChapter(isFirstChapter ? kChapter1 : kChapterAll);
 
-	getFlags()->flag_4 = false;
-	if (!isFirstChapter && entity)
-		getSavePoints()->call(kEntityNone, entity, kActionNone);
+	bool flag_4 = false;
+	
+	if (!isFirstChapter) {
+		getFlags()->flag_4 = false;
 
+		if (entityIndex) {
+			getSavePoints()->call(kEntityNone, entityIndex, kActionNone);
+			flag_4 = getFlags()->flag_4;
+		}
+	}
+
+	getFlags()->flag_4 = flag_4;
 	if (!getFlags()->flag_4)
 		getScenes()->loadScene(getState()->scene);
 }

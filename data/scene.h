@@ -205,7 +205,6 @@ public:
 	Scene();
 	~Scene();
 
-	static bool load(Scene * const scene, Common::SeekableReadStream *stream, SceneHeader *header);
 	static Scene *get(Common::SeekableReadStream *stream, SceneHeader *header);
 
 	bool checkHotSpot(const Common::Point &coord, SceneHotspot **hotspot);

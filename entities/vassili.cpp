@@ -142,27 +142,16 @@ IMPLEMENT_FUNCTION(Vassili, function6, 6)
 	case kActionNone:
 		if (getEntities()->checkFields1(kEntityNone, kCarRedSleeping, kPosition_8200)) {
 
-			// FIXME: use UPDATE_paramFUNCTION
-			error("Vassili::function6: not implemented!");
-			if (params->param3) {
-				if (params->param3 >= (int)getState()->timeTicks)
-					goto label_function7;
-
-				params->param3 = kTimeInvalid;
-			} else {
-				params->param3 = (int)getState()->timeTicks + params->param1;
-				if (!params->param3) {
-					if (params->param3 >= (int)getState()->timeTicks)
-						goto label_function7;
-
-					params->param3 = kTimeInvalid;
-				}
-			}
+			UPDATE_PARAM_FUNCTION(params->param3, getState()->timeTicks, params->param1, label_function7);
 
 			setCallback(1);
 			call(new ENTITY_SETUP_SIIS(Vassili, setup_draw), "303B");
 			break;
 		}
+
+		params->param3 = 0;
+		if (params->param2)
+			getEntities()->drawSequenceLeft(kEntityVassili, "303A");
 
 label_function7:
 		if (params->param4 != kTimeInvalid && getState()->time > kTimeKronos) {
@@ -218,9 +207,8 @@ IMPLEMENT_FUNCTION(Vassili, function7, 7)
 		break;
 
 	case kActionNone:
-		// FIXME: use UPDATE_paramFUNCTION
-		error("Vassili::function7: not implemented!");
 		if (params->param1 != kTimeInvalid && getState()->time > kTimeVassili) {
+
 			 if (getState()->time <= kTimeVassili_2) {
 				 if (getEntities()->checkFields7(kCarRedSleeping) || !params->param1) {
 					 params->param1 = getState()->time + 150;

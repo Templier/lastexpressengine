@@ -184,8 +184,8 @@ void Beetle::update() {
 
 			updateData(24);
 
-			_data->coordX = random(250) + 190;
-			_data->coordOffset = random(5) + 5;
+			_data->coordX = (int16)(random(250) + 190);
+			_data->coordOffset = (int16)(random(5) + 5);
 
 			if (_data->field_D9 > 1)
 				_data->field_D9--;
@@ -207,7 +207,7 @@ void Beetle::drawUpdate() {
 	// Update current frame
 	switch (_data->indexes[_data->offset]) {
 	default:
-		_data->currentFrame = _data->currentFrame + 10;
+		_data->currentFrame += 10;
 		break;
 
 	case 3:
@@ -297,7 +297,7 @@ void Beetle::drawUpdate() {
 	// Update beetle data
 	int rnd = random(100);
 	if (_data->coordX < 165 || _data->coordX > 465) {
-		int index = 0;
+		uint index = 0;
 
 		if (rnd >= 30) {
 			if (rnd >= 70)
@@ -440,7 +440,7 @@ update_data:
 		return;
 	}
 
-	_data->coordOffset = _data->coordOffset + 4 * random(100)/100 + _data->field_D9;
+	_data->coordOffset = _data->coordOffset + (int16)(4 * random(100)/100 + _data->field_D9);
 	_data->field_D5 = 0;
 }
 

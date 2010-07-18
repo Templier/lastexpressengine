@@ -61,30 +61,29 @@ bool ResourceManager::loadArchive(ArchiveIndex type) {
 	if (_isDemo)
 		return loadArchive(archiveDemoPath);
 
-	bool loadedOk = true;
-
 	// Load HD
-	loadedOk &= loadArchive(archiveHDPath);
+	if (!loadArchive(archiveHDPath))
+		return false;
 
 	switch(type) {
 	case kArchiveCd1:
-		return loadedOk && loadArchive(archiveCD1Path);
+		return loadArchive(archiveCD1Path);
 
 	case kArchiveCd2:
-		return loadedOk && loadArchive(archiveCD2Path);
+		return loadArchive(archiveCD2Path);
 
 	case kArchiveCd3:
-		return loadedOk && loadArchive(archiveCD3Path);
+		return loadArchive(archiveCD3Path);
 
 	case kArchiveAll:
 	default:
-		loadedOk &= loadArchive(archiveCD1Path);
-		loadedOk &= loadArchive(archiveCD2Path);
-		loadedOk &= loadArchive(archiveCD3Path);
+		if (loadArchive(archiveCD1Path))
+			if (loadArchive(archiveCD2Path))
+				return loadArchive(archiveCD3Path);
 		break;
 	}
 
-	return loadedOk;
+	return false;
 }
 
 void ResourceManager::reset() {

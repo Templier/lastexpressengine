@@ -139,21 +139,6 @@ void Scene::clear() {
 Scene *Scene::get(Common::SeekableReadStream *stream, SceneHeader *header) {
 	Scene *s = new Scene();
 
-	if (!load(s, stream, header)) {
-		delete s;
-		return NULL;
-	}
-
-	return s;
-}
-
-bool Scene::load(Scene * const s, Common::SeekableReadStream *stream, SceneHeader *header) {
-	if (!s)
-		return false;
-
-	// Clear existing data
-	s->clear();
-
 	s->_header = header;
 
 	debugC(10, kLastExpressDebugScenes, "Scene:  name=%s, sig=%02d, count=%d, field_11=%d", header->name, header->sig, header->count, header->field_11);
@@ -175,7 +160,7 @@ bool Scene::load(Scene * const s, Common::SeekableReadStream *stream, SceneHeade
 		}
 	}
 
-	return true;
+	return s;
 }
 
 SceneHeader* Scene::getHeader() {

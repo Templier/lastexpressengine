@@ -54,8 +54,8 @@ public:
 	void eventTick(const Common::Event &ev);
 
 	void init();
-	void gameOver(TimeType type, TimeValue time, SceneIndex sceneIndex, bool showScene);
-	void updateCursor(bool redraw = true);
+	void gameOver(TimeType type, TimeValue time, SceneIndex sceneIndex, bool showScene) const;
+	void updateCursor(bool redraw = true) const;
 
 	Action 	   *getGameAction()   { return _action; }
 	Beetle     *getGameBeetle()   { return _beetle; }

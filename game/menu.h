@@ -48,7 +48,7 @@ public:
 	Menu(LastExpressEngine *engine);
 	~Menu();
 
-	void show(bool savegame, TimeType type, uint32 time);
+	void show(bool doSavegame, TimeType type, uint32 time);
 
 	// Event handling
 	void eventMouse(const Common::Event &ev);
@@ -130,8 +130,6 @@ private:
 
 	uint32 _creditsSequenceIndex;
 
-	void loadData();
-
 	//////////////////////////////////////////////////////////////////////////
 	// Event handling
 	uint32 _checkHotspotsTicks;
@@ -140,11 +138,13 @@ private:
 
 	bool handleEvent(StartMenuAction action, Common::EventType type);
 	void checkHotspots();
+	void setLogicEventHandlers();
 
 	//////////////////////////////////////////////////////////////////////////
 	// Game-related
-	void initGame();
-	void switchGame();
+	void initGame(bool doSavegame, TimeType type, uint32 time);
+	void startGame();
+	void switchGame();	
 	bool isGameFinished() const;
 
 	//////////////////////////////////////////////////////////////////////////
@@ -160,10 +160,14 @@ private:
 		uint operator()(const StartMenuOverlay& x) const { return x; }
 	};
 
-	Common::HashMap<StartMenuOverlay, SequenceFrame *, MenuOverlays_Hash, MenuOverlays_EqualTo> _overlays;
+	typedef Common::HashMap<StartMenuOverlay, SequenceFrame *, MenuOverlays_Hash, MenuOverlays_EqualTo> MenuFrames;
+
+	MenuFrames _frames;
 
 	void hideOverlays();
 	void showFrame(StartMenuOverlay overlay, int index, bool redraw);
+
+	void clear();
 
 	// TODO: remove?
 	void moveToCity(CityButton city, bool clicked);	
@@ -172,6 +176,7 @@ private:
 
 	//////////////////////////////////////////////////////////////////////////
 	// Misc
+	void loadData();
 	SceneIndex getSceneIndex() const;
 	Common::String getAcornSequenceName(GameId id) const;
 	

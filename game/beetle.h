@@ -59,10 +59,11 @@ private:
 		Sequence *currentSequence;
 		uint32 currentFrame;
 		uint32 index;
-		uint32 coordOffset;
+		int16 coordOffset;
+		int16 field_86;
 
-		uint16 coordX;
-		uint16 coordY;
+		int16 coordX;
+		int16 coordY;
 
 		uint32 indexes[16];
 
@@ -79,6 +80,8 @@ private:
 			currentFrame = 0;
 			index = 0;
 			coordOffset = 0;
+
+			field_86 = 0;
 
 			coordX = 0;
 			coordY = 0;

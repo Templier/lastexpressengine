@@ -173,6 +173,7 @@ static const struct {
 
 //////////////////////////////////////////////////////////////////////////
 // Clock
+//////////////////////////////////////////////////////////////////////////
 class Clock {
 public:
 	Clock(LastExpressEngine *engine);
@@ -259,7 +260,9 @@ void Clock::draw(uint32 time) {
 	getScenes()->addToQueue(_frameDate);
 }
 
+//////////////////////////////////////////////////////////////////////////
 // TrainLine
+//////////////////////////////////////////////////////////////////////////
 class TrainLine {
 public:
 	TrainLine(LastExpressEngine *engine);
@@ -297,7 +300,6 @@ void TrainLine::clear() {
 // Draw the train line at the time
 //  line1: 150 frames (=> Belgrade)
 //  line2: 61 frames (=> Constantinople)
-// text:0042E710
 void TrainLine::draw(uint32 time) {
 	assert(time >= kTimeCityParis && time <= kTimeCityConstantinople);
 
@@ -435,7 +437,7 @@ void Menu::eventTick(const Common::Event&) {
 
 //////////////////////////////////////////////////////////////////////////
 // Show the intro and load the main menu scene
-void Menu::show(bool savegame, TimeType type, uint32 time) {
+void Menu::show(bool doSavegame, TimeType type, uint32 time) {
 
 	if (_isShowingMenu)
 		return;
@@ -473,6 +475,7 @@ void Menu::show(bool savegame, TimeType type, uint32 time) {
 
 	_hasShownStartScreen = true;
 
+	initGame(doSavegame, type, time);
 	// Init savegame
 	// FIXME: getSavegame()->init(savegame, type, time);
 
@@ -504,44 +507,6 @@ void Menu::show(bool savegame, TimeType type, uint32 time) {
 
 	// Set event handlers
 	SET_EVENT_HANDLERS(Menu, this);
-}
-
-// Get menu scene index
-LastExpress::SceneIndex Menu::getSceneIndex() const {
-	// TODO Do check for DWORD at text:004ADF70 < 0x1030EC
-
-	// + 1 = normal menu with open egg / clock
-	// + 2 = shield menu, when no savegame exists (no game has been started)
-	return (SceneIndex)(SaveLoad::isSavegameValid(_gameId) ? _gameId * 5 + 1 : _gameId * 5 + 2);
-}
-
-// Switch to the next savegame
-void Menu::switchGame() {
-	// Switch back to blue game is the current game is not started
-	if (!_isGameStarted) {
-		_gameId = kGameBlue;
-	} else {
-		_gameId = getNextGameId();
-	}
-
-	// Initialize savegame if needed
-	if (!SaveLoad::isSavegamePresent(_gameId))
-		SaveLoad::initSavegame(_gameId);
-
-	// Reset run state
-	_isGameStarted = false;
-
-	// TODO load data from savegame, adjust volume & luminosity, etc...
-	//////////////////////////////////////////////////////////////////////////
-	// HACK for debug
-	if (_gameId == kGameBlue) {
-		getState()->time = kTimeCityPoszony;
-		_isGameStarted = true;
-	}
-	//////////////////////////////////////////////////////////////////////////
-
-	// Redraw all menu elements
-	show(false, kTimeType0, 0);
 }
 
 bool Menu::handleEvent(StartMenuAction action, Common::EventType type) {
@@ -598,51 +563,49 @@ bool Menu::handleEvent(StartMenuAction action, Common::EventType type) {
 
 		playSfxStream("LIB046.SND");
 
-		// Set event callbacks for logic
-		SET_EVENT_HANDLERS(Logic, getLogic());
+		// Setup new game
 		getSavePoints()->reset();
+		setLogicEventHandlers();
 
-		// TODO: to implement in logic...
-		//  - load new data file
-		//  - show intro if new game
-		//  - Reset save game & "save points"
-		//  - etc.
-		if (!SaveLoad::isSavegameValid(kGameBlue)) {
-			getState()->scene = kSceneDefault; // HACK to not show menu after we are finished
-			clearBg(GraphicsManager::kBackgroundAll);
+		// TODO: sound entry loop
 
-			showScene((SceneIndex)(5 * _gameId + 3), GraphicsManager::kBackgroundC);
-			askForRedraw(); redrawScreen();
-			_engine->_system->delayMillis(200);
+		if (!getFlags()->mouseRightClick) {
+			getScenes()->loadScene((SceneIndex)(5 * _gameId + 3));
 
-			showScene((SceneIndex)(5 * _gameId + 3), GraphicsManager::kBackgroundC);
-			askForRedraw(); redrawScreen();
-			_engine->_system->delayMillis(200);
+			if (!getFlags()->mouseRightClick) {
+				getScenes()->loadScene((SceneIndex)(5 * _gameId + 4));
 
-			showScene((SceneIndex)(5 * _gameId + 3), GraphicsManager::kBackgroundC);
-			askForRedraw(); redrawScreen();
-			_engine->_system->delayMillis(200);
+				if (!getFlags()->mouseRightClick) {
+					getScenes()->loadScene((SceneIndex)(5 * _gameId + 5));
 
-			// Show intro
-			Animation animation;
-			if (animation.load(getArchive("1601.nis")))
-				animation.play();
+					if (!getFlags()->mouseRightClick) {
+						// TODO more soundcache events
+
+						// Show intro
+						Animation animation;
+						if (animation.load(getArchive("1601.nis")))
+							animation.play();
+
+						getEvent(kEventIntro) = 1;
+					}
+				}
+			}
 		}
+		
+		if (!getEvent(kEventIntro))	{
+			getEvent(kEventIntro) = 1;
 
-		clearBg(GraphicsManager::kBackgroundAll);
-
-		_isShowingMenu = false;
+			// TODO sound loop
+		}
 
 		// Setup game
 		getFlags()->isGameRunning = true;
+		startGame();
 
-		getState()->scene = kSceneDefault;
-		// TODO reset all game data
-		getEntities()->setup(true, kEntityNone);
+		if (!_isShowingMenu)
+			getInventory()->show();
 
-		getInventory()->show();
-		askForRedraw();
-		break;
+		return false;		
 
 	//////////////////////////////////////////////////////////////////////////
 	case kMenuCredits:
@@ -871,15 +834,185 @@ bool Menu::handleEvent(StartMenuAction action, Common::EventType type) {
 		break;
 	}
 
-	
-
 	return true;
+}
+
+void Menu::setLogicEventHandlers() {
+	SET_EVENT_HANDLERS(Logic, getLogic());
+	clear();
+	_isShowingMenu = false;
+}
+
+//////////////////////////////////////////////////////////////////////////
+// Game-related
+//////////////////////////////////////////////////////////////////////////
+void Menu::initGame(bool doSavegame, TimeType type, uint32 time) {
+	warning("Menu::initGame: not implemented!");
+
+	if (time >= kTimeStartGame) {
+		_currentTime = time;
+		_time = time;
+		_clock->draw(time);
+		_trainLine->draw(time);
+
+		initTime(type, time);
+	}
+}
+
+void Menu::startGame() {
+	// TODO: we need to reset the current scene
+	getState()->scene = kSceneDefault;
+
+	getEntities()->setup(true, kEntityNone);
+	warning("Menu::startGame: not implemented!");
+}
+
+// Switch to the next savegame
+void Menu::switchGame() {
+	// Switch back to blue game is the current game is not started
+	if (!_isGameStarted) {
+		_gameId = kGameBlue;
+	} else {
+		_gameId = getNextGameId();
+	}
+
+	// Initialize savegame if needed
+	if (!SaveLoad::isSavegamePresent(_gameId))
+		SaveLoad::initSavegame(_gameId);
+
+	// Reset run state
+	_isGameStarted = false;
+
+	// TODO load data from savegame, adjust volume & luminosity, etc...
+	//////////////////////////////////////////////////////////////////////////
+	// HACK for debug
+	if (_gameId == kGameBlue) {
+		getState()->time = kTimeCityPoszony;
+		_isGameStarted = true;
+	}
+	//////////////////////////////////////////////////////////////////////////
+
+	// Redraw all menu elements
+	show(false, kTimeType0, 0);
+}
+
+bool Menu::isGameFinished() const {
+	SaveLoad::SavegameEntryHeader *data = getSaveLoad()->getEntry(_index);
+
+	if (_index2 != _index)
+		return false;
+
+	if (data->type != SaveLoad::kHeaderType2)
+		return false;
+
+	return (data->event == kEventAnnaKilled
+		 || data->event == kEventKronosHostageAnnaNoFirebird
+		 || data->event == kEventKahinaPunch
+		 || data->event == kEventKahinaPunchBlue
+		 || data->event == kEventKahinaPunchYellow
+		 || data->event == kEventKahinaPunchSuite
+		 || data->event == kEventKahinaPunchSuite2
+		 || data->event == kEventKahinaPunchSuite3
+		 || data->event == kEventKahinaPunchCar
+		 || data->event == kEventKahinaPunchSuite4
+		 || data->event == kEventKahinaPunchSuite5
+		 || data->event == kEventKahinaPunchRestaurant
+		 || data->event == kEventKronosGiveFirebird
+		 || data->event == kEventAugustFindCorpse
+		 || data->event == kEventMertensBloodJacket
+		 || data->event == kEventMertensCorpseFloor
+		 || data->event == kEventMertensCorpseBed
+		 || data->event == kEventCoudertBloodJacket
+		 || data->event == kEventGendarmesArrestation
+		 || data->event == kEventAbbotDrinkGiveDetonator
+		 || data->event == kEventMilosCorpseFloor
+		 || data->event == kEventLocomotiveAnnaStopsTrain
+		 || data->event == kEventTrainStopped
+		 || data->event == kEventCathVesnaRestaurantKilled
+		 || data->event == kEventCathVesnaTrainTopKilled
+		 || data->event == kEventLocomotiveConductorsDiscovered
+		 || data->event == kEventViennaAugustUnloadGuns
+		 || data->event == kEventViennaKronosFirebird
+		 || data->event == kEventVergesAnnaDead
+		 || data->event == kEventTrainExplosionBridge
+		 || data->event == kEventKronosBringNothing);
+}
+
+//////////////////////////////////////////////////////////////////////////
+// Overlays & elements
+//////////////////////////////////////////////////////////////////////////
+void Menu::checkHotspots() {
+	if (!_isShowingMenu)
+		return;
+
+	if (!getFlags()->shouldRedraw)
+		return;
+
+	if (_isShowingCredits)
+		return;
+
+	SceneHotspot *hotspot = NULL;
+	getScenes()->get(getState()->scene)->checkHotSpot(getCoords(), &hotspot);
+
+	if (hotspot)
+		handleEvent((StartMenuAction)hotspot->action, _mouseFlags);
+	else
+		hideOverlays();
+}
+
+void Menu::hideOverlays() {
+	_lastHotspot = NULL;
+
+	// Hide all menu overlays
+	for (MenuFrames::iterator it = _frames.begin(); it != _frames.end(); it++)
+		showFrame(it->_key, -1, false);
+
+	getScenes()->drawFrames(true);
+}
+
+void Menu::showFrame(StartMenuOverlay overlayType, int index, bool redraw) {
+	if (index == -1) {
+		getScenes()->removeAndRedraw(_frames[overlayType], redraw);
+	} else {
+		// Check that the overlay is valid or not already showing
+		if (!_frames[overlayType])
+			return;
+
+		if (_frames[overlayType]->getFrame() == (uint32)index)
+			return;
+
+		// Remove the frame and add a new one with the proper index
+		getScenes()->removeAndRedraw(_frames[overlayType], false);		
+		_frames[overlayType]->setFrame(index);
+		getScenes()->addToQueue(_frames[overlayType]);
+
+		if (redraw)
+			getScenes()->drawFrames(true);
+	}
+}
+
+// Remove all frames from the queue
+void Menu::clear() {
+	for (MenuFrames::iterator it = _frames.begin(); it != _frames.end(); it++)
+		getScenes()->removeAndRedraw(it->_value, false);
+}
+
+// Show credits overlay
+void Menu::showCredits() {
+	clearBg(GraphicsManager::kBackgroundOverlay);
+
+	if (!_isShowingCredits || _creditsSequenceIndex > _seqCredits.count() - 1) {
+		_isShowingCredits = false;
+		return;
+	}
+
+	drawSequenceFrame(&_seqCredits, _creditsSequenceIndex, GraphicsManager::kBackgroundA);
+	_creditsSequenceIndex++;
 }
 
 //////////////////////////////////////////////////////////////////////////
 // Helper functions
 //////////////////////////////////////////////////////////////////////////
-
 void Menu::loadData() {
 	bool loaded = true;
 
@@ -917,12 +1050,12 @@ void Menu::loadData() {
 	assert(loaded == true);
 
 	// FIXME: rewrite rest of function
-	_overlays[kOverlayTooltip] = new SequenceFrame(&_seqTooltips, 0, false);
-	_overlays[kOverlayEggButtons] = new SequenceFrame(&_seqEggButtons, 0, false);
-	_overlays[kOverlayButtons] = new SequenceFrame(&_seqButtons, 0, false);
-	_overlays[kOverlayAcorn] = new SequenceFrame(&_seqAcorn, 0, false);
+	_frames[kOverlayTooltip] = new SequenceFrame(&_seqTooltips, 0, false);
+	_frames[kOverlayEggButtons] = new SequenceFrame(&_seqEggButtons, 0, false);
+	_frames[kOverlayButtons] = new SequenceFrame(&_seqButtons, 0, false);
+	_frames[kOverlayAcorn] = new SequenceFrame(&_seqAcorn, 0, false);
 
-	_overlays[kOverlayCredits] = new SequenceFrame(&_seqCredits, 0, false);
+	_frames[kOverlayCredits] = new SequenceFrame(&_seqCredits, 0, false);
 }
 
 // Get the sequence name to use for the acorn highlight, depending of the currently loaded savegame
@@ -962,70 +1095,13 @@ Common::String Menu::getAcornSequenceName(GameId id) const {
 	return name;
 }
 
-//////////////////////////////////////////////////////////////////////////
-// Overlays & elements
-//////////////////////////////////////////////////////////////////////////
-void Menu::checkHotspots() {
-	if (!_isShowingMenu)
-		return;
+// Get menu scene index
+LastExpress::SceneIndex Menu::getSceneIndex() const {
+	// TODO Do check for DWORD at text:004ADF70 < 0x1030EC
 
-	if (!getFlags()->shouldRedraw)
-		return;
-
-	if (_isShowingCredits)
-		return;
-
-	SceneHotspot *hotspot = NULL;
-	getScenes()->get(getState()->scene)->checkHotSpot(getCoords(), &hotspot);
-
-	if (hotspot)
-		handleEvent((StartMenuAction)hotspot->action, _mouseFlags);
-	else
-		hideOverlays();
-}
-
-void Menu::hideOverlays() {
-	_lastHotspot = NULL;
-
-	// Hide all menu overlays
-	for (uint32 i = 0; i < _overlays.size(); i++)
-		showFrame((StartMenuOverlay)i, -1, false);
-
-	getScenes()->drawFrames(true);
-}
-
-void Menu::showFrame(StartMenuOverlay overlayType, int index, bool redraw) {
-	if (index == -1) {
-		getScenes()->removeAndRedraw(_overlays[overlayType], redraw);
-	} else {
-		// Check that the overlay is valid or not already showing
-		if (!_overlays[overlayType])
-			return;
-
-		if (_overlays[overlayType]->getFrame() == (uint32)index)
-			return;
-
-		// Remove the frame and add a new one with the proper index
-		getScenes()->removeAndRedraw(_overlays[overlayType], false);		
-		_overlays[overlayType]->setFrame(index);
-		getScenes()->addToQueue(_overlays[overlayType]);
-
-		if (redraw)
-			getScenes()->drawFrames(true);
-	}
-}
-
-// Show credits overlay
-void Menu::showCredits() {
-	clearBg(GraphicsManager::kBackgroundOverlay);
-
-	if (!_isShowingCredits || _creditsSequenceIndex > _seqCredits.count() - 1) {
-		_isShowingCredits = false;
-		return;
-	}
-
-	drawSequenceFrame(&_seqCredits, _creditsSequenceIndex, GraphicsManager::kBackgroundA);
-	_creditsSequenceIndex++;
+	// + 1 = normal menu with open egg / clock
+	// + 2 = shield menu, when no savegame exists (no game has been started)
+	return (SceneIndex)(SaveLoad::isSavegameValid(_gameId) ? _gameId * 5 + 1 : _gameId * 5 + 2);
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -1272,48 +1348,6 @@ void Menu::moveToCity(CityButton city, bool clicked) {
 			tooltip = cityButtonsInfo[city].rewind;
 		drawSequenceFrame(&_seqTooltips, tooltip, GraphicsManager::kBackgroundOverlay)
 	}
-}
-
-bool Menu::isGameFinished() const {
-	SaveLoad::SavegameEntryHeader *data = getSaveLoad()->getEntry(_index);
-
-	if (_index2 != _index)
-		return false;
-
-	if (data->type != SaveLoad::kHeaderType2)
-		return false;
-
-	return (data->event == kEventAnnaKilled
-		 || data->event == kEventKronosHostageAnnaNoFirebird
-		 || data->event == kEventKahinaPunch
-		 || data->event == kEventKahinaPunchBlue
-		 || data->event == kEventKahinaPunchYellow
-		 || data->event == kEventKahinaPunchSuite
-		 || data->event == kEventKahinaPunchSuite2
-		 || data->event == kEventKahinaPunchSuite3
-		 || data->event == kEventKahinaPunchCar
-		 || data->event == kEventKahinaPunchSuite4
-		 || data->event == kEventKahinaPunchSuite5
-		 || data->event == kEventKahinaPunchRestaurant
-		 || data->event == kEventKronosGiveFirebird
-		 || data->event == kEventAugustFindCorpse
-		 || data->event == kEventMertensBloodJacket
-		 || data->event == kEventMertensCorpseFloor
-		 || data->event == kEventMertensCorpseBed
-		 || data->event == kEventCoudertBloodJacket
-		 || data->event == kEventGendarmesArrestation
-		 || data->event == kEventAbbotDrinkGiveDetonator
-		 || data->event == kEventMilosCorpseFloor
-		 || data->event == kEventLocomotiveAnnaStopsTrain
-		 || data->event == kEventTrainStopped
-		 || data->event == kEventCathVesnaRestaurantKilled
-		 || data->event == kEventCathVesnaTrainTopKilled
-		 || data->event == kEventLocomotiveConductorsDiscovered
-		 || data->event == kEventViennaAugustUnloadGuns
-		 || data->event == kEventViennaKronosFirebird
-		 || data->event == kEventVergesAnnaDead
-		 || data->event == kEventTrainExplosionBridge
-		 || data->event == kEventKronosBringNothing);
 }
 
 //////////////////////////////////////////////////////////////////////////

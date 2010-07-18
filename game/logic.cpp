@@ -181,7 +181,7 @@ void Logic::eventMouse(const Common::Event &ev) {
 				getInventory()->unselectItem();
 		}
 
-		REDRAW_CURSOR();
+		REDRAW_CURSOR()
 	}
 
 	// Handle match case
@@ -207,7 +207,7 @@ void Logic::eventMouse(const Common::Event &ev) {
 			getScenes()->processScene();
 		}
 
-		REDRAW_CURSOR();
+		REDRAW_CURSOR()
 	}
 
 	// Handle entity item case
@@ -303,7 +303,7 @@ void Logic::eventMouse(const Common::Event &ev) {
 		switchChapter();
 }
 
-void Logic::eventTick(const Common::Event &ev) {
+void Logic::eventTick(const Common::Event &) {
 	uint ticks = 1;
 
 	//////////////////////////////////////////////////////////////////////////
@@ -411,7 +411,7 @@ void Logic::eventTick(const Common::Event &ev) {
 //////////////////////////////////////////////////////////////////////////
 
 // Handle game over
-void Logic::gameOver(TimeType type, TimeValue time, SceneIndex sceneIndex, bool showScene) {
+void Logic::gameOver(TimeType type, TimeValue time, SceneIndex sceneIndex, bool showScene) const {
 
 	getSound()->unknownFunction3();
 	getEntities()->reset();
@@ -499,7 +499,7 @@ void Logic::showCredits() {
 //////////////////////////////////////////////////////////////////////////
 // Misc
 //////////////////////////////////////////////////////////////////////////
-void Logic::updateCursor(bool redraw) {
+void Logic::updateCursor(bool) const { /* the cursor is always updated, even when we don't want to redraw it */
 	CursorStyle style = kCursorNormal;
 	bool interact = false;
 

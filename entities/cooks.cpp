@@ -424,15 +424,7 @@ IMPLEMENT_FUNCTION(Cooks, function11, 11)
 		break;
 
 	case kActionNone:
-		// FIXME: use UPDATE_paramFUNCTION
-		error("Cooks::function11: not implemented!");
-		if (params->param4) {
-			if (params->param4 > (int)getState()->time)
-				goto update_params;
-			params->param4 = kTimeInvalid;
-		} else {
-			params->param4 = params->param2 + (int)getState()->time;
-		}
+		UPDATE_PARAM_FUNCTION(params->param4, getState()->time, params->param2, update_params);
 
 		// Broken plate sound
 		getSound()->playSound(kEntityNone, "LIB122",  getEntities()->getSoundValue(kEntityCooks));
