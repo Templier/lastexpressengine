@@ -26,6 +26,7 @@
 #include "lastexpress/entities/verges.h"
 
 #include "lastexpress/game/entities.h"
+#include "lastexpress/game/inventory.h"
 #include "lastexpress/game/logic.h"
 #include "lastexpress/game/object.h"
 #include "lastexpress/game/savepoint.h"
@@ -288,7 +289,85 @@ IMPLEMENT_FUNCTION(Verges, function25, 25)
 }
 
 IMPLEMENT_FUNCTION(Verges, chapter1_handler, 26)
-	error("Verges: callback function 26 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionNone:
+		error("Verges: callback function 26 not implemented!");
+		break;
+
+	case kAction9:
+		setCallback(17);
+		call(new ENTITY_SETUP(Verges, setup_function13), savepoint.param.intValue < 106 ? true : false);
+		break;
+
+	case kActionDefault:
+		getData()->car = kCarBaggage;
+		getData()->entityPosition = kPosition_5000;
+		getData()->field_493 = kField493_0;
+
+		getEntities()->prepareSequences(kEntityVerges);
+		getInventory()->setLocationAndProcess(kItem9, kLocation1);
+		break;
+
+	case kActionCallback:
+		error("Coudert: callback function 40 not implemented!");
+
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			break;
+
+		case 2:
+			break;
+
+		case 3:
+			break;
+
+		case 4:
+			break;
+
+		case 5:
+			break;
+
+		case 6:
+			break;
+
+		case 7:
+			break;
+
+		case 8:
+			break;
+
+		case 9:
+			break;
+
+		case 10:
+			break;
+
+		case 11:
+			break;
+
+		case 12:
+			break;
+
+		case 13:
+			break;
+
+		case 14:
+			break;
+
+		case 15:
+			break;
+
+		case 16:
+			break;
+		}
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Verges, chapter2, 27)

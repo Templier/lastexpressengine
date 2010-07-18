@@ -189,7 +189,38 @@ IMPLEMENT_FUNCTION(Tatiana, function18, 18)
 }
 
 IMPLEMENT_FUNCTION(Tatiana, chapter1_handler, 19)
-	error("Tatiana: callback function 19 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionNone:
+		error("Tatiana: callback function 17 not implemented!");
+		break;
+
+	case kActionDefault:
+		getSavePoints()->push(kEntityTatiana, kEntityTables4, kAction136455232);
+		getEntities()->drawSequenceLeft(kEntityTatiana, "014A");
+		break;
+
+	case kAction17:		
+		params->param1 = getEntities()->isPlayerPosition(kCarRestaurant, 67) ? 1 : 0;
+		params->param4 = getEntities()->isPlayerPosition(kCarRestaurant, 69) 
+		              || getEntities()->isPlayerPosition(kCarRestaurant, 70)
+		              || getEntities()->isPlayerPosition(kCarRestaurant, 71);
+		break;
+
+	case kAction122288808:
+		getEntities()->drawSequenceLeft(kEntityTatiana, "014A");
+		break;
+
+	case kAction122358304:
+		getEntities()->drawSequenceLeft(kEntityTatiana, "BLANK");
+		break;
+
+	case kAction124973510:
+		setup_function20();
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Tatiana, function20, 20)

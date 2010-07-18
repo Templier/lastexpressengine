@@ -150,7 +150,7 @@ void Entity::function1Clothes(const SavePoint &savepoint) {
 // param1: savegame entry type
 // param2: EventIndex
 void Entity::savegame(const SavePoint &savepoint) {
-	EXPOSE_PARAMS(EntityData::EntityParametersIIII)	
+	EXPOSE_PARAMS(EntityData::EntityParametersIIII)
 
 	switch (savepoint.action) {
 	default:
@@ -168,7 +168,7 @@ void Entity::savegame(const SavePoint &savepoint) {
 }
 
 void Entity::playSound(const SavePoint &savepoint, bool resetItem, int param3) {
-	EXPOSE_PARAMS(EntityData::EntityParametersSIIS)	
+	EXPOSE_PARAMS(EntityData::EntityParametersSIIS)
 
 	switch (savepoint.action) {
 	default:
@@ -189,7 +189,7 @@ void Entity::playSound(const SavePoint &savepoint, bool resetItem, int param3) {
 
 void Entity::draw(const SavePoint &savepoint, bool handleExcuseMe) {
 	EXPOSE_PARAMS(EntityData::EntityParametersSIIS)
-	
+
 	switch (savepoint.action) {
 	default:
 		break;
@@ -212,7 +212,7 @@ void Entity::draw(const SavePoint &savepoint, bool handleExcuseMe) {
 }
 
 void Entity::draw2(const SavePoint &savepoint) {
-	EXPOSE_PARAMS(EntityData::EntityParametersSSII)	
+	EXPOSE_PARAMS(EntityData::EntityParametersSSII)
 
 	switch (savepoint.action) {
 	default:
@@ -288,7 +288,7 @@ void Entity::savepointCheckFields11(const SavePoint &savepoint) {
 }
 
 void Entity::checkEntity(const SavePoint &savepoint, bool handleExcuseMe) {
-	EXPOSE_PARAMS(EntityData::EntityParametersIIII)	
+	EXPOSE_PARAMS(EntityData::EntityParametersIIII)
 
 	switch (savepoint.action) {
 	default:
@@ -313,7 +313,7 @@ void Entity::checkEntity(const SavePoint &savepoint, bool handleExcuseMe) {
 }
 
 void Entity::savepointCall(const SavePoint &savepoint, bool handleExcuseMe) {
-	EXPOSE_PARAMS(EntityData::EntityParametersSIIS)	
+	EXPOSE_PARAMS(EntityData::EntityParametersSIIS)
 
 	switch (savepoint.action) {
 	default:
@@ -349,7 +349,7 @@ void Entity::savepointCall(const SavePoint &savepoint, bool handleExcuseMe) {
 // param1: sequence
 // param2: object index
 void Entity::enterExitCompartment(const SavePoint &savepoint) {
-	EXPOSE_PARAMS(EntityData::EntityParametersSIIS)	
+	EXPOSE_PARAMS(EntityData::EntityParametersSIIS)
 
 	switch (savepoint.action) {
 	default:

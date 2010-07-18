@@ -96,7 +96,7 @@ IMPLEMENT_FUNCTION_S(Servers0, draw, 3)
 	Entity::draw(savepoint, true);
 }
 
-IMPLEMENT_FUNCTION_NOSETUP(Servers0, updatePosition, 4)	
+IMPLEMENT_FUNCTION_NOSETUP(Servers0, updatePosition, 4)
 	Entity::updatePosition(savepoint, true);
 }
 

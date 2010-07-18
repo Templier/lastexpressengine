@@ -608,7 +608,7 @@ enum InventoryItem {
 	kPortraitGreen     = 34,
 	kPortraitYellow    = 36,
 
-	kInventoryInvalid  = 128,
+	kItemInvalid  = 128,
 
 	kItem146 = 146
 };
@@ -1094,6 +1094,7 @@ enum ActionIndex {
 	kAction8               = 8,
 	kAction9               = 9,
 	kAction10              = 10,
+	kAction11              = 11,
 	kActionDefault         = 12,
 	kAction16              = 16,
 	kAction17              = 17,
@@ -1162,6 +1163,7 @@ enum ActionIndex {
 	kAction154005632 = 154005632,
 	kAction155991520 = 155991520,
 	kAction157026693 = 157026693,
+	kAction168253822 = 168253822,
 	kAction168254872 = 168254872,
 	kAction169557824 = 169557824,
 	kAction171394341 = 171394341,    // Coudert / Mertens
@@ -1172,8 +1174,10 @@ enum ActionIndex {
 	kAction189750912 = 189750912,
 	kAction201431954 = 201431954,    // Coudert / Mertens / Verges
 	kAction205033696 = 205033696,
+	kAction225932896 = 225932896,
 	kAction226031488 = 226031488,    // Coudert / Verges
 	kAction292048641 = 292048641,
+	kAction305159806 = 305159806,
 	kAction326348944 = 326348944,
 	kAction339669520 = 339669520,    // Coudert / Verges
 
@@ -1339,6 +1343,7 @@ enum ActionIndex {
 	/////////////////////////////
 	// Tatiana
 	/////////////////////////////
+	kAction124973510 = 124973510,
 	kAction169360385 = 169360385,
 	kAction191198209 = 191198209,
 

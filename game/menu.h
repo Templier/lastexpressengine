@@ -144,7 +144,7 @@ private:
 	// Game-related
 	void initGame(bool doSavegame, TimeType type, uint32 time);
 	void startGame();
-	void switchGame();	
+	void switchGame();
 	bool isGameFinished() const;
 
 	//////////////////////////////////////////////////////////////////////////
@@ -170,21 +170,21 @@ private:
 	void clear();
 
 	// TODO: remove?
-	void moveToCity(CityButton city, bool clicked);	
+	void moveToCity(CityButton city, bool clicked);
 	void showCredits();
-	
+
 
 	//////////////////////////////////////////////////////////////////////////
 	// Misc
 	void loadData();
 	SceneIndex getSceneIndex() const;
 	Common::String getAcornSequenceName(GameId id) const;
-	
+
 	//////////////////////////////////////////////////////////////////////////
 	// Time
 	uint32 _currentIndex; // current savegame entry
 	uint32 _currentTime;  // current game time
-	
+
 	uint32 _index;
 	uint32 _index2;
 	uint32 _time;
@@ -194,11 +194,11 @@ private:
 	void initTime(TimeType type, uint32 time);
 	void updateTime(uint32 time);
 	void adjustTime();
-	void adjustIndex(uint32 time1, uint32 time2, bool searchEntry);	
-	void goToTime(uint32 time);	
+	void adjustIndex(uint32 time1, uint32 time2, bool searchEntry);
+	void goToTime(uint32 time);
 	void setTime();
 	void forwardTime();
-	void rewindTime();	
+	void rewindTime();
 	bool hasTimeDelta() { return (_currentTime - _time) >= 1; }
 
 	//////////////////////////////////////////////////////////////////////////

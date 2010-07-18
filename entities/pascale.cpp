@@ -207,8 +207,8 @@ switch (savepoint.action) {
 
 	case kActionNone:
 		if (!params->param2) {
-			if (getEntities()->isPlayerPosition(kCarRestaurant, 69) 
-			 || getEntities()->isPlayerPosition(kCarRestaurant, 70) 
+			if (getEntities()->isPlayerPosition(kCarRestaurant, 69)
+			 || getEntities()->isPlayerPosition(kCarRestaurant, 70)
 			 || getEntities()->isPlayerPosition(kCarRestaurant, 71))
 				params->param2 = 1;
 

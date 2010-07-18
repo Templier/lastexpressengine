@@ -29,6 +29,7 @@
 #include "lastexpress/game/logic.h"
 #include "lastexpress/game/object.h"
 #include "lastexpress/game/savepoint.h"
+#include "lastexpress/game/scenes.h"
 #include "lastexpress/game/sound.h"
 #include "lastexpress/game/state.h"
 
@@ -302,7 +303,95 @@ IMPLEMENT_FUNCTION(Coudert, function39, 39)
 }
 
 IMPLEMENT_FUNCTION(Coudert, chapter1_handler, 40)
-	error("Coudert: callback function 40 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionNone:
+		error("Coudert: callback function 40 not implemented!");
+		break;
+
+	case kAction1:
+		getData()->inventoryItem = kItemNone;
+
+		setCallback(11);
+		call(new ENTITY_SETUP(Coudert, setup_savegame), kSavegameType2, kEventCoudertAskTylerCompartment);
+		break;
+
+	case kAction11:
+		error("Coudert: callback function 40 not implemented!");
+		break;
+
+	case kActionDefault:
+		getData()->car = kCarRedSleeping;
+		getData()->entityPosition = kPosition_1500;
+		getData()->field_493 = kField493_0;
+
+		getScenes()->loadSceneFromItemPosition(kItem5);
+		break;
+
+	case kAction17:
+		error("Coudert: callback function 40 not implemented!");
+		break;
+
+	case kActionCallback:
+		error("Coudert: callback function 40 not implemented!");
+
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			break;
+
+		case 4:
+			break;
+
+		case 5:
+			break;
+
+		case 6:
+			break;
+
+		case 7:
+			break;
+
+		case 8:
+			break;
+
+		case 9:
+			break;
+
+		case 10:
+			break;
+
+		case 11:
+			break;
+
+		case 12:
+			break;
+
+		case 14:
+			break;
+		}
+		break;
+
+	case kAction168253822:
+		error("Coudert: callback function 40 not implemented!");
+		break;
+
+	case kAction225358684:
+		error("Coudert: callback function 40 not implemented!");
+		break;
+
+	case kAction225932896:
+		error("Coudert: callback function 40 not implemented!");
+		break;
+
+	case kAction305159806:
+		error("Coudert: callback function 40 not implemented!");
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Coudert, function41, 41)

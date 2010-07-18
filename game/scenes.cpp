@@ -321,7 +321,7 @@ LastExpress::SceneIndex SceneManager::processIndex(SceneIndex index) {
 	default:
 		break;
 
-	case kCarRedSleeping:	
+	case kCarRedSleeping:
 		if (checkPosition(index, kCheckPositionLookingAtDoors)) {
 			Position position = (Position)(scene->position + (checkPosition(kSceneNone, kCheckPositionType0) ? -1 : 1));
 
@@ -341,7 +341,7 @@ LastExpress::SceneIndex SceneManager::processIndex(SceneIndex index) {
 				break;
 
 			case 41:
-			case 51:			
+			case 51:
 				if (!getEntities()->getPosition(car, 39))
 					return getSceneIndexFromPosition(car, 39);
 				// Fallback to next case
@@ -380,18 +380,18 @@ LastExpress::SceneIndex SceneManager::processIndex(SceneIndex index) {
 			case 57:
 				if (!getEntities()->getPosition(car, 27))
 					return getSceneIndexFromPosition(car, 27);
-				// Fallback to next case	
+				// Fallback to next case
 
 			case 48:
 			case 58:
 				if (!getEntities()->getPosition(car, 2))
 					return getSceneIndexFromPosition(car, 2);
 				break;
-			}	
-		}		
+			}
+		}
 		break;
 
-	case kCarRestaurant:	
+	case kCarRestaurant:
 		switch (scene->position) {
 		default:
 			break;
@@ -438,9 +438,9 @@ LastExpress::SceneIndex SceneManager::processIndex(SceneIndex index) {
 		case 69:
 		case 71:
 			if (!getEntities()->getPosition(car, 70))
-				return getSceneIndexFromPosition(car, 70);			
+				return getSceneIndexFromPosition(car, 70);
 			break;
-		}		
+		}
 		break;
 	}
 
@@ -692,7 +692,7 @@ void SceneManager::removeFromQueue(SequenceFrame *frame) {
 			_queue.erase(i);
 			_flagDrawSequences = true;
 			break;
-		}		
+		}
 	}
 }
 

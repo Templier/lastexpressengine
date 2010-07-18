@@ -314,7 +314,7 @@ IMPLEMENT_FUNCTION(August, chapter1_handler, 25)
 		} else {
 			setCallback(4);
 			call(new ENTITY_SETUP(August, setup_savegame), kSavegameType2, kEventDinerAugustOriginalJacket);
-		}		
+		}
 		break;
 
 	case kActionDefault:
@@ -322,7 +322,7 @@ IMPLEMENT_FUNCTION(August, chapter1_handler, 25)
 		getEntities()->drawSequenceLeft(kEntityAugust, "010B");
 
 		if (!getProgress().eventMetAugust)
-			params->param2 = kInventoryInvalid;
+			params->param2 = kItemInvalid;
 
 		getData()->inventoryItem = (InventoryItem)params->param2;
 		break;
@@ -347,14 +347,14 @@ IMPLEMENT_FUNCTION(August, chapter1_handler, 25)
 			break;
 
 		case 3:
-			setup_function28();			
+			setup_function28();
 			break;
 
 		case 4:
 			getSavePoints()->push(kEntityAugust, kEntityAlexei, kAction225182640);
 			getAction()->playAnimation(kEventDinerAugustOriginalJacket);
 			getObjects()->update(kObjectCompartment1, kEntityNone, kLocation3, kCursorNormal, kCursorNormal);
-			
+
 			getData()->field_493 = kField493_0;
 
 			getSavePoints()->push(kEntityAugust, kEntityTables3, kAction103798704, "010K");

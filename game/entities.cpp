@@ -228,7 +228,7 @@ void Entities::setup(bool isFirstChapter, EntityIndex entityIndex) {
 	setupChapter(isFirstChapter ? kChapter1 : kChapterAll);
 
 	bool flag_4 = false;
-	
+
 	if (!isFirstChapter) {
 		getFlags()->flag_4 = false;
 
@@ -834,10 +834,10 @@ void Entities::computeCurrentFrame2(EntityIndex entityIndex) {
 					if (data->currentFrame2 != -1 && originalCurrentFrame2 == data->currentFrame2)
 						if (data->currentFrame2 < (int)(data->sequence2->count() - 2))
 							data->currentFrame2 += 2;
-				}				
+				}
 			} else {
 				data->currentFrame2 = getCurrentFrame2(entityIndex, data->sequence2, kPositionNone, false);
-			}			
+			}
 			break;
 
 		case 23:
@@ -865,10 +865,10 @@ void Entities::computeCurrentFrame2(EntityIndex entityIndex) {
 					if (data->currentFrame2 != -1 && originalCurrentFrame2 == data->currentFrame2)
 						if (data->currentFrame2 < (int)(data->sequence2->count() - 2))
 							data->currentFrame2 += 2;
-				}				
+				}
 			} else {
 				data->currentFrame2 = getCurrentFrame2(entityIndex, data->sequence2, kPositionNone, false);
-			}		
+			}
 			break;
 		}
 
@@ -883,13 +883,13 @@ void Entities::computeCurrentFrame2(EntityIndex entityIndex) {
 		}
 		break;
 
-	case kDirectionRight:				
+	case kDirectionRight:
 		bool found = false;
 		bool flag = false;
 		uint32 frameIndex = 0;
 		int field30 = 0;
 
-		int16 currentFrame2Copy = (!data->currentFrame2 && !data->field_4A1) ? -1 : data->currentFrame2; 			
+		int16 currentFrame2Copy = (!data->currentFrame2 && !data->field_4A1) ? -1 : data->currentFrame2;
 
 		// Process frames
 		do {
@@ -963,7 +963,7 @@ void Entities::computeCurrentFrame2(EntityIndex entityIndex) {
 
 			getSavePoints()->push(kEntityNone, entityIndex, kActionExitCompartment);
 			getSavePoints()->process();
-		}		
+		}
 		break;
 	}
 }

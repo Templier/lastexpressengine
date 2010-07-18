@@ -50,7 +50,7 @@
 	    uint16 {2}    - Hotspot top
 	    uint16 {2}    - Hotspot bottom
 	    byte {1}      - Compression type
-	    byte {1}      - Subtype (determines which set of decompression functions will be called) => 0, 1, 2, 3	    
+	    byte {1}      - Subtype (determines which set of decompression functions will be called) => 0, 1, 2, 3
 	    byte {1}      - Unknown
 	    byte {1}      - Unknown
 		uint16 {2}    - Unknown

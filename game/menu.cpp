@@ -187,7 +187,7 @@ private:
 
 	// Frames
 	SequenceFrame *_frameMinutes;
-	SequenceFrame *_frameHour;	
+	SequenceFrame *_frameHour;
 	SequenceFrame *_frameSun;
 	SequenceFrame *_frameDate;
 };
@@ -201,7 +201,7 @@ Clock::Clock(LastExpressEngine *engine) : _engine(engine), _frameMinutes(NULL), 
 
 Clock::~Clock() {
 	delete _frameMinutes;
-	delete _frameHour;	
+	delete _frameHour;
 	delete _frameSun;
 	delete _frameDate;
 
@@ -375,7 +375,7 @@ Menu::~Menu() {
 	_lastHotspot = NULL;
 
 	// Zero passed pointers
-	_engine = NULL;	
+	_engine = NULL;
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -414,7 +414,7 @@ void Menu::eventMouse(const Common::Event &ev) {
 				hideOverlays();
 			}
 		}
-	}	
+	}
 
 	if (redraw) {
 		getFlags()->shouldRedraw = true;
@@ -593,7 +593,7 @@ bool Menu::handleEvent(StartMenuAction action, Common::EventType type) {
 				}
 			}
 		}
-		
+
 		if (!getEvent(kEventIntro))	{
 			getEvent(kEventIntro) = 1;
 
@@ -607,7 +607,7 @@ bool Menu::handleEvent(StartMenuAction action, Common::EventType type) {
 		if (!_isShowingMenu)
 			getInventory()->show();
 
-		return false;		
+		return false;
 
 	//////////////////////////////////////////////////////////////////////////
 	case kMenuCredits:
@@ -984,7 +984,7 @@ void Menu::showFrame(StartMenuOverlay overlayType, int index, bool redraw) {
 			return;
 
 		// Remove the frame and add a new one with the proper index
-		getScenes()->removeAndRedraw(_frames[overlayType], false);		
+		getScenes()->removeAndRedraw(_frames[overlayType], false);
 		_frames[overlayType]->setFrame(index);
 		getScenes()->addToQueue(_frames[overlayType]);
 
@@ -1132,7 +1132,7 @@ void Menu::initTime(TimeType type, uint32 time) {
 		if (!entryIndex)
 			break;
 
-		// Iterate through existing entries		
+		// Iterate through existing entries
 		do {
 			if (getSaveLoad()->getEntry(entryIndex)->time <= time)
 				break;
@@ -1169,7 +1169,7 @@ void Menu::initTime(TimeType type, uint32 time) {
 		} else {
 			entryIndex = _index - 1;
 		}
-		break;					 
+		break;
 	}
 
 	if (entryIndex) {
@@ -1181,7 +1181,7 @@ void Menu::initTime(TimeType type, uint32 time) {
 void Menu::updateTime(uint32 time) {
 	if (_currentTime == _time)
 		_delta = 0;
-	
+
 	_currentTime = time;
 
 	if (_time != time) {
@@ -1217,7 +1217,7 @@ void Menu::adjustIndex(uint32 time1, uint32 time2, bool searchEntry) {
 
 						--currentIndex;
 					} while ((int32)currentIndex >= 0);
-				}				
+				}
 			} else {
 				index = _index - 1;
 			}
@@ -1237,14 +1237,14 @@ void Menu::adjustIndex(uint32 time1, uint32 time2, bool searchEntry) {
 
 						++currentIndex;
 					} while (currentIndex >= _index2);
-				}			
+				}
 			} else {
 				index = _index + 1;
 			}
 		}
 
 		_index = index;
-		checkHotspots();		
+		checkHotspots();
 	}
 
 	if (_index == _currentIndex) {

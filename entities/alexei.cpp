@@ -203,7 +203,58 @@ IMPLEMENT_FUNCTION(Alexei, chapter1, 17)
 }
 
 IMPLEMENT_FUNCTION(Alexei, chapter1_handler, 18)
-	error("Alexei: callback function 18 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionNone:
+		error("Alexei: callback function 19 not implemented!");
+		break;
+
+	case kAction1:
+		error("Alexei: callback function 19 not implemented!");
+		break;
+
+	case kActionDefault:
+		getSavePoints()->push(kEntityAlexei, kEntityTables1, kAction136455232);
+		getEntities()->drawSequenceLeft(kEntityAlexei, "005B");
+
+		params->param2 = kItemInvalid;
+		getData()->inventoryItem = kItemInvalid;
+		break;
+
+	case kAction17:
+		params->param1 = getEntities()->isPlayerPosition(kCarRestaurant, 63) ? 1 : 0;
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			getEntities()->updatePosition(kEntityAlexei, kCarRestaurant, 63);
+			setup_function19();
+			break;
+
+		case 2:
+			error("Alexei: callback function 18 not implemented!");
+			break;
+		}
+		break;
+
+	case kAction168046720:
+		getData()->inventoryItem = kItemNone;
+		break;
+
+	case kAction168627977:
+		getData()->inventoryItem = (InventoryItem)params->param2;
+		break;
+
+	case kAction225182640:
+		getData()->inventoryItem = kItemNone;
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Alexei, function19, 19)

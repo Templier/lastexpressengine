@@ -377,7 +377,7 @@ protected:
 	void savepointCheckFields11(const SavePoint &savepoint);
 	void checkEntity(const SavePoint &savepoint, bool handleExcuseMe = false);
 	void savepointCall(const SavePoint &savepoint, bool handleExcuseMe = false);
-	void enterExitCompartment(const SavePoint &savepoint);	
+	void enterExitCompartment(const SavePoint &savepoint);
 	void updatePosition(const SavePoint &savepoint, bool handleExcuseMe = false);
 };
 

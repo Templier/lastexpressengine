@@ -155,15 +155,74 @@ IMPLEMENT_FUNCTION_S(Mertens, function7, 7)
 }
 
 IMPLEMENT_FUNCTION_S(Mertens, function8, 8)
-	error("Mertens: callback function  8 not implemented!");
+	error("Mertens: callback function 8 not implemented!");
 }
 
 IMPLEMENT_FUNCTION_II(Mertens, savegame, 9)
 	Entity::savegame(savepoint);
 }
 
+//////////////////////////////////////////////////////////////////////////
+// Parameters
+//  - CarIndex
+//  - EntityPosition
 IMPLEMENT_FUNCTION_II(Mertens, function10, 10)
-	error("Mertens: callback function 10 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionNone:
+		error("Mertens: callback function 10 not implemented!");
+		break;
+
+	case kAction1:
+		error("Mertens: callback function 10 not implemented!");
+		break;
+
+	case kActionExcuseMeCath:
+		getSound()->playSound(kEntityMertens, "CON1110B");
+		break;
+
+	case kActionExcuseMe:
+		getSound()->excuseMe(kEntityMertens);
+		break;
+
+	case kActionDefault:
+		if (!getProgress().eventCorpseFound && !getEvent(kEventMertensAskTylerCompartment) && !getEvent(kEventMertensAskTylerCompartment)
+		 || ENTITY_PARAM(0, 4) && getProgress().jacket == kJacketGreen && !getEvent(kEventMertensDontMakeBed) && !getProgress().eventCorpseThrown)
+			params->param3 = 1;
+
+		if (getEntities()->checkEntity(kEntityMertens, (CarIndex)params->param1, (EntityPosition)params->param2))
+			CALLBACK_ACTION();
+		break;
+
+	case kActionCallback:
+		error("Mertens: callback function 10 not implemented!");
+
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			break;
+
+		case 2:
+			break;
+
+		case 3:
+			break;
+
+		case 4:
+			break;
+
+		case 5:
+			break;
+
+		case 6:
+			break;
+		}
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION_I(Mertens, function11, 11)

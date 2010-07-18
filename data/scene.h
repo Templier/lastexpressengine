@@ -199,7 +199,7 @@ public:
 		kType133 = 133
 	};
 
-	// Data	
+	// Data
 	uint16 count;
 	uint16 field_11;
 	CarIndex car;
@@ -210,7 +210,7 @@ public:
 	byte param3;
 
 	~Scene();
-	
+
 	Common::Rect draw(Graphics::Surface *surface);
 
 	// Hotspots
@@ -220,7 +220,7 @@ public:
 
 private:
 	char _name[8];
-	byte _sig;	
+	byte _sig;
 	uint32 _hotspot;
 
 	Scene() {}

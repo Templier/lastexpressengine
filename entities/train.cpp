@@ -317,7 +317,7 @@ label_process:
 					params->param7 = 0;
 			}
 
-			if (params1->param8 && params1->param8 < (int)getState()->time) {				
+			if (params1->param8 && params1->param8 < (int)getState()->time) {
 				params->param7 = 0;
 				params1->param8 = 0;
 			}

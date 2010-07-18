@@ -219,13 +219,13 @@ void Logic::eventMouse(const Common::Event &ev) {
 	 && !getInventory()->isMagnifierInUse()) {
 
 		InventoryItem item = getEntityData(entityIndex)->inventoryItem;
-		if (getInventory()->hasItem(item) || (item & kInventoryInvalid)) {
+		if (getInventory()->hasItem(item) || (item & kItemInvalid)) {
 			hotspotHandled = true;
 
-			_engine->getCursor()->setStyle((item & kInventoryInvalid) ? kCursorTalk2 : getInventory()->getEntry(item)->cursor);
+			_engine->getCursor()->setStyle((item & kItemInvalid) ? kCursorTalk2 : getInventory()->getEntry(item)->cursor);
 
 			if (ev.type == Common::EVENT_LBUTTONUP)
-				getSavePoints()->push(kEntityNone, entityIndex, kAction1, (item & kInventoryInvalid) ? 0 : item);
+				getSavePoints()->push(kEntityNone, entityIndex, kAction1, (item & kItemInvalid) ? 0 : item);
 		}
 	}
 

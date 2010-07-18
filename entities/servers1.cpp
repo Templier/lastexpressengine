@@ -388,7 +388,7 @@ IMPLEMENT_FUNCTION(Servers1, chapter4, 25)
 		getData()->field_493 = kField493_0;
 		getData()->car = kCarRestaurant;
 		getData()->inventoryItem = kItemNone;
-		
+
 		getEntities()->prepareSequences(kEntityServers1);
 
 		ENTITY_PARAM(1, 2) = 0;
