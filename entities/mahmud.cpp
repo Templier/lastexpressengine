@@ -233,7 +233,7 @@ IMPLEMENT_FUNCTION_II(Mahmud, function10, 10)
 		} else {
 			getAction()->handleOtherCompartment((ObjectIndex)savepoint.param.intValue, 0, 0);
 
-			switch (getScenes()->get(getState()->scene)->getHeader()->position) {
+			switch (getScenes()->get(getState()->scene)->position) {
 			default:
 				break;
 
@@ -310,7 +310,7 @@ IMPLEMENT_FUNCTION(Mahmud, function11, 11)
 			getSound()->playSound(kEntityMahmud, (params->param1 == 1 ? "MAH1170E" : (params->param1 == 2 ? "MAH1173B" : "MAH1174")));
 		}
 
-		switch (getScenes()->get(getState()->scene)->getHeader()->position) {
+		switch (getScenes()->get(getState()->scene)->position) {
 		default:
 			break;
 

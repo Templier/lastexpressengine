@@ -32,25 +32,6 @@
 
 namespace LastExpress {
 
-// SceneHeader
-SceneHeader *SceneHeader::load(Common::SeekableReadStream *stream) {
-	SceneHeader *sh = new SceneHeader();
-
-	stream->read(&sh->name, sizeof(sh->name));
-	sh->sig = stream->readByte();
-	sh->count = stream->readUint16LE();;
-	sh->field_11 = stream->readUint16LE();
-	sh->car = (CarIndex)stream->readUint16LE();
-	sh->position = stream->readByte();
-	sh->type = stream->readByte();
-	sh->param1 = stream->readByte();
-	sh->param2 = stream->readByte();
-	sh->param3 = stream->readByte();
-	sh->hotspot = stream->readUint32LE();
-
-	return sh;
-}
-
 SceneHotspot *SceneHotspot::load(Common::SeekableReadStream *stream) {
 	SceneHotspot *hs = new SceneHotspot();
 
@@ -122,35 +103,44 @@ bool SceneHotspot::isInside(const Common::Point &point) {
 
 //////////////////////////////////////////////////////////////////////////
 // Scene
-Scene::Scene() : _header(NULL) {}
-
 Scene::~Scene() {
-	clear();
-}
-
-void Scene::clear() {
 	// Free the hotspots
 	for (int i = 0; i < (int)_hotspots.size(); i++)
 		delete _hotspots[i];
-
-	_header = NULL;
 }
 
-Scene *Scene::get(Common::SeekableReadStream *stream, SceneHeader *header) {
-	Scene *s = new Scene();
+Scene *Scene::load(Common::SeekableReadStream *stream) {
+	Scene *scene = new Scene();
 
-	s->_header = header;
+	stream->read(&scene->name, sizeof(scene->name));
+	scene->sig = stream->readByte();
+	scene->count = stream->readUint16LE();;
+	scene->field_11 = stream->readUint16LE();
+	scene->car = (CarIndex)stream->readUint16LE();
+	scene->position = stream->readByte();
+	scene->type = (Type)stream->readByte();
+	scene->param1 = stream->readByte();
+	scene->param2 = stream->readByte();
+	scene->param3 = stream->readByte();
+	scene->hotspot = stream->readUint32LE();
 
-	debugC(10, kLastExpressDebugScenes, "Scene:  name=%s, sig=%02d, count=%d, field_11=%d", header->name, header->sig, header->count, header->field_11);
-	debugC(10, kLastExpressDebugScenes, "\tcar=%02d, position=%02d, type=%02d, param1=%02d", header->car, header->position, header->type, header->param1);
-	debugC(10, kLastExpressDebugScenes, "\tparam2=%02d, param3=%02d, hotspot=%d\n", header->param2, header->param3, header->hotspot);
+	return scene;
+}
+
+void Scene::loadHotspots(Common::SeekableReadStream *stream) {
+	if (!_hotspots.empty())
+		return;
+
+	debugC(10, kLastExpressDebugScenes, "Scene:  name=%s, sig=%02d, position=%d, field_11=%d", name, sig, count, field_11);
+	debugC(10, kLastExpressDebugScenes, "\tcar=%02d, position=%02d, type=%02d, param1=%02d", car, position, type, param1);
+	debugC(10, kLastExpressDebugScenes, "\tparam2=%02d, param3=%02d, hotspot=%d\n", param2, param3, hotspot);
 
 	// Read all hotspots
-	if (header->hotspot != 0) {
-		stream->seek((int32)header->hotspot, SEEK_SET);
+	if (hotspot != 0) {
+		stream->seek((int32)hotspot, SEEK_SET);
 		SceneHotspot *hotspot = SceneHotspot::load(stream);
 		while (hotspot) {
-			s->_hotspots.push_back(hotspot);
+			_hotspots.push_back(hotspot);
 
 			if (hotspot->next == 0)
 				break;
@@ -159,15 +149,6 @@ Scene *Scene::get(Common::SeekableReadStream *stream, SceneHeader *header) {
 			hotspot = SceneHotspot::load(stream);
 		}
 	}
-
-	return s;
-}
-
-SceneHeader* Scene::getHeader() {
-	if (_header == NULL)
-		error("Scene::getHeader: Trying to get the header from an uninitialized scene. Did you forgot to call Scene::load()?");
-
-	return _header;
 }
 
 bool Scene::checkHotSpot(const Common::Point &coord, SceneHotspot **hotspot) {
@@ -187,7 +168,7 @@ bool Scene::checkHotSpot(const Common::Point &coord, SceneHotspot **hotspot) {
 	return found;
 }
 
-SceneHotspot *Scene::getHotspot(SceneIndex index) {
+SceneHotspot *Scene::getHotspot(uint32 index) {
 	if (_hotspots.empty())
 		return NULL;
 
@@ -201,16 +182,13 @@ Common::Rect Scene::draw(Graphics::Surface *surface) {
 	// Safety checks
 	Common::Rect rect;
 
-	if (!_header)
-		error("Scene::draw: Invalid header data!");
-
-	Common::String name(_header->name);
-	name.trim();
-	if (name.empty())
+	Common::String sceneName(name);
+	sceneName.trim();
+	if (sceneName.empty())
 		error("Scene::draw: This scene is not a valid drawing scene!");
 
 	// Load background
-	Background *background = ((LastExpressEngine *)g_engine)->getResourceManager()->loadBackground(name);
+	Background *background = ((LastExpressEngine *)g_engine)->getResourceManager()->loadBackground(sceneName);
 	if (background) {
 		rect = background->draw(surface);
 		delete background;
@@ -228,8 +206,11 @@ SceneLoader::~SceneLoader() {
 }
 
 void SceneLoader::clear() {
-	// Free the headers
-	_headers.clear();
+	// Remove all scenes
+	for (int i = 0; i < (int)_scenes.size(); i++)
+		delete _scenes[i];
+
+	_scenes.clear();
 
 	delete _stream;
 }
@@ -243,7 +224,7 @@ bool SceneLoader::load(Common::SeekableReadStream *stream) {
 	_stream = stream;
 
 	// Read the default scene to get the total number of scenes
-	SceneHeader *header = SceneHeader::load(_stream);
+	Scene *header = Scene::load(_stream);
 	if (!header)
 		error("SceneLoader::load: Invalid data file!");
 
@@ -255,30 +236,31 @@ bool SceneLoader::load(Common::SeekableReadStream *stream) {
 		return false;
 	}
 
-	_headers.push_back(header);
+	_scenes.push_back(header);
 
 	// Read all the chunks
 	for (uint32 i = 0; i < header->count; ++i) {
-		SceneHeader *scene = SceneHeader::load(_stream);
+		Scene *scene = Scene::load(_stream);
 		if (!scene)
 			break;
 
-		_headers.push_back(scene);
+		_scenes.push_back(scene);
 	}
 
 	return true;
 }
 
-Scene *SceneLoader::getScene(SceneIndex index) {
-	if (_headers.empty())
+Scene *SceneLoader::get(SceneIndex index) {
+	if (_scenes.empty())
 		return NULL;
 
-	if (index > _headers.size())
+	if (index > _scenes.size())
 		return NULL;
 
-	debugC(9, kLastExpressDebugScenes, "Loading scene %d", index);
+	// Load the hotspots if needed
+	_scenes[index]->loadHotspots(_stream);
 
-	return Scene::get(_stream, _headers[(int)index]);
+	return _scenes[index];
 }
 
 } // End of namespace LastExpress

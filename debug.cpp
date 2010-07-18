@@ -445,7 +445,7 @@ bool Debugger::cmd_loadscene(int argc, const char **argv) {
 			//return true;
 
 			/*********************************************/
-			Scene *s = _sceneLoader->getScene(index);
+			Scene *s = _sceneLoader->get(index);
 			if (!s) {
 				DebugPrintf("Cannot load scene %i from CD %i", index, cd);
 				resetCommand();

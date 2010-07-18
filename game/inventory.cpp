@@ -429,32 +429,32 @@ InventoryItem Inventory::getFirstExaminableItem() const {
 bool Inventory::isItemSceneParameter(InventoryItem item) const {
 	Scene *scene = getScenes()->get(getState()->scene);
 
-	switch(scene->getHeader()->type) {
+	switch(scene->type) {
 	default:
 		return false;
 
 	case Scene::kTypeItem:
-		if (scene->getHeader()->param1 == item)
+		if (scene->param1 == item)
 			return true;
 		break;
 
 	case Scene::kTypeItem2:
-		if (scene->getHeader()->param1 == item || scene->getHeader()->param2 == item)
+		if (scene->param1 == item || scene->param2 == item)
 			return true;
 		break;
 
 	case Scene::kTypeEntityItem:
-		if (scene->getHeader()->param2 == item)
+		if (scene->param2 == item)
 			return true;
 		break;
 
 	case Scene::kTypeItem3:
-		if (scene->getHeader()->param1 == item || scene->getHeader()->param2 == item || scene->getHeader()->param3 == item)
+		if (scene->param1 == item || scene->param2 == item || scene->param3 == item)
 			return true;
 		break;
 
 	case Scene::kType8:
-		if (scene->getHeader()->param2 == item)
+		if (scene->param2 == item)
 			return true;
 		break;
 	}

@@ -791,10 +791,10 @@ void Entities::computeCurrentFrame2(EntityIndex entityIndex) {
 	case kDirectionDown: {
 		Scene *scene = getScenes()->get(getState()->scene);
 
-		if (scene->getHeader()->position > 40)
+		if (scene->position > 40)
 			break;
 
-		switch (scene->getHeader()->position) {
+		switch (scene->position) {
 		default:
 		case 4:
 		case 19:
@@ -1337,7 +1337,7 @@ Sequence *Entities::copySequence(Sequence *sequence) {
 
 void Entities::getSequenceName(EntityIndex index, EntityDirection direction, Common::String &sequence1, Common::String &sequence2) const {
 	EntityData::EntityCallData *data = getData(index);
-	Position position = getScenes()->get(getState()->scene)->getHeader()->position;
+	Position position = getScenes()->get(getState()->scene)->position;
 
 	// reset fields
 	data->field_4A9 = 0;
@@ -2158,7 +2158,7 @@ bool Entities::checkFields3(EntityIndex entity) const {
 }
 
 bool Entities::isPlayerPosition(CarIndex car, Position position) const {
-	return getData(kEntityNone)->car == car && getScenes()->get(getState()->scene)->getHeader()->position == position;
+	return getData(kEntityNone)->car == car && getScenes()->get(getState()->scene)->position == position;
 }
 
 bool Entities::checkFields5(EntityIndex entity, CarIndex car) const {
@@ -2376,7 +2376,7 @@ bool Entities::checkSequenceFromPosition(EntityIndex entity) const {
 
 EntityPosition Entities::getEntityPositionFromCurrentPosition() const {
 	// Get the scene position first
-	Position position = getScenes()->get(getState()->scene)->getHeader()->position;
+	Position position = getScenes()->get(getState()->scene)->position;
 
 	if (getScenes()->checkPosition(kSceneNone, SceneManager::kCheckPositionType0))
 		return (EntityPosition)(entityPositions[position] - kPosition_1430);

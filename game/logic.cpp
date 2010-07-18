@@ -263,7 +263,7 @@ void Logic::eventMouse(const Common::Event &ev) {
 
 		Scene *hotspotScene = getScenes()->get((*it)->scene);
 
-		if (!getEntities()->getPosition(hotspotScene->getHeader()->car, hotspotScene->getHeader()->position)
+		if (!getEntities()->getPosition(hotspotScene->car, hotspotScene->position)
 		 || (*it)->cursor == kCursorTurnRight
 		 || (*it)->cursor == kCursorTurnLeft) {
 			 location = (*it)->location;
@@ -344,7 +344,7 @@ void Logic::eventTick(const Common::Event &) {
 		Scene *scene = getScenes()->get(getState()->scene);
 
 		if (getScenes()->checkCurrentPosition(true)
-		&& !getEntities()->getPosition(scene->getHeader()->car, scene->getHeader()->position)) {
+		&& !getEntities()->getPosition(scene->car, scene->position)) {
 
 			// Process hotspot
 			SceneHotspot *hotspot = scene->getHotspot();
@@ -553,7 +553,7 @@ void Logic::updateCursor(bool) const { /* the cursor is always updated, even whe
 						if (getAction()->getCursor(**i)) {
 							Scene *hotspotScene = getScenes()->get((*i)->scene);
 
-							if (!getEntities()->getPosition(hotspotScene->getHeader()->car, hotspotScene->getHeader()->position)
+							if (!getEntities()->getPosition(hotspotScene->car, hotspotScene->position)
 							 || (*i)->cursor == kCursorTurnRight
 							 || (*i)->cursor == kCursorTurnLeft) {
 								hotspot = *i;

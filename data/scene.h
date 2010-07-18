@@ -76,26 +76,7 @@
 
 namespace LastExpress {
 
-class SceneHeader {
-public:
-	static SceneHeader *load(Common::SeekableReadStream *stream);
-
-private:
-	SceneHeader() {}
-
-public:
-	char name[8];
-	byte sig;
-	uint16 count;
-	uint16 field_11;
-	CarIndex car;			// uin16
-	Position position;
-	byte type;
-	byte param1;
-	byte param2;
-	byte param3;
-	uint32 hotspot;
-};
+class Scene;
 
 class SceneHotspot {
 public:
@@ -178,10 +159,26 @@ private:
 	Common::Array<SceneCoord *> _coords;
 };
 
+class SceneLoader {
+public:
+	SceneLoader();
+	~SceneLoader();
+
+	bool load(Common::SeekableReadStream *stream);
+	Scene *get(SceneIndex index);
+
+	uint32 count() const { return _scenes.size(); };
+
+private:
+	Common::SeekableReadStream *_stream;
+	Common::Array<Scene *> _scenes;
+
+	void clear();
+};
+
 class Scene : public Drawable {
 public:
-
-	// Scenes
+	// Enumerations
 	enum Type {
 		// PreProcess
 		kTypeEntity = 1,
@@ -202,40 +199,41 @@ public:
 		kType133 = 133
 	};
 
-	Scene();
+	// Data	
+	uint16 count;
+	uint16 field_11;
+	CarIndex car;
+	Position position;
+	Type type;
+	byte param1;
+	byte param2;
+	byte param3;
+
 	~Scene();
-
-	static Scene *get(Common::SeekableReadStream *stream, SceneHeader *header);
-
-	bool checkHotSpot(const Common::Point &coord, SceneHotspot **hotspot);
+	
 	Common::Rect draw(Graphics::Surface *surface);
 
-	SceneHeader* getHeader();
+	// Hotspots
 	Common::Array<SceneHotspot *> *getHotspots() { return &_hotspots; }
-	SceneHotspot *getHotspot(SceneIndex index = kSceneNone);
+	bool checkHotSpot(const Common::Point &coord, SceneHotspot **hotspot);
+	SceneHotspot *getHotspot(uint32 index = 0);
 
 private:
-	SceneHeader *_header;
+	char name[8];
+	byte sig;	
+	uint32 hotspot;
+
+	Scene() {}
 	Common::Array<SceneHotspot *> _hotspots;
 
-	void clear();
-};
-
-class SceneLoader {
-public:
-	SceneLoader();
-	~SceneLoader();
-
-	bool load(Common::SeekableReadStream *stream);
-	Scene *getScene(SceneIndex index);
-
-	uint32 count() const { return _headers.size(); };
-
-private:
-	Common::SeekableReadStream *_stream;
-	Common::Array<SceneHeader *> _headers;
+	static Scene *load(Common::SeekableReadStream *stream);
+	void loadHotspots(Common::SeekableReadStream *stream);
 
 	void clear();
+
+	// Only allow full access for loading the scene and the hotspots
+	friend bool SceneLoader::load(Common::SeekableReadStream *stream);
+	friend Scene *SceneLoader::get(SceneIndex index);
 };
 
 } // End of namespace LastExpress

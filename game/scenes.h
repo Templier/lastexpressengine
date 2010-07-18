@@ -50,11 +50,9 @@ public:
 	SceneManager(LastExpressEngine *engine);
 	~SceneManager();
 
-	// Datafile
-	void loadSceneDataFile(ArchiveIndex archive);
-
 	// Scene cache
-	Scene *get(SceneIndex sceneIndex);
+	void loadSceneDataFile(ArchiveIndex archive);
+	Scene *get(SceneIndex sceneIndex) { return _sceneLoader->get(sceneIndex); }
 
 	// Scene loading
 	void setScene(SceneIndex sceneIndex);
@@ -91,16 +89,6 @@ public:
 	void setFlagDrawSequences() { _flagDrawSequences = true; }
 
 private:
-	struct SceneCache_EqualTo {
-		bool operator()(const SceneIndex& x, const SceneIndex& y) const { return x == y; }
-	};
-
-	struct SceneCache_Hash {
-		uint operator()(const SceneIndex& x) const { return x; }
-	};
-
-	typedef Common::HashMap<SceneIndex, Scene *, SceneCache_Hash, SceneCache_EqualTo> SceneCache;
-
 	LastExpressEngine *_engine;
 
 	SceneLoader       *_sceneLoader;     ///< Scene loader
@@ -113,10 +101,6 @@ private:
 	bool _flagDrawEntities;
 	bool _flagDrawSequences;
 	bool _flagCoordinates;
-
-	// Scene cache
-	SceneCache _scenes;
-	void purgeSceneCache();
 
 	// Train sequences
 	Common::Array<Sequence *> _doors;

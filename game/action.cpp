@@ -424,7 +424,7 @@ IMPLEMENT_ACTION(inventory) {
 		index = getState()->sceneBackup;
 
 		Scene *backup = getScenes()->get(getState()->sceneBackup);
-		if (getEntities()->getPosition(backup->getHeader()->car, backup->getHeader()->position))
+		if (getEntities()->getPosition(backup->car, backup->position))
 			index = getScenes()->processIndex(getState()->sceneBackup);
 	}
 
@@ -1291,7 +1291,7 @@ IMPLEMENT_ACTION(useWhistle) {
 			evt = kEventCathOpenEgg;
 
 			Scene *scene = getScenes()->get(hotspot.scene);
-			if (scene->getHotspot())
+			if (scene->getHotspots())
 				return scene->getHotspot()->scene;
 
 		} else {

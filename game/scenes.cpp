@@ -54,8 +54,6 @@ SceneManager::~SceneManager() {
 	_currentScene = NULL; /* part of cache */
 	delete _sceneLoader;
 
-	purgeSceneCache();
-
 	// Clear sequences
 	for (int i = 0; i < (int)_doors.size(); i++)
 		delete _doors[i];
@@ -70,7 +68,7 @@ SceneManager::~SceneManager() {
 }
 
 //////////////////////////////////////////////////////////////////////////
-// DataFile
+// Scene cache
 //////////////////////////////////////////////////////////////////////////
 void SceneManager::loadSceneDataFile(ArchiveIndex archive) {
 	// Demo only has CD2TRAIN.DAT file
@@ -81,9 +79,6 @@ void SceneManager::loadSceneDataFile(ArchiveIndex archive) {
 	case kArchiveCd1:
 	case kArchiveCd2:
 	case kArchiveCd3:
-		// Clear the scene cache
-		purgeSceneCache();
-
 		if (!_sceneLoader->load(getArchive(Common::String::printf("CD%iTRAIN.DAT", archive))))
 			error("SceneManager::loadSceneDataFile: cannot load data file CD%iTRAIN.DAT", archive);
 		break;
@@ -96,26 +91,6 @@ void SceneManager::loadSceneDataFile(ArchiveIndex archive) {
 }
 
 //////////////////////////////////////////////////////////////////////////
-// Scene cache
-//////////////////////////////////////////////////////////////////////////
-Scene *SceneManager::get(SceneIndex sceneIndex) {
-	// Check if the scene is already loaded
-	if (!_scenes.contains(sceneIndex)) {
-		_scenes[sceneIndex] = _sceneLoader->getScene(sceneIndex);
-	}
-
-	return _scenes[sceneIndex];
-}
-
-void SceneManager::purgeSceneCache() {
-	// Clear scenes
-	for (SceneCache::iterator iter = _scenes.begin(); iter != _scenes.end(); ++iter)
-		SAFE_DELETE(iter->_value);
-
-	_scenes.clear();
-}
-
-//////////////////////////////////////////////////////////////////////////
 // Scene loading
 //////////////////////////////////////////////////////////////////////////
 void SceneManager::loadScene(SceneIndex index) {
@@ -125,7 +100,7 @@ void SceneManager::loadScene(SceneIndex index) {
 	if (getState()->sceneUseBackup) {
 		Scene *scene = getScenes()->get(index);
 
-		if (scene->getHeader()->param3 != 255) {
+		if (scene->param3 != 255) {
 			getState()->sceneUseBackup = false;
 			getState()->sceneBackup2 = kSceneNone;
 		}
@@ -236,11 +211,11 @@ void SceneManager::loadSceneFromItemPosition(InventoryItem item) {
 
 	// Get current scene position
 	Scene *scene = getScenes()->get(getState()->scene);
-	Position position = scene->getHeader()->position;
+	Position position = scene->position;
 
     if (getState()->sceneUseBackup) {
 		Scene *sceneBackup = getScenes()->get(getState()->sceneBackup);
-		position = sceneBackup->getHeader()->position;
+		position = sceneBackup->position;
 	}
 
 	// Checks are different for each item
@@ -290,8 +265,8 @@ void SceneManager::drawScene(SceneIndex index) {
 	// Update entities
 	Scene *scene = (getState()->sceneUseBackup ? get(getState()->sceneBackup) : _currentScene);
 
-	getEntityData(kEntityNone)->entityPosition = (EntityPosition)scene->getHeader()->count;
-	getEntityData(kEntityNone)->car = scene->getHeader()->car;
+	getEntityData(kEntityNone)->entityPosition = (EntityPosition)scene->count;
+	getEntityData(kEntityNone)->car = scene->car;
 
 	getFlags()->flag_3 = true;
 
@@ -332,7 +307,7 @@ void SceneManager::processScene() {
 
 	Scene *backup = getScenes()->get(getState()->sceneBackup);
 
-	if (getEntities()->getPosition(backup->getHeader()->car, backup->getHeader()->position))
+	if (getEntities()->getPosition(backup->car, backup->position))
 		loadScene(processIndex(getState()->sceneBackup));
 	else
 		loadScene(getState()->sceneBackup);
@@ -340,7 +315,7 @@ void SceneManager::processScene() {
 
 LastExpress::SceneIndex SceneManager::processIndex(SceneIndex index) {
 	Scene *scene = get(index);
-	CarIndex car = scene->getHeader()->car;
+	CarIndex car = scene->car;
 
 	switch (car) {
 	default:
@@ -348,7 +323,7 @@ LastExpress::SceneIndex SceneManager::processIndex(SceneIndex index) {
 
 	case kCarRedSleeping:	
 		if (checkPosition(index, kCheckPositionLookingAtDoors)) {
-			Position position = (Position)(scene->getHeader()->position + (checkPosition(kSceneNone, kCheckPositionType0) ? -1 : 1));
+			Position position = (Position)(scene->position + (checkPosition(kSceneNone, kCheckPositionType0) ? -1 : 1));
 
 			if (position == 4)
 				position = 3;
@@ -361,7 +336,7 @@ LastExpress::SceneIndex SceneManager::processIndex(SceneIndex index) {
 			else
 				return getSceneIndexFromPosition(car, position);
 		} else {
-			switch (scene->getHeader()->position) {
+			switch (scene->position) {
 			default:
 				break;
 
@@ -417,7 +392,7 @@ LastExpress::SceneIndex SceneManager::processIndex(SceneIndex index) {
 		break;
 
 	case kCarRestaurant:	
-		switch (scene->getHeader()->position) {
+		switch (scene->position) {
 		default:
 			break;
 
@@ -478,8 +453,8 @@ LastExpress::SceneIndex SceneManager::processIndex(SceneIndex index) {
 bool SceneManager::checkPosition(SceneIndex index, CheckPositionType type) const {
 	Scene *scene = getScenes()->get((index ? index : getState()->scene));
 
-	CarIndex car = (CarIndex)scene->getHeader()->car;
-	Position position = scene->getHeader()->position;
+	CarIndex car = (CarIndex)scene->car;
+	Position position = scene->position;
 
 	bool isInSleepingCar = (car == kCarGreenSleeping || car == kCarRedSleeping);
 
@@ -504,8 +479,8 @@ bool SceneManager::checkPosition(SceneIndex index, CheckPositionType type) const
 bool SceneManager::checkCurrentPosition(bool doCheckOtherCars) const {
 	Scene *scene = getScenes()->get(getState()->scene);
 
-	Position position = scene->getHeader()->position;
-	CarIndex car = (CarIndex)scene->getHeader()->car;
+	Position position = scene->position;
+	CarIndex car = (CarIndex)scene->car;
 
 	if (!doCheckOtherCars)
 		return (car == kCarGreenSleeping || car == kCarRedSleeping)
@@ -600,7 +575,7 @@ void SceneManager::updateDoorsAndClock() {
 
 			// Load door sequence
 			Scene *scene = getScenes()->get(getState()->scene);
-			Common::String name = Common::String::printf("633X%c-%02d.seq", (index - firstIndex) + 65, scene->getHeader()->position);
+			Common::String name = Common::String::printf("633X%c-%02d.seq", (index - firstIndex) + 65, scene->position);
 			Sequence *sequence = Sequence::loadSequence(getArchive(name), 255);
 
 			// If the sequence doesn't exists, skip
@@ -753,17 +728,16 @@ SceneIndex SceneManager::getSceneIndexFromPosition(CarIndex car, Position positi
 	SceneIndex index = kSceneMenu;
 
 	Scene *firstScene = getScenes()->get(index);
-	SceneHeader *header = firstScene->getHeader();
 
-	while (header->car != car
-		|| header->position != position
-		|| ((param3 != -1 || header->param3) && header->param3 != param3 && header->type != Scene::kTypeItem3)) {
+	while (firstScene->car != car
+		|| firstScene->position != position
+		|| ((param3 != -1 || firstScene->param3) && firstScene->param3 != param3 && firstScene->type != Scene::kTypeItem3)) {
 
 		// Increment index and look at the next scene
 		index = (SceneIndex)(index + 1);
 
 		// Load the next scene
-		header = getScenes()->get(index)->getHeader();
+		firstScene = getScenes()->get(index);
 
 		if (index >= _sceneLoader->count())
 			return getState()->scene;
@@ -771,7 +745,7 @@ SceneIndex SceneManager::getSceneIndexFromPosition(CarIndex car, Position positi
 
 	// Process index if necessary
 	Scene *scene = getScenes()->get(index);
-	if (getEntities()->getPosition(scene->getHeader()->car, scene->getHeader()->position))
+	if (getEntities()->getPosition(scene->car, scene->position))
 		return processIndex(index);
 
 	return index;
@@ -790,10 +764,10 @@ SceneIndex SceneManager::getSceneIndexFromPosition(CarIndex car, Position positi
 	}
 
 #define GET_ENTITY_LOCATION(scene) \
-	getObjects()->get((ObjectIndex)scene->getHeader()->param1).location
+	getObjects()->get((ObjectIndex)scene->param1).location
 
 #define GET_ITEM_LOCATION(scene, parameter) \
-	getInventory()->getEntry((InventoryItem)scene->getHeader()->parameter)->location
+	getInventory()->getEntry((InventoryItem)scene->parameter)->location
 
 void SceneManager::preProcessScene(SceneIndex *index) {
 
@@ -803,7 +777,7 @@ void SceneManager::preProcessScene(SceneIndex *index) {
 
 	Scene *scene = getScenes()->get(*index);
 
-	switch (scene->getHeader()->type) {
+	switch (scene->type) {
 	case Scene::kTypeItem:
 	case Scene::kTypeItem2:
 	case Scene::kTypeItem3:
@@ -811,16 +785,16 @@ void SceneManager::preProcessScene(SceneIndex *index) {
 	case Scene::kTypeEntityItem: {
 		int location = 0;
 		ObjectLocation location1 = kLocationNone, location2 = kLocationNone, location3 = kLocationNone;
-		byte type = scene->getHeader()->type;
+		byte type = scene->type;
 
 		// Check bounds
-		if (scene->getHeader()->param1 >= ((type == Scene::kTypeEntity || type == Scene::kTypeEntityItem) ? 128 : 32))
+		if (scene->param1 >= ((type == Scene::kTypeEntity || type == Scene::kTypeEntityItem) ? 128 : 32))
 			break;
 
-		if (type != Scene::kTypeItem && scene->getHeader()->param2 >= 32)
+		if (type != Scene::kTypeItem && scene->param2 >= 32)
 			break;
 
-		if (type == Scene::kTypeItem3 && scene->getHeader()->param3 >= 32)
+		if (type == Scene::kTypeItem3 && scene->param3 >= 32)
 			break;
 
 		// Check location
@@ -872,7 +846,7 @@ void SceneManager::preProcessScene(SceneIndex *index) {
 	}
 
 	case Scene::kType6: {
-		if (scene->getHeader()->param1 >= 128)
+		if (scene->param1 >= 128)
 			break;
 
 		bool found = false;
@@ -881,7 +855,7 @@ void SceneManager::preProcessScene(SceneIndex *index) {
 				// The index might be modified by the action, so reload the scene on each iteration
 				Scene *currentScene = getScenes()->get(*index);
 
-				if (getObjects()->get((ObjectIndex)currentScene->getHeader()->param1).location2 == (*it)->location) {
+				if (getObjects()->get((ObjectIndex)currentScene->param1).location2 == (*it)->location) {
 					PROCESS_HOTSPOT_SCENE(*it, index);
 					found = true;
 				}
@@ -900,18 +874,18 @@ void SceneManager::preProcessScene(SceneIndex *index) {
 
 	case Scene::kType7:
 	case Scene::kType8:
-		if (scene->getHeader()->param1 >= 16)
+		if (scene->param1 >= 16)
 			break;
 
-		if (getEntities()->getCompartments(scene->getHeader()->param1) || getEntities()->getCompartments1(scene->getHeader()->param1)) {
+		if (getEntities()->getCompartments(scene->param1) || getEntities()->getCompartments1(scene->param1)) {
 
 			Scene *currentScene = getScenes()->get(getState()->scene);
 
-			if ((checkPosition(getState()->scene, kCheckPositionType0) && checkPosition(*index, kCheckPositionType0) && currentScene->getHeader()->count < scene->getHeader()->count)
-			 || (checkPosition(getState()->scene, kCheckPositionType1)  && checkPosition(*index, kCheckPositionType1)  && currentScene->getHeader()->count > scene->getHeader()->count)) {
+			if ((checkPosition(getState()->scene, kCheckPositionType0) && checkPosition(*index, kCheckPositionType0) && currentScene->count < scene->count)
+			 || (checkPosition(getState()->scene, kCheckPositionType1)  && checkPosition(*index, kCheckPositionType1)  && currentScene->count > scene->count)) {
 
-				if (State::getPowerOfTwo((uint32)getEntities()->getCompartments(scene->getHeader()->param1)) != 30
-				 && State::getPowerOfTwo((uint32)getEntities()->getCompartments1(scene->getHeader()->param1)) != 30 )
+				if (State::getPowerOfTwo((uint32)getEntities()->getCompartments(scene->param1)) != 30
+				 && State::getPowerOfTwo((uint32)getEntities()->getCompartments1(scene->param1)) != 30 )
 					getSound()->playSound(kEntityNone, "CAT1126A");
 
 				*index = scene->getHotspot()->scene;
@@ -921,13 +895,13 @@ void SceneManager::preProcessScene(SceneIndex *index) {
 
 			preProcessScene(index);
 		} else {
-			if (scene->getHeader()->type == Scene::kType7)
+			if (scene->type == Scene::kType7)
 				break;
 
-			if (scene->getHeader()->param2 >= 32)
+			if (scene->param2 >= 32)
 				break;
 
-			ObjectLocation location = getInventory()->getEntry((InventoryItem)scene->getHeader()->param2)->location;
+			ObjectLocation location = getInventory()->getEntry((InventoryItem)scene->param2)->location;
 			if (!location)
 				break;
 
@@ -946,13 +920,13 @@ void SceneManager::preProcessScene(SceneIndex *index) {
 
 	// Sound processing
 	if (getSound()->isBuffered(kEntityTables4)) {
-		if (getScenes()->get(*index)->getHeader()->type != Scene::kTypeReadText || getScenes()->get(*index)->getHeader()->param1)
+		if (getScenes()->get(*index)->type != Scene::kTypeReadText || getScenes()->get(*index)->param1)
 			getSound()->processEntry(kEntityTables4);
 	}
 
 	// Cleanup
 	if (getBeetle()->isLoaded()) {
-		if (getScenes()->get(*index)->getHeader()->type != Scene::kTypeLoadBeetleSequences)
+		if (getScenes()->get(*index)->type != Scene::kTypeLoadBeetleSequences)
 			getBeetle()->unload();
 	}
 }
@@ -961,16 +935,16 @@ void SceneManager::postProcessScene() {
 
 	Scene *scene = getScenes()->get(getState()->scene);
 
-	switch (scene->getHeader()->type) {
+	switch (scene->type) {
 	case Scene::kTypeList: {
 
 		// Adjust time
-		getState()->time += (scene->getHeader()->param1 + 10) * getState()->timeDelta;
-		getState()->timeTicks += (scene->getHeader()->param1 + 10);
+		getState()->time += (scene->param1 + 10) * getState()->timeDelta;
+		getState()->timeTicks += (scene->param1 + 10);
 
 		// TODO wait for a number of frames unless right mouse is clicked
 		//if (!getFlags()->mouse_right_click) {
-		//	while ((unknown + 4 * scene->getHeader()->param1) > unknown) {
+		//	while ((unknown + 4 * scene->param1) > unknown) {
 		//		if (getFlags()->mouse_right_click)
 		//			break;
 
@@ -988,7 +962,7 @@ void SceneManager::postProcessScene() {
 		if (getFlags()->mouseRightClick) {
 			Scene *hotspotScene = getScenes()->get(hotspot->scene);
 
-			while (hotspotScene->getHeader()->type == Scene::kTypeList) {
+			while (hotspotScene->type == Scene::kTypeList) {
 				hotspot = hotspotScene->getHotspot();
 				if (hotspot) {
 					getAction()->processHotspot(*hotspot);
@@ -1068,7 +1042,7 @@ void SceneManager::postProcessScene() {
 		break;
 
 	case Scene::kTypeReadText:
-        getSound()->readText(scene->getHeader()->param1);
+        getSound()->readText(scene->param1);
 		break;
 
 	case Scene::kType133:
