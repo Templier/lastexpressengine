@@ -257,7 +257,7 @@ IMPLEMENT_FUNCTION(Cooks, chapter1_handler, 6)
 		break;
 
 	case kActionNone:
-		UPDATE_PARAM(params->param4, getState()->time, 2);
+		UPDATE_PARAM(params->param4, getState()->time, params->param2);
 
 		// Broken plate sound
 		getSound()->playSound(kEntityNone, "LIB122",  getEntities()->getSoundValue(kEntityCooks));
@@ -367,7 +367,7 @@ IMPLEMENT_FUNCTION(Cooks, function9, 9)
 		break;
 
 	case kActionNone:
-		UPDATE_PARAM(params->param3, getState()->time, 1);
+		UPDATE_PARAM(params->param3, getState()->time, params->param1);
 
 		// Broken plate sound
 		getSound()->playSound(kEntityNone, "LIB122",  getEntities()->getSoundValue(kEntityCooks));
@@ -432,7 +432,7 @@ IMPLEMENT_FUNCTION(Cooks, function11, 11)
 		params->param4 = 0;
 
 update_params:
-		if (getState()->time > kTimeCooks && !params->param5) {
+		if (getState()->time > kTime2079000 && !params->param5) {
 			params->param1 = 0;
 			params->param5 = 1;
 		}
@@ -515,7 +515,7 @@ IMPLEMENT_FUNCTION(Cooks, function13, 13)
 		break;
 
 	case kActionNone:
-		UPDATE_PARAM(params->param3, getState()->time, 1)
+		UPDATE_PARAM(params->param3, getState()->time, params->param1)
 
 		// Broken plate sound
 		getSound()->playSound(kEntityNone, "LIB122",  getEntities()->getSoundValue(kEntityCooks));

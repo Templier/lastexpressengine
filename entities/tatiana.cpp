@@ -194,7 +194,37 @@ IMPLEMENT_FUNCTION(Tatiana, chapter1_handler, 19)
 		break;
 
 	case kActionNone:
-		error("Tatiana: callback function 17 not implemented!");
+		if (getSound()->isBuffered(kEntityTatiana) || !params->param4 || params->param3 == 2 || getSound()->isBuffered("TAT1066"))
+			goto label_tatiana_chapter1_2;
+
+		UPDATE_PARAM_FUNCTION(params->param5, getState()->timeTicks, 450, label_tatiana_chapter1_1);
+		getSound()->playSound(kEntityTatiana, params->param3 ? "TAT1069B" : "TAT1069A");
+		getProgress().field_64 = 1;
+		params->param3++;
+		params->param5 = 0;
+
+label_tatiana_chapter1_1:
+		if (getEntities()->isPlayerPosition(kCarRestaurant, 71)) {
+			UPDATE_PARAM_FUNCTION(params->param6, getState()->timeTicks, 75, label_tatiana_chapter1_2);
+
+			getSound()->playSound(kEntityTatiana, params->param3 ? "TAT1069B" : "TAT1069A");
+			getProgress().field_64 = 1;
+			params->param3++;
+			params->param6 = 0;
+		}
+
+label_tatiana_chapter1_2:
+		if (getState()->time > kTime1084500 && !params->param7) {
+			params->param7 = 1;
+			getSavePoints()->push(kEntityTatiana, kEntityPascale, kAction257489762);
+		}
+
+		if (params->param1) {
+			UPDATE_PARAM(params->param8, getState()->timeTicks, 90);
+			getScenes()->loadSceneFromPosition(kCarRestaurant, 65);
+		} else {
+			params->param8 = 0;
+		}
 		break;
 
 	case kActionDefault:
@@ -202,9 +232,9 @@ IMPLEMENT_FUNCTION(Tatiana, chapter1_handler, 19)
 		getEntities()->drawSequenceLeft(kEntityTatiana, "014A");
 		break;
 
-	case kAction17:		
+	case kAction17:
 		params->param1 = getEntities()->isPlayerPosition(kCarRestaurant, 67) ? 1 : 0;
-		params->param4 = getEntities()->isPlayerPosition(kCarRestaurant, 69) 
+		params->param4 = getEntities()->isPlayerPosition(kCarRestaurant, 69)
 		              || getEntities()->isPlayerPosition(kCarRestaurant, 70)
 		              || getEntities()->isPlayerPosition(kCarRestaurant, 71);
 		break;
@@ -502,7 +532,7 @@ IMPLEMENT_FUNCTION(Tatiana, function44, 44)
 
 	case kActionDefault:
 		setCallback(1);
-		call(new ENTITY_SETUP(Tatiana, setup_function16), kTimeTatiana);
+		call(new ENTITY_SETUP(Tatiana, setup_function16), kTime2362500);
 		break;
 
 	case kActionCallback:

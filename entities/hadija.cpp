@@ -180,15 +180,15 @@ IMPLEMENT_FUNCTION(Hadija, chapter1_handler, 11)
 		break;
 
 	case kActionNone:
-		TIME_CHECK_PLAYSOUND_2(Hadija, kTimeParisEpernay, params->param1, 1, "Har1100", kPosition_4840);
+		TIME_CHECK_PLAYSOUND_UPDATEPOSITION(Hadija, kTimeParisEpernay, params->param1, 1, "Har1100", kPosition_4840);
 
 label_callback1:
-		TIME_CHECK_CALLBACK(Hadija, kTimeRebecca_1_1, params->param2, 2, setup_function8);
+		TIME_CHECK_CALLBACK(Hadija, kTime1084500, params->param2, 2, setup_function8);
 
 label_callback2:
-		if (params->param3 != kTimeInvalid && getState()->time > kTimeAnna) {
+		if (params->param3 != kTimeInvalid && getState()->time > kTime1093500) {
 
-			if (getState()->time <= kTimeHadija_1_2) {
+			if (getState()->time <= kTime1134000) {
 
 				if (!getEntities()->checkFields7(kCarGreenSleeping) || !getEntities()->checkFields1(kEntityMahmud, kCarGreenSleeping, kPosition_5790) || !params->param3) {
 					params->param3 = getState()->time + 75;
@@ -211,11 +211,11 @@ label_callback2:
 		}
 
 label_callback3:
-		TIME_CHECK_CALLBACK(Hadija, kTimeHadija_1, params->param4, 4, setup_function9);
+		TIME_CHECK_CALLBACK(Hadija, kTime1156500, params->param4, 4, setup_function9);
 
 label_callback4:
-		if (params->param5 != kTimeInvalid && getState()->time > kTimeTables1) {
-			if (getState()->time <= kTimeHadija_1_1) {
+		if (params->param5 != kTimeInvalid && getState()->time > kTime1165500) {
+			if (getState()->time <= kTime1188000) {
 
 				if (!getEntities()->checkFields7(kCarGreenSleeping) || !getEntities()->checkFields1(kEntityMahmud, kCarGreenSleeping, kPosition_5790) || !params->param5) {
 					params->param5 = getState()->time + 75;

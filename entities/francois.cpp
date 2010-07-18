@@ -158,10 +158,10 @@ IMPLEMENT_FUNCTION(Francois, chapter1_handler, 18)
 		break;
 
 	case kActionNone:
-		if (getState()->time > kTimeFrancois && !params->param1) {
+		if (getState()->time > kTime1161000 && !params->param1) {
 			params->param1 = 1;
 			setCallback(1);
-			call(new ENTITY_SETUP(Francois, setup_function11), kTimeAnna);
+			call(new ENTITY_SETUP(Francois, setup_function11), kTime1093500);
 		}
 		break;
 
@@ -178,7 +178,7 @@ IMPLEMENT_FUNCTION(Francois, function19, 19)
 		break;
 
 	case kActionNone:
-		TIME_CHECK_CALLBACK(Francois, kTimeFrancois, params->param1, 2, setup_function12);
+		TIME_CHECK_CALLBACK(Francois, kTime1161000, params->param1, 2, setup_function12);
 		break;
 
 	case kAction101107728:

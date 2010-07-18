@@ -237,7 +237,7 @@ IMPLEMENT_FUNCTION(Chapters, chapter1_handler, 8)
 		break;
 
 	case kActionNone:
-		if (!getProgress().isTrainRunning || getState()->time >= kTimeChapter1_101)
+		if (!getProgress().isTrainRunning || getState()->time >= kTime1458000)
 			goto label_processStations;
 
 		UPDATE_PARAM_FUNCTION(params->param6, getState()->timeTicks, params->param2, label_processStations)
@@ -250,7 +250,7 @@ IMPLEMENT_FUNCTION(Chapters, chapter1_handler, 8)
 
 label_processStations:
 		// Process stations
-		TIME_CHECK_SAVEGAME(Chapters, kTimeChapter1_0, params->param7, 1, kSavegameType1, kEventNone);
+		TIME_CHECK_SAVEGAME(Chapters, kTime1039500, params->param7, 1, kSavegameType1, kEventNone);
 
 label_enter_epernay:
 		// Entering Epernay station
@@ -289,7 +289,7 @@ label_exit_barleduc:
 		TIME_CHECK_EXITSTATION(Chapters, kTimeExitBarLeDuc, ENTITY_PARAM(1, 6), 8, "BarLeDuc");
 
 label_enter_nancy:
-		if (getState()->time > kTimeChapter1_1 && !ENTITY_PARAM(1, 7)) {
+		if (getState()->time > kTime1260000 && !ENTITY_PARAM(1, 7)) {
 			ENTITY_PARAM(1, 7) = 1;
 			getState()->timeDelta = 1;
 		}
@@ -325,7 +325,7 @@ label_exit_deutschavricourt:
 		// Exiting Avricourt station
 		TIME_CHECK_EXITSTATION(Chapters, kTimeExitDeutschAvricourt, ENTITY_PARAM(2, 7), 16, "DeutschA");
 
-label_savegame_strasbourg:
+label_enter_strasbourg:
 		TIME_CHECK_SAVEGAME(Chapters, kTimeCityStrasbourg, ENTITY_PARAM(2, 8), 17, kSavegameType1, kEventNone);
 
 label_exit_strasbourg:
@@ -471,8 +471,8 @@ label_chapter1_end:
 			goto label_exit_deutschavricourt;
 
 		case 16:
-			getState()->time = kTimeChapter1_100;
-			goto label_savegame_strasbourg;
+			getState()->time = kTimeEnterStrasbourg;
+			goto label_enter_strasbourg;
 
 		case 17:
 			getProgress().field_18 = 1;
@@ -944,7 +944,7 @@ IMPLEMENT_FUNCTION(Chapters, chapter5_handler, 22)
 		break;
 
 	case kActionNone:
-		if (getState()->time > kTimeChapter5_0 && !params->param2) {
+		if (getState()->time > kTime2907000 && !params->param2) {
 			params->param2 = 1;
 
 			if (!getProgress().isNightTime) {
@@ -953,7 +953,7 @@ IMPLEMENT_FUNCTION(Chapters, chapter5_handler, 22)
 			}
 		}
 
-		if (getState()->time > kTimeTrainStopped_2 && !params->param3) {
+		if (getState()->time > kTimeTrainStopped2 && !params->param3) {
 			params->param3 = 1;
 
 			if (!getEvent(kEventLocomotiveMilos) && !getEvent(kEventLocomotiveMilosNight)) {
@@ -964,11 +964,11 @@ IMPLEMENT_FUNCTION(Chapters, chapter5_handler, 22)
 		break;
 
 	case kAction2:
-		if (getState()->time <= kTimeTrainStopped_2) {
+		if (getState()->time <= kTimeTrainStopped2) {
 			setCallback(1);
 			call(new ENTITY_SETUP(Chapters, setup_savegame), kSavegameType2, kEventTrainStopped);
 		} else {
-			getLogic()->gameOver(kTimeTypeTime, kTimeTrainStopped_2, kSceneGameOverTrainStopped, true);
+			getLogic()->gameOver(kTimeTypeTime, kTimeTrainStopped2, kSceneGameOverTrainStopped, true);
 		}
 		break;
 
@@ -985,7 +985,7 @@ IMPLEMENT_FUNCTION(Chapters, chapter5_handler, 22)
 
 	case kAction135800432:
 		getProgress().isNightTime = 1;
-		getState()->time = kTimeChapter5_1;
+		getState()->time = kTime2916000;
 
 		if (getSound()->isBuffered(kEntityChapters))
 			getSound()->removeFromQueue(kEntityChapters);

@@ -119,7 +119,7 @@ IMPLEMENT_FUNCTION(Max, function7, 7)
 		break;
 
 	case kActionNone:
-		UPDATE_PARAM(params->param2, getState()->time, 1)
+		UPDATE_PARAM(params->param2, getState()->time, params->param1)
 
 		if (!getSound()->isBuffered(kEntityMax))
 			getSound()->playSound(kEntityMax, "Max1122");
@@ -207,7 +207,7 @@ IMPLEMENT_FUNCTION(Max, chapter4_handler, 8)
 		break;
 
 	case kActionNone:
-		UPDATE_PARAM(params->param3, getState()->time, 2);
+		UPDATE_PARAM(params->param3, getState()->time, params->param2);
 
 		if (!getSound()->isBuffered(kEntityMax))
 			getSound()->playSound(kEntityMax, "Max3101");
@@ -380,7 +380,7 @@ IMPLEMENT_FUNCTION(Max, chapter3_handler, 13)
 			break;
 		}
 
-		UPDATE_PARAM(params->param3, getState()->time, 1);
+		UPDATE_PARAM(params->param3, getState()->time, params->param1);
 
 		if (!getSound()->isBuffered(kEntityMax))
 			getSound()->playSound(kEntityMax, "Max1122");

@@ -289,7 +289,7 @@ IMPLEMENT_FUNCTION(Pascale, function18, 18)
 	if (savepoint.action != kActionNone)
 		return;
 
-	if (getState()->time > kTimePascale && !params->param1) {
+	if (getState()->time > kTime1242000 && !params->param1) {
 		params->param1 = 1;
 
 		getSavePoints()->push(kEntityPascale, kEntityServers0, kAction101632192);

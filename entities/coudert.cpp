@@ -25,6 +25,7 @@
 
 #include "lastexpress/entities/coudert.h"
 
+#include "lastexpress/game/action.h"
 #include "lastexpress/game/entities.h"
 #include "lastexpress/game/logic.h"
 #include "lastexpress/game/object.h"
@@ -154,10 +155,17 @@ IMPLEMENT_FUNCTION_I(Coudert, function12, 12)
 	error("Coudert: callback function 12 not implemented!");
 }
 
+//////////////////////////////////////////////////////////////////////////
+// Parameters
+//  - bool
+//  - EntityIndex
 IMPLEMENT_FUNCTION_II(Coudert, function13, 13)
 	error("Coudert: callback function 13 not implemented!");
 }
 
+//////////////////////////////////////////////////////////////////////////
+// Paramaters
+//  - EntityIndex
 IMPLEMENT_FUNCTION_I(Coudert, function14, 14)
 	error("Coudert: callback function 14 not implemented!");
 }
@@ -308,7 +316,118 @@ IMPLEMENT_FUNCTION(Coudert, chapter1_handler, 40)
 		break;
 
 	case kActionNone:
-		error("Coudert: callback function 40 not implemented!");
+		if (ENTITY_PARAM(2, 3)) {
+			ENTITY_PARAM(0, 1) = 1;
+			ENTITY_PARAM(0, 3) = 0;
+			ENTITY_PARAM(0, 4) = 0;
+			ENTITY_PARAM(0, 5) = 0;
+			ENTITY_PARAM(0, 8) = 0;
+
+			ENTITY_PARAM(1, 1) = 0;
+
+			ENTITY_PARAM(2, 1) = 0;
+			ENTITY_PARAM(2, 2) = 0;
+			
+			getEntities()->drawSequenceLeft(kEntityCoudert, "697F");
+
+			params->param1 = 1;
+			params->param2 = 1;
+
+			ENTITY_PARAM(2, 3) = 0;
+		}
+
+		getData()->inventoryItem = (getProgress().eventCorpseFound || getEvent(kEventCoudertAskTylerCompartment)) ? kItemNone : kItemInvalid;
+
+		if (ENTITY_PARAM(0, 8)) {
+			getData()->inventoryItem = kItemNone;
+
+			setCallback(4);
+			call(new ENTITY_SETUP(Coudert, setup_function15), true);
+			break;
+		}
+
+label_callback_4:
+		if (ENTITY_PARAM(1, 1)) {
+			getData()->inventoryItem = kItemNone;
+
+			setCallback(5);
+			call(new ENTITY_SETUP(Coudert, setup_function15), false);
+			break;
+		}
+
+label_callback_5:
+		if (ENTITY_PARAM(0, 6) || ENTITY_PARAM(0, 7)) {
+			getData()->inventoryItem = kItemNone;
+			setup_function37();
+			break;
+		}
+
+		if (ENTITY_PARAM(0, 3)) {
+			getData()->inventoryItem = kItemNone;
+
+			setCallback(6);
+			call(new ENTITY_SETUP(Coudert, setup_function14), kEntityVerges);
+			break;
+		}
+
+label_callback_6:
+		if (ENTITY_PARAM(0, 5)) {
+			getData()->inventoryItem = kItemNone;
+
+			setCallback(7);
+			call(new ENTITY_SETUP(Coudert, setup_function14), kEntityMertens);
+			break;
+		}
+
+label_callback_7:
+		if (ENTITY_PARAM(0, 4)) {
+			getData()->inventoryItem = kItemNone;
+
+			setCallback(8);
+			call(new ENTITY_SETUP(Coudert, setup_function14), kEntityMmeBoutarel);
+			break;
+		}
+
+label_callback_8:
+		if (ENTITY_PARAM(2, 2)) {
+			getData()->inventoryItem = kItemNone;
+
+			setCallback(9);
+			call(new ENTITY_SETUP(Coudert, setup_function39));
+			break;
+		}
+
+label_callback_9:
+		if (ENTITY_PARAM(0, 1) && !getSound()->isBuffered(kEntityCoudert))
+			getSound()->playSound(kEntityCoudert, random(2) ? "JAC1065" : "JAC1065A");
+		
+		if (getState()->time > kTime1107000 && !ENTITY_PARAM(0, 1) && !getEvent(kEventVassiliSeizure)) {
+			getData()->inventoryItem = kItemNone;
+
+			setCallback(10);
+			call(new ENTITY_SETUP(Coudert, setup_function41));
+			break;
+		}
+
+label_callback_10:
+		if (getState()->time > kTime1189800 && !ENTITY_PARAM(0, 1) && !ENTITY_PARAM(2, 1)) {
+			UPDATE_PARAM_FUNCTION(params->param3, getState()->time, 2700, label_coudert_object);
+
+			ENTITY_PARAM(0, 2) = 1;
+			ENTITY_PARAM(0, 1) = 1;
+
+			getEntities()->drawSequenceLeft(kEntityCoudert, "697F");
+
+			params->param3 = 0;
+		}
+
+label_coudert_object:
+		if (!ENTITY_PARAM(0, 2))
+			break;
+
+		TIME_CHECK_OBJECT(kTime1107000, params->param4, kObject111, kLocation2);
+		TIME_CHECK_OBJECT(kTime1161000, params->param5, kObject111, kLocation3);
+		TIME_CHECK_OBJECT(kTime1206000, params->param6, kObject111, kLocation4);
 		break;
 
 	case kAction1:
@@ -319,7 +438,12 @@ IMPLEMENT_FUNCTION(Coudert, chapter1_handler, 40)
 		break;
 
 	case kAction11:
-		error("Coudert: callback function 40 not implemented!");
+		if (!ENTITY_PARAM(0, 1) && !ENTITY_PARAM(2, 1)) {
+			getData()->inventoryItem = kItemNone;
+
+			setCallback(13);
+			call(new ENTITY_SETUP(Coudert, setup_function13), savepoint.param.intValue, savepoint.entity2);
+		}	
 		break;
 
 	case kActionDefault:
@@ -331,65 +455,106 @@ IMPLEMENT_FUNCTION(Coudert, chapter1_handler, 40)
 		break;
 
 	case kAction17:
-		error("Coudert: callback function 40 not implemented!");
+		if (!ENTITY_PARAM(2, 1) && !ENTITY_PARAM(0, 1)) {
+
+			if (!getEntities()->isPlayerPosition(kCarRedSleeping, 1) && !getEntities()->isPlayerPosition(kCarRedSleeping, 23))
+				break;
+
+			if (getProgress().jacket == kJacketOriginal) {
+				setCallback(1);
+				call(new ENTITY_SETUP(Coudert, setup_savegame), kSavegameType2, kEventCoudertBloodJacket);
+			} else {
+				setCallback(getEntities()->isPlayerPosition(kCarRedSleeping, 1) ? 2 : 3);
+				call(new ENTITY_SETUP(Coudert, setup_function13), true, kEntityNone);
+			}			
+		}
 		break;
 
 	case kActionCallback:
-		error("Coudert: callback function 40 not implemented!");
-
 		switch (getCallback()) {
 		default:
 			break;
 
 		case 1:
+			getAction()->playAnimation(kEventCoudertBloodJacket);
+			getLogic()->gameOver(kTimeType0, kTime1, kSceneGameOverBloodJacket, true);
 			break;
 
 		case 4:
-			break;
+			goto label_callback_4;
 
 		case 5:
-			break;
+			goto label_callback_5;
 
 		case 6:
-			break;
+			goto label_callback_6;
 
 		case 7:
-			break;
+			goto label_callback_7;
 
 		case 8:
-			break;
+			goto label_callback_8;
 
 		case 9:
-			break;
+			goto label_callback_9;
 
 		case 10:
-			break;
+			params->param1 = 1;
+			goto label_callback_10;
 
 		case 11:
+			getAction()->playAnimation(kEventCoudertAskTylerCompartment);
+			getEntities()->drawSequenceRight(kEntityCoudert, ENTITY_PARAM(0, 2) ? "627A" : "627D");
+			getScenes()->loadSceneFromItemPosition(kItem5);
+
+			ENTITY_PARAM(0, 1) = 0;
+
+			getScenes()->loadSceneFromPosition(kCarRedSleeping, 25);
+
+			setCallback(12);
+			call(new ENTITY_SETUP(Coudert, setup_function4));
 			break;
 
 		case 12:
+			getEntities()->drawSequenceLeft(kEntityCoudert, ENTITY_PARAM(0, 2) ? "627B" : "627E");
 			break;
 
 		case 14:
+			setCallback(15);
+			call(new ENTITY_SETUP(Coudert, setup_function18));
 			break;
 		}
 		break;
 
 	case kAction168253822:
-		error("Coudert: callback function 40 not implemented!");
+		if (!ENTITY_PARAM(2, 1) && !ENTITY_PARAM(0, 1)) {
+			getData()->inventoryItem = kItemNone;
+			getSound()->playSound(kEntityCoudert, "JAC1120");
+
+			setCallback(14);
+			call(new ENTITY_SETUP_SIIS(Coudert, setup_function2), "697D");
+		}
 		break;
 
 	case kAction225358684:
-		error("Coudert: callback function 40 not implemented!");
+		if (!ENTITY_PARAM(0, 1)) {
+			getData()->inventoryItem = kItemNone;
+			setCallback(16);
+			call(new ENTITY_SETUP(Coudert, setup_function30), savepoint.param.intValue);
+		}		
 		break;
 
 	case kAction225932896:
-		error("Coudert: callback function 40 not implemented!");
+		if (!ENTITY_PARAM(2, 1) && !ENTITY_PARAM(0, 1))
+			getSavePoints()->push(kEntityCoudert, kEntityFrancois, kAction205346192);
 		break;
 
 	case kAction305159806:
-		error("Coudert: callback function 40 not implemented!");
+		if (!ENTITY_PARAM(2, 1) && !ENTITY_PARAM(0, 1)) {
+			getData()->inventoryItem = kItemNone;
+			setCallback(17);
+			call(new ENTITY_SETUP(Coudert, setup_function31), savepoint.param.intValue);
+		}
 		break;
 	}
 }

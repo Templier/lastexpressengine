@@ -209,7 +209,7 @@ IMPLEMENT_FUNCTION(Salko, function15, 15)
 		break;
 
 	case kActionNone:
-		if (getState()->time < kTimeAugustVienna) {
+		if (getState()->time < kTime2200500) {
 			UPDATE_PARAM(params->param1, getState()->time, 81000);
 
 			setCallback(1);
@@ -348,7 +348,7 @@ IMPLEMENT_FUNCTION(Salko, function21, 21)
 		break;
 
 	case kActionNone:
-		if (getState()->time > kTimeSalko && !params->param1) {
+		if (getState()->time > kTime2422800 && !params->param1) {
 			params->param1 = 1;
 			setCallback(1);
 			call(new ENTITY_SETUP(Salko, setup_checkEntity), kCarRedSleeping, kPosition_2740);

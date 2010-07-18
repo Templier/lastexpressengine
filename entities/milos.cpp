@@ -346,12 +346,12 @@ IMPLEMENT_FUNCTION(Milos, chapter1_handler, 15)
 		break;
 
 	case kActionNone:
-		if (getState()->time > kTimeMilos1_0 && !params->param3) {
+		if (getState()->time > kTime1071000 && !params->param3) {
 			params->param3 = 1;
 			getSavePoints()->push(kEntityMilos, kEntityServers1, kAction223002560);
 		}
 
-		if (getState()->time > kTimeMilos1_1 && getEntities()->checkFields11()) {
+		if (getState()->time > kTime1089000 && getEntities()->checkFields11()) {
 			setup_function16();
 			break;
 		}
@@ -528,7 +528,7 @@ IMPLEMENT_FUNCTION(Milos, function30, 30)
 
 	case kActionNone:
 		setCallback(1);
-		call(new ENTITY_SETUP(Milos, setup_function11), kTimeMilos_4_0);
+		call(new ENTITY_SETUP(Milos, setup_function11), kTime2410200);
 		break;
 
 	case kActionCallback:
@@ -537,14 +537,14 @@ IMPLEMENT_FUNCTION(Milos, function30, 30)
 			getSavePoints()->push(kEntityMilos, kEntityIvo, kAction55996766);
 
 			setCallback(2);
-			call(new ENTITY_SETUP(Milos, setup_function11), kTimeMilos_4_1);
+			call(new ENTITY_SETUP(Milos, setup_function11), kTime2412000);
 			break;
 
 		case 2:
 			getSavePoints()->push(kEntityMilos, kEntitySalko, kAction55996766);
 
 			setCallback(3);
-			call(new ENTITY_SETUP(Milos, setup_function11), kTimeMilos_4_2);
+			call(new ENTITY_SETUP(Milos, setup_function11), kTime2415600);
 			break;
 
 		case 3:

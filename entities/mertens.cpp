@@ -172,7 +172,49 @@ IMPLEMENT_FUNCTION_II(Mertens, function10, 10)
 		break;
 
 	case kActionNone:
-		error("Mertens: callback function 10 not implemented!");
+		if (params->param3 && getEntities()->checkFields9(kEntityMertens, kEntityNone, 2000))
+			getData()->inventoryItem = (InventoryItem)(getData()->inventoryItem | kItemInvalid);
+		else
+			getData()->inventoryItem = (InventoryItem)(getData()->inventoryItem & 127);
+
+		if (!getEntities()->checkFields9(kEntityMertens, kEntityNone, 1000)
+		  || getEntities()->checkFields3(kEntityNone)
+		  || getEntities()->checkFields10(kEntityNone)) {
+			if (getEntities()->checkEntity(kEntityMertens, (CarIndex)params->param1, (EntityPosition)params->param2)) {
+				getData()->inventoryItem = kItemNone;
+				CALLBACK_ACTION();
+			}
+			break;
+		}
+
+		if (getProgress().jacket == kJacketOriginal) {
+			setCallback(1);
+			call(new ENTITY_SETUP(Mertens, setup_savegame), kSavegameType2, kEventMertensBloodJacket);
+			break;
+		}
+
+		if ((ENTITY_PARAM(0, 6) || ENTITY_PARAM(0, 7)) && !getEvent(kEventKronosConversation) && getProgress().jacket == kJacketGreen) {
+			setCallback(2);
+			call(new ENTITY_SETUP(Mertens, setup_savegame), kSavegameType2, kEventMertensChronosInvitation);
+			break;
+		}
+
+		if (ENTITY_PARAM(1, 2) && getProgress().jacket == kJacketGreen && !getProgress().eventMetAugust) {
+			setCallback(3);
+			call(new ENTITY_SETUP(Mertens, setup_savegame), kSavegameType2, kEventMertensAugustWaiting);
+			break;
+		}
+
+		if (ENTITY_PARAM(2, 4) && getState()->time < kTime2133000) {
+			setCallback(4);
+			call(new ENTITY_SETUP(Mertens, setup_savegame), kSavegameType2, kEventMertensKronosConcertInvitation);
+			break;
+		}
+
+		if (getEntities()->checkEntity(kEntityMertens, (CarIndex)params->param1, (EntityPosition)params->param2)) {
+			getData()->inventoryItem = kItemNone;
+			CALLBACK_ACTION();
+		}
 		break;
 
 	case kAction1:
@@ -282,43 +324,41 @@ IMPLEMENT_FUNCTION(Mertens, function17, 17)
 	case kActionDefault:
 		// FIXME: Check that we are using the correct parameter struct
 		if (ENTITY_PARAM(0, 6) || ((EntityData::EntityParametersIIII*)_data->getParameters(8, 1))->hasNonNullParameter()) {
-
 			getInventory()->setLocationAndProcess(kItem7, kLocation1);
 
 			setCallback(1);
-			call(new ENTITY_SETUP(Mertens, setup_function10), 3, 540);
-
-		} else {
-
-			if (ENTITY_PARAM(0, 8)) {
-
-				getEntities()->drawSequenceLeft(kEntityMertens, "601K");
-				getScenes()->loadSceneFromItemPosition(kItem7);
-
-				ENTITY_PARAM(2, 1) = 1;
-				CALLBACK_ACTION()
-
-			} else {	// Mertens sits on his chair at the back of the train
-				if (getInventory()->hasItem(kItemPassengerList) || ENTITY_PARAM(0, 2))
-					getEntities()->drawSequenceRight(kEntityMertens, "601A");
-				else {	// Got the passenger list, Mertens is looking for it before sitting
-					ENTITY_PARAM(0, 2) = 1;
-					getSound()->playSound(kEntityMertens, "CON1058", -1, 75);
-					getEntities()->drawSequenceRight(kEntityMertens, "601D");
-				}
-
-				getScenes()->loadSceneFromItemPosition(kItem7);
-
-				if (getEntities()->isPlayerPosition(kCarGreenSleeping, 68)) {
-					getSound()->playSound(kEntityNone, "CON1110");
-					getScenes()->loadSceneFromPosition(kCarGreenSleeping, 25);
-				}
-
-				setCallback(3);
-				call(new ENTITY_SETUP(Mertens, setup_function6));
-			}
-
+			call(new ENTITY_SETUP(Mertens, setup_function10), kCarGreenSleeping, kPosition_540);
+			break;
 		}
+
+		if (ENTITY_PARAM(0, 8)) {
+			getEntities()->drawSequenceLeft(kEntityMertens, "601K");
+			getScenes()->loadSceneFromItemPosition(kItem7);
+			ENTITY_PARAM(2, 1) = 1;
+
+			CALLBACK_ACTION();
+			break;
+		}
+
+		// Mertens sits on his chair at the back of the train
+		if (!getInventory()->hasItem(kItemPassengerList) || ENTITY_PARAM(0, 2)) {
+			getEntities()->drawSequenceRight(kEntityMertens, "601A");
+		} else {
+			// Got the passenger list, Mertens is looking for it before sitting
+			ENTITY_PARAM(0, 2) = 1;
+			getSound()->playSound(kEntityMertens, "CON1058", -1, 75);
+			getEntities()->drawSequenceRight(kEntityMertens, "601D");
+		}
+
+		getScenes()->loadSceneFromItemPosition(kItem7);
+
+		if (getEntities()->isPlayerPosition(kCarGreenSleeping, 68)) {
+			getSound()->playSound(kEntityNone, "CON1110");
+			getScenes()->loadSceneFromPosition(kCarGreenSleeping, 25);
+		}
+
+		setCallback(3);
+		call(new ENTITY_SETUP(Mertens, setup_function6));
 		break;
 
 	case kActionCallback:

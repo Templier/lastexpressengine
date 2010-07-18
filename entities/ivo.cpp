@@ -239,7 +239,7 @@ IMPLEMENT_FUNCTION(Ivo, chapter2, 18)
 		break;
 
 	case kActionNone:
-		TIME_CHECK(kTimeIvo_2, params->param1, setup_function19);
+		TIME_CHECK(kTime1777500, params->param1, setup_function19);
 		break;
 
 	case kActionDefault:
@@ -326,7 +326,7 @@ IMPLEMENT_FUNCTION(Ivo, function25, 25)
 		break;
 
 	case kActionNone:
-		if (getState()->time > kTimeIvo && getEntities()->checkFields11()) {
+		if (getState()->time > kTime2361600 && getEntities()->checkFields11()) {
 			getData()->field_493 = kField493_0;
 			setup_function26();
 		}
@@ -374,7 +374,7 @@ IMPLEMENT_FUNCTION(Ivo, function28, 28)
 		break;
 
 	case kActionNone:
-		if (getState()->time > kTimeIvo_1 && !params->param1) {
+		if (getState()->time > kTime2425500 && !params->param1) {
 			params->param1 = 1;
 			setCallback(1);
 			call(new ENTITY_SETUP(Ivo, setup_checkEntity), kCarRedSleeping, kPosition_2740);

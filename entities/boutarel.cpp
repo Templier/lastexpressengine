@@ -274,7 +274,7 @@ IMPLEMENT_FUNCTION(Boutarel, chapter1_handler, 21)
 
 	case kActionDefault:
 		setCallback(1);
-		call(new ENTITY_SETUP_ISII(Boutarel, setup_function17), kTimeMilos1_0, "101A");
+		call(new ENTITY_SETUP_ISII(Boutarel, setup_function17), kTime1071000, "101A");
 		break;
 
 	case kActionCallback:
@@ -289,7 +289,7 @@ IMPLEMENT_FUNCTION(Boutarel, chapter1_handler, 21)
 
 		case 2:
 			setCallback(3);
-			call(new ENTITY_SETUP(Boutarel, setup_function18), kTimeBoutarel1_0);
+			call(new ENTITY_SETUP(Boutarel, setup_function18), kTime1102500);
 			break;
 
 		case 3:
@@ -326,7 +326,7 @@ IMPLEMENT_FUNCTION(Boutarel, chapter1_handler, 21)
 
 		case 7:
 			setCallback(8);
-			call(new ENTITY_SETUP_ISII(Boutarel, setup_function17), kTimeYasmin_9, "102B");
+			call(new ENTITY_SETUP_ISII(Boutarel, setup_function17), kTime1183500, "102B");
 			break;
 
 		case 8:
@@ -336,7 +336,7 @@ IMPLEMENT_FUNCTION(Boutarel, chapter1_handler, 21)
 
 		case 9:
 			setCallback(10);
-			call(new ENTITY_SETUP(Boutarel, setup_function18), kTimeBoutarel1_1);
+			call(new ENTITY_SETUP(Boutarel, setup_function18), kTime1215000);
 			break;
 
 		case 10:
@@ -390,7 +390,7 @@ IMPLEMENT_FUNCTION(Boutarel, chapter2_handler, 24)
 		break;
 
 	case kActionNone:
-		TIME_CHECK_CALLBACK(Boutarel, kTimeYasmin, params->param2, 1, setup_function14);
+		TIME_CHECK_CALLBACK(Boutarel, kTime1759500, params->param2, 1, setup_function14);
 		break;
 
 	case kActionDefault:
@@ -533,7 +533,7 @@ IMPLEMENT_FUNCTION(Boutarel, function32, 32)
 		break;
 
 	case kActionNone:
-		TIME_CHECK(kTimeBoutarel, params->param1, setup_function33);
+		TIME_CHECK(kTime2367000, params->param1, setup_function33);
 		break;
 
 	case kActionDefault:

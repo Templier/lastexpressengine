@@ -100,7 +100,7 @@ void SavePoints::process() {
 			// Call requested callback
 			Entity::Callback *callback = getCallback(savepoint.entity1);
 			if (callback && callback->isValid()) {
-				debugC(8, kLastExpressDebugLogic, "Executing savepoint: entity1=%s, action=%d, entity2=%s", ENTITY_NAME(savepoint.entity1), savepoint.action, ENTITY_NAME(savepoint.entity2));
+				debugC(8, kLastExpressDebugLogic, "Savepoint: entity1=%s, action=%d, entity2=%s", ENTITY_NAME(savepoint.entity1), savepoint.action, ENTITY_NAME(savepoint.entity2));
 				(*callback)(savepoint);
 			}
 		}
@@ -155,7 +155,7 @@ void SavePoints::call(EntityIndex entity2, EntityIndex entity1, ActionIndex acti
 
 	Entity::Callback *callback = getCallback(entity1);
 	if (callback && callback->isValid()) {
-		debugC(8, kLastExpressDebugLogic, "Executing savepoint: entity1=%s, action=%d, entity2=%s, param=%d", ENTITY_NAME(entity1), action, ENTITY_NAME(entity2), param);
+		debugC(8, kLastExpressDebugLogic, "Savepoint: entity1=%s, action=%d, entity2=%s, param=%d", ENTITY_NAME(entity1), action, ENTITY_NAME(entity2), param);
 		(*callback)(point);
 	}
 }
@@ -169,7 +169,7 @@ void SavePoints::call(EntityIndex entity2, EntityIndex entity1, ActionIndex acti
 
 	Entity::Callback *callback = getCallback(entity1);
 	if (callback && callback->isValid()) {
-		debugC(8, kLastExpressDebugLogic, "Executing savepoint: entity1=%s, action=%d, entity2=%s, param=%s", ENTITY_NAME(entity1), action, ENTITY_NAME(entity2), param);
+		debugC(8, kLastExpressDebugLogic, "Savepoint: entity1=%s, action=%d, entity2=%s, param=%s", ENTITY_NAME(entity1), action, ENTITY_NAME(entity2), param);
 		(*callback)(point);
 	}
 }

@@ -181,16 +181,16 @@ IMPLEMENT_FUNCTION(Alouan, chapter1_handler, 11)
 
 	case kActionNone:
 
-		TIME_CHECK_CALLBACK(Alouan, kTimeAlouan, params->param1, 1, setup_function9);
+		TIME_CHECK_CALLBACK(Alouan, kTime1096200, params->param1, 1, setup_function9);
 
 label_callback1:
-		if (getState()->time > kTimeYasmin_7 && !params->param2) {
+		if (getState()->time > kTime1162800 && !params->param2) {
 			params->param2 = 1;
 			getSavePoints()->push(kEntityAlouan, kEntityTrain, kAction191070912, kPosition_4070);
 			getData()->entityPosition = kPosition_4070;
 		}
 
-		if (getState()->time > kTimeAlouan_1 && !params->param3) {
+		if (getState()->time > kTime1179000 && !params->param3) {
 			params->param3 = 1;
 			getSavePoints()->push(kEntityAlouan, kEntityTrain, kAction191070912, kPosition_4840);
 

@@ -121,7 +121,7 @@ IMPLEMENT_FUNCTION(Kronos, chapter1_handler, 8)
 		break;
 
 	case kActionNone:
-		TIME_CHECK(kTimeKronos, params->param2, setup_function11);
+		TIME_CHECK(kTime1489500, params->param2, setup_function11);
 		break;
 
 	case kAction171849314:
@@ -161,7 +161,7 @@ IMPLEMENT_FUNCTION(Kronos, function10, 10)
 		break;
 
 	case kActionNone:
-		TIME_CHECK(kTimeKronos, params->param1, setup_function11);
+		TIME_CHECK(kTime1489500, params->param1, setup_function11);
 
 		if (params->param1 && getEntities()->checkFields5(kEntityNone, kCarKronos)) {
 			UPDATE_PARAM(params->param3, getState()->timeTicks, 150);
@@ -233,7 +233,7 @@ IMPLEMENT_FUNCTION(Kronos, function14, 14)
 		break;
 
 	case kActionNone:
-		if (getState()->time > kTimeKronos_0 && !params->param1 && !params->param2 && !params->param3)
+		if (getState()->time > kTime1993500 && !params->param1 && !params->param2 && !params->param3)
 			setup_function15();
 		break;
 

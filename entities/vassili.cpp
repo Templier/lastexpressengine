@@ -154,9 +154,9 @@ IMPLEMENT_FUNCTION(Vassili, function6, 6)
 			getEntities()->drawSequenceLeft(kEntityVassili, "303A");
 
 label_function7:
-		if (params->param4 != kTimeInvalid && getState()->time > kTimeKronos) {
+		if (params->param4 != kTimeInvalid && getState()->time > kTime1489500) {
 
-			if (getState()->time <= kTimeVassili) {
+			if (getState()->time <= kTime1503000) {
 
 				if (getEntities()->checkFields1(kEntityNone, kCarRedSleeping, kPosition_8200) || !params->param4) {
 
@@ -207,9 +207,9 @@ IMPLEMENT_FUNCTION(Vassili, function7, 7)
 		break;
 
 	case kActionNone:
-		if (params->param1 != kTimeInvalid && getState()->time > kTimeVassili) {
+		if (params->param1 != kTimeInvalid && getState()->time > kTime1503000) {
 
-			 if (getState()->time <= kTimeVassili_2) {
+			 if (getState()->time <= kTime1512000) {
 				 if (getEntities()->checkFields7(kCarRedSleeping) || !params->param1) {
 					 params->param1 = getState()->time + 150;
 					 if (params->param1) {

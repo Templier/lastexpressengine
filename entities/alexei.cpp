@@ -25,6 +25,7 @@
 
 #include "lastexpress/entities/alexei.h"
 
+#include "lastexpress/game/action.h"
 #include "lastexpress/game/entities.h"
 #include "lastexpress/game/inventory.h"
 #include "lastexpress/game/logic.h"
@@ -208,11 +209,34 @@ IMPLEMENT_FUNCTION(Alexei, chapter1_handler, 18)
 		break;
 
 	case kActionNone:
-		error("Alexei: callback function 19 not implemented!");
+		if (getState()->time > kTime1089000 && getEntities()->checkFields11()) {
+			params->param2 = 0;
+
+			getData()->field_493 = kField493_0;
+			getData()->inventoryItem = kItemNone;
+
+			getEntities()->updatePosition(kEntityAlexei, kCarRestaurant, 63, true);
+			getInventory()->setLocationAndProcess(kItem17, kLocation1);
+
+			setCallback(1);
+			call(new ENTITY_SETUP_SIIS(Alexei, setup_function8), "005D", kEntityTables1, kAction103798704, "005E");
+			break;
+		}
+
+		if (params->param1) {
+			UPDATE_PARAM(params->param3, getState()->timeTicks, 90);
+			getScenes()->loadSceneFromPosition(kCarRestaurant, 61);
+		} else {
+			params->param3 = 0;
+		}
 		break;
 
 	case kAction1:
-		error("Alexei: callback function 19 not implemented!");
+		params->param2 = 0;
+		getData()->inventoryItem = kItemNone;
+
+		setCallback(2);
+		call(new ENTITY_SETUP(Alexei, setup_savegame), kSavegameType2, kEventAlexeiDiner);
 		break;
 
 	case kActionDefault:
@@ -238,7 +262,17 @@ IMPLEMENT_FUNCTION(Alexei, chapter1_handler, 18)
 			break;
 
 		case 2:
-			error("Alexei: callback function 18 not implemented!");
+			getAction()->playAnimation(getProgress().jacket == kJacketGreen ? kEventAlexeiDiner : kEventAlexeiDinerOriginalJacket);
+			getSavePoints()->push(kEntityAlexei, kEntityTables1, kAction103798704, "005E");
+
+			getData()->entityPosition = kPosition_3650;
+			getData()->field_493 = kField493_0;
+
+			getEntities()->prepareSequences(kEntityAlexei);
+			getInventory()->getEntry(kItem17)->location = kLocation1;
+			getScenes()->loadSceneFromPosition(kCarRestaurant, 63);
+
+			setup_function19();
 			break;
 		}
 		break;
@@ -339,12 +373,12 @@ IMPLEMENT_FUNCTION(Alexei, function25, 25)
 				getScenes()->loadSceneFromPosition(kCarGreenSleeping, 49);
 
 			setCallback(2);
-			call(new ENTITY_SETUP_ISII(Alexei, setup_function16), kTimeAlouan_1, "411");
+			call(new ENTITY_SETUP_ISII(Alexei, setup_function16), kTime1179000, "411");
 			break;
 
 		case 2:
 			setCallback(3);
-			call(new ENTITY_SETUP_ISII(Alexei, setup_function16), kTimeAlexei_1_1, "412");
+			call(new ENTITY_SETUP_ISII(Alexei, setup_function16), kTime1323000, "412");
 			break;
 
 		case 3:
@@ -361,7 +395,7 @@ IMPLEMENT_FUNCTION(Alexei, function26, 26)
 		break;
 
 	case kActionNone:
-		TIME_CHECK(kTimeVassili_2, params->param1, setup_function27)
+		TIME_CHECK(kTime1512000, params->param1, setup_function27)
 		break;
 
 	case kActionDefault:
@@ -521,7 +555,7 @@ IMPLEMENT_FUNCTION(Alexei, chapter4_handler, 38)
 
 	case kActionDefault:
 		setCallback(1);
-		call(new ENTITY_SETUP_ISII(Alexei, setup_function16), kTimeAlexei, "411");
+		call(new ENTITY_SETUP_ISII(Alexei, setup_function16), kTime2354400, "411");
 		break;
 
 	case kActionCallback:
@@ -549,7 +583,7 @@ IMPLEMENT_FUNCTION(Alexei, function41, 41)
 			getScenes()->loadSceneFromPosition(kCarGreenSleeping, 49);
 
 		setCallback(1);
-		call(new ENTITY_SETUP_ISII(Alexei, setup_function16), kTimeAlexei_1, "411");
+		call(new ENTITY_SETUP_ISII(Alexei, setup_function16), kTime2403000, "411");
 		break;
 
 	case kActionCallback:

@@ -496,7 +496,7 @@ const char *SoundManager::getDialogName(EntityIndex entity) const {
 			return "XAUG5";
 
 		// Getting closer to Vienna...
-		if (getState()->time > kTimeAugustVienna && !getEvent(kEventAugustMerchandise))
+		if (getState()->time > kTime2200500 && !getEvent(kEventAugustMerchandise))
 			return "XAUG4A";
 
 		if (getEvent(kEventAugustMerchandise))

@@ -134,7 +134,7 @@ IMPLEMENT_FUNCTION(Kahina, chapter1_handler, 11)
 	if (savepoint.action != kActionNone)
 		return;
 
-	if (getState()->time > kTimeKahina && !params->param1 && getProgress().jacket) {
+	if (getState()->time > kTime1107000 && !params->param1 && getProgress().jacket) {
 		getSavePoints()->push(kEntityKahina, kEntityMertens, kAction238732837);
 		params->param1 = 1;
 	}

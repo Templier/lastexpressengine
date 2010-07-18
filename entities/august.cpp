@@ -285,7 +285,7 @@ IMPLEMENT_FUNCTION(August, chapter1_handler, 25)
 			params->param1 = 1;
 		}
 
-		if (getState()->time > kTimeRebecca_1_0 && !params->param3) {
+		if (getState()->time > kTime1080000 && !params->param3) {
 			params->param3 = 1;
 
 			if (!params->param1) {
@@ -294,7 +294,7 @@ IMPLEMENT_FUNCTION(August, chapter1_handler, 25)
 			}
 		}
 
-		if (getState()->time > kTimeAnna && getEntities()->checkFields11()) {
+		if (getState()->time > kTime1093500 && getEntities()->checkFields11()) {
 			getData()->field_493 = kField493_0;
 			getData()->inventoryItem = kItemNone;
 
@@ -445,7 +445,7 @@ IMPLEMENT_FUNCTION(August, function31, 31)
 
 		case 2:
 			setCallback(2);
-			call(new ENTITY_SETUP(August, setup_function21), kTimeFrancois);
+			call(new ENTITY_SETUP(August, setup_function21), kTime1161000);
 			break;
 
 		case 3:
@@ -609,7 +609,7 @@ IMPLEMENT_FUNCTION(August, function45, 45)
 		break;
 
 	case kActionNone:
-		if (getState()->time > kTimeAugust_1 && !params->param1) {
+		if (getState()->time > kTime2061000 && !params->param1) {
 			params->param1 = 1;
 			getData()->inventoryItem = kItemNone;
 

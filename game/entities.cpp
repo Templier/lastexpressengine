@@ -969,12 +969,26 @@ void Entities::computeCurrentFrame2(EntityIndex entityIndex) {
 }
 
 int Entities::getCurrentFrame2(EntityIndex entity, Sequence *sequence, EntityPosition position, bool doProcessing) {
+	EntityData::EntityCallData *data = getData(entity);
 
-	if (doProcessing) {
-		error("Entities::getCurrentFrame2: not implemented!");
+	EntityPosition firstFramePosition = sequence->getFrameInfo(0)->entityPosition;
+	EntityPosition lastFramePosition = sequence->getFrameInfo(sequence->count() - 1)->entityPosition;
+
+	bool isGoingForward = (firstFramePosition < lastFramePosition);
+
+	if (!doProcessing) {
+		if (!isGoingForward) {
+			if (data->field_4A3 + firstFramePosition < data->entityPosition || lastFramePosition - data->field_4A3 > data->entityPosition)
+				return -1;
+		} else {
+			if (firstFramePosition - data->field_4A3 > data->entityPosition || lastFramePosition + data->field_4A3 < data->entityPosition)
+				return -1;
+		}
 	}
 
-	//if (sequence->getFrameInfo()->position >= )
+	if (sequence->count() == 0)
+		return 0;
+
 	error("Entities::getCurrentFrame2: not implemented!");
 
 	return -1;

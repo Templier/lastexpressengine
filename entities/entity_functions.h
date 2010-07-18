@@ -62,6 +62,14 @@
 		break; \
 	}
 
+#define TIME_CHECK_CALLBACK_S(class, timeValue, parameter, callback, function, seq) \
+	if (getState()->time > timeValue && !parameter) { \
+		parameter = 1; \
+		setCallback(callback); \
+		call(new ENTITY_SETUP_SIIS(class, function), seq); \
+		break; \
+	}
+
 #define TIME_CHECK_CALLBACK_ACTION(class, timeValue, parameter) \
 	if (getState()->time > timeValue && !parameter) { \
 		parameter = 1; \
@@ -117,13 +125,19 @@
 		break; \
 	}
 
-#define TIME_CHECK_PLAYSOUND_2(class, timeValue, parameter, callback, sound, position) \
+#define TIME_CHECK_PLAYSOUND_UPDATEPOSITION(class, timeValue, parameter, callback, sound, position) \
 	if (getState()->time > timeValue && !parameter) { \
 		parameter = 1; \
 		getData()->entityPosition = position; \
 		setCallback(callback); \
 		call(new ENTITY_SETUP_SIIS(class, setup_playSound), sound); \
 		break; \
+	}
+
+#define TIME_CHECK_OBJECT(timeValue, parameter, object, location) \
+	if (getState()->time > timeValue && !parameter) { \
+		parameter = 1; \
+		getObjects()->updateLocation2(object, location); \
 	}
 
 

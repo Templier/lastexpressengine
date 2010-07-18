@@ -25,6 +25,7 @@
 
 #include "lastexpress/entities/verges.h"
 
+#include "lastexpress/game/action.h"
 #include "lastexpress/game/entities.h"
 #include "lastexpress/game/inventory.h"
 #include "lastexpress/game/logic.h"
@@ -135,10 +136,90 @@ IMPLEMENT_FUNCTION_II(Verges, function8, 8)
 	error("Verges: callback function 8 not implemented!");
 }
 
+//////////////////////////////////////////////////////////////////////////
+// Parameters
+//  - Sound name
 IMPLEMENT_FUNCTION_S(Verges, function9, 9)
-	error("Verges: callback function 9 not implemented!");
+switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionDefault:
+		getObjects()->update(kObject104, kEntityNone, kLocationNone, kCursorNormal, kCursorHand);
+		getObjects()->update(kObject105, kEntityNone, kLocationNone, kCursorNormal, kCursorHand);
+
+		if (getEntities()->checkFields21(kEntityNone) || getEntities()->checkFields17(kEntityNone)) {
+			getAction()->playAnimation(getEntities()->checkFields21(kEntityNone) ? kEventVergesBagageCarOffLimits : kEventVergesCanIHelpYou);
+			getSound()->playSound(kEntityNone, "BUMP");
+			getScenes()->loadSceneFromPosition(kCarRestaurant, 65);
+		}
+
+		getScenes()->loadSceneFromItemPosition(kItem9);
+		getData()->car = kCarRestaurant;
+		getData()->entityPosition = kPosition_5900;
+
+		setCallback(1);
+		call(new ENTITY_SETUP(Verges, setup_function6));
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			getData()->entityPosition = kPosition_5800;
+			getData()->field_493 = kField493_0;
+
+			getSound()->playSound(kEntityVerges, (char *)&params->seq1);
+
+			setCallback(2);
+			call(new ENTITY_SETUP_SIIS(Verges, setup_draw), "813DD");
+			break;
+
+		case 2:
+			if (!getSound()->isBuffered(kEntityVerges))
+				getSound()->playSound(kEntityVerges, (char *)&params->seq1);
+
+			getEntities()->drawSequenceRight(kEntityVerges, "813DS");
+
+			if (getEntities()->checkFields13(kEntityNone))
+				getEntities()->updateEntity(kEntityVerges);
+
+			setCallback(3);
+			call(new ENTITY_SETUP(Verges, setup_function3));
+			break;
+
+		case 3:
+			setCallback(4);
+			call(new ENTITY_SETUP_IISI(Verges, setup_function10), kCarGreenSleeping, kPosition_540, (char *)&params->seq1);
+			break;
+
+		case 4:
+			getEntities()->prepareSequences(kEntityVerges);
+
+			setCallback(5);
+			call(new ENTITY_SETUP(Verges, setup_updateFromTime), 225);
+			break;
+
+		case 5:
+			setCallback(6);
+			call(new ENTITY_SETUP(Verges, setup_function11));
+			break;
+
+		case 6:
+			CALLBACK_ACTION();
+			break;
+		}
+		break;
+	}
 }
 
+//////////////////////////////////////////////////////////////////////////
+// Parameters
+//  - CarIndex
+//  - EntityPosition
+//  - Sound name
 IMPLEMENT_FUNCTION_IIS(Verges, function10, 10)
 	error("Verges: callback function 10 not implemented!");
 }
@@ -294,7 +375,94 @@ IMPLEMENT_FUNCTION(Verges, chapter1_handler, 26)
 		break;
 
 	case kActionNone:
-		error("Verges: callback function 26 not implemented!");
+		if (ENTITY_PARAM(0, 6)) {
+			params->param1 = 1;
+			params->param2 = 1;
+			params->param3 = 1;
+			params->param4 = 1;
+			params->param5 = 1;
+			params->param6 = 1;
+
+			ENTITY_PARAM(0, 6) = 0;
+		}
+
+		if (ENTITY_PARAM(0, 2)) {
+			setCallback(1);
+			call(new ENTITY_SETUP(Verges, setup_function23));
+			break;
+		}
+
+label_callback1:
+		if (getEntities()->checkFields20(kEntityNone)) {
+			setCallback(2);
+			call(new ENTITY_SETUP(Verges, setup_function13), 0);
+			break;
+		}
+
+label_callback2:
+		if (ENTITY_PARAM(0, 7)) {
+			setCallback(3);
+			call(new ENTITY_SETUP(Verges, setup_function25));
+			break;
+		}
+
+label_callback3:
+		if (params->param6)
+			goto label_callback12;
+
+		TIME_CHECK_CALLBACK_S(Verges, kTimeChapter1, params->param7, 4, setup_function9, "TRA1001");
+
+label_callback4:
+		TIME_CHECK_CALLBACK(Verges, kTime1089000, params->param8, 5, setup_function12);
+
+		params->param8 = 1;
+
+		if (!params->param5) {
+			setCallback(5);
+			call(new ENTITY_SETUP(Verges, setup_function12));
+			break;
+		}		
+
+label_callback8:
+		TIME_CHECK_CALLBACK_S(Verges, kTime1107000, ENTITY_PARAM(1, 1), 9, setup_function9, "TRA1001A");
+
+label_callback9:
+		TIME_CHECK_CALLBACK_S(Verges, kTime1134000, ENTITY_PARAM(1, 2), 10, setup_function9, "TRA1002");
+
+label_callback10:
+		TIME_CHECK_CALLBACK_S(Verges, kTime1165500, ENTITY_PARAM(1, 3), 11, setup_function9, "TRA1003");
+
+label_callback11:
+		TIME_CHECK_CALLBACK_S(Verges, kTIme1225800, ENTITY_PARAM(1, 4), 12, setup_function9, "TRA1004");
+
+label_callback12:
+		if (ENTITY_PARAM(0, 5) && !params->param2) {
+			setCallback(13);
+			call(new ENTITY_SETUP(Verges, setup_function21));
+			break;
+		}
+
+label_callback13:
+		if (getInventory()->hasItem(kItemPassengerList) && !params->param4 && (getState()->time < kTime1134000 || getState()->time > kTime1156500)) { 
+			setCallback(14);
+			call(new ENTITY_SETUP(Verges, setup_function20));
+			break;
+		}		
+
+label_callback14:
+		if (ENTITY_PARAM(0, 3) && !params->param4 && (getState()->time < kTime1134000 || getState()->time > kTime1156500)) {
+			setCallback(15);
+			call(new ENTITY_SETUP(Verges, setup_function17));
+			break;
+		}
+
+label_callback15:
+		if (ENTITY_PARAM(0, 1) && !params->param5) {
+			if (getState()->time < kTime1134000 || getState()->time > kTime1156500) {
+				setCallback(16);
+				call(new ENTITY_SETUP(Verges, setup_function22));
+			}
+		}
 		break;
 
 	case kAction9:
@@ -312,58 +480,66 @@ IMPLEMENT_FUNCTION(Verges, chapter1_handler, 26)
 		break;
 
 	case kActionCallback:
-		error("Coudert: callback function 40 not implemented!");
-
 		switch (getCallback()) {
 		default:
 			break;
 
 		case 1:
-			break;
+			goto label_callback1;
 
 		case 2:
-			break;
+			goto label_callback2;
 
 		case 3:
-			break;
+			goto label_callback3;
 
 		case 4:
-			break;
+			goto label_callback4;
 
 		case 5:
+			setCallback(6);
+			call(new ENTITY_SETUP(Verges, setup_function8), kCarGreenSleeping, kPosition_2000);
 			break;
 
 		case 6:
+			setCallback(7);
+			call(new ENTITY_SETUP_ISII(Verges, setup_function15), kCarGreenSleeping, "TRA1202");
 			break;
 
 		case 7:
+			setCallback(8);
+			call(new ENTITY_SETUP(Verges, setup_function11));
 			break;
 
 		case 8:
-			break;
+			goto label_callback8;
 
 		case 9:
-			break;
+			goto label_callback9;
 
 		case 10:
-			break;
+			goto label_callback10;
 
 		case 11:
-			break;
+			goto label_callback11;
 
 		case 12:
-			break;
+			goto label_callback12;
 
 		case 13:
-			break;
+			params->param2 = 1;
+			goto label_callback13;
 
 		case 14:
-			break;
+			params->param3 = 1;
+			goto label_callback14;
 
 		case 15:
-			break;
+			params->param4 = 1;
+			goto label_callback15;
 
 		case 16:
+			params->param5 = 1;
 			break;
 		}
 		break;

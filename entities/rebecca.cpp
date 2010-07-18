@@ -224,12 +224,12 @@ IMPLEMENT_FUNCTION(Rebecca, chapter1_handler, 22)
 		break;
 
 	case kActionNone:
-		TIME_CHECK_PLAYSOUND(Rebecca, kTimeRebecca_1_1, params->param3, 1, "REB1015");
+		TIME_CHECK_PLAYSOUND(Rebecca, kTime1084500, params->param3, 1, "REB1015");
 
 		if (params->param4 == kTimeInvalid || !getState()->time)
 			goto label_function22_callback_5;
 
-		if (getState()->time > kTimeRebecca_1_0) {
+		if (getState()->time > kTime1080000) {
 			params->param4 = kTimeInvalid;
 			if (getEntities()->checkFields12(kEntityNone))
 				getProgress().field_B8 = 1;
@@ -338,7 +338,7 @@ IMPLEMENT_FUNCTION(Rebecca, function25, 25)
 
 	case kActionDefault:
 		setCallback(1);
-		call(new ENTITY_SETUP(Rebecca, setup_function20), kTimeRebecca_3);
+		call(new ENTITY_SETUP(Rebecca, setup_function20), kTime1184400);
 		break;
 
 	case kActionCallback:
@@ -411,7 +411,7 @@ IMPLEMENT_FUNCTION(Rebecca, function29, 29)
 
 	case kActionDefault:
 		setCallback(1);
-		call(new ENTITY_SETUP(Rebecca, setup_function20), kTimeRebecca_2);
+		call(new ENTITY_SETUP(Rebecca, setup_function20), kTime1764000);
 		break;
 
 	case kActionCallback:
@@ -493,7 +493,7 @@ IMPLEMENT_FUNCTION(Rebecca, function33, 33)
 
 	case kActionDefault:
 		setCallback(1);
-		call(new ENTITY_SETUP(Rebecca, setup_function20), kTimeRebecca);
+		call(new ENTITY_SETUP(Rebecca, setup_function20), kTime2016000);
 		break;
 
 	case kActionCallback:
@@ -514,7 +514,7 @@ IMPLEMENT_FUNCTION(Rebecca, function35, 35)
 
 	case kActionDefault:
 		setCallback(1);
-		call(new ENTITY_SETUP(Rebecca, setup_function20), kTimeRebecca_0);
+		call(new ENTITY_SETUP(Rebecca, setup_function20), kTime2070000);
 		break;
 
 	case kActionCallback:
@@ -535,7 +535,7 @@ IMPLEMENT_FUNCTION(Rebecca, function37, 37)
 
 	case kActionDefault:
 		setCallback(1);
-		call(new ENTITY_SETUP(Rebecca, setup_function20), kTimeRebecca_1);
+		call(new ENTITY_SETUP(Rebecca, setup_function20), kTime2110500);
 		break;
 
 	case kActionCallback:
@@ -647,7 +647,7 @@ IMPLEMENT_FUNCTION(Rebecca, function43, 43)
 
 	case kActionDefault:
 		setCallback(1);
-		call(new ENTITY_SETUP(Rebecca, setup_function20), kTimeRebecca_4);
+		call(new ENTITY_SETUP(Rebecca, setup_function20), kTime2385000);
 		break;
 
 	case kActionCallback:
@@ -689,7 +689,7 @@ IMPLEMENT_FUNCTION(Rebecca, function45, 45)
 		break;
 
 	case kAction205034665:
-		if (!params->param1 && getState()->time < kTimeRebecca_4_1) {
+		if (!params->param1 && getState()->time < kTime2511000) {
 			setCallback(1);
 			call(new ENTITY_SETUP_SIIS(Rebecca, setup_playSound), "Reb6969");
 		}

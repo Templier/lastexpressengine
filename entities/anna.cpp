@@ -284,7 +284,7 @@ IMPLEMENT_FUNCTION(Anna, function20, 20)
 
 	case kActionDefault:
 		setCallback(1);
-		call(new ENTITY_SETUP_ISII(Anna, setup_function15), kTimeAnna, "NONE");
+		call(new ENTITY_SETUP_ISII(Anna, setup_function15), kTime1093500, "NONE");
 		break;
 
 	case kActionCallback:
@@ -764,7 +764,7 @@ IMPLEMENT_FUNCTION(Anna, function62, 62)
 		break;
 
 	case kActionNone:
-		if (getState()->time > kTimeAnna_3 && !params->param2) {
+		if (getState()->time > kTime2259000 && !params->param2) {
 			params->param2 = 1;
 			getSavePoints()->push(kEntityAnna, kEntityVesna, kAction189299008);
 			setup_function63();
@@ -795,7 +795,7 @@ IMPLEMENT_FUNCTION(Anna, function63, 63)
 	case kActionCallback:
 		if (getCallback() == 1) {
 			getAction()->playAnimation(kEventAnnaKilled);
-			getLogic()->gameOver(kTimeTypeTime, kTimeAnna_2, kSceneGameOverAnnaDied, true);
+			getLogic()->gameOver(kTimeTypeTime, kTime2250000, kSceneGameOverAnnaDied, true);
 		}
 		break;
 
@@ -863,7 +863,7 @@ IMPLEMENT_FUNCTION(Anna, function68, 68)
 	case kActionNone:
 		if (!params->param1) {
 			setCallback(1);
-			call(new ENTITY_SETUP_ISII(Anna, setup_function15), kTimeAnna_4_0, "NONE");
+			call(new ENTITY_SETUP_ISII(Anna, setup_function15), kTime2511900, "NONE");
 		}
 		break;
 

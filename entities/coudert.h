@@ -105,6 +105,7 @@ public:
 
 private:
 	DECLARE_CALL_FUNCTION(iiii, Coudert, int, int, int, int)
+	DECLARE_CALL_FUNCTION(siis, Coudert, const char *, int, int, const char *)
 };
 
 } // End of namespace LastExpress
