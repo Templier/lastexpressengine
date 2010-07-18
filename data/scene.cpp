@@ -112,8 +112,8 @@ Scene::~Scene() {
 Scene *Scene::load(Common::SeekableReadStream *stream) {
 	Scene *scene = new Scene();
 
-	stream->read(&scene->name, sizeof(scene->name));
-	scene->sig = stream->readByte();
+	stream->read(&scene->_name, sizeof(scene->_name));
+	scene->_sig = stream->readByte();
 	scene->count = stream->readUint16LE();;
 	scene->field_11 = stream->readUint16LE();
 	scene->car = (CarIndex)stream->readUint16LE();
@@ -122,7 +122,7 @@ Scene *Scene::load(Common::SeekableReadStream *stream) {
 	scene->param1 = stream->readByte();
 	scene->param2 = stream->readByte();
 	scene->param3 = stream->readByte();
-	scene->hotspot = stream->readUint32LE();
+	scene->_hotspot = stream->readUint32LE();
 
 	return scene;
 }
@@ -131,13 +131,13 @@ void Scene::loadHotspots(Common::SeekableReadStream *stream) {
 	if (!_hotspots.empty())
 		return;
 
-	debugC(10, kLastExpressDebugScenes, "Scene:  name=%s, sig=%02d, position=%d, field_11=%d", name, sig, count, field_11);
+	debugC(10, kLastExpressDebugScenes, "Scene:  name=%s, sig=%02d, position=%d, field_11=%d", _name, _sig, count, field_11);
 	debugC(10, kLastExpressDebugScenes, "\tcar=%02d, position=%02d, type=%02d, param1=%02d", car, position, type, param1);
-	debugC(10, kLastExpressDebugScenes, "\tparam2=%02d, param3=%02d, hotspot=%d\n", param2, param3, hotspot);
+	debugC(10, kLastExpressDebugScenes, "\tparam2=%02d, param3=%02d, hotspot=%d\n", param2, param3, _hotspot);
 
 	// Read all hotspots
-	if (hotspot != 0) {
-		stream->seek((int32)hotspot, SEEK_SET);
+	if (_hotspot != 0) {
+		stream->seek((int32)_hotspot, SEEK_SET);
 		SceneHotspot *hotspot = SceneHotspot::load(stream);
 		while (hotspot) {
 			_hotspots.push_back(hotspot);
@@ -168,11 +168,11 @@ bool Scene::checkHotSpot(const Common::Point &coord, SceneHotspot **hotspot) {
 	return found;
 }
 
-SceneHotspot *Scene::getHotspot(uint32 index) {
+SceneHotspot *Scene::getHotspot(uint index) {
 	if (_hotspots.empty())
 		return NULL;
 
-	if (index >= (int)_hotspots.size())
+	if (index >= _hotspots.size())
 		return NULL;
 
 	return _hotspots[index];
@@ -182,7 +182,7 @@ Common::Rect Scene::draw(Graphics::Surface *surface) {
 	// Safety checks
 	Common::Rect rect;
 
-	Common::String sceneName(name);
+	Common::String sceneName(_name);
 	sceneName.trim();
 	if (sceneName.empty())
 		error("Scene::draw: This scene is not a valid drawing scene!");
@@ -258,9 +258,9 @@ Scene *SceneLoader::get(SceneIndex index) {
 		return NULL;
 
 	// Load the hotspots if needed
-	_scenes[index]->loadHotspots(_stream);
+	_scenes[(int)index]->loadHotspots(_stream);
 
-	return _scenes[index];
+	return _scenes[(int)index];
 }
 
 } // End of namespace LastExpress

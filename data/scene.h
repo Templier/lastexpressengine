@@ -216,12 +216,12 @@ public:
 	// Hotspots
 	Common::Array<SceneHotspot *> *getHotspots() { return &_hotspots; }
 	bool checkHotSpot(const Common::Point &coord, SceneHotspot **hotspot);
-	SceneHotspot *getHotspot(uint32 index = 0);
+	SceneHotspot *getHotspot(uint index = 0);
 
 private:
-	char name[8];
-	byte sig;	
-	uint32 hotspot;
+	char _name[8];
+	byte _sig;	
+	uint32 _hotspot;
 
 	Scene() {}
 	Common::Array<SceneHotspot *> _hotspots;
