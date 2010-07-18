@@ -195,6 +195,10 @@ IMPLEMENT_FUNCTION_II(August, savegame, 15)
 	Entity::savegame(savepoint);
 }
 
+//////////////////////////////////////////////////////////////////////////
+// Parameters
+//  - CarIndex
+//  - EntityPosition
 IMPLEMENT_FUNCTION_II(August, function16, 16)
 	error("August: callback function 16 not implemented!");
 }
@@ -271,7 +275,132 @@ IMPLEMENT_FUNCTION(August, dinner, 24)
 }
 
 IMPLEMENT_FUNCTION(August, chapter1_handler, 25)
-	error("August: callback function 25 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionNone:
+		if (!params->param1 && getProgress().eventCorpseFound) {
+			getSavePoints()->push(kEntityAugust, kEntityPascale, kAction239072064);
+			params->param1 = 1;
+		}
+
+		if (getState()->time > kTimeRebecca_1_0 && !params->param3) {
+			params->param3 = 1;
+
+			if (!params->param1) {
+				getSavePoints()->push(kEntityAugust, kEntityPascale, kAction239072064);
+				params->param1 = 1;
+			}
+		}
+
+		if (getState()->time > kTimeAnna && getEntities()->checkFields11()) {
+			getData()->field_493 = kField493_0;
+			getData()->inventoryItem = kItemNone;
+
+			setCallback(1);
+			call(new ENTITY_SETUP_SIIS(August, setup_function9), "010J", kEntityTables3, kAction103798704, "010K");
+		}
+		break;
+
+	case kAction1:
+		params->param2 = 0;
+		getData()->inventoryItem = kItemNone;
+		getSavePoints()->push(kEntityAugust, kEntityPascale, kAction191604416);
+
+		if (getProgress().jacket == kJacketGreen) {
+			setCallback(3);
+			call(new ENTITY_SETUP(August, setup_dinner));
+		} else {
+			setCallback(4);
+			call(new ENTITY_SETUP(August, setup_savegame), kSavegameType2, kEventDinerAugustOriginalJacket);
+		}		
+		break;
+
+	case kActionDefault:
+		getSavePoints()->push(kEntityAugust, kEntityTables3, kAction136455232);
+		getEntities()->drawSequenceLeft(kEntityAugust, "010B");
+
+		if (!getProgress().eventMetAugust)
+			params->param2 = kInventoryInvalid;
+
+		getData()->inventoryItem = (InventoryItem)params->param2;
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			getSavePoints()->push(kEntityAugust, kEntityServers0, kAction204704037);
+			getEntities()->drawSequenceRight(kEntityAugust, "803DS");
+			if (getEntities()->checkFields13(kEntityNone))
+				getEntities()->updateEntity(kEntityAugust);
+
+			setCallback(2);
+			call(new ENTITY_SETUP(August, setup_function8));
+			break;
+
+		case 2:
+			setup_function26();
+			break;
+
+		case 3:
+			setup_function28();			
+			break;
+
+		case 4:
+			getSavePoints()->push(kEntityAugust, kEntityAlexei, kAction225182640);
+			getAction()->playAnimation(kEventDinerAugustOriginalJacket);
+			getObjects()->update(kObjectCompartment1, kEntityNone, kLocation3, kCursorNormal, kCursorNormal);
+			
+			getData()->field_493 = kField493_0;
+
+			getSavePoints()->push(kEntityAugust, kEntityTables3, kAction103798704, "010K");
+			getEntities()->drawSequenceRight(kEntityAugust, "010P");
+			getScenes()->loadSceneFromPosition(kCarRestaurant, 65);
+
+			setCallback(5);
+			call(new ENTITY_SETUP(August, setup_function8));
+			break;
+
+		case 5:
+			getSavePoints()->push(kEntityAugust, kEntityServers0, kAction204704037);
+			getEntities()->drawSequenceRight(kEntityAugust, "803DS");
+			if (getEntities()->checkFields13(kEntityNone))
+				getEntities()->updateEntity(kEntityAugust);
+
+			setCallback(6);
+			call(new ENTITY_SETUP(August, setup_function8));
+			break;
+
+		case 6:
+			getProgress().field_14 = 2;
+
+			setCallback(7);
+			call(new ENTITY_SETUP(August, setup_function16), kCarGreenSleeping, kPosition_8200);
+			break;
+
+		case 7:
+			setCallback(8);
+			call(new ENTITY_SETUP(August, setup_function23), 0);
+			break;
+
+		case 8:
+			getLogic()->gameOver(kTimeType0, kTime0, kSceneNone, true);
+			break;
+		}
+		break;
+
+	case kAction168046720:
+		getData()->inventoryItem = kItemNone;
+		break;
+
+	case kAction168627977:
+		getData()->inventoryItem = (InventoryItem)params->param2;
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(August, function26, 26)

@@ -178,7 +178,7 @@ void SavePoints::callAndProcess() {
 	SavePoint savepoint; // empty parameters
 
 	// We ignore the kEntityNone callback in the list
-	EntityIndex index = kEntityAbbot;
+	EntityIndex index = kEntityAnna;
 
 	// Call all callbacks with empty parameters
 	bool isRunning = getFlags()->isGameRunning;

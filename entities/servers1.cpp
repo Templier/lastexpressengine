@@ -51,7 +51,7 @@ Servers1::Servers1(LastExpressEngine *engine) : Entity(engine, kEntityServers1) 
 	ADD_CALLBACK_FUNCTION(Servers1, function11);
 	ADD_CALLBACK_FUNCTION(Servers1, function12);
 	ADD_CALLBACK_FUNCTION(Servers1, function13);
-	ADD_CALLBACK_FUNCTION(Servers1, function14);
+	ADD_CALLBACK_FUNCTION(Servers1, chapter1_handler);
 	ADD_CALLBACK_FUNCTION(Servers1, function15);
 	ADD_CALLBACK_FUNCTION(Servers1, function16);
 	ADD_CALLBACK_FUNCTION(Servers1, chapter2);
@@ -151,8 +151,7 @@ IMPLEMENT_FUNCTION(Servers1, chapter1, 8)
 		break;
 
 	case kActionNone:
-		error("Servers1:chapter1: not implemented!");
-		// call function 14
+		setup_chapter1_handler();
 		break;
 
 	case kActionDefault:
@@ -195,8 +194,52 @@ IMPLEMENT_FUNCTION(Servers1, function13, 13)
 	error("Servers1: callback function 13 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Servers1, function14, 14)
-	error("Servers1: callback function 14 not implemented!");
+IMPLEMENT_FUNCTION(Servers1, chapter1_handler, 14)
+switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionDefault:
+		if (!getEntities()->checkFields17(kEntityServers1) || !getEntities()->checkFields11())
+			break;
+
+		if (ENTITY_PARAM(0, 1)) {
+			setCallback(1);
+			call(new ENTITY_SETUP(Servers1, setup_function9));
+			break;
+		}
+
+		if (ENTITY_PARAM(1, 2)) {
+			setCallback(2);
+			call(new ENTITY_SETUP(Servers1, setup_function10));
+			break;
+		}
+
+		if (ENTITY_PARAM(0, 3)) {
+			setCallback(3);
+			call(new ENTITY_SETUP(Servers1, setup_function11));
+			break;
+		}
+
+		if (ENTITY_PARAM(0, 4)) {
+			setCallback(4);
+			call(new ENTITY_SETUP(Servers1, setup_function12));
+			break;
+		}
+
+		if (ENTITY_PARAM(0, 5)) {
+			setCallback(5);
+			call(new ENTITY_SETUP(Servers1, setup_function13));
+		}
+		break;
+
+	case kActionCallback:
+		if (getCallback() == 5) {
+			getSavePoints()->push(kEntityServers1, kEntityPascale, kAction352768896);
+			setup_function15();
+		}
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Servers1, function15, 15)
@@ -345,8 +388,7 @@ IMPLEMENT_FUNCTION(Servers1, chapter4, 25)
 		getData()->field_493 = kField493_0;
 		getData()->car = kCarRestaurant;
 		getData()->inventoryItem = kItemNone;
-
-		// TODO: there is a second call to drawSequences in the original code (is it really needed?)
+		
 		getEntities()->prepareSequences(kEntityServers1);
 
 		ENTITY_PARAM(1, 2) = 0;

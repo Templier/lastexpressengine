@@ -54,7 +54,7 @@ Pascale::Pascale(LastExpressEngine *engine) : Entity(engine, kEntityPascale) {
 	ADD_CALLBACK_FUNCTION(Pascale, sitAnna);
 	ADD_CALLBACK_FUNCTION(Pascale, function15);
 	ADD_CALLBACK_FUNCTION(Pascale, function16);
-	ADD_CALLBACK_FUNCTION(Pascale, function17);
+	ADD_CALLBACK_FUNCTION(Pascale, chapter1_handler);
 	ADD_CALLBACK_FUNCTION(Pascale, function18);
 	ADD_CALLBACK_FUNCTION(Pascale, function19);
 	ADD_CALLBACK_FUNCTION(Pascale, chapter2);
@@ -144,7 +144,7 @@ IMPLEMENT_FUNCTION(Pascale, chapter1, 12)
 		break;
 
 	case kActionNone:
-		setup_function17();
+		setup_chapter1_handler();
  		break;
 
 	case kActionDefault:
@@ -200,8 +200,89 @@ IMPLEMENT_FUNCTION(Pascale, function16, 16)
 	error("Pascale: callback function 16 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Pascale, function17, 17)
-	error("Pascale: callback function 17 not implemented!");
+IMPLEMENT_FUNCTION(Pascale, chapter1_handler, 17)
+switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionNone:
+		if (!params->param2) {
+			if (getEntities()->isPlayerPosition(kCarRestaurant, 69) 
+			 || getEntities()->isPlayerPosition(kCarRestaurant, 70) 
+			 || getEntities()->isPlayerPosition(kCarRestaurant, 71))
+				params->param2 = 1;
+
+			if (!params->param2 && getEntities()->isPlayerPosition(kCarRestaurant, 61))
+				params->param1 = 1;
+		}
+
+		if (!getEntities()->checkFields17(kEntityPascale))
+			break;
+
+		if (ENTITY_PARAM(0, 5) && ENTITY_PARAM(0, 6)) {
+			setup_function18();
+			break;
+		}
+
+
+		if (!getEntities()->checkFields11())
+			goto label_callback3;
+
+		if (params->param1 && !params->param2 && getEntities()->isPlayerPosition(kCarRestaurant, 61)) {
+			setCallback(1);
+			call(new ENTITY_SETUP(Pascale, setup_function11));
+			break;
+		}
+
+label_callback1:
+		if (ENTITY_PARAM(0, 1) && !ENTITY_PARAM(1, 3)) {
+			setCallback(2);
+			call(new ENTITY_SETUP(Pascale, setup_function13));
+			break;
+		}
+
+label_callback2:
+		if (ENTITY_PARAM(0, 3)) {
+			setCallback(3);
+			call(new ENTITY_SETUP(Pascale, setup_function16));
+			break;
+		}
+
+label_callback3:
+		if (ENTITY_PARAM(0, 2)) {
+			setCallback(4);
+			call(new ENTITY_SETUP(Pascale, setup_function15));
+			break;
+		}
+
+label_callback4:
+		if (ENTITY_PARAM(0, 4)) {
+			setCallback(5);
+			call(new ENTITY_SETUP(Pascale, setup_function8));
+		}
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			params->param1 = 0;
+			params->param2 = 1;
+			goto label_callback1;
+
+		case 2:
+			goto label_callback2;
+
+		case 3:
+			goto label_callback3;
+
+		case 4:
+			goto label_callback4;
+		}
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Pascale, function18, 18)
