@@ -561,6 +561,8 @@ bool Menu::handleEvent(StartMenuAction action, Common::EventType type) {
 		if (!clicked)
 			break;
 
+		clearBg(GraphicsManager::kBackgroundOverlay);
+
 		playSfxStream("LIB046.SND");
 
 		// Setup new game

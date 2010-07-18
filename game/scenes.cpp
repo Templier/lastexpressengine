@@ -155,7 +155,7 @@ void SceneManager::loadScene(SceneIndex index) {
 
 void SceneManager::loadSceneFromObject(ObjectIndex object, bool alternate) {
 	if (alternate) {
-		loadSceneFromPosition((object < 10 ? kCarGreenSleeping : kCarRedSleeping), 17 - (object - 1) * 2);
+		loadSceneFromPosition((object < kObject10 ? kCarGreenSleeping : kCarRedSleeping), (Position)(17 - (object - 1) * 2));
 		return;
 	}
 
@@ -177,7 +177,7 @@ void SceneManager::loadSceneFromObject(ObjectIndex object, bool alternate) {
 	case kObjectCompartmentE:
 	case kObjectCompartmentF:
 	case kObjectCompartmentG:
-		loadSceneFromPosition((object < 10 ? kCarGreenSleeping : kCarRedSleeping), 38 - (object - 1) * 2);
+		loadSceneFromPosition((object < kObject10 ? kCarGreenSleeping : kCarRedSleeping), (Position)(38 - (object - 1) * 2));
 		break;
 
 	case kObjectCompartment8:
@@ -338,8 +338,138 @@ void SceneManager::processScene() {
 		loadScene(getState()->sceneBackup);
 }
 
-LastExpress::SceneIndex SceneManager::processIndex(SceneIndex sceneIndex) {
-	error("SceneManager::processIndex is not implemented!");
+LastExpress::SceneIndex SceneManager::processIndex(SceneIndex index) {
+	Scene *scene = get(index);
+	CarIndex car = scene->getHeader()->car;
+
+	switch (car) {
+	default:
+		break;
+
+	case kCarRedSleeping:	
+		if (checkPosition(index, kCheckPositionLookingAtDoors)) {
+			Position position = (Position)(scene->getHeader()->position + (checkPosition(kSceneNone, kCheckPositionType0) ? -1 : 1));
+
+			if (position == 4)
+				position = 3;
+
+			if (position == 24)
+				position = 25;
+
+			if (getEntities()->getPosition(car, position))
+				return index;
+			else
+				return getSceneIndexFromPosition(car, position);
+		} else {
+			switch (scene->getHeader()->position) {
+			default:
+				break;
+
+			case 41:
+			case 51:			
+				if (!getEntities()->getPosition(car, 39))
+					return getSceneIndexFromPosition(car, 39);
+				// Fallback to next case
+
+			case 42:
+			case 52:
+				if (!getEntities()->getPosition(car, 14))
+					return getSceneIndexFromPosition(car, 14);
+				// Fallback to next case
+
+			case 43:
+			case 53:
+				if (!getEntities()->getPosition(car, 35))
+					return getSceneIndexFromPosition(car, 35);
+				// Fallback to next case
+
+			case 44:
+			case 54:
+				if (!getEntities()->getPosition(car, 10))
+					return getSceneIndexFromPosition(car, 10);
+				// Fallback to next case
+
+			case 45:
+			case 55:
+				if (!getEntities()->getPosition(car, 32))
+					return getSceneIndexFromPosition(car, 32);
+				// Fallback to next case
+
+			case 46:
+			case 56:
+				if (!getEntities()->getPosition(car, 7))
+					return getSceneIndexFromPosition(car, 7);
+				// Fallback to next case
+
+			case 47:
+			case 57:
+				if (!getEntities()->getPosition(car, 27))
+					return getSceneIndexFromPosition(car, 27);
+				// Fallback to next case	
+
+			case 48:
+			case 58:
+				if (!getEntities()->getPosition(car, 2))
+					return getSceneIndexFromPosition(car, 2);
+				break;
+			}	
+		}		
+		break;
+
+	case kCarRestaurant:	
+		switch (scene->getHeader()->position) {
+		default:
+			break;
+
+		case 52:
+		case 53:
+		case 54:
+			if (!getEntities()->getPosition(car, 51))
+				return getSceneIndexFromPosition(car, 51);
+			// Fallback to next case
+
+		case 50:
+		case 56:
+		case 57:
+		case 58:
+			if (!getEntities()->getPosition(car, 55))
+				return getSceneIndexFromPosition(car, 55);
+			// Fallback to next case
+
+		case 59:
+			if (!getEntities()->getPosition(car, 60))
+				return getSceneIndexFromPosition(car, 60);
+			// Fallback to next case
+
+		case 60:
+			if (!getEntities()->getPosition(car, 59))
+				return getSceneIndexFromPosition(car, 59);
+			// Fallback to next case
+
+		case 62:
+		case 63:
+		case 64:
+			if (!getEntities()->getPosition(car, 61))
+				return getSceneIndexFromPosition(car, 61);
+			// Fallback to next case
+
+		case 66:
+		case 67:
+		case 68:
+			if (!getEntities()->getPosition(car, 65))
+				return getSceneIndexFromPosition(car, 65);
+			// Fallback to next case
+
+		case 69:
+		case 71:
+			if (!getEntities()->getPosition(car, 70))
+				return getSceneIndexFromPosition(car, 70);			
+			break;
+		}		
+		break;
+	}
+
+	return index;
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -470,7 +600,7 @@ void SceneManager::updateDoorsAndClock() {
 
 			// Load door sequence
 			Scene *scene = getScenes()->get(getState()->scene);
-			Common::String name = Common::String::printf("633X%c-%02d.seq", (index - firstIndex + 65), scene->getHeader()->position);
+			Common::String name = Common::String::printf("633X%c-%02d.seq", (index - firstIndex) + 65, scene->getHeader()->position);
 			Sequence *sequence = Sequence::loadSequence(getArchive(name), 255);
 
 			// If the sequence doesn't exists, skip
@@ -481,7 +611,7 @@ void SceneManager::updateDoorsAndClock() {
 
 			// Adjust frame data and store in frame list
 			SequenceFrame *frame = new SequenceFrame(sequence);
-			frame->getInfo()->location = (checkPosition(kSceneNone, kCheckPositionType0) ? firstIndex - index - 1 : index - firstIndex - 8);
+			frame->getInfo()->location = (checkPosition(kSceneNone, kCheckPositionType0) ? (firstIndex - index) - 1 : (index - firstIndex) - 8);
 
 			// Add frame to list
 			addToQueue(frame);
@@ -771,8 +901,8 @@ void SceneManager::preProcessScene(SceneIndex *index) {
 			if ((checkPosition(getState()->scene, kCheckPositionType0) && checkPosition(*index, kCheckPositionType0) && currentScene->getHeader()->count < scene->getHeader()->count)
 			 || (checkPosition(getState()->scene, kCheckPositionType1)  && checkPosition(*index, kCheckPositionType1)  && currentScene->getHeader()->count > scene->getHeader()->count)) {
 
-				if (State::getPowerOfTwo(getEntities()->getCompartments(scene->getHeader()->param1)) != 30
-				 && State::getPowerOfTwo(getEntities()->getCompartments1(scene->getHeader()->param1)) != 30 )
+				if (State::getPowerOfTwo((uint32)getEntities()->getCompartments(scene->getHeader()->param1)) != 30
+				 && State::getPowerOfTwo((uint32)getEntities()->getCompartments1(scene->getHeader()->param1)) != 30 )
 					getSound()->playSound(kEntityNone, "CAT1126A");
 
 				*index = scene->getHotspot()->scene;
@@ -868,7 +998,7 @@ void SceneManager::postProcessScene() {
 			// Init entities
 			entities[0] = kEntityNone;
 
-			int progress = 0;
+			uint progress = 0;
 
 			for (uint i = 1; i < (unsigned)getEntities()->count(); i++) {
 				CarIndex car = getEntityData((EntityIndex)i)->car;

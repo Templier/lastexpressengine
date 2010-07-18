@@ -50,7 +50,6 @@ public:
 	SceneManager(LastExpressEngine *engine);
 	~SceneManager();
 
-
 	// Datafile
 	void loadSceneDataFile(ArchiveIndex archive);
 
@@ -134,8 +133,6 @@ private:
 	// Scene processing
 	void preProcessScene(SceneIndex *index);
 	void postProcessScene();
-
-
 };
 
 } // End of namespace LastExpress

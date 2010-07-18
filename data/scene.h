@@ -212,7 +212,7 @@ public:
 
 	SceneHeader* getHeader();
 	Common::Array<SceneHotspot *> *getHotspots() { return &_hotspots; }
-	SceneHotspot *getHotspot(int index = 0);
+	SceneHotspot *getHotspot(SceneIndex index = kSceneNone);
 
 private:
 	SceneHeader *_header;

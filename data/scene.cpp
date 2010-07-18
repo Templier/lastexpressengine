@@ -187,7 +187,7 @@ bool Scene::checkHotSpot(const Common::Point &coord, SceneHotspot **hotspot) {
 	return found;
 }
 
-SceneHotspot *Scene::getHotspot(int index) {
+SceneHotspot *Scene::getHotspot(SceneIndex index) {
 	if (_hotspots.empty())
 		return NULL;
 
