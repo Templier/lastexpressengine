@@ -604,7 +604,7 @@ void SceneManager::updateDoorsAndClock() {
 			Sequence *sequence = Sequence::loadSequence(getArchive(name), 255);
 
 			// If the sequence doesn't exists, skip
-			if (!sequence->isLoaded())
+			if (!sequence || !sequence->isLoaded())
 				continue;
 
 			_doors.push_back(sequence);
@@ -656,6 +656,8 @@ void SceneManager::resetDoorsAndClock() {
 void SceneManager::drawFrames(bool refreshScreen) {
 	if (!_flagDrawSequences)
 		return;
+
+	clearBg(GraphicsManager::kBackgroundOverlay);
 
 	for (Common::List<SequenceFrame *>::iterator i = _queue.begin(); i != _queue.end(); ++i)
 		_engine->getGraphicsManager()->draw(*i, GraphicsManager::kBackgroundOverlay);
@@ -709,7 +711,14 @@ void SceneManager::removeFromQueue(SequenceFrame *frame) {
 	if (!frame)
 		return;
 
-	_queue.remove(frame);
+	// Check that the frame is in the queue and remove it
+	for (Common::List<SequenceFrame *>::iterator i = _queue.begin(); i != _queue.end(); ++i) {
+		if (frame->equal(*i)) {
+			_queue.erase(i);
+			_flagDrawSequences = true;
+			break;
+		}		
+	}
 }
 
 void SceneManager::removeAndRedraw(SequenceFrame *frame, bool doRedraw) {
