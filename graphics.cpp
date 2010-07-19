@@ -29,6 +29,8 @@
 
 namespace LastExpress {
 
+#define COLOR_KEY  0xFFFF
+
 GraphicsManager::GraphicsManager() : _changed(false) {
 	_screen.create(640, 480, 2);
 
@@ -77,14 +79,14 @@ void GraphicsManager::clear(BackgroundType type, const Common::Rect &rect) {
 		case kBackgroundC:
 		case kBackgroundOverlay:
 		case kBackgroundInventory:
-			getSurface(type)->fillRect(rect, 0);
+			getSurface(type)->fillRect(rect, COLOR_KEY);
 			break;
 
 		case kBackgroundAll:
-			_backgroundA.fillRect(rect, 0);
-			_backgroundC.fillRect(rect, 0);
-			_overlay.fillRect(rect, 0);
-			_inventory.fillRect(rect, 0);
+			_backgroundA.fillRect(rect, COLOR_KEY);
+			_backgroundC.fillRect(rect, COLOR_KEY);
+			_overlay.fillRect(rect, COLOR_KEY);
+			_inventory.fillRect(rect, COLOR_KEY);
 			break;
 	}
 }
@@ -137,14 +139,16 @@ void GraphicsManager::mergePlanes() {
 
 	for (int i = 0; i < 640 * 480; i++) {
 
-		if (*(inventory))
-			*(screen) = *(inventory);
-		else if (*(overlay))
-			*(screen) = *(overlay);
-		else if (*(backgroundA))
-			*(screen) = *(backgroundA);
+		if (*inventory != COLOR_KEY)
+			*screen = *inventory;
+		else if (*overlay != COLOR_KEY)
+			*screen = *overlay;
+		else if (*backgroundA != COLOR_KEY)
+			*screen = *backgroundA;
+		else if (*backgroundC != COLOR_KEY)
+			*screen = *backgroundC;
 		else
-			*(screen) = *(backgroundC);
+			*screen = 0;
 
 		inventory++;
 		screen++;
