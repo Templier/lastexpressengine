@@ -90,11 +90,7 @@ public:
 
 private:
 	LastExpressEngine *_engine;
-
 	SceneLoader       *_sceneLoader;     ///< Scene loader
-	Scene             *_currentScene;    ///< Current scene
-
-	Common::Rect coordinates;
 
 	// Flags
 	bool _flagNoEntity;
@@ -103,13 +99,9 @@ private:
 	bool _flagCoordinates;
 
 	// Train sequences
-	Common::Array<Sequence *> _doors;
-
-	Sequence *_clockHours;
-	Sequence *_clockMinutes;
-
-	uint _hoursIndex;
-	uint _minutesIndex;
+	Common::List<SequenceFrame *> _doors;
+	SequenceFrame *_clockHours;
+	SequenceFrame *_clockMinutes;
 
 	// Sequence queue
 	Common::List<SequenceFrame *> _queue;

@@ -44,19 +44,18 @@
 
 namespace LastExpress {
 
-SceneManager::SceneManager(LastExpressEngine *engine) : _engine(engine), _currentScene(NULL),
+SceneManager::SceneManager(LastExpressEngine *engine) : _engine(engine),
 	_flagNoEntity(false), _flagDrawEntities(false), _flagDrawSequences(false), _flagCoordinates(false),
-	_clockHours(NULL), _clockMinutes(NULL), _hoursIndex(0), _minutesIndex(0) {
+	_clockHours(NULL), _clockMinutes(NULL) {
 	_sceneLoader = new SceneLoader();
 }
 
 SceneManager::~SceneManager() {
-	_currentScene = NULL; /* part of cache */
 	delete _sceneLoader;
 
-	// Clear sequences
-	for (int i = 0; i < (int)_doors.size(); i++)
-		delete _doors[i];
+	// Clear frames
+	for (Common::List<SequenceFrame *>::iterator door = _doors.begin(); door != _doors.end(); ++door)
+		SAFE_DELETE(*door);
 
 	_doors.clear();
 
@@ -257,13 +256,12 @@ void SceneManager::drawScene(SceneIndex index) {
 	debugC(9, kLastExpressDebugScenes, "== Drawing scene: %d ==", index);
 
 	// Update scene
-	_currentScene = get(index);
-	_engine->getGraphicsManager()->draw(_currentScene, GraphicsManager::kBackgroundC, true);
+	_engine->getGraphicsManager()->draw(get(index), GraphicsManager::kBackgroundC, true);
 	getState()->scene = index;
 
 	//////////////////////////////////////////////////////////////////////////
 	// Update entities
-	Scene *scene = (getState()->sceneUseBackup ? get(getState()->sceneBackup) : _currentScene);
+	Scene *scene = (getState()->sceneUseBackup ? get(getState()->sceneBackup) : get(index));
 
 	getEntityData(kEntityNone)->entityPosition = (EntityPosition)scene->count;
 	getEntityData(kEntityNone)->car = scene->car;
@@ -541,22 +539,25 @@ bool SceneManager::checkCurrentPosition(bool doCheckOtherCars) const {
 //////////////////////////////////////////////////////////////////////////
 void SceneManager::updateDoorsAndClock() {
 	// Clear all sequences from the list
-	for (int i = 0; i < (int)_doors.size(); i++) {
-		removeFromQueue(new SequenceFrame(_doors[i]));
-		setCoordinates(new SequenceFrame(_doors[i]));
+	for (Common::List<SequenceFrame *>::iterator door = _doors.begin(); door != _doors.end(); ++door) {
+		removeFromQueue(*door);
+		setCoordinates(*door);
+		SAFE_DELETE(*door);
 	}
 
 	// Cleanup doors sequences
 	_doors.clear();
 
 	if (_clockHours) {
-		removeFromQueue(new SequenceFrame(_clockHours, _hoursIndex));
-		setCoordinates(new SequenceFrame(_clockHours, _hoursIndex));
+		removeFromQueue(_clockHours);
+		setCoordinates(_clockHours);
+		SAFE_DELETE(_clockHours);
 	}
 
 	if (_clockMinutes) {
-		removeFromQueue(new SequenceFrame(_clockMinutes, _minutesIndex));
-		setCoordinates(new SequenceFrame(_clockMinutes, _minutesIndex));
+		removeFromQueue(_clockMinutes);
+		setCoordinates(_clockMinutes);
+		SAFE_DELETE(_clockMinutes);
 	}
 
 	// Queue doors sequences for display
@@ -588,11 +589,11 @@ void SceneManager::updateDoorsAndClock() {
 			if (!sequence || !sequence->isLoaded())
 				continue;
 
-			_doors.push_back(sequence);
-
 			// Adjust frame data and store in frame list
-			SequenceFrame *frame = new SequenceFrame(sequence);
+			SequenceFrame *frame = new SequenceFrame(sequence, 0, true);
 			frame->getInfo()->location = (checkPosition(kSceneNone, kCheckPositionType0) ? (firstIndex - index) - 1 : (index - firstIndex) - 8);
+
+			_doors.push_back(frame);
 
 			// Add frame to list
 			addToQueue(frame);
@@ -601,24 +602,35 @@ void SceneManager::updateDoorsAndClock() {
 
 	// Queue clock sequences for display
 	if (checkPosition(kSceneNone, kCheckPositionLookingAtClock)) {
-		// Example scene: 349
+		// Only used in scene 349 to show the hands on the clock
 
-		_clockHours = loadSequence1("SCLKH-81.seq", 255);
-		_clockMinutes = loadSequence1("SCLKM-81.seq", 255);
-
-		error("SceneManager::updateDoorsAndClock: not implemented!");
+		Sequence *sequenceHours = loadSequence1("SCLKH-81.seq", 255);
+		Sequence *sequenceMinutes = loadSequence1("SCLKM-81.seq", 255);
 
 		// Compute hours and minutes indexes
+		uint32 hoursIndex = getState()->time % 1296000 % 54000 / 900;
 
+		uint hours = (getState()->time % 1296000) / 54000;
+		if (hours >= 12)
+			hours -= 12;
+
+		uint32 minutesIndex = 5 * hours + hoursIndex / 12;
 
 		// Adjust z-order and store sequences to list
+		_clockHours = new SequenceFrame(sequenceHours, hoursIndex, true);
+		_clockHours->getInfo()->location = 65534;
+		
+		_clockMinutes = new SequenceFrame(sequenceMinutes, minutesIndex, true);
+		_clockMinutes->getInfo()->location = 65535;
 
+		addToQueue(_clockHours);
+		addToQueue(_clockMinutes);
 	}
 }
 
 void SceneManager::resetDoorsAndClock() {
-	for (int i = 0; i < (int)_doors.size(); i++)
-		delete _doors[i];
+	for (Common::List<SequenceFrame *>::iterator door = _doors.begin(); door != _doors.end(); ++door)
+		SAFE_DELETE(*door);
 
 	_doors.clear();
 
@@ -688,7 +700,7 @@ void SceneManager::addToQueue(SequenceFrame *frame) {
 	_queue.push_back(frame);
 }
 
-void SceneManager::removeFromQueue(SequenceFrame /*const*/ *frame) {
+void SceneManager::removeFromQueue(SequenceFrame *frame) {
 	if (!frame)
 		return;
 
