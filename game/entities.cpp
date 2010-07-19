@@ -513,7 +513,7 @@ void Entities::updateSequences() {
 		int field30 = (data->direction == kDirectionLeft ? entityIndex + 35 : 15);
 
 		if (data->sequenceName2 != "" && !data->sequence2) {
-			data->sequence2 = Sequence::loadSequence(getArchive(data->sequenceName2), field30);
+			data->sequence2 = loadSequence1(data->sequenceName2, field30);
 
 			// If sequence 2 was loaded correctly, remove the copied name
 			// otherwise, compute new name
@@ -527,7 +527,7 @@ void Entities::updateSequences() {
 					COMPUTE_SEQUENCE_NAME(sequenceName, data->sequenceName2);
 
 					// Try loading the sequence
-					data->sequence2 = Sequence::loadSequence(getArchive(sequenceName), field30);
+					data->sequence2 = loadSequence1(sequenceName, field30);
 				}
 
 				// Update sequence names
@@ -540,7 +540,7 @@ void Entities::updateSequences() {
 		if (data->sequenceName3 != "" && !data->sequence3) {
 
 			if (data->car == getData(kEntityNone)->car)
-				data->sequence3 = Sequence::loadSequence(getArchive(data->sequenceName3), field30);
+				data->sequence3 = loadSequence1(data->sequenceName3, field30);
 
 			if (!data->sequence3) {
 				Common::String sequenceName;
@@ -550,7 +550,7 @@ void Entities::updateSequences() {
 					COMPUTE_SEQUENCE_NAME(sequenceName, data->sequenceName3);
 
 					// Try loading the sequence
-					data->sequence3 = Sequence::loadSequence(getArchive(sequenceName), field30);
+					data->sequence3 = loadSequence1(sequenceName, field30);
 				}
 
 				// Update sequence names
@@ -646,7 +646,7 @@ void Entities::executeCallbacks() {
 
 void Entities::processEntity(EntityIndex entityIndex) {
 	EntityData::EntityCallData *data = getData(entityIndex);
-	bool dontClearQueue = false;
+	bool keepPreviousFrame = false;
 
 	data->doProcessEntity = false;
 
@@ -658,8 +658,8 @@ void Entities::processEntity(EntityIndex entityIndex) {
 			data->position = 0;
 		}
 
-		getScenes()->removeAndRedraw(data->frame, false);
-		getScenes()->removeAndRedraw(data->frame1, false);
+		getScenes()->removeAndRedraw(&data->frame, false);
+		getScenes()->removeAndRedraw(&data->frame1, false);
 
 		INCREMENT_DIRECTION_COUNTER();
 
@@ -667,7 +667,7 @@ void Entities::processEntity(EntityIndex entityIndex) {
 	}
 
 	if (data->frame1) {
-		getScenes()->removeAndRedraw(data->frame1, false);
+		getScenes()->removeAndRedraw(&data->frame1, false);
 
 		if (data->frame && data->frame->getInfo()->subType != kFrameType3) {
 			data->frame->getInfo()->subType = kFrameType2;
@@ -736,7 +736,7 @@ label_nosequence:
 	}
 
 	if (data->frame->getInfo()->field_2F == 1)
-		dontClearQueue = true;
+		keepPreviousFrame = true;
 
 	// Increment current frame
 	data->currentFrame2++;
@@ -746,8 +746,8 @@ label_nosequence:
 		if (data->direction == kDirectionLeft) {
 			data->currentFrame2 = 0;
 		} else {
-			dontClearQueue = true;
-			processEntitySub2(entityIndex);
+			keepPreviousFrame = true;
+			drawNextSequence(entityIndex);
 
 			if (getFlags()->flag_entities_0 || data->doProcessEntity)
 				return;
@@ -763,7 +763,7 @@ label_nosequence:
 
 	}
 
-	updateFrame(entityIndex, dontClearQueue, false);
+	updateFrame(entityIndex, keepPreviousFrame, false);
 
 	if (!getFlags()->flag_entities_0 && !data->doProcessEntity)
 		INCREMENT_DIRECTION_COUNTER();
@@ -994,11 +994,11 @@ int Entities::getCurrentFrame2(EntityIndex entity, Sequence *sequence, EntityPos
 	return -1;
 }
 
-void Entities::updateFrame(EntityIndex entityIndex, bool dontClearQueue, bool dontPlaySound) {
+void Entities::updateFrame(EntityIndex entityIndex, bool keepPreviousFrame, bool dontPlaySound) {
 	EntityData::EntityCallData *data = getData(entityIndex);
 
 	// Set frame to be drawn again
-	if (data->frame && dontClearQueue) {
+	if (data->frame && keepPreviousFrame) {
 		if (data->frame->getInfo()->subType != kFrameType3)
 			data->frame->getInfo()->subType = kFrameType2;
 
@@ -1006,7 +1006,7 @@ void Entities::updateFrame(EntityIndex entityIndex, bool dontClearQueue, bool do
 	}
 
 	// Remove old frame from queue
-	if (data->frame && !dontClearQueue)
+	if (data->frame && !keepPreviousFrame)
 		getScenes()->removeFromQueue(data->frame);
 
 	// Stop if nothing else to draw
@@ -1020,7 +1020,7 @@ void Entities::updateFrame(EntityIndex entityIndex, bool dontClearQueue, bool do
 	FrameInfo *info = data->sequence2->getFrameInfo(data->currentFrame2);
 
 	if (data->frame && data->frame->getInfo()->subType != kFrameType3)
-		if (!info->field_2E || dontClearQueue)
+		if (!info->field_2E || keepPreviousFrame)
 			getScenes()->setCoordinates(data->frame);
 
 	// Update position
@@ -1035,7 +1035,7 @@ void Entities::updateFrame(EntityIndex entityIndex, bool dontClearQueue, bool do
 	if (info->subType != kFrameType3) {
 		info->subType = kFrameType1;
 
-		if (!dontClearQueue)
+		if (!keepPreviousFrame)
 			info->subType = kFrameTypeNone;
 	}
 
@@ -1086,18 +1086,51 @@ void Entities::updateFrame(EntityIndex entityIndex, bool dontClearQueue, bool do
 		getSound()->playSoundEvent(entityIndex, info->soundAction, info->field_31);
 
 	// Add the new frame to the queue
-	SequenceFrame *frame = new SequenceFrame(data->sequence2, data->currentFrame2, false);
+	SequenceFrame *frame = new SequenceFrame(data->sequence2, data->currentFrame2);
 	getScenes()->addToQueue(frame);
 
-	if (dontClearQueue)
+	// Keep previous frame if needed and store the new frame
+	if (keepPreviousFrame)
 		data->frame1 = data->frame;
+	
+	data->frame = frame;
 
 	if (!dontPlaySound)
-		data->field_49B = dontClearQueue ? 0 : 1;
+		data->field_49B = keepPreviousFrame ? 0 : 1;
 }
 
-void Entities::processEntitySub2(EntityIndex entityIndex) {
-	error("Entities::processEntitySub2: not implemented!");
+void Entities::drawNextSequence(EntityIndex entityIndex) {
+	EntityData::EntityCallData *data = getData(entityIndex);
+
+	if (data->direction == kDirectionRight) {
+		getSavePoints()->push(kEntityNone, entityIndex, kActionExitCompartment);
+		getSavePoints()->process();
+
+		if (getFlags()->flag_entities_0 || data->doProcessEntity)
+			return;
+	}
+
+	if (!isDirectionUpOrDown(entityIndex))
+		return;
+
+	if (data->sequence3)
+		return;
+
+	if (!getScenes()->checkPosition(kSceneNone, SceneManager::kCheckPositionLookingAtDoors))
+		return;
+
+	if (getData(kEntityNone)->car != data->car)
+		return;
+
+	if ((data->field_4A9 && !checkFields25(entityIndex)) || (!data->field_4A9 && checkFields25(entityIndex))) {
+
+		data->entityPosition = (!data->field_4A9 && checkFields25(entityIndex)) ? kPosition_2088 : kPosition_8514;
+
+		if (data->direction != kDirectionUp)
+			data->entityPosition = (!data->field_4A9 && checkFields25(entityIndex)) ? kPosition_8512 : kPosition_2086;
+
+		drawSequencesInternal(entityIndex, data->direction, true);
+	}
 }
 
 void Entities::processEntitySub3(EntityIndex entityIndex) {
@@ -1148,29 +1181,31 @@ void Entities::drawSequenceRight(EntityIndex index, const char* sequence) {
 	drawSequenceInternal(index, sequence, kDirectionRight);
 }
 
-void Entities::prepareSequences(EntityIndex index) {
-	debugC(8, kLastExpressDebugLogic, "Prepare sequences for entity %s", ENTITY_NAME(index));
+void Entities::prepareSequences(EntityIndex entityIndex) {
+	debugC(8, kLastExpressDebugLogic, "Prepare sequences for entity %s", ENTITY_NAME(entityIndex));
 
-	getScenes()->removeAndRedraw(getData(index)->frame, false);
-	getScenes()->removeAndRedraw(getData(index)->frame1, false);
+	EntityData::EntityCallData *data = getData(entityIndex);
 
-	if (getData(index)->sequence3) {
-		SAFE_DELETE(getData(index)->sequence3);
-		getData(index)->sequenceName3 = "";
-		getData(index)->field_4AA = 0;
-		getData(index)->direction2 = kDirectionNone;
+	getScenes()->removeAndRedraw(&data->frame, false);
+	getScenes()->removeAndRedraw(&data->frame1, false);
+
+	if (data->sequence3) {
+		SAFE_DELETE(data->sequence3);
+		data->sequenceName3 = "";
+		data->field_4AA = 0;
+		data->direction2 = kDirectionNone;
 	}
 
-	if (getData(index)->sequence2) {
-		SAFE_DELETE(getData(index)->sequence2);
-		getData(index)->sequenceName2 = "";
-		getData(index)->field_4A9 = 0;
-		getData(index)->currentFrame2 = -1;
+	if (data->sequence2) {
+		SAFE_DELETE(data->sequence2);
+		data->sequenceName2 = "";
+		data->field_4A9 = 0;
+		data->currentFrame2 = -1;
 	}
 
-	getData(index)->sequenceName = "";
-	getData(index)->direction = kDirectionNone;
-	getData(index)->doProcessEntity = true;
+	data->sequenceName = "";
+	data->direction = kDirectionNone;
+	data->doProcessEntity = true;
 }
 
 void Entities::drawSequenceInternal(EntityIndex index, const char* sequence, EntityDirection direction) {
@@ -1190,7 +1225,6 @@ void Entities::drawSequenceInternal(EntityIndex index, const char* sequence, Ent
 }
 
 void Entities::drawSequencesInternal(EntityIndex entityIndex, EntityDirection direction, bool unknown) {
-
 	EntityData::EntityCallData *data = getData(entityIndex);
 
 	// Compute value for loading sequence depending on direction
@@ -1248,14 +1282,14 @@ void Entities::drawSequencesInternal(EntityIndex entityIndex, EntityDirection di
 			if (unknown) {
 
 				if (data->car == getData(kEntityNone)->car)
-					data->sequence2 = Sequence::loadSequence(getArchive(sequenceName1), field30);
+					data->sequence2 = loadSequence1(sequenceName1, field30);
 
 				if (data->sequence2) {
 					data->sequenceName2 = sequenceName1;
 					data->sequenceNameCopy = "";
 				} else {
 					if (sequenceName != "")
-						data->sequence2 = Sequence::loadSequence(getArchive(sequenceName), field30);
+						data->sequence2 = loadSequence1(sequenceName, field30);
 
 					data->sequenceName2 = (data->sequence2 ? sequenceName : "");
 					data->sequenceNameCopy = (data->sequence2 ? "" : sequenceName1);
@@ -1298,7 +1332,7 @@ void Entities::drawSequencesInternal(EntityIndex entityIndex, EntityDirection di
 	} else {
 		SAFE_DELETE(data->sequence3);
 
-		data->sequence3 = copySequence(data->sequence2);
+		data->sequence3 = loadSequence1(data->sequence2->getName(), data->sequence2->getField30());
 
 		data->sequenceName3 = data->sequenceName2;
 		data->field_4AA = data->field_4A9;
@@ -1330,23 +1364,19 @@ void Entities::drawSequencesInternalSub(EntityIndex entityIndex, Common::String 
 	if (unknown) {
 
 		if (data->car == getData(kEntityNone)->car)
-			data->sequence3 = Sequence::loadSequence(getArchive(sequenceName), field30);
+			data->sequence3 = loadSequence1(sequenceName, field30);
 
 		if (data->sequence3) {
 			data->sequenceName3 = sequenceName;
 		} else {
 			if (sequenceName2 != "")
-				data->sequence3 = Sequence::loadSequence(getArchive(sequenceName2), field30);
+				data->sequence3 = loadSequence1(sequenceName2, field30);
 
 			data->sequenceName3 = (data->sequence3 ? sequenceName2 : "");
 		}
 	} else {
 		data->sequenceName3 = sequenceName;
 	}
-}
-
-Sequence *Entities::copySequence(Sequence *sequence) {
-	error("Entities::copySequence: not implemented!");
 }
 
 void Entities::getSequenceName(EntityIndex index, EntityDirection direction, Common::String &sequence1, Common::String &sequence2) const {
@@ -2402,14 +2432,11 @@ EntityPosition Entities::getEntityPositionFromCurrentPosition() const {
 }
 
 void Entities::clearEntitySequenceData(EntityData::EntityCallData * data, EntityDirection direction) {
-	getScenes()->removeAndRedraw(data->frame, false);
-	getScenes()->removeAndRedraw(data->frame1, false);
+	getScenes()->removeAndRedraw(&data->frame, false);
+	getScenes()->removeAndRedraw(&data->frame1, false);
 
-	if (data->sequence2)
-		SAFE_DELETE(data->sequence2);
-
-	if (data->sequence3)
-		SAFE_DELETE(data->sequence3);
+	SAFE_DELETE(data->sequence2);
+	SAFE_DELETE(data->sequence3);
 
 	data->sequenceName2 = "";
 	data->sequenceName3 = "";

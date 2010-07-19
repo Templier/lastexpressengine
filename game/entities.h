@@ -167,12 +167,11 @@ private:
 	void clearEntitySequenceData(EntityData::EntityCallData * data, EntityDirection direction);
 	void computeCurrentFrame2(EntityIndex entityIndex);
 	int getCurrentFrame2(EntityIndex entity, Sequence *sequence, EntityPosition position, bool doProcessing);
-	void updateFrame(EntityIndex entityIndex, bool dontClearQueue, bool dontPlaySound);
-	void processEntitySub2(EntityIndex entityIndex);
+	void updateFrame(EntityIndex entityIndex, bool keepPreviousFrame, bool dontPlaySound);
+	void drawNextSequence(EntityIndex entityIndex);
 	void processEntitySub3(EntityIndex entityIndex);
 	void copySequenceData3To2(EntityIndex entityIndex);
 
-	Sequence *copySequence(Sequence *sequence);
 	void getSequenceName(EntityIndex entity, EntityDirection direction, Common::String &sequence1, Common::String &sequence2) const;
 
 	void updatePositionsEnter(EntityIndex entity, CarIndex car, Position position1, Position position2, Position position3, Position position4);

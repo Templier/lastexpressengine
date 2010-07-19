@@ -148,16 +148,19 @@ private:
 
 class Sequence {
 public:
-	Sequence();
+	Sequence(Common::String name);
 	~Sequence();
 
-	static Sequence *loadSequence(Common::SeekableReadStream *stream = NULL, byte field30 = 15);
+	static Sequence *load(Common::String name, Common::SeekableReadStream *stream = NULL, byte field30 = 15);
 
 	bool load(Common::SeekableReadStream *stream, byte field30 = 15);
 
 	uint32 count() const { return _frames.size(); };
 	AnimFrame *getFrame(uint32 index = 0);
 	FrameInfo *getFrameInfo(uint32 index = 0);
+
+	Common::String getName() { return _name; }
+	uint32 getField30() { return _field30; }
 
 	bool isLoaded() { return _isLoaded; }
 
@@ -170,11 +173,14 @@ private:
 	Common::Array<FrameInfo> _frames;
 	Common::SeekableReadStream *_stream;
 	bool _isLoaded;
+
+	Common::String _name;
+	uint32 _field30; // used when copying sequences
 };
 
 class SequenceFrame : public Drawable {
 public:
-	SequenceFrame(Sequence *sequence, uint32 frame = 0, bool dispose = true);
+	SequenceFrame(Sequence *sequence, uint32 frame = 0, bool dispose = false);
 	~SequenceFrame();
 
 	Common::Rect draw(Graphics::Surface *surface);
@@ -183,6 +189,7 @@ public:
 	uint32 getFrame() { return _frame; }
 	bool nextFrame();
 
+	Common::String getName() { return _sequence->getName(); }
 	FrameInfo *getInfo();
 
 	bool equal(const SequenceFrame *other) const;

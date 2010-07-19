@@ -76,6 +76,8 @@
 //////////////////////////////////////////////////////////////////////////
 
 // Sequences
+#define loadSequence(name) Sequence::load(name, getArchive(name))
+#define loadSequence1(name, field30) Sequence::load(name, getArchive(name), field30)
 #define drawSequenceFrame(drawable, index, type) { \
 	AnimFrame *frame = (drawable)->getFrame((index)); \
 	_engine->getGraphicsManager()->draw((frame), (type)); \

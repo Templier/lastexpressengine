@@ -82,18 +82,18 @@ AnimFrame::AnimFrame(Common::SeekableReadStream *in, const FrameInfo &f) : _pale
 	// TODO: use just the needed rectangle
 	_image.create(640, 480, 1);
 
-	debugC(6, kLastExpressDebugGraphics, "    Offsets: data=%d, unknown=%d, palette=%d", f.dataOffset, f.unknown, f.paletteOffset);
-	debugC(6, kLastExpressDebugGraphics, "    Position: (%d, %d) - (%d, %d)", f.xPos1, f.yPos1, f.xPos2, f.yPos2);
-	debugC(6, kLastExpressDebugGraphics, "    Initial Skip: %d", f.initialSkip);
-	debugC(6, kLastExpressDebugGraphics, "    Decompressed end offset: %d", f.decompressedEndOffset);
-	debugC(6, kLastExpressDebugGraphics, "    Hotspot: (%d, %d) x (%d, %d)\n", f.hotspot.left, f.hotspot.top, f.hotspot.right, f.hotspot.bottom);
-	debugC(6, kLastExpressDebugGraphics, "    Compression type: %u / %u", f.compressionType, f.subType);
-	debugC(6, kLastExpressDebugGraphics, "    Unknown: %u - %u - %u - %u - %u - %u - %u - %d", f.field_2E, f.field_2F, f.field_30, f.field_31, f.field_33, f.field_35, f.field_36, f.field_38);
-	debugC(6, kLastExpressDebugGraphics, "    Sound action: %u", f.soundAction);
-	debugC(6, kLastExpressDebugGraphics, "    Position: %d", f.position);
-	debugC(6, kLastExpressDebugGraphics, "    Entity Position: %d", f.entityPosition);
-	debugC(6, kLastExpressDebugGraphics, "    Location: %d", f.location);
-	debugC(6, kLastExpressDebugGraphics, "    next: %d", f.next);
+	//debugC(6, kLastExpressDebugGraphics, "    Offsets: data=%d, unknown=%d, palette=%d", f.dataOffset, f.unknown, f.paletteOffset);
+	//debugC(6, kLastExpressDebugGraphics, "    Position: (%d, %d) - (%d, %d)", f.xPos1, f.yPos1, f.xPos2, f.yPos2);
+	//debugC(6, kLastExpressDebugGraphics, "    Initial Skip: %d", f.initialSkip);
+	//debugC(6, kLastExpressDebugGraphics, "    Decompressed end offset: %d", f.decompressedEndOffset);
+	//debugC(6, kLastExpressDebugGraphics, "    Hotspot: (%d, %d) x (%d, %d)\n", f.hotspot.left, f.hotspot.top, f.hotspot.right, f.hotspot.bottom);
+	//debugC(6, kLastExpressDebugGraphics, "    Compression type: %u / %u", f.compressionType, f.subType);
+	//debugC(6, kLastExpressDebugGraphics, "    Unknown: %u - %u - %u - %u - %u - %u - %u - %d", f.field_2E, f.field_2F, f.field_30, f.field_31, f.field_33, f.field_35, f.field_36, f.field_38);
+	//debugC(6, kLastExpressDebugGraphics, "    Sound action: %u", f.soundAction);
+	//debugC(6, kLastExpressDebugGraphics, "    Position: %d", f.position);
+	//debugC(6, kLastExpressDebugGraphics, "    Entity Position: %d", f.entityPosition);
+	//debugC(6, kLastExpressDebugGraphics, "    Location: %d", f.location);
+	//debugC(6, kLastExpressDebugGraphics, "    next: %d", f.next);
 
 	switch (f.compressionType) {
 	case 0:
@@ -334,7 +334,7 @@ void AnimFrame::decompFF(Common::SeekableReadStream *in, const FrameInfo &f) {
 //  SEQUENCE
 //////////////////////////////////////////////////////////////////////////
 
-Sequence::Sequence() : _stream(NULL), _isLoaded(false) {
+Sequence::Sequence(Common::String name) : _name(name), _stream(NULL), _isLoaded(false) {
 }
 
 Sequence::~Sequence() {
@@ -347,8 +347,8 @@ void Sequence::reset() {
 	_stream = NULL;
 }
 
-Sequence *Sequence::loadSequence(Common::SeekableReadStream *stream, byte field30) {
-	Sequence *sequence = new Sequence();
+Sequence *Sequence::load(Common::String name, Common::SeekableReadStream *stream, byte field30) {
+	Sequence *sequence = new Sequence(name);
 
 	if (!sequence->load(stream, field30)) {
 		delete sequence;
@@ -365,10 +365,13 @@ bool Sequence::load(Common::SeekableReadStream *stream, byte field30) {
 	// Reset data
 	reset();
 
-	// Copy stream for later decoding of sequence
+	_field30 = field30;
+
+	// Keep stream for later decoding of sequence
 	_stream = stream;
 
 	// Read header to get the number of frames
+	_stream->seek(0);
 	uint32 numframes = _stream->readUint32LE();
 	uint32 unknown = _stream->readUint32LE();
 	debugC(3, kLastExpressDebugGraphics, "Number of frames in sequence: %d / unknown=0x%x", numframes, unknown);
@@ -416,7 +419,7 @@ AnimFrame *Sequence::getFrame(uint32 index) {
 	if (frame->compressionType == 0)
 		return NULL;
 
-	debugC(4, kLastExpressDebugGraphics, "Decoding frame %d / %d", index + 1, _frames.size());
+	debugC(4, kLastExpressDebugGraphics, "Decoding sequence %s: frame %d / %d", _name.c_str(), index, _frames.size() - 1);
 
 	return new AnimFrame(_stream, *frame);
 }
@@ -473,7 +476,7 @@ FrameInfo *SequenceFrame::getInfo() {
 }
 
 bool SequenceFrame::equal(const SequenceFrame *other) const {
-	return _sequence == other->_sequence && _frame == other->_frame;
+	return _sequence->getName() == other->_sequence->getName() && _frame == other->_frame;
 }
 
 } // End of namespace LastExpress

@@ -136,7 +136,7 @@ bool Debugger::cmd_playseq(int argc, const char **argv) {
 
 			return false;
 		} else {
-			Sequence *sequence = new Sequence();
+			Sequence *sequence = new Sequence(filename);
 			if (sequence->load(getArchive(filename))) {
 
 				// Check that we have at least a frame to show
@@ -147,7 +147,7 @@ bool Debugger::cmd_playseq(int argc, const char **argv) {
 
 				_engine->getCursor()->show(false);
 
-				SequenceFrame player(sequence);
+				SequenceFrame player(sequence, 0, true);
 				do {
 					// Clear screen
 					clearBg(GraphicsManager::kBackgroundA);
@@ -200,7 +200,7 @@ bool Debugger::cmd_showframe(int argc, const char **argv) {
 
 			return false;
 		} else {
-			Sequence sequence;
+			Sequence sequence(filename);
 			if (sequence.load(getArchive(filename))) {
 				_engine->getCursor()->show(false);
 				clearBg(GraphicsManager::kBackgroundOverlay);

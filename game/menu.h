@@ -107,13 +107,13 @@ private:
 	LastExpressEngine *_engine;
 
 	// Sequences
-	Sequence _seqTooltips;
-	Sequence _seqEggButtons;
-	Sequence _seqButtons;
+	Sequence* _seqTooltips;
+	Sequence* _seqEggButtons;
+	Sequence* _seqButtons;
 
 	// TODO might be loaded on-the-fly in the future
-	Sequence _seqCredits;
-	Sequence _seqAcorn;
+	Sequence* _seqCredits;
+	Sequence* _seqAcorn;
 
 	// Cached decoded frames
 	AnimFrame *_cityButtonFrames[7];

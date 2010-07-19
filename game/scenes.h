@@ -78,8 +78,8 @@ public:
 	// Sequence queue
 	void drawFrames(bool refreshScreen);
 	void addToQueue(SequenceFrame *frame);
-	void removeFromQueue(SequenceFrame const *frame);
-	void removeAndRedraw(SequenceFrame const *frame, bool doRedraw);
+	void removeFromQueue(SequenceFrame *frame);
+	void removeAndRedraw(SequenceFrame **frame, bool doRedraw);
 	void resetQueue();
 	void setCoordinates(SequenceFrame *frame);
 

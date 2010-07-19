@@ -541,17 +541,23 @@ bool SceneManager::checkCurrentPosition(bool doCheckOtherCars) const {
 //////////////////////////////////////////////////////////////////////////
 void SceneManager::updateDoorsAndClock() {
 	// Clear all sequences from the list
-	for (int i = 0; i < (int)_doors.size(); i++)
-		removeFromQueue(new SequenceFrame(_doors[i], 0, false));
+	for (int i = 0; i < (int)_doors.size(); i++) {
+		removeFromQueue(new SequenceFrame(_doors[i]));
+		setCoordinates(new SequenceFrame(_doors[i]));
+	}
 
 	// Cleanup doors sequences
 	_doors.clear();
 
-	if (_clockHours)
-		removeFromQueue(new SequenceFrame(_clockHours, _hoursIndex, false));
+	if (_clockHours) {
+		removeFromQueue(new SequenceFrame(_clockHours, _hoursIndex));
+		setCoordinates(new SequenceFrame(_clockHours, _hoursIndex));
+	}
 
-	if (_clockMinutes)
-		removeFromQueue(new SequenceFrame(_clockMinutes, _minutesIndex, false));
+	if (_clockMinutes) {
+		removeFromQueue(new SequenceFrame(_clockMinutes, _minutesIndex));
+		setCoordinates(new SequenceFrame(_clockMinutes, _minutesIndex));
+	}
 
 	// Queue doors sequences for display
 	if (checkPosition(kSceneNone, kCheckPositionLookingAtDoors)) {
@@ -576,7 +582,7 @@ void SceneManager::updateDoorsAndClock() {
 			// Load door sequence
 			Scene *scene = getScenes()->get(getState()->scene);
 			Common::String name = Common::String::printf("633X%c-%02d.seq", (index - firstIndex) + 65, scene->position);
-			Sequence *sequence = Sequence::loadSequence(getArchive(name), 255);
+			Sequence *sequence = loadSequence1(name, 255);
 
 			// If the sequence doesn't exists, skip
 			if (!sequence || !sequence->isLoaded())
@@ -597,8 +603,8 @@ void SceneManager::updateDoorsAndClock() {
 	if (checkPosition(kSceneNone, kCheckPositionLookingAtClock)) {
 		// Example scene: 349
 
-		_clockHours = Sequence::loadSequence(getArchive("SCLKH-81.seq"), 255);
-		_clockMinutes = Sequence::loadSequence(getArchive("SCLKM-81.seq"), 255);
+		_clockHours = loadSequence1("SCLKH-81.seq", 255);
+		_clockMinutes = loadSequence1("SCLKM-81.seq", 255);
 
 		error("SceneManager::updateDoorsAndClock: not implemented!");
 
@@ -606,8 +612,6 @@ void SceneManager::updateDoorsAndClock() {
 
 
 		// Adjust z-order and store sequences to list
-
-
 
 	}
 }
@@ -655,6 +659,8 @@ void SceneManager::addToQueue(SequenceFrame *frame) {
 			return;
 	}
 
+	debugC(8, kLastExpressDebugGraphics, "Adding frame: %s / %d", frame->getName().c_str(), frame->getFrame());
+
 	// Set flag
 	_flagDrawSequences = true;
 
@@ -682,13 +688,15 @@ void SceneManager::addToQueue(SequenceFrame *frame) {
 	_queue.push_back(frame);
 }
 
-void SceneManager::removeFromQueue(SequenceFrame const *frame) {
+void SceneManager::removeFromQueue(SequenceFrame /*const*/ *frame) {
 	if (!frame)
 		return;
 
+	debugC(8, kLastExpressDebugGraphics, "Removing frame: %s / %d", frame->getName().c_str(), frame->getFrame());
+
 	// Check that the frame is in the queue and remove it
 	for (Common::List<SequenceFrame *>::iterator i = _queue.begin(); i != _queue.end(); ++i) {
-		if (frame->equal(*i)) {
+		if (frame->equal(*i)) {			
 			_queue.erase(i);
 			_flagDrawSequences = true;
 			break;
@@ -696,14 +704,16 @@ void SceneManager::removeFromQueue(SequenceFrame const *frame) {
 	}
 }
 
-void SceneManager::removeAndRedraw(SequenceFrame const *frame, bool doRedraw) {
+void SceneManager::removeAndRedraw(SequenceFrame **frame, bool doRedraw) {
 	if (!frame)
 		return;
 
-	removeFromQueue(frame);
+	removeFromQueue(*frame);
 
 	if (doRedraw)
 		drawFrames(true);
+
+	SAFE_DELETE(*frame);
 }
 
 void SceneManager::resetQueue() {
