@@ -56,19 +56,30 @@ namespace LastExpress {
 
 Debugger::Debugger(LastExpressEngine *engine) : _engine(engine), _command(NULL), _numParams(0), _commandParams(NULL) {
 
+	//////////////////////////////////////////////////////////////////////////
 	// Register the debugger commands
-	DCmd_Register("playseq",   WRAP_METHOD(Debugger, cmd_playseq));
-	DCmd_Register("showframe", WRAP_METHOD(Debugger, cmd_showframe));
-	DCmd_Register("playsnd",   WRAP_METHOD(Debugger, cmd_playsnd));
-	DCmd_Register("playsbe",   WRAP_METHOD(Debugger, cmd_playsbe));
-	DCmd_Register("playnis",   WRAP_METHOD(Debugger, cmd_playnis));
-	DCmd_Register("showbg",    WRAP_METHOD(Debugger, cmd_showbg));
-	DCmd_Register("loadscene", WRAP_METHOD(Debugger, cmd_loadscene));
-	DCmd_Register("clear",     WRAP_METHOD(Debugger, cmd_clear));
-	DCmd_Register("listfiles", WRAP_METHOD(Debugger, cmd_listfiles));
-	DCmd_Register("loadgame",  WRAP_METHOD(Debugger, cmd_loadgame));
-	DCmd_Register("fight",     WRAP_METHOD(Debugger, cmd_fight));
-	DCmd_Register("beetle",    WRAP_METHOD(Debugger, cmd_beetle));
+
+	// General
+	DCmd_Register("help",      WRAP_METHOD(Debugger, cmdHelp));
+
+	// Data
+	DCmd_Register("listfiles", WRAP_METHOD(Debugger, cmdListFiles));
+
+	DCmd_Register("playseq",   WRAP_METHOD(Debugger, cmdPlaySeq));
+	DCmd_Register("showframe", WRAP_METHOD(Debugger, cmdShowFrame));
+	DCmd_Register("showbg",    WRAP_METHOD(Debugger, cmdShowBg));
+	DCmd_Register("playsnd",   WRAP_METHOD(Debugger, cmdPlaySnd));
+	DCmd_Register("playsbe",   WRAP_METHOD(Debugger, cmdPlaySbe));
+	DCmd_Register("playnis",   WRAP_METHOD(Debugger, cmdPlayNis));
+
+	// Scene & interaction
+	DCmd_Register("loadscene", WRAP_METHOD(Debugger, cmdLoadScene));
+	DCmd_Register("fight",     WRAP_METHOD(Debugger, cmdFight));
+	DCmd_Register("beetle",    WRAP_METHOD(Debugger, cmdBeetle));
+
+	// Misc
+	DCmd_Register("loadgame",  WRAP_METHOD(Debugger, cmdLoadGame));	
+	DCmd_Register("clear",     WRAP_METHOD(Debugger, cmdClear));
 
 	resetCommand();
 }
@@ -118,7 +129,34 @@ void Debugger::callCommand() {
 		(*_command)(_numParams, const_cast<const char **>(_commandParams));
 }
 
-bool Debugger::cmd_playseq(int argc, const char **argv) {
+bool Debugger::cmdHelp(int argc, const char **argv) {
+	DebugPrintf("Debug flags\n");
+	DebugPrintf("-----------\n");
+	DebugPrintf(" debugflag_list - Lists the available debug flags and their status\n");
+	DebugPrintf(" debugflag_enable - Enables a debug flag\n");
+	DebugPrintf(" debugflag_disable - Disables a debug flag\n");
+	DebugPrintf("\n");
+	DebugPrintf("Commands\n");
+	DebugPrintf("--------\n");
+	DebugPrintf(" listfiles - list files in the archive\n");
+	DebugPrintf(" playseq - play a sequence\n");
+	DebugPrintf(" showframe - show a frame from a sequence\n");
+	DebugPrintf(" showbg - show a background\n");
+	DebugPrintf(" playsnd - play a sound\n");
+	DebugPrintf(" playsbe - play a subtitle\n");
+	DebugPrintf(" playnis - play an animation\n");
+	DebugPrintf(" loadscene - load a scene\n");
+	DebugPrintf(" fight - start a fight\n");
+	DebugPrintf(" beetle - start the beetle game\n");
+	DebugPrintf(" loadgame - load a saved game\n");
+	DebugPrintf(" clear - clear the screen\n");
+	DebugPrintf("\n");
+	return true;
+}
+
+//////////////////////////////////////////////////////////////////////////
+// Play a sequence
+bool Debugger::cmdPlaySeq(int argc, const char **argv) {
 	if (argc == 2) {
 		Common::String filename(const_cast<char *>(argv[1]));
 
@@ -131,10 +169,10 @@ bool Debugger::cmd_playseq(int argc, const char **argv) {
 
 		// Store command
 		if (!hasCommand()) {
-			_command = WRAP_METHOD(Debugger, cmd_playseq);
+			_command = WRAP_METHOD(Debugger, cmdPlaySeq);
 			copyCommand(argc, argv);
 
-			return false;
+			return Cmd_Exit(0, 0);
 		} else {
 			Sequence *sequence = new Sequence(filename);
 			if (sequence->load(getArchive(filename))) {
@@ -182,7 +220,7 @@ bool Debugger::cmd_playseq(int argc, const char **argv) {
 	return true;
 }
 
-bool Debugger::cmd_showframe(int argc, const char **argv) {
+bool Debugger::cmdShowFrame(int argc, const char **argv) {
 	if (argc == 3) {
 		Common::String filename(const_cast<char *>(argv[1]));
 
@@ -195,10 +233,10 @@ bool Debugger::cmd_showframe(int argc, const char **argv) {
 
 		// Store command
 		if (!hasCommand()) {
-			_command = WRAP_METHOD(Debugger, cmd_showframe);
+			_command = WRAP_METHOD(Debugger, cmdShowFrame);
 			copyCommand(argc, argv);
 
-			return false;
+			return Cmd_Exit(0, 0);
 		} else {
 			Sequence sequence(filename);
 			if (sequence.load(getArchive(filename))) {
@@ -230,7 +268,7 @@ bool Debugger::cmd_showframe(int argc, const char **argv) {
 	return true;
 }
 
-bool Debugger::cmd_playsnd(int argc, const char **argv) {
+bool Debugger::cmdPlaySnd(int argc, const char **argv) {
 	if (argc == 2) {
 		// Add .SND at the end of the filename if needed
 		Common::String name(const_cast<char *>(argv[1]));
@@ -252,7 +290,7 @@ bool Debugger::cmd_playsnd(int argc, const char **argv) {
 	return true;
 }
 
-bool Debugger::cmd_playsbe(int argc, const char **argv) {
+bool Debugger::cmdPlaySbe(int argc, const char **argv) {
 	if (argc == 2) {
 		Common::String filename(const_cast<char *>(argv[1]));
 
@@ -265,10 +303,10 @@ bool Debugger::cmd_playsbe(int argc, const char **argv) {
 
 		// Store command
 		if (!hasCommand()) {
-			_command = WRAP_METHOD(Debugger, cmd_playsbe);
+			_command = WRAP_METHOD(Debugger, cmdPlaySbe);
 			copyCommand(argc, argv);
 
-			return false;
+			return Cmd_Exit(0, 0);
 		} else {
 			SubtitleManager subtitle(_engine->getFont());
 			if (subtitle.load(getArchive(filename))) {
@@ -301,7 +339,7 @@ bool Debugger::cmd_playsbe(int argc, const char **argv) {
 	return true;
 }
 
-bool Debugger::cmd_playnis(int argc, const char **argv) {
+bool Debugger::cmdPlayNis(int argc, const char **argv) {
 	if (argc == 2) {
 		Common::String filename(const_cast<char *>(argv[1]));
 
@@ -314,10 +352,10 @@ bool Debugger::cmd_playnis(int argc, const char **argv) {
 
 		// Store command
 		if (!hasCommand()) {
-			_command = WRAP_METHOD(Debugger, cmd_playnis);
+			_command = WRAP_METHOD(Debugger, cmdPlayNis);
 			copyCommand(argc, argv);
 
-			return false;
+			return Cmd_Exit(0, 0);
 		} else {
 			// Make sure we are not called in a loop
 			_numParams = 0;
@@ -337,7 +375,7 @@ bool Debugger::cmd_playnis(int argc, const char **argv) {
 	return true;
 }
 
-bool Debugger::cmd_showbg(int argc, const char **argv) {
+bool Debugger::cmdShowBg(int argc, const char **argv) {
 	if (argc == 2) {
 		Common::String filename(const_cast<char *>(argv[1]));
 
@@ -348,10 +386,10 @@ bool Debugger::cmd_showbg(int argc, const char **argv) {
 
 		// Store command
 		if (!hasCommand()) {
-			_command = WRAP_METHOD(Debugger, cmd_showbg);
+			_command = WRAP_METHOD(Debugger, cmdShowBg);
 			copyCommand(argc, argv);
 
-			return false;
+			return Cmd_Exit(0, 0);
 		} else {
 			clearBg(GraphicsManager::kBackgroundC);
 
@@ -375,7 +413,7 @@ bool Debugger::cmd_showbg(int argc, const char **argv) {
 	return true;
 }
 
-bool Debugger::cmd_loadscene(int argc, const char **argv) {
+bool Debugger::cmdLoadScene(int argc, const char **argv) {
 	if (argc >= 2) {
 		if (argc > 3) {
 			DebugPrintf("Syntax: loadscene (<cd number>) <scene index>\n");
@@ -400,10 +438,10 @@ bool Debugger::cmd_loadscene(int argc, const char **argv) {
 
 		// Store command
 		if (!hasCommand()) {
-			_command = WRAP_METHOD(Debugger, cmd_loadscene);
+			_command = WRAP_METHOD(Debugger, cmdLoadScene);
 			copyCommand(argc, argv);
 
-			return false;
+			return Cmd_Exit(0, 0);
 		} else {
 
 			// Check for cd and load the proper data file in the fly
@@ -473,7 +511,7 @@ bool Debugger::cmd_loadscene(int argc, const char **argv) {
 }
 
 
-bool Debugger::cmd_clear(int argc, const char **) {
+bool Debugger::cmdClear(int argc, const char **) {
 	if (argc == 1) {
 		clearBg(GraphicsManager::kBackgroundAll);
 		askForRedraw();
@@ -485,7 +523,7 @@ bool Debugger::cmd_clear(int argc, const char **) {
 	return true;
 }
 
-bool Debugger::cmd_listfiles(int argc, const char **argv) {
+bool Debugger::cmdListFiles(int argc, const char **argv) {
 	if (argc == 2) {
 		Common::String filter(const_cast<char *>(argv[1]));
 
@@ -503,7 +541,7 @@ bool Debugger::cmd_listfiles(int argc, const char **argv) {
 	return true;
 }
 
-bool Debugger::cmd_loadgame(int argc, const char **argv) {
+bool Debugger::cmdLoadGame(int argc, const char **argv) {
 	if (argc == 2) {
 		int id = getNumber(argv[1]);
 
@@ -521,7 +559,7 @@ error:
 	return true;
 }
 
-bool Debugger::cmd_fight(int argc, const char **argv) {
+bool Debugger::cmdFight(int argc, const char **argv) {
 	if (argc == 2) {
 		FightType type = (FightType)getNumber(argv[1]);
 
@@ -550,7 +588,7 @@ bool Debugger::cmd_fight(int argc, const char **argv) {
 
 		// Store command
 		if (!hasCommand()) {
-			_command = WRAP_METHOD(Debugger, cmd_fight);
+			_command = WRAP_METHOD(Debugger, cmdFight);
 			copyCommand(argc, argv);
 
 			return false;
@@ -611,14 +649,14 @@ error:
 	return true;
 }
 
-bool Debugger::cmd_beetle(int argc, const char **argv) {
+bool Debugger::cmdBeetle(int argc, const char **argv) {
 	if (argc == 1) {
 		// Load proper data file (beetle game in in Cd2)
 		getScenes()->loadSceneDataFile(kArchiveCd2);
 
 		// Store command
 		if (!hasCommand()) {
-			_command = WRAP_METHOD(Debugger, cmd_beetle);
+			_command = WRAP_METHOD(Debugger, cmdBeetle);
 			copyCommand(argc, argv);
 
 			return false;

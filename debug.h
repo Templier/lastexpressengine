@@ -57,18 +57,19 @@ public:
 private:
 	LastExpressEngine *_engine;
 
-	bool cmd_loadscene(int argc, const char **argv);
-	bool cmd_playseq(int argc, const char **argv);
-	bool cmd_showframe(int argc, const char **argv);
-	bool cmd_playsnd(int argc, const char **argv);
-	bool cmd_playsbe(int argc, const char **argv);
-	bool cmd_playnis(int argc, const char **argv);
-	bool cmd_showbg(int argc, const char **argv);
-	bool cmd_clear(int argc, const char **argv);
-	bool cmd_listfiles(int argc, const char **argv);
-	bool cmd_loadgame(int argc, const char **argv);
-	bool cmd_fight(int argc, const char **argv);
-	bool cmd_beetle(int argc, const char **argv);
+	bool cmdHelp(int argc, const char **argv);
+	bool cmdLoadScene(int argc, const char **argv);
+	bool cmdPlaySeq(int argc, const char **argv);
+	bool cmdShowFrame(int argc, const char **argv);
+	bool cmdPlaySnd(int argc, const char **argv);
+	bool cmdPlaySbe(int argc, const char **argv);
+	bool cmdPlayNis(int argc, const char **argv);
+	bool cmdShowBg(int argc, const char **argv);
+	bool cmdClear(int argc, const char **argv);
+	bool cmdListFiles(int argc, const char **argv);
+	bool cmdLoadGame(int argc, const char **argv);
+	bool cmdFight(int argc, const char **argv);
+	bool cmdBeetle(int argc, const char **argv);
 
 	void resetCommand();
 	void copyCommand(int argc, const char **argv);

@@ -167,9 +167,7 @@ bool LastExpressEngine::handleEvents() {
 	}
 
 	// Show the debugger if required
-	if (_debugger->isActive()) {
-		_debugger->onFrame();
-	}
+	_debugger->onFrame();
 
 	// Handle input
 	Common::Event ev;
@@ -181,9 +179,9 @@ bool LastExpressEngine::handleEvents() {
 			if ((ev.kbd.flags & Common::KBD_CTRL) && ev.kbd.keycode == Common::KEYCODE_d)
 				_debugger->attach();
 
-			// DEBUG: Quit game on escape
-			if (ev.kbd.keycode == Common::KEYCODE_ESCAPE)
-				quitGame();
+			//// DEBUG: Quit game on escape
+			//if (ev.kbd.keycode == Common::KEYCODE_ESCAPE)
+			//	quitGame();
 
 			break;
 
