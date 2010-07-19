@@ -79,8 +79,6 @@ public:
 	Inventory(LastExpressEngine *engine);
 	~Inventory();
 
-	void init();
-
 	// Inventory contents
 	void addItem(InventoryItem item);
 	void removeItem(InventoryItem item, ObjectLocation newLocation = kLocationNone);
@@ -144,6 +142,8 @@ private:
 	Common::Rect _inventoryRect;
 	Common::Rect _menuRect;
 	Common::Rect _selectedRect;
+
+	void init();
 
 	void open();
 	void close();

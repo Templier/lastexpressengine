@@ -83,33 +83,6 @@ Logic::~Logic() {
 }
 
 //////////////////////////////////////////////////////////////////////////
-// Game & Menu
-//////////////////////////////////////////////////////////////////////////
-
-void Logic::init() {
-	// Initialize data
-	getInventory()->init();
-
-	//_entities->setup(kChapter1);
-
-	// DEBUG
-	//_engine->getMenu()->setShowStartup(false);
-	//_runState.showingMenu = false;
-	//getFlags()->gameRunning = true;
-	//SET_EVENT_HANDLERS(Logic);
-
-	//// Set Cursor type
-	//_engine->getCursor()->setStyle(kCursorNormal);
-	//_engine->getCursor()->show(true);
-
-	//getScenes()->loadScene(kSceneDefault);
-
-	//getInventory()->show();
-
-	//askForRedraw();
-}
-
-//////////////////////////////////////////////////////////////////////////
 // Event Handling
 //////////////////////////////////////////////////////////////////////////
 #define REDRAW_CURSOR() { \
@@ -581,7 +554,5 @@ void Logic::updateCursor(bool) const { /* the cursor is always updated, even whe
 
 	_engine->getCursor()->setStyle(style);
 }
-
-
 
 } // End of namespace LastExpress

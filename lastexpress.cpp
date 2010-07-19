@@ -137,7 +137,6 @@ Common::Error LastExpressEngine::run() {
 
 	// Game logic
 	_logic = new Logic(this);
-	_logic->init();
 
 	// Menu
 	_menu = new Menu(this);

@@ -52,6 +52,8 @@ Inventory::Inventory(LastExpressEngine *engine) : _engine(engine), _selectedItem
 	_inventoryRect = Common::Rect(0, 0, 32, 32);
 	_menuRect = Common::Rect(608, 448, 640, 480);
 	_selectedRect = Common::Rect(44, 0, 76, 32);
+
+	init();
 }
 
 Inventory::~Inventory() {

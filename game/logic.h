@@ -53,7 +53,6 @@ public:
 	void eventMouse(const Common::Event &ev);
 	void eventTick(const Common::Event &ev);
 
-	void init();
 	void gameOver(TimeType type, TimeValue time, SceneIndex sceneIndex, bool showScene) const;
 	void updateCursor(bool redraw = true) const;
 
