@@ -421,7 +421,7 @@ label_callback4:
 			setCallback(5);
 			call(new ENTITY_SETUP(Verges, setup_function12));
 			break;
-		}		
+		}
 
 label_callback8:
 		TIME_CHECK_CALLBACK_S(Verges, kTime1107000, ENTITY_PARAM(1, 1), 9, setup_function9, "TRA1001A");
@@ -443,11 +443,11 @@ label_callback12:
 		}
 
 label_callback13:
-		if (getInventory()->hasItem(kItemPassengerList) && !params->param4 && (getState()->time < kTime1134000 || getState()->time > kTime1156500)) { 
+		if (getInventory()->hasItem(kItemPassengerList) && !params->param4 && (getState()->time < kTime1134000 || getState()->time > kTime1156500)) {
 			setCallback(14);
 			call(new ENTITY_SETUP(Verges, setup_function20));
 			break;
-		}		
+		}
 
 label_callback14:
 		if (ENTITY_PARAM(0, 3) && !params->param4 && (getState()->time < kTime1134000 || getState()->time > kTime1156500)) {

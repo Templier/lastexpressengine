@@ -327,7 +327,7 @@ IMPLEMENT_FUNCTION(Coudert, chapter1_handler, 40)
 
 			ENTITY_PARAM(2, 1) = 0;
 			ENTITY_PARAM(2, 2) = 0;
-			
+
 			getEntities()->drawSequenceLeft(kEntityCoudert, "697F");
 
 			params->param1 = 1;
@@ -400,7 +400,7 @@ label_callback_8:
 label_callback_9:
 		if (ENTITY_PARAM(0, 1) && !getSound()->isBuffered(kEntityCoudert))
 			getSound()->playSound(kEntityCoudert, random(2) ? "JAC1065" : "JAC1065A");
-		
+
 		if (getState()->time > kTime1107000 && !ENTITY_PARAM(0, 1) && !getEvent(kEventVassiliSeizure)) {
 			getData()->inventoryItem = kItemNone;
 
@@ -443,7 +443,7 @@ label_coudert_object:
 
 			setCallback(13);
 			call(new ENTITY_SETUP(Coudert, setup_function13), savepoint.param.intValue, savepoint.entity2);
-		}	
+		}
 		break;
 
 	case kActionDefault:
@@ -466,7 +466,7 @@ label_coudert_object:
 			} else {
 				setCallback(getEntities()->isPlayerPosition(kCarRedSleeping, 1) ? 2 : 3);
 				call(new ENTITY_SETUP(Coudert, setup_function13), true, kEntityNone);
-			}			
+			}
 		}
 		break;
 
@@ -541,7 +541,7 @@ label_coudert_object:
 			getData()->inventoryItem = kItemNone;
 			setCallback(16);
 			call(new ENTITY_SETUP(Coudert, setup_function30), savepoint.param.intValue);
-		}		
+		}
 		break;
 
 	case kAction225932896:

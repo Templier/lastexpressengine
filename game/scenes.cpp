@@ -682,7 +682,7 @@ void SceneManager::addToQueue(SequenceFrame *frame) {
 	_queue.push_back(frame);
 }
 
-void SceneManager::removeFromQueue(SequenceFrame *frame) {
+void SceneManager::removeFromQueue(SequenceFrame const *frame) {
 	if (!frame)
 		return;
 
@@ -696,7 +696,7 @@ void SceneManager::removeFromQueue(SequenceFrame *frame) {
 	}
 }
 
-void SceneManager::removeAndRedraw(SequenceFrame *frame, bool doRedraw) {
+void SceneManager::removeAndRedraw(SequenceFrame const *frame, bool doRedraw) {
 	if (!frame)
 		return;
 
@@ -890,7 +890,7 @@ void SceneManager::preProcessScene(SceneIndex *index) {
 
 				*index = scene->getHotspot()->scene;
 			} else {
-				*index = scene->getHotspot(kSceneMenu)->scene;
+				*index = scene->getHotspot(1)->scene;
 			}
 
 			preProcessScene(index);

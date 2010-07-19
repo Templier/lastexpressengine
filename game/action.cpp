@@ -942,15 +942,15 @@ IMPLEMENT_ACTION(climbUpTrain) {
 	default:
 		break;
 
-	case 2:
-	case 3:
+	case kChapter2:
+	case kChapter3:
 		if (action == 2)
 			playAnimation(kEventCathClimbUpTrainGreenJacket);
 
 		playAnimation(kEventCathTopTrainGreenJacket);
 		break;
 
-	case 5:
+	case kChapter5:
 		if (action == 2)
 			playAnimation(getProgress().isNightTime ? kEventCathClimbUpTrainNoJacketNight : kEventCathClimbUpTrainNoJacketDay);
 
@@ -972,12 +972,12 @@ IMPLEMENT_ACTION(climbDownTrain) {
 	default:
 		return kSceneInvalid;
 
-	case 2:
-	case 3:
+	case kChapter2:
+	case kChapter3:
 		evt = kEventCathClimbDownTrainGreenJacket;
 		break;
 
-	case 5:
+	case kChapter5:
 		evt = (getProgress().isNightTime ? kEventCathClimbDownTrainNoJacketNight : kEventCathClimbDownTrainNoJacketDay);
 		break;
 	}
