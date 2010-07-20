@@ -106,6 +106,7 @@ public:
 
 	// Checks
 	bool checkEntity(EntityIndex entity, CarIndex car, EntityPosition position);
+
 	bool compare(EntityIndex entity1, EntityIndex entity2);
 
 	bool checkFields1(EntityIndex entity, CarIndex car, EntityPosition position) const;
@@ -171,6 +172,8 @@ private:
 	void drawNextSequence(EntityIndex entityIndex);
 	void updateEntityPosition(EntityIndex entityIndex);
 	void copySequenceData3To2(EntityIndex entityIndex);
+
+	bool changeCar(EntityData::EntityCallData * data, EntityIndex entity, CarIndex car, EntityPosition position, bool increment, EntityPosition newPosition, CarIndex newCar);
 
 	void getSequenceName(EntityIndex entity, EntityDirection direction, Common::String &sequence1, Common::String &sequence2) const;
 

@@ -993,7 +993,7 @@ int Entities::getCurrentFrame2(EntityIndex entity, Sequence *sequence, EntityPos
 	// Search for the correct frame
 	// TODO: looks slightly like some sort of binary search
 	uint32 frame = 0;
-	uint32 numFrames = sequence->count();
+	uint32 numFrames = sequence->count() - 1;
 
 	while (true) {
 		uint32 currentFrame2 = (frame + numFrames) / 2;
@@ -2097,7 +2097,21 @@ label_process_entity:
 			if (data->direction == direction) {
 
 				if (checkDistanceFromPosition(entity, kPosition_1500, 750) && entity != kEntityFrancois) {
-					error("Entities::checkEntity: not implemented (1)!");
+
+					if (!data->entity) {
+						if (data->direction != kDirectionUp || (position <= kPosition_2000 && data->car == car)) {
+							if (data->entityPosition > kPosition_1500 && (data->car == kCarGreenSleeping || data->car == kCarRedSleeping)) {
+								data->entity = data->car == kCarGreenSleeping ? kEntityMertens : kEntityCoudert;
+								getSavePoints()->push(entity, data->entity, kAction11, 1);
+							}
+						} else {
+							if (data->entityPosition < kPosition_1500 && (data->car == kCarGreenSleeping || data->car == kCarRedSleeping)) {
+								data->entity = data->car == kCarGreenSleeping ? kEntityMertens : kEntityCoudert;
+								getSavePoints()->push(entity, data->entity, kAction11, 1);
+							}
+						}
+					}
+
 				} else {
 					if (data->entity) {
 						getSavePoints()->push(entity, data->entity, kAction16);
@@ -2204,60 +2218,50 @@ label_process_entity:
 						data->entityPosition = (EntityPosition)(data->entityPosition - data->field_4A3);
 				}
 
-				if (data->entityPosition < kPosition_9270 || data->direction != kDirectionUp) {
-
-					if (getData(kEntityNone)->car == data->car) {
-						getSound()->playSoundEvent(entity, 36);
-						getSound()->playSoundEvent(entity, 37, 30);
+				if (data->entityPosition <= kPosition_9270 || data->direction != kDirectionUp) {
+					if (data->entityPosition < kPosition_850 && data->direction == kDirectionDown) {
+						if (changeCar(data, entity, car, position, true, kPosition_9269, kCarKronos))
+							return true;
 					}
-
-					data->car = (CarIndex)(data->car - 1);
-					data->entityPosition = kPosition_9269;
-
-					if (data->car == kCarKronos) {
-						if (checkFields6(kEntityNone)) {
-							getSound()->playSoundEvent(kEntityNone, 14);
-							getSound()->excuseMe(entity, 0, 16);
-							getScenes()->loadSceneFromPosition(kCarGreenSleeping, 1);
-							getSound()->playSound(kEntityNone, "CAT1127A");
-							getSound()->playSoundEvent(kEntityNone, 15);
-						}
-					}
-
-					if (data->car < car || (data->car == car && data->entityPosition < position)) {
-						data->car = car;
-						data->entityPosition = position;
-						data->direction = kDirectionNone;
-						data->entity = kEntityNone;
-
-						return true;
-					}
-
-					if (data->car == kCarKronos) {
-						if (checkFields23(kEntityNone)) {
-							getSound()->playSoundEvent(kEntityNone, 14);
-							getSound()->excuseMe(entity, 0, 16);
-							getScenes()->loadSceneFromPosition(kCarGreenSleeping, 62);
-							getSound()->playSound(kEntityNone, "CAT1127A");
-							getSound()->playSoundEvent(kEntityNone, 15);
-						}
-					}
-
-					if (data->car == getData(kEntityNone)->car) {
-						getSound()->playSoundEvent(entity, 36);
-						getSound()->playSoundEvent(entity, 37, 30);
-						goto label_checkentity_position;
-					}
-
 				} else {
-					error("Entities::checkEntity: not implemented (4)!");
+					if (changeCar(data, entity, car, position, false, kPosition_851, kCarGreenSleeping))
+						return true;
 				}
 
-label_checkentity_position:
 				if (getData(kEntityNone)->car == data->car && !data->field_493) {
-					error("Entities::checkEntity: not implemented! (5)");
-				}
+					if (data->direction == kDirectionUp) {
 
+						if (getData(kEntityNone)->entityPosition > data->entityPosition
+						 && getData(kEntityNone)->entityPosition - data->entityPosition >= 500
+						 && data->field_4A3 + 500 > getData(kEntityNone)->entityPosition - data->entityPosition) {
+
+							 if (getScenes()->checkPosition(kSceneNone, SceneManager::kCheckPositionType0) || getScenes()->checkCurrentPosition(false)) {
+								 getSavePoints()->push(kEntityNone, entity, kActionExcuseMe);
+
+								 if (getScenes()->checkCurrentPosition(false))
+									 getScenes()->loadSceneFromObject((ObjectIndex)getScenes()->get(getState()->scene)->param1, true);
+
+							 } else if (getScenes()->checkPosition(kSceneNone, SceneManager::kCheckPositionType1)) {
+								 getSavePoints()->push(kEntityNone, entity, kActionExcuseMeCath);
+							 }
+						}
+					} else {
+						if (getData(kEntityNone)->entityPosition < data->entityPosition
+						 && data->position - getData(kEntityNone)->entityPosition >= 500
+						 && data->field_4A3 + 500 > data->position - getData(kEntityNone)->entityPosition) {
+
+							if (getScenes()->checkPosition(kSceneNone, SceneManager::kCheckPositionType0)) {
+								 getSavePoints()->push(kEntityNone, entity, kActionExcuseMeCath);
+							} else if (getScenes()->checkPosition(kSceneNone, SceneManager::kCheckPositionType1) || getScenes()->checkCurrentPosition(false)){
+								 getSavePoints()->push(kEntityNone, entity, kActionExcuseMe);
+
+								 if (getScenes()->checkCurrentPosition(false))
+									 getScenes()->loadSceneFromObject((ObjectIndex)getScenes()->get(getState()->scene)->param1);
+							}
+						}
+					}
+					return false;
+				}
 			} else {
 				drawSequencesInternal(entity, direction, true);
 			}
@@ -2309,6 +2313,55 @@ label_checkentity_position:
 	return true;
 }
 
+bool Entities::changeCar(EntityData::EntityCallData * data, EntityIndex entity, CarIndex car, EntityPosition position, bool increment, EntityPosition newPosition, CarIndex newCar) {
+	if (getData(kEntityNone)->car == data->car) {
+		getSound()->playSoundEvent(entity, 36);
+		getSound()->playSoundEvent(entity, 37, 30);
+	}
+
+	data->car = (CarIndex)(increment ? data->car + 1 : data->car - 1);
+	data->entityPosition = newPosition;
+
+	if (data->car == newCar) {
+		if (checkFields6(kEntityNone)) {
+			getSound()->playSoundEvent(kEntityNone, 14);
+			getSound()->excuseMe(entity, 0, 16);
+			getScenes()->loadSceneFromPosition(kCarGreenSleeping, 1);
+			getSound()->playSound(kEntityNone, "CAT1127A");
+			getSound()->playSoundEvent(kEntityNone, 15);
+		}
+	}
+
+	if ((increment ? data->car > car : data->car < car) || (data->car == car && (increment ? data->entityPosition >= position : data->entityPosition < position))) {
+		data->car = car;
+		data->entityPosition = position;
+		data->direction = kDirectionNone;
+		data->entity = kEntityNone;
+
+		return true;
+	}
+
+	if (data->car == newCar) {
+		if (checkFields23(kEntityNone)) {
+			getSound()->playSoundEvent(kEntityNone, 14);
+			getSound()->excuseMe(entity, 0, 16);
+			getScenes()->loadSceneFromPosition(kCarGreenSleeping, 62);
+			getSound()->playSound(kEntityNone, "CAT1127A");
+			getSound()->playSoundEvent(kEntityNone, 15);
+		}
+	}
+
+	if (data->car == getData(kEntityNone)->car) {
+		getSound()->playSoundEvent(entity, 36);
+		getSound()->playSoundEvent(entity, 37, 30);
+	}
+
+	return false;
+}
+
+//////////////////////////////////////////////////////////////////////////
+// CHECKS
+//////////////////////////////////////////////////////////////////////////
 bool Entities::checkFields1(EntityIndex entity, CarIndex car, EntityPosition position) const {
 	return (getData(entity)->entityPosition == position
 		 && getData(entity)->field_493 == kField493_1
