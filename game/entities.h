@@ -169,7 +169,7 @@ private:
 	int getCurrentFrame2(EntityIndex entity, Sequence *sequence, EntityPosition position, bool doProcessing);
 	void updateFrame(EntityIndex entityIndex, bool keepPreviousFrame, bool dontPlaySound);
 	void drawNextSequence(EntityIndex entityIndex);
-	void processEntitySub3(EntityIndex entityIndex);
+	void updateEntityPosition(EntityIndex entityIndex);
 	void copySequenceData3To2(EntityIndex entityIndex);
 
 	void getSequenceName(EntityIndex entity, EntityDirection direction, Common::String &sequence1, Common::String &sequence2) const;

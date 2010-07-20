@@ -753,7 +753,7 @@ label_nosequence:
 				return;
 
 			if (!data->sequence3) {
-				processEntitySub3(entityIndex);
+				updateEntityPosition(entityIndex);
 				data->doProcessEntity = false;
 				return;
 			}
@@ -1133,8 +1133,38 @@ void Entities::drawNextSequence(EntityIndex entityIndex) {
 	}
 }
 
-void Entities::processEntitySub3(EntityIndex entityIndex) {
-	error("Entities::processEntitySub2: not implemented!");
+void Entities::updateEntityPosition(EntityIndex entityIndex) {
+	EntityData::EntityCallData *data = getData(entityIndex);
+
+	getScenes()->removeAndRedraw(&data->frame, false);
+
+	SAFE_DELETE(data->frame1);
+	data->field_49B = 0;
+
+	if (isDirectionUpOrDown(entityIndex)
+	 && (getScenes()->checkPosition(kSceneNone, SceneManager::kCheckPositionType0) || getScenes()->checkPosition(kSceneNone, SceneManager::kCheckPositionType1))
+	 && data->car == getData(kEntityNone)->car) {
+		
+		if (checkFields25(entityIndex)) {
+			data->entityPosition = getData(kEntityNone)->entityPosition;
+		} else if (data->field_4A9) {
+			data->entityPosition = (data->direction == kDirectionUp) ? kPosition_8514 : kPosition_2086;
+		} else {
+			if (isPlayerPosition(kCarGreenSleeping, 1) || isPlayerPosition(kCarGreenSleeping, 40)
+			 || isPlayerPosition(kCarRedSleeping, 1) || isPlayerPosition(kCarRedSleeping, 40)) {
+				 data->entityPosition = (data->direction == kDirectionUp) ? kPosition_2588 : kPosition_8012;
+			} else {
+				data->entityPosition = (data->direction == kDirectionUp) ? kPosition_9271 : kPosition_849;
+			}
+		}
+	}
+
+	SAFE_DELETE(data->sequence2);
+	data->sequenceName2 = "";
+	data->field_4A9 = 0;
+
+	if (data->direction2)
+		data->direction = data->direction2;
 }
 
 void Entities::copySequenceData3To2(EntityIndex entityIndex) {
