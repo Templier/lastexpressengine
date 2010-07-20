@@ -192,13 +192,20 @@ void Logic::eventMouse(const Common::Event &ev) {
 	 && !getInventory()->isMagnifierInUse()) {
 
 		InventoryItem item = getEntityData(entityIndex)->inventoryItem;
-		if (getInventory()->hasItem(item) || (item & kItemInvalid)) {
+		if (getInventory()->hasItem((InventoryItem)(item & 127))) {
 			hotspotHandled = true;
 
-			_engine->getCursor()->setStyle((item & kItemInvalid) ? kCursorTalk2 : getInventory()->getEntry(item)->cursor);
+			_engine->getCursor()->setStyle(getInventory()->getEntry((InventoryItem)(item & 127))->cursor);
 
 			if (ev.type == Common::EVENT_LBUTTONUP)
-				getSavePoints()->push(kEntityNone, entityIndex, kAction1, (item & kItemInvalid) ? 0 : item);
+				getSavePoints()->push(kEntityNone, entityIndex, kAction1, (InventoryItem)(item & 127));
+		} else if ((InventoryItem)(item & kItemInvalid)) {
+			hotspotHandled = true;
+
+			_engine->getCursor()->setStyle(kCursorTalk2);
+
+			if (ev.type == Common::EVENT_LBUTTONUP)
+				getSavePoints()->push(kEntityNone, entityIndex, kAction1, kCursorNormal);
 		}
 	}
 
@@ -484,7 +491,7 @@ void Logic::updateCursor(bool) const { /* the cursor is always updated, even whe
 	 || getInventory()->isEggHighlighted()
 	 || getInventory()->isMagnifierInUse()) {
 
-		if (getInventory()->getSelectedItem() != kItemWhistle
+		if (getInventory()->getSelectedItem() != kItemMatch
 		 || (!getEntities()->checkFields7(kCarGreenSleeping) && !getEntities()->checkFields7(kCarRedSleeping))
 		 || getProgress().jacket != kJacketGreen
 		 || getInventory()->isFlag1()
@@ -501,10 +508,10 @@ void Logic::updateCursor(bool) const { /* the cursor is always updated, even whe
 			 && !getInventory()->isFlag2()
 			 && !getInventory()->isEggHighlighted()
 			 && !getInventory()->isMagnifierInUse()) {
-				 if (getInventory()->hasItem(getEntityData(entity)->inventoryItem)) {
+				 if (getInventory()->hasItem((InventoryItem)(getEntityData(entity)->inventoryItem & 127))) {
 					 interact = true;
-					 style = getInventory()->getEntry(getEntityData(entity)->inventoryItem)->cursor;
-				 } else if ((int)getEntityData(entity)->inventoryItem == (int)kCursorProcess) {
+					 style = getInventory()->getEntry((InventoryItem)(getEntityData(entity)->inventoryItem & 127))->cursor;
+				 } else if ((int)getEntityData(entity)->inventoryItem == kItemInvalid) {
 					 interact = true;
 					 style = kCursorTalk2;
 				 }

@@ -880,6 +880,7 @@ void SceneManager::preProcessScene(SceneIndex *index) {
 				if (getObjects()->get((ObjectIndex)currentScene->param1).location2 == (*it)->location) {
 					PROCESS_HOTSPOT_SCENE(*it, index);
 					found = true;
+					break;
 				}
 			}
 		}
@@ -976,21 +977,20 @@ void SceneManager::postProcessScene() {
 		//}
 
 		SceneHotspot *hotspot = scene->getHotspot();
-		if (!hotspot)
-			break;
+		if (!hotspot) {
+			getAction()->processHotspot(*hotspot);
 
-		getAction()->processHotspot(*hotspot);
+			if (getFlags()->mouseRightClick) {
+				Scene *hotspotScene = getScenes()->get(hotspot->scene);
 
-		if (getFlags()->mouseRightClick) {
-			Scene *hotspotScene = getScenes()->get(hotspot->scene);
+				while (hotspotScene->type == Scene::kTypeList) {
+					hotspot = hotspotScene->getHotspot();
+					if (hotspot) {
+						getAction()->processHotspot(*hotspot);
 
-			while (hotspotScene->type == Scene::kTypeList) {
-				hotspot = hotspotScene->getHotspot();
-				if (hotspot) {
-					getAction()->processHotspot(*hotspot);
-
-					// reload the scene
-					hotspotScene = getScenes()->get(hotspot->scene);
+						// reload the scene
+						hotspotScene = getScenes()->get(hotspot->scene);
+					}
 				}
 			}
 		}

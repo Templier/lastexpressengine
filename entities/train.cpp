@@ -395,17 +395,18 @@ label_process:
 		}
 
 		if (getProgress().jacket == kJacketOriginal) {
-			if (getEntities()->isPlayerPosition(kCarRedSleeping, 18)) {
-				setCallback(1);
-				call(new ENTITY_SETUP(Train, setup_savegame), kSavegameType2, kEventMertensBloodJacket);
-				break;
-			}
+			// FIXME: why is this called?
+			//if (getEntities()->isPlayerPosition(kCarRedSleeping, 18)) {
+			//	setCallback(1);
+			//	call(new ENTITY_SETUP(Train, setup_savegame), kSavegameType2, kEventMertensBloodJacket);
+			//	break;
+			//}
 
-			if (getEntities()->isPlayerPosition(kCarGreenSleeping, 22)) {
-				setCallback(2);
-				call(new ENTITY_SETUP(Train, setup_savegame), kSavegameType2, kEventMertensBloodJacket);
-				break;
-			}
+			//if (getEntities()->isPlayerPosition(kCarGreenSleeping, 22)) {
+			//	setCallback(2);
+			//	call(new ENTITY_SETUP(Train, setup_savegame), kSavegameType2, kEventMertensBloodJacket);
+			//	break;
+			//}
 		}
 
 		resetParam8();

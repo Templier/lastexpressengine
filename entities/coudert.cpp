@@ -502,8 +502,8 @@ label_coudert_object:
 				break;
 
 			if (getProgress().jacket == kJacketOriginal) {
-				setCallback(1);
-				call(new ENTITY_SETUP(Coudert, setup_savegame), kSavegameType2, kEventCoudertBloodJacket);
+				//setCallback(1);
+				//call(new ENTITY_SETUP(Coudert, setup_savegame), kSavegameType2, kEventCoudertBloodJacket);
 			} else {
 				setCallback(getEntities()->isPlayerPosition(kCarRedSleeping, 1) ? 2 : 3);
 				call(new ENTITY_SETUP(Coudert, setup_function13), true, kEntityNone);
