@@ -281,14 +281,14 @@ IMPLEMENT_FUNCTION(Vassili, function9, 9)
 		break;
 
 	case kActionDefault:
-	case kAction17:
+	case kActionDrawScene:
 		if ((getObjects()->get(kObjectCompartmentA).location == kLocation2 && getEntities()->isPlayerPosition(kCarRedSleeping, 17))
 		|| getEntities()->isPlayerPosition(kCarRedSleeping, 18)
 		|| getEntities()->isPlayerPosition(kCarRedSleeping, 37)
 		|| getEntities()->isPlayerPosition(kCarRedSleeping, 38)
 		|| getEntities()->isPlayerPosition(kCarRedSleeping, 41)) {
 
-			if (savepoint.action == kAction17)
+			if (savepoint.action == kActionDrawScene)
 				getSound()->processEntry(kEntityVassili);
 
 			setup_seizure();
@@ -468,7 +468,7 @@ IMPLEMENT_FUNCTION(Vassili, stealEgg, 15)
 		getEntities()->drawSequenceLeft(kEntityVassili, "303A");
 		break;
 
-	case kAction17:
+	case kActionDrawScene:
 		if (getEntities()->checkFields1(kEntityNone, kCarRedSleeping, kPosition_7850)
 		 && getInventory()->hasItem(kItemFirebird)
 		 && !getEvent(kEventVassiliCompartmentStealEgg))

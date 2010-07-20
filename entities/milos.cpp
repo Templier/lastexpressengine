@@ -186,7 +186,7 @@ IMPLEMENT_FUNCTION_I(Milos, function11, 11)
 		getObjects()->update(kObjectCompartmentG, kEntityMilos, kLocation3, kCursorHandKnock, kCursorHand);
 		break;
 
-	case kAction17:
+	case kActionDrawScene:
 		if (params->param3 || params->param2) {
 			getObjects()->update(kObjectCompartmentG, kEntityMilos, kLocation3, kCursorHandKnock, kCursorHand);
 			params->param3 = 0;
@@ -622,7 +622,7 @@ IMPLEMENT_FUNCTION(Milos, function34, 34)
 
 IMPLEMENT_FUNCTION(Milos, prepareSequences, 35)
 	if (savepoint.action == kActionDefault)
-		getEntities()->clearSequences(kEntityMilos);	
+		getEntities()->clearSequences(kEntityMilos);
 }
 
 } // End of namespace LastExpress

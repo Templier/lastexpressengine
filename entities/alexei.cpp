@@ -248,7 +248,7 @@ IMPLEMENT_FUNCTION(Alexei, chapter1_handler, 18)
 		getData()->inventoryItem = kItemInvalid;
 		break;
 
-	case kAction17:
+	case kActionDrawScene:
 		params->param1 = getEntities()->isPlayerPosition(kCarRestaurant, 63) ? 1 : 0;
 		break;
 

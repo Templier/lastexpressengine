@@ -348,7 +348,7 @@ IMPLEMENT_FUNCTION(Alouan, function22, 22)
 		getData()->car = kCarGreenSleeping;
 		break;
 
-	case kAction17:
+	case kActionDrawScene:
 		if (getEntities()->checkFields5(kEntityNone, kCarGreenSleeping)) {
 			setup_function23();
 		}

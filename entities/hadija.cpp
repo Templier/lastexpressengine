@@ -390,7 +390,7 @@ IMPLEMENT_FUNCTION(Hadija, function22, 22)
 		getData()->car = kCarGreenSleeping;
 		break;
 
-	case kAction17:
+	case kActionDrawScene:
 		if (getEntities()->checkFields5(kEntityNone, kCarGreenSleeping)) {
 			setup_function23();
 		}

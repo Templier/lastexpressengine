@@ -789,7 +789,7 @@ IMPLEMENT_FUNCTION(August, function56, 56)
 		getEntities()->drawSequenceLeft(kEntityAugust, "507A3");
 		break;
 
-	case kAction17:
+	case kActionDrawScene:
 		if (!params->param1 && getEntities()->isPlayerPosition(kCarGreenSleeping, 43)) {
 			setCallback(1);
 			call(new ENTITY_SETUP(August, setup_function20));

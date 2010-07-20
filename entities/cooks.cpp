@@ -91,7 +91,7 @@ IMPLEMENT_FUNCTION(Cooks, function3, 3)
 		}
 		break;
 
-	case kAction17:
+	case kActionDrawScene:
 		if (!getEntities()->checkFields17(kEntityNone)) {
 			getEntities()->clearSequences(kEntityCooks);
 			CALLBACK_ACTION()
@@ -176,7 +176,7 @@ IMPLEMENT_FUNCTION(Cooks, function4, 4)
 		call(new ENTITY_SETUP_SIIS(Cooks, setup_draw), "308B");
 		break;
 
-	case kAction17:
+	case kActionDrawScene:
 		if (!getEntities()->checkFields17(kEntityNone)) {
 			getEntities()->clearSequences(kEntityCooks);
 			CALLBACK_ACTION()
@@ -270,7 +270,7 @@ IMPLEMENT_FUNCTION(Cooks, chapter1_handler, 6)
 		params->param2 = 225 * (4 * random(30) + 120);
 		break;
 
-	case kAction17:
+	case kActionDrawScene:
 		if (!getEntities()->checkFields17(kEntityNone))
 			break;
 
@@ -379,7 +379,7 @@ IMPLEMENT_FUNCTION(Cooks, function9, 9)
 		params->param1 = 225 * (4 * random(30) + 120);
 		break;
 
-	case kAction17:
+	case kActionDrawScene:
 		if (params->param2) {
 			setCallback(1);
 			call(new ENTITY_SETUP_SIIS(Cooks, setup_playSound), "ZFX1011");
@@ -443,7 +443,7 @@ update_params:
 		params->param2 = 225 * (4 * random(30) + 120);
 		break;
 
-	case kAction17:
+	case kActionDrawScene:
 		if (!getEntities()->checkFields17(kEntityNone))
 			break;
 
@@ -527,7 +527,7 @@ IMPLEMENT_FUNCTION(Cooks, function13, 13)
 		params->param1 = 225 * (4 * random(30) + 120);
 		break;
 
-	case kAction17:
+	case kActionDrawScene:
 		if (!getEntities()->checkFields17(kEntityNone))
 			break;
 

@@ -409,7 +409,7 @@ label_chapter1_end:
 		params->param2 = 225 * (4 * random(5) + 20);
 		break;
 
-	case kAction17:
+	case kActionDrawScene:
 		if (!params->param3) {
 			if (getEntities()->isPlayerPosition(kCarGreenSleeping, 1)) {
 				getState()->time = kTimeChapter1;

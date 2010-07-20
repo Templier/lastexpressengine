@@ -1109,7 +1109,7 @@ enum ActionIndex {
 	kAction11              = 11,
 	kActionDefault         = 12,
 	kAction16              = 16,
-	kAction17              = 17,
+	kActionDrawScene              = 17,
 	kActionCallback        = 18,
 
 	/////////////////////////////

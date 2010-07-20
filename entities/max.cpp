@@ -151,7 +151,7 @@ IMPLEMENT_FUNCTION(Max, function7, 7)
 		getObjects()->update(kObject53, kEntityMax, kLocation1, kCursorHandKnock, kCursorHand);
 		break;
 
-	case kAction17:
+	case kActionDrawScene:
 		if (!getSound()->isBuffered(kEntityMax)) {
 			if (getEntities()->isPlayerPosition(kCarRedSleeping, 56) || getEntities()->isPlayerPosition(kCarRedSleeping, 78))
 				getSound()->playSound(kEntityMax, "Max1120");

@@ -437,7 +437,7 @@ IMPLEMENT_FUNCTION(Yasmin, function20, 20)
 		getData()->car = kCarGreenSleeping;
 		break;
 
-	case kAction17:
+	case kActionDrawScene:
 		if (getEntities()->checkFields5(kEntityNone, kCarGreenSleeping)) {
 			setup_function21();
 		}

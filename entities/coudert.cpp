@@ -495,7 +495,7 @@ label_coudert_object:
 		getScenes()->loadSceneFromItemPosition(kItem5);
 		break;
 
-	case kAction17:
+	case kActionDrawScene:
 		if (!ENTITY_PARAM(2, 1) && !ENTITY_PARAM(0, 1)) {
 
 			if (!getEntities()->isPlayerPosition(kCarRedSleeping, 1) && !getEntities()->isPlayerPosition(kCarRedSleeping, 23))

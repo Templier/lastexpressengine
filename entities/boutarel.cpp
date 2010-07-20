@@ -253,7 +253,7 @@ IMPLEMENT_FUNCTION_IS(Boutarel, function17, 17)
 		getEntities()->drawSequenceLeft(kEntityMmeBoutarel, params->seq);
 		break;
 
-	case kAction17:
+	case kActionDrawScene:
 		params->param5 = (getEntities()->isPlayerPosition(kCarRestaurant, 52) ? 1 : 0);
 		break;
 	}
@@ -421,7 +421,7 @@ IMPLEMENT_FUNCTION(Boutarel, chapter2_handler, 24)
 		getEntities()->drawSequenceLeft(kEntityBoutarel, "008D");
 		break;
 
-	case kAction17:
+	case kActionDrawScene:
 		if (getEntities()->checkFields13(kEntityNone) && !params->param1) {
 			getSound()->playSound(kEntityBoutarel, "MRB2001");
 			params->param1 = 1;

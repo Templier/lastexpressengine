@@ -99,7 +99,7 @@ IMPLEMENT_FUNCTION_I(Gendarmes, function6, 6)
 		TIME_CHECK_CALLBACK_ACTION(Gendarmes, (uint32)params->param1, params->param2);
 		// Fallback to action 17
 
-	case kAction17:
+	case kActionDrawScene:
 		if (!ENTITY_PARAM(0, 1) && getEntities()->hasValidFrame(kEntityGendarmes)) {
 			getSound()->playSound(kEntityNone, "MUS007");
 			ENTITY_PARAM(0, 1) = 1;
@@ -139,7 +139,7 @@ IMPLEMENT_FUNCTION_II(Gendarmes, function8, 8)
 		}
 		// fallback to action 17
 
-	case kAction17:
+	case kActionDrawScene:
 		if (!ENTITY_PARAM(0, 1) && getEntities()->hasValidFrame(kEntityGendarmes)) {
 			getSound()->playSound(kEntityNone, "MUS007");
 			ENTITY_PARAM(0, 1) = 1;
@@ -481,7 +481,7 @@ void Gendarmes::arrest(const SavePoint &savepoint, bool shouldPlaySound, int a3)
 		break;
 
 	case kActionNone:
-	case kAction17:
+	case kActionDrawScene:
 		if (!ENTITY_PARAM(0, 1) && getEntities()->hasValidFrame(kEntityGendarmes)) {
 			getSound()->playSound(kEntityNone, "MUS007");
 			ENTITY_PARAM(0, 1) = 1;

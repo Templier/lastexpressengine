@@ -232,7 +232,7 @@ label_tatiana_chapter1_2:
 		getEntities()->drawSequenceLeft(kEntityTatiana, "014A");
 		break;
 
-	case kAction17:
+	case kActionDrawScene:
 		params->param1 = getEntities()->isPlayerPosition(kCarRestaurant, 67) ? 1 : 0;
 		params->param4 = getEntities()->isPlayerPosition(kCarRestaurant, 69)
 		              || getEntities()->isPlayerPosition(kCarRestaurant, 70)
@@ -633,7 +633,7 @@ IMPLEMENT_FUNCTION(Tatiana, function55, 55)
 		getEntities()->clearSequences(kEntityTatiana);
 		// fall back to next action
 
-	case kAction17:
+	case kActionDrawScene:
 		if (getEntities()->isPlayerPosition(kCarRestaurant, 72))
 			getScenes()->loadSceneFromPosition(kCarRestaurant, 86);
 		break;

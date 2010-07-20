@@ -141,7 +141,7 @@ IMPLEMENT_FUNCTION(MmeBoutarel, chapter1_handler, 12)
 		getEntities()->drawSequenceLeft(kEntityMmeBoutarel, "501");
 		break;
 
-	case kAction17:
+	case kActionDrawScene:
 		if (getEntities()->isPlayerPosition(kCarRedSleeping, 44)) {
 			setCallback(1);
 			call(new ENTITY_SETUP_SIIS(MmeBoutarel, setup_draw), "502B");

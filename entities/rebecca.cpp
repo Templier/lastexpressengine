@@ -287,7 +287,7 @@ label_function22_callback_5:
 		getEntities()->drawSequenceLeft(kEntityRebecca, "107B");
 		break;
 
-	case kAction17:
+	case kActionDrawScene:
 		params->param2 = (getEntities()->isPlayerPosition(kCarRestaurant, 57) ? 1 : 0);
 		break;
 

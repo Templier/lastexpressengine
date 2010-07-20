@@ -269,7 +269,7 @@ void SceneManager::drawScene(SceneIndex index) {
 	getFlags()->flag_3 = true;
 
 	if (getFlags()->isGameRunning) {
-		getSavePoints()->pushAll(kEntityNone, kAction17);
+		getSavePoints()->pushAll(kEntityNone, kActionDrawScene);
 		getSavePoints()->process();
 
 		if (_flagNoEntity)

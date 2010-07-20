@@ -110,11 +110,11 @@ void Logic::eventMouse(const Common::Event &ev) {
 		return;
 	}
 
-	/*if (getScenes()->checkCurrentPosition(true) && _engine->getCursor()->getStyle() == kCursorForward) {
-		getFlags()->shouldRedraw = false;
-		getFlags()->flag_0 = true;
-		return;
-	}*/
+	//if (getScenes()->checkCurrentPosition(true) && _engine->getCursor()->getStyle() == kCursorForward) {
+	//	getFlags()->shouldRedraw = false;
+	//	getFlags()->flag_0 = true;
+	//	return;
+	//}
 
 	// Update coordinates
 	getGameState()->setCoordinates(ev.mouse);
@@ -322,12 +322,11 @@ void Logic::eventTick(const Common::Event &) {
 			// Process hotspot
 			SceneHotspot *hotspot = scene->getHotspot();
 			SceneIndex index = getAction()->processHotspot(*hotspot);
-			/*if (index != kSceneInvalid && index != kSceneStopProcessing)
-				hotspot->scene = index;*/
-			// TODO reactivate hotspot handling once auto-loading of scene problem is fixed
+			if (index != kSceneInvalid && index != kSceneStopProcessing)
+				hotspot->scene = index;
 
-			if (index) {
-				getScenes()->setScene(index);
+			if (hotspot->scene) {
+				getScenes()->setScene(hotspot->scene);
 			} else {
 				getFlags()->flag_0 = false;
 				getFlags()->shouldRedraw = true;

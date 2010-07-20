@@ -281,7 +281,7 @@ IMPLEMENT_FUNCTION_IS(Anna, function15, 15)
 		getEntities()->drawSequenceLeft(kEntityAnna, params->seq);
 		break;
 
-	case kAction17:
+	case kActionDrawScene:
 		if (params->param6 || params->param5) {
 			getObjects()->update(kObjectCompartmentF, kEntityAnna, kLocation1, kCursorHandKnock, kCursorHand);
 			getObjects()->update(kObject53, kEntityAnna, kLocation1, kCursorHandKnock, kCursorHand);

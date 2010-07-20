@@ -1344,7 +1344,7 @@ void Entities::drawSequencesInternal(EntityIndex entityIndex, EntityDirection di
 				return;
 
 			loadSequence3(entityIndex, sequenceName2, sequenceName3, field30, loadSequence);
-			return;			
+			return;
 		}
 
 		SAFE_DELETE(data->sequence2);

@@ -266,7 +266,7 @@ IMPLEMENT_FUNCTION(Kahina, function22, 22)
 		getData()->field_493 = kField493_0;
 		break;
 
-	case kAction17:
+	case kActionDrawScene:
 		if (getData()->car > kCarGreenSleeping || (getData()->car == kCarGreenSleeping && getData()->entityPosition > kPosition_2740))
 			params->param1 = 1;
 		break;

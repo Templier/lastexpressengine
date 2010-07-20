@@ -52,20 +52,7 @@ Train::Train(LastExpressEngine *engine) : Entity(engine, kEntityTrain) {
 }
 
 IMPLEMENT_FUNCTION_II(Train, savegame, 1)
-	switch (savepoint.action) {
-	default:
-		break;
-
-	case kActionNone:
-		CALLBACK_ACTION()
-		break;
-
-	case kActionDefault:
-		save(kEntityTrain, (SavegameType)params->param1, (EventIndex)params->param2);
-
-		CALLBACK_ACTION()
-		break;
-	}
+	Entity::savegame(savepoint);
 }
 
 IMPLEMENT_FUNCTION(Train, chapter1, 2)
@@ -353,7 +340,7 @@ label_process:
 		getData()->entityPosition = kPosition_30000;
 		break;
 
-	case kAction17:
+	case kActionDrawScene:
 		getData()->car = getEntityData(kEntityNone)->car;
 
 		// Play clock sound
@@ -368,7 +355,7 @@ label_process:
 		}
 
 		// Draw moving background behind windows
-		if (params->param3) {  /* TODO: debug how this is set */
+		if (params->param3) {
 			if (getEntityData(kEntityNone)->car != params->param1 || isDay() != (bool)(params->param2 > 0)) {
 				switch (getEntityData(kEntityNone)->car) {
 				default:
@@ -491,7 +478,7 @@ label_process:
 		if (!params->param3) {
 			params->param1 = 0;
 			params->param3 = 1;
-			getSavePoints()->push(kEntityTrain, kEntityTrain, kAction17);
+			getSavePoints()->push(kEntityTrain, kEntityTrain, kActionDrawScene);
 		}
 		break;
 
@@ -565,8 +552,8 @@ void Train::resetParam8() {
 	 && !getEntities()->checkFields1(kEntityNone, (CarIndex)params1->param1, (EntityPosition)params1->param2)
 	 && !getEntities()->checkFields1(kEntityNone, (CarIndex)params1->param1, (EntityPosition)params1->param3)) {
 
-		if (getSound()->isBuffered(params1->seq))
-			getSound()->unknownFunction2(params1->seq);
+		if (getSound()->isBuffered((const char *)&params1->seq))
+			getSound()->unknownFunction2((const char *)&params1->seq);
 
 		params->param8 = 0;
 	}

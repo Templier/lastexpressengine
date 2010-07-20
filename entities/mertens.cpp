@@ -390,7 +390,7 @@ IMPLEMENT_FUNCTION(Mertens, function17, 17)
 			ENTITY_PARAM(0, 1) = 0;
 			getData()->inventoryItem = kItemNone;
 
-			getSavePoints()->push(kEntityMertens, kEntityMertens, kAction17);
+			getSavePoints()->push(kEntityMertens, kEntityMertens, kActionDrawScene);
 
 			CALLBACK_ACTION()
 			break;

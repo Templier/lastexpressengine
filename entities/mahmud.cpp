@@ -177,7 +177,7 @@ IMPLEMENT_FUNCTION_II(Mahmud, function10, 10)
 		break;
 
 	case kAction2:
-	case kAction17: {
+	case kActionDrawScene: {
 		if (getSound()->isBuffered(kEntityMahmud))
 			break;
 
@@ -643,7 +643,7 @@ IMPLEMENT_FUNCTION(Mahmud, chapters_handler, 14)
 		getObjects()->update(kObjectCompartment4, kEntityMahmud, kLocation3, kCursorHandKnock, kCursorHand);
 		break;
 
-	case kAction17:
+	case kActionDrawScene:
 		if (params->param4 || params->param5) {
 			getObjects()->update(kObjectCompartment4, kEntityMahmud, kLocation3, kCursorHandKnock, kCursorHand);
 			params->param4 = 0;
