@@ -27,6 +27,7 @@
 
 #include "lastexpress/game/action.h"
 #include "lastexpress/game/entities.h"
+#include "lastexpress/game/inventory.h"
 #include "lastexpress/game/logic.h"
 #include "lastexpress/game/object.h"
 #include "lastexpress/game/savepoint.h"
@@ -199,8 +200,136 @@ IMPLEMENT_FUNCTION_I(Anna, updateFromTicks, 14)
 	Entity::updateFromTicks(savepoint);
 }
 
+//////////////////////////////////////////////////////////////////////////
+// Parameters
+//  - time
+//  - sequence
 IMPLEMENT_FUNCTION_IS(Anna, function15, 15)
-	error("Anna: callback function 15 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionNone:
+		if (params->param1 < (int32)getState()->time && !params->param7) {
+			params->param7 = 1;
+
+			getObjects()->update(kObjectCompartmentF, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
+			getObjects()->update(kObject53, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
+
+			CALLBACK_ACTION();
+			break;
+		}
+
+		if (params->param5) {
+			UPDATE_PARAM(params->param8, getState()->timeTicks, 75);
+
+			params->param5 = 0;
+			params->param6 = 1;
+
+			CursorStyle cursor = getEntities()->checkFields1(kEntityMax, kCarRedSleeping, kPosition_4070) ? kCursorHand : kCursorNormal;
+
+			getObjects()->update(kObjectCompartmentF, kEntityAnna, kLocation1, kCursorNormal, cursor);
+			getObjects()->update(kObject53, kEntityAnna, kLocation1, kCursorNormal, cursor);
+		}
+
+		params->param8 = 0;
+		break;
+
+	case kAction9:
+		if (getEntities()->checkFields1(kEntityMax, kCarRedSleeping, kPosition_4070)) {
+			getObjects()->update(kObjectCompartmentF, kEntityAnna, kLocation1, kCursorNormal, kCursorNormal);
+			getObjects()->update(kObject53, kEntityAnna, kLocation1, kCursorNormal, kCursorNormal);
+
+			setCallback(1);
+			call(new ENTITY_SETUP_SIIS(Anna, setup_playSound), "LIB013");
+			break;
+		}
+		// Fallback to next action
+
+	case kAction8:
+		if (params->param5) {
+			CursorStyle cursor = getEntities()->checkFields1(kEntityMax, kCarRedSleeping, kPosition_4070) ? kCursorHand : kCursorNormal;
+
+			getObjects()->update(kObjectCompartmentF, kEntityAnna, kLocation1, kCursorNormal, cursor);
+			getObjects()->update(kObject53, kEntityAnna, kLocation1, kCursorNormal, cursor);
+
+			if (savepoint.param.intValue == kObject53) {
+				setCallback(6);
+				call(new ENTITY_SETUP_SIIS(Anna, setup_playSound), getSound()->justAMinuteCath());
+			} else {
+				if (getInventory()->hasItem(kItemPassengerList)) {
+					setCallback(7);
+					call(new ENTITY_SETUP_SIIS(Anna, setup_playSound), random(2) ? getSound()->wrongDoorCath() : (random(2) ? "CAT1506" : "CAT1506A"));
+				} else {
+					setCallback(8);
+					call(new ENTITY_SETUP_SIIS(Anna, setup_playSound), getSound()->wrongDoorCath());
+				}
+			}
+		} else {
+			getObjects()->update(kObjectCompartmentF, kEntityAnna, kLocation1, kCursorNormal, kCursorNormal);
+			getObjects()->update(kObject53, kEntityAnna, kLocation1, kCursorNormal, kCursorNormal);
+
+			setCallback(savepoint.action == kAction8 ? 3 : 4);
+			call(new ENTITY_SETUP_SIIS(Anna, setup_playSound), savepoint.action == kAction8 ? "LIB012" : "LIB013");
+		}
+		break;
+
+
+	case kActionDefault:
+		getObjects()->update(kObjectCompartmentF, kEntityAnna, kLocation1, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObject53, kEntityAnna, kLocation1, kCursorHandKnock, kCursorHand);
+		getEntities()->drawSequenceLeft(kEntityAnna, params->seq);
+		break;
+
+	case kAction17:
+		if (params->param6 || params->param5) {
+			getObjects()->update(kObjectCompartmentF, kEntityAnna, kLocation1, kCursorHandKnock, kCursorHand);
+			getObjects()->update(kObject53, kEntityAnna, kLocation1, kCursorHandKnock, kCursorHand);
+
+			params->param5 = 0;
+			params->param6 = 0;
+		}
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			if (!getSound()->isBuffered(kEntityMax)) {
+				setCallback(2);
+				call(new ENTITY_SETUP_SIIS(Anna, setup_playSound), "MAX1120");
+				break;
+			}
+			// Fallback to next case
+
+		case 2:
+			getObjects()->update(kObjectCompartmentF, kEntityAnna, kLocation1, kCursorHandKnock, kCursorHand);
+			getObjects()->update(kObject53, kEntityAnna, kLocation1, kCursorHandKnock, kCursorHand);
+			break;
+
+		case 3:
+		case 4:
+			setCallback(5);
+			call(new ENTITY_SETUP_SIIS(Anna, setup_playSound), "ANN1016");
+			break;
+
+		case 5:
+			getObjects()->update(kObjectCompartmentF, kEntityAnna, kLocation1, kCursorTalk, kCursorNormal);
+			getObjects()->update(kObject53, kEntityAnna, kLocation1, kCursorTalk, kCursorNormal);
+			params->param5 = 1;
+			break;
+
+		case 6:
+		case 7:
+		case 8:
+			params->param5 = 0;
+			params->param6 = 1;
+			break;
+		}
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Anna, chapter1, 16)
