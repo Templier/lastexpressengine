@@ -28,6 +28,8 @@
 
 #include "gui/debugger.h"
 
+#include "lastexpress/shared.h"
+
 namespace LastExpress {
 
 enum {
@@ -74,6 +76,9 @@ private:
 	void resetCommand();
 	void copyCommand(int argc, const char **argv);
 	int getNumber(const char *arg) const;
+
+	void loadArchive(ArchiveIndex index);
+	void restoreArchive();
 
 	Debuglet *_command;
 	int _numParams;

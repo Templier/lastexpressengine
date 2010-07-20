@@ -129,6 +129,37 @@ void Debugger::callCommand() {
 		(*_command)(_numParams, const_cast<const char **>(_commandParams));
 }
 
+void Debugger::loadArchive(ArchiveIndex index) {
+	_engine->getResourceManager()->loadArchive(index);
+	getScenes()->loadSceneDataFile(index);
+}
+
+// Restore loaded archive
+void Debugger::restoreArchive() {
+
+	ArchiveIndex index = kArchiveCd1;
+
+	switch (getProgress().chapter) {
+	default:
+	case kChapter1:
+		index = kArchiveCd1;
+		break;
+
+	case kChapter2:
+	case kChapter3:
+		index = kArchiveCd2;
+		break;
+
+	case kChapter4:
+	case kChapter5:
+		index = kArchiveCd3;
+		break;
+	}
+
+	_engine->getResourceManager()->loadArchive(index);
+	getScenes()->loadSceneDataFile(index);
+}
+
 bool Debugger::cmdHelp(int argc, const char **argv) {
 	DebugPrintf("Debug flags\n");
 	DebugPrintf("-----------\n");
@@ -157,10 +188,12 @@ bool Debugger::cmdHelp(int argc, const char **argv) {
 //////////////////////////////////////////////////////////////////////////
 // Play a sequence
 bool Debugger::cmdPlaySeq(int argc, const char **argv) {
-	if (argc == 2) {
+	if (argc == 2 || argc == 3) {
 		Common::String filename(const_cast<char *>(argv[1]));
-
 		filename += ".seq";
+
+		if (argc == 3)
+			loadArchive((ArchiveIndex)getNumber(argv[2]));
 
 		if (!_engine->getResourceManager()->hasFile(filename)) {
 			DebugPrintf("Cannot find file: %s\n", filename.c_str());
@@ -213,18 +246,23 @@ bool Debugger::cmdPlaySeq(int argc, const char **argv) {
 			}
 
 			resetCommand();
+
+			if (argc == 3)
+				restoreArchive();
 		}
 	} else {
-		DebugPrintf("Syntax: playseq <seqname>\n");
+		DebugPrintf("Syntax: playseq <seqname> (<cd number>)\n");
 	}
 	return true;
 }
 
 bool Debugger::cmdShowFrame(int argc, const char **argv) {
-	if (argc == 3) {
+	if (argc == 3 || argc == 4) {
 		Common::String filename(const_cast<char *>(argv[1]));
-
 		filename += ".seq";
+
+		if (argc == 4)
+			loadArchive((ArchiveIndex)getNumber(argv[3]));
 
 		if (!_engine->getResourceManager()->hasFile(filename)) {
 			DebugPrintf("Cannot find file: %s\n", filename.c_str());
@@ -261,15 +299,22 @@ bool Debugger::cmdShowFrame(int argc, const char **argv) {
 			}
 
 			resetCommand();
+
+			if (argc == 4)
+				restoreArchive();
 		}
 	} else {
-		DebugPrintf("Syntax: cmd_showframe <seqname> <index>\n");
+		DebugPrintf("Syntax: cmd_showframe <seqname> <index> (<cd number>)\n");
 	}
 	return true;
 }
 
 bool Debugger::cmdPlaySnd(int argc, const char **argv) {
-	if (argc == 2) {
+	if (argc == 2 || argc == 3) {
+
+		if (argc == 3)
+			loadArchive((ArchiveIndex)getNumber(argv[2]));
+
 		// Add .SND at the end of the filename if needed
 		Common::String name(const_cast<char *>(argv[1]));
 		if (!name.contains('.'))
@@ -284,15 +329,21 @@ bool Debugger::cmdPlaySnd(int argc, const char **argv) {
 
 		// FIXME: use another sound stream for debug (the one in the engine is not setup for playing a single sound)
 		getSound()->getSfxStream()->load(getArchive(name));
+
+		if (argc == 3)
+			restoreArchive();
 	} else {
-		DebugPrintf("Syntax: playsnd <sndname>\n");
+		DebugPrintf("Syntax: playsnd <sndname> (<cd number>)\n");
 	}
 	return true;
 }
 
 bool Debugger::cmdPlaySbe(int argc, const char **argv) {
-	if (argc == 2) {
+	if (argc == 2 || argc == 3) {
 		Common::String filename(const_cast<char *>(argv[1]));
+
+		if (argc == 3)
+			loadArchive((ArchiveIndex)getNumber(argv[2]));
 
 		filename += ".sbe";
 
@@ -331,17 +382,23 @@ bool Debugger::cmdPlaySbe(int argc, const char **argv) {
 				_engine->getCursor()->show(true);
 			}
 
+			if (argc == 3)
+				restoreArchive();
+
 			resetCommand();
 		}
 	} else {
-		DebugPrintf("Syntax: playsbe <sbename>\n");
+		DebugPrintf("Syntax: playsbe <sbename> (<cd number>)\n");
 	}
 	return true;
 }
 
 bool Debugger::cmdPlayNis(int argc, const char **argv) {
-	if (argc == 2) {
+	if (argc == 2 || argc == 3) {
 		Common::String filename(const_cast<char *>(argv[1]));
+
+		if (argc == 3)
+			loadArchive((ArchiveIndex)getNumber(argv[2]));
 
 		filename += ".nis";
 
@@ -367,17 +424,23 @@ bool Debugger::cmdPlayNis(int argc, const char **argv) {
 				_engine->getCursor()->show(true);
 			}
 
+			if (argc == 3)
+				restoreArchive();
+
 			resetCommand();
 		}
 	} else {
-		DebugPrintf("Syntax: playnis <nisname>\n");
+		DebugPrintf("Syntax: playnis <nisname> (<cd number>)\n");
 	}
 	return true;
 }
 
 bool Debugger::cmdShowBg(int argc, const char **argv) {
-	if (argc == 2) {
+	if (argc == 2 || argc == 3) {
 		Common::String filename(const_cast<char *>(argv[1]));
+
+		if (argc == 3)
+			loadArchive((ArchiveIndex)getNumber(argv[2]));
 
 		if (!_engine->getResourceManager()->hasFile(filename + ".BG")) {
 			DebugPrintf("Cannot find file: %s\n", (filename + ".BG").c_str());
@@ -402,37 +465,31 @@ bool Debugger::cmdShowBg(int argc, const char **argv) {
 
 			redrawScreen();
 
+			if (argc == 3)
+				restoreArchive();
+
 			// Pause for a second to be able to see the background
 			_engine->_system->delayMillis(1000);
 
 			resetCommand();
 		}
 	} else {
-		DebugPrintf("Syntax: showbg <bgname>\n");
+		DebugPrintf("Syntax: showbg <bgname> (<cd number>)\n");
 	}
 	return true;
 }
 
 bool Debugger::cmdLoadScene(int argc, const char **argv) {
-	if (argc >= 2) {
-		if (argc > 3) {
-			DebugPrintf("Syntax: loadscene (<cd number>) <scene index>\n");
-			return true;
-		}
-
+	if (argc == 2 || argc == 3) {
 		int cd = 1;
-		SceneIndex index = kSceneNone;
+		SceneIndex index = (SceneIndex)getNumber(argv[1]);;
 
 		// Check args
-		if (argc == 3) {
-			cd = getNumber(argv[1]);
-			index = (SceneIndex)getNumber(argv[2]);
-		} else {
-			index = (SceneIndex)getNumber(argv[1]);
-		}
+		if (argc == 3)
+			loadArchive((ArchiveIndex)getNumber(argv[2]));
 
-		if (cd <= 0 || cd > 3 || index > 2500) {
-			DebugPrintf("Error: invalid cd number (1-3) or index value (0-2500)");
+		if (index > 2500) {
+			DebugPrintf("Error: invalid index value (0-2500)");
 			return true;
 		}
 
@@ -443,18 +500,6 @@ bool Debugger::cmdLoadScene(int argc, const char **argv) {
 
 			return Cmd_Exit(0, 0);
 		} else {
-
-			// Check for cd and load the proper data file in the fly
-			// instead of relying on the engine scene manager which could have
-			// loaded a different cd
-			SceneLoader *_sceneLoader = new SceneLoader();
-			if (!_sceneLoader->load(getArchive(Common::String::printf("CD%iTRAIN.DAT", cd)))) {
-				DebugPrintf("Cannot load data for CD %i", cd);
-				resetCommand();
-
-				delete _sceneLoader;
-				return true;
-			}
 
 			clearBg(GraphicsManager::kBackgroundAll);
 
@@ -483,16 +528,15 @@ bool Debugger::cmdLoadScene(int argc, const char **argv) {
 			//return true;
 
 			/*********************************************/
-			Scene *s = _sceneLoader->get(index);
-			if (!s) {
+			Scene *scene = getScenes()->get(index);
+			if (!scene) {
 				DebugPrintf("Cannot load scene %i from CD %i", index, cd);
 				resetCommand();
 
-				delete _sceneLoader;
 				return true;
 			}
 
-			_engine->getGraphicsManager()->draw(s, GraphicsManager::kBackgroundC);
+			_engine->getGraphicsManager()->draw(scene, GraphicsManager::kBackgroundC);
 
 			askForRedraw();
 			redrawScreen();
@@ -500,12 +544,13 @@ bool Debugger::cmdLoadScene(int argc, const char **argv) {
 			// Pause for a second to be able to see the scene
 			_engine->_system->delayMillis(500);
 
-			delete _sceneLoader;
+			if (argc == 3)
+				restoreArchive();
 
 			resetCommand();
 		}
 	} else {
-		DebugPrintf("Syntax: loadscene (<cd number>) <scene index>\n");
+		DebugPrintf("Syntax: loadscene <scene index> (<cd number>)\n");
 	}
 	return true;
 }
@@ -524,18 +569,25 @@ bool Debugger::cmdClear(int argc, const char **) {
 }
 
 bool Debugger::cmdListFiles(int argc, const char **argv) {
-	if (argc == 2) {
+	if (argc == 2 || argc == 3) {		
 		Common::String filter(const_cast<char *>(argv[1]));
+
+		// Load the proper archive
+		if (argc == 3)	
+			loadArchive((ArchiveIndex)getNumber(argv[2]));		
 
 		Common::ArchiveMemberList list;
 		int count = _engine->getResourceManager()->listMatchingMembers(list, filter);
 
 		DebugPrintf("Number of matches: %d\n", count);
-		for (Common::ArchiveMemberList::iterator it = list.begin(); it != list.end(); ++it) {
-			DebugPrintf("%s\n", (*it)->getName().c_str());
-		}
+		for (Common::ArchiveMemberList::iterator it = list.begin(); it != list.end(); ++it)
+			DebugPrintf(" %s\n", (*it)->getName().c_str());
+
+		// Restore archive
+		if (argc == 3)
+			restoreArchive();
 	} else {
-		DebugPrintf("Syntax: listfiles <filter> (use * for all)\n");
+		DebugPrintf("Syntax: listfiles <filter> (use * for all)\n (<cd number>)");
 	}
 
 	return true;
@@ -584,7 +636,7 @@ bool Debugger::cmdFight(int argc, const char **argv) {
 			break;
 		}
 
-		getScenes()->loadSceneDataFile(index);
+		loadArchive(index);
 
 		// Store command
 		if (!hasCommand()) {
@@ -608,24 +660,7 @@ bool Debugger::cmdFight(int argc, const char **argv) {
 			_engine->_system->delayMillis(1000);
 
 			// Restore loaded archive
-			switch (getProgress().chapter) {
-			default:
-			case kChapter1:
-				index = kArchiveCd1;
-				break;
-
-			case kChapter2:
-			case kChapter3:
-				index = kArchiveCd2;
-				break;
-
-			case kChapter4:
-			case kChapter5:
-				index = kArchiveCd3;
-				break;
-			}
-
-			getScenes()->loadSceneDataFile(index);
+			restoreArchive();
 
 			// Stop audio and restore scene
 			getSound()->getSfxStream()->stop();
@@ -652,7 +687,7 @@ error:
 bool Debugger::cmdBeetle(int argc, const char **argv) {
 	if (argc == 1) {
 		// Load proper data file (beetle game in in Cd2)
-		getScenes()->loadSceneDataFile(kArchiveCd2);
+		loadArchive(kArchiveCd2);
 
 		// Store command
 		if (!hasCommand()) {
@@ -746,25 +781,7 @@ bool Debugger::cmdBeetle(int argc, const char **argv) {
 			getInventory()->getEntry(kItemBeetle)->location = previousLocation;
 
 			// Restore loaded archive
-			ArchiveIndex index = kArchiveCd1;
-			switch (getProgress().chapter) {
-			default:
-			case kChapter1:
-				index = kArchiveCd1;
-				break;
-
-			case kChapter2:
-			case kChapter3:
-				index = kArchiveCd2;
-				break;
-
-			case kChapter4:
-			case kChapter5:
-				index = kArchiveCd3;
-				break;
-			}
-
-			getScenes()->loadSceneDataFile(index);
+			restoreArchive();
 
 			// Stop audio and restore scene
 			getSound()->getSfxStream()->stop();
