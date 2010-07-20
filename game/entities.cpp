@@ -2125,7 +2125,7 @@ label_process_entity:
 					int compartmentIndex = (data->car == kCarGreenSleeping ? 0 : 8);
 
 					// We skip the first object position (0)
-					for (int i = 1; i < sizeof(objectsPosition); i++) {
+					for (int i = 1; i < 8; i++) {
 						if (getCompartments(compartmentIndex) || getCompartments1(compartmentIndex)) {
 							if (checkDistanceFromPosition(entity, objectsPosition[i], 750)) {
 								if (checkPosition(objectsPosition[i])) {
