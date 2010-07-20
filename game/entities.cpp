@@ -1496,7 +1496,6 @@ void Entities::getSequenceName(EntityIndex index, EntityDirection direction, Com
 	case kDirectionUp:
 		switch (position) {
 		default:
-			error("Entities::getSequenceName: Invalid scene position %d (Direction UP)", position);
 			break;
 
 		case 1:
@@ -1579,8 +1578,7 @@ void Entities::getSequenceName(EntityIndex index, EntityDirection direction, Com
 
 	case kDirectionDown:
 		switch (position) {
-		default:
-			error("Entities::getSequenceName: Invalid scene position %d (Direction DOWN)", position);
+		default:			
 			break;
 
 		case 1:
