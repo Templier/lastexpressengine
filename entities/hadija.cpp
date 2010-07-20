@@ -108,7 +108,7 @@ IMPLEMENT_FUNCTION(Hadija, function6, 6)
 
 		case 2:
 			getData()->entityPosition = kPosition_4070;
-			getEntities()->prepareSequences(kEntityHadija);
+			getEntities()->clearSequences(kEntityHadija);
 
 			CALLBACK_ACTION();
 		}
@@ -140,7 +140,7 @@ IMPLEMENT_FUNCTION(Hadija, function7, 7)
 
 		case 2:
 			getData()->entityPosition = kPosition_2740;
-			getEntities()->prepareSequences(kEntityHadija);
+			getEntities()->clearSequences(kEntityHadija);
 
 			CALLBACK_ACTION();
 		}
@@ -267,14 +267,14 @@ IMPLEMENT_FUNCTION(Hadija, function12, 12)
 		getData()->field_493 = kField493_1;
 		getData()->car = kCarGreenSleeping;
 
-		getEntities()->prepareSequences(kEntityHadija);
+		getEntities()->clearSequences(kEntityHadija);
 	}
 }
 
 IMPLEMENT_FUNCTION(Hadija, chapter2, 13)
 	if (savepoint.action == kActionDefault) {
 
-		getEntities()->prepareSequences(kEntityHadija);
+		getEntities()->clearSequences(kEntityHadija);
 
 		getData()->entityPosition = kPosition_3050;
 		getData()->field_493 = kField493_1;
@@ -300,7 +300,7 @@ IMPLEMENT_FUNCTION(Hadija, chapter3, 15)
 		break;
 
 	case kActionDefault:
-		getEntities()->prepareSequences(kEntityHadija);
+		getEntities()->clearSequences(kEntityHadija);
 
 		getData()->entityPosition = kPosition_4070;
 		getData()->field_493 = kField493_1;
@@ -343,7 +343,7 @@ IMPLEMENT_FUNCTION(Hadija, function19, 19)
 		getData()->field_493 = kField493_1;
 		getData()->car = kCarGreenSleeping;
 
-		getEntities()->prepareSequences(kEntityHadija);
+		getEntities()->clearSequences(kEntityHadija);
 	}
 }
 
@@ -357,7 +357,7 @@ IMPLEMENT_FUNCTION(Hadija, chapter5, 20)
 		break;
 
 	case kActionDefault:
-		getEntities()->prepareSequences(kEntityHadija);
+		getEntities()->clearSequences(kEntityHadija);
 
 		getData()->entityPosition = kPosition_3969;
 		getData()->field_493 = kField493_1;
@@ -419,7 +419,7 @@ IMPLEMENT_FUNCTION(Hadija, function23, 23)
 			break;
 
 		case 2:
-			getEntities()->prepareSequences(kEntityHadija);
+			getEntities()->clearSequences(kEntityHadija);
 
 			getData()->entityPosition = kPosition_4840;
 			getData()->field_493 = kField493_1;

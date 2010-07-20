@@ -217,7 +217,7 @@ IMPLEMENT_FUNCTION(Abbot, chapter1, 15)
 
 IMPLEMENT_FUNCTION(Abbot, chapter2, 16)
 	if (savepoint.action == kActionDefault)
-		getEntities()->prepareSequences(kEntityAbbot);
+		getEntities()->clearSequences(kEntityAbbot);
 }
 
 IMPLEMENT_FUNCTION(Abbot, chapter3, 17)
@@ -230,7 +230,7 @@ IMPLEMENT_FUNCTION(Abbot, chapter3, 17)
 		break;
 
 	case kActionDefault:
-		getEntities()->prepareSequences(kEntityAbbot);
+		getEntities()->clearSequences(kEntityAbbot);
 
 		getData()->entityPosition = kPosition_5900;
 		getData()->field_493 = kField493_1;
@@ -560,7 +560,7 @@ IMPLEMENT_FUNCTION(Abbot, function24, 24)
 		break;
 
 	case kActionDefault:
-		getEntities()->prepareSequences(kEntityAbbot);
+		getEntities()->clearSequences(kEntityAbbot);
 		getObjects()->update(kObjectCompartmentC, kEntityAbbot, kLocationNone, kCursorHandKnock, kCursorHand);
 		getObjects()->update(kObject50, kEntityAbbot, kLocationNone, kCursorHandKnock, kCursorHand);
 		break;
@@ -970,7 +970,7 @@ IMPLEMENT_FUNCTION(Abbot, chapter4, 39)
 		break;
 
 	case kActionDefault:
-		getEntities()->prepareSequences(kEntityAbbot);
+		getEntities()->clearSequences(kEntityAbbot);
 
 		getData()->car = kCarRestaurant;
 		getData()->inventoryItem = kItemNone;
@@ -1039,7 +1039,7 @@ IMPLEMENT_FUNCTION(Abbot, function44, 44)
 		getData()->field_493 = kField493_1;
 		getData()->car = kCarRedSleeping;
 
-		getEntities()->prepareSequences(kEntityAbbot);
+		getEntities()->clearSequences(kEntityAbbot);
 
 		getObjects()->update(kObjectCompartmentC, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
 		getObjects()->update(kObject50, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
@@ -1171,7 +1171,7 @@ IMPLEMENT_FUNCTION(Abbot, chapter5, 50)
 		break;
 
 	case kActionDefault:
-		getEntities()->prepareSequences(kEntityAbbot);
+		getEntities()->clearSequences(kEntityAbbot);
 
 		getData()->entityPosition = kPosition_3969;
 		getData()->field_493 = kField493_1;
@@ -1193,7 +1193,7 @@ IMPLEMENT_FUNCTION(Abbot, function52, 52)
 		break;
 
 	case kActionDefault:
-		getEntities()->prepareSequences(kEntityAbbot);
+		getEntities()->clearSequences(kEntityAbbot);
 
 		getData()->entityPosition = kPositionNone;
 		getData()->field_493 = kField493_0;

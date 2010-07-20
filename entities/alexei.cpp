@@ -269,7 +269,7 @@ IMPLEMENT_FUNCTION(Alexei, chapter1_handler, 18)
 			getData()->entityPosition = kPosition_3650;
 			getData()->field_493 = kField493_0;
 
-			getEntities()->prepareSequences(kEntityAlexei);
+			getEntities()->clearSequences(kEntityAlexei);
 			getInventory()->getEntry(kItem17)->location = kLocation1;
 			getScenes()->loadSceneFromPosition(kCarRestaurant, 63);
 
@@ -411,7 +411,7 @@ IMPLEMENT_FUNCTION(Alexei, function26, 26)
 		if (getEntities()->isPlayerPosition(kCarGreenSleeping, 61))
 			getScenes()->loadSceneFromPosition(kCarGreenSleeping, 66);
 
-		getEntities()->prepareSequences(kEntityAlexei);
+		getEntities()->clearSequences(kEntityAlexei);
 		break;
 	}
 }
@@ -437,7 +437,7 @@ IMPLEMENT_FUNCTION(Alexei, chapter2, 28)
 		break;
 
 	case kActionDefault:
-		getEntities()->prepareSequences(kEntityAlexei);
+		getEntities()->clearSequences(kEntityAlexei);
 
 		getObjects()->update(kObjectCompartment2, kEntityAlexei, kLocation1, kCursorHandKnock, kCursorHand);
 		getObjects()->update(kObject10, kEntityNone, kLocationNone, kCursorKeepValue, kCursorKeepValue);
@@ -506,7 +506,7 @@ IMPLEMENT_FUNCTION(Alexei, chapter3, 32)
 		break;
 
 	case kActionDefault:
-		getEntities()->prepareSequences(kEntityAlexei);
+		getEntities()->clearSequences(kEntityAlexei);
 
 		getObjects()->update(kObjectCompartment2, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
 		getObjects()->update(kObject10, kEntityNone, kLocationNone, kCursorKeepValue, kCursorKeepValue);
@@ -567,7 +567,7 @@ IMPLEMENT_FUNCTION(Alexei, chapter4, 37)
 		break;
 
 	case kActionDefault:
-		getEntities()->prepareSequences(kEntityAlexei);
+		getEntities()->clearSequences(kEntityAlexei);
 
 		getObjects()->update(kObjectCompartment2, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
 		getObjects()->update(kObject10, kEntityNone, kLocationNone, kCursorKeepValue, kCursorKeepValue);
@@ -702,7 +702,7 @@ IMPLEMENT_FUNCTION(Alexei, function46, 46)
 
 IMPLEMENT_FUNCTION(Alexei, function47, 47)
 	if (savepoint.action == kActionDefault) {
-		getEntities()->prepareSequences(kEntityAlexei);
+		getEntities()->clearSequences(kEntityAlexei);
 
 		getData()->entityPosition = kPositionNone;
 		getData()->field_493 = kField493_0;
@@ -715,7 +715,7 @@ IMPLEMENT_FUNCTION(Alexei, function47, 47)
 
 IMPLEMENT_FUNCTION(Alexei, chapter5, 48)
 	if (savepoint.action == kActionDefault)
-		getEntities()->prepareSequences(kEntityAlexei);
+		getEntities()->clearSequences(kEntityAlexei);
 }
 
 } // End of namespace LastExpress

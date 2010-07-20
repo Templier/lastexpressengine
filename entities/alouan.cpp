@@ -108,7 +108,7 @@ IMPLEMENT_FUNCTION(Alouan, function6, 6)
 
 		case 2:
 			getData()->entityPosition = kPosition_4070;
-			getEntities()->prepareSequences(kEntityAlouan);
+			getEntities()->clearSequences(kEntityAlouan);
 
 			CALLBACK_ACTION();
 		}
@@ -140,7 +140,7 @@ IMPLEMENT_FUNCTION(Alouan, function7, 7)
 
 		case 2:
 			getData()->entityPosition = kPosition_2740;
-			getEntities()->prepareSequences(kEntityAlouan);
+			getEntities()->clearSequences(kEntityAlouan);
 
 			CALLBACK_ACTION();
 		}
@@ -221,7 +221,7 @@ IMPLEMENT_FUNCTION(Alouan, function12, 12)
 		getData()->field_493 = kField493_1;
 		getData()->car = kCarGreenSleeping;
 
-		getEntities()->prepareSequences(kEntityAlouan);
+		getEntities()->clearSequences(kEntityAlouan);
 	}
 }
 
@@ -229,7 +229,7 @@ IMPLEMENT_FUNCTION(Alouan, chapter2, 13)
 	if (savepoint.action != kActionDefault)
 		return;
 
-	getEntities()->prepareSequences(kEntityAlouan);
+	getEntities()->clearSequences(kEntityAlouan);
 
 	getData()->entityPosition = kPosition_2740;
 	getData()->field_493 = kField493_1;
@@ -254,7 +254,7 @@ IMPLEMENT_FUNCTION(Alouan, chapter3, 15)
 		break;
 
 	case kActionDefault:
-		getEntities()->prepareSequences(kEntityAlouan);
+		getEntities()->clearSequences(kEntityAlouan);
 
 		getData()->entityPosition = kPosition_2740;
 		getData()->field_493 = kField493_1;
@@ -278,7 +278,7 @@ IMPLEMENT_FUNCTION(Alouan, chapter4, 17)
 		break;
 
 	case kActionDefault:
-		getEntities()->prepareSequences(kEntityAlouan);
+		getEntities()->clearSequences(kEntityAlouan);
 
 		getData()->entityPosition = kPosition_2740;
 		getData()->field_493 = kField493_1;
@@ -301,7 +301,7 @@ IMPLEMENT_FUNCTION(Alouan, function19, 19)
 		getData()->field_493 = kField493_1;
 		getData()->car = kCarGreenSleeping;
 
-		getEntities()->prepareSequences(kEntityAlouan);
+		getEntities()->clearSequences(kEntityAlouan);
 	}
 }
 
@@ -315,7 +315,7 @@ IMPLEMENT_FUNCTION(Alouan, chapter5, 20)
 		break;
 
 	case kActionDefault:
-		getEntities()->prepareSequences(kEntityAlouan);
+		getEntities()->clearSequences(kEntityAlouan);
 
 		getData()->entityPosition = kPosition_3969;
 		getData()->field_493 = kField493_1;
@@ -377,7 +377,7 @@ IMPLEMENT_FUNCTION(Alouan, function23, 23)
 			break;
 
 		case 2:
-			getEntities()->prepareSequences(kEntityAlouan);
+			getEntities()->clearSequences(kEntityAlouan);
 
 			getData()->entityPosition = kPosition_4070;
 			getData()->field_493 = kField493_1;

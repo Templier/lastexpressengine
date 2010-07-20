@@ -125,6 +125,18 @@ static const EntityPosition entityPositions[41] = {
 	} \
 }
 
+#define TRY_LOAD_SEQUENCE(sequence, name, name1, name2) { \
+	if (data->car == getData(kEntityNone)->car) \
+		sequence = loadSequence1(name1, field30); \
+	if (sequence) { \
+		name = name1; \
+	} else { \
+		if (name2 != "") \
+			sequence = loadSequence1(name2, field30); \
+		name = (sequence ? name2 : ""); \
+	} \
+}
+
 //////////////////////////////////////////////////////////////////////////
 // Entities
 //////////////////////////////////////////////////////////////////////////
@@ -250,7 +262,7 @@ void Entities::setupChapter(ChapterIndex chapter) {
 			getData((EntityIndex)i)->current_call = 0;
 			getData((EntityIndex)i)->inventoryItem = kItemNone;
 
-			prepareSequences((EntityIndex)i);
+			clearSequences((EntityIndex)i);
 		}
 
 		// Init compartments & positions
@@ -335,7 +347,7 @@ void Entities::resetState(EntityIndex entityIndex) {
 	if (getSound()->isBuffered(entityIndex))
 		getSound()->removeFromQueue(entityIndex);
 
-	prepareSequences(entityIndex);
+	clearSequences(entityIndex);
 
 	if (entityIndex == kEntity39)
 		entityIndex = kEntityNone;
@@ -392,7 +404,7 @@ void Entities::updateFields() const {
 			break;
 
 		case kDirectionSwitch:
-			if (data->direction2 == kDirectionRight)
+			if (data->directionSwitch == kDirectionRight)
 				data->field_4A1 += 9;
 			break;
 
@@ -491,7 +503,7 @@ void Entities::updateSequences() {
 				data->sequenceName3 = "";
 			}
 
-			data->direction = data->direction2;
+			data->direction = data->directionSwitch;
 			data->currentFrame2 = -1;
 			data->field_49B = 0;
 		}
@@ -546,7 +558,7 @@ void Entities::updateSequences() {
 				Common::String sequenceName;
 
 				// Left and down directions
-				if (data->direction2 == kDirectionLeft || data->direction2 == kDirectionRight) {
+				if (data->directionSwitch == kDirectionLeft || data->directionSwitch == kDirectionRight) {
 					COMPUTE_SEQUENCE_NAME(sequenceName, data->sequenceName3);
 
 					// Try loading the sequence
@@ -564,7 +576,7 @@ void Entities::resetSequences(EntityIndex entityIndex) const {
 
 	// Reset direction
 	if (getData(entityIndex)->direction == kDirectionSwitch) {
-		getData(entityIndex)->direction = getData(entityIndex)->direction2;
+		getData(entityIndex)->direction = getData(entityIndex)->directionSwitch;
 		getData(entityIndex)->field_49B = 0;
 		getData(entityIndex)->currentFrame2 = -1;
 	}
@@ -641,8 +653,8 @@ void Entities::executeCallbacks() {
 //////////////////////////////////////////////////////////////////////////
 #define INCREMENT_DIRECTION_COUNTER() { \
 	data->doProcessEntity = false; \
-	if (data->direction == kDirectionRight || (data->direction == kDirectionSwitch && data->direction2 == kDirectionRight)) \
-		data->field_4A1++; \
+	if (data->direction == kDirectionRight || (data->direction == kDirectionSwitch && data->directionSwitch == kDirectionRight)) \
+		++data->field_4A1; \
 	}
 
 void Entities::processEntity(EntityIndex entityIndex) {
@@ -663,7 +675,6 @@ void Entities::processEntity(EntityIndex entityIndex) {
 		getScenes()->removeAndRedraw(&data->frame1, false);
 
 		INCREMENT_DIRECTION_COUNTER();
-
 		return;
 	}
 
@@ -671,7 +682,7 @@ void Entities::processEntity(EntityIndex entityIndex) {
 		getScenes()->removeAndRedraw(&data->frame1, false);
 
 		if (data->frame && data->frame->getInfo()->subType != kFrameType3) {
-			data->frame->getInfo()->subType = kFrameType2;
+			data->frame->getInfo()->subType = kFrameTypeNone;
 			getScenes()->setFlagDrawSequences();
 		}
 	}
@@ -698,51 +709,47 @@ label_nosequence:
 				return;
 			}
 		} else {
-			if (data->direction != kDirectionRight || data->field_4A1 <= 100) {
-
-				if (data->direction == kDirectionRight && data->field_4A1 > 100) {
-					getSavePoints()->push(kEntityNone, entityIndex, kActionExitCompartment);
-					getSavePoints()->process();
-				}
+			if (data->direction == kDirectionRight && data->field_4A1 > 100) {
+				getSavePoints()->push(kEntityNone, entityIndex, kActionExitCompartment);
+				getSavePoints()->process();
 
 				if (getFlags()->flag_entities_0 || !data->doProcessEntity)
 					return;
-
-				if (data->position) {
-					updatePosition(entityIndex, data->car2, data->position);
-					data->car2 = kCarNone;
-					data->position = 0;
-				}
-
-				INCREMENT_DIRECTION_COUNTER();
 			}
-		}
 
+			if (data->position) {
+				updatePosition(entityIndex, data->car2, data->position);
+				data->car2 = kCarNone;
+				data->position = 0;
+			}
+
+			INCREMENT_DIRECTION_COUNTER();
+		}
 		return;
 	}
 
 	if (!data->sequence2)
 		goto label_nosequence;
 
-	if (data->frame->getInfo()->field_30 > data->field_49B || (data->direction == kDirectionLeft && data->sequence2->count() == 1)) {
+	if (data->frame->getInfo()->field_30 > data->field_49B + 1 || (data->direction == kDirectionLeft && data->sequence2->count() == 1)) {
 		data->field_49B++;
 		INCREMENT_DIRECTION_COUNTER();
 		return;
 	}
 
-	if (data->frame->getInfo()->field_30 > data->field_49B && !data->frame->getInfo()->field_2F) {
+	if (data->frame->getInfo()->field_30 > data->field_49B && !data->frame->getInfo()->keepPreviousFrame) {
 		data->field_49B++;
 		INCREMENT_DIRECTION_COUNTER();
 		return;
 	}
 
-	if (data->frame->getInfo()->field_2F == 1)
+	if (data->frame->getInfo()->keepPreviousFrame == 1)
 		keepPreviousFrame = true;
 
 	// Increment current frame
-	data->currentFrame2++;
+	++data->currentFrame2;
 
-	if ((data->currentFrame2 + 1) > (int32)data->sequence2->count() || (data->field_4A9 && checkSequenceFromPosition(entityIndex))) {
+	if (data->currentFrame2 > (int32)(data->sequence2->count() - 1) || (data->field_4A9 && checkSequenceFromPosition(entityIndex))) {
 
 		if (data->direction == kDirectionLeft) {
 			data->currentFrame2 = 0;
@@ -1079,10 +1086,7 @@ void Entities::updateFrame(EntityIndex entityIndex, bool keepPreviousFrame, bool
 		getSavePoints()->push(kEntityNone, entityIndex, kAction10);
 		getSavePoints()->process();
 
-		if (getFlags()->flag_entities_0)
-			return;
-
-		if (data->doProcessEntity)
+		if (getFlags()->flag_entities_0 || data->doProcessEntity)
 			return;
 	}
 
@@ -1090,10 +1094,7 @@ void Entities::updateFrame(EntityIndex entityIndex, bool keepPreviousFrame, bool
 		getSavePoints()->push(kEntityNone, entityIndex, kAction4);
 		getSavePoints()->process();
 
-		if (getFlags()->flag_entities_0)
-			return;
-
-		if (data->doProcessEntity)
+		if (getFlags()->flag_entities_0 || data->doProcessEntity)
 			return;
 	}
 
@@ -1108,10 +1109,7 @@ void Entities::updateFrame(EntityIndex entityIndex, bool keepPreviousFrame, bool
 		data->position = info->position;
 		updatePosition(entityIndex, data->car2, data->position, true);
 
-		if (getFlags()->flag_entities_0)
-			return;
-
-		if (data->doProcessEntity)
+		if (getFlags()->flag_entities_0 || data->doProcessEntity)
 			return;
 	}
 
@@ -1155,12 +1153,20 @@ void Entities::drawNextSequence(EntityIndex entityIndex) {
 	if (getData(kEntityNone)->car != data->car)
 		return;
 
-	if ((data->field_4A9 && !checkFields25(entityIndex)) || (!data->field_4A9 && checkFields25(entityIndex))) {
+	if (!data->field_4A9 || checkFields25(entityIndex)) {
+		if (!data->field_4A9 && checkFields25(entityIndex)) {
+			data->entityPosition = kPosition_2088;
 
-		data->entityPosition = (!data->field_4A9 && checkFields25(entityIndex)) ? kPosition_2088 : kPosition_8514;
+			if (data->direction != kDirectionUp)
+				data->entityPosition = kPosition_8512;
+
+			drawSequencesInternal(entityIndex, data->direction, true);
+		}
+	} else {
+		data->entityPosition = kPosition_8514;
 
 		if (data->direction != kDirectionUp)
-			data->entityPosition = (!data->field_4A9 && checkFields25(entityIndex)) ? kPosition_8512 : kPosition_2086;
+			data->entityPosition = kPosition_2086;
 
 		drawSequencesInternal(entityIndex, data->direction, true);
 	}
@@ -1196,8 +1202,8 @@ void Entities::updateEntityPosition(EntityIndex entityIndex) {
 	data->sequenceName2 = "";
 	data->field_4A9 = 0;
 
-	if (data->direction2)
-		data->direction = data->direction2;
+	if (data->directionSwitch)
+		data->direction = data->directionSwitch;
 }
 
 void Entities::copySequenceData3To2(EntityIndex entityIndex) {
@@ -1210,14 +1216,14 @@ void Entities::copySequenceData3To2(EntityIndex entityIndex) {
 	data->sequenceName2 = data->sequenceName3;
 	data->field_4A9 = data->field_4AA;
 
-	if (data->direction2)
-		data->direction = data->direction2;
+	if (data->directionSwitch)
+		data->direction = data->directionSwitch;
 
 	// Clear sequence 3
 	data->sequence3 = NULL;
 	data->sequenceName3 = "";
 	data->field_4AA = 0;
-	data->direction2 = kDirectionNone;
+	data->directionSwitch = kDirectionNone;
 
 	if (data->field_4A9) {
 		computeCurrentFrame2(entityIndex);
@@ -1244,7 +1250,7 @@ void Entities::drawSequenceRight(EntityIndex index, const char* sequence) {
 	drawSequenceInternal(index, sequence, kDirectionRight);
 }
 
-void Entities::prepareSequences(EntityIndex entityIndex) {
+void Entities::clearSequences(EntityIndex entityIndex) {
 	debugC(8, kLastExpressDebugLogic, "Prepare sequences for entity %s", ENTITY_NAME(entityIndex));
 
 	EntityData::EntityCallData *data = getData(entityIndex);
@@ -1256,7 +1262,7 @@ void Entities::prepareSequences(EntityIndex entityIndex) {
 		SAFE_DELETE(data->sequence3);
 		data->sequenceName3 = "";
 		data->field_4AA = 0;
-		data->direction2 = kDirectionNone;
+		data->directionSwitch = kDirectionNone;
 	}
 
 	if (data->sequence2) {
@@ -1287,7 +1293,7 @@ void Entities::drawSequenceInternal(EntityIndex index, const char* sequence, Ent
 	drawSequencesInternal(index, direction, true);
 }
 
-void Entities::drawSequencesInternal(EntityIndex entityIndex, EntityDirection direction, bool unknown) {
+void Entities::drawSequencesInternal(EntityIndex entityIndex, EntityDirection direction, bool loadSequence) {
 	EntityData::EntityCallData *data = getData(entityIndex);
 
 	// Compute value for loading sequence depending on direction
@@ -1302,7 +1308,7 @@ void Entities::drawSequencesInternal(EntityIndex entityIndex, EntityDirection di
 		return;
 	}
 
-	data->direction2 = kDirectionNone;
+	data->directionSwitch = kDirectionNone;
 
 	// Process sequence names
 	Common::String sequenceName;
@@ -1326,7 +1332,7 @@ void Entities::drawSequencesInternal(EntityIndex entityIndex, EntityDirection di
 	if (direction == kDirectionLeft || direction == kDirectionRight) {
 		COMPUTE_SEQUENCE_NAME(sequenceName, sequenceName1);
 
-		if (sequenceName3 == "")
+		if (sequenceName3 != "")
 			COMPUTE_SEQUENCE_NAME(sequenceName3, sequenceName2);
 	}
 
@@ -1337,15 +1343,15 @@ void Entities::drawSequencesInternal(EntityIndex entityIndex, EntityDirection di
 			if (sequenceName2 == "")
 				return;
 
-			drawSequencesInternalSub(entityIndex, sequenceName2, sequenceName3, field30, unknown);
-			return;
+			loadSequence3(entityIndex, sequenceName2, sequenceName3, field30, loadSequence);
+			return;			
 		}
 
 		SAFE_DELETE(data->sequence2);
 
 		if (sequenceName1 != data->sequenceName3) {
 
-			if (unknown) {
+			if (loadSequence) {
 
 				if (data->car == getData(kEntityNone)->car)
 					data->sequence2 = loadSequence1(sequenceName1, field30);
@@ -1365,7 +1371,7 @@ void Entities::drawSequencesInternal(EntityIndex entityIndex, EntityDirection di
 			}
 
 			if (sequenceName2 != "") {
-				drawSequencesInternalSub(entityIndex, sequenceName2, sequenceName3, field30, unknown);
+				loadSequence3(entityIndex, sequenceName2, sequenceName3, field30, loadSequence);
 				return;
 			}
 
@@ -1373,7 +1379,7 @@ void Entities::drawSequencesInternal(EntityIndex entityIndex, EntityDirection di
 				if (sequenceName2 == "")
 					return;
 
-				drawSequencesInternalSub(entityIndex, sequenceName2, sequenceName3, field30, unknown);
+				loadSequence3(entityIndex, sequenceName2, sequenceName3, field30, loadSequence);
 				return;
 			}
 
@@ -1389,29 +1395,15 @@ void Entities::drawSequencesInternal(EntityIndex entityIndex, EntityDirection di
 		if (sequenceName2 == "")
 			return;
 
-		drawSequencesInternalSub(entityIndex, sequenceName2, sequenceName3, field30, unknown);
+		loadSequence3(entityIndex, sequenceName2, sequenceName3, field30, loadSequence);
 		return;
 	}
 
-	if (data->sequenceName2 == sequenceName1) {
+	if (data->sequenceName2 != sequenceName1) {
 
-		if (data->sequenceName3 == sequenceName1) {
+		if (data->sequenceName3 != sequenceName1) {
 			SAFE_DELETE(data->sequence3);
-
-			if (getData(kEntityNone)->car == data->car)
-				data->sequence3 = loadSequence1(sequenceName1, field30);
-
-			if (data->sequence3) {
-				data->sequenceName3 = sequenceName1;
-			} else {
-				if (sequenceName != "")
-					data->sequence3 = loadSequence1(sequenceName, field30);
-
-				if (data->sequence3)
-					data->sequenceName3 = sequenceName;
-				else
-					data->sequenceName3 = "";
-			}
+			TRY_LOAD_SEQUENCE(data->sequence3, data->sequenceName3, sequenceName1, sequenceName);
 		}
 
 		data->field_4AA = data->field_4A9;
@@ -1421,7 +1413,7 @@ void Entities::drawSequencesInternal(EntityIndex entityIndex, EntityDirection di
 			data->currentFrame3 = getCurrentFrame2(entityIndex, data->sequence3, kPositionNone, false);
 
 			if (data->currentFrame3 == -1) {
-				prepareSequences(entityIndex);
+				clearSequences(entityIndex);
 				return;
 			}
 		}
@@ -1430,7 +1422,7 @@ void Entities::drawSequencesInternal(EntityIndex entityIndex, EntityDirection di
 		data->field_49B = data->frame->getInfo()->field_30;
 		data->currentFrame2 = data->sequence2->count() - 1;
 		data->direction = kDirectionSwitch;
-		data->direction2 = direction;
+		data->directionSwitch = direction;
 	} else {
 		SAFE_DELETE(data->sequence3);
 
@@ -1441,20 +1433,20 @@ void Entities::drawSequencesInternal(EntityIndex entityIndex, EntityDirection di
 		data->field_49B = data->frame->getInfo()->field_30;
 		data->currentFrame2 = data->sequence2->count() - 1;
 		data->direction = kDirectionSwitch;
-		data->direction2 = direction;
+		data->directionSwitch = direction;
 
-		if ((direction != kDirectionUp && direction != kDirectionDown) || data->field_4AA || !data->currentFrame3) {
+		if (direction != kDirectionUp && direction != kDirectionDown || data->field_4AA || !data->sequence3) {
 			data->currentFrame3 = 0;
 		} else {
 			data->currentFrame3 = getCurrentFrame2(entityIndex, data->sequence3, kPositionNone, false);
 
 			if (data->currentFrame3 == -1)
-				prepareSequences(entityIndex);
+				clearSequences(entityIndex);
 		}
 	}
 }
 
-void Entities::drawSequencesInternalSub(EntityIndex entityIndex, Common::String sequenceName, Common::String sequenceName2, int16 field30, bool unknown) {
+void Entities::loadSequence3(EntityIndex entityIndex, Common::String sequenceName, Common::String sequenceName2, int16 field30, bool reloadSequence) {
 	EntityData::EntityCallData *data = getData(entityIndex);
 
 	if (data->sequenceName3 == sequenceName)
@@ -1463,19 +1455,8 @@ void Entities::drawSequencesInternalSub(EntityIndex entityIndex, Common::String 
 	if (data->sequence3)
 		SAFE_DELETE(data->sequence3);
 
-	if (unknown) {
-
-		if (data->car == getData(kEntityNone)->car)
-			data->sequence3 = loadSequence1(sequenceName, field30);
-
-		if (data->sequence3) {
-			data->sequenceName3 = sequenceName;
-		} else {
-			if (sequenceName2 != "")
-				data->sequence3 = loadSequence1(sequenceName2, field30);
-
-			data->sequenceName3 = (data->sequence3 ? sequenceName2 : "");
-		}
+	if (reloadSequence) {
+		TRY_LOAD_SEQUENCE(data->sequence3, data->sequenceName3, sequenceName, sequenceName2);
 	} else {
 		data->sequenceName3 = sequenceName;
 	}
@@ -2683,7 +2664,7 @@ void Entities::clearEntitySequenceData(EntityData::EntityCallData * data, Entity
 
 	data->field_4A9 = 0;
 	data->field_4AA = 0;
-	data->direction2 = kDirectionNone;
+	data->directionSwitch = kDirectionNone;
 
 	data->currentFrame2 = -1;
 	data->currentFrame3 = 0;

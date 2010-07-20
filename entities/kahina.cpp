@@ -189,7 +189,7 @@ IMPLEMENT_FUNCTION(Kahina, chapter2, 16)
 		break;
 
 	case kActionDefault:
-		getEntities()->prepareSequences(kEntityKahina);
+		getEntities()->clearSequences(kEntityKahina);
 
 		getData()->entityPosition = kPosition_6000;
 		getData()->field_493 = kField493_0;
@@ -217,7 +217,7 @@ IMPLEMENT_FUNCTION(Kahina, chapter3, 18)
 		break;
 
 	case kActionDefault:
-		getEntities()->prepareSequences(kEntityKahina);
+		getEntities()->clearSequences(kEntityKahina);
 
 		getData()->entityPosition = kPosition_5000;
 		getData()->field_493 = kField493_0;
@@ -295,12 +295,12 @@ IMPLEMENT_FUNCTION(Kahina, function27, 27)
 
 IMPLEMENT_FUNCTION(Kahina, chapter4, 28)
 	if (savepoint.action == kActionDefault)
-		getEntities()->prepareSequences(kEntityKahina);
+		getEntities()->clearSequences(kEntityKahina);
 }
 
 IMPLEMENT_FUNCTION(Kahina, chapter5, 29)
 	if (savepoint.action == kActionDefault)
-		getEntities()->prepareSequences(kEntityKahina);
+		getEntities()->clearSequences(kEntityKahina);
 }
 
 } // End of namespace LastExpress

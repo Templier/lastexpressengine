@@ -372,7 +372,7 @@ label_process:
 			if (getEntityData(kEntityNone)->car != params->param1 || isDay() != (bool)(params->param2 > 0)) {
 				switch (getEntityData(kEntityNone)->car) {
 				default:
-					getEntities()->prepareSequences(kEntityTrain);
+					getEntities()->clearSequences(kEntityTrain);
 					break;
 
 				case kCarBaggageRear:
@@ -468,7 +468,7 @@ label_process:
 
 	case kActionTrainStopRunning:
 		params->param3 = 0;
-		getEntities()->prepareSequences(kEntityTrain);
+		getEntities()->clearSequences(kEntityTrain);
 		break;
 
 	case kAction202613084:

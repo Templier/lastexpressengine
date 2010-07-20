@@ -133,7 +133,7 @@ IMPLEMENT_FUNCTION(Salko, chapter1_handler, 10)
 
 	case kActionCallback:
 		if (getCallback() == 1) {
-			getEntities()->prepareSequences(kEntitySalko);
+			getEntities()->clearSequences(kEntitySalko);
 			setup_function8();
 		}
 		break;
@@ -151,7 +151,7 @@ IMPLEMENT_FUNCTION(Salko, function11, 11)
 		getData()->field_493 = kField493_1;
 		getData()->car = kCarRedSleeping;
 
-		getEntities()->prepareSequences(kEntitySalko);
+		getEntities()->clearSequences(kEntitySalko);
 		getObjects()->update(kObjectCompartmentH, kEntityNone, kLocation3, kCursorHandKnock, kCursorHand);
 	}
 }
@@ -162,7 +162,7 @@ IMPLEMENT_FUNCTION(Salko, chapter2, 12)
 		break;
 
 	case kActionDefault:
-		getEntities()->prepareSequences(kEntitySalko);
+		getEntities()->clearSequences(kEntitySalko);
 
 		getData()->entityPosition = kPosition_2740;
 		getData()->field_493 = kField493_1;
@@ -200,7 +200,7 @@ IMPLEMENT_FUNCTION(Salko, function13, 13)
 
 		case 2:
 			getSavePoints()->push(kEntitySalko, kEntityIvo, kAction102675536);
-			getEntities()->prepareSequences(kEntitySalko);
+			getEntities()->clearSequences(kEntitySalko);
 			break;
 
 		case 3:
@@ -229,7 +229,7 @@ IMPLEMENT_FUNCTION(Salko, chapter3, 14)
 		break;
 
 	case kActionDefault:
-		getEntities()->prepareSequences(kEntitySalko);
+		getEntities()->clearSequences(kEntitySalko);
 
 		getData()->entityPosition = kPosition_2740;
 		getData()->field_493 = kField493_1;
@@ -292,7 +292,7 @@ IMPLEMENT_FUNCTION(Salko, function17, 17)
 			break;
 
 		case 2:
-			getEntities()->prepareSequences(kEntitySalko);
+			getEntities()->clearSequences(kEntitySalko);
 			getData()->entityPosition = kPosition_2740;
 			getData()->field_493 = kField493_1;
 			getSavePoints()->push(kEntitySalko, kEntityMilos, kAction157691176);
@@ -314,7 +314,7 @@ IMPLEMENT_FUNCTION(Salko, chapter4, 18)
 		break;
 
 	case kActionDefault:
-		getEntities()->prepareSequences(kEntitySalko);
+		getEntities()->clearSequences(kEntitySalko);
 
 		getData()->entityPosition = kPosition_5420;
 		getData()->field_493 = kField493_1;
@@ -366,7 +366,7 @@ IMPLEMENT_FUNCTION(Salko, function20, 20)
 			break;
 
 		case 2:
-			getEntities()->prepareSequences(kEntitySalko);
+			getEntities()->clearSequences(kEntitySalko);
 			setup_function21();
 			break;
 		}
@@ -409,7 +409,7 @@ IMPLEMENT_FUNCTION(Salko, function21, 21)
 
 IMPLEMENT_FUNCTION(Salko, function22, 22)
 	if (savepoint.action == kActionDefault) {
-		getEntities()->prepareSequences(kEntitySalko);
+		getEntities()->clearSequences(kEntitySalko);
 		getObjects()->update(kObjectCompartmentH, kEntityNone, kLocation3, kCursorHandKnock, kCursorHand);
 
 		getData()->entityPosition = kPosition_2740;
@@ -429,7 +429,7 @@ IMPLEMENT_FUNCTION(Salko, chapter5, 23)
 		break;
 
 	case kActionDefault:
-		getEntities()->prepareSequences(kEntitySalko);
+		getEntities()->clearSequences(kEntitySalko);
 
 		getData()->entityPosition = kPosition_9460;
 		getData()->field_493 = kField493_1;

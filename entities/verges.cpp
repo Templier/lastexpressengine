@@ -196,7 +196,7 @@ switch (savepoint.action) {
 			break;
 
 		case 4:
-			getEntities()->prepareSequences(kEntityVerges);
+			getEntities()->clearSequences(kEntityVerges);
 
 			setCallback(5);
 			call(new ENTITY_SETUP(Verges, setup_updateFromTime), 225);
@@ -475,7 +475,7 @@ label_callback15:
 		getData()->entityPosition = kPosition_5000;
 		getData()->field_493 = kField493_0;
 
-		getEntities()->prepareSequences(kEntityVerges);
+		getEntities()->clearSequences(kEntityVerges);
 		getInventory()->setLocationAndProcess(kItem9, kLocation1);
 		break;
 
@@ -556,7 +556,7 @@ IMPLEMENT_FUNCTION(Verges, chapter2, 27)
 		break;
 
 	case kActionDefault:
-		getEntities()->prepareSequences(kEntityVerges);
+		getEntities()->clearSequences(kEntityVerges);
 
 		getData()->entityPosition = kPosition_5000;
 		getData()->field_493 = kField493_0;
@@ -585,7 +585,7 @@ IMPLEMENT_FUNCTION(Verges, chapter3, 29)
 		break;
 
 	case kActionDefault:
-		getEntities()->prepareSequences(kEntityVerges);
+		getEntities()->clearSequences(kEntityVerges);
 
 		getData()->entityPosition = kPosition_540;
 		getData()->field_493 = kField493_0;
@@ -673,7 +673,7 @@ IMPLEMENT_FUNCTION(Verges, chapter4, 36)
 		break;
 
 	case kActionDefault:
-		getEntities()->prepareSequences(kEntityVerges);
+		getEntities()->clearSequences(kEntityVerges);
 
 		getData()->entityPosition = kPosition_5000;
 		getData()->field_493 = kField493_0;
@@ -708,7 +708,7 @@ IMPLEMENT_FUNCTION(Verges, chapter5, 39)
 		break;
 
 	case kActionDefault:
-		getEntities()->prepareSequences(kEntityVerges);
+		getEntities()->clearSequences(kEntityVerges);
 
 		getData()->entityPosition = kPosition_3650;
 		getData()->field_493 = kField493_1;
@@ -732,7 +732,7 @@ IMPLEMENT_FUNCTION(Verges, function41, 41)
 
 IMPLEMENT_FUNCTION(Verges, function42, 42)
 	if (savepoint.action == kActionDefault)
-		getEntities()->prepareSequences(kEntityVerges);
+		getEntities()->clearSequences(kEntityVerges);
 }
 
 } // End of namespace LastExpress

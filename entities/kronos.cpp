@@ -174,7 +174,7 @@ IMPLEMENT_FUNCTION(Kronos, function10, 10)
 		getData()->field_493 = kField493_0;
 		getData()->car = kCarKronos;
 
-		getEntities()->prepareSequences(kEntityKronos);
+		getEntities()->clearSequences(kEntityKronos);
 		break;
 	}
 }
@@ -200,7 +200,7 @@ IMPLEMENT_FUNCTION(Kronos, function11, 11)
 
 IMPLEMENT_FUNCTION(Kronos, chapter2, 12)
 	if (savepoint.action == kActionDefault)
-		getEntities()->prepareSequences(kEntityKronos);
+		getEntities()->clearSequences(kEntityKronos);
 }
 
 IMPLEMENT_FUNCTION(Kronos, chapter3, 13)
@@ -213,7 +213,7 @@ IMPLEMENT_FUNCTION(Kronos, chapter3, 13)
 		break;
 
 	case kActionDefault:
-		getEntities()->prepareSequences(kEntityKronos);
+		getEntities()->clearSequences(kEntityKronos);
 
 		getData()->entityPosition = kPosition_6000;
 		getData()->field_493 = kField493_0;
@@ -362,12 +362,12 @@ IMPLEMENT_FUNCTION(Kronos, function23, 23)
 
 IMPLEMENT_FUNCTION(Kronos, chapter4, 24)
 	if (savepoint.action == kActionDefault)
-		getEntities()->prepareSequences(kEntityKronos);
+		getEntities()->clearSequences(kEntityKronos);
 }
 
 IMPLEMENT_FUNCTION(Kronos, chapter5, 25)
 	if (savepoint.action == kActionDefault)
-		getEntities()->prepareSequences(kEntityKronos);
+		getEntities()->clearSequences(kEntityKronos);
 }
 
 } // End of namespace LastExpress

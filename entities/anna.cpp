@@ -395,7 +395,7 @@ IMPLEMENT_FUNCTION(Anna, chapter1_handler, 19)
 			break;
 
 		case 3:
-			getEntities()->prepareSequences(kEntityAnna);
+			getEntities()->clearSequences(kEntityAnna);
 			getData()->entityPosition = kPosition_4070;
 			getData()->field_493 = kField493_1;
 
@@ -573,7 +573,7 @@ IMPLEMENT_FUNCTION(Anna, function32, 32)
 			break;
 
 		case 2:
-			getEntities()->prepareSequences(kEntityAnna);
+			getEntities()->clearSequences(kEntityAnna);
 
 			getData()->entityPosition = kPosition_4070;
 			getData()->field_493 = kField493_1;
@@ -642,7 +642,7 @@ IMPLEMENT_FUNCTION(Anna, function36, 36)
 		case 2:
 			getObjects()->update(kObjectCompartmentA, kEntityNone, kLocation2, kCursorKeepValue, kCursorKeepValue);
 			getData()->field_493 = kField493_1;
-			getEntities()->prepareSequences(kEntityAnna);
+			getEntities()->clearSequences(kEntityAnna);
 
 			setup_function37();
 			break;
@@ -711,7 +711,7 @@ IMPLEMENT_FUNCTION(Anna, chapter2, 42)
 		break;
 
 	case kActionDefault:
-		getEntities()->prepareSequences(kEntityAnna);
+		getEntities()->clearSequences(kEntityAnna);
 
 		getData()->entityPosition = kPosition_4070;
 		getData()->field_493 = kField493_1;
@@ -737,7 +737,7 @@ IMPLEMENT_FUNCTION(Anna, chapter3, 44)
 		break;
 
 	case kActionDefault:
-		getEntities()->prepareSequences(kEntityAnna);
+		getEntities()->clearSequences(kEntityAnna);
 
 		getData()->entityPosition = kPosition_4070;
 		getData()->field_493 = kField493_1;
@@ -798,7 +798,7 @@ IMPLEMENT_FUNCTION(Anna, leaveTableWithAugust, 49)
 
 	case kActionExitCompartment:
 		getSavePoints()->push(kEntityAnna, kEntityTables3, kAction103798704, "010M");
-		getEntities()->prepareSequences(kEntityAugust);
+		getEntities()->clearSequences(kEntityAugust);
 
 		CALLBACK_ACTION();
 		break;
@@ -868,7 +868,7 @@ IMPLEMENT_FUNCTION(Anna, function56, 56)
 		break;
 
 	case kActionDefault:
-		getEntities()->prepareSequences(kEntityAnna);
+		getEntities()->clearSequences(kEntityAnna);
 		getData()->entityPosition = kPosition_6000;
 		getData()->field_493 = kField493_1;
 		getData()->car = kCarKronos;
@@ -897,7 +897,7 @@ IMPLEMENT_FUNCTION(Anna, function58, 58)
 	case kActionCallback:
 		if (getCallback() == 1) {
 			getAction()->playAnimation(kEventAnnaSearchingCompartment);
-			getEntities()->prepareSequences(kEntityAnna);
+			getEntities()->clearSequences(kEntityAnna);
 			getScenes()->loadSceneFromPosition(kCarRedSleeping, 8);
 			getSound()->playSound(kEntityAnna, "lib015");
 			getSavePoints()->push(kEntityAnna, kEntityAugust, kAction122288808);
@@ -1000,7 +1000,7 @@ IMPLEMENT_FUNCTION(Anna, chapter4, 66)
 		break;
 
 	case kActionDefault:
-		getEntities()->prepareSequences(kEntityAnna);
+		getEntities()->clearSequences(kEntityAnna);
 
 		getData()->entityPosition = kPosition_4070;
 		getData()->field_493 = kField493_1;
@@ -1074,7 +1074,7 @@ IMPLEMENT_FUNCTION(Anna, function70, 70)
 
 		case 2:
 			getData()->field_493 = kField493_0;
-			getEntities()->prepareSequences(kEntityAnna);
+			getEntities()->clearSequences(kEntityAnna);
 			setup_function73();
 			break;
 		}
@@ -1104,7 +1104,7 @@ IMPLEMENT_FUNCTION(Anna, chapter5, 74)
 		break;
 
 	case kActionDefault:
-		getEntities()->prepareSequences(kEntityAnna);
+		getEntities()->clearSequences(kEntityAnna);
 
 		getData()->entityPosition = kPosition_3969;
 		getData()->field_493 = kField493_1;

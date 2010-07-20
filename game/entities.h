@@ -85,7 +85,7 @@ public:
 	// Sequences
 	void drawSequenceLeft(EntityIndex index, const char* sequence);
 	void drawSequenceRight(EntityIndex index, const char* sequence);
-	void prepareSequences(EntityIndex index);
+	void clearSequences(EntityIndex index);
 
 	bool hasValidFrame(EntityIndex entity) const;
 
@@ -162,8 +162,8 @@ private:
 	void processEntity(EntityIndex entity);
 
 	void drawSequenceInternal(EntityIndex entity, const char* sequence, EntityDirection direction);
-	void drawSequencesInternal(EntityIndex entity, EntityDirection direction, bool unknown);
-	void drawSequencesInternalSub(EntityIndex entityIndex, Common::String sequenceName, Common::String sequenceName2, int16 field30, bool unknown);
+	void drawSequencesInternal(EntityIndex entity, EntityDirection direction, bool loadSequence);
+	void loadSequence3(EntityIndex entityIndex, Common::String sequenceName, Common::String sequenceName2, int16 field30, bool loadSequence);
 
 	void clearEntitySequenceData(EntityData::EntityCallData * data, EntityDirection direction);
 	void computeCurrentFrame2(EntityIndex entityIndex);

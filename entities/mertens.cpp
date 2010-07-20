@@ -367,7 +367,7 @@ IMPLEMENT_FUNCTION(Mertens, function17, 17)
 			break;
 
 		case 1:
-			getEntities()->prepareSequences(kEntityMertens);
+			getEntities()->clearSequences(kEntityMertens);
 			ENTITY_PARAM(2, 1) = 1;
 			setCallback(2);
 			call(new ENTITY_SETUP(Mertens, setup_function11), 75);
@@ -586,7 +586,7 @@ IMPLEMENT_FUNCTION(Mertens, chapter2, 43)
 		break;
 
 	case kActionDefault:
-		getEntities()->prepareSequences(kEntityMertens);
+		getEntities()->clearSequences(kEntityMertens);
 
 		getData()->entityPosition = kPosition_1500;
 		getData()->field_493 = kField493_0;
@@ -668,7 +668,7 @@ IMPLEMENT_FUNCTION(Mertens, chapter4, 47)
 		break;
 
 	case kActionDefault:
-		getEntities()->prepareSequences(kEntityMertens);
+		getEntities()->clearSequences(kEntityMertens);
 
 		getData()->entityPosition = kPosition_1500;
 		getData()->field_493 = kField493_0;
@@ -714,7 +714,7 @@ IMPLEMENT_FUNCTION(Mertens, chapter5, 50)
 		break;
 
 	case kActionDefault:
-		getEntities()->prepareSequences(kEntityMertens);
+		getEntities()->clearSequences(kEntityMertens);
 
 		getData()->entityPosition = kPosition_3969;
 		getData()->field_493 = kField493_1;

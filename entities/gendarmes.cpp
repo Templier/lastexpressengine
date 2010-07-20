@@ -357,7 +357,7 @@ IMPLEMENT_FUNCTION(Gendarmes, function12, 12)
 		case 9:
 			if (getEntityData(kEntityNone)->car == kCarGreenSleeping) {
 				getProgress().field_14 = 0;
-				getEntities()->prepareSequences(kEntityGendarmes);
+				getEntities()->clearSequences(kEntityGendarmes);
 				getSavePoints()->push(kEntityGendarmes, kEntityVerges, kAction168710784);
 				setup_function13();
 				break;
@@ -439,7 +439,7 @@ IMPLEMENT_FUNCTION(Gendarmes, function12, 12)
 
 		case 24:
 			getProgress().field_14 = 0;
-			getEntities()->prepareSequences(kEntityGendarmes);
+			getEntities()->clearSequences(kEntityGendarmes);
 			getSavePoints()->push(kEntityGendarmes, kEntityVerges, kAction168710784);
 			setup_function13();
 			break;
@@ -455,22 +455,22 @@ IMPLEMENT_FUNCTION(Gendarmes, function13, 13)
 
 IMPLEMENT_FUNCTION(Gendarmes, chapter2, 14)
 	if (savepoint.action == kActionDefault)
-		getEntities()->prepareSequences(kEntityGendarmes);
+		getEntities()->clearSequences(kEntityGendarmes);
 }
 
 IMPLEMENT_FUNCTION(Gendarmes, chapter3, 15)
 	if (savepoint.action == kActionDefault)
-		getEntities()->prepareSequences(kEntityGendarmes);
+		getEntities()->clearSequences(kEntityGendarmes);
 }
 
 IMPLEMENT_FUNCTION(Gendarmes, chapter4, 16)
 	if (savepoint.action == kActionDefault)
-		getEntities()->prepareSequences(kEntityGendarmes);
+		getEntities()->clearSequences(kEntityGendarmes);
 }
 
 IMPLEMENT_FUNCTION(Gendarmes, chapter5, 17)
 	if (savepoint.action == kActionDefault)
-		getEntities()->prepareSequences(kEntityGendarmes);
+		getEntities()->clearSequences(kEntityGendarmes);
 }
 
 void Gendarmes::arrest(const SavePoint &savepoint, bool shouldPlaySound, int a3) {

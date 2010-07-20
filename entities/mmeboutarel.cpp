@@ -165,7 +165,7 @@ IMPLEMENT_FUNCTION(MmeBoutarel, chapter1_handler, 12)
 		case 3:
 			getData()->field_493 = kField493_1;
 			params->param1 = 1;
-			getEntities()->prepareSequences(kEntityMmeBoutarel);
+			getEntities()->clearSequences(kEntityMmeBoutarel);
 			setup_function13();
 			break;
 		}
@@ -226,7 +226,7 @@ IMPLEMENT_FUNCTION(MmeBoutarel, function16, 16)
 		getObjects()->update(kObjectCompartmentD, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
 		getObjects()->update(kObject51, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
 
-		getEntities()->prepareSequences(kEntityMmeBoutarel);
+		getEntities()->clearSequences(kEntityMmeBoutarel);
 	}
 }
 
@@ -240,7 +240,7 @@ IMPLEMENT_FUNCTION(MmeBoutarel, chapter2, 17)
 		break;
 
 	case kActionDefault:
-		getEntities()->prepareSequences(kEntityMmeBoutarel);
+		getEntities()->clearSequences(kEntityMmeBoutarel);
 
 		getData()->entityPosition = kPosition_4689;
 		getData()->field_493 = kField493_1;
@@ -274,7 +274,7 @@ IMPLEMENT_FUNCTION(MmeBoutarel, chapter3, 20)
 		break;
 
 	case kActionDefault:
-		getEntities()->prepareSequences(kEntityMmeBoutarel);
+		getEntities()->clearSequences(kEntityMmeBoutarel);
 
 		getData()->entityPosition = kPosition_5790;
 		getData()->field_493 = kField493_1;
@@ -299,7 +299,7 @@ IMPLEMENT_FUNCTION(MmeBoutarel, chapter4, 22)
 		break;
 
 	case kActionDefault:
-		getEntities()->prepareSequences(kEntityMmeBoutarel);
+		getEntities()->clearSequences(kEntityMmeBoutarel);
 
 		getData()->entityPosition = kPosition_5790;
 		getData()->field_493 = kField493_1;
@@ -320,7 +320,7 @@ IMPLEMENT_FUNCTION(MmeBoutarel, function24, 24)
 
 IMPLEMENT_FUNCTION(MmeBoutarel, function25, 25)
 	if (savepoint.action == kActionDefault) {
-		getEntities()->prepareSequences(kEntityMmeBoutarel);
+		getEntities()->clearSequences(kEntityMmeBoutarel);
 
 		getData()->entityPosition = kPosition_5790;
 		getData()->field_493 = kField493_1;
@@ -341,7 +341,7 @@ IMPLEMENT_FUNCTION(MmeBoutarel, chapter5, 26)
 		break;
 
 	case kActionDefault:
-		getEntities()->prepareSequences(kEntityMmeBoutarel);
+		getEntities()->clearSequences(kEntityMmeBoutarel);
 
 		getData()->entityPosition = kPosition_3969;
 		getData()->field_493 = kField493_1;

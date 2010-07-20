@@ -126,7 +126,7 @@ IMPLEMENT_FUNCTION(Yasmin, function6, 6)
 
 		case 3:
 			getData()->field_493 = kField493_1;
-			getEntities()->prepareSequences(kEntityYasmin);
+			getEntities()->clearSequences(kEntityYasmin);
 
 			CALLBACK_ACTION()
 			break;
@@ -165,7 +165,7 @@ IMPLEMENT_FUNCTION(Yasmin, function7, 7)
 
 		case 3:
 			getData()->field_493 = kField493_1;
-			getEntities()->prepareSequences(kEntityYasmin);
+			getEntities()->clearSequences(kEntityYasmin);
 
 			CALLBACK_ACTION()
 			break;
@@ -247,13 +247,13 @@ IMPLEMENT_FUNCTION(Yasmin, function10, 10)
 		getData()->field_493 = kField493_1;
 		getData()->car = kCarGreenSleeping;
 
-		getEntities()->prepareSequences(kEntityYasmin);
+		getEntities()->clearSequences(kEntityYasmin);
 	}
 }
 
 IMPLEMENT_FUNCTION(Yasmin, chapter2, 11)
 	if (savepoint.action == kActionDefault) {
-		getEntities()->prepareSequences(kEntityYasmin);
+		getEntities()->clearSequences(kEntityYasmin);
 
 		getData()->entityPosition = kPosition_3050;
 		getData()->field_493 = kField493_1;
@@ -307,7 +307,7 @@ IMPLEMENT_FUNCTION(Yasmin, chapter3, 13)
 		break;
 
 	case kActionDefault:
-		getEntities()->prepareSequences(kEntityYasmin);
+		getEntities()->clearSequences(kEntityYasmin);
 
 		getData()->entityPosition = kPosition_3050;
 		getData()->field_493 = kField493_1;
@@ -405,7 +405,7 @@ IMPLEMENT_FUNCTION(Yasmin, chapter5, 18)
 		break;
 
 	case kActionDefault:
-		getEntities()->prepareSequences(kEntityYasmin);
+		getEntities()->clearSequences(kEntityYasmin);
 
 		getData()->entityPosition = kPosition_3969;
 		getData()->field_493 = kField493_1;

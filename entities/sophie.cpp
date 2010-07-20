@@ -44,7 +44,7 @@ namespace LastExpress {
 		setup_chapters_handler(); \
 		break; \
 	case kActionDefault: \
-		getEntities()->prepareSequences(kEntitySophie); \
+		getEntities()->clearSequences(kEntitySophie); \
 		getData()->entityPosition = kPosition_4840; \
 		getData()->field_493 = kField493_1; \
 		getData()->car = kCarRedSleeping; \
@@ -58,7 +58,7 @@ namespace LastExpress {
 		getData()->entityPosition = kPosition_4840; \
 		getData()->field_493 = kField493_1; \
 		getData()->car = kCarRedSleeping; \
-		getEntities()->prepareSequences(kEntitySophie); \
+		getEntities()->clearSequences(kEntitySophie); \
 	}
 
 Sophie::Sophie(LastExpressEngine *engine) : Entity(engine, kEntitySophie) {
@@ -150,7 +150,7 @@ IMPLEMENT_FUNCTION(Sophie, chapters_handler, 3)
 			break;
 
 		case 1:
-			getEntities()->prepareSequences(kEntitySophie);
+			getEntities()->clearSequences(kEntitySophie);
 			break;
 
 		case 2:
@@ -158,7 +158,7 @@ IMPLEMENT_FUNCTION(Sophie, chapters_handler, 3)
 			break;
 
 		case 3:
-			getEntities()->prepareSequences(kEntitySophie);
+			getEntities()->clearSequences(kEntitySophie);
 			break;
 
 		case 4:
@@ -259,7 +259,7 @@ IMPLEMENT_FUNCTION(Sophie, chapter5, 10)
 		break;
 
 	case kActionDefault:
-		getEntities()->prepareSequences(kEntitySophie);
+		getEntities()->clearSequences(kEntitySophie);
 
 		getData()->entityPosition = kPosition_3969;
 		getData()->field_493 = kField493_1;

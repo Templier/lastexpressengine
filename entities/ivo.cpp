@@ -129,7 +129,7 @@ IMPLEMENT_FUNCTION(Ivo, sitAtTableWithSalko, 12)
 		break;
 
 	case kActionExitCompartment:
-		getEntities()->prepareSequences(kEntitySalko);
+		getEntities()->clearSequences(kEntitySalko);
 		getSavePoints()->push(kEntityIvo, kEntityTables2, kAction136455232);
 
 		CALLBACK_ACTION();
@@ -150,7 +150,7 @@ IMPLEMENT_FUNCTION(Ivo, leaveTableWithSalko, 13)
 
 	case kActionExitCompartment:
 		getSavePoints()->push(kEntityIvo, kEntityTables2, kAction103798704, "009E");
-		getEntities()->prepareSequences(kEntitySalko);
+		getEntities()->clearSequences(kEntitySalko);
 
 		CALLBACK_ACTION();
 		break;
@@ -228,7 +228,7 @@ IMPLEMENT_FUNCTION(Ivo, function17, 17)
 		getData()->field_493 = kField493_1;
 		getData()->car = kCarRedSleeping;
 
-		getEntities()->prepareSequences(kEntityIvo);
+		getEntities()->clearSequences(kEntityIvo);
 		getObjects()->update(kObjectCompartmentH, kEntityNone, kLocation3, kCursorHandKnock, kCursorHand);
 	}
 }
@@ -243,7 +243,7 @@ IMPLEMENT_FUNCTION(Ivo, chapter2, 18)
 		break;
 
 	case kActionDefault:
-		getEntities()->prepareSequences(kEntityIvo);
+		getEntities()->clearSequences(kEntityIvo);
 
 		getData()->entityPosition = kPosition_2740;
 		getData()->field_493 = kField493_1;
@@ -286,7 +286,7 @@ IMPLEMENT_FUNCTION(Ivo, chapter3, 22)
 		break;
 
 	case kActionDefault:
-		getEntities()->prepareSequences(kEntityIvo);
+		getEntities()->clearSequences(kEntityIvo);
 
 		getData()->entityPosition = kPosition_2740;
 		getData()->field_493 = kField493_1;
@@ -398,7 +398,7 @@ IMPLEMENT_FUNCTION(Ivo, function28, 28)
 
 IMPLEMENT_FUNCTION(Ivo, function29, 29)
 	if (savepoint.action == kActionDefault) {
-		getEntities()->prepareSequences(kEntityIvo);
+		getEntities()->clearSequences(kEntityIvo);
 		getObjects()->update(kObjectCompartmentH, kEntityNone, kLocation3, kCursorHandKnock, kCursorHand);
 
 		getData()->entityPosition = kPosition_2740;
@@ -418,7 +418,7 @@ IMPLEMENT_FUNCTION(Ivo, chapter5, 30)
 		break;
 
 	case kActionDefault:
-		getEntities()->prepareSequences(kEntityIvo);
+		getEntities()->clearSequences(kEntityIvo);
 
 		getData()->entityPosition = kPosition_540;
 		getData()->field_493 = kField493_1;
@@ -464,7 +464,7 @@ IMPLEMENT_FUNCTION(Ivo, function33, 33)
 
 IMPLEMENT_FUNCTION(Ivo, function34, 34)
 	if (savepoint.action == kActionDefault)
-		getEntities()->prepareSequences(kEntityIvo);
+		getEntities()->clearSequences(kEntityIvo);
 }
 
 } // End of namespace LastExpress

@@ -60,7 +60,7 @@ void FrameInfo::read(Common::SeekableReadStream *in, bool isSequence) {
 
 	// Sequence information
 	field_2E = in->readByte();
-	field_2F = in->readByte();
+	keepPreviousFrame = in->readByte();
 	field_30 = in->readByte();
 	field_31 = in->readByte();
 	soundAction = in->readByte();

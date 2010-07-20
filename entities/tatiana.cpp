@@ -305,7 +305,7 @@ IMPLEMENT_FUNCTION(Tatiana, function24, 24)
 
 		getEntities()->updatePosition(kEntityTatiana, kCarGreenSleeping, 70);
 		getEntities()->updatePosition(kEntityTatiana, kCarGreenSleeping, 71);
-		getEntities()->prepareSequences(kEntityTatiana);
+		getEntities()->clearSequences(kEntityTatiana);
 
 		getObjects()->update(kObjectCompartmentB, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
 		getObjects()->update(kObject49, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
@@ -323,7 +323,7 @@ IMPLEMENT_FUNCTION(Tatiana, chapter2, 25)
 		break;
 
 	case kActionDefault:
-		getEntities()->prepareSequences(kEntityTatiana);
+		getEntities()->clearSequences(kEntityTatiana);
 
 		getObjects()->update(kObjectCompartmentB, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
 		getObjects()->update(kObject49, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
@@ -392,7 +392,7 @@ IMPLEMENT_FUNCTION(Tatiana, chapter3, 31)
 		break;
 
 	case kActionDefault:
-		getEntities()->prepareSequences(kEntityTatiana);
+		getEntities()->clearSequences(kEntityTatiana);
 
 		getObjects()->update(kObjectCompartmentB, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
 		getObjects()->update(kObject49, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
@@ -423,7 +423,7 @@ IMPLEMENT_FUNCTION(Tatiana, function33, 33)
 		break;
 
 	case kActionDefault:
-		getEntities()->prepareSequences(kEntityTatiana);
+		getEntities()->clearSequences(kEntityTatiana);
 		setCallback(1);
 		call(new ENTITY_SETUP(Tatiana, setup_updateFromTime), 75);
 		break;
@@ -514,7 +514,7 @@ IMPLEMENT_FUNCTION(Tatiana, chapter4, 43)
 		break;
 
 	case kActionDefault:
-		getEntities()->prepareSequences(kEntityTatiana);
+		getEntities()->clearSequences(kEntityTatiana);
 
 		getObjects()->update(kObjectCompartmentB, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
 		getObjects()->update(kObject49, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
@@ -604,7 +604,7 @@ IMPLEMENT_FUNCTION(Tatiana, chapter5, 52)
 		break;
 
 	case kActionDefault:
-		getEntities()->prepareSequences(kEntityTatiana);
+		getEntities()->clearSequences(kEntityTatiana);
 
 		getData()->entityPosition = kPosition_3969;
 		getData()->field_493 = kField493_1;
@@ -630,7 +630,7 @@ IMPLEMENT_FUNCTION(Tatiana, function55, 55)
 		break;
 
 	case kActionDefault:
-		getEntities()->prepareSequences(kEntityTatiana);
+		getEntities()->clearSequences(kEntityTatiana);
 		// fall back to next action
 
 	case kAction17:

@@ -111,7 +111,7 @@ struct FrameInfo {
 	FrameSubType subType;         ///< Subtype (byte)
 
 	byte field_2E;
-	byte field_2F;
+	byte keepPreviousFrame;
 	byte field_30;
 	byte field_31;
 	byte soundAction;

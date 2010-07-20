@@ -848,12 +848,12 @@ IMPLEMENT_FUNCTION(Chapters, chapter5_init, 21)
 		break;
 
 	case kActionDefault:
-		getEntities()->prepareSequences(kEntityTables0);
-		getEntities()->prepareSequences(kEntityTables1);
-		getEntities()->prepareSequences(kEntityTables2);
-		getEntities()->prepareSequences(kEntityTables3);
-		getEntities()->prepareSequences(kEntityTables4);
-		getEntities()->prepareSequences(kEntityTables5);
+		getEntities()->clearSequences(kEntityTables0);
+		getEntities()->clearSequences(kEntityTables1);
+		getEntities()->clearSequences(kEntityTables2);
+		getEntities()->clearSequences(kEntityTables3);
+		getEntities()->clearSequences(kEntityTables4);
+		getEntities()->clearSequences(kEntityTables5);
 
 		getProgress().isTrainRunning = 1;
 

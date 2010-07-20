@@ -194,7 +194,7 @@ IMPLEMENT_FUNCTION(Francois, function20, 20)
 		getData()->field_493 = kField493_1;
 		getData()->car = kCarRedSleeping;
 
-		getEntities()->prepareSequences(kEntityFrancois);
+		getEntities()->clearSequences(kEntityFrancois);
 	}
 }
 
@@ -208,7 +208,7 @@ IMPLEMENT_FUNCTION(Francois, chapter2, 21)
 		break;
 
 	case kActionDefault:
-		getEntities()->prepareSequences(kEntityFrancois);
+		getEntities()->clearSequences(kEntityFrancois);
 
 		getData()->entityPosition = kPosition_4689;
 		getData()->field_493 = kField493_1;
@@ -239,7 +239,7 @@ IMPLEMENT_FUNCTION(Francois, function22, 22)
 			getSavePoints()->push(kEntityFrancois, kEntityMmeBoutarel, kAction100957716);
 			getData()->entityPosition = kPosition_5790;
 			getData()->field_493 = kField493_1;
-			getEntities()->prepareSequences(kEntityFrancois);
+			getEntities()->clearSequences(kEntityFrancois);
 			setup_function23();
 			break;
 		}
@@ -266,7 +266,7 @@ IMPLEMENT_FUNCTION(Francois, chapter3, 24)
 		break;
 
 	case kActionDefault:
-		getEntities()->prepareSequences(kEntityFrancois);
+		getEntities()->clearSequences(kEntityFrancois);
 
 		getData()->entityPosition = kPosition_5790;
 		getData()->field_493 = kField493_1;
@@ -291,7 +291,7 @@ IMPLEMENT_FUNCTION(Francois, chapter4, 26)
 		break;
 
 	case kActionDefault:
-		getEntities()->prepareSequences(kEntityFrancois);
+		getEntities()->clearSequences(kEntityFrancois);
 
 		getData()->entityPosition = kPosition_5790;
 		getData()->field_493 = kField493_1;
@@ -319,7 +319,7 @@ IMPLEMENT_FUNCTION(Francois, chapter5, 28)
 		break;
 
 	case kActionDefault:
-		getEntities()->prepareSequences(kEntityFrancois);
+		getEntities()->clearSequences(kEntityFrancois);
 
 		getData()->entityPosition = kPosition_3969;
 		getData()->field_493 = kField493_1;

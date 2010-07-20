@@ -134,7 +134,7 @@ IMPLEMENT_FUNCTION(Servers1, function7, 7)
 			break;
 
 		case 3:
-			getEntities()->prepareSequences(kEntityServers1);
+			getEntities()->clearSequences(kEntityServers1);
 			getData()->entityPosition = kPosition_5900;
 			ENTITY_PARAM(1, 2) = 0;
 
@@ -263,7 +263,7 @@ IMPLEMENT_FUNCTION(Servers1, function16, 16)
 		getData()->field_493 = kField493_0;
 		getData()->car = kCarRestaurant;
 
-		getEntities()->prepareSequences(kEntityServers1);
+		getEntities()->clearSequences(kEntityServers1);
 	}
 }
 
@@ -277,7 +277,7 @@ IMPLEMENT_FUNCTION(Servers1, chapter2, 17)
 		break;
 
 	case kActionDefault:
-		getEntities()->prepareSequences(kEntityServers1);
+		getEntities()->clearSequences(kEntityServers1);
 
 		getData()->entityPosition = kPosition_5900;
 		getData()->field_493 = kField493_0;
@@ -339,7 +339,7 @@ IMPLEMENT_FUNCTION(Servers1, chapter3, 22)
 		break;
 
 	case kActionDefault:
-		getEntities()->prepareSequences(kEntityServers1);
+		getEntities()->clearSequences(kEntityServers1);
 
 		getData()->entityPosition = kPosition_5900;
 		getData()->field_493 = kField493_0;
@@ -382,14 +382,14 @@ IMPLEMENT_FUNCTION(Servers1, chapter4, 25)
 		break;
 
 	case kActionDefault:
-		getEntities()->prepareSequences(kEntityServers1);
+		getEntities()->clearSequences(kEntityServers1);
 
 		getData()->entityPosition = kPosition_5900;
 		getData()->field_493 = kField493_0;
 		getData()->car = kCarRestaurant;
 		getData()->inventoryItem = kItemNone;
 
-		getEntities()->prepareSequences(kEntityServers1);
+		getEntities()->clearSequences(kEntityServers1);
 
 		ENTITY_PARAM(1, 2) = 0;
 		ENTITY_PARAM(1, 3) = 0;
@@ -425,7 +425,7 @@ IMPLEMENT_FUNCTION(Servers1, chapter5, 30)
 		break;
 
 	case kActionDefault:
-		getEntities()->prepareSequences(kEntityServers1);
+		getEntities()->clearSequences(kEntityServers1);
 
 		getData()->entityPosition = kPosition_3969;
 		getData()->field_493 = kField493_1;

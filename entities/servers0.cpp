@@ -236,7 +236,7 @@ IMPLEMENT_FUNCTION(Servers0, function22, 22)
 		getData()->field_493 = kField493_0;
 		getData()->car = kCarRestaurant;
 
-		getEntities()->prepareSequences(kEntityServers0);
+		getEntities()->clearSequences(kEntityServers0);
 	}
 }
 
@@ -250,7 +250,7 @@ IMPLEMENT_FUNCTION(Servers0, chapter2, 23)
 		break;
 
 	case kActionDefault:
-		getEntities()->prepareSequences(kEntityServers0);
+		getEntities()->clearSequences(kEntityServers0);
 
 		getData()->entityPosition = kPosition_5900;
 		getData()->field_493 = kField493_0;
@@ -315,7 +315,7 @@ IMPLEMENT_FUNCTION(Servers0, chapter3, 27)
 		break;
 
 	case kActionDefault:
-		getEntities()->prepareSequences(kEntityServers0);
+		getEntities()->clearSequences(kEntityServers0);
 
 		getData()->entityPosition = kPosition_5900;
 		getData()->field_493 = kField493_0;
@@ -355,7 +355,7 @@ IMPLEMENT_FUNCTION(Servers0, chapter4, 31)
 		break;
 
 	case kActionDefault:
-		getEntities()->prepareSequences(kEntityServers0);
+		getEntities()->clearSequences(kEntityServers0);
 
 		getData()->entityPosition = kPosition_5900;
 		getData()->field_493 = kField493_0;
@@ -399,7 +399,7 @@ IMPLEMENT_FUNCTION(Servers0, chapter5, 36)
 		break;
 
 	case kActionDefault:
-		getEntities()->prepareSequences(kEntityServers0);
+		getEntities()->clearSequences(kEntityServers0);
 
 		getData()->entityPosition = kPosition_3969;
 		getData()->field_493 = kField493_1;
@@ -433,7 +433,7 @@ void Servers0::handleServer(const SavePoint &savepoint, const char* name, Entity
 		if (getCallback() == 1) {
 			// Prepare or draw sequences depending of value of string
 			if (strcmp(name2, ""))
-				getEntities()->prepareSequences(kEntityServers0);
+				getEntities()->clearSequences(kEntityServers0);
 			else
 				getEntities()->drawSequenceLeft(kEntityServers0, name2);
 

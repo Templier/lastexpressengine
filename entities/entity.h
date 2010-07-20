@@ -249,7 +249,7 @@ public:
 		bool doProcessEntity;			// byte
 		byte field_4A9;
 		byte field_4AA;
-		EntityDirection direction2;
+		EntityDirection directionSwitch;
 		Common::String sequenceName2;        // char[9]
 		uint32 field_4B5;
 		Common::String sequenceName3;        // char[9]
@@ -288,7 +288,7 @@ public:
 			doProcessEntity = false;
 			field_4A9 = 0;
 			field_4AA = 0;
-			direction2 = kDirectionNone;
+			directionSwitch = kDirectionNone;
 
 			field_4B5 = 0;
 			field_4C2 = 0;

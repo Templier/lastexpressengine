@@ -615,7 +615,7 @@ IMPLEMENT_FUNCTION(Coudert, chapter2, 42)
 		break;
 
 	case kActionDefault:
-		getEntities()->prepareSequences(kEntityCoudert);
+		getEntities()->clearSequences(kEntityCoudert);
 
 		getData()->entityPosition = kPosition_1500;
 		getData()->field_493 = kField493_0;
@@ -664,7 +664,7 @@ IMPLEMENT_FUNCTION(Coudert, chapter3, 44)
 		break;
 
 	case kActionDefault:
-		getEntities()->prepareSequences(kEntityCoudert);
+		getEntities()->clearSequences(kEntityCoudert);
 
 		getData()->entityPosition = kPosition_1500;
 		getData()->field_493 = kField493_0;
@@ -739,7 +739,7 @@ IMPLEMENT_FUNCTION(Coudert, chapter4, 52)
 		break;
 
 	case kActionDefault:
-		getEntities()->prepareSequences(kEntityCoudert);
+		getEntities()->clearSequences(kEntityCoudert);
 
 		getData()->entityPosition = kPosition_1500;
 		getData()->field_493 = kField493_0;
@@ -802,7 +802,7 @@ IMPLEMENT_FUNCTION(Coudert, chapter5, 57)
 		break;
 
 	case kActionDefault:
-		getEntities()->prepareSequences(kEntityCoudert);
+		getEntities()->clearSequences(kEntityCoudert);
 
 		getData()->entityPosition = kPosition_3969;
 		getData()->field_493 = kField493_1;

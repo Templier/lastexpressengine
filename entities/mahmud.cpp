@@ -285,7 +285,7 @@ IMPLEMENT_FUNCTION_II(Mahmud, function10, 10)
 		case 3:
 			getEntities()->exitCompartment(kEntityMahmud, kObjectCompartment4, false);
 			getData()->field_493 = kField493_1;
-			getEntities()->prepareSequences(kEntityMahmud);
+			getEntities()->clearSequences(kEntityMahmud);
 
 			CALLBACK_ACTION();
 			break;
@@ -409,7 +409,7 @@ IMPLEMENT_FUNCTION(Mahmud, function11, 11)
 			getEntities()->exitCompartment(kEntityMahmud, kObjectCompartment4, false);
 			getData()->field_493 = kField493_1;
 
-			getEntities()->prepareSequences(kEntityMahmud);
+			getEntities()->clearSequences(kEntityMahmud);
 			getObjects()->update(kObjectCompartment4, kEntityMahmud, kLocation3, kCursorHandKnock, kCursorHand);
 
 			CALLBACK_ACTION();
@@ -464,7 +464,7 @@ IMPLEMENT_FUNCTION(Mahmud, function12, 12)
 
 		case 3:
 			getData()->field_493 = kField493_1;
-			getEntities()->prepareSequences(kEntityMahmud);
+			getEntities()->clearSequences(kEntityMahmud);
 
 			setCallback(4);
 			call(new ENTITY_SETUP_SIIS(Mahmud, setup_playSound), "Har1105");
@@ -489,7 +489,7 @@ IMPLEMENT_FUNCTION(Mahmud, function12, 12)
 
 		case 7:
 			getData()->field_493 = kField493_1;
-			getEntities()->prepareSequences(kEntityMahmud);
+			getEntities()->clearSequences(kEntityMahmud);
 
 			CALLBACK_ACTION();
 			break;
@@ -530,7 +530,7 @@ IMPLEMENT_FUNCTION(Mahmud, function13, 13)
 
 		case 3:
 			getData()->field_493 = kField493_1;
-			getEntities()->prepareSequences(kEntityMahmud);
+			getEntities()->clearSequences(kEntityMahmud);
 
 			setCallback(4);
 			call(new ENTITY_SETUP_SIIS(Mahmud, setup_playSound), "Har1107");
@@ -555,7 +555,7 @@ IMPLEMENT_FUNCTION(Mahmud, function13, 13)
 
 		case 7:
 			getData()->field_493 = kField493_1;
-			getEntities()->prepareSequences(kEntityMahmud);
+			getEntities()->clearSequences(kEntityMahmud);
 
 			CALLBACK_ACTION();
 			break;
@@ -637,7 +637,7 @@ IMPLEMENT_FUNCTION(Mahmud, chapters_handler, 14)
 		getData()->field_493 = kField493_1;
 		getData()->car = kCarGreenSleeping;
 
-		getEntities()->prepareSequences(kEntityMahmud);
+		getEntities()->clearSequences(kEntityMahmud);
 		params->param3 = 1;
 
 		getObjects()->update(kObjectCompartment4, kEntityMahmud, kLocation3, kCursorHandKnock, kCursorHand);
@@ -782,7 +782,7 @@ IMPLEMENT_FUNCTION(Mahmud, function16, 16)
 	getData()->car = kCarGreenSleeping;
 
 	getObjects()->update(kObjectCompartment4, kEntityNone, kLocation3, kCursorHandKnock, kCursorHand);
-	getEntities()->prepareSequences(kEntityMahmud);
+	getEntities()->clearSequences(kEntityMahmud);
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -796,7 +796,7 @@ IMPLEMENT_FUNCTION(Mahmud, chapter2, 17)
 		break;
 
 	case kActionDefault:
-		getEntities()->prepareSequences(kEntityMahmud);
+		getEntities()->clearSequences(kEntityMahmud);
 
 		getData()->entityPosition = kPosition_5790;
 		getData()->field_493 = kField493_1;
@@ -818,7 +818,7 @@ IMPLEMENT_FUNCTION(Mahmud, chapter3, 18)
 		break;
 
 	case kActionDefault:
-		getEntities()->prepareSequences(kEntityMahmud);
+		getEntities()->clearSequences(kEntityMahmud);
 
 		getData()->entityPosition = kPosition_5790;
 		getData()->field_493 = kField493_1;
@@ -841,7 +841,7 @@ IMPLEMENT_FUNCTION(Mahmud, chapter4, 19)
 		break;
 
 	case kActionDefault:
-		getEntities()->prepareSequences(kEntityMahmud);
+		getEntities()->clearSequences(kEntityMahmud);
 
 		getData()->entityPosition = kPosition_2740;
 		getData()->field_493 = kField493_1;
@@ -856,7 +856,7 @@ IMPLEMENT_FUNCTION(Mahmud, chapter4, 19)
 //////////////////////////////////////////////////////////////////////////
 IMPLEMENT_FUNCTION(Mahmud, chapter5, 20)
 	if (savepoint.action == kActionDefault)
-		getEntities()->prepareSequences(kEntityMahmud);
+		getEntities()->clearSequences(kEntityMahmud);
 }
 
 } // End of namespace LastExpress

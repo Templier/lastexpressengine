@@ -232,7 +232,7 @@ IMPLEMENT_FUNCTION(Vassili, function7, 7)
 		getData()->field_493 = kField493_1;
 		getData()->car = kCarRedSleeping;
 
-		getEntities()->prepareSequences(kEntityVassili);
+		getEntities()->clearSequences(kEntityVassili);
 		if (getEntities()->checkFields1(kEntityNone, kCarRedSleeping, kPosition_8200))
 			getScenes()->loadSceneFromObject(kObjectCompartmentA);
 
@@ -369,7 +369,7 @@ IMPLEMENT_FUNCTION(Vassili, chapter2, 12)
 		break;
 
 	case kActionDefault:
-		getEntities()->prepareSequences(kEntityVassili);
+		getEntities()->clearSequences(kEntityVassili);
 
 		getData()->entityPosition = kPosition_8200;
 		getData()->field_493 = kField493_1;
@@ -427,7 +427,7 @@ IMPLEMENT_FUNCTION(Vassili, chapter3, 14)
 		break;
 
 	case kActionDefault:
-		getEntities()->prepareSequences(kEntityVassili);
+		getEntities()->clearSequences(kEntityVassili);
 
 		getData()->entityPosition = kPosition_8200;
 		getData()->field_493 = kField493_1;
@@ -507,7 +507,7 @@ IMPLEMENT_FUNCTION(Vassili, chapter4, 16)
 		break;
 
 	case kActionDefault:
-		getEntities()->prepareSequences(kEntityVassili);
+		getEntities()->clearSequences(kEntityVassili);
 
 		getData()->entityPosition = kPosition_8200;
 		getData()->field_493 = kField493_1;
@@ -558,7 +558,7 @@ IMPLEMENT_FUNCTION(Vassili, function17, 17)
 
 IMPLEMENT_FUNCTION(Vassili, chapter5, 18)
 	if (savepoint.action == kActionDefault) {
-		getEntities()->prepareSequences(kEntityVassili);
+		getEntities()->clearSequences(kEntityVassili);
 
 		getData()->entityPosition = kPosition_3969;
 		getData()->field_493 = kField493_1;

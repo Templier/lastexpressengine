@@ -504,7 +504,7 @@ IMPLEMENT_FUNCTION(August, function34, 34)
 		getData()->field_493 = kField493_1;
 		getData()->car = kCarGreenSleeping;
 
-		getEntities()->prepareSequences(kEntityAugust);
+		getEntities()->clearSequences(kEntityAugust);
 		break;
 	}
 }
@@ -519,7 +519,7 @@ IMPLEMENT_FUNCTION(August, chapter2, 35)
 		break;
 
 	case kActionDefault:
-		getEntities()->prepareSequences(kEntityAugust);
+		getEntities()->clearSequences(kEntityAugust);
 
 		getData()->entityPosition = kPosition_3970;
 		getData()->field_493 = kField493_1;
@@ -563,7 +563,7 @@ IMPLEMENT_FUNCTION(August, function39, 39)
 		if (getCallback() == 1) {
 			getAction()->playAnimation(kEventAugustArrivalInMunich);
 			getSavePoints()->push(kEntityAugust, kEntityChapters, kActionChapter3);
-			getEntities()->prepareSequences(kEntityAugust);
+			getEntities()->clearSequences(kEntityAugust);
 		}
 		break;
 	}
@@ -579,7 +579,7 @@ IMPLEMENT_FUNCTION(August, chapter3, 40)
 		break;
 
 	case kActionDefault:
-		getEntities()->prepareSequences(kEntityAugust);
+		getEntities()->clearSequences(kEntityAugust);
 
 		getData()->entityPosition = kPosition_6470;
 		getData()->field_493 = kField493_0;
@@ -682,7 +682,7 @@ IMPLEMENT_FUNCTION(August, function50, 50)
 
 	case kActionDefault:
 		getObjects()->update(kObjectCompartment3, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
-		getEntities()->prepareSequences(kEntityAugust);
+		getEntities()->clearSequences(kEntityAugust);
 
 		getData()->entityPosition = kPosition_6000;
 		getData()->field_493 = kField493_1;
@@ -815,7 +815,7 @@ IMPLEMENT_FUNCTION(August, chapter4, 57)
 		break;
 
 	case kActionDefault:
-		getEntities()->prepareSequences(kEntityAugust);
+		getEntities()->clearSequences(kEntityAugust);
 
 		getData()->entityPosition = kPosition_6470;
 		getData()->field_493 = kField493_1;
@@ -926,7 +926,7 @@ IMPLEMENT_FUNCTION(August, function65, 65)
 		getData()->field_493 = kField493_1;
 		getData()->car = kCarGreenSleeping;
 
-		getEntities()->prepareSequences(kEntityAugust);
+		getEntities()->clearSequences(kEntityAugust);
 
 		getObjects()->update(kObjectCompartment3, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
 
@@ -946,7 +946,7 @@ IMPLEMENT_FUNCTION(August, chapter5, 66)
 		break;
 
 	case kActionDefault:
-		getEntities()->prepareSequences(kEntityAugust);
+		getEntities()->clearSequences(kEntityAugust);
 
 		getData()->entityPosition = kPosition_3969;
 		getData()->field_493 = kField493_1;

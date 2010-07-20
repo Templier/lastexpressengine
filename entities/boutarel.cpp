@@ -131,7 +131,7 @@ IMPLEMENT_FUNCTION(Boutarel, enterTableWithMmeBoutarel, 12)
 		break;
 
 	case kActionExitCompartment:
-		getEntities()->prepareSequences(kEntityMmeBoutarel);
+		getEntities()->clearSequences(kEntityMmeBoutarel);
 		getSavePoints()->push(kEntityBoutarel, kEntityTables2, kAction136455232);
 		getData()->field_493 = kField493_1;
 
@@ -159,7 +159,7 @@ IMPLEMENT_FUNCTION(Boutarel, leaveTableWithMmeBoutarel, 13)
 
 	case kActionExitCompartment:
 		getSavePoints()->push(kEntityBoutarel, kEntityTables2, kAction103798704, "008F");
-		getEntities()->prepareSequences(kEntityMmeBoutarel);
+		getEntities()->clearSequences(kEntityMmeBoutarel);
 
 		CALLBACK_ACTION();
 		break;
@@ -219,7 +219,7 @@ IMPLEMENT_FUNCTION_IS(Boutarel, function16, 16)
 		case 4:
 		case 5:
 			getData()->field_493 = kField493_1;
-			getEntities()->prepareSequences(kEntityBoutarel);
+			getEntities()->clearSequences(kEntityBoutarel);
 
 			CALLBACK_ACTION();
 			break;
@@ -380,7 +380,7 @@ IMPLEMENT_FUNCTION(Boutarel, function22, 22)
 		getObjects()->update(kObjectCompartmentC, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
 		getObjects()->update(kObject50, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
 
-		getEntities()->prepareSequences(kEntityBoutarel);
+		getEntities()->clearSequences(kEntityBoutarel);
 	}
 }
 
@@ -394,7 +394,7 @@ IMPLEMENT_FUNCTION(Boutarel, chapter2, 23)
 		break;
 
 	case kActionDefault:
-		getEntities()->prepareSequences(kEntityBoutarel);
+		getEntities()->clearSequences(kEntityBoutarel);
 
 		getData()->entityPosition = kPosition_4689;
 		getData()->field_493 = kField493_1;
@@ -452,7 +452,7 @@ IMPLEMENT_FUNCTION(Boutarel, chapter3, 26)
 		break;
 
 	case kActionDefault:
-		getEntities()->prepareSequences(kEntityBoutarel);
+		getEntities()->clearSequences(kEntityBoutarel);
 
 		getData()->field_493 = kField493_1;
 		getData()->car = kCarRedSleeping;
@@ -537,7 +537,7 @@ IMPLEMENT_FUNCTION(Boutarel, chapter4, 31)
 		break;
 
 	case kActionDefault:
-		getEntities()->prepareSequences(kEntityBoutarel);
+		getEntities()->clearSequences(kEntityBoutarel);
 
 		getData()->entityPosition = kPosition_6470;
 		getData()->field_493 = kField493_1;
@@ -581,7 +581,7 @@ IMPLEMENT_FUNCTION(Boutarel, function35, 35)
 		getData()->field_493 = kField493_1;
 		getData()->car = kCarRedSleeping;
 
-		getEntities()->prepareSequences(kEntityBoutarel);
+		getEntities()->clearSequences(kEntityBoutarel);
 
 		getObjects()->update(kObjectCompartmentC, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
 		getObjects()->update(kObject50, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
@@ -598,7 +598,7 @@ IMPLEMENT_FUNCTION(Boutarel, chapter5, 36)
 		break;
 
 	case kActionDefault:
-		getEntities()->prepareSequences(kEntityBoutarel);
+		getEntities()->clearSequences(kEntityBoutarel);
 
 		getData()->entityPosition = kPosition_3969;
 		getData()->field_493 = kField493_1;

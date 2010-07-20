@@ -226,7 +226,7 @@ IMPLEMENT_FUNCTION_I(Milos, function11, 11)
 
 		case 5:
 			getData()->field_493 = kField493_1;
-			getEntities()->prepareSequences(kEntityMilos);
+			getEntities()->clearSequences(kEntityMilos);
 			getSavePoints()->push(kEntityMilos, kEntityVesna, kAction101687594);
 			getObjects()->update(kObjectCompartmentG, kEntityMilos, kLocation3, kCursorHandKnock, kCursorHand);
 			break;
@@ -262,7 +262,7 @@ IMPLEMENT_FUNCTION_I(Milos, function11, 11)
 		case 13:
 			getEntities()->exitCompartment(kEntityMilos, kObjectCompartmentG, false);
 			getData()->field_493 = kField493_1;
-			getEntities()->prepareSequences(kEntityMilos);
+			getEntities()->clearSequences(kEntityMilos);
 			getObjects()->update(kObjectCompartmentG, kEntityMilos, kLocation3, kCursorHandKnock, kCursorHand);
 			params->param5 = 0;
 			break;
@@ -319,9 +319,9 @@ IMPLEMENT_FUNCTION(Milos, function13, 13)
 
 	case kActionExitCompartment:
 		getSavePoints()->push(kEntityMilos, kEntityTables2, kAction103798704, "009E");
-		getEntities()->prepareSequences(kEntityVesna);
-		getEntities()->prepareSequences(kEntityIvo);
-		getEntities()->prepareSequences(kEntitySalko);
+		getEntities()->clearSequences(kEntityVesna);
+		getEntities()->clearSequences(kEntityIvo);
+		getEntities()->clearSequences(kEntitySalko);
 
 		CALLBACK_ACTION();
 		break;
@@ -415,7 +415,7 @@ IMPLEMENT_FUNCTION(Milos, function18, 18)
 		getData()->field_493 = kField493_1;
 		getData()->car = kCarRedSleeping;
 
-		getEntities()->prepareSequences(kEntityMilos);
+		getEntities()->clearSequences(kEntityMilos);
 		getObjects()->update(kObjectCompartmentG, kEntityNone, kLocation3, kCursorHandKnock, kCursorHand);
 	}
 }
@@ -430,7 +430,7 @@ IMPLEMENT_FUNCTION(Milos, chapter2, 19)
 		break;
 
 	case kActionDefault:
-		getEntities()->prepareSequences(kEntityMilos);
+		getEntities()->clearSequences(kEntityMilos);
 
 		getData()->entityPosition = kPosition_4689;
 		getData()->field_493 = kField493_1;
@@ -463,7 +463,7 @@ IMPLEMENT_FUNCTION(Milos, chapter3, 22)
 		break;
 
 	case kActionDefault:
-		getEntities()->prepareSequences(kEntityMilos);
+		getEntities()->clearSequences(kEntityMilos);
 
 		getData()->clothes = kClothesDefault;
 		getData()->inventoryItem = kItemNone;
@@ -506,7 +506,7 @@ IMPLEMENT_FUNCTION(Milos, chapter4, 28)
 		break;
 
 	case kActionDefault:
-		getEntities()->prepareSequences(kEntityMilos);
+		getEntities()->clearSequences(kEntityMilos);
 
 		getData()->entityPosition = kPosition_3050;
 		getData()->field_493 = kField493_1;
@@ -585,7 +585,7 @@ IMPLEMENT_FUNCTION(Milos, function31, 31)
 
 IMPLEMENT_FUNCTION(Milos, function32, 32)
 	if (savepoint.action == kActionDefault) {
-		getEntities()->prepareSequences(kEntityMilos);
+		getEntities()->clearSequences(kEntityMilos);
 		getObjects()->update(kObjectCompartmentG, kEntityNone, kLocation3, kCursorHandKnock, kCursorHand);
 
 		getData()->entityPosition = kPosition_540;
@@ -605,7 +605,7 @@ IMPLEMENT_FUNCTION(Milos, chapter5, 33)
 		break;
 
 	case kActionDefault:
-		getEntities()->prepareSequences(kEntityMilos);
+		getEntities()->clearSequences(kEntityMilos);
 
 		getData()->entityPosition = kPosition_540;
 		getData()->field_493 = kField493_1;
@@ -621,9 +621,8 @@ IMPLEMENT_FUNCTION(Milos, function34, 34)
 }
 
 IMPLEMENT_FUNCTION(Milos, prepareSequences, 35)
-	if (savepoint.action == kActionDefault) {
-		getEntities()->prepareSequences(kEntityMilos);
-	}
+	if (savepoint.action == kActionDefault)
+		getEntities()->clearSequences(kEntityMilos);	
 }
 
 } // End of namespace LastExpress

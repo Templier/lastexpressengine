@@ -163,7 +163,7 @@ IMPLEMENT_FUNCTION(Rebecca, function15, 15)
 		if (getCallback() == 1) {
 			getObjects()->update(kObjectOutsideBetweenCompartments, kEntityNone, kLocationNone, kCursorKeepValue, kCursorKeepValue);
 			getData()->field_493 = kField493_1;
-			getEntities()->prepareSequences(kEntityRebecca);
+			getEntities()->clearSequences(kEntityRebecca);
 
 			CALLBACK_ACTION();
 		}
@@ -372,7 +372,7 @@ IMPLEMENT_FUNCTION(Rebecca, function27, 27)
 		getObjects()->update(kObjectCompartmentE, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
 		getObjects()->update(kObject52, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
 
-		getEntities()->prepareSequences(kEntityRebecca);
+		getEntities()->clearSequences(kEntityRebecca);
 	}
 }
 
@@ -386,7 +386,7 @@ IMPLEMENT_FUNCTION(Rebecca, chapter2, 28)
 		break;
 
 	case kActionDefault:
-		getEntities()->prepareSequences(kEntityRebecca);
+		getEntities()->clearSequences(kEntityRebecca);
 
 		getData()->entityPosition = kPosition_4840;
 		getData()->field_493 = kField493_1;
@@ -475,7 +475,7 @@ IMPLEMENT_FUNCTION(Rebecca, chapter3, 32)
 		break;
 
 	case kActionDefault:
-		getEntities()->prepareSequences(kEntityRebecca);
+		getEntities()->clearSequences(kEntityRebecca);
 
 		getData()->entityPosition = kPosition_4840;
 		getData()->field_493 = kField493_1;
@@ -585,7 +585,7 @@ IMPLEMENT_FUNCTION(Rebecca, function39, 39)
 		break;
 
 	case kActionDefault:
-		getEntities()->prepareSequences(kEntityRebecca);
+		getEntities()->clearSequences(kEntityRebecca);
 
 		getObjects()->update(kObjectCompartmentE, kEntityNone, kLocationNone, kCursorHandKnock, kCursorHand);
 		getObjects()->update(kObject52, kEntityNone, kLocationNone, kCursorHandKnock, kCursorHand);
@@ -624,7 +624,7 @@ IMPLEMENT_FUNCTION(Rebecca, chapter4, 42)
 		break;
 
 	case kActionDefault:
-		getEntities()->prepareSequences(kEntityRebecca);
+		getEntities()->clearSequences(kEntityRebecca);
 
 		getData()->entityPosition = kPosition_4840;
 		getData()->field_493 = kField493_1;
@@ -680,7 +680,7 @@ IMPLEMENT_FUNCTION(Rebecca, function45, 45)
 		getObjects()->update(kObjectCompartmentE, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
 		getObjects()->update(kObject52, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
 
-		getEntities()->prepareSequences(kEntityRebecca);
+		getEntities()->clearSequences(kEntityRebecca);
 		break;
 
 	case kActionCallback:
@@ -707,7 +707,7 @@ IMPLEMENT_FUNCTION(Rebecca, chapter5, 46)
 		break;
 
 	case kActionDefault:
-		getEntities()->prepareSequences(kEntityRebecca);
+		getEntities()->clearSequences(kEntityRebecca);
 
 		getData()->entityPosition = kPosition_3969;
 		getData()->field_493 = kField493_1;

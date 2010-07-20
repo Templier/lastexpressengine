@@ -147,7 +147,7 @@ IMPLEMENT_FUNCTION(Vesna, chapter1_handler, 13)
 
 	case kActionCallback:
 		if (getCallback() == 1) {
-			getEntities()->prepareSequences(kEntityVesna);
+			getEntities()->clearSequences(kEntityVesna);
 			setup_function14();
 		}
 		break;
@@ -183,7 +183,7 @@ IMPLEMENT_FUNCTION(Vesna, function15, 15)
 		getData()->field_493 = kField493_1;
 		getData()->car = kCarRedSleeping;
 
-		getEntities()->prepareSequences(kEntityVesna);
+		getEntities()->clearSequences(kEntityVesna);
 		getObjects()->update(kObjectCompartmentG, kEntityNone, kLocation3, kCursorHandKnock, kCursorHand);
 	}
 }
@@ -198,7 +198,7 @@ IMPLEMENT_FUNCTION(Vesna, chapter2, 16)
 		break;
 
 	case kActionDefault:
-		getEntities()->prepareSequences(kEntityVesna);
+		getEntities()->clearSequences(kEntityVesna);
 
 		getData()->entityPosition = kPosition_3050;
 		getData()->field_493 = kField493_1;
@@ -241,7 +241,7 @@ IMPLEMENT_FUNCTION(Vesna, chapter3, 19)
 		break;
 
 	case kActionDefault:
-		getEntities()->prepareSequences(kEntityVesna);
+		getEntities()->clearSequences(kEntityVesna);
 
 		getData()->entityPosition = kPosition_3050;
 		getData()->field_493 = kField493_1;
@@ -279,7 +279,7 @@ IMPLEMENT_FUNCTION(Vesna, chapter4, 24)
 		break;
 
 	case kActionDefault:
-		getEntities()->prepareSequences(kEntityVesna);
+		getEntities()->clearSequences(kEntityVesna);
 
 		getData()->entityPosition = kPosition_3050;
 		getData()->field_493 = kField493_1;
@@ -305,7 +305,7 @@ IMPLEMENT_FUNCTION(Vesna, function26, 26)
 
 IMPLEMENT_FUNCTION(Vesna, function27, 27)
 	if (savepoint.action == kActionDefault) {
-		getEntities()->prepareSequences(kEntityVesna);
+		getEntities()->clearSequences(kEntityVesna);
 		getObjects()->update(kObjectCompartmentG, kEntityNone, kLocation3, kCursorHandKnock, kCursorHand);
 
 		getData()->entityPosition = kPosition_3050;
@@ -325,7 +325,7 @@ IMPLEMENT_FUNCTION(Vesna, chapter5, 28)
 		break;
 
 	case kActionDefault:
-		getEntities()->prepareSequences(kEntityVesna);
+		getEntities()->clearSequences(kEntityVesna);
 
 		getData()->field_493 = kField493_1;
 		getData()->car = kCarRestaurant;
