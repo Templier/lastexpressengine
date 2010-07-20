@@ -621,6 +621,7 @@ void Entities::executeCallbacks() {
 
 	bool processed = true;
 	do {
+		processed = true;
 		for (int i = 1; i < (int)_entities.size(); i++) {
 			if (getFlags()->flag_entities_0)
 				break;
@@ -689,7 +690,7 @@ label_nosequence:
 		if (getFlags()->flag_entities_0 || data->doProcessEntity)
 			return;
 
-		if (data->sequence2 && data->currentFrame2 != -1 && (data->currentFrame2 + 1) <= (int32)data->sequence2->count()) {
+		if (data->sequence2 && data->currentFrame2 != -1 && data->currentFrame2 <= (int32)(data->sequence2->count() - 1)) {
 			updateFrame(entityIndex, false, true);
 
 			if (!getFlags()->flag_entities_0 && !data->doProcessEntity) {
@@ -989,7 +990,39 @@ int Entities::getCurrentFrame2(EntityIndex entity, Sequence *sequence, EntityPos
 	if (sequence->count() == 0)
 		return 0;
 
-	error("Entities::getCurrentFrame2: not implemented!");
+	// Search for the correct frame
+	// TODO: looks slightly like some sort of binary search
+	uint32 frame = 0;
+	uint32 numFrames = sequence->count();
+
+	while (true) {
+		uint32 currentFrame2 = (frame + numFrames) / 2;
+
+		if (position + sequence->getFrameInfo(currentFrame2)->entityPosition <= data->entityPosition) {
+			if (!isGoingForward)
+				numFrames = (frame + numFrames) / 2;
+			else
+				frame = (frame + numFrames) / 2;
+		} else {
+			if (isGoingForward)
+				numFrames = (frame + numFrames) / 2;
+			else
+				frame = (frame + numFrames) / 2;
+		}
+
+		if (numFrames - frame == 1) {
+			uint32 lastFrame = ABS(position - sequence->getFrameInfo(numFrames)->entityPosition + data->entityPosition);
+			currentFrame2 = ABS(position - sequence->getFrameInfo(frame)->entityPosition + data->entityPosition);
+
+			if (lastFrame - currentFrame2 < 0 || lastFrame == currentFrame2)
+				currentFrame2 = numFrames;
+
+			return currentFrame2;
+		}
+
+		if (numFrames <= frame)
+			return currentFrame2;
+	}
 
 	return -1;
 }
@@ -1144,7 +1177,7 @@ void Entities::updateEntityPosition(EntityIndex entityIndex) {
 	if (isDirectionUpOrDown(entityIndex)
 	 && (getScenes()->checkPosition(kSceneNone, SceneManager::kCheckPositionType0) || getScenes()->checkPosition(kSceneNone, SceneManager::kCheckPositionType1))
 	 && data->car == getData(kEntityNone)->car) {
-		
+
 		if (checkFields25(entityIndex)) {
 			data->entityPosition = getData(kEntityNone)->entityPosition;
 		} else if (data->field_4A9) {
@@ -1260,6 +1293,9 @@ void Entities::drawSequencesInternal(EntityIndex entityIndex, EntityDirection di
 	// Compute value for loading sequence depending on direction
 	int16 field30 = (direction == kDirectionLeft ? entityIndex + 35 : 15);
 
+	data->doProcessEntity = true;
+	byte field4A9 = data->field_4A9;
+
 	// First case: different car and not going right: cleanup and return
 	if (data->car != getData(kEntityNone)->car && direction != kDirectionRight) {
 		clearEntitySequenceData(data, direction);
@@ -1358,7 +1394,43 @@ void Entities::drawSequencesInternal(EntityIndex entityIndex, EntityDirection di
 	}
 
 	if (data->sequenceName2 == sequenceName1) {
-		error("Entities::drawSequencesInternal: not implemented (2)!");
+
+		if (data->sequenceName3 == sequenceName1) {
+			SAFE_DELETE(data->sequence3);
+
+			if (getData(kEntityNone)->car == data->car)
+				data->sequence3 = loadSequence1(sequenceName1, field30);
+
+			if (data->sequence3) {
+				data->sequenceName3 = sequenceName1;
+			} else {
+				if (sequenceName != "")
+					data->sequence3 = loadSequence1(sequenceName, field30);
+
+				if (data->sequence3)
+					data->sequenceName3 = sequenceName;
+				else
+					data->sequenceName3 = "";
+			}
+		}
+
+		data->field_4AA = data->field_4A9;
+		if (direction != kDirectionUp && direction != kDirectionDown || data->field_4AA || !data->sequence3) {
+			data->currentFrame3 = 0;
+		} else {
+			data->currentFrame3 = getCurrentFrame2(entityIndex, data->sequence3, kPositionNone, false);
+
+			if (data->currentFrame3 == -1) {
+				prepareSequences(entityIndex);
+				return;
+			}
+		}
+
+		data->field_4A9 = field4A9;
+		data->field_49B = data->frame->getInfo()->field_30;
+		data->currentFrame2 = data->sequence2->count() - 1;
+		data->direction = kDirectionSwitch;
+		data->direction2 = direction;
 	} else {
 		SAFE_DELETE(data->sequence3);
 
@@ -2061,7 +2133,7 @@ label_process_entity:
 
 						compartmentIndex += 4;
 					}
-					
+
 					for (EntityIndex entityIndex = kEntityAnna; entityIndex <= kEntity39; entityIndex = (EntityIndex)(entityIndex + 1)) {
 						if (getSavePoints()->getCallback(entityIndex)
 						 && hasValidFrame(entityIndex)
@@ -2121,7 +2193,7 @@ label_process_entity:
 						}
 					}
 
-					return false;					
+					return false;
 				}
 
 				if (data->direction == kDirectionUp) {
