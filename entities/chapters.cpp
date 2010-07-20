@@ -168,7 +168,6 @@ IMPLEMENT_FUNCTION(Chapters, chapter1_init, 7)
 	getProgress().isTrainRunning = 1;
 	getProgress().portrait = kPortraitOriginal;
 	getProgress().field_18 = 1;
-	getProgress().field_7C = 1;
 
 	// Setup inventory & items location
 	getInventory()->addItem(kItemTelegram);
@@ -185,6 +184,8 @@ IMPLEMENT_FUNCTION(Chapters, chapter1_init, 7)
 	getInventory()->setLocationAndProcess(kItemMatch, kLocation1);
 	getInventory()->setLocationAndProcess(kItem22, kLocation1);
 	getInventory()->setLocationAndProcess(kItemPaper, kLocation1);
+
+	getProgress().field_7C = 1;
 
 	getObjects()->update(kObjectCompartment1, kEntityNone, kLocationNone, kCursorHandKnock, kCursorHand);
 	getObjects()->update(kObjectOutsideTylerCompartment, kEntityNone, kLocationNone, kCursorKeepValue, kCursorKeepValue);
@@ -350,7 +351,7 @@ label_chapter1_end:
 	case kAction2:
 		if (ENTITY_PARAM(0, 2)) {
 
-			getSavePoints()->push(kEntityChapters, kEntityTrain, kAction191350523);
+			getSavePoints()->push(kEntityChapters, kEntityTrain, kActionTrainStopRunning);
 
 			if (getEntityData(kEntityNone)->field_493 != kField493_2) {
 				PLAY_STEAM();
@@ -409,13 +410,12 @@ label_chapter1_end:
 		break;
 
 	case kAction17:
-		if (params->param3)
-			break;
-
-		if (getEntities()->isPlayerPosition(kCarGreenSleeping, 1)) {
-			getState()->time = kTimeChapter1;
-			getState()->timeDelta = 3;
-			params->param3 = 1;
+		if (!params->param3) {
+			if (getEntities()->isPlayerPosition(kCarGreenSleeping, 1)) {
+				getState()->time = kTimeChapter1;
+				getState()->timeDelta = 3;
+				params->param3 = 1;
+			}
 		}
 		break;
 
@@ -786,7 +786,7 @@ IMPLEMENT_FUNCTION(Chapters, chapter4_init, 18)
 	getObjects()->update(kObjectHandleOutsideLeft, kEntityNone, kLocation1, kCursorNormal, kCursorHand);
 	getObjects()->update(kObjectHandleOutsideRight, kEntityNone, kLocation1, kCursorNormal, kCursorHand);
 
-	getSavePoints()->push(kEntityChapters, kEntityTrain, kAction203419131);
+	getSavePoints()->push(kEntityChapters, kEntityTrain, kActionTrainStartRunning);
 	getSavePoints()->push(kEntityChapters, kEntityTables0, kAction103798704);
 	getSavePoints()->push(kEntityChapters, kEntityTables1, kAction103798704);
 	getSavePoints()->push(kEntityChapters, kEntityTables2, kAction103798704);
@@ -1010,7 +1010,7 @@ void Chapters::enterExitStation(const SavePoint &savepoint, bool isEnteringStati
 			return;
 		}
 
-		getSavePoints()->push(kEntityChapters, kEntityTrain, kAction191350523);
+		getSavePoints()->push(kEntityChapters, kEntityTrain, kActionTrainStopRunning);
 
 		if (getEntityData(kEntityNone)->field_493 != kField493_2) {
 			ENTITY_PARAM(0, 2) = 0;
@@ -1078,7 +1078,7 @@ void Chapters::enterExitHelper(const SavePoint &savepoint, bool isEnteringStatio
 		ENTITY_PARAM(0, 2) = 1;
 		ENTITY_PARAM(0, 4) = params->param4;
 	} else {
-		getSavePoints()->push(kEntityChapters, kEntityTrain, kAction203419131);
+		getSavePoints()->push(kEntityChapters, kEntityTrain, kActionTrainStartRunning);
 		ENTITY_PARAM(0, 3) = 1;
 	}
 

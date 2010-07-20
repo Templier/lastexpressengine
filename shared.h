@@ -1365,10 +1365,10 @@ enum ActionIndex {
 	// Train
 	/////////////////////////////
 	kAction191070912 = 191070912,
-	kAction191350523 = 191350523,
+	kActionTrainStopRunning = 191350523,
 	kAction202613084 = 202613084,
 	kAction203339360 = 203339360,
-	kAction203419131 = 203419131,
+	kActionTrainStartRunning = 203419131,
 	kAction203863200 = 203863200,
 	kAction222746496 = 222746496,
 	kActionBreakCeiling = 225056224,

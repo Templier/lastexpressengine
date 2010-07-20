@@ -288,8 +288,7 @@ IMPLEMENT_FUNCTION(Train, process, 8)
 	case kActionNone:
 		// Play smoke animation
 		if ((getEntities()->checkFields7(kCarGreenSleeping) || getEntities()->checkFields7(kCarRedSleeping))
-		  && params->param4
-		  && !params->param5) {
+		  && params->param4  && !params->param5) {
 
 		  params->param4 -= 1;
 
@@ -344,7 +343,7 @@ label_process:
 		break;
 
 	case kActionDefault:
-		CURRENT_PARAMS(8, 1) = 1;
+		params->param3 = 1;
 		if (getProgress().chapter < kChapter5) {
 			getObjects()->update(kObjectCompartment5, kEntityTrain, kLocation3, kCursorHandKnock, kCursorHand);
 			getObjects()->update(kObjectCompartment6, kEntityTrain, kLocation3, kCursorHandKnock, kCursorHand);
@@ -467,7 +466,7 @@ label_process:
 		ENTITY_PARAM(0, 7) = (int)savepoint.param.intValue;
 		break;
 
-	case kAction191350523:
+	case kActionTrainStopRunning:
 		params->param3 = 0;
 		getEntities()->prepareSequences(kEntityTrain);
 		break;
@@ -488,7 +487,7 @@ label_process:
 		}
 		break;
 
-	case kAction203419131:
+	case kActionTrainStartRunning:
 		if (!params->param3) {
 			params->param1 = 0;
 			params->param3 = 1;

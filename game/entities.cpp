@@ -1578,7 +1578,7 @@ void Entities::getSequenceName(EntityIndex index, EntityDirection direction, Com
 
 	case kDirectionDown:
 		switch (position) {
-		default:			
+		default:
 			break;
 
 		case 1:
@@ -2122,7 +2122,7 @@ label_process_entity:
 					if (!data->field_4A9)
 						return false;
 
-					int compartmentIndex = 4 * (data->car == kCarRedSleeping ? 4 : 3);
+					int compartmentIndex = (data->car == kCarGreenSleeping ? 0 : 8);
 
 					// We skip the first object position (0)
 					for (int i = 1; i < sizeof(objectsPosition); i++) {
@@ -2143,7 +2143,7 @@ label_process_entity:
 							}
 						}
 
-						compartmentIndex += 4;
+						compartmentIndex++;
 					}
 
 					for (EntityIndex entityIndex = kEntityAnna; entityIndex <= kEntity39; entityIndex = (EntityIndex)(entityIndex + 1)) {
