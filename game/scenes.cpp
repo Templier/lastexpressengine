@@ -619,7 +619,7 @@ void SceneManager::updateDoorsAndClock() {
 		// Adjust z-order and store sequences to list
 		_clockHours = new SequenceFrame(sequenceHours, hoursIndex, true);
 		_clockHours->getInfo()->location = 65534;
-		
+
 		_clockMinutes = new SequenceFrame(sequenceMinutes, minutesIndex, true);
 		_clockMinutes->getInfo()->location = 65535;
 
@@ -708,7 +708,7 @@ void SceneManager::removeFromQueue(SequenceFrame *frame) {
 
 	// Check that the frame is in the queue and remove it
 	for (Common::List<SequenceFrame *>::iterator i = _queue.begin(); i != _queue.end(); ++i) {
-		if (frame->equal(*i)) {			
+		if (frame->equal(*i)) {
 			_queue.erase(i);
 			_flagDrawSequences = true;
 			break;

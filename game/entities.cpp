@@ -1092,7 +1092,7 @@ void Entities::updateFrame(EntityIndex entityIndex, bool keepPreviousFrame, bool
 	// Keep previous frame if needed and store the new frame
 	if (keepPreviousFrame)
 		data->frame1 = data->frame;
-	
+
 	data->frame = frame;
 
 	if (!dontPlaySound)

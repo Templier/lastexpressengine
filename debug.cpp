@@ -78,7 +78,7 @@ Debugger::Debugger(LastExpressEngine *engine) : _engine(engine), _command(NULL),
 	DCmd_Register("beetle",    WRAP_METHOD(Debugger, cmdBeetle));
 
 	// Misc
-	DCmd_Register("loadgame",  WRAP_METHOD(Debugger, cmdLoadGame));	
+	DCmd_Register("loadgame",  WRAP_METHOD(Debugger, cmdLoadGame));
 	DCmd_Register("clear",     WRAP_METHOD(Debugger, cmdClear));
 
 	resetCommand();
