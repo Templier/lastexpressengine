@@ -397,6 +397,7 @@ enum EntityPosition {
 	kPosition_1     = 1,
 	kPosition_3     = 3,
 	kPosition_4     = 4,
+	kPosition_500   = 500,
 	kPosition_540   = 540,
 	kPosition_750   = 750,
 	kPosition_850   = 850,
@@ -491,6 +492,7 @@ enum EntityPosition {
 	kPosition_9250  = 9250,
 	kPosition_9270  = 9270,
 	kPosition_9460  = 9460,
+	kPosition_9500  = 9500,
 	kPosition_30000 = 30000
 };
 

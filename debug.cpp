@@ -569,12 +569,12 @@ bool Debugger::cmdClear(int argc, const char **) {
 }
 
 bool Debugger::cmdListFiles(int argc, const char **argv) {
-	if (argc == 2 || argc == 3) {		
+	if (argc == 2 || argc == 3) {
 		Common::String filter(const_cast<char *>(argv[1]));
 
 		// Load the proper archive
-		if (argc == 3)	
-			loadArchive((ArchiveIndex)getNumber(argv[2]));		
+		if (argc == 3)
+			loadArchive((ArchiveIndex)getNumber(argv[2]));
 
 		Common::ArchiveMemberList list;
 		int count = _engine->getResourceManager()->listMatchingMembers(list, filter);

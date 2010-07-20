@@ -2004,7 +2004,94 @@ label_process_entity:
 				}
 
 				if (hasValidFrame(entity)) {
-					error("Entities::checkEntity: not implemented (2)!");
+
+					if (!data->field_4A9)
+						return false;
+
+					int compartmentIndex = 4 * (data->car == kCarRedSleeping ? 4 : 3);
+
+					// We skip the first object position (0)
+					for (int i = 1; i < sizeof(objectsPosition); i++) {
+						if (getCompartments(compartmentIndex) || getCompartments1(compartmentIndex)) {
+							if (checkDistanceFromPosition(entity, objectsPosition[i], 750)) {
+								if (checkPosition(objectsPosition[i])) {
+
+									if ((data->direction == kDirectionUp && data->entityPosition < objectsPosition[i] && (data->car != car || position > objectsPosition[i]))
+									 || (data->direction == kDirectionDown && data->entityPosition > objectsPosition[i] && (data->car != car || position < objectsPosition[i]))) {
+
+										 getSound()->excuseMe(entity, State::getPowerOfTwo(getCompartments(compartmentIndex) ? getCompartments(compartmentIndex) : getCompartments1(compartmentIndex)));
+
+										 data->field_497 = 144;
+
+										 break;
+									}
+								}
+							}
+						}
+
+						compartmentIndex += 4;
+					}
+					
+					for (EntityIndex entityIndex = kEntityAnna; entityIndex <= kEntity39; entityIndex = (EntityIndex)(entityIndex + 1)) {
+						if (getSavePoints()->getCallback(entityIndex)
+						 && hasValidFrame(entityIndex)
+						 && entityIndex != entity
+						 && checkFields9(entity, entityIndex, 750)
+						 && isDirectionUpOrDown(entityIndex)
+						 && (entity != kEntityRebecca || entityIndex != kEntitySophie)
+						 && (entity != kEntitySophie || entityIndex != kEntityRebecca)
+						 && (entity != kEntityIvo || entityIndex != kEntitySalko)
+						 && (entity != kEntitySalko || entityIndex != kEntityIvo)
+						 && (entity != kEntityMilos || entityIndex != kEntityVesna)
+						 && (entity != kEntityVesna || entityIndex != kEntityMilos)) {
+
+							 EntityData::EntityCallData *data2 = getData(entityIndex);
+
+							 if (data->direction != data2->direction) {
+
+								 if ((data->direction != kDirectionUp || data2->entityPosition <= data->entityPosition)
+								  && (data->direction != kDirectionDown || data2->entityPosition >= data->entityPosition))
+									continue;
+
+								 data->field_49B = 0;
+								 data2->field_49B = 0;
+
+								 data->field_497 = 16;
+								 data2->field_497 = 16;
+
+								 getSound()->excuseMe(entity, entityIndex);
+								 getSound()->excuseMe(entityIndex, entity);
+
+								 if (entityIndex > entity)
+									 ++data2->field_497;
+
+								 break;
+							 }
+
+							 if (ABS(data2->entityPosition - getData(kEntityNone)->entityPosition) < ABS(data->entityPosition - getData(kEntityNone)->entityPosition)) {
+
+								 if (!checkFields25(entity)) {
+
+									 if (direction == kDirectionUp) {
+										 if (data->entityPosition < kPosition_9500)
+											 data->entityPosition = (EntityPosition)(data->entityPosition + 500);
+									 } else {
+										 if (data->entityPosition > kPosition_500)
+											 data->entityPosition = (EntityPosition)(data->entityPosition - 500);
+									 }
+
+									 drawSequencesInternal(entity, direction, true);
+
+									 return false;
+								 }
+								 data->field_49B = 0;
+
+								 break;
+							 }
+						}
+					}
+
+					return false;					
 				}
 
 				if (data->direction == kDirectionUp) {
