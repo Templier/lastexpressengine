@@ -25,6 +25,7 @@
 
 #include "lastexpress/entities/boutarel.h"
 
+#include "lastexpress/game/action.h"
 #include "lastexpress/game/entities.h"
 #include "lastexpress/game/logic.h"
 #include "lastexpress/game/object.h"
@@ -45,12 +46,12 @@ Boutarel::Boutarel(LastExpressEngine *engine) : Entity(engine, kEntityBoutarel) 
 	ADD_CALLBACK_FUNCTION(Boutarel, updateFromTime);
 	ADD_CALLBACK_FUNCTION(Boutarel, updatePosition);
 	ADD_CALLBACK_FUNCTION(Boutarel, enterExitCompartment);
-	ADD_CALLBACK_FUNCTION(Boutarel, function7);
+	ADD_CALLBACK_FUNCTION(Boutarel, enterExitCompartment2);
 	ADD_CALLBACK_FUNCTION(Boutarel, function8);
 	ADD_CALLBACK_FUNCTION(Boutarel, function9);
 	ADD_CALLBACK_FUNCTION(Boutarel, function10);
 	ADD_CALLBACK_FUNCTION(Boutarel, function11);
-	ADD_CALLBACK_FUNCTION(Boutarel, function12);
+	ADD_CALLBACK_FUNCTION(Boutarel, enterTableWithMmeBoutarel);
 	ADD_CALLBACK_FUNCTION(Boutarel, leaveTableWithMmeBoutarel);
 	ADD_CALLBACK_FUNCTION(Boutarel, function14);
 	ADD_CALLBACK_FUNCTION(Boutarel, function15);
@@ -104,8 +105,8 @@ IMPLEMENT_FUNCTION_SI(Boutarel, enterExitCompartment, 6)
 	Entity::enterExitCompartment(savepoint);
 }
 
-IMPLEMENT_FUNCTION_SI(Boutarel, function7, 7)
-	error("Boutarel: callback function 7 not implemented!");
+IMPLEMENT_FUNCTION_SI(Boutarel, enterExitCompartment2, 7)
+	Entity::enterExitCompartment(savepoint, kPosition_6470, kPosition_6130, kObjectCompartmentC, true);
 }
 
 IMPLEMENT_FUNCTION(Boutarel, function8, 8)
@@ -124,8 +125,31 @@ IMPLEMENT_FUNCTION_I(Boutarel, function11, 11)
 	error("Boutarel: callback function 11 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Boutarel, function12, 12)
-	error("Boutarel: callback function 12 not implemented!");
+IMPLEMENT_FUNCTION(Boutarel, enterTableWithMmeBoutarel, 12)
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionExitCompartment:
+		getEntities()->prepareSequences(kEntityMmeBoutarel);
+		getSavePoints()->push(kEntityBoutarel, kEntityTables2, kAction136455232);
+		getData()->field_493 = kField493_1;
+
+		CALLBACK_ACTION();
+		break;
+
+	case kActionDefault:
+		getEntities()->drawSequenceRight(kEntityTables2, "008A3");
+		getEntities()->drawSequenceRight(kEntityMmeBoutarel, "008A2");
+		getEntities()->drawSequenceRight(kEntityBoutarel, "008A1");
+
+		if (getEntities()->checkFields12(kEntityNone)) {
+			getEntities()->updateEntity(kEntityBoutarel);
+			getEntityData(kEntityMmeBoutarel)->field_493 = getData()->field_493;
+			getEntityData(kEntityTables2)->field_493 = getData()->field_493;
+		}
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Boutarel, leaveTableWithMmeBoutarel, 13)
@@ -189,7 +213,7 @@ IMPLEMENT_FUNCTION_IS(Boutarel, function16, 16)
 
 		case 3:
 			setCallback(params->param1 ? 4 : 5);
-			call(new ENTITY_SETUP_SIIS(Boutarel, setup_function7), params->param1 ? "607Gc" : "607Ac", kObjectCompartmentC);
+			call(new ENTITY_SETUP_SIIS(Boutarel, setup_enterExitCompartment2), params->param1 ? "607Gc" : "607Ac", kObjectCompartmentC);
 			break;
 
 		case 4:

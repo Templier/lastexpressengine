@@ -487,7 +487,39 @@ IMPLEMENT_FUNCTION(Anna, function35, 35)
 }
 
 IMPLEMENT_FUNCTION(Anna, function36, 36)
-	error("Anna: callback function 36 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionDefault:
+		getObjects()->update(kObjectCompartmentF, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
+
+		setCallback(1);
+		call(new ENTITY_SETUP(Anna, setup_function10), kCarRedSleeping, kPosition_8200);
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			getObjects()->update(kObjectCompartmentA, kEntityNone, kLocation1, kCursorKeepValue, kCursorKeepValue);
+
+			setCallback(2);
+			call(new ENTITY_SETUP_SIIS(Anna, setup_enterExitCompartment), "608Aa", kObjectCompartmentA);
+			break;
+
+		case 2:
+			getObjects()->update(kObjectCompartmentA, kEntityNone, kLocation2, kCursorKeepValue, kCursorKeepValue);
+			getData()->field_493 = kField493_1;
+			getEntities()->prepareSequences(kEntityAnna);
+
+			setup_function37();
+			break;
+		}
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Anna, function37, 37)

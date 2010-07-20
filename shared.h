@@ -544,6 +544,7 @@ enum ObjectLocation {
 	kLocation4    = 4, // Window ?
 	kLocation5    = 5,
 	kLocation6    = 6,
+	kLocation7    = 7,
 	kLocation10   = 10,
 	kLocation11   = 11
 };
@@ -1289,6 +1290,7 @@ enum ActionIndex {
 	// Salko
 	/////////////////////////////
 	kAction55996766  = 55996766,
+	kAction102675536 = 102675536,    // Ivo
 	kAction136184016 = 136184016,
 
 	/////////////////////////////
@@ -1370,6 +1372,7 @@ enum ActionIndex {
 	/////////////////////////////
 	// Verges
 	/////////////////////////////
+	kAction125233040 = 125233040,   // Verges / Abbot
 	kAction158617345 = 158617345,
 	kAction167854368 = 167854368,
 	kAction168187490 = 168187490,

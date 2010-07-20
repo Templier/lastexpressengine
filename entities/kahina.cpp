@@ -26,6 +26,7 @@
 #include "lastexpress/entities/kahina.h"
 
 #include "lastexpress/game/entities.h"
+#include "lastexpress/game/inventory.h"
 #include "lastexpress/game/logic.h"
 #include "lastexpress/game/object.h"
 #include "lastexpress/game/savepoint.h"
@@ -241,7 +242,35 @@ IMPLEMENT_FUNCTION(Kahina, function21, 21)
 }
 
 IMPLEMENT_FUNCTION(Kahina, function22, 22)
-	error("Kahina: callback function 22 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionNone:
+		if (params->param1) {
+			ObjectLocation location = getInventory()->getEntry(kItemFirebird)->location;
+
+			if (ENTITY_PARAM(0, 3) || location == kLocation3 || location == kLocation7) {
+				setCallback(1);
+				call(new ENTITY_SETUP(Kahina, setup_function25));
+			} else if (location == kLocation2 || location == kLocation1) {
+				setCallback(2);
+				call(new ENTITY_SETUP(Kahina, setup_function26));
+			}
+		}
+		break;
+
+	case kActionDefault:
+		getData()->car = kCarKronos;
+		getData()->entityPosition = kPosition_5000;
+		getData()->field_493 = kField493_0;
+		break;
+
+	case kAction17:
+		if (getData()->car > kCarGreenSleeping || (getData()->car == kCarGreenSleeping && getData()->entityPosition > kPosition_2740))
+			params->param1 = 1;
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Kahina, function23, 23)

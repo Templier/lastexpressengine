@@ -46,8 +46,8 @@ Rebecca::Rebecca(LastExpressEngine *engine) : Entity(engine, kEntityRebecca) {
 	ADD_CALLBACK_FUNCTION(Rebecca, function5);
 	ADD_CALLBACK_FUNCTION(Rebecca, draw);
 	ADD_CALLBACK_FUNCTION(Rebecca, enterExitCompartment);
-	ADD_CALLBACK_FUNCTION(Rebecca, function8);
 	ADD_CALLBACK_FUNCTION(Rebecca, enterExitCompartment2);
+	ADD_CALLBACK_FUNCTION(Rebecca, enterExitCompartment3);
 	ADD_CALLBACK_FUNCTION(Rebecca, function10);
 	ADD_CALLBACK_FUNCTION(Rebecca, function11);
 	ADD_CALLBACK_FUNCTION(Rebecca, checkEntity);
@@ -118,11 +118,11 @@ IMPLEMENT_FUNCTION_SI(Rebecca, enterExitCompartment, 7)
 	Entity::enterExitCompartment(savepoint);
 }
 
-IMPLEMENT_FUNCTION_SI(Rebecca, function8, 8)
-	error("Rebecca: callback function 8 not implemented!");
+IMPLEMENT_FUNCTION_SI(Rebecca, enterExitCompartment2, 8)
+	Entity::enterExitCompartment(savepoint, kPosition_4840, kPosition_4455, kObjectCompartmentE, true);
 }
 
-IMPLEMENT_FUNCTION_SI(Rebecca, enterExitCompartment2, 9)
+IMPLEMENT_FUNCTION_SI(Rebecca, enterExitCompartment3, 9)
 	Entity::enterExitCompartment(savepoint);
 }
 
@@ -156,7 +156,7 @@ IMPLEMENT_FUNCTION(Rebecca, function15, 15)
 			getScenes()->loadSceneFromPosition(kCarRedSleeping, 49);
 
 		setCallback(1);
-		call(new ENTITY_SETUP_SIIS(Rebecca, setup_function8), "624Ae", kObjectCompartmentE);
+		call(new ENTITY_SETUP_SIIS(Rebecca, setup_enterExitCompartment2), "624Ae", kObjectCompartmentE);
 		break;
 
 	case kActionCallback:
@@ -554,7 +554,7 @@ IMPLEMENT_FUNCTION(Rebecca, function38, 38)
 		getData()->field_493 = kField493_0;
 
 		setCallback(1);
-		call(new ENTITY_SETUP_SIIS(Rebecca, setup_enterExitCompartment2), "624Be", kObjectCompartmentE);
+		call(new ENTITY_SETUP_SIIS(Rebecca, setup_enterExitCompartment3), "624Be", kObjectCompartmentE);
 		break;
 
 	case kActionCallback:

@@ -27,8 +27,10 @@
 
 #include "lastexpress/entities/entity_intern.h"
 
+#include "lastexpress/game/action.h"
 #include "lastexpress/game/entities.h"
 #include "lastexpress/game/logic.h"
+#include "lastexpress/game/scenes.h"
 #include "lastexpress/game/state.h"
 #include "lastexpress/game/savegame.h"
 #include "lastexpress/game/savepoint.h"
@@ -348,7 +350,7 @@ void Entity::savepointCall(const SavePoint &savepoint, bool handleExcuseMe) {
 //////////////////////////////////////////////////////////////////////////
 // param1: sequence
 // param2: object index
-void Entity::enterExitCompartment(const SavePoint &savepoint) {
+void Entity::enterExitCompartment(const SavePoint &savepoint, EntityPosition position1, EntityPosition position2, ObjectIndex compartment, bool alternate) {
 	EXPOSE_PARAMS(EntityData::EntityParametersSIIS)
 
 	switch (savepoint.action) {
@@ -357,12 +359,25 @@ void Entity::enterExitCompartment(const SavePoint &savepoint) {
 
 	case kActionExitCompartment:
 		getEntities()->exitCompartment(_entityIndex, (ObjectIndex)params->param4, false);
+		if (position1)
+			getData()->entityPosition = position1;
+
 		CALLBACK_ACTION()
 		break;
 
 	case kActionDefault:
 		getEntities()->drawSequenceRight(_entityIndex, params->seq1);
 		getEntities()->enterCompartment(_entityIndex, (ObjectIndex)params->param4, false);
+
+		if (position1) {
+			getData()->field_493 = kField493_1;
+
+			if (getEntities()->checkFields1(kEntityNone, kCarRedSleeping, position1) || getEntities()->checkFields1(kEntityNone, kCarRedSleeping, position2)) {
+				getAction()->playAnimation(isDay() ? kEventCathTurningDay : kEventCathTurningNight);
+				getSound()->playSound(kEntityNone, "BUMP");
+				getScenes()->loadSceneFromObject(compartment, alternate);
+			}
+		}
 		break;
 	}
 }

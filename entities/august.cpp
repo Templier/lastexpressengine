@@ -211,6 +211,10 @@ IMPLEMENT_FUNCTION_II(August, function18, 18)
 	error("August: callback function 18 not implemented!");
 }
 
+//////////////////////////////////////////////////////////////////////////
+// Parameters
+//  - bool
+//  - bool
 IMPLEMENT_FUNCTION_II(August, function19, 19)
 	error("August: callback function 19 not implemented!");
 }
@@ -854,7 +858,46 @@ IMPLEMENT_FUNCTION(August, function60, 60)
 }
 
 IMPLEMENT_FUNCTION(August, function61, 61)
-	error("August: callback function 61 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionDefault:
+		getData()->field_493 = kField493_0;
+		getEntities()->drawSequenceRight(kEntityAugust, "803FS");
+		if (getEntities()->checkFields13(kEntityNone))
+			getEntities()->updateEntity(kEntityAugust);
+
+		setCallback(1);
+		call(new ENTITY_SETUP(August, setup_function8));
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			setCallback(2);
+			call(new ENTITY_SETUP(August, setup_function16), kCarGreenSleeping, kPosition_6470);
+			break;
+
+		case 2:
+			setCallback(3);
+			call(new ENTITY_SETUP(August, setup_function19), false, false);
+			break;
+
+		case 3:
+			setCallback(4);
+			call(new ENTITY_SETUP(August, setup_function21), getState()->time + 4500);
+			break;
+
+		case 4:
+			setup_function62();
+			break;
+		}
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(August, function62, 62)

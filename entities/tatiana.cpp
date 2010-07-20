@@ -45,7 +45,7 @@ Tatiana::Tatiana(LastExpressEngine *engine) : Entity(engine, kEntityTatiana) {
 	ADD_CALLBACK_FUNCTION(Tatiana, draw);
 	ADD_CALLBACK_FUNCTION(Tatiana, updatePosition);
 	ADD_CALLBACK_FUNCTION(Tatiana, enterExitCompartment);
-	ADD_CALLBACK_FUNCTION(Tatiana, function6);
+	ADD_CALLBACK_FUNCTION(Tatiana, enterExitCompartment2);
 	ADD_CALLBACK_FUNCTION(Tatiana, function7);
 	ADD_CALLBACK_FUNCTION(Tatiana, function8);
 	ADD_CALLBACK_FUNCTION(Tatiana, updateFromTicks);
@@ -117,8 +117,8 @@ IMPLEMENT_FUNCTION_SI(Tatiana, enterExitCompartment, 5)
 	Entity::enterExitCompartment(savepoint);
 }
 
-IMPLEMENT_FUNCTION_SI(Tatiana, function6, 6)
-	error("Tatiana: callback function 6 not implemented!");
+IMPLEMENT_FUNCTION_SI(Tatiana, enterExitCompartment2, 6)
+	Entity::enterExitCompartment(savepoint, kPosition_7500, kPosition_7850, kObjectCompartmentB);
 }
 
 IMPLEMENT_FUNCTION_SIIS(Tatiana, function7, 7)
@@ -496,7 +496,12 @@ IMPLEMENT_FUNCTION(Tatiana, function41, 41)
 }
 
 IMPLEMENT_FUNCTION(Tatiana, function42, 42)
-	error("Tatiana: callback function 42 not implemented!");
+	if (savepoint.action == kActionExcuseMeCath || savepoint.action == kActionExcuseMe) {
+		getSound()->playSound(kEntityNone, "Tat3124", getEntities()->getSoundValue(kEntityTatiana));
+		return;
+	}
+
+	Entity::checkEntity(savepoint);
 }
 
 IMPLEMENT_FUNCTION(Tatiana, chapter4, 43)

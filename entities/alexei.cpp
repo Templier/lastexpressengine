@@ -175,9 +175,10 @@ IMPLEMENT_FUNCTION(Alexei, function15, 15)
 	error("Alexei: callback function 15 not implemented!");
 }
 
-// Parameters:
-//  - time
-//  - sequence name
+//////////////////////////////////////////////////////////////////////////
+// Parameters
+//  - TimeTicks
+//  - Sequence name
 IMPLEMENT_FUNCTION_IS(Alexei, function16, 16)
 	error("Alexei: callback function 16 not implemented!");
 }
@@ -460,7 +461,39 @@ IMPLEMENT_FUNCTION(Alexei, function30, 30)
 }
 
 IMPLEMENT_FUNCTION(Alexei, function31, 31)
-	error("Alexei: callback function 31 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionDefault:
+		getEntities()->drawSequenceRight(kEntityAlexei, "811DS");
+		if (getEntities()->checkFields13(kEntityNone))
+			getEntities()->updateEntity(kEntityAlexei);
+
+		setCallback(1);
+		call(new ENTITY_SETUP(Alexei, setup_function7));
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			setCallback(2);
+			call(new ENTITY_SETUP(Alexei, setup_function13));
+			break;
+
+		case 2:
+			if (getEntities()->isPlayerPosition(kCarGreenSleeping, 61))
+				getScenes()->loadSceneFromPosition(kCarGreenSleeping, 49);
+
+			setCallback(3);
+			call(new ENTITY_SETUP_ISII(Alexei, setup_function16), 15803100, "411");
+			break;
+		}
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Alexei, chapter3, 32)

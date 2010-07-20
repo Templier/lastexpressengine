@@ -76,6 +76,7 @@ public:
 
 private:
 	DECLARE_CALL_FUNCTION(iiii, Pascale, int, int, int, int)
+	DECLARE_CALL_FUNCTION(siis, Pascale, const char *, int, int, const char *)
 };
 
 } // End of namespace LastExpress

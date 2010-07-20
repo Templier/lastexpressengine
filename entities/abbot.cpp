@@ -25,6 +25,8 @@
 
 #include "lastexpress/entities/abbot.h"
 
+#include "lastexpress/entities/verges.h"
+
 #include "lastexpress/game/action.h"
 #include "lastexpress/game/entities.h"
 #include "lastexpress/game/inventory.h"
@@ -87,7 +89,7 @@ Abbot::Abbot(LastExpressEngine *engine) : Entity(engine, kEntityAbbot) {
 	ADD_CALLBACK_FUNCTION(Abbot, function44);
 	ADD_CALLBACK_FUNCTION(Abbot, function45);
 	ADD_CALLBACK_FUNCTION(Abbot, function46);
-	ADD_CALLBACK_FUNCTION(Abbot, function47);
+	ADD_CALLBACK_FUNCTION(Abbot, drinkAfterDefuse);
 	ADD_CALLBACK_FUNCTION(Abbot, function48);
 	ADD_CALLBACK_FUNCTION(Abbot, pickBomb);
 	ADD_CALLBACK_FUNCTION(Abbot, chapter5);
@@ -160,7 +162,8 @@ IMPLEMENT_FUNCTION_II(Abbot, savegame, 10)
 	Entity::savegame(savepoint);
 }
 
-// Parameters:
+//////////////////////////////////////////////////////////////////////////
+// Parameters
 //  - CarIndex
 //  - EntityPosition
 IMPLEMENT_FUNCTION_II(Abbot, function11, 11)
@@ -853,7 +856,38 @@ IMPLEMENT_FUNCTION(Abbot, function31, 31)
 }
 
 IMPLEMENT_FUNCTION(Abbot, function32, 32)
-	error("Abbot: callback function 32 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionDefault:
+		setCallback(1);
+		call(new ENTITY_SETUP(Abbot, setup_function11), kCarRedSleeping, kPosition_6470);
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			getObjects()->update(kObjectCompartmentC, kEntityNone, kLocation1, kCursorKeepValue, kCursorKeepValue);
+
+			setCallback(1);
+			call(new ENTITY_SETUP_SIIS(Abbot, setup_enterExitCompartment), "617Ac", kObjectCompartmentC);
+			break;
+
+		case 2:
+			getObjects()->update(kObjectCompartmentC, kEntityNone, kLocation2, kCursorKeepValue, kCursorKeepValue);
+			getData()->entityPosition = kPosition_6470;
+			getData()->field_493 = kField493_1;
+			getSavePoints()->push(kEntityAbbot, kEntityBoutarel, kAction122358304);
+
+			setup_function33();
+			break;
+		}
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Abbot, function33, 33)
@@ -873,7 +907,38 @@ IMPLEMENT_FUNCTION(Abbot, function36, 36)
 }
 
 IMPLEMENT_FUNCTION(Abbot, function37, 37)
-	error("Abbot: callback function 37 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionDefault:
+		setCallback(1);
+		call(new ENTITY_SETUP(Abbot, setup_function11), kCarRedSleeping, kPosition_6470);
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			getObjects()->update(kObjectCompartmentC, kEntityNone, kLocation1, kCursorKeepValue, kCursorKeepValue);
+
+			setCallback(2);
+			call(new ENTITY_SETUP_SIIS(Abbot, setup_enterExitCompartment), "617Ac", kObjectCompartmentC);
+			break;
+
+		case 2:
+			getObjects()->update(kObjectCompartmentC, kEntityNone, kLocation2, kCursorKeepValue, kCursorKeepValue);
+			getData()->entityPosition = kPosition_6470;
+			getData()->field_493 = kField493_1;
+			getSavePoints()->push(kEntityAbbot, kEntityBoutarel, kAction122358304);
+
+			setup_function38();
+			break;
+		}
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Abbot, function38, 38)
@@ -919,7 +984,7 @@ IMPLEMENT_FUNCTION(Abbot, chapter4, 39)
 //////////////////////////////////////////////////////////////////////////
 // Parameters
 //  - CarIndex
-//  - ??
+//  - EntityPosition
 IMPLEMENT_FUNCTION_II(Abbot, function40, 40)
 	error("Abbot: callback function 40 not implemented!");
 }
@@ -987,7 +1052,43 @@ IMPLEMENT_FUNCTION(Abbot, function44, 44)
 }
 
 IMPLEMENT_FUNCTION(Abbot, function45, 45)
-	error("Abbot: callback function 45 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionDefault:
+		getData()->entityPosition = kPosition_6471;
+		getData()->car = kCarRedSleeping;
+		getData()->field_493 = kField493_0;
+
+		RESET_ENTITY_STATE(kEntityVerges, Verges, setup_function38);
+
+		getEntities()->drawSequenceLeft(kEntityAbbot, "617Ec");
+		getEntities()->enterCompartment(kEntityAbbot, kObjectCompartmentC);
+
+		setCallback(1);
+		call(new ENTITY_SETUP_SIIS(Abbot, setup_playSound), "Abb4010");
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			setCallback(2);
+			call(new ENTITY_SETUP_SIIS(Abbot, setup_enterExitCompartment), "617Kc");
+			break;
+
+		case 2:
+			getEntities()->exitCompartment(kEntityAbbot, kObjectCompartmentC);
+			getSavePoints()->push(kEntityAbbot, kEntityVerges, kAction125233040);
+
+			setup_function46();
+			break;
+		}
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Abbot, function46, 46)
@@ -1004,13 +1105,52 @@ IMPLEMENT_FUNCTION(Abbot, function46, 46)
 
 	case kActionCallback:
 		if (getCallback() == 1)
-			setup_function47();
+			setup_drinkAfterDefuse();
 		break;
 	}
 }
 
-IMPLEMENT_FUNCTION(Abbot, function47, 47)
-	error("Abbot: callback function 47 not implemented!");
+IMPLEMENT_FUNCTION(Abbot, drinkAfterDefuse, 47)
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kAction1:
+		setCallback(3);
+		call(new ENTITY_SETUP(Abbot, setup_savegame), kSavegameType2, kEventAbbotDrinkGiveDetonator);
+		break;
+
+	case kActionDefault:
+		setCallback(1);
+		call(new ENTITY_SETUP(Abbot, setup_function14));
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			getData()->entityPosition = kPosition_1540;
+			getData()->field_493 = kField493_0;
+
+			setCallback(2);
+			call(new ENTITY_SETUP_SIIS(Abbot, setup_draw), "126A");
+			break;
+
+		case 2:
+			getData()->field_493 = kField493_1;
+			getEntities()->drawSequenceLeft(kEntityAbbot, "126B");
+			getData()->inventoryItem = kItemBomb;
+			break;
+
+		case 3:
+			getAction()->playAnimation(kEventAbbotDrinkGiveDetonator);
+			getLogic()->gameOver(kTimeType0, kTime1, kSceneNone, true);
+			break;
+		}
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Abbot, function48, 48)

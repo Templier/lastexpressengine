@@ -446,11 +446,77 @@ IMPLEMENT_FUNCTION(Pascale, function28, 28)
 }
 
 IMPLEMENT_FUNCTION(Pascale, function29, 29)
-	error("Pascale: callback function 29 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionDefault:
+		getData()->entityPosition = kPosition_1540;
+		getData()->field_493 = kField493_0;
+
+		setCallback(1);
+		call(new ENTITY_SETUP_SIIS(Pascale, setup_draw), "817DD");
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			getEntities()->drawSequenceRight(kEntityPascale, "817DS");
+			if (getEntities()->checkFields13(kEntityNone))
+				getEntities()->updateEntity(kEntityPascale);
+
+			setCallback(2);
+			call(new ENTITY_SETUP(Pascale, setup_function3));
+			break;
+
+		case 2:
+			getData()->entityPosition = kPosition_850;
+
+			CALLBACK_ACTION();
+			break;
+		}
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Pascale, function30, 30)
-	error("Pascale: callback function 30 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionDefault:
+		getData()->entityPosition = kPosition_9270;
+		getData()->field_493 = kField493_0;
+
+		setCallback(1);
+		call(new ENTITY_SETUP_SIIS(Pascale, setup_draw), "817US");
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			getEntities()->drawSequenceRight(kEntityPascale, "817UD");
+			if (getEntities()->checkFields12(kEntityNone))
+				getEntities()->updateEntity(kEntityPascale);
+
+			setCallback(2);
+			call(new ENTITY_SETUP(Pascale, setup_function3));
+			break;
+
+		case 2:
+			getData()->entityPosition = kPosition_5900;
+
+			CALLBACK_ACTION();
+			break;
+		}
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Pascale, chapter5, 31)

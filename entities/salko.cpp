@@ -179,7 +179,44 @@ IMPLEMENT_FUNCTION(Salko, chapter2, 12)
 }
 
 IMPLEMENT_FUNCTION(Salko, function13, 13)
-	error("Salko: callback function 13 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionDefault:
+		setCallback(1);
+		call(new ENTITY_SETUP_SIIS(Salko, setup_enterExitCompartment), "612DH", kObjectCompartmentH);
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			setCallback(2);
+			call(new ENTITY_SETUP(Salko, setup_checkEntity), kCarRestaurant, kPosition_850);
+			break;
+
+		case 2:
+			getSavePoints()->push(kEntitySalko, kEntityIvo, kAction102675536);
+			getEntities()->prepareSequences(kEntitySalko);
+			break;
+
+		case 3:
+			getEntities()->drawSequenceLeft(kEntitySalko, "BLANK");
+			getData()->field_493 = kField493_1;
+
+			setup_function8();
+			break;
+		}
+		break;
+
+	case kAction125242096:
+		setCallback(3);
+		call(new ENTITY_SETUP(Salko, setup_function7), kCarRedSleeping, kPosition_2740);
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Salko, chapter3, 14)

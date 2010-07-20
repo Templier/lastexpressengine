@@ -602,8 +602,45 @@ IMPLEMENT_FUNCTION(Verges, chapter3, 29)
 	}
 }
 
+//////////////////////////////////////////////////////////////////////////
+// Parameters
+//  - sequence name
 IMPLEMENT_FUNCTION_S(Verges, function30, 30)
-	error("Verges: callback function 30 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionDefault:
+		setCallback(1);
+		call(new ENTITY_SETUP(Verges, setup_function12));
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			setCallback(2);
+			call(new ENTITY_SETUP(Verges, setup_function8), kCarRedSleeping, kPosition_2000);
+			break;
+
+		case 2:
+			setCallback(3);
+			call(new ENTITY_SETUP_ISII(Verges, setup_function15), kEntityCoudert, params->seq1);
+			break;
+
+		case 3:
+			setCallback(4);
+			call(new ENTITY_SETUP(Verges, setup_function11));
+			break;
+
+		case 4:
+			CALLBACK_ACTION();
+			break;
+		}
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Verges, function31, 31)

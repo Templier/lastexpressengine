@@ -42,7 +42,7 @@ Francois::Francois(LastExpressEngine *engine) : Entity(engine, kEntityFrancois) 
 	ADD_CALLBACK_FUNCTION(Francois, updateFromTime);
 	ADD_CALLBACK_FUNCTION(Francois, draw);
 	ADD_CALLBACK_FUNCTION(Francois, enterExitCompartment);
-	ADD_CALLBACK_FUNCTION(Francois, function5);
+	ADD_CALLBACK_FUNCTION(Francois, enterExitCompartment2);
 	ADD_CALLBACK_FUNCTION(Francois, playSound);
 	ADD_CALLBACK_FUNCTION(Francois, savegame);
 	ADD_CALLBACK_FUNCTION(Francois, function8);
@@ -87,8 +87,8 @@ IMPLEMENT_FUNCTION_SI(Francois, enterExitCompartment, 4)
 	Entity::enterExitCompartment(savepoint);
 }
 
-IMPLEMENT_FUNCTION_SI(Francois, function5, 5)
-	error("Francois: callback function 5 not implemented!");
+IMPLEMENT_FUNCTION_SI(Francois, enterExitCompartment2, 5)
+	Entity::enterExitCompartment(savepoint, kPosition_5790, kPosition_6130, kObjectCompartmentD, true);
 }
 
 IMPLEMENT_FUNCTION_S(Francois, playSound, 6)

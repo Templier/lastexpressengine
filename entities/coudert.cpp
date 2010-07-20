@@ -137,6 +137,10 @@ IMPLEMENT_FUNCTION_II(Coudert, savegame, 8)
 	Entity::savegame(savepoint);
 }
 
+//////////////////////////////////////////////////////////////////////////
+// Parameters
+//  - CarIndex
+//  - EntityPosition
 IMPLEMENT_FUNCTION_II(Coudert, function9, 9)
 	error("Coudert: callback function 9 not implemented!");
 }
@@ -303,7 +307,44 @@ IMPLEMENT_FUNCTION(Coudert, function37, 37)
 }
 
 IMPLEMENT_FUNCTION(Coudert, function38, 38)
-	error("Coudert: callback function 38 not implemented!");
+switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionDefault:
+		getData()->car = kCarRedSleeping;
+		getData()->entityPosition = kPosition_8200;
+		getData()->field_493 = kField493_1;
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			ENTITY_PARAM(0, 6) = 0;
+			ENTITY_PARAM(0, 7) = 0;
+
+			setCallback(2);
+			call(new ENTITY_SETUP(Coudert, setup_function18));
+			break;
+
+		case 2:
+			setup_chapter1_handler();
+			break;
+		}
+		break;
+
+	case kAction191477936:
+		getData()->entityPosition = kPosition_4070;
+		getData()->field_493 = kField493_0;
+		getObjects()->update(kObjectCompartment4, kEntityNone, kLocationNone, kCursorHandKnock, kCursorHand);
+
+		setCallback(1);
+		call(new ENTITY_SETUP(Coudert, setup_function9), kCarRedSleeping, kPosition_2000);
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Coudert, function39, 39)

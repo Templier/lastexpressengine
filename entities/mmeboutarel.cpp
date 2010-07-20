@@ -43,7 +43,7 @@ MmeBoutarel::MmeBoutarel(LastExpressEngine *engine) : Entity(engine, kEntityMmeB
 	ADD_CALLBACK_FUNCTION(MmeBoutarel, draw);
 	ADD_CALLBACK_FUNCTION(MmeBoutarel, updateFromTime);
 	ADD_CALLBACK_FUNCTION(MmeBoutarel, enterExitCompartment);
-	ADD_CALLBACK_FUNCTION(MmeBoutarel, function6);
+	ADD_CALLBACK_FUNCTION(MmeBoutarel, enterExitCompartment2);
 	ADD_CALLBACK_FUNCTION(MmeBoutarel, function7);
 	ADD_CALLBACK_FUNCTION(MmeBoutarel, function8);
 	ADD_CALLBACK_FUNCTION(MmeBoutarel, function9);
@@ -89,8 +89,8 @@ IMPLEMENT_FUNCTION_SI(MmeBoutarel, enterExitCompartment, 5)
 	Entity::enterExitCompartment(savepoint);
 }
 
-IMPLEMENT_FUNCTION_SI(MmeBoutarel, function6, 6)
-	error("MmeBoutarel: callback function 6 not implemented!");
+IMPLEMENT_FUNCTION_SI(MmeBoutarel, enterExitCompartment2, 6)
+	Entity::enterExitCompartment(savepoint, kPosition_5790, kPosition_6130, kObjectCompartmentD, true);
 }
 
 IMPLEMENT_FUNCTION_II(MmeBoutarel, function7, 7)

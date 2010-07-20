@@ -68,6 +68,9 @@ public:
 	DECLARE_FUNCTION(function27)
 	DECLARE_FUNCTION(chapter4)
 	DECLARE_FUNCTION(chapter5)
+
+private:
+	DECLARE_CALL_FUNCTION(iiii, Kahina, int, int, int, int)
 };
 
 } // End of namespace LastExpress
