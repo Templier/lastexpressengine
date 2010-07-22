@@ -106,7 +106,7 @@ IMPLEMENT_FUNCTION_SI(Boutarel, enterExitCompartment, 6)
 }
 
 IMPLEMENT_FUNCTION_SI(Boutarel, enterExitCompartment2, 7)
-	Entity::enterExitCompartment(savepoint, kPosition_6470, kPosition_6130, kObjectCompartmentC, true);
+	Entity::enterExitCompartment(savepoint, kPosition_6470, kPosition_6130, kCarRedSleeping, kObjectCompartmentC, true);
 }
 
 IMPLEMENT_FUNCTION(Boutarel, function8, 8)

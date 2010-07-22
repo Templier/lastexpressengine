@@ -51,6 +51,7 @@ enum TimeValue {
 	kTime1102500              = 1102500,
 	kTime1107000              = 1107000,
 	kTime1134000              = 1134000,
+	kTime1138500              = 1138500,
 	kTimeEnterEpernay         = 1147500,
 	kTimeCityEpernay          = 1148400,
 	kTimeExitEpernay          = 1150200,
@@ -68,6 +69,8 @@ enum TimeValue {
 	kTime1184400              = 1184400,
 	kTime1188000              = 1188000,
 	kTime1189800              = 1189800,
+	kTime1197000              = 1197000,
+	kTime1201500              = 1201500,
 	kTime1206000              = 1206000,
 	kTime1215000              = 1215000,
 	kTIme1225800              = 1225800,
@@ -127,6 +130,8 @@ enum TimeValue {
 	kTime2070000              = 2070000,
 	kTimeCityWels             = 2075400,
 	kTime2079000              = 2079000,
+	kTime2088000              = 2088000,
+	kTime2097000              = 2097000,
 	kTimeCityLinz             = 2101500,
 	kTime2106000              = 2106000,
 	kTime2110500              = 2110500,
@@ -149,6 +154,7 @@ enum TimeValue {
 	kTimeCityPoszony          = 2383200,
 	kTime3289500              = 3289500,
 	kTime2403000              = 2403000,
+	kTime2407500              = 2407500,
 	kTime2410200              = 2410200,
 	kTime2412000              = 2412000,
 	kTime2415600              = 2415600,
@@ -1136,6 +1142,7 @@ enum ActionIndex {
 	kAction157370960 = 157370960,
 	kAction189299008 = 189299008,
 	kAction191668032 = 191668032,	// some action during or before concert?
+	kAction201437056 = 201437056,
 	kAction235856512 = 235856512,
 	kAction238936000 = 238936000,
 	kAction291662081 = 291662081,
@@ -1360,6 +1367,7 @@ enum ActionIndex {
 	kAction124973510 = 124973510,
 	kAction169360385 = 169360385,
 	kAction191198209 = 191198209,
+	kAction290869168 = 290869168,
 
 	/////////////////////////////
 	// Train

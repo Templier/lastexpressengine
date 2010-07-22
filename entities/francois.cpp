@@ -88,7 +88,7 @@ IMPLEMENT_FUNCTION_SI(Francois, enterExitCompartment, 4)
 }
 
 IMPLEMENT_FUNCTION_SI(Francois, enterExitCompartment2, 5)
-	Entity::enterExitCompartment(savepoint, kPosition_5790, kPosition_6130, kObjectCompartmentD, true);
+	Entity::enterExitCompartment(savepoint, kPosition_5790, kPosition_6130, kCarRedSleeping, kObjectCompartmentD, true);
 }
 
 IMPLEMENT_FUNCTION_S(Francois, playSound, 6)

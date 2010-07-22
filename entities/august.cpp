@@ -25,6 +25,8 @@
 
 #include "lastexpress/entities/august.h"
 
+#include "lastexpress/entities/verges.h"
+
 #include "lastexpress/game/action.h"
 #include "lastexpress/game/entities.h"
 #include "lastexpress/game/logic.h"
@@ -45,8 +47,8 @@ August::August(LastExpressEngine *engine) : Entity(engine, kEntityAugust) {
 	ADD_CALLBACK_FUNCTION(August, draw);
 	ADD_CALLBACK_FUNCTION(August, updatePosition);
 	ADD_CALLBACK_FUNCTION(August, enterExitCompartment);
-	ADD_CALLBACK_FUNCTION(August, function6);
 	ADD_CALLBACK_FUNCTION(August, enterExitCompartment2);
+	ADD_CALLBACK_FUNCTION(August, enterExitCompartment3);
 	ADD_CALLBACK_FUNCTION(August, function8);
 	ADD_CALLBACK_FUNCTION(August, function9);
 	ADD_CALLBACK_FUNCTION(August, function10);
@@ -108,7 +110,7 @@ August::August(LastExpressEngine *engine) : Entity(engine, kEntityAugust) {
 	ADD_CALLBACK_FUNCTION(August, chapter5);
 	ADD_CALLBACK_FUNCTION(August, chapter5_handler);
 	ADD_CALLBACK_FUNCTION(August, function68);
-	ADD_CALLBACK_FUNCTION(August, function69);
+	ADD_CALLBACK_FUNCTION(August, unhookCars);
 	ADD_NULL_FUNCTION();
 }
 
@@ -132,11 +134,11 @@ IMPLEMENT_FUNCTION_SI(August, enterExitCompartment, 5)
 	Entity::enterExitCompartment(savepoint);
 }
 
-IMPLEMENT_FUNCTION_SI(August, function6, 6)
-	error("August: callback function 6 not implemented!");
+IMPLEMENT_FUNCTION_SI(August, enterExitCompartment2, 6)
+	Entity::enterExitCompartment(savepoint, kPosition_6470, kPosition_6130, kCarGreenSleeping, kObjectCompartment3, true);
 }
 
-IMPLEMENT_FUNCTION_SI(August, enterExitCompartment2, 7)
+IMPLEMENT_FUNCTION_SI(August, enterExitCompartment3, 7)
 	if (savepoint.action == kAction4) {
 		getEntities()->exitCompartment(kEntityAugust, (ObjectIndex)params->param4, true);
 		CALLBACK_ACTION();
@@ -636,7 +638,39 @@ IMPLEMENT_FUNCTION(August, function45, 45)
 }
 
 IMPLEMENT_FUNCTION(August, function46, 46)
-	error("August: callback function 46 not implemented!");
+	switch (savepoint.action) {
+	default:
+		TIME_CHECK_CALLBACK(August, kTime2088000, params->param1, 1, setup_function47);
+		break;
+
+	case kActionNone:
+		break;
+
+	case kActionDrawScene:
+		if (getEntities()->isPlayerPosition(kCarGreenSleeping, 43)) {
+			setCallback(2);
+			call(new ENTITY_SETUP_SIIS(August, setup_draw), "507B2");
+		}
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			setup_function48();
+			break;
+
+		case 2:
+			if (getEntities()->isPlayerPosition(kCarGreenSleeping, 43))
+				getScenes()->loadSceneFromPosition(kCarGreenSleeping, 34);
+
+			getEntities()->clearSequences(kEntityAugust);
+			break;
+		}
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(August, function47, 47)
@@ -967,8 +1001,38 @@ IMPLEMENT_FUNCTION(August, function68, 68)
 	error("August: callback function 68 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(August, function69, 69)
-	error("August: callback function 69 not implemented!");
+IMPLEMENT_FUNCTION(August, unhookCars, 69)
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionNone:
+		getSavePoints()->pushAll(kEntityAugust, kAction135800432);
+		setup_nullfunction();
+		break;
+
+	case kActionDefault:
+		getSound()->unknownFunction3();
+		if (getSound()->isBuffered("ARRIVE"))
+			getSound()->removeFromQueue("ARRIVE");
+
+		setCallback(1);
+		call(new ENTITY_SETUP(August, setup_savegame), kSavegameType2, kEventAugustUnhookCarsBetrayal);
+		break;
+
+	case kActionCallback:
+		if (getCallback() == 1) {
+			getAction()->playAnimation(getProgress().field_C ? kEventAugustUnhookCarsBetrayal : kEventAugustUnhookCars);
+			getEntities()->clearSequences(kEntityAugust);
+			getSound()->resetState();
+			getSound()->playSound(kEntityNone, "MUS050");
+			getScenes()->loadSceneFromPosition(kCarRestaurant, 85, 1);
+			getSavePoints()->pushAll(kEntityAugust, kAction70549068);
+
+			RESET_ENTITY_STATE(kEntityVerges, Verges, setup_function42)
+		}
+		break;
+	}
 }
 
 IMPLEMENT_NULL_FUNCTION(August, 70)

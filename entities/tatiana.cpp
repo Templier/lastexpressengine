@@ -118,7 +118,7 @@ IMPLEMENT_FUNCTION_SI(Tatiana, enterExitCompartment, 5)
 }
 
 IMPLEMENT_FUNCTION_SI(Tatiana, enterExitCompartment2, 6)
-	Entity::enterExitCompartment(savepoint, kPosition_7500, kPosition_7850, kObjectCompartmentB);
+	Entity::enterExitCompartment(savepoint, kPosition_7500, kPosition_7850, kCarRedSleeping, kObjectCompartmentB);
 }
 
 IMPLEMENT_FUNCTION_SIIS(Tatiana, function7, 7)
@@ -338,7 +338,39 @@ IMPLEMENT_FUNCTION(Tatiana, chapter2, 25)
 }
 
 IMPLEMENT_FUNCTION(Tatiana, function26, 26)
-	error("Tatiana: callback function 26 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionNone:
+		if (getState()->time > kTime1800000 && params->param1 && getEntities()->checkFields11()) {
+			getData()->inventoryItem = kItemNone;
+			setup_function28();
+		}
+		break;
+
+	case kAction1:
+		getData()->inventoryItem = kItemNone;
+		setup_function28();
+		break;
+
+	case kActionDefault:
+		getEntities()->drawSequenceLeft(kEntityTatiana, "024A");
+		getSavePoints()->push(kEntityTatiana, kEntityTables5, kAction136455232);
+		getData()->inventoryItem = kItemInvalid;
+		break;
+
+	case kActionDrawScene:
+		if (getEntities()->isPlayerPosition(kCarRestaurant, 64) || getEntities()->isPlayerPosition(kCarRestaurant, 65)) {
+			getData()->inventoryItem = kItemNone;
+			setup_function27();
+		}
+		break;
+
+	case kAction290869168:
+		params->param1 = 1;
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Tatiana, function27, 27)
@@ -449,7 +481,41 @@ IMPLEMENT_FUNCTION(Tatiana, function33, 33)
 }
 
 IMPLEMENT_FUNCTION(Tatiana, function34, 34)
-	error("Tatiana: callback function 34 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionDefault:
+		setCallback(1);
+		call(new ENTITY_SETUP(Tatiana, setup_function16), kTime2097000);
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			getInventory()->getEntry(kItemFirebird)->location = kLocation1;
+			if (getEntities()->checkFields19(kEntityNone, kCarRedSleeping, kPosition_7850))
+				getScenes()->loadSceneFromObject(kObjectCompartmentB);
+
+			getObjects()->update(kObjectCompartmentB, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
+			getObjects()->update(kObject49, kEntityNone, kLocationNone, kCursorHandKnock, kCursorHand);
+			call(new ENTITY_SETUP(Tatiana, setup_function15));
+			break;
+
+		case 2:
+			setCallback(3);
+			call(new ENTITY_SETUP(Tatiana, setup_function13), kCarKronos, kPosition_9270);
+			break;
+
+		case 3:
+			setup_function35();
+			break;
+		}
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Tatiana, function35, 35)
@@ -548,7 +614,42 @@ IMPLEMENT_FUNCTION(Tatiana, function44, 44)
 }
 
 IMPLEMENT_FUNCTION(Tatiana, function45, 45)
-	error("Tatiana: callback function 45 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionDefault:
+		setCallback(1);
+		call(new ENTITY_SETUP_SIIS(Tatiana, setup_enterExitCompartment), "673Bb", kObjectCompartmentB);
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			getObjects()->update(kObjectCompartmentB, kEntityNone, kLocationNone, kCursorHandKnock, kCursorHand);
+			getData()->field_493 = kField493_0;
+
+			setCallback(1);
+			call(new ENTITY_SETUP(Tatiana, setup_function13), kCarGreenSleeping, kPosition_540);
+			break;
+
+		case 2:
+			if (getEntities()->checkFields6(kEntityNone)) {
+				getSound()->excuseMe(kEntityTatiana);
+
+				if (getEntities()->isPlayerPosition(kCarGreenSleeping, 62))
+					getScenes()->loadSceneFromPosition(kCarGreenSleeping, 72);
+			}
+
+			getSavePoints()->push(kEntityTatiana, kEntityAlexei, kAction123712592);
+			setup_function46();
+			break;
+		}
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Tatiana, function46, 46)
@@ -556,7 +657,45 @@ IMPLEMENT_FUNCTION(Tatiana, function46, 46)
 }
 
 IMPLEMENT_FUNCTION(Tatiana, function47, 47)
-	error("Tatiana: callback function 47 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionDefault:
+		setCallback(1);
+		call(new ENTITY_SETUP(Tatiana, setup_function13), kCarRedSleeping, kPosition_7500);
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			setCallback(2);
+			call(new ENTITY_SETUP_SIIS(Tatiana, setup_enterExitCompartment2), "673Db", kObjectCompartmentB);
+			break;
+
+		case 2:
+			getData()->field_493 = kField493_1;
+			getEntities()->clearSequences(kEntityTatiana);
+
+			setCallback(3);
+			call(new ENTITY_SETUP(Tatiana, setup_function16), kTime2407500);
+			break;
+
+		case 3:
+		case 4:
+			if (ENTITY_PARAM(0, 1) && getObjects()->get(kObjectCompartment1).location2 == kLocation1) {
+				setup_function48();
+			} else {
+				setCallback(4);
+				call(new ENTITY_SETUP(Tatiana, setup_function16), 900);
+			}
+			break;
+		}
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Tatiana, function48, 48)

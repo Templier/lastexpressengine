@@ -43,7 +43,7 @@ Vesna::Vesna(LastExpressEngine *engine) : Entity(engine, kEntityVesna) {
 	ADD_CALLBACK_FUNCTION(Vesna, playSound);
 	ADD_CALLBACK_FUNCTION(Vesna, enterExitCompartment);
 	ADD_CALLBACK_FUNCTION(Vesna, draw);
-	ADD_CALLBACK_FUNCTION(Vesna, function5);
+	ADD_CALLBACK_FUNCTION(Vesna, checkEntity);
 	ADD_CALLBACK_FUNCTION(Vesna, updateFromTime);
 	ADD_CALLBACK_FUNCTION(Vesna, function7);
 	ADD_CALLBACK_FUNCTION(Vesna, function8);
@@ -88,8 +88,14 @@ IMPLEMENT_FUNCTION_S(Vesna, draw, 4)
 	Entity::draw(savepoint);
 }
 
-IMPLEMENT_FUNCTION_II(Vesna, function5, 5)
-	error("Vesna: callback function 5 not implemented!");
+IMPLEMENT_FUNCTION_II(Vesna, checkEntity, 5)
+	if (savepoint.action == kActionExcuseMeCath) {
+		getSound()->playSound(kEntityNone, random(2) ? "CAT10150" : "CAT1015A");
+
+		return;
+	}
+
+	Entity::checkEntity(savepoint, true);
 }
 
 IMPLEMENT_FUNCTION_I(Vesna, updateFromTime, 6)

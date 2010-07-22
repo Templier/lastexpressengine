@@ -166,4 +166,63 @@
 	parameter = kTimeInvalid; \
 }
 
+
+// Go from one compartment to another (or the same one if no optional args are passed
+#define COMPARTMENT_TO(class, compartmentFrom, positionFrom, sequenceFrom, sequenceTo) \
+	switch (savepoint.action) { \
+	default: \
+		break; \
+	case kActionDefault: \
+		getData()->entityPosition = positionFrom; \
+		setCallback(1); \
+		call(new ENTITY_SETUP_SIIS(class, setup_enterExitCompartment), sequenceFrom, compartmentFrom); \
+		break; \
+	case kActionCallback: \
+		switch (getCallback()) { \
+		default: \
+			break; \
+		case 1: \
+			setCallback(2); \
+			call(new ENTITY_SETUP_SIIS(class, setup_enterExitCompartment), sequenceTo, compartmentFrom); \
+			break; \
+		case 2: \
+			getData()->entityPosition = positionFrom; \
+			getEntities()->clearSequences(_entityIndex); \
+			CALLBACK_ACTION(); \
+		} \
+		break; \
+	}
+
+#define COMPARTMENT_FROM_TO(class, compartmentFrom, positionFrom, sequenceFrom, compartmentTo, positionTo, sequenceTo) \
+	switch (savepoint.action) { \
+	default: \
+		break; \
+	case kActionDefault: \
+		getData()->entityPosition = positionFrom; \
+		getData()->field_493 = kField493_0; \
+		setCallback(1); \
+		call(new ENTITY_SETUP_SIIS(class, setup_enterExitCompartment), sequenceFrom, compartmentFrom); \
+		break; \
+	case kActionCallback: \
+		switch (getCallback()) { \
+		default: \
+			break; \
+		case 1: \
+			setCallback(2); \
+			call(new ENTITY_SETUP(class, setup_checkEntity), kCarGreenSleeping, positionTo); \
+			break; \
+		case 2: \
+			setCallback(3); \
+			call(new ENTITY_SETUP_SIIS(class, setup_enterExitCompartment), sequenceTo, compartmentTo); \
+			break; \
+		case 3: \
+			getData()->field_493 = kField493_1; \
+			getEntities()->clearSequences(_entityIndex); \
+			CALLBACK_ACTION(); \
+			break; \
+		} \
+		break; \
+	}
+
+
 #endif // LASTEXPRESS_ENTITY_FUNCTIONS_H

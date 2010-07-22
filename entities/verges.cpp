@@ -48,7 +48,7 @@ Verges::Verges(LastExpressEngine *engine) : Entity(engine, kEntityVerges) {
 	ADD_CALLBACK_FUNCTION(Verges, playSound16);
 	ADD_CALLBACK_FUNCTION(Verges, function6);
 	ADD_CALLBACK_FUNCTION(Verges, savegame);
-	ADD_CALLBACK_FUNCTION(Verges, function8);
+	ADD_CALLBACK_FUNCTION(Verges, checkEntity);
 	ADD_CALLBACK_FUNCTION(Verges, function9);
 	ADD_CALLBACK_FUNCTION(Verges, function10);
 	ADD_CALLBACK_FUNCTION(Verges, function11);
@@ -64,7 +64,7 @@ Verges::Verges(LastExpressEngine *engine) : Entity(engine, kEntityVerges) {
 	ADD_CALLBACK_FUNCTION(Verges, function21);
 	ADD_CALLBACK_FUNCTION(Verges, function22);
 	ADD_CALLBACK_FUNCTION(Verges, function23);
-	ADD_CALLBACK_FUNCTION(Verges, function24);
+	ADD_CALLBACK_FUNCTION(Verges, policeGettingOffTrain);
 	ADD_CALLBACK_FUNCTION(Verges, function25);
 	ADD_CALLBACK_FUNCTION(Verges, chapter1_handler);
 	ADD_CALLBACK_FUNCTION(Verges, chapter2);
@@ -132,8 +132,15 @@ IMPLEMENT_FUNCTION_II(Verges, savegame, 7)
 	Entity::savegame(savepoint);
 }
 
-IMPLEMENT_FUNCTION_II(Verges, function8, 8)
-	error("Verges: callback function 8 not implemented!");
+IMPLEMENT_FUNCTION_II(Verges, checkEntity, 8)
+	if (savepoint.action == kActionExcuseMeCath) {
+		if (!getSound()->isBuffered(kEntityVerges))
+			getSound()->playSound(kEntityNone, "TRA1113", getEntities()->getSoundValue(kEntityVerges));
+
+		return;
+	}
+
+	Entity::checkEntity(savepoint, true);
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -270,7 +277,7 @@ IMPLEMENT_FUNCTION(Verges, function17, 17)
 
 		case 1:
 			setCallback(2);
-			call(new ENTITY_SETUP(Verges, setup_function8), kCarGreenSleeping, kPosition_2000);
+			call(new ENTITY_SETUP(Verges, setup_checkEntity), kCarGreenSleeping, kPosition_2000);
 			break;
 
 		case 2:
@@ -361,8 +368,34 @@ IMPLEMENT_FUNCTION(Verges, function23, 23)
 	}
 }
 
-IMPLEMENT_FUNCTION(Verges, function24, 24)
-	error("Verges: callback function 24 not implemented!");
+IMPLEMENT_FUNCTION(Verges, policeGettingOffTrain, 24)
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionNone:
+		if (getEntities()->checkFields9(kEntityVerges, kEntityNone, 1000) && !getEntityData(kEntityNone)->field_493) {
+			setCallback(1);
+			call(new ENTITY_SETUP(Verges, setup_savegame), kSavegameType2, kEventGendarmesArrestation);
+		}
+		break;
+
+	case kAction2:
+		CALLBACK_ACTION();
+		break;
+
+	case kActionDefault:
+		getSound()->playSound(kEntityVerges, "POL1101", 16);
+		break;
+
+	case kActionCallback:
+		if (getCallback() == 1) {
+			getSound()->processEntry(kEntityVerges);
+			getAction()->playAnimation(kEventGendarmesArrestation);
+			getLogic()->gameOver(kTimeType0, kTime1, kSceneGameOverPolice1, true);
+		}
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Verges, function25, 25)
@@ -498,7 +531,7 @@ label_callback15:
 
 		case 5:
 			setCallback(6);
-			call(new ENTITY_SETUP(Verges, setup_function8), kCarGreenSleeping, kPosition_2000);
+			call(new ENTITY_SETUP(Verges, setup_checkEntity), kCarGreenSleeping, kPosition_2000);
 			break;
 
 		case 6:
@@ -622,7 +655,7 @@ IMPLEMENT_FUNCTION_S(Verges, function30, 30)
 
 		case 1:
 			setCallback(2);
-			call(new ENTITY_SETUP(Verges, setup_function8), kCarRedSleeping, kPosition_2000);
+			call(new ENTITY_SETUP(Verges, setup_checkEntity), kCarRedSleeping, kPosition_2000);
 			break;
 
 		case 2:
@@ -644,7 +677,44 @@ IMPLEMENT_FUNCTION_S(Verges, function30, 30)
 }
 
 IMPLEMENT_FUNCTION(Verges, function31, 31)
-	error("Verges: callback function 31 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionDefault:
+		setCallback(1);
+		call(new ENTITY_SETUP(Verges, setup_function12));
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			setCallback(2);
+			call(new ENTITY_SETUP(Verges, setup_checkEntity), kCarRedSleeping, kPosition_2000);
+			break;
+
+		case 2:
+			setCallback(3);
+			call(new ENTITY_SETUP_ISII(Verges, setup_function15), kEntityCoudert, "TRA3015");
+			break;
+
+		case 3:
+			setCallback(4);
+			call(new ENTITY_SETUP(Verges, setup_function11));
+			break;
+
+		case 4:
+			getProgress().field_48 = 1;
+			ENTITY_PARAM(0, 4) = 0;
+
+			CALLBACK_ACTION();
+			break;
+		}
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Verges, function32, 32)

@@ -119,7 +119,7 @@ IMPLEMENT_FUNCTION_SI(Rebecca, enterExitCompartment, 7)
 }
 
 IMPLEMENT_FUNCTION_SI(Rebecca, enterExitCompartment2, 8)
-	Entity::enterExitCompartment(savepoint, kPosition_4840, kPosition_4455, kObjectCompartmentE, true);
+	Entity::enterExitCompartment(savepoint, kPosition_4840, kPosition_4455, kCarRedSleeping, kObjectCompartmentE, true);
 }
 
 IMPLEMENT_FUNCTION_SI(Rebecca, enterExitCompartment3, 9)

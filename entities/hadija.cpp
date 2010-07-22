@@ -85,75 +85,19 @@ IMPLEMENT_FUNCTION_II(Hadija, checkEntity, 5)
 }
 
 IMPLEMENT_FUNCTION(Hadija, function6, 6)
-	switch (savepoint.action) {
-	default:
-		break;
-
-	case kActionDefault:
-		getData()->entityPosition = kPosition_4070;
-
-		setCallback(1);
-		call(new ENTITY_SETUP_SIIS(Hadija, setup_enterExitCompartment), "619Cf", kObjectCompartment6);
-		break;
-
-	case kActionCallback:
-		switch (getCallback()) {
-		default:
-			break;
-
-		case 1:
-			setCallback(2);
-			call(new ENTITY_SETUP_SIIS(Hadija, setup_enterExitCompartment), "619Df", kObjectCompartment6);
-			break;
-
-		case 2:
-			getData()->entityPosition = kPosition_4070;
-			getEntities()->clearSequences(kEntityHadija);
-
-			CALLBACK_ACTION();
-		}
-		break;
-	}
+	COMPARTMENT_TO(Hadija, kObjectCompartment6, kPosition_4070, "619Cf", "619Df");
 }
 
 IMPLEMENT_FUNCTION(Hadija, function7, 7)
-	switch (savepoint.action) {
-	default:
-		break;
-
-	case kActionDefault:
-		getData()->entityPosition = kPosition_2740;
-
-		setCallback(1);
-		call(new ENTITY_SETUP_SIIS(Hadija, setup_enterExitCompartment), "619Ch", kObjectCompartment8);
-		break;
-
-	case kActionCallback:
-		switch (getCallback()) {
-		default:
-			break;
-
-		case 1:
-			setCallback(2);
-			call(new ENTITY_SETUP_SIIS(Hadija, setup_enterExitCompartment), "619Dh", kObjectCompartment8);
-			break;
-
-		case 2:
-			getData()->entityPosition = kPosition_2740;
-			getEntities()->clearSequences(kEntityHadija);
-
-			CALLBACK_ACTION();
-		}
-		break;
-	}
+	COMPARTMENT_TO(Hadija, kObjectCompartment8, kPosition_2740, "619Ch", "619Dh");
 }
 
 IMPLEMENT_FUNCTION(Hadija, function8, 8)
-	error("Hadija: callback function 8 not implemented!");
+	COMPARTMENT_FROM_TO(Hadija, kObjectCompartment6, kPosition_4070, "619Bf", kObjectCompartment8, kPosition_2740, "619Ah");
 }
 
 IMPLEMENT_FUNCTION(Hadija, function9, 9)
-	error("Hadija: callback function 9 not implemented!");
+	COMPARTMENT_FROM_TO(Hadija, kObjectCompartment8, kPosition_2740, "619Bh", kObjectCompartment6, kPosition_4070, "619Af");
 }
 
 IMPLEMENT_FUNCTION(Hadija, chapter1, 10)

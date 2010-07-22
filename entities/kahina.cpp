@@ -149,7 +149,43 @@ IMPLEMENT_FUNCTION(Kahina, function12, 12)
 }
 
 IMPLEMENT_FUNCTION(Kahina, function13, 13)
-	error("Kahina: callback function 13 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionNone:
+		if (getProgress().field_14 || getState()->time >= kTime1201500 || params->param2 == kTimeInvalid || params->param1 >= (int)getState()->time)
+			break;
+
+		if (getState()->time <= kTime1197000) {
+			if (!getEntities()->checkFields7(kCarGreenSleeping) || !params->param2) {
+				params->param2 = getState()->time;
+
+				if (!getState()->time)
+					goto label_callback;
+			}
+
+			if (params->param2 >= (int)getState()->time)
+				break;
+		}
+
+		params->param2 = kTimeInvalid;
+
+label_callback:
+		setCallback(1);
+		call(new ENTITY_SETUP(Kahina, setup_function15));
+		break;
+
+	case kActionDefault:
+		getData()->car = kCarKronos;
+		getData()->entityPosition = kPosition_5000;
+		getData()->field_493 = kField493_0;
+
+		getObjects()->update(kObjectCompartmentKronos, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
+
+		params->param1 = getState()->time + 1800;
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Kahina, function14, 14)

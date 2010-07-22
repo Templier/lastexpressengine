@@ -41,7 +41,7 @@ namespace LastExpress {
 
 Coudert::Coudert(LastExpressEngine *engine) : Entity(engine, kEntityCoudert) {
 	ADD_CALLBACK_FUNCTION(Coudert, function1);
-	ADD_CALLBACK_FUNCTION(Coudert, function2);
+	ADD_CALLBACK_FUNCTION(Coudert, bloodJacket);
 	ADD_CALLBACK_FUNCTION(Coudert, function3);
 	ADD_CALLBACK_FUNCTION(Coudert, function4);
 	ADD_CALLBACK_FUNCTION(Coudert, function5);
@@ -109,8 +109,36 @@ IMPLEMENT_FUNCTION(Coudert, function1, 1)
 	Entity::function1Clothes(savepoint);
 }
 
-IMPLEMENT_FUNCTION_S(Coudert, function2, 2)
-	error("Coudert: callback function 2 not implemented!");
+IMPLEMENT_FUNCTION_S(Coudert, bloodJacket, 2)
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionNone:
+		if (getProgress().jacket == kJacketOriginal
+		 && getEntities()->checkFields9(kEntityCoudert, kEntityNone, 1000)
+		 && !getEntities()->checkFields3(kEntityNone)
+		 && !getEntities()->checkFields10(kEntityNone)) {
+			setCallback(1);
+			call(new ENTITY_SETUP(Coudert, setup_savegame), kSavegameType2, kEventMertensBloodJacket); /* BUG: is this a bug in the original? */
+		}
+		break;
+
+	case kActionExitCompartment:
+		CALLBACK_ACTION();
+		break;
+
+	case kActionDefault:
+		getEntities()->drawSequenceRight(kEntityCoudert, params->seq1);
+		break;
+
+	case kActionCallback:
+		if (getCallback() == 1) {
+			getAction()->playAnimation(kEventCoudertBloodJacket);
+			getLogic()->gameOver(kTimeType0, kTime1, kSceneGameOverBloodJacket, true);
+		}
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION_SI(Coudert, function3, 3)
@@ -573,7 +601,7 @@ label_coudert_object:
 			getSound()->playSound(kEntityCoudert, "JAC1120");
 
 			setCallback(14);
-			call(new ENTITY_SETUP_SIIS(Coudert, setup_function2), "697D");
+			call(new ENTITY_SETUP_SIIS(Coudert, setup_bloodJacket), "697D");
 		}
 		break;
 

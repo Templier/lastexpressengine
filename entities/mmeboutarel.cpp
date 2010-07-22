@@ -26,6 +26,7 @@
 #include "lastexpress/entities/mmeboutarel.h"
 
 #include "lastexpress/game/entities.h"
+#include "lastexpress/game/inventory.h"
 #include "lastexpress/game/logic.h"
 #include "lastexpress/game/object.h"
 #include "lastexpress/game/savepoint.h"
@@ -44,7 +45,7 @@ MmeBoutarel::MmeBoutarel(LastExpressEngine *engine) : Entity(engine, kEntityMmeB
 	ADD_CALLBACK_FUNCTION(MmeBoutarel, updateFromTime);
 	ADD_CALLBACK_FUNCTION(MmeBoutarel, enterExitCompartment);
 	ADD_CALLBACK_FUNCTION(MmeBoutarel, enterExitCompartment2);
-	ADD_CALLBACK_FUNCTION(MmeBoutarel, function7);
+	ADD_CALLBACK_FUNCTION(MmeBoutarel, checkEntity);
 	ADD_CALLBACK_FUNCTION(MmeBoutarel, function8);
 	ADD_CALLBACK_FUNCTION(MmeBoutarel, function9);
 	ADD_CALLBACK_FUNCTION(MmeBoutarel, chapter1);
@@ -90,11 +91,17 @@ IMPLEMENT_FUNCTION_SI(MmeBoutarel, enterExitCompartment, 5)
 }
 
 IMPLEMENT_FUNCTION_SI(MmeBoutarel, enterExitCompartment2, 6)
-	Entity::enterExitCompartment(savepoint, kPosition_5790, kPosition_6130, kObjectCompartmentD, true);
+	Entity::enterExitCompartment(savepoint, kPosition_5790, kPosition_6130, kCarRedSleeping, kObjectCompartmentD, true);
 }
 
-IMPLEMENT_FUNCTION_II(MmeBoutarel, function7, 7)
-	error("MmeBoutarel: callback function 7 not implemented!");
+IMPLEMENT_FUNCTION_II(MmeBoutarel, checkEntity, 7)
+	if (savepoint.action == kActionExcuseMeCath) {
+		getInventory()->hasItem(kItemPassengerList) ? getSound()->playSound(kEntityNone, "CAT1021") : getSound()->excuseMeCath();
+
+		return;
+	}
+
+	Entity::checkEntity(savepoint, true);
 }
 
 IMPLEMENT_FUNCTION_S(MmeBoutarel, function8, 8)

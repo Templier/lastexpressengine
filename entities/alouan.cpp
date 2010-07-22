@@ -85,75 +85,19 @@ IMPLEMENT_FUNCTION_II(Alouan, checkEntity, 5)
 }
 
 IMPLEMENT_FUNCTION(Alouan, function6, 6)
-	switch (savepoint.action) {
-	default:
-		break;
-
-	case kActionDefault:
-		getData()->entityPosition = kPosition_4070;
-
-		setCallback(1);
-		call(new ENTITY_SETUP_SIIS(Alouan, setup_enterExitCompartment), "621Cf", kObjectCompartment6);
-		break;
-
-	case kActionCallback:
-		switch (getCallback()) {
-		default:
-			break;
-
-		case 1:
-			setCallback(2);
-			call(new ENTITY_SETUP_SIIS(Alouan, setup_enterExitCompartment), "621Df", kObjectCompartment6);
-			break;
-
-		case 2:
-			getData()->entityPosition = kPosition_4070;
-			getEntities()->clearSequences(kEntityAlouan);
-
-			CALLBACK_ACTION();
-		}
-		break;
-	}
+	COMPARTMENT_TO(Alouan, kObjectCompartment6, kPosition_4070, "621Cf", "621Df");
 }
 
 IMPLEMENT_FUNCTION(Alouan, function7, 7)
-	switch (savepoint.action) {
-	default:
-		break;
-
-	case kActionDefault:
-		getData()->entityPosition = kPosition_2740;
-
-		setCallback(1);
-		call(new ENTITY_SETUP_SIIS(Alouan, setup_enterExitCompartment), "621Ch", kObjectCompartment8);
-		break;
-
-	case kActionCallback:
-		switch (getCallback()) {
-		default:
-			break;
-
-		case 1:
-			setCallback(2);
-			call(new ENTITY_SETUP_SIIS(Alouan, setup_enterExitCompartment), "621Dh", kObjectCompartment8);
-			break;
-
-		case 2:
-			getData()->entityPosition = kPosition_2740;
-			getEntities()->clearSequences(kEntityAlouan);
-
-			CALLBACK_ACTION();
-		}
-		break;
-	}
+	COMPARTMENT_TO(Alouan, kObjectCompartment8, kPosition_2740, "621Ch", "621Dh");
 }
 
 IMPLEMENT_FUNCTION(Alouan, function8, 8)
-	error("Alouan: callback function 8 not implemented!");
+	COMPARTMENT_FROM_TO(Alouan, kObjectCompartment6, kPosition_4070, "621Bf", kObjectCompartment8, kPosition_2740, "621Ah");
 }
 
 IMPLEMENT_FUNCTION(Alouan, function9, 9)
-	error("Alouan: callback function 9 not implemented!");
+	COMPARTMENT_FROM_TO(Alouan, kObjectCompartment8, kPosition_2740, "621Bh", kObjectCompartment6, kPosition_4070, "621Af");
 }
 
 IMPLEMENT_FUNCTION(Alouan, chapter1, 10)
@@ -349,9 +293,8 @@ IMPLEMENT_FUNCTION(Alouan, function22, 22)
 		break;
 
 	case kActionDrawScene:
-		if (getEntities()->checkFields5(kEntityNone, kCarGreenSleeping)) {
+		if (getEntities()->checkFields5(kEntityNone, kCarGreenSleeping))
 			setup_function23();
-		}
 		break;
 	}
 }

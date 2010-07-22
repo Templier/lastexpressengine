@@ -302,7 +302,32 @@ IMPLEMENT_FUNCTION(Pascale, function18, 18)
 }
 
 IMPLEMENT_FUNCTION(Pascale, function19, 19)
-	error("Pascale: callback function 19 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionNone:
+		if (!params->param1 && getEntityData(kEntityNone)->entityPosition < kPosition_3650) {
+			getObjects()->update(kObject65, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
+			getSavePoints()->push(kEntityPascale, kEntityTables0, kAction103798704, "001P");
+			getSavePoints()->push(kEntityPascale, kEntityTables1, kAction103798704, "005J");
+			getSavePoints()->push(kEntityPascale, kEntityTables2, kAction103798704, "009G");
+			getSavePoints()->push(kEntityPascale, kEntityTables3, kAction103798704, "010M");
+			getSavePoints()->push(kEntityPascale, kEntityTables4, kAction103798704, "014F");
+			getSavePoints()->push(kEntityPascale, kEntityTables5, kAction103798704, "024D");
+
+			params->param1 = 1;
+		}
+		break;
+
+	case kActionDefault:
+		getData()->car = kCarRestaurant;
+		getData()->entityPosition = kPosition_5900;
+		getData()->field_493 = kField493_0;
+
+		getEntities()->clearSequences(kEntityPascale);
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Pascale, chapter2, 20)

@@ -43,7 +43,7 @@ public:
 	DECLARE_FUNCTION_S(playSound)
 	DECLARE_FUNCTION_SI(enterExitCompartment)
 	DECLARE_FUNCTION_S(draw)
-	DECLARE_FUNCTION_II(function5)
+	DECLARE_FUNCTION_II(checkEntity)
 	DECLARE_FUNCTION_I(updateFromTime)
 	DECLARE_FUNCTION_II(function7)
 	DECLARE_FUNCTION(function8)

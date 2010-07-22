@@ -350,7 +350,7 @@ void Entity::savepointCall(const SavePoint &savepoint, bool handleExcuseMe) {
 //////////////////////////////////////////////////////////////////////////
 // param1: sequence
 // param2: object index
-void Entity::enterExitCompartment(const SavePoint &savepoint, EntityPosition position1, EntityPosition position2, ObjectIndex compartment, bool alternate) {
+void Entity::enterExitCompartment(const SavePoint &savepoint, EntityPosition position1, EntityPosition position2, CarIndex car, ObjectIndex compartment, bool alternate) {
 	EXPOSE_PARAMS(EntityData::EntityParametersSIIS)
 
 	switch (savepoint.action) {
@@ -372,7 +372,7 @@ void Entity::enterExitCompartment(const SavePoint &savepoint, EntityPosition pos
 		if (position1) {
 			getData()->field_493 = kField493_1;
 
-			if (getEntities()->checkFields1(kEntityNone, kCarRedSleeping, position1) || getEntities()->checkFields1(kEntityNone, kCarRedSleeping, position2)) {
+			if (getEntities()->checkFields1(kEntityNone, car, position1) || getEntities()->checkFields1(kEntityNone, car, position2)) {
 				getAction()->playAnimation(isDay() ? kEventCathTurningDay : kEventCathTurningNight);
 				getSound()->playSound(kEntityNone, "BUMP");
 				getScenes()->loadSceneFromObject(compartment, alternate);

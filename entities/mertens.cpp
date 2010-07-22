@@ -42,7 +42,7 @@ namespace LastExpress {
 
 Mertens::Mertens(LastExpressEngine *engine) : Entity(engine, kEntityMertens) {
 	ADD_CALLBACK_FUNCTION(Mertens, function1);
-	ADD_CALLBACK_FUNCTION(Mertens, function2);
+	ADD_CALLBACK_FUNCTION(Mertens, bloodJacket);
 	ADD_CALLBACK_FUNCTION(Mertens, function3);
 	ADD_CALLBACK_FUNCTION(Mertens, function4);
 	ADD_CALLBACK_FUNCTION(Mertens, function5);
@@ -101,8 +101,36 @@ IMPLEMENT_FUNCTION(Mertens, function1, 1)
 	Entity::function1(savepoint);
 }
 
-IMPLEMENT_FUNCTION_S(Mertens, function2, 2)
-	error("Mertens: callback function 2 not implemented!");
+IMPLEMENT_FUNCTION_S(Mertens, bloodJacket, 2)
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionNone:
+		if (getProgress().jacket == kJacketOriginal
+		 && getEntities()->checkFields9(kEntityMertens, kEntityNone, 1000)
+		 && !getEntities()->checkFields3(kEntityNone)
+		 && !getEntities()->checkFields10(kEntityNone)) {
+			setCallback(1);
+			call(new ENTITY_SETUP(Mertens, setup_savegame), kSavegameType2, kEventMertensBloodJacket);
+		}
+		break;
+
+	case kActionExitCompartment:
+		CALLBACK_ACTION();
+		break;
+
+	case kActionDefault:
+		getEntities()->drawSequenceRight(kEntityMertens, params->seq1);
+		break;
+
+	case kActionCallback:
+		if (getCallback() == 1) {
+			getAction()->playAnimation(kEventMertensBloodJacket);
+			getLogic()->gameOver(kTimeType0, kTime1, kSceneGameOverBloodJacket, true);
+		}
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION_SI(Mertens, function3, 3)
@@ -421,7 +449,7 @@ IMPLEMENT_FUNCTION(Mertens, function20, 20)
 			CALLBACK_ACTION();
 		} else {
 			setCallback(1);
-			call(new ENTITY_SETUP_SIIS(Mertens, setup_function2), "601C");
+			call(new ENTITY_SETUP_SIIS(Mertens, setup_bloodJacket), "601C");
 		}
 		break;
 

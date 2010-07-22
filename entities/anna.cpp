@@ -494,7 +494,43 @@ IMPLEMENT_FUNCTION(Anna, function24, 24)
 }
 
 IMPLEMENT_FUNCTION(Anna, function25, 25)
-	error("Anna: callback function 25 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionDefault:
+		getEntities()->drawSequenceLeft(kEntityAnna, "001J");
+		getProgress().field_28 = 1;
+
+		setCallback(1);
+		call(new ENTITY_SETUP(Anna, setup_function18), 0);
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 2:
+			call(new ENTITY_SETUP(Anna, setup_function8));
+			break;
+
+		case 3:
+			setup_function26();
+			break;
+		}
+		break;
+
+	case kAction122358304:
+		getEntities()->drawSequenceLeft(kEntityAnna, "BLANK");
+		break;
+
+	case kAction201437056:
+		getEntities()->drawSequenceLeft(kEntityAnna, "001J");
+		setCallback(2);
+		call(new ENTITY_SETUP(Anna, setup_function18), kTime1138500);
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Anna, function26, 26)
