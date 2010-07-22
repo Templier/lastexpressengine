@@ -250,7 +250,7 @@ IMPLEMENT_FUNCTION_IS(Boutarel, function17, 17)
 		break;
 
 	case kActionDefault:
-		getEntities()->drawSequenceLeft(kEntityMmeBoutarel, params->seq);
+		getEntities()->drawSequenceLeft(kEntityMmeBoutarel, (char *)&params->seq);
 		break;
 
 	case kActionDrawScene:

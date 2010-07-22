@@ -107,7 +107,7 @@ IMPLEMENT_FUNCTION_S(Mertens, bloodJacket, 2)
 		break;
 
 	case kActionNone:
-		if (getProgress().jacket == kJacketOriginal
+		if (getProgress().jacket == kJacketBlood
 		 && getEntities()->checkFields9(kEntityMertens, kEntityNone, 1000)
 		 && !getEntities()->checkFields3(kEntityNone)
 		 && !getEntities()->checkFields10(kEntityNone)) {
@@ -121,7 +121,7 @@ IMPLEMENT_FUNCTION_S(Mertens, bloodJacket, 2)
 		break;
 
 	case kActionDefault:
-		getEntities()->drawSequenceRight(kEntityMertens, params->seq1);
+		getEntities()->drawSequenceRight(kEntityMertens, (char *)&params->seq1);
 		break;
 
 	case kActionCallback:
@@ -156,7 +156,7 @@ IMPLEMENT_FUNCTION(Mertens, function6, 6)
 			break;
 		}
 
-		if (getProgress().jacket == kJacketOriginal
+		if (getProgress().jacket == kJacketBlood
 		 && getEntities()->checkFields9(kEntityMertens, kEntityNone, 1000)
 		 && !getEntities()->checkFields3(kEntityNone)
 		 && !getEntities()->checkFields10(kEntityNone)) {
@@ -215,7 +215,7 @@ IMPLEMENT_FUNCTION_II(Mertens, function10, 10)
 			break;
 		}
 
-		if (getProgress().jacket == kJacketOriginal) {
+		if (getProgress().jacket == kJacketBlood) {
 			setCallback(1);
 			call(new ENTITY_SETUP(Mertens, setup_savegame), kSavegameType2, kEventMertensBloodJacket);
 			break;
@@ -301,7 +301,7 @@ IMPLEMENT_FUNCTION_I(Mertens, function11, 11)
 		break;
 
 	case kActionNone:
-		if (getProgress().jacket == kJacketOriginal
+		if (getProgress().jacket == kJacketBlood
 			&& getEntities()->checkFields9(kEntityMertens, kEntityNone, 1000)
 			&& !getEntities()->checkFields3(kEntityNone)
 			&& !getEntities()->checkFields10(kEntityNone)) {

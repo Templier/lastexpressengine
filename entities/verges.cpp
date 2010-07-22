@@ -660,7 +660,7 @@ IMPLEMENT_FUNCTION_S(Verges, function30, 30)
 
 		case 2:
 			setCallback(3);
-			call(new ENTITY_SETUP_ISII(Verges, setup_function15), kEntityCoudert, params->seq1);
+			call(new ENTITY_SETUP_ISII(Verges, setup_function15), kEntityCoudert, (char *)&params->seq1);
 			break;
 
 		case 3:

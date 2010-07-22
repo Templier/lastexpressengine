@@ -1513,10 +1513,7 @@ void Action::pickGreenJacket(bool process) const {
 }
 
 void Action::pickScarf(bool process) const {
-	if (getProgress().jacket == kJacketOriginal)
-		playAnimation(kEventPickScarfGreen);
-	else
-		playAnimation(kEventPickScarfOriginal);
+	playAnimation(getProgress().jacket == kJacketGreen ? kEventPickScarfGreen : kEventPickScarfOriginal);
 
 	if (process)
 		getScenes()->processScene();
@@ -1524,33 +1521,30 @@ void Action::pickScarf(bool process) const {
 
 void Action::pickCorpse(byte bedPosition, bool process) const {
 
+	if (getProgress().jacket == kJacketOriginal)
+		getProgress().jacket = kJacketBlood;
+
 	switch(getInventory()->getEntry(kItemCorpse)->location) {
+	// No way to pick the corpse
+	default:
+		break;
+
 	// Floor
 	case kLocation1:
 		if (bedPosition != 4) {
-			if (getProgress().jacket == kJacketOriginal)
-				playAnimation(kEventCorpsePickFloorOriginal);
-			else
-				playAnimation(kEventCorpsePickFloorGreen);
-
+			playAnimation(getProgress().jacket == kJacketGreen ? kEventCorpsePickFloorGreen : kEventCorpsePickFloorOriginal);
 			break;
 		}
 
-		playAnimation(kEventCorpsePickFloorOpenedBedOriginal);
+		if (getProgress().jacket)
+			playAnimation(kEventCorpsePickFloorOpenedBedOriginal);
+
 		getInventory()->getEntry(kItemCorpse)->location = kLocation5;
 		break;
 
 	// Bed
 	case kLocation2:
-		if (getProgress().jacket == kJacketOriginal)
-			playAnimation(kEventCorpsePickBedOriginal);
-		else
-			playAnimation(kEventCorpsePickBedGreen);
-
-		break;
-
-	// No way to pick the corpse
-	default:
+		playAnimation(getProgress().jacket == kJacketGreen ? kEventCorpsePickFloorGreen : kEventCorpsePickBedOriginal);
 		break;
 	}
 
@@ -1571,19 +1565,11 @@ void Action::dropCorpse(bool process) const {
 		break;
 
 	case kLocation1:	// Floor
-		if (getProgress().jacket == kJacketOriginal)
-			playAnimation(kEventCorpseDropFloorOriginal);
-		else
-			playAnimation(kEventCorpseDropFloorGreen);
-
+		playAnimation(getProgress().jacket == kJacketGreen ? kEventCorpseDropFloorGreen : kEventCorpseDropFloorOriginal);
 		break;
 
 	case kLocation2:	// Bed
-		if (getProgress().jacket == kJacketOriginal)
-			playAnimation(kEventCorpseDropBedOriginal);
-		else
-			playAnimation(kEventCorpseDropBedGreen);
-
+		playAnimation(getProgress().jacket == kJacketGreen ? kEventCorpseDropBedGreen : kEventCorpseDropBedOriginal);
 		break;
 
 	case kLocation4: // Window
@@ -1591,12 +1577,8 @@ void Action::dropCorpse(bool process) const {
 		getInventory()->getEntry(kItemCorpse)->location = kLocationNone;
 		getProgress().eventCorpseThrown = 1;
 
-		if (getState()->time <= 1138500) {
-
-			if (getProgress().jacket == kJacketOriginal)
-				playAnimation(kEventCorpseDropWindowOriginal);
-			else
-				playAnimation(kEventCorpseDropWindowGreen);
+		if (getState()->time <= kTime1138500) {
+			playAnimation(getProgress().jacket == kJacketGreen ? kEventCorpseDropWindowGreen : kEventCorpseDropWindowOriginal);
 
 			getProgress().field_24 = 1;
 		} else {
@@ -1698,7 +1680,8 @@ CursorStyle Action::getCursor(const SceneHotspot &hotspot) const {
 
 	ObjectIndex object = (ObjectIndex)hotspot.param1;
 
-	//warning("================================= OBJECT %03d =================================", object);
+	if (hotspot.action != SceneHotspot::kActionCompartment && hotspot.action != SceneHotspot::kActionExitCompartment)
+		warning("================================= OBJECT %03d =================================", object);
 
 	switch (hotspot.action) {
 	default:
@@ -1853,7 +1836,7 @@ CursorStyle Action::getCursor(const SceneHotspot &hotspot) const {
 		return kCursorNormal;
 
 LABEL_KEY:
-	// Handle department action
+	// Handle compartment action
 	case SceneHotspot::kActionCompartment:
 	case SceneHotspot::kActionExitCompartment:
 		if (object >= kObjectMax)

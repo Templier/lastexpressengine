@@ -220,8 +220,8 @@ bool SavePoints::updateEntityFromData(const SavePoint &savepoint) {
 			EntityData::EntityParametersIIII *params = (EntityData::EntityParametersIIII *)getEntities()->get(_data[i].entity1)->getParamData()->getParameters(8, 0);
 
 			// Check size before updating value
-			if (_data[i].param >= 8)
-				error("SavePoints::updateEntityFromData: invalid param index to update (was:%d, max:8)!", _data[i].param);
+			if (_data[i].param >= 32)
+				error("SavePoints::updateEntityFromData: invalid param index to update (was:%d, max:32)!", _data[i].param);
 
 			*((int*)params + _data[i].param) = 1;
 

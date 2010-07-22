@@ -141,6 +141,8 @@ public:
 	bool checkFields23(EntityIndex entity) const;
 	bool checkDistanceFromPosition(EntityIndex entity, EntityPosition position, int distance) const;
 	bool checkFields25(EntityIndex entity) const;
+	static bool isFemale(EntityIndex entityIndex);
+	static bool isMarried(EntityIndex entityIndex);
 
 	// Serializable
 	void saveLoadWithSerializer(Common::Serializer &ser);

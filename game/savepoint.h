@@ -60,7 +60,7 @@ struct SavePoint {
 	EntityIndex entity2;
 	union {
 		uint32 intValue;
-		char charValue[4];
+		char charValue[5];
 	} param;
 
 	SavePoint() {

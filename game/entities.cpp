@@ -2114,7 +2114,7 @@ label_process_entity:
 									if ((data->direction == kDirectionUp && data->entityPosition < objectsPosition[i] && (data->car != car || position > objectsPosition[i]))
 									 || (data->direction == kDirectionDown && data->entityPosition > objectsPosition[i] && (data->car != car || position < objectsPosition[i]))) {
 
-										 getSound()->excuseMe(entity, State::getPowerOfTwo(getCompartments(compartmentIndex) ? getCompartments(compartmentIndex) : getCompartments1(compartmentIndex)));
+										 getSound()->excuseMe(entity, (EntityIndex)(State::getPowerOfTwo(getCompartments(compartmentIndex) ? getCompartments(compartmentIndex) : getCompartments1(compartmentIndex))));
 
 										 data->field_497 = 144;
 
@@ -2304,7 +2304,7 @@ bool Entities::changeCar(EntityData::EntityCallData * data, EntityIndex entity, 
 	if (data->car == newCar) {
 		if (checkFields6(kEntityNone)) {
 			getSound()->playSoundEvent(kEntityNone, 14);
-			getSound()->excuseMe(entity, 0, 16);
+			getSound()->excuseMe(entity, kEntityNone, 16);
 			getScenes()->loadSceneFromPosition(kCarGreenSleeping, 1);
 			getSound()->playSound(kEntityNone, "CAT1127A");
 			getSound()->playSoundEvent(kEntityNone, 15);
@@ -2323,7 +2323,7 @@ bool Entities::changeCar(EntityData::EntityCallData * data, EntityIndex entity, 
 	if (data->car == newCar) {
 		if (checkFields23(kEntityNone)) {
 			getSound()->playSoundEvent(kEntityNone, 14);
-			getSound()->excuseMe(entity, 0, 16);
+			getSound()->excuseMe(entity, kEntityNone, 16);
 			getScenes()->loadSceneFromPosition(kCarGreenSleeping, 62);
 			getSound()->playSound(kEntityNone, "CAT1127A");
 			getSound()->playSoundEvent(kEntityNone, 15);
@@ -2563,6 +2563,25 @@ bool Entities::checkFields25(EntityIndex entity) const {
 		return true;
 
 	return (getData(entity)->direction == kDirectionDown && getScenes()->checkPosition(kSceneNone, SceneManager::kCheckPositionType0));
+}
+
+bool Entities::isFemale(EntityIndex entity) {
+	return (entity == kEntityAnna
+		 || entity == kEntityTatiana
+		 || entity == kEntityVesna
+		 || entity == kEntityKahina
+		 || entity == kEntityMmeBoutarel
+		 || entity == kEntityRebecca
+		 || entity == kEntitySophie
+		 || entity == kEntityYasmin
+		 || entity == kEntityHadija
+		 || entity == kEntityAlouan);
+}
+
+bool Entities::isMarried(EntityIndex entity) {
+	return (entity != kEntityTatiana
+		 && entity != kEntityRebecca
+		 && entity != kEntitySophie);
 }
 
 bool Entities::checkPosition(EntityPosition position) const {

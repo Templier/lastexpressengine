@@ -163,14 +163,14 @@ IMPLEMENT_FUNCTION_IIS(August, function10, 10)
 
 	case kActionExitCompartment:
 		if (!params->param6)
-			getSavePoints()->call(kEntityAugust, (EntityIndex)params->param1, (ActionIndex)params->param2, params->seq1);
+			getSavePoints()->call(kEntityAugust, (EntityIndex)params->param1, (ActionIndex)params->param2, (char *)&params->seq1);
 
 		CALLBACK_ACTION();
 		break;
 
 	case kAction10:
 		if (!params->param6) {
-			getSavePoints()->call(kEntityAugust, (EntityIndex)params->param1, (ActionIndex)params->param2, params->seq1);
+			getSavePoints()->call(kEntityAugust, (EntityIndex)params->param1, (ActionIndex)params->param2, (char *)&params->seq1);
 			params->param6 = 1;
 		}
 		break;

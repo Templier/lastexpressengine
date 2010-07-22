@@ -227,7 +227,7 @@ IMPLEMENT_FUNCTION(Rebecca, chapter1_handler, 22)
 		TIME_CHECK_PLAYSOUND(Rebecca, kTime1084500, params->param3, 1, "REB1015");
 
 		if (params->param4 == kTimeInvalid || !getState()->time)
-			goto label_function22_callback_5;
+			goto label_function22_callback_4;
 
 		if (getState()->time > kTime1080000) {
 			params->param4 = kTimeInvalid;
@@ -254,10 +254,13 @@ IMPLEMENT_FUNCTION(Rebecca, chapter1_handler, 22)
 		if (params->param4 >= (int)getState()->time) {
 label_function22_callback_4:
 			if (params->param1) {
-				if ((params->param5 && !(getState()->time + 900)) || params->param5 < (int)getState()->time) {
-					if (params->param5 >= (int)getState()->time)
-						params->param5 = (int)getState()->time + 900;
+				bool checkParam5 = false;
+				if (!params->param5) {
+					params->param5 = (int)getState()->time + 900;
+					checkParam5 = true;
+				}
 
+				if (checkParam5 || params->param5 < (int)getState()->time) {
 					if (getEntities()->checkFields12(kEntityNone)) {
 						setCallback(5);
 						call(new ENTITY_SETUP_SIIS(Rebecca, setup_playSound), "REB1013");

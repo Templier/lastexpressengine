@@ -105,7 +105,7 @@ IMPLEMENT_FUNCTION_SIII(Mahmud, function4, 4)
 		break;
 
 	case kActionDefault:
-		getEntities()->drawSequenceRight(kEntityMahmud, params->seq);
+		getEntities()->drawSequenceRight(kEntityMahmud, (char *)&params->seq);
 		getEntities()->enterCompartment(kEntityMahmud, (ObjectIndex)params->param4, true);
 		break;
 	}
@@ -609,7 +609,7 @@ IMPLEMENT_FUNCTION(Mahmud, chapters_handler, 14)
 		if (params->param5) {
 			getObjects()->update(kObjectCompartment4, kEntityMahmud, kLocation3, kCursorNormal, kCursorNormal);
 
-			if (getProgress().jacket == kJacketOriginal
+			if (getProgress().jacket == kJacketBlood
 			 || getEvent(kEventMahmudWrongDoor) || getEvent(kEventMahmudWrongDoorOriginalJacket) || getEvent(kEventMahmudWrongDoorDay)) {
 
 				 // Check if we have the passenger list
@@ -687,7 +687,7 @@ IMPLEMENT_FUNCTION(Mahmud, chapters_handler, 14)
 			CursorStyle cursor = kCursorHand;
 			CursorStyle cursor2 = kCursorHandKnock;
 
-			if (getProgress().jacket == kJacketOriginal
+			if (getProgress().jacket == kJacketBlood
 			 || getEvent(kEventMahmudWrongDoor)
 			 || getEvent(kEventMahmudWrongDoorOriginalJacket)
 			 || getEvent(kEventMahmudWrongDoorDay)) {

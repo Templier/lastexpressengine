@@ -50,7 +50,7 @@ Anna::Anna(LastExpressEngine *engine) : Entity(engine, kEntityAnna) {
 	ADD_CALLBACK_FUNCTION(Anna, playSound);
 	ADD_CALLBACK_FUNCTION(Anna, function8);
 	ADD_CALLBACK_FUNCTION(Anna, savegame);
-	ADD_CALLBACK_FUNCTION(Anna, function10);
+	ADD_CALLBACK_FUNCTION(Anna, checkEntity);
 	ADD_CALLBACK_FUNCTION(Anna, updateFromTime);
 	ADD_CALLBACK_FUNCTION(Anna, function12);
 	ADD_CALLBACK_FUNCTION(Anna, draw2);
@@ -160,28 +160,17 @@ IMPLEMENT_FUNCTION_II(Anna, savegame, 9)
 	Entity::savegame(savepoint);
 }
 
-IMPLEMENT_FUNCTION_II(Anna, function10, 10)
-	switch (savepoint.action) {
-	default:
-		break;
-
-	case kActionExcuseMeCath:
+IMPLEMENT_FUNCTION_II(Anna, checkEntity, 10)
+	if (savepoint.action == kActionExcuseMeCath) {
 		if (getEvent(kEventAugustPresentAnna) || getEvent(kEventAugustPresentAnnaFirstIntroduction) || getProgress().chapter >= kChapter2)
 			getSound()->playSound(kEntityNone, "CAT1001");
 		else
 			getSound()->excuseMeCath();
-		break;
-
-	case kActionExcuseMe:
-		getSound()->excuseMe(kEntityAnna);
-		break;
-
-	case kActionNone:
-	case kActionDefault:
-		if (getEntities()->checkEntity(kEntityAnna, (CarIndex)params->param1, (EntityPosition)params->param2))
-			CALLBACK_ACTION()
-		break;
+	
+		return;
 	}
+
+	Entity::checkEntity(savepoint, true);
 }
 
 IMPLEMENT_FUNCTION_I(Anna, updateFromTime, 11)
@@ -278,7 +267,7 @@ IMPLEMENT_FUNCTION_IS(Anna, function15, 15)
 	case kActionDefault:
 		getObjects()->update(kObjectCompartmentF, kEntityAnna, kLocation1, kCursorHandKnock, kCursorHand);
 		getObjects()->update(kObject53, kEntityAnna, kLocation1, kCursorHandKnock, kCursorHand);
-		getEntities()->drawSequenceLeft(kEntityAnna, params->seq);
+		getEntities()->drawSequenceLeft(kEntityAnna, (char *)&params->seq);
 		break;
 
 	case kActionDrawScene:
@@ -353,7 +342,6 @@ IMPLEMENT_FUNCTION(Anna, chapter1, 16)
 		getData()->field_493 = kField493_1;
 		getData()->car = kCarGreenSleeping;
 		getData()->clothes = kClothesDefault;
-
 		break;
 	}
 }
@@ -386,7 +374,7 @@ IMPLEMENT_FUNCTION(Anna, chapter1_handler, 19)
 			getData()->field_493 = kField493_0;
 
 			setCallback(2);
-			call(new ENTITY_SETUP(Anna, setup_function10), kCarRedSleeping, kPosition_4070);
+			call(new ENTITY_SETUP(Anna, setup_checkEntity), kCarRedSleeping, kPosition_4070);
 			break;
 
 		case 2:
@@ -660,7 +648,7 @@ IMPLEMENT_FUNCTION(Anna, function36, 36)
 		getObjects()->update(kObjectCompartmentF, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
 
 		setCallback(1);
-		call(new ENTITY_SETUP(Anna, setup_function10), kCarRedSleeping, kPosition_8200);
+		call(new ENTITY_SETUP(Anna, setup_checkEntity), kCarRedSleeping, kPosition_8200);
 		break;
 
 	case kActionCallback:

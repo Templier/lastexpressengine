@@ -319,7 +319,7 @@ IMPLEMENT_FUNCTION(Vassili, seizure, 10)
 			break;
 		}
 
-		if (getProgress().jacket == kJacketOriginal) {
+		if (getProgress().jacket == kJacketBlood) {
 			getAction()->playAnimation(kEventMertensBloodJacket);
 			getLogic()->gameOver(kTimeType0, kTime0, kSceneNone, false);
 			break;

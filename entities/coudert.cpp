@@ -27,6 +27,7 @@
 
 #include "lastexpress/game/action.h"
 #include "lastexpress/game/entities.h"
+#include "lastexpress/game/inventory.h"
 #include "lastexpress/game/logic.h"
 #include "lastexpress/game/object.h"
 #include "lastexpress/game/savepoint.h"
@@ -51,7 +52,7 @@ Coudert::Coudert(LastExpressEngine *engine) : Entity(engine, kEntityCoudert) {
 	ADD_CALLBACK_FUNCTION(Coudert, function9);
 	ADD_CALLBACK_FUNCTION(Coudert, function10);
 	ADD_CALLBACK_FUNCTION(Coudert, function11);
-	ADD_CALLBACK_FUNCTION(Coudert, function12);
+	ADD_CALLBACK_FUNCTION(Coudert, excuseMe);
 	ADD_CALLBACK_FUNCTION(Coudert, function13);
 	ADD_CALLBACK_FUNCTION(Coudert, function14);
 	ADD_CALLBACK_FUNCTION(Coudert, function15);
@@ -115,7 +116,7 @@ IMPLEMENT_FUNCTION_S(Coudert, bloodJacket, 2)
 		break;
 
 	case kActionNone:
-		if (getProgress().jacket == kJacketOriginal
+		if (getProgress().jacket == kJacketBlood
 		 && getEntities()->checkFields9(kEntityCoudert, kEntityNone, 1000)
 		 && !getEntities()->checkFields3(kEntityNone)
 		 && !getEntities()->checkFields10(kEntityNone)) {
@@ -129,7 +130,7 @@ IMPLEMENT_FUNCTION_S(Coudert, bloodJacket, 2)
 		break;
 
 	case kActionDefault:
-		getEntities()->drawSequenceRight(kEntityCoudert, params->seq1);
+		getEntities()->drawSequenceRight(kEntityCoudert, (char *)&params->seq1);
 		break;
 
 	case kActionCallback:
@@ -146,7 +147,36 @@ IMPLEMENT_FUNCTION_SI(Coudert, function3, 3)
 }
 
 IMPLEMENT_FUNCTION(Coudert, function4, 4)
-	error("Coudert: callback function 4 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionNone:
+		if (getData()->direction != kDirectionRight) {
+			CALLBACK_ACTION();
+			break;
+		}
+
+		if (getProgress().jacket == kJacketBlood
+		 && getEntities()->checkFields9(kEntityCoudert, kEntityNone, 1000)
+		 && !getEntities()->checkFields3(kEntityNone)
+		 && !getEntities()->checkFields10(kEntityNone)) {
+			setCallback(1);
+			call(new ENTITY_SETUP(Coudert, setup_savegame), kSavegameType2, kEventMertensBloodJacket);
+		}
+		break;
+
+	case kActionExitCompartment:
+		CALLBACK_ACTION();
+		break;
+
+	case kActionCallback:
+		if (getCallback() == 1) {
+			getAction()->playAnimation(kEventCoudertBloodJacket);
+			getLogic()->gameOver(kTimeType0, kTime1, kSceneGameOverBloodJacket, true);
+		}
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION_SIII(Coudert, function5, 5)
@@ -183,8 +213,56 @@ IMPLEMENT_FUNCTION_I(Coudert, function11, 11)
 	error("Coudert: callback function 11 not implemented!");
 }
 
-IMPLEMENT_FUNCTION_I(Coudert, function12, 12)
-	error("Coudert: callback function 12 not implemented!");
+//////////////////////////////////////////////////////////////////////////
+// Parameters
+//  - EntityIndex
+IMPLEMENT_FUNCTION_I(Coudert, excuseMe, 12)
+	if (savepoint.action != kActionDefault)
+		return;
+
+	if (getSound()->isBuffered(kEntityCoudert)) {
+		CALLBACK_ACTION();
+		return;
+	}
+
+
+	if (isDay()) {
+		if (getEntities()->isFemale((EntityIndex)params->param1)) {
+			getSound()->playSound(kEntityCoudert, getEntities()->isMarried((EntityIndex)params->param1) ? "JAC1112C" : "JAC1112F");
+		} else {
+			if (!params->param1 && getProgress().field_18 == 2) {
+				switch (random(4)) {
+				default:
+					break;
+
+				case 0:
+					getSound()->playSound(kEntityCoudert, "JAC1013");
+					break;
+
+				case 1:
+					getSound()->playSound(kEntityCoudert, "JAC1013A");
+					break;
+
+				case 2:
+					getSound()->playSound(kEntityCoudert, "JAC1113");
+					break;
+
+				case 3:
+					getSound()->playSound(kEntityCoudert, "JAC1113A");
+					break;
+				}
+			} else {
+				getSound()->playSound(kEntityCoudert, "JAC1112D");
+			}
+		}
+	} else {
+		if (getEntities()->isFemale((EntityIndex)params->param1))
+			getSound()->playSound(kEntityCoudert, getEntities()->isMarried((EntityIndex)params->param1) ? "JAC1112B" : "JAC1112G");
+		else
+			getSound()->playSound(kEntityCoudert, "JAC1112E");
+	}
+
+	CALLBACK_ACTION();
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -192,7 +270,131 @@ IMPLEMENT_FUNCTION_I(Coudert, function12, 12)
 //  - bool
 //  - EntityIndex
 IMPLEMENT_FUNCTION_II(Coudert, function13, 13)
-	error("Coudert: callback function 13 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionNone:
+		if (getProgress().jacket == kJacketBlood
+		 && getEntities()->checkFields9(kEntityCoudert, kEntityNone, 1000)
+		 && !getEntities()->checkFields3(kEntityNone)
+		 && !getEntities()->checkFields10(kEntityNone)) {
+			setCallback(3);
+			call(new ENTITY_SETUP(Coudert, setup_savegame), kSavegameType2, kEventMertensBloodJacket);
+			break;
+		}
+
+		if (!params->param2 && !params->param3) {
+
+			if (!params->param4) {
+				params->param4 = getState()->timeTicks + 75;
+
+				if (!params->param4) {
+					getData()->inventoryItem = kItemNone;
+					setCallback(4);
+					call(new ENTITY_SETUP(Coudert, setup_function19), true);
+					break;
+				}
+			}
+
+			if (params->param4 < (int)getState()->timeTicks) {
+				params->param4 = kTimeInvalid;
+
+				getData()->inventoryItem = kItemNone;
+				setCallback(4);
+				call(new ENTITY_SETUP(Coudert, setup_function19), true);
+				break;
+			}
+		}
+
+		UPDATE_PARAM(params->param5, getState()->timeTicks, 225);
+
+		getData()->inventoryItem = kItemNone;
+		setCallback(5);
+		call(new ENTITY_SETUP(Coudert, setup_function19), true);
+		break;
+
+	case kAction1:
+		getData()->inventoryItem = kItemNone;
+
+		setCallback(9);
+		call(new ENTITY_SETUP(Coudert, setup_savegame), kSavegameType2, kEventCoudertAskTylerCompartment);
+		break;
+
+	case kAction11:
+		++params->param3;
+
+		setCallback(8);
+		call(new ENTITY_SETUP(Coudert, setup_excuseMe), savepoint.entity2);
+		break;
+
+	case kActionDefault:
+		if (params->param2)
+			params->param3 = 1;
+
+		setCallback(1);
+		call(new ENTITY_SETUP(Coudert, setup_excuseMe), params->param2);
+		break;
+
+	case kAction16:
+		--params->param3;
+
+		if (params->param2 && !params->param3) {
+			getData()->inventoryItem = kItemNone;
+			setCallback(7);
+			call(new ENTITY_SETUP(Coudert, setup_function19), true);
+		}
+		break;
+
+	case kActionDrawScene:
+		if (!params->param3) {
+			getData()->inventoryItem = kItemNone;
+			setCallback(6);
+			call(new ENTITY_SETUP(Coudert, setup_function19), true);
+		}
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			setCallback(2);
+			call(new ENTITY_SETUP(Coudert, setup_function17), true);
+			break;
+
+		case 2:
+			if (getProgress().chapter == kChapter1 && !getProgress().eventCorpseFound && !getEvent(kEventCoudertAskTylerCompartment))
+				getData()->inventoryItem = kItemInvalid;
+
+			getEntities()->drawSequenceLeft(kEntityCoudert, params->param1 ? "667I" : "667H");
+			break;
+
+		case 3:
+			getAction()->playAnimation(kEventCoudertBloodJacket);
+			getLogic()->gameOver(kTimeType0, kTime1, kSceneGameOverBloodJacket, true);
+			// BUG: the original game continues executing code here
+			break;
+
+		case 4:
+		case 5:
+		case 6:
+		case 7:
+			CALLBACK_ACTION();
+			break;
+
+		case 9:
+			getAction()->playAnimation(kEventCoudertAskTylerCompartment);
+			getScenes()->loadSceneFromPosition(kCarRedSleeping, 25);
+			break;
+		}
+		break;
+
+	case kAction201439712:
+		getEntities()->drawSequenceLeft(kEntityCoudert, "627K");
+		break;
+	}
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -210,16 +412,103 @@ IMPLEMENT_FUNCTION(Coudert, function16, 16)
 	error("Coudert: callback function 16 not implemented!");
 }
 
+//////////////////////////////////////////////////////////////////////////
+// Parameters
+//  - bool
 IMPLEMENT_FUNCTION_I(Coudert, function17, 17)
-	error("Coudert: callback function 17 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionDefault:
+		getScenes()->loadSceneFromItemPosition(kItem5);
+
+		if (ENTITY_PARAM(2, 1)) {
+			ENTITY_PARAM(2, 1) = 0;
+			CALLBACK_ACTION();
+			break;
+		}
+
+		if (params->param1) {
+			setCallback(1);
+			call(new ENTITY_SETUP_SIIS(Coudert, setup_bloodJacket), "627H");
+			break;
+		}
+
+		if (params->param2) {
+			setCallback(2);
+			call(new ENTITY_SETUP_SIIS(Coudert, setup_bloodJacket), "627C");
+			break;
+		}
+
+		setCallback(3);
+		call(new ENTITY_SETUP_SIIS(Coudert, setup_bloodJacket), "627F");
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+		case 2:
+		case 3:
+			CALLBACK_ACTION();
+			break;
+		}
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Coudert, function18, 18)
 	error("Coudert: callback function 18 not implemented!");
 }
 
+//////////////////////////////////////////////////////////////////////////
+// Parameters
+//  - bool
 IMPLEMENT_FUNCTION_I(Coudert, function19, 19)
-	error("Coudert: callback function 19 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionDefault:
+		if (ENTITY_PARAM(0, 6) || ENTITY_PARAM(0, 8)
+		 || ENTITY_PARAM(1, 1) || ENTITY_PARAM(1, 2) || ENTITY_PARAM(1, 3) || ENTITY_PARAM(1, 5) || ENTITY_PARAM(1, 6) || ENTITY_PARAM(1, 7) || ENTITY_PARAM(1, 8)
+		 || ENTITY_PARAM(2, 4) || ENTITY_PARAM(2, 6)) {
+			getInventory()->setLocationAndProcess(kItem5, kLocation1);
+			ENTITY_PARAM(2, 1) = 1;
+			CALLBACK_ACTION();
+			break;
+		}
+
+		if (ENTITY_PARAM(0, 3) || ENTITY_PARAM(0, 5) || ENTITY_PARAM(0, 4)) {
+			getScenes()->loadSceneFromItemPosition(kItem5);
+			ENTITY_PARAM(2, 1);
+			CALLBACK_ACTION();
+			break;
+		}
+
+		if (params->param1)
+			getEntities()->drawSequenceRight(kEntityCoudert, "697H");
+		else
+			getEntities()->drawSequenceRight(kEntityCoudert, ENTITY_PARAM(0, 2) ? "627A" : "627D");
+
+		getScenes()->loadSceneFromItemPosition(kItem5);
+
+		setCallback(1);
+		call(new ENTITY_SETUP(Coudert, setup_function4));
+		break;
+
+	case kActionCallback:
+		if (getCallback() == 1) {
+			getEntities()->drawSequenceLeft(kEntityCoudert, ENTITY_PARAM(0, 2) ? "627B" : "627E");
+			ENTITY_PARAM(0, 1) = 0;
+
+			CALLBACK_ACTION();
+		}
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION_II(Coudert, function20, 20)
@@ -529,9 +818,9 @@ label_coudert_object:
 			if (!getEntities()->isPlayerPosition(kCarRedSleeping, 1) && !getEntities()->isPlayerPosition(kCarRedSleeping, 23))
 				break;
 
-			if (getProgress().jacket == kJacketOriginal) {
-				//setCallback(1);
-				//call(new ENTITY_SETUP(Coudert, setup_savegame), kSavegameType2, kEventCoudertBloodJacket);
+			if (getProgress().jacket == kJacketBlood) {
+				setCallback(1);
+				call(new ENTITY_SETUP(Coudert, setup_savegame), kSavegameType2, kEventCoudertBloodJacket);
 			} else {
 				setCallback(getEntities()->isPlayerPosition(kCarRedSleeping, 1) ? 2 : 3);
 				call(new ENTITY_SETUP(Coudert, setup_function13), true, kEntityNone);

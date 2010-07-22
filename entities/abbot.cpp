@@ -124,7 +124,7 @@ IMPLEMENT_FUNCTION_SI(Abbot, function4, 4)
 		break;
 
 	case kActionDefault:
-		getEntities()->drawSequenceRight(kEntityAbbot, params->seq1);
+		getEntities()->drawSequenceRight(kEntityAbbot, (char *)&params->seq1);
 		getEntities()->enterCompartment(kEntityAbbot, (ObjectIndex)params->param4, false);
 
 		getData()->field_493 = kField493_1;

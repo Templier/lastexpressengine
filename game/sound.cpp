@@ -767,11 +767,11 @@ void SoundManager::readText(int id){
 //////////////////////////////////////////////////////////////////////////
 // Sound bites
 //////////////////////////////////////////////////////////////////////////
-void SoundManager::excuseMe(EntityIndex entity, int param2, int param3) {
+void SoundManager::excuseMe(EntityIndex entity, EntityIndex entity2, int param3) {
 	if (isBuffered(entity) && entity != kEntityNone && entity != kEntityChapters && entity != kEntityTrain)
 		return;
 
-	if (param2 == 20 || param2 == 30)
+	if (entity2 == kEntityFrancois || entity2 == kEntityMax)
 		return;
 
 	if (entity == kEntityFrancois && getEntityData(kEntityFrancois)->field_4A3 != 30)
@@ -812,10 +812,10 @@ void SoundManager::excuseMe(EntityIndex entity, int param2, int param3) {
 		break;
 
 	case kEntityMertens:
-		if (testParameter(param2)) {
+		if (getEntities()->isFemale(entity2)) {
 			playSound(kEntityNone, (random(2) ? "CON1111" : "CON1111A"), param3);
 		} else {
-			if (param2 || getProgress().jacket != kJacketGreen || !random(2)) {
+			if (entity2 || getProgress().jacket != kJacketGreen || !random(2)) {
 				switch(random(3)) {
 				default:
 					break;
@@ -843,10 +843,10 @@ void SoundManager::excuseMe(EntityIndex entity, int param2, int param3) {
 		break;
 
 	case kEntityCoudert:
-		if (testParameter(param2)) {
+		if (getEntities()->isFemale(entity2)) {
 			playSound(kEntityNone, "JAC1111D", param3);
 		} else {
-			if (param2 || getProgress().jacket != kJacketGreen || !random(2)) {
+			if (entity2 || getProgress().jacket != kJacketGreen || !random(2)) {
 				switch(random(4)) {
 				default:
 					break;
@@ -898,7 +898,7 @@ void SoundManager::excuseMe(EntityIndex entity, int param2, int param3) {
 		break;
 
 	case kEntityVerges:
-		if (testParameter(param2)) {
+		if (getEntities()->isFemale(entity2)) {
 			playSound(kEntityNone, (random(2) ? "TRA1113A" : "TRA1113B"));
 		} else {
 			playSound(kEntityNone, "TRA1112", param3);
@@ -914,7 +914,7 @@ void SoundManager::excuseMe(EntityIndex entity, int param2, int param3) {
 		break;
 
 	case kEntityAbbot:
-		if (testParameter(param2)) {
+		if (getEntities()->isFemale(entity2)) {
 			playSound(kEntityNone, "ABB3002C", param3);
 		} else {
 			switch(random(3)) {
@@ -994,7 +994,6 @@ void SoundManager::excuseMe(EntityIndex entity, int param2, int param3) {
 		break;
 
 	case kEntitySophie: {
-		bool param2Test = testParameter(param2);
 		switch(random(3)) {
 		default:
 			break;
@@ -1004,11 +1003,11 @@ void SoundManager::excuseMe(EntityIndex entity, int param2, int param3) {
 			break;
 
 		case 1:
-			playSound(kEntityNone, param2Test ? "SOP1105C" : "SOP1105A", param3);
+			playSound(kEntityNone, getEntities()->isFemale(entity2) ? "SOP1105C" : "SOP1105A", param3);
 			break;
 
 		case 2:
-			playSound(kEntityNone, param2Test ? "SOP1105D" : "SOP1105B", param3);
+			playSound(kEntityNone, getEntities()->isFemale(entity2) ? "SOP1105D" : "SOP1105B", param3);
 			break;
 		}
 		break;
@@ -1115,13 +1114,6 @@ const char *SoundManager::justAMinuteCath() const {
 	}
 
 	return "CAT1520";
-}
-
-//////////////////////////////////////////////////////////////////////////
-// Tests
-//////////////////////////////////////////////////////////////////////////
-bool SoundManager::testParameter(int param) {
-	return (param == 1 || param == 10 || param == 15 || param == 19 || param == 21 || param == 23 || param == 24 || param == 26 || param == 27 || param == 28);
 }
 
 //////////////////////////////////////////////////////////////////////////

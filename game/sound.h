@@ -123,14 +123,11 @@ public:
 	const char *getDialogName(EntityIndex entity) const;
 
 	// Sound bites
-	void excuseMe(EntityIndex entity, int param2 = 0, int param3 = 0);
+	void excuseMe(EntityIndex entity, EntityIndex entity2 = kEntityNone, int param3 = 0);
 	const char *excuseMeCath() const;
 	const char *justCheckingCath() const;
 	const char *wrongDoorCath() const;
 	const char *justAMinuteCath() const;
-
-	// Tests
-	static bool testParameter(int param);
 
 	// Sound streams
 	// TODO make private

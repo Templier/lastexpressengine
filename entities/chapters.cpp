@@ -201,12 +201,12 @@ IMPLEMENT_FUNCTION(Chapters, chapter1_init, 7)
 	params->param1 = 40;
 
 	getObjects()->updateLocation2(kObject25, kLocation1);
-	getObjects()->updateLocation2(kObjectGreenSleepingCar, kLocation1);
+	getObjects()->updateLocation2(kObjectTrainTimeTable, kLocation1);
 	getObjects()->updateLocation2(kObject98, kLocation1);
 	getObjects()->updateLocation2(kObjectRestaurantCar, kLocation1);
 
 	getObjects()->update(kObject25, kEntityNone, kLocationNone, kCursorNormal, kCursorForward);
-	getObjects()->update(kObjectGreenSleepingCar, kEntityNone, kLocationNone, kCursorNormal, kCursorForward);
+	getObjects()->update(kObjectTrainTimeTable, kEntityNone, kLocationNone, kCursorNormal, kCursorForward);
 	getObjects()->update(kObjectRedSleepingCar, kEntityNone, kLocationNone, kCursorNormal, kCursorForward);
 	getObjects()->update(kObject28, kEntityNone, kLocationNone, kCursorNormal, kCursorForward);
 	getObjects()->update(kObject56, kEntityNone, kLocationNone, kCursorNormal, kCursorForward);

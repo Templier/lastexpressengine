@@ -159,7 +159,7 @@ namespace LastExpress {
 #define EXPOSE_PARAMS(type) \
 	type *params = (type*)_data->getCurrentParameters(); \
 	if (!params) \
-		error("Trying to call an entity callback function with invalid parameters!");
+		error("Trying to call an entity callback function with invalid parameters!"); \
 
 // Implement call function and check for valid savepoint and parameters
 #define IMPLEMENT_CALL(class, name, index) \
@@ -178,38 +178,38 @@ namespace LastExpress {
 #define IMPLEMENT_FUNCTION(class, name, index) \
 	IMPLEMENT_SETUP(class, class, name, index) \
 	IMPLEMENT_CALL(class, name, index) \
-	EXPOSE_PARAMS(EntityData::EntityParametersIIII)
+	EXPOSE_PARAMS(EntityData::EntityParametersIIII) \
+	//debugC(6, kLastExpressDebugLogic, "Entity: " #class "::" #name "() - action: %d", savepoint.action);
 
 // setup with one int parameter
 #define IMPLEMENT_FUNCTION_I(class, name, index) \
 	void class::setup_##name(int param1, int, int, int) { \
 	BEGIN_SETUP(class, name, index) \
-	debugC(6, kLastExpressDebugLogic, "Entity: " #class "::setup_" #name "(%d)", param1); \
 	EntityData::EntityParametersIIII *params = (EntityData::EntityParametersIIII*)_data->getCurrentParameters(); \
 	params->param1 = param1; \
 	END_SETUP() \
 	} \
 	IMPLEMENT_CALL(class, name, index) \
-	EXPOSE_PARAMS(EntityData::EntityParametersIIII)
+	EXPOSE_PARAMS(EntityData::EntityParametersIIII) \
+	debugC(6, kLastExpressDebugLogic, "Entity: " #class "::" #name "(%d) - action: %d", params->param1, savepoint.action);
 
 // setup with two int parameters
 #define IMPLEMENT_FUNCTION_II(class, name, index) \
 	void class::setup_##name(int param1, int param2, int, int) { \
 		BEGIN_SETUP(class, name, index) \
-		debugC(6, kLastExpressDebugLogic, "Entity: " #class "::setup_" #name "(%d, %d)", param1, param2); \
 		EntityData::EntityParametersIIII *params = (EntityData::EntityParametersIIII*)_data->getCurrentParameters(); \
 		params->param1 = param1; \
 		params->param2 = param2; \
 		END_SETUP() \
 	} \
 	IMPLEMENT_CALL(class, name, index) \
-	EXPOSE_PARAMS(EntityData::EntityParametersIIII)
+	EXPOSE_PARAMS(EntityData::EntityParametersIIII) \
+	debugC(6, kLastExpressDebugLogic, "Entity: " #class "::" #name "(%d, %d) - action: %d", params->param1, params->param2, savepoint.action);
 
 // setup with three int parameters
 #define IMPLEMENT_FUNCTION_III(class, name, index) \
 	void class::setup_##name(int param1, int param2, int param3, int) { \
 		BEGIN_SETUP(class, name, index) \
-		debugC(6, kLastExpressDebugLogic, "Entity: " #class "::setup_" #name "(%d, %d, %d)", param1, param2, param3); \
 		EntityData::EntityParametersIIII *params = (EntityData::EntityParametersIIII*)_data->getCurrentParameters(); \
 		params->param1 = param1; \
 		params->param2 = param2; \
@@ -217,38 +217,38 @@ namespace LastExpress {
 		END_SETUP() \
 	} \
 	IMPLEMENT_CALL(class, name, index) \
-	EXPOSE_PARAMS(EntityData::EntityParametersIIII)
+	EXPOSE_PARAMS(EntityData::EntityParametersIIII) \
+	debugC(6, kLastExpressDebugLogic, "Entity: " #class "::" #name "(%d, %d, %d) - action: %d", params->param1, params->param2, params->param3, savepoint.action);
 
 // setup with on char* parameter
 #define IMPLEMENT_FUNCTION_S(class, name, index) \
 	void class::setup_##name(const char* seq1, int, int, const char*) { \
 		BEGIN_SETUP(class, name, index) \
-		debugC(6, kLastExpressDebugLogic, "Entity: " #class "::setup_" #name "(%s)", seq1); \
 		EntityData::EntityParametersSIIS *params = (EntityData::EntityParametersSIIS*)_data->getCurrentParameters(); \
 		strncpy((char *)&params->seq1, seq1, 12); \
 		END_SETUP() \
 	} \
 	IMPLEMENT_CALL(class, name, index) \
-	EXPOSE_PARAMS(EntityData::EntityParametersSIIS)
+	EXPOSE_PARAMS(EntityData::EntityParametersSIIS) \
+	debugC(6, kLastExpressDebugLogic, "Entity: " #class "::" #name "(%s) - action: %d", (char *)&params->seq1, savepoint.action);
 
 // setup with on char* parameter and one int
 #define IMPLEMENT_FUNCTION_SI(class, name, index) \
 	void class::setup_##name(const char* seq1, int param4, int, const char*) { \
 		BEGIN_SETUP(class, name, index) \
-		debugC(6, kLastExpressDebugLogic, "Entity: " #class "::setup_" #name "(%s, %d)", seq1, param4); \
 		EntityData::EntityParametersSIIS *params = (EntityData::EntityParametersSIIS*)_data->getCurrentParameters(); \
 		strncpy((char *)&params->seq1, seq1, 12); \
 		params->param4 = param4; \
 		END_SETUP() \
 	} \
 	IMPLEMENT_CALL(class, name, index) \
-	EXPOSE_PARAMS(EntityData::EntityParametersSIIS)
+	EXPOSE_PARAMS(EntityData::EntityParametersSIIS) \
+	debugC(6, kLastExpressDebugLogic, "Entity: " #class "::" #name "(%s, %d) - action: %d", (char *)&params->seq1, params->param4, savepoint.action);
 
 // setup with on char* parameter and two ints
 #define IMPLEMENT_FUNCTION_SII(class, name, index) \
 	void class::setup_##name(const char* seq1, int param4, int param5, const char*) { \
 		BEGIN_SETUP(class, name, index) \
-		debugC(6, kLastExpressDebugLogic, "Entity: " #class "::setup_" #name "(%s, %d, %d)", seq1, param4, param5); \
 		EntityData::EntityParametersSIIS *params = (EntityData::EntityParametersSIIS*)_data->getCurrentParameters(); \
 		strncpy((char *)&params->seq1, seq1, 12); \
 		params->param4 = param4; \
@@ -256,13 +256,13 @@ namespace LastExpress {
 		END_SETUP() \
 	} \
 	IMPLEMENT_CALL(class, name, index) \
-	EXPOSE_PARAMS(EntityData::EntityParametersSIIS)
+	EXPOSE_PARAMS(EntityData::EntityParametersSIIS) \
+	debugC(6, kLastExpressDebugLogic, "Entity: " #class "::" #name "(%s, %d, %d) - action: %d", (char *)&params->seq1, params->param4, params->param5, savepoint.action);
 
 // setup with on char* parameter and three ints
 #define IMPLEMENT_FUNCTION_SIII(class, name, index) \
 	void class::setup_##name(const char* seq, int param4, int param5, int param6) { \
 		BEGIN_SETUP(class, name, index) \
-		debugC(6, kLastExpressDebugLogic, "Entity: " #class "::setup_" #name "(%s, %d, %d, %d)", seq, param4, param5, param6); \
 		EntityData::EntityParametersSIII *params = (EntityData::EntityParametersSIII*)_data->getCurrentParameters(); \
 		strncpy((char *)&params->seq, seq, 12); \
 		params->param4 = param4; \
@@ -271,12 +271,12 @@ namespace LastExpress {
 		END_SETUP() \
 	} \
 	IMPLEMENT_CALL(class, name, index) \
-	EXPOSE_PARAMS(EntityData::EntityParametersSIII)
+	EXPOSE_PARAMS(EntityData::EntityParametersSIII) \
+	debugC(6, kLastExpressDebugLogic, "Entity: " #class "::" #name "(%s, %d, %d, %d) - action: %d", (char *)&params->seq, params->param4, params->param5, params->param6, savepoint.action);
 
 #define IMPLEMENT_FUNCTION_SIIS(class, name, index) \
 	void class::setup_##name(const char* seq1, int param4, int param5, const char* seq2) { \
 		BEGIN_SETUP(class, name, index) \
-		debugC(6, kLastExpressDebugLogic, "Entity: " #class "::setup_" #name "(%s, %d, %d, %s)", seq1, param4, param5, seq2); \
 		EntityData::EntityParametersSIIS *params = (EntityData::EntityParametersSIIS*)_data->getCurrentParameters(); \
 		strncpy((char *)&params->seq1, seq1, 12); \
 		params->param4 = param4; \
@@ -285,24 +285,24 @@ namespace LastExpress {
 		END_SETUP() \
 	} \
 	IMPLEMENT_CALL(class, name, index) \
-	EXPOSE_PARAMS(EntityData::EntityParametersSIIS)
+	EXPOSE_PARAMS(EntityData::EntityParametersSIIS) \
+	debugC(6, kLastExpressDebugLogic, "Entity: " #class "::" #name "(%s, %d, %d, %s) - action: %d", (char *)&params->seq1, params->param4, params->param5, (char *)&params->seq2, savepoint.action);
 
 #define IMPLEMENT_FUNCTION_SS(class, name, index) \
 	void class::setup_##name(const char* seq1, const char* seq2, int, int) { \
 		BEGIN_SETUP(class, name, index) \
-		debugC(6, kLastExpressDebugLogic, "Entity: " #class "::setup_" #name "(%s, %s)", seq1, seq2); \
 		EntityData::EntityParametersSSII *params = (EntityData::EntityParametersSSII*)_data->getCurrentParameters(); \
 		strncpy((char *)&params->seq1, seq1, 12); \
 		strncpy((char *)&params->seq2, seq2, 12); \
 		END_SETUP() \
 	} \
 	IMPLEMENT_CALL(class, name, index) \
-	EXPOSE_PARAMS(EntityData::EntityParametersSSII)
+	EXPOSE_PARAMS(EntityData::EntityParametersSSII) \
+	debugC(6, kLastExpressDebugLogic, "Entity: " #class "::" #name "(%s, %s) - action: %d", (char *)&params->seq1, (char *)&params->seq2, savepoint.action);
 
 #define IMPLEMENT_FUNCTION_SSI(class, name, index) \
 	void class::setup_##name(const char* seq1, const char* seq2, int param7, int) { \
 		BEGIN_SETUP(class, name, index) \
-		debugC(6, kLastExpressDebugLogic, "Entity: " #class "::setup_" #name "(%s, %s, %d)", seq1, seq2, param7); \
 		EntityData::EntityParametersSSII *params = (EntityData::EntityParametersSSII*)_data->getCurrentParameters(); \
 		strncpy((char *)&params->seq1, seq1, 12); \
 		strncpy((char *)&params->seq2, seq2, 12); \
@@ -310,24 +310,24 @@ namespace LastExpress {
 		END_SETUP() \
 	} \
 	IMPLEMENT_CALL(class, name, index) \
-	EXPOSE_PARAMS(EntityData::EntityParametersSSII)
+	EXPOSE_PARAMS(EntityData::EntityParametersSSII) \
+	debugC(6, kLastExpressDebugLogic, "Entity: " #class "::" #name "(%s, %s, %d) - action: %d", (char *)&params->seq1, (char *)&params->seq2, params->param7, savepoint.action);
 
 #define IMPLEMENT_FUNCTION_IS(class, name, index) \
 	void class::setup_##name(int param1, const char* seq, int, int) { \
 		BEGIN_SETUP(class, name, index) \
-		debugC(6, kLastExpressDebugLogic, "Entity: " #class "::setup_" #name "(%d, %s)", param1, seq); \
 		EntityData::EntityParametersISII *params = (EntityData::EntityParametersISII*)_data->getCurrentParameters(); \
 		params->param1 = param1; \
 		strncpy((char *)&params->seq, seq, 12); \
 		END_SETUP() \
 	} \
 	IMPLEMENT_CALL(class, name, index) \
-	EXPOSE_PARAMS(EntityData::EntityParametersISII)
+	EXPOSE_PARAMS(EntityData::EntityParametersISII) \
+	debugC(6, kLastExpressDebugLogic, "Entity: " #class "::" #name "(%d, %s) - action: %d", params->param1, (char *)&params->seq, savepoint.action);
 
 #define IMPLEMENT_FUNCTION_ISS(class, name, index) \
 	void class::setup_##name(int param1, const char* seq1, const char* seq2, int) { \
 		BEGIN_SETUP(class, name, index) \
-		debugC(6, kLastExpressDebugLogic, "Entity: " #class "::setup_" #name "(%d, %s, %s)", param1, seq1, seq2); \
 		EntityData::EntityParametersISSI *params = (EntityData::EntityParametersISSI*)_data->getCurrentParameters(); \
 		params->param1 = param1; \
 		strncpy((char *)&params->seq1, seq1, 12); \
@@ -335,12 +335,12 @@ namespace LastExpress {
 		END_SETUP() \
 	} \
 	IMPLEMENT_CALL(class, name, index) \
-	EXPOSE_PARAMS(EntityData::EntityParametersISSI)
+	EXPOSE_PARAMS(EntityData::EntityParametersISSI) \
+	debugC(6, kLastExpressDebugLogic, "Entity: " #class "::" #name "(%d, %s, %s) - action: %d", params->param1, (char *)&params->seq1, (char *)&params->seq2, savepoint.action);
 
 #define IMPLEMENT_FUNCTION_IIS(class, name, index) \
 	void class::setup_##name(int param1, int param2, const char* seq1, int) { \
 		BEGIN_SETUP(class, name, index) \
-		debugC(6, kLastExpressDebugLogic, "Entity: " #class "::setup_" #name "(%d, %d, %s)", param1, param2, seq1); \
 		EntityData::EntityParametersIISI *params = (EntityData::EntityParametersIISI*)_data->getCurrentParameters(); \
 		params->param1 = param1; \
 		params->param2 = param2; \
@@ -348,12 +348,12 @@ namespace LastExpress {
 		END_SETUP() \
 	} \
 	IMPLEMENT_CALL(class, name, index) \
-	EXPOSE_PARAMS(EntityData::EntityParametersIISI)
+	EXPOSE_PARAMS(EntityData::EntityParametersIISI) \
+	debugC(6, kLastExpressDebugLogic, "Entity: " #class "::" #name "(%d, %d, %s) - action: %d", params->param1, params->param2, (char *)&params->seq1, savepoint.action);
 
 #define IMPLEMENT_FUNCTION_IISS(class, name, index) \
 	void class::setup_##name(int param1, int param2, const char* seq1, const char* seq2) { \
 		BEGIN_SETUP(class, name, index) \
-		debugC(6, kLastExpressDebugLogic, "Entity: " #class "::setup_" #name "(%d, %d, %s, %s)", param1, param2, seq1, seq2); \
 		EntityData::EntityParametersIISS *params = (EntityData::EntityParametersIISS*)_data->getCurrentParameters(); \
 		params->param1 = param1; \
 		params->param2 = param2; \
@@ -362,7 +362,8 @@ namespace LastExpress {
 		END_SETUP() \
 	} \
 	IMPLEMENT_CALL(class, name, index) \
-	EXPOSE_PARAMS(EntityData::EntityParametersIISS)
+	EXPOSE_PARAMS(EntityData::EntityParametersIISS) \
+	debugC(6, kLastExpressDebugLogic, "Entity: " #class "::" #name "(%d, %d, %s, %s) - action: %d", params->param1, params->param2, (char *)&params->seq1, (char *)&params->seq2, savepoint.action);
 
 //////////////////////////////////////////////////////////////////////////
 // Setup helpers

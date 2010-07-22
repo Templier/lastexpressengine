@@ -217,8 +217,8 @@ IMPLEMENT_FUNCTION_III(Gendarmes, function10, 10)
 
 			getSound()->playSound(kEntityGendarmes, "LIB017", 16);
 
-			setCallback(getProgress().jacket == kJacketOriginal ? 3 : 4);
-			call(new ENTITY_SETUP(Gendarmes, setup_savegame), kSavegameType2, getProgress().jacket == kJacketOriginal ? kEventMertensBloodJacket : kEventGendarmesArrestation);
+			setCallback(getProgress().jacket == kJacketBlood ? 3 : 4);
+			call(new ENTITY_SETUP(Gendarmes, setup_savegame), kSavegameType2, getProgress().jacket == kJacketBlood ? kEventMertensBloodJacket : kEventGendarmesArrestation);
 		}
 		break;
 
@@ -499,9 +499,9 @@ void Gendarmes::arrest(const SavePoint &savepoint, bool shouldPlaySound, int a3)
 
 	case kActionDefault:
 		if (!shouldPlaySound)
-			getEntities()->drawSequenceRight(kEntityGendarmes, params->seq1);
+			getEntities()->drawSequenceRight(kEntityGendarmes, (char *)&params->seq1);
 		else
-			getSound()->playSound(kEntityGendarmes, params->seq1, a3);
+			getSound()->playSound(kEntityGendarmes, (char *)&params->seq1, a3);
 		break;
 
 	case kActionCallback:

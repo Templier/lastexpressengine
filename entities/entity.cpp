@@ -184,7 +184,7 @@ void Entity::playSound(const SavePoint &savepoint, bool resetItem, int param3) {
 		if (resetItem)
 			getData()->inventoryItem = kItemNone;
 
-		getSound()->playSound(_entityIndex, params->seq1, param3);
+		getSound()->playSound(_entityIndex, (char *)&params->seq1, param3);
 		break;
 	}
 }
@@ -208,7 +208,7 @@ void Entity::draw(const SavePoint &savepoint, bool handleExcuseMe) {
 		break;
 
 	case kActionDefault:
-		getEntities()->drawSequenceRight(_entityIndex, params->seq1);
+		getEntities()->drawSequenceRight(_entityIndex, (char *)&params->seq1);
 		break;
 	}
 }
@@ -225,8 +225,8 @@ void Entity::draw2(const SavePoint &savepoint) {
 		break;
 
 	case kActionDefault:
-		getEntities()->drawSequenceRight(_entityIndex, params->seq1);
-		getEntities()->drawSequenceRight((EntityIndex)params->param7, params->seq2);
+		getEntities()->drawSequenceRight(_entityIndex, (char *)&params->seq1);
+		getEntities()->drawSequenceRight((EntityIndex)params->param7, (char *)&params->seq2);
 		break;
 	}
 }
@@ -323,7 +323,7 @@ void Entity::savepointCall(const SavePoint &savepoint, bool handleExcuseMe) {
 
 	case kActionExitCompartment:
 		if (!CURRENT_PARAMS(1, 1))
-			getSavePoints()->call(_entityIndex, (EntityIndex)params->param4, (ActionIndex)params->param5, params->seq2);
+			getSavePoints()->call(_entityIndex, (EntityIndex)params->param4, (ActionIndex)params->param5, (char *)&params->seq2);
 		CALLBACK_ACTION()
 		break;
 
@@ -336,13 +336,13 @@ void Entity::savepointCall(const SavePoint &savepoint, bool handleExcuseMe) {
 
 	case kAction10:
 		if (!CURRENT_PARAMS(1, 1)) {
-			getSavePoints()->call(_entityIndex, (EntityIndex)params->param4, (ActionIndex)params->param5, params->seq2);
+			getSavePoints()->call(_entityIndex, (EntityIndex)params->param4, (ActionIndex)params->param5, (char *)&params->seq2);
 			CURRENT_PARAMS(1, 1) = 1;
 		}
 		break;
 
 	case kActionDefault:
-		getEntities()->drawSequenceRight(_entityIndex, params->seq1);
+		getEntities()->drawSequenceRight(_entityIndex, (char *)&params->seq1);
 		break;
 	}
 }
@@ -366,7 +366,7 @@ void Entity::enterExitCompartment(const SavePoint &savepoint, EntityPosition pos
 		break;
 
 	case kActionDefault:
-		getEntities()->drawSequenceRight(_entityIndex, params->seq1);
+		getEntities()->drawSequenceRight(_entityIndex, (char *)&params->seq1);
 		getEntities()->enterCompartment(_entityIndex, (ObjectIndex)params->param4, false);
 
 		if (position1) {
@@ -407,7 +407,7 @@ void Entity::updatePosition(const SavePoint &savepoint, bool handleExcuseMe) {
 		break;
 
 	case kActionDefault:
-		getEntities()->drawSequenceRight(_entityIndex, params->seq);
+		getEntities()->drawSequenceRight(_entityIndex, (char *)&params->seq);
 		getEntities()->updatePosition(_entityIndex, (CarIndex)params->param4, (Position)params->param5, true);
 		break;
 	}

@@ -301,7 +301,7 @@ IMPLEMENT_FUNCTION(Tatiana, function24, 24)
 		getData()->car = kCarRedSleeping;
 
 		getObjects()->update(kObject25, kEntityNone, kLocationNone, kCursorKeepValue, kCursorKeepValue);
-		getObjects()->update(kObjectGreenSleepingCar, kEntityNone, kLocationNone, kCursorKeepValue, kCursorKeepValue);
+		getObjects()->update(kObjectTrainTimeTable, kEntityNone, kLocationNone, kCursorKeepValue, kCursorKeepValue);
 
 		getEntities()->updatePosition(kEntityTatiana, kCarGreenSleeping, 70);
 		getEntities()->updatePosition(kEntityTatiana, kCarGreenSleeping, 71);

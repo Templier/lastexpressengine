@@ -419,7 +419,7 @@ AnimFrame *Sequence::getFrame(uint32 index) {
 	if (frame->compressionType == 0)
 		return NULL;
 
-	debugC(4, kLastExpressDebugGraphics, "Decoding sequence %s: frame %d / %d", _name.c_str(), index, _frames.size() - 1);
+	debugC(9, kLastExpressDebugGraphics, "Decoding sequence %s: frame %d / %d", _name.c_str(), index, _frames.size() - 1);
 
 	return new AnimFrame(_stream, *frame);
 }

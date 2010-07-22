@@ -278,8 +278,9 @@ enum SceneIndex {
 // Jacket
 //////////////////////////////////////////////////////////////////////////
 enum JacketType {
-	kJacketOriginal = 1,
-	kJacketGreen    = 2
+	kJacketOriginal   = 0,
+	kJacketBlood      = 1,
+	kJacketGreen      = 2
 };
 
 //////////////////////////////////////////////////////////////////////////
@@ -658,7 +659,7 @@ enum ObjectIndex {
 	kObject20,                          // 20
 	kObject21,
 	kObject22,
-	kObjectGreenSleepingCar,
+	kObjectTrainTimeTable,
 	kObjectRedSleepingCar,
 	kObject25,                          // 25
 	kObjectHandleOutsideLeft,
@@ -1192,6 +1193,7 @@ enum ActionIndex {
 	kAction189026624 = 189026624,
 	kAction189750912 = 189750912,
 	kAction201431954 = 201431954,    // Coudert / Mertens / Verges
+	kAction201439712 = 201439712,
 	kAction205033696 = 205033696,
 	kAction205346192 = 205346192,    // Coudert / Francois
 	kAction225932896 = 225932896,
