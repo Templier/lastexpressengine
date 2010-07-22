@@ -57,7 +57,7 @@ August::August(LastExpressEngine *engine) : Entity(engine, kEntityAugust) {
 	ADD_CALLBACK_FUNCTION(August, playSound16);
 	ADD_CALLBACK_FUNCTION(August, function14);
 	ADD_CALLBACK_FUNCTION(August, savegame);
-	ADD_CALLBACK_FUNCTION(August, function16);
+	ADD_CALLBACK_FUNCTION(August, checkEntity);
 	ADD_CALLBACK_FUNCTION(August, function17);
 	ADD_CALLBACK_FUNCTION(August, function18);
 	ADD_CALLBACK_FUNCTION(August, function19);
@@ -201,8 +201,19 @@ IMPLEMENT_FUNCTION_II(August, savegame, 15)
 // Parameters
 //  - CarIndex
 //  - EntityPosition
-IMPLEMENT_FUNCTION_II(August, function16, 16)
-	error("August: callback function 16 not implemented!");
+IMPLEMENT_FUNCTION_II(August, checkEntity, 16)
+	if (savepoint.action == kActionExcuseMeCath) {
+
+		if (getProgress().eventMetAugust) {
+			getSound()->playSound(kEntityNone, random(2) ? "CAT1002A" : "CAT1002");
+		} else {
+			getSound()->excuseMeCath();
+		}
+
+		return;
+	}
+
+	Entity::checkEntity(savepoint, true);
 }
 
 IMPLEMENT_FUNCTION_I(August, function17, 17)
@@ -385,7 +396,7 @@ IMPLEMENT_FUNCTION(August, chapter1_handler, 25)
 			getProgress().field_14 = 2;
 
 			setCallback(7);
-			call(new ENTITY_SETUP(August, setup_function16), kCarGreenSleeping, kPosition_8200);
+			call(new ENTITY_SETUP(August, setup_checkEntity), kCarGreenSleeping, kPosition_8200);
 			break;
 
 		case 7:
@@ -418,7 +429,71 @@ IMPLEMENT_FUNCTION(August, function27, 27)
 }
 
 IMPLEMENT_FUNCTION(August, function28, 28)
-	error("August: callback function 28 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kAction1:
+		getData()->inventoryItem = kItemNone;
+		params->param1 = 0;
+
+		setCallback(3);
+		call(new ENTITY_SETUP(August, setup_dinner));
+		break;
+
+	case kActionDefault:
+		if (!getProgress().eventMetAugust && getProgress().jacket == kJacketGreen)
+			params->param1 = kItemInvalid;
+
+		getEntities()->drawSequenceLeft(kEntityAugust, "010B");
+		getSavePoints()->push(kEntityAugust, kEntityServers0, kAction304061224);
+		getData()->inventoryItem = (InventoryItem)params->param1;
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			getSavePoints()->push(kEntityAugust, kEntityServers0, kAction203859488);
+			getData()->inventoryItem = (InventoryItem)params->param1;
+			getEntities()->drawSequenceLeft(kEntityAugust, "010B");
+			break;
+
+		case 2:
+			getSavePoints()->push(kEntityAugust, kEntityServers0, kAction136702400);			
+			getEntities()->drawSequenceLeft(kEntityAugust, "010B");
+			setup_function29();
+			break;
+		}
+		break;
+
+	case kAction168046720:
+		getData()->inventoryItem = kItemNone;
+		break;
+
+	case kAction168627977:
+		getData()->inventoryItem = (InventoryItem)params->param1;
+		break;
+
+	case kAction170016384:
+		getData()->inventoryItem = kItemNone;
+		getEntities()->drawSequenceLeft(kEntityServers0, "BLANK");
+		getEntities()->drawSequenceLeft(kEntityAugust, "010G");
+
+		setCallback(2);
+		call(new ENTITY_SETUP_SIIS(August, setup_playSound), "AUG1053");
+		break;
+
+	case kAction268773672:
+		getData()->inventoryItem = kItemNone;
+		getEntities()->drawSequenceLeft(kEntityAugust, "010D");
+
+		setCallback(1);
+		call(new ENTITY_SETUP_SIIS(August, setup_playSound), "AUG1052");
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(August, function29, 29)
@@ -436,7 +511,7 @@ IMPLEMENT_FUNCTION(August, function31, 31)
 
 	case kActionDefault:
 		setCallback(1);
-		call(new ENTITY_SETUP(August, setup_function16), kCarGreenSleeping, kPosition_6470);
+		call(new ENTITY_SETUP(August, setup_checkEntity), kCarGreenSleeping, kPosition_6470);
 		break;
 
 	case kActionCallback:
@@ -698,7 +773,7 @@ IMPLEMENT_FUNCTION(August, function49, 49)
 
 		case 1:
 			setCallback(2);
-			call(new ENTITY_SETUP(August, setup_function16), kCarKronos, kPosition_9270);
+			call(new ENTITY_SETUP(August, setup_checkEntity), kCarKronos, kPosition_9270);
 			break;
 
 		case 2:
@@ -758,7 +833,7 @@ IMPLEMENT_FUNCTION(August, function53, 53)
 
 		case 2:
 			setCallback(3);
-			call(new ENTITY_SETUP(August, setup_function16), kCarRestaurant, kPosition_850);
+			call(new ENTITY_SETUP(August, setup_checkEntity), kCarRestaurant, kPosition_850);
 			break;
 
 		case 3:
@@ -797,7 +872,7 @@ IMPLEMENT_FUNCTION(August, function55, 55)
 
 		case 2:
 			setCallback(3);
-			call(new ENTITY_SETUP(August, setup_function16), kCarGreenSleeping, kPosition_6470);
+			call(new ENTITY_SETUP(August, setup_checkEntity), kCarGreenSleeping, kPosition_6470);
 			break;
 
 		case 3:
@@ -913,7 +988,7 @@ IMPLEMENT_FUNCTION(August, function61, 61)
 
 		case 1:
 			setCallback(2);
-			call(new ENTITY_SETUP(August, setup_function16), kCarGreenSleeping, kPosition_6470);
+			call(new ENTITY_SETUP(August, setup_checkEntity), kCarGreenSleeping, kPosition_6470);
 			break;
 
 		case 2:

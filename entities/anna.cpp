@@ -166,7 +166,7 @@ IMPLEMENT_FUNCTION_II(Anna, checkEntity, 10)
 			getSound()->playSound(kEntityNone, "CAT1001");
 		else
 			getSound()->excuseMeCath();
-	
+
 		return;
 	}
 
