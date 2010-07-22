@@ -44,7 +44,7 @@
 namespace LastExpress {
 
 Vassili::Vassili(LastExpressEngine *engine) : Entity(engine, kEntityVassili) {
-	ADD_CALLBACK_FUNCTION(Vassili, function1);
+	ADD_CALLBACK_FUNCTION(Vassili, reset);
 	ADD_CALLBACK_FUNCTION(Vassili, draw);
 	ADD_CALLBACK_FUNCTION(Vassili, savegame);
 	ADD_CALLBACK_FUNCTION(Vassili, chapter1);
@@ -64,8 +64,8 @@ Vassili::Vassili(LastExpressEngine *engine) : Entity(engine, kEntityVassili) {
 	ADD_CALLBACK_FUNCTION(Vassili, chapter5);
 }
 
-IMPLEMENT_FUNCTION(Vassili, function1, 1)
-	Entity::function1(savepoint);
+IMPLEMENT_FUNCTION(Vassili, reset, 1)
+	Entity::reset(savepoint);
 }
 
 IMPLEMENT_FUNCTION_S(Vassili, draw, 2)

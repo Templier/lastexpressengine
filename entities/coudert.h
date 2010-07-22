@@ -39,7 +39,7 @@ public:
 	~Coudert() {};
 
 	// Setup
-	DECLARE_FUNCTION(function1)
+	DECLARE_FUNCTION(reset)
 	DECLARE_FUNCTION_S(bloodJacket)
 	DECLARE_FUNCTION_SI(function3)
 	DECLARE_FUNCTION(function4)

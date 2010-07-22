@@ -39,7 +39,7 @@
 namespace LastExpress {
 
 Kahina::Kahina(LastExpressEngine *engine) : Entity(engine, kEntityKahina) {
-	ADD_CALLBACK_FUNCTION(Kahina, function1);
+	ADD_CALLBACK_FUNCTION(Kahina, reset);
 	ADD_CALLBACK_FUNCTION(Kahina, playSound);
 	ADD_CALLBACK_FUNCTION(Kahina, savegame);
 	ADD_CALLBACK_FUNCTION(Kahina, updateFromTime);
@@ -70,8 +70,8 @@ Kahina::Kahina(LastExpressEngine *engine) : Entity(engine, kEntityKahina) {
 	ADD_CALLBACK_FUNCTION(Kahina, chapter5);
 }
 
-IMPLEMENT_FUNCTION(Kahina, function1, 1)
-	Entity::function1(savepoint);
+IMPLEMENT_FUNCTION(Kahina, reset, 1)
+	Entity::reset(savepoint);
 }
 
 IMPLEMENT_FUNCTION_S(Kahina, playSound, 2)

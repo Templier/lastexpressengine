@@ -40,7 +40,7 @@
 namespace LastExpress {
 
 Max::Max(LastExpressEngine *engine) : Entity(engine, kEntityMax) {
-	ADD_CALLBACK_FUNCTION(Max, function1);
+	ADD_CALLBACK_FUNCTION(Max, reset);
 	ADD_CALLBACK_FUNCTION(Max, playSound);
 	ADD_CALLBACK_FUNCTION(Max, draw);
 	ADD_CALLBACK_FUNCTION(Max, enterExitCompartment);
@@ -60,8 +60,8 @@ Max::Max(LastExpressEngine *engine) : Entity(engine, kEntityMax) {
 	ADD_CALLBACK_FUNCTION(Max, chapter5);
 }
 
-IMPLEMENT_FUNCTION(Max, function1, 1)
-	Entity::function1(savepoint);
+IMPLEMENT_FUNCTION(Max, reset, 1)
+	Entity::reset(savepoint);
 }
 
 IMPLEMENT_FUNCTION_S(Max, playSound, 2)

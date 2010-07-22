@@ -40,7 +40,7 @@
 namespace LastExpress {
 
 Boutarel::Boutarel(LastExpressEngine *engine) : Entity(engine, kEntityBoutarel) {
-	ADD_CALLBACK_FUNCTION(Boutarel, function1);
+	ADD_CALLBACK_FUNCTION(Boutarel, reset);
 	ADD_CALLBACK_FUNCTION(Boutarel, playSound);
 	ADD_CALLBACK_FUNCTION(Boutarel, draw);
 	ADD_CALLBACK_FUNCTION(Boutarel, updateFromTime);
@@ -81,8 +81,8 @@ Boutarel::Boutarel(LastExpressEngine *engine) : Entity(engine, kEntityBoutarel) 
 	ADD_NULL_FUNCTION();
 }
 
-IMPLEMENT_FUNCTION(Boutarel, function1, 1)
-	Entity::function1(savepoint);
+IMPLEMENT_FUNCTION(Boutarel, reset, 1)
+	Entity::reset(savepoint);
 }
 
 IMPLEMENT_FUNCTION_S(Boutarel, playSound, 2)

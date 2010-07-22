@@ -41,7 +41,7 @@
 namespace LastExpress {
 
 Mertens::Mertens(LastExpressEngine *engine) : Entity(engine, kEntityMertens) {
-	ADD_CALLBACK_FUNCTION(Mertens, function1);
+	ADD_CALLBACK_FUNCTION(Mertens, reset);
 	ADD_CALLBACK_FUNCTION(Mertens, bloodJacket);
 	ADD_CALLBACK_FUNCTION(Mertens, function3);
 	ADD_CALLBACK_FUNCTION(Mertens, function4);
@@ -97,8 +97,8 @@ Mertens::Mertens(LastExpressEngine *engine) : Entity(engine, kEntityMertens) {
 	ADD_NULL_FUNCTION();
 }
 
-IMPLEMENT_FUNCTION(Mertens, function1, 1)
-	Entity::function1(savepoint);
+IMPLEMENT_FUNCTION(Mertens, reset, 1)
+	Entity::reset(savepoint);
 }
 
 IMPLEMENT_FUNCTION_S(Mertens, bloodJacket, 2)

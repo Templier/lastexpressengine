@@ -42,7 +42,7 @@
 namespace LastExpress {
 
 August::August(LastExpressEngine *engine) : Entity(engine, kEntityAugust) {
-	ADD_CALLBACK_FUNCTION(August, function1);
+	ADD_CALLBACK_FUNCTION(August, reset);
 	ADD_CALLBACK_FUNCTION(August, updateFromTime);
 	ADD_CALLBACK_FUNCTION(August, draw);
 	ADD_CALLBACK_FUNCTION(August, updatePosition);
@@ -114,8 +114,8 @@ August::August(LastExpressEngine *engine) : Entity(engine, kEntityAugust) {
 	ADD_NULL_FUNCTION();
 }
 
-IMPLEMENT_FUNCTION(August, function1, 1)
-	Entity::function1Clothes(savepoint);
+IMPLEMENT_FUNCTION(August, reset, 1)
+	Entity::reset(savepoint, true);
 }
 
 IMPLEMENT_FUNCTION_I(August, updateFromTime, 2)
@@ -462,7 +462,7 @@ IMPLEMENT_FUNCTION(August, function28, 28)
 			break;
 
 		case 2:
-			getSavePoints()->push(kEntityAugust, kEntityServers0, kAction136702400);			
+			getSavePoints()->push(kEntityAugust, kEntityServers0, kAction136702400);
 			getEntities()->drawSequenceLeft(kEntityAugust, "010B");
 			setup_function29();
 			break;

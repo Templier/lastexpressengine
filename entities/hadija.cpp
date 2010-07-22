@@ -38,7 +38,7 @@
 namespace LastExpress {
 
 Hadija::Hadija(LastExpressEngine *engine) : Entity(engine, kEntityHadija) {
-	ADD_CALLBACK_FUNCTION(Hadija, function1);
+	ADD_CALLBACK_FUNCTION(Hadija, reset);
 	ADD_CALLBACK_FUNCTION(Hadija, enterExitCompartment);
 	ADD_CALLBACK_FUNCTION(Hadija, playSound);
 	ADD_CALLBACK_FUNCTION(Hadija, updateFromTime);
@@ -51,21 +51,21 @@ Hadija::Hadija(LastExpressEngine *engine) : Entity(engine, kEntityHadija) {
 	ADD_CALLBACK_FUNCTION(Hadija, chapter1_handler);
 	ADD_CALLBACK_FUNCTION(Hadija, function12);
 	ADD_CALLBACK_FUNCTION(Hadija, chapter2);
-	ADD_CALLBACK_FUNCTION(Hadija, function14);
+	ADD_CALLBACK_FUNCTION(Hadija, chapter2_handler);
 	ADD_CALLBACK_FUNCTION(Hadija, chapter3);
-	ADD_CALLBACK_FUNCTION(Hadija, function16);
+	ADD_CALLBACK_FUNCTION(Hadija, chapter3_handler);
 	ADD_CALLBACK_FUNCTION(Hadija, chapter4);
-	ADD_CALLBACK_FUNCTION(Hadija, function18);
+	ADD_CALLBACK_FUNCTION(Hadija, chapter4_handler);
 	ADD_CALLBACK_FUNCTION(Hadija, function19);
 	ADD_CALLBACK_FUNCTION(Hadija, chapter5);
-	ADD_CALLBACK_FUNCTION(Hadija, function21);
+	ADD_CALLBACK_FUNCTION(Hadija, chapter5_handler);
 	ADD_CALLBACK_FUNCTION(Hadija, function22);
 	ADD_CALLBACK_FUNCTION(Hadija, function23);
 	ADD_NULL_FUNCTION();
 }
 
-IMPLEMENT_FUNCTION(Hadija, function1, 1)
-	Entity::function1(savepoint);
+IMPLEMENT_FUNCTION(Hadija, reset, 1)
+	Entity::reset(savepoint);
 }
 
 IMPLEMENT_FUNCTION_SI(Hadija, enterExitCompartment, 2)
@@ -226,12 +226,56 @@ IMPLEMENT_FUNCTION(Hadija, chapter2, 13)
 		getData()->clothes = kClothesDefault;
 		getData()->inventoryItem = kItemNone;
 
-		setup_function14();
+		setup_chapter2_handler();
 	}
 }
 
-IMPLEMENT_FUNCTION(Hadija, function14, 14)
-	error("Hadija: callback function 14 not implemented!");
+IMPLEMENT_FUNCTION(Hadija, chapter2_handler, 14)
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionNone:
+		TIME_CHECK_POSITION(kTime1782000, params->param1, kPosition_2740);
+
+		if (params->param2 == kTimeInvalid || getState()->time <= kTime1786500) {
+			TIME_CHECK_CALLBACK(Hadija, kTime1822500, params->param3, 2, setup_function9);
+			break;
+		}
+
+		if (getState()->time <= kTime1818000) {
+
+			if (!getEntities()->checkFields7(kCarGreenSleeping) || !params->param2)
+				params->param2 = getState()->time + 75;
+
+			if (params->param2 >= (int)getState()->time) {
+				TIME_CHECK_CALLBACK(Hadija, kTime1822500, params->param3, 2, setup_function9);
+				break;
+			}
+		}
+
+		params->param2 = kTimeInvalid;
+
+		setCallback(1);
+		call(new ENTITY_SETUP(Hadija, setup_function7));
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			TIME_CHECK_CALLBACK(Hadija, kTime1822500, params->param3, 2, setup_function9);
+			break;
+
+		case 2:
+			setCallback(3);
+			call(new ENTITY_SETUP_SIIS(Hadija, setup_playSound), "Har2012");
+			break;
+		}
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Hadija, chapter3, 15)
@@ -240,7 +284,7 @@ IMPLEMENT_FUNCTION(Hadija, chapter3, 15)
 		break;
 
 	case kActionNone:
-		setup_function16();
+		setup_chapter3_handler();
 		break;
 
 	case kActionDefault:
@@ -254,7 +298,7 @@ IMPLEMENT_FUNCTION(Hadija, chapter3, 15)
 	}
 }
 
-IMPLEMENT_FUNCTION(Hadija, function16, 16)
+IMPLEMENT_FUNCTION(Hadija, chapter3_handler, 16)
 	error("Hadija: callback function 16 not implemented!");
 }
 
@@ -264,7 +308,7 @@ IMPLEMENT_FUNCTION(Hadija, chapter4, 17)
 		break;
 
 	case kActionNone:
-		setup_function18();
+		setup_chapter4_handler();
 		break;
 
 	case kActionDefault:
@@ -275,7 +319,7 @@ IMPLEMENT_FUNCTION(Hadija, chapter4, 17)
 	}
 }
 
-IMPLEMENT_FUNCTION(Hadija, function18, 18)
+IMPLEMENT_FUNCTION(Hadija, chapter4_handler, 18)
 	error("Hadija: callback function 18 not implemented!");
 }
 
@@ -297,7 +341,7 @@ IMPLEMENT_FUNCTION(Hadija, chapter5, 20)
 		break;
 
 	case kActionNone:
-		setup_function21();
+		setup_chapter5_handler();
 		break;
 
 	case kActionDefault:
@@ -313,7 +357,7 @@ IMPLEMENT_FUNCTION(Hadija, chapter5, 20)
 	}
 }
 
-IMPLEMENT_FUNCTION(Hadija, function21, 21)
+IMPLEMENT_FUNCTION(Hadija, chapter5_handler, 21)
 	if (savepoint.action == kAction70549068)
 		setup_function22();
 }

@@ -39,7 +39,7 @@
 namespace LastExpress {
 
 Rebecca::Rebecca(LastExpressEngine *engine) : Entity(engine, kEntityRebecca) {
-	ADD_CALLBACK_FUNCTION(Rebecca, function1);
+	ADD_CALLBACK_FUNCTION(Rebecca, reset);
 	ADD_CALLBACK_FUNCTION(Rebecca, updateFromTime);
 	ADD_CALLBACK_FUNCTION(Rebecca, playSound);
 	ADD_CALLBACK_FUNCTION(Rebecca, playSound16);
@@ -90,8 +90,8 @@ Rebecca::Rebecca(LastExpressEngine *engine) : Entity(engine, kEntityRebecca) {
 	ADD_NULL_FUNCTION();
 }
 
-IMPLEMENT_FUNCTION(Rebecca, function1, 1)
-	Entity::function1(savepoint);
+IMPLEMENT_FUNCTION(Rebecca, reset, 1)
+	Entity::reset(savepoint);
 }
 
 IMPLEMENT_FUNCTION_I(Rebecca, updateFromTime, 2)

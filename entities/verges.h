@@ -39,7 +39,7 @@ public:
 	~Verges() {};
 
 	// Setup
-	DECLARE_FUNCTION(function1)
+	DECLARE_FUNCTION(reset)
 	DECLARE_FUNCTION_S(draw)
 	DECLARE_FUNCTION(function3)
 	DECLARE_FUNCTION_S(playSound)

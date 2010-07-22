@@ -140,6 +140,11 @@
 		getObjects()->updateLocation2(object, location); \
 	}
 
+#define TIME_CHECK_POSITION(timeValue, parameter, position) \
+	if (getState()->time > timeValue && !parameter) { \
+		parameter = 1; \
+		getData()->entityPosition = position; \
+	}
 
 //////////////////////////////////////////////////////////////////////////
 // Helpers

@@ -38,7 +38,7 @@
 namespace LastExpress {
 
 Yasmin::Yasmin(LastExpressEngine *engine) : Entity(engine, kEntityYasmin) {
-	ADD_CALLBACK_FUNCTION(Yasmin, function1);
+	ADD_CALLBACK_FUNCTION(Yasmin, reset);
 	ADD_CALLBACK_FUNCTION(Yasmin, enterExitCompartment);
 	ADD_CALLBACK_FUNCTION(Yasmin, playSound);
 	ADD_CALLBACK_FUNCTION(Yasmin, updateFromTime);
@@ -62,7 +62,7 @@ Yasmin::Yasmin(LastExpressEngine *engine) : Entity(engine, kEntityYasmin) {
 	ADD_NULL_FUNCTION();
 }
 
-IMPLEMENT_FUNCTION(Yasmin, function1, 1)
+IMPLEMENT_FUNCTION(Yasmin, reset, 1)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -77,7 +77,7 @@ IMPLEMENT_FUNCTION(Yasmin, function1, 1)
 	}
 
 	// Process default actions
-	Entity::function1(savepoint);
+	Entity::reset(savepoint);
 }
 
 IMPLEMENT_FUNCTION_SI(Yasmin, enterExitCompartment, 2)

@@ -39,7 +39,7 @@ public:
 	~Ivo() {};
 
 	// Setup
-	DECLARE_FUNCTION(function1)
+	DECLARE_FUNCTION(reset)
 	DECLARE_FUNCTION_S(draw)
 	DECLARE_FUNCTION_SI(enterExitCompartment)
 	DECLARE_FUNCTION_I(updateFromTime)

@@ -38,7 +38,7 @@
 namespace LastExpress {
 
 Francois::Francois(LastExpressEngine *engine) : Entity(engine, kEntityFrancois) {
-	ADD_CALLBACK_FUNCTION(Francois, function1);
+	ADD_CALLBACK_FUNCTION(Francois, reset);
 	ADD_CALLBACK_FUNCTION(Francois, updateFromTime);
 	ADD_CALLBACK_FUNCTION(Francois, draw);
 	ADD_CALLBACK_FUNCTION(Francois, enterExitCompartment);
@@ -71,8 +71,8 @@ Francois::Francois(LastExpressEngine *engine) : Entity(engine, kEntityFrancois) 
 	ADD_NULL_FUNCTION();
 }
 
-IMPLEMENT_FUNCTION(Francois, function1, 1)
-	Entity::function1Clothes(savepoint);
+IMPLEMENT_FUNCTION(Francois, reset, 1)
+	Entity::reset(savepoint, true);
 }
 
 IMPLEMENT_FUNCTION_I(Francois, updateFromTime, 2)

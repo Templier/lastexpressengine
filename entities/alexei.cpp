@@ -41,7 +41,7 @@
 namespace LastExpress {
 
 Alexei::Alexei(LastExpressEngine *engine) : Entity(engine, kEntityAlexei) {
-	ADD_CALLBACK_FUNCTION(Alexei, function1);
+	ADD_CALLBACK_FUNCTION(Alexei, reset);
 	ADD_CALLBACK_FUNCTION(Alexei, playSound);
 	ADD_CALLBACK_FUNCTION(Alexei, updateFromTicks);
 	ADD_CALLBACK_FUNCTION(Alexei, draw);
@@ -91,8 +91,8 @@ Alexei::Alexei(LastExpressEngine *engine) : Entity(engine, kEntityAlexei) {
 	ADD_CALLBACK_FUNCTION(Alexei, chapter5);
 }
 
-IMPLEMENT_FUNCTION(Alexei, function1, 1)
-	Entity::function1(savepoint);
+IMPLEMENT_FUNCTION(Alexei, reset, 1)
+	Entity::reset(savepoint);
 }
 
 IMPLEMENT_FUNCTION_S(Alexei, playSound, 2)

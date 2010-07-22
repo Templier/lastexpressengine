@@ -39,15 +39,15 @@ public:
 	~Alouan() {};
 
 	// Setup
-	DECLARE_FUNCTION(function1)
+	DECLARE_FUNCTION(reset)
 	DECLARE_FUNCTION_SI(enterExitCompartment)
 	DECLARE_FUNCTION_S(playSound)
 	DECLARE_FUNCTION_I(updateFromTime)
 	DECLARE_FUNCTION_II(checkEntity)
-	DECLARE_FUNCTION(function6)
-	DECLARE_FUNCTION(function7)
-	DECLARE_FUNCTION(function8)
-	DECLARE_FUNCTION(function9)
+	DECLARE_FUNCTION(compartment6)
+	DECLARE_FUNCTION(compartment8)
+	DECLARE_FUNCTION(compartment6to8)
+	DECLARE_FUNCTION(compartment8to6)
 	DECLARE_FUNCTION(chapter1)
 	DECLARE_FUNCTION(chapter1_handler)
 	DECLARE_FUNCTION(function12)

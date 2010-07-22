@@ -39,7 +39,7 @@ public:
 	~Sophie() {};
 
 	// Setup
-	DECLARE_FUNCTION(function1)
+	DECLARE_FUNCTION(reset)
 	DECLARE_FUNCTION_II(function2)
 	DECLARE_FUNCTION(chapters_handler)
 	DECLARE_FUNCTION(chapter1)

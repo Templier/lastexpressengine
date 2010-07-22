@@ -39,7 +39,7 @@
 namespace LastExpress {
 
 Milos::Milos(LastExpressEngine *engine) : Entity(engine, kEntityMilos) {
-	ADD_CALLBACK_FUNCTION(Milos, function1);
+	ADD_CALLBACK_FUNCTION(Milos, reset);
 	ADD_CALLBACK_FUNCTION(Milos, draw);
 	ADD_CALLBACK_FUNCTION(Milos, enterExitCompartment);
 	ADD_CALLBACK_FUNCTION(Milos, enterExitCompartment2);
@@ -76,8 +76,8 @@ Milos::Milos(LastExpressEngine *engine) : Entity(engine, kEntityMilos) {
 	ADD_CALLBACK_FUNCTION(Milos, prepareSequences);
 }
 
-IMPLEMENT_FUNCTION(Milos, function1, 1)
-	Entity::function1(savepoint);
+IMPLEMENT_FUNCTION(Milos, reset, 1)
+	Entity::reset(savepoint);
 }
 
 IMPLEMENT_FUNCTION_S(Milos, draw, 2)

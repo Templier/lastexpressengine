@@ -43,7 +43,7 @@
 namespace LastExpress {
 
 Mahmud::Mahmud(LastExpressEngine *engine) : Entity(engine, kEntityMahmud) {
-	ADD_CALLBACK_FUNCTION(Mahmud, function1);
+	ADD_CALLBACK_FUNCTION(Mahmud, reset);
 	ADD_CALLBACK_FUNCTION(Mahmud, draw);
 	ADD_CALLBACK_FUNCTION(Mahmud, enterExitCompartment);
 	ADD_CALLBACK_FUNCTION(Mahmud, function4);
@@ -66,8 +66,8 @@ Mahmud::Mahmud(LastExpressEngine *engine) : Entity(engine, kEntityMahmud) {
 }
 
 //////////////////////////////////////////////////////////////////////////
-IMPLEMENT_FUNCTION(Mahmud, function1, 1)
-	Entity::function1(savepoint);
+IMPLEMENT_FUNCTION(Mahmud, reset, 1)
+	Entity::reset(savepoint);
 }
 
 //////////////////////////////////////////////////////////////////////////

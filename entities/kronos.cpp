@@ -41,7 +41,7 @@
 namespace LastExpress {
 
 Kronos::Kronos(LastExpressEngine *engine) : Entity(engine, kEntityKronos) {
-	ADD_CALLBACK_FUNCTION(Kronos, function1);
+	ADD_CALLBACK_FUNCTION(Kronos, reset);
 	ADD_CALLBACK_FUNCTION(Kronos, savegame);
 	ADD_CALLBACK_FUNCTION(Kronos, function3);
 	ADD_CALLBACK_FUNCTION(Kronos, playSound);
@@ -68,8 +68,8 @@ Kronos::Kronos(LastExpressEngine *engine) : Entity(engine, kEntityKronos) {
 	ADD_CALLBACK_FUNCTION(Kronos, chapter5);
 }
 
-IMPLEMENT_FUNCTION(Kronos, function1, 1)
-	Entity::function1(savepoint);
+IMPLEMENT_FUNCTION(Kronos, reset, 1)
+	Entity::reset(savepoint);
 }
 
 IMPLEMENT_FUNCTION_II(Kronos, savegame, 2)

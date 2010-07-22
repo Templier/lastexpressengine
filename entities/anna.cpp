@@ -41,7 +41,7 @@
 namespace LastExpress {
 
 Anna::Anna(LastExpressEngine *engine) : Entity(engine, kEntityAnna) {
-	ADD_CALLBACK_FUNCTION(Anna, function1);
+	ADD_CALLBACK_FUNCTION(Anna, reset);
 	ADD_CALLBACK_FUNCTION(Anna, draw);
 	ADD_CALLBACK_FUNCTION(Anna, updatePosition);
 	ADD_CALLBACK_FUNCTION(Anna, enterExitCompartment);
@@ -124,8 +124,8 @@ Anna::Anna(LastExpressEngine *engine) : Entity(engine, kEntityAnna) {
 	ADD_CALLBACK_FUNCTION(Anna, function81);
 }
 
-IMPLEMENT_FUNCTION(Anna, function1, 1)
-	Entity::function1Clothes(savepoint);
+IMPLEMENT_FUNCTION(Anna, reset, 1)
+	Entity::reset(savepoint, true);
 }
 
 IMPLEMENT_FUNCTION_S(Anna, draw, 2)
@@ -748,7 +748,49 @@ IMPLEMENT_FUNCTION(Anna, chapter2, 42)
 }
 
 IMPLEMENT_FUNCTION(Anna, chapter2_handler, 43)
-	error("Anna: callback function 43 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionDefault:
+		getObjects()->update(kObjectOutsideAnnaCompartment, kEntityNone, kLocationNone, kCursorKeepValue, kCursorKeepValue);
+
+		setCallback(1);
+		call(new ENTITY_SETUP(Anna, setup_function12));
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			setCallback(2);
+			call(new ENTITY_SETUP_ISII(Anna, setup_function15), kTime1786500, "418C");
+			break;
+
+		case 2:
+			setCallback(3);
+			call(new ENTITY_SETUP(Anna, setup_function12));
+			break;
+
+		case 3:
+			setCallback(4);
+			call(new ENTITY_SETUP_ISII(Anna, setup_function15), kTime1818000, "418C");
+			break;
+
+		case 4:
+			setCallback(5);
+			call(new ENTITY_SETUP(Anna, setup_function12));
+			break;
+
+		case 5:
+			setCallback(6);
+			call(new ENTITY_SETUP_ISII(Anna, setup_function15), kTimeEnd, "418C");
+			break;
+		}
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Anna, chapter3, 44)

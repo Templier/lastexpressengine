@@ -39,7 +39,7 @@ public:
 	~Kronos() {};
 
 	// Setup
-	DECLARE_FUNCTION(function1)
+	DECLARE_FUNCTION(reset)
 	DECLARE_FUNCTION_II(savegame)
 	DECLARE_FUNCTION_II(function3)
 	DECLARE_FUNCTION_NOSETUP(playSound)

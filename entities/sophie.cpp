@@ -62,7 +62,7 @@ namespace LastExpress {
 	}
 
 Sophie::Sophie(LastExpressEngine *engine) : Entity(engine, kEntitySophie) {
-	ADD_CALLBACK_FUNCTION(Sophie, function1);
+	ADD_CALLBACK_FUNCTION(Sophie, reset);
 	ADD_CALLBACK_FUNCTION(Sophie, function2);
 	ADD_CALLBACK_FUNCTION(Sophie, chapters_handler);
 	ADD_CALLBACK_FUNCTION(Sophie, chapter1);
@@ -77,8 +77,8 @@ Sophie::Sophie(LastExpressEngine *engine) : Entity(engine, kEntitySophie) {
 }
 
 //////////////////////////////////////////////////////////////////////////
-IMPLEMENT_FUNCTION(Sophie, function1, 1)
-	Entity::function1(savepoint);
+IMPLEMENT_FUNCTION(Sophie, reset, 1)
+	Entity::reset(savepoint);
 }
 
 //////////////////////////////////////////////////////////////////////////

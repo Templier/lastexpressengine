@@ -110,7 +110,62 @@ IMPLEMENT_FUNCTION_NOSETUP(Pascale, draw2, 7)
 }
 
 IMPLEMENT_FUNCTION(Pascale, function8, 8)
-	error("Pascale: callback function 8 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionDefault:
+		getData()->entityPosition = kPosition_850;
+		getData()->field_493 = kField493_0;
+
+		setCallback(1);
+		call(new ENTITY_SETUP_SIIS(Pascale, setup_draw), "901");
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			switch (getProgress().chapter) {
+			default:
+				break;
+
+			case kChapter1:
+				getSound()->playSound(kEntityPascale, "REB1198", -1, 30);
+				break;
+
+			case kChapter3:
+				getSound()->playSound(kEntityPascale, "REB3001", -1, 30);
+				break;
+
+			case kChapter4:
+				getSound()->playSound(kEntityPascale, "REB4001", -1, 30);
+				break;
+			}
+
+			setCallback(2);
+			call(new ENTITY_SETUP(Pascale, setup_function9));
+			break;
+
+		case 2:
+			getSavePoints()->push(kEntityPascale, kEntityRebecca, kAction157370960);
+
+			setCallback(3);
+			call(new ENTITY_SETUP_SIIS(Pascale, setup_draw), "905");
+			break;
+
+		case 3:
+			getEntities()->clearSequences(kEntityPascale);
+			getData()->entityPosition = kPosition_5900;
+			ENTITY_PARAM(0, 4) = 0;
+
+			CALLBACK_ACTION();
+			break;
+		}
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Pascale, function9, 9)
@@ -223,7 +278,6 @@ switch (savepoint.action) {
 			setup_function18();
 			break;
 		}
-
 
 		if (!getEntities()->checkFields11())
 			goto label_callback3;

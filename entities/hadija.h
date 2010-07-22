@@ -39,7 +39,7 @@ public:
 	~Hadija() {};
 
 	// Setup
-	DECLARE_FUNCTION(function1)
+	DECLARE_FUNCTION(reset)
 	DECLARE_FUNCTION_SI(enterExitCompartment)
 	DECLARE_FUNCTION_S(playSound)
 	DECLARE_FUNCTION_NOSETUP(updateFromTime)
@@ -52,14 +52,14 @@ public:
 	DECLARE_FUNCTION(chapter1_handler)
 	DECLARE_FUNCTION(function12)
 	DECLARE_FUNCTION(chapter2)
-	DECLARE_FUNCTION(function14)
+	DECLARE_FUNCTION(chapter2_handler)
 	DECLARE_FUNCTION(chapter3)
-	DECLARE_FUNCTION(function16)
+	DECLARE_FUNCTION(chapter3_handler)
 	DECLARE_FUNCTION(chapter4)
-	DECLARE_FUNCTION(function18)
+	DECLARE_FUNCTION(chapter4_handler)
 	DECLARE_FUNCTION(function19)
 	DECLARE_FUNCTION(chapter5)
-	DECLARE_FUNCTION(function21)
+	DECLARE_FUNCTION(chapter5_handler)
 	DECLARE_FUNCTION(function22)
 	DECLARE_FUNCTION(function23)
 	DECLARE_NULL_FUNCTION()

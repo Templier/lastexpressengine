@@ -39,7 +39,7 @@ public:
 	~Kahina() {};
 
 	// Setup
-	DECLARE_FUNCTION(function1)
+	DECLARE_FUNCTION(reset)
 	DECLARE_FUNCTION_S(playSound)
 	DECLARE_FUNCTION_II(savegame)
 	DECLARE_FUNCTION_I(updateFromTime)

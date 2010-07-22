@@ -41,7 +41,7 @@
 namespace LastExpress {
 
 Verges::Verges(LastExpressEngine *engine) : Entity(engine, kEntityVerges) {
-	ADD_CALLBACK_FUNCTION(Verges, function1);
+	ADD_CALLBACK_FUNCTION(Verges, reset);
 	ADD_CALLBACK_FUNCTION(Verges, draw);
 	ADD_CALLBACK_FUNCTION(Verges, function3);
 	ADD_CALLBACK_FUNCTION(Verges, playSound);
@@ -85,8 +85,8 @@ Verges::Verges(LastExpressEngine *engine) : Entity(engine, kEntityVerges) {
 	ADD_CALLBACK_FUNCTION(Verges, function42);
 }
 
-IMPLEMENT_FUNCTION(Verges, function1, 1)
-	Entity::function1(savepoint);
+IMPLEMENT_FUNCTION(Verges, reset, 1)
+	Entity::reset(savepoint);
 }
 
 IMPLEMENT_FUNCTION_S(Verges, draw, 2)

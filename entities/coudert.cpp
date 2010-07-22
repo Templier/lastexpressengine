@@ -41,7 +41,7 @@
 namespace LastExpress {
 
 Coudert::Coudert(LastExpressEngine *engine) : Entity(engine, kEntityCoudert) {
-	ADD_CALLBACK_FUNCTION(Coudert, function1);
+	ADD_CALLBACK_FUNCTION(Coudert, reset);
 	ADD_CALLBACK_FUNCTION(Coudert, bloodJacket);
 	ADD_CALLBACK_FUNCTION(Coudert, function3);
 	ADD_CALLBACK_FUNCTION(Coudert, function4);
@@ -106,8 +106,8 @@ Coudert::Coudert(LastExpressEngine *engine) : Entity(engine, kEntityCoudert) {
 	ADD_NULL_FUNCTION();
 }
 
-IMPLEMENT_FUNCTION(Coudert, function1, 1)
-	Entity::function1Clothes(savepoint);
+IMPLEMENT_FUNCTION(Coudert, reset, 1)
+	Entity::reset(savepoint, true);
 }
 
 IMPLEMENT_FUNCTION_S(Coudert, bloodJacket, 2)

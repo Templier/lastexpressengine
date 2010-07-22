@@ -371,8 +371,7 @@ protected:
 	void updateFromTicks(const SavePoint &savepoint);
 	void updateFromTime(const SavePoint &savepoint);
 
-	void function1(const SavePoint &savepoint);
-	void function1Clothes(const SavePoint &savepoint);
+	void reset(const SavePoint &savepoint, bool resetClothes = false);
 	void savepointDirection(const SavePoint &savepoint);
 	void savepointCheckFields11(const SavePoint &savepoint);
 	void checkEntity(const SavePoint &savepoint, bool handleExcuseMe = false);

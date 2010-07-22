@@ -38,15 +38,15 @@
 namespace LastExpress {
 
 Alouan::Alouan(LastExpressEngine *engine) : Entity(engine, kEntityAlouan) {
-	ADD_CALLBACK_FUNCTION(Alouan, function1);
+	ADD_CALLBACK_FUNCTION(Alouan, reset);
 	ADD_CALLBACK_FUNCTION(Alouan, enterExitCompartment);
 	ADD_CALLBACK_FUNCTION(Alouan, playSound);
 	ADD_CALLBACK_FUNCTION(Alouan, updateFromTime);
 	ADD_CALLBACK_FUNCTION(Alouan, checkEntity);
-	ADD_CALLBACK_FUNCTION(Alouan, function6);
-	ADD_CALLBACK_FUNCTION(Alouan, function7);
-	ADD_CALLBACK_FUNCTION(Alouan, function8);
-	ADD_CALLBACK_FUNCTION(Alouan, function9);
+	ADD_CALLBACK_FUNCTION(Alouan, compartment6);
+	ADD_CALLBACK_FUNCTION(Alouan, compartment8);
+	ADD_CALLBACK_FUNCTION(Alouan, compartment6to8);
+	ADD_CALLBACK_FUNCTION(Alouan, compartment8to6);
 	ADD_CALLBACK_FUNCTION(Alouan, chapter1);
 	ADD_CALLBACK_FUNCTION(Alouan, chapter1_handler);
 	ADD_CALLBACK_FUNCTION(Alouan, function12);
@@ -64,8 +64,8 @@ Alouan::Alouan(LastExpressEngine *engine) : Entity(engine, kEntityAlouan) {
 	ADD_NULL_FUNCTION();
 }
 
-IMPLEMENT_FUNCTION(Alouan, function1, 1)
-	Entity::function1(savepoint);
+IMPLEMENT_FUNCTION(Alouan, reset, 1)
+	Entity::reset(savepoint);
 }
 
 IMPLEMENT_FUNCTION_SI(Alouan, enterExitCompartment, 2)
@@ -84,19 +84,19 @@ IMPLEMENT_FUNCTION_II(Alouan, checkEntity, 5)
 	Entity::checkEntity(savepoint, true);
 }
 
-IMPLEMENT_FUNCTION(Alouan, function6, 6)
+IMPLEMENT_FUNCTION(Alouan, compartment6, 6)
 	COMPARTMENT_TO(Alouan, kObjectCompartment6, kPosition_4070, "621Cf", "621Df");
 }
 
-IMPLEMENT_FUNCTION(Alouan, function7, 7)
+IMPLEMENT_FUNCTION(Alouan, compartment8, 7)
 	COMPARTMENT_TO(Alouan, kObjectCompartment8, kPosition_2740, "621Ch", "621Dh");
 }
 
-IMPLEMENT_FUNCTION(Alouan, function8, 8)
+IMPLEMENT_FUNCTION(Alouan, compartment6to8, 8)
 	COMPARTMENT_FROM_TO(Alouan, kObjectCompartment6, kPosition_4070, "621Bf", kObjectCompartment8, kPosition_2740, "621Ah");
 }
 
-IMPLEMENT_FUNCTION(Alouan, function9, 9)
+IMPLEMENT_FUNCTION(Alouan, compartment8to6, 9)
 	COMPARTMENT_FROM_TO(Alouan, kObjectCompartment8, kPosition_2740, "621Bh", kObjectCompartment6, kPosition_4070, "621Af");
 }
 
@@ -125,7 +125,7 @@ IMPLEMENT_FUNCTION(Alouan, chapter1_handler, 11)
 
 	case kActionNone:
 
-		TIME_CHECK_CALLBACK(Alouan, kTime1096200, params->param1, 1, setup_function9);
+		TIME_CHECK_CALLBACK(Alouan, kTime1096200, params->param1, 1, setup_compartment8to6);
 
 label_callback1:
 		if (getState()->time > kTime1162800 && !params->param2) {
@@ -139,7 +139,7 @@ label_callback1:
 			getSavePoints()->push(kEntityAlouan, kEntityTrain, kAction191070912, kPosition_4840);
 
 			setCallback(2);
-			call(new ENTITY_SETUP(Alouan, setup_function8));
+			call(new ENTITY_SETUP(Alouan, setup_compartment6to8));
 		}
 		break;
 
@@ -185,7 +185,63 @@ IMPLEMENT_FUNCTION(Alouan, chapter2, 13)
 }
 
 IMPLEMENT_FUNCTION(Alouan, chapter2_handler, 14)
-	error("Alouan: callback function 14 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionNone:
+		if (params->param2 == kTimeInvalid)
+			break;
+
+		if (getState()->time <= kTime1777500) {
+			if (!getEntities()->checkFields7(kCarGreenSleeping) || !params->param2)
+				params->param2 = getState()->time + 75;
+
+			if (params->param2 >= (int)getState()->time)
+				break;
+		}
+
+		params->param2 = kTimeInvalid;
+
+		setCallback(params->param1 ? 1 : 2);
+		if (params->param1)
+			call(new ENTITY_SETUP(Alouan, setup_compartment8));
+		else
+			call(new ENTITY_SETUP(Alouan, setup_compartment6));
+		break;
+
+	case kActionDefault:
+		getSavePoints()->push(kEntityAlouan, kEntityTrain, kAction191070912, kPosition_4840);
+		params->param1 = 1;
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 3:
+			params->param1 = 0;
+			setCallback(4);
+			call(new ENTITY_SETUP_SIIS(Alouan, setup_playSound), "Har2011");
+			break;
+
+		case 4:
+			setCallback(5);
+			call(new ENTITY_SETUP(Alouan, setup_updateFromTime), 900);
+			break;
+
+		case 5:
+			getSavePoints()->push(kEntityAlouan, kEntityFrancois, kAction190219584);
+			break;
+		}
+		break;
+
+	case kAction189489753:
+		setCallback(3);
+		call(new ENTITY_SETUP(Alouan, setup_compartment8to6));
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Alouan, chapter3, 15)

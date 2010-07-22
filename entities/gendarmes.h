@@ -39,7 +39,7 @@ public:
 	~Gendarmes() {};
 
 	// Setup
-	DECLARE_FUNCTION(function1)
+	DECLARE_FUNCTION(reset)
 	DECLARE_FUNCTION(chapter1)
 	DECLARE_FUNCTION_S(arrestDraw)
 	DECLARE_FUNCTION_S(arrestPlaysound)

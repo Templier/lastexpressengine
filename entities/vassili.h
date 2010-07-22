@@ -39,7 +39,7 @@ public:
 	~Vassili() {};
 
 	// Setup
-	DECLARE_FUNCTION(function1)
+	DECLARE_FUNCTION(reset)
 	DECLARE_FUNCTION_S(draw)
 	DECLARE_FUNCTION_II(savegame)
 	DECLARE_FUNCTION(chapter1)

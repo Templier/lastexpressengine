@@ -40,7 +40,7 @@
 namespace LastExpress {
 
 Tatiana::Tatiana(LastExpressEngine *engine) : Entity(engine, kEntityTatiana) {
-	ADD_CALLBACK_FUNCTION(Tatiana, function1);
+	ADD_CALLBACK_FUNCTION(Tatiana, reset);
 	ADD_CALLBACK_FUNCTION(Tatiana, playSound);
 	ADD_CALLBACK_FUNCTION(Tatiana, draw);
 	ADD_CALLBACK_FUNCTION(Tatiana, updatePosition);
@@ -97,8 +97,8 @@ Tatiana::Tatiana(LastExpressEngine *engine) : Entity(engine, kEntityTatiana) {
 	ADD_CALLBACK_FUNCTION(Tatiana, function55);
 }
 
-IMPLEMENT_FUNCTION(Tatiana, function1, 1)
-	Entity::function1Clothes(savepoint);
+IMPLEMENT_FUNCTION(Tatiana, reset, 1)
+	Entity::reset(savepoint, true);
 }
 
 IMPLEMENT_FUNCTION_S(Tatiana, playSound, 2)

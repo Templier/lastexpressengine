@@ -39,7 +39,7 @@ public:
 	~Alexei() {};
 
 	// Setup
-	DECLARE_FUNCTION(function1)
+	DECLARE_FUNCTION(reset)
 	DECLARE_FUNCTION_S(playSound)
 	DECLARE_FUNCTION_I(updateFromTicks)
 	DECLARE_FUNCTION_S(draw)

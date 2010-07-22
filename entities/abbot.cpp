@@ -43,7 +43,7 @@
 namespace LastExpress {
 
 Abbot::Abbot(LastExpressEngine *engine) : Entity(engine, kEntityAbbot) {
-	ADD_CALLBACK_FUNCTION(Abbot, function1);
+	ADD_CALLBACK_FUNCTION(Abbot, reset);
 	ADD_CALLBACK_FUNCTION(Abbot, draw);
 	ADD_CALLBACK_FUNCTION(Abbot, enterExitCompartment);
 	ADD_CALLBACK_FUNCTION(Abbot, function4);
@@ -98,8 +98,8 @@ Abbot::Abbot(LastExpressEngine *engine) : Entity(engine, kEntityAbbot) {
 	ADD_CALLBACK_FUNCTION(Abbot, function53);
 }
 
-IMPLEMENT_FUNCTION(Abbot, function1, 1)
-	Entity::function1(savepoint);
+IMPLEMENT_FUNCTION(Abbot, reset, 1)
+	Entity::reset(savepoint);
 }
 
 IMPLEMENT_FUNCTION_S(Abbot, draw, 2)

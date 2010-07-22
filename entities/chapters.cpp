@@ -121,31 +121,31 @@ IMPLEMENT_FUNCTION(Chapters, resetMainEntities, 5)
 	if (savepoint.action != kActionDefault)
 		return;
 
-	RESET_ENTITY_STATE(kEntityAbbot, Abbot, setup_function1);
-	RESET_ENTITY_STATE(kEntityAlexei, Alexei, setup_function1);
-	RESET_ENTITY_STATE(kEntityAlouan, Alouan, setup_function1);
-	RESET_ENTITY_STATE(kEntityAnna, Anna, setup_function1);
-	RESET_ENTITY_STATE(kEntityAugust, August, setup_function1);
-	RESET_ENTITY_STATE(kEntityMertens, Mertens, setup_function1);
-	RESET_ENTITY_STATE(kEntityCoudert, Coudert, setup_function1);
-	RESET_ENTITY_STATE(kEntityFrancois, Francois, setup_function1);
-	RESET_ENTITY_STATE(kEntityHadija, Hadija, setup_function1);
-	RESET_ENTITY_STATE(kEntityIvo, Ivo, setup_function1);
-	RESET_ENTITY_STATE(kEntityKahina, Kahina, setup_function1);
-	RESET_ENTITY_STATE(kEntityMmeBoutarel, MmeBoutarel, setup_function1);
-	RESET_ENTITY_STATE(kEntityMahmud, Mahmud, setup_function1);
-	RESET_ENTITY_STATE(kEntityMax, Max, setup_function1);
-	RESET_ENTITY_STATE(kEntityMilos, Milos, setup_function1);
-	RESET_ENTITY_STATE(kEntityBoutarel, Boutarel, setup_function1);
-	RESET_ENTITY_STATE(kEntityGendarmes, Gendarmes, setup_function1);
-	RESET_ENTITY_STATE(kEntityRebecca, Rebecca, setup_function1);
-	RESET_ENTITY_STATE(kEntitySalko, Salko, setup_function1);
-	RESET_ENTITY_STATE(kEntitySophie, Sophie, setup_function1);
-	RESET_ENTITY_STATE(kEntityTatiana, Tatiana, setup_function1);
-	RESET_ENTITY_STATE(kEntityVerges, Verges, setup_function1);
-	RESET_ENTITY_STATE(kEntityVassili, Vassili, setup_function1);
-	RESET_ENTITY_STATE(kEntityVesna, Vesna, setup_function1);
-	RESET_ENTITY_STATE(kEntityYasmin, Yasmin, setup_function1);
+	RESET_ENTITY_STATE(kEntityAbbot, Abbot, setup_reset);
+	RESET_ENTITY_STATE(kEntityAlexei, Alexei, setup_reset);
+	RESET_ENTITY_STATE(kEntityAlouan, Alouan, setup_reset);
+	RESET_ENTITY_STATE(kEntityAnna, Anna, setup_reset);
+	RESET_ENTITY_STATE(kEntityAugust, August, setup_reset);
+	RESET_ENTITY_STATE(kEntityMertens, Mertens, setup_reset);
+	RESET_ENTITY_STATE(kEntityCoudert, Coudert, setup_reset);
+	RESET_ENTITY_STATE(kEntityFrancois, Francois, setup_reset);
+	RESET_ENTITY_STATE(kEntityHadija, Hadija, setup_reset);
+	RESET_ENTITY_STATE(kEntityIvo, Ivo, setup_reset);
+	RESET_ENTITY_STATE(kEntityKahina, Kahina, setup_reset);
+	RESET_ENTITY_STATE(kEntityMmeBoutarel, MmeBoutarel, setup_reset);
+	RESET_ENTITY_STATE(kEntityMahmud, Mahmud, setup_reset);
+	RESET_ENTITY_STATE(kEntityMax, Max, setup_reset);
+	RESET_ENTITY_STATE(kEntityMilos, Milos, setup_reset);
+	RESET_ENTITY_STATE(kEntityBoutarel, Boutarel, setup_reset);
+	RESET_ENTITY_STATE(kEntityGendarmes, Gendarmes, setup_reset);
+	RESET_ENTITY_STATE(kEntityRebecca, Rebecca, setup_reset);
+	RESET_ENTITY_STATE(kEntitySalko, Salko, setup_reset);
+	RESET_ENTITY_STATE(kEntitySophie, Sophie, setup_reset);
+	RESET_ENTITY_STATE(kEntityTatiana, Tatiana, setup_reset);
+	RESET_ENTITY_STATE(kEntityVerges, Verges, setup_reset);
+	RESET_ENTITY_STATE(kEntityVassili, Vassili, setup_reset);
+	RESET_ENTITY_STATE(kEntityVesna, Vesna, setup_reset);
+	RESET_ENTITY_STATE(kEntityYasmin, Yasmin, setup_reset);
 
 	CALLBACK_ACTION();
 }

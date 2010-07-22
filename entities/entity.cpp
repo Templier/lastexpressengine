@@ -111,11 +111,22 @@ void Entity::setup(ChapterIndex index) {
 // Shared functions
 //////////////////////////////////////////////////////////////////////////
 
-void Entity::function1(const SavePoint &savepoint) {
+//////////////////////////////////////////////////////////////////////////
+// Reset an entity
+void Entity::reset(const SavePoint &savepoint, bool resetClothes) {
 	EXPOSE_PARAMS(EntityData::EntityParametersIIII)
 
 	switch (savepoint.action) {
 	default:
+		break;
+
+	case kAction1:
+		if (resetClothes) {
+			// Select next available clothes
+			getData()->clothes = (ClothesIndex)(getData()->clothes + 1);
+			if (getData()->clothes > kClothes3)
+				getData()->clothes = kClothesDefault;
+		}
 		break;
 
 	case kActionNone:
@@ -130,22 +141,6 @@ void Entity::function1(const SavePoint &savepoint) {
 		params->param1 = 10000;
 		break;
 	}
-}
-
-void Entity::function1Clothes(const SavePoint &savepoint) {
-	// Handle kAction1
-	if (savepoint.action == kAction1) {
-
-		// Select next available clothes
-		getData()->clothes = (ClothesIndex)(getData()->clothes + 1);
-		if (getData()->clothes > kClothes3)
-			getData()->clothes = kClothesDefault;
-
-		return;
-	}
-
-	// Let the default function handle the other actions
-	function1(savepoint);
 }
 
 //////////////////////////////////////////////////////////////////////////

@@ -39,7 +39,7 @@
 namespace LastExpress {
 
 Vesna::Vesna(LastExpressEngine *engine) : Entity(engine, kEntityVesna) {
-	ADD_CALLBACK_FUNCTION(Vesna, function1);
+	ADD_CALLBACK_FUNCTION(Vesna, reset);
 	ADD_CALLBACK_FUNCTION(Vesna, playSound);
 	ADD_CALLBACK_FUNCTION(Vesna, enterExitCompartment);
 	ADD_CALLBACK_FUNCTION(Vesna, draw);
@@ -72,8 +72,8 @@ Vesna::Vesna(LastExpressEngine *engine) : Entity(engine, kEntityVesna) {
 	ADD_NULL_FUNCTION();
 }
 
-IMPLEMENT_FUNCTION(Vesna, function1, 1)
-	Entity::function1(savepoint);
+IMPLEMENT_FUNCTION(Vesna, reset, 1)
+	Entity::reset(savepoint);
 }
 
 IMPLEMENT_FUNCTION_S(Vesna, playSound, 2)

@@ -40,7 +40,7 @@
 namespace LastExpress {
 
 Gendarmes::Gendarmes(LastExpressEngine *engine) : Entity(engine, kEntityGendarmes) {
-	ADD_CALLBACK_FUNCTION(Gendarmes, function1);
+	ADD_CALLBACK_FUNCTION(Gendarmes, reset);
 	ADD_CALLBACK_FUNCTION(Gendarmes, chapter1);
 	ADD_CALLBACK_FUNCTION(Gendarmes, arrestDraw);
 	ADD_CALLBACK_FUNCTION(Gendarmes, arrestPlaysound);
@@ -59,8 +59,8 @@ Gendarmes::Gendarmes(LastExpressEngine *engine) : Entity(engine, kEntityGendarme
 	ADD_CALLBACK_FUNCTION(Gendarmes, chapter5);
 }
 
-IMPLEMENT_FUNCTION(Gendarmes, function1, 1)
-	Entity::function1(savepoint);
+IMPLEMENT_FUNCTION(Gendarmes, reset, 1)
+	Entity::reset(savepoint);
 }
 
 IMPLEMENT_FUNCTION(Gendarmes, chapter1, 2)
