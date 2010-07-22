@@ -98,6 +98,8 @@ private:
 	bool _flagDrawSequences;
 	bool _flagCoordinates;
 
+	Common::Rect _coords;
+
 	// Train sequences
 	Common::List<SequenceFrame *> _doors;
 	SequenceFrame *_clockHours;
@@ -109,6 +111,8 @@ private:
 	// Scene processing
 	void preProcessScene(SceneIndex *index);
 	void postProcessScene();
+
+	void resetCoordinates();
 };
 
 } // End of namespace LastExpress

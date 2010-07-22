@@ -46,7 +46,7 @@ namespace LastExpress {
 
 SceneManager::SceneManager(LastExpressEngine *engine) : _engine(engine),
 	_flagNoEntity(false), _flagDrawEntities(false), _flagDrawSequences(false), _flagCoordinates(false),
-	_clockHours(NULL), _clockMinutes(NULL) {
+	_clockHours(NULL), _clockMinutes(NULL), _coords(0, 0, 480, 640) {
 	_sceneLoader = new SceneLoader();
 }
 
@@ -648,6 +648,8 @@ void SceneManager::drawFrames(bool refreshScreen) {
 	if (!_flagDrawSequences)
 		return;
 
+	// TODO handle flag coordinates
+
 	clearBg(GraphicsManager::kBackgroundOverlay);
 
 	for (Common::List<SequenceFrame *>::iterator i = _queue.begin(); i != _queue.end(); ++i)
@@ -736,7 +738,32 @@ void SceneManager::resetQueue() {
 }
 
 void SceneManager::setCoordinates(SequenceFrame *frame) {
-	warning("SceneManager::setCoordinates - Not implemented!");
+
+	if (!frame || frame->getInfo()->subType == 3)
+		return;
+
+	_flagCoordinates = true;
+
+	if (_coords.right > (int)frame->getInfo()->xPos1)
+		_coords.right = frame->getInfo()->xPos1;
+
+	if (_coords.bottom > (int)frame->getInfo()->yPos1)
+		_coords.bottom = frame->getInfo()->yPos1;
+
+	if (_coords.left < (int)frame->getInfo()->xPos2)
+		_coords.left = frame->getInfo()->xPos2;
+
+	if (_coords.top < (int)frame->getInfo()->yPos2)
+		_coords.top = frame->getInfo()->yPos2;
+}
+
+void SceneManager::resetCoordinates() {
+	_coords.top = 0;
+	_coords.left = 0;
+	_coords.bottom = 480;
+	_coords.right = 640;
+
+	_flagCoordinates = false;
 }
 
 //////////////////////////////////////////////////////////////////////////
