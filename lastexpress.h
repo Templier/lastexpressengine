@@ -101,12 +101,17 @@ public:
 
 	// Event handling
 	bool handleEvents();
+	void pollEvents();
 
 	void backupEventHandlers();
 	void restoreEventHandlers();
 	void setEventHandlers(EventHandler::EventFunction *eventMouse, EventHandler::EventFunction *eventTick);
 
 	bool isDemo() const { return (bool)(_gameDescription->flags & ADGF_DEMO); }
+
+	// Frame Counter
+	uint32 getFrameCounter() { return _frameCounter; }
+	void setFrameCounter(uint32 count) { _frameCounter = count; }
 
 protected:
 	// Sound Timer
@@ -126,6 +131,9 @@ private:
 	Font   *_font;
 	Logic  *_logic;
 	Menu   *_menu;
+
+	// Frame counter
+	uint32 _frameCounter;
 
 	// Managers
 	GraphicsManager *_graphicsMan;

@@ -136,13 +136,14 @@ private:
 	Common::EventType _mouseFlags;
 	SceneHotspot *_lastHotspot;
 
+	void init(bool doSavegame, TimeType type, uint32 time);
+	void setup();
 	bool handleEvent(StartMenuAction action, Common::EventType type);
 	void checkHotspots();
 	void setLogicEventHandlers();
 
 	//////////////////////////////////////////////////////////////////////////
 	// Game-related
-	void initGame(bool doSavegame, TimeType type, uint32 time);
 	void startGame();
 	void switchGame();
 	bool isGameFinished() const;

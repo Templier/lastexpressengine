@@ -112,6 +112,7 @@ public:
 
 	// Init
 	static bool initSavegame(GameId id);
+	static void writeMainHeader(GameId id);
 
 	// Getting information
 	static bool isSavegamePresent(GameId id);
@@ -124,6 +125,8 @@ public:
 	uint32 getLastSavegameTicks() const { return _gameTicksLastSavegame; }
 
 	SavegameEntryHeader *getEntry(uint32 index);
+
+	void clearEntries();
 
 private:
 	struct SavegameMainHeader {

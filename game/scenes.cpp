@@ -992,16 +992,19 @@ void SceneManager::postProcessScene() {
 		getState()->time += (scene->param1 + 10) * getState()->timeDelta;
 		getState()->timeTicks += (scene->param1 + 10);
 
-		// TODO wait for a number of frames unless right mouse is clicked
-		//if (!getFlags()->mouse_right_click) {
-		//	while ((unknown + 4 * scene->param1) > unknown) {
-		//		if (getFlags()->mouse_right_click)
-		//			break;
+		// Wait for a number of frames unless right mouse is clicked
+		uint32 nextFrameCount = getFrameCount() + 4 * scene->param1;
+		if (!getFlags()->mouseRightClick) {
+			while (nextFrameCount > getFrameCount()) {
+				_engine->pollEvents();
 
-		//		getSoundMgr()->unknownFunction1();
-		//		// TODO Subtitle drawing function
-		//	}
-		//}
+				if (getFlags()->mouseRightClick)
+					break;
+
+				getSound()->unknownFunction1();
+				// TODO Subtitle drawing function
+			}
+		}
 
 		SceneHotspot *hotspot = scene->getHotspot();
 		if (!hotspot) {

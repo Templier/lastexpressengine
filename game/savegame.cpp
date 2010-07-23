@@ -212,21 +212,26 @@ bool SaveLoad::validateEntryHeader(const SavegameEntryHeader &header) {
 
 SaveLoad::SavegameEntryHeader *SaveLoad::getEntry(uint32 index) {
 	if (index >= _gameHeaders.size())
-		error("SaveLoad::getHeader: invalid index (was:%d, max:%d)", index, _gameHeaders.size() - 1);
+		error("SaveLoad::getEntry: invalid index (was:%d, max:%d)", index, _gameHeaders.size() - 1);
 
 	return _gameHeaders[index];
+}
+
+void SaveLoad::clearEntries() {
+	for (uint i = 0; i < _gameHeaders.size(); i++)
+		SAFE_DELETE(_gameHeaders[i]);
+
+	_gameHeaders.clear();
 }
 
 //////////////////////////////////////////////////////////////////////////
 // Init
 //////////////////////////////////////////////////////////////////////////
-bool SaveLoad::initSavegame(GameId id) {
-	assert(!isSavegamePresent(id));
-
+void SaveLoad::writeMainHeader(GameId id) {
 	Common::OutSaveFile *save = openForSaving(id);
 	if (!save) {
 		debugC(2, kLastExpressDebugSavegame, "SaveLoad::initSavegame - Cannot open savegame for writing: %s", getSavegameName(id).c_str());
-		return false;
+		return;
 	}
 
 	// Write default values to savegame
@@ -240,8 +245,12 @@ bool SaveLoad::initSavegame(GameId id) {
 	save->writeUint32LE(9);
 
 	delete save;
+}
 
-	return true;
+bool SaveLoad::initSavegame(GameId id) {
+	warning("SaveLoad::initSavegame: not implemented!");
+
+	return false;
 }
 
 //////////////////////////////////////////////////////////////////////////

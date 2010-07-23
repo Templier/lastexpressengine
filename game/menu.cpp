@@ -83,32 +83,32 @@ enum StartMenuTooltips {
 	kTooltipInsertCd3,
 	kTooltipContinueGame,
 	kTooltipReplayGame,
-	kTooltipContinueRewoundGame,
+	kTooltipContinueRewoundGame,    // 5
 	kTooltipViewGameEnding,
 	kTooltipStartAnotherGame,
 	kTooltipVolumeUp,
 	kTooltipVolumeDown,
-	kTooltipBrightnessUp,     // 10
+	kTooltipBrightnessUp,           // 10
 	kTooltipBrightnessDown,
 	kTooltipQuit,
 	kTooltipRewindParis,
 	kTooltipForwardStrasbourg,
-	kTooltipRewindStrasbourg,
+	kTooltipRewindStrasbourg,      // 15
 	kTooltipRewindMunich,
 	kTooltipForwardMunich,
 	kTooltipForwardVienna,
 	kTooltipRewindVienna,
-	kTooltipRewindBudapest,   // 20
+	kTooltipRewindBudapest,        // 20
 	kTooltipForwardBudapest,
 	kTooltipForwardBelgrade,
 	kTooltipRewindBelgrade,
 	kTooltipForwardConstantinople,
-	kTooltipSwitchBlueGame,
+	kTooltipSwitchBlueGame,        // 25
 	kTooltipSwitchRedGame,
 	kTooltipSwitchGoldGame,
 	kTooltipSwitchGreenGame,
 	kTooltipSwitchTealGame,
-	kTooltipSwitchPurpleGame, // 30
+	kTooltipSwitchPurpleGame,      // 30
 	kTooltipPlayNewGame,
 	kTooltipCredits,
 	kTooltipFastForward,
@@ -386,6 +386,23 @@ Menu::~Menu() {
 }
 
 //////////////////////////////////////////////////////////////////////////
+// Setup
+void Menu::setup() {
+
+	// Load all menu-related data
+	loadData();
+
+	// Load main scene
+	getState()->scene = getSceneIndex();
+	_engine->getGraphicsManager()->draw(getScenes()->get(getState()->scene), GraphicsManager::kBackgroundC);
+	//drawElements();
+
+	askForRedraw();
+
+	warning("Menu::setup: not implemented!");
+}
+
+//////////////////////////////////////////////////////////////////////////
 // Handle events
 void Menu::eventMouse(const Common::Event &ev) {
 	//if (!getFlags()->shouldRedraw)
@@ -453,38 +470,50 @@ void Menu::show(bool doSavegame, TimeType type, uint32 time) {
 	getEntities()->reset();
 
 	// If no blue savegame exists, this might be the first time we start the game, so we show the full intro
-	if (!SaveLoad::isSavegameValid(kGameBlue)) {
-		if (!_hasShownIntro) {
+	if (!getFlags()->mouseRightClick) {
+		if (!SaveLoad::isSavegameValid(kGameBlue) && _engine->getResourceManager()->loadArchive(kArchiveCd1)) {
 
-			// Show Broderbrund logo
-			Animation animation;
-			if (animation.load(getArchive("1930.nis")))
-				animation.play();
+			if (!_hasShownIntro) {
+				// Show Broderbrund logo
+				Animation animation;
+				if (animation.load(getArchive("1930.nis")))
+					animation.play();
 
-			// Play intro music
-			getSound()->playSoundWithSubtitles("MUS001.SND", 83886096, kEntityNone);
+				getFlags()->mouseRightClick = false;
 
-			// Show The Smoking Car logo
-			if (animation.load(getArchive("1931.nis")))
-				animation.play();
+				// Play intro music
+				getSound()->playSoundWithSubtitles("MUS001.SND", 83886096, kEntityNone);
 
-			_hasShownIntro = true;
-		}
-	} else {
-		// Only show the quick intro
-		if (!_hasShownStartScreen) {
-			getSound()->playSoundWithSubtitles("MUS018.SND", 83886096, kEntityNone);
-			getScenes()->loadScene(kSceneStartScreen);
+				// Show The Smoking Car logo
+				if (animation.load(getArchive("1931.nis")))
+					animation.play();
 
-			// FIXME: Original game waits 60 frames and loops Sound::unknownFunction1 unless the right button is pressed
+				_hasShownIntro = true;
+			}
+		} else {
+			// Only show the quick intro
+			if (!_hasShownStartScreen) {
+				getSound()->playSoundWithSubtitles("MUS018.SND", 83886096, kEntityNone);
+				getScenes()->loadScene(kSceneStartScreen);
+
+				// FIXME: Original game waits 60 frames and loops Sound::unknownFunction1 unless the right button is pressed
+				uint32 nextFrameCount = getFrameCount() + 60;
+				while (getFrameCount() < nextFrameCount) {
+					_engine->pollEvents();
+
+					if (getFlags()->mouseRightClick)
+						break;
+
+					getSound()->unknownFunction1();
+				}
+			}
 		}
 	}
 
 	_hasShownStartScreen = true;
 
-	initGame(doSavegame, type, time);
-	// Init savegame
-	// FIXME: getSavegame()->init(savegame, type, time);
+	// Init Menu
+	init(doSavegame, type, time);
 
 	// Setup sound
 	getSound()->unknownFunction4();
@@ -494,23 +523,14 @@ void Menu::show(bool doSavegame, TimeType type, uint32 time) {
 
 	// TODO more initialization
 	// TODO Init flags
+	getInventory()->unselectItem();
 
 	// Set Cursor type
 	_engine->getCursor()->setStyle(kCursorNormal);
 	_engine->getCursor()->show(true);
 
-	// Load all menu-related data
-	loadData();
-
-
-	//_currentTime = getState()->time;
-
-	// Load main scene
-	getState()->scene = getSceneIndex();
-	_engine->getGraphicsManager()->draw(getScenes()->get(getState()->scene), GraphicsManager::kBackgroundC);
-	//drawElements();
-
-	askForRedraw();
+	setup();
+	checkHotspots();
 
 	// Set event handlers
 	SET_EVENT_HANDLERS(Menu, this);
@@ -546,6 +566,12 @@ bool Menu::handleEvent(StartMenuAction action, Common::EventType type) {
 		// TODO reset time variable (and fall down to kMenuContinue)
 
 	case kMenuContinue:
+
+		if (hasTimeDelta()) {
+			hideOverlays();
+			return true;
+		}
+
 		// TODO Check for cd archive: reload the proper archive here if running in single cd mode
 		if (!_isGameStarted) {
 			drawSequenceFrame(_seqEggButtons, kButtonShield, GraphicsManager::kBackgroundOverlay);
@@ -570,7 +596,7 @@ bool Menu::handleEvent(StartMenuAction action, Common::EventType type) {
 
 		clearBg(GraphicsManager::kBackgroundOverlay);
 
-		playSfxStream("LIB046.SND");
+		getSound()->playSound(kEntityNone, "LIB046");
 
 		// Setup new game
 		getSavePoints()->reset();
@@ -648,48 +674,71 @@ bool Menu::handleEvent(StartMenuAction action, Common::EventType type) {
 
 	//////////////////////////////////////////////////////////////////////////
 	case kMenuSwitchSaveGame:
-		if (clicked) {
-			drawSequenceFrame(_seqAcorn, 1, GraphicsManager::kBackgroundOverlay);
-			playSfxStream("LIB046.SND");
-			switchGame();
-			// the menu should have been reset & redrawn, so don't do anything else here
-		} else {
-			drawSequenceFrame(_seqAcorn, 0, GraphicsManager::kBackgroundOverlay);
-
-			if (!SaveLoad::isSavegameValid(getNextGameId())) {
-				if (_isGameStarted)
-					drawSequenceFrame(_seqTooltips, kTooltipStartAnotherGame, GraphicsManager::kBackgroundOverlay)
-				else
-					drawSequenceFrame(_seqTooltips, kTooltipSwitchBlueGame, GraphicsManager::kBackgroundOverlay);
-			} else {
-				// Stupid tooltips ids are not in order, so we can't just increment them...
-				switch(_gameId) {
-					case kGameBlue:
-						drawSequenceFrame(_seqTooltips, kTooltipSwitchRedGame, GraphicsManager::kBackgroundOverlay);
-						break;
-
-					case kGameRed:
-						drawSequenceFrame(_seqTooltips, kTooltipSwitchGreenGame, GraphicsManager::kBackgroundOverlay);
-						break;
-
-					case kGameGreen:
-						drawSequenceFrame(_seqTooltips, kTooltipSwitchPurpleGame, GraphicsManager::kBackgroundOverlay);
-						break;
-
-					case kGamePurple:
-						drawSequenceFrame(_seqTooltips, kTooltipSwitchTealGame, GraphicsManager::kBackgroundOverlay);
-						break;
-
-					case kGameTeal:
-						drawSequenceFrame(_seqTooltips, kTooltipSwitchGoldGame, GraphicsManager::kBackgroundOverlay);
-						break;
-
-					case kGameGold:
-						drawSequenceFrame(_seqTooltips, kTooltipSwitchBlueGame, GraphicsManager::kBackgroundOverlay);
-						break;
-				}
-			}
+		if (hasTimeDelta()) {
+			hideOverlays();
+			return true;
 		}
+		
+		if (clicked) {
+			showFrame(kOverlayAcorn, 1, true);
+			showFrame(kOverlayTooltip, -1, true);
+			getSound()->playSound(kEntityNone, "LIB047");
+
+			// Setup new menu screen
+			switchGame();
+			setup();
+
+			// TODO set fight state to 0
+
+			return true;
+		}
+
+		// TODO Check for other flag and return
+
+		showFrame(kOverlayAcorn, 0, true);
+
+		if (_isGameStarted) {
+			showFrame(kOverlayTooltip, kTooltipSwitchBlueGame, true);
+			return true;
+		}
+
+		if (_gameId == kGameGold) {
+			showFrame(kOverlayTooltip, kTooltipSwitchBlueGame, true);
+			return true;
+		}
+
+		if (!SaveLoad::isSavegameValid(getNextGameId())) {
+			showFrame(kOverlayTooltip, kTooltipStartAnotherGame, true);
+			return true;
+		}
+
+		// Stupid tooltips ids are not in order, so we can't just increment them...
+		switch(_gameId) {
+		default:
+			break;
+
+		case kGameBlue:
+			showFrame(kOverlayTooltip, kTooltipSwitchRedGame, true);
+			break;
+
+		case kGameRed:
+			showFrame(kOverlayTooltip, kTooltipSwitchGreenGame, true);			
+			break;
+
+		case kGameGreen:
+			showFrame(kOverlayTooltip, kTooltipSwitchPurpleGame, true);
+			break;
+
+		case kGamePurple:
+			showFrame(kOverlayTooltip, kTooltipSwitchTealGame, true);
+			break;
+
+		case kGameTeal:
+			showFrame(kOverlayTooltip, kTooltipSwitchGoldGame, true);			
+			break;
+		}
+
+		return true;
 		break;
 
 	//////////////////////////////////////////////////////////////////////////
@@ -855,7 +904,7 @@ void Menu::setLogicEventHandlers() {
 //////////////////////////////////////////////////////////////////////////
 // Game-related
 //////////////////////////////////////////////////////////////////////////
-void Menu::initGame(bool doSavegame, TimeType type, uint32 time) {
+void Menu::init(bool doSavegame, TimeType type, uint32 time) {
 	warning("Menu::initGame: not implemented!");
 
 	if (time >= kTimeStartGame) {
@@ -878,31 +927,24 @@ void Menu::startGame() {
 
 // Switch to the next savegame
 void Menu::switchGame() {
-	// Switch back to blue game is the current game is not started
-	if (!_isGameStarted) {
-		_gameId = kGameBlue;
-	} else {
-		_gameId = getNextGameId();
-	}
 
+	// Switch back to blue game is the current game is not started
+	_gameId = SaveLoad::isSavegameValid(_gameId) ? getNextGameId() : kGameBlue;
+	
 	// Initialize savegame if needed
 	if (!SaveLoad::isSavegamePresent(_gameId))
 		SaveLoad::initSavegame(_gameId);
 
-	// Reset run state
-	_isGameStarted = false;
+	getState()->time = 0;
 
-	// TODO load data from savegame, adjust volume & luminosity, etc...
-	//////////////////////////////////////////////////////////////////////////
-	// HACK for debug
-	if (_gameId == kGameBlue) {
-		getState()->time = kTimeCityPoszony;
-		_isGameStarted = true;
-	}
-	//////////////////////////////////////////////////////////////////////////
+	// Clear menu elements
+	_clock->clear();
+	_trainLine->clear();
 
-	// Redraw all menu elements
-	show(false, kTimeType0, 0);
+	// Clear loaded savegame data
+	getSaveLoad()->clearEntries();
+
+	init(false, kTimeType0, 0);
 }
 
 bool Menu::isGameFinished() const {

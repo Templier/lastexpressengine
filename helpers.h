@@ -58,6 +58,8 @@
 #define setGlobalTimer(timer) getLogic()->getGameState()->setTimer(timer)
 #define setCoords(coords) getLogic()->getGameState()->setCoordinates(coords)
 #define getCoords() getLogic()->getGameState()->getCoordinates()
+#define setFrameCount(count) _engine->->setFrameCounter(count)
+#define getFrameCount() _engine->getFrameCounter()
 
 // Scenes
 #define getScenes() _engine->getSceneManager()

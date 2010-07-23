@@ -51,7 +51,7 @@ namespace LastExpress {
 
 LastExpressEngine::LastExpressEngine(OSystem *syst, const ADGameDescription *gd) :
     Engine(syst), _gameDescription(gd), _debugger(NULL), _cursor(NULL),
-    _font(NULL), _logic(NULL), _menu(NULL), _graphicsMan(NULL), _resMan(NULL), _sceneMan(NULL), _soundMan(NULL),
+    _font(NULL), _logic(NULL), _menu(NULL), _frameCounter(0), _graphicsMan(NULL), _resMan(NULL), _sceneMan(NULL), _soundMan(NULL),
 	eventMouse(NULL), eventTick(NULL), eventMouseBackup(NULL), eventTickBackup(NULL) {
 
 	// Adding the default directories
@@ -127,10 +127,6 @@ Common::Error LastExpressEngine::run() {
 	if (!_font)
 		return Common::kNoGameDataFoundError;
 
-	// Start sound manager and setup timer
-	_soundMan = new SoundManager(this);
-	_timer->installTimerProc(&soundTimer, 17, this);
-
 	// Start scene manager
 	_sceneMan = new SceneManager(this);
 	_sceneMan->loadSceneDataFile(kArchiveCd1);
@@ -138,8 +134,16 @@ Common::Error LastExpressEngine::run() {
 	// Game logic
 	_logic = new Logic(this);
 
+	// Start sound manager and setup timer
+	_soundMan = new SoundManager(this);
+	_timer->installTimerProc(&soundTimer, 17, this);
+
 	// Menu
 	_menu = new Menu(this);
+
+	// Set game running
+	getGameLogic()->getGameState()->getGameFlags()->isGameRunning = true;
+
 	_menu->show(false, kTimeType0, 0);
 
 	while (!shouldQuit()) {
@@ -151,6 +155,25 @@ Common::Error LastExpressEngine::run() {
 	}
 
 	return Common::kNoError;
+}
+
+void LastExpressEngine::pollEvents() {
+	Common::Event ev;
+	_eventMan->pollEvent(ev);
+
+	switch (ev.type) {
+
+	case Common::EVENT_LBUTTONUP:
+		getGameLogic()->getGameState()->getGameFlags()->mouseLeftClick = true;
+		break;
+	
+	case Common::EVENT_RBUTTONUP:
+		getGameLogic()->getGameState()->getGameFlags()->mouseRightClick = true;
+		break;
+
+	default:
+		break;
+	}
 }
 
 bool LastExpressEngine::handleEvents() {
@@ -187,10 +210,10 @@ bool LastExpressEngine::handleEvents() {
 
 		case Common::EVENT_MAINMENU:
 			// Closing the GMM
-
-		case Common::EVENT_MOUSEMOVE:
+		
 		case Common::EVENT_LBUTTONUP:
 		case Common::EVENT_RBUTTONUP:
+		case Common::EVENT_MOUSEMOVE:
 			if (eventMouse && eventMouse->isValid())
 				(*eventMouse)(ev);
 			break;
@@ -230,8 +253,12 @@ void LastExpressEngine::soundTimer(void *refCon) {
 }
 
 void LastExpressEngine::handleSoundTimer() {
-	if (_soundMan)
-		_soundMan->handleTimer();
+	if (getGameLogic()->getGameState()->getGameFlags()->isGameRunning) {
+		if (_frameCounter & 1)
+			_soundMan->handleTimer();
+
+		_frameCounter++;
+	}
 }
 
 ///////////////////////////////////////////////////////////////////////////////////
