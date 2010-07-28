@@ -48,13 +48,13 @@ Kronos::Kronos(LastExpressEngine *engine) : Entity(engine, kEntityKronos) {
 	ADD_CALLBACK_FUNCTION(Kronos, updateFromTime);
 	ADD_CALLBACK_FUNCTION(Kronos, updateFromTicks);
 	ADD_CALLBACK_FUNCTION(Kronos, chapter1);
-	ADD_CALLBACK_FUNCTION(Kronos, chapter1_handler);
+	ADD_CALLBACK_FUNCTION(Kronos, chapter1Handler);
 	ADD_CALLBACK_FUNCTION(Kronos, function9);
 	ADD_CALLBACK_FUNCTION(Kronos, function10);
 	ADD_CALLBACK_FUNCTION(Kronos, function11);
 	ADD_CALLBACK_FUNCTION(Kronos, chapter2);
 	ADD_CALLBACK_FUNCTION(Kronos, chapter3);
-	ADD_CALLBACK_FUNCTION(Kronos, function14);
+	ADD_CALLBACK_FUNCTION(Kronos, chapter3Handler);
 	ADD_CALLBACK_FUNCTION(Kronos, function15);
 	ADD_CALLBACK_FUNCTION(Kronos, function16);
 	ADD_CALLBACK_FUNCTION(Kronos, function17);
@@ -101,7 +101,7 @@ IMPLEMENT_FUNCTION(Kronos, chapter1, 7)
 		break;
 
 	case kActionNone:
-		TIME_CHECK_CHAPTER1(setup_chapter1_handler);
+		TIME_CHECK_CHAPTER1(setup_chapter1Handler);
 		break;
 
 	case kActionDefault:
@@ -115,7 +115,7 @@ IMPLEMENT_FUNCTION(Kronos, chapter1, 7)
 	}
 }
 
-IMPLEMENT_FUNCTION(Kronos, chapter1_handler, 8)
+IMPLEMENT_FUNCTION(Kronos, chapter1Handler, 8)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -209,7 +209,7 @@ IMPLEMENT_FUNCTION(Kronos, chapter3, 13)
 		break;
 
 	case kActionNone:
-		setup_function14();
+		setup_chapter3Handler();
 		break;
 
 	case kActionDefault:
@@ -227,7 +227,7 @@ IMPLEMENT_FUNCTION(Kronos, chapter3, 13)
 	}
 }
 
-IMPLEMENT_FUNCTION(Kronos, function14, 14)
+IMPLEMENT_FUNCTION(Kronos, chapter3Handler, 14)
 	switch (savepoint.action) {
 	default:
 		break;

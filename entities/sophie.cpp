@@ -72,7 +72,7 @@ Sophie::Sophie(LastExpressEngine *engine) : Entity(engine, kEntitySophie) {
 	ADD_CALLBACK_FUNCTION(Sophie, chapter4);
 	ADD_CALLBACK_FUNCTION(Sophie, function9);
 	ADD_CALLBACK_FUNCTION(Sophie, chapter5);
-	ADD_CALLBACK_FUNCTION(Sophie, function11);
+	ADD_CALLBACK_FUNCTION(Sophie, chapter5Handler);
 	ADD_NULL_FUNCTION();
 }
 
@@ -255,7 +255,7 @@ IMPLEMENT_FUNCTION(Sophie, chapter5, 10)
 		break;
 
 	case kActionNone:
-		setup_function11();
+		setup_chapter5Handler();
 		break;
 
 	case kActionDefault:
@@ -271,7 +271,7 @@ IMPLEMENT_FUNCTION(Sophie, chapter5, 10)
 }
 
 //////////////////////////////////////////////////////////////////////////
-IMPLEMENT_FUNCTION(Sophie, function11, 11)
+IMPLEMENT_FUNCTION(Sophie, chapter5Handler, 11)
 	if (savepoint.action == kAction70549068)
 		setup_nullfunction();
 }

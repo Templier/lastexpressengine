@@ -48,17 +48,17 @@ Hadija::Hadija(LastExpressEngine *engine) : Entity(engine, kEntityHadija) {
 	ADD_CALLBACK_FUNCTION(Hadija, function8);
 	ADD_CALLBACK_FUNCTION(Hadija, function9);
 	ADD_CALLBACK_FUNCTION(Hadija, chapter1);
-	ADD_CALLBACK_FUNCTION(Hadija, chapter1_handler);
+	ADD_CALLBACK_FUNCTION(Hadija, chapter1Handler);
 	ADD_CALLBACK_FUNCTION(Hadija, function12);
 	ADD_CALLBACK_FUNCTION(Hadija, chapter2);
-	ADD_CALLBACK_FUNCTION(Hadija, chapter2_handler);
+	ADD_CALLBACK_FUNCTION(Hadija, chapter2Handler);
 	ADD_CALLBACK_FUNCTION(Hadija, chapter3);
-	ADD_CALLBACK_FUNCTION(Hadija, chapter3_handler);
+	ADD_CALLBACK_FUNCTION(Hadija, chapter3Handler);
 	ADD_CALLBACK_FUNCTION(Hadija, chapter4);
-	ADD_CALLBACK_FUNCTION(Hadija, chapter4_handler);
+	ADD_CALLBACK_FUNCTION(Hadija, chapter4Handler);
 	ADD_CALLBACK_FUNCTION(Hadija, function19);
 	ADD_CALLBACK_FUNCTION(Hadija, chapter5);
-	ADD_CALLBACK_FUNCTION(Hadija, chapter5_handler);
+	ADD_CALLBACK_FUNCTION(Hadija, chapter5Handler);
 	ADD_CALLBACK_FUNCTION(Hadija, function22);
 	ADD_CALLBACK_FUNCTION(Hadija, function23);
 	ADD_NULL_FUNCTION();
@@ -106,7 +106,7 @@ IMPLEMENT_FUNCTION(Hadija, chapter1, 10)
 		break;
 
 	case kActionNone:
-		TIME_CHECK_CHAPTER1(setup_chapter1_handler);
+		TIME_CHECK_CHAPTER1(setup_chapter1Handler);
 		break;
 
 	case kActionDefault:
@@ -118,7 +118,7 @@ IMPLEMENT_FUNCTION(Hadija, chapter1, 10)
 	}
 }
 
-IMPLEMENT_FUNCTION(Hadija, chapter1_handler, 11)
+IMPLEMENT_FUNCTION(Hadija, chapter1Handler, 11)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -226,11 +226,11 @@ IMPLEMENT_FUNCTION(Hadija, chapter2, 13)
 		getData()->clothes = kClothesDefault;
 		getData()->inventoryItem = kItemNone;
 
-		setup_chapter2_handler();
+		setup_chapter2Handler();
 	}
 }
 
-IMPLEMENT_FUNCTION(Hadija, chapter2_handler, 14)
+IMPLEMENT_FUNCTION(Hadija, chapter2Handler, 14)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -284,7 +284,7 @@ IMPLEMENT_FUNCTION(Hadija, chapter3, 15)
 		break;
 
 	case kActionNone:
-		setup_chapter3_handler();
+		setup_chapter3Handler();
 		break;
 
 	case kActionDefault:
@@ -298,7 +298,7 @@ IMPLEMENT_FUNCTION(Hadija, chapter3, 15)
 	}
 }
 
-IMPLEMENT_FUNCTION(Hadija, chapter3_handler, 16)
+IMPLEMENT_FUNCTION(Hadija, chapter3Handler, 16)
 	error("Hadija: callback function 16 not implemented!");
 }
 
@@ -308,7 +308,7 @@ IMPLEMENT_FUNCTION(Hadija, chapter4, 17)
 		break;
 
 	case kActionNone:
-		setup_chapter4_handler();
+		setup_chapter4Handler();
 		break;
 
 	case kActionDefault:
@@ -319,7 +319,7 @@ IMPLEMENT_FUNCTION(Hadija, chapter4, 17)
 	}
 }
 
-IMPLEMENT_FUNCTION(Hadija, chapter4_handler, 18)
+IMPLEMENT_FUNCTION(Hadija, chapter4Handler, 18)
 	error("Hadija: callback function 18 not implemented!");
 }
 
@@ -341,7 +341,7 @@ IMPLEMENT_FUNCTION(Hadija, chapter5, 20)
 		break;
 
 	case kActionNone:
-		setup_chapter5_handler();
+		setup_chapter5Handler();
 		break;
 
 	case kActionDefault:
@@ -357,7 +357,7 @@ IMPLEMENT_FUNCTION(Hadija, chapter5, 20)
 	}
 }
 
-IMPLEMENT_FUNCTION(Hadija, chapter5_handler, 21)
+IMPLEMENT_FUNCTION(Hadija, chapter5Handler, 21)
 	if (savepoint.action == kAction70549068)
 		setup_function22();
 }

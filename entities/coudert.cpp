@@ -80,7 +80,7 @@ Coudert::Coudert(LastExpressEngine *engine) : Entity(engine, kEntityCoudert) {
 	ADD_CALLBACK_FUNCTION(Coudert, function37);
 	ADD_CALLBACK_FUNCTION(Coudert, function38);
 	ADD_CALLBACK_FUNCTION(Coudert, function39);
-	ADD_CALLBACK_FUNCTION(Coudert, chapter1_handler);
+	ADD_CALLBACK_FUNCTION(Coudert, chapter1Handler);
 	ADD_CALLBACK_FUNCTION(Coudert, function41);
 	ADD_CALLBACK_FUNCTION(Coudert, chapter2);
 	ADD_CALLBACK_FUNCTION(Coudert, function43);
@@ -98,7 +98,7 @@ Coudert::Coudert(LastExpressEngine *engine) : Entity(engine, kEntityCoudert) {
 	ADD_CALLBACK_FUNCTION(Coudert, function55);
 	ADD_CALLBACK_FUNCTION(Coudert, function56);
 	ADD_CALLBACK_FUNCTION(Coudert, chapter5);
-	ADD_CALLBACK_FUNCTION(Coudert, function58);
+	ADD_CALLBACK_FUNCTION(Coudert, chapter5Handler);
 	ADD_CALLBACK_FUNCTION(Coudert, function59);
 	ADD_CALLBACK_FUNCTION(Coudert, function60);
 	ADD_CALLBACK_FUNCTION(Coudert, function61);
@@ -461,7 +461,70 @@ IMPLEMENT_FUNCTION_I(Coudert, function17, 17)
 }
 
 IMPLEMENT_FUNCTION(Coudert, function18, 18)
-	error("Coudert: callback function 18 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionDefault:
+		if (ENTITY_PARAM(0, 6) || ENTITY_PARAM(0, 8)
+		 || ENTITY_PARAM(1, 1) || ENTITY_PARAM(1, 2) || ENTITY_PARAM(1, 3) || ENTITY_PARAM(1, 5) || ENTITY_PARAM(1, 6) || ENTITY_PARAM(1, 7) || ENTITY_PARAM(1, 8)
+		 || ENTITY_PARAM(2, 4) || ENTITY_PARAM(2, 6)) {
+			getInventory()->setLocationAndProcess(kItem5, kLocation1);
+
+			setCallback(1);
+			call(new ENTITY_SETUP(Coudert, setup_function9), kCarRedSleeping, kPosition_540);
+			break;
+		}
+
+		if (ENTITY_PARAM(0, 3) || ENTITY_PARAM(0, 5) || ENTITY_PARAM(0, 4)) {
+			getEntities()->drawSequenceLeft(kEntityCoudert, "627K");
+			getScenes()->loadSceneFromItemPosition(kItem5);
+
+			CALLBACK_ACTION();
+			break;
+		}
+
+		getEntities()->drawSequenceRight(kEntityCoudert, ENTITY_PARAM(0, 2) ? "627A" : "627D");
+		getScenes()->loadSceneFromItemPosition(kItem5);
+
+		if (getEntities()->isPlayerPosition(kCarRedSleeping, 68)) {
+			if (!getSound()->isBuffered(kEntityCoudert))
+				getSound()->playSound(kEntityCoudert, "JAC1111");
+
+			getScenes()->loadSceneFromPosition(kCarRedSleeping, 25);
+		}
+
+		setCallback(3);
+		call(new ENTITY_SETUP(Coudert, setup_function4));
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			getEntities()->clearSequences(kEntityCoudert);
+			ENTITY_PARAM(2, 1) = 1;
+
+			setCallback(2);
+			call(new ENTITY_SETUP(Coudert, setup_function10), 75);
+			break;
+
+		case 2:
+			CALLBACK_ACTION();
+			break;
+
+		case 3:
+			getEntities()->drawSequenceLeft(kEntityCoudert, ENTITY_PARAM(0, 2) ? "627B" : "627E");
+			ENTITY_PARAM(0, 1) = 0;
+			getSavePoints()->push(kEntityCoudert, kEntityCoudert, kActionDrawScene);
+
+			CALLBACK_ACTION();
+			break;
+		}
+		break;
+	}
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -581,7 +644,7 @@ IMPLEMENT_FUNCTION(Coudert, chapter1, 36)
 		break;
 
 	case kActionNone:
-		TIME_CHECK_CALLBACK(Coudert, kTimeChapter1, params->param1, 1, setup_chapter1_handler)
+		TIME_CHECK_CALLBACK(Coudert, kTimeChapter1, params->param1, 1, setup_chapter1Handler)
 		break;
 
 	case kActionDefault:
@@ -614,7 +677,7 @@ IMPLEMENT_FUNCTION(Coudert, chapter1, 36)
 
 	case kActionCallback:
 		if (getCallback() == 1)
-			setup_chapter1_handler();
+			setup_chapter1Handler();
 		break;
 	}
 }
@@ -648,7 +711,7 @@ switch (savepoint.action) {
 			break;
 
 		case 2:
-			setup_chapter1_handler();
+			setup_chapter1Handler();
 			break;
 		}
 		break;
@@ -668,7 +731,7 @@ IMPLEMENT_FUNCTION(Coudert, function39, 39)
 	error("Coudert: callback function 39 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Coudert, chapter1_handler, 40)
+IMPLEMENT_FUNCTION(Coudert, chapter1Handler, 40)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -1115,7 +1178,7 @@ IMPLEMENT_FUNCTION(Coudert, chapter5, 57)
 		break;
 
 	case kActionNone:
-		setup_function58();
+		setup_chapter5Handler();
 		break;
 
 	case kActionDefault:
@@ -1129,7 +1192,7 @@ IMPLEMENT_FUNCTION(Coudert, chapter5, 57)
 	}
 }
 
-IMPLEMENT_FUNCTION(Coudert, function58, 58)
+IMPLEMENT_FUNCTION(Coudert, chapter5Handler, 58)
 	if (savepoint.action == kAction70549068)
 		setup_function59();
 }

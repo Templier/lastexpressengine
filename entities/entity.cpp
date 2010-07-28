@@ -309,6 +309,12 @@ void Entity::checkEntity(const SavePoint &savepoint, bool handleExcuseMe) {
 	}
 }
 
+//////////////////////////////////////////////////////////////////////////
+// Parameters
+//  - sequence name
+//  - EntityIndex
+//  - ActionIndex
+//  - sequence name
 void Entity::savepointCall(const SavePoint &savepoint, bool handleExcuseMe) {
 	EXPOSE_PARAMS(EntityData::EntityParametersSIIS)
 

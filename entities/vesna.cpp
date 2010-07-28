@@ -51,14 +51,14 @@ Vesna::Vesna(LastExpressEngine *engine) : Entity(engine, kEntityVesna) {
 	ADD_CALLBACK_FUNCTION(Vesna, savegame);
 	ADD_CALLBACK_FUNCTION(Vesna, function11);
 	ADD_CALLBACK_FUNCTION(Vesna, chapter1);
-	ADD_CALLBACK_FUNCTION(Vesna, chapter1_handler);
+	ADD_CALLBACK_FUNCTION(Vesna, chapter1Handler);
 	ADD_CALLBACK_FUNCTION(Vesna, function14);
 	ADD_CALLBACK_FUNCTION(Vesna, function15);
 	ADD_CALLBACK_FUNCTION(Vesna, chapter2);
-	ADD_CALLBACK_FUNCTION(Vesna, function17);
+	ADD_CALLBACK_FUNCTION(Vesna, chapter2Handler);
 	ADD_CALLBACK_FUNCTION(Vesna, function18);
 	ADD_CALLBACK_FUNCTION(Vesna, chapter3);
-	ADD_CALLBACK_FUNCTION(Vesna, function20);
+	ADD_CALLBACK_FUNCTION(Vesna, chapter3Handler);
 	ADD_CALLBACK_FUNCTION(Vesna, function21);
 	ADD_CALLBACK_FUNCTION(Vesna, function22);
 	ADD_CALLBACK_FUNCTION(Vesna, function23);
@@ -67,7 +67,7 @@ Vesna::Vesna(LastExpressEngine *engine) : Entity(engine, kEntityVesna) {
 	ADD_CALLBACK_FUNCTION(Vesna, function26);
 	ADD_CALLBACK_FUNCTION(Vesna, function27);
 	ADD_CALLBACK_FUNCTION(Vesna, chapter5);
-	ADD_CALLBACK_FUNCTION(Vesna, function29);
+	ADD_CALLBACK_FUNCTION(Vesna, chapter5Handler);
 	ADD_CALLBACK_FUNCTION(Vesna, function30);
 	ADD_NULL_FUNCTION();
 }
@@ -128,7 +128,7 @@ IMPLEMENT_FUNCTION(Vesna, chapter1, 12)
 		break;
 
 	case kActionNone:
-		TIME_CHECK_CHAPTER1(setup_chapter1_handler);
+		TIME_CHECK_CHAPTER1(setup_chapter1Handler);
 		break;
 
 	case kActionDefault:
@@ -141,7 +141,7 @@ IMPLEMENT_FUNCTION(Vesna, chapter1, 12)
 	}
 }
 
-IMPLEMENT_FUNCTION(Vesna, chapter1_handler, 13)
+IMPLEMENT_FUNCTION(Vesna, chapter1Handler, 13)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -200,7 +200,7 @@ IMPLEMENT_FUNCTION(Vesna, chapter2, 16)
 		break;
 
 	case kActionNone:
-		setup_function17();
+		setup_chapter2Handler();
 		break;
 
 	case kActionDefault:
@@ -216,7 +216,7 @@ IMPLEMENT_FUNCTION(Vesna, chapter2, 16)
 	}
 }
 
-IMPLEMENT_FUNCTION(Vesna, function17, 17)
+IMPLEMENT_FUNCTION(Vesna, chapter2Handler, 17)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -243,7 +243,7 @@ IMPLEMENT_FUNCTION(Vesna, chapter3, 19)
 		break;
 
 	case kActionNone:
-		setup_function20();
+		setup_chapter3Handler();
 		break;
 
 	case kActionDefault:
@@ -258,7 +258,7 @@ IMPLEMENT_FUNCTION(Vesna, chapter3, 19)
 	}
 }
 
-IMPLEMENT_FUNCTION(Vesna, function20, 20)
+IMPLEMENT_FUNCTION(Vesna, chapter3Handler, 20)
 	error("Vesna: callback function 20 not implemented!");
 }
 
@@ -327,7 +327,7 @@ IMPLEMENT_FUNCTION(Vesna, chapter5, 28)
 		break;
 
 	case kActionNone:
-		setup_function29();
+		setup_chapter5Handler();
 		break;
 
 	case kActionDefault:
@@ -340,7 +340,7 @@ IMPLEMENT_FUNCTION(Vesna, chapter5, 28)
 	}
 }
 
-IMPLEMENT_FUNCTION(Vesna, function29, 29)
+IMPLEMENT_FUNCTION(Vesna, chapter5Handler, 29)
 	switch (savepoint.action) {
 	default:
 		break;

@@ -50,7 +50,7 @@ Gendarmes::Gendarmes(LastExpressEngine *engine) : Entity(engine, kEntityGendarme
 	ADD_CALLBACK_FUNCTION(Gendarmes, function8);
 	ADD_CALLBACK_FUNCTION(Gendarmes, function9);
 	ADD_CALLBACK_FUNCTION(Gendarmes, function10);
-	ADD_CALLBACK_FUNCTION(Gendarmes, chapter1_handler);
+	ADD_CALLBACK_FUNCTION(Gendarmes, chapter1Handler);
 	ADD_CALLBACK_FUNCTION(Gendarmes, function12);
 	ADD_CALLBACK_FUNCTION(Gendarmes, function13);
 	ADD_CALLBACK_FUNCTION(Gendarmes, chapter2);
@@ -69,7 +69,7 @@ IMPLEMENT_FUNCTION(Gendarmes, chapter1, 2)
 		break;
 
 	case kActionNone:
-		TIME_CHECK_CHAPTER1(setup_chapter1_handler);
+		TIME_CHECK_CHAPTER1(setup_chapter1Handler);
 		break;
 
 	case kActionDefault:
@@ -286,7 +286,7 @@ IMPLEMENT_FUNCTION_III(Gendarmes, function10, 10)
 	}
 }
 
-IMPLEMENT_FUNCTION(Gendarmes, chapter1_handler, 11)
+IMPLEMENT_FUNCTION(Gendarmes, chapter1Handler, 11)
 	if (savepoint.action == kAction169499649) {
 		getSavePoints()->push(kEntityGendarmes, kEntityMertens, kAction190082817);
 		setup_function12();

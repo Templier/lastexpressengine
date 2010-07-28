@@ -58,7 +58,7 @@ Alexei::Alexei(LastExpressEngine *engine) : Entity(engine, kEntityAlexei) {
 	ADD_CALLBACK_FUNCTION(Alexei, function15);
 	ADD_CALLBACK_FUNCTION(Alexei, function16);
 	ADD_CALLBACK_FUNCTION(Alexei, chapter1);
-	ADD_CALLBACK_FUNCTION(Alexei, chapter1_handler);
+	ADD_CALLBACK_FUNCTION(Alexei, chapter1Handler);
 	ADD_CALLBACK_FUNCTION(Alexei, function19);
 	ADD_CALLBACK_FUNCTION(Alexei, function20);
 	ADD_CALLBACK_FUNCTION(Alexei, function21);
@@ -69,16 +69,16 @@ Alexei::Alexei(LastExpressEngine *engine) : Entity(engine, kEntityAlexei) {
 	ADD_CALLBACK_FUNCTION(Alexei, function26);
 	ADD_CALLBACK_FUNCTION(Alexei, function27);
 	ADD_CALLBACK_FUNCTION(Alexei, chapter2);
-	ADD_CALLBACK_FUNCTION(Alexei, chapter2_handler);
+	ADD_CALLBACK_FUNCTION(Alexei, chapter2Handler);
 	ADD_CALLBACK_FUNCTION(Alexei, function30);
 	ADD_CALLBACK_FUNCTION(Alexei, function31);
 	ADD_CALLBACK_FUNCTION(Alexei, chapter3);
-	ADD_CALLBACK_FUNCTION(Alexei, chapter3_handler);
+	ADD_CALLBACK_FUNCTION(Alexei, chapter3Handler);
 	ADD_CALLBACK_FUNCTION(Alexei, function34);
 	ADD_CALLBACK_FUNCTION(Alexei, function35);
 	ADD_CALLBACK_FUNCTION(Alexei, function36);
 	ADD_CALLBACK_FUNCTION(Alexei, chapter4);
-	ADD_CALLBACK_FUNCTION(Alexei, chapter4_handler);
+	ADD_CALLBACK_FUNCTION(Alexei, chapter4Handler);
 	ADD_CALLBACK_FUNCTION(Alexei, function39);
 	ADD_CALLBACK_FUNCTION(Alexei, function40);
 	ADD_CALLBACK_FUNCTION(Alexei, function41);
@@ -199,7 +199,7 @@ IMPLEMENT_FUNCTION(Alexei, function15, 15)
 
 //////////////////////////////////////////////////////////////////////////
 // Parameters
-//  - TimeTicks
+//  - Time
 //  - Sequence name
 IMPLEMENT_FUNCTION_IS(Alexei, function16, 16)
 	error("Alexei: callback function 16 not implemented!");
@@ -211,7 +211,7 @@ IMPLEMENT_FUNCTION(Alexei, chapter1, 17)
 		break;
 
 	case kActionNone:
-		TIME_CHECK_CHAPTER1(setup_chapter1_handler)
+		TIME_CHECK_CHAPTER1(setup_chapter1Handler)
 		break;
 
 	case kActionDefault:
@@ -226,7 +226,7 @@ IMPLEMENT_FUNCTION(Alexei, chapter1, 17)
 	}
 }
 
-IMPLEMENT_FUNCTION(Alexei, chapter1_handler, 18)
+IMPLEMENT_FUNCTION(Alexei, chapter1Handler, 18)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -537,7 +537,7 @@ IMPLEMENT_FUNCTION(Alexei, chapter2, 28)
 		break;
 
 	case kActionNone:
-		setup_chapter2_handler();
+		setup_chapter2Handler();
 		break;
 
 	case kActionDefault:
@@ -556,8 +556,59 @@ IMPLEMENT_FUNCTION(Alexei, chapter2, 28)
 	}
 }
 
-IMPLEMENT_FUNCTION(Alexei, chapter2_handler, 29)
-	error("Alexei: callback function 29 not implemented!");
+IMPLEMENT_FUNCTION(Alexei, chapter2Handler, 29)
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionDefault:
+		setCallback(1);
+		call(new ENTITY_SETUP_ISII(Alexei, setup_function16), kTime1791000, "411");
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			setCallback(2);
+			call(new ENTITY_SETUP(Alexei, setup_function14));
+			break;
+
+		case 2:
+			setCallback(3);
+			call(new ENTITY_SETUP(Alexei, setup_checkEntity), kCarRestaurant, kPosition_850);
+			break;
+
+		case 3:
+			setCallback(4);
+			call(new ENTITY_SETUP(Alexei, setup_function12));
+			break;
+
+		case 4:
+			getData()->entityPosition = kPosition_1540;
+			getData()->field_493 = kField493_0;
+
+			setCallback(5);
+			call(new ENTITY_SETUP_SIIS(Alexei, setup_draw), "811US");
+			break;
+
+		case 5:
+			getEntities()->updatePosition(kEntityAlexei, kCarRestaurant, 63, true);
+
+			setCallback(6);
+			call(new ENTITY_SETUP_SIIS(Alexei, setup_function8), "018B", kEntityTables1, kAction136455232, "BOGUS");
+			break;
+
+		case 6:
+			getEntities()->updatePosition(kEntityAlexei, kCarRestaurant, 63);
+			getSavePoints()->push(kEntityAlexei, kEntityTatiana, kAction290869168);
+			setup_function30();
+			break;
+		}
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Alexei, function30, 30)
@@ -593,7 +644,7 @@ IMPLEMENT_FUNCTION(Alexei, function31, 31)
 				getScenes()->loadSceneFromPosition(kCarGreenSleeping, 49);
 
 			setCallback(3);
-			call(new ENTITY_SETUP_ISII(Alexei, setup_function16), 15803100, "411");
+			call(new ENTITY_SETUP_ISII(Alexei, setup_function16), kTimeEnd, "411");
 			break;
 		}
 		break;
@@ -606,7 +657,7 @@ IMPLEMENT_FUNCTION(Alexei, chapter3, 32)
 		break;
 
 	case kActionNone:
-		setup_chapter3_handler();
+		setup_chapter3Handler();
 		break;
 
 	case kActionDefault:
@@ -624,7 +675,7 @@ IMPLEMENT_FUNCTION(Alexei, chapter3, 32)
 	}
 }
 
-IMPLEMENT_FUNCTION(Alexei, chapter3_handler, 33)
+IMPLEMENT_FUNCTION(Alexei, chapter3Handler, 33)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -667,7 +718,7 @@ IMPLEMENT_FUNCTION(Alexei, chapter4, 37)
 		break;
 
 	case kActionNone:
-		setup_chapter4_handler();
+		setup_chapter4Handler();
 		break;
 
 	case kActionDefault:
@@ -685,7 +736,7 @@ IMPLEMENT_FUNCTION(Alexei, chapter4, 37)
 	}
 }
 
-IMPLEMENT_FUNCTION(Alexei, chapter4_handler, 38)
+IMPLEMENT_FUNCTION(Alexei, chapter4Handler, 38)
 	switch (savepoint.action) {
 	default:
 		break;

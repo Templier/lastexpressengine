@@ -47,21 +47,21 @@ Salko::Salko(LastExpressEngine *engine) : Entity(engine, kEntitySalko) {
 	ADD_CALLBACK_FUNCTION(Salko, function7);
 	ADD_CALLBACK_FUNCTION(Salko, function8);
 	ADD_CALLBACK_FUNCTION(Salko, chapter1);
-	ADD_CALLBACK_FUNCTION(Salko, chapter1_handler);
+	ADD_CALLBACK_FUNCTION(Salko, chapter1Handler);
 	ADD_CALLBACK_FUNCTION(Salko, function11);
 	ADD_CALLBACK_FUNCTION(Salko, chapter2);
 	ADD_CALLBACK_FUNCTION(Salko, function13);
 	ADD_CALLBACK_FUNCTION(Salko, chapter3);
-	ADD_CALLBACK_FUNCTION(Salko, function15);
+	ADD_CALLBACK_FUNCTION(Salko, chapter3Handler);
 	ADD_CALLBACK_FUNCTION(Salko, function16);
 	ADD_CALLBACK_FUNCTION(Salko, function17);
 	ADD_CALLBACK_FUNCTION(Salko, chapter4);
-	ADD_CALLBACK_FUNCTION(Salko, function19);
+	ADD_CALLBACK_FUNCTION(Salko, chapter4Handler);
 	ADD_CALLBACK_FUNCTION(Salko, function20);
 	ADD_CALLBACK_FUNCTION(Salko, function21);
 	ADD_CALLBACK_FUNCTION(Salko, function22);
 	ADD_CALLBACK_FUNCTION(Salko, chapter5);
-	ADD_CALLBACK_FUNCTION(Salko, function24);
+	ADD_CALLBACK_FUNCTION(Salko, chapter5Handler);
 	ADD_NULL_FUNCTION();
 }
 
@@ -110,7 +110,7 @@ IMPLEMENT_FUNCTION(Salko, chapter1, 9)
 		break;
 
 	case kActionNone:
-		TIME_CHECK_CHAPTER1(setup_chapter1_handler);
+		TIME_CHECK_CHAPTER1(setup_chapter1Handler);
 		break;
 
 	case kActionDefault:
@@ -121,7 +121,7 @@ IMPLEMENT_FUNCTION(Salko, chapter1, 9)
 	}
 }
 
-IMPLEMENT_FUNCTION(Salko, chapter1_handler, 10)
+IMPLEMENT_FUNCTION(Salko, chapter1Handler, 10)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -225,7 +225,7 @@ IMPLEMENT_FUNCTION(Salko, chapter3, 14)
 		break;
 
 	case kActionNone:
-		setup_function15();
+		setup_chapter3Handler();
 		break;
 
 	case kActionDefault:
@@ -240,7 +240,7 @@ IMPLEMENT_FUNCTION(Salko, chapter3, 14)
 	}
 }
 
-IMPLEMENT_FUNCTION(Salko, function15, 15)
+IMPLEMENT_FUNCTION(Salko, chapter3Handler, 15)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -297,7 +297,7 @@ IMPLEMENT_FUNCTION(Salko, function17, 17)
 			getData()->field_493 = kField493_1;
 			getSavePoints()->push(kEntitySalko, kEntityMilos, kAction157691176);
 
-			setup_function15();
+			setup_chapter3Handler();
 			break;
 		}
 		break;
@@ -310,7 +310,7 @@ IMPLEMENT_FUNCTION(Salko, chapter4, 18)
 		break;
 
 	case kActionNone:
-		setup_function19();
+		setup_chapter4Handler();
 		break;
 
 	case kActionDefault:
@@ -324,7 +324,7 @@ IMPLEMENT_FUNCTION(Salko, chapter4, 18)
 	}
 }
 
-IMPLEMENT_FUNCTION(Salko, function19, 19)
+IMPLEMENT_FUNCTION(Salko, chapter4Handler, 19)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -425,7 +425,7 @@ IMPLEMENT_FUNCTION(Salko, chapter5, 23)
 		break;
 
 	case kActionNone:
-		setup_function24();
+		setup_chapter5Handler();
 		break;
 
 	case kActionDefault:
@@ -439,7 +439,7 @@ IMPLEMENT_FUNCTION(Salko, chapter5, 23)
 	}
 }
 
-IMPLEMENT_FUNCTION(Salko, function24, 24)
+IMPLEMENT_FUNCTION(Salko, chapter5Handler, 24)
 	error("Salko: callback function 24 not implemented!");
 }
 

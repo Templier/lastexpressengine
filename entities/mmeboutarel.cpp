@@ -50,22 +50,22 @@ MmeBoutarel::MmeBoutarel(LastExpressEngine *engine) : Entity(engine, kEntityMmeB
 	ADD_CALLBACK_FUNCTION(MmeBoutarel, function9);
 	ADD_CALLBACK_FUNCTION(MmeBoutarel, chapter1);
 	ADD_CALLBACK_FUNCTION(MmeBoutarel, function11);
-	ADD_CALLBACK_FUNCTION(MmeBoutarel, chapter1_handler);
+	ADD_CALLBACK_FUNCTION(MmeBoutarel, chapter1Handler);
 	ADD_CALLBACK_FUNCTION(MmeBoutarel, function13);
 	ADD_CALLBACK_FUNCTION(MmeBoutarel, function14);
 	ADD_CALLBACK_FUNCTION(MmeBoutarel, function15);
 	ADD_CALLBACK_FUNCTION(MmeBoutarel, function16);
 	ADD_CALLBACK_FUNCTION(MmeBoutarel, chapter2);
-	ADD_CALLBACK_FUNCTION(MmeBoutarel, function18);
+	ADD_CALLBACK_FUNCTION(MmeBoutarel, chapter2Handler);
 	ADD_CALLBACK_FUNCTION(MmeBoutarel, function19);
 	ADD_CALLBACK_FUNCTION(MmeBoutarel, chapter3);
-	ADD_CALLBACK_FUNCTION(MmeBoutarel, function21);
+	ADD_CALLBACK_FUNCTION(MmeBoutarel, chapter3Handler);
 	ADD_CALLBACK_FUNCTION(MmeBoutarel, chapter4);
-	ADD_CALLBACK_FUNCTION(MmeBoutarel, function23);
+	ADD_CALLBACK_FUNCTION(MmeBoutarel, chapter4Handler);
 	ADD_CALLBACK_FUNCTION(MmeBoutarel, function24);
 	ADD_CALLBACK_FUNCTION(MmeBoutarel, function25);
 	ADD_CALLBACK_FUNCTION(MmeBoutarel, chapter5);
-	ADD_CALLBACK_FUNCTION(MmeBoutarel, function27);
+	ADD_CALLBACK_FUNCTION(MmeBoutarel, chapter5Handler);
 	ADD_CALLBACK_FUNCTION(MmeBoutarel, function28);
 	ADD_NULL_FUNCTION();
 }
@@ -118,7 +118,7 @@ IMPLEMENT_FUNCTION(MmeBoutarel, chapter1, 10)
 		break;
 
 	case kActionNone:
-		TIME_CHECK_CHAPTER1(setup_chapter1_handler);
+		TIME_CHECK_CHAPTER1(setup_chapter1Handler);
 		break;
 
 	case kActionDefault:
@@ -138,7 +138,7 @@ IMPLEMENT_FUNCTION(MmeBoutarel, function11, 11)
 	error("MmeBoutarel: callback function 11 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(MmeBoutarel, chapter1_handler, 12)
+IMPLEMENT_FUNCTION(MmeBoutarel, chapter1Handler, 12)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -243,7 +243,7 @@ IMPLEMENT_FUNCTION(MmeBoutarel, chapter2, 17)
 		break;
 
 	case kActionNone:
-		setup_function18();
+		setup_chapter2Handler();
 		break;
 
 	case kActionDefault:
@@ -263,7 +263,7 @@ IMPLEMENT_FUNCTION(MmeBoutarel, chapter2, 17)
 	}
 }
 
-IMPLEMENT_FUNCTION(MmeBoutarel, function18, 18)
+IMPLEMENT_FUNCTION(MmeBoutarel, chapter2Handler, 18)
 	error("MmeBoutarel: callback function 18 not implemented!");
 }
 
@@ -277,7 +277,7 @@ IMPLEMENT_FUNCTION(MmeBoutarel, chapter3, 20)
 		break;
 
 	case kActionNone:
-		setup_function21();
+		setup_chapter3Handler();
 		break;
 
 	case kActionDefault:
@@ -292,7 +292,7 @@ IMPLEMENT_FUNCTION(MmeBoutarel, chapter3, 20)
 	}
 }
 
-IMPLEMENT_FUNCTION(MmeBoutarel, function21, 21)
+IMPLEMENT_FUNCTION(MmeBoutarel, chapter3Handler, 21)
 	error("MmeBoutarel: callback function 21 not implemented!");
 }
 
@@ -302,7 +302,7 @@ IMPLEMENT_FUNCTION(MmeBoutarel, chapter4, 22)
 		break;
 
 	case kActionNone:
-		setup_function23();
+		setup_chapter4Handler();
 		break;
 
 	case kActionDefault:
@@ -317,7 +317,7 @@ IMPLEMENT_FUNCTION(MmeBoutarel, chapter4, 22)
 	}
 }
 
-IMPLEMENT_FUNCTION(MmeBoutarel, function23, 23)
+IMPLEMENT_FUNCTION(MmeBoutarel, chapter4Handler, 23)
 	error("MmeBoutarel: callback function 23 not implemented!");
 }
 
@@ -344,7 +344,7 @@ IMPLEMENT_FUNCTION(MmeBoutarel, chapter5, 26)
 		break;
 
 	case kActionNone:
-		setup_function27();
+		setup_chapter5Handler();
 		break;
 
 	case kActionDefault:
@@ -359,7 +359,7 @@ IMPLEMENT_FUNCTION(MmeBoutarel, chapter5, 26)
 	}
 }
 
-IMPLEMENT_FUNCTION(MmeBoutarel, function27, 27)
+IMPLEMENT_FUNCTION(MmeBoutarel, chapter5Handler, 27)
 	if (savepoint.action == kAction70549068)
 		setup_function28();
 }

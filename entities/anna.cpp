@@ -59,7 +59,7 @@ Anna::Anna(LastExpressEngine *engine) : Entity(engine, kEntityAnna) {
 	ADD_CALLBACK_FUNCTION(Anna, chapter1);
 	ADD_CALLBACK_FUNCTION(Anna, function17);
 	ADD_CALLBACK_FUNCTION(Anna, function18);
-	ADD_CALLBACK_FUNCTION(Anna, chapter1_handler);
+	ADD_CALLBACK_FUNCTION(Anna, chapter1Handler);
 	ADD_CALLBACK_FUNCTION(Anna, function20);
 	ADD_CALLBACK_FUNCTION(Anna, function21);
 	ADD_CALLBACK_FUNCTION(Anna, function22);
@@ -83,10 +83,10 @@ Anna::Anna(LastExpressEngine *engine) : Entity(engine, kEntityAnna) {
 	ADD_CALLBACK_FUNCTION(Anna, function40);
 	ADD_CALLBACK_FUNCTION(Anna, function41);
 	ADD_CALLBACK_FUNCTION(Anna, chapter2);
-	ADD_CALLBACK_FUNCTION(Anna, chapter2_handler);
+	ADD_CALLBACK_FUNCTION(Anna, chapter2Handler);
 	ADD_CALLBACK_FUNCTION(Anna, chapter3);
 	ADD_CALLBACK_FUNCTION(Anna, function45);
-	ADD_CALLBACK_FUNCTION(Anna, chapter3_handler);
+	ADD_CALLBACK_FUNCTION(Anna, chapter3Handler);
 	ADD_CALLBACK_FUNCTION(Anna, function47);
 	ADD_CALLBACK_FUNCTION(Anna, function48);
 	ADD_CALLBACK_FUNCTION(Anna, leaveTableWithAugust);
@@ -107,7 +107,7 @@ Anna::Anna(LastExpressEngine *engine) : Entity(engine, kEntityAnna) {
 	ADD_CALLBACK_FUNCTION(Anna, bagage);
 	ADD_CALLBACK_FUNCTION(Anna, function65);
 	ADD_CALLBACK_FUNCTION(Anna, chapter4);
-	ADD_CALLBACK_FUNCTION(Anna, chapter4_handler);
+	ADD_CALLBACK_FUNCTION(Anna, chapter4Handler);
 	ADD_CALLBACK_FUNCTION(Anna, function68);
 	ADD_CALLBACK_FUNCTION(Anna, function69);
 	ADD_CALLBACK_FUNCTION(Anna, function70);
@@ -115,7 +115,7 @@ Anna::Anna(LastExpressEngine *engine) : Entity(engine, kEntityAnna) {
 	ADD_CALLBACK_FUNCTION(Anna, function72);
 	ADD_CALLBACK_FUNCTION(Anna, function73);
 	ADD_CALLBACK_FUNCTION(Anna, chapter5);
-	ADD_CALLBACK_FUNCTION(Anna, chapter5_handler);
+	ADD_CALLBACK_FUNCTION(Anna, chapter5Handler);
 	ADD_CALLBACK_FUNCTION(Anna, function76);
 	ADD_CALLBACK_FUNCTION(Anna, function77);
 	ADD_CALLBACK_FUNCTION(Anna, function78);
@@ -178,7 +178,217 @@ IMPLEMENT_FUNCTION_I(Anna, updateFromTime, 11)
 }
 
 IMPLEMENT_FUNCTION(Anna, function12, 12)
-	error("Anna: callback function 12 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionNone:
+		if (!params->param2 && ENTITY_PARAM(0, 1))
+			params->param2 = 1;
+
+		if (params->param6) {
+			if (!params->param7)
+				params->param7 = getState()->timeTicks + 75;
+
+			if (params->param7 < (int)getState()->timeTicks) {
+				getSavePoints()->push(kEntityAnna, kEntityAnna, kAction2);
+
+				params->param6 = 0;
+				params->param7 = 0;
+			}
+		}
+
+		if (params->param4) {
+			UPDATE_PARAM(params->param8, getState()->timeTicks, 75);
+
+			params->param4 = 0;
+			params->param5 = 1;
+
+			getObjects()->update(kObjectCompartmentF, kEntityAnna, kLocation1, kCursorNormal, kCursorHand);
+			getObjects()->update(kObject53, kEntityAnna, kLocation1, kCursorNormal, kCursorHand);
+
+			--params->param1;
+
+			getSavePoints()->push(kEntityAnna, kEntityAnna, kAction2);
+		}
+
+		params->param8 = 0;
+		break;
+
+	case kAction2:
+		if (params->param2) {
+			CALLBACK_ACTION();
+			break;
+		}
+
+		++params->param1;
+
+		switch (params->param1) {
+		default:
+			break;
+
+		case 1:
+			getSound()->playSound(kEntityAnna, "ANN2135A");
+			break;
+
+		case 2:
+			getSound()->playSound(kEntityAnna, "ANN2135B");
+			break;
+
+		case 3:
+			getSound()->playSound(kEntityAnna, "ANN2135C");
+			break;
+
+		case 4:
+			getSound()->playSound(kEntityAnna, "ANN2135C");
+			break;
+
+		case 5:
+			getSound()->playSound(kEntityAnna, "ANN2135L");
+			break;
+
+		case 6:
+			getSound()->playSound(kEntityAnna, "ANN2135K");
+			break;
+
+		case 7:
+			getSound()->playSound(kEntityAnna, "ANN2135H");
+			break;
+
+		case 8:
+			getSound()->playSound(kEntityAnna, "ANN2135K");
+			break;
+
+		case 9:
+			getSound()->playSound(kEntityAnna, "ANN2135I");
+			break;
+
+		case 10:
+			getSound()->playSound(kEntityAnna, "ANN2135J");
+			break;
+
+		case 11:
+			getSound()->playSound(kEntityAnna, "ANN2135M");
+			break;
+
+		case 12:
+			getSound()->playSound(kEntityAnna, "ANN2135L");
+			break;
+
+		case 13:
+			getObjects()->update(kObjectCompartmentF, kEntityAnna, kLocation1, kCursorHandKnock, kCursorHand);
+			getObjects()->update(kObject53, kEntityAnna, kLocation1, kCursorHandKnock, kCursorHand);
+
+			CALLBACK_ACTION();
+			break;
+		}
+		break;
+
+	case kAction8:
+		if (params->param4) {
+			getObjects()->update(kObjectCompartmentF, kEntityAnna, kLocation1, kCursorNormal, kCursorHand);
+			getObjects()->update(kObject53, kEntityAnna, kLocation1, kCursorNormal, kCursorHand);
+
+			if (savepoint.param.intValue == 53) {
+				getSound()->playSound(kEntityNone, getSound()->justAMinuteCath());
+			} else if (getInventory()->hasItem(kItemPassengerList)) {
+				if (random(2)) {
+					getSound()->playSound(kEntityNone, getSound()->wrongDoorCath());
+				} else {
+					getSound()->playSound(kEntityNone, random(2) ? "CAT1506A" : "CAT1506");
+				}
+			} else {
+				getSound()->playSound(kEntityNone, getSound()->wrongDoorCath());
+			}
+
+			params->param4 = 0;
+			params->param5 = 0;
+		} else {
+			getSound()->removeFromQueue(kEntityAnna);
+
+			getObjects()->update(kObjectCompartmentF, kEntityAnna, kLocation1, kCursorNormal, kCursorNormal);
+			getObjects()->update(kObject53, kEntityAnna, kLocation1, kCursorNormal, kCursorNormal);
+
+			setCallback(1);
+			call(new ENTITY_SETUP_SIIS(Anna, setup_playSound), "LIB012");
+		}
+		break;
+
+	case kAction9:
+		getSound()->removeFromQueue(kEntityAnna);
+		setCallback(3);
+		call(new ENTITY_SETUP_SIIS(Anna, setup_playSound), "LIB013");
+		break;
+
+	case kActionDefault:
+		params->param1 = 1;
+		getObjects()->update(kObjectCompartmentF, kEntityAnna, kLocation1, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObject53, kEntityAnna, kLocation1, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObjectOutsideAnnaCompartment, kEntityNone, kLocationNone, kCursorKeepValue, kCursorKeepValue);
+
+		if (getEntities()->isPlayerPosition(kCarRedSleeping, 49))
+			getScenes()->loadSceneFromPosition(kCarRedSleeping, 49);
+
+		getEntities()->drawSequenceLeft(kEntityAnna, "418C");
+
+		if (getSound()->isBuffered(kEntityAnna))
+			getSound()->processEntry(kEntityAnna);
+
+		getSound()->playSound(kEntityAnna, "ANN2135A");
+		break;
+
+	case kActionDrawScene:
+		if (params->param5 || params->param4) {
+			getObjects()->update(kObjectCompartmentF, kEntityAnna, kLocation1, kCursorHandKnock, kCursorHand);
+			getObjects()->update(kObject53, kEntityAnna, kLocation1, kCursorHandKnock, kCursorHand);
+			params->param4 = 0;
+			params->param5 = 0;
+		}
+
+		if (getEntities()->isPlayerPosition(kCarRedSleeping, 60)) {
+			++params->param3;
+			if (params->param3 == 2) {
+				setCallback(2);
+				call(new ENTITY_SETUP_SIIS(Anna, setup_draw), "418B");
+			}
+		}
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			setCallback(2);
+			call(new ENTITY_SETUP_SIIS(Anna, setup_playSound), "Ann1016");
+			break;
+
+		case 2:
+			getObjects()->update(kObjectCompartmentF, kEntityAnna, kLocation1, kCursorTalk, kCursorHand);
+			getObjects()->update(kObject53, kEntityAnna, kLocation1, kCursorTalk, kCursorHand);
+			params->param4 = 1;
+			break;
+
+		case 3:
+			if (!getSound()->isBuffered(kEntityMax)) {
+				setCallback(4);
+				call(new ENTITY_SETUP_SIIS(Anna, setup_playSound), "MAX1120");
+				break;
+			}
+			// Fallback to next case
+
+		case 4:
+			--params->param1;
+			params->param6 = 1;
+			break;
+
+		case 5:
+			getEntities()->drawSequenceLeft(kEntityAnna, "418A");
+			break;
+		}
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION_SSI(Anna, draw2, 13)
@@ -327,7 +537,7 @@ IMPLEMENT_FUNCTION(Anna, chapter1, 16)
 		break;
 
 	case kActionNone:
-		TIME_CHECK_CHAPTER1(setup_chapter1_handler);
+		TIME_CHECK_CHAPTER1(setup_chapter1Handler);
 		break;
 
 	case kActionDefault:
@@ -354,7 +564,7 @@ IMPLEMENT_FUNCTION_I(Anna, function18, 18)
 	error("Anna: callback function 18 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Anna, chapter1_handler, 19)
+IMPLEMENT_FUNCTION(Anna, chapter1Handler, 19)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -731,7 +941,7 @@ IMPLEMENT_FUNCTION(Anna, chapter2, 42)
 		break;
 
 	case kActionNone:
-		setup_chapter2_handler();
+		setup_chapter2Handler();
 		break;
 
 	case kActionDefault:
@@ -747,7 +957,7 @@ IMPLEMENT_FUNCTION(Anna, chapter2, 42)
 	}
 }
 
-IMPLEMENT_FUNCTION(Anna, chapter2_handler, 43)
+IMPLEMENT_FUNCTION(Anna, chapter2Handler, 43)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -799,7 +1009,7 @@ IMPLEMENT_FUNCTION(Anna, chapter3, 44)
 		break;
 
 	case kActionNone:
-		setup_chapter3_handler();
+		setup_chapter3Handler();
 		break;
 
 	case kActionDefault:
@@ -823,7 +1033,7 @@ IMPLEMENT_FUNCTION_I(Anna, function45, 45)
 	error("Anna: callback function 45 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Anna, chapter3_handler, 46)
+IMPLEMENT_FUNCTION(Anna, chapter3Handler, 46)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -1062,7 +1272,7 @@ IMPLEMENT_FUNCTION(Anna, chapter4, 66)
 		break;
 
 	case kActionNone:
-		setup_chapter4_handler();
+		setup_chapter4Handler();
 		break;
 
 	case kActionDefault:
@@ -1078,7 +1288,7 @@ IMPLEMENT_FUNCTION(Anna, chapter4, 66)
 	}
 }
 
-IMPLEMENT_FUNCTION(Anna, chapter4_handler, 67)
+IMPLEMENT_FUNCTION(Anna, chapter4Handler, 67)
 	error("Anna: callback function 67 not implemented!");
 }
 
@@ -1166,7 +1376,7 @@ IMPLEMENT_FUNCTION(Anna, chapter5, 74)
 		break;
 
 	case kActionNone:
-		setup_chapter5_handler();
+		setup_chapter5Handler();
 		break;
 
 	case kActionDefault:
@@ -1184,7 +1394,7 @@ IMPLEMENT_FUNCTION(Anna, chapter5, 74)
 	}
 }
 
-IMPLEMENT_FUNCTION(Anna, chapter5_handler, 75)
+IMPLEMENT_FUNCTION(Anna, chapter5Handler, 75)
 	switch (savepoint.action) {
 	default:
 		break;

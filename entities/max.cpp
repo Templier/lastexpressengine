@@ -47,12 +47,12 @@ Max::Max(LastExpressEngine *engine) : Entity(engine, kEntityMax) {
 	ADD_CALLBACK_FUNCTION(Max, savegame);
 	ADD_CALLBACK_FUNCTION(Max, chapter12_handler);
 	ADD_CALLBACK_FUNCTION(Max, function7);
-	ADD_CALLBACK_FUNCTION(Max, chapter4_handler);
+	ADD_CALLBACK_FUNCTION(Max, chapter4Handler);
 	ADD_CALLBACK_FUNCTION(Max, function9);
 	ADD_CALLBACK_FUNCTION(Max, chapter1);
 	ADD_CALLBACK_FUNCTION(Max, chapter2);
 	ADD_CALLBACK_FUNCTION(Max, chapter3);
-	ADD_CALLBACK_FUNCTION(Max, chapter3_handler);
+	ADD_CALLBACK_FUNCTION(Max, chapter3Handler);
 	ADD_CALLBACK_FUNCTION(Max, freeFromCage);
 	ADD_CALLBACK_FUNCTION(Max, function15);
 	ADD_CALLBACK_FUNCTION(Max, chapter4);
@@ -201,7 +201,7 @@ IMPLEMENT_FUNCTION(Max, function7, 7)
 	}
 }
 
-IMPLEMENT_FUNCTION(Max, chapter4_handler, 8)
+IMPLEMENT_FUNCTION(Max, chapter4Handler, 8)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -354,7 +354,7 @@ IMPLEMENT_FUNCTION(Max, chapter3, 12)
 		break;
 
 	case kActionNone:
-		setup_chapter3_handler();
+		setup_chapter3Handler();
 		break;
 
 	case kActionDefault:
@@ -369,7 +369,7 @@ IMPLEMENT_FUNCTION(Max, chapter3, 12)
 	}
 }
 
-IMPLEMENT_FUNCTION(Max, chapter3_handler, 13)
+IMPLEMENT_FUNCTION(Max, chapter3Handler, 13)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -536,7 +536,7 @@ IMPLEMENT_FUNCTION(Max, function15, 15)
 
 	case kActionMaxFreeFromCage:
 		getEntities()->exitCompartment(kEntityMax, kObjectCompartmentF, false);
-		setup_chapter4_handler();
+		setup_chapter4Handler();
 		break;
 	}
 }
@@ -547,7 +547,7 @@ IMPLEMENT_FUNCTION(Max, chapter4, 16)
 		break;
 
 	case kActionNone:
-		setup_chapter4_handler();
+		setup_chapter4Handler();
 		break;
 
 	case kActionDefault:
@@ -589,7 +589,7 @@ IMPLEMENT_FUNCTION(Max, function17, 17)
 
 	case kActionMaxFreeFromCage:
 		getEntities()->exitCompartment(kEntityMax, kObjectCompartmentF, false);
-		setup_chapter4_handler();
+		setup_chapter4Handler();
 		break;
 	}
 }

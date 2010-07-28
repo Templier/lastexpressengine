@@ -43,7 +43,7 @@ public:
 	DECLARE_FUNCTION_S(draw)
 	DECLARE_FUNCTION_II(savegame)
 	DECLARE_FUNCTION(chapter1)
-	DECLARE_FUNCTION(chapter1_handler)
+	DECLARE_FUNCTION(chapter1Handler)
 	DECLARE_FUNCTION(function6)
 	DECLARE_FUNCTION(function7)
 	DECLARE_FUNCTION(function8)
@@ -55,7 +55,7 @@ public:
 	DECLARE_FUNCTION(chapter3)
 	DECLARE_FUNCTION(stealEgg)
 	DECLARE_FUNCTION(chapter4)
-	DECLARE_FUNCTION(function17)
+	DECLARE_FUNCTION(chapter4Handler)
 	DECLARE_FUNCTION(chapter5)
 
 private:

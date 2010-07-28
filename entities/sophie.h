@@ -49,7 +49,7 @@ public:
 	DECLARE_FUNCTION(chapter4)
 	DECLARE_FUNCTION(function9)
 	DECLARE_FUNCTION(chapter5)
-	DECLARE_FUNCTION(function11)
+	DECLARE_FUNCTION(chapter5Handler)
 	DECLARE_NULL_FUNCTION()
 
 private:

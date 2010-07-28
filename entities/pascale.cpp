@@ -54,22 +54,22 @@ Pascale::Pascale(LastExpressEngine *engine) : Entity(engine, kEntityPascale) {
 	ADD_CALLBACK_FUNCTION(Pascale, sitAnna);
 	ADD_CALLBACK_FUNCTION(Pascale, function15);
 	ADD_CALLBACK_FUNCTION(Pascale, function16);
-	ADD_CALLBACK_FUNCTION(Pascale, chapter1_handler);
+	ADD_CALLBACK_FUNCTION(Pascale, chapter1Handler);
 	ADD_CALLBACK_FUNCTION(Pascale, function18);
 	ADD_CALLBACK_FUNCTION(Pascale, function19);
 	ADD_CALLBACK_FUNCTION(Pascale, chapter2);
 	ADD_CALLBACK_FUNCTION(Pascale, chapter3);
-	ADD_CALLBACK_FUNCTION(Pascale, function22);
+	ADD_CALLBACK_FUNCTION(Pascale, chapter3Handler);
 	ADD_CALLBACK_FUNCTION(Pascale, function23);
 	ADD_CALLBACK_FUNCTION(Pascale, function24);
 	ADD_CALLBACK_FUNCTION(Pascale, chapter4);
-	ADD_CALLBACK_FUNCTION(Pascale, function26);
+	ADD_CALLBACK_FUNCTION(Pascale, chapter4Handler);
 	ADD_CALLBACK_FUNCTION(Pascale, function27);
 	ADD_CALLBACK_FUNCTION(Pascale, function28);
 	ADD_CALLBACK_FUNCTION(Pascale, function29);
 	ADD_CALLBACK_FUNCTION(Pascale, function30);
 	ADD_CALLBACK_FUNCTION(Pascale, chapter5);
-	ADD_CALLBACK_FUNCTION(Pascale, function32);
+	ADD_CALLBACK_FUNCTION(Pascale, chapter5Handler);
 	ADD_CALLBACK_FUNCTION(Pascale, function33);
 	ADD_NULL_FUNCTION();
 }
@@ -199,7 +199,7 @@ IMPLEMENT_FUNCTION(Pascale, chapter1, 12)
 		break;
 
 	case kActionNone:
-		setup_chapter1_handler();
+		setup_chapter1Handler();
  		break;
 
 	case kActionDefault:
@@ -255,7 +255,7 @@ IMPLEMENT_FUNCTION(Pascale, function16, 16)
 	error("Pascale: callback function 16 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Pascale, chapter1_handler, 17)
+IMPLEMENT_FUNCTION(Pascale, chapter1Handler, 17)
 switch (savepoint.action) {
 	default:
 		break;
@@ -404,7 +404,7 @@ IMPLEMENT_FUNCTION(Pascale, chapter3, 21)
 		break;
 
 	case kActionNone:
-		setup_function22();
+		setup_chapter3Handler();
  		break;
 
 	case kActionDefault:
@@ -421,7 +421,7 @@ IMPLEMENT_FUNCTION(Pascale, chapter3, 21)
 	}
 }
 
-IMPLEMENT_FUNCTION(Pascale, function22, 22)
+IMPLEMENT_FUNCTION(Pascale, chapter3Handler, 22)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -492,7 +492,7 @@ IMPLEMENT_FUNCTION(Pascale, chapter4, 25)
 		break;
 
 	case kActionNone:
-		setup_function26();
+		setup_chapter4Handler();
  		break;
 
 	case kActionDefault:
@@ -512,7 +512,7 @@ IMPLEMENT_FUNCTION(Pascale, chapter4, 25)
 	}
 }
 
-IMPLEMENT_FUNCTION(Pascale, function26, 26)
+IMPLEMENT_FUNCTION(Pascale, chapter4Handler, 26)
 	error("Pascale: callback function 26 not implemented!");
 }
 
@@ -604,7 +604,7 @@ IMPLEMENT_FUNCTION(Pascale, chapter5, 31)
 		break;
 
 	case kActionNone:
-		setup_function32();
+		setup_chapter5Handler();
  		break;
 
 	case kActionDefault:
@@ -618,7 +618,7 @@ IMPLEMENT_FUNCTION(Pascale, chapter5, 31)
 	}
 }
 
-IMPLEMENT_FUNCTION(Pascale, function32, 32)
+IMPLEMENT_FUNCTION(Pascale, chapter5Handler, 32)
 	if (savepoint.action == kAction70549068)
 		setup_function33();
 }

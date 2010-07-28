@@ -55,18 +55,18 @@ Francois::Francois(LastExpressEngine *engine) : Entity(engine, kEntityFrancois) 
 	ADD_CALLBACK_FUNCTION(Francois, function15);
 	ADD_CALLBACK_FUNCTION(Francois, function16);
 	ADD_CALLBACK_FUNCTION(Francois, chapter1);
-	ADD_CALLBACK_FUNCTION(Francois, chapter1_handler);
+	ADD_CALLBACK_FUNCTION(Francois, chapter1Handler);
 	ADD_CALLBACK_FUNCTION(Francois, function19);
 	ADD_CALLBACK_FUNCTION(Francois, function20);
 	ADD_CALLBACK_FUNCTION(Francois, chapter2);
-	ADD_CALLBACK_FUNCTION(Francois, function22);
+	ADD_CALLBACK_FUNCTION(Francois, chapter2Handler);
 	ADD_CALLBACK_FUNCTION(Francois, function23);
 	ADD_CALLBACK_FUNCTION(Francois, chapter3);
-	ADD_CALLBACK_FUNCTION(Francois, function25);
+	ADD_CALLBACK_FUNCTION(Francois, chapter3Handler);
 	ADD_CALLBACK_FUNCTION(Francois, chapter4);
-	ADD_CALLBACK_FUNCTION(Francois, function27);
+	ADD_CALLBACK_FUNCTION(Francois, chapter4Handler);
 	ADD_CALLBACK_FUNCTION(Francois, chapter5);
-	ADD_CALLBACK_FUNCTION(Francois, function29);
+	ADD_CALLBACK_FUNCTION(Francois, chapter5Handler);
 	ADD_CALLBACK_FUNCTION(Francois, function30);
 	ADD_NULL_FUNCTION();
 }
@@ -141,7 +141,7 @@ IMPLEMENT_FUNCTION(Francois, chapter1, 17)
 		break;
 
 	case kActionNone:
-		TIME_CHECK_CHAPTER1(setup_chapter1_handler);
+		TIME_CHECK_CHAPTER1(setup_chapter1Handler);
 		break;
 
 	case kActionDefault:
@@ -152,7 +152,7 @@ IMPLEMENT_FUNCTION(Francois, chapter1, 17)
 	}
 }
 
-IMPLEMENT_FUNCTION(Francois, chapter1_handler, 18)
+IMPLEMENT_FUNCTION(Francois, chapter1Handler, 18)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -204,7 +204,7 @@ IMPLEMENT_FUNCTION(Francois, chapter2, 21)
 		break;
 
 	case kActionNone:
-		setup_function22();
+		setup_chapter2Handler();
 		break;
 
 	case kActionDefault:
@@ -219,7 +219,7 @@ IMPLEMENT_FUNCTION(Francois, chapter2, 21)
 	}
 }
 
-IMPLEMENT_FUNCTION(Francois, function22, 22)
+IMPLEMENT_FUNCTION(Francois, chapter2Handler, 22)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -262,7 +262,7 @@ IMPLEMENT_FUNCTION(Francois, chapter3, 24)
 		break;
 
 	case kActionNone:
-		setup_function25();
+		setup_chapter3Handler();
 		break;
 
 	case kActionDefault:
@@ -277,7 +277,7 @@ IMPLEMENT_FUNCTION(Francois, chapter3, 24)
 	}
 }
 
-IMPLEMENT_FUNCTION(Francois, function25, 25)
+IMPLEMENT_FUNCTION(Francois, chapter3Handler, 25)
 	error("Francois: callback function 25 not implemented!");
 }
 
@@ -287,7 +287,7 @@ IMPLEMENT_FUNCTION(Francois, chapter4, 26)
 		break;
 
 	case kActionNone:
-		setup_function27();
+		setup_chapter4Handler();
 		break;
 
 	case kActionDefault:
@@ -302,7 +302,7 @@ IMPLEMENT_FUNCTION(Francois, chapter4, 26)
 	}
 }
 
-IMPLEMENT_FUNCTION(Francois, function27, 27)
+IMPLEMENT_FUNCTION(Francois, chapter4Handler, 27)
 	if (savepoint.action == kAction101107728) {
 		setCallback(1);
 		call(new ENTITY_SETUP(Francois, setup_function16));
@@ -315,7 +315,7 @@ IMPLEMENT_FUNCTION(Francois, chapter5, 28)
 		break;
 
 	case kActionNone:
-		setup_function29();
+		setup_chapter5Handler();
 		break;
 
 	case kActionDefault:
@@ -330,7 +330,7 @@ IMPLEMENT_FUNCTION(Francois, chapter5, 28)
 	}
 }
 
-IMPLEMENT_FUNCTION(Francois, function29, 29)
+IMPLEMENT_FUNCTION(Francois, chapter5Handler, 29)
 	if (savepoint.action == kAction70549068) {
 		if (!getInventory()->hasItem(kItemWhistle)
 		  && getInventory()->getEntry(kItemWhistle)->location != kLocation3)

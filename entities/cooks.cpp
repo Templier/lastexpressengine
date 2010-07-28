@@ -43,14 +43,14 @@ Cooks::Cooks(LastExpressEngine *engine) : Entity(engine, kEntityCooks) {
 	ADD_CALLBACK_FUNCTION(Cooks, function3);
 	ADD_CALLBACK_FUNCTION(Cooks, function4);
 	ADD_CALLBACK_FUNCTION(Cooks, chapter1);
-	ADD_CALLBACK_FUNCTION(Cooks, chapter1_handler);
+	ADD_CALLBACK_FUNCTION(Cooks, chapter1Handler);
 	ADD_CALLBACK_FUNCTION(Cooks, function7);
 	ADD_CALLBACK_FUNCTION(Cooks, chapter2);
-	ADD_CALLBACK_FUNCTION(Cooks, function9);
+	ADD_CALLBACK_FUNCTION(Cooks, chapter2Handler);
 	ADD_CALLBACK_FUNCTION(Cooks, chapter3);
-	ADD_CALLBACK_FUNCTION(Cooks, function11);
+	ADD_CALLBACK_FUNCTION(Cooks, chapter3Handler);
 	ADD_CALLBACK_FUNCTION(Cooks, chapter4);
-	ADD_CALLBACK_FUNCTION(Cooks, function13);
+	ADD_CALLBACK_FUNCTION(Cooks, chapter4Handler);
 	ADD_CALLBACK_FUNCTION(Cooks, chapter5);
 }
 
@@ -237,7 +237,7 @@ IMPLEMENT_FUNCTION(Cooks, chapter1, 5)
 		break;
 
 	case kActionNone:
-		TIME_CHECK_CHAPTER1(setup_chapter1_handler);
+		TIME_CHECK_CHAPTER1(setup_chapter1Handler);
 		break;
 
 	case kActionDefault:
@@ -251,7 +251,7 @@ IMPLEMENT_FUNCTION(Cooks, chapter1, 5)
 	}
 }
 
-IMPLEMENT_FUNCTION(Cooks, chapter1_handler, 6)
+IMPLEMENT_FUNCTION(Cooks, chapter1Handler, 6)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -344,7 +344,7 @@ IMPLEMENT_FUNCTION(Cooks, chapter2, 8)
 		break;
 
 	case kActionNone:
-		setup_function9();
+		setup_chapter2Handler();
 		break;
 
 	case kActionDefault:
@@ -361,7 +361,7 @@ IMPLEMENT_FUNCTION(Cooks, chapter2, 8)
 	}
 }
 
-IMPLEMENT_FUNCTION(Cooks, function9, 9)
+IMPLEMENT_FUNCTION(Cooks, chapter2Handler, 9)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -402,7 +402,7 @@ IMPLEMENT_FUNCTION(Cooks, chapter3, 10)
 		break;
 
 	case kActionNone:
-		setup_function11();
+		setup_chapter3Handler();
 		break;
 
 	case kActionDefault:
@@ -418,7 +418,7 @@ IMPLEMENT_FUNCTION(Cooks, chapter3, 10)
 	}
 }
 
-IMPLEMENT_FUNCTION(Cooks, function11, 11)
+IMPLEMENT_FUNCTION(Cooks, chapter3Handler, 11)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -492,7 +492,7 @@ IMPLEMENT_FUNCTION(Cooks, chapter4, 12)
 		break;
 
 	case kActionNone:
-		setup_function13();
+		setup_chapter4Handler();
 		break;
 
 	case kActionDefault:
@@ -509,7 +509,7 @@ IMPLEMENT_FUNCTION(Cooks, chapter4, 12)
 	}
 }
 
-IMPLEMENT_FUNCTION(Cooks, function13, 13)
+IMPLEMENT_FUNCTION(Cooks, chapter4Handler, 13)
 	switch (savepoint.action) {
 	default:
 		break;

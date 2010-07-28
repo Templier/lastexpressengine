@@ -66,9 +66,9 @@ Verges::Verges(LastExpressEngine *engine) : Entity(engine, kEntityVerges) {
 	ADD_CALLBACK_FUNCTION(Verges, function23);
 	ADD_CALLBACK_FUNCTION(Verges, policeGettingOffTrain);
 	ADD_CALLBACK_FUNCTION(Verges, function25);
-	ADD_CALLBACK_FUNCTION(Verges, chapter1_handler);
+	ADD_CALLBACK_FUNCTION(Verges, chapter1Handler);
 	ADD_CALLBACK_FUNCTION(Verges, chapter2);
-	ADD_CALLBACK_FUNCTION(Verges, function28);
+	ADD_CALLBACK_FUNCTION(Verges, chapter2Handler);
 	ADD_CALLBACK_FUNCTION(Verges, chapter3);
 	ADD_CALLBACK_FUNCTION(Verges, function30);
 	ADD_CALLBACK_FUNCTION(Verges, function31);
@@ -77,10 +77,10 @@ Verges::Verges(LastExpressEngine *engine) : Entity(engine, kEntityVerges) {
 	ADD_CALLBACK_FUNCTION(Verges, function34);
 	ADD_CALLBACK_FUNCTION(Verges, function35);
 	ADD_CALLBACK_FUNCTION(Verges, chapter4);
-	ADD_CALLBACK_FUNCTION(Verges, function37);
+	ADD_CALLBACK_FUNCTION(Verges, chapter4Handler);
 	ADD_CALLBACK_FUNCTION(Verges, function38);
 	ADD_CALLBACK_FUNCTION(Verges, chapter5);
-	ADD_CALLBACK_FUNCTION(Verges, function40);
+	ADD_CALLBACK_FUNCTION(Verges, chapter5Handler);
 	ADD_CALLBACK_FUNCTION(Verges, function41);
 	ADD_CALLBACK_FUNCTION(Verges, function42);
 }
@@ -305,7 +305,7 @@ IMPLEMENT_FUNCTION(Verges, chapter1, 18)
 		break;
 
 	case kActionNone:
-		TIME_CHECK_CHAPTER1(setup_chapter1_handler);
+		TIME_CHECK_CHAPTER1(setup_chapter1Handler);
 		break;
 
 	case kActionDefault:
@@ -402,7 +402,7 @@ IMPLEMENT_FUNCTION(Verges, function25, 25)
 	error("Verges: callback function 25 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Verges, chapter1_handler, 26)
+IMPLEMENT_FUNCTION(Verges, chapter1Handler, 26)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -585,7 +585,7 @@ IMPLEMENT_FUNCTION(Verges, chapter2, 27)
 		break;
 
 	case kActionNone:
-		setup_function28();
+		setup_chapter2Handler();
 		break;
 
 	case kActionDefault:
@@ -604,8 +604,97 @@ IMPLEMENT_FUNCTION(Verges, chapter2, 27)
 	}
 }
 
-IMPLEMENT_FUNCTION(Verges, function28, 28)
-	error("Verges: callback function 28 not implemented!");
+IMPLEMENT_FUNCTION(Verges, chapter2Handler, 28)
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionNone:
+		if (getEntities()->checkFields20(kEntityNone)) {
+			setCallback(1);
+			call(new ENTITY_SETUP(Verges, setup_function13), false);
+		}
+
+label_callback_1:
+		TIME_CHECK_CALLBACK_S(Verges, kTime1818900, params->param1, 2, setup_function9, "Tra2177");
+
+label_callback_2:
+		if (params->param2 == kTimeInvalid || !getState()->time)
+			goto label_callback_6;
+
+		if (getState()->time > kTime1836000) {
+			params->param2 = kTimeInvalid;
+			setCallback(3);
+			call(new ENTITY_SETUP(Verges, setup_function12));
+			break;
+		}
+
+		if (!getEntities()->checkFields7(kCarRedSleeping) || !params->param2) {
+			params->param2 = getState()->time;
+
+			if (!params->param2) {
+				setCallback(3);
+				call(new ENTITY_SETUP(Verges, setup_function12));
+				break;
+			}
+		}
+
+		if (params->param2 >= (int)getState()->time) {
+label_callback_6:
+
+			if (ENTITY_PARAM(0, 3)) {
+				setCallback(7);
+				call(new ENTITY_SETUP(Verges, setup_function17));
+			}
+
+			break;
+		}
+
+		params->param2 = kTimeInvalid;
+		setCallback(3);
+		call(new ENTITY_SETUP(Verges, setup_function12));
+		break;
+
+	case kAction9:
+		setCallback(8);
+		call(new ENTITY_SETUP(Verges, setup_function13), savepoint.param.intValue < 106);
+		break;
+
+	case kActionDefault:
+		getInventory()->setLocationAndProcess(kItem9, kLocation1);
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			goto label_callback_1;
+
+		case 2:
+			goto label_callback_2;
+
+		case 3:
+			setCallback(4);
+			call(new ENTITY_SETUP(Verges, setup_checkEntity), kCarRedSleeping, kPosition_2000);
+			break;
+
+		case 4:
+			setCallback(5);
+			call(new ENTITY_SETUP_ISII(Verges, setup_function15), kEntityCoudert, "TRA2100");
+			break;
+
+		case 5:
+			setCallback(6);
+			call(new ENTITY_SETUP(Verges, setup_function11));
+			break;
+
+		case 6:
+			goto label_callback_6;
+		}
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Verges, chapter3, 29)
@@ -739,7 +828,7 @@ IMPLEMENT_FUNCTION(Verges, chapter4, 36)
 		break;
 
 	case kActionNone:
-		setup_function37();
+		setup_chapter4Handler();
 		break;
 
 	case kActionDefault:
@@ -760,7 +849,7 @@ IMPLEMENT_FUNCTION(Verges, chapter4, 36)
 	}
 }
 
-IMPLEMENT_FUNCTION(Verges, function37, 37)
+IMPLEMENT_FUNCTION(Verges, chapter4Handler, 37)
 	error("Verges: callback function 37 not implemented!");
 }
 
@@ -774,7 +863,7 @@ IMPLEMENT_FUNCTION(Verges, chapter5, 39)
 		break;
 
 	case kActionNone:
-		setup_function40();
+		setup_chapter5Handler();
 		break;
 
 	case kActionDefault:
@@ -792,7 +881,7 @@ IMPLEMENT_FUNCTION(Verges, chapter5, 39)
 	}
 }
 
-IMPLEMENT_FUNCTION(Verges, function40, 40)
+IMPLEMENT_FUNCTION(Verges, chapter5Handler, 40)
 	error("Verges: callback function 40 not implemented!");
 }
 

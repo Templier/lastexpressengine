@@ -678,7 +678,7 @@ bool Menu::handleEvent(StartMenuAction action, Common::EventType type) {
 			hideOverlays();
 			return true;
 		}
-		
+
 		if (clicked) {
 			showFrame(kOverlayAcorn, 1, true);
 			showFrame(kOverlayTooltip, -1, true);
@@ -722,7 +722,7 @@ bool Menu::handleEvent(StartMenuAction action, Common::EventType type) {
 			break;
 
 		case kGameRed:
-			showFrame(kOverlayTooltip, kTooltipSwitchGreenGame, true);			
+			showFrame(kOverlayTooltip, kTooltipSwitchGreenGame, true);
 			break;
 
 		case kGameGreen:
@@ -734,7 +734,7 @@ bool Menu::handleEvent(StartMenuAction action, Common::EventType type) {
 			break;
 
 		case kGameTeal:
-			showFrame(kOverlayTooltip, kTooltipSwitchGoldGame, true);			
+			showFrame(kOverlayTooltip, kTooltipSwitchGoldGame, true);
 			break;
 		}
 
@@ -930,7 +930,7 @@ void Menu::switchGame() {
 
 	// Switch back to blue game is the current game is not started
 	_gameId = SaveLoad::isSavegameValid(_gameId) ? getNextGameId() : kGameBlue;
-	
+
 	// Initialize savegame if needed
 	if (!SaveLoad::isSavegamePresent(_gameId))
 		SaveLoad::initSavegame(_gameId);

@@ -51,24 +51,24 @@ Servers1::Servers1(LastExpressEngine *engine) : Entity(engine, kEntityServers1) 
 	ADD_CALLBACK_FUNCTION(Servers1, function11);
 	ADD_CALLBACK_FUNCTION(Servers1, function12);
 	ADD_CALLBACK_FUNCTION(Servers1, function13);
-	ADD_CALLBACK_FUNCTION(Servers1, chapter1_handler);
+	ADD_CALLBACK_FUNCTION(Servers1, chapter1Handler);
 	ADD_CALLBACK_FUNCTION(Servers1, function15);
 	ADD_CALLBACK_FUNCTION(Servers1, function16);
 	ADD_CALLBACK_FUNCTION(Servers1, chapter2);
-	ADD_CALLBACK_FUNCTION(Servers1, function18);
+	ADD_CALLBACK_FUNCTION(Servers1, chapter2Handler);
 	ADD_CALLBACK_FUNCTION(Servers1, function19);
 	ADD_CALLBACK_FUNCTION(Servers1, function20);
 	ADD_CALLBACK_FUNCTION(Servers1, function21);
 	ADD_CALLBACK_FUNCTION(Servers1, chapter3);
-	ADD_CALLBACK_FUNCTION(Servers1, function23);
+	ADD_CALLBACK_FUNCTION(Servers1, chapter3Handler);
 	ADD_CALLBACK_FUNCTION(Servers1, function24);
 	ADD_CALLBACK_FUNCTION(Servers1, chapter4);
-	ADD_CALLBACK_FUNCTION(Servers1, function26);
+	ADD_CALLBACK_FUNCTION(Servers1, chapter4Handler);
 	ADD_CALLBACK_FUNCTION(Servers1, function27);
 	ADD_CALLBACK_FUNCTION(Servers1, function28);
 	ADD_CALLBACK_FUNCTION(Servers1, function29);
 	ADD_CALLBACK_FUNCTION(Servers1, chapter5);
-	ADD_CALLBACK_FUNCTION(Servers1, function31);
+	ADD_CALLBACK_FUNCTION(Servers1, chapter5Handler);
 	ADD_NULL_FUNCTION()
 }
 
@@ -151,7 +151,7 @@ IMPLEMENT_FUNCTION(Servers1, chapter1, 8)
 		break;
 
 	case kActionNone:
-		setup_chapter1_handler();
+		setup_chapter1Handler();
 		break;
 
 	case kActionDefault:
@@ -194,7 +194,7 @@ IMPLEMENT_FUNCTION(Servers1, function13, 13)
 	error("Servers1: callback function 13 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Servers1, chapter1_handler, 14)
+IMPLEMENT_FUNCTION(Servers1, chapter1Handler, 14)
 switch (savepoint.action) {
 	default:
 		break;
@@ -273,7 +273,7 @@ IMPLEMENT_FUNCTION(Servers1, chapter2, 17)
 		break;
 
 	case kActionNone:
-		setup_function18();
+		setup_chapter2Handler();
 		break;
 
 	case kActionDefault:
@@ -292,8 +292,58 @@ IMPLEMENT_FUNCTION(Servers1, chapter2, 17)
 	}
 }
 
-IMPLEMENT_FUNCTION(Servers1, function18, 18)
-	error("Servers1: callback function 18 not implemented!");
+IMPLEMENT_FUNCTION(Servers1, chapter2Handler, 18)
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionNone:
+		if (!getEntities()->checkFields17(kEntityServers1) || !getEntities()->checkFields11())
+			break;
+
+		if (ENTITY_PARAM(0, 6)) {
+			setCallback(1);
+			call(new ENTITY_SETUP(Servers1, setup_function19));
+			break;
+		}
+
+label_callback_1:
+		if (ENTITY_PARAM(0, 7)) {
+			setCallback(2);
+			call(new ENTITY_SETUP(Servers1, setup_function20));
+			break;
+		}
+
+label_callback_2:
+		if (ENTITY_PARAM(0, 8) || ENTITY_PARAM(0, 5)) {
+			setCallback(3);
+			call(new ENTITY_SETUP(Servers1, setup_function21));
+		}
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			goto label_callback_1;
+
+		case 2:
+			goto label_callback_2;
+
+		case 4:
+			getEntities()->clearSequences(kEntityServers1);
+			getData()->entityPosition = kPosition_5900;
+			break;
+		}
+		break;
+
+	case kAction101106391:
+		setCallback(4);
+		call(new ENTITY_SETUP_SIIS(Servers1, setup_draw), "975");
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Servers1, function19, 19)
@@ -335,7 +385,7 @@ IMPLEMENT_FUNCTION(Servers1, chapter3, 22)
 		break;
 
 	case kActionNone:
-		setup_function23();
+		setup_chapter3Handler();
 		break;
 
 	case kActionDefault:
@@ -353,7 +403,7 @@ IMPLEMENT_FUNCTION(Servers1, chapter3, 22)
 	}
 }
 
-IMPLEMENT_FUNCTION(Servers1, function23, 23)
+IMPLEMENT_FUNCTION(Servers1, chapter3Handler, 23)
 	if (savepoint.action != kActionNone)
 		return;
 
@@ -378,7 +428,7 @@ IMPLEMENT_FUNCTION(Servers1, chapter4, 25)
 		break;
 
 	case kActionNone:
-		setup_function26();
+		setup_chapter4Handler();
 		break;
 
 	case kActionDefault:
@@ -399,7 +449,7 @@ IMPLEMENT_FUNCTION(Servers1, chapter4, 25)
 	}
 }
 
-IMPLEMENT_FUNCTION(Servers1, function26, 26)
+IMPLEMENT_FUNCTION(Servers1, chapter4Handler, 26)
 	error("Servers1: callback function 26 not implemented!");
 }
 
@@ -421,7 +471,7 @@ IMPLEMENT_FUNCTION(Servers1, chapter5, 30)
 		break;
 
 	case kActionNone:
-		setup_function31();
+		setup_chapter5Handler();
 		break;
 
 	case kActionDefault:
@@ -435,7 +485,7 @@ IMPLEMENT_FUNCTION(Servers1, chapter5, 30)
 	}
 }
 
-IMPLEMENT_FUNCTION(Servers1, function31, 31)
+IMPLEMENT_FUNCTION(Servers1, chapter5Handler, 31)
 	if (savepoint.action == kAction70549068)
 		setup_nullfunction();
 }

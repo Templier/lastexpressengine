@@ -108,14 +108,19 @@ enum TimeValue {
 	// Chapter 2
 	kTimeChapter2             = 1750500,
 	kTime1759500              = 1759500,
+	kTime1755000              = 1755000,
 	kTime1764000              = 1764000,
+	kTime1773000              = 1773000,
 	kTime1777500              = 1777500,
 	kTime1782000              = 1782000,
 	kTime1786500              = 1786500,
+	kTime1791000              = 1791000,
 	kTime1800000              = 1800000,
 	kTimeCityAugsburg         = 1809900,
 	kTime1818000              = 1818000,
+	kTime1818900              = 1818900,
 	kTime1822500              = 1822500,
+	kTime1836000              = 1836000,
 	kTimeCityMunich           = 1852200,
 
 	// Chapter 3
@@ -1165,6 +1170,7 @@ enum ActionIndex {
 	kAction168046720 = 168046720,
 	kAction168627977 = 168627977,
 	kAction203859488 = 203859488,
+	kAction219522616 = 219522616,    // Servers0
 	kAction225182640 = 225182640,
 
 	/////////////////////////////
@@ -1344,6 +1350,7 @@ enum ActionIndex {
 	/////////////////////////////
 	// Servers 1
 	/////////////////////////////
+	kAction101106391 = 101106391,
 	kAction122288808 = 122288808,    // Servers1/Boutarel
 	kAction123712592 = 123712592,    // Servers1/Ivo
 	kAction189688608 = 189688608,

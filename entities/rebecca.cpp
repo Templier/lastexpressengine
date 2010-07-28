@@ -60,18 +60,18 @@ Rebecca::Rebecca(LastExpressEngine *engine) : Entity(engine, kEntityRebecca) {
 	ADD_CALLBACK_FUNCTION(Rebecca, function19);
 	ADD_CALLBACK_FUNCTION(Rebecca, function20);
 	ADD_CALLBACK_FUNCTION(Rebecca, chapter1);
-	ADD_CALLBACK_FUNCTION(Rebecca, chapter1_handler);
+	ADD_CALLBACK_FUNCTION(Rebecca, chapter1Handler);
 	ADD_CALLBACK_FUNCTION(Rebecca, function23);
 	ADD_CALLBACK_FUNCTION(Rebecca, function24);
 	ADD_CALLBACK_FUNCTION(Rebecca, function25);
 	ADD_CALLBACK_FUNCTION(Rebecca, function26);
 	ADD_CALLBACK_FUNCTION(Rebecca, function27);
 	ADD_CALLBACK_FUNCTION(Rebecca, chapter2);
-	ADD_CALLBACK_FUNCTION(Rebecca, function29);
+	ADD_CALLBACK_FUNCTION(Rebecca, chapter2Handler);
 	ADD_CALLBACK_FUNCTION(Rebecca, function30);
 	ADD_CALLBACK_FUNCTION(Rebecca, function31);
 	ADD_CALLBACK_FUNCTION(Rebecca, chapter3);
-	ADD_CALLBACK_FUNCTION(Rebecca, function33);
+	ADD_CALLBACK_FUNCTION(Rebecca, chapter3Handler);
 	ADD_CALLBACK_FUNCTION(Rebecca, function34);
 	ADD_CALLBACK_FUNCTION(Rebecca, function35);
 	ADD_CALLBACK_FUNCTION(Rebecca, function36);
@@ -81,11 +81,11 @@ Rebecca::Rebecca(LastExpressEngine *engine) : Entity(engine, kEntityRebecca) {
 	ADD_CALLBACK_FUNCTION(Rebecca, function40);
 	ADD_CALLBACK_FUNCTION(Rebecca, function41);
 	ADD_CALLBACK_FUNCTION(Rebecca, chapter4);
-	ADD_CALLBACK_FUNCTION(Rebecca, function43);
+	ADD_CALLBACK_FUNCTION(Rebecca, chapter4Handler);
 	ADD_CALLBACK_FUNCTION(Rebecca, function44);
 	ADD_CALLBACK_FUNCTION(Rebecca, function45);
 	ADD_CALLBACK_FUNCTION(Rebecca, chapter5);
-	ADD_CALLBACK_FUNCTION(Rebecca, function47);
+	ADD_CALLBACK_FUNCTION(Rebecca, chapter5Handler);
 	ADD_CALLBACK_FUNCTION(Rebecca, function48);
 	ADD_NULL_FUNCTION();
 }
@@ -197,7 +197,7 @@ IMPLEMENT_FUNCTION(Rebecca, chapter1, 21)
 		break;
 
 	case kActionNone:
-		TIME_CHECK_CHAPTER1(setup_chapter1_handler);
+		TIME_CHECK_CHAPTER1(setup_chapter1Handler);
 		break;
 
 	case kActionDefault:
@@ -218,7 +218,7 @@ IMPLEMENT_FUNCTION(Rebecca, chapter1, 21)
 	}
 }
 
-IMPLEMENT_FUNCTION(Rebecca, chapter1_handler, 22)
+IMPLEMENT_FUNCTION(Rebecca, chapter1Handler, 22)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -385,7 +385,7 @@ IMPLEMENT_FUNCTION(Rebecca, chapter2, 28)
 		break;
 
 	case kActionNone:
-		setup_function29();
+		setup_chapter2Handler();
 		break;
 
 	case kActionDefault:
@@ -407,7 +407,7 @@ IMPLEMENT_FUNCTION(Rebecca, chapter2, 28)
 	}
 }
 
-IMPLEMENT_FUNCTION(Rebecca, function29, 29)
+IMPLEMENT_FUNCTION(Rebecca, chapter2Handler, 29)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -474,7 +474,7 @@ IMPLEMENT_FUNCTION(Rebecca, chapter3, 32)
 		break;
 
 	case kActionNone:
-		setup_function33();
+		setup_chapter3Handler();
 		break;
 
 	case kActionDefault:
@@ -489,7 +489,7 @@ IMPLEMENT_FUNCTION(Rebecca, chapter3, 32)
 	}
 }
 
-IMPLEMENT_FUNCTION(Rebecca, function33, 33)
+IMPLEMENT_FUNCTION(Rebecca, chapter3Handler, 33)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -623,7 +623,7 @@ IMPLEMENT_FUNCTION(Rebecca, chapter4, 42)
 		break;
 
 	case kActionNone:
-		setup_function43();
+		setup_chapter4Handler();
 		break;
 
 	case kActionDefault:
@@ -643,7 +643,7 @@ IMPLEMENT_FUNCTION(Rebecca, chapter4, 42)
 	}
 }
 
-IMPLEMENT_FUNCTION(Rebecca, function43, 43)
+IMPLEMENT_FUNCTION(Rebecca, chapter4Handler, 43)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -706,7 +706,7 @@ IMPLEMENT_FUNCTION(Rebecca, chapter5, 46)
 		break;
 
 	case kActionNone:
-		setup_function47();
+		setup_chapter5Handler();
 		break;
 
 	case kActionDefault:
@@ -722,7 +722,7 @@ IMPLEMENT_FUNCTION(Rebecca, chapter5, 46)
 	}
 }
 
-IMPLEMENT_FUNCTION(Rebecca, function47, 47)
+IMPLEMENT_FUNCTION(Rebecca, chapter5Handler, 47)
 	if (savepoint.action == kAction70549068)
 		setup_function48();
 }

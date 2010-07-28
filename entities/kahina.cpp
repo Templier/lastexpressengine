@@ -49,16 +49,16 @@ Kahina::Kahina(LastExpressEngine *engine) : Entity(engine, kEntityKahina) {
 	ADD_CALLBACK_FUNCTION(Kahina, function8);
 	ADD_CALLBACK_FUNCTION(Kahina, enterExitCompartment);
 	ADD_CALLBACK_FUNCTION(Kahina, chapter1);
-	ADD_CALLBACK_FUNCTION(Kahina, chapter1_handler);
+	ADD_CALLBACK_FUNCTION(Kahina, chapter1Handler);
 	ADD_CALLBACK_FUNCTION(Kahina, function12);
 	ADD_CALLBACK_FUNCTION(Kahina, function13);
 	ADD_CALLBACK_FUNCTION(Kahina, function14);
 	ADD_CALLBACK_FUNCTION(Kahina, function15);
 	ADD_CALLBACK_FUNCTION(Kahina, chapter2);
-	ADD_CALLBACK_FUNCTION(Kahina, function17);
+	ADD_CALLBACK_FUNCTION(Kahina, chapter2Handler);
 	ADD_CALLBACK_FUNCTION(Kahina, chapter3);
 	ADD_CALLBACK_FUNCTION(Kahina, function19);
-	ADD_CALLBACK_FUNCTION(Kahina, function20);
+	ADD_CALLBACK_FUNCTION(Kahina, chapter3Handler);
 	ADD_CALLBACK_FUNCTION(Kahina, function21);
 	ADD_CALLBACK_FUNCTION(Kahina, function22);
 	ADD_CALLBACK_FUNCTION(Kahina, function23);
@@ -117,7 +117,7 @@ IMPLEMENT_FUNCTION(Kahina, chapter1, 10)
 		break;
 
 	case kActionNone:
-		TIME_CHECK_CHAPTER1(setup_chapter1_handler);
+		TIME_CHECK_CHAPTER1(setup_chapter1Handler);
 		break;
 
 	case kActionDefault:
@@ -131,7 +131,7 @@ IMPLEMENT_FUNCTION(Kahina, chapter1, 10)
 	}
 }
 
-IMPLEMENT_FUNCTION(Kahina, chapter1_handler, 11)
+IMPLEMENT_FUNCTION(Kahina, chapter1Handler, 11)
 	if (savepoint.action != kActionNone)
 		return;
 
@@ -221,7 +221,7 @@ IMPLEMENT_FUNCTION(Kahina, chapter2, 16)
 		break;
 
 	case kActionNone:
-		setup_function17();
+		setup_chapter2Handler();
 		break;
 
 	case kActionDefault:
@@ -239,7 +239,7 @@ IMPLEMENT_FUNCTION(Kahina, chapter2, 16)
 	}
 }
 
-IMPLEMENT_FUNCTION(Kahina, function17, 17)
+IMPLEMENT_FUNCTION(Kahina, chapter2Handler, 17)
 	error("Kahina: callback function 17 not implemented!");
 }
 
@@ -249,7 +249,7 @@ IMPLEMENT_FUNCTION(Kahina, chapter3, 18)
 		break;
 
 	case kActionNone:
-		setup_function20();
+		setup_chapter3Handler();
 		break;
 
 	case kActionDefault:
@@ -269,7 +269,7 @@ IMPLEMENT_FUNCTION_II(Kahina, function19, 19)
 	error("Kahina: callback function 19 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Kahina, function20, 20)
+IMPLEMENT_FUNCTION(Kahina, chapter3Handler, 20)
 	error("Kahina: callback function 20 not implemented!");
 }
 

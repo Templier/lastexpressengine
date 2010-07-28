@@ -75,22 +75,22 @@ Chapters::Chapters(LastExpressEngine *engine) : Entity(engine, kEntityChapters) 
 	ADD_CALLBACK_FUNCTION(Chapters, chapter1);
 	ADD_CALLBACK_FUNCTION(Chapters, resetMainEntities);
 	ADD_CALLBACK_FUNCTION(Chapters, function6);
-	ADD_CALLBACK_FUNCTION(Chapters, chapter1_init);
-	ADD_CALLBACK_FUNCTION(Chapters, chapter1_handler);
-	ADD_CALLBACK_FUNCTION(Chapters, chapter1_end);
+	ADD_CALLBACK_FUNCTION(Chapters, chapter1Init);
+	ADD_CALLBACK_FUNCTION(Chapters, chapter1Handler);
+	ADD_CALLBACK_FUNCTION(Chapters, chapter1End);
 	ADD_CALLBACK_FUNCTION(Chapters, chapter2);
-	ADD_CALLBACK_FUNCTION(Chapters, chapter2_init);
-	ADD_CALLBACK_FUNCTION(Chapters, chapter2_handler);
+	ADD_CALLBACK_FUNCTION(Chapters, chapter2Init);
+	ADD_CALLBACK_FUNCTION(Chapters, chapter2Handler);
 	ADD_CALLBACK_FUNCTION(Chapters, chapter3);
-	ADD_CALLBACK_FUNCTION(Chapters, chapter3_init);
-	ADD_CALLBACK_FUNCTION(Chapters, chapter3_handler);
+	ADD_CALLBACK_FUNCTION(Chapters, chapter3Init);
+	ADD_CALLBACK_FUNCTION(Chapters, chapter3Handler);
 	ADD_CALLBACK_FUNCTION(Chapters, function16);
 	ADD_CALLBACK_FUNCTION(Chapters, chapter4);
-	ADD_CALLBACK_FUNCTION(Chapters, chapter4_init);
-	ADD_CALLBACK_FUNCTION(Chapters, chapter4_handler);
+	ADD_CALLBACK_FUNCTION(Chapters, chapter4Init);
+	ADD_CALLBACK_FUNCTION(Chapters, chapter4Handler);
 	ADD_CALLBACK_FUNCTION(Chapters, chapter5);
-	ADD_CALLBACK_FUNCTION(Chapters, chapter4_init);
-	ADD_CALLBACK_FUNCTION(Chapters, chapter4_handler);
+	ADD_CALLBACK_FUNCTION(Chapters, chapter4Init);
+	ADD_CALLBACK_FUNCTION(Chapters, chapter4Handler);
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -112,7 +112,7 @@ IMPLEMENT_FUNCTION_S(Chapters, exitStation, 3)
 IMPLEMENT_FUNCTION(Chapters, chapter1, 4)
 	if (savepoint.action == kActionDefault) {
 		getSavePoints()->addData(kEntityChapters, kAction171843264, 0);
-		setup_chapter1_init();
+		setup_chapter1Init();
 	}
 }
 
@@ -156,7 +156,7 @@ IMPLEMENT_FUNCTION(Chapters, function6, 6)
 }
 
 //////////////////////////////////////////////////////////////////////////
-IMPLEMENT_FUNCTION(Chapters, chapter1_init, 7)
+IMPLEMENT_FUNCTION(Chapters, chapter1Init, 7)
 	if (savepoint.action != kActionDefault)
 		return;
 
@@ -222,7 +222,7 @@ IMPLEMENT_FUNCTION(Chapters, chapter1_init, 7)
 	getObjects()->update(kObjectHandleOutsideRight, kEntityNone, kLocation1, kCursorNormal, kCursorHandKnock);
 	getObjects()->update(kObject101, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
 
-	setup_chapter1_handler();
+	setup_chapter1Handler();
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -232,7 +232,7 @@ IMPLEMENT_FUNCTION(Chapters, chapter1_init, 7)
 	ENTITY_PARAM(0, 2) = 0; \
 	}
 
-IMPLEMENT_FUNCTION(Chapters, chapter1_handler, 8)
+IMPLEMENT_FUNCTION(Chapters, chapter1Handler, 8)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -344,7 +344,7 @@ label_exit_badenoos:
 label_chapter1_end:
 		if (getState()->time > kTimeChapter1End3 && ! ENTITY_PARAM(3, 4)) {
 			ENTITY_PARAM(3, 4) = 1;
-			setup_chapter1_end();
+			setup_chapter1End();
 		}
 		break;
 
@@ -512,7 +512,7 @@ label_chapter1_end:
 		getProgress().field_18 = 3;
 
 		if (getState()->time >= kTimeChapter1End) {
-			setup_chapter1_end();
+			setup_chapter1End();
 		} else {
 			setCallback(23);
 			call(new ENTITY_SETUP(Chapters, setup_function6));
@@ -522,7 +522,7 @@ label_chapter1_end:
 }
 
 //////////////////////////////////////////////////////////////////////////
-IMPLEMENT_FUNCTION(Chapters, chapter1_end, 9)
+IMPLEMENT_FUNCTION(Chapters, chapter1End, 9)
 	if (savepoint.action == kActionDefault) {
 		// Reset sound cache
 		if (ENTITY_PARAM(0, 2) || ENTITY_PARAM(0, 3)) {
@@ -572,14 +572,14 @@ IMPLEMENT_FUNCTION(Chapters, chapter2, 10)
 
 			// Load scene data
 			getScenes()->loadSceneDataFile(kArchiveCd2);
-			setup_chapter2_init();
+			setup_chapter2Init();
 		}
 		break;
 	}
 }
 
 //////////////////////////////////////////////////////////////////////////
-IMPLEMENT_FUNCTION(Chapters, chapter2_init, 11)
+IMPLEMENT_FUNCTION(Chapters, chapter2Init, 11)
 	if (savepoint.action != kActionDefault)
 		return;
 
@@ -634,11 +634,11 @@ IMPLEMENT_FUNCTION(Chapters, chapter2_init, 11)
 	else
 		getScenes()->loadSceneFromPosition(kCarGreenSleeping, 79);
 
-	setup_chapter2_handler();
+	setup_chapter2Handler();
 }
 
 //////////////////////////////////////////////////////////////////////////
-IMPLEMENT_FUNCTION(Chapters, chapter2_handler, 12)
+IMPLEMENT_FUNCTION(Chapters, chapter2Handler, 12)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -678,12 +678,12 @@ IMPLEMENT_FUNCTION(Chapters, chapter3, 13)
 		getState()->time = kTimeChapter3;
 		getState()->timeDelta = 5;
 
-		setup_chapter3_init();
+		setup_chapter3Init();
 	}
 }
 
 //////////////////////////////////////////////////////////////////////////
-IMPLEMENT_FUNCTION(Chapters, chapter3_init, 14)
+IMPLEMENT_FUNCTION(Chapters, chapter3Init, 14)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -720,14 +720,14 @@ IMPLEMENT_FUNCTION(Chapters, chapter3_init, 14)
 
 	case kActionCallback:
 		if (getCallback() == 1)
-			setup_chapter3_handler();
+			setup_chapter3Handler();
 		break;
 	}
 }
 
 //////////////////////////////////////////////////////////////////////////
-IMPLEMENT_FUNCTION(Chapters, chapter3_handler, 15)
-	error("Chapters: callback function chapter3_handler not implemented!");
+IMPLEMENT_FUNCTION(Chapters, chapter3Handler, 15)
+	error("Chapters: callback function chapter3Handler not implemented!");
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -766,7 +766,7 @@ IMPLEMENT_FUNCTION(Chapters, chapter4, 17)
 
 			// Load scene data
 			getScenes()->loadSceneDataFile(kArchiveCd3);
-			setup_chapter4_init();
+			setup_chapter4Init();
 		}
 		break;
 
@@ -774,7 +774,7 @@ IMPLEMENT_FUNCTION(Chapters, chapter4, 17)
 }
 
 //////////////////////////////////////////////////////////////////////////
-IMPLEMENT_FUNCTION(Chapters, chapter4_init, 18)
+IMPLEMENT_FUNCTION(Chapters, chapter4Init, 18)
 	if (savepoint.action != kActionDefault)
 		return;
 
@@ -816,11 +816,11 @@ IMPLEMENT_FUNCTION(Chapters, chapter4_init, 18)
 		getScenes()->loadSceneFromPosition(kCarRestaurant, 69);
 
 	getInventory()->show();
-	setup_chapter4_handler();
+	setup_chapter4Handler();
 }
 
 //////////////////////////////////////////////////////////////////////////
-IMPLEMENT_FUNCTION(Chapters, chapter4_handler, 19)
+IMPLEMENT_FUNCTION(Chapters, chapter4Handler, 19)
 	error("Chapters: callback function 19 not implemented!");
 }
 
@@ -837,12 +837,12 @@ IMPLEMENT_FUNCTION(Chapters, chapter5, 20)
 		getState()->time = kTimeChapter5;
 		getState()->timeDelta = 2;
 
-		setup_chapter5_init();
+		setup_chapter5Init();
 	}
 }
 
 //////////////////////////////////////////////////////////////////////////
-IMPLEMENT_FUNCTION(Chapters, chapter5_init, 21)
+IMPLEMENT_FUNCTION(Chapters, chapter5Init, 21)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -932,13 +932,13 @@ IMPLEMENT_FUNCTION(Chapters, chapter5_init, 21)
 
 	case kActionCallback:
 		if (getCallback() == 1)
-			setup_chapter5_handler();
+			setup_chapter5Handler();
 		break;
 	}
 }
 
 //////////////////////////////////////////////////////////////////////////
-IMPLEMENT_FUNCTION(Chapters, chapter5_handler, 22)
+IMPLEMENT_FUNCTION(Chapters, chapter5Handler, 22)
 	switch (savepoint.action) {
 	default:
 		break;

@@ -58,20 +58,20 @@ Tatiana::Tatiana(LastExpressEngine *engine) : Entity(engine, kEntityTatiana) {
 	ADD_CALLBACK_FUNCTION(Tatiana, function16);
 	ADD_CALLBACK_FUNCTION(Tatiana, chapter1);
 	ADD_CALLBACK_FUNCTION(Tatiana, function18);
-	ADD_CALLBACK_FUNCTION(Tatiana, chapter1_handler);
+	ADD_CALLBACK_FUNCTION(Tatiana, chapter1Handler);
 	ADD_CALLBACK_FUNCTION(Tatiana, function20);
 	ADD_CALLBACK_FUNCTION(Tatiana, function21);
 	ADD_CALLBACK_FUNCTION(Tatiana, function22);
 	ADD_CALLBACK_FUNCTION(Tatiana, function23);
 	ADD_CALLBACK_FUNCTION(Tatiana, function24);
 	ADD_CALLBACK_FUNCTION(Tatiana, chapter2);
-	ADD_CALLBACK_FUNCTION(Tatiana, function26);
+	ADD_CALLBACK_FUNCTION(Tatiana, chapter2Handler);
 	ADD_CALLBACK_FUNCTION(Tatiana, function27);
 	ADD_CALLBACK_FUNCTION(Tatiana, function28);
 	ADD_CALLBACK_FUNCTION(Tatiana, function29);
 	ADD_CALLBACK_FUNCTION(Tatiana, function30);
 	ADD_CALLBACK_FUNCTION(Tatiana, chapter3);
-	ADD_CALLBACK_FUNCTION(Tatiana, function32);
+	ADD_CALLBACK_FUNCTION(Tatiana, chapter3Handler);
 	ADD_CALLBACK_FUNCTION(Tatiana, function33);
 	ADD_CALLBACK_FUNCTION(Tatiana, function34);
 	ADD_CALLBACK_FUNCTION(Tatiana, function35);
@@ -83,7 +83,7 @@ Tatiana::Tatiana(LastExpressEngine *engine) : Entity(engine, kEntityTatiana) {
 	ADD_CALLBACK_FUNCTION(Tatiana, function41);
 	ADD_CALLBACK_FUNCTION(Tatiana, function42);
 	ADD_CALLBACK_FUNCTION(Tatiana, chapter4);
-	ADD_CALLBACK_FUNCTION(Tatiana, function44);
+	ADD_CALLBACK_FUNCTION(Tatiana, chapter4Handler);
 	ADD_CALLBACK_FUNCTION(Tatiana, function45);
 	ADD_CALLBACK_FUNCTION(Tatiana, function46);
 	ADD_CALLBACK_FUNCTION(Tatiana, function47);
@@ -92,7 +92,7 @@ Tatiana::Tatiana(LastExpressEngine *engine) : Entity(engine, kEntityTatiana) {
 	ADD_CALLBACK_FUNCTION(Tatiana, function50);
 	ADD_CALLBACK_FUNCTION(Tatiana, function51);
 	ADD_CALLBACK_FUNCTION(Tatiana, chapter5);
-	ADD_CALLBACK_FUNCTION(Tatiana, function53);
+	ADD_CALLBACK_FUNCTION(Tatiana, chapter5Handler);
 	ADD_CALLBACK_FUNCTION(Tatiana, function54);
 	ADD_CALLBACK_FUNCTION(Tatiana, function55);
 }
@@ -167,7 +167,7 @@ IMPLEMENT_FUNCTION(Tatiana, chapter1, 17)
 		break;
 
 	case kActionNone:
-		TIME_CHECK_CHAPTER1(setup_chapter1_handler);
+		TIME_CHECK_CHAPTER1(setup_chapter1Handler);
 		break;
 
 	case kActionDefault:
@@ -188,7 +188,7 @@ IMPLEMENT_FUNCTION(Tatiana, function18, 18)
 	error("Tatiana: callback function 18 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Tatiana, chapter1_handler, 19)
+IMPLEMENT_FUNCTION(Tatiana, chapter1Handler, 19)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -319,7 +319,7 @@ IMPLEMENT_FUNCTION(Tatiana, chapter2, 25)
 		break;
 
 	case kActionNone:
-		setup_function26();
+		setup_chapter2Handler();
 		break;
 
 	case kActionDefault:
@@ -337,7 +337,7 @@ IMPLEMENT_FUNCTION(Tatiana, chapter2, 25)
 	}
 }
 
-IMPLEMENT_FUNCTION(Tatiana, function26, 26)
+IMPLEMENT_FUNCTION(Tatiana, chapter2Handler, 26)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -420,7 +420,7 @@ IMPLEMENT_FUNCTION(Tatiana, chapter3, 31)
 		break;
 
 	case kActionNone:
-		setup_function32();
+		setup_chapter3Handler();
 		break;
 
 	case kActionDefault:
@@ -445,7 +445,7 @@ IMPLEMENT_FUNCTION(Tatiana, chapter3, 31)
 	}
 }
 
-IMPLEMENT_FUNCTION(Tatiana, function32, 32)
+IMPLEMENT_FUNCTION(Tatiana, chapter3Handler, 32)
 	error("Tatiana: callback function 32 not implemented!");
 }
 
@@ -576,7 +576,7 @@ IMPLEMENT_FUNCTION(Tatiana, chapter4, 43)
 		break;
 
 	case kActionNone:
-		setup_function44();
+		setup_chapter4Handler();
 		break;
 
 	case kActionDefault:
@@ -596,7 +596,7 @@ IMPLEMENT_FUNCTION(Tatiana, chapter4, 43)
 	}
 }
 
-IMPLEMENT_FUNCTION(Tatiana, function44, 44)
+IMPLEMENT_FUNCTION(Tatiana, chapter4Handler, 44)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -739,7 +739,7 @@ IMPLEMENT_FUNCTION(Tatiana, chapter5, 52)
 		break;
 
 	case kActionNone:
-		setup_function53();
+		setup_chapter5Handler();
 		break;
 
 	case kActionDefault:
@@ -754,7 +754,7 @@ IMPLEMENT_FUNCTION(Tatiana, chapter5, 52)
 	}
 }
 
-IMPLEMENT_FUNCTION(Tatiana, function53, 53)
+IMPLEMENT_FUNCTION(Tatiana, chapter5Handler, 53)
 	if (savepoint.action == kAction70549068)
 		setup_function54();
 }

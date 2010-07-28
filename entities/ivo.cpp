@@ -52,7 +52,7 @@ Ivo::Ivo(LastExpressEngine *engine) : Entity(engine, kEntityIvo) {
 	ADD_CALLBACK_FUNCTION(Ivo, sitAtTableWithSalko);
 	ADD_CALLBACK_FUNCTION(Ivo, leaveTableWithSalko);
 	ADD_CALLBACK_FUNCTION(Ivo, chapter1);
-	ADD_CALLBACK_FUNCTION(Ivo, chapter1_handler);
+	ADD_CALLBACK_FUNCTION(Ivo, chapter1Handler);
 	ADD_CALLBACK_FUNCTION(Ivo, function16);
 	ADD_CALLBACK_FUNCTION(Ivo, function17);
 	ADD_CALLBACK_FUNCTION(Ivo, chapter2);
@@ -60,15 +60,15 @@ Ivo::Ivo(LastExpressEngine *engine) : Entity(engine, kEntityIvo) {
 	ADD_CALLBACK_FUNCTION(Ivo, function20);
 	ADD_CALLBACK_FUNCTION(Ivo, function21);
 	ADD_CALLBACK_FUNCTION(Ivo, chapter3);
-	ADD_CALLBACK_FUNCTION(Ivo, function23);
+	ADD_CALLBACK_FUNCTION(Ivo, chapter3Handler);
 	ADD_CALLBACK_FUNCTION(Ivo, chapter4);
-	ADD_CALLBACK_FUNCTION(Ivo, function25);
+	ADD_CALLBACK_FUNCTION(Ivo, chapter4Handler);
 	ADD_CALLBACK_FUNCTION(Ivo, function26);
 	ADD_CALLBACK_FUNCTION(Ivo, function27);
 	ADD_CALLBACK_FUNCTION(Ivo, function28);
 	ADD_CALLBACK_FUNCTION(Ivo, function29);
 	ADD_CALLBACK_FUNCTION(Ivo, chapter5);
-	ADD_CALLBACK_FUNCTION(Ivo, function31);
+	ADD_CALLBACK_FUNCTION(Ivo, chapter5Handler);
 	ADD_CALLBACK_FUNCTION(Ivo, function32);
 	ADD_CALLBACK_FUNCTION(Ivo, function33);
 	ADD_CALLBACK_FUNCTION(Ivo, function34);
@@ -169,7 +169,7 @@ IMPLEMENT_FUNCTION(Ivo, chapter1, 14)
 		break;
 
 	case kActionNone:
-		TIME_CHECK_CHAPTER1(setup_chapter1_handler);
+		TIME_CHECK_CHAPTER1(setup_chapter1Handler);
 		break;
 
 	case kActionDefault:
@@ -184,7 +184,7 @@ IMPLEMENT_FUNCTION(Ivo, chapter1, 14)
 	}
 }
 
-IMPLEMENT_FUNCTION(Ivo, chapter1_handler, 15)
+IMPLEMENT_FUNCTION(Ivo, chapter1Handler, 15)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -282,7 +282,7 @@ IMPLEMENT_FUNCTION(Ivo, chapter3, 22)
 		break;
 
 	case kActionNone:
-		setup_function23();
+		setup_chapter3Handler();
 		break;
 
 	case kActionDefault:
@@ -298,7 +298,7 @@ IMPLEMENT_FUNCTION(Ivo, chapter3, 22)
 	}
 }
 
-IMPLEMENT_FUNCTION(Ivo, function23, 23)
+IMPLEMENT_FUNCTION(Ivo, chapter3Handler, 23)
 	if (savepoint.action == kActionDefault)
 		getObjects()->update(kObjectCompartmentH, kEntityNone, kLocation3, kCursorHandKnock, kCursorHand);
 }
@@ -309,7 +309,7 @@ IMPLEMENT_FUNCTION(Ivo, chapter4, 24)
 		break;
 
 	case kActionNone:
-		setup_function25();
+		setup_chapter4Handler();
 		break;
 
 	case kActionDefault:
@@ -320,7 +320,7 @@ IMPLEMENT_FUNCTION(Ivo, chapter4, 24)
 	}
 }
 
-IMPLEMENT_FUNCTION(Ivo, function25, 25)
+IMPLEMENT_FUNCTION(Ivo, chapter4Handler, 25)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -414,7 +414,7 @@ IMPLEMENT_FUNCTION(Ivo, chapter5, 30)
 		break;
 
 	case kActionNone:
-		setup_function31();
+		setup_chapter5Handler();
 		break;
 
 	case kActionDefault:
@@ -429,7 +429,7 @@ IMPLEMENT_FUNCTION(Ivo, chapter5, 30)
 	}
 }
 
-IMPLEMENT_FUNCTION(Ivo, function31, 31)
+IMPLEMENT_FUNCTION(Ivo, chapter5Handler, 31)
 	if (savepoint.action == kAction70549068)
 		setup_function32();
 }

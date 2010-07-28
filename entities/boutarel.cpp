@@ -60,23 +60,23 @@ Boutarel::Boutarel(LastExpressEngine *engine) : Entity(engine, kEntityBoutarel) 
 	ADD_CALLBACK_FUNCTION(Boutarel, function18);
 	ADD_CALLBACK_FUNCTION(Boutarel, chapter1);
 	ADD_CALLBACK_FUNCTION(Boutarel, function20);
-	ADD_CALLBACK_FUNCTION(Boutarel, chapter1_handler);
+	ADD_CALLBACK_FUNCTION(Boutarel, chapter1Handler);
 	ADD_CALLBACK_FUNCTION(Boutarel, function22);
 	ADD_CALLBACK_FUNCTION(Boutarel, chapter2);
-	ADD_CALLBACK_FUNCTION(Boutarel, chapter2_handler);
+	ADD_CALLBACK_FUNCTION(Boutarel, chapter2Handler);
 	ADD_CALLBACK_FUNCTION(Boutarel, function25);
 	ADD_CALLBACK_FUNCTION(Boutarel, chapter3);
-	ADD_CALLBACK_FUNCTION(Boutarel, chapter3_handler);
+	ADD_CALLBACK_FUNCTION(Boutarel, chapter3Handler);
 	ADD_CALLBACK_FUNCTION(Boutarel, function28);
 	ADD_CALLBACK_FUNCTION(Boutarel, function29);
 	ADD_CALLBACK_FUNCTION(Boutarel, function30);
 	ADD_CALLBACK_FUNCTION(Boutarel, chapter4);
-	ADD_CALLBACK_FUNCTION(Boutarel, function32);
+	ADD_CALLBACK_FUNCTION(Boutarel, chapter4Handler);
 	ADD_CALLBACK_FUNCTION(Boutarel, function33);
 	ADD_CALLBACK_FUNCTION(Boutarel, function34);
 	ADD_CALLBACK_FUNCTION(Boutarel, function35);
 	ADD_CALLBACK_FUNCTION(Boutarel, chapter5);
-	ADD_CALLBACK_FUNCTION(Boutarel, function37);
+	ADD_CALLBACK_FUNCTION(Boutarel, chapter5Handler);
 	ADD_CALLBACK_FUNCTION(Boutarel, function38);
 	ADD_NULL_FUNCTION();
 }
@@ -269,7 +269,7 @@ IMPLEMENT_FUNCTION(Boutarel, chapter1, 19)
 		break;
 
 	case kActionNone:
-		TIME_CHECK_CHAPTER1(setup_chapter1_handler);
+		TIME_CHECK_CHAPTER1(setup_chapter1Handler);
 		break;
 
 	case kActionDefault:
@@ -291,7 +291,7 @@ IMPLEMENT_FUNCTION(Boutarel, function20, 20)
 	error("Boutarel: callback function 20 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Boutarel, chapter1_handler, 21)
+IMPLEMENT_FUNCTION(Boutarel, chapter1Handler, 21)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -390,7 +390,7 @@ IMPLEMENT_FUNCTION(Boutarel, chapter2, 23)
 		break;
 
 	case kActionNone:
-		setup_chapter2_handler();
+		setup_chapter2Handler();
 		break;
 
 	case kActionDefault:
@@ -408,7 +408,7 @@ IMPLEMENT_FUNCTION(Boutarel, chapter2, 23)
 	}
 }
 
-IMPLEMENT_FUNCTION(Boutarel, chapter2_handler, 24)
+IMPLEMENT_FUNCTION(Boutarel, chapter2Handler, 24)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -448,7 +448,7 @@ IMPLEMENT_FUNCTION(Boutarel, chapter3, 26)
 		break;
 
 	case kActionNone:
-		setup_chapter3_handler();
+		setup_chapter3Handler();
 		break;
 
 	case kActionDefault:
@@ -466,7 +466,7 @@ IMPLEMENT_FUNCTION(Boutarel, chapter3, 26)
 	}
 }
 
-IMPLEMENT_FUNCTION(Boutarel, chapter3_handler, 27)
+IMPLEMENT_FUNCTION(Boutarel, chapter3Handler, 27)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -533,7 +533,7 @@ IMPLEMENT_FUNCTION(Boutarel, chapter4, 31)
 		break;
 
 	case kActionNone:
-		setup_function32();
+		setup_chapter4Handler();
 		break;
 
 	case kActionDefault:
@@ -551,7 +551,7 @@ IMPLEMENT_FUNCTION(Boutarel, chapter4, 31)
 	}
 }
 
-IMPLEMENT_FUNCTION(Boutarel, function32, 32)
+IMPLEMENT_FUNCTION(Boutarel, chapter4Handler, 32)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -594,7 +594,7 @@ IMPLEMENT_FUNCTION(Boutarel, chapter5, 36)
 		break;
 
 	case kActionNone:
-		setup_function37();
+		setup_chapter5Handler();
 		break;
 
 	case kActionDefault:
@@ -609,7 +609,7 @@ IMPLEMENT_FUNCTION(Boutarel, chapter5, 36)
 	}
 }
 
-IMPLEMENT_FUNCTION(Boutarel, function37, 37)
+IMPLEMENT_FUNCTION(Boutarel, chapter5Handler, 37)
 	if (savepoint.action == kAction70549068)
 		setup_function38();
 }

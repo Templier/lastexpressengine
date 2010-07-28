@@ -81,7 +81,7 @@ Mertens::Mertens(LastExpressEngine *engine) : Entity(engine, kEntityMertens) {
 	ADD_CALLBACK_FUNCTION(Mertens, function38);
 	ADD_CALLBACK_FUNCTION(Mertens, function39);
 	ADD_CALLBACK_FUNCTION(Mertens, function40);
-	ADD_CALLBACK_FUNCTION(Mertens, chapter1_handler);
+	ADD_CALLBACK_FUNCTION(Mertens, chapter1Handler);
 	ADD_CALLBACK_FUNCTION(Mertens, function42);
 	ADD_CALLBACK_FUNCTION(Mertens, chapter2);
 	ADD_CALLBACK_FUNCTION(Mertens, function44);
@@ -91,7 +91,7 @@ Mertens::Mertens(LastExpressEngine *engine) : Entity(engine, kEntityMertens) {
 	ADD_CALLBACK_FUNCTION(Mertens, function48);
 	ADD_CALLBACK_FUNCTION(Mertens, function49);
 	ADD_CALLBACK_FUNCTION(Mertens, chapter5);
-	ADD_CALLBACK_FUNCTION(Mertens, function51);
+	ADD_CALLBACK_FUNCTION(Mertens, chapter5Handler);
 	ADD_CALLBACK_FUNCTION(Mertens, function52);
 	ADD_CALLBACK_FUNCTION(Mertens, function53);
 	ADD_NULL_FUNCTION();
@@ -518,7 +518,7 @@ IMPLEMENT_FUNCTION(Mertens, chapter1, 34)
 		break;
 
 	case kActionNone:
-		TIME_CHECK_CHAPTER1(setup_chapter1_handler);
+		TIME_CHECK_CHAPTER1(setup_chapter1Handler);
 		break;
 
 	case kActionDefault:
@@ -570,7 +570,7 @@ IMPLEMENT_FUNCTION(Mertens, function40, 40)
 	error("Mertens: callback function 40 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Mertens, chapter1_handler, 41)
+IMPLEMENT_FUNCTION(Mertens, chapter1Handler, 41)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -738,7 +738,7 @@ IMPLEMENT_FUNCTION(Mertens, chapter5, 50)
 		break;
 
 	case kActionNone:
-		setup_function51();
+		setup_chapter5Handler();
 		break;
 
 	case kActionDefault:
@@ -752,7 +752,7 @@ IMPLEMENT_FUNCTION(Mertens, chapter5, 50)
 	}
 }
 
-IMPLEMENT_FUNCTION(Mertens, function51, 51)
+IMPLEMENT_FUNCTION(Mertens, chapter5Handler, 51)
 	if (savepoint.action == kAction70549068)
 		setup_function52();
 }

@@ -44,14 +44,14 @@ public:
 	DECLARE_FUNCTION(function3)
 	DECLARE_FUNCTION(function4)
 	DECLARE_FUNCTION(chapter1)
-	DECLARE_FUNCTION(chapter1_handler)
+	DECLARE_FUNCTION(chapter1Handler)
 	DECLARE_FUNCTION(function7)
 	DECLARE_FUNCTION(chapter2)
-	DECLARE_FUNCTION(function9)
+	DECLARE_FUNCTION(chapter2Handler)
 	DECLARE_FUNCTION(chapter3)
-	DECLARE_FUNCTION(function11)
+	DECLARE_FUNCTION(chapter3Handler)
 	DECLARE_FUNCTION(chapter4)
-	DECLARE_FUNCTION(function13)
+	DECLARE_FUNCTION(chapter4Handler)
 	DECLARE_FUNCTION(chapter5)
 
 private:

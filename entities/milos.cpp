@@ -53,12 +53,12 @@ Milos::Milos(LastExpressEngine *engine) : Entity(engine, kEntityMilos) {
 	ADD_CALLBACK_FUNCTION(Milos, chapter1);
 	ADD_CALLBACK_FUNCTION(Milos, function13);
 	ADD_CALLBACK_FUNCTION(Milos, function14);
-	ADD_CALLBACK_FUNCTION(Milos, chapter1_handler);
+	ADD_CALLBACK_FUNCTION(Milos, chapter1Handler);
 	ADD_CALLBACK_FUNCTION(Milos, function16);
 	ADD_CALLBACK_FUNCTION(Milos, function17);
 	ADD_CALLBACK_FUNCTION(Milos, function18);
 	ADD_CALLBACK_FUNCTION(Milos, chapter2);
-	ADD_CALLBACK_FUNCTION(Milos, function20);
+	ADD_CALLBACK_FUNCTION(Milos, chapter2Handler);
 	ADD_CALLBACK_FUNCTION(Milos, function21);
 	ADD_CALLBACK_FUNCTION(Milos, chapter3);
 	ADD_CALLBACK_FUNCTION(Milos, function23);
@@ -67,12 +67,12 @@ Milos::Milos(LastExpressEngine *engine) : Entity(engine, kEntityMilos) {
 	ADD_CALLBACK_FUNCTION(Milos, function26);
 	ADD_CALLBACK_FUNCTION(Milos, function27);
 	ADD_CALLBACK_FUNCTION(Milos, chapter4);
-	ADD_CALLBACK_FUNCTION(Milos, function29);
+	ADD_CALLBACK_FUNCTION(Milos, chapter4Handler);
 	ADD_CALLBACK_FUNCTION(Milos, function30);
 	ADD_CALLBACK_FUNCTION(Milos, function31);
 	ADD_CALLBACK_FUNCTION(Milos, function32);
 	ADD_CALLBACK_FUNCTION(Milos, chapter5);
-	ADD_CALLBACK_FUNCTION(Milos, function34);
+	ADD_CALLBACK_FUNCTION(Milos, chapter5Handler);
 	ADD_CALLBACK_FUNCTION(Milos, prepareSequences);
 }
 
@@ -294,7 +294,7 @@ IMPLEMENT_FUNCTION(Milos, chapter1, 12)
 		break;
 
 	case kActionNone:
-		TIME_CHECK_CHAPTER1(setup_chapter1_handler);
+		TIME_CHECK_CHAPTER1(setup_chapter1Handler);
 		break;
 
 	case kActionDefault:
@@ -340,7 +340,7 @@ IMPLEMENT_FUNCTION(Milos, function14, 14)
 	error("Milos: callback function 14 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Milos, chapter1_handler, 15)
+IMPLEMENT_FUNCTION(Milos, chapter1Handler, 15)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -426,7 +426,7 @@ IMPLEMENT_FUNCTION(Milos, chapter2, 19)
 		break;
 
 	case kActionNone:
-		setup_function20();
+		setup_chapter2Handler();
 		break;
 
 	case kActionDefault:
@@ -442,7 +442,7 @@ IMPLEMENT_FUNCTION(Milos, chapter2, 19)
 	}
 }
 
-IMPLEMENT_FUNCTION(Milos, function20, 20)
+IMPLEMENT_FUNCTION(Milos, chapter2Handler, 20)
 	error("Milos: callback function 20 not implemented!");
 }
 
@@ -502,7 +502,7 @@ IMPLEMENT_FUNCTION(Milos, chapter4, 28)
 		break;
 
 	case kActionNone:
-		setup_function29();
+		setup_chapter4Handler();
 		break;
 
 	case kActionDefault:
@@ -517,7 +517,7 @@ IMPLEMENT_FUNCTION(Milos, chapter4, 28)
 	}
 }
 
-IMPLEMENT_FUNCTION(Milos, function29, 29)
+IMPLEMENT_FUNCTION(Milos, chapter4Handler, 29)
 	error("Milos: callback function 29 not implemented!");
 }
 
@@ -601,7 +601,7 @@ IMPLEMENT_FUNCTION(Milos, chapter5, 33)
 		break;
 
 	case kActionNone:
-		setup_function34();
+		setup_chapter5Handler();
 		break;
 
 	case kActionDefault:
@@ -616,7 +616,7 @@ IMPLEMENT_FUNCTION(Milos, chapter5, 33)
 	}
 }
 
-IMPLEMENT_FUNCTION(Milos, function34, 34)
+IMPLEMENT_FUNCTION(Milos, chapter5Handler, 34)
 	error("Milos: callback function 34 not implemented!");
 }
 

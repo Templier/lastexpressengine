@@ -166,7 +166,7 @@ void LastExpressEngine::pollEvents() {
 	case Common::EVENT_LBUTTONUP:
 		getGameLogic()->getGameState()->getGameFlags()->mouseLeftClick = true;
 		break;
-	
+
 	case Common::EVENT_RBUTTONUP:
 		getGameLogic()->getGameState()->getGameFlags()->mouseRightClick = true;
 		break;
@@ -210,7 +210,7 @@ bool LastExpressEngine::handleEvents() {
 
 		case Common::EVENT_MAINMENU:
 			// Closing the GMM
-		
+
 		case Common::EVENT_LBUTTONUP:
 		case Common::EVENT_RBUTTONUP:
 		case Common::EVENT_MOUSEMOVE:

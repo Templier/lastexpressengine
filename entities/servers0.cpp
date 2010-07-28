@@ -57,24 +57,24 @@ Servers0::Servers0(LastExpressEngine *engine) : Entity(engine, kEntityServers0) 
 	ADD_CALLBACK_FUNCTION(Servers0, function17);
 	ADD_CALLBACK_FUNCTION(Servers0, function18);
 	ADD_CALLBACK_FUNCTION(Servers0, function19);
-	ADD_CALLBACK_FUNCTION(Servers0, function20);
+	ADD_CALLBACK_FUNCTION(Servers0, chapter1Handler);
 	ADD_CALLBACK_FUNCTION(Servers0, function21);
 	ADD_CALLBACK_FUNCTION(Servers0, function22);
 	ADD_CALLBACK_FUNCTION(Servers0, chapter2);
-	ADD_CALLBACK_FUNCTION(Servers0, function24);
+	ADD_CALLBACK_FUNCTION(Servers0, chapter2Handler);
 	ADD_CALLBACK_FUNCTION(Servers0, function25);
 	ADD_CALLBACK_FUNCTION(Servers0, function26);
 	ADD_CALLBACK_FUNCTION(Servers0, chapter3);
-	ADD_CALLBACK_FUNCTION(Servers0, function28);
+	ADD_CALLBACK_FUNCTION(Servers0, chapter3Handler);
 	ADD_CALLBACK_FUNCTION(Servers0, function29);
 	ADD_CALLBACK_FUNCTION(Servers0, function30);
 	ADD_CALLBACK_FUNCTION(Servers0, chapter4);
-	ADD_CALLBACK_FUNCTION(Servers0, function32);
+	ADD_CALLBACK_FUNCTION(Servers0, chapter4Handler);
 	ADD_CALLBACK_FUNCTION(Servers0, function33);
 	ADD_CALLBACK_FUNCTION(Servers0, function34);
 	ADD_CALLBACK_FUNCTION(Servers0, function35);
 	ADD_CALLBACK_FUNCTION(Servers0, chapter5);
-	ADD_CALLBACK_FUNCTION(Servers0, function37);
+	ADD_CALLBACK_FUNCTION(Servers0, chapter5Handler);
 	ADD_NULL_FUNCTION();
 }
 
@@ -151,7 +151,7 @@ IMPLEMENT_FUNCTION(Servers0, chapter1, 11)
 		break;
 
 	case kActionNone:
-		setup_function20();
+		setup_chapter1Handler();
 		break;
 
 	case kActionDefault:
@@ -211,7 +211,7 @@ IMPLEMENT_FUNCTION(Servers0, function19, 19)
 	error("Servers0: callback function 19 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Servers0, function20, 20)
+IMPLEMENT_FUNCTION(Servers0, chapter1Handler, 20)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -246,7 +246,7 @@ IMPLEMENT_FUNCTION(Servers0, chapter2, 23)
 		break;
 
 	case kActionNone:
-		setup_function24();
+		setup_chapter2Handler();
 		break;
 
 	case kActionDefault:
@@ -264,7 +264,7 @@ IMPLEMENT_FUNCTION(Servers0, chapter2, 23)
 	}
 }
 
-IMPLEMENT_FUNCTION(Servers0, function24, 24)
+IMPLEMENT_FUNCTION(Servers0, chapter2Handler, 24)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -311,7 +311,7 @@ IMPLEMENT_FUNCTION(Servers0, chapter3, 27)
 		break;
 
 	case kActionNone:
-		setup_function28();
+		setup_chapter3Handler();
 		break;
 
 	case kActionDefault:
@@ -333,7 +333,7 @@ IMPLEMENT_FUNCTION(Servers0, chapter3, 27)
 	}
 }
 
-IMPLEMENT_FUNCTION(Servers0, function28, 28)
+IMPLEMENT_FUNCTION(Servers0, chapter3Handler, 28)
 	error("Servers0: callback function 28 not implemented!");
 }
 
@@ -351,7 +351,7 @@ IMPLEMENT_FUNCTION(Servers0, chapter4, 31)
 		break;
 
 	case kActionNone:
-		setup_function32();
+		setup_chapter4Handler();
 		break;
 
 	case kActionDefault:
@@ -373,7 +373,7 @@ IMPLEMENT_FUNCTION(Servers0, chapter4, 31)
 	}
 }
 
-IMPLEMENT_FUNCTION(Servers0, function32, 32)
+IMPLEMENT_FUNCTION(Servers0, chapter4Handler, 32)
 	error("Servers0: callback function 32 not implemented!");
 }
 
@@ -395,7 +395,7 @@ IMPLEMENT_FUNCTION(Servers0, chapter5, 36)
 		break;
 
 	case kActionNone:
-		setup_function37();
+		setup_chapter5Handler();
 		break;
 
 	case kActionDefault:
@@ -409,7 +409,7 @@ IMPLEMENT_FUNCTION(Servers0, chapter5, 36)
 	}
 }
 
-IMPLEMENT_FUNCTION(Servers0, function37, 37)
+IMPLEMENT_FUNCTION(Servers0, chapter5Handler, 37)
 	if (savepoint.action == kAction70549068)
 		setup_nullfunction();
 }
