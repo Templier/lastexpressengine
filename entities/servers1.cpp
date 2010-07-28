@@ -42,7 +42,7 @@ Servers1::Servers1(LastExpressEngine *engine) : Entity(engine, kEntityServers1) 
 	ADD_CALLBACK_FUNCTION(Servers1, draw);
 	ADD_CALLBACK_FUNCTION(Servers1, updatePosition);
 	ADD_CALLBACK_FUNCTION(Servers1, function4);
-	ADD_CALLBACK_FUNCTION(Servers1, savepointCall);
+	ADD_CALLBACK_FUNCTION(Servers1, callSavepoint);
 	ADD_CALLBACK_FUNCTION(Servers1, playSound);
 	ADD_CALLBACK_FUNCTION(Servers1, function7);
 	ADD_CALLBACK_FUNCTION(Servers1, chapter1);
@@ -95,8 +95,8 @@ IMPLEMENT_FUNCTION(Servers1, function4, 4)
 	Entity::savepointDirection(savepoint);
 }
 
-IMPLEMENT_FUNCTION_SIIS(Servers1, savepointCall, 5)
-	Entity::savepointCall(savepoint, true);
+IMPLEMENT_FUNCTION_SIIS(Servers1, callSavepoint, 5)
+	Entity::callSavepoint(savepoint, true);
 }
 
 IMPLEMENT_FUNCTION_S(Servers1, playSound, 6)

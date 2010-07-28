@@ -315,7 +315,7 @@ void Entity::checkEntity(const SavePoint &savepoint, bool handleExcuseMe) {
 //  - EntityIndex
 //  - ActionIndex
 //  - sequence name
-void Entity::savepointCall(const SavePoint &savepoint, bool handleExcuseMe) {
+void Entity::callSavepoint(const SavePoint &savepoint, bool handleExcuseMe) {
 	EXPOSE_PARAMS(EntityData::EntityParametersSIIS)
 
 	switch (savepoint.action) {

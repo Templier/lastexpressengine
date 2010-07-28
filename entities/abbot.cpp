@@ -54,7 +54,7 @@ Abbot::Abbot(LastExpressEngine *engine) : Entity(engine, kEntityAbbot) {
 	ADD_CALLBACK_FUNCTION(Abbot, playSound);
 	ADD_CALLBACK_FUNCTION(Abbot, savegame);
 	ADD_CALLBACK_FUNCTION(Abbot, function11);
-	ADD_CALLBACK_FUNCTION(Abbot, function12);
+	ADD_CALLBACK_FUNCTION(Abbot, callSavepoint);
 	ADD_CALLBACK_FUNCTION(Abbot, updatePosition);
 	ADD_CALLBACK_FUNCTION(Abbot, function14);
 	ADD_CALLBACK_FUNCTION(Abbot, chapter1);
@@ -198,8 +198,8 @@ IMPLEMENT_FUNCTION_II(Abbot, function11, 11)
 	}
 }
 
-IMPLEMENT_FUNCTION_SIIS(Abbot, function12, 12)
-	Entity::savepointCall(savepoint);
+IMPLEMENT_FUNCTION_SIIS(Abbot, callSavepoint, 12)
+	Entity::callSavepoint(savepoint);
 }
 
 IMPLEMENT_FUNCTION_SII(Abbot, updatePosition, 13)
@@ -493,7 +493,7 @@ IMPLEMENT_FUNCTION(Abbot, function23, 23)
 		getEntities()->updatePosition(kEntityAbbot, kCarRestaurant, 67, true);
 
 		setCallback(1);
-		call(new ENTITY_SETUP_SIIS(Abbot, setup_function12), "029F", kEntityTables4, kAction103798704, "029G");
+		call(new ENTITY_SETUP_SIIS(Abbot, setup_callSavepoint), "029F", kEntityTables4, kAction103798704, "029G");
 		break;
 
 	case kActionCallback:

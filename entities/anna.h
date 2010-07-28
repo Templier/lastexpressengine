@@ -44,7 +44,7 @@ public:
 	DECLARE_FUNCTION_SII(updatePosition)
 	DECLARE_FUNCTION_SI(enterExitCompartment)
 	DECLARE_FUNCTION(function5)
-	DECLARE_FUNCTION_SIIS(function6)
+	DECLARE_FUNCTION_SIIS(callSavepoint)
 	DECLARE_FUNCTION_S(playSound)
 	DECLARE_FUNCTION(function8)
 	DECLARE_FUNCTION_II(savegame)

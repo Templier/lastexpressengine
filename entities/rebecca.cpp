@@ -43,7 +43,7 @@ Rebecca::Rebecca(LastExpressEngine *engine) : Entity(engine, kEntityRebecca) {
 	ADD_CALLBACK_FUNCTION(Rebecca, updateFromTime);
 	ADD_CALLBACK_FUNCTION(Rebecca, playSound);
 	ADD_CALLBACK_FUNCTION(Rebecca, playSound16);
-	ADD_CALLBACK_FUNCTION(Rebecca, function5);
+	ADD_CALLBACK_FUNCTION(Rebecca, callSavepoint);
 	ADD_CALLBACK_FUNCTION(Rebecca, draw);
 	ADD_CALLBACK_FUNCTION(Rebecca, enterExitCompartment);
 	ADD_CALLBACK_FUNCTION(Rebecca, enterExitCompartment2);
@@ -106,8 +106,8 @@ IMPLEMENT_FUNCTION_S(Rebecca, playSound16, 4)
 	Entity::playSound(savepoint, false, getEntities()->getSoundValue(kEntityCoudert));
 }
 
-IMPLEMENT_FUNCTION_SIIS(Rebecca, function5, 5)
-	Entity::savepointCall(savepoint);
+IMPLEMENT_FUNCTION_SIIS(Rebecca, callSavepoint, 5)
+	Entity::callSavepoint(savepoint);
 }
 
 IMPLEMENT_FUNCTION_S(Rebecca, draw, 6)

@@ -50,7 +50,7 @@ August::August(LastExpressEngine *engine) : Entity(engine, kEntityAugust) {
 	ADD_CALLBACK_FUNCTION(August, enterExitCompartment2);
 	ADD_CALLBACK_FUNCTION(August, enterExitCompartment3);
 	ADD_CALLBACK_FUNCTION(August, function8);
-	ADD_CALLBACK_FUNCTION(August, function9);
+	ADD_CALLBACK_FUNCTION(August, callSavepoint);
 	ADD_CALLBACK_FUNCTION(August, function10);
 	ADD_CALLBACK_FUNCTION(August, draw2);
 	ADD_CALLBACK_FUNCTION(August, playSound);
@@ -152,8 +152,8 @@ IMPLEMENT_FUNCTION(August, function8, 8)
 	Entity::savepointDirection(savepoint);
 }
 
-IMPLEMENT_FUNCTION_SIIS(August, function9, 9)
-	Entity::savepointCall(savepoint);
+IMPLEMENT_FUNCTION_SIIS(August, callSavepoint, 9)
+	Entity::callSavepoint(savepoint);
 }
 
 IMPLEMENT_FUNCTION_IIS(August, function10, 10)
@@ -310,7 +310,7 @@ IMPLEMENT_FUNCTION(August, chapter1Handler, 25)
 			getData()->inventoryItem = kItemNone;
 
 			setCallback(1);
-			call(new ENTITY_SETUP_SIIS(August, setup_function9), "010J", kEntityTables3, kAction103798704, "010K");
+			call(new ENTITY_SETUP_SIIS(August, setup_callSavepoint), "010J", kEntityTables3, kAction103798704, "010K");
 		}
 		break;
 
@@ -622,7 +622,7 @@ IMPLEMENT_FUNCTION(August, chapter2Handler, 36)
 			getEntities()->updatePosition(kEntityAugust, kCarRestaurant, 62, true);
 
 			setCallback(2);
-			call(new ENTITY_SETUP_SIIS(August, setup_function9), "016C", kEntityTables0, kAction103798704, "016D");
+			call(new ENTITY_SETUP_SIIS(August, setup_callSavepoint), "016C", kEntityTables0, kAction103798704, "016D");
 		}
 		break;
 

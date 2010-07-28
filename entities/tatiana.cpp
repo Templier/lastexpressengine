@@ -46,7 +46,7 @@ Tatiana::Tatiana(LastExpressEngine *engine) : Entity(engine, kEntityTatiana) {
 	ADD_CALLBACK_FUNCTION(Tatiana, updatePosition);
 	ADD_CALLBACK_FUNCTION(Tatiana, enterExitCompartment);
 	ADD_CALLBACK_FUNCTION(Tatiana, enterExitCompartment2);
-	ADD_CALLBACK_FUNCTION(Tatiana, function7);
+	ADD_CALLBACK_FUNCTION(Tatiana, callSavepoint);
 	ADD_CALLBACK_FUNCTION(Tatiana, function8);
 	ADD_CALLBACK_FUNCTION(Tatiana, updateFromTicks);
 	ADD_CALLBACK_FUNCTION(Tatiana, updateFromTime);
@@ -121,8 +121,8 @@ IMPLEMENT_FUNCTION_SI(Tatiana, enterExitCompartment2, 6)
 	Entity::enterExitCompartment(savepoint, kPosition_7500, kPosition_7850, kCarRedSleeping, kObjectCompartmentB);
 }
 
-IMPLEMENT_FUNCTION_SIIS(Tatiana, function7, 7)
-	Entity::savepointCall(savepoint);
+IMPLEMENT_FUNCTION_SIIS(Tatiana, callSavepoint, 7)
+	Entity::callSavepoint(savepoint);
 }
 
 IMPLEMENT_FUNCTION(Tatiana, function8, 8)

@@ -47,7 +47,7 @@ public:
 	DECLARE_FUNCTION_SI(enterExitCompartment2)
 	DECLARE_FUNCTION_SI(enterExitCompartment3)
 	DECLARE_FUNCTION(function8)
-	DECLARE_FUNCTION_SIIS(function9)
+	DECLARE_FUNCTION_SIIS(callSavepoint)
 	DECLARE_FUNCTION_IIS(function10)
 	DECLARE_FUNCTION_SSI(draw2)
 	DECLARE_FUNCTION_S(playSound)

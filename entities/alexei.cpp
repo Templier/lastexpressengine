@@ -48,7 +48,7 @@ Alexei::Alexei(LastExpressEngine *engine) : Entity(engine, kEntityAlexei) {
 	ADD_CALLBACK_FUNCTION(Alexei, updatePosition);
 	ADD_CALLBACK_FUNCTION(Alexei, enterExitCompartment);
 	ADD_CALLBACK_FUNCTION(Alexei, function7);
-	ADD_CALLBACK_FUNCTION(Alexei, function8);
+	ADD_CALLBACK_FUNCTION(Alexei, callSavepoint);
 	ADD_CALLBACK_FUNCTION(Alexei, savegame);
 	ADD_CALLBACK_FUNCTION(Alexei, checkEntity);
 	ADD_CALLBACK_FUNCTION(Alexei, draw2);
@@ -119,8 +119,8 @@ IMPLEMENT_FUNCTION(Alexei, function7, 7)
 	Entity::savepointDirection(savepoint);
 }
 
-IMPLEMENT_FUNCTION_SIIS(Alexei, function8, 8)
-	Entity::savepointCall(savepoint);
+IMPLEMENT_FUNCTION_SIIS(Alexei, callSavepoint, 8)
+	Entity::callSavepoint(savepoint);
 }
 
 IMPLEMENT_FUNCTION_II(Alexei, savegame, 9)
@@ -202,7 +202,144 @@ IMPLEMENT_FUNCTION(Alexei, function15, 15)
 //  - Time
 //  - Sequence name
 IMPLEMENT_FUNCTION_IS(Alexei, function16, 16)
-	error("Alexei: callback function 16 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionNone:
+		if (!params->param7 && params->param1 < (int)getState()->time && !params->param8) {
+			params->param8 = 1;
+
+			getObjects()->update(kObjectCompartment2, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
+			getObjects()->update(kObjectHandleInsideBathroom, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
+
+			CALLBACK_ACTION();
+			break;
+		}
+
+		if (params->param5) {
+			UPDATE_PARAM(ENTITY_PARAM(1, 1), getState()->timeTicks, 75);
+
+			params->param5 = 0;
+			params->param6 = 1;
+
+			getObjects()->update(kObjectCompartment2, kEntityAlexei, kLocation1, kCursorNormal, kCursorNormal);
+			getObjects()->update(kObjectHandleInsideBathroom, kEntityAlexei, kLocation1, kCursorNormal, kCursorNormal);
+		}
+
+		ENTITY_PARAM(1, 1) = 0;
+		break;
+
+	case kAction8:
+	case kAction9:
+		getObjects()->update(kObjectCompartment2, kEntityAlexei, kLocation1, kCursorNormal, kCursorNormal);
+		getObjects()->update(kObjectHandleInsideBathroom, kEntityAlexei, kLocation1, kCursorNormal, kCursorNormal);
+
+		if (params->param5) {
+			if (savepoint.param.intValue == 18) {
+				setCallback(4);
+				call(new ENTITY_SETUP_SIIS(Alexei, setup_playSound), getSound()->justAMinuteCath());
+				break;
+			}
+
+			if (getInventory()->hasItem(kItemPassengerList)) {
+				setCallback(5);
+				call(new ENTITY_SETUP_SIIS(Alexei, setup_playSound), random(2) ? getSound()->wrongDoorCath() : "CAT1503");
+			} else {
+				setCallback(6);
+				call(new ENTITY_SETUP_SIIS(Alexei, setup_playSound), getSound()->wrongDoorCath());
+			}
+		} else {
+			setCallback(savepoint.action == kAction8 ? 1 : 2);
+			call(new ENTITY_SETUP_SIIS(Alexei, setup_playSound), savepoint.action == kAction8 ? "LIB012" : "LIB013");
+		}
+		break;
+
+	case kActionDefault:
+		getEntities()->drawSequenceLeft(kEntityAlexei, (char*)&params->seq);
+		getObjects()->update(kObjectCompartment2, kEntityAlexei, kLocation1, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObjectHandleInsideBathroom, kEntityAlexei, kLocation1, kCursorHandKnock, kCursorHand);
+		break;
+
+	case kActionDrawScene:
+		if (params->param6 || params->param5) {
+			getObjects()->update(kObjectCompartment2, kEntityAlexei, kLocation1, kCursorHandKnock, kCursorHand);
+			getObjects()->update(kObjectHandleInsideBathroom, kEntityAlexei, kLocation1, kCursorHandKnock, kCursorHand);
+
+			params->param5 = 0;
+			params->param6 = 0;
+		}
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+		case 2:
+			setCallback(3);
+			call(new ENTITY_SETUP_SIIS(Alexei, setup_playSound), "ALX1134A");
+			break;
+
+		case 3:
+			getObjects()->update(kObjectCompartment2, kEntityAlexei, kLocation1, kCursorTalk, kCursorNormal);
+			getObjects()->update(kObjectHandleInsideBathroom, kEntityAlexei, kLocation1, kCursorTalk, kCursorNormal);
+			params->param5 = 1;
+			break;
+
+		case 4:
+		case 5:
+		case 6:
+			params->param5 = 0;
+			params->param6 = 1;
+			break;
+
+		case 7:
+			setCallback(8);
+			call(new ENTITY_SETUP(Alexei, setup_updateFromTicks), 300);
+			break;
+
+		case 8:
+			setCallback(9);
+			call(new ENTITY_SETUP_SIIS(Alexei, setup_enterExitCompartment), "602Gb", kObjectCompartment2);
+			break;
+
+		case 9:
+			getData()->field_493 = kField493_0;
+			getSavePoints()->push(kEntityAlexei, kEntityMertens, kAction156567128);
+			getEntities()->drawSequenceLeft(kEntityAlexei, "602Hb");
+			getEntities()->enterCompartment(kEntityAlexei, kObjectCompartment2, true);
+			break;
+
+		case 10:
+			getEntities()->exitCompartment(kEntityAlexei, kObjectCompartment2, true);
+
+			getData()->field_493 = kField493_1;
+			getData()->entityPosition = kPosition_7500;
+
+			getEntities()->drawSequenceLeft(kEntityAlexei, (char *)&params->seq);
+			getObjects()->update(kObjectCompartment2, kEntityAlexei, kLocation1, kCursorHandKnock, kCursorHand);
+			getObjects()->update(kObjectHandleInsideBathroom, kEntityAlexei, kLocation1, kCursorHandKnock, kCursorHand);
+
+			params->param7 = 0;
+			break;
+		}
+		break;
+
+	case kAction124697504:
+		setCallback(10);
+		call(new ENTITY_SETUP_SIIS(Alexei, setup_enterExitCompartment), "602Ib", kObjectCompartment2);
+		break;
+
+	case kAction221617184:
+		params->param7 = 1;
+		getSavePoints()->push(kEntityAlexei, kEntityMertens, kAction100906246);
+
+		setCallback(7);
+		call(new ENTITY_SETUP_SIIS(Alexei, setup_playSound), "CON1024");
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Alexei, chapter1, 17)
@@ -242,7 +379,7 @@ IMPLEMENT_FUNCTION(Alexei, chapter1Handler, 18)
 			getInventory()->setLocationAndProcess(kItem17, kLocation1);
 
 			setCallback(1);
-			call(new ENTITY_SETUP_SIIS(Alexei, setup_function8), "005D", kEntityTables1, kAction103798704, "005E");
+			call(new ENTITY_SETUP_SIIS(Alexei, setup_callSavepoint), "005D", kEntityTables1, kAction103798704, "005E");
 			break;
 		}
 
@@ -363,7 +500,7 @@ IMPLEMENT_FUNCTION(Alexei, function19, 19)
 			getSavePoints()->push(kEntityAlexei, kEntityTables1, kAction136455232);
 
 			setCallback(7);
-			call(new ENTITY_SETUP_SIIS(Alexei, setup_function8), "005F", kObjectCompartmentC, kAction103798704, "005G");
+			call(new ENTITY_SETUP_SIIS(Alexei, setup_callSavepoint), "005F", kObjectCompartmentC, kAction103798704, "005G");
 			break;
 
 		case 7:
@@ -598,7 +735,7 @@ IMPLEMENT_FUNCTION(Alexei, chapter2Handler, 29)
 			getEntities()->updatePosition(kEntityAlexei, kCarRestaurant, 63, true);
 
 			setCallback(6);
-			call(new ENTITY_SETUP_SIIS(Alexei, setup_function8), "018B", kEntityTables1, kAction136455232, "BOGUS");
+			call(new ENTITY_SETUP_SIIS(Alexei, setup_callSavepoint), "018B", kEntityTables1, kAction136455232, "BOGUS");
 			break;
 
 		case 6:

@@ -38,7 +38,7 @@
 namespace LastExpress {
 
 Servers0::Servers0(LastExpressEngine *engine) : Entity(engine, kEntityServers0) {
-	ADD_CALLBACK_FUNCTION(Servers0, savepointCall);
+	ADD_CALLBACK_FUNCTION(Servers0, callSavepoint);
 	ADD_CALLBACK_FUNCTION(Servers0, updateFromTime);
 	ADD_CALLBACK_FUNCTION(Servers0, draw);
 	ADD_CALLBACK_FUNCTION(Servers0, updatePosition);
@@ -84,8 +84,8 @@ Servers0::Servers0(LastExpressEngine *engine) : Entity(engine, kEntityServers0) 
 //  - EntityIndex
 //  - ActionIndex
 //  - sequence name
-IMPLEMENT_FUNCTION_SIIS(Servers0, savepointCall, 1)
-	Entity::savepointCall(savepoint, true);
+IMPLEMENT_FUNCTION_SIIS(Servers0, callSavepoint, 1)
+	Entity::callSavepoint(savepoint, true);
 }
 
 IMPLEMENT_FUNCTION_NOSETUP(Servers0, updateFromTime, 2)

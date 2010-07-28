@@ -39,7 +39,7 @@ public:
 	~Servers0() {};
 
 	// Setup
-	DECLARE_FUNCTION_SIIS(savepointCall)
+	DECLARE_FUNCTION_SIIS(callSavepoint)
 	DECLARE_FUNCTION_NOSETUP(updateFromTime)
 	DECLARE_FUNCTION_S(draw)
 	DECLARE_FUNCTION_NOSETUP(updatePosition)

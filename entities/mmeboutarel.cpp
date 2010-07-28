@@ -264,7 +264,49 @@ IMPLEMENT_FUNCTION(MmeBoutarel, chapter2, 17)
 }
 
 IMPLEMENT_FUNCTION(MmeBoutarel, chapter2Handler, 18)
-	error("MmeBoutarel: callback function 18 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			if (getEntities()->checkFields1(kEntityFrancois, kCarRedSleeping, kPosition_5790)) {
+				getObjects()->update(kObjectCompartmentD, kEntityNone, kLocationNone, kCursorNormal, kCursorNormal);
+
+				setCallback(2);
+				call(new ENTITY_SETUP_SIIS(MmeBoutarel, setup_enterExitCompartment2), "606Ad", kObjectCompartmentD);
+			} else {
+				getEntities()->drawSequenceLeft(kEntityMmeBoutarel, "606Md");
+				getEntities()->enterCompartment(kEntityMmeBoutarel, kObjectCompartmentD, true);
+			}
+			break;
+
+		case 2:
+		case 3:
+			getObjects()->update(kObjectCompartmentD, kEntityNone, kLocation2, kCursorNormal, kCursorNormal);
+			getData()->field_493 = kField493_1;
+			setup_function19();
+			break;
+		}
+		break;
+
+	case kAction100901266:
+		setCallback(1);
+		call(new ENTITY_SETUP(MmeBoutarel, setup_checkEntity), kCarRedSleeping, kPosition_5790);
+		break;
+
+	case kAction100957716:
+		getEntities()->exitCompartment(kEntityMmeBoutarel, kObjectCompartmentD, true);
+		getObjects()->update(kObjectCompartmentD, kEntityNone, kLocationNone, kCursorNormal, kCursorNormal);
+
+		setCallback(3);
+		call(new ENTITY_SETUP_SIIS(MmeBoutarel, setup_enterExitCompartment2), "606Ad", kObjectCompartmentD);
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(MmeBoutarel, function19, 19)

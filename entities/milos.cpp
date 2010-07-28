@@ -73,7 +73,7 @@ Milos::Milos(LastExpressEngine *engine) : Entity(engine, kEntityMilos) {
 	ADD_CALLBACK_FUNCTION(Milos, function32);
 	ADD_CALLBACK_FUNCTION(Milos, chapter5);
 	ADD_CALLBACK_FUNCTION(Milos, chapter5Handler);
-	ADD_CALLBACK_FUNCTION(Milos, prepareSequences);
+	ADD_CALLBACK_FUNCTION(Milos, function35);
 }
 
 IMPLEMENT_FUNCTION(Milos, reset, 1)
@@ -443,7 +443,48 @@ IMPLEMENT_FUNCTION(Milos, chapter2, 19)
 }
 
 IMPLEMENT_FUNCTION(Milos, chapter2Handler, 20)
-	error("Milos: callback function 20 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionDefault:
+		getData()->car = kCarRedSleeping;
+		getData()->entityPosition = kPosition_540;
+		getData()->field_493 = kField493_0;
+
+		getSavePoints()->push(kEntityMilos, kEntityVesna, kAction137165825);
+		break;
+
+	case kActionDrawScene:
+		if (getEntities()->checkFields7(kCarRedSleeping) && !getEntities()->isPlayerPosition(kCarRedSleeping, 1)) {
+			setCallback(1);
+			call(new ENTITY_SETUP(Milos, setup_enterCompartmentDialog), kCarRedSleeping, kPosition_3050);
+		}
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			setCallback(2);
+			call(new ENTITY_SETUP_SIIS(Milos, setup_enterExitCompartment), "609Bg", kObjectCompartmentG);
+			break;
+
+		case 2:
+			getEntities()->clearSequences(kEntityMilos);
+
+			getData()->entityPosition = kPosition_3050;
+			getData()->field_493 = kField493_1;
+
+			getSavePoints()->push(kEntityMilos, kEntityVesna, kAction101687594);
+
+			setup_function21();
+			break;
+		}
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Milos, function21, 21)
@@ -620,7 +661,7 @@ IMPLEMENT_FUNCTION(Milos, chapter5Handler, 34)
 	error("Milos: callback function 34 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Milos, prepareSequences, 35)
+IMPLEMENT_FUNCTION(Milos, function35, 35)
 	if (savepoint.action == kActionDefault)
 		getEntities()->clearSequences(kEntityMilos);
 }

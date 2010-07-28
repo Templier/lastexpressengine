@@ -25,11 +25,13 @@
 
 #include "lastexpress/entities/kahina.h"
 
+#include "lastexpress/game/action.h"
 #include "lastexpress/game/entities.h"
 #include "lastexpress/game/inventory.h"
 #include "lastexpress/game/logic.h"
 #include "lastexpress/game/object.h"
 #include "lastexpress/game/savepoint.h"
+#include "lastexpress/game/scenes.h"
 #include "lastexpress/game/sound.h"
 #include "lastexpress/game/state.h"
 
@@ -240,7 +242,131 @@ IMPLEMENT_FUNCTION(Kahina, chapter2, 16)
 }
 
 IMPLEMENT_FUNCTION(Kahina, chapter2Handler, 17)
-	error("Kahina: callback function 17 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionNone:
+		if (params->param1) {
+			if (!params->param2)
+				params->param2 = getState()->time + 9000;
+
+			if (params->param2 < (int)getState()->time) {
+				params->param1 = 1;
+				params->param2 = 0;
+			}
+		}
+
+		if (getEvent(kEventKahinaAskSpeakFirebird) && getEvent(kEventKronosConversationFirebird) && getEntities()->checkFields5(kEntityNone, kCarKronos)) {
+			if (!params->param3)
+				params->param3 = getState()->time + 900;
+
+			if (params->param3 < (int)getState()->time) {
+				params->param3 = kTimeInvalid;
+
+				setCallback(1);
+				call(new ENTITY_SETUP(Kahina, setup_savegame), kSavegameType2, kEventKronosConversationFirebird);
+				break;
+			}
+		}
+
+label_callback_3:
+		if (getState()->time > kTime1845000 && getEvent(kEventKronosConversationFirebird) && getEntities()->checkFields14()) {
+			getObjects()->update(kObjectCompartmentKronos, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
+			getScenes()->loadSceneFromPosition(kCarKronos, 87);
+		}
+		break;
+
+	case kAction8:
+	case kAction9:
+		if (getEvent(kEventKronosConversationFirebird))
+			break;
+
+		if (getEvent(kEventKahinaAskSpeakFirebird)) {
+			if (getSound()->isBuffered(kEntityKahina))
+				getSound()->processEntry(kEntityKahina);
+
+			if (savepoint.action == kAction8)
+				getSound()->playSound(kEntityNone, "LIB012");
+
+			setCallback(4);
+			call(new ENTITY_SETUP(Kahina, setup_savegame), kSavegameType2, kEventKronosConversationFirebird);
+			break;
+		}
+
+		if (getEvent(kEventMilosCompartmentVisitAugust) || getEvent(kEventTatianaGivePoem) || getEvent(kEventTatianaBreakfastGivePoem)) {
+			if (savepoint.action == kAction8)
+				getSound()->playSound(kEntityNone, "LIB012");
+
+			setCallback(7);
+			call(new ENTITY_SETUP(Kahina, setup_savegame), kSavegameType2, kEventKahinaAskSpeakFirebird);
+			break;
+		}
+
+		if (params->param1) {
+			if (savepoint.action == kAction8)
+				getSound()->playSound(kEntityNone, "LIB012");
+
+			getAction()->playAnimation(kEventKahinaAskSpeak);
+			getScenes()->processScene();
+
+			getObjects()->update(kObjectCompartmentKronos, kEntityKahina, kLocation1, kCursorNormal, kCursorNormal);
+
+			setCallback(8);
+			call(new ENTITY_SETUP_SIIS(Kahina, setup_playSound), "KRO3003");
+		} else {
+			getObjects()->update(kObjectCompartmentKronos, kEntityKahina, kLocation1, kCursorNormal, kCursorNormal);
+
+			setCallback(savepoint.action == kAction8 ? 9 : 10);
+			call(new ENTITY_SETUP_SIIS(Kahina, setup_playSound), savepoint.action == kAction8 ? "LIB012" : "LIB013");
+		}
+		break;
+
+	case kActionDefault:
+		params->param1 = 1;
+		getObjects()->update(kObjectCompartmentKronos, kEntityKahina, kLocation1, kCursorHandKnock, kCursorHand);
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+		case 4:
+			getAction()->playAnimation(kEventKronosConversationFirebird);
+			getObjects()->update(kObjectCompartmentKronos, kEntityNone, kLocationNone, kCursorHandKnock, kCursorHand);
+			getScenes()->loadSceneFromPosition(kCarKronos, 80, 1);
+
+			setCallback(getCallback() == 1 ? 2 : 5);
+			call(new ENTITY_SETUP(Kahina, setup_updateFromTime), 900);
+			break;
+
+		case 2:
+		case 5:
+			setCallback(getCallback() == 2 ? 3 : 6);
+			call(new ENTITY_SETUP_SIIS(Kahina, setup_playSound), "KRO3005");
+			break;
+
+		case 3:
+			goto label_callback_3;
+
+		case 7:
+			getAction()->playAnimation(kEventKahinaAskSpeakFirebird);
+			getScenes()->loadSceneFromPosition(kCarKronos, 81);
+			getSound()->playSound(kEntityKahina, "KRO3004");
+			break;
+
+		case 8:
+		case 9:
+		case 10:
+			getObjects()->update(kObjectCompartmentKronos, kEntityKahina, kLocation1, kCursorHandKnock, kCursorHand);
+			if (getCallback() == 8)
+				params->param1 = 0;
+			break;
+		}
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Kahina, chapter3, 18)

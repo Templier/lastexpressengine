@@ -46,7 +46,7 @@ Anna::Anna(LastExpressEngine *engine) : Entity(engine, kEntityAnna) {
 	ADD_CALLBACK_FUNCTION(Anna, updatePosition);
 	ADD_CALLBACK_FUNCTION(Anna, enterExitCompartment);
 	ADD_CALLBACK_FUNCTION(Anna, function5);
-	ADD_CALLBACK_FUNCTION(Anna, function6);
+	ADD_CALLBACK_FUNCTION(Anna, callSavepoint);
 	ADD_CALLBACK_FUNCTION(Anna, playSound);
 	ADD_CALLBACK_FUNCTION(Anna, function8);
 	ADD_CALLBACK_FUNCTION(Anna, savegame);
@@ -144,8 +144,8 @@ IMPLEMENT_FUNCTION(Anna, function5, 5)
 	Entity::savepointDirection(savepoint);
 }
 
-IMPLEMENT_FUNCTION_SIIS(Anna, function6, 6)
-	Entity::savepointCall(savepoint);
+IMPLEMENT_FUNCTION_SIIS(Anna, callSavepoint, 6)
+	Entity::callSavepoint(savepoint);
 }
 
 IMPLEMENT_FUNCTION_S(Anna, playSound, 7)

@@ -73,7 +73,7 @@ public:
 	DECLARE_FUNCTION(function32)
 	DECLARE_FUNCTION(chapter5)
 	DECLARE_FUNCTION(chapter5Handler)
-	DECLARE_FUNCTION(prepareSequences)
+	DECLARE_FUNCTION(function35)
 
 private:
 	DECLARE_CALL_FUNCTION(siis, Milos, const char*, int, int, const char*)

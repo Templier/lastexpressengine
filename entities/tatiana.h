@@ -45,7 +45,7 @@ public:
 	DECLARE_FUNCTION_SII(updatePosition)
 	DECLARE_FUNCTION_SI(enterExitCompartment)
 	DECLARE_FUNCTION_SI(enterExitCompartment2)
-	DECLARE_FUNCTION_SIIS(function7)
+	DECLARE_FUNCTION_SIIS(callSavepoint)
 	DECLARE_FUNCTION(function8)
 	DECLARE_FUNCTION_NOSETUP(updateFromTicks)
 	DECLARE_FUNCTION_I(updateFromTime)
