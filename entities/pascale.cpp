@@ -544,7 +544,7 @@ IMPLEMENT_FUNCTION(Pascale, function29, 29)
 
 		case 1:
 			getEntities()->drawSequenceRight(kEntityPascale, "817DS");
-			if (getEntities()->checkFields13(kEntityNone))
+			if (getEntities()->checkFields13())
 				getEntities()->updateEntity(kEntityPascale);
 
 			setCallback(2);
@@ -581,7 +581,7 @@ IMPLEMENT_FUNCTION(Pascale, function30, 30)
 
 		case 1:
 			getEntities()->drawSequenceRight(kEntityPascale, "817UD");
-			if (getEntities()->checkFields12(kEntityNone))
+			if (getEntities()->checkFields12())
 				getEntities()->updateEntity(kEntityPascale);
 
 			setCallback(2);

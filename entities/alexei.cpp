@@ -622,7 +622,7 @@ IMPLEMENT_FUNCTION(Alexei, function31, 31)
 
 	case kActionDefault:
 		getEntities()->drawSequenceRight(kEntityAlexei, "811DS");
-		if (getEntities()->checkFields13(kEntityNone))
+		if (getEntities()->checkFields13())
 			getEntities()->updateEntity(kEntityAlexei);
 
 		setCallback(1);

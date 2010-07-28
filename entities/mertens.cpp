@@ -109,8 +109,8 @@ IMPLEMENT_FUNCTION_S(Mertens, bloodJacket, 2)
 	case kActionNone:
 		if (getProgress().jacket == kJacketBlood
 		 && getEntities()->checkFields9(kEntityMertens, kEntityNone, 1000)
-		 && !getEntities()->checkFields3(kEntityNone)
-		 && !getEntities()->checkFields10(kEntityNone)) {
+		 && !getEntities()->checkFields3()
+		 && !getEntities()->checkFields10()) {
 			setCallback(1);
 			call(new ENTITY_SETUP(Mertens, setup_savegame), kSavegameType2, kEventMertensBloodJacket);
 		}
@@ -158,8 +158,8 @@ IMPLEMENT_FUNCTION(Mertens, function6, 6)
 
 		if (getProgress().jacket == kJacketBlood
 		 && getEntities()->checkFields9(kEntityMertens, kEntityNone, 1000)
-		 && !getEntities()->checkFields3(kEntityNone)
-		 && !getEntities()->checkFields10(kEntityNone)) {
+		 && !getEntities()->checkFields3()
+		 && !getEntities()->checkFields10()) {
 			 setCallback(1);
 			 call(new ENTITY_SETUP(Mertens, setup_savegame), kSavegameType2, kEventMertensBloodJacket);
 		}
@@ -206,8 +206,8 @@ IMPLEMENT_FUNCTION_II(Mertens, function10, 10)
 			getData()->inventoryItem = (InventoryItem)(getData()->inventoryItem & 127);
 
 		if (!getEntities()->checkFields9(kEntityMertens, kEntityNone, 1000)
-		  || getEntities()->checkFields3(kEntityNone)
-		  || getEntities()->checkFields10(kEntityNone)) {
+		  || getEntities()->checkFields3()
+		  || getEntities()->checkFields10()) {
 			if (getEntities()->checkEntity(kEntityMertens, (CarIndex)params->param1, (EntityPosition)params->param2)) {
 				getData()->inventoryItem = kItemNone;
 				CALLBACK_ACTION();
@@ -303,8 +303,8 @@ IMPLEMENT_FUNCTION_I(Mertens, function11, 11)
 	case kActionNone:
 		if (getProgress().jacket == kJacketBlood
 			&& getEntities()->checkFields9(kEntityMertens, kEntityNone, 1000)
-			&& !getEntities()->checkFields3(kEntityNone)
-			&& !getEntities()->checkFields10(kEntityNone)) {
+			&& !getEntities()->checkFields3()
+			&& !getEntities()->checkFields10()) {
 			setCallback(1);
 			call(new ENTITY_SETUP(Mertens, setup_savegame), kSavegameType2, kEventMertensBloodJacket);
 			break;

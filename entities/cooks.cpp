@@ -92,7 +92,7 @@ IMPLEMENT_FUNCTION(Cooks, function3, 3)
 		break;
 
 	case kActionDrawScene:
-		if (!getEntities()->checkFields17(kEntityNone)) {
+		if (!getEntities()->checkFields17()) {
 			getEntities()->clearSequences(kEntityCooks);
 			CALLBACK_ACTION()
 			break;
@@ -177,7 +177,7 @@ IMPLEMENT_FUNCTION(Cooks, function4, 4)
 		break;
 
 	case kActionDrawScene:
-		if (!getEntities()->checkFields17(kEntityNone)) {
+		if (!getEntities()->checkFields17()) {
 			getEntities()->clearSequences(kEntityCooks);
 			CALLBACK_ACTION()
 			break;
@@ -271,7 +271,7 @@ IMPLEMENT_FUNCTION(Cooks, chapter1Handler, 6)
 		break;
 
 	case kActionDrawScene:
-		if (!getEntities()->checkFields17(kEntityNone))
+		if (!getEntities()->checkFields17())
 			break;
 
 		if (params->param1) {
@@ -444,7 +444,7 @@ update_params:
 		break;
 
 	case kActionDrawScene:
-		if (!getEntities()->checkFields17(kEntityNone))
+		if (!getEntities()->checkFields17())
 			break;
 
 		if (params->param1) {
@@ -528,7 +528,7 @@ IMPLEMENT_FUNCTION(Cooks, chapter4Handler, 13)
 		break;
 
 	case kActionDrawScene:
-		if (!getEntities()->checkFields17(kEntityNone))
+		if (!getEntities()->checkFields17())
 			break;
 
 		// Kitchen background sound

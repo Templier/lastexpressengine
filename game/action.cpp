@@ -1846,7 +1846,7 @@ LABEL_KEY:
 		|| getObjects()->get(object).entity
 		|| getObjects()->get(object).location != 1
 		|| !getObjects()->get(object).cursor2
-		|| getEntities()->checkFields3(kEntityNone)
+		|| getEntities()->checkFields3()
 		|| getEntities()->checkFields2(object))
 			return (CursorStyle)getObjects()->get(object).cursor2;
 		else

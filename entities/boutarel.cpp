@@ -143,7 +143,7 @@ IMPLEMENT_FUNCTION(Boutarel, enterTableWithMmeBoutarel, 12)
 		getEntities()->drawSequenceRight(kEntityMmeBoutarel, "008A2");
 		getEntities()->drawSequenceRight(kEntityBoutarel, "008A1");
 
-		if (getEntities()->checkFields12(kEntityNone)) {
+		if (getEntities()->checkFields12()) {
 			getEntities()->updateEntity(kEntityBoutarel);
 			getEntityData(kEntityMmeBoutarel)->field_493 = getData()->field_493;
 			getEntityData(kEntityTables2)->field_493 = getData()->field_493;
@@ -422,7 +422,7 @@ IMPLEMENT_FUNCTION(Boutarel, chapter2Handler, 24)
 		break;
 
 	case kActionDrawScene:
-		if (getEntities()->checkFields13(kEntityNone) && !params->param1) {
+		if (getEntities()->checkFields13() && !params->param1) {
 			getSound()->playSound(kEntityBoutarel, "MRB2001");
 			params->param1 = 1;
 		}

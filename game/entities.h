@@ -111,7 +111,7 @@ public:
 
 	bool checkFields1(EntityIndex entity, CarIndex car, EntityPosition position) const;
 	bool checkFields2(ObjectIndex object) const;
-	bool checkFields3(EntityIndex entity) const;
+	bool checkFields3(EntityIndex entity = kEntityNone) const;
 
 	/**
 	 * Check if the player is in the specified position
@@ -121,24 +121,24 @@ public:
 	*/
 	bool isPlayerPosition(CarIndex car, Position position) const;
 	bool checkFields5(EntityIndex entity, CarIndex car) const;
-	bool checkFields6(EntityIndex entity) const;
+	bool checkFields6(EntityIndex entity = kEntityNone) const;
 	bool checkFields7(CarIndex car) const;
 	bool isDirectionUpOrDown(EntityIndex entity) const;
 	bool checkFields9(EntityIndex entity1, EntityIndex entity2, int absValue) const;
-	bool checkFields10(EntityIndex entity) const;
+	bool checkFields10(EntityIndex entity = kEntityNone) const;
 	bool checkFields11() const;
-	bool checkFields12(EntityIndex entity) const;
-	bool checkFields13(EntityIndex entity) const;
-	bool checkFields14(EntityIndex entity) const;
+	bool checkFields12(EntityIndex entity = kEntityNone) const;
+	bool checkFields13(EntityIndex entity = kEntityNone) const;
+	bool checkFields14(EntityIndex entity = kEntityNone) const;
 	bool checkFields15() const;
 	bool checkFields16() const;
-	bool checkFields17(EntityIndex entity) const;
+	bool checkFields17(EntityIndex entity = kEntityNone) const;
 	bool checkFields18(CarIndex car, EntityPosition position) const;
 	bool checkFields19(EntityIndex entity, CarIndex car, EntityPosition position) const;
-	bool checkFields20(EntityIndex entity) const;
-	bool checkFields21(EntityIndex entity) const;
-	bool checkFields22(EntityIndex entity) const;
-	bool checkFields23(EntityIndex entity) const;
+	bool checkFields20(EntityIndex entity = kEntityNone) const;
+	bool checkFields21(EntityIndex entity = kEntityNone) const;
+	bool checkFields22(EntityIndex entity = kEntityNone) const;
+	bool checkFields23(EntityIndex entity = kEntityNone) const;
 	bool checkDistanceFromPosition(EntityIndex entity, EntityPosition position, int distance) const;
 	bool checkFields25(EntityIndex entity) const;
 	static bool isFemale(EntityIndex entityIndex);

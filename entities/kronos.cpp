@@ -333,7 +333,7 @@ IMPLEMENT_FUNCTION(Kronos, function23, 23)
 		break;
 
 	case kActionNone:
-		if (getEntities()->checkFields22(kEntityNone)) {
+		if (getEntities()->checkFields22()) {
 			setCallback(1);
 			call(new ENTITY_SETUP(Kronos, setup_savegame), kSavegameType2, kEventKahinaWrongDoor);
 		}

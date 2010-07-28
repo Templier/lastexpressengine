@@ -264,7 +264,7 @@ IMPLEMENT_FUNCTION(Abbot, chapter3Handler, 18)
 			getSavePoints()->push(kEntityAbbot, kEntityCooks, kAction236976550);
 			getEntities()->drawSequenceRight(kEntityAbbot, "804DS");
 
-			if (getEntities()->checkFields13(kEntityNone))
+			if (getEntities()->checkFields13())
 				getEntities()->updateEntity(kEntityAbbot);
 
 			setCallback(3);
@@ -406,7 +406,7 @@ IMPLEMENT_FUNCTION(Abbot, function21, 21)
 
 		case 5:
 			getEntities()->drawSequenceRight(kEntityAbbot, "029J");
-			if (getEntities()->checkFields12(kEntityNone))
+			if (getEntities()->checkFields12())
 				getEntities()->updateEntity(kEntityAbbot);
 
 			setCallback(6);
@@ -507,7 +507,7 @@ IMPLEMENT_FUNCTION(Abbot, function23, 23)
 			getSavePoints()->push(kEntityAbbot, kEntityAnna, kAction238936000);
 			getEntities()->drawSequenceRight(kEntityAbbot, "804DS");
 
-			if (getEntities()->checkFields13(kEntityNone))
+			if (getEntities()->checkFields13())
 				getEntities()->updateEntity(kEntityAbbot);
 
 			setCallback(2);

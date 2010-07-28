@@ -1905,13 +1905,13 @@ uint Entities::getSoundValue(EntityIndex entity) const {
 		break;
 
 	case kCarKronos:
-		if (getEntities()->checkFields14(entity) != getEntities()->checkFields14(kEntityNone))
+		if (getEntities()->checkFields14(entity) != getEntities()->checkFields14())
 			ret >>= 1;
 		break;
 
 	case kCarGreenSleeping:
 	case kCarRedSleeping:
-		if (getEntities()->checkFields6(kEntityNone) && !getEntities()->checkFields14(entity))
+		if (getEntities()->checkFields6() && !getEntities()->checkFields14(entity))
 			ret >>= 1;
 
 		if (getData(kEntityNone)->field_493
@@ -1920,8 +1920,8 @@ uint Entities::getSoundValue(EntityIndex entity) const {
 		break;
 
 	case kCarRestaurant:
-		if (getEntities()->checkFields12(entity) == getEntities()->checkFields12(kEntityNone)
-		&& (getEntities()->checkFields13(entity) != getEntities()->checkFields13(kEntityNone)))
+		if (getEntities()->checkFields12(entity) == getEntities()->checkFields12()
+		&& (getEntities()->checkFields13(entity) != getEntities()->checkFields13()))
 			ret >>=1;
 		else
 			ret >>=2;
@@ -2302,7 +2302,7 @@ bool Entities::changeCar(EntityData::EntityCallData * data, EntityIndex entity, 
 	data->entityPosition = newPosition;
 
 	if (data->car == newCar) {
-		if (checkFields6(kEntityNone)) {
+		if (checkFields6()) {
 			getSound()->playSoundEvent(kEntityNone, 14);
 			getSound()->excuseMe(entity, kEntityNone, 16);
 			getScenes()->loadSceneFromPosition(kCarGreenSleeping, 1);
@@ -2321,7 +2321,7 @@ bool Entities::changeCar(EntityData::EntityCallData * data, EntityIndex entity, 
 	}
 
 	if (data->car == newCar) {
-		if (checkFields23(kEntityNone)) {
+		if (checkFields23()) {
 			getSound()->playSoundEvent(kEntityNone, 14);
 			getSound()->excuseMe(entity, kEntityNone, 16);
 			getScenes()->loadSceneFromPosition(kCarGreenSleeping, 62);
@@ -2435,7 +2435,7 @@ bool Entities::checkFields6(EntityIndex entity) const {
 }
 
 bool Entities::checkFields7(CarIndex car) const {
-	return checkFields5(kEntityNone, car) && !getData(kEntityNone)->field_493 && !checkFields6(kEntityNone);
+	return checkFields5(kEntityNone, car) && !getData(kEntityNone)->field_493 && !checkFields6();
 }
 
 bool Entities::isDirectionUpOrDown(EntityIndex entity) const {

@@ -231,7 +231,7 @@ IMPLEMENT_FUNCTION(Rebecca, chapter1Handler, 22)
 
 		if (getState()->time > kTime1080000) {
 			params->param4 = kTimeInvalid;
-			if (getEntities()->checkFields12(kEntityNone))
+			if (getEntities()->checkFields12())
 				getProgress().field_B8 = 1;
 
 			setCallback(4);
@@ -239,10 +239,10 @@ IMPLEMENT_FUNCTION(Rebecca, chapter1Handler, 22)
 			break;
 		}
 
-		if (!getEntities()->checkFields12(kEntityNone) || !params->param4) {
+		if (!getEntities()->checkFields12() || !params->param4) {
 			params->param4 = getState()->time + 150;
 			if (!params->param4) {
-				if (getEntities()->checkFields12(kEntityNone))
+				if (getEntities()->checkFields12())
 					getProgress().field_B8 = 1;
 
 				setCallback(4);
@@ -261,7 +261,7 @@ label_function22_callback_4:
 				}
 
 				if (checkParam5 || params->param5 < (int)getState()->time) {
-					if (getEntities()->checkFields12(kEntityNone)) {
+					if (getEntities()->checkFields12()) {
 						setCallback(5);
 						call(new ENTITY_SETUP_SIIS(Rebecca, setup_playSound), "REB1013");
 						break;
@@ -278,7 +278,7 @@ label_function22_callback_5:
 			}
 		} else {
 			params->param4 = kTimeInvalid;
-			if (getEntities()->checkFields12(kEntityNone))
+			if (getEntities()->checkFields12())
 				getProgress().field_B8 = 1;
 
 			setCallback(4);

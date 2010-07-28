@@ -118,8 +118,8 @@ IMPLEMENT_FUNCTION_S(Coudert, bloodJacket, 2)
 	case kActionNone:
 		if (getProgress().jacket == kJacketBlood
 		 && getEntities()->checkFields9(kEntityCoudert, kEntityNone, 1000)
-		 && !getEntities()->checkFields3(kEntityNone)
-		 && !getEntities()->checkFields10(kEntityNone)) {
+		 && !getEntities()->checkFields3()
+		 && !getEntities()->checkFields10()) {
 			setCallback(1);
 			call(new ENTITY_SETUP(Coudert, setup_savegame), kSavegameType2, kEventMertensBloodJacket); /* BUG: is this a bug in the original? */
 		}
@@ -159,8 +159,8 @@ IMPLEMENT_FUNCTION(Coudert, function4, 4)
 
 		if (getProgress().jacket == kJacketBlood
 		 && getEntities()->checkFields9(kEntityCoudert, kEntityNone, 1000)
-		 && !getEntities()->checkFields3(kEntityNone)
-		 && !getEntities()->checkFields10(kEntityNone)) {
+		 && !getEntities()->checkFields3()
+		 && !getEntities()->checkFields10()) {
 			setCallback(1);
 			call(new ENTITY_SETUP(Coudert, setup_savegame), kSavegameType2, kEventMertensBloodJacket);
 		}
@@ -277,8 +277,8 @@ IMPLEMENT_FUNCTION_II(Coudert, function13, 13)
 	case kActionNone:
 		if (getProgress().jacket == kJacketBlood
 		 && getEntities()->checkFields9(kEntityCoudert, kEntityNone, 1000)
-		 && !getEntities()->checkFields3(kEntityNone)
-		 && !getEntities()->checkFields10(kEntityNone)) {
+		 && !getEntities()->checkFields3()
+		 && !getEntities()->checkFields10()) {
 			setCallback(3);
 			call(new ENTITY_SETUP(Coudert, setup_savegame), kSavegameType2, kEventMertensBloodJacket);
 			break;

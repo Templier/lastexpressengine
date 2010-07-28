@@ -249,7 +249,7 @@ void SoundManager::playSoundEvent(EntityIndex entity, byte action, byte a3) {
 	if (getEntityData(entity)->car != getEntityData(kEntityNone)->car)
 		return;
 
-	if (getEntities()->checkFields12(entity) != getEntities()->checkFields12(kEntityNone))
+	if (getEntities()->checkFields12(entity) != getEntities()->checkFields12())
 		return;
 
 	int _action = (int)action;

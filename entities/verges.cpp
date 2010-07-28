@@ -155,8 +155,8 @@ switch (savepoint.action) {
 		getObjects()->update(kObject104, kEntityNone, kLocationNone, kCursorNormal, kCursorHand);
 		getObjects()->update(kObject105, kEntityNone, kLocationNone, kCursorNormal, kCursorHand);
 
-		if (getEntities()->checkFields21(kEntityNone) || getEntities()->checkFields17(kEntityNone)) {
-			getAction()->playAnimation(getEntities()->checkFields21(kEntityNone) ? kEventVergesBagageCarOffLimits : kEventVergesCanIHelpYou);
+		if (getEntities()->checkFields21() || getEntities()->checkFields17()) {
+			getAction()->playAnimation(getEntities()->checkFields21() ? kEventVergesBagageCarOffLimits : kEventVergesCanIHelpYou);
 			getSound()->playSound(kEntityNone, "BUMP");
 			getScenes()->loadSceneFromPosition(kCarRestaurant, 65);
 		}
@@ -190,7 +190,7 @@ switch (savepoint.action) {
 
 			getEntities()->drawSequenceRight(kEntityVerges, "813DS");
 
-			if (getEntities()->checkFields13(kEntityNone))
+			if (getEntities()->checkFields13())
 				getEntities()->updateEntity(kEntityVerges);
 
 			setCallback(3);
@@ -426,7 +426,7 @@ IMPLEMENT_FUNCTION(Verges, chapter1Handler, 26)
 		}
 
 label_callback1:
-		if (getEntities()->checkFields20(kEntityNone)) {
+		if (getEntities()->checkFields20()) {
 			setCallback(2);
 			call(new ENTITY_SETUP(Verges, setup_function13), 0);
 			break;
@@ -610,7 +610,7 @@ IMPLEMENT_FUNCTION(Verges, chapter2Handler, 28)
 		break;
 
 	case kActionNone:
-		if (getEntities()->checkFields20(kEntityNone)) {
+		if (getEntities()->checkFields20()) {
 			setCallback(1);
 			call(new ENTITY_SETUP(Verges, setup_function13), false);
 		}

@@ -346,7 +346,7 @@ IMPLEMENT_FUNCTION(August, chapter1Handler, 25)
 		case 1:
 			getSavePoints()->push(kEntityAugust, kEntityServers0, kAction204704037);
 			getEntities()->drawSequenceRight(kEntityAugust, "803DS");
-			if (getEntities()->checkFields13(kEntityNone))
+			if (getEntities()->checkFields13())
 				getEntities()->updateEntity(kEntityAugust);
 
 			setCallback(2);
@@ -379,7 +379,7 @@ IMPLEMENT_FUNCTION(August, chapter1Handler, 25)
 		case 5:
 			getSavePoints()->push(kEntityAugust, kEntityServers0, kAction204704037);
 			getEntities()->drawSequenceRight(kEntityAugust, "803DS");
-			if (getEntities()->checkFields13(kEntityNone))
+			if (getEntities()->checkFields13())
 				getEntities()->updateEntity(kEntityAugust);
 
 			setCallback(6);
@@ -654,7 +654,7 @@ IMPLEMENT_FUNCTION(August, chapter2Handler, 36)
 		case 2:
 			getEntities()->updatePosition(kEntityAugust, kCarRestaurant, 62);
 			getEntities()->drawSequenceRight(kEntityAugust, "803ES");
-			if (getEntities()->checkFields13(kEntityNone))
+			if (getEntities()->checkFields13())
 				getEntities()->updateEntity(kEntityAugust);
 
 			setCallback(3);
@@ -1057,7 +1057,7 @@ IMPLEMENT_FUNCTION(August, function61, 61)
 	case kActionDefault:
 		getData()->field_493 = kField493_0;
 		getEntities()->drawSequenceRight(kEntityAugust, "803FS");
-		if (getEntities()->checkFields13(kEntityNone))
+		if (getEntities()->checkFields13())
 			getEntities()->updateEntity(kEntityAugust);
 
 		setCallback(1);
