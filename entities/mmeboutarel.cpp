@@ -96,10 +96,7 @@ IMPLEMENT_FUNCTION_SI(MmeBoutarel, enterExitCompartment2, 6)
 
 IMPLEMENT_FUNCTION_II(MmeBoutarel, checkEntity, 7)
 	if (savepoint.action == kActionExcuseMeCath) {
-		if (getInventory()->hasItem(kItemPassengerList))
-			getSound()->playSound(kEntityNone, "CAT1021");
-		else
-			getSound()->excuseMeCath();
+		getInventory()->hasItem(kItemPassengerList) ? getSound()->playSound(kEntityNone, "CAT1021") : getSound()->excuseMeCath();
 
 		return;
 	}

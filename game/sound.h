@@ -124,7 +124,7 @@ public:
 
 	// Sound bites
 	void excuseMe(EntityIndex entity, EntityIndex entity2 = kEntityNone, int param3 = 0);
-	const char *excuseMeCath() const;
+	void excuseMeCath();
 	const char *justCheckingCath() const;
 	const char *wrongDoorCath() const;
 	const char *justAMinuteCath() const;

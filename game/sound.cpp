@@ -1035,22 +1035,20 @@ void SoundManager::excuseMe(EntityIndex entity, EntityIndex entity2, int param3)
 	}
 }
 
-const char *SoundManager::excuseMeCath() const {
+void SoundManager::excuseMeCath() {
 	switch(random(3)) {
 	default:
+		playSound(kEntityNone, "CAT1126B");
 		break;
 
-	case 0:
-		return "CAT1126B";
-
 	case 1:
-		return "CAT1126C";
+		playSound(kEntityNone, "CAT1126C");
+		break;
 
 	case 2:
-		return "CAT1126D";
+		playSound(kEntityNone, "CAT1126D");
+		break;
 	}
-
-	return "CAT1126B";
 }
 
 const char *SoundManager::justCheckingCath() const {
