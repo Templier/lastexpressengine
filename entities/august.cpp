@@ -258,7 +258,314 @@ IMPLEMENT_FUNCTION(August, chapter1, 22)
 }
 
 IMPLEMENT_FUNCTION_I(August, function23, 23)
-	error("August: callback function 23 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionNone:
+		if (getProgress().field_14 == 29 || getProgress().field_14 == 3) {
+			if (params->param3) {
+				getData()->field_493 = kField493_0;
+
+				setCallback(2);
+				call(new ENTITY_SETUP_SIIS(August, setup_enterExitCompartment), "626Ea", kObjectCompartment1);
+			} else {
+				getEntities()->exitCompartment(kEntityAugust, kObjectCompartment1, true);
+				getObjects()->update(kObjectCompartment1, kEntityNone, kLocationNone, kCursorHandKnock, kCursorHand);
+				CALLBACK_ACTION();
+			}
+			break;
+		}
+
+		if (!params->param2) {
+
+			if (!ENTITY_PARAM(1, 3))
+				ENTITY_PARAM(1, 3) = getState()->timeTicks + 45;
+
+			if (ENTITY_PARAM(1, 3) >= (int)getState()->timeTicks)
+				break;
+
+			if (!params->param5) {
+				setCallback(8);
+				call(new ENTITY_SETUP_SIIS(August, setup_playSound), "AUG1002B");
+				break;
+			}
+
+label_callback_8:
+			if (!ENTITY_PARAM(1, 4))
+				ENTITY_PARAM(1, 4) = getState()->timeTicks + 75;
+
+			if (ENTITY_PARAM(1, 4) < (int)getState()->timeTicks) {
+				ENTITY_PARAM(1, 4) = kTimeInvalid;
+
+				getEntities()->exitCompartment(kEntityAugust, kObjectCompartment1);
+
+				if (getProgress().eventCorpseMovedFromFloor) {					
+					setCallback(9);
+					call(new ENTITY_SETUP_SIIS(August, setup_enterExitCompartment), "626Da", kObjectCompartment1);
+				} else if (getEntities()->checkFields5(kEntityNone, kCarGreenSleeping)) {					
+					setCallback(10);
+					call(new ENTITY_SETUP_SIIS(August, setup_enterExitCompartment3), "626Da", kObjectCompartment1);
+				} else {
+					getScenes()->loadSceneFromPosition(kCarNone, 1);
+					getObjects()->update(kObjectOutsideTylerCompartment, kEntityNone, kLocationNone, kCursorKeepValue, kCursorKeepValue);
+					setCallback(11);
+					call(new ENTITY_SETUP(August, setup_savegame), kSavegameType2, kEventAugustFindCorpse);
+				}
+				break;
+			}
+
+label_callback_9:
+			if (params->param3 && params->param1 < (int)getState()->time && !ENTITY_PARAM(1, 5)) {
+				ENTITY_PARAM(1, 5) = 1;
+				getObjects()->update(kObjectCompartment1, kEntityNone, kLocationNone, kCursorHandKnock, kCursorHand);
+
+				setCallback(12);
+				call(new ENTITY_SETUP_SIIS(August, setup_enterExitCompartment), "626Ea", kObjectCompartment1);
+			} 			
+			break;
+		}
+
+		if (!ENTITY_PARAM(1, 1))
+			ENTITY_PARAM(1, 1) = getState()->timeTicks + 45;
+
+		if (ENTITY_PARAM(1, 1) >= (int)getState()->timeTicks)
+			break;
+
+		if (getObjects()->get(kObjectCompartment1).location == kLocation1) {
+			UPDATE_PARAM(ENTITY_PARAM(1, 2), getState()->timeTicks, 75);
+
+			getObjects()->update(kObjectCompartment1, kEntityAugust, getObjects()->get(kObjectCompartment1).location, kCursorNormal, kCursorNormal);
+
+			params->param6++;
+
+			switch (params->param6) {
+			default:
+				break;
+
+			case 1:
+				setCallback(5);
+				call(new ENTITY_SETUP_SIIS(August, setup_playSound), "LIB013");
+				return;
+
+			case 2:
+				setCallback(7);
+				call(new ENTITY_SETUP_SIIS(August, setup_playSound), "LIB012");
+				return;
+
+			case 3:
+				params->param8++;
+
+				if (params->param8 >= 3) {
+					getObjects()->update(kObjectCompartment1, kEntityNone, getObjects()->get(kObjectCompartment1).location, kCursorHandKnock, kCursorHand);
+					CALLBACK_ACTION();
+					break;
+				}
+
+				params->param6 = 0;
+			}
+
+			getObjects()->update(kObjectCompartment1, kEntityAugust, getObjects()->get(kObjectCompartment1).location, params->param4 ? kCursorNormal : kCursorTalk, kCursorHand);
+			ENTITY_PARAM(1, 2) = 0;
+		} else {
+
+			if (getProgress().eventCorpseMovedFromFloor && getProgress().jacket != kJacketBlood) {
+				params->param7 = (getObjects()->get(kObjectCompartment1).location2 == kLocation1) ? 8 : 7;
+				getObjects()->update(kObjectOutsideTylerCompartment, kEntityNone, kLocationNone, kCursorKeepValue, kCursorKeepValue);
+
+				setCallback(4);
+				call(new ENTITY_SETUP(August, setup_savegame), kSavegameType2, kEventMeetAugustTylerCompartment);
+			} else {
+				getObjects()->update(kObjectOutsideTylerCompartment, kEntityNone, kLocationNone, kCursorKeepValue, kCursorKeepValue);
+
+				setCallback(3);
+				call(new ENTITY_SETUP(August, setup_savegame), kSavegameType2, kEventAugustFindCorpse);
+			}
+		}
+		break;
+
+	case kAction8:
+		if (params->param3) {
+			getObjects()->update(kObjectCompartment1, kEntityAugust, kLocationNone, kCursorNormal, kCursorNormal);
+
+			setCallback(15);
+			call(new ENTITY_SETUP_SIIS(August, setup_playSound), "LIB012");
+		} else if (!params->param4) {
+			getObjects()->update(kObjectCompartment1, kEntityAugust, getObjects()->get(kObjectCompartment1).location, kCursorNormal, kCursorNormal);
+
+			setCallback(17);
+			call(new ENTITY_SETUP_SIIS(August, setup_playSound), "AUG1002A");
+		}
+		break;
+
+	case kAction9:
+		if (getProgress().eventCorpseMovedFromFloor && getProgress().jacket != kJacketBlood) {
+			if (params->param3) {
+				getData()->field_493 = kField493_1;
+
+				params->param7 = (getObjects()->get(kObjectCompartment1).location2 == kLocation1) ? 10 : 9;
+			} else {
+				params->param7 = (getObjects()->get(kObjectCompartment1).location2 == kLocation1) ? 8 : 7;
+			}
+
+			setCallback(14);
+			call(new ENTITY_SETUP(August, setup_savegame), kSavegameType2, kEventMeetAugustTylerCompartment);
+		} else {
+			getObjects()->update(kObjectOutsideTylerCompartment, kEntityNone, kLocationNone, kCursorKeepValue, kCursorKeepValue);
+
+			setCallback(13);
+			call(new ENTITY_SETUP(August, setup_savegame), kSavegameType2, kEventAugustFindCorpse);
+		}
+		break;
+
+	case kActionDefault:
+		if (getEntities()->checkFields1(kEntityNone, kCarGreenSleeping, kPosition_8200)
+		 || getEntities()->checkFields1(kEntityNone, kCarGreenSleeping, kPosition_7850)
+		 || getEntities()->checkFields15()) {
+			getObjects()->update(kObjectCompartment1, kEntityAugust, getObjects()->get(kObjectCompartment1).location, kCursorNormal, kCursorNormal);
+
+			if (getEntities()->checkFields15())
+				getScenes()->loadSceneFromPosition(kCarGreenSleeping, 49);
+
+			getSound()->playSound(kEntityNone, "LIB012");
+
+			getObjects()->update(kObjectCompartment1, kEntityAugust, getObjects()->get(kObjectCompartment1).location, kCursorTalk, kCursorHand);
+
+			params->param2 = 1;
+		} else {
+			setCallback(1);
+			call(new ENTITY_SETUP_SIIS(August, setup_enterExitCompartment), "626Aa", kObjectCompartment1);
+		}
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			getEntities()->drawSequenceLeft(kEntityAugust, "626Ba");
+			getEntities()->enterCompartment(kEntityAugust, kObjectCompartment1, true);
+			break;
+
+		case 2:
+			getObjects()->update(kObjectCompartment1, kEntityNone, kLocationNone, kCursorHandKnock, kCursorHand);
+			CALLBACK_ACTION();
+			break;
+
+		case 3:
+			getSound()->playSound(kEntityNone, "LIB014");
+			getAction()->playAnimation(kEventAugustFindCorpse);
+			if (getEvent(kEventDinerAugustOriginalJacket))
+				getLogic()->gameOver(kTimeType3, kTime4, getProgress().eventCorpseFound ? kSceneGameOverStopPolice : kSceneGameOverPolice, true);
+			else if (getProgress().eventCorpseMovedFromFloor)
+				getLogic()->gameOver(kTimeType0, kTime1, kSceneGameOverBloodJacket, true);
+			else
+				getLogic()->gameOver(kTimeType0, kTime1, getProgress().eventCorpseFound ? kSceneGameOverStopPolice : kSceneGameOverPolice, true);
+			break;
+
+		case 4:
+			getObjects()->update(kObjectCompartment1, kEntityNone, kLocationNone, kCursorHandKnock, kCursorHand);
+			getSound()->playSound(kEntityNone, "LIB014");
+			getEntities()->clearSequences(kEntityAugust);
+			getData()->field_493 = kField493_1;
+
+			getAction()->playAnimation((EventIndex)params->param7);
+			getSound()->playSound(kEntityNone, "LIB015");
+			getProgress().eventMetAugust = 1;
+			getData()->field_493 = kField493_0;
+
+			getScenes()->loadScene(kScene41);
+
+			CALLBACK_ACTION();
+			break;
+
+		case 5:
+			setCallback(6);
+			call(new ENTITY_SETUP_SIIS(August, setup_playSound16), "AUG1002B");
+			break;
+
+		case 6:
+		case 7:
+			getObjects()->update(kObjectCompartment1, kEntityAugust, getObjects()->get(kObjectCompartment1).location, params->param4 ? kCursorNormal : kCursorTalk, kCursorHand);
+			ENTITY_PARAM(1, 2) = 0;
+			break;
+
+		case 8:
+			params->param5 = 1;
+			goto label_callback_8;
+
+		case 9:
+			params->param3 = 1;
+			getEntities()->clearSequences(kEntityAugust);
+			getData()->field_493 = kField493_1;
+			getObjects()->update(kObjectCompartment1, kEntityAugust, kLocationNone, kCursorHandKnock, kCursorHand);
+			goto label_callback_9;
+
+		case 10:
+			getObjects()->update(kObjectOutsideTylerCompartment, kEntityNone, kLocationNone, kCursorKeepValue, kCursorKeepValue);
+			setCallback(11);
+			call(new ENTITY_SETUP(August, setup_savegame), kSavegameType2, kEventAugustFindCorpse);
+			break;
+
+		case 11:
+			getAction()->playAnimation(kEventAugustFindCorpse);
+
+			getLogic()->gameOver(getEvent(kEventDinerAugustOriginalJacket) ? kTimeType3 : kTimeType0,
+								 getEvent(kEventDinerAugustOriginalJacket) ? kTime4 : kTime1,
+								 getProgress().eventCorpseFound ? kSceneGameOverStopPolice : kSceneGameOverPolice,
+								 true);
+			break;
+
+		case 12:
+			getData()->field_493 = kField493_0;
+			CALLBACK_ACTION();
+			break;
+
+		case 13:
+			getSound()->playSound(kEntityNone, getObjects()->get(kObjectCompartment1).location == kLocation1 ? "LIB032" : "LIB014");
+			getAction()->playAnimation(kEventAugustFindCorpse);
+
+			if (getEvent(kEventDinerAugustOriginalJacket))
+				getLogic()->gameOver(kTimeType3, kTime4, getProgress().eventCorpseFound ? kSceneGameOverStopPolice : kSceneGameOverPolice, true);
+			else if (getProgress().eventCorpseMovedFromFloor)
+				getLogic()->gameOver(kTimeType0, kTime1, kSceneGameOverBloodJacket, true);
+			else
+				getLogic()->gameOver(kTimeType0, kTime1, getProgress().eventCorpseFound ? kSceneGameOverStopPolice : kSceneGameOverPolice, true);
+			break;
+
+		case 14:
+			if (!params->param2)
+				getSound()->playSound(kEntityNone, getObjects()->get(kObjectCompartment1).location == kLocation1 ? "LIB032" : "LIB014");
+
+			getObjects()->update(kObjectCompartment1, kEntityNone, kLocationNone, kCursorHandKnock, kCursorHand);
+			getObjects()->update(kObjectOutsideTylerCompartment, kEntityNone, kLocationNone, kCursorKeepValue, kCursorKeepValue);
+
+			getAction()->playAnimation((EventIndex)params->param7);
+			getProgress().eventMetAugust = 1;
+			getData()->field_493 = kField493_0;
+
+			getScenes()->loadScene(kScene41);
+
+			CALLBACK_ACTION();
+			break;
+
+		case 15:
+			setCallback(16);
+			call(new ENTITY_SETUP_SIIS(August, setup_playSound), "AUG1128A");
+			break;
+
+		case 16:
+			getObjects()->update(kObjectCompartment1, kEntityAugust, kLocationNone, kCursorHandKnock, kCursorHand);
+			break;
+
+		case 17:
+			params->param4 = 1;
+			getObjects()->update(kObjectCompartment1, kEntityAugust, getObjects()->get(kObjectCompartment1).location, kCursorNormal, kCursorHand);
+			break;
+		}
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(August, dinner, 24)
