@@ -188,7 +188,173 @@ IMPLEMENT_FUNCTION(Rebecca, function19, 19)
 }
 
 IMPLEMENT_FUNCTION_I(Rebecca, function20, 20)
-	error("Rebecca: callback function 20 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionNone:
+		if (params->param1 < (int)getState()->time && !params->param5) {
+			params->param5 = 1;
+
+			getObjects()->update(kObjectCompartmentE, kEntityNone, kLocationNone, kCursorHandKnock, kCursorHand);
+			getObjects()->update(kObject52, kEntityNone, kLocationNone, kCursorHandKnock, kCursorHand);
+
+			CALLBACK_ACTION();
+			break;
+		}
+
+		if (!params->param2) {
+			params->param6 = 0;
+			goto label_process;
+		}
+
+		UPDATE_PARAM_FUNCTION(params->param6, getState()->timeTicks, 75, label_process);
+
+		params->param2 = 0;
+		params->param3 = 1;
+		getObjects()->update(kObjectCompartmentE, kEntityRebecca, kLocation1, kCursorNormal, kCursorNormal);
+		getObjects()->update(kObject52, kEntityRebecca, kLocation1, kCursorNormal, kCursorNormal);
+		params->param6 = 0;
+
+label_process:
+		if (getProgress().chapter == kChapter1 && !ENTITY_PARAM(0, 3)) {
+			if (params->param7 != kTimeInvalid && getState()->time > kTime1174500) {
+				if (getState()->time <= kTime1183500) {
+					if (!getEntities()->checkFields9(kEntityRebecca, kEntityNone, 2000) || getSound()->isBuffered("CON1210") || !params->param7)
+						params->param7 = getState()->time;
+
+					if (params->param7 >= (int)getState()->time)
+						goto label_callback;
+				}
+
+				params->param7 = kTimeInvalid;
+				ENTITY_PARAM(0, 3) = 1;
+
+				getObjects()->update(kObjectCompartmentE, kEntityRebecca, kLocation1, kCursorNormal, kCursorNormal);
+				getObjects()->update(kObject52, kEntityRebecca, kLocation1, kCursorNormal, kCursorNormal);
+
+				setCallback(1);
+				call(new ENTITY_SETUP_SIIS(Rebecca, setup_playSound), "REB1205");
+				break;
+			}
+			goto label_callback;
+		}
+
+		if (getProgress().chapter == kChapter3 && !ENTITY_PARAM(0, 4) && params->param8 != kTimeInvalid && getState()->time > kTime2097000) {
+			if (getState()->time <= kTime2106000) {
+				if (!getEntities()->checkFields9(kEntityRebecca, kEntityNone, 1000) || !params->param8)
+					params->param8 = getState()->time;
+
+				if (params->param8 >= (int)getState()->time)
+					goto label_callback;
+			}
+
+			params->param8 = kTimeInvalid;
+			ENTITY_PARAM(0, 4) = 1;
+
+			getObjects()->update(kObjectCompartmentE, kEntityRebecca, kLocation1, kCursorNormal, kCursorNormal);
+			getObjects()->update(kObject52, kEntityRebecca, kLocation1, kCursorNormal, kCursorNormal);
+
+			setCallback(2);
+			call(new ENTITY_SETUP_SIIS(Rebecca, setup_playSound), "REB3010");
+			break;
+		}
+
+label_callback:
+		if (ENTITY_PARAM(0, 2) && getEntities()->checkFields9(kEntityRebecca, kEntityNone, 1000)) {
+			getObjects()->update(kObjectCompartmentE, kEntityRebecca, kLocation1, kCursorNormal, kCursorNormal);
+			getObjects()->update(kObject52, kEntityRebecca, kLocation1, kCursorNormal, kCursorNormal);
+
+			setCallback(3);
+			call(new ENTITY_SETUP_SIIS(Rebecca, setup_playSound), "REB1040");
+		}
+		break;
+
+	case kAction8:
+	case kAction9:
+		break;
+
+	case kActionDefault:
+		getObjects()->update(kObjectCompartmentE, kEntityRebecca, kLocation1, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObject52, kEntityRebecca, kLocation1, kCursorHandKnock, kCursorHand);
+
+		break;
+
+	case kActionDrawScene:
+		if (params->param3 || params->param2) {
+			getObjects()->update(kObjectCompartmentE, kEntityRebecca, kLocation1, kCursorHandKnock, kCursorHand);
+			getObjects()->update(kObject52, kEntityRebecca, kLocation1, kCursorHandKnock, kCursorHand);
+
+			params->param2 = 0;
+			params->param3 = 0;
+		}
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+		case 2:
+		case 3:
+			getObjects()->update(kObjectCompartmentE, kEntityRebecca, kLocation1, kCursorHandKnock, kCursorHand);
+			getObjects()->update(kObject52, kEntityRebecca, kLocation1, kCursorHandKnock, kCursorHand);
+
+			if (getCallback() != 2)
+				ENTITY_PARAM(0, 2) = 0;
+
+			if (getCallback() != 3)
+				goto label_callback;
+			break;
+
+		case 4:
+		case 5:
+			if (random(2)) {
+				setCallback(6);
+				call(new ENTITY_SETUP_SIIS(Rebecca, setup_playSound), "REB1039");
+			} else {
+				setCallback(7);
+				call(new ENTITY_SETUP_SIIS(Rebecca, setup_playSound), random(2) ? "SOP1039" : "SOP1039A");
+			}
+			break;
+
+		case 6:
+		case 7:
+			params->param4 = (getCallback() == 6 ? 0 : 1);
+			getObjects()->update(kObjectCompartmentE, kEntityRebecca, kLocation1, kCursorTalk, kCursorNormal);
+			getObjects()->update(kObject52, kEntityRebecca, kLocation1, kCursorTalk, kCursorNormal);
+			params->param2 = 1;
+			break;
+
+		case 8:
+		case 9:
+		case 10:
+		case 11:
+			params->param2 = 0;
+			params->param3 = 1;
+			break;
+
+		case 12:
+			setCallback(13);
+			call(new ENTITY_SETUP_SIIS(Rebecca, setup_playSound16), "JAC1012B");
+			break;
+
+		case 13:
+			getObjects()->update(kObjectCompartmentE, kEntityRebecca, kLocation1, kCursorHandKnock, kCursorHand);
+			getObjects()->update(kObject52, kEntityRebecca, kLocation1, kCursorHandKnock, kCursorHand);
+			break;
+		}
+		break;
+
+	case kAction254915200:
+		getObjects()->update(kObjectCompartmentE, kEntityRebecca, kLocation1, kCursorNormal, kCursorNormal);
+		getObjects()->update(kObject52, kEntityRebecca, kLocation1, kCursorNormal, kCursorNormal);
+
+		setCallback(12);
+		call(new ENTITY_SETUP_SIIS(Rebecca, setup_playSound), "REB1039A");
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Rebecca, chapter1, 21)

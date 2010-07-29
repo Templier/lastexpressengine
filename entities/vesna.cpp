@@ -119,7 +119,98 @@ IMPLEMENT_FUNCTION_II(Vesna, savegame, 10)
 }
 
 IMPLEMENT_FUNCTION(Vesna, function11, 11)
-	error("Vesna: callback function 11 not implemented!");
+	// Expose parameters as IIIS and ignore the default exposed paremeters
+	EntityData::EntityParametersIIIS *parameters = (EntityData::EntityParametersIIIS*)_data->getCurrentParameters(1);
+
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionNone:
+		if (parameters->param3) {
+			UPDATE_PARAM(parameters->param7, getState()->timeTicks, 75);
+
+			parameters->param2 = 1;
+			parameters->param3 = 0;
+			getObjects()->update(kObjectCompartmentG, kEntityVesna, kLocation1, kCursorNormal, kCursorNormal);
+		}
+
+		parameters->param7 = 0;
+		break;
+
+	case kAction8:
+	case kAction9:
+		if (parameters->param3) {
+			getObjects()->update(kObjectCompartmentG, kEntityVesna, kLocation3, kCursorNormal, kCursorNormal);
+
+			setCallback(4);
+			call(new ENTITY_SETUP_SIIS(Vesna, setup_playSound), getSound()->wrongDoorCath());
+			break;
+		}
+
+		parameters->param1++;
+		switch (parameters->param1) {
+		default:
+			strcpy((char *)&parameters->seq, "VES1015C");
+			parameters->param1 = 0;
+			break;
+
+		case 1:
+			strcpy((char *)&parameters->seq, "VES1015A");
+			break;
+
+		case 2:
+			strcpy((char *)&parameters->seq, "VES1015B");
+			break;
+		}
+
+		getObjects()->update(kObjectCompartmentG, kEntityVesna, kLocation3, kCursorNormal, kCursorNormal);
+
+		setCallback(savepoint.action == kAction8 ? 2 : 1);
+		call(new ENTITY_SETUP_SIIS(Vesna, setup_playSound), savepoint.action == kAction8 ? "LIB012" : "LIB013");
+		break;
+
+	case kActionDefault:
+		getObjects()->update(kObjectCompartmentG, kEntityVesna, kLocation3, kCursorHandKnock, kCursorHand);
+		break;
+
+	case kActionDrawScene:
+		if (parameters->param2 || parameters->param3) {
+			getObjects()->update(kObjectCompartmentG, kEntityVesna, kLocation1, kCursorHandKnock, kCursorHand);
+
+			parameters->param2 = 0;
+			parameters->param3 = 0;
+		}
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+		case 2:
+			setCallback(3);
+			call(new ENTITY_SETUP_SIIS(Vesna, setup_playSound), (char *)&parameters->seq);
+			break;
+
+		case 3:
+			getObjects()->update(kObjectCompartmentG, kEntityVesna, kLocation3, kCursorTalk, kCursorNormal);
+			parameters->param3 = 1;
+			break;
+
+		case 4:
+			parameters->param2 = 1;
+			parameters->param3 = 0;
+			break;
+		}
+		break;
+
+	case kAction55996766:
+	case kAction101687594:
+		CALLBACK_ACTION();
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Vesna, chapter1, 12)

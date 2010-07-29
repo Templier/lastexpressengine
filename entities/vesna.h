@@ -73,6 +73,7 @@ public:
 
 private:
 	DECLARE_CALL_FUNCTION(iiii, Vesna, int, int, int, int)
+	DECLARE_CALL_FUNCTION(siis, Vesna, const char *, int, int, const char *)
 };
 
 } // End of namespace LastExpress

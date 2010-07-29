@@ -34,6 +34,8 @@ namespace LastExpress {
 enum TimeValue {
 	kTime0                    = 0,
 	kTime1                    = 1,
+	kTime4                    = 4,
+
 	kTimeCityParis            = 1037700,
 	kTime1039500              = 1039500,
 	kTimeStartGame            = 1061100,
@@ -1321,6 +1323,7 @@ enum ActionIndex {
 	// Rebecca
 	/////////////////////////////
 	kAction224253538 = 224253538,
+	kAction254915200 = 254915200,
 
 	/////////////////////////////
 	// Salko
