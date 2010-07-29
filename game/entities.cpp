@@ -1021,7 +1021,7 @@ int Entities::getCurrentFrame2(EntityIndex entity, Sequence *sequence, EntityPos
 			uint32 lastFrame = ABS(position - sequence->getFrameInfo(numFrames)->entityPosition + data->entityPosition);
 			currentFrame2 = ABS(position - sequence->getFrameInfo(frame)->entityPosition + data->entityPosition);
 
-			if (lastFrame - currentFrame2 < 0 || lastFrame == currentFrame2)
+			if (lastFrame <= currentFrame2)
 				currentFrame2 = numFrames;
 
 			return currentFrame2;
