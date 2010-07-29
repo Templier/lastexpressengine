@@ -496,7 +496,7 @@ void Menu::show(bool doSavegame, TimeType type, uint32 time) {
 				getSound()->playSoundWithSubtitles("MUS018.SND", 83886096, kEntityNone);
 				getScenes()->loadScene(kSceneStartScreen);
 
-				// FIXME: Original game waits 60 frames and loops Sound::unknownFunction1 unless the right button is pressed
+				// Original game waits 60 frames and loops Sound::unknownFunction1 unless the right button is pressed
 				uint32 nextFrameCount = getFrameCount() + 60;
 				while (getFrameCount() < nextFrameCount) {
 					_engine->pollEvents();
@@ -521,8 +521,10 @@ void Menu::show(bool doSavegame, TimeType type, uint32 time) {
 	if (getSound()->isBuffered("TIMER"))
 		getSound()->removeFromQueue("TIMER");
 
-	// TODO more initialization
-	// TODO Init flags
+	// Init flags & misc
+	_isShowingCredits = false;
+	getFlags()->isGameRunning = false;
+	_handleTimeDelta = hasTimeDelta();
 	getInventory()->unselectItem();
 
 	// Set Cursor type
@@ -905,13 +907,81 @@ void Menu::setLogicEventHandlers() {
 // Game-related
 //////////////////////////////////////////////////////////////////////////
 void Menu::init(bool doSavegame, TimeType type, uint32 time) {
-	warning("Menu::initGame: not implemented!");
 
-	if (time >= kTimeStartGame) {
-		_currentTime = time;
-		_time = time;
-		_clock->draw(time);
-		_trainLine->draw(time);
+	bool copyMenuIndex = true;
+
+	if (getGlobalTimer()) {
+		time = 0;
+
+		// Check if the CD file is present
+		ArchiveIndex index = kArchiveCd1;
+		switch (getProgress().chapter) {
+		default:
+		case kChapter1:			
+			break;
+
+		case kChapter2:
+		case kChapter3:
+			index = kArchiveCd2;
+			break;
+
+		case kChapter4:
+		case kChapter5:
+			index = kArchiveCd3;
+			break;
+		}
+
+		if (ResourceManager::isArchivePresent(index)) {
+			setGlobalTimer(0);
+			copyMenuIndex = false;
+
+			// TODO remove existing savegame and reset index & savegame name
+			warning("Menu::initGame: not implemented!");
+		}
+
+		doSavegame = false;
+	} else {
+		// TODO rename saves?
+		warning("Menu::initGame: not implemented!");
+	}
+	
+	// Create a new savegame if needed
+	if (!SaveLoad::isSavegamePresent(_gameId))
+		SaveLoad::writeMainHeader(_gameId);
+
+	if (doSavegame)
+		save(kEntityNone, kSavegameType3, kEventNone);
+
+	if (!getGlobalTimer()) {
+		// TODO: remove existing savegame temp file
+	}
+
+	// Init savegame and get the header data
+	getSaveLoad()->initSavegame(_gameId, true);	
+	SaveLoad::SavegameMainHeader header;
+	SaveLoad::loadMainHeader(_gameId, &header);
+
+	// Init Menu values
+	_index2 = header.index;
+	_lowerTime = getSaveLoad()->getEntry(_index2)->time;
+
+	if (copyMenuIndex)
+		_index = _index2;
+
+	//if (!getGlobalTimer())
+	//	_index3 = 0;
+
+	if (!getProgress().chapter)
+		getProgress().chapter = kChapter1;
+
+	getState()->time = getSaveLoad()->getEntry(_index)->time;
+	getProgress().chapter = getSaveLoad()->getEntry(_index)->chapter;
+
+	if (_lowerTime >= kTimeStartGame) {
+		_currentTime = getState()->time;
+		_time = getState()->time;
+		_clock->draw(_time);
+		_trainLine->draw(_time);
 
 		initTime(type, time);
 	}
@@ -933,7 +1003,7 @@ void Menu::switchGame() {
 
 	// Initialize savegame if needed
 	if (!SaveLoad::isSavegamePresent(_gameId))
-		SaveLoad::initSavegame(_gameId);
+		SaveLoad::writeMainHeader(_gameId);
 
 	getState()->time = 0;
 

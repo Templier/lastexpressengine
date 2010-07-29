@@ -85,11 +85,23 @@ class LastExpressEngine;
 class SaveLoad {
 public:
 	enum HeaderType {
+		kHeaderTypeNone = 0,
 		kHeaderType1 = 1,
 		kHeaderType2 = 2,
 		kHeaderType3 = 3,
 		kHeaderType4 = 4,
 		kHeaderType5 = 5
+	};
+
+	struct SavegameMainHeader {
+		uint32 signature;
+		uint32 index;
+		uint32 time;
+		uint32 field_C;
+		uint32 field_10;
+		int32 brightness;
+		int32 volume;
+		uint32 field_1C;
 	};
 
 	struct SavegameEntryHeader {
@@ -101,6 +113,17 @@ public:
 		EventIndex event;
 		int field_18;
 		int field_1C;
+
+		SavegameEntryHeader() {
+			signature = 0;
+			type = kHeaderTypeNone;
+			time = 0;
+			field_C = 0;
+			chapter = kChapterAll;
+			event = kEventNone;
+			field_18 = 0;
+			field_1C = 0;
+		}
 	};
 
 	SaveLoad(LastExpressEngine *engine);
@@ -111,7 +134,7 @@ public:
 	void saveGame(SavegameType type, EntityIndex entity, EventIndex event);
 
 	// Init
-	static bool initSavegame(GameId id);
+	void initSavegame(GameId id, bool resetHeaders);
 	static void writeMainHeader(GameId id);
 
 	// Getting information
@@ -122,31 +145,21 @@ public:
 	static Common::InSaveFile *openForLoading(GameId id);
 	static Common::OutSaveFile *openForSaving(GameId id);
 
-	uint32 getLastSavegameTicks() const { return _gameTicksLastSavegame; }
-
+	// Headers
+	static bool loadMainHeader(GameId id, SavegameMainHeader* header);
 	SavegameEntryHeader *getEntry(uint32 index);
-
 	void clearEntries();
 
-private:
-	struct SavegameMainHeader {
-		uint32 signature;
-		ChapterIndex chapter;
-		uint32 time;
-		uint32 field_C;
-		uint32 field_10;
-		int32 brightness;
-		int32 volume;
-		uint32 field_1C;
-	};
+	uint32 getLastSavegameTicks() const { return _gameTicksLastSavegame; }
 
+private:
 	LastExpressEngine *_engine;
 
 	uint32 _gameTicksLastSavegame;
 	Common::Array<SavegameEntryHeader *> _gameHeaders;
 
 	static Common::String getSavegameName(GameId id);
-	static bool loadMainHeader(GameId id, SavegameMainHeader* header);
+	
 	static void loadEntryHeader(Common::InSaveFile *save, SavegameEntryHeader* header);
 
 	static bool validateMainHeader(const SavegameMainHeader &header);

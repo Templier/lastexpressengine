@@ -63,6 +63,8 @@ SaveLoad::SaveLoad(LastExpressEngine *engine) : _engine(engine) {
 SaveLoad::~SaveLoad() {
 	//Zero passed pointers
 	_engine = NULL;
+
+	clearEntries();
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -81,7 +83,7 @@ bool SaveLoad::loadGame(GameId id) {
 
 
 
-	warning("SaveLoad::loadgame: not implemented!");
+	error("SaveLoad::loadgame: not implemented!");
 	return false;
 }
 
@@ -135,17 +137,20 @@ bool SaveLoad::loadMainHeader(GameId id, SavegameMainHeader* header) {
 	// Check there is enough data
 	if (save->size() < 32) {
 		debugC(2, kLastExpressDebugSavegame, "SaveLoad::isSavegameValid - Savegame seems to be corrupted (not enough data: %i bytes): %s", save->size(), getSavegameName(id).c_str());
+		delete save;
 		return false;
 	}
 
 	header->signature = save->readUint32LE();
-	header->chapter = (ChapterIndex)save->readUint32LE();
+	header->index = save->readUint32LE();
 	header->time = save->readUint32LE();
 	header->field_C = save->readUint32LE();
 	header->field_10 = save->readUint32LE();
 	header->brightness = save->readSint32LE();
 	header->volume = save->readSint32LE();
 	header->field_1C = save->readUint32LE();
+
+	delete save;
 
 	return true;
 }
@@ -247,10 +252,28 @@ void SaveLoad::writeMainHeader(GameId id) {
 	delete save;
 }
 
-bool SaveLoad::initSavegame(GameId id) {
+void SaveLoad::initSavegame(GameId id, bool resetHeaders) {
+	//Common::OutSaveFile *save = openForSaving(id);
+	//if (!save) {
+	//	debugC(2, kLastExpressDebugSavegame, "SaveLoad::initSavegame - Cannot open savegame for writing: %s", getSavegameName(id).c_str());
+	//	return;
+	//}
+
+	if (resetHeaders) {
+		clearEntries();
+
+		SavegameEntryHeader *header = new SavegameEntryHeader();
+		header->time = kTimeCityParis;
+		header->chapter = kChapter1;
+
+		_gameHeaders.push_back(header);
+	}
+
+	// Open the savegame and read all game headers
+
 	warning("SaveLoad::initSavegame: not implemented!");
 
-	return false;
+	//delete save;
 }
 
 //////////////////////////////////////////////////////////////////////////

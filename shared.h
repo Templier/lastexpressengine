@@ -334,6 +334,7 @@ enum SavegameType {
 	kSavegameType0 = 0,
 	kSavegameType1 = 1,
 	kSavegameType2 = 2,
+	kSavegameType3 = 3,
 	kSavegameTypeAuto = 4,
 	kSavegameTypeTickInterval = 5
 };

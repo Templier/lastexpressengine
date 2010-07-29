@@ -32,6 +32,7 @@
 #include "lastexpress/debug.h"
 
 #include "common/debug.h"
+#include "common/file.h"
 
 namespace LastExpress {
 
@@ -46,6 +47,23 @@ ResourceManager::ResourceManager(bool isDemo) : _isDemo(isDemo) {
 
 ResourceManager::~ResourceManager() {
 	reset();
+}
+
+bool ResourceManager::isArchivePresent(ArchiveIndex type) {
+	switch (type) {
+	default:
+	case kArchiveAll:
+		error("ResourceManager::isArchivePresent: Only checks for single CDs are valid!");
+		
+	case kArchiveCd1:
+		return Common::File::exists(archiveCD1Path);
+
+	case kArchiveCd2:
+		return Common::File::exists(archiveCD2Path);
+
+	case kArchiveCd3:
+		return Common::File::exists(archiveCD3Path);
+	}
 }
 
 // Load a specific archive collection
