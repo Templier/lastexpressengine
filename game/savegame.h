@@ -159,7 +159,7 @@ private:
 	Common::Array<SavegameEntryHeader *> _gameHeaders;
 
 	static Common::String getSavegameName(GameId id);
-	
+
 	static void loadEntryHeader(Common::InSaveFile *save, SavegameEntryHeader* header);
 
 	static bool validateMainHeader(const SavegameMainHeader &header);

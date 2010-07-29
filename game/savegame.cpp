@@ -130,13 +130,13 @@ bool SaveLoad::loadMainHeader(GameId id, SavegameMainHeader* header) {
 	// Read first 32 bytes of savegame
 	Common::InSaveFile *save = openForLoading(id);
 	if (!save) {
-		debugC(2, kLastExpressDebugSavegame, "SaveLoad::isSavegameValid - Cannot open savegame for reading: %s", getSavegameName(id).c_str());
+		debugC(2, kLastExpressDebugSavegame, "SaveLoad::loadMainHeader - Cannot open savegame for reading: %s", getSavegameName(id).c_str());
 		return false;
 	}
 
 	// Check there is enough data
 	if (save->size() < 32) {
-		debugC(2, kLastExpressDebugSavegame, "SaveLoad::isSavegameValid - Savegame seems to be corrupted (not enough data: %i bytes): %s", save->size(), getSavegameName(id).c_str());
+		debugC(2, kLastExpressDebugSavegame, "SaveLoad::loadMainHeader - Savegame seems to be corrupted (not enough data: %i bytes): %s", save->size(), getSavegameName(id).c_str());
 		delete save;
 		return false;
 	}
@@ -151,6 +151,12 @@ bool SaveLoad::loadMainHeader(GameId id, SavegameMainHeader* header) {
 	header->field_1C = save->readUint32LE();
 
 	delete save;
+
+	// Valide the header
+	if (!validateMainHeader(*header)) {
+		debugC(2, kLastExpressDebugSavegame, "SaveLoad::loadMainHeader - Cannot validate main header for savegame %s.", getSavegameName(id).c_str());
+		return false;
+	}
 
 	return true;
 }

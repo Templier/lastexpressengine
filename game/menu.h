@@ -98,9 +98,9 @@ private:
 		kOverlayEggButtons,
 		kOverlayButtons,
 		kOverlayAcorn,
-		kOverlay4,
-		kOverlay5,
-		kOverlay6,
+		kOverlayCity1,
+		kOverlayCity2,
+		kOverlayCity3,
 		kOverlayCredits
 	};
 
@@ -110,13 +110,11 @@ private:
 	Sequence* _seqTooltips;
 	Sequence* _seqEggButtons;
 	Sequence* _seqButtons;
-
-	// TODO might be loaded on-the-fly in the future
-	Sequence* _seqCredits;
 	Sequence* _seqAcorn;
-
-	// Cached decoded frames
-	AnimFrame *_cityButtonFrames[7];
+	Sequence* _seqCity1;
+	Sequence* _seqCity2;
+	Sequence* _seqCity3;
+	Sequence* _seqCredits;
 
 	GameId _gameId;
 
@@ -127,6 +125,7 @@ private:
 	bool _isShowingCredits;
 	bool _isGameStarted;
 	bool _isShowingMenu;
+
 
 	uint32 _creditsSequenceIndex;
 
@@ -177,8 +176,6 @@ private:
 
 	//////////////////////////////////////////////////////////////////////////
 	// Misc
-	void loadData();
-	SceneIndex getSceneIndex() const;
 	Common::String getAcornSequenceName(GameId id) const;
 
 	//////////////////////////////////////////////////////////////////////////

@@ -352,15 +352,13 @@ void TrainLine::draw(uint32 time) {
 // Menu
 //////////////////////////////////////////////////////////////////////////
 Menu::Menu(LastExpressEngine *engine) : _engine(engine),
-	_seqTooltips(NULL), _seqEggButtons(NULL), _seqButtons(NULL), _seqCredits(NULL), _seqAcorn(NULL),
+	_seqTooltips(NULL), _seqEggButtons(NULL), _seqButtons(NULL), _seqAcorn(NULL), _seqCity1(NULL), _seqCity2(NULL), _seqCity3(NULL), _seqCredits(NULL),
 	_gameId(kGameBlue), _hasShownStartScreen(false), _hasShownIntro(false),
 	_isShowingCredits(false), _isGameStarted(false), _isShowingMenu(false),
 	_clock(NULL), _trainLine(NULL), _checkHotspotsTicks(15), _lastHotspot(NULL), _mouseFlags(Common::EVENT_INVALID),
 	_currentIndex(0), _currentTime(0), _index(0), _index2(0), _time(0), _delta(0), _handleTimeDelta(false) {
 
 	_creditsSequenceIndex = 0;
-	for (int i = 0; i < 7; i++)
-		_cityButtonFrames[i] = NULL;
 
 	_clock = new Clock(_engine);
 	_trainLine = new TrainLine(_engine);
@@ -370,14 +368,14 @@ Menu::~Menu() {
 	delete _clock;
 	delete _trainLine;
 
-	for (int i = 0; i < 7; i++)
-		delete _cityButtonFrames[i];
-
 	SAFE_DELETE(_seqTooltips);
 	SAFE_DELETE(_seqEggButtons);
 	SAFE_DELETE(_seqButtons);
-	SAFE_DELETE(_seqCredits);
 	SAFE_DELETE(_seqAcorn);
+	SAFE_DELETE(_seqCity1);
+	SAFE_DELETE(_seqCity2);
+	SAFE_DELETE(_seqCity3);
+	SAFE_DELETE(_seqCredits);
 
 	_lastHotspot = NULL;
 
@@ -389,17 +387,46 @@ Menu::~Menu() {
 // Setup
 void Menu::setup() {
 
-	// Load all menu-related data
-	loadData();
+	// Clear drawing queue
+	getScenes()->removeAndRedraw(&_frames[kOverlayAcorn], false);
+	SAFE_DELETE(_seqAcorn);
 
-	// Load main scene
-	getState()->scene = getSceneIndex();
-	_engine->getGraphicsManager()->draw(getScenes()->get(getState()->scene), GraphicsManager::kBackgroundC);
-	//drawElements();
+	// Load Menu scene
+	// + 1 = normal menu with open egg / clock
+	// + 2 = shield menu, when no savegame exists (no game has been started)
+	_isGameStarted = _lowerTime >= kTimeStartGame;
+	getScenes()->loadScene((SceneIndex)(_isGameStarted ? _gameId * 5 + 1 : _gameId * 5 + 2));
+	getFlags()->shouldRedraw = true;
+	getLogic()->updateCursor();
 
-	askForRedraw();
+	//////////////////////////////////////////////////////////////////////////
+	// Load Acorn sequence
+	_seqAcorn = loadSequence(getAcornSequenceName(_isGameStarted ? getNextGameId() : kGameBlue));
 
-	warning("Menu::setup: not implemented!");
+	//////////////////////////////////////////////////////////////////////////
+	// Check if we loaded sequences before
+	if (_seqTooltips && _seqTooltips->count() > 0)
+		return;
+
+	// Load all static data
+	_seqTooltips = loadSequence("helpnewr.seq");
+	_seqEggButtons = loadSequence("buttns.seq");
+	_seqButtons = loadSequence("quit.seq");
+	_seqCity1 = loadSequence("jlinetl.seq");
+	_seqCity2 = loadSequence("jlinecen.seq");
+	_seqCity3 = loadSequence("jlinebr.seq");
+	_seqCredits = loadSequence("credits.seq");
+
+
+	// FIXME: rewrite rest of function
+	_frames[kOverlayTooltip] = new SequenceFrame(_seqTooltips);
+	_frames[kOverlayEggButtons] = new SequenceFrame(_seqEggButtons);
+	_frames[kOverlayButtons] = new SequenceFrame(_seqButtons);
+	_frames[kOverlayAcorn] = new SequenceFrame(_seqAcorn);
+	_frames[kOverlayCity1] = new SequenceFrame(_seqCity1);
+	_frames[kOverlayCity2] = new SequenceFrame(_seqCity2);
+	_frames[kOverlayCity3] = new SequenceFrame(_seqCity3);
+	_frames[kOverlayCredits] = new SequenceFrame(_seqCredits);
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -908,7 +935,7 @@ void Menu::setLogicEventHandlers() {
 //////////////////////////////////////////////////////////////////////////
 void Menu::init(bool doSavegame, TimeType type, uint32 time) {
 
-	bool copyMenuIndex = true;
+	bool useSameIndex = true;
 
 	if (getGlobalTimer()) {
 		time = 0;
@@ -917,7 +944,7 @@ void Menu::init(bool doSavegame, TimeType type, uint32 time) {
 		ArchiveIndex index = kArchiveCd1;
 		switch (getProgress().chapter) {
 		default:
-		case kChapter1:			
+		case kChapter1:
 			break;
 
 		case kChapter2:
@@ -933,7 +960,7 @@ void Menu::init(bool doSavegame, TimeType type, uint32 time) {
 
 		if (ResourceManager::isArchivePresent(index)) {
 			setGlobalTimer(0);
-			copyMenuIndex = false;
+			useSameIndex = false;
 
 			// TODO remove existing savegame and reset index & savegame name
 			warning("Menu::initGame: not implemented!");
@@ -942,9 +969,8 @@ void Menu::init(bool doSavegame, TimeType type, uint32 time) {
 		doSavegame = false;
 	} else {
 		// TODO rename saves?
-		warning("Menu::initGame: not implemented!");
 	}
-	
+
 	// Create a new savegame if needed
 	if (!SaveLoad::isSavegamePresent(_gameId))
 		SaveLoad::writeMainHeader(_gameId);
@@ -957,15 +983,16 @@ void Menu::init(bool doSavegame, TimeType type, uint32 time) {
 	}
 
 	// Init savegame and get the header data
-	getSaveLoad()->initSavegame(_gameId, true);	
+	getSaveLoad()->initSavegame(_gameId, true);
 	SaveLoad::SavegameMainHeader header;
-	SaveLoad::loadMainHeader(_gameId, &header);
+	if (!SaveLoad::loadMainHeader(_gameId, &header))
+		error("Menu::init: Corrupted savegame - Recovery path not implemented!");
 
 	// Init Menu values
 	_index2 = header.index;
 	_lowerTime = getSaveLoad()->getEntry(_index2)->time;
 
-	if (copyMenuIndex)
+	if (useSameIndex)
 		_index = _index2;
 
 	//if (!getGlobalTimer())
@@ -1131,61 +1158,8 @@ void Menu::showCredits() {
 	_creditsSequenceIndex++;
 }
 
-//////////////////////////////////////////////////////////////////////////
-// Helper functions
-//////////////////////////////////////////////////////////////////////////
-void Menu::loadData() {
-	bool loaded = true;
-
-	// Special case: acorn highlight needs to be reloaded when showing the menu again in case we switched games
-	// FIXME: rewrite to prevent leak
-	if (SaveLoad::isSavegameValid(getNextGameId()))
-		_seqAcorn = loadSequence(getAcornSequenceName(getNextGameId()));
-	else
-		_seqAcorn = loadSequence(getAcornSequenceName(kGameBlue));
-	assert(loaded == true);
-
-	// Check if we loaded sequences before
-	if (_seqTooltips && _seqTooltips->count() > 0)
-		return;
-
-	// Load all static data
-	_seqTooltips = loadSequence("helpnewr.seq");
-	_seqEggButtons = loadSequence("buttns.seq");
-	_seqButtons = loadSequence("quit.seq");
-
-	_seqCredits = loadSequence("credits.seq");
-
-	// Load the city buttons
-	Sequence s("jlinetl.seq");
-	loaded &= s.load(getArchive("jlinetl.seq"));
-	_cityButtonFrames[0] = s.getFrame(0);
-
-	loaded &= s.load(getArchive("jlinecen.seq"));
-	for (int i = 0; i < 5; i++)
-		_cityButtonFrames[i + 1] = s.getFrame((uint32)i);
-
-	loaded &= s.load(getArchive("jlinebr.seq"));
-	_cityButtonFrames[6] = s.getFrame(0);
-
-	// We cannot proceed unless all files loaded properly
-	assert(loaded == true);
-
-	// FIXME: rewrite rest of function
-	_frames[kOverlayTooltip] = new SequenceFrame(_seqTooltips);
-	_frames[kOverlayEggButtons] = new SequenceFrame(_seqEggButtons);
-	_frames[kOverlayButtons] = new SequenceFrame(_seqButtons);
-	_frames[kOverlayAcorn] = new SequenceFrame(_seqAcorn);
-
-	_frames[kOverlayCredits] = new SequenceFrame(_seqCredits);
-}
-
 // Get the sequence name to use for the acorn highlight, depending of the currently loaded savegame
 Common::String Menu::getAcornSequenceName(GameId id) const {
-
-	// end of text:00449d80 (also sets up the main menu scene)
-
-	// TODO replace with string array and access by index?
 	Common::String name = "";
 	switch (id) {
 	default:
@@ -1215,15 +1189,6 @@ Common::String Menu::getAcornSequenceName(GameId id) const {
 	}
 
 	return name;
-}
-
-// Get menu scene index
-LastExpress::SceneIndex Menu::getSceneIndex() const {
-	// TODO Do check for DWORD at text:004ADF70 < 0x1030EC
-
-	// + 1 = normal menu with open egg / clock
-	// + 2 = shield menu, when no savegame exists (no game has been started)
-	return (SceneIndex)(SaveLoad::isSavegameValid(_gameId) ? _gameId * 5 + 1 : _gameId * 5 + 2);
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -1456,7 +1421,7 @@ void Menu::moveToCity(CityButton city, bool clicked) {
 	}
 
 	// Show city overlay
-	_engine->getGraphicsManager()->draw(_cityButtonFrames[city], GraphicsManager::kBackgroundOverlay);
+	//_engine->getGraphicsManager()->draw(_cityButtonFrames[city], GraphicsManager::kBackgroundOverlay);
 
 	if (clicked) {
 		playSfxStream("LIB046.SND");
