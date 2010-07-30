@@ -54,7 +54,7 @@ bool ResourceManager::isArchivePresent(ArchiveIndex type) {
 	default:
 	case kArchiveAll:
 		error("ResourceManager::isArchivePresent: Only checks for single CDs are valid!");
-		
+
 	case kArchiveCd1:
 		return Common::File::exists(archiveCD1Path);
 

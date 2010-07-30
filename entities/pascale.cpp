@@ -455,7 +455,41 @@ IMPLEMENT_FUNCTION(Pascale, chapter3Handler, 22)
 }
 
 IMPLEMENT_FUNCTION(Pascale, function23, 23)
-	error("Pascale: callback function 23 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionDefault:
+		getData()->entityPosition = kPosition_5800;
+		getData()->field_493 = kField493_0;
+		getEntities()->updatePosition(kEntityPascale, kCarRestaurant, 67, true);
+
+		setCallback(1);
+		call(new ENTITY_SETUP(Pascale, setup_function24));
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			getEntities()->updatePosition(kEntityPascale, kCarRestaurant, 67, true);
+			getSavePoints()->push(kEntityPascale, kEntityAbbot, kAction122288808);
+
+			setCallback(2);
+			call(new ENTITY_SETUP_SIIS(Pascale, setup_draw), "906");
+			break;
+
+		case 2:
+			getData()->entityPosition = kPosition_5900;
+			ENTITY_PARAM(0, 7) = 0;
+			getEntities()->clearSequences(kEntityPascale);
+			CALLBACK_ACTION();
+			break;
+		}
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Pascale, function24, 24)
@@ -619,7 +653,7 @@ IMPLEMENT_FUNCTION(Pascale, chapter5, 31)
 }
 
 IMPLEMENT_FUNCTION(Pascale, chapter5Handler, 32)
-	if (savepoint.action == kAction70549068)
+	if (savepoint.action == kActionProceedChapter5)
 		setup_function33();
 }
 

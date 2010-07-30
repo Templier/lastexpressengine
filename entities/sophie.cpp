@@ -272,7 +272,7 @@ IMPLEMENT_FUNCTION(Sophie, chapter5, 10)
 
 //////////////////////////////////////////////////////////////////////////
 IMPLEMENT_FUNCTION(Sophie, chapter5Handler, 11)
-	if (savepoint.action == kAction70549068)
+	if (savepoint.action == kActionProceedChapter5)
 		setup_nullfunction();
 }
 

@@ -358,7 +358,7 @@ IMPLEMENT_FUNCTION(Hadija, chapter5, 20)
 }
 
 IMPLEMENT_FUNCTION(Hadija, chapter5Handler, 21)
-	if (savepoint.action == kAction70549068)
+	if (savepoint.action == kActionProceedChapter5)
 		setup_function22();
 }
 

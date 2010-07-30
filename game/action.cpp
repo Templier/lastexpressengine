@@ -1680,9 +1680,6 @@ CursorStyle Action::getCursor(const SceneHotspot &hotspot) const {
 
 	ObjectIndex object = (ObjectIndex)hotspot.param1;
 
-	if (hotspot.action != SceneHotspot::kActionCompartment && hotspot.action != SceneHotspot::kActionExitCompartment)
-		warning("================================= OBJECT %03d =================================", object);
-
 	switch (hotspot.action) {
 	default:
 		return kCursorNormal;
@@ -1694,12 +1691,14 @@ CursorStyle Action::getCursor(const SceneHotspot &hotspot) const {
 			return kCursorBackward;
 
 	case SceneHotspot::kActionKnockOnDoor:
+		warning("================================= DOOR %03d =================================", object);
 		if (object >= kObjectMax)
 			return kCursorNormal;
 		else
 			return (CursorStyle)getObjects()->get(object).cursor;
 
 	case SceneHotspot::kAction12:
+		warning("================================= OBJECT %03d =================================", object);
 		if (object >= kObjectMax)
 			return kCursorNormal;
 
@@ -1709,6 +1708,7 @@ CursorStyle Action::getCursor(const SceneHotspot &hotspot) const {
 			return kCursorNormal;
 
 	case SceneHotspot::kActionPickItem:
+		warning("================================= ITEM %03d =================================", object);
 		if (object >= kObjectCompartmentA)
 			return kCursorNormal;
 
@@ -1719,6 +1719,7 @@ CursorStyle Action::getCursor(const SceneHotspot &hotspot) const {
 			return kCursorNormal;
 
 	case SceneHotspot::kActionDropItem:
+		warning("================================= ITEM %03d =================================", object);
 		if (object >= kObjectCompartmentA)
 			return kCursorNormal;
 
@@ -1839,6 +1840,7 @@ LABEL_KEY:
 	// Handle compartment action
 	case SceneHotspot::kActionCompartment:
 	case SceneHotspot::kActionExitCompartment:
+		warning("================================= DOOR %03d =================================", object);
 		if (object >= kObjectMax)
 			return kCursorNormal;
 

@@ -59,9 +59,9 @@ Verges::Verges(LastExpressEngine *engine) : Entity(engine, kEntityVerges) {
 	ADD_CALLBACK_FUNCTION(Verges, function16);
 	ADD_CALLBACK_FUNCTION(Verges, function17);
 	ADD_CALLBACK_FUNCTION(Verges, chapter1);
-	ADD_CALLBACK_FUNCTION(Verges, function19);
-	ADD_CALLBACK_FUNCTION(Verges, function20);
-	ADD_CALLBACK_FUNCTION(Verges, function21);
+	ADD_CALLBACK_FUNCTION(Verges, talkHarem);
+	ADD_CALLBACK_FUNCTION(Verges, talkPassengerList);
+	ADD_CALLBACK_FUNCTION(Verges, talkGendarmes);
 	ADD_CALLBACK_FUNCTION(Verges, function22);
 	ADD_CALLBACK_FUNCTION(Verges, function23);
 	ADD_CALLBACK_FUNCTION(Verges, policeGettingOffTrain);
@@ -328,16 +328,16 @@ IMPLEMENT_FUNCTION(Verges, chapter1, 18)
 	}
 }
 
-IMPLEMENT_FUNCTION_NOSETUP(Verges, function19, 19)
-	error("Verges: callback function 19 not implemented!");
+IMPLEMENT_FUNCTION_NOSETUP(Verges, talkHarem, 19)
+	talk(savepoint, "TRA1202", "TRA1201");
 }
 
-IMPLEMENT_FUNCTION(Verges, function20, 20)
-	error("Verges: callback function 20 not implemented!");
+IMPLEMENT_FUNCTION(Verges, talkPassengerList, 20)
+	talk(savepoint, "TRA1205", "TRA1206");
 }
 
-IMPLEMENT_FUNCTION(Verges, function21, 21)
-	error("Verges: callback function 21 not implemented!");
+IMPLEMENT_FUNCTION(Verges, talkGendarmes, 21)
+	talk(savepoint, "TRA1250", "TRA1251");
 }
 
 IMPLEMENT_FUNCTION(Verges, function22, 22)
@@ -471,14 +471,14 @@ label_callback11:
 label_callback12:
 		if (ENTITY_PARAM(0, 5) && !params->param2) {
 			setCallback(13);
-			call(new ENTITY_SETUP(Verges, setup_function21));
+			call(new ENTITY_SETUP(Verges, setup_talkGendarmes));
 			break;
 		}
 
 label_callback13:
 		if (getInventory()->hasItem(kItemPassengerList) && !params->param4 && (getState()->time < kTime1134000 || getState()->time > kTime1156500)) {
 			setCallback(14);
-			call(new ENTITY_SETUP(Verges, setup_function20));
+			call(new ENTITY_SETUP(Verges, setup_talkPassengerList));
 			break;
 		}
 
@@ -854,7 +854,50 @@ IMPLEMENT_FUNCTION(Verges, chapter4Handler, 37)
 }
 
 IMPLEMENT_FUNCTION(Verges, function38, 38)
-	error("Verges: callback function 38 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionDefault:
+		getObjects()->update(kObject104, kEntityNone, kLocationNone, kCursorNormal, kCursorHand);
+		getObjects()->update(kObject105, kEntityNone, kLocationNone, kCursorNormal, kCursorHand);
+		getScenes()->loadSceneFromItemPosition(kItem9);
+		getEntities()->clearSequences(kEntityVerges);
+
+		getData()->entityPosition = kPosition_6469;
+		getData()->field_493 = kField493_0;
+		getData()->car = kCarGreenSleeping;
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			getEntities()->clearSequences(kEntityVerges);
+			setCallback(2);
+			call(new ENTITY_SETUP(Verges, setup_updateFromTime), 1800);
+			break;
+
+		case 2:
+			setCallback(3);
+			call(new ENTITY_SETUP(Verges, setup_function11));
+			break;
+
+		case 3:
+			setup_chapter4Handler();
+			break;
+		}
+		break;
+
+	case kAction125233040:
+		getData()->entityPosition = kPosition_5790;
+
+		setCallback(1);
+		call(new ENTITY_SETUP(Verges, setup_checkEntity), kCarGreenSleeping, kPosition_540);
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Verges, chapter5, 39)
@@ -892,6 +935,53 @@ IMPLEMENT_FUNCTION(Verges, function41, 41)
 IMPLEMENT_FUNCTION(Verges, function42, 42)
 	if (savepoint.action == kActionDefault)
 		getEntities()->clearSequences(kEntityVerges);
+}
+
+void Verges::talk(const SavePoint &savepoint, const char* sound1, const char* sound2) {
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionDefault:
+		setCallback(1);
+		call(new ENTITY_SETUP(Verges, setup_function12));
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			setCallback(2);
+			call(new ENTITY_SETUP(Verges, setup_checkEntity), kCarRedSleeping, kPosition_2000);
+			break;
+
+		case 2:
+			setCallback(3);
+			call(new ENTITY_SETUP_ISII(Verges, setup_function15), kEntityCoudert, sound1);
+			break;
+
+		case 3:
+			setCallback(4);
+			call(new ENTITY_SETUP(Verges, setup_checkEntity), kCarGreenSleeping, kPosition_2000);
+			break;
+
+		case 4:
+			setCallback(5);
+			call(new ENTITY_SETUP_ISII(Verges, setup_function15), kEntityMertens, sound2);
+			break;
+
+		case 5:
+			call(new ENTITY_SETUP(Verges, setup_function11));
+			break;
+
+		case 6:
+			CALLBACK_ACTION();
+			break;
+		}
+		break;
+	}
 }
 
 } // End of namespace LastExpress

@@ -25,6 +25,9 @@
 
 #include "lastexpress/entities/tatiana.h"
 
+#include "lastexpress/entities/alexei.h"
+
+#include "lastexpress/game/action.h"
 #include "lastexpress/game/entities.h"
 #include "lastexpress/game/inventory.h"
 #include "lastexpress/game/logic.h"
@@ -52,7 +55,7 @@ Tatiana::Tatiana(LastExpressEngine *engine) : Entity(engine, kEntityTatiana) {
 	ADD_CALLBACK_FUNCTION(Tatiana, updateFromTime);
 	ADD_CALLBACK_FUNCTION(Tatiana, function11);
 	ADD_CALLBACK_FUNCTION(Tatiana, savegame);
-	ADD_CALLBACK_FUNCTION(Tatiana, function13);
+	ADD_CALLBACK_FUNCTION(Tatiana, checkEntity);
 	ADD_CALLBACK_FUNCTION(Tatiana, function14);
 	ADD_CALLBACK_FUNCTION(Tatiana, function15);
 	ADD_CALLBACK_FUNCTION(Tatiana, function16);
@@ -145,8 +148,17 @@ IMPLEMENT_FUNCTION_II(Tatiana, savegame, 12)
 	Entity::savegame(savepoint);
 }
 
-IMPLEMENT_FUNCTION_II(Tatiana, function13, 13)
-	error("Tatiana: callback function 13 not implemented!");
+IMPLEMENT_FUNCTION_II(Tatiana, checkEntity, 13)
+	if (savepoint.action == kActionExcuseMeCath) {
+		if (getEvent(kEventTatianaAskMatchSpeakRussian) || getEvent(kEventTatianaAskMatch) || getEvent(kEventVassiliSeizure)) {
+			getSound()->playSound(kEntityNone, random(2) ? "CAT1010" : "CAT1010A");
+		} else {
+			getSound()->excuseMeCath();
+		}
+		return;
+	}
+
+	Entity::checkEntity(savepoint, true);
 }
 
 IMPLEMENT_FUNCTION(Tatiana, function14, 14)
@@ -272,7 +284,7 @@ IMPLEMENT_FUNCTION(Tatiana, function23, 23)
 
 	case kActionDefault:
 		setCallback(1);
-		call(new ENTITY_SETUP(Tatiana, setup_function13), kCarRedSleeping, kPosition_7500);
+		call(new ENTITY_SETUP(Tatiana, setup_checkEntity), kCarRedSleeping, kPosition_7500);
 		break;
 
 	case kActionCallback:
@@ -374,15 +386,117 @@ IMPLEMENT_FUNCTION(Tatiana, chapter2Handler, 26)
 }
 
 IMPLEMENT_FUNCTION(Tatiana, function27, 27)
-	error("Tatiana: callback function 27 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionDefault:
+		setCallback(getEvent(kEventTatianaGivePoem) ? 1 : 2);
+		call(new ENTITY_SETUP(Tatiana, setup_savegame), kSavegameType2, getEvent(kEventTatianaGivePoem) ? kEventTatianaBreakfastAlexei : kEventTatianaBreakfast);
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			RESET_ENTITY_STATE(kEntityAlexei, Alexei, setup_function30);
+			getAction()->playAnimation(kEventTatianaBreakfastAlexei);
+			getInventory()->addItem(kItemParchemin);
+			getInventory()->setLocationAndProcess(kItem11, kLocation1);
+			setup_function28();
+			break;
+
+		case 2:
+			RESET_ENTITY_STATE(kEntityAlexei, Alexei, setup_function30);
+			getAction()->playAnimation(kEventTatianaBreakfast);
+			if (getInventory()->hasItem(kItemParchemin)) {
+				getAction()->playAnimation(kEventTatianaBreakfastGivePoem);
+				getInventory()->removeItem(kItemParchemin);
+			} else {
+				getAction()->playAnimation(kEventTatianaAlexei);
+			}
+			setup_function28();
+			break;
+		}
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Tatiana, function28, 28)
-	error("Tatiana: callback function 28 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionDefault:
+		getData()->inventoryItem = kItemNone;
+		getData()->field_493 = kField493_0;
+
+		getSavePoints()->push(kEntityTatiana, kEntityTables5, kAction103798704, "024D");
+		getSavePoints()->push(kEntityTatiana, kEntityAlexei, kAction236053296, (getEvent(kEventTatianaBreakfastAlexei) || getEvent(kEventTatianaBreakfast)) ? 69 : 0);
+		break;
+
+	case kActionCallback:
+		if (getCallback() == 1)
+			setup_function29();
+		break;
+
+	case kAction123857088:
+		getEntities()->drawSequenceLeft(kEntityTatiana, "018G");
+
+		setCallback(1);
+		call(new ENTITY_SETUP(Tatiana, setup_updateFromTime), 1800);
+		break;
+
+	case kAction156444784:
+		getData()->field_493 = kField493_1;
+		getEntities()->drawSequenceLeft(kEntityTatiana, "BLANK");
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Tatiana, function29, 29)
-	error("Tatiana: callback function 29 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionDefault:
+		setCallback(1);
+		call(new ENTITY_SETUP(Tatiana, setup_function11));
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			getData()->field_493 = kField493_0;
+			getEntities()->updatePosition(kEntityTatiana, kCarRestaurant, 63, true);
+
+			setCallback(2);
+			call(new ENTITY_SETUP_SIIS(Tatiana, setup_callSavepoint), "018H", kEntityTables1, kAction103798704, "018A");
+			break;
+
+		case 2:
+			getEntities()->updatePosition(kEntityTatiana, kCarRestaurant, 63);
+			getSavePoints()->push(kEntityTatiana, kEntityServers1, kAction302203328);
+			getEntities()->drawSequenceRight(kEntityTatiana, "805DS");
+
+			if (getEntities()->checkFields13())
+				getEntities()->updateEntity(kEntityTatiana);
+
+			setCallback(3);
+			call(new ENTITY_SETUP(Tatiana, setup_function8));
+			break;
+
+		case 3:
+			setup_function30();
+			break;
+		}
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Tatiana, function30, 30)
@@ -392,7 +506,7 @@ IMPLEMENT_FUNCTION(Tatiana, function30, 30)
 
 	case kActionDefault:
 		setCallback(1);
-		call(new ENTITY_SETUP(Tatiana, setup_function13), kCarRedSleeping, kPosition_7500);
+		call(new ENTITY_SETUP(Tatiana, setup_checkEntity), kCarRedSleeping, kPosition_7500);
 		break;
 
 	case kActionCallback:
@@ -464,7 +578,7 @@ IMPLEMENT_FUNCTION(Tatiana, function33, 33)
 		switch (getCallback()) {
 		case 1:
 			setCallback(2);
-			call(new ENTITY_SETUP(Tatiana, setup_function13), kCarRedSleeping, kPosition_7500);
+			call(new ENTITY_SETUP(Tatiana, setup_checkEntity), kCarRedSleeping, kPosition_7500);
 			break;
 
 		case 2:
@@ -507,7 +621,7 @@ IMPLEMENT_FUNCTION(Tatiana, function34, 34)
 
 		case 2:
 			setCallback(3);
-			call(new ENTITY_SETUP(Tatiana, setup_function13), kCarKronos, kPosition_9270);
+			call(new ENTITY_SETUP(Tatiana, setup_checkEntity), kCarKronos, kPosition_9270);
 			break;
 
 		case 3:
@@ -523,7 +637,48 @@ IMPLEMENT_FUNCTION(Tatiana, function35, 35)
 }
 
 IMPLEMENT_FUNCTION(Tatiana, function36, 36)
-	error("Tatiana: callback function 36 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionDefault:
+		getData()->car = kCarGreenSleeping;
+		getData()->entityPosition = kPosition_850;
+		getData()->field_493 = kField493_0;
+
+		setCallback(1);
+		call(new ENTITY_SETUP(Tatiana, setup_checkEntity), kCarGreenSleeping, kPosition_7500);
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			if (!getEntities()->checkFields19(kEntityNone, kCarGreenSleeping, kPosition_7850) || getEntities()->checkFields1(kEntityNone, kCarRedSleeping, kPosition_8200)) {
+				setCallback(2);
+				call(new ENTITY_SETUP(Tatiana, setup_function14));
+				break;
+			}
+
+			if (getInventory()->hasItem(kItemFirebird)) {
+				getAction()->playAnimation(kEventTatianaCompartmentStealEgg);
+				getInventory()->removeItem(kItemFirebird);
+				getInventory()->getEntry(kItemFirebird)->location = kLocation2;
+			} else {
+				getAction()->playAnimation(kEventTatianaCompartment);
+			}
+
+			getScenes()->loadSceneFromObject(kObjectCompartmentB);
+			break;
+
+		case 2:
+			setup_function37();
+			break;
+		}
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Tatiana, function37, 37)
@@ -633,7 +788,7 @@ IMPLEMENT_FUNCTION(Tatiana, function45, 45)
 			getData()->field_493 = kField493_0;
 
 			setCallback(1);
-			call(new ENTITY_SETUP(Tatiana, setup_function13), kCarGreenSleeping, kPosition_540);
+			call(new ENTITY_SETUP(Tatiana, setup_checkEntity), kCarGreenSleeping, kPosition_540);
 			break;
 
 		case 2:
@@ -663,7 +818,7 @@ IMPLEMENT_FUNCTION(Tatiana, function47, 47)
 
 	case kActionDefault:
 		setCallback(1);
-		call(new ENTITY_SETUP(Tatiana, setup_function13), kCarRedSleeping, kPosition_7500);
+		call(new ENTITY_SETUP(Tatiana, setup_checkEntity), kCarRedSleeping, kPosition_7500);
 		break;
 
 	case kActionCallback:
@@ -755,7 +910,7 @@ IMPLEMENT_FUNCTION(Tatiana, chapter5, 52)
 }
 
 IMPLEMENT_FUNCTION(Tatiana, chapter5Handler, 53)
-	if (savepoint.action == kAction70549068)
+	if (savepoint.action == kActionProceedChapter5)
 		setup_function54();
 }
 

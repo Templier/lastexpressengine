@@ -46,6 +46,9 @@ namespace LastExpress {
 #define ENTITY_SETUP_SIIS(class, name) \
 	Functor4Mem<const char*, int, int, const char*, void, class>(this, &class::name)
 
+#define ENTITY_SETUP_SSII(class, name) \
+	Functor4Mem<const char*, const char*, int, int, void, class>(this, &class::name)
+
 #define ENTITY_SETUP_ISSI(class, name) \
 	Functor4Mem<int, const char*, const char*, int, void, class>(this, &class::name)
 
@@ -113,7 +116,7 @@ namespace LastExpress {
 
 #define DECLARE_FUNCTION_ISS(name) \
 	void name(const SavePoint &savepoint); \
-	void setup_##name(int param1, const char* seq1, const char* seq2 = 0, int param4 = 0);
+	void setup_##name(int param1, const char* seq1 = 0, const char* seq2 = 0, int param4 = 0);
 
 #define DECLARE_FUNCTION_IIS(name) \
 	void name(const SavePoint &savepoint); \

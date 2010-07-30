@@ -130,11 +130,47 @@ IMPLEMENT_FUNCTION_S(Servers0, playSound, 6)
 }
 
 IMPLEMENT_FUNCTION(Servers0, function7, 7)
-	error("Servers0: callback function 7 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionDefault:
+		getData()->entityPosition = kPosition_5800;
+		getData()->field_493 = kField493_0;
+
+		ENTITY_PARAM(0, 3) = 0;
+
+		setCallback(1);
+		call(new ENTITY_SETUP_SIIS(Servers0, setup_draw), "911");
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			getEntities()->clearSequences(kEntityServers0);
+			getSavePoints()->push(kEntityServers0, kEntityRebecca, kAction123712592);
+			break;
+
+		case 2:
+			getEntities()->clearSequences(kEntityServers0);
+			getData()->entityPosition = kPosition_5900;
+			CALLBACK_ACTION();
+			break;
+		}
+		break;
+
+	case kAction136702400:
+		setCallback(2);
+		call(new ENTITY_SETUP_SIIS(Servers0, setup_draw), "913");
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Servers0, function8, 8)
-	error("Servers0: callback function 8 not implemented!");
+	serveTable(savepoint, "911", kEntityTables3, "010L", "010M", "913", &ENTITY_PARAM(1, 2));
 }
 
 IMPLEMENT_FUNCTION(Servers0, function9, 9)
@@ -142,7 +178,7 @@ IMPLEMENT_FUNCTION(Servers0, function9, 9)
 }
 
 IMPLEMENT_FUNCTION(Servers0, function10, 10)
-	error("Servers0: callback function 10 not implemented!");
+	serveTable(savepoint, "916", kEntityTables4, "014E", "014F", "918", &ENTITY_PARAM(2, 3), false);
 }
 
 IMPLEMENT_FUNCTION(Servers0, chapter1, 11)
@@ -196,7 +232,7 @@ IMPLEMENT_FUNCTION(Servers0, function15, 15)
 }
 
 IMPLEMENT_FUNCTION(Servers0, function16, 16)
-	error("Servers0: callback function 16 not implemented!");
+	serveTable(savepoint, "907", kEntityTables0, "001N", "001P", "909", &ENTITY_PARAM(0, 6));
 }
 
 IMPLEMENT_FUNCTION(Servers0, function17, 17)
@@ -204,7 +240,7 @@ IMPLEMENT_FUNCTION(Servers0, function17, 17)
 }
 
 IMPLEMENT_FUNCTION(Servers0, function18, 18)
-	error("Servers0: callback function 18 not implemented!");
+	serveTable(savepoint, "911", kEntityTables3, "010L", "010H", "913", &ENTITY_PARAM(0, 7));
 }
 
 IMPLEMENT_FUNCTION(Servers0, function19, 19)
@@ -298,11 +334,49 @@ IMPLEMENT_FUNCTION(Servers0, chapter2Handler, 24)
 }
 
 IMPLEMENT_FUNCTION(Servers0, function25, 25)
-	error("Servers0: callback function 25 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionDefault:
+		getData()->entityPosition = kPosition_5800;
+		getData()->field_493 = kField493_0;
+
+		ENTITY_PARAM(0, 3) = 0;
+
+		setCallback(1);
+		call(new ENTITY_SETUP_SIIS(Servers0, setup_draw), "957");
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			getSavePoints()->push(kEntityServers0, kEntityAugust, kAction123712592);
+			getEntities()->drawSequenceLeft(kEntityServers0, "BLANK");
+			break;
+
+		case 2:
+			getData()->entityPosition = kPosition_5900;
+			getEntities()->clearSequences(kEntityServers0);
+			ENTITY_PARAM(1, 3) = 0;
+
+			CALLBACK_ACTION();
+			break;
+		}
+		break;
+
+	case kAction219522616:
+		setCallback(2);
+		call(new ENTITY_SETUP_SIIS(Servers0, setup_draw), "959");
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Servers0, function26, 26)
-	error("Servers0: callback function 26 not implemented!");
+	serveTable(savepoint, "957", kEntityTables0, "016E", "016D", "959", &ENTITY_PARAM(1, 4));
 }
 
 IMPLEMENT_FUNCTION(Servers0, chapter3, 27)
@@ -386,7 +460,7 @@ IMPLEMENT_FUNCTION(Servers0, function34, 34)
 }
 
 IMPLEMENT_FUNCTION(Servers0, function35, 35)
-	error("Servers0: callback function 35 not implemented!");
+	serveTable(savepoint, "911", kEntityTables3, "010L", "010M", "914", &ENTITY_PARAM(2, 1), false, true);
 }
 
 IMPLEMENT_FUNCTION(Servers0, chapter5, 36)
@@ -410,7 +484,7 @@ IMPLEMENT_FUNCTION(Servers0, chapter5, 36)
 }
 
 IMPLEMENT_FUNCTION(Servers0, chapter5Handler, 37)
-	if (savepoint.action == kAction70549068)
+	if (savepoint.action == kActionProceedChapter5)
 		setup_nullfunction();
 }
 
@@ -441,6 +515,55 @@ void Servers0::handleServer(const SavePoint &savepoint, const char* name, Entity
 			*parameter = 0;
 
 			CALLBACK_ACTION();
+		}
+		break;
+	}
+}
+
+void Servers0::serveTable(const SavePoint &savepoint, const char* seq1, EntityIndex entity, const char* seq2, const char* seq3, const char* seq4, int *parameter, bool updatePosition, bool pushSavepoint) {
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionDefault:
+		if (updatePosition) {
+			getData()->entityPosition = kPosition_5800;
+			getData()->field_493 = kField493_0;
+		}
+
+		setCallback(1);
+		call(new ENTITY_SETUP_SIIS(Servers0, setup_draw), seq1);
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			getSavePoints()->push(kEntityServers0, entity, kAction136455232);
+
+			setCallback(2);
+			call(new ENTITY_SETUP_SIIS(Servers0, setup_callSavepoint), seq2, entity, kAction103798704, seq3);
+			break;
+
+		case 2:
+			setCallback(3);
+			call(new ENTITY_SETUP_SIIS(Servers0, setup_draw), seq4);
+			break;
+
+		case 3:
+			getData()->entityPosition = kPosition_5900;
+
+			// Special case for function 35
+			if (pushSavepoint)
+				getSavePoints()->push(kEntityServers0, kEntityRebecca, kAction224253538);
+
+			getEntities()->clearSequences(kEntityServers0);
+			*parameter = 0;
+
+			CALLBACK_ACTION();
+			break;
 		}
 		break;
 	}

@@ -771,7 +771,45 @@ IMPLEMENT_FUNCTION(Rebecca, function39, 39)
 }
 
 IMPLEMENT_FUNCTION(Rebecca, function40, 40)
-	error("Rebecca: callback function 40 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionDefault:
+		getData()->entityPosition = kPosition_9270;
+		setCallback(1);
+		call(new ENTITY_SETUP(Rebecca, setup_checkEntity), kCarGreenSleeping, kPosition_2740);
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			getSavePoints()->push(kEntityRebecca, kEntitySophie, kAction292775040);
+			setCallback(2);
+			call(new ENTITY_SETUP(Rebecca, setup_checkEntity), kCarRedSleeping, kPosition_2740);
+			break;
+
+		case 2:
+			getSavePoints()->push(kEntityRebecca, kEntityAnna, kAction191668032);
+			setCallback(3);
+			call(new ENTITY_SETUP(Rebecca, setup_checkEntity), kCarRedSleeping, kPosition_4840);
+			break;
+
+		case 3:
+			getSavePoints()->push(kEntityRebecca, kEntitySophie, kAction123668192);
+			setCallback(4);
+			call(new ENTITY_SETUP(Rebecca, setup_function15));
+			break;
+
+		case 4:
+			setup_function41();
+			break;
+		}
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Rebecca, function41, 41)
@@ -889,7 +927,7 @@ IMPLEMENT_FUNCTION(Rebecca, chapter5, 46)
 }
 
 IMPLEMENT_FUNCTION(Rebecca, chapter5Handler, 47)
-	if (savepoint.action == kAction70549068)
+	if (savepoint.action == kActionProceedChapter5)
 		setup_function48();
 }
 

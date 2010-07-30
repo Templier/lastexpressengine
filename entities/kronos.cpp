@@ -308,7 +308,40 @@ IMPLEMENT_FUNCTION(Kronos, function17, 17)
 }
 
 IMPLEMENT_FUNCTION(Kronos, function18, 18)
-	error("Kronos: callback function 18 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionNone:
+		if (getState()->time > kTime2079000 && !params->param2) {
+			getObjects()->updateLocation2(kObjectCompartmentKronos, kLocation3);
+			getObjects()->update(kObjectCompartmentKronos, kEntityNone, kLocation3, kCursorHandKnock, kCursorHand);
+			params->param1 = 1;
+			params->param2 = 1;
+		}
+
+		TIME_CHECK(kTime2106000, params->param3, setup_function19)
+		else {
+			if (params->param1 && getEntities()->checkFields22()) {
+				setCallback(1);
+				call(new ENTITY_SETUP(Kronos, setup_savegame), kSavegameType2, kEventKahinaPunchSuite4);
+			}
+		}
+		break;
+
+	case kActionDefault:
+		getData()->entityPosition = kPosition_6000;
+		getData()->car = kCarKronos;
+		getData()->field_493 = kField493_0;
+		break;
+
+	case kActionCallback:
+		if (getCallback() == 1) {
+			getAction()->playAnimation(kEventKahinaPunchSuite4);
+			getLogic()->gameOver(kTimeType3, kTime253, kSceneNone, true);
+		}
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Kronos, function19, 19)

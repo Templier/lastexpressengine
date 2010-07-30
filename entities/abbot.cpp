@@ -899,7 +899,39 @@ IMPLEMENT_FUNCTION(Abbot, function34, 34)
 }
 
 IMPLEMENT_FUNCTION(Abbot, function35, 35)
-	error("Abbot: callback function 35 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionNone:
+		if (params->param1 != kTimeInvalid && getState()->time > kTime2115000) {
+			if (getState()->time <= kTime2124000) {
+				if (!getEntities()->checkFields9(kEntityAbbot, kEntityNone, 2000) || !params->param1)
+					params->param1 = (int)getState()->time;
+
+				if (params->param1 >= (int)getState()->time)
+					break;
+			}
+
+			params->param1 = kTimeInvalid;
+
+			setCallback(1);
+			call(new ENTITY_SETUP_SIIS(Abbot, setup_playSound), "Abb3014");
+		}
+		break;
+
+	case kActionDefault:
+		getEntities()->drawSequenceLeft(kEntityAbbot, "508A");
+		break;
+
+	case kActionCallback:
+		if (getCallback() == 1)
+			getEntities()->drawSequenceLeft(kEntityAbbot, "508B");
+		break;
+
+	case kAction123712592:
+		setup_function34();
+	}
 }
 
 IMPLEMENT_FUNCTION(Abbot, function36, 36)
@@ -1183,7 +1215,7 @@ IMPLEMENT_FUNCTION(Abbot, chapter5, 50)
 }
 
 IMPLEMENT_FUNCTION(Abbot, chapter5Handler, 51)
-	if (savepoint.action == kAction70549068)
+	if (savepoint.action == kActionProceedChapter5)
 		setup_function52();
 }
 

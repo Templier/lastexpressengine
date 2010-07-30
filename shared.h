@@ -35,6 +35,7 @@ enum TimeValue {
 	kTime0                    = 0,
 	kTime1                    = 1,
 	kTime4                    = 4,
+	kTime253                  = 253,
 
 	kTimeCityParis            = 1037700,
 	kTime1039500              = 1039500,
@@ -147,6 +148,8 @@ enum TimeValue {
 	kTimeCityLinz             = 2101500,
 	kTime2106000              = 2106000,
 	kTime2110500              = 2110500,
+	kTime2115000              = 2115000,
+	kTime2124000              = 2124000,
 	kTime2133000              = 2133000,
 	kTimeCityAmstetten        = 2154600,
 	kTime2160000              = 2160000,
@@ -486,6 +489,7 @@ enum EntityPosition {
 	kPosition_6220  = 6220,
 	kPosition_6410  = 6410,
 	kPosition_6460  = 6460,
+	kPosition_6469  = 6469,
 	kPosition_6470  = 6470,
 	kPosition_6471  = 6471,
 	kPosition_6800  = 6800,
@@ -517,6 +521,7 @@ enum EntityPosition {
 	kPosition_9271  = 9271,
 	kPosition_9460  = 9460,
 	kPosition_9500  = 9500,
+	kPosition_9510  = 9510,
 	kPosition_30000 = 30000
 };
 
@@ -1150,6 +1155,7 @@ enum ActionIndex {
 	kAction100906246 = 100906246,
 	kAction124697504 = 124697504,
 	kAction135664192 = 135664192,
+	kAction135854208 = 135854208,
 	kAction221617184 = 221617184,
 
 	/////////////////////////////
@@ -1163,6 +1169,8 @@ enum ActionIndex {
 	/////////////////////////////
 	kAction136702400 = 136702400,
 	kAction157370960 = 157370960,
+	kAction157894320 = 157894320,
+	kAction159332865 = 159332865,   // August
 	kAction189299008 = 189299008,
 	kAction191668032 = 191668032,	// some action during or before concert?
 	kAction201437056 = 201437056,
@@ -1376,7 +1384,7 @@ enum ActionIndex {
 	/////////////////////////////
 	// Sophie
 	/////////////////////////////
-	kAction70549068  = 70549068,
+	kActionProceedChapter5  = 70549068,
 	kAction123668192 = 123668192,
 	kAction125242096 = 125242096,
 	kAction136654208 = 136654208,
@@ -1392,9 +1400,12 @@ enum ActionIndex {
 	/////////////////////////////
 	// Tatiana
 	/////////////////////////////
+	kAction123857088 = 123857088,
 	kAction124973510 = 124973510,
+	kAction156444784 = 156444784,
 	kAction169360385 = 169360385,
 	kAction191198209 = 191198209,
+	kAction236053296 = 236053296,    // Alexei
 	kAction290869168 = 290869168,
 
 	/////////////////////////////

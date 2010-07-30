@@ -58,7 +58,7 @@ public:
 	DECLARE_FUNCTION_I(function17)
 	DECLARE_FUNCTION_II(function18)
 	DECLARE_FUNCTION_II(function19)
-	DECLARE_FUNCTION_I(function20)
+	DECLARE_FUNCTION_ISS(function20)
 	DECLARE_FUNCTION_I(function21)
 	DECLARE_FUNCTION(chapter1)
 	DECLARE_FUNCTION_I(function23)
@@ -113,6 +113,7 @@ public:
 private:
 	DECLARE_CALL_FUNCTION(iiii, August, int, int, int, int)
 	DECLARE_CALL_FUNCTION(siis, August, const char *, int, int, const char *)
+	DECLARE_CALL_FUNCTION(issi, August, int, const char *, const char *, int)
 };
 
 } // End of namespace LastExpress

@@ -417,7 +417,7 @@ IMPLEMENT_FUNCTION(Yasmin, chapter5, 18)
 }
 
 IMPLEMENT_FUNCTION(Yasmin, chapter5Handler, 19)
-	if (savepoint.action == kAction70549068)
+	if (savepoint.action == kActionProceedChapter5)
 		setup_function20();
 }
 

@@ -43,11 +43,11 @@ namespace LastExpress {
 Coudert::Coudert(LastExpressEngine *engine) : Entity(engine, kEntityCoudert) {
 	ADD_CALLBACK_FUNCTION(Coudert, reset);
 	ADD_CALLBACK_FUNCTION(Coudert, bloodJacket);
-	ADD_CALLBACK_FUNCTION(Coudert, function3);
+	ADD_CALLBACK_FUNCTION(Coudert, enterExitCompartment);
 	ADD_CALLBACK_FUNCTION(Coudert, function4);
 	ADD_CALLBACK_FUNCTION(Coudert, function5);
-	ADD_CALLBACK_FUNCTION(Coudert, function6);
-	ADD_CALLBACK_FUNCTION(Coudert, function7);
+	ADD_CALLBACK_FUNCTION(Coudert, playSound);
+	ADD_CALLBACK_FUNCTION(Coudert, playSound16);
 	ADD_CALLBACK_FUNCTION(Coudert, savegame);
 	ADD_CALLBACK_FUNCTION(Coudert, function9);
 	ADD_CALLBACK_FUNCTION(Coudert, function10);
@@ -142,7 +142,7 @@ IMPLEMENT_FUNCTION_S(Coudert, bloodJacket, 2)
 	}
 }
 
-IMPLEMENT_FUNCTION_SI(Coudert, function3, 3)
+IMPLEMENT_FUNCTION_SI(Coudert, enterExitCompartment, 3)
 	error("Coudert: callback function 3 not implemented!");
 }
 
@@ -183,12 +183,70 @@ IMPLEMENT_FUNCTION_SIII(Coudert, function5, 5)
 	error("Coudert: callback function 5 not implemented!");
 }
 
-IMPLEMENT_FUNCTION_S(Coudert, function6, 6)
-	error("Coudert: callback function 6 not implemented!");
+IMPLEMENT_FUNCTION_S(Coudert, playSound, 6)
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionNone:
+		if (getProgress().jacket == kJacketBlood
+		 && getEntities()->checkFields9(kEntityCoudert, kEntityNone, 1000)
+		 && !getEntities()->checkFields3()
+		 && !getEntities()->checkFields10()) {
+			setCallback(1);
+			call(new ENTITY_SETUP(Coudert, setup_savegame), kSavegameType2, kEventMertensBloodJacket);
+		}
+		break;
+
+	case kAction2:
+		CALLBACK_ACTION();
+		break;
+
+	case kActionDefault:
+		getSound()->playSound(kEntityCoudert, (char *)&params->seq1);
+		break;
+
+	case kActionCallback:
+		if (getCallback() == 1) {
+			getAction()->playAnimation(kEventCoudertBloodJacket);
+			getLogic()->gameOver(kTimeType0, kTime1, kSceneGameOverBloodJacket, true);
+		}
+		break;
+	}
 }
 
-IMPLEMENT_FUNCTION_NOSETUP(Coudert, function7, 7)
-	error("Coudert: callback function 7 not implemented!");
+IMPLEMENT_FUNCTION_NOSETUP(Coudert, playSound16, 7)
+	EXPOSE_PARAMS(EntityData::EntityParametersSIIS);
+
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionNone:
+		if (getProgress().jacket == kJacketBlood
+		 && getEntities()->checkFields9(kEntityCoudert, kEntityNone, 1000)
+		 && !getEntities()->checkFields3()
+		 && !getEntities()->checkFields10()) {
+			setCallback(1);
+			call(new ENTITY_SETUP(Coudert, setup_savegame), kSavegameType2, kEventMertensBloodJacket);
+		}
+		break;
+
+	case kAction2:
+		CALLBACK_ACTION();
+		break;
+
+	case kActionDefault:
+		getSound()->playSound(kEntityCoudert, (char *)&params->seq1, 16);
+		break;
+
+	case kActionCallback:
+		if (getCallback() == 1) {
+			getAction()->playAnimation(kEventCoudertBloodJacket);
+			getLogic()->gameOver(kTimeType0, kTime1, kSceneGameOverBloodJacket, true);
+		}
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION_II(Coudert, savegame, 8)
@@ -204,13 +262,68 @@ IMPLEMENT_FUNCTION_II(Coudert, function9, 9)
 }
 
 
-// Parameters: time offset
+//////////////////////////////////////////////////////////////////////////
+// Parameters
+//  - Time
 IMPLEMENT_FUNCTION_I(Coudert, function10, 10)
-	error("Coudert: callback function 10 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionNone:
+		if (getProgress().jacket == kJacketBlood
+		 && getEntities()->checkFields9(kEntityCoudert, kEntityNone, 1000)
+		 && !getEntities()->checkFields3()
+		 && !getEntities()->checkFields10()) {
+			setCallback(1);
+			call(new ENTITY_SETUP(Coudert, setup_savegame), kSavegameType2, kEventMertensBloodJacket);
+			break;
+		}
+
+		UPDATE_PARAM(params->param2, getState()->time, params->param1);
+
+		CALLBACK_ACTION();
+		break;
+
+	case kActionCallback:
+		if (getCallback() == 1) {
+			getAction()->playAnimation(kEventCoudertBloodJacket);
+			getLogic()->gameOver(kTimeType0, kTime1, kSceneGameOverBloodJacket, true);
+		}
+		break;
+	}
 }
 
+//////////////////////////////////////////////////////////////////////////
+// Parameters
+//  - TimeTicks
 IMPLEMENT_FUNCTION_I(Coudert, function11, 11)
-	error("Coudert: callback function 11 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionNone:
+		if (getProgress().jacket == kJacketBlood
+		 && getEntities()->checkFields9(kEntityCoudert, kEntityNone, 1000)
+		 && !getEntities()->checkFields3()
+		 && !getEntities()->checkFields10()) {
+			setCallback(1);
+			call(new ENTITY_SETUP(Coudert, setup_savegame), kSavegameType2, kEventMertensBloodJacket);
+			break;
+		}
+
+		UPDATE_PARAM(params->param2, getState()->timeTicks, params->param1);
+
+		CALLBACK_ACTION();
+		break;
+
+	case kActionCallback:
+		if (getCallback() == 1) {
+			getAction()->playAnimation(kEventCoudertBloodJacket);
+			getLogic()->gameOver(kTimeType0, kTime1, kSceneGameOverBloodJacket, true);
+		}
+		break;
+	}
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -587,7 +700,41 @@ IMPLEMENT_FUNCTION(Coudert, function22, 22)
 }
 
 IMPLEMENT_FUNCTION(Coudert, function23, 23)
-	error("Coudert: callback function 23 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionDefault:
+		setCallback(1);
+		call(new ENTITY_SETUP(Coudert, setup_function9), kCarRedSleeping, kPosition_4070);
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			setCallback(2);
+			call(new ENTITY_SETUP_SIIS(Coudert, setup_enterExitCompartment), "627Vf", kObjectCompartmentF);
+			break;
+
+		case 2:
+			getEntities()->drawSequenceLeft(kEntityCoudert, "627Wf");
+			getEntities()->enterCompartment(kEntityCoudert, kObjectCompartmentF, true);
+			getSavePoints()->push(kEntityCoudert, kEntityMax, kAction158007856);
+
+			setCallback(3);
+			call(new ENTITY_SETUP(Coudert, setup_function10), 150);
+			break;
+
+		case 3:
+			getEntities()->exitCompartment(kEntityCoudert, kObjectCompartmentF, true);
+			CALLBACK_ACTION();
+			break;
+		}
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Coudert, function24, 24)
@@ -623,7 +770,47 @@ IMPLEMENT_FUNCTION_I(Coudert, function31, 31)
 }
 
 IMPLEMENT_FUNCTION(Coudert, function32, 32)
-	error("Coudert: callback function 32 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionDefault:
+		setCallback(1);
+		call(new ENTITY_SETUP(Coudert, setup_function16));
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			setCallback(2);
+			call(new ENTITY_SETUP(Coudert, setup_function9), kCarRedSleeping, kPosition_9460);
+			break;
+
+		case 2:
+			getEntities()->clearSequences(kEntityCoudert);
+			setCallback(3);
+			call(new ENTITY_SETUP(Coudert, setup_function10), 900);
+			break;
+
+		case 3:
+			setCallback(4);
+			call(new ENTITY_SETUP(Coudert, setup_function9), kCarRedSleeping, kPosition_2000);
+			break;
+
+		case 4:
+			setCallback(5);
+			call(new ENTITY_SETUP(Coudert, setup_function18));
+			break;
+
+		case 5:
+			CALLBACK_ACTION();
+			break;
+		}
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Coudert, function33, 33)
@@ -1193,7 +1380,7 @@ IMPLEMENT_FUNCTION(Coudert, chapter5, 57)
 }
 
 IMPLEMENT_FUNCTION(Coudert, chapter5Handler, 58)
-	if (savepoint.action == kAction70549068)
+	if (savepoint.action == kActionProceedChapter5)
 		setup_function59();
 }
 

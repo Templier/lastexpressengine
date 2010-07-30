@@ -57,9 +57,9 @@ public:
 	DECLARE_FUNCTION_ISS(function16)
 	DECLARE_FUNCTION(function17)
 	DECLARE_FUNCTION(chapter1)
-	DECLARE_FUNCTION_NOSETUP(function19)
-	DECLARE_FUNCTION(function20)
-	DECLARE_FUNCTION(function21)
+	DECLARE_FUNCTION_NOSETUP(talkHarem)
+	DECLARE_FUNCTION(talkPassengerList)
+	DECLARE_FUNCTION(talkGendarmes)
 	DECLARE_FUNCTION(function22)
 	DECLARE_FUNCTION(function23)
 	DECLARE_FUNCTION(policeGettingOffTrain)
@@ -87,6 +87,8 @@ private:
 	DECLARE_CALL_FUNCTION(isii, Verges, int, const char *, int, int)
 	DECLARE_CALL_FUNCTION(siis, Verges, const char *, int, int, const char *)
 	DECLARE_CALL_FUNCTION(iisi, Verges, int, int, const char *, int)
+
+	void talk(const SavePoint &savepoint, const char* sound1, const char* sound2);
 };
 
 } // End of namespace LastExpress

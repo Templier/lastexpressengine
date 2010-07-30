@@ -83,6 +83,7 @@ private:
 	DECLARE_CALL_FUNCTION(siis, Servers0, const char *, int, int, const char*)
 
 	void handleServer(const SavePoint &savepoint, const char* name, EntityIndex entity, ActionIndex action, int *parameter, const char* name2 = "");
+	void serveTable(const SavePoint &savepoint, const char* seq1, EntityIndex entity, const char* seq2, const char* seq3, const char* seq4, int *parameter, bool updatePosition = true, bool pushSavepoint = false);
 };
 
 } // End of namespace LastExpress

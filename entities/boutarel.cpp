@@ -27,6 +27,7 @@
 
 #include "lastexpress/game/action.h"
 #include "lastexpress/game/entities.h"
+#include "lastexpress/game/inventory.h"
 #include "lastexpress/game/logic.h"
 #include "lastexpress/game/object.h"
 #include "lastexpress/game/scenes.h"
@@ -49,7 +50,7 @@ Boutarel::Boutarel(LastExpressEngine *engine) : Entity(engine, kEntityBoutarel) 
 	ADD_CALLBACK_FUNCTION(Boutarel, enterExitCompartment2);
 	ADD_CALLBACK_FUNCTION(Boutarel, function8);
 	ADD_CALLBACK_FUNCTION(Boutarel, function9);
-	ADD_CALLBACK_FUNCTION(Boutarel, function10);
+	ADD_CALLBACK_FUNCTION(Boutarel, checkEntity);
 	ADD_CALLBACK_FUNCTION(Boutarel, function11);
 	ADD_CALLBACK_FUNCTION(Boutarel, enterTableWithMmeBoutarel);
 	ADD_CALLBACK_FUNCTION(Boutarel, leaveTableWithMmeBoutarel);
@@ -117,8 +118,18 @@ IMPLEMENT_FUNCTION(Boutarel, function9, 9)
 	Entity::savepointCheckFields11(savepoint);
 }
 
-IMPLEMENT_FUNCTION_II(Boutarel, function10, 10)
-	error("Boutarel: callback function 10 not implemented!");
+IMPLEMENT_FUNCTION_II(Boutarel, checkEntity, 10)
+	if (savepoint.action == kActionExcuseMeCath) {
+
+		if (getInventory()->hasItem(kItemPassengerList) && getState()->time > kTime1089000)
+			getSound()->playSound(kEntityNone, "CAT1022");
+		else
+			getSound()->excuseMeCath();
+
+		return;
+	}
+
+	Entity::checkEntity(savepoint, true);
 }
 
 IMPLEMENT_FUNCTION_I(Boutarel, function11, 11)
@@ -208,7 +219,7 @@ IMPLEMENT_FUNCTION_IS(Boutarel, function16, 16)
 
 		case 2:
 			setCallback(3);
-			call(new ENTITY_SETUP(Boutarel, setup_function10), kCarGreenSleeping, kPosition_6470);
+			call(new ENTITY_SETUP(Boutarel, setup_checkEntity), kCarGreenSleeping, kPosition_6470);
 			break;
 
 		case 3:
@@ -610,7 +621,7 @@ IMPLEMENT_FUNCTION(Boutarel, chapter5, 36)
 }
 
 IMPLEMENT_FUNCTION(Boutarel, chapter5Handler, 37)
-	if (savepoint.action == kAction70549068)
+	if (savepoint.action == kActionProceedChapter5)
 		setup_function38();
 }
 

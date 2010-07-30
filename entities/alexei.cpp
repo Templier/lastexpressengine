@@ -592,7 +592,47 @@ IMPLEMENT_FUNCTION(Alexei, function23, 23)
 }
 
 IMPLEMENT_FUNCTION(Alexei, function24, 24)
-	error("Alexei: callback function 24 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kAction1:
+		getData()->inventoryItem = kItemNone;
+		setCallback(1);
+		call(new ENTITY_SETUP(Alexei, setup_savegame), kSavegameType2, kEventAlexeiSalonCath);
+		break;
+
+	case kActionDefault:
+		if (getEvent(kEventAlexeiSalonVassili))
+			getData()->inventoryItem = kItemInvalid;
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			getAction()->playAnimation(kEventAlexeiSalonCath);
+			getData()->car = kCarRestaurant;
+			getData()->entityPosition = kPosition_9460;
+			getEntities()->clearSequences(kEntityAlexei);
+			getScenes()->loadSceneFromPosition(kCarRestaurant, 55);
+			setup_function25();
+			break;
+
+		case 2:
+			setup_function25();
+			break;
+		}
+		break;
+
+	case kAction135854208:
+		getData()->inventoryItem = kItemNone;
+		setCallback(2);
+		call(new ENTITY_SETUP_SIIS(Alexei, setup_draw), "103G");
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Alexei, function25, 25)
@@ -895,7 +935,47 @@ IMPLEMENT_FUNCTION(Alexei, function39, 39)
 }
 
 IMPLEMENT_FUNCTION(Alexei, function40, 40)
-	error("Alexei: callback function 40 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionDefault:
+		setCallback(1);
+		call(new ENTITY_SETUP(Alexei, setup_checkEntity), kCarGreenSleeping, kPosition_7500);
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			getEntities()->drawSequenceRight(kEntityAlexei, "602Eb");
+			getEntities()->enterCompartment(kEntityAlexei, kObjectCompartment2);
+
+			getData()->field_493 = kField493_1;
+
+			if (getEntities()->checkFields1(kEntityNone, kCarGreenSleeping, kPosition_7500)) {
+				getAction()->playAnimation(isDay() ? kEventCathTurningDay : kEventCathTurningNight);
+				getSound()->playSound(kEntityNone, "BUMP");
+				getScenes()->loadSceneFromObject(kObjectCompartment2);
+			}
+
+			setCallback(2);
+			call(new ENTITY_SETUP(Alexei, setup_function7));
+			break;
+
+		case 2:
+			getEntities()->exitCompartment(kEntityAlexei, kObjectCompartment2);
+			getData()->entityPosition = kPosition_7500;
+			getData()->field_493 = kField493_1;
+			getEntities()->clearSequences(kEntityAlexei);
+
+			setup_function41();
+			break;
+		}
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Alexei, function41, 41)

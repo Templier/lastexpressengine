@@ -635,7 +635,48 @@ IMPLEMENT_FUNCTION(Anna, function20, 20)
 }
 
 IMPLEMENT_FUNCTION(Anna, function21, 21)
-	error("Anna: callback function 21 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionDefault:
+		setCallback(1);
+		call(new ENTITY_SETUP(Anna, setup_function17), kCarRestaurant, kPosition_850);
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			setCallback(2);
+			call(new ENTITY_SETUP(Anna, setup_function8));
+			break;
+
+		case 2:
+			getData()->entityPosition = kPosition_1540;
+			getData()->field_493 = kField493_0;
+
+			setCallback(3);
+			call(new ENTITY_SETUP_SIIS(Anna, setup_draw), "801US");
+			break;
+
+		case 3:
+			getEntities()->drawSequenceRight(kEntityAnna, "001B");
+			if (getEntities()->checkFields12())
+				getEntities()->updateEntity(kEntityAnna);
+
+			setCallback(4);
+			call(new ENTITY_SETUP(Anna, setup_function5));
+			break;
+
+		case 4:
+			setup_function22();
+			break;
+		}
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Anna, function22, 22)
@@ -656,7 +697,42 @@ IMPLEMENT_FUNCTION(Anna, function22, 22)
 }
 
 IMPLEMENT_FUNCTION(Anna, function23, 23)
-	error("Anna: callback function 23 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionDefault:
+		getEntities()->drawSequenceLeft(kEntityAnna, "001D");
+		getSavePoints()->push(kEntityAnna, kEntityServers0, kAction270410280);
+		getSavePoints()->push(kEntityAnna, kEntityTables0, kAction136455232);
+
+		setCallback(1);
+		call(new ENTITY_SETUP(Anna, setup_function18), false);
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			getEntities()->drawSequenceLeft(kEntityAnna, "001E");
+			setCallback(2);
+			call(new ENTITY_SETUP_SIIS(Anna, setup_playSound), "ANN1048");
+			break;
+
+		case 2:
+			setCallback(3);
+			call(new ENTITY_SETUP_SIIS(Anna, setup_draw), "001F");
+			break;
+
+		case 3:
+			getSavePoints()->push(kEntityAnna, kEntityServers0, kAction203859488);
+			setup_function24();
+			break;
+		}
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Anna, function24, 24)
@@ -736,7 +812,41 @@ IMPLEMENT_FUNCTION(Anna, function26, 26)
 }
 
 IMPLEMENT_FUNCTION(Anna, function27, 27)
-	error("Anna: callback function 27 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionDefault:
+		getSavePoints()->push(kEntityAnna, kEntityMax, kAction101687594);
+		setCallback(1);
+		call(new ENTITY_SETUP_ISII(Anna, setup_function15), kTime1156500, "NONE");
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+		case 2:
+			if (getProgress().field_14 == 29) {
+				params->param1 = getState()->time + 900;
+				setCallback(2);
+				call(new ENTITY_SETUP_ISII(Anna, setup_function15), params->param1, "NONE");
+			} else {
+				setCallback(3);
+				call(new ENTITY_SETUP_SIIS(Anna, setup_enterExitCompartment), "618Bf", kObjectCompartmentF);
+			}
+			break;
+
+		case 3:
+			getData()->field_493 = kField493_0;
+			getSavePoints()->push(kEntityAnna, kEntityMax, kAction71277948);
+			setup_function28();
+			break;
+		}
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Anna, function28, 28)
@@ -786,7 +896,45 @@ IMPLEMENT_FUNCTION(Anna, function30, 30)
 }
 
 IMPLEMENT_FUNCTION(Anna, function31, 31)
-	error("Anna: callback function 31 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionDefault:
+		setCallback(1);
+		call(new ENTITY_SETUP(Anna, setup_function8));
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			getData()->field_493 = kField493_0;
+			getSound()->playSound(kEntityAnna, "AUG1005");
+
+			setCallback(2);
+			call(new ENTITY_SETUP(Anna, setup_updateFromTicks), 150);
+			break;
+
+		case 2:
+			getEntities()->updatePosition(kEntityAnna, kCarRestaurant, 56, true);
+
+			setCallback(3);
+			call(new ENTITY_SETUP_SSII(Anna, setup_draw2), "106C1", "106C2", kEntityAugust);
+			break;
+
+		case 3:
+			getEntities()->updatePosition(kEntityAnna, kCarRestaurant, 56);
+			getInventory()->setLocationAndProcess(kItem3, kLocation1);
+			getSavePoints()->push(kEntityAnna, kEntityAugust, kAction159332865);
+
+			setup_function32();
+			break;
+		}
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Anna, function32, 32)
@@ -1024,13 +1172,46 @@ IMPLEMENT_FUNCTION(Anna, chapter3, 44)
 		getObjects()->update(kObjectCompartmentF, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
 		getObjects()->update(kObjectOutsideAnnaCompartment, kEntityNone, kLocationNone, kCursorKeepValue, kCursorKeepValue);
 		getObjects()->update(kObject53, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
-
 		break;
 	}
 }
 
 IMPLEMENT_FUNCTION_I(Anna, function45, 45)
-	error("Anna: callback function 45 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionDefault:
+		getData()->field_493 = kField493_0;
+
+		setCallback(1);
+		call(new ENTITY_SETUP_SIIS(Anna, setup_enterExitCompartment), "625Bf", kObjectCompartmentF);
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			getSavePoints()->push(kEntityAnna, kEntityCoudert, params->param1 ? kAction185737168 : kAction185671840);
+			getSound()->playSound(kEntityAnna, "Ann3147");
+			getEntities()->drawSequenceLeft(kEntityAnna, "625EF");
+			getEntities()->enterCompartment(kEntityAnna, kObjectCompartmentF, true);
+			break;
+
+		case 2:
+			getEntities()->exitCompartment(kEntityAnna, kObjectCompartmentF, true);
+			CALLBACK_ACTION();
+			break;
+		}
+		break;
+
+	case kAction157894320:
+		setCallback(2);
+		call(new ENTITY_SETUP(Anna, setup_updateFromTime), 75);
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Anna, chapter3Handler, 46)
@@ -1123,7 +1304,39 @@ IMPLEMENT_FUNCTION(Anna, function51, 51)
 }
 
 IMPLEMENT_FUNCTION(Anna, function52, 52)
-	error("Anna: callback function 52 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionExitCompartment:
+		getEntities()->exitCompartment(kEntityAnna, kObjectCompartmentF);
+		getData()->entityPosition = kPosition_4070;
+		getData()->field_493 = kField493_1;
+
+		getEntities()->clearSequences(kEntityAnna);
+
+		setup_function53();
+		break;
+
+	case kActionDefault:
+		setCallback(1);
+		call(new ENTITY_SETUP(Anna, setup_checkEntity), kCarRedSleeping, kPosition_4070);
+		break;
+
+	case kActionCallback:
+		if (getCallback() == 1) {
+			getEntities()->drawSequenceRight(kEntityAnna, "688Af");
+			getEntities()->enterCompartment(kEntityAnna, kObjectCompartmentF);
+			getData()->field_493 = kField493_1;
+
+			if (getEntities()->checkFields1(kEntityNone, kCarRedSleeping, kPosition_4070) || getEntities()->checkFields1(kEntityNone, kCarRedSleeping, kPosition_4455)) {
+				getAction()->playAnimation(isDay() ? kEventCathTurningDay : kEventCathTurningNight);
+				getSound()->playSound(kEntityNone, "BUMP");
+				getScenes()->loadSceneFromObject(kObjectCompartmentF);
+			}
+		}
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Anna, function53, 53)
@@ -1135,7 +1348,41 @@ IMPLEMENT_FUNCTION(Anna, function54, 54)
 }
 
 IMPLEMENT_FUNCTION(Anna, function55, 55)
-	error("Anna: callback function 55 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionDefault:
+		getObjects()->update(kObjectOutsideAnnaCompartment, kEntityNone, kLocation2, kCursorKeepValue, kCursorKeepValue);
+
+		if (getEntities()->isPlayerPosition(kCarRedSleeping, 78))
+			getScenes()->loadSceneFromPosition(kCarRedSleeping, 49);
+
+		getObjects()->update(kObjectCompartmentF, kEntityNone, kLocation1, kCursorNormal, kCursorNormal);
+		getObjects()->update(kObject53, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
+		getInventory()->setLocationAndProcess(kItemKey, kLocation1);
+
+		setCallback(1);
+		call(new ENTITY_SETUP(Anna, setup_function45), true);
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			getObjects()->update(kObjectCompartmentF, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
+			setCallback(2);
+			call(new ENTITY_SETUP(Anna, setup_checkEntity), kCarRedSleeping, kPosition_9270);
+			break;
+
+		case 2:
+			setup_function56();
+			break;
+		}
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Anna, function56, 56)

@@ -48,7 +48,7 @@ Kahina::Kahina(LastExpressEngine *engine) : Entity(engine, kEntityKahina) {
 	ADD_CALLBACK_FUNCTION(Kahina, updateFromTicks);
 	ADD_CALLBACK_FUNCTION(Kahina, function6);
 	ADD_CALLBACK_FUNCTION(Kahina, function7);
-	ADD_CALLBACK_FUNCTION(Kahina, function8);
+	ADD_CALLBACK_FUNCTION(Kahina, checkEntity);
 	ADD_CALLBACK_FUNCTION(Kahina, enterExitCompartment);
 	ADD_CALLBACK_FUNCTION(Kahina, chapter1);
 	ADD_CALLBACK_FUNCTION(Kahina, chapter1Handler);
@@ -105,8 +105,17 @@ IMPLEMENT_FUNCTION_II(Kahina, function7, 7)
 	error("Kahina: callback function 7 not implemented!");
 }
 
-IMPLEMENT_FUNCTION_II(Kahina, function8, 8)
-	error("Kahina: callback function 8 not implemented!");
+IMPLEMENT_FUNCTION_II(Kahina, checkEntity, 8)
+	if (savepoint.action == kActionExcuseMeCath) {
+		if (getEvent(kEventKronosConversation) || getEvent(kEventKronosConversationFirebird)) {
+			getSound()->playSound(kEntityNone, random(2) ? "CAT1019" : "CAT1019A");
+		} else {
+			getSound()->excuseMeCath();
+		}
+		return;
+	}
+
+	Entity::checkEntity(savepoint, true);
 }
 
 IMPLEMENT_FUNCTION_SI(Kahina, enterExitCompartment, 9)

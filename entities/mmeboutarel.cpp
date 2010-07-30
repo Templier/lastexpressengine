@@ -402,7 +402,7 @@ IMPLEMENT_FUNCTION(MmeBoutarel, chapter5, 26)
 }
 
 IMPLEMENT_FUNCTION(MmeBoutarel, chapter5Handler, 27)
-	if (savepoint.action == kAction70549068)
+	if (savepoint.action == kActionProceedChapter5)
 		setup_function28();
 }
 

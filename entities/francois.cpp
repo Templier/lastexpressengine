@@ -104,11 +104,75 @@ IMPLEMENT_FUNCTION_II(Francois, function8, 8)
 }
 
 IMPLEMENT_FUNCTION(Francois, function9, 9)
-	error("Francois: callback function 9 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionDefault:
+		if (getObjects()->get(kObjectCompartmentD).location == kLocation2) {
+			getObjects()->update(kObjectCompartmentD, kEntityNone, kLocationNone, kCursorKeepValue, kCursorKeepValue);
+			getSavePoints()->push(kEntityFrancois, kEntityMmeBoutarel, kAction134289824);
+			setCallback(1);
+			call(new ENTITY_SETUP_SIIS(Francois, setup_enterExitCompartment), "605Cd", kObjectCompartmentD);
+		} else {
+			setCallback(2);
+			call(new ENTITY_SETUP_SIIS(Francois, setup_enterExitCompartment), "605Ed", kObjectCompartmentD);
+		}
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			getObjects()->update(kObjectCompartmentD, kEntityNone, kLocation2, kCursorKeepValue, kCursorKeepValue);
+			break;
+
+		case 2:
+			getData()->field_493 = kField493_0;
+			CALLBACK_ACTION();
+			break;
+		}
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Francois, function10, 10)
-	error("Francois: callback function 10 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionDefault:
+		if (getObjects()->get(kObjectCompartmentD).location == kLocation2) {
+			getObjects()->update(kObjectCompartmentD, kEntityNone, kLocationNone, kCursorKeepValue, kCursorKeepValue);
+			setCallback(1);
+			call(new ENTITY_SETUP_SIIS(Francois, setup_enterExitCompartment), "605Bd", kObjectCompartmentD);
+		} else {
+			setCallback(2);
+			call(new ENTITY_SETUP_SIIS(Francois, setup_enterExitCompartment), "605Dd", kObjectCompartmentD);
+		}
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			getObjects()->update(kObjectCompartmentD, kEntityNone, kLocation2, kCursorKeepValue, kCursorKeepValue);
+			getSavePoints()->push(kEntityFrancois, kEntityMmeBoutarel, kAction102484312);
+			break;
+
+		case 2:
+			getData()->field_493 = kField493_1;
+			getEntities()->clearSequences(kEntityFrancois);
+
+			CALLBACK_ACTION();
+			break;
+		}
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION_I(Francois, function11, 11)
@@ -331,7 +395,7 @@ IMPLEMENT_FUNCTION(Francois, chapter5, 28)
 }
 
 IMPLEMENT_FUNCTION(Francois, chapter5Handler, 29)
-	if (savepoint.action == kAction70549068) {
+	if (savepoint.action == kActionProceedChapter5) {
 		if (!getInventory()->hasItem(kItemWhistle)
 		  && getInventory()->getEntry(kItemWhistle)->location != kLocation3)
 		  getInventory()->setLocationAndProcess(kItemWhistle, kLocation1);

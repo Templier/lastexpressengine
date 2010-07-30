@@ -187,11 +187,11 @@ IMPLEMENT_FUNCTION(Servers1, function11, 11)
 }
 
 IMPLEMENT_FUNCTION(Servers1, function12, 12)
-	error("Servers1: callback function 12 not implemented!");
+	serveTable(savepoint, "923", kEntityTables2, "009F", "009G", "926", &ENTITY_PARAM(0, 4));
 }
 
 IMPLEMENT_FUNCTION(Servers1, function13, 13)
-	error("Servers1: callback function 13 not implemented!");
+	serveTable(savepoint, "923", kEntityTables2, "009F", "009G", "926", &ENTITY_PARAM(0, 5));
 }
 
 IMPLEMENT_FUNCTION(Servers1, chapter1Handler, 14)
@@ -376,7 +376,7 @@ IMPLEMENT_FUNCTION(Servers1, function20, 20)
 }
 
 IMPLEMENT_FUNCTION(Servers1, function21, 21)
-	error("Servers1: callback function 21 not implemented!");
+	serveTable(savepoint, "974", kEntityTables2, "009F2", "009G", "976", &ENTITY_PARAM(0, 8), true, &ENTITY_PARAM(0, 5));
 }
 
 IMPLEMENT_FUNCTION(Servers1, chapter3, 22)
@@ -486,10 +486,57 @@ IMPLEMENT_FUNCTION(Servers1, chapter5, 30)
 }
 
 IMPLEMENT_FUNCTION(Servers1, chapter5Handler, 31)
-	if (savepoint.action == kAction70549068)
+	if (savepoint.action == kActionProceedChapter5)
 		setup_nullfunction();
 }
 
 IMPLEMENT_NULL_FUNCTION(Servers1, 32)
+
+void Servers1::serveTable(const SavePoint &savepoint, const char* seq1, EntityIndex entity, const char* seq2, const char* seq3, const char* seq4, int *parameter, bool updatePosition, int* parameter2) {
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionDefault:
+		if (updatePosition) {
+			getData()->entityPosition = kPosition_5800;
+			getData()->field_493 = kField493_0;
+		}
+
+		setCallback(1);
+		call(new ENTITY_SETUP_SIIS(Servers1, setup_draw), seq1);
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			getSavePoints()->push(kEntityServers1, entity, kAction136455232);
+
+			setCallback(2);
+			call(new ENTITY_SETUP_SIIS(Servers1, setup_callSavepoint), seq2, entity, kAction103798704, seq3);
+			break;
+
+		case 2:
+			setCallback(3);
+			call(new ENTITY_SETUP_SIIS(Servers1, setup_draw), seq4);
+			break;
+
+		case 3:
+			getData()->entityPosition = kPosition_5900;
+			getEntities()->clearSequences(kEntityServers1);
+			*parameter = 0;
+
+			if (parameter2 != NULL)
+				*parameter2 = 0;
+
+			CALLBACK_ACTION();
+			break;
+		}
+		break;
+	}
+}
 
 } // End of namespace LastExpress

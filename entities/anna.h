@@ -125,6 +125,7 @@ private:
 	DECLARE_CALL_FUNCTION(iiii, Anna, int, int, int, int)
 	DECLARE_CALL_FUNCTION(isii, Anna, int, const char*, int, int)
 	DECLARE_CALL_FUNCTION(siis, Anna, const char*, int, int, const char*)
+	DECLARE_CALL_FUNCTION(ssii, Anna, const char*, const char*, int, int)
 };
 
 } // End of namespace LastExpress

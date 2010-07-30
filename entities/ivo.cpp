@@ -25,10 +25,13 @@
 
 #include "lastexpress/entities/ivo.h"
 
+#include "lastexpress/game/action.h"
 #include "lastexpress/game/entities.h"
+#include "lastexpress/game/fight.h"
 #include "lastexpress/game/logic.h"
 #include "lastexpress/game/object.h"
 #include "lastexpress/game/savepoint.h"
+#include "lastexpress/game/scenes.h"
 #include "lastexpress/game/sound.h"
 #include "lastexpress/game/state.h"
 
@@ -69,7 +72,7 @@ Ivo::Ivo(LastExpressEngine *engine) : Entity(engine, kEntityIvo) {
 	ADD_CALLBACK_FUNCTION(Ivo, function29);
 	ADD_CALLBACK_FUNCTION(Ivo, chapter5);
 	ADD_CALLBACK_FUNCTION(Ivo, chapter5Handler);
-	ADD_CALLBACK_FUNCTION(Ivo, function32);
+	ADD_CALLBACK_FUNCTION(Ivo, fight);
 	ADD_CALLBACK_FUNCTION(Ivo, function33);
 	ADD_CALLBACK_FUNCTION(Ivo, function34);
 }
@@ -430,12 +433,50 @@ IMPLEMENT_FUNCTION(Ivo, chapter5, 30)
 }
 
 IMPLEMENT_FUNCTION(Ivo, chapter5Handler, 31)
-	if (savepoint.action == kAction70549068)
-		setup_function32();
+	if (savepoint.action == kActionProceedChapter5)
+		setup_fight();
 }
 
-IMPLEMENT_FUNCTION(Ivo, function32, 32)
-	error("Ivo: callback function 32 not implemented!");
+IMPLEMENT_FUNCTION(Ivo, fight, 32)
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionDefault:
+		getData()->field_493 = kField493_0;
+		getData()->entityPosition = kPosition_540;
+		getData()->car = kCarBaggageRear;
+		getData()->inventoryItem = kItemNone;
+
+		setCallback(1);
+		call(new ENTITY_SETUP(Ivo, setup_savegame), kSavegameType2, kEventCathIvoFight);
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			getSound()->playSound(kEntityNone, "LIB090");
+			getAction()->playAnimation(kEventCathIvoFight);
+
+			setCallback(2);
+			call(new ENTITY_SETUP(Ivo, setup_savegame), kSavegameType1, kTime0);
+			break;
+
+		case 2:
+			params->param1 = getFight()->setup(kFightIvo);
+			if (params->param1) {
+				getLogic()->gameOver(kTimeType0, kTime0, kSceneNone, true);
+			} else {
+				getScenes()->loadSceneFromPosition(kCarBaggageRear, 96);
+				setup_function33();
+			}
+			break;
+		}
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Ivo, function33, 33)
