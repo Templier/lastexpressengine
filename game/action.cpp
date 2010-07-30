@@ -508,30 +508,30 @@ IMPLEMENT_ACTION(compartment) {
 		return kSceneNone;
 	}
 
-	if (handleOtherCompartment(object, 1, 1)) {
+	if (handleOtherCompartment(object, true, true)) {
 		// Stop processing further
 		return kSceneNone;
 	}
 
 	ObjectLocation location = getObjects()->get(object).location;
-	if (location == 1 || location == 3 || getEntities()->checkFields2(object)) {
+	if (location == kLocation1 || location == kLocation3 || getEntities()->checkFields2(object)) {
 
 		// FIXME check again, this might be wrong (and simplify expression)
-		if (location != 1
+		if (location != kLocation1
 		 || getEntities()->checkFields2(object)
-		 || (getInventory()->getSelectedItem() != kItemKey
-		  && (location != 1 || !getInventory()->hasItem(kItemKey)
-		   || getInventory()->getSelectedItem() != kItemFirebird
-		   || getInventory()->getSelectedItem() != kItemBriefcase))) {
+		 || (getInventory()->getSelectedItem() != kItemKey && (location != kLocation1 || !getInventory()->hasItem(kItemKey)
+		 || getInventory()->getSelectedItem() != kItemFirebird
+		 || getInventory()->getSelectedItem() != kItemBriefcase))) {
+			if (!getSound()->isBuffered("LIB13"))
 				getSound()->playSoundEvent(kEntityNone, 13);
 
-				// Stop processing further
-				return kSceneNone;
+			// Stop processing further
+			return kSceneNone;
 		}
 
 		getSound()->playSoundEvent(kEntityNone, 32);
 
-		if ((object >= 1 && object <= 3) || (object >= 32 && object <= 37))
+		if ((object >= kObjectCompartment1 && object <= kObjectCompartment3) || (object >= kObjectCompartmentA && object <= kObjectCompartmentF))
 			getObjects()->update(object, kEntityNone, kLocationNone, kCursorHandKnock, kCursorHand);
 
 		getSound()->playSoundEvent(kEntityNone, 15, 22);
@@ -541,7 +541,7 @@ IMPLEMENT_ACTION(compartment) {
 	}
 
 	if (hotspot.action != 16 || getInventory()->getSelectedItem() != kItemKey) {
-		if (object == 109) {
+		if (object == kObjectCageMax) {
 			getSound()->playSoundEvent(kEntityNone, 26);
 		} else {
 			getSound()->playSoundEvent(kEntityNone, 14);
@@ -1593,7 +1593,7 @@ void Action::dropCorpse(bool process) const {
 		getScenes()->processScene();
 }
 
-bool Action::handleOtherCompartment(ObjectIndex object, byte param2, byte param3) const {
+bool Action::handleOtherCompartment(ObjectIndex object, bool doPlaySound, bool doLoadScene) const {
 
 	// Only handle compartments
 	if (getEntityData(kEntityNone)->field_493
@@ -1605,7 +1605,12 @@ bool Action::handleOtherCompartment(ObjectIndex object, byte param2, byte param3
 	if (getEntityData(kEntityNone)->car == getEntityData(kEntityGendarmes)->car
 	&& !getEntityData(kEntityGendarmes)->field_493
 	&& !getEntities()->compare(kEntityNone, kEntityGendarmes)) {
-		playCompartmentSoundEvents(kEntityNone, object, param2, param3, true);
+		if (doPlaySound)
+			playCompartmentSoundEvents(kEntityNone, object);
+
+		if (doLoadScene)
+			getScenes()->loadSceneFromObject(object);
+
 		return true;
 	}
 
@@ -1619,7 +1624,7 @@ bool Action::handleOtherCompartment(ObjectIndex object, byte param2, byte param3
 
 	//////////////////////////////////////////////////////////////////////////
 	// Coudert
-	if (getEntityData(kEntityNone)->field_493 != kField493_4
+	if (getEntityData(kEntityNone)->car != kCarRedSleeping
 	 || !getEntityData(kEntityCoudert)->car
 	 || getEntityData(kEntityCoudert)->field_493
 	 || ((EntityData::EntityParametersIIII*)getEntities()->get(kEntityCoudert)->getParamData()->getParameters(8, 0))->param1)
@@ -1632,7 +1637,14 @@ bool Action::handleOtherCompartment(ObjectIndex object, byte param2, byte param3
 	if (!getEntities()->compare(kEntityNone, kEntityCoudert)
 	&& getEntityData(kEntityCoudert)->direction == kDirectionUp
 	&& getEntityData(kEntityCoudert)->entityPosition < getEntityData(kEntityNone)->entityPosition) {
-		playCompartmentSoundEvents(kEntityCoudert, object, param2, param3, true);
+		if (doPlaySound)
+			playCompartmentSoundEvents(kEntityNone, object);
+
+		if (!getSound()->isBuffered(kEntityCoudert))
+			getSound()->playSound(kEntityCoudert, (random(2)) ? "JAC1000" : "JAC1000A");
+	
+		if (doLoadScene)
+			getScenes()->loadSceneFromObject(object);
 
 		return true;
 	}
@@ -1641,33 +1653,26 @@ bool Action::handleOtherCompartment(ObjectIndex object, byte param2, byte param3
 	if (!getEntities()->compare(kEntityNone, kEntityCoudert)
 	&& getEntityData(kEntityCoudert)->direction == kDirectionDown
 	&& getEntityData(kEntityCoudert)->entityPosition > getEntityData(kEntityNone)->entityPosition) {
-		playCompartmentSoundEvents(kEntityCoudert, object, param2, param3, false);
+		if (doPlaySound)
+			playCompartmentSoundEvents(kEntityNone, object);
 
-		return true;
+		if (!getSound()->isBuffered(kEntityCoudert))
+			getSound()->playSound(kEntityCoudert, (random(2)) ? "JAC1000" : "JAC1000A");
+	
+		if (doLoadScene)
+			getScenes()->loadSceneFromObject(object, true);
 	}
 
 	return false;
 }
 
-void Action::playCompartmentSoundEvents(EntityIndex entityIndex, ObjectIndex object, byte param2, byte param3, bool loadSceneFunction) const {
-	// FIXME missing tons of code here!
-	if (param2) {
-		if (getObjects()->get(object).location == 1 || getObjects()->get(object).location == 3 || getEntities()->checkFields2(object)) {
-			getSound()->playSoundEvent(kEntityNone, 13);
-		} else {
-			getSound()->playSoundEvent(kEntityNone, 14);
-			getSound()->playSoundEvent(kEntityNone, 15, 3);
-		}
+void Action::playCompartmentSoundEvents(EntityIndex entityIndex, ObjectIndex object) const {
+	if (getObjects()->get(object).location == kLocation1 || getObjects()->get(object).location == kLocation3 || getEntities()->checkFields2(object)) {
+		getSound()->playSoundEvent(kEntityNone, 13);
+	} else {
+		getSound()->playSoundEvent(kEntityNone, 14);
+		getSound()->playSoundEvent(kEntityNone, 15, 3);
 	}
-
-	if (entityIndex != kEntityNone) {
-		// HmHmmm...
-		if (!getSound()->isBuffered(entityIndex))
-			getSound()->playSound(entityIndex, (random(2)) ? "JAC1000" : "JAC1000A");
-	}
-
-	if (param3)
-		getScenes()->loadSceneFromObject(object, !loadSceneFunction);
 }
 
 //////////////////////////////////////////////////////////////////////////

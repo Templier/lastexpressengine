@@ -264,12 +264,15 @@ void Logic::eventMouse(const Common::Event &ev) {
 		return;
 
 	_flagActionPerformed = true;
+	
+	SceneIndex newScene = _action->processHotspot(*hotspot);
+	if (newScene != kSceneInvalid && newScene != kSceneStopProcessing)
+		hotspot->scene = newScene;
 
-	SceneIndex index = _action->processHotspot(*hotspot);
-	if (index != kSceneInvalid || hotspot->scene) {
+	if (hotspot->scene && newScene != kSceneStopProcessing) {
 		getFlags()->shouldRedraw = false;
 
-		getScenes()->setScene((index != kSceneInvalid && index != kSceneStopProcessing) ? index : hotspot->scene);
+		getScenes()->setScene(hotspot->scene);
 
 		if (getFlags()->shouldDrawEggOrHourGlass)
 			getInventory()->drawEgg();

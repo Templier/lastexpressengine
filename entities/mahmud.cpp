@@ -231,7 +231,7 @@ IMPLEMENT_FUNCTION_II(Mahmud, function10, 10)
 				getLogic()->gameOver(kTimeType0, kTime0, (getProgress().chapter == kChapter1) ? kSceneGameOverPolice1 : kSceneGameOverPolice2, true);
 			}
 		} else {
-			getAction()->handleOtherCompartment((ObjectIndex)savepoint.param.intValue, 0, 0);
+			getAction()->handleOtherCompartment((ObjectIndex)savepoint.param.intValue, false, false);
 
 			switch (getScenes()->get(getState()->scene)->position) {
 			default:

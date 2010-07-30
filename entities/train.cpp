@@ -88,7 +88,7 @@ void Train::handleCompartmentAction() {
 	if (params->param8)
 		getSavePoints()->push(kEntityTrain, kEntityMahmud, kAction290410610, (uint32)params->param1);
 
-	getAction()->handleOtherCompartment((ObjectIndex)params->param1, 0, ENTITY_PARAM(0, 8) ? 0 : 1);
+	getAction()->handleOtherCompartment((ObjectIndex)params->param1, false, !params->param8);
 
 	ENTITY_PARAM(0, 8) = params->param1;
 

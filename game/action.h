@@ -61,7 +61,7 @@ public:
 	void playAnimation(EventIndex index) const;
 
 	// Compartment action
-	bool handleOtherCompartment(ObjectIndex object, byte param2, byte param3) const;
+	bool handleOtherCompartment(ObjectIndex object, bool doPlaySound, bool doLoadScene) const;
 
 private:
 	typedef Common::Functor1<const SceneHotspot &, SceneIndex> ActionFunctor;
@@ -126,7 +126,7 @@ private:
 	void pickCorpse(byte bedPosition, bool process) const;
 	void dropCorpse(bool process) const;
 
-	void playCompartmentSoundEvents(EntityIndex entityIndex, ObjectIndex object, byte param2, byte param3, bool loadSceneFunction) const;
+	void playCompartmentSoundEvents(EntityIndex entityIndex, ObjectIndex object) const;
 };
 
 } // End of namespace LastExpress
