@@ -137,7 +137,7 @@ IMPLEMENT_FUNCTION_SII(Tatiana, updatePosition, 4)
 }
 
 /**
- * Handles entering/exiting a compartment. 
+ * Handles entering/exiting a compartment.
  *
  * @param seq1   The sequence to draw
  * @param param4 The compartment
@@ -147,7 +147,7 @@ IMPLEMENT_FUNCTION_SI(Tatiana, enterExitCompartment, 5)
 }
 
 /**
- * Handles entering/exiting a compartment and updates position/plays animation 
+ * Handles entering/exiting a compartment and updates position/plays animation
  *
  * @param seq1   The sequence to draw
  * @param param4 The compartment
@@ -292,10 +292,7 @@ label_tatiana_chapter1_1:
 		}
 
 label_tatiana_chapter1_2:
-		if (getState()->time > kTime1084500 && !params->param7) {
-			params->param7 = 1;
-			getSavePoints()->push(kEntityTatiana, kEntityPascale, kAction257489762);
-		}
+		TIME_CHECK_SAVEPOINT(kTime1084500, params->param7, kEntityTatiana, kEntityPascale, kAction257489762);
 
 		if (params->param1) {
 			UPDATE_PARAM(params->param8, getState()->timeTicks, 90);

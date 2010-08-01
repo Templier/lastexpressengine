@@ -243,18 +243,14 @@ public:
 		ClothesIndex clothes;			// byte
 		Position position;
 		CarIndex car2;                  // byte
-		bool doProcessEntity;			// byte
-		byte field_4A9;
-		byte field_4AA;
+		bool doProcessEntity;           // byte
+		bool field_4A9;	                // byte
+		bool field_4AA;                 // byte
 		EntityDirection directionSwitch;
-		Common::String sequenceName2;        // char[9]
-		uint32 field_4B5;
-		Common::String sequenceName3;        // char[9]
-		uint32 field_4C2;
-		Common::String sequenceName;         // char[6]
-		byte field_4CC;
-		Common::String sequenceNameCopy;     // char[9]
-		uint32 field_4D6;
+		Common::String sequenceName2;        // char[13]
+		Common::String sequenceName3;        // char[13]
+		Common::String sequenceName;         // char[7]
+		Common::String sequenceNameCopy;     // char[13]
 		SequenceFrame *frame;
 		SequenceFrame *frame1;
 		Sequence *sequence2;
@@ -280,16 +276,9 @@ public:
 			position = 0;
 			car2 = kCarNone;
 			doProcessEntity = false;
-			field_4A9 = 0;
-			field_4AA = 0;
+			field_4A9 = false;
+			field_4AA = false;
 			directionSwitch = kDirectionNone;
-
-			field_4B5 = 0;
-			field_4C2 = 0;
-
-			field_4CC = 0;
-			field_4D6 = 0;
-
 			frame = NULL;
 			frame1 = NULL;
 			sequence2 = NULL;
@@ -333,8 +322,8 @@ public:
 	EntityData::EntityCallData *getData() { return _data->getCallData(); }
 
 	// Callbacks
-	int getCallback() { return _data->getCallback(_data->getCurrentCallback() + 8); }
-	void setCallback(byte index) { _data->setCallback(_data->getCurrentCallback() + 8, index); }
+	int getCallback() { return _data->getCallback(_data->getCallData()->current_call + 8); }
+	void setCallback(byte index) { _data->setCallback(_data->getCallData()->current_call + 8, index); }
 
 	// Setup
 	void setup(ChapterIndex index);
@@ -371,7 +360,7 @@ protected:
 	 *
 	 * @param savepoint The savepoint
 	 *                    - Sound filename
-	 * @param resetItem true to reset item. 
+	 * @param resetItem true to reset item.
 	 * @param param3    sound parameter
 	 */
 	void playSound(const SavePoint &savepoint, bool resetItem = false, int param3 = -1);
@@ -423,7 +412,7 @@ protected:
 	/**
 	 * Process callback action when the entity direction is not kDirectionRight
 	 *
-	 * @param savepoint The savepoint. 
+	 * @param savepoint The savepoint.
 	 */
 	void callbackActionOnDirection(const SavePoint &savepoint);
 
@@ -432,32 +421,32 @@ protected:
 	/**
 	 * Updates the entity
 	 *
-	 * @param savepoint 	 The savepoint. 
+	 * @param savepoint 	 The savepoint.
 	 *                        - CarIndex
 	 *                        - EntityPosition
-	 * @param handleExcuseMe true to handle the kActionExcuseMe/kActionExcuseMeCath actions. 
+	 * @param handleExcuseMe true to handle the kActionExcuseMe/kActionExcuseMeCath actions.
 	 */
 	void updateEntity(const SavePoint &savepoint, bool handleExcuseMe = false);
 
 	/**
 	 * Call a specific savepoint (or draw sequence in default case)
 	 *
-	 * @param savepoint 	 The savepoint. 
+	 * @param savepoint 	 The savepoint.
 	 *                         - Sequence to draw in default case
 	 *                         - EntityIndex
 	 *                         - ActionIndex
 	 *                         - Sequence for the savepoint
-	 * @param handleExcuseMe true to handle excuse me. 
+	 * @param handleExcuseMe true to handle excuse me.
 	 */
 	void callSavepoint(const SavePoint &savepoint, bool handleExcuseMe = false);
 
 	/**
-	 * Handles entering/exiting a compartment. 
+	 * Handles entering/exiting a compartment.
 	 *
-	 * @param savepoint   The savepoint. 
-	 * @param position1   The first position. 
-	 * @param position2   The second position. 
-	 * @param car 		  The car. 
+	 * @param savepoint   The savepoint.
+	 * @param position1   The first position.
+	 * @param position2   The second position.
+	 * @param car 		  The car.
 	 * @param compartment The compartment.
 	 * @param alternate   true to use the alternate version of SceneManager::loadSceneFromObject()
 	 */

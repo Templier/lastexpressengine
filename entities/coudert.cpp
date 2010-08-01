@@ -146,7 +146,7 @@ IMPLEMENT_FUNCTION_S(Coudert, bloodJacket, 2)
 }
 
 /**
- * Handles entering/exiting a compartment. 
+ * Handles entering/exiting a compartment.
  *
  * @param seq1   The sequence to draw
  * @param param4 The compartment

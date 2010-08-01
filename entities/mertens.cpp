@@ -137,7 +137,7 @@ IMPLEMENT_FUNCTION_S(Mertens, bloodJacket, 2)
 }
 
 /**
- * Handles entering/exiting a compartment. 
+ * Handles entering/exiting a compartment.
  *
  * @param seq1   The sequence to draw
  * @param param4 The compartment
@@ -169,7 +169,7 @@ IMPLEMENT_FUNCTION_SI(Mertens, enterExitCompartment, 3)
 }
 
 /**
- * Handles entering/exiting a compartment. 
+ * Handles entering/exiting a compartment.
  *
  * @param seq1   The sequence to draw
  * @param param4 The compartment
@@ -206,7 +206,7 @@ IMPLEMENT_FUNCTION_SI(Mertens, enterExitCompartment2, 4)
 }
 
 /**
- * Handles entering/exiting a compartment. 
+ * Handles entering/exiting a compartment.
  *
  * @param seq1   The sequence to draw
  * @param param4 The compartment
@@ -525,18 +525,23 @@ IMPLEMENT_FUNCTION_I(Mertens, bonsoir, 12)
 	error("Mertens: callback function 12 not implemented!");
 }
 
+// bool
+// EntityIndex
 IMPLEMENT_FUNCTION_II(Mertens, function13, 13)
 	error("Mertens: callback function 13 not implemented!");
 }
 
+// EntityIndex
 IMPLEMENT_FUNCTION_I(Mertens, function14, 14)
 	error("Mertens: callback function 14 not implemented!");
 }
 
+// bool
 IMPLEMENT_FUNCTION_I(Mertens, function15, 15)
 	error("Mertens: callback function 15 not implemented!");
 }
 
+// bool
 IMPLEMENT_FUNCTION_I(Mertens, function16, 16)
 	error("Mertens: callback function 16 not implemented!");
 }
@@ -905,8 +910,347 @@ IMPLEMENT_FUNCTION(Mertens, chapter1Handler, 41)
 }
 
 IMPLEMENT_FUNCTION(Mertens, function42, 42)
-	error("Mertens: callback function 42 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
 
+	case kActionNone:
+		if (ENTITY_PARAM(2, 3)) {
+			ENTITY_PARAM(0, 1) = 1;
+			ENTITY_PARAM(0, 6) = 0;
+			ENTITY_PARAM(0, 7) = 0;
+			ENTITY_PARAM(0, 8) = 0;
+
+			ENTITY_PARAM(1, 1) = 0;
+			ENTITY_PARAM(1, 2) = 0;
+			ENTITY_PARAM(1, 3) = 0;
+			ENTITY_PARAM(1, 4) = 0;
+			ENTITY_PARAM(1, 5) = 0;
+			ENTITY_PARAM(1, 6) = 0;
+			ENTITY_PARAM(1, 7) = 0;
+
+			ENTITY_PARAM(2, 1) = 0; // BUG: is set twice. Maybe a bug?
+			ENTITY_PARAM(2, 2) = 0;
+			ENTITY_PARAM(2, 3) = 0;
+
+			params->param1 = 1;
+			params->param2 = 1;
+
+			getEntities()->drawSequenceLeft(kEntityMertens, "601E");
+		}
+
+		if (ENTITY_PARAM(2, 1) || getProgress().eventCorpseFound || getEvent(kEventMertensAskTylerCompartmentD) || getEvent(kEventMertensAskTylerCompartment))
+			getData()->inventoryItem = kItemNone;
+		else
+			getData()->inventoryItem = kItemInvalid;
+
+		if (!params->param2) {
+			TIME_CHECK_SAVEPOINT(kTime1125000, params->param3, kEntityMertens, kEntityMahmud, kAction170483072);
+
+			if (params->param4 != kTimeInvalid && getState()->time > kTimeCityChalons) {
+
+				if (getState()->time <= kTime1188000) {
+					if (!getEntities()->checkFields7(kCarGreenSleeping) && !getEntities()->checkFields7(kCarRedSleeping)
+					  || getSound()->isBuffered("REB1205")
+					  || !getEntities()->isEntitySitting(kEntityMmeBoutarel, kCarRedSleeping, kPosition_5790)
+					  || !params->param4) {
+						params->param4 = getState()->time;
+					}
+
+					if (params->param4 >= (int)getState()->time)
+						break;
+				}
+
+				ENTITY_PARAM(0, 4) = kTimeInvalid;
+				getData()->inventoryItem = kItemNone;
+
+				setCallback(8);
+				call(new ENTITY_SETUP_SSII(Mertens, setup_function29), "CON1210", "CON1210A");
+				break;
+			}
+		}
+
+label_callback_8:
+		if (getState()->time > kTime1215000 && !ENTITY_PARAM(0, 1) && !ENTITY_PARAM(2, 1)) {
+			if (!params->param5)
+				params->param5 = getState()->time + 2700;
+
+			if (params->param5 < (int)getState()->time) {
+				getEntities()->drawSequenceLeft(kEntityMertens, "601E");
+				ENTITY_PARAM(0, 1) = 1;
+				params->param5 = 0;
+			}
+		}
+
+		if (ENTITY_PARAM(0, 8)) {
+			getData()->inventoryItem = kItemNone;
+			setCallback(9);
+			call(new ENTITY_SETUP(Mertens, setup_function14), kEntityVerges);
+			break;
+		}
+
+		if (getProgress().field_14 == 29)
+			goto label_callback_13;
+
+label_callback_9:
+		if (ENTITY_PARAM(1, 6)) {
+			getData()->inventoryItem = kItemNone;
+			setCallback(10);
+			call(new ENTITY_SETUP(Mertens, setup_function16), true);
+			break;
+		}
+
+label_callback_10:
+		if (ENTITY_PARAM(1, 7)) {
+			getData()->inventoryItem = kItemNone;
+			setCallback(11);
+			call(new ENTITY_SETUP(Mertens, setup_function16), false);
+			break;
+		}
+
+label_callback_11:
+		if (ENTITY_PARAM(1, 5)) {
+			getData()->inventoryItem = kItemNone;
+			setCallback(12);
+			call(new ENTITY_SETUP(Mertens, setup_function15), true);
+			break;
+		}
+
+label_callback_12:
+		if (ENTITY_PARAM(1, 4)) {
+			getData()->inventoryItem = kItemNone;
+			setCallback(13);
+			call(new ENTITY_SETUP(Mertens, setup_function15), false);
+			break;
+		}
+
+label_callback_13:
+		if (ENTITY_PARAM(1, 2)) {
+			getData()->inventoryItem = kItemNone;
+			setCallback(14);
+			call(new ENTITY_SETUP(Mertens, setup_function35));
+			break;
+		}
+
+label_callback_14:
+		if (ENTITY_PARAM(0, 6)) {
+			getData()->inventoryItem = kItemNone;
+			setCallback(15);
+			call(new ENTITY_SETUP(Mertens, setup_function36));
+			break;
+		}
+
+label_callback_15:
+		if (ENTITY_PARAM(1, 3)) {
+			getData()->inventoryItem = kItemNone;
+			setCallback(16);
+			call(new ENTITY_SETUP(Mertens, setup_function40));
+			break;
+		}
+
+label_callback_16:
+		if (ENTITY_PARAM(1, 1)) {
+			ENTITY_PARAM(1, 1) = 0;
+			getData()->inventoryItem = kItemNone;
+			setCallback(17);
+			call(new ENTITY_SETUP_SIIS(Mertens, setup_function28), "CON1200");
+			break;
+		}
+
+label_callback_17:
+		if (ENTITY_PARAM(2, 2)) {
+			ENTITY_PARAM(2, 2) = 0;
+			getData()->inventoryItem = kItemNone;
+			setCallback(18);
+			call(new ENTITY_SETUP(Mertens, setup_function37));
+			break;
+		}
+
+label_callback_18:
+		if (!params->param1 && ENTITY_PARAM(0, 5)) {
+			getData()->inventoryItem = kItemNone;
+			setCallback(19);
+			call(new ENTITY_SETUP(Mertens, setup_function39));
+			break;
+		}
+
+label_callback_19:
+		if (ENTITY_PARAM(0, 1) && !getSound()->isBuffered(kEntityMertens)) {
+			if (getProgress().field_18 != 4)
+				getSound()->playSound(kEntityMertens, "CON1505");
+		}
+		break;
+
+	case kAction1:
+		getData()->inventoryItem = kItemNone;
+		setCallback(21);
+		call(new ENTITY_SETUP(Mertens, setup_savegame), kSavegameType2, kEventMertensAskTylerCompartmentD);
+		break;
+
+	case kAction11:
+		if (!ENTITY_PARAM(0, 1) && !ENTITY_PARAM(2, 1)) {
+			getData()->inventoryItem = kItemNone;
+			setCallback(20);
+			call(new ENTITY_SETUP(Mertens, setup_function13), savepoint.param.intValue, savepoint.entity2);
+		}
+		break;
+
+	case kActionDefault:
+		getData()->car = kCarGreenSleeping;
+		getData()->entityPosition = kPosition_1500;
+		getData()->posture = kPostureStanding;
+		getScenes()->loadSceneFromItemPosition(kItem7);
+		break;
+
+	case kActionDrawScene:
+		if (ENTITY_PARAM(2, 1))
+			break;
+
+		if (getEntities()->isPlayerPosition(kCarGreenSleeping, 23) && ENTITY_PARAM(0, 7) && !getEvent(kEventKronosConversation)) {
+			setCallback(1);
+			call(new ENTITY_SETUP(Mertens, setup_savegame), kSavegameType2, kEventMertensChronosInvitation);
+			break;
+		}
+
+		if (getEntities()->isPlayerPosition(kCarGreenSleeping, 23) && !getProgress().eventMertensChronosInvitation && !getEvent(kEventMertensLastCar) && !getEvent(kEventMertensLastCarOriginalJacket)) {
+			setCallback(1);
+			call(new ENTITY_SETUP(Mertens, setup_savegame), kSavegameType2, kEventMertensLastCar);
+			break;
+		}
+
+label_callback_2_4:
+		if ((getEntities()->isPlayerPosition(kCarGreenSleeping, 1) || getEntities()->isPlayerPosition(kCarGreenSleeping, 23)) && !ENTITY_PARAM(0, 1) && !ENTITY_PARAM(2, 1)) {
+			getData()->inventoryItem = kItemNone;
+			setCallback(getEntities()->isPlayerPosition(kCarGreenSleeping, 1) ? 5 : 6);
+			call(new ENTITY_SETUP(Mertens, setup_function13), getEntities()->isPlayerPosition(kCarGreenSleeping, 1), kEntityNone);
+			break;
+		}
+
+label_callback_5_6:
+		if (getEntities()->checkFields7(kCarGreenSleeping) && getData()->entityPosition < getEntityData(kEntityNone)->entityPosition) {
+			if (getProgress().jacket == kJacketOriginal || ENTITY_PARAM(0, 7)) {
+				getData()->inventoryItem = kItemNone;
+				setCallback(7);
+				call(new ENTITY_SETUP(Mertens, setup_function32));
+			}
+		}
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			getAction()->playAnimation(kEventMertensChronosInvitation);
+			getProgress().eventMertensChronosInvitation = true;
+			ENTITY_PARAM(0, 6) = 0;
+			ENTITY_PARAM(0, 7) = 0;
+			getEntities()->drawSequenceRight(kEntityMertens, "601A");
+			getScenes()->loadSceneFromItemPosition(kItem7);
+			ENTITY_PARAM(0, 1) = 0;
+			getData()->inventoryItem = kItemNone;
+
+			setCallback(2);
+			call(new ENTITY_SETUP(Mertens, setup_function6));
+			break;
+
+		case 2:
+		case 4:
+			getEntities()->drawSequenceLeft(kEntityMertens, "601B");
+			goto label_callback_2_4;
+
+		case 3:
+			getAction()->playAnimation(getProgress().jacket == kJacketOriginal ? kEventMertensLastCarOriginalJacket : kEventMertensLastCar);
+			getEntities()->drawSequenceRight(kEntityMertens, "601A");
+			getScenes()->loadSceneFromPosition(kCarGreenSleeping, 6);
+			getScenes()->loadSceneFromItemPosition(kItem7);
+			ENTITY_PARAM(0, 1) = 0;
+			getData()->inventoryItem = kItemNone;
+
+			setCallback(4);
+			call(new ENTITY_SETUP(Mertens, setup_function6));
+			break;
+
+		case 5:
+		case 6:
+			goto label_callback_5_6;
+
+		case 8:
+			goto label_callback_8;
+
+		case 9:
+			goto label_callback_9;
+
+		case 10:
+			goto label_callback_10;
+
+		case 11:
+			goto label_callback_11;
+
+		case 12:
+			goto label_callback_12;
+
+		case 13:
+			goto label_callback_13;
+
+		case 14:
+			goto label_callback_14;
+
+		case 15:
+			goto label_callback_15;
+
+		case 16:
+			goto label_callback_16;
+
+		case 17:
+			goto label_callback_17;
+
+		case 18:
+			goto label_callback_18;
+
+		case 19:
+			params->param1 = 1;
+			goto label_callback_19;
+
+		case 21:
+			getAction()->playAnimation(kEventMertensAskTylerCompartmentD);
+			getEntities()->drawSequenceRight(kEntityMertens, "601A");
+			getInventory()->getEntry(kItem7)->location = kLocationNone;
+			getScenes()->loadSceneFromPosition(kCarGreenSleeping, 25);
+
+			setCallback(22);
+			call(new ENTITY_SETUP(Mertens, setup_function6));
+			break;
+
+		case 22:
+			getEntities()->drawSequenceLeft(kEntityMertens, "601B");
+			break;
+		}
+		break;
+
+	case kAction225358684:
+		if (!ENTITY_PARAM(0, 1)) {
+			getData()->inventoryItem = kItemNone;
+			setCallback(23);
+			call(new ENTITY_SETUP(Mertens, setup_function30), savepoint.param.intValue);
+		}
+		break;
+
+	case kAction225932896:
+		if (!ENTITY_PARAM(2, 1) && !ENTITY_PARAM(0, 1))
+			getSavePoints()->push(kEntityMertens, kEntityFrancois, kAction205346192);
+		break;
+
+	case kAction305159806:
+		if (!ENTITY_PARAM(2, 1) && !ENTITY_PARAM(0, 1)) {
+			getData()->inventoryItem = kItemNone;
+			setCallback(24);
+			call(new ENTITY_SETUP(Mertens, setup_function31), savepoint.param.intValue);
+		}
+		break;
+
+	}
 }
 
 IMPLEMENT_FUNCTION(Mertens, chapter2, 43)

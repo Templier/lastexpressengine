@@ -53,6 +53,7 @@ enum TimeValue {
 	kTime1098000              = 1098000,
 	kTime1102500              = 1102500,
 	kTime1107000              = 1107000,
+	kTime1125000              = 1125000,
 	kTime1134000              = 1134000,
 	kTime1138500              = 1138500,
 	kTimeEnterEpernay         = 1147500,

@@ -150,7 +150,7 @@ IMPLEMENT_FUNCTION_II(Kahina, updateEntity, 8)
 }
 
 /**
- * Handles entering/exiting a compartment. 
+ * Handles entering/exiting a compartment.
  *
  * @param seq1   The sequence to draw
  * @param param4 The compartment
@@ -183,10 +183,8 @@ IMPLEMENT_FUNCTION(Kahina, chapter1Handler, 11)
 	if (savepoint.action != kActionNone)
 		return;
 
-	if (getState()->time > kTime1107000 && !params->param1 && getProgress().jacket) {
-		getSavePoints()->push(kEntityKahina, kEntityMertens, kAction238732837);
-		params->param1 = 1;
-	}
+	if (getProgress().jacket != kJacketOriginal)
+		TIME_CHECK_SAVEPOINT(kTime1107000, params->param1, kEntityKahina, kEntityMertens, kAction238732837);
 
 	if (getProgress().eventMertensChronosInvitation)
 		setup_function12();

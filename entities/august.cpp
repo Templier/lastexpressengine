@@ -151,7 +151,7 @@ IMPLEMENT_FUNCTION_SII(August, updatePosition, 4)
 }
 
 /**
- * Handles entering/exiting a compartment. 
+ * Handles entering/exiting a compartment.
  *
  * @param seq1   The sequence to draw
  * @param param4 The compartment
@@ -171,7 +171,7 @@ IMPLEMENT_FUNCTION_SI(August, enterExitCompartment2, 6)
 }
 
 /**
- * Handles entering/exiting a compartment. 
+ * Handles entering/exiting a compartment.
  *
  * @param seq1   The sequence to draw
  * @param param4 The compartment
@@ -992,10 +992,7 @@ IMPLEMENT_FUNCTION(August, chapter2Handler, 36)
 		break;
 
 	case kActionNone:
-		if (getState()->time > kTime1755000 && !params->param2) {
-			params->param2 = 1;
-			getSavePoints()->push(kEntityAugust, kEntityServers0, kAction252568704);
-		}
+		TIME_CHECK_SAVEPOINT(kTime1755000, params->param2, kEntityAugust, kEntityServers0, kAction252568704);
 
 		if (getState()->time > kTime1773000 && params->param1 && getEntities()->checkFields11()) {
 			getData()->inventoryItem = kItemNone;

@@ -115,7 +115,7 @@ IMPLEMENT_FUNCTION_S(Abbot, draw, 2)
 }
 
 /**
- * Handles entering/exiting a compartment. 
+ * Handles entering/exiting a compartment.
  *
  * @param seq1   The sequence to draw
  * @param param4 The compartment
@@ -468,10 +468,7 @@ IMPLEMENT_FUNCTION(Abbot, function22, 22)
 		break;
 
 	case kActionNone:
-		if (getState()->time > kTime1971000 && !params->param1) {
-			params->param1 = 1;
-			getSavePoints()->push(kEntityAbbot, kEntityServers0, kAction218586752);
-		}
+		TIME_CHECK_SAVEPOINT(kTime1971000, params->param1, kEntityAbbot, kEntityServers0, kAction218586752);
 
 		if (getState()->time > kTime1989000 && getEntities()->checkFields11()) {
 			getData()->inventoryItem = kItemNone;
@@ -1055,10 +1052,7 @@ IMPLEMENT_FUNCTION(Abbot, chapter4Handler, 41)
 		break;
 
 	case kActionNone:
-		if (getState()->time > kTime2358000 && !params->param1) {
-			params->param1 = 1;
-			getSavePoints()->push(kEntityAbbot, kEntityServers0, kAction218128129);
-		}
+		TIME_CHECK_SAVEPOINT(kTime2358000, params->param1, kEntityAbbot, kEntityServers0, kAction218128129);
 
 		if (getState()->time > kTime3289500 && getEntities()->checkFields11())
 			setup_function42();

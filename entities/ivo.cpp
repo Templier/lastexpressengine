@@ -94,7 +94,7 @@ IMPLEMENT_FUNCTION_S(Ivo, draw, 2)
 }
 
 /**
- * Handles entering/exiting a compartment. 
+ * Handles entering/exiting a compartment.
  *
  * @param seq1   The sequence to draw
  * @param param4 The compartment

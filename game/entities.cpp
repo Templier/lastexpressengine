@@ -378,20 +378,22 @@ void Entities::updateFields() const {
 			continue;
 
 		EntityData::EntityCallData *data = getData((EntityIndex)i);
+		int positionDelta = data->field_4A3 * 10;
 		switch (data->direction) {
 		default:
 			break;
 
 		case kDirectionUp:
-		case kDirectionDown:	// Replaces calls to CheckFields8
-			if (data->direction != kDirectionUp || (data->entityPosition + data->field_4A3 * 10) >= 10000)
-			{
-				if (data->direction == kDirectionDown) {
-					if (data->entityPosition > data->field_4A3 * 10)
-						data->entityPosition = (EntityPosition)(data->entityPosition - data->field_4A3 * 10);
-				}
+			if (data->entityPosition + positionDelta < 10000)
+				data->entityPosition = (EntityPosition)(data->entityPosition + positionDelta);
+			break;
+
+		case kDirectionDown:
+			if (data->entityPosition + positionDelta >= 10000) {
+					if (data->entityPosition > positionDelta)
+						data->entityPosition = (EntityPosition)(data->entityPosition - positionDelta);
 			} else {
-				data->entityPosition = (EntityPosition)(data->entityPosition + data->field_4A3 * 10);
+				data->entityPosition = (EntityPosition)(data->entityPosition + positionDelta);
 			}
 			break;
 
@@ -590,8 +592,8 @@ void Entities::resetSequences(EntityIndex entityIndex) const {
 	SAFE_DELETE(getData(entityIndex)->sequence3);
 	SAFE_DELETE(getData(entityIndex)->sequence4);
 
-	getData(entityIndex)->field_4A9 = 0;
-	getData(entityIndex)->field_4AA = 0;
+	getData(entityIndex)->field_4A9 = false;
+	getData(entityIndex)->field_4AA = false;
 
 	strcpy((char*)&getData(entityIndex)->sequenceNameCopy, "");
 	strcpy((char*)&getData(entityIndex)->sequenceName2, "");
@@ -1018,13 +1020,10 @@ int Entities::getCurrentFrame2(EntityIndex entity, Sequence *sequence, EntityPos
 		}
 
 		if (numFrames - frame == 1) {
-			uint32 lastFrame = ABS(position - sequence->getFrameInfo(numFrames)->entityPosition + data->entityPosition);
-			currentFrame2 = ABS(position - sequence->getFrameInfo(frame)->entityPosition + data->entityPosition);
+			uint32 lastFramePosition = ABS(position - sequence->getFrameInfo(numFrames)->entityPosition + data->entityPosition);
+			uint32 framePosition = ABS(position - sequence->getFrameInfo(frame)->entityPosition + data->entityPosition);
 
-			if (lastFrame <= currentFrame2)
-				currentFrame2 = numFrames;
-
-			return currentFrame2;
+			return (framePosition > lastFramePosition) ? numFrames : frame;
 		}
 
 		if (numFrames <= frame)
@@ -1200,7 +1199,7 @@ void Entities::updateEntityPosition(EntityIndex entityIndex) {
 
 	SAFE_DELETE(data->sequence2);
 	data->sequenceName2 = "";
-	data->field_4A9 = 0;
+	data->field_4A9 = false;
 
 	if (data->directionSwitch)
 		data->direction = data->directionSwitch;
@@ -1222,7 +1221,7 @@ void Entities::copySequenceData3To2(EntityIndex entityIndex) {
 	// Clear sequence 3
 	data->sequence3 = NULL;
 	data->sequenceName3 = "";
-	data->field_4AA = 0;
+	data->field_4AA = false;
 	data->directionSwitch = kDirectionNone;
 
 	if (data->field_4A9) {
@@ -1261,14 +1260,14 @@ void Entities::clearSequences(EntityIndex entityIndex) {
 	if (data->sequence3) {
 		SAFE_DELETE(data->sequence3);
 		data->sequenceName3 = "";
-		data->field_4AA = 0;
+		data->field_4AA = false;
 		data->directionSwitch = kDirectionNone;
 	}
 
 	if (data->sequence2) {
 		SAFE_DELETE(data->sequence2);
 		data->sequenceName2 = "";
-		data->field_4A9 = 0;
+		data->field_4A9 = false;
 		data->currentFrame2 = -1;
 	}
 
@@ -1467,8 +1466,8 @@ void Entities::getSequenceName(EntityIndex index, EntityDirection direction, Com
 	Position position = getScenes()->get(getState()->scene)->position;
 
 	// reset fields
-	data->field_4A9 = 0;
-	data->field_4AA = 0;
+	data->field_4A9 = false;
+	data->field_4AA = false;
 
 	switch (direction) {
 	default:
@@ -1507,7 +1506,7 @@ void Entities::getSequenceName(EntityIndex index, EntityDirection direction, Com
 			} else {
 				sequence1 = Common::String::printf("%02d%01d-03u.seq", index, data->clothes);
 				sequence2 = Common::String::printf("%02d%01d-%02deu.seq", index, data->clothes, position);
-				data->field_4A9 = 1;
+				data->field_4A9 = true;
 			}
 			break;
 
@@ -1542,11 +1541,11 @@ void Entities::getSequenceName(EntityIndex index, EntityDirection direction, Com
 
 			if (data->entityPosition >= kPosition_2087) {
 				sequence1 = Common::String::printf("%02d%01d-38u.seq", index, data->clothes);
-				data->field_4A9 = 1;
+				data->field_4A9 = true;
 			} else {
 				sequence1 = Common::String::printf("%02d%01d-%02deu.seq", index, data->clothes, position);
 				sequence2 = Common::String::printf("%02d%01d-38u.seq", index, data->clothes);
-				data->field_4AA = 1;
+				data->field_4AA = true;
 			}
 			break;
 
@@ -1587,11 +1586,11 @@ void Entities::getSequenceName(EntityIndex index, EntityDirection direction, Com
 
 			if (data->entityPosition <= kPosition_8513) {
 				sequence1 = Common::String::printf("%02d%01d-03d.seq", index, data->clothes);
-				data->field_4A9 = 1;
+				data->field_4A9 = true;
 			} else {
 				sequence1 = Common::String::printf("%02d%01d-%02ded.seq", index, data->clothes, position);
 				sequence2 = Common::String::printf("%02d%01d-03d.seq", index, data->clothes);
-				data->field_4AA = 1;
+				data->field_4AA = true;
 			}
 			break;
 
@@ -1629,7 +1628,7 @@ void Entities::getSequenceName(EntityIndex index, EntityDirection direction, Com
 			} else {
 				sequence1 = Common::String::printf("%02d%01d-38d.seq", index, data->clothes);
 				sequence2 = Common::String::printf("%02d%01d-%02ded.seq", index, data->clothes, position);
-				data->field_4A9 = 1;
+				data->field_4A9 = true;
 			}
 			break;
 
@@ -2681,8 +2680,8 @@ void Entities::clearEntitySequenceData(EntityData::EntityCallData * data, Entity
 	data->sequenceName2 = "";
 	data->sequenceName3 = "";
 
-	data->field_4A9 = 0;
-	data->field_4AA = 0;
+	data->field_4A9 = false;
+	data->field_4AA = false;
 	data->directionSwitch = kDirectionNone;
 
 	data->currentFrame2 = -1;

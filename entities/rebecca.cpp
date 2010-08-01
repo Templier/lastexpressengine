@@ -146,7 +146,7 @@ IMPLEMENT_FUNCTION_S(Rebecca, draw, 6)
 }
 
 /**
- * Handles entering/exiting a compartment. 
+ * Handles entering/exiting a compartment.
  *
  * @param seq1   The sequence to draw
  * @param param4 The compartment
@@ -166,7 +166,7 @@ IMPLEMENT_FUNCTION_SI(Rebecca, enterExitCompartment2, 8)
 }
 
 /**
- * Handles entering/exiting a compartment. 
+ * Handles entering/exiting a compartment.
  *
  * @param seq1   The sequence to draw
  * @param param4 The compartment

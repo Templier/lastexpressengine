@@ -54,6 +54,12 @@
 		function(); \
 	}
 
+#define TIME_CHECK_SAVEPOINT(timeValue, parameter, entity1, entity2, action) \
+	if (getState()->time > timeValue && !parameter) { \
+		parameter = 1; \
+		getSavePoints()->push(entity1, entity2, action); \
+	}
+
 #define TIME_CHECK_CALLBACK(class, timeValue, parameter, callback, function) \
 	if (getState()->time > timeValue && !parameter) { \
 		parameter = 1; \

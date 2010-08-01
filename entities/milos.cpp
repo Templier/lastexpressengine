@@ -93,7 +93,7 @@ IMPLEMENT_FUNCTION_S(Milos, draw, 2)
 }
 
 /**
- * Handles entering/exiting a compartment. 
+ * Handles entering/exiting a compartment.
  *
  * @param seq1   The sequence to draw
  * @param param4 The compartment
@@ -103,7 +103,7 @@ IMPLEMENT_FUNCTION_SI(Milos, enterExitCompartment, 3)
 }
 
 /**
- * Handles entering/exiting a compartment. 
+ * Handles entering/exiting a compartment.
  *
  * @param seq1   The sequence to draw
  * @param param4 The compartment
@@ -386,10 +386,7 @@ IMPLEMENT_FUNCTION(Milos, chapter1Handler, 15)
 		break;
 
 	case kActionNone:
-		if (getState()->time > kTime1071000 && !params->param3) {
-			params->param3 = 1;
-			getSavePoints()->push(kEntityMilos, kEntityServers1, kAction223002560);
-		}
+		TIME_CHECK_SAVEPOINT(kTime1071000, params->param3, kEntityMilos, kEntityServers1, kAction223002560);
 
 		if (getState()->time > kTime1089000 && getEntities()->checkFields11()) {
 			setup_function16();

@@ -133,7 +133,7 @@ void SavePoints::setCallback(EntityIndex index, Entity::Callback* callback) {
 	if (index >= 40)
 		error("SavePoints::setCallback - attempting to use an invalid entity index. Valid values 0-39, was %d", index);
 
-	if (!callback->isValid())
+	if (!callback || !callback->isValid())
 		error("SavePoints::setCallback - attempting to set an invalid callback for entity %s", ENTITY_NAME(index));
 
 	_callbacks[index] = callback;

@@ -97,6 +97,7 @@ public:
 private:
 	DECLARE_CALL_FUNCTION(iiii, Mertens, int, int, int, int)
 	DECLARE_CALL_FUNCTION(siis, Mertens, const char *, int, int, const char *)
+	DECLARE_CALL_FUNCTION(ssii, Mertens, const char *, const char *, int, int)
 };
 
 } // End of namespace LastExpress

@@ -105,7 +105,7 @@ IMPLEMENT_FUNCTION_I(MmeBoutarel, updateFromTime, 4)
 }
 
 /**
- * Handles entering/exiting a compartment. 
+ * Handles entering/exiting a compartment.
  *
  * @param seq1   The sequence to draw
  * @param param4 The compartment
@@ -115,7 +115,7 @@ IMPLEMENT_FUNCTION_SI(MmeBoutarel, enterExitCompartment, 5)
 }
 
 /**
- * Handles entering/exiting a compartment and updates position/play animation 
+ * Handles entering/exiting a compartment and updates position/play animation
  *
  * @param seq1   The sequence to draw
  * @param param4 The compartment
