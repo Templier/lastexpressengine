@@ -202,7 +202,7 @@ void SceneManager::loadSceneFromItemPosition(InventoryItem item) {
 	if (item == kItem5) car = kCarRedSleeping;
 	if (item == kItem7) car = kCarGreenSleeping;
 
-	if (!getEntities()->checkFields5(kEntityNone, car))
+	if (!getEntities()->isEntitySittingOrStanding(kEntityNone, car))
 		return;
 
 	if (getFlags()->flag_0)

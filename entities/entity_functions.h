@@ -204,7 +204,7 @@
 		break; \
 	case kActionDefault: \
 		getData()->entityPosition = positionFrom; \
-		getData()->field_493 = kField493_0; \
+		getData()->posture = kPostureStanding; \
 		setCallback(1); \
 		call(new ENTITY_SETUP_SIIS(class, setup_enterExitCompartment), sequenceFrom, compartmentFrom); \
 		break; \
@@ -214,14 +214,14 @@
 			break; \
 		case 1: \
 			setCallback(2); \
-			call(new ENTITY_SETUP(class, setup_checkEntity), kCarGreenSleeping, positionTo); \
+			call(new ENTITY_SETUP(class, setup_updateEntity), kCarGreenSleeping, positionTo); \
 			break; \
 		case 2: \
 			setCallback(3); \
 			call(new ENTITY_SETUP_SIIS(class, setup_enterExitCompartment), sequenceTo, compartmentTo); \
 			break; \
 		case 3: \
-			getData()->field_493 = kField493_1; \
+			getData()->posture = kPostureSitting; \
 			getEntities()->clearSequences(_entityIndex); \
 			CALLBACK_ACTION(); \
 			break; \

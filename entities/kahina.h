@@ -46,7 +46,7 @@ public:
 	DECLARE_FUNCTION_NOSETUP(updateFromTicks)
 	DECLARE_FUNCTION_I(function6)
 	DECLARE_FUNCTION_II(function7)
-	DECLARE_FUNCTION_II(checkEntity)
+	DECLARE_FUNCTION_II(updateEntity)
 	DECLARE_FUNCTION_SI(enterExitCompartment)
 	DECLARE_FUNCTION(chapter1)
 	DECLARE_FUNCTION(chapter1Handler)

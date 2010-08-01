@@ -42,7 +42,7 @@ Hadija::Hadija(LastExpressEngine *engine) : Entity(engine, kEntityHadija) {
 	ADD_CALLBACK_FUNCTION(Hadija, enterExitCompartment);
 	ADD_CALLBACK_FUNCTION(Hadija, playSound);
 	ADD_CALLBACK_FUNCTION(Hadija, updateFromTime);
-	ADD_CALLBACK_FUNCTION(Hadija, checkEntity);
+	ADD_CALLBACK_FUNCTION(Hadija, updateEntity);
 	ADD_CALLBACK_FUNCTION(Hadija, function6);
 	ADD_CALLBACK_FUNCTION(Hadija, function7);
 	ADD_CALLBACK_FUNCTION(Hadija, function8);
@@ -64,24 +64,49 @@ Hadija::Hadija(LastExpressEngine *engine) : Entity(engine, kEntityHadija) {
 	ADD_NULL_FUNCTION();
 }
 
+/**
+ * Resets the entity
+ */
 IMPLEMENT_FUNCTION(Hadija, reset, 1)
 	Entity::reset(savepoint);
 }
 
+/**
+ * Handles entering/exiting a compartment. 
+ *
+ * @param seq1   The sequence to draw
+ * @param param4 The compartment
+ */
 IMPLEMENT_FUNCTION_SI(Hadija, enterExitCompartment, 2)
 	Entity::enterExitCompartment(savepoint);
 }
 
+/**
+ * Plays sound
+ *
+ * @param param1 The sound filename
+ */
 IMPLEMENT_FUNCTION_S(Hadija, playSound, 3)
 	Entity::playSound(savepoint);
 }
 
+/**
+ * Updates parameter 2 using time value
+ *
+ * @param param1 The time to add
+ */
 IMPLEMENT_FUNCTION_NOSETUP(Hadija, updateFromTime, 4)
 	Entity::updateFromTime(savepoint);
 }
 
-IMPLEMENT_FUNCTION_II(Hadija, checkEntity, 5)
-	Entity::checkEntity(savepoint, true);
+/**
+ * Updates the entity
+ *
+ * @param param1 The car
+ * @param param2 The entity position
+ */
+IMPLEMENT_FUNCTION_II(Hadija, updateEntity, 5)
+	Entity::updateEntity(savepoint, true);
 }
 
 IMPLEMENT_FUNCTION(Hadija, function6, 6)
@@ -111,7 +136,7 @@ IMPLEMENT_FUNCTION(Hadija, chapter1, 10)
 
 	case kActionDefault:
 		getData()->entityPosition = kPosition_4070;
-		getData()->field_493 = kField493_1;
+		getData()->posture = kPostureSitting;
 		getData()->car = kCarGreenSleeping;
 
 		break;
@@ -134,7 +159,7 @@ label_callback2:
 
 			if (getState()->time <= kTime1134000) {
 
-				if (!getEntities()->checkFields7(kCarGreenSleeping) || !getEntities()->checkFields1(kEntityMahmud, kCarGreenSleeping, kPosition_5790) || !params->param3) {
+				if (!getEntities()->checkFields7(kCarGreenSleeping) || !getEntities()->isEntitySitting(kEntityMahmud, kCarGreenSleeping, kPosition_5790) || !params->param3) {
 					params->param3 = getState()->time + 75;
 
 					if (!params->param3) {
@@ -161,7 +186,7 @@ label_callback4:
 		if (params->param5 != kTimeInvalid && getState()->time > kTime1165500) {
 			if (getState()->time <= kTime1188000) {
 
-				if (!getEntities()->checkFields7(kCarGreenSleeping) || !getEntities()->checkFields1(kEntityMahmud, kCarGreenSleeping, kPosition_5790) || !params->param5) {
+				if (!getEntities()->checkFields7(kCarGreenSleeping) || !getEntities()->isEntitySitting(kEntityMahmud, kCarGreenSleeping, kPosition_5790) || !params->param5) {
 					params->param5 = getState()->time + 75;
 
 					if (!params->param5) {
@@ -208,7 +233,7 @@ IMPLEMENT_FUNCTION(Hadija, function12, 12)
 		getObjects()->update(kObjectCompartment8, kEntityNone, kLocation3, kCursorHandKnock, kCursorHand);
 
 		getData()->entityPosition = kPosition_2740;
-		getData()->field_493 = kField493_1;
+		getData()->posture = kPostureSitting;
 		getData()->car = kCarGreenSleeping;
 
 		getEntities()->clearSequences(kEntityHadija);
@@ -221,7 +246,7 @@ IMPLEMENT_FUNCTION(Hadija, chapter2, 13)
 		getEntities()->clearSequences(kEntityHadija);
 
 		getData()->entityPosition = kPosition_3050;
-		getData()->field_493 = kField493_1;
+		getData()->posture = kPostureSitting;
 		getData()->car = kCarGreenSleeping;
 		getData()->clothes = kClothesDefault;
 		getData()->inventoryItem = kItemNone;
@@ -291,7 +316,7 @@ IMPLEMENT_FUNCTION(Hadija, chapter3, 15)
 		getEntities()->clearSequences(kEntityHadija);
 
 		getData()->entityPosition = kPosition_4070;
-		getData()->field_493 = kField493_1;
+		getData()->posture = kPostureSitting;
 		getData()->car = kCarGreenSleeping;
 
 		break;
@@ -313,7 +338,7 @@ IMPLEMENT_FUNCTION(Hadija, chapter4, 17)
 
 	case kActionDefault:
 		getData()->entityPosition = kPosition_4070;
-		getData()->field_493 = kField493_1;
+		getData()->posture = kPostureSitting;
 		getData()->car = kCarGreenSleeping;
 		break;
 	}
@@ -328,7 +353,7 @@ IMPLEMENT_FUNCTION(Hadija, function19, 19)
 		getObjects()->update(kObjectCompartment8, kEntityNone, kLocation3, kCursorHandKnock, kCursorHand);
 
 		getData()->entityPosition = kPosition_4070;
-		getData()->field_493 = kField493_1;
+		getData()->posture = kPostureSitting;
 		getData()->car = kCarGreenSleeping;
 
 		getEntities()->clearSequences(kEntityHadija);
@@ -348,7 +373,7 @@ IMPLEMENT_FUNCTION(Hadija, chapter5, 20)
 		getEntities()->clearSequences(kEntityHadija);
 
 		getData()->entityPosition = kPosition_3969;
-		getData()->field_493 = kField493_1;
+		getData()->posture = kPostureSitting;
 		getData()->car = kCarRestaurant;
 		getData()->clothes = kClothesDefault;
 		getData()->inventoryItem = kItemNone;
@@ -374,12 +399,12 @@ IMPLEMENT_FUNCTION(Hadija, function22, 22)
 
 	case kActionDefault:
 		getData()->entityPosition = kPosition_5000;
-		getData()->field_493 = kField493_0;
+		getData()->posture = kPostureStanding;
 		getData()->car = kCarGreenSleeping;
 		break;
 
 	case kActionDrawScene:
-		if (getEntities()->checkFields5(kEntityNone, kCarGreenSleeping)) {
+		if (getEntities()->isEntitySittingOrStanding(kEntityNone, kCarGreenSleeping)) {
 			setup_function23();
 		}
 		break;
@@ -393,7 +418,7 @@ IMPLEMENT_FUNCTION(Hadija, function23, 23)
 
 	case kActionDefault:
 		setCallback(1);
-		call(new ENTITY_SETUP(Hadija, setup_checkEntity), kCarGreenSleeping, kPosition_4070);
+		call(new ENTITY_SETUP(Hadija, setup_updateEntity), kCarGreenSleeping, kPosition_4070);
 		break;
 
 	case kActionCallback:
@@ -410,7 +435,7 @@ IMPLEMENT_FUNCTION(Hadija, function23, 23)
 			getEntities()->clearSequences(kEntityHadija);
 
 			getData()->entityPosition = kPosition_4840;
-			getData()->field_493 = kField493_1;
+			getData()->posture = kPostureSitting;
 
 			getObjects()->update(kObjectCompartment5, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
 			break;

@@ -842,7 +842,7 @@ IMPLEMENT_ACTION(getOutsideTrain) {
 
 	if ((getEvent(kEventCathLookOutsideWindowDay) || getEvent(kEventCathLookOutsideWindowNight) || getObjects()->get(kObjectCompartment1).location2)
 	  && getProgress().isTrainRunning
-	  && (object != kObjectOutsideAnnaCompartment || (!getEntities()->checkFields1(kEntityRebecca, kCarRedSleeping, kPosition_4840) && getObjects()->get(kObjectOutsideBetweenCompartments).location == kLocation2))
+	  && (object != kObjectOutsideAnnaCompartment || (!getEntities()->isEntitySitting(kEntityRebecca, kCarRedSleeping, kPosition_4840) && getObjects()->get(kObjectOutsideBetweenCompartments).location == kLocation2))
 	  && getInventory()->getSelectedItem() != kItemFirebird
 	  && getInventory()->getSelectedItem() != kItemBriefcase) {
 
@@ -1287,7 +1287,7 @@ IMPLEMENT_ACTION(useWhistle) {
 			break;
 		}
 
-		if (getEntities()->checkFields1(kEntityNone, kCarGreenSleeping, kPosition_8200)) {
+		if (getEntities()->isEntitySitting(kEntityNone, kCarGreenSleeping, kPosition_8200)) {
 			evt = kEventCathOpenEgg;
 
 			Scene *scene = getScenes()->get(hotspot.scene);
@@ -1306,7 +1306,7 @@ IMPLEMENT_ACTION(useWhistle) {
 			break;
 		}
 
-		evt = (getEntities()->checkFields1(kEntityNone, kCarGreenSleeping, kPosition_8200)) ? kEventCathCloseEgg : kEventCathCloseEggNoBackground;
+		evt = (getEntities()->isEntitySitting(kEntityNone, kCarGreenSleeping, kPosition_8200)) ? kEventCathCloseEgg : kEventCathCloseEggNoBackground;
 		getProgress().isEggOpen = 0;
 		break;
 
@@ -1316,7 +1316,7 @@ IMPLEMENT_ACTION(useWhistle) {
 			break;
 		}
 
-		evt = (getEntities()->checkFields1(kEntityNone, kCarGreenSleeping, kPosition_8200)) ? kEventCathUseWhistleOpenEgg : kEventCathUseWhistleOpenEggNoBackground;
+		evt = (getEntities()->isEntitySitting(kEntityNone, kCarGreenSleeping, kPosition_8200)) ? kEventCathUseWhistleOpenEgg : kEventCathUseWhistleOpenEggNoBackground;
 		break;
 
 	}
@@ -1594,16 +1594,17 @@ void Action::dropCorpse(bool process) const {
 }
 
 bool Action::handleOtherCompartment(ObjectIndex object, bool doPlaySound, bool doLoadScene) const {
+	EntityData *_data = getEntities()->get(kEntityMertens)->getParamData();
 
 	// Only handle compartments
-	if (getEntityData(kEntityNone)->field_493
+	if (getEntityData(kEntityNone)->posture != kPostureStanding
 	|| ((object < kObjectCompartment2 || object > kObjectCompartment8) && (object < kObjectCompartmentA || object > kObjectCompartmentH)))
 		return false;
 
 	//////////////////////////////////////////////////////////////////////////
 	// Gendarmes
 	if (getEntityData(kEntityNone)->car == getEntityData(kEntityGendarmes)->car
-	&& !getEntityData(kEntityGendarmes)->field_493
+	&& getEntityData(kEntityGendarmes)->posture == kPostureStanding
 	&& !getEntities()->compare(kEntityNone, kEntityGendarmes)) {
 		if (doPlaySound)
 			playCompartmentSoundEvents(kEntityNone, object);
@@ -1616,18 +1617,18 @@ bool Action::handleOtherCompartment(ObjectIndex object, bool doPlaySound, bool d
 
 	//////////////////////////////////////////////////////////////////////////
 	// Mertens
-	if (getEntityData(kEntityNone)->field_493 == kField493_3
+	if (getEntityData(kEntityNone)->posture == kPosture3
 	 && getEntityData(kEntityMertens)->car == kCarGreenSleeping
-	 && !getEntityData(kEntityMertens)->field_493
-	 && !((EntityData::EntityParametersIIII*)getEntities()->get(kEntityMertens)->getParamData()->getParameters(8, 0))->param1)
+	 && !getEntityData(kEntityMertens)->posture
+	 && !ENTITY_PARAM(0, 1))
 		 error("Action::handleOtherCompartment: not implemented!");
 
 	//////////////////////////////////////////////////////////////////////////
 	// Coudert
 	if (getEntityData(kEntityNone)->car != kCarRedSleeping
 	 || !getEntityData(kEntityCoudert)->car
-	 || getEntityData(kEntityCoudert)->field_493
-	 || ((EntityData::EntityParametersIIII*)getEntities()->get(kEntityCoudert)->getParamData()->getParameters(8, 0))->param1)
+	 || getEntityData(kEntityCoudert)->posture != kPostureStanding
+	 || ENTITY_PARAM(0, 1))
 	 return false;
 
 	if (!getEntities()->compare(kEntityNone, kEntityCoudert))
@@ -1642,7 +1643,7 @@ bool Action::handleOtherCompartment(ObjectIndex object, bool doPlaySound, bool d
 
 		if (!getSound()->isBuffered(kEntityCoudert))
 			getSound()->playSound(kEntityCoudert, (random(2)) ? "JAC1000" : "JAC1000A");
-	
+
 		if (doLoadScene)
 			getScenes()->loadSceneFromObject(object);
 
@@ -1658,7 +1659,7 @@ bool Action::handleOtherCompartment(ObjectIndex object, bool doPlaySound, bool d
 
 		if (!getSound()->isBuffered(kEntityCoudert))
 			getSound()->playSound(kEntityCoudert, (random(2)) ? "JAC1000" : "JAC1000A");
-	
+
 		if (doLoadScene)
 			getScenes()->loadSceneFromObject(object, true);
 	}
@@ -1763,7 +1764,7 @@ CursorStyle Action::getCursor(const SceneHotspot &hotspot) const {
 
 		if ((getEvent(kEventCathLookOutsideWindowDay) || getEvent(kEventCathLookOutsideWindowDay) || getObjects()->get(kObjectCompartment1).location2 == kLocation1)
 			&& getProgress().isTrainRunning
-			&& (object != kObjectOutsideAnnaCompartment || (getEntities()->checkFields1(kEntityRebecca, kCarRedSleeping, kPosition_4840) && getObjects()->get(kObjectOutsideBetweenCompartments).location == 2))
+			&& (object != kObjectOutsideAnnaCompartment || (getEntities()->isEntitySitting(kEntityRebecca, kCarRedSleeping, kPosition_4840) && getObjects()->get(kObjectOutsideBetweenCompartments).location == 2))
 			&& getInventory()->getSelectedItem() != kItemBriefcase && getInventory()->getSelectedItem() != kItemFirebird)
 			return kCursorForward;
 
@@ -1853,7 +1854,7 @@ LABEL_KEY:
 		|| getObjects()->get(object).entity
 		|| getObjects()->get(object).location != 1
 		|| !getObjects()->get(object).cursor2
-		|| getEntities()->checkFields3()
+		|| getEntities()->isEntitySittingInCompartmentCars()
 		|| getEntities()->checkFields2(object))
 			return (CursorStyle)getObjects()->get(object).cursor2;
 		else
@@ -1876,7 +1877,6 @@ void Action::playAnimation(EventIndex index) const {
 	getInventory()->show();
 	getInventory()->showHourGlass();
 
-	// TODO: not sure how it is supposed to work
 	if (!getFlags()->mouseRightClick) {
 
 		if (getGlobalTimer()) {
@@ -1886,8 +1886,6 @@ void Action::playAnimation(EventIndex index) const {
 			}
 		}
 
-		// TODO adjust screen coordinates for drawing animation
-		// TODO compute arg to animation
 		bool processSound = false;
 		if (index >= kEventCorpseDropFloorOriginal
 		 || index == kEventCathWakingUp
@@ -1898,15 +1896,16 @@ void Action::playAnimation(EventIndex index) const {
 
 		// FIXME NIS animations need to be passed one more parameter than currently
 		Animation animation;
-		if (animation.load(getArchive(Common::String(animationList[index].filename) + ".nis")))
+		if (animation.load(getArchive(Common::String(animationList[index].filename) + ".nis") /*, processSound ? 0x4000 : 0xC000 */))
 			animation.play();
 
 		if (getSound()->isBuffered("TIMER"))
 			getSound()->removeFromQueue("TIMER");
 	}
 
-	// Adjust game time
 	getEvent(index) = 1;
+
+	// Adjust game time
 	getState()->timeTicks += animationList[index].time;
 	getState()->time += animationList[index].time * getState()->timeDelta;
 }

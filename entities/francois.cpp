@@ -71,30 +71,66 @@ Francois::Francois(LastExpressEngine *engine) : Entity(engine, kEntityFrancois) 
 	ADD_NULL_FUNCTION();
 }
 
+/**
+ * Resets the entity
+ */
 IMPLEMENT_FUNCTION(Francois, reset, 1)
 	Entity::reset(savepoint, true);
 }
 
+/**
+ * Updates parameter 2 using time value
+ *
+ * @param param1 The time to add
+ */
 IMPLEMENT_FUNCTION_I(Francois, updateFromTime, 2)
 	Entity::updateFromTime(savepoint);
 }
 
+/**
+ * Draws the entity
+ *
+ * @param seq1 The sequence to draw
+ */
 IMPLEMENT_FUNCTION_S(Francois, draw, 3)
 	Entity::draw(savepoint);
 }
 
+/**
+ * Handles entering/exiting a compartment. 
+ *
+ * @param seq1   The sequence to draw
+ * @param param4 The compartment
+ */
 IMPLEMENT_FUNCTION_SI(Francois, enterExitCompartment, 4)
 	Entity::enterExitCompartment(savepoint);
 }
 
+/**
+ * Handles entering/exiting a compartment and updates position/play animation
+ *
+ * @param seq1   The sequence to draw
+ * @param param4 The compartment
+ */
 IMPLEMENT_FUNCTION_SI(Francois, enterExitCompartment2, 5)
 	Entity::enterExitCompartment(savepoint, kPosition_5790, kPosition_6130, kCarRedSleeping, kObjectCompartmentD, true);
 }
 
+/**
+ * Plays sound
+ *
+ * @param param1 The sound filename
+ */
 IMPLEMENT_FUNCTION_S(Francois, playSound, 6)
 	Entity::playSound(savepoint);
 }
 
+/**
+ * Save the game
+ *
+ * @param param1 The SavegameType for the savegame
+ * @param param2 The EventIndex for the savegame
+ */
 IMPLEMENT_FUNCTION_II(Francois, savegame, 7)
 	Entity::savegame(savepoint);
 }
@@ -130,7 +166,7 @@ IMPLEMENT_FUNCTION(Francois, function9, 9)
 			break;
 
 		case 2:
-			getData()->field_493 = kField493_0;
+			getData()->posture = kPostureStanding;
 			CALLBACK_ACTION();
 			break;
 		}
@@ -165,7 +201,7 @@ IMPLEMENT_FUNCTION(Francois, function10, 10)
 			break;
 
 		case 2:
-			getData()->field_493 = kField493_1;
+			getData()->posture = kPostureSitting;
 			getEntities()->clearSequences(kEntityFrancois);
 
 			CALLBACK_ACTION();
@@ -210,7 +246,7 @@ IMPLEMENT_FUNCTION(Francois, chapter1, 17)
 
 	case kActionDefault:
 		getData()->entityPosition = kPosition_5790;
-		getData()->field_493 = kField493_1;
+		getData()->posture = kPostureSitting;
 		getData()->car = kCarRedSleeping;
 		break;
 	}
@@ -255,7 +291,7 @@ IMPLEMENT_FUNCTION(Francois, function19, 19)
 IMPLEMENT_FUNCTION(Francois, function20, 20)
 	if (savepoint.action == kActionDefault) {
 		getData()->entityPosition = kPosition_5790;
-		getData()->field_493 = kField493_1;
+		getData()->posture = kPostureSitting;
 		getData()->car = kCarRedSleeping;
 
 		getEntities()->clearSequences(kEntityFrancois);
@@ -275,7 +311,7 @@ IMPLEMENT_FUNCTION(Francois, chapter2, 21)
 		getEntities()->clearSequences(kEntityFrancois);
 
 		getData()->entityPosition = kPosition_4689;
-		getData()->field_493 = kField493_1;
+		getData()->posture = kPostureSitting;
 		getData()->car = kCarRestaurant;
 		getData()->clothes = kClothesDefault;
 		getData()->inventoryItem = kItemNone;
@@ -302,7 +338,7 @@ IMPLEMENT_FUNCTION(Francois, chapter2Handler, 22)
 			getObjects()->update(kObjectCompartmentD, kEntityNone, kLocation2, kCursorKeepValue, kCursorKeepValue);
 			getSavePoints()->push(kEntityFrancois, kEntityMmeBoutarel, kAction100957716);
 			getData()->entityPosition = kPosition_5790;
-			getData()->field_493 = kField493_1;
+			getData()->posture = kPostureSitting;
 			getEntities()->clearSequences(kEntityFrancois);
 			setup_function23();
 			break;
@@ -333,7 +369,7 @@ IMPLEMENT_FUNCTION(Francois, chapter3, 24)
 		getEntities()->clearSequences(kEntityFrancois);
 
 		getData()->entityPosition = kPosition_5790;
-		getData()->field_493 = kField493_1;
+		getData()->posture = kPostureSitting;
 		getData()->car = kCarRedSleeping;
 		getData()->clothes = kClothesDefault;
 		getData()->inventoryItem = kItemNone;
@@ -358,7 +394,7 @@ IMPLEMENT_FUNCTION(Francois, chapter4, 26)
 		getEntities()->clearSequences(kEntityFrancois);
 
 		getData()->entityPosition = kPosition_5790;
-		getData()->field_493 = kField493_1;
+		getData()->posture = kPostureSitting;
 		getData()->car = kCarRedSleeping;
 		getData()->clothes = kClothesDefault;
 		getData()->inventoryItem = kItemNone;
@@ -386,7 +422,7 @@ IMPLEMENT_FUNCTION(Francois, chapter5, 28)
 		getEntities()->clearSequences(kEntityFrancois);
 
 		getData()->entityPosition = kPosition_3969;
-		getData()->field_493 = kField493_1;
+		getData()->posture = kPostureSitting;
 		getData()->car = kCarRestaurant;
 		getData()->clothes = kClothesDefault;
 		getData()->inventoryItem = kItemNone;
@@ -411,7 +447,7 @@ IMPLEMENT_FUNCTION(Francois, function30, 30)
 
 	case kActionDefault:
 		getData()->entityPosition = kPosition_5790;
-		getData()->field_493 = kField493_1;
+		getData()->posture = kPostureSitting;
 		getData()->car = kCarRedSleeping;
 		getData()->clothes = kClothesDefault;
 		getData()->inventoryItem = kItemNone;

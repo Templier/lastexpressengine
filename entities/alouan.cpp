@@ -42,7 +42,7 @@ Alouan::Alouan(LastExpressEngine *engine) : Entity(engine, kEntityAlouan) {
 	ADD_CALLBACK_FUNCTION(Alouan, enterExitCompartment);
 	ADD_CALLBACK_FUNCTION(Alouan, playSound);
 	ADD_CALLBACK_FUNCTION(Alouan, updateFromTime);
-	ADD_CALLBACK_FUNCTION(Alouan, checkEntity);
+	ADD_CALLBACK_FUNCTION(Alouan, updateEntity);
 	ADD_CALLBACK_FUNCTION(Alouan, compartment6);
 	ADD_CALLBACK_FUNCTION(Alouan, compartment8);
 	ADD_CALLBACK_FUNCTION(Alouan, compartment6to8);
@@ -64,24 +64,49 @@ Alouan::Alouan(LastExpressEngine *engine) : Entity(engine, kEntityAlouan) {
 	ADD_NULL_FUNCTION();
 }
 
+/**
+ * Resets the entity
+ */
 IMPLEMENT_FUNCTION(Alouan, reset, 1)
 	Entity::reset(savepoint);
 }
 
+/**
+ * Handles entering/exiting a compartment. 
+ *
+ * @param seq1   The sequence to draw
+ * @param param4 The compartment
+ */
 IMPLEMENT_FUNCTION_SI(Alouan, enterExitCompartment, 2)
 	Entity::enterExitCompartment(savepoint);
 }
 
+/**
+ * Plays sound
+ *
+ * @param param1 The sound filename
+ */
 IMPLEMENT_FUNCTION_S(Alouan, playSound, 3)
 	Entity::playSound(savepoint);
 }
 
+/**
+ * Updates parameter 2 using time value
+ *
+ * @param param1 The time to add
+ */
 IMPLEMENT_FUNCTION_I(Alouan, updateFromTime, 4)
 	Entity::updateFromTime(savepoint);
 }
 
-IMPLEMENT_FUNCTION_II(Alouan, checkEntity, 5)
-	Entity::checkEntity(savepoint, true);
+/**
+ * Updates the entity
+ *
+ * @param param1 The car
+ * @param param2 The entity position
+ */
+IMPLEMENT_FUNCTION_II(Alouan, updateEntity, 5)
+	Entity::updateEntity(savepoint, true);
 }
 
 IMPLEMENT_FUNCTION(Alouan, compartment6, 6)
@@ -111,7 +136,7 @@ IMPLEMENT_FUNCTION(Alouan, chapter1, 10)
 
 	case kActionDefault:
 		getData()->entityPosition = kPosition_2740;
-		getData()->field_493 = kField493_1;
+		getData()->posture = kPostureSitting;
 		getData()->car = kCarGreenSleeping;
 
 		break;
@@ -162,7 +187,7 @@ IMPLEMENT_FUNCTION(Alouan, function12, 12)
 		getObjects()->update(kObjectCompartment5, kEntityNone, kLocation3, kCursorHandKnock, kCursorHand);
 
 		getData()->entityPosition = kPosition_4070;
-		getData()->field_493 = kField493_1;
+		getData()->posture = kPostureSitting;
 		getData()->car = kCarGreenSleeping;
 
 		getEntities()->clearSequences(kEntityAlouan);
@@ -176,7 +201,7 @@ IMPLEMENT_FUNCTION(Alouan, chapter2, 13)
 	getEntities()->clearSequences(kEntityAlouan);
 
 	getData()->entityPosition = kPosition_2740;
-	getData()->field_493 = kField493_1;
+	getData()->posture = kPostureSitting;
 	getData()->car = kCarGreenSleeping;
 	getData()->clothes = kClothesDefault;
 	getData()->inventoryItem = kItemNone;
@@ -257,7 +282,7 @@ IMPLEMENT_FUNCTION(Alouan, chapter3, 15)
 		getEntities()->clearSequences(kEntityAlouan);
 
 		getData()->entityPosition = kPosition_2740;
-		getData()->field_493 = kField493_1;
+		getData()->posture = kPostureSitting;
 		getData()->car = kCarGreenSleeping;
 
 		break;
@@ -281,7 +306,7 @@ IMPLEMENT_FUNCTION(Alouan, chapter4, 17)
 		getEntities()->clearSequences(kEntityAlouan);
 
 		getData()->entityPosition = kPosition_2740;
-		getData()->field_493 = kField493_1;
+		getData()->posture = kPostureSitting;
 		getData()->car = kCarGreenSleeping;
 
 		break;
@@ -298,7 +323,7 @@ IMPLEMENT_FUNCTION(Alouan, function19, 19)
 		getObjects()->update(kObjectCompartment5, kEntityNone, kLocation3, kCursorHandKnock, kCursorHand);
 
 		getData()->entityPosition = kPosition_2740;
-		getData()->field_493 = kField493_1;
+		getData()->posture = kPostureSitting;
 		getData()->car = kCarGreenSleeping;
 
 		getEntities()->clearSequences(kEntityAlouan);
@@ -318,7 +343,7 @@ IMPLEMENT_FUNCTION(Alouan, chapter5, 20)
 		getEntities()->clearSequences(kEntityAlouan);
 
 		getData()->entityPosition = kPosition_3969;
-		getData()->field_493 = kField493_1;
+		getData()->posture = kPostureSitting;
 		getData()->car = kCarRestaurant;
 		getData()->clothes = kClothesDefault;
 		getData()->inventoryItem = kItemNone;
@@ -344,12 +369,12 @@ IMPLEMENT_FUNCTION(Alouan, function22, 22)
 
 	case kActionDefault:
 		getData()->entityPosition = kPosition_5000;
-		getData()->field_493 = kField493_0;
+		getData()->posture = kPostureStanding;
 		getData()->car = kCarGreenSleeping;
 		break;
 
 	case kActionDrawScene:
-		if (getEntities()->checkFields5(kEntityNone, kCarGreenSleeping))
+		if (getEntities()->isEntitySittingOrStanding(kEntityNone, kCarGreenSleeping))
 			setup_function23();
 		break;
 	}
@@ -362,7 +387,7 @@ IMPLEMENT_FUNCTION(Alouan, function23, 23)
 
 	case kActionDefault:
 		setCallback(1);
-		call(new ENTITY_SETUP(Alouan, setup_checkEntity), kCarGreenSleeping, kPosition_4070);
+		call(new ENTITY_SETUP(Alouan, setup_updateEntity), kCarGreenSleeping, kPosition_4070);
 		break;
 
 	case kActionCallback:
@@ -379,7 +404,7 @@ IMPLEMENT_FUNCTION(Alouan, function23, 23)
 			getEntities()->clearSequences(kEntityAlouan);
 
 			getData()->entityPosition = kPosition_4070;
-			getData()->field_493 = kField493_1;
+			getData()->posture = kPostureSitting;
 
 			getObjects()->update(kObjectCompartment6, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
 			break;

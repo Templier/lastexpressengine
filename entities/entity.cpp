@@ -111,8 +111,6 @@ void Entity::setup(ChapterIndex index) {
 // Shared functions
 //////////////////////////////////////////////////////////////////////////
 
-//////////////////////////////////////////////////////////////////////////
-// Reset an entity
 void Entity::reset(const SavePoint &savepoint, bool resetClothes) {
 	EXPOSE_PARAMS(EntityData::EntityParametersIIII)
 
@@ -130,22 +128,19 @@ void Entity::reset(const SavePoint &savepoint, bool resetClothes) {
 		break;
 
 	case kActionNone:
-		if (getEntities()->checkEntity(_entityIndex, kCarGreenSleeping, (EntityPosition)params->param1))
+		if (getEntities()->updateEntity(_entityIndex, kCarGreenSleeping, (EntityPosition)params->param1))
 			params->param1 = (params->param1 == 10000) ? 0 : 10000;
 		break;
 
 	case kActionDefault:
 		getData()->entityPosition = kPositionNone;
-		getData()->field_493 = kField493_0;
+		getData()->posture = kPostureStanding;
 		getData()->car = kCarGreenSleeping;
 		params->param1 = 10000;
 		break;
 	}
 }
 
-//////////////////////////////////////////////////////////////////////////
-// param1: savegame entry type
-// param2: EventIndex
 void Entity::savegame(const SavePoint &savepoint) {
 	EXPOSE_PARAMS(EntityData::EntityParametersIIII)
 
@@ -254,8 +249,7 @@ void Entity::updateFromTime(const SavePoint &savepoint) {
 	}
 }
 
-
-void Entity::savepointDirection(const SavePoint &savepoint) {
+void Entity::callbackActionOnDirection(const SavePoint &savepoint) {
 	switch (savepoint.action) {
 	default:
 		break;
@@ -284,7 +278,7 @@ void Entity::savepointCheckFields11(const SavePoint &savepoint) {
 	}
 }
 
-void Entity::checkEntity(const SavePoint &savepoint, bool handleExcuseMe) {
+void Entity::updateEntity(const SavePoint &savepoint, bool handleExcuseMe) {
 	EXPOSE_PARAMS(EntityData::EntityParametersIIII)
 
 	switch (savepoint.action) {
@@ -303,18 +297,12 @@ void Entity::checkEntity(const SavePoint &savepoint, bool handleExcuseMe) {
 
 	case kActionNone:
 	case kActionDefault:
-		if (getEntities()->checkEntity(_entityIndex, (CarIndex)params->param1, (EntityPosition)params->param2))
+		if (getEntities()->updateEntity(_entityIndex, (CarIndex)params->param1, (EntityPosition)params->param2))
 			CALLBACK_ACTION()
 		break;
 	}
 }
 
-//////////////////////////////////////////////////////////////////////////
-// Parameters
-//  - sequence name
-//  - EntityIndex
-//  - ActionIndex
-//  - sequence name
 void Entity::callSavepoint(const SavePoint &savepoint, bool handleExcuseMe) {
 	EXPOSE_PARAMS(EntityData::EntityParametersSIIS)
 
@@ -348,10 +336,7 @@ void Entity::callSavepoint(const SavePoint &savepoint, bool handleExcuseMe) {
 	}
 }
 
-//////////////////////////////////////////////////////////////////////////
-// param1: sequence
-// param2: object index
-void Entity::enterExitCompartment(const SavePoint &savepoint, EntityPosition position1, EntityPosition position2, CarIndex car, ObjectIndex compartment, bool alternate) {
+void Entity::enterExitCompartment(const SavePoint &savepoint, EntityPosition position1, EntityPosition position2, CarIndex car, ObjectIndex compartment, bool alternate, bool updatePosture) {
 	EXPOSE_PARAMS(EntityData::EntityParametersSIIS)
 
 	switch (savepoint.action) {
@@ -363,6 +348,9 @@ void Entity::enterExitCompartment(const SavePoint &savepoint, EntityPosition pos
 		if (position1)
 			getData()->entityPosition = position1;
 
+		if (updatePosture)
+			getData()->posture = kPostureSitting;
+
 		CALLBACK_ACTION()
 		break;
 
@@ -371,9 +359,9 @@ void Entity::enterExitCompartment(const SavePoint &savepoint, EntityPosition pos
 		getEntities()->enterCompartment(_entityIndex, (ObjectIndex)params->param4, false);
 
 		if (position1) {
-			getData()->field_493 = kField493_1;
+			getData()->posture = kPostureSitting;
 
-			if (getEntities()->checkFields1(kEntityNone, car, position1) || getEntities()->checkFields1(kEntityNone, car, position2)) {
+			if (getEntities()->isEntitySitting(kEntityNone, car, position1) || getEntities()->isEntitySitting(kEntityNone, car, position2)) {
 				getAction()->playAnimation(isDay() ? kEventCathTurningDay : kEventCathTurningNight);
 				getSound()->playSound(kEntityNone, "BUMP");
 				getScenes()->loadSceneFromObject(compartment, alternate);
@@ -383,11 +371,6 @@ void Entity::enterExitCompartment(const SavePoint &savepoint, EntityPosition pos
 	}
 }
 
-//////////////////////////////////////////////////////////////////////////
-// Parameters
-//  - Sequence
-//  - CarIndex
-//  - Position
 void Entity::updatePosition(const SavePoint &savepoint, bool handleExcuseMe) {
 	EXPOSE_PARAMS(EntityData::EntityParametersSIII)
 

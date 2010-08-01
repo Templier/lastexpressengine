@@ -264,7 +264,7 @@ void Logic::eventMouse(const Common::Event &ev) {
 		return;
 
 	_flagActionPerformed = true;
-	
+
 	SceneIndex newScene = _action->processHotspot(*hotspot);
 	if (newScene != kSceneInvalid && newScene != kSceneStopProcessing)
 		hotspot->scene = newScene;

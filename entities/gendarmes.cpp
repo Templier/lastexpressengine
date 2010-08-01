@@ -59,6 +59,9 @@ Gendarmes::Gendarmes(LastExpressEngine *engine) : Entity(engine, kEntityGendarme
 	ADD_CALLBACK_FUNCTION(Gendarmes, chapter5);
 }
 
+/**
+ * Resets the entity
+ */
 IMPLEMENT_FUNCTION(Gendarmes, reset, 1)
 	Entity::reset(savepoint);
 }
@@ -105,7 +108,7 @@ IMPLEMENT_FUNCTION_I(Gendarmes, function6, 6)
 			ENTITY_PARAM(0, 1) = 1;
 		}
 
-		if (getEntities()->checkFields9(kEntityGendarmes, kEntityNone, 1000) && !getEntityData(kEntityNone)->field_493) {
+		if (getEntities()->checkFields9(kEntityGendarmes, kEntityNone, 1000) && !getEntityData(kEntityNone)->posture) {
 			setCallback(1);
 			call(new ENTITY_SETUP(Gendarmes, setup_savegame), kSavegameType2, kEventGendarmesArrestation);
 		}
@@ -120,6 +123,12 @@ IMPLEMENT_FUNCTION_I(Gendarmes, function6, 6)
 	}
 }
 
+/**
+ * Save the game
+ *
+ * @param param1 The SavegameType for the savegame
+ * @param param2 The EventIndex for the savegame
+ */
 IMPLEMENT_FUNCTION_II(Gendarmes, savegame, 7)
 	Entity::savegame(savepoint);
 }
@@ -133,7 +142,7 @@ IMPLEMENT_FUNCTION_II(Gendarmes, function8, 8)
 		break;
 
 	case kActionNone:
-		if (getEntities()->checkEntity(kEntityGendarmes, (CarIndex)params->param1, (EntityPosition)params->param2)) {
+		if (getEntities()->updateEntity(kEntityGendarmes, (CarIndex)params->param1, (EntityPosition)params->param2)) {
 			CALLBACK_ACTION();
 			break;
 		}
@@ -145,7 +154,7 @@ IMPLEMENT_FUNCTION_II(Gendarmes, function8, 8)
 			ENTITY_PARAM(0, 1) = 1;
 		}
 
-		if (getEntities()->checkFields9(kEntityGendarmes, kEntityNone, 1750) && !getEntityData(kEntityNone)->field_493) {
+		if (getEntities()->checkFields9(kEntityGendarmes, kEntityNone, 1750) && !getEntityData(kEntityNone)->posture) {
 			if (!getEntities()->isPlayerPosition(kCarRedSleeping, 22) || getEntities()->checkFields9(kEntityGendarmes, kEntityNone, 250)) {
 				setCallback(1);
 				call(new ENTITY_SETUP(Gendarmes, setup_savegame), kSavegameType2, kEventGendarmesArrestation);
@@ -154,7 +163,7 @@ IMPLEMENT_FUNCTION_II(Gendarmes, function8, 8)
 		break;
 
 	case kActionDefault:
-		if (getEntities()->checkEntity(kEntityGendarmes, (CarIndex)params->param1, (EntityPosition)params->param2))
+		if (getEntities()->updateEntity(kEntityGendarmes, (CarIndex)params->param1, (EntityPosition)params->param2))
 			CALLBACK_ACTION();
 		break;
 
@@ -300,7 +309,7 @@ IMPLEMENT_FUNCTION(Gendarmes, function12, 12)
 
 	case kActionDefault:
 		getData()->entityPosition = kPosition_540;
-		getData()->field_493 = kField493_0;
+		getData()->posture = kPostureStanding;
 		getData()->car = kCarGreenSleeping;
 
 		getProgress().field_14 = 29;
@@ -487,7 +496,7 @@ void Gendarmes::arrest(const SavePoint &savepoint, bool shouldPlaySound, int a3)
 			ENTITY_PARAM(0, 1) = 1;
 		}
 
-		if (getEntities()->checkFields9(kEntityGendarmes, kEntityNone, 1000) && !getEntityData(kEntityNone)->field_493) {
+		if (getEntities()->checkFields9(kEntityGendarmes, kEntityNone, 1000) && !getEntityData(kEntityNone)->posture) {
 			setCallback(1);
 			call(new ENTITY_SETUP(Gendarmes, setup_savegame), kSavegameType2, kEventGendarmesArrestation);
 		}

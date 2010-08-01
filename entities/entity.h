@@ -226,13 +226,10 @@ public:
 	};
 
 	struct EntityCallData {
-		byte callbacks[9];
-		uint32 field_489;
-		uint16 field_48D;
-		byte field_48F;
+		byte callbacks[16];
 		byte current_call;
-		EntityPosition entityPosition;
-		EntityField493 field_493;
+		EntityPosition entityPosition;  // word
+		Posture posture;				// word
 		CarIndex car;					// word
 		byte field_497;
 		EntityIndex entity;             // byte
@@ -265,13 +262,10 @@ public:
 		Sequence *sequence4;
 
 		EntityCallData() {
-			memset(&callbacks, 0, 9 * sizeof(byte));
-			field_489 = 0;
-			field_48D = 0;
-			field_48F = 0;
+			memset(&callbacks, 0, 16 * sizeof(byte));
 			current_call = 0;
 			entityPosition = kPositionNone;
-			field_493 = kField493_0;
+			posture = kPostureStanding;
 			car = kCarNone;
 			field_497 = 0;
 			entity = kEntityNone;
@@ -363,20 +357,121 @@ protected:
 	EntityData 				 *_data;
 	Common::Array<Callback *> _callbacks;
 
-	// Shared functions
+	/**
+	 * Saves the game
+	 *
+	 * @param savepoint The savepoint
+	 *                   - SavegameType
+	 *                   - EventIndex
+	 */
 	void savegame(const SavePoint &savepoint);
+
+	/**
+	 * Play sound
+	 *
+	 * @param savepoint The savepoint
+	 *                    - Sound filename
+	 * @param resetItem true to reset item. 
+	 * @param param3    sound parameter
+	 */
 	void playSound(const SavePoint &savepoint, bool resetItem = false, int param3 = -1);
+
+	/**
+	 * Draws the entity
+	 *
+	 * @param savepoint 	 The savepoint
+	 *                         - Sequence
+	 *                         - ExcuseMe flag
+	 * @param handleExcuseMe true to handle excuseMeCath action
+	 */
 	void draw(const SavePoint &savepoint, bool handleExcuseMe = false);
+
+	/**
+	 * Draws the entity along with another one
+	 *
+	 * @param savepoint The savepoint.
+	 *                    - Sequence 1
+	 *                    - Sequence 2
+	 *                    - EntityIndex
+	 */
 	void draw2(const SavePoint &savepoint);
+
+	/**
+	 * Updates parameter 2 using ticks value
+	 *
+	 * @param savepoint The savepoint
+	 *                    - Number of ticks to add
+	 */
 	void updateFromTicks(const SavePoint &savepoint);
+
+	/**
+	 * Updates parameter 2 using time value
+	 *
+	 * @param savepoint The savepoint.
+	 *                    - Time to add
+	 */
 	void updateFromTime(const SavePoint &savepoint);
 
+	/**
+	 * Resets an entity
+	 *
+	 * @param savepoint    The savepoint.
+	 * @param resetClothes true to reset clothes.
+	 */
 	void reset(const SavePoint &savepoint, bool resetClothes = false);
-	void savepointDirection(const SavePoint &savepoint);
+
+	/**
+	 * Process callback action when the entity direction is not kDirectionRight
+	 *
+	 * @param savepoint The savepoint. 
+	 */
+	void callbackActionOnDirection(const SavePoint &savepoint);
+
 	void savepointCheckFields11(const SavePoint &savepoint);
-	void checkEntity(const SavePoint &savepoint, bool handleExcuseMe = false);
+
+	/**
+	 * Updates the entity
+	 *
+	 * @param savepoint 	 The savepoint. 
+	 *                        - CarIndex
+	 *                        - EntityPosition
+	 * @param handleExcuseMe true to handle the kActionExcuseMe/kActionExcuseMeCath actions. 
+	 */
+	void updateEntity(const SavePoint &savepoint, bool handleExcuseMe = false);
+
+	/**
+	 * Call a specific savepoint (or draw sequence in default case)
+	 *
+	 * @param savepoint 	 The savepoint. 
+	 *                         - Sequence to draw in default case
+	 *                         - EntityIndex
+	 *                         - ActionIndex
+	 *                         - Sequence for the savepoint
+	 * @param handleExcuseMe true to handle excuse me. 
+	 */
 	void callSavepoint(const SavePoint &savepoint, bool handleExcuseMe = false);
-	void enterExitCompartment(const SavePoint &savepoint, EntityPosition position1 = kPositionNone, EntityPosition position2 = kPositionNone, CarIndex car = kCarNone, ObjectIndex compartment = kObjectNone, bool alternate = false);
+
+	/**
+	 * Handles entering/exiting a compartment. 
+	 *
+	 * @param savepoint   The savepoint. 
+	 * @param position1   The first position. 
+	 * @param position2   The second position. 
+	 * @param car 		  The car. 
+	 * @param compartment The compartment.
+	 * @param alternate   true to use the alternate version of SceneManager::loadSceneFromObject()
+	 */
+	void enterExitCompartment(const SavePoint &savepoint, EntityPosition position1 = kPositionNone, EntityPosition position2 = kPositionNone, CarIndex car = kCarNone, ObjectIndex compartment = kObjectNone, bool alternate = false, bool updatePosture = false);
+
+	/**
+	 * Updates the position
+	 *
+	 * @param savepoint 	 The savepoint
+	 *                        - Sequence name
+	 *                        - CarIndex
+	 *                        - Position
+	 * @param handleExcuseMe true to handle excuseMe actions
+	 */
 	void updatePosition(const SavePoint &savepoint, bool handleExcuseMe = false);
 };
 

@@ -42,7 +42,7 @@ public:
 	DECLARE_FUNCTION_NOSETUP(updateFromTime)
 	DECLARE_FUNCTION_S(draw)
 	DECLARE_FUNCTION_SIII(updatePosition)
-	DECLARE_FUNCTION(function4)
+	DECLARE_FUNCTION(callbackActionOnDirection)
 	DECLARE_FUNCTION_SIIS(callSavepoint)
 	DECLARE_FUNCTION_S(playSound)
 	DECLARE_FUNCTION(function7)

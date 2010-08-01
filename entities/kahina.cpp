@@ -48,7 +48,7 @@ Kahina::Kahina(LastExpressEngine *engine) : Entity(engine, kEntityKahina) {
 	ADD_CALLBACK_FUNCTION(Kahina, updateFromTicks);
 	ADD_CALLBACK_FUNCTION(Kahina, function6);
 	ADD_CALLBACK_FUNCTION(Kahina, function7);
-	ADD_CALLBACK_FUNCTION(Kahina, checkEntity);
+	ADD_CALLBACK_FUNCTION(Kahina, updateEntity);
 	ADD_CALLBACK_FUNCTION(Kahina, enterExitCompartment);
 	ADD_CALLBACK_FUNCTION(Kahina, chapter1);
 	ADD_CALLBACK_FUNCTION(Kahina, chapter1Handler);
@@ -72,18 +72,37 @@ Kahina::Kahina(LastExpressEngine *engine) : Entity(engine, kEntityKahina) {
 	ADD_CALLBACK_FUNCTION(Kahina, chapter5);
 }
 
+/**
+ * Resets the entity
+ */
 IMPLEMENT_FUNCTION(Kahina, reset, 1)
 	Entity::reset(savepoint);
 }
 
+/**
+ * Plays sound
+ *
+ * @param param1 The sound filename
+ */
 IMPLEMENT_FUNCTION_S(Kahina, playSound, 2)
 	Entity::playSound(savepoint);
 }
 
+/**
+ * Save the game
+ *
+ * @param param1 The SavegameType for the savegame
+ * @param param2 The EventIndex for the savegame
+ */
 IMPLEMENT_FUNCTION_II(Kahina, savegame, 3)
 	Entity::savegame(savepoint);
 }
 
+/**
+ * Updates parameter 2 using time value
+ *
+ * @param param1 The time to add
+ */
 IMPLEMENT_FUNCTION_I(Kahina, updateFromTime, 4)
 	if (savepoint.action == kAction137503360) {
 		ENTITY_PARAM(0, 2) = 1;
@@ -93,6 +112,12 @@ IMPLEMENT_FUNCTION_I(Kahina, updateFromTime, 4)
 	Entity::updateFromTime(savepoint);
 }
 
+/**
+ * Updates parameter 2 using ticks value
+ *
+ * @param savepoint The savepoint
+ *                    - number of ticks to add
+ */
 IMPLEMENT_FUNCTION_NOSETUP(Kahina, updateFromTicks, 5)
 	Entity::updateFromTicks(savepoint);
 }
@@ -105,7 +130,13 @@ IMPLEMENT_FUNCTION_II(Kahina, function7, 7)
 	error("Kahina: callback function 7 not implemented!");
 }
 
-IMPLEMENT_FUNCTION_II(Kahina, checkEntity, 8)
+/**
+ * Updates the entity
+ *
+ * @param param1 The car
+ * @param param2 The entity position
+ */
+IMPLEMENT_FUNCTION_II(Kahina, updateEntity, 8)
 	if (savepoint.action == kActionExcuseMeCath) {
 		if (getEvent(kEventKronosConversation) || getEvent(kEventKronosConversationFirebird)) {
 			getSound()->playSound(kEntityNone, random(2) ? "CAT1019" : "CAT1019A");
@@ -115,9 +146,15 @@ IMPLEMENT_FUNCTION_II(Kahina, checkEntity, 8)
 		return;
 	}
 
-	Entity::checkEntity(savepoint, true);
+	Entity::updateEntity(savepoint, true);
 }
 
+/**
+ * Handles entering/exiting a compartment. 
+ *
+ * @param seq1   The sequence to draw
+ * @param param4 The compartment
+ */
 IMPLEMENT_FUNCTION_SI(Kahina, enterExitCompartment, 9)
 	Entity::enterExitCompartment(savepoint);
 }
@@ -135,7 +172,7 @@ IMPLEMENT_FUNCTION(Kahina, chapter1, 10)
 		getObjects()->update(kObjectCompartmentKronos, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
 
 		getData()->entityPosition = kPosition_5000;
-		getData()->field_493 = kField493_0;
+		getData()->posture = kPostureStanding;
 		getData()->car = kCarKronos;
 
 		break;
@@ -190,7 +227,7 @@ label_callback:
 	case kActionDefault:
 		getData()->car = kCarKronos;
 		getData()->entityPosition = kPosition_5000;
-		getData()->field_493 = kField493_0;
+		getData()->posture = kPostureStanding;
 
 		getObjects()->update(kObjectCompartmentKronos, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
 
@@ -239,7 +276,7 @@ IMPLEMENT_FUNCTION(Kahina, chapter2, 16)
 		getEntities()->clearSequences(kEntityKahina);
 
 		getData()->entityPosition = kPosition_6000;
-		getData()->field_493 = kField493_0;
+		getData()->posture = kPostureStanding;
 		getData()->car = kCarKronos;
 		getData()->clothes = kClothesDefault;
 		getData()->inventoryItem = kItemNone;
@@ -266,7 +303,7 @@ IMPLEMENT_FUNCTION(Kahina, chapter2Handler, 17)
 			}
 		}
 
-		if (getEvent(kEventKahinaAskSpeakFirebird) && getEvent(kEventKronosConversationFirebird) && getEntities()->checkFields5(kEntityNone, kCarKronos)) {
+		if (getEvent(kEventKahinaAskSpeakFirebird) && getEvent(kEventKronosConversationFirebird) && getEntities()->isEntitySittingOrStanding(kEntityNone, kCarKronos)) {
 			if (!params->param3)
 				params->param3 = getState()->time + 900;
 
@@ -391,7 +428,7 @@ IMPLEMENT_FUNCTION(Kahina, chapter3, 18)
 		getEntities()->clearSequences(kEntityKahina);
 
 		getData()->entityPosition = kPosition_5000;
-		getData()->field_493 = kField493_0;
+		getData()->posture = kPostureStanding;
 		getData()->car = kCarKronos;
 		getData()->clothes = kClothesDefault;
 		getData()->inventoryItem = kItemNone;
@@ -434,7 +471,7 @@ IMPLEMENT_FUNCTION(Kahina, function22, 22)
 	case kActionDefault:
 		getData()->car = kCarKronos;
 		getData()->entityPosition = kPosition_5000;
-		getData()->field_493 = kField493_0;
+		getData()->posture = kPostureStanding;
 		break;
 
 	case kActionDrawScene:

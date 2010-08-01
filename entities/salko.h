@@ -42,7 +42,7 @@ public:
 	DECLARE_FUNCTION(reset)
 	DECLARE_FUNCTION_SI(enterExitCompartment)
 	DECLARE_FUNCTION_NOSETUP(draw)
-	DECLARE_FUNCTION_II(checkEntity)
+	DECLARE_FUNCTION_II(updateEntity)
 	DECLARE_FUNCTION_I(updateFromTime)
 	DECLARE_FUNCTION_II(savegame)
 	DECLARE_FUNCTION_II(function7)

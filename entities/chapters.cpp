@@ -93,7 +93,12 @@ Chapters::Chapters(LastExpressEngine *engine) : Entity(engine, kEntityChapters) 
 	ADD_CALLBACK_FUNCTION(Chapters, chapter4Handler);
 }
 
-//////////////////////////////////////////////////////////////////////////
+/**
+ * Save the game
+ *
+ * @param param1 The SavegameType for the savegame
+ * @param param2 The EventIndex for the savegame
+ */
 IMPLEMENT_FUNCTION_II(Chapters, savegame, 1)
 	Entity::savegame(savepoint);
 }
@@ -353,7 +358,7 @@ label_chapter1_end:
 
 			getSavePoints()->push(kEntityChapters, kEntityTrain, kActionTrainStopRunning);
 
-			if (getEntityData(kEntityNone)->field_493 != kField493_2) {
+			if (getEntityData(kEntityNone)->posture != kPosture2) {
 				PLAY_STEAM();
 				break;
 			}
@@ -611,11 +616,11 @@ IMPLEMENT_FUNCTION(Chapters, chapter2Init, 11)
 
 	params->param1 = 40;
 
-	getSavePoints()->push(kEntityChapters, kEntityTables0, kAction103798704);
-	getSavePoints()->push(kEntityChapters, kEntityTables1, kAction103798704);
-	getSavePoints()->push(kEntityChapters, kEntityTables2, kAction103798704);
-	getSavePoints()->push(kEntityChapters, kEntityTables3, kAction103798704);
-	getSavePoints()->push(kEntityChapters, kEntityTables4, kAction103798704);
+	getSavePoints()->push(kEntityChapters, kEntityTables0, kActionDrawTablesWithChairs);
+	getSavePoints()->push(kEntityChapters, kEntityTables1, kActionDrawTablesWithChairs);
+	getSavePoints()->push(kEntityChapters, kEntityTables2, kActionDrawTablesWithChairs);
+	getSavePoints()->push(kEntityChapters, kEntityTables3, kActionDrawTablesWithChairs);
+	getSavePoints()->push(kEntityChapters, kEntityTables4, kActionDrawTablesWithChairs);
 
 	getObjects()->update(kObjectCompartment1, kEntityNone, kLocationNone, kCursorHandKnock, kCursorHand);
 	getObjects()->update(kObjectOutsideTylerCompartment, kEntityNone, kLocationNone, kCursorKeepValue, kCursorKeepValue);
@@ -689,12 +694,12 @@ IMPLEMENT_FUNCTION(Chapters, chapter3Init, 14)
 		break;
 
 	case kActionDefault:
-		getSavePoints()->push(kEntityChapters, kEntityTables0, kAction103798704);
-		getSavePoints()->push(kEntityChapters, kEntityTables1, kAction103798704);
-		getSavePoints()->push(kEntityChapters, kEntityTables2, kAction103798704);
-		getSavePoints()->push(kEntityChapters, kEntityTables3, kAction103798704);
-		getSavePoints()->push(kEntityChapters, kEntityTables4, kAction103798704);
-		getSavePoints()->push(kEntityChapters, kEntityTables5, kAction103798704);
+		getSavePoints()->push(kEntityChapters, kEntityTables0, kActionDrawTablesWithChairs);
+		getSavePoints()->push(kEntityChapters, kEntityTables1, kActionDrawTablesWithChairs);
+		getSavePoints()->push(kEntityChapters, kEntityTables2, kActionDrawTablesWithChairs);
+		getSavePoints()->push(kEntityChapters, kEntityTables3, kActionDrawTablesWithChairs);
+		getSavePoints()->push(kEntityChapters, kEntityTables4, kActionDrawTablesWithChairs);
+		getSavePoints()->push(kEntityChapters, kEntityTables5, kActionDrawTablesWithChairs);
 
 		getProgress().isTrainRunning = 1;
 
@@ -787,12 +792,12 @@ IMPLEMENT_FUNCTION(Chapters, chapter4Init, 18)
 	getObjects()->update(kObjectHandleOutsideRight, kEntityNone, kLocation1, kCursorNormal, kCursorHand);
 
 	getSavePoints()->push(kEntityChapters, kEntityTrain, kActionTrainStartRunning);
-	getSavePoints()->push(kEntityChapters, kEntityTables0, kAction103798704);
-	getSavePoints()->push(kEntityChapters, kEntityTables1, kAction103798704);
-	getSavePoints()->push(kEntityChapters, kEntityTables2, kAction103798704);
-	getSavePoints()->push(kEntityChapters, kEntityTables3, kAction103798704);
-	getSavePoints()->push(kEntityChapters, kEntityTables4, kAction103798704);
-	getSavePoints()->push(kEntityChapters, kEntityTables5, kAction103798704);
+	getSavePoints()->push(kEntityChapters, kEntityTables0, kActionDrawTablesWithChairs);
+	getSavePoints()->push(kEntityChapters, kEntityTables1, kActionDrawTablesWithChairs);
+	getSavePoints()->push(kEntityChapters, kEntityTables2, kActionDrawTablesWithChairs);
+	getSavePoints()->push(kEntityChapters, kEntityTables3, kActionDrawTablesWithChairs);
+	getSavePoints()->push(kEntityChapters, kEntityTables4, kActionDrawTablesWithChairs);
+	getSavePoints()->push(kEntityChapters, kEntityTables5, kActionDrawTablesWithChairs);
 
 	getScenes()->loadSceneFromItemPosition(kItem3);
 
@@ -1012,7 +1017,7 @@ void Chapters::enterExitStation(const SavePoint &savepoint, bool isEnteringStati
 
 		getSavePoints()->push(kEntityChapters, kEntityTrain, kActionTrainStopRunning);
 
-		if (getEntityData(kEntityNone)->field_493 != kField493_2) {
+		if (getEntityData(kEntityNone)->posture != kPosture2) {
 			ENTITY_PARAM(0, 2) = 0;
 			enterExitHelper(savepoint, isEnteringStation);
 			return;

@@ -46,8 +46,8 @@ Ivo::Ivo(LastExpressEngine *engine) : Entity(engine, kEntityIvo) {
 	ADD_CALLBACK_FUNCTION(Ivo, enterExitCompartment);
 	ADD_CALLBACK_FUNCTION(Ivo, updateFromTime);
 	ADD_CALLBACK_FUNCTION(Ivo, updateFromTicks);
-	ADD_CALLBACK_FUNCTION(Ivo, checkEntity);
-	ADD_CALLBACK_FUNCTION(Ivo, function7);
+	ADD_CALLBACK_FUNCTION(Ivo, updateEntity);
+	ADD_CALLBACK_FUNCTION(Ivo, callbackActionOnDirection);
 	ADD_CALLBACK_FUNCTION(Ivo, playSound);
 	ADD_CALLBACK_FUNCTION(Ivo, function9);
 	ADD_CALLBACK_FUNCTION(Ivo, savegame);
@@ -77,39 +77,77 @@ Ivo::Ivo(LastExpressEngine *engine) : Entity(engine, kEntityIvo) {
 	ADD_CALLBACK_FUNCTION(Ivo, function34);
 }
 
+/**
+ * Resets the entity
+ */
 IMPLEMENT_FUNCTION(Ivo, reset, 1)
 	Entity::reset(savepoint);
 }
 
+/**
+ * Draws the entity
+ *
+ * @param seq1 The sequence to draw
+ */
 IMPLEMENT_FUNCTION_S(Ivo, draw, 2)
 	Entity::draw(savepoint);
 }
 
+/**
+ * Handles entering/exiting a compartment. 
+ *
+ * @param seq1   The sequence to draw
+ * @param param4 The compartment
+ */
 IMPLEMENT_FUNCTION_SI(Ivo, enterExitCompartment, 3)
 	Entity::enterExitCompartment(savepoint);
 }
 
+/**
+ * Updates parameter 2 using time value
+ *
+ * @param param1 The time to add
+ */
 IMPLEMENT_FUNCTION_I(Ivo, updateFromTime, 4)
 	Entity::updateFromTime(savepoint);
 }
 
+/**
+ * Updates parameter 2 using ticks value
+ *
+ * @param param1 The number of ticks to add
+ */
 IMPLEMENT_FUNCTION_I(Ivo, updateFromTicks, 5)
 	Entity::updateFromTicks(savepoint);
 }
 
-IMPLEMENT_FUNCTION_II(Ivo, checkEntity, 6)
+/**
+ * Updates the entity
+ *
+ * @param param1 The car
+ * @param param2 The entity position
+ */
+IMPLEMENT_FUNCTION_II(Ivo, updateEntity, 6)
 	if (savepoint.action == kActionExcuseMeCath || savepoint.action == kActionExcuseMe) {
 		getSound()->playSound(kEntityNone, "CAT1127A");
 		return;
 	}
 
-	Entity::checkEntity(savepoint);
+	Entity::updateEntity(savepoint);
 }
 
-IMPLEMENT_FUNCTION(Ivo, function7, 7)
-	Entity::savepointDirection(savepoint);
+/**
+ * Process callback action when the entity direction is not kDirectionRight
+ */
+IMPLEMENT_FUNCTION(Ivo, callbackActionOnDirection, 7)
+	Entity::callbackActionOnDirection(savepoint);
 }
 
+/**
+ * Plays sound
+ *
+ * @param param1 The sound filename
+ */
 IMPLEMENT_FUNCTION_NOSETUP(Ivo, playSound, 8)
 	Entity::playSound(savepoint, true);
 }
@@ -118,6 +156,12 @@ IMPLEMENT_FUNCTION(Ivo, function9, 9)
 	Entity::savepointCheckFields11(savepoint);
 }
 
+/**
+ * Save the game
+ *
+ * @param param1 The SavegameType for the savegame
+ * @param param2 The EventIndex for the savegame
+ */
 IMPLEMENT_FUNCTION_II(Ivo, savegame, 10)
 	Entity::savegame(savepoint);
 }
@@ -152,7 +196,7 @@ IMPLEMENT_FUNCTION(Ivo, leaveTableWithSalko, 13)
 		break;
 
 	case kActionExitCompartment:
-		getSavePoints()->push(kEntityIvo, kEntityTables2, kAction103798704, "009E");
+		getSavePoints()->push(kEntityIvo, kEntityTables2, kActionDrawTablesWithChairs, "009E");
 		getEntities()->clearSequences(kEntitySalko);
 
 		CALLBACK_ACTION();
@@ -180,7 +224,7 @@ IMPLEMENT_FUNCTION(Ivo, chapter1, 14)
 		getObjects()->update(kObject47, kEntityNone, kLocationNone, kCursorKeepValue, kCursorKeepValue);
 
 		getData()->entityPosition = kPosition_4691;
-		getData()->field_493 = kField493_1;
+		getData()->posture = kPostureSitting;
 		getData()->car = kCarRestaurant;
 
 		break;
@@ -194,7 +238,7 @@ IMPLEMENT_FUNCTION(Ivo, chapter1Handler, 15)
 
 	case kActionNone:
 		getData()->entityPosition = getEntityData(kEntityMilos)->entityPosition;
-		getData()->field_493 = getEntityData(kEntityMilos)->field_493;
+		getData()->posture = getEntityData(kEntityMilos)->posture;
 		break;
 
 	case kActionCallback:
@@ -228,7 +272,7 @@ IMPLEMENT_FUNCTION(Ivo, function16, 16)
 IMPLEMENT_FUNCTION(Ivo, function17, 17)
 	if (savepoint.action == kActionDefault) {
 		getData()->entityPosition = kPosition_2740;
-		getData()->field_493 = kField493_1;
+		getData()->posture = kPostureSitting;
 		getData()->car = kCarRedSleeping;
 
 		getEntities()->clearSequences(kEntityIvo);
@@ -249,7 +293,7 @@ IMPLEMENT_FUNCTION(Ivo, chapter2, 18)
 		getEntities()->clearSequences(kEntityIvo);
 
 		getData()->entityPosition = kPosition_2740;
-		getData()->field_493 = kField493_1;
+		getData()->posture = kPostureSitting;
 		getData()->car = kCarRedSleeping;
 		getData()->clothes = kClothesDefault;
 		getData()->inventoryItem = kItemNone;
@@ -272,7 +316,7 @@ IMPLEMENT_FUNCTION(Ivo, function20, 20)
 IMPLEMENT_FUNCTION(Ivo, function21, 21)
 	if (savepoint.action == kActionDefault) {
 		getData()->entityPosition = kPosition_2740;
-		getData()->field_493 = kField493_1;
+		getData()->posture = kPostureSitting;
 		getData()->car = kCarRedSleeping;
 
 		getObjects()->update(kObjectCompartmentH, kEntityNone, kLocation3, kCursorHandKnock, kCursorHand);
@@ -292,7 +336,7 @@ IMPLEMENT_FUNCTION(Ivo, chapter3, 22)
 		getEntities()->clearSequences(kEntityIvo);
 
 		getData()->entityPosition = kPosition_2740;
-		getData()->field_493 = kField493_1;
+		getData()->posture = kPostureSitting;
 		getData()->car = kCarRedSleeping;
 		getData()->clothes = kClothesDefault;
 		getData()->inventoryItem = kItemNone;
@@ -316,7 +360,7 @@ IMPLEMENT_FUNCTION(Ivo, chapter4, 24)
 		break;
 
 	case kActionDefault:
-		getData()->field_493 = kField493_1;
+		getData()->posture = kPostureSitting;
 		getData()->car = kCarRestaurant;
 		getData()->inventoryItem = kItemNone;
 		break;
@@ -330,7 +374,7 @@ IMPLEMENT_FUNCTION(Ivo, chapter4Handler, 25)
 
 	case kActionNone:
 		if (getState()->time > kTime2361600 && getEntities()->checkFields11()) {
-			getData()->field_493 = kField493_0;
+			getData()->posture = kPostureStanding;
 			setup_function26();
 		}
 		break;
@@ -380,7 +424,7 @@ IMPLEMENT_FUNCTION(Ivo, function28, 28)
 		if (getState()->time > kTime2425500 && !params->param1) {
 			params->param1 = 1;
 			setCallback(1);
-			call(new ENTITY_SETUP(Ivo, setup_checkEntity), kCarRedSleeping, kPosition_2740);
+			call(new ENTITY_SETUP(Ivo, setup_updateEntity), kCarRedSleeping, kPosition_2740);
 		}
 		break;
 
@@ -405,7 +449,7 @@ IMPLEMENT_FUNCTION(Ivo, function29, 29)
 		getObjects()->update(kObjectCompartmentH, kEntityNone, kLocation3, kCursorHandKnock, kCursorHand);
 
 		getData()->entityPosition = kPosition_2740;
-		getData()->field_493 = kField493_1;
+		getData()->posture = kPostureSitting;
 		getData()->car = kCarRedSleeping;
 		getData()->inventoryItem = kItemNone;
 	}
@@ -424,7 +468,7 @@ IMPLEMENT_FUNCTION(Ivo, chapter5, 30)
 		getEntities()->clearSequences(kEntityIvo);
 
 		getData()->entityPosition = kPosition_540;
-		getData()->field_493 = kField493_1;
+		getData()->posture = kPostureSitting;
 		getData()->car = kCarBaggageRear;
 		getData()->inventoryItem = kItemNone;
 
@@ -443,7 +487,7 @@ IMPLEMENT_FUNCTION(Ivo, fight, 32)
 		break;
 
 	case kActionDefault:
-		getData()->field_493 = kField493_0;
+		getData()->posture = kPostureStanding;
 		getData()->entityPosition = kPosition_540;
 		getData()->car = kCarBaggageRear;
 		getData()->inventoryItem = kItemNone;

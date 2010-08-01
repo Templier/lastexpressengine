@@ -261,7 +261,7 @@ Fight::FightEndType Fight::setup(FightType type) {
 
 	// Update game entities and state
 	getEntityData(kEntityNone)->entityPosition = (EntityPosition)scene->count;
-	getEntityData(kEntityNone)->field_493 = (EntityField493)scene->field_11;
+	getEntityData(kEntityNone)->posture = (Posture)scene->field_11;
 
 	getState()->scene = sceneIndex;
 

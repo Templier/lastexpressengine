@@ -68,29 +68,57 @@ Kronos::Kronos(LastExpressEngine *engine) : Entity(engine, kEntityKronos) {
 	ADD_CALLBACK_FUNCTION(Kronos, chapter5);
 }
 
+/**
+ * Resets the entity
+ */
 IMPLEMENT_FUNCTION(Kronos, reset, 1)
 	Entity::reset(savepoint);
 }
 
+/**
+ * Save the game
+ *
+ * @param param1 The SavegameType for the savegame
+ * @param param2 The EventIndex for the savegame
+ */
 IMPLEMENT_FUNCTION_II(Kronos, savegame, 2)
 	Entity::savegame(savepoint);
 }
 
-// Parameters:
-//  - CarIndex
-//  - EntityPosition
+/**
+ * Updates the entity
+ *
+ * @param param1 The car
+ * @param param2 The entity position
+ */
 IMPLEMENT_FUNCTION_II(Kronos, function3, 3)
-	Entity::checkEntity(savepoint);
+	Entity::updateEntity(savepoint);
 }
 
+/**
+ * Plays sound
+ *
+ * @param param1 The sound filename
+ */
 IMPLEMENT_FUNCTION_NOSETUP(Kronos, playSound, 4)
 	Entity::playSound(savepoint);
 }
 
+/**
+ * Updates parameter 2 using time value
+ *
+ * @param param1 The time to add
+ */
 IMPLEMENT_FUNCTION_NOSETUP(Kronos, updateFromTime, 5)
 	Entity::updateFromTime(savepoint);
 }
 
+/**
+ * Updates parameter 2 using ticks value
+ *
+ * @param savepoint The savepoint
+ *                    - number of ticks to add
+ */
 IMPLEMENT_FUNCTION_NOSETUP(Kronos, updateFromTicks, 6)
 	Entity::updateFromTicks(savepoint);
 }
@@ -106,7 +134,7 @@ IMPLEMENT_FUNCTION(Kronos, chapter1, 7)
 
 	case kActionDefault:
 		getData()->entityPosition = kPosition_6000;
-		getData()->field_493 = kField493_1;
+		getData()->posture = kPostureSitting;
 		getData()->car = kCarKronos;
 
 		getObjects()->update(kObjectCeiling, kEntityNone, kLocation1, kCursorKeepValue, kCursorKeepValue);
@@ -163,7 +191,7 @@ IMPLEMENT_FUNCTION(Kronos, function10, 10)
 	case kActionNone:
 		TIME_CHECK(kTime1489500, params->param1, setup_function11);
 
-		if (params->param1 && getEntities()->checkFields5(kEntityNone, kCarKronos)) {
+		if (params->param1 && getEntities()->isEntitySittingOrStanding(kEntityNone, kCarKronos)) {
 			UPDATE_PARAM(params->param3, getState()->timeTicks, 150);
 			setup_function9();
 		}
@@ -171,7 +199,7 @@ IMPLEMENT_FUNCTION(Kronos, function10, 10)
 
 	case kActionDefault:
 		getData()->entityPosition = kPosition_6000;
-		getData()->field_493 = kField493_0;
+		getData()->posture = kPostureStanding;
 		getData()->car = kCarKronos;
 
 		getEntities()->clearSequences(kEntityKronos);
@@ -216,7 +244,7 @@ IMPLEMENT_FUNCTION(Kronos, chapter3, 13)
 		getEntities()->clearSequences(kEntityKronos);
 
 		getData()->entityPosition = kPosition_6000;
-		getData()->field_493 = kField493_0;
+		getData()->posture = kPostureStanding;
 		getData()->car = kCarKronos;
 		getData()->clothes = kClothesDefault;
 		getData()->inventoryItem = kItemNone;
@@ -293,7 +321,7 @@ IMPLEMENT_FUNCTION(Kronos, function17, 17)
 
 	case kActionDefault:
 		getData()->entityPosition = kPosition_7500;
-		getData()->field_493 = kField493_0;
+		getData()->posture = kPostureStanding;
 		getData()->car = kCarRedSleeping;
 
 		setCallback(1);
@@ -332,7 +360,7 @@ IMPLEMENT_FUNCTION(Kronos, function18, 18)
 	case kActionDefault:
 		getData()->entityPosition = kPosition_6000;
 		getData()->car = kCarKronos;
-		getData()->field_493 = kField493_0;
+		getData()->posture = kPostureStanding;
 		break;
 
 	case kActionCallback:

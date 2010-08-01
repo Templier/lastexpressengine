@@ -45,7 +45,7 @@ MmeBoutarel::MmeBoutarel(LastExpressEngine *engine) : Entity(engine, kEntityMmeB
 	ADD_CALLBACK_FUNCTION(MmeBoutarel, updateFromTime);
 	ADD_CALLBACK_FUNCTION(MmeBoutarel, enterExitCompartment);
 	ADD_CALLBACK_FUNCTION(MmeBoutarel, enterExitCompartment2);
-	ADD_CALLBACK_FUNCTION(MmeBoutarel, checkEntity);
+	ADD_CALLBACK_FUNCTION(MmeBoutarel, updateEntity);
 	ADD_CALLBACK_FUNCTION(MmeBoutarel, function8);
 	ADD_CALLBACK_FUNCTION(MmeBoutarel, function9);
 	ADD_CALLBACK_FUNCTION(MmeBoutarel, chapter1);
@@ -70,38 +70,74 @@ MmeBoutarel::MmeBoutarel(LastExpressEngine *engine) : Entity(engine, kEntityMmeB
 	ADD_NULL_FUNCTION();
 }
 
+/**
+ * Resets the entity
+ */
 IMPLEMENT_FUNCTION(MmeBoutarel, reset, 1)
 	Entity::reset(savepoint);
 }
 
+/**
+ * Plays sound
+ *
+ * @param param1 The sound filename
+ */
 IMPLEMENT_FUNCTION_S(MmeBoutarel, playSound, 2)
 	Entity::playSound(savepoint);
 }
 
+/**
+ * Draws the entity
+ *
+ * @param seq1 The sequence to draw
+ */
 IMPLEMENT_FUNCTION_S(MmeBoutarel, draw, 3)
 	Entity::draw(savepoint);
 }
 
+/**
+ * Updates parameter 2 using time value
+ *
+ * @param param1 The time to add
+ */
 IMPLEMENT_FUNCTION_I(MmeBoutarel, updateFromTime, 4)
 	Entity::updateFromTime(savepoint);
 }
 
+/**
+ * Handles entering/exiting a compartment. 
+ *
+ * @param seq1   The sequence to draw
+ * @param param4 The compartment
+ */
 IMPLEMENT_FUNCTION_SI(MmeBoutarel, enterExitCompartment, 5)
 	Entity::enterExitCompartment(savepoint);
 }
 
+/**
+ * Handles entering/exiting a compartment and updates position/play animation 
+ *
+ * @param seq1   The sequence to draw
+ * @param param4 The compartment
+ */
 IMPLEMENT_FUNCTION_SI(MmeBoutarel, enterExitCompartment2, 6)
 	Entity::enterExitCompartment(savepoint, kPosition_5790, kPosition_6130, kCarRedSleeping, kObjectCompartmentD, true);
 }
 
-IMPLEMENT_FUNCTION_II(MmeBoutarel, checkEntity, 7)
+/**
+ * Updates the entity
+ *
+ * @param param1 The car
+ * @param param2 The entity position
+ */
+IMPLEMENT_FUNCTION_II(MmeBoutarel, updateEntity, 7)
 	if (savepoint.action == kActionExcuseMeCath) {
 		getInventory()->hasItem(kItemPassengerList) ? getSound()->playSound(kEntityNone, "CAT1021") : getSound()->excuseMeCath();
 
 		return;
 	}
 
-	Entity::checkEntity(savepoint, true);
+	Entity::updateEntity(savepoint, true);
 }
 
 IMPLEMENT_FUNCTION_S(MmeBoutarel, function8, 8)
@@ -128,7 +164,7 @@ IMPLEMENT_FUNCTION(MmeBoutarel, chapter1, 10)
 		getObjects()->update(kObject51, kEntityNone, kLocationNone, kCursorHandKnock, kCursorHand);
 
 		getData()->entityPosition = kPosition_5790;
-		getData()->field_493 = kField493_1;
+		getData()->posture = kPostureSitting;
 		getData()->car = kCarRedSleeping;
 		break;
 	}
@@ -170,7 +206,7 @@ IMPLEMENT_FUNCTION(MmeBoutarel, chapter1Handler, 12)
 			break;
 
 		case 3:
-			getData()->field_493 = kField493_1;
+			getData()->posture = kPostureSitting;
 			params->param1 = 1;
 			getEntities()->clearSequences(kEntityMmeBoutarel);
 			setup_function13();
@@ -199,7 +235,7 @@ IMPLEMENT_FUNCTION(MmeBoutarel, chapter1Handler, 12)
 
 	case kAction202221040:
 		getObjects()->update(kObjectCompartmentD, kEntityNone, kLocationNone, kCursorKeepValue, kCursorKeepValue);
-		getData()->field_493 = kField493_0;
+		getData()->posture = kPostureStanding;
 
 		getSound()->playSound(kEntityMmeBoutarel, "MME1035A");
 
@@ -227,7 +263,7 @@ IMPLEMENT_FUNCTION(MmeBoutarel, function15, 15)
 IMPLEMENT_FUNCTION(MmeBoutarel, function16, 16)
 	if (savepoint.action == kActionDefault) {
 		getData()->entityPosition = kPosition_5790;
-		getData()->field_493 = kField493_1;
+		getData()->posture = kPostureSitting;
 		getData()->car = kCarRedSleeping;
 
 		getObjects()->update(kObjectCompartmentD, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
@@ -250,7 +286,7 @@ IMPLEMENT_FUNCTION(MmeBoutarel, chapter2, 17)
 		getEntities()->clearSequences(kEntityMmeBoutarel);
 
 		getData()->entityPosition = kPosition_4689;
-		getData()->field_493 = kField493_1;
+		getData()->posture = kPostureSitting;
 		getData()->car = kCarRestaurant;
 		getData()->clothes = kClothesDefault;
 		getData()->inventoryItem = kItemNone;
@@ -274,7 +310,7 @@ IMPLEMENT_FUNCTION(MmeBoutarel, chapter2Handler, 18)
 			break;
 
 		case 1:
-			if (getEntities()->checkFields1(kEntityFrancois, kCarRedSleeping, kPosition_5790)) {
+			if (getEntities()->isEntitySitting(kEntityFrancois, kCarRedSleeping, kPosition_5790)) {
 				getObjects()->update(kObjectCompartmentD, kEntityNone, kLocationNone, kCursorNormal, kCursorNormal);
 
 				setCallback(2);
@@ -288,7 +324,7 @@ IMPLEMENT_FUNCTION(MmeBoutarel, chapter2Handler, 18)
 		case 2:
 		case 3:
 			getObjects()->update(kObjectCompartmentD, kEntityNone, kLocation2, kCursorNormal, kCursorNormal);
-			getData()->field_493 = kField493_1;
+			getData()->posture = kPostureSitting;
 			setup_function19();
 			break;
 		}
@@ -296,7 +332,7 @@ IMPLEMENT_FUNCTION(MmeBoutarel, chapter2Handler, 18)
 
 	case kAction100901266:
 		setCallback(1);
-		call(new ENTITY_SETUP(MmeBoutarel, setup_checkEntity), kCarRedSleeping, kPosition_5790);
+		call(new ENTITY_SETUP(MmeBoutarel, setup_updateEntity), kCarRedSleeping, kPosition_5790);
 		break;
 
 	case kAction100957716:
@@ -326,7 +362,7 @@ IMPLEMENT_FUNCTION(MmeBoutarel, chapter3, 20)
 		getEntities()->clearSequences(kEntityMmeBoutarel);
 
 		getData()->entityPosition = kPosition_5790;
-		getData()->field_493 = kField493_1;
+		getData()->posture = kPostureSitting;
 		getData()->car = kCarRedSleeping;
 		getData()->clothes = kClothesDefault;
 		getData()->inventoryItem = kItemNone;
@@ -351,7 +387,7 @@ IMPLEMENT_FUNCTION(MmeBoutarel, chapter4, 22)
 		getEntities()->clearSequences(kEntityMmeBoutarel);
 
 		getData()->entityPosition = kPosition_5790;
-		getData()->field_493 = kField493_1;
+		getData()->posture = kPostureSitting;
 		getData()->car = kCarRedSleeping;
 		getData()->clothes = kClothesDefault;
 		getData()->inventoryItem = kItemNone;
@@ -372,7 +408,7 @@ IMPLEMENT_FUNCTION(MmeBoutarel, function25, 25)
 		getEntities()->clearSequences(kEntityMmeBoutarel);
 
 		getData()->entityPosition = kPosition_5790;
-		getData()->field_493 = kField493_1;
+		getData()->posture = kPostureSitting;
 		getData()->car = kCarRedSleeping;
 
 		getObjects()->update(kObjectCompartmentD, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
@@ -393,7 +429,7 @@ IMPLEMENT_FUNCTION(MmeBoutarel, chapter5, 26)
 		getEntities()->clearSequences(kEntityMmeBoutarel);
 
 		getData()->entityPosition = kPosition_3969;
-		getData()->field_493 = kField493_1;
+		getData()->posture = kPostureSitting;
 		getData()->car = kCarRestaurant;
 		getData()->clothes = kClothesDefault;
 		getData()->inventoryItem = kItemNone;

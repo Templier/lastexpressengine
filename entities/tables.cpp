@@ -112,7 +112,7 @@ IMPLEMENT_FUNCTION(Tables, draw, 6)
 		break;
 
 	case kActionDefault:
-		getData()->field_493 = kField493_1;
+		getData()->posture = kPostureSitting;
 		getData()->car = kCarRestaurant;
 		switch(_id) {
 		default:
@@ -151,7 +151,7 @@ IMPLEMENT_FUNCTION(Tables, draw, 6)
 
 		break;
 
-	case kAction103798704:
+	case kActionDrawTablesWithChairs:
 		if (!strcmp(savepoint.param.charValue, "")) {
 			getEntities()->drawSequenceLeft(_id, savepoint.param.charValue);
 		} else {

@@ -65,17 +65,28 @@ Mahmud::Mahmud(LastExpressEngine *engine) : Entity(engine, kEntityMahmud) {
 	ADD_CALLBACK_FUNCTION(Mahmud, chapter5);
 }
 
-//////////////////////////////////////////////////////////////////////////
+/**
+ * Resets the entity
+ */
 IMPLEMENT_FUNCTION(Mahmud, reset, 1)
 	Entity::reset(savepoint);
 }
 
-//////////////////////////////////////////////////////////////////////////
+/**
+ * Draws the entity
+ *
+ * @param seq1 The sequence to draw
+ */
 IMPLEMENT_FUNCTION_NOSETUP(Mahmud, draw, 2)
 	Entity::draw(savepoint);
 }
 
-//////////////////////////////////////////////////////////////////////////
+/**
+ * Handles entering/exiting a compartment. 
+ *
+ * @param seq1   The sequence to draw
+ * @param param4 The compartment
+ */
 IMPLEMENT_FUNCTION_SI(Mahmud, enterExitCompartment, 3)
 	Entity::enterExitCompartment(savepoint);
 }
@@ -111,22 +122,39 @@ IMPLEMENT_FUNCTION_SIII(Mahmud, function4, 4)
 	}
 }
 
-//////////////////////////////////////////////////////////////////////////
+/**
+ * Plays sound
+ *
+ * @param param1 The sound filename
+ */
 IMPLEMENT_FUNCTION_S(Mahmud, playSound, 5)
 	Entity::playSound(savepoint);
 }
 
-//////////////////////////////////////////////////////////////////////////
+/**
+ * Plays sound
+ *
+ * @param param1 The sound filename
+ */
 IMPLEMENT_FUNCTION_S(Mahmud, playSoundMertens, 6)
 	Entity::playSound(savepoint, false, getEntities()->getSoundValue(kEntityMertens));
 }
 
-//////////////////////////////////////////////////////////////////////////
+/**
+ * Updates parameter 2 using time value
+ *
+ * @param param1 The time to add
+ */
 IMPLEMENT_FUNCTION_NOSETUP(Mahmud, updateFromTime, 7)
 	Entity::updateFromTime(savepoint);
 }
 
-//////////////////////////////////////////////////////////////////////////
+/**
+ * Save the game
+ *
+ * @param param1 The SavegameType for the savegame
+ * @param param2 The EventIndex for the savegame
+ */
 IMPLEMENT_FUNCTION_II(Mahmud, savegame, 8)
 	Entity::savegame(savepoint);
 }
@@ -141,7 +169,7 @@ IMPLEMENT_FUNCTION_II(Mahmud, function9, 9)
 
 	case kActionNone:
 	case kActionDefault:
-		if (getEntities()->checkEntity(kEntityMahmud, (CarIndex)params->param1, (EntityPosition)params->param2))
+		if (getEntities()->updateEntity(kEntityMahmud, (CarIndex)params->param1, (EntityPosition)params->param2))
 			CALLBACK_ACTION();
 		break;
 
@@ -275,7 +303,7 @@ IMPLEMENT_FUNCTION_II(Mahmud, function10, 10)
 			getObjects()->update(kObjectCompartment7, kEntityMahmud, kLocation3, kCursorHandKnock, kCursorHand);
 			getObjects()->update(kObjectCompartment8, kEntityMahmud, kLocation3, kCursorHandKnock, kCursorHand);
 
-			getData()->field_493 = kField493_0;
+			getData()->posture = kPostureStanding;
 
 			getEntities()->drawSequenceLeft(kEntityMahmud, "614Md");
 			getEntities()->enterCompartment(kEntityMahmud, kObjectCompartment4, false);
@@ -284,7 +312,7 @@ IMPLEMENT_FUNCTION_II(Mahmud, function10, 10)
 		case 2:
 		case 3:
 			getEntities()->exitCompartment(kEntityMahmud, kObjectCompartment4, false);
-			getData()->field_493 = kField493_1;
+			getData()->posture = kPostureSitting;
 			getEntities()->clearSequences(kEntityMahmud);
 
 			CALLBACK_ACTION();
@@ -345,7 +373,7 @@ IMPLEMENT_FUNCTION(Mahmud, function11, 11)
 			break;
 
 		case 1:
-			getData()->field_493 = kField493_0;
+			getData()->posture = kPostureStanding;
 			getObjects()->update(kObjectCompartment4, kEntityNone, kLocation3, kCursorHandKnock, kCursorHand);
 			getEntities()->drawSequenceLeft(kEntityMahmud, "614Kd");
 			getEntities()->enterCompartment(kEntityMahmud, kObjectCompartment4, false);
@@ -407,7 +435,7 @@ IMPLEMENT_FUNCTION(Mahmud, function11, 11)
 
 		case 11:
 			getEntities()->exitCompartment(kEntityMahmud, kObjectCompartment4, false);
-			getData()->field_493 = kField493_1;
+			getData()->posture = kPostureSitting;
 
 			getEntities()->clearSequences(kEntityMahmud);
 			getObjects()->update(kObjectCompartment4, kEntityMahmud, kLocation3, kCursorHandKnock, kCursorHand);
@@ -450,7 +478,7 @@ IMPLEMENT_FUNCTION(Mahmud, function12, 12)
 			break;
 
 		case 1:
-			getData()->field_493 = kField493_0;
+			getData()->posture = kPostureStanding;
 			getObjects()->update(kObjectCompartment4, kEntityNone, kLocation3, kCursorHandKnock, kCursorHand);
 
 			setCallback(2);
@@ -463,7 +491,7 @@ IMPLEMENT_FUNCTION(Mahmud, function12, 12)
 			break;
 
 		case 3:
-			getData()->field_493 = kField493_1;
+			getData()->posture = kPostureSitting;
 			getEntities()->clearSequences(kEntityMahmud);
 
 			setCallback(4);
@@ -476,7 +504,7 @@ IMPLEMENT_FUNCTION(Mahmud, function12, 12)
 			break;
 
 		case 5:
-			getData()->field_493 = kField493_0;
+			getData()->posture = kPostureStanding;
 
 			setCallback(6);
 			call(new ENTITY_SETUP(Mahmud, setup_function9), kCarGreenSleeping, kPosition_5790);
@@ -488,7 +516,7 @@ IMPLEMENT_FUNCTION(Mahmud, function12, 12)
 			break;
 
 		case 7:
-			getData()->field_493 = kField493_1;
+			getData()->posture = kPostureSitting;
 			getEntities()->clearSequences(kEntityMahmud);
 
 			CALLBACK_ACTION();
@@ -516,7 +544,7 @@ IMPLEMENT_FUNCTION(Mahmud, function13, 13)
 			break;
 
 		case 1:
-			getData()->field_493 = kField493_0;
+			getData()->posture = kPostureStanding;
 			getObjects()->update(kObjectCompartment4, kEntityNone, kLocation3, kCursorHandKnock, kCursorHand);
 
 			setCallback(2);
@@ -529,7 +557,7 @@ IMPLEMENT_FUNCTION(Mahmud, function13, 13)
 			break;
 
 		case 3:
-			getData()->field_493 = kField493_1;
+			getData()->posture = kPostureSitting;
 			getEntities()->clearSequences(kEntityMahmud);
 
 			setCallback(4);
@@ -542,7 +570,7 @@ IMPLEMENT_FUNCTION(Mahmud, function13, 13)
 			break;
 
 		case 5:
-			getData()->field_493 = kField493_0;
+			getData()->posture = kPostureStanding;
 
 			setCallback(6);
 			call(new ENTITY_SETUP(Mahmud, setup_function9), kCarGreenSleeping, kPosition_5790);
@@ -554,7 +582,7 @@ IMPLEMENT_FUNCTION(Mahmud, function13, 13)
 			break;
 
 		case 7:
-			getData()->field_493 = kField493_1;
+			getData()->posture = kPostureSitting;
 			getEntities()->clearSequences(kEntityMahmud);
 
 			CALLBACK_ACTION();
@@ -634,7 +662,7 @@ IMPLEMENT_FUNCTION(Mahmud, chapters_handler, 14)
 
 	case kActionDefault:
 		getData()->entityPosition = kPosition_5790;
-		getData()->field_493 = kField493_1;
+		getData()->posture = kPostureSitting;
 		getData()->car = kCarGreenSleeping;
 
 		getEntities()->clearSequences(kEntityMahmud);
@@ -763,7 +791,7 @@ IMPLEMENT_FUNCTION(Mahmud, chapter1, 15)
 		getSavePoints()->addData(kEntityMahmud, kAction170483072, 0);
 
 		getData()->entityPosition = kPosition_540;
-		getData()->field_493 = kField493_0;
+		getData()->posture = kPostureStanding;
 		getData()->car = kCarGreenSleeping;
 
 		getObjects()->update(kObjectCompartment4, kEntityNone, kLocation3, kCursorHandKnock, kCursorHand);
@@ -778,7 +806,7 @@ IMPLEMENT_FUNCTION(Mahmud, function16, 16)
 		return;
 
 	getData()->entityPosition = kPosition_5790;
-	getData()->field_493 = kField493_1;
+	getData()->posture = kPostureSitting;
 	getData()->car = kCarGreenSleeping;
 
 	getObjects()->update(kObjectCompartment4, kEntityNone, kLocation3, kCursorHandKnock, kCursorHand);
@@ -799,7 +827,7 @@ IMPLEMENT_FUNCTION(Mahmud, chapter2, 17)
 		getEntities()->clearSequences(kEntityMahmud);
 
 		getData()->entityPosition = kPosition_5790;
-		getData()->field_493 = kField493_1;
+		getData()->posture = kPostureSitting;
 		getData()->car = kCarGreenSleeping;
 		getData()->clothes = kClothesDefault;
 		getData()->inventoryItem = kItemNone;
@@ -821,7 +849,7 @@ IMPLEMENT_FUNCTION(Mahmud, chapter3, 18)
 		getEntities()->clearSequences(kEntityMahmud);
 
 		getData()->entityPosition = kPosition_5790;
-		getData()->field_493 = kField493_1;
+		getData()->posture = kPostureSitting;
 		getData()->car = kCarGreenSleeping;
 		getData()->clothes = kClothesDefault;
 		getData()->inventoryItem = kItemNone;
@@ -844,7 +872,7 @@ IMPLEMENT_FUNCTION(Mahmud, chapter4, 19)
 		getEntities()->clearSequences(kEntityMahmud);
 
 		getData()->entityPosition = kPosition_2740;
-		getData()->field_493 = kField493_1;
+		getData()->posture = kPostureSitting;
 		getData()->car = kCarGreenSleeping;
 		getData()->clothes = kClothesDefault;
 		getData()->inventoryItem = kItemNone;

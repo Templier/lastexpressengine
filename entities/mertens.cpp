@@ -97,6 +97,9 @@ Mertens::Mertens(LastExpressEngine *engine) : Entity(engine, kEntityMertens) {
 	ADD_NULL_FUNCTION();
 }
 
+/**
+ * Resets the entity
+ */
 IMPLEMENT_FUNCTION(Mertens, reset, 1)
 	Entity::reset(savepoint);
 }
@@ -109,7 +112,7 @@ IMPLEMENT_FUNCTION_S(Mertens, bloodJacket, 2)
 	case kActionNone:
 		if (getProgress().jacket == kJacketBlood
 		 && getEntities()->checkFields9(kEntityMertens, kEntityNone, 1000)
-		 && !getEntities()->checkFields3()
+		 && !getEntities()->isEntitySittingInCompartmentCars()
 		 && !getEntities()->checkFields10()) {
 			setCallback(1);
 			call(new ENTITY_SETUP(Mertens, setup_savegame), kSavegameType2, kEventMertensBloodJacket);
@@ -133,6 +136,12 @@ IMPLEMENT_FUNCTION_S(Mertens, bloodJacket, 2)
 	}
 }
 
+/**
+ * Handles entering/exiting a compartment. 
+ *
+ * @param seq1   The sequence to draw
+ * @param param4 The compartment
+ */
 IMPLEMENT_FUNCTION_SI(Mertens, enterExitCompartment, 3)
 	switch (savepoint.action) {
 	default:
@@ -141,7 +150,7 @@ IMPLEMENT_FUNCTION_SI(Mertens, enterExitCompartment, 3)
 	case kActionNone:
 		if (getProgress().jacket == kJacketBlood
 		 && getEntities()->checkFields9(kEntityMertens, kEntityNone, 1000)
-		 && !getEntities()->checkFields3()
+		 && !getEntities()->isEntitySittingInCompartmentCars()
 		 && !getEntities()->checkFields10()) {
 			setCallback(1);
 			call(new ENTITY_SETUP(Mertens, setup_savegame), kSavegameType2, kEventMertensBloodJacket);
@@ -159,6 +168,12 @@ IMPLEMENT_FUNCTION_SI(Mertens, enterExitCompartment, 3)
 	Entity::enterExitCompartment(savepoint);
 }
 
+/**
+ * Handles entering/exiting a compartment. 
+ *
+ * @param seq1   The sequence to draw
+ * @param param4 The compartment
+ */
 IMPLEMENT_FUNCTION_SI(Mertens, enterExitCompartment2, 4)
 	switch (savepoint.action) {
 	default:
@@ -167,7 +182,7 @@ IMPLEMENT_FUNCTION_SI(Mertens, enterExitCompartment2, 4)
 	case kActionNone:
 		if (getProgress().jacket == kJacketBlood
 		 && getEntities()->checkFields9(kEntityMertens, kEntityNone, 1000)
-		 && !getEntities()->checkFields3()
+		 && !getEntities()->isEntitySittingInCompartmentCars()
 		 && !getEntities()->checkFields10()) {
 			setCallback(1);
 			call(new ENTITY_SETUP(Mertens, setup_savegame), kSavegameType2, kEventMertensBloodJacket);
@@ -190,6 +205,12 @@ IMPLEMENT_FUNCTION_SI(Mertens, enterExitCompartment2, 4)
 	Entity::enterExitCompartment(savepoint);
 }
 
+/**
+ * Handles entering/exiting a compartment. 
+ *
+ * @param seq1   The sequence to draw
+ * @param param4 The compartment
+ */
 IMPLEMENT_FUNCTION_SIII(Mertens, enterExitCompartment3, 5)
 	error("Mertens: callback function 5 not implemented!");
 }
@@ -207,7 +228,7 @@ IMPLEMENT_FUNCTION(Mertens, function6, 6)
 
 		if (getProgress().jacket == kJacketBlood
 		 && getEntities()->checkFields9(kEntityMertens, kEntityNone, 1000)
-		 && !getEntities()->checkFields3()
+		 && !getEntities()->isEntitySittingInCompartmentCars()
 		 && !getEntities()->checkFields10()) {
 			 setCallback(1);
 			 call(new ENTITY_SETUP(Mertens, setup_savegame), kSavegameType2, kEventMertensBloodJacket);
@@ -235,7 +256,7 @@ IMPLEMENT_FUNCTION_S(Mertens, playSound, 7)
 	case kActionNone:
 		if (getProgress().jacket == kJacketBlood
 		 && getEntities()->checkFields9(kEntityMertens, kEntityNone, 1000)
-		 && !getEntities()->checkFields3()
+		 && !getEntities()->isEntitySittingInCompartmentCars()
 		 && !getEntities()->checkFields10()) {
 			setCallback(1);
 			call(new ENTITY_SETUP(Mertens, setup_savegame), kSavegameType2, kEventMertensBloodJacket);
@@ -267,7 +288,7 @@ IMPLEMENT_FUNCTION_S(Mertens, playSound16, 8)
 	case kActionNone:
 		if (getProgress().jacket == kJacketBlood
 		 && getEntities()->checkFields9(kEntityMertens, kEntityNone, 1000)
-		 && !getEntities()->checkFields3()
+		 && !getEntities()->isEntitySittingInCompartmentCars()
 		 && !getEntities()->checkFields10()) {
 			setCallback(1);
 			call(new ENTITY_SETUP(Mertens, setup_savegame), kSavegameType2, kEventMertensBloodJacket);
@@ -291,6 +312,12 @@ IMPLEMENT_FUNCTION_S(Mertens, playSound16, 8)
 	}
 }
 
+/**
+ * Save the game
+ *
+ * @param param1 The SavegameType for the savegame
+ * @param param2 The EventIndex for the savegame
+ */
 IMPLEMENT_FUNCTION_II(Mertens, savegame, 9)
 	Entity::savegame(savepoint);
 }
@@ -319,9 +346,9 @@ IMPLEMENT_FUNCTION_II(Mertens, function10, 10)
 			getData()->inventoryItem = (InventoryItem)(getData()->inventoryItem & 127);
 
 		if (!getEntities()->checkFields9(kEntityMertens, kEntityNone, 1000)
-		  || getEntities()->checkFields3()
+		  || getEntities()->isEntitySittingInCompartmentCars()
 		  || getEntities()->checkFields10()) {
-			if (getEntities()->checkEntity(kEntityMertens, (CarIndex)params->param1, (EntityPosition)params->param2)) {
+			if (getEntities()->updateEntity(kEntityMertens, (CarIndex)params->param1, (EntityPosition)params->param2)) {
 				getData()->inventoryItem = kItemNone;
 				CALLBACK_ACTION();
 			}
@@ -352,7 +379,7 @@ IMPLEMENT_FUNCTION_II(Mertens, function10, 10)
 			break;
 		}
 
-		if (getEntities()->checkEntity(kEntityMertens, (CarIndex)params->param1, (EntityPosition)params->param2)) {
+		if (getEntities()->updateEntity(kEntityMertens, (CarIndex)params->param1, (EntityPosition)params->param2)) {
 			getData()->inventoryItem = kItemNone;
 			CALLBACK_ACTION();
 		}
@@ -384,7 +411,7 @@ IMPLEMENT_FUNCTION_II(Mertens, function10, 10)
 		 || ENTITY_PARAM(0, 4) && getProgress().jacket == kJacketGreen && !getEvent(kEventMertensDontMakeBed) && !getProgress().eventCorpseThrown)
 			params->param3 = 1;
 
-		if (getEntities()->checkEntity(kEntityMertens, (CarIndex)params->param1, (EntityPosition)params->param2))
+		if (getEntities()->updateEntity(kEntityMertens, (CarIndex)params->param1, (EntityPosition)params->param2))
 			CALLBACK_ACTION();
 		break;
 
@@ -415,7 +442,7 @@ IMPLEMENT_FUNCTION_II(Mertens, function10, 10)
 			if (getData()->car == kCarGreenSleeping && getEntities()->checkDistanceFromPosition(kEntityMertens, kPosition_2000, 500))
 				getData()->entityPosition = kPosition_2500;
 
-			getEntities()->checkEntity(kEntityMertens, kCarGreenSleeping, kPosition_2000);
+			getEntities()->updateEntity(kEntityMertens, kCarGreenSleeping, kPosition_2000);
 			getEntities()->loadSceneFromEntityPosition(getData()->car, (EntityPosition)(getData()->entityPosition + 750));
 
 			CALLBACK_ACTION();
@@ -431,7 +458,7 @@ IMPLEMENT_FUNCTION_II(Mertens, function10, 10)
 				if (getData()->car == kCarGreenSleeping && getEntities()->checkDistanceFromPosition(kEntityMertens, kPosition_2000, 500))
 					getData()->entityPosition = kPosition_2500;
 
-				getEntities()->checkEntity(kEntityMertens, kCarGreenSleeping, kPosition_2000);
+				getEntities()->updateEntity(kEntityMertens, kCarGreenSleeping, kPosition_2000);
 				getEntities()->loadSceneFromEntityPosition(getData()->car, (EntityPosition)(getData()->entityPosition + 750));
 
 				CALLBACK_ACTION();
@@ -473,7 +500,7 @@ IMPLEMENT_FUNCTION_I(Mertens, function11, 11)
 	case kActionNone:
 		if (getProgress().jacket == kJacketBlood
 			&& getEntities()->checkFields9(kEntityMertens, kEntityNone, 1000)
-			&& !getEntities()->checkFields3()
+			&& !getEntities()->isEntitySittingInCompartmentCars()
 			&& !getEntities()->checkFields10()) {
 			setCallback(1);
 			call(new ENTITY_SETUP(Mertens, setup_savegame), kSavegameType2, kEventMertensBloodJacket);
@@ -776,7 +803,7 @@ IMPLEMENT_FUNCTION(Mertens, chapter1, 34)
 		ENTITY_PARAM(0, 1) = 0;
 
 		getData()->entityPosition = kPosition_9460;
-		getData()->field_493 = kField493_0;
+		getData()->posture = kPostureStanding;
 		getData()->car = kCarGreenSleeping;
 
 		break;
@@ -896,7 +923,7 @@ IMPLEMENT_FUNCTION(Mertens, chapter2, 43)
 		getEntities()->clearSequences(kEntityMertens);
 
 		getData()->entityPosition = kPosition_1500;
-		getData()->field_493 = kField493_0;
+		getData()->posture = kPostureStanding;
 		getData()->car = kCarGreenSleeping;
 		getData()->inventoryItem = kItemNone;
 
@@ -935,7 +962,7 @@ IMPLEMENT_FUNCTION(Mertens, chapter3, 45)
 
 	case kActionDefault:
 		getData()->entityPosition = kPosition_1500;
-		getData()->field_493 = kField493_0;
+		getData()->posture = kPostureStanding;
 		getData()->car = kCarGreenSleeping;
 		getData()->inventoryItem = kItemNone;
 
@@ -978,7 +1005,7 @@ IMPLEMENT_FUNCTION(Mertens, chapter4, 47)
 		getEntities()->clearSequences(kEntityMertens);
 
 		getData()->entityPosition = kPosition_1500;
-		getData()->field_493 = kField493_0;
+		getData()->posture = kPostureStanding;
 		getData()->car = kCarGreenSleeping;
 		getData()->inventoryItem = kItemNone;
 
@@ -1024,7 +1051,7 @@ IMPLEMENT_FUNCTION(Mertens, chapter5, 50)
 		getEntities()->clearSequences(kEntityMertens);
 
 		getData()->entityPosition = kPosition_3969;
-		getData()->field_493 = kField493_1;
+		getData()->posture = kPostureSitting;
 		getData()->car = kCarRestaurant;
 		getData()->inventoryItem = kItemNone;
 		break;

@@ -45,12 +45,12 @@ Anna::Anna(LastExpressEngine *engine) : Entity(engine, kEntityAnna) {
 	ADD_CALLBACK_FUNCTION(Anna, draw);
 	ADD_CALLBACK_FUNCTION(Anna, updatePosition);
 	ADD_CALLBACK_FUNCTION(Anna, enterExitCompartment);
-	ADD_CALLBACK_FUNCTION(Anna, function5);
+	ADD_CALLBACK_FUNCTION(Anna, callbackActionOnDirection);
 	ADD_CALLBACK_FUNCTION(Anna, callSavepoint);
 	ADD_CALLBACK_FUNCTION(Anna, playSound);
 	ADD_CALLBACK_FUNCTION(Anna, function8);
 	ADD_CALLBACK_FUNCTION(Anna, savegame);
-	ADD_CALLBACK_FUNCTION(Anna, checkEntity);
+	ADD_CALLBACK_FUNCTION(Anna, updateEntity);
 	ADD_CALLBACK_FUNCTION(Anna, updateFromTime);
 	ADD_CALLBACK_FUNCTION(Anna, function12);
 	ADD_CALLBACK_FUNCTION(Anna, draw2);
@@ -124,30 +124,67 @@ Anna::Anna(LastExpressEngine *engine) : Entity(engine, kEntityAnna) {
 	ADD_CALLBACK_FUNCTION(Anna, function81);
 }
 
+/**
+ * Resets the entity
+ */
 IMPLEMENT_FUNCTION(Anna, reset, 1)
 	Entity::reset(savepoint, true);
 }
 
+/**
+ * Draws the entity
+ *
+ * @param seq1 The sequence to draw
+ */
 IMPLEMENT_FUNCTION_S(Anna, draw, 2)
 	Entity::draw(savepoint);
 }
 
+/**
+ * Updates the position
+ *
+ * @param seq1   The sequence to draw
+ * @param param4 The car
+ * @param param5 The entity position
+ */
 IMPLEMENT_FUNCTION_SII(Anna, updatePosition, 3)
 	Entity::updatePosition(savepoint);
 }
 
+/**
+ * Handles entering/exiting a compartment. 
+ *
+ * @param seq1   The sequence to draw
+ * @param param4 The compartment
+ */
 IMPLEMENT_FUNCTION_SI(Anna, enterExitCompartment, 4)
 	Entity::enterExitCompartment(savepoint);
 }
 
-IMPLEMENT_FUNCTION(Anna, function5, 5)
-	Entity::savepointDirection(savepoint);
+/**
+ * Process callback action when the entity direction is not kDirectionRight
+ */
+IMPLEMENT_FUNCTION(Anna, callbackActionOnDirection, 5)
+	Entity::callbackActionOnDirection(savepoint);
 }
 
+/**
+ * Call a savepoint (or draw sequence in default case)
+ *
+ * @param seq1   The sequence to draw in the default case
+ * @param param4 The entity
+ * @param param5 The action
+ * @param seq1   The sequence name for the savepoint
+ */
 IMPLEMENT_FUNCTION_SIIS(Anna, callSavepoint, 6)
 	Entity::callSavepoint(savepoint);
 }
 
+/**
+ * Plays sound
+ *
+ * @param param1 The sound filename
+ */
 IMPLEMENT_FUNCTION_S(Anna, playSound, 7)
 	Entity::playSound(savepoint);
 }
@@ -156,11 +193,23 @@ IMPLEMENT_FUNCTION(Anna, function8, 8)
 	Entity::savepointCheckFields11(savepoint);
 }
 
+/**
+ * Save the game
+ *
+ * @param param1 The SavegameType for the savegame
+ * @param param2 The EventIndex for the savegame
+ */
 IMPLEMENT_FUNCTION_II(Anna, savegame, 9)
 	Entity::savegame(savepoint);
 }
 
-IMPLEMENT_FUNCTION_II(Anna, checkEntity, 10)
+/**
+ * Updates the entity
+ *
+ * @param param1 The car
+ * @param param2 The entity position
+ */
+IMPLEMENT_FUNCTION_II(Anna, updateEntity, 10)
 	if (savepoint.action == kActionExcuseMeCath) {
 		if (getEvent(kEventAugustPresentAnna) || getEvent(kEventAugustPresentAnnaFirstIntroduction) || getProgress().chapter >= kChapter2)
 			getSound()->playSound(kEntityNone, "CAT1001");
@@ -170,9 +219,14 @@ IMPLEMENT_FUNCTION_II(Anna, checkEntity, 10)
 		return;
 	}
 
-	Entity::checkEntity(savepoint, true);
+	Entity::updateEntity(savepoint, true);
 }
 
+/**
+ * Updates parameter 2 using time value
+ *
+ * @param param1 The time to add
+ */
 IMPLEMENT_FUNCTION_I(Anna, updateFromTime, 11)
 	Entity::updateFromTime(savepoint);
 }
@@ -391,10 +445,22 @@ IMPLEMENT_FUNCTION(Anna, function12, 12)
 	}
 }
 
+/**
+ * Draws the entity along with another one
+ *
+ * @param seq1   The sequence to draw
+ * @param seq2   The sequence to draw for the second entity
+ * @param param7 The EntityIndex of the second entity
+ */
 IMPLEMENT_FUNCTION_SSI(Anna, draw2, 13)
 	Entity::draw2(savepoint);
 }
 
+/**
+ * Updates parameter 2 using ticks value
+ *
+ * @param param1 The number of ticks to add
+ */
 IMPLEMENT_FUNCTION_I(Anna, updateFromTicks, 14)
 	Entity::updateFromTicks(savepoint);
 }
@@ -425,7 +491,7 @@ IMPLEMENT_FUNCTION_IS(Anna, function15, 15)
 			params->param5 = 0;
 			params->param6 = 1;
 
-			CursorStyle cursor = getEntities()->checkFields1(kEntityMax, kCarRedSleeping, kPosition_4070) ? kCursorHand : kCursorNormal;
+			CursorStyle cursor = getEntities()->isEntitySitting(kEntityMax, kCarRedSleeping, kPosition_4070) ? kCursorHand : kCursorNormal;
 
 			getObjects()->update(kObjectCompartmentF, kEntityAnna, kLocation1, kCursorNormal, cursor);
 			getObjects()->update(kObject53, kEntityAnna, kLocation1, kCursorNormal, cursor);
@@ -435,7 +501,7 @@ IMPLEMENT_FUNCTION_IS(Anna, function15, 15)
 		break;
 
 	case kAction9:
-		if (getEntities()->checkFields1(kEntityMax, kCarRedSleeping, kPosition_4070)) {
+		if (getEntities()->isEntitySitting(kEntityMax, kCarRedSleeping, kPosition_4070)) {
 			getObjects()->update(kObjectCompartmentF, kEntityAnna, kLocation1, kCursorNormal, kCursorNormal);
 			getObjects()->update(kObject53, kEntityAnna, kLocation1, kCursorNormal, kCursorNormal);
 
@@ -447,7 +513,7 @@ IMPLEMENT_FUNCTION_IS(Anna, function15, 15)
 
 	case kAction8:
 		if (params->param5) {
-			CursorStyle cursor = getEntities()->checkFields1(kEntityMax, kCarRedSleeping, kPosition_4070) ? kCursorHand : kCursorNormal;
+			CursorStyle cursor = getEntities()->isEntitySitting(kEntityMax, kCarRedSleeping, kPosition_4070) ? kCursorHand : kCursorNormal;
 
 			getObjects()->update(kObjectCompartmentF, kEntityAnna, kLocation1, kCursorNormal, cursor);
 			getObjects()->update(kObject53, kEntityAnna, kLocation1, kCursorNormal, cursor);
@@ -549,7 +615,7 @@ IMPLEMENT_FUNCTION(Anna, chapter1, 16)
 		getObjects()->update(kObjectOutsideAnnaCompartment, kEntityNone, kLocation1, kCursorKeepValue, kCursorKeepValue);
 
 		getData()->entityPosition = kPosition_8200;
-		getData()->field_493 = kField493_1;
+		getData()->posture = kPostureSitting;
 		getData()->car = kCarGreenSleeping;
 		getData()->clothes = kClothesDefault;
 		break;
@@ -581,10 +647,10 @@ IMPLEMENT_FUNCTION(Anna, chapter1Handler, 19)
 
 		case 1:
 			getData()->entityPosition = kPosition_8514;
-			getData()->field_493 = kField493_0;
+			getData()->posture = kPostureStanding;
 
 			setCallback(2);
-			call(new ENTITY_SETUP(Anna, setup_checkEntity), kCarRedSleeping, kPosition_4070);
+			call(new ENTITY_SETUP(Anna, setup_updateEntity), kCarRedSleeping, kPosition_4070);
 			break;
 
 		case 2:
@@ -595,7 +661,7 @@ IMPLEMENT_FUNCTION(Anna, chapter1Handler, 19)
 		case 3:
 			getEntities()->clearSequences(kEntityAnna);
 			getData()->entityPosition = kPosition_4070;
-			getData()->field_493 = kField493_1;
+			getData()->posture = kPostureSitting;
 
 			setup_function20();
 			break;
@@ -625,7 +691,7 @@ IMPLEMENT_FUNCTION(Anna, function20, 20)
 			break;
 
 		case 2:
-			getData()->field_493 = kField493_0;
+			getData()->posture = kPostureStanding;
 			getSavePoints()->push(kEntityAnna, kEntityMax, kAction71277948);
 			setup_function21();
 			break;
@@ -656,7 +722,7 @@ IMPLEMENT_FUNCTION(Anna, function21, 21)
 
 		case 2:
 			getData()->entityPosition = kPosition_1540;
-			getData()->field_493 = kField493_0;
+			getData()->posture = kPostureStanding;
 
 			setCallback(3);
 			call(new ENTITY_SETUP_SIIS(Anna, setup_draw), "801US");
@@ -665,10 +731,10 @@ IMPLEMENT_FUNCTION(Anna, function21, 21)
 		case 3:
 			getEntities()->drawSequenceRight(kEntityAnna, "001B");
 			if (getEntities()->checkFields12())
-				getEntities()->updateEntity(kEntityAnna);
+				getEntities()->updateFrame(kEntityAnna);
 
 			setCallback(4);
-			call(new ENTITY_SETUP(Anna, setup_function5));
+			call(new ENTITY_SETUP(Anna, setup_callbackActionOnDirection));
 			break;
 
 		case 4:
@@ -690,7 +756,7 @@ IMPLEMENT_FUNCTION(Anna, function22, 22)
 		break;
 
 	case kAction157370960:
-		getData()->field_493 = kField493_1;
+		getData()->posture = kPostureSitting;
 		setup_function23();
 		break;
 	}
@@ -840,7 +906,7 @@ IMPLEMENT_FUNCTION(Anna, function27, 27)
 			break;
 
 		case 3:
-			getData()->field_493 = kField493_0;
+			getData()->posture = kPostureStanding;
 			getSavePoints()->push(kEntityAnna, kEntityMax, kAction71277948);
 			setup_function28();
 			break;
@@ -870,7 +936,7 @@ IMPLEMENT_FUNCTION(Anna, function28, 28)
 			break;
 
 		case 2:
-			getData()->field_493 = kField493_0;
+			getData()->posture = kPostureStanding;
 			getData()->entityPosition = kPosition_1540;
 			getScenes()->loadSceneFromItemPosition(kItem3);
 
@@ -879,7 +945,7 @@ IMPLEMENT_FUNCTION(Anna, function28, 28)
 			break;
 
 		case 3:
-			getData()->field_493 = kField493_1;
+			getData()->posture = kPostureSitting;
 			setup_function29();
 			break;
 		}
@@ -911,7 +977,7 @@ IMPLEMENT_FUNCTION(Anna, function31, 31)
 			break;
 
 		case 1:
-			getData()->field_493 = kField493_0;
+			getData()->posture = kPostureStanding;
 			getSound()->playSound(kEntityAnna, "AUG1005");
 
 			setCallback(2);
@@ -958,7 +1024,7 @@ IMPLEMENT_FUNCTION(Anna, function32, 32)
 			getEntities()->clearSequences(kEntityAnna);
 
 			getData()->entityPosition = kPosition_4070;
-			getData()->field_493 = kField493_1;
+			getData()->posture = kPostureSitting;
 
 			setup_function33();
 			break;
@@ -1006,7 +1072,7 @@ IMPLEMENT_FUNCTION(Anna, function36, 36)
 		getObjects()->update(kObjectCompartmentF, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
 
 		setCallback(1);
-		call(new ENTITY_SETUP(Anna, setup_checkEntity), kCarRedSleeping, kPosition_8200);
+		call(new ENTITY_SETUP(Anna, setup_updateEntity), kCarRedSleeping, kPosition_8200);
 		break;
 
 	case kActionCallback:
@@ -1023,7 +1089,7 @@ IMPLEMENT_FUNCTION(Anna, function36, 36)
 
 		case 2:
 			getObjects()->update(kObjectCompartmentA, kEntityNone, kLocation2, kCursorKeepValue, kCursorKeepValue);
-			getData()->field_493 = kField493_1;
+			getData()->posture = kPostureSitting;
 			getEntities()->clearSequences(kEntityAnna);
 
 			setup_function37();
@@ -1040,7 +1106,7 @@ IMPLEMENT_FUNCTION(Anna, function37, 37)
 
   case kActionDefault:
 	getData()->entityPosition = kPosition_8200;
-	getData()->field_493 = kField493_0;
+	getData()->posture = kPostureStanding;
 	getData()->car = kCarRedSleeping;
 	break;
 
@@ -1096,7 +1162,7 @@ IMPLEMENT_FUNCTION(Anna, chapter2, 42)
 		getEntities()->clearSequences(kEntityAnna);
 
 		getData()->entityPosition = kPosition_4070;
-		getData()->field_493 = kField493_1;
+		getData()->posture = kPostureSitting;
 		getData()->car = kCarRedSleeping;
 		getData()->clothes = kClothes1;
 		getData()->inventoryItem = kItemNone;
@@ -1164,7 +1230,7 @@ IMPLEMENT_FUNCTION(Anna, chapter3, 44)
 		getEntities()->clearSequences(kEntityAnna);
 
 		getData()->entityPosition = kPosition_4070;
-		getData()->field_493 = kField493_1;
+		getData()->posture = kPostureSitting;
 		getData()->car = kCarRedSleeping;
 		getData()->clothes = kClothes3;
 		getData()->inventoryItem = kItemNone;
@@ -1182,7 +1248,7 @@ IMPLEMENT_FUNCTION_I(Anna, function45, 45)
 		break;
 
 	case kActionDefault:
-		getData()->field_493 = kField493_0;
+		getData()->posture = kPostureStanding;
 
 		setCallback(1);
 		call(new ENTITY_SETUP_SIIS(Anna, setup_enterExitCompartment), "625Bf", kObjectCompartmentF);
@@ -1254,7 +1320,7 @@ IMPLEMENT_FUNCTION(Anna, leaveTableWithAugust, 49)
 		break;
 
 	case kActionExitCompartment:
-		getSavePoints()->push(kEntityAnna, kEntityTables3, kAction103798704, "010M");
+		getSavePoints()->push(kEntityAnna, kEntityTables3, kActionDrawTablesWithChairs, "010M");
 		getEntities()->clearSequences(kEntityAugust);
 
 		CALLBACK_ACTION();
@@ -1286,7 +1352,7 @@ IMPLEMENT_FUNCTION(Anna, function50, 50)
 			break;
 
 		case 2:
-			getData()->field_493 = kField493_0;
+			getData()->posture = kPostureStanding;
 			setCallback(3);
 			call(new ENTITY_SETUP(Anna, setup_leaveTableWithAugust));
 			break;
@@ -1311,7 +1377,7 @@ IMPLEMENT_FUNCTION(Anna, function52, 52)
 	case kActionExitCompartment:
 		getEntities()->exitCompartment(kEntityAnna, kObjectCompartmentF);
 		getData()->entityPosition = kPosition_4070;
-		getData()->field_493 = kField493_1;
+		getData()->posture = kPostureSitting;
 
 		getEntities()->clearSequences(kEntityAnna);
 
@@ -1320,16 +1386,16 @@ IMPLEMENT_FUNCTION(Anna, function52, 52)
 
 	case kActionDefault:
 		setCallback(1);
-		call(new ENTITY_SETUP(Anna, setup_checkEntity), kCarRedSleeping, kPosition_4070);
+		call(new ENTITY_SETUP(Anna, setup_updateEntity), kCarRedSleeping, kPosition_4070);
 		break;
 
 	case kActionCallback:
 		if (getCallback() == 1) {
 			getEntities()->drawSequenceRight(kEntityAnna, "688Af");
 			getEntities()->enterCompartment(kEntityAnna, kObjectCompartmentF);
-			getData()->field_493 = kField493_1;
+			getData()->posture = kPostureSitting;
 
-			if (getEntities()->checkFields1(kEntityNone, kCarRedSleeping, kPosition_4070) || getEntities()->checkFields1(kEntityNone, kCarRedSleeping, kPosition_4455)) {
+			if (getEntities()->isEntitySitting(kEntityNone, kCarRedSleeping, kPosition_4070) || getEntities()->isEntitySitting(kEntityNone, kCarRedSleeping, kPosition_4455)) {
 				getAction()->playAnimation(isDay() ? kEventCathTurningDay : kEventCathTurningNight);
 				getSound()->playSound(kEntityNone, "BUMP");
 				getScenes()->loadSceneFromObject(kObjectCompartmentF);
@@ -1374,7 +1440,7 @@ IMPLEMENT_FUNCTION(Anna, function55, 55)
 		case 1:
 			getObjects()->update(kObjectCompartmentF, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
 			setCallback(2);
-			call(new ENTITY_SETUP(Anna, setup_checkEntity), kCarRedSleeping, kPosition_9270);
+			call(new ENTITY_SETUP(Anna, setup_updateEntity), kCarRedSleeping, kPosition_9270);
 			break;
 
 		case 2:
@@ -1393,7 +1459,7 @@ IMPLEMENT_FUNCTION(Anna, function56, 56)
 	case kActionDefault:
 		getEntities()->clearSequences(kEntityAnna);
 		getData()->entityPosition = kPosition_6000;
-		getData()->field_493 = kField493_1;
+		getData()->posture = kPostureSitting;
 		getData()->car = kCarKronos;
 		break;
 
@@ -1501,7 +1567,7 @@ IMPLEMENT_FUNCTION(Anna, bagage, 64)
 IMPLEMENT_FUNCTION(Anna, function65, 65)
 	if (savepoint.action == kActionDefault) {
 		getData()->entityPosition = kPosition_4070;
-		getData()->field_493 = kField493_1;
+		getData()->posture = kPostureSitting;
 		getData()->car = kCarRedSleeping;
 		getData()->clothes = kClothes3;
 		getData()->inventoryItem = kItemNone;
@@ -1526,7 +1592,7 @@ IMPLEMENT_FUNCTION(Anna, chapter4, 66)
 		getEntities()->clearSequences(kEntityAnna);
 
 		getData()->entityPosition = kPosition_4070;
-		getData()->field_493 = kField493_1;
+		getData()->posture = kPostureSitting;
 		getData()->car = kCarRedSleeping;
 		getData()->clothes = kClothes2;
 		getData()->inventoryItem = kItemNone;
@@ -1557,7 +1623,7 @@ IMPLEMENT_FUNCTION(Anna, function68, 68)
 
 		getData()->car = kCarRedSleeping;
 		getData()->entityPosition = kPosition_4070;
-		getData()->field_493 = kField493_1;
+		getData()->posture = kPostureSitting;
 		break;
 
 	case kAction191001984:
@@ -1596,7 +1662,7 @@ IMPLEMENT_FUNCTION(Anna, function70, 70)
 			break;
 
 		case 2:
-			getData()->field_493 = kField493_0;
+			getData()->posture = kPostureStanding;
 			getEntities()->clearSequences(kEntityAnna);
 			setup_function73();
 			break;
@@ -1630,7 +1696,7 @@ IMPLEMENT_FUNCTION(Anna, chapter5, 74)
 		getEntities()->clearSequences(kEntityAnna);
 
 		getData()->entityPosition = kPosition_3969;
-		getData()->field_493 = kField493_1;
+		getData()->posture = kPostureSitting;
 		getData()->car = kCarBaggageRear;
 		getData()->clothes = kClothes3;
 		getData()->inventoryItem = kItemNone;

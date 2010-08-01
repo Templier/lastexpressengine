@@ -58,7 +58,7 @@
 	    byte {1}    - param2;
 	    byte {1}    - param3
 	    byte {1}    - cursor
-	    uint32{4}  - offset to next hotpost
+	    uint32{4}   - offset to next hotpost
 
 	coords data (9 bytes)
 	    uint32 {4}    - ??

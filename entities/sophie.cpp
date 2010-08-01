@@ -46,7 +46,7 @@ namespace LastExpress {
 	case kActionDefault: \
 		getEntities()->clearSequences(kEntitySophie); \
 		getData()->entityPosition = kPosition_4840; \
-		getData()->field_493 = kField493_1; \
+		getData()->posture = kPostureSitting; \
 		getData()->car = kCarRedSleeping; \
 		getData()->clothes = kClothesDefault; \
 		getData()->inventoryItem = kItemNone; \
@@ -56,7 +56,7 @@ namespace LastExpress {
 #define DEFAULT_ACTION_IMPLEMENTATION() \
 	if (savepoint.action == kActionDefault) { \
 		getData()->entityPosition = kPosition_4840; \
-		getData()->field_493 = kField493_1; \
+		getData()->posture = kPostureSitting; \
 		getData()->car = kCarRedSleeping; \
 		getEntities()->clearSequences(kEntitySophie); \
 	}
@@ -76,7 +76,9 @@ Sophie::Sophie(LastExpressEngine *engine) : Entity(engine, kEntitySophie) {
 	ADD_NULL_FUNCTION();
 }
 
-//////////////////////////////////////////////////////////////////////////
+/**
+ * Resets the entity
+ */
 IMPLEMENT_FUNCTION(Sophie, reset, 1)
 	Entity::reset(savepoint);
 }
@@ -110,7 +112,7 @@ IMPLEMENT_FUNCTION_II(Sophie, function2, 2)
 		}
 
 		if (!params->param3)
-			getEntities()->checkEntity(kEntitySophie, (CarIndex)params->param1, (EntityPosition)params->param2);
+			getEntities()->updateEntity(kEntitySophie, (CarIndex)params->param1, (EntityPosition)params->param2);
 
 		break;
 	}
@@ -124,7 +126,7 @@ IMPLEMENT_FUNCTION_II(Sophie, function2, 2)
 		break;
 
 	case kActionDefault:
-		getEntities()->checkEntity(kEntitySophie, (CarIndex)params->param1, (EntityPosition)params->param2);
+		getEntities()->updateEntity(kEntitySophie, (CarIndex)params->param1, (EntityPosition)params->param2);
 		break;
 
 	case kAction123668192:
@@ -169,7 +171,7 @@ IMPLEMENT_FUNCTION(Sophie, chapters_handler, 3)
 
 	case kAction125242096:
 		getData()->entityPosition = (EntityPosition)(getEntityData(kEntityRebecca)->entityPosition - 100);
-		getData()->field_493 = getEntityData(kEntityRebecca)->field_493;
+		getData()->posture = getEntityData(kEntityRebecca)->posture;
 		getData()->car = getEntityData(kEntityRebecca)->car;
 
 		setCallback(1);
@@ -178,7 +180,7 @@ IMPLEMENT_FUNCTION(Sophie, chapters_handler, 3)
 
 	case kAction136654208:
 		getData()->entityPosition = (EntityPosition)(getEntityData(kEntityRebecca)->entityPosition + 100);
-		getData()->field_493 = getEntityData(kEntityRebecca)->field_493;
+		getData()->posture = getEntityData(kEntityRebecca)->posture;
 		getData()->car = getEntityData(kEntityRebecca)->car;
 
 		setCallback(2);
@@ -187,7 +189,7 @@ IMPLEMENT_FUNCTION(Sophie, chapters_handler, 3)
 
 	case kAction259921280:
 		getData()->entityPosition = (EntityPosition)(getEntityData(kEntityRebecca)->entityPosition + 100);
-		getData()->field_493 = getEntityData(kEntityRebecca)->field_493;
+		getData()->posture = getEntityData(kEntityRebecca)->posture;
 		getData()->car = getEntityData(kEntityRebecca)->car;
 
 		setCallback(3);
@@ -196,7 +198,7 @@ IMPLEMENT_FUNCTION(Sophie, chapters_handler, 3)
 
 	case kAction292775040:
 		getData()->entityPosition = kPosition_9270;
-		getData()->field_493 = kField493_0;
+		getData()->posture = kPostureStanding;
 		getData()->car = kCarKronos;
 
 		setCallback(4);
@@ -217,7 +219,7 @@ IMPLEMENT_FUNCTION(Sophie, chapter1, 4)
 
 	case kActionDefault:
 		getData()->entityPosition = kPosition_4840;
-		getData()->field_493 = kField493_1;
+		getData()->posture = kPostureSitting;
 		getData()->car = kCarRedSleeping;
 		break;
 	}
@@ -262,7 +264,7 @@ IMPLEMENT_FUNCTION(Sophie, chapter5, 10)
 		getEntities()->clearSequences(kEntitySophie);
 
 		getData()->entityPosition = kPosition_3969;
-		getData()->field_493 = kField493_1;
+		getData()->posture = kPostureSitting;
 		getData()->car = kCarRestaurant;
 		getData()->inventoryItem = kItemNone;
 

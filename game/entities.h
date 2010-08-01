@@ -60,7 +60,7 @@ public:
 	/**
 	 * Reset an entity state
 	 *
-	 * @param entityIndex entity index
+	 * @param entity entity index
 	 * @note remember to call the function pointer (we do not pass it our implementation)
 	 */
 	void resetState(EntityIndex entity);
@@ -69,16 +69,15 @@ public:
 	void updateCallbacks();
 
 	EntityIndex canInteractWith(const Common::Point &point) const;
+	bool compare(EntityIndex entity1, EntityIndex entity2);
 
 	/**
 	 * Update an entity current sequence frame (and related fields)
 	 *
-	 * @param entityIndex entity index
+	 * @param entity entity index
 	 */
-	void updateEntity(EntityIndex entity) const;
-
+	void updateFrame(EntityIndex entity) const;
 	void updatePosition(EntityIndex entity, CarIndex car, Position position, bool processScene = false);
-
 	void enterCompartment(EntityIndex entity, ObjectIndex compartment, bool useCompartment1 = true);
 	void exitCompartment(EntityIndex entity, ObjectIndex compartment, bool useCompartment1 = true);
 
@@ -87,6 +86,7 @@ public:
 	void drawSequenceRight(EntityIndex index, const char* sequence);
 	void clearSequences(EntityIndex index);
 
+	bool updateEntity(EntityIndex entity, CarIndex car, EntityPosition position);
 	bool hasValidFrame(EntityIndex entity) const;
 
 	// Accessors
@@ -105,22 +105,19 @@ public:
 	uint getSoundValue(EntityIndex index) const;
 
 	// Checks
-	bool checkEntity(EntityIndex entity, CarIndex car, EntityPosition position);
-
-	bool compare(EntityIndex entity1, EntityIndex entity2);
-
-	bool checkFields1(EntityIndex entity, CarIndex car, EntityPosition position) const;
+	bool isEntitySitting(EntityIndex entity, CarIndex car, EntityPosition position) const;
 	bool checkFields2(ObjectIndex object) const;
-	bool checkFields3(EntityIndex entity = kEntityNone) const;
+	bool isEntitySittingInCompartmentCars(EntityIndex entity = kEntityNone) const;
 
 	/**
 	 * Check if the player is in the specified position
-	 * @param car 		The car.
+	 *
+	 * @param car       The car.
 	 * @param position  The position.
 	 * @return true if player is in that position, false if not.
-	*/
+	 */
 	bool isPlayerPosition(CarIndex car, Position position) const;
-	bool checkFields5(EntityIndex entity, CarIndex car) const;
+	bool isEntitySittingOrStanding(EntityIndex entity, CarIndex car) const;
 	bool checkFields6(EntityIndex entity = kEntityNone) const;
 	bool checkFields7(CarIndex car) const;
 	bool isDirectionUpOrDown(EntityIndex entity) const;
@@ -141,8 +138,8 @@ public:
 	bool checkFields23(EntityIndex entity = kEntityNone) const;
 	bool checkDistanceFromPosition(EntityIndex entity, EntityPosition position, int distance) const;
 	bool checkFields25(EntityIndex entity) const;
-	static bool isFemale(EntityIndex entityIndex);
-	static bool isMarried(EntityIndex entityIndex);
+	static bool isFemale(EntityIndex entity);
+	static bool isMarried(EntityIndex entity);
 
 	// Serializable
 	void saveLoadWithSerializer(Common::Serializer &ser);
@@ -165,15 +162,15 @@ private:
 
 	void drawSequenceInternal(EntityIndex entity, const char* sequence, EntityDirection direction);
 	void drawSequencesInternal(EntityIndex entity, EntityDirection direction, bool loadSequence);
-	void loadSequence3(EntityIndex entityIndex, Common::String sequenceName, Common::String sequenceName2, int16 field30, bool loadSequence);
+	void loadSequence3(EntityIndex entity, Common::String sequenceName, Common::String sequenceName2, int16 field30, bool loadSequence);
 
 	void clearEntitySequenceData(EntityData::EntityCallData * data, EntityDirection direction);
-	void computeCurrentFrame2(EntityIndex entityIndex);
+	void computeCurrentFrame2(EntityIndex entity);
 	int getCurrentFrame2(EntityIndex entity, Sequence *sequence, EntityPosition position, bool doProcessing);
-	void updateFrame(EntityIndex entityIndex, bool keepPreviousFrame, bool dontPlaySound);
-	void drawNextSequence(EntityIndex entityIndex);
-	void updateEntityPosition(EntityIndex entityIndex);
-	void copySequenceData3To2(EntityIndex entityIndex);
+	void processFrame(EntityIndex entity, bool keepPreviousFrame, bool dontPlaySound);
+	void drawNextSequence(EntityIndex entity);
+	void updateEntityPosition(EntityIndex entity);
+	void copySequenceData3To2(EntityIndex entity);
 
 	bool changeCar(EntityData::EntityCallData * data, EntityIndex entity, CarIndex car, EntityPosition position, bool increment, EntityPosition newPosition, CarIndex newCar);
 

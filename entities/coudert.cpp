@@ -106,6 +106,9 @@ Coudert::Coudert(LastExpressEngine *engine) : Entity(engine, kEntityCoudert) {
 	ADD_NULL_FUNCTION();
 }
 
+/**
+ * Resets the entity
+ */
 IMPLEMENT_FUNCTION(Coudert, reset, 1)
 	Entity::reset(savepoint, true);
 }
@@ -118,7 +121,7 @@ IMPLEMENT_FUNCTION_S(Coudert, bloodJacket, 2)
 	case kActionNone:
 		if (getProgress().jacket == kJacketBlood
 		 && getEntities()->checkFields9(kEntityCoudert, kEntityNone, 1000)
-		 && !getEntities()->checkFields3()
+		 && !getEntities()->isEntitySittingInCompartmentCars()
 		 && !getEntities()->checkFields10()) {
 			setCallback(1);
 			call(new ENTITY_SETUP(Coudert, setup_savegame), kSavegameType2, kEventMertensBloodJacket); /* BUG: is this a bug in the original? */
@@ -142,8 +145,36 @@ IMPLEMENT_FUNCTION_S(Coudert, bloodJacket, 2)
 	}
 }
 
+/**
+ * Handles entering/exiting a compartment. 
+ *
+ * @param seq1   The sequence to draw
+ * @param param4 The compartment
+ */
 IMPLEMENT_FUNCTION_SI(Coudert, enterExitCompartment, 3)
-	error("Coudert: callback function 3 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionNone:
+		if (getProgress().jacket == kJacketBlood
+		 && getEntities()->checkFields9(kEntityCoudert, kEntityNone, 1000)
+		 && !getEntities()->isEntitySittingInCompartmentCars()
+		 && !getEntities()->checkFields10()) {
+			setCallback(1);
+			call(new ENTITY_SETUP(Coudert, setup_savegame), kSavegameType2, kEventMertensBloodJacket); /* BUG: is this a bug in the original? */
+		}
+		return;
+
+	case kActionCallback:
+		if (getCallback() == 1) {
+			getAction()->playAnimation(kEventCoudertBloodJacket);
+			getLogic()->gameOver(kTimeType0, kTime1, kSceneGameOverBloodJacket, true);
+		}
+		return;
+	}
+
+	Entity::enterExitCompartment(savepoint);
 }
 
 IMPLEMENT_FUNCTION(Coudert, function4, 4)
@@ -159,7 +190,7 @@ IMPLEMENT_FUNCTION(Coudert, function4, 4)
 
 		if (getProgress().jacket == kJacketBlood
 		 && getEntities()->checkFields9(kEntityCoudert, kEntityNone, 1000)
-		 && !getEntities()->checkFields3()
+		 && !getEntities()->isEntitySittingInCompartmentCars()
 		 && !getEntities()->checkFields10()) {
 			setCallback(1);
 			call(new ENTITY_SETUP(Coudert, setup_savegame), kSavegameType2, kEventMertensBloodJacket);
@@ -183,6 +214,11 @@ IMPLEMENT_FUNCTION_SIII(Coudert, function5, 5)
 	error("Coudert: callback function 5 not implemented!");
 }
 
+/**
+ * Play a sound
+ *
+ * @param seq1 The sound name
+ */
 IMPLEMENT_FUNCTION_S(Coudert, playSound, 6)
 	switch (savepoint.action) {
 	default:
@@ -191,7 +227,7 @@ IMPLEMENT_FUNCTION_S(Coudert, playSound, 6)
 	case kActionNone:
 		if (getProgress().jacket == kJacketBlood
 		 && getEntities()->checkFields9(kEntityCoudert, kEntityNone, 1000)
-		 && !getEntities()->checkFields3()
+		 && !getEntities()->isEntitySittingInCompartmentCars()
 		 && !getEntities()->checkFields10()) {
 			setCallback(1);
 			call(new ENTITY_SETUP(Coudert, setup_savegame), kSavegameType2, kEventMertensBloodJacket);
@@ -215,6 +251,11 @@ IMPLEMENT_FUNCTION_S(Coudert, playSound, 6)
 	}
 }
 
+/**
+ * Play a sound
+ *
+ * @param seq1 The sound name
+ */
 IMPLEMENT_FUNCTION_NOSETUP(Coudert, playSound16, 7)
 	EXPOSE_PARAMS(EntityData::EntityParametersSIIS);
 
@@ -225,7 +266,7 @@ IMPLEMENT_FUNCTION_NOSETUP(Coudert, playSound16, 7)
 	case kActionNone:
 		if (getProgress().jacket == kJacketBlood
 		 && getEntities()->checkFields9(kEntityCoudert, kEntityNone, 1000)
-		 && !getEntities()->checkFields3()
+		 && !getEntities()->isEntitySittingInCompartmentCars()
 		 && !getEntities()->checkFields10()) {
 			setCallback(1);
 			call(new ENTITY_SETUP(Coudert, setup_savegame), kSavegameType2, kEventMertensBloodJacket);
@@ -249,6 +290,12 @@ IMPLEMENT_FUNCTION_NOSETUP(Coudert, playSound16, 7)
 	}
 }
 
+/**
+ * Save the game
+ *
+ * @param param1 The SavegameType for the savegame
+ * @param param2 The EventIndex for the savegame
+ */
 IMPLEMENT_FUNCTION_II(Coudert, savegame, 8)
 	Entity::savegame(savepoint);
 }
@@ -273,7 +320,7 @@ IMPLEMENT_FUNCTION_I(Coudert, function10, 10)
 	case kActionNone:
 		if (getProgress().jacket == kJacketBlood
 		 && getEntities()->checkFields9(kEntityCoudert, kEntityNone, 1000)
-		 && !getEntities()->checkFields3()
+		 && !getEntities()->isEntitySittingInCompartmentCars()
 		 && !getEntities()->checkFields10()) {
 			setCallback(1);
 			call(new ENTITY_SETUP(Coudert, setup_savegame), kSavegameType2, kEventMertensBloodJacket);
@@ -305,7 +352,7 @@ IMPLEMENT_FUNCTION_I(Coudert, function11, 11)
 	case kActionNone:
 		if (getProgress().jacket == kJacketBlood
 		 && getEntities()->checkFields9(kEntityCoudert, kEntityNone, 1000)
-		 && !getEntities()->checkFields3()
+		 && !getEntities()->isEntitySittingInCompartmentCars()
 		 && !getEntities()->checkFields10()) {
 			setCallback(1);
 			call(new ENTITY_SETUP(Coudert, setup_savegame), kSavegameType2, kEventMertensBloodJacket);
@@ -390,7 +437,7 @@ IMPLEMENT_FUNCTION_II(Coudert, function13, 13)
 	case kActionNone:
 		if (getProgress().jacket == kJacketBlood
 		 && getEntities()->checkFields9(kEntityCoudert, kEntityNone, 1000)
-		 && !getEntities()->checkFields3()
+		 && !getEntities()->isEntitySittingInCompartmentCars()
 		 && !getEntities()->checkFields10()) {
 			setCallback(3);
 			call(new ENTITY_SETUP(Coudert, setup_savegame), kSavegameType2, kEventMertensBloodJacket);
@@ -856,7 +903,7 @@ IMPLEMENT_FUNCTION(Coudert, chapter1, 36)
 		ENTITY_PARAM(0, 2) = 1;
 
 		getData()->entityPosition = kPosition_1500;
-		getData()->field_493 = kField493_0;
+		getData()->posture = kPostureStanding;
 		getData()->car = kCarRedSleeping;
 
 		getObjects()->updateLocation2(kObject111, kLocation1);
@@ -881,7 +928,7 @@ switch (savepoint.action) {
 	case kActionDefault:
 		getData()->car = kCarRedSleeping;
 		getData()->entityPosition = kPosition_8200;
-		getData()->field_493 = kField493_1;
+		getData()->posture = kPostureSitting;
 		break;
 
 	case kActionCallback:
@@ -905,7 +952,7 @@ switch (savepoint.action) {
 
 	case kAction191477936:
 		getData()->entityPosition = kPosition_4070;
-		getData()->field_493 = kField493_0;
+		getData()->posture = kPostureStanding;
 		getObjects()->update(kObjectCompartment4, kEntityNone, kLocationNone, kCursorHandKnock, kCursorHand);
 
 		setCallback(1);
@@ -1057,7 +1104,7 @@ label_coudert_object:
 	case kActionDefault:
 		getData()->car = kCarRedSleeping;
 		getData()->entityPosition = kPosition_1500;
-		getData()->field_493 = kField493_0;
+		getData()->posture = kPostureStanding;
 
 		getScenes()->loadSceneFromItemPosition(kItem5);
 		break;
@@ -1185,7 +1232,7 @@ IMPLEMENT_FUNCTION(Coudert, chapter2, 42)
 		getEntities()->clearSequences(kEntityCoudert);
 
 		getData()->entityPosition = kPosition_1500;
-		getData()->field_493 = kField493_0;
+		getData()->posture = kPostureStanding;
 		getData()->car = kCarRedSleeping;
 		getData()->inventoryItem = kItemNone;
 
@@ -1234,7 +1281,7 @@ IMPLEMENT_FUNCTION(Coudert, chapter3, 44)
 		getEntities()->clearSequences(kEntityCoudert);
 
 		getData()->entityPosition = kPosition_1500;
-		getData()->field_493 = kField493_0;
+		getData()->posture = kPostureStanding;
 		getData()->car = kCarRedSleeping;
 		getData()->clothes = kClothesDefault;
 		getData()->inventoryItem = kItemNone;
@@ -1309,7 +1356,7 @@ IMPLEMENT_FUNCTION(Coudert, chapter4, 52)
 		getEntities()->clearSequences(kEntityCoudert);
 
 		getData()->entityPosition = kPosition_1500;
-		getData()->field_493 = kField493_0;
+		getData()->posture = kPostureStanding;
 		getData()->car = kCarRedSleeping;
 		getData()->clothes = kClothesDefault;
 		getData()->inventoryItem = kItemNone;
@@ -1372,7 +1419,7 @@ IMPLEMENT_FUNCTION(Coudert, chapter5, 57)
 		getEntities()->clearSequences(kEntityCoudert);
 
 		getData()->entityPosition = kPosition_3969;
-		getData()->field_493 = kField493_1;
+		getData()->posture = kPostureSitting;
 		getData()->car = kCarRestaurant;
 		getData()->inventoryItem = kItemNone;
 		break;
@@ -1391,7 +1438,7 @@ IMPLEMENT_FUNCTION(Coudert, function59, 59)
 
 	case kActionDefault:
 		getData()->entityPosition = kPosition_7500;
-		getData()->field_493 = kField493_0;
+		getData()->posture = kPostureStanding;
 		getData()->car = kCarRedSleeping;
 
 		getSound()->playSound(kEntityCoudert, "Jac5010"); // Situation is under control, please remain in your compartment

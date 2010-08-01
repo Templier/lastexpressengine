@@ -40,7 +40,7 @@ namespace LastExpress {
 Pascale::Pascale(LastExpressEngine *engine) : Entity(engine, kEntityPascale) {
 	ADD_CALLBACK_FUNCTION(Pascale, draw);
 	ADD_CALLBACK_FUNCTION(Pascale, function2);
-	ADD_CALLBACK_FUNCTION(Pascale, function3);
+	ADD_CALLBACK_FUNCTION(Pascale, callbackActionOnDirection);
 	ADD_CALLBACK_FUNCTION(Pascale, updateFromTime);
 	ADD_CALLBACK_FUNCTION(Pascale, updatePosition);
 	ADD_CALLBACK_FUNCTION(Pascale, playSound);
@@ -74,6 +74,11 @@ Pascale::Pascale(LastExpressEngine *engine) : Entity(engine, kEntityPascale) {
 	ADD_NULL_FUNCTION();
 }
 
+/**
+ * Draws the entity
+ *
+ * @param seq1 The sequence to draw
+ */
 IMPLEMENT_FUNCTION_S(Pascale, draw, 1)
 	Entity::draw(savepoint, true);
 }
@@ -82,7 +87,10 @@ IMPLEMENT_FUNCTION(Pascale, function2, 2)
 	Entity::savepointCheckFields11(savepoint);
 }
 
-IMPLEMENT_FUNCTION(Pascale, function3, 3)
+/**
+ * Process callback action when the entity direction is not kDirectionRight
+ */
+IMPLEMENT_FUNCTION(Pascale, callbackActionOnDirection, 3)
 	if (savepoint.action == kActionExcuseMeCath) {
 		if (!params->param1) {
 			getSound()->excuseMe(kEntityPascale);
@@ -90,21 +98,45 @@ IMPLEMENT_FUNCTION(Pascale, function3, 3)
 		}
 	}
 
-	Entity::savepointDirection(savepoint);
+	Entity::callbackActionOnDirection(savepoint);
 }
 
+/**
+ * Updates parameter 2 using time value
+ *
+ * @param param1 The time to add
+ */
 IMPLEMENT_FUNCTION_I(Pascale, updateFromTime, 4)
 	Entity::updateFromTime(savepoint);
 }
 
+/**
+ * Updates the position
+ *
+ * @param seq1   The sequence to draw
+ * @param param4 The car
+ * @param param5 The entity position
+ */
 IMPLEMENT_FUNCTION_NOSETUP(Pascale, updatePosition, 5)
 	Entity::updatePosition(savepoint, true);
 }
 
+/**
+ * Plays sound
+ *
+ * @param param1 The sound filename
+ */
 IMPLEMENT_FUNCTION_S(Pascale, playSound, 6)
 	Entity::playSound(savepoint);
 }
 
+/**
+ * Draws the entity along with another one
+ *
+ * @param seq1   The sequence to draw
+ * @param seq2   The sequence to draw for the second entity
+ * @param param7 The EntityIndex of the second entity
+ */
 IMPLEMENT_FUNCTION_NOSETUP(Pascale, draw2, 7)
 	Entity::draw2(savepoint);
 }
@@ -116,7 +148,7 @@ IMPLEMENT_FUNCTION(Pascale, function8, 8)
 
 	case kActionDefault:
 		getData()->entityPosition = kPosition_850;
-		getData()->field_493 = kField493_0;
+		getData()->posture = kPostureStanding;
 
 		setCallback(1);
 		call(new ENTITY_SETUP_SIIS(Pascale, setup_draw), "901");
@@ -216,7 +248,7 @@ IMPLEMENT_FUNCTION(Pascale, chapter1, 12)
 		getSavePoints()->addData(kEntityPascale, kAction190605184, 11);
 
 		getData()->entityPosition = kPosition_5900;
-		getData()->field_493 = kField493_0;
+		getData()->posture = kPostureStanding;
 		getData()->car = kCarRestaurant;
 		break;
 	}
@@ -363,12 +395,12 @@ IMPLEMENT_FUNCTION(Pascale, function19, 19)
 	case kActionNone:
 		if (!params->param1 && getEntityData(kEntityNone)->entityPosition < kPosition_3650) {
 			getObjects()->update(kObject65, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
-			getSavePoints()->push(kEntityPascale, kEntityTables0, kAction103798704, "001P");
-			getSavePoints()->push(kEntityPascale, kEntityTables1, kAction103798704, "005J");
-			getSavePoints()->push(kEntityPascale, kEntityTables2, kAction103798704, "009G");
-			getSavePoints()->push(kEntityPascale, kEntityTables3, kAction103798704, "010M");
-			getSavePoints()->push(kEntityPascale, kEntityTables4, kAction103798704, "014F");
-			getSavePoints()->push(kEntityPascale, kEntityTables5, kAction103798704, "024D");
+			getSavePoints()->push(kEntityPascale, kEntityTables0, kActionDrawTablesWithChairs, "001P");
+			getSavePoints()->push(kEntityPascale, kEntityTables1, kActionDrawTablesWithChairs, "005J");
+			getSavePoints()->push(kEntityPascale, kEntityTables2, kActionDrawTablesWithChairs, "009G");
+			getSavePoints()->push(kEntityPascale, kEntityTables3, kActionDrawTablesWithChairs, "010M");
+			getSavePoints()->push(kEntityPascale, kEntityTables4, kActionDrawTablesWithChairs, "014F");
+			getSavePoints()->push(kEntityPascale, kEntityTables5, kActionDrawTablesWithChairs, "024D");
 
 			params->param1 = 1;
 		}
@@ -377,7 +409,7 @@ IMPLEMENT_FUNCTION(Pascale, function19, 19)
 	case kActionDefault:
 		getData()->car = kCarRestaurant;
 		getData()->entityPosition = kPosition_5900;
-		getData()->field_493 = kField493_0;
+		getData()->posture = kPostureStanding;
 
 		getEntities()->clearSequences(kEntityPascale);
 		break;
@@ -389,7 +421,7 @@ IMPLEMENT_FUNCTION(Pascale, chapter2, 20)
 		getEntities()->clearSequences(kEntityPascale);
 
 		getData()->entityPosition = kPosition_5900;
-		getData()->field_493 = kField493_0;
+		getData()->posture = kPostureStanding;
 		getData()->car = kCarRestaurant;
 		getData()->clothes = kClothes1;
 		getData()->inventoryItem = kItemNone;
@@ -411,7 +443,7 @@ IMPLEMENT_FUNCTION(Pascale, chapter3, 21)
 		getEntities()->clearSequences(kEntityPascale);
 
 		getData()->entityPosition = kPosition_5900;
-		getData()->field_493 = kField493_0;
+		getData()->posture = kPostureStanding;
 		getData()->car = kCarRestaurant;
 		getData()->inventoryItem = kItemNone;
 
@@ -461,7 +493,7 @@ IMPLEMENT_FUNCTION(Pascale, function23, 23)
 
 	case kActionDefault:
 		getData()->entityPosition = kPosition_5800;
-		getData()->field_493 = kField493_0;
+		getData()->posture = kPostureStanding;
 		getEntities()->updatePosition(kEntityPascale, kCarRestaurant, 67, true);
 
 		setCallback(1);
@@ -533,7 +565,7 @@ IMPLEMENT_FUNCTION(Pascale, chapter4, 25)
 		getEntities()->clearSequences(kEntityPascale);
 
 		getData()->entityPosition = kPosition_5900;
-		getData()->field_493 = kField493_0;
+		getData()->posture = kPostureStanding;
 		getData()->car = kCarRestaurant;
 		getData()->inventoryItem = kItemNone;
 
@@ -565,7 +597,7 @@ IMPLEMENT_FUNCTION(Pascale, function29, 29)
 
 	case kActionDefault:
 		getData()->entityPosition = kPosition_1540;
-		getData()->field_493 = kField493_0;
+		getData()->posture = kPostureStanding;
 
 		setCallback(1);
 		call(new ENTITY_SETUP_SIIS(Pascale, setup_draw), "817DD");
@@ -579,10 +611,10 @@ IMPLEMENT_FUNCTION(Pascale, function29, 29)
 		case 1:
 			getEntities()->drawSequenceRight(kEntityPascale, "817DS");
 			if (getEntities()->checkFields13())
-				getEntities()->updateEntity(kEntityPascale);
+				getEntities()->updateFrame(kEntityPascale);
 
 			setCallback(2);
-			call(new ENTITY_SETUP(Pascale, setup_function3));
+			call(new ENTITY_SETUP(Pascale, setup_callbackActionOnDirection));
 			break;
 
 		case 2:
@@ -602,7 +634,7 @@ IMPLEMENT_FUNCTION(Pascale, function30, 30)
 
 	case kActionDefault:
 		getData()->entityPosition = kPosition_9270;
-		getData()->field_493 = kField493_0;
+		getData()->posture = kPostureStanding;
 
 		setCallback(1);
 		call(new ENTITY_SETUP_SIIS(Pascale, setup_draw), "817US");
@@ -616,10 +648,10 @@ IMPLEMENT_FUNCTION(Pascale, function30, 30)
 		case 1:
 			getEntities()->drawSequenceRight(kEntityPascale, "817UD");
 			if (getEntities()->checkFields12())
-				getEntities()->updateEntity(kEntityPascale);
+				getEntities()->updateFrame(kEntityPascale);
 
 			setCallback(2);
-			call(new ENTITY_SETUP(Pascale, setup_function3));
+			call(new ENTITY_SETUP(Pascale, setup_callbackActionOnDirection));
 			break;
 
 		case 2:
@@ -645,7 +677,7 @@ IMPLEMENT_FUNCTION(Pascale, chapter5, 31)
 		getEntities()->clearSequences(kEntityPascale);
 
 		getData()->entityPosition = kPosition_3969;
-		getData()->field_493 = kField493_1;
+		getData()->posture = kPostureSitting;
 		getData()->car = kCarRestaurant;
 		getData()->inventoryItem = kItemNone;
 		break;

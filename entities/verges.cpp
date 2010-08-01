@@ -48,7 +48,7 @@ Verges::Verges(LastExpressEngine *engine) : Entity(engine, kEntityVerges) {
 	ADD_CALLBACK_FUNCTION(Verges, playSound16);
 	ADD_CALLBACK_FUNCTION(Verges, function6);
 	ADD_CALLBACK_FUNCTION(Verges, savegame);
-	ADD_CALLBACK_FUNCTION(Verges, checkEntity);
+	ADD_CALLBACK_FUNCTION(Verges, updateEntity);
 	ADD_CALLBACK_FUNCTION(Verges, function9);
 	ADD_CALLBACK_FUNCTION(Verges, function10);
 	ADD_CALLBACK_FUNCTION(Verges, function11);
@@ -85,10 +85,18 @@ Verges::Verges(LastExpressEngine *engine) : Entity(engine, kEntityVerges) {
 	ADD_CALLBACK_FUNCTION(Verges, function42);
 }
 
+/**
+ * Resets the entity
+ */
 IMPLEMENT_FUNCTION(Verges, reset, 1)
 	Entity::reset(savepoint);
 }
 
+/**
+ * Draws the entity
+ *
+ * @param seq1 The sequence to draw
+ */
 IMPLEMENT_FUNCTION_S(Verges, draw, 2)
 	Entity::draw(savepoint, true);
 }
@@ -116,10 +124,21 @@ IMPLEMENT_FUNCTION(Verges, function3, 3)
 	}
 }
 
+/**
+ * Plays sound
+ *
+ * @param param1 The sound filename
+ */
 IMPLEMENT_FUNCTION_S(Verges, playSound, 4)
 	Entity::playSound(savepoint);
 }
 
+/**
+ * Plays sound
+ *
+ * @param savepoint The savepoint
+ *                    - sound filename
+ */
 IMPLEMENT_FUNCTION_NOSETUP(Verges, playSound16, 5)
 	Entity::playSound(savepoint, false, 16);
 }
@@ -128,11 +147,23 @@ IMPLEMENT_FUNCTION(Verges, function6, 6)
 	Entity::savepointCheckFields11(savepoint);
 }
 
+/**
+ * Save the game
+ *
+ * @param param1 The SavegameType for the savegame
+ * @param param2 The EventIndex for the savegame
+ */
 IMPLEMENT_FUNCTION_II(Verges, savegame, 7)
 	Entity::savegame(savepoint);
 }
 
-IMPLEMENT_FUNCTION_II(Verges, checkEntity, 8)
+/**
+ * Updates the entity
+ *
+ * @param param1 The car
+ * @param param2 The entity position
+ */
+IMPLEMENT_FUNCTION_II(Verges, updateEntity, 8)
 	if (savepoint.action == kActionExcuseMeCath) {
 		if (!getSound()->isBuffered(kEntityVerges))
 			getSound()->playSound(kEntityNone, "TRA1113", getEntities()->getSoundValue(kEntityVerges));
@@ -140,7 +171,7 @@ IMPLEMENT_FUNCTION_II(Verges, checkEntity, 8)
 		return;
 	}
 
-	Entity::checkEntity(savepoint, true);
+	Entity::updateEntity(savepoint, true);
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -176,7 +207,7 @@ switch (savepoint.action) {
 
 		case 1:
 			getData()->entityPosition = kPosition_5800;
-			getData()->field_493 = kField493_0;
+			getData()->posture = kPostureStanding;
 
 			getSound()->playSound(kEntityVerges, (char *)&params->seq1);
 
@@ -191,7 +222,7 @@ switch (savepoint.action) {
 			getEntities()->drawSequenceRight(kEntityVerges, "813DS");
 
 			if (getEntities()->checkFields13())
-				getEntities()->updateEntity(kEntityVerges);
+				getEntities()->updateFrame(kEntityVerges);
 
 			setCallback(3);
 			call(new ENTITY_SETUP(Verges, setup_function3));
@@ -243,6 +274,11 @@ IMPLEMENT_FUNCTION_I(Verges, function13, 13)
 	error("Verges: callback function 13 not implemented!");
 }
 
+/**
+ * Updates parameter 2 using time value
+ *
+ * @param param1 The time to add
+ */
 IMPLEMENT_FUNCTION_I(Verges, updateFromTime, 14)
 	Entity::updateFromTime(savepoint);
 }
@@ -277,7 +313,7 @@ IMPLEMENT_FUNCTION(Verges, function17, 17)
 
 		case 1:
 			setCallback(2);
-			call(new ENTITY_SETUP(Verges, setup_checkEntity), kCarGreenSleeping, kPosition_2000);
+			call(new ENTITY_SETUP(Verges, setup_updateEntity), kCarGreenSleeping, kPosition_2000);
 			break;
 
 		case 2:
@@ -322,7 +358,7 @@ IMPLEMENT_FUNCTION(Verges, chapter1, 18)
 		getObjects()->update(kObject105, kEntityVerges, kLocationNone, kCursorNormal, kCursorHand);
 
 		getData()->entityPosition = kPosition_5000;
-		getData()->field_493 = kField493_0;
+		getData()->posture = kPostureStanding;
 		getData()->car = kCarBaggage;
 		break;
 	}
@@ -353,13 +389,13 @@ IMPLEMENT_FUNCTION(Verges, function23, 23)
 		getScenes()->loadSceneFromItemPosition(kItem9);
 
 		getData()->entityPosition = kPosition_8200;
-		getData()->field_493 = kField493_1;
+		getData()->posture = kPostureSitting;
 		getData()->car = kCarRedSleeping;
 		break;
 
 	case kAction191477936:
 		getData()->entityPosition = kPosition_8200;
-		getData()->field_493 = kField493_0;
+		getData()->posture = kPostureStanding;
 		getData()->car = kCarRedSleeping;
 
 		setCallback(1);
@@ -374,7 +410,7 @@ IMPLEMENT_FUNCTION(Verges, policeGettingOffTrain, 24)
 		break;
 
 	case kActionNone:
-		if (getEntities()->checkFields9(kEntityVerges, kEntityNone, 1000) && !getEntityData(kEntityNone)->field_493) {
+		if (getEntities()->checkFields9(kEntityVerges, kEntityNone, 1000) && !getEntityData(kEntityNone)->posture) {
 			setCallback(1);
 			call(new ENTITY_SETUP(Verges, setup_savegame), kSavegameType2, kEventGendarmesArrestation);
 		}
@@ -506,7 +542,7 @@ label_callback15:
 	case kActionDefault:
 		getData()->car = kCarBaggage;
 		getData()->entityPosition = kPosition_5000;
-		getData()->field_493 = kField493_0;
+		getData()->posture = kPostureStanding;
 
 		getEntities()->clearSequences(kEntityVerges);
 		getInventory()->setLocationAndProcess(kItem9, kLocation1);
@@ -531,7 +567,7 @@ label_callback15:
 
 		case 5:
 			setCallback(6);
-			call(new ENTITY_SETUP(Verges, setup_checkEntity), kCarGreenSleeping, kPosition_2000);
+			call(new ENTITY_SETUP(Verges, setup_updateEntity), kCarGreenSleeping, kPosition_2000);
 			break;
 
 		case 6:
@@ -592,7 +628,7 @@ IMPLEMENT_FUNCTION(Verges, chapter2, 27)
 		getEntities()->clearSequences(kEntityVerges);
 
 		getData()->entityPosition = kPosition_5000;
-		getData()->field_493 = kField493_0;
+		getData()->posture = kPostureStanding;
 		getData()->car = kCarBaggage;
 		getData()->inventoryItem = kItemNone;
 
@@ -677,7 +713,7 @@ label_callback_6:
 
 		case 3:
 			setCallback(4);
-			call(new ENTITY_SETUP(Verges, setup_checkEntity), kCarRedSleeping, kPosition_2000);
+			call(new ENTITY_SETUP(Verges, setup_updateEntity), kCarRedSleeping, kPosition_2000);
 			break;
 
 		case 4:
@@ -710,7 +746,7 @@ IMPLEMENT_FUNCTION(Verges, chapter3, 29)
 		getEntities()->clearSequences(kEntityVerges);
 
 		getData()->entityPosition = kPosition_540;
-		getData()->field_493 = kField493_0;
+		getData()->posture = kPostureStanding;
 		getData()->car = kCarRestaurant;
 		getData()->clothes = kClothesDefault;
 		getData()->inventoryItem = kItemNone;
@@ -744,7 +780,7 @@ IMPLEMENT_FUNCTION_S(Verges, function30, 30)
 
 		case 1:
 			setCallback(2);
-			call(new ENTITY_SETUP(Verges, setup_checkEntity), kCarRedSleeping, kPosition_2000);
+			call(new ENTITY_SETUP(Verges, setup_updateEntity), kCarRedSleeping, kPosition_2000);
 			break;
 
 		case 2:
@@ -782,7 +818,7 @@ IMPLEMENT_FUNCTION(Verges, function31, 31)
 
 		case 1:
 			setCallback(2);
-			call(new ENTITY_SETUP(Verges, setup_checkEntity), kCarRedSleeping, kPosition_2000);
+			call(new ENTITY_SETUP(Verges, setup_updateEntity), kCarRedSleeping, kPosition_2000);
 			break;
 
 		case 2:
@@ -835,7 +871,7 @@ IMPLEMENT_FUNCTION(Verges, chapter4, 36)
 		getEntities()->clearSequences(kEntityVerges);
 
 		getData()->entityPosition = kPosition_5000;
-		getData()->field_493 = kField493_0;
+		getData()->posture = kPostureStanding;
 		getData()->car = kCarBaggage;
 		getData()->clothes = kClothesDefault;
 		getData()->inventoryItem = kItemNone;
@@ -865,7 +901,7 @@ IMPLEMENT_FUNCTION(Verges, function38, 38)
 		getEntities()->clearSequences(kEntityVerges);
 
 		getData()->entityPosition = kPosition_6469;
-		getData()->field_493 = kField493_0;
+		getData()->posture = kPostureStanding;
 		getData()->car = kCarGreenSleeping;
 		break;
 
@@ -895,7 +931,7 @@ IMPLEMENT_FUNCTION(Verges, function38, 38)
 		getData()->entityPosition = kPosition_5790;
 
 		setCallback(1);
-		call(new ENTITY_SETUP(Verges, setup_checkEntity), kCarGreenSleeping, kPosition_540);
+		call(new ENTITY_SETUP(Verges, setup_updateEntity), kCarGreenSleeping, kPosition_540);
 		break;
 	}
 }
@@ -913,7 +949,7 @@ IMPLEMENT_FUNCTION(Verges, chapter5, 39)
 		getEntities()->clearSequences(kEntityVerges);
 
 		getData()->entityPosition = kPosition_3650;
-		getData()->field_493 = kField493_1;
+		getData()->posture = kPostureSitting;
 		getData()->car = kCarRestaurant;
 		getData()->clothes = kClothesDefault;
 		getData()->inventoryItem = kItemNone;
@@ -954,7 +990,7 @@ void Verges::talk(const SavePoint &savepoint, const char* sound1, const char* so
 
 		case 1:
 			setCallback(2);
-			call(new ENTITY_SETUP(Verges, setup_checkEntity), kCarRedSleeping, kPosition_2000);
+			call(new ENTITY_SETUP(Verges, setup_updateEntity), kCarRedSleeping, kPosition_2000);
 			break;
 
 		case 2:
@@ -964,7 +1000,7 @@ void Verges::talk(const SavePoint &savepoint, const char* sound1, const char* so
 
 		case 3:
 			setCallback(4);
-			call(new ENTITY_SETUP(Verges, setup_checkEntity), kCarGreenSleeping, kPosition_2000);
+			call(new ENTITY_SETUP(Verges, setup_updateEntity), kCarGreenSleeping, kPosition_2000);
 			break;
 
 		case 4:

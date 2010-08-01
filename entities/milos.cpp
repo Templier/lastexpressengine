@@ -43,7 +43,7 @@ Milos::Milos(LastExpressEngine *engine) : Entity(engine, kEntityMilos) {
 	ADD_CALLBACK_FUNCTION(Milos, draw);
 	ADD_CALLBACK_FUNCTION(Milos, enterExitCompartment);
 	ADD_CALLBACK_FUNCTION(Milos, enterExitCompartment2);
-	ADD_CALLBACK_FUNCTION(Milos, function5);
+	ADD_CALLBACK_FUNCTION(Milos, callbackActionOnDirection);
 	ADD_CALLBACK_FUNCTION(Milos, playSound);
 	ADD_CALLBACK_FUNCTION(Milos, playSound16);
 	ADD_CALLBACK_FUNCTION(Milos, savegame);
@@ -76,35 +76,75 @@ Milos::Milos(LastExpressEngine *engine) : Entity(engine, kEntityMilos) {
 	ADD_CALLBACK_FUNCTION(Milos, function35);
 }
 
+/**
+ * Resets the entity
+ */
 IMPLEMENT_FUNCTION(Milos, reset, 1)
 	Entity::reset(savepoint);
 }
 
+/**
+ * Draws the entity
+ *
+ * @param seq1 The sequence to draw
+ */
 IMPLEMENT_FUNCTION_S(Milos, draw, 2)
 	Entity::draw(savepoint);
 }
 
+/**
+ * Handles entering/exiting a compartment. 
+ *
+ * @param seq1   The sequence to draw
+ * @param param4 The compartment
+ */
 IMPLEMENT_FUNCTION_SI(Milos, enterExitCompartment, 3)
 	Entity::enterExitCompartment(savepoint);
 }
 
-// Seems to be exactly the same as the previous function
+/**
+ * Handles entering/exiting a compartment. 
+ *
+ * @param seq1   The sequence to draw
+ * @param param4 The compartment
+ *
+ * @note Seems to be exactly the same as the previous function
+ */
 IMPLEMENT_FUNCTION_SI(Milos, enterExitCompartment2, 4)
 	Entity::enterExitCompartment(savepoint);
 }
 
-IMPLEMENT_FUNCTION(Milos, function5, 5)
-	Entity::savepointDirection(savepoint);
+/**
+ * Process callback action when the entity direction is not kDirectionRight
+ */
+IMPLEMENT_FUNCTION(Milos, callbackActionOnDirection, 5)
+	Entity::callbackActionOnDirection(savepoint);
 }
 
+/**
+ * Plays sound
+ *
+ * @param param1 The sound filename
+ */
 IMPLEMENT_FUNCTION_S(Milos, playSound, 6)
 	Entity::playSound(savepoint);
 }
 
+/**
+ * Plays sound
+ *
+ * @param param1 The sound filename
+ */
 IMPLEMENT_FUNCTION_S(Milos, playSound16, 7)
 	Entity::playSound(savepoint, false, 16);
 }
 
+/**
+ * Save the game
+ *
+ * @param param1 The SavegameType for the savegame
+ * @param param2 The EventIndex for the savegame
+ */
 IMPLEMENT_FUNCTION_II(Milos, savegame, 8)
 	Entity::savegame(savepoint);
 }
@@ -120,7 +160,7 @@ IMPLEMENT_FUNCTION_II(Milos, enterCompartmentDialog, 10)
 
 	case kActionNone:
 	case kActionDefault:
-		if (getEntities()->checkEntity(kEntityMilos, (CarIndex)params->param1, (EntityPosition)params->param2))
+		if (getEntities()->updateEntity(kEntityMilos, (CarIndex)params->param1, (EntityPosition)params->param2))
 			CALLBACK_ACTION()
 		break;
 
@@ -200,7 +240,7 @@ IMPLEMENT_FUNCTION_I(Milos, function11, 11)
 			break;
 
 		case 1:
-			getData()->field_493 = kField493_0;
+			getData()->posture = kPostureStanding;
 			setCallback(2);
 			call(new ENTITY_SETUP(Milos, setup_enterCompartmentDialog), 3, 8200);
 			break;
@@ -225,7 +265,7 @@ IMPLEMENT_FUNCTION_I(Milos, function11, 11)
 			break;
 
 		case 5:
-			getData()->field_493 = kField493_1;
+			getData()->posture = kPostureSitting;
 			getEntities()->clearSequences(kEntityMilos);
 			getSavePoints()->push(kEntityMilos, kEntityVesna, kAction101687594);
 			getObjects()->update(kObjectCompartmentG, kEntityMilos, kLocation3, kCursorHandKnock, kCursorHand);
@@ -261,7 +301,7 @@ IMPLEMENT_FUNCTION_I(Milos, function11, 11)
 
 		case 13:
 			getEntities()->exitCompartment(kEntityMilos, kObjectCompartmentG, false);
-			getData()->field_493 = kField493_1;
+			getData()->posture = kPostureSitting;
 			getEntities()->clearSequences(kEntityMilos);
 			getObjects()->update(kObjectCompartmentG, kEntityMilos, kLocation3, kCursorHandKnock, kCursorHand);
 			params->param5 = 0;
@@ -271,7 +311,7 @@ IMPLEMENT_FUNCTION_I(Milos, function11, 11)
 		break;
 
 	case kAction122865568:
-		getData()->field_493 = kField493_0;
+		getData()->posture = kPostureStanding;
 		setCallback(12);
 		call(new ENTITY_SETUP_SIIS(Milos, setup_enterExitCompartment), "611Bg", kObjectCompartmentG);
 		break;
@@ -302,7 +342,7 @@ IMPLEMENT_FUNCTION(Milos, chapter1, 12)
 		getObjects()->update(kObject46, kEntityNone, kLocationNone, kCursorKeepValue, kCursorKeepValue);
 
 		getData()->entityPosition = kPosition_4689;
-		getData()->field_493 = kField493_1;
+		getData()->posture = kPostureSitting;
 		getData()->car = kCarRestaurant;
 
 		getSavePoints()->addData(kEntityMilos, kAction157691176, 0);
@@ -318,7 +358,7 @@ IMPLEMENT_FUNCTION(Milos, function13, 13)
 		break;
 
 	case kActionExitCompartment:
-		getSavePoints()->push(kEntityMilos, kEntityTables2, kAction103798704, "009E");
+		getSavePoints()->push(kEntityMilos, kEntityTables2, kActionDrawTablesWithChairs, "009E");
 		getEntities()->clearSequences(kEntityVesna);
 		getEntities()->clearSequences(kEntityIvo);
 		getEntities()->clearSequences(kEntitySalko);
@@ -412,7 +452,7 @@ IMPLEMENT_FUNCTION(Milos, function17, 17)
 IMPLEMENT_FUNCTION(Milos, function18, 18)
 	if (savepoint.action == kActionDefault) {
 		getData()->entityPosition = kPosition_3050;
-		getData()->field_493 = kField493_1;
+		getData()->posture = kPostureSitting;
 		getData()->car = kCarRedSleeping;
 
 		getEntities()->clearSequences(kEntityMilos);
@@ -433,7 +473,7 @@ IMPLEMENT_FUNCTION(Milos, chapter2, 19)
 		getEntities()->clearSequences(kEntityMilos);
 
 		getData()->entityPosition = kPosition_4689;
-		getData()->field_493 = kField493_1;
+		getData()->posture = kPostureSitting;
 		getData()->car = kCarRestaurant;
 
 		getObjects()->update(kObjectCompartmentG, kEntityNone, kLocation3, kCursorHandKnock, kCursorHand);
@@ -450,7 +490,7 @@ IMPLEMENT_FUNCTION(Milos, chapter2Handler, 20)
 	case kActionDefault:
 		getData()->car = kCarRedSleeping;
 		getData()->entityPosition = kPosition_540;
-		getData()->field_493 = kField493_0;
+		getData()->posture = kPostureStanding;
 
 		getSavePoints()->push(kEntityMilos, kEntityVesna, kAction137165825);
 		break;
@@ -476,7 +516,7 @@ IMPLEMENT_FUNCTION(Milos, chapter2Handler, 20)
 			getEntities()->clearSequences(kEntityMilos);
 
 			getData()->entityPosition = kPosition_3050;
-			getData()->field_493 = kField493_1;
+			getData()->posture = kPostureSitting;
 
 			getSavePoints()->push(kEntityMilos, kEntityVesna, kAction101687594);
 
@@ -550,7 +590,7 @@ IMPLEMENT_FUNCTION(Milos, chapter4, 28)
 		getEntities()->clearSequences(kEntityMilos);
 
 		getData()->entityPosition = kPosition_3050;
-		getData()->field_493 = kField493_1;
+		getData()->posture = kPostureSitting;
 		getData()->car = kCarRedSleeping;
 		getData()->inventoryItem = kItemNone;
 
@@ -609,7 +649,7 @@ IMPLEMENT_FUNCTION(Milos, function31, 31)
 	case kActionCallback:
 		switch (getCallback()) {
 		case 1:
-			getData()->field_493 = kField493_0;
+			getData()->posture = kPostureStanding;
 			getObjects()->update(kObjectCompartmentG, kEntityNone, kLocation3, kCursorHandKnock, kCursorHand);
 
 			setCallback(2);
@@ -630,7 +670,7 @@ IMPLEMENT_FUNCTION(Milos, function32, 32)
 		getObjects()->update(kObjectCompartmentG, kEntityNone, kLocation3, kCursorHandKnock, kCursorHand);
 
 		getData()->entityPosition = kPosition_540;
-		getData()->field_493 = kField493_1;
+		getData()->posture = kPostureSitting;
 		getData()->car = kCarCoalTender;
 		getData()->inventoryItem = kItemNone;
 	}
@@ -649,7 +689,7 @@ IMPLEMENT_FUNCTION(Milos, chapter5, 33)
 		getEntities()->clearSequences(kEntityMilos);
 
 		getData()->entityPosition = kPosition_540;
-		getData()->field_493 = kField493_1;
+		getData()->posture = kPostureSitting;
 		getData()->car = kCarCoalTender;
 		getData()->inventoryItem = kItemNone;
 

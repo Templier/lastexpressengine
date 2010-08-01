@@ -41,7 +41,7 @@ public:
 	// Setup
 	DECLARE_FUNCTION_S(draw)
 	DECLARE_FUNCTION(function2)
-	DECLARE_FUNCTION(function3)
+	DECLARE_FUNCTION(callbackActionOnDirection)
 	DECLARE_FUNCTION_I(updateFromTime)
 	DECLARE_FUNCTION_NOSETUP(updatePosition)
 	DECLARE_FUNCTION_S(playSound)

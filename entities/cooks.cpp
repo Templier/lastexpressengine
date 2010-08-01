@@ -54,10 +54,20 @@ Cooks::Cooks(LastExpressEngine *engine) : Entity(engine, kEntityCooks) {
 	ADD_CALLBACK_FUNCTION(Cooks, chapter5);
 }
 
+/**
+ * Draws the entity
+ *
+ * @param seq1 The sequence to draw
+ */
 IMPLEMENT_FUNCTION_S(Cooks, draw, 1)
 	Entity::draw(savepoint);
 }
 
+/**
+ * Plays sound
+ *
+ * @param param1 The sound filename
+ */
 IMPLEMENT_FUNCTION_S(Cooks, playSound, 2)
 	Entity::playSound(savepoint);
 }
@@ -242,7 +252,7 @@ IMPLEMENT_FUNCTION(Cooks, chapter1, 5)
 
 	case kActionDefault:
 		getData()->entityPosition = kPosition_5900;
-		getData()->field_493 = kField493_0;
+		getData()->posture = kPostureStanding;
 		getData()->car = kCarRestaurant;
 
 		getProgress().field_4C = 0;
@@ -330,7 +340,7 @@ IMPLEMENT_FUNCTION(Cooks, function7, 7)
 
 	case kActionDefault:
 		getData()->entityPosition = kPosition_3650;
-		getData()->field_493 = kField493_0;
+		getData()->posture = kPostureStanding;
 		getData()->car = kCarRestaurant;
 
 		getEntities()->clearSequences(kEntityCooks);
@@ -351,7 +361,7 @@ IMPLEMENT_FUNCTION(Cooks, chapter2, 8)
 		getEntities()->clearSequences(kEntityCooks);
 
 		getData()->entityPosition = kPosition_5900;
-		getData()->field_493 = kField493_0;
+		getData()->posture = kPostureStanding;
 		getData()->car = kCarRestaurant;
 		getData()->inventoryItem = kItemNone;
 
@@ -499,7 +509,7 @@ IMPLEMENT_FUNCTION(Cooks, chapter4, 12)
 		getEntities()->clearSequences(kEntityCooks);
 
 		getData()->entityPosition = kPosition_5900;
-		getData()->field_493 = kField493_0;
+		getData()->posture = kPostureStanding;
 		getData()->car = kCarRestaurant;
 		getData()->inventoryItem = kItemNone;
 

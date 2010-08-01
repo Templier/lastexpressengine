@@ -47,10 +47,10 @@ Alexei::Alexei(LastExpressEngine *engine) : Entity(engine, kEntityAlexei) {
 	ADD_CALLBACK_FUNCTION(Alexei, draw);
 	ADD_CALLBACK_FUNCTION(Alexei, updatePosition);
 	ADD_CALLBACK_FUNCTION(Alexei, enterExitCompartment);
-	ADD_CALLBACK_FUNCTION(Alexei, function7);
+	ADD_CALLBACK_FUNCTION(Alexei, callbackActionOnDirection);
 	ADD_CALLBACK_FUNCTION(Alexei, callSavepoint);
 	ADD_CALLBACK_FUNCTION(Alexei, savegame);
-	ADD_CALLBACK_FUNCTION(Alexei, checkEntity);
+	ADD_CALLBACK_FUNCTION(Alexei, updateEntity);
 	ADD_CALLBACK_FUNCTION(Alexei, draw2);
 	ADD_CALLBACK_FUNCTION(Alexei, function12);
 	ADD_CALLBACK_FUNCTION(Alexei, function13);
@@ -91,43 +91,97 @@ Alexei::Alexei(LastExpressEngine *engine) : Entity(engine, kEntityAlexei) {
 	ADD_CALLBACK_FUNCTION(Alexei, chapter5);
 }
 
+/**
+ * Resets the entity
+ */
 IMPLEMENT_FUNCTION(Alexei, reset, 1)
 	Entity::reset(savepoint);
 }
 
+/**
+ * Plays sound
+ *
+ * @param param1 The sound filename
+ */
 IMPLEMENT_FUNCTION_S(Alexei, playSound, 2)
 	Entity::playSound(savepoint);
 }
 
+/**
+ * Updates parameter 2 using ticks value
+ *
+ * @param param1 The number of ticks to add
+ */
 IMPLEMENT_FUNCTION_I(Alexei, updateFromTicks, 3)
 	Entity::updateFromTicks(savepoint);
 }
 
+/**
+ * Draws the entity
+ *
+ * @param seq1 The sequence to draw
+ */
 IMPLEMENT_FUNCTION_S(Alexei, draw, 4)
 	Entity::draw(savepoint);
 }
 
+/**
+ * Updates the position
+ *
+ * @param seq1   The sequence to draw
+ * @param param4 The car
+ * @param param5 The entity position
+ */
 IMPLEMENT_FUNCTION_SII(Alexei, updatePosition, 5)
 	Entity::updatePosition(savepoint);
 }
 
+/**
+ * Handles entering/exiting a compartment. 
+ *
+ * @param seq1   The sequence to draw
+ * @param param4 The compartment
+ */
 IMPLEMENT_FUNCTION_SI(Alexei, enterExitCompartment, 6)
 	Entity::enterExitCompartment(savepoint);
 }
 
-IMPLEMENT_FUNCTION(Alexei, function7, 7)
-	Entity::savepointDirection(savepoint);
+/**
+ * Process callback action when the entity direction is not kDirectionRight
+ */
+IMPLEMENT_FUNCTION(Alexei, callbackActionOnDirection, 7)
+	Entity::callbackActionOnDirection(savepoint);
 }
 
+/**
+ * Call a savepoint (or draw sequence in default case)
+ *
+ * @param seq1   The sequence to draw in the default case
+ * @param param4 The entity
+ * @param param5 The action
+ * @param seq1   The sequence name for the savepoint
+ */
 IMPLEMENT_FUNCTION_SIIS(Alexei, callSavepoint, 8)
 	Entity::callSavepoint(savepoint);
 }
 
+/**
+ * Save the game
+ *
+ * @param param1 The SavegameType for the savegame
+ * @param param2 The EventIndex for the savegame
+ */
 IMPLEMENT_FUNCTION_II(Alexei, savegame, 9)
 	Entity::savegame(savepoint);
 }
 
-IMPLEMENT_FUNCTION_II(Alexei, checkEntity, 10)
+/**
+ * Updates the entity
+ *
+ * @param param1 The car
+ * @param param2 The entity position
+ */
+IMPLEMENT_FUNCTION_II(Alexei, updateEntity, 10)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -150,9 +204,16 @@ IMPLEMENT_FUNCTION_II(Alexei, checkEntity, 10)
 		break;
 	}
 
-	Entity::checkEntity(savepoint, true);
+	Entity::updateEntity(savepoint, true);
 }
 
+/**
+ * Draws the entity along with another one
+ *
+ * @param seq1   The sequence to draw
+ * @param seq2   The sequence to draw for the second entity
+ * @param param7 The EntityIndex of the second entity
+ */
 IMPLEMENT_FUNCTION_NOSETUP(Alexei, draw2, 11)
 	Entity::draw2(savepoint);
 }
@@ -177,7 +238,7 @@ IMPLEMENT_FUNCTION(Alexei, function14, 14)
 
 	case kActionCallback:
 		if (getCallback() == 1) {
-			getData()->field_493 = kField493_0;
+			getData()->posture = kPostureStanding;
 			getSavePoints()->push(kEntityAlexei, kEntityMertens, kAction302614416);
 			getEntities()->drawSequenceLeft(kEntityAlexei, "602DB");
 			getEntities()->enterCompartment(kEntityAlexei, kObjectCompartment2);
@@ -306,7 +367,7 @@ IMPLEMENT_FUNCTION_IS(Alexei, function16, 16)
 			break;
 
 		case 9:
-			getData()->field_493 = kField493_0;
+			getData()->posture = kPostureStanding;
 			getSavePoints()->push(kEntityAlexei, kEntityMertens, kAction156567128);
 			getEntities()->drawSequenceLeft(kEntityAlexei, "602Hb");
 			getEntities()->enterCompartment(kEntityAlexei, kObjectCompartment2, true);
@@ -315,7 +376,7 @@ IMPLEMENT_FUNCTION_IS(Alexei, function16, 16)
 		case 10:
 			getEntities()->exitCompartment(kEntityAlexei, kObjectCompartment2, true);
 
-			getData()->field_493 = kField493_1;
+			getData()->posture = kPostureSitting;
 			getData()->entityPosition = kPosition_7500;
 
 			getEntities()->drawSequenceLeft(kEntityAlexei, (char *)&params->seq);
@@ -357,7 +418,7 @@ IMPLEMENT_FUNCTION(Alexei, chapter1, 17)
 		getObjects()->update(kObjectHandleInsideBathroom, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
 
 		getData()->entityPosition = kPosition_3969;
-		getData()->field_493 = kField493_1;
+		getData()->posture = kPostureSitting;
 		getData()->car = kCarRestaurant;
 		break;
 	}
@@ -372,14 +433,14 @@ IMPLEMENT_FUNCTION(Alexei, chapter1Handler, 18)
 		if (getState()->time > kTime1089000 && getEntities()->checkFields11()) {
 			params->param2 = 0;
 
-			getData()->field_493 = kField493_0;
+			getData()->posture = kPostureStanding;
 			getData()->inventoryItem = kItemNone;
 
 			getEntities()->updatePosition(kEntityAlexei, kCarRestaurant, 63, true);
 			getInventory()->setLocationAndProcess(kItem17, kLocation1);
 
 			setCallback(1);
-			call(new ENTITY_SETUP_SIIS(Alexei, setup_callSavepoint), "005D", kEntityTables1, kAction103798704, "005E");
+			call(new ENTITY_SETUP_SIIS(Alexei, setup_callSavepoint), "005D", kEntityTables1, kActionDrawTablesWithChairs, "005E");
 			break;
 		}
 
@@ -423,10 +484,10 @@ IMPLEMENT_FUNCTION(Alexei, chapter1Handler, 18)
 
 		case 2:
 			getAction()->playAnimation(getProgress().jacket == kJacketGreen ? kEventAlexeiDiner : kEventAlexeiDinerOriginalJacket);
-			getSavePoints()->push(kEntityAlexei, kEntityTables1, kAction103798704, "005E");
+			getSavePoints()->push(kEntityAlexei, kEntityTables1, kActionDrawTablesWithChairs, "005E");
 
 			getData()->entityPosition = kPosition_3650;
-			getData()->field_493 = kField493_0;
+			getData()->posture = kPostureStanding;
 
 			getEntities()->clearSequences(kEntityAlexei);
 			getInventory()->getEntry(kItem17)->location = kLocation1;
@@ -468,12 +529,12 @@ IMPLEMENT_FUNCTION(Alexei, function19, 19)
 
 		case 1:
 			setCallback(2);
-			call(new ENTITY_SETUP(Alexei, setup_checkEntity), kCarGreenSleeping, kPosition_9460);
+			call(new ENTITY_SETUP(Alexei, setup_updateEntity), kCarGreenSleeping, kPosition_9460);
 			break;
 
 		case 2:
 			setCallback(3);
-			call(new ENTITY_SETUP(Alexei, setup_checkEntity), kCarRestaurant, kPosition_850);
+			call(new ENTITY_SETUP(Alexei, setup_updateEntity), kCarRestaurant, kPosition_850);
 			break;
 
 		case 3:
@@ -483,7 +544,7 @@ IMPLEMENT_FUNCTION(Alexei, function19, 19)
 
 		case 4:
 			getData()->entityPosition = kPosition_1540;
-			getData()->field_493 = kField493_0;
+			getData()->posture = kPostureStanding;
 
 			setCallback(5);
 			call(new ENTITY_SETUP_SIIS(Alexei, setup_draw), "811US");
@@ -500,7 +561,7 @@ IMPLEMENT_FUNCTION(Alexei, function19, 19)
 			getSavePoints()->push(kEntityAlexei, kEntityTables1, kAction136455232);
 
 			setCallback(7);
-			call(new ENTITY_SETUP_SIIS(Alexei, setup_callSavepoint), "005F", kObjectCompartmentC, kAction103798704, "005G");
+			call(new ENTITY_SETUP_SIIS(Alexei, setup_callSavepoint), "005F", kObjectCompartmentC, kActionDrawTablesWithChairs, "005G");
 			break;
 
 		case 7:
@@ -554,7 +615,7 @@ IMPLEMENT_FUNCTION(Alexei, function20, 20)
 
 		case 1:
 			setCallback(2);
-			call(new ENTITY_SETUP(Alexei, setup_checkEntity), kCarRestaurant, kPosition_850);
+			call(new ENTITY_SETUP(Alexei, setup_updateEntity), kCarRestaurant, kPosition_850);
 			break;
 
 		case 2:
@@ -564,14 +625,14 @@ IMPLEMENT_FUNCTION(Alexei, function20, 20)
 
 		case 3:
 			getData()->entityPosition = kPosition_1540;
-			getData()->field_493 = kField493_0;
+			getData()->posture = kPostureStanding;
 
 			setCallback(4);
 			call(new ENTITY_SETUP_SIIS(Alexei, setup_updatePosition), "103A", kCarRestaurant, 52);
 			break;
 
 		case 4:
-			getData()->field_493 = kField493_1;
+			getData()->posture = kPostureSitting;
 			setup_function26();
 			break;
 		}
@@ -683,7 +744,7 @@ IMPLEMENT_FUNCTION(Alexei, function26, 26)
 	case kActionDefault:
 		getData()->entityPosition = kPosition_7500;
 		getData()->car = kCarGreenSleeping;
-		getData()->field_493 = kField493_1;
+		getData()->posture = kPostureSitting;
 
 		getObjects()->update(kObjectCompartment2, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
 		getObjects()->update(kObjectHandleInsideBathroom, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
@@ -725,7 +786,7 @@ IMPLEMENT_FUNCTION(Alexei, chapter2, 28)
 		getObjects()->update(kObjectHandleInsideBathroom, kEntityAlexei, kLocation1, kCursorHandKnock, kCursorHand);
 
 		getData()->entityPosition = kPosition_7500;
-		getData()->field_493 = kField493_1;
+		getData()->posture = kPostureSitting;
 		getData()->car = kCarGreenSleeping;
 		getData()->clothes = kClothesDefault;
 		getData()->inventoryItem = kItemNone;
@@ -755,7 +816,7 @@ IMPLEMENT_FUNCTION(Alexei, chapter2Handler, 29)
 
 		case 2:
 			setCallback(3);
-			call(new ENTITY_SETUP(Alexei, setup_checkEntity), kCarRestaurant, kPosition_850);
+			call(new ENTITY_SETUP(Alexei, setup_updateEntity), kCarRestaurant, kPosition_850);
 			break;
 
 		case 3:
@@ -765,7 +826,7 @@ IMPLEMENT_FUNCTION(Alexei, chapter2Handler, 29)
 
 		case 4:
 			getData()->entityPosition = kPosition_1540;
-			getData()->field_493 = kField493_0;
+			getData()->posture = kPostureStanding;
 
 			setCallback(5);
 			call(new ENTITY_SETUP_SIIS(Alexei, setup_draw), "811US");
@@ -800,10 +861,10 @@ IMPLEMENT_FUNCTION(Alexei, function31, 31)
 	case kActionDefault:
 		getEntities()->drawSequenceRight(kEntityAlexei, "811DS");
 		if (getEntities()->checkFields13())
-			getEntities()->updateEntity(kEntityAlexei);
+			getEntities()->updateFrame(kEntityAlexei);
 
 		setCallback(1);
-		call(new ENTITY_SETUP(Alexei, setup_function7));
+		call(new ENTITY_SETUP(Alexei, setup_callbackActionOnDirection));
 		break;
 
 	case kActionCallback:
@@ -844,7 +905,7 @@ IMPLEMENT_FUNCTION(Alexei, chapter3, 32)
 		getObjects()->update(kObject10, kEntityNone, kLocationNone, kCursorKeepValue, kCursorKeepValue);
 		getObjects()->update(kObjectHandleInsideBathroom, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
 
-		getData()->field_493 = kField493_1;
+		getData()->posture = kPostureSitting;
 		getData()->car = kCarRestaurant;
 		getData()->clothes = kClothesDefault;
 		getData()->inventoryItem = kItemNone;
@@ -864,7 +925,7 @@ IMPLEMENT_FUNCTION(Alexei, chapter3Handler, 33)
 
 	case kAction122288808:
 		getData()->entityPosition = kPosition_9270;
-		getData()->field_493 = kField493_0;
+		getData()->posture = kPostureStanding;
 		getData()->car = kCarRedSleeping;
 
 		setCallback(1);
@@ -906,7 +967,7 @@ IMPLEMENT_FUNCTION(Alexei, chapter4, 37)
 		getObjects()->update(kObjectHandleInsideBathroom, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
 
 		getData()->entityPosition = kPosition_7500;
-		getData()->field_493 = kField493_1;
+		getData()->posture = kPostureSitting;
 		getData()->car = kCarGreenSleeping;
 		getData()->inventoryItem = kItemNone;
 		break;
@@ -941,7 +1002,7 @@ IMPLEMENT_FUNCTION(Alexei, function40, 40)
 
 	case kActionDefault:
 		setCallback(1);
-		call(new ENTITY_SETUP(Alexei, setup_checkEntity), kCarGreenSleeping, kPosition_7500);
+		call(new ENTITY_SETUP(Alexei, setup_updateEntity), kCarGreenSleeping, kPosition_7500);
 		break;
 
 	case kActionCallback:
@@ -953,22 +1014,22 @@ IMPLEMENT_FUNCTION(Alexei, function40, 40)
 			getEntities()->drawSequenceRight(kEntityAlexei, "602Eb");
 			getEntities()->enterCompartment(kEntityAlexei, kObjectCompartment2);
 
-			getData()->field_493 = kField493_1;
+			getData()->posture = kPostureSitting;
 
-			if (getEntities()->checkFields1(kEntityNone, kCarGreenSleeping, kPosition_7500)) {
+			if (getEntities()->isEntitySitting(kEntityNone, kCarGreenSleeping, kPosition_7500)) {
 				getAction()->playAnimation(isDay() ? kEventCathTurningDay : kEventCathTurningNight);
 				getSound()->playSound(kEntityNone, "BUMP");
 				getScenes()->loadSceneFromObject(kObjectCompartment2);
 			}
 
 			setCallback(2);
-			call(new ENTITY_SETUP(Alexei, setup_function7));
+			call(new ENTITY_SETUP(Alexei, setup_callbackActionOnDirection));
 			break;
 
 		case 2:
 			getEntities()->exitCompartment(kEntityAlexei, kObjectCompartment2);
 			getData()->entityPosition = kPosition_7500;
-			getData()->field_493 = kField493_1;
+			getData()->posture = kPostureSitting;
 			getEntities()->clearSequences(kEntityAlexei);
 
 			setup_function41();
@@ -1017,7 +1078,7 @@ IMPLEMENT_FUNCTION(Alexei, function42, 42)
 			getSavePoints()->push(kEntityAlexei, kEntityTatiana, kAction191198209);
 
 			setCallback(2);
-			call(new ENTITY_SETUP(Alexei, setup_checkEntity), kCarRestaurant, kPosition_850);
+			call(new ENTITY_SETUP(Alexei, setup_updateEntity), kCarRestaurant, kPosition_850);
 			break;
 
 		case 2:
@@ -1026,7 +1087,7 @@ IMPLEMENT_FUNCTION(Alexei, function42, 42)
 			break;
 
 		case 3:
-			getData()->field_493 = kField493_1;
+			getData()->posture = kPostureSitting;
 			setup_function43();
 			break;
 		}
@@ -1077,7 +1138,7 @@ IMPLEMENT_FUNCTION(Alexei, function47, 47)
 		getEntities()->clearSequences(kEntityAlexei);
 
 		getData()->entityPosition = kPositionNone;
-		getData()->field_493 = kField493_0;
+		getData()->posture = kPostureStanding;
 		getData()->car = kCarNone;
 
 		getObjects()->update(kObjectCompartment2, kEntityNone, kLocationNone, kCursorHandKnock, kCursorHand);

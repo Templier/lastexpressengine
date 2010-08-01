@@ -78,24 +78,43 @@ Servers0::Servers0(LastExpressEngine *engine) : Entity(engine, kEntityServers0) 
 	ADD_NULL_FUNCTION();
 }
 
-//////////////////////////////////////////////////////////////////////////
-// Parameters:
-//  - sequence name
-//  - EntityIndex
-//  - ActionIndex
-//  - sequence name
+/**
+ * Call a savepoint (or draw sequence in default case)
+ *
+ * @param seq1   The sequence to draw in the default case
+ * @param param4 The entity
+ * @param param5 The action
+ * @param seq1   The sequence name for the savepoint
+ */
 IMPLEMENT_FUNCTION_SIIS(Servers0, callSavepoint, 1)
 	Entity::callSavepoint(savepoint, true);
 }
 
+/**
+ * Updates parameter 2 using time value
+ *
+ * @param param1 The time to add
+ */
 IMPLEMENT_FUNCTION_NOSETUP(Servers0, updateFromTime, 2)
 	Entity::updateFromTime(savepoint);
 }
 
+/**
+ * Draws the entity
+ *
+ * @param seq1 The sequence to draw
+ */
 IMPLEMENT_FUNCTION_S(Servers0, draw, 3)
 	Entity::draw(savepoint, true);
 }
 
+/**
+ * Updates the position
+ *
+ * @param seq1   The sequence to draw
+ * @param param4 The car
+ * @param param5 The entity position
+ */
 IMPLEMENT_FUNCTION_NOSETUP(Servers0, updatePosition, 4)
 	Entity::updatePosition(savepoint, true);
 }
@@ -125,6 +144,11 @@ IMPLEMENT_FUNCTION_NOSETUP(Servers0, function5, 5)
 	}
 }
 
+/**
+ * Plays sound
+ *
+ * @param param1 The sound filename
+ */
 IMPLEMENT_FUNCTION_S(Servers0, playSound, 6)
 	Entity::playSound(savepoint);
 }
@@ -136,7 +160,7 @@ IMPLEMENT_FUNCTION(Servers0, function7, 7)
 
 	case kActionDefault:
 		getData()->entityPosition = kPosition_5800;
-		getData()->field_493 = kField493_0;
+		getData()->posture = kPostureStanding;
 
 		ENTITY_PARAM(0, 3) = 0;
 
@@ -209,7 +233,7 @@ IMPLEMENT_FUNCTION(Servers0, chapter1, 11)
 		getSavePoints()->addData(kEntityServers0, kAction337548856, 9);
 
 		getData()->entityPosition = kPosition_5900;
-		getData()->field_493 = kField493_0;
+		getData()->posture = kPostureStanding;
 		getData()->car = kCarRestaurant;
 		break;
 	}
@@ -269,7 +293,7 @@ IMPLEMENT_FUNCTION(Servers0, function21, 21)
 IMPLEMENT_FUNCTION(Servers0, function22, 22)
 	if (savepoint.action == kActionDefault) {
 		getData()->entityPosition = kPosition_5900;
-		getData()->field_493 = kField493_0;
+		getData()->posture = kPostureStanding;
 		getData()->car = kCarRestaurant;
 
 		getEntities()->clearSequences(kEntityServers0);
@@ -289,7 +313,7 @@ IMPLEMENT_FUNCTION(Servers0, chapter2, 23)
 		getEntities()->clearSequences(kEntityServers0);
 
 		getData()->entityPosition = kPosition_5900;
-		getData()->field_493 = kField493_0;
+		getData()->posture = kPostureStanding;
 		getData()->car = kCarRestaurant;
 		getData()->clothes = kClothes1;
 		getData()->inventoryItem = kItemNone;
@@ -340,7 +364,7 @@ IMPLEMENT_FUNCTION(Servers0, function25, 25)
 
 	case kActionDefault:
 		getData()->entityPosition = kPosition_5800;
-		getData()->field_493 = kField493_0;
+		getData()->posture = kPostureStanding;
 
 		ENTITY_PARAM(0, 3) = 0;
 
@@ -392,7 +416,7 @@ IMPLEMENT_FUNCTION(Servers0, chapter3, 27)
 		getEntities()->clearSequences(kEntityServers0);
 
 		getData()->entityPosition = kPosition_5900;
-		getData()->field_493 = kField493_0;
+		getData()->posture = kPostureStanding;
 		getData()->car = kCarRestaurant;
 		getData()->clothes = kClothes1;
 		getData()->inventoryItem = kItemNone;
@@ -432,7 +456,7 @@ IMPLEMENT_FUNCTION(Servers0, chapter4, 31)
 		getEntities()->clearSequences(kEntityServers0);
 
 		getData()->entityPosition = kPosition_5900;
-		getData()->field_493 = kField493_0;
+		getData()->posture = kPostureStanding;
 		getData()->car = kCarRestaurant;
 		getData()->clothes = kClothesDefault;
 		getData()->inventoryItem = kItemNone;
@@ -476,7 +500,7 @@ IMPLEMENT_FUNCTION(Servers0, chapter5, 36)
 		getEntities()->clearSequences(kEntityServers0);
 
 		getData()->entityPosition = kPosition_3969;
-		getData()->field_493 = kField493_1;
+		getData()->posture = kPostureSitting;
 		getData()->car = kCarRestaurant;
 		getData()->inventoryItem = kItemNone;
 		break;
@@ -497,7 +521,7 @@ void Servers0::handleServer(const SavePoint &savepoint, const char* name, Entity
 
 	case kActionDefault:
 		getData()->entityPosition = kPosition_5800;
-		getData()->field_493 = kField493_0;
+		getData()->posture = kPostureStanding;
 
 		setCallback(1);
 		call(new ENTITY_SETUP_SIIS(Servers0, setup_draw), name);
@@ -528,7 +552,7 @@ void Servers0::serveTable(const SavePoint &savepoint, const char* seq1, EntityIn
 	case kActionDefault:
 		if (updatePosition) {
 			getData()->entityPosition = kPosition_5800;
-			getData()->field_493 = kField493_0;
+			getData()->posture = kPostureStanding;
 		}
 
 		setCallback(1);
@@ -544,7 +568,7 @@ void Servers0::serveTable(const SavePoint &savepoint, const char* seq1, EntityIn
 			getSavePoints()->push(kEntityServers0, entity, kAction136455232);
 
 			setCallback(2);
-			call(new ENTITY_SETUP_SIIS(Servers0, setup_callSavepoint), seq2, entity, kAction103798704, seq3);
+			call(new ENTITY_SETUP_SIIS(Servers0, setup_callSavepoint), seq2, entity, kActionDrawTablesWithChairs, seq3);
 			break;
 
 		case 2:
