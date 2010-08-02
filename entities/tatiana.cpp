@@ -787,7 +787,7 @@ IMPLEMENT_FUNCTION(Tatiana, function41, 41)
  */
 IMPLEMENT_FUNCTION(Tatiana, function42, 42)
 	if (savepoint.action == kActionExcuseMeCath || savepoint.action == kActionExcuseMe) {
-		getSound()->playSound(kEntityNone, "Tat3124", getEntities()->getSoundValue(kEntityTatiana));
+		getSound()->playSound(kEntityNone, "Tat3124", getSound()->getSoundFlag(kEntityTatiana));
 		return;
 	}
 

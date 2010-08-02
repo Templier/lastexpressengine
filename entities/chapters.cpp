@@ -536,7 +536,7 @@ IMPLEMENT_FUNCTION(Chapters, chapter1End, 9)
 			ENTITY_PARAM(0, 3) = 0;
 		}
 
-		getSound()->playSound(kEntityNone, "MUS008", 16);
+		getSound()->playSound(kEntityNone, "MUS008", SoundManager::kFlagDefault);
 		getInventory()->unselectItem();
 
 		while (getSound()->isBuffered("MUS008"))
@@ -953,7 +953,7 @@ IMPLEMENT_FUNCTION(Chapters, chapter5Handler, 22)
 			params->param2 = 1;
 
 			if (!getProgress().isNightTime) {
-				getSound()->playSound(kEntityChapters, "ARRIVE", 8);
+				getSound()->playSound(kEntityChapters, "ARRIVE", SoundManager::kFlag8);
 				getSound()->unknownFunction3();
 			}
 		}
@@ -962,7 +962,7 @@ IMPLEMENT_FUNCTION(Chapters, chapter5Handler, 22)
 			params->param3 = 1;
 
 			if (!getEvent(kEventLocomotiveMilos) && !getEvent(kEventLocomotiveMilosNight)) {
-				getSound()->playSound(kEntityChapters, "ARRIVE", 8);
+				getSound()->playSound(kEntityChapters, "ARRIVE", SoundManager::kFlag8);
 				getSound()->unknownFunction3();
 			}
 		}
@@ -1071,7 +1071,7 @@ void Chapters::enterExitStation(const SavePoint &savepoint, bool isEnteringStati
 void Chapters::enterExitHelper(const SavePoint &savepoint, bool isEnteringStation) {
 	EXPOSE_PARAMS(EntityData::EntityParametersSIIS);
 
-	getSound()->playSound(kEntityChapters, isEnteringStation ? "ARRIVE" : "DEPART", 8);
+	getSound()->playSound(kEntityChapters, isEnteringStation ? "ARRIVE" : "DEPART", SoundManager::kFlag8);
 	getSound()->unknownFunction3();
 
 	getObjects()->update(kObjectHandleOutsideLeft, kEntityNone, kLocation1, kCursorNormal, isEnteringStation ? kCursorNormal : kCursorHand);

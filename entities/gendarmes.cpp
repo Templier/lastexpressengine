@@ -31,7 +31,6 @@
 #include "lastexpress/game/object.h"
 #include "lastexpress/game/savepoint.h"
 #include "lastexpress/game/scenes.h"
-#include "lastexpress/game/sound.h"
 #include "lastexpress/game/state.h"
 
 #include "lastexpress/lastexpress.h"
@@ -90,7 +89,7 @@ IMPLEMENT_FUNCTION_S(Gendarmes, arrestPlaysound, 4)
 }
 
 IMPLEMENT_FUNCTION_S(Gendarmes, arrestPlaysound16, 5)
-	arrest(savepoint, true, 16);
+	arrest(savepoint, true, SoundManager::kFlagDefault);
 }
 
 IMPLEMENT_FUNCTION_I(Gendarmes, function6, 6)
@@ -212,7 +211,7 @@ IMPLEMENT_FUNCTION_III(Gendarmes, function10, 10)
 		if (params->param6 == 0 || getState()->timeTicks > (uint32)params->param6) {
 			params->param6 = kTimeInvalid;
 
-			getSound()->playSound(kEntityGendarmes, "POL1046A", 16);
+			getSound()->playSound(kEntityGendarmes, "POL1046A", SoundManager::kFlagDefault);
 		}
 
 		UPDATE_PARAM(params->param7, getState()->timeTicks, 300);
@@ -224,7 +223,7 @@ IMPLEMENT_FUNCTION_III(Gendarmes, function10, 10)
 			if (getEntities()->checkFields15())
 				getScenes()->loadSceneFromPosition(kCarGreenSleeping, 49);
 
-			getSound()->playSound(kEntityGendarmes, "LIB017", 16);
+			getSound()->playSound(kEntityGendarmes, "LIB017", SoundManager::kFlagDefault);
 
 			setCallback(getProgress().jacket == kJacketBlood ? 3 : 4);
 			call(new ENTITY_SETUP(Gendarmes, setup_savegame), kSavegameType2, getProgress().jacket == kJacketBlood ? kEventMertensBloodJacket : kEventGendarmesArrestation);
@@ -260,7 +259,7 @@ IMPLEMENT_FUNCTION_III(Gendarmes, function10, 10)
 			break;
 
 		case 2:
-			getSound()->playSound(kEntityGendarmes, "LIB014", 16);
+			getSound()->playSound(kEntityGendarmes, "LIB014", SoundManager::kFlagDefault);
 			getAction()->playAnimation(kEventGendarmesArrestation);
 			getLogic()->gameOver(kTimeType0, kTime1, kSceneGameOverPolice1, true);
 			break;
@@ -286,7 +285,7 @@ IMPLEMENT_FUNCTION_III(Gendarmes, function10, 10)
 			break;
 
 		case 6:
-			getSound()->playSound(kEntityGendarmes, "LIB014", 16);
+			getSound()->playSound(kEntityGendarmes, "LIB014", SoundManager::kFlagDefault);
 			getAction()->playAnimation(kEventGendarmesArrestation);
 			getLogic()->gameOver(kTimeType0, kTime1, kSceneGameOverPolice1, true);
 			break;
@@ -482,7 +481,7 @@ IMPLEMENT_FUNCTION(Gendarmes, chapter5, 17)
 		getEntities()->clearSequences(kEntityGendarmes);
 }
 
-void Gendarmes::arrest(const SavePoint &savepoint, bool shouldPlaySound, int a3) {
+void Gendarmes::arrest(const SavePoint &savepoint, bool shouldPlaySound, SoundManager::FlagType flag) {
 	EXPOSE_PARAMS(EntityData::EntityParametersSIIS);
 
 	switch (savepoint.action) {
@@ -510,7 +509,7 @@ void Gendarmes::arrest(const SavePoint &savepoint, bool shouldPlaySound, int a3)
 		if (!shouldPlaySound)
 			getEntities()->drawSequenceRight(kEntityGendarmes, (char *)&params->seq1);
 		else
-			getSound()->playSound(kEntityGendarmes, (char *)&params->seq1, a3);
+			getSound()->playSound(kEntityGendarmes, (char *)&params->seq1, flag);
 		break;
 
 	case kActionCallback:

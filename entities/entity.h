@@ -28,6 +28,8 @@
 
 #include "lastexpress/shared.h"
 
+#include "lastexpress/game/sound.h"
+
 #include "common/array.h"
 #include "common/func.h"
 #include "common/serializer.h"
@@ -361,9 +363,9 @@ protected:
 	 * @param savepoint The savepoint
 	 *                    - Sound filename
 	 * @param resetItem true to reset item.
-	 * @param param3    sound parameter
+	 * @param flag      sound flag
 	 */
-	void playSound(const SavePoint &savepoint, bool resetItem = false, int param3 = -1);
+	void playSound(const SavePoint &savepoint, bool resetItem = false, SoundManager::FlagType flag = SoundManager::kFlagInvalid);
 
 	/**
 	 * Draws the entity

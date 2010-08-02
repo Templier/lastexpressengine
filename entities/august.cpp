@@ -252,7 +252,7 @@ IMPLEMENT_FUNCTION_S(August, playSound, 12)
  * @param param1 The sound filename
  */
 IMPLEMENT_FUNCTION_S(August, playSound16, 13)
-	Entity::playSound(savepoint, false, 16);
+	Entity::playSound(savepoint, false, SoundManager::kFlagDefault);
 }
 
 IMPLEMENT_FUNCTION(August, function14, 14)
@@ -1162,7 +1162,7 @@ IMPLEMENT_FUNCTION(August, function45, 45)
 	case kAction1:
 		getData()->inventoryItem = kItemNone;
 		getSound()->playSound(kEntityNone, "CAT1002");
-		getSound()->playSound(kEntityAugust, "AUG3102", -1, 15);
+		getSound()->playSound(kEntityAugust, "AUG3102", SoundManager::kFlagInvalid, 15);
 		break;
 
 	case kActionDefault:

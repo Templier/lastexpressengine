@@ -81,14 +81,6 @@
 
 namespace LastExpress {
 
-static const uint soundValues[32] = {
-	16,	15,	14,	13,	12,
-	11, 11,	10, 10,	9, 9, 8, 8,
-	7, 7, 7, 6, 6, 6,
-	5, 5, 5, 5,	4, 4, 4, 4,
-	3, 3, 3, 3, 3
-};
-
 #define STORE_VALUE(data) ((uint)1 << (uint)data)
 
 static const EntityPosition objectsPosition[9] = {kPositionNone,    kPosition_8200,
@@ -270,7 +262,7 @@ void Entities::setupChapter(ChapterIndex chapter) {
 		memset(&_compartments1, 0, sizeof(_compartments1));
 		memset(&_positions, 0, sizeof(_positions));
 
-		getSound()->setupQueue(13);
+		getSound()->resetQueue(SoundManager::kSoundType13);
 	}
 
 	// we skip the header when doing entity setup
@@ -1872,64 +1864,6 @@ void Entities::updatePositionsExit(EntityIndex entity, CarIndex car, Position po
 	getLogic()->updateCursor();
 }
 
-//////////////////////////////////////////////////////////////////////////
-// Misc (Sound, etc.)
-//////////////////////////////////////////////////////////////////////////
-uint Entities::getSoundValue(EntityIndex entity) const {
-	if (entity == kEntityNone)
-		return 16;
-
-	if (getData(entity)->car != getData(kEntityNone)->car)
-		return 0;
-
-	// Compute sound value
-	uint ret = 2;
-
-	// Get default value if valid
-	int index = ABS(getData(entity)->entityPosition - getData(kEntityNone)->entityPosition) / 230;
-	if (index < 32)
-		ret = soundValues[index];
-
-	if (getData(entity)->posture == kPosture2) {
-		if (getData(entity)->car != kCarKronos
-		&& !getEntities()->checkFields15()
-		&& !getEntities()->checkFields16())
-			return 0;
-
-		return ret / 6;
-	}
-
-	switch (getData(entity)->car) {
-	default:
-		break;
-
-	case kCarKronos:
-		if (getEntities()->checkFields14(entity) != getEntities()->checkFields14())
-			ret >>= 1;
-		break;
-
-	case kCarGreenSleeping:
-	case kCarRedSleeping:
-		if (getEntities()->checkFields6() && !getEntities()->checkFields14(entity))
-			ret >>= 1;
-
-		if (getData(kEntityNone)->posture
-		&& (getData(entity)->entityPosition != kPosition_1 || !getEntities()->checkFields9(kEntityNone, entity, 400)))
-			ret >>=1;
-		break;
-
-	case kCarRestaurant:
-		if (getEntities()->checkFields12(entity) == getEntities()->checkFields12()
-		&& (getEntities()->checkFields13(entity) != getEntities()->checkFields13()))
-			ret >>=1;
-		else
-			ret >>=2;
-		break;
-	}
-
-	return ret;
-}
-
 void Entities::loadSceneFromEntityPosition(CarIndex car, EntityPosition entityPosition, bool alternate) const {
 
 	// Determine position
@@ -2303,7 +2237,7 @@ bool Entities::changeCar(EntityData::EntityCallData * data, EntityIndex entity, 
 	if (data->car == newCar) {
 		if (checkFields6()) {
 			getSound()->playSoundEvent(kEntityNone, 14);
-			getSound()->excuseMe(entity, kEntityNone, 16);
+			getSound()->excuseMe(entity, kEntityNone, SoundManager::kFlagDefault);
 			getScenes()->loadSceneFromPosition(kCarGreenSleeping, 1);
 			getSound()->playSound(kEntityNone, "CAT1127A");
 			getSound()->playSoundEvent(kEntityNone, 15);
@@ -2322,7 +2256,7 @@ bool Entities::changeCar(EntityData::EntityCallData * data, EntityIndex entity, 
 	if (data->car == newCar) {
 		if (checkFields23()) {
 			getSound()->playSoundEvent(kEntityNone, 14);
-			getSound()->excuseMe(entity, kEntityNone, 16);
+			getSound()->excuseMe(entity, kEntityNone, SoundManager::kFlagDefault);
 			getScenes()->loadSceneFromPosition(kCarGreenSleeping, 62);
 			getSound()->playSound(kEntityNone, "CAT1127A");
 			getSound()->playSoundEvent(kEntityNone, 15);

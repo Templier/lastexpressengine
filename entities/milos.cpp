@@ -136,7 +136,7 @@ IMPLEMENT_FUNCTION_S(Milos, playSound, 6)
  * @param param1 The sound filename
  */
 IMPLEMENT_FUNCTION_S(Milos, playSound16, 7)
-	Entity::playSound(savepoint, false, 16);
+	Entity::playSound(savepoint, false, SoundManager::kFlagDefault);
 }
 
 /**

@@ -630,7 +630,7 @@ void Fight::loadMilosOpponent() {
 	_data->opponent->sequences.push_back(loadSequence("2001dbk.seq"));
 	_data->opponent->sequences.push_back(loadSequence("2001wbk.seq"));
 
-	getSound()->playSound(kEntityTables0, "MUS027", 16);
+	getSound()->playSound(kEntityTables0, "MUS027", SoundManager::kFlagDefault);
 
 	_data->opponent->field_38 = 35;
 }
@@ -697,7 +697,7 @@ void Fight::updateMilos(Fighter *fighter) {
 			setSequenceAndDraw(fighter->opponent, 6, kFightSequenceType1);
 
 			getSound()->removeFromQueue(kEntityTables0);
-			getSound()->playSound(kEntityTrain, "MUS029", 16);
+			getSound()->playSound(kEntityTrain, "MUS029", SoundManager::kFlagDefault);
 
 			CALL_FUNCTION1(fighter, handleAction, kFightActionWin);
 		}
@@ -833,7 +833,7 @@ void Fight::loadAnnaOpponent() {
 	_data->opponent->sequences.push_back(loadSequence("2002okml.seq"));
 	_data->opponent->sequences.push_back(loadSequence("2002okm.seq"));
 
-	getSound()->playSound(kEntityTables0, "MUS030", 16);
+	getSound()->playSound(kEntityTables0, "MUS030", SoundManager::kFlagDefault);
 
 	_data->opponent->field_38 = 30;
 }
@@ -998,7 +998,7 @@ void Fight::loadIvoOpponent() {
 	_data->opponent->sequences.push_back(loadSequence("csdr.seq"));
 	_data->opponent->sequences.push_back(loadSequence("2003l.seq"));
 
-	getSound()->playSound(kEntityTables0, "MUS032", 16);
+	getSound()->playSound(kEntityTables0, "MUS032", SoundManager::kFlagDefault);
 
 	_data->opponent->countdown = 5;
 	_data->opponent->field_38 = 15;
@@ -1206,7 +1206,7 @@ void Fight::loadSalkoOpponent() {
 	_data->opponent->sequences.push_back(loadSequence("2004ohm.seq"));
 	_data->opponent->sequences.push_back(loadSequence("blank.seq"));
 
-	getSound()->playSound(kEntityTables0, "MUS035", 16);
+	getSound()->playSound(kEntityTables0, "MUS035", SoundManager::kFlagDefault);
 
 	_data->opponent->countdown = 3;
 	_data->opponent->field_38 = 30;
@@ -1378,7 +1378,7 @@ void Fight::loadVesnaOpponent() {
 	_data->opponent->sequences.push_back(loadSequence("2005csbm.seq"));
 	_data->opponent->sequences.push_back(loadSequence("2005oam4.seq"));
 
-	getSound()->playSound(kEntityTables0, "MUS038", 16);
+	getSound()->playSound(kEntityTables0, "MUS038", SoundManager::kFlagDefault);
 
 	_data->opponent->countdown = 4;
 	_data->opponent->field_38 = 30;

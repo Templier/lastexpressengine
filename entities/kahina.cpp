@@ -209,7 +209,7 @@ IMPLEMENT_FUNCTION(Kahina, function12, 12)
 			call(new ENTITY_SETUP(Kahina, setup_savegame), kSavegameType2, kEventKronosGoingToInvitation);
 			break;
 		}
-		
+
 		if (savepoint.action == kAction9)
 			getSound()->playSound(kEntityNone, "LIB014");
 

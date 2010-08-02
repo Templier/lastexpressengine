@@ -101,9 +101,6 @@ public:
 	// Scene
 	void loadSceneFromEntityPosition(CarIndex car, EntityPosition position, bool alternate = false) const;
 
-	// Sound
-	uint getSoundValue(EntityIndex index) const;
-
 	// Checks
 	bool isSitting(EntityIndex entity, CarIndex car, EntityPosition position) const;
 	bool checkFields2(ObjectIndex object) const;

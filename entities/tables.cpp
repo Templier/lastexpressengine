@@ -49,28 +49,48 @@ Tables::Tables(LastExpressEngine *engine, EntityIndex id) : Entity(engine, id) {
 }
 
 IMPLEMENT_FUNCTION(Tables, chapter1, 1)
-	if (savepoint.action == kActionDefault)
+	if (savepoint.action == kActionDefault) {
+		if (_id == kEntityTables2)
+			getSound()->playSoundWithSubtitles("LOOP8A.SND", SoundManager::kFlagLoop, kEntityTables2);
+
 		setup_draw();
+	}
 }
 
 IMPLEMENT_FUNCTION(Tables, chapter2, 2)
-	if (savepoint.action == kActionDefault)
+	if (savepoint.action == kActionDefault) {
+		if (_id == kEntityTables2)
+			getSound()->playSoundWithSubtitles("LOOP8A.SND", SoundManager::kFlagLoop, kEntityTables2);
+
 		setup_draw();
+	}
 }
 
 IMPLEMENT_FUNCTION(Tables, chapter3, 3)
-	if (savepoint.action == kActionDefault)
+	if (savepoint.action == kActionDefault) {
+		if (_id == kEntityTables2)
+			getSound()->playSoundWithSubtitles("LOOP8A.SND", SoundManager::kFlagLoop, kEntityTables2);
+
 		setup_draw();
+	}
 }
 
 IMPLEMENT_FUNCTION(Tables, chapter4, 4)
-	if (savepoint.action == kActionDefault)
+	if (savepoint.action == kActionDefault) {
+		if (_id == kEntityTables2)
+			getSound()->playSoundWithSubtitles("LOOP8A.SND", SoundManager::kFlagLoop, kEntityTables2);
+
 		setup_draw();
+	}
 }
 
 IMPLEMENT_FUNCTION(Tables, chapter5, 5)
-	if (savepoint.action == kActionDefault)
+	if (savepoint.action == kActionDefault) {
+		if (_id == kEntityTables2 && getSound()->isBuffered(kEntityTables2))
+			getSound()->processEntry(kEntityTables2);
+
 		setup_draw();
+	}
 }
 
 IMPLEMENT_FUNCTION(Tables, draw, 6)

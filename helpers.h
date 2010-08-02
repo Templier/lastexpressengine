@@ -66,8 +66,6 @@
 
 // Sound
 #define getSound() _engine->getSoundManager()
-#define playMusicStream(name) getSound()->getMusicStream()->load(getArchive(name));
-#define playSfxStream(name) getSound()->getSfxStream()->load(getArchive(name));
 
 // Others
 #define getEntityData(entity) getEntities()->getData(entity)

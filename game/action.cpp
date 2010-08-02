@@ -470,7 +470,7 @@ IMPLEMENT_ACTION(playMusic) {
 
 	if (!getSound()->isBuffered(filename) &&
 	   (hotspot.param1 != 50 || getProgress().chapter == kChapter5))
-		getSound()->playSound(kEntityNone, filename, 16, hotspot.param2);
+		getSound()->playSound(kEntityNone, filename, SoundManager::kFlagDefault, hotspot.param2);
 
 	return kSceneInvalid;
 }
@@ -813,7 +813,7 @@ IMPLEMENT_ACTION(enterCompartment) {
 			getSound()->playSoundEvent(kEntityNone, 15, 22);
 
 			if (getProgress().field_78) {
-				getSound()->playSound(kEntityNone, "MUS003", 16);
+				getSound()->playSound(kEntityNone, "MUS003", SoundManager::kFlagDefault);
 				getProgress().field_78 = 0;
 			}
 
@@ -1092,7 +1092,7 @@ IMPLEMENT_ACTION(25) {
 
 	case 2:
 		if (!getSound()->isBuffered("MUS021"))
-			getSound()->playSound(kEntityNone, "MUS021", 16);
+			getSound()->playSound(kEntityNone, "MUS021", SoundManager::kFlagDefault);
 		break;
 
 	case 3:
@@ -1195,7 +1195,7 @@ IMPLEMENT_ACTION(29) {
 	sprintf((char *)&filename, "MUS%03d", hotspot.param3);
 
 	if (!getSound()->isBuffered(filename))
-		getSound()->playSound(kEntityNone, filename, 16);
+		getSound()->playSound(kEntityNone, filename, SoundManager::kFlagDefault);
 
 	return kSceneInvalid;
 }
@@ -1358,7 +1358,7 @@ IMPLEMENT_ACTION(openBed) {
 //////////////////////////////////////////////////////////////////////////
 // Action 37
 IMPLEMENT_ACTION(dialog) {
-	getSound()->playDialog(kEntityTables4, (EntityIndex)hotspot.param1, 16, 0);
+	getSound()->playDialog(kEntityTables4, (EntityIndex)hotspot.param1, SoundManager::kFlagDefault, 0);
 
 	return kSceneInvalid;
 }
@@ -1370,7 +1370,7 @@ IMPLEMENT_ACTION(eggBox) {
 	if (getProgress().field_7C) {
 
 		if (!getSound()->isBuffered("MUS003")) {
-			getSound()->playSound(kEntityNone, "MUS003", 16);
+			getSound()->playSound(kEntityNone, "MUS003", SoundManager::kFlagDefault);
 			getProgress().field_7C = 0;
 		}
 	}
@@ -1384,7 +1384,7 @@ IMPLEMENT_ACTION(39) {
 	getSound()->playSoundEvent(kEntityNone, 24);
 	if (getProgress().field_80) {
 		if (!getSound()->isBuffered("MUS003")) {
-			getSound()->playSound(kEntityNone, "MUS003", 16);
+			getSound()->playSound(kEntityNone, "MUS003", SoundManager::kFlagDefault);
 			getProgress().field_80 = 0;
 		}
 	}
@@ -1428,7 +1428,7 @@ IMPLEMENT_ACTION(41) {
 		sprintf((char *)&filename, "MUS%03d", id);
 
 		if (!getSound()->isBuffered(filename))
-			getSound()->playSound(kEntityNone, filename, 16);
+			getSound()->playSound(kEntityNone, filename, SoundManager::kFlagDefault);
 	}
 
 	return kSceneInvalid;
@@ -1461,7 +1461,7 @@ IMPLEMENT_ACTION(42) {
 	sprintf((char *)&filename, "MUS%03d", value);
 
 	if (!getSound()->isBuffered(filename) && hotspot.param3 & value) {
-		getSound()->playSound(kEntityNone, filename, 16);
+		getSound()->playSound(kEntityNone, filename, SoundManager::kFlagDefault);
 
 		getSavePoints()->call(kEntityNone, kEntityTrain, kAction203863200, (char *)&filename);
 		getSavePoints()->push(kEntityNone, kEntityTrain, kAction222746496, hotspot.param2);
@@ -1894,9 +1894,8 @@ void Action::playAnimation(EventIndex index) const {
 		 || index == kEventConcertLeaveWithBriefcase)
 			processSound = true;
 
-		// FIXME NIS animations need to be passed one more parameter than currently
 		Animation animation;
-		if (animation.load(getArchive(Common::String(animationList[index].filename) + ".nis") /*, processSound ? 0x4000 : 0xC000 */))
+		if (animation.load(getArchive(Common::String(animationList[index].filename) + ".nis") , processSound ? Animation::kFlagDefault : Animation::kFlagProcess))
 			animation.play();
 
 		if (getSound()->isBuffered("TIMER"))

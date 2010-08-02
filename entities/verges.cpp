@@ -140,7 +140,7 @@ IMPLEMENT_FUNCTION_S(Verges, playSound, 4)
  *                    - sound filename
  */
 IMPLEMENT_FUNCTION_NOSETUP(Verges, playSound16, 5)
-	Entity::playSound(savepoint, false, 16);
+	Entity::playSound(savepoint, false, SoundManager::kFlagDefault);
 }
 
 IMPLEMENT_FUNCTION(Verges, function6, 6)
@@ -166,7 +166,7 @@ IMPLEMENT_FUNCTION_II(Verges, savegame, 7)
 IMPLEMENT_FUNCTION_II(Verges, updateEntity, 8)
 	if (savepoint.action == kActionExcuseMeCath) {
 		if (!getSound()->isBuffered(kEntityVerges))
-			getSound()->playSound(kEntityNone, "TRA1113", getEntities()->getSoundValue(kEntityVerges));
+			getSound()->playSound(kEntityNone, "TRA1113", getSound()->getSoundFlag(kEntityVerges));
 
 		return;
 	}
@@ -421,7 +421,7 @@ IMPLEMENT_FUNCTION(Verges, policeGettingOffTrain, 24)
 		break;
 
 	case kActionDefault:
-		getSound()->playSound(kEntityVerges, "POL1101", 16);
+		getSound()->playSound(kEntityVerges, "POL1101", SoundManager::kFlagDefault);
 		break;
 
 	case kActionCallback:

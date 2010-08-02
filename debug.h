@@ -28,6 +28,8 @@
 
 #include "gui/debugger.h"
 
+#include "lastexpress/data/snd.h"
+
 #include "lastexpress/shared.h"
 
 namespace LastExpress {
@@ -83,6 +85,9 @@ private:
 	Debuglet *_command;
 	int _numParams;
 	char **_commandParams;
+
+	// Special sound stream for playing sounds
+	StreamedSound *_soundStream;
 };
 
 } // End of namespace LastExpress

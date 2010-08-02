@@ -159,7 +159,7 @@ void Entity::savegame(const SavePoint &savepoint) {
 	}
 }
 
-void Entity::playSound(const SavePoint &savepoint, bool resetItem, int param3) {
+void Entity::playSound(const SavePoint &savepoint, bool resetItem, SoundManager::FlagType flag) {
 	EXPOSE_PARAMS(EntityData::EntityParametersSIIS)
 
 	switch (savepoint.action) {
@@ -174,7 +174,7 @@ void Entity::playSound(const SavePoint &savepoint, bool resetItem, int param3) {
 		if (resetItem)
 			getData()->inventoryItem = kItemNone;
 
-		getSound()->playSound(_entityIndex, (char *)&params->seq1, param3);
+		getSound()->playSound(_entityIndex, (char *)&params->seq1, flag);
 		break;
 	}
 }

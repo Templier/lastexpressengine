@@ -82,10 +82,14 @@ Debugger::Debugger(LastExpressEngine *engine) : _engine(engine), _command(NULL),
 	DCmd_Register("clear",     WRAP_METHOD(Debugger, cmdClear));
 
 	resetCommand();
+
+	 _soundStream = new StreamedSound();
 }
 
 Debugger::~Debugger() {
 	DebugMan.clearAllDebugChannels();
+
+	delete _soundStream;
 
 	// Zero passed pointers
 	_engine = NULL;
@@ -327,8 +331,7 @@ bool Debugger::cmdPlaySnd(int argc, const char **argv) {
 
 		_engine->_system->getMixer()->stopAll();
 
-		// FIXME: use another sound stream for debug (the one in the engine is not setup for playing a single sound)
-		getSound()->getSfxStream()->load(getArchive(name));
+		_soundStream->load(getArchive(name));
 
 		if (argc == 3)
 			restoreArchive();
@@ -663,8 +666,7 @@ bool Debugger::cmdFight(int argc, const char **argv) {
 			restoreArchive();
 
 			// Stop audio and restore scene
-			getSound()->getSfxStream()->stop();
-			getSound()->getMusicStream()->stop();
+			getSound()->stopAllSound();
 
 			clearBg(GraphicsManager::kBackgroundAll);
 
@@ -784,8 +786,7 @@ bool Debugger::cmdBeetle(int argc, const char **argv) {
 			restoreArchive();
 
 			// Stop audio and restore scene
-			getSound()->getSfxStream()->stop();
-			getSound()->getMusicStream()->stop();
+			getSound()->stopAllSound();
 
 			clearBg(GraphicsManager::kBackgroundAll);
 

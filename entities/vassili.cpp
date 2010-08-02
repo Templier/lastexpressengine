@@ -277,7 +277,7 @@ IMPLEMENT_FUNCTION(Vassili, function8, 8)
 		getSavePoints()->push(kEntityVassili, kEntityAnna, kAction226031488);
 		getSavePoints()->push(kEntityVassili, kEntityVerges, kAction226031488);
 		getSavePoints()->push(kEntityVassili, kEntityCoudert, kAction226031488);
-		getSound()->playSound(kEntityVassili, "VAS1027", 16);
+		getSound()->playSound(kEntityVassili, "VAS1027", SoundManager::kFlagDefault);
 		break;
 	}
 }
@@ -308,7 +308,7 @@ IMPLEMENT_FUNCTION(Vassili, function9, 9)
 			setup_seizure();
 		} else {
 			if (savepoint.action == kActionDefault)
-				getSound()->playSound(kEntityVassili, "VAS1028", 16);
+				getSound()->playSound(kEntityVassili, "VAS1028", SoundManager::kFlagDefault);
 		}
 		break;
 	}

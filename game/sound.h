@@ -42,8 +42,7 @@
 	    char {16}       - name 2
 
 	Sound queue entry: 120 bytes
-	    byte {1}        - is on disk
-	    byte {1}        - ??
+	    uint16 {2}      - status
 	    byte {1}        - ??
 	    byte {1}        - ??
 	    uint32 {4}      - ??
@@ -72,7 +71,7 @@
 
 #include "lastexpress/shared.h"
 
-#include "common/array.h"
+#include "common/list.h"
 #include "common/system.h"
 #include "common/serializer.h"
 
@@ -83,6 +82,57 @@ class StreamedSound;
 
 class SoundManager : Common::Serializable {
 public:
+	enum SoundType {
+		kSoundTypeNone = 0,
+		kSoundType1,
+		kSoundType2,
+		kSoundType3,
+		kSoundType4,
+		kSoundType5,
+		kSoundType6,
+		kSoundType7,
+		kSoundType8,
+		kSoundType9,
+		kSoundType10,
+		kSoundType11,
+		kSoundType12,
+		kSoundType13,
+		kSoundType14,
+		kSoundType15,
+		kSoundType16
+	};
+
+	enum FlagType {
+		kFlagInvalid     = -1,
+		kFlagNone        = 0x0,
+		kFlag2           = 0x2,
+		kFlag3           = 0x3,
+		kFlag4           = 0x4,
+		kFlag5           = 0x5,
+		kFlag6           = 0x6,
+		kFlag7           = 0x7,
+		kFlag8           = 0x8,
+		kFlag9           = 0x9,
+		kFlag10          = 0xA,
+		kFlag11          = 0xB,
+		kFlag12          = 0xC,
+		kFlag13          = 0xD,
+		kFlag14          = 0xE,
+		kFlag15          = 0xF,
+		kFlagDefault     = 0x10,
+
+		kFlagType1_2     = 0x1000000,
+		kFlagSteam       = 0x1001007,
+		kFlagType13      = 0x3000000,
+		kFlagMenuClock   = 0x3080010,
+		kFlagType7       = 0x4000000,
+		kFlagType11      = 0x5000000,
+		kFlagMusic       = 0x5000010,
+		kFlagType3       = 0x6000000,
+		kFlagLoop        = 0x6001008,
+		kFlagType9       = 0x7000000,
+	};
+
 	SoundManager(LastExpressEngine *engine);
 	~SoundManager();
 
@@ -90,8 +140,8 @@ public:
 	void handleTimer();
 
 	// State (FIXME: to be renamed when we know more about it)
-	void resetState() { _state |= 1; }
-	void setupQueue(int a1, int a2 = 0);
+	void resetState() { _state |= kSoundType1; }
+	void resetQueue(SoundType type1, SoundType type2 = kSoundTypeNone);
 
 	// Sound queue
 	bool isBuffered(const char* filename, bool testForEntity = false);
@@ -101,19 +151,19 @@ public:
 
 	bool isBuffered(EntityIndex entity);
 	void processEntry(EntityIndex entity);
+	void processEntry(SoundType type);
 
 	// Misc
 	void unknownFunction1();
 	void unknownFunction2(const char* filename);
 	void unknownFunction3();
 	void unknownFunction4();
-	void unknownGameOver(bool isProcessing = true);
 
 	// Sound playing
-	void playSound(EntityIndex entity, const char *filename, int a3 = -1, byte a4 = 0);
-	bool playSoundWithSubtitles(const char *filename, int param3, EntityIndex entity, byte a4 = 0);
+	void playSound(EntityIndex entity, const char *filename, FlagType flag = kFlagInvalid, byte a4 = 0);
+	SoundType playSoundWithSubtitles(const char *filename, FlagType flag, EntityIndex entity, byte a4 = 0);
 	void playSoundEvent(EntityIndex entity, byte action, byte a3 = 0);
-	void playDialog(EntityIndex entity, EntityIndex entityDialog, int a3, byte a4);
+	void playDialog(EntityIndex entity, EntityIndex entityDialog, FlagType flag, byte a4);
 	void playSteam(CityIndex index);
 	void playFightSound(byte action, byte a4);
 	void playLocomotiveSound();
@@ -123,16 +173,17 @@ public:
 	const char *getDialogName(EntityIndex entity) const;
 
 	// Sound bites
-	void excuseMe(EntityIndex entity, EntityIndex entity2 = kEntityNone, int param3 = 0);
+	void excuseMe(EntityIndex entity, EntityIndex entity2 = kEntityNone, FlagType flag = kFlagNone);
 	void excuseMeCath();
 	const char *justCheckingCath() const;
 	const char *wrongDoorCath() const;
 	const char *justAMinuteCath() const;
 
-	// Sound streams
-	// TODO make private
-	StreamedSound *getMusicStream() const { return _music; }
-	StreamedSound *getSfxStream() const { return _sfx; }
+	// FLags
+	SoundManager::FlagType getSoundFlag(EntityIndex index) const;
+
+	// Debug
+	void stopAllSound();
 
 	// Serializable
 	void saveLoadWithSerializer(Common::Serializer &ser);
@@ -140,30 +191,31 @@ public:
 private:
 	LastExpressEngine* _engine;
 
+	enum SoundStatus {
+		kSoundStatus_20       = 0x20,
+		kSoundStatusRemoved   = 0x200,
+
+		kSoundStatus_8000     = 0x8000,
+		kSoundStatus_100000   = 0x100000,
+		kSoundStatus_40000000 = 0x40000000,
+
+		kSoundStatusClear0    = 0x10,
+		kSoundStatusClear1    = 0x1F,
+		kSoundStatusClear2    = 0x80,
+		kSoundStatusClear3    = 0x800,
+		kSoundStatusClearAll  = 0xFFFFFFE0
+	};
+
 	enum SoundState {
 		kSoundState0 = 0,
 		kSoundState1 = 1,
 		kSoundState2 = 2
 	};
 
-	enum SoundType {
-		kSoundTypeNone,
-		kSoundType1,
-		kSoundType2,
-		kSoundType3,
-		kSoundType4,
-		kSoundType5,
-		kSoundType6,
-		kSoundType7,
-		kSoundType8,
-		kSoundType9
-	};
-
 	struct SoundEntry {
-		//bool isOnDisk;
-		//byte field_1;
-		//byte field_2;
-		//byte field_3;
+		uint16 status;
+		// byte field_2;
+		byte field_3;
 		SoundType type;    // int
 		//int field_8;
 		//int field_C;
@@ -174,49 +226,70 @@ private:
 		//int field_20;
 		//int field_24;
 		//int field_28;
-		//int archive;
+		Common::SeekableReadStream *stream;	// int
 		//int field_30;
 		//int field_34;
 		//int field_38;
-		//int field_3C;
-		//int field_40;
+		int field_3C;
+		int field_40;
 		EntityIndex entity;
-		//int field_48;
-		//int field_4C;
-		char name1[16];
-		char name2[16];
+		int field_48;
+		int field_4C;
+		Common::String name1; //char[16];
+		Common::String name2; //char[16];
 		//int next; // offset to the next structure in the list (not used)
 		//Subtitle subtitle;
 
+		bool isStreamed; // TEMPORARY
+
 		SoundEntry() {
+			status = 0;
+			field_3 = 0;
 			type = kSoundTypeNone;
+			stream = NULL;
+			field_3C = 0;
+			field_40 = 0;
 			entity = kEntityNone;
-			strcpy((char*)&name1, "");
-			strcpy((char*)&name2, "");
+			field_48 = 0;
+			field_4C = 0;
+
+			isStreamed = false;
 		};
 	};
 
 	// State flag
 	int _state;
+	SoundType _currentType;
 
-	// Sound streams
-	StreamedSound *_music;
-	StreamedSound *_sfx;
+	// Sound stream
+	StreamedSound *_soundStream;
 
 	// Unknown data
 	uint32 _data0;
 	uint32 _data1;
 	uint32 _data2;
+	uint32 _flag;
 
 	// Sound cache
-	Common::Array<SoundEntry *> _cache;
+	Common::List<SoundEntry *> _cache;
 
 	SoundEntry *getEntry(EntityIndex index);
 	SoundEntry *getEntry(Common::String name);
 	SoundEntry *getEntry(SoundType type);
 
+	void setupEntry(SoundEntry *entry, Common::String name, FlagType flag, int a4);
+	void setEntryType(SoundEntry *entry, FlagType flag);
+	void setEntryStatus(SoundEntry *entry, FlagType flag);
+	bool updateCache(SoundEntry *entry);
+	void loadSoundData(SoundEntry *entry, Common::String name);
+
+	void updateEntry(SoundEntry *entry, uint value);
+	void updateEntryState(SoundEntry *entry);
+	void clearEntry(SoundEntry *entry);
+
+
 	// Subtitles
-	void showSubtitles(SoundEntry *entry, const char* filename);
+	void showSubtitles(SoundEntry *entry, Common::String filename);
 };
 
 } // End of namespace LastExpress

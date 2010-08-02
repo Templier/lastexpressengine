@@ -96,9 +96,16 @@ const char *locomotiveSounds[5] = {
 	"ZFX1007B"
 };
 
-SoundManager::SoundManager(LastExpressEngine *engine) : _engine(engine), _state(0) {
-	_sfx = new StreamedSound();
-	_music = new StreamedSound();
+static const SoundManager::FlagType soundFlags[32] = {
+	SoundManager::kFlagDefault, SoundManager::kFlag15, SoundManager::kFlag14, SoundManager::kFlag13, SoundManager::kFlag12,
+	SoundManager::kFlag11,      SoundManager::kFlag11, SoundManager::kFlag10, SoundManager::kFlag10, SoundManager::kFlag9,  SoundManager::kFlag9, SoundManager::kFlag8, SoundManager::kFlag8,
+	SoundManager::kFlag7,       SoundManager::kFlag7,  SoundManager::kFlag7,  SoundManager::kFlag6,  SoundManager::kFlag6,  SoundManager::kFlag6,
+	SoundManager::kFlag5,       SoundManager::kFlag5,  SoundManager::kFlag5,  SoundManager::kFlag5,  SoundManager::kFlag4,  SoundManager::kFlag4, SoundManager::kFlag4, SoundManager::kFlag4,
+	SoundManager::kFlag3,       SoundManager::kFlag3,  SoundManager::kFlag3,  SoundManager::kFlag3,  SoundManager::kFlag3
+};
+
+SoundManager::SoundManager(LastExpressEngine *engine) : _engine(engine), _state(0), _flag(0), _currentType(kSoundType16) {
+	_soundStream = new StreamedSound();
 
 	// Initialize unknown data
 	_data0 = 0;
@@ -107,8 +114,7 @@ SoundManager::SoundManager(LastExpressEngine *engine) : _engine(engine), _state(
 }
 
 SoundManager::~SoundManager() {
-	delete _sfx;
-	delete _music;
+	delete _soundStream;
 
 	// Zero passed pointers
 	_engine = NULL;
@@ -118,14 +124,34 @@ SoundManager::~SoundManager() {
 // Timer
 //////////////////////////////////////////////////////////////////////////
 void SoundManager::handleTimer() {
+
+	for (Common::List<SoundEntry *>::iterator i = _cache.begin(); i != _cache.end(); ++i) {
+		SoundEntry *entry = (*i);
+		if (entry->stream == NULL) {
+			i = _cache.reverse_erase(i);
+			continue;
+		}
+
+		if (!entry->isStreamed) {
+			_soundStream->load(entry->stream);
+			entry->isStreamed = true;
+		}			
+	}
+
 	// TODO: stream any sound in the queue after filtering
 }
 
 //////////////////////////////////////////////////////////////////////////
 // Sound queue management
 //////////////////////////////////////////////////////////////////////////
-void SoundManager::setupQueue(int a1, int a2) {
-	warning("Sound::setupQueue: not implemented!");
+void SoundManager::resetQueue(SoundType type1, SoundType type2) {
+	if (!type2)
+		type2 = type1;
+
+	for (Common::List<SoundEntry *>::iterator i = _cache.begin(); i != _cache.end(); ++i) {
+		if ((*i)->type != type1 && (*i)->type != type2)
+			clearEntry(*i);
+	}
 }
 
 bool SoundManager::isBuffered(EntityIndex entity) {
@@ -147,17 +173,213 @@ bool SoundManager::isBuffered(const char* filename, bool testForEntity) {
 }
 
 void SoundManager::removeFromQueue(EntityIndex entity) {
-	warning("Sound::removeFromQueue: not implemented!");
+	SoundEntry *entry = getEntry(entity);
+
+	if (entry)
+		clearEntry(entry);
 }
 
 void SoundManager::removeFromQueue(const char* filename) {
-	warning("Sound::removeFromQueue: not implemented!");
+	Common::String name(filename);
+
+	if (!name.contains('.'))
+		name += ".SND";
+
+	SoundEntry *entry = getEntry(name);
+
+	if (entry)
+		clearEntry(entry);
+}
+
+//////////////////////////////////////////////////////////////////////////
+// Entry
+//////////////////////////////////////////////////////////////////////////
+void SoundManager::setupEntry(SoundEntry *entry, Common::String name, FlagType flag, int a4) {
+	if (!entry)
+		error("SoundManager::setupEntry: Invalid entry!");
+
+	entry->field_4C = a4;
+	setEntryType(entry, flag);
+	setEntryStatus(entry, flag);
+
+	// Add entry to cache
+	_cache.push_back(entry);
+
+	updateCache(entry);
+	loadSoundData(entry, name);
+}
+
+void SoundManager::setEntryType(SoundEntry *entry, FlagType flag) {
+	switch (flag & kFlagType7) {
+	default:
+	case 0:
+		entry->type = _currentType;
+		_currentType = (SoundType)(_currentType + 1);
+		break;
+
+	case kFlagType1_2: {
+		SoundEntry *previous2 = getEntry(kSoundType2);
+		if (previous2)
+			updateEntry(previous2, 0);
+
+		SoundEntry *previous = getEntry(kSoundType1);
+		if (previous) {
+			previous->type = kSoundType2;
+			updateEntry(previous, 0);
+		}
+
+		entry->type = kSoundType1;
+		}
+		break;
+
+	case kFlagType3: {
+		SoundEntry *previous = getEntry(kSoundType3);
+		if (previous) {
+			previous->type = kSoundType4;
+			updateEntry(previous, 0);
+		}
+
+		entry->type = kSoundType11;
+		}
+		break;
+
+	case kFlagType7: {
+		SoundEntry *previous = getEntry(kSoundType7);
+		if (previous)
+			previous->type = kSoundType8;
+
+		entry->type = kSoundType7;
+		}
+		break;
+
+	case kFlagType9: {
+		SoundEntry *previous = getEntry(kSoundType9);
+		if (previous)
+			previous->type = kSoundType10;
+
+		entry->type = kSoundType9;
+		}
+		break;
+
+	case kFlagType11: {
+		SoundEntry *previous = getEntry(kSoundType11);
+		if (previous)
+			previous->type = kSoundType14;
+
+		entry->type = kSoundType11;
+		}
+		break;
+
+	case kFlagType13: {
+		SoundEntry *previous = getEntry(kSoundType13);
+		if (previous)
+			previous->type = kSoundType14;
+
+		entry->type = kSoundType13;
+		}
+		break;
+	}
+}
+
+void SoundManager::setEntryStatus(SoundEntry *entry, FlagType flag) {
+	SoundStatus status = (SoundStatus)flag;
+	if (!((status & 0xFF) & kSoundStatusClear1))
+		status = (SoundStatus)(status | kSoundStatusClear2);
+
+	if (((status & 0xFF00) >> 8) & kSoundStatusClear0)
+		entry->status = status;
+	else
+		entry->status = (SoundStatus)(status | kSoundStatusClear3);
+}
+
+bool SoundManager::updateCache(SoundEntry *entry) {
+	warning("Sound::updateCache: not implemented!");
+	return true;
+}
+
+void SoundManager::loadSoundData(SoundEntry *entry, Common::String name) {
+	entry->name2 = name;
+
+	// Load sound data
+	entry->stream = getArchive(name);
+
+	if (!entry->stream)
+		entry->stream = getArchive("DEFAULT.SND");
+
+	if (entry->stream) {
+		warning("Sound::loadSoundData: not implemented!");
+	} else {
+		entry->status = kSoundStatusRemoved;
+	}
+}
+
+void SoundManager::clearEntry(SoundEntry * entry) {
+	entry->status |= kSoundStatusRemoved;
+	entry->entity = kEntityNone;
+
+	if (entry->stream) {
+		if (!entry->isStreamed)
+			SAFE_DELETE(entry->stream);
+		
+		entry->stream = NULL;
+	}
+}
+
+void SoundManager::updateEntry(SoundEntry *entry, uint value) {
+	if (!(entry->field_3 & 64)) {
+
+		int value2 = value;
+
+		entry->status |= kSoundStatus_100000;
+
+		if (value) {
+			if (_flag & 32) {
+				entry->field_40 = value;
+				value2 = value * 2 + 1;
+			}
+
+			entry->field_3C = value2;
+		} else {
+			entry->field_3C = 0;
+			entry->status |= kSoundStatus_40000000;
+		}
+	}
+}
+
+void SoundManager::updateEntryState(SoundEntry *entry) {
+	if (_flag & 32) {
+		if (entry->type != kSoundType9 && entry->type != kSoundType7 && entry->type != kSoundType5) {
+			uint16 status = entry->status & kSoundStatusClear1;
+
+			entry->status &= kSoundStatusClearAll;
+
+			entry->field_40 = status;
+			entry->status |= status * 2 + 1;
+		}
+	}
+
+	entry->status |= kSoundStatus_20;
 }
 
 void SoundManager::processEntry(EntityIndex entity) {
-	error("Sound::processEntry: not implemented!");
+	SoundEntry *entry = getEntry(entity);
+
+	if (entry) {
+		updateEntry(entry, 0);
+		entry->entity = kEntityNone;
+	}
 }
 
+void SoundManager::processEntry(SoundType type) {
+	SoundEntry *entry = getEntry(type);
+
+	if (entry)
+		updateEntry(entry, 0);
+}
+
+//////////////////////////////////////////////////////////////////////////
+// Sound update
+//////////////////////////////////////////////////////////////////////////
 void SoundManager::unknownFunction1() {
 	//warning("Sound::unknownFunction1: not implemented!");
 }
@@ -174,35 +396,31 @@ void SoundManager::unknownFunction4() {
 	warning("Sound::unknownFunction4: not implemented!");
 }
 
-void SoundManager::unknownGameOver(bool isProcessing) {
-	warning("Sound::unknownGameOver: not implemented!");
-}
-
 //////////////////////////////////////////////////////////////////////////
 // Entry search
 //////////////////////////////////////////////////////////////////////////
 SoundManager::SoundEntry *SoundManager::getEntry(EntityIndex index) {
-	for (uint i = 0; i < _cache.size(); i++) {
-		if (_cache[i]->entity == index)
-			return _cache[i];
+	for (Common::List<SoundEntry *>::iterator i = _cache.begin(); i != _cache.end(); ++i) {
+		if ((*i)->entity == index)
+			return *i;
 	}
 
 	return NULL;
 }
 
 SoundManager::SoundEntry *SoundManager::getEntry(Common::String name) {
-	for (uint i = 0; i < _cache.size(); i++) {
-		if (name.compareTo((char *)&_cache[i]->name2))
-			return _cache[i];
+	for (Common::List<SoundEntry *>::iterator i = _cache.begin(); i != _cache.end(); ++i) {
+		if ((*i)->name2 == name)
+			return *i;
 	}
 
 	return NULL;
 }
 
 SoundManager::SoundEntry *SoundManager::getEntry(SoundType type) {
-	for (uint i = 0; i < _cache.size(); i++) {
-		if (_cache[i]->type == type)
-			return _cache[i];
+	for (Common::List<SoundEntry *>::iterator i = _cache.begin(); i != _cache.end(); ++i) {
+		if ((*i)->type == type)
+			return *i;
 	}
 
 	return NULL;
@@ -218,28 +436,42 @@ void SoundManager::saveLoadWithSerializer(Common::Serializer &ser) {
 //////////////////////////////////////////////////////////////////////////
 // Game-related functions
 //////////////////////////////////////////////////////////////////////////
-
-void SoundManager::playSound(EntityIndex entity, const char *filename, int a3, byte a4) {
+void SoundManager::playSound(EntityIndex entity, const char *filename, FlagType flag, byte a4) {
 	if (isBuffered(entity) && entity)
 		removeFromQueue(entity);
 
-	int param3 = (a3 == -1) ? getEntities()->getSoundValue(entity) : ( a3 | 0x80000);
+	FlagType _flag = (flag == -1) ? getSoundFlag(entity) : (FlagType)(flag | 0x80000);
 
 	// Add .SND at the end of the filename if needed
 	Common::String name(filename);
 	if (!name.contains('.'))
 		name += ".SND";
 
-	if (!playSoundWithSubtitles(name.c_str(), param3, entity, a4))
+	if (!playSoundWithSubtitles(name.c_str(), _flag, entity, a4))
 		if (entity)
 			getSavePoints()->push(kEntityNone, entity, kAction2);
 }
 
-bool SoundManager::playSoundWithSubtitles(const char *filename, int param3, EntityIndex entity, byte a4) {
-	playSfxStream(filename);
+SoundManager::SoundType SoundManager::playSoundWithSubtitles(const char *filename, FlagType flag, EntityIndex entity, byte a4) {
+	Common::String name(filename);
 
-	warning("Sound::playSoundWithSubtitles: no implemented!");
-	return true;
+	SoundEntry* entry = new SoundEntry();
+	setupEntry(entry, name, flag, 30);
+	entry->entity = entity;
+
+	if (a4) {
+		entry->field_48 = _data2 + 2 * a4;
+		entry->status |= kSoundStatus_8000;
+	} else {
+		// Get subtitles name
+		while (name.size() > 4)
+			name.deleteLastChar();
+
+		showSubtitles(entry, name);
+		updateEntryState(entry);
+	}
+
+	return entry->type;
 }
 
 void SoundManager::playSoundEvent(EntityIndex entity, byte action, byte a3) {
@@ -253,14 +485,14 @@ void SoundManager::playSoundEvent(EntityIndex entity, byte action, byte a3) {
 		return;
 
 	int _action = (int)action;
-	int param3 = getEntities()->getSoundValue(entity);
+	FlagType flag = getSoundFlag(entity);
 
 	switch (action) {
 	case 36: {
-		int _param3 = (param3 <= 9) ? param3 + 7 : 16;
+		uint32 _param3 = (flag <= 9) ? flag + 7 : 16;
 
 		if (_param3 > 7) {
-			_data0 = (uint32)_param3;
+			_data0 = _param3;
 			_data1 = _data2 + 2 * a3;
 		}
 		break;
@@ -368,8 +600,8 @@ void SoundManager::playSoundEvent(EntityIndex entity, byte action, byte a3) {
 	if (_action) {
 		sprintf((char *)&filename, "LIB%03d.SND", _action);
 
-		if (param3)
-			playSoundWithSubtitles((char*)&filename, param3, kEntityNone, a3);
+		if (flag)
+			playSoundWithSubtitles((char*)&filename, flag, kEntityNone, a3);
 	}
 }
 
@@ -379,8 +611,8 @@ void SoundManager::playSteam(CityIndex index) {
 
 	_state |= kSoundState2;
 
-	if (!getEntry((kSoundType1)))
-		playSoundWithSubtitles("STEAM.SND", 16781319, kEntitySteam);
+	if (!getEntry(kSoundType1))
+		playSoundWithSubtitles("STEAM.SND", kFlagSteam, kEntitySteam);
 
 	// Get the new sound entry and show subtitles
 	SoundEntry *entry = getEntry(kSoundType1);
@@ -431,16 +663,16 @@ void SoundManager::playFightSound(byte action, byte a4) {
 
 	if (_action) {
 		sprintf((char *)&filename, "LIB%03d.SND", _action);
-		playSound(kEntityTrain, (char*)&filename, 16, a4);
+		playSound(kEntityTrain, (char*)&filename, kFlagDefault, a4);
 	}
 }
 
-void SoundManager::playDialog(EntityIndex entity, EntityIndex entityDialog, int a3, byte a4) {
-	playSound(entity, getDialogName(entityDialog), a3, a4);
+void SoundManager::playDialog(EntityIndex entity, EntityIndex entityDialog, FlagType flag, byte a4) {
+	playSound(entity, getDialogName(entityDialog), flag, a4);
 }
 
 void SoundManager::playLocomotiveSound() {
-	playSound(kEntityNone, locomotiveSounds[random(5)], random(15) + 2);
+	playSound(kEntityNone, locomotiveSounds[random(5)], (FlagType)(random(15) + 2));
 }
 
 const char *SoundManager::getDialogName(EntityIndex entity) const {
@@ -761,13 +993,13 @@ void SoundManager::readText(int id){
 		if (isBuffered(text))
 			removeFromQueue(text);
 
-	playSound(kEntityTables4, text, 16);
+	playSound(kEntityTables4, text, kFlagDefault);
 }
 
 //////////////////////////////////////////////////////////////////////////
 // Sound bites
 //////////////////////////////////////////////////////////////////////////
-void SoundManager::excuseMe(EntityIndex entity, EntityIndex entity2, int param3) {
+void SoundManager::excuseMe(EntityIndex entity, EntityIndex entity2, FlagType flag) {
 	if (isBuffered(entity) && entity != kEntityNone && entity != kEntityChapters && entity != kEntityTrain)
 		return;
 
@@ -777,15 +1009,15 @@ void SoundManager::excuseMe(EntityIndex entity, EntityIndex entity2, int param3)
 	if (entity == kEntityFrancois && getEntityData(kEntityFrancois)->field_4A3 != 30)
 		return;
 
-	if (!param3)
-		param3 = getEntities()->getSoundValue(entity);
+	if (flag == kFlagNone)
+		flag = getSoundFlag(entity);
 
 	switch (entity) {
 	default:
 		break;
 
 	case kEntityAnna:
-		playSound(kEntityNone, "ANN1107A", param3);
+		playSound(kEntityNone, "ANN1107A", flag);
 		break;
 
 	case kEntityAugust:
@@ -794,26 +1026,26 @@ void SoundManager::excuseMe(EntityIndex entity, EntityIndex entity2, int param3)
 			break;
 
 		case 0:
-			playSound(kEntityNone, "AUG1100A", param3);
+			playSound(kEntityNone, "AUG1100A", flag);
 			break;
 
 		case 1:
-			playSound(kEntityNone, "AUG1100B", param3);
+			playSound(kEntityNone, "AUG1100B", flag);
 			break;
 
 		case 2:
-			playSound(kEntityNone, "AUG1100C", param3);
+			playSound(kEntityNone, "AUG1100C", flag);
 			break;
 
 		case 3:
-			playSound(kEntityNone, "AUG1100D", param3);
+			playSound(kEntityNone, "AUG1100D", flag);
 			break;
 		}
 		break;
 
 	case kEntityMertens:
 		if (getEntities()->isFemale(entity2)) {
-			playSound(kEntityNone, (random(2) ? "CON1111" : "CON1111A"), param3);
+			playSound(kEntityNone, (random(2) ? "CON1111" : "CON1111A"), flag);
 		} else {
 			if (entity2 || getProgress().jacket != kJacketGreen || !random(2)) {
 				switch(random(3)) {
@@ -821,15 +1053,15 @@ void SoundManager::excuseMe(EntityIndex entity, EntityIndex entity2, int param3)
 					break;
 
 				case 0:
-					playSound(kEntityNone, "CON1110A", param3);
+					playSound(kEntityNone, "CON1110A", flag);
 					break;
 
 				case 1:
-					playSound(kEntityNone, "CON1110C", param3);
+					playSound(kEntityNone, "CON1110C", flag);
 					break;
 
 				case 2:
-					playSound(kEntityNone, "CON1110", param3);
+					playSound(kEntityNone, "CON1110", flag);
 					break;
 				}
 			} else {
@@ -844,7 +1076,7 @@ void SoundManager::excuseMe(EntityIndex entity, EntityIndex entity2, int param3)
 
 	case kEntityCoudert:
 		if (getEntities()->isFemale(entity2)) {
-			playSound(kEntityNone, "JAC1111D", param3);
+			playSound(kEntityNone, "JAC1111D", flag);
 		} else {
 			if (entity2 || getProgress().jacket != kJacketGreen || !random(2)) {
 				switch(random(4)) {
@@ -852,29 +1084,29 @@ void SoundManager::excuseMe(EntityIndex entity, EntityIndex entity2, int param3)
 					break;
 
 				case 0:
-					playSound(kEntityNone, "JAC1111", param3);
+					playSound(kEntityNone, "JAC1111", flag);
 					break;
 
 				case 1:
-					playSound(kEntityNone, "JAC1111A", param3);
+					playSound(kEntityNone, "JAC1111A", flag);
 					break;
 
 				case 2:
-					playSound(kEntityNone, "JAC1111B", param3);
+					playSound(kEntityNone, "JAC1111B", flag);
 					break;
 
 				case 3:
-					playSound(kEntityNone, "JAC1111C", param3);
+					playSound(kEntityNone, "JAC1111C", flag);
 					break;
 				}
 			} else {
-				playSound(kEntityNone, "JAC1113B", param3);
+				playSound(kEntityNone, "JAC1113B", flag);
 			}
 		}
 		break;
 
 	case kEntityPascale:
-		playSound(kEntityNone, (random(2) ? "HDE1002" : "HED1002A"), param3);
+		playSound(kEntityNone, (random(2) ? "HDE1002" : "HED1002A"), flag);
 		break;
 
 	case kEntityServers0:
@@ -884,15 +1116,15 @@ void SoundManager::excuseMe(EntityIndex entity, EntityIndex entity2, int param3)
 			break;
 
 		case 0:
-			playSound(kEntityNone, (entity == kEntityServers0) ? "WAT1002" : "WAT1003", param3);
+			playSound(kEntityNone, (entity == kEntityServers0) ? "WAT1002" : "WAT1003", flag);
 			break;
 
 		case 1:
-			playSound(kEntityNone, (entity == kEntityServers0) ? "WAT1002A" : "WAT1003A", param3);
+			playSound(kEntityNone, (entity == kEntityServers0) ? "WAT1002A" : "WAT1003A", flag);
 			break;
 
 		case 2:
-			playSound(kEntityNone, (entity == kEntityServers0) ? "WAT1002B" : "WAT1003B", param3);
+			playSound(kEntityNone, (entity == kEntityServers0) ? "WAT1002B" : "WAT1003B", flag);
 			break;
 		}
 		break;
@@ -901,36 +1133,36 @@ void SoundManager::excuseMe(EntityIndex entity, EntityIndex entity2, int param3)
 		if (getEntities()->isFemale(entity2)) {
 			playSound(kEntityNone, (random(2) ? "TRA1113A" : "TRA1113B"));
 		} else {
-			playSound(kEntityNone, "TRA1112", param3);
+			playSound(kEntityNone, "TRA1112", flag);
 		}
 		break;
 
 	case kEntityTatiana:
-		playSound(kEntityNone, (random(2) ? "TAT1102A" : "TAT1102B"), param3);
+		playSound(kEntityNone, (random(2) ? "TAT1102A" : "TAT1102B"), flag);
 		break;
 
 	case kEntityAlexei:
-		playSound(kEntityNone, (random(2) ? "ALX1099C" : "ALX1099D"), param3);
+		playSound(kEntityNone, (random(2) ? "ALX1099C" : "ALX1099D"), flag);
 		break;
 
 	case kEntityAbbot:
 		if (getEntities()->isFemale(entity2)) {
-			playSound(kEntityNone, "ABB3002C", param3);
+			playSound(kEntityNone, "ABB3002C", flag);
 		} else {
 			switch(random(3)) {
 			default:
 				break;
 
 			case 0:
-				playSound(kEntityNone, "ABB3002", param3);
+				playSound(kEntityNone, "ABB3002", flag);
 				break;
 
 			case 1:
-				playSound(kEntityNone, "ABB3002A", param3);
+				playSound(kEntityNone, "ABB3002A", flag);
 				break;
 
 			case 2:
-				playSound(kEntityNone, "ABB3002B", param3);
+				playSound(kEntityNone, "ABB3002B", flag);
 				break;
 			}
 		}
@@ -942,21 +1174,21 @@ void SoundManager::excuseMe(EntityIndex entity, EntityIndex entity2, int param3)
 			break;
 
 		case 0:
-			playSound(kEntityNone, "VES1109A", param3);
+			playSound(kEntityNone, "VES1109A", flag);
 			break;
 
 		case 1:
-			playSound(kEntityNone, "VES1109B", param3);
+			playSound(kEntityNone, "VES1109B", flag);
 			break;
 
 		case 2:
-			playSound(kEntityNone, "VES1109C", param3);
+			playSound(kEntityNone, "VES1109C", flag);
 			break;
 		}
 		break;
 
 	case kEntityKahina:
-		playSound(kEntityNone, (random(2) ? "KAH1001" : "KAH1001A"), param3);
+		playSound(kEntityNone, (random(2) ? "KAH1001" : "KAH1001A"), flag);
 		break;
 
 	case kEntityFrancois:
@@ -966,31 +1198,31 @@ void SoundManager::excuseMe(EntityIndex entity, EntityIndex entity2, int param3)
 			break;
 
 		case 0:
-			playSound(kEntityNone, (entity == kEntityFrancois) ? "FRA1001" : "MME1103A", param3);
+			playSound(kEntityNone, (entity == kEntityFrancois) ? "FRA1001" : "MME1103A", flag);
 			break;
 
 		case 1:
-			playSound(kEntityNone, (entity == kEntityFrancois) ? "FRA1001A" : "MME1103B", param3);
+			playSound(kEntityNone, (entity == kEntityFrancois) ? "FRA1001A" : "MME1103B", flag);
 			break;
 
 		case 2:
-			playSound(kEntityNone, (entity == kEntityFrancois) ? "FRA1001B" : "MME1103C", param3);
+			playSound(kEntityNone, (entity == kEntityFrancois) ? "FRA1001B" : "MME1103C", flag);
 			break;
 
 		case 3:
-			playSound(kEntityNone, (entity == kEntityFrancois) ? "FRA1001C" : "MME1103D", param3);
+			playSound(kEntityNone, (entity == kEntityFrancois) ? "FRA1001C" : "MME1103D", flag);
 			break;
 		}
 		break;
 
 	case kEntityBoutarel:
-		playSound(kEntityNone, "MRB1104", param3);
-		if (param3 > 2)
+		playSound(kEntityNone, "MRB1104", flag);
+		if (flag > 2)
 			getProgress().eventMetBoutarel = 1;
 		break;
 
 	case kEntityRebecca:
-		playSound(kEntityNone, (random(2) ? "REB1106" : "REB110A"), param3);
+		playSound(kEntityNone, (random(2) ? "REB1106" : "REB110A"), flag);
 		break;
 
 	case kEntitySophie: {
@@ -999,38 +1231,38 @@ void SoundManager::excuseMe(EntityIndex entity, EntityIndex entity2, int param3)
 			break;
 
 		case 0:
-			playSound(kEntityNone, "SOP1105", param3);
+			playSound(kEntityNone, "SOP1105", flag);
 			break;
 
 		case 1:
-			playSound(kEntityNone, getEntities()->isFemale(entity2) ? "SOP1105C" : "SOP1105A", param3);
+			playSound(kEntityNone, getEntities()->isFemale(entity2) ? "SOP1105C" : "SOP1105A", flag);
 			break;
 
 		case 2:
-			playSound(kEntityNone, getEntities()->isFemale(entity2) ? "SOP1105D" : "SOP1105B", param3);
+			playSound(kEntityNone, getEntities()->isFemale(entity2) ? "SOP1105D" : "SOP1105B", flag);
 			break;
 		}
 		break;
 	}
 
 	case kEntityMahmud:
-		playSound(kEntityNone, "MAH1101", param3);
+		playSound(kEntityNone, "MAH1101", flag);
 		break;
 
 	case kEntityYasmin:
-		playSound(kEntityNone, "HAR1002", param3);
-		if (param3 > 2)
+		playSound(kEntityNone, "HAR1002", flag);
+		if (flag > 2)
 			getProgress().eventMetYasmin = 1;
 		break;
 
 	case kEntityHadija:
-		playSound(kEntityNone, (random(2) ? "HAR1001" : "HAR1001A"), param3);
-		if (param3 > 2)
+		playSound(kEntityNone, (random(2) ? "HAR1001" : "HAR1001A"), flag);
+		if (flag > 2)
 			getProgress().eventMetHadija = 1;
 		break;
 
 	case kEntityAlouan:
-		playSound(kEntityNone, "HAR1004", param3);
+		playSound(kEntityNone, "HAR1004", flag);
 		break;
 	}
 }
@@ -1115,10 +1347,75 @@ const char *SoundManager::justAMinuteCath() const {
 }
 
 //////////////////////////////////////////////////////////////////////////
+// Sound flags
+//////////////////////////////////////////////////////////////////////////
+SoundManager::FlagType SoundManager::getSoundFlag(EntityIndex entity) const {
+	if (entity == kEntityNone)
+		return kFlagDefault;
+
+	if (getEntityData(entity)->car != getEntityData(kEntityNone)->car)
+		return kFlagNone;
+
+	// Compute sound value
+	FlagType ret = kFlag2;
+
+	// Get default value if valid
+	int index = ABS(getEntityData(entity)->entityPosition - getEntityData(kEntityNone)->entityPosition) / 230;
+	if (index < 32)
+		ret = soundFlags[index];
+
+	if (getEntityData(entity)->posture == kPosture2) {
+		if (getEntityData(entity)->car != kCarKronos
+		&& !getEntities()->checkFields15()
+		&& !getEntities()->checkFields16())
+			return kFlagNone;
+
+		return (FlagType)(ret / 6);
+	}
+
+	switch (getEntityData(entity)->car) {
+	default:
+		break;
+
+	case kCarKronos:
+		if (getEntities()->checkFields14(entity) != getEntities()->checkFields14())
+			ret = (FlagType)(ret * 2);
+		break;
+
+	case kCarGreenSleeping:
+	case kCarRedSleeping:
+		if (getEntities()->checkFields6() && !getEntities()->checkFields14(entity))
+			ret = (FlagType)(ret * 2);
+
+		if (getEntityData(kEntityNone)->posture
+		&& (getEntityData(entity)->entityPosition != kPosition_1 || !getEntities()->checkFields9(kEntityNone, entity, 400)))
+			ret = (FlagType)(ret * 2);
+		break;
+
+	case kCarRestaurant:
+		if (getEntities()->checkFields12(entity) == getEntities()->checkFields12()
+		&& (getEntities()->checkFields13(entity) != getEntities()->checkFields13()))
+			ret = (FlagType)(ret * 2);
+		else
+			ret = (FlagType)(ret * 4);
+		break;
+	}
+
+	return ret;
+}
+
+//////////////////////////////////////////////////////////////////////////
 // Subtitles
 //////////////////////////////////////////////////////////////////////////
-void SoundManager::showSubtitles(SoundEntry *entry, const char* filename) {
+void SoundManager::showSubtitles(SoundEntry *entry, Common::String filename) {
 	warning("SoundManager::showSubtitles: not implemented!");
+}
+
+//////////////////////////////////////////////////////////////////////////
+// Misc
+//////////////////////////////////////////////////////////////////////////
+void SoundManager::stopAllSound() {
+	_soundStream->stop();
 }
 
 } // End of namespace LastExpress

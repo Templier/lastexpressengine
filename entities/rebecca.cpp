@@ -121,7 +121,7 @@ IMPLEMENT_FUNCTION_S(Rebecca, playSound, 3)
  * @param param1 The sound filename
  */
 IMPLEMENT_FUNCTION_S(Rebecca, playSound16, 4)
-	Entity::playSound(savepoint, false, getEntities()->getSoundValue(kEntityCoudert));
+	Entity::playSound(savepoint, false, getSound()->getSoundFlag(kEntityCoudert));
 }
 
 /**
@@ -464,33 +464,17 @@ IMPLEMENT_FUNCTION(Rebecca, chapter1Handler, 22)
 	case kActionNone:
 		TIME_CHECK_PLAYSOUND(Rebecca, kTime1084500, params->param3, 1, "REB1015");
 
-		if (params->param4 == kTimeInvalid || !getState()->time)
-			goto label_function22_callback_4;
+		if (params->param4 == kTimeInvalid)
+			goto label_callback_4;
 
-		if (getState()->time > kTime1080000) {
-			params->param4 = kTimeInvalid;
-			if (getEntities()->checkFields12())
-				getProgress().field_B8 = 1;
+		if (getState()->time > kTime1080000)
+			goto label_playConversation;
 
-			setCallback(4);
-			call(new ENTITY_SETUP_SIIS(Rebecca, setup_playSound), "REB1012");
-			break;
-		}
-
-		if (!getEntities()->checkFields12() || !params->param4) {
+		if (!getEntities()->checkFields12() || !params->param4)
 			params->param4 = getState()->time + 150;
-			if (!params->param4) {
-				if (getEntities()->checkFields12())
-					getProgress().field_B8 = 1;
-
-				setCallback(4);
-				call(new ENTITY_SETUP_SIIS(Rebecca, setup_playSound), "REB1012");
-				break;
-			}
-		}
 
 		if (params->param4 >= (int)getState()->time) {
-label_function22_callback_4:
+label_callback_4:
 			if (params->param1) {
 				bool checkParam5 = false;
 				if (!params->param5) {
@@ -507,7 +491,7 @@ label_function22_callback_4:
 				}
 			}
 
-label_function22_callback_5:
+label_callback_5:
 			if (params->param2) {
 				UPDATE_PARAM(params->param6, getState()->timeTicks, 90);
 				getScenes()->loadSceneFromPosition(kCarRestaurant, 55);
@@ -515,7 +499,9 @@ label_function22_callback_5:
 				params->param6 = 0;
 			}
 		} else {
+label_playConversation:
 			params->param4 = kTimeInvalid;
+
 			if (getEntities()->checkFields12())
 				getProgress().field_B8 = 1;
 
@@ -553,12 +539,12 @@ label_function22_callback_5:
 
 		case 4:
 			params->param1 = 1;
-			goto label_function22_callback_4;
+			goto label_callback_4;
 
 		case 5:
 			getProgress().field_B4 = 1;
 			params->param1 = 0;
-			goto label_function22_callback_5;
+			goto label_callback_5;
 		}
 		break;
 	}

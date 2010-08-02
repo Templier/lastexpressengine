@@ -135,7 +135,7 @@ IMPLEMENT_FUNCTION_II(Train, harem, 7)
 	getObjects()->update((ObjectIndex)params->param1, kEntityTrain, kLocation3, kCursorNormal, kCursorNormal);
 
 	// Knock / closed door sound
-	getSound()->playSound(kEntityTables5, (params->param2 == 8) ? "LIB012" : "LIB013", 16);
+	getSound()->playSound(kEntityTables5, (params->param2 == 8) ? "LIB012" : "LIB013", SoundManager::kFlagDefault);
 
 	if (params->param4 && params->param5) {
 
@@ -147,17 +147,17 @@ IMPLEMENT_FUNCTION_II(Train, harem, 7)
 			break;
 
 		case 1:
-			getSound()->playSound(kEntityTables5, "Har1014", 16, 15);
+			getSound()->playSound(kEntityTables5, "Har1014", SoundManager::kFlagDefault, 15);
 			break;
 
 		case 2:
-			getSound()->playSound(kEntityTables5, "Har1013", 16, 15);
-			getSound()->playSound(kEntityTables5, "Har1016", 16, 150);
+			getSound()->playSound(kEntityTables5, "Har1013", SoundManager::kFlagDefault, 15);
+			getSound()->playSound(kEntityTables5, "Har1016", SoundManager::kFlagDefault, 150);
 			break;
 
 		case 3:
-			getSound()->playSound(kEntityTables5, "Har1015A", 16, 15);
-			getSound()->playSound(kEntityTables5, "Har1015", 16, 150);
+			getSound()->playSound(kEntityTables5, "Har1015A", SoundManager::kFlagDefault, 15);
+			getSound()->playSound(kEntityTables5, "Har1015", SoundManager::kFlagDefault, 150);
 			break;
 		}
 
@@ -181,15 +181,15 @@ IMPLEMENT_FUNCTION_II(Train, harem, 7)
 			break;
 
 		case 1:
-			getSound()->playSound(kEntityTables5, "Har1014", 16, 15);
+			getSound()->playSound(kEntityTables5, "Har1014", SoundManager::kFlagDefault, 15);
 			break;
 
 		case 2:
-			getSound()->playSound(kEntityTables5, "Har1013", 16, 15);
+			getSound()->playSound(kEntityTables5, "Har1013", SoundManager::kFlagDefault, 15);
 			break;
 
 		case 3:
-			getSound()->playSound(kEntityTables5, "Har1013A", 16, 15);
+			getSound()->playSound(kEntityTables5, "Har1013A", SoundManager::kFlagDefault, 15);
 			break;
 		}
 
@@ -207,11 +207,11 @@ IMPLEMENT_FUNCTION_II(Train, harem, 7)
 			break;
 
 		case 1:
-			getSound()->playSound(kEntityTables5, "Har1012", 16, 15);
+			getSound()->playSound(kEntityTables5, "Har1012", SoundManager::kFlagDefault, 15);
 			break;
 
 		case 2:
-			getSound()->playSound(kEntityTables5, "Har1012A", 16, 15);
+			getSound()->playSound(kEntityTables5, "Har1012A", SoundManager::kFlagDefault, 15);
 			break;
 		}
 
@@ -225,7 +225,7 @@ IMPLEMENT_FUNCTION_II(Train, harem, 7)
 			ENTITY_PARAM(0, 1) += 1;
 
 			if (ENTITY_PARAM(0, 1) <= 1)
-				getSound()->playSound(kEntityTables5, "Har1014", 16, 15);
+				getSound()->playSound(kEntityTables5, "Har1014", SoundManager::kFlagDefault, 15);
 			else
 				params->param8 = 1;
 
@@ -239,7 +239,7 @@ IMPLEMENT_FUNCTION_II(Train, harem, 7)
 			ENTITY_PARAM(0, 4) += 1;
 
 			if (ENTITY_PARAM(0, 4) <= 1) {
-				getSound()->playSound(kEntityTables5, "Har1011", 16, 15);
+				getSound()->playSound(kEntityTables5, "Har1011", SoundManager::kFlagDefault, 15);
 				handleCompartmentAction();
 				return;
 			}
@@ -258,11 +258,11 @@ IMPLEMENT_FUNCTION_II(Train, harem, 7)
 		break;
 
 	case 1:
-		getSound()->playSound(kEntityTables5, "Har1013", 16, 15);
+		getSound()->playSound(kEntityTables5, "Har1013", SoundManager::kFlagDefault, 15);
 		break;
 
 	case 2:
-		getSound()->playSound(kEntityTables5, "Har1013A", 16, 15);
+		getSound()->playSound(kEntityTables5, "Har1013A", SoundManager::kFlagDefault, 15);
 		break;
 	}
 

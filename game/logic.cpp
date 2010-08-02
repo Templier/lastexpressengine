@@ -403,7 +403,7 @@ void Logic::gameOver(TimeType type, TimeValue time, SceneIndex sceneIndex, bool 
 
 	if (showScene) {
 
-		getSound()->unknownGameOver(false);
+		getSound()->processEntry(SoundManager::kSoundType11);
 
 		if (sceneIndex && !getFlags()->mouseRightClick) {
 			getScenes()->loadScene(sceneIndex);

@@ -137,7 +137,7 @@ IMPLEMENT_FUNCTION_S(Mahmud, playSound, 5)
  * @param param1 The sound filename
  */
 IMPLEMENT_FUNCTION_S(Mahmud, playSoundMertens, 6)
-	Entity::playSound(savepoint, false, getEntities()->getSoundValue(kEntityMertens));
+	Entity::playSound(savepoint, false, getSound()->getSoundFlag(kEntityMertens));
 }
 
 /**
@@ -255,7 +255,7 @@ IMPLEMENT_FUNCTION_II(Mahmud, function10, 10)
 			if (getState()->time >= kTimeCityGalanta) {
 				params->param3 = 0;
 			} else {
-				getSound()->playSound(kEntityTrain, "LIB050", 16);
+				getSound()->playSound(kEntityTrain, "LIB050", SoundManager::kFlagDefault);
 				getLogic()->gameOver(kTimeType0, kTime0, (getProgress().chapter == kChapter1) ? kSceneGameOverPolice1 : kSceneGameOverPolice2, true);
 			}
 		} else {
@@ -285,7 +285,7 @@ IMPLEMENT_FUNCTION_II(Mahmud, function10, 10)
 		break;
 
 	case kActionDefault:
-		getSound()->playSound(kEntityMahmud, params->param2 ? "MAH1170A" : "MAH1173", -1, 45);
+		getSound()->playSound(kEntityMahmud, params->param2 ? "MAH1170A" : "MAH1173", SoundManager::kFlagInvalid, 45);
 		getProgress().field_C4 = 1;
 
 		setCallback(1);

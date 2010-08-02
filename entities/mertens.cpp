@@ -340,7 +340,7 @@ IMPLEMENT_FUNCTION_S(Mertens, playSound16, 8)
 		break;
 
 	case kActionDefault:
-		getSound()->playSound(kEntityMertens, (char *)&params->seq1, 16);
+		getSound()->playSound(kEntityMertens, (char *)&params->seq1, SoundManager::kFlagDefault);
 		break;
 
 	case kActionCallback:
@@ -564,7 +564,7 @@ IMPLEMENT_FUNCTION_I(Mertens, function11, 11)
 /**
  * Says "Bonsoir" to another character
  *
- * @param param1 The entity 
+ * @param param1 The entity
  */
 IMPLEMENT_FUNCTION_I(Mertens, bonsoir, 12)
 	EntityIndex entity = (EntityIndex)params->param1;
@@ -799,7 +799,7 @@ IMPLEMENT_FUNCTION(Mertens, function17, 17)
 		} else {
 			// Got the passenger list, Mertens is looking for it before sitting
 			ENTITY_PARAM(0, 2) = 1;
-			getSound()->playSound(kEntityMertens, "CON1058", -1, 75);
+			getSound()->playSound(kEntityMertens, "CON1058", SoundManager::kFlagInvalid, 75);
 			getEntities()->drawSequenceRight(kEntityMertens, "601D");
 		}
 
