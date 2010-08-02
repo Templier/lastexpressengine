@@ -310,7 +310,7 @@ IMPLEMENT_FUNCTION(MmeBoutarel, chapter2Handler, 18)
 			break;
 
 		case 1:
-			if (getEntities()->isEntitySitting(kEntityFrancois, kCarRedSleeping, kPosition_5790)) {
+			if (getEntities()->isSitting(kEntityFrancois, kCarRedSleeping, kPosition_5790)) {
 				getObjects()->update(kObjectCompartmentD, kEntityNone, kLocationNone, kCursorNormal, kCursorNormal);
 
 				setCallback(2);

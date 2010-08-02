@@ -719,7 +719,7 @@ IMPLEMENT_FUNCTION(Tatiana, function36, 36)
 			break;
 
 		case 1:
-			if (!getEntities()->checkFields19(kEntityNone, kCarGreenSleeping, kPosition_7850) || getEntities()->isEntitySitting(kEntityNone, kCarRedSleeping, kPosition_8200)) {
+			if (!getEntities()->checkFields19(kEntityNone, kCarGreenSleeping, kPosition_7850) || getEntities()->isSitting(kEntityNone, kCarRedSleeping, kPosition_8200)) {
 				setCallback(2);
 				call(new ENTITY_SETUP(Tatiana, setup_function14));
 				break;

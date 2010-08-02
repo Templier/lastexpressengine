@@ -636,7 +636,7 @@ const char *SoundManager::getDialogName(EntityIndex entity) const {
 				return "XKRO2";
 		}
 
-		if (getProgress().eventMertensChronosInvitation)
+		if (getProgress().eventMertensKronosInvitation)
 			return "XKRO1";
 
 		break;

@@ -105,9 +105,9 @@ public:
 	uint getSoundValue(EntityIndex index) const;
 
 	// Checks
-	bool isEntitySitting(EntityIndex entity, CarIndex car, EntityPosition position) const;
+	bool isSitting(EntityIndex entity, CarIndex car, EntityPosition position) const;
 	bool checkFields2(ObjectIndex object) const;
-	bool isEntitySittingInCompartmentCars(EntityIndex entity = kEntityNone) const;
+	bool isSittingInCompartmentCars(EntityIndex entity = kEntityNone) const;
 
 	/**
 	 * Check if the player is in the specified position
@@ -117,7 +117,7 @@ public:
 	 * @return true if player is in that position, false if not.
 	 */
 	bool isPlayerPosition(CarIndex car, Position position) const;
-	bool isEntitySittingOrStanding(EntityIndex entity, CarIndex car) const;
+	bool isSittingOrStanding(EntityIndex entity, CarIndex car) const;
 	bool checkFields6(EntityIndex entity = kEntityNone) const;
 	bool checkFields7(CarIndex car) const;
 	bool isDirectionUpOrDown(EntityIndex entity) const;

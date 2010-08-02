@@ -69,7 +69,7 @@ public:
 		uint32 field_64;
 		uint32 field_68;
 		bool eventMertensAugustWaiting;
-		bool eventMertensChronosInvitation;
+		bool eventMertensKronosInvitation;
 		bool isEggOpen;
 		uint32 field_78;	// time?
 		uint32 field_7C;
@@ -199,7 +199,7 @@ public:
 			field_64 = 0;
 			field_68 = 0;
 			eventMertensAugustWaiting = false;
-			eventMertensChronosInvitation = false;
+			eventMertensKronosInvitation = false;
 			isEggOpen = false;
 			field_78 = 0;
 			field_7C = 0;

@@ -154,7 +154,7 @@ IMPLEMENT_FUNCTION(Vassili, function6, 6)
 		break;
 
 	case kActionNone:
-		if (getEntities()->isEntitySitting(kEntityNone, kCarRedSleeping, kPosition_8200)) {
+		if (getEntities()->isSitting(kEntityNone, kCarRedSleeping, kPosition_8200)) {
 
 			UPDATE_PARAM_FUNCTION(params->param3, getState()->timeTicks, params->param1, label_function7);
 
@@ -172,7 +172,7 @@ label_function7:
 
 			if (getState()->time <= kTime1503000) {
 
-				if (getEntities()->isEntitySitting(kEntityNone, kCarRedSleeping, kPosition_8200) || !params->param4) {
+				if (getEntities()->isSitting(kEntityNone, kCarRedSleeping, kPosition_8200) || !params->param4) {
 
 					params->param4 = getState()->time;
 					if (!params->param4) {
@@ -247,7 +247,7 @@ IMPLEMENT_FUNCTION(Vassili, function7, 7)
 		getData()->car = kCarRedSleeping;
 
 		getEntities()->clearSequences(kEntityVassili);
-		if (getEntities()->isEntitySitting(kEntityNone, kCarRedSleeping, kPosition_8200))
+		if (getEntities()->isSitting(kEntityNone, kCarRedSleeping, kPosition_8200))
 			getScenes()->loadSceneFromObject(kObjectCompartmentA);
 
 		getObjects()->update(kObjectCompartmentA, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
@@ -269,7 +269,7 @@ IMPLEMENT_FUNCTION(Vassili, function8, 8)
 		break;
 
 	case kActionDefault:
-		if (!getEntities()->isEntitySittingOrStanding(kEntityNone, kCarRedSleeping)) {
+		if (!getEntities()->isSittingOrStanding(kEntityNone, kCarRedSleeping)) {
 			getSound()->playSound(kEntityNone, "BUMP");
 			getScenes()->loadSceneFromPosition(kCarRedSleeping, (getEntityData(kEntityNone)->car <= kCarRedSleeping) ? 1 : 40);
 		}
@@ -403,7 +403,7 @@ IMPLEMENT_FUNCTION(Vassili, sleeping, 13)
 		break;
 
 	case kActionNone:
-		if (getEntities()->isEntitySitting(kEntityNone, kCarRedSleeping, kPosition_8200)) {
+		if (getEntities()->isSitting(kEntityNone, kCarRedSleeping, kPosition_8200)) {
 			UPDATE_PARAM(params->param3, getState()->timeTicks, params->param1);
 
 			setCallback(1);
@@ -460,7 +460,7 @@ IMPLEMENT_FUNCTION(Vassili, stealEgg, 15)
 		break;
 
 	case kActionNone:
-		if (getEntities()->isEntitySitting(kEntityNone, kCarRedSleeping, kPosition_8200)) {
+		if (getEntities()->isSitting(kEntityNone, kCarRedSleeping, kPosition_8200)) {
 			UPDATE_PARAM(params->param3, getState()->timeTicks, params->param1);
 
 			setCallback(1);
@@ -483,7 +483,7 @@ IMPLEMENT_FUNCTION(Vassili, stealEgg, 15)
 		break;
 
 	case kActionDrawScene:
-		if (getEntities()->isEntitySitting(kEntityNone, kCarRedSleeping, kPosition_7850)
+		if (getEntities()->isSitting(kEntityNone, kCarRedSleeping, kPosition_7850)
 		 && getInventory()->hasItem(kItemFirebird)
 		 && !getEvent(kEventVassiliCompartmentStealEgg))
 			getObjects()->update(kObject48, kEntityVassili, kLocationNone, kCursorNormal, kCursorHand);
@@ -542,7 +542,7 @@ IMPLEMENT_FUNCTION(Vassili, chapter4Handler, 17)
 		break;
 
 	case kActionNone:
-		if (getEntities()->isEntitySitting(kEntityNone, kCarRedSleeping, kPosition_8200)) {
+		if (getEntities()->isSitting(kEntityNone, kCarRedSleeping, kPosition_8200)) {
 			UPDATE_PARAM(params->param3, getState()->timeTicks, params->param1);
 
 			setCallback(1);

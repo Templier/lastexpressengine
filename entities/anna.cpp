@@ -491,7 +491,7 @@ IMPLEMENT_FUNCTION_IS(Anna, function15, 15)
 			params->param5 = 0;
 			params->param6 = 1;
 
-			CursorStyle cursor = getEntities()->isEntitySitting(kEntityMax, kCarRedSleeping, kPosition_4070) ? kCursorHand : kCursorNormal;
+			CursorStyle cursor = getEntities()->isSitting(kEntityMax, kCarRedSleeping, kPosition_4070) ? kCursorHand : kCursorNormal;
 
 			getObjects()->update(kObjectCompartmentF, kEntityAnna, kLocation1, kCursorNormal, cursor);
 			getObjects()->update(kObject53, kEntityAnna, kLocation1, kCursorNormal, cursor);
@@ -501,7 +501,7 @@ IMPLEMENT_FUNCTION_IS(Anna, function15, 15)
 		break;
 
 	case kAction9:
-		if (getEntities()->isEntitySitting(kEntityMax, kCarRedSleeping, kPosition_4070)) {
+		if (getEntities()->isSitting(kEntityMax, kCarRedSleeping, kPosition_4070)) {
 			getObjects()->update(kObjectCompartmentF, kEntityAnna, kLocation1, kCursorNormal, kCursorNormal);
 			getObjects()->update(kObject53, kEntityAnna, kLocation1, kCursorNormal, kCursorNormal);
 
@@ -513,7 +513,7 @@ IMPLEMENT_FUNCTION_IS(Anna, function15, 15)
 
 	case kAction8:
 		if (params->param5) {
-			CursorStyle cursor = getEntities()->isEntitySitting(kEntityMax, kCarRedSleeping, kPosition_4070) ? kCursorHand : kCursorNormal;
+			CursorStyle cursor = getEntities()->isSitting(kEntityMax, kCarRedSleeping, kPosition_4070) ? kCursorHand : kCursorNormal;
 
 			getObjects()->update(kObjectCompartmentF, kEntityAnna, kLocation1, kCursorNormal, cursor);
 			getObjects()->update(kObject53, kEntityAnna, kLocation1, kCursorNormal, cursor);
@@ -1395,7 +1395,7 @@ IMPLEMENT_FUNCTION(Anna, function52, 52)
 			getEntities()->enterCompartment(kEntityAnna, kObjectCompartmentF);
 			getData()->posture = kPostureSitting;
 
-			if (getEntities()->isEntitySitting(kEntityNone, kCarRedSleeping, kPosition_4070) || getEntities()->isEntitySitting(kEntityNone, kCarRedSleeping, kPosition_4455)) {
+			if (getEntities()->isSitting(kEntityNone, kCarRedSleeping, kPosition_4070) || getEntities()->isSitting(kEntityNone, kCarRedSleeping, kPosition_4455)) {
 				getAction()->playAnimation(isDay() ? kEventCathTurningDay : kEventCathTurningNight);
 				getSound()->playSound(kEntityNone, "BUMP");
 				getScenes()->loadSceneFromObject(kObjectCompartmentF);

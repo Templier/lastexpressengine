@@ -191,7 +191,7 @@ IMPLEMENT_FUNCTION(Kronos, function10, 10)
 	case kActionNone:
 		TIME_CHECK(kTime1489500, params->param1, setup_function11);
 
-		if (params->param1 && getEntities()->isEntitySittingOrStanding(kEntityNone, kCarKronos)) {
+		if (params->param1 && getEntities()->isSittingOrStanding(kEntityNone, kCarKronos)) {
 			UPDATE_PARAM(params->param3, getState()->timeTicks, 150);
 			setup_function9();
 		}

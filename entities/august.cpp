@@ -377,7 +377,7 @@ label_callback_8:
 				if (getProgress().eventCorpseMovedFromFloor) {
 					setCallback(9);
 					call(new ENTITY_SETUP_SIIS(August, setup_enterExitCompartment), "626Da", kObjectCompartment1);
-				} else if (getEntities()->isEntitySittingOrStanding(kEntityNone, kCarGreenSleeping)) {
+				} else if (getEntities()->isSittingOrStanding(kEntityNone, kCarGreenSleeping)) {
 					setCallback(10);
 					call(new ENTITY_SETUP_SIIS(August, setup_enterExitCompartment3), "626Da", kObjectCompartment1);
 				} else {
@@ -493,8 +493,8 @@ label_callback_9:
 		break;
 
 	case kActionDefault:
-		if (getEntities()->isEntitySitting(kEntityNone, kCarGreenSleeping, kPosition_8200)
-		 || getEntities()->isEntitySitting(kEntityNone, kCarGreenSleeping, kPosition_7850)
+		if (getEntities()->isSitting(kEntityNone, kCarGreenSleeping, kPosition_8200)
+		 || getEntities()->isSitting(kEntityNone, kCarGreenSleeping, kPosition_7850)
 		 || getEntities()->checkFields15()) {
 			getObjects()->update(kObjectCompartment1, kEntityAugust, getObjects()->get(kObjectCompartment1).location, kCursorNormal, kCursorNormal);
 

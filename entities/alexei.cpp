@@ -1016,7 +1016,7 @@ IMPLEMENT_FUNCTION(Alexei, function40, 40)
 
 			getData()->posture = kPostureSitting;
 
-			if (getEntities()->isEntitySitting(kEntityNone, kCarGreenSleeping, kPosition_7500)) {
+			if (getEntities()->isSitting(kEntityNone, kCarGreenSleeping, kPosition_7500)) {
 				getAction()->playAnimation(isDay() ? kEventCathTurningDay : kEventCathTurningNight);
 				getSound()->playSound(kEntityNone, "BUMP");
 				getScenes()->loadSceneFromObject(kObjectCompartment2);

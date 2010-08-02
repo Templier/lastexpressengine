@@ -159,7 +159,7 @@ label_callback2:
 
 			if (getState()->time <= kTime1134000) {
 
-				if (!getEntities()->checkFields7(kCarGreenSleeping) || !getEntities()->isEntitySitting(kEntityMahmud, kCarGreenSleeping, kPosition_5790) || !params->param3) {
+				if (!getEntities()->checkFields7(kCarGreenSleeping) || !getEntities()->isSitting(kEntityMahmud, kCarGreenSleeping, kPosition_5790) || !params->param3) {
 					params->param3 = getState()->time + 75;
 
 					if (!params->param3) {
@@ -186,7 +186,7 @@ label_callback4:
 		if (params->param5 != kTimeInvalid && getState()->time > kTime1165500) {
 			if (getState()->time <= kTime1188000) {
 
-				if (!getEntities()->checkFields7(kCarGreenSleeping) || !getEntities()->isEntitySitting(kEntityMahmud, kCarGreenSleeping, kPosition_5790) || !params->param5) {
+				if (!getEntities()->checkFields7(kCarGreenSleeping) || !getEntities()->isSitting(kEntityMahmud, kCarGreenSleeping, kPosition_5790) || !params->param5) {
 					params->param5 = getState()->time + 75;
 
 					if (!params->param5) {
@@ -404,7 +404,7 @@ IMPLEMENT_FUNCTION(Hadija, function22, 22)
 		break;
 
 	case kActionDrawScene:
-		if (getEntities()->isEntitySittingOrStanding(kEntityNone, kCarGreenSleeping)) {
+		if (getEntities()->isSittingOrStanding(kEntityNone, kCarGreenSleeping)) {
 			setup_function23();
 		}
 		break;

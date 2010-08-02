@@ -121,7 +121,7 @@ IMPLEMENT_FUNCTION_S(Coudert, bloodJacket, 2)
 	case kActionNone:
 		if (getProgress().jacket == kJacketBlood
 		 && getEntities()->checkFields9(kEntityCoudert, kEntityNone, 1000)
-		 && !getEntities()->isEntitySittingInCompartmentCars()
+		 && !getEntities()->isSittingInCompartmentCars()
 		 && !getEntities()->checkFields10()) {
 			setCallback(1);
 			call(new ENTITY_SETUP(Coudert, setup_savegame), kSavegameType2, kEventMertensBloodJacket); /* BUG: is this a bug in the original? */
@@ -159,7 +159,7 @@ IMPLEMENT_FUNCTION_SI(Coudert, enterExitCompartment, 3)
 	case kActionNone:
 		if (getProgress().jacket == kJacketBlood
 		 && getEntities()->checkFields9(kEntityCoudert, kEntityNone, 1000)
-		 && !getEntities()->isEntitySittingInCompartmentCars()
+		 && !getEntities()->isSittingInCompartmentCars()
 		 && !getEntities()->checkFields10()) {
 			setCallback(1);
 			call(new ENTITY_SETUP(Coudert, setup_savegame), kSavegameType2, kEventMertensBloodJacket); /* BUG: is this a bug in the original? */
@@ -190,7 +190,7 @@ IMPLEMENT_FUNCTION(Coudert, function4, 4)
 
 		if (getProgress().jacket == kJacketBlood
 		 && getEntities()->checkFields9(kEntityCoudert, kEntityNone, 1000)
-		 && !getEntities()->isEntitySittingInCompartmentCars()
+		 && !getEntities()->isSittingInCompartmentCars()
 		 && !getEntities()->checkFields10()) {
 			setCallback(1);
 			call(new ENTITY_SETUP(Coudert, setup_savegame), kSavegameType2, kEventMertensBloodJacket);
@@ -227,7 +227,7 @@ IMPLEMENT_FUNCTION_S(Coudert, playSound, 6)
 	case kActionNone:
 		if (getProgress().jacket == kJacketBlood
 		 && getEntities()->checkFields9(kEntityCoudert, kEntityNone, 1000)
-		 && !getEntities()->isEntitySittingInCompartmentCars()
+		 && !getEntities()->isSittingInCompartmentCars()
 		 && !getEntities()->checkFields10()) {
 			setCallback(1);
 			call(new ENTITY_SETUP(Coudert, setup_savegame), kSavegameType2, kEventMertensBloodJacket);
@@ -266,7 +266,7 @@ IMPLEMENT_FUNCTION_NOSETUP(Coudert, playSound16, 7)
 	case kActionNone:
 		if (getProgress().jacket == kJacketBlood
 		 && getEntities()->checkFields9(kEntityCoudert, kEntityNone, 1000)
-		 && !getEntities()->isEntitySittingInCompartmentCars()
+		 && !getEntities()->isSittingInCompartmentCars()
 		 && !getEntities()->checkFields10()) {
 			setCallback(1);
 			call(new ENTITY_SETUP(Coudert, setup_savegame), kSavegameType2, kEventMertensBloodJacket);
@@ -320,7 +320,7 @@ IMPLEMENT_FUNCTION_I(Coudert, function10, 10)
 	case kActionNone:
 		if (getProgress().jacket == kJacketBlood
 		 && getEntities()->checkFields9(kEntityCoudert, kEntityNone, 1000)
-		 && !getEntities()->isEntitySittingInCompartmentCars()
+		 && !getEntities()->isSittingInCompartmentCars()
 		 && !getEntities()->checkFields10()) {
 			setCallback(1);
 			call(new ENTITY_SETUP(Coudert, setup_savegame), kSavegameType2, kEventMertensBloodJacket);
@@ -352,7 +352,7 @@ IMPLEMENT_FUNCTION_I(Coudert, function11, 11)
 	case kActionNone:
 		if (getProgress().jacket == kJacketBlood
 		 && getEntities()->checkFields9(kEntityCoudert, kEntityNone, 1000)
-		 && !getEntities()->isEntitySittingInCompartmentCars()
+		 && !getEntities()->isSittingInCompartmentCars()
 		 && !getEntities()->checkFields10()) {
 			setCallback(1);
 			call(new ENTITY_SETUP(Coudert, setup_savegame), kSavegameType2, kEventMertensBloodJacket);
@@ -437,7 +437,7 @@ IMPLEMENT_FUNCTION_II(Coudert, function13, 13)
 	case kActionNone:
 		if (getProgress().jacket == kJacketBlood
 		 && getEntities()->checkFields9(kEntityCoudert, kEntityNone, 1000)
-		 && !getEntities()->isEntitySittingInCompartmentCars()
+		 && !getEntities()->isSittingInCompartmentCars()
 		 && !getEntities()->checkFields10()) {
 			setCallback(3);
 			call(new ENTITY_SETUP(Coudert, setup_savegame), kSavegameType2, kEventMertensBloodJacket);

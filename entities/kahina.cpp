@@ -186,12 +186,55 @@ IMPLEMENT_FUNCTION(Kahina, chapter1Handler, 11)
 	if (getProgress().jacket != kJacketOriginal)
 		TIME_CHECK_SAVEPOINT(kTime1107000, params->param1, kEntityKahina, kEntityMertens, kAction238732837);
 
-	if (getProgress().eventMertensChronosInvitation)
+	if (getProgress().eventMertensKronosInvitation)
 		setup_function12();
 }
 
 IMPLEMENT_FUNCTION(Kahina, function12, 12)
-	error("Kahina: callback function 12 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionNone:
+		TIME_CHECK(kTime1485000, params->param2, setup_function13);
+		break;
+
+	case kAction8:
+		getSound()->playSound(kEntityNone, "LIB012");
+		// Fallback to next action
+
+	case kAction9:
+		if (!getEvent(kEventKronosGoingToInvitation)) {
+			setCallback(1);
+			call(new ENTITY_SETUP(Kahina, setup_savegame), kSavegameType2, kEventKronosGoingToInvitation);
+			break;
+		}
+		
+		if (savepoint.action == kAction9)
+			getSound()->playSound(kEntityNone, "LIB014");
+
+		getScenes()->loadSceneFromPosition(kCarKronos, 80);
+		getSavePoints()->push(kEntityKahina, kEntityKronos, kAction171849314);
+		params->param1 = 1;
+		break;
+
+	case kActionDefault:
+		getObjects()->update(kObjectCompartmentKronos, kEntityKahina, kLocationNone, kCursorHandKnock, kCursorHand);
+		break;
+
+	case kActionCallback:
+		if (getCallback() == 1) {
+			getAction()->playAnimation(kEventKronosGoingToInvitation);
+			getScenes()->loadSceneFromPosition(kCarKronos, 80);
+			getSavePoints()->push(kEntityKahina, kEntityKronos, kAction171849314);
+			params->param1 = 1;
+		}
+		break;
+
+	case kAction137685712:
+		setup_function13();
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Kahina, function13, 13)
@@ -301,7 +344,7 @@ IMPLEMENT_FUNCTION(Kahina, chapter2Handler, 17)
 			}
 		}
 
-		if (getEvent(kEventKahinaAskSpeakFirebird) && getEvent(kEventKronosConversationFirebird) && getEntities()->isEntitySittingOrStanding(kEntityNone, kCarKronos)) {
+		if (getEvent(kEventKahinaAskSpeakFirebird) && getEvent(kEventKronosConversationFirebird) && getEntities()->isSittingOrStanding(kEntityNone, kCarKronos)) {
 			if (!params->param3)
 				params->param3 = getState()->time + 900;
 

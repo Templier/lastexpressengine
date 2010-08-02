@@ -464,7 +464,7 @@ IMPLEMENT_FUNCTION(Yasmin, function20, 20)
 		break;
 
 	case kActionDrawScene:
-		if (getEntities()->isEntitySittingOrStanding(kEntityNone, kCarGreenSleeping)) {
+		if (getEntities()->isSittingOrStanding(kEntityNone, kCarGreenSleeping)) {
 			setup_function21();
 		}
 		break;
