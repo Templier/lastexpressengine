@@ -2162,8 +2162,8 @@ label_process_entity:
 						}
 					} else {
 						if (getData(kEntityPlayer)->entityPosition < data->entityPosition
-						 && data->position - getData(kEntityPlayer)->entityPosition >= 500
-						 && data->field_4A3 + 500 > data->position - getData(kEntityPlayer)->entityPosition) {
+						 && data->entityPosition - getData(kEntityPlayer)->entityPosition >= 500
+						 && data->field_4A3 + 500 > data->entityPosition - getData(kEntityPlayer)->entityPosition) {
 
 							if (getScenes()->checkPosition(kSceneNone, SceneManager::kCheckPositionType0)) {
 								 getSavePoints()->push(kEntityPlayer, entity, kActionExcuseMeCath);
@@ -2245,7 +2245,7 @@ bool Entities::changeCar(EntityData::EntityCallData * data, EntityIndex entity, 
 		}
 	}
 
-	if ((increment ? data->car > car : data->car < car) || (data->car == car && (increment ? data->entityPosition >= position : data->entityPosition < position))) {
+	if ((increment ? data->car > car : data->car < car) || (data->car == car && (increment ? data->entityPosition >= position : data->entityPosition <= position))) {
 		data->car = car;
 		data->entityPosition = position;
 		data->direction = kDirectionNone;

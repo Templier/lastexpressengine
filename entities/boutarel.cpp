@@ -268,7 +268,7 @@ IMPLEMENT_FUNCTION_IS(Boutarel, function16, 16)
 
 		case 2:
 			setCallback(3);
-			call(new ENTITY_SETUP(Boutarel, setup_updateEntity), kCarGreenSleeping, kPosition_6470);
+			call(new ENTITY_SETUP(Boutarel, setup_updateEntity), kCarRedSleeping, kPosition_6470);
 			break;
 
 		case 3:
@@ -294,23 +294,18 @@ IMPLEMENT_FUNCTION_IS(Boutarel, function17, 17)
 		break;
 
 	case kActionNone:
-		if (params->param1 < (int)getState()->time && !params->param6) {
-			params->param6 = 1;
-			CALLBACK_ACTION();
-			break;
-		}
+		TIME_CHECK_CALLBACK_ACTION(Boutarel, params->param1, params->param6);
 
-		if (!params->param5) {
+		if (params->param5) {
+			UPDATE_PARAM(params->param7, getState()->timeTicks, 90)
+			getScenes()->loadSceneFromPosition(kCarRestaurant, 51);
+		} else {
 			params->param7 = 0;
-			break;
 		}
-
-		UPDATE_PARAM(params->param7, getState()->timeTicks, 90)
-		getScenes()->loadSceneFromPosition(kCarRestaurant, 51);
 		break;
 
 	case kActionDefault:
-		getEntities()->drawSequenceLeft(kEntityMmeBoutarel, (char *)&params->seq);
+		getEntities()->drawSequenceLeft(kEntityBoutarel, (char *)&params->seq);
 		break;
 
 	case kActionDrawScene:

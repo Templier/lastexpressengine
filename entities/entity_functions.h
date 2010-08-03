@@ -77,7 +77,7 @@
 	}
 
 #define TIME_CHECK_CALLBACK_ACTION(class, timeValue, parameter) \
-	if (getState()->time > timeValue && !parameter) { \
+	if ((int)getState()->time > timeValue && !parameter) { \
 		parameter = 1; \
 		CALLBACK_ACTION(); \
 		break; \
