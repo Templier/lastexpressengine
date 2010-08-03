@@ -47,7 +47,7 @@ public:
 	DECLARE_FUNCTION_II(updateEntity)
 	DECLARE_FUNCTION(callbackActionOnDirection)
 	DECLARE_FUNCTION_NOSETUP(playSound)
-	DECLARE_FUNCTION(function9)
+	DECLARE_FUNCTION(callbackActionOnSomebodyStandingInRestaurantOrSalon)
 	DECLARE_FUNCTION_II(savegame)
 	DECLARE_FUNCTION(function11)
 	DECLARE_FUNCTION(sitAtTableWithSalko)

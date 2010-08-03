@@ -131,8 +131,8 @@ void SoundManager::handleTimer() {
 			i = _cache.reverse_erase(i);
 			continue;
 		} else if (!entry->isStreamed) {
-			_soundStream->load(entry->stream);
 			entry->isStreamed = true;
+			_soundStream->load(entry->stream);
 		}
 	}
 

@@ -40,7 +40,7 @@ public:
 
 	// Setup
 	DECLARE_FUNCTION_S(draw)
-	DECLARE_FUNCTION(function2)
+	DECLARE_FUNCTION(callbackActionOnSomebodyStandingInRestaurantOrSalon)
 	DECLARE_FUNCTION(callbackActionOnDirection)
 	DECLARE_FUNCTION_I(updateFromTime)
 	DECLARE_FUNCTION_NOSETUP(updatePosition)

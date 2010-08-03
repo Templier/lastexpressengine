@@ -318,14 +318,14 @@ public:
 
 	EntityCallData 	  *getCallData() { return &_data; }
 
-	EntityParameters  *getParameters(int callback, int index) { return _parameters[callback].parameters[index]; }
-	EntityParameters  *getCurrentParameters(int index = 0) { return getParameters(_data.current_call, index); }
+	EntityParameters  *getParameters(uint callback, uint index);
+	EntityParameters  *getCurrentParameters(uint index = 0) { return getParameters(_data.current_call, index); }
 	void 			   resetCurrentParameters();
 
-	int 			   getCallback(int callback) { return _data.callbacks[callback]; }
+	int 			   getCallback(uint callback);
 	int				   getCurrentCallback() { return getCallback(_data.current_call); }
-	void 			   setCallback(int callback, byte index) { _data.callbacks[callback] = index; }
-	void 			   setCurrentCallback(byte index) { setCallback(_data.current_call, index); }
+	void 			   setCallback(uint callback, uint index);
+	void 			   setCurrentCallback(uint index) { setCallback(_data.current_call, index); }
 
 	// Serializable
 	void 			   saveLoadWithSerializer(Common::Serializer &ser);
@@ -443,7 +443,12 @@ protected:
 	 */
 	void callbackActionOnDirection(const SavePoint &savepoint);
 
-	void savepointCheckFields11(const SavePoint &savepoint);
+	/**
+	 * Process callback action when somebody is standing in the restaurant or salon.
+	 *
+	 * @param savepoint The savepoint.
+	 */
+	void callbackActionOnSomebodyStandingInRestaurantOrSalon(const SavePoint &savepoint);
 
 	/**
 	 * Updates the entity

@@ -50,7 +50,7 @@ public:
 	DECLARE_FUNCTION_II(savegame)
 	DECLARE_FUNCTION_II(updateEntity)
 	DECLARE_FUNCTION_NOSETUP(draw2)
-	DECLARE_FUNCTION(function12)
+	DECLARE_FUNCTION(callbackActionOnSomebodyStandingInRestaurantOrSalon)
 	DECLARE_FUNCTION(function13)
 	DECLARE_FUNCTION(function14)
 	DECLARE_FUNCTION(function15)

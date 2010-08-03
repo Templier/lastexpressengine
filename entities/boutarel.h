@@ -47,7 +47,7 @@ public:
 	DECLARE_FUNCTION_SI(enterExitCompartment)
 	DECLARE_FUNCTION_SI(enterExitCompartment2)
 	DECLARE_FUNCTION(callbackActionOnDirection)
-	DECLARE_FUNCTION(function9)
+	DECLARE_FUNCTION(callbackActionOnSomebodyStandingInRestaurantOrSalon)
 	DECLARE_FUNCTION_II(updateEntity)
 	DECLARE_FUNCTION_I(function11)
 	DECLARE_FUNCTION(enterTableWithMmeBoutarel)

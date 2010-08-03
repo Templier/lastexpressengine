@@ -52,7 +52,7 @@ Alexei::Alexei(LastExpressEngine *engine) : Entity(engine, kEntityAlexei) {
 	ADD_CALLBACK_FUNCTION(Alexei, savegame);
 	ADD_CALLBACK_FUNCTION(Alexei, updateEntity);
 	ADD_CALLBACK_FUNCTION(Alexei, draw2);
-	ADD_CALLBACK_FUNCTION(Alexei, function12);
+	ADD_CALLBACK_FUNCTION(Alexei, callbackActionOnSomebodyStandingInRestaurantOrSalon);
 	ADD_CALLBACK_FUNCTION(Alexei, function13);
 	ADD_CALLBACK_FUNCTION(Alexei, function14);
 	ADD_CALLBACK_FUNCTION(Alexei, function15);
@@ -218,8 +218,11 @@ IMPLEMENT_FUNCTION_NOSETUP(Alexei, draw2, 11)
 	Entity::draw2(savepoint);
 }
 
-IMPLEMENT_FUNCTION(Alexei, function12, 12)
-	Entity::savepointCheckFields11(savepoint);
+/**
+ * Process callback action when somebody is standing in the restaurant or salon.
+ */
+IMPLEMENT_FUNCTION(Alexei, callbackActionOnSomebodyStandingInRestaurantOrSalon, 12)
+	Entity::callbackActionOnSomebodyStandingInRestaurantOrSalon(savepoint);
 }
 
 IMPLEMENT_FUNCTION(Alexei, function13, 13)
@@ -539,7 +542,7 @@ IMPLEMENT_FUNCTION(Alexei, function19, 19)
 
 		case 3:
 			setCallback(4);
-			call(new ENTITY_SETUP(Alexei, setup_function12));
+			call(new ENTITY_SETUP(Alexei, setup_callbackActionOnSomebodyStandingInRestaurantOrSalon));
 			break;
 
 		case 4:
@@ -620,7 +623,7 @@ IMPLEMENT_FUNCTION(Alexei, function20, 20)
 
 		case 2:
 			setCallback(3);
-			call(new ENTITY_SETUP(Alexei, setup_function12));
+			call(new ENTITY_SETUP(Alexei, setup_callbackActionOnSomebodyStandingInRestaurantOrSalon));
 			break;
 
 		case 3:
@@ -821,7 +824,7 @@ IMPLEMENT_FUNCTION(Alexei, chapter2Handler, 29)
 
 		case 3:
 			setCallback(4);
-			call(new ENTITY_SETUP(Alexei, setup_function12));
+			call(new ENTITY_SETUP(Alexei, setup_callbackActionOnSomebodyStandingInRestaurantOrSalon));
 			break;
 
 		case 4:

@@ -51,11 +51,11 @@ August::August(LastExpressEngine *engine) : Entity(engine, kEntityAugust) {
 	ADD_CALLBACK_FUNCTION(August, enterExitCompartment3);
 	ADD_CALLBACK_FUNCTION(August, callbackActionOnDirection);
 	ADD_CALLBACK_FUNCTION(August, callSavepoint);
-	ADD_CALLBACK_FUNCTION(August, function10);
+	ADD_CALLBACK_FUNCTION(August, callSavepointNoDrawing);
 	ADD_CALLBACK_FUNCTION(August, draw2);
 	ADD_CALLBACK_FUNCTION(August, playSound);
 	ADD_CALLBACK_FUNCTION(August, playSound16);
-	ADD_CALLBACK_FUNCTION(August, function14);
+	ADD_CALLBACK_FUNCTION(August, callbackActionOnSomebodyStandingInRestaurantOrSalon);
 	ADD_CALLBACK_FUNCTION(August, savegame);
 	ADD_CALLBACK_FUNCTION(August, updateEntity);
 	ADD_CALLBACK_FUNCTION(August, function17);
@@ -205,7 +205,7 @@ IMPLEMENT_FUNCTION_SIIS(August, callSavepoint, 9)
 	Entity::callSavepoint(savepoint);
 }
 
-IMPLEMENT_FUNCTION_IIS(August, function10, 10)
+IMPLEMENT_FUNCTION_IIS(August, callSavepointNoDrawing, 10)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -255,8 +255,11 @@ IMPLEMENT_FUNCTION_S(August, playSound16, 13)
 	Entity::playSound(savepoint, false, SoundManager::kFlagDefault);
 }
 
-IMPLEMENT_FUNCTION(August, function14, 14)
-	Entity::savepointCheckFields11(savepoint);
+/**
+ * Process callback action when somebody is standing in the restaurant or salon.
+ */
+IMPLEMENT_FUNCTION(August, callbackActionOnSomebodyStandingInRestaurantOrSalon, 14)
+	Entity::callbackActionOnSomebodyStandingInRestaurantOrSalon(savepoint);
 }
 
 /**
@@ -1356,7 +1359,7 @@ IMPLEMENT_FUNCTION(August, function55, 55)
 
 	case kActionDefault:
 		setCallback(1);
-		call(new ENTITY_SETUP(August, setup_function14));
+		call(new ENTITY_SETUP(August, setup_callbackActionOnSomebodyStandingInRestaurantOrSalon));
 		break;
 
 	case kActionCallback:

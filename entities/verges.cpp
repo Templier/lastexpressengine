@@ -43,10 +43,10 @@ namespace LastExpress {
 Verges::Verges(LastExpressEngine *engine) : Entity(engine, kEntityVerges) {
 	ADD_CALLBACK_FUNCTION(Verges, reset);
 	ADD_CALLBACK_FUNCTION(Verges, draw);
-	ADD_CALLBACK_FUNCTION(Verges, function3);
+	ADD_CALLBACK_FUNCTION(Verges, callbackActionOnDirection);
 	ADD_CALLBACK_FUNCTION(Verges, playSound);
 	ADD_CALLBACK_FUNCTION(Verges, playSound16);
-	ADD_CALLBACK_FUNCTION(Verges, function6);
+	ADD_CALLBACK_FUNCTION(Verges, callbackActionOnSomebodyStandingInRestaurantOrSalon);
 	ADD_CALLBACK_FUNCTION(Verges, savegame);
 	ADD_CALLBACK_FUNCTION(Verges, updateEntity);
 	ADD_CALLBACK_FUNCTION(Verges, function9);
@@ -101,7 +101,7 @@ IMPLEMENT_FUNCTION_S(Verges, draw, 2)
 	Entity::draw(savepoint, true);
 }
 
-IMPLEMENT_FUNCTION(Verges, function3, 3)
+IMPLEMENT_FUNCTION(Verges, callbackActionOnDirection, 3)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -143,8 +143,11 @@ IMPLEMENT_FUNCTION_NOSETUP(Verges, playSound16, 5)
 	Entity::playSound(savepoint, false, SoundManager::kFlagDefault);
 }
 
-IMPLEMENT_FUNCTION(Verges, function6, 6)
-	Entity::savepointCheckFields11(savepoint);
+/**
+ * Process callback action when somebody is standing in the restaurant or salon.
+ */
+IMPLEMENT_FUNCTION(Verges, callbackActionOnSomebodyStandingInRestaurantOrSalon, 6)
+	Entity::callbackActionOnSomebodyStandingInRestaurantOrSalon(savepoint);
 }
 
 /**
@@ -197,7 +200,7 @@ switch (savepoint.action) {
 		getData()->entityPosition = kPosition_5900;
 
 		setCallback(1);
-		call(new ENTITY_SETUP(Verges, setup_function6));
+		call(new ENTITY_SETUP(Verges, setup_callbackActionOnSomebodyStandingInRestaurantOrSalon));
 		break;
 
 	case kActionCallback:
@@ -225,7 +228,7 @@ switch (savepoint.action) {
 				getEntities()->updateFrame(kEntityVerges);
 
 			setCallback(3);
-			call(new ENTITY_SETUP(Verges, setup_function3));
+			call(new ENTITY_SETUP(Verges, setup_callbackActionOnDirection));
 			break;
 
 		case 3:
@@ -318,7 +321,7 @@ IMPLEMENT_FUNCTION(Verges, function11, 11)
 
 		case 1:
 			setCallback(2);
-			call(new ENTITY_SETUP(Verges, setup_function6));
+			call(new ENTITY_SETUP(Verges, setup_callbackActionOnSomebodyStandingInRestaurantOrSalon));
 			break;
 
 		case 2:
@@ -336,7 +339,7 @@ IMPLEMENT_FUNCTION(Verges, function11, 11)
 				getEntities()->updateFrame(kEntityVerges);
 
 			setCallback(4);
-			call(new ENTITY_SETUP(Verges, setup_function3));
+			call(new ENTITY_SETUP(Verges, setup_callbackActionOnDirection));
 			break;
 
 		case 4:

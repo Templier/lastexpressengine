@@ -56,7 +56,7 @@ Abbot::Abbot(LastExpressEngine *engine) : Entity(engine, kEntityAbbot) {
 	ADD_CALLBACK_FUNCTION(Abbot, updateEntity);
 	ADD_CALLBACK_FUNCTION(Abbot, callSavepoint);
 	ADD_CALLBACK_FUNCTION(Abbot, updatePosition);
-	ADD_CALLBACK_FUNCTION(Abbot, function14);
+	ADD_CALLBACK_FUNCTION(Abbot, callbackActionOnSomebodyStandingInRestaurantOrSalon);
 	ADD_CALLBACK_FUNCTION(Abbot, chapter1);
 	ADD_CALLBACK_FUNCTION(Abbot, chapter2);
 	ADD_CALLBACK_FUNCTION(Abbot, chapter3);
@@ -234,8 +234,11 @@ IMPLEMENT_FUNCTION_SII(Abbot, updatePosition, 13)
 	Entity::updatePosition(savepoint);
 }
 
-IMPLEMENT_FUNCTION(Abbot, function14, 14)
-	Entity::savepointCheckFields11(savepoint);
+/**
+ * Process callback action when somebody is standing in the restaurant or salon.
+ */
+IMPLEMENT_FUNCTION(Abbot, callbackActionOnSomebodyStandingInRestaurantOrSalon, 14)
+	Entity::callbackActionOnSomebodyStandingInRestaurantOrSalon(savepoint);
 }
 
 IMPLEMENT_FUNCTION(Abbot, chapter1, 15)
@@ -323,7 +326,7 @@ IMPLEMENT_FUNCTION(Abbot, chapter3Handler, 18)
 
 	case kAction192054567:
 		setCallback(1);
-        call(new ENTITY_SETUP(Abbot, setup_function14));
+        call(new ENTITY_SETUP(Abbot, setup_callbackActionOnSomebodyStandingInRestaurantOrSalon));
 		break;
 	}
 }
@@ -421,7 +424,7 @@ IMPLEMENT_FUNCTION(Abbot, function21, 21)
 
 		case 3:
 			setCallback(4);
-			call(new ENTITY_SETUP(Abbot, setup_function14));
+			call(new ENTITY_SETUP(Abbot, setup_callbackActionOnSomebodyStandingInRestaurantOrSalon));
 			break;
 
 		case 4:
@@ -636,7 +639,7 @@ IMPLEMENT_FUNCTION(Abbot, function25, 25)
 
 		case 2:
 			setCallback(3);
-			call(new ENTITY_SETUP(Abbot, setup_function14));
+			call(new ENTITY_SETUP(Abbot, setup_callbackActionOnSomebodyStandingInRestaurantOrSalon));
 			break;
 
 		case 3:
@@ -689,7 +692,7 @@ IMPLEMENT_FUNCTION(Abbot, function27, 27)
 
 	case kActionDefault:
 		setCallback(1);
-		call(new ENTITY_SETUP(Abbot, setup_function14));
+		call(new ENTITY_SETUP(Abbot, setup_callbackActionOnSomebodyStandingInRestaurantOrSalon));
 		break;
 
 	case kActionCallback:
@@ -854,7 +857,7 @@ switch (savepoint.action) {
 
 		case 3:
 			setCallback(4);
-			call(new ENTITY_SETUP(Abbot, setup_function14));
+			call(new ENTITY_SETUP(Abbot, setup_callbackActionOnSomebodyStandingInRestaurantOrSalon));
 			break;
 
 		case 4:
@@ -1176,7 +1179,7 @@ IMPLEMENT_FUNCTION(Abbot, drinkAfterDefuse, 47)
 
 	case kActionDefault:
 		setCallback(1);
-		call(new ENTITY_SETUP(Abbot, setup_function14));
+		call(new ENTITY_SETUP(Abbot, setup_callbackActionOnSomebodyStandingInRestaurantOrSalon));
 		break;
 
 	case kActionCallback:

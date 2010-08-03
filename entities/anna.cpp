@@ -48,7 +48,7 @@ Anna::Anna(LastExpressEngine *engine) : Entity(engine, kEntityAnna) {
 	ADD_CALLBACK_FUNCTION(Anna, callbackActionOnDirection);
 	ADD_CALLBACK_FUNCTION(Anna, callSavepoint);
 	ADD_CALLBACK_FUNCTION(Anna, playSound);
-	ADD_CALLBACK_FUNCTION(Anna, function8);
+	ADD_CALLBACK_FUNCTION(Anna, callbackActionOnSomebodyStandingInRestaurantOrSalon);
 	ADD_CALLBACK_FUNCTION(Anna, savegame);
 	ADD_CALLBACK_FUNCTION(Anna, updateEntity);
 	ADD_CALLBACK_FUNCTION(Anna, updateFromTime);
@@ -189,8 +189,11 @@ IMPLEMENT_FUNCTION_S(Anna, playSound, 7)
 	Entity::playSound(savepoint);
 }
 
-IMPLEMENT_FUNCTION(Anna, function8, 8)
-	Entity::savepointCheckFields11(savepoint);
+/**
+ * Process callback action when somebody is standing in the restaurant or salon.
+ */
+IMPLEMENT_FUNCTION(Anna, callbackActionOnSomebodyStandingInRestaurantOrSalon, 8)
+	Entity::callbackActionOnSomebodyStandingInRestaurantOrSalon(savepoint);
 }
 
 /**
@@ -717,7 +720,7 @@ IMPLEMENT_FUNCTION(Anna, function21, 21)
 
 		case 1:
 			setCallback(2);
-			call(new ENTITY_SETUP(Anna, setup_function8));
+			call(new ENTITY_SETUP(Anna, setup_callbackActionOnSomebodyStandingInRestaurantOrSalon));
 			break;
 
 		case 2:
@@ -852,7 +855,7 @@ IMPLEMENT_FUNCTION(Anna, function25, 25)
 			break;
 
 		case 2:
-			call(new ENTITY_SETUP(Anna, setup_function8));
+			call(new ENTITY_SETUP(Anna, setup_callbackActionOnSomebodyStandingInRestaurantOrSalon));
 			break;
 
 		case 3:
@@ -932,7 +935,7 @@ IMPLEMENT_FUNCTION(Anna, function28, 28)
 
 		case 1:
 			setCallback(2);
-			call(new ENTITY_SETUP(Anna, setup_function8));
+			call(new ENTITY_SETUP(Anna, setup_callbackActionOnSomebodyStandingInRestaurantOrSalon));
 			break;
 
 		case 2:
@@ -968,7 +971,7 @@ IMPLEMENT_FUNCTION(Anna, function31, 31)
 
 	case kActionDefault:
 		setCallback(1);
-		call(new ENTITY_SETUP(Anna, setup_function8));
+		call(new ENTITY_SETUP(Anna, setup_callbackActionOnSomebodyStandingInRestaurantOrSalon));
 		break;
 
 	case kActionCallback:
@@ -1348,7 +1351,7 @@ IMPLEMENT_FUNCTION(Anna, function50, 50)
 		switch (getCallback()) {
 		case 1:
 			setCallback(2);
-			call(new ENTITY_SETUP(Anna, setup_function8));
+			call(new ENTITY_SETUP(Anna, setup_callbackActionOnSomebodyStandingInRestaurantOrSalon));
 			break;
 
 		case 2:

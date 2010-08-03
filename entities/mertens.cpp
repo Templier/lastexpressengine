@@ -806,7 +806,66 @@ IMPLEMENT_FUNCTION(Mertens, function17, 17)
 }
 
 IMPLEMENT_FUNCTION(Mertens, function18, 18)
-	error("Mertens: callback function 18 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionDefault:
+		if (ENTITY_PARAM(0, 6)
+		 || ENTITY_PARAM(1, 1)
+		 || ENTITY_PARAM(1, 2)
+		 || ENTITY_PARAM(1, 3)
+		 || ENTITY_PARAM(1, 4)
+		 || ENTITY_PARAM(1, 5)
+		 || ENTITY_PARAM(1, 6)
+		 || ENTITY_PARAM(1, 7)
+		 || ENTITY_PARAM(1, 8)) {
+			getInventory()->setLocationAndProcess(kItem7, kLocation1);
+			ENTITY_PARAM(2, 1) = 1;
+
+			CALLBACK_ACTION();
+			break;
+		}
+
+		if (ENTITY_PARAM(0, 8)) {
+			getScenes()->loadSceneFromItemPosition(kItem7);
+			ENTITY_PARAM(2, 1) = 1;
+
+			CALLBACK_ACTION();
+			break;
+		}
+
+		if (!getInventory()->hasItem(kItemPassengerList) || ENTITY_PARAM(0, 2)) {
+			getEntities()->drawSequenceRight(kEntityMertens, "601A");
+		} else {
+			ENTITY_PARAM(0, 2) = 1;
+			getSound()->playSound(kEntityMertens, "CON1058", SoundManager::kFlagInvalid, 75);
+			getEntities()->drawSequenceRight(kEntityMertens, "601D");
+		}
+
+		getScenes()->loadSceneFromItemPosition(kItem7);
+
+		setCallback(1);
+		call(new ENTITY_SETUP(Mertens, setup_function6));
+		break;
+
+	case kActionCallback:
+		if (getCallback() == 1) {
+			if (!ENTITY_PARAM(0, 3)
+			 && !getInventory()->hasItem(kItemPassengerList)
+			 && ENTITY_PARAM(0, 2)) {
+				getSavePoints()->push(kEntityMertens, kEntityVerges, kAction158617345);
+				ENTITY_PARAM(0, 3) = 1;
+			}
+
+			getEntities()->drawSequenceLeft(kEntityMertens, "601B");
+			ENTITY_PARAM(0, 1) = 0;
+			getData()->inventoryItem = kItemNone;
+
+			CALLBACK_ACTION();
+		}
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Mertens, function19, 19)

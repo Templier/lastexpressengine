@@ -49,7 +49,7 @@ Rebecca::Rebecca(LastExpressEngine *engine) : Entity(engine, kEntityRebecca) {
 	ADD_CALLBACK_FUNCTION(Rebecca, enterExitCompartment2);
 	ADD_CALLBACK_FUNCTION(Rebecca, enterExitCompartment3);
 	ADD_CALLBACK_FUNCTION(Rebecca, callbackActionOnDirection);
-	ADD_CALLBACK_FUNCTION(Rebecca, function11);
+	ADD_CALLBACK_FUNCTION(Rebecca, callbackActionOnSomebodyStandingInRestaurantOrSalon);
 	ADD_CALLBACK_FUNCTION(Rebecca, updateEntity);
 	ADD_CALLBACK_FUNCTION(Rebecca, updatePosition);
 	ADD_CALLBACK_FUNCTION(Rebecca, draw2);
@@ -182,8 +182,11 @@ IMPLEMENT_FUNCTION(Rebecca, callbackActionOnDirection, 10)
 	Entity::callbackActionOnDirection(savepoint);
 }
 
-IMPLEMENT_FUNCTION(Rebecca, function11, 11)
-	Entity::savepointCheckFields11(savepoint);
+/**
+ * Process callback action when somebody is standing in the restaurant or salon.
+ */
+IMPLEMENT_FUNCTION(Rebecca, callbackActionOnSomebodyStandingInRestaurantOrSalon, 11)
+	Entity::callbackActionOnSomebodyStandingInRestaurantOrSalon(savepoint);
 }
 
 /**

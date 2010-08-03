@@ -53,7 +53,7 @@ Tatiana::Tatiana(LastExpressEngine *engine) : Entity(engine, kEntityTatiana) {
 	ADD_CALLBACK_FUNCTION(Tatiana, callbackActionOnDirection);
 	ADD_CALLBACK_FUNCTION(Tatiana, updateFromTicks);
 	ADD_CALLBACK_FUNCTION(Tatiana, updateFromTime);
-	ADD_CALLBACK_FUNCTION(Tatiana, function11);
+	ADD_CALLBACK_FUNCTION(Tatiana, callbackActionOnSomebodyStandingInRestaurantOrSalon);
 	ADD_CALLBACK_FUNCTION(Tatiana, savegame);
 	ADD_CALLBACK_FUNCTION(Tatiana, updateEntity);
 	ADD_CALLBACK_FUNCTION(Tatiana, function14);
@@ -194,8 +194,11 @@ IMPLEMENT_FUNCTION_I(Tatiana, updateFromTime, 10)
 	Entity::updateFromTime(savepoint);
 }
 
-IMPLEMENT_FUNCTION(Tatiana, function11, 11)
-	Entity::savepointCheckFields11(savepoint);
+/**
+ * Process callback action when somebody is standing in the restaurant or salon.
+ */
+IMPLEMENT_FUNCTION(Tatiana, callbackActionOnSomebodyStandingInRestaurantOrSalon, 11)
+	Entity::callbackActionOnSomebodyStandingInRestaurantOrSalon(savepoint);
 }
 
 /**
@@ -526,7 +529,7 @@ IMPLEMENT_FUNCTION(Tatiana, function29, 29)
 
 	case kActionDefault:
 		setCallback(1);
-		call(new ENTITY_SETUP(Tatiana, setup_function11));
+		call(new ENTITY_SETUP(Tatiana, setup_callbackActionOnSomebodyStandingInRestaurantOrSalon));
 		break;
 
 	case kActionCallback:

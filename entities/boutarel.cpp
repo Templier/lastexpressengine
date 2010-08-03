@@ -49,7 +49,7 @@ Boutarel::Boutarel(LastExpressEngine *engine) : Entity(engine, kEntityBoutarel) 
 	ADD_CALLBACK_FUNCTION(Boutarel, enterExitCompartment);
 	ADD_CALLBACK_FUNCTION(Boutarel, enterExitCompartment2);
 	ADD_CALLBACK_FUNCTION(Boutarel, callbackActionOnDirection);
-	ADD_CALLBACK_FUNCTION(Boutarel, function9);
+	ADD_CALLBACK_FUNCTION(Boutarel, callbackActionOnSomebodyStandingInRestaurantOrSalon);
 	ADD_CALLBACK_FUNCTION(Boutarel, updateEntity);
 	ADD_CALLBACK_FUNCTION(Boutarel, function11);
 	ADD_CALLBACK_FUNCTION(Boutarel, enterTableWithMmeBoutarel);
@@ -154,8 +154,11 @@ IMPLEMENT_FUNCTION(Boutarel, callbackActionOnDirection, 8)
 	Entity::callbackActionOnDirection(savepoint);
 }
 
-IMPLEMENT_FUNCTION(Boutarel, function9, 9)
-	Entity::savepointCheckFields11(savepoint);
+/**
+ * Process callback action when somebody is standing in the restaurant or salon.
+ */
+IMPLEMENT_FUNCTION(Boutarel, callbackActionOnSomebodyStandingInRestaurantOrSalon, 9)
+	Entity::callbackActionOnSomebodyStandingInRestaurantOrSalon(savepoint);
 }
 
 /**
@@ -248,7 +251,7 @@ IMPLEMENT_FUNCTION_IS(Boutarel, function16, 16)
 
 	case kActionDefault:
 		setCallback(1);
-		call(new ENTITY_SETUP(Boutarel, setup_function9));
+		call(new ENTITY_SETUP(Boutarel, setup_callbackActionOnSomebodyStandingInRestaurantOrSalon));
 		break;
 
 	case kActionCallback:

@@ -49,7 +49,7 @@ Ivo::Ivo(LastExpressEngine *engine) : Entity(engine, kEntityIvo) {
 	ADD_CALLBACK_FUNCTION(Ivo, updateEntity);
 	ADD_CALLBACK_FUNCTION(Ivo, callbackActionOnDirection);
 	ADD_CALLBACK_FUNCTION(Ivo, playSound);
-	ADD_CALLBACK_FUNCTION(Ivo, function9);
+	ADD_CALLBACK_FUNCTION(Ivo, callbackActionOnSomebodyStandingInRestaurantOrSalon);
 	ADD_CALLBACK_FUNCTION(Ivo, savegame);
 	ADD_CALLBACK_FUNCTION(Ivo, function11);
 	ADD_CALLBACK_FUNCTION(Ivo, sitAtTableWithSalko);
@@ -152,8 +152,11 @@ IMPLEMENT_FUNCTION_NOSETUP(Ivo, playSound, 8)
 	Entity::playSound(savepoint, true);
 }
 
-IMPLEMENT_FUNCTION(Ivo, function9, 9)
-	Entity::savepointCheckFields11(savepoint);
+/**
+ * Process callback action when somebody is standing in the restaurant or salon.
+ */
+IMPLEMENT_FUNCTION(Ivo, callbackActionOnSomebodyStandingInRestaurantOrSalon, 9)
+	Entity::callbackActionOnSomebodyStandingInRestaurantOrSalon(savepoint);
 }
 
 /**

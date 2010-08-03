@@ -46,7 +46,7 @@ public:
 	DECLARE_FUNCTION_II(updateEntity)
 	DECLARE_FUNCTION_I(updateFromTime)
 	DECLARE_FUNCTION_II(function7)
-	DECLARE_FUNCTION(function8)
+	DECLARE_FUNCTION(callbackActionOnSomebodyStandingInRestaurantOrSalon)
 	DECLARE_FUNCTION(callbackActionOnDirection)
 	DECLARE_FUNCTION_II(savegame)
 	DECLARE_FUNCTION(function11)

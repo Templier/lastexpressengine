@@ -41,10 +41,10 @@ public:
 	// Setup
 	DECLARE_FUNCTION(reset)
 	DECLARE_FUNCTION_S(draw)
-	DECLARE_FUNCTION(function3)
+	DECLARE_FUNCTION(callbackActionOnDirection)
 	DECLARE_FUNCTION_S(playSound)
 	DECLARE_FUNCTION_NOSETUP(playSound16)
-	DECLARE_FUNCTION(function6)
+	DECLARE_FUNCTION(callbackActionOnSomebodyStandingInRestaurantOrSalon)
 	DECLARE_FUNCTION_II(savegame)
 	DECLARE_FUNCTION_II(updateEntity)
 	DECLARE_FUNCTION_S(function9)

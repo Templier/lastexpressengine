@@ -46,7 +46,7 @@ Vesna::Vesna(LastExpressEngine *engine) : Entity(engine, kEntityVesna) {
 	ADD_CALLBACK_FUNCTION(Vesna, updateEntity);
 	ADD_CALLBACK_FUNCTION(Vesna, updateFromTime);
 	ADD_CALLBACK_FUNCTION(Vesna, function7);
-	ADD_CALLBACK_FUNCTION(Vesna, function8);
+	ADD_CALLBACK_FUNCTION(Vesna, callbackActionOnSomebodyStandingInRestaurantOrSalon);
 	ADD_CALLBACK_FUNCTION(Vesna, callbackActionOnDirection);
 	ADD_CALLBACK_FUNCTION(Vesna, savegame);
 	ADD_CALLBACK_FUNCTION(Vesna, function11);
@@ -161,8 +161,11 @@ IMPLEMENT_FUNCTION_II(Vesna, function7, 7)
 	}
 }
 
-IMPLEMENT_FUNCTION(Vesna, function8, 8)
-	Entity::savepointCheckFields11(savepoint);
+/**
+ * Process callback action when somebody is standing in the restaurant or salon.
+ */
+IMPLEMENT_FUNCTION(Vesna, callbackActionOnSomebodyStandingInRestaurantOrSalon, 8)
+	Entity::callbackActionOnSomebodyStandingInRestaurantOrSalon(savepoint);
 }
 
 /**

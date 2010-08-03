@@ -29,6 +29,7 @@
 #include "lastexpress/game/logic.h"
 #include "lastexpress/game/object.h"
 #include "lastexpress/game/savepoint.h"
+#include "lastexpress/game/scenes.h"
 #include "lastexpress/game/sound.h"
 #include "lastexpress/game/state.h"
 
@@ -39,7 +40,7 @@ namespace LastExpress {
 
 Pascale::Pascale(LastExpressEngine *engine) : Entity(engine, kEntityPascale) {
 	ADD_CALLBACK_FUNCTION(Pascale, draw);
-	ADD_CALLBACK_FUNCTION(Pascale, function2);
+	ADD_CALLBACK_FUNCTION(Pascale, callbackActionOnSomebodyStandingInRestaurantOrSalon);
 	ADD_CALLBACK_FUNCTION(Pascale, callbackActionOnDirection);
 	ADD_CALLBACK_FUNCTION(Pascale, updateFromTime);
 	ADD_CALLBACK_FUNCTION(Pascale, updatePosition);
@@ -83,8 +84,11 @@ IMPLEMENT_FUNCTION_S(Pascale, draw, 1)
 	Entity::draw(savepoint, true);
 }
 
-IMPLEMENT_FUNCTION(Pascale, function2, 2)
-	Entity::savepointCheckFields11(savepoint);
+/**
+ * Process callback action when somebody is standing in the restaurant or salon.
+ */
+IMPLEMENT_FUNCTION(Pascale, callbackActionOnSomebodyStandingInRestaurantOrSalon, 2)
+	Entity::callbackActionOnSomebodyStandingInRestaurantOrSalon(savepoint);
 }
 
 /**
@@ -218,11 +222,95 @@ IMPLEMENT_FUNCTION(Pascale, sitSophieAndRebecca, 9)
 }
 
 IMPLEMENT_FUNCTION(Pascale, function10, 10)
-	error("Pascale: callback function 10 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionNone:
+		if (params->param1 && !getSound()->isBuffered(kEntityPascale))
+			getEntities()->updatePosition(kEntityPascale, kCarRestaurant, 64);
+		break;
+
+	case kActionExitCompartment:
+		if (!params->param2) {
+			params->param2 = 1;
+
+			getSound()->playSound(kEntityPascale, "HED1001A");
+			getSound()->playSound(kEntityPlayer, "LIB004");
+
+			getScenes()->loadSceneFromPosition(kCarRestaurant, 69);
+		}
+
+		CALLBACK_ACTION();
+		break;
+
+	case kAction4:
+		if (!params->param1) {
+			params->param1 = 1;
+			getSound()->playSound(kEntityPascale, "HED1001");
+		}
+		break;
+
+	case kActionDefault:
+		getEntities()->updatePosition(kEntityPascale, kCarRestaurant, 64, true);
+		getEntities()->drawSequenceRight(kEntityPascale, "035A");
+		break;
+
+	case kActionDrawScene:
+		if (params->param1 && getEntities()->isPlayerPosition(kCarRestaurant, 64)) {
+			getSound()->playSound(kEntityPascale, "HED1001A");
+			getSound()->playSound(kEntityPlayer, "LIB004");
+
+			// BUG: results in infinite loop loading that scene
+			getScenes()->loadSceneFromPosition(kCarRestaurant, 69);
+
+			CALLBACK_ACTION();
+		}
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Pascale, function11, 11)
-	error("Pascale: callback function 11 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionDefault:
+		getData()->entityPosition = kPosition_5800;
+		getData()->posture = kPostureStanding;
+
+		getSavePoints()->push(kEntityPascale, kEntityAugust, kAction168046720);
+		getSavePoints()->push(kEntityPascale, kEntityAnna, kAction168046720);
+		getSavePoints()->push(kEntityPascale, kEntityAlexei, kAction168046720);
+		getEntities()->updatePosition(kEntityPascale, kCarRestaurant, 55, true);
+
+		setCallback(1);
+		call(new ENTITY_SETUP(Pascale, setup_function10));
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			getSavePoints()->push(kEntityPascale, kEntityAugust, kAction168627977);
+			getSavePoints()->push(kEntityPascale, kEntityAnna, kAction168627977);
+			getSavePoints()->push(kEntityPascale, kEntityAlexei, kAction168627977);
+			getEntities()->updatePosition(kEntityPascale, kCarRestaurant, 55);
+
+			setCallback(2);
+			call(new ENTITY_SETUP_SIIS(Pascale, setup_draw), "905");
+			break;
+
+		case 2:
+			getEntities()->clearSequences(kEntityPascale);
+			getData()->entityPosition = kPosition_5900;
+			CALLBACK_ACTION();
+			break;
+		}
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Pascale, chapter1, 12)
