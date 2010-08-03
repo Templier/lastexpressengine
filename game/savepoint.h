@@ -28,6 +28,8 @@
 
 #include "lastexpress/entities/entity.h"
 
+#include "lastexpress/helpers.h"
+
 #include "common/array.h"
 #include "common/list.h"
 #include "common/serializer.h"
@@ -69,6 +71,10 @@ struct SavePoint {
 		entity2 = kEntityPlayer;
 		param.intValue = 0;
 	}
+
+	Common::String toString() {
+		return Common::String::printf("{ %s - %d - %s - %s }", ENTITY_NAME(entity1), action, ENTITY_NAME(entity2), param.charValue);
+	}
 };
 
 class SavePoints : Common::Serializable {
@@ -88,6 +94,10 @@ public:
 			action = kActionNone;
 			entity2 = kEntityPlayer;
 			param = 0;
+		}
+
+		Common::String toString() {
+			return Common::String::printf(" { %s\t - %d\t - %s\t - %d }", ENTITY_NAME(entity1), action, ENTITY_NAME(entity2), param);
 		}
 	};
 
@@ -113,6 +123,13 @@ public:
 
 	// Serializable
 	void saveLoadWithSerializer(Common::Serializer &s);
+
+	/**
+	 * Convert this object into a string representation. 
+	 *
+	 * @return A string representation of this object. 
+	 */
+	Common::String toString();
 
 private:
 	static const uint32 _savePointsMaxSize = 128;

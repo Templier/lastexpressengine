@@ -36,7 +36,6 @@ namespace LastExpress {
 
 Objects::Objects(LastExpressEngine *engine) : _engine(engine) {}
 
-
 const Objects::Object Objects::get(ObjectIndex index) const {
 	if (index >= kObjectMax)
 		error("Objects::get - internal error: invalid object index (%d)", index);
@@ -88,6 +87,18 @@ void Objects::updateLocation2(ObjectIndex index, ObjectLocation location2) {
 //////////////////////////////////////////////////////////////////////////
 void Objects::saveLoadWithSerializer(Common::Serializer &) {
 	error("Objects::saveLoadWithSerializer: not implemented!");
+}
+
+//////////////////////////////////////////////////////////////////////////
+// toString
+//////////////////////////////////////////////////////////////////////////
+Common::String Objects::toString() {
+	Common::String ret = "";
+
+	for (int i = 0; i < kObjectMax; i++)
+		ret += Common::String::printf("%d : %s\n", i, _objects[i].toString().c_str());
+	
+	return ret;
 }
 
 } // End of namespace LastExpress

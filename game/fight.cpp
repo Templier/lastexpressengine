@@ -253,7 +253,7 @@ Fight::FightEndType Fight::setup(FightType type) {
 	if (getFlags()->shouldRedraw) {
 		getFlags()->shouldRedraw = false;
 		askForRedraw();
-		redrawScreen();
+		//redrawScreen();
 	}
 
 	// Load the scene object

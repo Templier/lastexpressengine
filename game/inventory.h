@@ -74,6 +74,10 @@ public:
 			manualSelect = true;
 			location = kLocationNone;
 		}
+
+		Common::String toString() {
+			return Common::String::printf("{ %d - %d - %d - %d - %d - %d - %d }", cursor, scene, field_2, isSelectable, isPresent, manualSelect, location);
+		}
 	};
 
 	Inventory(LastExpressEngine *engine);
@@ -112,6 +116,13 @@ public:
 
 	// Serializable
 	void saveLoadWithSerializer(Common::Serializer &ser);
+
+	/**
+	 * Convert this object into a string representation. 
+	 *
+	 * @return A string representation of this object. 
+	 */
+	Common::String toString();
 
 private:
 	static const uint32 _defaultBlinkingInterval = 250; ///< Default blinking interval in ms

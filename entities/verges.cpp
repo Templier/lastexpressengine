@@ -429,7 +429,7 @@ IMPLEMENT_FUNCTION(Verges, chapter1, 18)
 		break;
 
 	case kActionDefault:
-		getSavePoints()->addData(kEntityVerges, kAction191337656, 0);
+		getSavePoints()->addData(kEntityVerges, kActionDeliverMessageToTyler, 0);
 		getSavePoints()->addData(kEntityVerges, kAction226031488, 1);
 		getSavePoints()->addData(kEntityVerges, kAction339669520, 1);
 		getSavePoints()->addData(kEntityVerges, kAction167854368, 4);

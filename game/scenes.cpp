@@ -111,7 +111,7 @@ void SceneManager::loadScene(SceneIndex index) {
 		shouldRedraw = false;
 		// TODO check whether we need to do that here
 		askForRedraw();
-		redrawScreen();
+		//redrawScreen();
 	}
 
 	// Set the scene
@@ -657,7 +657,7 @@ void SceneManager::drawFrames(bool refreshScreen) {
 
 	if (refreshScreen) {
 		askForRedraw();
-		redrawScreen();
+		//redrawScreen();
 
 		_flagDrawSequences = false;
 	}

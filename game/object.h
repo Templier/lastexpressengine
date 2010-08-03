@@ -28,6 +28,8 @@
 
 #include "lastexpress/shared.h"
 
+#include "lastexpress/helpers.h"
+
 #include "common/serializer.h"
 #include "common/system.h"
 
@@ -52,6 +54,11 @@ public:
 			cursor2 = kCursorHandKnock;
 			location2 = kLocationNone;
 		}
+
+		Common::String toString() {
+			return Common::String::printf("{ %s - %d - %d - %d - %d }", ENTITY_NAME(entity), location, cursor, cursor2, location2);
+		}
+
 	};
 
 	Objects(LastExpressEngine *engine);
@@ -62,6 +69,13 @@ public:
 
 	// Serializable
 	void saveLoadWithSerializer(Common::Serializer &ser);
+
+	/**
+	 * Convert this object into a string representation. 
+	 *
+	 * @return A string representation of this object. 
+	 */
+	Common::String toString();
 
 private:
 	LastExpressEngine* _engine;

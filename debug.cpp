@@ -39,7 +39,9 @@
 #include "lastexpress/game/fight.h"
 #include "lastexpress/game/inventory.h"
 #include "lastexpress/game/logic.h"
+#include "lastexpress/game/object.h"
 #include "lastexpress/game/savegame.h"
+#include "lastexpress/game/savepoint.h"
 #include "lastexpress/game/scenes.h"
 #include "lastexpress/game/sound.h"
 #include "lastexpress/game/state.h"
@@ -77,8 +79,9 @@ Debugger::Debugger(LastExpressEngine *engine) : _engine(engine), _command(NULL),
 	DCmd_Register("fight",     WRAP_METHOD(Debugger, cmdFight));
 	DCmd_Register("beetle",    WRAP_METHOD(Debugger, cmdBeetle));
 
-	// Entities
-	DCmd_Register("entity",   WRAP_METHOD(Debugger, cmdEntity));
+	// Game
+	DCmd_Register("dump",     WRAP_METHOD(Debugger, cmdDump));
+	DCmd_Register("entity",    WRAP_METHOD(Debugger, cmdEntity));
 
 	// Misc
 	DCmd_Register("loadgame",  WRAP_METHOD(Debugger, cmdLoadGame));
@@ -189,6 +192,7 @@ bool Debugger::cmdHelp(int argc, const char **argv) {
 	DebugPrintf(" fight - start a fight\n");
 	DebugPrintf(" beetle - start the beetle game\n");
 	DebugPrintf("\n");
+	DebugPrintf(" dump - Dump game data\n");
 	DebugPrintf(" entity - Dump entity data\n");
 	DebugPrintf("\n");
 	DebugPrintf(" loadgame - load a saved game\n");
@@ -607,6 +611,52 @@ bool Debugger::cmdListFiles(int argc, const char **argv) {
 	}
 
 	return true;
+}
+
+bool Debugger::cmdDump(int argc, const char **argv) {
+#define OUTPUT_DUMP(name, text) \
+	DebugPrintf(#name "\n"); \
+	DebugPrintf("--------------------------------------------------------------------\n\n"); \
+	DebugPrintf(text); \
+	DebugPrintf("\n");
+
+	if (argc == 2) {
+		switch (getNumber(argv[1])) {
+		default:
+			goto label_error;
+
+		// GameState
+		case 1:
+			OUTPUT_DUMP("Game state", getState()->toString().c_str());
+			break;
+
+		// Inventory
+		case 2:
+			OUTPUT_DUMP("Inventory", getInventory()->toString().c_str());
+			break;
+
+		// Objects
+		case 3:
+			OUTPUT_DUMP("Objects", getObjects()->toString().c_str());
+			break;
+
+		// SavePoints
+		case 4:
+			OUTPUT_DUMP("SavePoints", getSavePoints()->toString().c_str());
+			break;
+		}
+	} else {
+label_error:
+		DebugPrintf("Syntax: state <option>\n");
+		DebugPrintf("              1 : Game state\n");
+		DebugPrintf("              2 : Inventory\n");
+		DebugPrintf("              3 : Objects\n");
+		DebugPrintf("              4 : SavePoints\n");
+	}
+
+	return true;
+
+#undef OUTPUT_DUMP
 }
 
 bool Debugger::cmdEntity(int argc, const char **argv) {

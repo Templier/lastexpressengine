@@ -76,6 +76,7 @@ private:
 	bool cmdFight(int argc, const char **argv);
 	bool cmdBeetle(int argc, const char **argv);
 
+	bool cmdDump(int argc, const char **argv);
 	bool cmdEntity(int argc, const char **argv);
 
 	bool cmdLoadGame(int argc, const char **argv);

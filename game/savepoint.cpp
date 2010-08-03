@@ -239,7 +239,7 @@ void SavePoints::saveLoadWithSerializer(Common::Serializer &s) {
 
 	// Serialize savepoint data
 	uint32 dataSize = (s.isLoading() ? _savePointsMaxSize : _data.size());
-	for (int i = 0; i < (int)dataSize; i++) {
+	for (uint i = 0; i < dataSize; i++) {
 		if (s.isLoading()) {
 			SavePointData data;
 			_data.push_back(data);
@@ -280,6 +280,23 @@ void SavePoints::saveLoadWithSerializer(Common::Serializer &s) {
 			s.syncAsUint32LE((*it).param.intValue);
 		}
 	}
+}
+
+//////////////////////////////////////////////////////////////////////////
+// toString
+//////////////////////////////////////////////////////////////////////////
+Common::String SavePoints::toString() {
+	Common::String ret = "";
+
+	ret += "Savepoint Data\n";
+	for (uint i = 0; i < _data.size(); i++)
+		ret += _data[i].toString() + "\n";
+
+	ret += "\nSavepoints\n";
+	for (Common::List<SavePoint>::iterator it = _savepoints.begin(); it != _savepoints.end(); ++it)
+		ret += (*it).toString() + "\n";
+
+	return ret;
 }
 
 } // End of namespace LastExpress

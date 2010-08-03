@@ -51,7 +51,7 @@ public:
 	DECLARE_FUNCTION(function10)
 	DECLARE_FUNCTION(function11)
 	DECLARE_FUNCTION(chapter1)
-	DECLARE_FUNCTION(function13)
+	DECLARE_FUNCTION(getMessageFromAugustToTyler)
 	DECLARE_FUNCTION(sitAnna)
 	DECLARE_FUNCTION(function15)
 	DECLARE_FUNCTION(function16)

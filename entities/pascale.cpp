@@ -51,7 +51,7 @@ Pascale::Pascale(LastExpressEngine *engine) : Entity(engine, kEntityPascale) {
 	ADD_CALLBACK_FUNCTION(Pascale, function10);
 	ADD_CALLBACK_FUNCTION(Pascale, function11);
 	ADD_CALLBACK_FUNCTION(Pascale, chapter1);
-	ADD_CALLBACK_FUNCTION(Pascale, function13);
+	ADD_CALLBACK_FUNCTION(Pascale, getMessageFromAugustToTyler);
 	ADD_CALLBACK_FUNCTION(Pascale, sitAnna);
 	ADD_CALLBACK_FUNCTION(Pascale, function15);
 	ADD_CALLBACK_FUNCTION(Pascale, function16);
@@ -342,8 +342,50 @@ IMPLEMENT_FUNCTION(Pascale, chapter1, 12)
 	}
 }
 
-IMPLEMENT_FUNCTION(Pascale, function13, 13)
-	error("Pascale: callback function 13 not implemented!");
+IMPLEMENT_FUNCTION(Pascale, getMessageFromAugustToTyler, 13)
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionDefault:
+		getData()->entityPosition = kPosition_5800;
+		getData()->posture = kPostureStanding;
+
+		setCallback(1);
+		call(new ENTITY_SETUP_SIIS(Pascale, setup_draw), "902");
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			getEntities()->drawSequenceLeft(kEntityPascale, "010E");
+			getEntities()->drawSequenceLeft(kEntityAugust, "BLANK");
+
+			setCallback(2);
+			call(new ENTITY_SETUP_SIIS(Pascale, setup_playSound), "AUG1001");
+			break;
+
+		case 2:
+			getEntities()->drawSequenceLeft(kEntityPascale, "010B");
+
+			setCallback(3);
+			call(new ENTITY_SETUP_SIIS(Pascale, setup_draw), "905");
+			break;
+
+		case 3:
+			getData()->entityPosition = kPosition_5900;
+			getEntities()->clearSequences(kEntityPascale);
+			getSavePoints()->push(kEntityPascale, kEntityVerges, kActionDeliverMessageToTyler);
+			ENTITY_PARAM(0, 1) = 0;
+
+			CALLBACK_ACTION();
+			break;
+		}
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Pascale, sitAnna, 14)
@@ -409,7 +451,7 @@ switch (savepoint.action) {
 	label_callback1:
 			if (ENTITY_PARAM(0, 1) && !ENTITY_PARAM(1, 3)) {
 				setCallback(2);
-				call(new ENTITY_SETUP(Pascale, setup_function13));
+				call(new ENTITY_SETUP(Pascale, setup_getMessageFromAugustToTyler));
 				break;
 			}
 
