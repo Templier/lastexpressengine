@@ -338,13 +338,13 @@ public:
 		}
 
 		/**
-		 * Convert this object into a string representation. 
+		 * Convert this object into a string representation.
 		 *
-		 * @return A string representation of this object. 
+		 * @return A string representation of this object.
 		 */
 		Common::String toString() {
 			Common::String ret = "";
-			
+
 			ret += Common::String::printf("Time: %d    - Time delta: %d    - Ticks: %d\n", time, timeDelta, timeTicks);
 			ret += Common::String::printf("Brightness: %d    - Volume: %d    - UseBackup: %d\n", brightness, volume, sceneUseBackup);
 			ret += Common::String::printf("Scene: %d    - Scene backup: %d    - Scene backup 2: %d\n", scene, sceneBackup, sceneBackup2);

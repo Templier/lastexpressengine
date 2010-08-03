@@ -418,7 +418,7 @@ Common::String Inventory::toString() {
 
 	for (int i = 0; i < kPortraitOriginal; i++)
 		ret += Common::String::printf("%d : %s\n", i, _entries[i].toString().c_str());
-	
+
 	return ret;
 }
 

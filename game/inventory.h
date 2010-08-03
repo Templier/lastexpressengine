@@ -118,9 +118,9 @@ public:
 	void saveLoadWithSerializer(Common::Serializer &ser);
 
 	/**
-	 * Convert this object into a string representation. 
+	 * Convert this object into a string representation.
 	 *
-	 * @return A string representation of this object. 
+	 * @return A string representation of this object.
 	 */
 	Common::String toString();
 

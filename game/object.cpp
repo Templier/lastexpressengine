@@ -97,7 +97,7 @@ Common::String Objects::toString() {
 
 	for (int i = 0; i < kObjectMax; i++)
 		ret += Common::String::printf("%d : %s\n", i, _objects[i].toString().c_str());
-	
+
 	return ret;
 }
 
