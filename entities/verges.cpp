@@ -186,8 +186,8 @@ switch (savepoint.action) {
 		break;
 
 	case kActionDefault:
-		getObjects()->update(kObject104, kEntityNone, kLocationNone, kCursorNormal, kCursorHand);
-		getObjects()->update(kObject105, kEntityNone, kLocationNone, kCursorNormal, kCursorHand);
+		getObjects()->update(kObject104, kEntityPlayer, kLocationNone, kCursorNormal, kCursorHand);
+		getObjects()->update(kObject105, kEntityPlayer, kLocationNone, kCursorNormal, kCursorHand);
 
 		if (getEntities()->isInBaggageCar(kEntityPlayer) || getEntities()->isInKitchen(kEntityPlayer)) {
 			getAction()->playAnimation(getEntities()->isInBaggageCar(kEntityPlayer) ? kEventVergesBagageCarOffLimits : kEventVergesCanIHelpYou);
@@ -619,7 +619,7 @@ label_callback15:
 		}
 		break;
 
-	case kAction9:
+	case kActionOpenDoor:
 		setCallback(17);
 		call(new ENTITY_SETUP(Verges, setup_function13), savepoint.param.intValue < 106 ? true : false);
 		break;
@@ -776,7 +776,7 @@ label_callback_6:
 		call(new ENTITY_SETUP(Verges, setup_function12));
 		break;
 
-	case kAction9:
+	case kActionOpenDoor:
 		setCallback(8);
 		call(new ENTITY_SETUP(Verges, setup_function13), savepoint.param.intValue < 106);
 		break;
@@ -980,8 +980,8 @@ IMPLEMENT_FUNCTION(Verges, function38, 38)
 		break;
 
 	case kActionDefault:
-		getObjects()->update(kObject104, kEntityNone, kLocationNone, kCursorNormal, kCursorHand);
-		getObjects()->update(kObject105, kEntityNone, kLocationNone, kCursorNormal, kCursorHand);
+		getObjects()->update(kObject104, kEntityPlayer, kLocationNone, kCursorNormal, kCursorHand);
+		getObjects()->update(kObject105, kEntityPlayer, kLocationNone, kCursorNormal, kCursorHand);
 		getScenes()->loadSceneFromItemPosition(kItem9);
 		getEntities()->clearSequences(kEntityVerges);
 
@@ -1039,8 +1039,8 @@ IMPLEMENT_FUNCTION(Verges, chapter5, 39)
 		getData()->clothes = kClothesDefault;
 		getData()->inventoryItem = kItemNone;
 
-		getObjects()->update(kObject104, kEntityNone, kLocationNone, kCursorNormal, kCursorHand);
-		getObjects()->update(kObject105, kEntityNone, kLocationNone, kCursorNormal, kCursorHand);
+		getObjects()->update(kObject104, kEntityPlayer, kLocationNone, kCursorNormal, kCursorHand);
+		getObjects()->update(kObject105, kEntityPlayer, kLocationNone, kCursorNormal, kCursorHand);
 		break;
 	}
 }

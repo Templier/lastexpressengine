@@ -69,7 +69,6 @@
 
 // Others
 #define getEntityData(entity) getEntities()->getData(entity)
-#define save(entity, type, event) getSaveLoad()->saveGame(type, entity, event)
 
 //////////////////////////////////////////////////////////////////////////
 // Graphics

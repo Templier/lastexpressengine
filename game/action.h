@@ -84,9 +84,9 @@ private:
 	DECLARE_ACTION(playSounds);
 	DECLARE_ACTION(playAnimation);
 	DECLARE_ACTION(openCloseObject);
-	DECLARE_ACTION(10);
+	DECLARE_ACTION(updateObjetLocation2);
 	DECLARE_ACTION(setItemLocation);
-	DECLARE_ACTION(12);
+	DECLARE_ACTION(knockNoSound);
 	DECLARE_ACTION(pickItem);
 	DECLARE_ACTION(dropItem);
 	DECLARE_ACTION(enterCompartment);
@@ -112,8 +112,8 @@ private:
 	DECLARE_ACTION(eggBox);
 	DECLARE_ACTION(39);
 	DECLARE_ACTION(bed);
-	DECLARE_ACTION(41);
-	DECLARE_ACTION(42);
+	DECLARE_ACTION(playMusicChapter);
+	DECLARE_ACTION(playMusicChapterSetupTrain);
 	DECLARE_ACTION(switchChapter);
 	DECLARE_ACTION(44);
 
@@ -123,7 +123,7 @@ private:
 	// Helpers
 	void pickGreenJacket(bool process) const;
 	void pickScarf(bool process) const;
-	void pickCorpse(byte bedPosition, bool process) const;
+	void pickCorpse(ObjectLocation bedPosition, bool process) const;
 	void dropCorpse(bool process) const;
 
 	void playCompartmentSoundEvents(EntityIndex entityIndex, ObjectIndex object) const;

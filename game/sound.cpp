@@ -160,8 +160,8 @@ bool SoundManager::isBuffered(EntityIndex entity) {
 	return (getEntry(entity) != NULL);
 }
 
-bool SoundManager::isBuffered(const char* filename, bool testForEntity) {
-	SoundEntry *entry = getEntry(Common::String(filename));
+bool SoundManager::isBuffered(Common::String filename, bool testForEntity) {
+	SoundEntry *entry = getEntry(filename);
 
 	if (testForEntity)
 		return entry && !entry->entity;
@@ -176,8 +176,8 @@ void SoundManager::removeFromQueue(EntityIndex entity) {
 		resetEntry(entry);
 }
 
-void SoundManager::removeFromQueue(const char* filename) {
-	SoundEntry *entry = getEntry(Common::String(filename));
+void SoundManager::removeFromQueue(Common::String filename) {
+	SoundEntry *entry = getEntry(filename);
 
 	if (entry)
 		resetEntry(entry);
@@ -307,7 +307,7 @@ void SoundManager::loadSoundData(SoundEntry *entry, Common::String name) {
 
 void SoundManager::resetEntry(SoundEntry * entry) {
 	entry->status |= kSoundStatusRemoved;
-	entry->entity = kEntityNone;
+	entry->entity = kEntityPlayer;
 
 	if (entry->stream) {
 		if (!entry->isStreamed)
@@ -358,7 +358,7 @@ void SoundManager::processEntry(EntityIndex entity) {
 
 	if (entry) {
 		updateEntry(entry, 0);
-		entry->entity = kEntityNone;
+		entry->entity = kEntityPlayer;
 	}
 }
 
@@ -369,12 +369,12 @@ void SoundManager::processEntry(SoundType type) {
 		updateEntry(entry, 0);
 }
 
-void SoundManager::processEntry(const char* filename) {
-	SoundEntry *entry = getEntry(Common::String(filename));
+void SoundManager::processEntry(Common::String filename) {
+	SoundEntry *entry = getEntry(filename);
 
 	if (entry) {
 		updateEntry(entry, 0);
-		entry->entity = kEntityNone;
+		entry->entity = kEntityPlayer;
 	}
 }
 
@@ -436,27 +436,24 @@ void SoundManager::saveLoadWithSerializer(Common::Serializer &ser) {
 //////////////////////////////////////////////////////////////////////////
 // Game-related functions
 //////////////////////////////////////////////////////////////////////////
-void SoundManager::playSound(EntityIndex entity, const char *filename, FlagType flag, byte a4) {
+void SoundManager::playSound(EntityIndex entity, Common::String filename, FlagType flag, byte a4) {
 	if (isBuffered(entity) && entity)
 		removeFromQueue(entity);
 
 	FlagType _flag = (flag == -1) ? getSoundFlag(entity) : (FlagType)(flag | 0x80000);
 
 	// Add .SND at the end of the filename if needed
-	Common::String name(filename);
-	if (!name.contains('.'))
-		name += ".SND";
+	if (!filename.contains('.'))
+		filename += ".SND";
 
-	if (!playSoundWithSubtitles(name.c_str(), _flag, entity, a4))
+	if (!playSoundWithSubtitles(filename, _flag, entity, a4))
 		if (entity)
-			getSavePoints()->push(kEntityNone, entity, kAction2);
+			getSavePoints()->push(kEntityPlayer, entity, kAction2);
 }
 
-SoundManager::SoundType SoundManager::playSoundWithSubtitles(const char *filename, FlagType flag, EntityIndex entity, byte a4) {
-	Common::String name(filename);
-
+SoundManager::SoundType SoundManager::playSoundWithSubtitles(Common::String filename, FlagType flag, EntityIndex entity, byte a4) {
 	SoundEntry* entry = new SoundEntry();
-	setupEntry(entry, name, flag, 30);
+	setupEntry(entry, filename, flag, 30);
 	entry->entity = entity;
 
 	if (a4) {
@@ -464,10 +461,10 @@ SoundManager::SoundType SoundManager::playSoundWithSubtitles(const char *filenam
 		entry->status |= kSoundStatus_8000;
 	} else {
 		// Get subtitles name
-		while (name.size() > 4)
-			name.deleteLastChar();
+		while (filename.size() > 4)
+			filename.deleteLastChar();
 
-		showSubtitles(entry, name);
+		showSubtitles(entry, filename);
 		updateEntryState(entry);
 	}
 
@@ -601,7 +598,7 @@ void SoundManager::playSoundEvent(EntityIndex entity, byte action, byte a3) {
 		sprintf((char *)&filename, "LIB%03d.SND", _action);
 
 		if (flag)
-			playSoundWithSubtitles((char*)&filename, flag, kEntityNone, a3);
+			playSoundWithSubtitles((char*)&filename, flag, kEntityPlayer, a3);
 	}
 }
 
@@ -668,6 +665,9 @@ void SoundManager::playFightSound(byte action, byte a4) {
 }
 
 void SoundManager::playDialog(EntityIndex entity, EntityIndex entityDialog, FlagType flag, byte a4) {
+	if (isBuffered(getDialogName(entityDialog)))
+		removeFromQueue(getDialogName(entityDialog));
+
 	playSound(entity, getDialogName(entityDialog), flag, a4);
 }
 
@@ -853,7 +853,7 @@ const char *SoundManager::getDialogName(EntityIndex entity) const {
 			return "XKRO5";
 
 		if (getEvent(kEventKronosConversation) || getEvent(kEventKronosConversationFirebird)) {
-			ObjectLocation location = getInventory()->getEntry(kItemFirebird)->location;
+			ObjectLocation location = getInventory()->get(kItemFirebird)->location;
 			if (location != kLocation6 && location != kLocation5 && location != kLocation2 && location != kLocation1)
 				return "XKRO4A";
 		}
@@ -1350,7 +1350,7 @@ const char *SoundManager::justAMinuteCath() const {
 // Sound flags
 //////////////////////////////////////////////////////////////////////////
 SoundManager::FlagType SoundManager::getSoundFlag(EntityIndex entity) const {
-	if (entity == kEntityNone)
+	if (entity == kEntityPlayer)
 		return kFlagDefault;
 
 	if (getEntityData(entity)->car != getEntityData(kEntityPlayer)->car)

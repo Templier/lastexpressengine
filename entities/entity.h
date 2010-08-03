@@ -269,7 +269,7 @@ public:
 			posture = kPostureStanding;
 			car = kCarNone;
 			field_497 = 0;
-			entity = kEntityNone;
+			entity = kEntityPlayer;
 			inventoryItem = kItemNone;
 			direction = kDirectionNone;
 			field_49B = 0;
@@ -433,8 +433,9 @@ protected:
 	 *
 	 * @param savepoint    The savepoint.
 	 * @param resetClothes true to reset clothes.
+	 * @param resetItem    true to reset inventoryItem to kItemInvalid
 	 */
-	void reset(const SavePoint &savepoint, bool resetClothes = false);
+	void reset(const SavePoint &savepoint, bool resetClothes = false, bool resetItem = false);
 
 	/**
 	 * Process callback action when the entity direction is not kDirectionRight

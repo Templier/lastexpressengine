@@ -44,14 +44,14 @@ SceneHotspot *SceneHotspot::load(Common::SeekableReadStream *stream) {
 	hs->coordsOffset = stream->readUint32LE();
 	hs->scene = (SceneIndex)stream->readUint16LE();
 	hs->location = stream->readByte();
-	hs->action = stream->readByte();
+	hs->action = (Action)stream->readByte();
 	hs->param1 = stream->readByte();
 	hs->param2 = stream->readByte();
 	hs->param3 = stream->readByte();
 	hs->cursor = stream->readByte();
 	hs->next = stream->readUint32LE();
 
-	debugC(10, kLastExpressDebugScenes, "\thotspot: scene=%d location=%02d action=%02d param1=%02d param2=%02d param3=%02d cursor=%02d rect=(%d, %d)x(%d,%d)",
+	debugC(10, kLastExpressDebugScenes, "\thotspot: scene=%d location=%02d action=%d param1=%02d param2=%02d param3=%02d cursor=%02d rect=(%d, %d)x(%d,%d)",
 	                                   hs->scene, hs->location, hs->action, hs->param1, hs->param2, hs->param3, hs->cursor, hs->rect.left, hs->rect.top, hs->rect.right, hs->rect.bottom);
 	debugC(10, kLastExpressDebugScenes, "\t         coords=%d next=%d ", hs->coordsOffset, hs->next);
 
@@ -170,10 +170,10 @@ bool Scene::checkHotSpot(const Common::Point &coord, SceneHotspot **hotspot) {
 
 SceneHotspot *Scene::getHotspot(uint index) {
 	if (_hotspots.empty())
-		return NULL;
+		error("Scene::getHotspot: scene does not have any hotspots!");
 
 	if (index >= _hotspots.size())
-		return NULL;
+		error("Scene::getHotspot: invalid index (was: %d, max: %d)", index, _hotspots.size() - 1);
 
 	return _hotspots[index];
 }

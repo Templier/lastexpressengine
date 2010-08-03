@@ -230,7 +230,7 @@ label_callback4:
 
 IMPLEMENT_FUNCTION(Hadija, function12, 12)
 	if (savepoint.action == kActionDefault) {
-		getObjects()->update(kObjectCompartment8, kEntityNone, kLocation3, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObjectCompartment8, kEntityPlayer, kLocation3, kCursorHandKnock, kCursorHand);
 
 		getData()->entityPosition = kPosition_2740;
 		getData()->posture = kPostureSitting;
@@ -350,7 +350,7 @@ IMPLEMENT_FUNCTION(Hadija, chapter4Handler, 18)
 
 IMPLEMENT_FUNCTION(Hadija, function19, 19)
 	if (savepoint.action == kActionDefault) {
-		getObjects()->update(kObjectCompartment8, kEntityNone, kLocation3, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObjectCompartment8, kEntityPlayer, kLocation3, kCursorHandKnock, kCursorHand);
 
 		getData()->entityPosition = kPosition_4070;
 		getData()->posture = kPostureSitting;
@@ -437,7 +437,7 @@ IMPLEMENT_FUNCTION(Hadija, function23, 23)
 			getData()->entityPosition = kPosition_4840;
 			getData()->posture = kPostureSitting;
 
-			getObjects()->update(kObjectCompartment5, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
+			getObjects()->update(kObjectCompartment5, kEntityPlayer, kLocation1, kCursorHandKnock, kCursorHand);
 			break;
 		}
 		break;

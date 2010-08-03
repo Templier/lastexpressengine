@@ -911,7 +911,7 @@ switch (savepoint.action) {
 	case kAction191477936:
 		getData()->entityPosition = kPosition_4070;
 		getData()->posture = kPostureStanding;
-		getObjects()->update(kObjectCompartment4, kEntityNone, kLocationNone, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObjectCompartment4, kEntityPlayer, kLocationNone, kCursorHandKnock, kCursorHand);
 
 		setCallback(1);
 		call(new ENTITY_SETUP(Coudert, setup_function9), kCarRedSleeping, kPosition_2000);

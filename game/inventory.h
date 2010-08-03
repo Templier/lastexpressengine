@@ -87,8 +87,8 @@ public:
 	void unselectItem();
 	InventoryItem getSelectedItem() { return _selectedItem; }
 
-	InventoryEntry *getEntry(InventoryItem item);
-	InventoryEntry *getSelectedEntry() { return getEntry(_selectedItem); }
+	InventoryEntry *get(InventoryItem item);
+	InventoryEntry *getSelectedEntry() { return get(_selectedItem); }
 
 	InventoryItem getFirstExaminableItem() const;
 	void setLocationAndProcess(InventoryItem item, ObjectLocation location);

@@ -199,8 +199,8 @@ IMPLEMENT_FUNCTION_I(Milos, function11, 11)
 		error("Milos: callback function 11 not implemented!");
 		break;
 
-	case kAction8:
-	case kAction9:
+	case kActionKnock:
+	case kActionOpenDoor:
 		getObjects()->update(kObjectCompartmentG, kEntityMilos, kLocation3, kCursorNormal, kCursorNormal);
 
 		if (params->param2) {
@@ -212,7 +212,7 @@ IMPLEMENT_FUNCTION_I(Milos, function11, 11)
 				call(new ENTITY_SETUP_SIIS(Milos, setup_playSound), getSound()->wrongDoorCath());
 			}
 		} else {
-			if (savepoint.action == kAction8) {
+			if (savepoint.action == kActionKnock) {
 				setCallback(7);
 				call(new ENTITY_SETUP_SIIS(Milos, setup_playSound), "LIB012");
 			} else {
@@ -338,8 +338,8 @@ IMPLEMENT_FUNCTION(Milos, chapter1, 12)
 		break;
 
 	case kActionDefault:
-		getObjects()->update(kObjectCompartmentG, kEntityNone, kLocation3, kCursorHandKnock, kCursorHand);
-		getObjects()->update(kObject46, kEntityNone, kLocationNone, kCursorKeepValue, kCursorKeepValue);
+		getObjects()->update(kObjectCompartmentG, kEntityPlayer, kLocation3, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObject46, kEntityPlayer, kLocationNone, kCursorKeepValue, kCursorKeepValue);
 
 		getData()->entityPosition = kPosition_4689;
 		getData()->posture = kPostureSitting;
@@ -453,7 +453,7 @@ IMPLEMENT_FUNCTION(Milos, function18, 18)
 		getData()->car = kCarRedSleeping;
 
 		getEntities()->clearSequences(kEntityMilos);
-		getObjects()->update(kObjectCompartmentG, kEntityNone, kLocation3, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObjectCompartmentG, kEntityPlayer, kLocation3, kCursorHandKnock, kCursorHand);
 	}
 }
 
@@ -473,8 +473,8 @@ IMPLEMENT_FUNCTION(Milos, chapter2, 19)
 		getData()->posture = kPostureSitting;
 		getData()->car = kCarRestaurant;
 
-		getObjects()->update(kObjectCompartmentG, kEntityNone, kLocation3, kCursorHandKnock, kCursorHand);
-		getObjects()->update(kObject46, kEntityNone, kLocationNone, kCursorKeepValue, kCursorKeepValue);
+		getObjects()->update(kObjectCompartmentG, kEntityPlayer, kLocation3, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObject46, kEntityPlayer, kLocationNone, kCursorKeepValue, kCursorKeepValue);
 		break;
 	}
 }
@@ -647,7 +647,7 @@ IMPLEMENT_FUNCTION(Milos, function31, 31)
 		switch (getCallback()) {
 		case 1:
 			getData()->posture = kPostureStanding;
-			getObjects()->update(kObjectCompartmentG, kEntityNone, kLocation3, kCursorHandKnock, kCursorHand);
+			getObjects()->update(kObjectCompartmentG, kEntityPlayer, kLocation3, kCursorHandKnock, kCursorHand);
 
 			setCallback(2);
 			call(new ENTITY_SETUP(Milos, setup_enterCompartmentDialog), kCarGreenSleeping, kPosition_540);
@@ -664,7 +664,7 @@ IMPLEMENT_FUNCTION(Milos, function31, 31)
 IMPLEMENT_FUNCTION(Milos, function32, 32)
 	if (savepoint.action == kActionDefault) {
 		getEntities()->clearSequences(kEntityMilos);
-		getObjects()->update(kObjectCompartmentG, kEntityNone, kLocation3, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObjectCompartmentG, kEntityPlayer, kLocation3, kCursorHandKnock, kCursorHand);
 
 		getData()->entityPosition = kPosition_540;
 		getData()->posture = kPostureSitting;

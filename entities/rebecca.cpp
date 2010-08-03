@@ -236,7 +236,7 @@ IMPLEMENT_FUNCTION(Rebecca, function15, 15)
 
 	case kActionCallback:
 		if (getCallback() == 1) {
-			getObjects()->update(kObjectOutsideBetweenCompartments, kEntityNone, kLocationNone, kCursorKeepValue, kCursorKeepValue);
+			getObjects()->update(kObjectOutsideBetweenCompartments, kEntityPlayer, kLocationNone, kCursorKeepValue, kCursorKeepValue);
 			getData()->posture = kPostureSitting;
 			getEntities()->clearSequences(kEntityRebecca);
 
@@ -271,8 +271,8 @@ IMPLEMENT_FUNCTION_I(Rebecca, function20, 20)
 		if (params->param1 < (int)getState()->time && !params->param5) {
 			params->param5 = 1;
 
-			getObjects()->update(kObjectCompartmentE, kEntityNone, kLocationNone, kCursorHandKnock, kCursorHand);
-			getObjects()->update(kObject52, kEntityNone, kLocationNone, kCursorHandKnock, kCursorHand);
+			getObjects()->update(kObjectCompartmentE, kEntityPlayer, kLocationNone, kCursorHandKnock, kCursorHand);
+			getObjects()->update(kObject52, kEntityPlayer, kLocationNone, kCursorHandKnock, kCursorHand);
 
 			CALLBACK_ACTION();
 			break;
@@ -345,8 +345,8 @@ label_callback:
 		}
 		break;
 
-	case kAction8:
-	case kAction9:
+	case kActionKnock:
+	case kActionOpenDoor:
 		break;
 
 	case kActionDefault:
@@ -444,9 +444,9 @@ IMPLEMENT_FUNCTION(Rebecca, chapter1, 21)
 	case kActionDefault:
 		getSavePoints()->addData(kEntityRebecca, kAction224253538, 0);
 
-		getObjects()->update(kObjectCompartmentE, kEntityNone, kLocationNone, kCursorHandKnock, kCursorHand);
-		getObjects()->update(kObject52, kEntityNone, kLocationNone, kCursorHandKnock, kCursorHand);
-		getObjects()->update(kObjectOutsideBetweenCompartments, kEntityNone, kLocationNone, kCursorKeepValue, kCursorKeepValue);
+		getObjects()->update(kObjectCompartmentE, kEntityPlayer, kLocationNone, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObject52, kEntityPlayer, kLocationNone, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObjectOutsideBetweenCompartments, kEntityPlayer, kLocationNone, kCursorKeepValue, kCursorKeepValue);
 
 		getObjects()->updateLocation2(kObject110, kLocation1);
 
@@ -599,8 +599,8 @@ IMPLEMENT_FUNCTION(Rebecca, function27, 27)
 		getData()->posture = kPostureSitting;
 		getData()->car = kCarRedSleeping;
 
-		getObjects()->update(kObjectCompartmentE, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
-		getObjects()->update(kObject52, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObjectCompartmentE, kEntityPlayer, kLocation1, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObject52, kEntityPlayer, kLocation1, kCursorHandKnock, kCursorHand);
 
 		getEntities()->clearSequences(kEntityRebecca);
 	}
@@ -624,8 +624,8 @@ IMPLEMENT_FUNCTION(Rebecca, chapter2, 28)
 		getData()->clothes = kClothesDefault;
 		getData()->inventoryItem = kItemNone;
 
-		getObjects()->update(kObjectCompartmentE, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
-		getObjects()->update(kObject52, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObjectCompartmentE, kEntityPlayer, kLocation1, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObject52, kEntityPlayer, kLocation1, kCursorHandKnock, kCursorHand);
 
 		getObjects()->updateLocation2(kObject110, kLocation2);
 
@@ -687,7 +687,7 @@ IMPLEMENT_FUNCTION(Rebecca, function31, 31)
 			break;
 
 		case 2:
-			getObjects()->update(kObjectCompartmentE, kEntityNone, kLocation2, kCursorNormal, kCursorNormal);
+			getObjects()->update(kObjectCompartmentE, kEntityPlayer, kLocation2, kCursorNormal, kCursorNormal);
 			getEntities()->drawSequenceLeft(kEntityRebecca, "504");
 			break;
 		}
@@ -793,7 +793,7 @@ IMPLEMENT_FUNCTION(Rebecca, function38, 38)
 			break;
 
 		case 1:
-			getObjects()->update(kObjectCompartmentE, kEntityNone, kLocationNone, kCursorHandKnock, kCursorHand);
+			getObjects()->update(kObjectCompartmentE, kEntityPlayer, kLocationNone, kCursorHandKnock, kCursorHand);
             getSavePoints()->push(kEntityRebecca, kEntitySophie, kAction259921280);
 
 			setCallback(2);
@@ -817,8 +817,8 @@ IMPLEMENT_FUNCTION(Rebecca, function39, 39)
 	case kActionDefault:
 		getEntities()->clearSequences(kEntityRebecca);
 
-		getObjects()->update(kObjectCompartmentE, kEntityNone, kLocationNone, kCursorHandKnock, kCursorHand);
-		getObjects()->update(kObject52, kEntityNone, kLocationNone, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObjectCompartmentE, kEntityPlayer, kLocationNone, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObject52, kEntityPlayer, kLocationNone, kCursorHandKnock, kCursorHand);
 
 		getData()->entityPosition = kPosition_6000;
 		getData()->posture = kPostureSitting;
@@ -945,8 +945,8 @@ IMPLEMENT_FUNCTION(Rebecca, function45, 45)
 		getData()->posture = kPostureSitting;
 		getData()->car = kCarRedSleeping;
 
-		getObjects()->update(kObjectCompartmentE, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
-		getObjects()->update(kObject52, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObjectCompartmentE, kEntityPlayer, kLocation1, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObject52, kEntityPlayer, kLocation1, kCursorHandKnock, kCursorHand);
 
 		getEntities()->clearSequences(kEntityRebecca);
 		break;

@@ -480,7 +480,7 @@ IMPLEMENT_FUNCTION(Pascale, function19, 19)
 
 	case kActionNone:
 		if (!params->param1 && getEntityData(kEntityPlayer)->entityPosition < kPosition_3650) {
-			getObjects()->update(kObject65, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
+			getObjects()->update(kObject65, kEntityPlayer, kLocation1, kCursorHandKnock, kCursorHand);
 			getSavePoints()->push(kEntityPascale, kEntityTables0, kActionDrawTablesWithChairs, "001P");
 			getSavePoints()->push(kEntityPascale, kEntityTables1, kActionDrawTablesWithChairs, "005J");
 			getSavePoints()->push(kEntityPascale, kEntityTables2, kActionDrawTablesWithChairs, "009G");
@@ -512,7 +512,7 @@ IMPLEMENT_FUNCTION(Pascale, chapter2, 20)
 		getData()->clothes = kClothes1;
 		getData()->inventoryItem = kItemNone;
 
-		getObjects()->update(kObject65, kEntityNone, kLocationNone, kCursorNormal, kCursorForward);
+		getObjects()->update(kObject65, kEntityPlayer, kLocationNone, kCursorNormal, kCursorForward);
 	}
 }
 

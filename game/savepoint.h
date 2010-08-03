@@ -64,9 +64,9 @@ struct SavePoint {
 	} param;
 
 	SavePoint() {
-		entity1 = kEntityNone;
+		entity1 = kEntityPlayer;
 		action = kActionNone;
-		entity2 = kEntityNone;
+		entity2 = kEntityPlayer;
 		param.intValue = 0;
 	}
 };
@@ -84,9 +84,9 @@ public:
 		uint32 param;
 
 		SavePointData() {
-			entity1 = kEntityNone;
+			entity1 = kEntityPlayer;
 			action = kActionNone;
-			entity2 = kEntityNone;
+			entity2 = kEntityPlayer;
 			param = 0;
 		}
 	};

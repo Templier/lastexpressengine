@@ -217,7 +217,7 @@ IMPLEMENT_FUNCTION_III(Gendarmes, function10, 10)
 		UPDATE_PARAM(params->param7, getState()->timeTicks, 300);
 
 		if (!params->param4 && getEntities()->checkFields15()) {
-			getObjects()->update((ObjectIndex)params->param3, kEntityNone, kLocationNone, kCursorHandKnock, kCursorHand);
+			getObjects()->update((ObjectIndex)params->param3, kEntityPlayer, kLocationNone, kCursorHandKnock, kCursorHand);
 			CALLBACK_ACTION();
 		} else {
 			if (getEntities()->checkFields15())
@@ -230,14 +230,14 @@ IMPLEMENT_FUNCTION_III(Gendarmes, function10, 10)
 		}
 		break;
 
-	case kAction8:
+	case kActionKnock:
 		getObjects()->update((ObjectIndex)params->param3, kEntityGendarmes, getObjects()->get((ObjectIndex)params->param3).location, kCursorNormal, kCursorNormal);
 
 		setCallback(5);
 		call(new ENTITY_SETUP_SIIS(Gendarmes, setup_arrestPlaysound16), "POL1046B");
 		break;
 
-	case kAction9:
+	case kActionOpenDoor:
 		setCallback(6);
 		call(new ENTITY_SETUP(Gendarmes, setup_savegame), kSavegameType2, kEventGendarmesArrestation);
 		break;
@@ -268,7 +268,7 @@ IMPLEMENT_FUNCTION_III(Gendarmes, function10, 10)
 			getAction()->playAnimation((params->param1 < kCarRedSleeping) ? kEventMertensBloodJacket : kEventCoudertBloodJacket);
 			getLogic()->gameOver(kTimeType0, kTime1, kSceneGameOverBloodJacket, true);
 
-			getObjects()->update((ObjectIndex)params->param3, kEntityNone, kLocationNone, kCursorHandKnock, kCursorHand);
+			getObjects()->update((ObjectIndex)params->param3, kEntityPlayer, kLocationNone, kCursorHandKnock, kCursorHand);
 			CALLBACK_ACTION();
 			break;
 
@@ -276,7 +276,7 @@ IMPLEMENT_FUNCTION_III(Gendarmes, function10, 10)
 			getAction()->playAnimation(kEventGendarmesArrestation);
 			getLogic()->gameOver(kTimeType0, kTime1, kSceneGameOverPolice1, true);
 
-			getObjects()->update((ObjectIndex)params->param3, kEntityNone, kLocationNone, kCursorHandKnock, kCursorHand);
+			getObjects()->update((ObjectIndex)params->param3, kEntityPlayer, kLocationNone, kCursorHandKnock, kCursorHand);
 			CALLBACK_ACTION();
 			break;
 

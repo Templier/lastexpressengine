@@ -151,21 +151,21 @@ public:
 	void updateSubtitles();
 
 	// Entry
-	bool isBuffered(const char* filename, bool testForEntity = false);
+	bool isBuffered(Common::String filename, bool testForEntity = false);
 	bool isBuffered(EntityIndex entity);
 	void processEntry(EntityIndex entity);
 	void processEntry(SoundType type);
-	void processEntry(const char* filename);
+	void processEntry(Common::String filename);
 	void processEntries();
-	void removeFromQueue(const char* filename);
+	void removeFromQueue(Common::String filename);
 	void removeFromQueue(EntityIndex entity);
 
 	// Misc
 	void unknownFunction4();
 
 	// Sound playing
-	void playSound(EntityIndex entity, const char *filename, FlagType flag = kFlagInvalid, byte a4 = 0);
-	SoundType playSoundWithSubtitles(const char *filename, FlagType flag, EntityIndex entity, byte a4 = 0);
+	void playSound(EntityIndex entity, Common::String filename, FlagType flag = kFlagInvalid, byte a4 = 0);
+	SoundType playSoundWithSubtitles(Common::String filename, FlagType flag, EntityIndex entity, byte a4 = 0);
 	void playSoundEvent(EntityIndex entity, byte action, byte a3 = 0);
 	void playDialog(EntityIndex entity, EntityIndex entityDialog, FlagType flag, byte a4);
 	void playSteam(CityIndex index);
@@ -253,7 +253,7 @@ private:
 			stream = NULL;
 			field_3C = 0;
 			field_40 = 0;
-			entity = kEntityNone;
+			entity = kEntityPlayer;
 			field_48 = 0;
 			field_4C = 0;
 

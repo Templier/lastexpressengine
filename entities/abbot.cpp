@@ -308,14 +308,14 @@ IMPLEMENT_FUNCTION(Abbot, chapter3Handler, 18)
 			break;
 
 		case 4:
-			getObjects()->update(kObjectCompartmentC, kEntityNone, kLocation1, kCursorKeepValue, kCursorKeepValue);
+			getObjects()->update(kObjectCompartmentC, kEntityPlayer, kLocation1, kCursorKeepValue, kCursorKeepValue);
 
 			setCallback(5);
 			call(new ENTITY_SETUP_SIIS(Abbot, setup_enterExitCompartment), "617AC", kObjectCompartmentC);
 			break;
 
 		case 5:
-			getObjects()->update(kObjectCompartmentC, kEntityNone, kLocation2, kCursorKeepValue, kCursorKeepValue);
+			getObjects()->update(kObjectCompartmentC, kEntityPlayer, kLocation2, kCursorKeepValue, kCursorKeepValue);
 			getData()->entityPosition = kPosition_6470;
 			getData()->posture = kPostureSitting;
 
@@ -408,8 +408,8 @@ IMPLEMENT_FUNCTION(Abbot, function21, 21)
 			break;
 
 		case 1:
-			getObjects()->update(kObjectCompartmentC, kEntityNone, kLocationNone, kCursorHandKnock, kCursorHand);
-			getObjects()->update(kObject50, kEntityNone, kLocationNone, kCursorHandKnock, kCursorHand);
+			getObjects()->update(kObjectCompartmentC, kEntityPlayer, kLocationNone, kCursorHandKnock, kCursorHand);
+			getObjects()->update(kObject50, kEntityPlayer, kLocationNone, kCursorHandKnock, kCursorHand);
 
 			setCallback(2);
 			call(new ENTITY_SETUP_SIIS(Abbot, setup_enterExitCompartment), "617Mc", kObjectCompartmentC);
@@ -573,12 +573,12 @@ IMPLEMENT_FUNCTION(Abbot, function24, 24)
 		setup_function25();
 		break;
 
-	case kAction8:
-	case kAction9:
+	case kActionKnock:
+	case kActionOpenDoor:
 		getObjects()->update(kObjectCompartmentC, kEntityAbbot, kLocation1, kCursorNormal, kCursorNormal);
 		getObjects()->update(kObject50, kEntityAbbot, kLocation1, kCursorNormal, kCursorNormal);
 
-		if (savepoint.action == kAction8) {
+		if (savepoint.action == kActionKnock) {
 			setCallback(1);
 			call(new ENTITY_SETUP_SIIS(Abbot, setup_playSound), "LIB012");
 		} else {
@@ -630,8 +630,8 @@ IMPLEMENT_FUNCTION(Abbot, function25, 25)
 
 		case 1:
 			getData()->posture = kPostureStanding;
-			getObjects()->update(kObjectCompartmentC, kEntityNone, kLocationNone, kCursorHandKnock, kCursorHand);
-			getObjects()->update(kObject50, kEntityNone, kLocationNone, kCursorHandKnock, kCursorHand);
+			getObjects()->update(kObjectCompartmentC, kEntityPlayer, kLocationNone, kCursorHandKnock, kCursorHand);
+			getObjects()->update(kObject50, kEntityPlayer, kLocationNone, kCursorHandKnock, kCursorHand);
 
 			setCallback(2);
 			call(new ENTITY_SETUP(Abbot, setup_updateEntity), kCarRestaurant,  kPosition_850);
@@ -715,14 +715,14 @@ IMPLEMENT_FUNCTION(Abbot, function27, 27)
 			break;
 
 		case 3:
-			getObjects()->update(kObjectCompartmentC, kEntityNone, kLocation1, kCursorKeepValue, kCursorKeepValue);
+			getObjects()->update(kObjectCompartmentC, kEntityPlayer, kLocation1, kCursorKeepValue, kCursorKeepValue);
 
 			setCallback(4);
 			call(new ENTITY_SETUP_SIIS(Abbot, setup_enterExitCompartment), "617Ac", kObjectCompartmentC);
 			break;
 
 		case 4:
-			getObjects()->update(kObjectCompartmentC, kEntityNone, kLocation2, kCursorKeepValue, kCursorKeepValue);
+			getObjects()->update(kObjectCompartmentC, kEntityPlayer, kLocation2, kCursorKeepValue, kCursorKeepValue);
 			getData()->entityPosition = kPosition_6470;
 			getData()->posture = kPostureSitting;
 
@@ -767,7 +767,7 @@ IMPLEMENT_FUNCTION(Abbot, function29, 29)
 
 	case kActionDefault:
 		getSavePoints()->push(kEntityAbbot, kEntityBoutarel, kAction122288808);
-		getObjects()->update(kObjectCompartmentC, kEntityNone, kLocation1, kCursorKeepValue, kCursorKeepValue);
+		getObjects()->update(kObjectCompartmentC, kEntityPlayer, kLocation1, kCursorKeepValue, kCursorKeepValue);
 
 		setCallback(1);
 		call(new ENTITY_SETUP_SIIS(Abbot, setup_enterExitCompartment), "617Bc", kObjectCompartmentC);
@@ -779,7 +779,7 @@ IMPLEMENT_FUNCTION(Abbot, function29, 29)
 			break;
 
 		case 1:
-			getObjects()->update(kObjectCompartmentC, kEntityNone, kLocation2, kCursorKeepValue, kCursorKeepValue);
+			getObjects()->update(kObjectCompartmentC, kEntityPlayer, kLocation2, kCursorKeepValue, kCursorKeepValue);
 
 			setCallback(2);
 			call(new ENTITY_SETUP(Abbot, setup_updateEntity), kCarRedSleeping, kPosition_9460);
@@ -806,14 +806,14 @@ IMPLEMENT_FUNCTION(Abbot, function29, 29)
 			break;
 
 		case 6:
-			getObjects()->update(kObjectCompartmentC, kEntityNone, kLocation1, kCursorKeepValue, kCursorKeepValue);
+			getObjects()->update(kObjectCompartmentC, kEntityPlayer, kLocation1, kCursorKeepValue, kCursorKeepValue);
 
 			setCallback(7);
 			call(new ENTITY_SETUP_SIIS(Abbot, setup_enterExitCompartment), "617Ac", kObjectCompartmentC);
 			break;
 
 		case 7:
-			getObjects()->update(kObjectCompartmentC, kEntityNone, kLocation2, kCursorKeepValue, kCursorKeepValue);
+			getObjects()->update(kObjectCompartmentC, kEntityPlayer, kLocation2, kCursorKeepValue, kCursorKeepValue);
 			getSavePoints()->push(kEntityAbbot, kEntityBoutarel, kAction122358304);
 			getEntities()->drawSequenceLeft(kEntityAbbot, "508B");
 
@@ -841,14 +841,14 @@ switch (savepoint.action) {
 
 		case 1:
 			getSavePoints()->push(kEntityAbbot, kEntityBoutarel, kAction122288808);
-			getObjects()->update(kObjectCompartmentC, kEntityNone, kLocation1, kCursorKeepValue, kCursorKeepValue);
+			getObjects()->update(kObjectCompartmentC, kEntityPlayer, kLocation1, kCursorKeepValue, kCursorKeepValue);
 
 			setCallback(2);
 			call(new ENTITY_SETUP_SIIS(Abbot, setup_enterExitCompartment), "617Bc", kObjectCompartmentC);
 			break;
 
 		case 2:
-			getObjects()->update(kObjectCompartmentC, kEntityNone, kLocation2, kCursorKeepValue, kCursorKeepValue);
+			getObjects()->update(kObjectCompartmentC, kEntityPlayer, kLocation2, kCursorKeepValue, kCursorKeepValue);
 			getData()->posture = kPostureStanding;
 
 			setCallback(3);
@@ -899,14 +899,14 @@ IMPLEMENT_FUNCTION(Abbot, function32, 32)
 			break;
 
 		case 1:
-			getObjects()->update(kObjectCompartmentC, kEntityNone, kLocation1, kCursorKeepValue, kCursorKeepValue);
+			getObjects()->update(kObjectCompartmentC, kEntityPlayer, kLocation1, kCursorKeepValue, kCursorKeepValue);
 
 			setCallback(1);
 			call(new ENTITY_SETUP_SIIS(Abbot, setup_enterExitCompartment), "617Ac", kObjectCompartmentC);
 			break;
 
 		case 2:
-			getObjects()->update(kObjectCompartmentC, kEntityNone, kLocation2, kCursorKeepValue, kCursorKeepValue);
+			getObjects()->update(kObjectCompartmentC, kEntityPlayer, kLocation2, kCursorKeepValue, kCursorKeepValue);
 			getData()->entityPosition = kPosition_6470;
 			getData()->posture = kPostureSitting;
 			getSavePoints()->push(kEntityAbbot, kEntityBoutarel, kAction122358304);
@@ -982,14 +982,14 @@ IMPLEMENT_FUNCTION(Abbot, function37, 37)
 			break;
 
 		case 1:
-			getObjects()->update(kObjectCompartmentC, kEntityNone, kLocation1, kCursorKeepValue, kCursorKeepValue);
+			getObjects()->update(kObjectCompartmentC, kEntityPlayer, kLocation1, kCursorKeepValue, kCursorKeepValue);
 
 			setCallback(2);
 			call(new ENTITY_SETUP_SIIS(Abbot, setup_enterExitCompartment), "617Ac", kObjectCompartmentC);
 			break;
 
 		case 2:
-			getObjects()->update(kObjectCompartmentC, kEntityNone, kLocation2, kCursorKeepValue, kCursorKeepValue);
+			getObjects()->update(kObjectCompartmentC, kEntityPlayer, kLocation2, kCursorKeepValue, kCursorKeepValue);
 			getData()->entityPosition = kPosition_6470;
 			getData()->posture = kPostureSitting;
 			getSavePoints()->push(kEntityAbbot, kEntityBoutarel, kAction122358304);
@@ -1098,8 +1098,8 @@ IMPLEMENT_FUNCTION(Abbot, function44, 44)
 
 		getEntities()->clearSequences(kEntityAbbot);
 
-		getObjects()->update(kObjectCompartmentC, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
-		getObjects()->update(kObject50, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObjectCompartmentC, kEntityPlayer, kLocation1, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObject50, kEntityPlayer, kLocation1, kCursorHandKnock, kCursorHand);
 		break;
 
 	case kAction104060776:

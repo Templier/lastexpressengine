@@ -1451,7 +1451,7 @@ label_callback_5_6:
 		case 21:
 			getAction()->playAnimation(kEventMertensAskTylerCompartmentD);
 			getEntities()->drawSequenceRight(kEntityMertens, "601A");
-			getInventory()->getEntry(kItem7)->location = kLocationNone;
+			getInventory()->get(kItem7)->location = kLocationNone;
 			getScenes()->loadSceneFromPosition(kCarGreenSleeping, 25);
 
 			setCallback(22);

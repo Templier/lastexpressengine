@@ -137,7 +137,7 @@ IMPLEMENT_FUNCTION(Kronos, chapter1, 7)
 		getData()->posture = kPostureSitting;
 		getData()->car = kCarKronos;
 
-		getObjects()->update(kObjectCeiling, kEntityNone, kLocation1, kCursorKeepValue, kCursorKeepValue);
+		getObjects()->update(kObjectCeiling, kEntityPlayer, kLocation1, kCursorKeepValue, kCursorKeepValue);
 
 		break;
 	}
@@ -249,7 +249,7 @@ IMPLEMENT_FUNCTION(Kronos, chapter3, 13)
 		getData()->clothes = kClothesDefault;
 		getData()->inventoryItem = kItemNone;
 
-		getObjects()->update(kObjectCeiling, kEntityNone, kLocationNone, kCursorKeepValue, kCursorKeepValue);
+		getObjects()->update(kObjectCeiling, kEntityPlayer, kLocationNone, kCursorKeepValue, kCursorKeepValue);
 
 		break;
 	}
@@ -343,7 +343,7 @@ IMPLEMENT_FUNCTION(Kronos, function18, 18)
 	case kActionNone:
 		if (getState()->time > kTime2079000 && !params->param2) {
 			getObjects()->updateLocation2(kObjectCompartmentKronos, kLocation3);
-			getObjects()->update(kObjectCompartmentKronos, kEntityNone, kLocation3, kCursorHandKnock, kCursorHand);
+			getObjects()->update(kObjectCompartmentKronos, kEntityPlayer, kLocation3, kCursorHandKnock, kCursorHand);
 			params->param1 = 1;
 			params->param2 = 1;
 		}
@@ -401,7 +401,7 @@ IMPLEMENT_FUNCTION(Kronos, function23, 23)
 		break;
 
 	case kActionDefault:
-		getObjects()->update(kObjectCompartmentKronos, kEntityNone, kLocation3, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObjectCompartmentKronos, kEntityPlayer, kLocation3, kCursorHandKnock, kCursorHand);
 		break;
 
 	case kActionCallback:

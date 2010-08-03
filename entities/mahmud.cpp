@@ -46,19 +46,19 @@ Mahmud::Mahmud(LastExpressEngine *engine) : Entity(engine, kEntityMahmud) {
 	ADD_CALLBACK_FUNCTION(Mahmud, reset);
 	ADD_CALLBACK_FUNCTION(Mahmud, draw);
 	ADD_CALLBACK_FUNCTION(Mahmud, enterExitCompartment);
-	ADD_CALLBACK_FUNCTION(Mahmud, function4);
+	ADD_CALLBACK_FUNCTION(Mahmud, enterExitCompartment2);
 	ADD_CALLBACK_FUNCTION(Mahmud, playSound);
 	ADD_CALLBACK_FUNCTION(Mahmud, playSoundMertens);
 	ADD_CALLBACK_FUNCTION(Mahmud, updateFromTime);
 	ADD_CALLBACK_FUNCTION(Mahmud, savegame);
-	ADD_CALLBACK_FUNCTION(Mahmud, function9);
+	ADD_CALLBACK_FUNCTION(Mahmud, updateEntity);
 	ADD_CALLBACK_FUNCTION(Mahmud, function10);
 	ADD_CALLBACK_FUNCTION(Mahmud, function11);
 	ADD_CALLBACK_FUNCTION(Mahmud, function12);
 	ADD_CALLBACK_FUNCTION(Mahmud, function13);
 	ADD_CALLBACK_FUNCTION(Mahmud, chapters_handler);
 	ADD_CALLBACK_FUNCTION(Mahmud, chapter1);
-	ADD_CALLBACK_FUNCTION(Mahmud, function16);
+	ADD_CALLBACK_FUNCTION(Mahmud, resetChapter);
 	ADD_CALLBACK_FUNCTION(Mahmud, chapter2);
 	ADD_CALLBACK_FUNCTION(Mahmud, chapter3);
 	ADD_CALLBACK_FUNCTION(Mahmud, chapter4);
@@ -91,12 +91,15 @@ IMPLEMENT_FUNCTION_SI(Mahmud, enterExitCompartment, 3)
 	Entity::enterExitCompartment(savepoint);
 }
 
-//////////////////////////////////////////////////////////////////////////
-// param1: sequence
-// param2: object index
-// param3: game ticks
-// param4: object index
-IMPLEMENT_FUNCTION_SIII(Mahmud, function4, 4)
+/**
+ * Handles entering/exiting a compartment.
+ *
+ * @param seq1   The sequence to draw
+ * @param param4 The compartment
+ * @param param5 The time ticks
+ * @param param6 The object for loading the scene
+ */
+IMPLEMENT_FUNCTION_SIII(Mahmud, enterExitCompartment2, 4)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -106,18 +109,17 @@ IMPLEMENT_FUNCTION_SIII(Mahmud, function4, 4)
 
 		if (!getScenes()->checkPosition(kSceneNone, SceneManager::kCheckPositionType0))
 			getScenes()->loadSceneFromObject((ObjectIndex)params->param6, true);
-
 		break;
 
 	case kActionExitCompartment:
-		getEntities()->exitCompartment(kEntityMahmud, (ObjectIndex)params->param4, true);
+		getEntities()->exitCompartment(kEntityMahmud, (ObjectIndex)params->param4);
 
 		CALLBACK_ACTION();
 		break;
 
 	case kActionDefault:
 		getEntities()->drawSequenceRight(kEntityMahmud, (char *)&params->seq);
-		getEntities()->enterCompartment(kEntityMahmud, (ObjectIndex)params->param4, true);
+		getEntities()->enterCompartment(kEntityMahmud, (ObjectIndex)params->param4);
 		break;
 	}
 }
@@ -159,31 +161,23 @@ IMPLEMENT_FUNCTION_II(Mahmud, savegame, 8)
 	Entity::savegame(savepoint);
 }
 
-//////////////////////////////////////////////////////////////////////////
-// param1: CarIndex
-// param2: EntityPosition
-IMPLEMENT_FUNCTION_II(Mahmud, function9, 9)
-	switch (savepoint.action) {
-	default:
-		break;
-
-	case kActionNone:
-	case kActionDefault:
-		if (getEntities()->updateEntity(kEntityMahmud, (CarIndex)params->param1, (EntityPosition)params->param2))
-			CALLBACK_ACTION();
-		break;
-
-	case kActionExcuseMeCath:
+/**
+ * Updates the entity
+ *
+ * @param param1 The car
+ * @param param2 The entity position
+ */
+IMPLEMENT_FUNCTION_II(Mahmud, updateEntity, 9)
+	if (savepoint.action == kActionExcuseMeCath) {
 		if (getInventory()->hasItem(kItemPassengerList))
-			getSound()->playSound(kEntityPlayer, (random(2) == 0 ? "CAT1025A" : "CAT1025"));
+			getSound()->playSound(kEntityPlayer, random(2) ? "CAT1025" : "CAT1025Q");
 		else
 			getSound()->excuseMeCath();
-		break;
 
-	case kActionExcuseMe:
-		getSound()->excuseMe(kEntityMahmud);
-		break;
+		return;
 	}
+
+	Entity::updateEntity(savepoint, true);
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -205,27 +199,25 @@ IMPLEMENT_FUNCTION_II(Mahmud, function10, 10)
 		break;
 
 	case kAction2:
-	case kActionDrawScene: {
-		if (getSound()->isBuffered(kEntityMahmud))
-			break;
+	case kActionDrawScene:
+		if (!getSound()->isBuffered(kEntityMahmud)) {
+			EntityPosition position = getEntityData(kEntityPlayer)->entityPosition;
+			if (position < kPosition_1500 || position >= kPosition_5790 || (position > kPosition_4455 && params->param5 != 5)) {
+				getObjects()->update(kObjectCompartment5, kEntityTrain, kLocation3, kCursorHandKnock, kCursorHand);
+				getObjects()->update(kObjectCompartment6, kEntityTrain, kLocation3, kCursorHandKnock, kCursorHand);
+				getObjects()->update(kObjectCompartment7, kEntityTrain, kLocation3, kCursorHandKnock, kCursorHand);
+				getObjects()->update(kObjectCompartment8, kEntityTrain, kLocation3, kCursorHandKnock, kCursorHand);
 
-		EntityPosition position = getEntityData(kEntityPlayer)->entityPosition;
-		if (position < kPosition_1500 || position >= kPosition_5790 || (position > kPosition_4455 && params->param5 != 5)) {
-			getObjects()->update(kObjectCompartment5, kEntityTrain, kLocation3, kCursorHandKnock, kCursorHand);
-			getObjects()->update(kObjectCompartment6, kEntityTrain, kLocation3, kCursorHandKnock, kCursorHand);
-			getObjects()->update(kObjectCompartment7, kEntityTrain, kLocation3, kCursorHandKnock, kCursorHand);
-			getObjects()->update(kObjectCompartment8, kEntityTrain, kLocation3, kCursorHandKnock, kCursorHand);
-
-			setCallback(3);
-			call(new ENTITY_SETUP_SIIS(Mahmud, setup_enterExitCompartment), "614Ed", kObjectCompartment4);
+				setCallback(3);
+				call(new ENTITY_SETUP_SIIS(Mahmud, setup_enterExitCompartment), "614Ed", kObjectCompartment4);
+			}
 		}
 		break;
-	}
 
-	case kAction8:
-	case kAction9:
-		if (!getSound()->isBuffered((savepoint.action == kAction8) ? "LIB012" : "LIB013", true))
-			getSound()->playSound(kEntityPlayer, (savepoint.action == kAction8) ? "LIB012" : "LIB013");
+	case kActionKnock:
+	case kActionOpenDoor:
+		if (!getSound()->isBuffered((savepoint.action == kActionKnock) ? "LIB012" : "LIB013", true))
+			getSound()->playSound(kEntityPlayer, (savepoint.action == kActionKnock) ? "LIB012" : "LIB013");
 
 		params->param5 = savepoint.param.intValue;
 
@@ -234,7 +226,7 @@ IMPLEMENT_FUNCTION_II(Mahmud, function10, 10)
 
 			switch(params->param3) {
 			default:
-				getSound()->playSound(kEntityMahmud, params->param2 ? "MAH1170E" : "MAH1173A");
+				params->param4 = 1;
 				break;
 
 			case 1:
@@ -246,7 +238,7 @@ IMPLEMENT_FUNCTION_II(Mahmud, function10, 10)
 				break;
 
 			case 3:
-				params->param4 = 1;
+				getSound()->playSound(kEntityMahmud, params->param2 ? "MAH1170E" : "MAH1173A");
 				break;
 			}
 		}
@@ -258,29 +250,30 @@ IMPLEMENT_FUNCTION_II(Mahmud, function10, 10)
 				getSound()->playSound(kEntityTrain, "LIB050", SoundManager::kFlagDefault);
 				getLogic()->gameOver(kTimeType0, kTime0, (getProgress().chapter == kChapter1) ? kSceneGameOverPolice1 : kSceneGameOverPolice2, true);
 			}
-		} else {
-			getAction()->handleOtherCompartment((ObjectIndex)savepoint.param.intValue, false, false);
+			break;
+		}
 
-			switch (getScenes()->get(getState()->scene)->position) {
-			default:
-				break;
+		getAction()->handleOtherCompartment((ObjectIndex)savepoint.param.intValue, false, false);
 
-			case 55:
-				getScenes()->loadSceneFromObject(kObjectCompartment5, true);
-				break;
+		switch (getScenes()->get(getState()->scene)->position) {
+		default:
+			break;
 
-			case 56:
-				getScenes()->loadSceneFromObject(kObjectCompartment6, true);
-				break;
+		case 55:
+			getScenes()->loadSceneFromObject(kObjectCompartment5, true);
+			break;
 
-			case 57:
-				getScenes()->loadSceneFromObject(kObjectCompartment7, true);
-				break;
+		case 56:
+			getScenes()->loadSceneFromObject(kObjectCompartment6, true);
+			break;
 
-			case 58:
-				getScenes()->loadSceneFromObject(kObjectCompartment8, true);
-				break;
-			}
+		case 57:
+			getScenes()->loadSceneFromObject(kObjectCompartment7, true);
+			break;
+
+		case 58:
+			getScenes()->loadSceneFromObject(kObjectCompartment8, true);
+			break;
 		}
 		break;
 
@@ -289,7 +282,7 @@ IMPLEMENT_FUNCTION_II(Mahmud, function10, 10)
 		getProgress().field_C4 = 1;
 
 		setCallback(1);
-		call(new ENTITY_SETUP_SIII(Mahmud, setup_function4), "614Dd", kObjectCompartment4, 30, params->param1);
+		call(new ENTITY_SETUP_SIII(Mahmud, setup_enterExitCompartment2), "614Dd", kObjectCompartment4, 30, params->param1);
 		break;
 
 	case kActionCallback:
@@ -306,12 +299,12 @@ IMPLEMENT_FUNCTION_II(Mahmud, function10, 10)
 			getData()->posture = kPostureStanding;
 
 			getEntities()->drawSequenceLeft(kEntityMahmud, "614Md");
-			getEntities()->enterCompartment(kEntityMahmud, kObjectCompartment4, false);
+			getEntities()->enterCompartment(kEntityMahmud, kObjectCompartment4, true);
 			break;
 
 		case 2:
 		case 3:
-			getEntities()->exitCompartment(kEntityMahmud, kObjectCompartment4, false);
+			getEntities()->exitCompartment(kEntityMahmud, kObjectCompartment4, true);
 			getData()->posture = kPostureSitting;
 			getEntities()->clearSequences(kEntityMahmud);
 
@@ -328,9 +321,9 @@ IMPLEMENT_FUNCTION(Mahmud, function11, 11)
 	default:
 		break;
 
-	case kAction8:
-	case kAction9: {
-		getSound()->playSound(kEntityPlayer, (savepoint.action == kAction8 ? "LIB012" : "LIB013"));
+	case kActionKnock:
+	case kActionOpenDoor: {
+		getSound()->playSound(kEntityPlayer, (savepoint.action == kActionKnock ? "LIB012" : "LIB013"));
 
 		if (!getSound()->isBuffered(kEntityMahmud)) {
 			params->param1++;
@@ -374,9 +367,9 @@ IMPLEMENT_FUNCTION(Mahmud, function11, 11)
 
 		case 1:
 			getData()->posture = kPostureStanding;
-			getObjects()->update(kObjectCompartment4, kEntityNone, kLocation3, kCursorHandKnock, kCursorHand);
+			getObjects()->update(kObjectCompartment4, kEntityPlayer, kLocation3, kCursorHandKnock, kCursorHand);
 			getEntities()->drawSequenceLeft(kEntityMahmud, "614Kd");
-			getEntities()->enterCompartment(kEntityMahmud, kObjectCompartment4, false);
+			getEntities()->enterCompartment(kEntityMahmud, kObjectCompartment4, true);
 
 			setCallback(2);
 			call(new ENTITY_SETUP_SIIS(Mahmud, setup_playSound), "MAH1170A");
@@ -415,7 +408,7 @@ IMPLEMENT_FUNCTION(Mahmud, function11, 11)
 		case 8:
 			getSavePoints()->push(kEntityMahmud, kEntityMertens, kAction156567128);
 			getEntities()->drawSequenceLeft(kEntityMahmud, "614Bd");
-			getEntities()->enterCompartment(kEntityMahmud, kObjectCompartment4, false);
+			getEntities()->enterCompartment(kEntityMahmud, kObjectCompartment4, true);
 
 			setCallback(9);
 			call(new ENTITY_SETUP_SIIS(Mahmud, setup_playSound), "MAH1170G");
@@ -434,7 +427,7 @@ IMPLEMENT_FUNCTION(Mahmud, function11, 11)
 			break;
 
 		case 11:
-			getEntities()->exitCompartment(kEntityMahmud, kObjectCompartment4, false);
+			getEntities()->exitCompartment(kEntityMahmud, kObjectCompartment4, true);
 			getData()->posture = kPostureSitting;
 
 			getEntities()->clearSequences(kEntityMahmud);
@@ -479,10 +472,10 @@ IMPLEMENT_FUNCTION(Mahmud, function12, 12)
 
 		case 1:
 			getData()->posture = kPostureStanding;
-			getObjects()->update(kObjectCompartment4, kEntityNone, kLocation3, kCursorHandKnock, kCursorHand);
+			getObjects()->update(kObjectCompartment4, kEntityPlayer, kLocation3, kCursorHandKnock, kCursorHand);
 
 			setCallback(2);
-			call(new ENTITY_SETUP(Mahmud, setup_function9), kCarGreenSleeping, kPosition_4070);
+			call(new ENTITY_SETUP(Mahmud, setup_updateEntity), kCarGreenSleeping, kPosition_4070);
 			break;
 
 		case 2:
@@ -507,7 +500,7 @@ IMPLEMENT_FUNCTION(Mahmud, function12, 12)
 			getData()->posture = kPostureStanding;
 
 			setCallback(6);
-			call(new ENTITY_SETUP(Mahmud, setup_function9), kCarGreenSleeping, kPosition_5790);
+			call(new ENTITY_SETUP(Mahmud, setup_updateEntity), kCarGreenSleeping, kPosition_5790);
 			break;
 
 		case 6:
@@ -545,10 +538,10 @@ IMPLEMENT_FUNCTION(Mahmud, function13, 13)
 
 		case 1:
 			getData()->posture = kPostureStanding;
-			getObjects()->update(kObjectCompartment4, kEntityNone, kLocation3, kCursorHandKnock, kCursorHand);
+			getObjects()->update(kObjectCompartment4, kEntityPlayer, kLocation3, kCursorHandKnock, kCursorHand);
 
 			setCallback(2);
-			call(new ENTITY_SETUP(Mahmud, setup_function9), kCarGreenSleeping, kPosition_2740);
+			call(new ENTITY_SETUP(Mahmud, setup_updateEntity), kCarGreenSleeping, kPosition_2740);
 			break;
 
 		case 2:
@@ -573,7 +566,7 @@ IMPLEMENT_FUNCTION(Mahmud, function13, 13)
 			getData()->posture = kPostureStanding;
 
 			setCallback(6);
-			call(new ENTITY_SETUP(Mahmud, setup_function9), kCarGreenSleeping, kPosition_5790);
+			call(new ENTITY_SETUP(Mahmud, setup_updateEntity), kCarGreenSleeping, kPosition_5790);
 			break;
 
 		case 6:
@@ -624,39 +617,36 @@ IMPLEMENT_FUNCTION(Mahmud, chapters_handler, 14)
 
 			params->param4 = 1;
 			params->param5 = 0;
-			params->param8 = 0;
 
 			getObjects()->update(kObjectCompartment4, kEntityMahmud, kLocation3, kCursorNormal, kCursorNormal);
-		} else {
-			params->param8 = 0;
 		}
+
+		params->param8 = 0;
 		break;
 
-	case kAction8:
-	case kAction9:
+	case kActionKnock:
+	case kActionOpenDoor:
 		if (params->param5) {
 			getObjects()->update(kObjectCompartment4, kEntityMahmud, kLocation3, kCursorNormal, kCursorNormal);
 
-			if (getProgress().jacket == kJacketBlood
-			 || getEvent(kEventMahmudWrongDoor) || getEvent(kEventMahmudWrongDoorOriginalJacket) || getEvent(kEventMahmudWrongDoorDay)) {
-
-				 // Check if we have the passenger list
-				 if (getInventory()->hasItem(kItemPassengerList)) {
-					 setCallback(6);
+			if (getProgress().jacket == kJacketBlood || getEvent(kEventMahmudWrongDoor) || getEvent(kEventMahmudWrongDoorOriginalJacket) || getEvent(kEventMahmudWrongDoorDay)) {
+				// Check if we have the passenger list
+				if (getInventory()->hasItem(kItemPassengerList)) {
+					setCallback(6);
 					call(new ENTITY_SETUP_SIIS(Mahmud, setup_playSound), random(2) == 0 ? "CAT1501" : getSound()->wrongDoorCath());
-				 } else {
-					 setCallback(7);
+				} else {
+					setCallback(7);
 					call(new ENTITY_SETUP_SIIS(Mahmud, setup_playSound), getSound()->wrongDoorCath());
-				 }
+				}
 			} else {
-				setCallback(savepoint.action == kAction8 ? 8 : 9);
-				call(new ENTITY_SETUP_SIIS(Mahmud, setup_playSound), savepoint.action == kAction8 ? "LIB012" : "LIB013");
+				setCallback(savepoint.action == kActionKnock ? 8 : 9);
+				call(new ENTITY_SETUP_SIIS(Mahmud, setup_playSound), savepoint.action == kActionKnock ? "LIB012" : "LIB013");
 			}
 		} else {
 			getObjects()->update(kObjectCompartment4, kEntityMahmud, kLocation1, kCursorNormal, kCursorNormal);
 
-			setCallback(savepoint.action == kAction8 ? 3 : 4);
-			call(new ENTITY_SETUP_SIIS(Mahmud, setup_playSound), savepoint.action == kAction8 ? "LIB012" : "LIB013");
+			setCallback(savepoint.action == kActionKnock ? 3 : 4);
+			call(new ENTITY_SETUP_SIIS(Mahmud, setup_playSound), savepoint.action == kActionKnock ? "LIB012" : "LIB013");
 		}
 		break;
 
@@ -686,7 +676,6 @@ IMPLEMENT_FUNCTION(Mahmud, chapters_handler, 14)
 
 		case 1:
 			getObjects()->update(kObjectCompartment4, kEntityMahmud, kLocation3, kCursorHandKnock, kCursorHand);
-
 			params->param4 = 0;
 			params->param5 = 0;
 
@@ -694,12 +683,14 @@ IMPLEMENT_FUNCTION(Mahmud, chapters_handler, 14)
 				params->param7 = 1;
 				setCallback(2);
 				call(new ENTITY_SETUP(Mahmud, setup_function12));
+				break;
 			}
+
+			params->param8 = 0;
 			break;
 
 		case 2:
 			getObjects()->update(kObjectCompartment4, kEntityMahmud, kLocation3, kCursorHandKnock, kCursorHand);
-
 			params->param4 = 0;
 			params->param5 = 0;
 			params->param8 = 0;
@@ -749,14 +740,12 @@ IMPLEMENT_FUNCTION(Mahmud, chapters_handler, 14)
 
 		case 11:
 			getObjects()->update(kObjectCompartment4, kEntityMahmud, kLocation3, kCursorHandKnock, kCursorHand);
-
 			params->param4 = 0;
 			params->param5 = 0;
 			break;
 
 		case 12:
 			getObjects()->update(kObjectCompartment4, kEntityMahmud, kLocation3, kCursorHandKnock, kCursorHand);
-
 			params->param2 = 0;
 			params->param4 = 0;
 			params->param5 = 0;
@@ -794,14 +783,14 @@ IMPLEMENT_FUNCTION(Mahmud, chapter1, 15)
 		getData()->posture = kPostureStanding;
 		getData()->car = kCarGreenSleeping;
 
-		getObjects()->update(kObjectCompartment4, kEntityNone, kLocation3, kCursorHandKnock, kCursorHand);
-		getObjects()->update(kObject20, kEntityNone, kLocation3, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObjectCompartment4, kEntityPlayer, kLocation3, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObject20, kEntityPlayer, kLocation3, kCursorHandKnock, kCursorHand);
 		break;
 	}
 }
 
 //////////////////////////////////////////////////////////////////////////
-IMPLEMENT_FUNCTION(Mahmud, function16, 16)
+IMPLEMENT_FUNCTION(Mahmud, resetChapter, 16)
 	if (savepoint.action != kActionDefault)
 		return;
 
@@ -809,7 +798,7 @@ IMPLEMENT_FUNCTION(Mahmud, function16, 16)
 	getData()->posture = kPostureSitting;
 	getData()->car = kCarGreenSleeping;
 
-	getObjects()->update(kObjectCompartment4, kEntityNone, kLocation3, kCursorHandKnock, kCursorHand);
+	getObjects()->update(kObjectCompartment4, kEntityPlayer, kLocation3, kCursorHandKnock, kCursorHand);
 	getEntities()->clearSequences(kEntityMahmud);
 }
 

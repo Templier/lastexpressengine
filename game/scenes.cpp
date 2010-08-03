@@ -166,7 +166,7 @@ void SceneManager::loadSceneFromItem(InventoryItem item) {
 		return;
 
 	// Get the scene index from the item
-	SceneIndex index = getInventory()->getEntry(item)->scene;
+	SceneIndex index = getInventory()->get(item)->scene;
 	if (!index)
 		return;
 
@@ -187,7 +187,7 @@ void SceneManager::loadSceneFromItemPosition(InventoryItem item) {
 		return;
 
 	// Check item location
-	Inventory::InventoryEntry *entry = getInventory()->getEntry(item);
+	Inventory::InventoryEntry *entry = getInventory()->get(item);
 	if (!entry->location)
 		return;
 
@@ -269,7 +269,7 @@ void SceneManager::drawScene(SceneIndex index) {
 	getFlags()->flag_3 = true;
 
 	if (getFlags()->isGameRunning) {
-		getSavePoints()->pushAll(kEntityNone, kActionDrawScene);
+		getSavePoints()->pushAll(kEntityPlayer, kActionDrawScene);
 		getSavePoints()->process();
 
 		if (_flagNoEntity)
@@ -803,20 +803,20 @@ SceneIndex SceneManager::getSceneIndexFromPosition(CarIndex car, Position positi
 //////////////////////////////////////////////////////////////////////////
 // Scene processing
 //////////////////////////////////////////////////////////////////////////
-#define PROCESS_HOTSPOT_SCENE(hotspot, index) \
-	SceneIndex newScene = getAction()->processHotspot(*hotspot); \
-	if (newScene != kSceneInvalid && newScene != kSceneStopProcessing) \
-		(hotspot)->scene = newScene; \
-	if ((hotspot)->scene && newScene != kSceneStopProcessing) { \
+
+// Process hotspots
+//  - if it returns kSceneInvalid, the hotspot scene has not been modified
+//  - if it returns kSceneNone, it has been modified
+//
+// Note: we use the original hotspot scene to pre-process again
+#define PROCESS_HOTSPOT_SCENE(hotspot, index) { \
+	SceneIndex processedScene = getAction()->processHotspot(*hotspot); \
+	SceneIndex testScene = (processedScene == kSceneInvalid) ? (hotspot)->scene : processedScene; \
+	if (testScene) { \
 		*index = (hotspot)->scene; \
 		preProcessScene(index); \
-	}
-
-#define GET_ENTITY_LOCATION(scene) \
-	getObjects()->get((ObjectIndex)scene->param1).location
-
-#define GET_ITEM_LOCATION(scene, parameter) \
-	getInventory()->getEntry((InventoryItem)scene->parameter)->location
+	} \
+}
 
 void SceneManager::preProcessScene(SceneIndex *index) {
 
@@ -827,65 +827,17 @@ void SceneManager::preProcessScene(SceneIndex *index) {
 	Scene *scene = getScenes()->get(*index);
 
 	switch (scene->type) {
-	case Scene::kTypeItem:
-	case Scene::kTypeItem2:
-	case Scene::kTypeItem3:
-	case Scene::kTypeEntity:
-	case Scene::kTypeEntityItem: {
-		int location = 0;
-		ObjectLocation location1 = kLocationNone, location2 = kLocationNone, location3 = kLocationNone;
-		byte type = scene->type;
+	case Scene::kTypeObject: {
+		ObjectIndex object = (ObjectIndex)scene->param1;
 
-		// Check bounds
-		if (scene->param1 >= ((type == Scene::kTypeEntity || type == Scene::kTypeEntityItem) ? 128 : 32))
+		if (object >= kObjectMax)
 			break;
 
-		if (type != Scene::kTypeItem && scene->param2 >= 32)
-			break;
-
-		if (type == Scene::kTypeItem3 && scene->param3 >= 32)
-			break;
-
-		// Check location
-		if (type == Scene::kTypeEntity || type == Scene::kTypeEntityItem)
-			location1 = GET_ENTITY_LOCATION(scene);
-		else
-			location1 = GET_ITEM_LOCATION(scene, param1);
-
-		if (type != Scene::kTypeItem)
-			location2 = GET_ITEM_LOCATION(scene, param2);
-
-		if (type == Scene::kTypeItem3)
-			location3 = GET_ITEM_LOCATION(scene, param3);
-
-		if (location1)
-			location = 1;
-
-		if (type != Scene::kTypeItem && location2)
-			location |= 2;
-
-		if (type == Scene::kTypeItem3 && location3)
-			location |= 4;
-
-		if (!location)
+		if (getObjects()->get(object).location == kLocationNone)
 			break;
 
 		for (Common::Array<SceneHotspot *>::iterator it = scene->getHotspots()->begin(); it != scene->getHotspots()->end(); ++it) {
-
-			if ((type == Scene::kTypeItem || type == Scene::kTypeEntity)) {
-				if ((*it)->location != location1) {
-					continue;
-				}
-			} else {
-				if ((*it)->location != location
-				 || (*it)->param1 != location1
-				 || (*it)->param2 != location2) {
-					continue;
-				}
-			}
-
-			// Special case for TypeItem3
-			if (type == Scene::kTypeItem3 && (*it)->param3 != location3)
+			if (getObjects()->get(object).location != (*it)->location)
 				continue;
 
 			PROCESS_HOTSPOT_SCENE(*it, index);
@@ -894,25 +846,155 @@ void SceneManager::preProcessScene(SceneIndex *index) {
 		break;
 	}
 
-	case Scene::kType6: {
-		if (scene->param1 >= 128)
+	case Scene::kTypeItem: {
+		InventoryItem item = (InventoryItem)scene->param1;
+
+		if (item >= kPortraitOriginal)
+			break;
+
+		if (getInventory()->get(item)->location == kLocationNone)
+			break;
+
+		for (Common::Array<SceneHotspot *>::iterator it = scene->getHotspots()->begin(); it != scene->getHotspots()->end(); ++it) {
+			if (getInventory()->get(item)->location != (*it)->location)
+				continue;
+
+			PROCESS_HOTSPOT_SCENE(*it, index);
+			break;
+		}
+		break;
+	}
+
+	case Scene::kTypeItem2: {
+		InventoryItem item1 = (InventoryItem)scene->param1;
+		InventoryItem item2 = (InventoryItem)scene->param2;
+
+		if (item1 >= kPortraitOriginal || item2 >= kPortraitOriginal)
+			break;
+
+		int location = kLocationNone;
+
+		if (getInventory()->get(item1)->location != kLocationNone)
+			location = kLocation1;
+
+		if (getInventory()->get(item2)->location != kLocationNone)
+			location |= kLocation2;
+
+		if (!location)
+			break;
+
+		for (Common::Array<SceneHotspot *>::iterator it = scene->getHotspots()->begin(); it != scene->getHotspots()->end(); ++it) {
+			if (location != (*it)->location)
+				continue;
+
+			if (getInventory()->get(item1)->location != (*it)->param1)
+				continue;
+
+			if (getInventory()->get(item2)->location != (*it)->param2)
+				continue;
+
+			PROCESS_HOTSPOT_SCENE(*it, index);
+			break;
+		}
+		break;
+	}
+
+	case Scene::kTypeObjectItem: {
+		ObjectIndex object = (ObjectIndex)scene->param1;
+		InventoryItem item = (InventoryItem)scene->param2;
+
+		if (object >= kObjectMax)
+			break;
+
+		if (item >= kPortraitOriginal)
+			break;
+
+		int location = kLocationNone;
+
+		if (getObjects()->get(object).location == kLocation2)
+			location = kLocation1;
+
+		if (getInventory()->get(item)->location != kLocationNone)
+			location |= kLocation2;
+
+		if (!location)
+			break;
+
+		for (Common::Array<SceneHotspot *>::iterator it = scene->getHotspots()->begin(); it != scene->getHotspots()->end(); ++it) {
+			if (location != (*it)->location)
+				continue;
+
+			if (getObjects()->get(object).location != (*it)->param1)
+				continue;
+
+			if (getInventory()->get(item)->location != (*it)->param2)
+				continue;
+
+			PROCESS_HOTSPOT_SCENE(*it, index);
+			break;
+		}
+		break;
+		break;
+	}
+
+	case Scene::kTypeItem3: {
+		InventoryItem item1 = (InventoryItem)scene->param1;
+		InventoryItem item2 = (InventoryItem)scene->param2;
+		InventoryItem item3 = (InventoryItem)scene->param3;
+
+		if (item1 >= kPortraitOriginal || item2 >= kPortraitOriginal || item3 >= kPortraitOriginal)
+			break;
+
+		int location = kLocationNone;
+
+		if (getInventory()->get(item1)->location != kLocationNone)
+			location = kLocation1;
+
+		if (getInventory()->get(item2)->location != kLocationNone)
+			location |= kLocation2;
+
+		if (getInventory()->get(item3)->location != kLocationNone)
+			location |= kLocation4;
+
+		if (!location)
+			break;
+
+		for (Common::Array<SceneHotspot *>::iterator it = scene->getHotspots()->begin(); it != scene->getHotspots()->end(); ++it) {
+			if (location != (*it)->location)
+				continue;
+
+			if (getInventory()->get(item1)->location != (*it)->param1)
+				continue;
+
+			if (getInventory()->get(item2)->location != (*it)->param2)
+				continue;
+
+			if (getInventory()->get(item3)->location != (*it)->param3)
+				continue;
+
+			PROCESS_HOTSPOT_SCENE(*it, index);
+			break;
+		}
+		break;
+	}
+
+	case Scene::kTypeObjectLocation2: {
+		ObjectIndex object = (ObjectIndex)scene->param1;
+
+		if (object >= kObjectMax)
 			break;
 
 		bool found = false;
-		if (scene->getHotspots()->size() > 0) {
-			for (Common::Array<SceneHotspot *>::iterator it = scene->getHotspots()->begin(); it != scene->getHotspots()->end(); ++it) {
-				// The index might be modified by the action, so reload the scene on each iteration
-				Scene *currentScene = getScenes()->get(*index);
+		for (Common::Array<SceneHotspot *>::iterator it = scene->getHotspots()->begin(); it != scene->getHotspots()->end(); ++it) {
+			if (getObjects()->get(object).location2 != (*it)->location)
+				continue;
 
-				if (getObjects()->get((ObjectIndex)currentScene->param1).location2 == (*it)->location) {
-					PROCESS_HOTSPOT_SCENE(*it, index);
-					found = true;
-					break;
-				}
-			}
+			PROCESS_HOTSPOT_SCENE(*it, index);
+			found = true;
+			break;
 		}
 
-		// If the scene has no hotspot or if we haven't found a proper hotspot, use the first hotspot from the current scene
+		// If we haven't found a proper hotspot, use the first hotspot from the current scene
 		if (!found) {
 			Scene *sceneHotspot = getScenes()->get(*index);
 			SceneHotspot *hotspot = sceneHotspot->getHotspot();
@@ -922,8 +1004,8 @@ void SceneManager::preProcessScene(SceneIndex *index) {
 		break;
 	}
 
-	case Scene::kType7:
-	case Scene::kType8:
+	case Scene::kTypeCompartments:
+	case Scene::kTypeCompartmentsItem:
 		if (scene->param1 >= 16)
 			break;
 
@@ -945,21 +1027,23 @@ void SceneManager::preProcessScene(SceneIndex *index) {
 
 			preProcessScene(index);
 		} else {
-			if (scene->type == Scene::kType7)
+			// Stop processing here for kTypeCompartments
+			if (scene->type == Scene::kTypeCompartments)
 				break;
 
-			if (scene->param2 >= 32)
+			InventoryItem item = (InventoryItem)scene->param2;
+			if (item >= kPortraitOriginal)
 				break;
 
-			ObjectLocation location = getInventory()->getEntry((InventoryItem)scene->param2)->location;
-			if (!location)
+			if (getInventory()->get(item)->location == kLocationNone)
 				break;
 
 			for (Common::Array<SceneHotspot *>::iterator it = scene->getHotspots()->begin(); it != scene->getHotspots()->end(); ++it) {
-				if ((*it)->location == location) {
-					PROCESS_HOTSPOT_SCENE(*it, index);
-					break;
-				}
+				if (getInventory()->get(item)->location != (*it)->location)
+					continue;
+
+				PROCESS_HOTSPOT_SCENE(*it, index);
+				break;
 			}
 		}
 		break;
@@ -969,14 +1053,15 @@ void SceneManager::preProcessScene(SceneIndex *index) {
 	}
 
 	// Sound processing
+	Scene *newScene = getScenes()->get(*index);
 	if (getSound()->isBuffered(kEntityTables4)) {
-		if (getScenes()->get(*index)->type != Scene::kTypeReadText || getScenes()->get(*index)->param1)
+		if (newScene->type != Scene::kTypeReadText || newScene->param1)
 			getSound()->processEntry(kEntityTables4);
 	}
 
-	// Cleanup
+	// Cleanup beetle sequences
 	if (getBeetle()->isLoaded()) {
-		if (getScenes()->get(*index)->type != Scene::kTypeLoadBeetleSequences)
+		if (newScene->type != Scene::kTypeLoadBeetleSequences)
 			getBeetle()->unload();
 	}
 }
@@ -1006,22 +1091,17 @@ void SceneManager::postProcessScene() {
 			}
 		}
 
+		// Process hotspots and load scenes in the list
 		SceneHotspot *hotspot = scene->getHotspot();
-		if (!hotspot) {
-			getAction()->processHotspot(*hotspot);
+		SceneIndex processedScene = getAction()->processHotspot(*hotspot);
+		SceneIndex testScene = (processedScene == kSceneInvalid) ? hotspot->scene : processedScene;
 
-			if (getFlags()->mouseRightClick) {
-				Scene *hotspotScene = getScenes()->get(hotspot->scene);
+		if (getFlags()->mouseRightClick) {
 
-				while (hotspotScene->type == Scene::kTypeList) {
-					hotspot = hotspotScene->getHotspot();
-					if (hotspot) {
-						getAction()->processHotspot(*hotspot);
-
-						// reload the scene
-						hotspotScene = getScenes()->get(hotspot->scene);
-					}
-				}
+			while (getScenes()->get(testScene)->type == Scene::kTypeList) {
+				hotspot = getScenes()->get(testScene)->getHotspot();
+				processedScene = getAction()->processHotspot(*hotspot);
+				testScene = (processedScene == kSceneInvalid) ? hotspot->scene : processedScene;
 			}
 		}
 
@@ -1031,7 +1111,7 @@ void SceneManager::postProcessScene() {
 			EntityIndex entities[39];
 
 			// Init entities
-			entities[0] = kEntityNone;
+			entities[0] = kEntityPlayer;
 
 			uint progress = 0;
 
@@ -1052,20 +1132,19 @@ void SceneManager::postProcessScene() {
 				getSound()->excuseMe((progress == 1) ? entities[0] : entities[random(progress)], kEntityPlayer, SoundManager::kFlagDefault);
 		}
 
-		if (hotspot && hotspot->scene)
+		if (hotspot->scene)
 			setScene(hotspot->scene);
-
 		break;
 	}
 
 	case Scene::kTypeSavePointChapter:
 		if (getProgress().field_18 == 2)
-			getSavePoints()->push(kEntityNone, kEntityChapters, kActionEndChapter);
+			getSavePoints()->push(kEntityPlayer, kEntityChapters, kActionEndChapter);
 		break;
 
 	case Scene::kTypeLoadBeetleSequences:
 		if ((getProgress().chapter == kChapter2 || getProgress().chapter == kChapter3)
-		  && getInventory()->getEntry(kItemBeetle)->location == kLocation3) {
+		  && getInventory()->get(kItemBeetle)->location == kLocation3) {
 			if (!getBeetle()->isLoaded())
 				getBeetle()->load();
 		}
@@ -1076,7 +1155,7 @@ void SceneManager::postProcessScene() {
 			break;
 
 		getSound()->processEntry(SoundManager::kSoundType7);
-		getSound()->playSound(kEntityTrain, "LIB050.SND", SoundManager::kFlagDefault);
+		getSound()->playSound(kEntityTrain, "LIB050", SoundManager::kFlagDefault);
 
 		switch (getProgress().chapter) {
 		default:

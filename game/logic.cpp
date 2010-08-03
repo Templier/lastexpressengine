@@ -137,7 +137,7 @@ void Logic::eventMouse(const Common::Event &ev) {
 	 && !getInventory()->isMagnifierInUse()) {
 
 		 // Update cursor
-		_engine->getCursor()->setStyle(getInventory()->getEntry(kItemWhistle)->cursor);
+		_engine->getCursor()->setStyle(getInventory()->get(kItemWhistle)->cursor);
 
 		// Check if clicked
 		if (ev.type == Common::EVENT_LBUTTONUP && !getSound()->isBuffered("LIB045")) {
@@ -145,9 +145,9 @@ void Logic::eventMouse(const Common::Event &ev) {
 			getSound()->playSoundEvent(kEntityPlayer, 45);
 
 			if (getEntities()->isPlayerPosition(kCarGreenSleeping, 26) || getEntities()->isPlayerPosition(kCarGreenSleeping, 25) || getEntities()->isPlayerPosition(kCarGreenSleeping, 23)) {
-				getSavePoints()->push(kEntityNone, kEntityMertens, kAction226078300);
+				getSavePoints()->push(kEntityPlayer, kEntityMertens, kAction226078300);
 			} else if (getEntities()->isPlayerPosition(kCarRedSleeping, 26) || getEntities()->isPlayerPosition(kCarRedSleeping, 25) || getEntities()->isPlayerPosition(kCarRedSleeping, 23)) {
-				getSavePoints()->push(kEntityNone, kEntityCoudert, kAction226078300);
+				getSavePoints()->push(kEntityPlayer, kEntityCoudert, kAction226078300);
 			}
 
 			if (!getState()->sceneUseBackup)
@@ -165,10 +165,10 @@ void Logic::eventMouse(const Common::Event &ev) {
 	 && !getInventory()->isFlag2()
 	 && !getInventory()->isEggHighlighted()
 	 && !getInventory()->isMagnifierInUse()
-	 && (getInventory()->getEntry(kItem2)->location == kLocationNone || getEntityData(kEntityPlayer)->car != kCarRedSleeping || getEntityData(kEntityPlayer)->entityPosition != kPosition_2300)) {
+	 && (getInventory()->get(kItem2)->location == kLocationNone || getEntityData(kEntityPlayer)->car != kCarRedSleeping || getEntityData(kEntityPlayer)->entityPosition != kPosition_2300)) {
 
 		// Update cursor
-		_engine->getCursor()->setStyle(getInventory()->getEntry(kItemMatch)->cursor);
+		_engine->getCursor()->setStyle(getInventory()->get(kItemMatch)->cursor);
 
 		if (ev.type == Common::EVENT_LBUTTONUP) {
 
@@ -195,17 +195,17 @@ void Logic::eventMouse(const Common::Event &ev) {
 		if (getInventory()->hasItem((InventoryItem)(item & 127))) {
 			hotspotHandled = true;
 
-			_engine->getCursor()->setStyle(getInventory()->getEntry((InventoryItem)(item & 127))->cursor);
+			_engine->getCursor()->setStyle(getInventory()->get((InventoryItem)(item & 127))->cursor);
 
 			if (ev.type == Common::EVENT_LBUTTONUP)
-				getSavePoints()->push(kEntityNone, entityIndex, kAction1, (InventoryItem)(item & 127));
+				getSavePoints()->push(kEntityPlayer, entityIndex, kAction1, (InventoryItem)(item & 127));
 		} else if ((InventoryItem)(item & kItemInvalid)) {
 			hotspotHandled = true;
 
 			_engine->getCursor()->setStyle(kCursorTalk2);
 
 			if (ev.type == Common::EVENT_LBUTTONUP)
-				getSavePoints()->push(kEntityNone, entityIndex, kAction1, kCursorNormal);
+				getSavePoints()->push(kEntityPlayer, entityIndex, kAction1, kCursorNormal);
 		}
 	}
 
@@ -265,14 +265,13 @@ void Logic::eventMouse(const Common::Event &ev) {
 
 	_flagActionPerformed = true;
 
-	SceneIndex newScene = _action->processHotspot(*hotspot);
-	if (newScene != kSceneInvalid && newScene != kSceneStopProcessing)
-		hotspot->scene = newScene;
+	SceneIndex processedScene = getAction()->processHotspot(*hotspot);
+	SceneIndex testScene = (processedScene == kSceneInvalid) ? hotspot->scene : processedScene;
 
-	if (hotspot->scene && newScene != kSceneStopProcessing) {
+	if (testScene) {
 		getFlags()->shouldRedraw = false;
 
-		getScenes()->setScene(hotspot->scene);
+		getScenes()->setScene(testScene);
 
 		if (getFlags()->shouldDrawEggOrHourGlass)
 			getInventory()->drawEgg();
@@ -312,12 +311,12 @@ void Logic::eventTick(const Common::Event &) {
 			// Auto-save
 			if (!_ticksSinceLastSavegame) {
 				_ticksSinceLastSavegame = EVENT_TICKS_BEETWEEN_SAVEGAMES;
-				save(kEntityChapters, kSavegameTypeAuto, kEventNone);
+				getSaveLoad()->saveGame(kSavegameTypeAuto, kEntityChapters, kEventNone);
 			}
 
 			// Save after game ticks interval
 			if ((getState()->timeTicks - getSaveLoad()->getLastSavegameTicks()) > GAME_TICKS_BEETWEEN_SAVEGAMES)
-				save(kEntityChapters, kSavegameTypeTickInterval, kEventNone);
+				getSaveLoad()->saveGame(kSavegameTypeTickInterval, kEntityChapters, kEventNone);
 		}
 	}
 
@@ -331,12 +330,11 @@ void Logic::eventTick(const Common::Event &) {
 
 			// Process hotspot
 			SceneHotspot *hotspot = scene->getHotspot();
-			SceneIndex index = getAction()->processHotspot(*hotspot);
-			if (index != kSceneInvalid && index != kSceneStopProcessing)
-				hotspot->scene = index;
+			SceneIndex processedScene = getAction()->processHotspot(*hotspot);
+			SceneIndex testScene = (processedScene == kSceneInvalid) ? hotspot->scene : processedScene;
 
-			if (hotspot->scene) {
-				getScenes()->setScene(hotspot->scene);
+			if (testScene) {
+				getScenes()->setScene(testScene);
 			} else {
 				getFlags()->flag_0 = false;
 				getFlags()->shouldRedraw = true;
@@ -380,7 +378,7 @@ void Logic::eventTick(const Common::Event &) {
 
 	// Show item cursor on entity
 	if (getInventory()->hasItem((InventoryItem)(getEntityData(entity)->inventoryItem & 127)) && (int)getEntityData(entity)->inventoryItem != (int)kCursorTalk2) {
-		_engine->getCursor()->setStyle(getInventory()->getEntry((InventoryItem)(getEntityData(entity)->inventoryItem & 127))->cursor);
+		_engine->getCursor()->setStyle(getInventory()->get((InventoryItem)(getEntityData(entity)->inventoryItem & 127))->cursor);
 		return;
 	}
 
@@ -442,9 +440,9 @@ void Logic::switchChapter() {
 		break;
 
 	case kChapter3:
-		getInventory()->getEntry(kItemFirebird)->location = kLocation4;
-		getInventory()->getEntry(kItemFirebird)->isPresent = false;
-		getInventory()->getEntry(kItem11)->location = kLocation1;
+		getInventory()->get(kItemFirebird)->location = kLocation4;
+		getInventory()->get(kItemFirebird)->isPresent = false;
+		getInventory()->get(kItem11)->location = kLocation1;
 		getInventory()->addItem(kItemWhistle);
 		getInventory()->addItem(kItemKey);
 
@@ -501,7 +499,7 @@ void Logic::updateCursor(bool) const { /* the cursor is always updated, even whe
 		 || getInventory()->isFlag2()
 		 || getInventory()->isEggHighlighted()
 		 || getInventory()->isMagnifierInUse()
-		 || (getInventory()->getEntry(kItem2)->location
+		 || (getInventory()->get(kItem2)->location
 		  && getEntityData(kEntityPlayer)->car == kCarRedSleeping
 		  && getEntityData(kEntityPlayer)->entityPosition == kPosition_2300)) {
 
@@ -513,7 +511,7 @@ void Logic::updateCursor(bool) const { /* the cursor is always updated, even whe
 			 && !getInventory()->isMagnifierInUse()) {
 				 if (getInventory()->hasItem((InventoryItem)(getEntityData(entity)->inventoryItem & 127))) {
 					 interact = true;
-					 style = getInventory()->getEntry((InventoryItem)(getEntityData(entity)->inventoryItem & 127))->cursor;
+					 style = getInventory()->get((InventoryItem)(getEntityData(entity)->inventoryItem & 127))->cursor;
 				 } else if ((int)getEntityData(entity)->inventoryItem == kItemInvalid) {
 					 interact = true;
 					 style = kCursorTalk2;
@@ -548,11 +546,11 @@ void Logic::updateCursor(bool) const { /* the cursor is always updated, even whe
 				style = (hotspot) ? getAction()->getCursor(*hotspot) : kCursorNormal;
 			}
 		} else {
-			style = getInventory()->getEntry(kItemMatch)->cursor;
+			style = getInventory()->get(kItemMatch)->cursor;
 		}
 
 	} else {
-		style = getInventory()->getEntry(kItemWhistle)->cursor;
+		style = getInventory()->get(kItemWhistle)->cursor;
 	}
 
 	if (getInventory()->isMagnifierInUse())

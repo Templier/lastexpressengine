@@ -169,7 +169,7 @@ IMPLEMENT_FUNCTION(Kahina, chapter1, 10)
 		break;
 
 	case kActionDefault:
-		getObjects()->update(kObjectCompartmentKronos, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObjectCompartmentKronos, kEntityPlayer, kLocation1, kCursorHandKnock, kCursorHand);
 
 		getData()->entityPosition = kPosition_5000;
 		getData()->posture = kPostureStanding;
@@ -199,18 +199,18 @@ IMPLEMENT_FUNCTION(Kahina, function12, 12)
 		TIME_CHECK(kTime1485000, params->param2, setup_function13);
 		break;
 
-	case kAction8:
+	case kActionKnock:
 		getSound()->playSound(kEntityPlayer, "LIB012");
 		// Fallback to next action
 
-	case kAction9:
+	case kActionOpenDoor:
 		if (!getEvent(kEventKronosGoingToInvitation)) {
 			setCallback(1);
 			call(new ENTITY_SETUP(Kahina, setup_savegame), kSavegameType2, kEventKronosGoingToInvitation);
 			break;
 		}
 
-		if (savepoint.action == kAction9)
+		if (savepoint.action == kActionOpenDoor)
 			getSound()->playSound(kEntityPlayer, "LIB014");
 
 		getScenes()->loadSceneFromPosition(kCarKronos, 80);
@@ -270,7 +270,7 @@ label_callback:
 		getData()->entityPosition = kPosition_5000;
 		getData()->posture = kPostureStanding;
 
-		getObjects()->update(kObjectCompartmentKronos, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObjectCompartmentKronos, kEntityPlayer, kLocation1, kCursorHandKnock, kCursorHand);
 
 		params->param1 = getState()->time + 1800;
 		break;
@@ -359,13 +359,13 @@ IMPLEMENT_FUNCTION(Kahina, chapter2Handler, 17)
 
 label_callback_3:
 		if (getState()->time > kTime1845000 && getEvent(kEventKronosConversationFirebird) && getEntities()->isInKronosSalon(kEntityPlayer)) {
-			getObjects()->update(kObjectCompartmentKronos, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
+			getObjects()->update(kObjectCompartmentKronos, kEntityPlayer, kLocation1, kCursorHandKnock, kCursorHand);
 			getScenes()->loadSceneFromPosition(kCarKronos, 87);
 		}
 		break;
 
-	case kAction8:
-	case kAction9:
+	case kActionKnock:
+	case kActionOpenDoor:
 		if (getEvent(kEventKronosConversationFirebird))
 			break;
 
@@ -373,7 +373,7 @@ label_callback_3:
 			if (getSound()->isBuffered(kEntityKahina))
 				getSound()->processEntry(kEntityKahina);
 
-			if (savepoint.action == kAction8)
+			if (savepoint.action == kActionKnock)
 				getSound()->playSound(kEntityPlayer, "LIB012");
 
 			setCallback(4);
@@ -382,7 +382,7 @@ label_callback_3:
 		}
 
 		if (getEvent(kEventMilosCompartmentVisitAugust) || getEvent(kEventTatianaGivePoem) || getEvent(kEventTatianaBreakfastGivePoem)) {
-			if (savepoint.action == kAction8)
+			if (savepoint.action == kActionKnock)
 				getSound()->playSound(kEntityPlayer, "LIB012");
 
 			setCallback(7);
@@ -391,7 +391,7 @@ label_callback_3:
 		}
 
 		if (params->param1) {
-			if (savepoint.action == kAction8)
+			if (savepoint.action == kActionKnock)
 				getSound()->playSound(kEntityPlayer, "LIB012");
 
 			getAction()->playAnimation(kEventKahinaAskSpeak);
@@ -404,8 +404,8 @@ label_callback_3:
 		} else {
 			getObjects()->update(kObjectCompartmentKronos, kEntityKahina, kLocation1, kCursorNormal, kCursorNormal);
 
-			setCallback(savepoint.action == kAction8 ? 9 : 10);
-			call(new ENTITY_SETUP_SIIS(Kahina, setup_playSound), savepoint.action == kAction8 ? "LIB012" : "LIB013");
+			setCallback(savepoint.action == kActionKnock ? 9 : 10);
+			call(new ENTITY_SETUP_SIIS(Kahina, setup_playSound), savepoint.action == kActionKnock ? "LIB012" : "LIB013");
 		}
 		break;
 
@@ -422,7 +422,7 @@ label_callback_3:
 		case 1:
 		case 4:
 			getAction()->playAnimation(kEventKronosConversationFirebird);
-			getObjects()->update(kObjectCompartmentKronos, kEntityNone, kLocationNone, kCursorHandKnock, kCursorHand);
+			getObjects()->update(kObjectCompartmentKronos, kEntityPlayer, kLocationNone, kCursorHandKnock, kCursorHand);
 			getScenes()->loadSceneFromPosition(kCarKronos, 80, 1);
 
 			setCallback(getCallback() == 1 ? 2 : 5);
@@ -497,7 +497,7 @@ IMPLEMENT_FUNCTION(Kahina, function22, 22)
 
 	case kActionNone:
 		if (params->param1) {
-			ObjectLocation location = getInventory()->getEntry(kItemFirebird)->location;
+			ObjectLocation location = getInventory()->get(kItemFirebird)->location;
 
 			if (ENTITY_PARAM(0, 3) || location == kLocation3 || location == kLocation7) {
 				setCallback(1);

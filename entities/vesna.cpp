@@ -205,8 +205,8 @@ IMPLEMENT_FUNCTION(Vesna, function11, 11)
 		parameters->param7 = 0;
 		break;
 
-	case kAction8:
-	case kAction9:
+	case kActionKnock:
+	case kActionOpenDoor:
 		if (parameters->param3) {
 			getObjects()->update(kObjectCompartmentG, kEntityVesna, kLocation3, kCursorNormal, kCursorNormal);
 
@@ -233,8 +233,8 @@ IMPLEMENT_FUNCTION(Vesna, function11, 11)
 
 		getObjects()->update(kObjectCompartmentG, kEntityVesna, kLocation3, kCursorNormal, kCursorNormal);
 
-		setCallback(savepoint.action == kAction8 ? 2 : 1);
-		call(new ENTITY_SETUP_SIIS(Vesna, setup_playSound), savepoint.action == kAction8 ? "LIB012" : "LIB013");
+		setCallback(savepoint.action == kActionKnock ? 2 : 1);
+		call(new ENTITY_SETUP_SIIS(Vesna, setup_playSound), savepoint.action == kActionKnock ? "LIB012" : "LIB013");
 		break;
 
 	case kActionDefault:
@@ -348,7 +348,7 @@ IMPLEMENT_FUNCTION(Vesna, function15, 15)
 		getData()->car = kCarRedSleeping;
 
 		getEntities()->clearSequences(kEntityVesna);
-		getObjects()->update(kObjectCompartmentG, kEntityNone, kLocation3, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObjectCompartmentG, kEntityPlayer, kLocation3, kCursorHandKnock, kCursorHand);
 	}
 }
 
@@ -470,7 +470,7 @@ IMPLEMENT_FUNCTION(Vesna, function26, 26)
 IMPLEMENT_FUNCTION(Vesna, function27, 27)
 	if (savepoint.action == kActionDefault) {
 		getEntities()->clearSequences(kEntityVesna);
-		getObjects()->update(kObjectCompartmentG, kEntityNone, kLocation3, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObjectCompartmentG, kEntityPlayer, kLocation3, kCursorHandKnock, kCursorHand);
 
 		getData()->entityPosition = kPosition_3050;
 		getData()->posture = kPostureSitting;
@@ -503,7 +503,7 @@ IMPLEMENT_FUNCTION(Vesna, chapter5Handler, 29)
 	default:
 		break;
 
-	case kAction9:
+	case kActionOpenDoor:
 		setCallback(1);
 		call(new ENTITY_SETUP(Vesna, setup_savegame), kSavegameType2, kEventCathVesnaRestaurantKilled);
 		break;
@@ -520,7 +520,7 @@ IMPLEMENT_FUNCTION(Vesna, chapter5Handler, 29)
 		break;
 
 	case kAction134427424:
-		getObjects()->update(kObject64, kEntityNone, kLocationNone, kCursorNormal, kCursorForward);
+		getObjects()->update(kObject64, kEntityPlayer, kLocationNone, kCursorNormal, kCursorForward);
 		setup_function30();
 		break;
 	}

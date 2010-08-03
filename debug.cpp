@@ -738,13 +738,13 @@ bool Debugger::cmdBeetle(int argc, const char **argv) {
 
 			// Save current state
 			SceneIndex previousScene = getState()->scene;
-			ObjectLocation previousLocation = getInventory()->getEntry(kItemBeetle)->location;
+			ObjectLocation previousLocation = getInventory()->get(kItemBeetle)->location;
 			ChapterIndex previousChapter = (ChapterIndex)getProgress().chapter;
 
 			// Setup scene & inventory
 			getProgress().chapter = kChapter2;
 			Scene *scene = getScenes()->get(kSceneBeetle);
-			getInventory()->getEntry(kItemBeetle)->location = kLocation3;
+			getInventory()->get(kItemBeetle)->location = kLocation3;
 
 			askForRedraw();
 			redrawScreen();
@@ -814,7 +814,7 @@ bool Debugger::cmdBeetle(int argc, const char **argv) {
 
 			// Restore state
 			getProgress().chapter = previousChapter;
-			getInventory()->getEntry(kItemBeetle)->location = previousLocation;
+			getInventory()->get(kItemBeetle)->location = previousLocation;
 
 			// Restore loaded archive
 			restoreArchive();

@@ -146,7 +146,7 @@ IMPLEMENT_FUNCTION(Francois, function9, 9)
 
 	case kActionDefault:
 		if (getObjects()->get(kObjectCompartmentD).location == kLocation2) {
-			getObjects()->update(kObjectCompartmentD, kEntityNone, kLocationNone, kCursorKeepValue, kCursorKeepValue);
+			getObjects()->update(kObjectCompartmentD, kEntityPlayer, kLocationNone, kCursorKeepValue, kCursorKeepValue);
 			getSavePoints()->push(kEntityFrancois, kEntityMmeBoutarel, kAction134289824);
 			setCallback(1);
 			call(new ENTITY_SETUP_SIIS(Francois, setup_enterExitCompartment), "605Cd", kObjectCompartmentD);
@@ -162,7 +162,7 @@ IMPLEMENT_FUNCTION(Francois, function9, 9)
 			break;
 
 		case 1:
-			getObjects()->update(kObjectCompartmentD, kEntityNone, kLocation2, kCursorKeepValue, kCursorKeepValue);
+			getObjects()->update(kObjectCompartmentD, kEntityPlayer, kLocation2, kCursorKeepValue, kCursorKeepValue);
 			break;
 
 		case 2:
@@ -181,7 +181,7 @@ IMPLEMENT_FUNCTION(Francois, function10, 10)
 
 	case kActionDefault:
 		if (getObjects()->get(kObjectCompartmentD).location == kLocation2) {
-			getObjects()->update(kObjectCompartmentD, kEntityNone, kLocationNone, kCursorKeepValue, kCursorKeepValue);
+			getObjects()->update(kObjectCompartmentD, kEntityPlayer, kLocationNone, kCursorKeepValue, kCursorKeepValue);
 			setCallback(1);
 			call(new ENTITY_SETUP_SIIS(Francois, setup_enterExitCompartment), "605Bd", kObjectCompartmentD);
 		} else {
@@ -196,7 +196,7 @@ IMPLEMENT_FUNCTION(Francois, function10, 10)
 			break;
 
 		case 1:
-			getObjects()->update(kObjectCompartmentD, kEntityNone, kLocation2, kCursorKeepValue, kCursorKeepValue);
+			getObjects()->update(kObjectCompartmentD, kEntityPlayer, kLocation2, kCursorKeepValue, kCursorKeepValue);
 			getSavePoints()->push(kEntityFrancois, kEntityMmeBoutarel, kAction102484312);
 			break;
 
@@ -335,7 +335,7 @@ IMPLEMENT_FUNCTION(Francois, chapter2Handler, 22)
 			break;
 
 		case 2:
-			getObjects()->update(kObjectCompartmentD, kEntityNone, kLocation2, kCursorKeepValue, kCursorKeepValue);
+			getObjects()->update(kObjectCompartmentD, kEntityPlayer, kLocation2, kCursorKeepValue, kCursorKeepValue);
 			getSavePoints()->push(kEntityFrancois, kEntityMmeBoutarel, kAction100957716);
 			getData()->entityPosition = kPosition_5790;
 			getData()->posture = kPostureSitting;
@@ -433,7 +433,7 @@ IMPLEMENT_FUNCTION(Francois, chapter5, 28)
 IMPLEMENT_FUNCTION(Francois, chapter5Handler, 29)
 	if (savepoint.action == kActionProceedChapter5) {
 		if (!getInventory()->hasItem(kItemWhistle)
-		  && getInventory()->getEntry(kItemWhistle)->location != kLocation3)
+		  && getInventory()->get(kItemWhistle)->location != kLocation3)
 		  getInventory()->setLocationAndProcess(kItemWhistle, kLocation1);
 
 		setup_function30();

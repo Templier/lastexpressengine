@@ -90,7 +90,7 @@ public:
 		kActionPlaySounds = 7,
 		kActionPlayAnimation = 8,
 		kActionOpenCloseObject = 9,
-		kAction10 = 10,
+		kActionObjectUpdateLocation2 = 10,
 		kActionSetItemLocation = 11,
 		kAction12 = 12,
 		kActionPickItem = 13,
@@ -143,7 +143,7 @@ public:
 	uint32 coordsOffset;
 	SceneIndex scene;
 	byte location;
-	byte action;
+	Action action;
 	byte param1;
 	byte param2;
 	byte param3;
@@ -181,14 +181,14 @@ public:
 	// Enumerations
 	enum Type {
 		// PreProcess
-		kTypeEntity = 1,
+		kTypeObject = 1,
 		kTypeItem = 2,
 		kTypeItem2 = 3,
-		kTypeEntityItem = 4,
+		kTypeObjectItem = 4,
 		kTypeItem3 = 5,
-		kType6 = 6,
-		kType7 = 7,
-		kType8 = 8,
+		kTypeObjectLocation2 = 6,
+		kTypeCompartments = 7,
+		kTypeCompartmentsItem = 8,
 
 		// PostProcess
 		kTypeList = 128,

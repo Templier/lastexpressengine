@@ -221,7 +221,7 @@ bool Inventory::handleMouseEvent(const Common::Event &ev) {
 					if (_entries[i].isSelectable) {
 						selected = true;
 						_selectedItem = (InventoryItem)i;
-						drawItem(44, 0, getEntry(_selectedItem)->cursor, 100)
+						drawItem(44, 0, get(_selectedItem)->cursor, 100)
 					}
 
 					examine((InventoryItem)i);
@@ -333,7 +333,7 @@ void Inventory::showHourGlass() const{
 //////////////////////////////////////////////////////////////////////////
 // Items
 //////////////////////////////////////////////////////////////////////////
-Inventory::InventoryEntry *Inventory::getEntry(InventoryItem item) {
+Inventory::InventoryEntry *Inventory::get(InventoryItem item) {
 	if (item >= kPortraitOriginal)
 		error("Inventory::getEntry: Invalid inventory item!");
 
@@ -344,12 +344,12 @@ void Inventory::addItem(InventoryItem item) {
 	if (item >= kPortraitOriginal)
 		return;
 
-	getEntry(item)->isPresent = true;
-	getEntry(item)->location = kLocationNone;
+	get(item)->isPresent = true;
+	get(item)->location = kLocationNone;
 
 	// Auto-select item if necessary
-	if (getEntry(item)->cursor && !getEntry(item)->manualSelect) {
-		_selectedItem = (InventoryItem)getEntry(item)->cursor;
+	if (get(item)->cursor && !get(item)->manualSelect) {
+		_selectedItem = (InventoryItem)get(item)->cursor;
 		drawItem(44, 0, _selectedItem, 100)
 		askForRedraw();
 	}
@@ -359,10 +359,10 @@ void Inventory::removeItem(InventoryItem item, ObjectLocation newLocation) {
 	if (item >= kPortraitOriginal)
 		return;
 
-	getEntry(item)->isPresent = false;
-	getEntry(item)->location = newLocation;
+	get(item)->isPresent = false;
+	get(item)->location = newLocation;
 
-	if (getEntry(item)->cursor == (CursorStyle)_selectedItem) {
+	if (get(item)->cursor == (CursorStyle)_selectedItem) {
 		_selectedItem = kItemNone;
 		_engine->getGraphicsManager()->clear(GraphicsManager::kBackgroundInventory, Common::Rect(44, 0, 44 + 32, 32));
 		askForRedraw();
@@ -370,7 +370,7 @@ void Inventory::removeItem(InventoryItem item, ObjectLocation newLocation) {
 }
 
 bool Inventory::hasItem(InventoryItem item) {
-	if (getEntry(item)->isPresent && item < kPortraitOriginal)
+	if (get(item)->isPresent && item < kPortraitOriginal)
 		return true;
 
 	return false;
@@ -379,7 +379,7 @@ bool Inventory::hasItem(InventoryItem item) {
 void Inventory::selectItem(InventoryItem item) {
 	_selectedItem = item;
 
-	drawItem(44, 0, getEntry(_selectedItem)->cursor, 100)
+	drawItem(44, 0, get(_selectedItem)->cursor, 100)
 	askForRedraw();
 }
 
@@ -394,10 +394,10 @@ void Inventory::setLocationAndProcess(InventoryItem item, ObjectLocation locatio
 	if (item >= kPortraitOriginal)
 		return;
 
-	if (getEntry(item)->location == location)
+	if (get(item)->location == location)
 		return;
 
-	getEntry(item)->location = location;
+	get(item)->location = location;
 
 	if (isItemSceneParameter(item) && !getFlags()->flag_0)
 		getScenes()->processScene();
@@ -445,7 +445,7 @@ bool Inventory::isItemSceneParameter(InventoryItem item) const {
 			return true;
 		break;
 
-	case Scene::kTypeEntityItem:
+	case Scene::kTypeObjectItem:
 		if (scene->param2 == item)
 			return true;
 		break;
@@ -455,7 +455,7 @@ bool Inventory::isItemSceneParameter(InventoryItem item) const {
 			return true;
 		break;
 
-	case Scene::kType8:
+	case Scene::kTypeCompartmentsItem:
 		if (scene->param2 == item)
 			return true;
 		break;
@@ -466,7 +466,7 @@ bool Inventory::isItemSceneParameter(InventoryItem item) const {
 
 // Examine an inventory item
 void Inventory::examine(InventoryItem item) {
-	SceneIndex index = getEntry(item)->scene;
+	SceneIndex index = get(item)->scene;
 	if (!index)
 		return;
 
@@ -511,7 +511,7 @@ void Inventory::drawBlinkingEgg() {
 	//// Play timer sound
 	//if (getGlobalTimer() < 90) {
 	//	if (getGlobalTimer() + ticks >= 90)
-	//		getSound()->playSoundWithSubtitles("TIMER.SND", 50331664, kEntityNone);
+	//		getSound()->playSoundWithSubtitles("TIMER.SND", 50331664, kEntityPlayer);
 
 	//	if (getSound()->isBuffered("TIMER"))
 	//		setGlobalTimer(0);

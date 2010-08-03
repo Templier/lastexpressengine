@@ -344,9 +344,9 @@ Action::Action(LastExpressEngine *engine) : _engine(engine) {
 	ADD_ACTION(playSounds);
 	ADD_ACTION(playAnimation);
 	ADD_ACTION(openCloseObject);
-	ADD_ACTION(10);
+	ADD_ACTION(updateObjetLocation2);
 	ADD_ACTION(setItemLocation);
-	ADD_ACTION(12);
+	ADD_ACTION(knockNoSound);
 	ADD_ACTION(pickItem);
 	ADD_ACTION(dropItem);
 	ADD_ACTION(dummy);
@@ -375,8 +375,8 @@ Action::Action(LastExpressEngine *engine) : _engine(engine) {
 	ADD_ACTION(eggBox);
 	ADD_ACTION(39);
 	ADD_ACTION(bed);
-	ADD_ACTION(41);
-	ADD_ACTION(42);
+	ADD_ACTION(playMusicChapter);
+	ADD_ACTION(playMusicChapterSetupTrain);
 	ADD_ACTION(switchChapter);
 	ADD_ACTION(44);
 }
@@ -393,7 +393,7 @@ Action::~Action() {
 // Processing hotspot
 //////////////////////////////////////////////////////////////////////////
 SceneIndex Action::processHotspot(const SceneHotspot &hotspot) {
-	if (!hotspot.action || hotspot.action >= _actions.size())
+	if (!hotspot.action || hotspot.action >= (int)_actions.size())
 		return kSceneInvalid;
 
 	return (*_actions[hotspot.action])(hotspot);
@@ -442,7 +442,7 @@ IMPLEMENT_ACTION(inventory) {
 //////////////////////////////////////////////////////////////////////////
 // Action 2
 IMPLEMENT_ACTION(savePoint) {
-	getSavePoints()->push(kEntityNone, (EntityIndex)hotspot.param1, (ActionIndex)hotspot.param2);
+	getSavePoints()->push(kEntityPlayer, (EntityIndex)hotspot.param1, (ActionIndex)hotspot.param2);
 
 	return kSceneInvalid;
 }
@@ -452,10 +452,7 @@ IMPLEMENT_ACTION(savePoint) {
 IMPLEMENT_ACTION(playSound) {
 
 	// Check that the file is not already buffered
-	char filename[8];
-	sprintf((char *)&filename, "LIB%03d", hotspot.param1);
-
-	if (hotspot.param2 || !getSound()->isBuffered(filename, true))
+	if (hotspot.param2 || !getSound()->isBuffered(Common::String::printf("LIB%03d", hotspot.param1), true))
 		getSound()->playSoundEvent(kEntityPlayer, hotspot.param1, hotspot.param2);
 
 	return kSceneInvalid;
@@ -465,11 +462,9 @@ IMPLEMENT_ACTION(playSound) {
 // Action 4
 IMPLEMENT_ACTION(playMusic) {
 	// Check that the file is not already buffered
-	char filename[8];
-	sprintf((char *)&filename, "MUS%03d", hotspot.param1);
+	Common::String filename = Common::String::printf("MUS%03d", hotspot.param1);
 
-	if (!getSound()->isBuffered(filename) &&
-	   (hotspot.param1 != 50 || getProgress().chapter == kChapter5))
+	if (!getSound()->isBuffered(filename) && (hotspot.param1 != 50 || getProgress().chapter == kChapter5))
 		getSound()->playSound(kEntityPlayer, filename, SoundManager::kFlagDefault, hotspot.param2);
 
 	return kSceneInvalid;
@@ -479,12 +474,11 @@ IMPLEMENT_ACTION(playMusic) {
 // Action 5
 IMPLEMENT_ACTION(knock) {
 	ObjectIndex object = (ObjectIndex)hotspot.param1;
-
 	if (object >= kObjectMax)
 		return kSceneInvalid;
 
 	if (getObjects()->get(object).entity) {
-		getSavePoints()->push(kEntityNone, getObjects()->get(object).entity, kAction8, object);
+		getSavePoints()->push(kEntityPlayer, getObjects()->get(object).entity, kActionKnock, object);
 	} else {
 		if (!getSound()->isBuffered("LIB012", true))
 			getSound()->playSoundEvent(kEntityPlayer, 12);
@@ -502,7 +496,7 @@ IMPLEMENT_ACTION(compartment) {
 		return kSceneInvalid;
 
 	if (getObjects()->get(object).entity) {
-		getSavePoints()->push(kEntityNone, getObjects()->get(object).entity, kAction9, object);
+		getSavePoints()->push(kEntityPlayer, getObjects()->get(object).entity, kActionOpenDoor, object);
 
 		// Stop processing further
 		return kSceneNone;
@@ -532,7 +526,7 @@ IMPLEMENT_ACTION(compartment) {
 		getSound()->playSoundEvent(kEntityPlayer, 32);
 
 		if ((object >= kObjectCompartment1 && object <= kObjectCompartment3) || (object >= kObjectCompartmentA && object <= kObjectCompartmentF))
-			getObjects()->update(object, kEntityNone, kLocationNone, kCursorHandKnock, kCursorHand);
+			getObjects()->update(object, kEntityPlayer, kLocationNone, kCursorHandKnock, kCursorHand);
 
 		getSound()->playSoundEvent(kEntityPlayer, 15, 22);
 		getInventory()->unselectItem();
@@ -540,7 +534,7 @@ IMPLEMENT_ACTION(compartment) {
 		return kSceneInvalid;
 	}
 
-	if (hotspot.action != 16 || getInventory()->getSelectedItem() != kItemKey) {
+	if (hotspot.action != SceneHotspot::kActionEnterCompartment || getInventory()->getSelectedItem() != kItemKey) {
 		if (object == kObjectCageMax) {
 			getSound()->playSoundEvent(kEntityPlayer, 26);
 		} else {
@@ -550,7 +544,7 @@ IMPLEMENT_ACTION(compartment) {
 		return kSceneInvalid;
 	}
 
-	getObjects()->update(kObjectCompartment1, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
+	getObjects()->update(kObjectCompartment1, kEntityPlayer, kLocation1, kCursorHandKnock, kCursorHand);
 	getSound()->playSoundEvent(kEntityPlayer, 16);
 	getInventory()->unselectItem();
 
@@ -570,7 +564,7 @@ IMPLEMENT_ACTION(playSounds) {
 //////////////////////////////////////////////////////////////////////////
 // Action 8
 IMPLEMENT_ACTION(playAnimation) {
-	if (getEvent(hotspot.param1))
+	if (hotspot.param1 >= _animationListSize || getEvent(hotspot.param1))
 		return kSceneInvalid;
 
 	playAnimation((EventIndex)hotspot.param1);
@@ -595,6 +589,9 @@ IMPLEMENT_ACTION(openCloseObject) {
 	bool isNotWindow = ((object <= kObjectCompartment8  || object >= kObjectHandleBathroom) && (object <= kObjectCompartmentH || object >= kObject48));
 
 	switch (location) {
+	default:
+		break;
+
 	case kLocation1:
 		if (isNotWindow)
 			getSound()->playSoundEvent(kEntityPlayer, 24);
@@ -608,9 +605,6 @@ IMPLEMENT_ACTION(openCloseObject) {
 		else
 			getSound()->playSoundEvent(kEntityPlayer, 20);
 		break;
-
-	default:
-		break;
 	}
 
 	return kSceneInvalid;
@@ -618,13 +612,14 @@ IMPLEMENT_ACTION(openCloseObject) {
 
 //////////////////////////////////////////////////////////////////////////
 // Action 10
-IMPLEMENT_ACTION(10) {
+IMPLEMENT_ACTION(updateObjetLocation2) {
 	ObjectIndex object = (ObjectIndex)hotspot.param1;
+	ObjectLocation location = (ObjectLocation)hotspot.param2;
 
 	if (object >= kObjectMax)
 		return kSceneInvalid;
 
-	getObjects()->updateLocation2(object, (ObjectLocation)hotspot.param2);
+	getObjects()->updateLocation2(object, location);
 
 	if (object != kObject112 || getSound()->isBuffered("LIB096")) {
 		if (object == 1)
@@ -640,15 +635,17 @@ IMPLEMENT_ACTION(10) {
 // Action 11
 IMPLEMENT_ACTION(setItemLocation) {
 	InventoryItem item = (InventoryItem)hotspot.param1;
-	Inventory::InventoryEntry* entry = getInventory()->getEntry(item);
+	if (item >= kPortraitOriginal)
+		return kSceneInvalid;
 
+	Inventory::InventoryEntry* entry = getInventory()->get(item);
 	if (!entry->isPresent)
 		return kSceneInvalid;
 
 	entry->location = (ObjectLocation)hotspot.param2;
 
 	if (item == kItemCorpse) {
-		ObjectLocation corpseLocation = getInventory()->getEntry(kItemCorpse)->location;
+		ObjectLocation corpseLocation = getInventory()->get(kItemCorpse)->location;
 
 		if (corpseLocation == kLocation3 || corpseLocation == kLocation4)
 			getProgress().eventCorpseMovedFromFloor = 1;
@@ -661,14 +658,13 @@ IMPLEMENT_ACTION(setItemLocation) {
 
 //////////////////////////////////////////////////////////////////////////
 // Action 12
-IMPLEMENT_ACTION(12) {
+IMPLEMENT_ACTION(knockNoSound) {
 	ObjectIndex object = (ObjectIndex)hotspot.param1;
-
 	if (object >= kObjectMax)
 		return kSceneInvalid;
 
 	if (getObjects()->get(object).entity)
-		getSavePoints()->push(kEntityNone, getObjects()->get(object).entity, kAction8, object);
+		getSavePoints()->push(kEntityPlayer, getObjects()->get(object).entity, kActionKnock, object);
 
 	return kSceneInvalid;
 }
@@ -677,12 +673,15 @@ IMPLEMENT_ACTION(12) {
 // Action 13
 IMPLEMENT_ACTION(pickItem) {
 	InventoryItem item = (InventoryItem)hotspot.param1;
-	Inventory::InventoryEntry* entry = getInventory()->getEntry(item);
-	byte location = hotspot.param2;
+	ObjectLocation location = (ObjectLocation)hotspot.param2;
 	bool process = (hotspot.scene == 0);
-	SceneIndex continueProcess = kSceneInvalid;
+	SceneIndex sceneIndex = kSceneInvalid;
 
-	if (item >= kPortraitOriginal || !entry->location)
+	if (item >= kPortraitOriginal)
+		return kSceneInvalid;
+
+	Inventory::InventoryEntry* entry = getInventory()->get(item);
+	if (!entry->location)
 		return kSceneInvalid;
 
 	// Special case for corpse
@@ -695,6 +694,9 @@ IMPLEMENT_ACTION(pickItem) {
 	getInventory()->addItem(item);
 
 	switch (item) {
+	default:
+		break;
+
 	case kItemGreenJacket:
 		pickGreenJacket(process);
 		break;
@@ -710,7 +712,7 @@ IMPLEMENT_ACTION(pickItem) {
 			break;
 
 		getInventory()->addItem(kItemParchemin);
-		getInventory()->getEntry(kItem11)->location = kLocation1;
+		getInventory()->get(kItem11)->location = kLocation1;
 		getSound()->playSoundEvent(kEntityPlayer, 9);
 		break;
 
@@ -721,31 +723,28 @@ IMPLEMENT_ACTION(pickItem) {
 	case kItemBriefcase:
 		getSound()->playSoundEvent(kEntityPlayer, 83);
 		break;
-
-	default:
-		break;
 	}
 
 	// Load item scene
-	if (getInventory()->getEntry(item)->scene) {
+	if (getInventory()->get(item)->scene) {
 		if (!getState()->sceneUseBackup) {
 			getState()->sceneUseBackup = true;
 			getState()->sceneBackup = (hotspot.scene ? hotspot.scene : getState()->scene);
 		}
 
-		getScenes()->loadScene(getInventory()->getEntry(item)->scene);
+		getScenes()->loadScene(getInventory()->get(item)->scene);
 
 		// do not process further
-		continueProcess = kSceneStopProcessing;
+		sceneIndex = kSceneNone;
 	}
 
 	// Select item
-	if (getInventory()->getEntry(item)->isSelectable) {
+	if (getInventory()->get(item)->isSelectable) {
 		getInventory()->selectItem(item);
-		_engine->getCursor()->setStyle(getInventory()->getEntry(item)->cursor);
+		_engine->getCursor()->setStyle(getInventory()->get(item)->cursor);
 	}
 
-	return continueProcess;
+	return sceneIndex;
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -770,13 +769,13 @@ IMPLEMENT_ACTION(dropItem) {
 
 		if (location == kLocation2) {
 			if (!getProgress().field_58) {
-				save(kEntityPlayer, kSavegameType0, kEventNone);
+				getSaveLoad()->saveGame(kSavegameType1, kEntityPlayer, kEventNone);
 				getProgress().field_58 = 1;
 			}
 
-			if (getInventory()->getEntry(kItemParchemin)->location == kLocation2) {
+			if (getInventory()->get(kItemParchemin)->location == kLocation2) {
 				getInventory()->addItem(kItemParchemin);
-				getInventory()->getEntry(kItem11)->location = kLocation11;
+				getInventory()->get(kItem11)->location = kLocation1;
 				getSound()->playSoundEvent(kEntityPlayer, 9);
 			}
 		}
@@ -800,36 +799,33 @@ IMPLEMENT_ACTION(dropItem) {
 //////////////////////////////////////////////////////////////////////////
 // Action 16
 IMPLEMENT_ACTION(enterCompartment) {
-	if (getObjects()->get(kObjectCompartment1).location == 1 || getObjects()->get(kObjectCompartment1).location == 3 || getInventory()->getSelectedItem() == kItemKey) {
-		action_compartment(hotspot);
-		return kSceneInvalid;
-	}
+	if (getObjects()->get(kObjectCompartment1).location == kLocation1 || getObjects()->get(kObjectCompartment1).location == kLocation3 || getInventory()->getSelectedItem() == kItemKey)
+		return action_compartment(hotspot);
 
 	if (getProgress().eventCorpseFound) {
-		if (hotspot.action != 16 || getInventory()->getEntry(kItemBriefcase)->location != 2) {
-			action_compartment(hotspot);
-		} else {
-			getSound()->playSoundEvent(kEntityPlayer, 14);
-			getSound()->playSoundEvent(kEntityPlayer, 15, 22);
+		if (hotspot.action != SceneHotspot::kActionEnterCompartment || getInventory()->get(kItemBriefcase)->location != kLocation2)
+			return action_compartment(hotspot);
 
-			if (getProgress().field_78) {
-				getSound()->playSound(kEntityPlayer, "MUS003", SoundManager::kFlagDefault);
-				getProgress().field_78 = 0;
-			}
+		getSound()->playSoundEvent(kEntityPlayer, 14);
+		getSound()->playSoundEvent(kEntityPlayer, 15, 22);
 
-			getScenes()->loadSceneFromPosition(kCarGreenSleeping, 77);
-			return kSceneNone;
+		if (getProgress().field_78 && !getSound()->isBuffered("MUS003")) {
+			getSound()->playSound(kEntityPlayer, "MUS003", SoundManager::kFlagDefault);
+			getProgress().field_78 = 0;
 		}
-	} else {
-		save(kEntityPlayer, kSavegameType0, kEventNone);
-		getSound()->playSound(kEntityPlayer, "LIB014");
-		playAnimation(kEventCathFindCorpse);
-		getSound()->playSound(kEntityPlayer, "LIB015");
-		getProgress().eventCorpseFound = 1;
-		return kSceneCompartmentCorpse;
+
+		getScenes()->loadSceneFromPosition(kCarGreenSleeping, 77);
+
+		return kSceneNone;
 	}
 
-	return kSceneInvalid;
+	getSaveLoad()->saveGame(kSavegameType1, kEntityPlayer, kEventNone);
+	getSound()->playSound(kEntityPlayer, "LIB014");
+	playAnimation(kEventCathFindCorpse);
+	getSound()->playSound(kEntityPlayer, "LIB015");
+	getProgress().eventCorpseFound = 1;
+
+	return kSceneCompartmentCorpse;
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -840,7 +836,7 @@ IMPLEMENT_ACTION(enterCompartment) {
 IMPLEMENT_ACTION(getOutsideTrain) {
 	ObjectIndex object = (ObjectIndex)hotspot.param1;
 
-	if ((getEvent(kEventCathLookOutsideWindowDay) || getEvent(kEventCathLookOutsideWindowNight) || getObjects()->get(kObjectCompartment1).location2)
+	if ((getEvent(kEventCathLookOutsideWindowDay) || getEvent(kEventCathLookOutsideWindowNight) || getObjects()->get(kObjectCompartment1).location2 == kLocation1)
 	  && getProgress().isTrainRunning
 	  && (object != kObjectOutsideAnnaCompartment || (!getEntities()->isSitting(kEntityRebecca, kCarRedSleeping, kPosition_4840) && getObjects()->get(kObjectOutsideBetweenCompartments).location == kLocation2))
 	  && getInventory()->getSelectedItem() != kItemFirebird
@@ -997,14 +993,14 @@ IMPLEMENT_ACTION(climbDownTrain) {
 IMPLEMENT_ACTION(jumpUpDownTrain) {
 	switch (hotspot.param1) {
 	default:
-		error("Action::action_jumpUpDownTrain: Invalid hotspot.param1 value (%d)", hotspot.param1);
+		break;
 
 	case 1:
-		getSavePoints()->push(kEntityNone, kEntityChapters, kActionBreakCeiling);
+		getSavePoints()->push(kEntityPlayer, kEntityChapters, kActionBreakCeiling);
 		break;
 
 	case 2:
-		getSavePoints()->push(kEntityNone, kEntityChapters, kActionJumpDownCeiling);
+		getSavePoints()->push(kEntityPlayer, kEntityChapters, kActionJumpDownCeiling);
 		break;
 
 	case 3:
@@ -1015,7 +1011,7 @@ IMPLEMENT_ACTION(jumpUpDownTrain) {
 		}
 
 		// Show animation with or without briefcase
-		playAnimation((getInventory()->getEntry(kItemBriefcase)->location - 3) ? kEventCathJumpUpCeilingBriefcase : kEventCathJumpUpCeiling);
+		playAnimation((getInventory()->get(kItemBriefcase)->location - 3) ? kEventCathJumpUpCeilingBriefcase : kEventCathJumpUpCeiling);
 
 		if (!hotspot.scene)
 			getScenes()->processScene();
@@ -1024,7 +1020,7 @@ IMPLEMENT_ACTION(jumpUpDownTrain) {
 
 	case 4:
 		if (getProgress().chapter == kChapter1)
-			getSavePoints()->push(kEntityNone, kEntityKronos, kAction202621266);
+			getSavePoints()->push(kEntityPlayer, kEntityKronos, kAction202621266);
 		break;
 	}
 
@@ -1072,7 +1068,7 @@ IMPLEMENT_ACTION(unbound) {
 		break;
 
 	case 5:
-		getSavePoints()->push(kEntityNone, kEntityIvo, kAction192637492);
+		getSavePoints()->push(kEntityPlayer, kEntityIvo, kAction192637492);
 		break;
 	}
 
@@ -1087,7 +1083,7 @@ IMPLEMENT_ACTION(25) {
 		break;
 
 	case 1:
-		getSavePoints()->push(kEntityNone, kEntityAnna, kAction272177921);
+		getSavePoints()->push(kEntityPlayer, kEntityAnna, kAction272177921);
 		break;
 
 	case 2:
@@ -1097,11 +1093,9 @@ IMPLEMENT_ACTION(25) {
 
 	case 3:
 		getSound()->playSoundEvent(kEntityPlayer, 43);
-		if (!getInventory()->hasItem(kItemKey)) {
-			if (!getEvent(kEventAnnaBagageArgument)) {
-				RESET_ENTITY_STATE(kEntityAnna, Anna, setup_bagage);
-				return kSceneNone;
-			}
+		if (!getInventory()->hasItem(kItemKey) && !getEvent(kEventAnnaBagageArgument)) {
+			RESET_ENTITY_STATE(kEntityAnna, Anna, setup_bagage);
+			return kSceneNone;
 		}
 		break;
 	}
@@ -1117,28 +1111,28 @@ IMPLEMENT_ACTION(26) {
 		return kSceneInvalid;
 
 	case 1:
-		getSavePoints()->push(kEntityNone, kEntityChapters, kAction158610240);
-		return kSceneInvalid;
+		getSavePoints()->push(kEntityPlayer, kEntityChapters, kAction158610240);
+		break;
 
 	case 2:
-		getSavePoints()->push(kEntityNone, kEntityChapters, kAction225367984);
+		getSavePoints()->push(kEntityPlayer, kEntityChapters, kAction225367984);
 		getInventory()->unselectItem();
-		break;
+		return kSceneNone;
 
 	case 3:
-		getSavePoints()->push(kEntityNone, kEntityChapters, kAction191001984);
-		break;
+		getSavePoints()->push(kEntityPlayer, kEntityChapters, kAction191001984);
+		return kSceneNone;
 
 	case 4:
-		getSavePoints()->push(kEntityNone, kEntityChapters, kAction201959744);
-		break;
+		getSavePoints()->push(kEntityPlayer, kEntityChapters, kAction201959744);
+		return kSceneNone;
 
 	case 5:
-		getSavePoints()->push(kEntityNone, kEntityChapters, kAction169300225);
+		getSavePoints()->push(kEntityPlayer, kEntityChapters, kAction169300225);
 		break;
 	}
 
-	return kSceneNone;
+	return kSceneInvalid;
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -1152,11 +1146,11 @@ IMPLEMENT_ACTION(27) {
 		break;
 
 	case kCarGreenSleeping:
-		getSavePoints()->push(kEntityNone, kEntityMertens, kAction225358684, hotspot.param1);
+		getSavePoints()->push(kEntityPlayer, kEntityMertens, kAction225358684, hotspot.param1);
 		break;
 
 	case kCarRedSleeping:
-		getSavePoints()->push(kEntityNone, kEntityCoudert, kAction225358684, hotspot.param1);
+		getSavePoints()->push(kEntityPlayer, kEntityCoudert, kAction225358684, hotspot.param1);
 		break;
 	}
 
@@ -1191,9 +1185,7 @@ IMPLEMENT_ACTION(29) {
 	getProgress().field_C = 1;
 	getSound()->playSoundEvent(kEntityPlayer, hotspot.param1, hotspot.param2);
 
-	char filename[8];
-	sprintf((char *)&filename, "MUS%03d", hotspot.param3);
-
+	Common::String filename = Common::String::printf("MUS%03d", hotspot.param3);
 	if (!getSound()->isBuffered(filename))
 		getSound()->playSound(kEntityPlayer, filename, SoundManager::kFlagDefault);
 
@@ -1208,8 +1200,8 @@ IMPLEMENT_ACTION(catchBeetle) {
 
 	if (getBeetle()->catchBeetle()) {
 		getBeetle()->unload();
-		getInventory()->getEntry(kItemBeetle)->location = kLocation1;
-		getSavePoints()->push(kEntityNone, kEntityChapters, kAction202613084);
+		getInventory()->get(kItemBeetle)->location = kLocation1;
+		getSavePoints()->push(kEntityPlayer, kEntityChapters, kActionCatchBeetle);
 	}
 
 	return kSceneInvalid;
@@ -1218,17 +1210,15 @@ IMPLEMENT_ACTION(catchBeetle) {
 //////////////////////////////////////////////////////////////////////////
 // Action 31
 IMPLEMENT_ACTION(exitCompartment) {
-	if (!getProgress().field_30 && getProgress().jacket != 0) {
-		save(kEntityPlayer, kSavegameType0, kEventNone);
+	if (!getProgress().field_30 && getProgress().jacket != kJacketOriginal) {
+		getSaveLoad()->saveGame(kSavegameType1, kEntityPlayer, kEventNone);
 		getProgress().field_30 = 1;
 	}
 
 	getObjects()->updateLocation2(kObjectCompartment1, (ObjectLocation)hotspot.param2);
 
 	// fall to case enterCompartment action
-	action_enterCompartment(hotspot);
-
-	return kSceneInvalid;
+	return action_enterCompartment(hotspot);
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -1239,33 +1229,33 @@ IMPLEMENT_ACTION(32) {
 		break;
 
 	case 1:
-		getSavePoints()->push(kEntityNone, kEntitySalko, kAction167992577);
+		getSavePoints()->push(kEntityPlayer, kEntitySalko, kAction167992577);
 		break;
 
 	case 2:
-		getSavePoints()->push(kEntityNone, kEntityVesna, kAction202884544);
+		getSavePoints()->push(kEntityPlayer, kEntityVesna, kAction202884544);
 		break;
 
 	case 3:
 		if (getProgress().chapter == kChapter5) {
-			getSavePoints()->push(kEntityNone, kEntityAbbot, kAction168646401);
-			getSavePoints()->push(kEntityNone, kEntityMilos, kAction168646401);
+			getSavePoints()->push(kEntityPlayer, kEntityAbbot, kAction168646401);
+			getSavePoints()->push(kEntityPlayer, kEntityMilos, kAction168646401);
 		} else {
-			getSavePoints()->push(kEntityNone, kEntityTrain, kAction203339360);
+			getSavePoints()->push(kEntityPlayer, kEntityTrain, kAction203339360);
 		}
 		// Stop processing further scenes
 		return kSceneNone;
 
 	case 4:
-		getSavePoints()->push(kEntityNone, kEntityMilos, kAction169773228);
+		getSavePoints()->push(kEntityPlayer, kEntityMilos, kAction169773228);
 		break;
 
 	case 5:
-		getSavePoints()->push(kEntityNone, kEntityVesna, kAction167992577);
+		getSavePoints()->push(kEntityPlayer, kEntityVesna, kAction167992577);
 		break;
 
 	case 6:
-		getSavePoints()->push(kEntityNone, kEntityAugust, kAction203078272);
+		getSavePoints()->push(kEntityPlayer, kEntityAugust, kAction203078272);
 		break;
 	}
 
@@ -1276,6 +1266,7 @@ IMPLEMENT_ACTION(32) {
 // Action 33
 IMPLEMENT_ACTION(useWhistle) {
 	EventIndex evt = kEventNone;
+	SceneIndex sceneIndex = kSceneInvalid;
 
 	switch (hotspot.param1) {
 	default:
@@ -1283,7 +1274,7 @@ IMPLEMENT_ACTION(useWhistle) {
 
 	case 1:
 		if (getEvent(kEventKronosBringFirebird)) {
-			getSavePoints()->push(kEntityNone, kEntityAnna, kAction205294778);
+			getSavePoints()->push(kEntityPlayer, kEntityAnna, kAction205294778);
 			break;
 		}
 
@@ -1291,28 +1282,28 @@ IMPLEMENT_ACTION(useWhistle) {
 			evt = kEventCathOpenEgg;
 
 			Scene *scene = getScenes()->get(hotspot.scene);
-			if (scene->getHotspots())
-				return scene->getHotspot()->scene;
+			if (scene->getHotspot())
+				sceneIndex = scene->getHotspot()->scene;
 
 		} else {
 			evt = kEventCathOpenEggNoBackground;
 		}
-		getProgress().isEggOpen = 1;
+		getProgress().isEggOpen = true;
 		break;
 
 	case 2:
 		if (getEvent(kEventKronosBringFirebird)) {
-			getSavePoints()->push(kEntityNone, kEntityAnna, kAction224309120);
+			getSavePoints()->push(kEntityPlayer, kEntityAnna, kAction224309120);
 			break;
 		}
 
 		evt = (getEntities()->isSitting(kEntityPlayer, kCarGreenSleeping, kPosition_8200)) ? kEventCathCloseEgg : kEventCathCloseEggNoBackground;
-		getProgress().isEggOpen = 0;
+		getProgress().isEggOpen = false;
 		break;
 
 	case 3:
 		if (getEvent(kEventKronosBringFirebird)) {
-			getSavePoints()->push(kEntityNone, kEntityAnna, kAction270751616);
+			getSavePoints()->push(kEntityPlayer, kEntityAnna, kAction270751616);
 			break;
 		}
 
@@ -1323,19 +1314,19 @@ IMPLEMENT_ACTION(useWhistle) {
 
 	if (evt != kEventNone) {
 		playAnimation(evt);
-		if (!hotspot.scene)
+		if (sceneIndex == kSceneNone || !hotspot.scene)
 			getScenes()->processScene();
 	}
 
-	return kSceneInvalid;
+	return sceneIndex;
 }
 
 //////////////////////////////////////////////////////////////////////////
 // Action 34
 IMPLEMENT_ACTION(openMatchBox) {
 	// If the match is already in the inventory, do nothing
-	if (!getInventory()->getEntry(kItemMatch)->location
-		|| getInventory()->getEntry(kItemMatch)->isPresent)
+	if (!getInventory()->get(kItemMatch)->location
+	 || getInventory()->get(kItemMatch)->isPresent)
 		return kSceneInvalid;
 
 	getInventory()->addItem(kItemMatch);
@@ -1367,12 +1358,9 @@ IMPLEMENT_ACTION(dialog) {
 // Action 38
 IMPLEMENT_ACTION(eggBox) {
 	getSound()->playSoundEvent(kEntityPlayer, 43);
-	if (getProgress().field_7C) {
-
-		if (!getSound()->isBuffered("MUS003")) {
-			getSound()->playSound(kEntityPlayer, "MUS003", SoundManager::kFlagDefault);
-			getProgress().field_7C = 0;
-		}
+	if (getProgress().field_7C && !getSound()->isBuffered("MUS003")) {
+		getSound()->playSound(kEntityPlayer, "MUS003", SoundManager::kFlagDefault);
+		getProgress().field_7C = 0;
 	}
 
 	return kSceneInvalid;
@@ -1382,11 +1370,9 @@ IMPLEMENT_ACTION(eggBox) {
 // Action 39
 IMPLEMENT_ACTION(39) {
 	getSound()->playSoundEvent(kEntityPlayer, 24);
-	if (getProgress().field_80) {
-		if (!getSound()->isBuffered("MUS003")) {
-			getSound()->playSound(kEntityPlayer, "MUS003", SoundManager::kFlagDefault);
-			getProgress().field_80 = 0;
-		}
+	if (getProgress().field_80 && !getSound()->isBuffered("MUS003")) {
+		getSound()->playSound(kEntityPlayer, "MUS003", SoundManager::kFlagDefault);
+		getProgress().field_80 = 0;
 	}
 
 	return kSceneInvalid;
@@ -1396,17 +1382,17 @@ IMPLEMENT_ACTION(39) {
 // Action 40
 IMPLEMENT_ACTION(bed) {
 	getSound()->playSoundEvent(kEntityPlayer, 85);
-	// falls to case 12
-	return action_12(hotspot);
+	// falls to case knockNoSound
+	return action_knockNoSound(hotspot);
 }
 
 //////////////////////////////////////////////////////////////////////////
 // Action 41
-IMPLEMENT_ACTION(41) {
+IMPLEMENT_ACTION(playMusicChapter) {
 	byte id = 0;
 	switch (getProgress().chapter) {
 	default:
-		error("Action::action_41: Invalid chapter %d", getProgress().chapter);
+		break;
 
 	case kChapter1:
 		id = hotspot.param1;
@@ -1424,8 +1410,7 @@ IMPLEMENT_ACTION(41) {
 	}
 
 	if (id) {
-		char filename[8];
-		sprintf((char *)&filename, "MUS%03d", id);
+		Common::String filename = Common::String::printf("MUS%03d", id);
 
 		if (!getSound()->isBuffered(filename))
 			getSound()->playSound(kEntityPlayer, filename, SoundManager::kFlagDefault);
@@ -1436,35 +1421,34 @@ IMPLEMENT_ACTION(41) {
 
 //////////////////////////////////////////////////////////////////////////
 // Action 42
-IMPLEMENT_ACTION(42) {
-	int value = 0;
+IMPLEMENT_ACTION(playMusicChapterSetupTrain) {
+	int id = 0;
 	switch (getProgress().chapter) {
 	default:
 		break;
 
 	case kChapter1:
-		value = 1;
+		id = 1;
 		break;
 
 	case kChapter2:
 	case kChapter3:
-		value = 2;
+		id = 2;
 		break;
 
 	case kChapter4:
 	case kChapter5:
-		value = 4;
+		id = 4;
 		break;
 	}
 
-	char filename[8];
-	sprintf((char *)&filename, "MUS%03d", value);
+	Common::String filename = Common::String::printf("MUS%03d", hotspot.param1);
 
-	if (!getSound()->isBuffered(filename) && hotspot.param3 & value) {
+	if (!getSound()->isBuffered(filename) && hotspot.param3 & id) {
 		getSound()->playSound(kEntityPlayer, filename, SoundManager::kFlagDefault);
 
-		getSavePoints()->call(kEntityNone, kEntityTrain, kAction203863200, (char *)&filename);
-		getSavePoints()->push(kEntityNone, kEntityTrain, kAction222746496, hotspot.param2);
+		getSavePoints()->call(kEntityPlayer, kEntityTrain, kAction203863200, (char *)filename.c_str());
+		getSavePoints()->push(kEntityPlayer, kEntityTrain, kAction222746496, hotspot.param2);
 	}
 
 	return kSceneInvalid;
@@ -1485,11 +1469,11 @@ IMPLEMENT_ACTION(44) {
 		break;
 
 	case 1:
-		getSavePoints()->push(kEntityNone, kEntityRebecca, kAction205034665);
+		getSavePoints()->push(kEntityPlayer, kEntityRebecca, kAction205034665);
 		break;
 
 	case 2:
-		getSavePoints()->push(kEntityNone, kEntityChapters, kAction225358684);
+		getSavePoints()->push(kEntityPlayer, kEntityChapters, kAction225358684);
 		break;
 	}
 
@@ -1503,7 +1487,7 @@ void Action::pickGreenJacket(bool process) const {
 	getProgress().jacket = kJacketGreen;
 	getInventory()->addItem(kItemMatchBox);
 
-	getObjects()->update(kObjectOutsideTylerCompartment, kEntityNone, kLocation2, kCursorKeepValue, kCursorKeepValue);
+	getObjects()->update(kObjectOutsideTylerCompartment, kEntityPlayer, kLocation2, kCursorKeepValue, kCursorKeepValue);
 	playAnimation(kEventPickGreenJacket);
 
 	getInventory()->setPortrait(kPortraitGreen);
@@ -1519,12 +1503,12 @@ void Action::pickScarf(bool process) const {
 		getScenes()->processScene();
 }
 
-void Action::pickCorpse(byte bedPosition, bool process) const {
+void Action::pickCorpse(ObjectLocation bedPosition, bool process) const {
 
 	if (getProgress().jacket == kJacketOriginal)
 		getProgress().jacket = kJacketBlood;
 
-	switch(getInventory()->getEntry(kItemCorpse)->location) {
+	switch(getInventory()->get(kItemCorpse)->location) {
 	// No way to pick the corpse
 	default:
 		break;
@@ -1539,7 +1523,7 @@ void Action::pickCorpse(byte bedPosition, bool process) const {
 		if (getProgress().jacket)
 			playAnimation(kEventCorpsePickFloorOpenedBedOriginal);
 
-		getInventory()->getEntry(kItemCorpse)->location = kLocation5;
+		getInventory()->get(kItemCorpse)->location = kLocation5;
 		break;
 
 	// Bed
@@ -1560,7 +1544,7 @@ void Action::pickCorpse(byte bedPosition, bool process) const {
 }
 
 void Action::dropCorpse(bool process) const {
-	switch(getInventory()->getEntry(kItemCorpse)->location) {
+	switch(getInventory()->get(kItemCorpse)->location) {
 	default:
 		break;
 
@@ -1574,7 +1558,7 @@ void Action::dropCorpse(bool process) const {
 
 	case kLocation4: // Window
 		// Say goodbye to an old friend
-		getInventory()->getEntry(kItemCorpse)->location = kLocationNone;
+		getInventory()->get(kItemCorpse)->location = kLocationNone;
 		getProgress().eventCorpseThrown = 1;
 
 		if (getState()->time <= kTime1138500) {
@@ -1756,7 +1740,7 @@ CursorStyle Action::getCursor(const SceneHotspot &hotspot) const {
 		 ||	(getInventory()->getSelectedItem() != kItemFirebird && getInventory()->getSelectedItem() != kItemBriefcase)))
 			goto LABEL_KEY;
 
-		return (CursorStyle)getInventory()->getEntry(kItemKey)->cursor; // TODO is that always the same as kCursorKey ?
+		return (CursorStyle)getInventory()->get(kItemKey)->cursor; // TODO is that always the same as kCursorKey ?
 
 	case SceneHotspot::kActionGetOutsideTrain:
 		if (getProgress().jacket != kJacketGreen)
@@ -1808,7 +1792,7 @@ CursorStyle Action::getCursor(const SceneHotspot &hotspot) const {
 			return kCursorNormal;
 
 		if (getInventory()->getSelectedItem() == kItemMatchBox && getInventory()->hasItem(kItemMatch))
-			return (CursorStyle)getInventory()->getEntry(kItemMatchBox)->cursor;
+			return (CursorStyle)getInventory()->get(kItemMatchBox)->cursor;
 
 		return kCursorHandPointer;
 
@@ -1858,7 +1842,7 @@ LABEL_KEY:
 		|| getEntities()->checkFields2(object))
 			return (CursorStyle)getObjects()->get(object).cursor2;
 		else
-			return (CursorStyle)getInventory()->getEntry(kItemKey)->cursor;
+			return (CursorStyle)getInventory()->get(kItemKey)->cursor;
 	}
 }
 

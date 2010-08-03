@@ -128,7 +128,7 @@ Anna::Anna(LastExpressEngine *engine) : Entity(engine, kEntityAnna) {
  * Resets the entity
  */
 IMPLEMENT_FUNCTION(Anna, reset, 1)
-	Entity::reset(savepoint, true);
+	Entity::reset(savepoint, true, true);
 }
 
 /**
@@ -341,7 +341,7 @@ IMPLEMENT_FUNCTION(Anna, function12, 12)
 		}
 		break;
 
-	case kAction8:
+	case kActionKnock:
 		if (params->param4) {
 			getObjects()->update(kObjectCompartmentF, kEntityAnna, kLocation1, kCursorNormal, kCursorHand);
 			getObjects()->update(kObject53, kEntityAnna, kLocation1, kCursorNormal, kCursorHand);
@@ -371,7 +371,7 @@ IMPLEMENT_FUNCTION(Anna, function12, 12)
 		}
 		break;
 
-	case kAction9:
+	case kActionOpenDoor:
 		getSound()->removeFromQueue(kEntityAnna);
 		setCallback(3);
 		call(new ENTITY_SETUP_SIIS(Anna, setup_playSound), "LIB013");
@@ -381,7 +381,7 @@ IMPLEMENT_FUNCTION(Anna, function12, 12)
 		params->param1 = 1;
 		getObjects()->update(kObjectCompartmentF, kEntityAnna, kLocation1, kCursorHandKnock, kCursorHand);
 		getObjects()->update(kObject53, kEntityAnna, kLocation1, kCursorHandKnock, kCursorHand);
-		getObjects()->update(kObjectOutsideAnnaCompartment, kEntityNone, kLocationNone, kCursorKeepValue, kCursorKeepValue);
+		getObjects()->update(kObjectOutsideAnnaCompartment, kEntityPlayer, kLocationNone, kCursorKeepValue, kCursorKeepValue);
 
 		if (getEntities()->isPlayerPosition(kCarRedSleeping, 49))
 			getScenes()->loadSceneFromPosition(kCarRedSleeping, 49);
@@ -481,8 +481,8 @@ IMPLEMENT_FUNCTION_IS(Anna, function15, 15)
 		if (params->param1 < (int32)getState()->time && !params->param7) {
 			params->param7 = 1;
 
-			getObjects()->update(kObjectCompartmentF, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
-			getObjects()->update(kObject53, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
+			getObjects()->update(kObjectCompartmentF, kEntityPlayer, kLocation1, kCursorHandKnock, kCursorHand);
+			getObjects()->update(kObject53, kEntityPlayer, kLocation1, kCursorHandKnock, kCursorHand);
 
 			CALLBACK_ACTION();
 			break;
@@ -503,7 +503,7 @@ IMPLEMENT_FUNCTION_IS(Anna, function15, 15)
 		params->param8 = 0;
 		break;
 
-	case kAction9:
+	case kActionOpenDoor:
 		if (getEntities()->isSitting(kEntityMax, kCarRedSleeping, kPosition_4070)) {
 			getObjects()->update(kObjectCompartmentF, kEntityAnna, kLocation1, kCursorNormal, kCursorNormal);
 			getObjects()->update(kObject53, kEntityAnna, kLocation1, kCursorNormal, kCursorNormal);
@@ -514,7 +514,7 @@ IMPLEMENT_FUNCTION_IS(Anna, function15, 15)
 		}
 		// Fallback to next action
 
-	case kAction8:
+	case kActionKnock:
 		if (params->param5) {
 			CursorStyle cursor = getEntities()->isSitting(kEntityMax, kCarRedSleeping, kPosition_4070) ? kCursorHand : kCursorNormal;
 
@@ -537,8 +537,8 @@ IMPLEMENT_FUNCTION_IS(Anna, function15, 15)
 			getObjects()->update(kObjectCompartmentF, kEntityAnna, kLocation1, kCursorNormal, kCursorNormal);
 			getObjects()->update(kObject53, kEntityAnna, kLocation1, kCursorNormal, kCursorNormal);
 
-			setCallback(savepoint.action == kAction8 ? 3 : 4);
-			call(new ENTITY_SETUP_SIIS(Anna, setup_playSound), savepoint.action == kAction8 ? "LIB012" : "LIB013");
+			setCallback(savepoint.action == kActionKnock ? 3 : 4);
+			call(new ENTITY_SETUP_SIIS(Anna, setup_playSound), savepoint.action == kActionKnock ? "LIB012" : "LIB013");
 		}
 		break;
 
@@ -613,9 +613,9 @@ IMPLEMENT_FUNCTION(Anna, chapter1, 16)
 		getSavePoints()->addData(kEntityAnna, kAction291662081, 0);
 		getSavePoints()->addData(kEntityAnna, kAction238936000, 1);
 
-		getObjects()->update(kObjectCompartmentF, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
-		getObjects()->update(kObject53, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
-		getObjects()->update(kObjectOutsideAnnaCompartment, kEntityNone, kLocation1, kCursorKeepValue, kCursorKeepValue);
+		getObjects()->update(kObjectCompartmentF, kEntityPlayer, kLocation1, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObject53, kEntityPlayer, kLocation1, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObjectOutsideAnnaCompartment, kEntityPlayer, kLocation1, kCursorKeepValue, kCursorKeepValue);
 
 		getData()->entityPosition = kPosition_8200;
 		getData()->posture = kPostureSitting;
@@ -1072,7 +1072,7 @@ IMPLEMENT_FUNCTION(Anna, function36, 36)
 		break;
 
 	case kActionDefault:
-		getObjects()->update(kObjectCompartmentF, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObjectCompartmentF, kEntityPlayer, kLocation1, kCursorHandKnock, kCursorHand);
 
 		setCallback(1);
 		call(new ENTITY_SETUP(Anna, setup_updateEntity), kCarRedSleeping, kPosition_8200);
@@ -1084,14 +1084,14 @@ IMPLEMENT_FUNCTION(Anna, function36, 36)
 			break;
 
 		case 1:
-			getObjects()->update(kObjectCompartmentA, kEntityNone, kLocation1, kCursorKeepValue, kCursorKeepValue);
+			getObjects()->update(kObjectCompartmentA, kEntityPlayer, kLocation1, kCursorKeepValue, kCursorKeepValue);
 
 			setCallback(2);
 			call(new ENTITY_SETUP_SIIS(Anna, setup_enterExitCompartment), "608Aa", kObjectCompartmentA);
 			break;
 
 		case 2:
-			getObjects()->update(kObjectCompartmentA, kEntityNone, kLocation2, kCursorKeepValue, kCursorKeepValue);
+			getObjects()->update(kObjectCompartmentA, kEntityPlayer, kLocation2, kCursorKeepValue, kCursorKeepValue);
 			getData()->posture = kPostureSitting;
 			getEntities()->clearSequences(kEntityAnna);
 
@@ -1180,7 +1180,7 @@ IMPLEMENT_FUNCTION(Anna, chapter2Handler, 43)
 		break;
 
 	case kActionDefault:
-		getObjects()->update(kObjectOutsideAnnaCompartment, kEntityNone, kLocationNone, kCursorKeepValue, kCursorKeepValue);
+		getObjects()->update(kObjectOutsideAnnaCompartment, kEntityPlayer, kLocationNone, kCursorKeepValue, kCursorKeepValue);
 
 		setCallback(1);
 		call(new ENTITY_SETUP(Anna, setup_function12));
@@ -1238,9 +1238,9 @@ IMPLEMENT_FUNCTION(Anna, chapter3, 44)
 		getData()->clothes = kClothes3;
 		getData()->inventoryItem = kItemNone;
 
-		getObjects()->update(kObjectCompartmentF, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
-		getObjects()->update(kObjectOutsideAnnaCompartment, kEntityNone, kLocationNone, kCursorKeepValue, kCursorKeepValue);
-		getObjects()->update(kObject53, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObjectCompartmentF, kEntityPlayer, kLocation1, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObjectOutsideAnnaCompartment, kEntityPlayer, kLocationNone, kCursorKeepValue, kCursorKeepValue);
+		getObjects()->update(kObject53, kEntityPlayer, kLocation1, kCursorHandKnock, kCursorHand);
 		break;
 	}
 }
@@ -1422,13 +1422,13 @@ IMPLEMENT_FUNCTION(Anna, function55, 55)
 		break;
 
 	case kActionDefault:
-		getObjects()->update(kObjectOutsideAnnaCompartment, kEntityNone, kLocation2, kCursorKeepValue, kCursorKeepValue);
+		getObjects()->update(kObjectOutsideAnnaCompartment, kEntityPlayer, kLocation2, kCursorKeepValue, kCursorKeepValue);
 
 		if (getEntities()->isPlayerPosition(kCarRedSleeping, 78))
 			getScenes()->loadSceneFromPosition(kCarRedSleeping, 49);
 
-		getObjects()->update(kObjectCompartmentF, kEntityNone, kLocation1, kCursorNormal, kCursorNormal);
-		getObjects()->update(kObject53, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObjectCompartmentF, kEntityPlayer, kLocation1, kCursorNormal, kCursorNormal);
+		getObjects()->update(kObject53, kEntityPlayer, kLocation1, kCursorHandKnock, kCursorHand);
 		getInventory()->setLocationAndProcess(kItemKey, kLocation1);
 
 		setCallback(1);
@@ -1441,7 +1441,7 @@ IMPLEMENT_FUNCTION(Anna, function55, 55)
 			break;
 
 		case 1:
-			getObjects()->update(kObjectCompartmentF, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
+			getObjects()->update(kObjectCompartmentF, kEntityPlayer, kLocation1, kCursorHandKnock, kCursorHand);
 			setCallback(2);
 			call(new ENTITY_SETUP(Anna, setup_updateEntity), kCarRedSleeping, kPosition_9270);
 			break;
@@ -1575,7 +1575,7 @@ IMPLEMENT_FUNCTION(Anna, function65, 65)
 		getData()->clothes = kClothes3;
 		getData()->inventoryItem = kItemNone;
 
-		getObjects()->update(kObjectOutsideAnnaCompartment, kEntityNone, kLocation1, kCursorKeepValue, kCursorKeepValue);
+		getObjects()->update(kObjectOutsideAnnaCompartment, kEntityPlayer, kLocation1, kCursorKeepValue, kCursorKeepValue);
 
 		setCallback(1);
 		call(new ENTITY_SETUP_ISII(Anna, setup_function15), kTimeEnd, "NONE");
@@ -1621,8 +1621,8 @@ IMPLEMENT_FUNCTION(Anna, function68, 68)
 		break;
 
 	case kActionDefault:
-		getObjects()->update(kObjectCompartmentF, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
-		getObjects()->update(kObject53, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObjectCompartmentF, kEntityPlayer, kLocation1, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObject53, kEntityPlayer, kLocation1, kCursorHandKnock, kCursorHand);
 
 		getData()->car = kCarRedSleeping;
 		getData()->entityPosition = kPosition_4070;
@@ -1630,7 +1630,7 @@ IMPLEMENT_FUNCTION(Anna, function68, 68)
 		break;
 
 	case kAction191001984:
-		getObjects()->update(kObjectCompartmentF, kEntityNone, kLocationNone, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObjectCompartmentF, kEntityPlayer, kLocationNone, kCursorHandKnock, kCursorHand);
 		setup_function69();
 		break;
 
@@ -1704,7 +1704,7 @@ IMPLEMENT_FUNCTION(Anna, chapter5, 74)
 		getData()->clothes = kClothes3;
 		getData()->inventoryItem = kItemNone;
 
-		getObjects()->update(kObjectOutsideAnnaCompartment, kEntityNone, kLocationNone, kCursorKeepValue, kCursorKeepValue);
+		getObjects()->update(kObjectOutsideAnnaCompartment, kEntityPlayer, kLocationNone, kCursorKeepValue, kCursorKeepValue);
 
 		break;
 	}

@@ -509,7 +509,7 @@ void Menu::show(bool doSavegame, TimeType type, uint32 time) {
 				getFlags()->mouseRightClick = false;
 
 				// Play intro music
-				getSound()->playSoundWithSubtitles("MUS001.SND", SoundManager::kFlagMusic, kEntityNone);
+				getSound()->playSoundWithSubtitles("MUS001.SND", SoundManager::kFlagMusic, kEntityPlayer);
 
 				// Show The Smoking Car logo
 				if (animation.load(getArchive("1931.nis")))
@@ -520,7 +520,7 @@ void Menu::show(bool doSavegame, TimeType type, uint32 time) {
 		} else {
 			// Only show the quick intro
 			if (!_hasShownStartScreen) {
-				getSound()->playSoundWithSubtitles("MUS018.SND", SoundManager::kFlagMusic, kEntityNone);
+				getSound()->playSoundWithSubtitles("MUS018.SND", SoundManager::kFlagMusic, kEntityPlayer);
 				getScenes()->loadScene(kSceneStartScreen);
 
 				// Original game waits 60 frames and loops Sound::unknownFunction1 unless the right button is pressed
@@ -976,7 +976,7 @@ void Menu::init(bool doSavegame, TimeType type, uint32 time) {
 		SaveLoad::writeMainHeader(_gameId);
 
 	if (doSavegame)
-		save(kEntityPlayer, kSavegameType3, kEventNone);
+		getSaveLoad()->saveGame(kSavegameType3, kEntityPlayer, kEventNone);
 
 	if (!getGlobalTimer()) {
 		// TODO: remove existing savegame temp file

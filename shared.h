@@ -287,7 +287,6 @@ enum SceneIndex {
 
 	kSceneFightDefault            = 820,
 
-	kSceneStopProcessing          = 0xfffffffe,
 	kSceneInvalid                 = 0xffffffff
 };
 
@@ -790,8 +789,7 @@ enum ObjectIndex {
 // Entity ID
 //////////////////////////////////////////////////////////////////////////
 enum EntityIndex {
-	kEntityPlayer = 0,
-	kEntityNone = 0,
+	kEntityPlayer,
 	kEntityAnna,
 	kEntityAugust,
 	kEntityMertens,
@@ -1130,13 +1128,13 @@ enum ActionIndex {
 	kAction4               = 4,
 	kActionExcuseMeCath    = 5,
 	kActionExcuseMe        = 6,
-	kAction8               = 8,
-	kAction9               = 9,
+	kActionKnock           = 8,
+	kActionOpenDoor        = 9,
 	kAction10              = 10,
 	kAction11              = 11,
 	kActionDefault         = 12,
 	kAction16              = 16,
-	kActionDrawScene              = 17,
+	kActionDrawScene       = 17,
 	kActionCallback        = 18,
 
 	/////////////////////////////
@@ -1415,7 +1413,7 @@ enum ActionIndex {
 	/////////////////////////////
 	kAction191070912 = 191070912,
 	kActionTrainStopRunning = 191350523,
-	kAction202613084 = 202613084,
+	kActionCatchBeetle = 202613084,
 	kAction203339360 = 203339360,
 	kActionTrainStartRunning = 203419131,
 	kAction203863200 = 203863200,

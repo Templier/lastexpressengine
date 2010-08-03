@@ -268,7 +268,7 @@ IMPLEMENT_FUNCTION(Yasmin, chapter1Handler, 9)
 
 IMPLEMENT_FUNCTION(Yasmin, function10, 10)
 	if (savepoint.action == kActionDefault) {
-		getObjects()->update(kObjectCompartment7, kEntityNone, kLocation3, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObjectCompartment7, kEntityPlayer, kLocation3, kCursorHandKnock, kCursorHand);
 		getData()->entityPosition = kPosition_3050;
 		getData()->posture = kPostureSitting;
 		getData()->car = kCarGreenSleeping;

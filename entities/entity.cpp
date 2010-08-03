@@ -136,7 +136,7 @@ void Entity::setup(ChapterIndex index) {
 // Shared functions
 //////////////////////////////////////////////////////////////////////////
 
-void Entity::reset(const SavePoint &savepoint, bool resetClothes) {
+void Entity::reset(const SavePoint &savepoint, bool resetClothes, bool resetItem) {
 	EXPOSE_PARAMS(EntityData::EntityParametersIIII)
 
 	switch (savepoint.action) {
@@ -161,6 +161,10 @@ void Entity::reset(const SavePoint &savepoint, bool resetClothes) {
 		getData()->entityPosition = kPositionNone;
 		getData()->posture = kPostureStanding;
 		getData()->car = kCarGreenSleeping;
+
+		if (resetItem)
+			getData()->inventoryItem = kItemInvalid;
+
 		params->param1 = 10000;
 		break;
 	}
@@ -178,7 +182,7 @@ void Entity::savegame(const SavePoint &savepoint) {
 		break;
 
 	case kActionDefault:
-		save(_entityIndex, (SavegameType)params->param1, (EventIndex)params->param2);
+		getSaveLoad()->saveGame((SavegameType)params->param1, _entityIndex, (EventIndex)params->param2);
 		CALLBACK_ACTION()
 		break;
 	}

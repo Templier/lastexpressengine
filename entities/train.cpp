@@ -327,13 +327,16 @@ label_process:
 
 		break;
 
-	case kAction8:
-	case kAction9:
-		if (savepoint.param.intValue == 5 || savepoint.param.intValue == 6 || savepoint.param.intValue == 7 || savepoint.param.intValue == 8) {
-			setCallback(savepoint.action == 8 ? 3 : 4);
-			call(new ENTITY_SETUP(Train, setup_harem), (int)savepoint.param.intValue, savepoint.action);
+	case kActionKnock:
+	case kActionOpenDoor: {
+		// Handle opening harem compartments
+		ObjectIndex compartment = (ObjectIndex)savepoint.param.intValue;
+		if (compartment == kObjectCompartment5 || compartment == kObjectCompartment6 || compartment == kObjectCompartment7 || compartment == kObjectCompartment8) {
+			setCallback(savepoint.action == kActionKnock ? 3 : 4);
+			call(new ENTITY_SETUP(Train, setup_harem), compartment, savepoint.action);
 		}
 		break;
+	}
 
 	case kActionDefault:
 		params->param3 = 1;
@@ -438,7 +441,7 @@ label_process:
 
 		case 6:
 			getAction()->playAnimation(kEventCathBreakCeiling);
-			getObjects()->update(kObjectCeiling, kEntityNone, kLocation2, kCursorKeepValue, kCursorKeepValue);
+			getObjects()->update(kObjectCeiling, kEntityPlayer, kLocation2, kCursorKeepValue, kCursorKeepValue);
 			getScenes()->processScene();
 			break;
 
@@ -464,7 +467,7 @@ label_process:
 		getEntities()->clearSequences(kEntityTrain);
 		break;
 
-	case kAction202613084:
+	case kActionCatchBeetle:
 		setCallback(8);
 		call(new ENTITY_SETUP(Train, setup_savegame), kSavegameType2, kEventCloseMatchbox);
 		break;

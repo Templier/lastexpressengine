@@ -46,7 +46,7 @@ public:
 		ObjectLocation location2;
 
 		Object() {
-			entity = kEntityNone;
+			entity = kEntityPlayer;
 			location = kLocationNone;
 			cursor = kCursorHandKnock;
 			cursor2 = kCursorHandKnock;

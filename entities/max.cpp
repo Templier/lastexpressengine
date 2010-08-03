@@ -153,16 +153,16 @@ IMPLEMENT_FUNCTION(Max, function7, 7)
 		params->param2 = 0;
 		break;
 
-	case kAction8:
-	case kAction9:
+	case kActionKnock:
+	case kActionOpenDoor:
 		getObjects()->update(kObjectCompartmentF, kEntityMax, kLocation1, kCursorNormal, kCursorNormal);
 		getObjects()->update(kObject53, kEntityMax, kLocation1, kCursorNormal, kCursorNormal);
 
 		if (getSound()->isBuffered(kEntityMax))
 			getSound()->processEntry(kEntityMax);
 
-		setCallback((savepoint.action == kAction8) ? 1 : 2);
-		call(new ENTITY_SETUP_SIIS(Max, setup_playSound), (savepoint.action == kAction8) ? "LIB012" : "LIB013");
+		setCallback((savepoint.action == kActionKnock) ? 1 : 2);
+		call(new ENTITY_SETUP_SIIS(Max, setup_playSound), (savepoint.action == kActionKnock) ? "LIB012" : "LIB013");
 		break;
 
 	case kActionDefault:
@@ -211,8 +211,8 @@ IMPLEMENT_FUNCTION(Max, function7, 7)
 	case kAction122358304:
 	case kActionMaxFreeFromCage:
 		getSavePoints()->push(kEntityMax, kEntityMax, kActionMaxFreeFromCage);
-		getObjects()->update(kObjectCompartmentF, kEntityNone, kLocationNone, kCursorHandKnock, kCursorHand);
-		getObjects()->update(kObject53, kEntityNone, kLocationNone, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObjectCompartmentF, kEntityPlayer, kLocationNone, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObject53, kEntityPlayer, kLocationNone, kCursorHandKnock, kCursorHand);
 
 		CALLBACK_ACTION()
 		break;
@@ -241,7 +241,7 @@ IMPLEMENT_FUNCTION(Max, chapter4Handler, 8)
 		params->param3 = 0;
 		break;
 
-	case kAction9:
+	case kActionOpenDoor:
 		if (params->param1) {
 			setCallback(1);
 			call(new ENTITY_SETUP(Max, setup_savegame), kSavegameType2, kEventCathMaxLickHand);
@@ -281,7 +281,7 @@ IMPLEMENT_FUNCTION(Max, chapter4Handler, 8)
 		getSound()->playSound(kEntityPlayer, "LIB026");
 		getAction()->playAnimation(kEventCathMaxFree);
 		getScenes()->loadSceneFromPosition(kCarBaggage, 92);
-		getObjects()->update(kObjectCageMax, kEntityNone, kLocationNone, kCursorNormal, kCursorHand);
+		getObjects()->update(kObjectCageMax, kEntityPlayer, kLocationNone, kCursorNormal, kCursorHand);
 		setup_function9();
 		break;
 	}
@@ -461,7 +461,7 @@ IMPLEMENT_FUNCTION(Max, freeFromCage, 14)
 
 	//////////////////////////////////////////////////////////////////////////
 	// Save game after freeing Max from his cage
-	case kAction9:
+	case kActionOpenDoor:
 		if (getEvent(kEventCathMaxCage)) {
 			if (getEvent(kEventCathMaxFree)) {
 				setCallback(2);
@@ -507,7 +507,7 @@ IMPLEMENT_FUNCTION(Max, freeFromCage, 14)
 			getSound()->playSound(kEntityPlayer, "LIB026");
 			getAction()->playAnimation(kEventCathMaxFree);
 			getScenes()->loadSceneFromPosition(kCarBaggage, 92);
-			getObjects()->update(kObjectCageMax, kEntityNone, kLocationNone, kCursorNormal, kCursorHand);
+			getObjects()->update(kObjectCageMax, kEntityPlayer, kLocationNone, kCursorNormal, kCursorHand);
 			setup_function9();
 			break;
 		}
@@ -627,7 +627,7 @@ IMPLEMENT_FUNCTION(Max, chapter5, 18)
 		getData()->posture = kPostureStanding;
 		getData()->car = kCarNone;
 
-		getObjects()->update(kObjectCageMax, kEntityNone, kLocationNone, kCursorNormal, kCursorHand);
+		getObjects()->update(kObjectCageMax, kEntityPlayer, kLocationNone, kCursorNormal, kCursorHand);
 	}
 }
 

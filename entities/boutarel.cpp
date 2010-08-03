@@ -336,9 +336,9 @@ IMPLEMENT_FUNCTION(Boutarel, chapter1, 19)
 		getSavePoints()->addData(kEntityBoutarel, kAction203520448, 0);
 		getSavePoints()->addData(kEntityBoutarel, kAction237889408, 1);
 
-		getObjects()->update(kObjectCompartmentC, kEntityNone, kLocationNone, kCursorHandKnock, kCursorHand);
-		getObjects()->update(kObject50, kEntityNone, kLocationNone, kCursorHandKnock, kCursorHand);
-		getObjects()->update(kObject42, kEntityNone, kLocationNone, kCursorKeepValue, kCursorKeepValue);
+		getObjects()->update(kObjectCompartmentC, kEntityPlayer, kLocationNone, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObject50, kEntityPlayer, kLocationNone, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObject42, kEntityPlayer, kLocationNone, kCursorKeepValue, kCursorKeepValue);
 
 		getData()->entityPosition = kPosition_1750;
 		getData()->posture = kPostureSitting;
@@ -377,8 +377,8 @@ IMPLEMENT_FUNCTION(Boutarel, chapter1Handler, 21)
 			break;
 
 		case 3:
-			getObjects()->update(kObjectCompartmentC, kEntityNone, kLocation1, kCursorNormal, kCursorNormal);
-			getObjects()->update(kObject50, kEntityNone, kLocation1, kCursorNormal, kCursorNormal);
+			getObjects()->update(kObjectCompartmentC, kEntityPlayer, kLocation1, kCursorNormal, kCursorNormal);
+			getObjects()->update(kObject50, kEntityPlayer, kLocation1, kCursorNormal, kCursorNormal);
 
 			if (getEntities()->isPlayerPosition(kCarRedSleeping, 54) || getEntities()->isPlayerPosition(kCarRedSleeping, 44))
 				getScenes()->loadSceneFromPosition(kCarRedSleeping, 10);
@@ -437,8 +437,8 @@ IMPLEMENT_FUNCTION(Boutarel, function22, 22)
 		getData()->posture = kPostureSitting;
 		getData()->car = kCarRedSleeping;
 
-		getObjects()->update(kObjectCompartmentC, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
-		getObjects()->update(kObject50, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObjectCompartmentC, kEntityPlayer, kLocation1, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObject50, kEntityPlayer, kLocation1, kCursorHandKnock, kCursorHand);
 
 		getEntities()->clearSequences(kEntityBoutarel);
 	}
@@ -461,8 +461,8 @@ IMPLEMENT_FUNCTION(Boutarel, chapter2, 23)
 		getData()->car = kCarRestaurant;
 		getData()->inventoryItem = kItemNone;
 
-		getObjects()->update(kObjectCompartmentC, kEntityNone, kLocationNone, kCursorHandKnock, kCursorHand);
-		getObjects()->update(kObject50, kEntityNone, kLocationNone, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObjectCompartmentC, kEntityPlayer, kLocationNone, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObject50, kEntityPlayer, kLocationNone, kCursorHandKnock, kCursorHand);
 
 		break;
 	}
@@ -497,7 +497,7 @@ IMPLEMENT_FUNCTION(Boutarel, chapter2Handler, 24)
 
 IMPLEMENT_FUNCTION(Boutarel, function25, 25)
 	if (savepoint.action == kActionDefault) {
-		getObjects()->update(kObjectCompartmentC, kEntityNone, kLocation2, kCursorKeepValue, kCursorKeepValue);
+		getObjects()->update(kObjectCompartmentC, kEntityPlayer, kLocation2, kCursorKeepValue, kCursorKeepValue);
 		getEntities()->drawSequenceLeft(kEntityBoutarel, "510");
 	}
 }
@@ -519,8 +519,8 @@ IMPLEMENT_FUNCTION(Boutarel, chapter3, 26)
 		getData()->clothes = kClothesDefault;
 		getData()->inventoryItem = kItemNone;
 
-		getObjects()->update(kObjectCompartmentC, kEntityNone, kLocation2, kCursorKeepValue, kCursorKeepValue);
-		getObjects()->update(kObject50, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObjectCompartmentC, kEntityPlayer, kLocation2, kCursorKeepValue, kCursorKeepValue);
+		getObjects()->update(kObject50, kEntityPlayer, kLocation1, kCursorHandKnock, kCursorHand);
 
 		break;
 	}
@@ -532,7 +532,7 @@ IMPLEMENT_FUNCTION(Boutarel, chapter3Handler, 27)
 		break;
 
 	case kActionDefault:
-		getObjects()->update(kObjectCompartmentC, kEntityNone, kLocation2, kCursorKeepValue, kCursorKeepValue);
+		getObjects()->update(kObjectCompartmentC, kEntityPlayer, kLocation2, kCursorKeepValue, kCursorKeepValue);
 		getEntities()->drawSequenceLeft(kEntityBoutarel, "510");
 		break;
 
@@ -573,7 +573,7 @@ IMPLEMENT_FUNCTION(Boutarel, function30, 30)
 		break;
 
 	case kActionDefault:
-		getObjects()->update(kObjectCompartmentC, kEntityNone, kLocation2, kCursorKeepValue, kCursorKeepValue);
+		getObjects()->update(kObjectCompartmentC, kEntityPlayer, kLocation2, kCursorKeepValue, kCursorKeepValue);
 		getEntities()->drawSequenceLeft(kEntityBoutarel, "510");
 		break;
 
@@ -605,8 +605,8 @@ IMPLEMENT_FUNCTION(Boutarel, chapter4, 31)
 		getData()->clothes = kClothesDefault;
 		getData()->inventoryItem = kItemNone;
 
-		getObjects()->update(kObjectCompartmentC, kEntityNone, kLocation2, kCursorKeepValue, kCursorKeepValue);
-		getObjects()->update(kObject50, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObjectCompartmentC, kEntityPlayer, kLocation2, kCursorKeepValue, kCursorKeepValue);
+		getObjects()->update(kObject50, kEntityPlayer, kLocation1, kCursorHandKnock, kCursorHand);
 		break;
 	}
 }
@@ -621,7 +621,7 @@ IMPLEMENT_FUNCTION(Boutarel, chapter4Handler, 32)
 		break;
 
 	case kActionDefault:
-		getObjects()->update(kObjectCompartmentC, kEntityNone, kLocation2, kCursorKeepValue, kCursorKeepValue);
+		getObjects()->update(kObjectCompartmentC, kEntityPlayer, kLocation2, kCursorKeepValue, kCursorKeepValue);
 		getEntities()->drawSequenceLeft(kEntityBoutarel, "510");
 		break;
 	}
@@ -643,8 +643,8 @@ IMPLEMENT_FUNCTION(Boutarel, function35, 35)
 
 		getEntities()->clearSequences(kEntityBoutarel);
 
-		getObjects()->update(kObjectCompartmentC, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
-		getObjects()->update(kObject50, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObjectCompartmentC, kEntityPlayer, kLocation1, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObject50, kEntityPlayer, kLocation1, kCursorHandKnock, kCursorHand);
 	}
 }
 

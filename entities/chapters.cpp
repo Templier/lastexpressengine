@@ -192,8 +192,8 @@ IMPLEMENT_FUNCTION(Chapters, chapter1Init, 7)
 
 	getProgress().field_7C = 1;
 
-	getObjects()->update(kObjectCompartment1, kEntityNone, kLocationNone, kCursorHandKnock, kCursorHand);
-	getObjects()->update(kObjectOutsideTylerCompartment, kEntityNone, kLocationNone, kCursorKeepValue, kCursorKeepValue);
+	getObjects()->update(kObjectCompartment1, kEntityPlayer, kLocationNone, kCursorHandKnock, kCursorHand);
+	getObjects()->update(kObjectOutsideTylerCompartment, kEntityPlayer, kLocationNone, kCursorKeepValue, kCursorKeepValue);
 
 	for (uint i = kObjectCompartment1; i <= kObjectCompartment8; i++) {
 		getObjects()->updateLocation2((ObjectIndex)i, kLocation2);
@@ -210,22 +210,22 @@ IMPLEMENT_FUNCTION(Chapters, chapter1Init, 7)
 	getObjects()->updateLocation2(kObject98, kLocation1);
 	getObjects()->updateLocation2(kObjectRestaurantCar, kLocation1);
 
-	getObjects()->update(kObject25, kEntityNone, kLocationNone, kCursorNormal, kCursorForward);
-	getObjects()->update(kObjectTrainTimeTable, kEntityNone, kLocationNone, kCursorNormal, kCursorForward);
-	getObjects()->update(kObjectRedSleepingCar, kEntityNone, kLocationNone, kCursorNormal, kCursorForward);
-	getObjects()->update(kObject28, kEntityNone, kLocationNone, kCursorNormal, kCursorForward);
-	getObjects()->update(kObject56, kEntityNone, kLocationNone, kCursorNormal, kCursorForward);
-	getObjects()->update(kObject54, kEntityNone, kLocationNone, kCursorNormal, kCursorForward);
-	getObjects()->update(kObjectRestaurantCar, kEntityNone, kLocationNone, kCursorNormal, kCursorForward);
-	getObjects()->update(kObject59, kEntityNone, kLocationNone, kCursorNormal, kCursorForward);
-	getObjects()->update(kObject66, kEntityNone, kLocationNone, kCursorNormal, kCursorForward);
-	getObjects()->update(kObject64, kEntityNone, kLocationNone, kCursorNormal, kCursorForward);
-	getObjects()->update(kObject65, kEntityNone, kLocationNone, kCursorNormal, kCursorForward);
-	getObjects()->update(kObject69, kEntityNone, kLocationNone, kCursorNormal, kCursorForward);
-	getObjects()->update(kObject98, kEntityNone, kLocationNone, kCursorNormal, kCursorForward);
-	getObjects()->update(kObjectHandleOutsideLeft, kEntityNone, kLocation1, kCursorNormal, kCursorHandKnock);
-	getObjects()->update(kObjectHandleOutsideRight, kEntityNone, kLocation1, kCursorNormal, kCursorHandKnock);
-	getObjects()->update(kObject101, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
+	getObjects()->update(kObject25, kEntityPlayer, kLocationNone, kCursorNormal, kCursorForward);
+	getObjects()->update(kObjectTrainTimeTable, kEntityPlayer, kLocationNone, kCursorNormal, kCursorForward);
+	getObjects()->update(kObjectRedSleepingCar, kEntityPlayer, kLocationNone, kCursorNormal, kCursorForward);
+	getObjects()->update(kObject28, kEntityPlayer, kLocationNone, kCursorNormal, kCursorForward);
+	getObjects()->update(kObject56, kEntityPlayer, kLocationNone, kCursorNormal, kCursorForward);
+	getObjects()->update(kObject54, kEntityPlayer, kLocationNone, kCursorNormal, kCursorForward);
+	getObjects()->update(kObjectRestaurantCar, kEntityPlayer, kLocationNone, kCursorNormal, kCursorForward);
+	getObjects()->update(kObject59, kEntityPlayer, kLocationNone, kCursorNormal, kCursorForward);
+	getObjects()->update(kObject66, kEntityPlayer, kLocationNone, kCursorNormal, kCursorForward);
+	getObjects()->update(kObject64, kEntityPlayer, kLocationNone, kCursorNormal, kCursorForward);
+	getObjects()->update(kObject65, kEntityPlayer, kLocationNone, kCursorNormal, kCursorForward);
+	getObjects()->update(kObject69, kEntityPlayer, kLocationNone, kCursorNormal, kCursorForward);
+	getObjects()->update(kObject98, kEntityPlayer, kLocationNone, kCursorNormal, kCursorForward);
+	getObjects()->update(kObjectHandleOutsideLeft, kEntityPlayer, kLocation1, kCursorNormal, kCursorHandKnock);
+	getObjects()->update(kObjectHandleOutsideRight, kEntityPlayer, kLocation1, kCursorNormal, kCursorHandKnock);
+	getObjects()->update(kObject101, kEntityPlayer, kLocation1, kCursorHandKnock, kCursorHand);
 
 	setup_chapter1Handler();
 }
@@ -600,8 +600,8 @@ IMPLEMENT_FUNCTION(Chapters, chapter2Init, 11)
 	// Setup inventory & items location
 	getInventory()->addItem(kItemGreenJacket);
 
-	getObjects()->update(kObjectHandleOutsideLeft, kEntityNone, kLocation1, kCursorNormal, kCursorHand);
-	getObjects()->update(kObjectHandleOutsideRight, kEntityNone, kLocation1, kCursorNormal, kCursorHand);
+	getObjects()->update(kObjectHandleOutsideLeft, kEntityPlayer, kLocation1, kCursorNormal, kCursorHand);
+	getObjects()->update(kObjectHandleOutsideRight, kEntityPlayer, kLocation1, kCursorNormal, kCursorHand);
 
 	getInventory()->setLocationAndProcess(kItemBeetle, kLocation3);
 	getInventory()->setLocationAndProcess(kItem3, kLocation1);
@@ -622,8 +622,8 @@ IMPLEMENT_FUNCTION(Chapters, chapter2Init, 11)
 	getSavePoints()->push(kEntityChapters, kEntityTables3, kActionDrawTablesWithChairs);
 	getSavePoints()->push(kEntityChapters, kEntityTables4, kActionDrawTablesWithChairs);
 
-	getObjects()->update(kObjectCompartment1, kEntityNone, kLocationNone, kCursorHandKnock, kCursorHand);
-	getObjects()->update(kObjectOutsideTylerCompartment, kEntityNone, kLocationNone, kCursorKeepValue, kCursorKeepValue);
+	getObjects()->update(kObjectCompartment1, kEntityPlayer, kLocationNone, kCursorHandKnock, kCursorHand);
+	getObjects()->update(kObjectOutsideTylerCompartment, kEntityPlayer, kLocationNone, kCursorKeepValue, kCursorKeepValue);
 
 	// Reset sound cache
 	if (ENTITY_PARAM(0, 2) || ENTITY_PARAM(0, 3)) {
@@ -703,12 +703,12 @@ IMPLEMENT_FUNCTION(Chapters, chapter3Init, 14)
 
 		getProgress().isTrainRunning = 1;
 
-		getObjects()->update(kObjectHandleOutsideLeft, kEntityNone, kLocation1, kCursorNormal, kCursorHand);
-		getObjects()->update(kObjectHandleOutsideRight, kEntityNone, kLocation1, kCursorNormal, kCursorHand);
+		getObjects()->update(kObjectHandleOutsideLeft, kEntityPlayer, kLocation1, kCursorNormal, kCursorHand);
+		getObjects()->update(kObjectHandleOutsideRight, kEntityPlayer, kLocation1, kCursorNormal, kCursorHand);
 		getInventory()->setLocationAndProcess(kItemBriefcase, kLocation1);
 		getInventory()->setLocationAndProcess(kItem3, kLocation1);
 		getObjects()->updateLocation2(kObjectCompartment1, kLocation2);
-		getObjects()->update(kObject107, kEntityNone, kLocation3, kCursorKeepValue, kCursorKeepValue);
+		getObjects()->update(kObject107, kEntityPlayer, kLocation3, kCursorKeepValue, kCursorKeepValue);
 
 		if (ENTITY_PARAM(0, 2) || ENTITY_PARAM(0, 3)) {
 			getSound()->removeFromQueue(kEntityChapters);
@@ -788,8 +788,8 @@ IMPLEMENT_FUNCTION(Chapters, chapter4Init, 18)
 
 	getProgress().isTrainRunning = 1;
 
-	getObjects()->update(kObjectHandleOutsideLeft, kEntityNone, kLocation1, kCursorNormal, kCursorHand);
-	getObjects()->update(kObjectHandleOutsideRight, kEntityNone, kLocation1, kCursorNormal, kCursorHand);
+	getObjects()->update(kObjectHandleOutsideLeft, kEntityPlayer, kLocation1, kCursorNormal, kCursorHand);
+	getObjects()->update(kObjectHandleOutsideRight, kEntityPlayer, kLocation1, kCursorNormal, kCursorHand);
 
 	getSavePoints()->push(kEntityChapters, kEntityTrain, kActionTrainStartRunning);
 	getSavePoints()->push(kEntityChapters, kEntityTables0, kActionDrawTablesWithChairs);
@@ -803,11 +803,11 @@ IMPLEMENT_FUNCTION(Chapters, chapter4Init, 18)
 
 	getInventory()->setLocationAndProcess(kItemBomb, kLocation1);
 
-	if (getInventory()->getEntry(kItemBeetle)->location == kLocation3)
+	if (getInventory()->get(kItemBeetle)->location == kLocation3)
 		getScenes()->loadSceneFromItemPosition(kItemBeetle);
 
 	getObjects()->updateLocation2(kObject25, kLocation2);
-	getObjects()->update(kObject107, kEntityNone, kLocation3, kCursorKeepValue, kCursorKeepValue);
+	getObjects()->update(kObject107, kEntityPlayer, kLocation3, kCursorKeepValue, kCursorKeepValue);
 
 	if (ENTITY_PARAM(0, 2) || ENTITY_PARAM(0, 3)) {
 		getSound()->removeFromQueue(kEntityChapters);
@@ -862,38 +862,38 @@ IMPLEMENT_FUNCTION(Chapters, chapter5Init, 21)
 
 		getProgress().isTrainRunning = 1;
 
-		getObjects()->update(kObjectHandleOutsideLeft, kEntityNone, kLocation1, kCursorNormal, kCursorHand);
-		getObjects()->update(kObjectHandleOutsideRight, kEntityNone, kLocation1, kCursorNormal, kCursorHand);
-		getObjects()->update(kObjectCompartment1, kEntityNone, kLocationNone, kCursorHandKnock, kCursorHand);
-		getObjects()->update(kObjectCompartment2, kEntityNone, kLocationNone, kCursorHandKnock, kCursorHand);
-		getObjects()->update(kObjectCompartment3, kEntityNone, kLocationNone, kCursorHandKnock, kCursorHand);
-		getObjects()->update(kObjectCompartment4, kEntityNone, kLocation3, kCursorHandKnock, kCursorHand);
-		getObjects()->update(kObjectCompartment5, kEntityNone, kLocation3, kCursorHandKnock, kCursorHand);
-		getObjects()->update(kObjectCompartment6, kEntityNone, kLocation3, kCursorHandKnock, kCursorHand);
-		getObjects()->update(kObjectCompartment7, kEntityNone, kLocation3, kCursorHandKnock, kCursorHand);
-		getObjects()->update(kObjectCompartment8, kEntityNone, kLocation3, kCursorHandKnock, kCursorHand);
-		getObjects()->update(kObjectCompartmentA, kEntityNone, kLocationNone, kCursorHandKnock, kCursorHand);
-		getObjects()->update(kObjectCompartmentB, kEntityNone, kLocationNone, kCursorHandKnock, kCursorHand);
-		getObjects()->update(kObjectCompartmentC, kEntityNone, kLocationNone, kCursorHandKnock, kCursorHand);
-		getObjects()->update(kObjectCompartmentD, kEntityNone, kLocationNone, kCursorHandKnock, kCursorHand);
-		getObjects()->update(kObjectCompartmentE, kEntityNone, kLocationNone, kCursorHandKnock, kCursorHand);
-		getObjects()->update(kObjectCompartmentF, kEntityNone, kLocationNone, kCursorHandKnock, kCursorHand);
-		getObjects()->update(kObjectCompartmentG, kEntityNone, kLocation3, kCursorHandKnock, kCursorHand);
-		getObjects()->update(kObjectCompartmentH, kEntityNone, kLocation3, kCursorHandKnock, kCursorHand);
-		getObjects()->update(kObjectHandleBathroom, kEntityNone, kLocationNone, kCursorHandKnock, kCursorHand);
-		getObjects()->update(kObjectHandleInsideBathroom, kEntityNone, kLocationNone, kCursorHandKnock, kCursorHand);
-		getObjects()->update(kObjectKitchen, kEntityNone, kLocationNone, kCursorHandKnock, kCursorHand);
-		getObjects()->update(kObject20, kEntityNone, kLocation3, kCursorHandKnock, kCursorHand);
-		getObjects()->update(kObject21, kEntityNone, kLocation3, kCursorHandKnock, kCursorHand);
-		getObjects()->update(kObject22, kEntityNone, kLocation3, kCursorHandKnock, kCursorHand);
-		getObjects()->update(kObject48, kEntityNone, kLocationNone, kCursorHandKnock, kCursorHand);
-		getObjects()->update(kObject49, kEntityNone, kLocationNone, kCursorHandKnock, kCursorHand);
-		getObjects()->update(kObject50, kEntityNone, kLocationNone, kCursorHandKnock, kCursorHand);
-		getObjects()->update(kObject51, kEntityNone, kLocationNone, kCursorHandKnock, kCursorHand);
-		getObjects()->update(kObject52, kEntityNone, kLocationNone, kCursorHandKnock, kCursorHand);
-		getObjects()->update(kObject53, kEntityNone, kLocationNone, kCursorHandKnock, kCursorHand);
-		getObjects()->update(kObjectHandleOutsideLeft, kEntityNone, kLocationNone, kCursorHandKnock, kCursorHand);
-		getObjects()->update(kObjectHandleOutsideRight, kEntityNone, kLocationNone, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObjectHandleOutsideLeft, kEntityPlayer, kLocation1, kCursorNormal, kCursorHand);
+		getObjects()->update(kObjectHandleOutsideRight, kEntityPlayer, kLocation1, kCursorNormal, kCursorHand);
+		getObjects()->update(kObjectCompartment1, kEntityPlayer, kLocationNone, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObjectCompartment2, kEntityPlayer, kLocationNone, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObjectCompartment3, kEntityPlayer, kLocationNone, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObjectCompartment4, kEntityPlayer, kLocation3, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObjectCompartment5, kEntityPlayer, kLocation3, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObjectCompartment6, kEntityPlayer, kLocation3, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObjectCompartment7, kEntityPlayer, kLocation3, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObjectCompartment8, kEntityPlayer, kLocation3, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObjectCompartmentA, kEntityPlayer, kLocationNone, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObjectCompartmentB, kEntityPlayer, kLocationNone, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObjectCompartmentC, kEntityPlayer, kLocationNone, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObjectCompartmentD, kEntityPlayer, kLocationNone, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObjectCompartmentE, kEntityPlayer, kLocationNone, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObjectCompartmentF, kEntityPlayer, kLocationNone, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObjectCompartmentG, kEntityPlayer, kLocation3, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObjectCompartmentH, kEntityPlayer, kLocation3, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObjectHandleBathroom, kEntityPlayer, kLocationNone, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObjectHandleInsideBathroom, kEntityPlayer, kLocationNone, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObjectKitchen, kEntityPlayer, kLocationNone, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObject20, kEntityPlayer, kLocation3, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObject21, kEntityPlayer, kLocation3, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObject22, kEntityPlayer, kLocation3, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObject48, kEntityPlayer, kLocationNone, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObject49, kEntityPlayer, kLocationNone, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObject50, kEntityPlayer, kLocationNone, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObject51, kEntityPlayer, kLocationNone, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObject52, kEntityPlayer, kLocationNone, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObject53, kEntityPlayer, kLocationNone, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObjectHandleOutsideLeft, kEntityPlayer, kLocationNone, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObjectHandleOutsideRight, kEntityPlayer, kLocationNone, kCursorHandKnock, kCursorHand);
 
 		getProgress().field_18 = 1;
 		getProgress().field_84 = 1;
@@ -915,9 +915,9 @@ IMPLEMENT_FUNCTION(Chapters, chapter5Init, 21)
 			}
 		}
 
-		getObjects()->update(kObject93, kEntityNone, kLocation2, kCursorKeepValue, kCursorKeepValue);
-		getObjects()->update(kObject94, kEntityNone, kLocationNone, kCursorKeepValue, kCursorKeepValue);
-		getObjects()->update(kObject101, kEntityNone, kLocationNone, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObject93, kEntityPlayer, kLocation2, kCursorKeepValue, kCursorKeepValue);
+		getObjects()->update(kObject94, kEntityPlayer, kLocationNone, kCursorKeepValue, kCursorKeepValue);
+		getObjects()->update(kObject101, kEntityPlayer, kLocationNone, kCursorHandKnock, kCursorHand);
 
 		getObjects()->updateLocation2(kObject98, kLocation2);
 		getObjects()->updateLocation2(kObjectRestaurantCar, kLocation2);
@@ -1074,8 +1074,8 @@ void Chapters::enterExitHelper(const SavePoint &savepoint, bool isEnteringStatio
 	getSound()->playSound(kEntityChapters, isEnteringStation ? "ARRIVE" : "DEPART", SoundManager::kFlag8);
 	getSound()->processEntries();
 
-	getObjects()->update(kObjectHandleOutsideLeft, kEntityNone, kLocation1, kCursorNormal, isEnteringStation ? kCursorNormal : kCursorHand);
-	getObjects()->update(kObjectHandleOutsideRight, kEntityNone, kLocation1, kCursorNormal, isEnteringStation ? kCursorNormal : kCursorHand);
+	getObjects()->update(kObjectHandleOutsideLeft, kEntityPlayer, kLocation1, kCursorNormal, isEnteringStation ? kCursorNormal : kCursorHand);
+	getObjects()->update(kObjectHandleOutsideRight, kEntityPlayer, kLocation1, kCursorNormal, isEnteringStation ? kCursorNormal : kCursorHand);
 
 	getProgress().isTrainRunning = isEnteringStation ? false : true;
 
