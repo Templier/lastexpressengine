@@ -45,6 +45,7 @@ class EntityData : Common::Serializable {
 public:
 
 	struct EntityParameters {
+		virtual Common::String toString() = 0;
 	};
 
 	struct EntityParametersIIII : EntityParameters {
@@ -71,6 +72,10 @@ public:
 		bool hasNonNullParameter() {
 			return param1 || param2 || param3 || param4 || param5 || param6 || param7 || param8;
 		}
+
+		Common::String toString() {
+			return Common::String::printf("IIII: %d %d %d %d %d %d %d %d\n", param1, param2, param3, param4, param5, param6, param7, param8);
+		}
 	};
 
 	struct EntityParametersSIII : EntityParameters {
@@ -89,6 +94,10 @@ public:
 			param7 = 0;
 			param8 = 0;
 		}
+
+		Common::String toString() {
+			return Common::String::printf("SIII: %s %d %d %d %d %d\n", seq, param4, param5, param6, param7, param8);
+		}
 	};
 
 	struct EntityParametersSIIS : EntityParameters {
@@ -103,6 +112,10 @@ public:
 			param5 = 0;
 			memset(&seq2, 0, 12);
 		}
+
+		Common::String toString() {
+			return Common::String::printf("SIIS: %s %d %d %s\n", seq1, param4, param5, seq2);
+		}
 	};
 
 	struct EntityParametersISSI : EntityParameters {
@@ -116,6 +129,10 @@ public:
 			memset(&seq1, 0, 12);
 			memset(&seq2, 0, 12);
 			param8 = 0;
+		}
+
+		Common::String toString() {
+			return Common::String::printf("ISSI: %d %s %s %d\n", param1, seq1, seq2, param8);
 		}
 	};
 
@@ -135,6 +152,10 @@ public:
 			param7 = 0;
 			param8 = 0;
 		}
+
+		Common::String toString() {
+			return Common::String::printf("ISII: %d %s %d %d %d %d\n", param1, seq, param5, param6, param7, param8);
+		}
 	};
 
 	struct EntityParametersSSII : EntityParameters {
@@ -148,6 +169,10 @@ public:
 			memset(&seq2, 0, 12);
 			param7 = 0;
 			param8 = 0;
+		}
+
+		Common::String toString() {
+			return Common::String::printf("SSII: %s %s %d %d\n", seq1, seq2, param7, param8);
 		}
 	};
 
@@ -163,12 +188,16 @@ public:
 			memset(&seq1, 0, 12);
 			memset(&seq2, 0, 12);
 		}
+
+		Common::String toString() {
+			return Common::String::printf("IISS: %d %d %s %s\n", param1, param2, seq1, seq2);
+		}
 	};
 
 	struct EntityParametersIISI : EntityParameters {
 		int param1;
 		int param2;
-		char seq1[12];
+		char seq[12];
 		int param6;
 		int param7;
 		int param8;
@@ -176,10 +205,14 @@ public:
 		EntityParametersIISI() {
 			param1 = 0;
 			param2 = 0;
-			memset(&seq1, 0, 12);
+			memset(&seq, 0, 12);
 			param6 = 0;
 			param7 = 0;
 			param8 = 0;
+		}
+
+		Common::String toString() {
+			return Common::String::printf("IISI: %d %d %s %d %d %d\n", param1, param2, seq, param6, param7, param8);
 		}
 	};
 
@@ -199,13 +232,18 @@ public:
 			param7 = 0;
 			param8 = 0;
 		}
+
+		Common::String toString() {
+			return Common::String::printf("IIIS: %d %d %d %s %d %d\n", param1, param2, param3, seq, param7, param8);
+		}
 	};
 
 	struct EntityCallParameters {
 		EntityParameters* parameters[4];
 
 		EntityCallParameters() {
-			create();
+			// We default to int parameters
+			create<EntityParametersIIII>();
 		}
 
 		~EntityCallParameters() {
@@ -213,10 +251,11 @@ public:
 		}
 
 
-		// We default to int parameters
+
+		template <class parameter>
 		void create() {
 			for (int i = 0; i < 4; i++)
-				parameters[i] = new EntityParametersIIII();
+				parameters[i] = new parameter();
 		}
 
 		void clear() {
@@ -229,7 +268,7 @@ public:
 
 	struct EntityCallData {
 		byte callbacks[16];
-		byte current_call;
+		byte currentCall;
 		EntityPosition entityPosition;  // word
 		Posture posture;				// word
 		CarIndex car;					// word
@@ -264,7 +303,7 @@ public:
 		 */
 		EntityCallData() {
 			memset(&callbacks, 0, 16 * sizeof(byte));
-			current_call = 0;
+			currentCall = 0;
 			entityPosition = kPositionNone;
 			posture = kPostureStanding;
 			car = kCarNone;
@@ -299,16 +338,20 @@ public:
 		Common::String toString() {
 			Common::String str = "";
 
-			str += Common::String::printf("Entity position: %d    - Posture: %d       - Car: %d\n", entityPosition, posture, car);
+			str += Common::String::printf("Entity position: %d - Posture: %d       - Car: %d\n", entityPosition, posture, car);
 			str += Common::String::printf("Entity: %d             - Item: %d          - Direction: %d\n", entity, inventoryItem, direction);
 			str += Common::String::printf("Clothes: %d            - Position: %d      - Direction switch: %d\n", clothes, position, directionSwitch);
 			str += "\n";
 			str += Common::String::printf("field_497: %02d        - field_49B: %i     - field_4A1: %i\n", field_497, field_49B, field_4A1);
 			str += Common::String::printf("field_4A9: %02d        - field_4AA: %i     - Car 2: %d\n", field_4A9, field_4AA, car2);
 			str += "\n";
-			str += "Sequence: " + sequenceName + "    - Sequence 2: " + sequenceName2 + "\n";
+			str += "Sequence: " + sequenceName + "                 - Sequence 2: " + sequenceName2 + "\n";
 			str += "Sequence prefix: " + sequenceNamePrefix + "    - Sequence copy: " + sequenceNameCopy + "\n";
 			str += Common::String::printf("Current frame: %i    - Current frame 2: %i       - Process entity: %d\n", currentFrame, currentFrame2, doProcessEntity);
+			str += "\n";
+			str += Common::String::printf("Current call: %d\n", currentCall);
+			str += Common::String::printf("Functions: %d %d %d %d %d %d %d %d\n", callbacks[0], callbacks[1], callbacks[2], callbacks[3], callbacks[4], callbacks[5], callbacks[6], callbacks[7]);
+			str += Common::String::printf("Callbacks: %d %d %d %d %d %d %d %d\n", callbacks[8], callbacks[9], callbacks[10], callbacks[11], callbacks[12], callbacks[13], callbacks[14], callbacks[15]);
 
 			return str;
 		}
@@ -316,16 +359,21 @@ public:
 
 	EntityData() {}
 
+	template <class parameter>
+	void resetCurrentParameters() {
+		_parameters[_data.currentCall].clear();
+		_parameters[_data.currentCall].create<parameter>();
+	}
+
 	EntityCallData 	  *getCallData() { return &_data; }
 
 	EntityParameters  *getParameters(uint callback, uint index);
-	EntityParameters  *getCurrentParameters(uint index = 0) { return getParameters(_data.current_call, index); }
-	void 			   resetCurrentParameters();
+	EntityParameters  *getCurrentParameters(uint index = 0) { return getParameters(_data.currentCall, index); }
 
 	int 			   getCallback(uint callback);
-	int				   getCurrentCallback() { return getCallback(_data.current_call); }
+	int				   getCurrentCallback() { return getCallback(_data.currentCall); }
 	void 			   setCallback(uint callback, uint index);
-	void 			   setCurrentCallback(uint index) { setCallback(_data.current_call, index); }
+	void 			   setCurrentCallback(uint index) { setCallback(_data.currentCall, index); }
 
 	// Serializable
 	void 			   saveLoadWithSerializer(Common::Serializer &ser);
@@ -349,8 +397,8 @@ public:
 	EntityData::EntityCallData *getData() { return _data->getCallData(); }
 
 	// Callbacks
-	int getCallback() { return _data->getCallback(_data->getCallData()->current_call + 8); }
-	void setCallback(byte index) { _data->setCallback(_data->getCallData()->current_call + 8, index); }
+	int getCallback() { return _data->getCallback(_data->getCallData()->currentCall + 8); }
+	void setCallback(byte index) { _data->setCallback(_data->getCallData()->currentCall + 8, index); }
 
 	// Setup
 	void setup(ChapterIndex index);

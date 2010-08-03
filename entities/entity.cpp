@@ -55,14 +55,6 @@ EntityData::EntityParameters *EntityData::getParameters(uint callback, uint inde
 	return _parameters[callback].parameters[index];
 }
 
-void EntityData::resetCurrentParameters() {
-	// TODO see if this ever called without setting the call parameters just after
-	// if not, we can optimize the thing and not instantiate an EntityCallParameters just to delete it afterwards
-	_parameters[_data.current_call].clear();
-	_parameters[_data.current_call].create();
-}
-
-
 int EntityData::getCallback(uint callback) {
 	if (callback > 16)
 		error("EntityData::getParameters: invalid callback value (was: %d, max: 16)", callback);

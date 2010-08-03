@@ -669,12 +669,23 @@ bool Debugger::cmdEntity(int argc, const char **argv) {
 		DebugPrintf("Entity %s\n", ENTITY_NAME(index));
 		DebugPrintf("--------------------------------------------------------------------\n\n");
 		DebugPrintf(getEntities()->getData(index)->toString().c_str());
+
+		// The Player entity does not have any callback data
+		if (index != kEntityPlayer) {
+			EntityData *data = getEntities()->get(index)->getParamData();
+			for (int callback = 0; callback < 9; callback++) {
+				DebugPrintf("Call parameters %d:\n", callback);
+				for (int ix = 0; ix < 4; ix++)
+					DebugPrintf("  %s", data->getParameters(callback, ix)->toString().c_str());
+			}
+		}
+
 		DebugPrintf("\n");
 	} else {
 label_error:
 		DebugPrintf("Syntax: entity <index>\n");
-		for (int i = 0; i < 40; i++)
-			DebugPrintf(" %s - %d\n", ENTITY_NAME(i), i);
+		for (int i = 0; i < 40; i += 4)
+			DebugPrintf(" %s - %d        %s - %d        %s - %d        %s - %d\n", ENTITY_NAME(i), i, ENTITY_NAME(i+1), i+1, ENTITY_NAME(i+2), i+2, ENTITY_NAME(i+3), i+3);
 	}
 
 	return true;

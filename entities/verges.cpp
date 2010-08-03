@@ -268,7 +268,7 @@ IMPLEMENT_FUNCTION_IIS(Verges, function10, 10)
 	case kActionNone:
 		if (!params->param7) {
 			if (!getSound()->isBuffered(kEntityVerges)) {
-				getSound()->playSound(kEntityVerges, (char *)&params->seq1);
+				getSound()->playSound(kEntityVerges, (char *)&params->seq);
 				params->param7 = 1;
 			}
 		}
@@ -281,7 +281,7 @@ IMPLEMENT_FUNCTION_IIS(Verges, function10, 10)
 		if (params->param6) {
 			UPDATE_PARAM(params->param8, getState()->timeTicks, 75);
 
-			getSound()->playSound(kEntityVerges, (char *)&params->seq1);
+			getSound()->playSound(kEntityVerges, (char *)&params->seq);
 
 			params->param6 = 0;
 			params->param8 = 0;
@@ -293,7 +293,7 @@ IMPLEMENT_FUNCTION_IIS(Verges, function10, 10)
 
 	case kActionDefault:
 		if (!getSound()->isBuffered(kEntityVerges)) {
-			getSound()->playSound(kEntityVerges, params->seq1);
+			getSound()->playSound(kEntityVerges, params->seq);
 			params->param7 = 1;
 		}
 

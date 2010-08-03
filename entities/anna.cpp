@@ -626,11 +626,175 @@ IMPLEMENT_FUNCTION(Anna, chapter1, 16)
 }
 
 IMPLEMENT_FUNCTION_II(Anna, function17, 17)
-	error("Anna: callback function 17 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionNone:
+		getData()->inventoryItem = (params->param3 && getEntities()->checkFields9(kEntityAnna, kEntityPlayer, 2000)) ? (InventoryItem)LOBYTE(params->param3) : kItemNone;
+
+		if (getEntities()->updateEntity(kEntityAnna, (CarIndex)params->param1, (EntityPosition)params->param2)) {
+			getData()->inventoryItem = kItemNone;
+			CALLBACK_ACTION()
+		}
+		break;
+
+	case kAction1:
+		if (savepoint.param.intValue == 8) {
+			getData()->inventoryItem = (InventoryItem)(getData()->inventoryItem & kItemToggleLow);
+			params->param3 &= 0xFFFFFFF7;
+
+			setCallback(1);
+			call(new ENTITY_SETUP(Anna, setup_savegame), kSavegameType2, kEventAnnaGiveScarf);
+		} else {
+			setCallback(2);
+			call(new ENTITY_SETUP(Anna, setup_savegame), kSavegameType2, kEventGotALight);
+		}
+		break;
+
+	case kActionExcuseMeCath:
+		if (getEvent(kEventAugustPresentAnna) || getEvent(kEventAugustPresentAnnaFirstIntroduction) || getProgress().chapter >= kChapter2)
+			getSound()->playSound(kEntityPlayer, "CAT1001");
+		else
+			getSound()->excuseMeCath();
+		break;
+
+	case kActionExcuseMe:
+		getSound()->excuseMe(kEntityAnna);
+		break;
+
+	case kActionDefault:
+		if (getProgress().jacket == kJacketGreen) {
+			if (!getEvent(kEventGotALight) && !getEvent(kEventGotALightD) && !getEvent(kEventAugustPresentAnna) && !getEvent(kEventAugustPresentAnnaFirstIntroduction))
+				params->param3 = kItemInvalid;
+
+			if (!params->param3 && !getEvent(kEventAnnaGiveScarfAsk) && !getEvent(kEventAnnaGiveScarfDinerAsk) && !getEvent(kEventAnnaGiveScarfSalonAsk))
+				params->param3 |= 8;
+		}
+
+		if (getEntities()->updateEntity(kEntityAnna, (CarIndex)params->param1, (EntityPosition)params->param2))
+			CALLBACK_ACTION()
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			if (getEvent(kEventAnnaGiveScarf)
+			 || getEvent(kEventAnnaGiveScarfDiner)
+			 || getEvent(kEventAnnaGiveScarfSalon)
+			 || getEvent(kEventAnnaGiveScarfMonogram)
+			 || getEvent(kEventAnnaGiveScarfDinerMonogram)
+			 || getEvent(kEventAnnaGiveScarfSalonMonogram))
+				getAction()->playAnimation(kEventAnnaGiveScarfAsk);
+			else if (getEvent(kEventAugustPresentAnna)
+				  || getEvent(kEventAugustPresentAnnaFirstIntroduction))
+				getAction()->playAnimation(kEventAnnaGiveScarfMonogram);
+			else
+				getAction()->playAnimation(kEventAnnaGiveScarf);
+
+			getEntities()->loadSceneFromEntityPosition(getData()->car, (EntityPosition)(getData()->entityPosition + (750 * (getData()->direction == kDirectionUp ? -1 : 1))), getData()->direction == kDirectionUp);
+			break;
+
+		case 2:
+			getAction()->playAnimation(getData()->direction == kDirectionUp ? kEventGotALightD : kEventGotALight);
+			getData()->inventoryItem = (InventoryItem)(getData()->inventoryItem & kItemToggleHigh);
+			params->param3 &= 0xFFFFFF7F;
+
+			if (getProgress().jacket == kJacketGreen && !getEvent(kEventAnnaGiveScarfAsk) && !getEvent(kEventAnnaGiveScarfDinerAsk) && !getEvent(kEventAnnaGiveScarfSalonAsk))
+				params->param3 |= 8;
+
+			getEntities()->loadSceneFromEntityPosition(getData()->car, (EntityPosition)(getData()->entityPosition + (750 * (getData()->direction == kDirectionUp ? -1 : 1))), getData()->direction == kDirectionUp);
+			break;
+		}
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION_I(Anna, function18, 18)
-	error("Anna: callback function 18 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionNone:
+		if (params->param1 && params->param1 < (int)getState()->time && getEntities()->isSomebodyStandingInRestaurantOrSalon()) {
+			getData()->inventoryItem = kItemNone;
+			CALLBACK_ACTION()
+			break;
+		}
+
+		if (params->param5 && !params->param4) {
+			UPDATE_PARAM_FUNCTION(params->param6, getState()->time, 900, label_next);
+
+			params->param2 |= kItemScarf;
+			params->param5 = 0;
+			params->param6 = 0;
+		}
+
+label_next:
+		if (params->param3) {
+			UPDATE_PARAM(params->param7, getState()->timeTicks, 90);
+
+			getScenes()->loadSceneFromPosition(kCarRestaurant, 61);
+		} else {
+			params->param7 = 0;
+		}
+		break;
+
+	case kAction1:
+		setCallback(savepoint.param.intValue == 8 ? 1 : 2);
+		call(new ENTITY_SETUP(Anna, setup_savegame), kSavegameType2, savepoint.param.intValue == 8 ? kEventAnnaGiveScarf : kEventDinerMindJoin);
+		break;
+
+	case kActionDefault:
+		if (getProgress().jacket == kJacketGreen) {
+			if (!getEvent(kEventDinerMindJoin) && !getEvent(kEventAugustPresentAnna) && !getEvent(kEventAugustPresentAnnaFirstIntroduction))
+				params->param2 |= kItemInvalid;
+
+			if (!params->param2 && !getEvent(kEventAnnaGiveScarfAsk) && !getEvent(kEventAnnaGiveScarfDinerAsk) && !getEvent(kEventAnnaGiveScarfSalonAsk))
+				params->param2 |= 8;
+		}
+
+		getData()->inventoryItem = (InventoryItem)LOBYTE(params->param2);
+		break;
+
+	case kActionDrawScene:
+		params->param3 = getEntities()->isPlayerPosition(kCarRestaurant, 62);
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			break;
+
+		case 2:
+			break;
+		}
+		break;
+
+	case kAction168046720:
+		getData()->inventoryItem = kItemNone;
+		params->param4 = 1;
+		break;
+
+	case kAction168627977:
+		getData()->inventoryItem = (InventoryItem)LOBYTE(params->param2);
+		params->param4 = 0;
+		break;
+
+	case kAction170016384:
+	case kAction259136835:
+	case kAction268773672:
+		getData()->inventoryItem = kItemNone;
+		CALLBACK_ACTION()
+		break;
+
+	}
 }
 
 IMPLEMENT_FUNCTION(Anna, chapter1Handler, 19)

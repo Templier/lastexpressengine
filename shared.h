@@ -645,9 +645,12 @@ enum InventoryItem {
 	kPortraitGreen     = 34,
 	kPortraitYellow    = 36,
 
-	kItemInvalid  = 128,
+	kItemInvalid       = 128,
+	kItem146           = 146,
 
-	kItem146 = 146
+	// Toggles
+	kItemToggleHigh    = 0x7F,
+	kItemToggleLow     = 0xF7
 };
 
 //////////////////////////////////////////////////////////////////////////
@@ -1176,6 +1179,7 @@ enum ActionIndex {
 	kAction201437056 = 201437056,
 	kAction235856512 = 235856512,
 	kAction238936000 = 238936000,
+	kAction259136835 = 259136835,
 	kAction291662081 = 291662081,
 
 	/////////////////////////////
@@ -1354,7 +1358,7 @@ enum ActionIndex {
 	kAction223712416 = 223712416,
 	kAction237485916 = 237485916,
 	kAction252568704 = 252568704,
-	kAction268773672 = 268773672,
+	kAction268773672 = 268773672,    // Anna / August
 	kAction270068760 = 270068760,
 	kAction270410280 = 270410280,
 	kAction286403504 = 286403504,

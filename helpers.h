@@ -92,6 +92,14 @@
 #define SAFE_DELETE(_p) { if(_p) { delete _p; _p=NULL; } }
 
 //////////////////////////////////////////////////////////////////////////
+// Byte manipulation
+//////////////////////////////////////////////////////////////////////////
+#define LOWORD(l)           ((unsigned short)(((unsigned long)(l)) & 0xffff))
+#define HIWORD(l)           ((unsigned short)((((unsigned long)(l)) >> 16) & 0xffff))
+#define LOBYTE(w)           ((unsigned char)(((unsigned long)(w)) & 0xff))
+#define HIBYTE(w)           ((unsigned char)((((unsigned long)(w)) >> 8) & 0xff))
+
+//////////////////////////////////////////////////////////////////////////
 // Output
 //////////////////////////////////////////////////////////////////////////
 extern const char *g_entityNames[];

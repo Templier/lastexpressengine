@@ -251,7 +251,7 @@ void Entities::setupChapter(ChapterIndex chapter) {
 	if (chapter) {
 		// Reset current call, inventory item & draw sequences
 		for (uint i = 1; i < _entities.size(); i++) {
-			getData((EntityIndex)i)->current_call = 0;
+			getData((EntityIndex)i)->currentCall = 0;
 			getData((EntityIndex)i)->inventoryItem = kItemNone;
 
 			clearSequences((EntityIndex)i);
@@ -333,7 +333,7 @@ EntityIndex Entities::canInteractWith(const Common::Point &point) const {
 }
 
 void Entities::resetState(EntityIndex entityIndex) {
-	getData(entityIndex)->current_call = 0;
+	getData(entityIndex)->currentCall = 0;
 	getData(entityIndex)->inventoryItem = kItemNone;
 
 	if (getSound()->isBuffered(entityIndex))

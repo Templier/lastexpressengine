@@ -156,9 +156,9 @@
 // Helpers
 //////////////////////////////////////////////////////////////////////////
 #define CALLBACK_ACTION() { \
-	if (getData()->current_call == 0) \
+	if (getData()->currentCall == 0) \
 		error("CALLBACK_ACTION: currentCall is already 0, cannot proceed!"); \
-	getData()->current_call--; \
+	getData()->currentCall--; \
 	getSavePoints()->setCallback(_entityIndex, _callbacks[_data->getCurrentCallback()]); \
 	getSavePoints()->call(_entityIndex, _entityIndex, kActionCallback); \
 	}
