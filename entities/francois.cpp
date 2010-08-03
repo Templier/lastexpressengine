@@ -167,7 +167,7 @@ IMPLEMENT_FUNCTION(Francois, function9, 9)
 
 		case 2:
 			getData()->posture = kPostureStanding;
-			CALLBACK_ACTION();
+			CALLBACK_ACTION()
 			break;
 		}
 		break;
@@ -204,7 +204,7 @@ IMPLEMENT_FUNCTION(Francois, function10, 10)
 			getData()->posture = kPostureSitting;
 			getEntities()->clearSequences(kEntityFrancois);
 
-			CALLBACK_ACTION();
+			CALLBACK_ACTION()
 			break;
 		}
 		break;

@@ -274,7 +274,7 @@ IMPLEMENT_FUNCTION(Anna, function12, 12)
 
 	case kAction2:
 		if (params->param2) {
-			CALLBACK_ACTION();
+			CALLBACK_ACTION()
 			break;
 		}
 
@@ -336,7 +336,7 @@ IMPLEMENT_FUNCTION(Anna, function12, 12)
 			getObjects()->update(kObjectCompartmentF, kEntityAnna, kLocation1, kCursorHandKnock, kCursorHand);
 			getObjects()->update(kObject53, kEntityAnna, kLocation1, kCursorHandKnock, kCursorHand);
 
-			CALLBACK_ACTION();
+			CALLBACK_ACTION()
 			break;
 		}
 		break;
@@ -484,7 +484,7 @@ IMPLEMENT_FUNCTION_IS(Anna, function15, 15)
 			getObjects()->update(kObjectCompartmentF, kEntityPlayer, kLocation1, kCursorHandKnock, kCursorHand);
 			getObjects()->update(kObject53, kEntityPlayer, kLocation1, kCursorHandKnock, kCursorHand);
 
-			CALLBACK_ACTION();
+			CALLBACK_ACTION()
 			break;
 		}
 
@@ -1271,7 +1271,7 @@ IMPLEMENT_FUNCTION_I(Anna, function45, 45)
 
 		case 2:
 			getEntities()->exitCompartment(kEntityAnna, kObjectCompartmentF, true);
-			CALLBACK_ACTION();
+			CALLBACK_ACTION()
 			break;
 		}
 		break;
@@ -1326,7 +1326,7 @@ IMPLEMENT_FUNCTION(Anna, leaveTableWithAugust, 49)
 		getSavePoints()->push(kEntityAnna, kEntityTables3, kActionDrawTablesWithChairs, "010M");
 		getEntities()->clearSequences(kEntityAugust);
 
-		CALLBACK_ACTION();
+		CALLBACK_ACTION()
 		break;
 
 	case kActionDefault:

@@ -657,7 +657,7 @@ void Entities::processEntity(EntityIndex entityIndex) {
 
 	data->doProcessEntity = false;
 
-	if (data->car != getData(kEntityPlayer)->car && data->direction != kDirectionRight && data->direction != kDirectionSwitch) {
+	if (getData(kEntityPlayer)->car != data->car && data->direction != kDirectionRight && data->direction != kDirectionSwitch) {
 
 		if (data->position) {
 			updatePosition(entityIndex, data->car2, data->position);
@@ -707,7 +707,7 @@ label_nosequence:
 				getSavePoints()->push(kEntityPlayer, entityIndex, kActionExitCompartment);
 				getSavePoints()->process();
 
-				if (getFlags()->flag_entities_0 || !data->doProcessEntity)
+				if (getFlags()->flag_entities_0 || data->doProcessEntity)
 					return;
 			}
 
@@ -921,10 +921,7 @@ void Entities::computeCurrentFrame(EntityIndex entityIndex) {
 				getSavePoints()->push(kEntityPlayer, entityIndex, kAction10);
 				getSavePoints()->process();
 
-				if (!getFlags()->flag_entities_0)
-					return;
-
-				if (!data->doProcessEntity)
+				if (getFlags()->flag_entities_0 || data->doProcessEntity)
 					return;
 			}
 
@@ -932,10 +929,7 @@ void Entities::computeCurrentFrame(EntityIndex entityIndex) {
 				getSavePoints()->push(kEntityPlayer, entityIndex, kAction4);
 				getSavePoints()->process();
 
-				if (!getFlags()->flag_entities_0)
-					return;
-
-				if (!data->doProcessEntity)
+				if (getFlags()->flag_entities_0 || data->doProcessEntity)
 					return;
 			}
 

@@ -240,7 +240,7 @@ IMPLEMENT_FUNCTION(Rebecca, function15, 15)
 			getData()->posture = kPostureSitting;
 			getEntities()->clearSequences(kEntityRebecca);
 
-			CALLBACK_ACTION();
+			CALLBACK_ACTION()
 		}
 		break;
 	}
@@ -274,7 +274,7 @@ IMPLEMENT_FUNCTION_I(Rebecca, function20, 20)
 			getObjects()->update(kObjectCompartmentE, kEntityPlayer, kLocationNone, kCursorHandKnock, kCursorHand);
 			getObjects()->update(kObject52, kEntityPlayer, kLocationNone, kCursorHandKnock, kCursorHand);
 
-			CALLBACK_ACTION();
+			CALLBACK_ACTION()
 			break;
 		}
 

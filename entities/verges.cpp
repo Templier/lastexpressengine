@@ -108,11 +108,11 @@ IMPLEMENT_FUNCTION(Verges, callbackActionOnDirection, 3)
 
 	case kActionNone:
 		if (getData()->direction != kDirectionRight)
-			CALLBACK_ACTION();
+			CALLBACK_ACTION()
 		break;
 
 	case kActionExitCompartment:
-		CALLBACK_ACTION();
+		CALLBACK_ACTION()
  		break;
 
 	case kActionExcuseMeCath:
@@ -211,7 +211,6 @@ switch (savepoint.action) {
 		case 1:
 			getData()->entityPosition = kPosition_5800;
 			getData()->posture = kPostureStanding;
-
 			getSound()->playSound(kEntityVerges, (char *)&params->seq1);
 
 			setCallback(2);
@@ -249,7 +248,7 @@ switch (savepoint.action) {
 			break;
 
 		case 6:
-			CALLBACK_ACTION();
+			CALLBACK_ACTION()
 			break;
 		}
 		break;
@@ -275,7 +274,7 @@ IMPLEMENT_FUNCTION_IIS(Verges, function10, 10)
 		}
 
 		if (getEntities()->updateEntity(kEntityVerges, (CarIndex)params->param1, (EntityPosition)params->param2)) {
-			CALLBACK_ACTION();
+			CALLBACK_ACTION()
 			break;
 		}
 
@@ -299,7 +298,7 @@ IMPLEMENT_FUNCTION_IIS(Verges, function10, 10)
 		}
 
 		if (getEntities()->updateEntity(kEntityVerges, (CarIndex)params->param1, (EntityPosition)params->param2))
-			CALLBACK_ACTION();
+			CALLBACK_ACTION()
 		break;
 	}
 }
@@ -413,7 +412,7 @@ IMPLEMENT_FUNCTION(Verges, function17, 17)
 
 		case 4:
 			ENTITY_PARAM(0, 3) = 0;
-			CALLBACK_ACTION();
+			CALLBACK_ACTION()
 			break;
 		}
 		break;
@@ -502,7 +501,7 @@ IMPLEMENT_FUNCTION(Verges, policeGettingOffTrain, 24)
 		break;
 
 	case kAction2:
-		CALLBACK_ACTION();
+		CALLBACK_ACTION()
 		break;
 
 	case kActionDefault:
@@ -879,7 +878,7 @@ IMPLEMENT_FUNCTION_S(Verges, function30, 30)
 			break;
 
 		case 4:
-			CALLBACK_ACTION();
+			CALLBACK_ACTION()
 			break;
 		}
 		break;
@@ -920,7 +919,7 @@ IMPLEMENT_FUNCTION(Verges, function31, 31)
 			getProgress().field_48 = 1;
 			ENTITY_PARAM(0, 4) = 0;
 
-			CALLBACK_ACTION();
+			CALLBACK_ACTION()
 			break;
 		}
 		break;
@@ -1098,7 +1097,7 @@ void Verges::talk(const SavePoint &savepoint, const char* sound1, const char* so
 			break;
 
 		case 6:
-			CALLBACK_ACTION();
+			CALLBACK_ACTION()
 			break;
 		}
 		break;

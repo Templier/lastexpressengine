@@ -179,7 +179,7 @@ IMPLEMENT_FUNCTION_SI(August, enterExitCompartment2, 6)
 IMPLEMENT_FUNCTION_SI(August, enterExitCompartment3, 7)
 	if (savepoint.action == kAction4) {
 		getEntities()->exitCompartment(kEntityAugust, (ObjectIndex)params->param4, true);
-		CALLBACK_ACTION();
+		CALLBACK_ACTION()
 		return;
 	}
 
@@ -214,7 +214,7 @@ IMPLEMENT_FUNCTION_IIS(August, callSavepointNoDrawing, 10)
 		if (!params->param6)
 			getSavePoints()->call(kEntityAugust, (EntityIndex)params->param1, (ActionIndex)params->param2, (char *)&params->seq1);
 
-		CALLBACK_ACTION();
+		CALLBACK_ACTION()
 		break;
 
 	case kAction10:
@@ -349,7 +349,7 @@ IMPLEMENT_FUNCTION_I(August, function23, 23)
 			} else {
 				getEntities()->exitCompartment(kEntityAugust, kObjectCompartment1, true);
 				getObjects()->update(kObjectCompartment1, kEntityPlayer, kLocationNone, kCursorHandKnock, kCursorHand);
-				CALLBACK_ACTION();
+				CALLBACK_ACTION()
 			}
 			break;
 		}
@@ -435,7 +435,7 @@ label_callback_9:
 
 				if (params->param8 >= 3) {
 					getObjects()->update(kObjectCompartment1, kEntityPlayer, getObjects()->get(kObjectCompartment1).location, kCursorHandKnock, kCursorHand);
-					CALLBACK_ACTION();
+					CALLBACK_ACTION()
 					break;
 				}
 
@@ -527,7 +527,7 @@ label_callback_9:
 
 		case 2:
 			getObjects()->update(kObjectCompartment1, kEntityPlayer, kLocationNone, kCursorHandKnock, kCursorHand);
-			CALLBACK_ACTION();
+			CALLBACK_ACTION()
 			break;
 
 		case 3:
@@ -554,7 +554,7 @@ label_callback_9:
 
 			getScenes()->loadScene(kScene41);
 
-			CALLBACK_ACTION();
+			CALLBACK_ACTION()
 			break;
 
 		case 5:
@@ -596,7 +596,7 @@ label_callback_9:
 
 		case 12:
 			getData()->posture = kPostureStanding;
-			CALLBACK_ACTION();
+			CALLBACK_ACTION()
 			break;
 
 		case 13:
@@ -624,7 +624,7 @@ label_callback_9:
 
 			getScenes()->loadScene(kScene41);
 
-			CALLBACK_ACTION();
+			CALLBACK_ACTION()
 			break;
 
 		case 15:
@@ -663,7 +663,7 @@ IMPLEMENT_FUNCTION(August, dinner, 24)
 
 			getScenes()->loadSceneFromPosition(kCarRestaurant, 61);
 
-			CALLBACK_ACTION();
+			CALLBACK_ACTION()
 		}
 		break;
 	}
@@ -1249,7 +1249,7 @@ IMPLEMENT_FUNCTION(August, function47, 47)
 			break;
 
 		case 5:
-			CALLBACK_ACTION();
+			CALLBACK_ACTION()
 			break;
 		}
 		break;

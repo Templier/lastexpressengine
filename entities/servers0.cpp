@@ -128,11 +128,11 @@ IMPLEMENT_FUNCTION_NOSETUP(Servers0, function5, 5)
 
 	case kActionNone:
 		if (getData()->direction != kDirectionRight)
-			CALLBACK_ACTION();
+			CALLBACK_ACTION()
 		break;
 
 	case kActionExitCompartment:
-		CALLBACK_ACTION();
+		CALLBACK_ACTION()
  		break;
 
 	case kActionExcuseMeCath:
@@ -181,7 +181,7 @@ IMPLEMENT_FUNCTION(Servers0, function7, 7)
 		case 2:
 			getEntities()->clearSequences(kEntityServers0);
 			getData()->entityPosition = kPosition_5900;
-			CALLBACK_ACTION();
+			CALLBACK_ACTION()
 			break;
 		}
 		break;
@@ -387,7 +387,7 @@ IMPLEMENT_FUNCTION(Servers0, function25, 25)
 			getEntities()->clearSequences(kEntityServers0);
 			ENTITY_PARAM(1, 3) = 0;
 
-			CALLBACK_ACTION();
+			CALLBACK_ACTION()
 			break;
 		}
 		break;
@@ -538,7 +538,7 @@ void Servers0::handleServer(const SavePoint &savepoint, const char* name, Entity
 			getSavePoints()->push(kEntityServers0, entity, action);
 			*parameter = 0;
 
-			CALLBACK_ACTION();
+			CALLBACK_ACTION()
 		}
 		break;
 	}
@@ -586,7 +586,7 @@ void Servers0::serveTable(const SavePoint &savepoint, const char* seq1, EntityIn
 			getEntities()->clearSequences(kEntityServers0);
 			*parameter = 0;
 
-			CALLBACK_ACTION();
+			CALLBACK_ACTION()
 			break;
 		}
 		break;

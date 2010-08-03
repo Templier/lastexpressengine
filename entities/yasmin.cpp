@@ -479,7 +479,7 @@ IMPLEMENT_FUNCTION(Yasmin, function21, 21)
 	case kActionNone:
 	case kActionDefault:
 		if (getEntities()->updateEntity(kEntityYasmin, (CarIndex)params->param1, (EntityPosition)params->param2))
-			CALLBACK_ACTION();
+			CALLBACK_ACTION()
 		break;
 
 	case kActionExcuseMeCath:

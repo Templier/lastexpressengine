@@ -402,7 +402,7 @@ IMPLEMENT_FUNCTION(Servers1, function20, 20)
 			getEntities()->drawSequenceLeft(kEntityServers1, "BLANK");
 			ENTITY_PARAM(0, 7) = 0;
 
-			CALLBACK_ACTION();
+			CALLBACK_ACTION()
 		}
 		break;
 	}
@@ -565,7 +565,7 @@ void Servers1::serveTable(const SavePoint &savepoint, const char* seq1, EntityIn
 			if (parameter2 != NULL)
 				*parameter2 = 0;
 
-			CALLBACK_ACTION();
+			CALLBACK_ACTION()
 			break;
 		}
 		break;

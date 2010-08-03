@@ -114,7 +114,7 @@ IMPLEMENT_FUNCTION_SIII(Mahmud, enterExitCompartment2, 4)
 	case kActionExitCompartment:
 		getEntities()->exitCompartment(kEntityMahmud, (ObjectIndex)params->param4);
 
-		CALLBACK_ACTION();
+		CALLBACK_ACTION()
 		break;
 
 	case kActionDefault:
@@ -308,7 +308,7 @@ IMPLEMENT_FUNCTION_II(Mahmud, function10, 10)
 			getData()->posture = kPostureSitting;
 			getEntities()->clearSequences(kEntityMahmud);
 
-			CALLBACK_ACTION();
+			CALLBACK_ACTION()
 			break;
 		}
 		break;
@@ -433,7 +433,7 @@ IMPLEMENT_FUNCTION(Mahmud, function11, 11)
 			getEntities()->clearSequences(kEntityMahmud);
 			getObjects()->update(kObjectCompartment4, kEntityMahmud, kLocation3, kCursorHandKnock, kCursorHand);
 
-			CALLBACK_ACTION();
+			CALLBACK_ACTION()
 			break;
 		}
 		break;
@@ -512,7 +512,7 @@ IMPLEMENT_FUNCTION(Mahmud, function12, 12)
 			getData()->posture = kPostureSitting;
 			getEntities()->clearSequences(kEntityMahmud);
 
-			CALLBACK_ACTION();
+			CALLBACK_ACTION()
 			break;
 
 		}
@@ -578,7 +578,7 @@ IMPLEMENT_FUNCTION(Mahmud, function13, 13)
 			getData()->posture = kPostureSitting;
 			getEntities()->clearSequences(kEntityMahmud);
 
-			CALLBACK_ACTION();
+			CALLBACK_ACTION()
 			break;
 
 		}

@@ -817,7 +817,7 @@ IMPLEMENT_FUNCTION(Abbot, function29, 29)
 			getSavePoints()->push(kEntityAbbot, kEntityBoutarel, kAction122358304);
 			getEntities()->drawSequenceLeft(kEntityAbbot, "508B");
 
-			CALLBACK_ACTION();
+			CALLBACK_ACTION()
 			break;
 		}
 		break;

@@ -79,7 +79,7 @@
 #define TIME_CHECK_CALLBACK_ACTION(class, timeValue, parameter) \
 	if ((int)getState()->time > timeValue && !parameter) { \
 		parameter = 1; \
-		CALLBACK_ACTION(); \
+		CALLBACK_ACTION() \
 		break; \
 	}
 
@@ -201,7 +201,7 @@
 		case 2: \
 			getData()->entityPosition = positionFrom; \
 			getEntities()->clearSequences(_entityIndex); \
-			CALLBACK_ACTION(); \
+			CALLBACK_ACTION() \
 		} \
 		break; \
 	}
@@ -231,7 +231,7 @@
 		case 3: \
 			getData()->posture = kPostureSitting; \
 			getEntities()->clearSequences(_entityIndex); \
-			CALLBACK_ACTION(); \
+			CALLBACK_ACTION() \
 			break; \
 		} \
 		break; \

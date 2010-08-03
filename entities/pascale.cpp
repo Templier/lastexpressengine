@@ -197,7 +197,7 @@ IMPLEMENT_FUNCTION(Pascale, function8, 8)
 			getData()->entityPosition = kPosition_5900;
 			ENTITY_PARAM(0, 4) = 0;
 
-			CALLBACK_ACTION();
+			CALLBACK_ACTION()
 			break;
 		}
 		break;
@@ -210,7 +210,7 @@ IMPLEMENT_FUNCTION(Pascale, sitSophieAndRebecca, 9)
 		break;
 
 	case kActionExitCompartment:
-		CALLBACK_ACTION();
+		CALLBACK_ACTION()
  		break;
 
 	case kActionDefault:
@@ -241,7 +241,7 @@ IMPLEMENT_FUNCTION(Pascale, function10, 10)
 			getScenes()->loadSceneFromPosition(kCarRestaurant, 69);
 		}
 
-		CALLBACK_ACTION();
+		CALLBACK_ACTION()
 		break;
 
 	case kAction4:
@@ -264,7 +264,7 @@ IMPLEMENT_FUNCTION(Pascale, function10, 10)
 			// BUG: results in infinite loop loading that scene
 			getScenes()->loadSceneFromPosition(kCarRestaurant, 69);
 
-			CALLBACK_ACTION();
+			CALLBACK_ACTION()
 		}
 		break;
 	}
@@ -306,7 +306,7 @@ IMPLEMENT_FUNCTION(Pascale, function11, 11)
 		case 2:
 			getEntities()->clearSequences(kEntityPascale);
 			getData()->entityPosition = kPosition_5900;
-			CALLBACK_ACTION();
+			CALLBACK_ACTION()
 			break;
 		}
 		break;
@@ -354,7 +354,7 @@ IMPLEMENT_FUNCTION(Pascale, sitAnna, 14)
 	case kActionExitCompartment:
 		getEntities()->updatePosition(kEntityPascale, kCarRestaurant, 62);
 
-		CALLBACK_ACTION();
+		CALLBACK_ACTION()
 		break;
 
 	case kActionDefault:
@@ -603,7 +603,7 @@ IMPLEMENT_FUNCTION(Pascale, function23, 23)
 			getData()->entityPosition = kPosition_5900;
 			ENTITY_PARAM(0, 7) = 0;
 			getEntities()->clearSequences(kEntityPascale);
-			CALLBACK_ACTION();
+			CALLBACK_ACTION()
 			break;
 		}
 		break;
@@ -623,7 +623,7 @@ IMPLEMENT_FUNCTION(Pascale, function24, 24)
 		break;
 
 	case kActionExitCompartment:
-		CALLBACK_ACTION();
+		CALLBACK_ACTION()
 		break;
 
 	case kAction10:
@@ -706,7 +706,7 @@ IMPLEMENT_FUNCTION(Pascale, function29, 29)
 		case 2:
 			getData()->entityPosition = kPosition_850;
 
-			CALLBACK_ACTION();
+			CALLBACK_ACTION()
 			break;
 		}
 		break;
@@ -743,7 +743,7 @@ IMPLEMENT_FUNCTION(Pascale, function30, 30)
 		case 2:
 			getData()->entityPosition = kPosition_5900;
 
-			CALLBACK_ACTION();
+			CALLBACK_ACTION()
 			break;
 		}
 		break;

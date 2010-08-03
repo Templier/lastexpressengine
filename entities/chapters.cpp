@@ -152,7 +152,7 @@ IMPLEMENT_FUNCTION(Chapters, resetMainEntities, 5)
 	RESET_ENTITY_STATE(kEntityVesna, Vesna, setup_reset);
 	RESET_ENTITY_STATE(kEntityYasmin, Yasmin, setup_reset);
 
-	CALLBACK_ACTION();
+	CALLBACK_ACTION()
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -1087,7 +1087,7 @@ void Chapters::enterExitHelper(const SavePoint &savepoint, bool isEnteringStatio
 		ENTITY_PARAM(0, 3) = 1;
 	}
 
-	CALLBACK_ACTION();
+	CALLBACK_ACTION()
 }
 
 } // End of namespace LastExpress

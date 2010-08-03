@@ -156,7 +156,7 @@ IMPLEMENT_FUNCTION_II(Vesna, function7, 7)
 		break;
 
 	case kAction123668192:
-		CALLBACK_ACTION();
+		CALLBACK_ACTION()
 		break;
 	}
 }
@@ -275,7 +275,7 @@ IMPLEMENT_FUNCTION(Vesna, function11, 11)
 
 	case kAction55996766:
 	case kAction101687594:
-		CALLBACK_ACTION();
+		CALLBACK_ACTION()
 		break;
 	}
 }

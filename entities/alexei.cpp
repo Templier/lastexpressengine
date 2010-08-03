@@ -252,7 +252,7 @@ IMPLEMENT_FUNCTION(Alexei, function14, 14)
 		getObjects()->update(kObjectCompartment2, kEntityPlayer, kLocation1, kCursorHandKnock, kCursorHand);
 		getEntities()->exitCompartment(kEntityAlexei, kObjectCompartment2);
 
-		CALLBACK_ACTION();
+		CALLBACK_ACTION()
 		break;
 	}
 }
@@ -277,7 +277,7 @@ IMPLEMENT_FUNCTION_IS(Alexei, function16, 16)
 			getObjects()->update(kObjectCompartment2, kEntityPlayer, kLocation1, kCursorHandKnock, kCursorHand);
 			getObjects()->update(kObjectHandleInsideBathroom, kEntityPlayer, kLocation1, kCursorHandKnock, kCursorHand);
 
-			CALLBACK_ACTION();
+			CALLBACK_ACTION()
 			break;
 		}
 

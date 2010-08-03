@@ -363,7 +363,7 @@ IMPLEMENT_FUNCTION(Milos, function13, 13)
 		getEntities()->clearSequences(kEntityIvo);
 		getEntities()->clearSequences(kEntitySalko);
 
-		CALLBACK_ACTION();
+		CALLBACK_ACTION()
 		break;
 
 	case kActionDefault:

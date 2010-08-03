@@ -195,7 +195,7 @@ IMPLEMENT_FUNCTION(Boutarel, enterTableWithMmeBoutarel, 12)
 		getSavePoints()->push(kEntityBoutarel, kEntityTables2, kAction136455232);
 		getData()->posture = kPostureSitting;
 
-		CALLBACK_ACTION();
+		CALLBACK_ACTION()
 		break;
 
 	case kActionDefault:
@@ -221,7 +221,7 @@ IMPLEMENT_FUNCTION(Boutarel, leaveTableWithMmeBoutarel, 13)
 		getSavePoints()->push(kEntityBoutarel, kEntityTables2, kActionDrawTablesWithChairs, "008F");
 		getEntities()->clearSequences(kEntityMmeBoutarel);
 
-		CALLBACK_ACTION();
+		CALLBACK_ACTION()
 		break;
 
 	case kActionDefault:
@@ -281,7 +281,7 @@ IMPLEMENT_FUNCTION_IS(Boutarel, function16, 16)
 			getData()->posture = kPostureSitting;
 			getEntities()->clearSequences(kEntityBoutarel);
 
-			CALLBACK_ACTION();
+			CALLBACK_ACTION()
 			break;
 		}
 		break;

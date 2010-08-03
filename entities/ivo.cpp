@@ -182,7 +182,7 @@ IMPLEMENT_FUNCTION(Ivo, sitAtTableWithSalko, 12)
 		getEntities()->clearSequences(kEntitySalko);
 		getSavePoints()->push(kEntityIvo, kEntityTables2, kAction136455232);
 
-		CALLBACK_ACTION();
+		CALLBACK_ACTION()
 		break;
 
 	case kActionDefault:
@@ -202,7 +202,7 @@ IMPLEMENT_FUNCTION(Ivo, leaveTableWithSalko, 13)
 		getSavePoints()->push(kEntityIvo, kEntityTables2, kActionDrawTablesWithChairs, "009E");
 		getEntities()->clearSequences(kEntitySalko);
 
-		CALLBACK_ACTION();
+		CALLBACK_ACTION()
 		break;
 
 	case kActionDefault:

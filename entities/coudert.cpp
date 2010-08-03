@@ -132,7 +132,7 @@ IMPLEMENT_FUNCTION_S(Coudert, bloodJacket, 2)
 		break;
 
 	case kActionExitCompartment:
-		CALLBACK_ACTION();
+		CALLBACK_ACTION()
 		break;
 
 	case kActionDefault:
@@ -181,7 +181,7 @@ IMPLEMENT_FUNCTION(Coudert, function4, 4)
 
 	case kActionNone:
 		if (getData()->direction != kDirectionRight) {
-			CALLBACK_ACTION();
+			CALLBACK_ACTION()
 			break;
 		}
 
@@ -189,7 +189,7 @@ IMPLEMENT_FUNCTION(Coudert, function4, 4)
 		break;
 
 	case kActionExitCompartment:
-		CALLBACK_ACTION();
+		CALLBACK_ACTION()
 		break;
 
 	case kActionCallback:
@@ -220,7 +220,7 @@ IMPLEMENT_FUNCTION_S(Coudert, playSound, 6)
 		break;
 
 	case kAction2:
-		CALLBACK_ACTION();
+		CALLBACK_ACTION()
 		break;
 
 	case kActionDefault:
@@ -253,7 +253,7 @@ IMPLEMENT_FUNCTION_NOSETUP(Coudert, playSound16, 7)
 		break;
 
 	case kAction2:
-		CALLBACK_ACTION();
+		CALLBACK_ACTION()
 		break;
 
 	case kActionDefault:
@@ -301,7 +301,7 @@ IMPLEMENT_FUNCTION_I(Coudert, function10, 10)
 
 		UPDATE_PARAM(params->param2, getState()->time, params->param1);
 
-		CALLBACK_ACTION();
+		CALLBACK_ACTION()
 		break;
 
 	case kActionCallback:
@@ -326,7 +326,7 @@ IMPLEMENT_FUNCTION_I(Coudert, function11, 11)
 
 		UPDATE_PARAM(params->param2, getState()->timeTicks, params->param1);
 
-		CALLBACK_ACTION();
+		CALLBACK_ACTION()
 		break;
 
 	case kActionCallback:
@@ -346,7 +346,7 @@ IMPLEMENT_FUNCTION_I(Coudert, excuseMe, 12)
 		return;
 
 	if (getSound()->isBuffered(kEntityCoudert)) {
-		CALLBACK_ACTION();
+		CALLBACK_ACTION()
 		return;
 	}
 
@@ -387,7 +387,7 @@ IMPLEMENT_FUNCTION_I(Coudert, excuseMe, 12)
 			getSound()->playSound(kEntityCoudert, "JAC1112E");
 	}
 
-	CALLBACK_ACTION();
+	CALLBACK_ACTION()
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -499,7 +499,7 @@ IMPLEMENT_FUNCTION_II(Coudert, function13, 13)
 		case 5:
 		case 6:
 		case 7:
-			CALLBACK_ACTION();
+			CALLBACK_ACTION()
 			break;
 
 		case 9:
@@ -543,7 +543,7 @@ IMPLEMENT_FUNCTION_I(Coudert, function17, 17)
 
 		if (ENTITY_PARAM(2, 1)) {
 			ENTITY_PARAM(2, 1) = 0;
-			CALLBACK_ACTION();
+			CALLBACK_ACTION()
 			break;
 		}
 
@@ -571,7 +571,7 @@ IMPLEMENT_FUNCTION_I(Coudert, function17, 17)
 		case 1:
 		case 2:
 		case 3:
-			CALLBACK_ACTION();
+			CALLBACK_ACTION()
 			break;
 		}
 		break;
@@ -598,7 +598,7 @@ IMPLEMENT_FUNCTION(Coudert, function18, 18)
 			getEntities()->drawSequenceLeft(kEntityCoudert, "627K");
 			getScenes()->loadSceneFromItemPosition(kItem5);
 
-			CALLBACK_ACTION();
+			CALLBACK_ACTION()
 			break;
 		}
 
@@ -630,7 +630,7 @@ IMPLEMENT_FUNCTION(Coudert, function18, 18)
 			break;
 
 		case 2:
-			CALLBACK_ACTION();
+			CALLBACK_ACTION()
 			break;
 
 		case 3:
@@ -638,7 +638,7 @@ IMPLEMENT_FUNCTION(Coudert, function18, 18)
 			ENTITY_PARAM(0, 1) = 0;
 			getSavePoints()->push(kEntityCoudert, kEntityCoudert, kActionDrawScene);
 
-			CALLBACK_ACTION();
+			CALLBACK_ACTION()
 			break;
 		}
 		break;
@@ -659,14 +659,14 @@ IMPLEMENT_FUNCTION_I(Coudert, function19, 19)
 		 || ENTITY_PARAM(2, 4) || ENTITY_PARAM(2, 6)) {
 			getInventory()->setLocationAndProcess(kItem5, kLocation1);
 			ENTITY_PARAM(2, 1) = 1;
-			CALLBACK_ACTION();
+			CALLBACK_ACTION()
 			break;
 		}
 
 		if (ENTITY_PARAM(0, 3) || ENTITY_PARAM(0, 5) || ENTITY_PARAM(0, 4)) {
 			getScenes()->loadSceneFromItemPosition(kItem5);
 			ENTITY_PARAM(2, 1);
-			CALLBACK_ACTION();
+			CALLBACK_ACTION()
 			break;
 		}
 
@@ -686,7 +686,7 @@ IMPLEMENT_FUNCTION_I(Coudert, function19, 19)
 			getEntities()->drawSequenceLeft(kEntityCoudert, ENTITY_PARAM(0, 2) ? "627B" : "627E");
 			ENTITY_PARAM(0, 1) = 0;
 
-			CALLBACK_ACTION();
+			CALLBACK_ACTION()
 		}
 		break;
 	}
@@ -735,7 +735,7 @@ IMPLEMENT_FUNCTION(Coudert, function23, 23)
 
 		case 3:
 			getEntities()->exitCompartment(kEntityCoudert, kObjectCompartmentF, true);
-			CALLBACK_ACTION();
+			CALLBACK_ACTION()
 			break;
 		}
 		break;
@@ -811,7 +811,7 @@ IMPLEMENT_FUNCTION(Coudert, function32, 32)
 			break;
 
 		case 5:
-			CALLBACK_ACTION();
+			CALLBACK_ACTION()
 			break;
 		}
 		break;
