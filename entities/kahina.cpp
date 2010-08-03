@@ -139,7 +139,7 @@ IMPLEMENT_FUNCTION_II(Kahina, function7, 7)
 IMPLEMENT_FUNCTION_II(Kahina, updateEntity, 8)
 	if (savepoint.action == kActionExcuseMeCath) {
 		if (getEvent(kEventKronosConversation) || getEvent(kEventKronosConversationFirebird)) {
-			getSound()->playSound(kEntityNone, random(2) ? "CAT1019" : "CAT1019A");
+			getSound()->playSound(kEntityPlayer, random(2) ? "CAT1019" : "CAT1019A");
 		} else {
 			getSound()->excuseMeCath();
 		}
@@ -200,7 +200,7 @@ IMPLEMENT_FUNCTION(Kahina, function12, 12)
 		break;
 
 	case kAction8:
-		getSound()->playSound(kEntityNone, "LIB012");
+		getSound()->playSound(kEntityPlayer, "LIB012");
 		// Fallback to next action
 
 	case kAction9:
@@ -211,7 +211,7 @@ IMPLEMENT_FUNCTION(Kahina, function12, 12)
 		}
 
 		if (savepoint.action == kAction9)
-			getSound()->playSound(kEntityNone, "LIB014");
+			getSound()->playSound(kEntityPlayer, "LIB014");
 
 		getScenes()->loadSceneFromPosition(kCarKronos, 80);
 		getSavePoints()->push(kEntityKahina, kEntityKronos, kAction171849314);
@@ -344,7 +344,7 @@ IMPLEMENT_FUNCTION(Kahina, chapter2Handler, 17)
 			}
 		}
 
-		if (getEvent(kEventKahinaAskSpeakFirebird) && getEvent(kEventKronosConversationFirebird) && getEntities()->isSittingOrStanding(kEntityNone, kCarKronos)) {
+		if (getEvent(kEventKahinaAskSpeakFirebird) && getEvent(kEventKronosConversationFirebird) && getEntities()->isSittingOrStanding(kEntityPlayer, kCarKronos)) {
 			if (!params->param3)
 				params->param3 = getState()->time + 900;
 
@@ -358,7 +358,7 @@ IMPLEMENT_FUNCTION(Kahina, chapter2Handler, 17)
 		}
 
 label_callback_3:
-		if (getState()->time > kTime1845000 && getEvent(kEventKronosConversationFirebird) && getEntities()->checkFields14()) {
+		if (getState()->time > kTime1845000 && getEvent(kEventKronosConversationFirebird) && getEntities()->isInKronosSalon(kEntityPlayer)) {
 			getObjects()->update(kObjectCompartmentKronos, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
 			getScenes()->loadSceneFromPosition(kCarKronos, 87);
 		}
@@ -374,7 +374,7 @@ label_callback_3:
 				getSound()->processEntry(kEntityKahina);
 
 			if (savepoint.action == kAction8)
-				getSound()->playSound(kEntityNone, "LIB012");
+				getSound()->playSound(kEntityPlayer, "LIB012");
 
 			setCallback(4);
 			call(new ENTITY_SETUP(Kahina, setup_savegame), kSavegameType2, kEventKronosConversationFirebird);
@@ -383,7 +383,7 @@ label_callback_3:
 
 		if (getEvent(kEventMilosCompartmentVisitAugust) || getEvent(kEventTatianaGivePoem) || getEvent(kEventTatianaBreakfastGivePoem)) {
 			if (savepoint.action == kAction8)
-				getSound()->playSound(kEntityNone, "LIB012");
+				getSound()->playSound(kEntityPlayer, "LIB012");
 
 			setCallback(7);
 			call(new ENTITY_SETUP(Kahina, setup_savegame), kSavegameType2, kEventKahinaAskSpeakFirebird);
@@ -392,7 +392,7 @@ label_callback_3:
 
 		if (params->param1) {
 			if (savepoint.action == kAction8)
-				getSound()->playSound(kEntityNone, "LIB012");
+				getSound()->playSound(kEntityPlayer, "LIB012");
 
 			getAction()->playAnimation(kEventKahinaAskSpeak);
 			getScenes()->processScene();

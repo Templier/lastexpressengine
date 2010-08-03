@@ -168,7 +168,7 @@ IMPLEMENT_FUNCTION_II(Boutarel, updateEntity, 10)
 	if (savepoint.action == kActionExcuseMeCath) {
 
 		if (getInventory()->hasItem(kItemPassengerList) && getState()->time > kTime1089000)
-			getSound()->playSound(kEntityNone, "CAT1022");
+			getSound()->playSound(kEntityPlayer, "CAT1022");
 		else
 			getSound()->excuseMeCath();
 
@@ -200,7 +200,7 @@ IMPLEMENT_FUNCTION(Boutarel, enterTableWithMmeBoutarel, 12)
 		getEntities()->drawSequenceRight(kEntityMmeBoutarel, "008A2");
 		getEntities()->drawSequenceRight(kEntityBoutarel, "008A1");
 
-		if (getEntities()->checkFields12()) {
+		if (getEntities()->isInSalon(kEntityPlayer)) {
 			getEntities()->updateFrame(kEntityBoutarel);
 			getEntityData(kEntityMmeBoutarel)->posture = getData()->posture;
 			getEntityData(kEntityTables2)->posture = getData()->posture;
@@ -479,7 +479,7 @@ IMPLEMENT_FUNCTION(Boutarel, chapter2Handler, 24)
 		break;
 
 	case kActionDrawScene:
-		if (getEntities()->checkFields13() && !params->param1) {
+		if (getEntities()->isInRestaurant(kEntityPlayer) && !params->param1) {
 			getSound()->playSound(kEntityBoutarel, "MRB2001");
 			params->param1 = 1;
 		}

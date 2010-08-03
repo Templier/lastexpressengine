@@ -191,7 +191,7 @@ IMPLEMENT_FUNCTION_II(Alexei, updateEntity, 10)
 			getSound()->excuseMe(kEntityAlexei);
 		} else {
 			if (getEvent(kEventAlexeiSalonVassili) || (getEvent(kEventTatianaAskMatchSpeakRussian) && getInventory()->hasItem(kItemPassengerList))) {
-				getSound()->playSound(kEntityNone, random(2) ? "CAT1012" : "CAT1012A");
+				getSound()->playSound(kEntityPlayer, random(2) ? "CAT1012" : "CAT1012A");
 			} else {
 				getSound()->excuseMeCath();
 			}
@@ -430,7 +430,7 @@ IMPLEMENT_FUNCTION(Alexei, chapter1Handler, 18)
 		break;
 
 	case kActionNone:
-		if (getState()->time > kTime1089000 && getEntities()->checkFields11()) {
+		if (getState()->time > kTime1089000 && getEntities()->isSomebodyStandingInRestaurantOrSalon()) {
 			params->param2 = 0;
 
 			getData()->posture = kPostureStanding;
@@ -860,7 +860,7 @@ IMPLEMENT_FUNCTION(Alexei, function31, 31)
 
 	case kActionDefault:
 		getEntities()->drawSequenceRight(kEntityAlexei, "811DS");
-		if (getEntities()->checkFields13())
+		if (getEntities()->isInRestaurant(kEntityPlayer))
 			getEntities()->updateFrame(kEntityAlexei);
 
 		setCallback(1);
@@ -1016,9 +1016,9 @@ IMPLEMENT_FUNCTION(Alexei, function40, 40)
 
 			getData()->posture = kPostureSitting;
 
-			if (getEntities()->isSitting(kEntityNone, kCarGreenSleeping, kPosition_7500)) {
+			if (getEntities()->isSitting(kEntityPlayer, kCarGreenSleeping, kPosition_7500)) {
 				getAction()->playAnimation(isDay() ? kEventCathTurningDay : kEventCathTurningNight);
-				getSound()->playSound(kEntityNone, "BUMP");
+				getSound()->playSound(kEntityPlayer, "BUMP");
 				getScenes()->loadSceneFromObject(kObjectCompartment2);
 			}
 

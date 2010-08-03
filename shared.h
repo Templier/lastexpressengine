@@ -790,7 +790,8 @@ enum ObjectIndex {
 // Entity ID
 //////////////////////////////////////////////////////////////////////////
 enum EntityIndex {
-	kEntityNone,
+	kEntityPlayer = 0,
+	kEntityNone = 0,
 	kEntityAnna,
 	kEntityAugust,
 	kEntityMertens,

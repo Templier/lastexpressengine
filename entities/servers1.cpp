@@ -233,7 +233,7 @@ switch (savepoint.action) {
 		break;
 
 	case kActionDefault:
-		if (!getEntities()->checkFields17(kEntityServers1) || !getEntities()->checkFields11())
+		if (!getEntities()->isInKitchen(kEntityServers1) || !getEntities()->isSomebodyStandingInRestaurantOrSalon())
 			break;
 
 		if (ENTITY_PARAM(0, 1)) {
@@ -331,7 +331,7 @@ IMPLEMENT_FUNCTION(Servers1, chapter2Handler, 18)
 		break;
 
 	case kActionNone:
-		if (!getEntities()->checkFields17(kEntityServers1) || !getEntities()->checkFields11())
+		if (!getEntities()->isInKitchen(kEntityServers1) || !getEntities()->isSomebodyStandingInRestaurantOrSalon())
 			break;
 
 		if (ENTITY_PARAM(0, 6)) {
@@ -440,7 +440,7 @@ IMPLEMENT_FUNCTION(Servers1, chapter3Handler, 23)
 	if (savepoint.action != kActionNone)
 		return;
 
-	if (getEntities()->checkFields17(kEntityServers1) && getEntities()->checkFields11()) {
+	if (getEntities()->isInKitchen(kEntityServers1) && getEntities()->isSomebodyStandingInRestaurantOrSalon()) {
 		if (ENTITY_PARAM(1, 1)) {
 			setCallback(1);
 			call(new ENTITY_SETUP(Servers1, setup_function24));

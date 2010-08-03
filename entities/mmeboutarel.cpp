@@ -132,7 +132,7 @@ IMPLEMENT_FUNCTION_SI(MmeBoutarel, enterExitCompartment2, 6)
  */
 IMPLEMENT_FUNCTION_II(MmeBoutarel, updateEntity, 7)
 	if (savepoint.action == kActionExcuseMeCath) {
-		getInventory()->hasItem(kItemPassengerList) ? getSound()->playSound(kEntityNone, "CAT1021") : getSound()->excuseMeCath();
+		getInventory()->hasItem(kItemPassengerList) ? getSound()->playSound(kEntityPlayer, "CAT1021") : getSound()->excuseMeCath();
 
 		return;
 	}
@@ -239,7 +239,7 @@ IMPLEMENT_FUNCTION(MmeBoutarel, chapter1Handler, 12)
 
 		getSound()->playSound(kEntityMmeBoutarel, "MME1035A");
 
-		if (getEntities()->hasValidFrame(kEntityMmeBoutarel) || getEntities()->checkFields9(kEntityMmeBoutarel, kEntityNone, 2000) )
+		if (getEntities()->hasValidFrame(kEntityMmeBoutarel) || getEntities()->checkFields9(kEntityMmeBoutarel, kEntityPlayer, 2000) )
 			getProgress().field_AC = 1;
 
 		setCallback(2);

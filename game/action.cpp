@@ -456,7 +456,7 @@ IMPLEMENT_ACTION(playSound) {
 	sprintf((char *)&filename, "LIB%03d", hotspot.param1);
 
 	if (hotspot.param2 || !getSound()->isBuffered(filename, true))
-		getSound()->playSoundEvent(kEntityNone, hotspot.param1, hotspot.param2);
+		getSound()->playSoundEvent(kEntityPlayer, hotspot.param1, hotspot.param2);
 
 	return kSceneInvalid;
 }
@@ -470,7 +470,7 @@ IMPLEMENT_ACTION(playMusic) {
 
 	if (!getSound()->isBuffered(filename) &&
 	   (hotspot.param1 != 50 || getProgress().chapter == kChapter5))
-		getSound()->playSound(kEntityNone, filename, SoundManager::kFlagDefault, hotspot.param2);
+		getSound()->playSound(kEntityPlayer, filename, SoundManager::kFlagDefault, hotspot.param2);
 
 	return kSceneInvalid;
 }
@@ -487,7 +487,7 @@ IMPLEMENT_ACTION(knock) {
 		getSavePoints()->push(kEntityNone, getObjects()->get(object).entity, kAction8, object);
 	} else {
 		if (!getSound()->isBuffered("LIB012", true))
-			getSound()->playSoundEvent(kEntityNone, 12);
+			getSound()->playSoundEvent(kEntityPlayer, 12);
 	}
 
 	return kSceneInvalid;
@@ -523,18 +523,18 @@ IMPLEMENT_ACTION(compartment) {
 		 || getInventory()->getSelectedItem() != kItemFirebird
 		 || getInventory()->getSelectedItem() != kItemBriefcase))) {
 			if (!getSound()->isBuffered("LIB13"))
-				getSound()->playSoundEvent(kEntityNone, 13);
+				getSound()->playSoundEvent(kEntityPlayer, 13);
 
 			// Stop processing further
 			return kSceneNone;
 		}
 
-		getSound()->playSoundEvent(kEntityNone, 32);
+		getSound()->playSoundEvent(kEntityPlayer, 32);
 
 		if ((object >= kObjectCompartment1 && object <= kObjectCompartment3) || (object >= kObjectCompartmentA && object <= kObjectCompartmentF))
 			getObjects()->update(object, kEntityNone, kLocationNone, kCursorHandKnock, kCursorHand);
 
-		getSound()->playSoundEvent(kEntityNone, 15, 22);
+		getSound()->playSoundEvent(kEntityPlayer, 15, 22);
 		getInventory()->unselectItem();
 
 		return kSceneInvalid;
@@ -542,16 +542,16 @@ IMPLEMENT_ACTION(compartment) {
 
 	if (hotspot.action != 16 || getInventory()->getSelectedItem() != kItemKey) {
 		if (object == kObjectCageMax) {
-			getSound()->playSoundEvent(kEntityNone, 26);
+			getSound()->playSoundEvent(kEntityPlayer, 26);
 		} else {
-			getSound()->playSoundEvent(kEntityNone, 14);
-			getSound()->playSoundEvent(kEntityNone, 15, 22);
+			getSound()->playSoundEvent(kEntityPlayer, 14);
+			getSound()->playSoundEvent(kEntityPlayer, 15, 22);
 		}
 		return kSceneInvalid;
 	}
 
 	getObjects()->update(kObjectCompartment1, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
-	getSound()->playSoundEvent(kEntityNone, 16);
+	getSound()->playSoundEvent(kEntityPlayer, 16);
 	getInventory()->unselectItem();
 
 	// Stop processing further
@@ -561,8 +561,8 @@ IMPLEMENT_ACTION(compartment) {
 //////////////////////////////////////////////////////////////////////////
 // Action 7
 IMPLEMENT_ACTION(playSounds) {
-	getSound()->playSoundEvent(kEntityNone, hotspot.param1);
-	getSound()->playSoundEvent(kEntityNone, hotspot.param3, hotspot.param2);
+	getSound()->playSoundEvent(kEntityPlayer, hotspot.param1);
+	getSound()->playSoundEvent(kEntityPlayer, hotspot.param3, hotspot.param2);
 
 	return kSceneInvalid;
 }
@@ -597,16 +597,16 @@ IMPLEMENT_ACTION(openCloseObject) {
 	switch (location) {
 	case kLocation1:
 		if (isNotWindow)
-			getSound()->playSoundEvent(kEntityNone, 24);
+			getSound()->playSoundEvent(kEntityPlayer, 24);
 		else
-			getSound()->playSoundEvent(kEntityNone, 21);
+			getSound()->playSoundEvent(kEntityPlayer, 21);
 		break;
 
 	case kLocation2:
 		if (isNotWindow)
-			getSound()->playSoundEvent(kEntityNone, 36);
+			getSound()->playSoundEvent(kEntityPlayer, 36);
 		else
-			getSound()->playSoundEvent(kEntityNone, 20);
+			getSound()->playSoundEvent(kEntityPlayer, 20);
 		break;
 
 	default:
@@ -628,9 +628,9 @@ IMPLEMENT_ACTION(10) {
 
 	if (object != kObject112 || getSound()->isBuffered("LIB096")) {
 		if (object == 1)
-			getSound()->playSoundEvent(kEntityNone, 73);
+			getSound()->playSoundEvent(kEntityPlayer, 73);
 	} else {
-		getSound()->playSoundEvent(kEntityNone, 96);
+		getSound()->playSoundEvent(kEntityPlayer, 96);
 	}
 
 	return kSceneInvalid;
@@ -711,7 +711,7 @@ IMPLEMENT_ACTION(pickItem) {
 
 		getInventory()->addItem(kItemParchemin);
 		getInventory()->getEntry(kItem11)->location = kLocation1;
-		getSound()->playSoundEvent(kEntityNone, 9);
+		getSound()->playSoundEvent(kEntityPlayer, 9);
 		break;
 
 	case kItemBomb:
@@ -719,7 +719,7 @@ IMPLEMENT_ACTION(pickItem) {
 		break;
 
 	case kItemBriefcase:
-		getSound()->playSoundEvent(kEntityNone, 83);
+		getSound()->playSoundEvent(kEntityPlayer, 83);
 		break;
 
 	default:
@@ -766,18 +766,18 @@ IMPLEMENT_ACTION(dropItem) {
 
 	// Handle actions
 	if (item == kItemBriefcase) {
-		getSound()->playSoundEvent(kEntityNone, 82);
+		getSound()->playSoundEvent(kEntityPlayer, 82);
 
 		if (location == kLocation2) {
 			if (!getProgress().field_58) {
-				save(kEntityNone, kSavegameType0, kEventNone);
+				save(kEntityPlayer, kSavegameType0, kEventNone);
 				getProgress().field_58 = 1;
 			}
 
 			if (getInventory()->getEntry(kItemParchemin)->location == kLocation2) {
 				getInventory()->addItem(kItemParchemin);
 				getInventory()->getEntry(kItem11)->location = kLocation11;
-				getSound()->playSoundEvent(kEntityNone, 9);
+				getSound()->playSoundEvent(kEntityPlayer, 9);
 			}
 		}
 	}
@@ -809,11 +809,11 @@ IMPLEMENT_ACTION(enterCompartment) {
 		if (hotspot.action != 16 || getInventory()->getEntry(kItemBriefcase)->location != 2) {
 			action_compartment(hotspot);
 		} else {
-			getSound()->playSoundEvent(kEntityNone, 14);
-			getSound()->playSoundEvent(kEntityNone, 15, 22);
+			getSound()->playSoundEvent(kEntityPlayer, 14);
+			getSound()->playSoundEvent(kEntityPlayer, 15, 22);
 
 			if (getProgress().field_78) {
-				getSound()->playSound(kEntityNone, "MUS003", SoundManager::kFlagDefault);
+				getSound()->playSound(kEntityPlayer, "MUS003", SoundManager::kFlagDefault);
 				getProgress().field_78 = 0;
 			}
 
@@ -821,10 +821,10 @@ IMPLEMENT_ACTION(enterCompartment) {
 			return kSceneNone;
 		}
 	} else {
-		save(kEntityNone, kSavegameType0, kEventNone);
-		getSound()->playSound(kEntityNone, "LIB014");
+		save(kEntityPlayer, kSavegameType0, kEventNone);
+		getSound()->playSound(kEntityPlayer, "LIB014");
 		playAnimation(kEventCathFindCorpse);
-		getSound()->playSound(kEntityNone, "LIB015");
+		getSound()->playSound(kEntityPlayer, "LIB015");
 		getProgress().eventCorpseFound = 1;
 		return kSceneCompartmentCorpse;
 	}
@@ -984,7 +984,7 @@ IMPLEMENT_ACTION(climbDownTrain) {
 
 	playAnimation(evt);
 	if (evt == kEventCathClimbDownTrainNoJacketDay)
-		getSound()->playSoundEvent(kEntityNone, 37);
+		getSound()->playSoundEvent(kEntityPlayer, 37);
 
 	if (!hotspot.scene)
 		getScenes()->processScene();
@@ -1010,7 +1010,7 @@ IMPLEMENT_ACTION(jumpUpDownTrain) {
 	case 3:
 		if (getInventory()->getSelectedItem() == kItemBriefcase) {
 			getInventory()->removeItem(kItemBriefcase, kLocation3);
-			getSound()->playSoundEvent(kEntityNone, 82);
+			getSound()->playSoundEvent(kEntityPlayer, 82);
 			getInventory()->unselectItem();
 		}
 
@@ -1064,7 +1064,7 @@ IMPLEMENT_ACTION(unbound) {
 	case 4:
 		if (!getEvent(kEventCathStruggleWithBonds2)) {
 			playAnimation(kEventCathStruggleWithBonds2);
-			getSound()->playSoundEvent(kEntityNone, 101);
+			getSound()->playSoundEvent(kEntityPlayer, 101);
 			getInventory()->setLocationAndProcess(kItemMatch, kLocation2);
 			if (!hotspot.scene)
 				getScenes()->processScene();
@@ -1092,11 +1092,11 @@ IMPLEMENT_ACTION(25) {
 
 	case 2:
 		if (!getSound()->isBuffered("MUS021"))
-			getSound()->playSound(kEntityNone, "MUS021", SoundManager::kFlagDefault);
+			getSound()->playSound(kEntityPlayer, "MUS021", SoundManager::kFlagDefault);
 		break;
 
 	case 3:
-		getSound()->playSoundEvent(kEntityNone, 43);
+		getSound()->playSoundEvent(kEntityPlayer, 43);
 		if (!getInventory()->hasItem(kItemKey)) {
 			if (!getEvent(kEventAnnaBagageArgument)) {
 				RESET_ENTITY_STATE(kEntityAnna, Anna, setup_bagage);
@@ -1145,9 +1145,9 @@ IMPLEMENT_ACTION(26) {
 // Action 27
 IMPLEMENT_ACTION(27) {
 	if (!getSound()->isBuffered("LIB031", true))
-		getSound()->playSoundEvent(kEntityNone, 31);
+		getSound()->playSoundEvent(kEntityPlayer, 31);
 
-	switch (getEntityData(kEntityNone)->car) {
+	switch (getEntityData(kEntityPlayer)->car) {
 	default:
 		break;
 
@@ -1189,13 +1189,13 @@ IMPLEMENT_ACTION(concertSitCough) {
 // Action 29
 IMPLEMENT_ACTION(29) {
 	getProgress().field_C = 1;
-	getSound()->playSoundEvent(kEntityNone, hotspot.param1, hotspot.param2);
+	getSound()->playSoundEvent(kEntityPlayer, hotspot.param1, hotspot.param2);
 
 	char filename[8];
 	sprintf((char *)&filename, "MUS%03d", hotspot.param3);
 
 	if (!getSound()->isBuffered(filename))
-		getSound()->playSound(kEntityNone, filename, SoundManager::kFlagDefault);
+		getSound()->playSound(kEntityPlayer, filename, SoundManager::kFlagDefault);
 
 	return kSceneInvalid;
 }
@@ -1219,7 +1219,7 @@ IMPLEMENT_ACTION(catchBeetle) {
 // Action 31
 IMPLEMENT_ACTION(exitCompartment) {
 	if (!getProgress().field_30 && getProgress().jacket != 0) {
-		save(kEntityNone, kSavegameType0, kEventNone);
+		save(kEntityPlayer, kSavegameType0, kEventNone);
 		getProgress().field_30 = 1;
 	}
 
@@ -1287,7 +1287,7 @@ IMPLEMENT_ACTION(useWhistle) {
 			break;
 		}
 
-		if (getEntities()->isSitting(kEntityNone, kCarGreenSleeping, kPosition_8200)) {
+		if (getEntities()->isSitting(kEntityPlayer, kCarGreenSleeping, kPosition_8200)) {
 			evt = kEventCathOpenEgg;
 
 			Scene *scene = getScenes()->get(hotspot.scene);
@@ -1306,7 +1306,7 @@ IMPLEMENT_ACTION(useWhistle) {
 			break;
 		}
 
-		evt = (getEntities()->isSitting(kEntityNone, kCarGreenSleeping, kPosition_8200)) ? kEventCathCloseEgg : kEventCathCloseEggNoBackground;
+		evt = (getEntities()->isSitting(kEntityPlayer, kCarGreenSleeping, kPosition_8200)) ? kEventCathCloseEgg : kEventCathCloseEggNoBackground;
 		getProgress().isEggOpen = 0;
 		break;
 
@@ -1316,7 +1316,7 @@ IMPLEMENT_ACTION(useWhistle) {
 			break;
 		}
 
-		evt = (getEntities()->isSitting(kEntityNone, kCarGreenSleeping, kPosition_8200)) ? kEventCathUseWhistleOpenEgg : kEventCathUseWhistleOpenEggNoBackground;
+		evt = (getEntities()->isSitting(kEntityPlayer, kCarGreenSleeping, kPosition_8200)) ? kEventCathUseWhistleOpenEgg : kEventCathUseWhistleOpenEggNoBackground;
 		break;
 
 	}
@@ -1339,7 +1339,7 @@ IMPLEMENT_ACTION(openMatchBox) {
 		return kSceneInvalid;
 
 	getInventory()->addItem(kItemMatch);
-	getSound()->playSoundEvent(kEntityNone, 102);
+	getSound()->playSoundEvent(kEntityPlayer, 102);
 
 	return kSceneInvalid;
 }
@@ -1347,7 +1347,7 @@ IMPLEMENT_ACTION(openMatchBox) {
 //////////////////////////////////////////////////////////////////////////
 // Action 35
 IMPLEMENT_ACTION(openBed) {
-	getSound()->playSoundEvent(kEntityNone, 59);
+	getSound()->playSoundEvent(kEntityPlayer, 59);
 
 	return kSceneInvalid;
 }
@@ -1366,11 +1366,11 @@ IMPLEMENT_ACTION(dialog) {
 //////////////////////////////////////////////////////////////////////////
 // Action 38
 IMPLEMENT_ACTION(eggBox) {
-	getSound()->playSoundEvent(kEntityNone, 43);
+	getSound()->playSoundEvent(kEntityPlayer, 43);
 	if (getProgress().field_7C) {
 
 		if (!getSound()->isBuffered("MUS003")) {
-			getSound()->playSound(kEntityNone, "MUS003", SoundManager::kFlagDefault);
+			getSound()->playSound(kEntityPlayer, "MUS003", SoundManager::kFlagDefault);
 			getProgress().field_7C = 0;
 		}
 	}
@@ -1381,10 +1381,10 @@ IMPLEMENT_ACTION(eggBox) {
 //////////////////////////////////////////////////////////////////////////
 // Action 39
 IMPLEMENT_ACTION(39) {
-	getSound()->playSoundEvent(kEntityNone, 24);
+	getSound()->playSoundEvent(kEntityPlayer, 24);
 	if (getProgress().field_80) {
 		if (!getSound()->isBuffered("MUS003")) {
-			getSound()->playSound(kEntityNone, "MUS003", SoundManager::kFlagDefault);
+			getSound()->playSound(kEntityPlayer, "MUS003", SoundManager::kFlagDefault);
 			getProgress().field_80 = 0;
 		}
 	}
@@ -1395,7 +1395,7 @@ IMPLEMENT_ACTION(39) {
 //////////////////////////////////////////////////////////////////////////
 // Action 40
 IMPLEMENT_ACTION(bed) {
-	getSound()->playSoundEvent(kEntityNone, 85);
+	getSound()->playSoundEvent(kEntityPlayer, 85);
 	// falls to case 12
 	return action_12(hotspot);
 }
@@ -1428,7 +1428,7 @@ IMPLEMENT_ACTION(41) {
 		sprintf((char *)&filename, "MUS%03d", id);
 
 		if (!getSound()->isBuffered(filename))
-			getSound()->playSound(kEntityNone, filename, SoundManager::kFlagDefault);
+			getSound()->playSound(kEntityPlayer, filename, SoundManager::kFlagDefault);
 	}
 
 	return kSceneInvalid;
@@ -1461,7 +1461,7 @@ IMPLEMENT_ACTION(42) {
 	sprintf((char *)&filename, "MUS%03d", value);
 
 	if (!getSound()->isBuffered(filename) && hotspot.param3 & value) {
-		getSound()->playSound(kEntityNone, filename, SoundManager::kFlagDefault);
+		getSound()->playSound(kEntityPlayer, filename, SoundManager::kFlagDefault);
 
 		getSavePoints()->call(kEntityNone, kEntityTrain, kAction203863200, (char *)&filename);
 		getSavePoints()->push(kEntityNone, kEntityTrain, kAction222746496, hotspot.param2);
@@ -1597,17 +1597,17 @@ bool Action::handleOtherCompartment(ObjectIndex object, bool doPlaySound, bool d
 	EntityData *_data = getEntities()->get(kEntityMertens)->getParamData();
 
 	// Only handle compartments
-	if (getEntityData(kEntityNone)->posture != kPostureStanding
+	if (getEntityData(kEntityPlayer)->posture != kPostureStanding
 	|| ((object < kObjectCompartment2 || object > kObjectCompartment8) && (object < kObjectCompartmentA || object > kObjectCompartmentH)))
 		return false;
 
 	//////////////////////////////////////////////////////////////////////////
 	// Gendarmes
-	if (getEntityData(kEntityNone)->car == getEntityData(kEntityGendarmes)->car
+	if (getEntityData(kEntityPlayer)->car == getEntityData(kEntityGendarmes)->car
 	&& getEntityData(kEntityGendarmes)->posture == kPostureStanding
-	&& !getEntities()->compare(kEntityNone, kEntityGendarmes)) {
+	&& !getEntities()->compare(kEntityPlayer, kEntityGendarmes)) {
 		if (doPlaySound)
-			playCompartmentSoundEvents(kEntityNone, object);
+			playCompartmentSoundEvents(kEntityPlayer, object);
 
 		if (doLoadScene)
 			getScenes()->loadSceneFromObject(object);
@@ -1617,7 +1617,7 @@ bool Action::handleOtherCompartment(ObjectIndex object, bool doPlaySound, bool d
 
 	//////////////////////////////////////////////////////////////////////////
 	// Mertens
-	if (getEntityData(kEntityNone)->posture == kPosture3
+	if (getEntityData(kEntityPlayer)->posture == kPosture3
 	 && getEntityData(kEntityMertens)->car == kCarGreenSleeping
 	 && !getEntityData(kEntityMertens)->posture
 	 && !ENTITY_PARAM(0, 1))
@@ -1625,21 +1625,21 @@ bool Action::handleOtherCompartment(ObjectIndex object, bool doPlaySound, bool d
 
 	//////////////////////////////////////////////////////////////////////////
 	// Coudert
-	if (getEntityData(kEntityNone)->car != kCarRedSleeping
+	if (getEntityData(kEntityPlayer)->car != kCarRedSleeping
 	 || !getEntityData(kEntityCoudert)->car
 	 || getEntityData(kEntityCoudert)->posture != kPostureStanding
 	 || ENTITY_PARAM(0, 1))
 	 return false;
 
-	if (!getEntities()->compare(kEntityNone, kEntityCoudert))
+	if (!getEntities()->compare(kEntityPlayer, kEntityCoudert))
 		error("Action::handleOtherCompartment: not implemented!");
 
 	// Direction = Up
-	if (!getEntities()->compare(kEntityNone, kEntityCoudert)
+	if (!getEntities()->compare(kEntityPlayer, kEntityCoudert)
 	&& getEntityData(kEntityCoudert)->direction == kDirectionUp
-	&& getEntityData(kEntityCoudert)->entityPosition < getEntityData(kEntityNone)->entityPosition) {
+	&& getEntityData(kEntityCoudert)->entityPosition < getEntityData(kEntityPlayer)->entityPosition) {
 		if (doPlaySound)
-			playCompartmentSoundEvents(kEntityNone, object);
+			playCompartmentSoundEvents(kEntityPlayer, object);
 
 		if (!getSound()->isBuffered(kEntityCoudert))
 			getSound()->playSound(kEntityCoudert, (random(2)) ? "JAC1000" : "JAC1000A");
@@ -1651,11 +1651,11 @@ bool Action::handleOtherCompartment(ObjectIndex object, bool doPlaySound, bool d
 	}
 
 	// Direction = down
-	if (!getEntities()->compare(kEntityNone, kEntityCoudert)
+	if (!getEntities()->compare(kEntityPlayer, kEntityCoudert)
 	&& getEntityData(kEntityCoudert)->direction == kDirectionDown
-	&& getEntityData(kEntityCoudert)->entityPosition > getEntityData(kEntityNone)->entityPosition) {
+	&& getEntityData(kEntityCoudert)->entityPosition > getEntityData(kEntityPlayer)->entityPosition) {
 		if (doPlaySound)
-			playCompartmentSoundEvents(kEntityNone, object);
+			playCompartmentSoundEvents(kEntityPlayer, object);
 
 		if (!getSound()->isBuffered(kEntityCoudert))
 			getSound()->playSound(kEntityCoudert, (random(2)) ? "JAC1000" : "JAC1000A");
@@ -1669,10 +1669,10 @@ bool Action::handleOtherCompartment(ObjectIndex object, bool doPlaySound, bool d
 
 void Action::playCompartmentSoundEvents(EntityIndex entityIndex, ObjectIndex object) const {
 	if (getObjects()->get(object).location == kLocation1 || getObjects()->get(object).location == kLocation3 || getEntities()->checkFields2(object)) {
-		getSound()->playSoundEvent(kEntityNone, 13);
+		getSound()->playSoundEvent(kEntityPlayer, 13);
 	} else {
-		getSound()->playSoundEvent(kEntityNone, 14);
-		getSound()->playSoundEvent(kEntityNone, 15, 3);
+		getSound()->playSoundEvent(kEntityPlayer, 14);
+		getSound()->playSoundEvent(kEntityPlayer, 15, 3);
 	}
 }
 
@@ -1854,7 +1854,7 @@ LABEL_KEY:
 		|| getObjects()->get(object).entity
 		|| getObjects()->get(object).location != 1
 		|| !getObjects()->get(object).cursor2
-		|| getEntities()->isSittingInCompartmentCars()
+		|| getEntities()->isSittingInCompartmentCars(kEntityPlayer)
 		|| getEntities()->checkFields2(object))
 			return (CursorStyle)getObjects()->get(object).cursor2;
 		else
@@ -1867,11 +1867,22 @@ LABEL_KEY:
 //////////////////////////////////////////////////////////////////////////
 
 // Play an animation and add delta time to global game time
-void Action::playAnimation(EventIndex index) const {
+void Action::playAnimation(EventIndex index, bool debugMode) const {
 	if (index >= _animationListSize)
 		error("Action::playAnimation: invalid event index (value=%i, max=%i)", index, _animationListSize);
 
+	// In debug mode, just show the animation
+	if (debugMode) {
+		Animation animation;
+		if (animation.load(getArchive(Common::String(animationList[index].filename) + ".nis")))
+			animation.play();
+		return;
+	}
+
 	getFlags()->flag_3 = true;
+
+	// Hide cursor
+	_engine->getCursor()->show(false);
 
 	// Show inventory & hourglass
 	getInventory()->show();
@@ -1881,7 +1892,7 @@ void Action::playAnimation(EventIndex index) const {
 
 		if (getGlobalTimer()) {
 			if (getSound()->isBuffered("TIMER")) {
-				getSound()->unknownFunction2("TIMER");
+				getSound()->processEntry("TIMER");
 				setGlobalTimer(105);
 			}
 		}
@@ -1901,6 +1912,9 @@ void Action::playAnimation(EventIndex index) const {
 		if (getSound()->isBuffered("TIMER"))
 			getSound()->removeFromQueue("TIMER");
 	}
+
+	// Show cursor
+	_engine->getCursor()->show(true);
 
 	getEvent(index) = 1;
 

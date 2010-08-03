@@ -62,18 +62,24 @@ private:
 	LastExpressEngine *_engine;
 
 	bool cmdHelp(int argc, const char **argv);
-	bool cmdLoadScene(int argc, const char **argv);
-	bool cmdPlaySeq(int argc, const char **argv);
+
+	bool cmdListFiles(int argc, const char **argv);
+
 	bool cmdShowFrame(int argc, const char **argv);
+	bool cmdShowBg(int argc, const char **argv);
+	bool cmdPlaySeq(int argc, const char **argv);
 	bool cmdPlaySnd(int argc, const char **argv);
 	bool cmdPlaySbe(int argc, const char **argv);
 	bool cmdPlayNis(int argc, const char **argv);
-	bool cmdShowBg(int argc, const char **argv);
-	bool cmdClear(int argc, const char **argv);
-	bool cmdListFiles(int argc, const char **argv);
-	bool cmdLoadGame(int argc, const char **argv);
+
+	bool cmdLoadScene(int argc, const char **argv);
 	bool cmdFight(int argc, const char **argv);
 	bool cmdBeetle(int argc, const char **argv);
+
+	bool cmdEntity(int argc, const char **argv);
+
+	bool cmdLoadGame(int argc, const char **argv);
+	bool cmdClear(int argc, const char **argv);
 
 	void resetCommand();
 	void copyCommand(int argc, const char **argv);

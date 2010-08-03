@@ -374,7 +374,7 @@ IMPLEMENT_FUNCTION(Alouan, function22, 22)
 		break;
 
 	case kActionDrawScene:
-		if (getEntities()->isSittingOrStanding(kEntityNone, kCarGreenSleeping))
+		if (getEntities()->isSittingOrStanding(kEntityPlayer, kCarGreenSleeping))
 			setup_function23();
 		break;
 	}

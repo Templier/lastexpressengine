@@ -238,27 +238,30 @@ public:
 		InventoryItem inventoryItem;	// byte
 		EntityDirection direction;		// byte
 		int16 field_49B;
+		int16 currentFrame;
 		int16 currentFrame2;
-		int16 currentFrame3;
 		int16 field_4A1;
 		int16 field_4A3;
-		ClothesIndex clothes;			// byte
+		ClothesIndex clothes;			    // byte
 		Position position;
-		CarIndex car2;                  // byte
-		bool doProcessEntity;           // byte
-		bool field_4A9;	                // byte
-		bool field_4AA;                 // byte
+		CarIndex car2;                      // byte
+		bool doProcessEntity;               // byte
+		bool field_4A9;	                    // byte
+		bool field_4AA;                     // byte
 		EntityDirection directionSwitch;
-		Common::String sequenceName2;        // char[13]
-		Common::String sequenceName3;        // char[13]
-		Common::String sequenceName;         // char[7]
-		Common::String sequenceNameCopy;     // char[13]
+		Common::String sequenceName;        // char[13]
+		Common::String sequenceName2;       // char[13]
+		Common::String sequenceNamePrefix;  // char[7]
+		Common::String sequenceNameCopy;    // char[13]
 		SequenceFrame *frame;
 		SequenceFrame *frame1;
+		Sequence *sequence;
 		Sequence *sequence2;
 		Sequence *sequence3;
-		Sequence *sequence4;
 
+		/**
+		 * Default constructor.
+		 */
 		EntityCallData() {
 			memset(&callbacks, 0, 16 * sizeof(byte));
 			current_call = 0;
@@ -270,8 +273,8 @@ public:
 			inventoryItem = kItemNone;
 			direction = kDirectionNone;
 			field_49B = 0;
+			currentFrame = 0;
 			currentFrame2 = 0;
-			currentFrame3 = 0;
 			field_4A1 = 0;
 			field_4A3 = 30;
 			clothes = kClothesDefault;
@@ -283,9 +286,31 @@ public:
 			directionSwitch = kDirectionNone;
 			frame = NULL;
 			frame1 = NULL;
+			sequence = NULL;
 			sequence2 = NULL;
 			sequence3 = NULL;
-			sequence4 = NULL;
+		}
+
+		/**
+		 * Convert this object into a string representation.
+		 *
+		 * @return A string representation of this object.
+		 */
+		Common::String toString() {
+			Common::String str = "";
+
+			str += Common::String::printf("Entity position: %d    - Posture: %d       - Car: %d\n", entityPosition, posture, car);
+			str += Common::String::printf("Entity: %d             - Item: %d          - Direction: %d\n", entity, inventoryItem, direction);
+			str += Common::String::printf("Clothes: %d            - Position: %d      - Direction switch: %d\n", clothes, position, directionSwitch);
+			str += "\n";
+			str += Common::String::printf("field_497: %02d        - field_49B: %i     - field_4A1: %i\n", field_497, field_49B, field_4A1);
+			str += Common::String::printf("field_4A9: %02d        - field_4AA: %i     - Car 2: %d\n", field_4A9, field_4AA, car2);
+			str += "\n";
+			str += "Sequence: " + sequenceName + "    - Sequence 2: " + sequenceName2 + "\n";
+			str += "Sequence prefix: " + sequenceNamePrefix + "    - Sequence copy: " + sequenceNameCopy + "\n";
+			str += Common::String::printf("Current frame: %i    - Current frame 2: %i       - Process entity: %d\n", currentFrame, currentFrame2, doProcessEntity);
+
+			return str;
 		}
 	};
 

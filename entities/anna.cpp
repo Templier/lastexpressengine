@@ -212,7 +212,7 @@ IMPLEMENT_FUNCTION_II(Anna, savegame, 9)
 IMPLEMENT_FUNCTION_II(Anna, updateEntity, 10)
 	if (savepoint.action == kActionExcuseMeCath) {
 		if (getEvent(kEventAugustPresentAnna) || getEvent(kEventAugustPresentAnnaFirstIntroduction) || getProgress().chapter >= kChapter2)
-			getSound()->playSound(kEntityNone, "CAT1001");
+			getSound()->playSound(kEntityPlayer, "CAT1001");
 		else
 			getSound()->excuseMeCath();
 
@@ -344,15 +344,15 @@ IMPLEMENT_FUNCTION(Anna, function12, 12)
 			getObjects()->update(kObject53, kEntityAnna, kLocation1, kCursorNormal, kCursorHand);
 
 			if (savepoint.param.intValue == 53) {
-				getSound()->playSound(kEntityNone, getSound()->justAMinuteCath());
+				getSound()->playSound(kEntityPlayer, getSound()->justAMinuteCath());
 			} else if (getInventory()->hasItem(kItemPassengerList)) {
 				if (random(2)) {
-					getSound()->playSound(kEntityNone, getSound()->wrongDoorCath());
+					getSound()->playSound(kEntityPlayer, getSound()->wrongDoorCath());
 				} else {
-					getSound()->playSound(kEntityNone, random(2) ? "CAT1506A" : "CAT1506");
+					getSound()->playSound(kEntityPlayer, random(2) ? "CAT1506A" : "CAT1506");
 				}
 			} else {
-				getSound()->playSound(kEntityNone, getSound()->wrongDoorCath());
+				getSound()->playSound(kEntityPlayer, getSound()->wrongDoorCath());
 			}
 
 			params->param4 = 0;
@@ -730,7 +730,7 @@ IMPLEMENT_FUNCTION(Anna, function21, 21)
 
 		case 3:
 			getEntities()->drawSequenceRight(kEntityAnna, "001B");
-			if (getEntities()->checkFields12())
+			if (getEntities()->isInSalon(kEntityPlayer))
 				getEntities()->updateFrame(kEntityAnna);
 
 			setCallback(4);
@@ -1130,7 +1130,7 @@ IMPLEMENT_FUNCTION(Anna, function38, 38)
 
 	case kActionCallback:
 		if (getCallback() == 1) {
-			getSound()->playSound(kEntityNone, "MUS043");
+			getSound()->playSound(kEntityPlayer, "MUS043");
 			setup_function40();
 		}
 		break;
@@ -1395,9 +1395,9 @@ IMPLEMENT_FUNCTION(Anna, function52, 52)
 			getEntities()->enterCompartment(kEntityAnna, kObjectCompartmentF);
 			getData()->posture = kPostureSitting;
 
-			if (getEntities()->isSitting(kEntityNone, kCarRedSleeping, kPosition_4070) || getEntities()->isSitting(kEntityNone, kCarRedSleeping, kPosition_4455)) {
+			if (getEntities()->isSitting(kEntityPlayer, kCarRedSleeping, kPosition_4070) || getEntities()->isSitting(kEntityPlayer, kCarRedSleeping, kPosition_4455)) {
 				getAction()->playAnimation(isDay() ? kEventCathTurningDay : kEventCathTurningNight);
-				getSound()->playSound(kEntityNone, "BUMP");
+				getSound()->playSound(kEntityPlayer, "BUMP");
 				getScenes()->loadSceneFromObject(kObjectCompartmentF);
 			}
 		}
@@ -1552,7 +1552,7 @@ IMPLEMENT_FUNCTION(Anna, function63, 63)
 	// Anna will get killed...
 	case kAction272177921:
 		if (getSound()->isBuffered("MUS012"))
-			getSound()->unknownFunction2("MUS012");
+			getSound()->processEntry("MUS012");
 
 		setCallback(1);
 		call(new ENTITY_SETUP(Anna, setup_savegame), kSavegameType2, kEventAnnaKilled);

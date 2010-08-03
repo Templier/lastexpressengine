@@ -46,7 +46,7 @@ Pascale::Pascale(LastExpressEngine *engine) : Entity(engine, kEntityPascale) {
 	ADD_CALLBACK_FUNCTION(Pascale, playSound);
 	ADD_CALLBACK_FUNCTION(Pascale, draw2);
 	ADD_CALLBACK_FUNCTION(Pascale, function8);
-	ADD_CALLBACK_FUNCTION(Pascale, function9);
+	ADD_CALLBACK_FUNCTION(Pascale, sitSophieAndRebecca);
 	ADD_CALLBACK_FUNCTION(Pascale, function10);
 	ADD_CALLBACK_FUNCTION(Pascale, function11);
 	ADD_CALLBACK_FUNCTION(Pascale, chapter1);
@@ -178,7 +178,7 @@ IMPLEMENT_FUNCTION(Pascale, function8, 8)
 			}
 
 			setCallback(2);
-			call(new ENTITY_SETUP(Pascale, setup_function9));
+			call(new ENTITY_SETUP(Pascale, setup_sitSophieAndRebecca));
 			break;
 
 		case 2:
@@ -200,7 +200,7 @@ IMPLEMENT_FUNCTION(Pascale, function8, 8)
 	}
 }
 
-IMPLEMENT_FUNCTION(Pascale, function9, 9)
+IMPLEMENT_FUNCTION(Pascale, sitSophieAndRebecca, 9)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -303,7 +303,7 @@ switch (savepoint.action) {
 				params->param1 = 1;
 		}
 
-		if (!getEntities()->checkFields17(kEntityPascale))
+		if (!getEntities()->isInKitchen(kEntityPascale))
 			break;
 
 		if (ENTITY_PARAM(0, 5) && ENTITY_PARAM(0, 6)) {
@@ -311,29 +311,27 @@ switch (savepoint.action) {
 			break;
 		}
 
-		if (!getEntities()->checkFields11())
-			goto label_callback3;
+		if (getEntities()->isSomebodyStandingInRestaurantOrSalon()) {
+			if (params->param1 && !params->param2 && getEntities()->isPlayerPosition(kCarRestaurant, 61)) {
+				setCallback(1);
+				call(new ENTITY_SETUP(Pascale, setup_function11));
+				break;
+			}
 
-		if (params->param1 && !params->param2 && getEntities()->isPlayerPosition(kCarRestaurant, 61)) {
-			setCallback(1);
-			call(new ENTITY_SETUP(Pascale, setup_function11));
-			break;
+	label_callback1:
+			if (ENTITY_PARAM(0, 1) && !ENTITY_PARAM(1, 3)) {
+				setCallback(2);
+				call(new ENTITY_SETUP(Pascale, setup_function13));
+				break;
+			}
+
+	label_callback2:
+			if (ENTITY_PARAM(0, 3)) {
+				setCallback(3);
+				call(new ENTITY_SETUP(Pascale, setup_function16));
+				break;
+			}
 		}
-
-label_callback1:
-		if (ENTITY_PARAM(0, 1) && !ENTITY_PARAM(1, 3)) {
-			setCallback(2);
-			call(new ENTITY_SETUP(Pascale, setup_function13));
-			break;
-		}
-
-label_callback2:
-		if (ENTITY_PARAM(0, 3)) {
-			setCallback(3);
-			call(new ENTITY_SETUP(Pascale, setup_function16));
-			break;
-		}
-
 label_callback3:
 		if (ENTITY_PARAM(0, 2)) {
 			setCallback(4);
@@ -393,7 +391,7 @@ IMPLEMENT_FUNCTION(Pascale, function19, 19)
 		break;
 
 	case kActionNone:
-		if (!params->param1 && getEntityData(kEntityNone)->entityPosition < kPosition_3650) {
+		if (!params->param1 && getEntityData(kEntityPlayer)->entityPosition < kPosition_3650) {
 			getObjects()->update(kObject65, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
 			getSavePoints()->push(kEntityPascale, kEntityTables0, kActionDrawTablesWithChairs, "001P");
 			getSavePoints()->push(kEntityPascale, kEntityTables1, kActionDrawTablesWithChairs, "005J");
@@ -459,7 +457,7 @@ IMPLEMENT_FUNCTION(Pascale, chapter3Handler, 22)
 		break;
 
 	case kActionNone:
-		if (!getEntities()->checkFields17(kEntityPascale))
+		if (!getEntities()->isInKitchen(kEntityPascale))
 			break;
 
 		if (ENTITY_PARAM(0, 7)) {
@@ -610,7 +608,7 @@ IMPLEMENT_FUNCTION(Pascale, function29, 29)
 
 		case 1:
 			getEntities()->drawSequenceRight(kEntityPascale, "817DS");
-			if (getEntities()->checkFields13())
+			if (getEntities()->isInRestaurant(kEntityPlayer))
 				getEntities()->updateFrame(kEntityPascale);
 
 			setCallback(2);
@@ -647,7 +645,7 @@ IMPLEMENT_FUNCTION(Pascale, function30, 30)
 
 		case 1:
 			getEntities()->drawSequenceRight(kEntityPascale, "817UD");
-			if (getEntities()->checkFields12())
+			if (getEntities()->isInSalon(kEntityPlayer))
 				getEntities()->updateFrame(kEntityPascale);
 
 			setCallback(2);

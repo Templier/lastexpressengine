@@ -292,7 +292,7 @@ label_process:
 		if (getProgress().chapter == kChapter1 && !ENTITY_PARAM(0, 3)) {
 			if (params->param7 != kTimeInvalid && getState()->time > kTime1174500) {
 				if (getState()->time <= kTime1183500) {
-					if (!getEntities()->checkFields9(kEntityRebecca, kEntityNone, 2000) || getSound()->isBuffered("CON1210") || !params->param7)
+					if (!getEntities()->checkFields9(kEntityRebecca, kEntityPlayer, 2000) || getSound()->isBuffered("CON1210") || !params->param7)
 						params->param7 = getState()->time;
 
 					if (params->param7 >= (int)getState()->time)
@@ -314,7 +314,7 @@ label_process:
 
 		if (getProgress().chapter == kChapter3 && !ENTITY_PARAM(0, 4) && params->param8 != kTimeInvalid && getState()->time > kTime2097000) {
 			if (getState()->time <= kTime2106000) {
-				if (!getEntities()->checkFields9(kEntityRebecca, kEntityNone, 1000) || !params->param8)
+				if (!getEntities()->checkFields9(kEntityRebecca, kEntityPlayer, 1000) || !params->param8)
 					params->param8 = getState()->time;
 
 				if (params->param8 >= (int)getState()->time)
@@ -333,7 +333,7 @@ label_process:
 		}
 
 label_callback:
-		if (ENTITY_PARAM(0, 2) && getEntities()->checkFields9(kEntityRebecca, kEntityNone, 1000)) {
+		if (ENTITY_PARAM(0, 2) && getEntities()->checkFields9(kEntityRebecca, kEntityPlayer, 1000)) {
 			getObjects()->update(kObjectCompartmentE, kEntityRebecca, kLocation1, kCursorNormal, kCursorNormal);
 			getObjects()->update(kObject52, kEntityRebecca, kLocation1, kCursorNormal, kCursorNormal);
 
@@ -470,7 +470,7 @@ IMPLEMENT_FUNCTION(Rebecca, chapter1Handler, 22)
 		if (getState()->time > kTime1080000)
 			goto label_playConversation;
 
-		if (!getEntities()->checkFields12() || !params->param4)
+		if (!getEntities()->isInSalon(kEntityPlayer) || !params->param4)
 			params->param4 = getState()->time + 150;
 
 		if (params->param4 >= (int)getState()->time) {
@@ -483,7 +483,7 @@ label_callback_4:
 				}
 
 				if (checkParam5 || params->param5 < (int)getState()->time) {
-					if (getEntities()->checkFields12()) {
+					if (getEntities()->isInSalon(kEntityPlayer)) {
 						setCallback(5);
 						call(new ENTITY_SETUP_SIIS(Rebecca, setup_playSound), "REB1013");
 						break;
@@ -502,7 +502,7 @@ label_callback_5:
 label_playConversation:
 			params->param4 = kTimeInvalid;
 
-			if (getEntities()->checkFields12())
+			if (getEntities()->isInSalon(kEntityPlayer))
 				getProgress().field_B8 = 1;
 
 			setCallback(4);

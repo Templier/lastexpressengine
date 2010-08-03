@@ -278,7 +278,7 @@ IMPLEMENT_FUNCTION(Max, chapter4Handler, 8)
 		if (getSound()->isBuffered(kEntityMax))
 			getSound()->processEntry(kEntityMax);
 
-		getSound()->playSound(kEntityNone, "LIB026");
+		getSound()->playSound(kEntityPlayer, "LIB026");
 		getAction()->playAnimation(kEventCathMaxFree);
 		getScenes()->loadSceneFromPosition(kCarBaggage, 92);
 		getObjects()->update(kObjectCageMax, kEntityNone, kLocationNone, kCursorNormal, kCursorHand);
@@ -504,7 +504,7 @@ IMPLEMENT_FUNCTION(Max, freeFromCage, 14)
 			if (getSound()->isBuffered(kEntityMax))
 				getSound()->processEntry(kEntityMax);
 
-			getSound()->playSound(kEntityNone, "LIB026");
+			getSound()->playSound(kEntityPlayer, "LIB026");
 			getAction()->playAnimation(kEventCathMaxFree);
 			getScenes()->loadSceneFromPosition(kCarBaggage, 92);
 			getObjects()->update(kObjectCageMax, kEntityNone, kLocationNone, kCursorNormal, kCursorHand);

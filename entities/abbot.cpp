@@ -201,7 +201,7 @@ IMPLEMENT_FUNCTION_II(Abbot, updateEntity, 11)
 			getSound()->excuseMe(kEntityAbbot);
 		} else {
 			if (getEvent(kEventAbbotIntroduction))
-				getSound()->playSound(kEntityNone, "CAT1013");
+				getSound()->playSound(kEntityPlayer, "CAT1013");
 			else
 				getSound()->excuseMeCath();
 		}
@@ -292,7 +292,7 @@ IMPLEMENT_FUNCTION(Abbot, chapter3Handler, 18)
 			getSavePoints()->push(kEntityAbbot, kEntityCooks, kAction236976550);
 			getEntities()->drawSequenceRight(kEntityAbbot, "804DS");
 
-			if (getEntities()->checkFields13())
+			if (getEntities()->isInRestaurant(kEntityPlayer))
 				getEntities()->updateFrame(kEntityAbbot);
 
 			setCallback(3);
@@ -379,7 +379,7 @@ IMPLEMENT_FUNCTION(Abbot, function20, 20)
 		break;
 
 	case kActionNone:
-		if (getState()->time > kTime1966500 && getEntities()->checkFields13(kEntityBoutarel))
+		if (getState()->time > kTime1966500 && getEntities()->isInRestaurant(kEntityBoutarel))
 			setup_function21();
 		break;
 
@@ -434,7 +434,7 @@ IMPLEMENT_FUNCTION(Abbot, function21, 21)
 
 		case 5:
 			getEntities()->drawSequenceRight(kEntityAbbot, "029J");
-			if (getEntities()->checkFields12())
+			if (getEntities()->isInSalon(kEntityPlayer))
 				getEntities()->updateFrame(kEntityAbbot);
 
 			setCallback(6);
@@ -470,7 +470,7 @@ IMPLEMENT_FUNCTION(Abbot, function22, 22)
 	case kActionNone:
 		TIME_CHECK_SAVEPOINT(kTime1971000, params->param1, kEntityAbbot, kEntityServers0, kAction218586752);
 
-		if (getState()->time > kTime1989000 && getEntities()->checkFields11()) {
+		if (getState()->time > kTime1989000 && getEntities()->isSomebodyStandingInRestaurantOrSalon()) {
 			getData()->inventoryItem = kItemNone;
 			setup_function23();
 		}
@@ -494,7 +494,7 @@ IMPLEMENT_FUNCTION(Abbot, function22, 22)
 			break;
 
 		getAction()->playAnimation(kEventAbbotIntroduction);
-		getSound()->playSound(kEntityNone, "LIB036");
+		getSound()->playSound(kEntityPlayer, "LIB036");
 		getScenes()->loadSceneFromPosition(kCarRestaurant, 61);
 		break;
 
@@ -532,7 +532,7 @@ IMPLEMENT_FUNCTION(Abbot, function23, 23)
 			getSavePoints()->push(kEntityAbbot, kEntityAnna, kAction238936000);
 			getEntities()->drawSequenceRight(kEntityAbbot, "804DS");
 
-			if (getEntities()->checkFields13())
+			if (getEntities()->isInRestaurant(kEntityPlayer))
 				getEntities()->updateFrame(kEntityAbbot);
 
 			setCallback(2);
@@ -666,7 +666,7 @@ IMPLEMENT_FUNCTION(Abbot, function26, 26)
 	case kActionNone:
 		UPDATE_PARAM(params->param2, getState()->time, 4500);
 
-		if (getEntities()->checkFields11())
+		if (getEntities()->isSomebodyStandingInRestaurantOrSalon())
 			setup_function27();
 		break;
 
@@ -931,7 +931,7 @@ IMPLEMENT_FUNCTION(Abbot, function35, 35)
 	case kActionNone:
 		if (params->param1 != kTimeInvalid && getState()->time > kTime2115000) {
 			if (getState()->time <= kTime2124000) {
-				if (!getEntities()->checkFields9(kEntityAbbot, kEntityNone, 2000) || !params->param1)
+				if (!getEntities()->checkFields9(kEntityAbbot, kEntityPlayer, 2000) || !params->param1)
 					params->param1 = (int)getState()->time;
 
 				if (params->param1 >= (int)getState()->time)
@@ -1054,7 +1054,7 @@ IMPLEMENT_FUNCTION(Abbot, chapter4Handler, 41)
 	case kActionNone:
 		TIME_CHECK_SAVEPOINT(kTime2358000, params->param1, kEntityAbbot, kEntityServers0, kAction218128129);
 
-		if (getState()->time > kTime3289500 && getEntities()->checkFields11())
+		if (getState()->time > kTime3289500 && getEntities()->isSomebodyStandingInRestaurantOrSalon())
 			setup_function42();
 
 		break;

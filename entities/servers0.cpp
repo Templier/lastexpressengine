@@ -330,7 +330,7 @@ IMPLEMENT_FUNCTION(Servers0, chapter2Handler, 24)
 		break;
 
 	case kActionNone:
-		if (!getEntities()->checkFields17(kEntityServers0) || !getEntities()->checkFields11())
+		if (!getEntities()->isInKitchen(kEntityServers0) || !getEntities()->isSomebodyStandingInRestaurantOrSalon())
 			break;
 
 		if (ENTITY_PARAM(1, 3)) {

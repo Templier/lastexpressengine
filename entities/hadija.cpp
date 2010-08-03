@@ -404,7 +404,7 @@ IMPLEMENT_FUNCTION(Hadija, function22, 22)
 		break;
 
 	case kActionDrawScene:
-		if (getEntities()->isSittingOrStanding(kEntityNone, kCarGreenSleeping)) {
+		if (getEntities()->isSittingOrStanding(kEntityPlayer, kCarGreenSleeping)) {
 			setup_function23();
 		}
 		break;

@@ -191,7 +191,7 @@ IMPLEMENT_FUNCTION(Kronos, function10, 10)
 	case kActionNone:
 		TIME_CHECK(kTime1489500, params->param1, setup_function11);
 
-		if (params->param1 && getEntities()->isSittingOrStanding(kEntityNone, kCarKronos)) {
+		if (params->param1 && getEntities()->isSittingOrStanding(kEntityPlayer, kCarKronos)) {
 			UPDATE_PARAM(params->param3, getState()->timeTicks, 150);
 			setup_function9();
 		}
@@ -350,7 +350,7 @@ IMPLEMENT_FUNCTION(Kronos, function18, 18)
 
 		TIME_CHECK(kTime2106000, params->param3, setup_function19)
 		else {
-			if (params->param1 && getEntities()->checkFields22()) {
+			if (params->param1 && getEntities()->isInKronosSanctum(kEntityPlayer)) {
 				setCallback(1);
 				call(new ENTITY_SETUP(Kronos, setup_savegame), kSavegameType2, kEventKahinaPunchSuite4);
 			}
@@ -394,7 +394,7 @@ IMPLEMENT_FUNCTION(Kronos, function23, 23)
 		break;
 
 	case kActionNone:
-		if (getEntities()->checkFields22()) {
+		if (getEntities()->isInKronosSanctum(kEntityPlayer)) {
 			setCallback(1);
 			call(new ENTITY_SETUP(Kronos, setup_savegame), kSavegameType2, kEventKahinaWrongDoor);
 		}
@@ -411,11 +411,11 @@ IMPLEMENT_FUNCTION(Kronos, function23, 23)
 			if (getInventory()->hasItem(kItemBriefcase))
 				getInventory()->removeItem(kItemBriefcase);
 
-			getSound()->playSound(kEntityNone, "BUMP");
+			getSound()->playSound(kEntityPlayer, "BUMP");
 
 			getScenes()->loadSceneFromPosition(kCarKronos, 81);
 
-			getSound()->playSound(kEntityNone, "LIB015");
+			getSound()->playSound(kEntityPlayer, "LIB015");
 		}
 		break;
 	}

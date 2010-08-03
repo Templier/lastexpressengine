@@ -166,7 +166,7 @@ IMPLEMENT_FUNCTION_II(Verges, savegame, 7)
 IMPLEMENT_FUNCTION_II(Verges, updateEntity, 8)
 	if (savepoint.action == kActionExcuseMeCath) {
 		if (!getSound()->isBuffered(kEntityVerges))
-			getSound()->playSound(kEntityNone, "TRA1113", getSound()->getSoundFlag(kEntityVerges));
+			getSound()->playSound(kEntityPlayer, "TRA1113", getSound()->getSoundFlag(kEntityVerges));
 
 		return;
 	}
@@ -186,9 +186,9 @@ switch (savepoint.action) {
 		getObjects()->update(kObject104, kEntityNone, kLocationNone, kCursorNormal, kCursorHand);
 		getObjects()->update(kObject105, kEntityNone, kLocationNone, kCursorNormal, kCursorHand);
 
-		if (getEntities()->checkFields21() || getEntities()->checkFields17()) {
-			getAction()->playAnimation(getEntities()->checkFields21() ? kEventVergesBagageCarOffLimits : kEventVergesCanIHelpYou);
-			getSound()->playSound(kEntityNone, "BUMP");
+		if (getEntities()->isInBaggageCar(kEntityPlayer) || getEntities()->isInKitchen(kEntityPlayer)) {
+			getAction()->playAnimation(getEntities()->isInBaggageCar(kEntityPlayer) ? kEventVergesBagageCarOffLimits : kEventVergesCanIHelpYou);
+			getSound()->playSound(kEntityPlayer, "BUMP");
 			getScenes()->loadSceneFromPosition(kCarRestaurant, 65);
 		}
 
@@ -221,7 +221,7 @@ switch (savepoint.action) {
 
 			getEntities()->drawSequenceRight(kEntityVerges, "813DS");
 
-			if (getEntities()->checkFields13())
+			if (getEntities()->isInRestaurant(kEntityPlayer))
 				getEntities()->updateFrame(kEntityVerges);
 
 			setCallback(3);
@@ -259,11 +259,93 @@ switch (savepoint.action) {
 //  - EntityPosition
 //  - Sound name
 IMPLEMENT_FUNCTION_IIS(Verges, function10, 10)
-	error("Verges: callback function 10 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionNone:
+		if (!params->param7) {
+			if (!getSound()->isBuffered(kEntityVerges)) {
+				getSound()->playSound(kEntityVerges, (char *)&params->seq1);
+				params->param7 = 1;
+			}
+		}
+
+		if (getEntities()->updateEntity(kEntityVerges, (CarIndex)params->param1, (EntityPosition)params->param2)) {
+			CALLBACK_ACTION();
+			break;
+		}
+
+		if (params->param6) {
+			UPDATE_PARAM(params->param8, getState()->timeTicks, 75);
+
+			getSound()->playSound(kEntityVerges, (char *)&params->seq1);
+
+			params->param6 = 0;
+			params->param8 = 0;
+		}
+		break;
+
+	case kAction2:
+		params->param6 = 1;
+
+	case kActionDefault:
+		if (!getSound()->isBuffered(kEntityVerges)) {
+			getSound()->playSound(kEntityVerges, params->seq1);
+			params->param7 = 1;
+		}
+
+		if (getEntities()->updateEntity(kEntityVerges, (CarIndex)params->param1, (EntityPosition)params->param2))
+			CALLBACK_ACTION();
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Verges, function11, 11)
-	error("Verges: callback function 11 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionDefault:
+		setCallback(1);
+		call(new ENTITY_SETUP(Verges, setup_updateEntity), kCarRestaurant, kPosition_540);
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			setCallback(2);
+			call(new ENTITY_SETUP(Verges, setup_function6));
+			break;
+
+		case 2:
+			getData()->entityPosition = kPosition_1540;
+			getData()->posture = kPostureStanding;
+
+			setCallback(3);
+			call(new ENTITY_SETUP_SIIS(Verges, setup_draw), "813US");
+			break;
+
+		case 3:
+			getEntities()->drawSequenceRight(kEntityVerges, "813UD");
+
+			if (getEntities()->isInSalon(kEntityPlayer))
+				getEntities()->updateFrame(kEntityVerges);
+
+			setCallback(4);
+			call(new ENTITY_SETUP(Verges, setup_function3));
+			break;
+
+		case 4:
+			getEntities()->clearSequences(kEntityVerges);
+
+			break;
+		}
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Verges, function12, 12)
@@ -410,7 +492,7 @@ IMPLEMENT_FUNCTION(Verges, policeGettingOffTrain, 24)
 		break;
 
 	case kActionNone:
-		if (getEntities()->checkFields9(kEntityVerges, kEntityNone, 1000) && !getEntityData(kEntityNone)->posture) {
+		if (getEntities()->checkFields9(kEntityVerges, kEntityPlayer, 1000) && !getEntityData(kEntityPlayer)->posture) {
 			setCallback(1);
 			call(new ENTITY_SETUP(Verges, setup_savegame), kSavegameType2, kEventGendarmesArrestation);
 		}
@@ -462,7 +544,7 @@ IMPLEMENT_FUNCTION(Verges, chapter1Handler, 26)
 		}
 
 label_callback1:
-		if (getEntities()->checkFields20()) {
+		if (getEntities()->isInBaggageCarEntrance(kEntityPlayer)) {
 			setCallback(2);
 			call(new ENTITY_SETUP(Verges, setup_function13), 0);
 			break;
@@ -646,7 +728,7 @@ IMPLEMENT_FUNCTION(Verges, chapter2Handler, 28)
 		break;
 
 	case kActionNone:
-		if (getEntities()->checkFields20()) {
+		if (getEntities()->isInBaggageCarEntrance(kEntityPlayer)) {
 			setCallback(1);
 			call(new ENTITY_SETUP(Verges, setup_function13), false);
 		}

@@ -531,7 +531,7 @@ void Menu::show(bool doSavegame, TimeType type, uint32 time) {
 					if (getFlags()->mouseRightClick)
 						break;
 
-					getSound()->unknownFunction1();
+					getSound()->updateQueue();
 				}
 			}
 		}
@@ -625,7 +625,7 @@ bool Menu::handleEvent(StartMenuAction action, Common::EventType type) {
 
 		clearBg(GraphicsManager::kBackgroundOverlay);
 
-		getSound()->playSound(kEntityNone, "LIB046");
+		getSound()->playSound(kEntityPlayer, "LIB046");
 
 		// Setup new game
 		getSavePoints()->reset();
@@ -675,7 +675,7 @@ bool Menu::handleEvent(StartMenuAction action, Common::EventType type) {
 	case kMenuCredits:
 		if (clicked) {
 			drawSequenceFrame(_seqTooltips, kButtonCreditsPushed, GraphicsManager::kBackgroundOverlay);
-			getSound()->playSound(kEntityNone, "LIB046.SND");
+			getSound()->playSound(kEntityPlayer, "LIB046.SND");
 			_isShowingCredits = true;
 			_creditsSequenceIndex = 0;
 			showCredits();
@@ -691,7 +691,7 @@ bool Menu::handleEvent(StartMenuAction action, Common::EventType type) {
 
 		if (clicked) {
 			drawSequenceFrame(_seqButtons, kButtonQuitPushed, GraphicsManager::kBackgroundOverlay);
-			getSound()->playSound(kEntityNone, "LIB046.SND");
+			getSound()->playSound(kEntityPlayer, "LIB046.SND");
 
 			error("Menu::handleEvent / kMenuQuitGame: implementation not finished!");
 
@@ -711,7 +711,7 @@ bool Menu::handleEvent(StartMenuAction action, Common::EventType type) {
 		if (clicked) {
 			showFrame(kOverlayAcorn, 1, true);
 			showFrame(kOverlayTooltip, -1, true);
-			getSound()->playSound(kEntityNone, "LIB047");
+			getSound()->playSound(kEntityPlayer, "LIB047");
 
 			// Setup new menu screen
 			switchGame();
@@ -776,7 +776,7 @@ bool Menu::handleEvent(StartMenuAction action, Common::EventType type) {
 		//if (_currentTime <= getState()->time)
 		if (clicked) {
 			drawSequenceFrame(_seqEggButtons, kButtonRewindPushed, GraphicsManager::kBackgroundOverlay);
-			getSound()->playSound(kEntityNone, "LIB046.SND");
+			getSound()->playSound(kEntityPlayer, "LIB046.SND");
 			// TODO rewind clock
 			//goToTime(XXX + 8);
 		} else {
@@ -793,7 +793,7 @@ bool Menu::handleEvent(StartMenuAction action, Common::EventType type) {
 
 		if (clicked) {
 			drawSequenceFrame(_seqEggButtons, kButtonForwardPushed, GraphicsManager::kBackgroundOverlay);
-			getSound()->playSound(kEntityNone, "LIB046.SND");
+			getSound()->playSound(kEntityPlayer, "LIB046.SND");
 
 			// TODO advance clock
 			//goToTime(32 * ??? + XXX + 8);
@@ -852,7 +852,7 @@ bool Menu::handleEvent(StartMenuAction action, Common::EventType type) {
 		// Show highlight on button & adjust volume if needed
 		if (clicked) {
 			drawSequenceFrame(_seqButtons, kButtonVolumeDownPushed, GraphicsManager::kBackgroundOverlay);
-			getSound()->playSound(kEntityNone, "LIB046.SND");
+			getSound()->playSound(kEntityPlayer, "LIB046.SND");
 			setVolume(getVolume() - 1);
 		} else {
 			drawSequenceFrame(_seqButtons, kButtonVolumeDown, GraphicsManager::kBackgroundOverlay);
@@ -872,7 +872,7 @@ bool Menu::handleEvent(StartMenuAction action, Common::EventType type) {
 		// Show highlight on button & adjust volume if needed
 		if (clicked) {
 			drawSequenceFrame(_seqButtons, kButtonVolumeUpPushed, GraphicsManager::kBackgroundOverlay);
-			getSound()->playSound(kEntityNone, "LIB046.SND");
+			getSound()->playSound(kEntityPlayer, "LIB046.SND");
 			setVolume(getVolume() + 1);
 		} else {
 			drawSequenceFrame(_seqButtons, kButtonVolumeUp, GraphicsManager::kBackgroundOverlay);
@@ -892,7 +892,7 @@ bool Menu::handleEvent(StartMenuAction action, Common::EventType type) {
 		// Show highlight on button & adjust brightness if needed
 		if (clicked) {
 			drawSequenceFrame(_seqButtons, kButtonBrightnessDownPushed, GraphicsManager::kBackgroundOverlay);
-			getSound()->playSound(kEntityNone, "LIB046.SND");
+			getSound()->playSound(kEntityPlayer, "LIB046.SND");
 
 			setBrightness(getBrightness() - 1);
 		} else {
@@ -913,7 +913,7 @@ bool Menu::handleEvent(StartMenuAction action, Common::EventType type) {
 		// Show highlight on button & adjust brightness if needed
 		if (clicked) {
 			drawSequenceFrame(_seqButtons, kButtonBrightnessUpPushed, GraphicsManager::kBackgroundOverlay);
-			getSound()->playSound(kEntityNone, "LIB046.SND");
+			getSound()->playSound(kEntityPlayer, "LIB046.SND");
 			setBrightness(getBrightness() + 1);
 		} else {
 			drawSequenceFrame(_seqButtons, kButtonBrightnessUp, GraphicsManager::kBackgroundOverlay);
@@ -976,7 +976,7 @@ void Menu::init(bool doSavegame, TimeType type, uint32 time) {
 		SaveLoad::writeMainHeader(_gameId);
 
 	if (doSavegame)
-		save(kEntityNone, kSavegameType3, kEventNone);
+		save(kEntityPlayer, kSavegameType3, kEventNone);
 
 	if (!getGlobalTimer()) {
 		// TODO: remove existing savegame temp file
@@ -1018,7 +1018,7 @@ void Menu::startGame() {
 	// TODO: we need to reset the current scene
 	getState()->scene = kSceneDefault;
 
-	getEntities()->setup(true, kEntityNone);
+	getEntities()->setup(true, kEntityPlayer);
 	warning("Menu::startGame: not implemented!");
 }
 
@@ -1424,7 +1424,7 @@ void Menu::moveToCity(CityButton city, bool clicked) {
 	//_engine->getGraphicsManager()->draw(_cityButtonFrames[city], GraphicsManager::kBackgroundOverlay);
 
 	if (clicked) {
-		getSound()->playSound(kEntityNone, "LIB046.SND");
+		getSound()->playSound(kEntityPlayer, "LIB046.SND");
 		goToTime(time);
 		// TODO set some global var to 1
 	} else {

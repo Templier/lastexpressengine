@@ -175,7 +175,7 @@ IMPLEMENT_FUNCTION_II(Mahmud, function9, 9)
 
 	case kActionExcuseMeCath:
 		if (getInventory()->hasItem(kItemPassengerList))
-			getSound()->playSound(kEntityNone, (random(2) == 0 ? "CAT1025A" : "CAT1025"));
+			getSound()->playSound(kEntityPlayer, (random(2) == 0 ? "CAT1025A" : "CAT1025"));
 		else
 			getSound()->excuseMeCath();
 		break;
@@ -209,7 +209,7 @@ IMPLEMENT_FUNCTION_II(Mahmud, function10, 10)
 		if (getSound()->isBuffered(kEntityMahmud))
 			break;
 
-		EntityPosition position = getEntityData(kEntityNone)->entityPosition;
+		EntityPosition position = getEntityData(kEntityPlayer)->entityPosition;
 		if (position < kPosition_1500 || position >= kPosition_5790 || (position > kPosition_4455 && params->param5 != 5)) {
 			getObjects()->update(kObjectCompartment5, kEntityTrain, kLocation3, kCursorHandKnock, kCursorHand);
 			getObjects()->update(kObjectCompartment6, kEntityTrain, kLocation3, kCursorHandKnock, kCursorHand);
@@ -225,7 +225,7 @@ IMPLEMENT_FUNCTION_II(Mahmud, function10, 10)
 	case kAction8:
 	case kAction9:
 		if (!getSound()->isBuffered((savepoint.action == kAction8) ? "LIB012" : "LIB013", true))
-			getSound()->playSound(kEntityNone, (savepoint.action == kAction8) ? "LIB012" : "LIB013");
+			getSound()->playSound(kEntityPlayer, (savepoint.action == kAction8) ? "LIB012" : "LIB013");
 
 		params->param5 = savepoint.param.intValue;
 
@@ -330,7 +330,7 @@ IMPLEMENT_FUNCTION(Mahmud, function11, 11)
 
 	case kAction8:
 	case kAction9: {
-		getSound()->playSound(kEntityNone, (savepoint.action == kAction8 ? "LIB012" : "LIB013"));
+		getSound()->playSound(kEntityPlayer, (savepoint.action == kAction8 ? "LIB012" : "LIB013"));
 
 		if (!getSound()->isBuffered(kEntityMahmud)) {
 			params->param1++;
@@ -741,7 +741,7 @@ IMPLEMENT_FUNCTION(Mahmud, chapters_handler, 14)
 
 		case 10:
 			getAction()->playAnimation((getProgress().jacket == kJacketGreen) ? (isDay() ? kEventMahmudWrongDoorDay : kEventMahmudWrongDoor) : kEventMahmudWrongDoorOriginalJacket);
-			getSound()->playSound(kEntityNone, "LIB015");
+			getSound()->playSound(kEntityPlayer, "LIB015");
 			getScenes()->processScene();
 
 			params->param4 = 1;

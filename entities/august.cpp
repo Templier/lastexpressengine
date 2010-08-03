@@ -277,7 +277,7 @@ IMPLEMENT_FUNCTION_II(August, savegame, 15)
  */
 IMPLEMENT_FUNCTION_II(August, updateEntity, 16)
 	if (savepoint.action == kActionExcuseMeCath) {
-		getProgress().eventMetAugust ? getSound()->playSound(kEntityNone, random(2) ? "CAT1002A" : "CAT1002") : getSound()->excuseMeCath();
+		getProgress().eventMetAugust ? getSound()->playSound(kEntityPlayer, random(2) ? "CAT1002A" : "CAT1002") : getSound()->excuseMeCath();
 		return;
 	}
 
@@ -377,7 +377,7 @@ label_callback_8:
 				if (getProgress().eventCorpseMovedFromFloor) {
 					setCallback(9);
 					call(new ENTITY_SETUP_SIIS(August, setup_enterExitCompartment), "626Da", kObjectCompartment1);
-				} else if (getEntities()->isSittingOrStanding(kEntityNone, kCarGreenSleeping)) {
+				} else if (getEntities()->isSittingOrStanding(kEntityPlayer, kCarGreenSleeping)) {
 					setCallback(10);
 					call(new ENTITY_SETUP_SIIS(August, setup_enterExitCompartment3), "626Da", kObjectCompartment1);
 				} else {
@@ -493,15 +493,15 @@ label_callback_9:
 		break;
 
 	case kActionDefault:
-		if (getEntities()->isSitting(kEntityNone, kCarGreenSleeping, kPosition_8200)
-		 || getEntities()->isSitting(kEntityNone, kCarGreenSleeping, kPosition_7850)
+		if (getEntities()->isSitting(kEntityPlayer, kCarGreenSleeping, kPosition_8200)
+		 || getEntities()->isSitting(kEntityPlayer, kCarGreenSleeping, kPosition_7850)
 		 || getEntities()->checkFields15()) {
 			getObjects()->update(kObjectCompartment1, kEntityAugust, getObjects()->get(kObjectCompartment1).location, kCursorNormal, kCursorNormal);
 
 			if (getEntities()->checkFields15())
 				getScenes()->loadSceneFromPosition(kCarGreenSleeping, 49);
 
-			getSound()->playSound(kEntityNone, "LIB012");
+			getSound()->playSound(kEntityPlayer, "LIB012");
 
 			getObjects()->update(kObjectCompartment1, kEntityAugust, getObjects()->get(kObjectCompartment1).location, kCursorTalk, kCursorHand);
 
@@ -528,7 +528,7 @@ label_callback_9:
 			break;
 
 		case 3:
-			getSound()->playSound(kEntityNone, "LIB014");
+			getSound()->playSound(kEntityPlayer, "LIB014");
 			getAction()->playAnimation(kEventAugustFindCorpse);
 			if (getEvent(kEventDinerAugustOriginalJacket))
 				getLogic()->gameOver(kTimeType3, kTime4, getProgress().eventCorpseFound ? kSceneGameOverStopPolice : kSceneGameOverPolice, true);
@@ -540,12 +540,12 @@ label_callback_9:
 
 		case 4:
 			getObjects()->update(kObjectCompartment1, kEntityNone, kLocationNone, kCursorHandKnock, kCursorHand);
-			getSound()->playSound(kEntityNone, "LIB014");
+			getSound()->playSound(kEntityPlayer, "LIB014");
 			getEntities()->clearSequences(kEntityAugust);
 			getData()->posture = kPostureSitting;
 
 			getAction()->playAnimation((EventIndex)params->param7);
-			getSound()->playSound(kEntityNone, "LIB015");
+			getSound()->playSound(kEntityPlayer, "LIB015");
 			getProgress().eventMetAugust = 1;
 			getData()->posture = kPostureStanding;
 
@@ -597,7 +597,7 @@ label_callback_9:
 			break;
 
 		case 13:
-			getSound()->playSound(kEntityNone, getObjects()->get(kObjectCompartment1).location == kLocation1 ? "LIB032" : "LIB014");
+			getSound()->playSound(kEntityPlayer, getObjects()->get(kObjectCompartment1).location == kLocation1 ? "LIB032" : "LIB014");
 			getAction()->playAnimation(kEventAugustFindCorpse);
 
 			if (getEvent(kEventDinerAugustOriginalJacket))
@@ -610,7 +610,7 @@ label_callback_9:
 
 		case 14:
 			if (!params->param2)
-				getSound()->playSound(kEntityNone, getObjects()->get(kObjectCompartment1).location == kLocation1 ? "LIB032" : "LIB014");
+				getSound()->playSound(kEntityPlayer, getObjects()->get(kObjectCompartment1).location == kLocation1 ? "LIB032" : "LIB014");
 
 			getObjects()->update(kObjectCompartment1, kEntityNone, kLocationNone, kCursorHandKnock, kCursorHand);
 			getObjects()->update(kObjectOutsideTylerCompartment, kEntityNone, kLocationNone, kCursorKeepValue, kCursorKeepValue);
@@ -655,7 +655,7 @@ IMPLEMENT_FUNCTION(August, dinner, 24)
 	case kActionCallback:
 		if (getCallback() == 1) {
 
-			getAction()->playAnimation(getEntities()->checkFields13(kEntityAlexei) ? kEventDinerAugustAlexeiBackground : kEventDinerAugust);
+			getAction()->playAnimation(getEntities()->isInRestaurant(kEntityAlexei) ? kEventDinerAugustAlexeiBackground : kEventDinerAugust);
 			getProgress().eventMetAugust = 1;
 
 			getScenes()->loadSceneFromPosition(kCarRestaurant, 61);
@@ -686,7 +686,7 @@ IMPLEMENT_FUNCTION(August, chapter1Handler, 25)
 			}
 		}
 
-		if (getState()->time > kTime1093500 && getEntities()->checkFields11()) {
+		if (getState()->time > kTime1093500 && getEntities()->isSomebodyStandingInRestaurantOrSalon()) {
 			getData()->posture = kPostureStanding;
 			getData()->inventoryItem = kItemNone;
 
@@ -727,7 +727,7 @@ IMPLEMENT_FUNCTION(August, chapter1Handler, 25)
 		case 1:
 			getSavePoints()->push(kEntityAugust, kEntityServers0, kAction204704037);
 			getEntities()->drawSequenceRight(kEntityAugust, "803DS");
-			if (getEntities()->checkFields13())
+			if (getEntities()->isInRestaurant(kEntityPlayer))
 				getEntities()->updateFrame(kEntityAugust);
 
 			setCallback(2);
@@ -760,7 +760,7 @@ IMPLEMENT_FUNCTION(August, chapter1Handler, 25)
 		case 5:
 			getSavePoints()->push(kEntityAugust, kEntityServers0, kAction204704037);
 			getEntities()->drawSequenceRight(kEntityAugust, "803DS");
-			if (getEntities()->checkFields13())
+			if (getEntities()->isInRestaurant(kEntityPlayer))
 				getEntities()->updateFrame(kEntityAugust);
 
 			setCallback(6);
@@ -994,7 +994,7 @@ IMPLEMENT_FUNCTION(August, chapter2Handler, 36)
 	case kActionNone:
 		TIME_CHECK_SAVEPOINT(kTime1755000, params->param2, kEntityAugust, kEntityServers0, kAction252568704);
 
-		if (getState()->time > kTime1773000 && params->param1 && getEntities()->checkFields11()) {
+		if (getState()->time > kTime1773000 && params->param1 && getEntities()->isSomebodyStandingInRestaurantOrSalon()) {
 			getData()->inventoryItem = kItemNone;
 			getData()->posture = kPostureStanding;
 			getEntities()->updatePosition(kEntityAugust, kCarRestaurant, 62, true);
@@ -1032,7 +1032,7 @@ IMPLEMENT_FUNCTION(August, chapter2Handler, 36)
 		case 2:
 			getEntities()->updatePosition(kEntityAugust, kCarRestaurant, 62);
 			getEntities()->drawSequenceRight(kEntityAugust, "803ES");
-			if (getEntities()->checkFields13())
+			if (getEntities()->isInRestaurant(kEntityPlayer))
 				getEntities()->updateFrame(kEntityAugust);
 
 			setCallback(3);
@@ -1091,7 +1091,7 @@ IMPLEMENT_FUNCTION(August, function39, 39)
 
 	case kActionDefault:
 		if (!ENTITY_PARAM(0, 1))
-			getSound()->playSound(kEntityNone, "BUMP");
+			getSound()->playSound(kEntityPlayer, "BUMP");
 
 		setCallback(1);
 		call(new ENTITY_SETUP(August, setup_savegame), kSavegameType2, kEventAugustArrivalInMunich);
@@ -1161,7 +1161,7 @@ IMPLEMENT_FUNCTION(August, function45, 45)
 
 	case kAction1:
 		getData()->inventoryItem = kItemNone;
-		getSound()->playSound(kEntityNone, "CAT1002");
+		getSound()->playSound(kEntityPlayer, "CAT1002");
 		getSound()->playSound(kEntityAugust, "AUG3102", SoundManager::kFlagInvalid, 15);
 		break;
 
@@ -1475,7 +1475,7 @@ IMPLEMENT_FUNCTION(August, function61, 61)
 	case kActionDefault:
 		getData()->posture = kPostureStanding;
 		getEntities()->drawSequenceRight(kEntityAugust, "803FS");
-		if (getEntities()->checkFields13())
+		if (getEntities()->isInRestaurant(kEntityPlayer))
 			getEntities()->updateFrame(kEntityAugust);
 
 		setCallback(1);
@@ -1588,7 +1588,7 @@ IMPLEMENT_FUNCTION(August, unhookCars, 69)
 		break;
 
 	case kActionDefault:
-		getSound()->unknownFunction3();
+		getSound()->processEntries();
 		if (getSound()->isBuffered("ARRIVE"))
 			getSound()->removeFromQueue("ARRIVE");
 
@@ -1601,7 +1601,7 @@ IMPLEMENT_FUNCTION(August, unhookCars, 69)
 			getAction()->playAnimation(getProgress().field_C ? kEventAugustUnhookCarsBetrayal : kEventAugustUnhookCars);
 			getEntities()->clearSequences(kEntityAugust);
 			getSound()->resetState();
-			getSound()->playSound(kEntityNone, "MUS050");
+			getSound()->playSound(kEntityPlayer, "MUS050");
 			getScenes()->loadSceneFromPosition(kCarRestaurant, 85, 1);
 			getSavePoints()->pushAll(kEntityAugust, kActionProceedChapter5);
 

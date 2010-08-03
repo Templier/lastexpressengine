@@ -177,7 +177,7 @@ void SavePoints::call(EntityIndex entity2, EntityIndex entity1, ActionIndex acti
 void SavePoints::callAndProcess() {
 	SavePoint savepoint; // empty parameters
 
-	// We ignore the kEntityNone callback in the list
+	// We ignore the kEntityPlayer callback in the list
 	EntityIndex index = kEntityAnna;
 
 	// Call all callbacks with empty parameters

@@ -202,7 +202,7 @@ void SceneManager::loadSceneFromItemPosition(InventoryItem item) {
 	if (item == kItem5) car = kCarRedSleeping;
 	if (item == kItem7) car = kCarGreenSleeping;
 
-	if (!getEntities()->isSittingOrStanding(kEntityNone, car))
+	if (!getEntities()->isSittingOrStanding(kEntityPlayer, car))
 		return;
 
 	if (getFlags()->flag_0)
@@ -263,8 +263,8 @@ void SceneManager::drawScene(SceneIndex index) {
 	// Update entities
 	Scene *scene = (getState()->sceneUseBackup ? get(getState()->sceneBackup) : get(index));
 
-	getEntityData(kEntityNone)->entityPosition = (EntityPosition)scene->count;
-	getEntityData(kEntityNone)->car = scene->car;
+	getEntityData(kEntityPlayer)->entityPosition = (EntityPosition)scene->count;
+	getEntityData(kEntityPlayer)->car = scene->car;
 
 	getFlags()->flag_3 = true;
 
@@ -566,9 +566,9 @@ void SceneManager::updateDoorsAndClock() {
 		ObjectIndex firstIndex = kObjectNone;
 
 		// Init objectIndex (or exit if not in one of the two compartment cars
-		if (getEntityData(kEntityNone)->car == kCarGreenSleeping)
+		if (getEntityData(kEntityPlayer)->car == kCarGreenSleeping)
 			firstIndex = kObjectCompartment1;
-		else if (getEntityData(kEntityNone)->car == kCarRedSleeping)
+		else if (getEntityData(kEntityPlayer)->car == kCarRedSleeping)
 			firstIndex = kObjectCompartmentA;
 		else
 			return;
@@ -936,7 +936,7 @@ void SceneManager::preProcessScene(SceneIndex *index) {
 
 				if (State::getPowerOfTwo((uint32)getEntities()->getCompartments(scene->param1)) != 30
 				 && State::getPowerOfTwo((uint32)getEntities()->getCompartments1(scene->param1)) != 30 )
-					getSound()->playSound(kEntityNone, "CAT1126A");
+					getSound()->playSound(kEntityPlayer, "CAT1126A");
 
 				*index = scene->getHotspot()->scene;
 			} else {
@@ -1001,8 +1001,8 @@ void SceneManager::postProcessScene() {
 				if (getFlags()->mouseRightClick)
 					break;
 
-				getSound()->unknownFunction1();
-				// TODO Subtitle drawing function
+				getSound()->updateQueue();
+				getSound()->updateSubtitles();
 			}
 		}
 
@@ -1026,8 +1026,8 @@ void SceneManager::postProcessScene() {
 		}
 
 		// If several entities are there, choose one to sound "Excuse me"
-		EntityPosition entityPosition = getEntityData(kEntityNone)->entityPosition;
-		if (getEntityData(kEntityNone)->car == kCar9 && (entityPosition == kPosition_4 || entityPosition == kPosition_3)) {
+		EntityPosition entityPosition = getEntityData(kEntityPlayer)->entityPosition;
+		if (getEntityData(kEntityPlayer)->car == kCar9 && (entityPosition == kPosition_4 || entityPosition == kPosition_3)) {
 			EntityIndex entities[39];
 
 			// Init entities
@@ -1035,7 +1035,7 @@ void SceneManager::postProcessScene() {
 
 			uint progress = 0;
 
-			for (uint i = 1; i < (unsigned)getEntities()->count(); i++) {
+			for (uint i = 1; i < 40 /* number of entities */; i++) {
 				CarIndex car = getEntityData((EntityIndex)i)->car;
 				EntityPosition position = getEntityData((EntityIndex)i)->entityPosition;
 
@@ -1049,7 +1049,7 @@ void SceneManager::postProcessScene() {
 			}
 
 			if (progress)
-				getSound()->excuseMe((progress == 1) ? entities[0] : entities[random(progress)], kEntityNone , SoundManager::kFlagDefault);
+				getSound()->excuseMe((progress == 1) ? entities[0] : entities[random(progress)], kEntityPlayer, SoundManager::kFlagDefault);
 		}
 
 		if (hotspot && hotspot->scene)

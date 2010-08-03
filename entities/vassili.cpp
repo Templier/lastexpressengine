@@ -154,7 +154,7 @@ IMPLEMENT_FUNCTION(Vassili, function6, 6)
 		break;
 
 	case kActionNone:
-		if (getEntities()->isSitting(kEntityNone, kCarRedSleeping, kPosition_8200)) {
+		if (getEntities()->isSitting(kEntityPlayer, kCarRedSleeping, kPosition_8200)) {
 
 			UPDATE_PARAM_FUNCTION(params->param3, getState()->timeTicks, params->param1, label_function7);
 
@@ -172,7 +172,7 @@ label_function7:
 
 			if (getState()->time <= kTime1503000) {
 
-				if (getEntities()->isSitting(kEntityNone, kCarRedSleeping, kPosition_8200) || !params->param4) {
+				if (getEntities()->isSitting(kEntityPlayer, kCarRedSleeping, kPosition_8200) || !params->param4) {
 
 					params->param4 = getState()->time;
 					if (!params->param4) {
@@ -247,7 +247,7 @@ IMPLEMENT_FUNCTION(Vassili, function7, 7)
 		getData()->car = kCarRedSleeping;
 
 		getEntities()->clearSequences(kEntityVassili);
-		if (getEntities()->isSitting(kEntityNone, kCarRedSleeping, kPosition_8200))
+		if (getEntities()->isSitting(kEntityPlayer, kCarRedSleeping, kPosition_8200))
 			getScenes()->loadSceneFromObject(kObjectCompartmentA);
 
 		getObjects()->update(kObjectCompartmentA, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
@@ -269,9 +269,9 @@ IMPLEMENT_FUNCTION(Vassili, function8, 8)
 		break;
 
 	case kActionDefault:
-		if (!getEntities()->isSittingOrStanding(kEntityNone, kCarRedSleeping)) {
-			getSound()->playSound(kEntityNone, "BUMP");
-			getScenes()->loadSceneFromPosition(kCarRedSleeping, (getEntityData(kEntityNone)->car <= kCarRedSleeping) ? 1 : 40);
+		if (!getEntities()->isSittingOrStanding(kEntityPlayer, kCarRedSleeping)) {
+			getSound()->playSound(kEntityPlayer, "BUMP");
+			getScenes()->loadSceneFromPosition(kCarRedSleeping, (getEntityData(kEntityPlayer)->car <= kCarRedSleeping) ? 1 : 40);
 		}
 
 		getSavePoints()->push(kEntityVassili, kEntityAnna, kAction226031488);
@@ -288,8 +288,8 @@ IMPLEMENT_FUNCTION(Vassili, function9, 9)
 		break;
 
 	case kAction2:
-		if (!getEntities()->checkFields9(kEntityVassili, kEntityNone, 2500))
-			getSound()->playSound(kEntityNone, "BUMP");
+		if (!getEntities()->checkFields9(kEntityVassili, kEntityPlayer, 2500))
+			getSound()->playSound(kEntityPlayer, "BUMP");
 
 		setup_seizure();
 		break;
@@ -403,7 +403,7 @@ IMPLEMENT_FUNCTION(Vassili, sleeping, 13)
 		break;
 
 	case kActionNone:
-		if (getEntities()->isSitting(kEntityNone, kCarRedSleeping, kPosition_8200)) {
+		if (getEntities()->isSitting(kEntityPlayer, kCarRedSleeping, kPosition_8200)) {
 			UPDATE_PARAM(params->param3, getState()->timeTicks, params->param1);
 
 			setCallback(1);
@@ -460,7 +460,7 @@ IMPLEMENT_FUNCTION(Vassili, stealEgg, 15)
 		break;
 
 	case kActionNone:
-		if (getEntities()->isSitting(kEntityNone, kCarRedSleeping, kPosition_8200)) {
+		if (getEntities()->isSitting(kEntityPlayer, kCarRedSleeping, kPosition_8200)) {
 			UPDATE_PARAM(params->param3, getState()->timeTicks, params->param1);
 
 			setCallback(1);
@@ -483,7 +483,7 @@ IMPLEMENT_FUNCTION(Vassili, stealEgg, 15)
 		break;
 
 	case kActionDrawScene:
-		if (getEntities()->isSitting(kEntityNone, kCarRedSleeping, kPosition_7850)
+		if (getEntities()->isSitting(kEntityPlayer, kCarRedSleeping, kPosition_7850)
 		 && getInventory()->hasItem(kItemFirebird)
 		 && !getEvent(kEventVassiliCompartmentStealEgg))
 			getObjects()->update(kObject48, kEntityVassili, kLocationNone, kCursorNormal, kCursorHand);
@@ -542,7 +542,7 @@ IMPLEMENT_FUNCTION(Vassili, chapter4Handler, 17)
 		break;
 
 	case kActionNone:
-		if (getEntities()->isSitting(kEntityNone, kCarRedSleeping, kPosition_8200)) {
+		if (getEntities()->isSitting(kEntityPlayer, kCarRedSleeping, kPosition_8200)) {
 			UPDATE_PARAM(params->param3, getState()->timeTicks, params->param1);
 
 			setCallback(1);

@@ -63,11 +63,11 @@ Debugger::Debugger(LastExpressEngine *engine) : _engine(engine), _command(NULL),
 	DCmd_Register("help",      WRAP_METHOD(Debugger, cmdHelp));
 
 	// Data
-	DCmd_Register("listfiles", WRAP_METHOD(Debugger, cmdListFiles));
+	DCmd_Register("ls",        WRAP_METHOD(Debugger, cmdListFiles));
 
-	DCmd_Register("playseq",   WRAP_METHOD(Debugger, cmdPlaySeq));
 	DCmd_Register("showframe", WRAP_METHOD(Debugger, cmdShowFrame));
 	DCmd_Register("showbg",    WRAP_METHOD(Debugger, cmdShowBg));
+	DCmd_Register("playseq",   WRAP_METHOD(Debugger, cmdPlaySeq));
 	DCmd_Register("playsnd",   WRAP_METHOD(Debugger, cmdPlaySnd));
 	DCmd_Register("playsbe",   WRAP_METHOD(Debugger, cmdPlaySbe));
 	DCmd_Register("playnis",   WRAP_METHOD(Debugger, cmdPlayNis));
@@ -76,6 +76,9 @@ Debugger::Debugger(LastExpressEngine *engine) : _engine(engine), _command(NULL),
 	DCmd_Register("loadscene", WRAP_METHOD(Debugger, cmdLoadScene));
 	DCmd_Register("fight",     WRAP_METHOD(Debugger, cmdFight));
 	DCmd_Register("beetle",    WRAP_METHOD(Debugger, cmdBeetle));
+
+	// Entities
+	DCmd_Register("entity",   WRAP_METHOD(Debugger, cmdEntity));
 
 	// Misc
 	DCmd_Register("loadgame",  WRAP_METHOD(Debugger, cmdLoadGame));
@@ -173,16 +176,21 @@ bool Debugger::cmdHelp(int argc, const char **argv) {
 	DebugPrintf("\n");
 	DebugPrintf("Commands\n");
 	DebugPrintf("--------\n");
-	DebugPrintf(" listfiles - list files in the archive\n");
-	DebugPrintf(" playseq - play a sequence\n");
+	DebugPrintf(" ls - list files in the archive\n");
+	DebugPrintf("\n");
 	DebugPrintf(" showframe - show a frame from a sequence\n");
 	DebugPrintf(" showbg - show a background\n");
+	DebugPrintf(" playseq - play a sequence\n");
 	DebugPrintf(" playsnd - play a sound\n");
 	DebugPrintf(" playsbe - play a subtitle\n");
 	DebugPrintf(" playnis - play an animation\n");
+	DebugPrintf("\n");
 	DebugPrintf(" loadscene - load a scene\n");
 	DebugPrintf(" fight - start a fight\n");
 	DebugPrintf(" beetle - start the beetle game\n");
+	DebugPrintf("\n");
+	DebugPrintf(" entity - Dump entity data\n");
+	DebugPrintf("\n");
 	DebugPrintf(" loadgame - load a saved game\n");
 	DebugPrintf(" clear - clear the screen\n");
 	DebugPrintf("\n");
@@ -398,15 +406,14 @@ bool Debugger::cmdPlaySbe(int argc, const char **argv) {
 
 bool Debugger::cmdPlayNis(int argc, const char **argv) {
 	if (argc == 2 || argc == 3) {
-		Common::String filename(const_cast<char *>(argv[1]));
+		Common::String name(const_cast<char *>(argv[1]));
 
 		if (argc == 3)
 			loadArchive((ArchiveIndex)getNumber(argv[2]));
 
-		filename += ".nis";
-
-		if (!_engine->getResourceManager()->hasFile(filename)) {
-			DebugPrintf("Cannot find file: %s\n", filename.c_str());
+		// If we got a nis filename, check that the file exists
+		if (name.contains('.') && _engine->getResourceManager()->hasFile(name)) {
+			DebugPrintf("Cannot find file: %s\n", name.c_str());
 			return true;
 		}
 
@@ -420,11 +427,17 @@ bool Debugger::cmdPlayNis(int argc, const char **argv) {
 			// Make sure we are not called in a loop
 			_numParams = 0;
 
-			Animation animation;
-			if (animation.load(getArchive(filename))) {
-				_engine->getCursor()->show(false);
-				animation.play();
-				_engine->getCursor()->show(true);
+
+			// Check if we got a nis filename or an animation index
+			if (name.contains('.')) {
+				Animation animation;
+				if (animation.load(getArchive(name))) {
+					_engine->getCursor()->show(false);
+					animation.play();
+					_engine->getCursor()->show(true);
+				}
+			} else {
+				getAction()->playAnimation((EventIndex)atoi(name.c_str()), true);
 			}
 
 			if (argc == 3)
@@ -433,7 +446,7 @@ bool Debugger::cmdPlayNis(int argc, const char **argv) {
 			resetCommand();
 		}
 	} else {
-		DebugPrintf("Syntax: playnis <nisname> (<cd number>)\n");
+		DebugPrintf("Syntax: playnis <nisname.nis or animation index> (<cd number>)\n");
 	}
 	return true;
 }
@@ -590,7 +603,28 @@ bool Debugger::cmdListFiles(int argc, const char **argv) {
 		if (argc == 3)
 			restoreArchive();
 	} else {
-		DebugPrintf("Syntax: listfiles <filter> (use * for all)\n (<cd number>)");
+		DebugPrintf("Syntax: ls <filter> (use * for all)\n (<cd number>)");
+	}
+
+	return true;
+}
+
+bool Debugger::cmdEntity(int argc, const char **argv) {
+	if (argc == 2) {
+		EntityIndex index = (EntityIndex)getNumber(argv[1]);
+
+		if (index < 0 || index > 39)
+			goto label_error;
+
+		DebugPrintf("Entity %s\n", ENTITY_NAME(index));
+		DebugPrintf("--------------------------------------------------------------------\n\n");
+		DebugPrintf(getEntities()->getData(index)->toString().c_str());
+		DebugPrintf("\n");
+	} else {
+label_error:
+		DebugPrintf("Syntax: entity <index>\n");
+		for (int i = 0; i < 40; i++)
+			DebugPrintf(" %s - %d\n", ENTITY_NAME(i), i);
 	}
 
 	return true;

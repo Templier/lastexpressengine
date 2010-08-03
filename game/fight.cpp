@@ -260,8 +260,8 @@ Fight::FightEndType Fight::setup(FightType type) {
 	Scene *scene = getScenes()->get(sceneIndex);
 
 	// Update game entities and state
-	getEntityData(kEntityNone)->entityPosition = (EntityPosition)scene->count;
-	getEntityData(kEntityNone)->posture = (Posture)scene->field_11;
+	getEntityData(kEntityPlayer)->entityPosition = (EntityPosition)scene->count;
+	getEntityData(kEntityPlayer)->posture = (Posture)scene->field_11;
 
 	getState()->scene = sceneIndex;
 
@@ -289,7 +289,7 @@ Fight::FightEndType Fight::setup(FightType type) {
 		if (_engine->handleEvents())
 			continue;
 
-		getSound()->unknownFunction1();
+		getSound()->updateQueue();
 	}
 
 	// Cleanup after fight is over

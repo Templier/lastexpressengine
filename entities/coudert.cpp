@@ -40,6 +40,15 @@
 
 namespace LastExpress {
 
+#define SAVEGAME_BLOOD_JACKET() \
+	if (getProgress().jacket == kJacketBlood \
+		&& getEntities()->checkFields9(kEntityCoudert, kEntityPlayer, 1000) \
+		&& !getEntities()->isSittingInCompartmentCars(kEntityPlayer) \
+		&& !getEntities()->checkFields10(kEntityPlayer)) { \
+		setCallback(1); \
+		call(new ENTITY_SETUP(Coudert, setup_savegame), kSavegameType2, kEventMertensBloodJacket); \
+	}
+
 Coudert::Coudert(LastExpressEngine *engine) : Entity(engine, kEntityCoudert) {
 	ADD_CALLBACK_FUNCTION(Coudert, reset);
 	ADD_CALLBACK_FUNCTION(Coudert, bloodJacket);
@@ -119,13 +128,7 @@ IMPLEMENT_FUNCTION_S(Coudert, bloodJacket, 2)
 		break;
 
 	case kActionNone:
-		if (getProgress().jacket == kJacketBlood
-		 && getEntities()->checkFields9(kEntityCoudert, kEntityNone, 1000)
-		 && !getEntities()->isSittingInCompartmentCars()
-		 && !getEntities()->checkFields10()) {
-			setCallback(1);
-			call(new ENTITY_SETUP(Coudert, setup_savegame), kSavegameType2, kEventMertensBloodJacket); /* BUG: is this a bug in the original? */
-		}
+		SAVEGAME_BLOOD_JACKET();
 		break;
 
 	case kActionExitCompartment:
@@ -157,13 +160,7 @@ IMPLEMENT_FUNCTION_SI(Coudert, enterExitCompartment, 3)
 		break;
 
 	case kActionNone:
-		if (getProgress().jacket == kJacketBlood
-		 && getEntities()->checkFields9(kEntityCoudert, kEntityNone, 1000)
-		 && !getEntities()->isSittingInCompartmentCars()
-		 && !getEntities()->checkFields10()) {
-			setCallback(1);
-			call(new ENTITY_SETUP(Coudert, setup_savegame), kSavegameType2, kEventMertensBloodJacket); /* BUG: is this a bug in the original? */
-		}
+		SAVEGAME_BLOOD_JACKET();
 		return;
 
 	case kActionCallback:
@@ -188,13 +185,7 @@ IMPLEMENT_FUNCTION(Coudert, function4, 4)
 			break;
 		}
 
-		if (getProgress().jacket == kJacketBlood
-		 && getEntities()->checkFields9(kEntityCoudert, kEntityNone, 1000)
-		 && !getEntities()->isSittingInCompartmentCars()
-		 && !getEntities()->checkFields10()) {
-			setCallback(1);
-			call(new ENTITY_SETUP(Coudert, setup_savegame), kSavegameType2, kEventMertensBloodJacket);
-		}
+		SAVEGAME_BLOOD_JACKET();
 		break;
 
 	case kActionExitCompartment:
@@ -225,13 +216,7 @@ IMPLEMENT_FUNCTION_S(Coudert, playSound, 6)
 		break;
 
 	case kActionNone:
-		if (getProgress().jacket == kJacketBlood
-		 && getEntities()->checkFields9(kEntityCoudert, kEntityNone, 1000)
-		 && !getEntities()->isSittingInCompartmentCars()
-		 && !getEntities()->checkFields10()) {
-			setCallback(1);
-			call(new ENTITY_SETUP(Coudert, setup_savegame), kSavegameType2, kEventMertensBloodJacket);
-		}
+		SAVEGAME_BLOOD_JACKET();
 		break;
 
 	case kAction2:
@@ -264,13 +249,7 @@ IMPLEMENT_FUNCTION_NOSETUP(Coudert, playSound16, 7)
 		break;
 
 	case kActionNone:
-		if (getProgress().jacket == kJacketBlood
-		 && getEntities()->checkFields9(kEntityCoudert, kEntityNone, 1000)
-		 && !getEntities()->isSittingInCompartmentCars()
-		 && !getEntities()->checkFields10()) {
-			setCallback(1);
-			call(new ENTITY_SETUP(Coudert, setup_savegame), kSavegameType2, kEventMertensBloodJacket);
-		}
+		SAVEGAME_BLOOD_JACKET();
 		break;
 
 	case kAction2:
@@ -318,14 +297,7 @@ IMPLEMENT_FUNCTION_I(Coudert, function10, 10)
 		break;
 
 	case kActionNone:
-		if (getProgress().jacket == kJacketBlood
-		 && getEntities()->checkFields9(kEntityCoudert, kEntityNone, 1000)
-		 && !getEntities()->isSittingInCompartmentCars()
-		 && !getEntities()->checkFields10()) {
-			setCallback(1);
-			call(new ENTITY_SETUP(Coudert, setup_savegame), kSavegameType2, kEventMertensBloodJacket);
-			break;
-		}
+		SAVEGAME_BLOOD_JACKET();
 
 		UPDATE_PARAM(params->param2, getState()->time, params->param1);
 
@@ -350,14 +322,7 @@ IMPLEMENT_FUNCTION_I(Coudert, function11, 11)
 		break;
 
 	case kActionNone:
-		if (getProgress().jacket == kJacketBlood
-		 && getEntities()->checkFields9(kEntityCoudert, kEntityNone, 1000)
-		 && !getEntities()->isSittingInCompartmentCars()
-		 && !getEntities()->checkFields10()) {
-			setCallback(1);
-			call(new ENTITY_SETUP(Coudert, setup_savegame), kSavegameType2, kEventMertensBloodJacket);
-			break;
-		}
+		SAVEGAME_BLOOD_JACKET();
 
 		UPDATE_PARAM(params->param2, getState()->timeTicks, params->param1);
 
@@ -435,14 +400,7 @@ IMPLEMENT_FUNCTION_II(Coudert, function13, 13)
 		break;
 
 	case kActionNone:
-		if (getProgress().jacket == kJacketBlood
-		 && getEntities()->checkFields9(kEntityCoudert, kEntityNone, 1000)
-		 && !getEntities()->isSittingInCompartmentCars()
-		 && !getEntities()->checkFields10()) {
-			setCallback(3);
-			call(new ENTITY_SETUP(Coudert, setup_savegame), kSavegameType2, kEventMertensBloodJacket);
-			break;
-		}
+		SAVEGAME_BLOOD_JACKET();
 
 		if (!params->param2 && !params->param3) {
 
@@ -1120,7 +1078,7 @@ label_coudert_object:
 				call(new ENTITY_SETUP(Coudert, setup_savegame), kSavegameType2, kEventCoudertBloodJacket);
 			} else {
 				setCallback(getEntities()->isPlayerPosition(kCarRedSleeping, 1) ? 2 : 3);
-				call(new ENTITY_SETUP(Coudert, setup_function13), true, kEntityNone);
+				call(new ENTITY_SETUP(Coudert, setup_function13), true, kEntityPlayer);
 			}
 		}
 		break;

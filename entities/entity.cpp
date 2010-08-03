@@ -272,7 +272,7 @@ void Entity::savepointCheckFields11(const SavePoint &savepoint) {
 
 	case kActionNone:
 	case kActionDefault:
-		if (getEntities()->checkFields11())
+		if (getEntities()->isSomebodyStandingInRestaurantOrSalon())
 			CALLBACK_ACTION()
 		break;
 	}
@@ -361,9 +361,9 @@ void Entity::enterExitCompartment(const SavePoint &savepoint, EntityPosition pos
 		if (position1) {
 			getData()->posture = kPostureSitting;
 
-			if (getEntities()->isSitting(kEntityNone, car, position1) || getEntities()->isSitting(kEntityNone, car, position2)) {
+			if (getEntities()->isSitting(kEntityPlayer, car, position1) || getEntities()->isSitting(kEntityPlayer, car, position2)) {
 				getAction()->playAnimation(isDay() ? kEventCathTurningDay : kEventCathTurningNight);
-				getSound()->playSound(kEntityNone, "BUMP");
+				getSound()->playSound(kEntityPlayer, "BUMP");
 				getScenes()->loadSceneFromObject(compartment, alternate);
 			}
 		}

@@ -102,7 +102,7 @@ IMPLEMENT_FUNCTION(Cooks, function3, 3)
 		break;
 
 	case kActionDrawScene:
-		if (!getEntities()->checkFields17()) {
+		if (!getEntities()->isInKitchen(kEntityPlayer)) {
 			getEntities()->clearSequences(kEntityCooks);
 			CALLBACK_ACTION()
 			break;
@@ -187,7 +187,7 @@ IMPLEMENT_FUNCTION(Cooks, function4, 4)
 		break;
 
 	case kActionDrawScene:
-		if (!getEntities()->checkFields17()) {
+		if (!getEntities()->isInKitchen(kEntityPlayer)) {
 			getEntities()->clearSequences(kEntityCooks);
 			CALLBACK_ACTION()
 			break;
@@ -270,7 +270,7 @@ IMPLEMENT_FUNCTION(Cooks, chapter1Handler, 6)
 		UPDATE_PARAM(params->param4, getState()->time, params->param2);
 
 		// Broken plate sound
-		getSound()->playSound(kEntityNone, "LIB122",  getSound()->getSoundFlag(kEntityCooks));
+		getSound()->playSound(kEntityPlayer, "LIB122",  getSound()->getSoundFlag(kEntityCooks));
 		params->param2 = 225 * (4 * random(30) + 120);
 		params->param4 = 0;
 		break;
@@ -281,7 +281,7 @@ IMPLEMENT_FUNCTION(Cooks, chapter1Handler, 6)
 		break;
 
 	case kActionDrawScene:
-		if (!getEntities()->checkFields17())
+		if (!getEntities()->isInKitchen(kEntityPlayer))
 			break;
 
 		if (params->param1) {
@@ -380,7 +380,7 @@ IMPLEMENT_FUNCTION(Cooks, chapter2Handler, 9)
 		UPDATE_PARAM(params->param3, getState()->time, params->param1);
 
 		// Broken plate sound
-		getSound()->playSound(kEntityNone, "LIB122",  getSound()->getSoundFlag(kEntityCooks));
+		getSound()->playSound(kEntityPlayer, "LIB122",  getSound()->getSoundFlag(kEntityCooks));
 		params->param1 = 225 * (4 * random(30) + 120);
 		params->param3 = 0;
 		break;
@@ -437,7 +437,7 @@ IMPLEMENT_FUNCTION(Cooks, chapter3Handler, 11)
 		UPDATE_PARAM_FUNCTION(params->param4, getState()->time, params->param2, update_params);
 
 		// Broken plate sound
-		getSound()->playSound(kEntityNone, "LIB122",  getSound()->getSoundFlag(kEntityCooks));
+		getSound()->playSound(kEntityPlayer, "LIB122",  getSound()->getSoundFlag(kEntityCooks));
 		params->param2 = 225 * (4 * random(30) + 120);
 		params->param4 = 0;
 
@@ -454,7 +454,7 @@ update_params:
 		break;
 
 	case kActionDrawScene:
-		if (!getEntities()->checkFields17())
+		if (!getEntities()->isInKitchen(kEntityPlayer))
 			break;
 
 		if (params->param1) {
@@ -528,7 +528,7 @@ IMPLEMENT_FUNCTION(Cooks, chapter4Handler, 13)
 		UPDATE_PARAM(params->param3, getState()->time, params->param1)
 
 		// Broken plate sound
-		getSound()->playSound(kEntityNone, "LIB122",  getSound()->getSoundFlag(kEntityCooks));
+		getSound()->playSound(kEntityPlayer, "LIB122",  getSound()->getSoundFlag(kEntityCooks));
 		params->param1 = 225 * (4 * random(30) + 120);
 		params->param3 = 0;
 		break;
@@ -538,7 +538,7 @@ IMPLEMENT_FUNCTION(Cooks, chapter4Handler, 13)
 		break;
 
 	case kActionDrawScene:
-		if (!getEntities()->checkFields17())
+		if (!getEntities()->isInKitchen(kEntityPlayer))
 			break;
 
 		// Kitchen background sound

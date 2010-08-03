@@ -142,7 +142,7 @@ void Logic::eventMouse(const Common::Event &ev) {
 		// Check if clicked
 		if (ev.type == Common::EVENT_LBUTTONUP && !getSound()->isBuffered("LIB045")) {
 
-			getSound()->playSoundEvent(kEntityNone, 45);
+			getSound()->playSoundEvent(kEntityPlayer, 45);
 
 			if (getEntities()->isPlayerPosition(kCarGreenSleeping, 26) || getEntities()->isPlayerPosition(kCarGreenSleeping, 25) || getEntities()->isPlayerPosition(kCarGreenSleeping, 23)) {
 				getSavePoints()->push(kEntityNone, kEntityMertens, kAction226078300);
@@ -165,7 +165,7 @@ void Logic::eventMouse(const Common::Event &ev) {
 	 && !getInventory()->isFlag2()
 	 && !getInventory()->isEggHighlighted()
 	 && !getInventory()->isMagnifierInUse()
-	 && (getInventory()->getEntry(kItem2)->location == kLocationNone || getEntityData(kEntityNone)->car != kCarRedSleeping || getEntityData(kEntityNone)->entityPosition != kPosition_2300)) {
+	 && (getInventory()->getEntry(kItem2)->location == kLocationNone || getEntityData(kEntityPlayer)->car != kCarRedSleeping || getEntityData(kEntityPlayer)->entityPosition != kPosition_2300)) {
 
 		// Update cursor
 		_engine->getCursor()->setStyle(getInventory()->getEntry(kItemMatch)->cursor);
@@ -395,7 +395,7 @@ void Logic::eventTick(const Common::Event &) {
 // Handle game over
 void Logic::gameOver(TimeType type, TimeValue time, SceneIndex sceneIndex, bool showScene) const {
 
-	getSound()->unknownFunction3();
+	getSound()->processEntries();
 	getEntities()->reset();
 	getFlags()->isGameRunning = false;
 	getSavePoints()->reset();
@@ -412,7 +412,7 @@ void Logic::gameOver(TimeType type, TimeValue time, SceneIndex sceneIndex, bool 
 				if (getFlags()->mouseRightClick)
 					break;
 
-				getSound()->unknownFunction1();
+				getSound()->updateQueue();
 			}
 		}
 	}
@@ -462,7 +462,7 @@ void Logic::switchChapter() {
 }
 
 void Logic::playFinalSequence() {
-	getSound()->unknownFunction3();
+	getSound()->processEntries();
 
 	_action->playAnimation(kEventFinalSequence);
 	showCredits();
@@ -502,8 +502,8 @@ void Logic::updateCursor(bool) const { /* the cursor is always updated, even whe
 		 || getInventory()->isEggHighlighted()
 		 || getInventory()->isMagnifierInUse()
 		 || (getInventory()->getEntry(kItem2)->location
-		  && getEntityData(kEntityNone)->car == kCarRedSleeping
-		  && getEntityData(kEntityNone)->entityPosition == kPosition_2300)) {
+		  && getEntityData(kEntityPlayer)->car == kCarRedSleeping
+		  && getEntityData(kEntityPlayer)->entityPosition == kPosition_2300)) {
 
 			EntityIndex entity = getEntities()->canInteractWith(getCoords());
 			if (entity

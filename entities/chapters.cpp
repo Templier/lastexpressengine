@@ -358,7 +358,7 @@ label_chapter1_end:
 
 			getSavePoints()->push(kEntityChapters, kEntityTrain, kActionTrainStopRunning);
 
-			if (getEntityData(kEntityNone)->posture != kPosture2) {
+			if (getEntityData(kEntityPlayer)->posture != kPosture2) {
 				PLAY_STEAM();
 				break;
 			}
@@ -375,7 +375,7 @@ label_chapter1_end:
 				break;
 			}
 
-			CarIndex car = getEntityData(kEntityNone)->car;
+			CarIndex car = getEntityData(kEntityPlayer)->car;
 			if (car < kCarRedSleeping || car > kCarCoalTender) {
 				if (car < kCarBaggageRear || car > kCarGreenSleeping) {
 					PLAY_STEAM();
@@ -383,7 +383,7 @@ label_chapter1_end:
 				}
 
 				if (getEntities()->isPlayerPosition(kCarGreenSleeping, 98)) {
-					getSound()->playSound(kEntityNone, "LIB015");
+					getSound()->playSound(kEntityPlayer, "LIB015");
 					getScenes()->loadSceneFromPosition(kCarGreenSleeping, 71);
 					PLAY_STEAM();
 					break;
@@ -536,11 +536,11 @@ IMPLEMENT_FUNCTION(Chapters, chapter1End, 9)
 			ENTITY_PARAM(0, 3) = 0;
 		}
 
-		getSound()->playSound(kEntityNone, "MUS008", SoundManager::kFlagDefault);
+		getSound()->playSound(kEntityPlayer, "MUS008", SoundManager::kFlagDefault);
 		getInventory()->unselectItem();
 
 		while (getSound()->isBuffered("MUS008"))
-			getSound()->unknownFunction1();
+			getSound()->updateQueue();
 
 		setup_chapter2();
 	}
@@ -783,7 +783,7 @@ IMPLEMENT_FUNCTION(Chapters, chapter4Init, 18)
 	if (savepoint.action != kActionDefault)
 		return;
 
-	getSound()->unknownFunction3();
+	getSound()->processEntries();
 	getSound()->resetState();
 
 	getProgress().isTrainRunning = 1;
@@ -954,7 +954,7 @@ IMPLEMENT_FUNCTION(Chapters, chapter5Handler, 22)
 
 			if (!getProgress().isNightTime) {
 				getSound()->playSound(kEntityChapters, "ARRIVE", SoundManager::kFlag8);
-				getSound()->unknownFunction3();
+				getSound()->processEntries();
 			}
 		}
 
@@ -963,7 +963,7 @@ IMPLEMENT_FUNCTION(Chapters, chapter5Handler, 22)
 
 			if (!getEvent(kEventLocomotiveMilos) && !getEvent(kEventLocomotiveMilosNight)) {
 				getSound()->playSound(kEntityChapters, "ARRIVE", SoundManager::kFlag8);
-				getSound()->unknownFunction3();
+				getSound()->processEntries();
 			}
 		}
 		break;
@@ -1017,7 +1017,7 @@ void Chapters::enterExitStation(const SavePoint &savepoint, bool isEnteringStati
 
 		getSavePoints()->push(kEntityChapters, kEntityTrain, kActionTrainStopRunning);
 
-		if (getEntityData(kEntityNone)->posture != kPosture2) {
+		if (getEntityData(kEntityPlayer)->posture != kPosture2) {
 			ENTITY_PARAM(0, 2) = 0;
 			enterExitHelper(savepoint, isEnteringStation);
 			return;
@@ -1040,16 +1040,16 @@ void Chapters::enterExitStation(const SavePoint &savepoint, bool isEnteringStati
 		}
 
 		// Other cars
-		if (getEntityData(kEntityNone)->car < kCarRedSleeping || getEntityData(kEntityNone)->car > kCarCoalTender) {
+		if (getEntityData(kEntityPlayer)->car < kCarRedSleeping || getEntityData(kEntityPlayer)->car > kCarCoalTender) {
 
-			if (getEntityData(kEntityNone)->car < kCarBaggageRear || getEntityData(kEntityNone)->car > kCarGreenSleeping) {
+			if (getEntityData(kEntityPlayer)->car < kCarBaggageRear || getEntityData(kEntityPlayer)->car > kCarGreenSleeping) {
 				ENTITY_PARAM(0, 2) = 0;
 				enterExitHelper(savepoint, isEnteringStation);
 				return;
 			}
 
 			if (getEntities()->isPlayerPosition(kCarGreenSleeping, 98)) {
-				getSound()->playSound(kEntityNone, "LIB015");
+				getSound()->playSound(kEntityPlayer, "LIB015");
 				getScenes()->loadSceneFromPosition(kCarGreenSleeping, 71);
 				ENTITY_PARAM(0, 2) = 0;
 				enterExitHelper(savepoint, isEnteringStation);
@@ -1072,7 +1072,7 @@ void Chapters::enterExitHelper(const SavePoint &savepoint, bool isEnteringStatio
 	EXPOSE_PARAMS(EntityData::EntityParametersSIIS);
 
 	getSound()->playSound(kEntityChapters, isEnteringStation ? "ARRIVE" : "DEPART", SoundManager::kFlag8);
-	getSound()->unknownFunction3();
+	getSound()->processEntries();
 
 	getObjects()->update(kObjectHandleOutsideLeft, kEntityNone, kLocation1, kCursorNormal, isEnteringStation ? kCursorNormal : kCursorHand);
 	getObjects()->update(kObjectHandleOutsideRight, kEntityNone, kLocation1, kCursorNormal, isEnteringStation ? kCursorNormal : kCursorHand);

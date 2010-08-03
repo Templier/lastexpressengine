@@ -139,24 +139,28 @@ public:
 	// Timer
 	void handleTimer();
 
-	// State (FIXME: to be renamed when we know more about it)
+	// State
 	void resetState() { _state |= kSoundType1; }
-	void resetQueue(SoundType type1, SoundType type2 = kSoundTypeNone);
 
 	// Sound queue
+	void updateQueue();
+	void resetQueue(SoundType type1, SoundType type2 = kSoundTypeNone);
+	void clearQueue();
+
+	// Subtitles
+	void updateSubtitles();
+
+	// Entry
 	bool isBuffered(const char* filename, bool testForEntity = false);
-
-	void removeFromQueue(const char* filename);
-	void removeFromQueue(EntityIndex entity);
-
 	bool isBuffered(EntityIndex entity);
 	void processEntry(EntityIndex entity);
 	void processEntry(SoundType type);
+	void processEntry(const char* filename);
+	void processEntries();
+	void removeFromQueue(const char* filename);
+	void removeFromQueue(EntityIndex entity);
 
 	// Misc
-	void unknownFunction1();
-	void unknownFunction2(const char* filename);
-	void unknownFunction3();
 	void unknownFunction4();
 
 	// Sound playing
@@ -173,7 +177,7 @@ public:
 	const char *getDialogName(EntityIndex entity) const;
 
 	// Sound bites
-	void excuseMe(EntityIndex entity, EntityIndex entity2 = kEntityNone, FlagType flag = kFlagNone);
+	void excuseMe(EntityIndex entity, EntityIndex entity2 = kEntityPlayer, FlagType flag = kFlagNone);
 	void excuseMeCath();
 	const char *justCheckingCath() const;
 	const char *wrongDoorCath() const;
@@ -280,12 +284,13 @@ private:
 	void setupEntry(SoundEntry *entry, Common::String name, FlagType flag, int a4);
 	void setEntryType(SoundEntry *entry, FlagType flag);
 	void setEntryStatus(SoundEntry *entry, FlagType flag);
-	bool updateCache(SoundEntry *entry);
+	bool setupCache(SoundEntry *entry);
 	void loadSoundData(SoundEntry *entry, Common::String name);
 
 	void updateEntry(SoundEntry *entry, uint value);
 	void updateEntryState(SoundEntry *entry);
-	void clearEntry(SoundEntry *entry);
+	void resetEntry(SoundEntry *entry);
+	void removeEntry(SoundEntry *entry);
 
 
 	// Subtitles

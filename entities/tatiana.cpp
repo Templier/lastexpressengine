@@ -217,7 +217,7 @@ IMPLEMENT_FUNCTION_II(Tatiana, savegame, 12)
 IMPLEMENT_FUNCTION_II(Tatiana, updateEntity, 13)
 	if (savepoint.action == kActionExcuseMeCath) {
 		if (getEvent(kEventTatianaAskMatchSpeakRussian) || getEvent(kEventTatianaAskMatch) || getEvent(kEventVassiliSeizure)) {
-			getSound()->playSound(kEntityNone, random(2) ? "CAT1010" : "CAT1010A");
+			getSound()->playSound(kEntityPlayer, random(2) ? "CAT1010" : "CAT1010A");
 		} else {
 			getSound()->excuseMeCath();
 		}
@@ -418,7 +418,7 @@ IMPLEMENT_FUNCTION(Tatiana, chapter2Handler, 26)
 		break;
 
 	case kActionNone:
-		if (getState()->time > kTime1800000 && params->param1 && getEntities()->checkFields11()) {
+		if (getState()->time > kTime1800000 && params->param1 && getEntities()->isSomebodyStandingInRestaurantOrSalon()) {
 			getData()->inventoryItem = kItemNone;
 			setup_function28();
 		}
@@ -547,7 +547,7 @@ IMPLEMENT_FUNCTION(Tatiana, function29, 29)
 			getSavePoints()->push(kEntityTatiana, kEntityServers1, kAction302203328);
 			getEntities()->drawSequenceRight(kEntityTatiana, "805DS");
 
-			if (getEntities()->checkFields13())
+			if (getEntities()->isInRestaurant(kEntityPlayer))
 				getEntities()->updateFrame(kEntityTatiana);
 
 			setCallback(3);
@@ -674,7 +674,7 @@ IMPLEMENT_FUNCTION(Tatiana, function34, 34)
 
 		case 1:
 			getInventory()->getEntry(kItemFirebird)->location = kLocation1;
-			if (getEntities()->checkFields19(kEntityNone, kCarRedSleeping, kPosition_7850))
+			if (getEntities()->checkFields19(kEntityPlayer, kCarRedSleeping, kPosition_7850))
 				getScenes()->loadSceneFromObject(kObjectCompartmentB);
 
 			getObjects()->update(kObjectCompartmentB, kEntityNone, kLocation1, kCursorHandKnock, kCursorHand);
@@ -719,7 +719,7 @@ IMPLEMENT_FUNCTION(Tatiana, function36, 36)
 			break;
 
 		case 1:
-			if (!getEntities()->checkFields19(kEntityNone, kCarGreenSleeping, kPosition_7850) || getEntities()->isSitting(kEntityNone, kCarRedSleeping, kPosition_8200)) {
+			if (!getEntities()->checkFields19(kEntityPlayer, kCarGreenSleeping, kPosition_7850) || getEntities()->isSitting(kEntityPlayer, kCarRedSleeping, kPosition_8200)) {
 				setCallback(2);
 				call(new ENTITY_SETUP(Tatiana, setup_function14));
 				break;
@@ -758,7 +758,7 @@ IMPLEMENT_FUNCTION(Tatiana, function39, 39)
 		break;
 
 	case kActionNone:
-		if (!params->param1 && getEntities()->checkFields9(kEntityTatiana, kEntityNone, 1000)) {
+		if (!params->param1 && getEntities()->checkFields9(kEntityTatiana, kEntityPlayer, 1000)) {
 			params->param1 = 1;
 			getSound()->playSound(kEntityTatiana, "Tat3164");	// Tatiana weeping
 		}
@@ -787,7 +787,7 @@ IMPLEMENT_FUNCTION(Tatiana, function41, 41)
  */
 IMPLEMENT_FUNCTION(Tatiana, function42, 42)
 	if (savepoint.action == kActionExcuseMeCath || savepoint.action == kActionExcuseMe) {
-		getSound()->playSound(kEntityNone, "Tat3124", getSound()->getSoundFlag(kEntityTatiana));
+		getSound()->playSound(kEntityPlayer, "Tat3124", getSound()->getSoundFlag(kEntityTatiana));
 		return;
 	}
 
@@ -861,7 +861,7 @@ IMPLEMENT_FUNCTION(Tatiana, function45, 45)
 			break;
 
 		case 2:
-			if (getEntities()->checkFields6()) {
+			if (getEntities()->checkFields6(kEntityPlayer)) {
 				getSound()->excuseMe(kEntityTatiana);
 
 				if (getEntities()->isPlayerPosition(kCarGreenSleeping, 62))

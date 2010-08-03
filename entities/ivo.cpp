@@ -129,7 +129,7 @@ IMPLEMENT_FUNCTION_I(Ivo, updateFromTicks, 5)
  */
 IMPLEMENT_FUNCTION_II(Ivo, updateEntity, 6)
 	if (savepoint.action == kActionExcuseMeCath || savepoint.action == kActionExcuseMe) {
-		getSound()->playSound(kEntityNone, "CAT1127A");
+		getSound()->playSound(kEntityPlayer, "CAT1127A");
 		return;
 	}
 
@@ -373,7 +373,7 @@ IMPLEMENT_FUNCTION(Ivo, chapter4Handler, 25)
 		break;
 
 	case kActionNone:
-		if (getState()->time > kTime2361600 && getEntities()->checkFields11()) {
+		if (getState()->time > kTime2361600 && getEntities()->isSomebodyStandingInRestaurantOrSalon()) {
 			getData()->posture = kPostureStanding;
 			setup_function26();
 		}
@@ -502,7 +502,7 @@ IMPLEMENT_FUNCTION(Ivo, fight, 32)
 			break;
 
 		case 1:
-			getSound()->playSound(kEntityNone, "LIB090");
+			getSound()->playSound(kEntityPlayer, "LIB090");
 			getAction()->playAnimation(kEventCathIvoFight);
 
 			setCallback(2);
@@ -532,7 +532,7 @@ IMPLEMENT_FUNCTION(Ivo, function33, 33)
 		getState()->time += 1800;
 
 		setCallback(1);
-		call(new ENTITY_SETUP(Ivo, setup_savegame), kSavegameType1, kEntityNone);
+		call(new ENTITY_SETUP(Ivo, setup_savegame), kSavegameType1, kEventNone);
 		break;
 
 	case kActionCallback:

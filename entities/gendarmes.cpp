@@ -103,11 +103,11 @@ IMPLEMENT_FUNCTION_I(Gendarmes, function6, 6)
 
 	case kActionDrawScene:
 		if (!ENTITY_PARAM(0, 1) && getEntities()->hasValidFrame(kEntityGendarmes)) {
-			getSound()->playSound(kEntityNone, "MUS007");
+			getSound()->playSound(kEntityPlayer, "MUS007");
 			ENTITY_PARAM(0, 1) = 1;
 		}
 
-		if (getEntities()->checkFields9(kEntityGendarmes, kEntityNone, 1000) && !getEntityData(kEntityNone)->posture) {
+		if (getEntities()->checkFields9(kEntityGendarmes, kEntityPlayer, 1000) && !getEntityData(kEntityPlayer)->posture) {
 			setCallback(1);
 			call(new ENTITY_SETUP(Gendarmes, setup_savegame), kSavegameType2, kEventGendarmesArrestation);
 		}
@@ -149,12 +149,12 @@ IMPLEMENT_FUNCTION_II(Gendarmes, function8, 8)
 
 	case kActionDrawScene:
 		if (!ENTITY_PARAM(0, 1) && getEntities()->hasValidFrame(kEntityGendarmes)) {
-			getSound()->playSound(kEntityNone, "MUS007");
+			getSound()->playSound(kEntityPlayer, "MUS007");
 			ENTITY_PARAM(0, 1) = 1;
 		}
 
-		if (getEntities()->checkFields9(kEntityGendarmes, kEntityNone, 1750) && !getEntityData(kEntityNone)->posture) {
-			if (!getEntities()->isPlayerPosition(kCarRedSleeping, 22) || getEntities()->checkFields9(kEntityGendarmes, kEntityNone, 250)) {
+		if (getEntities()->checkFields9(kEntityGendarmes, kEntityPlayer, 1750) && !getEntityData(kEntityPlayer)->posture) {
+			if (!getEntities()->isPlayerPosition(kCarRedSleeping, 22) || getEntities()->checkFields9(kEntityGendarmes, kEntityPlayer, 250)) {
 				setCallback(1);
 				call(new ENTITY_SETUP(Gendarmes, setup_savegame), kSavegameType2, kEventGendarmesArrestation);
 			}
@@ -363,7 +363,7 @@ IMPLEMENT_FUNCTION(Gendarmes, function12, 12)
 			break;
 
 		case 9:
-			if (getEntityData(kEntityNone)->car == kCarGreenSleeping) {
+			if (getEntityData(kEntityPlayer)->car == kCarGreenSleeping) {
 				getProgress().field_14 = 0;
 				getEntities()->clearSequences(kEntityGendarmes);
 				getSavePoints()->push(kEntityGendarmes, kEntityVerges, kAction168710784);
@@ -491,11 +491,11 @@ void Gendarmes::arrest(const SavePoint &savepoint, bool shouldPlaySound, SoundMa
 	case kActionNone:
 	case kActionDrawScene:
 		if (!ENTITY_PARAM(0, 1) && getEntities()->hasValidFrame(kEntityGendarmes)) {
-			getSound()->playSound(kEntityNone, "MUS007");
+			getSound()->playSound(kEntityPlayer, "MUS007");
 			ENTITY_PARAM(0, 1) = 1;
 		}
 
-		if (getEntities()->checkFields9(kEntityGendarmes, kEntityNone, 1000) && !getEntityData(kEntityNone)->posture) {
+		if (getEntities()->checkFields9(kEntityGendarmes, kEntityPlayer, 1000) && !getEntityData(kEntityPlayer)->posture) {
 			setCallback(1);
 			call(new ENTITY_SETUP(Gendarmes, setup_savegame), kSavegameType2, kEventGendarmesArrestation);
 		}

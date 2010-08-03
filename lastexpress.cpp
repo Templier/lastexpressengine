@@ -44,7 +44,7 @@
 
 #include "engines/util.h"
 
-const char *g_entityNames[] = { "None", "Anna", "August", "Mertens", "Coudert", "Pascale", "Servers0", "Servers1", "Cooks", "Verges", "Tatiana", "Vassili", "Alexei", "Abbot", "Milos", "Vesna", "Ivo", "Salko", "Kronos", "Kahina", "Francois", "MmeBoutarel", "Boutarel", "Rebecca", "Sophie", "Mahmud", "Yasmin", "Hadija", "Alouan", "Gendarmes", "Max", "Chapters", "Train", "Tables0", "Tables1", "Tables2", "Tables3", "Tables4", "Tables5", "Entity39"};
+const char *g_entityNames[] = { "Player", "Anna", "August", "Mertens", "Coudert", "Pascale", "Servers0", "Servers1", "Cooks", "Verges", "Tatiana", "Vassili", "Alexei", "Abbot", "Milos", "Vesna", "Ivo", "Salko", "Kronos", "Kahina", "Francois", "MmeBoutarel", "Boutarel", "Rebecca", "Sophie", "Mahmud", "Yasmin", "Hadija", "Alouan", "Gendarmes", "Max", "Chapters", "Train", "Tables0", "Tables1", "Tables2", "Tables3", "Tables4", "Tables5", "Entity39"};
 const char *g_directionNames[] = { "None", "Up", "Down", "Left", "Right", "Switch"};
 
 namespace LastExpress {
@@ -147,8 +147,8 @@ Common::Error LastExpressEngine::run() {
 	_menu->show(false, kTimeType0, 0);
 
 	while (!shouldQuit()) {
-		_soundMan->unknownFunction1();
-		// TODO: call subtitle function
+		_soundMan->updateQueue();
+		_soundMan->updateSubtitles();
 
 		if (handleEvents())
 			continue;

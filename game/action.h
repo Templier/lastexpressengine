@@ -58,7 +58,7 @@ public:
 	CursorStyle getCursor(const SceneHotspot &hotspot) const;
 
 	// Animation
-	void playAnimation(EventIndex index) const;
+	void playAnimation(EventIndex index, bool debugMode = false) const;
 
 	// Compartment action
 	bool handleOtherCompartment(ObjectIndex object, bool doPlaySound, bool doLoadScene) const;

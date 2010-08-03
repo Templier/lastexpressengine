@@ -171,15 +171,15 @@ IMPLEMENT_FUNCTION_II(Milos, enterCompartmentDialog, 10)
 			switch(random(3)) {
 			default:
 			case 0:
-				getSound()->playSound(kEntityNone, "CAT1014");
+				getSound()->playSound(kEntityPlayer, "CAT1014");
 				break;
 
 			case 1:
-				getSound()->playSound(kEntityNone, "CAT1014A");
+				getSound()->playSound(kEntityPlayer, "CAT1014A");
 				break;
 
 			case 2:
-				getSound()->playSound(kEntityNone, "CAT1014B");
+				getSound()->playSound(kEntityPlayer, "CAT1014B");
 				break;
 			}
 		} else {
@@ -388,7 +388,7 @@ IMPLEMENT_FUNCTION(Milos, chapter1Handler, 15)
 	case kActionNone:
 		TIME_CHECK_SAVEPOINT(kTime1071000, params->param3, kEntityMilos, kEntityServers1, kAction223002560);
 
-		if (getState()->time > kTime1089000 && getEntities()->checkFields11()) {
+		if (getState()->time > kTime1089000 && getEntities()->isSomebodyStandingInRestaurantOrSalon()) {
 			setup_function16();
 			break;
 		}

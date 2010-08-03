@@ -323,7 +323,7 @@ label_process:
 
 		// Play clock sound
 		if (params->param6 && !getSound()->isBuffered("ZFX1001", true))
-			getSound()->playSound(kEntityNone, "ZFX1001");
+			getSound()->playSound(kEntityPlayer, "ZFX1001");
 
 		break;
 
@@ -347,13 +347,13 @@ label_process:
 		break;
 
 	case kActionDrawScene:
-		getData()->car = getEntityData(kEntityNone)->car;
+		getData()->car = getEntityData(kEntityPlayer)->car;
 
 		// Play clock sound
 		if (getEntities()->isPlayerPosition(kCarRestaurant, 81)) {
 			params->param6 = 1;
 			if (!getSound()->isBuffered("ZFX1001"))
-				getSound()->playSound(kEntityNone, "ZFX1001");
+				getSound()->playSound(kEntityPlayer, "ZFX1001");
 		} else {
 			params->param6 = 0;
 			if (getSound()->isBuffered("ZFX1001", true))
@@ -362,8 +362,8 @@ label_process:
 
 		// Draw moving background behind windows
 		if (params->param3) {
-			if (getEntityData(kEntityNone)->car != params->param1 || isDay() != (bool)(params->param2 > 0)) {
-				switch (getEntityData(kEntityNone)->car) {
+			if (getEntityData(kEntityPlayer)->car != params->param1 || isDay() != (bool)(params->param2 > 0)) {
+				switch (getEntityData(kEntityPlayer)->car) {
 				default:
 					getEntities()->clearSequences(kEntityTrain);
 					break;
@@ -390,7 +390,7 @@ label_process:
 				}
 
 				// Set parameters so we do not get called twice
-				params->param1 = getEntityData(kEntityNone)->car;
+				params->param1 = getEntityData(kEntityPlayer)->car;
 				params->param2 = isDay();
 			}
 		}
@@ -555,11 +555,11 @@ void Train::resetParam8() {
 	EntityData::EntityParametersIIIS *params1 = (EntityData::EntityParametersIIIS*)_data->getCurrentParameters(1);
 
 	if (params->param8
-	 && !getEntities()->isSitting(kEntityNone, (CarIndex)params1->param1, (EntityPosition)params1->param2)
-	 && !getEntities()->isSitting(kEntityNone, (CarIndex)params1->param1, (EntityPosition)params1->param3)) {
+	 && !getEntities()->isSitting(kEntityPlayer, (CarIndex)params1->param1, (EntityPosition)params1->param2)
+	 && !getEntities()->isSitting(kEntityPlayer, (CarIndex)params1->param1, (EntityPosition)params1->param3)) {
 
 		if (getSound()->isBuffered((const char *)&params1->seq))
-			getSound()->unknownFunction2((const char *)&params1->seq);
+			getSound()->processEntry((const char *)&params1->seq);
 
 		params->param8 = 0;
 	}
