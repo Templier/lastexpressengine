@@ -248,7 +248,7 @@ IMPLEMENT_FUNCTION_II(Mahmud, function10, 10)
 				params->param3 = 0;
 			} else {
 				getSound()->playSound(kEntityTrain, "LIB050", SoundManager::kFlagDefault);
-				getLogic()->gameOver(kTimeType0, kTime0, (getProgress().chapter == kChapter1) ? kSceneGameOverPolice1 : kSceneGameOverPolice2, true);
+				getLogic()->gameOver(kInitTypeIndex, 0, (getProgress().chapter == kChapter1) ? kSceneGameOverPolice1 : kSceneGameOverPolice2, true);
 			}
 			break;
 		}

@@ -509,13 +509,13 @@ IMPLEMENT_FUNCTION(Ivo, fight, 32)
 			getAction()->playAnimation(kEventCathIvoFight);
 
 			setCallback(2);
-			call(new ENTITY_SETUP(Ivo, setup_savegame), kSavegameType1, kTime0);
+			call(new ENTITY_SETUP(Ivo, setup_savegame), kSavegameType1, kEventNone);
 			break;
 
 		case 2:
 			params->param1 = getFight()->setup(kFightIvo);
 			if (params->param1) {
-				getLogic()->gameOver(kTimeType0, kTime0, kSceneNone, true);
+				getLogic()->gameOver(kInitTypeIndex, 0, kSceneNone, true);
 			} else {
 				getScenes()->loadSceneFromPosition(kCarBaggageRear, 96);
 				setup_function33();

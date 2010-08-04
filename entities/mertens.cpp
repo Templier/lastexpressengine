@@ -133,7 +133,7 @@ IMPLEMENT_FUNCTION_S(Mertens, bloodJacket, 2)
 	case kActionCallback:
 		if (getCallback() == 1) {
 			getAction()->playAnimation(kEventMertensBloodJacket);
-			getLogic()->gameOver(kTimeType0, kTime1, kSceneGameOverBloodJacket, true);
+			getLogic()->gameOver(kInitTypeIndex, 1, kSceneGameOverBloodJacket, true);
 		}
 		break;
 	}
@@ -157,7 +157,7 @@ IMPLEMENT_FUNCTION_SI(Mertens, enterExitCompartment, 3)
 	case kActionCallback:
 		if (getCallback() == 1) {
 			getAction()->playAnimation(kEventMertensBloodJacket);
-			getLogic()->gameOver(kTimeType0, kTime1, kSceneGameOverBloodJacket, true);
+			getLogic()->gameOver(kInitTypeIndex, 1, kSceneGameOverBloodJacket, true);
 		}
 		return;
 	}
@@ -188,7 +188,7 @@ IMPLEMENT_FUNCTION_SI(Mertens, enterExitCompartment2, 4)
 	case kActionCallback:
 		if (getCallback() == 1) {
 			getAction()->playAnimation(kEventMertensBloodJacket);
-			getLogic()->gameOver(kTimeType0, kTime1, kSceneGameOverBloodJacket, true);
+			getLogic()->gameOver(kInitTypeIndex, 1, kSceneGameOverBloodJacket, true);
 		}
 		return;
 	}
@@ -234,7 +234,7 @@ IMPLEMENT_FUNCTION_SIII(Mertens, enterExitCompartment3, 5)
 	case kActionCallback:
 		if (getCallback() == 1) {
 			getAction()->playAnimation(kEventMertensBloodJacket);
-			getLogic()->gameOver(kTimeType0, kTime1, kSceneGameOverBloodJacket, true);
+			getLogic()->gameOver(kInitTypeIndex, 1, kSceneGameOverBloodJacket, true);
 		}
 		break;
 	}
@@ -261,7 +261,7 @@ IMPLEMENT_FUNCTION(Mertens, function6, 6)
 	case kActionCallback:
 		if (getCallback() == 1) {
 			getAction()->playAnimation(kEventMertensBloodJacket);
-			getLogic()->gameOver(kTimeType0, kTime1, kSceneGameOverBloodJacket, true);
+			getLogic()->gameOver(kInitTypeIndex, 1, kSceneGameOverBloodJacket, true);
 		}
 		break;
 	}
@@ -287,7 +287,7 @@ IMPLEMENT_FUNCTION_S(Mertens, playSound, 7)
 	case kActionCallback:
 		if (getCallback() == 1) {
 			getAction()->playAnimation(kEventMertensBloodJacket);
-			getLogic()->gameOver(kTimeType0, kTime1, kSceneGameOverBloodJacket, true);
+			getLogic()->gameOver(kInitTypeIndex, 1, kSceneGameOverBloodJacket, true);
 		}
 		break;
 	}
@@ -313,7 +313,7 @@ IMPLEMENT_FUNCTION_S(Mertens, playSound16, 8)
 	case kActionCallback:
 		if (getCallback() == 1) {
 			getAction()->playAnimation(kEventMertensBloodJacket);
-			getLogic()->gameOver(kTimeType0, kTime1, kSceneGameOverBloodJacket, true);
+			getLogic()->gameOver(kInitTypeIndex, 1, kSceneGameOverBloodJacket, true);
 		}
 		break;
 	}
@@ -429,7 +429,7 @@ IMPLEMENT_FUNCTION_II(Mertens, function10, 10)
 
 		case 1:
 			getAction()->playAnimation(kEventMertensBloodJacket);
-			getLogic()->gameOver(kTimeType0, kTime1, kSceneGameOverBloodJacket, true);
+			getLogic()->gameOver(kInitTypeIndex, 1, kSceneGameOverBloodJacket, true);
 			break;
 
 		case 2:
@@ -515,7 +515,7 @@ IMPLEMENT_FUNCTION_I(Mertens, function11, 11)
 	case kActionCallback:
 		if (getCallback() == 1) {
 			getAction()->playAnimation(kEventMertensBloodJacket);
-			getLogic()->gameOver(kTimeType0, kTime1, kSceneGameOverBloodJacket, true);
+			getLogic()->gameOver(kInitTypeIndex, 1, kSceneGameOverBloodJacket, true);
 		}
 		break;
 	}
@@ -675,7 +675,7 @@ IMPLEMENT_FUNCTION_II(Mertens, function13, 13)
 
 		case 4:
 			getAction()->playAnimation(kEventMertensBloodJacket);
-			getLogic()->gameOver(kTimeType0, kTime1, kSceneGameOverBloodJacket, true);
+			getLogic()->gameOver(kInitTypeIndex, 1, kSceneGameOverBloodJacket, true);
 			break;
 
 		case 5:

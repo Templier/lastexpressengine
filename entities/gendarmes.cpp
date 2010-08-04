@@ -116,7 +116,7 @@ IMPLEMENT_FUNCTION_I(Gendarmes, function6, 6)
 	case kActionCallback:
 		if (getCallback() == 1) {
 			getAction()->playAnimation(kEventGendarmesArrestation);
-			getLogic()->gameOver(kTimeType0, kTime1, kSceneGameOverPolice1, true);
+			getLogic()->gameOver(kInitTypeIndex, 1, kSceneGameOverPolice1, true);
 		}
 		break;
 	}
@@ -169,7 +169,7 @@ IMPLEMENT_FUNCTION_II(Gendarmes, function8, 8)
 	case kActionCallback:
 		if (getCallback() == 1) {
 			getAction()->playAnimation(kEventGendarmesArrestation);
-			getLogic()->gameOver(kTimeType0, kTime1, kSceneGameOverPolice1, true);
+			getLogic()->gameOver(kInitTypeIndex, 1, kSceneGameOverPolice1, true);
 		}
 		break;
 	}
@@ -261,12 +261,12 @@ IMPLEMENT_FUNCTION_III(Gendarmes, function10, 10)
 		case 2:
 			getSound()->playSound(kEntityGendarmes, "LIB014", SoundManager::kFlagDefault);
 			getAction()->playAnimation(kEventGendarmesArrestation);
-			getLogic()->gameOver(kTimeType0, kTime1, kSceneGameOverPolice1, true);
+			getLogic()->gameOver(kInitTypeIndex, 1, kSceneGameOverPolice1, true);
 			break;
 
 		case 3:
 			getAction()->playAnimation((params->param1 < kCarRedSleeping) ? kEventMertensBloodJacket : kEventCoudertBloodJacket);
-			getLogic()->gameOver(kTimeType0, kTime1, kSceneGameOverBloodJacket, true);
+			getLogic()->gameOver(kInitTypeIndex, 1, kSceneGameOverBloodJacket, true);
 
 			getObjects()->update((ObjectIndex)params->param3, kEntityPlayer, kLocationNone, kCursorHandKnock, kCursorHand);
 			CALLBACK_ACTION()
@@ -274,7 +274,7 @@ IMPLEMENT_FUNCTION_III(Gendarmes, function10, 10)
 
 		case 4:
 			getAction()->playAnimation(kEventGendarmesArrestation);
-			getLogic()->gameOver(kTimeType0, kTime1, kSceneGameOverPolice1, true);
+			getLogic()->gameOver(kInitTypeIndex, 1, kSceneGameOverPolice1, true);
 
 			getObjects()->update((ObjectIndex)params->param3, kEntityPlayer, kLocationNone, kCursorHandKnock, kCursorHand);
 			CALLBACK_ACTION()
@@ -287,7 +287,7 @@ IMPLEMENT_FUNCTION_III(Gendarmes, function10, 10)
 		case 6:
 			getSound()->playSound(kEntityGendarmes, "LIB014", SoundManager::kFlagDefault);
 			getAction()->playAnimation(kEventGendarmesArrestation);
-			getLogic()->gameOver(kTimeType0, kTime1, kSceneGameOverPolice1, true);
+			getLogic()->gameOver(kInitTypeIndex, 1, kSceneGameOverPolice1, true);
 			break;
 		}
 		break;
@@ -515,7 +515,7 @@ void Gendarmes::arrest(const SavePoint &savepoint, bool shouldPlaySound, SoundMa
 	case kActionCallback:
 		if (getCallback() == 1) {
 			getAction()->playAnimation(kEventGendarmesArrestation);
-			getLogic()->gameOver(kTimeType0, kTime1, kSceneGameOverPolice1, true);
+			getLogic()->gameOver(kInitTypeIndex, 1, kSceneGameOverPolice1, true);
 		}
 		break;
 	}

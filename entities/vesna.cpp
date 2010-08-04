@@ -515,7 +515,7 @@ IMPLEMENT_FUNCTION(Vesna, chapter5Handler, 29)
 	case kActionCallback:
 		if (getCallback() == 1) {
 			getAction()->playAnimation(kEventCathVesnaRestaurantKilled);
-			getLogic()->gameOver(kTimeType0, kTime1, kSceneNone, true);
+			getLogic()->gameOver(kInitTypeIndex, 1, kSceneNone, true);
 		}
 		break;
 

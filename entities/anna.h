@@ -119,7 +119,7 @@ public:
 	DECLARE_FUNCTION(function78)
 	DECLARE_FUNCTION(function79)
 	DECLARE_FUNCTION(function80)
-	DECLARE_FUNCTION(function81)
+	DECLARE_FUNCTION(finalSequence)
 
 private:
 	DECLARE_CALL_FUNCTION(iiii, Anna, int, int, int, int)

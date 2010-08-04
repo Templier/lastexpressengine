@@ -142,7 +142,7 @@ IMPLEMENT_FUNCTION_S(Coudert, bloodJacket, 2)
 	case kActionCallback:
 		if (getCallback() == 1) {
 			getAction()->playAnimation(kEventCoudertBloodJacket);
-			getLogic()->gameOver(kTimeType0, kTime1, kSceneGameOverBloodJacket, true);
+			getLogic()->gameOver(kInitTypeIndex, 1, kSceneGameOverBloodJacket, true);
 		}
 		break;
 	}
@@ -166,7 +166,7 @@ IMPLEMENT_FUNCTION_SI(Coudert, enterExitCompartment, 3)
 	case kActionCallback:
 		if (getCallback() == 1) {
 			getAction()->playAnimation(kEventCoudertBloodJacket);
-			getLogic()->gameOver(kTimeType0, kTime1, kSceneGameOverBloodJacket, true);
+			getLogic()->gameOver(kInitTypeIndex, 1, kSceneGameOverBloodJacket, true);
 		}
 		return;
 	}
@@ -195,7 +195,7 @@ IMPLEMENT_FUNCTION(Coudert, function4, 4)
 	case kActionCallback:
 		if (getCallback() == 1) {
 			getAction()->playAnimation(kEventCoudertBloodJacket);
-			getLogic()->gameOver(kTimeType0, kTime1, kSceneGameOverBloodJacket, true);
+			getLogic()->gameOver(kInitTypeIndex, 1, kSceneGameOverBloodJacket, true);
 		}
 		break;
 	}
@@ -230,7 +230,7 @@ IMPLEMENT_FUNCTION_S(Coudert, playSound, 6)
 	case kActionCallback:
 		if (getCallback() == 1) {
 			getAction()->playAnimation(kEventCoudertBloodJacket);
-			getLogic()->gameOver(kTimeType0, kTime1, kSceneGameOverBloodJacket, true);
+			getLogic()->gameOver(kInitTypeIndex, 1, kSceneGameOverBloodJacket, true);
 		}
 		break;
 	}
@@ -263,7 +263,7 @@ IMPLEMENT_FUNCTION_NOSETUP(Coudert, playSound16, 7)
 	case kActionCallback:
 		if (getCallback() == 1) {
 			getAction()->playAnimation(kEventCoudertBloodJacket);
-			getLogic()->gameOver(kTimeType0, kTime1, kSceneGameOverBloodJacket, true);
+			getLogic()->gameOver(kInitTypeIndex, 1, kSceneGameOverBloodJacket, true);
 		}
 		break;
 	}
@@ -307,7 +307,7 @@ IMPLEMENT_FUNCTION_I(Coudert, function10, 10)
 	case kActionCallback:
 		if (getCallback() == 1) {
 			getAction()->playAnimation(kEventCoudertBloodJacket);
-			getLogic()->gameOver(kTimeType0, kTime1, kSceneGameOverBloodJacket, true);
+			getLogic()->gameOver(kInitTypeIndex, 1, kSceneGameOverBloodJacket, true);
 		}
 		break;
 	}
@@ -332,7 +332,7 @@ IMPLEMENT_FUNCTION_I(Coudert, function11, 11)
 	case kActionCallback:
 		if (getCallback() == 1) {
 			getAction()->playAnimation(kEventCoudertBloodJacket);
-			getLogic()->gameOver(kTimeType0, kTime1, kSceneGameOverBloodJacket, true);
+			getLogic()->gameOver(kInitTypeIndex, 1, kSceneGameOverBloodJacket, true);
 		}
 		break;
 	}
@@ -491,7 +491,7 @@ IMPLEMENT_FUNCTION_II(Coudert, function13, 13)
 
 		case 3:
 			getAction()->playAnimation(kEventCoudertBloodJacket);
-			getLogic()->gameOver(kTimeType0, kTime1, kSceneGameOverBloodJacket, true);
+			getLogic()->gameOver(kInitTypeIndex, 1, kSceneGameOverBloodJacket, true);
 			// BUG: the original game continues executing code here
 			break;
 
@@ -1090,7 +1090,7 @@ label_coudert_object:
 
 		case 1:
 			getAction()->playAnimation(kEventCoudertBloodJacket);
-			getLogic()->gameOver(kTimeType0, kTime1, kSceneGameOverBloodJacket, true);
+			getLogic()->gameOver(kInitTypeIndex, 1, kSceneGameOverBloodJacket, true);
 			break;
 
 		case 4:
@@ -1353,7 +1353,48 @@ IMPLEMENT_FUNCTION(Coudert, function53, 53)
 }
 
 IMPLEMENT_FUNCTION(Coudert, function54, 54)
-	error("Coudert: callback function 54 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionDefault:
+		if (getEntities()->hasValidFrame(kEntityCoudert)) {
+			getData()->posture = kPostureStanding;
+
+			setCallback(1);
+			call(new ENTITY_SETUP(Coudert, setup_function9), kCarRedSleeping, kPosition_540);
+		} else {
+			getData()->car = kCarLocomotive;
+			getData()->entityPosition = kPosition_540;
+		}
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			getEntities()->clearSequences(kEntityCoudert);
+			getData()->car = kCarLocomotive;
+			break;
+
+		case 2:
+			setCallback(3);
+			call(new ENTITY_SETUP(Coudert, setup_function18));
+			break;
+
+		case 3:
+			CALLBACK_ACTION()
+			break;
+		}
+		break;
+
+	case kAction191001984:
+		getData()->car = kCarRedSleeping;
+		setCallback(2);
+		call(new ENTITY_SETUP(Coudert, setup_function9), kCarRedSleeping, kPosition_1500);
+	}
 }
 
 IMPLEMENT_FUNCTION(Coudert, function55, 55)

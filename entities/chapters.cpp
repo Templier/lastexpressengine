@@ -571,7 +571,7 @@ IMPLEMENT_FUNCTION(Chapters, chapter2, 10)
 	case kActionCallback:
 		if (getCallback() == 1) {
 			if (!_engine->getResourceManager()->loadArchive(kArchiveCd2)) {
-				getMenu()->show(false, kTimeType0, 0);
+				getMenu()->show(false, kInitTypeIndex, 0);
 				return;
 			}
 
@@ -765,7 +765,7 @@ IMPLEMENT_FUNCTION(Chapters, chapter4, 17)
 	case kActionCallback:
 		if (getCallback() == 1) {
 			if (!_engine->getResourceManager()->loadArchive(kArchiveCd3)) {
-				getMenu()->show(false, kTimeType0, 0);
+				getMenu()->show(false, kInitTypeIndex, 0);
 				return;
 			}
 

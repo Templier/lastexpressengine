@@ -1303,7 +1303,7 @@ IMPLEMENT_ACTION(useWhistle) {
 
 	case 3:
 		if (getEvent(kEventKronosBringFirebird)) {
-			getSavePoints()->push(kEntityPlayer, kEntityAnna, kAction270751616);
+			getSavePoints()->push(kEntityPlayer, kEntityAnna, kActionUseWhistle);
 			break;
 		}
 

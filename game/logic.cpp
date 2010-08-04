@@ -391,7 +391,7 @@ void Logic::eventTick(const Common::Event &) {
 //////////////////////////////////////////////////////////////////////////
 
 // Handle game over
-void Logic::gameOver(TimeType type, TimeValue time, SceneIndex sceneIndex, bool showScene) const {
+void Logic::gameOver(MenuInitType type, int value, SceneIndex sceneIndex, bool showScene) const {
 
 	getSound()->processEntries();
 	getEntities()->reset();
@@ -416,7 +416,7 @@ void Logic::gameOver(TimeType type, TimeValue time, SceneIndex sceneIndex, bool 
 	}
 
 	// Show Menu
-	getMenu()->show(false, type, time);
+	getMenu()->show(false, type, value);
 }
 
 void Logic::switchChapter() {
@@ -469,7 +469,7 @@ void Logic::playFinalSequence() {
 	getSavePoints()->reset();
 	getFlags()->flag_entities_0 = true;
 
-	getMenu()->show(false, kTimeType0, 0);
+	getMenu()->show(false, kInitTypeIndex, 0);
 }
 
 void Logic::showCredits() {

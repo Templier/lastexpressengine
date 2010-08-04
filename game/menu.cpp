@@ -488,7 +488,7 @@ void Menu::eventTick(const Common::Event&) {
 
 //////////////////////////////////////////////////////////////////////////
 // Show the intro and load the main menu scene
-void Menu::show(bool doSavegame, TimeType type, uint32 time) {
+void Menu::show(bool doSavegame, MenuInitType type, uint32 value) {
 
 	if (_isShowingMenu)
 		return;
@@ -540,7 +540,7 @@ void Menu::show(bool doSavegame, TimeType type, uint32 time) {
 	_hasShownStartScreen = true;
 
 	// Init Menu
-	init(doSavegame, type, time);
+	init(doSavegame, type, value);
 
 	// Setup sound
 	getSound()->unknownFunction4();
@@ -933,12 +933,12 @@ void Menu::setLogicEventHandlers() {
 //////////////////////////////////////////////////////////////////////////
 // Game-related
 //////////////////////////////////////////////////////////////////////////
-void Menu::init(bool doSavegame, TimeType type, uint32 time) {
+void Menu::init(bool doSavegame, MenuInitType type, uint32 value) {
 
 	bool useSameIndex = true;
 
 	if (getGlobalTimer()) {
-		time = 0;
+		value = 0;
 
 		// Check if the CD file is present
 		ArchiveIndex index = kArchiveCd1;
@@ -1010,7 +1010,7 @@ void Menu::init(bool doSavegame, TimeType type, uint32 time) {
 		_clock->draw(_time);
 		_trainLine->draw(_time);
 
-		initTime(type, time);
+		initTime(type, value);
 	}
 }
 
@@ -1041,7 +1041,7 @@ void Menu::switchGame() {
 	// Clear loaded savegame data
 	getSaveLoad()->clearEntries();
 
-	init(false, kTimeType0, 0);
+	init(false, kInitTypeIndex, 0);
 }
 
 bool Menu::isGameFinished() const {
@@ -1055,16 +1055,16 @@ bool Menu::isGameFinished() const {
 
 	return (data->event == kEventAnnaKilled
 		 || data->event == kEventKronosHostageAnnaNoFirebird
-		 || data->event == kEventKahinaPunch
+		 || data->event == kEventKahinaPunchBaggageCarEntrance
 		 || data->event == kEventKahinaPunchBlue
 		 || data->event == kEventKahinaPunchYellow
-		 || data->event == kEventKahinaPunchSuite
-		 || data->event == kEventKahinaPunchSuite2
-		 || data->event == kEventKahinaPunchSuite3
+		 || data->event == kEventKahinaPunchSalon
+		 || data->event == kEventKahinaPunchKitchen
+		 || data->event == kEventKahinaPunchBaggageCar
 		 || data->event == kEventKahinaPunchCar
 		 || data->event == kEventKahinaPunchSuite4
-		 || data->event == kEventKahinaPunchSuite5
 		 || data->event == kEventKahinaPunchRestaurant
+		 || data->event == kEventKahinaPunch
 		 || data->event == kEventKronosGiveFirebird
 		 || data->event == kEventAugustFindCorpse
 		 || data->event == kEventMertensBloodJacket
@@ -1194,8 +1194,8 @@ Common::String Menu::getAcornSequenceName(GameId id) const {
 //////////////////////////////////////////////////////////////////////////
 // Time
 //////////////////////////////////////////////////////////////////////////
-void Menu::initTime(TimeType type, uint32 time) {
-	if (!time)
+void Menu::initTime(MenuInitType type, uint32 value) {
+	if (!value)
 		return;
 
 	// The savegame entry index
@@ -1205,12 +1205,12 @@ void Menu::initTime(TimeType type, uint32 time) {
 	default:
 		break;
 
-	case kTimeType0:
-		entryIndex = (_index <= time) ? 1 : _index - time;
+	case kInitTypeIndex:
+		entryIndex = (_index <= value) ? 1 : _index - value;
 		break;
 
 	case kTimeTypeTime:
-		if (time < kTimeStartGame)
+		if (value < kTimeStartGame)
 			break;
 
 		entryIndex = _index;
@@ -1219,7 +1219,7 @@ void Menu::initTime(TimeType type, uint32 time) {
 
 		// Iterate through existing entries
 		do {
-			if (getSaveLoad()->getEntry(entryIndex)->time <= time)
+			if (getSaveLoad()->getEntry(entryIndex)->time <= value)
 				break;
 
 			entryIndex--;
@@ -1232,19 +1232,19 @@ void Menu::initTime(TimeType type, uint32 time) {
 			break;
 
 		do {
-			if (getSaveLoad()->getEntry(entryIndex)->event == (EventIndex)time)
+			if (getSaveLoad()->getEntry(entryIndex)->event == (EventIndex)value)
 				break;
 
 			entryIndex--;
 		} while (entryIndex);
 		break;
 
-	case kTimeType3:
+	case kTimeTypeEvent2:
 		// TODO rewrite in a more legible way
 		if (_index > 1) {
 			uint32 index = _index;
 			do {
-				if (getSaveLoad()->getEntry(index)->event == (EventIndex)time)
+				if (getSaveLoad()->getEntry(index)->event == (EventIndex)value)
 					break;
 
 				index--;

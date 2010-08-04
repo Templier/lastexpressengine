@@ -144,7 +144,7 @@ Common::Error LastExpressEngine::run() {
 	// Set game running
 	getGameLogic()->getGameState()->getGameFlags()->isGameRunning = true;
 
-	_menu->show(false, kTimeType0, 0);
+	_menu->show(false, kInitTypeIndex, 0);
 
 	while (!shouldQuit()) {
 		_soundMan->updateQueue();

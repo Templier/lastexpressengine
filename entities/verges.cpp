@@ -512,7 +512,7 @@ IMPLEMENT_FUNCTION(Verges, policeGettingOffTrain, 24)
 		if (getCallback() == 1) {
 			getSound()->processEntry(kEntityVerges);
 			getAction()->playAnimation(kEventGendarmesArrestation);
-			getLogic()->gameOver(kTimeType0, kTime1, kSceneGameOverPolice1, true);
+			getLogic()->gameOver(kInitTypeIndex, 1, kSceneGameOverPolice1, true);
 		}
 		break;
 	}

@@ -366,7 +366,7 @@ IMPLEMENT_FUNCTION(Kronos, function18, 18)
 	case kActionCallback:
 		if (getCallback() == 1) {
 			getAction()->playAnimation(kEventKahinaPunchSuite4);
-			getLogic()->gameOver(kTimeType3, kTime253, kSceneNone, true);
+			getLogic()->gameOver(kTimeTypeEvent2, kEventCathJumpDownCeiling, kSceneNone, true);
 		}
 		break;
 	}

@@ -53,7 +53,8 @@ public:
 	void eventMouse(const Common::Event &ev);
 	void eventTick(const Common::Event &ev);
 
-	void gameOver(TimeType type, TimeValue time, SceneIndex sceneIndex, bool showScene) const;
+	void gameOver(MenuInitType type, int value, SceneIndex sceneIndex, bool showScene) const;
+	void playFinalSequence();
 	void updateCursor(bool redraw = true) const;
 
 	Action 	   *getGameAction()   { return _action; }
@@ -73,8 +74,7 @@ private:
 	SaveLoad *_saveload;        ///< Save & loading
 	State    *_state;           ///< Game state
 
-	void switchChapter();
-	void playFinalSequence();
+	void switchChapter();	
 	void showCredits();
 
 	// Flags & Members

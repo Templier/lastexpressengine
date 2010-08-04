@@ -32,10 +32,7 @@ namespace LastExpress {
 // Time values
 //////////////////////////////////////////////////////////////////////////
 enum TimeValue {
-	kTime0                    = 0,
-	kTime1                    = 1,
-	kTime4                    = 4,
-	kTime253                  = 253,
+	kTime5933                 = 5933,
 
 	kTimeCityParis            = 1037700,
 	kTime1039500              = 1039500,
@@ -73,6 +70,7 @@ enum TimeValue {
 	kTime1184400              = 1184400,
 	kTime1188000              = 1188000,
 	kTime1189800              = 1189800,
+	kTime1192500              = 1192500,
 	kTime1197000              = 1197000,
 	kTime1201500              = 1201500,
 	kTime1206000              = 1206000,
@@ -201,14 +199,15 @@ enum TimeValue {
 	// Bug in original game?
 	kTimeEnd                  = 15803100,
 
-	kTimeInvalid              = 2147483647
+	kTimeInvalid              = 2147483647,
+	kTimeInvalid2             = 0xFFFFFEDA
 };
 
-enum TimeType {
-	kTimeType0 = 0,
+enum MenuInitType {
+	kInitTypeIndex = 0,
 	kTimeTypeTime = 1,
 	kTimeTypeEvent = 2,
-	kTimeType3 = 3
+	kTimeTypeEvent2 = 3
 };
 
 //////////////////////////////////////////////////////////////////////////
@@ -909,17 +908,17 @@ enum EventIndex {
 	kEventKronosReturnBriefcase = 61,
 	kEventKronosHostageAnna = 62,
 	kEventKronosGiveFirebird = 63,
-	kEventKahinaPunch = 64,
+	kEventKahinaPunchBaggageCarEntrance = 64,
 	kEventKahinaPunchBlue = 65,
 	kEventKahinaPunchYellow = 66,
-	kEventKahinaPunchSuite = 67,
-	kEventKahinaPunchSuite2 = 68,
-	kEventKahinaPunchSuite3 = 69,
+	kEventKahinaPunchSalon = 67,
+	kEventKahinaPunchKitchen = 68,
+	kEventKahinaPunchBaggageCar = 69,
 	kEventKahinaPunchCar = 70,
 	kEventKahinaPunchSuite4 = 71,
-	kEventKahinaPunchSuite5 = 72,
+	kEventKahinaPunchRestaurant = 72,
 	kEventKronosHostageAnnaNoFirebird = 73,
-	kEventKahinaPunchRestaurant = 74,
+	kEventKahinaPunch = 74,
 	kEventKahinaWrongDoor = 75,
 	kEventAlexeiDiner = 76,
 	kEventAlexeiDinerOriginalJacket = 77,
@@ -1470,7 +1469,7 @@ enum ActionIndex {
 	kAction203078272 = 203078272,
 	kAction205034665 = 205034665,
 	kAction205294778 = 205294778,
-	kAction270751616 = 270751616,
+	kActionUseWhistle = 270751616,
 	kAction272177921 = 272177921,
 	kAction224309120 = 224309120,
 	kAction225358684 = 225358684,

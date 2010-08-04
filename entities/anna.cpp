@@ -121,7 +121,7 @@ Anna::Anna(LastExpressEngine *engine) : Entity(engine, kEntityAnna) {
 	ADD_CALLBACK_FUNCTION(Anna, function78);
 	ADD_CALLBACK_FUNCTION(Anna, function79);
 	ADD_CALLBACK_FUNCTION(Anna, function80);
-	ADD_CALLBACK_FUNCTION(Anna, function81);
+	ADD_CALLBACK_FUNCTION(Anna, finalSequence);
 }
 
 /**
@@ -1125,7 +1125,65 @@ IMPLEMENT_FUNCTION(Anna, function29, 29)
 }
 
 IMPLEMENT_FUNCTION(Anna, function30, 30)
-	error("Anna: callback function 30 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionNone:
+		if (params->param3 != kTimeInvalid && getState()->time) {
+			if (getState()->time > kTime1188000) {
+				params->param3 = kTimeInvalid;
+				getSound()->playSound(kEntityAnna, "AUG1004");
+			} else {
+				if (!getEntities()->isInSalon(kEntityPlayer) || !params->param3)
+					params->param3 = getState()->time + 450;
+
+				if (params->param3 < (int)getState()->time) {
+					params->param3 = kTimeInvalid;
+					getSound()->playSound(kEntityAnna, "AUG1004");
+				}
+			}
+		}
+
+		if (params->param2 && params->param4 != kTimeInvalid && getState()->time > kTime1179000) {
+
+			if (getState()->time > kTime1192500) {
+				params->param4 = kTimeInvalid;
+				setup_function30();
+				break;
+			}
+
+			if (!getEntities()->isInSalon(kEntityPlayer) || !params->param4)
+				params->param4 = getState()->time + 150;
+
+			if (params->param4 < (int)getState()->time) {
+				params->param4 = kTimeInvalid;
+				setup_function30();
+				break;
+			}
+		}
+
+		if (params->param1) {
+			UPDATE_PARAM(params->param5, getState()->timeTicks, 90);
+			getScenes()->loadSceneFromPosition(kCarRestaurant, 55);
+		} else {
+			params->param5 = 0;
+		}
+		break;
+
+	case kAction2:
+		params->param2 = 1;
+		break;
+
+	case kActionDefault:
+		getSavePoints()->push(kEntityAnna, kEntityAugust, kAction122358304);
+		getEntities()->drawSequenceLeft(kEntityAnna, "106B");
+		break;
+
+	case kActionDrawScene:
+		params->param1 = getEntities()->isPlayerPosition(kCarRestaurant, 56);
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Anna, function31, 31)
@@ -1908,19 +1966,151 @@ IMPLEMENT_FUNCTION(Anna, function77, 77)
 }
 
 IMPLEMENT_FUNCTION(Anna, function78, 78)
-	error("Anna: callback function 78 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionDrawScene:
+		if ((getEntities()->isInRestaurant(kEntityPlayer) || getEntities()->isInSalon(kEntityPlayer)) && getInventory()->hasItem(kItemFirebird)) {
+			setup_function80();
+			break;
+		}
+
+		getState()->time = kTimeInvalid2;
+
+		setCallback(getInventory()->get(kItemFirebird)->location == kLocation4 ? 2 : 1);
+		call(new ENTITY_SETUP(Anna, setup_savegame), kSavegameType2, getInventory()->get(kItemFirebird)->location == kLocation4 ? kEventKronosHostageAnna : kEventKronosHostageAnnaNoFirebird);
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			getAction()->playAnimation(kEventKronosHostageAnnaNoFirebird);
+			getLogic()->gameOver(kTimeTypeEvent2, kEventAugustUnhookCarsBetrayal, kSceneNone, true);
+			break;
+
+		case 2:
+			getAction()->playAnimation(kEventKronosHostageAnna);
+			getScenes()->loadSceneFromPosition(kCarRestaurant, 61);
+			getSound()->playSound(kEntityAnna, "Mus024", SoundManager::kFlagDefault);
+			setup_function79();
+			break;
+		}
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Anna, function79, 79)
-	error("Anna: callback function 79 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kAction2:
+		getState()->time = kTime5933;
+		setCallback(1);
+		call(new ENTITY_SETUP(Anna, setup_savegame), kSavegameType2, kEventKahinaPunch);
+		break;
+
+	case kActionDrawScene:
+		if (getEntities()->isInRestaurant(kEntityPlayer) && getInventory()->hasItem(kItemFirebird)) {
+			setup_function80();
+			break;
+		}
+
+		if (getEntities()->isInSalon(kEntityPlayer) && !getEvent(kEventKahinaPunch)) {
+			getState()->time = kTime5933;
+			setCallback(2);
+			call(new ENTITY_SETUP(Anna, setup_savegame), kSavegameType2, kEventKahinaPunch);
+		}
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			if (getEntities()->isInSalon(kEntityPlayer))
+				getAction()->playAnimation(kEventKahinaPunchSalon);
+			else if (getEntities()->isInRestaurant(kEntityPlayer))
+				getAction()->playAnimation(kEventKahinaPunchRestaurant);
+			else if (getEntities()->isInKitchen(kEntityPlayer))
+				getAction()->playAnimation(kEventKahinaPunchKitchen);
+			else if (getEntities()->isInBaggageCarEntrance(kEntityPlayer))
+				getAction()->playAnimation(kEventKahinaPunchBaggageCarEntrance);
+			else if (getEntities()->isSittingOrStanding(kEntityPlayer, kCarBaggage))
+				getAction()->playAnimation(kEventKahinaPunchBaggageCar);
+			break;
+
+		case 2:
+			getAction()->playAnimation(kEventKahinaPunchSalon);			
+			break;
+		}
+
+		getLogic()->gameOver(kInitTypeIndex, 1, kSceneNone, true);
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Anna, function80, 80)
 	error("Anna: callback function 80 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Anna, function81, 81)
-	error("Anna: callback function 81 not implemented!");
+IMPLEMENT_FUNCTION(Anna, finalSequence, 81)
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionNone:
+		UPDATE_PARAM(params->param1, getState()->timeTicks, 180);
+
+		getSound()->playSound(kEntityTrain, "LIB069");
+		getLogic()->gameOver(kInitTypeIndex, 2, kSceneNone, true);
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			getAction()->playAnimation(kEventCathCloseEggNoBackground);
+			getAction()->playAnimation(kEventKronosGiveFirebird);
+
+			if (getInventory()->hasItem(kItemWhistle))
+				getLogic()->gameOver(kInitTypeIndex, 1, kSceneGameOverTrainExplosion, true);
+			else if (getInventory()->get(kItemWhistle)->location == kLocation1)
+				getLogic()->gameOver(kTimeTypeEvent2, kEventAnnaDialogGoToJerusalem, kSceneNone, true);
+			else
+				getLogic()->gameOver(kTimeTypeEvent2, kEventAugustUnhookCarsBetrayal, kSceneGameOverTrainExplosion2, true);
+			break;
+
+		case 2:
+			getInventory()->removeItem(kItemWhistle);
+			getLogic()->playFinalSequence();
+			break;
+		}
+		break;
+
+	case kAction224309120:
+		getProgress().isEggOpen = false;
+		getState()->time = kTimeCityConstantinople;
+
+		setCallback(1);
+		call(new ENTITY_SETUP(Anna, setup_savegame), kSavegameType2, kEventKronosGiveFirebird);
+
+	case kActionUseWhistle:
+		getProgress().isEggOpen = false;
+		setGlobalTimer(0);
+		getState()->time = kTimeCityConstantinople;
+
+		setCallback(2);
+		call(new ENTITY_SETUP(Anna, setup_savegame), kSavegameType2, kEventFinalSequence);
+		break;
+	}
 }
 
 } // End of namespace LastExpress

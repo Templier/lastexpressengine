@@ -534,11 +534,11 @@ label_callback_9:
 			getSound()->playSound(kEntityPlayer, "LIB014");
 			getAction()->playAnimation(kEventAugustFindCorpse);
 			if (getEvent(kEventDinerAugustOriginalJacket))
-				getLogic()->gameOver(kTimeType3, kTime4, getProgress().eventCorpseFound ? kSceneGameOverStopPolice : kSceneGameOverPolice, true);
+				getLogic()->gameOver(kTimeTypeEvent2, kEventDinerAugustOriginalJacket, getProgress().eventCorpseFound ? kSceneGameOverStopPolice : kSceneGameOverPolice, true);
 			else if (getProgress().eventCorpseMovedFromFloor)
-				getLogic()->gameOver(kTimeType0, kTime1, kSceneGameOverBloodJacket, true);
+				getLogic()->gameOver(kInitTypeIndex, 1, kSceneGameOverBloodJacket, true);
 			else
-				getLogic()->gameOver(kTimeType0, kTime1, getProgress().eventCorpseFound ? kSceneGameOverStopPolice : kSceneGameOverPolice, true);
+				getLogic()->gameOver(kInitTypeIndex, 1, getProgress().eventCorpseFound ? kSceneGameOverStopPolice : kSceneGameOverPolice, true);
 			break;
 
 		case 4:
@@ -588,8 +588,8 @@ label_callback_9:
 		case 11:
 			getAction()->playAnimation(kEventAugustFindCorpse);
 
-			getLogic()->gameOver(getEvent(kEventDinerAugustOriginalJacket) ? kTimeType3 : kTimeType0,
-								 getEvent(kEventDinerAugustOriginalJacket) ? kTime4 : kTime1,
+			getLogic()->gameOver(getEvent(kEventDinerAugustOriginalJacket) ? kTimeTypeEvent2 : kInitTypeIndex,
+								 getEvent(kEventDinerAugustOriginalJacket) ? kEventDinerAugustOriginalJacket : 1,
 								 getProgress().eventCorpseFound ? kSceneGameOverStopPolice : kSceneGameOverPolice,
 								 true);
 			break;
@@ -604,11 +604,11 @@ label_callback_9:
 			getAction()->playAnimation(kEventAugustFindCorpse);
 
 			if (getEvent(kEventDinerAugustOriginalJacket))
-				getLogic()->gameOver(kTimeType3, kTime4, getProgress().eventCorpseFound ? kSceneGameOverStopPolice : kSceneGameOverPolice, true);
+				getLogic()->gameOver(kTimeTypeEvent2, kEventDinerAugustOriginalJacket, getProgress().eventCorpseFound ? kSceneGameOverStopPolice : kSceneGameOverPolice, true);
 			else if (getProgress().eventCorpseMovedFromFloor)
-				getLogic()->gameOver(kTimeType0, kTime1, kSceneGameOverBloodJacket, true);
+				getLogic()->gameOver(kInitTypeIndex, 1, kSceneGameOverBloodJacket, true);
 			else
-				getLogic()->gameOver(kTimeType0, kTime1, getProgress().eventCorpseFound ? kSceneGameOverStopPolice : kSceneGameOverPolice, true);
+				getLogic()->gameOver(kInitTypeIndex, 1, getProgress().eventCorpseFound ? kSceneGameOverStopPolice : kSceneGameOverPolice, true);
 			break;
 
 		case 14:
@@ -783,7 +783,7 @@ IMPLEMENT_FUNCTION(August, chapter1Handler, 25)
 			break;
 
 		case 8:
-			getLogic()->gameOver(kTimeType0, kTime0, kSceneNone, true);
+			getLogic()->gameOver(kInitTypeIndex, 0, kSceneNone, true);
 			break;
 		}
 		break;

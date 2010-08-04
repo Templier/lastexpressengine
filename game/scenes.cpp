@@ -1159,15 +1159,15 @@ void SceneManager::postProcessScene() {
 
 		switch (getProgress().chapter) {
 		default:
-			getLogic()->gameOver(kTimeType0, kTime0, kSceneGameOverPolice2, true);
+			getLogic()->gameOver(kInitTypeIndex, 0, kSceneGameOverPolice2, true);
 			break;
 
 		case kChapter1:
-			getLogic()->gameOver(kTimeType0, kTime0, kSceneGameOverAlarm, true);
+			getLogic()->gameOver(kInitTypeIndex, 0, kSceneGameOverAlarm, true);
 			break;
 
 		case kChapter4:
-			getLogic()->gameOver(kTimeType0, kTime0, kSceneGameOverAlarm2, true);
+			getLogic()->gameOver(kInitTypeIndex, 0, kSceneGameOverAlarm2, true);
 			break;
 		}
 		break;

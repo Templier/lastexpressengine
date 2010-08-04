@@ -1203,7 +1203,7 @@ IMPLEMENT_FUNCTION(Abbot, drinkAfterDefuse, 47)
 
 		case 3:
 			getAction()->playAnimation(kEventAbbotDrinkGiveDetonator);
-			getLogic()->gameOver(kTimeType0, kTime1, kSceneNone, true);
+			getLogic()->gameOver(kInitTypeIndex, 1, kSceneNone, true);
 			break;
 		}
 		break;
