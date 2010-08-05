@@ -102,7 +102,7 @@ void SaveLoad::saveGame(SavegameType type, EntityIndex entity, EventIndex event)
 
 // Check if a specific savegame exists
 bool SaveLoad::isSavegamePresent(GameId id) {
-	if (!Common::File::exists(getSavegameName(id)))
+	if (g_system->getSavefileManager()->listSavefiles(getSavegameName(id)).size() == 0)
 		return false;
 
 	return true;
