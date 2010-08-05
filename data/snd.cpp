@@ -59,7 +59,7 @@ void SimpleSound::loadHeader(Common::SeekableReadStream *in) {
 }
 
 Audio::AudioStream *SimpleSound::makeDecoder(Common::SeekableReadStream *in, uint32 size) const {
-	return Audio::makeADPCMStream(in, DisposeAfterUse::YES, size, Audio::kADPCMMSIma, 44100, 1, _blockSize);
+	return Audio::makeADPCMStream(in, DisposeAfterUse::YES, size, Audio::kADPCMMSImaInverted, 44100, 1, _blockSize);
 }
 
 void SimpleSound::play(Audio::AudioStream *as) {
