@@ -40,6 +40,8 @@
 
 namespace LastExpress {
 
+#define LOBYTE(w)           ((unsigned char)(((unsigned long)(w)) & 0xff))
+
 Anna::Anna(LastExpressEngine *engine) : Entity(engine, kEntityAnna) {
 	ADD_CALLBACK_FUNCTION(Anna, reset);
 	ADD_CALLBACK_FUNCTION(Anna, draw);
@@ -2046,7 +2048,7 @@ IMPLEMENT_FUNCTION(Anna, function79, 79)
 			break;
 
 		case 2:
-			getAction()->playAnimation(kEventKahinaPunchSalon);			
+			getAction()->playAnimation(kEventKahinaPunchSalon);
 			break;
 		}
 

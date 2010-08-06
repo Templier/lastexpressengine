@@ -564,8 +564,7 @@ IMPLEMENT_ACTION(playSounds) {
 //////////////////////////////////////////////////////////////////////////
 // Action 8
 IMPLEMENT_ACTION(playAnimation) {
-	// FIXME: g++ says that this is always false
-	if (hotspot.param1 >= _animationListSize || getEvent(hotspot.param1))
+	if (getEvent(hotspot.param1))
 		return kSceneInvalid;
 
 	playAnimation((EventIndex)hotspot.param1);

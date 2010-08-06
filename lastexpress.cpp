@@ -78,7 +78,6 @@ LastExpressEngine::~LastExpressEngine() {
 
 	// Delete the remaining objects
 	delete _cursor;
-	delete _debugger;
 	delete _font;
 	delete _logic;
 	delete _menu;
@@ -86,6 +85,7 @@ LastExpressEngine::~LastExpressEngine() {
 	delete _resMan;
 	delete _sceneMan;
 	delete _soundMan;
+	delete _debugger;
 
 	// Cleanup event handlers
 	SAFE_DELETE(eventMouse);

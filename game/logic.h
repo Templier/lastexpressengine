@@ -74,7 +74,7 @@ private:
 	SaveLoad *_saveload;        ///< Save & loading
 	State    *_state;           ///< Game state
 
-	void switchChapter();	
+	void switchChapter();
 	void showCredits();
 
 	// Flags & Members
