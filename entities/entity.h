@@ -45,6 +45,7 @@ class EntityData : Common::Serializable {
 public:
 
 	struct EntityParameters {
+		virtual ~EntityParameters() {}
 		virtual Common::String toString() = 0;
 	};
 

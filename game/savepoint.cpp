@@ -160,7 +160,7 @@ void SavePoints::call(EntityIndex entity2, EntityIndex entity1, ActionIndex acti
 	}
 }
 
-void SavePoints::call(EntityIndex entity2, EntityIndex entity1, ActionIndex action, char* param) const {
+void SavePoints::call(EntityIndex entity2, EntityIndex entity1, ActionIndex action, const char *param) const {
 	SavePoint point;
 	point.entity1 = entity1;
 	point.action = action;

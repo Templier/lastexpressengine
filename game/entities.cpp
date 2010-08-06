@@ -1006,10 +1006,10 @@ int Entities::getCurrentFrame(EntityIndex entity, Sequence *sequence, EntityPosi
 		}
 
 		if (numFrames - frame == 1) {
-			uint32 lastFramePosition = ABS(position - sequence->getFrameInfo(numFrames)->entityPosition + data->entityPosition);
+			uint32 lastFramePos = ABS(position - sequence->getFrameInfo(numFrames)->entityPosition + data->entityPosition);
 			uint32 framePosition = ABS(position - sequence->getFrameInfo(frame)->entityPosition + data->entityPosition);
 
-			return (framePosition > lastFramePosition) ? numFrames : frame;
+			return (framePosition > lastFramePos) ? numFrames : frame;
 		}
 
 		if (numFrames <= frame)

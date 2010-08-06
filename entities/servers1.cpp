@@ -525,13 +525,13 @@ IMPLEMENT_FUNCTION(Servers1, chapter5Handler, 31)
 
 IMPLEMENT_NULL_FUNCTION(Servers1, 32)
 
-void Servers1::serveTable(const SavePoint &savepoint, const char* seq1, EntityIndex entity, const char* seq2, const char* seq3, const char* seq4, int *parameter, bool updatePosition, int* parameter2) {
+void Servers1::serveTable(const SavePoint &savepoint, const char* seq1, EntityIndex entity, const char* seq2, const char* seq3, const char* seq4, int *parameter, bool shouldUpdatePosition, int* parameter2) {
 	switch (savepoint.action) {
 	default:
 		break;
 
 	case kActionDefault:
-		if (updatePosition) {
+		if (shouldUpdatePosition) {
 			getData()->entityPosition = kPosition_5800;
 			getData()->posture = kPostureStanding;
 		}

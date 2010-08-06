@@ -564,6 +564,7 @@ IMPLEMENT_ACTION(playSounds) {
 //////////////////////////////////////////////////////////////////////////
 // Action 8
 IMPLEMENT_ACTION(playAnimation) {
+	// FIXME: g++ says that this is always false
 	if (hotspot.param1 >= _animationListSize || getEvent(hotspot.param1))
 		return kSceneInvalid;
 
@@ -1447,7 +1448,7 @@ IMPLEMENT_ACTION(playMusicChapterSetupTrain) {
 	if (!getSound()->isBuffered(filename) && hotspot.param3 & id) {
 		getSound()->playSound(kEntityPlayer, filename, SoundManager::kFlagDefault);
 
-		getSavePoints()->call(kEntityPlayer, kEntityTrain, kAction203863200, (char *)filename.c_str());
+		getSavePoints()->call(kEntityPlayer, kEntityTrain, kAction203863200, filename.c_str());
 		getSavePoints()->push(kEntityPlayer, kEntityTrain, kAction222746496, hotspot.param2);
 	}
 

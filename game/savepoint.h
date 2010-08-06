@@ -118,7 +118,7 @@ public:
 	void setCallback(EntityIndex index, Entity::Callback* callback);
 	Callback *getCallback(EntityIndex entity) const;
 	void call(EntityIndex entity2, EntityIndex entity1, ActionIndex action, uint32 param = 0) const;
-	void call(EntityIndex entity2, EntityIndex entity1, ActionIndex action, char* param) const;
+	void call(EntityIndex entity2, EntityIndex entity1, ActionIndex action, const char *param) const;
 	void callAndProcess();
 
 	// Serializable

@@ -130,7 +130,7 @@ public:
 		kFlagMusic       = 0x5000010,
 		kFlagType3       = 0x6000000,
 		kFlagLoop        = 0x6001008,
-		kFlagType9       = 0x7000000,
+		kFlagType9       = 0x7000000
 	};
 
 	SoundManager(LastExpressEngine *engine);

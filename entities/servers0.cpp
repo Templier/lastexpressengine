@@ -544,13 +544,13 @@ void Servers0::handleServer(const SavePoint &savepoint, const char* name, Entity
 	}
 }
 
-void Servers0::serveTable(const SavePoint &savepoint, const char* seq1, EntityIndex entity, const char* seq2, const char* seq3, const char* seq4, int *parameter, bool updatePosition, bool pushSavepoint) {
+void Servers0::serveTable(const SavePoint &savepoint, const char* seq1, EntityIndex entity, const char* seq2, const char* seq3, const char* seq4, int *parameter, bool shouldUpdatePosition, bool pushSavepoint) {
 	switch (savepoint.action) {
 	default:
 		break;
 
 	case kActionDefault:
-		if (updatePosition) {
+		if (shouldUpdatePosition) {
 			getData()->entityPosition = kPosition_5800;
 			getData()->posture = kPostureStanding;
 		}

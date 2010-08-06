@@ -98,7 +98,7 @@ IMPLEMENT_FUNCTION_I(Gendarmes, function6, 6)
 		break;
 
 	case kActionNone:
-		TIME_CHECK_CALLBACK_ACTION(Gendarmes, (uint32)params->param1, params->param2);
+		TIME_CHECK_CALLBACK_ACTION(Gendarmes, params->param1, params->param2);
 		// Fallback to action 17
 
 	case kActionDrawScene:
