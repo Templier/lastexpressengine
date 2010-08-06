@@ -692,7 +692,7 @@ void SceneManager::addToQueue(SequenceFrame *frame) {
 
 	// Insert the frame in the queue based on location
 	for (Common::List<SequenceFrame *>::iterator i = _queue.begin(); i != _queue.end(); ++i) {
-		if (frame->getInfo()->location > _queue.front()->getInfo()->location) {
+		if (frame->getInfo()->location > (*i)->getInfo()->location) {
 			_queue.insert(i, frame);
 			return;
 		}

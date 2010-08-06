@@ -51,7 +51,8 @@ namespace LastExpress {
 
 LastExpressEngine::LastExpressEngine(OSystem *syst, const ADGameDescription *gd) :
     Engine(syst), _gameDescription(gd), _debugger(NULL), _cursor(NULL),
-    _font(NULL), _logic(NULL), _menu(NULL), _frameCounter(0), _graphicsMan(NULL), _resMan(NULL), _sceneMan(NULL), _soundMan(NULL),
+    _font(NULL), _logic(NULL), _menu(NULL), _frameCounter(0), _lastFrameCount(0),
+	_graphicsMan(NULL), _resMan(NULL), _sceneMan(NULL), _soundMan(NULL),
 	eventMouse(NULL), eventTick(NULL), eventMouseBackup(NULL), eventTickBackup(NULL) {
 
 	// Adding the default directories
@@ -141,9 +142,6 @@ Common::Error LastExpressEngine::run() {
 	// Menu
 	_menu = new Menu(this);
 
-	// Set game running
-	getGameLogic()->getGameState()->getGameFlags()->isGameRunning = true;
-
 	_menu->show(false, kInitTypeIndex, 0);
 
 	while (!shouldQuit()) {
@@ -212,7 +210,23 @@ bool LastExpressEngine::handleEvents() {
 			// Closing the GMM
 
 		case Common::EVENT_LBUTTONUP:
+			getGameLogic()->getGameState()->getGameFlags()->mouseLeftClick = true;
+
+			// Adjust frameInterval flag
+			if (_frameCounter < _lastFrameCount + 30)
+				getGameLogic()->getGameState()->getGameFlags()->frameInterval = true;
+			_lastFrameCount = _frameCounter;
+
+			if (eventMouse && eventMouse->isValid())
+				(*eventMouse)(ev);
+			break;
+
 		case Common::EVENT_RBUTTONUP:
+			getGameLogic()->getGameState()->getGameFlags()->mouseRightClick = true;
+			if (eventMouse && eventMouse->isValid())
+				(*eventMouse)(ev);
+			break;
+
 		case Common::EVENT_MOUSEMOVE:
 			if (eventMouse && eventMouse->isValid())
 				(*eventMouse)(ev);

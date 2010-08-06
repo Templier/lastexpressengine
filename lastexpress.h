@@ -134,6 +134,7 @@ private:
 
 	// Frame counter
 	uint32 _frameCounter;
+	uint32 _lastFrameCount;
 
 	// Managers
 	GraphicsManager *_graphicsMan;

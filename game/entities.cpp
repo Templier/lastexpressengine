@@ -376,21 +376,17 @@ void Entities::updateFields() const {
 			break;
 
 		case kDirectionUp:
-			if (data->entityPosition + positionDelta < 10000)
+			if (data->entityPosition >= 10000 - positionDelta)
 				data->entityPosition = (EntityPosition)(data->entityPosition + positionDelta);
 			break;
 
 		case kDirectionDown:
-			if (data->entityPosition + positionDelta >= 10000) {
-					if (data->entityPosition > positionDelta)
-						data->entityPosition = (EntityPosition)(data->entityPosition - positionDelta);
-			} else {
-				data->entityPosition = (EntityPosition)(data->entityPosition + positionDelta);
-			}
+			if (data->entityPosition > positionDelta)
+				data->entityPosition = (EntityPosition)(data->entityPosition - positionDelta);
 			break;
 
 		case kDirectionLeft:
-			data->currentFrame += 1;
+			data->currentFrame++;
 			break;
 
 		case kDirectionRight:
@@ -1980,11 +1976,11 @@ bool Entities::updateEntity(EntityIndex entity, CarIndex car, EntityPosition pos
 			goto label_process_entity;
 	}
 
-	if (getEntities()->hasValidFrame(entity) && getEntities()->checkFields25(entity)) {
-		if (!getEntities()->checkPosition(position)) {
-			flag3 = false;
-			position = (EntityPosition)(getData(kEntityPlayer)->entityPosition + 250 * (data->direction == kDirectionUp ? 1 : -1));
-		}
+	if (getEntities()->hasValidFrame(entity)
+	 && getEntities()->checkFields25(entity)
+	 && !getEntities()->checkPosition(position)) {
+		flag3 = false;
+		position = (EntityPosition)(getData(kEntityPlayer)->entityPosition + 250 * (data->direction == kDirectionUp ? 1 : -1));
 	}
 
 	if (!flag3) {
@@ -2007,13 +2003,13 @@ label_process_entity:
 						if (data->direction != kDirectionUp || (position <= kPosition_2000 && data->car == car)) {
 							if (data->direction == kDirectionDown && (position < kPosition_1500 || data->car != car)) {
 								if (data->entityPosition > kPosition_1500 && (data->car == kCarGreenSleeping || data->car == kCarRedSleeping)) {
-									data->entity = data->car == kCarGreenSleeping ? kEntityMertens : kEntityCoudert;
+									data->entity = (data->car == kCarGreenSleeping) ? kEntityMertens : kEntityCoudert;
 									getSavePoints()->push(entity, data->entity, kAction11);
 								}
 							}
 						} else {
 							if (data->entityPosition < kPosition_1500 && (data->car == kCarGreenSleeping || data->car == kCarRedSleeping)) {
-								data->entity = data->car == kCarGreenSleeping ? kEntityMertens : kEntityCoudert;
+								data->entity = (data->car == kCarGreenSleeping) ? kEntityMertens : kEntityCoudert;
 								getSavePoints()->push(entity, data->entity, kAction11, 1);
 							}
 						}
@@ -2173,9 +2169,8 @@ label_process_entity:
 				}
 			} else if (!flag1) {
 				drawSequencesInternal(entity, direction, true);
+				return false;
 			}
-
-			return false;
 		}
 
 		//////////////////////////////////////////////////////////////////////////

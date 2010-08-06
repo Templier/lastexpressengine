@@ -359,6 +359,8 @@ public:
 		bool flag_4;
 		bool flag_5;
 
+		bool frameInterval;
+
 		bool isGameRunning;
 
 		// Mouse flags
@@ -376,6 +378,8 @@ public:
 			flag_3 = false;
 			flag_4 = false;
 			flag_5 = false;
+
+			frameInterval = false;
 
 			isGameRunning = false;
 

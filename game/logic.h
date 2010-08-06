@@ -79,6 +79,7 @@ private:
 
 	// Flags & Members
 	bool _flagActionPerformed;
+	bool _ignoreFrameInterval;
 	int _ticksSinceLastSavegame;
 };
 

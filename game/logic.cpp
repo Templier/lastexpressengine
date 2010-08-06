@@ -67,6 +67,7 @@ Logic::Logic(LastExpressEngine *engine) : _engine(engine) {
 
 	// Flags
 	_flagActionPerformed = false;
+	_ignoreFrameInterval = false;
 	_ticksSinceLastSavegame = EVENT_TICKS_BEETWEEN_SAVEGAMES;
 }
 
@@ -102,19 +103,30 @@ void Logic::eventMouse(const Common::Event &ev) {
 	getFlags()->mouseLeftClick = false;
 	getFlags()->mouseRightClick = false;
 
-	// TODO process event flags
-	//warning("Logic::eventMouse: event flag processing not implemented!");
-	if (getFlags()->flag_0) {
-		//warning("Logic::eventMouse: event flag processing not implemented!");
+	// Process event flags
+	if (ev.type == Common::EVENT_LBUTTONUP) {
 
+		if (getFlags()->frameInterval)
+			_ignoreFrameInterval = false;
+
+		getFlags()->frameInterval = false;
+	}
+
+	if (getFlags()->flag_0) {
+		if (ev.type == Common::EVENT_LBUTTONUP || ev.type == Common::EVENT_RBUTTONUP) {
+			getFlags()->flag_0 = false;
+			getFlags()->shouldRedraw = true;
+			updateCursor(true);
+			getFlags()->frameInterval = true;
+		}
 		return;
 	}
 
-	//if (getScenes()->checkCurrentPosition(true) && _engine->getCursor()->getStyle() == kCursorForward) {
-	//	getFlags()->shouldRedraw = false;
-	//	getFlags()->flag_0 = true;
-	//	return;
-	//}
+	if (_ignoreFrameInterval && getScenes()->checkCurrentPosition(true) && _engine->getCursor()->getStyle() == kCursorForward) {
+		getFlags()->shouldRedraw = false;
+		getFlags()->flag_0 = true;
+		return;
+	}
 
 	// Update coordinates
 	getGameState()->setCoordinates(ev.mouse);
@@ -192,13 +204,13 @@ void Logic::eventMouse(const Common::Event &ev) {
 	 && !getInventory()->isMagnifierInUse()) {
 
 		InventoryItem item = getEntityData(entityIndex)->inventoryItem;
-		if (getInventory()->hasItem((InventoryItem)(item & 127))) {
+		if (getInventory()->hasItem((InventoryItem)(item & kItemToggleHigh))) {
 			hotspotHandled = true;
 
-			_engine->getCursor()->setStyle(getInventory()->get((InventoryItem)(item & 127))->cursor);
+			_engine->getCursor()->setStyle(getInventory()->get((InventoryItem)(item & kItemToggleHigh))->cursor);
 
 			if (ev.type == Common::EVENT_LBUTTONUP)
-				getSavePoints()->push(kEntityPlayer, entityIndex, kAction1, (InventoryItem)(item & 127));
+				getSavePoints()->push(kEntityPlayer, entityIndex, kAction1, (InventoryItem)(item & kItemToggleHigh));
 		} else if ((InventoryItem)(item & kItemInvalid)) {
 			hotspotHandled = true;
 
@@ -211,7 +223,7 @@ void Logic::eventMouse(const Common::Event &ev) {
 
 	//////////////////////////////////////////////////////////////////////////
 	// Handle standard actions
-	if (hotspotHandled)
+	if (hotspotHandled || getInventory()->isFlag1() || getInventory()->isFlag2() || getInventory()->isEggHighlighted())
 		return;
 
 	// Magnifier in use
@@ -377,8 +389,8 @@ void Logic::eventTick(const Common::Event &) {
 	}
 
 	// Show item cursor on entity
-	if (getInventory()->hasItem((InventoryItem)(getEntityData(entity)->inventoryItem & 127)) && (int)getEntityData(entity)->inventoryItem != (int)kCursorTalk2) {
-		_engine->getCursor()->setStyle(getInventory()->get((InventoryItem)(getEntityData(entity)->inventoryItem & 127))->cursor);
+	if (getInventory()->hasItem((InventoryItem)(getEntityData(entity)->inventoryItem & kItemToggleHigh)) && (int)getEntityData(entity)->inventoryItem != (int)kCursorTalk2) {
+		_engine->getCursor()->setStyle(getInventory()->get((InventoryItem)(getEntityData(entity)->inventoryItem & kItemToggleHigh))->cursor);
 		return;
 	}
 
@@ -509,9 +521,9 @@ void Logic::updateCursor(bool) const { /* the cursor is always updated, even whe
 			 && !getInventory()->isFlag2()
 			 && !getInventory()->isEggHighlighted()
 			 && !getInventory()->isMagnifierInUse()) {
-				 if (getInventory()->hasItem((InventoryItem)(getEntityData(entity)->inventoryItem & 127))) {
+				 if (getInventory()->hasItem((InventoryItem)(getEntityData(entity)->inventoryItem & kItemToggleHigh))) {
 					 interact = true;
-					 style = getInventory()->get((InventoryItem)(getEntityData(entity)->inventoryItem & 127))->cursor;
+					 style = getInventory()->get((InventoryItem)(getEntityData(entity)->inventoryItem & kItemToggleHigh))->cursor;
 				 } else if ((int)getEntityData(entity)->inventoryItem == kItemInvalid) {
 					 interact = true;
 					 style = kCursorTalk2;
