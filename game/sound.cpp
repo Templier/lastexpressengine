@@ -440,13 +440,13 @@ void SoundManager::playSound(EntityIndex entity, Common::String filename, FlagTy
 	if (isBuffered(entity) && entity)
 		removeFromQueue(entity);
 
-	FlagType _flag = (flag == -1) ? getSoundFlag(entity) : (FlagType)(flag | 0x80000);
+	FlagType currentFlag = (flag == -1) ? getSoundFlag(entity) : (FlagType)(flag | 0x80000);
 
 	// Add .SND at the end of the filename if needed
 	if (!filename.contains('.'))
 		filename += ".SND";
 
-	if (!playSoundWithSubtitles(filename, _flag, entity, a4))
+	if (!playSoundWithSubtitles(filename, currentFlag, entity, a4))
 		if (entity)
 			getSavePoints()->push(kEntityPlayer, entity, kAction2);
 }

@@ -1392,7 +1392,7 @@ void Entities::drawSequencesInternal(EntityIndex entityIndex, EntityDirection di
 		}
 
 		data->field_4AA = data->field_4A9;
-		if (direction != kDirectionUp && direction != kDirectionDown || data->field_4AA || !data->sequence2) {
+		if ((direction != kDirectionUp && direction != kDirectionDown) || data->field_4AA || !data->sequence2) {
 			data->currentFrame2 = 0;
 		} else {
 			data->currentFrame2 = getCurrentFrame(entityIndex, data->sequence2, kPositionNone, false);
@@ -1420,7 +1420,7 @@ void Entities::drawSequencesInternal(EntityIndex entityIndex, EntityDirection di
 		data->direction = kDirectionSwitch;
 		data->directionSwitch = direction;
 
-		if (direction != kDirectionUp && direction != kDirectionDown || data->field_4AA || !data->sequence2) {
+		if ((direction != kDirectionUp && direction != kDirectionDown) || data->field_4AA || !data->sequence2) {
 			data->currentFrame2 = 0;
 		} else {
 			data->currentFrame2 = getCurrentFrame(entityIndex, data->sequence2, kPositionNone, false);
