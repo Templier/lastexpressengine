@@ -34,6 +34,10 @@
 
 namespace LastExpress {
 
+Common::String Objects::Object::toString() {
+	return Common::String::printf("{ %s - %d - %d - %d - %d }", ENTITY_NAME(entity), location, cursor, cursor2, location2);
+}
+
 Objects::Objects(LastExpressEngine *engine) : _engine(engine) {}
 
 const Objects::Object Objects::get(ObjectIndex index) const {
