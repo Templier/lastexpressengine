@@ -171,7 +171,7 @@ void Logic::eventMouse(const Common::Event &ev) {
 
 	// Handle match case
 	if (getInventory()->getSelectedItem() == kItemMatch
-	 && (getEntities()->checkFields7(kCarGreenSleeping) || getEntities()->checkFields7(kCarRedSleeping))
+	 && (getEntities()->isPlayerInCar(kCarGreenSleeping) || getEntities()->isPlayerInCar(kCarRedSleeping))
 	 && getProgress().jacket == kJacketGreen
 	 && !getInventory()->isFlag1()
 	 && !getInventory()->isFlag2()
@@ -505,7 +505,7 @@ void Logic::updateCursor(bool) const { /* the cursor is always updated, even whe
 	 || getInventory()->isMagnifierInUse()) {
 
 		if (getInventory()->getSelectedItem() != kItemMatch
-		 || (!getEntities()->checkFields7(kCarGreenSleeping) && !getEntities()->checkFields7(kCarRedSleeping))
+		 || (!getEntities()->isPlayerInCar(kCarGreenSleeping) && !getEntities()->isPlayerInCar(kCarRedSleeping))
 		 || getProgress().jacket != kJacketGreen
 		 || getInventory()->isFlag1()
 		 || getInventory()->isFlag2()

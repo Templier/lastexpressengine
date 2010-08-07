@@ -224,7 +224,7 @@ IMPLEMENT_FUNCTION(Vassili, function7, 7)
 		if (params->param1 != kTimeInvalid && getState()->time > kTime1503000) {
 
 			 if (getState()->time <= kTime1512000) {
-				 if (getEntities()->checkFields7(kCarRedSleeping) || !params->param1) {
+				 if (getEntities()->isPlayerInCar(kCarRedSleeping) || !params->param1) {
 					 params->param1 = getState()->time + 150;
 					 if (params->param1) {
 						 setup_function8();

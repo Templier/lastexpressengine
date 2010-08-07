@@ -1384,7 +1384,7 @@ SoundManager::FlagType SoundManager::getSoundFlag(EntityIndex entity) const {
 
 	case kCarGreenSleeping:
 	case kCarRedSleeping:
-		if (getEntities()->checkFields6(kEntityPlayer) && !getEntities()->isInKronosSalon(entity))
+		if (getEntities()->isInGreenCarEntrance(kEntityPlayer) && !getEntities()->isInKronosSalon(entity))
 			ret = (FlagType)(ret * 2);
 
 		if (getEntityData(kEntityPlayer)->posture

@@ -155,6 +155,8 @@ public:
 
 	bool isInside(const Common::Point &point);
 
+	Common::String toString();
+
 private:
 	Common::Array<SceneCoord *> _coords;
 };
@@ -217,6 +219,8 @@ public:
 	Common::Array<SceneHotspot *> *getHotspots() { return &_hotspots; }
 	bool checkHotSpot(const Common::Point &coord, SceneHotspot **hotspot);
 	SceneHotspot *getHotspot(uint index = 0);
+
+	Common::String toString();
 
 private:
 	char _name[8];

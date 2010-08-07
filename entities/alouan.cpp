@@ -219,7 +219,7 @@ IMPLEMENT_FUNCTION(Alouan, chapter2Handler, 14)
 			break;
 
 		if (getState()->time <= kTime1777500) {
-			if (!getEntities()->checkFields7(kCarGreenSleeping) || !params->param2)
+			if (!getEntities()->isPlayerInCar(kCarGreenSleeping) || !params->param2)
 				params->param2 = getState()->time + 75;
 
 			if (params->param2 >= (int)getState()->time)

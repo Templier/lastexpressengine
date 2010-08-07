@@ -247,7 +247,7 @@ IMPLEMENT_FUNCTION(Kahina, function13, 13)
 			break;
 
 		if (getState()->time <= kTime1197000) {
-			if (!getEntities()->checkFields7(kCarGreenSleeping) || !params->param2) {
+			if (!getEntities()->isPlayerInCar(kCarGreenSleeping) || !params->param2) {
 				params->param2 = getState()->time;
 
 				if (!getState()->time)
@@ -577,11 +577,11 @@ IMPLEMENT_FUNCTION(Kahina, function27, 27)
 		break;
 
 	case kActionNone:
-		if (getEntities()->checkFields6(kEntityPlayer))
+		if (getEntities()->isInGreenCarEntrance(kEntityPlayer))
 			params->param1 = kEventKahinaPunchCar;
-		else if (getEntities()->checkFields7(kCarGreenSleeping))
+		else if (getEntities()->isPlayerInCar(kCarGreenSleeping))
 			params->param1 = kEventKahinaPunchBlue;
-		else if (getEntities()->checkFields7(kCarRedSleeping))
+		else if (getEntities()->isPlayerInCar(kCarRedSleeping))
 			params->param1 = kEventKahinaPunchYellow;
 		else if (getEntities()->isInSalon(kEntityPlayer))
 			params->param1 = kEventKahinaPunchSalon;

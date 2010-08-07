@@ -1017,7 +1017,7 @@ IMPLEMENT_FUNCTION(Tatiana, function45, 45)
 			break;
 
 		case 2:
-			if (getEntities()->checkFields6(kEntityPlayer)) {
+			if (getEntities()->isInGreenCarEntrance(kEntityPlayer)) {
 				getSound()->excuseMe(kEntityTatiana);
 
 				if (getEntities()->isPlayerPosition(kCarGreenSleeping, 62))

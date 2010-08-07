@@ -260,7 +260,7 @@ IMPLEMENT_FUNCTION_I(Francois, function11, 11)
 			}
 		}
 
-		if (!getEntities()->hasValidFrame(kEntityFrancois) || !getEntities()->checkFields25(kEntityFrancois))
+		if (!getEntities()->hasValidFrame(kEntityFrancois) || !getEntities()->isWalkingOppositeToPlayer(kEntityFrancois))
 			getData()->inventoryItem = kItemNone;
 
 		if (getEntities()->updateEntity(kEntityFrancois, (CarIndex)params->param2, (EntityPosition)params->param3)) {

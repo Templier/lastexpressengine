@@ -313,7 +313,7 @@ IMPLEMENT_FUNCTION_II(August, updateEntity2, 18)
 		if (getEntities()->updateEntity(_entityIndex, (CarIndex)params->param1, (EntityPosition)params->param2)) {
 			CALLBACK_ACTION()
 		} else if (getEntities()->checkFields9(kEntityAugust, kEntityPlayer, 1000)
-		        && !getEntities()->checkFields6(kEntityPlayer)
+		        && !getEntities()->isInGreenCarEntrance(kEntityPlayer)
 				&& !getEntities()->isSittingInCompartmentCars(kEntityPlayer)
 				&& !getEntities()->checkFields10(kEntityPlayer)) {
 

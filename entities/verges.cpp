@@ -826,7 +826,7 @@ label_callback_2:
 			break;
 		}
 
-		if (!getEntities()->checkFields7(kCarRedSleeping) || !params->param2) {
+		if (!getEntities()->isPlayerInCar(kCarRedSleeping) || !params->param2) {
 			params->param2 = getState()->time;
 
 			if (!params->param2) {

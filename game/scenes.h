@@ -41,8 +41,8 @@ class SequenceFrame;
 class SceneManager {
 public:
 	enum CheckPositionType {
-		kCheckPositionType0,
-		kCheckPositionType1,
+		kCheckPositionLookingUp,
+		kCheckPositionLookingDown,
 		kCheckPositionLookingAtDoors,
 		kCheckPositionLookingAtClock
 	};

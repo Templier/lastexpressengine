@@ -97,7 +97,7 @@ public:
 		}
 
 		Common::String toString() {
-			return Common::String::printf(" { %s\t - %d\t - %s\t - %d }", ENTITY_NAME(entity1), action, ENTITY_NAME(entity2), param);
+			return Common::String::printf(" { %s - %d - %s - %d }", ENTITY_NAME(entity1), action, ENTITY_NAME(entity2), param);
 		}
 	};
 

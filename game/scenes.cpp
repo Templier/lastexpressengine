@@ -321,7 +321,7 @@ LastExpress::SceneIndex SceneManager::processIndex(SceneIndex index) {
 
 	case kCarRedSleeping:
 		if (checkPosition(index, kCheckPositionLookingAtDoors)) {
-			Position position = (Position)(scene->position + (checkPosition(kSceneNone, kCheckPositionType0) ? -1 : 1));
+			Position position = (Position)(scene->position + (checkPosition(kSceneNone, kCheckPositionLookingUp) ? -1 : 1));
 
 			if (position == 4)
 				position = 3;
@@ -460,10 +460,10 @@ bool SceneManager::checkPosition(SceneIndex index, CheckPositionType type) const
 	default:
 		error("SceneManager::checkPosition: Invalid position type: %d", type);
 
-	case kCheckPositionType0:
+	case kCheckPositionLookingUp:
 		return isInSleepingCar && (position >= 1 && position <= 19);
 
-	case kCheckPositionType1:
+	case kCheckPositionLookingDown:
 		return isInSleepingCar && (position >= 21 && position <= 40);
 
 	case kCheckPositionLookingAtDoors:
@@ -591,7 +591,7 @@ void SceneManager::updateDoorsAndClock() {
 
 			// Adjust frame data and store in frame list
 			SequenceFrame *frame = new SequenceFrame(sequence, 0, true);
-			frame->getInfo()->location = (checkPosition(kSceneNone, kCheckPositionType0) ? (firstIndex - index) - 1 : (index - firstIndex) - 8);
+			frame->getInfo()->location = (checkPosition(kSceneNone, kCheckPositionLookingUp) ? (firstIndex - index) - 1 : (index - firstIndex) - 8);
 
 			_doors.push_back(frame);
 
@@ -1013,8 +1013,8 @@ void SceneManager::preProcessScene(SceneIndex *index) {
 
 			Scene *currentScene = getScenes()->get(getState()->scene);
 
-			if ((checkPosition(getState()->scene, kCheckPositionType0) && checkPosition(*index, kCheckPositionType0) && currentScene->count < scene->count)
-			 || (checkPosition(getState()->scene, kCheckPositionType1)  && checkPosition(*index, kCheckPositionType1)  && currentScene->count > scene->count)) {
+			if ((checkPosition(getState()->scene, kCheckPositionLookingUp) && checkPosition(*index, kCheckPositionLookingUp) && currentScene->count < scene->count)
+			 || (checkPosition(getState()->scene, kCheckPositionLookingDown)  && checkPosition(*index, kCheckPositionLookingDown)  && currentScene->count > scene->count)) {
 
 				if (State::getPowerOfTwo((uint32)getEntities()->getCompartments(scene->param1)) != 30
 				 && State::getPowerOfTwo((uint32)getEntities()->getCompartments1(scene->param1)) != 30 )

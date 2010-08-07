@@ -493,7 +493,7 @@ IMPLEMENT_FUNCTION(Milos, chapter2Handler, 20)
 		break;
 
 	case kActionDrawScene:
-		if (getEntities()->checkFields7(kCarRedSleeping) && !getEntities()->isPlayerPosition(kCarRedSleeping, 1)) {
+		if (getEntities()->isPlayerInCar(kCarRedSleeping) && !getEntities()->isPlayerPosition(kCarRedSleeping, 1)) {
 			setCallback(1);
 			call(new ENTITY_SETUP(Milos, setup_enterCompartmentDialog), kCarRedSleeping, kPosition_3050);
 		}

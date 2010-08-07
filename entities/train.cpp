@@ -280,7 +280,7 @@ IMPLEMENT_FUNCTION(Train, process, 8)
 
 	case kActionNone:
 		// Play smoke animation
-		if ((getEntities()->checkFields7(kCarGreenSleeping) || getEntities()->checkFields7(kCarRedSleeping))
+		if ((getEntities()->isPlayerInCar(kCarGreenSleeping) || getEntities()->isPlayerInCar(kCarRedSleeping))
 		  && params->param4  && !params->param5) {
 
 		  params->param4 -= 1;

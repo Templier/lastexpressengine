@@ -1134,8 +1134,8 @@ void Entities::drawNextSequence(EntityIndex entityIndex) {
 	if (getData(kEntityPlayer)->car != data->car)
 		return;
 
-	if (!data->field_4A9 || checkFields25(entityIndex)) {
-		if (!data->field_4A9 && checkFields25(entityIndex)) {
+	if (!data->field_4A9 || isWalkingOppositeToPlayer(entityIndex)) {
+		if (!data->field_4A9 && isWalkingOppositeToPlayer(entityIndex)) {
 			data->entityPosition = kPosition_2088;
 
 			if (data->direction != kDirectionUp)
@@ -1162,10 +1162,10 @@ void Entities::updateEntityPosition(EntityIndex entityIndex) {
 	data->field_49B = 0;
 
 	if (isDirectionUpOrDown(entityIndex)
-	 && (getScenes()->checkPosition(kSceneNone, SceneManager::kCheckPositionType0) || getScenes()->checkPosition(kSceneNone, SceneManager::kCheckPositionType1))
+	 && (getScenes()->checkPosition(kSceneNone, SceneManager::kCheckPositionLookingUp) || getScenes()->checkPosition(kSceneNone, SceneManager::kCheckPositionLookingDown))
 	 && data->car == getData(kEntityPlayer)->car) {
 
-		if (checkFields25(entityIndex)) {
+		if (isWalkingOppositeToPlayer(entityIndex)) {
 			data->entityPosition = getData(kEntityPlayer)->entityPosition;
 		} else if (data->field_4A9) {
 			data->entityPosition = (data->direction == kDirectionUp) ? kPosition_8514 : kPosition_2086;
@@ -1932,7 +1932,7 @@ bool Entities::updateEntity(EntityIndex entity, CarIndex car, EntityPosition pos
 	bool flag3 = false;
 
 	if (position == kPosition_2000
-	 && getScenes()->checkPosition(kSceneNone, SceneManager::kCheckPositionType0)
+	 && getScenes()->checkPosition(kSceneNone, SceneManager::kCheckPositionLookingUp)
 	 && !isPlayerPosition(kCarGreenSleeping, 1)
 	 && !isPlayerPosition(kCarRedSleeping, 2))
 		 position = kPosition_1500;
@@ -1966,8 +1966,8 @@ bool Entities::updateEntity(EntityIndex entity, CarIndex car, EntityPosition pos
 		flag3 = true;
 
 	if (!flag3) {
-		if ((getScenes()->checkPosition(kSceneNone, SceneManager::kCheckPositionType0) && data->direction == kDirectionUp)
-		 || (getScenes()->checkPosition(kSceneNone, SceneManager::kCheckPositionType1) && data->direction == kDirectionDown)) {
+		if ((getScenes()->checkPosition(kSceneNone, SceneManager::kCheckPositionLookingUp) && data->direction == kDirectionUp)
+		 || (getScenes()->checkPosition(kSceneNone, SceneManager::kCheckPositionLookingDown) && data->direction == kDirectionDown)) {
 			 if (!checkPosition(position) && checkFields9(entity, kEntityPlayer, 250))
 				 flag3 = true;
 		}
@@ -1977,7 +1977,7 @@ bool Entities::updateEntity(EntityIndex entity, CarIndex car, EntityPosition pos
 	}
 
 	if (getEntities()->hasValidFrame(entity)
-	 && getEntities()->checkFields25(entity)
+	 && getEntities()->isWalkingOppositeToPlayer(entity)
 	 && !getEntities()->checkPosition(position)) {
 		flag3 = false;
 		position = (EntityPosition)(getData(kEntityPlayer)->entityPosition + 250 * (data->direction == kDirectionUp ? 1 : -1));
@@ -2091,7 +2091,7 @@ label_process_entity:
 
 							 if (ABS(data2->entityPosition - getData(kEntityPlayer)->entityPosition) < ABS(data->entityPosition - getData(kEntityPlayer)->entityPosition)) {
 
-								 if (!checkFields25(entity)) {
+								 if (!isWalkingOppositeToPlayer(entity)) {
 
 									 if (direction == kDirectionUp) {
 										 if (data->entityPosition < kPosition_9500)
@@ -2140,13 +2140,13 @@ label_process_entity:
 						 && getData(kEntityPlayer)->entityPosition - data->entityPosition >= 500
 						 && data->field_4A3 + 500 > getData(kEntityPlayer)->entityPosition - data->entityPosition) {
 
-							 if (getScenes()->checkPosition(kSceneNone, SceneManager::kCheckPositionType0) || getScenes()->checkCurrentPosition(false)) {
+							 if (getScenes()->checkPosition(kSceneNone, SceneManager::kCheckPositionLookingUp) || getScenes()->checkCurrentPosition(false)) {
 								 getSavePoints()->push(kEntityPlayer, entity, kActionExcuseMe);
 
 								 if (getScenes()->checkCurrentPosition(false))
 									 getScenes()->loadSceneFromObject((ObjectIndex)getScenes()->get(getState()->scene)->param1, true);
 
-							 } else if (getScenes()->checkPosition(kSceneNone, SceneManager::kCheckPositionType1)) {
+							 } else if (getScenes()->checkPosition(kSceneNone, SceneManager::kCheckPositionLookingDown)) {
 								 getSavePoints()->push(kEntityPlayer, entity, kActionExcuseMeCath);
 							 }
 						}
@@ -2155,9 +2155,9 @@ label_process_entity:
 						 && data->entityPosition - getData(kEntityPlayer)->entityPosition >= 500
 						 && data->field_4A3 + 500 > data->entityPosition - getData(kEntityPlayer)->entityPosition) {
 
-							if (getScenes()->checkPosition(kSceneNone, SceneManager::kCheckPositionType0)) {
+							if (getScenes()->checkPosition(kSceneNone, SceneManager::kCheckPositionLookingUp)) {
 								 getSavePoints()->push(kEntityPlayer, entity, kActionExcuseMeCath);
-							} else if (getScenes()->checkPosition(kSceneNone, SceneManager::kCheckPositionType1) || getScenes()->checkCurrentPosition(false)){
+							} else if (getScenes()->checkPosition(kSceneNone, SceneManager::kCheckPositionLookingDown) || getScenes()->checkCurrentPosition(false)){
 								 getSavePoints()->push(kEntityPlayer, entity, kActionExcuseMe);
 
 								 if (getScenes()->checkCurrentPosition(false))
@@ -2225,7 +2225,7 @@ bool Entities::changeCar(EntityData::EntityCallData * data, EntityIndex entity, 
 	data->entityPosition = newPosition;
 
 	if (data->car == newCar) {
-		if (checkFields6(kEntityPlayer)) {
+		if (isInGreenCarEntrance(kEntityPlayer)) {
 			getSound()->playSoundEvent(kEntityPlayer, 14);
 			getSound()->excuseMe(entity, kEntityPlayer, SoundManager::kFlagDefault);
 			getScenes()->loadSceneFromPosition(kCarGreenSleeping, 1);
@@ -2353,12 +2353,12 @@ bool Entities::isSittingOrStanding(EntityIndex entity, CarIndex car) const {
 	return getData(entity)->car == car && getData(entity)->posture <= kPostureSitting;
 }
 
-bool Entities::checkFields6(EntityIndex entity) const {
+bool Entities::isInGreenCarEntrance(EntityIndex entity) const {
 	return isSittingOrStanding(entity, kCarGreenSleeping) && getData(entity)->entityPosition < kPosition_850;
 }
 
-bool Entities::checkFields7(CarIndex car) const {
-	return isSittingOrStanding(kEntityPlayer, car) && getData(kEntityPlayer)->posture && !checkFields6(kEntityPlayer);
+bool Entities::isPlayerInCar(CarIndex car) const {
+	return isSittingOrStanding(kEntityPlayer, car) && getData(kEntityPlayer)->posture && !isInGreenCarEntrance(kEntityPlayer);
 }
 
 bool Entities::isDirectionUpOrDown(EntityIndex entity) const {
@@ -2481,11 +2481,11 @@ bool Entities::checkDistanceFromPosition(EntityIndex entity, EntityPosition posi
 	return distance >= ABS(getData(entity)->entityPosition - position);
 }
 
-bool Entities::checkFields25(EntityIndex entity) const {
-	if (getData(entity)->direction == kDirectionUp && getScenes()->checkPosition(kSceneNone, SceneManager::kCheckPositionType1))
+bool Entities::isWalkingOppositeToPlayer(EntityIndex entity) const {
+	if (getData(entity)->direction == kDirectionUp && getScenes()->checkPosition(kSceneNone, SceneManager::kCheckPositionLookingDown))
 		return true;
 
-	return (getData(entity)->direction == kDirectionDown && getScenes()->checkPosition(kSceneNone, SceneManager::kCheckPositionType0));
+	return (getData(entity)->direction == kDirectionDown && getScenes()->checkPosition(kSceneNone, SceneManager::kCheckPositionLookingUp));
 }
 
 bool Entities::isFemale(EntityIndex entity) {
@@ -2561,21 +2561,21 @@ bool Entities::checkPosition(EntityPosition position) const {
 		break;
 	}
 
-	if (getScenes()->checkPosition(kSceneNone, SceneManager::kCheckPositionType0) && entityPositions[position1] >= getEntityData(kEntityPlayer)->entityPosition)
+	if (getScenes()->checkPosition(kSceneNone, SceneManager::kCheckPositionLookingUp) && entityPositions[position1] >= getEntityData(kEntityPlayer)->entityPosition)
 		return true;
 	else
-		return (getScenes()->checkPosition(kSceneNone, SceneManager::kCheckPositionType1) && entityPositions[position2] <= getEntityData(kEntityPlayer)->entityPosition);
+		return (getScenes()->checkPosition(kSceneNone, SceneManager::kCheckPositionLookingDown) && entityPositions[position2] <= getEntityData(kEntityPlayer)->entityPosition);
 }
 
 bool Entities::checkSequenceFromPosition(EntityIndex entity) const {
 	FrameInfo *info = getEntityData(entity)->sequence->getFrameInfo(getEntityData(entity)->currentFrame);
 
 	if (getEntityData(entity)->direction == kDirectionUp)
-		return (getScenes()->checkPosition(kSceneNone, SceneManager::kCheckPositionType0)
+		return (getScenes()->checkPosition(kSceneNone, SceneManager::kCheckPositionLookingUp)
 			 && info->entityPosition + getEntityPositionFromCurrentPosition() > kPosition_8513);
 
 	if (getEntityData(entity)->direction == kDirectionDown)
-		return (getScenes()->checkPosition(kSceneNone, SceneManager::kCheckPositionType1)
+		return (getScenes()->checkPosition(kSceneNone, SceneManager::kCheckPositionLookingDown)
 			 && info->entityPosition + getEntityPositionFromCurrentPosition() < kPosition_2087);
 
 	return false;
@@ -2585,10 +2585,10 @@ EntityPosition Entities::getEntityPositionFromCurrentPosition() const {
 	// Get the scene position first
 	Position position = getScenes()->get(getState()->scene)->position;
 
-	if (getScenes()->checkPosition(kSceneNone, SceneManager::kCheckPositionType0))
+	if (getScenes()->checkPosition(kSceneNone, SceneManager::kCheckPositionLookingUp))
 		return (EntityPosition)(entityPositions[position] - kPosition_1430);
 
-	if (getScenes()->checkPosition(kSceneNone, SceneManager::kCheckPositionType1))
+	if (getScenes()->checkPosition(kSceneNone, SceneManager::kCheckPositionLookingDown))
 		return (EntityPosition)(entityPositions[position] - kPosition_9020);
 
 	return kPositionNone;

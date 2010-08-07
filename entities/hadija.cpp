@@ -159,7 +159,7 @@ label_callback2:
 
 			if (getState()->time <= kTime1134000) {
 
-				if (!getEntities()->checkFields7(kCarGreenSleeping) || !getEntities()->isSitting(kEntityMahmud, kCarGreenSleeping, kPosition_5790) || !params->param3) {
+				if (!getEntities()->isPlayerInCar(kCarGreenSleeping) || !getEntities()->isSitting(kEntityMahmud, kCarGreenSleeping, kPosition_5790) || !params->param3) {
 					params->param3 = getState()->time + 75;
 
 					if (!params->param3) {
@@ -186,7 +186,7 @@ label_callback4:
 		if (params->param5 != kTimeInvalid && getState()->time > kTime1165500) {
 			if (getState()->time <= kTime1188000) {
 
-				if (!getEntities()->checkFields7(kCarGreenSleeping) || !getEntities()->isSitting(kEntityMahmud, kCarGreenSleeping, kPosition_5790) || !params->param5) {
+				if (!getEntities()->isPlayerInCar(kCarGreenSleeping) || !getEntities()->isSitting(kEntityMahmud, kCarGreenSleeping, kPosition_5790) || !params->param5) {
 					params->param5 = getState()->time + 75;
 
 					if (!params->param5) {
@@ -270,7 +270,7 @@ IMPLEMENT_FUNCTION(Hadija, chapter2Handler, 14)
 
 		if (getState()->time <= kTime1818000) {
 
-			if (!getEntities()->checkFields7(kCarGreenSleeping) || !params->param2)
+			if (!getEntities()->isPlayerInCar(kCarGreenSleeping) || !params->param2)
 				params->param2 = getState()->time + 75;
 
 			if (params->param2 >= (int)getState()->time) {

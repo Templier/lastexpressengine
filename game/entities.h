@@ -147,8 +147,23 @@ public:
 	 */
 	bool isSittingOrStanding(EntityIndex entity, CarIndex car) const;
 
-	bool checkFields6(EntityIndex entity) const;
-	bool checkFields7(CarIndex car) const;
+	/**
+	 * Query if 'entity' is in green car entrance. 
+	 *
+	 * @param entity The entity. 
+	 *
+	 * @return true if in the green car entrance, false if not. 
+	 */
+	bool isInGreenCarEntrance(EntityIndex entity) const;
+
+	/**
+	 * Query if the player is in a specific car
+	 *
+	 * @param car The car. 
+	 *
+	 * @return true if player is in the car, false if not. 
+	 */
+	bool isPlayerInCar(CarIndex car) const;
 
 	/**
 	 * Query if 'entity' is going in the up or down direction.
@@ -267,7 +282,7 @@ public:
 	 */
 	bool checkDistanceFromPosition(EntityIndex entity, EntityPosition position, int distance) const;
 
-	bool checkFields25(EntityIndex entity) const;
+	bool isWalkingOppositeToPlayer(EntityIndex entity) const;
 
 	/**
 	 * Query if 'entity' is female.

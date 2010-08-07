@@ -107,7 +107,7 @@ IMPLEMENT_FUNCTION_SIII(Mahmud, enterExitCompartment2, 4)
 	case kActionNone:
 		UPDATE_PARAM(params->param7, getState()->timeTicks, params->param5);
 
-		if (!getScenes()->checkPosition(kSceneNone, SceneManager::kCheckPositionType0))
+		if (!getScenes()->checkPosition(kSceneNone, SceneManager::kCheckPositionLookingUp))
 			getScenes()->loadSceneFromObject((ObjectIndex)params->param6, true);
 		break;
 

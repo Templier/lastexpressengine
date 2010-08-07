@@ -1322,7 +1322,7 @@ IMPLEMENT_FUNCTION(Mertens, function42, 42)
 			if (params->param4 != kTimeInvalid && getState()->time > kTimeCityChalons) {
 
 				if (getState()->time <= kTime1188000) {
-					if ((!getEntities()->checkFields7(kCarGreenSleeping) && !getEntities()->checkFields7(kCarRedSleeping))
+					if ((!getEntities()->isPlayerInCar(kCarGreenSleeping) && !getEntities()->isPlayerInCar(kCarRedSleeping))
 					  || getSound()->isBuffered("REB1205")
 					  || !getEntities()->isSitting(kEntityMmeBoutarel, kCarRedSleeping, kPosition_5790)
 					  || !params->param4) {
@@ -1499,7 +1499,7 @@ label_callback_2_4:
 		}
 
 label_callback_5_6:
-		if (getEntities()->checkFields7(kCarGreenSleeping) && getData()->entityPosition < getEntityData(kEntityPlayer)->entityPosition) {
+		if (getEntities()->isPlayerInCar(kCarGreenSleeping) && getData()->entityPosition < getEntityData(kEntityPlayer)->entityPosition) {
 			if (getProgress().jacket == kJacketOriginal || ENTITY_PARAM(0, 7)) {
 				getData()->inventoryItem = kItemNone;
 				setCallback(7);
@@ -1790,7 +1790,7 @@ IMPLEMENT_FUNCTION(Mertens, function52, 52)
 
 		if (params->param1 >= (int)getState()->time) {
 
-			if (!getEntities()->checkFields7(kCarRedSleeping) || !params->param2)
+			if (!getEntities()->isPlayerInCar(kCarRedSleeping) || !params->param2)
 				params->param2 = getState()->time;
 
 			if (params->param2 >= (int)getState()->time)

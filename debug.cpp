@@ -644,6 +644,9 @@ bool Debugger::cmdDump(int argc, const char **argv) {
 		case 4:
 			OUTPUT_DUMP("SavePoints", getSavePoints()->toString().c_str());
 			break;
+
+		case 5:
+			OUTPUT_DUMP("Current scene", getScenes()->get(getState()->scene)->toString().c_str());
 		}
 	} else {
 label_error:
@@ -652,6 +655,7 @@ label_error:
 		DebugPrintf("              2 : Inventory\n");
 		DebugPrintf("              3 : Objects\n");
 		DebugPrintf("              4 : SavePoints\n");
+		DebugPrintf("              5 : Current scene\n");
 	}
 
 	return true;

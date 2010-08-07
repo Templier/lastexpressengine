@@ -76,6 +76,15 @@ SceneHotspot *SceneHotspot::load(Common::SeekableReadStream *stream) {
 	return hs;
 }
 
+Common::String SceneHotspot::toString() {
+	Common::String output = "";
+
+	output += Common::String::printf("    hotspot: scene=%d location=%02d action=%d param1=%02d param2=%02d param3=%02d cursor=%02d rect=(%d, %d)x(%d,%d)",
+	                                   scene, location, action, param1, param2, param3, cursor, rect.left, rect.top, rect.right, rect.bottom);
+	
+	return output;
+}
+
 bool SceneHotspot::isInside(const Common::Point &point) {
 
 	bool contains = rect.contains(point);
@@ -195,6 +204,23 @@ Common::Rect Scene::draw(Graphics::Surface *surface) {
 	}
 
 	return rect;
+}
+
+Common::String Scene::toString() {
+	Common::String output = "";
+
+	output += Common::String::printf("Scene:  name=%s, sig=%02d, count=%d, field_11=%d\n", _name, _sig, count, field_11);
+	output += Common::String::printf("        car=%02d, position=%02d, type=%02d, param1=%02d\n", car, position, type, param1);
+	output += Common::String::printf("        param2=%02d, param3=%02d, hotspot=%d\n", param2, param3, _hotspot);
+
+	// Hotspots
+	if (_hotspots.size() != 0) {
+		output += "\nHotspots:\n";
+		for (int i = 0; i < (int)_hotspots.size(); i++)
+			output += _hotspots[i]->toString() + "\n";
+	}
+
+	return output;
 }
 
 //////////////////////////////////////////////////////////////////////////
