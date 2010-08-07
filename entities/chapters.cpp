@@ -264,14 +264,14 @@ label_enter_epernay:
 
 label_exit_epernay:
 		// Exiting Epernay station
-		TIME_CHECK_EXITSTATION_2(Chapters, kTimeExitEpernay, ENTITY_PARAM(1, 1), params->param4, 3, "Epernay");
+		TIME_CHECK_EXITSTATION_2(Chapters, kTimeExitEpernay, CURRENT_PARAMS(1, 1), params->param4, 3, "Epernay");
 
 label_epernay_police:
 		TIME_CHECK_EXITSTATION_0(Chapters, params->param5, ENTITY_PARAM(0, 2), 4, "Unschedu");
 
 label_enter_chalons:
-		if (getState()->time > kTimeEnterChalons && !ENTITY_PARAM(1, 2)) {
-			ENTITY_PARAM(1, 2) = 1;
+		if (getState()->time > kTimeEnterChalons && !CURRENT_PARAMS(1, 2)) {
+			CURRENT_PARAMS(1, 2) = 1;
 			getProgress().field_18 = 2;
 		}
 
@@ -280,75 +280,75 @@ label_enter_chalons:
 			goto label_exit_strasbourg;
 
 		// Entering Chalons station
-		TIME_CHECK_ENTERSTATION(Chapters, kTimeEnterChalons, ENTITY_PARAM(1, 3), 5, "Chalons", kCityChalons);
+		TIME_CHECK_ENTERSTATION(Chapters, kTimeEnterChalons, CURRENT_PARAMS(1, 3), 5, "Chalons", kCityChalons);
 
 label_exit_chalons:
 		// Exiting Chalons station
-		TIME_CHECK_EXITSTATION(Chapters, kTimeExitChalons, ENTITY_PARAM(1, 4), 6, "Chalons");
+		TIME_CHECK_EXITSTATION(Chapters, kTimeExitChalons, CURRENT_PARAMS(1, 4), 6, "Chalons");
 
 label_enter_barleduc:
 		// Entering Bar-Le-Duc station
-		TIME_CHECK_ENTERSTATION(Chapters, kTimeCityBarLeDuc, ENTITY_PARAM(1, 5), 7, "BarLeDuc", kCityBarleduc);
+		TIME_CHECK_ENTERSTATION(Chapters, kTimeCityBarLeDuc, CURRENT_PARAMS(1, 5), 7, "BarLeDuc", kCityBarleduc);
 
 label_exit_barleduc:
 		// Exiting Bar-Le-Duc station
-		TIME_CHECK_EXITSTATION(Chapters, kTimeExitBarLeDuc, ENTITY_PARAM(1, 6), 8, "BarLeDuc");
+		TIME_CHECK_EXITSTATION(Chapters, kTimeExitBarLeDuc, CURRENT_PARAMS(1, 6), 8, "BarLeDuc");
 
 label_enter_nancy:
-		if (getState()->time > kTime1260000 && !ENTITY_PARAM(1, 7)) {
-			ENTITY_PARAM(1, 7) = 1;
+		if (getState()->time > kTime1260000 && !CURRENT_PARAMS(1, 7)) {
+			CURRENT_PARAMS(1, 7) = 1;
 			getState()->timeDelta = 1;
 		}
 
 		// Entering Nancy station
-		TIME_CHECK_ENTERSTATION(Chapters, kTimeCityNancy, ENTITY_PARAM(1, 8), 9, "Nancy", kCityNancy);
+		TIME_CHECK_ENTERSTATION(Chapters, kTimeCityNancy, CURRENT_PARAMS(1, 8), 9, "Nancy", kCityNancy);
 
 label_exit_nancy:
 		// Exiting Nancy station
-		TIME_CHECK_EXITSTATION(Chapters, kTimeExitNancy, ENTITY_PARAM(2, 1), 10, "Nancy");
+		TIME_CHECK_EXITSTATION(Chapters, kTimeExitNancy, CURRENT_PARAMS(2, 1), 10, "Nancy");
 
 label_enter_luneville:
 		// Entering Luneville station
-		TIME_CHECK_ENTERSTATION(Chapters, kTimeCityLuneville, ENTITY_PARAM(2, 2), 11, "Luneville", kCityLuneville);
+		TIME_CHECK_ENTERSTATION(Chapters, kTimeCityLuneville, CURRENT_PARAMS(2, 2), 11, "Luneville", kCityLuneville);
 
 label_exit_luneville:
 		// Exiting Luneville station
-		TIME_CHECK_EXITSTATION(Chapters, kTimeExitLuneville, ENTITY_PARAM(2, 3), 12, "Luneville");
+		TIME_CHECK_EXITSTATION(Chapters, kTimeExitLuneville, CURRENT_PARAMS(2, 3), 12, "Luneville");
 
 label_enter_avricourt:
 		// Entering Avricourt station
-		TIME_CHECK_ENTERSTATION(Chapters, kTimeCityAvricourt, ENTITY_PARAM(2, 4), 13, "Avricourt", kCityAvricourt);
+		TIME_CHECK_ENTERSTATION(Chapters, kTimeCityAvricourt, CURRENT_PARAMS(2, 4), 13, "Avricourt", kCityAvricourt);
 
 label_exit_avricourt:
 		// Exiting Avricourt station
-		TIME_CHECK_EXITSTATION(Chapters, kTimeExitAvricourt, ENTITY_PARAM(2, 5), 14, "Avricourt");
+		TIME_CHECK_EXITSTATION(Chapters, kTimeExitAvricourt, CURRENT_PARAMS(2, 5), 14, "Avricourt");
 
 label_enter_deutschavricourt:
 		// Entering Deutsch-Avricourt station
-		TIME_CHECK_ENTERSTATION(Chapters, kTimeCityDeutschAvricourt, ENTITY_PARAM(2, 6), 15, "DeutschA", kCityDeutschAvricourt);
+		TIME_CHECK_ENTERSTATION(Chapters, kTimeCityDeutschAvricourt, CURRENT_PARAMS(2, 6), 15, "DeutschA", kCityDeutschAvricourt);
 
 label_exit_deutschavricourt:
 		// Exiting Avricourt station
-		TIME_CHECK_EXITSTATION(Chapters, kTimeExitDeutschAvricourt, ENTITY_PARAM(2, 7), 16, "DeutschA");
+		TIME_CHECK_EXITSTATION(Chapters, kTimeExitDeutschAvricourt, CURRENT_PARAMS(2, 7), 16, "DeutschA");
 
 label_enter_strasbourg:
-		TIME_CHECK_SAVEGAME(Chapters, kTimeCityStrasbourg, ENTITY_PARAM(2, 8), 17, kSavegameType1, kEventNone);
+		TIME_CHECK_SAVEGAME(Chapters, kTimeCityStrasbourg, CURRENT_PARAMS(2, 8), 17, kSavegameType1, kEventNone);
 
 label_exit_strasbourg:
 		// Exiting Strasbourg station
-		TIME_CHECK_EXITSTATION(Chapters, kTimeExitStrasbourg, ENTITY_PARAM(3, 1), 19, "Strasbou");
+		TIME_CHECK_EXITSTATION(Chapters, kTimeExitStrasbourg, CURRENT_PARAMS(3, 1), 19, "Strasbou");
 
 label_enter_badenoos:
 		// Entering Baden Oos station
-		TIME_CHECK_ENTERSTATION(Chapters, kTimeCityBadenOos, ENTITY_PARAM(3, 2), 20, "BadenOos", kCityBadenOos);
+		TIME_CHECK_ENTERSTATION(Chapters, kTimeCityBadenOos, CURRENT_PARAMS(3, 2), 20, "BadenOos", kCityBadenOos);
 
 label_exit_badenoos:
 		// Exiting Baden Oos station
-		TIME_CHECK_EXITSTATION(Chapters, kTimeExitBadenOos, ENTITY_PARAM(3, 3), 21, "BadenOos");
+		TIME_CHECK_EXITSTATION(Chapters, kTimeExitBadenOos, CURRENT_PARAMS(3, 3), 21, "BadenOos");
 
 label_chapter1_end:
-		if (getState()->time > kTimeChapter1End3 && ! ENTITY_PARAM(3, 4)) {
-			ENTITY_PARAM(3, 4) = 1;
+		if (getState()->time > kTimeChapter1End3 && ! CURRENT_PARAMS(3, 4)) {
+			CURRENT_PARAMS(3, 4) = 1;
 			setup_chapter1End();
 		}
 		break;

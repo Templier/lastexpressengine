@@ -44,9 +44,9 @@ Gendarmes::Gendarmes(LastExpressEngine *engine) : Entity(engine, kEntityGendarme
 	ADD_CALLBACK_FUNCTION(Gendarmes, arrestDraw);
 	ADD_CALLBACK_FUNCTION(Gendarmes, arrestPlaysound);
 	ADD_CALLBACK_FUNCTION(Gendarmes, arrestPlaysound16);
-	ADD_CALLBACK_FUNCTION(Gendarmes, function6);
+	ADD_CALLBACK_FUNCTION(Gendarmes, arrestCallback);
 	ADD_CALLBACK_FUNCTION(Gendarmes, savegame);
-	ADD_CALLBACK_FUNCTION(Gendarmes, function8);
+	ADD_CALLBACK_FUNCTION(Gendarmes, arrestUpdateEntity);
 	ADD_CALLBACK_FUNCTION(Gendarmes, function9);
 	ADD_CALLBACK_FUNCTION(Gendarmes, function10);
 	ADD_CALLBACK_FUNCTION(Gendarmes, chapter1Handler);
@@ -92,34 +92,8 @@ IMPLEMENT_FUNCTION_S(Gendarmes, arrestPlaysound16, 5)
 	arrest(savepoint, true, SoundManager::kFlagDefault);
 }
 
-IMPLEMENT_FUNCTION_I(Gendarmes, function6, 6)
-	switch (savepoint.action) {
-	default:
-		break;
-
-	case kActionNone:
-		TIME_CHECK_CALLBACK_ACTION(Gendarmes, params->param1, params->param2);
-		// Fallback to action 17
-
-	case kActionDrawScene:
-		if (!ENTITY_PARAM(0, 1) && getEntities()->hasValidFrame(kEntityGendarmes)) {
-			getSound()->playSound(kEntityPlayer, "MUS007");
-			ENTITY_PARAM(0, 1) = 1;
-		}
-
-		if (getEntities()->checkFields9(kEntityGendarmes, kEntityPlayer, 1000) && !getEntityData(kEntityPlayer)->posture) {
-			setCallback(1);
-			call(new ENTITY_SETUP(Gendarmes, setup_savegame), kSavegameType2, kEventGendarmesArrestation);
-		}
-		break;
-
-	case kActionCallback:
-		if (getCallback() == 1) {
-			getAction()->playAnimation(kEventGendarmesArrestation);
-			getLogic()->gameOver(kInitTypeIndex, 1, kSceneGameOverPolice1, true);
-		}
-		break;
-	}
+IMPLEMENT_FUNCTION_I(Gendarmes, arrestCallback, 6)
+	arrest(savepoint, true, SoundManager::kFlagInvalid, true);
 }
 
 /**
@@ -135,44 +109,8 @@ IMPLEMENT_FUNCTION_II(Gendarmes, savegame, 7)
 // Parameters:
 // - CarIndex
 // - EntityPosition
-IMPLEMENT_FUNCTION_II(Gendarmes, function8, 8)
-	switch (savepoint.action) {
-	default:
-		break;
-
-	case kActionNone:
-		if (getEntities()->updateEntity(kEntityGendarmes, (CarIndex)params->param1, (EntityPosition)params->param2)) {
-			CALLBACK_ACTION()
-			break;
-		}
-		// fallback to action 17
-
-	case kActionDrawScene:
-		if (!ENTITY_PARAM(0, 1) && getEntities()->hasValidFrame(kEntityGendarmes)) {
-			getSound()->playSound(kEntityPlayer, "MUS007");
-			ENTITY_PARAM(0, 1) = 1;
-		}
-
-		if (getEntities()->checkFields9(kEntityGendarmes, kEntityPlayer, 1750) && !getEntityData(kEntityPlayer)->posture) {
-			if (!getEntities()->isPlayerPosition(kCarRedSleeping, 22) || getEntities()->checkFields9(kEntityGendarmes, kEntityPlayer, 250)) {
-				setCallback(1);
-				call(new ENTITY_SETUP(Gendarmes, setup_savegame), kSavegameType2, kEventGendarmesArrestation);
-			}
-		}
-		break;
-
-	case kActionDefault:
-		if (getEntities()->updateEntity(kEntityGendarmes, (CarIndex)params->param1, (EntityPosition)params->param2))
-			CALLBACK_ACTION()
-		break;
-
-	case kActionCallback:
-		if (getCallback() == 1) {
-			getAction()->playAnimation(kEventGendarmesArrestation);
-			getLogic()->gameOver(kInitTypeIndex, 1, kSceneGameOverPolice1, true);
-		}
-		break;
-	}
+IMPLEMENT_FUNCTION_II(Gendarmes, arrestUpdateEntity, 8)
+	arrest(savepoint, true, SoundManager::kFlagInvalid, false, true);
 }
 
 // Parameters:
@@ -314,7 +252,7 @@ IMPLEMENT_FUNCTION(Gendarmes, function12, 12)
 		getProgress().field_14 = 29;
 
 		setCallback(1);
-		call(new ENTITY_SETUP(Gendarmes, setup_function8), kCarGreenSleeping, kPosition_5540);
+		call(new ENTITY_SETUP(Gendarmes, setup_arrestUpdateEntity), kCarGreenSleeping, kPosition_5540);
 		break;
 
 	case kActionCallback:
@@ -329,7 +267,7 @@ IMPLEMENT_FUNCTION(Gendarmes, function12, 12)
 
 		case 2:
 			setCallback(3);
-			call(new ENTITY_SETUP(Gendarmes, setup_function8), kCarGreenSleeping, kPosition_6220);
+			call(new ENTITY_SETUP(Gendarmes, setup_arrestUpdateEntity), kCarGreenSleeping, kPosition_6220);
 			break;
 
 		case 3:
@@ -339,7 +277,7 @@ IMPLEMENT_FUNCTION(Gendarmes, function12, 12)
 
 		case 4:
 			setCallback(5);
-			call(new ENTITY_SETUP(Gendarmes, setup_function8), kCarGreenSleeping, kPosition_7250);
+			call(new ENTITY_SETUP(Gendarmes, setup_arrestUpdateEntity), kCarGreenSleeping, kPosition_7250);
 			break;
 
 		case 5:
@@ -349,7 +287,7 @@ IMPLEMENT_FUNCTION(Gendarmes, function12, 12)
 
 		case 6:
 			setCallback(7);
-			call(new ENTITY_SETUP(Gendarmes, setup_function8), kCarGreenSleeping, kPosition_7950);
+			call(new ENTITY_SETUP(Gendarmes, setup_arrestUpdateEntity), kCarGreenSleeping, kPosition_7950);
 			break;
 
 		case 7:
@@ -359,7 +297,7 @@ IMPLEMENT_FUNCTION(Gendarmes, function12, 12)
 
 		case 8:
 			setCallback(9);
-			call(new ENTITY_SETUP(Gendarmes, setup_function8), kCarGreenSleeping, kPosition_9460);
+			call(new ENTITY_SETUP(Gendarmes, setup_arrestUpdateEntity), kCarGreenSleeping, kPosition_9460);
 			break;
 
 		case 9:
@@ -372,7 +310,7 @@ IMPLEMENT_FUNCTION(Gendarmes, function12, 12)
 			}
 
 			setCallback(10);
-			call(new ENTITY_SETUP(Gendarmes, setup_function8), kCarRedSleeping, kPosition_2490);
+			call(new ENTITY_SETUP(Gendarmes, setup_arrestUpdateEntity), kCarRedSleeping, kPosition_2490);
 			break;
 
 		case 10:
@@ -382,7 +320,7 @@ IMPLEMENT_FUNCTION(Gendarmes, function12, 12)
 
 		case 11:
 			setCallback(12);
-			call(new ENTITY_SETUP(Gendarmes, setup_function8), kCarRedSleeping, kPosition_3820);
+			call(new ENTITY_SETUP(Gendarmes, setup_arrestUpdateEntity), kCarRedSleeping, kPosition_3820);
 			break;
 
 		case 12:
@@ -392,7 +330,7 @@ IMPLEMENT_FUNCTION(Gendarmes, function12, 12)
 
 		case 13:
 			setCallback(14);
-			call(new ENTITY_SETUP(Gendarmes, setup_function8), kCarRedSleeping, kPosition_4590);
+			call(new ENTITY_SETUP(Gendarmes, setup_arrestUpdateEntity), kCarRedSleeping, kPosition_4590);
 			break;
 
 		case 14:
@@ -402,7 +340,7 @@ IMPLEMENT_FUNCTION(Gendarmes, function12, 12)
 
 		case 15:
 			setCallback(16);
-			call(new ENTITY_SETUP(Gendarmes, setup_function8), kCarRedSleeping, kPosition_5540);
+			call(new ENTITY_SETUP(Gendarmes, setup_arrestUpdateEntity), kCarRedSleeping, kPosition_5540);
 			break;
 
 		case 16:
@@ -412,7 +350,7 @@ IMPLEMENT_FUNCTION(Gendarmes, function12, 12)
 
 		case 17:
 			setCallback(18);
-			call(new ENTITY_SETUP(Gendarmes, setup_function8), kCarRedSleeping, kPosition_6220);
+			call(new ENTITY_SETUP(Gendarmes, setup_arrestUpdateEntity), kCarRedSleeping, kPosition_6220);
 			break;
 
 		case 18:
@@ -422,7 +360,7 @@ IMPLEMENT_FUNCTION(Gendarmes, function12, 12)
 
 		case 19:
 			setCallback(20);
-			call(new ENTITY_SETUP(Gendarmes, setup_function8), kCarRedSleeping, kPosition_7250);
+			call(new ENTITY_SETUP(Gendarmes, setup_arrestUpdateEntity), kCarRedSleeping, kPosition_7250);
 			break;
 
 		case 20:
@@ -432,7 +370,7 @@ IMPLEMENT_FUNCTION(Gendarmes, function12, 12)
 
 		case 21:
 			setCallback(22);
-			call(new ENTITY_SETUP(Gendarmes, setup_function8), kCarRedSleeping, kPosition_7950);
+			call(new ENTITY_SETUP(Gendarmes, setup_arrestUpdateEntity), kCarRedSleeping, kPosition_7950);
 			break;
 
 		case 22:
@@ -442,7 +380,7 @@ IMPLEMENT_FUNCTION(Gendarmes, function12, 12)
 
 		case 23:
 			setCallback(24);
-			call(new ENTITY_SETUP(Gendarmes, setup_function8), kCarRedSleeping, kPosition_9460);
+			call(new ENTITY_SETUP(Gendarmes, setup_arrestUpdateEntity), kCarRedSleeping, kPosition_9460);
 			break;
 
 		case 24:
@@ -481,14 +419,26 @@ IMPLEMENT_FUNCTION(Gendarmes, chapter5, 17)
 		getEntities()->clearSequences(kEntityGendarmes);
 }
 
-void Gendarmes::arrest(const SavePoint &savepoint, bool shouldPlaySound, SoundManager::FlagType flag) {
-	EXPOSE_PARAMS(EntityData::EntityParametersSIIS);
-
+void Gendarmes::arrest(const SavePoint &savepoint, bool shouldPlaySound, SoundManager::FlagType flag, bool checkCallback, bool shouldUpdateEntity) {	
 	switch (savepoint.action) {
 	default:
 		break;
 
 	case kActionNone:
+		if (checkCallback) {
+			EXPOSE_PARAMS(EntityData::EntityParametersIIII);
+			TIME_CHECK_CALLBACK_ACTION(Gendarmes, params->param1, params->param2);
+		}
+
+		if (shouldUpdateEntity) {
+			EXPOSE_PARAMS(EntityData::EntityParametersIIII);
+			if (getEntities()->updateEntity(kEntityGendarmes, (CarIndex)params->param1, (EntityPosition)params->param2)) {
+				CALLBACK_ACTION()
+				break;
+			}
+		}
+		// Fallback to next action
+
 	case kActionDrawScene:
 		if (!ENTITY_PARAM(0, 1) && getEntities()->hasValidFrame(kEntityGendarmes)) {
 			getSound()->playSound(kEntityPlayer, "MUS007");
@@ -496,6 +446,11 @@ void Gendarmes::arrest(const SavePoint &savepoint, bool shouldPlaySound, SoundMa
 		}
 
 		if (getEntities()->checkFields9(kEntityGendarmes, kEntityPlayer, 1000) && !getEntityData(kEntityPlayer)->posture) {
+			
+			if (shouldUpdateEntity)
+				if (getEntities()->isPlayerPosition(kCarRedSleeping, 22) && !getEntities()->checkFields9(kEntityGendarmes, kEntityPlayer, 250))
+					break;
+
 			setCallback(1);
 			call(new ENTITY_SETUP(Gendarmes, setup_savegame), kSavegameType2, kEventGendarmesArrestation);
 		}
@@ -506,10 +461,23 @@ void Gendarmes::arrest(const SavePoint &savepoint, bool shouldPlaySound, SoundMa
 		break;
 
 	case kActionDefault:
-		if (!shouldPlaySound)
-			getEntities()->drawSequenceRight(kEntityGendarmes, (char *)&params->seq1);
-		else
-			getSound()->playSound(kEntityGendarmes, (char *)&params->seq1, flag);
+		// Only handle when passing SIIS params
+		if (!checkCallback) {
+			EXPOSE_PARAMS(EntityData::EntityParametersSIIS);
+
+			if (!shouldPlaySound)
+				getEntities()->drawSequenceRight(kEntityGendarmes, (char *)&params->seq1);
+			else
+				getSound()->playSound(kEntityGendarmes, (char *)&params->seq1, flag);
+		}
+
+		if (shouldUpdateEntity) {
+			EXPOSE_PARAMS(EntityData::EntityParametersIIII);
+			if (getEntities()->updateEntity(kEntityGendarmes, (CarIndex)params->param1, (EntityPosition)params->param2)) {
+				CALLBACK_ACTION()
+				break;
+			}
+		}
 		break;
 
 	case kActionCallback:

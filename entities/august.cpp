@@ -392,10 +392,10 @@ IMPLEMENT_FUNCTION_I(August, function23, 23)
 
 		if (!params->param2) {
 
-			if (!ENTITY_PARAM(1, 3))
-				ENTITY_PARAM(1, 3) = getState()->timeTicks + 45;
+			if (!CURRENT_PARAMS(1, 3))
+				CURRENT_PARAMS(1, 3) = getState()->timeTicks + 45;
 
-			if (ENTITY_PARAM(1, 3) >= (int)getState()->timeTicks)
+			if (CURRENT_PARAMS(1, 3) >= (int)getState()->timeTicks)
 				break;
 
 			if (!params->param5) {
@@ -405,11 +405,11 @@ IMPLEMENT_FUNCTION_I(August, function23, 23)
 			}
 
 label_callback_8:
-			if (!ENTITY_PARAM(1, 4))
-				ENTITY_PARAM(1, 4) = getState()->timeTicks + 75;
+			if (!CURRENT_PARAMS(1, 4))
+				CURRENT_PARAMS(1, 4) = getState()->timeTicks + 75;
 
-			if (ENTITY_PARAM(1, 4) < (int)getState()->timeTicks) {
-				ENTITY_PARAM(1, 4) = kTimeInvalid;
+			if (CURRENT_PARAMS(1, 4) < (int)getState()->timeTicks) {
+				CURRENT_PARAMS(1, 4) = kTimeInvalid;
 
 				getEntities()->exitCompartment(kEntityAugust, kObjectCompartment1, true);
 
@@ -429,8 +429,8 @@ label_callback_8:
 			}
 
 label_callback_9:
-			if (params->param3 && params->param1 < (int)getState()->time && !ENTITY_PARAM(1, 5)) {
-				ENTITY_PARAM(1, 5) = 1;
+			if (params->param3 && params->param1 < (int)getState()->time && !CURRENT_PARAMS(1, 5)) {
+				CURRENT_PARAMS(1, 5) = 1;
 				getObjects()->update(kObjectCompartment1, kEntityPlayer, kLocationNone, kCursorHandKnock, kCursorHand);
 
 				setCallback(12);
@@ -439,14 +439,14 @@ label_callback_9:
 			break;
 		}
 
-		if (!ENTITY_PARAM(1, 1))
-			ENTITY_PARAM(1, 1) = getState()->timeTicks + 45;
+		if (!CURRENT_PARAMS(1, 1))
+			CURRENT_PARAMS(1, 1) = getState()->timeTicks + 45;
 
-		if (ENTITY_PARAM(1, 1) >= (int)getState()->timeTicks)
+		if (CURRENT_PARAMS(1, 1) >= (int)getState()->timeTicks)
 			break;
 
 		if (getObjects()->get(kObjectCompartment1).location == kLocation1) {
-			UPDATE_PARAM(ENTITY_PARAM(1, 2), getState()->timeTicks, 75);
+			UPDATE_PARAM(CURRENT_PARAMS(1, 2), getState()->timeTicks, 75);
 
 			getObjects()->update(kObjectCompartment1, kEntityAugust, getObjects()->get(kObjectCompartment1).location, kCursorNormal, kCursorNormal);
 
@@ -479,7 +479,7 @@ label_callback_9:
 			}
 
 			getObjects()->update(kObjectCompartment1, kEntityAugust, getObjects()->get(kObjectCompartment1).location, params->param4 ? kCursorNormal : kCursorTalk, kCursorHand);
-			ENTITY_PARAM(1, 2) = 0;
+			CURRENT_PARAMS(1, 2) = 0;
 		} else {
 
 			if (getProgress().eventCorpseMovedFromFloor && getProgress().jacket != kJacketBlood) {

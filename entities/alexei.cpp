@@ -282,7 +282,7 @@ IMPLEMENT_FUNCTION_IS(Alexei, function16, 16)
 		}
 
 		if (params->param5) {
-			UPDATE_PARAM(ENTITY_PARAM(1, 1), getState()->timeTicks, 75);
+			UPDATE_PARAM(CURRENT_PARAMS(1, 1), getState()->timeTicks, 75);
 
 			params->param5 = 0;
 			params->param6 = 1;
@@ -291,7 +291,7 @@ IMPLEMENT_FUNCTION_IS(Alexei, function16, 16)
 			getObjects()->update(kObjectHandleInsideBathroom, kEntityAlexei, kLocation1, kCursorNormal, kCursorNormal);
 		}
 
-		ENTITY_PARAM(1, 1) = 0;
+		CURRENT_PARAMS(1, 1) = 0;
 		break;
 
 	case kActionKnock:

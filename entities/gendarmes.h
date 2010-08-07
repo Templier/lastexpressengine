@@ -46,9 +46,9 @@ public:
 	DECLARE_FUNCTION_S(arrestDraw)
 	DECLARE_FUNCTION_S(arrestPlaysound)
 	DECLARE_FUNCTION_S(arrestPlaysound16)
-	DECLARE_FUNCTION_I(function6)
+	DECLARE_FUNCTION_I(arrestCallback)
 	DECLARE_FUNCTION_II(savegame)
-	DECLARE_FUNCTION_II(function8)
+	DECLARE_FUNCTION_II(arrestUpdateEntity)
 	DECLARE_FUNCTION_IISS(function9)
 	DECLARE_FUNCTION_III(function10)
 	DECLARE_FUNCTION(chapter1Handler)
@@ -64,7 +64,7 @@ private:
 	DECLARE_CALL_FUNCTION(iiss, Gendarmes, int, int, const char*, const char*)
 	DECLARE_CALL_FUNCTION(siis, Gendarmes, const char*, int, int, const char*)
 
-	void arrest(const SavePoint &savepoint, bool playSound = false, SoundManager::FlagType flag = SoundManager::kFlagInvalid);
+	void arrest(const SavePoint &savepoint, bool playSound = false, SoundManager::FlagType flag = SoundManager::kFlagInvalid, bool checkCallback = false, bool shouldUpdateEntity = false);
 };
 
 } // End of namespace LastExpress

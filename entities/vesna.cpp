@@ -147,8 +147,8 @@ IMPLEMENT_FUNCTION_II(Vesna, updateEntity2, 7)
 		params->param3 = 0;
 
 		if (getEntities()->checkFields9(kEntityVesna, kEntityMilos, 500)
-		 || ((getData()->direction == kDirectionUp && (getData()->car > getEntityData(kEntityMilos)->car) || (getData()->car == getEntityData(kEntityMilos)->car && getData()->entityPosition > getEntityData(kEntityMilos)->entityPosition)))
-		 || ((getData()->direction == kDirectionDown && (getData()->car < getEntityData(kEntityMilos)->car) || (getData()->car == getEntityData(kEntityMilos)->car && getData()->entityPosition < getEntityData(kEntityMilos)->entityPosition)))) {
+		 || (((getData()->direction == kDirectionUp && (getData()->car > getEntityData(kEntityMilos)->car)) || (getData()->car == getEntityData(kEntityMilos)->car && getData()->entityPosition > getEntityData(kEntityMilos)->entityPosition)))
+		 || (((getData()->direction == kDirectionDown && (getData()->car < getEntityData(kEntityMilos)->car)) || (getData()->car == getEntityData(kEntityMilos)->car && getData()->entityPosition < getEntityData(kEntityMilos)->entityPosition)))) {
 			getData()->field_49B = 0;
 			params->param3 = 1;
 		}

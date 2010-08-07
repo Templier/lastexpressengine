@@ -1380,6 +1380,9 @@ enum ActionIndex {
 	kAction101106391 = 101106391,
 	kAction122288808 = 122288808,    // Boutarel
 	kAction123712592 = 123712592,    // Ivo
+	kAction125826561 = 125826561,    // August
+	kAction134486752 = 134486752,    // August
+	kAction168717392 = 168717392,    // Boutarel
 	kAction189688608 = 189688608,
 	kAction219377792 = 219377792,
 	kAction223002560 = 223002560,

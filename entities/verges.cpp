@@ -358,7 +358,42 @@ IMPLEMENT_FUNCTION(Verges, function12, 12)
 }
 
 IMPLEMENT_FUNCTION_I(Verges, function13, 13)
-	error("Verges: callback function 13 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionDefault:
+		setCallback(1);
+		call(new ENTITY_SETUP(Verges, setup_savegame), kSavegameType2, kEventVergesSuitcase);
+		break;
+
+	case kActionCallback:
+		if (getCallback() == 1) {
+			if (getEvent(kEventVergesSuitcase) || getEvent(kEventVergesSuitcaseNight) || getEvent(kEventVergesSuitcaseOtherEntry) || getEvent(kEventVergesSuitcaseNightOtherEntry))
+				params->param2 = 1;
+
+			if (isDay() && getProgress().chapter != kChapter1)
+				params->param2 = 1;
+
+			if (params->param1) {
+				if (isDay())
+					getAction()->playAnimation(params->param2 ? kEventVergesSuitcaseOtherEntryStart : kEventVergesSuitcaseOtherEntry);
+				else 
+					getAction()->playAnimation(params->param2 ? kEventVergesSuitcaseNightOtherEntryStart : kEventVergesSuitcaseNightOtherEntry);				
+			} else {
+				if (isDay())
+					getAction()->playAnimation(params->param2 ? kEventVergesSuitcaseStart : kEventVergesSuitcase);
+				else 
+					getAction()->playAnimation(params->param2 ? kEventVergesSuitcaseNightStart : kEventVergesSuitcaseNight);
+			}
+
+			getEntities()->clearSequences(kEntityVerges);
+			getScenes()->loadSceneFromPosition(kCarBaggage, 91);
+
+			CALLBACK_ACTION()
+		}
+		break;
+	}
 }
 
 /**
@@ -411,7 +446,42 @@ IMPLEMENT_FUNCTION_IS(Verges, function15, 15)
 }
 
 IMPLEMENT_FUNCTION_ISS(Verges, function16, 16)
-	error("Verges: callback function 16 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionNone:
+		if (CURRENT_PARAMS(1, 1) && params->param8) {
+			getSavePoints()->push(kEntityVerges, (EntityIndex)params->param1, kAction125499160);
+
+			if (!getEntities()->isPlayerPosition(kCarGreenSleeping, 2) && !getEntities()->isPlayerPosition(kCarRedSleeping, 2))
+				getData()->entityPosition = kPosition_2088;
+
+			CALLBACK_ACTION()
+		}
+		break;
+
+	case kAction2:
+		CURRENT_PARAMS(1, 1)++;
+
+		if (CURRENT_PARAMS(1, 1) == 1)
+			getSound()->playSound(kEntityVerges, (char *)&params->seq2);
+		break;
+
+	case kActionDefault:
+		getEntities()->drawSequenceLeft(kEntityVerges, "620F");
+		getSavePoints()->push(kEntityVerges, (EntityIndex)params->param1, kAction171394341);
+		break;
+
+	case kAction155853632:
+		params->param8 = 1;
+		break;
+
+	case kAction202558662:
+		getEntities()->drawSequenceLeft(kEntityVerges, "620E");
+		getSound()->playSound(kEntityVerges, (char *)&params->seq1);
+		break;
+	}
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -654,16 +724,16 @@ label_callback4:
 		}
 
 label_callback8:
-		TIME_CHECK_CALLBACK_S(Verges, kTime1107000, ENTITY_PARAM(1, 1), 9, setup_function9, "TRA1001A");
+		TIME_CHECK_CALLBACK_S(Verges, kTime1107000, CURRENT_PARAMS(1, 1), 9, setup_function9, "TRA1001A");
 
 label_callback9:
-		TIME_CHECK_CALLBACK_S(Verges, kTime1134000, ENTITY_PARAM(1, 2), 10, setup_function9, "TRA1002");
+		TIME_CHECK_CALLBACK_S(Verges, kTime1134000, CURRENT_PARAMS(1, 2), 10, setup_function9, "TRA1002");
 
 label_callback10:
-		TIME_CHECK_CALLBACK_S(Verges, kTime1165500, ENTITY_PARAM(1, 3), 11, setup_function9, "TRA1003");
+		TIME_CHECK_CALLBACK_S(Verges, kTime1165500, CURRENT_PARAMS(1, 3), 11, setup_function9, "TRA1003");
 
 label_callback11:
-		TIME_CHECK_CALLBACK_S(Verges, kTime1225800, ENTITY_PARAM(1, 4), 12, setup_function9, "TRA1004");
+		TIME_CHECK_CALLBACK_S(Verges, kTime1225800, CURRENT_PARAMS(1, 4), 12, setup_function9, "TRA1004");
 
 label_callback12:
 		if (ENTITY_PARAM(0, 5) && !params->param2) {

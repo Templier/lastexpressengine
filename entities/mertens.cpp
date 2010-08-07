@@ -452,7 +452,7 @@ IMPLEMENT_FUNCTION_II(Mertens, function10, 10)
 			ENTITY_PARAM(0, 6) = 0;
 			ENTITY_PARAM(0, 7) = 0;
 
-			if (params->param1 != 3 || params->param2 != kPosition_8200 && params->param2 != kPosition_9510) {
+			if (params->param1 != 3 || (params->param2 != kPosition_8200 && params->param2 != kPosition_9510)) {
 				LOADSCENE_FROM_POSITION();
 				break;
 			}

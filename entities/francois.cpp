@@ -224,7 +224,6 @@ IMPLEMENT_FUNCTION_I(Francois, function11, 11)
 				CURRENT_PARAMS(1, 1) = getState()->timeTicks + params->param6;
 
 			if (CURRENT_PARAMS(1, 1) < (int)getState()->timeTicks) {
-
 				switch (random(7)) {
 				default:
 					break;
@@ -266,7 +265,7 @@ IMPLEMENT_FUNCTION_I(Francois, function11, 11)
 		if (getEntities()->updateEntity(kEntityFrancois, (CarIndex)params->param2, (EntityPosition)params->param3)) {
 			params->param5 = 0;
 
-			if (params->param3 = kPosition_540) {
+			if (params->param3 == kPosition_540) {
 				params->param2 = (getProgress().chapter == kChapter1) ? kCarRedSleeping : kCarGreenSleeping;
 				params->param3 = kPosition_9460;
 			} else {
@@ -304,28 +303,24 @@ label_callback:
 			 && getData()->entityPosition < getEntityData(kEntityMmeBoutarel)->entityPosition) {
 
 				if (getData()->direction == kDirectionDown) {
-
 					getSavePoints()->push(kEntityFrancois, kEntityMmeBoutarel, kAction202221040);
 					params->param4 = 1;
 					params->param5 = 1;
-
 				} else if (params->param4 && getEntities()->checkFields9(kEntityFrancois, kEntityMmeBoutarel, 1000)) {
 					getSavePoints()->push(kEntityFrancois, kEntityMmeBoutarel, kAction168986720);
 					params->param5 = 1;
 				}
 			}
-		} else {
-			if (params->param1 < (int)getState()->time) {
-				getData()->clothes = kClothesDefault;
-				getData()->field_4A3 = 30;
-				getData()->inventoryItem = kItemNone;
+		} else if (params->param1 < (int)getState()->time) {
+			getData()->clothes = kClothesDefault;
+			getData()->field_4A3 = 30;
+			getData()->inventoryItem = kItemNone;
 
-				if (getSound()->isBuffered(kEntityFrancois))
-					getSound()->processEntry(kEntityFrancois);
+			if (getSound()->isBuffered(kEntityFrancois))
+				getSound()->processEntry(kEntityFrancois);
 
-				setCallback(4);
-				call(new ENTITY_SETUP(Francois, setup_function8), kCarRedSleeping, kPosition_5790);
-			}
+			setCallback(4);
+			call(new ENTITY_SETUP(Francois, setup_function8), kCarRedSleeping, kPosition_5790);
 		}
 		break;
 

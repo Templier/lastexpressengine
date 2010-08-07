@@ -476,8 +476,6 @@ IMPLEMENT_FUNCTION(Servers0, function25, 25)
 		getData()->entityPosition = kPosition_5800;
 		getData()->posture = kPostureStanding;
 
-		ENTITY_PARAM(0, 3) = 0;
-
 		setCallback(1);
 		call(new ENTITY_SETUP_SIIS(Servers0, setup_draw), "957");
 		break;
