@@ -156,7 +156,7 @@ IMPLEMENT_FUNCTION(Vassili, function6, 6)
 	case kActionNone:
 		if (getEntities()->isSitting(kEntityPlayer, kCarRedSleeping, kPosition_8200)) {
 
-			UPDATE_PARAM_FUNCTION(params->param3, getState()->timeTicks, params->param1, label_function7);
+			UPDATE_PARAM_GOTO(params->param3, getState()->timeTicks, params->param1, label_function7);
 
 			setCallback(1);
 			call(new ENTITY_SETUP_SIIS(Vassili, setup_draw), "303B");

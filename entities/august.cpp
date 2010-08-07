@@ -59,7 +59,7 @@ August::August(LastExpressEngine *engine) : Entity(engine, kEntityAugust) {
 	ADD_CALLBACK_FUNCTION(August, savegame);
 	ADD_CALLBACK_FUNCTION(August, updateEntity);
 	ADD_CALLBACK_FUNCTION(August, function17);
-	ADD_CALLBACK_FUNCTION(August, function18);
+	ADD_CALLBACK_FUNCTION(August, updateEntity2);
 	ADD_CALLBACK_FUNCTION(August, function19);
 	ADD_CALLBACK_FUNCTION(August, function20);
 	ADD_CALLBACK_FUNCTION(August, function21);
@@ -144,7 +144,7 @@ IMPLEMENT_FUNCTION_S(August, draw, 3)
  *
  * @param seq1   The sequence to draw
  * @param param4 The car
- * @param param5 The entity position
+ * @param param5 The position
  */
 IMPLEMENT_FUNCTION_SII(August, updatePosition, 4)
 	Entity::updatePosition(savepoint);
@@ -178,7 +178,7 @@ IMPLEMENT_FUNCTION_SI(August, enterExitCompartment2, 6)
  */
 IMPLEMENT_FUNCTION_SI(August, enterExitCompartment3, 7)
 	if (savepoint.action == kAction4) {
-		getEntities()->exitCompartment(kEntityAugust, (ObjectIndex)params->param4, true);
+		getEntities()->exitCompartment(kEntityAugust, (ObjectIndex)params->param4);
 		CALLBACK_ACTION()
 		return;
 	}
@@ -205,6 +205,13 @@ IMPLEMENT_FUNCTION_SIIS(August, callSavepoint, 9)
 	Entity::callSavepoint(savepoint);
 }
 
+/**
+ * Call a savepoint
+ *
+ * @param param1 The entity
+ * @param param2 The action
+ * @param seq    The sequence name for the savepoint
+ */
 IMPLEMENT_FUNCTION_IIS(August, callSavepointNoDrawing, 10)
 	switch (savepoint.action) {
 	default:
@@ -291,8 +298,37 @@ IMPLEMENT_FUNCTION_I(August, function17, 17)
 	error("August: callback function 17 not implemented!");
 }
 
-IMPLEMENT_FUNCTION_II(August, function18, 18)
-	error("August: callback function 18 not implemented!");
+/**
+ * Updates the entity
+ *
+ * @param param1 The car
+ * @param param2 The entity position
+ */
+IMPLEMENT_FUNCTION_II(August, updateEntity2, 18)
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionNone:
+		if (getEntities()->updateEntity(_entityIndex, (CarIndex)params->param1, (EntityPosition)params->param2)) {
+			CALLBACK_ACTION()
+		} else if (getEntities()->checkFields9(kEntityAugust, kEntityPlayer, 1000)
+		        && !getEntities()->checkFields6(kEntityPlayer)
+				&& !getEntities()->isSittingInCompartmentCars(kEntityPlayer)
+				&& !getEntities()->checkFields10(kEntityPlayer)) {
+
+			if (getData()->car == kCarGreenSleeping || getData()->car == kCarRedSleeping) {
+				ENTITY_PARAM(0, 1) = 1;
+				CALLBACK_ACTION()
+			}
+		}
+		break;
+
+	case kActionDefault:
+		if (getEntities()->updateEntity(_entityIndex, (CarIndex)params->param1, (EntityPosition)params->param2))
+			CALLBACK_ACTION()
+		break;
+	}
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -375,7 +411,7 @@ label_callback_8:
 			if (ENTITY_PARAM(1, 4) < (int)getState()->timeTicks) {
 				ENTITY_PARAM(1, 4) = kTimeInvalid;
 
-				getEntities()->exitCompartment(kEntityAugust, kObjectCompartment1);
+				getEntities()->exitCompartment(kEntityAugust, kObjectCompartment1, true);
 
 				if (getProgress().eventCorpseMovedFromFloor) {
 					setCallback(9);
@@ -799,11 +835,116 @@ IMPLEMENT_FUNCTION(August, chapter1Handler, 25)
 }
 
 IMPLEMENT_FUNCTION(August, function26, 26)
-	error("August: callback function 26 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionDefault:
+		if (getProgress().eventMetAugust || getProgress().field_14) {
+			setCallback(5);
+			call(new ENTITY_SETUP(August, setup_updateEntity), kCarGreenSleeping, kPosition_6470);
+		} else {
+			getProgress().field_14 = 2;
+			setCallback(1);
+			call(new ENTITY_SETUP(August, setup_updateEntity), kCarGreenSleeping, kPosition_8200);
+		}
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			setCallback(2);
+			call(new ENTITY_SETUP(August, setup_function23), getState()->time + 13500);
+			break;
+
+		case 2:
+			setCallback(3);
+			call(new ENTITY_SETUP(August, setup_updateEntity), kCarGreenSleeping, kPosition_6470);
+			break;
+
+		case 3:
+			setCallback(4);
+			call(new ENTITY_SETUP(August, setup_function19), false, false);
+			break;
+
+		case 4:
+			if (getProgress().field_14 == 2)
+				getProgress().field_14 = 0;
+
+			setCallback(7);
+			call(new ENTITY_SETUP(August, setup_function21), getState()->time + 900);
+			break;
+
+		case 5:
+			setCallback(6);
+			call(new ENTITY_SETUP(August, setup_function19), false, false);
+			break;
+
+		case 6:
+			setCallback(7);
+			call(new ENTITY_SETUP(August, setup_function21), getState()->time + 900);
+			break;
+
+		case 7:
+			setup_function27();
+			break;
+		}
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(August, function27, 27)
-	error("August: callback function 27 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionDefault:
+		setCallback(1);
+		call(new ENTITY_SETUP_ISSI(August, setup_function20), false);
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			setCallback(2);
+			call(new ENTITY_SETUP(August, setup_updateEntity), kCarRestaurant, kPosition_850);
+			break;
+
+		case 2:
+			setCallback(3);
+			call(new ENTITY_SETUP(August, setup_callbackActionOnSomebodyStandingInRestaurantOrSalon));
+			break;
+
+		case 3:
+			getData()->entityPosition = kPosition_1540;
+			getData()->posture = kPostureStanding;
+
+			setCallback(4);
+			call(new ENTITY_SETUP_SIIS(August, setup_draw), "803US");
+			break;
+
+		case 4:
+			getEntities()->drawSequenceRight(kEntityAugust, "010A");
+			if (getEntities()->isInSalon(kEntityPlayer))
+				getEntities()->updateFrame(kEntityAugust);
+
+			setCallback(5);
+			call(new ENTITY_SETUP_IISI(August, setup_callSavepointNoDrawing), kEntityTables3, kAction136455232, "BOGUS");
+			break;
+
+		case 5:
+			getData()->posture = kPostureSitting;
+			setup_function28();
+			break;
+		}
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(August, function28, 28)
@@ -1257,7 +1398,51 @@ IMPLEMENT_FUNCTION(August, function47, 47)
 }
 
 IMPLEMENT_FUNCTION(August, function48, 48)
-	error("August: callback function 48 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionNone:
+		TIME_CHECK(kTimeCityLinz, params->param1, setup_function49);
+		break;
+
+	case kActionKnock:
+	case kActionOpenDoor:
+		if (!getEvent(kEventAugustTalkCompartmentDoor) && !getEvent(kEventAugustTalkCompartmentDoorBlueRedingote)
+		 && !getEvent(kEventAugustBringEgg) && !getEvent(kEventAugustBringBriefcase)) {
+
+			if (savepoint.action == kActionKnock)
+				getSound()->playSound(kEntityPlayer, "LIB012");
+
+			setCallback(1);
+			call(new ENTITY_SETUP(August, setup_savegame), kSavegameType2, kEventAugustTalkCompartmentDoor);
+		}
+		break;
+
+	case kActionDefault:
+		getObjects()->update(kObjectCompartment3, kEntityAugust, kLocation1, kCursorHandKnock, kCursorHand);
+		getData()->clothes = kClothes2;
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			getAction()->playAnimation(kEventAugustTalkCompartmentDoor);
+			getScenes()->processScene();
+
+			setCallback(2);
+			call(new ENTITY_SETUP(August, setup_function21), kTimeCityLinz);
+			break;
+
+		case 2:
+			setup_function49();
+			break;
+		}
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(August, function49, 49)
@@ -1308,7 +1493,55 @@ IMPLEMENT_FUNCTION(August, function50, 50)
 }
 
 IMPLEMENT_FUNCTION(August, function51, 51)
-	error("August: callback function 51 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionDefault:
+		getData()->car = kCarGreenSleeping;
+		getData()->entityPosition = kPosition_850;
+		getData()->posture = kPostureStanding;
+
+		setCallback(1);
+		call(new ENTITY_SETUP(August, setup_function42), kCarGreenSleeping, kPosition_5790, false);
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			getSavePoints()->push(kEntityAugust, kEntityTatiana, kAction191668032);
+
+			setCallback(2);
+			call(new ENTITY_SETUP(August, setup_function42), kCarRedSleeping, kPosition_540, true);
+			break;
+
+		case 2:
+			getEntities()->clearSequences(kEntityAugust);
+			break;
+
+		case 3:
+			getEntities()->drawSequenceLeft(kEntityAugust, "BLANK");
+			getSavePoints()->push(kEntityAugust, kEntityAnna, kAction123712592);
+			break;
+		}
+		break;
+
+	case kAction122288808:
+		setup_function52();
+		break;
+
+	case kAction122358304:
+		getEntities()->drawSequenceLeft(kEntityAugust, "BLANK");
+		break;
+
+	case kAction169032608:
+		setCallback(3);
+		call(new ENTITY_SETUP(August, setup_function42), kCarRedSleeping, kPosition_3820, true);
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(August, function52, 52)
@@ -1443,7 +1676,54 @@ IMPLEMENT_FUNCTION(August, chapter4, 57)
 }
 
 IMPLEMENT_FUNCTION(August, chapter4Handler, 58)
-	error("August: callback function 58 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionDefault:
+		setCallback(1);
+		call(new ENTITY_SETUP_ISSI(August, setup_function20), false);
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			setCallback(2);
+			call(new ENTITY_SETUP(August, setup_updateEntity), kCarRestaurant, kPosition_850);
+			break;
+
+		case 2:
+			setCallback(3);
+			call(new ENTITY_SETUP(August, setup_callbackActionOnSomebodyStandingInRestaurantOrSalon));
+			break;
+
+		case 3:
+			getData()->entityPosition = kPosition_1540;
+			getData()->posture = kPostureStanding;
+
+			setCallback(4);
+			call(new ENTITY_SETUP_SIIS(August, setup_draw), "803WS");
+			break;
+
+		case 4:
+			getEntities()->drawSequenceRight(kEntityAugust, "010A3");
+			if (getEntities()->isInSalon(kEntityPlayer))
+				getEntities()->updateFrame(kEntityAugust);
+
+			setCallback(5);
+			call(new ENTITY_SETUP_IISI(August, setup_callSavepointNoDrawing), kEntityTables3, kAction136455232, "BOGUS");
+			break;
+
+		case 5:
+			getData()->posture = kPostureSitting;
+			setup_function59();
+			break;
+		}
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(August, function59, 59)
@@ -1522,7 +1802,56 @@ IMPLEMENT_FUNCTION(August, function63, 63)
 }
 
 IMPLEMENT_FUNCTION(August, function64, 64)
-	error("August: callback function 64 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionNone:
+		if (!params->param1)
+			params->param1 = getState()->time + 1800;
+
+		if (params->param1 >= (int)getState()->time)
+			break;
+
+		if (getState()->time > kTime2430000 && getEntities()->isSomebodyStandingInRestaurantOrSalon())  {
+			getData()->posture = kPostureStanding;
+
+			setCallback(1);
+			call(new ENTITY_SETUP_SIIS(August, setup_updatePosition), "122J", kCarRestaurant, 57);
+		}
+		break;
+
+	case kActionDefault:
+		getEntities()->drawSequenceLeft(kEntityAugust, "122H");
+		break;
+
+	case kActionDrawScene:
+		if (getEntities()->isPlayerPosition(kCarRestaurant, 57))
+			getScenes()->loadSceneFromPosition(kCarRestaurant, 50);
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			setCallback(2);
+			call(new ENTITY_SETUP(August, setup_updateEntity), kCarGreenSleeping, kPosition_6470);
+			break;
+
+		case 2:
+			setCallback(3);
+			call(new ENTITY_SETUP_SIIS(August, setup_enterExitCompartment2), "696Dc", kObjectCompartment3);
+			break;
+
+		case 3:
+			getEntities()->clearSequences(kEntityAugust);
+			setup_function65();
+			break;
+		}
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(August, function65, 65)

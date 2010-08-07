@@ -40,8 +40,6 @@
 
 namespace LastExpress {
 
-#define LOBYTE(w)           ((unsigned char)(((unsigned long)(w)) & 0xff))
-
 Anna::Anna(LastExpressEngine *engine) : Entity(engine, kEntityAnna) {
 	ADD_CALLBACK_FUNCTION(Anna, reset);
 	ADD_CALLBACK_FUNCTION(Anna, draw);
@@ -728,7 +726,7 @@ IMPLEMENT_FUNCTION_I(Anna, function18, 18)
 		}
 
 		if (params->param5 && !params->param4) {
-			UPDATE_PARAM_FUNCTION(params->param6, getState()->time, 900, label_next);
+			UPDATE_PARAM_GOTO(params->param6, getState()->time, 900, label_next);
 
 			params->param2 |= kItemScarf;
 			params->param5 = 0;

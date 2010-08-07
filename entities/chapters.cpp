@@ -246,7 +246,7 @@ IMPLEMENT_FUNCTION(Chapters, chapter1Handler, 8)
 		if (!getProgress().isTrainRunning || getState()->time >= kTime1458000)
 			goto label_processStations;
 
-		UPDATE_PARAM_FUNCTION(params->param6, getState()->timeTicks, params->param2, label_processStations)
+		UPDATE_PARAM_GOTO(params->param6, getState()->timeTicks, params->param2, label_processStations)
 
 		// Play sound FX
 		getSound()->playLocomotiveSound();

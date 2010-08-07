@@ -68,11 +68,27 @@
 		break; \
 	}
 
+#define TIME_CHECK_CALLBACK_I(class, timeValue, parameter, callback, function, param1) \
+	if (getState()->time > timeValue && !parameter) { \
+		parameter = 1; \
+		setCallback(callback); \
+		call(new ENTITY_SETUP(class, function), param1); \
+		break; \
+	}
+
 #define TIME_CHECK_CALLBACK_S(class, timeValue, parameter, callback, function, seq) \
 	if (getState()->time > timeValue && !parameter) { \
 		parameter = 1; \
 		setCallback(callback); \
 		call(new ENTITY_SETUP_SIIS(class, function), seq); \
+		break; \
+	}
+
+#define TIME_CHECK_CALLBACK_SII(class, timeValue, parameter, callback, function, seq, param1, param2) \
+	if (getState()->time > timeValue && !parameter) { \
+		parameter = 1; \
+		setCallback(callback); \
+		call(new ENTITY_SETUP_SIIS(class, function), seq, param1, param2); \
 		break; \
 	}
 
@@ -171,7 +187,7 @@
 	parameter = kTimeInvalid; \
 }
 
-#define UPDATE_PARAM_FUNCTION(parameter, type, value, label) { \
+#define UPDATE_PARAM_GOTO(parameter, type, value, label) { \
 	if (!parameter) \
 		parameter = (int)type + (int)value; \
 	if (parameter >= (int)type) \

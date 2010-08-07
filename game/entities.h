@@ -81,8 +81,8 @@ public:
 	 */
 	void updateFrame(EntityIndex entity) const;
 	void updatePosition(EntityIndex entity, CarIndex car, Position position, bool processScene = false);
-	void enterCompartment(EntityIndex entity, ObjectIndex compartment, bool useCompartment1 = true);
-	void exitCompartment(EntityIndex entity, ObjectIndex compartment, bool useCompartment1 = true);
+	void enterCompartment(EntityIndex entity, ObjectIndex compartment, bool useCompartment1 = false);
+	void exitCompartment(EntityIndex entity, ObjectIndex compartment, bool useCompartment1 = false);
 
 	// Sequences
 	void drawSequenceLeft(EntityIndex index, const char* sequence);

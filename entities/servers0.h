@@ -43,7 +43,7 @@ public:
 	DECLARE_FUNCTION_NOSETUP(updateFromTime)
 	DECLARE_FUNCTION_S(draw)
 	DECLARE_FUNCTION_NOSETUP(updatePosition)
-	DECLARE_FUNCTION_NOSETUP(function5)
+	DECLARE_FUNCTION_NOSETUP(callbackActionOnDirection)
 	DECLARE_FUNCTION_S(playSound)
 	DECLARE_FUNCTION(function7)
 	DECLARE_FUNCTION(function8)
@@ -67,12 +67,12 @@ public:
 	DECLARE_FUNCTION(function26)
 	DECLARE_FUNCTION(chapter3)
 	DECLARE_FUNCTION(chapter3Handler)
-	DECLARE_FUNCTION(function29)
+	DECLARE_FUNCTION(augustAnnaDateOrder)
 	DECLARE_FUNCTION(function30)
 	DECLARE_FUNCTION(chapter4)
 	DECLARE_FUNCTION(chapter4Handler)
-	DECLARE_FUNCTION(function33)
-	DECLARE_FUNCTION(function34)
+	DECLARE_FUNCTION(augustOrderSteak)
+	DECLARE_FUNCTION(augustServeDuck)
 	DECLARE_FUNCTION(function35)
 	DECLARE_FUNCTION(chapter5)
 	DECLARE_FUNCTION(chapter5Handler)
@@ -83,7 +83,7 @@ private:
 	DECLARE_CALL_FUNCTION(siis, Servers0, const char *, int, int, const char*)
 
 	void handleServer(const SavePoint &savepoint, const char* name, EntityIndex entity, ActionIndex action, int *parameter, const char* name2 = "");
-	void serveTable(const SavePoint &savepoint, const char* seq1, EntityIndex entity, const char* seq2, const char* seq3, const char* seq4, int *parameter, bool updatePosition = true, bool pushSavepoint = false);
+	void serveTable(const SavePoint &savepoint, const char* seq1, EntityIndex entity, const char* seq2, const char* seq3, const char* seq4, int *parameter, bool shouldUpdatePosition = true, bool pushSavepoint = false, Position position = 0);
 };
 
 } // End of namespace LastExpress

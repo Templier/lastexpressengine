@@ -315,7 +315,111 @@ IMPLEMENT_FUNCTION_IS(Boutarel, function17, 17)
 }
 
 IMPLEMENT_FUNCTION_I(Boutarel, function18, 18)
-	error("Boutarel: callback function 18 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionNone:
+		if (params->param1 < (int)getState()->time && !params->param4) {
+			params->param4 = 1;
+
+			getObjects()->update(kObjectCompartmentC, kEntityPlayer, kLocationNone, kCursorHandKnock, kCursorHand);
+			getObjects()->update(kObject50, kEntityPlayer, kLocationNone, kCursorHandKnock, kCursorHand);
+
+			CALLBACK_ACTION()
+			break;
+		}
+
+		if (params->param2) {
+			UPDATE_PARAM(params->param5, getState()->timeTicks, 75);
+
+			params->param2 = 0;
+			params->param3 = 1;
+
+			getObjects()->update(kObjectCompartmentC, kEntityBoutarel, kLocation1, kCursorNormal, kCursorNormal);
+			getObjects()->update(kObject50, kEntityBoutarel, kLocation1, kCursorNormal, kCursorNormal);
+		}
+
+		params->param5 = 0;
+		break;
+
+	case kActionKnock:
+	case kActionOpenDoor:
+		getObjects()->update(kObjectCompartmentC, kEntityBoutarel, kLocation1, kCursorNormal, kCursorNormal);
+		getObjects()->update(kObject50, kEntityBoutarel, kLocation1, kCursorNormal, kCursorNormal);
+
+		if (params->param2) {
+			if (savepoint.param.intValue == 50) {
+				setCallback(4);
+				call(new ENTITY_SETUP_SIIS(Boutarel, setup_playSound), getSound()->justAMinuteCath());
+			} else if (getInventory()->hasItem(kItemPassengerList)) {
+				setCallback(5);
+				call(new ENTITY_SETUP_SIIS(Boutarel, setup_playSound), random(2) ? "CAT1511" : getSound()->wrongDoorCath());
+			} else {
+				setCallback(6);
+				call(new ENTITY_SETUP_SIIS(Boutarel, setup_playSound), getSound()->wrongDoorCath());
+			}
+		} else {
+			setCallback(savepoint.action == kActionKnock ? 1 : 2);
+			call(new ENTITY_SETUP_SIIS(Boutarel, setup_playSound), savepoint.action == kActionKnock ? "LIB012" : "LIB013");
+		}
+		break;
+
+	case kActionDefault:
+		getObjects()->update(kObjectCompartmentC, kEntityBoutarel, kLocation1, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObject50, kEntityBoutarel, kLocation1, kCursorHandKnock, kCursorHand);
+		break;
+
+	case kActionDrawScene:
+		if (params->param3 || params->param2) {
+			getObjects()->update(kObjectCompartmentC, kEntityBoutarel, kLocation1, kCursorHandKnock, kCursorHand);
+			getObjects()->update(kObject50, kEntityBoutarel, kLocation1, kCursorHandKnock, kCursorHand);
+
+			params->param2 = 0;
+			params->param3 = 0;
+		}
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+		case 2:
+			setCallback(3);
+			call(new ENTITY_SETUP_SIIS(Boutarel, setup_playSound), random(2) ? "MRB1001" : "MRB1001A");
+			break;
+
+		case 3:
+			getObjects()->update(kObjectCompartmentC, kEntityBoutarel, kLocation1, kCursorTalk, kCursorNormal);
+			getObjects()->update(kObject50, kEntityBoutarel, kLocation1, kCursorTalk, kCursorNormal);
+
+			params->param2 = 1;
+			break;
+
+		case 4:
+		case 5:
+		case 6:
+			params->param2 = 0;
+			params->param3 = 1;
+			break;
+
+		case 7:
+			getSavePoints()->push(kEntityBoutarel, kEntityCoudert, kAction123199584);
+			break;
+
+		}
+		break;
+
+	case kAction122865568:
+		getSavePoints()->push(kEntityBoutarel, kEntityCoudert, kAction88652208);
+		break;
+
+	case kAction221683008:
+		setCallback(7);
+		call(new ENTITY_SETUP_SIIS(Boutarel, setup_playSound), "MRB1001");
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Boutarel, chapter1, 19)

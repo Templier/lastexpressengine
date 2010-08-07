@@ -283,18 +283,18 @@ IMPLEMENT_FUNCTION(Kahina, function14, 14)
 		break;
 
 	case kActionExitCompartment:
-		getEntities()->exitCompartment(kEntityKahina, kObjectCompartmentF, true);
+		getEntities()->exitCompartment(kEntityKahina, kObjectCompartmentF);
 		CALLBACK_ACTION()
 		break;
 
 	case kAction4:
-		getEntities()->exitCompartment(kEntityKahina, kObjectCompartmentF, true);
+		getEntities()->exitCompartment(kEntityKahina, kObjectCompartmentF);
 		CALLBACK_ACTION()
 		break;
 
 	case kActionDefault:
 		getEntities()->drawSequenceRight(kEntityKahina, "616Cf");
-		getEntities()->enterCompartment(kEntityKahina, kObjectCompartmentF, true);
+		getEntities()->enterCompartment(kEntityKahina, kObjectCompartmentF);
 		getSavePoints()->push(kEntityKahina, kEntityMax, kAction158007856);
 		break;
 	}
@@ -478,8 +478,41 @@ IMPLEMENT_FUNCTION(Kahina, chapter3, 18)
 	}
 }
 
+/**
+ * Update the entity, handling excuse me events and resetting the entity state after the argument with Anna in the bagage car
+ *
+ * @param param1 The car index
+ * @param param2 The entity position
+ */
 IMPLEMENT_FUNCTION_II(Kahina, function19, 19)
-	error("Kahina: callback function 19 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionNone:
+		if (getEvent(kEventAnnaBagageArgument))
+			RESET_ENTITY_STATE(kEntityKahina, Kahina, setup_function22);
+
+		if (getEntities()->updateEntity(kEntityKahina, (CarIndex)params->param1, (EntityPosition)params->param2))
+			CALLBACK_ACTION()
+		break;
+
+	case kActionExcuseMeCath:
+		if (getEvent(kEventKronosConversation) || getEvent(kEventKronosConversationFirebird))
+			getSound()->playSound(kEntityPlayer, random(2) ? "CAT1019" : "CAT1019A");
+		else
+			getSound()->excuseMeCath();
+		break;
+
+	case kActionExcuseMe:
+		getSound()->excuseMe(kEntityKahina);
+		break;
+
+	case kActionDefault:
+		if (getEntities()->updateEntity(kEntityKahina, (CarIndex)params->param1, (EntityPosition)params->param2))
+			CALLBACK_ACTION()
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Kahina, chapter3Handler, 20)
@@ -539,7 +572,45 @@ IMPLEMENT_FUNCTION(Kahina, function26, 26)
 }
 
 IMPLEMENT_FUNCTION(Kahina, function27, 27)
-	error("Kahina: callback function 27 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionNone:
+		if (getEntities()->checkFields6(kEntityPlayer))
+			params->param1 = kEventKahinaPunchCar;
+		else if (getEntities()->checkFields7(kCarGreenSleeping))
+			params->param1 = kEventKahinaPunchBlue;
+		else if (getEntities()->checkFields7(kCarRedSleeping))
+			params->param1 = kEventKahinaPunchYellow;
+		else if (getEntities()->isInSalon(kEntityPlayer))
+			params->param1 = kEventKahinaPunchSalon;
+		else if (getEntities()->isInRestaurant(kEntityPlayer))
+			params->param1 = kEventKahinaPunchRestaurant;
+		else if (getEntities()->isInKitchen(kEntityPlayer))
+			params->param1 = kEventKahinaPunchKitchen;
+		else if (getEntities()->isInBaggageCarEntrance(kEntityPlayer))
+			params->param1 = kEventKahinaPunchBaggageCarEntrance;
+		else if (getEntities()->isSittingOrStanding(kEntityPlayer, kCarBaggage))
+			params->param1 = kEventKahinaPunchBaggageCar;
+
+		if (params->param1) {
+			setCallback(1);
+			call(new ENTITY_SETUP(Kahina, setup_savegame), kSavegameType2, kSceneGameOverAlarm2);
+		}
+		break;
+
+	case kActionDefault:
+		getState()->timeDelta = 0;
+		break;
+
+	case kActionCallback:
+		if (getCallback() == 1) {
+			getAction()->playAnimation((EventIndex)params->param1);
+			getLogic()->gameOver(kInitTypeIndex, 1, kSceneNone, true);
+		}
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Kahina, chapter4, 28)

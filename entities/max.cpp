@@ -326,7 +326,7 @@ setup_functions:
 		getData()->car = kCarRedSleeping;
 
 		getEntities()->drawSequenceLeft(kEntityMax, "630Af");
-		getEntities()->enterCompartment(kEntityMax, kObjectCompartmentF, false);
+		getEntities()->enterCompartment(kEntityMax, kObjectCompartmentF, true);
 
 		params->param1 = getState()->time + 2700;
 		break;
@@ -548,19 +548,19 @@ IMPLEMENT_FUNCTION(Max, function15, 15)
 	case kActionCallback:
 		if (getCallback() == 1) {
 			getEntities()->drawSequenceLeft(kEntityMax, "630Af");
-			getEntities()->enterCompartment(kEntityMax, kObjectCompartmentF, false);
+			getEntities()->enterCompartment(kEntityMax, kObjectCompartmentF, true);
 			getSavePoints()->push(kEntityMax, kEntityAnna, kAction156622016);
 		}
 		break;
 
 	case kAction122358304:
 		(savepoint.entity2 == kEntityAnna) ? (params->param1 = 1) : (params->param2 = 1);
-		getEntities()->exitCompartment(kEntityMax, kObjectCompartmentF, false);
+		getEntities()->exitCompartment(kEntityMax, kObjectCompartmentF, true);
 		getEntities()->drawSequenceLeft(kEntityMax, "BLANK");
 		break;
 
 	case kActionMaxFreeFromCage:
-		getEntities()->exitCompartment(kEntityMax, kObjectCompartmentF, false);
+		getEntities()->exitCompartment(kEntityMax, kObjectCompartmentF, true);
 		setup_chapter4Handler();
 		break;
 	}
@@ -608,12 +608,12 @@ IMPLEMENT_FUNCTION(Max, function17, 17)
 
 	case kAction122358304:
 		params->param1 = 1;
-		getEntities()->exitCompartment(kEntityMax, kObjectCompartmentF, false);
+		getEntities()->exitCompartment(kEntityMax, kObjectCompartmentF, true);
 		getEntities()->drawSequenceLeft(kEntityMax, "BLANK");
 		break;
 
 	case kActionMaxFreeFromCage:
-		getEntities()->exitCompartment(kEntityMax, kObjectCompartmentF, false);
+		getEntities()->exitCompartment(kEntityMax, kObjectCompartmentF, true);
 		setup_chapter4Handler();
 		break;
 	}

@@ -365,7 +365,7 @@ void Entity::enterExitCompartment(const SavePoint &savepoint, EntityPosition pos
 		break;
 
 	case kActionExitCompartment:
-		getEntities()->exitCompartment(_entityIndex, (ObjectIndex)params->param4, false);
+		getEntities()->exitCompartment(_entityIndex, (ObjectIndex)params->param4);
 		if (position1)
 			getData()->entityPosition = position1;
 
@@ -377,7 +377,7 @@ void Entity::enterExitCompartment(const SavePoint &savepoint, EntityPosition pos
 
 	case kActionDefault:
 		getEntities()->drawSequenceRight(_entityIndex, (char *)&params->seq1);
-		getEntities()->enterCompartment(_entityIndex, (ObjectIndex)params->param4, false);
+		getEntities()->enterCompartment(_entityIndex, (ObjectIndex)params->param4);
 
 		if (position1) {
 			getData()->posture = kPostureSitting;

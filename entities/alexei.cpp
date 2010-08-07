@@ -244,13 +244,13 @@ IMPLEMENT_FUNCTION(Alexei, function14, 14)
 			getData()->posture = kPostureStanding;
 			getSavePoints()->push(kEntityAlexei, kEntityMertens, kAction302614416);
 			getEntities()->drawSequenceLeft(kEntityAlexei, "602DB");
-			getEntities()->enterCompartment(kEntityAlexei, kObjectCompartment2);
+			getEntities()->enterCompartment(kEntityAlexei, kObjectCompartment2, true);
 		}
 		break;
 
 	case kAction135664192:
 		getObjects()->update(kObjectCompartment2, kEntityPlayer, kLocation1, kCursorHandKnock, kCursorHand);
-		getEntities()->exitCompartment(kEntityAlexei, kObjectCompartment2);
+		getEntities()->exitCompartment(kEntityAlexei, kObjectCompartment2, true);
 
 		CALLBACK_ACTION()
 		break;
@@ -472,7 +472,7 @@ IMPLEMENT_FUNCTION(Alexei, chapter1Handler, 18)
 		break;
 
 	case kActionDrawScene:
-		params->param1 = getEntities()->isPlayerPosition(kCarRestaurant, 63) ? 1 : 0;
+		params->param1 = getEntities()->isPlayerPosition(kCarRestaurant, 63);
 		break;
 
 	case kActionCallback:
@@ -506,7 +506,7 @@ IMPLEMENT_FUNCTION(Alexei, chapter1Handler, 18)
 		break;
 
 	case kAction168627977:
-		getData()->inventoryItem = (InventoryItem)params->param2;
+		getData()->inventoryItem = (InventoryItem)LOBYTE(params->param2);
 		break;
 
 	case kAction225182640:

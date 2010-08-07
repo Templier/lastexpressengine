@@ -75,7 +75,8 @@ enum TimeValue {
 	kTime1201500              = 1201500,
 	kTime1206000              = 1206000,
 	kTime1215000              = 1215000,
-	kTIme1225800              = 1225800,
+	kTime1224000              = 1224000,
+	kTime1225800              = 1225800,
 	kTimeCityBarLeDuc         = 1228500,
 	kTimeExitBarLeDuc         = 1231200,
 	kTime1242000              = 1242000,
@@ -176,6 +177,7 @@ enum TimeValue {
 	kTimeCityGalanta          = 2418300,
 	kTime2422800              = 2422800,
 	kTime2425500              = 2425500,
+	kTime2430000              = 2430000,
 	kTime2457000              = 2457000,
 	kTime2479500              = 2479500,
 	kTime2488500              = 2488500,
@@ -1187,6 +1189,7 @@ enum ActionIndex {
 	kAction123793792 = 123793792,
 	kAction168046720 = 168046720,
 	kAction168627977 = 168627977,
+	kAction169032608 = 169032608,
 	kAction203859488 = 203859488,
 	kAction219522616 = 219522616,    // Servers0
 	kAction225182640 = 225182640,
@@ -1221,22 +1224,24 @@ enum ActionIndex {
 	kAction168253822 = 168253822,
 	kAction168254872 = 168254872,
 	kAction169557824 = 169557824,
-	kAction171394341 = 171394341,    // Coudert / Mertens
+	kAction171394341 = 171394341,    // Mertens
 	kAction185671840 = 185671840,
 	kAction185737168 = 185737168,
 	kAction188570113 = 188570113,
 	kAction189026624 = 189026624,
 	kAction189750912 = 189750912,
-	kAction201431954 = 201431954,    // Coudert / Mertens / Verges
+	kAction192063264 = 192063264,    // Anna
+	kAction201431954 = 201431954,    // Mertens / Verges
 	kAction201439712 = 201439712,
 	kAction205033696 = 205033696,
-	kAction205346192 = 205346192,    // Coudert / Francois
+	kAction205346192 = 205346192,    // Francois
 	kAction225932896 = 225932896,
-	kAction226031488 = 226031488,    // Coudert / Verges
+	kAction226031488 = 226031488,    // Verges
+	kAction238358920 = 238358920,    // Anna
 	kAction292048641 = 292048641,
 	kAction305159806 = 305159806,
 	kAction326348944 = 326348944,
-	kAction339669520 = 339669520,    // Coudert / Verges
+	kAction339669520 = 339669520,    // Verges
 
 	/////////////////////////////
 	// Francois
@@ -1261,11 +1266,12 @@ enum ActionIndex {
 	/////////////////////////////
 	kAction137685712 = 137685712,
 	kAction171849314 = 171849314,
+	kAction235599361 = 235599361,
 
 	/////////////////////////////
 	// Mahmud
 	/////////////////////////////
-	kAction102227384 = 102227384,    // Mahmud / Mertens
+	kAction102227384 = 102227384,    // Mertens
 	kAction156567128 = 156567128,
 	kAction170483072 = 170483072,
 	kAction225563840 = 225563840,
@@ -1283,6 +1289,7 @@ enum ActionIndex {
 	/////////////////////////////
 	// Mertens
 	/////////////////////////////
+	kAction155604840 = 155604840,    // MmeBoutarel
 	kAction169633856 = 169633856,
 	kAction188635520 = 188635520,
 	kAction190082817 = 190082817,
@@ -1297,10 +1304,10 @@ enum ActionIndex {
 	/////////////////////////////
 	// Milos
 	/////////////////////////////
-	kAction88652208 = 88652208,      // Milos/Coudert
+	kAction88652208 = 88652208,      // Coudert
 	kAction122865568 = 122865568,
 	kAction123852928 = 123852928,
-	kAction123199584 = 123199584,    // Milos/Coudert
+	kAction123199584 = 123199584,    // Coudert
 	kAction157691176 = 157691176,
 	kAction208228224 = 208228224,
 	kAction221683008 = 221683008,
@@ -1349,6 +1356,7 @@ enum ActionIndex {
 	/////////////////////////////
 	kAction170016384 = 170016384,
 	kAction188893625 = 188893625,
+	kAction201964801 = 201964801,    // August
 	kAction204704037 = 204704037,
 	kAction207330561 = 207330561,
 	kAction218128129 = 218128129,
@@ -1370,8 +1378,8 @@ enum ActionIndex {
 	// Servers 1
 	/////////////////////////////
 	kAction101106391 = 101106391,
-	kAction122288808 = 122288808,    // Servers1/Boutarel
-	kAction123712592 = 123712592,    // Servers1/Ivo
+	kAction122288808 = 122288808,    // Boutarel
+	kAction123712592 = 123712592,    // Ivo
 	kAction189688608 = 189688608,
 	kAction219377792 = 219377792,
 	kAction223002560 = 223002560,
@@ -1403,12 +1411,15 @@ enum ActionIndex {
 	/////////////////////////////
 	// Tatiana
 	/////////////////////////////
+	kAction69239528  = 69239528,
 	kAction123857088 = 123857088,
 	kAction124973510 = 124973510,
 	kAction156444784 = 156444784,
 	kAction169360385 = 169360385,
 	kAction191198209 = 191198209,
+	kAction223183000 = 223183000,    // August
 	kAction236053296 = 236053296,    // Alexei
+	kAction268620864 = 268620864,    // August
 	kAction290869168 = 290869168,
 
 	/////////////////////////////
@@ -1428,12 +1439,15 @@ enum ActionIndex {
 	/////////////////////////////
 	// Verges
 	/////////////////////////////
-	kAction125233040 = 125233040,   // Verges / Abbot
+	kAction125233040 = 125233040,   // Abbot
+	kAction125499160 = 125499160,
+	kAction155853632 = 155853632,
 	kAction158617345 = 158617345,
 	kAction167854368 = 167854368,
 	kAction168187490 = 168187490,
 	kAction168255788 = 168255788,
 	kActionDeliverMessageToTyler = 191337656,
+	kAction202558662 = 202558662,
 
 	/////////////////////////////
 	// Vassili
@@ -1450,6 +1464,7 @@ enum ActionIndex {
 	kAction135024800 = 135024800,
 	kAction137165825 = 137165825,
 	kAction190412928 = 190412928,
+	kAction203663744 = 203663744,
 	kAction204832737 = 204832737,
 
 	/////////////////////////////

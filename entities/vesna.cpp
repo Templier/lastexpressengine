@@ -45,7 +45,7 @@ Vesna::Vesna(LastExpressEngine *engine) : Entity(engine, kEntityVesna) {
 	ADD_CALLBACK_FUNCTION(Vesna, draw);
 	ADD_CALLBACK_FUNCTION(Vesna, updateEntity);
 	ADD_CALLBACK_FUNCTION(Vesna, updateFromTime);
-	ADD_CALLBACK_FUNCTION(Vesna, function7);
+	ADD_CALLBACK_FUNCTION(Vesna, updateEntity2);
 	ADD_CALLBACK_FUNCTION(Vesna, callbackActionOnSomebodyStandingInRestaurantOrSalon);
 	ADD_CALLBACK_FUNCTION(Vesna, callbackActionOnDirection);
 	ADD_CALLBACK_FUNCTION(Vesna, savegame);
@@ -132,7 +132,13 @@ IMPLEMENT_FUNCTION_I(Vesna, updateFromTime, 6)
 	Entity::updateFromTime(savepoint);
 }
 
-IMPLEMENT_FUNCTION_II(Vesna, function7, 7)
+/**
+ * Updates the entity
+ *
+ * @param param1 The car
+ * @param param2 The entity position
+ */
+IMPLEMENT_FUNCTION_II(Vesna, updateEntity2, 7)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -141,8 +147,8 @@ IMPLEMENT_FUNCTION_II(Vesna, function7, 7)
 		params->param3 = 0;
 
 		if (getEntities()->checkFields9(kEntityVesna, kEntityMilos, 500)
-		 || (getData()->direction == kDirectionUp && (getData()->car > getEntityData(kEntityMilos)->car || getData()->car == getEntityData(kEntityMilos)->car && getData()->entityPosition > getEntityData(kEntityMilos)->entityPosition))
-		 || (getData()->direction == kDirectionDown && (getData()->car < getEntityData(kEntityMilos)->car || getData()->car == getEntityData(kEntityMilos)->car && getData()->entityPosition < getEntityData(kEntityMilos)->entityPosition))) {
+		 || ((getData()->direction == kDirectionUp && (getData()->car > getEntityData(kEntityMilos)->car) || (getData()->car == getEntityData(kEntityMilos)->car && getData()->entityPosition > getEntityData(kEntityMilos)->entityPosition)))
+		 || ((getData()->direction == kDirectionDown && (getData()->car < getEntityData(kEntityMilos)->car) || (getData()->car == getEntityData(kEntityMilos)->car && getData()->entityPosition < getEntityData(kEntityMilos)->entityPosition)))) {
 			getData()->field_49B = 0;
 			params->param3 = 1;
 		}
@@ -318,7 +324,7 @@ IMPLEMENT_FUNCTION(Vesna, chapter1Handler, 13)
 
 	case kAction204832737:
 		setCallback(1);
-		call(new ENTITY_SETUP(Vesna, setup_function7), kCarRedSleeping, kPosition_3050);
+		call(new ENTITY_SETUP(Vesna, setup_updateEntity2), kCarRedSleeping, kPosition_3050);
 		break;
 	}
 }
@@ -429,7 +435,46 @@ IMPLEMENT_FUNCTION(Vesna, function22, 22)
 }
 
 IMPLEMENT_FUNCTION(Vesna, function23, 23)
-	error("Vesna: callback function 23 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionKnock:
+	case kActionOpenDoor:
+		getObjects()->update(kObjectCompartmentG, kEntityVesna, kLocation3, kCursorNormal, kCursorNormal);
+		setCallback(savepoint.action == kActionKnock ? 1 : 2);
+		call(new ENTITY_SETUP_SIIS(Vesna, setup_playSound), savepoint.action == kActionKnock ? "LIB012" : "LIB013");
+		break;
+
+	case kActionDefault:
+		getData()->car = kCarRedSleeping;
+		getData()->entityPosition = kPosition_3050;
+		getData()->posture = kPostureSitting;
+		getData()->clothes = kClothesDefault;
+		getData()->inventoryItem = kItemNone;
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+		case 2:
+			setCallback(3);
+			call(new ENTITY_SETUP_SIIS(Vesna, setup_playSound), "VES1015A");
+			break;
+
+		case 3:
+			getObjects()->update(kObjectCompartmentG, kEntityVesna, kLocation3, kCursorHandKnock, kCursorHand);
+			break;
+		}
+		break;
+
+	case kAction203663744:
+		getObjects()->update(kObjectCompartmentG, kEntityVesna, kLocation3, kCursorHandKnock, kCursorHand);
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Vesna, chapter4, 24)
@@ -464,7 +509,55 @@ IMPLEMENT_FUNCTION(Vesna, function25, 25)
 }
 
 IMPLEMENT_FUNCTION(Vesna, function26, 26)
-	error("Vesna: callback function 26 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionDefault:
+		setCallback(1);
+		call(new ENTITY_SETUP(Vesna, setup_callbackActionOnSomebodyStandingInRestaurantOrSalon));
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			getData()->car = kCarRestaurant;
+			getData()->entityPosition = kPosition_5800;
+			getData()->posture = kPostureStanding;
+
+			setCallback(2);
+			call(new ENTITY_SETUP_SIIS(Vesna, setup_draw), "808DD");
+			break;
+
+		case 2:
+			getEntities()->drawSequenceRight(kEntityVesna, "808DS");
+
+			if (getEntities()->isInRestaurant(kEntityPlayer))
+				getEntities()->updateFrame(kEntityVesna);
+
+			setCallback(3);
+			call(new ENTITY_SETUP(Vesna, setup_callbackActionOnDirection));
+			break;
+
+		case 3:
+			setCallback(4);
+			call(new ENTITY_SETUP(Vesna, setup_updateEntity), kCarRedSleeping, kPosition_3050);
+			break;
+
+		case 4:
+			setCallback(5);
+			call(new ENTITY_SETUP_SIIS(Vesna, setup_enterExitCompartment), "610AG", kObjectCompartmentG);
+			break;
+
+		case 5:
+			setup_function27();
+			break;
+		}
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Vesna, function27, 27)

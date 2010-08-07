@@ -294,7 +294,7 @@ IMPLEMENT_FUNCTION(Train, process, 8)
 		}
 
 		if (params->param6) {
-			UPDATE_PARAM_FUNCTION(params1->param7, getState()->time, 900, label_process);
+			UPDATE_PARAM_GOTO(params1->param7, getState()->time, 900, label_process);
 			getScenes()->loadSceneFromPosition(kCarRestaurant, 58);
 		}
 

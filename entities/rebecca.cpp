@@ -283,7 +283,7 @@ IMPLEMENT_FUNCTION_I(Rebecca, function20, 20)
 			goto label_process;
 		}
 
-		UPDATE_PARAM_FUNCTION(params->param6, getState()->timeTicks, 75, label_process);
+		UPDATE_PARAM_GOTO(params->param6, getState()->timeTicks, 75, label_process);
 
 		params->param2 = 0;
 		params->param3 = 1;
@@ -590,7 +590,45 @@ IMPLEMENT_FUNCTION(Rebecca, function25, 25)
 }
 
 IMPLEMENT_FUNCTION(Rebecca, function26, 26)
-	error("Rebecca: callback function 26 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionNone:
+		TIME_CHECK_CALLBACK_SII(Rebecca, kTime1224000, params->param2, 1, setup_updatePosition, "118H", kCarRestaurant, 52);
+
+		if (params->param1) {
+			UPDATE_PARAM(params->param3, getState()->timeTicks, 90);
+
+			getScenes()->loadSceneFromPosition(kCarRestaurant, 51);
+		}
+		break;
+
+	case kActionDefault:
+		getEntities()->drawSequenceLeft(kEntityRebecca, "118D");
+		break;
+
+	case kActionDrawScene:
+		params->param1 = getEntities()->isPlayerPosition(kCarRestaurant, 52);
+		params->param3 = 0;
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			setCallback(2);
+			call(new ENTITY_SETUP(Rebecca, setup_function18));
+			break;
+
+		case 2:
+			setup_function27();
+			break;
+		}
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Rebecca, function27, 27)

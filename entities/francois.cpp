@@ -25,6 +25,7 @@
 
 #include "lastexpress/entities/francois.h"
 
+#include "lastexpress/game/action.h"
 #include "lastexpress/game/entities.h"
 #include "lastexpress/game/inventory.h"
 #include "lastexpress/game/logic.h"
@@ -212,7 +213,216 @@ IMPLEMENT_FUNCTION(Francois, function10, 10)
 }
 
 IMPLEMENT_FUNCTION_I(Francois, function11, 11)
-	error("Francois: callback function 11 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionNone:
+		if (!getSound()->isBuffered(kEntityFrancois)) {
+
+			if (!CURRENT_PARAMS(1, 1))
+				CURRENT_PARAMS(1, 1) = getState()->timeTicks + params->param6;
+
+			if (CURRENT_PARAMS(1, 1) < (int)getState()->timeTicks) {
+
+				switch (random(7)) {
+				default:
+					break;
+
+				case 0:
+					getSound()->playSound(kEntityFrancois, "Fra1002A");
+					break;
+
+				case 1:
+					getSound()->playSound(kEntityFrancois, "Fra1002B");
+					break;
+
+				case 2:
+					getSound()->playSound(kEntityFrancois, "Fra1002C");
+					break;
+
+				case 3:
+					getSound()->playSound(kEntityFrancois, "Fra1002D");
+					break;
+
+				case 4:
+					getSound()->playSound(kEntityFrancois, "Fra1002E");
+					break;
+
+				case 5:
+				case 6:
+					getSound()->playSound(kEntityFrancois, "Fra1002F");
+					break;
+				}
+
+				params->param6 = 15 * random(7);
+				CURRENT_PARAMS(1, 1) = 0;
+			}
+		}
+
+		if (!getEntities()->hasValidFrame(kEntityFrancois) || !getEntities()->checkFields25(kEntityFrancois))
+			getData()->inventoryItem = kItemNone;
+
+		if (getEntities()->updateEntity(kEntityFrancois, (CarIndex)params->param2, (EntityPosition)params->param3)) {
+			params->param5 = 0;
+
+			if (params->param3 = kPosition_540) {
+				params->param2 = (getProgress().chapter == kChapter1) ? kCarRedSleeping : kCarGreenSleeping;
+				params->param3 = kPosition_9460;
+			} else {
+				params->param2 = kCarGreenSleeping;
+				params->param3 = kPosition_540;
+				params->param7 = 0;
+				params->param8 = 0;
+
+				getSavePoints()->push(kEntityFrancois, kEntityCoudert, kAction225932896);
+				getSavePoints()->push(kEntityFrancois, kEntityMertens, kAction225932896);
+			}
+		}
+
+		if (getEntities()->checkDistanceFromPosition(kEntityFrancois, kPosition_2000, 500) && getData()->direction == kDirectionDown) {
+
+			if (getEntities()->isSittingOrStanding(kEntityFrancois, kCarRedSleeping) && params->param8) {
+				setCallback(2);
+				call(new ENTITY_SETUP_SIIS(Francois, setup_draw), "605A");
+				break;
+			}
+
+			if (getEntities()->isSittingOrStanding(kEntityFrancois, kCarGreenSleeping) && params->param7) {
+				setCallback(3);
+				call(new ENTITY_SETUP_SIIS(Francois, setup_draw), "605A");
+				break;
+			}
+		}
+
+label_callback:
+		if (getProgress().chapter == kChapter1) {
+
+			if (getEntities()->isSittingOrStanding(kEntityFrancois, kCarRedSleeping)
+			 && (getEntities()->hasValidFrame(kEntityFrancois) || params->param1 < (int)getState()->time || params->param4)
+			 && !params->param5
+			 && getData()->entityPosition < getEntityData(kEntityMmeBoutarel)->entityPosition) {
+
+				if (getData()->direction == kDirectionDown) {
+
+					getSavePoints()->push(kEntityFrancois, kEntityMmeBoutarel, kAction202221040);
+					params->param4 = 1;
+					params->param5 = 1;
+
+				} else if (params->param4 && getEntities()->checkFields9(kEntityFrancois, kEntityMmeBoutarel, 1000)) {
+					getSavePoints()->push(kEntityFrancois, kEntityMmeBoutarel, kAction168986720);
+					params->param5 = 1;
+				}
+			}
+		} else {
+			if (params->param1 < (int)getState()->time) {
+				getData()->clothes = kClothesDefault;
+				getData()->field_4A3 = 30;
+				getData()->inventoryItem = kItemNone;
+
+				if (getSound()->isBuffered(kEntityFrancois))
+					getSound()->processEntry(kEntityFrancois);
+
+				setCallback(4);
+				call(new ENTITY_SETUP(Francois, setup_function8), kCarRedSleeping, kPosition_5790);
+			}
+		}
+		break;
+
+	case kAction1:
+		getData()->inventoryItem = kItemNone;
+
+		if (getSound()->isBuffered(kEntityFrancois))
+			getSound()->processEntry(kEntityFrancois);
+
+		setCallback(6);
+		call(new ENTITY_SETUP(Francois, setup_savegame), kSavegameType2, kEventFrancoisWhistle);
+		break;
+
+	case kActionExcuseMeCath:
+		if (getProgress().jacket == kJacketGreen
+		 && !getEvent(kEventFrancoisWhistle)
+		 && !getEvent(kEventFrancoisWhistleD)
+		 && !getEvent(kEventFrancoisWhistleNight)
+		 && !getEvent(kEventFrancoisWhistleNightD))
+			getData()->inventoryItem = kItemInvalid;
+
+	case kActionDefault:
+		setCallback(1);
+		call(new ENTITY_SETUP(Francois, setup_function9));
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			getData()->clothes = kClothes1;
+			getData()->field_4A3 = 100;
+			getData()->inventoryItem = kItemNone;
+
+			params->param2 = kCarGreenSleeping;
+			params->param3 = kPosition_540;
+
+			getEntities()->updateEntity(kEntityFrancois, kCarGreenSleeping, kPosition_540);
+
+			params->param6 = 15 * random(7);
+			break;
+
+		case 2:
+			getSavePoints()->push(kEntityFrancois, kEntityCoudert, kAction168253822);
+			// Fallback to next case
+
+		case 3:
+			params->param2 = kCarRedSleeping;
+			params->param3 = kPosition_9460;
+			params->param5 = 0;
+
+			getData()->entityPosition = kPosition_2088;
+
+			getEntities()->updateEntity(kEntityFrancois, kCarRedSleeping, kPosition_9460);
+			goto label_callback;
+
+		case 4:
+			setCallback(5);
+			call(new ENTITY_SETUP(Francois, setup_function10));
+			break;
+
+		case 5:
+			CALLBACK_ACTION()
+			break;
+
+		case 6:
+			if (getProgress().jacket == kJacketGreen) {
+				if (isDay())
+					getAction()->playAnimation(getData()->entityPosition <= getEntityData(kEntityPlayer)->entityPosition ? kEventFrancoisWhistleD : kEventFrancoisWhistleD);
+				else
+					getAction()->playAnimation(getData()->entityPosition <= getEntityData(kEntityPlayer)->entityPosition ? kEventFrancoisWhistleNightD : kEventFrancoisWhistleNight);
+			}
+			getEntities()->loadSceneFromEntityPosition(getData()->car, (EntityPosition)(getData()->entityPosition + 750 * (getData()->direction == kDirectionUp ? -1 : 1)), getData()->direction == kDirectionUp);
+			break;
+		}
+		break;
+
+	case kAction102752636:
+		getEntities()->clearSequences(kEntityFrancois);
+		getData()->posture = kPostureSitting;
+		getData()->entityPosition = kPosition_5790;
+		getData()->clothes = kClothesDefault;
+		getData()->field_4A3 = 30;
+		getData()->inventoryItem = kItemNone;
+
+		CALLBACK_ACTION()
+		break;
+
+	case kAction205346192:
+		if (savepoint.entity2 == kEntityCoudert)
+			params->param8 = 1;
+		else if (savepoint.entity2 == kEntityMertens)
+			params->param7 = 1;
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Francois, function12, 12)
@@ -258,11 +468,7 @@ IMPLEMENT_FUNCTION(Francois, chapter1Handler, 18)
 		break;
 
 	case kActionNone:
-		if (getState()->time > kTime1161000 && !params->param1) {
-			params->param1 = 1;
-			setCallback(1);
-			call(new ENTITY_SETUP(Francois, setup_function11), kTime1093500);
-		}
+		TIME_CHECK_CALLBACK_I(Francois, kTimeParisEpernay, params->param1, 1, setup_function11, kTime1093500);
 		break;
 
 	case kActionCallback:

@@ -132,7 +132,6 @@ IMPLEMENT_FUNCTION(Yasmin, function6, 6)
 		getData()->posture = kPostureStanding;
 
 		setCallback(1);
-		// Exit compartment
 		call(new ENTITY_SETUP_SIIS(Yasmin, setup_enterExitCompartment), "615Be", kObjectCompartment5);
 		break;
 
@@ -142,11 +141,12 @@ IMPLEMENT_FUNCTION(Yasmin, function6, 6)
 			break;
 
 		case 1:
+			setCallback(2);
 			call(new ENTITY_SETUP(Yasmin, setup_updateEntity), kCarGreenSleeping, kPosition_3050);
 			break;
 
 		case 2:
-			// Enter compartment
+			setCallback(3);
 			call(new ENTITY_SETUP_SIIS(Yasmin, setup_enterExitCompartment), "615Ag", kObjectCompartment7);
 			break;
 

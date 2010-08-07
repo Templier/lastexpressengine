@@ -295,12 +295,12 @@ IMPLEMENT_FUNCTION_I(Milos, function11, 11)
 
 		case 12:
 			getEntities()->drawSequenceLeft(kEntityMilos, "611Cg");
-			getEntities()->enterCompartment(kEntityMilos, kObjectCompartmentG, false);
+			getEntities()->enterCompartment(kEntityMilos, kObjectCompartmentG, true);
 			getSavePoints()->push(kEntityMilos, kEntityCoudert, kAction88652208);
 			break;
 
 		case 13:
-			getEntities()->exitCompartment(kEntityMilos, kObjectCompartmentG, false);
+			getEntities()->exitCompartment(kEntityMilos, kObjectCompartmentG, true);
 			getData()->posture = kPostureSitting;
 			getEntities()->clearSequences(kEntityMilos);
 			getObjects()->update(kObjectCompartmentG, kEntityMilos, kLocation3, kCursorHandKnock, kCursorHand);
@@ -394,7 +394,7 @@ IMPLEMENT_FUNCTION(Milos, chapter1Handler, 15)
 		}
 
 		if (getEntities()->isPlayerPosition(kCarRestaurant, 61) && !params->param1) {
-			UPDATE_PARAM_FUNCTION(params->param4, getState()->timeTicks, 45, label_checkNextPosition);
+			UPDATE_PARAM_GOTO(params->param4, getState()->timeTicks, 45, label_checkNextPosition);
 
 			setCallback(1);
 			call(new ENTITY_SETUP_SIIS(Milos, setup_draw), "009C");

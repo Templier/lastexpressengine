@@ -381,7 +381,44 @@ IMPLEMENT_FUNCTION(Kronos, function20, 20)
 }
 
 IMPLEMENT_FUNCTION(Kronos, function21, 21)
-	error("Kronos: callback function 21 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionNone:
+		if (getEntities()->isInKronosSanctum(kEntityPlayer)) {
+			setCallback(1);
+			call(new ENTITY_SETUP(Kronos, setup_savegame), kSavegameType2, kEventKahinaWrongDoor);
+		}
+		break;
+
+	case kActionDefault:
+		getProgress().field_40 = 0;
+		getObjects()->update(kObjectCompartmentKronos, kEntityPlayer, kLocation3, kCursorNormal, kCursorNormal);
+		getSavePoints()->push(kEntityKronos, kEntityRebecca, kAction191668032);
+		if (!getEvent(kEventConcertLeaveWithBriefcase))
+			setup_function22();
+		break;
+
+	case kActionCallback:
+		if (getCallback() == 1) {
+			getAction()->playAnimation(kEventKahinaWrongDoor);
+
+			if (getInventory()->hasItem(kItemBriefcase))
+				getInventory()->removeItem(kItemBriefcase);
+
+			getSound()->playSound(kEntityPlayer, "BUMP");
+
+			getScenes()->loadSceneFromPosition(kCarKronos, 81);
+
+			getSound()->playSound(kEntityPlayer, "LIB015");
+		}
+		break;
+
+	case kAction235599361:
+		setup_function22();
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Kronos, function22, 22)

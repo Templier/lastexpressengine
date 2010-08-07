@@ -55,7 +55,7 @@ Mertens::Mertens(LastExpressEngine *engine) : Entity(engine, kEntityMertens) {
 	ADD_CALLBACK_FUNCTION(Mertens, enterExitCompartment);
 	ADD_CALLBACK_FUNCTION(Mertens, enterExitCompartment2);
 	ADD_CALLBACK_FUNCTION(Mertens, enterExitCompartment3);
-	ADD_CALLBACK_FUNCTION(Mertens, function6);
+	ADD_CALLBACK_FUNCTION(Mertens, callbackActionOnDirection);
 	ADD_CALLBACK_FUNCTION(Mertens, playSound);
 	ADD_CALLBACK_FUNCTION(Mertens, playSound16);
 	ADD_CALLBACK_FUNCTION(Mertens, savegame);
@@ -181,7 +181,7 @@ IMPLEMENT_FUNCTION_SI(Mertens, enterExitCompartment2, 4)
 		return;
 
 	case kAction4:
-		getEntities()->exitCompartment(kEntityMertens, (ObjectIndex)params->param4, false);
+		getEntities()->exitCompartment(kEntityMertens, (ObjectIndex)params->param4);
 		CALLBACK_ACTION()
 		return;
 
@@ -214,14 +214,14 @@ IMPLEMENT_FUNCTION_SIII(Mertens, enterExitCompartment3, 5)
 		break;
 
 	case kActionExitCompartment:
-		getEntities()->exitCompartment(_entityIndex, (ObjectIndex)params->param4, false);
+		getEntities()->exitCompartment(_entityIndex, (ObjectIndex)params->param4);
 		getData()->entityPosition = (EntityPosition)params->param5;
 		CALLBACK_ACTION()
 		break;
 
 	case kActionDefault:
 		getEntities()->drawSequenceRight(_entityIndex, (char *)&params->seq);
-		getEntities()->enterCompartment(_entityIndex, (ObjectIndex)params->param4, false);
+		getEntities()->enterCompartment(_entityIndex, (ObjectIndex)params->param4);
 		getData()->entityPosition = (EntityPosition)params->param5;
 
 		if (getEntities()->isSitting(kEntityPlayer, kCarGreenSleeping, (EntityPosition)params->param5) || getEntities()->isSitting(kEntityPlayer, kCarGreenSleeping, (EntityPosition)params->param6)) {
@@ -240,7 +240,10 @@ IMPLEMENT_FUNCTION_SIII(Mertens, enterExitCompartment3, 5)
 	}
 }
 
-IMPLEMENT_FUNCTION(Mertens, function6, 6)
+/**
+ * Process callback action when the entity direction is not kDirectionRight
+ */
+IMPLEMENT_FUNCTION(Mertens, callbackActionOnDirection, 6)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -267,6 +270,11 @@ IMPLEMENT_FUNCTION(Mertens, function6, 6)
 	}
 }
 
+/**
+ * Plays sound
+ *
+ * @param param1 The sound filename
+ */
 IMPLEMENT_FUNCTION_S(Mertens, playSound, 7)
 	switch (savepoint.action) {
 	default:
@@ -293,6 +301,11 @@ IMPLEMENT_FUNCTION_S(Mertens, playSound, 7)
 	}
 }
 
+/**
+ * Plays sound
+ *
+ * @param param1 The sound filename
+ */
 IMPLEMENT_FUNCTION_S(Mertens, playSound16, 8)
 	switch (savepoint.action) {
 	default:
@@ -350,7 +363,7 @@ IMPLEMENT_FUNCTION_II(Mertens, function10, 10)
 		if (params->param3 && getEntities()->checkFields9(kEntityMertens, kEntityPlayer, 2000))
 			getData()->inventoryItem = (InventoryItem)(getData()->inventoryItem | kItemInvalid);
 		else
-			getData()->inventoryItem = (InventoryItem)(getData()->inventoryItem & 127);
+			getData()->inventoryItem = (InventoryItem)(getData()->inventoryItem & kItemToggleHigh);
 
 		if (!getEntities()->checkFields9(kEntityMertens, kEntityPlayer, 1000)
 		  || getEntities()->isSittingInCompartmentCars(kEntityPlayer)
@@ -368,7 +381,7 @@ IMPLEMENT_FUNCTION_II(Mertens, function10, 10)
 			break;
 		}
 
-		if ((ENTITY_PARAM(0, 6) || ENTITY_PARAM(0, 7)) && !getEvent(kEventKronosConversation) && getProgress().jacket == kJacketGreen) {
+		if ((ENTITY_PARAM(0, 6) || ENTITY_PARAM(0, 7)) && (!getEvent(kEventKronosConversation) && getProgress().jacket == kJacketGreen)) {
 			setCallback(2);
 			call(new ENTITY_SETUP(Mertens, setup_savegame), kSavegameType2, kEventMertensKronosInvitation);
 			break;
@@ -414,8 +427,8 @@ IMPLEMENT_FUNCTION_II(Mertens, function10, 10)
 		break;
 
 	case kActionDefault:
-		if (!getProgress().eventCorpseFound && !getEvent(kEventMertensAskTylerCompartment) && !getEvent(kEventMertensAskTylerCompartment)
-		 || ENTITY_PARAM(0, 4) && getProgress().jacket == kJacketGreen && !getEvent(kEventMertensDontMakeBed) && !getProgress().eventCorpseThrown)
+		if ((!getProgress().eventCorpseFound && !getEvent(kEventMertensAskTylerCompartment) && !getEvent(kEventMertensAskTylerCompartment))
+		 || (ENTITY_PARAM(0, 4) && getProgress().jacket == kJacketGreen && !getEvent(kEventMertensDontMakeBed) && !getProgress().eventCorpseThrown))
 			params->param3 = 1;
 
 		if (getEntities()->updateEntity(kEntityMertens, (CarIndex)params->param1, (EntityPosition)params->param2))
@@ -714,7 +727,58 @@ IMPLEMENT_FUNCTION_I(Mertens, function14, 14)
 
 // bool
 IMPLEMENT_FUNCTION_I(Mertens, function15, 15)
-	error("Mertens: callback function 15 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionDefault:
+		ENTITY_PARAM(1, 4) = 0;
+		ENTITY_PARAM(1, 5) = 0;
+
+		setCallback(1);
+		call(new ENTITY_SETUP(Mertens, setup_function19));
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			setCallback(2);
+			call(new ENTITY_SETUP(Mertens, setup_function10), kCarGreenSleeping, kPosition_4070);
+			break;
+
+		case 2:
+			getSound()->playSound(kEntityMertens, params->param1 ? "CON1059A" : "CON1059");
+
+			setCallback(3);
+			call(new ENTITY_SETUP(Mertens, setup_function10), kCarGreenSleeping, kPosition_7500);
+			break;
+
+		case 3:
+			setCallback(4);
+			call(new ENTITY_SETUP_SIIS(Mertens, setup_enterExitCompartment), "601Xb", kObjectCompartment2);
+			break;
+
+		case 4:
+			getSavePoints()->push(kEntityMertens, kEntityAlexei, kAction135664192);
+
+			setCallback(5);
+			call(new ENTITY_SETUP(Mertens, setup_function10), kCarGreenSleeping, kPosition_2000);
+			break;
+
+		case 5:
+			setCallback(6);
+			call(new ENTITY_SETUP(Mertens, setup_function17));
+			break;
+
+		case 6:
+			CALLBACK_ACTION();
+			break;
+		}
+		break;
+	}
 }
 
 // bool
@@ -764,7 +828,7 @@ IMPLEMENT_FUNCTION(Mertens, function17, 17)
 		}
 
 		setCallback(3);
-		call(new ENTITY_SETUP(Mertens, setup_function6));
+		call(new ENTITY_SETUP(Mertens, setup_callbackActionOnDirection));
 		break;
 
 	case kActionCallback:
@@ -846,7 +910,7 @@ IMPLEMENT_FUNCTION(Mertens, function18, 18)
 		getScenes()->loadSceneFromItemPosition(kItem7);
 
 		setCallback(1);
-		call(new ENTITY_SETUP(Mertens, setup_function6));
+		call(new ENTITY_SETUP(Mertens, setup_callbackActionOnDirection));
 		break;
 
 	case kActionCallback:
@@ -963,7 +1027,41 @@ IMPLEMENT_FUNCTION_I(Mertens, function30, 30)
 }
 
 IMPLEMENT_FUNCTION_I(Mertens, function31, 31)
-	error("Mertens: callback function 31 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kAction2:
+		setCallback(3);
+		call(new ENTITY_SETUP(Mertens, setup_function17));
+		break;
+
+	case kActionDefault:
+		setCallback(1);
+		call(new ENTITY_SETUP_SIIS(Mertens, setup_bloodJacket), "601G");
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			if (getSound()->isBuffered(kEntityMertens)) {
+				getEntities()->drawSequenceLeft(kEntityMertens, "601J");
+			} else {
+				setCallback(2);
+				call(new ENTITY_SETUP(Mertens, setup_function17));
+			}
+			break;
+
+		case 2:
+		case 3:
+			CALLBACK_ACTION()
+			break;
+		}
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Mertens, function32, 32)
@@ -1064,7 +1162,46 @@ IMPLEMENT_FUNCTION(Mertens, function37, 37)
 }
 
 IMPLEMENT_FUNCTION(Mertens, function38, 38)
-	error("Mertens: callback function 38 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionDefault:
+		if (!ENTITY_PARAM(0, 4)) {
+			CALLBACK_ACTION()
+			break;
+		}
+
+		if (getProgress().field_14 == 29) {
+			CALLBACK_ACTION()
+		} else {
+			setCallback(1);
+			call(new ENTITY_SETUP(Mertens, setup_function10), kCarGreenSleeping, kPosition_8200);
+		}
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			if (!ENTITY_PARAM(0, 4)) {
+				CALLBACK_ACTION()
+				break;
+			}
+
+			setCallback(2);
+			call(new ENTITY_SETUP(Mertens, setup_tylerCompartment), 0);
+			break;
+
+		case 2:
+			ENTITY_PARAM(0, 4) = 0;
+			CALLBACK_ACTION()
+			break;
+		}
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Mertens, function39, 39)
@@ -1185,7 +1322,7 @@ IMPLEMENT_FUNCTION(Mertens, function42, 42)
 			if (params->param4 != kTimeInvalid && getState()->time > kTimeCityChalons) {
 
 				if (getState()->time <= kTime1188000) {
-					if (!getEntities()->checkFields7(kCarGreenSleeping) && !getEntities()->checkFields7(kCarRedSleeping)
+					if ((!getEntities()->checkFields7(kCarGreenSleeping) && !getEntities()->checkFields7(kCarRedSleeping))
 					  || getSound()->isBuffered("REB1205")
 					  || !getEntities()->isSitting(kEntityMmeBoutarel, kCarRedSleeping, kPosition_5790)
 					  || !params->param4) {
@@ -1387,7 +1524,7 @@ label_callback_5_6:
 			getData()->inventoryItem = kItemNone;
 
 			setCallback(2);
-			call(new ENTITY_SETUP(Mertens, setup_function6));
+			call(new ENTITY_SETUP(Mertens, setup_callbackActionOnDirection));
 			break;
 
 		case 2:
@@ -1404,7 +1541,7 @@ label_callback_5_6:
 			getData()->inventoryItem = kItemNone;
 
 			setCallback(4);
-			call(new ENTITY_SETUP(Mertens, setup_function6));
+			call(new ENTITY_SETUP(Mertens, setup_callbackActionOnDirection));
 			break;
 
 		case 5:
@@ -1455,7 +1592,7 @@ label_callback_5_6:
 			getScenes()->loadSceneFromPosition(kCarGreenSleeping, 25);
 
 			setCallback(22);
-			call(new ENTITY_SETUP(Mertens, setup_function6));
+			call(new ENTITY_SETUP(Mertens, setup_callbackActionOnDirection));
 			break;
 
 		case 22:
@@ -1643,7 +1780,57 @@ IMPLEMENT_FUNCTION(Mertens, chapter5Handler, 51)
 }
 
 IMPLEMENT_FUNCTION(Mertens, function52, 52)
-	error("Mertens: callback function 52 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionNone:
+		if (params->param2 == kTimeInvalid)
+			break;
+
+		if (params->param1 >= (int)getState()->time) {
+
+			if (!getEntities()->checkFields7(kCarRedSleeping) || !params->param2)
+				params->param2 = getState()->time;
+
+			if (params->param2 >= (int)getState()->time)
+				break;
+		}
+
+		params->param2 = kTimeInvalid;
+
+		setCallback(1);
+		call(new ENTITY_SETUP_SIIS(Mertens, setup_playSound), "Mme5010");
+		break;
+
+	case kActionDefault:
+		getData()->car = kCarRedSleeping;
+		getData()->entityPosition = kPosition_5790;
+		getData()->posture = kPostureSitting;
+
+		getObjects()->update(kObjectCompartmentD, kEntityPlayer, kLocation3, kCursorHandKnock, kCursorHand);
+
+		params->param1 = getState()->time + 4500;
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			setCallback(2);
+			call(new ENTITY_SETUP_SIIS(Mertens, setup_enterExitCompartment), "671Ad", kObjectCompartmentD);
+			break;
+
+		case 2:
+			getData()->posture = kPostureStanding;
+			getSavePoints()->push(kEntityMertens, kEntityMmeBoutarel, kAction155604840);
+			setup_function53();
+			break;
+		}
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Mertens, function53, 53)

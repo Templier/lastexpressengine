@@ -202,7 +202,7 @@ IMPLEMENT_FUNCTION(MmeBoutarel, chapter1Handler, 12)
 
 		case 2:
 			getEntities()->drawSequenceLeft(kEntityMmeBoutarel, "606Qd");
-			getEntities()->enterCompartment(kEntityMmeBoutarel, kObjectCompartmentD);
+			getEntities()->enterCompartment(kEntityMmeBoutarel, kObjectCompartmentD, true);
 			break;
 
 		case 3:
@@ -227,7 +227,7 @@ IMPLEMENT_FUNCTION(MmeBoutarel, chapter1Handler, 12)
 	case kAction168986720:
 		getSavePoints()->push(kEntityMmeBoutarel, kEntityFrancois, kAction102752636);
 		getSound()->playSound(kEntityMmeBoutarel, "MME1036");
-		getEntities()->exitCompartment(kEntityMmeBoutarel, kObjectCompartmentD);
+		getEntities()->exitCompartment(kEntityMmeBoutarel, kObjectCompartmentD, true);
 
 		setCallback(3);
 		call(new ENTITY_SETUP_SIIS(MmeBoutarel, setup_enterExitCompartment), "606Fd", kObjectCompartmentD);

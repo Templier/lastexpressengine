@@ -231,11 +231,64 @@ IMPLEMENT_FUNCTION_II(Tatiana, updateEntity, 13)
 }
 
 IMPLEMENT_FUNCTION(Tatiana, function14, 14)
-	error("Tatiana: callback function 14 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionDefault:
+		getSavePoints()->push(kEntityTatiana, kEntityCoudert, kAction326348944);
+		getEntities()->drawSequenceLeft(kEntityTatiana, getProgress().chapter == kChapter1 ? "603Fb" : "673Fb");
+		getEntities()->enterCompartment(kEntityTatiana, kObjectCompartmentB, true);
+		break;
+
+	case kActionCallback:
+		if (getCallback() == 1 || getCallback() == 2) {
+			getEntities()->exitCompartment(kEntityTatiana, kObjectCompartmentB, true);
+			getData()->posture = kPostureSitting;
+			getEntities()->clearSequences(kEntityTatiana);
+
+			CALLBACK_ACTION()
+		}
+		break;
+
+	case kAction69239528:
+		setCallback(getProgress().chapter == kChapter1 ? 1 : 2);
+		call(new ENTITY_SETUP_SIIS(Tatiana, setup_enterExitCompartment2), getProgress().chapter == kChapter1 ? "603Db" : "673Db", kObjectCompartmentB);
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Tatiana, function15, 15)
-	error("Tatiana: callback function 15 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionDefault:
+		setCallback(getProgress().chapter == kChapter1 ? 1 : 2);
+		call(new ENTITY_SETUP_SIIS(Tatiana, setup_enterExitCompartment2), getProgress().chapter == kChapter1 ? "603Bb" : "673Bb", kObjectCompartmentB);
+		break;
+
+
+
+		break;
+
+	case kActionCallback:
+		if (getCallback() == 1 || getCallback() == 2) {
+			getData()->posture = kPostureStanding;
+			getSavePoints()->push(kEntityTatiana, kEntityCoudert, kAction292048641);
+
+			getEntities()->drawSequenceLeft(kEntityTatiana, getProgress().chapter == kChapter1 ? "603Fb" : "673Fb");
+			getEntities()->enterCompartment(kEntityTatiana, kObjectCompartmentB, true);
+		}
+		break;
+
+	case kAction69239528:
+		getEntities()->exitCompartment(kEntityTatiana, kObjectCompartmentB, true);
+		getObjects()->update(kObjectCompartmentB, kEntityPlayer, kLocation1, kCursorHandKnock, kCursorHand);
+
+		CALLBACK_ACTION()
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION_I(Tatiana, function16, 16)
@@ -278,7 +331,7 @@ IMPLEMENT_FUNCTION(Tatiana, chapter1Handler, 19)
 		if (getSound()->isBuffered(kEntityTatiana) || !params->param4 || params->param3 == 2 || getSound()->isBuffered("TAT1066"))
 			goto label_tatiana_chapter1_2;
 
-		UPDATE_PARAM_FUNCTION(params->param5, getState()->timeTicks, 450, label_tatiana_chapter1_1);
+		UPDATE_PARAM_GOTO(params->param5, getState()->timeTicks, 450, label_tatiana_chapter1_1);
 		getSound()->playSound(kEntityTatiana, params->param3 ? "TAT1069B" : "TAT1069A");
 		getProgress().field_64 = 1;
 		params->param3++;
@@ -286,7 +339,7 @@ IMPLEMENT_FUNCTION(Tatiana, chapter1Handler, 19)
 
 label_tatiana_chapter1_1:
 		if (getEntities()->isPlayerPosition(kCarRestaurant, 71)) {
-			UPDATE_PARAM_FUNCTION(params->param6, getState()->timeTicks, 75, label_tatiana_chapter1_2);
+			UPDATE_PARAM_GOTO(params->param6, getState()->timeTicks, 75, label_tatiana_chapter1_2);
 
 			getSound()->playSound(kEntityTatiana, params->param3 ? "TAT1069B" : "TAT1069A");
 			getProgress().field_64 = 1;
@@ -332,7 +385,45 @@ label_tatiana_chapter1_2:
 }
 
 IMPLEMENT_FUNCTION(Tatiana, function20, 20)
-	error("Tatiana: callback function 20 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionDefault:
+		setCallback(1);
+		call(new ENTITY_SETUP(Tatiana, setup_callbackActionOnSomebodyStandingInRestaurantOrSalon));
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			getData()->posture = kPostureStanding;
+			getSavePoints()->push(kEntityTatiana, kEntityAugust, kAction223183000);
+			getEntities()->updatePosition(kEntityTatiana, kCarRestaurant, 67, true);
+			getSound()->playSound(kEntityTatiana, "TAT1070");
+
+			setCallback(2);
+			call(new ENTITY_SETUP_SIIS(Tatiana, setup_callSavepoint), "014C", kEntityTables4, kActionDrawTablesWithChairs, "014D");
+			break;
+
+		case 2:
+			getEntities()->updatePosition(kEntityTatiana, kCarRestaurant, 67);
+			getSavePoints()->push(kEntityTatiana, kEntityServers0, kAction188893625);
+
+			setCallback(3);
+			call(new ENTITY_SETUP(Tatiana, setup_function18));
+			break;
+
+		case 3:
+			getSavePoints()->push(kEntityTatiana, kEntityAugust, kAction268620864);
+			setup_function21();
+			break;
+		}
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Tatiana, function21, 21)
@@ -699,7 +790,47 @@ IMPLEMENT_FUNCTION(Tatiana, function34, 34)
 }
 
 IMPLEMENT_FUNCTION(Tatiana, function35, 35)
-	error("Tatiana: callback function 35 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionNone:
+		if (!params->param1
+		 && getInventory()->hasItem(kItemFirebird)
+		 && getEntities()->checkFields19(kEntityPlayer, kCarRedSleeping, kPosition_7850)
+		 && (getState()->time < kTime2133000 || getProgress().field_40)) {
+			setCallback(1);
+			call(new ENTITY_SETUP(Tatiana, setup_function41));
+			break;
+		}
+
+label_callback_1:
+		if (getState()->time > kTime2133000) {
+			if (getData()->car >= kCarRedSleeping || (getData()->car == kCarGreenSleeping && getData()->entityPosition > kPosition_5790))
+				setup_function36();
+		}
+		break;
+
+	case kActionDefault:
+		getObjects()->update(kObjectCompartmentB, kEntityPlayer, kLocation1, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObject49, kEntityPlayer, kLocationNone, kCursorHandKnock, kCursorHand);
+		getEntities()->clearSequences(kEntityTatiana);
+
+		getData()->car = kCarKronos;
+		getData()->entityPosition = kPosition_6000;
+		getData()->posture = kPostureSitting;
+		break;
+
+	case kActionCallback:
+		if (getCallback() == 1) {
+			params->param1 = 1;
+			goto label_callback_1;
+		}
+		break;
+
+	case kAction191668032:
+		setup_function36();
+	}
 }
 
 IMPLEMENT_FUNCTION(Tatiana, function36, 36)
@@ -775,7 +906,29 @@ IMPLEMENT_FUNCTION(Tatiana, function39, 39)
 }
 
 IMPLEMENT_FUNCTION(Tatiana, function40, 40)
-	error("Tatiana: callback function 40 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionNone:
+		if (getEntities()->isSittingOrStanding(kEntityPlayer, kCarKronos)
+		 || getData()->car != getEntityData(kEntityPlayer)->car
+		 || getEntities()->updateEntity(kEntityTatiana, kCarKronos, kPosition_9270))
+			CALLBACK_ACTION()
+		break;
+
+	case kActionExcuseMe:
+		if (getEvent(kEventTatianaAskMatchSpeakRussian) || getEvent(kEventTatianaAskMatch) || getEvent(kEventVassiliSeizure))
+			getSound()->playSound(kEntityPlayer, random(2) ? "CAT1001A" : "CAT1010");
+		else
+			getSound()->excuseMeCath();
+		break;
+
+	case kActionDefault:
+		if (getEntities()->updateEntity(kEntityTatiana, kCarKronos, kPosition_9270))
+			CALLBACK_ACTION()
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Tatiana, function41, 41)

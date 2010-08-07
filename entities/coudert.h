@@ -62,12 +62,12 @@ public:
 	DECLARE_FUNCTION(function21)
 	DECLARE_FUNCTION(function22)
 	DECLARE_FUNCTION(function23)
-	DECLARE_FUNCTION(function24)
+	DECLARE_FUNCTION(visitCompartmentF)
 	DECLARE_FUNCTION(function25)
 	DECLARE_FUNCTION(function26)
 	DECLARE_FUNCTION(function27)
-	DECLARE_FUNCTION(function28)
-	DECLARE_FUNCTION(function29)
+	DECLARE_FUNCTION(visitCompartmentB)
+	DECLARE_FUNCTION(visitCompartmentA)
 	DECLARE_FUNCTION_I(function30)
 	DECLARE_FUNCTION_I(function31)
 	DECLARE_FUNCTION(function32)
@@ -106,6 +106,9 @@ public:
 private:
 	DECLARE_CALL_FUNCTION(iiii, Coudert, int, int, int, int)
 	DECLARE_CALL_FUNCTION(siis, Coudert, const char *, int, int, const char *)
+	DECLARE_CALL_FUNCTION(siii, Coudert, const char *, int, int, int)
+
+	void visitCompartment(const SavePoint &savepoint, EntityPosition position, const char* seq1, ObjectIndex compartment, const char* seq2, const char* seq3, EntityPosition sittingPosition, ObjectIndex object, const char* seq4);
 };
 
 } // End of namespace LastExpress

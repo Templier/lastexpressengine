@@ -37,12 +37,19 @@
 
 namespace LastExpress {
 
+#define HANDLE_TABLE(index, param, callback, function) \
+	if (ENTITY_PARAM(index, param)) { \
+		setCallback(callback); \
+		call(new ENTITY_SETUP(Servers0, function)); \
+		break; \
+	}
+
 Servers0::Servers0(LastExpressEngine *engine) : Entity(engine, kEntityServers0) {
 	ADD_CALLBACK_FUNCTION(Servers0, callSavepoint);
 	ADD_CALLBACK_FUNCTION(Servers0, updateFromTime);
 	ADD_CALLBACK_FUNCTION(Servers0, draw);
 	ADD_CALLBACK_FUNCTION(Servers0, updatePosition);
-	ADD_CALLBACK_FUNCTION(Servers0, function5);
+	ADD_CALLBACK_FUNCTION(Servers0, callbackActionOnDirection);
 	ADD_CALLBACK_FUNCTION(Servers0, playSound);
 	ADD_CALLBACK_FUNCTION(Servers0, function7);
 	ADD_CALLBACK_FUNCTION(Servers0, function8);
@@ -66,12 +73,12 @@ Servers0::Servers0(LastExpressEngine *engine) : Entity(engine, kEntityServers0) 
 	ADD_CALLBACK_FUNCTION(Servers0, function26);
 	ADD_CALLBACK_FUNCTION(Servers0, chapter3);
 	ADD_CALLBACK_FUNCTION(Servers0, chapter3Handler);
-	ADD_CALLBACK_FUNCTION(Servers0, function29);
+	ADD_CALLBACK_FUNCTION(Servers0, augustAnnaDateOrder);
 	ADD_CALLBACK_FUNCTION(Servers0, function30);
 	ADD_CALLBACK_FUNCTION(Servers0, chapter4);
 	ADD_CALLBACK_FUNCTION(Servers0, chapter4Handler);
-	ADD_CALLBACK_FUNCTION(Servers0, function33);
-	ADD_CALLBACK_FUNCTION(Servers0, function34);
+	ADD_CALLBACK_FUNCTION(Servers0, augustOrderSteak);
+	ADD_CALLBACK_FUNCTION(Servers0, augustServeDuck);
 	ADD_CALLBACK_FUNCTION(Servers0, function35);
 	ADD_CALLBACK_FUNCTION(Servers0, chapter5);
 	ADD_CALLBACK_FUNCTION(Servers0, chapter5Handler);
@@ -119,7 +126,10 @@ IMPLEMENT_FUNCTION_NOSETUP(Servers0, updatePosition, 4)
 	Entity::updatePosition(savepoint, true);
 }
 
-IMPLEMENT_FUNCTION_NOSETUP(Servers0, function5, 5)
+/**
+ * Process callback action when the entity direction is not kDirectionRight
+ */
+IMPLEMENT_FUNCTION_NOSETUP(Servers0, callbackActionOnDirection, 5)
 	EXPOSE_PARAMS(EntityData::EntityParametersIIII);
 
 	switch (savepoint.action) {
@@ -198,7 +208,49 @@ IMPLEMENT_FUNCTION(Servers0, function8, 8)
 }
 
 IMPLEMENT_FUNCTION(Servers0, function9, 9)
-	error("Servers0: callback function 9 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionDefault:
+		getData()->entityPosition = kPosition_5800;
+		getData()->posture = kPostureStanding;
+
+		setCallback(1);
+		call(new ENTITY_SETUP_SIIS(Servers0, setup_draw), "915");
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			getSavePoints()->push(kEntityServers0, kEntityAbbot, kAction122358304);
+			getEntities()->drawSequenceLeft(kEntityServers0, "029D");
+
+			setCallback(2);
+			call(new ENTITY_SETUP_SIIS(Servers0, setup_playSound), getProgress().chapter == kChapter3 ? "Abb3016" : "Abb4001");
+			break;
+
+		case 2:
+			getSavePoints()->push(kEntityServers0, kEntityAbbot, kAction122288808);
+
+			setCallback(3);
+			call(new ENTITY_SETUP_SIIS(Servers0, setup_draw), "917");
+			break;
+
+		case 3:
+			getData()->entityPosition = kPosition_5900;
+			getEntities()->clearSequences(kEntityServers0);
+			ENTITY_PARAM(2, 2) = 0;
+			ENTITY_PARAM(1, 6) = 0;
+
+			CALLBACK_ACTION()
+			break;
+		}
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Servers0, function10, 10)
@@ -260,7 +312,7 @@ IMPLEMENT_FUNCTION(Servers0, function16, 16)
 }
 
 IMPLEMENT_FUNCTION(Servers0, function17, 17)
-	error("Servers0: callback function 17 not implemented!");
+	serveTable(savepoint, "915", kEntityTables4, "014E", "014F", "917", &ENTITY_PARAM(1, 1), true, false, 67);
 }
 
 IMPLEMENT_FUNCTION(Servers0, function18, 18)
@@ -268,10 +320,85 @@ IMPLEMENT_FUNCTION(Servers0, function18, 18)
 }
 
 IMPLEMENT_FUNCTION(Servers0, function19, 19)
-	error("Servers0: callback function 19 not implemented!");
+	serveTable(savepoint, "911", kEntityTables3, "010L", "010M", "913", &ENTITY_PARAM(0, 8), true, true);
 }
 
 IMPLEMENT_FUNCTION(Servers0, chapter1Handler, 20)
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionNone:
+		if (params->param2) {
+			UPDATE_PARAM_GOTO(params->param3, getState()->time, 2700, label_continue);
+
+			ENTITY_PARAM(0, 4) = 1;
+			params->param2 = 0;
+		}
+
+label_continue:
+		if (params->param1) {
+			UPDATE_PARAM_GOTO(params->param4, getState()->time, 4500, label_continue2);
+
+			ENTITY_PARAM(0, 5) = 1;
+			params->param1 = 0;
+		}
+
+label_continue2:
+		if (!getEntities()->isInKitchen(kEntityServers0) && !getEntities()->isSomebodyStandingInRestaurantOrSalon())
+			break;
+
+		HANDLE_TABLE(0, 1, 1, setup_function12);
+		HANDLE_TABLE(0, 2, 2, setup_function13);
+		HANDLE_TABLE(0, 3, 3, setup_function7);
+		HANDLE_TABLE(0, 4, 4, setup_function14);
+		HANDLE_TABLE(0, 5, 5, setup_function15);
+		HANDLE_TABLE(0, 6, 6, setup_function16);
+		HANDLE_TABLE(1, 1, 7, setup_function17);
+		HANDLE_TABLE(0, 7, 8, setup_function18);
+		HANDLE_TABLE(0, 8, 9, setup_function19);
+		HANDLE_TABLE(1, 2, 10, setup_function8);
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 10:
+			getSavePoints()->push(kEntityServers0, kEntityPascale, kAction352703104);
+			setup_function21();
+			break;
+
+		case 11:
+		case 12:
+			getEntities()->clearSequences(kEntityServers0);
+			getData()->entityPosition = kPosition_5900;
+
+			(getCallback() == 11) ? params->param2 = 1 : params->param1 = 1;
+			break;
+
+		case 13:
+		case 14:
+			getEntities()->clearSequences(kEntityServers0);
+			getData()->entityPosition = kPosition_5900;
+			break;
+		}
+		break;
+
+	case kAction136702400:
+		setCallback(savepoint.entity2 == kEntityAnna ? 13 : 14);
+		call(new ENTITY_SETUP_SIIS(Servers0, setup_draw), savepoint.entity2 == kEntityAnna ? "909" : "913");
+		break;
+
+	case kAction203859488:
+		setCallback(savepoint.entity2 == kEntityAnna ? 11 : 12);
+		call(new ENTITY_SETUP_SIIS(Servers0, setup_draw), savepoint.entity2 == kEntityAnna ? "910" : "913");
+		break;
+	}
+}
+
+IMPLEMENT_FUNCTION(Servers0, function21, 21)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -284,10 +411,6 @@ IMPLEMENT_FUNCTION(Servers0, chapter1Handler, 20)
 		setup_function22();
 		break;
 	}
-}
-
-IMPLEMENT_FUNCTION(Servers0, function21, 21)
-	error("Servers0: callback function 21 not implemented!");
 }
 
 IMPLEMENT_FUNCTION(Servers0, function22, 22)
@@ -333,26 +456,13 @@ IMPLEMENT_FUNCTION(Servers0, chapter2Handler, 24)
 		if (!getEntities()->isInKitchen(kEntityServers0) || !getEntities()->isSomebodyStandingInRestaurantOrSalon())
 			break;
 
-		if (ENTITY_PARAM(1, 3)) {
-			setCallback(1);
-			call(new ENTITY_SETUP(Servers0, setup_function25));
-			break;
-		}
-
-		if (ENTITY_PARAM(1, 4)) {
-			setCallback(2);
-			call(new ENTITY_SETUP(Servers0, setup_function26));
-		}
+		HANDLE_TABLE(1, 3, 1, setup_function25);
+		HANDLE_TABLE(1, 4, 2, setup_function26);
  		break;
 
 	case kActionCallback:
-		if (getCallback() != 1)
-			break;
-
-		if (ENTITY_PARAM(1, 4)) {
-			setCallback(2);
-			call(new ENTITY_SETUP(Servers0, setup_function26));
-		}
+		if (getCallback() == 1)
+			HANDLE_TABLE(1, 4, 2, setup_function26);
 		break;
 	}
 }
@@ -435,12 +545,94 @@ IMPLEMENT_FUNCTION(Servers0, chapter3Handler, 28)
 	error("Servers0: callback function 28 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Servers0, function29, 29)
-	error("Servers0: callback function 29 not implemented!");
+IMPLEMENT_FUNCTION(Servers0, augustAnnaDateOrder, 29)
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionDefault:
+		getData()->entityPosition = kPosition_5800;
+		getData()->posture = kPostureStanding;
+
+		setCallback(1);
+		call(new ENTITY_SETUP_SIIS(Servers0, setup_draw), "911");
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			getSavePoints()->push(kEntityServers0, kEntityAnna, kAction122358304);
+			getEntities()->drawSequenceLeft(kEntityServers0, "026D");
+
+			setCallback(2);
+			call(new ENTITY_SETUP_SIIS(Servers0, setup_playSound), "Ann3138");
+			break;
+
+		case 2:
+			getSavePoints()->push(kEntityServers0, kEntityAnna, kAction122288808);
+
+			setCallback(3);
+			call(new ENTITY_SETUP_SIIS(Servers0, setup_draw), "913");
+			break;
+
+		case 3:
+			getData()->entityPosition = kPosition_5900;
+			getEntities()->clearSequences(kEntityServers0);
+			ENTITY_PARAM(1, 5) = 0;
+
+			CALLBACK_ACTION()
+			break;
+		}
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Servers0, function30, 30)
-	error("Servers0: callback function 30 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionDefault:
+		getData()->entityPosition = kPosition_5800;
+		getData()->posture = kPostureStanding;
+
+		setCallback(1);
+		call(new ENTITY_SETUP_SIIS(Servers0, setup_draw), "916");
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			getSavePoints()->push(kEntityServers0, kEntityAbbot, kAction122358304);
+			getEntities()->drawSequenceLeft(kEntityServers0, "029D");
+
+			setCallback(2);
+			call(new ENTITY_SETUP_SIIS(Servers0, setup_playSound), "Abb3016a");
+			break;
+
+		case 2:
+			getSavePoints()->push(kEntityServers0, kEntityAbbot, kAction122288808);
+
+			setCallback(3);
+			call(new ENTITY_SETUP_SIIS(Servers0, setup_draw), "918");
+			break;
+
+		case 3:
+			getData()->entityPosition = kPosition_5900;
+			getEntities()->clearSequences(kEntityServers0);
+			ENTITY_PARAM(2, 4) = 0;
+
+			CALLBACK_ACTION()
+			break;
+		}
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Servers0, chapter4, 31)
@@ -475,12 +667,88 @@ IMPLEMENT_FUNCTION(Servers0, chapter4Handler, 32)
 	error("Servers0: callback function 32 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Servers0, function33, 33)
-	error("Servers0: callback function 33 not implemented!");
+IMPLEMENT_FUNCTION(Servers0, augustOrderSteak, 33)
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionDefault:
+		setCallback(1);
+		call(new ENTITY_SETUP_SIIS(Servers0, setup_draw), "911");
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			getEntities()->drawSequenceLeft(kEntityServers0, "010F3");
+			getEntities()->drawSequenceLeft(kEntityAugust, "010D3");
+
+			setCallback(2);
+			call(new ENTITY_SETUP_SIIS(Servers0, setup_playSound), "AUG4002");
+			break;
+
+		case 2:
+			getSavePoints()->push(kEntityServers0, kEntityAugust, kAction122288808);
+
+			setCallback(3);
+			call(new ENTITY_SETUP_SIIS(Servers0, setup_draw), "913");
+			break;
+
+		case 3:
+			getData()->entityPosition = kPosition_5900;
+			getEntities()->clearSequences(kEntityServers0);
+			ENTITY_PARAM(1, 7) = 0;
+
+			CALLBACK_ACTION()
+			break;
+		}
+		break;
+	}
 }
 
-IMPLEMENT_FUNCTION(Servers0, function34, 34)
-	error("Servers0: callback function 34 not implemented!");
+IMPLEMENT_FUNCTION(Servers0, augustServeDuck, 34)
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionDefault:
+		setCallback(1);
+		call(new ENTITY_SETUP_SIIS(Servers0, setup_draw), "912");
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			getSavePoints()->push(kEntityServers0, kEntityAugust, kAction122358304);
+			getSound()->playSound(kEntityServers0, "AUG1053");
+
+			setCallback(2);
+			call(new ENTITY_SETUP_SIIS(Servers0, setup_draw), "010G3");
+			break;
+
+		case 2:
+			getSavePoints()->push(kEntityServers0, kEntityAugust, kAction201964801);
+
+			setCallback(3);
+			call(new ENTITY_SETUP_SIIS(Servers0, setup_draw), "914");
+			break;
+
+		case 3:
+			getData()->entityPosition = kPosition_5900;
+			getEntities()->clearSequences(kEntityServers0);
+			ENTITY_PARAM(1, 8) = 0;
+
+			CALLBACK_ACTION()
+			break;
+		}
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Servers0, function35, 35)
@@ -544,7 +812,7 @@ void Servers0::handleServer(const SavePoint &savepoint, const char* name, Entity
 	}
 }
 
-void Servers0::serveTable(const SavePoint &savepoint, const char* seq1, EntityIndex entity, const char* seq2, const char* seq3, const char* seq4, int *parameter, bool shouldUpdatePosition, bool pushSavepoint) {
+void Servers0::serveTable(const SavePoint &savepoint, const char* seq1, EntityIndex entity, const char* seq2, const char* seq3, const char* seq4, int *parameter, bool shouldUpdatePosition, bool pushSavepoint, Position position) {
 	switch (savepoint.action) {
 	default:
 		break;
@@ -565,6 +833,9 @@ void Servers0::serveTable(const SavePoint &savepoint, const char* seq1, EntityIn
 			break;
 
 		case 1:
+			if (position)
+				getEntities()->updatePosition(kEntityServers0, kCarRestaurant, position, true);
+
 			getSavePoints()->push(kEntityServers0, entity, kAction136455232);
 
 			setCallback(2);
@@ -572,6 +843,9 @@ void Servers0::serveTable(const SavePoint &savepoint, const char* seq1, EntityIn
 			break;
 
 		case 2:
+			if (position)
+				getEntities()->updatePosition(kEntityServers0, kCarRestaurant, position);
+
 			setCallback(3);
 			call(new ENTITY_SETUP_SIIS(Servers0, setup_draw), seq4);
 			break;
@@ -579,7 +853,7 @@ void Servers0::serveTable(const SavePoint &savepoint, const char* seq1, EntityIn
 		case 3:
 			getData()->entityPosition = kPosition_5900;
 
-			// Special case for function 35
+			// Special case for functions 19 & 35
 			if (pushSavepoint)
 				getSavePoints()->push(kEntityServers0, kEntityRebecca, kAction224253538);
 

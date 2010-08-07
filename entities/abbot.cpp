@@ -1121,7 +1121,7 @@ IMPLEMENT_FUNCTION(Abbot, function45, 45)
 		RESET_ENTITY_STATE(kEntityVerges, Verges, setup_function38);
 
 		getEntities()->drawSequenceLeft(kEntityAbbot, "617Ec");
-		getEntities()->enterCompartment(kEntityAbbot, kObjectCompartmentC);
+		getEntities()->enterCompartment(kEntityAbbot, kObjectCompartmentC, true);
 
 		setCallback(1);
 		call(new ENTITY_SETUP_SIIS(Abbot, setup_playSound), "Abb4010");
@@ -1138,7 +1138,7 @@ IMPLEMENT_FUNCTION(Abbot, function45, 45)
 			break;
 
 		case 2:
-			getEntities()->exitCompartment(kEntityAbbot, kObjectCompartmentC);
+			getEntities()->exitCompartment(kEntityAbbot, kObjectCompartmentC, true);
 			getSavePoints()->push(kEntityAbbot, kEntityVerges, kAction125233040);
 
 			setup_function46();
