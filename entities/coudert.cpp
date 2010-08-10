@@ -352,8 +352,8 @@ IMPLEMENT_FUNCTION_I(Coudert, excuseMe, 12)
 
 
 	if (isDay()) {
-		if (getEntities()->isFemale((EntityIndex)params->param1)) {
-			getSound()->playSound(kEntityCoudert, getEntities()->isMarried((EntityIndex)params->param1) ? "JAC1112C" : "JAC1112F");
+		if (Entities::isFemale((EntityIndex)params->param1)) {
+			getSound()->playSound(kEntityCoudert, Entities::isMarried((EntityIndex)params->param1) ? "JAC1112C" : "JAC1112F");
 		} else {
 			if (!params->param1 && getProgress().field_18 == 2) {
 				switch (random(4)) {
@@ -381,8 +381,8 @@ IMPLEMENT_FUNCTION_I(Coudert, excuseMe, 12)
 			}
 		}
 	} else {
-		if (getEntities()->isFemale((EntityIndex)params->param1))
-			getSound()->playSound(kEntityCoudert, getEntities()->isMarried((EntityIndex)params->param1) ? "JAC1112B" : "JAC1112G");
+		if (Entities::isFemale((EntityIndex)params->param1))
+			getSound()->playSound(kEntityCoudert, Entities::isMarried((EntityIndex)params->param1) ? "JAC1112B" : "JAC1112G");
 		else
 			getSound()->playSound(kEntityCoudert, "JAC1112E");
 	}
@@ -697,7 +697,7 @@ IMPLEMENT_FUNCTION_I(Coudert, function19, 19)
 
 		if (ENTITY_PARAM(0, 3) || ENTITY_PARAM(0, 5) || ENTITY_PARAM(0, 4)) {
 			getScenes()->loadSceneFromItemPosition(kItem5);
-			ENTITY_PARAM(2, 1);
+			ENTITY_PARAM(2, 1) = 1;
 			CALLBACK_ACTION()
 			break;
 		}

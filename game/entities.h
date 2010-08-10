@@ -87,7 +87,7 @@ public:
 	// Sequences
 	void drawSequenceLeft(EntityIndex index, const char* sequence);
 	void drawSequenceRight(EntityIndex index, const char* sequence);
-	void clearSequences(EntityIndex index);
+	void clearSequences(EntityIndex index) const;
 
 	bool updateEntity(EntityIndex entity, CarIndex car, EntityPosition position);
 	bool hasValidFrame(EntityIndex entity) const;
@@ -148,20 +148,20 @@ public:
 	bool isSittingOrStanding(EntityIndex entity, CarIndex car) const;
 
 	/**
-	 * Query if 'entity' is in green car entrance. 
+	 * Query if 'entity' is in green car entrance.
 	 *
-	 * @param entity The entity. 
+	 * @param entity The entity.
 	 *
-	 * @return true if in the green car entrance, false if not. 
+	 * @return true if in the green car entrance, false if not.
 	 */
 	bool isInGreenCarEntrance(EntityIndex entity) const;
 
 	/**
 	 * Query if the player is in a specific car
 	 *
-	 * @param car The car. 
+	 * @param car The car.
 	 *
-	 * @return true if player is in the car, false if not. 
+	 * @return true if player is in the car, false if not.
 	 */
 	bool isPlayerInCar(CarIndex car) const;
 
@@ -320,17 +320,17 @@ private:
 
 	void drawSequenceInternal(EntityIndex entity, const char* sequence, EntityDirection direction);
 	void drawSequencesInternal(EntityIndex entity, EntityDirection direction, bool loadSequence);
-	void loadSequence2(EntityIndex entity, Common::String sequenceName, Common::String sequenceName2, int16 field30, bool loadSequence);
+	void loadSequence2(EntityIndex entity, Common::String sequenceName, Common::String sequenceName2, int16 field30, bool loadSequence) const;
 
-	void clearEntitySequenceData(EntityData::EntityCallData * data, EntityDirection direction);
+	void clearEntitySequenceData(EntityData::EntityCallData * data, EntityDirection direction) const;
 	void computeCurrentFrame(EntityIndex entity);
-	int getCurrentFrame(EntityIndex entity, Sequence *sequence, EntityPosition position, bool doProcessing);
+	int getCurrentFrame(EntityIndex entity, Sequence *sequence, EntityPosition position, bool doProcessing) const;
 	void processFrame(EntityIndex entity, bool keepPreviousFrame, bool dontPlaySound);
 	void drawNextSequence(EntityIndex entity);
-	void updateEntityPosition(EntityIndex entity);
+	void updateEntityPosition(EntityIndex entity) const;
 	void copySequenceData(EntityIndex entity);
 
-	bool changeCar(EntityData::EntityCallData * data, EntityIndex entity, CarIndex car, EntityPosition position, bool increment, EntityPosition newPosition, CarIndex newCar);
+	bool changeCar(EntityData::EntityCallData * data, EntityIndex entity, CarIndex car, EntityPosition position, bool increment, EntityPosition newPosition, CarIndex newCar) const;
 
 	void getSequenceName(EntityIndex entity, EntityDirection direction, Common::String &sequence1, Common::String &sequence2) const;
 

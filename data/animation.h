@@ -93,8 +93,6 @@ private:
 		uint32 size;
 	};
 
-	int _flag;
-
 	void reset();
 	AnimFrame *processChunkFrame(Common::SeekableReadStream *in, const Chunk &c) const;
 	void processChunkAudio(Common::SeekableReadStream *in, const Chunk &c);
@@ -108,6 +106,7 @@ private:
 
 	uint32 _startTime;
 	bool _changed;
+	int _flag;
 };
 
 } // End of namespace LastExpress

@@ -368,12 +368,12 @@ public:
 
 	EntityCallData 	  *getCallData() { return &_data; }
 
-	EntityParameters  *getParameters(uint callback, uint index);
-	EntityParameters  *getCurrentParameters(uint index = 0) { return getParameters(_data.currentCall, index); }
+	EntityParameters  *getParameters(uint callback, byte index) const;
+	EntityParameters  *getCurrentParameters(byte index = 0) { return getParameters(_data.currentCall, index); }
 
-	int 			   getCallback(uint callback);
+	int 			   getCallback(uint callback) const;
 	int				   getCurrentCallback() { return getCallback(_data.currentCall); }
-	void 			   setCallback(uint callback, uint index);
+	void 			   setCallback(uint callback, byte index);
 	void 			   setCurrentCallback(uint index) { setCallback(_data.currentCall, index); }
 
 	// Serializable

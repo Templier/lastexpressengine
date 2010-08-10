@@ -378,6 +378,7 @@ IMPLEMENT_FUNCTION_I(Boutarel, function18, 18)
 			params->param2 = 0;
 			params->param3 = 0;
 		}
+		break;
 
 	case kActionCallback:
 		switch (getCallback()) {

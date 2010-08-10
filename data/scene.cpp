@@ -81,7 +81,7 @@ Common::String SceneHotspot::toString() {
 
 	output += Common::String::printf("    hotspot: scene=%d location=%02d action=%d param1=%02d param2=%02d param3=%02d cursor=%02d rect=(%d, %d)x(%d,%d)",
 	                                   scene, location, action, param1, param2, param3, cursor, rect.left, rect.top, rect.right, rect.bottom);
-	
+
 	return output;
 }
 

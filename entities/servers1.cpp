@@ -210,7 +210,7 @@ IMPLEMENT_FUNCTION(Servers1, chapter1, 8)
 IMPLEMENT_FUNCTION(Servers1, function9, 9)
 	switch (savepoint.action) {
 	default:
-		break;	
+		break;
 
 	case kActionDefault:
 		getData()->entityPosition = kPosition_5800;
@@ -255,7 +255,7 @@ IMPLEMENT_FUNCTION(Servers1, function9, 9)
 IMPLEMENT_FUNCTION(Servers1, function10, 10)
 	switch (savepoint.action) {
 	default:
-		break;	
+		break;
 
 	case kActionDefault:
 		getData()->entityPosition = kPosition_5800;
@@ -530,11 +530,11 @@ IMPLEMENT_FUNCTION(Servers1, chapter3Handler, 23)
 		call(new ENTITY_SETUP(Servers1, setup_function24));
 		return;
 	}
-		
+
 	if (ENTITY_PARAM(1, 2)) {
 		setCallback(2);
 		call(new ENTITY_SETUP(Servers1, setup_function7));
-	}	
+	}
 }
 
 IMPLEMENT_FUNCTION(Servers1, function24, 24)
@@ -605,7 +605,7 @@ label_continue:
 
 	case kActionCallback:
 		if (getCallback() == 1)
-			params->param1 = 1;		
+			params->param1 = 1;
 		break;
 
 	case kAction201431954:
@@ -715,7 +715,7 @@ void Servers1::serveTable(const SavePoint &savepoint, const char* seq1, EntityIn
 void Servers1::serveSalon(const SavePoint &savepoint, const char* seq1, const char* snd1, EntityIndex entity, const char* snd2, const char* seq2, ActionIndex action, const char* seq3, int *parameter) {
 	switch (savepoint.action) {
 	default:
-		break;	
+		break;
 
 	case kActionDefault:
 		getData()->entityPosition = kPosition_5800;
@@ -730,7 +730,7 @@ void Servers1::serveSalon(const SavePoint &savepoint, const char* seq1, const ch
 		default:
 			break;
 
-		case 1:			
+		case 1:
 			getEntities()->drawSequenceRight(kEntityServers1, seq1);
 
 			if (getEntities()->isInRestaurant(kEntityPlayer))

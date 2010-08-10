@@ -46,7 +46,7 @@ namespace LastExpress {
 
 SceneManager::SceneManager(LastExpressEngine *engine) : _engine(engine),
 	_flagNoEntity(false), _flagDrawEntities(false), _flagDrawSequences(false), _flagCoordinates(false),
-	_clockHours(NULL), _clockMinutes(NULL), _coords(0, 0, 480, 640) {
+	_coords(0, 0, 480, 640), _clockHours(NULL), _clockMinutes(NULL) {
 	_sceneLoader = new SceneLoader();
 }
 
@@ -745,16 +745,16 @@ void SceneManager::setCoordinates(SequenceFrame *frame) {
 	_flagCoordinates = true;
 
 	if (_coords.right > (int)frame->getInfo()->xPos1)
-		_coords.right = frame->getInfo()->xPos1;
+		_coords.right = (int16)frame->getInfo()->xPos1;
 
 	if (_coords.bottom > (int)frame->getInfo()->yPos1)
-		_coords.bottom = frame->getInfo()->yPos1;
+		_coords.bottom = (int16)frame->getInfo()->yPos1;
 
 	if (_coords.left < (int)frame->getInfo()->xPos2)
-		_coords.left = frame->getInfo()->xPos2;
+		_coords.left = (int16)frame->getInfo()->xPos2;
 
 	if (_coords.top < (int)frame->getInfo()->yPos2)
-		_coords.top = frame->getInfo()->yPos2;
+		_coords.top = (int16)frame->getInfo()->yPos2;
 }
 
 void SceneManager::resetCoordinates() {
@@ -933,7 +933,6 @@ void SceneManager::preProcessScene(SceneIndex *index) {
 			PROCESS_HOTSPOT_SCENE(*it, index);
 			break;
 		}
-		break;
 		break;
 	}
 

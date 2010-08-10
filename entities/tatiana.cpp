@@ -268,10 +268,6 @@ IMPLEMENT_FUNCTION(Tatiana, function15, 15)
 		call(new ENTITY_SETUP_SIIS(Tatiana, setup_enterExitCompartment2), getProgress().chapter == kChapter1 ? "603Bb" : "673Bb", kObjectCompartmentB);
 		break;
 
-
-
-		break;
-
 	case kActionCallback:
 		if (getCallback() == 1 || getCallback() == 2) {
 			getData()->posture = kPostureStanding;

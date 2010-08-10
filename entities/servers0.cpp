@@ -375,7 +375,10 @@ label_continue2:
 			getEntities()->clearSequences(kEntityServers0);
 			getData()->entityPosition = kPosition_5900;
 
-			(getCallback() == 11) ? params->param2 = 1 : params->param1 = 1;
+			if (getCallback() == 11)
+				params->param2 = 1;
+			else
+				params->param1 = 1;
 			break;
 
 		case 13:

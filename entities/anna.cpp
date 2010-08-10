@@ -2101,6 +2101,7 @@ IMPLEMENT_FUNCTION(Anna, finalSequence, 81)
 
 		setCallback(1);
 		call(new ENTITY_SETUP(Anna, setup_savegame), kSavegameType2, kEventKronosGiveFirebird);
+		break;
 
 	case kActionUseWhistle:
 		getProgress().isEggOpen = false;

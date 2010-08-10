@@ -139,13 +139,13 @@ void Debugger::callCommand() {
 		(*_command)(_numParams, const_cast<const char **>(_commandParams));
 }
 
-void Debugger::loadArchive(ArchiveIndex index) {
+void Debugger::loadArchive(ArchiveIndex index) const {
 	_engine->getResourceManager()->loadArchive(index);
 	getScenes()->loadSceneDataFile(index);
 }
 
 // Restore loaded archive
-void Debugger::restoreArchive() {
+void Debugger::restoreArchive() const {
 
 	ArchiveIndex index = kArchiveCd1;
 
@@ -170,7 +170,7 @@ void Debugger::restoreArchive() {
 	getScenes()->loadSceneDataFile(index);
 }
 
-bool Debugger::cmdHelp(int argc, const char **argv) {
+bool Debugger::cmdHelp(int, const char **) {
 	DebugPrintf("Debug flags\n");
 	DebugPrintf("-----------\n");
 	DebugPrintf(" debugflag_list - Lists the available debug flags and their status\n");
@@ -667,7 +667,7 @@ bool Debugger::cmdEntity(int argc, const char **argv) {
 	if (argc == 2) {
 		EntityIndex index = (EntityIndex)getNumber(argv[1]);
 
-		if (index < 0 || index > 39)
+		if (index > 39)
 			goto label_error;
 
 		DebugPrintf("Entity %s\n", ENTITY_NAME(index));
@@ -677,9 +677,9 @@ bool Debugger::cmdEntity(int argc, const char **argv) {
 		// The Player entity does not have any callback data
 		if (index != kEntityPlayer) {
 			EntityData *data = getEntities()->get(index)->getParamData();
-			for (int callback = 0; callback < 9; callback++) {
+			for (uint callback = 0; callback < 9; callback++) {
 				DebugPrintf("Call parameters %d:\n", callback);
-				for (int ix = 0; ix < 4; ix++)
+				for (uint ix = 0; ix < 4; ix++)
 					DebugPrintf("  %s", data->getParameters(callback, ix)->toString().c_str());
 			}
 		}

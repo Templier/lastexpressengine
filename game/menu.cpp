@@ -766,9 +766,7 @@ bool Menu::handleEvent(StartMenuAction action, Common::EventType type) {
 			showFrame(kOverlayTooltip, kTooltipSwitchGoldGame, true);
 			break;
 		}
-
 		return true;
-		break;
 
 	//////////////////////////////////////////////////////////////////////////
 	case kMenuRewindGame:

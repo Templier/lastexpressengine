@@ -45,25 +45,25 @@ namespace LastExpress {
 //////////////////////////////////////////////////////////////////////////
 // EntityData
 //////////////////////////////////////////////////////////////////////////
-EntityData::EntityParameters *EntityData::getParameters(uint callback, uint index) {
-	if (callback > 9)
+EntityData::EntityParameters *EntityData::getParameters(uint callback, byte index) const {
+	if (callback >= 9)
 		error("EntityData::getParameters: invalid callback value (was: %d, max: 9)", callback);
 
-	if (index > 4)
+	if (index >= 4)
 		error("EntityData::getParameters: invalid index value (was: %d, max: 4)", index);
 
 	return _parameters[callback].parameters[index];
 }
 
-int EntityData::getCallback(uint callback) {
-	if (callback > 16)
+int EntityData::getCallback(uint callback) const {
+	if (callback >= 16)
 		error("EntityData::getParameters: invalid callback value (was: %d, max: 16)", callback);
 
 	return _data.callbacks[callback];
 }
 
-void EntityData::setCallback(uint callback, uint index) {
-	if (callback > 16)
+void EntityData::setCallback(uint callback, byte index) {
+	if (callback >= 16)
 		error("EntityData::getParameters: invalid callback value (was: %d, max: 16)", callback);
 
 	_data.callbacks[callback] = index;

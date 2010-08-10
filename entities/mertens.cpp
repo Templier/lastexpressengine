@@ -447,7 +447,7 @@ IMPLEMENT_FUNCTION_II(Mertens, function10, 10)
 
 		case 2:
 			getAction()->playAnimation(getData()->entityPosition < getEntityData(kEntityPlayer)->entityPosition ? kEventMertensKronosInvitation : kEventMertensKronosInvitationClosedWindows);
-			getProgress().eventMertensKronosInvitation;
+			getProgress().eventMertensKronosInvitation = true;
 
 			ENTITY_PARAM(0, 6) = 0;
 			ENTITY_PARAM(0, 7) = 0;
@@ -470,7 +470,7 @@ IMPLEMENT_FUNCTION_II(Mertens, function10, 10)
 
 		case 3:
 			getAction()->playAnimation(kEventMertensAugustWaiting);
-			getProgress().eventMertensAugustWaiting = 1;
+			getProgress().eventMertensAugustWaiting = true;
 
 			ENTITY_PARAM(1, 2) = 0;
 
@@ -551,7 +551,7 @@ IMPLEMENT_FUNCTION_I(Mertens, bonsoir, 12)
 	}
 
 	if (isDay()) {
-		if (getEntities()->isFemale(entity)) {
+		if (Entities::isFemale(entity)) {
 			getSound()->playSound(kEntityMertens, random(2) ? "CON1112" : "CON1112A");
 		} else {
 			if (entity || getProgress().field_18 != 2) {
@@ -574,7 +574,7 @@ IMPLEMENT_FUNCTION_I(Mertens, bonsoir, 12)
 			}
 		}
 	} else {
-		if (getEntities()->isFemale(entity))
+		if (Entities::isFemale(entity))
 			getSound()->playSound(kEntityMertens, random(2) ? "CON1112B" : "CON1112C");
 		else
 			getSound()->playSound(kEntityMertens, "CON1112G");

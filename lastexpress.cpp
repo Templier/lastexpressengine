@@ -269,7 +269,8 @@ void LastExpressEngine::soundTimer(void *refCon) {
 void LastExpressEngine::handleSoundTimer() {
 	if (getGameLogic()->getGameState()->getGameFlags()->isGameRunning) {
 		if (_frameCounter & 1)
-			_soundMan->handleTimer();
+			if (_soundMan)
+				_soundMan->handleTimer();
 
 		_frameCounter++;
 	}

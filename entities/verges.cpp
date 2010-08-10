@@ -293,6 +293,7 @@ IMPLEMENT_FUNCTION_IIS(Verges, function10, 10)
 
 	case kAction2:
 		params->param6 = 1;
+		break;
 
 	case kActionDefault:
 		if (!getSound()->isBuffered(kEntityVerges)) {
@@ -378,12 +379,12 @@ IMPLEMENT_FUNCTION_I(Verges, function13, 13)
 			if (params->param1) {
 				if (isDay())
 					getAction()->playAnimation(params->param2 ? kEventVergesSuitcaseOtherEntryStart : kEventVergesSuitcaseOtherEntry);
-				else 
-					getAction()->playAnimation(params->param2 ? kEventVergesSuitcaseNightOtherEntryStart : kEventVergesSuitcaseNightOtherEntry);				
+				else
+					getAction()->playAnimation(params->param2 ? kEventVergesSuitcaseNightOtherEntryStart : kEventVergesSuitcaseNightOtherEntry);
 			} else {
 				if (isDay())
 					getAction()->playAnimation(params->param2 ? kEventVergesSuitcaseStart : kEventVergesSuitcase);
-				else 
+				else
 					getAction()->playAnimation(params->param2 ? kEventVergesSuitcaseNightStart : kEventVergesSuitcaseNight);
 			}
 
@@ -1284,7 +1285,7 @@ IMPLEMENT_FUNCTION(Verges, function42, 42)
 		getEntities()->clearSequences(kEntityVerges);
 }
 
-void Verges::talk(const SavePoint &savepoint, const char* sound1, const char* sound2) {
+void Verges::talk(const SavePoint &savepoint, const char *sound1, const char *sound2) {
 	switch (savepoint.action) {
 	default:
 		break;

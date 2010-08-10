@@ -84,6 +84,7 @@ bool SaveLoad::loadGame(GameId id) {
 
 
 	error("SaveLoad::loadgame: not implemented!");
+
 	return false;
 }
 

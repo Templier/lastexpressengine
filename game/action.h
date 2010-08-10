@@ -126,7 +126,7 @@ private:
 	void pickCorpse(ObjectLocation bedPosition, bool process) const;
 	void dropCorpse(bool process) const;
 
-	void playCompartmentSoundEvents(EntityIndex entityIndex, ObjectIndex object) const;
+	void playCompartmentSoundEvents(ObjectIndex object) const;
 };
 
 } // End of namespace LastExpress

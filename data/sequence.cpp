@@ -334,9 +334,6 @@ void AnimFrame::decompFF(Common::SeekableReadStream *in, const FrameInfo &f) {
 //  SEQUENCE
 //////////////////////////////////////////////////////////////////////////
 
-Sequence::Sequence(Common::String name) : _name(name), _stream(NULL), _isLoaded(false) {
-}
-
 Sequence::~Sequence() {
 	reset();
 }
@@ -424,12 +421,8 @@ AnimFrame *Sequence::getFrame(uint32 index) {
 	return new AnimFrame(_stream, *frame);
 }
 
-
-// SequencePlayer
-SequenceFrame::SequenceFrame(Sequence *sequence, uint32 frame, bool dispose) :
-	_sequence(sequence), _frame(frame), _dispose(dispose) {
-}
-
+//////////////////////////////////////////////////////////////////////////
+// SequenceFrame
 SequenceFrame::~SequenceFrame() {
 	if (_dispose && _sequence) {
 		delete _sequence;

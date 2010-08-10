@@ -403,7 +403,7 @@ void Logic::eventTick(const Common::Event &) {
 //////////////////////////////////////////////////////////////////////////
 
 // Handle game over
-void Logic::gameOver(MenuInitType type, int value, SceneIndex sceneIndex, bool showScene) const {
+void Logic::gameOver(MenuInitType type, uint32 value, SceneIndex sceneIndex, bool showScene) const {
 
 	getSound()->processEntries();
 	getEntities()->reset();
@@ -471,7 +471,7 @@ void Logic::switchChapter() {
 	}
 }
 
-void Logic::playFinalSequence() {
+void Logic::playFinalSequence() const {
 	getSound()->processEntries();
 
 	_action->playAnimation(kEventFinalSequence);
@@ -484,7 +484,7 @@ void Logic::playFinalSequence() {
 	getMenu()->show(false, kInitTypeIndex, 0);
 }
 
-void Logic::showCredits() {
+void Logic::showCredits() const {
 	error("Logic::showCredits: not implemented!");
 }
 

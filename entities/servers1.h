@@ -72,7 +72,7 @@ public:
 	DECLARE_FUNCTION(chapter5Handler)
 	DECLARE_NULL_FUNCTION()
 
-private:	
+private:
 	DECLARE_CALL_FUNCTION(iiii, Servers1, int, int, int, int)
 	DECLARE_CALL_FUNCTION(siii, Servers1, const char*, int, int, int)
 	DECLARE_CALL_FUNCTION(siis, Servers1, const char*, int, int, const char*)

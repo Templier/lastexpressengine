@@ -419,7 +419,7 @@ IMPLEMENT_FUNCTION(Gendarmes, chapter5, 17)
 		getEntities()->clearSequences(kEntityGendarmes);
 }
 
-void Gendarmes::arrest(const SavePoint &savepoint, bool shouldPlaySound, SoundManager::FlagType flag, bool checkCallback, bool shouldUpdateEntity) {	
+void Gendarmes::arrest(const SavePoint &savepoint, bool shouldPlaySound, SoundManager::FlagType flag, bool checkCallback, bool shouldUpdateEntity) {
 	switch (savepoint.action) {
 	default:
 		break;
@@ -446,7 +446,7 @@ void Gendarmes::arrest(const SavePoint &savepoint, bool shouldPlaySound, SoundMa
 		}
 
 		if (getEntities()->checkFields9(kEntityGendarmes, kEntityPlayer, 1000) && !getEntityData(kEntityPlayer)->posture) {
-			
+
 			if (shouldUpdateEntity)
 				if (getEntities()->isPlayerPosition(kCarRedSleeping, 22) && !getEntities()->checkFields9(kEntityGendarmes, kEntityPlayer, 250))
 					break;

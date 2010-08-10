@@ -148,7 +148,7 @@ private:
 
 class Sequence {
 public:
-	Sequence(Common::String name);
+	Sequence(Common::String name) : _stream(NULL), _isLoaded(false), _name(name), _field30(15) {}
 	~Sequence();
 
 	static Sequence *load(Common::String name, Common::SeekableReadStream *stream = NULL, byte field30 = 15);
@@ -180,7 +180,7 @@ private:
 
 class SequenceFrame : public Drawable {
 public:
-	SequenceFrame(Sequence *sequence, uint32 frame = 0, bool dispose = false);
+	SequenceFrame(Sequence *sequence, uint16 frame = 0, bool dispose = false) : _sequence(sequence), _frame(frame), _dispose(dispose) {}
 	~SequenceFrame();
 
 	Common::Rect draw(Graphics::Surface *surface);

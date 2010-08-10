@@ -221,7 +221,7 @@ IMPLEMENT_FUNCTION_I(Francois, function11, 11)
 		if (!getSound()->isBuffered(kEntityFrancois)) {
 
 			if (!CURRENT_PARAMS(1, 1))
-				CURRENT_PARAMS(1, 1) = getState()->timeTicks + params->param6;
+				CURRENT_PARAMS(1, 1) = (int)getState()->timeTicks + params->param6;
 
 			if (CURRENT_PARAMS(1, 1) < (int)getState()->timeTicks) {
 				switch (random(7)) {
@@ -341,6 +341,7 @@ label_callback:
 		 && !getEvent(kEventFrancoisWhistleNight)
 		 && !getEvent(kEventFrancoisWhistleNightD))
 			getData()->inventoryItem = kItemInvalid;
+		break;
 
 	case kActionDefault:
 		setCallback(1);

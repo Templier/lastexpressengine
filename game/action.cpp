@@ -823,7 +823,7 @@ IMPLEMENT_ACTION(enterCompartment) {
 	getSound()->playSound(kEntityPlayer, "LIB014");
 	playAnimation(kEventCathFindCorpse);
 	getSound()->playSound(kEntityPlayer, "LIB015");
-	getProgress().eventCorpseFound = 1;
+	getProgress().eventCorpseFound = true;
 
 	return kSceneCompartmentCorpse;
 }
@@ -1559,17 +1559,17 @@ void Action::dropCorpse(bool process) const {
 	case kLocation4: // Window
 		// Say goodbye to an old friend
 		getInventory()->get(kItemCorpse)->location = kLocationNone;
-		getProgress().eventCorpseThrown = 1;
+		getProgress().eventCorpseThrown = true;
 
 		if (getState()->time <= kTime1138500) {
 			playAnimation(getProgress().jacket == kJacketGreen ? kEventCorpseDropWindowGreen : kEventCorpseDropWindowOriginal);
 
-			getProgress().field_24 = 1;
+			getProgress().field_24 = true;
 		} else {
 			playAnimation(kEventCorpseDropBridge);
 		}
 
-		getProgress().eventCorpseMovedFromFloor = 1;
+		getProgress().eventCorpseMovedFromFloor = true;
 		break;
 	}
 
@@ -1591,7 +1591,7 @@ bool Action::handleOtherCompartment(ObjectIndex object, bool doPlaySound, bool d
 	&& getEntityData(kEntityGendarmes)->posture == kPostureStanding
 	&& !getEntities()->compare(kEntityPlayer, kEntityGendarmes)) {
 		if (doPlaySound)
-			playCompartmentSoundEvents(kEntityPlayer, object);
+			playCompartmentSoundEvents(object);
 
 		if (doLoadScene)
 			getScenes()->loadSceneFromObject(object);
@@ -1623,7 +1623,7 @@ bool Action::handleOtherCompartment(ObjectIndex object, bool doPlaySound, bool d
 	&& getEntityData(kEntityCoudert)->direction == kDirectionUp
 	&& getEntityData(kEntityCoudert)->entityPosition < getEntityData(kEntityPlayer)->entityPosition) {
 		if (doPlaySound)
-			playCompartmentSoundEvents(kEntityPlayer, object);
+			playCompartmentSoundEvents(object);
 
 		if (!getSound()->isBuffered(kEntityCoudert))
 			getSound()->playSound(kEntityCoudert, (random(2)) ? "JAC1000" : "JAC1000A");
@@ -1639,7 +1639,7 @@ bool Action::handleOtherCompartment(ObjectIndex object, bool doPlaySound, bool d
 	&& getEntityData(kEntityCoudert)->direction == kDirectionDown
 	&& getEntityData(kEntityCoudert)->entityPosition > getEntityData(kEntityPlayer)->entityPosition) {
 		if (doPlaySound)
-			playCompartmentSoundEvents(kEntityPlayer, object);
+			playCompartmentSoundEvents(object);
 
 		if (!getSound()->isBuffered(kEntityCoudert))
 			getSound()->playSound(kEntityCoudert, (random(2)) ? "JAC1000" : "JAC1000A");
@@ -1651,7 +1651,7 @@ bool Action::handleOtherCompartment(ObjectIndex object, bool doPlaySound, bool d
 	return false;
 }
 
-void Action::playCompartmentSoundEvents(EntityIndex entityIndex, ObjectIndex object) const {
+void Action::playCompartmentSoundEvents(ObjectIndex object) const {
 	if (getObjects()->get(object).location == kLocation1 || getObjects()->get(object).location == kLocation3 || getEntities()->checkFields2(object)) {
 		getSound()->playSoundEvent(kEntityPlayer, 13);
 	} else {

@@ -283,13 +283,13 @@ private:
 
 	void setupEntry(SoundEntry *entry, Common::String name, FlagType flag, int a4);
 	void setEntryType(SoundEntry *entry, FlagType flag);
-	void setEntryStatus(SoundEntry *entry, FlagType flag);
+	void setEntryStatus(SoundEntry *entry, FlagType flag) const;
 	bool setupCache(SoundEntry *entry);
 	void loadSoundData(SoundEntry *entry, Common::String name);
 
-	void updateEntry(SoundEntry *entry, uint value);
-	void updateEntryState(SoundEntry *entry);
-	void resetEntry(SoundEntry *entry);
+	void updateEntry(SoundEntry *entry, uint value) const;
+	void updateEntryState(SoundEntry *entry) const ;
+	void resetEntry(SoundEntry *entry) const;
 	void removeEntry(SoundEntry *entry);
 
 

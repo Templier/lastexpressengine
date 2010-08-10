@@ -960,7 +960,7 @@ void Entities::computeCurrentFrame(EntityIndex entityIndex) {
 	}
 }
 
-int Entities::getCurrentFrame(EntityIndex entity, Sequence *sequence, EntityPosition position, bool doProcessing) {
+int Entities::getCurrentFrame(EntityIndex entity, Sequence *sequence, EntityPosition position, bool doProcessing) const {
 	EntityData::EntityCallData *data = getData(entity);
 
 	EntityPosition firstFramePosition = sequence->getFrameInfo(0)->entityPosition;
@@ -986,7 +986,7 @@ int Entities::getCurrentFrame(EntityIndex entity, Sequence *sequence, EntityPosi
 	uint32 frame = 0;
 	uint32 numFrames = sequence->count() - 1;
 
-	while (true) {
+	for (;;) {
 		uint32 currentFrame = (frame + numFrames) / 2;
 
 		if (position + sequence->getFrameInfo(currentFrame)->entityPosition <= data->entityPosition) {
@@ -1002,8 +1002,8 @@ int Entities::getCurrentFrame(EntityIndex entity, Sequence *sequence, EntityPosi
 		}
 
 		if (numFrames - frame == 1) {
-			uint32 lastFramePos = ABS(position - sequence->getFrameInfo(numFrames)->entityPosition + data->entityPosition);
-			uint32 framePosition = ABS(position - sequence->getFrameInfo(frame)->entityPosition + data->entityPosition);
+			uint32 lastFramePos = ABS(position - (sequence->getFrameInfo(numFrames)->entityPosition + data->entityPosition));
+			uint32 framePosition = ABS(position - (sequence->getFrameInfo(frame)->entityPosition + data->entityPosition));
 
 			return (framePosition > lastFramePos) ? numFrames : frame;
 		}
@@ -1011,8 +1011,6 @@ int Entities::getCurrentFrame(EntityIndex entity, Sequence *sequence, EntityPosi
 		if (numFrames <= frame)
 			return currentFrame;
 	}
-
-	return -1;
 }
 
 void Entities::processFrame(EntityIndex entityIndex, bool keepPreviousFrame, bool dontPlaySound) {
@@ -1153,7 +1151,7 @@ void Entities::drawNextSequence(EntityIndex entityIndex) {
 	}
 }
 
-void Entities::updateEntityPosition(EntityIndex entityIndex) {
+void Entities::updateEntityPosition(EntityIndex entityIndex) const {
 	EntityData::EntityCallData *data = getData(entityIndex);
 
 	getScenes()->removeAndRedraw(&data->frame, false);
@@ -1231,7 +1229,7 @@ void Entities::drawSequenceRight(EntityIndex index, const char* sequence) {
 	drawSequenceInternal(index, sequence, kDirectionRight);
 }
 
-void Entities::clearSequences(EntityIndex entityIndex) {
+void Entities::clearSequences(EntityIndex entityIndex) const {
 	debugC(8, kLastExpressDebugLogic, "Prepare sequences for entity %s", ENTITY_NAME(entityIndex));
 
 	EntityData::EntityCallData *data = getData(entityIndex);
@@ -1281,7 +1279,7 @@ void Entities::drawSequencesInternal(EntityIndex entityIndex, EntityDirection di
 	int16 field30 = (direction == kDirectionLeft ? entityIndex + 35 : 15);
 
 	data->doProcessEntity = true;
-	byte field4A9 = data->field_4A9;
+	bool field4A9 = data->field_4A9;
 
 	// First case: different car and not going right: cleanup and return
 	if (data->car != getData(kEntityPlayer)->car && direction != kDirectionRight) {
@@ -1427,7 +1425,7 @@ void Entities::drawSequencesInternal(EntityIndex entityIndex, EntityDirection di
 	}
 }
 
-void Entities::loadSequence2(EntityIndex entityIndex, Common::String sequenceName, Common::String sequenceName2, int16 field30, bool reloadSequence) {
+void Entities::loadSequence2(EntityIndex entityIndex, Common::String sequenceName, Common::String sequenceName2, int16 field30, bool reloadSequence) const {
 	EntityData::EntityCallData *data = getData(entityIndex);
 
 	if (data->sequenceName2 == sequenceName)
@@ -2167,10 +2165,10 @@ label_process_entity:
 					}
 					return false;
 				}
-			} else if (!flag1) {
-				drawSequencesInternal(entity, direction, true);
-				return false;
 			}
+		} else if (!flag1) {
+			drawSequencesInternal(entity, direction, true);
+			return false;
 		}
 
 		//////////////////////////////////////////////////////////////////////////
@@ -2215,7 +2213,7 @@ label_process_entity:
 	return true;
 }
 
-bool Entities::changeCar(EntityData::EntityCallData * data, EntityIndex entity, CarIndex car, EntityPosition position, bool increment, EntityPosition newPosition, CarIndex newCar) {
+bool Entities::changeCar(EntityData::EntityCallData * data, EntityIndex entity, CarIndex car, EntityPosition position, bool increment, EntityPosition newPosition, CarIndex newCar) const {
 	if (getData(kEntityPlayer)->car == data->car) {
 		getSound()->playSoundEvent(entity, 36);
 		getSound()->playSoundEvent(entity, 37, 30);
@@ -2594,7 +2592,7 @@ EntityPosition Entities::getEntityPositionFromCurrentPosition() const {
 	return kPositionNone;
 }
 
-void Entities::clearEntitySequenceData(EntityData::EntityCallData * data, EntityDirection direction) {
+void Entities::clearEntitySequenceData(EntityData::EntityCallData * data, EntityDirection direction) const {
 	getScenes()->removeAndRedraw(&data->frame, false);
 	getScenes()->removeAndRedraw(&data->frame1, false);
 
