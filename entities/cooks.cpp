@@ -104,7 +104,7 @@ IMPLEMENT_FUNCTION(Cooks, function3, 3)
 	case kActionDrawScene:
 		if (!getEntities()->isInKitchen(kEntityPlayer)) {
 			getEntities()->clearSequences(kEntityCooks);
-			CALLBACK_ACTION()
+			CALLBACK_ACTION();
 			break;
 		}
 
@@ -116,7 +116,7 @@ IMPLEMENT_FUNCTION(Cooks, function3, 3)
 					if (!getEntities()->hasValidFrame(kEntityCooks)) {
 						getSound()->playSound(kEntityCooks, "LIB015");
 						getEntities()->clearSequences(kEntityCooks);
-						CALLBACK_ACTION()
+						CALLBACK_ACTION();
 					}
 					break;
 				}
@@ -130,7 +130,7 @@ IMPLEMENT_FUNCTION(Cooks, function3, 3)
 		if (params->param1 && !getEntities()->hasValidFrame(kEntityCooks)) {
 			getSound()->playSound(kEntityCooks, "LIB015");
 			getEntities()->clearSequences(kEntityCooks);
-			CALLBACK_ACTION()
+			CALLBACK_ACTION();
 		}
 		break;
 
@@ -189,7 +189,7 @@ IMPLEMENT_FUNCTION(Cooks, function4, 4)
 	case kActionDrawScene:
 		if (!getEntities()->isInKitchen(kEntityPlayer)) {
 			getEntities()->clearSequences(kEntityCooks);
-			CALLBACK_ACTION()
+			CALLBACK_ACTION();
 			break;
 		}
 
@@ -201,7 +201,7 @@ IMPLEMENT_FUNCTION(Cooks, function4, 4)
 					if (!getEntities()->hasValidFrame(kEntityCooks)) {
 						getSound()->playSound(kEntityCooks, "LIB015");
 						getEntities()->clearSequences(kEntityCooks);
-						CALLBACK_ACTION()
+						CALLBACK_ACTION();
 					}
 					break;
 				}
@@ -215,7 +215,7 @@ IMPLEMENT_FUNCTION(Cooks, function4, 4)
 		if (params->param1 && !getEntities()->hasValidFrame(kEntityCooks)) {
 			getSound()->playSound(kEntityCooks, "LIB015");
 			getEntities()->clearSequences(kEntityCooks);
-			CALLBACK_ACTION()
+			CALLBACK_ACTION();
 		}
 		break;
 

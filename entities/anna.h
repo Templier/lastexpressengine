@@ -46,7 +46,7 @@ public:
 	DECLARE_FUNCTION(callbackActionOnDirection)
 	DECLARE_FUNCTION_SIIS(callSavepoint)
 	DECLARE_FUNCTION_S(playSound)
-	DECLARE_FUNCTION(callbackActionOnSomebodyStandingInRestaurantOrSalon)
+	DECLARE_FUNCTION(callbackActionRestaurantOrSalon)
 	DECLARE_FUNCTION_II(savegame)
 	DECLARE_FUNCTION_II(updateEntity)
 	DECLARE_FUNCTION_I(updateFromTime)

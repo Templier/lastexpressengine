@@ -106,7 +106,7 @@ IMPLEMENT_FUNCTION_II(Kahina, savegame, 3)
 IMPLEMENT_FUNCTION_I(Kahina, updateFromTime, 4)
 	if (savepoint.action == kAction137503360) {
 		ENTITY_PARAM(0, 2) = 1;
-		CALLBACK_ACTION()
+		CALLBACK_ACTION();
 	}
 
 	Entity::updateFromTime(savepoint);
@@ -284,12 +284,12 @@ IMPLEMENT_FUNCTION(Kahina, function14, 14)
 
 	case kActionExitCompartment:
 		getEntities()->exitCompartment(kEntityKahina, kObjectCompartmentF);
-		CALLBACK_ACTION()
+		CALLBACK_ACTION();
 		break;
 
 	case kAction4:
 		getEntities()->exitCompartment(kEntityKahina, kObjectCompartmentF);
-		CALLBACK_ACTION()
+		CALLBACK_ACTION();
 		break;
 
 	case kActionDefault:
@@ -494,7 +494,7 @@ IMPLEMENT_FUNCTION_II(Kahina, function19, 19)
 			RESET_ENTITY_STATE(kEntityKahina, Kahina, setup_function22);
 
 		if (getEntities()->updateEntity(kEntityKahina, (CarIndex)params->param1, (EntityPosition)params->param2))
-			CALLBACK_ACTION()
+			CALLBACK_ACTION();
 		break;
 
 	case kActionExcuseMeCath:
@@ -510,7 +510,7 @@ IMPLEMENT_FUNCTION_II(Kahina, function19, 19)
 
 	case kActionDefault:
 		if (getEntities()->updateEntity(kEntityKahina, (CarIndex)params->param1, (EntityPosition)params->param2))
-			CALLBACK_ACTION()
+			CALLBACK_ACTION();
 		break;
 	}
 }

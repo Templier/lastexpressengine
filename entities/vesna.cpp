@@ -46,7 +46,7 @@ Vesna::Vesna(LastExpressEngine *engine) : Entity(engine, kEntityVesna) {
 	ADD_CALLBACK_FUNCTION(Vesna, updateEntity);
 	ADD_CALLBACK_FUNCTION(Vesna, updateFromTime);
 	ADD_CALLBACK_FUNCTION(Vesna, updateEntity2);
-	ADD_CALLBACK_FUNCTION(Vesna, callbackActionOnSomebodyStandingInRestaurantOrSalon);
+	ADD_CALLBACK_FUNCTION(Vesna, callbackActionRestaurantOrSalon);
 	ADD_CALLBACK_FUNCTION(Vesna, callbackActionOnDirection);
 	ADD_CALLBACK_FUNCTION(Vesna, savegame);
 	ADD_CALLBACK_FUNCTION(Vesna, function11);
@@ -162,7 +162,7 @@ IMPLEMENT_FUNCTION_II(Vesna, updateEntity2, 7)
 		break;
 
 	case kAction123668192:
-		CALLBACK_ACTION()
+		CALLBACK_ACTION();
 		break;
 	}
 }
@@ -170,8 +170,8 @@ IMPLEMENT_FUNCTION_II(Vesna, updateEntity2, 7)
 /**
  * Process callback action when somebody is standing in the restaurant or salon.
  */
-IMPLEMENT_FUNCTION(Vesna, callbackActionOnSomebodyStandingInRestaurantOrSalon, 8)
-	Entity::callbackActionOnSomebodyStandingInRestaurantOrSalon(savepoint);
+IMPLEMENT_FUNCTION(Vesna, callbackActionRestaurantOrSalon, 8)
+	Entity::callbackActionRestaurantOrSalon(savepoint);
 }
 
 /**
@@ -281,7 +281,7 @@ IMPLEMENT_FUNCTION(Vesna, function11, 11)
 
 	case kAction55996766:
 	case kAction101687594:
-		CALLBACK_ACTION()
+		CALLBACK_ACTION();
 		break;
 	}
 }
@@ -515,7 +515,7 @@ IMPLEMENT_FUNCTION(Vesna, function26, 26)
 
 	case kActionDefault:
 		setCallback(1);
-		call(new ENTITY_SETUP(Vesna, setup_callbackActionOnSomebodyStandingInRestaurantOrSalon));
+		call(new ENTITY_SETUP(Vesna, setup_callbackActionRestaurantOrSalon));
 		break;
 
 	case kActionCallback:

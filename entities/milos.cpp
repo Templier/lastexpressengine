@@ -161,7 +161,7 @@ IMPLEMENT_FUNCTION_II(Milos, enterCompartmentDialog, 10)
 	case kActionNone:
 	case kActionDefault:
 		if (getEntities()->updateEntity(kEntityMilos, (CarIndex)params->param1, (EntityPosition)params->param2))
-			CALLBACK_ACTION()
+			CALLBACK_ACTION();
 		break;
 
 	case kActionExcuseMeCath:
@@ -363,7 +363,7 @@ IMPLEMENT_FUNCTION(Milos, function13, 13)
 		getEntities()->clearSequences(kEntityIvo);
 		getEntities()->clearSequences(kEntitySalko);
 
-		CALLBACK_ACTION()
+		CALLBACK_ACTION();
 		break;
 
 	case kActionDefault:

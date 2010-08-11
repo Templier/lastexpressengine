@@ -52,7 +52,7 @@ public:
 	DECLARE_FUNCTION_II(updateEntity)
 	DECLARE_FUNCTION_SIIS(callSavepoint)
 	DECLARE_FUNCTION_SII(updatePosition)
-	DECLARE_FUNCTION(callbackActionOnSomebodyStandingInRestaurantOrSalon)
+	DECLARE_FUNCTION(callbackActionRestaurantOrSalon)
 	DECLARE_FUNCTION(chapter1)
 	DECLARE_FUNCTION(chapter2)
 	DECLARE_FUNCTION(chapter3)

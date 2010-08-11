@@ -53,7 +53,7 @@ Tatiana::Tatiana(LastExpressEngine *engine) : Entity(engine, kEntityTatiana) {
 	ADD_CALLBACK_FUNCTION(Tatiana, callbackActionOnDirection);
 	ADD_CALLBACK_FUNCTION(Tatiana, updateFromTicks);
 	ADD_CALLBACK_FUNCTION(Tatiana, updateFromTime);
-	ADD_CALLBACK_FUNCTION(Tatiana, callbackActionOnSomebodyStandingInRestaurantOrSalon);
+	ADD_CALLBACK_FUNCTION(Tatiana, callbackActionRestaurantOrSalon);
 	ADD_CALLBACK_FUNCTION(Tatiana, savegame);
 	ADD_CALLBACK_FUNCTION(Tatiana, updateEntity);
 	ADD_CALLBACK_FUNCTION(Tatiana, function14);
@@ -197,8 +197,8 @@ IMPLEMENT_FUNCTION_I(Tatiana, updateFromTime, 10)
 /**
  * Process callback action when somebody is standing in the restaurant or salon.
  */
-IMPLEMENT_FUNCTION(Tatiana, callbackActionOnSomebodyStandingInRestaurantOrSalon, 11)
-	Entity::callbackActionOnSomebodyStandingInRestaurantOrSalon(savepoint);
+IMPLEMENT_FUNCTION(Tatiana, callbackActionRestaurantOrSalon, 11)
+	Entity::callbackActionRestaurantOrSalon(savepoint);
 }
 
 /**
@@ -247,7 +247,7 @@ IMPLEMENT_FUNCTION(Tatiana, function14, 14)
 			getData()->posture = kPostureSitting;
 			getEntities()->clearSequences(kEntityTatiana);
 
-			CALLBACK_ACTION()
+			CALLBACK_ACTION();
 		}
 		break;
 
@@ -282,7 +282,7 @@ IMPLEMENT_FUNCTION(Tatiana, function15, 15)
 		getEntities()->exitCompartment(kEntityTatiana, kObjectCompartmentB, true);
 		getObjects()->update(kObjectCompartmentB, kEntityPlayer, kLocation1, kCursorHandKnock, kCursorHand);
 
-		CALLBACK_ACTION()
+		CALLBACK_ACTION();
 		break;
 	}
 }
@@ -387,7 +387,7 @@ IMPLEMENT_FUNCTION(Tatiana, function20, 20)
 
 	case kActionDefault:
 		setCallback(1);
-		call(new ENTITY_SETUP(Tatiana, setup_callbackActionOnSomebodyStandingInRestaurantOrSalon));
+		call(new ENTITY_SETUP(Tatiana, setup_callbackActionRestaurantOrSalon));
 		break;
 
 	case kActionCallback:
@@ -616,7 +616,7 @@ IMPLEMENT_FUNCTION(Tatiana, function29, 29)
 
 	case kActionDefault:
 		setCallback(1);
-		call(new ENTITY_SETUP(Tatiana, setup_callbackActionOnSomebodyStandingInRestaurantOrSalon));
+		call(new ENTITY_SETUP(Tatiana, setup_callbackActionRestaurantOrSalon));
 		break;
 
 	case kActionCallback:
@@ -910,7 +910,7 @@ IMPLEMENT_FUNCTION(Tatiana, function40, 40)
 		if (getEntities()->isSittingOrStanding(kEntityPlayer, kCarKronos)
 		 || getData()->car != getEntityData(kEntityPlayer)->car
 		 || getEntities()->updateEntity(kEntityTatiana, kCarKronos, kPosition_9270))
-			CALLBACK_ACTION()
+			CALLBACK_ACTION();
 		break;
 
 	case kActionExcuseMe:
@@ -922,7 +922,7 @@ IMPLEMENT_FUNCTION(Tatiana, function40, 40)
 
 	case kActionDefault:
 		if (getEntities()->updateEntity(kEntityTatiana, kCarKronos, kPosition_9270))
-			CALLBACK_ACTION()
+			CALLBACK_ACTION();
 		break;
 	}
 }

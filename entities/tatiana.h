@@ -49,7 +49,7 @@ public:
 	DECLARE_FUNCTION(callbackActionOnDirection)
 	DECLARE_FUNCTION_NOSETUP(updateFromTicks)
 	DECLARE_FUNCTION_I(updateFromTime)
-	DECLARE_FUNCTION(callbackActionOnSomebodyStandingInRestaurantOrSalon)
+	DECLARE_FUNCTION(callbackActionRestaurantOrSalon)
 	DECLARE_FUNCTION_II(savegame)
 	DECLARE_FUNCTION_II(updateEntity)
 	DECLARE_FUNCTION(function14)

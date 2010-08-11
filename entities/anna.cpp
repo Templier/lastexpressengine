@@ -48,7 +48,7 @@ Anna::Anna(LastExpressEngine *engine) : Entity(engine, kEntityAnna) {
 	ADD_CALLBACK_FUNCTION(Anna, callbackActionOnDirection);
 	ADD_CALLBACK_FUNCTION(Anna, callSavepoint);
 	ADD_CALLBACK_FUNCTION(Anna, playSound);
-	ADD_CALLBACK_FUNCTION(Anna, callbackActionOnSomebodyStandingInRestaurantOrSalon);
+	ADD_CALLBACK_FUNCTION(Anna, callbackActionRestaurantOrSalon);
 	ADD_CALLBACK_FUNCTION(Anna, savegame);
 	ADD_CALLBACK_FUNCTION(Anna, updateEntity);
 	ADD_CALLBACK_FUNCTION(Anna, updateFromTime);
@@ -192,8 +192,8 @@ IMPLEMENT_FUNCTION_S(Anna, playSound, 7)
 /**
  * Process callback action when somebody is standing in the restaurant or salon.
  */
-IMPLEMENT_FUNCTION(Anna, callbackActionOnSomebodyStandingInRestaurantOrSalon, 8)
-	Entity::callbackActionOnSomebodyStandingInRestaurantOrSalon(savepoint);
+IMPLEMENT_FUNCTION(Anna, callbackActionRestaurantOrSalon, 8)
+	Entity::callbackActionRestaurantOrSalon(savepoint);
 }
 
 /**
@@ -274,7 +274,7 @@ IMPLEMENT_FUNCTION(Anna, function12, 12)
 
 	case kAction2:
 		if (params->param2) {
-			CALLBACK_ACTION()
+			CALLBACK_ACTION();
 			break;
 		}
 
@@ -336,7 +336,7 @@ IMPLEMENT_FUNCTION(Anna, function12, 12)
 			getObjects()->update(kObjectCompartmentF, kEntityAnna, kLocation1, kCursorHandKnock, kCursorHand);
 			getObjects()->update(kObject53, kEntityAnna, kLocation1, kCursorHandKnock, kCursorHand);
 
-			CALLBACK_ACTION()
+			CALLBACK_ACTION();
 			break;
 		}
 		break;
@@ -484,7 +484,7 @@ IMPLEMENT_FUNCTION_IS(Anna, function15, 15)
 			getObjects()->update(kObjectCompartmentF, kEntityPlayer, kLocation1, kCursorHandKnock, kCursorHand);
 			getObjects()->update(kObject53, kEntityPlayer, kLocation1, kCursorHandKnock, kCursorHand);
 
-			CALLBACK_ACTION()
+			CALLBACK_ACTION();
 			break;
 		}
 
@@ -635,7 +635,7 @@ IMPLEMENT_FUNCTION_II(Anna, function17, 17)
 
 		if (getEntities()->updateEntity(kEntityAnna, (CarIndex)params->param1, (EntityPosition)params->param2)) {
 			getData()->inventoryItem = kItemNone;
-			CALLBACK_ACTION()
+			CALLBACK_ACTION();
 		}
 		break;
 
@@ -673,7 +673,7 @@ IMPLEMENT_FUNCTION_II(Anna, function17, 17)
 		}
 
 		if (getEntities()->updateEntity(kEntityAnna, (CarIndex)params->param1, (EntityPosition)params->param2))
-			CALLBACK_ACTION()
+			CALLBACK_ACTION();
 		break;
 
 	case kActionCallback:
@@ -721,7 +721,7 @@ IMPLEMENT_FUNCTION_I(Anna, function18, 18)
 	case kActionNone:
 		if (params->param1 && params->param1 < (int)getState()->time && getEntities()->isSomebodyStandingInRestaurantOrSalon()) {
 			getData()->inventoryItem = kItemNone;
-			CALLBACK_ACTION()
+			CALLBACK_ACTION();
 			break;
 		}
 
@@ -770,9 +770,33 @@ label_next:
 			break;
 
 		case 1:
+			if (getEvent(kEventAnnaGiveScarf) || getEvent(kEventAnnaGiveScarfDiner) || getEvent(kEventAnnaGiveScarfSalon) 
+			 || getEvent(kEventAnnaGiveScarfMonogram) || getEvent(kEventAnnaGiveScarfDinerMonogram) || getEvent(kEventAnnaGiveScarfSalonMonogram)) {
+				getAction()->playAnimation(kEventAnnaGiveScarfDinerAsk);
+			} else {
+				getAction()->playAnimation((getEvent(kEventAugustPresentAnna) || getEvent(kEventAugustPresentAnnaFirstIntroduction)) ? kEventAnnaGiveScarfDinerMonogram : kEventAnnaGiveScarfDiner);
+				params->param5 = 1;
+			}
+
+			params->param2 &= 0xFFFFFFF7;
+			getData()->inventoryItem = (InventoryItem)params->param2;
+			getScenes()->loadSceneFromPosition(kCarRestaurant, 61);
 			break;
 
 		case 2:
+			getAction()->playAnimation(kEventDinerMindJoin);
+
+			params->param2 &= 0xFFFFFFF7;
+
+			if (getProgress().jacket == kJacketGreen
+			 && !getEvent(kEventAnnaGiveScarfAsk)
+			 && !getEvent(kEventAnnaGiveScarfDinerAsk)
+			 && !getEvent(kEventAnnaGiveScarfSalonAsk)) {
+				params->param2 |= 8;
+			}
+
+			getData()->inventoryItem = (InventoryItem)LOBYTE(params->param2);
+			getScenes()->loadSceneFromPosition(kCarRestaurant, 61);
 			break;
 		}
 		break;
@@ -791,9 +815,8 @@ label_next:
 	case kAction259136835:
 	case kAction268773672:
 		getData()->inventoryItem = kItemNone;
-		CALLBACK_ACTION()
+		CALLBACK_ACTION();
 		break;
-
 	}
 }
 
@@ -884,7 +907,7 @@ IMPLEMENT_FUNCTION(Anna, function21, 21)
 
 		case 1:
 			setCallback(2);
-			call(new ENTITY_SETUP(Anna, setup_callbackActionOnSomebodyStandingInRestaurantOrSalon));
+			call(new ENTITY_SETUP(Anna, setup_callbackActionRestaurantOrSalon));
 			break;
 
 		case 2:
@@ -1019,7 +1042,7 @@ IMPLEMENT_FUNCTION(Anna, function25, 25)
 			break;
 
 		case 2:
-			call(new ENTITY_SETUP(Anna, setup_callbackActionOnSomebodyStandingInRestaurantOrSalon));
+			call(new ENTITY_SETUP(Anna, setup_callbackActionRestaurantOrSalon));
 			break;
 
 		case 3:
@@ -1041,7 +1064,55 @@ IMPLEMENT_FUNCTION(Anna, function25, 25)
 }
 
 IMPLEMENT_FUNCTION(Anna, function26, 26)
-	error("Anna: callback function 26 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionDefault:
+		getData()->posture = kPostureStanding;
+		getEntities()->updatePosition(kEntityAnna, kCarRestaurant, 62);
+
+		setCallback(1);
+		call(new ENTITY_SETUP_SIIS(Anna, setup_callSavepoint), "001L", kEntityTables0, kActionDrawTablesWithChairs, "001H");
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			getEntities()->updatePosition(kEntityAnna, kCarRestaurant, 62);
+			getSavePoints()->push(kEntityAnna, kEntityServers0, kAction237485916);
+			getEntities()->drawSequenceRight(kEntityAnna, "801DS");
+
+			if (getEntities()->isInRestaurant(kEntityPlayer))
+				getEntities()->updateFrame(kEntityAnna);
+
+			setCallback(2);
+			call(new ENTITY_SETUP(Anna, setup_callbackActionOnDirection));
+			break;
+
+		case 2:
+			setCallback(3);
+			call(new ENTITY_SETUP(Anna, setup_function17), kCarRedSleeping, kPosition_4070);
+			break;
+
+		case 3:
+			setCallback(4);
+			call(new ENTITY_SETUP_SIIS(Anna, setup_enterExitCompartment), "618Af", kObjectCompartmentF);
+			break;
+
+		case 4:
+			getEntities()->clearSequences(kEntityAnna);
+			getData()->entityPosition = kPosition_4070;
+			getData()->posture = kPostureSitting;
+
+			setup_function27();
+			break;
+		}
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Anna, function27, 27)
@@ -1099,7 +1170,7 @@ IMPLEMENT_FUNCTION(Anna, function28, 28)
 
 		case 1:
 			setCallback(2);
-			call(new ENTITY_SETUP(Anna, setup_callbackActionOnSomebodyStandingInRestaurantOrSalon));
+			call(new ENTITY_SETUP(Anna, setup_callbackActionRestaurantOrSalon));
 			break;
 
 		case 2:
@@ -1193,7 +1264,7 @@ IMPLEMENT_FUNCTION(Anna, function31, 31)
 
 	case kActionDefault:
 		setCallback(1);
-		call(new ENTITY_SETUP(Anna, setup_callbackActionOnSomebodyStandingInRestaurantOrSalon));
+		call(new ENTITY_SETUP(Anna, setup_callbackActionRestaurantOrSalon));
 		break;
 
 	case kActionCallback:
@@ -1493,7 +1564,7 @@ IMPLEMENT_FUNCTION_I(Anna, function45, 45)
 
 		case 2:
 			getEntities()->exitCompartment(kEntityAnna, kObjectCompartmentF, true);
-			CALLBACK_ACTION()
+			CALLBACK_ACTION();
 			break;
 		}
 		break;
@@ -1548,7 +1619,7 @@ IMPLEMENT_FUNCTION(Anna, leaveTableWithAugust, 49)
 		getSavePoints()->push(kEntityAnna, kEntityTables3, kActionDrawTablesWithChairs, "010M");
 		getEntities()->clearSequences(kEntityAugust);
 
-		CALLBACK_ACTION()
+		CALLBACK_ACTION();
 		break;
 
 	case kActionDefault:
@@ -1573,7 +1644,7 @@ IMPLEMENT_FUNCTION(Anna, function50, 50)
 		switch (getCallback()) {
 		case 1:
 			setCallback(2);
-			call(new ENTITY_SETUP(Anna, setup_callbackActionOnSomebodyStandingInRestaurantOrSalon));
+			call(new ENTITY_SETUP(Anna, setup_callbackActionRestaurantOrSalon));
 			break;
 
 		case 2:

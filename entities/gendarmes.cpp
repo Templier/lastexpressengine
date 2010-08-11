@@ -156,7 +156,7 @@ IMPLEMENT_FUNCTION_III(Gendarmes, function10, 10)
 
 		if (!params->param4 && getEntities()->checkFields15()) {
 			getObjects()->update((ObjectIndex)params->param3, kEntityPlayer, kLocationNone, kCursorHandKnock, kCursorHand);
-			CALLBACK_ACTION()
+			CALLBACK_ACTION();
 		} else {
 			if (getEntities()->checkFields15())
 				getScenes()->loadSceneFromPosition(kCarGreenSleeping, 49);
@@ -207,7 +207,7 @@ IMPLEMENT_FUNCTION_III(Gendarmes, function10, 10)
 			getLogic()->gameOver(kInitTypeIndex, 1, kSceneGameOverBloodJacket, true);
 
 			getObjects()->update((ObjectIndex)params->param3, kEntityPlayer, kLocationNone, kCursorHandKnock, kCursorHand);
-			CALLBACK_ACTION()
+			CALLBACK_ACTION();
 			break;
 
 		case 4:
@@ -215,7 +215,7 @@ IMPLEMENT_FUNCTION_III(Gendarmes, function10, 10)
 			getLogic()->gameOver(kInitTypeIndex, 1, kSceneGameOverPolice1, true);
 
 			getObjects()->update((ObjectIndex)params->param3, kEntityPlayer, kLocationNone, kCursorHandKnock, kCursorHand);
-			CALLBACK_ACTION()
+			CALLBACK_ACTION();
 			break;
 
 		case 5:
@@ -433,7 +433,7 @@ void Gendarmes::arrest(const SavePoint &savepoint, bool shouldPlaySound, SoundMa
 		if (shouldUpdateEntity) {
 			EXPOSE_PARAMS(EntityData::EntityParametersIIII);
 			if (getEntities()->updateEntity(kEntityGendarmes, (CarIndex)params->param1, (EntityPosition)params->param2)) {
-				CALLBACK_ACTION()
+				CALLBACK_ACTION();
 				break;
 			}
 		}
@@ -457,7 +457,7 @@ void Gendarmes::arrest(const SavePoint &savepoint, bool shouldPlaySound, SoundMa
 		break;
 
 	case kActionExitCompartment:
-		CALLBACK_ACTION()
+		CALLBACK_ACTION();
 		break;
 
 	case kActionDefault:
@@ -474,7 +474,7 @@ void Gendarmes::arrest(const SavePoint &savepoint, bool shouldPlaySound, SoundMa
 		if (shouldUpdateEntity) {
 			EXPOSE_PARAMS(EntityData::EntityParametersIIII);
 			if (getEntities()->updateEntity(kEntityGendarmes, (CarIndex)params->param1, (EntityPosition)params->param2)) {
-				CALLBACK_ACTION()
+				CALLBACK_ACTION();
 				break;
 			}
 		}

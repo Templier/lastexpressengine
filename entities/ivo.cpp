@@ -49,7 +49,7 @@ Ivo::Ivo(LastExpressEngine *engine) : Entity(engine, kEntityIvo) {
 	ADD_CALLBACK_FUNCTION(Ivo, updateEntity);
 	ADD_CALLBACK_FUNCTION(Ivo, callbackActionOnDirection);
 	ADD_CALLBACK_FUNCTION(Ivo, playSound);
-	ADD_CALLBACK_FUNCTION(Ivo, callbackActionOnSomebodyStandingInRestaurantOrSalon);
+	ADD_CALLBACK_FUNCTION(Ivo, callbackActionRestaurantOrSalon);
 	ADD_CALLBACK_FUNCTION(Ivo, savegame);
 	ADD_CALLBACK_FUNCTION(Ivo, function11);
 	ADD_CALLBACK_FUNCTION(Ivo, sitAtTableWithSalko);
@@ -155,8 +155,8 @@ IMPLEMENT_FUNCTION_NOSETUP(Ivo, playSound, 8)
 /**
  * Process callback action when somebody is standing in the restaurant or salon.
  */
-IMPLEMENT_FUNCTION(Ivo, callbackActionOnSomebodyStandingInRestaurantOrSalon, 9)
-	Entity::callbackActionOnSomebodyStandingInRestaurantOrSalon(savepoint);
+IMPLEMENT_FUNCTION(Ivo, callbackActionRestaurantOrSalon, 9)
+	Entity::callbackActionRestaurantOrSalon(savepoint);
 }
 
 /**
@@ -182,7 +182,7 @@ IMPLEMENT_FUNCTION(Ivo, sitAtTableWithSalko, 12)
 		getEntities()->clearSequences(kEntitySalko);
 		getSavePoints()->push(kEntityIvo, kEntityTables2, kAction136455232);
 
-		CALLBACK_ACTION()
+		CALLBACK_ACTION();
 		break;
 
 	case kActionDefault:
@@ -202,7 +202,7 @@ IMPLEMENT_FUNCTION(Ivo, leaveTableWithSalko, 13)
 		getSavePoints()->push(kEntityIvo, kEntityTables2, kActionDrawTablesWithChairs, "009E");
 		getEntities()->clearSequences(kEntitySalko);
 
-		CALLBACK_ACTION()
+		CALLBACK_ACTION();
 		break;
 
 	case kActionDefault:
@@ -309,7 +309,58 @@ IMPLEMENT_FUNCTION(Ivo, chapter2, 18)
 }
 
 IMPLEMENT_FUNCTION(Ivo, function19, 19)
-	error("Ivo: callback function 19 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionDefault:
+		setCallback(1);
+		call(new ENTITY_SETUP_SIIS(Ivo, setup_enterExitCompartment), "613FH", kObjectCompartmentH);
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			getData()->posture = kPostureStanding;
+			if (getData()->entityPosition < kPosition_2087)
+				getData()->entityPosition = kPosition_2088;
+
+			setCallback(2);
+			call(new ENTITY_SETUP(Ivo, setup_updateEntity), kCarRestaurant, kPosition_850);
+			break;
+
+		case 2:
+			getSavePoints()->push(kEntityIvo, kEntitySalko, kAction136184016);
+			break;
+
+		case 3:
+			getData()->entityPosition = kPosition_1540;
+			getData()->posture = kPostureStanding;
+
+			setCallback(4);
+			call(new ENTITY_SETUP_SIIS(Ivo, setup_draw), "809US");
+			break;
+
+		case 4:
+			setCallback(5);
+			call(new ENTITY_SETUP(Ivo, setup_sitAtTableWithSalko));
+			break;
+
+		case 5:
+			getData()->posture = kPostureSitting;
+			setup_function20();
+			break;
+		}
+		break;
+
+	case kAction102675536:
+		setCallback(3);
+		call(new ENTITY_SETUP(Ivo, setup_callbackActionRestaurantOrSalon));
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Ivo, function20, 20)

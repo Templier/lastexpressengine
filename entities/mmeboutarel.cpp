@@ -30,6 +30,7 @@
 #include "lastexpress/game/logic.h"
 #include "lastexpress/game/object.h"
 #include "lastexpress/game/savepoint.h"
+#include "lastexpress/game/scenes.h"
 #include "lastexpress/game/sound.h"
 #include "lastexpress/game/state.h"
 
@@ -253,7 +254,53 @@ IMPLEMENT_FUNCTION(MmeBoutarel, function13, 13)
 }
 
 IMPLEMENT_FUNCTION(MmeBoutarel, function14, 14)
-	error("MmeBoutarel: callback function 14 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionDefault:
+		setCallback(1);
+		call(new ENTITY_SETUP_SIIS(MmeBoutarel, setup_enterExitCompartment), "606Dd", kObjectCompartmentD);
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			getObjects()->update(kObjectCompartmentD, kEntityPlayer, kLocation2, kCursorNormal, kCursorNormal);
+            getObjects()->update(kObject51, kEntityPlayer, kLocation1, kCursorHandKnock, kCursorHand);
+			getEntities()->drawSequenceLeft(kEntityMmeBoutarel, "503");
+			break;
+
+		case 2:
+			getEntities()->drawSequenceLeft(kEntityMmeBoutarel, "503");
+
+			setCallback(3);
+			call(new ENTITY_SETUP_SIIS(MmeBoutarel, setup_playSound), "MRB1080");
+			break;
+
+		case 3:
+			getObjects()->update(kObjectCompartmentD, kEntityPlayer, kLocation1, kCursorKeepValue, kCursorKeepValue);
+
+			setCallback(4);
+			call(new ENTITY_SETUP_SIIS(MmeBoutarel, setup_enterExitCompartment), "606Cd", kObjectCompartmentD);
+			break;
+
+		case 4:
+			getEntities()->clearSequences(kEntityMmeBoutarel);
+
+			setup_function15();
+			break;
+		}
+		break;
+
+	case kAction101107728:
+		setCallback(2);
+		call(new ENTITY_SETUP(MmeBoutarel, setup_function9));
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(MmeBoutarel, function15, 15)
@@ -346,7 +393,46 @@ IMPLEMENT_FUNCTION(MmeBoutarel, chapter2Handler, 18)
 }
 
 IMPLEMENT_FUNCTION(MmeBoutarel, function19, 19)
-	error("MmeBoutarel: callback function 19 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionNone:
+		if (getEntities()->isPlayerPosition(kCarRedSleeping, 44) && !params->param2) {
+			if (params->param1) {
+				setCallback(1);
+				call(new ENTITY_SETUP_SIIS(MmeBoutarel, setup_draw), "502B");
+			} else {
+				params->param1 = 1;
+			}
+		}
+		break;
+
+	case kActionDefault:
+		getObjects()->update(kObjectCompartmentD, kEntityPlayer, kLocation2, kCursorNormal, kCursorNormal);
+		getObjects()->update(kObject51, kEntityPlayer, kLocationNone, kCursorHandKnock, kCursorHand);
+
+		params->param2 = 1;
+		getEntities()->drawSequenceLeft(kEntityMmeBoutarel, "501");
+		break;
+
+	case kActionCallback:
+		if (getCallback() == 1) {
+			if (getEntities()->isPlayerPosition(kCarRedSleeping , 44))
+				getScenes()->loadSceneFromPosition(kCarRedSleeping, 11);
+		}
+		break;
+
+	case kAction102484312:
+		getEntities()->drawSequenceLeft(kEntityMmeBoutarel, "501");
+		params->param2 = 1;
+		break;
+
+	case kAction134289824:
+		getEntities()->drawSequenceLeft(kEntityMmeBoutarel, "502A");
+		params->param2 = 0;
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(MmeBoutarel, chapter3, 20)

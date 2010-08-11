@@ -56,7 +56,7 @@ Abbot::Abbot(LastExpressEngine *engine) : Entity(engine, kEntityAbbot) {
 	ADD_CALLBACK_FUNCTION(Abbot, updateEntity);
 	ADD_CALLBACK_FUNCTION(Abbot, callSavepoint);
 	ADD_CALLBACK_FUNCTION(Abbot, updatePosition);
-	ADD_CALLBACK_FUNCTION(Abbot, callbackActionOnSomebodyStandingInRestaurantOrSalon);
+	ADD_CALLBACK_FUNCTION(Abbot, callbackActionRestaurantOrSalon);
 	ADD_CALLBACK_FUNCTION(Abbot, chapter1);
 	ADD_CALLBACK_FUNCTION(Abbot, chapter2);
 	ADD_CALLBACK_FUNCTION(Abbot, chapter3);
@@ -237,8 +237,8 @@ IMPLEMENT_FUNCTION_SII(Abbot, updatePosition, 13)
 /**
  * Process callback action when somebody is standing in the restaurant or salon.
  */
-IMPLEMENT_FUNCTION(Abbot, callbackActionOnSomebodyStandingInRestaurantOrSalon, 14)
-	Entity::callbackActionOnSomebodyStandingInRestaurantOrSalon(savepoint);
+IMPLEMENT_FUNCTION(Abbot, callbackActionRestaurantOrSalon, 14)
+	Entity::callbackActionRestaurantOrSalon(savepoint);
 }
 
 IMPLEMENT_FUNCTION(Abbot, chapter1, 15)
@@ -326,7 +326,7 @@ IMPLEMENT_FUNCTION(Abbot, chapter3Handler, 18)
 
 	case kAction192054567:
 		setCallback(1);
-        call(new ENTITY_SETUP(Abbot, setup_callbackActionOnSomebodyStandingInRestaurantOrSalon));
+        call(new ENTITY_SETUP(Abbot, setup_callbackActionRestaurantOrSalon));
 		break;
 	}
 }
@@ -424,7 +424,7 @@ IMPLEMENT_FUNCTION(Abbot, function21, 21)
 
 		case 3:
 			setCallback(4);
-			call(new ENTITY_SETUP(Abbot, setup_callbackActionOnSomebodyStandingInRestaurantOrSalon));
+			call(new ENTITY_SETUP(Abbot, setup_callbackActionRestaurantOrSalon));
 			break;
 
 		case 4:
@@ -639,7 +639,7 @@ IMPLEMENT_FUNCTION(Abbot, function25, 25)
 
 		case 2:
 			setCallback(3);
-			call(new ENTITY_SETUP(Abbot, setup_callbackActionOnSomebodyStandingInRestaurantOrSalon));
+			call(new ENTITY_SETUP(Abbot, setup_callbackActionRestaurantOrSalon));
 			break;
 
 		case 3:
@@ -692,7 +692,7 @@ IMPLEMENT_FUNCTION(Abbot, function27, 27)
 
 	case kActionDefault:
 		setCallback(1);
-		call(new ENTITY_SETUP(Abbot, setup_callbackActionOnSomebodyStandingInRestaurantOrSalon));
+		call(new ENTITY_SETUP(Abbot, setup_callbackActionRestaurantOrSalon));
 		break;
 
 	case kActionCallback:
@@ -817,7 +817,7 @@ IMPLEMENT_FUNCTION(Abbot, function29, 29)
 			getSavePoints()->push(kEntityAbbot, kEntityBoutarel, kAction122358304);
 			getEntities()->drawSequenceLeft(kEntityAbbot, "508B");
 
-			CALLBACK_ACTION()
+			CALLBACK_ACTION();
 			break;
 		}
 		break;
@@ -857,7 +857,7 @@ switch (savepoint.action) {
 
 		case 3:
 			setCallback(4);
-			call(new ENTITY_SETUP(Abbot, setup_callbackActionOnSomebodyStandingInRestaurantOrSalon));
+			call(new ENTITY_SETUP(Abbot, setup_callbackActionRestaurantOrSalon));
 			break;
 
 		case 4:
@@ -1079,7 +1079,54 @@ IMPLEMENT_FUNCTION(Abbot, chapter4Handler, 41)
 }
 
 IMPLEMENT_FUNCTION(Abbot, function42, 42)
-	error("Abbot: callback function 42 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionDefault:
+		getData()->posture = kPostureStanding;
+		getEntities()->updatePosition(kEntityAbbot, kCarRestaurant, 67, true);
+
+		setCallback(1);
+		call(new ENTITY_SETUP_SIIS(Abbot, setup_callSavepoint), "029F", kEntityTables4, kActionDrawTablesWithChairs, "029G");
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			getEntities()->updatePosition(kEntityAbbot, kCarRestaurant, 67);
+			getSavePoints()->push(kEntityAbbot, kEntityServers0, kAction270068760);
+			getEntities()->drawSequenceRight(kEntityAbbot, "804DS");
+
+			if (getEntities()->isInRestaurant(kEntityPlayer))
+				getEntities()->updateFrame(kEntityAbbot);
+
+			setCallback(2);
+			call(new ENTITY_SETUP(Abbot, setup_callbackActionOnDirection));
+			break;
+
+		case 2:
+			setCallback(3);
+			call(new ENTITY_SETUP(Abbot, setup_updateEntity), kCarRedSleeping, kPosition_6470);
+			break;
+
+		case 3:
+			setCallback(4);
+			call(new ENTITY_SETUP_SIIS(Abbot, setup_enterExitCompartment2), "617Cc", kObjectCompartmentC);
+			break;
+
+		case 4:
+			getData()->posture = kPostureSitting;
+			getEntities()->clearSequences(kEntityAbbot);
+
+			setup_function43();
+			break;
+		}
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Abbot, function43, 43)
@@ -1179,7 +1226,7 @@ IMPLEMENT_FUNCTION(Abbot, drinkAfterDefuse, 47)
 
 	case kActionDefault:
 		setCallback(1);
-		call(new ENTITY_SETUP(Abbot, setup_callbackActionOnSomebodyStandingInRestaurantOrSalon));
+		call(new ENTITY_SETUP(Abbot, setup_callbackActionRestaurantOrSalon));
 		break;
 
 	case kActionCallback:

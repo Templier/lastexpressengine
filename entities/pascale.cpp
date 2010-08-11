@@ -40,7 +40,7 @@ namespace LastExpress {
 
 Pascale::Pascale(LastExpressEngine *engine) : Entity(engine, kEntityPascale) {
 	ADD_CALLBACK_FUNCTION(Pascale, draw);
-	ADD_CALLBACK_FUNCTION(Pascale, callbackActionOnSomebodyStandingInRestaurantOrSalon);
+	ADD_CALLBACK_FUNCTION(Pascale, callbackActionRestaurantOrSalon);
 	ADD_CALLBACK_FUNCTION(Pascale, callbackActionOnDirection);
 	ADD_CALLBACK_FUNCTION(Pascale, updateFromTime);
 	ADD_CALLBACK_FUNCTION(Pascale, updatePosition);
@@ -87,8 +87,8 @@ IMPLEMENT_FUNCTION_S(Pascale, draw, 1)
 /**
  * Process callback action when somebody is standing in the restaurant or salon.
  */
-IMPLEMENT_FUNCTION(Pascale, callbackActionOnSomebodyStandingInRestaurantOrSalon, 2)
-	Entity::callbackActionOnSomebodyStandingInRestaurantOrSalon(savepoint);
+IMPLEMENT_FUNCTION(Pascale, callbackActionRestaurantOrSalon, 2)
+	Entity::callbackActionRestaurantOrSalon(savepoint);
 }
 
 /**
@@ -197,7 +197,7 @@ IMPLEMENT_FUNCTION(Pascale, function8, 8)
 			getData()->entityPosition = kPosition_5900;
 			ENTITY_PARAM(0, 4) = 0;
 
-			CALLBACK_ACTION()
+			CALLBACK_ACTION();
 			break;
 		}
 		break;
@@ -210,7 +210,7 @@ IMPLEMENT_FUNCTION(Pascale, sitSophieAndRebecca, 9)
 		break;
 
 	case kActionExitCompartment:
-		CALLBACK_ACTION()
+		CALLBACK_ACTION();
  		break;
 
 	case kActionDefault:
@@ -241,7 +241,7 @@ IMPLEMENT_FUNCTION(Pascale, function10, 10)
 			getScenes()->loadSceneFromPosition(kCarRestaurant, 69);
 		}
 
-		CALLBACK_ACTION()
+		CALLBACK_ACTION();
 		break;
 
 	case kAction4:
@@ -263,7 +263,7 @@ IMPLEMENT_FUNCTION(Pascale, function10, 10)
 
 			getScenes()->loadSceneFromPosition(kCarRestaurant, 69);
 
-			CALLBACK_ACTION()
+			CALLBACK_ACTION();
 		}
 		break;
 	}
@@ -306,7 +306,7 @@ IMPLEMENT_FUNCTION(Pascale, function11, 11)
 			getEntities()->clearSequences(kEntityPascale);
 			getData()->entityPosition = kPosition_5900;
 
-			CALLBACK_ACTION()
+			CALLBACK_ACTION();
 			break;
 		}
 		break;
@@ -387,7 +387,7 @@ IMPLEMENT_FUNCTION(Pascale, getMessageFromAugustToTyler, 13)
 			getSavePoints()->push(kEntityPascale, kEntityVerges, kActionDeliverMessageToTyler);
 			ENTITY_PARAM(0, 1) = 0;
 
-			CALLBACK_ACTION();
+			CALLBACK_ACTION();;
 			break;
 		}
 		break;
@@ -402,7 +402,7 @@ IMPLEMENT_FUNCTION(Pascale, sitAnna, 14)
 	case kActionExitCompartment:
 		getEntities()->updatePosition(kEntityPascale, kCarRestaurant, 62);
 
-		CALLBACK_ACTION()
+		CALLBACK_ACTION();
 		break;
 
 	case kActionDefault:
@@ -452,7 +452,7 @@ IMPLEMENT_FUNCTION(Pascale, function15, 15)
 			getData()->entityPosition = kPosition_5900;
 			ENTITY_PARAM(0, 2) = 0;
 
-			CALLBACK_ACTION()
+			CALLBACK_ACTION();
 			break;
 		}
 		break;
@@ -693,7 +693,7 @@ IMPLEMENT_FUNCTION(Pascale, function23, 23)
 			getData()->entityPosition = kPosition_5900;
 			ENTITY_PARAM(0, 7) = 0;
 			getEntities()->clearSequences(kEntityPascale);
-			CALLBACK_ACTION()
+			CALLBACK_ACTION();
 			break;
 		}
 		break;
@@ -713,7 +713,7 @@ IMPLEMENT_FUNCTION(Pascale, function24, 24)
 		break;
 
 	case kActionExitCompartment:
-		CALLBACK_ACTION()
+		CALLBACK_ACTION();
 		break;
 
 	case kAction10:
@@ -788,7 +788,7 @@ IMPLEMENT_FUNCTION(Pascale, function27, 27)
 			getSavePoints()->push(kEntityPascale, kEntityCoudert, kAction123712592);
 
 			setCallback(3);
-			call(new ENTITY_SETUP(Pascale, setup_callbackActionOnSomebodyStandingInRestaurantOrSalon));
+			call(new ENTITY_SETUP(Pascale, setup_callbackActionRestaurantOrSalon));
 			break;
 
 		case 3:
@@ -803,7 +803,7 @@ IMPLEMENT_FUNCTION(Pascale, function27, 27)
 			ENTITY_PARAM(1, 1) = 0;
 			ENTITY_PARAM(1, 2) = 1;
 
-			CALLBACK_ACTION()
+			CALLBACK_ACTION();
 			break;
 		}
 		break;
@@ -848,7 +848,7 @@ IMPLEMENT_FUNCTION(Pascale, function28, 28)
 			getData()->entityPosition = kPosition_5900;
 			ENTITY_PARAM(1, 2) = 0;
 
-			CALLBACK_ACTION()
+			CALLBACK_ACTION();
 			break;
 		}
 		break;
@@ -885,7 +885,7 @@ IMPLEMENT_FUNCTION(Pascale, function29, 29)
 		case 2:
 			getData()->entityPosition = kPosition_850;
 
-			CALLBACK_ACTION()
+			CALLBACK_ACTION();
 			break;
 		}
 		break;
@@ -922,7 +922,7 @@ IMPLEMENT_FUNCTION(Pascale, function30, 30)
 		case 2:
 			getData()->entityPosition = kPosition_5900;
 
-			CALLBACK_ACTION()
+			CALLBACK_ACTION();
 			break;
 		}
 		break;

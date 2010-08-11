@@ -49,7 +49,7 @@ Rebecca::Rebecca(LastExpressEngine *engine) : Entity(engine, kEntityRebecca) {
 	ADD_CALLBACK_FUNCTION(Rebecca, enterExitCompartment2);
 	ADD_CALLBACK_FUNCTION(Rebecca, enterExitCompartment3);
 	ADD_CALLBACK_FUNCTION(Rebecca, callbackActionOnDirection);
-	ADD_CALLBACK_FUNCTION(Rebecca, callbackActionOnSomebodyStandingInRestaurantOrSalon);
+	ADD_CALLBACK_FUNCTION(Rebecca, callbackActionRestaurantOrSalon);
 	ADD_CALLBACK_FUNCTION(Rebecca, updateEntity);
 	ADD_CALLBACK_FUNCTION(Rebecca, updatePosition);
 	ADD_CALLBACK_FUNCTION(Rebecca, draw2);
@@ -185,8 +185,8 @@ IMPLEMENT_FUNCTION(Rebecca, callbackActionOnDirection, 10)
 /**
  * Process callback action when somebody is standing in the restaurant or salon.
  */
-IMPLEMENT_FUNCTION(Rebecca, callbackActionOnSomebodyStandingInRestaurantOrSalon, 11)
-	Entity::callbackActionOnSomebodyStandingInRestaurantOrSalon(savepoint);
+IMPLEMENT_FUNCTION(Rebecca, callbackActionRestaurantOrSalon, 11)
+	Entity::callbackActionRestaurantOrSalon(savepoint);
 }
 
 /**
@@ -240,7 +240,7 @@ IMPLEMENT_FUNCTION(Rebecca, function15, 15)
 			getData()->posture = kPostureSitting;
 			getEntities()->clearSequences(kEntityRebecca);
 
-			CALLBACK_ACTION()
+			CALLBACK_ACTION();
 		}
 		break;
 	}
@@ -274,7 +274,7 @@ IMPLEMENT_FUNCTION_I(Rebecca, function20, 20)
 			getObjects()->update(kObjectCompartmentE, kEntityPlayer, kLocationNone, kCursorHandKnock, kCursorHand);
 			getObjects()->update(kObject52, kEntityPlayer, kLocationNone, kCursorHandKnock, kCursorHand);
 
-			CALLBACK_ACTION()
+			CALLBACK_ACTION();
 			break;
 		}
 

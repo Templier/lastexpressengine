@@ -98,7 +98,7 @@ void Train::handleCompartmentAction() {
 
 	ENTITY_PARAM(0, 8) = params->param1;
 
-	CALLBACK_ACTION()
+	CALLBACK_ACTION();
 }
 
 IMPLEMENT_FUNCTION_II(Train, harem, 7)

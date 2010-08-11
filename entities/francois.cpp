@@ -168,7 +168,7 @@ IMPLEMENT_FUNCTION(Francois, function9, 9)
 
 		case 2:
 			getData()->posture = kPostureStanding;
-			CALLBACK_ACTION()
+			CALLBACK_ACTION();
 			break;
 		}
 		break;
@@ -205,7 +205,7 @@ IMPLEMENT_FUNCTION(Francois, function10, 10)
 			getData()->posture = kPostureSitting;
 			getEntities()->clearSequences(kEntityFrancois);
 
-			CALLBACK_ACTION()
+			CALLBACK_ACTION();
 			break;
 		}
 		break;
@@ -386,7 +386,7 @@ label_callback:
 			break;
 
 		case 5:
-			CALLBACK_ACTION()
+			CALLBACK_ACTION();
 			break;
 
 		case 6:
@@ -409,7 +409,7 @@ label_callback:
 		getData()->field_4A3 = 30;
 		getData()->inventoryItem = kItemNone;
 
-		CALLBACK_ACTION()
+		CALLBACK_ACTION();
 		break;
 
 	case kAction205346192:
@@ -422,7 +422,56 @@ label_callback:
 }
 
 IMPLEMENT_FUNCTION(Francois, function12, 12)
-	error("Francois: callback function 12 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionDefault:
+		setCallback(1);
+		call(new ENTITY_SETUP(Francois, setup_function9));
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			setCallback(2);
+			call(new ENTITY_SETUP(Francois, setup_function8), kCarRedSleeping, kPosition_9460);
+			break;
+
+		case 2:
+			setCallback(3);
+			call(new ENTITY_SETUP(Francois, setup_updateFromTime), 675);
+			break;
+
+		case 3:
+			setCallback(4);
+			call(new ENTITY_SETUP(Francois, setup_function8), kCarRedSleeping, kPosition_540);
+			break;
+
+		case 4:
+			setCallback(5);
+			call(new ENTITY_SETUP(Francois, setup_updateFromTime), 675);
+			break;
+
+		case 5:
+			setCallback(6);
+			call(new ENTITY_SETUP(Francois, setup_function8), kCarRedSleeping, kPosition_5790);
+			break;
+
+		case 6:
+			setCallback(7);
+			call(new ENTITY_SETUP(Francois, setup_function10));
+			break;
+
+		case 7:
+			CALLBACK_ACTION();
+			break;
+		}
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Francois, function13, 13)

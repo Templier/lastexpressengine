@@ -170,12 +170,12 @@ void Entity::savegame(const SavePoint &savepoint) {
 		break;
 
 	case kActionNone:
-		CALLBACK_ACTION()
+		CALLBACK_ACTION();
 		break;
 
 	case kActionDefault:
 		getSaveLoad()->saveGame((SavegameType)params->param1, _entityIndex, (EventIndex)params->param2);
-		CALLBACK_ACTION()
+		CALLBACK_ACTION();
 		break;
 	}
 }
@@ -188,7 +188,7 @@ void Entity::playSound(const SavePoint &savepoint, bool resetItem, SoundManager:
 		break;
 
 	case kAction2:
-		CALLBACK_ACTION()
+		CALLBACK_ACTION();
 		break;
 
 	case kActionDefault:
@@ -208,7 +208,7 @@ void Entity::draw(const SavePoint &savepoint, bool handleExcuseMe) {
 		break;
 
 	case kActionExitCompartment:
-		CALLBACK_ACTION()
+		CALLBACK_ACTION();
 		break;
 
 	case kActionExcuseMeCath:
@@ -232,7 +232,7 @@ void Entity::draw2(const SavePoint &savepoint) {
 		break;
 
 	case kActionExitCompartment:
-		CALLBACK_ACTION()
+		CALLBACK_ACTION();
 		break;
 
 	case kActionDefault:
@@ -251,7 +251,7 @@ void Entity::updateFromTicks(const SavePoint &savepoint) {
 
 	case kActionNone:
 		UPDATE_PARAM(params->param2, getState()->timeTicks, params->param1)
-		CALLBACK_ACTION()
+		CALLBACK_ACTION();
 		break;
 	}
 }
@@ -265,7 +265,7 @@ void Entity::updateFromTime(const SavePoint &savepoint) {
 
 	case kActionNone:
 		UPDATE_PARAM(params->param2, getState()->time, params->param1)
-		CALLBACK_ACTION()
+		CALLBACK_ACTION();
 		break;
 	}
 }
@@ -276,17 +276,17 @@ void Entity::callbackActionOnDirection(const SavePoint &savepoint) {
 		break;
 
 	case kActionExitCompartment:
-		CALLBACK_ACTION()
+		CALLBACK_ACTION();
 		break;
 
 	case kActionDefault:
 		if (getData()->direction != kDirectionRight)
-			CALLBACK_ACTION()
+			CALLBACK_ACTION();
 		break;
 	}
 }
 
-void Entity::callbackActionOnSomebodyStandingInRestaurantOrSalon(const SavePoint &savepoint) {
+void Entity::callbackActionRestaurantOrSalon(const SavePoint &savepoint) {
 	switch (savepoint.action) {
 	default:
 		break;
@@ -294,7 +294,7 @@ void Entity::callbackActionOnSomebodyStandingInRestaurantOrSalon(const SavePoint
 	case kActionNone:
 	case kActionDefault:
 		if (getEntities()->isSomebodyStandingInRestaurantOrSalon())
-			CALLBACK_ACTION()
+			CALLBACK_ACTION();
 		break;
 	}
 }
@@ -319,7 +319,7 @@ void Entity::updateEntity(const SavePoint &savepoint, bool handleExcuseMe) {
 	case kActionNone:
 	case kActionDefault:
 		if (getEntities()->updateEntity(_entityIndex, (CarIndex)params->param1, (EntityPosition)params->param2))
-			CALLBACK_ACTION()
+			CALLBACK_ACTION();
 		break;
 	}
 }
@@ -334,7 +334,7 @@ void Entity::callSavepoint(const SavePoint &savepoint, bool handleExcuseMe) {
 	case kActionExitCompartment:
 		if (!CURRENT_PARAMS(1, 1))
 			getSavePoints()->call(_entityIndex, (EntityIndex)params->param4, (ActionIndex)params->param5, (char *)&params->seq2);
-		CALLBACK_ACTION()
+		CALLBACK_ACTION();
 		break;
 
 	case kActionExcuseMeCath:
@@ -372,7 +372,7 @@ void Entity::enterExitCompartment(const SavePoint &savepoint, EntityPosition pos
 		if (updatePosture)
 			getData()->posture = kPostureSitting;
 
-		CALLBACK_ACTION()
+		CALLBACK_ACTION();
 		break;
 
 	case kActionDefault:
@@ -401,7 +401,7 @@ void Entity::updatePosition(const SavePoint &savepoint, bool handleExcuseMe) {
 
 	case kActionExitCompartment:
 		getEntities()->updatePosition(_entityIndex, (CarIndex)params->param4, (Position)params->param5);
-		CALLBACK_ACTION()
+		CALLBACK_ACTION();
 		break;
 
 	case kActionExcuseMeCath:

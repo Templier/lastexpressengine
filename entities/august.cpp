@@ -55,7 +55,7 @@ August::August(LastExpressEngine *engine) : Entity(engine, kEntityAugust) {
 	ADD_CALLBACK_FUNCTION(August, draw2);
 	ADD_CALLBACK_FUNCTION(August, playSound);
 	ADD_CALLBACK_FUNCTION(August, playSound16);
-	ADD_CALLBACK_FUNCTION(August, callbackActionOnSomebodyStandingInRestaurantOrSalon);
+	ADD_CALLBACK_FUNCTION(August, callbackActionRestaurantOrSalon);
 	ADD_CALLBACK_FUNCTION(August, savegame);
 	ADD_CALLBACK_FUNCTION(August, updateEntity);
 	ADD_CALLBACK_FUNCTION(August, function17);
@@ -179,7 +179,7 @@ IMPLEMENT_FUNCTION_SI(August, enterExitCompartment2, 6)
 IMPLEMENT_FUNCTION_SI(August, enterExitCompartment3, 7)
 	if (savepoint.action == kAction4) {
 		getEntities()->exitCompartment(kEntityAugust, (ObjectIndex)params->param4);
-		CALLBACK_ACTION()
+		CALLBACK_ACTION();
 		return;
 	}
 
@@ -221,7 +221,7 @@ IMPLEMENT_FUNCTION_IIS(August, callSavepointNoDrawing, 10)
 		if (!params->param6)
 			getSavePoints()->call(kEntityAugust, (EntityIndex)params->param1, (ActionIndex)params->param2, (char *)&params->seq);
 
-		CALLBACK_ACTION()
+		CALLBACK_ACTION();
 		break;
 
 	case kAction10:
@@ -265,8 +265,8 @@ IMPLEMENT_FUNCTION_S(August, playSound16, 13)
 /**
  * Process callback action when somebody is standing in the restaurant or salon.
  */
-IMPLEMENT_FUNCTION(August, callbackActionOnSomebodyStandingInRestaurantOrSalon, 14)
-	Entity::callbackActionOnSomebodyStandingInRestaurantOrSalon(savepoint);
+IMPLEMENT_FUNCTION(August, callbackActionRestaurantOrSalon, 14)
+	Entity::callbackActionRestaurantOrSalon(savepoint);
 }
 
 /**
@@ -311,7 +311,7 @@ IMPLEMENT_FUNCTION_II(August, updateEntity2, 18)
 
 	case kActionNone:
 		if (getEntities()->updateEntity(_entityIndex, (CarIndex)params->param1, (EntityPosition)params->param2)) {
-			CALLBACK_ACTION()
+			CALLBACK_ACTION();
 		} else if (getEntities()->checkFields9(kEntityAugust, kEntityPlayer, 1000)
 		        && !getEntities()->isInGreenCarEntrance(kEntityPlayer)
 				&& !getEntities()->isSittingInCompartmentCars(kEntityPlayer)
@@ -319,14 +319,14 @@ IMPLEMENT_FUNCTION_II(August, updateEntity2, 18)
 
 			if (getData()->car == kCarGreenSleeping || getData()->car == kCarRedSleeping) {
 				ENTITY_PARAM(0, 1) = 1;
-				CALLBACK_ACTION()
+				CALLBACK_ACTION();
 			}
 		}
 		break;
 
 	case kActionDefault:
 		if (getEntities()->updateEntity(_entityIndex, (CarIndex)params->param1, (EntityPosition)params->param2))
-			CALLBACK_ACTION()
+			CALLBACK_ACTION();
 		break;
 	}
 }
@@ -385,7 +385,7 @@ IMPLEMENT_FUNCTION_I(August, function23, 23)
 			} else {
 				getEntities()->exitCompartment(kEntityAugust, kObjectCompartment1, true);
 				getObjects()->update(kObjectCompartment1, kEntityPlayer, kLocationNone, kCursorHandKnock, kCursorHand);
-				CALLBACK_ACTION()
+				CALLBACK_ACTION();
 			}
 			break;
 		}
@@ -471,7 +471,7 @@ label_callback_9:
 
 				if (params->param8 >= 3) {
 					getObjects()->update(kObjectCompartment1, kEntityPlayer, getObjects()->get(kObjectCompartment1).location, kCursorHandKnock, kCursorHand);
-					CALLBACK_ACTION()
+					CALLBACK_ACTION();
 					break;
 				}
 
@@ -563,7 +563,7 @@ label_callback_9:
 
 		case 2:
 			getObjects()->update(kObjectCompartment1, kEntityPlayer, kLocationNone, kCursorHandKnock, kCursorHand);
-			CALLBACK_ACTION()
+			CALLBACK_ACTION();
 			break;
 
 		case 3:
@@ -590,7 +590,7 @@ label_callback_9:
 
 			getScenes()->loadScene(kScene41);
 
-			CALLBACK_ACTION()
+			CALLBACK_ACTION();
 			break;
 
 		case 5:
@@ -632,7 +632,7 @@ label_callback_9:
 
 		case 12:
 			getData()->posture = kPostureStanding;
-			CALLBACK_ACTION()
+			CALLBACK_ACTION();
 			break;
 
 		case 13:
@@ -660,7 +660,7 @@ label_callback_9:
 
 			getScenes()->loadScene(kScene41);
 
-			CALLBACK_ACTION()
+			CALLBACK_ACTION();
 			break;
 
 		case 15:
@@ -699,7 +699,7 @@ IMPLEMENT_FUNCTION(August, dinner, 24)
 
 			getScenes()->loadSceneFromPosition(kCarRestaurant, 61);
 
-			CALLBACK_ACTION()
+			CALLBACK_ACTION();
 		}
 		break;
 	}
@@ -918,7 +918,7 @@ IMPLEMENT_FUNCTION(August, function27, 27)
 
 		case 2:
 			setCallback(3);
-			call(new ENTITY_SETUP(August, setup_callbackActionOnSomebodyStandingInRestaurantOrSalon));
+			call(new ENTITY_SETUP(August, setup_callbackActionRestaurantOrSalon));
 			break;
 
 		case 3:
@@ -1390,7 +1390,7 @@ IMPLEMENT_FUNCTION(August, function47, 47)
 			break;
 
 		case 5:
-			CALLBACK_ACTION()
+			CALLBACK_ACTION();
 			break;
 		}
 		break;
@@ -1592,7 +1592,7 @@ IMPLEMENT_FUNCTION(August, function55, 55)
 
 	case kActionDefault:
 		setCallback(1);
-		call(new ENTITY_SETUP(August, setup_callbackActionOnSomebodyStandingInRestaurantOrSalon));
+		call(new ENTITY_SETUP(August, setup_callbackActionRestaurantOrSalon));
 		break;
 
 	case kActionCallback:
@@ -1697,7 +1697,7 @@ IMPLEMENT_FUNCTION(August, chapter4Handler, 58)
 
 		case 2:
 			setCallback(3);
-			call(new ENTITY_SETUP(August, setup_callbackActionOnSomebodyStandingInRestaurantOrSalon));
+			call(new ENTITY_SETUP(August, setup_callbackActionRestaurantOrSalon));
 			break;
 
 		case 3:

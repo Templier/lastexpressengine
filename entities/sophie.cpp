@@ -130,7 +130,7 @@ IMPLEMENT_FUNCTION_II(Sophie, function2, 2)
 		break;
 
 	case kAction123668192:
-		CALLBACK_ACTION()
+		CALLBACK_ACTION();
 		break;
 	}
 }

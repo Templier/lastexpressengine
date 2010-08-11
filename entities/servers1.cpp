@@ -171,7 +171,7 @@ IMPLEMENT_FUNCTION(Servers1, function7, 7)
 			getData()->entityPosition = kPosition_5900;
 			ENTITY_PARAM(1, 2) = 0;
 
-			CALLBACK_ACTION()
+			CALLBACK_ACTION();
 			break;
 		}
 		break;
@@ -245,7 +245,7 @@ IMPLEMENT_FUNCTION(Servers1, function9, 9)
 			getData()->entityPosition = kPosition_5900;
 			ENTITY_PARAM(0, 1) = 0;
 
-			CALLBACK_ACTION()
+			CALLBACK_ACTION();
 			break;
 		}
 		break;
@@ -290,7 +290,7 @@ IMPLEMENT_FUNCTION(Servers1, function10, 10)
 			getData()->entityPosition = kPosition_5900;
 			ENTITY_PARAM(0, 2) = 0;
 
-			CALLBACK_ACTION()
+			CALLBACK_ACTION();
 			break;
 		}
 		break;
@@ -484,7 +484,7 @@ IMPLEMENT_FUNCTION(Servers1, function20, 20)
 			getEntities()->drawSequenceLeft(kEntityServers1, "BLANK");
 			ENTITY_PARAM(0, 7) = 0;
 
-			CALLBACK_ACTION()
+			CALLBACK_ACTION();
 		}
 		break;
 	}
@@ -705,7 +705,7 @@ void Servers1::serveTable(const SavePoint &savepoint, const char* seq1, EntityIn
 			if (parameter2 != NULL)
 				*parameter2 = 0;
 
-			CALLBACK_ACTION()
+			CALLBACK_ACTION();
 			break;
 		}
 		break;
@@ -774,7 +774,7 @@ void Servers1::serveSalon(const SavePoint &savepoint, const char* seq1, const ch
 			getData()->entityPosition = kPosition_5900;
 			*parameter = 0;
 
-			CALLBACK_ACTION()
+			CALLBACK_ACTION();
 			break;
 		}
 		break;

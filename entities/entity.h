@@ -498,7 +498,7 @@ protected:
 	 *
 	 * @param savepoint The savepoint.
 	 */
-	void callbackActionOnSomebodyStandingInRestaurantOrSalon(const SavePoint &savepoint);
+	void callbackActionRestaurantOrSalon(const SavePoint &savepoint);
 
 	/**
 	 * Updates the entity
