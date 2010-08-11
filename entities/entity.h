@@ -28,6 +28,8 @@
 
 #include "lastexpress/shared.h"
 
+#include "lastexpress/helpers.h"
+
 #include "lastexpress/game/sound.h"
 
 #include "common/array.h"
@@ -261,7 +263,7 @@ public:
 
 		void clear() {
 			for (int i = 0; i < 4; i++)
-				delete parameters[i];
+				SAFE_DELETE(parameters[i]);
 		}
 
 

@@ -46,15 +46,15 @@ Pascale::Pascale(LastExpressEngine *engine) : Entity(engine, kEntityPascale) {
 	ADD_CALLBACK_FUNCTION(Pascale, updatePosition);
 	ADD_CALLBACK_FUNCTION(Pascale, playSound);
 	ADD_CALLBACK_FUNCTION(Pascale, draw2);
-	ADD_CALLBACK_FUNCTION(Pascale, function8);
+	ADD_CALLBACK_FUNCTION(Pascale, welcomeSophieAndRebecca);
 	ADD_CALLBACK_FUNCTION(Pascale, sitSophieAndRebecca);
-	ADD_CALLBACK_FUNCTION(Pascale, function10);
+	ADD_CALLBACK_FUNCTION(Pascale, welcomeCath);
 	ADD_CALLBACK_FUNCTION(Pascale, function11);
 	ADD_CALLBACK_FUNCTION(Pascale, chapter1);
 	ADD_CALLBACK_FUNCTION(Pascale, getMessageFromAugustToTyler);
 	ADD_CALLBACK_FUNCTION(Pascale, sitAnna);
-	ADD_CALLBACK_FUNCTION(Pascale, function15);
-	ADD_CALLBACK_FUNCTION(Pascale, function16);
+	ADD_CALLBACK_FUNCTION(Pascale, welcomeAnna);
+	ADD_CALLBACK_FUNCTION(Pascale, serveTatianaVassili);
 	ADD_CALLBACK_FUNCTION(Pascale, chapter1Handler);
 	ADD_CALLBACK_FUNCTION(Pascale, function18);
 	ADD_CALLBACK_FUNCTION(Pascale, function19);
@@ -62,11 +62,11 @@ Pascale::Pascale(LastExpressEngine *engine) : Entity(engine, kEntityPascale) {
 	ADD_CALLBACK_FUNCTION(Pascale, chapter3);
 	ADD_CALLBACK_FUNCTION(Pascale, chapter3Handler);
 	ADD_CALLBACK_FUNCTION(Pascale, function23);
-	ADD_CALLBACK_FUNCTION(Pascale, function24);
+	ADD_CALLBACK_FUNCTION(Pascale, welcomeAbbot);
 	ADD_CALLBACK_FUNCTION(Pascale, chapter4);
 	ADD_CALLBACK_FUNCTION(Pascale, chapter4Handler);
 	ADD_CALLBACK_FUNCTION(Pascale, function27);
-	ADD_CALLBACK_FUNCTION(Pascale, function28);
+	ADD_CALLBACK_FUNCTION(Pascale, messageFromAnna);
 	ADD_CALLBACK_FUNCTION(Pascale, function29);
 	ADD_CALLBACK_FUNCTION(Pascale, function30);
 	ADD_CALLBACK_FUNCTION(Pascale, chapter5);
@@ -100,6 +100,8 @@ IMPLEMENT_FUNCTION(Pascale, callbackActionOnDirection, 3)
 			getSound()->excuseMe(kEntityPascale);
 			params->param1 = 1;
 		}
+
+		return;
 	}
 
 	Entity::callbackActionOnDirection(savepoint);
@@ -145,7 +147,7 @@ IMPLEMENT_FUNCTION_NOSETUP(Pascale, draw2, 7)
 	Entity::draw2(savepoint);
 }
 
-IMPLEMENT_FUNCTION(Pascale, function8, 8)
+IMPLEMENT_FUNCTION(Pascale, welcomeSophieAndRebecca, 8)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -221,7 +223,7 @@ IMPLEMENT_FUNCTION(Pascale, sitSophieAndRebecca, 9)
 	}
 }
 
-IMPLEMENT_FUNCTION(Pascale, function10, 10)
+IMPLEMENT_FUNCTION(Pascale, welcomeCath, 10)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -284,7 +286,7 @@ IMPLEMENT_FUNCTION(Pascale, function11, 11)
 		getEntities()->updatePosition(kEntityPascale, kCarRestaurant, 55, true);
 
 		setCallback(1);
-		call(new ENTITY_SETUP(Pascale, setup_function10));
+		call(new ENTITY_SETUP(Pascale, setup_welcomeCath));
 		break;
 
 	case kActionCallback:
@@ -387,7 +389,7 @@ IMPLEMENT_FUNCTION(Pascale, getMessageFromAugustToTyler, 13)
 			getSavePoints()->push(kEntityPascale, kEntityVerges, kActionDeliverMessageToTyler);
 			ENTITY_PARAM(0, 1) = 0;
 
-			CALLBACK_ACTION();;
+			CALLBACK_ACTION();
 			break;
 		}
 		break;
@@ -415,7 +417,7 @@ IMPLEMENT_FUNCTION(Pascale, sitAnna, 14)
 	}
 }
 
-IMPLEMENT_FUNCTION(Pascale, function15, 15)
+IMPLEMENT_FUNCTION(Pascale, welcomeAnna, 15)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -459,8 +461,56 @@ IMPLEMENT_FUNCTION(Pascale, function15, 15)
 	}
 }
 
-IMPLEMENT_FUNCTION(Pascale, function16, 16)
-	error("Pascale: callback function 16 not implemented!");
+IMPLEMENT_FUNCTION(Pascale, serveTatianaVassili, 16)
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionDefault:
+		getData()->entityPosition = kPosition_5800;
+		getData()->posture = kPostureStanding;
+
+		setCallback(1);
+		call(new ENTITY_SETUP_SIIS(Pascale, setup_draw), "903");
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			getSavePoints()->push(kEntityPascale, kEntityTatiana, kAction122358304);
+			getEntities()->drawSequenceLeft(kEntityPascale, "014B");
+			getEntities()->updatePosition(kEntityPascale, kCarRestaurant, 67, true);
+
+			if (getSound()->isBuffered("TAT1069A"))
+				getSound()->processEntry("TAT1069A");
+			else if (getSound()->isBuffered("TAT1069B"))
+				getSound()->processEntry("TAT1069B");
+			
+			setCallback(2);
+			call(new ENTITY_SETUP_SIIS(Pascale, setup_playSound), "TAT1066");
+			break;
+
+		case 2:
+			getEntities()->updatePosition(kEntityPascale, kCarRestaurant, 67);
+			getSavePoints()->push(kEntityPascale, kEntityTatiana, kAction122288808);
+
+			setCallback(3);
+			call(new ENTITY_SETUP_SIIS(Pascale, setup_draw), "906");
+			break;
+
+		case 3:
+			getEntities()->clearSequences(kEntityPascale);
+			getData()->entityPosition = kPosition_5900;
+			ENTITY_PARAM(0, 3) = 0;
+
+			CALLBACK_ACTION();
+			break;
+		}
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Pascale, chapter1Handler, 17)
@@ -506,21 +556,21 @@ label_callback1:
 label_callback2:
 		if (ENTITY_PARAM(0, 3)) {
 			setCallback(3);
-			call(new ENTITY_SETUP(Pascale, setup_function16));
+			call(new ENTITY_SETUP(Pascale, setup_serveTatianaVassili));
 			break;
 		}
 
 label_callback3:
 		if (ENTITY_PARAM(0, 2)) {
 			setCallback(4);
-			call(new ENTITY_SETUP(Pascale, setup_function15));
+			call(new ENTITY_SETUP(Pascale, setup_welcomeAnna));
 			break;
 		}
 
 label_callback4:
 		if (ENTITY_PARAM(0, 4)) {
 			setCallback(5);
-			call(new ENTITY_SETUP(Pascale, setup_function8));
+			call(new ENTITY_SETUP(Pascale, setup_welcomeSophieAndRebecca));
 		}
 		break;
 
@@ -644,20 +694,16 @@ IMPLEMENT_FUNCTION(Pascale, chapter3Handler, 22)
 			break;
 		}
 
+label_callback:
 		if (ENTITY_PARAM(0, 4)) {
 			setCallback(2);
-			call(new ENTITY_SETUP(Pascale, setup_function8));
+			call(new ENTITY_SETUP(Pascale, setup_welcomeSophieAndRebecca));
 		}
  		break;
 
 	case kActionCallback:
-		if (getCallback() != 1)
-			break;
-
-		if (ENTITY_PARAM(0, 4)) {
-			setCallback(2);
-			call(new ENTITY_SETUP(Pascale, setup_function8));
-		}
+		if (getCallback() == 1)
+			goto label_callback;
 		break;
 	}
 }
@@ -673,7 +719,7 @@ IMPLEMENT_FUNCTION(Pascale, function23, 23)
 		getEntities()->updatePosition(kEntityPascale, kCarRestaurant, 67, true);
 
 		setCallback(1);
-		call(new ENTITY_SETUP(Pascale, setup_function24));
+		call(new ENTITY_SETUP(Pascale, setup_welcomeAbbot));
 		break;
 
 	case kActionCallback:
@@ -682,7 +728,7 @@ IMPLEMENT_FUNCTION(Pascale, function23, 23)
 			break;
 
 		case 1:
-			getEntities()->updatePosition(kEntityPascale, kCarRestaurant, 67, true);
+			getEntities()->updatePosition(kEntityPascale, kCarRestaurant, 67);
 			getSavePoints()->push(kEntityPascale, kEntityAbbot, kAction122288808);
 
 			setCallback(2);
@@ -693,6 +739,7 @@ IMPLEMENT_FUNCTION(Pascale, function23, 23)
 			getData()->entityPosition = kPosition_5900;
 			ENTITY_PARAM(0, 7) = 0;
 			getEntities()->clearSequences(kEntityPascale);
+
 			CALLBACK_ACTION();
 			break;
 		}
@@ -700,7 +747,7 @@ IMPLEMENT_FUNCTION(Pascale, function23, 23)
 	}
 }
 
-IMPLEMENT_FUNCTION(Pascale, function24, 24)
+IMPLEMENT_FUNCTION(Pascale, welcomeAbbot, 24)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -755,7 +802,119 @@ IMPLEMENT_FUNCTION(Pascale, chapter4, 25)
 }
 
 IMPLEMENT_FUNCTION(Pascale, chapter4Handler, 26)
-	error("Pascale: callback function 26 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionNone:
+		if (getState()->time > kTime2511000 && !params->param4) {
+			params->param2 = 1;
+			params->param4 = 1;
+		}
+
+		if (!getEntities()->isInKitchen(kEntityPascale))
+			break;
+
+		if (getEntities()->isSomebodyStandingInRestaurantOrSalon()) {
+			if (ENTITY_PARAM(0, 8)) {
+				setCallback(1);
+				call(new ENTITY_SETUP(Pascale, setup_function27));
+				break;
+			}
+
+label_callback1:
+			if (ENTITY_PARAM(1, 2) && ENTITY_PARAM(1, 4)) {
+				if (!params->param3)
+					params->param3 = getState()->time + 9000;
+
+				if (params->param5 != kTimeInvalid) {
+
+					if (params->param3 < (int)getState()->time) {
+						params->param5 = kTimeInvalid;
+						setCallback(2);
+						call(new ENTITY_SETUP(Pascale, setup_messageFromAnna));
+						break;
+					}
+
+					if (!getEntities()->isInRestaurant(kEntityPlayer) || !params->param5)
+						params->param5 = getState()->time;
+
+					if (params->param5 < (int)getState()->time) {
+						params->param5 = kTimeInvalid;
+						setCallback(2);
+						call(new ENTITY_SETUP(Pascale, setup_messageFromAnna));
+						break;
+					}						
+				}
+			}
+
+label_callback2:
+			if (params->param1 && !params->param2 && getEntities()->isPlayerPosition(kCarRestaurant, 61)) {
+				setCallback(3);
+				call(new ENTITY_SETUP(Pascale, setup_function11));
+				break;
+			}
+		}
+
+label_callback3:
+		if (ENTITY_PARAM(0, 4)) {
+			setCallback(4);
+			call(new ENTITY_SETUP(Pascale, setup_welcomeSophieAndRebecca));
+		}
+		break;
+
+	case kActionDefault:
+		if (getEntities()->isPlayerPosition(kCarRestaurant, 69)
+		 || getEntities()->isPlayerPosition(kCarRestaurant, 70)
+		 || getEntities()->isPlayerPosition(kCarRestaurant, 71))
+			params->param2 = 1;
+		break;
+
+	case kActionDrawScene:
+		if (!params->param2) {
+			if (getEntities()->isPlayerPosition(kCarRestaurant, 69)
+			 || getEntities()->isPlayerPosition(kCarRestaurant, 70)
+			 || getEntities()->isPlayerPosition(kCarRestaurant, 71))
+				params->param2 = 1;
+
+			if (!params->param2 && getEntities()->isPlayerPosition(kCarRestaurant, 61))
+				params->param1 = 1;
+		}
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			goto label_callback1;
+
+		case 2:
+			goto label_callback2;
+
+		case 3:
+			params->param1 = 0;
+			params->param2 = 1;
+			goto label_callback3;
+		}
+		break;
+
+	case kAction201431954:
+		ENTITY_PARAM(0, 4) = 0;
+		ENTITY_PARAM(0, 8) = 0;
+
+		getSavePoints()->push(kEntityPascale, kEntityTables0, kActionDrawTablesWithChairs, "001P");
+		getSavePoints()->push(kEntityPascale, kEntityTables1, kActionDrawTablesWithChairs, "005J");
+		getSavePoints()->push(kEntityPascale, kEntityTables2, kActionDrawTablesWithChairs, "009G");
+		getSavePoints()->push(kEntityPascale, kEntityTables3, kActionDrawTablesWithChairs, "010M");
+		getSavePoints()->push(kEntityPascale, kEntityTables4, kActionDrawTablesWithChairs, "014F");
+		getSavePoints()->push(kEntityPascale, kEntityTables5, kActionDrawTablesWithChairs, "024D");
+
+		getData()->entityPosition = kPosition_5900;
+		getData()->posture = kPostureStanding;
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Pascale, function27, 27)
@@ -810,7 +969,7 @@ IMPLEMENT_FUNCTION(Pascale, function27, 27)
 	}
 }
 
-IMPLEMENT_FUNCTION(Pascale, function28, 28)
+IMPLEMENT_FUNCTION(Pascale, messageFromAnna, 28)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -955,7 +1114,124 @@ IMPLEMENT_FUNCTION(Pascale, chapter5Handler, 32)
 }
 
 IMPLEMENT_FUNCTION(Pascale, function33, 33)
-	error("Pascale: callback function 33 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionNone:
+		if (params->param4) {
+
+			if (!params->param5)
+				params->param5 = getState()->time + 4500;
+
+			if (params->param5 < (int)getState()->time) {
+				params->param5 = kTimeInvalid;
+
+				getObjects()->update(kObjectCompartmentG, kEntityPascale, kLocation1, kCursorNormal, kCursorNormal);
+
+				setCallback(1);
+				call(new ENTITY_SETUP_SIIS(Pascale, setup_playSound), "Wat5010");
+				break;
+			}
+		}
+
+label_callback1:
+		if (params->param1) {
+			UPDATE_PARAM(params->param6, getState()->timeTicks, 75);
+
+			params->param1 = 0;
+			params->param2 = 2;
+			
+			getObjects()->update(kObjectCompartmentG, kEntityPascale, kLocation1, kCursorNormal, kCursorNormal);
+		}
+
+		params->param6 = 0;
+		break;
+
+	case kActionKnock:
+	case kActionOpenDoor:
+		if (params->param1) {
+			getObjects()->update(kObjectCompartmentG, kEntityPascale, kLocation1, kCursorNormal, kCursorNormal);
+			params->param1 = 0;
+
+			setCallback(2);
+			call(new ENTITY_SETUP_SIIS(Pascale, setup_playSound), getSound()->justCheckingCath());
+		} else {
+			setCallback(savepoint.action == kActionKnock ? 3 : 4);
+			call(new ENTITY_SETUP_SIIS(Pascale, setup_playSound), savepoint.action == kActionKnock ? "LIB012" : "LIB013");
+		}
+		break;
+
+	case kActionDefault:
+		getData()->car = kCarRedSleeping;
+		getData()->entityPosition = kPosition_3050;
+		getData()->posture = kPostureSitting;
+
+		getObjects()->update(kObjectCompartmentG, kEntityPascale, kLocation1, kCursorHandKnock, kCursorHand);
+		break;
+
+	case kActionDrawScene:
+		if (params->param2 || params->param1) {
+			params->param1 = 0;
+			params->param2 = 0;
+			params->param3 = 0;
+
+			getObjects()->update(kObjectCompartmentG, kEntityPascale, kLocation1, kCursorHandKnock, kCursorHand);
+		}
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			getObjects()->update(kObjectCompartmentG, kEntityPascale, kLocation1, kCursorHandKnock, kCursorHand);
+			goto label_callback1;
+
+		case 2:
+			getObjects()->update(kObjectCompartmentG, kEntityPascale, kLocation1, kCursorHandKnock, kCursorHand);
+			break;
+
+		case 3:
+		case 4:
+			params->param3++;
+
+			if (params->param3 == 1 || params->param3 == 2) {
+				getObjects()->update(kObjectCompartmentG, kEntityPascale, kLocation1, kCursorNormal, kCursorNormal);
+				setCallback(params->param3 == 1 ? 5 : 6);
+				call(new ENTITY_SETUP_SIIS(Pascale, setup_playSound), params->param3 == 1 ? "Wat5001" : "Wat5002");
+			}
+			break;
+
+		case 5:
+			params->param1 = 1;
+			getObjects()->update(kObjectCompartmentG, kEntityPascale, kLocation1, kCursorTalk, kCursorNormal);
+			break;
+
+		case 6:
+			params->param2 = 1;
+			break;
+
+		case 7:
+			params->param4 = 1;
+			break;
+		}
+		break;
+
+	case kAction135800432:
+		setup_nullfunction();
+		break;
+
+	case kAction169750080:
+		if (getSound()->isBuffered(kEntityPascale)) {
+			params->param4 = 1;
+		} else {
+			setCallback(7);
+			call(new ENTITY_SETUP_SIIS(Pascale, setup_playSound), "Wat5002");
+		}
+		break;
+	}
 }
 
 IMPLEMENT_NULL_FUNCTION(Pascale, 34)

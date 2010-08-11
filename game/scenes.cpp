@@ -785,11 +785,11 @@ SceneIndex SceneManager::getSceneIndexFromPosition(CarIndex car, Position positi
 		// Increment index and look at the next scene
 		index = (SceneIndex)(index + 1);
 
-		// Load the next scene
-		firstScene = getScenes()->get(index);
-
 		if (index >= _sceneLoader->count())
 			return getState()->scene;
+
+		// Load the next scene
+		firstScene = getScenes()->get(index);
 	}
 
 	// Process index if necessary

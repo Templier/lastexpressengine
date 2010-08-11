@@ -457,7 +457,7 @@ void Menu::eventMouse(const Common::Event &ev) {
 				++_creditsSequenceIndex;
 				showFrame(kOverlayCredits, _creditsSequenceIndex, true);
 			}
-		}		
+		}
 	} else {
 		// Check for hotspots
 		SceneHotspot *hotspot = NULL;
@@ -603,7 +603,7 @@ bool Menu::handleEvent(StartMenuAction action, Common::EventType type) {
 
 			_isShowingCredits = true;
 			_creditsSequenceIndex = 0;
-			
+
 			showFrame(kOverlayCredits, 0, true);
 		} else {
 			// TODO check flags ?
@@ -634,7 +634,7 @@ bool Menu::handleEvent(StartMenuAction action, Common::EventType type) {
 
 			return false;
 		} else {
-			showFrame(kOverlayButtons, kButtonQuit, true);			
+			showFrame(kOverlayButtons, kButtonQuit, true);
 		}
 		break;
 
@@ -748,9 +748,9 @@ bool Menu::handleEvent(StartMenuAction action, Common::EventType type) {
 			// Setup new menu screen
 			switchGame();
 			setup();
-			
+
 			// Set fight state to 0
-			getFight()->resetState();			
+			getFight()->resetState();
 
 			return true;
 		}
@@ -1516,7 +1516,7 @@ void Menu::moveToCity(CityButton city, bool clicked) {
 		showFrame(kOverlayTooltip, -1, true);
 		getSound()->playSound(kEntityPlayer, "LIB046");
 		goToTime(time);
-		
+
 		_handleTimeDelta = true;
 
 		return;

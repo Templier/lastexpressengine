@@ -270,7 +270,7 @@ void LastExpressEngine::handleSoundTimer() {
 		if (_soundMan)
 			_soundMan->handleTimer();
 
-	_frameCounter++;	
+	_frameCounter++;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////

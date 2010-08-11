@@ -345,17 +345,97 @@ IMPLEMENT_FUNCTION(Verges, function11, 11)
 			call(new ENTITY_SETUP(Verges, setup_callbackActionOnDirection));
 			break;
 
-		case 4:
+		case 4: {
 			getEntities()->clearSequences(kEntityVerges);
 
+			bool loadscene = true;
+
+			if (getEntities()->isInBaggageCarEntrance(kEntityPlayer))
+				getAction()->playAnimation(kEventVergesEscortToDiningCar);
+			else if (getEntities()->isInBaggageCar(kEntityPlayer))
+				getAction()->playAnimation(kEventVergesBagageCarOffLimits);
+			else if (getEntities()->isInKitchen(kEntityPlayer))
+				getAction()->playAnimation(kEventVergesCanIHelpYou);
+			else
+				loadscene = false;
+
+			if (loadscene) {
+				getSound()->playSound(kEntityPlayer, "BUMP");
+				getScenes()->loadSceneFromPosition(kCarRestaurant, 65);
+			}
+
+			getInventory()->setLocationAndProcess(kItem9, kLocation1);
+
+			getData()->car = kCarBaggage;
+			getData()->entityPosition = kPosition_5000;
+
+			getObjects()->update(kObject104, kEntityVerges, kLocationNone, kCursorNormal, kCursorHand);
+            getObjects()->update(kObject105, kEntityVerges, kLocationNone, kCursorNormal, kCursorHand);
+
+			CALLBACK_ACTION();
 			break;
+			}
 		}
 		break;
 	}
 }
 
 IMPLEMENT_FUNCTION(Verges, function12, 12)
-	error("Verges: callback function 12 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionDefault:
+		getObjects()->update(kObject104, kEntityPlayer, kLocationNone, kCursorNormal, kCursorHand);
+		getObjects()->update(kObject105, kEntityPlayer, kLocationNone, kCursorNormal, kCursorHand);
+
+		if (getEntities()->isInBaggageCar(kEntityPlayer) || getEntities()->isInKitchen(kEntityPlayer)) {
+			getAction()->playAnimation(getEntities()->isInBaggageCar(kEntityPlayer) ? kEventVergesBagageCarOffLimits : kEventVergesCanIHelpYou);
+			getSound()->playSound(kEntityPlayer, "BUMP");
+			getScenes()->loadSceneFromPosition(kCarRestaurant, 65);
+		}
+
+		getScenes()->loadSceneFromItemPosition(kItem9);
+
+		getData()->car = kCarRestaurant;
+		getData()->entityPosition = kPosition_5900;
+
+		setCallback(1);
+		call(new ENTITY_SETUP(Verges, setup_callbackActionRestaurantOrSalon));
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			getData()->entityPosition = kPosition_5800;
+			getData()->posture = kPostureStanding;
+
+			setCallback(2);
+			call(new ENTITY_SETUP_SIIS(Verges, setup_draw), "813DD");
+			break;
+
+		case 2:
+			getEntities()->drawSequenceRight(kEntityVerges, "813DS");
+
+			if (getEntities()->isInRestaurant(kEntityPlayer))
+				getEntities()->updateFrame(kEntityVerges);
+
+			setCallback(3);
+			call(new ENTITY_SETUP(Verges, setup_callbackActionOnDirection));
+			break;
+
+		case 3:
+			getData()->entityPosition = kPosition_850;
+			getEntities()->clearSequences(kEntityVerges);
+
+			CALLBACK_ACTION();
+			break;
+		}
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION_I(Verges, function13, 13)
@@ -642,7 +722,7 @@ IMPLEMENT_FUNCTION(Verges, policeGettingOffTrain, 24)
 		break;
 
 	case kActionNone:
-		if (getEntities()->checkFields9(kEntityVerges, kEntityPlayer, 1000) && !getEntityData(kEntityPlayer)->posture) {
+		if (getEntities()->checkFields9(kEntityVerges, kEntityPlayer, 1000) && getEntityData(kEntityPlayer)->posture == kPostureStanding) {
 			setCallback(1);
 			call(new ENTITY_SETUP(Verges, setup_savegame), kSavegameType2, kEventGendarmesArrestation);
 		}
@@ -696,7 +776,7 @@ IMPLEMENT_FUNCTION(Verges, chapter1Handler, 26)
 label_callback1:
 		if (getEntities()->isInBaggageCarEntrance(kEntityPlayer)) {
 			setCallback(2);
-			call(new ENTITY_SETUP(Verges, setup_function13), 0);
+			call(new ENTITY_SETUP(Verges, setup_function13), false);
 			break;
 		}
 
@@ -744,7 +824,7 @@ label_callback12:
 		}
 
 label_callback13:
-		if (getInventory()->hasItem(kItemPassengerList) && !params->param4 && (getState()->time < kTime1134000 || getState()->time > kTime1156500)) {
+		if (getInventory()->hasItem(kItemPassengerList) && !params->param3 && (getState()->time < kTime1134000 || getState()->time > kTime1156500)) {
 			setCallback(14);
 			call(new ENTITY_SETUP(Verges, setup_talkPassengerList));
 			break;
