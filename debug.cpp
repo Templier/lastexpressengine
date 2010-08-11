@@ -619,13 +619,13 @@ bool Debugger::cmdTimeDelta(int argc, const char **argv) {
 	if (argc == 2) {
 		int delta =  getNumber(argv[1]);
 
-		if (delta <= 0 || delta > 100)
+		if (delta <= 0 || delta > 500)
 			goto label_error;
 
 		getState()->timeDelta = delta;
 	} else {
 label_error:
-		DebugPrintf("Syntax: delta <time delta> (delta=1-100)\n");
+		DebugPrintf("Syntax: delta <time delta> (delta=1-500)\n");
 	}
 
 	return true;

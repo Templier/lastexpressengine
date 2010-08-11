@@ -90,9 +90,13 @@
 //////////////////////////////////////////////////////////////////////////
 // Output
 //////////////////////////////////////////////////////////////////////////
-extern const char *g_entityNames[];
+extern const char *g_actionNames[];
 extern const char *g_directionNames[];
-#define ENTITY_NAME(index) (index >= 40 ? "INVALID" : g_entityNames[index])
+extern const char *g_entityNames[];
+
+#define ACTION_NAME(action) (action > 18 ? Common::String::printf("%d", action).c_str() : g_actionNames[action])
 #define DIRECTION_NAME(direction) (direction >= 6 ? "INVALID" : g_directionNames[direction])
+#define ENTITY_NAME(index) (index >= 40 ? "INVALID" : g_entityNames[index])
+
 
 #endif // LASTEXPRESS_HELPERS_H

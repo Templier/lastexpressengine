@@ -100,7 +100,7 @@ void SavePoints::process() {
 			// Call requested callback
 			Entity::Callback *callback = getCallback(savepoint.entity1);
 			if (callback && callback->isValid()) {
-				debugC(8, kLastExpressDebugLogic, "Savepoint: entity1=%s, action=%d, entity2=%s", ENTITY_NAME(savepoint.entity1), savepoint.action, ENTITY_NAME(savepoint.entity2));
+				debugC(8, kLastExpressDebugLogic, "Savepoint: entity1=%s, action=%s, entity2=%s", ENTITY_NAME(savepoint.entity1), ACTION_NAME(savepoint.action), ENTITY_NAME(savepoint.entity2));
 				(*callback)(savepoint);
 			}
 		}
@@ -155,7 +155,7 @@ void SavePoints::call(EntityIndex entity2, EntityIndex entity1, ActionIndex acti
 
 	Entity::Callback *callback = getCallback(entity1);
 	if (callback && callback->isValid()) {
-		debugC(8, kLastExpressDebugLogic, "Savepoint: entity1=%s, action=%d, entity2=%s, param=%d", ENTITY_NAME(entity1), action, ENTITY_NAME(entity2), param);
+		debugC(8, kLastExpressDebugLogic, "Savepoint: entity1=%s, action=%s, entity2=%s, param=%d", ENTITY_NAME(entity1), ACTION_NAME(action), ENTITY_NAME(entity2), param);
 		(*callback)(point);
 	}
 }
@@ -169,7 +169,7 @@ void SavePoints::call(EntityIndex entity2, EntityIndex entity1, ActionIndex acti
 
 	Entity::Callback *callback = getCallback(entity1);
 	if (callback && callback->isValid()) {
-		debugC(8, kLastExpressDebugLogic, "Savepoint: entity1=%s, action=%d, entity2=%s, param=%s", ENTITY_NAME(entity1), action, ENTITY_NAME(entity2), param);
+		debugC(8, kLastExpressDebugLogic, "Savepoint: entity1=%s, action=%s, entity2=%s, param=%s", ENTITY_NAME(entity1), ACTION_NAME(action), ENTITY_NAME(entity2), param);
 		(*callback)(point);
 	}
 }
@@ -214,7 +214,7 @@ bool SavePoints::updateEntityFromData(const SavePoint &savepoint) {
 
 		// Found our data!
 		if (_data[i].entity1 == savepoint.entity1 && _data[i].action == savepoint.action) {
-			debugC(8, kLastExpressDebugLogic, "Update entity from data: entity1=%s, action=%d, param=%d", ENTITY_NAME(_data[i].entity1), _data[i].action, _data[i].param);
+			debugC(8, kLastExpressDebugLogic, "Update entity from data: entity1=%s, action=%s, param=%d", ENTITY_NAME(_data[i].entity1), ACTION_NAME(_data[i].action), _data[i].param);
 
 			// the SavePoint param value is the index of the entity call parameter to update
 			EntityData::EntityParametersIIII *params = (EntityData::EntityParametersIIII *)getEntities()->get(_data[i].entity1)->getParamData()->getParameters(8, 0);
