@@ -105,7 +105,7 @@ static const EntityPosition entityPositions[41] = {
 
 #define COMPUTE_SEQUENCE_NAME(sequenceTo, sequenceFrom) { \
 	sequenceTo = sequenceFrom; \
-	for (int seqIdx = 0; seqIdx < 8; seqIdx++) \
+	for (int seqIdx = 0; seqIdx < 7; seqIdx++) \
 		sequenceTo.deleteLastChar(); \
 	if (isSittingOrStanding(entityIndex, kCarGreenSleeping) || isSittingOrStanding(entityIndex, kCarGreenSleeping)) { \
 		if (data->car < getData(kEntityPlayer)->car || (data->car == getData(kEntityPlayer)->car && data->entityPosition < getData(kEntityPlayer)->entityPosition)) \
@@ -298,17 +298,13 @@ EntityIndex Entities::canInteractWith(const Common::Point &point) const {
 	int location = 10000;
 
 	// Check if there is an entity we can interact with
-	for (uint i = 1; i < _entities.size(); i++) {
+	for (uint i = 0; i < _entities.size(); i++) {
 
 		// Skip entities with no current frame
 		if (!getData((EntityIndex)i)->frame)
 			continue;
 
 		FrameInfo *info =  getData((EntityIndex)i)->frame->getInfo();
-
-		// Skip frames with no data
-		if (!info->dataOffset)
-			continue;
 
 		// Check the hotspot
 		if (info->hotspot.contains(point)) {
@@ -656,7 +652,7 @@ void Entities::processEntity(EntityIndex entityIndex) {
 	if (getData(kEntityPlayer)->car != data->car && data->direction != kDirectionRight && data->direction != kDirectionSwitch) {
 
 		if (data->position) {
-			updatePosition(entityIndex, data->car2, data->position);
+			updatePositionExit(entityIndex, data->car2, data->position);
 			data->car2 = kCarNone;
 			data->position = 0;
 		}
@@ -708,7 +704,7 @@ label_nosequence:
 			}
 
 			if (data->position) {
-				updatePosition(entityIndex, data->car2, data->position);
+				updatePositionExit(entityIndex, data->car2, data->position);
 				data->car2 = kCarNone;
 				data->position = 0;
 			}
@@ -1078,7 +1074,7 @@ void Entities::processFrame(EntityIndex entityIndex, bool keepPreviousFrame, boo
 	}
 
 	if (data->position) {
-		updatePosition(entityIndex, data->car2, data->position);
+		updatePositionExit(entityIndex, data->car2, data->position);
 		data->car2 = kCarNone;
 		data->position = 0;
 	}
@@ -1086,7 +1082,7 @@ void Entities::processFrame(EntityIndex entityIndex, bool keepPreviousFrame, boo
 	if (info->position) {
 		data->car2 = data->car;
 		data->position = info->position;
-		updatePosition(entityIndex, data->car2, data->position, true);
+		updatePositionEnter(entityIndex, data->car2, data->position);
 
 		if (getFlags()->flag_entities_0 || data->doProcessEntity)
 			return;
@@ -1230,7 +1226,7 @@ void Entities::drawSequenceRight(EntityIndex index, const char* sequence) {
 }
 
 void Entities::clearSequences(EntityIndex entityIndex) const {
-	debugC(8, kLastExpressDebugLogic, "Prepare sequences for entity %s", ENTITY_NAME(entityIndex));
+	debugC(8, kLastExpressDebugLogic, "Clear sequences for entity %s", ENTITY_NAME(entityIndex));
 
 	EntityData::EntityCallData *data = getData(entityIndex);
 
@@ -1491,7 +1487,7 @@ void Entities::getSequenceName(EntityIndex index, EntityDirection direction, Com
 			break;
 
 		case 18:
-			if (data->entityPosition >= kPosition_2436)
+			if (data->entityPosition < kPosition_9270)
 				sequence1 = Common::String::printf("%02d%01d-18u.seq", index, data->clothes);
 			break;
 
@@ -1801,7 +1797,25 @@ void Entities::exitCompartment(EntityIndex entity, ObjectIndex compartment, bool
 		_compartments[index] &= ~STORE_VALUE(entity);
 }
 
-void Entities::updatePosition(EntityIndex entity, CarIndex car, Position position, bool processScene) {
+void Entities::updatePositionEnter(EntityIndex entity, CarIndex car, Position position) {
+	if (entity == kEntity39)
+		entity = kEntityPlayer;
+
+	if (entity > kEntityChapters)
+		return;
+
+	_positions[100 * car + position] |= STORE_VALUE(entity);
+
+	if (isPlayerPosition(car, position) || (car == kCarRestaurant && position == 57 && isPlayerPosition(kCarRestaurant, 50))) {
+		getSound()->excuseMe(entity);
+		getScenes()->loadScene(getScenes()->processIndex(getState()->scene));
+		getSound()->playSound(kEntityPlayer, "CAT1127A");
+	} else {
+		getLogic()->updateCursor();
+	}
+}
+
+void Entities::updatePositionExit(EntityIndex entity, CarIndex car, Position position) {
 	if (entity == kEntity39)
 		entity = kEntityPlayer;
 
@@ -1810,13 +1824,7 @@ void Entities::updatePosition(EntityIndex entity, CarIndex car, Position positio
 
 	_positions[100 * car + position] &= ~STORE_VALUE(entity);
 
-	if (processScene && (isPlayerPosition(car, position) || (car == kCarRestaurant && position == 57 && isPlayerPosition(kCarRestaurant, 50)))) {
-		getSound()->excuseMe(entity);
-		getScenes()->loadScene(getScenes()->processIndex(getState()->scene));
-		getSound()->playSound(kEntityPlayer, "CAT1127A");
-	} else {
-		getLogic()->updateCursor();
-	}
+	getLogic()->updateCursor();
 }
 
 void Entities::updatePositionsEnter(EntityIndex entity, CarIndex car, Position position1, Position position2, Position position3, Position position4) {
@@ -2592,7 +2600,7 @@ EntityPosition Entities::getEntityPositionFromCurrentPosition() const {
 	return kPositionNone;
 }
 
-void Entities::clearEntitySequenceData(EntityData::EntityCallData * data, EntityDirection direction) const {
+void Entities::clearEntitySequenceData(EntityData::EntityCallData *data, EntityDirection direction) const {
 	getScenes()->removeAndRedraw(&data->frame, false);
 	getScenes()->removeAndRedraw(&data->frame1, false);
 

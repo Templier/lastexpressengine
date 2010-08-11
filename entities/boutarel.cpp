@@ -483,16 +483,16 @@ IMPLEMENT_FUNCTION(Boutarel, chapter1Handler, 21)
 			if (getEntities()->isPlayerPosition(kCarRedSleeping, 54) || getEntities()->isPlayerPosition(kCarRedSleeping, 44))
 				getScenes()->loadSceneFromPosition(kCarRedSleeping, 10);
 
-			getEntities()->updatePosition(kEntityBoutarel, kCarRedSleeping, 54, true);
-			getEntities()->updatePosition(kEntityBoutarel, kCarRedSleeping, 44, true);
+			getEntities()->updatePositionExit(kEntityBoutarel, kCarRedSleeping, 54);
+			getEntities()->updatePositionExit(kEntityBoutarel, kCarRedSleeping, 44);
 
 			setCallback(4);
 			call(new ENTITY_SETUP_SIIS(Boutarel, setup_playSound), "MRB1074");
 			break;
 
 		case 4:
-			getEntities()->updatePosition(kEntityBoutarel, kCarRedSleeping, 54);
-			getEntities()->updatePosition(kEntityBoutarel, kCarRedSleeping, 44);
+			getEntities()->updatePositionExit(kEntityBoutarel, kCarRedSleeping, 54);
+			getEntities()->updatePositionExit(kEntityBoutarel, kCarRedSleeping, 44);
 
 			setCallback(5);
 			call(new ENTITY_SETUP(Boutarel, setup_function20));

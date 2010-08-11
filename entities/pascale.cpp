@@ -230,7 +230,7 @@ IMPLEMENT_FUNCTION(Pascale, welcomeCath, 10)
 
 	case kActionNone:
 		if (params->param1 && !getSound()->isBuffered(kEntityPascale))
-			getEntities()->updatePosition(kEntityPascale, kCarRestaurant, 64);
+			getEntities()->updatePositionExit(kEntityPascale, kCarRestaurant, 64);
 		break;
 
 	case kActionExitCompartment:
@@ -254,7 +254,7 @@ IMPLEMENT_FUNCTION(Pascale, welcomeCath, 10)
 		break;
 
 	case kActionDefault:
-		getEntities()->updatePosition(kEntityPascale, kCarRestaurant, 64, true);
+		getEntities()->updatePositionEnter(kEntityPascale, kCarRestaurant, 64);
 		getEntities()->drawSequenceRight(kEntityPascale, "035A");
 		break;
 
@@ -283,7 +283,7 @@ IMPLEMENT_FUNCTION(Pascale, function11, 11)
 		getSavePoints()->push(kEntityPascale, kEntityAugust, kAction168046720);
 		getSavePoints()->push(kEntityPascale, kEntityAnna, kAction168046720);
 		getSavePoints()->push(kEntityPascale, kEntityAlexei, kAction168046720);
-		getEntities()->updatePosition(kEntityPascale, kCarRestaurant, 55, true);
+		getEntities()->updatePositionEnter(kEntityPascale, kCarRestaurant, 55);
 
 		setCallback(1);
 		call(new ENTITY_SETUP(Pascale, setup_welcomeCath));
@@ -298,7 +298,7 @@ IMPLEMENT_FUNCTION(Pascale, function11, 11)
 			getSavePoints()->push(kEntityPascale, kEntityAugust, kAction168627977);
 			getSavePoints()->push(kEntityPascale, kEntityAnna, kAction168627977);
 			getSavePoints()->push(kEntityPascale, kEntityAlexei, kAction168627977);
-			getEntities()->updatePosition(kEntityPascale, kCarRestaurant, 55);
+			getEntities()->updatePositionExit(kEntityPascale, kCarRestaurant, 55);
 
 			setCallback(2);
 			call(new ENTITY_SETUP_SIIS(Pascale, setup_draw), "905");
@@ -402,7 +402,7 @@ IMPLEMENT_FUNCTION(Pascale, sitAnna, 14)
 		break;
 
 	case kActionExitCompartment:
-		getEntities()->updatePosition(kEntityPascale, kCarRestaurant, 62);
+		getEntities()->updatePositionExit(kEntityPascale, kCarRestaurant, 62);
 
 		CALLBACK_ACTION();
 		break;
@@ -412,7 +412,7 @@ IMPLEMENT_FUNCTION(Pascale, sitAnna, 14)
 		getEntities()->drawSequenceRight(kEntityAnna, "001C2");
 		getEntities()->drawSequenceRight(kEntityPascale, "001C1");
 
-		getEntities()->updatePosition(kEntityPascale, kCarRestaurant, 62, true);
+		getEntities()->updatePositionEnter(kEntityPascale, kCarRestaurant, 62);
 		break;
 	}
 }
@@ -482,19 +482,19 @@ IMPLEMENT_FUNCTION(Pascale, serveTatianaVassili, 16)
 		case 1:
 			getSavePoints()->push(kEntityPascale, kEntityTatiana, kAction122358304);
 			getEntities()->drawSequenceLeft(kEntityPascale, "014B");
-			getEntities()->updatePosition(kEntityPascale, kCarRestaurant, 67, true);
+			getEntities()->updatePositionEnter(kEntityPascale, kCarRestaurant, 67);
 
 			if (getSound()->isBuffered("TAT1069A"))
 				getSound()->processEntry("TAT1069A");
 			else if (getSound()->isBuffered("TAT1069B"))
 				getSound()->processEntry("TAT1069B");
-			
+
 			setCallback(2);
 			call(new ENTITY_SETUP_SIIS(Pascale, setup_playSound), "TAT1066");
 			break;
 
 		case 2:
-			getEntities()->updatePosition(kEntityPascale, kCarRestaurant, 67);
+			getEntities()->updatePositionExit(kEntityPascale, kCarRestaurant, 67);
 			getSavePoints()->push(kEntityPascale, kEntityTatiana, kAction122288808);
 
 			setCallback(3);
@@ -716,7 +716,7 @@ IMPLEMENT_FUNCTION(Pascale, function23, 23)
 	case kActionDefault:
 		getData()->entityPosition = kPosition_5800;
 		getData()->posture = kPostureStanding;
-		getEntities()->updatePosition(kEntityPascale, kCarRestaurant, 67, true);
+		getEntities()->updatePositionEnter(kEntityPascale, kCarRestaurant, 67);
 
 		setCallback(1);
 		call(new ENTITY_SETUP(Pascale, setup_welcomeAbbot));
@@ -728,7 +728,7 @@ IMPLEMENT_FUNCTION(Pascale, function23, 23)
 			break;
 
 		case 1:
-			getEntities()->updatePosition(kEntityPascale, kCarRestaurant, 67);
+			getEntities()->updatePositionExit(kEntityPascale, kCarRestaurant, 67);
 			getSavePoints()->push(kEntityPascale, kEntityAbbot, kAction122288808);
 
 			setCallback(2);
@@ -844,7 +844,7 @@ label_callback1:
 						setCallback(2);
 						call(new ENTITY_SETUP(Pascale, setup_messageFromAnna));
 						break;
-					}						
+					}
 				}
 			}
 
@@ -1141,7 +1141,7 @@ label_callback1:
 
 			params->param1 = 0;
 			params->param2 = 2;
-			
+
 			getObjects()->update(kObjectCompartmentG, kEntityPascale, kLocation1, kCursorNormal, kCursorNormal);
 		}
 

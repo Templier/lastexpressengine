@@ -518,7 +518,7 @@ IMPLEMENT_FUNCTION(Abbot, function23, 23)
 
 	case kActionDefault:
 		getData()->posture = kPostureStanding;
-		getEntities()->updatePosition(kEntityAbbot, kCarRestaurant, 67, true);
+		getEntities()->updatePositionEnter(kEntityAbbot, kCarRestaurant, 67);
 
 		setCallback(1);
 		call(new ENTITY_SETUP_SIIS(Abbot, setup_callSavepoint), "029F", kEntityTables4, kActionDrawTablesWithChairs, "029G");
@@ -530,7 +530,7 @@ IMPLEMENT_FUNCTION(Abbot, function23, 23)
 			break;
 
 		case 1:
-			getEntities()->updatePosition(kEntityAbbot, kCarRestaurant, 67);
+			getEntities()->updatePositionExit(kEntityAbbot, kCarRestaurant, 67);
 			getSavePoints()->push(kEntityAbbot, kEntityServers0, kAction270068760);
 			getSavePoints()->push(kEntityAbbot, kEntityAnna, kAction238936000);
 			getEntities()->drawSequenceRight(kEntityAbbot, "804DS");
@@ -1085,7 +1085,7 @@ IMPLEMENT_FUNCTION(Abbot, function42, 42)
 
 	case kActionDefault:
 		getData()->posture = kPostureStanding;
-		getEntities()->updatePosition(kEntityAbbot, kCarRestaurant, 67, true);
+		getEntities()->updatePositionExit(kEntityAbbot, kCarRestaurant, 67);
 
 		setCallback(1);
 		call(new ENTITY_SETUP_SIIS(Abbot, setup_callSavepoint), "029F", kEntityTables4, kActionDrawTablesWithChairs, "029G");
@@ -1097,7 +1097,7 @@ IMPLEMENT_FUNCTION(Abbot, function42, 42)
 			break;
 
 		case 1:
-			getEntities()->updatePosition(kEntityAbbot, kCarRestaurant, 67);
+			getEntities()->updatePositionExit(kEntityAbbot, kCarRestaurant, 67);
 			getSavePoints()->push(kEntityAbbot, kEntityServers0, kAction270068760);
 			getEntities()->drawSequenceRight(kEntityAbbot, "804DS");
 

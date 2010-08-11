@@ -80,7 +80,8 @@ public:
 	 * @param entity entity index
 	 */
 	void updateFrame(EntityIndex entity) const;
-	void updatePosition(EntityIndex entity, CarIndex car, Position position, bool processScene = false);
+	void updatePositionEnter(EntityIndex entity, CarIndex car, Position position);
+	void updatePositionExit(EntityIndex entity, CarIndex car, Position position);
 	void enterCompartment(EntityIndex entity, ObjectIndex compartment, bool useCompartment1 = false);
 	void exitCompartment(EntityIndex entity, ObjectIndex compartment, bool useCompartment1 = false);
 

@@ -1141,7 +1141,7 @@ IMPLEMENT_FUNCTION(August, chapter2Handler, 36)
 		if (getState()->time > kTime1773000 && params->param1 && getEntities()->isSomebodyStandingInRestaurantOrSalon()) {
 			getData()->inventoryItem = kItemNone;
 			getData()->posture = kPostureStanding;
-			getEntities()->updatePosition(kEntityAugust, kCarRestaurant, 62, true);
+			getEntities()->updatePositionEnter(kEntityAugust, kCarRestaurant, 62);
 
 			setCallback(2);
 			call(new ENTITY_SETUP_SIIS(August, setup_callSavepoint), "016C", kEntityTables0, kActionDrawTablesWithChairs, "016D");
@@ -1174,7 +1174,7 @@ IMPLEMENT_FUNCTION(August, chapter2Handler, 36)
 			break;
 
 		case 2:
-			getEntities()->updatePosition(kEntityAugust, kCarRestaurant, 62);
+			getEntities()->updatePositionExit(kEntityAugust, kCarRestaurant, 62);
 			getEntities()->drawSequenceRight(kEntityAugust, "803ES");
 			if (getEntities()->isInRestaurant(kEntityPlayer))
 				getEntities()->updateFrame(kEntityAugust);

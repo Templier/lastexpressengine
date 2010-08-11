@@ -398,7 +398,7 @@ IMPLEMENT_FUNCTION(Tatiana, function20, 20)
 		case 1:
 			getData()->posture = kPostureStanding;
 			getSavePoints()->push(kEntityTatiana, kEntityAugust, kAction223183000);
-			getEntities()->updatePosition(kEntityTatiana, kCarRestaurant, 67, true);
+			getEntities()->updatePositionEnter(kEntityTatiana, kCarRestaurant, 67);
 			getSound()->playSound(kEntityTatiana, "TAT1070");
 
 			setCallback(2);
@@ -406,7 +406,7 @@ IMPLEMENT_FUNCTION(Tatiana, function20, 20)
 			break;
 
 		case 2:
-			getEntities()->updatePosition(kEntityTatiana, kCarRestaurant, 67);
+			getEntities()->updatePositionExit(kEntityTatiana, kCarRestaurant, 67);
 			getSavePoints()->push(kEntityTatiana, kEntityServers0, kAction188893625);
 
 			setCallback(3);
@@ -468,8 +468,8 @@ IMPLEMENT_FUNCTION(Tatiana, function24, 24)
 		getObjects()->update(kObject25, kEntityPlayer, kLocationNone, kCursorKeepValue, kCursorKeepValue);
 		getObjects()->update(kObjectTrainTimeTable, kEntityPlayer, kLocationNone, kCursorKeepValue, kCursorKeepValue);
 
-		getEntities()->updatePosition(kEntityTatiana, kCarGreenSleeping, 70);
-		getEntities()->updatePosition(kEntityTatiana, kCarGreenSleeping, 71);
+		getEntities()->updatePositionExit(kEntityTatiana, kCarGreenSleeping, 70);
+		getEntities()->updatePositionExit(kEntityTatiana, kCarGreenSleeping, 71);
 		getEntities()->clearSequences(kEntityTatiana);
 
 		getObjects()->update(kObjectCompartmentB, kEntityPlayer, kLocation1, kCursorHandKnock, kCursorHand);
@@ -626,14 +626,14 @@ IMPLEMENT_FUNCTION(Tatiana, function29, 29)
 
 		case 1:
 			getData()->posture = kPostureStanding;
-			getEntities()->updatePosition(kEntityTatiana, kCarRestaurant, 63, true);
+			getEntities()->updatePositionEnter(kEntityTatiana, kCarRestaurant, 63);
 
 			setCallback(2);
 			call(new ENTITY_SETUP_SIIS(Tatiana, setup_callSavepoint), "018H", kEntityTables1, kActionDrawTablesWithChairs, "018A");
 			break;
 
 		case 2:
-			getEntities()->updatePosition(kEntityTatiana, kCarRestaurant, 63);
+			getEntities()->updatePositionExit(kEntityTatiana, kCarRestaurant, 63);
 			getSavePoints()->push(kEntityTatiana, kEntityServers1, kAction302203328);
 			getEntities()->drawSequenceRight(kEntityTatiana, "805DS");
 

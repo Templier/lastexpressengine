@@ -439,7 +439,7 @@ IMPLEMENT_FUNCTION(Alexei, chapter1Handler, 18)
 			getData()->posture = kPostureStanding;
 			getData()->inventoryItem = kItemNone;
 
-			getEntities()->updatePosition(kEntityAlexei, kCarRestaurant, 63, true);
+			getEntities()->updatePositionEnter(kEntityAlexei, kCarRestaurant, 63);
 			getInventory()->setLocationAndProcess(kItem17, kLocation1);
 
 			setCallback(1);
@@ -481,7 +481,7 @@ IMPLEMENT_FUNCTION(Alexei, chapter1Handler, 18)
 			break;
 
 		case 1:
-			getEntities()->updatePosition(kEntityAlexei, kCarRestaurant, 63);
+			getEntities()->updatePositionExit(kEntityAlexei, kCarRestaurant, 63);
 			setup_function19();
 			break;
 
@@ -559,7 +559,7 @@ IMPLEMENT_FUNCTION(Alexei, function19, 19)
 			break;
 
 		case 6:
-			getEntities()->updatePosition(kEntityAlexei, kCarRestaurant, 63, true);
+			getEntities()->updatePositionEnter(kEntityAlexei, kCarRestaurant, 63);
 			getScenes()->loadSceneFromItemPosition(kItem17);
 			getSavePoints()->push(kEntityAlexei, kEntityTables1, kAction136455232);
 
@@ -568,7 +568,7 @@ IMPLEMENT_FUNCTION(Alexei, function19, 19)
 			break;
 
 		case 7:
-			getEntities()->updatePosition(kEntityAlexei, kCarRestaurant, 63);
+			getEntities()->updatePositionExit(kEntityAlexei, kCarRestaurant, 63);
 			getSavePoints()->push(kEntityAlexei, kEntityServers1, kAction302996448);
 
 			setCallback(8);
@@ -836,14 +836,14 @@ IMPLEMENT_FUNCTION(Alexei, chapter2Handler, 29)
 			break;
 
 		case 5:
-			getEntities()->updatePosition(kEntityAlexei, kCarRestaurant, 63, true);
+			getEntities()->updatePositionEnter(kEntityAlexei, kCarRestaurant, 63);
 
 			setCallback(6);
 			call(new ENTITY_SETUP_SIIS(Alexei, setup_callSavepoint), "018B", kEntityTables1, kAction136455232, "BOGUS");
 			break;
 
 		case 6:
-			getEntities()->updatePosition(kEntityAlexei, kCarRestaurant, 63);
+			getEntities()->updatePositionExit(kEntityAlexei, kCarRestaurant, 63);
 			getSavePoints()->push(kEntityAlexei, kEntityTatiana, kAction290869168);
 			setup_function30();
 			break;

@@ -835,7 +835,7 @@ void Servers0::serveTable(const SavePoint &savepoint, const char* seq1, EntityIn
 
 		case 1:
 			if (position)
-				getEntities()->updatePosition(kEntityServers0, kCarRestaurant, position, true);
+				getEntities()->updatePositionEnter(kEntityServers0, kCarRestaurant, position);
 
 			getSavePoints()->push(kEntityServers0, entity, kAction136455232);
 
@@ -845,7 +845,7 @@ void Servers0::serveTable(const SavePoint &savepoint, const char* seq1, EntityIn
 
 		case 2:
 			if (position)
-				getEntities()->updatePosition(kEntityServers0, kCarRestaurant, position);
+				getEntities()->updatePositionExit(kEntityServers0, kCarRestaurant, position);
 
 			setCallback(3);
 			call(new ENTITY_SETUP_SIIS(Servers0, setup_draw), seq4);

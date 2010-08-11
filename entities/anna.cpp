@@ -1070,7 +1070,7 @@ IMPLEMENT_FUNCTION(Anna, function26, 26)
 
 	case kActionDefault:
 		getData()->posture = kPostureStanding;
-		getEntities()->updatePosition(kEntityAnna, kCarRestaurant, 62);
+		getEntities()->updatePositionExit(kEntityAnna, kCarRestaurant, 62);
 
 		setCallback(1);
 		call(new ENTITY_SETUP_SIIS(Anna, setup_callSavepoint), "001L", kEntityTables0, kActionDrawTablesWithChairs, "001H");
@@ -1082,7 +1082,7 @@ IMPLEMENT_FUNCTION(Anna, function26, 26)
 			break;
 
 		case 1:
-			getEntities()->updatePosition(kEntityAnna, kCarRestaurant, 62);
+			getEntities()->updatePositionExit(kEntityAnna, kCarRestaurant, 62);
 			getSavePoints()->push(kEntityAnna, kEntityServers0, kAction237485916);
 			getEntities()->drawSequenceRight(kEntityAnna, "801DS");
 
@@ -1281,14 +1281,14 @@ IMPLEMENT_FUNCTION(Anna, function31, 31)
 			break;
 
 		case 2:
-			getEntities()->updatePosition(kEntityAnna, kCarRestaurant, 56, true);
+			getEntities()->updatePositionEnter(kEntityAnna, kCarRestaurant, 56);
 
 			setCallback(3);
 			call(new ENTITY_SETUP_SSII(Anna, setup_draw2), "106C1", "106C2", kEntityAugust);
 			break;
 
 		case 3:
-			getEntities()->updatePosition(kEntityAnna, kCarRestaurant, 56);
+			getEntities()->updatePositionExit(kEntityAnna, kCarRestaurant, 56);
 			getInventory()->setLocationAndProcess(kItem3, kLocation1);
 			getSavePoints()->push(kEntityAnna, kEntityAugust, kAction159332865);
 

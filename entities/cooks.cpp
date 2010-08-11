@@ -79,8 +79,8 @@ IMPLEMENT_FUNCTION(Cooks, function3, 3)
 
 	case kActionDefault:
 		getEntities()->drawSequenceLeft(kEntityCooks, "308A");
-		getEntities()->updatePosition(kEntityCooks, kCarRestaurant, 75, true);
-		getEntities()->updatePosition(kEntityCooks, kCarRestaurant, 78, true);
+		getEntities()->updatePositionEnter(kEntityCooks, kCarRestaurant, 75);
+		getEntities()->updatePositionEnter(kEntityCooks, kCarRestaurant, 78);
 
 		switch (getProgress().chapter) {
 		default:
@@ -148,8 +148,8 @@ IMPLEMENT_FUNCTION(Cooks, function3, 3)
 
 		case 3:
 			getEntities()->drawSequenceLeft(kEntityCooks, "308C");
-			getEntities()->updatePosition(kEntityCooks, kCarRestaurant, 75);
-			getEntities()->updatePosition(kEntityCooks, kCarRestaurant, 78);
+			getEntities()->updatePositionExit(kEntityCooks, kCarRestaurant, 75);
+			getEntities()->updatePositionExit(kEntityCooks, kCarRestaurant, 78);
 			break;
 		}
 		break;
@@ -163,8 +163,8 @@ IMPLEMENT_FUNCTION(Cooks, function4, 4)
 
 	case kActionDefault:
 		getEntities()->drawSequenceLeft(kEntityCooks, "308A");
-		getEntities()->updatePosition(kEntityCooks, kCarRestaurant, 75, true);
-		getEntities()->updatePosition(kEntityCooks, kCarRestaurant, 78, true);
+		getEntities()->updatePositionEnter(kEntityCooks, kCarRestaurant, 75);
+		getEntities()->updatePositionEnter(kEntityCooks, kCarRestaurant, 78);
 
 		switch (getProgress().chapter) {
 		default:
@@ -233,8 +233,8 @@ IMPLEMENT_FUNCTION(Cooks, function4, 4)
 
 		case 3:
 			getEntities()->drawSequenceLeft(kEntityCooks, "308C");
-			getEntities()->updatePosition(kEntityCooks, kCarRestaurant, 75);
-			getEntities()->updatePosition(kEntityCooks, kCarRestaurant, 78, true);
+			getEntities()->updatePositionExit(kEntityCooks, kCarRestaurant, 75);
+			getEntities()->updatePositionEnter(kEntityCooks, kCarRestaurant, 78);
 			break;
 		}
 		break;

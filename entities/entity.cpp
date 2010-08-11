@@ -400,7 +400,7 @@ void Entity::updatePosition(const SavePoint &savepoint, bool handleExcuseMe) {
 		break;
 
 	case kActionExitCompartment:
-		getEntities()->updatePosition(_entityIndex, (CarIndex)params->param4, (Position)params->param5);
+		getEntities()->updatePositionExit(_entityIndex, (CarIndex)params->param4, (Position)params->param5);
 		CALLBACK_ACTION();
 		break;
 
@@ -413,7 +413,7 @@ void Entity::updatePosition(const SavePoint &savepoint, bool handleExcuseMe) {
 
 	case kActionDefault:
 		getEntities()->drawSequenceRight(_entityIndex, (char *)&params->seq);
-		getEntities()->updatePosition(_entityIndex, (CarIndex)params->param4, (Position)params->param5, true);
+		getEntities()->updatePositionEnter(_entityIndex, (CarIndex)params->param4, (Position)params->param5);
 		break;
 	}
 }
