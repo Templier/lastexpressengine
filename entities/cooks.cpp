@@ -271,13 +271,13 @@ IMPLEMENT_FUNCTION(Cooks, chapter1Handler, 6)
 
 		// Broken plate sound
 		getSound()->playSound(kEntityPlayer, "LIB122",  getSound()->getSoundFlag(kEntityCooks));
-		params->param2 = 225 * (4 * random(30) + 120);
+		params->param2 = 225 * (4 * rnd(30) + 120);
 		params->param4 = 0;
 		break;
 
 	case kActionDefault:
 		params->param1 = 1;
-		params->param2 = 225 * (4 * random(30) + 120);
+		params->param2 = 225 * (4 * rnd(30) + 120);
 		break;
 
 	case kActionDrawScene:
@@ -381,12 +381,12 @@ IMPLEMENT_FUNCTION(Cooks, chapter2Handler, 9)
 
 		// Broken plate sound
 		getSound()->playSound(kEntityPlayer, "LIB122",  getSound()->getSoundFlag(kEntityCooks));
-		params->param1 = 225 * (4 * random(30) + 120);
+		params->param1 = 225 * (4 * rnd(30) + 120);
 		params->param3 = 0;
 		break;
 
 	case kActionDefault:
-		params->param1 = 225 * (4 * random(30) + 120);
+		params->param1 = 225 * (4 * rnd(30) + 120);
 		break;
 
 	case kActionDrawScene:
@@ -438,7 +438,7 @@ IMPLEMENT_FUNCTION(Cooks, chapter3Handler, 11)
 
 		// Broken plate sound
 		getSound()->playSound(kEntityPlayer, "LIB122",  getSound()->getSoundFlag(kEntityCooks));
-		params->param2 = 225 * (4 * random(30) + 120);
+		params->param2 = 225 * (4 * rnd(30) + 120);
 		params->param4 = 0;
 
 update_params:
@@ -450,7 +450,7 @@ update_params:
 
 	case kActionDefault:
 		params->param1 = 1;
-		params->param2 = 225 * (4 * random(30) + 120);
+		params->param2 = 225 * (4 * rnd(30) + 120);
 		break;
 
 	case kActionDrawScene:
@@ -529,12 +529,12 @@ IMPLEMENT_FUNCTION(Cooks, chapter4Handler, 13)
 
 		// Broken plate sound
 		getSound()->playSound(kEntityPlayer, "LIB122",  getSound()->getSoundFlag(kEntityCooks));
-		params->param1 = 225 * (4 * random(30) + 120);
+		params->param1 = 225 * (4 * rnd(30) + 120);
 		params->param3 = 0;
 		break;
 
 	case kActionDefault:
-		params->param1 = 225 * (4 * random(30) + 120);
+		params->param1 = 225 * (4 * rnd(30) + 120);
 		break;
 
 	case kActionDrawScene:

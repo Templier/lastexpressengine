@@ -116,12 +116,12 @@ IMPLEMENT_FUNCTION(Max, chapter12_handler, 6)
 		if (!getSound()->isBuffered(kEntityMax))
 			getSound()->playSound(kEntityMax, "Max1122");
 
-		params->param1 = 255 * (4 * random(20) + 40);
+		params->param1 = 255 * (4 * rnd(20) + 40);
 		params->param2 = 0;
 		break;
 
 	case kActionDefault:
-		params->param1 = 255 * (4 * random(20) + 40);
+		params->param1 = 255 * (4 * rnd(20) + 40);
 		break;
 
 	case kAction71277948:
@@ -132,7 +132,7 @@ IMPLEMENT_FUNCTION(Max, chapter12_handler, 6)
 	case kAction158007856:
 		if (!getSound()->isBuffered(kEntityMax)) {
 			getSound()->playSound(kEntityMax, "Max1122");
-			params->param1 = 255 * (4 * random(20) + 40);
+			params->param1 = 255 * (4 * rnd(20) + 40);
 		}
 		break;
 	}
@@ -149,7 +149,7 @@ IMPLEMENT_FUNCTION(Max, function7, 7)
 		if (!getSound()->isBuffered(kEntityMax))
 			getSound()->playSound(kEntityMax, "Max1122");
 
-		params->param1 = 255 * (4 * random(20) + 40);
+		params->param1 = 255 * (4 * rnd(20) + 40);
 		params->param2 = 0;
 		break;
 
@@ -166,7 +166,7 @@ IMPLEMENT_FUNCTION(Max, function7, 7)
 		break;
 
 	case kActionDefault:
-		params->param1 = 255 * (4 * random(20) + 40);
+		params->param1 = 255 * (4 * rnd(20) + 40);
 
 		getData()->entityPosition = kPosition_4070;
 		getData()->posture = kPostureSitting;
@@ -220,7 +220,7 @@ IMPLEMENT_FUNCTION(Max, function7, 7)
 	case kAction158007856:
 		if (!getSound()->isBuffered(kEntityMax)) {
 			getSound()->playSound(kEntityMax, "Max1122");
-			params->param1 = 255 * (4 * random(20) + 40);
+			params->param1 = 255 * (4 * rnd(20) + 40);
 		}
 		break;
 	}
@@ -237,7 +237,7 @@ IMPLEMENT_FUNCTION(Max, chapter4Handler, 8)
 		if (!getSound()->isBuffered(kEntityMax))
 			getSound()->playSound(kEntityMax, "Max3101");
 
-		params->param2 = 255 * (4 * random(20) + 40);
+		params->param2 = 255 * (4 * rnd(20) + 40);
 		params->param3 = 0;
 		break;
 
@@ -258,7 +258,7 @@ IMPLEMENT_FUNCTION(Max, chapter4Handler, 8)
 		break;
 
 	case kActionDefault:
-		params->param2 = 255 * (4 * random(20) + 40);
+		params->param2 = 255 * (4 * rnd(20) + 40);
 
 		getObjects()->update(kObjectCageMax, kEntityMax, kLocationNone, kCursorNormal, kCursorHand);
 		getEntities()->clearSequences(kEntityMax);
@@ -410,12 +410,12 @@ IMPLEMENT_FUNCTION(Max, chapter3Handler, 13)
 		if (!getSound()->isBuffered(kEntityMax))
 			getSound()->playSound(kEntityMax, "Max1122");
 
-		params->param1 = 255 * (4 * random(20) + 40);
+		params->param1 = 255 * (4 * rnd(20) + 40);
 		params->param3 = 0;
 		break;
 
 	case kActionDefault:
-		params->param1 = 255 * (4 * random(20) + 40);
+		params->param1 = 255 * (4 * rnd(20) + 40);
 
 		getData()->entityPosition = kPosition_4070;
 		getData()->posture = kPostureSitting;
@@ -441,7 +441,7 @@ IMPLEMENT_FUNCTION(Max, chapter3Handler, 13)
 
 		if (!getSound()->isBuffered(kEntityMax)) {
 			getSound()->playSound(kEntityMax, "Max1122");
-			params->param1 = 255 * (4 * random(20) + 40);
+			params->param1 = 255 * (4 * rnd(20) + 40);
 		}
 		break;
 	}

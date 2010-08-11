@@ -354,7 +354,7 @@ IMPLEMENT_FUNCTION_I(Boutarel, function18, 18)
 				call(new ENTITY_SETUP_SIIS(Boutarel, setup_playSound), getSound()->justAMinuteCath());
 			} else if (getInventory()->hasItem(kItemPassengerList)) {
 				setCallback(5);
-				call(new ENTITY_SETUP_SIIS(Boutarel, setup_playSound), random(2) ? "CAT1511" : getSound()->wrongDoorCath());
+				call(new ENTITY_SETUP_SIIS(Boutarel, setup_playSound), rnd(2) ? "CAT1511" : getSound()->wrongDoorCath());
 			} else {
 				setCallback(6);
 				call(new ENTITY_SETUP_SIIS(Boutarel, setup_playSound), getSound()->wrongDoorCath());
@@ -388,7 +388,7 @@ IMPLEMENT_FUNCTION_I(Boutarel, function18, 18)
 		case 1:
 		case 2:
 			setCallback(3);
-			call(new ENTITY_SETUP_SIIS(Boutarel, setup_playSound), random(2) ? "MRB1001" : "MRB1001A");
+			call(new ENTITY_SETUP_SIIS(Boutarel, setup_playSound), rnd(2) ? "MRB1001" : "MRB1001A");
 			break;
 
 		case 3:

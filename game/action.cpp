@@ -1626,7 +1626,7 @@ bool Action::handleOtherCompartment(ObjectIndex object, bool doPlaySound, bool d
 			playCompartmentSoundEvents(object);
 
 		if (!getSound()->isBuffered(kEntityCoudert))
-			getSound()->playSound(kEntityCoudert, (random(2)) ? "JAC1000" : "JAC1000A");
+			getSound()->playSound(kEntityCoudert, (rnd(2)) ? "JAC1000" : "JAC1000A");
 
 		if (doLoadScene)
 			getScenes()->loadSceneFromObject(object);
@@ -1642,7 +1642,7 @@ bool Action::handleOtherCompartment(ObjectIndex object, bool doPlaySound, bool d
 			playCompartmentSoundEvents(object);
 
 		if (!getSound()->isBuffered(kEntityCoudert))
-			getSound()->playSound(kEntityCoudert, (random(2)) ? "JAC1000" : "JAC1000A");
+			getSound()->playSound(kEntityCoudert, (rnd(2)) ? "JAC1000" : "JAC1000A");
 
 		if (doLoadScene)
 			getScenes()->loadSceneFromObject(object, true);

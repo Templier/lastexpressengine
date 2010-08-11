@@ -53,8 +53,8 @@ Coudert::Coudert(LastExpressEngine *engine) : Entity(engine, kEntityCoudert) {
 	ADD_CALLBACK_FUNCTION(Coudert, reset);
 	ADD_CALLBACK_FUNCTION(Coudert, bloodJacket);
 	ADD_CALLBACK_FUNCTION(Coudert, enterExitCompartment);
-	ADD_CALLBACK_FUNCTION(Coudert, function4);
-	ADD_CALLBACK_FUNCTION(Coudert, function5);
+	ADD_CALLBACK_FUNCTION(Coudert, callbackActionOnDirection);
+	ADD_CALLBACK_FUNCTION(Coudert, enterExitCompartment2);
 	ADD_CALLBACK_FUNCTION(Coudert, playSound);
 	ADD_CALLBACK_FUNCTION(Coudert, playSound16);
 	ADD_CALLBACK_FUNCTION(Coudert, savegame);
@@ -174,7 +174,10 @@ IMPLEMENT_FUNCTION_SI(Coudert, enterExitCompartment, 3)
 	Entity::enterExitCompartment(savepoint);
 }
 
-IMPLEMENT_FUNCTION(Coudert, function4, 4)
+/**
+ * Process callback action when the entity direction is not kDirectionRight
+ */
+IMPLEMENT_FUNCTION(Coudert, callbackActionOnDirection, 4)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -201,8 +204,32 @@ IMPLEMENT_FUNCTION(Coudert, function4, 4)
 	}
 }
 
-IMPLEMENT_FUNCTION_SIII(Coudert, function5, 5)
-	error("Coudert: callback function 5 not implemented!");
+/**
+ * Handles entering/exiting a compartment.
+ *
+ * @param seq1   The sequence to draw
+ * @param param4 The compartment
+ * @param param5 The entity position 1
+ * @param param6 The entity position 2
+ */
+IMPLEMENT_FUNCTION_SIII(Coudert, enterExitCompartment2, 5)
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionNone:
+		SAVEGAME_BLOOD_JACKET();
+		return;
+
+	case kActionCallback:
+		if (getCallback() == 1) {
+			getAction()->playAnimation(kEventCoudertBloodJacket);
+			getLogic()->gameOver(kInitTypeIndex, 1, kSceneGameOverBloodJacket, true);
+		}
+		return;
+	}
+
+	Entity::enterExitCompartment(savepoint, (EntityPosition)params->param5, (EntityPosition)params->param6, kCarRedSleeping, (ObjectIndex)params->param4, false);
 }
 
 /**
@@ -284,9 +311,84 @@ IMPLEMENT_FUNCTION_II(Coudert, savegame, 8)
 //  - CarIndex
 //  - EntityPosition
 IMPLEMENT_FUNCTION_II(Coudert, function9, 9)
-	error("Coudert: callback function 9 not implemented!");
-}
+	switch (savepoint.action) {
+	default:
+		break;
 
+	case kActionNone:
+		if (params->param3 && getEntities()->checkFields9(kEntityCoudert, kEntityPlayer, 2000))
+			getData()->inventoryItem = kItemInvalid;
+		else
+			getData()->inventoryItem = kItemNone;
+
+		if (getProgress().jacket != kJacketBlood
+		 || !getEntities()->checkFields9(kEntityCoudert, kEntityPlayer, 1000)
+		 || getEntities()->isSittingInCompartmentCars(kEntityPlayer)
+		 || getEntities()->checkFields10(kEntityPlayer)) {
+			if (getEntities()->updateEntity(kEntityCoudert, (CarIndex)params->param1, (EntityPosition)params->param2)) {
+				getData()->inventoryItem = kItemNone;
+
+				CALLBACK_ACTION();
+			}
+			break;
+		}
+
+		setCallback(1);
+		call(new ENTITY_SETUP(Coudert, setup_savegame), kSavegameType2, kEventMertensBloodJacket);
+		break;
+
+	case kAction1:
+		params->param3 = 0;
+		getData()->inventoryItem = kItemNone;
+
+		setCallback(2);
+		call(new ENTITY_SETUP(Coudert, setup_savegame), kSavegameType2, kEventCoudertAskTylerCompartment);
+		break;
+
+	case kActionExcuseMeCath:
+		if (getData()->clothes == kClothes1)
+			getSound()->playSound(kEntityPlayer, "ZFX1003", getSound()->getSoundFlag(kEntityCoudert));
+		else if (!getSound()->isBuffered(kEntityCoudert))
+			getSound()->playSound(kEntityPlayer, "JAC1112", getSound()->getSoundFlag(kEntityCoudert));
+		break;
+
+	case kActionExcuseMe:
+		if (getData()->clothes == kClothes1)
+			getSound()->playSound(kEntityPlayer, "ZFX1003", getSound()->getSoundFlag(kEntityCoudert));
+		else
+			getSound()->excuseMe(kEntityCoudert);
+		break;
+
+	case kActionDefault:
+		if (!getProgress().eventCorpseFound && !getEvent(kEventCoudertAskTylerCompartment))
+			params->param3 = kItemInvalid;
+
+		if (getEntities()->updateEntity(kEntityCoudert, (CarIndex)params->param1, (EntityPosition)params->param2))
+			CALLBACK_ACTION();
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			getAction()->playAnimation(kEventCoudertBloodJacket);
+			getLogic()->gameOver(kInitTypeIndex, 1, kSceneGameOverBloodJacket, true);
+			break;
+
+		case 2:
+			getAction()->playAnimation(kEventCoudertAskTylerCompartment);
+
+			if (getData()->direction != kDirectionUp)
+				getEntities()->loadSceneFromEntityPosition(getData()->car, (EntityPosition)(getData()->entityPosition + 750));
+			else
+				getEntities()->loadSceneFromEntityPosition(getData()->car, (EntityPosition)(getData()->entityPosition - 750), true);
+			break;
+		}
+		break;
+	}
+}
 
 //////////////////////////////////////////////////////////////////////////
 // Parameters
@@ -356,7 +458,7 @@ IMPLEMENT_FUNCTION_I(Coudert, excuseMe, 12)
 			getSound()->playSound(kEntityCoudert, Entities::isMarried((EntityIndex)params->param1) ? "JAC1112C" : "JAC1112F");
 		} else {
 			if (!params->param1 && getProgress().field_18 == 2) {
-				switch (random(4)) {
+				switch (rnd(4)) {
 				default:
 					break;
 
@@ -645,7 +747,7 @@ IMPLEMENT_FUNCTION(Coudert, function18, 18)
 		}
 
 		setCallback(3);
-		call(new ENTITY_SETUP(Coudert, setup_function4));
+		call(new ENTITY_SETUP(Coudert, setup_callbackActionOnDirection));
 		break;
 
 	case kActionCallback:
@@ -710,7 +812,7 @@ IMPLEMENT_FUNCTION_I(Coudert, function19, 19)
 		getScenes()->loadSceneFromItemPosition(kItem5);
 
 		setCallback(1);
-		call(new ENTITY_SETUP(Coudert, setup_function4));
+		call(new ENTITY_SETUP(Coudert, setup_callbackActionOnDirection));
 		break;
 
 	case kActionCallback:
@@ -953,7 +1055,7 @@ IMPLEMENT_FUNCTION(Coudert, function37, 37)
 			getData()->entityPosition = kPosition_8200;
 
 			setCallback(4);
-			call(new ENTITY_SETUP_SIII(Coudert, setup_function5), "698Ha", kObjectCompartmentA, kPosition_8200, kPosition_7850);
+			call(new ENTITY_SETUP_SIII(Coudert, setup_enterExitCompartment2), "698Ha", kObjectCompartmentA, kPosition_8200, kPosition_7850);
 		} else {
 			setCallback(1);
 			call(new ENTITY_SETUP(Coudert, setup_function16));
@@ -978,7 +1080,7 @@ IMPLEMENT_FUNCTION(Coudert, function37, 37)
 
 		case 3:
 			setCallback(4);
-			call(new ENTITY_SETUP_SIII(Coudert, setup_function5), "698Ha", kObjectCompartmentA, kPosition_8200, kPosition_7850);
+			call(new ENTITY_SETUP_SIII(Coudert, setup_enterExitCompartment2), "698Ha", kObjectCompartmentA, kPosition_8200, kPosition_7850);
 			break;
 
 		case 4:
@@ -1126,7 +1228,7 @@ label_callback_8:
 
 label_callback_9:
 		if (ENTITY_PARAM(0, 1) && !getSound()->isBuffered(kEntityCoudert))
-			getSound()->playSound(kEntityCoudert, random(2) ? "JAC1065" : "JAC1065A");
+			getSound()->playSound(kEntityCoudert, rnd(2) ? "JAC1065" : "JAC1065A");
 
 		if (getState()->time > kTime1107000 && !ENTITY_PARAM(0, 1) && !getEvent(kEventVassiliSeizure)) {
 			getData()->inventoryItem = kItemNone;
@@ -1239,7 +1341,7 @@ label_coudert_object:
 			getScenes()->loadSceneFromPosition(kCarRedSleeping, 25);
 
 			setCallback(12);
-			call(new ENTITY_SETUP(Coudert, setup_function4));
+			call(new ENTITY_SETUP(Coudert, setup_callbackActionOnDirection));
 			break;
 
 		case 12:
@@ -1287,7 +1389,115 @@ label_coudert_object:
 }
 
 IMPLEMENT_FUNCTION(Coudert, function41, 41)
-	error("Coudert: callback function 41 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionDefault:
+		setCallback(1);
+		call(new ENTITY_SETUP(Coudert, setup_function16));
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			setCallback(2);
+			call(new ENTITY_SETUP(Coudert, setup_visitCompartmentA));
+			break;
+
+		case 2:
+			setCallback(3);
+			call(new ENTITY_SETUP(Coudert, setup_function33));
+			break;
+
+		case 3:
+			setCallback(4);
+			call(new ENTITY_SETUP(Coudert, setup_visitCompartmentB));
+			break;
+
+		case 4:
+			setCallback(5);
+			call(new ENTITY_SETUP(Coudert, setup_function33));
+			break;
+
+		case 5:
+			setCallback(6);
+			call(new ENTITY_SETUP(Coudert, setup_function27));
+			break;
+
+		case 6:
+			getSavePoints()->push(kEntityCoudert, kEntityRebecca, kAction285528346);
+
+			setCallback(7);
+			call(new ENTITY_SETUP(Coudert, setup_function33));
+			break;
+
+		case 7:
+			setCallback(8);
+			call(new ENTITY_SETUP(Coudert, setup_function26));
+			break;
+
+		case 8:
+			setCallback(9);
+			call(new ENTITY_SETUP(Coudert, setup_function33));
+			break;
+
+		case 9:
+			setCallback(10);
+			call(new ENTITY_SETUP(Coudert, setup_function25));
+			break;
+
+		case 10:
+			setCallback(11);
+			call(new ENTITY_SETUP(Coudert, setup_function33));
+			break;
+
+		case 11:
+			setCallback(12);
+			call(new ENTITY_SETUP(Coudert, setup_function23));
+			break;
+
+		case 12:
+			setCallback(13);
+			call(new ENTITY_SETUP(Coudert, setup_function33));
+			break;
+
+		case 13:
+			setCallback(14);
+			call(new ENTITY_SETUP(Coudert, setup_function22));
+			break;
+
+		case 14:
+			setCallback(15);
+			call(new ENTITY_SETUP(Coudert, setup_function33));
+			break;
+
+		case 15:
+			setCallback(16);
+			call(new ENTITY_SETUP(Coudert, setup_function21));
+			break;
+
+		case 16:
+			setCallback(17);
+			call(new ENTITY_SETUP(Coudert, setup_function9), kCarRedSleeping, kPosition_2000);
+			break;
+
+		case 17:
+			setCallback(18);
+			call(new ENTITY_SETUP(Coudert, setup_function18));
+			break;
+
+		case 18:
+			getSavePoints()->push(kEntityCoudert, kEntityMilos, kAction208228224);
+
+			CALLBACK_ACTION();
+			break;
+		}
+		break;
+	}		
 }
 
 IMPLEMENT_FUNCTION(Coudert, chapter2, 42)
@@ -1420,7 +1630,7 @@ IMPLEMENT_FUNCTION(Coudert, function48, 48)
 			break;
 
 		case 2:
-			getSound()->playSound(kEntityCoudert, random(2) ? "Ann3148B" : "Ann3148");
+			getSound()->playSound(kEntityCoudert, rnd(2) ? "Ann3148B" : "Ann3148");
 			setCallback(3);
 			call(new ENTITY_SETUP_SIIS(Coudert, setup_enterExitCompartment), "627Xf", kObjectCompartmentF);
 			break;
@@ -1671,7 +1881,7 @@ void Coudert::visitCompartment(const SavePoint &savepoint, EntityPosition positi
 
 		case 3:
 			setCallback(4);
-			call(new ENTITY_SETUP_SIII(Coudert, setup_function5), seq3, compartment, position, sittingPosition);
+			call(new ENTITY_SETUP_SIII(Coudert, setup_enterExitCompartment2), seq3, compartment, position, sittingPosition);
 			break;
 
 		case 4:

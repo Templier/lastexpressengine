@@ -32,7 +32,7 @@
 
 // Misc
 #define getArchive(name) _engine->getResourceManager()->getFileStream(name)
-#define random(value) _engine->getRandom().getRandomNumber(value - 1)
+#define rnd(value) _engine->getRandom().getRandomNumber(value - 1)
 
 // Engine subclasses
 #define getLogic() _engine->getGameLogic()

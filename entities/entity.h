@@ -28,8 +28,6 @@
 
 #include "lastexpress/shared.h"
 
-#include "lastexpress/helpers.h"
-
 #include "lastexpress/game/sound.h"
 
 #include "common/array.h"
@@ -253,8 +251,6 @@ public:
 			clear();
 		}
 
-
-
 		template <class parameter>
 		void create() {
 			for (int i = 0; i < 4; i++)
@@ -262,11 +258,12 @@ public:
 		}
 
 		void clear() {
-			for (int i = 0; i < 4; i++)
-				SAFE_DELETE(parameters[i]);
+			for (int i = 0; i < 4; i++) {
+				if (parameters[i])
+					delete parameters[i];
+				parameters[i] = NULL;
+			}
 		}
-
-
 	};
 
 	struct EntityCallData {

@@ -1128,7 +1128,7 @@ void SceneManager::postProcessScene() {
 			}
 
 			if (progress)
-				getSound()->excuseMe((progress == 1) ? entities[0] : entities[random(progress)], kEntityPlayer, SoundManager::kFlagDefault);
+				getSound()->excuseMe((progress == 1) ? entities[0] : entities[rnd(progress)], kEntityPlayer, SoundManager::kFlagDefault);
 		}
 
 		if (hotspot->scene)

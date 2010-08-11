@@ -139,7 +139,7 @@ IMPLEMENT_FUNCTION_II(Kahina, function7, 7)
 IMPLEMENT_FUNCTION_II(Kahina, updateEntity, 8)
 	if (savepoint.action == kActionExcuseMeCath) {
 		if (getEvent(kEventKronosConversation) || getEvent(kEventKronosConversationFirebird)) {
-			getSound()->playSound(kEntityPlayer, random(2) ? "CAT1019" : "CAT1019A");
+			getSound()->playSound(kEntityPlayer, rnd(2) ? "CAT1019" : "CAT1019A");
 		} else {
 			getSound()->excuseMeCath();
 		}
@@ -499,7 +499,7 @@ IMPLEMENT_FUNCTION_II(Kahina, function19, 19)
 
 	case kActionExcuseMeCath:
 		if (getEvent(kEventKronosConversation) || getEvent(kEventKronosConversationFirebird))
-			getSound()->playSound(kEntityPlayer, random(2) ? "CAT1019" : "CAT1019A");
+			getSound()->playSound(kEntityPlayer, rnd(2) ? "CAT1019" : "CAT1019A");
 		else
 			getSound()->excuseMeCath();
 		break;

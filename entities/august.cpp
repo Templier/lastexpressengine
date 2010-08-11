@@ -287,7 +287,7 @@ IMPLEMENT_FUNCTION_II(August, savegame, 15)
  */
 IMPLEMENT_FUNCTION_II(August, updateEntity, 16)
 	if (savepoint.action == kActionExcuseMeCath) {
-		getProgress().eventMetAugust ? getSound()->playSound(kEntityPlayer, random(2) ? "CAT1002A" : "CAT1002") : getSound()->excuseMeCath();
+		getProgress().eventMetAugust ? getSound()->playSound(kEntityPlayer, rnd(2) ? "CAT1002A" : "CAT1002") : getSound()->excuseMeCath();
 		return;
 	}
 

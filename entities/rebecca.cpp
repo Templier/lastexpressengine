@@ -385,12 +385,12 @@ label_callback:
 
 		case 4:
 		case 5:
-			if (random(2)) {
+			if (rnd(2)) {
 				setCallback(6);
 				call(new ENTITY_SETUP_SIIS(Rebecca, setup_playSound), "REB1039");
 			} else {
 				setCallback(7);
-				call(new ENTITY_SETUP_SIIS(Rebecca, setup_playSound), random(2) ? "SOP1039" : "SOP1039A");
+				call(new ENTITY_SETUP_SIIS(Rebecca, setup_playSound), rnd(2) ? "SOP1039" : "SOP1039A");
 			}
 			break;
 

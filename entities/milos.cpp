@@ -168,7 +168,7 @@ IMPLEMENT_FUNCTION_II(Milos, enterCompartmentDialog, 10)
 	case kActionExcuseMe:
 		if (getEvent(kEventMilosTylerCompartmentDefeat)) {
 			// Robert saying: "Milos"
-			switch(random(3)) {
+			switch(rnd(3)) {
 			default:
 			case 0:
 				getSound()->playSound(kEntityPlayer, "CAT1014");
@@ -206,7 +206,7 @@ IMPLEMENT_FUNCTION_I(Milos, function11, 11)
 		if (params->param2) {
 			if (getInventory()->hasItem(kItemPassengerList)) {
 				setCallback(10);
-				call(new ENTITY_SETUP_SIIS(Milos, setup_playSound), (random(2) ? "CAT1504" : getSound()->wrongDoorCath()));
+				call(new ENTITY_SETUP_SIIS(Milos, setup_playSound), (rnd(2) ? "CAT1504" : getSound()->wrongDoorCath()));
 			} else {
 				setCallback(11);
 				call(new ENTITY_SETUP_SIIS(Milos, setup_playSound), getSound()->wrongDoorCath());

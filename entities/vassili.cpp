@@ -197,7 +197,7 @@ label_function7:
 
 		getObjects()->update(kObjectCompartmentA, kEntityPlayer, kLocationNone, kCursorHandKnock, kCursorHand);
 
-		params->param1 = 5 * (3 * random(25) + 15);
+		params->param1 = 5 * (3 * rnd(25) + 15);
 
 		getEntities()->drawSequenceLeft(kEntityVassili, "303A");
 		break;
@@ -205,7 +205,7 @@ label_function7:
 	case kActionCallback:
 		if (getCallback() == 1) {
 			getEntities()->drawSequenceLeft(kEntityVassili, "303C");
-			params->param1 = 5 * (3 * random(25) + 15);
+			params->param1 = 5 * (3 * rnd(25) + 15);
 			params->param2 = 1;
 
 			// Shared part with kActionNone
@@ -416,7 +416,7 @@ IMPLEMENT_FUNCTION(Vassili, sleeping, 13)
 		break;
 
 	case kActionDefault:
-		params->param5 = 5 * (3 * random(25) + 15);
+		params->param5 = 5 * (3 * rnd(25) + 15);
 		getEntities()->drawSequenceLeft(kEntityVassili, "303A");
 		break;
 
@@ -425,7 +425,7 @@ IMPLEMENT_FUNCTION(Vassili, sleeping, 13)
 			break;
 
 		getEntities()->drawSequenceLeft(kEntityVassili, "303C");
-		params->param1 = 5 * (3 * random(25) + 15);
+		params->param1 = 5 * (3 * rnd(25) + 15);
 		params->param2 = 1;
 		break;
 	}
@@ -478,7 +478,7 @@ IMPLEMENT_FUNCTION(Vassili, stealEgg, 15)
 		break;
 
 	case kActionDefault:
-		params->param5 = 5 * (3 * random(25) + 15);
+		params->param5 = 5 * (3 * rnd(25) + 15);
 		getEntities()->drawSequenceLeft(kEntityVassili, "303A");
 		break;
 
@@ -498,7 +498,7 @@ IMPLEMENT_FUNCTION(Vassili, stealEgg, 15)
 
 		case 1:
 			getEntities()->drawSequenceLeft(kEntityVassili, "303C");
-			params->param1 = 5 * (3 * random(25) + 15);
+			params->param1 = 5 * (3 * rnd(25) + 15);
 			params->param2 = 1;
 			break;
 
@@ -555,7 +555,7 @@ IMPLEMENT_FUNCTION(Vassili, chapter4Handler, 17)
 		break;
 
 	case kActionDefault:
-		params->param5 = 5 * (3 * random(25) + 15);
+		params->param5 = 5 * (3 * rnd(25) + 15);
 		getEntities()->drawSequenceLeft(kEntityVassili, "303A");
 		break;
 
@@ -564,7 +564,7 @@ IMPLEMENT_FUNCTION(Vassili, chapter4Handler, 17)
 			break;
 
 		getEntities()->drawSequenceLeft(kEntityVassili, "303C");
-		params->param1 = 5 * (3 * random(25) + 15);
+		params->param1 = 5 * (3 * rnd(25) + 15);
 		params->param2 = 1;
 		break;
 	}

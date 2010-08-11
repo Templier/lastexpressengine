@@ -174,9 +174,9 @@ void Beetle::update() {
 	}
 
 	if (getInventory()->get(kItemBeetle)->location == kLocation3) {
-		if ((!_data->field_DD && random(10) < 1)
-		  || (_data->field_DD && random(30) < 1)
-		  || random(100) < 1) {
+		if ((!_data->field_DD && rnd(10) < 1)
+		  || (_data->field_DD && rnd(30) < 1)
+		  || rnd(100) < 1) {
 
 			_data->field_DD++;
 			if (_data->field_DD > 3)
@@ -184,8 +184,8 @@ void Beetle::update() {
 
 			updateData(24);
 
-			_data->coordX = (int16)(random(250) + 190);
-			_data->coordOffset = (int16)(random(5) + 5);
+			_data->coordX = (int16)(rnd(250) + 190);
+			_data->coordOffset = (int16)(rnd(5) + 5);
 
 			if (_data->field_D9 > 1)
 				_data->field_D9--;
@@ -295,7 +295,7 @@ void Beetle::drawUpdate() {
 	}
 
 	// Update beetle data
-	int rnd = random(100);
+	int rnd = rnd(100);
 	if (_data->coordX < 165 || _data->coordX > 465) {
 		uint index = 0;
 
@@ -440,7 +440,7 @@ update_data:
 		return;
 	}
 
-	_data->coordOffset = _data->coordOffset + (int16)(4 * random(100)/100 + _data->field_D9);
+	_data->coordOffset = _data->coordOffset + (int16)(4 * rnd(100)/100 + _data->field_D9);
 	_data->field_D5 = 0;
 }
 

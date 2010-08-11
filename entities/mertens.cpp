@@ -552,12 +552,12 @@ IMPLEMENT_FUNCTION_I(Mertens, bonsoir, 12)
 
 	if (isDay()) {
 		if (Entities::isFemale(entity)) {
-			getSound()->playSound(kEntityMertens, random(2) ? "CON1112" : "CON1112A");
+			getSound()->playSound(kEntityMertens, rnd(2) ? "CON1112" : "CON1112A");
 		} else {
 			if (entity || getProgress().field_18 != 2) {
 				getSound()->playSound(kEntityMertens, "CON1112F");
 			} else {
-				switch (random(3)) {
+				switch (rnd(3)) {
 				default:
 				case 0:
 					getSound()->playSound(kEntityMertens, "CON1061");
@@ -575,7 +575,7 @@ IMPLEMENT_FUNCTION_I(Mertens, bonsoir, 12)
 		}
 	} else {
 		if (Entities::isFemale(entity))
-			getSound()->playSound(kEntityMertens, random(2) ? "CON1112B" : "CON1112C");
+			getSound()->playSound(kEntityMertens, rnd(2) ? "CON1112B" : "CON1112C");
 		else
 			getSound()->playSound(kEntityMertens, "CON1112G");
 	}
@@ -1023,7 +1023,151 @@ IMPLEMENT_FUNCTION_SS(Mertens, function29, 29)
 }
 
 IMPLEMENT_FUNCTION_I(Mertens, function30, 30)
-	error("Mertens: callback function 30 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionDefault:
+		switch (params->param1) {
+		default:
+			CALLBACK_ACTION();
+			return;
+
+		case 1:
+			params->param2 = kPosition_8200;
+
+			if (getProgress().field_14) {
+				CALLBACK_ACTION();
+				return;
+			}
+
+			getProgress().field_14 = 3;
+			break;
+
+		case 2:
+			params->param2 = kPosition_7500;
+			break;
+
+		case 3:
+			params->param2 = kPosition_6470;
+			break;
+		}
+
+		setCallback(1);
+		call(new ENTITY_SETUP(Mertens, setup_function19));
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			setCallback(2);
+			call(new ENTITY_SETUP(Mertens, setup_function10), kCarGreenSleeping, params->param2);
+			break;
+
+		case 2:
+			switch (params->param1) {
+			default:
+				if (getProgress().field_14 == 3)
+					getProgress().field_14 = 0;
+
+				setCallback(8);
+				call(new ENTITY_SETUP(Mertens, setup_function10), kCarGreenSleeping, kPosition_2000);
+				break;
+
+			case 1:
+				if (getProgress().chapter == kChapter4)
+					getSavePoints()->push(kEntityMertens, kEntityTatiana, kAction238790488);
+
+				setCallback(3);
+				call(new ENTITY_SETUP(Mertens, setup_tylerCompartment), 3);
+				break;
+
+			case 2:
+				if (getEntities()->isSitting(kEntityPlayer, kCarGreenSleeping, kPosition_7500)) {
+					getObjects()->update(kObjectCompartment2, kEntityPlayer, getObjects()->get(kObjectCompartment2).location, kCursorNormal, kCursorNormal);
+					params->param3 = 1;
+				}
+
+				setCallback(4);
+				call(new ENTITY_SETUP_SIIS(Mertens, setup_enterExitCompartment), "601Vb", kObjectCompartment2);
+				break;
+
+			case 3:
+				if (getEntities()->isSitting(kEntityPlayer, kCarGreenSleeping, kPosition_6470)) {
+					getObjects()->update(kObjectCompartment3, kEntityPlayer, getObjects()->get(kObjectCompartment3).location, kCursorNormal, kCursorNormal);
+					params->param3 = 1;
+				}
+
+				setCallback(6);
+				call(new ENTITY_SETUP_SIIS(Mertens, setup_enterExitCompartment), "601Mc", kObjectCompartment3);
+				break;
+			}
+			break;
+
+		case 3:
+			if (getProgress().field_14 == 3)
+					getProgress().field_14 = 0;
+
+			setCallback(8);
+			call(new ENTITY_SETUP(Mertens, setup_function10), kCarGreenSleeping, kPosition_2000);
+			break;
+
+		case 4:
+			getEntities()->drawSequenceLeft(kEntityMertens, "601Wb");
+			getEntities()->enterCompartment(kEntityMertens, kObjectCompartment2, true);
+
+			setCallback(5);
+			call(new ENTITY_SETUP_SIIS(Mertens, setup_playSound), "CON3020");
+			break;
+
+		case 5:
+			if (params->param3)
+				getObjects()->update(kObjectCompartment2, kEntityPlayer, getObjects()->get(kObjectCompartment2).location, kCursorHandKnock, kCursorHand);
+
+			getEntities()->exitCompartment(kEntityMertens, kObjectCompartment2);
+
+			if (getProgress().field_14 == 3)
+					getProgress().field_14 = 0;
+
+			setCallback(8);
+			call(new ENTITY_SETUP(Mertens, setup_function10), kCarGreenSleeping, kPosition_2000);
+			break;
+
+		case 6:
+			getEntities()->drawSequenceLeft(kEntityMertens, "601Nc");
+			getEntities()->enterCompartment(kEntityMertens, kObjectCompartment3, true);
+
+			setCallback(7);
+			call(new ENTITY_SETUP_SIIS(Mertens, setup_playSound), "CON3020");
+			break;
+
+		case 7:
+			if (params->param3)
+				getObjects()->update(kObjectCompartment3, kEntityPlayer, getObjects()->get(kObjectCompartment3).location, kCursorHandKnock, kCursorHand);
+
+			getEntities()->exitCompartment(kEntityMertens, kObjectCompartment3);
+
+			if (getProgress().field_14 == 3)
+					getProgress().field_14 = 0;
+
+			setCallback(8);
+			call(new ENTITY_SETUP(Mertens, setup_function10), kCarGreenSleeping, kPosition_2000);
+			break;
+
+		case 8:
+			setCallback(9);
+			call(new ENTITY_SETUP(Mertens, setup_function17));
+			break;
+
+		case 9:
+			CALLBACK_ACTION();
+			break;
+		}
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION_I(Mertens, function31, 31)

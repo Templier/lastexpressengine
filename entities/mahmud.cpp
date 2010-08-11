@@ -170,7 +170,7 @@ IMPLEMENT_FUNCTION_II(Mahmud, savegame, 8)
 IMPLEMENT_FUNCTION_II(Mahmud, updateEntity, 9)
 	if (savepoint.action == kActionExcuseMeCath) {
 		if (getInventory()->hasItem(kItemPassengerList))
-			getSound()->playSound(kEntityPlayer, random(2) ? "CAT1025" : "CAT1025Q");
+			getSound()->playSound(kEntityPlayer, rnd(2) ? "CAT1025" : "CAT1025Q");
 		else
 			getSound()->excuseMeCath();
 
@@ -633,7 +633,7 @@ IMPLEMENT_FUNCTION(Mahmud, chapters_handler, 14)
 				// Check if we have the passenger list
 				if (getInventory()->hasItem(kItemPassengerList)) {
 					setCallback(6);
-					call(new ENTITY_SETUP_SIIS(Mahmud, setup_playSound), random(2) == 0 ? "CAT1501" : getSound()->wrongDoorCath());
+					call(new ENTITY_SETUP_SIIS(Mahmud, setup_playSound), rnd(2) == 0 ? "CAT1501" : getSound()->wrongDoorCath());
 				} else {
 					setCallback(7);
 					call(new ENTITY_SETUP_SIIS(Mahmud, setup_playSound), getSound()->wrongDoorCath());

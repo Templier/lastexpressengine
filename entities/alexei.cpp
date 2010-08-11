@@ -191,7 +191,7 @@ IMPLEMENT_FUNCTION_II(Alexei, updateEntity, 10)
 			getSound()->excuseMe(kEntityAlexei);
 		} else {
 			if (getEvent(kEventAlexeiSalonVassili) || (getEvent(kEventTatianaAskMatchSpeakRussian) && getInventory()->hasItem(kItemPassengerList))) {
-				getSound()->playSound(kEntityPlayer, random(2) ? "CAT1012" : "CAT1012A");
+				getSound()->playSound(kEntityPlayer, rnd(2) ? "CAT1012" : "CAT1012A");
 			} else {
 				getSound()->excuseMeCath();
 			}
@@ -226,7 +226,49 @@ IMPLEMENT_FUNCTION(Alexei, callbackActionRestaurantOrSalon, 12)
 }
 
 IMPLEMENT_FUNCTION(Alexei, function13, 13)
-	error("Alexei: callback function 13 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionDefault:
+		setCallback(1);
+		call(new ENTITY_SETUP(Alexei, setup_updateEntity), kCarGreenSleeping, kPosition_7500);
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			getSavePoints()->push(kEntityAlexei, kEntityMertens, kAction302614416);
+			getEntities()->drawSequenceLeft(kEntityAlexei, "602DB");
+			getEntities()->enterCompartment(kEntityAlexei, kObjectCompartment2, true);
+
+			getData()->posture = kPostureSitting;
+
+			if (getEntities()->isSitting(kEntityPlayer, kCarGreenSleeping, kPosition_7500)) {
+				getAction()->playAnimation(isDay() ? kEventCathTurningDay : kEventCathTurningNight);
+				getSound()->playSound(kEntityPlayer, "BUMP");
+				getScenes()->loadSceneFromObject(kObjectCompartment2, true);
+			}
+			break;
+
+		case 2:
+			getEntities()->exitCompartment(kEntityAlexei, kObjectCompartment2, true);
+			getData()->posture = kPostureSitting;
+			getData()->entityPosition = kPosition_7500;
+			getEntities()->clearSequences(kEntityAlexei);
+
+			CALLBACK_ACTION();
+			break;
+		}
+		break;
+
+	case kAction135664192:
+		setCallback(2);
+		call(new ENTITY_SETUP_SIIS(Alexei, setup_enterExitCompartment), "602Eb", kObjectCompartment2);
+	}
 }
 
 IMPLEMENT_FUNCTION(Alexei, function14, 14)
@@ -308,7 +350,7 @@ IMPLEMENT_FUNCTION_IS(Alexei, function16, 16)
 
 			if (getInventory()->hasItem(kItemPassengerList)) {
 				setCallback(5);
-				call(new ENTITY_SETUP_SIIS(Alexei, setup_playSound), random(2) ? getSound()->wrongDoorCath() : "CAT1503");
+				call(new ENTITY_SETUP_SIIS(Alexei, setup_playSound), rnd(2) ? getSound()->wrongDoorCath() : "CAT1503");
 			} else {
 				setCallback(6);
 				call(new ENTITY_SETUP_SIIS(Alexei, setup_playSound), getSound()->wrongDoorCath());

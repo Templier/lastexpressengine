@@ -349,10 +349,10 @@ IMPLEMENT_FUNCTION(Anna, function12, 12)
 			if (savepoint.param.intValue == 53) {
 				getSound()->playSound(kEntityPlayer, getSound()->justAMinuteCath());
 			} else if (getInventory()->hasItem(kItemPassengerList)) {
-				if (random(2)) {
+				if (rnd(2)) {
 					getSound()->playSound(kEntityPlayer, getSound()->wrongDoorCath());
 				} else {
-					getSound()->playSound(kEntityPlayer, random(2) ? "CAT1506A" : "CAT1506");
+					getSound()->playSound(kEntityPlayer, rnd(2) ? "CAT1506A" : "CAT1506");
 				}
 			} else {
 				getSound()->playSound(kEntityPlayer, getSound()->wrongDoorCath());
@@ -527,7 +527,7 @@ IMPLEMENT_FUNCTION_IS(Anna, function15, 15)
 			} else {
 				if (getInventory()->hasItem(kItemPassengerList)) {
 					setCallback(7);
-					call(new ENTITY_SETUP_SIIS(Anna, setup_playSound), random(2) ? getSound()->wrongDoorCath() : (random(2) ? "CAT1506" : "CAT1506A"));
+					call(new ENTITY_SETUP_SIIS(Anna, setup_playSound), rnd(2) ? getSound()->wrongDoorCath() : (rnd(2) ? "CAT1506" : "CAT1506A"));
 				} else {
 					setCallback(8);
 					call(new ENTITY_SETUP_SIIS(Anna, setup_playSound), getSound()->wrongDoorCath());

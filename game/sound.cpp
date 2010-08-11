@@ -511,17 +511,17 @@ void SoundManager::playSoundEvent(EntityIndex entity, byte action, byte a3) {
 	case 168:
 	case 188:
 	case 198:
-		_action += 1 + (int)random(5);
+		_action += 1 + (int)rnd(5);
 		break;
 
 	case 174:
 	case 184:
 	case 194:
-		_action += 1 + (int)random(3);
+		_action += 1 + (int)rnd(3);
 		break;
 
 	case 180:
-		_action += 1 + (int)random(4);
+		_action += 1 + (int)rnd(4);
 		break;
 
 	case 246:
@@ -530,14 +530,14 @@ void SoundManager::playSoundEvent(EntityIndex entity, byte action, byte a3) {
 		values[2] = 105;
 		values[3] = 106;
 		values[4] = 116;
-		_action = values[random(5)];
+		_action = values[rnd(5)];
 		break;
 
 	case 247:
 		values[0] = 11;
 		values[1] = 123;
 		values[2] = 124;
-		_action = values[random(3)];
+		_action = values[rnd(3)];
 		break;
 
 	case 248:
@@ -545,7 +545,7 @@ void SoundManager::playSoundEvent(EntityIndex entity, byte action, byte a3) {
 		values[1] = 103;
 		values[2] = 108;
 		values[3] = 109;
-		_action = values[random(4)];
+		_action = values[rnd(4)];
 		break;
 
 	case 249:
@@ -553,7 +553,7 @@ void SoundManager::playSoundEvent(EntityIndex entity, byte action, byte a3) {
 		values[1] = 56;
 		values[2] = 112;
 		values[3] = 113;
-		_action = values[random(4)];
+		_action = values[rnd(4)];
 		break;
 
 	case 250:
@@ -561,7 +561,7 @@ void SoundManager::playSoundEvent(EntityIndex entity, byte action, byte a3) {
 		values[1] = 107;
 		values[2] = 115;
 		values[3] = 117;
-		_action = values[random(4)];
+		_action = values[rnd(4)];
 		break;
 
 	case 251:
@@ -569,7 +569,7 @@ void SoundManager::playSoundEvent(EntityIndex entity, byte action, byte a3) {
 		values[1] = 11;
 		values[2] = 56;
 		values[3] = 113;
-		_action = values[random(4)];
+		_action = values[rnd(4)];
 		break;
 
 	case 252:
@@ -577,7 +577,7 @@ void SoundManager::playSoundEvent(EntityIndex entity, byte action, byte a3) {
 		values[1] = 6;
 		values[2] = 109;
 		values[3] = 121;
-		_action = values[random(4)];
+		_action = values[rnd(4)];
 		break;
 
 	case 254:
@@ -585,14 +585,14 @@ void SoundManager::playSoundEvent(EntityIndex entity, byte action, byte a3) {
 		values[1] = 104;
 		values[2] = 120;
 		values[3] = 121;
-		_action = values[random(4)];
+		_action = values[rnd(4)];
 		break;
 
 	case 255:
 		values[0] = 0;
 		values[1] = 106;
 		values[2] = 115;
-		_action = values[random(3)];
+		_action = values[rnd(3)];
 		break;
 
 	default:
@@ -637,7 +637,7 @@ void SoundManager::playFightSound(byte action, byte a4) {
 		values[0] = action + 1;
 		values[1] = action + 2;
 		values[2] = action + 3;
-		_action = values[random(3)];
+		_action = values[rnd(3)];
 		break;
 
 	case 180:
@@ -645,7 +645,7 @@ void SoundManager::playFightSound(byte action, byte a4) {
 		values[1] = action + 2;
 		values[2] = action + 3;
 		values[3] = action + 4;
-		_action = values[random(4)];
+		_action = values[rnd(4)];
 		break;
 
 	case 150:
@@ -659,7 +659,7 @@ void SoundManager::playFightSound(byte action, byte a4) {
 		values[2] = action + 3;
 		values[3] = action + 4;
 		values[4] = action + 5;
-		_action = values[random(5)];
+		_action = values[rnd(5)];
 		break;
 	}
 
@@ -677,7 +677,7 @@ void SoundManager::playDialog(EntityIndex entity, EntityIndex entityDialog, Flag
 }
 
 void SoundManager::playLocomotiveSound() {
-	playSound(kEntityPlayer, locomotiveSounds[random(5)], (FlagType)(random(15) + 2));
+	playSound(kEntityPlayer, locomotiveSounds[rnd(5)], (FlagType)(rnd(15) + 2));
 }
 
 const char *SoundManager::getDialogName(EntityIndex entity) const {
@@ -1026,7 +1026,7 @@ void SoundManager::excuseMe(EntityIndex entity, EntityIndex entity2, FlagType fl
 		break;
 
 	case kEntityAugust:
-		switch(random(4)) {
+		switch(rnd(4)) {
 		default:
 			break;
 
@@ -1050,10 +1050,10 @@ void SoundManager::excuseMe(EntityIndex entity, EntityIndex entity2, FlagType fl
 
 	case kEntityMertens:
 		if (Entities::isFemale(entity2)) {
-			playSound(kEntityPlayer, (random(2) ? "CON1111" : "CON1111A"), flag);
+			playSound(kEntityPlayer, (rnd(2) ? "CON1111" : "CON1111A"), flag);
 		} else {
-			if (entity2 || getProgress().jacket != kJacketGreen || !random(2)) {
-				switch(random(3)) {
+			if (entity2 || getProgress().jacket != kJacketGreen || !rnd(2)) {
+				switch(rnd(3)) {
 				default:
 					break;
 
@@ -1083,8 +1083,8 @@ void SoundManager::excuseMe(EntityIndex entity, EntityIndex entity2, FlagType fl
 		if (Entities::isFemale(entity2)) {
 			playSound(kEntityPlayer, "JAC1111D", flag);
 		} else {
-			if (entity2 || getProgress().jacket != kJacketGreen || !random(2)) {
-				switch(random(4)) {
+			if (entity2 || getProgress().jacket != kJacketGreen || !rnd(2)) {
+				switch(rnd(4)) {
 				default:
 					break;
 
@@ -1111,12 +1111,12 @@ void SoundManager::excuseMe(EntityIndex entity, EntityIndex entity2, FlagType fl
 		break;
 
 	case kEntityPascale:
-		playSound(kEntityPlayer, (random(2) ? "HDE1002" : "HED1002A"), flag);
+		playSound(kEntityPlayer, (rnd(2) ? "HDE1002" : "HED1002A"), flag);
 		break;
 
 	case kEntityServers0:
 	case kEntityServers1:
-		switch(random(3)) {
+		switch(rnd(3)) {
 		default:
 			break;
 
@@ -1136,25 +1136,25 @@ void SoundManager::excuseMe(EntityIndex entity, EntityIndex entity2, FlagType fl
 
 	case kEntityVerges:
 		if (Entities::isFemale(entity2)) {
-			playSound(kEntityPlayer, (random(2) ? "TRA1113A" : "TRA1113B"));
+			playSound(kEntityPlayer, (rnd(2) ? "TRA1113A" : "TRA1113B"));
 		} else {
 			playSound(kEntityPlayer, "TRA1112", flag);
 		}
 		break;
 
 	case kEntityTatiana:
-		playSound(kEntityPlayer, (random(2) ? "TAT1102A" : "TAT1102B"), flag);
+		playSound(kEntityPlayer, (rnd(2) ? "TAT1102A" : "TAT1102B"), flag);
 		break;
 
 	case kEntityAlexei:
-		playSound(kEntityPlayer, (random(2) ? "ALX1099C" : "ALX1099D"), flag);
+		playSound(kEntityPlayer, (rnd(2) ? "ALX1099C" : "ALX1099D"), flag);
 		break;
 
 	case kEntityAbbot:
 		if (Entities::isFemale(entity2)) {
 			playSound(kEntityPlayer, "ABB3002C", flag);
 		} else {
-			switch(random(3)) {
+			switch(rnd(3)) {
 			default:
 				break;
 
@@ -1174,7 +1174,7 @@ void SoundManager::excuseMe(EntityIndex entity, EntityIndex entity2, FlagType fl
 		break;
 
 	case kEntityVesna:
-		switch(random(3)) {
+		switch(rnd(3)) {
 		default:
 			break;
 
@@ -1193,12 +1193,12 @@ void SoundManager::excuseMe(EntityIndex entity, EntityIndex entity2, FlagType fl
 		break;
 
 	case kEntityKahina:
-		playSound(kEntityPlayer, (random(2) ? "KAH1001" : "KAH1001A"), flag);
+		playSound(kEntityPlayer, (rnd(2) ? "KAH1001" : "KAH1001A"), flag);
 		break;
 
 	case kEntityFrancois:
 	case kEntityMmeBoutarel:
-		switch(random(4)) {
+		switch(rnd(4)) {
 		default:
 			break;
 
@@ -1227,11 +1227,11 @@ void SoundManager::excuseMe(EntityIndex entity, EntityIndex entity2, FlagType fl
 		break;
 
 	case kEntityRebecca:
-		playSound(kEntityPlayer, (random(2) ? "REB1106" : "REB110A"), flag);
+		playSound(kEntityPlayer, (rnd(2) ? "REB1106" : "REB110A"), flag);
 		break;
 
 	case kEntitySophie: {
-		switch(random(3)) {
+		switch(rnd(3)) {
 		default:
 			break;
 
@@ -1261,7 +1261,7 @@ void SoundManager::excuseMe(EntityIndex entity, EntityIndex entity2, FlagType fl
 		break;
 
 	case kEntityHadija:
-		playSound(kEntityPlayer, (random(2) ? "HAR1001" : "HAR1001A"), flag);
+		playSound(kEntityPlayer, (rnd(2) ? "HAR1001" : "HAR1001A"), flag);
 		if (flag > 2)
 			getProgress().eventMetHadija = 1;
 		break;
@@ -1273,7 +1273,7 @@ void SoundManager::excuseMe(EntityIndex entity, EntityIndex entity2, FlagType fl
 }
 
 void SoundManager::excuseMeCath() {
-	switch(random(3)) {
+	switch(rnd(3)) {
 	default:
 		playSound(kEntityPlayer, "CAT1126B");
 		break;
@@ -1289,7 +1289,7 @@ void SoundManager::excuseMeCath() {
 }
 
 const char *SoundManager::justCheckingCath() const {
-	switch(random(4)) {
+	switch(rnd(4)) {
 	default:
 		break;
 
@@ -1310,7 +1310,7 @@ const char *SoundManager::justCheckingCath() const {
 }
 
 const char *SoundManager::wrongDoorCath() const {
-	switch(random(5)) {
+	switch(rnd(5)) {
 	default:
 		break;
 
@@ -1334,7 +1334,7 @@ const char *SoundManager::wrongDoorCath() const {
 }
 
 const char *SoundManager::justAMinuteCath() const {
-	switch(random(3)) {
+	switch(rnd(3)) {
 	default:
 		break;
 

@@ -669,7 +669,7 @@ void Fight::handleActionMilos(Fighter *fighter, FightAction action) {
 		if (fighter->sequenceIndex != 1 || CHECK_SEQUENCE2(fighter, 4) || fighter->opponent->sequenceIndex != 1) {
 			switch (fighter->opponent->sequenceIndex) {
 			default:
-				setSequenceAndDraw(fighter, random(3) + 1, kFightSequenceType0);
+				setSequenceAndDraw(fighter, rnd(3) + 1, kFightSequenceType0);
 				break;
 
 			case 1:
@@ -745,7 +745,7 @@ void Fight::updateOpponentMilos(Fighter *fighter) {
 	if (!opponent->field_38 && CALL_FUNCTION1(opponent, canInteract, kFightAction1) && !opponent->sequenceIndex2) {
 
 		if (opponent->opponent->field_34 >= 2) {
-			switch (random(5)) {
+			switch (rnd(5)) {
 			default:
 				break;
 
@@ -914,7 +914,7 @@ void Fight::updateOpponentAnna(Fighter *fighter) {
 	if (!opponent->field_38 && CALL_FUNCTION1(opponent, canInteract, kFightAction1) && !opponent->sequenceIndex2) {
 
 		if (opponent->opponent->field_34 >= 2) {
-			switch (random(6)) {
+			switch (rnd(6)) {
 			default:
 				break;
 
@@ -948,7 +948,7 @@ void Fight::updateOpponentAnna(Fighter *fighter) {
 		}
 
 		// Update field_38
-		opponent->field_38 = (int32)random(15);
+		opponent->field_38 = (int32)rnd(15);
 	}
 
 	if (opponent->frame && CHECK_SEQUENCE2(opponent, 2)) {
@@ -1113,7 +1113,7 @@ void Fight::handleOpponentActionIvo(Fighter *fighter, FightAction action) {
 		if (opponent->sequenceIndex)
 			break;
 
-		if (random(100) <= (unsigned int)(opponent->countdown > 2 ? 60 : 75)) {
+		if (rnd(100) <= (unsigned int)(opponent->countdown > 2 ? 60 : 75)) {
 			setSequenceAndDraw(opponent, 3 , kFightSequenceType1);
 			if (opponent->opponent->sequenceIndex == 4)
 				setSequenceAndDraw(opponent, 2, kFightSequenceType2);
@@ -1129,7 +1129,7 @@ void Fight::updateOpponentIvo(Fighter *fighter) {
 	if (!opponent->field_38 && CALL_FUNCTION1(opponent, canInteract, kFightAction1) && !opponent->sequenceIndex2) {
 
 		if (opponent->opponent->field_34 >= 2) {
-			switch (random(5)) {
+			switch (rnd(5)) {
 			default:
 				break;
 
@@ -1159,7 +1159,7 @@ void Fight::updateOpponentIvo(Fighter *fighter) {
 		}
 
 		// Update field_38
-		opponent->field_38 = 3 * opponent->countdown + (int32)random(10);
+		opponent->field_38 = 3 * opponent->countdown + (int32)rnd(10);
 	}
 
 	if (opponent->frame && CHECK_SEQUENCE2(opponent, 2)) {
@@ -1303,7 +1303,7 @@ void Fight::updateOpponentSalko(Fighter *fighter) {
 
 	if (!opponent->field_38 && CALL_FUNCTION1(opponent, canInteract, kFightAction1) && !opponent->sequenceIndex2) {
 
-		switch (random(5)) {
+		switch (rnd(5)) {
 		default:
 			break;
 
@@ -1507,7 +1507,7 @@ void Fight::updateOpponentVesna(Fighter *fighter) {
 		if (opponent->opponent->field_34 == 1) {
 			setSequenceAndDraw(opponent, 2, kFightSequenceType0);
 		} else {
-			switch (random(6)) {
+			switch (rnd(6)) {
 			default:
 				break;
 

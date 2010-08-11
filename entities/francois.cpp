@@ -224,7 +224,7 @@ IMPLEMENT_FUNCTION_I(Francois, function11, 11)
 				CURRENT_PARAMS(1, 1) = (int)getState()->timeTicks + params->param6;
 
 			if (CURRENT_PARAMS(1, 1) < (int)getState()->timeTicks) {
-				switch (random(7)) {
+				switch (rnd(7)) {
 				default:
 					break;
 
@@ -254,7 +254,7 @@ IMPLEMENT_FUNCTION_I(Francois, function11, 11)
 					break;
 				}
 
-				params->param6 = 15 * random(7);
+				params->param6 = 15 * rnd(7);
 				CURRENT_PARAMS(1, 1) = 0;
 			}
 		}
@@ -363,7 +363,7 @@ label_callback:
 
 			getEntities()->updateEntity(kEntityFrancois, kCarGreenSleeping, kPosition_540);
 
-			params->param6 = 15 * random(7);
+			params->param6 = 15 * rnd(7);
 			break;
 
 		case 2:

@@ -220,7 +220,7 @@ IMPLEMENT_FUNCTION_II(Tatiana, savegame, 12)
 IMPLEMENT_FUNCTION_II(Tatiana, updateEntity, 13)
 	if (savepoint.action == kActionExcuseMeCath) {
 		if (getEvent(kEventTatianaAskMatchSpeakRussian) || getEvent(kEventTatianaAskMatch) || getEvent(kEventVassiliSeizure)) {
-			getSound()->playSound(kEntityPlayer, random(2) ? "CAT1010" : "CAT1010A");
+			getSound()->playSound(kEntityPlayer, rnd(2) ? "CAT1010" : "CAT1010A");
 		} else {
 			getSound()->excuseMeCath();
 		}
@@ -915,7 +915,7 @@ IMPLEMENT_FUNCTION(Tatiana, function40, 40)
 
 	case kActionExcuseMe:
 		if (getEvent(kEventTatianaAskMatchSpeakRussian) || getEvent(kEventTatianaAskMatch) || getEvent(kEventVassiliSeizure))
-			getSound()->playSound(kEntityPlayer, random(2) ? "CAT1001A" : "CAT1010");
+			getSound()->playSound(kEntityPlayer, rnd(2) ? "CAT1001A" : "CAT1010");
 		else
 			getSound()->excuseMeCath();
 		break;

@@ -115,7 +115,7 @@ IMPLEMENT_FUNCTION_S(Vesna, draw, 4)
  */
 IMPLEMENT_FUNCTION_II(Vesna, updateEntity, 5)
 	if (savepoint.action == kActionExcuseMeCath) {
-		getSound()->playSound(kEntityPlayer, random(2) ? "CAT10150" : "CAT1015A");
+		getSound()->playSound(kEntityPlayer, rnd(2) ? "CAT10150" : "CAT1015A");
 
 		return;
 	}

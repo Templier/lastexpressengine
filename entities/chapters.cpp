@@ -251,7 +251,7 @@ IMPLEMENT_FUNCTION(Chapters, chapter1Handler, 8)
 		// Play sound FX
 		getSound()->playLocomotiveSound();
 
-		params->param2 = 225 * (4 * random(5) + 20);
+		params->param2 = 225 * (4 * rnd(5) + 20);
 		params->param6 = 0;
 
 label_processStations:
@@ -411,7 +411,7 @@ label_chapter1_end:
 		break;
 
 	case kActionDefault:
-		params->param2 = 225 * (4 * random(5) + 20);
+		params->param2 = 225 * (4 * rnd(5) + 20);
 		break;
 
 	case kActionDrawScene:
@@ -656,12 +656,12 @@ IMPLEMENT_FUNCTION(Chapters, chapter2Handler, 12)
 
 		getSound()->playLocomotiveSound();
 
-		params->param1 = 225 * (4 * random(5) + 20);
+		params->param1 = 225 * (4 * rnd(5) + 20);
 		params->param2 = 0;
 		break;
 
 	case kActionDefault:
-		params->param1 = 225 * (4 * random(5) + 20);
+		params->param1 = 225 * (4 * rnd(5) + 20);
 		break;
 
 	case kActionChapter3:
@@ -978,7 +978,7 @@ IMPLEMENT_FUNCTION(Chapters, chapter5Handler, 22)
 		break;
 
 	case kActionDefault:
-		params->param1 = 225 * (4 * random(10) + 20);
+		params->param1 = 225 * (4 * rnd(10) + 20);
 		break;
 
 	case kActionCallback:
