@@ -80,7 +80,8 @@ Debugger::Debugger(LastExpressEngine *engine) : _engine(engine), _command(NULL),
 	DCmd_Register("beetle",    WRAP_METHOD(Debugger, cmdBeetle));
 
 	// Game
-	DCmd_Register("dump",     WRAP_METHOD(Debugger, cmdDump));
+	DCmd_Register("delta",     WRAP_METHOD(Debugger, cmdTimeDelta));
+	DCmd_Register("dump",      WRAP_METHOD(Debugger, cmdDump));
 	DCmd_Register("entity",    WRAP_METHOD(Debugger, cmdEntity));
 
 	// Misc
@@ -192,6 +193,7 @@ bool Debugger::cmdHelp(int, const char **) {
 	DebugPrintf(" fight - start a fight\n");
 	DebugPrintf(" beetle - start the beetle game\n");
 	DebugPrintf("\n");
+	DebugPrintf(" delta - Adjust the time delta\n");
 	DebugPrintf(" dump - Dump game data\n");
 	DebugPrintf(" entity - Dump entity data\n");
 	DebugPrintf("\n");
@@ -608,6 +610,22 @@ bool Debugger::cmdListFiles(int argc, const char **argv) {
 			restoreArchive();
 	} else {
 		DebugPrintf("Syntax: ls <filter> (use * for all)\n (<cd number>)");
+	}
+
+	return true;
+}
+
+bool Debugger::cmdTimeDelta(int argc, const char **argv) {
+	if (argc == 2) {
+		int delta =  getNumber(argv[1]);
+
+		if (delta <= 0 || delta > 100)
+			goto label_error;
+
+		getState()->timeDelta = delta;
+	} else {
+label_error:
+		DebugPrintf("Syntax: delta <time delta> (delta=1-100)\n");
 	}
 
 	return true;
