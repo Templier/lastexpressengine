@@ -281,12 +281,17 @@ void SoundManager::setEntryStatus(SoundEntry *entry, FlagType flag) const {
 	if (((status & 0xFF00) >> 8) & kSoundStatusClear0)
 		entry->status = status;
 	else
-		entry->status = (SoundStatus)(status | kSoundStatusClear3);
+		entry->status = (SoundStatus)(status | kSoundStatusClear4);
 }
 
 bool SoundManager::setupCache(SoundEntry *entry) {
 	warning("Sound::updateCache: not implemented!");
 	return true;
+}
+
+void SoundManager::clearStatus() {
+	for (Common::List<SoundEntry *>::iterator i = _cache.begin(); i != _cache.end(); ++i)
+		(*i)->status |= kSoundStatusClear3;
 }
 
 void SoundManager::loadSoundData(SoundEntry *entry, Common::String name) {

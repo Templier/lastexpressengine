@@ -94,12 +94,12 @@ private:
 
 	// Start menu overlay elements
 	enum StartMenuOverlay {
-		kOverlayTooltip,
+		kOverlayTooltip,            // 0
 		kOverlayEggButtons,
 		kOverlayButtons,
 		kOverlayAcorn,
 		kOverlayCity1,
-		kOverlayCity2,
+		kOverlayCity2,              // 5
 		kOverlayCity3,
 		kOverlayCredits
 	};
@@ -171,8 +171,6 @@ private:
 
 	// TODO: remove?
 	void moveToCity(CityButton city, bool clicked);
-	void showCredits();
-
 
 	//////////////////////////////////////////////////////////////////////////
 	// Misc

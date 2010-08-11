@@ -57,7 +57,7 @@ static const int _animationListSize = 273;
 static const struct {
 	const char *filename;
 	uint16 time;
-} animationList[_animationListSize] = {
+} _animationList[_animationListSize] = {
 	{"", 0},
 	{"1002",    255},
 	{"1002D",   255},
@@ -1858,7 +1858,7 @@ void Action::playAnimation(EventIndex index, bool debugMode) const {
 	// In debug mode, just show the animation
 	if (debugMode) {
 		Animation animation;
-		if (animation.load(getArchive(Common::String(animationList[index].filename) + ".nis")))
+		if (animation.load(getArchive(Common::String(_animationList[index].filename) + ".nis")))
 			animation.play();
 		return;
 	}
@@ -1890,7 +1890,7 @@ void Action::playAnimation(EventIndex index, bool debugMode) const {
 			processSound = true;
 
 		Animation animation;
-		if (animation.load(getArchive(Common::String(animationList[index].filename) + ".nis") , processSound ? Animation::kFlagDefault : Animation::kFlagProcess))
+		if (animation.load(getArchive(Common::String(_animationList[index].filename) + ".nis") , processSound ? Animation::kFlagDefault : Animation::kFlagProcess))
 			animation.play();
 
 		if (getSound()->isBuffered("TIMER"))
@@ -1903,8 +1903,8 @@ void Action::playAnimation(EventIndex index, bool debugMode) const {
 	getEvent(index) = 1;
 
 	// Adjust game time
-	getState()->timeTicks += animationList[index].time;
-	getState()->time += animationList[index].time * getState()->timeDelta;
+	getState()->timeTicks += _animationList[index].time;
+	getState()->time += _animationList[index].time * getState()->timeDelta;
 }
 
 } // End of namespace LastExpress

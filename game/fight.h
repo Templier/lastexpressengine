@@ -87,6 +87,7 @@ public:
 	void eventTick(const Common::Event &ev);
 
 	void setStopped();
+	void resetState() { _state = 0; }
 
 private:
 	enum FightSequenceType {

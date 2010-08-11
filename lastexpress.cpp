@@ -141,7 +141,6 @@ Common::Error LastExpressEngine::run() {
 
 	// Menu
 	_menu = new Menu(this);
-
 	_menu->show(false, kInitTypeIndex, 0);
 
 	while (!shouldQuit()) {
@@ -267,13 +266,11 @@ void LastExpressEngine::soundTimer(void *refCon) {
 }
 
 void LastExpressEngine::handleSoundTimer() {
-	if (getGameLogic()->getGameState()->getGameFlags()->isGameRunning) {
-		if (_frameCounter & 1)
-			if (_soundMan)
-				_soundMan->handleTimer();
+	if (_frameCounter & 1)
+		if (_soundMan)
+			_soundMan->handleTimer();
 
-		_frameCounter++;
-	}
+	_frameCounter++;	
 }
 
 ///////////////////////////////////////////////////////////////////////////////////

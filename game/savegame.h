@@ -133,6 +133,8 @@ public:
 	bool loadGame(GameId id);
 	void saveGame(SavegameType type, EntityIndex entity, EventIndex event);
 
+	void saveVolumeBrightness();
+
 	// Init
 	void initSavegame(GameId id, bool resetHeaders);
 	static void writeMainHeader(GameId id);

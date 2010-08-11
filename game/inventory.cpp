@@ -150,7 +150,7 @@ bool Inventory::handleMouseEvent(const Common::Event &ev) {
 
 		// If clicked, show the menu
 		if (ev.type == Common::EVENT_LBUTTONUP) {
-			getSound()->playSound(kEntityPlayer, "LIB039.SND");
+			getSound()->playSound(kEntityPlayer, "LIB039");
 			getMenu()->show(false, kInitTypeIndex, 0);
 
 			// TODO can we return directly or do we need to make sure the state will be "valid" when we come back from the menu

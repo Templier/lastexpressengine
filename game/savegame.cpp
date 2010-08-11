@@ -97,6 +97,10 @@ void SaveLoad::saveGame(SavegameType type, EntityIndex entity, EventIndex event)
 	warning("SaveLoad::savegame: not implemented!");
 }
 
+void SaveLoad::saveVolumeBrightness() {
+	warning("SaveLoad::saveVolumeBrightness: not implemented!");
+}
+
 //////////////////////////////////////////////////////////////////////////
 // Static Members
 //////////////////////////////////////////////////////////////////////////

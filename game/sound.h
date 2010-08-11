@@ -162,6 +162,7 @@ public:
 
 	// Misc
 	void unknownFunction4();
+	void clearStatus();
 
 	// Sound playing
 	void playSound(EntityIndex entity, Common::String filename, FlagType flag = kFlagInvalid, byte a4 = 0);
@@ -206,7 +207,8 @@ private:
 		kSoundStatusClear0    = 0x10,
 		kSoundStatusClear1    = 0x1F,
 		kSoundStatusClear2    = 0x80,
-		kSoundStatusClear3    = 0x800,
+		kSoundStatusClear3    = 0x200,
+		kSoundStatusClear4    = 0x800,
 		kSoundStatusClearAll  = 0xFFFFFFE0
 	};
 

@@ -77,10 +77,6 @@
 // Sequences
 #define loadSequence(name) Sequence::load(name, getArchive(name))
 #define loadSequence1(name, field30) Sequence::load(name, getArchive(name), field30)
-#define drawSequenceFrame(drawable, index, type) { \
-	AnimFrame *frame = (drawable)->getFrame((index)); \
-	_engine->getGraphicsManager()->draw((frame), (type)); \
-	delete frame; }
 
 #define clearBg(type) _engine->getGraphicsManager()->clear(type)
 #define showScene(index, type) _engine->getGraphicsManager()->draw(getScenes()->get(index), type);
