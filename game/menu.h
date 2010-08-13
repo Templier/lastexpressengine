@@ -48,7 +48,7 @@ public:
 	Menu(LastExpressEngine *engine);
 	~Menu();
 
-	void show(bool doSavegame, MenuInitType type, uint32 value);
+	void show(bool doSavegame, SavegameType type, uint32 value);
 
 	// Event handling
 	void eventMouse(const Common::Event &ev);
@@ -135,7 +135,7 @@ private:
 	Common::EventType _mouseFlags;
 	SceneHotspot *_lastHotspot;
 
-	void init(bool doSavegame, MenuInitType type, uint32 value);
+	void init(bool doSavegame, SavegameType type, uint32 value);
 	void setup();
 	bool handleEvent(StartMenuAction action, Common::EventType type);
 	void checkHotspots();
@@ -188,7 +188,7 @@ private:
 	uint32 _delta;
 	bool _handleTimeDelta;
 
-	void initTime(MenuInitType type, uint32 time);
+	void initTime(SavegameType type, uint32 time);
 	void updateTime(uint32 time);
 	void adjustTime();
 	void adjustIndex(uint32 time1, uint32 time2, bool searchEntry);

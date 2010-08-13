@@ -248,7 +248,7 @@ IMPLEMENT_FUNCTION_II(Mahmud, function10, 10)
 				params->param3 = 0;
 			} else {
 				getSound()->playSound(kEntityTrain, "LIB050", SoundManager::kFlagDefault);
-				getLogic()->gameOver(kInitTypeIndex, 0, (getProgress().chapter == kChapter1) ? kSceneGameOverPolice1 : kSceneGameOverPolice2, true);
+				getLogic()->gameOver(kSavegameTypeIndex, 0, (getProgress().chapter == kChapter1) ? kSceneGameOverPolice1 : kSceneGameOverPolice2, true);
 			}
 			break;
 		}
@@ -727,7 +727,7 @@ IMPLEMENT_FUNCTION(Mahmud, chapters_handler, 14)
 		case 8:
 		case 9:
 			setCallback(10);
-			call(new ENTITY_SETUP(Mahmud, setup_savegame), kSavegameType2, kEventMahmudWrongDoor);
+			call(new ENTITY_SETUP(Mahmud, setup_savegame), kSavegameTypeEvent, kEventMahmudWrongDoor);
 			return;
 
 		case 10:

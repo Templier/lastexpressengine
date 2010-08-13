@@ -689,13 +689,13 @@ const char *SoundManager::getDialogName(EntityIndex entity) const {
 		if (getEvent(kEventLocomotiveRestartTrain))
 			return "XANN11";
 
-		if (getEvent(kEventAnnaBagageTies) || getEvent(kEventAnnaBagageTies2) || getEvent(kEventAnnaBagageTies3) || getEvent(kEventAnnaBagageTies4))
+		if (getEvent(kEventAnnaBaggageTies) || getEvent(kEventAnnaBaggageTies2) || getEvent(kEventAnnaBaggageTies3) || getEvent(kEventAnnaBaggageTies4))
 			return "XANN10";
 
 		if (getEvent(kEventAnnaTired) || getEvent(kEventAnnaTiredKiss))
 			return "XANN9";
 
-		if (getEvent(kEventAnnaBagageArgument))
+		if (getEvent(kEventAnnaBaggageArgument))
 			return "XANN8";
 
 		if (getEvent(kEventKronosVisit))

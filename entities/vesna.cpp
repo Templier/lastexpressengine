@@ -598,7 +598,7 @@ IMPLEMENT_FUNCTION(Vesna, chapter5Handler, 29)
 
 	case kActionOpenDoor:
 		setCallback(1);
-		call(new ENTITY_SETUP(Vesna, setup_savegame), kSavegameType2, kEventCathVesnaRestaurantKilled);
+		call(new ENTITY_SETUP(Vesna, setup_savegame), kSavegameTypeEvent, kEventCathVesnaRestaurantKilled);
 		break;
 
 	case kActionDefault:
@@ -608,7 +608,7 @@ IMPLEMENT_FUNCTION(Vesna, chapter5Handler, 29)
 	case kActionCallback:
 		if (getCallback() == 1) {
 			getAction()->playAnimation(kEventCathVesnaRestaurantKilled);
-			getLogic()->gameOver(kInitTypeIndex, 1, kSceneNone, true);
+			getLogic()->gameOver(kSavegameTypeIndex, 1, kSceneNone, true);
 		}
 		break;
 

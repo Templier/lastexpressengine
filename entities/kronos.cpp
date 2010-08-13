@@ -169,7 +169,7 @@ IMPLEMENT_FUNCTION(Kronos, function9, 9)
 
 	case kActionDefault:
 		setCallback(1);
-		call(new ENTITY_SETUP(Kronos, setup_savegame), kSavegameType2, kEventKronosConversation);
+		call(new ENTITY_SETUP(Kronos, setup_savegame), kSavegameTypeEvent, kEventKronosConversation);
 		break;
 
 	case kActionCallback:
@@ -297,7 +297,7 @@ IMPLEMENT_FUNCTION(Kronos, function16, 16)
 
 	case kActionDefault:
 		setCallback(1);
-		call(new ENTITY_SETUP(Kronos, setup_savegame), kSavegameType2, kEventKronosVisit);
+		call(new ENTITY_SETUP(Kronos, setup_savegame), kSavegameTypeEvent, kEventKronosVisit);
 		break;
 
 	case kActionCallback:
@@ -352,7 +352,7 @@ IMPLEMENT_FUNCTION(Kronos, function18, 18)
 		else {
 			if (params->param1 && getEntities()->isInKronosSanctum(kEntityPlayer)) {
 				setCallback(1);
-				call(new ENTITY_SETUP(Kronos, setup_savegame), kSavegameType2, kEventKahinaPunchSuite4);
+				call(new ENTITY_SETUP(Kronos, setup_savegame), kSavegameTypeEvent, kEventKahinaPunchSuite4);
 			}
 		}
 		break;
@@ -366,7 +366,7 @@ IMPLEMENT_FUNCTION(Kronos, function18, 18)
 	case kActionCallback:
 		if (getCallback() == 1) {
 			getAction()->playAnimation(kEventKahinaPunchSuite4);
-			getLogic()->gameOver(kTimeTypeEvent2, kEventCathJumpDownCeiling, kSceneNone, true);
+			getLogic()->gameOver(kSavegameTypeEvent2, kEventCathJumpDownCeiling, kSceneNone, true);
 		}
 		break;
 	}
@@ -388,7 +388,7 @@ IMPLEMENT_FUNCTION(Kronos, function21, 21)
 	case kActionNone:
 		if (getEntities()->isInKronosSanctum(kEntityPlayer)) {
 			setCallback(1);
-			call(new ENTITY_SETUP(Kronos, setup_savegame), kSavegameType2, kEventKahinaWrongDoor);
+			call(new ENTITY_SETUP(Kronos, setup_savegame), kSavegameTypeEvent, kEventKahinaWrongDoor);
 		}
 		break;
 
@@ -433,7 +433,7 @@ IMPLEMENT_FUNCTION(Kronos, function23, 23)
 	case kActionNone:
 		if (getEntities()->isInKronosSanctum(kEntityPlayer)) {
 			setCallback(1);
-			call(new ENTITY_SETUP(Kronos, setup_savegame), kSavegameType2, kEventKahinaWrongDoor);
+			call(new ENTITY_SETUP(Kronos, setup_savegame), kSavegameTypeEvent, kEventKahinaWrongDoor);
 		}
 		break;
 

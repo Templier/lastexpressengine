@@ -193,7 +193,7 @@ switch (savepoint.action) {
 		getObjects()->update(kObject105, kEntityPlayer, kLocationNone, kCursorNormal, kCursorHand);
 
 		if (getEntities()->isInBaggageCar(kEntityPlayer) || getEntities()->isInKitchen(kEntityPlayer)) {
-			getAction()->playAnimation(getEntities()->isInBaggageCar(kEntityPlayer) ? kEventVergesBagageCarOffLimits : kEventVergesCanIHelpYou);
+			getAction()->playAnimation(getEntities()->isInBaggageCar(kEntityPlayer) ? kEventVergesBaggageCarOffLimits : kEventVergesCanIHelpYou);
 			getSound()->playSound(kEntityPlayer, "BUMP");
 			getScenes()->loadSceneFromPosition(kCarRestaurant, 65);
 		}
@@ -353,7 +353,7 @@ IMPLEMENT_FUNCTION(Verges, function11, 11)
 			if (getEntities()->isInBaggageCarEntrance(kEntityPlayer))
 				getAction()->playAnimation(kEventVergesEscortToDiningCar);
 			else if (getEntities()->isInBaggageCar(kEntityPlayer))
-				getAction()->playAnimation(kEventVergesBagageCarOffLimits);
+				getAction()->playAnimation(kEventVergesBaggageCarOffLimits);
 			else if (getEntities()->isInKitchen(kEntityPlayer))
 				getAction()->playAnimation(kEventVergesCanIHelpYou);
 			else
@@ -390,7 +390,7 @@ IMPLEMENT_FUNCTION(Verges, function12, 12)
 		getObjects()->update(kObject105, kEntityPlayer, kLocationNone, kCursorNormal, kCursorHand);
 
 		if (getEntities()->isInBaggageCar(kEntityPlayer) || getEntities()->isInKitchen(kEntityPlayer)) {
-			getAction()->playAnimation(getEntities()->isInBaggageCar(kEntityPlayer) ? kEventVergesBagageCarOffLimits : kEventVergesCanIHelpYou);
+			getAction()->playAnimation(getEntities()->isInBaggageCar(kEntityPlayer) ? kEventVergesBaggageCarOffLimits : kEventVergesCanIHelpYou);
 			getSound()->playSound(kEntityPlayer, "BUMP");
 			getScenes()->loadSceneFromPosition(kCarRestaurant, 65);
 		}
@@ -445,7 +445,7 @@ IMPLEMENT_FUNCTION_I(Verges, function13, 13)
 
 	case kActionDefault:
 		setCallback(1);
-		call(new ENTITY_SETUP(Verges, setup_savegame), kSavegameType2, kEventVergesSuitcase);
+		call(new ENTITY_SETUP(Verges, setup_savegame), kSavegameTypeEvent, kEventVergesSuitcase);
 		break;
 
 	case kActionCallback:
@@ -724,7 +724,7 @@ IMPLEMENT_FUNCTION(Verges, policeGettingOffTrain, 24)
 	case kActionNone:
 		if (getEntities()->checkFields9(kEntityVerges, kEntityPlayer, 1000) && getEntityData(kEntityPlayer)->posture == kPostureStanding) {
 			setCallback(1);
-			call(new ENTITY_SETUP(Verges, setup_savegame), kSavegameType2, kEventGendarmesArrestation);
+			call(new ENTITY_SETUP(Verges, setup_savegame), kSavegameTypeEvent, kEventGendarmesArrestation);
 		}
 		break;
 
@@ -740,7 +740,7 @@ IMPLEMENT_FUNCTION(Verges, policeGettingOffTrain, 24)
 		if (getCallback() == 1) {
 			getSound()->processEntry(kEntityVerges);
 			getAction()->playAnimation(kEventGendarmesArrestation);
-			getLogic()->gameOver(kInitTypeIndex, 1, kSceneGameOverPolice1, true);
+			getLogic()->gameOver(kSavegameTypeIndex, 1, kSceneGameOverPolice1, true);
 		}
 		break;
 	}
@@ -1292,7 +1292,7 @@ IMPLEMENT_FUNCTION(Verges, chapter5Handler, 40)
 		getObjects()->update(kObject65, kEntityPlayer, kLocationNone, kCursorNormal, kCursorForward);
 
 		setCallback(1);
-		call(new ENTITY_SETUP(Verges, setup_savegame), kSavegameType2, kEventCathFreePassengers);
+		call(new ENTITY_SETUP(Verges, setup_savegame), kSavegameTypeEvent, kEventCathFreePassengers);
 		break;
 
 	case kActionDefault:

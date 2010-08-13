@@ -403,7 +403,7 @@ void Logic::eventTick(const Common::Event &) {
 //////////////////////////////////////////////////////////////////////////
 
 // Handle game over
-void Logic::gameOver(MenuInitType type, uint32 value, SceneIndex sceneIndex, bool showScene) const {
+void Logic::gameOver(SavegameType type, uint32 value, SceneIndex sceneIndex, bool showScene) const {
 
 	getSound()->processEntries();
 	getEntities()->reset();
@@ -431,7 +431,7 @@ void Logic::gameOver(MenuInitType type, uint32 value, SceneIndex sceneIndex, boo
 	getMenu()->show(false, type, value);
 }
 
-void Logic::switchChapter() {
+void Logic::switchChapter() const {
 	getSound()->clearStatus();
 
 	switch(getState()->progress.chapter) {
@@ -481,7 +481,7 @@ void Logic::playFinalSequence() const {
 	getSavePoints()->reset();
 	getFlags()->flag_entities_0 = true;
 
-	getMenu()->show(false, kInitTypeIndex, 0);
+	getMenu()->show(false, kSavegameTypeIndex, 0);
 }
 
 void Logic::showCredits() const {

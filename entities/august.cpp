@@ -423,7 +423,7 @@ label_callback_8:
 					getScenes()->loadSceneFromPosition(kCarNone, 1);
 					getObjects()->update(kObjectOutsideTylerCompartment, kEntityPlayer, kLocationNone, kCursorKeepValue, kCursorKeepValue);
 					setCallback(11);
-					call(new ENTITY_SETUP(August, setup_savegame), kSavegameType2, kEventAugustFindCorpse);
+					call(new ENTITY_SETUP(August, setup_savegame), kSavegameTypeEvent, kEventAugustFindCorpse);
 				}
 				break;
 			}
@@ -487,12 +487,12 @@ label_callback_9:
 				getObjects()->update(kObjectOutsideTylerCompartment, kEntityPlayer, kLocationNone, kCursorKeepValue, kCursorKeepValue);
 
 				setCallback(4);
-				call(new ENTITY_SETUP(August, setup_savegame), kSavegameType2, kEventMeetAugustTylerCompartment);
+				call(new ENTITY_SETUP(August, setup_savegame), kSavegameTypeEvent, kEventMeetAugustTylerCompartment);
 			} else {
 				getObjects()->update(kObjectOutsideTylerCompartment, kEntityPlayer, kLocationNone, kCursorKeepValue, kCursorKeepValue);
 
 				setCallback(3);
-				call(new ENTITY_SETUP(August, setup_savegame), kSavegameType2, kEventAugustFindCorpse);
+				call(new ENTITY_SETUP(August, setup_savegame), kSavegameTypeEvent, kEventAugustFindCorpse);
 			}
 		}
 		break;
@@ -522,12 +522,12 @@ label_callback_9:
 			}
 
 			setCallback(14);
-			call(new ENTITY_SETUP(August, setup_savegame), kSavegameType2, kEventMeetAugustTylerCompartment);
+			call(new ENTITY_SETUP(August, setup_savegame), kSavegameTypeEvent, kEventMeetAugustTylerCompartment);
 		} else {
 			getObjects()->update(kObjectOutsideTylerCompartment, kEntityPlayer, kLocationNone, kCursorKeepValue, kCursorKeepValue);
 
 			setCallback(13);
-			call(new ENTITY_SETUP(August, setup_savegame), kSavegameType2, kEventAugustFindCorpse);
+			call(new ENTITY_SETUP(August, setup_savegame), kSavegameTypeEvent, kEventAugustFindCorpse);
 		}
 		break;
 
@@ -570,11 +570,11 @@ label_callback_9:
 			getSound()->playSound(kEntityPlayer, "LIB014");
 			getAction()->playAnimation(kEventAugustFindCorpse);
 			if (getEvent(kEventDinerAugustOriginalJacket))
-				getLogic()->gameOver(kTimeTypeEvent2, kEventDinerAugustOriginalJacket, getProgress().eventCorpseFound ? kSceneGameOverStopPolice : kSceneGameOverPolice, true);
+				getLogic()->gameOver(kSavegameTypeEvent2, kEventDinerAugustOriginalJacket, getProgress().eventCorpseFound ? kSceneGameOverStopPolice : kSceneGameOverPolice, true);
 			else if (getProgress().eventCorpseMovedFromFloor)
-				getLogic()->gameOver(kInitTypeIndex, 1, kSceneGameOverBloodJacket, true);
+				getLogic()->gameOver(kSavegameTypeIndex, 1, kSceneGameOverBloodJacket, true);
 			else
-				getLogic()->gameOver(kInitTypeIndex, 1, getProgress().eventCorpseFound ? kSceneGameOverStopPolice : kSceneGameOverPolice, true);
+				getLogic()->gameOver(kSavegameTypeIndex, 1, getProgress().eventCorpseFound ? kSceneGameOverStopPolice : kSceneGameOverPolice, true);
 			break;
 
 		case 4:
@@ -618,13 +618,13 @@ label_callback_9:
 		case 10:
 			getObjects()->update(kObjectOutsideTylerCompartment, kEntityPlayer, kLocationNone, kCursorKeepValue, kCursorKeepValue);
 			setCallback(11);
-			call(new ENTITY_SETUP(August, setup_savegame), kSavegameType2, kEventAugustFindCorpse);
+			call(new ENTITY_SETUP(August, setup_savegame), kSavegameTypeEvent, kEventAugustFindCorpse);
 			break;
 
 		case 11:
 			getAction()->playAnimation(kEventAugustFindCorpse);
 
-			getLogic()->gameOver(getEvent(kEventDinerAugustOriginalJacket) ? kTimeTypeEvent2 : kInitTypeIndex,
+			getLogic()->gameOver(getEvent(kEventDinerAugustOriginalJacket) ? kSavegameTypeEvent2 : kSavegameTypeIndex,
 								 getEvent(kEventDinerAugustOriginalJacket) ? kEventDinerAugustOriginalJacket : 1,
 								 getProgress().eventCorpseFound ? kSceneGameOverStopPolice : kSceneGameOverPolice,
 								 true);
@@ -640,11 +640,11 @@ label_callback_9:
 			getAction()->playAnimation(kEventAugustFindCorpse);
 
 			if (getEvent(kEventDinerAugustOriginalJacket))
-				getLogic()->gameOver(kTimeTypeEvent2, kEventDinerAugustOriginalJacket, getProgress().eventCorpseFound ? kSceneGameOverStopPolice : kSceneGameOverPolice, true);
+				getLogic()->gameOver(kSavegameTypeEvent2, kEventDinerAugustOriginalJacket, getProgress().eventCorpseFound ? kSceneGameOverStopPolice : kSceneGameOverPolice, true);
 			else if (getProgress().eventCorpseMovedFromFloor)
-				getLogic()->gameOver(kInitTypeIndex, 1, kSceneGameOverBloodJacket, true);
+				getLogic()->gameOver(kSavegameTypeIndex, 1, kSceneGameOverBloodJacket, true);
 			else
-				getLogic()->gameOver(kInitTypeIndex, 1, getProgress().eventCorpseFound ? kSceneGameOverStopPolice : kSceneGameOverPolice, true);
+				getLogic()->gameOver(kSavegameTypeIndex, 1, getProgress().eventCorpseFound ? kSceneGameOverStopPolice : kSceneGameOverPolice, true);
 			break;
 
 		case 14:
@@ -688,7 +688,7 @@ IMPLEMENT_FUNCTION(August, dinner, 24)
 
 	case kActionDefault:
 		setCallback(1);
-		call(new ENTITY_SETUP(August, setup_savegame), kSavegameType2, kEventDinerAugust);
+		call(new ENTITY_SETUP(August, setup_savegame), kSavegameTypeEvent, kEventDinerAugust);
 		break;
 
 	case kActionCallback:
@@ -744,7 +744,7 @@ IMPLEMENT_FUNCTION(August, chapter1Handler, 25)
 			call(new ENTITY_SETUP(August, setup_dinner));
 		} else {
 			setCallback(4);
-			call(new ENTITY_SETUP(August, setup_savegame), kSavegameType2, kEventDinerAugustOriginalJacket);
+			call(new ENTITY_SETUP(August, setup_savegame), kSavegameTypeEvent, kEventDinerAugustOriginalJacket);
 		}
 		break;
 
@@ -819,7 +819,7 @@ IMPLEMENT_FUNCTION(August, chapter1Handler, 25)
 			break;
 
 		case 8:
-			getLogic()->gameOver(kInitTypeIndex, 0, kSceneNone, true);
+			getLogic()->gameOver(kSavegameTypeIndex, 0, kSceneNone, true);
 			break;
 		}
 		break;
@@ -1152,7 +1152,7 @@ IMPLEMENT_FUNCTION(August, chapter2Handler, 36)
 		getData()->inventoryItem = kItemNone;
 
 		setCallback(1);
-		call(new ENTITY_SETUP(August, setup_savegame), kSavegameType2, kEventAugustGoodMorning);
+		call(new ENTITY_SETUP(August, setup_savegame), kSavegameTypeEvent, kEventAugustGoodMorning);
 		break;
 
 	case kActionDefault:
@@ -1238,7 +1238,7 @@ IMPLEMENT_FUNCTION(August, function39, 39)
 			getSound()->playSound(kEntityPlayer, "BUMP");
 
 		setCallback(1);
-		call(new ENTITY_SETUP(August, setup_savegame), kSavegameType2, kEventAugustArrivalInMunich);
+		call(new ENTITY_SETUP(August, setup_savegame), kSavegameTypeEvent, kEventAugustArrivalInMunich);
 		break;
 
 	case kActionCallback:
@@ -1415,7 +1415,7 @@ IMPLEMENT_FUNCTION(August, function48, 48)
 				getSound()->playSound(kEntityPlayer, "LIB012");
 
 			setCallback(1);
-			call(new ENTITY_SETUP(August, setup_savegame), kSavegameType2, kEventAugustTalkCompartmentDoor);
+			call(new ENTITY_SETUP(August, setup_savegame), kSavegameTypeEvent, kEventAugustTalkCompartmentDoor);
 		}
 		break;
 
@@ -1925,7 +1925,7 @@ IMPLEMENT_FUNCTION(August, unhookCars, 69)
 			getSound()->removeFromQueue("ARRIVE");
 
 		setCallback(1);
-		call(new ENTITY_SETUP(August, setup_savegame), kSavegameType2, kEventAugustUnhookCarsBetrayal);
+		call(new ENTITY_SETUP(August, setup_savegame), kSavegameTypeEvent, kEventAugustUnhookCarsBetrayal);
 		break;
 
 	case kActionCallback:

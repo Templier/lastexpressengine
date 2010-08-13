@@ -46,7 +46,7 @@ namespace LastExpress {
 		&& !getEntities()->isSittingInCompartmentCars(kEntityPlayer) \
 		&& !getEntities()->checkFields10(kEntityPlayer)) { \
 		setCallback(1); \
-		call(new ENTITY_SETUP(Coudert, setup_savegame), kSavegameType2, kEventMertensBloodJacket); \
+		call(new ENTITY_SETUP(Coudert, setup_savegame), kSavegameTypeEvent, kEventMertensBloodJacket); \
 	}
 
 Coudert::Coudert(LastExpressEngine *engine) : Entity(engine, kEntityCoudert) {
@@ -142,7 +142,7 @@ IMPLEMENT_FUNCTION_S(Coudert, bloodJacket, 2)
 	case kActionCallback:
 		if (getCallback() == 1) {
 			getAction()->playAnimation(kEventCoudertBloodJacket);
-			getLogic()->gameOver(kInitTypeIndex, 1, kSceneGameOverBloodJacket, true);
+			getLogic()->gameOver(kSavegameTypeIndex, 1, kSceneGameOverBloodJacket, true);
 		}
 		break;
 	}
@@ -166,7 +166,7 @@ IMPLEMENT_FUNCTION_SI(Coudert, enterExitCompartment, 3)
 	case kActionCallback:
 		if (getCallback() == 1) {
 			getAction()->playAnimation(kEventCoudertBloodJacket);
-			getLogic()->gameOver(kInitTypeIndex, 1, kSceneGameOverBloodJacket, true);
+			getLogic()->gameOver(kSavegameTypeIndex, 1, kSceneGameOverBloodJacket, true);
 		}
 		return;
 	}
@@ -198,7 +198,7 @@ IMPLEMENT_FUNCTION(Coudert, callbackActionOnDirection, 4)
 	case kActionCallback:
 		if (getCallback() == 1) {
 			getAction()->playAnimation(kEventCoudertBloodJacket);
-			getLogic()->gameOver(kInitTypeIndex, 1, kSceneGameOverBloodJacket, true);
+			getLogic()->gameOver(kSavegameTypeIndex, 1, kSceneGameOverBloodJacket, true);
 		}
 		break;
 	}
@@ -224,7 +224,7 @@ IMPLEMENT_FUNCTION_SIII(Coudert, enterExitCompartment2, 5)
 	case kActionCallback:
 		if (getCallback() == 1) {
 			getAction()->playAnimation(kEventCoudertBloodJacket);
-			getLogic()->gameOver(kInitTypeIndex, 1, kSceneGameOverBloodJacket, true);
+			getLogic()->gameOver(kSavegameTypeIndex, 1, kSceneGameOverBloodJacket, true);
 		}
 		return;
 	}
@@ -257,7 +257,7 @@ IMPLEMENT_FUNCTION_S(Coudert, playSound, 6)
 	case kActionCallback:
 		if (getCallback() == 1) {
 			getAction()->playAnimation(kEventCoudertBloodJacket);
-			getLogic()->gameOver(kInitTypeIndex, 1, kSceneGameOverBloodJacket, true);
+			getLogic()->gameOver(kSavegameTypeIndex, 1, kSceneGameOverBloodJacket, true);
 		}
 		break;
 	}
@@ -290,7 +290,7 @@ IMPLEMENT_FUNCTION_NOSETUP(Coudert, playSound16, 7)
 	case kActionCallback:
 		if (getCallback() == 1) {
 			getAction()->playAnimation(kEventCoudertBloodJacket);
-			getLogic()->gameOver(kInitTypeIndex, 1, kSceneGameOverBloodJacket, true);
+			getLogic()->gameOver(kSavegameTypeIndex, 1, kSceneGameOverBloodJacket, true);
 		}
 		break;
 	}
@@ -334,7 +334,7 @@ IMPLEMENT_FUNCTION_II(Coudert, function9, 9)
 		}
 
 		setCallback(1);
-		call(new ENTITY_SETUP(Coudert, setup_savegame), kSavegameType2, kEventMertensBloodJacket);
+		call(new ENTITY_SETUP(Coudert, setup_savegame), kSavegameTypeEvent, kEventMertensBloodJacket);
 		break;
 
 	case kAction1:
@@ -342,7 +342,7 @@ IMPLEMENT_FUNCTION_II(Coudert, function9, 9)
 		getData()->inventoryItem = kItemNone;
 
 		setCallback(2);
-		call(new ENTITY_SETUP(Coudert, setup_savegame), kSavegameType2, kEventCoudertAskTylerCompartment);
+		call(new ENTITY_SETUP(Coudert, setup_savegame), kSavegameTypeEvent, kEventCoudertAskTylerCompartment);
 		break;
 
 	case kActionExcuseMeCath:
@@ -374,7 +374,7 @@ IMPLEMENT_FUNCTION_II(Coudert, function9, 9)
 
 		case 1:
 			getAction()->playAnimation(kEventCoudertBloodJacket);
-			getLogic()->gameOver(kInitTypeIndex, 1, kSceneGameOverBloodJacket, true);
+			getLogic()->gameOver(kSavegameTypeIndex, 1, kSceneGameOverBloodJacket, true);
 			break;
 
 		case 2:
@@ -409,7 +409,7 @@ IMPLEMENT_FUNCTION_I(Coudert, function10, 10)
 	case kActionCallback:
 		if (getCallback() == 1) {
 			getAction()->playAnimation(kEventCoudertBloodJacket);
-			getLogic()->gameOver(kInitTypeIndex, 1, kSceneGameOverBloodJacket, true);
+			getLogic()->gameOver(kSavegameTypeIndex, 1, kSceneGameOverBloodJacket, true);
 		}
 		break;
 	}
@@ -434,7 +434,7 @@ IMPLEMENT_FUNCTION_I(Coudert, function11, 11)
 	case kActionCallback:
 		if (getCallback() == 1) {
 			getAction()->playAnimation(kEventCoudertBloodJacket);
-			getLogic()->gameOver(kInitTypeIndex, 1, kSceneGameOverBloodJacket, true);
+			getLogic()->gameOver(kSavegameTypeIndex, 1, kSceneGameOverBloodJacket, true);
 		}
 		break;
 	}
@@ -538,7 +538,7 @@ IMPLEMENT_FUNCTION_II(Coudert, function13, 13)
 		getData()->inventoryItem = kItemNone;
 
 		setCallback(9);
-		call(new ENTITY_SETUP(Coudert, setup_savegame), kSavegameType2, kEventCoudertAskTylerCompartment);
+		call(new ENTITY_SETUP(Coudert, setup_savegame), kSavegameTypeEvent, kEventCoudertAskTylerCompartment);
 		break;
 
 	case kAction11:
@@ -593,7 +593,7 @@ IMPLEMENT_FUNCTION_II(Coudert, function13, 13)
 
 		case 3:
 			getAction()->playAnimation(kEventCoudertBloodJacket);
-			getLogic()->gameOver(kInitTypeIndex, 1, kSceneGameOverBloodJacket, true);
+			getLogic()->gameOver(kSavegameTypeIndex, 1, kSceneGameOverBloodJacket, true);
 			// BUG: the original game continues executing code here
 			break;
 
@@ -826,8 +826,96 @@ IMPLEMENT_FUNCTION_I(Coudert, function19, 19)
 	}
 }
 
+/**
+ * ??
+ *
+ * @param param1 The first object index
+ * @param param2 The second object index
+ */
 IMPLEMENT_FUNCTION_II(Coudert, function20, 20)
-	error("Coudert: callback function 20 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionNone:
+		if (!CURRENT_PARAMS(1, 3))
+			CURRENT_PARAMS(1, 3) = getState()->time + 300;
+
+		if (CURRENT_PARAMS(1, 3) < (int)getState()->time) {
+			CURRENT_PARAMS(1, 3) = kTimeInvalid;
+
+			getSound()->playSound(kEntityPlayer, "ZFX1004", getSound()->getSoundFlag(kEntityCoudert));
+		}
+
+		UPDATE_PARAM(CURRENT_PARAMS(1, 4), getState()->time, 900);
+
+		getObjects()->updateLocation2((ObjectIndex)params->param1, kLocation1);
+
+		if (params->param4 != kLocation2)
+			getObjects()->update((ObjectIndex)params->param1, (EntityIndex)params->param3, (ObjectLocation)params->param4, (CursorStyle)params->param5, (CursorStyle)params->param6);
+
+		if (params->param2)
+			getObjects()->update((ObjectIndex)params->param2, (EntityIndex)params->param7, (ObjectLocation)params->param8, (CursorStyle)CURRENT_PARAMS(1, 1), (CursorStyle)CURRENT_PARAMS(1, 2));
+
+		CALLBACK_ACTION();
+		break;
+
+	case kActionKnock:
+	case kActionOpenDoor:
+		getObjects()->update((ObjectIndex)params->param1, kEntityCoudert, kLocation1, kCursorNormal, kCursorNormal);
+		if (params->param2)
+			getObjects()->update((ObjectIndex)params->param2, kEntityCoudert, kLocation1, kCursorNormal, kCursorNormal);
+
+		setCallback(savepoint.action == kActionKnock ? 1 : 2);
+		call(new ENTITY_SETUP_SIIS(Coudert, setup_playSound), savepoint.action == kActionKnock ? "LIB012" : "LIB013");
+		break;
+
+	case kActionDefault:
+		params->param3 = getObjects()->get((ObjectIndex)params->param1).entity;
+		params->param4 = getObjects()->get((ObjectIndex)params->param1).location;
+		params->param5 = getObjects()->get((ObjectIndex)params->param1).cursor;
+		params->param6 = getObjects()->get((ObjectIndex)params->param1).cursor2;
+
+		if (params->param2) {
+			params->param7 = getObjects()->get((ObjectIndex)params->param2).entity;
+			params->param8 = getObjects()->get((ObjectIndex)params->param2).location;
+			CURRENT_PARAMS(1, 1) = getObjects()->get((ObjectIndex)params->param2).cursor;
+			CURRENT_PARAMS(1, 2) = getObjects()->get((ObjectIndex)params->param2).cursor2;
+
+			getObjects()->update((ObjectIndex)params->param2, kEntityCoudert, kLocation1, kCursorHandKnock, kCursorHand);
+		}
+
+		if (params->param4 != kLocation2)
+			getObjects()->update((ObjectIndex)params->param1, kEntityCoudert, kLocation1, kCursorHandKnock, kCursorHand);
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+		case 2:
+			if (params->param1 == kObjectCompartmentA || params->param1 == kObjectCompartmentC
+			 || params->param1 == kObjectCompartmentG || params->param1 == kObjectCompartmentH) {
+				setCallback(3);
+				call(new ENTITY_SETUP_SIIS(Coudert, setup_playSound), "Jac1001B");
+			} else {
+				setCallback(4);
+				call(new ENTITY_SETUP_SIIS(Coudert, setup_playSound), "Jac1001A");
+			}
+			break;
+
+		case 3:
+		case 4:
+			getObjects()->update((ObjectIndex)params->param1, kEntityCoudert, kLocation1, kCursorHandKnock, kCursorHand);
+
+			if (params->param2)
+				getObjects()->update((ObjectIndex)params->param2, kEntityCoudert, kLocation1, kCursorHandKnock, kCursorHand);
+			break;
+		}
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Coudert, function21, 21)
@@ -1263,7 +1351,7 @@ label_coudert_object:
 		getData()->inventoryItem = kItemNone;
 
 		setCallback(11);
-		call(new ENTITY_SETUP(Coudert, setup_savegame), kSavegameType2, kEventCoudertAskTylerCompartment);
+		call(new ENTITY_SETUP(Coudert, setup_savegame), kSavegameTypeEvent, kEventCoudertAskTylerCompartment);
 		break;
 
 	case kAction11:
@@ -1291,7 +1379,7 @@ label_coudert_object:
 
 			if (getProgress().jacket == kJacketBlood) {
 				setCallback(1);
-				call(new ENTITY_SETUP(Coudert, setup_savegame), kSavegameType2, kEventCoudertBloodJacket);
+				call(new ENTITY_SETUP(Coudert, setup_savegame), kSavegameTypeEvent, kEventCoudertBloodJacket);
 			} else {
 				setCallback(getEntities()->isPlayerPosition(kCarRedSleeping, 1) ? 2 : 3);
 				call(new ENTITY_SETUP(Coudert, setup_function13), true, kEntityPlayer);
@@ -1306,7 +1394,7 @@ label_coudert_object:
 
 		case 1:
 			getAction()->playAnimation(kEventCoudertBloodJacket);
-			getLogic()->gameOver(kInitTypeIndex, 1, kSceneGameOverBloodJacket, true);
+			getLogic()->gameOver(kSavegameTypeIndex, 1, kSceneGameOverBloodJacket, true);
 			break;
 
 		case 4:
@@ -1497,7 +1585,7 @@ IMPLEMENT_FUNCTION(Coudert, function41, 41)
 			break;
 		}
 		break;
-	}		
+	}
 }
 
 IMPLEMENT_FUNCTION(Coudert, chapter2, 42)

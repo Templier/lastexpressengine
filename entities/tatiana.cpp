@@ -545,7 +545,7 @@ IMPLEMENT_FUNCTION(Tatiana, function27, 27)
 
 	case kActionDefault:
 		setCallback(getEvent(kEventTatianaGivePoem) ? 1 : 2);
-		call(new ENTITY_SETUP(Tatiana, setup_savegame), kSavegameType2, getEvent(kEventTatianaGivePoem) ? kEventTatianaBreakfastAlexei : kEventTatianaBreakfast);
+		call(new ENTITY_SETUP(Tatiana, setup_savegame), kSavegameTypeEvent, getEvent(kEventTatianaGivePoem) ? kEventTatianaBreakfastAlexei : kEventTatianaBreakfast);
 		break;
 
 	case kActionCallback:

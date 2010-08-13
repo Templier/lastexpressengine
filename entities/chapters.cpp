@@ -256,7 +256,7 @@ IMPLEMENT_FUNCTION(Chapters, chapter1Handler, 8)
 
 label_processStations:
 		// Process stations
-		TIME_CHECK_SAVEGAME(Chapters, kTime1039500, params->param7, 1, kSavegameType1, kEventNone);
+		TIME_CHECK_SAVEGAME(Chapters, kTime1039500, params->param7, 1, kSavegameTypeTime, kTimeNone);
 
 label_enter_epernay:
 		// Entering Epernay station
@@ -332,7 +332,7 @@ label_exit_deutschavricourt:
 		TIME_CHECK_EXITSTATION(Chapters, kTimeExitDeutschAvricourt, CURRENT_PARAMS(2, 7), 16, "DeutschA");
 
 label_enter_strasbourg:
-		TIME_CHECK_SAVEGAME(Chapters, kTimeCityStrasbourg, CURRENT_PARAMS(2, 8), 17, kSavegameType1, kEventNone);
+		TIME_CHECK_SAVEGAME(Chapters, kTimeCityStrasbourg, CURRENT_PARAMS(2, 8), 17, kSavegameTypeTime, kTimeNone);
 
 label_exit_strasbourg:
 		// Exiting Strasbourg station
@@ -565,13 +565,13 @@ IMPLEMENT_FUNCTION(Chapters, chapter2, 10)
 
 		// Save game
 		setCallback(1);
-		call(new ENTITY_SETUP(Chapters, setup_savegame), kSavegameType1, kEventNone);
+		call(new ENTITY_SETUP(Chapters, setup_savegame), kSavegameTypeTime, kTimeNone);
 		break;
 
 	case kActionCallback:
 		if (getCallback() == 1) {
 			if (!_engine->getResourceManager()->loadArchive(kArchiveCd2)) {
-				getMenu()->show(false, kInitTypeIndex, 0);
+				getMenu()->show(false, kSavegameTypeIndex, 0);
 				return;
 			}
 
@@ -720,7 +720,7 @@ IMPLEMENT_FUNCTION(Chapters, chapter3Init, 14)
 		getInventory()->show();
 
 		setCallback(1);
-		call(new ENTITY_SETUP(Chapters, setup_savegame), kSavegameType1, kEventNone);
+		call(new ENTITY_SETUP(Chapters, setup_savegame), kSavegameTypeTime, kTimeNone);
 		break;
 
 	case kActionCallback:
@@ -759,13 +759,13 @@ IMPLEMENT_FUNCTION(Chapters, chapter4, 17)
 
 		// Save game
 		setCallback(1);
-		call(new ENTITY_SETUP(Chapters, setup_savegame), kSavegameType1, kEventNone);
+		call(new ENTITY_SETUP(Chapters, setup_savegame), kSavegameTypeTime, kTimeNone);
 		break;
 
 	case kActionCallback:
 		if (getCallback() == 1) {
 			if (!_engine->getResourceManager()->loadArchive(kArchiveCd3)) {
-				getMenu()->show(false, kInitTypeIndex, 0);
+				getMenu()->show(false, kSavegameTypeIndex, 0);
 				return;
 			}
 
@@ -932,7 +932,7 @@ IMPLEMENT_FUNCTION(Chapters, chapter5Init, 21)
 		getInventory()->show();
 
 		setCallback(1);
-		call(new ENTITY_SETUP(Chapters, setup_savegame), kSavegameType1, kEventNone);
+		call(new ENTITY_SETUP(Chapters, setup_savegame), kSavegameTypeTime, kTimeNone);
 		break;
 
 	case kActionCallback:
@@ -971,9 +971,9 @@ IMPLEMENT_FUNCTION(Chapters, chapter5Handler, 22)
 	case kAction2:
 		if (getState()->time <= kTimeTrainStopped2) {
 			setCallback(1);
-			call(new ENTITY_SETUP(Chapters, setup_savegame), kSavegameType2, kEventTrainStopped);
+			call(new ENTITY_SETUP(Chapters, setup_savegame), kSavegameTypeEvent, kEventTrainStopped);
 		} else {
-			getLogic()->gameOver(kTimeTypeTime, kTimeTrainStopped2, kSceneGameOverTrainStopped, true);
+			getLogic()->gameOver(kSavegameTypeTime, kTimeTrainStopped2, kSceneGameOverTrainStopped, true);
 		}
 		break;
 
@@ -984,7 +984,7 @@ IMPLEMENT_FUNCTION(Chapters, chapter5Handler, 22)
 	case kActionCallback:
 		if (getCallback() == 1) {
 			getAction()->playAnimation(kEventTrainStopped);
-			getLogic()->gameOver(kTimeTypeTime, kTimeTrainStopped, kSceneGameOverTrainStopped, true);
+			getLogic()->gameOver(kSavegameTypeTime, kTimeTrainStopped, kSceneGameOverTrainStopped, true);
 		}
 		break;
 

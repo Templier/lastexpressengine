@@ -89,7 +89,7 @@ bool SaveLoad::loadGame(GameId id) {
 }
 
 // Save game
-void SaveLoad::saveGame(SavegameType type, EntityIndex entity, EventIndex event) {
+void SaveLoad::saveGame(SavegameType type, EntityIndex entity, uint32 value) {
 
 	// Save ticks
 	_gameTicksLastSavegame = getState()->timeTicks;

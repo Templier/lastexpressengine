@@ -483,7 +483,7 @@ IMPLEMENT_FUNCTION(Abbot, function22, 22)
 		getData()->inventoryItem = kItemNone;
 
 		setCallback(1);
-		call(new ENTITY_SETUP(Abbot, setup_savegame), kSavegameType2, kEventAbbotIntroduction);
+		call(new ENTITY_SETUP(Abbot, setup_savegame), kSavegameTypeEvent, kEventAbbotIntroduction);
 		break;
 
 	case kActionDefault:
@@ -1221,7 +1221,7 @@ IMPLEMENT_FUNCTION(Abbot, drinkAfterDefuse, 47)
 
 	case kAction1:
 		setCallback(3);
-		call(new ENTITY_SETUP(Abbot, setup_savegame), kSavegameType2, kEventAbbotDrinkGiveDetonator);
+		call(new ENTITY_SETUP(Abbot, setup_savegame), kSavegameTypeEvent, kEventAbbotDrinkGiveDetonator);
 		break;
 
 	case kActionDefault:
@@ -1250,7 +1250,7 @@ IMPLEMENT_FUNCTION(Abbot, drinkAfterDefuse, 47)
 
 		case 3:
 			getAction()->playAnimation(kEventAbbotDrinkGiveDetonator);
-			getLogic()->gameOver(kInitTypeIndex, 1, kSceneNone, true);
+			getLogic()->gameOver(kSavegameTypeIndex, 1, kSceneNone, true);
 			break;
 		}
 		break;
@@ -1340,13 +1340,13 @@ IMPLEMENT_FUNCTION(Abbot, function53, 53)
 	case kAction168646401:
 		if (!getEvent(kEventLocomotiveAbbotGetSomeRest)) {
 			setCallback(1);
-			call(new ENTITY_SETUP(Abbot, setup_savegame), kSavegameType2, kEventLocomotiveAbbotGetSomeRest);
+			call(new ENTITY_SETUP(Abbot, setup_savegame), kSavegameTypeEvent, kEventLocomotiveAbbotGetSomeRest);
 			break;
 		}
 
 		if (!getEvent(kEventLocomotiveAbbotShoveling)) {
 			setCallback(2);
-			call(new ENTITY_SETUP(Abbot, setup_savegame), kSavegameType2, kEventLocomotiveAbbotShoveling);
+			call(new ENTITY_SETUP(Abbot, setup_savegame), kSavegameTypeEvent, kEventLocomotiveAbbotShoveling);
 			break;
 		}
 

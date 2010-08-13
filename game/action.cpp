@@ -769,7 +769,7 @@ IMPLEMENT_ACTION(dropItem) {
 
 		if (location == kLocation2) {
 			if (!getProgress().field_58) {
-				getSaveLoad()->saveGame(kSavegameType1, kEntityPlayer, kEventNone);
+				getSaveLoad()->saveGame(kSavegameTypeTime, kEntityPlayer, kTimeNone);
 				getProgress().field_58 = 1;
 			}
 
@@ -819,7 +819,7 @@ IMPLEMENT_ACTION(enterCompartment) {
 		return kSceneNone;
 	}
 
-	getSaveLoad()->saveGame(kSavegameType1, kEntityPlayer, kEventNone);
+	getSaveLoad()->saveGame(kSavegameTypeTime, kEntityPlayer, kTimeNone);
 	getSound()->playSound(kEntityPlayer, "LIB014");
 	playAnimation(kEventCathFindCorpse);
 	getSound()->playSound(kEntityPlayer, "LIB015");
@@ -1093,8 +1093,8 @@ IMPLEMENT_ACTION(25) {
 
 	case 3:
 		getSound()->playSoundEvent(kEntityPlayer, 43);
-		if (!getInventory()->hasItem(kItemKey) && !getEvent(kEventAnnaBagageArgument)) {
-			RESET_ENTITY_STATE(kEntityAnna, Anna, setup_bagage);
+		if (!getInventory()->hasItem(kItemKey) && !getEvent(kEventAnnaBaggageArgument)) {
+			RESET_ENTITY_STATE(kEntityAnna, Anna, setup_baggage);
 			return kSceneNone;
 		}
 		break;
@@ -1211,7 +1211,7 @@ IMPLEMENT_ACTION(catchBeetle) {
 // Action 31
 IMPLEMENT_ACTION(exitCompartment) {
 	if (!getProgress().field_30 && getProgress().jacket != kJacketOriginal) {
-		getSaveLoad()->saveGame(kSavegameType1, kEntityPlayer, kEventNone);
+		getSaveLoad()->saveGame(kSavegameTypeTime, kEntityPlayer, kTimeNone);
 		getProgress().field_30 = 1;
 	}
 

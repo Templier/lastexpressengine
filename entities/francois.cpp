@@ -331,7 +331,7 @@ label_callback:
 			getSound()->processEntry(kEntityFrancois);
 
 		setCallback(6);
-		call(new ENTITY_SETUP(Francois, setup_savegame), kSavegameType2, kEventFrancoisWhistle);
+		call(new ENTITY_SETUP(Francois, setup_savegame), kSavegameTypeEvent, kEventFrancoisWhistle);
 		break;
 
 	case kActionExcuseMeCath:

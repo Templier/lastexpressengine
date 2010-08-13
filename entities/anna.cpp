@@ -27,6 +27,7 @@
 
 #include "lastexpress/game/action.h"
 #include "lastexpress/game/entities.h"
+#include "lastexpress/game/fight.h"
 #include "lastexpress/game/inventory.h"
 #include "lastexpress/game/logic.h"
 #include "lastexpress/game/object.h"
@@ -104,7 +105,7 @@ Anna::Anna(LastExpressEngine *engine) : Entity(engine, kEntityAnna) {
 	ADD_CALLBACK_FUNCTION(Anna, function61);
 	ADD_CALLBACK_FUNCTION(Anna, function62);
 	ADD_CALLBACK_FUNCTION(Anna, function63);
-	ADD_CALLBACK_FUNCTION(Anna, bagage);
+	ADD_CALLBACK_FUNCTION(Anna, baggage);
 	ADD_CALLBACK_FUNCTION(Anna, function65);
 	ADD_CALLBACK_FUNCTION(Anna, chapter4);
 	ADD_CALLBACK_FUNCTION(Anna, chapter4Handler);
@@ -645,10 +646,10 @@ IMPLEMENT_FUNCTION_II(Anna, function17, 17)
 			params->param3 &= 0xFFFFFFF7;
 
 			setCallback(1);
-			call(new ENTITY_SETUP(Anna, setup_savegame), kSavegameType2, kEventAnnaGiveScarf);
+			call(new ENTITY_SETUP(Anna, setup_savegame), kSavegameTypeEvent, kEventAnnaGiveScarf);
 		} else {
 			setCallback(2);
-			call(new ENTITY_SETUP(Anna, setup_savegame), kSavegameType2, kEventGotALight);
+			call(new ENTITY_SETUP(Anna, setup_savegame), kSavegameTypeEvent, kEventGotALight);
 		}
 		break;
 
@@ -745,7 +746,7 @@ label_next:
 
 	case kAction1:
 		setCallback(savepoint.param.intValue == 8 ? 1 : 2);
-		call(new ENTITY_SETUP(Anna, setup_savegame), kSavegameType2, savepoint.param.intValue == 8 ? kEventAnnaGiveScarf : kEventDinerMindJoin);
+		call(new ENTITY_SETUP(Anna, setup_savegame), kSavegameTypeEvent, savepoint.param.intValue == 8 ? kEventAnnaGiveScarf : kEventDinerMindJoin);
 		break;
 
 	case kActionDefault:
@@ -1776,7 +1777,7 @@ IMPLEMENT_FUNCTION(Anna, function58, 58)
 
 	case kActionDefault:
 		setCallback(1);
-		call(new ENTITY_SETUP(Anna, setup_savegame), kSavegameType2, kEventAnnaSearchingCompartment);
+		call(new ENTITY_SETUP(Anna, setup_savegame), kSavegameTypeEvent, kEventAnnaSearchingCompartment);
 		break;
 
 	case kActionCallback:
@@ -1841,7 +1842,7 @@ IMPLEMENT_FUNCTION(Anna, function63, 63)
 	case kActionCallback:
 		if (getCallback() == 1) {
 			getAction()->playAnimation(kEventAnnaKilled);
-			getLogic()->gameOver(kTimeTypeTime, kTime2250000, kSceneGameOverAnnaDied, true);
+			getLogic()->gameOver(kSavegameTypeTime, kTime2250000, kSceneGameOverAnnaDied, true);
 		}
 		break;
 
@@ -1851,13 +1852,60 @@ IMPLEMENT_FUNCTION(Anna, function63, 63)
 			getSound()->processEntry("MUS012");
 
 		setCallback(1);
-		call(new ENTITY_SETUP(Anna, setup_savegame), kSavegameType2, kEventAnnaKilled);
+		call(new ENTITY_SETUP(Anna, setup_savegame), kSavegameTypeEvent, kEventAnnaKilled);
 		break;
 	}
 }
 
-IMPLEMENT_FUNCTION(Anna, bagage, 64)
-	error("Anna: callback function 64 not implemented!");
+IMPLEMENT_FUNCTION(Anna, baggage, 64)
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionDefault:
+		getEntities()->clearSequences(kEntityAnna);
+
+		setCallback(1);
+		call(new ENTITY_SETUP(Anna, setup_savegame), kSavegameTypeEvent, kEventAnnaBaggageArgument);
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			getAction()->playAnimation(kEventAnnaBaggageArgument);
+
+			setCallback(2);
+			call(new ENTITY_SETUP(Anna, setup_savegame), kSavegameTypeTime, kTimeNone);
+			break;
+
+		case 2:
+			params->param1 = getFight()->setup(kFightAnna);
+
+			if (params->param1)
+				getLogic()->gameOver(kSavegameTypeIndex, 0, kSceneNone, params->param1 == Fight::kFightEndLost);
+			else  {
+				getState()->time += 1800;
+
+				setCallback(3);
+				call(new ENTITY_SETUP(Anna, setup_savegame), kSavegameTypeEvent, kEventAnnaBagagePart2);
+			}
+			break;
+
+		case 3:
+			getAction()->playAnimation(kEventAnnaBagagePart2);
+			getScenes()->loadSceneFromPosition(kCarBaggage, 96);
+
+			getProgress().field_54 = 0;
+			getState()->time = kTime2266200;
+
+			setup_function65();
+			break;
+		}
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Anna, function65, 65)
@@ -2011,9 +2059,9 @@ IMPLEMENT_FUNCTION(Anna, chapter5Handler, 75)
 	case kActionCallback:
 		if (getCallback() == 1) {
 			if (getProgress().field_C)
-				getAction()->playAnimation(getEvent(kEventAnnaKissTrainHijacked) ? kEventAnnaBagageTies2 : kEventAnnaBagageTies);
+				getAction()->playAnimation(getEvent(kEventAnnaKissTrainHijacked) ? kEventAnnaBaggageTies2 : kEventAnnaBaggageTies);
 			else
-				getAction()->playAnimation(getEvent(kEventAnnaKissTrainHijacked) ? kEventAnnaBagageTies3 : kEventAnnaBagageTies4);
+				getAction()->playAnimation(getEvent(kEventAnnaKissTrainHijacked) ? kEventAnnaBaggageTies3 : kEventAnnaBaggageTies4);
 
 			getScenes()->loadSceneFromPosition(kCarBaggage, 8);
 			setup_function76();
@@ -2022,7 +2070,7 @@ IMPLEMENT_FUNCTION(Anna, chapter5Handler, 75)
 
 	case kAction272177921:
 		setCallback(1);
-		call(new ENTITY_SETUP(Anna, setup_savegame), kSavegameType2, kEventAnnaBagageTies);
+		call(new ENTITY_SETUP(Anna, setup_savegame), kSavegameTypeEvent, kEventAnnaBaggageTies);
 		break;
 	}
 }
@@ -2050,7 +2098,7 @@ IMPLEMENT_FUNCTION(Anna, function78, 78)
 		getState()->time = kTimeInvalid2;
 
 		setCallback(getInventory()->get(kItemFirebird)->location == kLocation4 ? 2 : 1);
-		call(new ENTITY_SETUP(Anna, setup_savegame), kSavegameType2, getInventory()->get(kItemFirebird)->location == kLocation4 ? kEventKronosHostageAnna : kEventKronosHostageAnnaNoFirebird);
+		call(new ENTITY_SETUP(Anna, setup_savegame), kSavegameTypeEvent, getInventory()->get(kItemFirebird)->location == kLocation4 ? kEventKronosHostageAnna : kEventKronosHostageAnnaNoFirebird);
 		break;
 
 	case kActionCallback:
@@ -2060,7 +2108,7 @@ IMPLEMENT_FUNCTION(Anna, function78, 78)
 
 		case 1:
 			getAction()->playAnimation(kEventKronosHostageAnnaNoFirebird);
-			getLogic()->gameOver(kTimeTypeEvent2, kEventAugustUnhookCarsBetrayal, kSceneNone, true);
+			getLogic()->gameOver(kSavegameTypeEvent2, kEventAugustUnhookCarsBetrayal, kSceneNone, true);
 			break;
 
 		case 2:
@@ -2082,7 +2130,7 @@ IMPLEMENT_FUNCTION(Anna, function79, 79)
 	case kAction2:
 		getState()->time = kTime5933;
 		setCallback(1);
-		call(new ENTITY_SETUP(Anna, setup_savegame), kSavegameType2, kEventKahinaPunch);
+		call(new ENTITY_SETUP(Anna, setup_savegame), kSavegameTypeEvent, kEventKahinaPunch);
 		break;
 
 	case kActionDrawScene:
@@ -2094,7 +2142,7 @@ IMPLEMENT_FUNCTION(Anna, function79, 79)
 		if (getEntities()->isInSalon(kEntityPlayer) && !getEvent(kEventKahinaPunch)) {
 			getState()->time = kTime5933;
 			setCallback(2);
-			call(new ENTITY_SETUP(Anna, setup_savegame), kSavegameType2, kEventKahinaPunch);
+			call(new ENTITY_SETUP(Anna, setup_savegame), kSavegameTypeEvent, kEventKahinaPunch);
 		}
 		break;
 
@@ -2121,7 +2169,7 @@ IMPLEMENT_FUNCTION(Anna, function79, 79)
 			break;
 		}
 
-		getLogic()->gameOver(kInitTypeIndex, 1, kSceneNone, true);
+		getLogic()->gameOver(kSavegameTypeIndex, 1, kSceneNone, true);
 		break;
 	}
 }
@@ -2139,7 +2187,7 @@ IMPLEMENT_FUNCTION(Anna, finalSequence, 81)
 		UPDATE_PARAM(params->param1, getState()->timeTicks, 180);
 
 		getSound()->playSound(kEntityTrain, "LIB069");
-		getLogic()->gameOver(kInitTypeIndex, 2, kSceneNone, true);
+		getLogic()->gameOver(kSavegameTypeIndex, 2, kSceneNone, true);
 		break;
 
 	case kActionCallback:
@@ -2152,11 +2200,11 @@ IMPLEMENT_FUNCTION(Anna, finalSequence, 81)
 			getAction()->playAnimation(kEventKronosGiveFirebird);
 
 			if (getInventory()->hasItem(kItemWhistle))
-				getLogic()->gameOver(kInitTypeIndex, 1, kSceneGameOverTrainExplosion, true);
+				getLogic()->gameOver(kSavegameTypeIndex, 1, kSceneGameOverTrainExplosion, true);
 			else if (getInventory()->get(kItemWhistle)->location == kLocation1)
-				getLogic()->gameOver(kTimeTypeEvent2, kEventAnnaDialogGoToJerusalem, kSceneNone, true);
+				getLogic()->gameOver(kSavegameTypeEvent2, kEventAnnaDialogGoToJerusalem, kSceneNone, true);
 			else
-				getLogic()->gameOver(kTimeTypeEvent2, kEventAugustUnhookCarsBetrayal, kSceneGameOverTrainExplosion2, true);
+				getLogic()->gameOver(kSavegameTypeEvent2, kEventAugustUnhookCarsBetrayal, kSceneGameOverTrainExplosion2, true);
 			break;
 
 		case 2:
@@ -2171,7 +2219,7 @@ IMPLEMENT_FUNCTION(Anna, finalSequence, 81)
 		getState()->time = kTimeCityConstantinople;
 
 		setCallback(1);
-		call(new ENTITY_SETUP(Anna, setup_savegame), kSavegameType2, kEventKronosGiveFirebird);
+		call(new ENTITY_SETUP(Anna, setup_savegame), kSavegameTypeEvent, kEventKronosGiveFirebird);
 		break;
 
 	case kActionUseWhistle:
@@ -2180,7 +2228,7 @@ IMPLEMENT_FUNCTION(Anna, finalSequence, 81)
 		getState()->time = kTimeCityConstantinople;
 
 		setCallback(2);
-		call(new ENTITY_SETUP(Anna, setup_savegame), kSavegameType2, kEventFinalSequence);
+		call(new ENTITY_SETUP(Anna, setup_savegame), kSavegameTypeEvent, kEventFinalSequence);
 		break;
 	}
 }

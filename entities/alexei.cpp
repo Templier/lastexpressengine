@@ -502,7 +502,7 @@ IMPLEMENT_FUNCTION(Alexei, chapter1Handler, 18)
 		getData()->inventoryItem = kItemNone;
 
 		setCallback(2);
-		call(new ENTITY_SETUP(Alexei, setup_savegame), kSavegameType2, kEventAlexeiDiner);
+		call(new ENTITY_SETUP(Alexei, setup_savegame), kSavegameTypeEvent, kEventAlexeiDiner);
 		break;
 
 	case kActionDefault:
@@ -705,7 +705,7 @@ IMPLEMENT_FUNCTION(Alexei, function24, 24)
 	case kAction1:
 		getData()->inventoryItem = kItemNone;
 		setCallback(1);
-		call(new ENTITY_SETUP(Alexei, setup_savegame), kSavegameType2, kEventAlexeiSalonCath);
+		call(new ENTITY_SETUP(Alexei, setup_savegame), kSavegameTypeEvent, kEventAlexeiSalonCath);
 		break;
 
 	case kActionDefault:

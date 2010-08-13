@@ -323,19 +323,19 @@ IMPLEMENT_FUNCTION(Vassili, seizure, 10)
 		// Check that we have removed the body from the train and changed jacket
 		if (!getProgress().eventCorpseMovedFromFloor) {
 			getAction()->playAnimation(kEventMertensCorpseFloor);
-			getLogic()->gameOver(kInitTypeIndex, 0, kSceneNone, false);
+			getLogic()->gameOver(kSavegameTypeIndex, 0, kSceneNone, false);
 			break;
 		}
 
 		if (!getProgress().eventCorpseThrown) {
 			getAction()->playAnimation(kEventMertensCorpseBed);
-			getLogic()->gameOver(kInitTypeIndex, 0, kSceneNone, false);
+			getLogic()->gameOver(kSavegameTypeIndex, 0, kSceneNone, false);
 			break;
 		}
 
 		if (getProgress().jacket == kJacketBlood) {
 			getAction()->playAnimation(kEventMertensBloodJacket);
-			getLogic()->gameOver(kInitTypeIndex, 0, kSceneNone, false);
+			getLogic()->gameOver(kSavegameTypeIndex, 0, kSceneNone, false);
 			break;
 		}
 
@@ -344,7 +344,7 @@ IMPLEMENT_FUNCTION(Vassili, seizure, 10)
 		RESET_ENTITY_STATE(kEntityCoudert, Coudert, setup_function38);
 
 		setCallback(1);
-		call(new ENTITY_SETUP(Vassili, setup_savegame), kSavegameType2, kEventVassiliSeizure);
+		call(new ENTITY_SETUP(Vassili, setup_savegame), kSavegameTypeEvent, kEventVassiliSeizure);
 		break;
 
 	case kActionCallback:
@@ -474,7 +474,7 @@ IMPLEMENT_FUNCTION(Vassili, stealEgg, 15)
 
 	case kActionOpenDoor:
 		setCallback(2);
-		call(new ENTITY_SETUP(Vassili, setup_savegame), kSavegameType2, kEventVassiliCompartmentStealEgg);
+		call(new ENTITY_SETUP(Vassili, setup_savegame), kSavegameTypeEvent, kEventVassiliCompartmentStealEgg);
 		break;
 
 	case kActionDefault:

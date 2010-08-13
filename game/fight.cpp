@@ -57,14 +57,14 @@ namespace LastExpress {
 		error("Fight::load##namePlayer - invalid data!"); \
 	_data->player->handleAction = new Common::Functor2Mem<Fighter *, FightAction, void, Fight>(this, &Fight::handleAction##name); \
 	_data->player->update = new Common::Functor1Mem<Fighter *, void, Fight>(this, &Fight::update##name); \
-	_data->player->canInteract = new Common::Functor2Mem<Fighter *, FightAction, bool, Fight>(this, &Fight::canInteract##name);
+	_data->player->canInteract = new Common::Functor2Mem<Fighter const *, FightAction, bool, Fight>(this, &Fight::canInteract##name);
 
 #define REGISTER_OPPONENT_FUNCTIONS(name) \
 	if (!_data) \
 		error("Fight::load##nameOpponent - invalid data!"); \
 	_data->opponent->handleAction = new Common::Functor2Mem<Fighter *, FightAction, void, Fight>(this, &Fight::handleOpponentAction##name); \
 	_data->opponent->update = new Common::Functor1Mem<Fighter *, void, Fight>(this, &Fight::updateOpponent##name); \
-	_data->opponent->canInteract = new Common::Functor2Mem<Fighter *, FightAction, bool, Fight>(this, &Fight::canInteract);
+	_data->opponent->canInteract = new Common::Functor2Mem<Fighter const *, FightAction, bool, Fight>(this, &Fight::canInteract);
 
 #define CHECK_SEQUENCE2(fighter, value) \
 	(fighter->frame->getInfo()->field_33 & value)
@@ -519,7 +519,7 @@ void Fight::processFighter(Fighter *fighter) {
 	if (_data->isRunning) {
 
 		// Get the current sequence frame
-		SequenceFrame *frame = new SequenceFrame(fighter->sequence, fighter->frameIndex);
+		SequenceFrame *frame = new SequenceFrame(fighter->sequence, (uint16)fighter->frameIndex);
 		frame->getInfo()->location = 1;
 
 		if (fighter->frame == frame) {
@@ -577,7 +577,7 @@ void Fight::handleAction(Fighter *fighter, FightAction action) {
 	fighter->action = action;
 }
 
-bool Fight::canInteract(Fighter *fighter, FightAction /*= (FightAction)0*/ ) {
+bool Fight::canInteract(Fighter const *fighter, FightAction /*= (FightAction)0*/ ) {
 	return (fighter->action == kFightAction101 && !fighter->sequenceIndex);
 }
 
@@ -711,7 +711,7 @@ void Fight::updateMilos(Fighter *fighter) {
 	update(fighter);
 }
 
-bool Fight::canInteractMilos(Fighter *fighter, FightAction action) {
+bool Fight::canInteractMilos(Fighter const *fighter, FightAction action) {
 	if (!_data)
 		error("Fight::canInteractMilos - invalid data!");
 
@@ -807,7 +807,7 @@ void Fight::loadAnnaPlayer() {
 	// Special case: we are using some shared functions directly
 	_data->player->handleAction = new Common::Functor2Mem<Fighter *, FightAction, void, Fight>(this, &Fight::handleActionAnna);
 	_data->player->update = new Common::Functor1Mem<Fighter *, void, Fight>(this, &Fight::update);
-	_data->player->canInteract = new Common::Functor2Mem<Fighter *, FightAction, bool, Fight>(this, &Fight::canInteract);
+	_data->player->canInteract = new Common::Functor2Mem<Fighter const *, FightAction, bool, Fight>(this, &Fight::canInteract);
 
 	_data->player->sequences.push_back(loadSequence("2002cr.seq"));
 	_data->player->sequences.push_back(loadSequence("2002cdl.seq"));
@@ -823,7 +823,7 @@ void Fight::loadAnnaOpponent() {
 	// Special case: we are using some shared functions directly
 	_data->opponent->handleAction = new Common::Functor2Mem<Fighter *, FightAction, void, Fight>(this, &Fight::handleAction);
 	_data->opponent->update = new Common::Functor1Mem<Fighter *, void, Fight>(this, &Fight::updateOpponentAnna);
-	_data->opponent->canInteract = new Common::Functor2Mem<Fighter *, FightAction, bool, Fight>(this, &Fight::canInteract);
+	_data->opponent->canInteract = new Common::Functor2Mem<Fighter const *, FightAction, bool, Fight>(this, &Fight::canInteract);
 
 	_data->opponent->sequences.push_back(loadSequence("2002or.seq"));
 	_data->opponent->sequences.push_back(loadSequence("2002oal.seq"));
@@ -1077,7 +1077,7 @@ void Fight::updateIvo(Fighter *fighter) {
 	update(fighter);
 }
 
-bool Fight::canInteractIvo(Fighter *fighter, FightAction action) {
+bool Fight::canInteractIvo(Fighter const *fighter, FightAction action) {
 	if (action == kFightAction129 || action == kFightAction130)
 		return (fighter->sequenceIndex >= 8);
 
@@ -1273,7 +1273,7 @@ void Fight::updateSalko(Fighter *fighter) {
 	}
 }
 
-bool Fight::canInteractSalko(Fighter *fighter, FightAction action) {
+bool Fight::canInteractSalko(Fighter const *fighter, FightAction action) {
 	if (action == kFightAction131) {
 		if (fighter->sequenceIndex == 1) {
 			if (fighter->opponent->countdown <= 0)
@@ -1454,7 +1454,7 @@ void Fight::updateVesna(Fighter *fighter) {
 	update(fighter);
 }
 
-bool Fight::canInteractVesna(Fighter *fighter, FightAction action) {
+bool Fight::canInteractVesna(Fighter const *fighter, FightAction action) {
 	if (action != kFightAction128)
 		return canInteract(fighter);
 

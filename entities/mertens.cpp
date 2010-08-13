@@ -46,7 +46,7 @@ namespace LastExpress {
 	 && !getEntities()->isSittingInCompartmentCars(kEntityPlayer) \
 	 && !getEntities()->checkFields10(kEntityPlayer)) { \
 		setCallback(1); \
-		call(new ENTITY_SETUP(Mertens, setup_savegame), kSavegameType2, kEventMertensBloodJacket); \
+		call(new ENTITY_SETUP(Mertens, setup_savegame), kSavegameTypeEvent, kEventMertensBloodJacket); \
 	}
 
 Mertens::Mertens(LastExpressEngine *engine) : Entity(engine, kEntityMertens) {
@@ -133,7 +133,7 @@ IMPLEMENT_FUNCTION_S(Mertens, bloodJacket, 2)
 	case kActionCallback:
 		if (getCallback() == 1) {
 			getAction()->playAnimation(kEventMertensBloodJacket);
-			getLogic()->gameOver(kInitTypeIndex, 1, kSceneGameOverBloodJacket, true);
+			getLogic()->gameOver(kSavegameTypeIndex, 1, kSceneGameOverBloodJacket, true);
 		}
 		break;
 	}
@@ -157,7 +157,7 @@ IMPLEMENT_FUNCTION_SI(Mertens, enterExitCompartment, 3)
 	case kActionCallback:
 		if (getCallback() == 1) {
 			getAction()->playAnimation(kEventMertensBloodJacket);
-			getLogic()->gameOver(kInitTypeIndex, 1, kSceneGameOverBloodJacket, true);
+			getLogic()->gameOver(kSavegameTypeIndex, 1, kSceneGameOverBloodJacket, true);
 		}
 		return;
 	}
@@ -188,7 +188,7 @@ IMPLEMENT_FUNCTION_SI(Mertens, enterExitCompartment2, 4)
 	case kActionCallback:
 		if (getCallback() == 1) {
 			getAction()->playAnimation(kEventMertensBloodJacket);
-			getLogic()->gameOver(kInitTypeIndex, 1, kSceneGameOverBloodJacket, true);
+			getLogic()->gameOver(kSavegameTypeIndex, 1, kSceneGameOverBloodJacket, true);
 		}
 		return;
 	}
@@ -234,7 +234,7 @@ IMPLEMENT_FUNCTION_SIII(Mertens, enterExitCompartment3, 5)
 	case kActionCallback:
 		if (getCallback() == 1) {
 			getAction()->playAnimation(kEventMertensBloodJacket);
-			getLogic()->gameOver(kInitTypeIndex, 1, kSceneGameOverBloodJacket, true);
+			getLogic()->gameOver(kSavegameTypeIndex, 1, kSceneGameOverBloodJacket, true);
 		}
 		break;
 	}
@@ -264,7 +264,7 @@ IMPLEMENT_FUNCTION(Mertens, callbackActionOnDirection, 6)
 	case kActionCallback:
 		if (getCallback() == 1) {
 			getAction()->playAnimation(kEventMertensBloodJacket);
-			getLogic()->gameOver(kInitTypeIndex, 1, kSceneGameOverBloodJacket, true);
+			getLogic()->gameOver(kSavegameTypeIndex, 1, kSceneGameOverBloodJacket, true);
 		}
 		break;
 	}
@@ -295,7 +295,7 @@ IMPLEMENT_FUNCTION_S(Mertens, playSound, 7)
 	case kActionCallback:
 		if (getCallback() == 1) {
 			getAction()->playAnimation(kEventMertensBloodJacket);
-			getLogic()->gameOver(kInitTypeIndex, 1, kSceneGameOverBloodJacket, true);
+			getLogic()->gameOver(kSavegameTypeIndex, 1, kSceneGameOverBloodJacket, true);
 		}
 		break;
 	}
@@ -326,7 +326,7 @@ IMPLEMENT_FUNCTION_S(Mertens, playSound16, 8)
 	case kActionCallback:
 		if (getCallback() == 1) {
 			getAction()->playAnimation(kEventMertensBloodJacket);
-			getLogic()->gameOver(kInitTypeIndex, 1, kSceneGameOverBloodJacket, true);
+			getLogic()->gameOver(kSavegameTypeIndex, 1, kSceneGameOverBloodJacket, true);
 		}
 		break;
 	}
@@ -377,25 +377,25 @@ IMPLEMENT_FUNCTION_II(Mertens, function10, 10)
 
 		if (getProgress().jacket == kJacketBlood) {
 			setCallback(1);
-			call(new ENTITY_SETUP(Mertens, setup_savegame), kSavegameType2, kEventMertensBloodJacket);
+			call(new ENTITY_SETUP(Mertens, setup_savegame), kSavegameTypeEvent, kEventMertensBloodJacket);
 			break;
 		}
 
 		if ((ENTITY_PARAM(0, 6) || ENTITY_PARAM(0, 7)) && (!getEvent(kEventKronosConversation) && getProgress().jacket == kJacketGreen)) {
 			setCallback(2);
-			call(new ENTITY_SETUP(Mertens, setup_savegame), kSavegameType2, kEventMertensKronosInvitation);
+			call(new ENTITY_SETUP(Mertens, setup_savegame), kSavegameTypeEvent, kEventMertensKronosInvitation);
 			break;
 		}
 
 		if (ENTITY_PARAM(1, 2) && getProgress().jacket == kJacketGreen && !getProgress().eventMetAugust) {
 			setCallback(3);
-			call(new ENTITY_SETUP(Mertens, setup_savegame), kSavegameType2, kEventMertensAugustWaiting);
+			call(new ENTITY_SETUP(Mertens, setup_savegame), kSavegameTypeEvent, kEventMertensAugustWaiting);
 			break;
 		}
 
 		if (ENTITY_PARAM(2, 4) && getState()->time < kTime2133000) {
 			setCallback(4);
-			call(new ENTITY_SETUP(Mertens, setup_savegame), kSavegameType2, kEventMertensKronosConcertInvitation);
+			call(new ENTITY_SETUP(Mertens, setup_savegame), kSavegameTypeEvent, kEventMertensKronosConcertInvitation);
 			break;
 		}
 
@@ -410,11 +410,11 @@ IMPLEMENT_FUNCTION_II(Mertens, function10, 10)
 		if (getProgress().eventCorpseFound || getEvent(kEventMertensAskTylerCompartment) || getEvent(kEventMertensAskTylerCompartmentD)) {
 			if (ENTITY_PARAM(0, 4) && getProgress().jacket == kJacketGreen && !getEvent(kEventMertensDontMakeBed) && !getProgress().eventCorpseThrown) {
 				setCallback(6);
-				call(new ENTITY_SETUP(Mertens, setup_savegame), kSavegameType2, kEventMertensDontMakeBed);
+				call(new ENTITY_SETUP(Mertens, setup_savegame), kSavegameTypeEvent, kEventMertensDontMakeBed);
 			}
 		} else {
 			setCallback(5);
-			call(new ENTITY_SETUP(Mertens, setup_savegame), kSavegameType2, kEventMertensAskTylerCompartment);
+			call(new ENTITY_SETUP(Mertens, setup_savegame), kSavegameTypeEvent, kEventMertensAskTylerCompartment);
 		}
 		break;
 
@@ -442,7 +442,7 @@ IMPLEMENT_FUNCTION_II(Mertens, function10, 10)
 
 		case 1:
 			getAction()->playAnimation(kEventMertensBloodJacket);
-			getLogic()->gameOver(kInitTypeIndex, 1, kSceneGameOverBloodJacket, true);
+			getLogic()->gameOver(kSavegameTypeIndex, 1, kSceneGameOverBloodJacket, true);
 			break;
 
 		case 2:
@@ -528,7 +528,7 @@ IMPLEMENT_FUNCTION_I(Mertens, function11, 11)
 	case kActionCallback:
 		if (getCallback() == 1) {
 			getAction()->playAnimation(kEventMertensBloodJacket);
-			getLogic()->gameOver(kInitTypeIndex, 1, kSceneGameOverBloodJacket, true);
+			getLogic()->gameOver(kSavegameTypeIndex, 1, kSceneGameOverBloodJacket, true);
 		}
 		break;
 	}
@@ -633,7 +633,7 @@ IMPLEMENT_FUNCTION_II(Mertens, function13, 13)
 	case kAction1:
 		getData()->inventoryItem = kItemNone;
 		setCallback(7);
-		call(new ENTITY_SETUP(Mertens, setup_savegame), kSavegameType2, kEventMertensAskTylerCompartmentD);
+		call(new ENTITY_SETUP(Mertens, setup_savegame), kSavegameTypeEvent, kEventMertensAskTylerCompartmentD);
 		break;
 
 	case kAction11:
@@ -667,7 +667,7 @@ IMPLEMENT_FUNCTION_II(Mertens, function13, 13)
 	case kActionDrawScene:
 		if (getEntities()->isPlayerPosition(kCarGreenSleeping, 23) && ENTITY_PARAM(0, 7) && !getEvent(kEventKronosConversation)) {
 			setCallback(8);
-			call(new ENTITY_SETUP(Mertens, setup_savegame), kSavegameType2, kEventMertensKronosInvitation);
+			call(new ENTITY_SETUP(Mertens, setup_savegame), kSavegameTypeEvent, kEventMertensKronosInvitation);
 		}
 		break;
 
@@ -688,7 +688,7 @@ IMPLEMENT_FUNCTION_II(Mertens, function13, 13)
 
 		case 4:
 			getAction()->playAnimation(kEventMertensBloodJacket);
-			getLogic()->gameOver(kInitTypeIndex, 1, kSceneGameOverBloodJacket, true);
+			getLogic()->gameOver(kSavegameTypeIndex, 1, kSceneGameOverBloodJacket, true);
 			break;
 
 		case 5:
@@ -1019,7 +1019,65 @@ IMPLEMENT_FUNCTION_S(Mertens, function28, 28)
 }
 
 IMPLEMENT_FUNCTION_SS(Mertens, function29, 29)
-	error("Mertens: callback function 29 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionNone:
+		if (params->param7 > 1 && params->param8) {
+			getSavePoints()->push(kEntityMertens, kEntityCoudert, kAction125499160);
+
+			setCallback(3);
+			call(new ENTITY_SETUP(Mertens, setup_function10), kCarGreenSleeping, kPosition_2000);
+		}
+		break;
+
+	case kAction2:
+		params->param7++;
+		if (params->param7 == 1)
+			getSound()->playSound(kEntityMertens, (char *)&params->seq2);
+		break;
+
+	case kActionDefault:
+		setCallback(1);
+		call(new ENTITY_SETUP(Mertens, setup_function19));
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			setCallback(2);
+			call(new ENTITY_SETUP(Mertens, setup_function10), kCarRedSleeping, kPosition_1500);
+			break;
+
+		case 2:
+			getEntities()->drawSequenceLeft(kEntityMertens, "601O");
+			getSavePoints()->push(kEntityMertens, kEntityCoudert, kAction154005632);
+			break;
+
+		case 3:
+			setCallback(4);
+			call(new ENTITY_SETUP(Mertens, setup_function17));
+			break;
+
+		case 4:
+			CALLBACK_ACTION();
+			break;
+		}
+		break;
+
+	case kAction155853632:
+		params->param8 = 1;
+		break;
+
+	case kAction202558662:
+		getEntities()->drawSequenceLeft(kEntityMertens, "601L");
+		getSound()->playSound(kEntityMertens, (char *)&params->seq1);
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION_I(Mertens, function30, 30)
@@ -1600,7 +1658,7 @@ label_callback_19:
 	case kAction1:
 		getData()->inventoryItem = kItemNone;
 		setCallback(21);
-		call(new ENTITY_SETUP(Mertens, setup_savegame), kSavegameType2, kEventMertensAskTylerCompartmentD);
+		call(new ENTITY_SETUP(Mertens, setup_savegame), kSavegameTypeEvent, kEventMertensAskTylerCompartmentD);
 		break;
 
 	case kAction11:
@@ -1624,13 +1682,13 @@ label_callback_19:
 
 		if (getEntities()->isPlayerPosition(kCarGreenSleeping, 23) && ENTITY_PARAM(0, 7) && !getEvent(kEventKronosConversation)) {
 			setCallback(1);
-			call(new ENTITY_SETUP(Mertens, setup_savegame), kSavegameType2, kEventMertensKronosInvitation);
+			call(new ENTITY_SETUP(Mertens, setup_savegame), kSavegameTypeEvent, kEventMertensKronosInvitation);
 			break;
 		}
 
 		if (getEntities()->isPlayerPosition(kCarGreenSleeping, 23) && !getProgress().eventMertensKronosInvitation && !getEvent(kEventMertensLastCar) && !getEvent(kEventMertensLastCarOriginalJacket)) {
 			setCallback(1);
-			call(new ENTITY_SETUP(Mertens, setup_savegame), kSavegameType2, kEventMertensLastCar);
+			call(new ENTITY_SETUP(Mertens, setup_savegame), kSavegameTypeEvent, kEventMertensLastCar);
 			break;
 		}
 

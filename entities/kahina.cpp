@@ -206,7 +206,7 @@ IMPLEMENT_FUNCTION(Kahina, function12, 12)
 	case kActionOpenDoor:
 		if (!getEvent(kEventKronosGoingToInvitation)) {
 			setCallback(1);
-			call(new ENTITY_SETUP(Kahina, setup_savegame), kSavegameType2, kEventKronosGoingToInvitation);
+			call(new ENTITY_SETUP(Kahina, setup_savegame), kSavegameTypeEvent, kEventKronosGoingToInvitation);
 			break;
 		}
 
@@ -352,7 +352,7 @@ IMPLEMENT_FUNCTION(Kahina, chapter2Handler, 17)
 				params->param3 = kTimeInvalid;
 
 				setCallback(1);
-				call(new ENTITY_SETUP(Kahina, setup_savegame), kSavegameType2, kEventKronosConversationFirebird);
+				call(new ENTITY_SETUP(Kahina, setup_savegame), kSavegameTypeEvent, kEventKronosConversationFirebird);
 				break;
 			}
 		}
@@ -377,7 +377,7 @@ label_callback_3:
 				getSound()->playSound(kEntityPlayer, "LIB012");
 
 			setCallback(4);
-			call(new ENTITY_SETUP(Kahina, setup_savegame), kSavegameType2, kEventKronosConversationFirebird);
+			call(new ENTITY_SETUP(Kahina, setup_savegame), kSavegameTypeEvent, kEventKronosConversationFirebird);
 			break;
 		}
 
@@ -386,7 +386,7 @@ label_callback_3:
 				getSound()->playSound(kEntityPlayer, "LIB012");
 
 			setCallback(7);
-			call(new ENTITY_SETUP(Kahina, setup_savegame), kSavegameType2, kEventKahinaAskSpeakFirebird);
+			call(new ENTITY_SETUP(Kahina, setup_savegame), kSavegameTypeEvent, kEventKahinaAskSpeakFirebird);
 			break;
 		}
 
@@ -479,7 +479,7 @@ IMPLEMENT_FUNCTION(Kahina, chapter3, 18)
 }
 
 /**
- * Update the entity, handling excuse me events and resetting the entity state after the argument with Anna in the bagage car
+ * Update the entity, handling excuse me events and resetting the entity state after the argument with Anna in the baggage car
  *
  * @param param1 The car index
  * @param param2 The entity position
@@ -490,7 +490,7 @@ IMPLEMENT_FUNCTION_II(Kahina, function19, 19)
 		break;
 
 	case kActionNone:
-		if (getEvent(kEventAnnaBagageArgument))
+		if (getEvent(kEventAnnaBaggageArgument))
 			RESET_ENTITY_STATE(kEntityKahina, Kahina, setup_function22);
 
 		if (getEntities()->updateEntity(kEntityKahina, (CarIndex)params->param1, (EntityPosition)params->param2))
@@ -596,7 +596,7 @@ IMPLEMENT_FUNCTION(Kahina, function27, 27)
 
 		if (params->param1) {
 			setCallback(1);
-			call(new ENTITY_SETUP(Kahina, setup_savegame), kSavegameType2, kSceneGameOverAlarm2);
+			call(new ENTITY_SETUP(Kahina, setup_savegame), kSavegameTypeEvent, kSceneGameOverAlarm2);
 		}
 		break;
 
@@ -607,7 +607,7 @@ IMPLEMENT_FUNCTION(Kahina, function27, 27)
 	case kActionCallback:
 		if (getCallback() == 1) {
 			getAction()->playAnimation((EventIndex)params->param1);
-			getLogic()->gameOver(kInitTypeIndex, 1, kSceneNone, true);
+			getLogic()->gameOver(kSavegameTypeIndex, 1, kSceneNone, true);
 		}
 		break;
 	}

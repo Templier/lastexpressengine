@@ -138,7 +138,7 @@ IMPLEMENT_FUNCTION_III(Gendarmes, function10, 10)
 
 			if (!getEntities()->checkFields15() && getObjects()->get((ObjectIndex)params->param3).location != kLocation1) {
 				setCallback(2);
-				call(new ENTITY_SETUP(Gendarmes, setup_savegame), kSavegameType2, kEventGendarmesArrestation);
+				call(new ENTITY_SETUP(Gendarmes, setup_savegame), kSavegameTypeEvent, kEventGendarmesArrestation);
 				break;
 			}
 		}
@@ -164,7 +164,7 @@ IMPLEMENT_FUNCTION_III(Gendarmes, function10, 10)
 			getSound()->playSound(kEntityGendarmes, "LIB017", SoundManager::kFlagDefault);
 
 			setCallback(getProgress().jacket == kJacketBlood ? 3 : 4);
-			call(new ENTITY_SETUP(Gendarmes, setup_savegame), kSavegameType2, getProgress().jacket == kJacketBlood ? kEventMertensBloodJacket : kEventGendarmesArrestation);
+			call(new ENTITY_SETUP(Gendarmes, setup_savegame), kSavegameTypeEvent, getProgress().jacket == kJacketBlood ? kEventMertensBloodJacket : kEventGendarmesArrestation);
 		}
 		break;
 
@@ -177,7 +177,7 @@ IMPLEMENT_FUNCTION_III(Gendarmes, function10, 10)
 
 	case kActionOpenDoor:
 		setCallback(6);
-		call(new ENTITY_SETUP(Gendarmes, setup_savegame), kSavegameType2, kEventGendarmesArrestation);
+		call(new ENTITY_SETUP(Gendarmes, setup_savegame), kSavegameTypeEvent, kEventGendarmesArrestation);
 		break;
 
 	case kActionDefault:
@@ -199,12 +199,12 @@ IMPLEMENT_FUNCTION_III(Gendarmes, function10, 10)
 		case 2:
 			getSound()->playSound(kEntityGendarmes, "LIB014", SoundManager::kFlagDefault);
 			getAction()->playAnimation(kEventGendarmesArrestation);
-			getLogic()->gameOver(kInitTypeIndex, 1, kSceneGameOverPolice1, true);
+			getLogic()->gameOver(kSavegameTypeIndex, 1, kSceneGameOverPolice1, true);
 			break;
 
 		case 3:
 			getAction()->playAnimation((params->param1 < kCarRedSleeping) ? kEventMertensBloodJacket : kEventCoudertBloodJacket);
-			getLogic()->gameOver(kInitTypeIndex, 1, kSceneGameOverBloodJacket, true);
+			getLogic()->gameOver(kSavegameTypeIndex, 1, kSceneGameOverBloodJacket, true);
 
 			getObjects()->update((ObjectIndex)params->param3, kEntityPlayer, kLocationNone, kCursorHandKnock, kCursorHand);
 			CALLBACK_ACTION();
@@ -212,7 +212,7 @@ IMPLEMENT_FUNCTION_III(Gendarmes, function10, 10)
 
 		case 4:
 			getAction()->playAnimation(kEventGendarmesArrestation);
-			getLogic()->gameOver(kInitTypeIndex, 1, kSceneGameOverPolice1, true);
+			getLogic()->gameOver(kSavegameTypeIndex, 1, kSceneGameOverPolice1, true);
 
 			getObjects()->update((ObjectIndex)params->param3, kEntityPlayer, kLocationNone, kCursorHandKnock, kCursorHand);
 			CALLBACK_ACTION();
@@ -225,7 +225,7 @@ IMPLEMENT_FUNCTION_III(Gendarmes, function10, 10)
 		case 6:
 			getSound()->playSound(kEntityGendarmes, "LIB014", SoundManager::kFlagDefault);
 			getAction()->playAnimation(kEventGendarmesArrestation);
-			getLogic()->gameOver(kInitTypeIndex, 1, kSceneGameOverPolice1, true);
+			getLogic()->gameOver(kSavegameTypeIndex, 1, kSceneGameOverPolice1, true);
 			break;
 		}
 		break;
@@ -452,7 +452,7 @@ void Gendarmes::arrest(const SavePoint &savepoint, bool shouldPlaySound, SoundMa
 					break;
 
 			setCallback(1);
-			call(new ENTITY_SETUP(Gendarmes, setup_savegame), kSavegameType2, kEventGendarmesArrestation);
+			call(new ENTITY_SETUP(Gendarmes, setup_savegame), kSavegameTypeEvent, kEventGendarmesArrestation);
 		}
 		break;
 
@@ -483,7 +483,7 @@ void Gendarmes::arrest(const SavePoint &savepoint, bool shouldPlaySound, SoundMa
 	case kActionCallback:
 		if (getCallback() == 1) {
 			getAction()->playAnimation(kEventGendarmesArrestation);
-			getLogic()->gameOver(kInitTypeIndex, 1, kSceneGameOverPolice1, true);
+			getLogic()->gameOver(kSavegameTypeIndex, 1, kSceneGameOverPolice1, true);
 		}
 		break;
 	}

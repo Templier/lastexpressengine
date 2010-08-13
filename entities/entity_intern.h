@@ -167,7 +167,7 @@ namespace LastExpress {
 #define EXPOSE_PARAMS(type) \
 	type *params = (type*)_data->getCurrentParameters(); \
 	if (!params) \
-		error("Trying to call an entity callback function with invalid parameters!"); \
+		error("Trying to call an entity function with invalid parameters!"); \
 
 // Implement call function and check for valid savepoint and parameters
 #define IMPLEMENT_CALL(class, name, index) \

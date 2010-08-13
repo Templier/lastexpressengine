@@ -244,7 +244,7 @@ IMPLEMENT_FUNCTION(Max, chapter4Handler, 8)
 	case kActionOpenDoor:
 		if (params->param1) {
 			setCallback(1);
-			call(new ENTITY_SETUP(Max, setup_savegame), kSavegameType2, kEventCathMaxLickHand);
+			call(new ENTITY_SETUP(Max, setup_savegame), kSavegameTypeEvent, kEventCathMaxLickHand);
 			break;
 		}
 
@@ -465,12 +465,12 @@ IMPLEMENT_FUNCTION(Max, freeFromCage, 14)
 		if (getEvent(kEventCathMaxCage)) {
 			if (getEvent(kEventCathMaxFree)) {
 				setCallback(2);
-				call(new ENTITY_SETUP(Max, setup_savegame), kSavegameType2, kEventCathMaxFree);
+				call(new ENTITY_SETUP(Max, setup_savegame), kSavegameTypeEvent, kEventCathMaxFree);
 			}
 
 		} else {
 			setCallback(1);
-			call(new ENTITY_SETUP(Max, setup_savegame), kSavegameType2, kEventCathMaxCage);
+			call(new ENTITY_SETUP(Max, setup_savegame), kSavegameTypeEvent, kEventCathMaxCage);
 		}
 		break;
 

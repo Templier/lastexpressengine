@@ -32,6 +32,7 @@ namespace LastExpress {
 // Time values
 //////////////////////////////////////////////////////////////////////////
 enum TimeValue {
+	kTimeNone                 = 0,
 	kTime5933                 = 5933,
 
 	kTimeCityParis            = 1037700,
@@ -157,6 +158,7 @@ enum TimeValue {
 	kTime2200500              = 2200500,
 	kTime2250000              = 2250000,
 	kTime2259000              = 2259000,
+	kTime2266200              = 2266200,
 	kTimeCityVienna           = 2268000,
 
 	// Chapter 4
@@ -203,13 +205,6 @@ enum TimeValue {
 
 	kTimeInvalid              = 2147483647,
 	kTimeInvalid2             = 0xFFFFFEDA
-};
-
-enum MenuInitType {
-	kInitTypeIndex = 0,
-	kTimeTypeTime = 1,
-	kTimeTypeEvent = 2,
-	kTimeTypeEvent2 = 3
 };
 
 //////////////////////////////////////////////////////////////////////////
@@ -336,10 +331,10 @@ enum GameId {
 };
 
 enum SavegameType {
-	kSavegameType0 = 0,
-	kSavegameType1 = 1,
-	kSavegameType2 = 2,
-	kSavegameType3 = 3,
+	kSavegameTypeIndex = 0,
+	kSavegameTypeTime = 1,
+	kSavegameTypeEvent = 2,
+	kSavegameTypeEvent2 = 3,
 	kSavegameTypeAuto = 4,
 	kSavegameTypeTickInterval = 5
 };
@@ -878,16 +873,16 @@ enum EventIndex {
 	kEventAugustBringEgg = 29,
 	kEventAugustBringBriefcase = 30,
 	kEventAugustTalkCigar = 31,
-	kEventAnnaBagageArgument = 32,
+	kEventAnnaBaggageArgument = 32,
 	kEventAnnaBagagePart2 = 33,
 	kEventAnnaConversation_34 = 34,
 	kEventAugustDrink = 35,
 	kEventAnnaTired = 36,
 	kEventAnnaTiredKiss = 37,
-	kEventAnnaBagageTies = 38,
-	kEventAnnaBagageTies2 = 39,
-	kEventAnnaBagageTies3 = 40,
-	kEventAnnaBagageTies4 = 41,
+	kEventAnnaBaggageTies = 38,
+	kEventAnnaBaggageTies2 = 39,
+	kEventAnnaBaggageTies3 = 40,
+	kEventAnnaBaggageTies4 = 41,
 	kEventAugustUnhookCarsBetrayal = 42,
 	kEventAugustUnhookCars = 43,
 	kEventLocomotiveAnnaStopsTrain = 44,
@@ -1000,9 +995,9 @@ enum EventIndex {
 	kEventMahmudWrongDoorOriginalJacket = 151,
 	kEventMahmudWrongDoorDay = 152,
 	kEventVergesEscortToDiningCar = 153,
-	kEventVergesBagageCarOffLimits = 154,
+	kEventVergesBaggageCarOffLimits = 154,
 	kEventVergesCanIHelpYou = 155,
-	kEventCoudertBagageCar = 156,
+	kEventCoudertBaggageCar = 156,
 	kEventCathTurningDay = 157,
 	kEventCathTurningNight = 158,
 	kEventIntro = 159,

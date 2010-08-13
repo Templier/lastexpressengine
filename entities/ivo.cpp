@@ -547,7 +547,7 @@ IMPLEMENT_FUNCTION(Ivo, fight, 32)
 		getData()->inventoryItem = kItemNone;
 
 		setCallback(1);
-		call(new ENTITY_SETUP(Ivo, setup_savegame), kSavegameType2, kEventCathIvoFight);
+		call(new ENTITY_SETUP(Ivo, setup_savegame), kSavegameTypeEvent, kEventCathIvoFight);
 		break;
 
 	case kActionCallback:
@@ -560,13 +560,13 @@ IMPLEMENT_FUNCTION(Ivo, fight, 32)
 			getAction()->playAnimation(kEventCathIvoFight);
 
 			setCallback(2);
-			call(new ENTITY_SETUP(Ivo, setup_savegame), kSavegameType1, kEventNone);
+			call(new ENTITY_SETUP(Ivo, setup_savegame), kSavegameTypeTime, kTimeNone);
 			break;
 
 		case 2:
 			params->param1 = getFight()->setup(kFightIvo);
 			if (params->param1) {
-				getLogic()->gameOver(kInitTypeIndex, 0, kSceneNone, true);
+				getLogic()->gameOver(kSavegameTypeIndex, 0, kSceneNone, true);
 			} else {
 				getScenes()->loadSceneFromPosition(kCarBaggageRear, 96);
 				setup_function33();
@@ -586,7 +586,7 @@ IMPLEMENT_FUNCTION(Ivo, function33, 33)
 		getState()->time += 1800;
 
 		setCallback(1);
-		call(new ENTITY_SETUP(Ivo, setup_savegame), kSavegameType1, kEventNone);
+		call(new ENTITY_SETUP(Ivo, setup_savegame), kSavegameTypeTime, kTimeNone);
 		break;
 
 	case kActionCallback:

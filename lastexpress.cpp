@@ -143,7 +143,7 @@ Common::Error LastExpressEngine::run() {
 
 	// Menu
 	_menu = new Menu(this);
-	_menu->show(false, kInitTypeIndex, 0);
+	_menu->show(false, kSavegameTypeIndex, 0);
 
 	while (!shouldQuit()) {
 		_soundMan->updateQueue();

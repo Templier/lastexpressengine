@@ -131,7 +131,7 @@ public:
 
 	// Save & Load
 	bool loadGame(GameId id);
-	void saveGame(SavegameType type, EntityIndex entity, EventIndex event);
+	void saveGame(SavegameType type, EntityIndex entity, uint32 value);
 
 	void saveVolumeBrightness();
 

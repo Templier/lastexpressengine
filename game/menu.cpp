@@ -160,7 +160,7 @@ static const struct {
 
 static const struct {
 	TimeValue time;
-	int index;
+	uint index;
 	StartMenuTooltips rewind;
 	StartMenuTooltips forward;
 } _cityButtonsInfo[7] = {
@@ -322,8 +322,8 @@ void TrainLine::draw(uint32 time) {
 	if (time > (uint32)_trainCities[index].time) {
 		// Interpolate linearly to use a frame between the cities
 		uint8 diffFrames = _trainCities[index + 1].frame - _trainCities[index].frame;
-		uint diffTimeCities = (_trainCities[index + 1].time - _trainCities[index].time);
-		uint traveledTime = (time - _trainCities[index].time);
+		uint diffTimeCities = (uint)(_trainCities[index + 1].time - _trainCities[index].time);
+		uint traveledTime = (time - (uint)_trainCities[index].time);
 		frame = (uint16)(_trainCities[index].frame + (traveledTime * diffFrames) / diffTimeCities);
 	} else {
 		// Exactly on the city
@@ -357,10 +357,8 @@ Menu::Menu(LastExpressEngine *engine) : _engine(engine),
 	_seqTooltips(NULL), _seqEggButtons(NULL), _seqButtons(NULL), _seqAcorn(NULL), _seqCity1(NULL), _seqCity2(NULL), _seqCity3(NULL), _seqCredits(NULL),
 	_gameId(kGameBlue), _hasShownStartScreen(false), _hasShownIntro(false),
 	_isShowingCredits(false), _isGameStarted(false), _isShowingMenu(false),
-	_clock(NULL), _trainLine(NULL), _checkHotspotsTicks(15), _lastHotspot(NULL), _mouseFlags(Common::EVENT_INVALID),
-	_currentIndex(0), _currentTime(0), _index(0), _index2(0), _time(0), _delta(0), _handleTimeDelta(false) {
-
-	_creditsSequenceIndex = 0;
+	_creditsSequenceIndex(0), _checkHotspotsTicks(15),  _mouseFlags(Common::EVENT_INVALID), _lastHotspot(NULL),
+	_currentIndex(0), _currentTime(0), _lowerTime(0), _index(0), _index2(0), _time(0), _delta(0), _handleTimeDelta(false) {
 
 	_clock = new Clock(_engine);
 	_trainLine = new TrainLine(_engine);
@@ -450,7 +448,7 @@ void Menu::eventMouse(const Common::Event &ev) {
 
 		if (ev.type == Common::EVENT_LBUTTONUP) {
 			// Last frame of the credits
-			if (_creditsSequenceIndex == _seqCredits->count() - 1) {
+			if (_seqCredits && _creditsSequenceIndex == _seqCredits->count() - 1) {
 				showFrame(kOverlayCredits, -1, true);
 				_isShowingCredits = false;
 			} else {
@@ -502,7 +500,7 @@ void Menu::eventTick(const Common::Event&) {
 
 //////////////////////////////////////////////////////////////////////////
 // Show the intro and load the main menu scene
-void Menu::show(bool doSavegame, MenuInitType type, uint32 value) {
+void Menu::show(bool doSavegame, SavegameType type, uint32 value) {
 
 	if (_isShowingMenu)
 		return;
@@ -630,7 +628,7 @@ bool Menu::handleEvent(StartMenuAction action, Common::EventType type) {
 
 			getFlags()->shouldRedraw = false;
 
-			_engine->quitGame();
+			Engine::quitGame();
 
 			return false;
 		} else {
@@ -657,7 +655,7 @@ bool Menu::handleEvent(StartMenuAction action, Common::EventType type) {
 			cd = (getProgress().chapter > kChapter3) ? kArchiveCd3 : kArchiveCd2;
 
 		// Show tooltips & buttons to start a game, continue a game or load the proper cd
-		if (_engine->getResourceManager()->isArchivePresent(cd)) {
+		if (ResourceManager::isArchivePresent(cd)) {
 			if (_isGameStarted) {
 				showFrame(kOverlayEggButtons, kButtonContinue, true);
 
@@ -813,7 +811,7 @@ bool Menu::handleEvent(StartMenuAction action, Common::EventType type) {
 				_handleTimeDelta = false;
 
 			showFrame(kOverlayEggButtons, kButtonRewindPushed, true);
-			showFrame(kOverlayTooltip, -1, 1);
+			showFrame(kOverlayTooltip, -1, true);
 
 			getSound()->playSound(kEntityPlayer, "LIB046");
 
@@ -838,7 +836,7 @@ bool Menu::handleEvent(StartMenuAction action, Common::EventType type) {
 				_handleTimeDelta = false;
 
 			showFrame(kOverlayEggButtons, kButtonForwardPushed, true);
-			showFrame(kOverlayTooltip, -1, 1);
+			showFrame(kOverlayTooltip, -1, true);
 
 			getSound()->playSound(kEntityPlayer, "LIB046");
 
@@ -1035,7 +1033,7 @@ void Menu::setLogicEventHandlers() {
 //////////////////////////////////////////////////////////////////////////
 // Game-related
 //////////////////////////////////////////////////////////////////////////
-void Menu::init(bool doSavegame, MenuInitType type, uint32 value) {
+void Menu::init(bool doSavegame, SavegameType type, uint32 value) {
 
 	bool useSameIndex = true;
 
@@ -1078,7 +1076,7 @@ void Menu::init(bool doSavegame, MenuInitType type, uint32 value) {
 		SaveLoad::writeMainHeader(_gameId);
 
 	if (doSavegame)
-		getSaveLoad()->saveGame(kSavegameType3, kEntityPlayer, kEventNone);
+		getSaveLoad()->saveGame(kSavegameTypeEvent2, kEntityPlayer, kEventNone);
 
 	if (!getGlobalTimer()) {
 		// TODO: remove existing savegame temp file
@@ -1143,7 +1141,7 @@ void Menu::switchGame() {
 	// Clear loaded savegame data
 	getSaveLoad()->clearEntries();
 
-	init(false, kInitTypeIndex, 0);
+	init(false, kSavegameTypeIndex, 0);
 }
 
 bool Menu::isGameFinished() const {
@@ -1230,7 +1228,7 @@ void Menu::showFrame(StartMenuOverlay overlayType, int index, bool redraw) {
 
 		// Remove the frame and add a new one with the proper index
 		getScenes()->removeFromQueue(_frames[overlayType]);
-		_frames[overlayType]->setFrame(index);
+		_frames[overlayType]->setFrame((uint)index);
 		getScenes()->addToQueue(_frames[overlayType]);
 	}
 
@@ -1282,7 +1280,7 @@ Common::String Menu::getAcornSequenceName(GameId id) const {
 //////////////////////////////////////////////////////////////////////////
 // Time
 //////////////////////////////////////////////////////////////////////////
-void Menu::initTime(MenuInitType type, uint32 value) {
+void Menu::initTime(SavegameType type, uint32 value) {
 	if (!value)
 		return;
 
@@ -1293,11 +1291,11 @@ void Menu::initTime(MenuInitType type, uint32 value) {
 	default:
 		break;
 
-	case kInitTypeIndex:
+	case kSavegameTypeIndex:
 		entryIndex = (_index <= value) ? 1 : _index - value;
 		break;
 
-	case kTimeTypeTime:
+	case kSavegameTypeTime:
 		if (value < kTimeStartGame)
 			break;
 
@@ -1314,7 +1312,7 @@ void Menu::initTime(MenuInitType type, uint32 value) {
 		} while (entryIndex);
 		break;
 
-	case kTimeTypeEvent:
+	case kSavegameTypeEvent:
 		entryIndex = _index;
 		if (!entryIndex)
 			break;
@@ -1327,7 +1325,7 @@ void Menu::initTime(MenuInitType type, uint32 value) {
 		} while (entryIndex);
 		break;
 
-	case kTimeTypeEvent2:
+	case kSavegameTypeEvent2:
 		// TODO rewrite in a more legible way
 		if (_index > 1) {
 			uint32 index = _index;
@@ -1429,11 +1427,11 @@ void Menu::adjustIndex(uint32 time1, uint32 time2, bool searchEntry) {
 void Menu::goToTime(uint32 time) {
 
 	uint32 entryIndex = 0;
-	uint32 deltaTime = ABS((int)(getSaveLoad()->getEntry(0)->time - time));
+	uint32 deltaTime = (uint32)ABS((int32)(getSaveLoad()->getEntry(0)->time - time));
 	uint32 index = 0;
 
 	do {
-		uint32 deltaTime2 = ABS((int)(getSaveLoad()->getEntry(index)->time - time));
+		uint32 deltaTime2 = (uint32)ABS((int32)(getSaveLoad()->getEntry(index)->time - time));
 		if (deltaTime2 < deltaTime) {
 			deltaTime = deltaTime2;
 			entryIndex = index;
@@ -1501,7 +1499,7 @@ void Menu::adjustTime() {
 }
 
 void Menu::moveToCity(CityButton city, bool clicked) {
-	uint32 time = _cityButtonsInfo[city].time;
+	uint32 time = (uint32)_cityButtonsInfo[city].time;
 
 	// TODO Check if we have access (there seems to be more checks on some internal times) - probably : current_time (menu only) / game time / some other?
 	if (_lowerTime < time || _time == time || _currentTime == time) {

@@ -608,13 +608,13 @@ void SceneManager::updateDoorsAndClock() {
 		Sequence *sequenceMinutes = loadSequence1("SCLKM-81.seq", 255);
 
 		// Compute hours and minutes indexes
-		uint32 hoursIndex = getState()->time % 1296000 % 54000 / 900;
+		uint16 hoursIndex = getState()->time % 1296000 % 54000 / 900;
 
 		uint hours = (getState()->time % 1296000) / 54000;
 		if (hours >= 12)
 			hours -= 12;
 
-		uint32 minutesIndex = 5 * hours + hoursIndex / 12;
+		uint16 minutesIndex = (uint16)(5 * hours + hoursIndex / 12);
 
 		// Adjust z-order and store sequences to list
 		_clockHours = new SequenceFrame(sequenceHours, hoursIndex, true);
@@ -1158,15 +1158,15 @@ void SceneManager::postProcessScene() {
 
 		switch (getProgress().chapter) {
 		default:
-			getLogic()->gameOver(kInitTypeIndex, 0, kSceneGameOverPolice2, true);
+			getLogic()->gameOver(kSavegameTypeIndex, 0, kSceneGameOverPolice2, true);
 			break;
 
 		case kChapter1:
-			getLogic()->gameOver(kInitTypeIndex, 0, kSceneGameOverAlarm, true);
+			getLogic()->gameOver(kSavegameTypeIndex, 0, kSceneGameOverAlarm, true);
 			break;
 
 		case kChapter4:
-			getLogic()->gameOver(kInitTypeIndex, 0, kSceneGameOverAlarm2, true);
+			getLogic()->gameOver(kSavegameTypeIndex, 0, kSceneGameOverAlarm2, true);
 			break;
 		}
 		break;

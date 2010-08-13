@@ -117,7 +117,7 @@ private:
 	struct Fighter {
 		Common::Functor2<Fighter *, FightAction, void> *handleAction;
 		Common::Functor1<Fighter *, void> *update;
-		Common::Functor2<Fighter *, FightAction, bool> *canInteract;
+		Common::Functor2<Fighter const *, FightAction, bool> *canInteract;
 		Fighter* opponent;
 		Common::Array<Sequence *> sequences;
 		uint32 sequenceIndex;
@@ -218,7 +218,7 @@ private:
 	// Default functions
 	void handleAction(Fighter *fighter, FightAction action);
 	void update(Fighter *fighter);
-	bool canInteract(Fighter *fighter, FightAction = (FightAction)0);
+	bool canInteract(Fighter const *fighter, FightAction = (FightAction)0);
 	void updateOpponent(Fighter *fighter);
 
 	// Milos
@@ -226,7 +226,7 @@ private:
 	void loadMilosOpponent();
 	void handleActionMilos(Fighter *fighter, FightAction action);
 	void updateMilos(Fighter *fighter);
-	bool canInteractMilos(Fighter *fighter, FightAction action);
+	bool canInteractMilos(Fighter const *fighter, FightAction action);
 	void handleOpponentActionMilos(Fighter *fighter, FightAction action);
 	void updateOpponentMilos(Fighter *fighter);
 
@@ -241,7 +241,7 @@ private:
 	void loadIvoOpponent();
 	void handleActionIvo(Fighter *fighter, FightAction action);
 	void updateIvo(Fighter *fighter);
-	bool canInteractIvo(Fighter *fighter, FightAction action);
+	bool canInteractIvo(Fighter const *fighter, FightAction action);
 	void handleOpponentActionIvo(Fighter *fighter, FightAction action);
 	void updateOpponentIvo(Fighter *fighter);
 
@@ -250,7 +250,7 @@ private:
 	void loadSalkoOpponent();
 	void handleActionSalko(Fighter *fighter, FightAction action);
 	void updateSalko(Fighter *fighter);
-	bool canInteractSalko(Fighter *fighter, FightAction action);
+	bool canInteractSalko(Fighter const *fighter, FightAction action);
 	void handleOpponentActionSalko(Fighter *fighter, FightAction action);
 	void updateOpponentSalko(Fighter *fighter);
 
@@ -259,7 +259,7 @@ private:
 	void loadVesnaOpponent();
 	void handleActionVesna(Fighter *fighter, FightAction action);
 	void updateVesna(Fighter *fighter);
-	bool canInteractVesna(Fighter *fighter, FightAction action);
+	bool canInteractVesna(Fighter const *fighter, FightAction action);
 	void handleOpponentActionVesna(Fighter *fighter, FightAction action);
 	void updateOpponentVesna(Fighter *fighter);
 };

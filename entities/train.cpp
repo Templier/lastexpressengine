@@ -406,13 +406,13 @@ label_process:
 		if (getProgress().jacket == kJacketBlood) {
 			if (getEntities()->isPlayerPosition(kCarRedSleeping, 18)) {
 				setCallback(1);
-				call(new ENTITY_SETUP(Train, setup_savegame), kSavegameType2, kEventMertensBloodJacket);
+				call(new ENTITY_SETUP(Train, setup_savegame), kSavegameTypeEvent, kEventMertensBloodJacket);
 				break;
 			}
 
 			if (getEntities()->isPlayerPosition(kCarGreenSleeping, 22)) {
 				setCallback(2);
-				call(new ENTITY_SETUP(Train, setup_savegame), kSavegameType2, kEventMertensBloodJacket);
+				call(new ENTITY_SETUP(Train, setup_savegame), kSavegameTypeEvent, kEventMertensBloodJacket);
 				break;
 			}
 		}
@@ -430,13 +430,13 @@ label_process:
 		case 1:
 		case 2:
 			getAction()->playAnimation(action == 1 ? kEventCoudertBloodJacket : kEventMertensBloodJacket);
-			getLogic()->gameOver(kInitTypeIndex, 1, kSceneGameOverBloodJacket, true);
+			getLogic()->gameOver(kSavegameTypeIndex, 1, kSceneGameOverBloodJacket, true);
 			resetParam8();
 			break;
 
 		case 5:
 			getAction()->playAnimation(kEventLocomotiveConductorsDiscovered);
-			getLogic()->gameOver(kInitTypeIndex, 1, kSceneGameOverPolice2, true);
+			getLogic()->gameOver(kSavegameTypeIndex, 1, kSceneGameOverPolice2, true);
 			break;
 
 		case 6:
@@ -469,13 +469,13 @@ label_process:
 
 	case kActionCatchBeetle:
 		setCallback(8);
-		call(new ENTITY_SETUP(Train, setup_savegame), kSavegameType2, kEventCloseMatchbox);
+		call(new ENTITY_SETUP(Train, setup_savegame), kSavegameTypeEvent, kEventCloseMatchbox);
 		break;
 
 	case kAction203339360:
 		if (params->param7) {
 			setCallback(5);
-			call(new ENTITY_SETUP(Train, setup_savegame), kSavegameType2, kEventLocomotiveConductorsDiscovered);
+			call(new ENTITY_SETUP(Train, setup_savegame), kSavegameTypeEvent, kEventLocomotiveConductorsDiscovered);
 		} else {
 			params->param7 = 1;
 			getAction()->playAnimation(kEventLocomotiveConductorsLook);
@@ -543,12 +543,12 @@ label_process:
 
 	case kActionBreakCeiling:
 		setCallback(6);
-		call(new ENTITY_SETUP(Train, setup_savegame), kSavegameType2, kEventCathBreakCeiling);
+		call(new ENTITY_SETUP(Train, setup_savegame), kSavegameTypeEvent, kEventCathBreakCeiling);
 		break;
 
 	case kActionJumpDownCeiling:
 		setCallback(7);
-		call(new ENTITY_SETUP(Train, setup_savegame), kSavegameType2, kEventCathJumpDownCeiling);
+		call(new ENTITY_SETUP(Train, setup_savegame), kSavegameTypeEvent, kEventCathJumpDownCeiling);
 		break;
 	}
 }
