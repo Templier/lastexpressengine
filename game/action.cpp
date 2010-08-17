@@ -848,26 +848,26 @@ IMPLEMENT_ACTION(getOutsideTrain) {
 
 		case kObjectOutsideTylerCompartment:
 			getEvent(kEventCathLookOutsideWindowDay) = 1;
-			playAnimation(isDay() ? kEventCathGoOutsideTylerCompartmentDay : kEventCathGoOutsideTylerCompartmentNight);
+			playAnimation(isNight() ? kEventCathGoOutsideTylerCompartmentNight : kEventCathGoOutsideTylerCompartmentDay);
 			getProgress().field_C8 = 1;
 			break;
 
 		case kObjectOutsideBetweenCompartments:
 			getEvent(kEventCathLookOutsideWindowDay) = 1;
-			playAnimation(isDay() ? kEventCathGoOutsideDay : kEventCathGoOutsideNight);
+			playAnimation(isNight() ? kEventCathGoOutsideNight : kEventCathGoOutsideDay);
 			getProgress().field_C8 = 1;
 			break;
 
 		case kObjectOutsideAnnaCompartment:
 			getEvent(kEventCathLookOutsideWindowDay) = 1;
-			playAnimation(isDay() ? kEventCathGetInsideDay : kEventCathGetInsideNight);
+			playAnimation(isNight() ? kEventCathGetInsideNight : kEventCathGetInsideDay);
 			if (!hotspot.scene)
 				getScenes()->processScene();
 			break;
 		}
 	} else {
 		if (object == kObjectOutsideTylerCompartment || object == kObjectOutsideBetweenCompartments || object == kObjectOutsideAnnaCompartment) {
-			playAnimation(isDay() ? kEventCathLookOutsideWindowDay : kEventCathLookOutsideWindowNight);
+			playAnimation(isNight() ? kEventCathLookOutsideWindowNight : kEventCathLookOutsideWindowDay);
 			getScenes()->processScene();
 			return kSceneNone;
 		}
@@ -884,11 +884,11 @@ IMPLEMENT_ACTION(slip) {
 		return kSceneInvalid;
 
 	case kObjectOutsideTylerCompartment:
-		playAnimation(isDay() ? kEventCathSlipTylerCompartmentDay : kEventCathSlipTylerCompartmentNight);
+		playAnimation(isNight() ? kEventCathSlipTylerCompartmentNight : kEventCathSlipTylerCompartmentDay);
 		break;
 
 	case kObjectOutsideBetweenCompartments:
-		playAnimation(isDay() ? kEventCathSlipDay : kEventCathSlipNight);
+		playAnimation(isNight() ? kEventCathSlipNight : kEventCathSlipDay);
 		break;
 	}
 
@@ -908,11 +908,11 @@ IMPLEMENT_ACTION(getInsideTrain) {
 		return kSceneInvalid;
 
 	case kObjectOutsideTylerCompartment:
-		playAnimation(isDay() ? kEventCathGetInsideTylerCompartmentDay : kEventCathGetInsideTylerCompartmentNight);
+		playAnimation(isNight() ? kEventCathGetInsideTylerCompartmentNight : kEventCathGetInsideTylerCompartmentDay);
 		break;
 
 	case kObjectOutsideBetweenCompartments:
-		playAnimation(isDay() ? kEventCathGetInsideDay : kEventCathGetInsideNight);
+		playAnimation(isNight() ? kEventCathGetInsideNight : kEventCathGetInsideDay);
 		break;
 
 	case kObjectOutsideAnnaCompartment:

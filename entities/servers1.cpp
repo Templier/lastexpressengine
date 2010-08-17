@@ -659,7 +659,7 @@ IMPLEMENT_FUNCTION(Servers1, chapter5Handler, 31)
 
 IMPLEMENT_NULL_FUNCTION(Servers1, 32)
 
-void Servers1::serveTable(const SavePoint &savepoint, const char* seq1, EntityIndex entity, const char* seq2, const char* seq3, const char* seq4, int *parameter, Position position, bool shouldUpdatePosition, int* parameter2) {
+void Servers1::serveTable(const SavePoint &savepoint, const char* seq1, EntityIndex entity, const char* seq2, const char* seq3, const char* seq4, uint *parameter, Position position, bool shouldUpdatePosition, uint* parameter2) {
 	switch (savepoint.action) {
 	default:
 		break;
@@ -712,7 +712,7 @@ void Servers1::serveTable(const SavePoint &savepoint, const char* seq1, EntityIn
 	}
 }
 
-void Servers1::serveSalon(const SavePoint &savepoint, const char* seq1, const char* snd1, EntityIndex entity, const char* snd2, const char* seq2, ActionIndex action, const char* seq3, int *parameter) {
+void Servers1::serveSalon(const SavePoint &savepoint, const char* seq1, const char* snd1, EntityIndex entity, const char* snd2, const char* seq2, ActionIndex action, const char* seq3, uint *parameter) {
 	switch (savepoint.action) {
 	default:
 		break;

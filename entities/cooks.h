@@ -55,8 +55,8 @@ public:
 	DECLARE_FUNCTION(chapter5)
 
 private:
-	DECLARE_CALL_FUNCTION(siis, Cooks, const char*, int, int, const char*)
-	DECLARE_CALL_FUNCTION(iiii, Cooks, int, int, int, int)
+	DECLARE_CALL_FUNCTION(siis, Cooks, const char*, uint, uint, const char*)
+	DECLARE_CALL_FUNCTION(iiii, Cooks, uint, uint, uint, uint)
 };
 
 } // End of namespace LastExpress

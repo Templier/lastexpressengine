@@ -49,8 +49,7 @@ public:
 	DECLARE_FUNCTION(process)
 
 private:
-	DECLARE_CALL_FUNCTION(iiis, Train, int, int, int, char*)
-	DECLARE_CALL_FUNCTION(iiii, Train, int, int, int, int)
+	DECLARE_CALL_FUNCTION(iiii, Train, uint, uint, uint, uint)
 
 	// Helper methods
 	void resetParam8();

@@ -94,8 +94,8 @@ public:
 	DECLARE_FUNCTION(function53)
 
 private:
-	DECLARE_CALL_FUNCTION(siis, Abbot, const char*, int, int, const char*)
-	DECLARE_CALL_FUNCTION(iiii, Abbot, int, int, int, int)
+	DECLARE_CALL_FUNCTION(siis, Abbot, const char*, uint, uint, const char*)
+	DECLARE_CALL_FUNCTION(iiii, Abbot, uint, uint, uint, uint)
 };
 
 } // End of namespace LastExpress

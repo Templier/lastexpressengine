@@ -96,8 +96,8 @@ public:
 	DECLARE_FUNCTION(function55)
 
 private:
-	DECLARE_CALL_FUNCTION(iiii, Tatiana, int, int, int, int)
-	DECLARE_CALL_FUNCTION(siis, Tatiana, const char *, int, int, const char *)
+	DECLARE_CALL_FUNCTION(iiii, Tatiana, uint, uint, uint, uint)
+	DECLARE_CALL_FUNCTION(siis, Tatiana, const char *, uint, uint, const char *)
 };
 
 } // End of namespace LastExpress

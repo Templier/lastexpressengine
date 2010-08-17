@@ -76,8 +76,8 @@ public:
 	DECLARE_FUNCTION(function35)
 
 private:
-	DECLARE_CALL_FUNCTION(siis, Milos, const char*, int, int, const char*)
-	DECLARE_CALL_FUNCTION(iiii, Milos, int, int, int, int)
+	DECLARE_CALL_FUNCTION(siis, Milos, const char*, uint, uint, const char*)
+	DECLARE_CALL_FUNCTION(iiii, Milos, uint, uint, uint, uint)
 };
 
 } // End of namespace LastExpress

@@ -111,10 +111,10 @@ public:
 	DECLARE_NULL_FUNCTION()
 
 private:
-	DECLARE_CALL_FUNCTION(iiii, August, int, int, int, int)
-	DECLARE_CALL_FUNCTION(siis, August, const char *, int, int, const char *)
-	DECLARE_CALL_FUNCTION(issi, August, int, const char *, const char *, int)
-	DECLARE_CALL_FUNCTION(iisi, August, int, int, const char *, int)
+	DECLARE_CALL_FUNCTION(iiii, August, uint, uint, uint, uint)
+	DECLARE_CALL_FUNCTION(siis, August, const char *, uint, uint, const char *)
+	DECLARE_CALL_FUNCTION(issi, August, uint, const char *, const char *, uint)
+	DECLARE_CALL_FUNCTION(iisi, August, uint, uint, const char *, uint)
 };
 
 } // End of namespace LastExpress

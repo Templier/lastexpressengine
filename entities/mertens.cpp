@@ -225,7 +225,7 @@ IMPLEMENT_FUNCTION_SIII(Mertens, enterExitCompartment3, 5)
 		getData()->entityPosition = (EntityPosition)params->param5;
 
 		if (getEntities()->isSitting(kEntityPlayer, kCarGreenSleeping, (EntityPosition)params->param5) || getEntities()->isSitting(kEntityPlayer, kCarGreenSleeping, (EntityPosition)params->param6)) {
-			getAction()->playAnimation(isDay() ? kEventCathTurningDay : kEventCathTurningNight);
+			getAction()->playAnimation(isNight() ? kEventCathTurningNight : kEventCathTurningDay);
 			getSound()->playSound(kEntityPlayer, "BUMP");
 			getScenes()->loadSceneFromObject((ObjectIndex)params->param4);
 		}
@@ -550,7 +550,7 @@ IMPLEMENT_FUNCTION_I(Mertens, bonsoir, 12)
 		return;
 	}
 
-	if (isDay()) {
+	if (isNight()) {
 		if (Entities::isFemale(entity)) {
 			getSound()->playSound(kEntityMertens, rnd(2) ? "CON1112" : "CON1112A");
 		} else {
@@ -601,7 +601,7 @@ IMPLEMENT_FUNCTION_II(Mertens, function13, 13)
 			if (!params->param4)
 				params->param4 = getState()->timeTicks + 75;
 
-			if (params->param4 < (int)getState()->timeTicks) {
+			if (params->param4 < getState()->timeTicks) {
 				params->param4 = kTimeInvalid;
 
 				getData()->inventoryItem = kItemNone;
@@ -614,7 +614,7 @@ IMPLEMENT_FUNCTION_II(Mertens, function13, 13)
 		if (!params->param5)
 			params->param5 = getState()->timeTicks + 225;
 
-		if (params->param5 < (int)getState()->timeTicks) {
+		if (params->param5 < getState()->timeTicks) {
 			params->param5 = kTimeInvalid;
 
 			getData()->inventoryItem = kItemNone;
@@ -1531,7 +1531,7 @@ IMPLEMENT_FUNCTION(Mertens, function42, 42)
 						params->param4 = getState()->time;
 					}
 
-					if (params->param4 >= (int)getState()->time)
+					if (params->param4 >= getState()->time)
 						break;
 				}
 
@@ -1549,7 +1549,7 @@ label_callback_8:
 			if (!params->param5)
 				params->param5 = getState()->time + 2700;
 
-			if (params->param5 < (int)getState()->time) {
+			if (params->param5 < getState()->time) {
 				getEntities()->drawSequenceLeft(kEntityMertens, "601E");
 				ENTITY_PARAM(0, 1) = 1;
 				params->param5 = 0;
@@ -1990,12 +1990,12 @@ IMPLEMENT_FUNCTION(Mertens, function52, 52)
 		if (params->param2 == kTimeInvalid)
 			break;
 
-		if (params->param1 >= (int)getState()->time) {
+		if (params->param1 >= getState()->time) {
 
 			if (!getEntities()->isPlayerInCar(kCarRedSleeping) || !params->param2)
 				params->param2 = getState()->time;
 
-			if (params->param2 >= (int)getState()->time)
+			if (params->param2 >= getState()->time)
 				break;
 		}
 

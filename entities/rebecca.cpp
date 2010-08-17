@@ -268,7 +268,7 @@ IMPLEMENT_FUNCTION_I(Rebecca, function20, 20)
 		break;
 
 	case kActionNone:
-		if (params->param1 < (int)getState()->time && !params->param5) {
+		if (params->param1 < getState()->time && !params->param5) {
 			params->param5 = 1;
 
 			getObjects()->update(kObjectCompartmentE, kEntityPlayer, kLocationNone, kCursorHandKnock, kCursorHand);
@@ -298,7 +298,7 @@ label_process:
 					if (!getEntities()->checkFields9(kEntityRebecca, kEntityPlayer, 2000) || getSound()->isBuffered("CON1210") || !params->param7)
 						params->param7 = getState()->time;
 
-					if (params->param7 >= (int)getState()->time)
+					if (params->param7 >= getState()->time)
 						goto label_callback;
 				}
 
@@ -320,7 +320,7 @@ label_process:
 				if (!getEntities()->checkFields9(kEntityRebecca, kEntityPlayer, 1000) || !params->param8)
 					params->param8 = getState()->time;
 
-				if (params->param8 >= (int)getState()->time)
+				if (params->param8 >= getState()->time)
 					goto label_callback;
 			}
 
@@ -476,16 +476,16 @@ IMPLEMENT_FUNCTION(Rebecca, chapter1Handler, 22)
 		if (!getEntities()->isInSalon(kEntityPlayer) || !params->param4)
 			params->param4 = getState()->time + 150;
 
-		if (params->param4 >= (int)getState()->time) {
+		if (params->param4 >= getState()->time) {
 label_callback_4:
 			if (params->param1) {
 				bool checkParam5 = false;
 				if (!params->param5) {
-					params->param5 = (int)getState()->time + 900;
+					params->param5 = getState()->time + 900;
 					checkParam5 = true;
 				}
 
-				if (checkParam5 || params->param5 < (int)getState()->time) {
+				if (checkParam5 || params->param5 < getState()->time) {
 					if (getEntities()->isInSalon(kEntityPlayer)) {
 						setCallback(5);
 						call(new ENTITY_SETUP_SIIS(Rebecca, setup_playSound), "REB1013");

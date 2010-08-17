@@ -248,7 +248,7 @@ IMPLEMENT_FUNCTION(Alexei, function13, 13)
 			getData()->posture = kPostureSitting;
 
 			if (getEntities()->isSitting(kEntityPlayer, kCarGreenSleeping, kPosition_7500)) {
-				getAction()->playAnimation(isDay() ? kEventCathTurningDay : kEventCathTurningNight);
+				getAction()->playAnimation(isNight() ? kEventCathTurningNight : kEventCathTurningDay);
 				getSound()->playSound(kEntityPlayer, "BUMP");
 				getScenes()->loadSceneFromObject(kObjectCompartment2, true);
 			}
@@ -313,7 +313,7 @@ IMPLEMENT_FUNCTION_IS(Alexei, function16, 16)
 		break;
 
 	case kActionNone:
-		if (!params->param7 && params->param1 < (int)getState()->time && !params->param8) {
+		if (!params->param7 && params->param1 < getState()->time && !params->param8) {
 			params->param8 = 1;
 
 			getObjects()->update(kObjectCompartment2, kEntityPlayer, kLocation1, kCursorHandKnock, kCursorHand);
@@ -1062,7 +1062,7 @@ IMPLEMENT_FUNCTION(Alexei, function40, 40)
 			getData()->posture = kPostureSitting;
 
 			if (getEntities()->isSitting(kEntityPlayer, kCarGreenSleeping, kPosition_7500)) {
-				getAction()->playAnimation(isDay() ? kEventCathTurningDay : kEventCathTurningNight);
+				getAction()->playAnimation(isNight() ? kEventCathTurningNight : kEventCathTurningDay);
 				getSound()->playSound(kEntityPlayer, "BUMP");
 				getScenes()->loadSceneFromObject(kObjectCompartment2);
 			}

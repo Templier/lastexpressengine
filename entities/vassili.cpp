@@ -116,10 +116,10 @@ IMPLEMENT_FUNCTION(Vassili, chapter1Handler, 5)
 			getData()->entityPosition = getEntityData(kEntityTatiana)->entityPosition;
 			getData()->posture = getEntityData(kEntityTatiana)->posture;
 		} else {
-			if (params->param3 && params->param3 >= (int)getState()->time) {
+			if (params->param3 && params->param3 >= getState()->time) {
 				break;
 			}else {
-				params->param3 = (int)getState()->time + 450;
+				params->param3 = getState()->time + 450;
 				if (params->param3 == 0)
 					break;
 			}
@@ -181,7 +181,7 @@ label_function7:
 					}
 				}
 
-				if (params->param4 >= (int)getState()->time)
+				if (params->param4 >= getState()->time)
 					break;
 			}
 
@@ -232,7 +232,7 @@ IMPLEMENT_FUNCTION(Vassili, function7, 7)
 					 }
 				 }
 
-				 if (params->param1 >= (int)getState()->time)
+				 if (params->param1 >= getState()->time)
 					 break;
 			 }
 

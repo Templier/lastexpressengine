@@ -1070,7 +1070,7 @@ void SoundManager::excuseMe(EntityIndex entity, EntityIndex entity2, FlagType fl
 					break;
 				}
 			} else {
-				if (isDay()) {
+				if (isNight()) {
 					playSound(kEntityPlayer, (getProgress().field_18 == 2 ? "CON1110F" : "CON1110E"));
 				} else {
 					playSound(kEntityPlayer, "CON1110D");

@@ -829,7 +829,7 @@ label_callback1:
 
 				if (params->param5 != kTimeInvalid) {
 
-					if (params->param3 < (int)getState()->time) {
+					if (params->param3 < getState()->time) {
 						params->param5 = kTimeInvalid;
 						setCallback(2);
 						call(new ENTITY_SETUP(Pascale, setup_messageFromAnna));
@@ -839,7 +839,7 @@ label_callback1:
 					if (!getEntities()->isInRestaurant(kEntityPlayer) || !params->param5)
 						params->param5 = getState()->time;
 
-					if (params->param5 < (int)getState()->time) {
+					if (params->param5 < getState()->time) {
 						params->param5 = kTimeInvalid;
 						setCallback(2);
 						call(new ENTITY_SETUP(Pascale, setup_messageFromAnna));
@@ -1124,7 +1124,7 @@ IMPLEMENT_FUNCTION(Pascale, function33, 33)
 			if (!params->param5)
 				params->param5 = getState()->time + 4500;
 
-			if (params->param5 < (int)getState()->time) {
+			if (params->param5 < getState()->time) {
 				params->param5 = kTimeInvalid;
 
 				getObjects()->update(kObjectCompartmentG, kEntityPascale, kLocation1, kCursorNormal, kCursorNormal);

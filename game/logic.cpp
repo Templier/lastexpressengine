@@ -184,7 +184,7 @@ void Logic::eventMouse(const Common::Event &ev) {
 
 		if (ev.type == Common::EVENT_LBUTTONUP) {
 
-			getAction()->playAnimation(isDay() ? kEventCathSmokeDay : kEventCathSmokeNight);
+			getAction()->playAnimation(isNight() ? kEventCathSmokeNight : kEventCathSmokeDay);
 
 			if (!getState()->sceneUseBackup)
 				getInventory()->unselectItem();

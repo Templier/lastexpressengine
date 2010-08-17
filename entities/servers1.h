@@ -73,12 +73,12 @@ public:
 	DECLARE_NULL_FUNCTION()
 
 private:
-	DECLARE_CALL_FUNCTION(iiii, Servers1, int, int, int, int)
-	DECLARE_CALL_FUNCTION(siii, Servers1, const char*, int, int, int)
-	DECLARE_CALL_FUNCTION(siis, Servers1, const char*, int, int, const char*)
+	DECLARE_CALL_FUNCTION(iiii, Servers1, uint, uint, uint, uint)
+	DECLARE_CALL_FUNCTION(siii, Servers1, const char*, uint, uint, uint)
+	DECLARE_CALL_FUNCTION(siis, Servers1, const char*, uint, uint, const char*)
 
-	void serveTable(const SavePoint &savepoint, const char* seq1, EntityIndex entity, const char* seq2, const char* seq3, const char* seq4, int *parameter, Position position = 0, bool updatePosition = true, int *parameter2 = NULL);
-	void serveSalon(const SavePoint &savepoint, const char* seq1, const char* snd1, EntityIndex entity, const char* snd2, const char* seq2, ActionIndex action, const char* seq3, int *parameter);
+	void serveTable(const SavePoint &savepoint, const char* seq1, EntityIndex entity, const char* seq2, const char* seq3, const char* seq4, uint *parameter, Position position = 0, bool updatePosition = true, uint *parameter2 = NULL);
+	void serveSalon(const SavePoint &savepoint, const char* seq1, const char* snd1, EntityIndex entity, const char* snd2, const char* seq2, ActionIndex action, const char* seq3, uint *parameter);
 };
 
 } // End of namespace LastExpress

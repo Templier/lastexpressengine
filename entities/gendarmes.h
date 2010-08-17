@@ -60,9 +60,9 @@ public:
 	DECLARE_FUNCTION(chapter5)
 
 private:
-	DECLARE_CALL_FUNCTION(iiii, Gendarmes, int, int, int, int)
-	DECLARE_CALL_FUNCTION(iiss, Gendarmes, int, int, const char*, const char*)
-	DECLARE_CALL_FUNCTION(siis, Gendarmes, const char*, int, int, const char*)
+	DECLARE_CALL_FUNCTION(iiii, Gendarmes, uint, uint, uint, uint)
+	DECLARE_CALL_FUNCTION(iiss, Gendarmes, uint, uint, const char*, const char*)
+	DECLARE_CALL_FUNCTION(siis, Gendarmes, const char*, uint, uint, const char*)
 
 	void arrest(const SavePoint &savepoint, bool playSound = false, SoundManager::FlagType flag = SoundManager::kFlagInvalid, bool checkCallback = false, bool shouldUpdateEntity = false);
 };

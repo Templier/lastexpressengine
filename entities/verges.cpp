@@ -453,19 +453,19 @@ IMPLEMENT_FUNCTION_I(Verges, function13, 13)
 			if (getEvent(kEventVergesSuitcase) || getEvent(kEventVergesSuitcaseNight) || getEvent(kEventVergesSuitcaseOtherEntry) || getEvent(kEventVergesSuitcaseNightOtherEntry))
 				params->param2 = 1;
 
-			if (isDay() && getProgress().chapter != kChapter1)
+			if (isNight() && getProgress().chapter != kChapter1)
 				params->param2 = 1;
 
 			if (params->param1) {
-				if (isDay())
-					getAction()->playAnimation(params->param2 ? kEventVergesSuitcaseOtherEntryStart : kEventVergesSuitcaseOtherEntry);
-				else
+				if (isNight())
 					getAction()->playAnimation(params->param2 ? kEventVergesSuitcaseNightOtherEntryStart : kEventVergesSuitcaseNightOtherEntry);
-			} else {
-				if (isDay())
-					getAction()->playAnimation(params->param2 ? kEventVergesSuitcaseStart : kEventVergesSuitcase);
 				else
+					getAction()->playAnimation(params->param2 ? kEventVergesSuitcaseOtherEntryStart : kEventVergesSuitcaseOtherEntry);
+			} else {
+				if (isNight())
 					getAction()->playAnimation(params->param2 ? kEventVergesSuitcaseNightStart : kEventVergesSuitcaseNight);
+				else
+					getAction()->playAnimation(params->param2 ? kEventVergesSuitcaseStart : kEventVergesSuitcase);
 			}
 
 			getEntities()->clearSequences(kEntityVerges);
@@ -987,7 +987,7 @@ label_callback_2:
 			}
 		}
 
-		if (params->param2 >= (int)getState()->time) {
+		if (params->param2 >= getState()->time) {
 label_callback_6:
 
 			if (ENTITY_PARAM(0, 3)) {

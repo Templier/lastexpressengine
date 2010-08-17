@@ -70,8 +70,8 @@ public:
 	DECLARE_FUNCTION(chapter5)
 
 private:
-	DECLARE_CALL_FUNCTION(iiii, Kahina, int, int, int, int)
-	DECLARE_CALL_FUNCTION(siis, Kahina, const char *, int, int, const char *)
+	DECLARE_CALL_FUNCTION(iiii, Kahina, uint, uint, uint, uint)
+	DECLARE_CALL_FUNCTION(siis, Kahina, const char *, uint, uint, const char *)
 };
 
 } // End of namespace LastExpress

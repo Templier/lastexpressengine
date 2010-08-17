@@ -453,7 +453,7 @@ IMPLEMENT_FUNCTION_I(Coudert, excuseMe, 12)
 	}
 
 
-	if (isDay()) {
+	if (isNight()) {
 		if (Entities::isFemale((EntityIndex)params->param1)) {
 			getSound()->playSound(kEntityCoudert, Entities::isMarried((EntityIndex)params->param1) ? "JAC1112C" : "JAC1112F");
 		} else {
@@ -517,7 +517,7 @@ IMPLEMENT_FUNCTION_II(Coudert, function13, 13)
 				}
 			}
 
-			if (params->param4 < (int)getState()->timeTicks) {
+			if (params->param4 < getState()->timeTicks) {
 				params->param4 = kTimeInvalid;
 
 				getData()->inventoryItem = kItemNone;
@@ -621,7 +621,83 @@ IMPLEMENT_FUNCTION_II(Coudert, function13, 13)
 // Paramaters
 //  - EntityIndex
 IMPLEMENT_FUNCTION_I(Coudert, function14, 14)
-	error("Coudert: callback function 14 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionNone:
+		SAVEGAME_BLOOD_JACKET();
+		break;
+
+	case kActionDefault:
+		if (ENTITY_PARAM(2, 1)) {
+			ENTITY_PARAM(2, 1) = 0;
+
+			setCallback(3);
+			call(new ENTITY_SETUP(Coudert, setup_function9), kCarRedSleeping, kPosition_1500);
+		} else {
+			setCallback(1);
+			call(new ENTITY_SETUP(Coudert, setup_function10), 15);
+		}
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			getSavePoints()->push(kEntityCoudert, (EntityIndex)params->param1, kAction202558662);
+
+			setCallback(2);
+			call(new ENTITY_SETUP(Coudert, setup_function17), false);
+			break;
+
+		case 2:
+			getSavePoints()->push(kEntityCoudert, (EntityIndex)params->param1, kAction155853632);
+			getEntities()->drawSequenceLeft(kEntityCoudert, "627K");
+			break;
+
+		case 3:
+			getSavePoints()->push(kEntityCoudert, (EntityIndex)params->param1, kAction202558662);
+			getSavePoints()->push(kEntityCoudert, (EntityIndex)params->param1, kAction155853632);
+			getEntities()->drawSequenceLeft(kEntityCoudert, "627K");
+			getScenes()->loadSceneFromItemPosition(kItem5);
+			break;
+
+		case 4:
+			getAction()->playAnimation(kEventCoudertBloodJacket);
+			getLogic()->gameOver(kSavegameTypeIndex, 1, kSceneGameOverBloodJacket, true);
+			break;
+
+		case 5:
+			CALLBACK_ACTION();
+			break;
+		}
+		break;
+
+	case kAction125499160:
+		switch (params->param1) {
+		default:
+			break;
+
+		case kEntityVerges:
+			ENTITY_PARAM(0, 3) = 0;
+			break;
+
+		case kEntityMmeBoutarel:
+			ENTITY_PARAM(0, 4) = 0;
+			break;
+
+		case kEntityMertens:
+			ENTITY_PARAM(0, 5) = 0;
+			break;
+		}
+
+		setCallback(5);
+		call(new ENTITY_SETUP(Coudert, setup_function19), false);
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION_I(Coudert, function15, 15)
@@ -841,7 +917,7 @@ IMPLEMENT_FUNCTION_II(Coudert, function20, 20)
 		if (!CURRENT_PARAMS(1, 3))
 			CURRENT_PARAMS(1, 3) = getState()->time + 300;
 
-		if (CURRENT_PARAMS(1, 3) < (int)getState()->time) {
+		if (CURRENT_PARAMS(1, 3) < getState()->time) {
 			CURRENT_PARAMS(1, 3) = kTimeInvalid;
 
 			getSound()->playSound(kEntityPlayer, "ZFX1004", getSound()->getSoundFlag(kEntityCoudert));
@@ -1075,7 +1151,118 @@ IMPLEMENT_FUNCTION(Coudert, function32, 32)
 }
 
 IMPLEMENT_FUNCTION(Coudert, function33, 33)
-	error("Coudert: callback function 33 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionDefault:
+		if (ENTITY_PARAM(0, 3) || ENTITY_PARAM(0, 4) || ENTITY_PARAM(0, 5) || ENTITY_PARAM(0, 6) || ENTITY_PARAM(0, 7)
+		 || ENTITY_PARAM(1, 2) || ENTITY_PARAM(1, 7)
+		 || ENTITY_PARAM(2, 2)) {
+			ENTITY_PARAM(2, 6) = 1;
+
+			if (ENTITY_PARAM(0, 3) || ENTITY_PARAM(0, 4) || ENTITY_PARAM(0, 5)) {
+				setCallback(1);
+				call(new ENTITY_SETUP(Coudert, setup_function9), kCarRedSleeping, kPosition_1500);
+			} else {
+				setCallback(5);
+				call(new ENTITY_SETUP(Coudert, setup_function9), kCarRedSleeping, kPosition_540);
+			}
+		} else {
+			CALLBACK_ACTION();
+		}
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			ENTITY_PARAM(2, 1) = 1;
+			if (ENTITY_PARAM(0, 3)) {
+				setCallback(2);
+				call(new ENTITY_SETUP(Coudert, setup_function14), kEntityVerges);
+
+				break;
+			}
+			// Fallback to next case
+
+		case 2:
+			if (ENTITY_PARAM(0, 5)) {
+				setCallback(3);
+				call(new ENTITY_SETUP(Coudert, setup_function14), kEntityMertens);
+
+				break;
+			}
+			// Fallback to next case
+
+		case 3:
+			if (ENTITY_PARAM(0, 4)) {
+				setCallback(4);
+				call(new ENTITY_SETUP(Coudert, setup_function14), kEntityMmeBoutarel);
+
+				break;
+			}
+			// Fallback to next case
+
+		case 4:
+			ENTITY_PARAM(2, 6) = 0;
+
+			CALLBACK_ACTION();
+			break;
+
+		case 5:
+			getEntities()->clearSequences(kEntityCoudert);
+
+			setCallback(6);
+			call(new ENTITY_SETUP(Coudert, setup_function10), 75);
+			break;
+
+		case 6:
+			if (ENTITY_PARAM(0, 6) || ENTITY_PARAM(0, 7)) {
+				setCallback(7);
+				call(new ENTITY_SETUP(Coudert, setup_function37));
+
+				break;
+			}
+			// Fallback to next case
+
+		case 7:
+			if (ENTITY_PARAM(2, 2)) {
+				setCallback(8);
+				call(new ENTITY_SETUP(Coudert, setup_function39));
+
+				break;
+			}
+			// Fallback to next case
+
+		case 8:
+			if (ENTITY_PARAM(1, 2)) {
+				setCallback(9);
+				call(new ENTITY_SETUP(Coudert, setup_function55));
+
+				break;
+			}
+			// Fallback to next case
+
+		case 9:
+			if (ENTITY_PARAM(1, 7)) {
+				setCallback(10);
+				call(new ENTITY_SETUP(Coudert, setup_function34), false);
+
+				break;
+			}
+			// Fallback to next case
+
+		case 10:
+			ENTITY_PARAM(2, 6) = 0;
+
+			CALLBACK_ACTION();
+			break;
+		}
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION_I(Coudert, function34, 34)

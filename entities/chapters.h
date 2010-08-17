@@ -63,8 +63,8 @@ public:
 	DECLARE_FUNCTION(chapter5Handler)
 
 private:
-	DECLARE_CALL_FUNCTION(siis, Chapters, const char*, int, int, const char*)
-	DECLARE_CALL_FUNCTION(iiii, Chapters, int, int, int, int)
+	DECLARE_CALL_FUNCTION(siis, Chapters, const char*, uint, uint, const char*)
+	DECLARE_CALL_FUNCTION(iiii, Chapters, uint, uint, uint, uint)
 
 	void enterExitStation(const SavePoint &savepoint, bool isEnteringStation);
 	void enterExitHelper(const SavePoint &savepoint, bool isEnteringStation);

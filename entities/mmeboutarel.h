@@ -70,8 +70,8 @@ public:
 	DECLARE_NULL_FUNCTION()
 
 private:
-	DECLARE_CALL_FUNCTION(iiii, MmeBoutarel, int, int, int, int)
-	DECLARE_CALL_FUNCTION(siis, MmeBoutarel, const char*, int, int, const char*)
+	DECLARE_CALL_FUNCTION(iiii, MmeBoutarel, uint, uint, uint, uint)
+	DECLARE_CALL_FUNCTION(siis, MmeBoutarel, const char*, uint, uint, const char*)
 };
 
 } // End of namespace LastExpress

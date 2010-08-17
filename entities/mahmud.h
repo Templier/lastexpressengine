@@ -52,7 +52,7 @@ public:
 	DECLARE_FUNCTION(function11)
 	DECLARE_FUNCTION(function12)
 	DECLARE_FUNCTION(function13)
-	DECLARE_FUNCTION(chapters_handler)
+	DECLARE_FUNCTION(chaptersHandler)
 	DECLARE_FUNCTION(chapter1)
 	DECLARE_FUNCTION(resetChapter)
 	DECLARE_FUNCTION(chapter2)
@@ -61,9 +61,9 @@ public:
 	DECLARE_FUNCTION(chapter5)
 
 private:
-	DECLARE_CALL_FUNCTION(siis, Mahmud, const char*, int, int, const char*)
-	DECLARE_CALL_FUNCTION(siii, Mahmud, const char*, int, int, int)
-	DECLARE_CALL_FUNCTION(iiii, Mahmud, int, int, int, int)
+	DECLARE_CALL_FUNCTION(siis, Mahmud, const char*, uint, uint, const char*)
+	DECLARE_CALL_FUNCTION(siii, Mahmud, const char*, uint, uint, uint)
+	DECLARE_CALL_FUNCTION(iiii, Mahmud, uint, uint, uint, uint)
 };
 
 } // End of namespace LastExpress

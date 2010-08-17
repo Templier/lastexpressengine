@@ -66,8 +66,8 @@ public:
 	DECLARE_NULL_FUNCTION()
 
 private:
-	DECLARE_CALL_FUNCTION(iiii, Salko, int, int, int, int)
-	DECLARE_CALL_FUNCTION(siis, Salko, const char*, int, int, const char*)
+	DECLARE_CALL_FUNCTION(iiii, Salko, uint, uint, uint, uint)
+	DECLARE_CALL_FUNCTION(siis, Salko, const char*, uint, uint, const char*)
 };
 
 } // End of namespace LastExpress

@@ -248,7 +248,7 @@ IMPLEMENT_FUNCTION(Anna, function12, 12)
 			if (!params->param7)
 				params->param7 = getState()->timeTicks + 75;
 
-			if (params->param7 < (int)getState()->timeTicks) {
+			if (params->param7 < getState()->timeTicks) {
 				getSavePoints()->push(kEntityAnna, kEntityAnna, kAction2);
 
 				params->param6 = 0;
@@ -479,7 +479,7 @@ IMPLEMENT_FUNCTION_IS(Anna, function15, 15)
 		break;
 
 	case kActionNone:
-		if (params->param1 < (int32)getState()->time && !params->param7) {
+		if (params->param1 < getState()->time && !params->param7) {
 			params->param7 = 1;
 
 			getObjects()->update(kObjectCompartmentF, kEntityPlayer, kLocation1, kCursorHandKnock, kCursorHand);
@@ -720,7 +720,7 @@ IMPLEMENT_FUNCTION_I(Anna, function18, 18)
 		break;
 
 	case kActionNone:
-		if (params->param1 && params->param1 < (int)getState()->time && getEntities()->isSomebodyStandingInRestaurantOrSalon()) {
+		if (params->param1 && params->param1 < getState()->time && getEntities()->isSomebodyStandingInRestaurantOrSalon()) {
 			getData()->inventoryItem = kItemNone;
 			CALLBACK_ACTION();
 			break;
@@ -1210,7 +1210,7 @@ IMPLEMENT_FUNCTION(Anna, function30, 30)
 				if (!getEntities()->isInSalon(kEntityPlayer) || !params->param3)
 					params->param3 = getState()->time + 450;
 
-				if (params->param3 < (int)getState()->time) {
+				if (params->param3 < getState()->time) {
 					params->param3 = kTimeInvalid;
 					getSound()->playSound(kEntityAnna, "AUG1004");
 				}
@@ -1228,7 +1228,7 @@ IMPLEMENT_FUNCTION(Anna, function30, 30)
 			if (!getEntities()->isInSalon(kEntityPlayer) || !params->param4)
 				params->param4 = getState()->time + 150;
 
-			if (params->param4 < (int)getState()->time) {
+			if (params->param4 < getState()->time) {
 				params->param4 = kTimeInvalid;
 				setup_function30();
 				break;
@@ -1693,7 +1693,7 @@ IMPLEMENT_FUNCTION(Anna, function52, 52)
 			getData()->posture = kPostureSitting;
 
 			if (getEntities()->isSitting(kEntityPlayer, kCarRedSleeping, kPosition_4070) || getEntities()->isSitting(kEntityPlayer, kCarRedSleeping, kPosition_4455)) {
-				getAction()->playAnimation(isDay() ? kEventCathTurningDay : kEventCathTurningNight);
+				getAction()->playAnimation(isNight() ? kEventCathTurningNight : kEventCathTurningDay);
 				getSound()->playSound(kEntityPlayer, "BUMP");
 				getScenes()->loadSceneFromObject(kObjectCompartmentF);
 			}

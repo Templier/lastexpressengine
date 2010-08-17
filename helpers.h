@@ -44,7 +44,7 @@
 #define getFight() getLogic()->getGameFight()
 #define getEntities() getLogic()->getGameEntities()
 #define getSaveLoad() getLogic()->getGameSaveLoad()
-#define isDay() getLogic()->getGameState()->isDayTime()
+#define isNight() getLogic()->getGameState()->isNightTime()
 
 // State
 #define getState() getLogic()->getGameState()->getGameState()

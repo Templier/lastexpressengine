@@ -395,7 +395,7 @@ IMPLEMENT_FUNCTION_I(August, function23, 23)
 			if (!CURRENT_PARAMS(1, 3))
 				CURRENT_PARAMS(1, 3) = getState()->timeTicks + 45;
 
-			if (CURRENT_PARAMS(1, 3) >= (int)getState()->timeTicks)
+			if (CURRENT_PARAMS(1, 3) >= getState()->timeTicks)
 				break;
 
 			if (!params->param5) {
@@ -408,7 +408,7 @@ label_callback_8:
 			if (!CURRENT_PARAMS(1, 4))
 				CURRENT_PARAMS(1, 4) = getState()->timeTicks + 75;
 
-			if (CURRENT_PARAMS(1, 4) < (int)getState()->timeTicks) {
+			if (CURRENT_PARAMS(1, 4) < getState()->timeTicks) {
 				CURRENT_PARAMS(1, 4) = kTimeInvalid;
 
 				getEntities()->exitCompartment(kEntityAugust, kObjectCompartment1, true);
@@ -429,7 +429,7 @@ label_callback_8:
 			}
 
 label_callback_9:
-			if (params->param3 && params->param1 < (int)getState()->time && !CURRENT_PARAMS(1, 5)) {
+			if (params->param3 && params->param1 < getState()->time && !CURRENT_PARAMS(1, 5)) {
 				CURRENT_PARAMS(1, 5) = 1;
 				getObjects()->update(kObjectCompartment1, kEntityPlayer, kLocationNone, kCursorHandKnock, kCursorHand);
 
@@ -442,7 +442,7 @@ label_callback_9:
 		if (!CURRENT_PARAMS(1, 1))
 			CURRENT_PARAMS(1, 1) = getState()->timeTicks + 45;
 
-		if (CURRENT_PARAMS(1, 1) >= (int)getState()->timeTicks)
+		if (CURRENT_PARAMS(1, 1) >= getState()->timeTicks)
 			break;
 
 		if (getObjects()->get(kObjectCompartment1).location == kLocation1) {
@@ -1810,7 +1810,7 @@ IMPLEMENT_FUNCTION(August, function64, 64)
 		if (!params->param1)
 			params->param1 = getState()->time + 1800;
 
-		if (params->param1 >= (int)getState()->time)
+		if (params->param1 >= getState()->time)
 			break;
 
 		if (getState()->time > kTime2430000 && getEntities()->isSomebodyStandingInRestaurantOrSalon())  {

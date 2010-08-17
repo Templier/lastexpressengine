@@ -935,9 +935,9 @@ IMPLEMENT_FUNCTION(Abbot, function35, 35)
 		if (params->param1 != kTimeInvalid && getState()->time > kTime2115000) {
 			if (getState()->time <= kTime2124000) {
 				if (!getEntities()->checkFields9(kEntityAbbot, kEntityPlayer, 2000) || !params->param1)
-					params->param1 = (int)getState()->time;
+					params->param1 = getState()->time;
 
-				if (params->param1 >= (int)getState()->time)
+				if (params->param1 >= getState()->time)
 					break;
 			}
 
@@ -1057,7 +1057,7 @@ IMPLEMENT_FUNCTION(Abbot, chapter4Handler, 41)
 	case kActionNone:
 		TIME_CHECK_SAVEPOINT(kTime2358000, params->param1, kEntityAbbot, kEntityServers0, kAction218128129);
 
-		if (getState()->time > kTime3289500 && getEntities()->isSomebodyStandingInRestaurantOrSalon())
+		if (getState()->time > kTime2389500 && getEntities()->isSomebodyStandingInRestaurantOrSalon())
 			setup_function42();
 
 		break;

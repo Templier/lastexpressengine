@@ -50,14 +50,14 @@ public:
 	};
 
 	struct EntityParametersIIII : EntityParameters {
-		int param1;
-		int param2;
-		int param3;
-		int param4;
-		int param5;
-		int param6;
-		int param7;
-		int param8;
+		uint param1;
+		uint param2;
+		uint param3;
+		uint param4;
+		uint param5;
+		uint param6;
+		uint param7;
+		uint param8;
 
 		EntityParametersIIII() {
 			param1 = 0;
@@ -81,11 +81,11 @@ public:
 
 	struct EntityParametersSIII : EntityParameters {
 		char seq[12];
-		int param4;
-		int param5;
-		int param6;
-		int param7;
-		int param8;
+		uint param4;
+		uint param5;
+		uint param6;
+		uint param7;
+		uint param8;
 
 		EntityParametersSIII() {
 			memset(&seq, 0, 12);
@@ -103,8 +103,8 @@ public:
 
 	struct EntityParametersSIIS : EntityParameters {
 		char seq1[12];
-		int param4;
-		int param5;
+		uint param4;
+		uint param5;
 		char seq2[12];
 
 		EntityParametersSIIS() {
@@ -120,10 +120,10 @@ public:
 	};
 
 	struct EntityParametersISSI : EntityParameters {
-		int param1;
+		uint param1;
 		char seq1[12];
 		char seq2[12];
-		int param8;
+		uint param8;
 
 		EntityParametersISSI() {
 			param1 = 0;
@@ -138,12 +138,12 @@ public:
 	};
 
 	struct EntityParametersISII : EntityParameters {
-		int param1;
+		uint param1;
 		char seq[12];
-		int param5;
-		int param6;
-		int param7;
-		int param8;
+		uint param5;
+		uint param6;
+		uint param7;
+		uint param8;
 
 		EntityParametersISII() {
 			param1 = 0;
@@ -162,8 +162,8 @@ public:
 	struct EntityParametersSSII : EntityParameters {
 		char seq1[12];
 		char seq2[12];
-		int param7;
-		int param8;
+		uint param7;
+		uint param8;
 
 		EntityParametersSSII() {
 			memset(&seq1, 0, 12);
@@ -178,8 +178,8 @@ public:
 	};
 
 	struct EntityParametersIISS : EntityParameters {
-		int param1;
-		int param2;
+		uint param1;
+		uint param2;
 		char seq1[12];
 		char seq2[12];
 
@@ -196,12 +196,12 @@ public:
 	};
 
 	struct EntityParametersIISI : EntityParameters {
-		int param1;
-		int param2;
+		uint param1;
+		uint param2;
 		char seq[12];
-		int param6;
-		int param7;
-		int param8;
+		uint param6;
+		uint param7;
+		uint param8;
 
 		EntityParametersIISI() {
 			param1 = 0;
@@ -218,12 +218,12 @@ public:
 	};
 
 	struct EntityParametersIIIS : EntityParameters {
-		int param1;
-		int param2;
-		int param3;
+		uint param1;
+		uint param2;
+		uint param3;
 		char seq[12];
-		int param7;
-		int param8;
+		uint param7;
+		uint param8;
 
 		EntityParametersIIIS() {
 			param1 = 0;
@@ -403,11 +403,11 @@ public:
 	// Setup
 	void setup(ChapterIndex index);
 
-	virtual void setup_chapter1(int param1 = 0, int param2 = 0, int param3 = 0, int param4 = 0) = 0;
-	virtual void setup_chapter2(int param1 = 0, int param2 = 0, int param3 = 0, int param4 = 0) = 0;
-	virtual void setup_chapter3(int param1 = 0, int param2 = 0, int param3 = 0, int param4 = 0) = 0;
-	virtual void setup_chapter4(int param1 = 0, int param2 = 0, int param3 = 0, int param4 = 0) = 0;
-	virtual void setup_chapter5(int param1 = 0, int param2 = 0, int param3 = 0, int param4 = 0) = 0;
+	virtual void setup_chapter1(uint param1 = 0, uint param2 = 0, uint param3 = 0, uint param4 = 0) = 0;
+	virtual void setup_chapter2(uint param1 = 0, uint param2 = 0, uint param3 = 0, uint param4 = 0) = 0;
+	virtual void setup_chapter3(uint param1 = 0, uint param2 = 0, uint param3 = 0, uint param4 = 0) = 0;
+	virtual void setup_chapter4(uint param1 = 0, uint param2 = 0, uint param3 = 0, uint param4 = 0) = 0;
+	virtual void setup_chapter5(uint param1 = 0, uint param2 = 0, uint param3 = 0, uint param4 = 0) = 0;
 
 	// Serializable
 	void saveLoadWithSerializer(Common::Serializer &ser) { _data->saveLoadWithSerializer(ser); }

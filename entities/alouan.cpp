@@ -222,7 +222,7 @@ IMPLEMENT_FUNCTION(Alouan, chapter2Handler, 14)
 			if (!getEntities()->isPlayerInCar(kCarGreenSleeping) || !params->param2)
 				params->param2 = getState()->time + 75;
 
-			if (params->param2 >= (int)getState()->time)
+			if (params->param2 >= getState()->time)
 				break;
 		}
 

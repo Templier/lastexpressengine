@@ -281,13 +281,13 @@ IMPLEMENT_FUNCTION(Train, process, 8)
 	case kActionNone:
 		// Play smoke animation
 		if ((getEntities()->isPlayerInCar(kCarGreenSleeping) || getEntities()->isPlayerInCar(kCarRedSleeping))
-		  && params->param4  && !params->param5) {
+		  && params->param4 && !params->param5) {
 
 		  params->param4 -= 1;
 
 		  if (!params->param4 && getProgress().jacket == kJacketGreen) {
 
-			  getAction()->playAnimation(isDay() ? kEventCathSmokeDay : kEventCathSmokeNight);
+			  getAction()->playAnimation(isNight() ? kEventCathSmokeNight : kEventCathSmokeDay);
 			  params->param5 = 1;
 			  getScenes()->processScene();
 		  }
@@ -303,13 +303,13 @@ IMPLEMENT_FUNCTION(Train, process, 8)
 label_process:
 		if (params->param7) {
 			if (!params1->param8) {
-				params1->param8 = (int)getState()->time + 4500;
+				params1->param8 = getState()->time + 4500;
 
 				if (!params1->param8)
 					params->param7 = 0;
 			}
 
-			if (params1->param8 && params1->param8 < (int)getState()->time) {
+			if (params1->param8 && params1->param8 < getState()->time) {
 				params->param7 = 0;
 				params1->param8 = 0;
 			}
@@ -365,7 +365,7 @@ label_process:
 
 		// Draw moving background behind windows
 		if (params->param3) {
-			if (getEntityData(kEntityPlayer)->car != params->param1 || isDay() != (bool)(params->param2 > 0)) {
+			if (getEntityData(kEntityPlayer)->car != (CarIndex)params->param1 || isNight() != (bool)(params->param2)) {
 				switch (getEntityData(kEntityPlayer)->car) {
 				default:
 					getEntities()->clearSequences(kEntityTrain);
@@ -376,7 +376,7 @@ label_process:
 					if (getProgress().isNightTime)
 						getEntities()->drawSequenceLeft(kEntityTrain, "B1WNM");
 					else
-						getEntities()->drawSequenceLeft(kEntityTrain, isDay() ? "B1WNN" : "B1WND");
+						getEntities()->drawSequenceLeft(kEntityTrain, isNight() ? "B1WNN" : "B1WND");
 					break;
 
 				case kCarGreenSleeping:
@@ -384,17 +384,17 @@ label_process:
 					if (getProgress().isNightTime)
 						getEntities()->drawSequenceLeft(kEntityTrain, "S1WNM");
 					else
-						getEntities()->drawSequenceLeft(kEntityTrain, isDay() ? "S1WNN" : "S1WND");
+						getEntities()->drawSequenceLeft(kEntityTrain, isNight() ? "S1WNN" : "S1WND");
 					break;
 
 				case kCarRestaurant:
-					getEntities()->drawSequenceLeft(kEntityTrain, isDay() ? "RCWNN" : "RCWND");
+					getEntities()->drawSequenceLeft(kEntityTrain, isNight() ? "RCWNN" : "RCWND");
 					break;
 				}
 
 				// Set parameters so we do not get called twice
 				params->param1 = getEntityData(kEntityPlayer)->car;
-				params->param2 = isDay();
+				params->param2 = isNight();
 			}
 		}
 
@@ -459,7 +459,7 @@ label_process:
 	}
 
 	case kAction191070912:
-		ENTITY_PARAM(0, 7) = (int)savepoint.param.intValue;
+		ENTITY_PARAM(0, 7) = savepoint.param.intValue;
 		break;
 
 	case kActionTrainStopRunning:

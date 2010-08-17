@@ -53,7 +53,7 @@ public:
 	DECLARE_NULL_FUNCTION()
 
 private:
-	DECLARE_CALL_FUNCTION(iiii, Sophie, int, int, int, int)
+	DECLARE_CALL_FUNCTION(iiii, Sophie, uint, uint, uint, uint)
 };
 
 } // End of namespace LastExpress

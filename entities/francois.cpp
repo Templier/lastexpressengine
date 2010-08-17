@@ -221,9 +221,9 @@ IMPLEMENT_FUNCTION_I(Francois, function11, 11)
 		if (!getSound()->isBuffered(kEntityFrancois)) {
 
 			if (!CURRENT_PARAMS(1, 1))
-				CURRENT_PARAMS(1, 1) = (int)getState()->timeTicks + params->param6;
+				CURRENT_PARAMS(1, 1) = getState()->timeTicks + params->param6;
 
-			if (CURRENT_PARAMS(1, 1) < (int)getState()->timeTicks) {
+			if (CURRENT_PARAMS(1, 1) < getState()->timeTicks) {
 				switch (rnd(7)) {
 				default:
 					break;
@@ -298,7 +298,7 @@ label_callback:
 		if (getProgress().chapter == kChapter1) {
 
 			if (getEntities()->isSittingOrStanding(kEntityFrancois, kCarRedSleeping)
-			 && (getEntities()->hasValidFrame(kEntityFrancois) || params->param1 < (int)getState()->time || params->param4)
+			 && (getEntities()->hasValidFrame(kEntityFrancois) || params->param1 < getState()->time || params->param4)
 			 && !params->param5
 			 && getData()->entityPosition < getEntityData(kEntityMmeBoutarel)->entityPosition) {
 
@@ -311,7 +311,7 @@ label_callback:
 					params->param5 = 1;
 				}
 			}
-		} else if (params->param1 < (int)getState()->time) {
+		} else if (params->param1 < getState()->time) {
 			getData()->clothes = kClothesDefault;
 			getData()->field_4A3 = 30;
 			getData()->inventoryItem = kItemNone;
@@ -391,10 +391,10 @@ label_callback:
 
 		case 6:
 			if (getProgress().jacket == kJacketGreen) {
-				if (isDay())
-					getAction()->playAnimation(getData()->entityPosition <= getEntityData(kEntityPlayer)->entityPosition ? kEventFrancoisWhistleD : kEventFrancoisWhistleD);
-				else
+				if (isNight())
 					getAction()->playAnimation(getData()->entityPosition <= getEntityData(kEntityPlayer)->entityPosition ? kEventFrancoisWhistleNightD : kEventFrancoisWhistleNight);
+				else
+					getAction()->playAnimation(getData()->entityPosition <= getEntityData(kEntityPlayer)->entityPosition ? kEventFrancoisWhistleD : kEventFrancoisWhistleD);
 			}
 			getEntities()->loadSceneFromEntityPosition(getData()->car, (EntityPosition)(getData()->entityPosition + 750 * (getData()->direction == kDirectionUp ? -1 : 1)), getData()->direction == kDirectionUp);
 			break;

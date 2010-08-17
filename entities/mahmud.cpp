@@ -56,7 +56,7 @@ Mahmud::Mahmud(LastExpressEngine *engine) : Entity(engine, kEntityMahmud) {
 	ADD_CALLBACK_FUNCTION(Mahmud, function11);
 	ADD_CALLBACK_FUNCTION(Mahmud, function12);
 	ADD_CALLBACK_FUNCTION(Mahmud, function13);
-	ADD_CALLBACK_FUNCTION(Mahmud, chapters_handler);
+	ADD_CALLBACK_FUNCTION(Mahmud, chaptersHandler);
 	ADD_CALLBACK_FUNCTION(Mahmud, chapter1);
 	ADD_CALLBACK_FUNCTION(Mahmud, resetChapter);
 	ADD_CALLBACK_FUNCTION(Mahmud, chapter2);
@@ -587,7 +587,7 @@ IMPLEMENT_FUNCTION(Mahmud, function13, 13)
 }
 
 //////////////////////////////////////////////////////////////////////////
-IMPLEMENT_FUNCTION(Mahmud, chapters_handler, 14)
+IMPLEMENT_FUNCTION(Mahmud, chaptersHandler, 14)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -731,7 +731,7 @@ IMPLEMENT_FUNCTION(Mahmud, chapters_handler, 14)
 			return;
 
 		case 10:
-			getAction()->playAnimation((getProgress().jacket == kJacketGreen) ? (isDay() ? kEventMahmudWrongDoorDay : kEventMahmudWrongDoor) : kEventMahmudWrongDoorOriginalJacket);
+			getAction()->playAnimation((getProgress().jacket == kJacketGreen) ? (isNight() ? kEventMahmudWrongDoor : kEventMahmudWrongDoorDay) : kEventMahmudWrongDoorOriginalJacket);
 			getSound()->playSound(kEntityPlayer, "LIB015");
 			getScenes()->processScene();
 
@@ -773,7 +773,7 @@ IMPLEMENT_FUNCTION(Mahmud, chapter1, 15)
 		break;
 
 	case kActionNone:
-		TIME_CHECK_CHAPTER1(setup_chapters_handler);
+		TIME_CHECK_CHAPTER1(setup_chaptersHandler);
 		break;
 
 	case kActionDefault:
@@ -809,7 +809,7 @@ IMPLEMENT_FUNCTION(Mahmud, chapter2, 17)
 		break;
 
 	case kActionNone:
-		setup_chapters_handler();
+		setup_chaptersHandler();
 		break;
 
 	case kActionDefault:
@@ -831,7 +831,7 @@ IMPLEMENT_FUNCTION(Mahmud, chapter3, 18)
 		break;
 
 	case kActionNone:
-		setup_chapters_handler();
+		setup_chaptersHandler();
 		break;
 
 	case kActionDefault:
@@ -854,7 +854,7 @@ IMPLEMENT_FUNCTION(Mahmud, chapter4, 19)
 		break;
 
 	case kActionNone:
-		setup_chapters_handler();
+		setup_chaptersHandler();
 		break;
 
 	case kActionDefault:

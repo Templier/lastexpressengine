@@ -383,7 +383,7 @@ void Entity::enterExitCompartment(const SavePoint &savepoint, EntityPosition pos
 			getData()->posture = kPostureSitting;
 
 			if (getEntities()->isSitting(kEntityPlayer, car, position1) || getEntities()->isSitting(kEntityPlayer, car, position2)) {
-				getAction()->playAnimation(isDay() ? kEventCathTurningDay : kEventCathTurningNight);
+				getAction()->playAnimation(isNight() ? kEventCathTurningNight : kEventCathTurningDay);
 				getSound()->playSound(kEntityPlayer, "BUMP");
 				getScenes()->loadSceneFromObject(compartment, alternate);
 			}

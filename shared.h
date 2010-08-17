@@ -170,7 +170,7 @@ enum TimeValue {
 	kTime2367000              = 2367000,
 	kTime2385000              = 2385000,
 	kTimeCityPoszony          = 2383200,
-	kTime3289500              = 3289500,
+	kTime2389500              = 3289500,
 	kTime2403000              = 2403000,
 	kTime2407500              = 2407500,
 	kTime2410200              = 2410200,

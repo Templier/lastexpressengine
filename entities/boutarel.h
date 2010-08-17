@@ -80,9 +80,9 @@ public:
 	DECLARE_NULL_FUNCTION()
 
 private:
-    DECLARE_CALL_FUNCTION(iiii, Boutarel, int, int, int, int)
-	DECLARE_CALL_FUNCTION(siis, Boutarel, const char *, int, int, const char *)
-	DECLARE_CALL_FUNCTION(isii, Boutarel, int, const char *, int, int)
+    DECLARE_CALL_FUNCTION(iiii, Boutarel, uint, uint, uint, uint)
+	DECLARE_CALL_FUNCTION(siis, Boutarel, const char *, uint, uint, const char *)
+	DECLARE_CALL_FUNCTION(isii, Boutarel, uint, const char *, uint, uint)
 };
 
 } // End of namespace LastExpress

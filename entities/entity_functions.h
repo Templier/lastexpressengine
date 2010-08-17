@@ -93,7 +93,7 @@
 	}
 
 #define TIME_CHECK_CALLBACK_ACTION(class, timeValue, parameter) \
-	if ((int)getState()->time > timeValue && !parameter) { \
+	if (getState()->time > timeValue && !parameter) { \
 		parameter = 1; \
 		CALLBACK_ACTION(); \
 		break; \
@@ -181,16 +181,16 @@
 
 #define UPDATE_PARAM(parameter, type, value) { \
 	if (!parameter) \
-		parameter = (int)type + (int)value; \
-	if (parameter >= (int)type) \
+		parameter = type + value; \
+	if (parameter >= type) \
 		break; \
 	parameter = kTimeInvalid; \
 }
 
 #define UPDATE_PARAM_GOTO(parameter, type, value, label) { \
 	if (!parameter) \
-		parameter = (int)type + (int)value; \
-	if (parameter >= (int)type) \
+		parameter = type + value; \
+	if (parameter >= type) \
 		goto label; \
 	parameter = kTimeInvalid; \
 }

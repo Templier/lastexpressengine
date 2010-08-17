@@ -59,8 +59,8 @@ public:
 	DECLARE_FUNCTION(chapter5)
 
 private:
-	DECLARE_CALL_FUNCTION(siis, Vassili, const char*, int, int, const char*)
-	DECLARE_CALL_FUNCTION(iiii, Vassili, int, int, int, int)
+	DECLARE_CALL_FUNCTION(iiii, Vassili, uint, uint, uint, uint)
+	DECLARE_CALL_FUNCTION(siis, Vassili, const char*, uint, uint, const char*)
 };
 
 } // End of namespace LastExpress

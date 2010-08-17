@@ -169,7 +169,7 @@ label_callback2:
 					}
 				}
 
-				if (params->param3 >= (int)getState()->time)
+				if (params->param3 >= getState()->time)
 					return;
 			}
 
@@ -196,7 +196,7 @@ label_callback4:
 					}
 				}
 
-				if (params->param5 >= (int)getState()->time)
+				if (params->param5 >= getState()->time)
 					return;
 			}
 
@@ -273,7 +273,7 @@ IMPLEMENT_FUNCTION(Hadija, chapter2Handler, 14)
 			if (!getEntities()->isPlayerInCar(kCarGreenSleeping) || !params->param2)
 				params->param2 = getState()->time + 75;
 
-			if (params->param2 >= (int)getState()->time) {
+			if (params->param2 >= getState()->time) {
 				TIME_CHECK_CALLBACK(Hadija, kTime1822500, params->param3, 2, setup_function9);
 				break;
 			}

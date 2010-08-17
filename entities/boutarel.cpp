@@ -320,7 +320,7 @@ IMPLEMENT_FUNCTION_I(Boutarel, function18, 18)
 		break;
 
 	case kActionNone:
-		if (params->param1 < (int)getState()->time && !params->param4) {
+		if (params->param1 < getState()->time && !params->param4) {
 			params->param4 = 1;
 
 			getObjects()->update(kObjectCompartmentC, kEntityPlayer, kLocationNone, kCursorHandKnock, kCursorHand);
@@ -728,7 +728,51 @@ IMPLEMENT_FUNCTION(Boutarel, chapter4Handler, 32)
 }
 
 IMPLEMENT_FUNCTION(Boutarel, function33, 33)
-	error("Boutarel: callback function 33 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionNone:
+		if (params->param1)
+			TIME_CHECK_CALLBACK_I(Boutarel, kTime2389500, params->param2, 3, setup_function14, false);
+		break;
+
+	case kActionDefault:
+		setCallback(1);
+		call(new ENTITY_SETUP(Boutarel, setup_function11), true);
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			getEntities()->drawSequenceLeft(kEntityBoutarel, "008B");
+
+			setCallback(2);
+			call(new ENTITY_SETUP(Boutarel, setup_updateFromTime), 450);
+			break;
+
+		case 2:
+			getSavePoints()->push(kEntityBoutarel, kEntityServers1, kAction256200848);
+			break;
+
+		case 3:
+			setup_function34();
+			break;
+		}
+		break;
+
+	case kAction122288808:
+		params->param1 = 1;
+		getEntities()->drawSequenceLeft(kEntityBoutarel, "008D");
+		break;
+
+	case kAction122358304:
+		getEntities()->drawSequenceLeft(kEntityBoutarel, "BLANK");
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Boutarel, function34, 34)

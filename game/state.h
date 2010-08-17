@@ -55,7 +55,7 @@ public:
 		ChapterIndex chapter;
 		uint32 field_30;
 		bool eventMetAugust;
-		uint32 isNightTime;					///< 0 = day / 1 = night
+		bool isNightTime;
 		uint32 field_3C;
 		uint32 field_40;
 		uint32 field_44;
@@ -405,7 +405,7 @@ public:
 	Flags      *getGameFlags() { return _flags; }
 
 	// Time checks
-	bool isDayTime() const;
+	bool isNightTime() const;
 
 	// Timer
 	int getTimer() { return _timer; }

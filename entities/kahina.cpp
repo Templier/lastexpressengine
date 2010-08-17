@@ -243,7 +243,7 @@ IMPLEMENT_FUNCTION(Kahina, function13, 13)
 		break;
 
 	case kActionNone:
-		if (getProgress().field_14 || getState()->time >= kTime1201500 || params->param2 == kTimeInvalid || params->param1 >= (int)getState()->time)
+		if (getProgress().field_14 || getState()->time >= kTime1201500 || params->param2 == kTimeInvalid || params->param1 >= getState()->time)
 			break;
 
 		if (getState()->time <= kTime1197000) {
@@ -254,7 +254,7 @@ IMPLEMENT_FUNCTION(Kahina, function13, 13)
 					goto label_callback;
 			}
 
-			if (params->param2 >= (int)getState()->time)
+			if (params->param2 >= getState()->time)
 				break;
 		}
 
@@ -338,7 +338,7 @@ IMPLEMENT_FUNCTION(Kahina, chapter2Handler, 17)
 			if (!params->param2)
 				params->param2 = getState()->time + 9000;
 
-			if (params->param2 < (int)getState()->time) {
+			if (params->param2 < getState()->time) {
 				params->param1 = 1;
 				params->param2 = 0;
 			}
@@ -348,7 +348,7 @@ IMPLEMENT_FUNCTION(Kahina, chapter2Handler, 17)
 			if (!params->param3)
 				params->param3 = getState()->time + 900;
 
-			if (params->param3 < (int)getState()->time) {
+			if (params->param3 < getState()->time) {
 				params->param3 = kTimeInvalid;
 
 				setCallback(1);

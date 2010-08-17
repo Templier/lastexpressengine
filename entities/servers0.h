@@ -79,11 +79,11 @@ public:
 	DECLARE_NULL_FUNCTION()
 
 private:
-	DECLARE_CALL_FUNCTION(iiii, Servers0, int, int, int, int)
-	DECLARE_CALL_FUNCTION(siis, Servers0, const char *, int, int, const char*)
+	DECLARE_CALL_FUNCTION(iiii, Servers0, uint, uint, uint, uint)
+	DECLARE_CALL_FUNCTION(siis, Servers0, const char *, uint, uint, const char*)
 
-	void handleServer(const SavePoint &savepoint, const char* name, EntityIndex entity, ActionIndex action, int *parameter, const char* name2 = "");
-	void serveTable(const SavePoint &savepoint, const char* seq1, EntityIndex entity, const char* seq2, const char* seq3, const char* seq4, int *parameter, bool shouldUpdatePosition = true, bool pushSavepoint = false, Position position = 0);
+	void handleServer(const SavePoint &savepoint, const char* name, EntityIndex entity, ActionIndex action, uint *parameter, const char* name2 = "");
+	void serveTable(const SavePoint &savepoint, const char* seq1, EntityIndex entity, const char* seq2, const char* seq3, const char* seq4, uint *parameter, bool shouldUpdatePosition = true, bool pushSavepoint = false, Position position = 0);
 };
 
 } // End of namespace LastExpress

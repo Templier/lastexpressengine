@@ -75,8 +75,8 @@ public:
 	DECLARE_FUNCTION(function34)
 
 private:
-	DECLARE_CALL_FUNCTION(iiii, Ivo, int, int, int, int)
-	DECLARE_CALL_FUNCTION(siis, Ivo, const char*, int, int, const char*)
+	DECLARE_CALL_FUNCTION(iiii, Ivo, uint, uint, uint, uint)
+	DECLARE_CALL_FUNCTION(siis, Ivo, const char*, uint, uint, const char*)
 };
 
 } // End of namespace LastExpress
