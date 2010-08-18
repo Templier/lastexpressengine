@@ -312,9 +312,9 @@ IMPLEMENT_FUNCTION_II(August, updateEntity2, 18)
 	case kActionNone:
 		if (getEntities()->updateEntity(_entityIndex, (CarIndex)params->param1, (EntityPosition)params->param2)) {
 			CALLBACK_ACTION();
-		} else if (getEntities()->checkFields9(kEntityAugust, kEntityPlayer, 1000)
+		} else if (getEntities()->isDistanceBetweenEntities(kEntityAugust, kEntityPlayer, 1000)
 		        && !getEntities()->isInGreenCarEntrance(kEntityPlayer)
-				&& !getEntities()->isSittingInCompartmentCars(kEntityPlayer)
+				&& !getEntities()->isInsideCompartment(kEntityPlayer)
 				&& !getEntities()->checkFields10(kEntityPlayer)) {
 
 			if (getData()->car == kCarGreenSleeping || getData()->car == kCarRedSleeping) {
@@ -361,7 +361,7 @@ IMPLEMENT_FUNCTION(August, chapter1, 22)
 		getObjects()->update(kObject11, kEntityPlayer, kLocationNone, kCursorKeepValue, kCursorKeepValue);
 
 		getData()->entityPosition = kPosition_4691;
-		getData()->posture = kPostureSitting;
+		getData()->location = kLocationInsideCompartment;
 		getData()->car = kCarRestaurant;
 		getData()->clothes = kClothesDefault;
 
@@ -378,7 +378,7 @@ IMPLEMENT_FUNCTION_I(August, function23, 23)
 	case kActionNone:
 		if (getProgress().field_14 == 29 || getProgress().field_14 == 3) {
 			if (params->param3) {
-				getData()->posture = kPostureStanding;
+				getData()->location = kLocationOutsideCompartment;
 
 				setCallback(2);
 				call(new ENTITY_SETUP_SIIS(August, setup_enterExitCompartment), "626Ea", kObjectCompartment1);
@@ -416,7 +416,7 @@ label_callback_8:
 				if (getProgress().eventCorpseMovedFromFloor) {
 					setCallback(9);
 					call(new ENTITY_SETUP_SIIS(August, setup_enterExitCompartment), "626Da", kObjectCompartment1);
-				} else if (getEntities()->isSittingOrStanding(kEntityPlayer, kCarGreenSleeping)) {
+				} else if (getEntities()->isInsideTrainCar(kEntityPlayer, kCarGreenSleeping)) {
 					setCallback(10);
 					call(new ENTITY_SETUP_SIIS(August, setup_enterExitCompartment3), "626Da", kObjectCompartment1);
 				} else {
@@ -514,7 +514,7 @@ label_callback_9:
 	case kActionOpenDoor:
 		if (getProgress().eventCorpseMovedFromFloor && getProgress().jacket != kJacketBlood) {
 			if (params->param3) {
-				getData()->posture = kPostureSitting;
+				getData()->location = kLocationInsideCompartment;
 
 				params->param7 = (getObjects()->get(kObjectCompartment1).location2 == kLocation1) ? kEventMeetAugustHisCompartmentBed : kEventMeetAugustHisCompartment;
 			} else {
@@ -532,12 +532,12 @@ label_callback_9:
 		break;
 
 	case kActionDefault:
-		if (getEntities()->isSitting(kEntityPlayer, kCarGreenSleeping, kPosition_8200)
-		 || getEntities()->isSitting(kEntityPlayer, kCarGreenSleeping, kPosition_7850)
-		 || getEntities()->checkFields15()) {
+		if (getEntities()->isInsideCompartment(kEntityPlayer, kCarGreenSleeping, kPosition_8200)
+		 || getEntities()->isInsideCompartment(kEntityPlayer, kCarGreenSleeping, kPosition_7850)
+		 || getEntities()->isOutsideAlexeiWindow()) {
 			getObjects()->update(kObjectCompartment1, kEntityAugust, getObjects()->get(kObjectCompartment1).location, kCursorNormal, kCursorNormal);
 
-			if (getEntities()->checkFields15())
+			if (getEntities()->isOutsideAlexeiWindow())
 				getScenes()->loadSceneFromPosition(kCarGreenSleeping, 49);
 
 			getSound()->playSound(kEntityPlayer, "LIB012");
@@ -581,12 +581,12 @@ label_callback_9:
 			getObjects()->update(kObjectCompartment1, kEntityPlayer, kLocationNone, kCursorHandKnock, kCursorHand);
 			getSound()->playSound(kEntityPlayer, "LIB014");
 			getEntities()->clearSequences(kEntityAugust);
-			getData()->posture = kPostureSitting;
+			getData()->location = kLocationInsideCompartment;
 
 			getAction()->playAnimation((EventIndex)params->param7);
 			getSound()->playSound(kEntityPlayer, "LIB015");
 			getProgress().eventMetAugust = 1;
-			getData()->posture = kPostureStanding;
+			getData()->location = kLocationOutsideCompartment;
 
 			getScenes()->loadScene(kScene41);
 
@@ -611,7 +611,7 @@ label_callback_9:
 		case 9:
 			params->param3 = 1;
 			getEntities()->clearSequences(kEntityAugust);
-			getData()->posture = kPostureSitting;
+			getData()->location = kLocationInsideCompartment;
 			getObjects()->update(kObjectCompartment1, kEntityAugust, kLocationNone, kCursorHandKnock, kCursorHand);
 			goto label_callback_9;
 
@@ -631,7 +631,7 @@ label_callback_9:
 			break;
 
 		case 12:
-			getData()->posture = kPostureStanding;
+			getData()->location = kLocationOutsideCompartment;
 			CALLBACK_ACTION();
 			break;
 
@@ -656,7 +656,7 @@ label_callback_9:
 
 			getAction()->playAnimation((EventIndex)params->param7);
 			getProgress().eventMetAugust = 1;
-			getData()->posture = kPostureStanding;
+			getData()->location = kLocationOutsideCompartment;
 
 			getScenes()->loadScene(kScene41);
 
@@ -725,8 +725,8 @@ IMPLEMENT_FUNCTION(August, chapter1Handler, 25)
 			}
 		}
 
-		if (getState()->time > kTime1093500 && getEntities()->isSomebodyStandingInRestaurantOrSalon()) {
-			getData()->posture = kPostureStanding;
+		if (getState()->time > kTime1093500 && getEntities()->isSomebodyInsideRestaurantOrSalon()) {
+			getData()->location = kLocationOutsideCompartment;
 			getData()->inventoryItem = kItemNone;
 
 			setCallback(1);
@@ -786,7 +786,7 @@ IMPLEMENT_FUNCTION(August, chapter1Handler, 25)
 			getAction()->playAnimation(kEventDinerAugustOriginalJacket);
 			getObjects()->update(kObjectCompartment1, kEntityPlayer, kLocation3, kCursorNormal, kCursorNormal);
 
-			getData()->posture = kPostureStanding;
+			getData()->location = kLocationOutsideCompartment;
 
 			getSavePoints()->push(kEntityAugust, kEntityTables3, kActionDrawTablesWithChairs, "010K");
 			getEntities()->drawSequenceRight(kEntityAugust, "010P");
@@ -923,7 +923,7 @@ IMPLEMENT_FUNCTION(August, function27, 27)
 
 		case 3:
 			getData()->entityPosition = kPosition_1540;
-			getData()->posture = kPostureStanding;
+			getData()->location = kLocationOutsideCompartment;
 
 			setCallback(4);
 			call(new ENTITY_SETUP_SIIS(August, setup_draw), "803US");
@@ -939,7 +939,7 @@ IMPLEMENT_FUNCTION(August, function27, 27)
 			break;
 
 		case 5:
-			getData()->posture = kPostureSitting;
+			getData()->location = kLocationInsideCompartment;
 			setup_function28();
 			break;
 		}
@@ -1097,7 +1097,7 @@ IMPLEMENT_FUNCTION(August, function34, 34)
 		getObjects()->update(kObjectCompartment3, kEntityPlayer, kLocation1, kCursorHandKnock, kCursorHand);
 
 		getData()->entityPosition = kPosition_6470;
-		getData()->posture = kPostureSitting;
+		getData()->location = kLocationInsideCompartment;
 		getData()->car = kCarGreenSleeping;
 
 		getEntities()->clearSequences(kEntityAugust);
@@ -1118,7 +1118,7 @@ IMPLEMENT_FUNCTION(August, chapter2, 35)
 		getEntities()->clearSequences(kEntityAugust);
 
 		getData()->entityPosition = kPosition_3970;
-		getData()->posture = kPostureSitting;
+		getData()->location = kLocationInsideCompartment;
 		getData()->car = kCarRestaurant;
 		getData()->clothes = kClothes1;
 		getData()->inventoryItem = kItemNone;
@@ -1138,9 +1138,9 @@ IMPLEMENT_FUNCTION(August, chapter2Handler, 36)
 	case kActionNone:
 		TIME_CHECK_SAVEPOINT(kTime1755000, params->param2, kEntityAugust, kEntityServers0, kAction252568704);
 
-		if (getState()->time > kTime1773000 && params->param1 && getEntities()->isSomebodyStandingInRestaurantOrSalon()) {
+		if (getState()->time > kTime1773000 && params->param1 && getEntities()->isSomebodyInsideRestaurantOrSalon()) {
 			getData()->inventoryItem = kItemNone;
-			getData()->posture = kPostureStanding;
+			getData()->location = kLocationOutsideCompartment;
 			getEntities()->updatePositionEnter(kEntityAugust, kCarRestaurant, 62);
 
 			setCallback(2);
@@ -1264,7 +1264,7 @@ IMPLEMENT_FUNCTION(August, chapter3, 40)
 		getEntities()->clearSequences(kEntityAugust);
 
 		getData()->entityPosition = kPosition_6470;
-		getData()->posture = kPostureStanding;
+		getData()->location = kLocationOutsideCompartment;
 		getData()->car = kCarGreenSleeping;
 		getData()->clothes = kClothes1;
 		getData()->inventoryItem = kItemNone;
@@ -1483,7 +1483,7 @@ IMPLEMENT_FUNCTION(August, function50, 50)
 		getEntities()->clearSequences(kEntityAugust);
 
 		getData()->entityPosition = kPosition_6000;
-		getData()->posture = kPostureSitting;
+		getData()->location = kLocationInsideCompartment;
 		getData()->car = kCarKronos;
 		break;
 
@@ -1500,7 +1500,7 @@ IMPLEMENT_FUNCTION(August, function51, 51)
 	case kActionDefault:
 		getData()->car = kCarGreenSleeping;
 		getData()->entityPosition = kPosition_850;
-		getData()->posture = kPostureStanding;
+		getData()->location = kLocationOutsideCompartment;
 
 		setCallback(1);
 		call(new ENTITY_SETUP(August, setup_function42), kCarGreenSleeping, kPosition_5790, false);
@@ -1601,7 +1601,7 @@ IMPLEMENT_FUNCTION(August, function55, 55)
 			break;
 
 		case 1:
-			getData()->posture = kPostureStanding;
+			getData()->location = kLocationOutsideCompartment;
 
 			setCallback(2);
 			call(new ENTITY_SETUP_SIIS(August, setup_updatePosition), "105D3", kCarRestaurant, 57);
@@ -1664,7 +1664,7 @@ IMPLEMENT_FUNCTION(August, chapter4, 57)
 		getEntities()->clearSequences(kEntityAugust);
 
 		getData()->entityPosition = kPosition_6470;
-		getData()->posture = kPostureSitting;
+		getData()->location = kLocationInsideCompartment;
 		getData()->car = kCarGreenSleeping;
 		getData()->clothes = kClothes2;
 		getData()->inventoryItem = kItemNone;
@@ -1702,7 +1702,7 @@ IMPLEMENT_FUNCTION(August, chapter4Handler, 58)
 
 		case 3:
 			getData()->entityPosition = kPosition_1540;
-			getData()->posture = kPostureStanding;
+			getData()->location = kLocationOutsideCompartment;
 
 			setCallback(4);
 			call(new ENTITY_SETUP_SIIS(August, setup_draw), "803WS");
@@ -1718,7 +1718,7 @@ IMPLEMENT_FUNCTION(August, chapter4Handler, 58)
 			break;
 
 		case 5:
-			getData()->posture = kPostureSitting;
+			getData()->location = kLocationInsideCompartment;
 			setup_function59();
 			break;
 		}
@@ -1756,7 +1756,7 @@ IMPLEMENT_FUNCTION(August, function61, 61)
 		break;
 
 	case kActionDefault:
-		getData()->posture = kPostureStanding;
+		getData()->location = kLocationOutsideCompartment;
 		getEntities()->drawSequenceRight(kEntityAugust, "803FS");
 		if (getEntities()->isInRestaurant(kEntityPlayer))
 			getEntities()->updateFrame(kEntityAugust);
@@ -1813,8 +1813,8 @@ IMPLEMENT_FUNCTION(August, function64, 64)
 		if (params->param1 >= getState()->time)
 			break;
 
-		if (getState()->time > kTime2430000 && getEntities()->isSomebodyStandingInRestaurantOrSalon())  {
-			getData()->posture = kPostureStanding;
+		if (getState()->time > kTime2430000 && getEntities()->isSomebodyInsideRestaurantOrSalon())  {
+			getData()->location = kLocationOutsideCompartment;
 
 			setCallback(1);
 			call(new ENTITY_SETUP_SIIS(August, setup_updatePosition), "122J", kCarRestaurant, 57);
@@ -1865,7 +1865,7 @@ IMPLEMENT_FUNCTION(August, function65, 65)
 
 	case kActionDefault:
 		getData()->entityPosition = kPosition_6470;
-		getData()->posture = kPostureSitting;
+		getData()->location = kLocationInsideCompartment;
 		getData()->car = kCarGreenSleeping;
 
 		getEntities()->clearSequences(kEntityAugust);
@@ -1891,7 +1891,7 @@ IMPLEMENT_FUNCTION(August, chapter5, 66)
 		getEntities()->clearSequences(kEntityAugust);
 
 		getData()->entityPosition = kPosition_3969;
-		getData()->posture = kPostureSitting;
+		getData()->location = kLocationInsideCompartment;
 		getData()->car = kCarRestaurant;
 		getData()->clothes = kClothes2;
 		getData()->inventoryItem = kItemNone;

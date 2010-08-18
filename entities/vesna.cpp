@@ -146,7 +146,7 @@ IMPLEMENT_FUNCTION_II(Vesna, updateEntity2, 7)
 	case kActionNone:
 		params->param3 = 0;
 
-		if (getEntities()->checkFields9(kEntityVesna, kEntityMilos, 500)
+		if (getEntities()->isDistanceBetweenEntities(kEntityVesna, kEntityMilos, 500)
 		 || (((getData()->direction == kDirectionUp && (getData()->car > getEntityData(kEntityMilos)->car)) || (getData()->car == getEntityData(kEntityMilos)->car && getData()->entityPosition > getEntityData(kEntityMilos)->entityPosition)))
 		 || (((getData()->direction == kDirectionDown && (getData()->car < getEntityData(kEntityMilos)->car)) || (getData()->car == getEntityData(kEntityMilos)->car && getData()->entityPosition < getEntityData(kEntityMilos)->entityPosition)))) {
 			getData()->field_49B = 0;
@@ -299,7 +299,7 @@ IMPLEMENT_FUNCTION(Vesna, chapter1, 12)
 		getSavePoints()->addData(kEntityVesna, kAction124190740, 0);
 
 		getData()->entityPosition = kPosition_4689;
-		getData()->posture = kPostureSitting;
+		getData()->location = kLocationInsideCompartment;
 		getData()->car = kCarRestaurant;
 		break;
 	}
@@ -312,7 +312,7 @@ IMPLEMENT_FUNCTION(Vesna, chapter1Handler, 13)
 
 	case kActionNone:
 		getData()->entityPosition = getEntityData(kEntityMilos)->entityPosition;
-		getData()->posture = getEntityData(kEntityMilos)->posture;
+		getData()->location = getEntityData(kEntityMilos)->location;
 		break;
 
 	case kActionCallback:
@@ -336,7 +336,7 @@ IMPLEMENT_FUNCTION(Vesna, function14, 14)
 
 	case kActionDefault:
 		getData()->entityPosition = kPosition_3050;
-		getData()->posture = kPostureSitting;
+		getData()->location = kLocationInsideCompartment;
 		getData()->car = kCarRedSleeping;
 		break;
 
@@ -350,7 +350,7 @@ IMPLEMENT_FUNCTION(Vesna, function14, 14)
 IMPLEMENT_FUNCTION(Vesna, function15, 15)
 	if (savepoint.action == kActionDefault) {
 		getData()->entityPosition = kPosition_3050;
-		getData()->posture = kPostureSitting;
+		getData()->location = kLocationInsideCompartment;
 		getData()->car = kCarRedSleeping;
 
 		getEntities()->clearSequences(kEntityVesna);
@@ -371,7 +371,7 @@ IMPLEMENT_FUNCTION(Vesna, chapter2, 16)
 		getEntities()->clearSequences(kEntityVesna);
 
 		getData()->entityPosition = kPosition_3050;
-		getData()->posture = kPostureSitting;
+		getData()->location = kLocationInsideCompartment;
 		getData()->car = kCarRedSleeping;
 		getData()->clothes = kClothesDefault;
 		getData()->inventoryItem = kItemNone;
@@ -414,7 +414,7 @@ IMPLEMENT_FUNCTION(Vesna, chapter3, 19)
 		getEntities()->clearSequences(kEntityVesna);
 
 		getData()->entityPosition = kPosition_3050;
-		getData()->posture = kPostureSitting;
+		getData()->location = kLocationInsideCompartment;
 		getData()->car = kCarRedSleeping;
 		getData()->clothes = kClothesDefault;
 		getData()->inventoryItem = kItemNone;
@@ -449,7 +449,7 @@ IMPLEMENT_FUNCTION(Vesna, function23, 23)
 	case kActionDefault:
 		getData()->car = kCarRedSleeping;
 		getData()->entityPosition = kPosition_3050;
-		getData()->posture = kPostureSitting;
+		getData()->location = kLocationInsideCompartment;
 		getData()->clothes = kClothesDefault;
 		getData()->inventoryItem = kItemNone;
 		break;
@@ -491,7 +491,7 @@ IMPLEMENT_FUNCTION(Vesna, chapter4, 24)
 		getEntities()->clearSequences(kEntityVesna);
 
 		getData()->entityPosition = kPosition_3050;
-		getData()->posture = kPostureSitting;
+		getData()->location = kLocationInsideCompartment;
 		getData()->car = kCarRedSleeping;
 		getData()->inventoryItem = kItemNone;
 
@@ -526,7 +526,7 @@ IMPLEMENT_FUNCTION(Vesna, function26, 26)
 		case 1:
 			getData()->car = kCarRestaurant;
 			getData()->entityPosition = kPosition_5800;
-			getData()->posture = kPostureStanding;
+			getData()->location = kLocationOutsideCompartment;
 
 			setCallback(2);
 			call(new ENTITY_SETUP_SIIS(Vesna, setup_draw), "808DD");
@@ -566,7 +566,7 @@ IMPLEMENT_FUNCTION(Vesna, function27, 27)
 		getObjects()->update(kObjectCompartmentG, kEntityPlayer, kLocation3, kCursorHandKnock, kCursorHand);
 
 		getData()->entityPosition = kPosition_3050;
-		getData()->posture = kPostureSitting;
+		getData()->location = kLocationInsideCompartment;
 		getData()->car = kCarRedSleeping;
 		getData()->inventoryItem = kItemNone;
 	}
@@ -584,7 +584,7 @@ IMPLEMENT_FUNCTION(Vesna, chapter5, 28)
 	case kActionDefault:
 		getEntities()->clearSequences(kEntityVesna);
 
-		getData()->posture = kPostureSitting;
+		getData()->location = kLocationInsideCompartment;
 		getData()->car = kCarRestaurant;
 		getData()->inventoryItem = kItemNone;
 		break;

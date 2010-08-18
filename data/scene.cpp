@@ -123,8 +123,8 @@ Scene *Scene::load(Common::SeekableReadStream *stream) {
 
 	stream->read(&scene->_name, sizeof(scene->_name));
 	scene->_sig = stream->readByte();
-	scene->count = stream->readUint16LE();;
-	scene->field_11 = stream->readUint16LE();
+	scene->entityPosition = (EntityPosition)stream->readUint16LE();;
+	scene->location = (Location)stream->readUint16LE();
 	scene->car = (CarIndex)stream->readUint16LE();
 	scene->position = stream->readByte();
 	scene->type = (Type)stream->readByte();
@@ -140,7 +140,7 @@ void Scene::loadHotspots(Common::SeekableReadStream *stream) {
 	if (!_hotspots.empty())
 		return;
 
-	debugC(10, kLastExpressDebugScenes, "Scene:  name=%s, sig=%02d, position=%d, field_11=%d", _name, _sig, count, field_11);
+	debugC(10, kLastExpressDebugScenes, "Scene:  name=%s, sig=%02d, entityPosition=%d, location=%d", _name, _sig, entityPosition, location);
 	debugC(10, kLastExpressDebugScenes, "\tcar=%02d, position=%02d, type=%02d, param1=%02d", car, position, type, param1);
 	debugC(10, kLastExpressDebugScenes, "\tparam2=%02d, param3=%02d, hotspot=%d\n", param2, param3, _hotspot);
 
@@ -209,7 +209,7 @@ Common::Rect Scene::draw(Graphics::Surface *surface) {
 Common::String Scene::toString() {
 	Common::String output = "";
 
-	output += Common::String::printf("Scene:  name=%s, sig=%02d, count=%d, field_11=%d\n", _name, _sig, count, field_11);
+	output += Common::String::printf("Scene:  name=%s, sig=%02d, entityPosition=%d, location=%d\n", _name, _sig, entityPosition, location);
 	output += Common::String::printf("        car=%02d, position=%02d, type=%02d, param1=%02d\n", car, position, type, param1);
 	output += Common::String::printf("        param2=%02d, param3=%02d, hotspot=%d\n", param2, param3, _hotspot);
 
@@ -254,9 +254,9 @@ bool SceneLoader::load(Common::SeekableReadStream *stream) {
 	if (!header)
 		error("SceneLoader::load: Invalid data file!");
 
-	debugC(2, kLastExpressDebugScenes, "   found %d entries", header->count);
+	debugC(2, kLastExpressDebugScenes, "   found %d entries", header->entityPosition); /* Header entityPosition is the scene count */
 
-	if (header->count > 2500) {
+	if (header->entityPosition > 2500) {
 		delete header;
 
 		return false;
@@ -265,7 +265,7 @@ bool SceneLoader::load(Common::SeekableReadStream *stream) {
 	_scenes.push_back(header);
 
 	// Read all the chunks
-	for (uint32 i = 0; i < header->count; ++i) {
+	for (uint i = 0; i < (uint)header->entityPosition; ++i) {
 		Scene *scene = Scene::load(_stream);
 		if (!scene)
 			break;

@@ -154,7 +154,7 @@ IMPLEMENT_FUNCTION(Pascale, welcomeSophieAndRebecca, 8)
 
 	case kActionDefault:
 		getData()->entityPosition = kPosition_850;
-		getData()->posture = kPostureStanding;
+		getData()->location = kLocationOutsideCompartment;
 
 		setCallback(1);
 		call(new ENTITY_SETUP_SIIS(Pascale, setup_draw), "901");
@@ -278,7 +278,7 @@ IMPLEMENT_FUNCTION(Pascale, function11, 11)
 
 	case kActionDefault:
 		getData()->entityPosition = kPosition_5800;
-		getData()->posture = kPostureStanding;
+		getData()->location = kLocationOutsideCompartment;
 
 		getSavePoints()->push(kEntityPascale, kEntityAugust, kAction168046720);
 		getSavePoints()->push(kEntityPascale, kEntityAnna, kAction168046720);
@@ -338,7 +338,7 @@ IMPLEMENT_FUNCTION(Pascale, chapter1, 12)
 		getSavePoints()->addData(kEntityPascale, kAction190605184, 11);
 
 		getData()->entityPosition = kPosition_5900;
-		getData()->posture = kPostureStanding;
+		getData()->location = kLocationOutsideCompartment;
 		getData()->car = kCarRestaurant;
 		break;
 	}
@@ -351,7 +351,7 @@ IMPLEMENT_FUNCTION(Pascale, getMessageFromAugustToTyler, 13)
 
 	case kActionDefault:
 		getData()->entityPosition = kPosition_5800;
-		getData()->posture = kPostureStanding;
+		getData()->location = kLocationOutsideCompartment;
 
 		setCallback(1);
 		call(new ENTITY_SETUP_SIIS(Pascale, setup_draw), "902");
@@ -424,7 +424,7 @@ IMPLEMENT_FUNCTION(Pascale, welcomeAnna, 15)
 
 	case kActionDefault:
 		getData()->entityPosition = kPosition_5800;
-		getData()->posture = kPostureStanding;
+		getData()->location = kLocationOutsideCompartment;
 
 		setCallback(1);
 		call(new ENTITY_SETUP_SIIS(Pascale, setup_draw), "901");
@@ -468,7 +468,7 @@ IMPLEMENT_FUNCTION(Pascale, serveTatianaVassili, 16)
 
 	case kActionDefault:
 		getData()->entityPosition = kPosition_5800;
-		getData()->posture = kPostureStanding;
+		getData()->location = kLocationOutsideCompartment;
 
 		setCallback(1);
 		call(new ENTITY_SETUP_SIIS(Pascale, setup_draw), "903");
@@ -537,7 +537,7 @@ switch (savepoint.action) {
 			break;
 		}
 
-		if (!getEntities()->isSomebodyStandingInRestaurantOrSalon())
+		if (!getEntities()->isSomebodyInsideRestaurantOrSalon())
 			goto label_callback3;
 
 		if (params->param1 && !params->param2 && getEntities()->isPlayerPosition(kCarRestaurant, 61)) {
@@ -635,7 +635,7 @@ IMPLEMENT_FUNCTION(Pascale, function19, 19)
 	case kActionDefault:
 		getData()->car = kCarRestaurant;
 		getData()->entityPosition = kPosition_5900;
-		getData()->posture = kPostureStanding;
+		getData()->location = kLocationOutsideCompartment;
 
 		getEntities()->clearSequences(kEntityPascale);
 		break;
@@ -647,7 +647,7 @@ IMPLEMENT_FUNCTION(Pascale, chapter2, 20)
 		getEntities()->clearSequences(kEntityPascale);
 
 		getData()->entityPosition = kPosition_5900;
-		getData()->posture = kPostureStanding;
+		getData()->location = kLocationOutsideCompartment;
 		getData()->car = kCarRestaurant;
 		getData()->clothes = kClothes1;
 		getData()->inventoryItem = kItemNone;
@@ -669,7 +669,7 @@ IMPLEMENT_FUNCTION(Pascale, chapter3, 21)
 		getEntities()->clearSequences(kEntityPascale);
 
 		getData()->entityPosition = kPosition_5900;
-		getData()->posture = kPostureStanding;
+		getData()->location = kLocationOutsideCompartment;
 		getData()->car = kCarRestaurant;
 		getData()->inventoryItem = kItemNone;
 
@@ -715,7 +715,7 @@ IMPLEMENT_FUNCTION(Pascale, function23, 23)
 
 	case kActionDefault:
 		getData()->entityPosition = kPosition_5800;
-		getData()->posture = kPostureStanding;
+		getData()->location = kLocationOutsideCompartment;
 		getEntities()->updatePositionEnter(kEntityPascale, kCarRestaurant, 67);
 
 		setCallback(1);
@@ -788,7 +788,7 @@ IMPLEMENT_FUNCTION(Pascale, chapter4, 25)
 		getEntities()->clearSequences(kEntityPascale);
 
 		getData()->entityPosition = kPosition_5900;
-		getData()->posture = kPostureStanding;
+		getData()->location = kLocationOutsideCompartment;
 		getData()->car = kCarRestaurant;
 		getData()->inventoryItem = kItemNone;
 
@@ -815,7 +815,7 @@ IMPLEMENT_FUNCTION(Pascale, chapter4Handler, 26)
 		if (!getEntities()->isInKitchen(kEntityPascale))
 			break;
 
-		if (getEntities()->isSomebodyStandingInRestaurantOrSalon()) {
+		if (getEntities()->isSomebodyInsideRestaurantOrSalon()) {
 			if (ENTITY_PARAM(0, 8)) {
 				setCallback(1);
 				call(new ENTITY_SETUP(Pascale, setup_function27));
@@ -912,7 +912,7 @@ label_callback3:
 		getSavePoints()->push(kEntityPascale, kEntityTables5, kActionDrawTablesWithChairs, "024D");
 
 		getData()->entityPosition = kPosition_5900;
-		getData()->posture = kPostureStanding;
+		getData()->location = kLocationOutsideCompartment;
 		break;
 	}
 }
@@ -976,7 +976,7 @@ IMPLEMENT_FUNCTION(Pascale, messageFromAnna, 28)
 
 	case kActionDefault:
 		getData()->entityPosition = kPosition_5800;
-		getData()->posture = kPostureStanding;
+		getData()->location = kLocationOutsideCompartment;
 
 		setCallback(1);
 		call(new ENTITY_SETUP_SIIS(Pascale, setup_draw), "902");
@@ -1021,7 +1021,7 @@ IMPLEMENT_FUNCTION(Pascale, function29, 29)
 
 	case kActionDefault:
 		getData()->entityPosition = kPosition_1540;
-		getData()->posture = kPostureStanding;
+		getData()->location = kLocationOutsideCompartment;
 
 		setCallback(1);
 		call(new ENTITY_SETUP_SIIS(Pascale, setup_draw), "817DD");
@@ -1058,7 +1058,7 @@ IMPLEMENT_FUNCTION(Pascale, function30, 30)
 
 	case kActionDefault:
 		getData()->entityPosition = kPosition_9270;
-		getData()->posture = kPostureStanding;
+		getData()->location = kLocationOutsideCompartment;
 
 		setCallback(1);
 		call(new ENTITY_SETUP_SIIS(Pascale, setup_draw), "817US");
@@ -1101,7 +1101,7 @@ IMPLEMENT_FUNCTION(Pascale, chapter5, 31)
 		getEntities()->clearSequences(kEntityPascale);
 
 		getData()->entityPosition = kPosition_3969;
-		getData()->posture = kPostureSitting;
+		getData()->location = kLocationInsideCompartment;
 		getData()->car = kCarRestaurant;
 		getData()->inventoryItem = kItemNone;
 		break;
@@ -1165,7 +1165,7 @@ label_callback1:
 	case kActionDefault:
 		getData()->car = kCarRedSleeping;
 		getData()->entityPosition = kPosition_3050;
-		getData()->posture = kPostureSitting;
+		getData()->location = kLocationInsideCompartment;
 
 		getObjects()->update(kObjectCompartmentG, kEntityPascale, kLocation1, kCursorHandKnock, kCursorHand);
 		break;

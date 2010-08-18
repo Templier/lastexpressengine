@@ -269,19 +269,19 @@ public:
 	struct EntityCallData {
 		byte callbacks[16];
 		byte currentCall;
-		EntityPosition entityPosition;  // word
-		Posture posture;				// word
-		CarIndex car;					// word
+		EntityPosition entityPosition;      // word
+		Location location;                  // word
+		CarIndex car;                       // word
 		byte field_497;
-		EntityIndex entity;             // byte
-		InventoryItem inventoryItem;	// byte
-		EntityDirection direction;		// byte
+		EntityIndex entity;                 // byte
+		InventoryItem inventoryItem;        // byte
+		EntityDirection direction;          // byte
 		int16 field_49B;
 		int16 currentFrame;
 		int16 currentFrame2;
 		int16 field_4A1;
 		int16 field_4A3;
-		ClothesIndex clothes;			    // byte
+		ClothesIndex clothes;               // byte
 		Position position;
 		CarIndex car2;                      // byte
 		bool doProcessEntity;               // byte
@@ -305,7 +305,7 @@ public:
 			memset(&callbacks, 0, 16 * sizeof(byte));
 			currentCall = 0;
 			entityPosition = kPositionNone;
-			posture = kPostureStanding;
+			location = kLocationOutsideCompartment;
 			car = kCarNone;
 			field_497 = 0;
 			entity = kEntityPlayer;
@@ -338,7 +338,7 @@ public:
 		Common::String toString() {
 			Common::String str = "";
 
-			str += Common::String::printf("Entity position: %d - Posture: %d       - Car: %d\n", entityPosition, posture, car);
+			str += Common::String::printf("Entity position: %d    - Location: %d       - Car: %d\n", entityPosition, location, car);
 			str += Common::String::printf("Entity: %d             - Item: %d          - Direction: %d\n", entity, inventoryItem, direction);
 			str += Common::String::printf("Clothes: %d            - Position: %d      - Direction switch: %d\n", clothes, position, directionSwitch);
 			str += "\n";
@@ -531,7 +531,7 @@ protected:
 	 * @param compartment The compartment.
 	 * @param alternate   true to use the alternate version of SceneManager::loadSceneFromObject()
 	 */
-	void enterExitCompartment(const SavePoint &savepoint, EntityPosition position1 = kPositionNone, EntityPosition position2 = kPositionNone, CarIndex car = kCarNone, ObjectIndex compartment = kObjectNone, bool alternate = false, bool updatePosture = false);
+	void enterExitCompartment(const SavePoint &savepoint, EntityPosition position1 = kPositionNone, EntityPosition position2 = kPositionNone, CarIndex car = kCarNone, ObjectIndex compartment = kObjectNone, bool alternate = false, bool updateLocation = false);
 
 	/**
 	 * Updates the position

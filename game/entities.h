@@ -108,26 +108,26 @@ public:
 	//////////////////////////////////////////////////////////////////////////
 
 	/**
-	 * Query if 'entity' is sitting.
+	 * Query if 'entity' is inside a compartment
 	 *
 	 * @param entity   The entity.
 	 * @param car 	   The car.
 	 * @param position The position.
 	 *
-	 * @return true if sitting, false if not.
+	 * @return true if inside the compartment, false if not.
 	 */
-	bool isSitting(EntityIndex entity, CarIndex car, EntityPosition position) const;
+	bool isInsideCompartment(EntityIndex entity, CarIndex car, EntityPosition position) const;
 
 	bool checkFields2(ObjectIndex object) const;
 
 	/**
-	 * Query if 'entity' is sitting in compartment cars.
+	 * Query if 'entity' is in compartment cars.
 	 *
 	 * @param entity The entity.
 	 *
-	 * @return true if sitting in compartment cars, false if not.
+	 * @return true if in compartment cars, false if not.
 	 */
-	bool isSittingInCompartmentCars(EntityIndex entity) const;
+	bool isInsideCompartment(EntityIndex entity) const;
 
 	/**
 	 * Query if the player is in the specified position
@@ -139,14 +139,14 @@ public:
 	bool isPlayerPosition(CarIndex car, Position position) const;
 
 	/**
-	 * Query if 'entity' is sitting or standing.
+	 * Query if 'entity' is inside a train car
 	 *
 	 * @param entity The entity.
 	 * @param car    The car.
 	 *
-	 * @return true if sitting or standing, false if not.
+	 * @return true if inside a train car, false if not.
 	 */
-	bool isSittingOrStanding(EntityIndex entity, CarIndex car) const;
+	bool isInsideTrainCar(EntityIndex entity, CarIndex car) const;
 
 	/**
 	 * Query if 'entity' is in green car entrance.
@@ -175,15 +175,25 @@ public:
 	 */
 	bool isDirectionUpOrDown(EntityIndex entity) const;
 
-	bool checkFields9(EntityIndex entity1, EntityIndex entity2, int absValue) const;
+	/**
+	 * Query if the distance between the two entities is less 'distance'
+	 *
+	 * @param entity1  The first entity. 
+	 * @param entity2  The second entity. 
+	 * @param distance The distance. 
+	 *
+	 * @return true if the distance between entities is less than 'distance', false if not. 
+	 */
+	bool isDistanceBetweenEntities(EntityIndex entity1, EntityIndex entity2, uint distance) const;
+
 	bool checkFields10(EntityIndex entity) const;
 
 	/**
-	 * Query if there is somebody standing in restaurant or salon.
+	 * Query if there is somebody in the restaurant or salon.
 	 *
-	 * @return true if somebody is standing in the restaurant or salon, false if not.
+	 * @return true if somebody is in the restaurant or salon, false if not.
 	 */
-	bool isSomebodyStandingInRestaurantOrSalon() const;
+	bool isSomebodyInsideRestaurantOrSalon() const;
 
 	/**
 	 * Query if 'entity' is in the salon.
@@ -212,8 +222,19 @@ public:
 	 */
 	bool isInKronosSalon(EntityIndex entity) const;
 
-	bool checkFields15() const;
-	bool checkFields16() const;
+	/**
+	 * Query if the player is outside Alexei window. 
+	 *
+	 * @return true if outside alexei window, false if not. 
+	 */
+	bool isOutsideAlexeiWindow() const;
+
+	/**
+	 * Query if the player is outside Anna window. 
+	 *
+	 * @return true if outside anna window, false if not. 
+	 */
+	bool isOutsideAnnaWindow() const;
 
 	/**
 	 * Query if 'entity' is in the kitchen.
@@ -225,14 +246,14 @@ public:
 	bool isInKitchen(EntityIndex entity) const;
 
 	/**
-	 * Query if nobody is sitting at that position.
+	 * Query if nobody is in a compartment at that position.
 	 *
 	 * @param car 	   The car.
 	 * @param position The position.
 	 *
-	 * @return true if nobody is sitting, false if not.
+	 * @return true if nobody is in a compartment, false if not.
 	 */
-	bool isNobodySitting(CarIndex car, EntityPosition position) const;
+	bool isNobodyInCompartment(CarIndex car, EntityPosition position) const;
 
 	bool checkFields19(EntityIndex entity, CarIndex car, EntityPosition position) const;
 
@@ -283,6 +304,13 @@ public:
 	 */
 	bool checkDistanceFromPosition(EntityIndex entity, EntityPosition position, int distance) const;
 
+	/**
+	 * Query if 'entity' is walking opposite to player. 
+	 *
+	 * @param entity The entity. 
+	 *
+	 * @return true if walking opposite to player, false if not. 
+	 */
 	bool isWalkingOppositeToPlayer(EntityIndex entity) const;
 
 	/**
@@ -319,12 +347,12 @@ private:
 	void executeCallbacks();
 	void processEntity(EntityIndex entity);
 
-	void drawSequenceInternal(EntityIndex entity, const char* sequence, EntityDirection direction);
-	void drawSequencesInternal(EntityIndex entity, EntityDirection direction, bool loadSequence);
+	void drawSequence(EntityIndex entity, const char* sequence, EntityDirection direction);
+	void drawSequences(EntityIndex entity, EntityDirection direction, bool loadSequence) const;
 	void loadSequence2(EntityIndex entity, Common::String sequenceName, Common::String sequenceName2, int16 field30, bool loadSequence) const;
 
 	void clearEntitySequenceData(EntityData::EntityCallData * data, EntityDirection direction) const;
-	void computeCurrentFrame(EntityIndex entity);
+	void computeCurrentFrame(EntityIndex entity) const;
 	int getCurrentFrame(EntityIndex entity, Sequence *sequence, EntityPosition position, bool doProcessing) const;
 	void processFrame(EntityIndex entity, bool keepPreviousFrame, bool dontPlaySound);
 	void drawNextSequence(EntityIndex entity);

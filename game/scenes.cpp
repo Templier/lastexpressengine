@@ -202,7 +202,7 @@ void SceneManager::loadSceneFromItemPosition(InventoryItem item) {
 	if (item == kItem5) car = kCarRedSleeping;
 	if (item == kItem7) car = kCarGreenSleeping;
 
-	if (!getEntities()->isSittingOrStanding(kEntityPlayer, car))
+	if (!getEntities()->isInsideTrainCar(kEntityPlayer, car))
 		return;
 
 	if (getFlags()->flag_0)
@@ -263,7 +263,7 @@ void SceneManager::drawScene(SceneIndex index) {
 	// Update entities
 	Scene *scene = (getState()->sceneUseBackup ? get(getState()->sceneBackup) : get(index));
 
-	getEntityData(kEntityPlayer)->entityPosition = (EntityPosition)scene->count;
+	getEntityData(kEntityPlayer)->entityPosition = scene->entityPosition;
 	getEntityData(kEntityPlayer)->car = scene->car;
 
 	getFlags()->flag_3 = true;
@@ -1012,8 +1012,8 @@ void SceneManager::preProcessScene(SceneIndex *index) {
 
 			Scene *currentScene = getScenes()->get(getState()->scene);
 
-			if ((checkPosition(getState()->scene, kCheckPositionLookingUp) && checkPosition(*index, kCheckPositionLookingUp) && currentScene->count < scene->count)
-			 || (checkPosition(getState()->scene, kCheckPositionLookingDown)  && checkPosition(*index, kCheckPositionLookingDown)  && currentScene->count > scene->count)) {
+			if ((checkPosition(getState()->scene, kCheckPositionLookingUp) && checkPosition(*index, kCheckPositionLookingUp) && currentScene->entityPosition < scene->entityPosition)
+			 || (checkPosition(getState()->scene, kCheckPositionLookingDown)  && checkPosition(*index, kCheckPositionLookingDown)  && currentScene->entityPosition > scene->entityPosition)) {
 
 				if (State::getPowerOfTwo((uint32)getEntities()->getCompartments(scene->param1)) != 30
 				 && State::getPowerOfTwo((uint32)getEntities()->getCompartments1(scene->param1)) != 30 )

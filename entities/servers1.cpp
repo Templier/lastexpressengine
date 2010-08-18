@@ -143,7 +143,7 @@ IMPLEMENT_FUNCTION(Servers1, function7, 7)
 
 	case kActionDefault:
 		getData()->entityPosition = kPosition_5800;
-		getData()->posture = kPostureStanding;
+		getData()->location = kLocationOutsideCompartment;
 
 		setCallback(1);
 		call(new ENTITY_SETUP_SIIS(Servers1, setup_draw), "924");
@@ -201,7 +201,7 @@ IMPLEMENT_FUNCTION(Servers1, chapter1, 8)
 		getSavePoints()->addData(kEntityServers1, kAction258136010, 11);
 
 		getData()->entityPosition = kPosition_5900;
-		getData()->posture = kPostureStanding;
+		getData()->location = kLocationOutsideCompartment;
 		getData()->car = kCarRestaurant;
 		break;
 	}
@@ -214,7 +214,7 @@ IMPLEMENT_FUNCTION(Servers1, function9, 9)
 
 	case kActionDefault:
 		getData()->entityPosition = kPosition_5800;
-		getData()->posture = kPostureStanding;
+		getData()->location = kLocationOutsideCompartment;
 
 		setCallback(1);
 		call(new ENTITY_SETUP_SIIS(Servers1, setup_draw), "924");
@@ -259,7 +259,7 @@ IMPLEMENT_FUNCTION(Servers1, function10, 10)
 
 	case kActionDefault:
 		getData()->entityPosition = kPosition_5800;
-		getData()->posture = kPostureStanding;
+		getData()->location = kLocationOutsideCompartment;
 
 		setCallback(1);
 		call(new ENTITY_SETUP_SIIS(Servers1, setup_draw), "924");
@@ -315,7 +315,7 @@ switch (savepoint.action) {
 		break;
 
 	case kActionDefault:
-		if (!getEntities()->isInKitchen(kEntityServers1) || !getEntities()->isSomebodyStandingInRestaurantOrSalon())
+		if (!getEntities()->isInKitchen(kEntityServers1) || !getEntities()->isSomebodyInsideRestaurantOrSalon())
 			break;
 
 		if (ENTITY_PARAM(0, 1)) {
@@ -375,7 +375,7 @@ IMPLEMENT_FUNCTION(Servers1, function15, 15)
 IMPLEMENT_FUNCTION(Servers1, function16, 16)
 	if (savepoint.action == kActionDefault) {
 		getData()->entityPosition = kPosition_5900;
-		getData()->posture = kPostureStanding;
+		getData()->location = kLocationOutsideCompartment;
 		getData()->car = kCarRestaurant;
 
 		getEntities()->clearSequences(kEntityServers1);
@@ -395,7 +395,7 @@ IMPLEMENT_FUNCTION(Servers1, chapter2, 17)
 		getEntities()->clearSequences(kEntityServers1);
 
 		getData()->entityPosition = kPosition_5900;
-		getData()->posture = kPostureStanding;
+		getData()->location = kLocationOutsideCompartment;
 		getData()->car = kCarRestaurant;
 		getData()->clothes = kClothes1;
 		getData()->inventoryItem = kItemNone;
@@ -413,7 +413,7 @@ IMPLEMENT_FUNCTION(Servers1, chapter2Handler, 18)
 		break;
 
 	case kActionNone:
-		if (!getEntities()->isInKitchen(kEntityServers1) || !getEntities()->isSomebodyStandingInRestaurantOrSalon())
+		if (!getEntities()->isInKitchen(kEntityServers1) || !getEntities()->isSomebodyInsideRestaurantOrSalon())
 			break;
 
 		if (ENTITY_PARAM(0, 6)) {
@@ -472,7 +472,7 @@ IMPLEMENT_FUNCTION(Servers1, function20, 20)
 
 	case kActionDefault:
 		getData()->entityPosition = kPosition_5800;
-		getData()->posture = kPostureStanding;
+		getData()->location = kLocationOutsideCompartment;
 
 		setCallback(1);
 		call(new ENTITY_SETUP_SIIS(Servers1, setup_draw), "973");
@@ -507,7 +507,7 @@ IMPLEMENT_FUNCTION(Servers1, chapter3, 22)
 		getEntities()->clearSequences(kEntityServers1);
 
 		getData()->entityPosition = kPosition_5900;
-		getData()->posture = kPostureStanding;
+		getData()->location = kLocationOutsideCompartment;
 		getData()->car = kCarRestaurant;
 		getData()->clothes = kClothes1;
 		getData()->inventoryItem = kItemNone;
@@ -522,7 +522,7 @@ IMPLEMENT_FUNCTION(Servers1, chapter3Handler, 23)
 	if (savepoint.action != kActionNone)
 		return;
 
-	if (!getEntities()->isInKitchen(kEntityServers1) || !getEntities()->isSomebodyStandingInRestaurantOrSalon())
+	if (!getEntities()->isInKitchen(kEntityServers1) || !getEntities()->isSomebodyInsideRestaurantOrSalon())
 		return;
 
 	if (ENTITY_PARAM(1, 1)) {
@@ -554,7 +554,7 @@ IMPLEMENT_FUNCTION(Servers1, chapter4, 25)
 		getEntities()->clearSequences(kEntityServers1);
 
 		getData()->entityPosition = kPosition_5900;
-		getData()->posture = kPostureStanding;
+		getData()->location = kLocationOutsideCompartment;
 		getData()->car = kCarRestaurant;
 		getData()->inventoryItem = kItemNone;
 
@@ -582,7 +582,7 @@ IMPLEMENT_FUNCTION(Servers1, chapter4Handler, 26)
 		}
 
 label_continue:
-		if (!getEntities()->isInKitchen(kEntityServers1) || !getEntities()->isSomebodyStandingInRestaurantOrSalon())
+		if (!getEntities()->isInKitchen(kEntityServers1) || !getEntities()->isSomebodyInsideRestaurantOrSalon())
 			break;
 
 		if (ENTITY_PARAM(1, 5)) {
@@ -615,7 +615,7 @@ label_continue:
 		ENTITY_PARAM(1, 5) = 0;
 
 		getData()->entityPosition = kPosition_5900;
-		getData()->posture = kPostureStanding;
+		getData()->location = kLocationOutsideCompartment;
 		break;
 	}
 }
@@ -645,7 +645,7 @@ IMPLEMENT_FUNCTION(Servers1, chapter5, 30)
 		getEntities()->clearSequences(kEntityServers1);
 
 		getData()->entityPosition = kPosition_3969;
-		getData()->posture = kPostureSitting;
+		getData()->location = kLocationInsideCompartment;
 		getData()->car = kCarRestaurant;
 		getData()->inventoryItem = kItemNone;
 		break;
@@ -667,7 +667,7 @@ void Servers1::serveTable(const SavePoint &savepoint, const char* seq1, EntityIn
 	case kActionDefault:
 		if (shouldUpdatePosition) {
 			getData()->entityPosition = kPosition_5800;
-			getData()->posture = kPostureStanding;
+			getData()->location = kLocationOutsideCompartment;
 		}
 
 		setCallback(1);
@@ -719,7 +719,7 @@ void Servers1::serveSalon(const SavePoint &savepoint, const char* seq1, const ch
 
 	case kActionDefault:
 		getData()->entityPosition = kPosition_5800;
-		getData()->posture = kPostureStanding;
+		getData()->location = kLocationOutsideCompartment;
 
 		setCallback(1);
 		call(new ENTITY_SETUP_SIIS(Servers1, setup_draw), "816DD");

@@ -1369,10 +1369,10 @@ SoundManager::FlagType SoundManager::getSoundFlag(EntityIndex entity) const {
 	if (index < 32)
 		ret = soundFlags[index];
 
-	if (getEntityData(entity)->posture == kPosture2) {
+	if (getEntityData(entity)->location == kLocationOutsideTrain) {
 		if (getEntityData(entity)->car != kCarKronos
-		&& !getEntities()->checkFields15()
-		&& !getEntities()->checkFields16())
+		&& !getEntities()->isOutsideAlexeiWindow()
+		&& !getEntities()->isOutsideAnnaWindow())
 			return kFlagNone;
 
 		return (FlagType)(ret / 6);
@@ -1392,8 +1392,8 @@ SoundManager::FlagType SoundManager::getSoundFlag(EntityIndex entity) const {
 		if (getEntities()->isInGreenCarEntrance(kEntityPlayer) && !getEntities()->isInKronosSalon(entity))
 			ret = (FlagType)(ret * 2);
 
-		if (getEntityData(kEntityPlayer)->posture
-		&& (getEntityData(entity)->entityPosition != kPosition_1 || !getEntities()->checkFields9(kEntityPlayer, entity, 400)))
+		if (getEntityData(kEntityPlayer)->location
+		&& (getEntityData(entity)->entityPosition != kPosition_1 || !getEntities()->isDistanceBetweenEntities(kEntityPlayer, entity, 400)))
 			ret = (FlagType)(ret * 2);
 		break;
 

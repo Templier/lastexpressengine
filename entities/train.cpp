@@ -127,10 +127,10 @@ IMPLEMENT_FUNCTION_II(Train, harem, 7)
 		break;
 	}
 
-	params->param4 = getEntities()->isSitting(kEntityAlouan, kCarGreenSleeping, (EntityPosition)params->param3);
-	params->param5 = (ENTITY_PARAM(0, 7) - params->param3) <= 0;
-	params->param6 = getEntities()->isSitting(kEntityYasmin, kCarGreenSleeping, (EntityPosition)params->param3);
-	params->param7 = getEntities()->isSitting(kEntityHadija, kCarGreenSleeping, (EntityPosition)params->param3);
+	params->param4 = getEntities()->isInsideCompartment(kEntityAlouan, kCarGreenSleeping, (EntityPosition)params->param3);
+	params->param5 = (ENTITY_PARAM(0, 7) - params->param3) < 1;
+	params->param6 = getEntities()->isInsideCompartment(kEntityYasmin, kCarGreenSleeping, (EntityPosition)params->param3);
+	params->param7 = getEntities()->isInsideCompartment(kEntityHadija, kCarGreenSleeping, (EntityPosition)params->param3);
 
 	getObjects()->update((ObjectIndex)params->param1, kEntityTrain, kLocation3, kCursorNormal, kCursorNormal);
 
@@ -558,8 +558,8 @@ void Train::resetParam8() {
 	EntityData::EntityParametersIIIS *params1 = (EntityData::EntityParametersIIIS*)_data->getCurrentParameters(1);
 
 	if (params->param8
-	 && !getEntities()->isSitting(kEntityPlayer, (CarIndex)params1->param1, (EntityPosition)params1->param2)
-	 && !getEntities()->isSitting(kEntityPlayer, (CarIndex)params1->param1, (EntityPosition)params1->param3)) {
+	 && !getEntities()->isInsideCompartment(kEntityPlayer, (CarIndex)params1->param1, (EntityPosition)params1->param2)
+	 && !getEntities()->isInsideCompartment(kEntityPlayer, (CarIndex)params1->param1, (EntityPosition)params1->param3)) {
 
 		if (getSound()->isBuffered((const char *)&params1->seq))
 			getSound()->processEntry((const char *)&params1->seq);

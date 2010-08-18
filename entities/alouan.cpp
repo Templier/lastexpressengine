@@ -136,7 +136,7 @@ IMPLEMENT_FUNCTION(Alouan, chapter1, 10)
 
 	case kActionDefault:
 		getData()->entityPosition = kPosition_2740;
-		getData()->posture = kPostureSitting;
+		getData()->location = kLocationInsideCompartment;
 		getData()->car = kCarGreenSleeping;
 
 		break;
@@ -187,7 +187,7 @@ IMPLEMENT_FUNCTION(Alouan, function12, 12)
 		getObjects()->update(kObjectCompartment5, kEntityPlayer, kLocation3, kCursorHandKnock, kCursorHand);
 
 		getData()->entityPosition = kPosition_4070;
-		getData()->posture = kPostureSitting;
+		getData()->location = kLocationInsideCompartment;
 		getData()->car = kCarGreenSleeping;
 
 		getEntities()->clearSequences(kEntityAlouan);
@@ -201,7 +201,7 @@ IMPLEMENT_FUNCTION(Alouan, chapter2, 13)
 	getEntities()->clearSequences(kEntityAlouan);
 
 	getData()->entityPosition = kPosition_2740;
-	getData()->posture = kPostureSitting;
+	getData()->location = kLocationInsideCompartment;
 	getData()->car = kCarGreenSleeping;
 	getData()->clothes = kClothesDefault;
 	getData()->inventoryItem = kItemNone;
@@ -282,7 +282,7 @@ IMPLEMENT_FUNCTION(Alouan, chapter3, 15)
 		getEntities()->clearSequences(kEntityAlouan);
 
 		getData()->entityPosition = kPosition_2740;
-		getData()->posture = kPostureSitting;
+		getData()->location = kLocationInsideCompartment;
 		getData()->car = kCarGreenSleeping;
 
 		break;
@@ -290,7 +290,52 @@ IMPLEMENT_FUNCTION(Alouan, chapter3, 15)
 }
 
 IMPLEMENT_FUNCTION(Alouan, chapter3Handler, 16)
-	error("Alouan: callback function 16 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionNone:
+		TIME_CHECK_CALLBACK(Alouan, kTimeCitySalzbourg, params->param1, 1, setup_compartment8to6);
+
+label_callback1:
+		if (params->param2 != kTimeInvalid && getState()->time > kTime1989000)
+			TIME_CHECK_CAR(Alouan, kTime2119500, params->param5, 5, setup_compartment8);
+
+label_callback2:
+		TIME_CHECK_PLAYSOUND(Alouan, kTime2052000, params->param3, 3, "Har1005");
+
+label_callback3:
+		TIME_CHECK_CALLBACK(Alouan, kTime2133000, params->param4, 4, setup_compartment6to8);
+
+label_callback4:
+		if (params->param5 != kTimeInvalid && getState()->time > kTime2151000)
+			TIME_CHECK_CAR(Alouan, kTime2241000, params->param5, 5, setup_compartment8);
+		break;
+
+	case kActionDefault:
+		getSavePoints()->push(kEntityAlouan, kEntityTrain, kAction191070912, kPosition_4840);
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			getData()->entityPosition = kPosition_4840;
+			goto label_callback1;
+
+		case 2:
+			goto label_callback2;
+
+		case 3:
+			goto label_callback3;
+
+		case 4:
+			goto label_callback4;
+		}
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Alouan, chapter4, 17)
@@ -306,7 +351,7 @@ IMPLEMENT_FUNCTION(Alouan, chapter4, 17)
 		getEntities()->clearSequences(kEntityAlouan);
 
 		getData()->entityPosition = kPosition_2740;
-		getData()->posture = kPostureSitting;
+		getData()->location = kLocationInsideCompartment;
 		getData()->car = kCarGreenSleeping;
 
 		break;
@@ -314,7 +359,45 @@ IMPLEMENT_FUNCTION(Alouan, chapter4, 17)
 }
 
 IMPLEMENT_FUNCTION(Alouan, chapter4Handler, 18)
-	error("Alouan: callback function 18 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionNone:
+		if (params->param1 != kTimeInvalid)
+			TIME_CHECK_CAR(Alouan, kTime2443500, params->param1, 1, setup_compartment8);
+
+label_callback1:
+		TIME_CHECK_CALLBACK(Alouan, kTime2455200, params->param2, 2, setup_compartment8to6);
+
+label_callback2:
+		if (getState()->time > kTime2475000 && !params->param3) {
+			params->param3 = 1;
+			getSavePoints()->push(kEntityAlouan, kEntityTrain, kAction191070912, kPosition_4840);
+
+			setCallback(3);
+			call(new ENTITY_SETUP(Alouan, setup_compartment6to8));
+		}		
+		break;
+
+	case kActionDefault:
+		getSavePoints()->push(kEntityAlouan, kEntityTrain, kAction191070912, kPosition_4840);
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			goto label_callback1;
+
+		case 2:
+			getSavePoints()->push(kEntityAlouan, kEntityTrain, kAction191070912, kPosition_4070);
+			goto label_callback2;
+		}
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Alouan, function19, 19)
@@ -323,7 +406,7 @@ IMPLEMENT_FUNCTION(Alouan, function19, 19)
 		getObjects()->update(kObjectCompartment5, kEntityPlayer, kLocation3, kCursorHandKnock, kCursorHand);
 
 		getData()->entityPosition = kPosition_2740;
-		getData()->posture = kPostureSitting;
+		getData()->location = kLocationInsideCompartment;
 		getData()->car = kCarGreenSleeping;
 
 		getEntities()->clearSequences(kEntityAlouan);
@@ -343,7 +426,7 @@ IMPLEMENT_FUNCTION(Alouan, chapter5, 20)
 		getEntities()->clearSequences(kEntityAlouan);
 
 		getData()->entityPosition = kPosition_3969;
-		getData()->posture = kPostureSitting;
+		getData()->location = kLocationInsideCompartment;
 		getData()->car = kCarRestaurant;
 		getData()->clothes = kClothesDefault;
 		getData()->inventoryItem = kItemNone;
@@ -369,12 +452,12 @@ IMPLEMENT_FUNCTION(Alouan, function22, 22)
 
 	case kActionDefault:
 		getData()->entityPosition = kPosition_5000;
-		getData()->posture = kPostureStanding;
+		getData()->location = kLocationOutsideCompartment;
 		getData()->car = kCarGreenSleeping;
 		break;
 
 	case kActionDrawScene:
-		if (getEntities()->isSittingOrStanding(kEntityPlayer, kCarGreenSleeping))
+		if (getEntities()->isInsideTrainCar(kEntityPlayer, kCarGreenSleeping))
 			setup_function23();
 		break;
 	}
@@ -404,7 +487,7 @@ IMPLEMENT_FUNCTION(Alouan, function23, 23)
 			getEntities()->clearSequences(kEntityAlouan);
 
 			getData()->entityPosition = kPosition_4070;
-			getData()->posture = kPostureSitting;
+			getData()->location = kLocationInsideCompartment;
 
 			getObjects()->update(kObjectCompartment6, kEntityPlayer, kLocation1, kCursorHandKnock, kCursorHand);
 			break;

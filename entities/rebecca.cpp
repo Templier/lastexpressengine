@@ -227,7 +227,7 @@ IMPLEMENT_FUNCTION(Rebecca, function15, 15)
 		break;
 
 	case kActionDefault:
-		if (getEntities()->checkFields16())
+		if (getEntities()->isOutsideAnnaWindow())
 			getScenes()->loadSceneFromPosition(kCarRedSleeping, 49);
 
 		setCallback(1);
@@ -237,7 +237,7 @@ IMPLEMENT_FUNCTION(Rebecca, function15, 15)
 	case kActionCallback:
 		if (getCallback() == 1) {
 			getObjects()->update(kObjectOutsideBetweenCompartments, kEntityPlayer, kLocationNone, kCursorKeepValue, kCursorKeepValue);
-			getData()->posture = kPostureSitting;
+			getData()->location = kLocationInsideCompartment;
 			getEntities()->clearSequences(kEntityRebecca);
 
 			CALLBACK_ACTION();
@@ -295,7 +295,7 @@ label_process:
 		if (getProgress().chapter == kChapter1 && !ENTITY_PARAM(0, 3)) {
 			if (params->param7 != kTimeInvalid && getState()->time > kTime1174500) {
 				if (getState()->time <= kTime1183500) {
-					if (!getEntities()->checkFields9(kEntityRebecca, kEntityPlayer, 2000) || getSound()->isBuffered("CON1210") || !params->param7)
+					if (!getEntities()->isDistanceBetweenEntities(kEntityRebecca, kEntityPlayer, 2000) || getSound()->isBuffered("CON1210") || !params->param7)
 						params->param7 = getState()->time;
 
 					if (params->param7 >= getState()->time)
@@ -317,7 +317,7 @@ label_process:
 
 		if (getProgress().chapter == kChapter3 && !ENTITY_PARAM(0, 4) && params->param8 != kTimeInvalid && getState()->time > kTime2097000) {
 			if (getState()->time <= kTime2106000) {
-				if (!getEntities()->checkFields9(kEntityRebecca, kEntityPlayer, 1000) || !params->param8)
+				if (!getEntities()->isDistanceBetweenEntities(kEntityRebecca, kEntityPlayer, 1000) || !params->param8)
 					params->param8 = getState()->time;
 
 				if (params->param8 >= getState()->time)
@@ -336,7 +336,7 @@ label_process:
 		}
 
 label_callback:
-		if (ENTITY_PARAM(0, 2) && getEntities()->checkFields9(kEntityRebecca, kEntityPlayer, 1000)) {
+		if (ENTITY_PARAM(0, 2) && getEntities()->isDistanceBetweenEntities(kEntityRebecca, kEntityPlayer, 1000)) {
 			getObjects()->update(kObjectCompartmentE, kEntityRebecca, kLocation1, kCursorNormal, kCursorNormal);
 			getObjects()->update(kObject52, kEntityRebecca, kLocation1, kCursorNormal, kCursorNormal);
 
@@ -451,7 +451,7 @@ IMPLEMENT_FUNCTION(Rebecca, chapter1, 21)
 		getObjects()->updateLocation2(kObject110, kLocation1);
 
 		getData()->entityPosition = kPosition_2830;
-		getData()->posture = kPostureSitting;
+		getData()->location = kLocationInsideCompartment;
 		getData()->car = kCarRestaurant;
 
 		ENTITY_PARAM(0, 2) = 1;
@@ -634,7 +634,7 @@ IMPLEMENT_FUNCTION(Rebecca, function26, 26)
 IMPLEMENT_FUNCTION(Rebecca, function27, 27)
 	if (savepoint.action == kActionDefault) {
 		getData()->entityPosition = kPosition_4840;
-		getData()->posture = kPostureSitting;
+		getData()->location = kLocationInsideCompartment;
 		getData()->car = kCarRedSleeping;
 
 		getObjects()->update(kObjectCompartmentE, kEntityPlayer, kLocation1, kCursorHandKnock, kCursorHand);
@@ -657,7 +657,7 @@ IMPLEMENT_FUNCTION(Rebecca, chapter2, 28)
 		getEntities()->clearSequences(kEntityRebecca);
 
 		getData()->entityPosition = kPosition_4840;
-		getData()->posture = kPostureSitting;
+		getData()->location = kLocationInsideCompartment;
 		getData()->car = kCarRedSleeping;
 		getData()->clothes = kClothesDefault;
 		getData()->inventoryItem = kItemNone;
@@ -746,7 +746,7 @@ IMPLEMENT_FUNCTION(Rebecca, chapter3, 32)
 		getEntities()->clearSequences(kEntityRebecca);
 
 		getData()->entityPosition = kPosition_4840;
-		getData()->posture = kPostureSitting;
+		getData()->location = kLocationInsideCompartment;
 		getData()->car = kCarRedSleeping;
 		getData()->clothes = kClothesDefault;
 		getData()->inventoryItem = kItemNone;
@@ -819,7 +819,7 @@ IMPLEMENT_FUNCTION(Rebecca, function38, 38)
 		break;
 
 	case kActionDefault:
-		getData()->posture = kPostureStanding;
+		getData()->location = kLocationOutsideCompartment;
 
 		setCallback(1);
 		call(new ENTITY_SETUP_SIIS(Rebecca, setup_enterExitCompartment3), "624Be", kObjectCompartmentE);
@@ -859,7 +859,7 @@ IMPLEMENT_FUNCTION(Rebecca, function39, 39)
 		getObjects()->update(kObject52, kEntityPlayer, kLocationNone, kCursorHandKnock, kCursorHand);
 
 		getData()->entityPosition = kPosition_6000;
-		getData()->posture = kPostureSitting;
+		getData()->location = kLocationInsideCompartment;
 		getData()->car = kCarKronos;
 		break;
 
@@ -933,7 +933,7 @@ IMPLEMENT_FUNCTION(Rebecca, chapter4, 42)
 		getEntities()->clearSequences(kEntityRebecca);
 
 		getData()->entityPosition = kPosition_4840;
-		getData()->posture = kPostureSitting;
+		getData()->location = kLocationInsideCompartment;
 		getData()->car = kCarRedSleeping;
 		getData()->clothes = kClothesDefault;
 		getData()->inventoryItem = kItemNone;
@@ -980,7 +980,7 @@ IMPLEMENT_FUNCTION(Rebecca, function45, 45)
 
 	case kActionDefault:
 		getData()->entityPosition = kPosition_4840;
-		getData()->posture = kPostureSitting;
+		getData()->location = kLocationInsideCompartment;
 		getData()->car = kCarRedSleeping;
 
 		getObjects()->update(kObjectCompartmentE, kEntityPlayer, kLocation1, kCursorHandKnock, kCursorHand);
@@ -1016,7 +1016,7 @@ IMPLEMENT_FUNCTION(Rebecca, chapter5, 46)
 		getEntities()->clearSequences(kEntityRebecca);
 
 		getData()->entityPosition = kPosition_3969;
-		getData()->posture = kPostureSitting;
+		getData()->location = kLocationInsideCompartment;
 		getData()->car = kCarRestaurant;
 		getData()->inventoryItem = kItemNone;
 

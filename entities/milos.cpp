@@ -240,7 +240,7 @@ IMPLEMENT_FUNCTION_I(Milos, function11, 11)
 			break;
 
 		case 1:
-			getData()->posture = kPostureStanding;
+			getData()->location = kLocationOutsideCompartment;
 			setCallback(2);
 			call(new ENTITY_SETUP(Milos, setup_enterCompartmentDialog), 3, 8200);
 			break;
@@ -265,7 +265,7 @@ IMPLEMENT_FUNCTION_I(Milos, function11, 11)
 			break;
 
 		case 5:
-			getData()->posture = kPostureSitting;
+			getData()->location = kLocationInsideCompartment;
 			getEntities()->clearSequences(kEntityMilos);
 			getSavePoints()->push(kEntityMilos, kEntityVesna, kAction101687594);
 			getObjects()->update(kObjectCompartmentG, kEntityMilos, kLocation3, kCursorHandKnock, kCursorHand);
@@ -301,7 +301,7 @@ IMPLEMENT_FUNCTION_I(Milos, function11, 11)
 
 		case 13:
 			getEntities()->exitCompartment(kEntityMilos, kObjectCompartmentG, true);
-			getData()->posture = kPostureSitting;
+			getData()->location = kLocationInsideCompartment;
 			getEntities()->clearSequences(kEntityMilos);
 			getObjects()->update(kObjectCompartmentG, kEntityMilos, kLocation3, kCursorHandKnock, kCursorHand);
 			params->param5 = 0;
@@ -311,7 +311,7 @@ IMPLEMENT_FUNCTION_I(Milos, function11, 11)
 		break;
 
 	case kAction122865568:
-		getData()->posture = kPostureStanding;
+		getData()->location = kLocationOutsideCompartment;
 		setCallback(12);
 		call(new ENTITY_SETUP_SIIS(Milos, setup_enterExitCompartment), "611Bg", kObjectCompartmentG);
 		break;
@@ -342,7 +342,7 @@ IMPLEMENT_FUNCTION(Milos, chapter1, 12)
 		getObjects()->update(kObject46, kEntityPlayer, kLocationNone, kCursorKeepValue, kCursorKeepValue);
 
 		getData()->entityPosition = kPosition_4689;
-		getData()->posture = kPostureSitting;
+		getData()->location = kLocationInsideCompartment;
 		getData()->car = kCarRestaurant;
 
 		getSavePoints()->addData(kEntityMilos, kAction157691176, 0);
@@ -388,7 +388,7 @@ IMPLEMENT_FUNCTION(Milos, chapter1Handler, 15)
 	case kActionNone:
 		TIME_CHECK_SAVEPOINT(kTime1071000, params->param3, kEntityMilos, kEntityServers1, kAction223002560);
 
-		if (getState()->time > kTime1089000 && getEntities()->isSomebodyStandingInRestaurantOrSalon()) {
+		if (getState()->time > kTime1089000 && getEntities()->isSomebodyInsideRestaurantOrSalon()) {
 			setup_function16();
 			break;
 		}
@@ -449,7 +449,7 @@ IMPLEMENT_FUNCTION(Milos, function17, 17)
 IMPLEMENT_FUNCTION(Milos, function18, 18)
 	if (savepoint.action == kActionDefault) {
 		getData()->entityPosition = kPosition_3050;
-		getData()->posture = kPostureSitting;
+		getData()->location = kLocationInsideCompartment;
 		getData()->car = kCarRedSleeping;
 
 		getEntities()->clearSequences(kEntityMilos);
@@ -470,7 +470,7 @@ IMPLEMENT_FUNCTION(Milos, chapter2, 19)
 		getEntities()->clearSequences(kEntityMilos);
 
 		getData()->entityPosition = kPosition_4689;
-		getData()->posture = kPostureSitting;
+		getData()->location = kLocationInsideCompartment;
 		getData()->car = kCarRestaurant;
 
 		getObjects()->update(kObjectCompartmentG, kEntityPlayer, kLocation3, kCursorHandKnock, kCursorHand);
@@ -487,7 +487,7 @@ IMPLEMENT_FUNCTION(Milos, chapter2Handler, 20)
 	case kActionDefault:
 		getData()->car = kCarRedSleeping;
 		getData()->entityPosition = kPosition_540;
-		getData()->posture = kPostureStanding;
+		getData()->location = kLocationOutsideCompartment;
 
 		getSavePoints()->push(kEntityMilos, kEntityVesna, kAction137165825);
 		break;
@@ -513,7 +513,7 @@ IMPLEMENT_FUNCTION(Milos, chapter2Handler, 20)
 			getEntities()->clearSequences(kEntityMilos);
 
 			getData()->entityPosition = kPosition_3050;
-			getData()->posture = kPostureSitting;
+			getData()->location = kLocationInsideCompartment;
 
 			getSavePoints()->push(kEntityMilos, kEntityVesna, kAction101687594);
 
@@ -571,7 +571,33 @@ IMPLEMENT_FUNCTION_I(Milos, function26, 26)
 }
 
 IMPLEMENT_FUNCTION_II(Milos, function27, 27)
-	error("Milos: callback function 27 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionNone:
+		if (getEntities()->updateEntity(kEntityMilos, (CarIndex)params->param1, (EntityPosition)params->param2)) {
+			CALLBACK_ACTION();
+			break;
+		}
+
+		if (getEntities()->isDistanceBetweenEntities(kEntityMilos, kEntityPlayer, 1000)
+		 && !getEntities()->isInGreenCarEntrance(kEntityPlayer)
+		 && !getEntities()->isInsideCompartment(kEntityPlayer)
+		 && !getEntities()->checkFields10(kEntityPlayer)) {
+			if (getData()->car == kCarRedSleeping || getData()->car == kCarGreenSleeping) {
+				ENTITY_PARAM(0, 2) = 1;
+
+				CALLBACK_ACTION();
+			}
+		}
+		break;
+
+	case kActionDefault:
+		if (getEntities()->updateEntity(kEntityMilos, (CarIndex)params->param1, (EntityPosition)params->param2))
+			CALLBACK_ACTION();
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Milos, chapter4, 28)
@@ -587,7 +613,7 @@ IMPLEMENT_FUNCTION(Milos, chapter4, 28)
 		getEntities()->clearSequences(kEntityMilos);
 
 		getData()->entityPosition = kPosition_3050;
-		getData()->posture = kPostureSitting;
+		getData()->location = kLocationInsideCompartment;
 		getData()->car = kCarRedSleeping;
 		getData()->inventoryItem = kItemNone;
 
@@ -646,7 +672,7 @@ IMPLEMENT_FUNCTION(Milos, function31, 31)
 	case kActionCallback:
 		switch (getCallback()) {
 		case 1:
-			getData()->posture = kPostureStanding;
+			getData()->location = kLocationOutsideCompartment;
 			getObjects()->update(kObjectCompartmentG, kEntityPlayer, kLocation3, kCursorHandKnock, kCursorHand);
 
 			setCallback(2);
@@ -667,7 +693,7 @@ IMPLEMENT_FUNCTION(Milos, function32, 32)
 		getObjects()->update(kObjectCompartmentG, kEntityPlayer, kLocation3, kCursorHandKnock, kCursorHand);
 
 		getData()->entityPosition = kPosition_540;
-		getData()->posture = kPostureSitting;
+		getData()->location = kLocationInsideCompartment;
 		getData()->car = kCarCoalTender;
 		getData()->inventoryItem = kItemNone;
 	}
@@ -686,7 +712,7 @@ IMPLEMENT_FUNCTION(Milos, chapter5, 33)
 		getEntities()->clearSequences(kEntityMilos);
 
 		getData()->entityPosition = kPosition_540;
-		getData()->posture = kPostureSitting;
+		getData()->location = kLocationInsideCompartment;
 		getData()->car = kCarCoalTender;
 		getData()->inventoryItem = kItemNone;
 

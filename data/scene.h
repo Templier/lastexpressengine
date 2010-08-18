@@ -202,8 +202,8 @@ public:
 	};
 
 	// Data
-	uint16 count;
-	uint16 field_11;
+	EntityPosition entityPosition;
+	Location location;
 	CarIndex car;
 	Position position;
 	Type type;

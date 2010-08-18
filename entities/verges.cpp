@@ -213,7 +213,7 @@ switch (savepoint.action) {
 
 		case 1:
 			getData()->entityPosition = kPosition_5800;
-			getData()->posture = kPostureStanding;
+			getData()->location = kLocationOutsideCompartment;
 			getSound()->playSound(kEntityVerges, (char *)&params->seq1);
 
 			setCallback(2);
@@ -329,7 +329,7 @@ IMPLEMENT_FUNCTION(Verges, function11, 11)
 
 		case 2:
 			getData()->entityPosition = kPosition_1540;
-			getData()->posture = kPostureStanding;
+			getData()->location = kLocationOutsideCompartment;
 
 			setCallback(3);
 			call(new ENTITY_SETUP_SIIS(Verges, setup_draw), "813US");
@@ -411,7 +411,7 @@ IMPLEMENT_FUNCTION(Verges, function12, 12)
 
 		case 1:
 			getData()->entityPosition = kPosition_5800;
-			getData()->posture = kPostureStanding;
+			getData()->location = kLocationOutsideCompartment;
 
 			setCallback(2);
 			call(new ENTITY_SETUP_SIIS(Verges, setup_draw), "813DD");
@@ -628,7 +628,7 @@ IMPLEMENT_FUNCTION(Verges, chapter1, 18)
 		getObjects()->update(kObject105, kEntityVerges, kLocationNone, kCursorNormal, kCursorHand);
 
 		getData()->entityPosition = kPosition_5000;
-		getData()->posture = kPostureStanding;
+		getData()->location = kLocationOutsideCompartment;
 		getData()->car = kCarBaggage;
 		break;
 	}
@@ -701,13 +701,13 @@ IMPLEMENT_FUNCTION(Verges, function23, 23)
 		getScenes()->loadSceneFromItemPosition(kItem9);
 
 		getData()->entityPosition = kPosition_8200;
-		getData()->posture = kPostureSitting;
+		getData()->location = kLocationInsideCompartment;
 		getData()->car = kCarRedSleeping;
 		break;
 
 	case kAction191477936:
 		getData()->entityPosition = kPosition_8200;
-		getData()->posture = kPostureStanding;
+		getData()->location = kLocationOutsideCompartment;
 		getData()->car = kCarRedSleeping;
 
 		setCallback(1);
@@ -722,7 +722,7 @@ IMPLEMENT_FUNCTION(Verges, policeGettingOffTrain, 24)
 		break;
 
 	case kActionNone:
-		if (getEntities()->checkFields9(kEntityVerges, kEntityPlayer, 1000) && getEntityData(kEntityPlayer)->posture == kPostureStanding) {
+		if (getEntities()->isDistanceBetweenEntities(kEntityVerges, kEntityPlayer, 1000) && getEntityData(kEntityPlayer)->location == kLocationOutsideCompartment) {
 			setCallback(1);
 			call(new ENTITY_SETUP(Verges, setup_savegame), kSavegameTypeEvent, kEventGendarmesArrestation);
 		}
@@ -854,7 +854,7 @@ label_callback15:
 	case kActionDefault:
 		getData()->car = kCarBaggage;
 		getData()->entityPosition = kPosition_5000;
-		getData()->posture = kPostureStanding;
+		getData()->location = kLocationOutsideCompartment;
 
 		getEntities()->clearSequences(kEntityVerges);
 		getInventory()->setLocationAndProcess(kItem9, kLocation1);
@@ -940,7 +940,7 @@ IMPLEMENT_FUNCTION(Verges, chapter2, 27)
 		getEntities()->clearSequences(kEntityVerges);
 
 		getData()->entityPosition = kPosition_5000;
-		getData()->posture = kPostureStanding;
+		getData()->location = kLocationOutsideCompartment;
 		getData()->car = kCarBaggage;
 		getData()->inventoryItem = kItemNone;
 
@@ -1058,7 +1058,7 @@ IMPLEMENT_FUNCTION(Verges, chapter3, 29)
 		getEntities()->clearSequences(kEntityVerges);
 
 		getData()->entityPosition = kPosition_540;
-		getData()->posture = kPostureStanding;
+		getData()->location = kLocationOutsideCompartment;
 		getData()->car = kCarRestaurant;
 		getData()->clothes = kClothesDefault;
 		getData()->inventoryItem = kItemNone;
@@ -1167,7 +1167,55 @@ IMPLEMENT_FUNCTION(Verges, function34, 34)
 }
 
 IMPLEMENT_FUNCTION(Verges, function35, 35)
-	error("Verges: callback function 35 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionDefault:
+		setCallback(1);
+		call(new ENTITY_SETUP(Verges, setup_function12));
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			setCallback(2);
+			call(new ENTITY_SETUP(Verges, setup_updateEntity), kCarRedSleeping, kPosition_2000);
+			break;
+
+		case 2:
+			setCallback(3);
+			call(new ENTITY_SETUP_ISII(Verges, setup_function15), kCarRedSleeping, "Tra3011A");
+			break;
+
+		case 3:
+			getSavePoints()->push(kEntityVerges, kEntityCoudert, kAction188570113);
+
+			setCallback(4);
+			call(new ENTITY_SETUP(Verges, setup_updateEntity), kCarGreenSleeping, kPosition_2000);
+			break;
+
+		case 4:
+			setCallback(5);
+			call(new ENTITY_SETUP_ISII(Verges, setup_function15), kCarGreenSleeping, "Tra3011");
+			break;
+
+		case 5:
+			getSavePoints()->push(kEntityVerges, kEntityMertens, kAction188635520);
+
+			setCallback(6);
+			call(new ENTITY_SETUP(Verges, setup_function11));
+			break;
+			
+		case 6:
+			CALLBACK_ACTION();
+			break;
+		}
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Verges, chapter4, 36)
@@ -1183,7 +1231,7 @@ IMPLEMENT_FUNCTION(Verges, chapter4, 36)
 		getEntities()->clearSequences(kEntityVerges);
 
 		getData()->entityPosition = kPosition_5000;
-		getData()->posture = kPostureStanding;
+		getData()->location = kLocationOutsideCompartment;
 		getData()->car = kCarBaggage;
 		getData()->clothes = kClothesDefault;
 		getData()->inventoryItem = kItemNone;
@@ -1213,7 +1261,7 @@ IMPLEMENT_FUNCTION(Verges, function38, 38)
 		getEntities()->clearSequences(kEntityVerges);
 
 		getData()->entityPosition = kPosition_6469;
-		getData()->posture = kPostureStanding;
+		getData()->location = kLocationOutsideCompartment;
 		getData()->car = kCarGreenSleeping;
 		break;
 
@@ -1261,7 +1309,7 @@ IMPLEMENT_FUNCTION(Verges, chapter5, 39)
 		getEntities()->clearSequences(kEntityVerges);
 
 		getData()->entityPosition = kPosition_3650;
-		getData()->posture = kPostureSitting;
+		getData()->location = kLocationInsideCompartment;
 		getData()->car = kCarRestaurant;
 		getData()->clothes = kClothesDefault;
 		getData()->inventoryItem = kItemNone;
@@ -1320,7 +1368,7 @@ IMPLEMENT_FUNCTION(Verges, function41, 41)
 		getObjects()->updateLocation2(kObjectRestaurantCar, kLocation3);
 		getData()->car = kCarRedSleeping;
 		getData()->entityPosition = kPosition_9460;
-		getData()->posture = kPostureSitting;
+		getData()->location = kLocationInsideCompartment;
 
 		setCallback(1);
 		call(new ENTITY_SETUP_IISI(Verges, setup_function10), kCarRedSleeping, kPosition_2000, "Tra5001");

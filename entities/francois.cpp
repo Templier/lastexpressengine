@@ -167,7 +167,7 @@ IMPLEMENT_FUNCTION(Francois, function9, 9)
 			break;
 
 		case 2:
-			getData()->posture = kPostureStanding;
+			getData()->location = kLocationOutsideCompartment;
 			CALLBACK_ACTION();
 			break;
 		}
@@ -202,7 +202,7 @@ IMPLEMENT_FUNCTION(Francois, function10, 10)
 			break;
 
 		case 2:
-			getData()->posture = kPostureSitting;
+			getData()->location = kLocationInsideCompartment;
 			getEntities()->clearSequences(kEntityFrancois);
 
 			CALLBACK_ACTION();
@@ -281,13 +281,13 @@ IMPLEMENT_FUNCTION_I(Francois, function11, 11)
 
 		if (getEntities()->checkDistanceFromPosition(kEntityFrancois, kPosition_2000, 500) && getData()->direction == kDirectionDown) {
 
-			if (getEntities()->isSittingOrStanding(kEntityFrancois, kCarRedSleeping) && params->param8) {
+			if (getEntities()->isInsideTrainCar(kEntityFrancois, kCarRedSleeping) && params->param8) {
 				setCallback(2);
 				call(new ENTITY_SETUP_SIIS(Francois, setup_draw), "605A");
 				break;
 			}
 
-			if (getEntities()->isSittingOrStanding(kEntityFrancois, kCarGreenSleeping) && params->param7) {
+			if (getEntities()->isInsideTrainCar(kEntityFrancois, kCarGreenSleeping) && params->param7) {
 				setCallback(3);
 				call(new ENTITY_SETUP_SIIS(Francois, setup_draw), "605A");
 				break;
@@ -297,7 +297,7 @@ IMPLEMENT_FUNCTION_I(Francois, function11, 11)
 label_callback:
 		if (getProgress().chapter == kChapter1) {
 
-			if (getEntities()->isSittingOrStanding(kEntityFrancois, kCarRedSleeping)
+			if (getEntities()->isInsideTrainCar(kEntityFrancois, kCarRedSleeping)
 			 && (getEntities()->hasValidFrame(kEntityFrancois) || params->param1 < getState()->time || params->param4)
 			 && !params->param5
 			 && getData()->entityPosition < getEntityData(kEntityMmeBoutarel)->entityPosition) {
@@ -306,7 +306,7 @@ label_callback:
 					getSavePoints()->push(kEntityFrancois, kEntityMmeBoutarel, kAction202221040);
 					params->param4 = 1;
 					params->param5 = 1;
-				} else if (params->param4 && getEntities()->checkFields9(kEntityFrancois, kEntityMmeBoutarel, 1000)) {
+				} else if (params->param4 && getEntities()->isDistanceBetweenEntities(kEntityFrancois, kEntityMmeBoutarel, 1000)) {
 					getSavePoints()->push(kEntityFrancois, kEntityMmeBoutarel, kAction168986720);
 					params->param5 = 1;
 				}
@@ -403,7 +403,7 @@ label_callback:
 
 	case kAction102752636:
 		getEntities()->clearSequences(kEntityFrancois);
-		getData()->posture = kPostureSitting;
+		getData()->location = kLocationInsideCompartment;
 		getData()->entityPosition = kPosition_5790;
 		getData()->clothes = kClothesDefault;
 		getData()->field_4A3 = 30;
@@ -501,7 +501,7 @@ IMPLEMENT_FUNCTION(Francois, chapter1, 17)
 
 	case kActionDefault:
 		getData()->entityPosition = kPosition_5790;
-		getData()->posture = kPostureSitting;
+		getData()->location = kLocationInsideCompartment;
 		getData()->car = kCarRedSleeping;
 		break;
 	}
@@ -542,7 +542,7 @@ IMPLEMENT_FUNCTION(Francois, function19, 19)
 IMPLEMENT_FUNCTION(Francois, function20, 20)
 	if (savepoint.action == kActionDefault) {
 		getData()->entityPosition = kPosition_5790;
-		getData()->posture = kPostureSitting;
+		getData()->location = kLocationInsideCompartment;
 		getData()->car = kCarRedSleeping;
 
 		getEntities()->clearSequences(kEntityFrancois);
@@ -562,7 +562,7 @@ IMPLEMENT_FUNCTION(Francois, chapter2, 21)
 		getEntities()->clearSequences(kEntityFrancois);
 
 		getData()->entityPosition = kPosition_4689;
-		getData()->posture = kPostureSitting;
+		getData()->location = kLocationInsideCompartment;
 		getData()->car = kCarRestaurant;
 		getData()->clothes = kClothesDefault;
 		getData()->inventoryItem = kItemNone;
@@ -589,7 +589,7 @@ IMPLEMENT_FUNCTION(Francois, chapter2Handler, 22)
 			getObjects()->update(kObjectCompartmentD, kEntityPlayer, kLocation2, kCursorKeepValue, kCursorKeepValue);
 			getSavePoints()->push(kEntityFrancois, kEntityMmeBoutarel, kAction100957716);
 			getData()->entityPosition = kPosition_5790;
-			getData()->posture = kPostureSitting;
+			getData()->location = kLocationInsideCompartment;
 			getEntities()->clearSequences(kEntityFrancois);
 			setup_function23();
 			break;
@@ -620,7 +620,7 @@ IMPLEMENT_FUNCTION(Francois, chapter3, 24)
 		getEntities()->clearSequences(kEntityFrancois);
 
 		getData()->entityPosition = kPosition_5790;
-		getData()->posture = kPostureSitting;
+		getData()->location = kLocationInsideCompartment;
 		getData()->car = kCarRedSleeping;
 		getData()->clothes = kClothesDefault;
 		getData()->inventoryItem = kItemNone;
@@ -645,7 +645,7 @@ IMPLEMENT_FUNCTION(Francois, chapter4, 26)
 		getEntities()->clearSequences(kEntityFrancois);
 
 		getData()->entityPosition = kPosition_5790;
-		getData()->posture = kPostureSitting;
+		getData()->location = kLocationInsideCompartment;
 		getData()->car = kCarRedSleeping;
 		getData()->clothes = kClothesDefault;
 		getData()->inventoryItem = kItemNone;
@@ -673,7 +673,7 @@ IMPLEMENT_FUNCTION(Francois, chapter5, 28)
 		getEntities()->clearSequences(kEntityFrancois);
 
 		getData()->entityPosition = kPosition_3969;
-		getData()->posture = kPostureSitting;
+		getData()->location = kLocationInsideCompartment;
 		getData()->car = kCarRestaurant;
 		getData()->clothes = kClothesDefault;
 		getData()->inventoryItem = kItemNone;
@@ -698,7 +698,7 @@ IMPLEMENT_FUNCTION(Francois, function30, 30)
 
 	case kActionDefault:
 		getData()->entityPosition = kPosition_5790;
-		getData()->posture = kPostureSitting;
+		getData()->location = kLocationInsideCompartment;
 		getData()->car = kCarRedSleeping;
 		getData()->clothes = kClothesDefault;
 		getData()->inventoryItem = kItemNone;

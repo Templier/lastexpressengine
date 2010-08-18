@@ -245,9 +245,9 @@ IMPLEMENT_FUNCTION(Alexei, function13, 13)
 			getEntities()->drawSequenceLeft(kEntityAlexei, "602DB");
 			getEntities()->enterCompartment(kEntityAlexei, kObjectCompartment2, true);
 
-			getData()->posture = kPostureSitting;
+			getData()->location = kLocationInsideCompartment;
 
-			if (getEntities()->isSitting(kEntityPlayer, kCarGreenSleeping, kPosition_7500)) {
+			if (getEntities()->isInsideCompartment(kEntityPlayer, kCarGreenSleeping, kPosition_7500)) {
 				getAction()->playAnimation(isNight() ? kEventCathTurningNight : kEventCathTurningDay);
 				getSound()->playSound(kEntityPlayer, "BUMP");
 				getScenes()->loadSceneFromObject(kObjectCompartment2, true);
@@ -256,7 +256,7 @@ IMPLEMENT_FUNCTION(Alexei, function13, 13)
 
 		case 2:
 			getEntities()->exitCompartment(kEntityAlexei, kObjectCompartment2, true);
-			getData()->posture = kPostureSitting;
+			getData()->location = kLocationInsideCompartment;
 			getData()->entityPosition = kPosition_7500;
 			getEntities()->clearSequences(kEntityAlexei);
 
@@ -283,7 +283,7 @@ IMPLEMENT_FUNCTION(Alexei, function14, 14)
 
 	case kActionCallback:
 		if (getCallback() == 1) {
-			getData()->posture = kPostureStanding;
+			getData()->location = kLocationOutsideCompartment;
 			getSavePoints()->push(kEntityAlexei, kEntityMertens, kAction302614416);
 			getEntities()->drawSequenceLeft(kEntityAlexei, "602DB");
 			getEntities()->enterCompartment(kEntityAlexei, kObjectCompartment2, true);
@@ -412,7 +412,7 @@ IMPLEMENT_FUNCTION_IS(Alexei, function16, 16)
 			break;
 
 		case 9:
-			getData()->posture = kPostureStanding;
+			getData()->location = kLocationOutsideCompartment;
 			getSavePoints()->push(kEntityAlexei, kEntityMertens, kAction156567128);
 			getEntities()->drawSequenceLeft(kEntityAlexei, "602Hb");
 			getEntities()->enterCompartment(kEntityAlexei, kObjectCompartment2, true);
@@ -421,7 +421,7 @@ IMPLEMENT_FUNCTION_IS(Alexei, function16, 16)
 		case 10:
 			getEntities()->exitCompartment(kEntityAlexei, kObjectCompartment2, true);
 
-			getData()->posture = kPostureSitting;
+			getData()->location = kLocationInsideCompartment;
 			getData()->entityPosition = kPosition_7500;
 
 			getEntities()->drawSequenceLeft(kEntityAlexei, (char *)&params->seq);
@@ -463,7 +463,7 @@ IMPLEMENT_FUNCTION(Alexei, chapter1, 17)
 		getObjects()->update(kObjectHandleInsideBathroom, kEntityPlayer, kLocation1, kCursorHandKnock, kCursorHand);
 
 		getData()->entityPosition = kPosition_3969;
-		getData()->posture = kPostureSitting;
+		getData()->location = kLocationInsideCompartment;
 		getData()->car = kCarRestaurant;
 		break;
 	}
@@ -475,10 +475,10 @@ IMPLEMENT_FUNCTION(Alexei, chapter1Handler, 18)
 		break;
 
 	case kActionNone:
-		if (getState()->time > kTime1089000 && getEntities()->isSomebodyStandingInRestaurantOrSalon()) {
+		if (getState()->time > kTime1089000 && getEntities()->isSomebodyInsideRestaurantOrSalon()) {
 			params->param2 = 0;
 
-			getData()->posture = kPostureStanding;
+			getData()->location = kLocationOutsideCompartment;
 			getData()->inventoryItem = kItemNone;
 
 			getEntities()->updatePositionEnter(kEntityAlexei, kCarRestaurant, 63);
@@ -532,7 +532,7 @@ IMPLEMENT_FUNCTION(Alexei, chapter1Handler, 18)
 			getSavePoints()->push(kEntityAlexei, kEntityTables1, kActionDrawTablesWithChairs, "005E");
 
 			getData()->entityPosition = kPosition_3650;
-			getData()->posture = kPostureStanding;
+			getData()->location = kLocationOutsideCompartment;
 
 			getEntities()->clearSequences(kEntityAlexei);
 			getInventory()->get(kItem17)->location = kLocation1;
@@ -589,7 +589,7 @@ IMPLEMENT_FUNCTION(Alexei, function19, 19)
 
 		case 4:
 			getData()->entityPosition = kPosition_1540;
-			getData()->posture = kPostureStanding;
+			getData()->location = kLocationOutsideCompartment;
 
 			setCallback(5);
 			call(new ENTITY_SETUP_SIIS(Alexei, setup_draw), "811US");
@@ -670,14 +670,14 @@ IMPLEMENT_FUNCTION(Alexei, function20, 20)
 
 		case 3:
 			getData()->entityPosition = kPosition_1540;
-			getData()->posture = kPostureStanding;
+			getData()->location = kLocationOutsideCompartment;
 
 			setCallback(4);
 			call(new ENTITY_SETUP_SIIS(Alexei, setup_updatePosition), "103A", kCarRestaurant, 52);
 			break;
 
 		case 4:
-			getData()->posture = kPostureSitting;
+			getData()->location = kLocationInsideCompartment;
 			setup_function26();
 			break;
 		}
@@ -789,7 +789,7 @@ IMPLEMENT_FUNCTION(Alexei, function26, 26)
 	case kActionDefault:
 		getData()->entityPosition = kPosition_7500;
 		getData()->car = kCarGreenSleeping;
-		getData()->posture = kPostureSitting;
+		getData()->location = kLocationInsideCompartment;
 
 		getObjects()->update(kObjectCompartment2, kEntityPlayer, kLocation1, kCursorHandKnock, kCursorHand);
 		getObjects()->update(kObjectHandleInsideBathroom, kEntityPlayer, kLocation1, kCursorHandKnock, kCursorHand);
@@ -831,7 +831,7 @@ IMPLEMENT_FUNCTION(Alexei, chapter2, 28)
 		getObjects()->update(kObjectHandleInsideBathroom, kEntityAlexei, kLocation1, kCursorHandKnock, kCursorHand);
 
 		getData()->entityPosition = kPosition_7500;
-		getData()->posture = kPostureSitting;
+		getData()->location = kLocationInsideCompartment;
 		getData()->car = kCarGreenSleeping;
 		getData()->clothes = kClothesDefault;
 		getData()->inventoryItem = kItemNone;
@@ -871,7 +871,7 @@ IMPLEMENT_FUNCTION(Alexei, chapter2Handler, 29)
 
 		case 4:
 			getData()->entityPosition = kPosition_1540;
-			getData()->posture = kPostureStanding;
+			getData()->location = kLocationOutsideCompartment;
 
 			setCallback(5);
 			call(new ENTITY_SETUP_SIIS(Alexei, setup_draw), "811US");
@@ -950,7 +950,7 @@ IMPLEMENT_FUNCTION(Alexei, chapter3, 32)
 		getObjects()->update(kObject10, kEntityPlayer, kLocationNone, kCursorKeepValue, kCursorKeepValue);
 		getObjects()->update(kObjectHandleInsideBathroom, kEntityPlayer, kLocation1, kCursorHandKnock, kCursorHand);
 
-		getData()->posture = kPostureSitting;
+		getData()->location = kLocationInsideCompartment;
 		getData()->car = kCarRestaurant;
 		getData()->clothes = kClothesDefault;
 		getData()->inventoryItem = kItemNone;
@@ -970,7 +970,7 @@ IMPLEMENT_FUNCTION(Alexei, chapter3Handler, 33)
 
 	case kAction122288808:
 		getData()->entityPosition = kPosition_9270;
-		getData()->posture = kPostureStanding;
+		getData()->location = kLocationOutsideCompartment;
 		getData()->car = kCarRedSleeping;
 
 		setCallback(1);
@@ -1012,7 +1012,7 @@ IMPLEMENT_FUNCTION(Alexei, chapter4, 37)
 		getObjects()->update(kObjectHandleInsideBathroom, kEntityPlayer, kLocation1, kCursorHandKnock, kCursorHand);
 
 		getData()->entityPosition = kPosition_7500;
-		getData()->posture = kPostureSitting;
+		getData()->location = kLocationInsideCompartment;
 		getData()->car = kCarGreenSleeping;
 		getData()->inventoryItem = kItemNone;
 		break;
@@ -1059,9 +1059,9 @@ IMPLEMENT_FUNCTION(Alexei, function40, 40)
 			getEntities()->drawSequenceRight(kEntityAlexei, "602Eb");
 			getEntities()->enterCompartment(kEntityAlexei, kObjectCompartment2);
 
-			getData()->posture = kPostureSitting;
+			getData()->location = kLocationInsideCompartment;
 
-			if (getEntities()->isSitting(kEntityPlayer, kCarGreenSleeping, kPosition_7500)) {
+			if (getEntities()->isInsideCompartment(kEntityPlayer, kCarGreenSleeping, kPosition_7500)) {
 				getAction()->playAnimation(isNight() ? kEventCathTurningNight : kEventCathTurningDay);
 				getSound()->playSound(kEntityPlayer, "BUMP");
 				getScenes()->loadSceneFromObject(kObjectCompartment2);
@@ -1074,7 +1074,7 @@ IMPLEMENT_FUNCTION(Alexei, function40, 40)
 		case 2:
 			getEntities()->exitCompartment(kEntityAlexei, kObjectCompartment2);
 			getData()->entityPosition = kPosition_7500;
-			getData()->posture = kPostureSitting;
+			getData()->location = kLocationInsideCompartment;
 			getEntities()->clearSequences(kEntityAlexei);
 
 			setup_function41();
@@ -1132,7 +1132,7 @@ IMPLEMENT_FUNCTION(Alexei, function42, 42)
 			break;
 
 		case 3:
-			getData()->posture = kPostureSitting;
+			getData()->location = kLocationInsideCompartment;
 			setup_function43();
 			break;
 		}
@@ -1183,7 +1183,7 @@ IMPLEMENT_FUNCTION(Alexei, function47, 47)
 		getEntities()->clearSequences(kEntityAlexei);
 
 		getData()->entityPosition = kPositionNone;
-		getData()->posture = kPostureStanding;
+		getData()->location = kLocationOutsideCompartment;
 		getData()->car = kCarNone;
 
 		getObjects()->update(kObjectCompartment2, kEntityPlayer, kLocationNone, kCursorHandKnock, kCursorHand);

@@ -358,18 +358,18 @@ label_chapter1_end:
 
 			getSavePoints()->push(kEntityChapters, kEntityTrain, kActionTrainStopRunning);
 
-			if (getEntityData(kEntityPlayer)->posture != kPosture2) {
+			if (getEntityData(kEntityPlayer)->location != kLocationOutsideTrain) {
 				PLAY_STEAM();
 				break;
 			}
 
-			if (getEntities()->checkFields15()) {
+			if (getEntities()->isOutsideAlexeiWindow()) {
 				getScenes()->loadSceneFromPosition(kCarGreenSleeping, 49);
 				PLAY_STEAM();
 				break;
 			}
 
-			if (getEntities()->checkFields16()) {
+			if (getEntities()->isOutsideAnnaWindow()) {
 				getScenes()->loadSceneFromPosition(kCarRedSleeping, 49);
 				PLAY_STEAM();
 				break;
@@ -1017,14 +1017,14 @@ void Chapters::enterExitStation(const SavePoint &savepoint, bool isEnteringStati
 
 		getSavePoints()->push(kEntityChapters, kEntityTrain, kActionTrainStopRunning);
 
-		if (getEntityData(kEntityPlayer)->posture != kPosture2) {
+		if (getEntityData(kEntityPlayer)->location != kLocationOutsideTrain) {
 			ENTITY_PARAM(0, 2) = 0;
 			enterExitHelper(savepoint, isEnteringStation);
 			return;
 		}
 
 		// Green sleeping car
-		if (getEntities()->checkFields15()) {
+		if (getEntities()->isOutsideAlexeiWindow()) {
 			getScenes()->loadSceneFromPosition(kCarGreenSleeping, 49);
 			ENTITY_PARAM(0, 2) = 0;
 			enterExitHelper(savepoint, isEnteringStation);
@@ -1032,7 +1032,7 @@ void Chapters::enterExitStation(const SavePoint &savepoint, bool isEnteringStati
 		}
 
 		// Red sleeping car
-		if (getEntities()->checkFields16()) {
+		if (getEntities()->isOutsideAnnaWindow()) {
 			getScenes()->loadSceneFromPosition(kCarRedSleeping, 49);
 			ENTITY_PARAM(0, 2) = 0;
 			enterExitHelper(savepoint, isEnteringStation);

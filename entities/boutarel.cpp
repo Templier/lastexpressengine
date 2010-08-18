@@ -193,7 +193,7 @@ IMPLEMENT_FUNCTION(Boutarel, enterTableWithMmeBoutarel, 12)
 	case kActionExitCompartment:
 		getEntities()->clearSequences(kEntityMmeBoutarel);
 		getSavePoints()->push(kEntityBoutarel, kEntityTables2, kAction136455232);
-		getData()->posture = kPostureSitting;
+		getData()->location = kLocationInsideCompartment;
 
 		CALLBACK_ACTION();
 		break;
@@ -205,8 +205,8 @@ IMPLEMENT_FUNCTION(Boutarel, enterTableWithMmeBoutarel, 12)
 
 		if (getEntities()->isInSalon(kEntityPlayer)) {
 			getEntities()->updateFrame(kEntityBoutarel);
-			getEntityData(kEntityMmeBoutarel)->posture = getData()->posture;
-			getEntityData(kEntityTables2)->posture = getData()->posture;
+			getEntityData(kEntityMmeBoutarel)->location = getData()->location;
+			getEntityData(kEntityTables2)->location = getData()->location;
 		}
 		break;
 	}
@@ -260,7 +260,7 @@ IMPLEMENT_FUNCTION_IS(Boutarel, function16, 16)
 			break;
 
 		case 1:
-			getData()->posture = kPostureStanding;
+			getData()->location = kLocationOutsideCompartment;
 
 			setCallback(2);
 			call(new ENTITY_SETUP_SIIS(Boutarel, setup_updatePosition), (const char *)&params->seq, kCarRestaurant, 52);
@@ -278,7 +278,7 @@ IMPLEMENT_FUNCTION_IS(Boutarel, function16, 16)
 
 		case 4:
 		case 5:
-			getData()->posture = kPostureSitting;
+			getData()->location = kLocationInsideCompartment;
 			getEntities()->clearSequences(kEntityBoutarel);
 
 			CALLBACK_ACTION();
@@ -441,7 +441,7 @@ IMPLEMENT_FUNCTION(Boutarel, chapter1, 19)
 		getObjects()->update(kObject42, kEntityPlayer, kLocationNone, kCursorKeepValue, kCursorKeepValue);
 
 		getData()->entityPosition = kPosition_1750;
-		getData()->posture = kPostureSitting;
+		getData()->location = kLocationInsideCompartment;
 		getData()->car = kCarRestaurant;
 		break;
 	}
@@ -534,7 +534,7 @@ IMPLEMENT_FUNCTION(Boutarel, chapter1Handler, 21)
 IMPLEMENT_FUNCTION(Boutarel, function22, 22)
 	if (savepoint.action == kActionDefault) {
 		getData()->entityPosition = kPosition_6470;
-		getData()->posture = kPostureSitting;
+		getData()->location = kLocationInsideCompartment;
 		getData()->car = kCarRedSleeping;
 
 		getObjects()->update(kObjectCompartmentC, kEntityPlayer, kLocation1, kCursorHandKnock, kCursorHand);
@@ -557,7 +557,7 @@ IMPLEMENT_FUNCTION(Boutarel, chapter2, 23)
 		getEntities()->clearSequences(kEntityBoutarel);
 
 		getData()->entityPosition = kPosition_4689;
-		getData()->posture = kPostureSitting;
+		getData()->location = kLocationInsideCompartment;
 		getData()->car = kCarRestaurant;
 		getData()->inventoryItem = kItemNone;
 
@@ -614,7 +614,7 @@ IMPLEMENT_FUNCTION(Boutarel, chapter3, 26)
 	case kActionDefault:
 		getEntities()->clearSequences(kEntityBoutarel);
 
-		getData()->posture = kPostureSitting;
+		getData()->location = kLocationInsideCompartment;
 		getData()->car = kCarRedSleeping;
 		getData()->clothes = kClothesDefault;
 		getData()->inventoryItem = kItemNone;
@@ -700,7 +700,7 @@ IMPLEMENT_FUNCTION(Boutarel, chapter4, 31)
 		getEntities()->clearSequences(kEntityBoutarel);
 
 		getData()->entityPosition = kPosition_6470;
-		getData()->posture = kPostureSitting;
+		getData()->location = kLocationInsideCompartment;
 		getData()->car = kCarRedSleeping;
 		getData()->clothes = kClothesDefault;
 		getData()->inventoryItem = kItemNone;
@@ -782,7 +782,7 @@ IMPLEMENT_FUNCTION(Boutarel, function34, 34)
 IMPLEMENT_FUNCTION(Boutarel, function35, 35)
 	if (savepoint.action == kActionDefault) {
 		getData()->entityPosition = kPosition_6470;
-		getData()->posture = kPostureSitting;
+		getData()->location = kLocationInsideCompartment;
 		getData()->car = kCarRedSleeping;
 
 		getEntities()->clearSequences(kEntityBoutarel);
@@ -805,7 +805,7 @@ IMPLEMENT_FUNCTION(Boutarel, chapter5, 36)
 		getEntities()->clearSequences(kEntityBoutarel);
 
 		getData()->entityPosition = kPosition_3969;
-		getData()->posture = kPostureSitting;
+		getData()->location = kLocationInsideCompartment;
 		getData()->car = kCarRestaurant;
 		getData()->clothes = kClothesDefault;
 		getData()->inventoryItem = kItemNone;
@@ -825,7 +825,7 @@ IMPLEMENT_FUNCTION(Boutarel, function38, 38)
 
 	case kActionDefault:
 		getData()->entityPosition = kPosition_5790;
-		getData()->posture = kPostureSitting;
+		getData()->location = kLocationInsideCompartment;
 		getData()->car = kCarRedSleeping;
 		break;
 

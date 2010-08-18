@@ -622,7 +622,7 @@ bool Debugger::cmdTimeDelta(int argc, const char **argv) {
 		if (delta <= 0 || delta > 500)
 			goto label_error;
 
-		getState()->timeDelta = delta;
+		getState()->timeDelta = (uint)delta;
 	} else {
 label_error:
 		DebugPrintf("Syntax: delta <time delta> (delta=1-500)\n");
@@ -697,7 +697,7 @@ bool Debugger::cmdEntity(int argc, const char **argv) {
 			EntityData *data = getEntities()->get(index)->getParamData();
 			for (uint callback = 0; callback < 9; callback++) {
 				DebugPrintf("Call parameters %d:\n", callback);
-				for (uint ix = 0; ix < 4; ix++)
+				for (byte ix = 0; ix < 4; ix++)
 					DebugPrintf("  %s", data->getParameters(callback, ix)->toString().c_str());
 			}
 		}

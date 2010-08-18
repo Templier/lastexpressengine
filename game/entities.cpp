@@ -107,7 +107,7 @@ static const EntityPosition entityPositions[41] = {
 	sequenceTo = sequenceFrom; \
 	for (int seqIdx = 0; seqIdx < 7; seqIdx++) \
 		sequenceTo.deleteLastChar(); \
-	if (isSittingOrStanding(entityIndex, kCarGreenSleeping) || isSittingOrStanding(entityIndex, kCarGreenSleeping)) { \
+	if (isInsideTrainCar(entityIndex, kCarGreenSleeping) || isInsideTrainCar(entityIndex, kCarGreenSleeping)) { \
 		if (data->car < getData(kEntityPlayer)->car || (data->car == getData(kEntityPlayer)->car && data->entityPosition < getData(kEntityPlayer)->entityPosition)) \
 			sequenceTo += "R.SEQ"; \
 		else \
@@ -495,7 +495,7 @@ void Entities::updateSequences() {
 		}
 
 		// Draw sequences
-		drawSequencesInternal(entityIndex, data->direction, false);
+		drawSequences(entityIndex, data->direction, false);
 	}
 
 	//////////////////////////////////////////////////////////////////////////
@@ -679,7 +679,7 @@ void Entities::processEntity(EntityIndex entityIndex) {
 	if (!data->frame || !data->direction) {
 label_nosequence:
 		if (!data->sequence)
-			drawSequencesInternal(entityIndex, data->direction, true);
+			drawSequences(entityIndex, data->direction, true);
 
 		data->doProcessEntity = false;
 		computeCurrentFrame(entityIndex);
@@ -763,7 +763,7 @@ label_nosequence:
 		INCREMENT_DIRECTION_COUNTER();
 }
 
-void Entities::computeCurrentFrame(EntityIndex entityIndex) {
+void Entities::computeCurrentFrame(EntityIndex entityIndex) const {
 	EntityData::EntityCallData *data = getData(entityIndex);
 	int16 originalCurrentFrame = data->currentFrame;
 
@@ -1135,7 +1135,7 @@ void Entities::drawNextSequence(EntityIndex entityIndex) {
 			if (data->direction != kDirectionUp)
 				data->entityPosition = kPosition_8512;
 
-			drawSequencesInternal(entityIndex, data->direction, true);
+			drawSequences(entityIndex, data->direction, true);
 		}
 	} else {
 		data->entityPosition = kPosition_8514;
@@ -1143,7 +1143,7 @@ void Entities::drawNextSequence(EntityIndex entityIndex) {
 		if (data->direction != kDirectionUp)
 			data->entityPosition = kPosition_2086;
 
-		drawSequencesInternal(entityIndex, data->direction, true);
+		drawSequences(entityIndex, data->direction, true);
 	}
 }
 
@@ -1218,11 +1218,11 @@ void Entities::copySequenceData(EntityIndex entityIndex) {
 // Drawing
 //////////////////////////////////////////////////////////////////////////
 void Entities::drawSequenceLeft(EntityIndex index, const char* sequence) {
-	drawSequenceInternal(index, sequence, kDirectionLeft);
+	drawSequence(index, sequence, kDirectionLeft);
 }
 
 void Entities::drawSequenceRight(EntityIndex index, const char* sequence) {
-	drawSequenceInternal(index, sequence, kDirectionRight);
+	drawSequence(index, sequence, kDirectionRight);
 }
 
 void Entities::clearSequences(EntityIndex entityIndex) const {
@@ -1252,7 +1252,7 @@ void Entities::clearSequences(EntityIndex entityIndex) const {
 	data->doProcessEntity = true;
 }
 
-void Entities::drawSequenceInternal(EntityIndex index, const char* sequence, EntityDirection direction) {
+void Entities::drawSequence(EntityIndex index, const char* sequence, EntityDirection direction) {
 	debugC(8, kLastExpressDebugLogic, "Drawing sequence %s for entity %s with direction %s", sequence, ENTITY_NAME(index), DIRECTION_NAME(direction));
 
 	// Copy sequence name
@@ -1265,10 +1265,10 @@ void Entities::drawSequenceInternal(EntityIndex index, const char* sequence, Ent
 	getData(index)->currentFrame = 0;
 	getData(index)->field_4A1 = 0;
 
-	drawSequencesInternal(index, direction, true);
+	drawSequences(index, direction, true);
 }
 
-void Entities::drawSequencesInternal(EntityIndex entityIndex, EntityDirection direction, bool loadSequence) {
+void Entities::drawSequences(EntityIndex entityIndex, EntityDirection direction, bool loadSequence) const {
 	EntityData::EntityCallData *data = getData(entityIndex);
 
 	// Compute value for loading sequence depending on direction
@@ -1974,7 +1974,7 @@ bool Entities::updateEntity(EntityIndex entity, CarIndex car, EntityPosition pos
 	if (!flag3) {
 		if ((getScenes()->checkPosition(kSceneNone, SceneManager::kCheckPositionLookingUp) && data->direction == kDirectionUp)
 		 || (getScenes()->checkPosition(kSceneNone, SceneManager::kCheckPositionLookingDown) && data->direction == kDirectionDown)) {
-			 if (!checkPosition(position) && checkFields9(entity, kEntityPlayer, 250))
+			 if (!checkPosition(position) && isDistanceBetweenEntities(entity, kEntityPlayer, 250))
 				 flag3 = true;
 		}
 
@@ -2063,7 +2063,7 @@ label_process_entity:
 						if (getSavePoints()->getCallback(entityIndex)
 						 && hasValidFrame(entityIndex)
 						 && entityIndex != entity
-						 && checkFields9(entity, entityIndex, 750)
+						 && isDistanceBetweenEntities(entity, entityIndex, 750)
 						 && isDirectionUpOrDown(entityIndex)
 						 && (entity != kEntityRebecca || entityIndex != kEntitySophie)
 						 && (entity != kEntitySophie || entityIndex != kEntityRebecca)
@@ -2107,7 +2107,7 @@ label_process_entity:
 											 data->entityPosition = (EntityPosition)(data->entityPosition - 500);
 									 }
 
-									 drawSequencesInternal(entity, direction, true);
+									 drawSequences(entity, direction, true);
 
 									 return false;
 								 }
@@ -2139,7 +2139,7 @@ label_process_entity:
 						return true;
 				}
 
-				if (getData(kEntityPlayer)->car == data->car && data->posture == kPostureStanding) {
+				if (getData(kEntityPlayer)->car == data->car && data->location == kLocationOutsideCompartment) {
 					if (data->direction == kDirectionUp) {
 
 						if (getData(kEntityPlayer)->entityPosition > data->entityPosition
@@ -2175,7 +2175,7 @@ label_process_entity:
 				}
 			}
 		} else if (!flag1) {
-			drawSequencesInternal(entity, direction, true);
+			drawSequences(entity, direction, true);
 			return false;
 		}
 
@@ -2194,7 +2194,7 @@ label_process_entity:
 				return true;
 			}
 
-			drawSequencesInternal(entity, direction, true);
+			drawSequences(entity, direction, true);
 			return false;
 		}
 
@@ -2209,7 +2209,7 @@ label_process_entity:
 			return true;
 		}
 
-		drawSequencesInternal(entity, direction, true);
+		drawSequences(entity, direction, true);
 		return false;
 	}
 
@@ -2270,9 +2270,9 @@ bool Entities::changeCar(EntityData::EntityCallData * data, EntityIndex entity, 
 //////////////////////////////////////////////////////////////////////////
 // CHECKS
 //////////////////////////////////////////////////////////////////////////
-bool Entities::isSitting(EntityIndex entity, CarIndex car, EntityPosition position) const {
+bool Entities::isInsideCompartment(EntityIndex entity, CarIndex car, EntityPosition position) const {
 	return (getData(entity)->entityPosition == position
-		 && getData(entity)->posture == kPostureSitting
+		 && getData(entity)->location == kLocationInsideCompartment
 		 && getData(entity)->car == car);
 }
 
@@ -2295,7 +2295,7 @@ bool Entities::checkFields2(ObjectIndex object) const {
 	case kObjectCompartment8:
 		position = objectsPosition[object];
 		car = kCarGreenSleeping;
-		if (isSitting(kEntityPlayer, car, position))
+		if (isInsideCompartment(kEntityPlayer, car, position))
 			return false;
 		break;
 
@@ -2319,7 +2319,7 @@ bool Entities::checkFields2(ObjectIndex object) const {
 	case kObjectCompartmentH:
 		position = objectsPosition[object-32];
 		car = kCarRedSleeping;
-		if (isSitting(kEntityPlayer, car, position))
+		if (isInsideCompartment(kEntityPlayer, car, position))
 			return false;
 		break;
 
@@ -2336,7 +2336,7 @@ bool Entities::checkFields2(ObjectIndex object) const {
 	}
 
 	uint index = 1;
-	while (!isSitting((EntityIndex)index, car, position) || index == kEntityVassili) {
+	while (!isInsideCompartment((EntityIndex)index, car, position) || index == kEntityVassili) {
 		index++;
 		if (index >= 40)
 			return false;
@@ -2345,47 +2345,47 @@ bool Entities::checkFields2(ObjectIndex object) const {
 	return true;
 }
 
-bool Entities::isSittingInCompartmentCars(EntityIndex entity) const {
+bool Entities::isInsideCompartment(EntityIndex entity) const {
 	return (getData(entity)->car == kCarGreenSleeping
 		 || getData(entity)->car == kCarRedSleeping)
-		 && getData(entity)->posture == kPostureSitting;
+		 && getData(entity)->location == kLocationInsideCompartment;
 }
 
 bool Entities::isPlayerPosition(CarIndex car, Position position) const {
 	return getData(kEntityPlayer)->car == car && getScenes()->get(getState()->scene)->position == position;
 }
 
-bool Entities::isSittingOrStanding(EntityIndex entity, CarIndex car) const {
-	return getData(entity)->car == car && getData(entity)->posture <= kPostureSitting;
+bool Entities::isInsideTrainCar(EntityIndex entity, CarIndex car) const {
+	return getData(entity)->car == car && getData(entity)->location <= kLocationInsideCompartment;
 }
 
 bool Entities::isInGreenCarEntrance(EntityIndex entity) const {
-	return isSittingOrStanding(entity, kCarGreenSleeping) && getData(entity)->entityPosition < kPosition_850;
+	return isInsideTrainCar(entity, kCarGreenSleeping) && getData(entity)->entityPosition < kPosition_850;
 }
 
 bool Entities::isPlayerInCar(CarIndex car) const {
-	return isSittingOrStanding(kEntityPlayer, car) && getData(kEntityPlayer)->posture && !isInGreenCarEntrance(kEntityPlayer);
+	return isInsideTrainCar(kEntityPlayer, car) && getData(kEntityPlayer)->location && !isInGreenCarEntrance(kEntityPlayer);
 }
 
 bool Entities::isDirectionUpOrDown(EntityIndex entity) const {
 	return getData(entity)->direction == kDirectionUp || getData(entity)->direction == kDirectionDown;
 }
 
-bool Entities::checkFields9(EntityIndex entity1, EntityIndex entity2, int absValue) const {
+bool Entities::isDistanceBetweenEntities(EntityIndex entity1, EntityIndex entity2, uint distance) const {
 	return getData(entity1)->car == getData(entity2)->car
-	    && ABS(getData(entity1)->entityPosition - getData(entity2)->entityPosition) <= absValue
-		&& (getData(entity1)->posture != kPosture2 || getData(entity2)->posture != kPosture2);
+	    && (uint)ABS(getData(entity1)->entityPosition - getData(entity2)->entityPosition) <= distance
+		&& (getData(entity1)->location != kLocationOutsideTrain || getData(entity2)->location != kLocationOutsideTrain);
 }
 
 bool Entities::checkFields10(EntityIndex entity) const {
-	return getData(entity)->posture <= kPosture2;
+	return getData(entity)->location <= kLocationOutsideTrain;
 }
 
-bool Entities::isSomebodyStandingInRestaurantOrSalon() const {
+bool Entities::isSomebodyInsideRestaurantOrSalon() const {
 	for (uint i = 1; i < _entities.size(); i++) {
 		EntityIndex index = (EntityIndex)i;
 
-		if (getData(index)->posture == kPostureStanding && (isInSalon(index) || isInRestaurant(index)))
+		if (getData(index)->location == kLocationOutsideCompartment && (isInSalon(index) || isInRestaurant(index)))
 			return false;
 	}
 
@@ -2393,42 +2393,42 @@ bool Entities::isSomebodyStandingInRestaurantOrSalon() const {
 }
 
 bool Entities::isInSalon(EntityIndex entity) const {
-	return isSittingOrStanding(entity, kCarRestaurant)
+	return isInsideTrainCar(entity, kCarRestaurant)
 		&& getData(entity)->entityPosition >= kPosition_1540
 		&& getData(entity)->entityPosition <= kPosition_3650;
 }
 
 bool Entities::isInRestaurant(EntityIndex entity) const {
-	return isSittingOrStanding(entity, kCarRestaurant)
+	return isInsideTrainCar(entity, kCarRestaurant)
 		&& getData(entity)->entityPosition >= kPosition_3650
 		&& getData(entity)->entityPosition <= kPosition_5800;
 }
 
 bool Entities::isInKronosSalon(EntityIndex entity) const {
-	return isSittingOrStanding(entity, kCarKronos)
+	return isInsideTrainCar(entity, kCarKronos)
 		&& getData(entity)->entityPosition >= kPosition_5500
 		&& getData(entity)->entityPosition <= kPosition_7500;
 }
 
-bool Entities::checkFields15() const {
+bool Entities::isOutsideAlexeiWindow() const {
 	return (getData(kEntityPlayer)->entityPosition == kPosition_7500 || getData(kEntityPlayer)->entityPosition == kPosition_8200)
-		 && getData(kEntityPlayer)->posture == kPosture2
+		 && getData(kEntityPlayer)->location == kLocationOutsideTrain
 		 && getData(kEntityPlayer)->car == kCarGreenSleeping;
 }
 
-bool Entities::checkFields16() const {
+bool Entities::isOutsideAnnaWindow() const {
 	return (getData(kEntityPlayer)->entityPosition == kPosition_4070 || getData(kEntityPlayer)->entityPosition == kPosition_4840)
-		 && getData(kEntityPlayer)->posture == kPosture2
+		 && getData(kEntityPlayer)->location == kLocationOutsideTrain
 		 && getData(kEntityPlayer)->car == kCarRedSleeping;
 }
 
 bool Entities::isInKitchen(EntityIndex entity) const {
-	return isSittingOrStanding(entity, kCarRestaurant) && getData(entity)->entityPosition > kPosition_5800;
+	return isInsideTrainCar(entity, kCarRestaurant) && getData(entity)->entityPosition > kPosition_5800;
 }
 
-bool Entities::isNobodySitting(CarIndex car, EntityPosition position) const {
+bool Entities::isNobodyInCompartment(CarIndex car, EntityPosition position) const {
 	for (uint i = 1; i < _entities.size(); i++) {
-		if (isSitting((EntityIndex)i, car, position))
+		if (isInsideCompartment((EntityIndex)i, car, position))
 			return false;
 	}
 	return true;
@@ -2436,7 +2436,7 @@ bool Entities::isNobodySitting(CarIndex car, EntityPosition position) const {
 
 bool Entities::checkFields19(EntityIndex entity, CarIndex car, EntityPosition position) const {
 
-	if (getData(entity)->car != car ||  getData(entity)->posture != kPostureSitting)
+	if (getData(entity)->car != car ||  getData(entity)->location != kLocationInsideCompartment)
 		return false;
 
 	EntityPosition entityPosition = getData(entity)->entityPosition;
@@ -2464,23 +2464,23 @@ bool Entities::checkFields19(EntityIndex entity, CarIndex car, EntityPosition po
 }
 
 bool Entities::isInBaggageCarEntrance(EntityIndex entity) const {
-	return isSittingOrStanding(entity, kCarBaggage)
+	return isInsideTrainCar(entity, kCarBaggage)
 		&& getData(entity)->entityPosition >= kPosition_4500
 		&& getData(entity)->entityPosition <= kPosition_5500;
 }
 
 bool Entities::isInBaggageCar(EntityIndex entity) const {
-	return isSittingOrStanding(entity, kCarBaggage) && getData(entity)->entityPosition < kPosition_4500;
+	return isInsideTrainCar(entity, kCarBaggage) && getData(entity)->entityPosition < kPosition_4500;
 }
 
 bool Entities::isInKronosSanctum(EntityIndex entity) const {
-	return isSittingOrStanding(entity, kCarKronos)
+	return isInsideTrainCar(entity, kCarKronos)
 		&& getData(entity)->entityPosition >= kPosition_3500
 		&& getData(entity)->entityPosition <= kPosition_5500;
 }
 
 bool Entities::isInKronosCarEntrance(EntityIndex entity) const {
-	return isSittingOrStanding(entity, kCarKronos) && getData(entity)->entityPosition > kPosition_7900;
+	return isInsideTrainCar(entity, kCarKronos) && getData(entity)->entityPosition > kPosition_7900;
 }
 
 bool Entities::checkDistanceFromPosition(EntityIndex entity, EntityPosition position, int distance) const {

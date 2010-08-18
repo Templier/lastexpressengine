@@ -136,7 +136,7 @@ IMPLEMENT_FUNCTION_III(Gendarmes, function10, 10)
 			if (!params->param5)
 				params->param5 = getState()->timeTicks + 75;
 
-			if (!getEntities()->checkFields15() && getObjects()->get((ObjectIndex)params->param3).location != kLocation1) {
+			if (!getEntities()->isOutsideAlexeiWindow() && getObjects()->get((ObjectIndex)params->param3).location != kLocation1) {
 				setCallback(2);
 				call(new ENTITY_SETUP(Gendarmes, setup_savegame), kSavegameTypeEvent, kEventGendarmesArrestation);
 				break;
@@ -154,11 +154,11 @@ IMPLEMENT_FUNCTION_III(Gendarmes, function10, 10)
 
 		UPDATE_PARAM(params->param7, getState()->timeTicks, 300);
 
-		if (!params->param4 && getEntities()->checkFields15()) {
+		if (!params->param4 && getEntities()->isOutsideAlexeiWindow()) {
 			getObjects()->update((ObjectIndex)params->param3, kEntityPlayer, kLocationNone, kCursorHandKnock, kCursorHand);
 			CALLBACK_ACTION();
 		} else {
-			if (getEntities()->checkFields15())
+			if (getEntities()->isOutsideAlexeiWindow())
 				getScenes()->loadSceneFromPosition(kCarGreenSleeping, 49);
 
 			getSound()->playSound(kEntityGendarmes, "LIB017", SoundManager::kFlagDefault);
@@ -246,7 +246,7 @@ IMPLEMENT_FUNCTION(Gendarmes, function12, 12)
 
 	case kActionDefault:
 		getData()->entityPosition = kPosition_540;
-		getData()->posture = kPostureStanding;
+		getData()->location = kLocationOutsideCompartment;
 		getData()->car = kCarGreenSleeping;
 
 		getProgress().field_14 = 29;
@@ -445,10 +445,10 @@ void Gendarmes::arrest(const SavePoint &savepoint, bool shouldPlaySound, SoundMa
 			ENTITY_PARAM(0, 1) = 1;
 		}
 
-		if (getEntities()->checkFields9(kEntityGendarmes, kEntityPlayer, 1000) && !getEntityData(kEntityPlayer)->posture) {
+		if (getEntities()->isDistanceBetweenEntities(kEntityGendarmes, kEntityPlayer, 1000) && !getEntityData(kEntityPlayer)->location) {
 
 			if (shouldUpdateEntity)
-				if (getEntities()->isPlayerPosition(kCarRedSleeping, 22) && !getEntities()->checkFields9(kEntityGendarmes, kEntityPlayer, 250))
+				if (getEntities()->isPlayerPosition(kCarRedSleeping, 22) && !getEntities()->isDistanceBetweenEntities(kEntityGendarmes, kEntityPlayer, 250))
 					break;
 
 			setCallback(1);

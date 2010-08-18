@@ -227,7 +227,7 @@ IMPLEMENT_FUNCTION(Ivo, chapter1, 14)
 		getObjects()->update(kObject47, kEntityPlayer, kLocationNone, kCursorKeepValue, kCursorKeepValue);
 
 		getData()->entityPosition = kPosition_4691;
-		getData()->posture = kPostureSitting;
+		getData()->location = kLocationInsideCompartment;
 		getData()->car = kCarRestaurant;
 
 		break;
@@ -241,7 +241,7 @@ IMPLEMENT_FUNCTION(Ivo, chapter1Handler, 15)
 
 	case kActionNone:
 		getData()->entityPosition = getEntityData(kEntityMilos)->entityPosition;
-		getData()->posture = getEntityData(kEntityMilos)->posture;
+		getData()->location = getEntityData(kEntityMilos)->location;
 		break;
 
 	case kActionCallback:
@@ -275,7 +275,7 @@ IMPLEMENT_FUNCTION(Ivo, function16, 16)
 IMPLEMENT_FUNCTION(Ivo, function17, 17)
 	if (savepoint.action == kActionDefault) {
 		getData()->entityPosition = kPosition_2740;
-		getData()->posture = kPostureSitting;
+		getData()->location = kLocationInsideCompartment;
 		getData()->car = kCarRedSleeping;
 
 		getEntities()->clearSequences(kEntityIvo);
@@ -296,7 +296,7 @@ IMPLEMENT_FUNCTION(Ivo, chapter2, 18)
 		getEntities()->clearSequences(kEntityIvo);
 
 		getData()->entityPosition = kPosition_2740;
-		getData()->posture = kPostureSitting;
+		getData()->location = kLocationInsideCompartment;
 		getData()->car = kCarRedSleeping;
 		getData()->clothes = kClothesDefault;
 		getData()->inventoryItem = kItemNone;
@@ -324,7 +324,7 @@ IMPLEMENT_FUNCTION(Ivo, function19, 19)
 			break;
 
 		case 1:
-			getData()->posture = kPostureStanding;
+			getData()->location = kLocationOutsideCompartment;
 			if (getData()->entityPosition < kPosition_2087)
 				getData()->entityPosition = kPosition_2088;
 
@@ -338,7 +338,7 @@ IMPLEMENT_FUNCTION(Ivo, function19, 19)
 
 		case 3:
 			getData()->entityPosition = kPosition_1540;
-			getData()->posture = kPostureStanding;
+			getData()->location = kLocationOutsideCompartment;
 
 			setCallback(4);
 			call(new ENTITY_SETUP_SIIS(Ivo, setup_draw), "809US");
@@ -350,7 +350,7 @@ IMPLEMENT_FUNCTION(Ivo, function19, 19)
 			break;
 
 		case 5:
-			getData()->posture = kPostureSitting;
+			getData()->location = kLocationInsideCompartment;
 			setup_function20();
 			break;
 		}
@@ -370,7 +370,7 @@ IMPLEMENT_FUNCTION(Ivo, function20, 20)
 IMPLEMENT_FUNCTION(Ivo, function21, 21)
 	if (savepoint.action == kActionDefault) {
 		getData()->entityPosition = kPosition_2740;
-		getData()->posture = kPostureSitting;
+		getData()->location = kLocationInsideCompartment;
 		getData()->car = kCarRedSleeping;
 
 		getObjects()->update(kObjectCompartmentH, kEntityPlayer, kLocation3, kCursorHandKnock, kCursorHand);
@@ -390,7 +390,7 @@ IMPLEMENT_FUNCTION(Ivo, chapter3, 22)
 		getEntities()->clearSequences(kEntityIvo);
 
 		getData()->entityPosition = kPosition_2740;
-		getData()->posture = kPostureSitting;
+		getData()->location = kLocationInsideCompartment;
 		getData()->car = kCarRedSleeping;
 		getData()->clothes = kClothesDefault;
 		getData()->inventoryItem = kItemNone;
@@ -414,7 +414,7 @@ IMPLEMENT_FUNCTION(Ivo, chapter4, 24)
 		break;
 
 	case kActionDefault:
-		getData()->posture = kPostureSitting;
+		getData()->location = kLocationInsideCompartment;
 		getData()->car = kCarRestaurant;
 		getData()->inventoryItem = kItemNone;
 		break;
@@ -427,8 +427,8 @@ IMPLEMENT_FUNCTION(Ivo, chapter4Handler, 25)
 		break;
 
 	case kActionNone:
-		if (getState()->time > kTime2361600 && getEntities()->isSomebodyStandingInRestaurantOrSalon()) {
-			getData()->posture = kPostureStanding;
+		if (getState()->time > kTime2361600 && getEntities()->isSomebodyInsideRestaurantOrSalon()) {
+			getData()->location = kLocationOutsideCompartment;
 			setup_function26();
 		}
 		break;
@@ -503,7 +503,7 @@ IMPLEMENT_FUNCTION(Ivo, function29, 29)
 		getObjects()->update(kObjectCompartmentH, kEntityPlayer, kLocation3, kCursorHandKnock, kCursorHand);
 
 		getData()->entityPosition = kPosition_2740;
-		getData()->posture = kPostureSitting;
+		getData()->location = kLocationInsideCompartment;
 		getData()->car = kCarRedSleeping;
 		getData()->inventoryItem = kItemNone;
 	}
@@ -522,7 +522,7 @@ IMPLEMENT_FUNCTION(Ivo, chapter5, 30)
 		getEntities()->clearSequences(kEntityIvo);
 
 		getData()->entityPosition = kPosition_540;
-		getData()->posture = kPostureSitting;
+		getData()->location = kLocationInsideCompartment;
 		getData()->car = kCarBaggageRear;
 		getData()->inventoryItem = kItemNone;
 
@@ -541,7 +541,7 @@ IMPLEMENT_FUNCTION(Ivo, fight, 32)
 		break;
 
 	case kActionDefault:
-		getData()->posture = kPostureStanding;
+		getData()->location = kLocationOutsideCompartment;
 		getData()->entityPosition = kPosition_540;
 		getData()->car = kCarBaggageRear;
 		getData()->inventoryItem = kItemNone;

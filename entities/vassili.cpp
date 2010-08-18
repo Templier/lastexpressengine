@@ -114,7 +114,7 @@ IMPLEMENT_FUNCTION(Vassili, chapter1Handler, 5)
 	case kActionNone:
 		if (params->param1) {
 			getData()->entityPosition = getEntityData(kEntityTatiana)->entityPosition;
-			getData()->posture = getEntityData(kEntityTatiana)->posture;
+			getData()->location = getEntityData(kEntityTatiana)->location;
 		} else {
 			if (params->param3 && params->param3 >= getState()->time) {
 				break;
@@ -154,7 +154,7 @@ IMPLEMENT_FUNCTION(Vassili, function6, 6)
 		break;
 
 	case kActionNone:
-		if (getEntities()->isSitting(kEntityPlayer, kCarRedSleeping, kPosition_8200)) {
+		if (getEntities()->isInsideCompartment(kEntityPlayer, kCarRedSleeping, kPosition_8200)) {
 
 			UPDATE_PARAM_GOTO(params->param3, getState()->timeTicks, params->param1, label_function7);
 
@@ -172,7 +172,7 @@ label_function7:
 
 			if (getState()->time <= kTime1503000) {
 
-				if (getEntities()->isSitting(kEntityPlayer, kCarRedSleeping, kPosition_8200) || !params->param4) {
+				if (getEntities()->isInsideCompartment(kEntityPlayer, kCarRedSleeping, kPosition_8200) || !params->param4) {
 
 					params->param4 = getState()->time;
 					if (!params->param4) {
@@ -192,7 +192,7 @@ label_function7:
 
 	case kActionDefault:
 		getData()->entityPosition = kPosition_8200;
-		getData()->posture = kPostureSitting;
+		getData()->location = kLocationInsideCompartment;
 		getData()->car = kCarRedSleeping;
 
 		getObjects()->update(kObjectCompartmentA, kEntityPlayer, kLocationNone, kCursorHandKnock, kCursorHand);
@@ -243,11 +243,11 @@ IMPLEMENT_FUNCTION(Vassili, function7, 7)
 
 	case kActionDefault:
 		getData()->entityPosition = kPosition_8200;
-		getData()->posture = kPostureSitting;
+		getData()->location = kLocationInsideCompartment;
 		getData()->car = kCarRedSleeping;
 
 		getEntities()->clearSequences(kEntityVassili);
-		if (getEntities()->isSitting(kEntityPlayer, kCarRedSleeping, kPosition_8200))
+		if (getEntities()->isInsideCompartment(kEntityPlayer, kCarRedSleeping, kPosition_8200))
 			getScenes()->loadSceneFromObject(kObjectCompartmentA);
 
 		getObjects()->update(kObjectCompartmentA, kEntityPlayer, kLocation1, kCursorHandKnock, kCursorHand);
@@ -269,7 +269,7 @@ IMPLEMENT_FUNCTION(Vassili, function8, 8)
 		break;
 
 	case kActionDefault:
-		if (!getEntities()->isSittingOrStanding(kEntityPlayer, kCarRedSleeping)) {
+		if (!getEntities()->isInsideTrainCar(kEntityPlayer, kCarRedSleeping)) {
 			getSound()->playSound(kEntityPlayer, "BUMP");
 			getScenes()->loadSceneFromPosition(kCarRedSleeping, (getEntityData(kEntityPlayer)->car <= kCarRedSleeping) ? 1 : 40);
 		}
@@ -288,7 +288,7 @@ IMPLEMENT_FUNCTION(Vassili, function9, 9)
 		break;
 
 	case kAction2:
-		if (!getEntities()->checkFields9(kEntityVassili, kEntityPlayer, 2500))
+		if (!getEntities()->isDistanceBetweenEntities(kEntityVassili, kEntityPlayer, 2500))
 			getSound()->playSound(kEntityPlayer, "BUMP");
 
 		setup_seizure();
@@ -351,7 +351,7 @@ IMPLEMENT_FUNCTION(Vassili, seizure, 10)
 		if (getCallback() != 1)
 			break;
 
-		getData()->posture = kPostureSitting;
+		getData()->location = kLocationInsideCompartment;
 		getAction()->playAnimation(kEventVassiliSeizure);
 
         getObjects()->update(kObjectCompartmentA, kEntityPlayer, kLocationNone, kCursorHandKnock, kCursorHand);
@@ -386,7 +386,7 @@ IMPLEMENT_FUNCTION(Vassili, chapter2, 12)
 		getEntities()->clearSequences(kEntityVassili);
 
 		getData()->entityPosition = kPosition_8200;
-		getData()->posture = kPostureSitting;
+		getData()->location = kLocationInsideCompartment;
 		getData()->car = kCarRedSleeping;
 		getData()->clothes = kClothesDefault;
 		getData()->inventoryItem = kItemNone;
@@ -403,7 +403,7 @@ IMPLEMENT_FUNCTION(Vassili, sleeping, 13)
 		break;
 
 	case kActionNone:
-		if (getEntities()->isSitting(kEntityPlayer, kCarRedSleeping, kPosition_8200)) {
+		if (getEntities()->isInsideCompartment(kEntityPlayer, kCarRedSleeping, kPosition_8200)) {
 			UPDATE_PARAM(params->param3, getState()->timeTicks, params->param1);
 
 			setCallback(1);
@@ -444,7 +444,7 @@ IMPLEMENT_FUNCTION(Vassili, chapter3, 14)
 		getEntities()->clearSequences(kEntityVassili);
 
 		getData()->entityPosition = kPosition_8200;
-		getData()->posture = kPostureSitting;
+		getData()->location = kLocationInsideCompartment;
 		getData()->car = kCarRedSleeping;
 		getData()->clothes = kClothesDefault;
 		getData()->inventoryItem = kItemNone;
@@ -460,7 +460,7 @@ IMPLEMENT_FUNCTION(Vassili, stealEgg, 15)
 		break;
 
 	case kActionNone:
-		if (getEntities()->isSitting(kEntityPlayer, kCarRedSleeping, kPosition_8200)) {
+		if (getEntities()->isInsideCompartment(kEntityPlayer, kCarRedSleeping, kPosition_8200)) {
 			UPDATE_PARAM(params->param3, getState()->timeTicks, params->param1);
 
 			setCallback(1);
@@ -483,7 +483,7 @@ IMPLEMENT_FUNCTION(Vassili, stealEgg, 15)
 		break;
 
 	case kActionDrawScene:
-		if (getEntities()->isSitting(kEntityPlayer, kCarRedSleeping, kPosition_7850)
+		if (getEntities()->isInsideCompartment(kEntityPlayer, kCarRedSleeping, kPosition_7850)
 		 && getInventory()->hasItem(kItemFirebird)
 		 && !getEvent(kEventVassiliCompartmentStealEgg))
 			getObjects()->update(kObject48, kEntityVassili, kLocationNone, kCursorNormal, kCursorHand);
@@ -524,7 +524,7 @@ IMPLEMENT_FUNCTION(Vassili, chapter4, 16)
 		getEntities()->clearSequences(kEntityVassili);
 
 		getData()->entityPosition = kPosition_8200;
-		getData()->posture = kPostureSitting;
+		getData()->location = kLocationInsideCompartment;
 		getData()->car = kCarRedSleeping;
 		getData()->clothes = kClothesDefault;
 		getData()->inventoryItem = kItemNone;
@@ -542,7 +542,7 @@ IMPLEMENT_FUNCTION(Vassili, chapter4Handler, 17)
 		break;
 
 	case kActionNone:
-		if (getEntities()->isSitting(kEntityPlayer, kCarRedSleeping, kPosition_8200)) {
+		if (getEntities()->isInsideCompartment(kEntityPlayer, kCarRedSleeping, kPosition_8200)) {
 			UPDATE_PARAM(params->param3, getState()->timeTicks, params->param1);
 
 			setCallback(1);
@@ -575,7 +575,7 @@ IMPLEMENT_FUNCTION(Vassili, chapter5, 18)
 		getEntities()->clearSequences(kEntityVassili);
 
 		getData()->entityPosition = kPosition_3969;
-		getData()->posture = kPostureSitting;
+		getData()->location = kLocationInsideCompartment;
 		getData()->car = kCarRestaurant;
 		getData()->clothes = kClothesDefault;
 		getData()->inventoryItem = kItemNone;

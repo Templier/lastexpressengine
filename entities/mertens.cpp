@@ -42,8 +42,8 @@ namespace LastExpress {
 
 #define SAVEGAME_BLOOD_JACKET() \
 	if (getProgress().jacket == kJacketBlood \
-	 && getEntities()->checkFields9(kEntityMertens, kEntityPlayer, 1000) \
-	 && !getEntities()->isSittingInCompartmentCars(kEntityPlayer) \
+	 && getEntities()->isDistanceBetweenEntities(kEntityMertens, kEntityPlayer, 1000) \
+	 && !getEntities()->isInsideCompartment(kEntityPlayer) \
 	 && !getEntities()->checkFields10(kEntityPlayer)) { \
 		setCallback(1); \
 		call(new ENTITY_SETUP(Mertens, setup_savegame), kSavegameTypeEvent, kEventMertensBloodJacket); \
@@ -224,7 +224,7 @@ IMPLEMENT_FUNCTION_SIII(Mertens, enterExitCompartment3, 5)
 		getEntities()->enterCompartment(_entityIndex, (ObjectIndex)params->param4);
 		getData()->entityPosition = (EntityPosition)params->param5;
 
-		if (getEntities()->isSitting(kEntityPlayer, kCarGreenSleeping, (EntityPosition)params->param5) || getEntities()->isSitting(kEntityPlayer, kCarGreenSleeping, (EntityPosition)params->param6)) {
+		if (getEntities()->isInsideCompartment(kEntityPlayer, kCarGreenSleeping, (EntityPosition)params->param5) || getEntities()->isInsideCompartment(kEntityPlayer, kCarGreenSleeping, (EntityPosition)params->param6)) {
 			getAction()->playAnimation(isNight() ? kEventCathTurningNight : kEventCathTurningDay);
 			getSound()->playSound(kEntityPlayer, "BUMP");
 			getScenes()->loadSceneFromObject((ObjectIndex)params->param4);
@@ -360,13 +360,13 @@ IMPLEMENT_FUNCTION_II(Mertens, function10, 10)
 		break;
 
 	case kActionNone:
-		if (params->param3 && getEntities()->checkFields9(kEntityMertens, kEntityPlayer, 2000))
+		if (params->param3 && getEntities()->isDistanceBetweenEntities(kEntityMertens, kEntityPlayer, 2000))
 			getData()->inventoryItem = (InventoryItem)(getData()->inventoryItem | kItemInvalid);
 		else
 			getData()->inventoryItem = (InventoryItem)(getData()->inventoryItem & kItemToggleHigh);
 
-		if (!getEntities()->checkFields9(kEntityMertens, kEntityPlayer, 1000)
-		  || getEntities()->isSittingInCompartmentCars(kEntityPlayer)
+		if (!getEntities()->isDistanceBetweenEntities(kEntityMertens, kEntityPlayer, 1000)
+		  || getEntities()->isInsideCompartment(kEntityPlayer)
 		  || getEntities()->checkFields10(kEntityPlayer)) {
 			if (getEntities()->updateEntity(kEntityMertens, (CarIndex)params->param1, (EntityPosition)params->param2)) {
 				getData()->inventoryItem = kItemNone;
@@ -1144,7 +1144,7 @@ IMPLEMENT_FUNCTION_I(Mertens, function30, 30)
 				break;
 
 			case 2:
-				if (getEntities()->isSitting(kEntityPlayer, kCarGreenSleeping, kPosition_7500)) {
+				if (getEntities()->isInsideCompartment(kEntityPlayer, kCarGreenSleeping, kPosition_7500)) {
 					getObjects()->update(kObjectCompartment2, kEntityPlayer, getObjects()->get(kObjectCompartment2).location, kCursorNormal, kCursorNormal);
 					params->param3 = 1;
 				}
@@ -1154,7 +1154,7 @@ IMPLEMENT_FUNCTION_I(Mertens, function30, 30)
 				break;
 
 			case 3:
-				if (getEntities()->isSitting(kEntityPlayer, kCarGreenSleeping, kPosition_6470)) {
+				if (getEntities()->isInsideCompartment(kEntityPlayer, kCarGreenSleeping, kPosition_6470)) {
 					getObjects()->update(kObjectCompartment3, kEntityPlayer, getObjects()->get(kObjectCompartment3).location, kCursorNormal, kCursorNormal);
 					params->param3 = 1;
 				}
@@ -1343,7 +1343,7 @@ IMPLEMENT_FUNCTION(Mertens, chapter1, 34)
 		ENTITY_PARAM(0, 1) = 0;
 
 		getData()->entityPosition = kPosition_9460;
-		getData()->posture = kPostureStanding;
+		getData()->location = kLocationOutsideCompartment;
 		getData()->car = kCarGreenSleeping;
 
 		break;
@@ -1526,7 +1526,7 @@ IMPLEMENT_FUNCTION(Mertens, function42, 42)
 				if (getState()->time <= kTime1188000) {
 					if ((!getEntities()->isPlayerInCar(kCarGreenSleeping) && !getEntities()->isPlayerInCar(kCarRedSleeping))
 					  || getSound()->isBuffered("REB1205")
-					  || !getEntities()->isSitting(kEntityMmeBoutarel, kCarRedSleeping, kPosition_5790)
+					  || !getEntities()->isInsideCompartment(kEntityMmeBoutarel, kCarRedSleeping, kPosition_5790)
 					  || !params->param4) {
 						params->param4 = getState()->time;
 					}
@@ -1672,7 +1672,7 @@ label_callback_19:
 	case kActionDefault:
 		getData()->car = kCarGreenSleeping;
 		getData()->entityPosition = kPosition_1500;
-		getData()->posture = kPostureStanding;
+		getData()->location = kLocationOutsideCompartment;
 		getScenes()->loadSceneFromItemPosition(kItem7);
 		break;
 
@@ -1841,7 +1841,7 @@ IMPLEMENT_FUNCTION(Mertens, chapter2, 43)
 		getEntities()->clearSequences(kEntityMertens);
 
 		getData()->entityPosition = kPosition_1500;
-		getData()->posture = kPostureStanding;
+		getData()->location = kLocationOutsideCompartment;
 		getData()->car = kCarGreenSleeping;
 		getData()->inventoryItem = kItemNone;
 
@@ -1880,7 +1880,7 @@ IMPLEMENT_FUNCTION(Mertens, chapter3, 45)
 
 	case kActionDefault:
 		getData()->entityPosition = kPosition_1500;
-		getData()->posture = kPostureStanding;
+		getData()->location = kLocationOutsideCompartment;
 		getData()->car = kCarGreenSleeping;
 		getData()->inventoryItem = kItemNone;
 
@@ -1923,7 +1923,7 @@ IMPLEMENT_FUNCTION(Mertens, chapter4, 47)
 		getEntities()->clearSequences(kEntityMertens);
 
 		getData()->entityPosition = kPosition_1500;
-		getData()->posture = kPostureStanding;
+		getData()->location = kLocationOutsideCompartment;
 		getData()->car = kCarGreenSleeping;
 		getData()->inventoryItem = kItemNone;
 
@@ -1969,7 +1969,7 @@ IMPLEMENT_FUNCTION(Mertens, chapter5, 50)
 		getEntities()->clearSequences(kEntityMertens);
 
 		getData()->entityPosition = kPosition_3969;
-		getData()->posture = kPostureSitting;
+		getData()->location = kLocationInsideCompartment;
 		getData()->car = kCarRestaurant;
 		getData()->inventoryItem = kItemNone;
 		break;
@@ -2008,7 +2008,7 @@ IMPLEMENT_FUNCTION(Mertens, function52, 52)
 	case kActionDefault:
 		getData()->car = kCarRedSleeping;
 		getData()->entityPosition = kPosition_5790;
-		getData()->posture = kPostureSitting;
+		getData()->location = kLocationInsideCompartment;
 
 		getObjects()->update(kObjectCompartmentD, kEntityPlayer, kLocation3, kCursorHandKnock, kCursorHand);
 
@@ -2026,7 +2026,7 @@ IMPLEMENT_FUNCTION(Mertens, function52, 52)
 			break;
 
 		case 2:
-			getData()->posture = kPostureStanding;
+			getData()->location = kLocationOutsideCompartment;
 			getSavePoints()->push(kEntityMertens, kEntityMmeBoutarel, kAction155604840);
 			setup_function53();
 			break;

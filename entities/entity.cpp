@@ -151,7 +151,7 @@ void Entity::reset(const SavePoint &savepoint, bool resetClothes, bool resetItem
 
 	case kActionDefault:
 		getData()->entityPosition = kPositionNone;
-		getData()->posture = kPostureStanding;
+		getData()->location = kLocationOutsideCompartment;
 		getData()->car = kCarGreenSleeping;
 
 		if (resetItem)
@@ -293,7 +293,7 @@ void Entity::callbackActionRestaurantOrSalon(const SavePoint &savepoint) {
 
 	case kActionNone:
 	case kActionDefault:
-		if (getEntities()->isSomebodyStandingInRestaurantOrSalon())
+		if (getEntities()->isSomebodyInsideRestaurantOrSalon())
 			CALLBACK_ACTION();
 		break;
 	}
@@ -357,7 +357,7 @@ void Entity::callSavepoint(const SavePoint &savepoint, bool handleExcuseMe) {
 	}
 }
 
-void Entity::enterExitCompartment(const SavePoint &savepoint, EntityPosition position1, EntityPosition position2, CarIndex car, ObjectIndex compartment, bool alternate, bool updatePosture) {
+void Entity::enterExitCompartment(const SavePoint &savepoint, EntityPosition position1, EntityPosition position2, CarIndex car, ObjectIndex compartment, bool alternate, bool updateLocation) {
 	EXPOSE_PARAMS(EntityData::EntityParametersSIIS)
 
 	switch (savepoint.action) {
@@ -369,8 +369,8 @@ void Entity::enterExitCompartment(const SavePoint &savepoint, EntityPosition pos
 		if (position1)
 			getData()->entityPosition = position1;
 
-		if (updatePosture)
-			getData()->posture = kPostureSitting;
+		if (updateLocation)
+			getData()->location = kLocationInsideCompartment;
 
 		CALLBACK_ACTION();
 		break;
@@ -380,9 +380,9 @@ void Entity::enterExitCompartment(const SavePoint &savepoint, EntityPosition pos
 		getEntities()->enterCompartment(_entityIndex, (ObjectIndex)params->param4);
 
 		if (position1) {
-			getData()->posture = kPostureSitting;
+			getData()->location = kLocationInsideCompartment;
 
-			if (getEntities()->isSitting(kEntityPlayer, car, position1) || getEntities()->isSitting(kEntityPlayer, car, position2)) {
+			if (getEntities()->isInsideCompartment(kEntityPlayer, car, position1) || getEntities()->isInsideCompartment(kEntityPlayer, car, position2)) {
 				getAction()->playAnimation(isNight() ? kEventCathTurningNight : kEventCathTurningDay);
 				getSound()->playSound(kEntityPlayer, "BUMP");
 				getScenes()->loadSceneFromObject(compartment, alternate);

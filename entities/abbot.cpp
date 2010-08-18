@@ -264,7 +264,7 @@ IMPLEMENT_FUNCTION(Abbot, chapter3, 17)
 		getEntities()->clearSequences(kEntityAbbot);
 
 		getData()->entityPosition = kPosition_5900;
-		getData()->posture = kPostureSitting;
+		getData()->location = kLocationInsideCompartment;
 		getData()->car = kCarRestaurant;
 		getData()->inventoryItem = kItemNone;
 		getData()->clothes = kClothesDefault;
@@ -285,7 +285,7 @@ IMPLEMENT_FUNCTION(Abbot, chapter3Handler, 18)
 
 		case 1:
 			getData()->entityPosition = kPosition_5800;
-			getData()->posture = kPostureStanding;
+			getData()->location = kLocationOutsideCompartment;
 
 			setCallback(2);
 			call(new ENTITY_SETUP_SIIS(Abbot, setup_draw), "804DD");
@@ -317,7 +317,7 @@ IMPLEMENT_FUNCTION(Abbot, chapter3Handler, 18)
 		case 5:
 			getObjects()->update(kObjectCompartmentC, kEntityPlayer, kLocation2, kCursorKeepValue, kCursorKeepValue);
 			getData()->entityPosition = kPosition_6470;
-			getData()->posture = kPostureSitting;
+			getData()->location = kLocationInsideCompartment;
 
 			setup_function19();
 			break;
@@ -416,7 +416,7 @@ IMPLEMENT_FUNCTION(Abbot, function21, 21)
 			break;
 
 		case 2:
-			getData()->posture = kPostureStanding;
+			getData()->location = kLocationOutsideCompartment;
 
 			setCallback(3);
 			call(new ENTITY_SETUP(Abbot, setup_updateEntity), kCarRestaurant, kPosition_850);
@@ -429,7 +429,7 @@ IMPLEMENT_FUNCTION(Abbot, function21, 21)
 
 		case 4:
 			getData()->entityPosition = kPosition_1540;
-			getData()->posture = kPostureStanding;
+			getData()->location = kLocationOutsideCompartment;
 
 			setCallback(5);
 			call(new ENTITY_SETUP_SIIS(Abbot, setup_draw), "804US");
@@ -457,7 +457,7 @@ IMPLEMENT_FUNCTION(Abbot, function21, 21)
 
 	case kAction122288808:
 		getSavePoints()->push(kEntityAbbot, kEntityTables4, kAction136455232);
-		getData()->posture = kPostureSitting;
+		getData()->location = kLocationInsideCompartment;
 
 		setCallback(7);
         call(new ENTITY_SETUP_SIIS(Abbot, setup_draw), "029B");
@@ -473,7 +473,7 @@ IMPLEMENT_FUNCTION(Abbot, function22, 22)
 	case kActionNone:
 		TIME_CHECK_SAVEPOINT(kTime1971000, params->param1, kEntityAbbot, kEntityServers0, kAction218586752);
 
-		if (getState()->time > kTime1989000 && getEntities()->isSomebodyStandingInRestaurantOrSalon()) {
+		if (getState()->time > kTime1989000 && getEntities()->isSomebodyInsideRestaurantOrSalon()) {
 			getData()->inventoryItem = kItemNone;
 			setup_function23();
 		}
@@ -517,7 +517,7 @@ IMPLEMENT_FUNCTION(Abbot, function23, 23)
 		break;
 
 	case kActionDefault:
-		getData()->posture = kPostureStanding;
+		getData()->location = kLocationOutsideCompartment;
 		getEntities()->updatePositionEnter(kEntityAbbot, kCarRestaurant, 67);
 
 		setCallback(1);
@@ -553,7 +553,7 @@ IMPLEMENT_FUNCTION(Abbot, function23, 23)
 			break;
 
 		case 4:
-			getData()->posture = kPostureSitting;
+			getData()->location = kLocationInsideCompartment;
 
 			setup_function24();
 			break;
@@ -629,7 +629,7 @@ IMPLEMENT_FUNCTION(Abbot, function25, 25)
 			break;
 
 		case 1:
-			getData()->posture = kPostureStanding;
+			getData()->location = kLocationOutsideCompartment;
 			getObjects()->update(kObjectCompartmentC, kEntityPlayer, kLocationNone, kCursorHandKnock, kCursorHand);
 			getObjects()->update(kObject50, kEntityPlayer, kLocationNone, kCursorHandKnock, kCursorHand);
 
@@ -644,14 +644,14 @@ IMPLEMENT_FUNCTION(Abbot, function25, 25)
 
 		case 3:
 			getData()->entityPosition = kPosition_1540;
-			getData()->posture = kPostureStanding;
+			getData()->location = kLocationOutsideCompartment;
 
 			setCallback(4);
 			call(new ENTITY_SETUP_SIIS(Abbot, setup_updatePosition), "115A", 5, 56);
 			break;
 
 		case 4:
-			getData()->posture = kPostureSitting;
+			getData()->location = kLocationInsideCompartment;
 			getScenes()->loadSceneFromItemPosition(kItem3);
 
 			setup_function26();
@@ -669,7 +669,7 @@ IMPLEMENT_FUNCTION(Abbot, function26, 26)
 	case kActionNone:
 		UPDATE_PARAM(params->param2, getState()->time, 4500);
 
-		if (getEntities()->isSomebodyStandingInRestaurantOrSalon())
+		if (getEntities()->isSomebodyInsideRestaurantOrSalon())
 			setup_function27();
 		break;
 
@@ -701,7 +701,7 @@ IMPLEMENT_FUNCTION(Abbot, function27, 27)
 			break;
 
 		case 1:
-			getData()->posture = kPostureStanding;
+			getData()->location = kLocationOutsideCompartment;
 
 			setCallback(2);
 			call(new ENTITY_SETUP_SIIS(Abbot, setup_updatePosition), "115C", 5, 56);
@@ -724,7 +724,7 @@ IMPLEMENT_FUNCTION(Abbot, function27, 27)
 		case 4:
 			getObjects()->update(kObjectCompartmentC, kEntityPlayer, kLocation2, kCursorKeepValue, kCursorKeepValue);
 			getData()->entityPosition = kPosition_6470;
-			getData()->posture = kPostureSitting;
+			getData()->location = kLocationInsideCompartment;
 
 			setup_function28();
 			break;
@@ -849,7 +849,7 @@ switch (savepoint.action) {
 
 		case 2:
 			getObjects()->update(kObjectCompartmentC, kEntityPlayer, kLocation2, kCursorKeepValue, kCursorKeepValue);
-			getData()->posture = kPostureStanding;
+			getData()->location = kLocationOutsideCompartment;
 
 			setCallback(3);
 			call(new ENTITY_SETUP(Abbot, setup_updateEntity), kCarRestaurant, kPosition_850);
@@ -862,7 +862,7 @@ switch (savepoint.action) {
 
 		case 4:
 			getData()->entityPosition = kPosition_1540;
-			getData()->posture = kPostureStanding;
+			getData()->location = kLocationOutsideCompartment;
 
 			setCallback(5);
 			call(new ENTITY_SETUP_SIIS(Abbot, setup_updatePosition), "115A", 5, 56);
@@ -870,7 +870,7 @@ switch (savepoint.action) {
 
 		case 5:
 			getScenes()->loadSceneFromItemPosition(kItem3);
-			getData()->posture = kPostureSitting;
+			getData()->location = kLocationInsideCompartment;
 
 			setup_function31();
 			break;
@@ -908,7 +908,7 @@ IMPLEMENT_FUNCTION(Abbot, function32, 32)
 		case 2:
 			getObjects()->update(kObjectCompartmentC, kEntityPlayer, kLocation2, kCursorKeepValue, kCursorKeepValue);
 			getData()->entityPosition = kPosition_6470;
-			getData()->posture = kPostureSitting;
+			getData()->location = kLocationInsideCompartment;
 			getSavePoints()->push(kEntityAbbot, kEntityBoutarel, kAction122358304);
 
 			setup_function33();
@@ -934,7 +934,7 @@ IMPLEMENT_FUNCTION(Abbot, function35, 35)
 	case kActionNone:
 		if (params->param1 != kTimeInvalid && getState()->time > kTime2115000) {
 			if (getState()->time <= kTime2124000) {
-				if (!getEntities()->checkFields9(kEntityAbbot, kEntityPlayer, 2000) || !params->param1)
+				if (!getEntities()->isDistanceBetweenEntities(kEntityAbbot, kEntityPlayer, 2000) || !params->param1)
 					params->param1 = getState()->time;
 
 				if (params->param1 >= getState()->time)
@@ -991,7 +991,7 @@ IMPLEMENT_FUNCTION(Abbot, function37, 37)
 		case 2:
 			getObjects()->update(kObjectCompartmentC, kEntityPlayer, kLocation2, kCursorKeepValue, kCursorKeepValue);
 			getData()->entityPosition = kPosition_6470;
-			getData()->posture = kPostureSitting;
+			getData()->location = kLocationInsideCompartment;
 			getSavePoints()->push(kEntityAbbot, kEntityBoutarel, kAction122358304);
 
 			setup_function38();
@@ -1057,7 +1057,7 @@ IMPLEMENT_FUNCTION(Abbot, chapter4Handler, 41)
 	case kActionNone:
 		TIME_CHECK_SAVEPOINT(kTime2358000, params->param1, kEntityAbbot, kEntityServers0, kAction218128129);
 
-		if (getState()->time > kTime2389500 && getEntities()->isSomebodyStandingInRestaurantOrSalon())
+		if (getState()->time > kTime2389500 && getEntities()->isSomebodyInsideRestaurantOrSalon())
 			setup_function42();
 
 		break;
@@ -1065,7 +1065,7 @@ IMPLEMENT_FUNCTION(Abbot, chapter4Handler, 41)
 	case kActionDefault:
 		getSavePoints()->push(kEntityAbbot, kEntityTables4, kAction136455232);
 		getEntities()->drawSequenceLeft(kEntityAbbot, "029E");
-		getData()->posture = kPostureSitting;
+		getData()->location = kLocationInsideCompartment;
 		break;
 
 	case kAction122288808:
@@ -1084,7 +1084,7 @@ IMPLEMENT_FUNCTION(Abbot, function42, 42)
 		break;
 
 	case kActionDefault:
-		getData()->posture = kPostureStanding;
+		getData()->location = kLocationOutsideCompartment;
 		getEntities()->updatePositionExit(kEntityAbbot, kCarRestaurant, 67);
 
 		setCallback(1);
@@ -1119,7 +1119,7 @@ IMPLEMENT_FUNCTION(Abbot, function42, 42)
 			break;
 
 		case 4:
-			getData()->posture = kPostureSitting;
+			getData()->location = kLocationInsideCompartment;
 			getEntities()->clearSequences(kEntityAbbot);
 
 			setup_function43();
@@ -1140,7 +1140,7 @@ IMPLEMENT_FUNCTION(Abbot, function44, 44)
 
 	case kActionDefault:
 		getData()->entityPosition = kPosition_6470;
-		getData()->posture = kPostureSitting;
+		getData()->location = kLocationInsideCompartment;
 		getData()->car = kCarRedSleeping;
 
 		getEntities()->clearSequences(kEntityAbbot);
@@ -1163,7 +1163,7 @@ IMPLEMENT_FUNCTION(Abbot, function45, 45)
 	case kActionDefault:
 		getData()->entityPosition = kPosition_6471;
 		getData()->car = kCarRedSleeping;
-		getData()->posture = kPostureStanding;
+		getData()->location = kLocationOutsideCompartment;
 
 		RESET_ENTITY_STATE(kEntityVerges, Verges, setup_function38);
 
@@ -1236,14 +1236,14 @@ IMPLEMENT_FUNCTION(Abbot, drinkAfterDefuse, 47)
 
 		case 1:
 			getData()->entityPosition = kPosition_1540;
-			getData()->posture = kPostureStanding;
+			getData()->location = kLocationOutsideCompartment;
 
 			setCallback(2);
 			call(new ENTITY_SETUP_SIIS(Abbot, setup_draw), "126A");
 			break;
 
 		case 2:
-			getData()->posture = kPostureSitting;
+			getData()->location = kLocationInsideCompartment;
 			getEntities()->drawSequenceLeft(kEntityAbbot, "126B");
 			getData()->inventoryItem = kItemBomb;
 			break;
@@ -1278,7 +1278,7 @@ IMPLEMENT_FUNCTION(Abbot, chapter5, 50)
 		getEntities()->clearSequences(kEntityAbbot);
 
 		getData()->entityPosition = kPosition_3969;
-		getData()->posture = kPostureSitting;
+		getData()->location = kLocationInsideCompartment;
 		getData()->car = kCarRestaurant;
 		getData()->inventoryItem = kItemNone;
 		getData()->clothes = kClothesDefault;
@@ -1300,7 +1300,7 @@ IMPLEMENT_FUNCTION(Abbot, function52, 52)
 		getEntities()->clearSequences(kEntityAbbot);
 
 		getData()->entityPosition = kPositionNone;
-		getData()->posture = kPostureStanding;
+		getData()->location = kLocationOutsideCompartment;
 		getData()->car = kCarNone;
 		break;
 

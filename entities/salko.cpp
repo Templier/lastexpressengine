@@ -25,10 +25,13 @@
 
 #include "lastexpress/entities/salko.h"
 
+#include "lastexpress/game/action.h"
 #include "lastexpress/game/entities.h"
+#include "lastexpress/game/fight.h"
 #include "lastexpress/game/logic.h"
 #include "lastexpress/game/object.h"
 #include "lastexpress/game/savepoint.h"
+#include "lastexpress/game/scenes.h"
 #include "lastexpress/game/sound.h"
 #include "lastexpress/game/state.h"
 
@@ -130,7 +133,7 @@ IMPLEMENT_FUNCTION_II(Salko, function7, 7)
 IMPLEMENT_FUNCTION(Salko, function8, 8)
 	if (savepoint.action == kActionDefault) {
 		getData()->entityPosition = kPosition_2740;
-		getData()->posture = kPostureSitting;
+		getData()->location = kLocationInsideCompartment;
 		getData()->car = kCarRedSleeping;
 	}
 }
@@ -146,7 +149,7 @@ IMPLEMENT_FUNCTION(Salko, chapter1, 9)
 
 	case kActionDefault:
 		getData()->entityPosition = kPosition_4691;
-		getData()->posture = kPostureStanding;
+		getData()->location = kLocationOutsideCompartment;
 		getData()->car = kCarRestaurant;
 		break;
 	}
@@ -159,7 +162,7 @@ IMPLEMENT_FUNCTION(Salko, chapter1Handler, 10)
 
 	case kActionNone:
 		getData()->entityPosition = getEntityData(kEntityIvo)->entityPosition;
-		getData()->posture = getEntityData(kEntityIvo)->posture;
+		getData()->location = getEntityData(kEntityIvo)->location;
 		break;
 
 	case kActionCallback:
@@ -179,7 +182,7 @@ IMPLEMENT_FUNCTION(Salko, chapter1Handler, 10)
 IMPLEMENT_FUNCTION(Salko, function11, 11)
 	if (savepoint.action == kActionDefault) {
 		getData()->entityPosition = kPosition_2740;
-		getData()->posture = kPostureSitting;
+		getData()->location = kLocationInsideCompartment;
 		getData()->car = kCarRedSleeping;
 
 		getEntities()->clearSequences(kEntitySalko);
@@ -196,7 +199,7 @@ IMPLEMENT_FUNCTION(Salko, chapter2, 12)
 		getEntities()->clearSequences(kEntitySalko);
 
 		getData()->entityPosition = kPosition_2740;
-		getData()->posture = kPostureSitting;
+		getData()->location = kLocationInsideCompartment;
 		getData()->car = kCarRedSleeping;
 		getData()->clothes = kClothesDefault;
 		getData()->inventoryItem = kItemNone;
@@ -236,7 +239,7 @@ IMPLEMENT_FUNCTION(Salko, function13, 13)
 
 		case 3:
 			getEntities()->drawSequenceLeft(kEntitySalko, "BLANK");
-			getData()->posture = kPostureSitting;
+			getData()->location = kLocationInsideCompartment;
 
 			setup_function8();
 			break;
@@ -263,7 +266,7 @@ IMPLEMENT_FUNCTION(Salko, chapter3, 14)
 		getEntities()->clearSequences(kEntitySalko);
 
 		getData()->entityPosition = kPosition_2740;
-		getData()->posture = kPostureSitting;
+		getData()->location = kLocationInsideCompartment;
 		getData()->car = kCarRedSleeping;
 		getData()->clothes = kClothesDefault;
 		getData()->inventoryItem = kItemNone;
@@ -293,7 +296,89 @@ IMPLEMENT_FUNCTION(Salko, chapter3Handler, 15)
 }
 
 IMPLEMENT_FUNCTION(Salko, function16, 16)
-	error("Salko: callback function 16 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionNone:
+		if (getEntities()->hasValidFrame(kEntitySalko) && getEntities()->isDistanceBetweenEntities(kEntitySalko, kEntityPlayer, 5000)) {
+			getSavePoints()->push(kEntitySalko, kEntityMax, kAction158007856);
+
+			setCallback(3);
+			call(new ENTITY_SETUP(Salko, setup_updateFromTime), 75);
+			break;
+		}
+
+label_callback3:
+		UPDATE_PARAM(params->param1, getState()->time, 4500);
+
+		getSavePoints()->push(kEntitySalko, kEntitySalko, kAction101169464);
+		break;
+
+	case kActionDefault:
+		setCallback(1);
+		call(new ENTITY_SETUP_SIIS(Salko, setup_enterExitCompartment), "612DH", kObjectCompartmentH);
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			getData()->location = kLocationOutsideCompartment;
+
+			if (getData()->entityPosition < kPosition_2087)
+				getData()->entityPosition = kPosition_2088;
+
+			setCallback(2);
+			call(new ENTITY_SETUP(Salko, setup_updateEntity), kCarRedSleeping, kPosition_4070);
+			break;
+
+		case 2:
+			break;
+
+		case 3:
+			getSavePoints()->push(kEntitySalko, kEntitySalko, kAction101169464);
+			goto label_callback3;
+
+		case 4:
+			getEntities()->exitCompartment(kEntitySalko, kObjectCompartmentF, true);
+
+			setCallback(5);
+			call(new ENTITY_SETUP(Salko, setup_updateEntity), kCarRedSleeping, kPosition_9460);
+			break;
+
+		case 5:
+			setCallback(6);
+			call(new ENTITY_SETUP(Salko, setup_updateFromTime), 4500);
+			break;
+
+		case 6:
+			setCallback(7);
+			call(new ENTITY_SETUP(Salko, setup_updateEntity), kCarRedSleeping, kPosition_2740);
+			break;
+
+		case 7:
+			setCallback(8);
+			call(new ENTITY_SETUP_SIIS(Salko, setup_enterExitCompartment), "612Ch", kObjectCompartmentH);
+			break;
+
+		case 8:
+			getData()->location = kLocationInsideCompartment;
+			getData()->entityPosition = kPosition_2740;
+			getEntities()->clearSequences(kEntitySalko);
+
+			CALLBACK_ACTION();
+			break;
+		}
+		break;
+
+	case kAction101169464:
+		setCallback(4);
+		call(new ENTITY_SETUP_SIIS(Salko, setup_enterExitCompartment), "612Bf", kObjectCompartmentF);
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Salko, function17, 17)
@@ -303,7 +388,7 @@ IMPLEMENT_FUNCTION(Salko, function17, 17)
 
 	case kActionDefault:
 		getData()->entityPosition = kPosition_6470;
-		getData()->posture = kPostureStanding;
+		getData()->location = kLocationOutsideCompartment;
 		getData()->car = kCarGreenSleeping;
 		getData()->clothes = kClothesDefault;
 		getData()->inventoryItem = kItemNone;
@@ -325,7 +410,7 @@ IMPLEMENT_FUNCTION(Salko, function17, 17)
 		case 2:
 			getEntities()->clearSequences(kEntitySalko);
 			getData()->entityPosition = kPosition_2740;
-			getData()->posture = kPostureSitting;
+			getData()->location = kLocationInsideCompartment;
 			getSavePoints()->push(kEntitySalko, kEntityMilos, kAction157691176);
 
 			setup_chapter3Handler();
@@ -348,7 +433,7 @@ IMPLEMENT_FUNCTION(Salko, chapter4, 18)
 		getEntities()->clearSequences(kEntitySalko);
 
 		getData()->entityPosition = kPosition_5420;
-		getData()->posture = kPostureSitting;
+		getData()->location = kLocationInsideCompartment;
 		getData()->car = kCarRestaurant;
 		getData()->inventoryItem = kItemNone;
 		break;
@@ -364,7 +449,7 @@ IMPLEMENT_FUNCTION(Salko, chapter4Handler, 19)
 		if (getCallback() == 1) {
 			getEntities()->drawSequenceLeft(kEntitySalko, "BLANK");
 
-			getData()->posture = kPostureSitting;
+			getData()->location = kLocationInsideCompartment;
 
 			setup_function20();
 		}
@@ -388,7 +473,7 @@ IMPLEMENT_FUNCTION(Salko, function20, 20)
 			break;
 
 		case 1:
-			getData()->posture = kPostureStanding;
+			getData()->location = kLocationOutsideCompartment;
 			if (getData()->entityPosition < kPosition_2087)
 				getData()->entityPosition = kPosition_2088;
 
@@ -444,7 +529,7 @@ IMPLEMENT_FUNCTION(Salko, function22, 22)
 		getObjects()->update(kObjectCompartmentH, kEntityPlayer, kLocation3, kCursorHandKnock, kCursorHand);
 
 		getData()->entityPosition = kPosition_2740;
-		getData()->posture = kPostureSitting;
+		getData()->location = kLocationInsideCompartment;
 		getData()->car = kCarRedSleeping;
 		getData()->inventoryItem = kItemNone;
 	}
@@ -463,7 +548,7 @@ IMPLEMENT_FUNCTION(Salko, chapter5, 23)
 		getEntities()->clearSequences(kEntitySalko);
 
 		getData()->entityPosition = kPosition_9460;
-		getData()->posture = kPostureSitting;
+		getData()->location = kLocationInsideCompartment;
 		getData()->car = kCarRestaurant;
 		getData()->inventoryItem = kItemNone;
 		break;
@@ -471,7 +556,52 @@ IMPLEMENT_FUNCTION(Salko, chapter5, 23)
 }
 
 IMPLEMENT_FUNCTION(Salko, chapter5Handler, 24)
-	error("Salko: callback function 24 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			if (getSound()->isBuffered("MUS050"))
+				getSound()->processEntry("MUS050");
+
+			getAction()->playAnimation(kEventCathSalkoTrainTopFight);
+
+			setCallback(2);
+			call(new ENTITY_SETUP(Salko, setup_savegame), kSavegameTypeTime, kTimeNone);
+			break;
+
+		case 2:
+			params->param1 = getFight()->setup(kFightSalko);
+
+			if (params->param1 == Fight::kFightEndWin) {
+				getState()->time += 1800;
+				setCallback(3);
+				call(new ENTITY_SETUP(Salko, setup_savegame), kSavegameTypeEvent, kEventCathSalkoTrainTopWin);
+			} else {
+				getLogic()->gameOver(kSavegameTypeIndex, 0, kSceneNone, params->param1 == Fight::kFightEndLost);
+			}
+			break;
+
+		case 3:
+			getAction()->playAnimation(kEventCathSalkoTrainTopWin);
+			getSavePoints()->push(kEntitySalko, kEntityVesna, kAction134427424);
+
+			getScenes()->loadSceneFromPosition(kCarRestaurant, 10);
+			setup_nullfunction();
+			break;
+		}
+		break;
+
+	case kAction167992577:
+		setCallback(1);
+		call(new ENTITY_SETUP(Salko, setup_savegame), kSavegameTypeEvent, kEventCathSalkoTrainTopFight);
+		break;
+	}
 }
 
 IMPLEMENT_NULL_FUNCTION(Salko, 25)

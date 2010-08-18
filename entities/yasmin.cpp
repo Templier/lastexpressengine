@@ -129,7 +129,7 @@ IMPLEMENT_FUNCTION(Yasmin, function6, 6)
 
 	case kActionDefault:
 		getData()->entityPosition = kPosition_4840;
-		getData()->posture = kPostureStanding;
+		getData()->location = kLocationOutsideCompartment;
 
 		setCallback(1);
 		call(new ENTITY_SETUP_SIIS(Yasmin, setup_enterExitCompartment), "615Be", kObjectCompartment5);
@@ -151,7 +151,7 @@ IMPLEMENT_FUNCTION(Yasmin, function6, 6)
 			break;
 
 		case 3:
-			getData()->posture = kPostureSitting;
+			getData()->location = kLocationInsideCompartment;
 			getEntities()->clearSequences(kEntityYasmin);
 
 			CALLBACK_ACTION();
@@ -168,7 +168,7 @@ IMPLEMENT_FUNCTION(Yasmin, function7, 7)
 
 	case kActionDefault:
 		getData()->entityPosition = kPosition_3050;
-		getData()->posture = kPostureStanding;
+		getData()->location = kLocationOutsideCompartment;
 
 		setCallback(1);
 		// Exit compartment
@@ -190,7 +190,7 @@ IMPLEMENT_FUNCTION(Yasmin, function7, 7)
 			break;
 
 		case 3:
-			getData()->posture = kPostureSitting;
+			getData()->location = kLocationInsideCompartment;
 			getEntities()->clearSequences(kEntityYasmin);
 
 			CALLBACK_ACTION();
@@ -211,7 +211,7 @@ IMPLEMENT_FUNCTION(Yasmin, chapter1, 8)
 
 	case kActionDefault:
 		getData()->entityPosition = kPosition_4840;
-		getData()->posture = kPostureSitting;
+		getData()->location = kLocationInsideCompartment;
 		getData()->car = kCarGreenSleeping;
 		break;
 	}
@@ -270,7 +270,7 @@ IMPLEMENT_FUNCTION(Yasmin, function10, 10)
 	if (savepoint.action == kActionDefault) {
 		getObjects()->update(kObjectCompartment7, kEntityPlayer, kLocation3, kCursorHandKnock, kCursorHand);
 		getData()->entityPosition = kPosition_3050;
-		getData()->posture = kPostureSitting;
+		getData()->location = kLocationInsideCompartment;
 		getData()->car = kCarGreenSleeping;
 
 		getEntities()->clearSequences(kEntityYasmin);
@@ -282,7 +282,7 @@ IMPLEMENT_FUNCTION(Yasmin, chapter2, 11)
 		getEntities()->clearSequences(kEntityYasmin);
 
 		getData()->entityPosition = kPosition_3050;
-		getData()->posture = kPostureSitting;
+		getData()->location = kLocationInsideCompartment;
 		getData()->car = kCarGreenSleeping;
 		getData()->clothes = kClothesDefault;
 		getData()->inventoryItem = kItemNone;
@@ -336,7 +336,7 @@ IMPLEMENT_FUNCTION(Yasmin, chapter3, 13)
 		getEntities()->clearSequences(kEntityYasmin);
 
 		getData()->entityPosition = kPosition_3050;
-		getData()->posture = kPostureSitting;
+		getData()->location = kLocationInsideCompartment;
 		getData()->car = kCarGreenSleeping;
 		break;
 	}
@@ -381,7 +381,7 @@ IMPLEMENT_FUNCTION(Yasmin, chapter4, 15)
 
 	case kActionDefault:
 		getData()->entityPosition = kPosition_3050;
-		getData()->posture = kPostureSitting;
+		getData()->location = kLocationInsideCompartment;
 		getData()->car = kCarGreenSleeping;
 		break;
 	}
@@ -434,7 +434,7 @@ IMPLEMENT_FUNCTION(Yasmin, chapter5, 18)
 		getEntities()->clearSequences(kEntityYasmin);
 
 		getData()->entityPosition = kPosition_3969;
-		getData()->posture = kPostureSitting;
+		getData()->location = kLocationInsideCompartment;
 		getData()->car = kCarRestaurant;
 		getData()->clothes = kClothesDefault;
 		getData()->inventoryItem = kItemNone;
@@ -459,12 +459,12 @@ IMPLEMENT_FUNCTION(Yasmin, function20, 20)
 
 	case kActionDefault:
 		getData()->entityPosition = kPosition_2500;
-		getData()->posture = kPostureStanding;
+		getData()->location = kLocationOutsideCompartment;
 		getData()->car = kCarGreenSleeping;
 		break;
 
 	case kActionDrawScene:
-		if (getEntities()->isSittingOrStanding(kEntityPlayer, kCarGreenSleeping)) {
+		if (getEntities()->isInsideTrainCar(kEntityPlayer, kCarGreenSleeping)) {
 			setup_function21();
 		}
 		break;

@@ -296,7 +296,7 @@ IMPLEMENT_FUNCTION_II(Mahmud, function10, 10)
 			getObjects()->update(kObjectCompartment7, kEntityMahmud, kLocation3, kCursorHandKnock, kCursorHand);
 			getObjects()->update(kObjectCompartment8, kEntityMahmud, kLocation3, kCursorHandKnock, kCursorHand);
 
-			getData()->posture = kPostureStanding;
+			getData()->location = kLocationOutsideCompartment;
 
 			getEntities()->drawSequenceLeft(kEntityMahmud, "614Md");
 			getEntities()->enterCompartment(kEntityMahmud, kObjectCompartment4, true);
@@ -305,7 +305,7 @@ IMPLEMENT_FUNCTION_II(Mahmud, function10, 10)
 		case 2:
 		case 3:
 			getEntities()->exitCompartment(kEntityMahmud, kObjectCompartment4, true);
-			getData()->posture = kPostureSitting;
+			getData()->location = kLocationInsideCompartment;
 			getEntities()->clearSequences(kEntityMahmud);
 
 			CALLBACK_ACTION();
@@ -366,7 +366,7 @@ IMPLEMENT_FUNCTION(Mahmud, function11, 11)
 			break;
 
 		case 1:
-			getData()->posture = kPostureStanding;
+			getData()->location = kLocationOutsideCompartment;
 			getObjects()->update(kObjectCompartment4, kEntityPlayer, kLocation3, kCursorHandKnock, kCursorHand);
 			getEntities()->drawSequenceLeft(kEntityMahmud, "614Kd");
 			getEntities()->enterCompartment(kEntityMahmud, kObjectCompartment4, true);
@@ -428,7 +428,7 @@ IMPLEMENT_FUNCTION(Mahmud, function11, 11)
 
 		case 11:
 			getEntities()->exitCompartment(kEntityMahmud, kObjectCompartment4, true);
-			getData()->posture = kPostureSitting;
+			getData()->location = kLocationInsideCompartment;
 
 			getEntities()->clearSequences(kEntityMahmud);
 			getObjects()->update(kObjectCompartment4, kEntityMahmud, kLocation3, kCursorHandKnock, kCursorHand);
@@ -471,7 +471,7 @@ IMPLEMENT_FUNCTION(Mahmud, function12, 12)
 			break;
 
 		case 1:
-			getData()->posture = kPostureStanding;
+			getData()->location = kLocationOutsideCompartment;
 			getObjects()->update(kObjectCompartment4, kEntityPlayer, kLocation3, kCursorHandKnock, kCursorHand);
 
 			setCallback(2);
@@ -484,7 +484,7 @@ IMPLEMENT_FUNCTION(Mahmud, function12, 12)
 			break;
 
 		case 3:
-			getData()->posture = kPostureSitting;
+			getData()->location = kLocationInsideCompartment;
 			getEntities()->clearSequences(kEntityMahmud);
 
 			setCallback(4);
@@ -497,7 +497,7 @@ IMPLEMENT_FUNCTION(Mahmud, function12, 12)
 			break;
 
 		case 5:
-			getData()->posture = kPostureStanding;
+			getData()->location = kLocationOutsideCompartment;
 
 			setCallback(6);
 			call(new ENTITY_SETUP(Mahmud, setup_updateEntity), kCarGreenSleeping, kPosition_5790);
@@ -509,7 +509,7 @@ IMPLEMENT_FUNCTION(Mahmud, function12, 12)
 			break;
 
 		case 7:
-			getData()->posture = kPostureSitting;
+			getData()->location = kLocationInsideCompartment;
 			getEntities()->clearSequences(kEntityMahmud);
 
 			CALLBACK_ACTION();
@@ -537,7 +537,7 @@ IMPLEMENT_FUNCTION(Mahmud, function13, 13)
 			break;
 
 		case 1:
-			getData()->posture = kPostureStanding;
+			getData()->location = kLocationOutsideCompartment;
 			getObjects()->update(kObjectCompartment4, kEntityPlayer, kLocation3, kCursorHandKnock, kCursorHand);
 
 			setCallback(2);
@@ -550,7 +550,7 @@ IMPLEMENT_FUNCTION(Mahmud, function13, 13)
 			break;
 
 		case 3:
-			getData()->posture = kPostureSitting;
+			getData()->location = kLocationInsideCompartment;
 			getEntities()->clearSequences(kEntityMahmud);
 
 			setCallback(4);
@@ -563,7 +563,7 @@ IMPLEMENT_FUNCTION(Mahmud, function13, 13)
 			break;
 
 		case 5:
-			getData()->posture = kPostureStanding;
+			getData()->location = kLocationOutsideCompartment;
 
 			setCallback(6);
 			call(new ENTITY_SETUP(Mahmud, setup_updateEntity), kCarGreenSleeping, kPosition_5790);
@@ -575,7 +575,7 @@ IMPLEMENT_FUNCTION(Mahmud, function13, 13)
 			break;
 
 		case 7:
-			getData()->posture = kPostureSitting;
+			getData()->location = kLocationInsideCompartment;
 			getEntities()->clearSequences(kEntityMahmud);
 
 			CALLBACK_ACTION();
@@ -652,7 +652,7 @@ IMPLEMENT_FUNCTION(Mahmud, chaptersHandler, 14)
 
 	case kActionDefault:
 		getData()->entityPosition = kPosition_5790;
-		getData()->posture = kPostureSitting;
+		getData()->location = kLocationInsideCompartment;
 		getData()->car = kCarGreenSleeping;
 
 		getEntities()->clearSequences(kEntityMahmud);
@@ -780,7 +780,7 @@ IMPLEMENT_FUNCTION(Mahmud, chapter1, 15)
 		getSavePoints()->addData(kEntityMahmud, kAction170483072, 0);
 
 		getData()->entityPosition = kPosition_540;
-		getData()->posture = kPostureStanding;
+		getData()->location = kLocationOutsideCompartment;
 		getData()->car = kCarGreenSleeping;
 
 		getObjects()->update(kObjectCompartment4, kEntityPlayer, kLocation3, kCursorHandKnock, kCursorHand);
@@ -795,7 +795,7 @@ IMPLEMENT_FUNCTION(Mahmud, resetChapter, 16)
 		return;
 
 	getData()->entityPosition = kPosition_5790;
-	getData()->posture = kPostureSitting;
+	getData()->location = kLocationInsideCompartment;
 	getData()->car = kCarGreenSleeping;
 
 	getObjects()->update(kObjectCompartment4, kEntityPlayer, kLocation3, kCursorHandKnock, kCursorHand);
@@ -816,7 +816,7 @@ IMPLEMENT_FUNCTION(Mahmud, chapter2, 17)
 		getEntities()->clearSequences(kEntityMahmud);
 
 		getData()->entityPosition = kPosition_5790;
-		getData()->posture = kPostureSitting;
+		getData()->location = kLocationInsideCompartment;
 		getData()->car = kCarGreenSleeping;
 		getData()->clothes = kClothesDefault;
 		getData()->inventoryItem = kItemNone;
@@ -838,7 +838,7 @@ IMPLEMENT_FUNCTION(Mahmud, chapter3, 18)
 		getEntities()->clearSequences(kEntityMahmud);
 
 		getData()->entityPosition = kPosition_5790;
-		getData()->posture = kPostureSitting;
+		getData()->location = kLocationInsideCompartment;
 		getData()->car = kCarGreenSleeping;
 		getData()->clothes = kClothesDefault;
 		getData()->inventoryItem = kItemNone;
@@ -861,7 +861,7 @@ IMPLEMENT_FUNCTION(Mahmud, chapter4, 19)
 		getEntities()->clearSequences(kEntityMahmud);
 
 		getData()->entityPosition = kPosition_2740;
-		getData()->posture = kPostureSitting;
+		getData()->location = kLocationInsideCompartment;
 		getData()->car = kCarGreenSleeping;
 		getData()->clothes = kClothesDefault;
 		getData()->inventoryItem = kItemNone;

@@ -244,7 +244,7 @@ IMPLEMENT_FUNCTION(Tatiana, function14, 14)
 	case kActionCallback:
 		if (getCallback() == 1 || getCallback() == 2) {
 			getEntities()->exitCompartment(kEntityTatiana, kObjectCompartmentB, true);
-			getData()->posture = kPostureSitting;
+			getData()->location = kLocationInsideCompartment;
 			getEntities()->clearSequences(kEntityTatiana);
 
 			CALLBACK_ACTION();
@@ -270,7 +270,7 @@ IMPLEMENT_FUNCTION(Tatiana, function15, 15)
 
 	case kActionCallback:
 		if (getCallback() == 1 || getCallback() == 2) {
-			getData()->posture = kPostureStanding;
+			getData()->location = kLocationOutsideCompartment;
 			getSavePoints()->push(kEntityTatiana, kEntityCoudert, kAction292048641);
 
 			getEntities()->drawSequenceLeft(kEntityTatiana, getProgress().chapter == kChapter1 ? "603Fb" : "673Fb");
@@ -308,7 +308,7 @@ IMPLEMENT_FUNCTION(Tatiana, chapter1, 17)
 		getObjects()->update(kObject41, kEntityPlayer, kLocationNone, kCursorKeepValue, kCursorKeepValue);
 
 		getData()->entityPosition = kPosition_5419;
-		getData()->posture = kPostureSitting;
+		getData()->location = kLocationInsideCompartment;
 		getData()->car = kCarRestaurant;
 		break;
 	}
@@ -396,7 +396,7 @@ IMPLEMENT_FUNCTION(Tatiana, function20, 20)
 			break;
 
 		case 1:
-			getData()->posture = kPostureStanding;
+			getData()->location = kLocationOutsideCompartment;
 			getSavePoints()->push(kEntityTatiana, kEntityAugust, kAction223183000);
 			getEntities()->updatePositionEnter(kEntityTatiana, kCarRestaurant, 67);
 			getSound()->playSound(kEntityTatiana, "TAT1070");
@@ -462,7 +462,7 @@ IMPLEMENT_FUNCTION(Tatiana, function24, 24)
 	if (savepoint.action == kActionDefault) {
 
 		getData()->entityPosition = kPosition_7500;
-		getData()->posture = kPostureSitting;
+		getData()->location = kLocationInsideCompartment;
 		getData()->car = kCarRedSleeping;
 
 		getObjects()->update(kObject25, kEntityPlayer, kLocationNone, kCursorKeepValue, kCursorKeepValue);
@@ -495,7 +495,7 @@ IMPLEMENT_FUNCTION(Tatiana, chapter2, 25)
 		getObjects()->update(kObject41, kEntityPlayer, kLocationNone, kCursorKeepValue, kCursorKeepValue);
 
 		getData()->entityPosition = kPosition_5420;
-		getData()->posture = kPostureSitting;
+		getData()->location = kLocationInsideCompartment;
 		getData()->car = kCarRestaurant;
 		getData()->clothes = kClothes2;
 		break;
@@ -508,7 +508,7 @@ IMPLEMENT_FUNCTION(Tatiana, chapter2Handler, 26)
 		break;
 
 	case kActionNone:
-		if (getState()->time > kTime1800000 && params->param1 && getEntities()->isSomebodyStandingInRestaurantOrSalon()) {
+		if (getState()->time > kTime1800000 && params->param1 && getEntities()->isSomebodyInsideRestaurantOrSalon()) {
 			getData()->inventoryItem = kItemNone;
 			setup_function28();
 		}
@@ -584,7 +584,7 @@ IMPLEMENT_FUNCTION(Tatiana, function28, 28)
 
 	case kActionDefault:
 		getData()->inventoryItem = kItemNone;
-		getData()->posture = kPostureStanding;
+		getData()->location = kLocationOutsideCompartment;
 
 		getSavePoints()->push(kEntityTatiana, kEntityTables5, kActionDrawTablesWithChairs, "024D");
 		getSavePoints()->push(kEntityTatiana, kEntityAlexei, kAction236053296, (getEvent(kEventTatianaBreakfastAlexei) || getEvent(kEventTatianaBreakfast)) ? 69 : 0);
@@ -603,7 +603,7 @@ IMPLEMENT_FUNCTION(Tatiana, function28, 28)
 		break;
 
 	case kAction156444784:
-		getData()->posture = kPostureSitting;
+		getData()->location = kLocationInsideCompartment;
 		getEntities()->drawSequenceLeft(kEntityTatiana, "BLANK");
 		break;
 	}
@@ -625,7 +625,7 @@ IMPLEMENT_FUNCTION(Tatiana, function29, 29)
 			break;
 
 		case 1:
-			getData()->posture = kPostureStanding;
+			getData()->location = kLocationOutsideCompartment;
 			getEntities()->updatePositionEnter(kEntityTatiana, kCarRestaurant, 63);
 
 			setCallback(2);
@@ -697,7 +697,7 @@ IMPLEMENT_FUNCTION(Tatiana, chapter3, 31)
 		getObjects()->update(kObject49, kEntityPlayer, kLocation1, kCursorHandKnock, kCursorHand);
 
 		getData()->entityPosition = kPosition_1750;
-		getData()->posture = kPostureSitting;
+		getData()->location = kLocationInsideCompartment;
 		getData()->car = kCarRestaurant;
 		getData()->clothes = kClothes2;
 		getData()->inventoryItem = kItemNone;
@@ -814,7 +814,7 @@ label_callback_1:
 
 		getData()->car = kCarKronos;
 		getData()->entityPosition = kPosition_6000;
-		getData()->posture = kPostureSitting;
+		getData()->location = kLocationInsideCompartment;
 		break;
 
 	case kActionCallback:
@@ -837,7 +837,7 @@ IMPLEMENT_FUNCTION(Tatiana, function36, 36)
 	case kActionDefault:
 		getData()->car = kCarGreenSleeping;
 		getData()->entityPosition = kPosition_850;
-		getData()->posture = kPostureStanding;
+		getData()->location = kLocationOutsideCompartment;
 
 		setCallback(1);
 		call(new ENTITY_SETUP(Tatiana, setup_updateEntity), kCarGreenSleeping, kPosition_7500);
@@ -849,7 +849,7 @@ IMPLEMENT_FUNCTION(Tatiana, function36, 36)
 			break;
 
 		case 1:
-			if (!getEntities()->checkFields19(kEntityPlayer, kCarGreenSleeping, kPosition_7850) || getEntities()->isSitting(kEntityPlayer, kCarRedSleeping, kPosition_8200)) {
+			if (!getEntities()->checkFields19(kEntityPlayer, kCarGreenSleeping, kPosition_7850) || getEntities()->isInsideCompartment(kEntityPlayer, kCarRedSleeping, kPosition_8200)) {
 				setCallback(2);
 				call(new ENTITY_SETUP(Tatiana, setup_function14));
 				break;
@@ -888,7 +888,7 @@ IMPLEMENT_FUNCTION(Tatiana, function39, 39)
 		break;
 
 	case kActionNone:
-		if (!params->param1 && getEntities()->checkFields9(kEntityTatiana, kEntityPlayer, 1000)) {
+		if (!params->param1 && getEntities()->isDistanceBetweenEntities(kEntityTatiana, kEntityPlayer, 1000)) {
 			params->param1 = 1;
 			getSound()->playSound(kEntityTatiana, "Tat3164");	// Tatiana weeping
 		}
@@ -907,7 +907,7 @@ IMPLEMENT_FUNCTION(Tatiana, function40, 40)
 		break;
 
 	case kActionNone:
-		if (getEntities()->isSittingOrStanding(kEntityPlayer, kCarKronos)
+		if (getEntities()->isInsideTrainCar(kEntityPlayer, kCarKronos)
 		 || getData()->car != getEntityData(kEntityPlayer)->car
 		 || getEntities()->updateEntity(kEntityTatiana, kCarKronos, kPosition_9270))
 			CALLBACK_ACTION();
@@ -962,7 +962,7 @@ IMPLEMENT_FUNCTION(Tatiana, chapter4, 43)
 		getObjects()->update(kObject49, kEntityPlayer, kLocation1, kCursorHandKnock, kCursorHand);
 
 		getData()->entityPosition = kPosition_7500;
-		getData()->posture = kPostureSitting;
+		getData()->location = kLocationInsideCompartment;
 		getData()->car = kCarRedSleeping;
 		getData()->clothes = kClothes2;
 		getData()->inventoryItem = kItemNone;
@@ -1006,7 +1006,7 @@ IMPLEMENT_FUNCTION(Tatiana, function45, 45)
 
 		case 1:
 			getObjects()->update(kObjectCompartmentB, kEntityPlayer, kLocationNone, kCursorHandKnock, kCursorHand);
-			getData()->posture = kPostureStanding;
+			getData()->location = kLocationOutsideCompartment;
 
 			setCallback(1);
 			call(new ENTITY_SETUP(Tatiana, setup_updateEntity), kCarGreenSleeping, kPosition_540);
@@ -1053,7 +1053,7 @@ IMPLEMENT_FUNCTION(Tatiana, function47, 47)
 			break;
 
 		case 2:
-			getData()->posture = kPostureSitting;
+			getData()->location = kLocationInsideCompartment;
 			getEntities()->clearSequences(kEntityTatiana);
 
 			setCallback(3);
@@ -1085,7 +1085,7 @@ IMPLEMENT_FUNCTION(Tatiana, function49, 49)
 
 	case kActionDefault:
 		getData()->entityPosition = kPosition_7500;
-		getData()->posture = kPostureSitting;
+		getData()->location = kLocationInsideCompartment;
 		getData()->car = kCarRedSleeping;
 
 		getObjects()->update(kObjectCompartmentB, kEntityPlayer, kLocation1, kCursorHandKnock, kCursorHand);
@@ -1122,7 +1122,7 @@ IMPLEMENT_FUNCTION(Tatiana, chapter5, 52)
 		getEntities()->clearSequences(kEntityTatiana);
 
 		getData()->entityPosition = kPosition_3969;
-		getData()->posture = kPostureSitting;
+		getData()->location = kLocationInsideCompartment;
 		getData()->car = kCarRestaurant;
 		getData()->clothes = kClothesDefault;
 		getData()->inventoryItem = kItemNone;

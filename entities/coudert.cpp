@@ -42,8 +42,8 @@ namespace LastExpress {
 
 #define SAVEGAME_BLOOD_JACKET() \
 	if (getProgress().jacket == kJacketBlood \
-		&& getEntities()->checkFields9(kEntityCoudert, kEntityPlayer, 1000) \
-		&& !getEntities()->isSittingInCompartmentCars(kEntityPlayer) \
+		&& getEntities()->isDistanceBetweenEntities(kEntityCoudert, kEntityPlayer, 1000) \
+		&& !getEntities()->isInsideCompartment(kEntityPlayer) \
 		&& !getEntities()->checkFields10(kEntityPlayer)) { \
 		setCallback(1); \
 		call(new ENTITY_SETUP(Coudert, setup_savegame), kSavegameTypeEvent, kEventMertensBloodJacket); \
@@ -316,14 +316,14 @@ IMPLEMENT_FUNCTION_II(Coudert, function9, 9)
 		break;
 
 	case kActionNone:
-		if (params->param3 && getEntities()->checkFields9(kEntityCoudert, kEntityPlayer, 2000))
+		if (params->param3 && getEntities()->isDistanceBetweenEntities(kEntityCoudert, kEntityPlayer, 2000))
 			getData()->inventoryItem = kItemInvalid;
 		else
 			getData()->inventoryItem = kItemNone;
 
 		if (getProgress().jacket != kJacketBlood
-		 || !getEntities()->checkFields9(kEntityCoudert, kEntityPlayer, 1000)
-		 || getEntities()->isSittingInCompartmentCars(kEntityPlayer)
+		 || !getEntities()->isDistanceBetweenEntities(kEntityCoudert, kEntityPlayer, 1000)
+		 || getEntities()->isInsideCompartment(kEntityPlayer)
 		 || getEntities()->checkFields10(kEntityPlayer)) {
 			if (getEntities()->updateEntity(kEntityCoudert, (CarIndex)params->param1, (EntityPosition)params->param2)) {
 				getData()->inventoryItem = kItemNone;
@@ -1304,7 +1304,7 @@ IMPLEMENT_FUNCTION(Coudert, chapter1, 36)
 		ENTITY_PARAM(0, 2) = 1;
 
 		getData()->entityPosition = kPosition_1500;
-		getData()->posture = kPostureStanding;
+		getData()->location = kLocationOutsideCompartment;
 		getData()->car = kCarRedSleeping;
 
 		getObjects()->updateLocation2(kObject111, kLocation1);
@@ -1360,7 +1360,7 @@ IMPLEMENT_FUNCTION(Coudert, function37, 37)
 
 		case 4:
 			getObjects()->update(kObjectCompartmentA, kEntityPlayer, kLocation2, kCursorKeepValue, kCursorKeepValue);
-			getData()->posture = kPostureSitting;
+			getData()->location = kLocationInsideCompartment;
 			getEntities()->clearSequences(kEntityCoudert);
 			setup_function38();
 			break;
@@ -1377,7 +1377,7 @@ switch (savepoint.action) {
 	case kActionDefault:
 		getData()->car = kCarRedSleeping;
 		getData()->entityPosition = kPosition_8200;
-		getData()->posture = kPostureSitting;
+		getData()->location = kLocationInsideCompartment;
 		break;
 
 	case kActionCallback:
@@ -1401,7 +1401,7 @@ switch (savepoint.action) {
 
 	case kAction191477936:
 		getData()->entityPosition = kPosition_4070;
-		getData()->posture = kPostureStanding;
+		getData()->location = kLocationOutsideCompartment;
 		getObjects()->update(kObjectCompartment4, kEntityPlayer, kLocationNone, kCursorHandKnock, kCursorHand);
 
 		setCallback(1);
@@ -1553,7 +1553,7 @@ label_coudert_object:
 	case kActionDefault:
 		getData()->car = kCarRedSleeping;
 		getData()->entityPosition = kPosition_1500;
-		getData()->posture = kPostureStanding;
+		getData()->location = kLocationOutsideCompartment;
 
 		getScenes()->loadSceneFromItemPosition(kItem5);
 		break;
@@ -1789,7 +1789,7 @@ IMPLEMENT_FUNCTION(Coudert, chapter2, 42)
 		getEntities()->clearSequences(kEntityCoudert);
 
 		getData()->entityPosition = kPosition_1500;
-		getData()->posture = kPostureStanding;
+		getData()->location = kLocationOutsideCompartment;
 		getData()->car = kCarRedSleeping;
 		getData()->inventoryItem = kItemNone;
 
@@ -1838,7 +1838,7 @@ IMPLEMENT_FUNCTION(Coudert, chapter3, 44)
 		getEntities()->clearSequences(kEntityCoudert);
 
 		getData()->entityPosition = kPosition_1500;
-		getData()->posture = kPostureStanding;
+		getData()->location = kLocationOutsideCompartment;
 		getData()->car = kCarRedSleeping;
 		getData()->clothes = kClothesDefault;
 		getData()->inventoryItem = kItemNone;
@@ -1956,7 +1956,7 @@ IMPLEMENT_FUNCTION(Coudert, chapter4, 52)
 		getEntities()->clearSequences(kEntityCoudert);
 
 		getData()->entityPosition = kPosition_1500;
-		getData()->posture = kPostureStanding;
+		getData()->location = kLocationOutsideCompartment;
 		getData()->car = kCarRedSleeping;
 		getData()->clothes = kClothesDefault;
 		getData()->inventoryItem = kItemNone;
@@ -2001,7 +2001,7 @@ IMPLEMENT_FUNCTION(Coudert, function54, 54)
 
 	case kActionDefault:
 		if (getEntities()->hasValidFrame(kEntityCoudert)) {
-			getData()->posture = kPostureStanding;
+			getData()->location = kLocationOutsideCompartment;
 
 			setCallback(1);
 			call(new ENTITY_SETUP(Coudert, setup_function9), kCarRedSleeping, kPosition_540);
@@ -2060,7 +2060,7 @@ IMPLEMENT_FUNCTION(Coudert, chapter5, 57)
 		getEntities()->clearSequences(kEntityCoudert);
 
 		getData()->entityPosition = kPosition_3969;
-		getData()->posture = kPostureSitting;
+		getData()->location = kLocationInsideCompartment;
 		getData()->car = kCarRestaurant;
 		getData()->inventoryItem = kItemNone;
 		break;
@@ -2079,7 +2079,7 @@ IMPLEMENT_FUNCTION(Coudert, function59, 59)
 
 	case kActionDefault:
 		getData()->entityPosition = kPosition_7500;
-		getData()->posture = kPostureStanding;
+		getData()->location = kLocationOutsideCompartment;
 		getData()->car = kCarRedSleeping;
 
 		getSound()->playSound(kEntityCoudert, "Jac5010"); // Situation is under control, please remain in your compartment
@@ -2161,7 +2161,7 @@ void Coudert::visitCompartment(const SavePoint &savepoint, EntityPosition positi
 
 		case 4:
 			getEntities()->exitCompartment(kEntityCoudert, compartment, true);
-			getData()->posture = kPostureSitting;
+			getData()->location = kLocationInsideCompartment;
 			getEntities()->clearSequences(kEntityCoudert);
 
 			setCallback(5);
@@ -2174,7 +2174,7 @@ void Coudert::visitCompartment(const SavePoint &savepoint, EntityPosition positi
 			break;
 
 		case 6:
-			getData()->posture = kPostureStanding;
+			getData()->location = kLocationOutsideCompartment;
 			CALLBACK_ACTION();
 			break;
 		}

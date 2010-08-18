@@ -132,7 +132,7 @@ IMPLEMENT_FUNCTION(Tables, draw, 6)
 		break;
 
 	case kActionDefault:
-		getData()->posture = kPostureSitting;
+		getData()->location = kLocationInsideCompartment;
 		getData()->car = kCarRestaurant;
 		switch(_id) {
 		default:

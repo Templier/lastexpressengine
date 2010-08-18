@@ -174,7 +174,7 @@ IMPLEMENT_FUNCTION_S(MmeBoutarel, function8, 8)
 		getEntities()->drawSequenceLeft(kEntityMmeBoutarel, "606L");
 		getSound()->playSound(kEntityMmeBoutarel, (char *)&params->seq1);
 
-		if (getEntities()->hasValidFrame(kEntityMmeBoutarel) || getEntities()->checkFields9(kEntityMmeBoutarel, kEntityPlayer, 2000)) {
+		if (getEntities()->hasValidFrame(kEntityMmeBoutarel) || getEntities()->isDistanceBetweenEntities(kEntityMmeBoutarel, kEntityPlayer, 2000)) {
 			if (getProgress().chapter == kChapter1)
 				getProgress().field_A8 = 1;
 			else if (getProgress().chapter == kChapter3)
@@ -204,7 +204,7 @@ IMPLEMENT_FUNCTION(MmeBoutarel, chapter1, 10)
 		getObjects()->update(kObject51, kEntityPlayer, kLocationNone, kCursorHandKnock, kCursorHand);
 
 		getData()->entityPosition = kPosition_5790;
-		getData()->posture = kPostureSitting;
+		getData()->location = kLocationInsideCompartment;
 		getData()->car = kCarRedSleeping;
 		break;
 	}
@@ -246,7 +246,7 @@ IMPLEMENT_FUNCTION(MmeBoutarel, chapter1Handler, 12)
 			break;
 
 		case 3:
-			getData()->posture = kPostureSitting;
+			getData()->location = kLocationInsideCompartment;
 			params->param1 = 1;
 			getEntities()->clearSequences(kEntityMmeBoutarel);
 			setup_function13();
@@ -275,11 +275,11 @@ IMPLEMENT_FUNCTION(MmeBoutarel, chapter1Handler, 12)
 
 	case kAction202221040:
 		getObjects()->update(kObjectCompartmentD, kEntityPlayer, kLocationNone, kCursorKeepValue, kCursorKeepValue);
-		getData()->posture = kPostureStanding;
+		getData()->location = kLocationOutsideCompartment;
 
 		getSound()->playSound(kEntityMmeBoutarel, "MME1035A");
 
-		if (getEntities()->hasValidFrame(kEntityMmeBoutarel) || getEntities()->checkFields9(kEntityMmeBoutarel, kEntityPlayer, 2000) )
+		if (getEntities()->hasValidFrame(kEntityMmeBoutarel) || getEntities()->isDistanceBetweenEntities(kEntityMmeBoutarel, kEntityPlayer, 2000) )
 			getProgress().field_AC = 1;
 
 		setCallback(2);
@@ -349,7 +349,7 @@ IMPLEMENT_FUNCTION(MmeBoutarel, function15, 15)
 IMPLEMENT_FUNCTION(MmeBoutarel, function16, 16)
 	if (savepoint.action == kActionDefault) {
 		getData()->entityPosition = kPosition_5790;
-		getData()->posture = kPostureSitting;
+		getData()->location = kLocationInsideCompartment;
 		getData()->car = kCarRedSleeping;
 
 		getObjects()->update(kObjectCompartmentD, kEntityPlayer, kLocation1, kCursorHandKnock, kCursorHand);
@@ -372,7 +372,7 @@ IMPLEMENT_FUNCTION(MmeBoutarel, chapter2, 17)
 		getEntities()->clearSequences(kEntityMmeBoutarel);
 
 		getData()->entityPosition = kPosition_4689;
-		getData()->posture = kPostureSitting;
+		getData()->location = kLocationInsideCompartment;
 		getData()->car = kCarRestaurant;
 		getData()->clothes = kClothesDefault;
 		getData()->inventoryItem = kItemNone;
@@ -396,7 +396,7 @@ IMPLEMENT_FUNCTION(MmeBoutarel, chapter2Handler, 18)
 			break;
 
 		case 1:
-			if (getEntities()->isSitting(kEntityFrancois, kCarRedSleeping, kPosition_5790)) {
+			if (getEntities()->isInsideCompartment(kEntityFrancois, kCarRedSleeping, kPosition_5790)) {
 				getObjects()->update(kObjectCompartmentD, kEntityPlayer, kLocationNone, kCursorNormal, kCursorNormal);
 
 				setCallback(2);
@@ -410,7 +410,7 @@ IMPLEMENT_FUNCTION(MmeBoutarel, chapter2Handler, 18)
 		case 2:
 		case 3:
 			getObjects()->update(kObjectCompartmentD, kEntityPlayer, kLocation2, kCursorNormal, kCursorNormal);
-			getData()->posture = kPostureSitting;
+			getData()->location = kLocationInsideCompartment;
 			setup_function19();
 			break;
 		}
@@ -487,7 +487,7 @@ IMPLEMENT_FUNCTION(MmeBoutarel, chapter3, 20)
 		getEntities()->clearSequences(kEntityMmeBoutarel);
 
 		getData()->entityPosition = kPosition_5790;
-		getData()->posture = kPostureSitting;
+		getData()->location = kLocationInsideCompartment;
 		getData()->car = kCarRedSleeping;
 		getData()->clothes = kClothesDefault;
 		getData()->inventoryItem = kItemNone;
@@ -512,7 +512,7 @@ IMPLEMENT_FUNCTION(MmeBoutarel, chapter4, 22)
 		getEntities()->clearSequences(kEntityMmeBoutarel);
 
 		getData()->entityPosition = kPosition_5790;
-		getData()->posture = kPostureSitting;
+		getData()->location = kLocationInsideCompartment;
 		getData()->car = kCarRedSleeping;
 		getData()->clothes = kClothesDefault;
 		getData()->inventoryItem = kItemNone;
@@ -575,7 +575,7 @@ IMPLEMENT_FUNCTION(MmeBoutarel, function25, 25)
 		getEntities()->clearSequences(kEntityMmeBoutarel);
 
 		getData()->entityPosition = kPosition_5790;
-		getData()->posture = kPostureSitting;
+		getData()->location = kLocationInsideCompartment;
 		getData()->car = kCarRedSleeping;
 
 		getObjects()->update(kObjectCompartmentD, kEntityPlayer, kLocation1, kCursorHandKnock, kCursorHand);
@@ -596,7 +596,7 @@ IMPLEMENT_FUNCTION(MmeBoutarel, chapter5, 26)
 		getEntities()->clearSequences(kEntityMmeBoutarel);
 
 		getData()->entityPosition = kPosition_3969;
-		getData()->posture = kPostureSitting;
+		getData()->location = kLocationInsideCompartment;
 		getData()->car = kCarRestaurant;
 		getData()->clothes = kClothesDefault;
 		getData()->inventoryItem = kItemNone;

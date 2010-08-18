@@ -134,7 +134,7 @@ IMPLEMENT_FUNCTION(Kronos, chapter1, 7)
 
 	case kActionDefault:
 		getData()->entityPosition = kPosition_6000;
-		getData()->posture = kPostureSitting;
+		getData()->location = kLocationInsideCompartment;
 		getData()->car = kCarKronos;
 
 		getObjects()->update(kObjectCeiling, kEntityPlayer, kLocation1, kCursorKeepValue, kCursorKeepValue);
@@ -191,7 +191,7 @@ IMPLEMENT_FUNCTION(Kronos, function10, 10)
 	case kActionNone:
 		TIME_CHECK(kTime1489500, params->param1, setup_function11);
 
-		if (params->param1 && getEntities()->isSittingOrStanding(kEntityPlayer, kCarKronos)) {
+		if (params->param1 && getEntities()->isInsideTrainCar(kEntityPlayer, kCarKronos)) {
 			UPDATE_PARAM(params->param3, getState()->timeTicks, 150);
 			setup_function9();
 		}
@@ -199,7 +199,7 @@ IMPLEMENT_FUNCTION(Kronos, function10, 10)
 
 	case kActionDefault:
 		getData()->entityPosition = kPosition_6000;
-		getData()->posture = kPostureStanding;
+		getData()->location = kLocationOutsideCompartment;
 		getData()->car = kCarKronos;
 
 		getEntities()->clearSequences(kEntityKronos);
@@ -244,7 +244,7 @@ IMPLEMENT_FUNCTION(Kronos, chapter3, 13)
 		getEntities()->clearSequences(kEntityKronos);
 
 		getData()->entityPosition = kPosition_6000;
-		getData()->posture = kPostureStanding;
+		getData()->location = kLocationOutsideCompartment;
 		getData()->car = kCarKronos;
 		getData()->clothes = kClothesDefault;
 		getData()->inventoryItem = kItemNone;
@@ -321,7 +321,7 @@ IMPLEMENT_FUNCTION(Kronos, function17, 17)
 
 	case kActionDefault:
 		getData()->entityPosition = kPosition_7500;
-		getData()->posture = kPostureStanding;
+		getData()->location = kLocationOutsideCompartment;
 		getData()->car = kCarRedSleeping;
 
 		setCallback(1);
@@ -360,7 +360,7 @@ IMPLEMENT_FUNCTION(Kronos, function18, 18)
 	case kActionDefault:
 		getData()->entityPosition = kPosition_6000;
 		getData()->car = kCarKronos;
-		getData()->posture = kPostureStanding;
+		getData()->location = kLocationOutsideCompartment;
 		break;
 
 	case kActionCallback:

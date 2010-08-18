@@ -172,7 +172,7 @@ IMPLEMENT_FUNCTION(Kahina, chapter1, 10)
 		getObjects()->update(kObjectCompartmentKronos, kEntityPlayer, kLocation1, kCursorHandKnock, kCursorHand);
 
 		getData()->entityPosition = kPosition_5000;
-		getData()->posture = kPostureStanding;
+		getData()->location = kLocationOutsideCompartment;
 		getData()->car = kCarKronos;
 
 		break;
@@ -268,7 +268,7 @@ label_callback:
 	case kActionDefault:
 		getData()->car = kCarKronos;
 		getData()->entityPosition = kPosition_5000;
-		getData()->posture = kPostureStanding;
+		getData()->location = kLocationOutsideCompartment;
 
 		getObjects()->update(kObjectCompartmentKronos, kEntityPlayer, kLocation1, kCursorHandKnock, kCursorHand);
 
@@ -317,7 +317,7 @@ IMPLEMENT_FUNCTION(Kahina, chapter2, 16)
 		getEntities()->clearSequences(kEntityKahina);
 
 		getData()->entityPosition = kPosition_6000;
-		getData()->posture = kPostureStanding;
+		getData()->location = kLocationOutsideCompartment;
 		getData()->car = kCarKronos;
 		getData()->clothes = kClothesDefault;
 		getData()->inventoryItem = kItemNone;
@@ -344,7 +344,7 @@ IMPLEMENT_FUNCTION(Kahina, chapter2Handler, 17)
 			}
 		}
 
-		if (getEvent(kEventKahinaAskSpeakFirebird) && getEvent(kEventKronosConversationFirebird) && getEntities()->isSittingOrStanding(kEntityPlayer, kCarKronos)) {
+		if (getEvent(kEventKahinaAskSpeakFirebird) && getEvent(kEventKronosConversationFirebird) && getEntities()->isInsideTrainCar(kEntityPlayer, kCarKronos)) {
 			if (!params->param3)
 				params->param3 = getState()->time + 900;
 
@@ -469,7 +469,7 @@ IMPLEMENT_FUNCTION(Kahina, chapter3, 18)
 		getEntities()->clearSequences(kEntityKahina);
 
 		getData()->entityPosition = kPosition_5000;
-		getData()->posture = kPostureStanding;
+		getData()->location = kLocationOutsideCompartment;
 		getData()->car = kCarKronos;
 		getData()->clothes = kClothesDefault;
 		getData()->inventoryItem = kItemNone;
@@ -545,7 +545,7 @@ IMPLEMENT_FUNCTION(Kahina, function22, 22)
 	case kActionDefault:
 		getData()->car = kCarKronos;
 		getData()->entityPosition = kPosition_5000;
-		getData()->posture = kPostureStanding;
+		getData()->location = kLocationOutsideCompartment;
 		break;
 
 	case kActionDrawScene:
@@ -591,7 +591,7 @@ IMPLEMENT_FUNCTION(Kahina, function27, 27)
 			params->param1 = kEventKahinaPunchKitchen;
 		else if (getEntities()->isInBaggageCarEntrance(kEntityPlayer))
 			params->param1 = kEventKahinaPunchBaggageCarEntrance;
-		else if (getEntities()->isSittingOrStanding(kEntityPlayer, kCarBaggage))
+		else if (getEntities()->isInsideTrainCar(kEntityPlayer, kCarBaggage))
 			params->param1 = kEventKahinaPunchBaggageCar;
 
 		if (params->param1) {

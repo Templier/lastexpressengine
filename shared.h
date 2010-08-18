@@ -108,6 +108,7 @@ enum TimeValue {
 	kTimeChapter1End2         = 1647000,
 	kTimeChapter1End3         = 1674000,
 	kTimeCityGeislingen       = 1713600,
+	kTime1714500              = 1714500,
 	kTimeCityUlm              = 1739700,
 
 	// Chapter 2
@@ -137,7 +138,9 @@ enum TimeValue {
 	kTimeCitySalzbourg        = 1984500,
 	kTime1989000              = 1989000,
 	kTime1993500              = 1993500,
+	kTime1998000              = 1998000,
 	kTime2016000              = 2016000,
+	kTime2020500              = 2020500,
 	kTimeCityAttnangPuchheim  = 2049300,
 	kTime2052000              = 2052000,
 	kTime2061000              = 2061000,
@@ -151,12 +154,18 @@ enum TimeValue {
 	kTime2106000              = 2106000,
 	kTime2110500              = 2110500,
 	kTime2115000              = 2115000,
+	kTime2119500              = 2119500,
 	kTime2124000              = 2124000,
 	kTime2133000              = 2133000,
+	kTime2151000              = 2151000,
 	kTimeCityAmstetten        = 2154600,
 	kTime2160000              = 2160000,
+	kTime2187000              = 2187000,
+	kTime2196000              = 2196000,
 	kTime2200500              = 2200500,
+	kTime2241000              = 2241000,
 	kTime2250000              = 2250000,
+	kTime2254500              = 2254500,
 	kTime2259000              = 2259000,
 	kTime2266200              = 2266200,
 	kTimeCityVienna           = 2268000,
@@ -177,11 +186,16 @@ enum TimeValue {
 	kTime2412000              = 2412000,
 	kTime2415600              = 2415600,
 	kTimeCityGalanta          = 2418300,
+	kTime2421000              = 2421000,
 	kTime2422800              = 2422800,
 	kTime2425500              = 2425500,
 	kTime2430000              = 2430000,
+	kTime2443500              = 2443500,
+	kTime2455200              = 2455200,
 	kTime2457000              = 2457000,
+	kTime2475000              = 2475000,
 	kTime2479500              = 2479500,
+	kTime2484000              = 2484000,
 	kTime2488500              = 2488500,
 	kTime2511000              = 2511000,
 	kTime2511900              = 2511900,
@@ -523,13 +537,12 @@ enum EntityPosition {
 };
 
 //////////////////////////////////////////////////////////////////////////
-// Posture
+// Location
 //////////////////////////////////////////////////////////////////////////
-enum Posture {
-	kPostureStanding = 0,
-	kPostureSitting = 1,
-	kPosture2 = 2,
-	kPosture3 = 3
+enum Location {
+	kLocationOutsideCompartment = 0,
+	kLocationInsideCompartment = 1,
+	kLocationOutsideTrain = 2
 };
 
 //////////////////////////////////////////////////////////////////////////
@@ -1167,6 +1180,7 @@ enum ActionIndex {
 	// Anna
 	/////////////////////////////
 	kAction136702400 = 136702400,
+	kAction156049968 = 156049968,
 	kAction157370960 = 157370960,
 	kAction157894320 = 157894320,
 	kAction159332865 = 159332865,   // August
@@ -1346,6 +1360,7 @@ enum ActionIndex {
 	// Salko
 	/////////////////////////////
 	kAction55996766  = 55996766,
+	kAction101169464 = 101169464,
 	kAction102675536 = 102675536,    // Ivo
 	kAction136184016 = 136184016,
 

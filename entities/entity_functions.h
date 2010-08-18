@@ -168,6 +168,17 @@
 		getData()->entityPosition = position; \
 	}
 
+#define TIME_CHECK_CAR(class, timeValue, parameter, callback, function) {\
+	if (getState()->time <= timeValue && !getEntities()->isPlayerInCar(kCarGreenSleeping) || !parameter) \
+		parameter = getState()->time + 75; \
+	if (getState()->time > timeValue || parameter < getState()->time) { \
+		parameter = kTimeInvalid; \
+		setCallback(callback); \
+		call(new ENTITY_SETUP(class, function)); \
+		break; \
+	} \
+}
+
 //////////////////////////////////////////////////////////////////////////
 // Helpers
 //////////////////////////////////////////////////////////////////////////
@@ -228,7 +239,7 @@
 		break; \
 	case kActionDefault: \
 		getData()->entityPosition = positionFrom; \
-		getData()->posture = kPostureStanding; \
+		getData()->location = kLocationOutsideCompartment; \
 		setCallback(1); \
 		call(new ENTITY_SETUP_SIIS(class, setup_enterExitCompartment), sequenceFrom, compartmentFrom); \
 		break; \
@@ -245,7 +256,7 @@
 			call(new ENTITY_SETUP_SIIS(class, setup_enterExitCompartment), sequenceTo, compartmentTo); \
 			break; \
 		case 3: \
-			getData()->posture = kPostureSitting; \
+			getData()->location = kLocationInsideCompartment; \
 			getEntities()->clearSequences(_entityIndex); \
 			CALLBACK_ACTION(); \
 			break; \
