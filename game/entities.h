@@ -127,7 +127,7 @@ public:
 	 *
 	 * @return true if in compartment cars, false if not.
 	 */
-	bool isInsideCompartment(EntityIndex entity) const;
+	bool isInsideCompartments(EntityIndex entity) const;
 
 	/**
 	 * Query if the player is in the specified position
@@ -178,11 +178,11 @@ public:
 	/**
 	 * Query if the distance between the two entities is less 'distance'
 	 *
-	 * @param entity1  The first entity. 
-	 * @param entity2  The second entity. 
-	 * @param distance The distance. 
+	 * @param entity1  The first entity.
+	 * @param entity2  The second entity.
+	 * @param distance The distance.
 	 *
-	 * @return true if the distance between entities is less than 'distance', false if not. 
+	 * @return true if the distance between entities is less than 'distance', false if not.
 	 */
 	bool isDistanceBetweenEntities(EntityIndex entity1, EntityIndex entity2, uint distance) const;
 
@@ -223,16 +223,16 @@ public:
 	bool isInKronosSalon(EntityIndex entity) const;
 
 	/**
-	 * Query if the player is outside Alexei window. 
+	 * Query if the player is outside Alexei window.
 	 *
-	 * @return true if outside alexei window, false if not. 
+	 * @return true if outside alexei window, false if not.
 	 */
 	bool isOutsideAlexeiWindow() const;
 
 	/**
-	 * Query if the player is outside Anna window. 
+	 * Query if the player is outside Anna window.
 	 *
-	 * @return true if outside anna window, false if not. 
+	 * @return true if outside anna window, false if not.
 	 */
 	bool isOutsideAnnaWindow() const;
 
@@ -305,11 +305,11 @@ public:
 	bool checkDistanceFromPosition(EntityIndex entity, EntityPosition position, int distance) const;
 
 	/**
-	 * Query if 'entity' is walking opposite to player. 
+	 * Query if 'entity' is walking opposite to player.
 	 *
-	 * @param entity The entity. 
+	 * @param entity The entity.
 	 *
-	 * @return true if walking opposite to player, false if not. 
+	 * @return true if walking opposite to player, false if not.
 	 */
 	bool isWalkingOppositeToPlayer(EntityIndex entity) const;
 

@@ -83,11 +83,10 @@ namespace LastExpress {
 
 #define STORE_VALUE(data) ((uint)1 << (uint)data)
 
-static const EntityPosition objectsPosition[9] = {kPositionNone,    kPosition_8200,
-	                                              kPosition_7500, kPosition_6470,
-	                                              kPosition_5790, kPosition_4840,
-	                                              kPosition_4070, kPosition_3050,
-	                                              kPosition_2740};
+static const EntityPosition objectsPosition[8] = {kPosition_8200, kPosition_7500,
+	                                              kPosition_6470, kPosition_5790,
+	                                              kPosition_4840, kPosition_4070,
+	                                              kPosition_3050, kPosition_2740};
 
 static const EntityPosition entityPositions[41] = {
             kPositionNone,    kPosition_851,  kPosition_1430, kPosition_2110, kPositionNone,
@@ -1926,7 +1925,53 @@ bool Entities::compare(EntityIndex entity1, EntityIndex entity2) {
 	 || data1->car > kCarRedSleeping)
 		return false;
 
-	error("Entities::compare: not implemented!");
+	EntityPosition position1 = (data1->entityPosition >= data2->entityPosition) ? data1->entityPosition : data2->entityPosition;
+	EntityPosition position2 = (data1->entityPosition >= data2->entityPosition) ? data2->entityPosition : data1->entityPosition;
+
+	// Compute position
+	int index1 = 7;
+	do {
+		if (objectsPosition[index1] >= position2)
+			break;
+
+		--index1;
+	} while (index1 > -1);
+
+	int index2 = 0;
+	do {
+		if (objectsPosition[index2] <= position2)
+			break;
+
+		++index2;
+	} while (index2 < 8);
+
+	if (index1 > -1 && index2 < 8 && index2 <= index1) {
+		while (index2 <= index1) {
+			if (getCompartments(index2 + (data1->car == kCarGreenSleeping ? 0 : 8)))
+				return true;
+
+			if (getCompartments1(index2 + (data1->car == kCarGreenSleeping ? 0 : 8)))
+				return true;
+
+			++index2;
+		}
+	}
+
+	for (EntityIndex entity = kEntityAnna; entity <= kEntity39; entity = (EntityIndex)(entity + 1)) {
+
+		if (entity1 == entity || entity2 == entity)
+			continue;
+
+		if (!isDirectionUpOrDown(entity))
+			continue;
+
+		if (data1->car == getEntityData(entity)->car
+		 && getEntityData(entity)->entityPosition > position2
+		 && getEntityData(entity)->entityPosition < position1)
+			return true;
+	}
+
+	return false;
 }
 
 bool Entities::updateEntity(EntityIndex entity, CarIndex car, EntityPosition position) {
@@ -2037,8 +2082,7 @@ label_process_entity:
 					else if (data->car == kCarRedSleeping)
 						compartmentIndex = 8;
 
-					// We skip the first object position (0)
-					for (int i = 1; i < 8; i++) {
+					for (int i = 0; i < 8; i++) {
 						if (getCompartments(compartmentIndex) || getCompartments1(compartmentIndex)) {
 							if (checkDistanceFromPosition(entity, objectsPosition[i], 750)) {
 								if (checkPosition(objectsPosition[i])) {
@@ -2293,7 +2337,7 @@ bool Entities::checkFields2(ObjectIndex object) const {
 	case kObjectCompartment6:
 	case kObjectCompartment7:
 	case kObjectCompartment8:
-		position = objectsPosition[object];
+		position = objectsPosition[object - 1];
 		car = kCarGreenSleeping;
 		if (isInsideCompartment(kEntityPlayer, car, position))
 			return false;
@@ -2345,7 +2389,7 @@ bool Entities::checkFields2(ObjectIndex object) const {
 	return true;
 }
 
-bool Entities::isInsideCompartment(EntityIndex entity) const {
+bool Entities::isInsideCompartments(EntityIndex entity) const {
 	return (getData(entity)->car == kCarGreenSleeping
 		 || getData(entity)->car == kCarRedSleeping)
 		 && getData(entity)->location == kLocationInsideCompartment;

@@ -583,7 +583,7 @@ IMPLEMENT_FUNCTION_II(Milos, function27, 27)
 
 		if (getEntities()->isDistanceBetweenEntities(kEntityMilos, kEntityPlayer, 1000)
 		 && !getEntities()->isInGreenCarEntrance(kEntityPlayer)
-		 && !getEntities()->isInsideCompartment(kEntityPlayer)
+		 && !getEntities()->isInsideCompartments(kEntityPlayer)
 		 && !getEntities()->checkFields10(kEntityPlayer)) {
 			if (getData()->car == kCarRedSleeping || getData()->car == kCarGreenSleeping) {
 				ENTITY_PARAM(0, 2) = 1;

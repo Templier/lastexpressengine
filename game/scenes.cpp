@@ -128,11 +128,6 @@ void SceneManager::loadScene(SceneIndex index) {
 }
 
 void SceneManager::loadSceneFromObject(ObjectIndex object, bool alternate) {
-	if (alternate) {
-		loadSceneFromPosition((object < kObject10 ? kCarGreenSleeping : kCarRedSleeping), (Position)(17 - (object - 1) * 2));
-		return;
-	}
-
 	switch (object) {
 	default:
 		break;
@@ -144,6 +139,12 @@ void SceneManager::loadSceneFromObject(ObjectIndex object, bool alternate) {
 	case kObjectCompartment5:
 	case kObjectCompartment6:
 	case kObjectCompartment7:
+		if (alternate)
+			loadSceneFromPosition(kCarGreenSleeping, (Position)(17 - (object - 1) * 2));
+		else
+			loadSceneFromPosition(kCarGreenSleeping, (Position)(38 - (object - 1) * 2));
+		break;
+
 	case kObjectCompartmentA:
 	case kObjectCompartmentB:
 	case kObjectCompartmentC:
@@ -151,12 +152,15 @@ void SceneManager::loadSceneFromObject(ObjectIndex object, bool alternate) {
 	case kObjectCompartmentE:
 	case kObjectCompartmentF:
 	case kObjectCompartmentG:
-		loadSceneFromPosition((object < kObject10 ? kCarGreenSleeping : kCarRedSleeping), (Position)(38 - (object - 1) * 2));
+		if (alternate)
+			loadSceneFromPosition(kCarGreenSleeping, (Position)(17 - (object - 32) * 2));
+		else
+			loadSceneFromPosition(kCarRedSleeping, (Position)(38 - (object - 32) * 2));
 		break;
 
 	case kObjectCompartment8:
 	case kObjectCompartmentH:
-		loadSceneFromPosition(kCarGreenSleeping, 25);
+		loadSceneFromPosition(object == kObjectCompartment8 ? kCarGreenSleeping : kCarRedSleeping, alternate ? 3 : 25);
 		break;
 	}
 }

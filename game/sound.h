@@ -172,6 +172,7 @@ public:
 	void playSteam(CityIndex index);
 	void playFightSound(byte action, byte a4);
 	void playLocomotiveSound();
+	void playWarningCompartment(EntityIndex entity, ObjectIndex compartment);
 
 	// Dialog & Letters
 	void readText(int id);
@@ -188,7 +189,7 @@ public:
 	SoundManager::FlagType getSoundFlag(EntityIndex index) const;
 
 	// Debug
-	void stopAllSound();
+	void stopAllSound() const;
 
 	// Serializable
 	void saveLoadWithSerializer(Common::Serializer &ser);
@@ -218,10 +219,20 @@ private:
 		kSoundState2 = 2
 	};
 
+	union SoundStatusUnion {
+		uint32 status;
+		byte status1;
+		byte status2;
+		byte status3;
+		byte status4;
+
+		SoundStatusUnion() {
+			status = 0;
+		}
+	};
+
 	struct SoundEntry {
-		uint16 status;
-		// byte field_2;
-		byte field_3;
+		SoundStatusUnion status;
 		SoundType type;    // int
 		//int field_8;
 		//int field_C;
@@ -249,8 +260,6 @@ private:
 		bool isStreamed; // TEMPORARY
 
 		SoundEntry() {
-			status = 0;
-			field_3 = 0;
 			type = kSoundTypeNone;
 			stream = NULL;
 			field_3C = 0;
@@ -275,6 +284,9 @@ private:
 	uint32 _data1;
 	uint32 _data2;
 	uint32 _flag;
+
+	// Compartment warnings by Mertens or Coudert
+	uint32 _lastWarning[12];
 
 	// Sound cache
 	Common::List<SoundEntry *> _cache;

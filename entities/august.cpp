@@ -314,7 +314,7 @@ IMPLEMENT_FUNCTION_II(August, updateEntity2, 18)
 			CALLBACK_ACTION();
 		} else if (getEntities()->isDistanceBetweenEntities(kEntityAugust, kEntityPlayer, 1000)
 		        && !getEntities()->isInGreenCarEntrance(kEntityPlayer)
-				&& !getEntities()->isInsideCompartment(kEntityPlayer)
+				&& !getEntities()->isInsideCompartments(kEntityPlayer)
 				&& !getEntities()->checkFields10(kEntityPlayer)) {
 
 			if (getData()->car == kCarGreenSleeping || getData()->car == kCarRedSleeping) {

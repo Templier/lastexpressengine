@@ -377,7 +377,7 @@ label_callback2:
 
 			setCallback(3);
 			call(new ENTITY_SETUP(Alouan, setup_compartment6to8));
-		}		
+		}
 		break;
 
 	case kActionDefault:

@@ -354,7 +354,7 @@ label_callback4:
 		default:
 			break;
 
-		case 1:			
+		case 1:
 			goto label_callback1;
 
 		case 2:

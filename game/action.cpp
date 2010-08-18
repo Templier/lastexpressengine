@@ -510,12 +510,11 @@ IMPLEMENT_ACTION(compartment) {
 	ObjectLocation location = getObjects()->get(object).location;
 	if (location == kLocation1 || location == kLocation3 || getEntities()->checkFields2(object)) {
 
-		// FIXME check again, this might be wrong (and simplify expression)
-		if (location != kLocation1
-		 || getEntities()->checkFields2(object)
-		 || (getInventory()->getSelectedItem() != kItemKey && (location != kLocation1 || !getInventory()->hasItem(kItemKey)
-		 || getInventory()->getSelectedItem() != kItemFirebird
-		 || getInventory()->getSelectedItem() != kItemBriefcase))) {
+		if (location != kLocation1 || getEntities()->checkFields2(object)
+		 || (getInventory()->getSelectedItem() != kItemKey
+		 && (object != kItemMatchBox
+		  || !getInventory()->hasItem(kItemKey)
+		  || (getInventory()->getSelectedItem() != kItemFirebird && getInventory()->getSelectedItem() != kItemBriefcase)))) {
 			if (!getSound()->isBuffered("LIB13"))
 				getSound()->playSoundEvent(kEntityPlayer, 13);
 
@@ -1578,7 +1577,8 @@ void Action::dropCorpse(bool process) const {
 }
 
 bool Action::handleOtherCompartment(ObjectIndex object, bool doPlaySound, bool doLoadScene) const {
-	EntityData *_data = getEntities()->get(kEntityMertens)->getParamData();
+#define ENTITY_PARAMS(entity, index, id) \
+	((EntityData::EntityParametersIIII*)getEntities()->get(entity)->getParamData()->getParameters(8, index))->param##id
 
 	// Only handle compartments
 	if (getEntityData(kEntityPlayer)->location != kLocationOutsideCompartment
@@ -1604,48 +1604,110 @@ bool Action::handleOtherCompartment(ObjectIndex object, bool doPlaySound, bool d
 	if (getEntityData(kEntityPlayer)->car == kCarGreenSleeping
 	 && getEntityData(kEntityMertens)->car == kCarGreenSleeping
 	 && !getEntityData(kEntityMertens)->location
-	 && !ENTITY_PARAM(0, 1))
-		 error("Action::handleOtherCompartment: not implemented!");
+	 && !ENTITY_PARAMS(kEntityMertens, 0, 1)) {
+
+		if (!getEntities()->compare(kEntityPlayer, kEntityMertens)) {
+
+			if (getEntityData(kEntityMertens)->entityPosition < kPosition_2740
+			 && getEntityData(kEntityMertens)->entityPosition > kPosition_850
+			 && (getEntityData(kEntityCoudert)->car != kCarGreenSleeping || getEntityData(kEntityCoudert)->entityPosition > kPosition_2740)
+			 && (getEntityData(kEntityVerges)->car != kCarGreenSleeping || getEntityData(kEntityVerges)->entityPosition > kPosition_2740)) {
+				if (doPlaySound)
+					playCompartmentSoundEvents(object);
+
+				if (!getSound()->isBuffered(kEntityMertens))
+					getSound()->playWarningCompartment(kEntityMertens, object);
+
+				getSavePoints()->push(kEntityPlayer, kEntityMertens, kAction305159806);
+
+				if (doLoadScene)
+					getScenes()->loadSceneFromObject(object);
+
+				return true;
+			}
+
+			if (getEntityData(kEntityMertens)->direction == kDirectionUp
+			 && getEntityData(kEntityMertens)->entityPosition < getEntityData(kEntityPlayer)->entityPosition) {
+				if (doPlaySound)
+					playCompartmentSoundEvents(object);
+
+				if (!getSound()->isBuffered(kEntityMertens))
+					getSound()->playSound(kEntityMertens, (rnd(2)) ? "JAC1000" : "JAC1000A");
+
+				if (doLoadScene)
+					getScenes()->loadSceneFromObject(object);
+			}
+
+			if (getEntityData(kEntityMertens)->direction == kDirectionDown
+			 && getEntityData(kEntityMertens)->entityPosition > getEntityData(kEntityPlayer)->entityPosition) {
+				if (doPlaySound)
+					playCompartmentSoundEvents(object);
+
+				if (!getSound()->isBuffered(kEntityMertens))
+					getSound()->playSound(kEntityMertens, (rnd(2)) ? "JAC1000" : "JAC1000A");
+
+				if (doLoadScene)
+					getScenes()->loadSceneFromObject(object, true);
+			}
+		}
+	}
 
 	//////////////////////////////////////////////////////////////////////////
 	// Coudert
 	if (getEntityData(kEntityPlayer)->car != kCarRedSleeping
 	 || !getEntityData(kEntityCoudert)->car
 	 || getEntityData(kEntityCoudert)->location != kLocationOutsideCompartment
-	 || ENTITY_PARAM(0, 1))
+	 || ENTITY_PARAMS(kEntityCoudert, 0, 1))
 	 return false;
 
-	if (!getEntities()->compare(kEntityPlayer, kEntityCoudert))
-		error("Action::handleOtherCompartment: not implemented!");
+	if (!getEntities()->compare(kEntityPlayer, kEntityCoudert)) {
 
-	// Direction = Up
-	if (!getEntities()->compare(kEntityPlayer, kEntityCoudert)
-	&& getEntityData(kEntityCoudert)->direction == kDirectionUp
-	&& getEntityData(kEntityCoudert)->entityPosition < getEntityData(kEntityPlayer)->entityPosition) {
-		if (doPlaySound)
-			playCompartmentSoundEvents(object);
+		if (getEntityData(kEntityCoudert)->entityPosition < kPosition_2740
+		 && getEntityData(kEntityCoudert)->entityPosition > kPosition_850
+		 && (getEntityData(kEntityMertens)->car != kCarRedSleeping || getEntityData(kEntityMertens)->entityPosition > kPosition_2740)
+		 && (getEntityData(kEntityVerges)->car != kCarRedSleeping || getEntityData(kEntityVerges)->entityPosition > kPosition_2740)
+		 && (getEntityData(kEntityMmeBoutarel)->car != kCarRedSleeping || getEntityData(kEntityMmeBoutarel)->entityPosition > kPosition_2740)) {
+			if (doPlaySound)
+				playCompartmentSoundEvents(object);
 
-		if (!getSound()->isBuffered(kEntityCoudert))
-			getSound()->playSound(kEntityCoudert, (rnd(2)) ? "JAC1000" : "JAC1000A");
+			if (!getSound()->isBuffered(kEntityCoudert))
+				getSound()->playWarningCompartment(kEntityCoudert, object);
 
-		if (doLoadScene)
-			getScenes()->loadSceneFromObject(object);
+			getSavePoints()->push(kEntityPlayer, kEntityCoudert, kAction305159806);
 
-		return true;
-	}
+			if (doLoadScene)
+				getScenes()->loadSceneFromObject(object);
 
-	// Direction = down
-	if (!getEntities()->compare(kEntityPlayer, kEntityCoudert)
-	&& getEntityData(kEntityCoudert)->direction == kDirectionDown
-	&& getEntityData(kEntityCoudert)->entityPosition > getEntityData(kEntityPlayer)->entityPosition) {
-		if (doPlaySound)
-			playCompartmentSoundEvents(object);
+			return true;
+		}
 
-		if (!getSound()->isBuffered(kEntityCoudert))
-			getSound()->playSound(kEntityCoudert, (rnd(2)) ? "JAC1000" : "JAC1000A");
+		// Direction = Up
+		if (getEntityData(kEntityCoudert)->direction == kDirectionUp
+		 && getEntityData(kEntityCoudert)->entityPosition < getEntityData(kEntityPlayer)->entityPosition) {
+			if (doPlaySound)
+				playCompartmentSoundEvents(object);
 
-		if (doLoadScene)
-			getScenes()->loadSceneFromObject(object, true);
+			if (!getSound()->isBuffered(kEntityCoudert))
+				getSound()->playSound(kEntityCoudert, (rnd(2)) ? "JAC1000" : "JAC1000A");
+
+			if (doLoadScene)
+				getScenes()->loadSceneFromObject(object);
+
+			return true;
+		}
+
+		// Direction = down
+		if (getEntityData(kEntityCoudert)->direction == kDirectionDown
+		 && getEntityData(kEntityCoudert)->entityPosition > getEntityData(kEntityPlayer)->entityPosition) {
+			if (doPlaySound)
+				playCompartmentSoundEvents(object);
+
+			if (!getSound()->isBuffered(kEntityCoudert))
+				getSound()->playSound(kEntityCoudert, (rnd(2)) ? "JAC1000" : "JAC1000A");
+
+			if (doLoadScene)
+				getScenes()->loadSceneFromObject(object, true);
+		}
 	}
 
 	return false;
@@ -1838,7 +1900,7 @@ LABEL_KEY:
 		|| getObjects()->get(object).entity
 		|| getObjects()->get(object).location != 1
 		|| !getObjects()->get(object).cursor2
-		|| getEntities()->isInsideCompartment(kEntityPlayer)
+		|| getEntities()->isInsideCompartments(kEntityPlayer)
 		|| getEntities()->checkFields2(object))
 			return (CursorStyle)getObjects()->get(object).cursor2;
 		else

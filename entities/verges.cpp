@@ -1209,7 +1209,7 @@ IMPLEMENT_FUNCTION(Verges, function35, 35)
 			setCallback(6);
 			call(new ENTITY_SETUP(Verges, setup_function11));
 			break;
-			
+
 		case 6:
 			CALLBACK_ACTION();
 			break;

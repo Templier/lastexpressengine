@@ -43,7 +43,7 @@ namespace LastExpress {
 #define SAVEGAME_BLOOD_JACKET() \
 	if (getProgress().jacket == kJacketBlood \
 		&& getEntities()->isDistanceBetweenEntities(kEntityCoudert, kEntityPlayer, 1000) \
-		&& !getEntities()->isInsideCompartment(kEntityPlayer) \
+		&& !getEntities()->isInsideCompartments(kEntityPlayer) \
 		&& !getEntities()->checkFields10(kEntityPlayer)) { \
 		setCallback(1); \
 		call(new ENTITY_SETUP(Coudert, setup_savegame), kSavegameTypeEvent, kEventMertensBloodJacket); \
@@ -323,7 +323,7 @@ IMPLEMENT_FUNCTION_II(Coudert, function9, 9)
 
 		if (getProgress().jacket != kJacketBlood
 		 || !getEntities()->isDistanceBetweenEntities(kEntityCoudert, kEntityPlayer, 1000)
-		 || getEntities()->isInsideCompartment(kEntityPlayer)
+		 || getEntities()->isInsideCompartments(kEntityPlayer)
 		 || getEntities()->checkFields10(kEntityPlayer)) {
 			if (getEntities()->updateEntity(kEntityCoudert, (CarIndex)params->param1, (EntityPosition)params->param2)) {
 				getData()->inventoryItem = kItemNone;
