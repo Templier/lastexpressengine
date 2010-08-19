@@ -512,7 +512,7 @@ IMPLEMENT_ACTION(compartment) {
 
 		if (location != kLocation1 || getEntities()->checkFields2(object)
 		 || (getInventory()->getSelectedItem() != kItemKey
-		 && (object != kItemMatchBox
+		 && ((InventoryItem)object != kItemMatchBox
 		  || !getInventory()->hasItem(kItemKey)
 		  || (getInventory()->getSelectedItem() != kItemFirebird && getInventory()->getSelectedItem() != kItemBriefcase)))) {
 			if (!getSound()->isBuffered("LIB13"))
