@@ -490,29 +490,29 @@ IMPLEMENT_ACTION(knock) {
 //////////////////////////////////////////////////////////////////////////
 // Action 6
 IMPLEMENT_ACTION(compartment) {
-	ObjectIndex object = (ObjectIndex)hotspot.param1;
+	ObjectIndex compartment = (ObjectIndex)hotspot.param1;
 
-	if (object >= kObjectMax)
+	if (compartment >= kObjectMax)
 		return kSceneInvalid;
 
-	if (getObjects()->get(object).entity) {
-		getSavePoints()->push(kEntityPlayer, getObjects()->get(object).entity, kActionOpenDoor, object);
+	if (getObjects()->get(compartment).entity) {
+		getSavePoints()->push(kEntityPlayer, getObjects()->get(compartment).entity, kActionOpenDoor, compartment);
 
 		// Stop processing further
 		return kSceneNone;
 	}
 
-	if (handleOtherCompartment(object, true, true)) {
+	if (handleOtherCompartment(compartment, true, true)) {
 		// Stop processing further
 		return kSceneNone;
 	}
 
-	ObjectLocation location = getObjects()->get(object).location;
-	if (location == kLocation1 || location == kLocation3 || getEntities()->checkFields2(object)) {
+	ObjectLocation location = getObjects()->get(compartment).location;
+	if (location == kLocation1 || location == kLocation3 || getEntities()->checkFields2(compartment)) {
 
-		if (location != kLocation1 || getEntities()->checkFields2(object)
+		if (location != kLocation1 || getEntities()->checkFields2(compartment)
 		 || (getInventory()->getSelectedItem() != kItemKey
-		 && ((InventoryItem)object != kItemMatchBox
+		 && (compartment != kObjectCompartment1
 		  || !getInventory()->hasItem(kItemKey)
 		  || (getInventory()->getSelectedItem() != kItemFirebird && getInventory()->getSelectedItem() != kItemBriefcase)))) {
 			if (!getSound()->isBuffered("LIB13"))
@@ -524,8 +524,8 @@ IMPLEMENT_ACTION(compartment) {
 
 		getSound()->playSoundEvent(kEntityPlayer, 32);
 
-		if ((object >= kObjectCompartment1 && object <= kObjectCompartment3) || (object >= kObjectCompartmentA && object <= kObjectCompartmentF))
-			getObjects()->update(object, kEntityPlayer, kLocationNone, kCursorHandKnock, kCursorHand);
+		if ((compartment >= kObjectCompartment1 && compartment <= kObjectCompartment3) || (compartment >= kObjectCompartmentA && compartment <= kObjectCompartmentF))
+			getObjects()->update(compartment, kEntityPlayer, kLocationNone, kCursorHandKnock, kCursorHand);
 
 		getSound()->playSoundEvent(kEntityPlayer, 15, 22);
 		getInventory()->unselectItem();
@@ -534,7 +534,7 @@ IMPLEMENT_ACTION(compartment) {
 	}
 
 	if (hotspot.action != SceneHotspot::kActionEnterCompartment || getInventory()->getSelectedItem() != kItemKey) {
-		if (object == kObjectCageMax) {
+		if (compartment == kObjectCageMax) {
 			getSound()->playSoundEvent(kEntityPlayer, 26);
 		} else {
 			getSound()->playSoundEvent(kEntityPlayer, 14);
@@ -1814,12 +1814,10 @@ CursorStyle Action::getCursor(const SceneHotspot &hotspot) const {
 			&& getInventory()->getSelectedItem() != kItemBriefcase && getInventory()->getSelectedItem() != kItemFirebird)
 			return kCursorForward;
 
-		// FIXME convert to something readable
-		return (CursorStyle)((((getObjects()->get(kObjectCompartment1).location2 - 1) < 1) - 1) & 11);
+		return (getObjects()->get(kObjectCompartment1).location2 < kLocation2) ? kCursorNormal : kCursorMagnifier;
 
 	case SceneHotspot::kActionSlip:
-		// FIXME convert to something readable
-		return (CursorStyle)(((getProgress().field_C8 < 1) - 1) & 7);
+		return (getProgress().field_C8 < 1) ? kCursorNormal : kCursorLeft;
 
 	case SceneHotspot::kActionClimbUpTrain:
 		if (getProgress().isTrainRunning
@@ -1834,8 +1832,7 @@ CursorStyle Action::getCursor(const SceneHotspot &hotspot) const {
 		if (object != kObjectCompartment1)
 			return kCursorNormal;
 
-		// FIXME convert to something readable
-		return (CursorStyle)(-(getObjects()->get(kObjectCeiling).location < 1) & 9);
+		return (getObjects()->get(kObjectCeiling).location < kLocation1) ? kCursorHand : kCursorNormal;
 
 	case SceneHotspot::kActionUnbound:
 		if (hotspot.param2 != 2)

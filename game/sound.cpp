@@ -1085,7 +1085,7 @@ void SoundManager::playWarningCompartment(EntityIndex entity, ObjectIndex compar
 				getSound()->playSound(kEntityCoudert, rnd(2) ? "Jac1500" : "Jac1500A", kFlagDefault);
 				break;
 			}
-			
+
 			getSound()->playSound(kEntityCoudert, rnd(2) ? "Jac1508" : "Jac1508A", kFlagDefault);
 			break;
 
@@ -1094,11 +1094,11 @@ void SoundManager::playWarningCompartment(EntityIndex entity, ObjectIndex compar
 				getSound()->playSound(kEntityCoudert, rnd(2) ? "Jac1500" : "Jac1500A", kFlagDefault);
 				break;
 			}
-			
+
 			if (getProgress().field_40 || (getState()->time > kTimeCityLinz && getState()->time < kTime2133000))
 				getSound()->playSound(kEntityCoudert, "Jac1507A", kFlagDefault);
 			else
-				getSound()->playSound(kEntityCoudert, "Jac1507", kFlagDefault);			
+				getSound()->playSound(kEntityCoudert, "Jac1507", kFlagDefault);
 			break;
 
 		case kObjectCompartmentC:
@@ -1118,7 +1118,7 @@ void SoundManager::playWarningCompartment(EntityIndex entity, ObjectIndex compar
 				getSound()->playSound(kEntityCoudert, rnd(2) ? "Jac1500" : "Jac1500A", kFlagDefault);
 				break;
 			}
-			
+
 			getSound()->playSound(kEntityCoudert, "Jac1505", kFlagDefault);
 			break;
 
@@ -1127,8 +1127,8 @@ void SoundManager::playWarningCompartment(EntityIndex entity, ObjectIndex compar
 				getSound()->playSound(kEntityCoudert, rnd(2) ? "Jac1500" : "Jac1500A", kFlagDefault);
 				break;
 			}
-			
-			if (getProgress().field_40 || (getState()->time > kTime2115000 && getState()->time < kTime2133000)) {				
+
+			if (getProgress().field_40 || (getState()->time > kTime2115000 && getState()->time < kTime2133000)) {
 				getSound()->playSound(kEntityCoudert, "Jac1504B", kFlagDefault);
 				break;
 			}
@@ -1144,8 +1144,8 @@ void SoundManager::playWarningCompartment(EntityIndex entity, ObjectIndex compar
 				getSound()->playSound(kEntityCoudert, rnd(2) ? "Jac1500" : "Jac1500A", kFlagDefault);
 				break;
 			}
-			
-			if (getProgress().field_40 || (getState()->time > kTime2083500 && getState()->time < kTime2133000)) {				
+
+			if (getProgress().field_40 || (getState()->time > kTime2083500 && getState()->time < kTime2133000)) {
 				getSound()->playSound(kEntityCoudert, "Jac1503B", kFlagDefault);
 				break;
 			}
