@@ -69,6 +69,19 @@ void EntityData::setCallback(uint callback, byte index) {
 	_data.callbacks[callback] = index;
 }
 
+void EntityData::updateParameters(uint32 index) {
+	if (index < 8)
+		getParameters(8, 0)->update(index);
+	else if (index < 16)
+		getParameters(8, 1)->update(index - 8);
+	else if (index < 24)
+		getParameters(8, 2)->update(index - 16);
+	else if (index < 32)
+		getParameters(8, 3)->update(index - 24);
+	else
+		error("EntityData::updateParameters: invalid param index to update (was:%d, max:32)!", index);
+}
+
 void EntityData::saveLoadWithSerializer(Common::Serializer &) {
 	error("EntityData::saveLoadWithSerializer: not implemented!");
 }
