@@ -405,13 +405,13 @@ SceneIndex Action::processHotspot(const SceneHotspot &hotspot) {
 
 //////////////////////////////////////////////////////////////////////////
 // Action 0
-IMPLEMENT_ACTION(dummy) {
+IMPLEMENT_ACTION(dummy)
 	error("Action::action_dummy: Function should never be called (hotspot action: %d)!", hotspot.action);
 }
 
 //////////////////////////////////////////////////////////////////////////
 // Action 1
-IMPLEMENT_ACTION(inventory) {
+IMPLEMENT_ACTION(inventory)
 	if (!getState()->sceneUseBackup)
 		return kSceneInvalid;
 
@@ -441,7 +441,7 @@ IMPLEMENT_ACTION(inventory) {
 
 //////////////////////////////////////////////////////////////////////////
 // Action 2
-IMPLEMENT_ACTION(savePoint) {
+IMPLEMENT_ACTION(savePoint)
 	getSavePoints()->push(kEntityPlayer, (EntityIndex)hotspot.param1, (ActionIndex)hotspot.param2);
 
 	return kSceneInvalid;
@@ -449,7 +449,7 @@ IMPLEMENT_ACTION(savePoint) {
 
 //////////////////////////////////////////////////////////////////////////
 // Action 3
-IMPLEMENT_ACTION(playSound) {
+IMPLEMENT_ACTION(playSound)
 
 	// Check that the file is not already buffered
 	if (hotspot.param2 || !getSound()->isBuffered(Common::String::printf("LIB%03d", hotspot.param1), true))
@@ -460,7 +460,7 @@ IMPLEMENT_ACTION(playSound) {
 
 //////////////////////////////////////////////////////////////////////////
 // Action 4
-IMPLEMENT_ACTION(playMusic) {
+IMPLEMENT_ACTION(playMusic)
 	// Check that the file is not already buffered
 	Common::String filename = Common::String::printf("MUS%03d", hotspot.param1);
 
@@ -472,7 +472,7 @@ IMPLEMENT_ACTION(playMusic) {
 
 //////////////////////////////////////////////////////////////////////////
 // Action 5
-IMPLEMENT_ACTION(knock) {
+IMPLEMENT_ACTION(knock)
 	ObjectIndex object = (ObjectIndex)hotspot.param1;
 	if (object >= kObjectMax)
 		return kSceneInvalid;
@@ -489,7 +489,7 @@ IMPLEMENT_ACTION(knock) {
 
 //////////////////////////////////////////////////////////////////////////
 // Action 6
-IMPLEMENT_ACTION(compartment) {
+IMPLEMENT_ACTION(compartment)
 	ObjectIndex compartment = (ObjectIndex)hotspot.param1;
 
 	if (compartment >= kObjectMax)
@@ -553,7 +553,7 @@ IMPLEMENT_ACTION(compartment) {
 
 //////////////////////////////////////////////////////////////////////////
 // Action 7
-IMPLEMENT_ACTION(playSounds) {
+IMPLEMENT_ACTION(playSounds)
 	getSound()->playSoundEvent(kEntityPlayer, hotspot.param1);
 	getSound()->playSoundEvent(kEntityPlayer, hotspot.param3, hotspot.param2);
 
@@ -562,7 +562,7 @@ IMPLEMENT_ACTION(playSounds) {
 
 //////////////////////////////////////////////////////////////////////////
 // Action 8
-IMPLEMENT_ACTION(playAnimation) {
+IMPLEMENT_ACTION(playAnimation)
 	if (getEvent(hotspot.param1))
 		return kSceneInvalid;
 
@@ -576,7 +576,7 @@ IMPLEMENT_ACTION(playAnimation) {
 
 //////////////////////////////////////////////////////////////////////////
 // Action 9
-IMPLEMENT_ACTION(openCloseObject) {
+IMPLEMENT_ACTION(openCloseObject)
 	ObjectIndex object = (ObjectIndex)hotspot.param1;
 	ObjectLocation location = (ObjectLocation)hotspot.param2;
 
@@ -611,7 +611,7 @@ IMPLEMENT_ACTION(openCloseObject) {
 
 //////////////////////////////////////////////////////////////////////////
 // Action 10
-IMPLEMENT_ACTION(updateObjetLocation2) {
+IMPLEMENT_ACTION(updateObjetLocation2)
 	ObjectIndex object = (ObjectIndex)hotspot.param1;
 	ObjectLocation location = (ObjectLocation)hotspot.param2;
 
@@ -632,7 +632,7 @@ IMPLEMENT_ACTION(updateObjetLocation2) {
 
 //////////////////////////////////////////////////////////////////////////
 // Action 11
-IMPLEMENT_ACTION(setItemLocation) {
+IMPLEMENT_ACTION(setItemLocation)
 	InventoryItem item = (InventoryItem)hotspot.param1;
 	if (item >= kPortraitOriginal)
 		return kSceneInvalid;
@@ -647,9 +647,9 @@ IMPLEMENT_ACTION(setItemLocation) {
 		ObjectLocation corpseLocation = getInventory()->get(kItemCorpse)->location;
 
 		if (corpseLocation == kLocation3 || corpseLocation == kLocation4)
-			getProgress().eventCorpseMovedFromFloor = 1;
+			getProgress().eventCorpseMovedFromFloor = true;
 		else
-			getProgress().eventCorpseMovedFromFloor = 0;
+			getProgress().eventCorpseMovedFromFloor = false;
 	}
 
 	return kSceneInvalid;
@@ -657,7 +657,7 @@ IMPLEMENT_ACTION(setItemLocation) {
 
 //////////////////////////////////////////////////////////////////////////
 // Action 12
-IMPLEMENT_ACTION(knockNoSound) {
+IMPLEMENT_ACTION(knockNoSound)
 	ObjectIndex object = (ObjectIndex)hotspot.param1;
 	if (object >= kObjectMax)
 		return kSceneInvalid;
@@ -670,7 +670,7 @@ IMPLEMENT_ACTION(knockNoSound) {
 
 //////////////////////////////////////////////////////////////////////////
 // Action 13
-IMPLEMENT_ACTION(pickItem) {
+IMPLEMENT_ACTION(pickItem)
 	InventoryItem item = (InventoryItem)hotspot.param1;
 	ObjectLocation location = (ObjectLocation)hotspot.param2;
 	bool process = (hotspot.scene == 0);
@@ -748,7 +748,7 @@ IMPLEMENT_ACTION(pickItem) {
 
 //////////////////////////////////////////////////////////////////////////
 // Action 14
-IMPLEMENT_ACTION(dropItem) {
+IMPLEMENT_ACTION(dropItem)
 	InventoryItem item = (InventoryItem)hotspot.param1;
 	ObjectLocation location = (ObjectLocation)hotspot.param2;
 	bool process = (hotspot.scene == kSceneNone);
@@ -797,7 +797,7 @@ IMPLEMENT_ACTION(dropItem) {
 
 //////////////////////////////////////////////////////////////////////////
 // Action 16
-IMPLEMENT_ACTION(enterCompartment) {
+IMPLEMENT_ACTION(enterCompartment)
 	if (getObjects()->get(kObjectCompartment1).location == kLocation1 || getObjects()->get(kObjectCompartment1).location == kLocation3 || getInventory()->getSelectedItem() == kItemKey)
 		return action_compartment(hotspot);
 
@@ -832,7 +832,7 @@ IMPLEMENT_ACTION(enterCompartment) {
 
 //////////////////////////////////////////////////////////////////////////
 // Action 18
-IMPLEMENT_ACTION(getOutsideTrain) {
+IMPLEMENT_ACTION(getOutsideTrain)
 	ObjectIndex object = (ObjectIndex)hotspot.param1;
 
 	if ((getEvent(kEventCathLookOutsideWindowDay) || getEvent(kEventCathLookOutsideWindowNight) || getObjects()->get(kObjectCompartment1).location2 == kLocation1)
@@ -877,7 +877,7 @@ IMPLEMENT_ACTION(getOutsideTrain) {
 
 //////////////////////////////////////////////////////////////////////////
 // Action 19
-IMPLEMENT_ACTION(slip) {
+IMPLEMENT_ACTION(slip)
 	switch((ObjectIndex)hotspot.param1) {
 	default:
 		return kSceneInvalid;
@@ -901,7 +901,7 @@ IMPLEMENT_ACTION(slip) {
 
 //////////////////////////////////////////////////////////////////////////
 // Action 20
-IMPLEMENT_ACTION(getInsideTrain) {
+IMPLEMENT_ACTION(getInsideTrain)
 	switch ((ObjectIndex)hotspot.param1) {
 	default:
 		return kSceneInvalid;
@@ -927,7 +927,7 @@ IMPLEMENT_ACTION(getInsideTrain) {
 
 //////////////////////////////////////////////////////////////////////////
 // Action 21
-IMPLEMENT_ACTION(climbUpTrain) {
+IMPLEMENT_ACTION(climbUpTrain)
 	byte action = hotspot.param1;
 
 	if (action != 1 && action != 2)
@@ -961,7 +961,7 @@ IMPLEMENT_ACTION(climbUpTrain) {
 
 //////////////////////////////////////////////////////////////////////////
 // Action 22
-IMPLEMENT_ACTION(climbDownTrain) {
+IMPLEMENT_ACTION(climbDownTrain)
 	EventIndex evt = kEventNone;
 	switch (getProgress().chapter) {
 	default:
@@ -989,7 +989,7 @@ IMPLEMENT_ACTION(climbDownTrain) {
 
 //////////////////////////////////////////////////////////////////////////
 // Action 23
-IMPLEMENT_ACTION(jumpUpDownTrain) {
+IMPLEMENT_ACTION(jumpUpDownTrain)
 	switch (hotspot.param1) {
 	default:
 		break;
@@ -1028,7 +1028,7 @@ IMPLEMENT_ACTION(jumpUpDownTrain) {
 
 //////////////////////////////////////////////////////////////////////////
 // Action 24
-IMPLEMENT_ACTION(unbound) {
+IMPLEMENT_ACTION(unbound)
 	byte action = hotspot.param1;
 
 	switch (action) {
@@ -1076,7 +1076,7 @@ IMPLEMENT_ACTION(unbound) {
 
 //////////////////////////////////////////////////////////////////////////
 // Action 25
-IMPLEMENT_ACTION(25) {
+IMPLEMENT_ACTION(25)
 	switch(hotspot.param1) {
 	default:
 		break;
@@ -1104,7 +1104,7 @@ IMPLEMENT_ACTION(25) {
 
 //////////////////////////////////////////////////////////////////////////
 // Action 26
-IMPLEMENT_ACTION(26) {
+IMPLEMENT_ACTION(26)
 	switch(hotspot.param1) {
 	default:
 		return kSceneInvalid;
@@ -1136,7 +1136,7 @@ IMPLEMENT_ACTION(26) {
 
 //////////////////////////////////////////////////////////////////////////
 // Action 27
-IMPLEMENT_ACTION(27) {
+IMPLEMENT_ACTION(27)
 	if (!getSound()->isBuffered("LIB031", true))
 		getSound()->playSoundEvent(kEntityPlayer, 31);
 
@@ -1158,7 +1158,7 @@ IMPLEMENT_ACTION(27) {
 
 //////////////////////////////////////////////////////////////////////////
 // Action 28
-IMPLEMENT_ACTION(concertSitCough) {
+IMPLEMENT_ACTION(concertSitCough)
 	switch(hotspot.param1) {
 	default:
 		return kSceneInvalid;
@@ -1180,7 +1180,7 @@ IMPLEMENT_ACTION(concertSitCough) {
 
 //////////////////////////////////////////////////////////////////////////
 // Action 29
-IMPLEMENT_ACTION(29) {
+IMPLEMENT_ACTION(29)
 	getProgress().field_C = 1;
 	getSound()->playSoundEvent(kEntityPlayer, hotspot.param1, hotspot.param2);
 
@@ -1193,7 +1193,7 @@ IMPLEMENT_ACTION(29) {
 
 //////////////////////////////////////////////////////////////////////////
 // Action 30
-IMPLEMENT_ACTION(catchBeetle) {
+IMPLEMENT_ACTION(catchBeetle)
 	if (!getBeetle()->isLoaded())
 		return kSceneInvalid;
 
@@ -1208,7 +1208,7 @@ IMPLEMENT_ACTION(catchBeetle) {
 
 //////////////////////////////////////////////////////////////////////////
 // Action 31
-IMPLEMENT_ACTION(exitCompartment) {
+IMPLEMENT_ACTION(exitCompartment)
 	if (!getProgress().field_30 && getProgress().jacket != kJacketOriginal) {
 		getSaveLoad()->saveGame(kSavegameTypeTime, kEntityPlayer, kTimeNone);
 		getProgress().field_30 = 1;
@@ -1222,7 +1222,7 @@ IMPLEMENT_ACTION(exitCompartment) {
 
 //////////////////////////////////////////////////////////////////////////
 // Action 32
-IMPLEMENT_ACTION(32) {
+IMPLEMENT_ACTION(32)
 	switch(hotspot.param1) {
 	default:
 		break;
@@ -1263,7 +1263,7 @@ IMPLEMENT_ACTION(32) {
 
 //////////////////////////////////////////////////////////////////////////
 // Action 33
-IMPLEMENT_ACTION(useWhistle) {
+IMPLEMENT_ACTION(useWhistle)
 	EventIndex evt = kEventNone;
 	SceneIndex sceneIndex = kSceneInvalid;
 
@@ -1322,7 +1322,7 @@ IMPLEMENT_ACTION(useWhistle) {
 
 //////////////////////////////////////////////////////////////////////////
 // Action 34
-IMPLEMENT_ACTION(openMatchBox) {
+IMPLEMENT_ACTION(openMatchBox)
 	// If the match is already in the inventory, do nothing
 	if (!getInventory()->get(kItemMatch)->location
 	 || getInventory()->get(kItemMatch)->isPresent)
@@ -1336,7 +1336,7 @@ IMPLEMENT_ACTION(openMatchBox) {
 
 //////////////////////////////////////////////////////////////////////////
 // Action 35
-IMPLEMENT_ACTION(openBed) {
+IMPLEMENT_ACTION(openBed)
 	getSound()->playSoundEvent(kEntityPlayer, 59);
 
 	return kSceneInvalid;
@@ -1347,7 +1347,7 @@ IMPLEMENT_ACTION(openBed) {
 
 //////////////////////////////////////////////////////////////////////////
 // Action 37
-IMPLEMENT_ACTION(dialog) {
+IMPLEMENT_ACTION(dialog)
 	getSound()->playDialog(kEntityTables4, (EntityIndex)hotspot.param1, SoundManager::kFlagDefault, 0);
 
 	return kSceneInvalid;
@@ -1355,7 +1355,7 @@ IMPLEMENT_ACTION(dialog) {
 
 //////////////////////////////////////////////////////////////////////////
 // Action 38
-IMPLEMENT_ACTION(eggBox) {
+IMPLEMENT_ACTION(eggBox)
 	getSound()->playSoundEvent(kEntityPlayer, 43);
 	if (getProgress().field_7C && !getSound()->isBuffered("MUS003")) {
 		getSound()->playSound(kEntityPlayer, "MUS003", SoundManager::kFlagDefault);
@@ -1367,7 +1367,7 @@ IMPLEMENT_ACTION(eggBox) {
 
 //////////////////////////////////////////////////////////////////////////
 // Action 39
-IMPLEMENT_ACTION(39) {
+IMPLEMENT_ACTION(39)
 	getSound()->playSoundEvent(kEntityPlayer, 24);
 	if (getProgress().field_80 && !getSound()->isBuffered("MUS003")) {
 		getSound()->playSound(kEntityPlayer, "MUS003", SoundManager::kFlagDefault);
@@ -1379,7 +1379,7 @@ IMPLEMENT_ACTION(39) {
 
 //////////////////////////////////////////////////////////////////////////
 // Action 40
-IMPLEMENT_ACTION(bed) {
+IMPLEMENT_ACTION(bed)
 	getSound()->playSoundEvent(kEntityPlayer, 85);
 	// falls to case knockNoSound
 	return action_knockNoSound(hotspot);
@@ -1387,7 +1387,7 @@ IMPLEMENT_ACTION(bed) {
 
 //////////////////////////////////////////////////////////////////////////
 // Action 41
-IMPLEMENT_ACTION(playMusicChapter) {
+IMPLEMENT_ACTION(playMusicChapter)
 	byte id = 0;
 	switch (getProgress().chapter) {
 	default:
@@ -1420,7 +1420,7 @@ IMPLEMENT_ACTION(playMusicChapter) {
 
 //////////////////////////////////////////////////////////////////////////
 // Action 42
-IMPLEMENT_ACTION(playMusicChapterSetupTrain) {
+IMPLEMENT_ACTION(playMusicChapterSetupTrain)
 	int id = 0;
 	switch (getProgress().chapter) {
 	default:
@@ -1455,14 +1455,14 @@ IMPLEMENT_ACTION(playMusicChapterSetupTrain) {
 
 //////////////////////////////////////////////////////////////////////////
 // // Action 43
-IMPLEMENT_ACTION(switchChapter) {
+IMPLEMENT_ACTION(switchChapter)
 	// Nothing to do here as an hotspot action
 	return kSceneInvalid;
 }
 
 //////////////////////////////////////////////////////////////////////////
 // Action 44
-IMPLEMENT_ACTION(44) {
+IMPLEMENT_ACTION(44)
 	switch (hotspot.param1) {
 	default:
 		break;
@@ -1790,8 +1790,7 @@ CursorStyle Action::getCursor(const SceneHotspot &hotspot) const {
 		if (object >= kObjectMax)
 			return kCursorNormal;
 
-		// TODO check size of object to make sure we don't have an out of bounds access
-		if ((&getProgress().field_0)[object] == hotspot.param2)
+		if (getProgress().isEqual(object, hotspot.param2))
 			return (CursorStyle)hotspot.param3;
 
 		return kCursorNormal;
@@ -1856,7 +1855,7 @@ CursorStyle Action::getCursor(const SceneHotspot &hotspot) const {
 		return kCursorHandPointer;
 
 	case SceneHotspot::KActionUseWhistle:
-		if (object != 3)
+		if (object != kObjectCompartment3)
 			return kCursorNormal;
 
 		if (getInventory()->getSelectedItem() == kItemWhistle)

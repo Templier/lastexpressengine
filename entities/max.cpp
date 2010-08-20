@@ -311,10 +311,10 @@ IMPLEMENT_FUNCTION(Max, function9, 9)
 		params->param2 = kTimeInvalid;
 
 setup_functions:
-		if (getProgress().chapter == 3)
+		if (getProgress().chapter == kChapter3)
 			setup_function15();
 
-		if (getProgress().chapter == 4)
+		if (getProgress().chapter == kChapter4)
 			setup_function17();
 		break;
 

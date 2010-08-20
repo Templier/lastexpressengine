@@ -28,8 +28,6 @@
 
 namespace LastExpress {
 
-#include "common/func.h"
-
 #include "lastexpress/entities/entity_functions.h"
 
 #define LOBYTE(w)           ((unsigned char)(((unsigned long)(w)) & 0xff))
@@ -382,41 +380,6 @@ namespace LastExpress {
 
 #define END_SETUP() \
 		_engine->getGameLogic()->getGameState()->getGameSavePoints()->call(_entityIndex, _entityIndex, kActionDefault);
-
-//////////////////////////////////////////////////////////////////////////
-// Functors class for setup functions
-template<class Arg1, class Arg2, class Arg3, class Arg4, class Result>
-struct QuaternaryFunction {
-	typedef Arg1 FirstArgumentType;
-	typedef Arg2 SecondArgumentType;
-	typedef Arg3 ThirdArgumentType;
-	typedef Arg4 FourthArgumentType;
-	typedef Result ResultType;
-};
-
-template<class Arg1, class Arg2, class Arg3, class Arg4, class Res>
-struct Functor4 : public QuaternaryFunction<Arg1, Arg2, Arg3, Arg4, Res> {
-	virtual ~Functor4() {}
-
-	virtual bool isValid() const = 0;
-	virtual Res operator()(Arg1, Arg2, Arg3, Arg4) const = 0;
-};
-
-template<class Arg1, class Arg2, class Arg3, class Arg4, class Res, class T>
-class Functor4Mem : public Functor4<Arg1, Arg2, Arg3, Arg4, Res> {
-public:
-	typedef Res (T::*FuncType)(Arg1, Arg2, Arg3, Arg4);
-
-	Functor4Mem(T *t, const FuncType &func) : _t(t), _func(func) {}
-
-	bool isValid() const { return _func != 0 && _t != 0; }
-	Res operator()(Arg1 v1, Arg2 v2, Arg3 v3, Arg4 v4) const {
-		return (_t->*_func)(v1, v2, v3, v4);
-	}
-private:
-	mutable T *_t;
-	const FuncType _func;
-};
 
 } // End of namespace LastExpress
 

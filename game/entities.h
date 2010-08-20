@@ -68,7 +68,7 @@ public:
 	 */
 	void resetState(EntityIndex entity);
 	void updateFields() const;
-	void updateSequences();
+	void updateSequences() const;
 	void updateCallbacks();
 
 	EntityIndex canInteractWith(const Common::Point &point) const;
@@ -86,8 +86,8 @@ public:
 	void exitCompartment(EntityIndex entity, ObjectIndex compartment, bool useCompartment1 = false);
 
 	// Sequences
-	void drawSequenceLeft(EntityIndex index, const char* sequence);
-	void drawSequenceRight(EntityIndex index, const char* sequence);
+	void drawSequenceLeft(EntityIndex index, const char* sequence) const;
+	void drawSequenceRight(EntityIndex index, const char* sequence) const;
 	void clearSequences(EntityIndex index) const;
 
 	bool updateEntity(EntityIndex entity, CarIndex car, EntityPosition position);
@@ -347,17 +347,17 @@ private:
 	void executeCallbacks();
 	void processEntity(EntityIndex entity);
 
-	void drawSequence(EntityIndex entity, const char* sequence, EntityDirection direction);
+	void drawSequence(EntityIndex entity, const char* sequence, EntityDirection direction) const;
 	void drawSequences(EntityIndex entity, EntityDirection direction, bool loadSequence) const;
-	void loadSequence2(EntityIndex entity, Common::String sequenceName, Common::String sequenceName2, int16 field30, bool loadSequence) const;
+	void loadSequence2(EntityIndex entity, Common::String sequenceName, Common::String sequenceName2, byte field30, bool loadSequence) const;
 
 	void clearEntitySequenceData(EntityData::EntityCallData * data, EntityDirection direction) const;
 	void computeCurrentFrame(EntityIndex entity) const;
-	int getCurrentFrame(EntityIndex entity, Sequence *sequence, EntityPosition position, bool doProcessing) const;
+	int16 getCurrentFrame(EntityIndex entity, Sequence *sequence, EntityPosition position, bool doProcessing) const;
 	void processFrame(EntityIndex entity, bool keepPreviousFrame, bool dontPlaySound);
-	void drawNextSequence(EntityIndex entity);
+	void drawNextSequence(EntityIndex entity) const;
 	void updateEntityPosition(EntityIndex entity) const;
-	void copySequenceData(EntityIndex entity);
+	void copySequenceData(EntityIndex entity) const;
 
 	bool changeCar(EntityData::EntityCallData * data, EntityIndex entity, CarIndex car, EntityPosition position, bool increment, EntityPosition newPosition, CarIndex newCar) const;
 

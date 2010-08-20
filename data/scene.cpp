@@ -76,7 +76,7 @@ SceneHotspot *SceneHotspot::load(Common::SeekableReadStream *stream) {
 	return hs;
 }
 
-Common::String SceneHotspot::toString() {
+Common::String SceneHotspot::toString() const {
 	Common::String output = "";
 
 	output += Common::String::printf("    hotspot: scene=%d location=%02d action=%d param1=%02d param2=%02d param3=%02d cursor=%02d rect=(%d, %d)x(%d,%d)",

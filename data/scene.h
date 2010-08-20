@@ -155,7 +155,7 @@ public:
 
 	bool isInside(const Common::Point &point);
 
-	Common::String toString();
+	Common::String toString() const;
 
 private:
 	Common::Array<SceneCoord *> _coords;

@@ -170,7 +170,7 @@ IMPLEMENT_FUNCTION(Chapters, chapter1Init, 7)
 
 	getState()->time = kTimeChapter1;
 	getState()->timeDelta = 0;
-	getProgress().isTrainRunning = 1;
+	getProgress().isTrainRunning = true;
 	getProgress().portrait = kPortraitOriginal;
 	getProgress().field_18 = 1;
 
@@ -588,10 +588,10 @@ IMPLEMENT_FUNCTION(Chapters, chapter2Init, 11)
 	if (savepoint.action != kActionDefault)
 		return;
 
-	getProgress().eventCorpseMovedFromFloor = 1;
+	getProgress().eventCorpseMovedFromFloor = true;
 	getProgress().field_18 = 1;
 	getProgress().isTrainRunning = true;
-	getProgress().eventCorpseFound = 1;
+	getProgress().eventCorpseFound = true;
 
 	// Switch to green jacket/portrait
 	getProgress().jacket = kJacketGreen;
@@ -701,7 +701,7 @@ IMPLEMENT_FUNCTION(Chapters, chapter3Init, 14)
 		getSavePoints()->push(kEntityChapters, kEntityTables4, kActionDrawTablesWithChairs);
 		getSavePoints()->push(kEntityChapters, kEntityTables5, kActionDrawTablesWithChairs);
 
-		getProgress().isTrainRunning = 1;
+		getProgress().isTrainRunning = true;
 
 		getObjects()->update(kObjectHandleOutsideLeft, kEntityPlayer, kLocation1, kCursorNormal, kCursorHand);
 		getObjects()->update(kObjectHandleOutsideRight, kEntityPlayer, kLocation1, kCursorNormal, kCursorHand);
@@ -786,7 +786,7 @@ IMPLEMENT_FUNCTION(Chapters, chapter4Init, 18)
 	getSound()->processEntries();
 	getSound()->resetState();
 
-	getProgress().isTrainRunning = 1;
+	getProgress().isTrainRunning = true;
 
 	getObjects()->update(kObjectHandleOutsideLeft, kEntityPlayer, kLocation1, kCursorNormal, kCursorHand);
 	getObjects()->update(kObjectHandleOutsideRight, kEntityPlayer, kLocation1, kCursorNormal, kCursorHand);
@@ -860,7 +860,7 @@ IMPLEMENT_FUNCTION(Chapters, chapter5Init, 21)
 		getEntities()->clearSequences(kEntityTables4);
 		getEntities()->clearSequences(kEntityTables5);
 
-		getProgress().isTrainRunning = 1;
+		getProgress().isTrainRunning = true;
 
 		getObjects()->update(kObjectHandleOutsideLeft, kEntityPlayer, kLocation1, kCursorNormal, kCursorHand);
 		getObjects()->update(kObjectHandleOutsideRight, kEntityPlayer, kLocation1, kCursorNormal, kCursorHand);
@@ -989,7 +989,7 @@ IMPLEMENT_FUNCTION(Chapters, chapter5Handler, 22)
 		break;
 
 	case kAction135800432:
-		getProgress().isNightTime = 1;
+		getProgress().isNightTime = true;
 		getState()->time = kTime2916000;
 
 		if (getSound()->isBuffered(kEntityChapters))

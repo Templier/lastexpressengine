@@ -43,7 +43,7 @@ public:
 	struct GameProgress {
 		uint32 field_0;
 		JacketType jacket;
-		uint32 eventCorpseMovedFromFloor;
+		bool eventCorpseMovedFromFloor;
 		uint32 field_C;
 		bool eventCorpseFound;
 		uint32 field_14;                  ///< EntityIndex (used in Gendarmes)
@@ -176,129 +176,279 @@ public:
 			eventCorpseMovedFromFloor = false;
 			field_C = 0;
 			eventCorpseFound = false;
-			field_14 = 0;
+			field_14 = 0;                             // 5
 			field_18 = 0;
 			portrait = _defaultPortrait;
 			eventCorpseThrown = false;
 			field_24 = 0;
-			field_28 = 0;
+			field_28 = 0;                             // 10
 			chapter = kChapter1;
 			field_30 = 0;
 			eventMetAugust = false;
 			isNightTime = false;
-			field_3C = 0;
+			field_3C = 0;                             // 15
 			field_40 = 0;
 			field_44 = 0;
 			field_48 = 0;
 			field_4C = 0;
-			isTrainRunning = false;
+			isTrainRunning = false;                   // 20
 			field_54 = 0;
 			field_58 = 0;
 			field_5C = 0;
 			field_60 = 0;
-			field_64 = 0;
+			field_64 = 0;                             // 25
 			field_68 = 0;
 			eventMertensAugustWaiting = false;
 			eventMertensKronosInvitation = false;
 			isEggOpen = false;
-			field_78 = 0;
+			field_78 = 0;                             // 30
 			field_7C = 0;
 			field_80 = 0;
 			field_84 = 0;
 			field_88 = 0;
-			field_8C = 0;
+			field_8C = 0;                             // 35
 			field_90 = 0;
 			field_94 = 0;
 			field_98 = 0;
 			field_9C = 0;
-			field_A0 = 0;
+			field_A0 = 0;                             // 40
 			field_A4 = 0;
 			field_A8 = 0;
 			field_AC = 0;
 			field_B0 = 0;
-			field_B4 = 0;
+			field_B4 = 0;                             // 45
 			field_B8 = 0;
 			field_BC = 0;
 			field_C0 = 0;
 			field_C4 = 0;
-			field_C8 = 0;
+			field_C8 = 0;                             // 50
 			field_CC = 0;
 			eventMetBoutarel = false;
 			eventMetHadija = false;
 			eventMetYasmin = false;
-			field_DC = 0;
+			field_DC = 0;                             // 55
 			field_E0 = 0;
 			field_E4 = 0;
 			field_E8 = 0;
 			field_EC = 0;
-			field_F0 = 0;
+			field_F0 = 0;                             // 60
 			field_F4 = 0;
 			field_F8 = 0;
 			field_FC = 0;
 			field_100 = 0;
-			field_104 = 0;
+			field_104 = 0;                            // 65
 			field_108 = 0;
 			field_10C = 0;
 			field_110 = 0;
 			field_114 = 0;
-			field_118 = 0;
+			field_118 = 0;                            // 70
 			field_11C = 0;
 			field_120 = 0;
 			field_124 = 0;
 			field_128 = 0;
-			field_12C = 0;
+			field_12C = 0;                            // 75
 			field_130 = 0;
 			field_134 = 0;
 			field_138 = 0;
 			field_13C = 0;
-			field_140 = 0;
+			field_140 = 0;                            // 80
 			field_144 = 0;
 			field_148 = 0;
 			field_14C = 0;
 			field_150 = 0;
-			field_154 = 0;
+			field_154 = 0;                            // 85
 			field_158 = 0;
 			field_15C = 0;
 			field_160 = 0;
 			field_164 = 0;
-			field_168 = 0;
+			field_168 = 0;                            // 90
 			field_16C = 0;
 			field_170 = 0;
 			field_174 = 0;
 			field_178 = 0;
-			field_17C = 0;
+			field_17C = 0;                            // 95
 			field_180 = 0;
 			field_184 = 0;
 			field_188 = 0;
 			field_18C = 0;
-			field_190 = 0;
+			field_190 = 0;                            // 100
 			field_194 = 0;
 			field_198 = 0;
 			field_19C = 0;
 			field_1A0 = 0;
-			field_1A4 = 0;
+			field_1A4 = 0;                            // 105
 			field_1A8 = 0;
 			field_1AC = 0;
 			field_1B0 = 0;
 			field_1B4 = 0;
-			field_1B8 = 0;
+			field_1B8 = 0;                            // 110
 			field_1BC = 0;
 			field_1C0 = 0;
 			field_1C4 = 0;
 			field_1C8 = 0;
-			field_1CC = 0;
+			field_1CC = 0;                            // 115
 			field_1D0 = 0;
 			field_1D4 = 0;
 			field_1D8 = 0;
 			field_1DC = 0;
-			field_1E0 = 0;
+			field_1E0 = 0;                            // 120
 			field_1E4 = 0;
 			field_1E8 = 0;
 			field_1EC = 0;
 			field_1F0 = 0;
-			field_1F4 = 0;
+			field_1F4 = 0;                            // 125
 			field_1F8 = 0;
 			field_1FC = 0;
+		}
+
+		/**
+		 * Query if if a progress value is equal to the specified value.
+		 *
+		 * Note: This is necessary because we store different types in the progress structure
+		 *       and need to test a value based on an index in Action::getCursor()
+		 *
+		 * @param index Zero-based index of the progress structure entry
+		 * @param val   The value.
+		 *
+		 * @return true if equal, false if not.
+		 */
+		bool isEqual(uint index, uint val) {
+			#define EXPOSE_VALUE(idx, name) case idx: return ((uint)name == val);
+
+			switch (index) {
+			default:
+				error("GameProgress::isEqual: invalid index value (was: %d, max:127)", index);
+				break;
+
+			EXPOSE_VALUE(0, field_0);
+			EXPOSE_VALUE(1, jacket);
+			EXPOSE_VALUE(2, eventCorpseMovedFromFloor);
+			EXPOSE_VALUE(3, field_C);
+			EXPOSE_VALUE(4, eventCorpseFound);
+			EXPOSE_VALUE(5, field_14);
+			EXPOSE_VALUE(6, field_18);
+			EXPOSE_VALUE(7, portrait);
+			EXPOSE_VALUE(8, eventCorpseThrown);
+			EXPOSE_VALUE(9, field_24);
+			EXPOSE_VALUE(10, field_28);
+			EXPOSE_VALUE(11, chapter);
+			EXPOSE_VALUE(12, field_30);
+			EXPOSE_VALUE(13, eventMetAugust);
+			EXPOSE_VALUE(14, isNightTime);
+			EXPOSE_VALUE(15, field_3C);
+			EXPOSE_VALUE(16, field_40);
+			EXPOSE_VALUE(17, field_44);
+			EXPOSE_VALUE(18, field_48);
+			EXPOSE_VALUE(19, field_4C);
+			EXPOSE_VALUE(20, isTrainRunning);
+			EXPOSE_VALUE(21, field_54);
+			EXPOSE_VALUE(22, field_58);
+			EXPOSE_VALUE(23, field_5C);
+			EXPOSE_VALUE(24, field_60);
+			EXPOSE_VALUE(25, field_64);
+			EXPOSE_VALUE(26, field_68);
+			EXPOSE_VALUE(27, eventMertensAugustWaiting);
+			EXPOSE_VALUE(28, eventMertensKronosInvitation);
+			EXPOSE_VALUE(29, isEggOpen);
+			EXPOSE_VALUE(30, field_78);
+			EXPOSE_VALUE(31, field_7C);
+			EXPOSE_VALUE(32, field_80);
+			EXPOSE_VALUE(33, field_84);
+			EXPOSE_VALUE(34, field_88);
+			EXPOSE_VALUE(35, field_8C);
+			EXPOSE_VALUE(36, field_90);
+			EXPOSE_VALUE(37, field_94);
+			EXPOSE_VALUE(38, field_98);
+			EXPOSE_VALUE(39, field_9C);
+			EXPOSE_VALUE(40, field_A0);
+			EXPOSE_VALUE(41, field_A4);
+			EXPOSE_VALUE(42, field_A8);
+			EXPOSE_VALUE(43, field_AC);
+			EXPOSE_VALUE(44, field_B0);
+			EXPOSE_VALUE(45, field_B4);
+			EXPOSE_VALUE(46, field_B8);
+			EXPOSE_VALUE(47, field_BC);
+			EXPOSE_VALUE(48, field_C0);
+			EXPOSE_VALUE(49, field_C4);
+			EXPOSE_VALUE(50, field_C8);
+			EXPOSE_VALUE(51, field_CC);
+			EXPOSE_VALUE(52, eventMetBoutarel);
+			EXPOSE_VALUE(53, eventMetHadija);
+			EXPOSE_VALUE(54, eventMetYasmin);
+			EXPOSE_VALUE(55, field_DC);
+			EXPOSE_VALUE(56, field_E0);
+			EXPOSE_VALUE(57, field_E4);
+			EXPOSE_VALUE(58, field_E8);
+			EXPOSE_VALUE(59, field_EC);
+			EXPOSE_VALUE(60, field_F0);
+			EXPOSE_VALUE(61, field_F4);
+			EXPOSE_VALUE(62, field_F8);
+			EXPOSE_VALUE(63, field_FC);
+			EXPOSE_VALUE(64, field_100);
+			EXPOSE_VALUE(65, field_104);
+			EXPOSE_VALUE(66, field_108);
+			EXPOSE_VALUE(67, field_10C);
+			EXPOSE_VALUE(68, field_110);
+			EXPOSE_VALUE(69, field_114);
+			EXPOSE_VALUE(70, field_118);
+			EXPOSE_VALUE(71, field_11C);
+			EXPOSE_VALUE(72, field_120);
+			EXPOSE_VALUE(73, field_124);
+			EXPOSE_VALUE(74, field_128);
+			EXPOSE_VALUE(75, field_12C);
+			EXPOSE_VALUE(76, field_130);
+			EXPOSE_VALUE(77, field_134);
+			EXPOSE_VALUE(78, field_138);
+			EXPOSE_VALUE(79, field_13C);
+			EXPOSE_VALUE(80, field_140);
+			EXPOSE_VALUE(81, field_144);
+			EXPOSE_VALUE(82, field_148);
+			EXPOSE_VALUE(83, field_14C);
+			EXPOSE_VALUE(84, field_150);
+			EXPOSE_VALUE(85, field_154);
+			EXPOSE_VALUE(86, field_158);
+			EXPOSE_VALUE(87, field_15C);
+			EXPOSE_VALUE(88, field_160);
+			EXPOSE_VALUE(89, field_164);
+			EXPOSE_VALUE(90, field_168);
+			EXPOSE_VALUE(91, field_16C);
+			EXPOSE_VALUE(92, field_170);
+			EXPOSE_VALUE(93, field_174);
+			EXPOSE_VALUE(94, field_178);
+			EXPOSE_VALUE(95, field_17C);
+			EXPOSE_VALUE(96, field_180);
+			EXPOSE_VALUE(97, field_184);
+			EXPOSE_VALUE(98, field_188);
+			EXPOSE_VALUE(99, field_18C);
+			EXPOSE_VALUE(100, field_190);
+			EXPOSE_VALUE(101, field_194);
+			EXPOSE_VALUE(102, field_198);
+			EXPOSE_VALUE(103, field_19C);
+			EXPOSE_VALUE(104, field_1A0);
+			EXPOSE_VALUE(105, field_1A4);
+			EXPOSE_VALUE(106, field_1A8);
+			EXPOSE_VALUE(107, field_1AC);
+			EXPOSE_VALUE(108, field_1B0);
+			EXPOSE_VALUE(109, field_1B4);
+			EXPOSE_VALUE(110, field_1B8);
+			EXPOSE_VALUE(111, field_1BC);
+			EXPOSE_VALUE(112, field_1C0);
+			EXPOSE_VALUE(113, field_1C4);
+			EXPOSE_VALUE(114, field_1C8);
+			EXPOSE_VALUE(115, field_1CC);
+			EXPOSE_VALUE(116, field_1D0);
+			EXPOSE_VALUE(117, field_1D4);
+			EXPOSE_VALUE(118, field_1D8);
+			EXPOSE_VALUE(119, field_1DC);
+			EXPOSE_VALUE(120, field_1E0);
+			EXPOSE_VALUE(121, field_1E4);
+			EXPOSE_VALUE(122, field_1E8);
+			EXPOSE_VALUE(123, field_1EC);
+			EXPOSE_VALUE(124, field_1F0);
+			EXPOSE_VALUE(125, field_1F4);
+			EXPOSE_VALUE(126, field_1F8);
+			EXPOSE_VALUE(127, field_1FC);
+			}
 		}
 	};
 

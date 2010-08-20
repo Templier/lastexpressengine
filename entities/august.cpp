@@ -365,7 +365,7 @@ IMPLEMENT_FUNCTION(August, chapter1, 22)
 		getData()->car = kCarRestaurant;
 		getData()->clothes = kClothesDefault;
 
-		getProgress().eventMetAugust = 0;
+		getProgress().eventMetAugust = false;
 		break;
 	}
 }
@@ -585,7 +585,7 @@ label_callback_9:
 
 			getAction()->playAnimation((EventIndex)params->param7);
 			getSound()->playSound(kEntityPlayer, "LIB015");
-			getProgress().eventMetAugust = 1;
+			getProgress().eventMetAugust = true;
 			getData()->location = kLocationOutsideCompartment;
 
 			getScenes()->loadScene(kScene41);
@@ -655,7 +655,7 @@ label_callback_9:
 			getObjects()->update(kObjectOutsideTylerCompartment, kEntityPlayer, kLocationNone, kCursorKeepValue, kCursorKeepValue);
 
 			getAction()->playAnimation((EventIndex)params->param7);
-			getProgress().eventMetAugust = 1;
+			getProgress().eventMetAugust = true;
 			getData()->location = kLocationOutsideCompartment;
 
 			getScenes()->loadScene(kScene41);
@@ -695,7 +695,7 @@ IMPLEMENT_FUNCTION(August, dinner, 24)
 		if (getCallback() == 1) {
 
 			getAction()->playAnimation(getEntities()->isInRestaurant(kEntityAlexei) ? kEventDinerAugustAlexeiBackground : kEventDinerAugust);
-			getProgress().eventMetAugust = 1;
+			getProgress().eventMetAugust = true;
 
 			getScenes()->loadSceneFromPosition(kCarRestaurant, 61);
 

@@ -395,7 +395,7 @@ bool Sequence::load(Common::SeekableReadStream *stream, byte field30) {
 	return true;
 }
 
-FrameInfo *Sequence::getFrameInfo(uint32 index) {
+FrameInfo *Sequence::getFrameInfo(uint16 index) {
 	if (_frames.size() == 0)
 		error("Trying to decode a sequence before loading its data");
 
@@ -405,7 +405,7 @@ FrameInfo *Sequence::getFrameInfo(uint32 index) {
 	return &_frames[index];
 }
 
-AnimFrame *Sequence::getFrame(uint32 index) {
+AnimFrame *Sequence::getFrame(uint16 index) {
 
 	FrameInfo *frame = getFrameInfo(index);
 
@@ -446,7 +446,7 @@ Common::Rect SequenceFrame::draw(Graphics::Surface *surface) {
 	return rect;
 }
 
-bool SequenceFrame::setFrame(uint32 frame) {
+bool SequenceFrame::setFrame(uint16 frame) {
 	if (!_sequence)
 		return false;
 

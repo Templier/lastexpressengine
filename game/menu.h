@@ -127,7 +127,7 @@ private:
 	bool _isShowingMenu;
 
 
-	uint32 _creditsSequenceIndex;
+	uint16 _creditsSequenceIndex;
 
 	//////////////////////////////////////////////////////////////////////////
 	// Event handling

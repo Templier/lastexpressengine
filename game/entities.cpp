@@ -423,7 +423,7 @@ void Entities::updateFrame(EntityIndex entityIndex) const {
 			break;
 
 		// Get the proper frame
-		FrameInfo *info = sequence->getFrameInfo(*currentFrame);
+		FrameInfo *info = sequence->getFrameInfo((uint16)*currentFrame);
 
 		if (info->field_33 & 8) {
 			found = true;
@@ -445,7 +445,7 @@ void Entities::updateFrame(EntityIndex entityIndex) const {
 	}
 }
 
-void Entities::updateSequences() {
+void Entities::updateSequences() const {
 	if (!getFlags()->isGameRunning)
 		return;
 
@@ -507,7 +507,7 @@ void Entities::updateSequences() {
 			continue;
 
 		EntityData::EntityCallData *data = getData(entityIndex);
-		int field30 = (data->direction == kDirectionLeft ? entityIndex + 35 : 15);
+		byte field30 = (data->direction == kDirectionLeft ? entityIndex + 35 : 15);
 
 		if (data->sequenceName != "" && !data->sequence) {
 			data->sequence = loadSequence1(data->sequenceName, field30);
@@ -879,8 +879,8 @@ void Entities::computeCurrentFrame(EntityIndex entityIndex) const {
 	case kDirectionRight:
 		bool found = false;
 		bool flag = false;
-		uint32 frameIndex = 0;
-		int field30 = 0;
+		uint16 frameIndex = 0;
+		byte field30 = 0;
 
 		int16 currentFrameCopy = (!data->currentFrame && !data->field_4A1) ? -1 : data->currentFrame;
 
@@ -898,7 +898,7 @@ void Entities::computeCurrentFrame(EntityIndex entityIndex) const {
 
 			if (field30 > data->field_4A1 - 10) {
 				if (info->soundAction)
-					getSound()->playSoundEvent(entityIndex, info->soundAction, (field30 <= data->field_4A1 - info->field_31) ? 0 : field30 + info->field_31 - data->field_4A1);
+					getSound()->playSoundEvent(entityIndex, info->soundAction, (field30 <= data->field_4A1 - info->field_31) ? 0 : (byte)(field30 + info->field_31 - data->field_4A1));
 			}
 
 			field30 += info->field_30;
@@ -937,16 +937,16 @@ void Entities::computeCurrentFrame(EntityIndex entityIndex) const {
 				data->currentFrame = frameIndex;
 				data->field_49B = data->field_4A1 - field30;
 
-				byte soundAction = data->sequence->getFrameInfo(data->currentFrame)->soundAction;
-				byte field31 = data->sequence->getFrameInfo(data->currentFrame)->field_31;
+				byte soundAction = data->sequence->getFrameInfo((uint16)data->currentFrame)->soundAction;
+				byte field31 = data->sequence->getFrameInfo((uint16)data->currentFrame)->field_31;
 				if (soundAction) {
 					if (data->currentFrame != currentFrameCopy)
-						getSound()->playSoundEvent(entityIndex, soundAction, field31 <= data->field_49B ? 0 : field31 - data->field_49B);
+						getSound()->playSoundEvent(entityIndex, soundAction, field31 <= data->field_49B ? 0 : (byte)(field31 - data->field_49B));
 				}
 			}
 		} else {
-			data->currentFrame = data->sequence->count() - 1;
-			data->field_49B = data->sequence->getFrameInfo(data->currentFrame)->field_30;
+			data->currentFrame = (int16)(data->sequence->count() - 1);
+			data->field_49B = data->sequence->getFrameInfo((uint16)data->currentFrame)->field_30;
 
 			getSavePoints()->push(kEntityPlayer, entityIndex, kActionExitCompartment);
 			getSavePoints()->process();
@@ -955,7 +955,7 @@ void Entities::computeCurrentFrame(EntityIndex entityIndex) const {
 	}
 }
 
-int Entities::getCurrentFrame(EntityIndex entity, Sequence *sequence, EntityPosition position, bool doProcessing) const {
+int16 Entities::getCurrentFrame(EntityIndex entity, Sequence *sequence, EntityPosition position, bool doProcessing) const {
 	EntityData::EntityCallData *data = getData(entity);
 
 	EntityPosition firstFramePosition = sequence->getFrameInfo(0)->entityPosition;
@@ -978,11 +978,11 @@ int Entities::getCurrentFrame(EntityIndex entity, Sequence *sequence, EntityPosi
 
 	// Search for the correct frame
 	// TODO: looks slightly like some sort of binary search
-	uint32 frame = 0;
-	uint32 numFrames = sequence->count() - 1;
+	uint16 frame = 0;
+	uint16 numFrames = sequence->count() - 1;
 
 	for (;;) {
-		uint32 currentFrame = (frame + numFrames) / 2;
+		uint16 currentFrame = (frame + numFrames) / 2;
 
 		if (position + sequence->getFrameInfo(currentFrame)->entityPosition <= data->entityPosition) {
 			if (!isGoingForward)
@@ -997,8 +997,8 @@ int Entities::getCurrentFrame(EntityIndex entity, Sequence *sequence, EntityPosi
 		}
 
 		if (numFrames - frame == 1) {
-			uint32 lastFramePos = ABS(position - (sequence->getFrameInfo(numFrames)->entityPosition + data->entityPosition));
-			uint32 framePosition = ABS(position - (sequence->getFrameInfo(frame)->entityPosition + data->entityPosition));
+			uint16 lastFramePos = ABS(position - (sequence->getFrameInfo(numFrames)->entityPosition + data->entityPosition));
+			uint16 framePosition = ABS(position - (sequence->getFrameInfo(frame)->entityPosition + data->entityPosition));
 
 			return (framePosition > lastFramePos) ? numFrames : frame;
 		}
@@ -1031,7 +1031,7 @@ void Entities::processFrame(EntityIndex entityIndex, bool keepPreviousFrame, boo
 		return;
 
 	// Get new frame info
-	FrameInfo *info = data->sequence->getFrameInfo(data->currentFrame);
+	FrameInfo *info = data->sequence->getFrameInfo((uint16)data->currentFrame);
 
 	if (data->frame && data->frame->getInfo()->subType != kFrameType3)
 		if (!info->field_2E || keepPreviousFrame)
@@ -1091,7 +1091,7 @@ void Entities::processFrame(EntityIndex entityIndex, bool keepPreviousFrame, boo
 		getSound()->playSoundEvent(entityIndex, info->soundAction, info->field_31);
 
 	// Add the new frame to the queue
-	SequenceFrame *frame = new SequenceFrame(data->sequence, data->currentFrame);
+	SequenceFrame *frame = new SequenceFrame(data->sequence, (uint16)data->currentFrame);
 	getScenes()->addToQueue(frame);
 
 	// Keep previous frame if needed and store the new frame
@@ -1104,7 +1104,7 @@ void Entities::processFrame(EntityIndex entityIndex, bool keepPreviousFrame, boo
 		data->field_49B = keepPreviousFrame ? 0 : 1;
 }
 
-void Entities::drawNextSequence(EntityIndex entityIndex) {
+void Entities::drawNextSequence(EntityIndex entityIndex) const {
 	EntityData::EntityCallData *data = getData(entityIndex);
 
 	if (data->direction == kDirectionRight) {
@@ -1180,7 +1180,7 @@ void Entities::updateEntityPosition(EntityIndex entityIndex) const {
 		data->direction = data->directionSwitch;
 }
 
-void Entities::copySequenceData(EntityIndex entityIndex) {
+void Entities::copySequenceData(EntityIndex entityIndex) const {
 	EntityData::EntityCallData *data = getData(entityIndex);
 
 	if (data->sequence)
@@ -1216,11 +1216,11 @@ void Entities::copySequenceData(EntityIndex entityIndex) {
 //////////////////////////////////////////////////////////////////////////
 // Drawing
 //////////////////////////////////////////////////////////////////////////
-void Entities::drawSequenceLeft(EntityIndex index, const char* sequence) {
+void Entities::drawSequenceLeft(EntityIndex index, const char* sequence) const {
 	drawSequence(index, sequence, kDirectionLeft);
 }
 
-void Entities::drawSequenceRight(EntityIndex index, const char* sequence) {
+void Entities::drawSequenceRight(EntityIndex index, const char* sequence) const {
 	drawSequence(index, sequence, kDirectionRight);
 }
 
@@ -1251,7 +1251,7 @@ void Entities::clearSequences(EntityIndex entityIndex) const {
 	data->doProcessEntity = true;
 }
 
-void Entities::drawSequence(EntityIndex index, const char* sequence, EntityDirection direction) {
+void Entities::drawSequence(EntityIndex index, const char* sequence, EntityDirection direction) const {
 	debugC(8, kLastExpressDebugLogic, "Drawing sequence %s for entity %s with direction %s", sequence, ENTITY_NAME(index), DIRECTION_NAME(direction));
 
 	// Copy sequence name
@@ -1271,7 +1271,7 @@ void Entities::drawSequences(EntityIndex entityIndex, EntityDirection direction,
 	EntityData::EntityCallData *data = getData(entityIndex);
 
 	// Compute value for loading sequence depending on direction
-	int16 field30 = (direction == kDirectionLeft ? entityIndex + 35 : 15);
+	byte field30 = (direction == kDirectionLeft ? entityIndex + 35 : 15);
 
 	data->doProcessEntity = true;
 	bool field4A9 = data->field_4A9;
@@ -1394,7 +1394,7 @@ void Entities::drawSequences(EntityIndex entityIndex, EntityDirection direction,
 
 		data->field_4A9 = field4A9;
 		data->field_49B = data->frame->getInfo()->field_30;
-		data->currentFrame = data->sequence->count() - 1;
+		data->currentFrame = (int16)(data->sequence->count() - 1);
 		data->direction = kDirectionSwitch;
 		data->directionSwitch = direction;
 	} else {
@@ -1405,7 +1405,7 @@ void Entities::drawSequences(EntityIndex entityIndex, EntityDirection direction,
 		data->sequenceName2 = data->sequenceName;
 		data->field_4AA = data->field_4A9;
 		data->field_49B = data->frame->getInfo()->field_30;
-		data->currentFrame = data->sequence->count() - 1;
+		data->currentFrame = (int16)(data->sequence->count() - 1);
 		data->direction = kDirectionSwitch;
 		data->directionSwitch = direction;
 
@@ -1420,7 +1420,7 @@ void Entities::drawSequences(EntityIndex entityIndex, EntityDirection direction,
 	}
 }
 
-void Entities::loadSequence2(EntityIndex entityIndex, Common::String sequenceName, Common::String sequenceName2, int16 field30, bool reloadSequence) const {
+void Entities::loadSequence2(EntityIndex entityIndex, Common::String sequenceName, Common::String sequenceName2, byte field30, bool reloadSequence) const {
 	EntityData::EntityCallData *data = getData(entityIndex);
 
 	if (data->sequenceName2 == sequenceName)
@@ -2090,7 +2090,7 @@ label_process_entity:
 									if ((data->direction == kDirectionUp   && data->entityPosition < objectsPosition[i] && (data->car != car || position > objectsPosition[i]))
 									 || (data->direction == kDirectionDown && data->entityPosition > objectsPosition[i] && (data->car != car || position < objectsPosition[i]))) {
 
-										 getSound()->excuseMe(entity, (EntityIndex)(State::getPowerOfTwo(getCompartments(compartmentIndex) ? getCompartments(compartmentIndex) : getCompartments1(compartmentIndex))));
+										 getSound()->excuseMe(entity, (EntityIndex)(State::getPowerOfTwo((uint32)(getCompartments(compartmentIndex) ? getCompartments(compartmentIndex) : getCompartments1(compartmentIndex)))));
 
 										 data->field_497 = 144;
 
@@ -2618,7 +2618,7 @@ bool Entities::checkPosition(EntityPosition position) const {
 }
 
 bool Entities::checkSequenceFromPosition(EntityIndex entity) const {
-	FrameInfo *info = getEntityData(entity)->sequence->getFrameInfo(getEntityData(entity)->currentFrame);
+	FrameInfo *info = getEntityData(entity)->sequence->getFrameInfo((uint16)getEntityData(entity)->currentFrame);
 
 	if (getEntityData(entity)->direction == kDirectionUp)
 		return (getScenes()->checkPosition(kSceneNone, SceneManager::kCheckPositionLookingUp)

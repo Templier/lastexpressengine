@@ -47,6 +47,8 @@ public:
 	struct EntityParameters {
 		virtual ~EntityParameters() {}
 		virtual Common::String toString() = 0;
+
+		virtual void update(uint32 index) = 0;
 	};
 
 	struct EntityParametersIIII : EntityParameters {
@@ -77,6 +79,22 @@ public:
 		Common::String toString() {
 			return Common::String::printf("IIII: %d %d %d %d %d %d %d %d\n", param1, param2, param3, param4, param5, param6, param7, param8);
 		}
+
+		void update(uint32 index) {
+			switch (index) {
+			default:
+				error("EntityParametersIIII::update: invalid index (was: %d)", index);
+
+			case 0: param1 = 1; break;
+			case 1: param2 = 1; break;
+			case 2: param3 = 1; break;
+			case 3: param4 = 1; break;
+			case 4: param5 = 1; break;
+			case 5: param6 = 1; break;
+			case 6: param7 = 1; break;
+			case 7: param8 = 1; break;
+			}
+		}
 	};
 
 	struct EntityParametersSIII : EntityParameters {
@@ -99,6 +117,19 @@ public:
 		Common::String toString() {
 			return Common::String::printf("SIII: %s %d %d %d %d %d\n", seq, param4, param5, param6, param7, param8);
 		}
+
+		void update(uint32 index) {
+			switch (index) {
+			default:
+				error("EntityParametersSIII::update: invalid index (was: %d)", index);
+
+			case 3: param4 = 1; break;
+			case 4: param5 = 1; break;
+			case 5: param6 = 1; break;
+			case 6: param7 = 1; break;
+			case 7: param8 = 1; break;
+			}
+		}
 	};
 
 	struct EntityParametersSIIS : EntityParameters {
@@ -117,6 +148,16 @@ public:
 		Common::String toString() {
 			return Common::String::printf("SIIS: %s %d %d %s\n", seq1, param4, param5, seq2);
 		}
+
+		void update(uint32 index) {
+			switch (index) {
+			default:
+				error("EntityParametersSIIS::update: invalid index (was: %d)", index);
+
+			case 3: param4 = 1; break;
+			case 4: param5 = 1; break;
+			}
+		}
 	};
 
 	struct EntityParametersISSI : EntityParameters {
@@ -134,6 +175,16 @@ public:
 
 		Common::String toString() {
 			return Common::String::printf("ISSI: %d %s %s %d\n", param1, seq1, seq2, param8);
+		}
+
+		void update(uint32 index) {
+			switch (index) {
+			default:
+				error("EntityParametersISSI::update: invalid index (was: %d)", index);
+
+			case 0: param1 = 1; break;
+			case 7: param8 = 1; break;
+			}
 		}
 	};
 
@@ -157,6 +208,19 @@ public:
 		Common::String toString() {
 			return Common::String::printf("ISII: %d %s %d %d %d %d\n", param1, seq, param5, param6, param7, param8);
 		}
+
+		void update(uint32 index) {
+			switch (index) {
+			default:
+				error("EntityParametersISII::update: invalid index (was: %d)", index);
+
+			case 0: param1 = 1; break;
+			case 4: param5 = 1; break;
+			case 5: param6 = 1; break;
+			case 6: param7 = 1; break;
+			case 7: param8 = 1; break;
+			}
+		}
 	};
 
 	struct EntityParametersSSII : EntityParameters {
@@ -175,6 +239,16 @@ public:
 		Common::String toString() {
 			return Common::String::printf("SSII: %s %s %d %d\n", seq1, seq2, param7, param8);
 		}
+
+		void update(uint32 index) {
+			switch (index) {
+			default:
+				error("EntityParametersSSII::update: invalid index (was: %d)", index);
+
+			case 6: param7 = 1; break;
+			case 7: param8 = 1; break;
+			}
+		}
 	};
 
 	struct EntityParametersIISS : EntityParameters {
@@ -192,6 +266,16 @@ public:
 
 		Common::String toString() {
 			return Common::String::printf("IISS: %d %d %s %s\n", param1, param2, seq1, seq2);
+		}
+
+		void update(uint32 index) {
+			switch (index) {
+			default:
+				error("EntityParametersIISS::update: invalid index (was: %d)", index);
+
+			case 0: param1 = 1; break;
+			case 1: param2 = 1; break;
+			}
 		}
 	};
 
@@ -215,6 +299,19 @@ public:
 		Common::String toString() {
 			return Common::String::printf("IISI: %d %d %s %d %d %d\n", param1, param2, seq, param6, param7, param8);
 		}
+
+		void update(uint32 index) {
+			switch (index) {
+			default:
+				error("EntityParametersIISI::update: invalid index (was: %d)", index);
+
+			case 0: param1 = 1; break;
+			case 1: param2 = 1; break;
+			case 5: param6 = 1; break;
+			case 6: param7 = 1; break;
+			case 7: param8 = 1; break;
+			}
+		}
 	};
 
 	struct EntityParametersIIIS : EntityParameters {
@@ -236,6 +333,19 @@ public:
 
 		Common::String toString() {
 			return Common::String::printf("IIIS: %d %d %d %s %d %d\n", param1, param2, param3, seq, param7, param8);
+		}
+
+		void update(uint32 index) {
+			switch (index) {
+			default:
+				error("EntityParametersIIIS::update: invalid index (was: %d)", index);
+
+			case 0: param1 = 1; break;
+			case 1: param2 = 1; break;
+			case 2: param3 = 1; break;
+			case 6: param7 = 1; break;
+			case 7: param8 = 1; break;
+			}
 		}
 	};
 
@@ -374,6 +484,8 @@ public:
 	int				   getCurrentCallback() { return getCallback(_data.currentCall); }
 	void 			   setCallback(uint callback, byte index);
 	void 			   setCurrentCallback(uint index) { setCallback(_data.currentCall, index); }
+
+	void               updateParameters(uint32 index);
 
 	// Serializable
 	void 			   saveLoadWithSerializer(Common::Serializer &ser);

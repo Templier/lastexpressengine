@@ -217,13 +217,7 @@ bool SavePoints::updateEntityFromData(const SavePoint &savepoint) {
 			debugC(8, kLastExpressDebugLogic, "Update entity from data: entity1=%s, action=%s, param=%d", ENTITY_NAME(_data[i].entity1), ACTION_NAME(_data[i].action), _data[i].param);
 
 			// the SavePoint param value is the index of the entity call parameter to update
-			EntityData::EntityParametersIIII *params = (EntityData::EntityParametersIIII *)getEntities()->get(_data[i].entity1)->getParamData()->getParameters(8, 0);
-
-			// Check size before updating value
-			if (_data[i].param >= 32)
-				error("SavePoints::updateEntityFromData: invalid param index to update (was:%d, max:32)!", _data[i].param);
-
-			*((int*)params + _data[i].param) = 1;
+			getEntities()->get(_data[i].entity1)->getParamData()->updateParameters(_data[i].param);
 
 			return true;
 		}
