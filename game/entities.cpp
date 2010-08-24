@@ -672,12 +672,11 @@ void Entities::processEntity(EntityIndex entityIndex) {
 		}
 	}
 
-	if (data->sequence3)
-		SAFE_DELETE(data->sequence3);
+	SAFE_DELETE(data->sequence3);
 
 	if (!data->frame || !data->direction) {
-label_nosequence:
 		if (!data->sequence)
+label_nosequence:
 			drawSequences(entityIndex, data->direction, true);
 
 		data->doProcessEntity = false;
@@ -686,7 +685,7 @@ label_nosequence:
 		if (getFlags()->flag_entities_0 || data->doProcessEntity)
 			return;
 
-		if (data->sequence && data->currentFrame != -1 && data->currentFrame <= (int32)(data->sequence->count() - 1)) {
+		if (data->sequence && data->currentFrame != -1 && data->currentFrame <= (int16)(data->sequence->count() - 1)) {
 			processFrame(entityIndex, false, true);
 
 			if (!getFlags()->flag_entities_0 && !data->doProcessEntity) {
@@ -717,13 +716,13 @@ label_nosequence:
 		goto label_nosequence;
 
 	if (data->frame->getInfo()->field_30 > data->field_49B + 1 || (data->direction == kDirectionLeft && data->sequence->count() == 1)) {
-		data->field_49B++;
+		++data->field_49B;
 		INCREMENT_DIRECTION_COUNTER();
 		return;
 	}
 
 	if (data->frame->getInfo()->field_30 > data->field_49B && !data->frame->getInfo()->keepPreviousFrame) {
-		data->field_49B++;
+		++data->field_49B;
 		INCREMENT_DIRECTION_COUNTER();
 		return;
 	}
@@ -734,7 +733,7 @@ label_nosequence:
 	// Increment current frame
 	++data->currentFrame;
 
-	if (data->currentFrame > (int32)(data->sequence->count() - 1) || (data->field_4A9 && checkSequenceFromPosition(entityIndex))) {
+	if (data->currentFrame > (int16)(data->sequence->count() - 1) || (data->field_4A9 && checkSequenceFromPosition(entityIndex))) {
 
 		if (data->direction == kDirectionLeft) {
 			data->currentFrame = 0;
@@ -891,7 +890,7 @@ void Entities::computeCurrentFrame(EntityIndex entityIndex) const {
 
 			FrameInfo *info = data->sequence->getFrameInfo(frameIndex);
 
-			if (field30 + info->field_30 > data->field_4A1) {
+			if (field30 + info->field_30 >= data->field_4A1) {
 				found = true;
 				break;
 			}
@@ -931,7 +930,48 @@ void Entities::computeCurrentFrame(EntityIndex entityIndex) const {
 		if (found) {
 
 			if (flag) {
-				error("Entities::computeCurrentFrame2: not implemented (3)!");
+				bool found2 = false;
+
+				do {
+					if (frameIndex >= data->sequence->count())
+						break;
+
+					FrameInfo *info = data->sequence->getFrameInfo(frameIndex);
+					if (info->field_33 & 2) {
+						found2 = true;
+
+						getSavePoints()->push(kEntityPlayer, entityIndex, kAction10);
+						getSavePoints()->process();
+
+						if (getFlags()->flag_entities_0 || data->doProcessEntity)
+							return;
+
+					} else {
+						data->field_4A1 += info->field_30;
+
+						byte soundAction = data->sequence->getFrameInfo((uint16)data->currentFrame)->soundAction;
+						if (soundAction)
+							getSound()->playSoundEvent(entityIndex, soundAction);
+
+						++frameIndex;
+					}
+
+				} while (!found2);
+
+				if (found2) {
+					data->currentFrame = frameIndex;
+					data->field_49B = 0;
+
+					byte soundAction = data->sequence->getFrameInfo((uint16)data->currentFrame)->soundAction;
+					byte field31 = data->sequence->getFrameInfo((uint16)data->currentFrame)->field_31;
+					if (soundAction && data->currentFrame != currentFrameCopy)
+						getSound()->playSoundEvent(entityIndex, soundAction, field31);
+
+				} else {
+					data->currentFrame = (int16)(data->sequence->count() - 1);
+					data->field_49B = data->sequence->getFrameInfo((uint16)data->currentFrame)->field_30;
+				}
+
 			} else {
 
 				data->currentFrame = frameIndex;
@@ -939,10 +979,8 @@ void Entities::computeCurrentFrame(EntityIndex entityIndex) const {
 
 				byte soundAction = data->sequence->getFrameInfo((uint16)data->currentFrame)->soundAction;
 				byte field31 = data->sequence->getFrameInfo((uint16)data->currentFrame)->field_31;
-				if (soundAction) {
-					if (data->currentFrame != currentFrameCopy)
-						getSound()->playSoundEvent(entityIndex, soundAction, field31 <= data->field_49B ? 0 : (byte)(field31 - data->field_49B));
-				}
+				if (soundAction && data->currentFrame != currentFrameCopy)
+					getSound()->playSoundEvent(entityIndex, soundAction, field31 <= data->field_49B ? 0 : (byte)(field31 - data->field_49B));
 			}
 		} else {
 			data->currentFrame = (int16)(data->sequence->count() - 1);
