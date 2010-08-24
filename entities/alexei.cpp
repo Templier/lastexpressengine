@@ -694,7 +694,63 @@ IMPLEMENT_FUNCTION(Alexei, function22, 22)
 }
 
 IMPLEMENT_FUNCTION(Alexei, function23, 23)
-	error("Alexei: callback function 23 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionNone:
+		getData()->inventoryItem = (!getEntities()->isInRestaurant(kEntityAlexei) || getEvent(kEventAlexeiSalonPoem)) ? kItemNone : kItemParchemin;
+		break;
+
+	case kAction1:
+		setCallback(2);
+		call(new ENTITY_SETUP(Alexei, setup_savegame), kSavegameTypeEvent, kEventAlexeiSalonPoem);
+		break;
+
+	case kActionDefault:
+		getData()->location = kLocationInsideCompartment;
+		getSavePoints()->push(kEntityAlexei, kEntityTatiana, kAction124973510);
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			getAction()->playAnimation(kEventAlexeiSalonVassili);
+
+			getData()->location = kLocationOutsideCompartment;
+
+			getEntities()->drawSequenceLeft(kEntityAlexei, "103F");
+			getScenes()->processScene();
+
+			setup_function24();
+			break;
+
+		case 2:
+			getAction()->playAnimation(kEventAlexeiSalonPoem);
+
+			getData()->inventoryItem = kItemNone;
+
+			getScenes()->loadSceneFromPosition(kCarRestaurant, 55);
+			break;
+		}
+		break;
+
+	case kAction157159392:
+		if (getEntities()->isInSalon(kEntityPlayer)) {
+			setCallback(1);
+			call(new ENTITY_SETUP(Alexei, setup_savegame), kSavegameTypeEvent, kEventAlexeiSalonVassili);
+		} else {
+			setup_function24();
+		}
+		break;
+
+	case kAction188784532:
+		setup_function24();
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Alexei, function24, 24)

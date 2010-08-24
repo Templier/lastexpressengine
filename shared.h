@@ -124,6 +124,7 @@ enum TimeValue {
 	kTime1786500              = 1786500,
 	kTime1791000              = 1791000,
 	kTime1800000              = 1800000,
+	kTime1809000              = 1809000,
 	kTimeCityAugsburg         = 1809900,
 	kTime1818000              = 1818000,
 	kTime1818900              = 1818900,
@@ -998,7 +999,7 @@ enum EventIndex {
 	kEventMertensAskTylerCompartment = 138,
 	kEventMertensAskTylerCompartmentD = 139,
 	kEventMertensPushCall = 140,
-	kEventMertensPushCall2 = 141,
+	kEventMertensPushCallNight = 141,
 	kEventMertensAugustWaiting = 142,
 	kEventMertensAugustWaitingCompartment = 143,
 	kEventIntroBroderbrund = 144,
@@ -1171,6 +1172,7 @@ enum ActionIndex {
 	kAction124697504 = 124697504,
 	kAction135664192 = 135664192,
 	kAction135854208 = 135854208,
+	kAction188784532 = 188784532,
 	kAction221617184 = 221617184,
 
 	/////////////////////////////

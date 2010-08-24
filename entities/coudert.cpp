@@ -1053,7 +1053,100 @@ IMPLEMENT_FUNCTION(Coudert, function26, 26)
 }
 
 IMPLEMENT_FUNCTION(Coudert, function27, 27)
-	error("Coudert: callback function 27 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionNone:
+		if (!params->param1) {
+			UPDATE_PARAM(params->param2, getState()->timeTicks, 75);
+
+			setCallback(3);
+			call(new ENTITY_SETUP_SIII(Coudert, setup_enterExitCompartment2), "627Rc", kObjectCompartmentC, kPosition_6470, kPosition_6130);
+		}
+		break;
+
+	case kActionDefault:
+		setCallback(1);
+		call(new ENTITY_SETUP(Coudert, setup_function9), kCarRedSleeping, kPosition_6470);
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			setCallback(2);
+			call(new ENTITY_SETUP_SIIS(Coudert, setup_enterExitCompartment), "627Mc", kObjectCompartmentC);
+			break;
+
+		case 2:
+			getSavePoints()->push(kEntityCoudert, kEntityBoutarel, kAction221683008);
+			getEntities()->drawSequenceLeft(kEntityCoudert, "627Nc");
+			getEntities()->enterCompartment(kEntityCoudert, kObjectCompartmentC, true);
+			break;
+
+		case 3:
+			getEntities()->exitCompartment(kEntityCoudert, kObjectCompartmentC, true);
+			getData()->location = kLocationInsideCompartment;
+			getEntities()->clearSequences(kEntityCoudert);
+
+			setCallback(4);
+			call(new ENTITY_SETUP(Coudert, setup_function20), kObjectCompartmentC, kObject50);
+			break;
+
+		case 4:
+			setCallback(5);
+			call(new ENTITY_SETUP_SIIS(Coudert, setup_enterExitCompartment), "627Sc", kObjectCompartmentC);
+			break;
+
+		case 5:
+			getData()->location = kLocationOutsideCompartment;
+			CALLBACK_ACTION();
+			break;
+
+		case 6:
+			getSavePoints()->push(kEntityCoudert, kEntityBoutarel, kAction122865568);
+			break;
+
+		case 7:
+			getEntities()->exitCompartment(kEntityCoudert, kObjectCompartmentC, true);
+			getData()->location = kLocationInsideCompartment;
+			getEntities()->clearSequences(kEntityCoudert);
+
+			setCallback(8);
+			call(new ENTITY_SETUP(Coudert, setup_function20), kObjectCompartmentC, kObject50);
+			break;
+
+		case 8:
+			getSound()->playSound(kEntityCoudert, "JAC1013");
+
+			setCallback(9);
+			call(new ENTITY_SETUP_SIIS(Coudert, setup_enterExitCompartment), "627Uc", kObjectCompartmentC);
+			break;
+
+		case 9:
+			getData()->location = kLocationOutsideCompartment;
+			getSavePoints()->push(kEntityCoudert, kEntityBoutarel, kAction123852928);
+
+			CALLBACK_ACTION();
+			break;
+		}
+		break;
+
+	case kAction88652208:
+		setCallback(7);
+		call(new ENTITY_SETUP_SIII(Coudert, setup_enterExitCompartment2), "627Rc", kObjectCompartmentC, kPosition_6470, kPosition_6130);
+		break;
+
+	case kAction123199584:
+		params->param1 = 1;
+
+		setCallback(6);
+		call(new ENTITY_SETUP_SIIS(Coudert, setup_playSound), "JAC1012");
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Coudert, visitCompartmentB, 28)

@@ -512,6 +512,11 @@ IMPLEMENT_FUNCTION_II(Mertens, function10, 10)
 #undef LOADSCENE_FROM_POSITION
 }
 
+/**
+ *
+ *
+ * @param param1 The time offset.
+ */
 IMPLEMENT_FUNCTION_I(Mertens, function11, 11)
 	switch (savepoint.action) {
 	default:
@@ -720,9 +725,77 @@ IMPLEMENT_FUNCTION_II(Mertens, function13, 13)
 	}
 }
 
-// EntityIndex
+/**
+ *
+ *
+ * @param param1 The EntityIndex
+ */
 IMPLEMENT_FUNCTION_I(Mertens, function14, 14)
-	error("Mertens: callback function 14 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionNone:
+		SAVEGAME_BLOOD_JACKET();
+		break;
+
+	case kActionDefault:
+		getData()->inventoryItem = kItemNone;
+
+		if (ENTITY_PARAM(2, 1)) {
+			ENTITY_PARAM(2, 1) = 0;
+
+			setCallback(3);
+			call(new ENTITY_SETUP(Mertens, setup_function10), kCarGreenSleeping, kPosition_1500);
+		} else {
+			setCallback(1);
+			call(new ENTITY_SETUP(Mertens, setup_function11), 15);
+		}
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			getSavePoints()->push(kEntityMertens, (EntityIndex)params->param1, kAction202558662);
+
+			setCallback(2);
+			call(new ENTITY_SETUP(Mertens, setup_function20));
+			break;
+
+		case 2:
+			getSavePoints()->push(kEntityMertens, (EntityIndex)params->param1, kAction155853632);
+			getEntities()->drawSequenceLeft(kEntityMertens, "601K");
+			break;
+
+		case 3:
+			getSavePoints()->push(kEntityMertens, (EntityIndex)params->param1, kAction202558662);
+			getSavePoints()->push(kEntityMertens, (EntityIndex)params->param1, kAction155853632);
+			getEntities()->drawSequenceLeft(kEntityMertens, "601K");
+			getScenes()->loadSceneFromItemPosition(kItem7);
+			break;
+
+		case 4:
+			getAction()->playAnimation(kEventMertensBloodJacket);
+			getLogic()->gameOver(kSavegameTypeIndex, 1, kSceneGameOverBloodJacket, true);
+			break;
+
+		case 5:
+			CALLBACK_ACTION();
+			break;
+		}
+		break;
+
+	case kAction125499160:
+		if (params->param1 == kEntityVerges)
+			ENTITY_PARAM(0, 8) = 0;
+
+		setCallback(5);
+		call(new ENTITY_SETUP(Mertens, setup_function18));
+		break;
+	}
 }
 
 // bool
@@ -986,6 +1059,12 @@ IMPLEMENT_FUNCTION(Mertens, function20, 20)
 	}
 }
 
+/**
+ * ???
+ *
+ * @param param1 First object index
+ * @param param2 Second object index
+ */
 IMPLEMENT_FUNCTION_II(Mertens, function21, 21)
 	error("Mertens: callback function 21 not implemented!");
 }
@@ -1011,7 +1090,395 @@ IMPLEMENT_FUNCTION_I(Mertens, function26, 26)
 }
 
 IMPLEMENT_FUNCTION_I(Mertens, tylerCompartment, 27)
-	error("Mertens: callback function 27 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionNone:
+		if (getProgress().field_14 == 29) {
+			CALLBACK_ACTION();
+			break;
+		}
+
+		if (!params->param2)
+			params->param2 = getState()->timeTicks + 150;
+
+		if (params->param2 < getState()->timeTicks) {
+			params->param2 = kTimeInvalid;
+
+			getObjects()->update(kObjectCompartment1, kEntityPlayer, getObjects()->get(kObjectCompartment1).location, kCursorNormal, kCursorNormal);
+
+			setCallback(10);
+			call(new ENTITY_SETUP_SIIS(Mertens, setup_playSound16), "CON1018A");
+			break;
+		}
+
+label_callback10:
+		if (!params->param3)
+			params->param3 = getState()->timeTicks + 300;
+
+		if (params->param3 >= getState()->timeTicks) {
+label_callback11:
+			UPDATE_PARAM(params->param4, getState()->timeTicks, 375);
+
+			getSound()->playSound(kEntityPlayer, "LIB033");
+
+			if (getProgress().eventCorpseMovedFromFloor) {
+
+				if (getProgress().jacket == kJacketBlood) {
+					setCallback(18);
+					call(new ENTITY_SETUP(Mertens, setup_savegame), kSavegameTypeEvent, kEventMertensBloodJacket);
+					break;
+				}
+
+				if (params->param1) {
+					getObjects()->update(kObjectCompartment1, kEntityPlayer, kLocationNone, kCursorHandKnock, kCursorHand);
+
+					switch (params->param1) {
+					case 1:
+						setCallback(20);
+						call(new ENTITY_SETUP(Mertens, setup_savegame), kSavegameTypeEvent, kEventMertensAugustWaitingCompartment);
+						break;
+
+					case 2:
+						setCallback(21);
+						call(new ENTITY_SETUP(Mertens, setup_savegame), kSavegameTypeEvent, kEventMertensKronosInvitationCompartment);
+						break;
+
+					case 3:
+						getAction()->playAnimation(isNight() ? kEventMertensPushCallNight : kEventMertensPushCall);
+						// fallback to default case
+
+					default:
+						getSound()->playSound(kEntityPlayer, "LIB015");
+						getScenes()->loadScene(kScene41);
+
+						CALLBACK_ACTION();
+						break;
+					}
+				} else {
+					setCallback(26);
+					call(new ENTITY_SETUP(Mertens, setup_function26), false);
+				}
+
+			} else {
+				if (!getEntities()->isInsideTrainCar(kEntityPlayer, kCarGreenSleeping))
+					getScenes()->loadSceneFromPosition(kCarNone, 1);
+
+				setCallback(17);
+				call(new ENTITY_SETUP(Mertens, setup_savegame), kSavegameTypeEvent, kEventMertensCorpseFloor);
+			}
+		} else {
+			params->param3 = kTimeInvalid;
+
+			if (getObjects()->get(kObjectCompartment1).location == kLocation1) {
+				getObjects()->update(kObjectCompartment1, kEntityPlayer, kLocation1, kCursorNormal, kCursorNormal);
+
+				setCallback(11);
+				call(new ENTITY_SETUP_SIIS(Mertens, setup_playSound16), "CON1018B");
+				break;
+			}
+
+			getSound()->playSound(kEntityPlayer, "LIB014");
+
+			if (getProgress().eventCorpseMovedFromFloor) {
+
+				if (getProgress().jacket == kJacketBlood) {
+					setCallback(13);
+					call(new ENTITY_SETUP(Mertens, setup_savegame), kSavegameTypeEvent, kEventMertensBloodJacket);
+					break;
+				}
+
+				if (params->param1) {
+					getObjects()->update(kObjectCompartment1, kEntityPlayer, kLocationNone, kCursorHandKnock, kCursorHand);
+
+					switch (params->param1) {
+					case 1:
+						setCallback(15);
+						call(new ENTITY_SETUP(Mertens, setup_savegame), kSavegameTypeEvent, kEventMertensAugustWaitingCompartment);
+						break;
+
+					case 2:
+						setCallback(16);
+						call(new ENTITY_SETUP(Mertens, setup_savegame), kSavegameTypeEvent, kEventMertensKronosInvitationCompartment);
+						break;
+
+					case 3:
+						getAction()->playAnimation(isNight() ? kEventMertensPushCallNight : kEventMertensPushCall);
+						// fallback to default case
+
+					default:
+						getSound()->playSound(kEntityPlayer, "LIB015");
+						getScenes()->loadScene(kScene41);
+
+						CALLBACK_ACTION();
+						break;
+					}
+				} else {
+					setCallback(14);
+					call(new ENTITY_SETUP(Mertens, setup_function26), false);
+				}
+			} else {
+				if (!getEntities()->isInsideTrainCar(kEntityPlayer, kCarGreenSleeping))
+					getScenes()->loadSceneFromPosition(kCarNone, 1);
+
+				setCallback(12);
+				call(new ENTITY_SETUP(Mertens, setup_savegame), kSavegameTypeEvent, kEventMertensCorpseFloor);
+			}
+		}
+		break;
+
+	case kActionKnock:
+		if (params->param1) {
+			getObjects()->update(kObjectCompartment1, kEntityMertens, getObjects()->get(kObjectCompartment1).location, kCursorNormal, kCursorNormal);
+
+			switch (params->param1) {
+			default:
+				getObjects()->update(kObjectCompartment1, kEntityPlayer, getObjects()->get(kObjectCompartment1).location, kCursorHandKnock, kCursorHand);
+
+				CALLBACK_ACTION();
+				break;
+
+			case 1:
+				setCallback(23);
+				call(new ENTITY_SETUP_SIIS(Mertens, setup_playSound16), "CON1018D");
+				break;
+
+			case 2:
+				setCallback(24);
+				call(new ENTITY_SETUP_SIIS(Mertens, setup_playSound16), "CON1018E");
+				break;
+
+			case 3:
+				setCallback(25);
+				call(new ENTITY_SETUP_SIIS(Mertens, setup_playSound16), "CON1025");
+				break;
+			}
+
+		} else {
+			setCallback(22);
+			call(new ENTITY_SETUP(Mertens, setup_function26), true);
+		}
+		break;
+
+	case kActionOpenDoor:
+		getSound()->playSound(kEntityPlayer, getObjects()->get(kObjectCompartment1).location == kLocation1 ? "LIB012" : "LIB014");
+
+		if (getProgress().eventCorpseMovedFromFloor) {
+
+			if (getProgress().jacket == kJacketBlood) {
+				setCallback(27);
+				call(new ENTITY_SETUP(Mertens, setup_savegame), kSavegameTypeEvent, kEventMertensBloodJacket);
+				break;
+			}
+
+			if (params->param1) {
+				getObjects()->update(kObjectCompartment1, kEntityPlayer, kLocationNone, kCursorHandKnock, kCursorHand);
+
+				switch (params->param1) {
+				case 1:
+					setCallback(29);
+					call(new ENTITY_SETUP(Mertens, setup_savegame), kSavegameTypeEvent, kEventMertensAugustWaitingCompartment);
+					break;
+
+				case 2:
+					setCallback(30);
+					call(new ENTITY_SETUP(Mertens, setup_savegame), kSavegameTypeEvent, kEventMertensKronosInvitationCompartment);
+					break;
+
+				case 3:
+					getAction()->playAnimation(isNight() ? kEventMertensPushCallNight : kEventMertensPushCall);
+					// fallback to default case
+
+				default:
+					getSound()->playSound(kEntityPlayer, "LIB015");
+					getScenes()->loadScene(kScene41);
+
+					CALLBACK_ACTION();
+					break;
+				}
+			} else {
+				setCallback(28);
+				call(new ENTITY_SETUP(Mertens, setup_function26), false);
+			}
+		} else {
+			if (!getEntities()->isInsideTrainCar(kEntityPlayer, kCarGreenSleeping))
+				getScenes()->loadSceneFromPosition(kCarNone, 1);
+
+			setCallback(26);
+			call(new ENTITY_SETUP(Mertens, setup_savegame), kSavegameTypeEvent, kEventMertensCorpseFloor);
+		}
+		break;
+
+	case kActionDefault:
+		getData()->inventoryItem = kItemNone;
+
+		if (getEntities()->isInsideCompartment(kEntityPlayer, kCarGreenSleeping, kPosition_8200)
+		 || getEntities()->isInsideCompartment(kEntityPlayer, kCarGreenSleeping, kPosition_7850)
+		 || getEntities()->isOutsideAlexeiWindow()) {
+			getObjects()->update(kObjectCompartment1, kEntityPlayer, getObjects()->get(kObjectCompartment1).location, kCursorNormal, kCursorNormal);
+
+			if (getEntities()->isOutsideAlexeiWindow())
+				getScenes()->loadSceneFromPosition(kCarGreenSleeping, 49);
+
+			setCallback(params->param1 ? 9 : 8);
+			call(new ENTITY_SETUP_SIIS(Mertens, setup_playSound16), params->param1 ? "CON1018" : "CON1060");
+		} else {
+			getSound()->playSound(kEntityMertens, "CON1019");
+
+			setCallback(1);
+			call(new ENTITY_SETUP_SIIS(Mertens, setup_enterExitCompartment), "601Ma", kObjectCompartment1);
+		}
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			if (getProgress().eventCorpseMovedFromFloor) {
+				setCallback(4);
+				call(new ENTITY_SETUP_SIIS(Mertens, setup_enterExitCompartment), "601Ra", kObjectCompartment1);
+			} else {
+				if (getEntities()->isInsideTrainCar(kEntityPlayer, kCarGreenSleeping)) {
+					setCallback(2);
+					call(new ENTITY_SETUP_SIIS(Mertens, setup_enterExitCompartment), "601Ra", kObjectCompartment1);
+				} else {
+					getScenes()->loadSceneFromPosition(kCarNone, 1);
+
+					setCallback(3);
+					call(new ENTITY_SETUP(Mertens, setup_savegame), kSavegameTypeEvent, kEventMertensCorpseFloor);
+				}
+			}
+			break;
+
+		case 2:
+			setCallback(3);
+			call(new ENTITY_SETUP(Mertens, setup_savegame), kSavegameTypeEvent, kEventMertensCorpseFloor);
+			break;
+
+		case 3:
+		case 12:
+		case 17:
+		case 26:
+			getAction()->playAnimation(kEventMertensCorpseFloor);
+			getLogic()->gameOver(kSavegameTypeIndex, 1, getProgress().eventCorpseFound ? kSceneGameOverStopPolice : kSceneGameOverPolice, true);
+			break;
+
+		case 4:
+			getObjects()->update(kObjectCompartment1, kEntityPlayer, kLocation1, kCursorNormal, kCursorNormal);
+			getData()->location = kLocationInsideCompartment;
+			getEntities()->clearSequences(kEntityMertens);
+
+			if (params->param1) {
+				setCallback(7);
+				call(new ENTITY_SETUP_SIIS(Mertens, setup_enterExitCompartment), "601Sa", kObjectCompartment1);
+				break;
+			}
+
+			if (getProgress().eventCorpseThrown || getProgress().chapter != kChapter1) {
+				setCallback(6);
+				call(new ENTITY_SETUP(Mertens, setup_function21), kObjectCompartment1, kObjectHandleBathroom);
+			} else {
+				if (!getEntities()->isInsideTrainCar(kEntityPlayer, kCarGreenSleeping))
+					getScenes()->loadSceneFromPosition(kCarNone, 1);
+
+				setCallback(5);
+				call(new ENTITY_SETUP(Mertens, setup_savegame), kSavegameTypeEvent, kEventMertensCorpseBed);
+			}
+			break;
+
+		case 5:
+			getAction()->playAnimation(kEventMertensCorpseBed);
+			getLogic()->gameOver(kSavegameTypeIndex, 1, kSceneGameOverPolice1, true);
+			break;
+
+		case 6:
+			setCallback(7);
+			call(new ENTITY_SETUP_SIIS(Mertens, setup_enterExitCompartment), "601Sa", kObjectCompartment1);
+			break;
+
+		case 7:
+			getData()->location = kLocationOutsideCompartment;
+			getObjects()->update(kObjectCompartment1, kEntityPlayer, kLocationNone, kCursorHandKnock, kCursorHand);
+
+			CALLBACK_ACTION();
+			break;
+
+		case 8:
+		case 9:
+			getObjects()->update(kObjectCompartment1, kEntityMertens, getObjects()->get(kObjectCompartment1).location, kCursorTalk, kCursorHand);
+			break;
+
+		case 10:
+			getObjects()->update(kObjectCompartment1, kEntityMertens, getObjects()->get(kObjectCompartment1).location, kCursorTalk, kCursorHand);
+			goto label_callback10;
+
+		case 11:
+			getObjects()->update(kObjectCompartment1, kEntityMertens, getObjects()->get(kObjectCompartment1).location, kCursorTalk, kCursorHand);
+			goto label_callback11;
+
+		case 13:
+		case 18:
+		case 27:
+			getAction()->playAnimation(kEventMertensBloodJacket);
+			getLogic()->gameOver(kSavegameTypeIndex, 1, kSceneGameOverBloodJacket, true);
+			break;
+
+		case 14:
+		case 19:
+		case 22:
+		case 28:
+			CALLBACK_ACTION();
+			break;
+
+		case 15:
+		case 20:
+		case 29:
+			getAction()->playAnimation(kEventMertensAugustWaitingCompartment);
+			getProgress().eventMertensAugustWaiting = true;
+
+			getSound()->playSound(kEntityPlayer, "LIB015");
+			getScenes()->loadScene(kScene41);
+
+			CALLBACK_ACTION();
+			break;
+
+		case 16:
+		case 21:
+		case 30:
+			getAction()->playAnimation(kEventMertensKronosInvitationCompartment);
+			getProgress().eventMertensKronosInvitation = true;
+
+			getSound()->playSound(kEntityPlayer, "LIB015");
+			getScenes()->loadScene(kScene41);
+
+			CALLBACK_ACTION();
+			break;
+
+		case 23:
+			getProgress().eventMertensAugustWaiting = true;
+			getObjects()->update(kObjectCompartment1, kEntityPlayer, getObjects()->get(kObjectCompartment1).location, kCursorHandKnock, kCursorHand);
+
+			CALLBACK_ACTION();
+			break;
+
+		case 24:
+			getProgress().eventMertensKronosInvitation = true;
+			getObjects()->update(kObjectCompartment1, kEntityPlayer, getObjects()->get(kObjectCompartment1).location, kCursorHandKnock, kCursorHand);
+
+			CALLBACK_ACTION();
+			break;
+
+		case 25:
+			getObjects()->update(kObjectCompartment1, kEntityPlayer, getObjects()->get(kObjectCompartment1).location, kCursorHandKnock, kCursorHand);
+
+			CALLBACK_ACTION();
+			break;
+		}
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION_S(Mertens, function28, 28)
