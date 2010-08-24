@@ -169,7 +169,7 @@
 	}
 
 #define TIME_CHECK_CAR(class, timeValue, parameter, callback, function) {\
-	if (getState()->time <= timeValue && !getEntities()->isPlayerInCar(kCarGreenSleeping) || !parameter) \
+	if ((getState()->time <= timeValue && !getEntities()->isPlayerInCar(kCarGreenSleeping)) || !parameter) \
 		parameter = getState()->time + 75; \
 	if (getState()->time > timeValue || parameter < getState()->time) { \
 		parameter = kTimeInvalid; \
