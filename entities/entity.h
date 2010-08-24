@@ -485,7 +485,7 @@ public:
 	void 			   setCallback(uint callback, byte index);
 	void 			   setCurrentCallback(uint index) { setCallback(_data.currentCall, index); }
 
-	void               updateParameters(uint32 index);
+	void               updateParameters(uint32 index) const;
 
 	// Serializable
 	void 			   saveLoadWithSerializer(Common::Serializer &ser);

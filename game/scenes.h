@@ -77,7 +77,7 @@ public:
 
 	// Sequence queue
 	void drawFrames(bool refreshScreen);
-	void addToQueue(SequenceFrame *frame);
+	void addToQueue(SequenceFrame * const frame);
 	void removeFromQueue(SequenceFrame *frame);
 	void removeAndRedraw(SequenceFrame **frame, bool doRedraw);
 	void resetQueue();

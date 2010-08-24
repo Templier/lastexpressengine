@@ -69,7 +69,7 @@ void EntityData::setCallback(uint callback, byte index) {
 	_data.callbacks[callback] = index;
 }
 
-void EntityData::updateParameters(uint32 index) {
+void EntityData::updateParameters(uint32 index) const {
 	if (index < 8)
 		getParameters(8, 0)->update(index);
 	else if (index < 16)

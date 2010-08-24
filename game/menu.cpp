@@ -248,7 +248,7 @@ void Clock::draw(uint32 time) {
 	_frameMinutes->setFrame(minute);
 	_frameHour->setFrame((5 * hour + minute / 12) % 60);
 	_frameSun->setFrame((5 * hour + minute / 12) % 120);
-	_frameDate->setFrame(index_date);
+	_frameDate->setFrame((uint16)index_date);
 
 	// Adjust z-order and queue
 	_frameMinutes->getInfo()->location = 1;
@@ -1228,7 +1228,7 @@ void Menu::showFrame(StartMenuOverlay overlayType, int index, bool redraw) {
 
 		// Remove the frame and add a new one with the proper index
 		getScenes()->removeFromQueue(_frames[overlayType]);
-		_frames[overlayType]->setFrame((uint)index);
+		_frames[overlayType]->setFrame((uint16)index);
 		getScenes()->addToQueue(_frames[overlayType]);
 	}
 

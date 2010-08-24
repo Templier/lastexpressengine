@@ -299,7 +299,7 @@ bool Debugger::cmdShowFrame(int argc, const char **argv) {
 				_engine->getCursor()->show(false);
 				clearBg(GraphicsManager::kBackgroundOverlay);
 
-				AnimFrame *frame = sequence.getFrame((uint32)getNumber(argv[2]));
+				AnimFrame *frame = sequence.getFrame((uint16)getNumber(argv[2]));
 				if (!frame) {
 					DebugPrintf("Invalid frame index: %i\n", filename.c_str());
 					resetCommand();

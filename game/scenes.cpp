@@ -667,7 +667,7 @@ void SceneManager::drawFrames(bool refreshScreen) {
 	}
 }
 
-void SceneManager::addToQueue(SequenceFrame *frame) {
+void SceneManager::addToQueue(SequenceFrame * const frame) {
 	if (!frame)
 		return;
 

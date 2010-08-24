@@ -356,7 +356,7 @@ void Beetle::drawUpdate() {
 	// Invert direction
 	INVERT_Y();
 
-	SequenceFrame *frame = new SequenceFrame(_data->currentSequence, _data->currentFrame);
+	SequenceFrame *frame = new SequenceFrame(_data->currentSequence, (uint16)_data->currentFrame);
 	updateFrame(frame);
 
 	INVERT_Y();
@@ -454,10 +454,10 @@ void Beetle::updateFrame(SequenceFrame *frame) const {
 
 	// Update coordinates
 	if (_data->coordX > 0)
-		frame->getInfo()->xPos1 = _data->coordX;
+		frame->getInfo()->xPos1 = (uint16)_data->coordX;
 
 	if (_data->coordY > 0)
-		frame->getInfo()->yPos1 = _data->coordY;
+		frame->getInfo()->yPos1 = (uint16)_data->coordY;
 }
 
 void Beetle::updateData(uint32 index) {
