@@ -193,7 +193,7 @@ IMPLEMENT_FUNCTION_II(Vesna, savegame, 10)
 
 IMPLEMENT_FUNCTION(Vesna, function11, 11)
 	// Expose parameters as IIIS and ignore the default exposed paremeters
-	EntityData::EntityParametersIIIS *parameters = (EntityData::EntityParametersIIIS*)_data->getCurrentParameters(1);
+	EntityData::EntityParametersIIIS *parameters = (EntityData::EntityParametersIIIS*)_data->getCurrentParameters();
 
 	switch (savepoint.action) {
 	default:

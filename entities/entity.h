@@ -349,6 +349,24 @@ public:
 		}
 	};
 
+	struct EntityParametersI5S : EntityParameters {
+		uint param1;
+		uint param2;
+		uint param3;
+		uint param4;
+		uint param5;
+		char seq[12];
+
+		EntityParametersI5S() {
+			param1 = 0;
+			param2 = 0;
+			param3 = 0;
+			param4 = 0;
+			param5 = 0;
+			memset(&seq, 0, 12);
+		}
+	};
+
 	struct EntityCallParameters {
 		EntityParameters* parameters[4];
 

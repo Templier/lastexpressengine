@@ -32,18 +32,23 @@
 #include "lastexpress/entities/august.h"
 #include "lastexpress/entities/boutarel.h"
 #include "lastexpress/entities/coudert.h"
+#include "lastexpress/entities/cooks.h"
 #include "lastexpress/entities/francois.h"
 #include "lastexpress/entities/gendarmes.h"
 #include "lastexpress/entities/hadija.h"
 #include "lastexpress/entities/ivo.h"
 #include "lastexpress/entities/kahina.h"
+#include "lastexpress/entities/kronos.h"
 #include "lastexpress/entities/mahmud.h"
 #include "lastexpress/entities/max.h"
 #include "lastexpress/entities/mertens.h"
 #include "lastexpress/entities/milos.h"
 #include "lastexpress/entities/mmeboutarel.h"
+#include "lastexpress/entities/pascale.h"
 #include "lastexpress/entities/rebecca.h"
 #include "lastexpress/entities/salko.h"
+#include "lastexpress/entities/servers0.h"
+#include "lastexpress/entities/servers1.h"
 #include "lastexpress/entities/sophie.h"
 #include "lastexpress/entities/tatiana.h"
 #include "lastexpress/entities/vassili.h"
@@ -157,7 +162,161 @@ IMPLEMENT_FUNCTION(Chapters, resetMainEntities, 5)
 
 //////////////////////////////////////////////////////////////////////////
 IMPLEMENT_FUNCTION(Chapters, function6, 6)
-	error("Chapters: callback function 6 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kAction2:
+		getSound()->playSound(kEntityChapters, "MUS0009", SoundManager::kFlagDefault);
+		break;
+
+	case kActionKnock:
+		if (!getSound()->isBuffered("LIB012", true))
+			getSound()->playSound(kEntityPlayer, "LIB012");
+
+	case kActionOpenDoor:
+		if (params->param1) {
+			getEntities()->clearSequences(kEntityChapters);
+			getSound()->processEntry(kEntityChapters);
+			getSound()->playSound(kEntityPlayer, "LIB014");
+			getSound()->resetState();
+
+			ENTITY_PARAM(0, 4) = 7;
+
+			getSound()->playSteam(kCityPolice);
+
+			getAction()->playAnimation(kEventCathDream);
+
+			getState()->timeDelta = 3;
+			getProgress().field_18 = 1;
+			getProgress().field_84 = 0;
+
+			getObjects()->update(kObject63, kEntityPlayer, kLocationNone, kCursorHandKnock, kCursorHand);
+
+			getScenes()->loadScene(kScene41);
+
+			CALLBACK_ACTION();
+		} else {
+			getSound()->playSound(kEntityPlayer, "LIB014");
+			getSound()->playSound(kEntityPlayer, "LIB015", SoundManager::kFlagDefault, 15);
+
+			if (!getSound()->isBuffered(kEntityChapters))
+				getSound()->playSound(kEntityChapters, "MUS009", SoundManager::kFlagDefault);
+
+			getScenes()->loadSceneFromPosition(kCarLocomotive, 38);
+
+			getObjects()->update(kObject63, kEntityChapters, kLocationNone, kCursorHandKnock, kCursorHand);
+
+			params->param1 = 1;
+		}
+		break;
+
+	case kActionDefault:
+		RESET_ENTITY_STATE(kEntityPascale, Pascale, setup_function19);
+		RESET_ENTITY_STATE(kEntityServers0, Servers0, setup_function22);
+		RESET_ENTITY_STATE(kEntityServers1, Servers1, setup_function16);
+		RESET_ENTITY_STATE(kEntityCooks, Cooks, setup_function7);
+
+		RESET_ENTITY_STATE(kEntityMertens, Mertens, setup_function42);
+		RESET_ENTITY_STATE(kEntityCoudert, Coudert, setup_chapter1Handler);
+		RESET_ENTITY_STATE(kEntityVerges,  Verges, setup_chapter1Handler);
+
+		getSavePoints()->push(kEntityChapters, kEntityMertens, kAction201431954);
+		getSavePoints()->push(kEntityChapters, kEntityCoudert, kAction201431954);
+		getSavePoints()->push(kEntityChapters, kEntityVerges, kAction201431954);
+
+		RESET_ENTITY_STATE(kEntityKronos, Kronos, setup_function10);
+		RESET_ENTITY_STATE(kEntityKahina, Kahina, setup_function13);
+		RESET_ENTITY_STATE(kEntityAnna, Anna, setup_function34);
+		RESET_ENTITY_STATE(kEntityAugust, August, setup_function34);
+		RESET_ENTITY_STATE(kEntityTatiana, Tatiana, setup_function24);
+		RESET_ENTITY_STATE(kEntityVassili, Vassili, setup_function7);
+		RESET_ENTITY_STATE(kEntityAlexei, Alexei, setup_function26);
+		RESET_ENTITY_STATE(kEntityMilos, Milos, setup_function18);
+		RESET_ENTITY_STATE(kEntityVesna, Vesna, setup_function15);
+		RESET_ENTITY_STATE(kEntityIvo, Ivo, setup_function17);
+		RESET_ENTITY_STATE(kEntitySalko, Salko, setup_function11);
+		RESET_ENTITY_STATE(kEntityFrancois, Francois, setup_function20);
+		RESET_ENTITY_STATE(kEntityMmeBoutarel, MmeBoutarel, setup_function16);
+		RESET_ENTITY_STATE(kEntityBoutarel, Boutarel, setup_function22);
+		RESET_ENTITY_STATE(kEntityRebecca, Rebecca, setup_function27);
+		RESET_ENTITY_STATE(kEntitySophie, Sophie, setup_function5);
+		RESET_ENTITY_STATE(kEntityMahmud, Mahmud, setup_resetChapter);
+		RESET_ENTITY_STATE(kEntityYasmin, Yasmin, setup_function10);
+		RESET_ENTITY_STATE(kEntityHadija, Hadija, setup_function12);
+		RESET_ENTITY_STATE(kEntityHadija, Alouan, setup_function12);
+
+		if (ENTITY_PARAM(0, 2) || ENTITY_PARAM(0, 3)) {
+			getSound()->removeFromQueue(kEntityChapters);
+
+			ENTITY_PARAM(0, 2) = 0;
+			ENTITY_PARAM(0, 3) = 0;
+		}
+
+		getSound()->processEntries();
+
+		if (getSound()->isBuffered("CON1505"))
+			getSound()->processEntry("CON1505");
+
+		if (getSound()->isBuffered("AUG1057"))
+			getSound()->processEntry("AUG1057");
+
+		if (getSound()->isBuffered("ZFX1005"))
+			getSound()->processEntry("ZFX1005");
+
+		if (getSound()->isBuffered("ZFX1006"))
+			getSound()->processEntry("ZFX1006");
+
+		if (getSound()->isBuffered("ZFX1007"))
+			getSound()->processEntry("ZFX1007");
+
+		if (getSound()->isBuffered("ZFX1007A"))
+			getSound()->processEntry("ZFX1007A");
+
+		if (getSound()->isBuffered("ZFX1007B"))
+			getSound()->processEntry("ZFX1007B");
+
+
+		getSound()->playSound(kEntityPlayer, "MUS008", SoundManager::kFlagDefault);
+		getInventory()->unselectItem();
+
+		// FIXME add event pump
+		while (getSound()->isBuffered("MUS008"))
+			getSound()->updateQueue();
+
+		getProgress().field_84 = true;
+
+		getScenes()->loadSceneFromPosition(kCarLocomotive, 75);
+		getInventory()->show();
+
+		getState()->time = kTime1492200;
+		getProgress().field_18 = 4;
+		getState()->timeDelta = 0;
+
+		getObjects()->update(kObject63, kEntityChapters, kLocationNone, kCursorNormal, kCursorHand);
+		getSavePoints()->push(kEntityChapters, kEntityTrain, kActionTrainStopRunning);
+
+		getProgress().isTrainRunning = false;
+
+		setCallback(1);
+		call(new ENTITY_SETUP(Chapters, setup_savegame), kSavegameTypeTime, kTimeNone); 
+		break;
+
+	case kAction225358684:
+		params->param2++;
+
+		if (params->param2 >= 3) {
+
+			if (!getSound()->isBuffered("LIB031", true))
+				getSound()->playSound(kEntityPlayer, "LIB031");
+
+			if (params->param2 == 3) {
+				getData()->car = kCarGreenSleeping;
+				getEntities()->drawSequenceLeft(kEntityChapters, "JUGL");
+			}
+		}
+		break;
+	}
 }
 
 //////////////////////////////////////////////////////////////////////////

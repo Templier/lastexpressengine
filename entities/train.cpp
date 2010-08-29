@@ -86,9 +86,7 @@ IMPLEMENT_FUNCTION(Train, chapter5, 6)
 		setup_process();
 }
 
-
 void Train::handleCompartmentAction() {
-	// TODO check that those are the proper parameters
 	EXPOSE_PARAMS(EntityData::EntityParametersIIII)
 
 	if (params->param8)
@@ -128,7 +126,7 @@ IMPLEMENT_FUNCTION_II(Train, harem, 7)
 	}
 
 	params->param4 = getEntities()->isInsideCompartment(kEntityAlouan, kCarGreenSleeping, (EntityPosition)params->param3);
-	params->param5 = (ENTITY_PARAM(0, 7) - params->param3) < 1;
+	params->param5 = (ENTITY_PARAM(0, 7) - params->param3) < 1 ? true : false;
 	params->param6 = getEntities()->isInsideCompartment(kEntityYasmin, kCarGreenSleeping, (EntityPosition)params->param3);
 	params->param7 = getEntities()->isInsideCompartment(kEntityHadija, kCarGreenSleeping, (EntityPosition)params->param3);
 
@@ -139,7 +137,7 @@ IMPLEMENT_FUNCTION_II(Train, harem, 7)
 
 	if (params->param4 && params->param5) {
 
-		ENTITY_PARAM(0, 5) += 1;
+		ENTITY_PARAM(0, 5)++;
 
 		switch (ENTITY_PARAM(0, 5)) {
 		default:
@@ -173,7 +171,7 @@ IMPLEMENT_FUNCTION_II(Train, harem, 7)
 
 	if (params->param6 && params->param7) {
 
-		ENTITY_PARAM(0, 6) += 1;
+		ENTITY_PARAM(0, 6)++;
 
 		switch(ENTITY_PARAM(0, 6)) {
 		default:
@@ -197,51 +195,51 @@ IMPLEMENT_FUNCTION_II(Train, harem, 7)
 		return;
 	}
 
-	if (!params->param5 && params->param6) {
+	if (!params->param5) {
 
-		ENTITY_PARAM(0, 3) += 1;
+		if (params->param6) {
+			ENTITY_PARAM(0, 3)++;
 
-		switch(ENTITY_PARAM(0, 3)) {
-		default:
-			params->param8 = 1;
-			break;
-
-		case 1:
-			getSound()->playSound(kEntityTables5, "Har1012", SoundManager::kFlagDefault, 15);
-			break;
-
-		case 2:
-			getSound()->playSound(kEntityTables5, "Har1012A", SoundManager::kFlagDefault, 15);
-			break;
-		}
-
-		handleCompartmentAction();
-		return;
-	}
-
-	if (!params->param5 && !params->param6) {
-
-		if (params->param4) {
-			ENTITY_PARAM(0, 1) += 1;
-
-			if (ENTITY_PARAM(0, 1) <= 1)
-				getSound()->playSound(kEntityTables5, "Har1014", SoundManager::kFlagDefault, 15);
-			else
+			switch(ENTITY_PARAM(0, 3)) {
+			default:
 				params->param8 = 1;
+				break;
 
-			getProgress().field_DC = 1;
+			case 1:
+				getSound()->playSound(kEntityTables5, "Har1012", SoundManager::kFlagDefault, 15);
+				break;
+
+			case 2:
+				getSound()->playSound(kEntityTables5, "Har1012A", SoundManager::kFlagDefault, 15);
+				break;
+			}
 
 			handleCompartmentAction();
 			return;
-		}
+		} else {
+			
+			if (params->param4) {
+				ENTITY_PARAM(0, 1)++;
 
-		if (params->param7) {
-			ENTITY_PARAM(0, 4) += 1;
+				if (ENTITY_PARAM(0, 1) <= 1)
+					getSound()->playSound(kEntityTables5, "Har1014", SoundManager::kFlagDefault, 15);
+				else
+					params->param8 = 1;
 
-			if (ENTITY_PARAM(0, 4) <= 1) {
-				getSound()->playSound(kEntityTables5, "Har1011", SoundManager::kFlagDefault, 15);
+				getProgress().field_DC = 1;
+
 				handleCompartmentAction();
 				return;
+			}
+
+			if (params->param7) {
+				ENTITY_PARAM(0, 4)++;
+
+				if (ENTITY_PARAM(0, 4) <= 1) {
+					getSound()->playSound(kEntityTables5, "Har1011", SoundManager::kFlagDefault, 15);
+					handleCompartmentAction();
+					return;
+				}
 			}
 		}
 

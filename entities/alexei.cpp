@@ -476,7 +476,7 @@ IMPLEMENT_FUNCTION(Alexei, chapter1Handler, 18)
 
 	case kActionNone:
 		if (getState()->time > kTime1089000 && getEntities()->isSomebodyInsideRestaurantOrSalon()) {
-			params->param2 = 0;
+			params->param2 = kItemNone;
 
 			getData()->location = kLocationOutsideCompartment;
 			getData()->inventoryItem = kItemNone;
@@ -498,7 +498,7 @@ IMPLEMENT_FUNCTION(Alexei, chapter1Handler, 18)
 		break;
 
 	case kAction1:
-		params->param2 = 0;
+		params->param2 = kItemNone;
 		getData()->inventoryItem = kItemNone;
 
 		setCallback(2);
@@ -514,7 +514,7 @@ IMPLEMENT_FUNCTION(Alexei, chapter1Handler, 18)
 		break;
 
 	case kActionDrawScene:
-		params->param1 = getEntities()->isPlayerPosition(kCarRestaurant, 63);
+		params->param1 = getEntities()->isPlayerPosition(kCarRestaurant, 63) ? 1 : 0;
 		break;
 
 	case kActionCallback:

@@ -1157,8 +1157,128 @@ IMPLEMENT_FUNCTION(Coudert, visitCompartmentA, 29)
 	visitCompartment(savepoint, kPosition_8200, "627Ma", kObjectCompartmentA, "627Na", "627Ra", kPosition_7850, kObject48, "627Sa");
 }
 
-IMPLEMENT_FUNCTION_I(Coudert, function30, 30)
-	error("Coudert: callback function 30 not implemented!");
+/**
+ * ???
+ *
+ * @param param1 The compartment 
+ */
+IMPLEMENT_FUNCTION_I(Coudert, function30, 30)	
+	// Expose parameters as IIIIIS and ignore the default exposed parameters
+	EntityData::EntityParametersI5S  *parameters  = (EntityData::EntityParametersI5S*)_data->getCurrentParameters();
+	EntityData::EntityParametersSIIS *parameters1 = (EntityData::EntityParametersSIIS*)_data->getCurrentParameters(1);
+
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionDefault:
+		switch (parameters->param1) {
+		default:
+			CALLBACK_ACTION();
+			// Stop processing here
+			return;
+
+		case kObjectCompartmentA:
+			parameters->param2 = kPosition_8200;
+			parameters->param3 = kPosition_7850;
+			strcpy((char *)&parameters->seq, "627Ma");
+			strcpy((char *)&parameters1->seq1, "627Na");
+			break;
+
+		case kObjectCompartmentB:
+			parameters->param2 = kPosition_7500;
+			parameters->param3 = kPosition_7850;
+			parameters->param4 = true;
+			strcpy((char *)&parameters->seq, "627Vb");
+			strcpy((char *)&parameters1->seq1, "627Wb");
+			break;
+
+		case kObjectCompartmentC:
+			parameters->param2 = kPosition_6470;
+			parameters->param3 = kPosition_6130;
+			strcpy((char *)&parameters->seq, "627Mc");
+			strcpy((char *)&parameters1->seq1, "627Nc");
+			break;
+
+		case kObjectCompartmentD:
+			parameters->param2 = kPosition_5790;
+			parameters->param3 = kPosition_6130;
+			parameters->param4 = true;
+			strcpy((char *)&parameters->seq, "627Vd");
+			strcpy((char *)&parameters1->seq1, "627Wd");
+			break;
+
+		case kObjectCompartmentE:
+			parameters->param2 = kPosition_4840;
+			parameters->param3 = kPosition_4455;
+			parameters->param4 = true;
+			strcpy((char *)&parameters->seq, "627Me");
+			strcpy((char *)&parameters1->seq1, "627Ne");
+			break;
+
+		case kObjectCompartmentF:
+			parameters->param2 = kPosition_4070;
+			parameters->param3 = kPosition_4455;
+			parameters->param4 = true;
+			strcpy((char *)&parameters->seq, "627Vf");
+			strcpy((char *)&parameters1->seq1, "627Wf");
+			break;
+		}
+
+		setCallback(1);
+		call(new ENTITY_SETUP(Coudert, setup_function16));
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			setCallback(2);
+			call(new ENTITY_SETUP(Coudert, setup_function9), kCarRedSleeping, (EntityPosition)parameters->param2);
+			break;
+
+		case 2:
+			if (getEntities()->checkFields19(kEntityPlayer, kCarRedSleeping, (EntityPosition)parameters->param3)
+			 || ((parameters->param1 == kObjectCompartmentE || parameters->param1 == kObjectCompartmentF) && getEntities()->isOutsideAnnaWindow())) {
+				getObjects()->update((ObjectIndex)parameters->param1, kEntityPlayer, getObjects()->get((ObjectIndex)parameters->param1).location, kCursorNormal, kCursorNormal);
+				parameters->param5 = true;
+			}
+
+			setCallback(3);
+			call(new ENTITY_SETUP_SIIS(Coudert, setup_enterExitCompartment), (char *)&parameters->seq, (ObjectIndex)parameters->param1);
+			break;
+
+		case 3:
+			getEntities()->drawSequenceLeft(kEntityCoudert, (char *)&parameters1->seq1);
+			getEntities()->enterCompartment(kEntityCoudert, (ObjectIndex)parameters->param1, true);
+
+			setCallback(4);
+			call(new ENTITY_SETUP_SIIS(Coudert, setup_playSound), parameters->param4 ? "JAC3020" : "JAC3021");
+			break;
+
+		case 4:
+			if (parameters->param5)
+				getObjects()->update((ObjectIndex)parameters->param1, kEntityPlayer, getObjects()->get((ObjectIndex)parameters->param1).location, kCursorHandKnock, kCursorHand);
+			
+			getEntities()->exitCompartment(kEntityCoudert, (ObjectIndex)parameters->param1, true);
+
+			setCallback(5);
+			call(new ENTITY_SETUP(Coudert, setup_function9), kCarRedSleeping, kPosition_2000);
+			break;
+
+		case 5:
+			setCallback(6);
+			call(new ENTITY_SETUP(Coudert, setup_function18));
+			break;
+
+		case 6:
+			CALLBACK_ACTION();
+			break;
+		}
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION_I(Coudert, function31, 31)

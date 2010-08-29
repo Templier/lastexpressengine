@@ -99,6 +99,7 @@ enum TimeValue {
 	kTime1485000              = 1485000,
 	kTime1489500              = 1489500,
 	kTimeCityStrasbourg       = 1490400,
+	kTime1492200              = 1492200,
 	kTimeExitStrasbourg       = 1493100,
 	kTimeChapter1End          = 1494000,
 	kTime1503000              = 1503000,
