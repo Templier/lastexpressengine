@@ -217,7 +217,7 @@ IMPLEMENT_FUNCTION_II(Train, harem, 7)
 			handleCompartmentAction();
 			return;
 		} else {
-			
+
 			if (params->param4) {
 				ENTITY_PARAM(0, 1)++;
 

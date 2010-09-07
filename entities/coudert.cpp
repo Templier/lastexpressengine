@@ -1160,9 +1160,9 @@ IMPLEMENT_FUNCTION(Coudert, visitCompartmentA, 29)
 /**
  * ???
  *
- * @param param1 The compartment 
+ * @param param1 The compartment
  */
-IMPLEMENT_FUNCTION_I(Coudert, function30, 30)	
+IMPLEMENT_FUNCTION_I(Coudert, function30, 30)
 	// Expose parameters as IIIIIS and ignore the default exposed parameters
 	EntityData::EntityParametersI5S  *parameters  = (EntityData::EntityParametersI5S*)_data->getCurrentParameters();
 	EntityData::EntityParametersSIIS *parameters1 = (EntityData::EntityParametersSIIS*)_data->getCurrentParameters(1);
@@ -1261,7 +1261,7 @@ IMPLEMENT_FUNCTION_I(Coudert, function30, 30)
 		case 4:
 			if (parameters->param5)
 				getObjects()->update((ObjectIndex)parameters->param1, kEntityPlayer, getObjects()->get((ObjectIndex)parameters->param1).location, kCursorHandKnock, kCursorHand);
-			
+
 			getEntities()->exitCompartment(kEntityCoudert, (ObjectIndex)parameters->param1, true);
 
 			setCallback(5);

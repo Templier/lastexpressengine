@@ -90,7 +90,7 @@ Debugger::Debugger(LastExpressEngine *engine) : _engine(engine), _command(NULL),
 
 	resetCommand();
 
-	 _soundStream = new StreamedSound();
+	_soundStream = new StreamedSound();
 }
 
 Debugger::~Debugger() {

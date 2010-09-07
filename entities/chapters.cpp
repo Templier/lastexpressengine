@@ -299,7 +299,7 @@ IMPLEMENT_FUNCTION(Chapters, function6, 6)
 		getProgress().isTrainRunning = false;
 
 		setCallback(1);
-		call(new ENTITY_SETUP(Chapters, setup_savegame), kSavegameTypeTime, kTimeNone); 
+		call(new ENTITY_SETUP(Chapters, setup_savegame), kSavegameTypeTime, kTimeNone);
 		break;
 
 	case kAction225358684:
