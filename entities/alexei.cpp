@@ -951,7 +951,63 @@ IMPLEMENT_FUNCTION(Alexei, chapter2Handler, 29)
 }
 
 IMPLEMENT_FUNCTION(Alexei, function30, 30)
-	error("Alexei: callback function 30 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionDefault:
+		getObjects()->update(kObjectCompartment2, kEntityPlayer, kLocation1, kCursorHandKnock, kCursorHand);
+		getData()->car = kCarRestaurant;
+		getData()->location = kLocationInsideCompartment;
+
+		getEntities()->drawSequenceLeft(kEntityAlexei, "018C");
+		getSavePoints()->push(kEntityAlexei, kEntityTables1, kAction136455232);
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			getEntities()->updatePositionExit(kEntityAlexei, kCarRestaurant, 63);
+			getSavePoints()->push(kEntityAlexei, kEntityTatiana, kAction156444784);
+			getEntities()->drawSequenceLeft(kEntityAlexei, "018E");
+
+			if (getEntities()->isInRestaurant(kEntityPlayer))
+				getProgress().field_68 = 1;
+
+			setCallback(2);
+			call(new ENTITY_SETUP_SIIS(Alexei, setup_playSound), "TAT2116");
+			break;
+
+		case 2:
+			getSound()->playSound(kEntityAlexei, "TAt2116A");
+			getEntities()->updatePositionEnter(kEntityAlexei, kCarRestaurant, 63);
+
+			setCallback(3);
+			call(new ENTITY_SETUP_SIIS(Alexei, setup_callSavepoint), "018F", kEntityTatiana, kAction123857088, "BOGUS");
+			break;
+
+		case 3:
+			getEntities()->updatePositionExit(kEntityAlexei, kCarRestaurant, 63);
+			setup_function31();
+			break;
+		}
+		break;
+
+	case kAction236053296:
+		getEntities()->drawSequenceRight(kEntityAlexei, "018D1");
+		getEntities()->drawSequenceRight(kEntityTatiana, "018D2");
+		getEntities()->updatePositionEnter(kEntityAlexei, kCarRestaurant, 63);
+
+		if (savepoint.param.intValue)
+			getScenes()->loadSceneFromPosition(kCarRestaurant, savepoint.param.intValue);
+
+		setCallback(1);
+		call(new ENTITY_SETUP(Alexei, setup_callbackActionOnDirection));
+		break;
+	}
 }
 
 IMPLEMENT_FUNCTION(Alexei, function31, 31)

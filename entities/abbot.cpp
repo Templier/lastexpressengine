@@ -919,14 +919,6 @@ IMPLEMENT_FUNCTION(Abbot, function32, 32)
 }
 
 IMPLEMENT_FUNCTION(Abbot, function33, 33)
-	error("Abbot: callback function 33 not implemented!");
-}
-
-IMPLEMENT_FUNCTION(Abbot, function34, 34)
-	error("Abbot: callback function 34 not implemented!");
-}
-
-IMPLEMENT_FUNCTION(Abbot, function35, 35)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -959,6 +951,123 @@ IMPLEMENT_FUNCTION(Abbot, function35, 35)
 
 	case kAction123712592:
 		setup_function34();
+		break;
+	}
+}
+
+IMPLEMENT_FUNCTION(Abbot, function34, 34)
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionDefault:
+		setCallback(1);
+		call(new ENTITY_SETUP_SIIS(Abbot, setup_playSound), "Abb3031");
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			getSavePoints()->push(kEntityAbbot, kEntityBoutarel, kAction122288808);
+			getObjects()->update(kObjectCompartmentC, kEntityPlayer, kLocation1, kCursorKeepValue, kCursorKeepValue);
+
+			setCallback(2);
+			call(new ENTITY_SETUP_SIIS(Abbot, setup_enterExitCompartment), "617Bc", kObjectCompartmentC);
+			break;
+
+		case 2:
+			getObjects()->update(kObjectCompartmentC, kEntityPlayer, kLocation2, kCursorKeepValue, kCursorKeepValue);
+			getData()->location = kLocationOutsideCompartment;
+
+			setCallback(3);
+			call(new ENTITY_SETUP(Abbot, setup_updateEntity), kCarRestaurant, kPosition_850);
+			break;
+
+		case 3:
+			setCallback(4);
+			call(new ENTITY_SETUP(Abbot, setup_callbackActionRestaurantOrSalon));
+			break;
+
+		case 4:
+			getData()->entityPosition = kPosition_1540;
+			getData()->location = kLocationOutsideCompartment;
+
+			setCallback(5);
+			call(new ENTITY_SETUP_SIIS(Abbot, setup_updatePosition), "115A", kCarRestaurant, 56);
+			break;
+
+		case 5:
+			getScenes()->loadSceneFromItemPosition(kItem3);
+
+			getData()->location = kLocationInsideCompartment;
+			setup_function35();
+			break;
+		}
+		break;
+}
+}
+
+IMPLEMENT_FUNCTION(Abbot, function35, 35)
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionNone:
+		if (params->param2 == kTimeInvalid)
+			break;
+
+		if (params->param1 >= getState()->time) {
+			if (!getEntities()->isInSalon(kEntityPlayer) || !params->param2)
+				params->param2 = getState()->time + 450;
+
+			if (params->param2 >= getState()->time)
+				break;
+		}
+
+		params->param2 = kTimeInvalid;
+
+		getSavePoints()->push(kEntityAbbot, kEntityAugust, kAction136196244);
+
+		setCallback(1);
+		call(new ENTITY_SETUP(Abbot, setup_updateFromTime), 0);
+		break;
+
+	case kActionDefault:
+		getEntities()->drawSequenceLeft(kEntityAbbot, "115B");
+		params->param1 = getState()->time + 9000;
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			setCallback(2);
+			call(new ENTITY_SETUP(Abbot, setup_callbackActionRestaurantOrSalon));
+			break;
+
+		case 2:
+			getData()->location = kLocationOutsideCompartment;
+			getSound()->playSound(kEntityAbbot, "Abb3040", SoundManager::kFlagInvalid, 45);
+			getEntities()->updatePositionEnter(kEntityAbbot, kCarRestaurant, 57);
+
+			setCallback(3);
+			call(new ENTITY_SETUP_SIIS(Abbot, setup_callSavepoint), "121A", kEntityAugust, kAction122358304, "BOGUS");
+			break;
+
+		case 3:
+			getEntities()->updatePositionExit(kEntityAbbot, kCarRestaurant, 57);
+			getInventory()->setLocationAndProcess(kItem3, kLocation1);
+			getData()->location = kLocationInsideCompartment;
+
+			setup_function36();
+			break;
+		}
+		break;
 	}
 }
 
