@@ -37,33 +37,6 @@ namespace LastExpress {
 #define ENTITY_CALLBACK(class, name, pointer) \
 	Common::Functor1Mem<const SavePoint&, void, class>(pointer, &class::name)
 
-#define ENTITY_SETUP(class, name) \
-	Functor4Mem<uint, uint, uint, uint, void, class>(this, &class::name)
-
-#define ENTITY_SETUP_SIII(class, name) \
-	Functor4Mem<const char*, uint, uint, uint, void, class>(this, &class::name)
-
-#define ENTITY_SETUP_SIIS(class, name) \
-	Functor4Mem<const char*, uint, uint, const char*, void, class>(this, &class::name)
-
-#define ENTITY_SETUP_SSII(class, name) \
-	Functor4Mem<const char*, const char*, uint, uint, void, class>(this, &class::name)
-
-#define ENTITY_SETUP_ISSI(class, name) \
-	Functor4Mem<uint, const char*, const char*, uint, void, class>(this, &class::name)
-
-#define ENTITY_SETUP_ISII(class, name) \
-	Functor4Mem<uint, const char*, uint, uint, void, class>(this, &class::name)
-
-#define ENTITY_SETUP_IISS(class, name) \
-	Functor4Mem<uint, uint, const char*, const char*, void, class>(this, &class::name)
-
-#define ENTITY_SETUP_IISI(class, name) \
-	Functor4Mem<uint, uint, const char*, uint, void, class>(this, &class::name)
-
-#define ENTITY_SETUP_IIIS(class, name) \
-	Functor4Mem<uint, uint, uint, const char*, void, class>(this, &class::name)
-
 #define ADD_CALLBACK_FUNCTION(class, name) \
 	_callbacks.push_back(new ENTITY_CALLBACK(class, name, this));
 
@@ -120,7 +93,7 @@ namespace LastExpress {
 
 #define DECLARE_FUNCTION_IIS(name) \
 	void name(const SavePoint &savepoint); \
-	void setup_##name(uint param1, uint param2, const char* seq, uint param3);
+	void setup_##name(uint param1, uint param2, const char* seq, uint param3 = 0);
 
 #define DECLARE_FUNCTION_IISS(name) \
 	void name(const SavePoint &savepoint); \
@@ -128,7 +101,7 @@ namespace LastExpress {
 
 #define DECLARE_FUNCTION_SIII(name) \
 	void name(const SavePoint &savepoint); \
-	void setup_##name(const char* seq, uint param2, uint param3, uint param4);
+	void setup_##name(const char* seq, uint param2, uint param3, uint param4 = 0);
 
 #define DECLARE_FUNCTION_SS(name) \
 	_DECLARE_FUNCTION_SSII(name)
@@ -136,20 +109,10 @@ namespace LastExpress {
 #define DECLARE_FUNCTION_SSI(name) \
 	_DECLARE_FUNCTION_SSII(name)
 
-// uinternal macros
+// internal macros
 #define _DECLARE_FUNCTION_SSII(name) \
 	void name(const SavePoint &savepoint); \
 	void setup_##name(const char* seq1, const char* seq2, uint param3 = 0, uint param4 = 0);
-
-//////////////////////////////////////////////////////////////////////////
-// Call function
-#define DECLARE_CALL_FUNCTION(id, class, type1, type2, type3, type4) \
-	typedef Functor4Mem<type1, type2, type3, type4, void, class> SetupFunction_##id; \
-	void call(SetupFunction_##id *func, type1 param1 = 0, type2 param2 = 0, type3 param3 = 0, type4 param4 = 0) { \
-		getData()->currentCall++; \
-		(*func)(param1, param2, param3, param4); \
-		delete func; \
-	}
 
 //////////////////////////////////////////////////////////////////////////
 // Implementation
@@ -159,7 +122,7 @@ namespace LastExpress {
 	BEGIN_SETUP(callback_class, name, index, EntityData::EntityParametersIIII) \
 	debugC(6, kLastExpressDebugLogic, "Entity: " #class "::setup_" #name "()"); \
 	END_SETUP() \
-	 }
+}
 
 // Expose parameters and check validity
 #define EXPOSE_PARAMS(type) \

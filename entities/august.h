@@ -109,12 +109,6 @@ public:
 	DECLARE_FUNCTION(function68)
 	DECLARE_FUNCTION(unhookCars)
 	DECLARE_NULL_FUNCTION()
-
-private:
-	DECLARE_CALL_FUNCTION(iiii, August, uint, uint, uint, uint)
-	DECLARE_CALL_FUNCTION(siis, August, const char *, uint, uint, const char *)
-	DECLARE_CALL_FUNCTION(issi, August, uint, const char *, const char *, uint)
-	DECLARE_CALL_FUNCTION(iisi, August, uint, uint, const char *, uint)
 };
 
 } // End of namespace LastExpress

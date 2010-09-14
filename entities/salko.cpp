@@ -174,7 +174,7 @@ IMPLEMENT_FUNCTION(Salko, chapter1Handler, 10)
 
 	case kAction125242096:
 		setCallback(1);
-		call(new ENTITY_SETUP(Salko, setup_function7), kCarRedSleeping, kPosition_2740);
+		setup_function7(kCarRedSleeping, kPosition_2740);
 		break;
 	}
 }
@@ -207,7 +207,7 @@ IMPLEMENT_FUNCTION(Salko, chapter2, 12)
 
 	case kAction136184016:
 		setCallback(1);
-		call(new ENTITY_SETUP(Salko, setup_function13));
+		setup_function13();
 		break;
 	}
 }
@@ -219,7 +219,7 @@ IMPLEMENT_FUNCTION(Salko, function13, 13)
 
 	case kActionDefault:
 		setCallback(1);
-		call(new ENTITY_SETUP_SIIS(Salko, setup_enterExitCompartment), "612DH", kObjectCompartmentH);
+		setup_enterExitCompartment("612DH", kObjectCompartmentH);
 		break;
 
 	case kActionCallback:
@@ -229,7 +229,7 @@ IMPLEMENT_FUNCTION(Salko, function13, 13)
 
 		case 1:
 			setCallback(2);
-			call(new ENTITY_SETUP(Salko, setup_updateEntity), kCarRestaurant, kPosition_850);
+			setup_updateEntity(kCarRestaurant, kPosition_850);
 			break;
 
 		case 2:
@@ -248,7 +248,7 @@ IMPLEMENT_FUNCTION(Salko, function13, 13)
 
 	case kAction125242096:
 		setCallback(3);
-		call(new ENTITY_SETUP(Salko, setup_function7), kCarRedSleeping, kPosition_2740);
+		setup_function7(kCarRedSleeping, kPosition_2740);
 		break;
 	}
 }
@@ -284,7 +284,7 @@ IMPLEMENT_FUNCTION(Salko, chapter3Handler, 15)
 			UPDATE_PARAM(params->param1, getState()->time, 81000);
 
 			setCallback(1);
-			call(new ENTITY_SETUP(Salko, setup_function16));
+			setup_function16();
 		}
 		break;
 
@@ -305,7 +305,7 @@ IMPLEMENT_FUNCTION(Salko, function16, 16)
 			getSavePoints()->push(kEntitySalko, kEntityMax, kAction158007856);
 
 			setCallback(3);
-			call(new ENTITY_SETUP(Salko, setup_updateFromTime), 75);
+			setup_updateFromTime(75);
 			break;
 		}
 
@@ -317,7 +317,7 @@ label_callback3:
 
 	case kActionDefault:
 		setCallback(1);
-		call(new ENTITY_SETUP_SIIS(Salko, setup_enterExitCompartment), "612DH", kObjectCompartmentH);
+		setup_enterExitCompartment("612DH", kObjectCompartmentH);
 		break;
 
 	case kActionCallback:
@@ -332,7 +332,7 @@ label_callback3:
 				getData()->entityPosition = kPosition_2088;
 
 			setCallback(2);
-			call(new ENTITY_SETUP(Salko, setup_updateEntity), kCarRedSleeping, kPosition_4070);
+			setup_updateEntity(kCarRedSleeping, kPosition_4070);
 			break;
 
 		case 2:
@@ -346,22 +346,22 @@ label_callback3:
 			getEntities()->exitCompartment(kEntitySalko, kObjectCompartmentF, true);
 
 			setCallback(5);
-			call(new ENTITY_SETUP(Salko, setup_updateEntity), kCarRedSleeping, kPosition_9460);
+			setup_updateEntity(kCarRedSleeping, kPosition_9460);
 			break;
 
 		case 5:
 			setCallback(6);
-			call(new ENTITY_SETUP(Salko, setup_updateFromTime), 4500);
+			setup_updateFromTime(4500);
 			break;
 
 		case 6:
 			setCallback(7);
-			call(new ENTITY_SETUP(Salko, setup_updateEntity), kCarRedSleeping, kPosition_2740);
+			setup_updateEntity(kCarRedSleeping, kPosition_2740);
 			break;
 
 		case 7:
 			setCallback(8);
-			call(new ENTITY_SETUP_SIIS(Salko, setup_enterExitCompartment), "612Ch", kObjectCompartmentH);
+			setup_enterExitCompartment("612Ch", kObjectCompartmentH);
 			break;
 
 		case 8:
@@ -376,7 +376,7 @@ label_callback3:
 
 	case kAction101169464:
 		setCallback(4);
-		call(new ENTITY_SETUP_SIIS(Salko, setup_enterExitCompartment), "612Bf", kObjectCompartmentF);
+		setup_enterExitCompartment("612Bf", kObjectCompartmentF);
 		break;
 	}
 }
@@ -394,7 +394,7 @@ IMPLEMENT_FUNCTION(Salko, function17, 17)
 		getData()->inventoryItem = kItemNone;
 
 		setCallback(1);
-		call(new ENTITY_SETUP(Salko, setup_updateEntity), kCarGreenSleeping, kPosition_2740);
+		setup_updateEntity(kCarGreenSleeping, kPosition_2740);
 		break;
 
 	case kActionCallback:
@@ -404,7 +404,7 @@ IMPLEMENT_FUNCTION(Salko, function17, 17)
 
 		case 1:
 			setCallback(2);
-			call(new ENTITY_SETUP_SIIS(Salko, setup_enterExitCompartment), "612Ch", kObjectCompartmentH);
+			setup_enterExitCompartment("612Ch", kObjectCompartmentH);
 			break;
 
 		case 2:
@@ -457,7 +457,7 @@ IMPLEMENT_FUNCTION(Salko, chapter4Handler, 19)
 
 	case kAction125242096:
 		setCallback(1);
-		call(new ENTITY_SETUP(Salko, setup_function7), kCarRedSleeping, kPosition_2740);
+		setup_function7(kCarRedSleeping, kPosition_2740);
 		break;
 	}
 }
@@ -478,7 +478,7 @@ IMPLEMENT_FUNCTION(Salko, function20, 20)
 				getData()->entityPosition = kPosition_2088;
 
 			setCallback(2);
-			call(new ENTITY_SETUP(Salko, setup_updateEntity), kCarRestaurant, kPosition_850);
+			setup_updateEntity(kCarRestaurant, kPosition_850);
 			break;
 
 		case 2:
@@ -490,7 +490,7 @@ IMPLEMENT_FUNCTION(Salko, function20, 20)
 
 	case kAction55996766:
 		setCallback(1);
-		call(new ENTITY_SETUP_SIIS(Salko, setup_enterExitCompartment), "612Dh", kObjectCompartmentH);
+		setup_enterExitCompartment("612Dh", kObjectCompartmentH);
 		break;
 	}
 }
@@ -504,7 +504,7 @@ IMPLEMENT_FUNCTION(Salko, function21, 21)
 		if (getState()->time > kTime2422800 && !params->param1) {
 			params->param1 = 1;
 			setCallback(1);
-			call(new ENTITY_SETUP(Salko, setup_updateEntity), kCarRedSleeping, kPosition_2740);
+			setup_updateEntity(kCarRedSleeping, kPosition_2740);
 		}
 		break;
 
@@ -512,7 +512,7 @@ IMPLEMENT_FUNCTION(Salko, function21, 21)
 		switch (getCallback()) {
 		case 1:
 			setCallback(2);
-			call(new ENTITY_SETUP_SIIS(Salko, setup_enterExitCompartment), "612Ch", kObjectCompartmentH);
+			setup_enterExitCompartment("612Ch", kObjectCompartmentH);
 			break;
 
 		case 2:
@@ -572,7 +572,7 @@ IMPLEMENT_FUNCTION(Salko, chapter5Handler, 24)
 			getAction()->playAnimation(kEventCathSalkoTrainTopFight);
 
 			setCallback(2);
-			call(new ENTITY_SETUP(Salko, setup_savegame), kSavegameTypeTime, kTimeNone);
+			setup_savegame(kSavegameTypeTime, kTimeNone);
 			break;
 
 		case 2:
@@ -581,7 +581,7 @@ IMPLEMENT_FUNCTION(Salko, chapter5Handler, 24)
 			if (params->param1 == Fight::kFightEndWin) {
 				getState()->time += 1800;
 				setCallback(3);
-				call(new ENTITY_SETUP(Salko, setup_savegame), kSavegameTypeEvent, kEventCathSalkoTrainTopWin);
+				setup_savegame(kSavegameTypeEvent, kEventCathSalkoTrainTopWin);
 			} else {
 				getLogic()->gameOver(kSavegameTypeIndex, 0, kSceneNone, params->param1 == Fight::kFightEndLost);
 			}
@@ -599,7 +599,7 @@ IMPLEMENT_FUNCTION(Salko, chapter5Handler, 24)
 
 	case kAction167992577:
 		setCallback(1);
-		call(new ENTITY_SETUP(Salko, setup_savegame), kSavegameTypeEvent, kEventCathSalkoTrainTopFight);
+		setup_savegame(kSavegameTypeEvent, kEventCathSalkoTrainTopFight);
 		break;
 	}
 }

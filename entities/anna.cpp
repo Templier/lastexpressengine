@@ -368,14 +368,14 @@ IMPLEMENT_FUNCTION(Anna, function12, 12)
 			getObjects()->update(kObject53, kEntityAnna, kLocation1, kCursorNormal, kCursorNormal);
 
 			setCallback(1);
-			call(new ENTITY_SETUP_SIIS(Anna, setup_playSound), "LIB012");
+			setup_playSound("LIB012");
 		}
 		break;
 
 	case kActionOpenDoor:
 		getSound()->removeFromQueue(kEntityAnna);
 		setCallback(3);
-		call(new ENTITY_SETUP_SIIS(Anna, setup_playSound), "LIB013");
+		setup_playSound("LIB013");
 		break;
 
 	case kActionDefault:
@@ -407,7 +407,7 @@ IMPLEMENT_FUNCTION(Anna, function12, 12)
 			++params->param3;
 			if (params->param3 == 2) {
 				setCallback(2);
-				call(new ENTITY_SETUP_SIIS(Anna, setup_draw), "418B");
+				setup_draw("418B");
 			}
 		}
 		break;
@@ -419,7 +419,7 @@ IMPLEMENT_FUNCTION(Anna, function12, 12)
 
 		case 1:
 			setCallback(2);
-			call(new ENTITY_SETUP_SIIS(Anna, setup_playSound), "Ann1016");
+			setup_playSound("Ann1016");
 			break;
 
 		case 2:
@@ -431,7 +431,7 @@ IMPLEMENT_FUNCTION(Anna, function12, 12)
 		case 3:
 			if (!getSound()->isBuffered(kEntityMax)) {
 				setCallback(4);
-				call(new ENTITY_SETUP_SIIS(Anna, setup_playSound), "MAX1120");
+				setup_playSound("MAX1120");
 				break;
 			}
 			// Fallback to next case
@@ -510,7 +510,7 @@ IMPLEMENT_FUNCTION_IS(Anna, function15, 15)
 			getObjects()->update(kObject53, kEntityAnna, kLocation1, kCursorNormal, kCursorNormal);
 
 			setCallback(1);
-			call(new ENTITY_SETUP_SIIS(Anna, setup_playSound), "LIB013");
+			setup_playSound("LIB013");
 			break;
 		}
 		// Fallback to next action
@@ -524,14 +524,14 @@ IMPLEMENT_FUNCTION_IS(Anna, function15, 15)
 
 			if (savepoint.param.intValue == kObject53) {
 				setCallback(6);
-				call(new ENTITY_SETUP_SIIS(Anna, setup_playSound), getSound()->justAMinuteCath());
+				setup_playSound(getSound()->justAMinuteCath());
 			} else {
 				if (getInventory()->hasItem(kItemPassengerList)) {
 					setCallback(7);
-					call(new ENTITY_SETUP_SIIS(Anna, setup_playSound), rnd(2) ? getSound()->wrongDoorCath() : (rnd(2) ? "CAT1506" : "CAT1506A"));
+					setup_playSound(rnd(2) ? getSound()->wrongDoorCath() : (rnd(2) ? "CAT1506" : "CAT1506A"));
 				} else {
 					setCallback(8);
-					call(new ENTITY_SETUP_SIIS(Anna, setup_playSound), getSound()->wrongDoorCath());
+					setup_playSound(getSound()->wrongDoorCath());
 				}
 			}
 		} else {
@@ -539,7 +539,7 @@ IMPLEMENT_FUNCTION_IS(Anna, function15, 15)
 			getObjects()->update(kObject53, kEntityAnna, kLocation1, kCursorNormal, kCursorNormal);
 
 			setCallback(savepoint.action == kActionKnock ? 3 : 4);
-			call(new ENTITY_SETUP_SIIS(Anna, setup_playSound), savepoint.action == kActionKnock ? "LIB012" : "LIB013");
+			setup_playSound(savepoint.action == kActionKnock ? "LIB012" : "LIB013");
 		}
 		break;
 
@@ -568,7 +568,7 @@ IMPLEMENT_FUNCTION_IS(Anna, function15, 15)
 		case 1:
 			if (!getSound()->isBuffered(kEntityMax)) {
 				setCallback(2);
-				call(new ENTITY_SETUP_SIIS(Anna, setup_playSound), "MAX1120");
+				setup_playSound("MAX1120");
 				break;
 			}
 			// Fallback to next case
@@ -581,7 +581,7 @@ IMPLEMENT_FUNCTION_IS(Anna, function15, 15)
 		case 3:
 		case 4:
 			setCallback(5);
-			call(new ENTITY_SETUP_SIIS(Anna, setup_playSound), "ANN1016");
+			setup_playSound("ANN1016");
 			break;
 
 		case 5:
@@ -646,10 +646,10 @@ IMPLEMENT_FUNCTION_II(Anna, function17, 17)
 			params->param3 &= 0xFFFFFFF7;
 
 			setCallback(1);
-			call(new ENTITY_SETUP(Anna, setup_savegame), kSavegameTypeEvent, kEventAnnaGiveScarf);
+			setup_savegame(kSavegameTypeEvent, kEventAnnaGiveScarf);
 		} else {
 			setCallback(2);
-			call(new ENTITY_SETUP(Anna, setup_savegame), kSavegameTypeEvent, kEventGotALight);
+			setup_savegame(kSavegameTypeEvent, kEventGotALight);
 		}
 		break;
 
@@ -746,7 +746,7 @@ label_next:
 
 	case kAction1:
 		setCallback(savepoint.param.intValue == 8 ? 1 : 2);
-		call(new ENTITY_SETUP(Anna, setup_savegame), kSavegameTypeEvent, savepoint.param.intValue == 8 ? kEventAnnaGiveScarf : kEventDinerMindJoin);
+		setup_savegame(kSavegameTypeEvent, savepoint.param.intValue == 8 ? kEventAnnaGiveScarf : kEventDinerMindJoin);
 		break;
 
 	case kActionDefault:
@@ -828,7 +828,7 @@ IMPLEMENT_FUNCTION(Anna, chapter1Handler, 19)
 
 	case kActionDefault:
 		setCallback(1);
-		call(new ENTITY_SETUP_SIIS(Anna, setup_enterExitCompartment), "618Ca", kObjectCompartment1);
+		setup_enterExitCompartment("618Ca", kObjectCompartment1);
 		break;
 
 	case kActionCallback:
@@ -841,12 +841,12 @@ IMPLEMENT_FUNCTION(Anna, chapter1Handler, 19)
 			getData()->location = kLocationOutsideCompartment;
 
 			setCallback(2);
-			call(new ENTITY_SETUP(Anna, setup_updateEntity), kCarRedSleeping, kPosition_4070);
+			setup_updateEntity(kCarRedSleeping, kPosition_4070);
 			break;
 
 		case 2:
 			setCallback(3);
-			call(new ENTITY_SETUP_SIIS(Anna, setup_enterExitCompartment), "618Af", kObjectCompartmentF);
+			setup_enterExitCompartment("618Af", kObjectCompartmentF);
 			break;
 
 		case 3:
@@ -868,7 +868,7 @@ IMPLEMENT_FUNCTION(Anna, function20, 20)
 
 	case kActionDefault:
 		setCallback(1);
-		call(new ENTITY_SETUP_ISII(Anna, setup_function15), kTime1093500, "NONE");
+		setup_function15(kTime1093500, "NONE");
 		break;
 
 	case kActionCallback:
@@ -878,7 +878,7 @@ IMPLEMENT_FUNCTION(Anna, function20, 20)
 
 		case 1:
 			setCallback(2);
-			call(new ENTITY_SETUP_SIIS(Anna, setup_enterExitCompartment), "618Bf", kObjectCompartmentF);
+			setup_enterExitCompartment("618Bf", kObjectCompartmentF);
 			break;
 
 		case 2:
@@ -898,7 +898,7 @@ IMPLEMENT_FUNCTION(Anna, function21, 21)
 
 	case kActionDefault:
 		setCallback(1);
-		call(new ENTITY_SETUP(Anna, setup_function17), kCarRestaurant, kPosition_850);
+		setup_function17(kCarRestaurant, kPosition_850);
 		break;
 
 	case kActionCallback:
@@ -908,7 +908,7 @@ IMPLEMENT_FUNCTION(Anna, function21, 21)
 
 		case 1:
 			setCallback(2);
-			call(new ENTITY_SETUP(Anna, setup_callbackActionRestaurantOrSalon));
+			setup_callbackActionRestaurantOrSalon();
 			break;
 
 		case 2:
@@ -916,7 +916,7 @@ IMPLEMENT_FUNCTION(Anna, function21, 21)
 			getData()->location = kLocationOutsideCompartment;
 
 			setCallback(3);
-			call(new ENTITY_SETUP_SIIS(Anna, setup_draw), "801US");
+			setup_draw("801US");
 			break;
 
 		case 3:
@@ -925,7 +925,7 @@ IMPLEMENT_FUNCTION(Anna, function21, 21)
 				getEntities()->updateFrame(kEntityAnna);
 
 			setCallback(4);
-			call(new ENTITY_SETUP(Anna, setup_callbackActionOnDirection));
+			setup_callbackActionOnDirection();
 			break;
 
 		case 4:
@@ -964,7 +964,7 @@ IMPLEMENT_FUNCTION(Anna, function23, 23)
 		getSavePoints()->push(kEntityAnna, kEntityTables0, kAction136455232);
 
 		setCallback(1);
-		call(new ENTITY_SETUP(Anna, setup_function18), false);
+		setup_function18(false);
 		break;
 
 	case kActionCallback:
@@ -975,12 +975,12 @@ IMPLEMENT_FUNCTION(Anna, function23, 23)
 		case 1:
 			getEntities()->drawSequenceLeft(kEntityAnna, "001E");
 			setCallback(2);
-			call(new ENTITY_SETUP_SIIS(Anna, setup_playSound), "ANN1048");
+			setup_playSound("ANN1048");
 			break;
 
 		case 2:
 			setCallback(3);
-			call(new ENTITY_SETUP_SIIS(Anna, setup_draw), "001F");
+			setup_draw("001F");
 			break;
 
 		case 3:
@@ -1001,7 +1001,7 @@ IMPLEMENT_FUNCTION(Anna, function24, 24)
 		getEntities()->drawSequenceLeft(kEntityAnna, "001G");
 
 		setCallback(1);
-		call(new ENTITY_SETUP(Anna, setup_function18));
+		setup_function18();
 		break;
 
 	case kActionCallback:
@@ -1012,7 +1012,7 @@ IMPLEMENT_FUNCTION(Anna, function24, 24)
 		case 1:
 			getEntities()->drawSequenceLeft(kEntityAnna, "001H");
 			setCallback(2);
-			call(new ENTITY_SETUP_SIIS(Anna, setup_playSound), "ANN1049");
+			setup_playSound("ANN1049");
 			break;
 
 		case 2:
@@ -1034,7 +1034,7 @@ IMPLEMENT_FUNCTION(Anna, function25, 25)
 		getProgress().field_28 = 1;
 
 		setCallback(1);
-		call(new ENTITY_SETUP(Anna, setup_function18), 0);
+		setup_function18(0);
 		break;
 
 	case kActionCallback:
@@ -1043,7 +1043,7 @@ IMPLEMENT_FUNCTION(Anna, function25, 25)
 			break;
 
 		case 2:
-			call(new ENTITY_SETUP(Anna, setup_callbackActionRestaurantOrSalon));
+			setup_callbackActionRestaurantOrSalon();
 			break;
 
 		case 3:
@@ -1059,7 +1059,7 @@ IMPLEMENT_FUNCTION(Anna, function25, 25)
 	case kAction201437056:
 		getEntities()->drawSequenceLeft(kEntityAnna, "001J");
 		setCallback(2);
-		call(new ENTITY_SETUP(Anna, setup_function18), kTime1138500);
+		setup_function18(kTime1138500);
 		break;
 	}
 }
@@ -1074,7 +1074,7 @@ IMPLEMENT_FUNCTION(Anna, function26, 26)
 		getEntities()->updatePositionExit(kEntityAnna, kCarRestaurant, 62);
 
 		setCallback(1);
-		call(new ENTITY_SETUP_SIIS(Anna, setup_callSavepoint), "001L", kEntityTables0, kActionDrawTablesWithChairs, "001H");
+		setup_callSavepoint("001L", kEntityTables0, kActionDrawTablesWithChairs, "001H");
 		break;
 
 	case kActionCallback:
@@ -1091,17 +1091,17 @@ IMPLEMENT_FUNCTION(Anna, function26, 26)
 				getEntities()->updateFrame(kEntityAnna);
 
 			setCallback(2);
-			call(new ENTITY_SETUP(Anna, setup_callbackActionOnDirection));
+			setup_callbackActionOnDirection();
 			break;
 
 		case 2:
 			setCallback(3);
-			call(new ENTITY_SETUP(Anna, setup_function17), kCarRedSleeping, kPosition_4070);
+			setup_function17(kCarRedSleeping, kPosition_4070);
 			break;
 
 		case 3:
 			setCallback(4);
-			call(new ENTITY_SETUP_SIIS(Anna, setup_enterExitCompartment), "618Af", kObjectCompartmentF);
+			setup_enterExitCompartment("618Af", kObjectCompartmentF);
 			break;
 
 		case 4:
@@ -1124,7 +1124,7 @@ IMPLEMENT_FUNCTION(Anna, function27, 27)
 	case kActionDefault:
 		getSavePoints()->push(kEntityAnna, kEntityMax, kAction101687594);
 		setCallback(1);
-		call(new ENTITY_SETUP_ISII(Anna, setup_function15), kTime1156500, "NONE");
+		setup_function15(kTime1156500, "NONE");
 		break;
 
 	case kActionCallback:
@@ -1137,10 +1137,10 @@ IMPLEMENT_FUNCTION(Anna, function27, 27)
 			if (getProgress().field_14 == 29) {
 				params->param1 = getState()->time + 900;
 				setCallback(2);
-				call(new ENTITY_SETUP_ISII(Anna, setup_function15), params->param1, "NONE");
+				setup_function15(params->param1, "NONE");
 			} else {
 				setCallback(3);
-				call(new ENTITY_SETUP_SIIS(Anna, setup_enterExitCompartment), "618Bf", kObjectCompartmentF);
+				setup_enterExitCompartment("618Bf", kObjectCompartmentF);
 			}
 			break;
 
@@ -1161,7 +1161,7 @@ IMPLEMENT_FUNCTION(Anna, function28, 28)
 
 	case kActionDefault:
 		setCallback(1);
-		call(new ENTITY_SETUP(Anna, setup_function17), kCarRestaurant, kPosition_850);
+		setup_function17(kCarRestaurant, kPosition_850);
 		break;
 
 	case kActionCallback:
@@ -1171,7 +1171,7 @@ IMPLEMENT_FUNCTION(Anna, function28, 28)
 
 		case 1:
 			setCallback(2);
-			call(new ENTITY_SETUP(Anna, setup_callbackActionRestaurantOrSalon));
+			setup_callbackActionRestaurantOrSalon();
 			break;
 
 		case 2:
@@ -1180,7 +1180,7 @@ IMPLEMENT_FUNCTION(Anna, function28, 28)
 			getScenes()->loadSceneFromItemPosition(kItem3);
 
 			setCallback(3);
-			call(new ENTITY_SETUP_SIIS(Anna, setup_updatePosition), "104A", kCarRestaurant, 56);
+			setup_updatePosition("104A", kCarRestaurant, 56);
 			break;
 
 		case 3:
@@ -1265,7 +1265,7 @@ IMPLEMENT_FUNCTION(Anna, function31, 31)
 
 	case kActionDefault:
 		setCallback(1);
-		call(new ENTITY_SETUP(Anna, setup_callbackActionRestaurantOrSalon));
+		setup_callbackActionRestaurantOrSalon();
 		break;
 
 	case kActionCallback:
@@ -1278,14 +1278,14 @@ IMPLEMENT_FUNCTION(Anna, function31, 31)
 			getSound()->playSound(kEntityAnna, "AUG1005");
 
 			setCallback(2);
-			call(new ENTITY_SETUP(Anna, setup_updateFromTicks), 150);
+			setup_updateFromTicks(150);
 			break;
 
 		case 2:
 			getEntities()->updatePositionEnter(kEntityAnna, kCarRestaurant, 56);
 
 			setCallback(3);
-			call(new ENTITY_SETUP_SSII(Anna, setup_draw2), "106C1", "106C2", kEntityAugust);
+			setup_draw2("106C1", "106C2", kEntityAugust);
 			break;
 
 		case 3:
@@ -1307,14 +1307,14 @@ IMPLEMENT_FUNCTION(Anna, function32, 32)
 
 	case kActionDefault:
 		setCallback(1);
-		call(new ENTITY_SETUP(Anna, setup_function17), kCarRedSleeping, kPosition_4070);
+		setup_function17(kCarRedSleeping, kPosition_4070);
 		break;
 
 	case kActionCallback:
 		switch (getCallback()) {
 		case 1:
 			setCallback(2);
-			call(new ENTITY_SETUP_SIIS(Anna, setup_enterExitCompartment), "618Af", kObjectCompartmentF);
+			setup_enterExitCompartment("618Af", kObjectCompartmentF);
 			break;
 
 		case 2:
@@ -1340,7 +1340,7 @@ IMPLEMENT_FUNCTION(Anna, function33, 33)
 
 		params->param1 = getState()->time + 4500;
 		setCallback(1);
-		call(new ENTITY_SETUP_ISII(Anna, setup_function15), params->param1, "NONE");
+		setup_function15(params->param1, "NONE");
 		break;
 
 	case kActionCallback:
@@ -1369,7 +1369,7 @@ IMPLEMENT_FUNCTION(Anna, function36, 36)
 		getObjects()->update(kObjectCompartmentF, kEntityPlayer, kLocation1, kCursorHandKnock, kCursorHand);
 
 		setCallback(1);
-		call(new ENTITY_SETUP(Anna, setup_updateEntity), kCarRedSleeping, kPosition_8200);
+		setup_updateEntity(kCarRedSleeping, kPosition_8200);
 		break;
 
 	case kActionCallback:
@@ -1381,7 +1381,7 @@ IMPLEMENT_FUNCTION(Anna, function36, 36)
 			getObjects()->update(kObjectCompartmentA, kEntityPlayer, kLocation1, kCursorKeepValue, kCursorKeepValue);
 
 			setCallback(2);
-			call(new ENTITY_SETUP_SIIS(Anna, setup_enterExitCompartment), "608Aa", kObjectCompartmentA);
+			setup_enterExitCompartment("608Aa", kObjectCompartmentA);
 			break;
 
 		case 2:
@@ -1422,7 +1422,7 @@ IMPLEMENT_FUNCTION(Anna, function38, 38)
 		getData()->entityPosition = kPosition_7500;
 
 		setCallback(1);
-		call(new ENTITY_SETUP_SIIS(Anna, setup_playSound), "ANN1010");
+		setup_playSound("ANN1010");
 		break;
 
 	case kActionCallback:
@@ -1477,7 +1477,7 @@ IMPLEMENT_FUNCTION(Anna, chapter2Handler, 43)
 		getObjects()->update(kObjectOutsideAnnaCompartment, kEntityPlayer, kLocationNone, kCursorKeepValue, kCursorKeepValue);
 
 		setCallback(1);
-		call(new ENTITY_SETUP(Anna, setup_function12));
+		setup_function12();
 		break;
 
 	case kActionCallback:
@@ -1487,27 +1487,27 @@ IMPLEMENT_FUNCTION(Anna, chapter2Handler, 43)
 
 		case 1:
 			setCallback(2);
-			call(new ENTITY_SETUP_ISII(Anna, setup_function15), kTime1786500, "418C");
+			setup_function15(kTime1786500, "418C");
 			break;
 
 		case 2:
 			setCallback(3);
-			call(new ENTITY_SETUP(Anna, setup_function12));
+			setup_function12();
 			break;
 
 		case 3:
 			setCallback(4);
-			call(new ENTITY_SETUP_ISII(Anna, setup_function15), kTime1818000, "418C");
+			setup_function15(kTime1818000, "418C");
 			break;
 
 		case 4:
 			setCallback(5);
-			call(new ENTITY_SETUP(Anna, setup_function12));
+			setup_function12();
 			break;
 
 		case 5:
 			setCallback(6);
-			call(new ENTITY_SETUP_ISII(Anna, setup_function15), kTimeEnd, "418C");
+			setup_function15(kTimeEnd, "418C");
 			break;
 		}
 		break;
@@ -1548,7 +1548,7 @@ IMPLEMENT_FUNCTION_I(Anna, function45, 45)
 		getData()->location = kLocationOutsideCompartment;
 
 		setCallback(1);
-		call(new ENTITY_SETUP_SIIS(Anna, setup_enterExitCompartment), "625Bf", kObjectCompartmentF);
+		setup_enterExitCompartment("625Bf", kObjectCompartmentF);
 		break;
 
 	case kActionCallback:
@@ -1572,7 +1572,7 @@ IMPLEMENT_FUNCTION_I(Anna, function45, 45)
 
 	case kAction157894320:
 		setCallback(2);
-		call(new ENTITY_SETUP(Anna, setup_updateFromTime), 75);
+		setup_updateFromTime(75);
 		break;
 	}
 }
@@ -1587,7 +1587,7 @@ IMPLEMENT_FUNCTION(Anna, chapter3Handler, 46)
 			getScenes()->loadSceneFromPosition(kCarRedSleeping, 49);
 
 		setCallback(1);
-		call(new ENTITY_SETUP(Anna, setup_function12));
+		setup_function12();
 		break;
 
 	case kActionCallback:
@@ -1596,7 +1596,7 @@ IMPLEMENT_FUNCTION(Anna, chapter3Handler, 46)
 				setup_function47();
 			} else {
 				setCallback(2);
-				call(new ENTITY_SETUP_ISII(Anna, setup_function15), getState()->time + 4500, "418C");
+				setup_function15(getState()->time + 4500, "418C");
 			}
 		}
 		break;
@@ -1638,20 +1638,20 @@ IMPLEMENT_FUNCTION(Anna, function50, 50)
 
 	case kActionDefault:
 		setCallback(1);
-		call(new ENTITY_SETUP_SIIS(Anna, setup_playSound), "ann3141");
+		setup_playSound("ann3141");
 		break;
 
 	case kActionCallback:
 		switch (getCallback()) {
 		case 1:
 			setCallback(2);
-			call(new ENTITY_SETUP(Anna, setup_callbackActionRestaurantOrSalon));
+			setup_callbackActionRestaurantOrSalon();
 			break;
 
 		case 2:
 			getData()->location = kLocationOutsideCompartment;
 			setCallback(3);
-			call(new ENTITY_SETUP(Anna, setup_leaveTableWithAugust));
+			setup_leaveTableWithAugust();
 			break;
 
 		case 3:
@@ -1683,7 +1683,7 @@ IMPLEMENT_FUNCTION(Anna, function52, 52)
 
 	case kActionDefault:
 		setCallback(1);
-		call(new ENTITY_SETUP(Anna, setup_updateEntity), kCarRedSleeping, kPosition_4070);
+		setup_updateEntity(kCarRedSleeping, kPosition_4070);
 		break;
 
 	case kActionCallback:
@@ -1726,7 +1726,7 @@ IMPLEMENT_FUNCTION(Anna, function55, 55)
 		getInventory()->setLocationAndProcess(kItemKey, kLocation1);
 
 		setCallback(1);
-		call(new ENTITY_SETUP(Anna, setup_function45), true);
+		setup_function45(true);
 		break;
 
 	case kActionCallback:
@@ -1737,7 +1737,7 @@ IMPLEMENT_FUNCTION(Anna, function55, 55)
 		case 1:
 			getObjects()->update(kObjectCompartmentF, kEntityPlayer, kLocation1, kCursorHandKnock, kCursorHand);
 			setCallback(2);
-			call(new ENTITY_SETUP(Anna, setup_updateEntity), kCarRedSleeping, kPosition_9270);
+			setup_updateEntity(kCarRedSleeping, kPosition_9270);
 			break;
 
 		case 2:
@@ -1777,7 +1777,7 @@ IMPLEMENT_FUNCTION(Anna, function58, 58)
 
 	case kActionDefault:
 		setCallback(1);
-		call(new ENTITY_SETUP(Anna, setup_savegame), kSavegameTypeEvent, kEventAnnaSearchingCompartment);
+		setup_savegame(kSavegameTypeEvent, kEventAnnaSearchingCompartment);
 		break;
 
 	case kActionCallback:
@@ -1807,7 +1807,7 @@ IMPLEMENT_FUNCTION(Anna, function60, 60)
 		getSound()->playSound(kEntityAnna, rnd(2) ? "Ann3126" : "Ann3127");
 
 		setCallback(1);
-		call(new ENTITY_SETUP_SIIS(Anna, setup_enterExitCompartment), "630Cf", kObjectCompartmentF);
+		setup_enterExitCompartment("630Cf", kObjectCompartmentF);
 		break;
 
 	case kActionCallback:
@@ -1817,7 +1817,7 @@ IMPLEMENT_FUNCTION(Anna, function60, 60)
 
 		case 1:
 			setCallback(2);
-			call(new ENTITY_SETUP_SIIS(Anna, setup_enterExitCompartment), "630Df", kObjectCompartmentF);
+			setup_enterExitCompartment("630Df", kObjectCompartmentF);
 			break;
 
 		case 2:
@@ -1837,7 +1837,7 @@ IMPLEMENT_FUNCTION(Anna, function60, 60)
 
 	case kAction156049968:
 		setCallback(3);
-		call(new ENTITY_SETUP_SIIS(Anna, setup_enterExitCompartment), "629EF", kObjectCompartmentF);
+		setup_enterExitCompartment("629EF", kObjectCompartmentF);
 		break;
 	}
 }
@@ -1893,7 +1893,7 @@ IMPLEMENT_FUNCTION(Anna, function63, 63)
 			getSound()->processEntry("MUS012");
 
 		setCallback(1);
-		call(new ENTITY_SETUP(Anna, setup_savegame), kSavegameTypeEvent, kEventAnnaKilled);
+		setup_savegame(kSavegameTypeEvent, kEventAnnaKilled);
 		break;
 	}
 }
@@ -1907,7 +1907,7 @@ IMPLEMENT_FUNCTION(Anna, baggage, 64)
 		getEntities()->clearSequences(kEntityAnna);
 
 		setCallback(1);
-		call(new ENTITY_SETUP(Anna, setup_savegame), kSavegameTypeEvent, kEventAnnaBaggageArgument);
+		setup_savegame(kSavegameTypeEvent, kEventAnnaBaggageArgument);
 		break;
 
 	case kActionCallback:
@@ -1919,7 +1919,7 @@ IMPLEMENT_FUNCTION(Anna, baggage, 64)
 			getAction()->playAnimation(kEventAnnaBaggageArgument);
 
 			setCallback(2);
-			call(new ENTITY_SETUP(Anna, setup_savegame), kSavegameTypeTime, kTimeNone);
+			setup_savegame(kSavegameTypeTime, kTimeNone);
 			break;
 
 		case 2:
@@ -1931,7 +1931,7 @@ IMPLEMENT_FUNCTION(Anna, baggage, 64)
 				getState()->time += 1800;
 
 				setCallback(3);
-				call(new ENTITY_SETUP(Anna, setup_savegame), kSavegameTypeEvent, kEventAnnaBagagePart2);
+				setup_savegame(kSavegameTypeEvent, kEventAnnaBagagePart2);
 			}
 			break;
 
@@ -1960,7 +1960,7 @@ IMPLEMENT_FUNCTION(Anna, function65, 65)
 		getObjects()->update(kObjectOutsideAnnaCompartment, kEntityPlayer, kLocation1, kCursorKeepValue, kCursorKeepValue);
 
 		setCallback(1);
-		call(new ENTITY_SETUP_ISII(Anna, setup_function15), kTimeEnd, "NONE");
+		setup_function15(kTimeEnd, "NONE");
 	}
 }
 
@@ -1998,7 +1998,7 @@ IMPLEMENT_FUNCTION(Anna, function68, 68)
 	case kActionNone:
 		if (!params->param1) {
 			setCallback(1);
-			call(new ENTITY_SETUP_ISII(Anna, setup_function15), kTime2511900, "NONE");
+			setup_function15(kTime2511900, "NONE");
 		}
 		break;
 
@@ -2033,7 +2033,7 @@ IMPLEMENT_FUNCTION(Anna, function70, 70)
 
 	case kActionDefault:
 		setCallback(1);
-		call(new ENTITY_SETUP(Anna, setup_function72), kCarRedSleeping, kPosition_4070);
+		setup_function72(kCarRedSleeping, kPosition_4070);
 		break;
 
 	case kActionCallback:
@@ -2043,7 +2043,7 @@ IMPLEMENT_FUNCTION(Anna, function70, 70)
 
 		case 1:
 			setCallback(2);
-			call(new ENTITY_SETUP(Anna, setup_function71));
+			setup_function71();
 			break;
 
 		case 2:
@@ -2111,7 +2111,7 @@ IMPLEMENT_FUNCTION(Anna, chapter5Handler, 75)
 
 	case kAction272177921:
 		setCallback(1);
-		call(new ENTITY_SETUP(Anna, setup_savegame), kSavegameTypeEvent, kEventAnnaBaggageTies);
+		setup_savegame(kSavegameTypeEvent, kEventAnnaBaggageTies);
 		break;
 	}
 }
@@ -2139,7 +2139,7 @@ IMPLEMENT_FUNCTION(Anna, function78, 78)
 		getState()->time = kTimeInvalid2;
 
 		setCallback(getInventory()->get(kItemFirebird)->location == kLocation4 ? 2 : 1);
-		call(new ENTITY_SETUP(Anna, setup_savegame), kSavegameTypeEvent, getInventory()->get(kItemFirebird)->location == kLocation4 ? kEventKronosHostageAnna : kEventKronosHostageAnnaNoFirebird);
+		setup_savegame(kSavegameTypeEvent, getInventory()->get(kItemFirebird)->location == kLocation4 ? kEventKronosHostageAnna : kEventKronosHostageAnnaNoFirebird);
 		break;
 
 	case kActionCallback:
@@ -2171,7 +2171,7 @@ IMPLEMENT_FUNCTION(Anna, function79, 79)
 	case kAction2:
 		getState()->time = kTime5933;
 		setCallback(1);
-		call(new ENTITY_SETUP(Anna, setup_savegame), kSavegameTypeEvent, kEventKahinaPunch);
+		setup_savegame(kSavegameTypeEvent, kEventKahinaPunch);
 		break;
 
 	case kActionDrawScene:
@@ -2183,7 +2183,7 @@ IMPLEMENT_FUNCTION(Anna, function79, 79)
 		if (getEntities()->isInSalon(kEntityPlayer) && !getEvent(kEventKahinaPunch)) {
 			getState()->time = kTime5933;
 			setCallback(2);
-			call(new ENTITY_SETUP(Anna, setup_savegame), kSavegameTypeEvent, kEventKahinaPunch);
+			setup_savegame(kSavegameTypeEvent, kEventKahinaPunch);
 		}
 		break;
 
@@ -2260,7 +2260,7 @@ IMPLEMENT_FUNCTION(Anna, finalSequence, 81)
 		getState()->time = kTimeCityConstantinople;
 
 		setCallback(1);
-		call(new ENTITY_SETUP(Anna, setup_savegame), kSavegameTypeEvent, kEventKronosGiveFirebird);
+		setup_savegame(kSavegameTypeEvent, kEventKronosGiveFirebird);
 		break;
 
 	case kActionUseWhistle:
@@ -2269,7 +2269,7 @@ IMPLEMENT_FUNCTION(Anna, finalSequence, 81)
 		getState()->time = kTimeCityConstantinople;
 
 		setCallback(2);
-		call(new ENTITY_SETUP(Anna, setup_savegame), kSavegameTypeEvent, kEventFinalSequence);
+		setup_savegame(kSavegameTypeEvent, kEventFinalSequence);
 		break;
 	}
 }

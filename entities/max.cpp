@@ -126,7 +126,7 @@ IMPLEMENT_FUNCTION(Max, chapter12_handler, 6)
 
 	case kAction71277948:
 		setCallback(1);
-		call(new ENTITY_SETUP(Max, setup_function7));
+		setup_function7();
 		break;
 
 	case kAction158007856:
@@ -162,7 +162,7 @@ IMPLEMENT_FUNCTION(Max, function7, 7)
 			getSound()->processEntry(kEntityMax);
 
 		setCallback((savepoint.action == kActionKnock) ? 1 : 2);
-		call(new ENTITY_SETUP_SIIS(Max, setup_playSound), (savepoint.action == kActionKnock) ? "LIB012" : "LIB013");
+		setup_playSound((savepoint.action == kActionKnock) ? "LIB012" : "LIB013");
 		break;
 
 	case kActionDefault:
@@ -192,7 +192,7 @@ IMPLEMENT_FUNCTION(Max, function7, 7)
 		case 1:
 		case 2:
 			setCallback(3);
-			call(new ENTITY_SETUP_SIIS(Max, setup_playSound), "Max1122");
+			setup_playSound("Max1122");
 			break;
 
 		case 3:
@@ -244,7 +244,7 @@ IMPLEMENT_FUNCTION(Max, chapter4Handler, 8)
 	case kActionOpenDoor:
 		if (params->param1) {
 			setCallback(1);
-			call(new ENTITY_SETUP(Max, setup_savegame), kSavegameTypeEvent, kEventCathMaxLickHand);
+			setup_savegame(kSavegameTypeEvent, kEventCathMaxLickHand);
 			break;
 		}
 
@@ -424,7 +424,7 @@ IMPLEMENT_FUNCTION(Max, chapter3Handler, 13)
 
 	case kAction71277948:
 		setCallback(1);
-		call(new ENTITY_SETUP(Max, setup_function7));
+		setup_function7();
 		break;
 
 	case kAction122358304:
@@ -465,12 +465,12 @@ IMPLEMENT_FUNCTION(Max, freeFromCage, 14)
 		if (getEvent(kEventCathMaxCage)) {
 			if (getEvent(kEventCathMaxFree)) {
 				setCallback(2);
-				call(new ENTITY_SETUP(Max, setup_savegame), kSavegameTypeEvent, kEventCathMaxFree);
+				setup_savegame(kSavegameTypeEvent, kEventCathMaxFree);
 			}
 
 		} else {
 			setCallback(1);
-			call(new ENTITY_SETUP(Max, setup_savegame), kSavegameTypeEvent, kEventCathMaxCage);
+			setup_savegame(kSavegameTypeEvent, kEventCathMaxCage);
 		}
 		break;
 
@@ -542,7 +542,7 @@ IMPLEMENT_FUNCTION(Max, function15, 15)
 			getSound()->playSound(kEntityMax, "Max3010");
 
 		setCallback(1);
-		call(new ENTITY_SETUP_SIIS(Max, setup_enterExitCompartment), "630Bf", kObjectCompartment4);
+		setup_enterExitCompartment("630Bf", kObjectCompartment4);
 		break;
 
 	case kActionCallback:

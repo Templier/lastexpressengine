@@ -92,10 +92,6 @@ public:
 	DECLARE_FUNCTION(chapter5Handler)
 	DECLARE_FUNCTION(function52)
 	DECLARE_FUNCTION(function53)
-
-private:
-	DECLARE_CALL_FUNCTION(siis, Abbot, const char*, uint, uint, const char*)
-	DECLARE_CALL_FUNCTION(iiii, Abbot, uint, uint, uint, uint)
 };
 
 } // End of namespace LastExpress

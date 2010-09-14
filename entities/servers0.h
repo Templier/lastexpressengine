@@ -79,9 +79,6 @@ public:
 	DECLARE_NULL_FUNCTION()
 
 private:
-	DECLARE_CALL_FUNCTION(iiii, Servers0, uint, uint, uint, uint)
-	DECLARE_CALL_FUNCTION(siis, Servers0, const char *, uint, uint, const char*)
-
 	void handleServer(const SavePoint &savepoint, const char* name, EntityIndex entity, ActionIndex action, uint *parameter, const char* name2 = "");
 	void serveTable(const SavePoint &savepoint, const char* seq1, EntityIndex entity, const char* seq2, const char* seq3, const char* seq4, uint *parameter, bool shouldUpdatePosition = true, bool pushSavepoint = false, Position position = 0);
 };

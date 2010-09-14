@@ -49,8 +49,6 @@ public:
 	DECLARE_FUNCTION(process)
 
 private:
-	DECLARE_CALL_FUNCTION(iiii, Train, uint, uint, uint, uint)
-
 	// Helper methods
 	void resetParam8();
 	void handleCompartmentAction();

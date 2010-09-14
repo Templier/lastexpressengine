@@ -528,7 +528,7 @@ public:
 
 	// Callbacks
 	int getCallback() { return _data->getCallback(_data->getCallData()->currentCall + 8); }
-	void setCallback(byte index) { _data->setCallback(_data->getCallData()->currentCall + 8, index); }
+	void setCallback(byte index) { _data->setCallback(_data->getCallData()->currentCall + 8, index); getData()->currentCall++; }
 
 	// Setup
 	void setup(ChapterIndex index);

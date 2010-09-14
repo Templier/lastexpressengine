@@ -331,7 +331,7 @@ label_process:
 		ObjectIndex compartment = (ObjectIndex)savepoint.param.intValue;
 		if (compartment == kObjectCompartment5 || compartment == kObjectCompartment6 || compartment == kObjectCompartment7 || compartment == kObjectCompartment8) {
 			setCallback(savepoint.action == kActionKnock ? 3 : 4);
-			call(new ENTITY_SETUP(Train, setup_harem), compartment, savepoint.action);
+			setup_harem(compartment, savepoint.action);
 		}
 		break;
 	}
@@ -404,13 +404,13 @@ label_process:
 		if (getProgress().jacket == kJacketBlood) {
 			if (getEntities()->isPlayerPosition(kCarRedSleeping, 18)) {
 				setCallback(1);
-				call(new ENTITY_SETUP(Train, setup_savegame), kSavegameTypeEvent, kEventMertensBloodJacket);
+				setup_savegame(kSavegameTypeEvent, kEventMertensBloodJacket);
 				break;
 			}
 
 			if (getEntities()->isPlayerPosition(kCarGreenSleeping, 22)) {
 				setCallback(2);
-				call(new ENTITY_SETUP(Train, setup_savegame), kSavegameTypeEvent, kEventMertensBloodJacket);
+				setup_savegame(kSavegameTypeEvent, kEventMertensBloodJacket);
 				break;
 			}
 		}
@@ -467,13 +467,13 @@ label_process:
 
 	case kActionCatchBeetle:
 		setCallback(8);
-		call(new ENTITY_SETUP(Train, setup_savegame), kSavegameTypeEvent, kEventCloseMatchbox);
+		setup_savegame(kSavegameTypeEvent, kEventCloseMatchbox);
 		break;
 
 	case kAction203339360:
 		if (params->param7) {
 			setCallback(5);
-			call(new ENTITY_SETUP(Train, setup_savegame), kSavegameTypeEvent, kEventLocomotiveConductorsDiscovered);
+			setup_savegame(kSavegameTypeEvent, kEventLocomotiveConductorsDiscovered);
 		} else {
 			params->param7 = 1;
 			getAction()->playAnimation(kEventLocomotiveConductorsLook);
@@ -541,12 +541,12 @@ label_process:
 
 	case kActionBreakCeiling:
 		setCallback(6);
-		call(new ENTITY_SETUP(Train, setup_savegame), kSavegameTypeEvent, kEventCathBreakCeiling);
+		setup_savegame(kSavegameTypeEvent, kEventCathBreakCeiling);
 		break;
 
 	case kActionJumpDownCeiling:
 		setCallback(7);
-		call(new ENTITY_SETUP(Train, setup_savegame), kSavegameTypeEvent, kEventCathJumpDownCeiling);
+		setup_savegame(kSavegameTypeEvent, kEventCathJumpDownCeiling);
 		break;
 	}
 }

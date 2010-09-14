@@ -231,7 +231,7 @@ IMPLEMENT_FUNCTION(Rebecca, function15, 15)
 			getScenes()->loadSceneFromPosition(kCarRedSleeping, 49);
 
 		setCallback(1);
-		call(new ENTITY_SETUP_SIIS(Rebecca, setup_enterExitCompartment2), "624Ae", kObjectCompartmentE);
+		setup_enterExitCompartment2("624Ae", kObjectCompartmentE);
 		break;
 
 	case kActionCallback:
@@ -309,7 +309,7 @@ label_process:
 				getObjects()->update(kObject52, kEntityRebecca, kLocation1, kCursorNormal, kCursorNormal);
 
 				setCallback(1);
-				call(new ENTITY_SETUP_SIIS(Rebecca, setup_playSound), "REB1205");
+				setup_playSound("REB1205");
 				break;
 			}
 			goto label_callback;
@@ -331,7 +331,7 @@ label_process:
 			getObjects()->update(kObject52, kEntityRebecca, kLocation1, kCursorNormal, kCursorNormal);
 
 			setCallback(2);
-			call(new ENTITY_SETUP_SIIS(Rebecca, setup_playSound), "REB3010");
+			setup_playSound("REB3010");
 			break;
 		}
 
@@ -341,7 +341,7 @@ label_callback:
 			getObjects()->update(kObject52, kEntityRebecca, kLocation1, kCursorNormal, kCursorNormal);
 
 			setCallback(3);
-			call(new ENTITY_SETUP_SIIS(Rebecca, setup_playSound), "REB1040");
+			setup_playSound("REB1040");
 		}
 		break;
 
@@ -387,10 +387,10 @@ label_callback:
 		case 5:
 			if (rnd(2)) {
 				setCallback(6);
-				call(new ENTITY_SETUP_SIIS(Rebecca, setup_playSound), "REB1039");
+				setup_playSound("REB1039");
 			} else {
 				setCallback(7);
-				call(new ENTITY_SETUP_SIIS(Rebecca, setup_playSound), rnd(2) ? "SOP1039" : "SOP1039A");
+				setup_playSound(rnd(2) ? "SOP1039" : "SOP1039A");
 			}
 			break;
 
@@ -412,7 +412,7 @@ label_callback:
 
 		case 12:
 			setCallback(13);
-			call(new ENTITY_SETUP_SIIS(Rebecca, setup_playSound16), "JAC1012B");
+			setup_playSound16("JAC1012B");
 			break;
 
 		case 13:
@@ -427,7 +427,7 @@ label_callback:
 		getObjects()->update(kObject52, kEntityRebecca, kLocation1, kCursorNormal, kCursorNormal);
 
 		setCallback(12);
-		call(new ENTITY_SETUP_SIIS(Rebecca, setup_playSound), "REB1039A");
+		setup_playSound("REB1039A");
 		break;
 	}
 }
@@ -488,7 +488,7 @@ label_callback_4:
 				if (checkParam5 || params->param5 < getState()->time) {
 					if (getEntities()->isInSalon(kEntityPlayer)) {
 						setCallback(5);
-						call(new ENTITY_SETUP_SIIS(Rebecca, setup_playSound), "REB1013");
+						setup_playSound("REB1013");
 						break;
 					}
 				}
@@ -509,7 +509,7 @@ label_playConversation:
 				getProgress().field_B8 = 1;
 
 			setCallback(4);
-			call(new ENTITY_SETUP_SIIS(Rebecca, setup_playSound), "REB1012");
+			setup_playSound("REB1012");
 		}
 		break;
 
@@ -528,12 +528,12 @@ label_playConversation:
 
 		case 1:
 			setCallback(2);
-			call(new ENTITY_SETUP_SIIS(Rebecca, setup_updatePosition), "107C", kCarRestaurant, 57);
+			setup_updatePosition("107C", kCarRestaurant, 57);
 			break;
 
 		case 2:
 			setCallback(3);
-			call(new ENTITY_SETUP(Rebecca, setup_function18));
+			setup_function18();
 			break;
 
 		case 3:
@@ -568,7 +568,7 @@ IMPLEMENT_FUNCTION(Rebecca, function25, 25)
 
 	case kActionDefault:
 		setCallback(1);
-		call(new ENTITY_SETUP(Rebecca, setup_function20), kTime1184400);
+		setup_function20(kTime1184400);
 		break;
 
 	case kActionCallback:
@@ -578,7 +578,7 @@ IMPLEMENT_FUNCTION(Rebecca, function25, 25)
 
 		case 1:
 			setCallback(2);
-			call(new ENTITY_SETUP(Rebecca, setup_function17));
+			setup_function17();
 			break;
 
 		case 2:
@@ -620,7 +620,7 @@ IMPLEMENT_FUNCTION(Rebecca, function26, 26)
 
 		case 1:
 			setCallback(2);
-			call(new ENTITY_SETUP(Rebecca, setup_function18));
+			setup_function18();
 			break;
 
 		case 2:
@@ -679,7 +679,7 @@ IMPLEMENT_FUNCTION(Rebecca, chapter2Handler, 29)
 
 	case kActionDefault:
 		setCallback(1);
-		call(new ENTITY_SETUP(Rebecca, setup_function20), kTime1764000);
+		setup_function20(kTime1764000);
 		break;
 
 	case kActionCallback:
@@ -689,7 +689,7 @@ IMPLEMENT_FUNCTION(Rebecca, chapter2Handler, 29)
 
 		case 1:
 			setCallback(2);
-			call(new ENTITY_SETUP(Rebecca, setup_function17));
+			setup_function17();
 			break;
 
 		case 2:
@@ -711,7 +711,7 @@ IMPLEMENT_FUNCTION(Rebecca, function31, 31)
 
 	case kActionDefault:
 		setCallback(1);
-		call(new ENTITY_SETUP(Rebecca, setup_updateFromTime), 900);
+		setup_updateFromTime(900);
 		break;
 
 	case kActionCallback:
@@ -721,7 +721,7 @@ IMPLEMENT_FUNCTION(Rebecca, function31, 31)
 
 		case 1:
 			setCallback(2);
-			call(new ENTITY_SETUP_SIIS(Rebecca, setup_enterExitCompartment), "623CE", kObjectCompartmentE);
+			setup_enterExitCompartment("623CE", kObjectCompartmentE);
 			break;
 
 		case 2:
@@ -761,7 +761,7 @@ IMPLEMENT_FUNCTION(Rebecca, chapter3Handler, 33)
 
 	case kActionDefault:
 		setCallback(1);
-		call(new ENTITY_SETUP(Rebecca, setup_function20), kTime2016000);
+		setup_function20(kTime2016000);
 		break;
 
 	case kActionCallback:
@@ -782,7 +782,7 @@ IMPLEMENT_FUNCTION(Rebecca, function35, 35)
 
 	case kActionDefault:
 		setCallback(1);
-		call(new ENTITY_SETUP(Rebecca, setup_function20), kTime2070000);
+		setup_function20(kTime2070000);
 		break;
 
 	case kActionCallback:
@@ -803,7 +803,7 @@ IMPLEMENT_FUNCTION(Rebecca, function37, 37)
 
 	case kActionDefault:
 		setCallback(1);
-		call(new ENTITY_SETUP(Rebecca, setup_function20), kTime2110500);
+		setup_function20(kTime2110500);
 		break;
 
 	case kActionCallback:
@@ -822,7 +822,7 @@ IMPLEMENT_FUNCTION(Rebecca, function38, 38)
 		getData()->location = kLocationOutsideCompartment;
 
 		setCallback(1);
-		call(new ENTITY_SETUP_SIIS(Rebecca, setup_enterExitCompartment3), "624Be", kObjectCompartmentE);
+		setup_enterExitCompartment3("624Be", kObjectCompartmentE);
 		break;
 
 	case kActionCallback:
@@ -835,7 +835,7 @@ IMPLEMENT_FUNCTION(Rebecca, function38, 38)
             getSavePoints()->push(kEntityRebecca, kEntitySophie, kAction259921280);
 
 			setCallback(2);
-			call(new ENTITY_SETUP(Rebecca, setup_updateEntity), kCarKronos, kPosition_9270);
+			setup_updateEntity(kCarKronos, kPosition_9270);
 			break;
 
 		case 2:
@@ -877,7 +877,7 @@ IMPLEMENT_FUNCTION(Rebecca, function40, 40)
 	case kActionDefault:
 		getData()->entityPosition = kPosition_9270;
 		setCallback(1);
-		call(new ENTITY_SETUP(Rebecca, setup_updateEntity), kCarGreenSleeping, kPosition_2740);
+		setup_updateEntity(kCarGreenSleeping, kPosition_2740);
 		break;
 
 	case kActionCallback:
@@ -888,19 +888,19 @@ IMPLEMENT_FUNCTION(Rebecca, function40, 40)
 		case 1:
 			getSavePoints()->push(kEntityRebecca, kEntitySophie, kAction292775040);
 			setCallback(2);
-			call(new ENTITY_SETUP(Rebecca, setup_updateEntity), kCarRedSleeping, kPosition_2740);
+			setup_updateEntity(kCarRedSleeping, kPosition_2740);
 			break;
 
 		case 2:
 			getSavePoints()->push(kEntityRebecca, kEntityAnna, kAction191668032);
 			setCallback(3);
-			call(new ENTITY_SETUP(Rebecca, setup_updateEntity), kCarRedSleeping, kPosition_4840);
+			setup_updateEntity(kCarRedSleeping, kPosition_4840);
 			break;
 
 		case 3:
 			getSavePoints()->push(kEntityRebecca, kEntitySophie, kAction123668192);
 			setCallback(4);
-			call(new ENTITY_SETUP(Rebecca, setup_function15));
+			setup_function15();
 			break;
 
 		case 4:
@@ -916,7 +916,7 @@ IMPLEMENT_FUNCTION(Rebecca, function41, 41)
 		ENTITY_PARAM(0, 2) = 1;
 
 		setCallback(1);
-		call(new ENTITY_SETUP(Rebecca, setup_function20), kTimeEnd);
+		setup_function20(kTimeEnd);
 	}
 }
 
@@ -953,7 +953,7 @@ IMPLEMENT_FUNCTION(Rebecca, chapter4Handler, 43)
 
 	case kActionDefault:
 		setCallback(1);
-		call(new ENTITY_SETUP(Rebecca, setup_function20), kTime2385000);
+		setup_function20(kTime2385000);
 		break;
 
 	case kActionCallback:
@@ -962,7 +962,7 @@ IMPLEMENT_FUNCTION(Rebecca, chapter4Handler, 43)
 				setup_function44();
 			} else {
 				setCallback(2);
-				call(new ENTITY_SETUP(Rebecca, setup_function20), getState()->time + 900);
+				setup_function20(getState()->time + 900);
 			}
 		}
 		break;
@@ -997,7 +997,7 @@ IMPLEMENT_FUNCTION(Rebecca, function45, 45)
 	case kAction205034665:
 		if (!params->param1 && getState()->time < kTime2511000) {
 			setCallback(1);
-			call(new ENTITY_SETUP_SIIS(Rebecca, setup_playSound), "Reb6969");
+			setup_playSound("Reb6969");
 		}
 		break;
 	}

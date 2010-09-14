@@ -64,10 +64,6 @@ public:
 	DECLARE_FUNCTION(chapter5)
 	DECLARE_FUNCTION(chapter5Handler)
 	DECLARE_NULL_FUNCTION()
-
-private:
-	DECLARE_CALL_FUNCTION(iiii, Salko, uint, uint, uint, uint)
-	DECLARE_CALL_FUNCTION(siis, Salko, const char*, uint, uint, const char*)
 };
 
 } // End of namespace LastExpress

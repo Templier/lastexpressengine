@@ -68,10 +68,6 @@ public:
 	DECLARE_FUNCTION(function27)
 	DECLARE_FUNCTION(chapter4)
 	DECLARE_FUNCTION(chapter5)
-
-private:
-	DECLARE_CALL_FUNCTION(iiii, Kahina, uint, uint, uint, uint)
-	DECLARE_CALL_FUNCTION(siis, Kahina, const char *, uint, uint, const char *)
 };
 
 } // End of namespace LastExpress

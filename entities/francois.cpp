@@ -150,10 +150,10 @@ IMPLEMENT_FUNCTION(Francois, function9, 9)
 			getObjects()->update(kObjectCompartmentD, kEntityPlayer, kLocationNone, kCursorKeepValue, kCursorKeepValue);
 			getSavePoints()->push(kEntityFrancois, kEntityMmeBoutarel, kAction134289824);
 			setCallback(1);
-			call(new ENTITY_SETUP_SIIS(Francois, setup_enterExitCompartment), "605Cd", kObjectCompartmentD);
+			setup_enterExitCompartment("605Cd", kObjectCompartmentD);
 		} else {
 			setCallback(2);
-			call(new ENTITY_SETUP_SIIS(Francois, setup_enterExitCompartment), "605Ed", kObjectCompartmentD);
+			setup_enterExitCompartment("605Ed", kObjectCompartmentD);
 		}
 		break;
 
@@ -184,10 +184,10 @@ IMPLEMENT_FUNCTION(Francois, function10, 10)
 		if (getObjects()->get(kObjectCompartmentD).location == kLocation2) {
 			getObjects()->update(kObjectCompartmentD, kEntityPlayer, kLocationNone, kCursorKeepValue, kCursorKeepValue);
 			setCallback(1);
-			call(new ENTITY_SETUP_SIIS(Francois, setup_enterExitCompartment), "605Bd", kObjectCompartmentD);
+			setup_enterExitCompartment("605Bd", kObjectCompartmentD);
 		} else {
 			setCallback(2);
-			call(new ENTITY_SETUP_SIIS(Francois, setup_enterExitCompartment), "605Dd", kObjectCompartmentD);
+			setup_enterExitCompartment("605Dd", kObjectCompartmentD);
 		}
 		break;
 
@@ -283,13 +283,13 @@ IMPLEMENT_FUNCTION_I(Francois, function11, 11)
 
 			if (getEntities()->isInsideTrainCar(kEntityFrancois, kCarRedSleeping) && params->param8) {
 				setCallback(2);
-				call(new ENTITY_SETUP_SIIS(Francois, setup_draw), "605A");
+				setup_draw("605A");
 				break;
 			}
 
 			if (getEntities()->isInsideTrainCar(kEntityFrancois, kCarGreenSleeping) && params->param7) {
 				setCallback(3);
-				call(new ENTITY_SETUP_SIIS(Francois, setup_draw), "605A");
+				setup_draw("605A");
 				break;
 			}
 		}
@@ -320,7 +320,7 @@ label_callback:
 				getSound()->processEntry(kEntityFrancois);
 
 			setCallback(4);
-			call(new ENTITY_SETUP(Francois, setup_function8), kCarRedSleeping, kPosition_5790);
+			setup_function8(kCarRedSleeping, kPosition_5790);
 		}
 		break;
 
@@ -331,7 +331,7 @@ label_callback:
 			getSound()->processEntry(kEntityFrancois);
 
 		setCallback(6);
-		call(new ENTITY_SETUP(Francois, setup_savegame), kSavegameTypeEvent, kEventFrancoisWhistle);
+		setup_savegame(kSavegameTypeEvent, kEventFrancoisWhistle);
 		break;
 
 	case kActionExcuseMeCath:
@@ -345,7 +345,7 @@ label_callback:
 
 	case kActionDefault:
 		setCallback(1);
-		call(new ENTITY_SETUP(Francois, setup_function9));
+		setup_function9();
 		break;
 
 	case kActionCallback:
@@ -382,7 +382,7 @@ label_callback:
 
 		case 4:
 			setCallback(5);
-			call(new ENTITY_SETUP(Francois, setup_function10));
+			setup_function10();
 			break;
 
 		case 5:
@@ -428,7 +428,7 @@ IMPLEMENT_FUNCTION(Francois, function12, 12)
 
 	case kActionDefault:
 		setCallback(1);
-		call(new ENTITY_SETUP(Francois, setup_function9));
+		setup_function9();
 		break;
 
 	case kActionCallback:
@@ -438,32 +438,32 @@ IMPLEMENT_FUNCTION(Francois, function12, 12)
 
 		case 1:
 			setCallback(2);
-			call(new ENTITY_SETUP(Francois, setup_function8), kCarRedSleeping, kPosition_9460);
+			setup_function8(kCarRedSleeping, kPosition_9460);
 			break;
 
 		case 2:
 			setCallback(3);
-			call(new ENTITY_SETUP(Francois, setup_updateFromTime), 675);
+			setup_updateFromTime(675);
 			break;
 
 		case 3:
 			setCallback(4);
-			call(new ENTITY_SETUP(Francois, setup_function8), kCarRedSleeping, kPosition_540);
+			setup_function8(kCarRedSleeping, kPosition_540);
 			break;
 
 		case 4:
 			setCallback(5);
-			call(new ENTITY_SETUP(Francois, setup_updateFromTime), 675);
+			setup_updateFromTime(675);
 			break;
 
 		case 5:
 			setCallback(6);
-			call(new ENTITY_SETUP(Francois, setup_function8), kCarRedSleeping, kPosition_5790);
+			setup_function8(kCarRedSleeping, kPosition_5790);
 			break;
 
 		case 6:
 			setCallback(7);
-			call(new ENTITY_SETUP(Francois, setup_function10));
+			setup_function10();
 			break;
 
 		case 7:
@@ -534,7 +534,7 @@ IMPLEMENT_FUNCTION(Francois, function19, 19)
 
 	case kAction101107728:
 		setCallback(1);
-		call(new ENTITY_SETUP(Francois, setup_function16));
+		setup_function16();
 		break;
 	}
 }
@@ -582,7 +582,7 @@ IMPLEMENT_FUNCTION(Francois, chapter2Handler, 22)
 
 		case 1:
 			setCallback(2);
-			call(new ENTITY_SETUP_SIIS(Francois, setup_enterExitCompartment), "605Id", kObjectCompartmentD);
+			setup_enterExitCompartment("605Id", kObjectCompartmentD);
 			break;
 
 		case 2:
@@ -598,7 +598,7 @@ IMPLEMENT_FUNCTION(Francois, chapter2Handler, 22)
 
 	case kAction100901266:
 		setCallback(1);
-		call(new ENTITY_SETUP(Francois, setup_function8), kCarRedSleeping, kPosition_5790);
+		setup_function8(kCarRedSleeping, kPosition_5790);
 		break;
 	}
 }
@@ -656,7 +656,7 @@ IMPLEMENT_FUNCTION(Francois, chapter4, 26)
 IMPLEMENT_FUNCTION(Francois, chapter4Handler, 27)
 	if (savepoint.action == kAction101107728) {
 		setCallback(1);
-		call(new ENTITY_SETUP(Francois, setup_function16));
+		setup_function16();
 	}
 }
 

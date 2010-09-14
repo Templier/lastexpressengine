@@ -206,7 +206,7 @@ IMPLEMENT_FUNCTION(Kahina, function12, 12)
 	case kActionOpenDoor:
 		if (!getEvent(kEventKronosGoingToInvitation)) {
 			setCallback(1);
-			call(new ENTITY_SETUP(Kahina, setup_savegame), kSavegameTypeEvent, kEventKronosGoingToInvitation);
+			setup_savegame(kSavegameTypeEvent, kEventKronosGoingToInvitation);
 			break;
 		}
 
@@ -262,7 +262,7 @@ IMPLEMENT_FUNCTION(Kahina, function13, 13)
 
 label_callback:
 		setCallback(1);
-		call(new ENTITY_SETUP(Kahina, setup_function15));
+		setup_function15();
 		break;
 
 	case kActionDefault:
@@ -352,7 +352,7 @@ IMPLEMENT_FUNCTION(Kahina, chapter2Handler, 17)
 				params->param3 = kTimeInvalid;
 
 				setCallback(1);
-				call(new ENTITY_SETUP(Kahina, setup_savegame), kSavegameTypeEvent, kEventKronosConversationFirebird);
+				setup_savegame(kSavegameTypeEvent, kEventKronosConversationFirebird);
 				break;
 			}
 		}
@@ -377,7 +377,7 @@ label_callback_3:
 				getSound()->playSound(kEntityPlayer, "LIB012");
 
 			setCallback(4);
-			call(new ENTITY_SETUP(Kahina, setup_savegame), kSavegameTypeEvent, kEventKronosConversationFirebird);
+			setup_savegame(kSavegameTypeEvent, kEventKronosConversationFirebird);
 			break;
 		}
 
@@ -386,7 +386,7 @@ label_callback_3:
 				getSound()->playSound(kEntityPlayer, "LIB012");
 
 			setCallback(7);
-			call(new ENTITY_SETUP(Kahina, setup_savegame), kSavegameTypeEvent, kEventKahinaAskSpeakFirebird);
+			setup_savegame(kSavegameTypeEvent, kEventKahinaAskSpeakFirebird);
 			break;
 		}
 
@@ -400,12 +400,12 @@ label_callback_3:
 			getObjects()->update(kObjectCompartmentKronos, kEntityKahina, kLocation1, kCursorNormal, kCursorNormal);
 
 			setCallback(8);
-			call(new ENTITY_SETUP_SIIS(Kahina, setup_playSound), "KRO3003");
+			setup_playSound("KRO3003");
 		} else {
 			getObjects()->update(kObjectCompartmentKronos, kEntityKahina, kLocation1, kCursorNormal, kCursorNormal);
 
 			setCallback(savepoint.action == kActionKnock ? 9 : 10);
-			call(new ENTITY_SETUP_SIIS(Kahina, setup_playSound), savepoint.action == kActionKnock ? "LIB012" : "LIB013");
+			setup_playSound(savepoint.action == kActionKnock ? "LIB012" : "LIB013");
 		}
 		break;
 
@@ -426,13 +426,13 @@ label_callback_3:
 			getScenes()->loadSceneFromPosition(kCarKronos, 80, 1);
 
 			setCallback(getCallback() == 1 ? 2 : 5);
-			call(new ENTITY_SETUP(Kahina, setup_updateFromTime), 900);
+			setup_updateFromTime(900);
 			break;
 
 		case 2:
 		case 5:
 			setCallback(getCallback() == 2 ? 3 : 6);
-			call(new ENTITY_SETUP_SIIS(Kahina, setup_playSound), "KRO3005");
+			setup_playSound("KRO3005");
 			break;
 
 		case 3:
@@ -534,10 +534,10 @@ IMPLEMENT_FUNCTION(Kahina, function22, 22)
 
 			if (ENTITY_PARAM(0, 3) || location == kLocation3 || location == kLocation7) {
 				setCallback(1);
-				call(new ENTITY_SETUP(Kahina, setup_function25));
+				setup_function25();
 			} else if (location == kLocation2 || location == kLocation1) {
 				setCallback(2);
-				call(new ENTITY_SETUP(Kahina, setup_function26));
+				setup_function26();
 			}
 		}
 		break;
@@ -596,7 +596,7 @@ IMPLEMENT_FUNCTION(Kahina, function27, 27)
 
 		if (params->param1) {
 			setCallback(1);
-			call(new ENTITY_SETUP(Kahina, setup_savegame), kSavegameTypeEvent, kSceneGameOverAlarm2);
+			setup_savegame(kSavegameTypeEvent, kSceneGameOverAlarm2);
 		}
 		break;
 

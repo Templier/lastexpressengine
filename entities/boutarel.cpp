@@ -251,7 +251,7 @@ IMPLEMENT_FUNCTION_IS(Boutarel, function16, 16)
 
 	case kActionDefault:
 		setCallback(1);
-		call(new ENTITY_SETUP(Boutarel, setup_callbackActionRestaurantOrSalon));
+		setup_callbackActionRestaurantOrSalon();
 		break;
 
 	case kActionCallback:
@@ -263,17 +263,17 @@ IMPLEMENT_FUNCTION_IS(Boutarel, function16, 16)
 			getData()->location = kLocationOutsideCompartment;
 
 			setCallback(2);
-			call(new ENTITY_SETUP_SIIS(Boutarel, setup_updatePosition), (const char *)&params->seq, kCarRestaurant, 52);
+			setup_updatePosition((const char *)&params->seq, kCarRestaurant, 52);
 			break;
 
 		case 2:
 			setCallback(3);
-			call(new ENTITY_SETUP(Boutarel, setup_updateEntity), kCarRedSleeping, kPosition_6470);
+			setup_updateEntity(kCarRedSleeping, kPosition_6470);
 			break;
 
 		case 3:
 			setCallback(params->param1 ? 4 : 5);
-			call(new ENTITY_SETUP_SIIS(Boutarel, setup_enterExitCompartment2), params->param1 ? "607Gc" : "607Ac", kObjectCompartmentC);
+			setup_enterExitCompartment2(params->param1 ? "607Gc" : "607Ac", kObjectCompartmentC);
 			break;
 
 		case 4:
@@ -351,17 +351,17 @@ IMPLEMENT_FUNCTION_I(Boutarel, function18, 18)
 		if (params->param2) {
 			if (savepoint.param.intValue == 50) {
 				setCallback(4);
-				call(new ENTITY_SETUP_SIIS(Boutarel, setup_playSound), getSound()->justAMinuteCath());
+				setup_playSound(getSound()->justAMinuteCath());
 			} else if (getInventory()->hasItem(kItemPassengerList)) {
 				setCallback(5);
-				call(new ENTITY_SETUP_SIIS(Boutarel, setup_playSound), rnd(2) ? "CAT1511" : getSound()->wrongDoorCath());
+				setup_playSound(rnd(2) ? "CAT1511" : getSound()->wrongDoorCath());
 			} else {
 				setCallback(6);
-				call(new ENTITY_SETUP_SIIS(Boutarel, setup_playSound), getSound()->wrongDoorCath());
+				setup_playSound(getSound()->wrongDoorCath());
 			}
 		} else {
 			setCallback(savepoint.action == kActionKnock ? 1 : 2);
-			call(new ENTITY_SETUP_SIIS(Boutarel, setup_playSound), savepoint.action == kActionKnock ? "LIB012" : "LIB013");
+			setup_playSound(savepoint.action == kActionKnock ? "LIB012" : "LIB013");
 		}
 		break;
 
@@ -388,7 +388,7 @@ IMPLEMENT_FUNCTION_I(Boutarel, function18, 18)
 		case 1:
 		case 2:
 			setCallback(3);
-			call(new ENTITY_SETUP_SIIS(Boutarel, setup_playSound), rnd(2) ? "MRB1001" : "MRB1001A");
+			setup_playSound(rnd(2) ? "MRB1001" : "MRB1001A");
 			break;
 
 		case 3:
@@ -418,7 +418,7 @@ IMPLEMENT_FUNCTION_I(Boutarel, function18, 18)
 
 	case kAction221683008:
 		setCallback(7);
-		call(new ENTITY_SETUP_SIIS(Boutarel, setup_playSound), "MRB1001");
+		setup_playSound("MRB1001");
 		break;
 	}
 }
@@ -458,7 +458,7 @@ IMPLEMENT_FUNCTION(Boutarel, chapter1Handler, 21)
 
 	case kActionDefault:
 		setCallback(1);
-		call(new ENTITY_SETUP_ISII(Boutarel, setup_function17), kTime1071000, "101A");
+		setup_function17(kTime1071000, "101A");
 		break;
 
 	case kActionCallback:
@@ -468,12 +468,12 @@ IMPLEMENT_FUNCTION(Boutarel, chapter1Handler, 21)
 
 		case 1:
 			setCallback(2);
-			call(new ENTITY_SETUP_ISII(Boutarel, setup_function16), false, "101B");
+			setup_function16(false, "101B");
 			break;
 
 		case 2:
 			setCallback(3);
-			call(new ENTITY_SETUP(Boutarel, setup_function18), kTime1102500);
+			setup_function18(kTime1102500);
 			break;
 
 		case 3:
@@ -487,7 +487,7 @@ IMPLEMENT_FUNCTION(Boutarel, chapter1Handler, 21)
 			getEntities()->updatePositionExit(kEntityBoutarel, kCarRedSleeping, 44);
 
 			setCallback(4);
-			call(new ENTITY_SETUP_SIIS(Boutarel, setup_playSound), "MRB1074");
+			setup_playSound("MRB1074");
 			break;
 
 		case 4:
@@ -495,32 +495,32 @@ IMPLEMENT_FUNCTION(Boutarel, chapter1Handler, 21)
 			getEntities()->updatePositionExit(kEntityBoutarel, kCarRedSleeping, 44);
 
 			setCallback(5);
-			call(new ENTITY_SETUP(Boutarel, setup_function20));
+			setup_function20();
 			break;
 
 		case 5:
 			setCallback(6);
-			call(new ENTITY_SETUP(Boutarel, setup_function18), kTimeEnterChalons);
+			setup_function18(kTimeEnterChalons);
 			break;
 
 		case 6:
 			setCallback(7);
-			call(new ENTITY_SETUP_ISII(Boutarel, setup_function15), false, "102A");
+			setup_function15(false, "102A");
 			break;
 
 		case 7:
 			setCallback(8);
-			call(new ENTITY_SETUP_ISII(Boutarel, setup_function17), kTime1183500, "102B");
+			setup_function17(kTime1183500, "102B");
 			break;
 
 		case 8:
 			setCallback(9);
-			call(new ENTITY_SETUP_ISII(Boutarel, setup_function16), false, "102C");
+			setup_function16(false, "102C");
 			break;
 
 		case 9:
 			setCallback(10);
-			call(new ENTITY_SETUP(Boutarel, setup_function18), kTime1215000);
+			setup_function18(kTime1215000);
 			break;
 
 		case 10:
@@ -653,7 +653,7 @@ IMPLEMENT_FUNCTION(Boutarel, function28, 28)
 
 	case kActionDefault:
 		setCallback(1);
-		call(new ENTITY_SETUP(Boutarel, setup_function11), 1);
+		setup_function11(1);
 		break;
 
 	case kActionCallback:
@@ -739,7 +739,7 @@ IMPLEMENT_FUNCTION(Boutarel, function33, 33)
 
 	case kActionDefault:
 		setCallback(1);
-		call(new ENTITY_SETUP(Boutarel, setup_function11), true);
+		setup_function11(true);
 		break;
 
 	case kActionCallback:
@@ -751,7 +751,7 @@ IMPLEMENT_FUNCTION(Boutarel, function33, 33)
 			getEntities()->drawSequenceLeft(kEntityBoutarel, "008B");
 
 			setCallback(2);
-			call(new ENTITY_SETUP(Boutarel, setup_updateFromTime), 450);
+			setup_updateFromTime(450);
 			break;
 
 		case 2:

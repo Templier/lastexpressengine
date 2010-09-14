@@ -175,7 +175,7 @@ IMPLEMENT_FUNCTION(Sophie, chapters_handler, 3)
 		getData()->car = getEntityData(kEntityRebecca)->car;
 
 		setCallback(1);
-		call(new ENTITY_SETUP(Sophie, setup_function2), kCarRestaurant, kPosition_850);
+		setup_function2(kCarRestaurant, kPosition_850);
 		break;
 
 	case kAction136654208:
@@ -184,7 +184,7 @@ IMPLEMENT_FUNCTION(Sophie, chapters_handler, 3)
 		getData()->car = getEntityData(kEntityRebecca)->car;
 
 		setCallback(2);
-		call(new ENTITY_SETUP(Sophie, setup_function2), kCarRedSleeping, kPosition_4840);
+		setup_function2(kCarRedSleeping, kPosition_4840);
 		break;
 
 	case kAction259921280:
@@ -193,7 +193,7 @@ IMPLEMENT_FUNCTION(Sophie, chapters_handler, 3)
 		getData()->car = getEntityData(kEntityRebecca)->car;
 
 		setCallback(3);
-		call(new ENTITY_SETUP(Sophie, setup_function2), kCarKronos, kPosition_9460);
+		setup_function2(kCarKronos, kPosition_9460);
 		break;
 
 	case kAction292775040:
@@ -202,7 +202,7 @@ IMPLEMENT_FUNCTION(Sophie, chapters_handler, 3)
 		getData()->car = kCarKronos;
 
 		setCallback(4);
-		call(new ENTITY_SETUP(Sophie, setup_function2), kCarRedSleeping, kPosition_4840);
+		setup_function2(kCarRedSleeping, kPosition_4840);
 		break;
 	}
 }

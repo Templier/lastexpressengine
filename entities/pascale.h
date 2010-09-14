@@ -73,10 +73,6 @@ public:
 	DECLARE_FUNCTION(chapter5Handler)
 	DECLARE_FUNCTION(function33)
 	DECLARE_NULL_FUNCTION()
-
-private:
-	DECLARE_CALL_FUNCTION(iiii, Pascale, uint, uint, uint, uint)
-	DECLARE_CALL_FUNCTION(siis, Pascale, const char *, uint, uint, const char *)
 };
 
 } // End of namespace LastExpress

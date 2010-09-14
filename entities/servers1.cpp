@@ -146,7 +146,7 @@ IMPLEMENT_FUNCTION(Servers1, function7, 7)
 		getData()->location = kLocationOutsideCompartment;
 
 		setCallback(1);
-		call(new ENTITY_SETUP_SIIS(Servers1, setup_draw), "924");
+		setup_draw("924");
 		break;
 
 	case kActionCallback:
@@ -157,13 +157,13 @@ IMPLEMENT_FUNCTION(Servers1, function7, 7)
 		case 1:
 			getSavePoints()->push(kEntityServers1, kEntityBoutarel, kAction122358304);
 			setCallback(2);
-			call(new ENTITY_SETUP_SIIS(Servers1, setup_draw), "008C");
+			setup_draw("008C");
 			break;
 
 		case 2:
 			getSavePoints()->push(kEntityServers1, kEntityBoutarel, kAction122288808);
 			setCallback(2);
-			call(new ENTITY_SETUP_SIIS(Servers1, setup_draw), "926");
+			setup_draw("926");
 			break;
 
 		case 3:
@@ -217,7 +217,7 @@ IMPLEMENT_FUNCTION(Servers1, function9, 9)
 		getData()->location = kLocationOutsideCompartment;
 
 		setCallback(1);
-		call(new ENTITY_SETUP_SIIS(Servers1, setup_draw), "924");
+		setup_draw("924");
 		break;
 
 	case kActionCallback:
@@ -230,14 +230,14 @@ IMPLEMENT_FUNCTION(Servers1, function9, 9)
 			getEntities()->drawSequenceLeft(kEntityServers1, "009B");
 
 			setCallback(2);
-			call(new ENTITY_SETUP_SIIS(Servers1, setup_playSound), "WAT1001");
+			setup_playSound("WAT1001");
 			break;
 
 		case 2:
 			getEntities()->drawSequenceLeft(kEntityMilos, "009A");
 
 			setCallback(3);
-			call(new ENTITY_SETUP_SIIS(Servers1, setup_draw), "926");
+			setup_draw("926");
 			break;
 
 		case 3:
@@ -262,7 +262,7 @@ IMPLEMENT_FUNCTION(Servers1, function10, 10)
 		getData()->location = kLocationOutsideCompartment;
 
 		setCallback(1);
-		call(new ENTITY_SETUP_SIIS(Servers1, setup_draw), "924");
+		setup_draw("924");
 		break;
 
 	case kActionCallback:
@@ -275,14 +275,14 @@ IMPLEMENT_FUNCTION(Servers1, function10, 10)
 			getEntities()->drawSequenceLeft(kEntityServers1, "008C");
 
 			setCallback(2);
-			call(new ENTITY_SETUP_SIIS(Servers1, setup_playSound), "MRB1077");
+			setup_playSound("MRB1077");
 			break;
 
 		case 2:
 			getSavePoints()->push(kEntityServers1, kEntityBoutarel, kAction168717392);
 
 			setCallback(3);
-			call(new ENTITY_SETUP_SIIS(Servers1, setup_draw), "926");
+			setup_draw("926");
 			break;
 
 		case 3:
@@ -320,31 +320,31 @@ switch (savepoint.action) {
 
 		if (ENTITY_PARAM(0, 1)) {
 			setCallback(1);
-			call(new ENTITY_SETUP(Servers1, setup_function9));
+			setup_function9();
 			break;
 		}
 
 		if (ENTITY_PARAM(1, 2)) {
 			setCallback(2);
-			call(new ENTITY_SETUP(Servers1, setup_function10));
+			setup_function10();
 			break;
 		}
 
 		if (ENTITY_PARAM(0, 3)) {
 			setCallback(3);
-			call(new ENTITY_SETUP(Servers1, setup_function11));
+			setup_function11();
 			break;
 		}
 
 		if (ENTITY_PARAM(0, 4)) {
 			setCallback(4);
-			call(new ENTITY_SETUP(Servers1, setup_function12));
+			setup_function12();
 			break;
 		}
 
 		if (ENTITY_PARAM(0, 5)) {
 			setCallback(5);
-			call(new ENTITY_SETUP(Servers1, setup_function13));
+			setup_function13();
 		}
 		break;
 
@@ -418,21 +418,21 @@ IMPLEMENT_FUNCTION(Servers1, chapter2Handler, 18)
 
 		if (ENTITY_PARAM(0, 6)) {
 			setCallback(1);
-			call(new ENTITY_SETUP(Servers1, setup_function19));
+			setup_function19();
 			break;
 		}
 
 label_callback_1:
 		if (ENTITY_PARAM(0, 7)) {
 			setCallback(2);
-			call(new ENTITY_SETUP(Servers1, setup_function20));
+			setup_function20();
 			break;
 		}
 
 label_callback_2:
 		if (ENTITY_PARAM(0, 8) || ENTITY_PARAM(0, 5)) {
 			setCallback(3);
-			call(new ENTITY_SETUP(Servers1, setup_function21));
+			setup_function21();
 		}
 		break;
 
@@ -456,7 +456,7 @@ label_callback_2:
 
 	case kAction101106391:
 		setCallback(4);
-		call(new ENTITY_SETUP_SIIS(Servers1, setup_draw), "975");
+		setup_draw("975");
 		break;
 	}
 }
@@ -475,7 +475,7 @@ IMPLEMENT_FUNCTION(Servers1, function20, 20)
 		getData()->location = kLocationOutsideCompartment;
 
 		setCallback(1);
-		call(new ENTITY_SETUP_SIIS(Servers1, setup_draw), "973");
+		setup_draw("973");
 		break;
 
 	case kActionCallback:
@@ -527,13 +527,13 @@ IMPLEMENT_FUNCTION(Servers1, chapter3Handler, 23)
 
 	if (ENTITY_PARAM(1, 1)) {
 		setCallback(1);
-		call(new ENTITY_SETUP(Servers1, setup_function24));
+		setup_function24();
 		return;
 	}
 
 	if (ENTITY_PARAM(1, 2)) {
 		setCallback(2);
-		call(new ENTITY_SETUP(Servers1, setup_function7));
+		setup_function7();
 	}
 }
 
@@ -587,19 +587,19 @@ label_continue:
 
 		if (ENTITY_PARAM(1, 5)) {
 			setCallback(2);
-			call(new ENTITY_SETUP(Servers1, setup_function28));
+			setup_function28();
 			break;
 		}
 
 		if (ENTITY_PARAM(1, 4)) {
 			setCallback(3);
-			call(new ENTITY_SETUP(Servers1, setup_function29));
+			setup_function29();
 			break;
 		}
 
 		if (ENTITY_PARAM(1, 2)) {
 			setCallback(4);
-			call(new ENTITY_SETUP(Servers1, setup_function7));
+			setup_function7();
 		}
 		break;
 
@@ -671,7 +671,7 @@ void Servers1::serveTable(const SavePoint &savepoint, const char* seq1, EntityIn
 		}
 
 		setCallback(1);
-		call(new ENTITY_SETUP_SIIS(Servers1, setup_draw), seq1);
+		setup_draw(seq1);
 		break;
 
 	case kActionCallback:
@@ -686,7 +686,7 @@ void Servers1::serveTable(const SavePoint &savepoint, const char* seq1, EntityIn
 			getSavePoints()->push(kEntityServers1, entity, kAction136455232);
 
 			setCallback(2);
-			call(new ENTITY_SETUP_SIIS(Servers1, setup_callSavepoint), seq2, entity, kActionDrawTablesWithChairs, seq3);
+			setup_callSavepoint(seq2, entity, kActionDrawTablesWithChairs, seq3);
 			break;
 
 		case 2:
@@ -694,7 +694,7 @@ void Servers1::serveTable(const SavePoint &savepoint, const char* seq1, EntityIn
 				getEntities()->updatePositionExit(kEntityServers1, kCarRestaurant, position);
 
 			setCallback(3);
-			call(new ENTITY_SETUP_SIIS(Servers1, setup_draw), seq4);
+			setup_draw(seq4);
 			break;
 
 		case 3:
@@ -722,7 +722,7 @@ void Servers1::serveSalon(const SavePoint &savepoint, const char* seq1, const ch
 		getData()->location = kLocationOutsideCompartment;
 
 		setCallback(1);
-		call(new ENTITY_SETUP_SIIS(Servers1, setup_draw), "816DD");
+		setup_draw("816DD");
 		break;
 
 	case kActionCallback:
@@ -740,7 +740,7 @@ void Servers1::serveSalon(const SavePoint &savepoint, const char* seq1, const ch
 				getSound()->playSound(kEntityServers1, snd1);
 
 			setCallback(2);
-			call(new ENTITY_SETUP(Servers1, setup_callbackActionOnDirection));
+			setup_callbackActionOnDirection();
 			break;
 
 		case 2:
@@ -749,14 +749,14 @@ void Servers1::serveSalon(const SavePoint &savepoint, const char* seq1, const ch
 			getSound()->playSound(kEntityServers1, snd2);
 
 			setCallback(3);
-			call(new ENTITY_SETUP_SIII(Servers1, setup_updatePosition), seq2, kCarRestaurant, 57);
+			setup_updatePosition(seq2, kCarRestaurant, 57);
 			break;
 
 		case 3:
 			getSavePoints()->push(kEntityServers1, entity, action);
 
 			setCallback(4);
-			call(new ENTITY_SETUP_SIIS(Servers1, setup_draw), seq3);
+			setup_draw(seq3);
 			break;
 
 		case 4:
@@ -766,7 +766,7 @@ void Servers1::serveSalon(const SavePoint &savepoint, const char* seq1, const ch
 				getEntities()->updateFrame(kEntityServers1);
 
 			setCallback(5);
-			call(new ENTITY_SETUP(Servers1, setup_callbackActionOnDirection));
+			setup_callbackActionOnDirection();
 			break;
 
 		case 5:

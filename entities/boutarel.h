@@ -78,11 +78,6 @@ public:
 	DECLARE_FUNCTION(chapter5Handler)
 	DECLARE_FUNCTION(function38)
 	DECLARE_NULL_FUNCTION()
-
-private:
-    DECLARE_CALL_FUNCTION(iiii, Boutarel, uint, uint, uint, uint)
-	DECLARE_CALL_FUNCTION(siis, Boutarel, const char *, uint, uint, const char *)
-	DECLARE_CALL_FUNCTION(isii, Boutarel, uint, const char *, uint, uint)
 };
 
 } // End of namespace LastExpress

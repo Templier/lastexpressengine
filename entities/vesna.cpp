@@ -217,7 +217,7 @@ IMPLEMENT_FUNCTION(Vesna, function11, 11)
 			getObjects()->update(kObjectCompartmentG, kEntityVesna, kLocation3, kCursorNormal, kCursorNormal);
 
 			setCallback(4);
-			call(new ENTITY_SETUP_SIIS(Vesna, setup_playSound), getSound()->wrongDoorCath());
+			setup_playSound(getSound()->wrongDoorCath());
 			break;
 		}
 
@@ -240,7 +240,7 @@ IMPLEMENT_FUNCTION(Vesna, function11, 11)
 		getObjects()->update(kObjectCompartmentG, kEntityVesna, kLocation3, kCursorNormal, kCursorNormal);
 
 		setCallback(savepoint.action == kActionKnock ? 2 : 1);
-		call(new ENTITY_SETUP_SIIS(Vesna, setup_playSound), savepoint.action == kActionKnock ? "LIB012" : "LIB013");
+		setup_playSound(savepoint.action == kActionKnock ? "LIB012" : "LIB013");
 		break;
 
 	case kActionDefault:
@@ -264,7 +264,7 @@ IMPLEMENT_FUNCTION(Vesna, function11, 11)
 		case 1:
 		case 2:
 			setCallback(3);
-			call(new ENTITY_SETUP_SIIS(Vesna, setup_playSound), (char *)&parameters->seq);
+			setup_playSound((char *)&parameters->seq);
 			break;
 
 		case 3:
@@ -324,7 +324,7 @@ IMPLEMENT_FUNCTION(Vesna, chapter1Handler, 13)
 
 	case kAction204832737:
 		setCallback(1);
-		call(new ENTITY_SETUP(Vesna, setup_updateEntity2), kCarRedSleeping, kPosition_3050);
+		setup_updateEntity2(kCarRedSleeping, kPosition_3050);
 		break;
 	}
 }
@@ -342,7 +342,7 @@ IMPLEMENT_FUNCTION(Vesna, function14, 14)
 
 	case kAction190412928:
 		setCallback(1);
-		call(new ENTITY_SETUP(Vesna, setup_function11));
+		setup_function11();
 		break;
 	}
 }
@@ -387,12 +387,12 @@ IMPLEMENT_FUNCTION(Vesna, chapter2Handler, 17)
 
 	case kAction135024800:
 		setCallback(2);
-		call(new ENTITY_SETUP(Vesna, setup_function18));
+		setup_function18();
 		break;
 
 	case kAction137165825:
 		setCallback(1);
-		call(new ENTITY_SETUP(Vesna, setup_function11));
+		setup_function11();
 		break;
 	}
 }
@@ -443,7 +443,7 @@ IMPLEMENT_FUNCTION(Vesna, function23, 23)
 	case kActionOpenDoor:
 		getObjects()->update(kObjectCompartmentG, kEntityVesna, kLocation3, kCursorNormal, kCursorNormal);
 		setCallback(savepoint.action == kActionKnock ? 1 : 2);
-		call(new ENTITY_SETUP_SIIS(Vesna, setup_playSound), savepoint.action == kActionKnock ? "LIB012" : "LIB013");
+		setup_playSound(savepoint.action == kActionKnock ? "LIB012" : "LIB013");
 		break;
 
 	case kActionDefault:
@@ -462,7 +462,7 @@ IMPLEMENT_FUNCTION(Vesna, function23, 23)
 		case 1:
 		case 2:
 			setCallback(3);
-			call(new ENTITY_SETUP_SIIS(Vesna, setup_playSound), "VES1015A");
+			setup_playSound("VES1015A");
 			break;
 
 		case 3:
@@ -484,7 +484,7 @@ IMPLEMENT_FUNCTION(Vesna, chapter4, 24)
 
 	case kActionNone:
 		setCallback(1);
-		call(new ENTITY_SETUP(Vesna, setup_function11));
+		setup_function11();
 		break;
 
 	case kActionDefault:
@@ -515,7 +515,7 @@ IMPLEMENT_FUNCTION(Vesna, function26, 26)
 
 	case kActionDefault:
 		setCallback(1);
-		call(new ENTITY_SETUP(Vesna, setup_callbackActionRestaurantOrSalon));
+		setup_callbackActionRestaurantOrSalon();
 		break;
 
 	case kActionCallback:
@@ -529,7 +529,7 @@ IMPLEMENT_FUNCTION(Vesna, function26, 26)
 			getData()->location = kLocationOutsideCompartment;
 
 			setCallback(2);
-			call(new ENTITY_SETUP_SIIS(Vesna, setup_draw), "808DD");
+			setup_draw("808DD");
 			break;
 
 		case 2:
@@ -539,17 +539,17 @@ IMPLEMENT_FUNCTION(Vesna, function26, 26)
 				getEntities()->updateFrame(kEntityVesna);
 
 			setCallback(3);
-			call(new ENTITY_SETUP(Vesna, setup_callbackActionOnDirection));
+			setup_callbackActionOnDirection();
 			break;
 
 		case 3:
 			setCallback(4);
-			call(new ENTITY_SETUP(Vesna, setup_updateEntity), kCarRedSleeping, kPosition_3050);
+			setup_updateEntity(kCarRedSleeping, kPosition_3050);
 			break;
 
 		case 4:
 			setCallback(5);
-			call(new ENTITY_SETUP_SIIS(Vesna, setup_enterExitCompartment), "610AG", kObjectCompartmentG);
+			setup_enterExitCompartment("610AG", kObjectCompartmentG);
 			break;
 
 		case 5:
@@ -598,7 +598,9 @@ IMPLEMENT_FUNCTION(Vesna, chapter5Handler, 29)
 
 	case kActionOpenDoor:
 		setCallback(1);
-		call(new ENTITY_SETUP(Vesna, setup_savegame), kSavegameTypeEvent, kEventCathVesnaRestaurantKilled);
+
+		getData()->currentCall++;
+		setup_savegame(kSavegameTypeEvent, kEventCathVesnaRestaurantKilled);
 		break;
 
 	case kActionDefault:

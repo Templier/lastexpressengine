@@ -299,7 +299,7 @@ IMPLEMENT_FUNCTION(Chapters, function6, 6)
 		getProgress().isTrainRunning = false;
 
 		setCallback(1);
-		call(new ENTITY_SETUP(Chapters, setup_savegame), kSavegameTypeTime, kTimeNone);
+		setup_savegame(kSavegameTypeTime, kTimeNone);
 		break;
 
 	case kAction225358684:
@@ -641,7 +641,7 @@ label_chapter1_end:
 		case 17:
 			getProgress().field_18 = 1;
 			setCallback(18);
-			call(new ENTITY_SETUP_SIIS(Chapters, setup_enterStation), "Strasbou", kCityStrasbourg);
+			setup_enterStation("Strasbou", kCityStrasbourg);
 			break;
 
 		case 18:
@@ -669,7 +669,7 @@ label_chapter1_end:
 
 	case kAction169629818:
 		setCallback(22);
-		call(new ENTITY_SETUP_SIIS(Chapters, setup_enterStation), "Unschedu", kCityPolice);
+		setup_enterStation("Unschedu", kCityPolice);
 		break;
 
 	case kActionEndChapter:
@@ -679,7 +679,7 @@ label_chapter1_end:
 			setup_chapter1End();
 		} else {
 			setCallback(23);
-			call(new ENTITY_SETUP(Chapters, setup_function6));
+			setup_function6();
 		}
 		break;
 	}
@@ -724,7 +724,7 @@ IMPLEMENT_FUNCTION(Chapters, chapter2, 10)
 
 		// Save game
 		setCallback(1);
-		call(new ENTITY_SETUP(Chapters, setup_savegame), kSavegameTypeTime, kTimeNone);
+		setup_savegame(kSavegameTypeTime, kTimeNone);
 		break;
 
 	case kActionCallback:
@@ -879,7 +879,7 @@ IMPLEMENT_FUNCTION(Chapters, chapter3Init, 14)
 		getInventory()->show();
 
 		setCallback(1);
-		call(new ENTITY_SETUP(Chapters, setup_savegame), kSavegameTypeTime, kTimeNone);
+		setup_savegame(kSavegameTypeTime, kTimeNone);
 		break;
 
 	case kActionCallback:
@@ -918,7 +918,7 @@ IMPLEMENT_FUNCTION(Chapters, chapter4, 17)
 
 		// Save game
 		setCallback(1);
-		call(new ENTITY_SETUP(Chapters, setup_savegame), kSavegameTypeTime, kTimeNone);
+		setup_savegame(kSavegameTypeTime, kTimeNone);
 		break;
 
 	case kActionCallback:
@@ -1091,7 +1091,7 @@ IMPLEMENT_FUNCTION(Chapters, chapter5Init, 21)
 		getInventory()->show();
 
 		setCallback(1);
-		call(new ENTITY_SETUP(Chapters, setup_savegame), kSavegameTypeTime, kTimeNone);
+		setup_savegame(kSavegameTypeTime, kTimeNone);
 		break;
 
 	case kActionCallback:
@@ -1130,7 +1130,7 @@ IMPLEMENT_FUNCTION(Chapters, chapter5Handler, 22)
 	case kAction2:
 		if (getState()->time <= kTimeTrainStopped2) {
 			setCallback(1);
-			call(new ENTITY_SETUP(Chapters, setup_savegame), kSavegameTypeEvent, kEventTrainStopped);
+			setup_savegame(kSavegameTypeEvent, kEventTrainStopped);
 		} else {
 			getLogic()->gameOver(kSavegameTypeTime, kTimeTrainStopped2, kSceneGameOverTrainStopped, true);
 		}

@@ -64,9 +64,6 @@ public:
 	DECLARE_FUNCTION(function23)
 	DECLARE_FUNCTION(chapter4)
 	DECLARE_FUNCTION(chapter5)
-
-private:
-	DECLARE_CALL_FUNCTION(iiii, Kronos, uint, uint, uint, uint)
 };
 
 } // End of namespace LastExpress

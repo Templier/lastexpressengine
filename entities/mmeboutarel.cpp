@@ -227,7 +227,7 @@ IMPLEMENT_FUNCTION(MmeBoutarel, chapter1Handler, 12)
 	case kActionDrawScene:
 		if (getEntities()->isPlayerPosition(kCarRedSleeping, 44)) {
 			setCallback(1);
-			call(new ENTITY_SETUP_SIIS(MmeBoutarel, setup_draw), "502B");
+			setup_draw("502B");
 		}
 		break;
 
@@ -270,7 +270,7 @@ IMPLEMENT_FUNCTION(MmeBoutarel, chapter1Handler, 12)
 		getEntities()->exitCompartment(kEntityMmeBoutarel, kObjectCompartmentD, true);
 
 		setCallback(3);
-		call(new ENTITY_SETUP_SIIS(MmeBoutarel, setup_enterExitCompartment), "606Fd", kObjectCompartmentD);
+		setup_enterExitCompartment("606Fd", kObjectCompartmentD);
 		break;
 
 	case kAction202221040:
@@ -283,7 +283,7 @@ IMPLEMENT_FUNCTION(MmeBoutarel, chapter1Handler, 12)
 			getProgress().field_AC = 1;
 
 		setCallback(2);
-		call(new ENTITY_SETUP_SIIS(MmeBoutarel, setup_enterExitCompartment), "606Ed", kObjectCompartmentD);
+		setup_enterExitCompartment("606Ed", kObjectCompartmentD);
 		break;
 	}
 }
@@ -299,7 +299,7 @@ IMPLEMENT_FUNCTION(MmeBoutarel, function14, 14)
 
 	case kActionDefault:
 		setCallback(1);
-		call(new ENTITY_SETUP_SIIS(MmeBoutarel, setup_enterExitCompartment), "606Dd", kObjectCompartmentD);
+		setup_enterExitCompartment("606Dd", kObjectCompartmentD);
 		break;
 
 	case kActionCallback:
@@ -317,14 +317,14 @@ IMPLEMENT_FUNCTION(MmeBoutarel, function14, 14)
 			getEntities()->drawSequenceLeft(kEntityMmeBoutarel, "503");
 
 			setCallback(3);
-			call(new ENTITY_SETUP_SIIS(MmeBoutarel, setup_playSound), "MRB1080");
+			setup_playSound("MRB1080");
 			break;
 
 		case 3:
 			getObjects()->update(kObjectCompartmentD, kEntityPlayer, kLocation1, kCursorKeepValue, kCursorKeepValue);
 
 			setCallback(4);
-			call(new ENTITY_SETUP_SIIS(MmeBoutarel, setup_enterExitCompartment), "606Cd", kObjectCompartmentD);
+			setup_enterExitCompartment("606Cd", kObjectCompartmentD);
 			break;
 
 		case 4:
@@ -337,7 +337,7 @@ IMPLEMENT_FUNCTION(MmeBoutarel, function14, 14)
 
 	case kAction101107728:
 		setCallback(2);
-		call(new ENTITY_SETUP(MmeBoutarel, setup_function9));
+		setup_function9();
 		break;
 	}
 }
@@ -400,7 +400,7 @@ IMPLEMENT_FUNCTION(MmeBoutarel, chapter2Handler, 18)
 				getObjects()->update(kObjectCompartmentD, kEntityPlayer, kLocationNone, kCursorNormal, kCursorNormal);
 
 				setCallback(2);
-				call(new ENTITY_SETUP_SIIS(MmeBoutarel, setup_enterExitCompartment2), "606Ad", kObjectCompartmentD);
+				setup_enterExitCompartment2("606Ad", kObjectCompartmentD);
 			} else {
 				getEntities()->drawSequenceLeft(kEntityMmeBoutarel, "606Md");
 				getEntities()->enterCompartment(kEntityMmeBoutarel, kObjectCompartmentD, true);
@@ -418,7 +418,7 @@ IMPLEMENT_FUNCTION(MmeBoutarel, chapter2Handler, 18)
 
 	case kAction100901266:
 		setCallback(1);
-		call(new ENTITY_SETUP(MmeBoutarel, setup_updateEntity), kCarRedSleeping, kPosition_5790);
+		setup_updateEntity(kCarRedSleeping, kPosition_5790);
 		break;
 
 	case kAction100957716:
@@ -426,7 +426,7 @@ IMPLEMENT_FUNCTION(MmeBoutarel, chapter2Handler, 18)
 		getObjects()->update(kObjectCompartmentD, kEntityPlayer, kLocationNone, kCursorNormal, kCursorNormal);
 
 		setCallback(3);
-		call(new ENTITY_SETUP_SIIS(MmeBoutarel, setup_enterExitCompartment2), "606Ad", kObjectCompartmentD);
+		setup_enterExitCompartment2("606Ad", kObjectCompartmentD);
 		break;
 	}
 }
@@ -440,7 +440,7 @@ IMPLEMENT_FUNCTION(MmeBoutarel, function19, 19)
 		if (getEntities()->isPlayerPosition(kCarRedSleeping, 44) && !params->param2) {
 			if (params->param1) {
 				setCallback(1);
-				call(new ENTITY_SETUP_SIIS(MmeBoutarel, setup_draw), "502B");
+				setup_draw("502B");
 			} else {
 				params->param1 = 1;
 			}
@@ -532,7 +532,7 @@ IMPLEMENT_FUNCTION(MmeBoutarel, chapter4Handler, 23)
 			getObjects()->update(kObjectCompartmentD, kEntityPlayer, kLocation1, kCursorKeepValue, kCursorKeepValue);
 
 			setCallback(1);
-			call(new ENTITY_SETUP_SIIS(MmeBoutarel, setup_enterExitCompartment), "606Cd", kObjectCompartmentD);
+			setup_enterExitCompartment("606Cd", kObjectCompartmentD);
 		}
 		break;
 
@@ -561,7 +561,7 @@ IMPLEMENT_FUNCTION(MmeBoutarel, chapter4Handler, 23)
 
 	case kAction101107728:
 		setCallback(2);
-		call(new ENTITY_SETUP(MmeBoutarel, setup_function9));
+		setup_function9();
 		break;
 	}
 }

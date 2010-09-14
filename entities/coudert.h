@@ -104,10 +104,6 @@ public:
 	DECLARE_NULL_FUNCTION()
 
 private:
-	DECLARE_CALL_FUNCTION(iiii, Coudert, uint, uint, uint, uint)
-	DECLARE_CALL_FUNCTION(siis, Coudert, const char *, uint, uint, const char *)
-	DECLARE_CALL_FUNCTION(siii, Coudert, const char *, uint, uint, uint)
-
 	void visitCompartment(const SavePoint &savepoint, EntityPosition position, const char* seq1, ObjectIndex compartment, const char* seq2, const char* seq3, EntityPosition sittingPosition, ObjectIndex object, const char* seq4);
 };
 

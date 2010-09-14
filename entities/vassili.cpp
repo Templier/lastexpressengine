@@ -159,7 +159,7 @@ IMPLEMENT_FUNCTION(Vassili, function6, 6)
 			UPDATE_PARAM_GOTO(params->param3, getState()->timeTicks, params->param1, label_function7);
 
 			setCallback(1);
-			call(new ENTITY_SETUP_SIIS(Vassili, setup_draw), "303B");
+			setup_draw("303B");
 			break;
 		}
 
@@ -344,7 +344,7 @@ IMPLEMENT_FUNCTION(Vassili, seizure, 10)
 		RESET_ENTITY_STATE(kEntityCoudert, Coudert, setup_function38);
 
 		setCallback(1);
-		call(new ENTITY_SETUP(Vassili, setup_savegame), kSavegameTypeEvent, kEventVassiliSeizure);
+		setup_savegame(kSavegameTypeEvent, kEventVassiliSeizure);
 		break;
 
 	case kActionCallback:
@@ -407,7 +407,7 @@ IMPLEMENT_FUNCTION(Vassili, sleeping, 13)
 			UPDATE_PARAM(params->param3, getState()->timeTicks, params->param1);
 
 			setCallback(1);
-			call(new ENTITY_SETUP_SIIS(Vassili, setup_draw), "303B");
+			setup_draw("303B");
 		} else {
 			params->param3 = 0;
 			if (params->param2)
@@ -464,7 +464,7 @@ IMPLEMENT_FUNCTION(Vassili, stealEgg, 15)
 			UPDATE_PARAM(params->param3, getState()->timeTicks, params->param1);
 
 			setCallback(1);
-			call(new ENTITY_SETUP_SIIS(Vassili, setup_draw), "303B");
+			setup_draw("303B");
 		} else {
 			params->param3 = 0;
 			if (params->param2)
@@ -474,7 +474,7 @@ IMPLEMENT_FUNCTION(Vassili, stealEgg, 15)
 
 	case kActionOpenDoor:
 		setCallback(2);
-		call(new ENTITY_SETUP(Vassili, setup_savegame), kSavegameTypeEvent, kEventVassiliCompartmentStealEgg);
+		setup_savegame(kSavegameTypeEvent, kEventVassiliCompartmentStealEgg);
 		break;
 
 	case kActionDefault:
@@ -546,7 +546,7 @@ IMPLEMENT_FUNCTION(Vassili, chapter4Handler, 17)
 			UPDATE_PARAM(params->param3, getState()->timeTicks, params->param1);
 
 			setCallback(1);
-			call(new ENTITY_SETUP_SIIS(Vassili, setup_draw), "303B");
+			setup_draw("303B");
 		} else {
 			params->param3 = 0;
 			if (params->param2)

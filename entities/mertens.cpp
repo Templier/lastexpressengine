@@ -46,7 +46,7 @@ namespace LastExpress {
 	 && !getEntities()->isInsideCompartments(kEntityPlayer) \
 	 && !getEntities()->checkFields10(kEntityPlayer)) { \
 		setCallback(1); \
-		call(new ENTITY_SETUP(Mertens, setup_savegame), kSavegameTypeEvent, kEventMertensBloodJacket); \
+		setup_savegame(kSavegameTypeEvent, kEventMertensBloodJacket); \
 	}
 
 Mertens::Mertens(LastExpressEngine *engine) : Entity(engine, kEntityMertens) {
@@ -377,25 +377,25 @@ IMPLEMENT_FUNCTION_II(Mertens, function10, 10)
 
 		if (getProgress().jacket == kJacketBlood) {
 			setCallback(1);
-			call(new ENTITY_SETUP(Mertens, setup_savegame), kSavegameTypeEvent, kEventMertensBloodJacket);
+			setup_savegame(kSavegameTypeEvent, kEventMertensBloodJacket);
 			break;
 		}
 
 		if ((ENTITY_PARAM(0, 6) || ENTITY_PARAM(0, 7)) && (!getEvent(kEventKronosConversation) && getProgress().jacket == kJacketGreen)) {
 			setCallback(2);
-			call(new ENTITY_SETUP(Mertens, setup_savegame), kSavegameTypeEvent, kEventMertensKronosInvitation);
+			setup_savegame(kSavegameTypeEvent, kEventMertensKronosInvitation);
 			break;
 		}
 
 		if (ENTITY_PARAM(1, 2) && getProgress().jacket == kJacketGreen && !getProgress().eventMetAugust) {
 			setCallback(3);
-			call(new ENTITY_SETUP(Mertens, setup_savegame), kSavegameTypeEvent, kEventMertensAugustWaiting);
+			setup_savegame(kSavegameTypeEvent, kEventMertensAugustWaiting);
 			break;
 		}
 
 		if (ENTITY_PARAM(2, 4) && getState()->time < kTime2133000) {
 			setCallback(4);
-			call(new ENTITY_SETUP(Mertens, setup_savegame), kSavegameTypeEvent, kEventMertensKronosConcertInvitation);
+			setup_savegame(kSavegameTypeEvent, kEventMertensKronosConcertInvitation);
 			break;
 		}
 
@@ -410,11 +410,11 @@ IMPLEMENT_FUNCTION_II(Mertens, function10, 10)
 		if (getProgress().eventCorpseFound || getEvent(kEventMertensAskTylerCompartment) || getEvent(kEventMertensAskTylerCompartmentD)) {
 			if (ENTITY_PARAM(0, 4) && getProgress().jacket == kJacketGreen && !getEvent(kEventMertensDontMakeBed) && !getProgress().eventCorpseThrown) {
 				setCallback(6);
-				call(new ENTITY_SETUP(Mertens, setup_savegame), kSavegameTypeEvent, kEventMertensDontMakeBed);
+				setup_savegame(kSavegameTypeEvent, kEventMertensDontMakeBed);
 			}
 		} else {
 			setCallback(5);
-			call(new ENTITY_SETUP(Mertens, setup_savegame), kSavegameTypeEvent, kEventMertensAskTylerCompartment);
+			setup_savegame(kSavegameTypeEvent, kEventMertensAskTylerCompartment);
 		}
 		break;
 
@@ -611,7 +611,7 @@ IMPLEMENT_FUNCTION_II(Mertens, function13, 13)
 
 				getData()->inventoryItem = kItemNone;
 				setCallback(5);
-				call(new ENTITY_SETUP(Mertens, setup_function18));
+				setup_function18();
 				break;
 			}
 		}
@@ -624,7 +624,7 @@ IMPLEMENT_FUNCTION_II(Mertens, function13, 13)
 
 			getData()->inventoryItem = kItemNone;
 			setCallback(6);
-			call(new ENTITY_SETUP(Mertens, setup_function18));
+			setup_function18();
 			break;
 		}
 
@@ -638,13 +638,13 @@ IMPLEMENT_FUNCTION_II(Mertens, function13, 13)
 	case kAction1:
 		getData()->inventoryItem = kItemNone;
 		setCallback(7);
-		call(new ENTITY_SETUP(Mertens, setup_savegame), kSavegameTypeEvent, kEventMertensAskTylerCompartmentD);
+		setup_savegame(kSavegameTypeEvent, kEventMertensAskTylerCompartmentD);
 		break;
 
 	case kAction11:
 		params->param3++;
 		setCallback(11);
-		call(new ENTITY_SETUP(Mertens, setup_bonsoir), savepoint.entity2);
+		setup_bonsoir(savepoint.entity2);
 		break;
 
 	case kActionDefault:
@@ -656,7 +656,7 @@ IMPLEMENT_FUNCTION_II(Mertens, function13, 13)
 		}
 
 		setCallback(3);
-		call(new ENTITY_SETUP(Mertens, setup_function20));
+		setup_function20();
 		break;
 
 	case kAction16:
@@ -665,14 +665,14 @@ IMPLEMENT_FUNCTION_II(Mertens, function13, 13)
 		if (params->param2 && !params->param3) {
 			getData()->inventoryItem = kItemNone;
 			setCallback(10);
-			call(new ENTITY_SETUP(Mertens, setup_function18));
+			setup_function18();
 		}
 		break;
 
 	case kActionDrawScene:
 		if (getEntities()->isPlayerPosition(kCarGreenSleeping, 23) && ENTITY_PARAM(0, 7) && !getEvent(kEventKronosConversation)) {
 			setCallback(8);
-			call(new ENTITY_SETUP(Mertens, setup_savegame), kSavegameTypeEvent, kEventMertensKronosInvitation);
+			setup_savegame(kSavegameTypeEvent, kEventMertensKronosInvitation);
 		}
 		break;
 
@@ -684,7 +684,7 @@ IMPLEMENT_FUNCTION_II(Mertens, function13, 13)
 		case 1:
 		case 2:
 			setCallback(3);
-			call(new ENTITY_SETUP(Mertens, setup_function20));
+			setup_function20();
 			break;
 
 		case 3:
@@ -717,7 +717,7 @@ IMPLEMENT_FUNCTION_II(Mertens, function13, 13)
 			if (!params->param3) {
 				getData()->inventoryItem = kItemNone;
 				setCallback(10);
-				call(new ENTITY_SETUP(Mertens, setup_function18));
+				setup_function18();
 			}
 			break;
 		}
@@ -746,10 +746,10 @@ IMPLEMENT_FUNCTION_I(Mertens, function14, 14)
 			ENTITY_PARAM(2, 1) = 0;
 
 			setCallback(3);
-			call(new ENTITY_SETUP(Mertens, setup_function10), kCarGreenSleeping, kPosition_1500);
+			setup_function10(kCarGreenSleeping, kPosition_1500);
 		} else {
 			setCallback(1);
-			call(new ENTITY_SETUP(Mertens, setup_function11), 15);
+			setup_function11(15);
 		}
 		break;
 
@@ -762,7 +762,7 @@ IMPLEMENT_FUNCTION_I(Mertens, function14, 14)
 			getSavePoints()->push(kEntityMertens, (EntityIndex)params->param1, kAction202558662);
 
 			setCallback(2);
-			call(new ENTITY_SETUP(Mertens, setup_function20));
+			setup_function20();
 			break;
 
 		case 2:
@@ -793,7 +793,7 @@ IMPLEMENT_FUNCTION_I(Mertens, function14, 14)
 			ENTITY_PARAM(0, 8) = 0;
 
 		setCallback(5);
-		call(new ENTITY_SETUP(Mertens, setup_function18));
+		setup_function18();
 		break;
 	}
 }
@@ -809,7 +809,7 @@ IMPLEMENT_FUNCTION_I(Mertens, function15, 15)
 		ENTITY_PARAM(1, 5) = 0;
 
 		setCallback(1);
-		call(new ENTITY_SETUP(Mertens, setup_function19));
+		setup_function19();
 		break;
 
 	case kActionCallback:
@@ -819,31 +819,31 @@ IMPLEMENT_FUNCTION_I(Mertens, function15, 15)
 
 		case 1:
 			setCallback(2);
-			call(new ENTITY_SETUP(Mertens, setup_function10), kCarGreenSleeping, kPosition_4070);
+			setup_function10(kCarGreenSleeping, kPosition_4070);
 			break;
 
 		case 2:
 			getSound()->playSound(kEntityMertens, params->param1 ? "CON1059A" : "CON1059");
 
 			setCallback(3);
-			call(new ENTITY_SETUP(Mertens, setup_function10), kCarGreenSleeping, kPosition_7500);
+			setup_function10(kCarGreenSleeping, kPosition_7500);
 			break;
 
 		case 3:
 			setCallback(4);
-			call(new ENTITY_SETUP_SIIS(Mertens, setup_enterExitCompartment), "601Xb", kObjectCompartment2);
+			setup_enterExitCompartment("601Xb", kObjectCompartment2);
 			break;
 
 		case 4:
 			getSavePoints()->push(kEntityMertens, kEntityAlexei, kAction135664192);
 
 			setCallback(5);
-			call(new ENTITY_SETUP(Mertens, setup_function10), kCarGreenSleeping, kPosition_2000);
+			setup_function10(kCarGreenSleeping, kPosition_2000);
 			break;
 
 		case 5:
 			setCallback(6);
-			call(new ENTITY_SETUP(Mertens, setup_function17));
+			setup_function17();
 			break;
 
 		case 6:
@@ -870,7 +870,7 @@ IMPLEMENT_FUNCTION(Mertens, function17, 17)
 			getInventory()->setLocationAndProcess(kItem7, kLocation1);
 
 			setCallback(1);
-			call(new ENTITY_SETUP(Mertens, setup_function10), kCarGreenSleeping, kPosition_540);
+			setup_function10(kCarGreenSleeping, kPosition_540);
 			break;
 		}
 
@@ -901,7 +901,7 @@ IMPLEMENT_FUNCTION(Mertens, function17, 17)
 		}
 
 		setCallback(3);
-		call(new ENTITY_SETUP(Mertens, setup_callbackActionOnDirection));
+		setup_callbackActionOnDirection();
 		break;
 
 	case kActionCallback:
@@ -913,7 +913,7 @@ IMPLEMENT_FUNCTION(Mertens, function17, 17)
 			getEntities()->clearSequences(kEntityMertens);
 			ENTITY_PARAM(2, 1) = 1;
 			setCallback(2);
-			call(new ENTITY_SETUP(Mertens, setup_function11), 75);
+			setup_function11(75);
 			break;
 
 		case 2:
@@ -983,7 +983,7 @@ IMPLEMENT_FUNCTION(Mertens, function18, 18)
 		getScenes()->loadSceneFromItemPosition(kItem7);
 
 		setCallback(1);
-		call(new ENTITY_SETUP(Mertens, setup_callbackActionOnDirection));
+		setup_callbackActionOnDirection();
 		break;
 
 	case kActionCallback:
@@ -1017,7 +1017,7 @@ IMPLEMENT_FUNCTION(Mertens, function19, 19)
 			CALLBACK_ACTION();
 		} else {
 			setCallback(1);
-			call(new ENTITY_SETUP_SIIS(Mertens, setup_bloodJacket), "601C");
+			setup_bloodJacket("601C");
 		}
 		break;
 
@@ -1048,7 +1048,7 @@ IMPLEMENT_FUNCTION(Mertens, function20, 20)
 			CALLBACK_ACTION();
 		} else {
 			setCallback(1);
-			call(new ENTITY_SETUP_SIIS(Mertens, setup_bloodJacket), "601C");
+			setup_bloodJacket("601C");
 		}
 		break;
 
@@ -1091,13 +1091,13 @@ IMPLEMENT_FUNCTION(Mertens, function25, 25)
 			UPDATE_PARAM(params->param2, getState()->timeTicks, 75);
 
 			setCallback(3);
-			call(new ENTITY_SETUP_SIII(Mertens, setup_enterExitCompartment3), "601Zb", kObjectCompartment2, kPosition_7500);
+			setup_enterExitCompartment3("601Zb", kObjectCompartment2, kPosition_7500);
 		}
 		break;
 
 	case kActionDefault:
 		setCallback(1);
-		call(new ENTITY_SETUP(Mertens, setup_function10), kCarGreenSleeping, kPosition_7500);
+		setup_function10(kCarGreenSleeping, kPosition_7500);
 		break;
 
 	case kActionCallback:
@@ -1107,7 +1107,7 @@ IMPLEMENT_FUNCTION(Mertens, function25, 25)
 
 		case 1:
 			setCallback(2);
-			call(new ENTITY_SETUP_SIIS(Mertens, setup_enterExitCompartment), "601Vb", kObjectCompartment2);
+			setup_enterExitCompartment("601Vb", kObjectCompartment2);
 			break;
 
 		case 2:
@@ -1126,12 +1126,12 @@ IMPLEMENT_FUNCTION(Mertens, function25, 25)
 					getProgress().field_14 = 3;
 
 			setCallback(4);
-			call(new ENTITY_SETUP(Mertens, setup_function21), kObjectCompartment2, kObjectHandleInsideBathroom);
+			setup_function21(kObjectCompartment2, kObjectHandleInsideBathroom);
 			break;
 
 		case 4:
 			setCallback(5);
-			call(new ENTITY_SETUP_SIIS(Mertens, setup_enterExitCompartment), "671Ab", kObjectCompartment2);
+			setup_enterExitCompartment("671Ab", kObjectCompartment2);
 			break;
 
 		case 5:
@@ -1151,7 +1151,7 @@ IMPLEMENT_FUNCTION(Mertens, function25, 25)
 					getProgress().field_14 = 3;
 
 			setCallback(7);
-			call(new ENTITY_SETUP(Mertens, setup_function21), kObjectCompartment2, kObjectHandleInsideBathroom);
+			setup_function21(kObjectCompartment2, kObjectHandleInsideBathroom);
 			break;
 
 		case 7:
@@ -1159,7 +1159,7 @@ IMPLEMENT_FUNCTION(Mertens, function25, 25)
 			getObjects()->update(kObjectCompartment2, kEntityPlayer, kLocation1, kCursorKeepValue, kCursorKeepValue);
 
 			setCallback(8);
-			call(new ENTITY_SETUP_SIIS(Mertens, setup_enterExitCompartment), "641Ub", kObjectCompartment2);
+			setup_enterExitCompartment("641Ub", kObjectCompartment2);
 			break;
 
 		case 8:
@@ -1167,7 +1167,7 @@ IMPLEMENT_FUNCTION(Mertens, function25, 25)
 			getSavePoints()->push(kEntityMertens, kEntityAlexei, kAction124697504);
 
 			setCallback(9);
-			call(new ENTITY_SETUP(Mertens, setup_function10), kCarGreenSleeping, kPosition_9460);
+			setup_function10(kCarGreenSleeping, kPosition_9460);
 			break;
 
 		case 9:
@@ -1182,7 +1182,7 @@ IMPLEMENT_FUNCTION(Mertens, function25, 25)
 
 	case kAction156567128:
 		setCallback(6);
-		call(new ENTITY_SETUP_SIIS(Mertens, setup_enterExitCompartment), "641Tb", kObjectCompartment2);
+		setup_enterExitCompartment("641Tb", kObjectCompartment2);
 		break;
 	}
 }
@@ -1211,7 +1211,7 @@ IMPLEMENT_FUNCTION_I(Mertens, tylerCompartment, 27)
 			getObjects()->update(kObjectCompartment1, kEntityPlayer, getObjects()->get(kObjectCompartment1).location, kCursorNormal, kCursorNormal);
 
 			setCallback(10);
-			call(new ENTITY_SETUP_SIIS(Mertens, setup_playSound16), "CON1018A");
+			setup_playSound16("CON1018A");
 			break;
 		}
 
@@ -1229,7 +1229,7 @@ label_callback11:
 
 				if (getProgress().jacket == kJacketBlood) {
 					setCallback(18);
-					call(new ENTITY_SETUP(Mertens, setup_savegame), kSavegameTypeEvent, kEventMertensBloodJacket);
+					setup_savegame(kSavegameTypeEvent, kEventMertensBloodJacket);
 					break;
 				}
 
@@ -1239,12 +1239,12 @@ label_callback11:
 					switch (params->param1) {
 					case 1:
 						setCallback(20);
-						call(new ENTITY_SETUP(Mertens, setup_savegame), kSavegameTypeEvent, kEventMertensAugustWaitingCompartment);
+						setup_savegame(kSavegameTypeEvent, kEventMertensAugustWaitingCompartment);
 						break;
 
 					case 2:
 						setCallback(21);
-						call(new ENTITY_SETUP(Mertens, setup_savegame), kSavegameTypeEvent, kEventMertensKronosInvitationCompartment);
+						setup_savegame(kSavegameTypeEvent, kEventMertensKronosInvitationCompartment);
 						break;
 
 					case 3:
@@ -1260,7 +1260,7 @@ label_callback11:
 					}
 				} else {
 					setCallback(26);
-					call(new ENTITY_SETUP(Mertens, setup_function26), false);
+					setup_function26(false);
 				}
 
 			} else {
@@ -1268,7 +1268,7 @@ label_callback11:
 					getScenes()->loadSceneFromPosition(kCarNone, 1);
 
 				setCallback(17);
-				call(new ENTITY_SETUP(Mertens, setup_savegame), kSavegameTypeEvent, kEventMertensCorpseFloor);
+				setup_savegame(kSavegameTypeEvent, kEventMertensCorpseFloor);
 			}
 		} else {
 			params->param3 = kTimeInvalid;
@@ -1277,7 +1277,7 @@ label_callback11:
 				getObjects()->update(kObjectCompartment1, kEntityPlayer, kLocation1, kCursorNormal, kCursorNormal);
 
 				setCallback(11);
-				call(new ENTITY_SETUP_SIIS(Mertens, setup_playSound16), "CON1018B");
+				setup_playSound16("CON1018B");
 				break;
 			}
 
@@ -1287,7 +1287,7 @@ label_callback11:
 
 				if (getProgress().jacket == kJacketBlood) {
 					setCallback(13);
-					call(new ENTITY_SETUP(Mertens, setup_savegame), kSavegameTypeEvent, kEventMertensBloodJacket);
+					setup_savegame(kSavegameTypeEvent, kEventMertensBloodJacket);
 					break;
 				}
 
@@ -1297,12 +1297,12 @@ label_callback11:
 					switch (params->param1) {
 					case 1:
 						setCallback(15);
-						call(new ENTITY_SETUP(Mertens, setup_savegame), kSavegameTypeEvent, kEventMertensAugustWaitingCompartment);
+						setup_savegame(kSavegameTypeEvent, kEventMertensAugustWaitingCompartment);
 						break;
 
 					case 2:
 						setCallback(16);
-						call(new ENTITY_SETUP(Mertens, setup_savegame), kSavegameTypeEvent, kEventMertensKronosInvitationCompartment);
+						setup_savegame(kSavegameTypeEvent, kEventMertensKronosInvitationCompartment);
 						break;
 
 					case 3:
@@ -1318,14 +1318,14 @@ label_callback11:
 					}
 				} else {
 					setCallback(14);
-					call(new ENTITY_SETUP(Mertens, setup_function26), false);
+					setup_function26(false);
 				}
 			} else {
 				if (!getEntities()->isInsideTrainCar(kEntityPlayer, kCarGreenSleeping))
 					getScenes()->loadSceneFromPosition(kCarNone, 1);
 
 				setCallback(12);
-				call(new ENTITY_SETUP(Mertens, setup_savegame), kSavegameTypeEvent, kEventMertensCorpseFloor);
+				setup_savegame(kSavegameTypeEvent, kEventMertensCorpseFloor);
 			}
 		}
 		break;
@@ -1343,23 +1343,23 @@ label_callback11:
 
 			case 1:
 				setCallback(23);
-				call(new ENTITY_SETUP_SIIS(Mertens, setup_playSound16), "CON1018D");
+				setup_playSound16("CON1018D");
 				break;
 
 			case 2:
 				setCallback(24);
-				call(new ENTITY_SETUP_SIIS(Mertens, setup_playSound16), "CON1018E");
+				setup_playSound16("CON1018E");
 				break;
 
 			case 3:
 				setCallback(25);
-				call(new ENTITY_SETUP_SIIS(Mertens, setup_playSound16), "CON1025");
+				setup_playSound16("CON1025");
 				break;
 			}
 
 		} else {
 			setCallback(22);
-			call(new ENTITY_SETUP(Mertens, setup_function26), true);
+			setup_function26(true);
 		}
 		break;
 
@@ -1370,7 +1370,7 @@ label_callback11:
 
 			if (getProgress().jacket == kJacketBlood) {
 				setCallback(27);
-				call(new ENTITY_SETUP(Mertens, setup_savegame), kSavegameTypeEvent, kEventMertensBloodJacket);
+				setup_savegame(kSavegameTypeEvent, kEventMertensBloodJacket);
 				break;
 			}
 
@@ -1380,12 +1380,12 @@ label_callback11:
 				switch (params->param1) {
 				case 1:
 					setCallback(29);
-					call(new ENTITY_SETUP(Mertens, setup_savegame), kSavegameTypeEvent, kEventMertensAugustWaitingCompartment);
+					setup_savegame(kSavegameTypeEvent, kEventMertensAugustWaitingCompartment);
 					break;
 
 				case 2:
 					setCallback(30);
-					call(new ENTITY_SETUP(Mertens, setup_savegame), kSavegameTypeEvent, kEventMertensKronosInvitationCompartment);
+					setup_savegame(kSavegameTypeEvent, kEventMertensKronosInvitationCompartment);
 					break;
 
 				case 3:
@@ -1401,14 +1401,14 @@ label_callback11:
 				}
 			} else {
 				setCallback(28);
-				call(new ENTITY_SETUP(Mertens, setup_function26), false);
+				setup_function26(false);
 			}
 		} else {
 			if (!getEntities()->isInsideTrainCar(kEntityPlayer, kCarGreenSleeping))
 				getScenes()->loadSceneFromPosition(kCarNone, 1);
 
 			setCallback(26);
-			call(new ENTITY_SETUP(Mertens, setup_savegame), kSavegameTypeEvent, kEventMertensCorpseFloor);
+			setup_savegame(kSavegameTypeEvent, kEventMertensCorpseFloor);
 		}
 		break;
 
@@ -1424,12 +1424,12 @@ label_callback11:
 				getScenes()->loadSceneFromPosition(kCarGreenSleeping, 49);
 
 			setCallback(params->param1 ? 9 : 8);
-			call(new ENTITY_SETUP_SIIS(Mertens, setup_playSound16), params->param1 ? "CON1018" : "CON1060");
+			setup_playSound16(params->param1 ? "CON1018" : "CON1060");
 		} else {
 			getSound()->playSound(kEntityMertens, "CON1019");
 
 			setCallback(1);
-			call(new ENTITY_SETUP_SIIS(Mertens, setup_enterExitCompartment), "601Ma", kObjectCompartment1);
+			setup_enterExitCompartment("601Ma", kObjectCompartment1);
 		}
 		break;
 
@@ -1441,23 +1441,23 @@ label_callback11:
 		case 1:
 			if (getProgress().eventCorpseMovedFromFloor) {
 				setCallback(4);
-				call(new ENTITY_SETUP_SIIS(Mertens, setup_enterExitCompartment), "601Ra", kObjectCompartment1);
+				setup_enterExitCompartment("601Ra", kObjectCompartment1);
 			} else {
 				if (getEntities()->isInsideTrainCar(kEntityPlayer, kCarGreenSleeping)) {
 					setCallback(2);
-					call(new ENTITY_SETUP_SIIS(Mertens, setup_enterExitCompartment), "601Ra", kObjectCompartment1);
+					setup_enterExitCompartment("601Ra", kObjectCompartment1);
 				} else {
 					getScenes()->loadSceneFromPosition(kCarNone, 1);
 
 					setCallback(3);
-					call(new ENTITY_SETUP(Mertens, setup_savegame), kSavegameTypeEvent, kEventMertensCorpseFloor);
+					setup_savegame(kSavegameTypeEvent, kEventMertensCorpseFloor);
 				}
 			}
 			break;
 
 		case 2:
 			setCallback(3);
-			call(new ENTITY_SETUP(Mertens, setup_savegame), kSavegameTypeEvent, kEventMertensCorpseFloor);
+			setup_savegame(kSavegameTypeEvent, kEventMertensCorpseFloor);
 			break;
 
 		case 3:
@@ -1475,19 +1475,19 @@ label_callback11:
 
 			if (params->param1) {
 				setCallback(7);
-				call(new ENTITY_SETUP_SIIS(Mertens, setup_enterExitCompartment), "601Sa", kObjectCompartment1);
+				setup_enterExitCompartment("601Sa", kObjectCompartment1);
 				break;
 			}
 
 			if (getProgress().eventCorpseThrown || getProgress().chapter != kChapter1) {
 				setCallback(6);
-				call(new ENTITY_SETUP(Mertens, setup_function21), kObjectCompartment1, kObjectHandleBathroom);
+				setup_function21(kObjectCompartment1, kObjectHandleBathroom);
 			} else {
 				if (!getEntities()->isInsideTrainCar(kEntityPlayer, kCarGreenSleeping))
 					getScenes()->loadSceneFromPosition(kCarNone, 1);
 
 				setCallback(5);
-				call(new ENTITY_SETUP(Mertens, setup_savegame), kSavegameTypeEvent, kEventMertensCorpseBed);
+				setup_savegame(kSavegameTypeEvent, kEventMertensCorpseBed);
 			}
 			break;
 
@@ -1498,7 +1498,7 @@ label_callback11:
 
 		case 6:
 			setCallback(7);
-			call(new ENTITY_SETUP_SIIS(Mertens, setup_enterExitCompartment), "601Sa", kObjectCompartment1);
+			setup_enterExitCompartment("601Sa", kObjectCompartment1);
 			break;
 
 		case 7:
@@ -1597,7 +1597,7 @@ IMPLEMENT_FUNCTION_SS(Mertens, function29, 29)
 			getSavePoints()->push(kEntityMertens, kEntityCoudert, kAction125499160);
 
 			setCallback(3);
-			call(new ENTITY_SETUP(Mertens, setup_function10), kCarGreenSleeping, kPosition_2000);
+			setup_function10(kCarGreenSleeping, kPosition_2000);
 		}
 		break;
 
@@ -1609,7 +1609,7 @@ IMPLEMENT_FUNCTION_SS(Mertens, function29, 29)
 
 	case kActionDefault:
 		setCallback(1);
-		call(new ENTITY_SETUP(Mertens, setup_function19));
+		setup_function19();
 		break;
 
 	case kActionCallback:
@@ -1619,7 +1619,7 @@ IMPLEMENT_FUNCTION_SS(Mertens, function29, 29)
 
 		case 1:
 			setCallback(2);
-			call(new ENTITY_SETUP(Mertens, setup_function10), kCarRedSleeping, kPosition_1500);
+			setup_function10(kCarRedSleeping, kPosition_1500);
 			break;
 
 		case 2:
@@ -1629,7 +1629,7 @@ IMPLEMENT_FUNCTION_SS(Mertens, function29, 29)
 
 		case 3:
 			setCallback(4);
-			call(new ENTITY_SETUP(Mertens, setup_function17));
+			setup_function17();
 			break;
 
 		case 4:
@@ -1681,7 +1681,7 @@ IMPLEMENT_FUNCTION_I(Mertens, function30, 30)
 		}
 
 		setCallback(1);
-		call(new ENTITY_SETUP(Mertens, setup_function19));
+		setup_function19();
 		break;
 
 	case kActionCallback:
@@ -1691,7 +1691,7 @@ IMPLEMENT_FUNCTION_I(Mertens, function30, 30)
 
 		case 1:
 			setCallback(2);
-			call(new ENTITY_SETUP(Mertens, setup_function10), kCarGreenSleeping, params->param2);
+			setup_function10(kCarGreenSleeping, params->param2);
 			break;
 
 		case 2:
@@ -1701,7 +1701,7 @@ IMPLEMENT_FUNCTION_I(Mertens, function30, 30)
 					getProgress().field_14 = 0;
 
 				setCallback(8);
-				call(new ENTITY_SETUP(Mertens, setup_function10), kCarGreenSleeping, kPosition_2000);
+				setup_function10(kCarGreenSleeping, kPosition_2000);
 				break;
 
 			case 1:
@@ -1709,7 +1709,7 @@ IMPLEMENT_FUNCTION_I(Mertens, function30, 30)
 					getSavePoints()->push(kEntityMertens, kEntityTatiana, kAction238790488);
 
 				setCallback(3);
-				call(new ENTITY_SETUP(Mertens, setup_tylerCompartment), 3);
+				setup_tylerCompartment(3);
 				break;
 
 			case 2:
@@ -1719,7 +1719,7 @@ IMPLEMENT_FUNCTION_I(Mertens, function30, 30)
 				}
 
 				setCallback(4);
-				call(new ENTITY_SETUP_SIIS(Mertens, setup_enterExitCompartment), "601Vb", kObjectCompartment2);
+				setup_enterExitCompartment("601Vb", kObjectCompartment2);
 				break;
 
 			case 3:
@@ -1729,7 +1729,7 @@ IMPLEMENT_FUNCTION_I(Mertens, function30, 30)
 				}
 
 				setCallback(6);
-				call(new ENTITY_SETUP_SIIS(Mertens, setup_enterExitCompartment), "601Mc", kObjectCompartment3);
+				setup_enterExitCompartment("601Mc", kObjectCompartment3);
 				break;
 			}
 			break;
@@ -1739,7 +1739,7 @@ IMPLEMENT_FUNCTION_I(Mertens, function30, 30)
 					getProgress().field_14 = 0;
 
 			setCallback(8);
-			call(new ENTITY_SETUP(Mertens, setup_function10), kCarGreenSleeping, kPosition_2000);
+			setup_function10(kCarGreenSleeping, kPosition_2000);
 			break;
 
 		case 4:
@@ -1747,7 +1747,7 @@ IMPLEMENT_FUNCTION_I(Mertens, function30, 30)
 			getEntities()->enterCompartment(kEntityMertens, kObjectCompartment2, true);
 
 			setCallback(5);
-			call(new ENTITY_SETUP_SIIS(Mertens, setup_playSound), "CON3020");
+			setup_playSound("CON3020");
 			break;
 
 		case 5:
@@ -1760,7 +1760,7 @@ IMPLEMENT_FUNCTION_I(Mertens, function30, 30)
 					getProgress().field_14 = 0;
 
 			setCallback(8);
-			call(new ENTITY_SETUP(Mertens, setup_function10), kCarGreenSleeping, kPosition_2000);
+			setup_function10(kCarGreenSleeping, kPosition_2000);
 			break;
 
 		case 6:
@@ -1768,7 +1768,7 @@ IMPLEMENT_FUNCTION_I(Mertens, function30, 30)
 			getEntities()->enterCompartment(kEntityMertens, kObjectCompartment3, true);
 
 			setCallback(7);
-			call(new ENTITY_SETUP_SIIS(Mertens, setup_playSound), "CON3020");
+			setup_playSound("CON3020");
 			break;
 
 		case 7:
@@ -1781,12 +1781,12 @@ IMPLEMENT_FUNCTION_I(Mertens, function30, 30)
 					getProgress().field_14 = 0;
 
 			setCallback(8);
-			call(new ENTITY_SETUP(Mertens, setup_function10), kCarGreenSleeping, kPosition_2000);
+			setup_function10(kCarGreenSleeping, kPosition_2000);
 			break;
 
 		case 8:
 			setCallback(9);
-			call(new ENTITY_SETUP(Mertens, setup_function17));
+			setup_function17();
 			break;
 
 		case 9:
@@ -1804,12 +1804,12 @@ IMPLEMENT_FUNCTION_I(Mertens, function31, 31)
 
 	case kAction2:
 		setCallback(3);
-		call(new ENTITY_SETUP(Mertens, setup_function17));
+		setup_function17();
 		break;
 
 	case kActionDefault:
 		setCallback(1);
-		call(new ENTITY_SETUP_SIIS(Mertens, setup_bloodJacket), "601G");
+		setup_bloodJacket("601G");
 		break;
 
 	case kActionCallback:
@@ -1822,7 +1822,7 @@ IMPLEMENT_FUNCTION_I(Mertens, function31, 31)
 				getEntities()->drawSequenceLeft(kEntityMertens, "601J");
 			} else {
 				setCallback(2);
-				call(new ENTITY_SETUP(Mertens, setup_function17));
+				setup_function17();
 			}
 			break;
 
@@ -1842,7 +1842,7 @@ IMPLEMENT_FUNCTION(Mertens, function32, 32)
 
 	case kActionDefault:
 		setCallback(1);
-		call(new ENTITY_SETUP(Mertens, setup_function19));
+		setup_function19();
 		break;
 
 	case kActionCallback:
@@ -1852,26 +1852,26 @@ IMPLEMENT_FUNCTION(Mertens, function32, 32)
 
 		case 1:
 			setCallback(2);
-			call(new ENTITY_SETUP(Mertens, setup_function10), kCarGreenSleeping, kPosition_9510);
+			setup_function10(kCarGreenSleeping, kPosition_9510);
 			break;
 
 		case 2:
 			if (getData()->entityPosition >= kPosition_9460) {
 				getEntities()->clearSequences(kEntityMertens);
 				setCallback(3);
-				call(new ENTITY_SETUP(Mertens, setup_function11), 900);
+				setup_function11(900);
 				break;
 			}
 			// Fallback to next case
 
 		case 3:
 			setCallback(4);
-			call(new ENTITY_SETUP(Mertens, setup_function10), kCarGreenSleeping, kPosition_2000);
+			setup_function10(kCarGreenSleeping, kPosition_2000);
 			break;
 
 		case 4:
 			setCallback(5);
-			call(new ENTITY_SETUP(Mertens, setup_function17));
+			setup_function17();
 			break;
 
 		case 5:
@@ -1947,7 +1947,7 @@ IMPLEMENT_FUNCTION(Mertens, function38, 38)
 			CALLBACK_ACTION();
 		} else {
 			setCallback(1);
-			call(new ENTITY_SETUP(Mertens, setup_function10), kCarGreenSleeping, kPosition_8200);
+			setup_function10(kCarGreenSleeping, kPosition_8200);
 		}
 		break;
 
@@ -1963,7 +1963,7 @@ IMPLEMENT_FUNCTION(Mertens, function38, 38)
 			}
 
 			setCallback(2);
-			call(new ENTITY_SETUP(Mertens, setup_tylerCompartment), 0);
+			setup_tylerCompartment(0);
 			break;
 
 		case 2:
@@ -1987,7 +1987,7 @@ IMPLEMENT_FUNCTION(Mertens, function40, 40)
 	case kActionDefault:
 		ENTITY_PARAM(1, 3) = 0;
 		setCallback(1);
-		call(new ENTITY_SETUP(Mertens, setup_function19));
+		setup_function19();
 		break;
 
 	case kActionCallback:
@@ -1997,22 +1997,22 @@ IMPLEMENT_FUNCTION(Mertens, function40, 40)
 
 		case 1:
 			setCallback(2);
-			call(new ENTITY_SETUP(Mertens, setup_function10), kCarKronos, kPosition_9460);
+			setup_function10(kCarKronos, kPosition_9460);
 			break;
 
 		case 2:
 			setCallback(3);
-			call(new ENTITY_SETUP(Mertens, setup_function11), 1800);
+			setup_function11(1800);
 			break;
 
 		case 3:
 			setCallback(4);
-			call(new ENTITY_SETUP(Mertens, setup_function10), kCarGreenSleeping, kPosition_1500);
+			setup_function10(kCarGreenSleeping, kPosition_1500);
 			break;
 
 		case 4:
 			setCallback(5);
-			call(new ENTITY_SETUP(Mertens, setup_function17));
+			setup_function17();
 			break;
 
 		case 5:
@@ -2031,7 +2031,7 @@ IMPLEMENT_FUNCTION(Mertens, chapter1Handler, 41)
 
 	case kActionDefault:
 		setCallback(1);
-		call(new ENTITY_SETUP(Mertens, setup_function10), kCarGreenSleeping, kPosition_2000);
+		setup_function10(kCarGreenSleeping, kPosition_2000);
 		break;
 
 	case kActionCallback:
@@ -2041,7 +2041,7 @@ IMPLEMENT_FUNCTION(Mertens, chapter1Handler, 41)
 
 		case 1:
 			setCallback(2);
-			call(new ENTITY_SETUP(Mertens, setup_function17));
+			setup_function17();
 			break;
 
 		case 2:
@@ -2108,7 +2108,7 @@ IMPLEMENT_FUNCTION(Mertens, function42, 42)
 				getData()->inventoryItem = kItemNone;
 
 				setCallback(8);
-				call(new ENTITY_SETUP_SSII(Mertens, setup_function29), "CON1210", "CON1210A");
+				setup_function29("CON1210", "CON1210A");
 				break;
 			}
 		}
@@ -2128,7 +2128,7 @@ label_callback_8:
 		if (ENTITY_PARAM(0, 8)) {
 			getData()->inventoryItem = kItemNone;
 			setCallback(9);
-			call(new ENTITY_SETUP(Mertens, setup_function14), kEntityVerges);
+			setup_function14(kEntityVerges);
 			break;
 		}
 
@@ -2139,7 +2139,7 @@ label_callback_9:
 		if (ENTITY_PARAM(1, 6)) {
 			getData()->inventoryItem = kItemNone;
 			setCallback(10);
-			call(new ENTITY_SETUP(Mertens, setup_function16), true);
+			setup_function16(true);
 			break;
 		}
 
@@ -2147,7 +2147,7 @@ label_callback_10:
 		if (ENTITY_PARAM(1, 7)) {
 			getData()->inventoryItem = kItemNone;
 			setCallback(11);
-			call(new ENTITY_SETUP(Mertens, setup_function16), false);
+			setup_function16(false);
 			break;
 		}
 
@@ -2155,7 +2155,7 @@ label_callback_11:
 		if (ENTITY_PARAM(1, 5)) {
 			getData()->inventoryItem = kItemNone;
 			setCallback(12);
-			call(new ENTITY_SETUP(Mertens, setup_function15), true);
+			setup_function15(true);
 			break;
 		}
 
@@ -2163,7 +2163,7 @@ label_callback_12:
 		if (ENTITY_PARAM(1, 4)) {
 			getData()->inventoryItem = kItemNone;
 			setCallback(13);
-			call(new ENTITY_SETUP(Mertens, setup_function15), false);
+			setup_function15(false);
 			break;
 		}
 
@@ -2171,7 +2171,7 @@ label_callback_13:
 		if (ENTITY_PARAM(1, 2)) {
 			getData()->inventoryItem = kItemNone;
 			setCallback(14);
-			call(new ENTITY_SETUP(Mertens, setup_function35));
+			setup_function35();
 			break;
 		}
 
@@ -2179,7 +2179,7 @@ label_callback_14:
 		if (ENTITY_PARAM(0, 6)) {
 			getData()->inventoryItem = kItemNone;
 			setCallback(15);
-			call(new ENTITY_SETUP(Mertens, setup_function36));
+			setup_function36();
 			break;
 		}
 
@@ -2187,7 +2187,7 @@ label_callback_15:
 		if (ENTITY_PARAM(1, 3)) {
 			getData()->inventoryItem = kItemNone;
 			setCallback(16);
-			call(new ENTITY_SETUP(Mertens, setup_function40));
+			setup_function40();
 			break;
 		}
 
@@ -2196,7 +2196,7 @@ label_callback_16:
 			ENTITY_PARAM(1, 1) = 0;
 			getData()->inventoryItem = kItemNone;
 			setCallback(17);
-			call(new ENTITY_SETUP_SIIS(Mertens, setup_function28), "CON1200");
+			setup_function28("CON1200");
 			break;
 		}
 
@@ -2205,7 +2205,7 @@ label_callback_17:
 			ENTITY_PARAM(2, 2) = 0;
 			getData()->inventoryItem = kItemNone;
 			setCallback(18);
-			call(new ENTITY_SETUP(Mertens, setup_function37));
+			setup_function37();
 			break;
 		}
 
@@ -2213,7 +2213,7 @@ label_callback_18:
 		if (!params->param1 && ENTITY_PARAM(0, 5)) {
 			getData()->inventoryItem = kItemNone;
 			setCallback(19);
-			call(new ENTITY_SETUP(Mertens, setup_function39));
+			setup_function39();
 			break;
 		}
 
@@ -2227,14 +2227,14 @@ label_callback_19:
 	case kAction1:
 		getData()->inventoryItem = kItemNone;
 		setCallback(21);
-		call(new ENTITY_SETUP(Mertens, setup_savegame), kSavegameTypeEvent, kEventMertensAskTylerCompartmentD);
+		setup_savegame(kSavegameTypeEvent, kEventMertensAskTylerCompartmentD);
 		break;
 
 	case kAction11:
 		if (!ENTITY_PARAM(0, 1) && !ENTITY_PARAM(2, 1)) {
 			getData()->inventoryItem = kItemNone;
 			setCallback(20);
-			call(new ENTITY_SETUP(Mertens, setup_function13), savepoint.param.intValue, savepoint.entity2);
+			setup_function13(savepoint.param.intValue, savepoint.entity2);
 		}
 		break;
 
@@ -2251,13 +2251,13 @@ label_callback_19:
 
 		if (getEntities()->isPlayerPosition(kCarGreenSleeping, 23) && ENTITY_PARAM(0, 7) && !getEvent(kEventKronosConversation)) {
 			setCallback(1);
-			call(new ENTITY_SETUP(Mertens, setup_savegame), kSavegameTypeEvent, kEventMertensKronosInvitation);
+			setup_savegame(kSavegameTypeEvent, kEventMertensKronosInvitation);
 			break;
 		}
 
 		if (getEntities()->isPlayerPosition(kCarGreenSleeping, 23) && !getProgress().eventMertensKronosInvitation && !getEvent(kEventMertensLastCar) && !getEvent(kEventMertensLastCarOriginalJacket)) {
 			setCallback(1);
-			call(new ENTITY_SETUP(Mertens, setup_savegame), kSavegameTypeEvent, kEventMertensLastCar);
+			setup_savegame(kSavegameTypeEvent, kEventMertensLastCar);
 			break;
 		}
 
@@ -2265,7 +2265,7 @@ label_callback_2_4:
 		if ((getEntities()->isPlayerPosition(kCarGreenSleeping, 1) || getEntities()->isPlayerPosition(kCarGreenSleeping, 23)) && !ENTITY_PARAM(0, 1) && !ENTITY_PARAM(2, 1)) {
 			getData()->inventoryItem = kItemNone;
 			setCallback(getEntities()->isPlayerPosition(kCarGreenSleeping, 1) ? 5 : 6);
-			call(new ENTITY_SETUP(Mertens, setup_function13), getEntities()->isPlayerPosition(kCarGreenSleeping, 1), false);
+			setup_function13(getEntities()->isPlayerPosition(kCarGreenSleeping, 1), false);
 			break;
 		}
 
@@ -2274,7 +2274,7 @@ label_callback_5_6:
 			if (getProgress().jacket == kJacketOriginal || ENTITY_PARAM(0, 7)) {
 				getData()->inventoryItem = kItemNone;
 				setCallback(7);
-				call(new ENTITY_SETUP(Mertens, setup_function32));
+				setup_function32();
 			}
 		}
 		break;
@@ -2295,7 +2295,7 @@ label_callback_5_6:
 			getData()->inventoryItem = kItemNone;
 
 			setCallback(2);
-			call(new ENTITY_SETUP(Mertens, setup_callbackActionOnDirection));
+			setup_callbackActionOnDirection();
 			break;
 
 		case 2:
@@ -2312,7 +2312,7 @@ label_callback_5_6:
 			getData()->inventoryItem = kItemNone;
 
 			setCallback(4);
-			call(new ENTITY_SETUP(Mertens, setup_callbackActionOnDirection));
+			setup_callbackActionOnDirection();
 			break;
 
 		case 5:
@@ -2363,7 +2363,7 @@ label_callback_5_6:
 			getScenes()->loadSceneFromPosition(kCarGreenSleeping, 25);
 
 			setCallback(22);
-			call(new ENTITY_SETUP(Mertens, setup_callbackActionOnDirection));
+			setup_callbackActionOnDirection();
 			break;
 
 		case 22:
@@ -2376,7 +2376,7 @@ label_callback_5_6:
 		if (!ENTITY_PARAM(0, 1)) {
 			getData()->inventoryItem = kItemNone;
 			setCallback(23);
-			call(new ENTITY_SETUP(Mertens, setup_function30), savepoint.param.intValue);
+			setup_function30(savepoint.param.intValue);
 		}
 		break;
 
@@ -2389,7 +2389,7 @@ label_callback_5_6:
 		if (!ENTITY_PARAM(2, 1) && !ENTITY_PARAM(0, 1)) {
 			getData()->inventoryItem = kItemNone;
 			setCallback(24);
-			call(new ENTITY_SETUP(Mertens, setup_function31), savepoint.param.intValue);
+			setup_function31(savepoint.param.intValue);
 		}
 		break;
 
@@ -2403,7 +2403,7 @@ IMPLEMENT_FUNCTION(Mertens, chapter2, 43)
 
 	case kActionNone:
 		setCallback(1);
-		call(new ENTITY_SETUP(Mertens, setup_function17));
+		setup_function17();
 		break;
 
 	case kActionDefault:
@@ -2441,28 +2441,28 @@ IMPLEMENT_FUNCTION(Mertens, function44, 44)
 	case kActionNone:
 		if (ENTITY_PARAM(1, 6)) {
 			setCallback(1);
-			call(new ENTITY_SETUP(Mertens, setup_function16), true);
+			setup_function16(true);
 			break;
 		}
 
 label_callback1:
 		if (ENTITY_PARAM(1, 7)) {
 			setCallback(2);
-			call(new ENTITY_SETUP(Mertens, setup_function16), false);
+			setup_function16(false);
 			break;
 		}
 
 label_callback2:
 		if (ENTITY_PARAM(1, 5)) {
 			setCallback(3);
-			call(new ENTITY_SETUP(Mertens, setup_function15), true);
+			setup_function15(true);
 			break;
 		}
 
 label_callback3:
 		if (ENTITY_PARAM(1, 4)) {
 			setCallback(4);
-			call(new ENTITY_SETUP(Mertens, setup_function15), false);
+			setup_function15(false);
 			break;
 		}
 
@@ -2471,7 +2471,7 @@ label_callback3:
 	case kAction11:
 		if (!ENTITY_PARAM(2, 1)) {
 			setCallback(5);
-			call(new ENTITY_SETUP(Mertens, setup_function13), savepoint.param.intValue, savepoint.entity2);
+			setup_function13(savepoint.param.intValue, savepoint.entity2);
 		}
 		break;
 
@@ -2481,11 +2481,11 @@ label_callback3:
 
 		if (getEntities()->isPlayerPosition(kCarGreenSleeping, 1)) {
 			setCallback(6);
-			call(new ENTITY_SETUP(Mertens, setup_function13), true, false);
+			setup_function13(true, false);
 
 		} else if (getEntities()->isPlayerPosition(kCarGreenSleeping, 23)) {
 			setCallback(7);
-			call(new ENTITY_SETUP(Mertens, setup_function13), false, false);
+			setup_function13(false, false);
 		}
 		break;
 
@@ -2508,7 +2508,7 @@ label_callback3:
 	case kAction225358684:
 		if (!ENTITY_PARAM(0, 1)) {
 			setCallback(9);
-			call(new ENTITY_SETUP(Mertens, setup_function30), savepoint.param.intValue);
+			setup_function30(savepoint.param.intValue);
 		}
 		break;
 
@@ -2520,14 +2520,14 @@ label_callback3:
 	case kAction226078300:
 		if (!ENTITY_PARAM(2, 1) && !ENTITY_PARAM(0, 1)) {
 			setCallback(8);
-			call(new ENTITY_SETUP_SIIS(Mertens, setup_playSound), "CON2020");
+			setup_playSound("CON2020");
 		}
 		break;
 
 	case kAction305159806:
 		if (!ENTITY_PARAM(2, 1) && !ENTITY_PARAM(0, 1)) {
 			setCallback(10);
-			call(new ENTITY_SETUP(Mertens, setup_function31), savepoint.param.intValue);
+			setup_function31(savepoint.param.intValue);
 		}
 		break;
 }
@@ -2540,7 +2540,7 @@ IMPLEMENT_FUNCTION(Mertens, chapter3, 45)
 
 	case kActionNone:
 		setCallback(1);
-		call(new ENTITY_SETUP(Mertens, setup_function17));
+		setup_function17();
 		break;
 
 	case kActionDefault:
@@ -2581,7 +2581,7 @@ IMPLEMENT_FUNCTION(Mertens, chapter4, 47)
 
 	case kActionNone:
 		setCallback(1);
-		call(new ENTITY_SETUP(Mertens, setup_function17));
+		setup_function17();
 		break;
 
 	case kActionDefault:
@@ -2667,7 +2667,7 @@ IMPLEMENT_FUNCTION(Mertens, function52, 52)
 		params->param2 = kTimeInvalid;
 
 		setCallback(1);
-		call(new ENTITY_SETUP_SIIS(Mertens, setup_playSound), "Mme5010");
+		setup_playSound("Mme5010");
 		break;
 
 	case kActionDefault:
@@ -2687,7 +2687,7 @@ IMPLEMENT_FUNCTION(Mertens, function52, 52)
 
 		case 1:
 			setCallback(2);
-			call(new ENTITY_SETUP_SIIS(Mertens, setup_enterExitCompartment), "671Ad", kObjectCompartmentD);
+			setup_enterExitCompartment("671Ad", kObjectCompartmentD);
 			break;
 
 		case 2:

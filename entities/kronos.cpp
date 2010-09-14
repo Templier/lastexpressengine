@@ -169,7 +169,7 @@ IMPLEMENT_FUNCTION(Kronos, function9, 9)
 
 	case kActionDefault:
 		setCallback(1);
-		call(new ENTITY_SETUP(Kronos, setup_savegame), kSavegameTypeEvent, kEventKronosConversation);
+		setup_savegame(kSavegameTypeEvent, kEventKronosConversation);
 		break;
 
 	case kActionCallback:
@@ -297,7 +297,7 @@ IMPLEMENT_FUNCTION(Kronos, function16, 16)
 
 	case kActionDefault:
 		setCallback(1);
-		call(new ENTITY_SETUP(Kronos, setup_savegame), kSavegameTypeEvent, kEventKronosVisit);
+		setup_savegame(kSavegameTypeEvent, kEventKronosVisit);
 		break;
 
 	case kActionCallback:
@@ -325,7 +325,7 @@ IMPLEMENT_FUNCTION(Kronos, function17, 17)
 		getData()->car = kCarRedSleeping;
 
 		setCallback(1);
-		call(new ENTITY_SETUP(Kronos, setup_function3), kCarGreenSleeping, kPosition_9270);
+		setup_function3(kCarGreenSleeping, kPosition_9270);
 		break;
 
 	case kActionCallback:
@@ -352,7 +352,7 @@ IMPLEMENT_FUNCTION(Kronos, function18, 18)
 		else {
 			if (params->param1 && getEntities()->isInKronosSanctum(kEntityPlayer)) {
 				setCallback(1);
-				call(new ENTITY_SETUP(Kronos, setup_savegame), kSavegameTypeEvent, kEventKahinaPunchSuite4);
+				setup_savegame(kSavegameTypeEvent, kEventKahinaPunchSuite4);
 			}
 		}
 		break;
@@ -388,7 +388,7 @@ IMPLEMENT_FUNCTION(Kronos, function21, 21)
 	case kActionNone:
 		if (getEntities()->isInKronosSanctum(kEntityPlayer)) {
 			setCallback(1);
-			call(new ENTITY_SETUP(Kronos, setup_savegame), kSavegameTypeEvent, kEventKahinaWrongDoor);
+			setup_savegame(kSavegameTypeEvent, kEventKahinaWrongDoor);
 		}
 		break;
 
@@ -433,7 +433,7 @@ IMPLEMENT_FUNCTION(Kronos, function23, 23)
 	case kActionNone:
 		if (getEntities()->isInKronosSanctum(kEntityPlayer)) {
 			setCallback(1);
-			call(new ENTITY_SETUP(Kronos, setup_savegame), kSavegameTypeEvent, kEventKahinaWrongDoor);
+			setup_savegame(kSavegameTypeEvent, kEventKahinaWrongDoor);
 		}
 		break;
 

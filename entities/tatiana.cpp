@@ -253,7 +253,7 @@ IMPLEMENT_FUNCTION(Tatiana, function14, 14)
 
 	case kAction69239528:
 		setCallback(getProgress().chapter == kChapter1 ? 1 : 2);
-		call(new ENTITY_SETUP_SIIS(Tatiana, setup_enterExitCompartment2), getProgress().chapter == kChapter1 ? "603Db" : "673Db", kObjectCompartmentB);
+		setup_enterExitCompartment2(getProgress().chapter == kChapter1 ? "603Db" : "673Db", kObjectCompartmentB);
 		break;
 	}
 }
@@ -265,7 +265,7 @@ IMPLEMENT_FUNCTION(Tatiana, function15, 15)
 
 	case kActionDefault:
 		setCallback(getProgress().chapter == kChapter1 ? 1 : 2);
-		call(new ENTITY_SETUP_SIIS(Tatiana, setup_enterExitCompartment2), getProgress().chapter == kChapter1 ? "603Bb" : "673Bb", kObjectCompartmentB);
+		setup_enterExitCompartment2(getProgress().chapter == kChapter1 ? "603Bb" : "673Bb", kObjectCompartmentB);
 		break;
 
 	case kActionCallback:
@@ -387,7 +387,7 @@ IMPLEMENT_FUNCTION(Tatiana, function20, 20)
 
 	case kActionDefault:
 		setCallback(1);
-		call(new ENTITY_SETUP(Tatiana, setup_callbackActionRestaurantOrSalon));
+		setup_callbackActionRestaurantOrSalon();
 		break;
 
 	case kActionCallback:
@@ -402,7 +402,7 @@ IMPLEMENT_FUNCTION(Tatiana, function20, 20)
 			getSound()->playSound(kEntityTatiana, "TAT1070");
 
 			setCallback(2);
-			call(new ENTITY_SETUP_SIIS(Tatiana, setup_callSavepoint), "014C", kEntityTables4, kActionDrawTablesWithChairs, "014D");
+			setup_callSavepoint("014C", kEntityTables4, kActionDrawTablesWithChairs, "014D");
 			break;
 
 		case 2:
@@ -410,7 +410,7 @@ IMPLEMENT_FUNCTION(Tatiana, function20, 20)
 			getSavePoints()->push(kEntityTatiana, kEntityServers0, kAction188893625);
 
 			setCallback(3);
-			call(new ENTITY_SETUP(Tatiana, setup_function18));
+			setup_function18();
 			break;
 
 		case 3:
@@ -437,7 +437,7 @@ IMPLEMENT_FUNCTION(Tatiana, function23, 23)
 
 	case kActionDefault:
 		setCallback(1);
-		call(new ENTITY_SETUP(Tatiana, setup_updateEntity), kCarRedSleeping, kPosition_7500);
+		setup_updateEntity(kCarRedSleeping, kPosition_7500);
 		break;
 
 	case kActionCallback:
@@ -447,7 +447,7 @@ IMPLEMENT_FUNCTION(Tatiana, function23, 23)
 
 		case 1:
 			setCallback(2);
-			call(new ENTITY_SETUP(Tatiana, setup_function14));
+			setup_function14();
 			break;
 
 		case 2:
@@ -545,7 +545,7 @@ IMPLEMENT_FUNCTION(Tatiana, function27, 27)
 
 	case kActionDefault:
 		setCallback(getEvent(kEventTatianaGivePoem) ? 1 : 2);
-		call(new ENTITY_SETUP(Tatiana, setup_savegame), kSavegameTypeEvent, getEvent(kEventTatianaGivePoem) ? kEventTatianaBreakfastAlexei : kEventTatianaBreakfast);
+		setup_savegame(kSavegameTypeEvent, getEvent(kEventTatianaGivePoem) ? kEventTatianaBreakfastAlexei : kEventTatianaBreakfast);
 		break;
 
 	case kActionCallback:
@@ -599,7 +599,7 @@ IMPLEMENT_FUNCTION(Tatiana, function28, 28)
 		getEntities()->drawSequenceLeft(kEntityTatiana, "018G");
 
 		setCallback(1);
-		call(new ENTITY_SETUP(Tatiana, setup_updateFromTime), 1800);
+		setup_updateFromTime(1800);
 		break;
 
 	case kAction156444784:
@@ -616,7 +616,7 @@ IMPLEMENT_FUNCTION(Tatiana, function29, 29)
 
 	case kActionDefault:
 		setCallback(1);
-		call(new ENTITY_SETUP(Tatiana, setup_callbackActionRestaurantOrSalon));
+		setup_callbackActionRestaurantOrSalon();
 		break;
 
 	case kActionCallback:
@@ -629,7 +629,7 @@ IMPLEMENT_FUNCTION(Tatiana, function29, 29)
 			getEntities()->updatePositionEnter(kEntityTatiana, kCarRestaurant, 63);
 
 			setCallback(2);
-			call(new ENTITY_SETUP_SIIS(Tatiana, setup_callSavepoint), "018H", kEntityTables1, kActionDrawTablesWithChairs, "018A");
+			setup_callSavepoint("018H", kEntityTables1, kActionDrawTablesWithChairs, "018A");
 			break;
 
 		case 2:
@@ -641,7 +641,7 @@ IMPLEMENT_FUNCTION(Tatiana, function29, 29)
 				getEntities()->updateFrame(kEntityTatiana);
 
 			setCallback(3);
-			call(new ENTITY_SETUP(Tatiana, setup_callbackActionOnDirection));
+			setup_callbackActionOnDirection();
 			break;
 
 		case 3:
@@ -659,7 +659,7 @@ IMPLEMENT_FUNCTION(Tatiana, function30, 30)
 
 	case kActionDefault:
 		setCallback(1);
-		call(new ENTITY_SETUP(Tatiana, setup_updateEntity), kCarRedSleeping, kPosition_7500);
+		setup_updateEntity(kCarRedSleeping, kPosition_7500);
 		break;
 
 	case kActionCallback:
@@ -669,12 +669,12 @@ IMPLEMENT_FUNCTION(Tatiana, function30, 30)
 
 		case 1:
 			setCallback(2);
-			call(new ENTITY_SETUP(Tatiana, setup_function14));
+			setup_function14();
 			break;
 
 		case 2:
 			setCallback(3);
-			call(new ENTITY_SETUP(Tatiana, setup_function16), kTimeEnd);
+			setup_function16(kTimeEnd);
 			break;
 		}
 		break;
@@ -724,19 +724,19 @@ IMPLEMENT_FUNCTION(Tatiana, function33, 33)
 	case kActionDefault:
 		getEntities()->clearSequences(kEntityTatiana);
 		setCallback(1);
-		call(new ENTITY_SETUP(Tatiana, setup_updateFromTime), 75);
+		setup_updateFromTime(75);
 		break;
 
 	case kActionCallback:
 		switch (getCallback()) {
 		case 1:
 			setCallback(2);
-			call(new ENTITY_SETUP(Tatiana, setup_updateEntity), kCarRedSleeping, kPosition_7500);
+			setup_updateEntity(kCarRedSleeping, kPosition_7500);
 			break;
 
 		case 2:
 			setCallback(3);
-			call(new ENTITY_SETUP(Tatiana, setup_function14));
+			setup_function14();
 			break;
 
 		case 3:
@@ -754,7 +754,7 @@ IMPLEMENT_FUNCTION(Tatiana, function34, 34)
 
 	case kActionDefault:
 		setCallback(1);
-		call(new ENTITY_SETUP(Tatiana, setup_function16), kTime2097000);
+		setup_function16(kTime2097000);
 		break;
 
 	case kActionCallback:
@@ -769,12 +769,12 @@ IMPLEMENT_FUNCTION(Tatiana, function34, 34)
 
 			getObjects()->update(kObjectCompartmentB, kEntityPlayer, kLocation1, kCursorHandKnock, kCursorHand);
 			getObjects()->update(kObject49, kEntityPlayer, kLocationNone, kCursorHandKnock, kCursorHand);
-			call(new ENTITY_SETUP(Tatiana, setup_function15));
+			setup_function15();
 			break;
 
 		case 2:
 			setCallback(3);
-			call(new ENTITY_SETUP(Tatiana, setup_updateEntity), kCarKronos, kPosition_9270);
+			setup_updateEntity(kCarKronos, kPosition_9270);
 			break;
 
 		case 3:
@@ -796,7 +796,7 @@ IMPLEMENT_FUNCTION(Tatiana, function35, 35)
 		 && getEntities()->checkFields19(kEntityPlayer, kCarRedSleeping, kPosition_7850)
 		 && (getState()->time < kTime2133000 || getProgress().field_40)) {
 			setCallback(1);
-			call(new ENTITY_SETUP(Tatiana, setup_function41));
+			setup_function41();
 			break;
 		}
 
@@ -840,7 +840,7 @@ IMPLEMENT_FUNCTION(Tatiana, function36, 36)
 		getData()->location = kLocationOutsideCompartment;
 
 		setCallback(1);
-		call(new ENTITY_SETUP(Tatiana, setup_updateEntity), kCarGreenSleeping, kPosition_7500);
+		setup_updateEntity(kCarGreenSleeping, kPosition_7500);
 		break;
 
 	case kActionCallback:
@@ -851,7 +851,7 @@ IMPLEMENT_FUNCTION(Tatiana, function36, 36)
 		case 1:
 			if (!getEntities()->checkFields19(kEntityPlayer, kCarGreenSleeping, kPosition_7850) || getEntities()->isInsideCompartment(kEntityPlayer, kCarRedSleeping, kPosition_8200)) {
 				setCallback(2);
-				call(new ENTITY_SETUP(Tatiana, setup_function14));
+				setup_function14();
 				break;
 			}
 
@@ -979,7 +979,7 @@ IMPLEMENT_FUNCTION(Tatiana, chapter4Handler, 44)
 
 	case kActionDefault:
 		setCallback(1);
-		call(new ENTITY_SETUP(Tatiana, setup_function16), kTime2362500);
+		setup_function16(kTime2362500);
 		break;
 
 	case kActionCallback:
@@ -996,7 +996,7 @@ IMPLEMENT_FUNCTION(Tatiana, function45, 45)
 
 	case kActionDefault:
 		setCallback(1);
-		call(new ENTITY_SETUP_SIIS(Tatiana, setup_enterExitCompartment), "673Bb", kObjectCompartmentB);
+		setup_enterExitCompartment("673Bb", kObjectCompartmentB);
 		break;
 
 	case kActionCallback:
@@ -1009,7 +1009,7 @@ IMPLEMENT_FUNCTION(Tatiana, function45, 45)
 			getData()->location = kLocationOutsideCompartment;
 
 			setCallback(1);
-			call(new ENTITY_SETUP(Tatiana, setup_updateEntity), kCarGreenSleeping, kPosition_540);
+			setup_updateEntity(kCarGreenSleeping, kPosition_540);
 			break;
 
 		case 2:
@@ -1039,7 +1039,7 @@ IMPLEMENT_FUNCTION(Tatiana, function47, 47)
 
 	case kActionDefault:
 		setCallback(1);
-		call(new ENTITY_SETUP(Tatiana, setup_updateEntity), kCarRedSleeping, kPosition_7500);
+		setup_updateEntity(kCarRedSleeping, kPosition_7500);
 		break;
 
 	case kActionCallback:
@@ -1049,7 +1049,7 @@ IMPLEMENT_FUNCTION(Tatiana, function47, 47)
 
 		case 1:
 			setCallback(2);
-			call(new ENTITY_SETUP_SIIS(Tatiana, setup_enterExitCompartment2), "673Db", kObjectCompartmentB);
+			setup_enterExitCompartment2("673Db", kObjectCompartmentB);
 			break;
 
 		case 2:
@@ -1057,7 +1057,7 @@ IMPLEMENT_FUNCTION(Tatiana, function47, 47)
 			getEntities()->clearSequences(kEntityTatiana);
 
 			setCallback(3);
-			call(new ENTITY_SETUP(Tatiana, setup_function16), kTime2407500);
+			setup_function16(kTime2407500);
 			break;
 
 		case 3:
@@ -1066,7 +1066,7 @@ IMPLEMENT_FUNCTION(Tatiana, function47, 47)
 				setup_function48();
 			} else {
 				setCallback(4);
-				call(new ENTITY_SETUP(Tatiana, setup_function16), 900);
+				setup_function16(900);
 			}
 			break;
 		}

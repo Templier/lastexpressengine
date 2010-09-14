@@ -63,10 +63,6 @@ public:
 	DECLARE_FUNCTION(function22)
 	DECLARE_FUNCTION(function23)
 	DECLARE_NULL_FUNCTION()
-
-private:
-	DECLARE_CALL_FUNCTION(iiii, Alouan, uint, uint, uint, uint)
-	DECLARE_CALL_FUNCTION(siis, Alouan, const char*, uint, uint, const char*)
 };
 
 } // End of namespace LastExpress

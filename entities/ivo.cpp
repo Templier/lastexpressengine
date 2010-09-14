@@ -251,7 +251,7 @@ IMPLEMENT_FUNCTION(Ivo, chapter1Handler, 15)
 
 		case 1:
 			setCallback(2);
-			call(new ENTITY_SETUP(Ivo, setup_function11));
+			setup_function11();
 			break;
 
 		case 2:
@@ -263,7 +263,7 @@ IMPLEMENT_FUNCTION(Ivo, chapter1Handler, 15)
 
 	case kAction125242096:
 		setCallback(1);
-		call(new ENTITY_SETUP(Ivo, setup_updateFromTicks), 75);
+		setup_updateFromTicks(75);
 		break;
 	}
 }
@@ -307,14 +307,14 @@ IMPLEMENT_FUNCTION(Ivo, function16, 16)
 		getData()->location = kLocationOutsideCompartment;
 
 		setCallback(1);
-		call(new ENTITY_SETUP_SIIS(Ivo, setup_enterExitCompartment), "613Bh", kObjectCompartmentH);
+		setup_enterExitCompartment("613Bh", kObjectCompartmentH);
 		break;
 
 	case kAction123852928:
 		getEntities()->exitCompartment(kEntityIvo, kObjectCompartmentH, true);
 
 		setCallback(2);
-		call(new ENTITY_SETUP_SIIS(Ivo, setup_enterExitCompartment), "613Dh", kObjectCompartmentH);
+		setup_enterExitCompartment("613Dh", kObjectCompartmentH);
 		break;
 
 	case kAction221683008:
@@ -366,7 +366,7 @@ IMPLEMENT_FUNCTION(Ivo, function19, 19)
 
 	case kActionDefault:
 		setCallback(1);
-		call(new ENTITY_SETUP_SIIS(Ivo, setup_enterExitCompartment), "613FH", kObjectCompartmentH);
+		setup_enterExitCompartment("613FH", kObjectCompartmentH);
 		break;
 
 	case kActionCallback:
@@ -380,7 +380,7 @@ IMPLEMENT_FUNCTION(Ivo, function19, 19)
 				getData()->entityPosition = kPosition_2088;
 
 			setCallback(2);
-			call(new ENTITY_SETUP(Ivo, setup_updateEntity), kCarRestaurant, kPosition_850);
+			setup_updateEntity(kCarRestaurant, kPosition_850);
 			break;
 
 		case 2:
@@ -392,12 +392,12 @@ IMPLEMENT_FUNCTION(Ivo, function19, 19)
 			getData()->location = kLocationOutsideCompartment;
 
 			setCallback(4);
-			call(new ENTITY_SETUP_SIIS(Ivo, setup_draw), "809US");
+			setup_draw("809US");
 			break;
 
 		case 4:
 			setCallback(5);
-			call(new ENTITY_SETUP(Ivo, setup_sitAtTableWithSalko));
+			setup_sitAtTableWithSalko();
 			break;
 
 		case 5:
@@ -409,7 +409,7 @@ IMPLEMENT_FUNCTION(Ivo, function19, 19)
 
 	case kAction102675536:
 		setCallback(3);
-		call(new ENTITY_SETUP(Ivo, setup_callbackActionRestaurantOrSalon));
+		setup_callbackActionRestaurantOrSalon();
 		break;
 	}
 }
@@ -425,7 +425,7 @@ IMPLEMENT_FUNCTION(Ivo, function20, 20)
 				getData()->location = kLocationOutsideCompartment;
 
 				setCallback(2);
-				call(new ENTITY_SETUP(Ivo, setup_leaveTableWithSalko));
+				setup_leaveTableWithSalko();
 			}
 		}
 		break;
@@ -448,7 +448,7 @@ IMPLEMENT_FUNCTION(Ivo, function20, 20)
 
 		case 2:
 			setCallback(3);
-			call(new ENTITY_SETUP(Ivo, setup_function11));
+			setup_function11();
 			break;
 
 		case 3:
@@ -462,7 +462,7 @@ IMPLEMENT_FUNCTION(Ivo, function20, 20)
 		getEntities()->drawSequenceLeft(kEntityIvo, "023C2");
 
 		setCallback(1);
-		call(new ENTITY_SETUP(Ivo, setup_updateFromTime), 450);
+		setup_updateFromTime(450);
 		break;
 	}
 }
@@ -547,14 +547,14 @@ IMPLEMENT_FUNCTION(Ivo, function26, 26)
 
 	case kActionDefault:
 		setCallback(1);
-		call(new ENTITY_SETUP(Ivo, setup_leaveTableWithSalko));
+		setup_leaveTableWithSalko();
 		break;
 
 	case kActionCallback:
 		switch (getCallback()) {
 		case 1:
 			setCallback(2);
-			call(new ENTITY_SETUP(Ivo, setup_function11));
+			setup_function11();
 			break;
 
 		case 2:
@@ -586,7 +586,7 @@ IMPLEMENT_FUNCTION(Ivo, function27, 27)
 				getData()->entityPosition = kPosition_2088;
 
 			setCallback(2);
-			call(new ENTITY_SETUP(Ivo, setup_updateEntity), kCarRestaurant, kPosition_850);
+			setup_updateEntity(kCarRestaurant, kPosition_850);
 			break;
 
 		case 2:
@@ -611,19 +611,19 @@ IMPLEMENT_FUNCTION(Ivo, function27, 27)
 
 	case kAction55996766:
 		setCallback(1);
-		call(new ENTITY_SETUP_SIIS(Ivo, setup_enterExitCompartment), "613FH", kObjectCompartmentH);
+		setup_enterExitCompartment("613FH", kObjectCompartmentH);
 		break;
 
 	case kAction122865568:
 		getData()->location = kLocationOutsideCompartment;
 
 		setCallback(3);
-		call(new ENTITY_SETUP_SIIS(Ivo, setup_enterExitCompartment), "613Bh", kObjectCompartmentH);
+		setup_enterExitCompartment("613Bh", kObjectCompartmentH);
 		break;
 
 	case kAction123852928:
 		setCallback(4);
-		call(new ENTITY_SETUP_SIIS(Ivo, setup_enterExitCompartment), "613Dh", kObjectCompartmentH);
+		setup_enterExitCompartment("613Dh", kObjectCompartmentH);
 		break;
 
 	case kAction221683008:
@@ -641,7 +641,7 @@ IMPLEMENT_FUNCTION(Ivo, function28, 28)
 		if (getState()->time > kTime2425500 && !params->param1) {
 			params->param1 = 1;
 			setCallback(1);
-			call(new ENTITY_SETUP(Ivo, setup_updateEntity), kCarRedSleeping, kPosition_2740);
+			setup_updateEntity(kCarRedSleeping, kPosition_2740);
 		}
 		break;
 
@@ -649,7 +649,7 @@ IMPLEMENT_FUNCTION(Ivo, function28, 28)
 		switch (getCallback()) {
 		case 1:
 			setCallback(2);
-			call(new ENTITY_SETUP_SIIS(Ivo, setup_enterExitCompartment), "613EH", kObjectCompartmentH);
+			setup_enterExitCompartment("613EH", kObjectCompartmentH);
 			break;
 
 		case 2:
@@ -710,7 +710,7 @@ IMPLEMENT_FUNCTION(Ivo, fight, 32)
 		getData()->inventoryItem = kItemNone;
 
 		setCallback(1);
-		call(new ENTITY_SETUP(Ivo, setup_savegame), kSavegameTypeEvent, kEventCathIvoFight);
+		setup_savegame(kSavegameTypeEvent, kEventCathIvoFight);
 		break;
 
 	case kActionCallback:
@@ -723,7 +723,7 @@ IMPLEMENT_FUNCTION(Ivo, fight, 32)
 			getAction()->playAnimation(kEventCathIvoFight);
 
 			setCallback(2);
-			call(new ENTITY_SETUP(Ivo, setup_savegame), kSavegameTypeTime, kTimeNone);
+			setup_savegame(kSavegameTypeTime, kTimeNone);
 			break;
 
 		case 2:
@@ -749,7 +749,7 @@ IMPLEMENT_FUNCTION(Ivo, function33, 33)
 		getState()->time += 1800;
 
 		setCallback(1);
-		call(new ENTITY_SETUP(Ivo, setup_savegame), kSavegameTypeTime, kTimeNone);
+		setup_savegame(kSavegameTypeTime, kTimeNone);
 		break;
 
 	case kActionCallback:

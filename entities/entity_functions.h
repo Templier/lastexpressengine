@@ -64,7 +64,7 @@
 	if (getState()->time > timeValue && !parameter) { \
 		parameter = 1; \
 		setCallback(callback); \
-		call(new ENTITY_SETUP(class, function)); \
+		function(); \
 		break; \
 	}
 
@@ -72,7 +72,7 @@
 	if (getState()->time > timeValue && !parameter) { \
 		parameter = 1; \
 		setCallback(callback); \
-		call(new ENTITY_SETUP(class, function), param1); \
+		function(param1); \
 		break; \
 	}
 
@@ -80,7 +80,7 @@
 	if (getState()->time > timeValue && !parameter) { \
 		parameter = 1; \
 		setCallback(callback); \
-		call(new ENTITY_SETUP_SIIS(class, function), seq); \
+		function(seq); \
 		break; \
 	}
 
@@ -88,7 +88,7 @@
 	if (getState()->time > timeValue && !parameter) { \
 		parameter = 1; \
 		setCallback(callback); \
-		call(new ENTITY_SETUP_SIIS(class, function), seq, param1, param2); \
+		function(seq, param1, param2); \
 		break; \
 	}
 
@@ -103,7 +103,7 @@
 	if (getState()->time > timeValue && !parameter) { \
 		parameter = 1; \
 		setCallback(callback); \
-		call(new ENTITY_SETUP(class, setup_savegame), type, event); \
+		setup_savegame(type, event); \
 		break; \
 	}
 
@@ -111,7 +111,7 @@
 	if (getState()->time > timeValue && !parameter) { \
 		parameter = 1; \
 		setCallback(callback); \
-		call(new ENTITY_SETUP_SIIS(class, setup_enterStation), name, param2); \
+		setup_enterStation(name, param2); \
 		break; \
 	}
 
@@ -119,7 +119,7 @@
 	if (getState()->time > timeValue && !parameter) { \
 		parameter = 1; \
 		setCallback(callback); \
-		call(new ENTITY_SETUP_SIIS(class, setup_exitStation), name); \
+		setup_exitStation(name); \
 		break; \
 	}
 
@@ -128,14 +128,14 @@
 		parameter1 = 1; \
 		parameter2 = 1; \
 		setCallback(callback); \
-		call(new ENTITY_SETUP_SIIS(class, setup_exitStation), name); \
+		setup_exitStation(name); \
 		break; \
 	}
 
 #define TIME_CHECK_EXITSTATION_0(class, parameter1, parameter2, callback, name) \
 	if (parameter1 && !parameter2) { \
 		setCallback(callback); \
-		call(new ENTITY_SETUP_SIIS(class, setup_exitStation), name); \
+		setup_exitStation(name); \
 		break; \
 	}
 
@@ -143,7 +143,7 @@
 	if (getState()->time > timeValue && !parameter) { \
 		parameter = 1; \
 		setCallback(callback); \
-		call(new ENTITY_SETUP_SIIS(class, setup_playSound), sound); \
+		setup_playSound(sound); \
 		break; \
 	}
 
@@ -152,7 +152,7 @@
 		parameter = 1; \
 		getData()->entityPosition = position; \
 		setCallback(callback); \
-		call(new ENTITY_SETUP_SIIS(class, setup_playSound), sound); \
+		setup_playSound(sound); \
 		break; \
 	}
 
@@ -174,7 +174,7 @@
 	if (getState()->time > timeValue || parameter < getState()->time) { \
 		parameter = kTimeInvalid; \
 		setCallback(callback); \
-		call(new ENTITY_SETUP(class, function)); \
+		function(); \
 		break; \
 	} \
 }
@@ -215,7 +215,7 @@
 	case kActionDefault: \
 		getData()->entityPosition = positionFrom; \
 		setCallback(1); \
-		call(new ENTITY_SETUP_SIIS(class, setup_enterExitCompartment), sequenceFrom, compartmentFrom); \
+		setup_enterExitCompartment(sequenceFrom, compartmentFrom); \
 		break; \
 	case kActionCallback: \
 		switch (getCallback()) { \
@@ -223,7 +223,7 @@
 			break; \
 		case 1: \
 			setCallback(2); \
-			call(new ENTITY_SETUP_SIIS(class, setup_enterExitCompartment), sequenceTo, compartmentFrom); \
+			setup_enterExitCompartment(sequenceTo, compartmentFrom); \
 			break; \
 		case 2: \
 			getData()->entityPosition = positionFrom; \
@@ -241,7 +241,7 @@
 		getData()->entityPosition = positionFrom; \
 		getData()->location = kLocationOutsideCompartment; \
 		setCallback(1); \
-		call(new ENTITY_SETUP_SIIS(class, setup_enterExitCompartment), sequenceFrom, compartmentFrom); \
+		setup_enterExitCompartment(sequenceFrom, compartmentFrom); \
 		break; \
 	case kActionCallback: \
 		switch (getCallback()) { \
@@ -249,11 +249,11 @@
 			break; \
 		case 1: \
 			setCallback(2); \
-			call(new ENTITY_SETUP(class, setup_updateEntity), kCarGreenSleeping, positionTo); \
+			setup_updateEntity(kCarGreenSleeping, positionTo); \
 			break; \
 		case 2: \
 			setCallback(3); \
-			call(new ENTITY_SETUP_SIIS(class, setup_enterExitCompartment), sequenceTo, compartmentTo); \
+			setup_enterExitCompartment(sequenceTo, compartmentTo); \
 			break; \
 		case 3: \
 			getData()->location = kLocationInsideCompartment; \

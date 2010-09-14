@@ -132,7 +132,7 @@ IMPLEMENT_FUNCTION(Yasmin, function6, 6)
 		getData()->location = kLocationOutsideCompartment;
 
 		setCallback(1);
-		call(new ENTITY_SETUP_SIIS(Yasmin, setup_enterExitCompartment), "615Be", kObjectCompartment5);
+		setup_enterExitCompartment("615Be", kObjectCompartment5);
 		break;
 
 	case kActionCallback:
@@ -142,12 +142,12 @@ IMPLEMENT_FUNCTION(Yasmin, function6, 6)
 
 		case 1:
 			setCallback(2);
-			call(new ENTITY_SETUP(Yasmin, setup_updateEntity), kCarGreenSleeping, kPosition_3050);
+			setup_updateEntity(kCarGreenSleeping, kPosition_3050);
 			break;
 
 		case 2:
 			setCallback(3);
-			call(new ENTITY_SETUP_SIIS(Yasmin, setup_enterExitCompartment), "615Ag", kObjectCompartment7);
+			setup_enterExitCompartment("615Ag", kObjectCompartment7);
 			break;
 
 		case 3:
@@ -171,8 +171,7 @@ IMPLEMENT_FUNCTION(Yasmin, function7, 7)
 		getData()->location = kLocationOutsideCompartment;
 
 		setCallback(1);
-		// Exit compartment
-		call(new ENTITY_SETUP_SIIS(Yasmin, setup_enterExitCompartment), "615Bg", kObjectCompartment7);
+		setup_enterExitCompartment("615Bg", kObjectCompartment7);
 		break;
 
 	case kActionCallback:
@@ -181,12 +180,13 @@ IMPLEMENT_FUNCTION(Yasmin, function7, 7)
 			break;
 
 		case 1:
-			call(new ENTITY_SETUP(Yasmin, setup_updateEntity), kCarGreenSleeping, kPosition_4840);
+			setCallback(2);
+			setup_updateEntity(kCarGreenSleeping, kPosition_4840);
 			break;
 
 		case 2:
-			// Enter compartment
-			call(new ENTITY_SETUP_SIIS(Yasmin, setup_enterExitCompartment), "615Ae", kObjectCompartment5);
+			setCallback(3);
+			setup_enterExitCompartment("615Ae", kObjectCompartment5);
 			break;
 
 		case 3:
@@ -239,7 +239,7 @@ IMPLEMENT_FUNCTION(Yasmin, chapter1Handler, 9)
 		case 1:
 			getData()->entityPosition = kPosition_2740;
 			setCallback(2);
-			call(new ENTITY_SETUP_SIIS(Yasmin, setup_playSound), "Har1102");
+			setup_playSound("Har1102");
 			break;
 
 		case 2:
@@ -405,7 +405,7 @@ IMPLEMENT_FUNCTION(Yasmin, chapter4Handler, 16)
 		case 1:
 			getData()->entityPosition = kPosition_4070;
 			setCallback(2);
-			call(new ENTITY_SETUP_SIIS(Yasmin, setup_playSound), "Har1110");
+			setup_playSound("Har1110");
 			break;
 
 		case 2:

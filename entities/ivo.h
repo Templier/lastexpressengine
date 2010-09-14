@@ -73,10 +73,6 @@ public:
 	DECLARE_FUNCTION(fight)
 	DECLARE_FUNCTION(function33)
 	DECLARE_FUNCTION(function34)
-
-private:
-	DECLARE_CALL_FUNCTION(iiii, Ivo, uint, uint, uint, uint)
-	DECLARE_CALL_FUNCTION(siis, Ivo, const char*, uint, uint, const char*)
 };
 
 } // End of namespace LastExpress

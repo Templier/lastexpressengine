@@ -93,12 +93,6 @@ public:
 	DECLARE_FUNCTION(function52)
 	DECLARE_FUNCTION(function53)
 	DECLARE_NULL_FUNCTION()
-
-private:
-	DECLARE_CALL_FUNCTION(iiii, Mertens, uint, uint, uint, uint)
-	DECLARE_CALL_FUNCTION(siis, Mertens, const char *, uint, uint, const char *)
-	DECLARE_CALL_FUNCTION(ssii, Mertens, const char *, const char *, uint, uint)
-	DECLARE_CALL_FUNCTION(siii, Mertens, const char *, uint, uint, uint)
 };
 
 } // End of namespace LastExpress

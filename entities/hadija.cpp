@@ -164,7 +164,7 @@ label_callback2:
 
 					if (!params->param3) {
 						setCallback(3);
-						call(new ENTITY_SETUP(Hadija, setup_compartment8));
+						setup_compartment8();
 						return;
 					}
 				}
@@ -176,7 +176,7 @@ label_callback2:
 			params->param3 = kTimeInvalid;
 
 			setCallback(3);
-			call(new ENTITY_SETUP(Hadija, setup_compartment8));
+			setup_compartment8();
 		}
 
 label_callback3:
@@ -191,7 +191,7 @@ label_callback4:
 
 					if (!params->param5) {
 						setCallback(5);
-						call(new ENTITY_SETUP(Hadija, setup_compartment6));
+						setup_compartment6();
 						return;
 					}
 				}
@@ -203,7 +203,7 @@ label_callback4:
 			params->param5 = kTimeInvalid;
 
 			setCallback(5);
-			call(new ENTITY_SETUP(Hadija, setup_compartment6));
+			setup_compartment6();
 		}
 		break;
 
@@ -282,7 +282,7 @@ IMPLEMENT_FUNCTION(Hadija, chapter2Handler, 14)
 		params->param2 = kTimeInvalid;
 
 		setCallback(1);
-		call(new ENTITY_SETUP(Hadija, setup_compartment8));
+		setup_compartment8();
 		break;
 
 	case kActionCallback:
@@ -296,7 +296,7 @@ IMPLEMENT_FUNCTION(Hadija, chapter2Handler, 14)
 
 		case 2:
 			setCallback(3);
-			call(new ENTITY_SETUP_SIIS(Hadija, setup_playSound), "Har2012");
+			setup_playSound("Har2012");
 			break;
 		}
 		break;
@@ -495,7 +495,7 @@ IMPLEMENT_FUNCTION(Hadija, function23, 23)
 
 	case kActionDefault:
 		setCallback(1);
-		call(new ENTITY_SETUP(Hadija, setup_updateEntity), kCarGreenSleeping, kPosition_4070);
+		setup_updateEntity(kCarGreenSleeping, kPosition_4070);
 		break;
 
 	case kActionCallback:
@@ -505,7 +505,7 @@ IMPLEMENT_FUNCTION(Hadija, function23, 23)
 
 		case 1:
 			setCallback(2);
-			call(new ENTITY_SETUP_SIIS(Hadija, setup_enterExitCompartment), "619AF", kObjectCompartment6);
+			setup_enterExitCompartment("619AF", kObjectCompartment6);
 			break;
 
 		case 2:

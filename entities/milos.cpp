@@ -206,18 +206,18 @@ IMPLEMENT_FUNCTION_I(Milos, function11, 11)
 		if (params->param2) {
 			if (getInventory()->hasItem(kItemPassengerList)) {
 				setCallback(10);
-				call(new ENTITY_SETUP_SIIS(Milos, setup_playSound), (rnd(2) ? "CAT1504" : getSound()->wrongDoorCath()));
+				setup_playSound((rnd(2) ? "CAT1504" : getSound()->wrongDoorCath()));
 			} else {
 				setCallback(11);
-				call(new ENTITY_SETUP_SIIS(Milos, setup_playSound), getSound()->wrongDoorCath());
+				setup_playSound(getSound()->wrongDoorCath());
 			}
 		} else {
 			if (savepoint.action == kActionKnock) {
 				setCallback(7);
-				call(new ENTITY_SETUP_SIIS(Milos, setup_playSound), "LIB012");
+				setup_playSound("LIB012");
 			} else {
 				setCallback(8);
-				call(new ENTITY_SETUP_SIIS(Milos, setup_playSound), "LIB013");
+				setup_playSound("LIB013");
 			}
 		}
 		break;
@@ -242,12 +242,12 @@ IMPLEMENT_FUNCTION_I(Milos, function11, 11)
 		case 1:
 			getData()->location = kLocationOutsideCompartment;
 			setCallback(2);
-			call(new ENTITY_SETUP(Milos, setup_enterCompartmentDialog), 3, 8200);
+			setup_enterCompartmentDialog(3, 8200);
 			break;
 
 		case 2:
 			setCallback(3);
-			call(new ENTITY_SETUP(Milos, setup_function14));
+			setup_function14();
 			break;
 
 		case 3:
@@ -256,12 +256,12 @@ IMPLEMENT_FUNCTION_I(Milos, function11, 11)
 
 			params->param6 = 1;
 			setCallback(4);
-			call(new ENTITY_SETUP(Milos, setup_enterCompartmentDialog), kCarRedSleeping, 3050);
+			setup_enterCompartmentDialog(kCarRedSleeping, 3050);
 			break;
 
 		case 4:
 			setCallback(5);
-			call(new ENTITY_SETUP_SIIS(Milos, setup_enterExitCompartment), "609Bg", kObjectCompartmentG);
+			setup_enterExitCompartment("609Bg", kObjectCompartmentG);
 			break;
 
 		case 5:
@@ -279,7 +279,7 @@ IMPLEMENT_FUNCTION_I(Milos, function11, 11)
 		case 8:
 			setCallback(9);
 			// Milos asking: "Yeah? Who is it?"
-			call(new ENTITY_SETUP_SIIS(Milos, setup_playSound), "MIL1117A");
+			setup_playSound("MIL1117A");
 			break;
 
 		case 9:
@@ -313,12 +313,12 @@ IMPLEMENT_FUNCTION_I(Milos, function11, 11)
 	case kAction122865568:
 		getData()->location = kLocationOutsideCompartment;
 		setCallback(12);
-		call(new ENTITY_SETUP_SIIS(Milos, setup_enterExitCompartment), "611Bg", kObjectCompartmentG);
+		setup_enterExitCompartment("611Bg", kObjectCompartmentG);
 		break;
 
 	case kAction123852928:
 		params->param1 = 13;
-		call(new ENTITY_SETUP_SIIS(Milos, setup_enterExitCompartment), "611Dg", kObjectCompartmentG);
+		setup_enterExitCompartment("611Dg", kObjectCompartmentG);
 		break;
 
 	case kAction221683008:
@@ -397,7 +397,7 @@ IMPLEMENT_FUNCTION(Milos, chapter1Handler, 15)
 			UPDATE_PARAM_GOTO(params->param4, getState()->timeTicks, 45, label_checkNextPosition);
 
 			setCallback(1);
-			call(new ENTITY_SETUP_SIIS(Milos, setup_draw), "009C");
+			setup_draw("009C");
 			break;
 		}
 
@@ -406,7 +406,7 @@ label_checkNextPosition:
 			UPDATE_PARAM(params->param5, getState()->timeTicks, 45);
 
 			setCallback(2);
-			call(new ENTITY_SETUP_SIIS(Milos, setup_draw), "009C");
+			setup_draw("009C");
 		}
 		break;
 
@@ -442,7 +442,7 @@ IMPLEMENT_FUNCTION(Milos, function16, 16)
 IMPLEMENT_FUNCTION(Milos, function17, 17)
 	if (savepoint.action == kActionDefault) {
 		setCallback(1);
-		call(new ENTITY_SETUP(Milos, setup_function11), kTimeBedTime);
+		setup_function11(kTimeBedTime);
 	}
 }
 
@@ -495,7 +495,7 @@ IMPLEMENT_FUNCTION(Milos, chapter2Handler, 20)
 	case kActionDrawScene:
 		if (getEntities()->isPlayerInCar(kCarRedSleeping) && !getEntities()->isPlayerPosition(kCarRedSleeping, 1)) {
 			setCallback(1);
-			call(new ENTITY_SETUP(Milos, setup_enterCompartmentDialog), kCarRedSleeping, kPosition_3050);
+			setup_enterCompartmentDialog(kCarRedSleeping, kPosition_3050);
 		}
 		break;
 
@@ -506,7 +506,7 @@ IMPLEMENT_FUNCTION(Milos, chapter2Handler, 20)
 
 		case 1:
 			setCallback(2);
-			call(new ENTITY_SETUP_SIIS(Milos, setup_enterExitCompartment), "609Bg", kObjectCompartmentG);
+			setup_enterExitCompartment("609Bg", kObjectCompartmentG);
 			break;
 
 		case 2:
@@ -632,7 +632,7 @@ IMPLEMENT_FUNCTION(Milos, function30, 30)
 
 	case kActionNone:
 		setCallback(1);
-		call(new ENTITY_SETUP(Milos, setup_function11), kTime2410200);
+		setup_function11(kTime2410200);
 		break;
 
 	case kActionCallback:
@@ -641,14 +641,14 @@ IMPLEMENT_FUNCTION(Milos, function30, 30)
 			getSavePoints()->push(kEntityMilos, kEntityIvo, kAction55996766);
 
 			setCallback(2);
-			call(new ENTITY_SETUP(Milos, setup_function11), kTime2412000);
+			setup_function11(kTime2412000);
 			break;
 
 		case 2:
 			getSavePoints()->push(kEntityMilos, kEntitySalko, kAction55996766);
 
 			setCallback(3);
-			call(new ENTITY_SETUP(Milos, setup_function11), kTime2415600);
+			setup_function11(kTime2415600);
 			break;
 
 		case 3:
@@ -666,7 +666,7 @@ IMPLEMENT_FUNCTION(Milos, function31, 31)
 
 	case kActionNone:
 		setCallback(1);
-		call(new ENTITY_SETUP_SIIS(Milos, setup_enterExitCompartment), "609CG", kObjectCompartmentG);
+		setup_enterExitCompartment("609CG", kObjectCompartmentG);
 		break;
 
 	case kActionCallback:
@@ -676,7 +676,7 @@ IMPLEMENT_FUNCTION(Milos, function31, 31)
 			getObjects()->update(kObjectCompartmentG, kEntityPlayer, kLocation3, kCursorHandKnock, kCursorHand);
 
 			setCallback(2);
-			call(new ENTITY_SETUP(Milos, setup_enterCompartmentDialog), kCarGreenSleeping, kPosition_540);
+			setup_enterCompartmentDialog(kCarGreenSleeping, kPosition_540);
 			break;
 
 		case 2:

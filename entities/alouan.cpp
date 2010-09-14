@@ -164,7 +164,7 @@ label_callback1:
 			getSavePoints()->push(kEntityAlouan, kEntityTrain, kAction191070912, kPosition_4840);
 
 			setCallback(2);
-			call(new ENTITY_SETUP(Alouan, setup_compartment6to8));
+			setup_compartment6to8();
 		}
 		break;
 
@@ -230,9 +230,9 @@ IMPLEMENT_FUNCTION(Alouan, chapter2Handler, 14)
 
 		setCallback(params->param1 ? 1 : 2);
 		if (params->param1)
-			call(new ENTITY_SETUP(Alouan, setup_compartment8));
+			setup_compartment8();
 		else
-			call(new ENTITY_SETUP(Alouan, setup_compartment6));
+			setup_compartment6();
 		break;
 
 	case kActionDefault:
@@ -248,12 +248,12 @@ IMPLEMENT_FUNCTION(Alouan, chapter2Handler, 14)
 		case 3:
 			params->param1 = 0;
 			setCallback(4);
-			call(new ENTITY_SETUP_SIIS(Alouan, setup_playSound), "Har2011");
+			setup_playSound("Har2011");
 			break;
 
 		case 4:
 			setCallback(5);
-			call(new ENTITY_SETUP(Alouan, setup_updateFromTime), 900);
+			setup_updateFromTime(900);
 			break;
 
 		case 5:
@@ -264,7 +264,7 @@ IMPLEMENT_FUNCTION(Alouan, chapter2Handler, 14)
 
 	case kAction189489753:
 		setCallback(3);
-		call(new ENTITY_SETUP(Alouan, setup_compartment8to6));
+		setup_compartment8to6();
 		break;
 	}
 }
@@ -376,7 +376,7 @@ label_callback2:
 			getSavePoints()->push(kEntityAlouan, kEntityTrain, kAction191070912, kPosition_4840);
 
 			setCallback(3);
-			call(new ENTITY_SETUP(Alouan, setup_compartment6to8));
+			setup_compartment6to8();
 		}
 		break;
 
@@ -470,7 +470,7 @@ IMPLEMENT_FUNCTION(Alouan, function23, 23)
 
 	case kActionDefault:
 		setCallback(1);
-		call(new ENTITY_SETUP(Alouan, setup_updateEntity), kCarGreenSleeping, kPosition_4070);
+		setup_updateEntity(kCarGreenSleeping, kPosition_4070);
 		break;
 
 	case kActionCallback:
@@ -480,7 +480,7 @@ IMPLEMENT_FUNCTION(Alouan, function23, 23)
 
 		case 1:
 			setCallback(2);
-			call(new ENTITY_SETUP_SIIS(Alouan, setup_enterExitCompartment), "619AF", kObjectCompartment5);
+			setup_enterExitCompartment("619AF", kObjectCompartment5);
 			break;
 
 		case 2:
