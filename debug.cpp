@@ -86,6 +86,7 @@ Debugger::Debugger(LastExpressEngine *engine) : _engine(engine), _command(NULL),
 
 	// Misc
 	DCmd_Register("loadgame",  WRAP_METHOD(Debugger, cmdLoadGame));
+	DCmd_Register("chapter",   WRAP_METHOD(Debugger, cmdSwitchChapter));
 	DCmd_Register("clear",     WRAP_METHOD(Debugger, cmdClear));
 
 	resetCommand();
@@ -104,6 +105,9 @@ Debugger::~Debugger() {
 	_commandParams = NULL;
 }
 
+//////////////////////////////////////////////////////////////////////////
+// Helper functions
+//////////////////////////////////////////////////////////////////////////
 bool Debugger::hasCommand() const {
 	return (_numParams != 0);
 }
@@ -171,6 +175,9 @@ void Debugger::restoreArchive() const {
 	getScenes()->loadSceneDataFile(index);
 }
 
+//////////////////////////////////////////////////////////////////////////
+// Debugger commands
+//////////////////////////////////////////////////////////////////////////
 bool Debugger::cmdHelp(int, const char **) {
 	DebugPrintf("Debug flags\n");
 	DebugPrintf("-----------\n");
@@ -198,13 +205,166 @@ bool Debugger::cmdHelp(int, const char **) {
 	DebugPrintf(" entity - Dump entity data\n");
 	DebugPrintf("\n");
 	DebugPrintf(" loadgame - load a saved game\n");
+	DebugPrintf(" chapter - switch to a specific chapter\n");
 	DebugPrintf(" clear - clear the screen\n");
 	DebugPrintf("\n");
 	return true;
 }
 
-//////////////////////////////////////////////////////////////////////////
-// Play a sequence
+/**
+ * Command: list files in archive
+ *
+ * @param argc The argument count.
+ * @param argv The values.
+ *
+ * @return true if it was handled, false otherwise
+ */
+bool Debugger::cmdListFiles(int argc, const char **argv) {
+	if (argc == 2 || argc == 3) {
+		Common::String filter(const_cast<char *>(argv[1]));
+
+		// Load the proper archive
+		if (argc == 3)
+			loadArchive((ArchiveIndex)getNumber(argv[2]));
+
+		Common::ArchiveMemberList list;
+		int count = _engine->getResourceManager()->listMatchingMembers(list, filter);
+
+		DebugPrintf("Number of matches: %d\n", count);
+		for (Common::ArchiveMemberList::iterator it = list.begin(); it != list.end(); ++it)
+			DebugPrintf(" %s\n", (*it)->getName().c_str());
+
+		// Restore archive
+		if (argc == 3)
+			restoreArchive();
+	} else {
+		DebugPrintf("Syntax: ls <filter> (use * for all)\n (<cd number>)");
+	}
+
+	return true;
+}
+
+/**
+ * Command: Shows a frame
+ *
+ * @param argc The argument count.
+ * @param argv The values.
+ *
+ * @return true if it was handled, false otherwise
+ */
+bool Debugger::cmdShowFrame(int argc, const char **argv) {
+	if (argc == 3 || argc == 4) {
+		Common::String filename(const_cast<char *>(argv[1]));
+		filename += ".seq";
+
+		if (argc == 4)
+			loadArchive((ArchiveIndex)getNumber(argv[3]));
+
+		if (!_engine->getResourceManager()->hasFile(filename)) {
+			DebugPrintf("Cannot find file: %s\n", filename.c_str());
+			return true;
+		}
+
+		// Store command
+		if (!hasCommand()) {
+			_command = WRAP_METHOD(Debugger, cmdShowFrame);
+			copyCommand(argc, argv);
+
+			return Cmd_Exit(0, 0);
+		} else {
+			Sequence sequence(filename);
+			if (sequence.load(getArchive(filename))) {
+				_engine->getCursor()->show(false);
+				clearBg(GraphicsManager::kBackgroundOverlay);
+
+				AnimFrame *frame = sequence.getFrame((uint16)getNumber(argv[2]));
+				if (!frame) {
+					DebugPrintf("Invalid frame index: %i\n", filename.c_str());
+					resetCommand();
+					return true;
+				}
+
+				_engine->getGraphicsManager()->draw(frame, GraphicsManager::kBackgroundOverlay);
+				delete frame;
+
+				askForRedraw();
+				redrawScreen();
+
+				_engine->_system->delayMillis(1000);
+				_engine->getCursor()->show(true);
+			}
+
+			resetCommand();
+
+			if (argc == 4)
+				restoreArchive();
+		}
+	} else {
+		DebugPrintf("Syntax: cmd_showframe <seqname> <index> (<cd number>)\n");
+	}
+	return true;
+}
+
+/**
+ * Command: shows a background
+ *
+ * @param argc The argument count.
+ * @param argv The values.
+ *
+ * @return true if it was handled, false otherwise
+ */
+bool Debugger::cmdShowBg(int argc, const char **argv) {
+	if (argc == 2 || argc == 3) {
+		Common::String filename(const_cast<char *>(argv[1]));
+
+		if (argc == 3)
+			loadArchive((ArchiveIndex)getNumber(argv[2]));
+
+		if (!_engine->getResourceManager()->hasFile(filename + ".BG")) {
+			DebugPrintf("Cannot find file: %s\n", (filename + ".BG").c_str());
+			return true;
+		}
+
+		// Store command
+		if (!hasCommand()) {
+			_command = WRAP_METHOD(Debugger, cmdShowBg);
+			copyCommand(argc, argv);
+
+			return Cmd_Exit(0, 0);
+		} else {
+			clearBg(GraphicsManager::kBackgroundC);
+
+			Background *background = _engine->getResourceManager()->loadBackground(filename);
+			if (background) {
+				_engine->getGraphicsManager()->draw(background, GraphicsManager::kBackgroundC);
+				delete background;
+				askForRedraw();
+			}
+
+			redrawScreen();
+
+			if (argc == 3)
+				restoreArchive();
+
+			// Pause for a second to be able to see the background
+			_engine->_system->delayMillis(1000);
+
+			resetCommand();
+		}
+	} else {
+		DebugPrintf("Syntax: showbg <bgname> (<cd number>)\n");
+	}
+	return true;
+}
+
+/**
+ * Command: plays a sequence.
+ *
+ * @param argc The argument count.
+ * @param argv The values.
+ *
+ * @return true if it was handled, false otherwise
+ */
 bool Debugger::cmdPlaySeq(int argc, const char **argv) {
 	if (argc == 2 || argc == 3) {
 		Common::String filename(const_cast<char *>(argv[1]));
@@ -274,59 +434,14 @@ bool Debugger::cmdPlaySeq(int argc, const char **argv) {
 	return true;
 }
 
-bool Debugger::cmdShowFrame(int argc, const char **argv) {
-	if (argc == 3 || argc == 4) {
-		Common::String filename(const_cast<char *>(argv[1]));
-		filename += ".seq";
-
-		if (argc == 4)
-			loadArchive((ArchiveIndex)getNumber(argv[3]));
-
-		if (!_engine->getResourceManager()->hasFile(filename)) {
-			DebugPrintf("Cannot find file: %s\n", filename.c_str());
-			return true;
-		}
-
-		// Store command
-		if (!hasCommand()) {
-			_command = WRAP_METHOD(Debugger, cmdShowFrame);
-			copyCommand(argc, argv);
-
-			return Cmd_Exit(0, 0);
-		} else {
-			Sequence sequence(filename);
-			if (sequence.load(getArchive(filename))) {
-				_engine->getCursor()->show(false);
-				clearBg(GraphicsManager::kBackgroundOverlay);
-
-				AnimFrame *frame = sequence.getFrame((uint16)getNumber(argv[2]));
-				if (!frame) {
-					DebugPrintf("Invalid frame index: %i\n", filename.c_str());
-					resetCommand();
-					return true;
-				}
-
-				_engine->getGraphicsManager()->draw(frame, GraphicsManager::kBackgroundOverlay);
-				delete frame;
-
-				askForRedraw();
-				redrawScreen();
-
-				_engine->_system->delayMillis(1000);
-				_engine->getCursor()->show(true);
-			}
-
-			resetCommand();
-
-			if (argc == 4)
-				restoreArchive();
-		}
-	} else {
-		DebugPrintf("Syntax: cmd_showframe <seqname> <index> (<cd number>)\n");
-	}
-	return true;
-}
-
+/**
+ * Command: plays a sound
+ *
+ * @param argc The argument count.
+ * @param argv The values.
+ *
+ * @return true if it was handled, false otherwise
+ */
 bool Debugger::cmdPlaySnd(int argc, const char **argv) {
 	if (argc == 2 || argc == 3) {
 
@@ -355,6 +470,14 @@ bool Debugger::cmdPlaySnd(int argc, const char **argv) {
 	return true;
 }
 
+/**
+ * Command: plays subtitles
+ *
+ * @param argc The argument count.
+ * @param argv The values.
+ *
+ * @return true if it was handled, false otherwise
+ */
 bool Debugger::cmdPlaySbe(int argc, const char **argv) {
 	if (argc == 2 || argc == 3) {
 		Common::String filename(const_cast<char *>(argv[1]));
@@ -410,6 +533,14 @@ bool Debugger::cmdPlaySbe(int argc, const char **argv) {
 	return true;
 }
 
+/**
+ * Command: plays a NIS animation sequence.
+ *
+ * @param argc The argument count.
+ * @param argv The values.
+ *
+ * @return true if it was handled, false otherwise
+ */
 bool Debugger::cmdPlayNis(int argc, const char **argv) {
 	if (argc == 2 || argc == 3) {
 		Common::String name(const_cast<char *>(argv[1]));
@@ -457,50 +588,14 @@ bool Debugger::cmdPlayNis(int argc, const char **argv) {
 	return true;
 }
 
-bool Debugger::cmdShowBg(int argc, const char **argv) {
-	if (argc == 2 || argc == 3) {
-		Common::String filename(const_cast<char *>(argv[1]));
-
-		if (argc == 3)
-			loadArchive((ArchiveIndex)getNumber(argv[2]));
-
-		if (!_engine->getResourceManager()->hasFile(filename + ".BG")) {
-			DebugPrintf("Cannot find file: %s\n", (filename + ".BG").c_str());
-			return true;
-		}
-
-		// Store command
-		if (!hasCommand()) {
-			_command = WRAP_METHOD(Debugger, cmdShowBg);
-			copyCommand(argc, argv);
-
-			return Cmd_Exit(0, 0);
-		} else {
-			clearBg(GraphicsManager::kBackgroundC);
-
-			Background *background = _engine->getResourceManager()->loadBackground(filename);
-			if (background) {
-				_engine->getGraphicsManager()->draw(background, GraphicsManager::kBackgroundC);
-				delete background;
-				askForRedraw();
-			}
-
-			redrawScreen();
-
-			if (argc == 3)
-				restoreArchive();
-
-			// Pause for a second to be able to see the background
-			_engine->_system->delayMillis(1000);
-
-			resetCommand();
-		}
-	} else {
-		DebugPrintf("Syntax: showbg <bgname> (<cd number>)\n");
-	}
-	return true;
-}
-
+/**
+ * Command: loads a scene
+ *
+ * @param argc The argument count.
+ * @param argv The values.
+ *
+ * @return true if it was handled, false otherwise
+ */
 bool Debugger::cmdLoadScene(int argc, const char **argv) {
 	if (argc == 2 || argc == 3) {
 		int cd = 1;
@@ -577,160 +672,14 @@ bool Debugger::cmdLoadScene(int argc, const char **argv) {
 	return true;
 }
 
-
-bool Debugger::cmdClear(int argc, const char **) {
-	if (argc == 1) {
-		clearBg(GraphicsManager::kBackgroundAll);
-		askForRedraw();
-		redrawScreen();
-	} else {
-		DebugPrintf("Syntax: clear - clear the screen\n");
-	}
-
-	return true;
-}
-
-bool Debugger::cmdListFiles(int argc, const char **argv) {
-	if (argc == 2 || argc == 3) {
-		Common::String filter(const_cast<char *>(argv[1]));
-
-		// Load the proper archive
-		if (argc == 3)
-			loadArchive((ArchiveIndex)getNumber(argv[2]));
-
-		Common::ArchiveMemberList list;
-		int count = _engine->getResourceManager()->listMatchingMembers(list, filter);
-
-		DebugPrintf("Number of matches: %d\n", count);
-		for (Common::ArchiveMemberList::iterator it = list.begin(); it != list.end(); ++it)
-			DebugPrintf(" %s\n", (*it)->getName().c_str());
-
-		// Restore archive
-		if (argc == 3)
-			restoreArchive();
-	} else {
-		DebugPrintf("Syntax: ls <filter> (use * for all)\n (<cd number>)");
-	}
-
-	return true;
-}
-
-bool Debugger::cmdTimeDelta(int argc, const char **argv) {
-	if (argc == 2) {
-		int delta =  getNumber(argv[1]);
-
-		if (delta <= 0 || delta > 500)
-			goto label_error;
-
-		getState()->timeDelta = (uint)delta;
-	} else {
-label_error:
-		DebugPrintf("Syntax: delta <time delta> (delta=1-500)\n");
-	}
-
-	return true;
-}
-
-bool Debugger::cmdDump(int argc, const char **argv) {
-#define OUTPUT_DUMP(name, text) \
-	DebugPrintf(#name "\n"); \
-	DebugPrintf("--------------------------------------------------------------------\n\n"); \
-	DebugPrintf(text); \
-	DebugPrintf("\n");
-
-	if (argc == 2) {
-		switch (getNumber(argv[1])) {
-		default:
-			goto label_error;
-
-		// GameState
-		case 1:
-			OUTPUT_DUMP("Game state", getState()->toString().c_str());
-			break;
-
-		// Inventory
-		case 2:
-			OUTPUT_DUMP("Inventory", getInventory()->toString().c_str());
-			break;
-
-		// Objects
-		case 3:
-			OUTPUT_DUMP("Objects", getObjects()->toString().c_str());
-			break;
-
-		// SavePoints
-		case 4:
-			OUTPUT_DUMP("SavePoints", getSavePoints()->toString().c_str());
-			break;
-
-		case 5:
-			OUTPUT_DUMP("Current scene", getScenes()->get(getState()->scene)->toString().c_str());
-		}
-	} else {
-label_error:
-		DebugPrintf("Syntax: state <option>\n");
-		DebugPrintf("              1 : Game state\n");
-		DebugPrintf("              2 : Inventory\n");
-		DebugPrintf("              3 : Objects\n");
-		DebugPrintf("              4 : SavePoints\n");
-		DebugPrintf("              5 : Current scene\n");
-	}
-
-	return true;
-
-#undef OUTPUT_DUMP
-}
-
-bool Debugger::cmdEntity(int argc, const char **argv) {
-	if (argc == 2) {
-		EntityIndex index = (EntityIndex)getNumber(argv[1]);
-
-		if (index > 39)
-			goto label_error;
-
-		DebugPrintf("Entity %s\n", ENTITY_NAME(index));
-		DebugPrintf("--------------------------------------------------------------------\n\n");
-		DebugPrintf(getEntities()->getData(index)->toString().c_str());
-
-		// The Player entity does not have any callback data
-		if (index != kEntityPlayer) {
-			EntityData *data = getEntities()->get(index)->getParamData();
-			for (uint callback = 0; callback < 9; callback++) {
-				DebugPrintf("Call parameters %d:\n", callback);
-				for (byte ix = 0; ix < 4; ix++)
-					DebugPrintf("  %s", data->getParameters(callback, ix)->toString().c_str());
-			}
-		}
-
-		DebugPrintf("\n");
-	} else {
-label_error:
-		DebugPrintf("Syntax: entity <index>\n");
-		for (int i = 0; i < 40; i += 4)
-			DebugPrintf(" %s - %d        %s - %d        %s - %d        %s - %d\n", ENTITY_NAME(i), i, ENTITY_NAME(i+1), i+1, ENTITY_NAME(i+2), i+2, ENTITY_NAME(i+3), i+3);
-	}
-
-	return true;
-}
-
-bool Debugger::cmdLoadGame(int argc, const char **argv) {
-	if (argc == 2) {
-		int id = getNumber(argv[1]);
-
-		if (id == 0 || id > 6)
-			goto error;
-
-		if (!getSaveLoad()->loadGame((GameId)(id - 1)))
-			DebugPrintf("Error loading game with id=%d", id);
-
-	} else {
-error:
-		DebugPrintf("Syntax: loadgame <id> (id=1-6)\n");
-	}
-
-	return true;
-}
-
+/**
+ * Command: starts a fight sequence
+ *
+ * @param argc The argument count.
+ * @param argv The values.
+ *
+ * @return true if it was handled, false otherwise
+ */
 bool Debugger::cmdFight(int argc, const char **argv) {
 	if (argc == 2) {
 		FightType type = (FightType)getNumber(argv[1]);
@@ -803,6 +752,14 @@ error:
 	return true;
 }
 
+/**
+ * Command: starts the beetle sequence
+ *
+ * @param argc The argument count.
+ * @param argv The values.
+ *
+ * @return true if it was handled, false otherwise
+ */
 bool Debugger::cmdBeetle(int argc, const char **argv) {
 	if (argc == 1) {
 		// Load proper data file (beetle game in in Cd2)
@@ -917,6 +874,209 @@ bool Debugger::cmdBeetle(int argc, const char **argv) {
 		}
 	} else {
 		DebugPrintf("Syntax: beetle\n");
+	}
+
+	return true;
+}
+
+/**
+ * Command: adjusts the time delta
+ *
+ * @param argc The argument count.
+ * @param argv The values.
+ *
+ * @return true if it was handled, false otherwise
+ */
+bool Debugger::cmdTimeDelta(int argc, const char **argv) {
+	if (argc == 2) {
+		int delta =  getNumber(argv[1]);
+
+		if (delta <= 0 || delta > 500)
+			goto label_error;
+
+		getState()->timeDelta = (uint)delta;
+	} else {
+label_error:
+		DebugPrintf("Syntax: delta <time delta> (delta=1-500)\n");
+	}
+
+	return true;
+}
+
+/**
+ * Command: dumps game logic data
+ *
+ * @param argc The argument count.
+ * @param argv The values.
+ *
+ * @return true if it was handled, false otherwise
+ */
+bool Debugger::cmdDump(int argc, const char **argv) {
+#define OUTPUT_DUMP(name, text) \
+	DebugPrintf(#name "\n"); \
+	DebugPrintf("--------------------------------------------------------------------\n\n"); \
+	DebugPrintf(text); \
+	DebugPrintf("\n");
+
+	if (argc == 2) {
+		switch (getNumber(argv[1])) {
+		default:
+			goto label_error;
+
+		// GameState
+		case 1:
+			OUTPUT_DUMP("Game state", getState()->toString().c_str());
+			break;
+
+		// Inventory
+		case 2:
+			OUTPUT_DUMP("Inventory", getInventory()->toString().c_str());
+			break;
+
+		// Objects
+		case 3:
+			OUTPUT_DUMP("Objects", getObjects()->toString().c_str());
+			break;
+
+		// SavePoints
+		case 4:
+			OUTPUT_DUMP("SavePoints", getSavePoints()->toString().c_str());
+			break;
+
+		case 5:
+			OUTPUT_DUMP("Current scene", getScenes()->get(getState()->scene)->toString().c_str());
+		}
+	} else {
+label_error:
+		DebugPrintf("Syntax: state <option>\n");
+		DebugPrintf("              1 : Game state\n");
+		DebugPrintf("              2 : Inventory\n");
+		DebugPrintf("              3 : Objects\n");
+		DebugPrintf("              4 : SavePoints\n");
+		DebugPrintf("              5 : Current scene\n");
+	}
+
+	return true;
+
+#undef OUTPUT_DUMP
+}
+
+/**
+ * Command: shows entity data
+ *
+ * @param argc The argument count.
+ * @param argv The values.
+ *
+ * @return true if it was handled, false otherwise
+ */
+bool Debugger::cmdEntity(int argc, const char **argv) {
+	if (argc == 2) {
+		EntityIndex index = (EntityIndex)getNumber(argv[1]);
+
+		if (index > 39)
+			goto label_error;
+
+		DebugPrintf("Entity %s\n", ENTITY_NAME(index));
+		DebugPrintf("--------------------------------------------------------------------\n\n");
+		DebugPrintf(getEntities()->getData(index)->toString().c_str());
+
+		// The Player entity does not have any callback data
+		if (index != kEntityPlayer) {
+			EntityData *data = getEntities()->get(index)->getParamData();
+			for (uint callback = 0; callback < 9; callback++) {
+				DebugPrintf("Call parameters %d:\n", callback);
+				for (byte ix = 0; ix < 4; ix++)
+					DebugPrintf("  %s", data->getParameters(callback, ix)->toString().c_str());
+			}
+		}
+
+		DebugPrintf("\n");
+	} else {
+label_error:
+		DebugPrintf("Syntax: entity <index>\n");
+		for (int i = 0; i < 40; i += 4)
+			DebugPrintf(" %s - %d        %s - %d        %s - %d        %s - %d\n", ENTITY_NAME(i), i, ENTITY_NAME(i+1), i+1, ENTITY_NAME(i+2), i+2, ENTITY_NAME(i+3), i+3);
+	}
+
+	return true;
+}
+
+/**
+ * Command: loads a game
+ *
+ * @param argc The argument count.
+ * @param argv The values.
+ *
+ * @return true if it was handled, false otherwise
+ */
+bool Debugger::cmdLoadGame(int argc, const char **argv) {
+	if (argc == 2) {
+		int id = getNumber(argv[1]);
+
+		if (id == 0 || id > 6)
+			goto error;
+
+		if (!getSaveLoad()->loadGame((GameId)(id - 1)))
+			DebugPrintf("Error loading game with id=%d", id);
+
+	} else {
+error:
+		DebugPrintf("Syntax: loadgame <id> (id=1-6)\n");
+	}
+
+	return true;
+}
+
+/**
+ * Command: switch to a specific chapter
+ *
+ * @param argc The argument count.
+ * @param argv The values.
+ *
+ * @return true if it was handled, false otherwise
+ */
+bool Debugger::cmdSwitchChapter(int argc, const char **argv) {
+	if (argc == 2) {
+		int id = getNumber(argv[1]);
+
+		if (id <= 1 || id > 6)
+			goto error;
+
+		// Store command
+		if (!hasCommand()) {
+			_command = WRAP_METHOD(Debugger, cmdSwitchChapter);
+			copyCommand(argc, argv);
+
+			return false;
+		} else {
+			// Sets the current chapter and then call Logic::switchChapter to proceed to the next chapter
+			getState()->progress.chapter = (ChapterIndex)(id - 1);
+
+			getLogic()->switchChapter();
+		}
+	} else {
+error:
+		DebugPrintf("Syntax: chapter <id> (id=2-6)\n");
+	}
+
+	return true;
+}
+
+/**
+ * Command: clears the screen
+ *
+ * @param argc The argument count.
+ * @param argv The values.
+ *
+ * @return true if it was handled, false otherwise
+ */
+bool Debugger::cmdClear(int argc, const char **) {
+	if (argc == 1) {
+		clearBg(GraphicsManager::kBackgroundAll);
+		askForRedraw();
+		redrawScreen();
+	} else {
+		DebugPrintf("Syntax: clear - clear the screen\n");
 	}
 
 	return true;

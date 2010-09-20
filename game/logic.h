@@ -40,6 +40,7 @@ class LastExpressEngine;
 
 class Action;
 class Beetle;
+class Debugger;
 class Entities;
 class Fight;
 class SaveLoad;
@@ -81,6 +82,8 @@ private:
 	bool _flagActionPerformed;
 	bool _ignoreFrameInterval;
 	int _ticksSinceLastSavegame;
+
+	friend class Debugger;
 };
 
 } // End of namespace LastExpress
