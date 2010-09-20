@@ -38,28 +38,102 @@ public:
 	Yasmin(LastExpressEngine *engine);
 	~Yasmin() {};
 
-	// Setup
+	/**
+	 * Resets the entity
+	 */
 	DECLARE_FUNCTION(reset)
-	DECLARE_FUNCTION_SI(enterExitCompartment)
-	DECLARE_FUNCTION_S(playSound)
+
+	/**
+	 * Handles entering/exiting a compartment.
+	 *
+	 * @param sequence    The sequence to draw
+	 * @param compartment The compartment
+	 */
+	DECLARE_FUNCTION(enterExitCompartment, const char* sequence, ObjectIndex compartment)
+
+	/**
+	 * Plays sound
+	 *
+	 * @param filename The sound filename
+	 */
+	DECLARE_FUNCTION(playSound, const char* filename)
+
+	/**
+	 * Updates parameter 2 using time value
+	 *
+	 * @param savepoint The savepoint
+	 *                    - Time to add
+	 */
 	DECLARE_FUNCTION_NOSETUP(updateFromTime)
-	DECLARE_FUNCTION_II(updateEntity)
+
+	/**
+	 * Updates the entity
+	 *
+	 * @param index          The car
+	 * @param entityPosition The entity position
+	 */
+	DECLARE_FUNCTION(updateEntity, CarIndex index, EntityPosition entityPosition)
+
 	DECLARE_FUNCTION(function6)
 	DECLARE_FUNCTION(function7)
+
+	/**
+	 * Setup Chapter 1
+	 */
 	DECLARE_FUNCTION(chapter1)
+
+	/**
+	 * Handle Chapter 1 events
+	 */
 	DECLARE_FUNCTION(chapter1Handler)
+
 	DECLARE_FUNCTION(function10)
+
+	/**
+	 * Setup Chapter 2
+	 */
 	DECLARE_FUNCTION(chapter2)
+
+	/**
+	 * Handle Chapter 2 events
+	 */
 	DECLARE_FUNCTION(chapter2Handler)
+
+	/**
+	 * Setup Chapter 3
+	 */
 	DECLARE_FUNCTION(chapter3)
+
+	/**
+	 * Handle Chapter 3 events
+	 */
 	DECLARE_FUNCTION(chapter3Handler)
+
+	/**
+	 * Setup Chapter 4
+	 */
 	DECLARE_FUNCTION(chapter4)
+
+	/**
+	 * Handle Chapter 4 events
+	 */
 	DECLARE_FUNCTION(chapter4Handler)
+
 	DECLARE_FUNCTION(function17)
+
+	/**
+	 * Setup Chapter 5
+	 */
 	DECLARE_FUNCTION(chapter5)
+
+	/**
+	 * Handle Chapter 5 events
+	 */
 	DECLARE_FUNCTION(chapter5Handler)
+
 	DECLARE_FUNCTION(function20)
 	DECLARE_FUNCTION(function21)
+
 	DECLARE_NULL_FUNCTION()
 };
 

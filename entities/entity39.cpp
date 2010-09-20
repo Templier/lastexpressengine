@@ -48,33 +48,39 @@ Entity39::Entity39(LastExpressEngine *engine) : Entity(engine, kEntity39) {
 	_counter = 0;
 }
 
-IMPLEMENT_FUNCTION(Entity39, chapter1, 1)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(1, Entity39, chapter1)
 	if (savepoint.action == kActionDefault)
 		setup_process();
 }
 
-IMPLEMENT_FUNCTION(Entity39, chapter2, 2)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(2, Entity39, chapter2)
 	if (savepoint.action == kActionDefault)
 		setup_process();
 }
 
-IMPLEMENT_FUNCTION(Entity39, chapter3, 3)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(3, Entity39, chapter3)
 	if (savepoint.action == kActionDefault)
 		setup_process();
 }
 
-IMPLEMENT_FUNCTION(Entity39, chapter4, 4)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(4, Entity39, chapter4)
 	if (savepoint.action == kActionDefault)
 		setup_process();
 }
 
-IMPLEMENT_FUNCTION(Entity39, chapter5, 5)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(5, Entity39, chapter5)
 	if (savepoint.action == kActionDefault)
 		setup_process();
 }
 
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(6, Entity39, process)
 // TODO: _sequence & counter do not seem to be touched anywhere else in the code :(
-IMPLEMENT_FUNCTION(Entity39, process, 6)
 	switch (savepoint.action) {
 	default:
 		break;

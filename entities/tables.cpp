@@ -48,7 +48,8 @@ Tables::Tables(LastExpressEngine *engine, EntityIndex id) : Entity(engine, id) {
 	ADD_CALLBACK_FUNCTION(Tables, draw);
 }
 
-IMPLEMENT_FUNCTION(Tables, chapter1, 1)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(1, Tables, chapter1)
 	if (savepoint.action == kActionDefault) {
 		if (_id == kEntityTables2)
 			getSound()->playSoundWithSubtitles("LOOP8A.SND", SoundManager::kFlagLoop, kEntityTables2);
@@ -57,7 +58,8 @@ IMPLEMENT_FUNCTION(Tables, chapter1, 1)
 	}
 }
 
-IMPLEMENT_FUNCTION(Tables, chapter2, 2)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(2, Tables, chapter2)
 	if (savepoint.action == kActionDefault) {
 		if (_id == kEntityTables2)
 			getSound()->playSoundWithSubtitles("LOOP8A.SND", SoundManager::kFlagLoop, kEntityTables2);
@@ -66,7 +68,8 @@ IMPLEMENT_FUNCTION(Tables, chapter2, 2)
 	}
 }
 
-IMPLEMENT_FUNCTION(Tables, chapter3, 3)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(3, Tables, chapter3)
 	if (savepoint.action == kActionDefault) {
 		if (_id == kEntityTables2)
 			getSound()->playSoundWithSubtitles("LOOP8A.SND", SoundManager::kFlagLoop, kEntityTables2);
@@ -75,7 +78,8 @@ IMPLEMENT_FUNCTION(Tables, chapter3, 3)
 	}
 }
 
-IMPLEMENT_FUNCTION(Tables, chapter4, 4)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(4, Tables, chapter4)
 	if (savepoint.action == kActionDefault) {
 		if (_id == kEntityTables2)
 			getSound()->playSoundWithSubtitles("LOOP8A.SND", SoundManager::kFlagLoop, kEntityTables2);
@@ -84,7 +88,8 @@ IMPLEMENT_FUNCTION(Tables, chapter4, 4)
 	}
 }
 
-IMPLEMENT_FUNCTION(Tables, chapter5, 5)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(5, Tables, chapter5)
 	if (savepoint.action == kActionDefault) {
 		if (_id == kEntityTables2 && getSound()->isBuffered(kEntityTables2))
 			getSound()->processEntry(kEntityTables2);
@@ -93,7 +98,8 @@ IMPLEMENT_FUNCTION(Tables, chapter5, 5)
 	}
 }
 
-IMPLEMENT_FUNCTION(Tables, draw, 6)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(6, Tables, draw)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -211,6 +217,5 @@ IMPLEMENT_FUNCTION(Tables, draw, 6)
 		break;
 	}
 }
-
 
 } // End of namespace LastExpress

@@ -114,69 +114,38 @@ August::August(LastExpressEngine *engine) : Entity(engine, kEntityAugust) {
 	ADD_NULL_FUNCTION();
 }
 
-/**
- * Resets the entity
- */
-IMPLEMENT_FUNCTION(August, reset, 1)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(1, August, reset)
 	Entity::reset(savepoint, true);
 }
 
-/**
- * Updates parameter 2 using time value
- *
- * @param param1 The time to add
- */
-IMPLEMENT_FUNCTION_I(August, updateFromTime, 2)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_I(2, August, updateFromTime, uint32)
 	Entity::updateFromTime(savepoint);
 }
 
-/**
- * Draws the entity
- *
- * @param seq1 The sequence to draw
- */
-IMPLEMENT_FUNCTION_S(August, draw, 3)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_S(3, August, draw)
 	Entity::draw(savepoint);
 }
 
-/**
- * Updates the position
- *
- * @param seq1   The sequence to draw
- * @param param4 The car
- * @param param5 The position
- */
-IMPLEMENT_FUNCTION_SII(August, updatePosition, 4)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_SII(4, August, updatePosition, CarIndex, Position)
 	Entity::updatePosition(savepoint);
 }
 
-/**
- * Handles entering/exiting a compartment.
- *
- * @param seq1   The sequence to draw
- * @param param4 The compartment
- */
-IMPLEMENT_FUNCTION_SI(August, enterExitCompartment, 5)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_SI(5, August, enterExitCompartment, ObjectIndex)
 	Entity::enterExitCompartment(savepoint);
 }
 
-/**
- * Handles entering/exiting a compartment and updates the position/play animation
- *
- * @param seq1   The sequence to draw
- * @param param4 The compartment
- */
-IMPLEMENT_FUNCTION_SI(August, enterExitCompartment2, 6)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_SI(6, August, enterExitCompartment2, ObjectIndex)
 	Entity::enterExitCompartment(savepoint, kPosition_6470, kPosition_6130, kCarGreenSleeping, kObjectCompartment3, true);
 }
 
-/**
- * Handles entering/exiting a compartment.
- *
- * @param seq1   The sequence to draw
- * @param param4 The compartment
- */
-IMPLEMENT_FUNCTION_SI(August, enterExitCompartment3, 7)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_SI(7, August, enterExitCompartment3, ObjectIndex)
 	if (savepoint.action == kAction4) {
 		getEntities()->exitCompartment(kEntityAugust, (ObjectIndex)params->param4);
 		CALLBACK_ACTION();
@@ -186,33 +155,18 @@ IMPLEMENT_FUNCTION_SI(August, enterExitCompartment3, 7)
 	Entity::enterExitCompartment(savepoint);
 }
 
-/**
- * Process callback action when the entity direction is not kDirectionRight
- */
-IMPLEMENT_FUNCTION(August, callbackActionOnDirection, 8)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(8, August, callbackActionOnDirection)
 	Entity::callbackActionOnDirection(savepoint);
 }
 
-/**
- * Call a savepoint (or draw sequence in default case)
- *
- * @param seq1   The sequence to draw in the default case
- * @param param4 The entity
- * @param param5 The action
- * @param seq1   The sequence name for the savepoint
- */
-IMPLEMENT_FUNCTION_SIIS(August, callSavepoint, 9)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_SIIS(9, August, callSavepoint, EntityIndex, ActionIndex)
 	Entity::callSavepoint(savepoint);
 }
 
-/**
- * Call a savepoint
- *
- * @param param1 The entity
- * @param param2 The action
- * @param seq    The sequence name for the savepoint
- */
-IMPLEMENT_FUNCTION_IIS(August, callSavepointNoDrawing, 10)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_IIS(10, August, callSavepointNoDrawing, EntityIndex, ActionIndex)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -233,59 +187,33 @@ IMPLEMENT_FUNCTION_IIS(August, callSavepointNoDrawing, 10)
 	}
 }
 
-/**
- * Draws the entity along with another one
- *
- * @param seq1   The sequence to draw
- * @param seq2   The sequence to draw for the second entity
- * @param param7 The EntityIndex of the second entity
- */
-IMPLEMENT_FUNCTION_SSI(August, draw2, 11)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_SSI(11, August, draw2, EntityIndex)
 	Entity::draw2(savepoint);
 }
 
-/**
- * Plays sound
- *
- * @param param1 The sound filename
- */
-IMPLEMENT_FUNCTION_S(August, playSound, 12)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_S(12, August, playSound)
 	Entity::playSound(savepoint);
 }
 
-/**
- * Plays sound
- *
- * @param param1 The sound filename
- */
-IMPLEMENT_FUNCTION_S(August, playSound16, 13)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_S(13, August, playSound16)
 	Entity::playSound(savepoint, false, SoundManager::kFlagDefault);
 }
 
-/**
- * Process callback action when somebody is standing in the restaurant or salon.
- */
-IMPLEMENT_FUNCTION(August, callbackActionRestaurantOrSalon, 14)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(14, August, callbackActionRestaurantOrSalon)
 	Entity::callbackActionRestaurantOrSalon(savepoint);
 }
 
-/**
- * Save the game
- *
- * @param param1 The SavegameType for the savegame
- * @param param2 The EventIndex for the savegame
- */
-IMPLEMENT_FUNCTION_II(August, savegame, 15)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_II(15, August, savegame, SavegameType, uint32)
 	Entity::savegame(savepoint);
 }
 
-/**
- * Updates the entity
- *
- * @param param1 The car
- * @param param2 The entity position
- */
-IMPLEMENT_FUNCTION_II(August, updateEntity, 16)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_II(16, August, updateEntity, CarIndex, EntityPosition)
 	if (savepoint.action == kActionExcuseMeCath) {
 		getProgress().eventMetAugust ? getSound()->playSound(kEntityPlayer, rnd(2) ? "CAT1002A" : "CAT1002") : getSound()->excuseMeCath();
 		return;
@@ -294,17 +222,13 @@ IMPLEMENT_FUNCTION_II(August, updateEntity, 16)
 	Entity::updateEntity(savepoint, true);
 }
 
-IMPLEMENT_FUNCTION_I(August, function17, 17)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_I(17, August, function17, TimeValue)
 	error("August: callback function 17 not implemented!");
 }
 
-/**
- * Updates the entity
- *
- * @param param1 The car
- * @param param2 The entity position
- */
-IMPLEMENT_FUNCTION_II(August, updateEntity2, 18)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_II(18, August, updateEntity2, CarIndex, EntityPosition)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -332,22 +256,22 @@ IMPLEMENT_FUNCTION_II(August, updateEntity2, 18)
 }
 
 //////////////////////////////////////////////////////////////////////////
-// Parameters
-//  - bool
-//  - bool
-IMPLEMENT_FUNCTION_II(August, function19, 19)
+IMPLEMENT_FUNCTION_II(19, August, function19, bool, bool)
 	error("August: callback function 19 not implemented!");
 }
 
-IMPLEMENT_FUNCTION_ISS(August, function20, 20)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_I(20, August, function20, bool)
 	error("August: callback function 20 not implemented!");
 }
 
-IMPLEMENT_FUNCTION_I(August, function21, 21)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_I(21, August, function21, TimeValue)
 	error("August: callback function 21 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(August, chapter1, 22)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(22, August, chapter1)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -370,7 +294,8 @@ IMPLEMENT_FUNCTION(August, chapter1, 22)
 	}
 }
 
-IMPLEMENT_FUNCTION_I(August, function23, 23)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_I(23, August, function23, TimeValue)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -681,7 +606,8 @@ label_callback_9:
 	}
 }
 
-IMPLEMENT_FUNCTION(August, dinner, 24)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(24, August, dinner)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -705,7 +631,8 @@ IMPLEMENT_FUNCTION(August, dinner, 24)
 	}
 }
 
-IMPLEMENT_FUNCTION(August, chapter1Handler, 25)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(25, August, chapter1Handler)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -815,7 +742,7 @@ IMPLEMENT_FUNCTION(August, chapter1Handler, 25)
 
 		case 7:
 			setCallback(8);
-			setup_function23(0);
+			setup_function23(kTimeNone);
 			break;
 
 		case 8:
@@ -834,7 +761,8 @@ IMPLEMENT_FUNCTION(August, chapter1Handler, 25)
 	}
 }
 
-IMPLEMENT_FUNCTION(August, function26, 26)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(26, August, function26)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -857,7 +785,7 @@ IMPLEMENT_FUNCTION(August, function26, 26)
 
 		case 1:
 			setCallback(2);
-			setup_function23(getState()->time + 13500);
+			setup_function23((TimeValue)(getState()->time + 13500));
 			break;
 
 		case 2:
@@ -875,7 +803,7 @@ IMPLEMENT_FUNCTION(August, function26, 26)
 				getProgress().field_14 = 0;
 
 			setCallback(7);
-			setup_function21(getState()->time + 900);
+			setup_function21((TimeValue)(getState()->time + 900));
 			break;
 
 		case 5:
@@ -885,7 +813,7 @@ IMPLEMENT_FUNCTION(August, function26, 26)
 
 		case 6:
 			setCallback(7);
-			setup_function21(getState()->time + 900);
+			setup_function21((TimeValue)(getState()->time + 900));
 			break;
 
 		case 7:
@@ -896,7 +824,8 @@ IMPLEMENT_FUNCTION(August, function26, 26)
 	}
 }
 
-IMPLEMENT_FUNCTION(August, function27, 27)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(27, August, function27)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -947,7 +876,8 @@ IMPLEMENT_FUNCTION(August, function27, 27)
 	}
 }
 
-IMPLEMENT_FUNCTION(August, function28, 28)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(28, August, function28)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -1015,15 +945,18 @@ IMPLEMENT_FUNCTION(August, function28, 28)
 	}
 }
 
-IMPLEMENT_FUNCTION(August, function29, 29)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(29, August, function29)
 	error("August: callback function 29 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(August, restaurant, 30)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(30, August, restaurant)
 	error("August: callback function 30 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(August, function31, 31)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(31, August, function31)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -1040,7 +973,7 @@ IMPLEMENT_FUNCTION(August, function31, 31)
 
 		case 1:
 			setCallback(2);
-			setup_function19();
+			setup_function19(0, 0);
 			break;
 
 		case 2:
@@ -1052,7 +985,7 @@ IMPLEMENT_FUNCTION(August, function31, 31)
 		case 4:
 			if (getProgress().field_14 == 29) {
 				setCallback(4);
-				setup_function21(getState()->time + 900);
+				setup_function21((TimeValue)(getState()->time + 900));
 			} else {
 				setup_function32();
 			}
@@ -1062,18 +995,20 @@ IMPLEMENT_FUNCTION(August, function31, 31)
 	}
 }
 
-IMPLEMENT_FUNCTION(August, function32, 32)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(32, August, function32)
 	error("August: callback function 32 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(August, function33, 33)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(33, August, function33)
 	switch (savepoint.action) {
 	default:
 		break;
 
 	case kActionDefault:
 		setCallback(getProgress().eventMetAugust ? 1 : 2);
-		setup_function21(getProgress().eventMetAugust ? getState()->time + 9000 : (uint32)kTimeBedTime);
+		setup_function21(getProgress().eventMetAugust ? (TimeValue)(getState()->time + 9000) : kTimeBedTime);
 		break;
 
 	case kActionCallback:
@@ -1083,7 +1018,8 @@ IMPLEMENT_FUNCTION(August, function33, 33)
 	}
 }
 
-IMPLEMENT_FUNCTION(August, function34, 34)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(34, August, function34)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -1105,7 +1041,8 @@ IMPLEMENT_FUNCTION(August, function34, 34)
 	}
 }
 
-IMPLEMENT_FUNCTION(August, chapter2, 35)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(35, August, chapter2)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -1130,7 +1067,8 @@ IMPLEMENT_FUNCTION(August, chapter2, 35)
 	}
 }
 
-IMPLEMENT_FUNCTION(August, chapter2Handler, 36)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(36, August, chapter2Handler)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -1220,15 +1158,18 @@ IMPLEMENT_FUNCTION(August, chapter2Handler, 36)
 	}
 }
 
-IMPLEMENT_FUNCTION(August, function37, 37)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(37, August, function37)
 	error("August: callback function 37 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(August, function38, 38)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(38, August, function38)
 	error("August: callback function 38 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(August, function39, 39)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(39, August, function39)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -1251,7 +1192,8 @@ IMPLEMENT_FUNCTION(August, function39, 39)
 	}
 }
 
-IMPLEMENT_FUNCTION(August, chapter3, 40)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(40, August, chapter3)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -1273,23 +1215,28 @@ IMPLEMENT_FUNCTION(August, chapter3, 40)
 	}
 }
 
-IMPLEMENT_FUNCTION_II(August, function41, 41)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_II(41, August, function41, CarIndex, EntityPosition)
 	error("August: callback function 41 not implemented!");
 }
 
-IMPLEMENT_FUNCTION_III(August, function42, 42)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_III(42, August, function42, CarIndex, EntityPosition, bool)
 	error("August: callback function 42 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(August, chapter3Handler, 43)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(43, August, chapter3Handler)
 	error("August: callback function 43 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(August, function44, 44)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(44, August, function44)
 	error("August: callback function 44 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(August, function45, 45)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(45, August, function45)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -1317,7 +1264,8 @@ IMPLEMENT_FUNCTION(August, function45, 45)
 	}
 }
 
-IMPLEMENT_FUNCTION(August, function46, 46)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(46, August, function46)
 	switch (savepoint.action) {
 	default:
 		TIME_CHECK_CALLBACK(August, kTime2088000, params->param1, 1, setup_function47);
@@ -1353,7 +1301,8 @@ IMPLEMENT_FUNCTION(August, function46, 46)
 	}
 }
 
-IMPLEMENT_FUNCTION(August, function47, 47)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(47, August, function47)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -1386,7 +1335,7 @@ IMPLEMENT_FUNCTION(August, function47, 47)
 
 		case 4:
 			setCallback(5);
-			setup_function19();
+			setup_function19(0, 0);
 			break;
 
 		case 5:
@@ -1397,7 +1346,8 @@ IMPLEMENT_FUNCTION(August, function47, 47)
 	}
 }
 
-IMPLEMENT_FUNCTION(August, function48, 48)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(48, August, function48)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -1445,7 +1395,8 @@ IMPLEMENT_FUNCTION(August, function48, 48)
 	}
 }
 
-IMPLEMENT_FUNCTION(August, function49, 49)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(49, August, function49)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -1473,7 +1424,8 @@ IMPLEMENT_FUNCTION(August, function49, 49)
 	}
 }
 
-IMPLEMENT_FUNCTION(August, function50, 50)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(50, August, function50)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -1492,7 +1444,8 @@ IMPLEMENT_FUNCTION(August, function50, 50)
 	}
 }
 
-IMPLEMENT_FUNCTION(August, function51, 51)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(51, August, function51)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -1544,11 +1497,13 @@ IMPLEMENT_FUNCTION(August, function51, 51)
 	}
 }
 
-IMPLEMENT_FUNCTION(August, function52, 52)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(52, August, function52)
 	error("August: callback function 52 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(August, function53, 53)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(53, August, function53)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -1581,11 +1536,13 @@ IMPLEMENT_FUNCTION(August, function53, 53)
 	}
 }
 
-IMPLEMENT_FUNCTION(August, function54, 54)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(54, August, function54)
 	error("August: callback function 54 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(August, function55, 55)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(55, August, function55)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -1625,7 +1582,8 @@ IMPLEMENT_FUNCTION(August, function55, 55)
 	}
 }
 
-IMPLEMENT_FUNCTION(August, function56, 56)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(56, August, function56)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -1651,7 +1609,8 @@ IMPLEMENT_FUNCTION(August, function56, 56)
 	}
 }
 
-IMPLEMENT_FUNCTION(August, chapter4, 57)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(57, August, chapter4)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -1675,7 +1634,8 @@ IMPLEMENT_FUNCTION(August, chapter4, 57)
 	}
 }
 
-IMPLEMENT_FUNCTION(August, chapter4Handler, 58)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(58, August, chapter4Handler)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -1726,7 +1686,8 @@ IMPLEMENT_FUNCTION(August, chapter4Handler, 58)
 	}
 }
 
-IMPLEMENT_FUNCTION(August, function59, 59)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(59, August, function59)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -1746,11 +1707,13 @@ IMPLEMENT_FUNCTION(August, function59, 59)
 	}
 }
 
-IMPLEMENT_FUNCTION(August, function60, 60)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(60, August, function60)
 	error("August: callback function 60 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(August, function61, 61)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(61, August, function61)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -1782,7 +1745,7 @@ IMPLEMENT_FUNCTION(August, function61, 61)
 
 		case 3:
 			setCallback(4);
-			setup_function21(getState()->time + 4500);
+			setup_function21((TimeValue)(getState()->time + 4500));
 			break;
 
 		case 4:
@@ -1793,15 +1756,18 @@ IMPLEMENT_FUNCTION(August, function61, 61)
 	}
 }
 
-IMPLEMENT_FUNCTION(August, function62, 62)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(62, August, function62)
 	error("August: callback function 62 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(August, function63, 63)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(63, August, function63)
 	error("August: callback function 63 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(August, function64, 64)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(64, August, function64)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -1854,7 +1820,8 @@ IMPLEMENT_FUNCTION(August, function64, 64)
 	}
 }
 
-IMPLEMENT_FUNCTION(August, function65, 65)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(65, August, function65)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -1878,7 +1845,8 @@ IMPLEMENT_FUNCTION(August, function65, 65)
 	}
 }
 
-IMPLEMENT_FUNCTION(August, chapter5, 66)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(66, August, chapter5)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -1900,16 +1868,19 @@ IMPLEMENT_FUNCTION(August, chapter5, 66)
 	}
 }
 
-IMPLEMENT_FUNCTION(August, chapter5Handler, 67)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(67, August, chapter5Handler)
 	if (savepoint.action == kActionProceedChapter5)
 		setup_function68();
 }
 
-IMPLEMENT_FUNCTION(August, function68, 68)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(68, August, function68)
 	error("August: callback function 68 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(August, unhookCars, 69)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(69, August, unhookCars)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -1943,6 +1914,7 @@ IMPLEMENT_FUNCTION(August, unhookCars, 69)
 	}
 }
 
-IMPLEMENT_NULL_FUNCTION(August, 70)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_NULL_FUNCTION(70, August)
 
 } // End of namespace LastExpress

@@ -38,38 +38,135 @@ public:
 	Ivo(LastExpressEngine *engine);
 	~Ivo() {};
 
-	// Setup
+	/**
+	 * Resets the entity
+	 */
 	DECLARE_FUNCTION(reset)
-	DECLARE_FUNCTION_S(draw)
-	DECLARE_FUNCTION_SI(enterExitCompartment)
-	DECLARE_FUNCTION_I(updateFromTime)
-	DECLARE_FUNCTION_I(updateFromTicks)
-	DECLARE_FUNCTION_II(updateEntity)
+
+	/**
+	 * Draws the entity
+	 *
+	 * @param sequence The sequence to draw
+	 */
+	DECLARE_FUNCTION(draw, const char* sequence)
+
+	/**
+	 * Handles entering/exiting a compartment.
+	 *
+	 * @param sequence    The sequence to draw
+	 * @param compartment The compartment
+	 */
+	DECLARE_FUNCTION(enterExitCompartment, const char* sequence, ObjectIndex compartment)
+
+	/**
+	 * Updates parameter 2 using time value
+	 *
+	 * @param time The time to add
+	 */
+	DECLARE_FUNCTION(updateFromTime, uint32 time)
+
+	/**
+	 * Updates parameter 2 using ticks value
+	 *
+	 * @param ticks The number of ticks to add
+	 */
+	DECLARE_FUNCTION(updateFromTicks, uint32 ticks)
+
+	/**
+	 * Updates the entity
+	 *
+	 * @param index          The car
+	 * @param entityPosition The entity position
+	 */
+	DECLARE_FUNCTION(updateEntity, CarIndex index, EntityPosition entityPosition)
+
+	/**
+	 * Process callback action when the entity direction is not kDirectionRight
+	 */
 	DECLARE_FUNCTION(callbackActionOnDirection)
+
+	/**
+	 * Plays sound
+	 *
+	 * @param savepoint The savepoint
+	 *                    - the sound filename
+	 */
 	DECLARE_FUNCTION_NOSETUP(playSound)
+
+	/**
+	 * Process callback action when somebody is standing in the restaurant or salon.
+	 */
 	DECLARE_FUNCTION(callbackActionRestaurantOrSalon)
-	DECLARE_FUNCTION_II(savegame)
+
+	/**
+	 * Saves the game
+	 *
+	 * @param savegameType The type of the savegame
+	 * @param param        The param for the savegame (EventIndex or TimeValue)
+	 */
+	DECLARE_FUNCTION(savegame, SavegameType savegameType, uint32 param)
+
 	DECLARE_FUNCTION(function11)
 	DECLARE_FUNCTION(sitAtTableWithSalko)
 	DECLARE_FUNCTION(leaveTableWithSalko)
+
+	/**
+	 * Setup Chapter 1
+	 */
 	DECLARE_FUNCTION(chapter1)
+
+	/**
+	 * Handle Chapter 1 events
+	 */
 	DECLARE_FUNCTION(chapter1Handler)
+
 	DECLARE_FUNCTION(function16)
 	DECLARE_FUNCTION(function17)
+
+	/**
+	 * Setup Chapter 2
+	 */
 	DECLARE_FUNCTION(chapter2)
+
 	DECLARE_FUNCTION(function19)
 	DECLARE_FUNCTION(function20)
 	DECLARE_FUNCTION(function21)
+
+	/**
+	 * Setup Chapter 3
+	 */
 	DECLARE_FUNCTION(chapter3)
+
+	/**
+	 * Handle Chapter 3 events
+	 */
 	DECLARE_FUNCTION(chapter3Handler)
+
+	/**
+	 * Setup Chapter 4
+	 */
 	DECLARE_FUNCTION(chapter4)
+
+	/**
+	 * Handle Chapter 4 events
+	 */
 	DECLARE_FUNCTION(chapter4Handler)
+
 	DECLARE_FUNCTION(function26)
 	DECLARE_FUNCTION(function27)
 	DECLARE_FUNCTION(function28)
 	DECLARE_FUNCTION(function29)
+
+	/**
+	 * Setup Chapter 5
+	 */
 	DECLARE_FUNCTION(chapter5)
+
+	/**
+	 * Handle Chapter 5 events
+	 */
 	DECLARE_FUNCTION(chapter5Handler)
+
 	DECLARE_FUNCTION(fight)
 	DECLARE_FUNCTION(function33)
 	DECLARE_FUNCTION(function34)

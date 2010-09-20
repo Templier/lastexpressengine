@@ -62,10 +62,8 @@ Yasmin::Yasmin(LastExpressEngine *engine) : Entity(engine, kEntityYasmin) {
 	ADD_NULL_FUNCTION();
 }
 
-/**
- * Resets the entity
- */
-IMPLEMENT_FUNCTION(Yasmin, reset, 1)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(1, Yasmin, reset)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -83,46 +81,28 @@ IMPLEMENT_FUNCTION(Yasmin, reset, 1)
 	Entity::reset(savepoint);
 }
 
-/**
- * Handles entering/exiting a compartment.
- *
- * @param seq1   The sequence to draw
- * @param param4 The compartment
- */
-IMPLEMENT_FUNCTION_SI(Yasmin, enterExitCompartment, 2)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_SI(2, Yasmin, enterExitCompartment, ObjectIndex)
 	Entity::enterExitCompartment(savepoint);
 }
 
-/**
- * Plays sound
- *
- * @param param1 The sound filename
- */
-IMPLEMENT_FUNCTION_S(Yasmin, playSound, 3)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_S(3, Yasmin, playSound)
 	Entity::playSound(savepoint);
 }
 
-/**
- * Updates parameter 2 using time value
- *
- * @param savepoint The savepoint
- *                    - Time to add
- */
-IMPLEMENT_FUNCTION_NOSETUP(Yasmin, updateFromTime, 4)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_NOSETUP(4, Yasmin, updateFromTime)
 	Entity::updateFromTime(savepoint);
 }
 
-/**
- * Updates the entity
- *
- * @param param1 The car
- * @param param2 The entity position
- */
-IMPLEMENT_FUNCTION_II(Yasmin, updateEntity, 5)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_II(5, Yasmin, updateEntity, CarIndex, EntityPosition)
 	Entity::updateEntity(savepoint, true);
 }
 
-IMPLEMENT_FUNCTION(Yasmin, function6, 6)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(6, Yasmin, function6)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -161,7 +141,8 @@ IMPLEMENT_FUNCTION(Yasmin, function6, 6)
 	}
 }
 
-IMPLEMENT_FUNCTION(Yasmin, function7, 7)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(7, Yasmin, function7)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -200,7 +181,8 @@ IMPLEMENT_FUNCTION(Yasmin, function7, 7)
 	}
 }
 
-IMPLEMENT_FUNCTION(Yasmin, chapter1, 8)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(8, Yasmin, chapter1)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -217,7 +199,8 @@ IMPLEMENT_FUNCTION(Yasmin, chapter1, 8)
 	}
 }
 
-IMPLEMENT_FUNCTION(Yasmin, chapter1Handler, 9)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(9, Yasmin, chapter1Handler)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -266,7 +249,8 @@ IMPLEMENT_FUNCTION(Yasmin, chapter1Handler, 9)
 	}
 }
 
-IMPLEMENT_FUNCTION(Yasmin, function10, 10)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(10, Yasmin, function10)
 	if (savepoint.action == kActionDefault) {
 		getObjects()->update(kObjectCompartment7, kEntityPlayer, kLocation3, kCursorHandKnock, kCursorHand);
 		getData()->entityPosition = kPosition_3050;
@@ -277,7 +261,8 @@ IMPLEMENT_FUNCTION(Yasmin, function10, 10)
 	}
 }
 
-IMPLEMENT_FUNCTION(Yasmin, chapter2, 11)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(11, Yasmin, chapter2)
 	if (savepoint.action == kActionDefault) {
 		getEntities()->clearSequences(kEntityYasmin);
 
@@ -291,7 +276,8 @@ IMPLEMENT_FUNCTION(Yasmin, chapter2, 11)
 	}
 }
 
-IMPLEMENT_FUNCTION(Yasmin, chapter2Handler, 12)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(12, Yasmin, chapter2Handler)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -323,7 +309,8 @@ IMPLEMENT_FUNCTION(Yasmin, chapter2Handler, 12)
 	}
 }
 
-IMPLEMENT_FUNCTION(Yasmin, chapter3, 13)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(13, Yasmin, chapter3)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -342,7 +329,8 @@ IMPLEMENT_FUNCTION(Yasmin, chapter3, 13)
 	}
 }
 
-IMPLEMENT_FUNCTION(Yasmin, chapter3Handler, 14)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(14, Yasmin, chapter3Handler)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -370,7 +358,8 @@ IMPLEMENT_FUNCTION(Yasmin, chapter3Handler, 14)
 	}
 }
 
-IMPLEMENT_FUNCTION(Yasmin, chapter4, 15)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(15, Yasmin, chapter4)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -387,7 +376,8 @@ IMPLEMENT_FUNCTION(Yasmin, chapter4, 15)
 	}
 }
 
-IMPLEMENT_FUNCTION(Yasmin, chapter4Handler, 16)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(16, Yasmin, chapter4Handler)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -416,12 +406,14 @@ IMPLEMENT_FUNCTION(Yasmin, chapter4Handler, 16)
 	}
 }
 
-// Same as existing function 10 ?
-IMPLEMENT_FUNCTION(Yasmin, function17, 17)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(17, Yasmin, function17)
+	// Same as existing function 10 ?
 	function10(savepoint);
 }
 
-IMPLEMENT_FUNCTION(Yasmin, chapter5, 18)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(18, Yasmin, chapter5)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -442,12 +434,14 @@ IMPLEMENT_FUNCTION(Yasmin, chapter5, 18)
 	}
 }
 
-IMPLEMENT_FUNCTION(Yasmin, chapter5Handler, 19)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(19, Yasmin, chapter5Handler)
 	if (savepoint.action == kActionProceedChapter5)
 		setup_function20();
 }
 
-IMPLEMENT_FUNCTION(Yasmin, function20, 20)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(20, Yasmin, function20)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -471,7 +465,8 @@ IMPLEMENT_FUNCTION(Yasmin, function20, 20)
 	}
 }
 
-IMPLEMENT_FUNCTION(Yasmin, function21, 21)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(21, Yasmin, function21)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -491,7 +486,5 @@ IMPLEMENT_FUNCTION(Yasmin, function21, 21)
 		break;
 	}
 }
-
-IMPLEMENT_NULL_FUNCTION(Yasmin, 22)
 
 } // End of namespace LastExpress

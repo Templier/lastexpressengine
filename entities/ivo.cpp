@@ -77,57 +77,33 @@ Ivo::Ivo(LastExpressEngine *engine) : Entity(engine, kEntityIvo) {
 	ADD_CALLBACK_FUNCTION(Ivo, function34);
 }
 
-/**
- * Resets the entity
- */
-IMPLEMENT_FUNCTION(Ivo, reset, 1)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(1, Ivo, reset)
 	Entity::reset(savepoint);
 }
 
-/**
- * Draws the entity
- *
- * @param seq1 The sequence to draw
- */
-IMPLEMENT_FUNCTION_S(Ivo, draw, 2)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_S(2, Ivo, draw)
 	Entity::draw(savepoint);
 }
 
-/**
- * Handles entering/exiting a compartment.
- *
- * @param seq1   The sequence to draw
- * @param param4 The compartment
- */
-IMPLEMENT_FUNCTION_SI(Ivo, enterExitCompartment, 3)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_SI(3, Ivo, enterExitCompartment, ObjectIndex)
 	Entity::enterExitCompartment(savepoint);
 }
 
-/**
- * Updates parameter 2 using time value
- *
- * @param param1 The time to add
- */
-IMPLEMENT_FUNCTION_I(Ivo, updateFromTime, 4)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_I(4, Ivo, updateFromTime, uint32)
 	Entity::updateFromTime(savepoint);
 }
 
-/**
- * Updates parameter 2 using ticks value
- *
- * @param param1 The number of ticks to add
- */
-IMPLEMENT_FUNCTION_I(Ivo, updateFromTicks, 5)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_I(5, Ivo, updateFromTicks, uint32)
 	Entity::updateFromTicks(savepoint);
 }
 
-/**
- * Updates the entity
- *
- * @param param1 The car
- * @param param2 The entity position
- */
-IMPLEMENT_FUNCTION_II(Ivo, updateEntity, 6)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_II(6, Ivo, updateEntity, CarIndex, EntityPosition)
 	if (savepoint.action == kActionExcuseMeCath || savepoint.action == kActionExcuseMe) {
 		getSound()->playSound(kEntityPlayer, "CAT1127A");
 		return;
@@ -136,44 +112,33 @@ IMPLEMENT_FUNCTION_II(Ivo, updateEntity, 6)
 	Entity::updateEntity(savepoint);
 }
 
-/**
- * Process callback action when the entity direction is not kDirectionRight
- */
-IMPLEMENT_FUNCTION(Ivo, callbackActionOnDirection, 7)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(7, Ivo, callbackActionOnDirection)
 	Entity::callbackActionOnDirection(savepoint);
 }
 
-/**
- * Plays sound
- *
- * @param param1 The sound filename
- */
-IMPLEMENT_FUNCTION_NOSETUP(Ivo, playSound, 8)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_NOSETUP(8, Ivo, playSound)
 	Entity::playSound(savepoint, true);
 }
 
-/**
- * Process callback action when somebody is standing in the restaurant or salon.
- */
-IMPLEMENT_FUNCTION(Ivo, callbackActionRestaurantOrSalon, 9)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(9, Ivo, callbackActionRestaurantOrSalon)
 	Entity::callbackActionRestaurantOrSalon(savepoint);
 }
 
-/**
- * Save the game
- *
- * @param param1 The SavegameType for the savegame
- * @param param2 The EventIndex for the savegame
- */
-IMPLEMENT_FUNCTION_II(Ivo, savegame, 10)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_II(10, Ivo, savegame, SavegameType, uint32)
 	Entity::savegame(savepoint);
 }
 
-IMPLEMENT_FUNCTION(Ivo, function11, 11)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(11, Ivo, function11)
 	error("Ivo: callback function 11 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Ivo, sitAtTableWithSalko, 12)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(12, Ivo, sitAtTableWithSalko)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -193,7 +158,8 @@ IMPLEMENT_FUNCTION(Ivo, sitAtTableWithSalko, 12)
 	}
 }
 
-IMPLEMENT_FUNCTION(Ivo, leaveTableWithSalko, 13)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(13, Ivo, leaveTableWithSalko)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -213,7 +179,8 @@ IMPLEMENT_FUNCTION(Ivo, leaveTableWithSalko, 13)
 	}
 }
 
-IMPLEMENT_FUNCTION(Ivo, chapter1, 14)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(14, Ivo, chapter1)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -234,7 +201,8 @@ IMPLEMENT_FUNCTION(Ivo, chapter1, 14)
 	}
 }
 
-IMPLEMENT_FUNCTION(Ivo, chapter1Handler, 15)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(15, Ivo, chapter1Handler)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -268,7 +236,8 @@ IMPLEMENT_FUNCTION(Ivo, chapter1Handler, 15)
 	}
 }
 
-IMPLEMENT_FUNCTION(Ivo, function16, 16)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(16, Ivo, function16)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -323,7 +292,8 @@ IMPLEMENT_FUNCTION(Ivo, function16, 16)
 	}
 }
 
-IMPLEMENT_FUNCTION(Ivo, function17, 17)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(17, Ivo, function17)
 	if (savepoint.action == kActionDefault) {
 		getData()->entityPosition = kPosition_2740;
 		getData()->location = kLocationInsideCompartment;
@@ -334,7 +304,8 @@ IMPLEMENT_FUNCTION(Ivo, function17, 17)
 	}
 }
 
-IMPLEMENT_FUNCTION(Ivo, chapter2, 18)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(18, Ivo, chapter2)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -359,7 +330,8 @@ IMPLEMENT_FUNCTION(Ivo, chapter2, 18)
 	}
 }
 
-IMPLEMENT_FUNCTION(Ivo, function19, 19)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(19, Ivo, function19)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -414,7 +386,8 @@ IMPLEMENT_FUNCTION(Ivo, function19, 19)
 	}
 }
 
-IMPLEMENT_FUNCTION(Ivo, function20, 20)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(20, Ivo, function20)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -467,7 +440,8 @@ IMPLEMENT_FUNCTION(Ivo, function20, 20)
 	}
 }
 
-IMPLEMENT_FUNCTION(Ivo, function21, 21)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(21, Ivo, function21)
 	if (savepoint.action == kActionDefault) {
 		getData()->entityPosition = kPosition_2740;
 		getData()->location = kLocationInsideCompartment;
@@ -477,7 +451,8 @@ IMPLEMENT_FUNCTION(Ivo, function21, 21)
 	}
 }
 
-IMPLEMENT_FUNCTION(Ivo, chapter3, 22)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(22, Ivo, chapter3)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -499,12 +474,14 @@ IMPLEMENT_FUNCTION(Ivo, chapter3, 22)
 	}
 }
 
-IMPLEMENT_FUNCTION(Ivo, chapter3Handler, 23)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(23, Ivo, chapter3Handler)
 	if (savepoint.action == kActionDefault)
 		getObjects()->update(kObjectCompartmentH, kEntityPlayer, kLocation3, kCursorHandKnock, kCursorHand);
 }
 
-IMPLEMENT_FUNCTION(Ivo, chapter4, 24)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(24, Ivo, chapter4)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -521,7 +498,8 @@ IMPLEMENT_FUNCTION(Ivo, chapter4, 24)
 	}
 }
 
-IMPLEMENT_FUNCTION(Ivo, chapter4Handler, 25)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(25, Ivo, chapter4Handler)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -540,7 +518,8 @@ IMPLEMENT_FUNCTION(Ivo, chapter4Handler, 25)
 	}
 }
 
-IMPLEMENT_FUNCTION(Ivo, function26, 26)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(26, Ivo, function26)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -565,7 +544,8 @@ IMPLEMENT_FUNCTION(Ivo, function26, 26)
 	}
 }
 
-IMPLEMENT_FUNCTION(Ivo, function27, 27)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(27, Ivo, function27)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -632,7 +612,8 @@ IMPLEMENT_FUNCTION(Ivo, function27, 27)
 	}
 }
 
-IMPLEMENT_FUNCTION(Ivo, function28, 28)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(28, Ivo, function28)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -660,7 +641,8 @@ IMPLEMENT_FUNCTION(Ivo, function28, 28)
 	}
 }
 
-IMPLEMENT_FUNCTION(Ivo, function29, 29)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(29, Ivo, function29)
 	if (savepoint.action == kActionDefault) {
 		getEntities()->clearSequences(kEntityIvo);
 		getObjects()->update(kObjectCompartmentH, kEntityPlayer, kLocation3, kCursorHandKnock, kCursorHand);
@@ -672,7 +654,8 @@ IMPLEMENT_FUNCTION(Ivo, function29, 29)
 	}
 }
 
-IMPLEMENT_FUNCTION(Ivo, chapter5, 30)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(30, Ivo, chapter5)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -693,12 +676,14 @@ IMPLEMENT_FUNCTION(Ivo, chapter5, 30)
 	}
 }
 
-IMPLEMENT_FUNCTION(Ivo, chapter5Handler, 31)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(31, Ivo, chapter5Handler)
 	if (savepoint.action == kActionProceedChapter5)
 		setup_fight();
 }
 
-IMPLEMENT_FUNCTION(Ivo, fight, 32)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(32, Ivo, fight)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -740,7 +725,8 @@ IMPLEMENT_FUNCTION(Ivo, fight, 32)
 	}
 }
 
-IMPLEMENT_FUNCTION(Ivo, function33, 33)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(33, Ivo, function33)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -764,7 +750,8 @@ IMPLEMENT_FUNCTION(Ivo, function33, 33)
 	}
 }
 
-IMPLEMENT_FUNCTION(Ivo, function34, 34)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(34, Ivo, function34)
 	if (savepoint.action == kActionDefault)
 		getEntities()->clearSequences(kEntityIvo);
 }

@@ -34,44 +34,127 @@ namespace LastExpress {
 class LastExpressEngine;
 
 class Mertens : public Entity {
+private:
+	// The type of action when entering Tyler compartment
+	enum MertensActionType {
+		kMertensActionNone = 0,
+		kMertensAction1 = 1,
+		kMertensAction2 = 2,
+		kMertensAction3 = 3
+	};
+
 public:
 	Mertens(LastExpressEngine *engine);
 	~Mertens() {};
 
-	// Setup
+	/**
+	 * Resets the entity
+	 */
 	DECLARE_FUNCTION(reset)
-	DECLARE_FUNCTION_S(bloodJacket)
-	DECLARE_FUNCTION_SI(enterExitCompartment)
-	DECLARE_FUNCTION_SI(enterExitCompartment2)
-	DECLARE_FUNCTION_SIII(enterExitCompartment3)
+
+	/**
+	 * Handle meeting Coudert with the blooded jacket
+	 *
+	 * @param sequence The sequence to draw
+	 */
+	DECLARE_FUNCTION(bloodJacket, const char *sequence)
+
+	/**
+	 * Handles entering/exiting a compartment.
+	 *
+	 * @param sequence    The sequence to draw
+	 * @param compartment The compartment
+	 */
+	DECLARE_FUNCTION(enterExitCompartment, const char* sequence, ObjectIndex compartment)
+
+	/**
+	 * Handles entering/exiting a compartment and updates position/play animation
+	 *
+	 * @param sequence    The sequence to draw
+	 * @param compartment The compartment
+	 */
+	DECLARE_FUNCTION(enterExitCompartment2, const char* sequence, ObjectIndex compartment)
+
+	/**
+	 * Handles entering/exiting a compartment.
+	 *
+	 * @param sequence        The sequence to draw
+	 * @param compartment     The compartment
+	 * @param entityPosition1 The entity position
+	 * @param entityPosition1 The entity position to check
+	 *
+	 * @note We are not using the shared function due to too many differences
+	 */
+	DECLARE_FUNCTION(enterExitCompartment3, const char* sequence, ObjectIndex compartment, EntityPosition entityPosition1, EntityPosition entityPosition2)
+
+	/**
+	 * Process callback action when the entity direction is not kDirectionRight
+	 */
 	DECLARE_FUNCTION(callbackActionOnDirection)
-	DECLARE_FUNCTION_S(playSound)
-	DECLARE_FUNCTION_S(playSound16)
-	DECLARE_FUNCTION_II(savegame)
-	DECLARE_FUNCTION_II(function10)
-	DECLARE_FUNCTION_I(function11)
-	DECLARE_FUNCTION_I(bonsoir)
-	DECLARE_FUNCTION_II(function13)
-	DECLARE_FUNCTION_I(function14)
-	DECLARE_FUNCTION_I(function15)
-	DECLARE_FUNCTION_I(function16)
+
+	/**
+	 * Plays sound
+	 *
+	 * @param filename The sound filename
+	 */
+	DECLARE_FUNCTION(playSound, const char* filename)
+
+	/**
+	 * Plays sound
+	 *
+	 * @param filename The sound filename
+	 */
+	DECLARE_FUNCTION(playSound16, const char* filename)
+
+	/**
+	 * Saves the game
+	 *
+	 * @param savegameType The type of the savegame
+	 * @param param        The param for the savegame (EventIndex or TimeValue)
+	 */
+	DECLARE_FUNCTION(savegame, SavegameType savegameType, uint32 param)
+
+	DECLARE_FUNCTION(function10, CarIndex car, EntityPosition entityPosition)
+	DECLARE_FUNCTION(function11, uint32 time)
+
+	/**
+	* Says "Bonsoir" to another character
+	*
+	* @param entity The entity
+	*/
+	DECLARE_FUNCTION(bonsoir, EntityIndex entity)
+	DECLARE_FUNCTION(function13, bool, bool)
+	DECLARE_FUNCTION(function14, EntityIndex entity)
+	DECLARE_FUNCTION(function15, bool)
+	DECLARE_FUNCTION(function16, bool)
 	DECLARE_FUNCTION(function17)
 	DECLARE_FUNCTION(function18)
 	DECLARE_FUNCTION(function19)
 	DECLARE_FUNCTION(function20)
-	DECLARE_FUNCTION_II(function21)
+
+	/**
+	 * ???
+	 *
+	 * @param object1 First object index
+	 * @param object2 Second object index
+	 */
+	DECLARE_FUNCTION(function21, ObjectIndex object1, ObjectIndex object2)
 	DECLARE_FUNCTION(function22)
 	DECLARE_FUNCTION(function23)
 	DECLARE_FUNCTION(function24)
 	DECLARE_FUNCTION(function25)
-	DECLARE_FUNCTION_I(function26)
-	DECLARE_FUNCTION_I(tylerCompartment)
-	DECLARE_FUNCTION_S(function28)
-	DECLARE_FUNCTION_SS(function29)
-	DECLARE_FUNCTION_I(function30)
-	DECLARE_FUNCTION_I(function31)
+	DECLARE_FUNCTION(function26, bool)
+	DECLARE_FUNCTION(tylerCompartment, MertensActionType action)
+	DECLARE_FUNCTION(function28, const char *soundName)
+	DECLARE_FUNCTION(function29, const char *soundName1, const char *soundName2)
+	DECLARE_FUNCTION(function30, MertensActionType action)
+	DECLARE_FUNCTION(function31, MertensActionType action)
 	DECLARE_FUNCTION(function32)
 	DECLARE_FUNCTION(function33)
+
+	/**
+	 * Setup Chapter 1
+	 */
 	DECLARE_FUNCTION(chapter1)
 	DECLARE_FUNCTION(function35)
 	DECLARE_FUNCTION(function36)
@@ -79,19 +162,49 @@ public:
 	DECLARE_FUNCTION(function38)
 	DECLARE_FUNCTION(function39)
 	DECLARE_FUNCTION(function40)
+
+	/**
+	 * Handle Chapter 1 events
+	 */
 	DECLARE_FUNCTION(chapter1Handler)
+
 	DECLARE_FUNCTION(function42)
+
+	/**
+	 * Setup Chapter 2
+	 */
 	DECLARE_FUNCTION(chapter2)
+
 	DECLARE_FUNCTION(function44)
+
+	/**
+	 * Setup Chapter 3
+	 */
 	DECLARE_FUNCTION(chapter3)
+
 	DECLARE_FUNCTION(function46)
+
+	/**
+	 * Setup Chapter 4
+	 */
 	DECLARE_FUNCTION(chapter4)
+
 	DECLARE_FUNCTION(function48)
 	DECLARE_FUNCTION(function49)
+
+	/**
+	 * Setup Chapter 5
+	 */
 	DECLARE_FUNCTION(chapter5)
+
+	/**
+	 * Handle Chapter 5 events
+	 */
 	DECLARE_FUNCTION(chapter5Handler)
+
 	DECLARE_FUNCTION(function52)
 	DECLARE_FUNCTION(function53)
+
 	DECLARE_NULL_FUNCTION()
 };
 

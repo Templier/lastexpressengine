@@ -64,68 +64,53 @@ Alouan::Alouan(LastExpressEngine *engine) : Entity(engine, kEntityAlouan) {
 	ADD_NULL_FUNCTION();
 }
 
-/**
- * Resets the entity
- */
-IMPLEMENT_FUNCTION(Alouan, reset, 1)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(1, Alouan, reset)
 	Entity::reset(savepoint);
 }
 
-/**
- * Handles entering/exiting a compartment.
- *
- * @param seq1   The sequence to draw
- * @param param4 The compartment
- */
-IMPLEMENT_FUNCTION_SI(Alouan, enterExitCompartment, 2)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_SI(2, Alouan, enterExitCompartment, ObjectIndex)
 	Entity::enterExitCompartment(savepoint);
 }
 
-/**
- * Plays sound
- *
- * @param param1 The sound filename
- */
-IMPLEMENT_FUNCTION_S(Alouan, playSound, 3)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_S(3, Alouan, playSound)
 	Entity::playSound(savepoint);
 }
 
-/**
- * Updates parameter 2 using time value
- *
- * @param param1 The time to add
- */
-IMPLEMENT_FUNCTION_I(Alouan, updateFromTime, 4)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_I(4, Alouan, updateFromTime, uint32)
 	Entity::updateFromTime(savepoint);
 }
 
-/**
- * Updates the entity
- *
- * @param param1 The car
- * @param param2 The entity position
- */
-IMPLEMENT_FUNCTION_II(Alouan, updateEntity, 5)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_II(5, Alouan, updateEntity, CarIndex, EntityPosition)
 	Entity::updateEntity(savepoint, true);
 }
 
-IMPLEMENT_FUNCTION(Alouan, compartment6, 6)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(6, Alouan, compartment6)
 	COMPARTMENT_TO(Alouan, kObjectCompartment6, kPosition_4070, "621Cf", "621Df");
 }
 
-IMPLEMENT_FUNCTION(Alouan, compartment8, 7)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(7, Alouan, compartment8)
 	COMPARTMENT_TO(Alouan, kObjectCompartment8, kPosition_2740, "621Ch", "621Dh");
 }
 
-IMPLEMENT_FUNCTION(Alouan, compartment6to8, 8)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(8, Alouan, compartment6to8)
 	COMPARTMENT_FROM_TO(Alouan, kObjectCompartment6, kPosition_4070, "621Bf", kObjectCompartment8, kPosition_2740, "621Ah");
 }
 
-IMPLEMENT_FUNCTION(Alouan, compartment8to6, 9)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(9, Alouan, compartment8to6)
 	COMPARTMENT_FROM_TO(Alouan, kObjectCompartment8, kPosition_2740, "621Bh", kObjectCompartment6, kPosition_4070, "621Af");
 }
 
-IMPLEMENT_FUNCTION(Alouan, chapter1, 10)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(10, Alouan, chapter1)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -143,7 +128,8 @@ IMPLEMENT_FUNCTION(Alouan, chapter1, 10)
 	}
 }
 
-IMPLEMENT_FUNCTION(Alouan, chapter1Handler, 11)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(11, Alouan, chapter1Handler)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -181,7 +167,8 @@ label_callback1:
 	}
 }
 
-IMPLEMENT_FUNCTION(Alouan, function12, 12)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(12, Alouan, function12)
 	if (savepoint.action == kActionDefault) {
 		getObjects()->update(kObjectCompartment7, kEntityPlayer, kLocation3, kCursorHandKnock, kCursorHand);
 		getObjects()->update(kObjectCompartment5, kEntityPlayer, kLocation3, kCursorHandKnock, kCursorHand);
@@ -194,7 +181,8 @@ IMPLEMENT_FUNCTION(Alouan, function12, 12)
 	}
 }
 
-IMPLEMENT_FUNCTION(Alouan, chapter2, 13)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(13, Alouan, chapter2)
 	if (savepoint.action != kActionDefault)
 		return;
 
@@ -209,7 +197,8 @@ IMPLEMENT_FUNCTION(Alouan, chapter2, 13)
 	setup_chapter2Handler();
 }
 
-IMPLEMENT_FUNCTION(Alouan, chapter2Handler, 14)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(14, Alouan, chapter2Handler)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -269,7 +258,8 @@ IMPLEMENT_FUNCTION(Alouan, chapter2Handler, 14)
 	}
 }
 
-IMPLEMENT_FUNCTION(Alouan, chapter3, 15)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(15, Alouan, chapter3)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -289,7 +279,8 @@ IMPLEMENT_FUNCTION(Alouan, chapter3, 15)
 	}
 }
 
-IMPLEMENT_FUNCTION(Alouan, chapter3Handler, 16)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(16, Alouan, chapter3Handler)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -338,7 +329,8 @@ label_callback4:
 	}
 }
 
-IMPLEMENT_FUNCTION(Alouan, chapter4, 17)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(17, Alouan, chapter4)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -358,7 +350,8 @@ IMPLEMENT_FUNCTION(Alouan, chapter4, 17)
 	}
 }
 
-IMPLEMENT_FUNCTION(Alouan, chapter4Handler, 18)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(18, Alouan, chapter4Handler)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -400,7 +393,8 @@ label_callback2:
 	}
 }
 
-IMPLEMENT_FUNCTION(Alouan, function19, 19)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(19, Alouan, function19)
 	if (savepoint.action == kActionDefault) {
 		getObjects()->update(kObjectCompartment7, kEntityPlayer, kLocation3, kCursorHandKnock, kCursorHand);
 		getObjects()->update(kObjectCompartment5, kEntityPlayer, kLocation3, kCursorHandKnock, kCursorHand);
@@ -413,7 +407,8 @@ IMPLEMENT_FUNCTION(Alouan, function19, 19)
 	}
 }
 
-IMPLEMENT_FUNCTION(Alouan, chapter5, 20)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(20, Alouan, chapter5)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -435,12 +430,14 @@ IMPLEMENT_FUNCTION(Alouan, chapter5, 20)
 	}
 }
 
-IMPLEMENT_FUNCTION(Alouan, chapter5Handler, 21)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(21, Alouan, chapter5Handler)
 	if (savepoint.action == kActionProceedChapter5)
 		setup_function22();
 }
 
-IMPLEMENT_FUNCTION(Alouan, function22, 22)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(22, Alouan, function22)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -463,7 +460,8 @@ IMPLEMENT_FUNCTION(Alouan, function22, 22)
 	}
 }
 
-IMPLEMENT_FUNCTION(Alouan, function23, 23)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(23, Alouan, function23)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -500,6 +498,7 @@ IMPLEMENT_FUNCTION(Alouan, function23, 23)
 	}
 }
 
-IMPLEMENT_NULL_FUNCTION(Alouan, 24)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_NULL_FUNCTION(24, Alouan)
 
 } // End of namespace LastExpress

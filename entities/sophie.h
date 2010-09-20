@@ -38,18 +38,58 @@ public:
 	Sophie(LastExpressEngine *engine);
 	~Sophie() {};
 
-	// Setup
+	/**
+	 * Resets the entity
+	 */
 	DECLARE_FUNCTION(reset)
-	DECLARE_FUNCTION_II(function2)
+
+	/**
+	 * Updates the entity
+	 *
+	 * @param index          The car
+	 * @param entityPosition The entity position
+	 */
+	DECLARE_FUNCTION(updateEntity, CarIndex index, EntityPosition entityPosition)
+
+	/**
+	 * Handle chapters events
+	 */
 	DECLARE_FUNCTION(chapters_handler)
+
+	/**
+	 * Setup Chapter 1
+	 */
 	DECLARE_FUNCTION(chapter1)
+
 	DECLARE_FUNCTION(function5)
+
+	/**
+	 * Setup Chapter 2
+	 */
 	DECLARE_FUNCTION(chapter2)
+
+	/**
+	 * Setup Chapter 3
+	 */
 	DECLARE_FUNCTION(chapter3)
+
+	/**
+	 * Setup Chapter 4
+	 */
 	DECLARE_FUNCTION(chapter4)
+
 	DECLARE_FUNCTION(function9)
+
+	/**
+	 * Setup Chapter 5
+	 */
 	DECLARE_FUNCTION(chapter5)
+
+	/**
+	 * Handle Chapter 5 events
+	 */
 	DECLARE_FUNCTION(chapter5Handler)
+
 	DECLARE_NULL_FUNCTION()
 };
 

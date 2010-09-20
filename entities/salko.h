@@ -38,31 +38,109 @@ public:
 	Salko(LastExpressEngine *engine);
 	~Salko() {};
 
-	// Setup
+	/**
+	 * Resets the entity
+	 */
 	DECLARE_FUNCTION(reset)
-	DECLARE_FUNCTION_SI(enterExitCompartment)
+
+	/**
+	 * Handles entering/exiting a compartment.
+	 *
+	 * @param sequence    The sequence to draw
+	 * @param compartment The compartment
+	 */
+	DECLARE_FUNCTION(enterExitCompartment, const char* sequence, ObjectIndex compartment)
+
+	/**
+	* Draws the entity
+	*
+	* @param savepoint The savepoint
+	*                    - The sequence to draw
+	*/
 	DECLARE_FUNCTION_NOSETUP(draw)
-	DECLARE_FUNCTION_II(updateEntity)
-	DECLARE_FUNCTION_I(updateFromTime)
-	DECLARE_FUNCTION_II(savegame)
-	DECLARE_FUNCTION_II(function7)
+
+	/**
+	 * Updates the entity
+	 *
+	 * @param index          The car
+	 * @param entityPosition The entity position
+	 */
+	DECLARE_FUNCTION(updateEntity, CarIndex index, EntityPosition entityPosition)
+
+	/**
+	 * Updates parameter 2 using time value
+	 *
+	 * @param time The time to add
+	 */
+	DECLARE_FUNCTION(updateFromTime, uint32 time)
+
+	/**
+	 * Saves the game
+	 *
+	 * @param savegameType The type of the savegame
+	 * @param param        The param for the savegame (EventIndex or TimeValue)
+	 */
+	DECLARE_FUNCTION(savegame, SavegameType savegameType, uint32 param)
+
+	DECLARE_FUNCTION(function7, CarIndex index, EntityPosition entityPosition)
+
 	DECLARE_FUNCTION(function8)
+
+	/**
+	 * Setup Chapter 1
+	 */
 	DECLARE_FUNCTION(chapter1)
+
+	/**
+	 * Handle Chapter 1 events
+	 */
 	DECLARE_FUNCTION(chapter1Handler)
+
 	DECLARE_FUNCTION(function11)
+
+	/**
+	 * Setup Chapter 2
+	 */
 	DECLARE_FUNCTION(chapter2)
 	DECLARE_FUNCTION(function13)
+
+	/**
+	 * Setup Chapter 3
+	 */
 	DECLARE_FUNCTION(chapter3)
+
+	/**
+	 * Handle Chapter 3 events
+	 */
 	DECLARE_FUNCTION(chapter3Handler)
+
 	DECLARE_FUNCTION(function16)
 	DECLARE_FUNCTION(function17)
+
+	/**
+	 * Setup Chapter 4
+	 */
 	DECLARE_FUNCTION(chapter4)
+
+	/**
+	 * Handle Chapter 4 events
+	 */
 	DECLARE_FUNCTION(chapter4Handler)
+
 	DECLARE_FUNCTION(function20)
 	DECLARE_FUNCTION(function21)
 	DECLARE_FUNCTION(function22)
+
+	/**
+	 * Setup Chapter 5
+	 */
 	DECLARE_FUNCTION(chapter5)
+
+	/**
+	 * Handle Chapter 5 events
+	 */
 	DECLARE_FUNCTION(chapter5Handler)
+
 	DECLARE_NULL_FUNCTION()
 };
 

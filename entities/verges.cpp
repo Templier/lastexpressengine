@@ -85,26 +85,18 @@ Verges::Verges(LastExpressEngine *engine) : Entity(engine, kEntityVerges) {
 	ADD_CALLBACK_FUNCTION(Verges, function42);
 }
 
-/**
- * Resets the entity
- */
-IMPLEMENT_FUNCTION(Verges, reset, 1)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(1, Verges, reset)
 	Entity::reset(savepoint);
 }
 
-/**
- * Draws the entity
- *
- * @param seq1 The sequence to draw
- */
-IMPLEMENT_FUNCTION_S(Verges, draw, 2)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_S(2, Verges, draw)
 	Entity::draw(savepoint, true);
 }
 
-/**
- * Process callback action when the entity direction is not kDirectionRight
- */
-IMPLEMENT_FUNCTION(Verges, callbackActionOnDirection, 3)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(3, Verges, callbackActionOnDirection)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -127,49 +119,28 @@ IMPLEMENT_FUNCTION(Verges, callbackActionOnDirection, 3)
 	}
 }
 
-/**
- * Plays sound
- *
- * @param param1 The sound filename
- */
-IMPLEMENT_FUNCTION_S(Verges, playSound, 4)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_S(4, Verges, playSound)
 	Entity::playSound(savepoint);
 }
 
-/**
- * Plays sound
- *
- * @param savepoint The savepoint
- *                    - sound filename
- */
-IMPLEMENT_FUNCTION_NOSETUP(Verges, playSound16, 5)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_NOSETUP(5, Verges, playSound16)
 	Entity::playSound(savepoint, false, SoundManager::kFlagDefault);
 }
 
-/**
- * Process callback action when somebody is standing in the restaurant or salon.
- */
-IMPLEMENT_FUNCTION(Verges, callbackActionRestaurantOrSalon, 6)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(6, Verges, callbackActionRestaurantOrSalon)
 	Entity::callbackActionRestaurantOrSalon(savepoint);
 }
 
-/**
- * Save the game
- *
- * @param param1 The SavegameType for the savegame
- * @param param2 The EventIndex for the savegame
- */
-IMPLEMENT_FUNCTION_II(Verges, savegame, 7)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_II(7, Verges, savegame, SavegameType, uint32)
 	Entity::savegame(savepoint);
 }
 
-/**
- * Updates the entity
- *
- * @param param1 The car
- * @param param2 The entity position
- */
-IMPLEMENT_FUNCTION_II(Verges, updateEntity, 8)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_II(8, Verges, updateEntity, CarIndex, EntityPosition)
 	if (savepoint.action == kActionExcuseMeCath) {
 		if (!getSound()->isBuffered(kEntityVerges))
 			getSound()->playSound(kEntityPlayer, "TRA1113", getSound()->getSoundFlag(kEntityVerges));
@@ -181,9 +152,7 @@ IMPLEMENT_FUNCTION_II(Verges, updateEntity, 8)
 }
 
 //////////////////////////////////////////////////////////////////////////
-// Parameters
-//  - Sound name
-IMPLEMENT_FUNCTION_S(Verges, function9, 9)
+IMPLEMENT_FUNCTION_S(9, Verges, function9)
 switch (savepoint.action) {
 	default:
 		break;
@@ -259,11 +228,7 @@ switch (savepoint.action) {
 }
 
 //////////////////////////////////////////////////////////////////////////
-// Parameters
-//  - CarIndex
-//  - EntityPosition
-//  - Sound name
-IMPLEMENT_FUNCTION_IIS(Verges, function10, 10)
+IMPLEMENT_FUNCTION_IIS(10, Verges, function10, CarIndex, EntityPosition)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -307,7 +272,8 @@ IMPLEMENT_FUNCTION_IIS(Verges, function10, 10)
 	}
 }
 
-IMPLEMENT_FUNCTION(Verges, function11, 11)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(11, Verges, function11)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -380,7 +346,8 @@ IMPLEMENT_FUNCTION(Verges, function11, 11)
 	}
 }
 
-IMPLEMENT_FUNCTION(Verges, function12, 12)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(12, Verges, function12)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -438,7 +405,8 @@ IMPLEMENT_FUNCTION(Verges, function12, 12)
 	}
 }
 
-IMPLEMENT_FUNCTION_I(Verges, function13, 13)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_I(13, Verges, function13, bool)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -477,20 +445,13 @@ IMPLEMENT_FUNCTION_I(Verges, function13, 13)
 	}
 }
 
-/**
- * Updates parameter 2 using time value
- *
- * @param param1 The time to add
- */
-IMPLEMENT_FUNCTION_I(Verges, updateFromTime, 14)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_I(14, Verges, updateFromTime, uint32)
 	Entity::updateFromTime(savepoint);
 }
 
 //////////////////////////////////////////////////////////////////////////
-// Parameters
-//  - EntityIndex
-//  - Sound name
-IMPLEMENT_FUNCTION_IS(Verges, function15, 15)
+IMPLEMENT_FUNCTION_IS(15, Verges, function15, EntityIndex)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -526,7 +487,8 @@ IMPLEMENT_FUNCTION_IS(Verges, function15, 15)
 	}
 }
 
-IMPLEMENT_FUNCTION_ISS(Verges, function16, 16)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_ISS(16, Verges, function16, EntityIndex)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -566,7 +528,7 @@ IMPLEMENT_FUNCTION_ISS(Verges, function16, 16)
 }
 
 //////////////////////////////////////////////////////////////////////////
-IMPLEMENT_FUNCTION(Verges, function17, 17)
+IMPLEMENT_FUNCTION(17, Verges, function17)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -605,7 +567,8 @@ IMPLEMENT_FUNCTION(Verges, function17, 17)
 	}
 }
 
-IMPLEMENT_FUNCTION(Verges, chapter1, 18)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(18, Verges, chapter1)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -634,19 +597,23 @@ IMPLEMENT_FUNCTION(Verges, chapter1, 18)
 	}
 }
 
-IMPLEMENT_FUNCTION_NOSETUP(Verges, talkHarem, 19)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_NOSETUP(19, Verges, talkHarem)
 	talk(savepoint, "TRA1202", "TRA1201");
 }
 
-IMPLEMENT_FUNCTION(Verges, talkPassengerList, 20)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(20, Verges, talkPassengerList)
 	talk(savepoint, "TRA1205", "TRA1206");
 }
 
-IMPLEMENT_FUNCTION(Verges, talkGendarmes, 21)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(21, Verges, talkGendarmes)
 	talk(savepoint, "TRA1250", "TRA1251");
 }
 
-IMPLEMENT_FUNCTION(Verges, function22, 22)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(22, Verges, function22)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -669,10 +636,10 @@ IMPLEMENT_FUNCTION(Verges, function22, 22)
 		case 2:
 			if (getEvent(kEventMertensAskTylerCompartment) || getEvent(kEventMertensAskTylerCompartmentD) || getEvent(kEventMertensAugustWaiting)) {
 				setCallback(3);
-				setup_function16(kCarGreenSleeping, "TRA1200", "TRA1201");
+				setup_function16(kEntityMertens, "TRA1200", "TRA1201");
 			} else {
 				setCallback(4);
-				setup_function16(kCarGreenSleeping, "TRA1200A", "TRA1201");
+				setup_function16(kEntityMertens, "TRA1200A", "TRA1201");
 			}
 			break;
 
@@ -692,7 +659,8 @@ IMPLEMENT_FUNCTION(Verges, function22, 22)
 	}
 }
 
-IMPLEMENT_FUNCTION(Verges, function23, 23)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(23, Verges, function23)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -716,7 +684,8 @@ IMPLEMENT_FUNCTION(Verges, function23, 23)
 	}
 }
 
-IMPLEMENT_FUNCTION(Verges, policeGettingOffTrain, 24)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(24, Verges, policeGettingOffTrain)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -746,11 +715,13 @@ IMPLEMENT_FUNCTION(Verges, policeGettingOffTrain, 24)
 	}
 }
 
-IMPLEMENT_FUNCTION(Verges, function25, 25)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(25, Verges, function25)
 	error("Verges: callback function 25 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Verges, chapter1Handler, 26)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(26, Verges, chapter1Handler)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -884,7 +855,7 @@ label_callback15:
 
 		case 6:
 			setCallback(7);
-			setup_function15(kCarGreenSleeping, "TRA1202");
+			setup_function15(kEntityMertens, "TRA1202");
 			break;
 
 		case 7:
@@ -927,7 +898,8 @@ label_callback15:
 	}
 }
 
-IMPLEMENT_FUNCTION(Verges, chapter2, 27)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(27, Verges, chapter2)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -952,7 +924,8 @@ IMPLEMENT_FUNCTION(Verges, chapter2, 27)
 	}
 }
 
-IMPLEMENT_FUNCTION(Verges, chapter2Handler, 28)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(28, Verges, chapter2Handler)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -1045,7 +1018,8 @@ label_callback_6:
 	}
 }
 
-IMPLEMENT_FUNCTION(Verges, chapter3, 29)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(29, Verges, chapter3)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -1073,9 +1047,7 @@ IMPLEMENT_FUNCTION(Verges, chapter3, 29)
 }
 
 //////////////////////////////////////////////////////////////////////////
-// Parameters
-//  - sequence name
-IMPLEMENT_FUNCTION_S(Verges, function30, 30)
+IMPLEMENT_FUNCTION_S(30, Verges, function30)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -1113,7 +1085,8 @@ IMPLEMENT_FUNCTION_S(Verges, function30, 30)
 	}
 }
 
-IMPLEMENT_FUNCTION(Verges, function31, 31)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(31, Verges, function31)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -1154,19 +1127,23 @@ IMPLEMENT_FUNCTION(Verges, function31, 31)
 	}
 }
 
-IMPLEMENT_FUNCTION(Verges, function32, 32)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(32, Verges, function32)
 	error("Verges: callback function 32 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Verges, function33, 33)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(33, Verges, function33)
 	error("Verges: callback function 33 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Verges, function34, 34)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(34, Verges, function34)
 	error("Verges: callback function 34 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Verges, function35, 35)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(35, Verges, function35)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -1188,7 +1165,7 @@ IMPLEMENT_FUNCTION(Verges, function35, 35)
 
 		case 2:
 			setCallback(3);
-			setup_function15(kCarRedSleeping, "Tra3011A");
+			setup_function15(kEntityMertens, "Tra3011A");
 			break;
 
 		case 3:
@@ -1200,7 +1177,7 @@ IMPLEMENT_FUNCTION(Verges, function35, 35)
 
 		case 4:
 			setCallback(5);
-			setup_function15(kCarGreenSleeping, "Tra3011");
+			setup_function15(kEntityMertens, "Tra3011");
 			break;
 
 		case 5:
@@ -1218,7 +1195,8 @@ IMPLEMENT_FUNCTION(Verges, function35, 35)
 	}
 }
 
-IMPLEMENT_FUNCTION(Verges, chapter4, 36)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(36, Verges, chapter4)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -1245,11 +1223,13 @@ IMPLEMENT_FUNCTION(Verges, chapter4, 36)
 	}
 }
 
-IMPLEMENT_FUNCTION(Verges, chapter4Handler, 37)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(37, Verges, chapter4Handler)
 	error("Verges: callback function 37 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Verges, function38, 38)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(38, Verges, function38)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -1296,7 +1276,8 @@ IMPLEMENT_FUNCTION(Verges, function38, 38)
 	}
 }
 
-IMPLEMENT_FUNCTION(Verges, chapter5, 39)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(39, Verges, chapter5)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -1320,7 +1301,8 @@ IMPLEMENT_FUNCTION(Verges, chapter5, 39)
 	}
 }
 
-IMPLEMENT_FUNCTION(Verges, chapter5Handler, 40)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(40, Verges, chapter5Handler)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -1359,7 +1341,8 @@ IMPLEMENT_FUNCTION(Verges, chapter5Handler, 40)
 	}
 }
 
-IMPLEMENT_FUNCTION(Verges, function41, 41)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(41, Verges, function41)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -1408,11 +1391,16 @@ IMPLEMENT_FUNCTION(Verges, function41, 41)
 	}
 }
 
-IMPLEMENT_FUNCTION(Verges, function42, 42)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(42, Verges, function42)
 	if (savepoint.action == kActionDefault)
 		getEntities()->clearSequences(kEntityVerges);
 }
 
+
+//////////////////////////////////////////////////////////////////////////
+// Private functions
+//////////////////////////////////////////////////////////////////////////
 void Verges::talk(const SavePoint &savepoint, const char *sound1, const char *sound2) {
 	switch (savepoint.action) {
 	default:

@@ -64,68 +64,53 @@ Hadija::Hadija(LastExpressEngine *engine) : Entity(engine, kEntityHadija) {
 	ADD_NULL_FUNCTION();
 }
 
-/**
- * Resets the entity
- */
-IMPLEMENT_FUNCTION(Hadija, reset, 1)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(1, Hadija, reset)
 	Entity::reset(savepoint);
 }
 
-/**
- * Handles entering/exiting a compartment.
- *
- * @param seq1   The sequence to draw
- * @param param4 The compartment
- */
-IMPLEMENT_FUNCTION_SI(Hadija, enterExitCompartment, 2)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_SI(2, Hadija, enterExitCompartment, ObjectIndex)
 	Entity::enterExitCompartment(savepoint);
 }
 
-/**
- * Plays sound
- *
- * @param param1 The sound filename
- */
-IMPLEMENT_FUNCTION_S(Hadija, playSound, 3)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_S(3, Hadija, playSound)
 	Entity::playSound(savepoint);
 }
 
-/**
- * Updates parameter 2 using time value
- *
- * @param param1 The time to add
- */
-IMPLEMENT_FUNCTION_NOSETUP(Hadija, updateFromTime, 4)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_NOSETUP(4, Hadija, updateFromTime)
 	Entity::updateFromTime(savepoint);
 }
 
-/**
- * Updates the entity
- *
- * @param param1 The car
- * @param param2 The entity position
- */
-IMPLEMENT_FUNCTION_II(Hadija, updateEntity, 5)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_II(5, Hadija, updateEntity, CarIndex, EntityPosition)
 	Entity::updateEntity(savepoint, true);
 }
 
-IMPLEMENT_FUNCTION(Hadija, compartment6, 6)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(6, Hadija, compartment6)
 	COMPARTMENT_TO(Hadija, kObjectCompartment6, kPosition_4070, "619Cf", "619Df");
 }
 
-IMPLEMENT_FUNCTION(Hadija, compartment8, 7)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(7, Hadija, compartment8)
 	COMPARTMENT_TO(Hadija, kObjectCompartment8, kPosition_2740, "619Ch", "619Dh");
 }
 
-IMPLEMENT_FUNCTION(Hadija, compartment6to8, 8)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(8, Hadija, compartment6to8)
 	COMPARTMENT_FROM_TO(Hadija, kObjectCompartment6, kPosition_4070, "619Bf", kObjectCompartment8, kPosition_2740, "619Ah");
 }
 
-IMPLEMENT_FUNCTION(Hadija, compartment8to6, 9)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(9, Hadija, compartment8to6)
 	COMPARTMENT_FROM_TO(Hadija, kObjectCompartment8, kPosition_2740, "619Bh", kObjectCompartment6, kPosition_4070, "619Af");
 }
 
-IMPLEMENT_FUNCTION(Hadija, chapter1, 10)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(10, Hadija, chapter1)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -143,7 +128,8 @@ IMPLEMENT_FUNCTION(Hadija, chapter1, 10)
 	}
 }
 
-IMPLEMENT_FUNCTION(Hadija, chapter1Handler, 11)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(11, Hadija, chapter1Handler)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -228,7 +214,8 @@ label_callback4:
 	}
 }
 
-IMPLEMENT_FUNCTION(Hadija, function12, 12)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(12, Hadija, function12)
 	if (savepoint.action == kActionDefault) {
 		getObjects()->update(kObjectCompartment8, kEntityPlayer, kLocation3, kCursorHandKnock, kCursorHand);
 
@@ -240,7 +227,8 @@ IMPLEMENT_FUNCTION(Hadija, function12, 12)
 	}
 }
 
-IMPLEMENT_FUNCTION(Hadija, chapter2, 13)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(13, Hadija, chapter2)
 	if (savepoint.action == kActionDefault) {
 
 		getEntities()->clearSequences(kEntityHadija);
@@ -255,7 +243,8 @@ IMPLEMENT_FUNCTION(Hadija, chapter2, 13)
 	}
 }
 
-IMPLEMENT_FUNCTION(Hadija, chapter2Handler, 14)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(14, Hadija, chapter2Handler)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -303,7 +292,8 @@ IMPLEMENT_FUNCTION(Hadija, chapter2Handler, 14)
 	}
 }
 
-IMPLEMENT_FUNCTION(Hadija, chapter3, 15)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(15, Hadija, chapter3)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -323,7 +313,8 @@ IMPLEMENT_FUNCTION(Hadija, chapter3, 15)
 	}
 }
 
-IMPLEMENT_FUNCTION(Hadija, chapter3Handler, 16)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(16, Hadija, chapter3Handler)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -370,7 +361,8 @@ label_callback4:
 	}
 }
 
-IMPLEMENT_FUNCTION(Hadija, chapter4, 17)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(17, Hadija, chapter4)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -387,7 +379,8 @@ IMPLEMENT_FUNCTION(Hadija, chapter4, 17)
 	}
 }
 
-IMPLEMENT_FUNCTION(Hadija, chapter4Handler, 18)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(18, Hadija, chapter4Handler)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -425,7 +418,8 @@ label_callback3:
 	}
 }
 
-IMPLEMENT_FUNCTION(Hadija, function19, 19)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(19, Hadija, function19)
 	if (savepoint.action == kActionDefault) {
 		getObjects()->update(kObjectCompartment8, kEntityPlayer, kLocation3, kCursorHandKnock, kCursorHand);
 
@@ -437,7 +431,8 @@ IMPLEMENT_FUNCTION(Hadija, function19, 19)
 	}
 }
 
-IMPLEMENT_FUNCTION(Hadija, chapter5, 20)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(20, Hadija, chapter5)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -459,12 +454,14 @@ IMPLEMENT_FUNCTION(Hadija, chapter5, 20)
 	}
 }
 
-IMPLEMENT_FUNCTION(Hadija, chapter5Handler, 21)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(21, Hadija, chapter5Handler)
 	if (savepoint.action == kActionProceedChapter5)
 		setup_function22();
 }
 
-IMPLEMENT_FUNCTION(Hadija, function22, 22)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(22, Hadija, function22)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -488,7 +485,8 @@ IMPLEMENT_FUNCTION(Hadija, function22, 22)
 	}
 }
 
-IMPLEMENT_FUNCTION(Hadija, function23, 23)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(23, Hadija, function23)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -525,6 +523,7 @@ IMPLEMENT_FUNCTION(Hadija, function23, 23)
 	}
 }
 
-IMPLEMENT_NULL_FUNCTION(Hadija, 24)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_NULL_FUNCTION(24, Hadija)
 
 } // End of namespace LastExpress

@@ -71,67 +71,38 @@ MmeBoutarel::MmeBoutarel(LastExpressEngine *engine) : Entity(engine, kEntityMmeB
 	ADD_NULL_FUNCTION();
 }
 
-/**
- * Resets the entity
- */
-IMPLEMENT_FUNCTION(MmeBoutarel, reset, 1)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(1, MmeBoutarel, reset)
 	Entity::reset(savepoint);
 }
 
-/**
- * Plays sound
- *
- * @param param1 The sound filename
- */
-IMPLEMENT_FUNCTION_S(MmeBoutarel, playSound, 2)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_S(2, MmeBoutarel, playSound)
 	Entity::playSound(savepoint);
 }
 
-/**
- * Draws the entity
- *
- * @param seq1 The sequence to draw
- */
-IMPLEMENT_FUNCTION_S(MmeBoutarel, draw, 3)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_S(3, MmeBoutarel, draw)
 	Entity::draw(savepoint);
 }
 
-/**
- * Updates parameter 2 using time value
- *
- * @param param1 The time to add
- */
-IMPLEMENT_FUNCTION_I(MmeBoutarel, updateFromTime, 4)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_I(4, MmeBoutarel, updateFromTime, uint32)
 	Entity::updateFromTime(savepoint);
 }
 
-/**
- * Handles entering/exiting a compartment.
- *
- * @param seq1   The sequence to draw
- * @param param4 The compartment
- */
-IMPLEMENT_FUNCTION_SI(MmeBoutarel, enterExitCompartment, 5)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_SI(5, MmeBoutarel, enterExitCompartment, ObjectIndex)
 	Entity::enterExitCompartment(savepoint);
 }
 
-/**
- * Handles entering/exiting a compartment and updates position/play animation
- *
- * @param seq1   The sequence to draw
- * @param param4 The compartment
- */
-IMPLEMENT_FUNCTION_SI(MmeBoutarel, enterExitCompartment2, 6)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_SI(6, MmeBoutarel, enterExitCompartment2, ObjectIndex)
 	Entity::enterExitCompartment(savepoint, kPosition_5790, kPosition_6130, kCarRedSleeping, kObjectCompartmentD, true);
 }
 
-/**
- * Updates the entity
- *
- * @param param1 The car
- * @param param2 The entity position
- */
-IMPLEMENT_FUNCTION_II(MmeBoutarel, updateEntity, 7)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_II(7, MmeBoutarel, updateEntity, CarIndex, EntityPosition)
 	if (savepoint.action == kActionExcuseMeCath) {
 		getInventory()->hasItem(kItemPassengerList) ? getSound()->playSound(kEntityPlayer, "CAT1021") : getSound()->excuseMeCath();
 
@@ -141,7 +112,8 @@ IMPLEMENT_FUNCTION_II(MmeBoutarel, updateEntity, 7)
 	Entity::updateEntity(savepoint, true);
 }
 
-IMPLEMENT_FUNCTION_S(MmeBoutarel, function8, 8)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_S(8, MmeBoutarel, function8)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -184,11 +156,13 @@ IMPLEMENT_FUNCTION_S(MmeBoutarel, function8, 8)
 	}
 }
 
-IMPLEMENT_FUNCTION(MmeBoutarel, function9, 9)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(9, MmeBoutarel, function9)
 	error("MmeBoutarel: callback function 9 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(MmeBoutarel, chapter1, 10)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(10, MmeBoutarel, chapter1)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -210,11 +184,13 @@ IMPLEMENT_FUNCTION(MmeBoutarel, chapter1, 10)
 	}
 }
 
-IMPLEMENT_FUNCTION(MmeBoutarel, function11, 11)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(11, MmeBoutarel, function11)
 	error("MmeBoutarel: callback function 11 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(MmeBoutarel, chapter1Handler, 12)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(12, MmeBoutarel, chapter1Handler)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -288,11 +264,13 @@ IMPLEMENT_FUNCTION(MmeBoutarel, chapter1Handler, 12)
 	}
 }
 
-IMPLEMENT_FUNCTION(MmeBoutarel, function13, 13)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(13, MmeBoutarel, function13)
 	error("MmeBoutarel: callback function 13 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(MmeBoutarel, function14, 14)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(14, MmeBoutarel, function14)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -342,11 +320,13 @@ IMPLEMENT_FUNCTION(MmeBoutarel, function14, 14)
 	}
 }
 
-IMPLEMENT_FUNCTION(MmeBoutarel, function15, 15)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(15, MmeBoutarel, function15)
 	error("MmeBoutarel: callback function 15 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(MmeBoutarel, function16, 16)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(16, MmeBoutarel, function16)
 	if (savepoint.action == kActionDefault) {
 		getData()->entityPosition = kPosition_5790;
 		getData()->location = kLocationInsideCompartment;
@@ -359,7 +339,8 @@ IMPLEMENT_FUNCTION(MmeBoutarel, function16, 16)
 	}
 }
 
-IMPLEMENT_FUNCTION(MmeBoutarel, chapter2, 17)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(17, MmeBoutarel, chapter2)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -385,7 +366,8 @@ IMPLEMENT_FUNCTION(MmeBoutarel, chapter2, 17)
 	}
 }
 
-IMPLEMENT_FUNCTION(MmeBoutarel, chapter2Handler, 18)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(18, MmeBoutarel, chapter2Handler)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -431,7 +413,8 @@ IMPLEMENT_FUNCTION(MmeBoutarel, chapter2Handler, 18)
 	}
 }
 
-IMPLEMENT_FUNCTION(MmeBoutarel, function19, 19)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(19, MmeBoutarel, function19)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -474,7 +457,8 @@ IMPLEMENT_FUNCTION(MmeBoutarel, function19, 19)
 	}
 }
 
-IMPLEMENT_FUNCTION(MmeBoutarel, chapter3, 20)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(20, MmeBoutarel, chapter3)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -495,11 +479,13 @@ IMPLEMENT_FUNCTION(MmeBoutarel, chapter3, 20)
 	}
 }
 
-IMPLEMENT_FUNCTION(MmeBoutarel, chapter3Handler, 21)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(21, MmeBoutarel, chapter3Handler)
 	error("MmeBoutarel: callback function 21 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(MmeBoutarel, chapter4, 22)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(22, MmeBoutarel, chapter4)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -520,7 +506,8 @@ IMPLEMENT_FUNCTION(MmeBoutarel, chapter4, 22)
 	}
 }
 
-IMPLEMENT_FUNCTION(MmeBoutarel, chapter4Handler, 23)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(23, MmeBoutarel, chapter4Handler)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -566,11 +553,13 @@ IMPLEMENT_FUNCTION(MmeBoutarel, chapter4Handler, 23)
 	}
 }
 
-IMPLEMENT_FUNCTION(MmeBoutarel, function24, 24)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(24, MmeBoutarel, function24)
 	error("MmeBoutarel: callback function 24 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(MmeBoutarel, function25, 25)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(25, MmeBoutarel, function25)
 	if (savepoint.action == kActionDefault) {
 		getEntities()->clearSequences(kEntityMmeBoutarel);
 
@@ -583,7 +572,8 @@ IMPLEMENT_FUNCTION(MmeBoutarel, function25, 25)
 	}
 }
 
-IMPLEMENT_FUNCTION(MmeBoutarel, chapter5, 26)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(26, MmeBoutarel, chapter5)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -604,15 +594,18 @@ IMPLEMENT_FUNCTION(MmeBoutarel, chapter5, 26)
 	}
 }
 
-IMPLEMENT_FUNCTION(MmeBoutarel, chapter5Handler, 27)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(27, MmeBoutarel, chapter5Handler)
 	if (savepoint.action == kActionProceedChapter5)
 		setup_function28();
 }
 
-IMPLEMENT_FUNCTION(MmeBoutarel, function28, 28)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(28, MmeBoutarel, function28)
 	error("MmeBoutarel: callback function 28 not implemented!");
 }
 
-IMPLEMENT_NULL_FUNCTION(MmeBoutarel, 29)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_NULL_FUNCTION(29, MmeBoutarel)
 
 } // End of namespace LastExpress

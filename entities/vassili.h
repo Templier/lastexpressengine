@@ -38,24 +38,70 @@ public:
 	Vassili(LastExpressEngine *engine);
 	~Vassili() {};
 
-	// Setup
+	/**
+	 * Resets the entity
+	 */
 	DECLARE_FUNCTION(reset)
-	DECLARE_FUNCTION_S(draw)
-	DECLARE_FUNCTION_II(savegame)
+
+	/**
+	 * Draws the entity
+	 *
+	 * @param sequence The sequence to draw
+	 */
+	DECLARE_FUNCTION(draw, const char* sequence)
+
+	/**
+	 * Saves the game
+	 *
+	 * @param savegameType The type of the savegame
+	 * @param param        The param for the savegame (EventIndex or TimeValue)
+	 */
+	DECLARE_FUNCTION(savegame, SavegameType savegameType, uint32 param)
+
+	/**
+	 * Setup Chapter 1
+	 */
 	DECLARE_FUNCTION(chapter1)
+
+	/**
+	 * Handle Chapter 1 events
+	 */
 	DECLARE_FUNCTION(chapter1Handler)
+
 	DECLARE_FUNCTION(function6)
 	DECLARE_FUNCTION(function7)
 	DECLARE_FUNCTION(function8)
 	DECLARE_FUNCTION(function9)
 	DECLARE_FUNCTION(seizure)
 	DECLARE_FUNCTION(drawInBed)
+
+	/**
+	 * Setup Chapter 2
+	 */
 	DECLARE_FUNCTION(chapter2)
+
 	DECLARE_FUNCTION(sleeping)
+
+	/**
+	 * Setup Chapter 3
+	 */
 	DECLARE_FUNCTION(chapter3)
+
 	DECLARE_FUNCTION(stealEgg)
+
+	/**
+	 * Setup Chapter 4
+	 */
 	DECLARE_FUNCTION(chapter4)
+
+	/**
+	 * Handle Chapter 4 events
+	 */
 	DECLARE_FUNCTION(chapter4Handler)
+
+	/**
+	 * Setup Chapter 5
+	 */
 	DECLARE_FUNCTION(chapter5)
 };
 

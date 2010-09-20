@@ -68,69 +68,43 @@ Salko::Salko(LastExpressEngine *engine) : Entity(engine, kEntitySalko) {
 	ADD_NULL_FUNCTION();
 }
 
-/**
- * Resets the entity
- */
-IMPLEMENT_FUNCTION(Salko, reset, 1)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(1, Salko, reset)
 	Entity::reset(savepoint);
 }
 
-/**
- * Handles entering/exiting a compartment.
- *
- * @param seq1   The sequence to draw
- * @param param4 The compartment
- */
-IMPLEMENT_FUNCTION_SI(Salko, enterExitCompartment, 2)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_SI(2, Salko, enterExitCompartment, ObjectIndex)
 	Entity::enterExitCompartment(savepoint);
 }
 
-/**
- * Draws the entity
- *
- * @param seq1 The sequence to draw
- */
-IMPLEMENT_FUNCTION_NOSETUP(Salko, draw, 3)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_NOSETUP(3, Salko, draw)
 	Entity::draw(savepoint);
 }
 
-/**
- * Updates the entity
- *
- * @param param1 The car
- * @param param2 The entity position
- */
-IMPLEMENT_FUNCTION_II(Salko, updateEntity, 4)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_II(4, Salko, updateEntity, CarIndex, EntityPosition)
 	Entity::updateEntity(savepoint);
 }
 
-/**
- * Updates parameter 2 using time value
- *
- * @param param1 The time to add
- */
-IMPLEMENT_FUNCTION_I(Salko, updateFromTime, 5)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_I(5, Salko, updateFromTime, uint32)
 	Entity::updateFromTime(savepoint);
 }
 
-/**
- * Save the game
- *
- * @param param1 The SavegameType for the savegame
- * @param param2 The EventIndex for the savegame
- */
-IMPLEMENT_FUNCTION_II(Salko, savegame, 6)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_II(6, Salko, savegame, SavegameType, uint32)
 	Entity::savegame(savepoint);
 }
 
-// Parameters:
-// - Car
-// - EntityPosition
-IMPLEMENT_FUNCTION_II(Salko, function7, 7)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_II(7, Salko, function7, CarIndex, EntityPosition)
 	error("Salko: callback function 7 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Salko, function8, 8)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(8, Salko, function8)
 	if (savepoint.action == kActionDefault) {
 		getData()->entityPosition = kPosition_2740;
 		getData()->location = kLocationInsideCompartment;
@@ -138,7 +112,8 @@ IMPLEMENT_FUNCTION(Salko, function8, 8)
 	}
 }
 
-IMPLEMENT_FUNCTION(Salko, chapter1, 9)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(9, Salko, chapter1)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -155,7 +130,8 @@ IMPLEMENT_FUNCTION(Salko, chapter1, 9)
 	}
 }
 
-IMPLEMENT_FUNCTION(Salko, chapter1Handler, 10)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(10, Salko, chapter1Handler)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -179,7 +155,8 @@ IMPLEMENT_FUNCTION(Salko, chapter1Handler, 10)
 	}
 }
 
-IMPLEMENT_FUNCTION(Salko, function11, 11)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(11, Salko, function11)
 	if (savepoint.action == kActionDefault) {
 		getData()->entityPosition = kPosition_2740;
 		getData()->location = kLocationInsideCompartment;
@@ -190,7 +167,8 @@ IMPLEMENT_FUNCTION(Salko, function11, 11)
 	}
 }
 
-IMPLEMENT_FUNCTION(Salko, chapter2, 12)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(12, Salko, chapter2)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -212,7 +190,8 @@ IMPLEMENT_FUNCTION(Salko, chapter2, 12)
 	}
 }
 
-IMPLEMENT_FUNCTION(Salko, function13, 13)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(13, Salko, function13)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -253,7 +232,8 @@ IMPLEMENT_FUNCTION(Salko, function13, 13)
 	}
 }
 
-IMPLEMENT_FUNCTION(Salko, chapter3, 14)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(14, Salko, chapter3)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -274,7 +254,8 @@ IMPLEMENT_FUNCTION(Salko, chapter3, 14)
 	}
 }
 
-IMPLEMENT_FUNCTION(Salko, chapter3Handler, 15)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(15, Salko, chapter3Handler)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -295,7 +276,8 @@ IMPLEMENT_FUNCTION(Salko, chapter3Handler, 15)
 	}
 }
 
-IMPLEMENT_FUNCTION(Salko, function16, 16)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(16, Salko, function16)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -381,7 +363,8 @@ label_callback3:
 	}
 }
 
-IMPLEMENT_FUNCTION(Salko, function17, 17)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(17, Salko, function17)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -420,7 +403,8 @@ IMPLEMENT_FUNCTION(Salko, function17, 17)
 	}
 }
 
-IMPLEMENT_FUNCTION(Salko, chapter4, 18)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(18, Salko, chapter4)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -440,7 +424,8 @@ IMPLEMENT_FUNCTION(Salko, chapter4, 18)
 	}
 }
 
-IMPLEMENT_FUNCTION(Salko, chapter4Handler, 19)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(19, Salko, chapter4Handler)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -462,7 +447,8 @@ IMPLEMENT_FUNCTION(Salko, chapter4Handler, 19)
 	}
 }
 
-IMPLEMENT_FUNCTION(Salko, function20, 20)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(20, Salko, function20)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -495,7 +481,8 @@ IMPLEMENT_FUNCTION(Salko, function20, 20)
 	}
 }
 
-IMPLEMENT_FUNCTION(Salko, function21, 21)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(21, Salko, function21)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -523,7 +510,8 @@ IMPLEMENT_FUNCTION(Salko, function21, 21)
 	}
 }
 
-IMPLEMENT_FUNCTION(Salko, function22, 22)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(22, Salko, function22)
 	if (savepoint.action == kActionDefault) {
 		getEntities()->clearSequences(kEntitySalko);
 		getObjects()->update(kObjectCompartmentH, kEntityPlayer, kLocation3, kCursorHandKnock, kCursorHand);
@@ -535,7 +523,8 @@ IMPLEMENT_FUNCTION(Salko, function22, 22)
 	}
 }
 
-IMPLEMENT_FUNCTION(Salko, chapter5, 23)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(23, Salko, chapter5)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -555,7 +544,8 @@ IMPLEMENT_FUNCTION(Salko, chapter5, 23)
 	}
 }
 
-IMPLEMENT_FUNCTION(Salko, chapter5Handler, 24)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(24, Salko, chapter5Handler)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -604,6 +594,7 @@ IMPLEMENT_FUNCTION(Salko, chapter5Handler, 24)
 	}
 }
 
-IMPLEMENT_NULL_FUNCTION(Salko, 25)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_NULL_FUNCTION(25, Salko)
 
 } // End of namespace LastExpress

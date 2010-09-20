@@ -38,35 +38,124 @@ public:
 	MmeBoutarel(LastExpressEngine *engine);
 	~MmeBoutarel() {};
 
-	// Setup
+	/**
+	 * Resets the entity
+	 */
 	DECLARE_FUNCTION(reset)
-	DECLARE_FUNCTION_S(playSound)
-	DECLARE_FUNCTION_S(draw)
-	DECLARE_FUNCTION_I(updateFromTime)
-	DECLARE_FUNCTION_SI(enterExitCompartment)
-	DECLARE_FUNCTION_SI(enterExitCompartment2)
-	DECLARE_FUNCTION_II(updateEntity)
-	DECLARE_FUNCTION_S(function8)
+
+	/**
+	 * Plays sound
+	 *
+	 * @param filename The sound filename
+	 */
+	DECLARE_FUNCTION(playSound, const char* filename)
+
+	/**
+	 * Draws the entity
+	 *
+	 * @param sequence The sequence to draw
+	 */
+	DECLARE_FUNCTION(draw, const char* sequence)
+
+	/**
+	 * Updates parameter 2 using time value
+	 *
+	 * @param time The time to add
+	 */
+	DECLARE_FUNCTION(updateFromTime, uint32 time)
+
+	/**
+	 * Handles entering/exiting a compartment.
+	 *
+	 * @param sequence    The sequence to draw
+	 * @param compartment The compartment
+	 */
+	DECLARE_FUNCTION(enterExitCompartment, const char* sequence, ObjectIndex compartment)
+
+	/**
+	 * Handles entering/exiting a compartment and updates position/play animation
+	 *
+	 * @param sequence    The sequence to draw
+	 * @param compartment The compartment
+	 */
+	DECLARE_FUNCTION(enterExitCompartment2, const char* sequence, ObjectIndex compartment)
+
+	/**
+	 * Updates the entity
+	 *
+	 * @param index          The car
+	 * @param entityPosition The entity position
+	 */
+	DECLARE_FUNCTION(updateEntity, CarIndex index, EntityPosition entityPosition)
+
+	DECLARE_FUNCTION(function8, const char *soundName)
+
 	DECLARE_FUNCTION(function9)
+
+	/**
+	 * Setup Chapter 1
+	 */
 	DECLARE_FUNCTION(chapter1)
+
 	DECLARE_FUNCTION(function11)
+
+	/**
+	 * Handle Chapter 1 events
+	 */
 	DECLARE_FUNCTION(chapter1Handler)
+
 	DECLARE_FUNCTION(function13)
 	DECLARE_FUNCTION(function14)
 	DECLARE_FUNCTION(function15)
 	DECLARE_FUNCTION(function16)
+
+	/**
+	 * Setup Chapter 2
+	 */
 	DECLARE_FUNCTION(chapter2)
+
+	/**
+	 * Handle Chapter 2 events
+	 */
 	DECLARE_FUNCTION(chapter2Handler)
+
 	DECLARE_FUNCTION(function19)
+
+	/**
+	 * Setup Chapter 3
+	 */
 	DECLARE_FUNCTION(chapter3)
+
+	/**
+	 * Handle Chapter 3 events
+	 */
 	DECLARE_FUNCTION(chapter3Handler)
+
+	/**
+	 * Setup Chapter 4
+	 */
 	DECLARE_FUNCTION(chapter4)
+
+	/**
+	 * Handle Chapter 4 events
+	 */
 	DECLARE_FUNCTION(chapter4Handler)
+
 	DECLARE_FUNCTION(function24)
 	DECLARE_FUNCTION(function25)
+
+	/**
+	 * Setup Chapter 5
+	 */
 	DECLARE_FUNCTION(chapter5)
+
+	/**
+	 * Handle Chapter 5 events
+	 */
 	DECLARE_FUNCTION(chapter5Handler)
+
 	DECLARE_FUNCTION(function28)
+
 	DECLARE_NULL_FUNCTION()
 };
 

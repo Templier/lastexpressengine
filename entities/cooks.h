@@ -38,20 +38,69 @@ public:
 	Cooks(LastExpressEngine *engine);
 	~Cooks() {};
 
-	// Setup
-	DECLARE_FUNCTION_S(draw)
-	DECLARE_FUNCTION_S(playSound)
+	/**
+	 * Draws the entity
+	 *
+	 * @param sequence The sequence to draw
+	 */
+	DECLARE_FUNCTION(draw, const char* sequence)
+
+	/**
+	 * Plays sound
+	 *
+	 * @param filename The sound filename
+	 */
+	DECLARE_FUNCTION(playSound, const char* filename)
+
 	DECLARE_FUNCTION(function3)
+
 	DECLARE_FUNCTION(function4)
+
+	/**
+	 * Setup Chapter 1
+	 */
 	DECLARE_FUNCTION(chapter1)
+
+	/**
+	 * Handle Chapter 1 events
+	 */
 	DECLARE_FUNCTION(chapter1Handler)
+
 	DECLARE_FUNCTION(function7)
+
+	/**
+	 * Setup Chapter 2
+	 */
 	DECLARE_FUNCTION(chapter2)
+
+	/**
+	 * Handle Chapter 2 events
+	 */
 	DECLARE_FUNCTION(chapter2Handler)
+
+	/**
+	 * Setup Chapter 3
+	 */
 	DECLARE_FUNCTION(chapter3)
+
+	/**
+	 * Handle Chapter 3 events
+	 */
 	DECLARE_FUNCTION(chapter3Handler)
+
+	/**
+	 * Setup Chapter 4
+	 */
 	DECLARE_FUNCTION(chapter4)
+
+	/**
+	 * Handle Chapter 4 events
+	 */
 	DECLARE_FUNCTION(chapter4Handler)
+
+	/**
+	 * Setup Chapter 5
+	 */
 	DECLARE_FUNCTION(chapter5)
 };
 

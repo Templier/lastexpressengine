@@ -38,17 +38,61 @@ public:
 	Servers0(LastExpressEngine *engine);
 	~Servers0() {};
 
-	// Setup
-	DECLARE_FUNCTION_SIIS(callSavepoint)
+
+	/**
+	 * Call a savepoint (or draw sequence in default case)
+	 *
+	 * @param sequence1   The sequence to draw in the default case
+	 * @param entity      The entity
+	 * @param action      The action
+	 * @param sequence2   The sequence name for the savepoint
+	 */
+	DECLARE_FUNCTION(callSavepoint, const char* sequence1, EntityIndex entity, ActionIndex action, const char* sequence2)
+
+	/**
+	 * Updates parameter 2 using time value
+	 *
+	 * @param savepoint The savepoint
+	 *                    - Time to add
+	 */
 	DECLARE_FUNCTION_NOSETUP(updateFromTime)
-	DECLARE_FUNCTION_S(draw)
-	DECLARE_FUNCTION_NOSETUP(updatePosition)
+
+	/**
+	 * Draws the entity
+	 *
+	 * @param sequence The sequence to draw
+	 */
+	DECLARE_FUNCTION(draw, const char* sequence)
+
+	/**
+	 * Updates the position
+	 *
+	 * @param sequence1      The sequence to draw
+	 * @param car            The car
+	 * @param position       The position
+	 */
+	DECLARE_FUNCTION(updatePosition, const char* sequence1, CarIndex car, Position position)
+
+	/**
+	 * Process callback action when the entity direction is not kDirectionRight
+	 */
 	DECLARE_FUNCTION_NOSETUP(callbackActionOnDirection)
-	DECLARE_FUNCTION_S(playSound)
+
+	/**
+	 * Plays sound
+	 *
+	 * @param filename The sound filename
+	 */
+	DECLARE_FUNCTION(playSound, const char* filename)
+
 	DECLARE_FUNCTION(function7)
 	DECLARE_FUNCTION(function8)
 	DECLARE_FUNCTION(function9)
 	DECLARE_FUNCTION(function10)
+
+	/**
+	 * Setup Chapter 1
+	 */
 	DECLARE_FUNCTION(chapter1)
 	DECLARE_FUNCTION(function12)
 	DECLARE_FUNCTION(function13)
@@ -58,24 +102,65 @@ public:
 	DECLARE_FUNCTION(function17)
 	DECLARE_FUNCTION(function18)
 	DECLARE_FUNCTION(function19)
+
+	/**
+	 * Handle Chapter 1 events
+	 */
 	DECLARE_FUNCTION(chapter1Handler)
+
 	DECLARE_FUNCTION(function21)
 	DECLARE_FUNCTION(function22)
+
+	/**
+	 * Setup Chapter 2
+	 */
 	DECLARE_FUNCTION(chapter2)
+
+	/**
+	 * Handle Chapter 2 events
+	 */
 	DECLARE_FUNCTION(chapter2Handler)
+
 	DECLARE_FUNCTION(function25)
 	DECLARE_FUNCTION(function26)
+
+	/**
+	 * Setup Chapter 3
+	 */
 	DECLARE_FUNCTION(chapter3)
+
+	/**
+	 * Handle Chapter 3 events
+	 */
 	DECLARE_FUNCTION(chapter3Handler)
+
 	DECLARE_FUNCTION(augustAnnaDateOrder)
 	DECLARE_FUNCTION(function30)
+
+	/**
+	 * Setup Chapter 4
+	 */
 	DECLARE_FUNCTION(chapter4)
+
+	/**
+	 * Handle Chapter 4 events
+	 */
 	DECLARE_FUNCTION(chapter4Handler)
+
 	DECLARE_FUNCTION(augustOrderSteak)
 	DECLARE_FUNCTION(augustServeDuck)
 	DECLARE_FUNCTION(function35)
+
+	/**
+	 * Setup Chapter 5
+	 */
 	DECLARE_FUNCTION(chapter5)
+
+	/**
+	 * Handle Chapter 5 events
+	 */
 	DECLARE_FUNCTION(chapter5Handler)
+
 	DECLARE_NULL_FUNCTION()
 
 private:

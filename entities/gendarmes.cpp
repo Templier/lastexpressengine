@@ -58,14 +58,13 @@ Gendarmes::Gendarmes(LastExpressEngine *engine) : Entity(engine, kEntityGendarme
 	ADD_CALLBACK_FUNCTION(Gendarmes, chapter5);
 }
 
-/**
- * Resets the entity
- */
-IMPLEMENT_FUNCTION(Gendarmes, reset, 1)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(1, Gendarmes, reset)
 	Entity::reset(savepoint);
 }
 
-IMPLEMENT_FUNCTION(Gendarmes, chapter1, 2)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(2, Gendarmes, chapter1)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -80,53 +79,43 @@ IMPLEMENT_FUNCTION(Gendarmes, chapter1, 2)
 	}
 }
 
-IMPLEMENT_FUNCTION_S(Gendarmes, arrestDraw, 3)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_S(3, Gendarmes, arrestDraw)
 	arrest(savepoint);
 }
 
-IMPLEMENT_FUNCTION_S(Gendarmes, arrestPlaysound, 4)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_S(4, Gendarmes, arrestPlaysound)
 	arrest(savepoint, true);
 }
 
-IMPLEMENT_FUNCTION_S(Gendarmes, arrestPlaysound16, 5)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_S(5, Gendarmes, arrestPlaysound16)
 	arrest(savepoint, true, SoundManager::kFlagDefault);
 }
 
-IMPLEMENT_FUNCTION_I(Gendarmes, arrestCallback, 6)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_I(6, Gendarmes, arrestCallback, TimeValue)
 	arrest(savepoint, true, SoundManager::kFlagInvalid, true);
 }
 
-/**
- * Save the game
- *
- * @param param1 The SavegameType for the savegame
- * @param param2 The EventIndex for the savegame
- */
-IMPLEMENT_FUNCTION_II(Gendarmes, savegame, 7)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_II(7, Gendarmes, savegame, SavegameType, uint32)
 	Entity::savegame(savepoint);
 }
 
-// Parameters:
-// - CarIndex
-// - EntityPosition
-IMPLEMENT_FUNCTION_II(Gendarmes, arrestUpdateEntity, 8)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_II(8, Gendarmes, arrestUpdateEntity, CarIndex, EntityPosition)
 	arrest(savepoint, true, SoundManager::kFlagInvalid, false, true);
 }
 
-// Parameters:
-// - CarIndex
-// - EntityPosition
-// - char *
-// - char *
-IMPLEMENT_FUNCTION_IISS(Gendarmes, function9, 9)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_IISS(9, Gendarmes, function9, CarIndex, EntityPosition)
 	error("Gendarmes: callback function 9 not implemented!");
 }
 
-// Parameters:
-// - CarIndex
-// - EntityPosition
-// - ObjectIndex
-IMPLEMENT_FUNCTION_III(Gendarmes, function10, 10)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_III(10, Gendarmes, function10, CarIndex, EntityPosition, ObjectIndex)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -232,14 +221,16 @@ IMPLEMENT_FUNCTION_III(Gendarmes, function10, 10)
 	}
 }
 
-IMPLEMENT_FUNCTION(Gendarmes, chapter1Handler, 11)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(11, Gendarmes, chapter1Handler)
 	if (savepoint.action == kAction169499649) {
 		getSavePoints()->push(kEntityGendarmes, kEntityMertens, kAction190082817);
 		setup_function12();
 	}
 }
 
-IMPLEMENT_FUNCTION(Gendarmes, function12, 12)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(12, Gendarmes, function12)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -394,31 +385,39 @@ IMPLEMENT_FUNCTION(Gendarmes, function12, 12)
 	}
 }
 
-IMPLEMENT_FUNCTION(Gendarmes, function13, 13)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(13, Gendarmes, function13)
 	if (savepoint.action == kActionDefault)
 		getData()->car = kCarNone;
 }
 
-IMPLEMENT_FUNCTION(Gendarmes, chapter2, 14)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(14, Gendarmes, chapter2)
 	if (savepoint.action == kActionDefault)
 		getEntities()->clearSequences(kEntityGendarmes);
 }
 
-IMPLEMENT_FUNCTION(Gendarmes, chapter3, 15)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(15, Gendarmes, chapter3)
 	if (savepoint.action == kActionDefault)
 		getEntities()->clearSequences(kEntityGendarmes);
 }
 
-IMPLEMENT_FUNCTION(Gendarmes, chapter4, 16)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(16, Gendarmes, chapter4)
 	if (savepoint.action == kActionDefault)
 		getEntities()->clearSequences(kEntityGendarmes);
 }
 
-IMPLEMENT_FUNCTION(Gendarmes, chapter5, 17)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(17, Gendarmes, chapter5)
 	if (savepoint.action == kActionDefault)
 		getEntities()->clearSequences(kEntityGendarmes);
 }
 
+//////////////////////////////////////////////////////////////////////////
+// Private functions
+//////////////////////////////////////////////////////////////////////////
 void Gendarmes::arrest(const SavePoint &savepoint, bool shouldPlaySound, SoundManager::FlagType flag, bool checkCallback, bool shouldUpdateEntity) {
 	switch (savepoint.action) {
 	default:

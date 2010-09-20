@@ -54,25 +54,18 @@ Cooks::Cooks(LastExpressEngine *engine) : Entity(engine, kEntityCooks) {
 	ADD_CALLBACK_FUNCTION(Cooks, chapter5);
 }
 
-/**
- * Draws the entity
- *
- * @param seq1 The sequence to draw
- */
-IMPLEMENT_FUNCTION_S(Cooks, draw, 1)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_S(1, Cooks, draw)
 	Entity::draw(savepoint);
 }
 
-/**
- * Plays sound
- *
- * @param param1 The sound filename
- */
-IMPLEMENT_FUNCTION_S(Cooks, playSound, 2)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_S(2, Cooks, playSound)
 	Entity::playSound(savepoint);
 }
 
-IMPLEMENT_FUNCTION(Cooks, function3, 3)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(3, Cooks, function3)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -156,7 +149,8 @@ IMPLEMENT_FUNCTION(Cooks, function3, 3)
 	}
 }
 
-IMPLEMENT_FUNCTION(Cooks, function4, 4)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(4, Cooks, function4)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -241,7 +235,8 @@ IMPLEMENT_FUNCTION(Cooks, function4, 4)
 	}
 }
 
-IMPLEMENT_FUNCTION(Cooks, chapter1, 5)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(5, Cooks, chapter1)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -261,7 +256,8 @@ IMPLEMENT_FUNCTION(Cooks, chapter1, 5)
 	}
 }
 
-IMPLEMENT_FUNCTION(Cooks, chapter1Handler, 6)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(6, Cooks, chapter1Handler)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -327,7 +323,8 @@ IMPLEMENT_FUNCTION(Cooks, chapter1Handler, 6)
 	}
 }
 
-IMPLEMENT_FUNCTION(Cooks, function7, 7)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(7, Cooks, function7)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -348,7 +345,8 @@ IMPLEMENT_FUNCTION(Cooks, function7, 7)
 	}
 }
 
-IMPLEMENT_FUNCTION(Cooks, chapter2, 8)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(8, Cooks, chapter2)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -371,7 +369,8 @@ IMPLEMENT_FUNCTION(Cooks, chapter2, 8)
 	}
 }
 
-IMPLEMENT_FUNCTION(Cooks, chapter2Handler, 9)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(9, Cooks, chapter2Handler)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -406,7 +405,8 @@ IMPLEMENT_FUNCTION(Cooks, chapter2Handler, 9)
 	}
 }
 
-IMPLEMENT_FUNCTION(Cooks, chapter3, 10)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(10, Cooks, chapter3)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -428,7 +428,8 @@ IMPLEMENT_FUNCTION(Cooks, chapter3, 10)
 	}
 }
 
-IMPLEMENT_FUNCTION(Cooks, chapter3Handler, 11)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(11, Cooks, chapter3Handler)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -496,7 +497,8 @@ update_params:
 	}
 }
 
-IMPLEMENT_FUNCTION(Cooks, chapter4, 12)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(12, Cooks, chapter4)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -519,7 +521,8 @@ IMPLEMENT_FUNCTION(Cooks, chapter4, 12)
 	}
 }
 
-IMPLEMENT_FUNCTION(Cooks, chapter4Handler, 13)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(13, Cooks, chapter4Handler)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -560,7 +563,8 @@ IMPLEMENT_FUNCTION(Cooks, chapter4Handler, 13)
 	}
 }
 
-IMPLEMENT_FUNCTION(Cooks, chapter5, 14)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(14, Cooks, chapter5)
 	if (savepoint.action == kActionDefault)
 		getEntities()->clearSequences(kEntityCooks);
 }

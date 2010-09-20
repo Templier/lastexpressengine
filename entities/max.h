@@ -38,23 +38,89 @@ public:
 	Max(LastExpressEngine *engine);
 	~Max() {};
 
+	/**
+	 * Resets the entity
+	 */
 	DECLARE_FUNCTION(reset)
-	DECLARE_FUNCTION_S(playSound)
+
+	/**
+	 * Plays sound
+	 *
+	 * @param filename The sound filename
+	 */
+	DECLARE_FUNCTION(playSound, const char* filename)
+
+	/**
+	* Draws the entity
+	*
+	* @param savepoint The savepoint
+	*                    - The sequence to draw
+	*/
 	DECLARE_FUNCTION_NOSETUP(draw)
-	DECLARE_FUNCTION_SI(enterExitCompartment)
-	DECLARE_FUNCTION_II(savegame)
+
+	/**
+	 * Handles entering/exiting a compartment.
+	 *
+	 * @param sequence    The sequence to draw
+	 * @param compartment The compartment
+	 */
+	DECLARE_FUNCTION(enterExitCompartment, const char* sequence, ObjectIndex compartment)
+
+	/**
+	 * Saves the game
+	 *
+	 * @param savegameType The type of the savegame
+	 * @param param        The param for the savegame (EventIndex or TimeValue)
+	 */
+	DECLARE_FUNCTION(savegame, SavegameType savegameType, uint32 param)
+
+	/**
+	 * Handle Chapter 1 & 2 events
+	 */
 	DECLARE_FUNCTION(chapter12_handler)
+
 	DECLARE_FUNCTION(function7)
+
+	/**
+	 * Handle Chapter 4 events
+	 */
 	DECLARE_FUNCTION(chapter4Handler)
+
 	DECLARE_FUNCTION(function9)
+
+	/**
+	 * Setup Chapter 1
+	 */
 	DECLARE_FUNCTION(chapter1)
+
+	/**
+	 * Setup Chapter 2
+	 */
 	DECLARE_FUNCTION(chapter2)
+
+	/**
+	 * Setup Chapter 3
+	 */
 	DECLARE_FUNCTION(chapter3)
+
+	/**
+	 * Handle Chapter 3 events
+	 */
 	DECLARE_FUNCTION(chapter3Handler)
+
 	DECLARE_FUNCTION(freeFromCage)
 	DECLARE_FUNCTION(function15)
+
+	/**
+	 * Setup Chapter 4
+	 */
 	DECLARE_FUNCTION(chapter4)
+
 	DECLARE_FUNCTION(function17)
+
+	/**
+	 * Setup Chapter 5
+	 */
 	DECLARE_FUNCTION(chapter5)
 };
 

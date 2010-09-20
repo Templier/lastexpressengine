@@ -91,97 +91,53 @@ Alexei::Alexei(LastExpressEngine *engine) : Entity(engine, kEntityAlexei) {
 	ADD_CALLBACK_FUNCTION(Alexei, chapter5);
 }
 
-/**
- * Resets the entity
- */
-IMPLEMENT_FUNCTION(Alexei, reset, 1)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(1, Alexei, reset)
 	Entity::reset(savepoint);
 }
 
-/**
- * Plays sound
- *
- * @param param1 The sound filename
- */
-IMPLEMENT_FUNCTION_S(Alexei, playSound, 2)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_S(2, Alexei, playSound)
 	Entity::playSound(savepoint);
 }
 
-/**
- * Updates parameter 2 using ticks value
- *
- * @param param1 The number of ticks to add
- */
-IMPLEMENT_FUNCTION_I(Alexei, updateFromTicks, 3)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_I(3, Alexei, updateFromTicks, uint32)
 	Entity::updateFromTicks(savepoint);
 }
 
-/**
- * Draws the entity
- *
- * @param seq1 The sequence to draw
- */
-IMPLEMENT_FUNCTION_S(Alexei, draw, 4)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_S(4, Alexei, draw)
 	Entity::draw(savepoint);
 }
 
-/**
- * Updates the position
- *
- * @param seq1   The sequence to draw
- * @param param4 The car
- * @param param5 The entity position
- */
-IMPLEMENT_FUNCTION_SII(Alexei, updatePosition, 5)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_SII(5, Alexei, updatePosition, CarIndex, Position)
 	Entity::updatePosition(savepoint);
 }
 
-/**
- * Handles entering/exiting a compartment.
- *
- * @param seq1   The sequence to draw
- * @param param4 The compartment
- */
-IMPLEMENT_FUNCTION_SI(Alexei, enterExitCompartment, 6)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_SI(6, Alexei, enterExitCompartment, ObjectIndex)
 	Entity::enterExitCompartment(savepoint);
 }
 
-/**
- * Process callback action when the entity direction is not kDirectionRight
- */
-IMPLEMENT_FUNCTION(Alexei, callbackActionOnDirection, 7)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(7, Alexei, callbackActionOnDirection)
 	Entity::callbackActionOnDirection(savepoint);
 }
 
-/**
- * Call a savepoint (or draw sequence in default case)
- *
- * @param seq1   The sequence to draw in the default case
- * @param param4 The entity
- * @param param5 The action
- * @param seq1   The sequence name for the savepoint
- */
-IMPLEMENT_FUNCTION_SIIS(Alexei, callSavepoint, 8)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_SIIS(8, Alexei, callSavepoint, EntityIndex, ActionIndex)
 	Entity::callSavepoint(savepoint);
 }
 
-/**
- * Save the game
- *
- * @param param1 The SavegameType for the savegame
- * @param param2 The EventIndex for the savegame
- */
-IMPLEMENT_FUNCTION_II(Alexei, savegame, 9)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_II(9, Alexei, savegame, SavegameType, uint32)
 	Entity::savegame(savepoint);
 }
 
-/**
- * Updates the entity
- *
- * @param param1 The car
- * @param param2 The entity position
- */
-IMPLEMENT_FUNCTION_II(Alexei, updateEntity, 10)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_II(10, Alexei, updateEntity, CarIndex, EntityPosition)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -207,25 +163,18 @@ IMPLEMENT_FUNCTION_II(Alexei, updateEntity, 10)
 	Entity::updateEntity(savepoint, true);
 }
 
-/**
- * Draws the entity along with another one
- *
- * @param seq1   The sequence to draw
- * @param seq2   The sequence to draw for the second entity
- * @param param7 The EntityIndex of the second entity
- */
-IMPLEMENT_FUNCTION_NOSETUP(Alexei, draw2, 11)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_NOSETUP(11, Alexei, draw2)
 	Entity::draw2(savepoint);
 }
 
-/**
- * Process callback action when somebody is standing in the restaurant or salon.
- */
-IMPLEMENT_FUNCTION(Alexei, callbackActionRestaurantOrSalon, 12)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(12, Alexei, callbackActionRestaurantOrSalon)
 	Entity::callbackActionRestaurantOrSalon(savepoint);
 }
 
-IMPLEMENT_FUNCTION(Alexei, function13, 13)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(13, Alexei, function13)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -271,7 +220,8 @@ IMPLEMENT_FUNCTION(Alexei, function13, 13)
 	}
 }
 
-IMPLEMENT_FUNCTION(Alexei, function14, 14)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(14, Alexei, function14)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -299,15 +249,13 @@ IMPLEMENT_FUNCTION(Alexei, function14, 14)
 	}
 }
 
-IMPLEMENT_FUNCTION(Alexei, function15, 15)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(15, Alexei, function15)
 	error("Alexei: callback function 15 not implemented!");
 }
 
 //////////////////////////////////////////////////////////////////////////
-// Parameters
-//  - Time
-//  - Sequence name
-IMPLEMENT_FUNCTION_IS(Alexei, function16, 16)
+IMPLEMENT_FUNCTION_IS(16, Alexei, function16, TimeValue)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -448,7 +396,8 @@ IMPLEMENT_FUNCTION_IS(Alexei, function16, 16)
 	}
 }
 
-IMPLEMENT_FUNCTION(Alexei, chapter1, 17)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(17, Alexei, chapter1)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -469,7 +418,8 @@ IMPLEMENT_FUNCTION(Alexei, chapter1, 17)
 	}
 }
 
-IMPLEMENT_FUNCTION(Alexei, chapter1Handler, 18)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(18, Alexei, chapter1Handler)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -557,7 +507,8 @@ IMPLEMENT_FUNCTION(Alexei, chapter1Handler, 18)
 	}
 }
 
-IMPLEMENT_FUNCTION(Alexei, function19, 19)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(19 ,Alexei, function19)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -606,7 +557,7 @@ IMPLEMENT_FUNCTION(Alexei, function19, 19)
 			getSavePoints()->push(kEntityAlexei, kEntityTables1, kAction136455232);
 
 			setCallback(7);
-			setup_callSavepoint("005F", kObjectCompartmentC, kActionDrawTablesWithChairs, "005G");
+			setup_callSavepoint("005F", kEntityTables1, kActionDrawTablesWithChairs, "005G");
 			break;
 
 		case 7:
@@ -643,7 +594,8 @@ IMPLEMENT_FUNCTION(Alexei, function19, 19)
 	}
 }
 
-IMPLEMENT_FUNCTION(Alexei, function20, 20)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(20, Alexei, function20)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -685,15 +637,18 @@ IMPLEMENT_FUNCTION(Alexei, function20, 20)
 	}
 }
 
-IMPLEMENT_FUNCTION(Alexei, function21, 21)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(21, Alexei, function21)
 	error("Alexei: callback function 21 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Alexei, function22, 22)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(22, Alexei, function22)
 	error("Alexei: callback function 22 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Alexei, function23, 23)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(23, Alexei, function23)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -753,7 +708,8 @@ IMPLEMENT_FUNCTION(Alexei, function23, 23)
 	}
 }
 
-IMPLEMENT_FUNCTION(Alexei, function24, 24)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(24, Alexei, function24)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -797,7 +753,8 @@ IMPLEMENT_FUNCTION(Alexei, function24, 24)
 	}
 }
 
-IMPLEMENT_FUNCTION(Alexei, function25, 25)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(25, Alexei, function25)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -833,7 +790,8 @@ IMPLEMENT_FUNCTION(Alexei, function25, 25)
 	}
 }
 
-IMPLEMENT_FUNCTION(Alexei, function26, 26)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(26, Alexei, function26)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -859,7 +817,8 @@ IMPLEMENT_FUNCTION(Alexei, function26, 26)
 	}
 }
 
-IMPLEMENT_FUNCTION(Alexei, function27, 27)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(27, Alexei, function27)
 	if (savepoint.action == kActionDefault) {
 		getObjects()->update(kObject10, kEntityPlayer, kLocationNone, kCursorKeepValue, kCursorKeepValue);
 
@@ -870,7 +829,8 @@ IMPLEMENT_FUNCTION(Alexei, function27, 27)
 	}
 }
 
-IMPLEMENT_FUNCTION(Alexei, chapter2, 28)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(28, Alexei, chapter2)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -895,7 +855,8 @@ IMPLEMENT_FUNCTION(Alexei, chapter2, 28)
 	}
 }
 
-IMPLEMENT_FUNCTION(Alexei, chapter2Handler, 29)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(29, Alexei, chapter2Handler)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -950,7 +911,8 @@ IMPLEMENT_FUNCTION(Alexei, chapter2Handler, 29)
 	}
 }
 
-IMPLEMENT_FUNCTION(Alexei, function30, 30)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(30, Alexei, function30)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -1010,7 +972,8 @@ IMPLEMENT_FUNCTION(Alexei, function30, 30)
 	}
 }
 
-IMPLEMENT_FUNCTION(Alexei, function31, 31)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(31, Alexei, function31)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -1046,7 +1009,8 @@ IMPLEMENT_FUNCTION(Alexei, function31, 31)
 	}
 }
 
-IMPLEMENT_FUNCTION(Alexei, chapter3, 32)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(32, Alexei, chapter3)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -1070,7 +1034,8 @@ IMPLEMENT_FUNCTION(Alexei, chapter3, 32)
 	}
 }
 
-IMPLEMENT_FUNCTION(Alexei, chapter3Handler, 33)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(33, Alexei, chapter3Handler)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -1095,19 +1060,23 @@ IMPLEMENT_FUNCTION(Alexei, chapter3Handler, 33)
 	}
 }
 
-IMPLEMENT_FUNCTION(Alexei, function34, 34)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(34, Alexei, function34)
 	error("Alexei: callback function 34 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Alexei, function35, 35)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(35, Alexei, function35)
 	error("Alexei: callback function 35 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Alexei, function36, 36)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(36, Alexei, function36)
 	error("Alexei: callback function 36 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Alexei, chapter4, 37)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(37, Alexei, chapter4)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -1131,7 +1100,8 @@ IMPLEMENT_FUNCTION(Alexei, chapter4, 37)
 	}
 }
 
-IMPLEMENT_FUNCTION(Alexei, chapter4Handler, 38)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(38, Alexei, chapter4Handler)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -1148,11 +1118,13 @@ IMPLEMENT_FUNCTION(Alexei, chapter4Handler, 38)
 	}
 }
 
-IMPLEMENT_FUNCTION(Alexei, function39, 39)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(39, Alexei, function39)
 	error("Alexei: callback function 39 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Alexei, function40, 40)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(40, Alexei, function40)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -1196,7 +1168,8 @@ IMPLEMENT_FUNCTION(Alexei, function40, 40)
 	}
 }
 
-IMPLEMENT_FUNCTION(Alexei, function41, 41)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(41, Alexei, function41)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -1216,7 +1189,8 @@ IMPLEMENT_FUNCTION(Alexei, function41, 41)
 	}
 }
 
-IMPLEMENT_FUNCTION(Alexei, function42, 42)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(42, Alexei, function42)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -1252,15 +1226,18 @@ IMPLEMENT_FUNCTION(Alexei, function42, 42)
 	}
 }
 
-IMPLEMENT_FUNCTION(Alexei, function43, 43)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(43, Alexei, function43)
 	error("Alexei: callback function 43 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Alexei, function44, 44)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(44, Alexei, function44)
 	error("Alexei: callback function 44 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Alexei, function45, 45)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(45, Alexei, function45)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -1286,11 +1263,13 @@ IMPLEMENT_FUNCTION(Alexei, function45, 45)
 	}
 }
 
-IMPLEMENT_FUNCTION(Alexei, function46, 46)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(46, Alexei, function46)
 	error("Alexei: callback function 46 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Alexei, function47, 47)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(47, Alexei, function47)
 	if (savepoint.action == kActionDefault) {
 		getEntities()->clearSequences(kEntityAlexei);
 
@@ -1303,7 +1282,8 @@ IMPLEMENT_FUNCTION(Alexei, function47, 47)
 	}
 }
 
-IMPLEMENT_FUNCTION(Alexei, chapter5, 48)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(48, Alexei, chapter5)
 	if (savepoint.action == kActionDefault)
 		getEntities()->clearSequences(kEntityAlexei);
 }

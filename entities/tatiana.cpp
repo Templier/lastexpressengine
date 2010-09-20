@@ -100,124 +100,68 @@ Tatiana::Tatiana(LastExpressEngine *engine) : Entity(engine, kEntityTatiana) {
 	ADD_CALLBACK_FUNCTION(Tatiana, function55);
 }
 
-/**
- * Resets the entity
- */
-IMPLEMENT_FUNCTION(Tatiana, reset, 1)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(1, Tatiana, reset)
 	Entity::reset(savepoint, true);
 }
 
-/**
- * Plays sound
- *
- * @param param1 The sound filename
- */
-IMPLEMENT_FUNCTION_S(Tatiana, playSound, 2)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_S(2, Tatiana, playSound)
 	Entity::playSound(savepoint);
 }
 
-/**
- * Draws the entity
- *
- * @param seq1 The sequence to draw
- */
-IMPLEMENT_FUNCTION_S(Tatiana, draw, 3)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_S(3, Tatiana, draw)
 	Entity::draw(savepoint);
 }
 
-/**
- * Updates the position
- *
- * @param seq1   The sequence to draw
- * @param param4 The car
- * @param param5 The entity position
- */
-IMPLEMENT_FUNCTION_SII(Tatiana, updatePosition, 4)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_SII(4, Tatiana, updatePosition, CarIndex, Position)
 	Entity::updatePosition(savepoint);
 }
 
-/**
- * Handles entering/exiting a compartment.
- *
- * @param seq1   The sequence to draw
- * @param param4 The compartment
- */
-IMPLEMENT_FUNCTION_SI(Tatiana, enterExitCompartment, 5)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_SI(5, Tatiana, enterExitCompartment, ObjectIndex)
 	Entity::enterExitCompartment(savepoint);
 }
 
-/**
- * Handles entering/exiting a compartment and updates position/plays animation
- *
- * @param seq1   The sequence to draw
- * @param param4 The compartment
- */
-IMPLEMENT_FUNCTION_SI(Tatiana, enterExitCompartment2, 6)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_SI(6, Tatiana, enterExitCompartment2, ObjectIndex)
 	Entity::enterExitCompartment(savepoint, kPosition_7500, kPosition_7850, kCarRedSleeping, kObjectCompartmentB);
 }
 
-/**
- * Call a savepoint (or draw sequence in default case)
- *
- * @param seq1   The sequence to draw in the default case
- * @param param4 The entity
- * @param param5 The action
- * @param seq1   The sequence name for the savepoint
- */
-IMPLEMENT_FUNCTION_SIIS(Tatiana, callSavepoint, 7)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_SIIS(7, Tatiana, callSavepoint, EntityIndex, ActionIndex)
 	Entity::callSavepoint(savepoint);
 }
 
-/**
- * Process callback action when the entity direction is not kDirectionRight
- */
-IMPLEMENT_FUNCTION(Tatiana, callbackActionOnDirection, 8)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(8, Tatiana, callbackActionOnDirection)
 	Entity::callbackActionOnDirection(savepoint);
 }
 
-/**
- * Updates parameter 2 using ticks value
- *
- * @param savepoint The savepoint
- *                    - number of ticks to add
- */
-IMPLEMENT_FUNCTION_NOSETUP(Tatiana, updateFromTicks, 9)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_NOSETUP(9, Tatiana, updateFromTicks)
 	Entity::updateFromTicks(savepoint);
 }
 
-/**
- * Updates parameter 2 using time value
- *
- * @param param1 The time to add
- */
-IMPLEMENT_FUNCTION_I(Tatiana, updateFromTime, 10)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_I(10, Tatiana, updateFromTime, uint32)
 	Entity::updateFromTime(savepoint);
 }
 
-/**
- * Process callback action when somebody is standing in the restaurant or salon.
- */
-IMPLEMENT_FUNCTION(Tatiana, callbackActionRestaurantOrSalon, 11)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(11, Tatiana, callbackActionRestaurantOrSalon)
 	Entity::callbackActionRestaurantOrSalon(savepoint);
 }
 
-/**
- * Save the game
- *
- * @param param1 The SavegameType for the savegame
- * @param param2 The EventIndex for the savegame
- */
-IMPLEMENT_FUNCTION_II(Tatiana, savegame, 12)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_II(12, Tatiana, savegame, SavegameType, uint32)
 	Entity::savegame(savepoint);
 }
 
-/**
- * Updates the entity
- *
- * @param param1 The car
- * @param param2 The entity position
- */
-IMPLEMENT_FUNCTION_II(Tatiana, updateEntity, 13)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_II(13, Tatiana, updateEntity, CarIndex, EntityPosition)
 	if (savepoint.action == kActionExcuseMeCath) {
 		if (getEvent(kEventTatianaAskMatchSpeakRussian) || getEvent(kEventTatianaAskMatch) || getEvent(kEventVassiliSeizure)) {
 			getSound()->playSound(kEntityPlayer, rnd(2) ? "CAT1010" : "CAT1010A");
@@ -230,7 +174,8 @@ IMPLEMENT_FUNCTION_II(Tatiana, updateEntity, 13)
 	Entity::updateEntity(savepoint, true);
 }
 
-IMPLEMENT_FUNCTION(Tatiana, function14, 14)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(14, Tatiana, function14)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -258,7 +203,8 @@ IMPLEMENT_FUNCTION(Tatiana, function14, 14)
 	}
 }
 
-IMPLEMENT_FUNCTION(Tatiana, function15, 15)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(15, Tatiana, function15)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -287,11 +233,13 @@ IMPLEMENT_FUNCTION(Tatiana, function15, 15)
 	}
 }
 
-IMPLEMENT_FUNCTION_I(Tatiana, function16, 16)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_I(16, Tatiana, function16, uint32)
 	error("Tatiana: callback function 16 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Tatiana, chapter1, 17)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(17, Tatiana, chapter1)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -314,11 +262,13 @@ IMPLEMENT_FUNCTION(Tatiana, chapter1, 17)
 	}
 }
 
-IMPLEMENT_FUNCTION(Tatiana, function18, 18)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(18, Tatiana, function18)
 	error("Tatiana: callback function 18 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Tatiana, chapter1Handler, 19)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(19, Tatiana, chapter1Handler)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -380,7 +330,8 @@ label_tatiana_chapter1_2:
 	}
 }
 
-IMPLEMENT_FUNCTION(Tatiana, function20, 20)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(20, Tatiana, function20)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -422,15 +373,18 @@ IMPLEMENT_FUNCTION(Tatiana, function20, 20)
 	}
 }
 
-IMPLEMENT_FUNCTION(Tatiana, function21, 21)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(21, Tatiana, function21)
 	error("Tatiana: callback function 21 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Tatiana, function22, 22)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(22, Tatiana, function22)
 	error("Tatiana: callback function 22 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Tatiana, function23, 23)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(23, Tatiana, function23)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -458,7 +412,8 @@ IMPLEMENT_FUNCTION(Tatiana, function23, 23)
 	}
 }
 
-IMPLEMENT_FUNCTION(Tatiana, function24, 24)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(24, Tatiana, function24)
 	if (savepoint.action == kActionDefault) {
 
 		getData()->entityPosition = kPosition_7500;
@@ -478,7 +433,8 @@ IMPLEMENT_FUNCTION(Tatiana, function24, 24)
 	}
 }
 
-IMPLEMENT_FUNCTION(Tatiana, chapter2, 25)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(25, Tatiana, chapter2)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -502,7 +458,8 @@ IMPLEMENT_FUNCTION(Tatiana, chapter2, 25)
 	}
 }
 
-IMPLEMENT_FUNCTION(Tatiana, chapter2Handler, 26)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(26, Tatiana, chapter2Handler)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -538,7 +495,8 @@ IMPLEMENT_FUNCTION(Tatiana, chapter2Handler, 26)
 	}
 }
 
-IMPLEMENT_FUNCTION(Tatiana, function27, 27)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(27, Tatiana, function27)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -577,7 +535,8 @@ IMPLEMENT_FUNCTION(Tatiana, function27, 27)
 	}
 }
 
-IMPLEMENT_FUNCTION(Tatiana, function28, 28)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(28, Tatiana, function28)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -609,7 +568,8 @@ IMPLEMENT_FUNCTION(Tatiana, function28, 28)
 	}
 }
 
-IMPLEMENT_FUNCTION(Tatiana, function29, 29)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(29, Tatiana, function29)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -652,7 +612,8 @@ IMPLEMENT_FUNCTION(Tatiana, function29, 29)
 	}
 }
 
-IMPLEMENT_FUNCTION(Tatiana, function30, 30)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(30, Tatiana, function30)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -681,7 +642,8 @@ IMPLEMENT_FUNCTION(Tatiana, function30, 30)
 	}
 }
 
-IMPLEMENT_FUNCTION(Tatiana, chapter3, 31)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(31, Tatiana, chapter3)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -712,11 +674,13 @@ IMPLEMENT_FUNCTION(Tatiana, chapter3, 31)
 	}
 }
 
-IMPLEMENT_FUNCTION(Tatiana, chapter3Handler, 32)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(32, Tatiana, chapter3Handler)
 	error("Tatiana: callback function 32 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Tatiana, function33, 33)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(33, Tatiana, function33)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -747,7 +711,8 @@ IMPLEMENT_FUNCTION(Tatiana, function33, 33)
 	}
 }
 
-IMPLEMENT_FUNCTION(Tatiana, function34, 34)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(34, Tatiana, function34)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -785,7 +750,8 @@ IMPLEMENT_FUNCTION(Tatiana, function34, 34)
 	}
 }
 
-IMPLEMENT_FUNCTION(Tatiana, function35, 35)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(35, Tatiana, function35)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -829,7 +795,8 @@ label_callback_1:
 	}
 }
 
-IMPLEMENT_FUNCTION(Tatiana, function36, 36)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(36, Tatiana, function36)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -874,15 +841,18 @@ IMPLEMENT_FUNCTION(Tatiana, function36, 36)
 	}
 }
 
-IMPLEMENT_FUNCTION(Tatiana, function37, 37)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(37, Tatiana, function37)
 	error("Tatiana: callback function 37 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Tatiana, function38, 38)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(38, Tatiana, function38)
 	error("Tatiana: callback function 38 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Tatiana, function39, 39)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(39, Tatiana, function39)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -901,7 +871,8 @@ IMPLEMENT_FUNCTION(Tatiana, function39, 39)
 	}
 }
 
-IMPLEMENT_FUNCTION(Tatiana, function40, 40)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(40, Tatiana, function40)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -927,17 +898,13 @@ IMPLEMENT_FUNCTION(Tatiana, function40, 40)
 	}
 }
 
-IMPLEMENT_FUNCTION(Tatiana, function41, 41)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(41, Tatiana, function41)
 	error("Tatiana: callback function 41 not implemented!");
 }
 
-/**
- * Updates the entity
- *
- * @param param1 The car
- * @param param2 The entity position
- */
-IMPLEMENT_FUNCTION(Tatiana, function42, 42)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(42, Tatiana, function42)
 	if (savepoint.action == kActionExcuseMeCath || savepoint.action == kActionExcuseMe) {
 		getSound()->playSound(kEntityPlayer, "Tat3124", getSound()->getSoundFlag(kEntityTatiana));
 		return;
@@ -946,7 +913,8 @@ IMPLEMENT_FUNCTION(Tatiana, function42, 42)
 	Entity::updateEntity(savepoint);
 }
 
-IMPLEMENT_FUNCTION(Tatiana, chapter4, 43)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(43, Tatiana, chapter4)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -972,7 +940,8 @@ IMPLEMENT_FUNCTION(Tatiana, chapter4, 43)
 	}
 }
 
-IMPLEMENT_FUNCTION(Tatiana, chapter4Handler, 44)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(44, Tatiana, chapter4Handler)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -989,7 +958,8 @@ IMPLEMENT_FUNCTION(Tatiana, chapter4Handler, 44)
 	}
 }
 
-IMPLEMENT_FUNCTION(Tatiana, function45, 45)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(45, Tatiana, function45)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -1028,11 +998,13 @@ IMPLEMENT_FUNCTION(Tatiana, function45, 45)
 	}
 }
 
-IMPLEMENT_FUNCTION(Tatiana, function46, 46)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(46, Tatiana, function46)
 	error("Tatiana: callback function 46 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Tatiana, function47, 47)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(47, Tatiana, function47)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -1074,11 +1046,13 @@ IMPLEMENT_FUNCTION(Tatiana, function47, 47)
 	}
 }
 
-IMPLEMENT_FUNCTION(Tatiana, function48, 48)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(48, Tatiana, function48)
 	error("Tatiana: callback function 48 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Tatiana, function49, 49)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(49, Tatiana, function49)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -1098,18 +1072,21 @@ IMPLEMENT_FUNCTION(Tatiana, function49, 49)
 	}
 }
 
-IMPLEMENT_FUNCTION(Tatiana, function50, 50)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(50, Tatiana, function50)
 	error("Tatiana: callback function 50 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Tatiana, function51, 51)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(51, Tatiana, function51)
 	if (savepoint.action == kActionDefault) {
 		getObjects()->update(kObjectCompartmentA, kEntityPlayer, kLocation1, kCursorNormal, kCursorNormal);
 		getObjects()->update(kObject48, kEntityPlayer, kLocation1, kCursorNormal, kCursorNormal);
 	}
 }
 
-IMPLEMENT_FUNCTION(Tatiana, chapter5, 52)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(52, Tatiana, chapter5)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -1130,16 +1107,19 @@ IMPLEMENT_FUNCTION(Tatiana, chapter5, 52)
 	}
 }
 
-IMPLEMENT_FUNCTION(Tatiana, chapter5Handler, 53)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(53, Tatiana, chapter5Handler)
 	if (savepoint.action == kActionProceedChapter5)
 		setup_function54();
 }
 
-IMPLEMENT_FUNCTION(Tatiana, function54, 54)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(54, Tatiana, function54)
 	error("Tatiana: callback function 54 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Tatiana, function55, 55)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(55, Tatiana, function55)
 	switch (savepoint.action) {
 	default:
 		break;

@@ -72,39 +72,23 @@ Servers1::Servers1(LastExpressEngine *engine) : Entity(engine, kEntityServers1) 
 	ADD_NULL_FUNCTION()
 }
 
-/**
- * Updates parameter 2 using time value
- *
- * @param param1 The time to add
- */
-IMPLEMENT_FUNCTION_NOSETUP(Servers1, updateFromTime, 1)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_NOSETUP(1, Servers1, updateFromTime)
 	Entity::updateFromTime(savepoint);
 }
 
-/**
- * Draws the entity
- *
- * @param seq1 The sequence to draw
- */
-IMPLEMENT_FUNCTION_S(Servers1, draw, 2)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_S(2, Servers1, draw)
 	Entity::draw(savepoint, true);
 }
 
-/**
- * Updates the position
- *
- * @param seq1   The sequence to draw
- * @param param4 The car
- * @param param5 The entity position
- */
-IMPLEMENT_FUNCTION_SIII(Servers1, updatePosition, 3)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_SII(3, Servers1, updatePosition, CarIndex, Position)
 	Entity::updatePosition(savepoint, true);
 }
 
-/**
- * Process callback action when the entity direction is not kDirectionRight
- */
-IMPLEMENT_FUNCTION(Servers1, callbackActionOnDirection, 4)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(4, Servers1, callbackActionOnDirection)
 	if (savepoint.action == kActionExcuseMeCath) {
 		if (!params->param1) {
 			getSound()->excuseMe(kEntityServers1);
@@ -115,28 +99,18 @@ IMPLEMENT_FUNCTION(Servers1, callbackActionOnDirection, 4)
 	Entity::callbackActionOnDirection(savepoint);
 }
 
-/**
- * Call a savepoint (or draw sequence in default case)
- *
- * @param seq1   The sequence to draw in the default case
- * @param param4 The entity
- * @param param5 The action
- * @param seq1   The sequence name for the savepoint
- */
-IMPLEMENT_FUNCTION_SIIS(Servers1, callSavepoint, 5)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_SIIS(5, Servers1, callSavepoint, EntityIndex, ActionIndex)
 	Entity::callSavepoint(savepoint, true);
 }
 
-/**
- * Plays sound
- *
- * @param param1 The sound filename
- */
-IMPLEMENT_FUNCTION_S(Servers1, playSound, 6)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_S(6, Servers1, playSound)
 	Entity::playSound(savepoint);
 }
 
-IMPLEMENT_FUNCTION(Servers1, function7, 7)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(7, Servers1, function7)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -178,7 +152,8 @@ IMPLEMENT_FUNCTION(Servers1, function7, 7)
 	}
 }
 
-IMPLEMENT_FUNCTION(Servers1, chapter1, 8)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(8, Servers1, chapter1)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -207,7 +182,8 @@ IMPLEMENT_FUNCTION(Servers1, chapter1, 8)
 	}
 }
 
-IMPLEMENT_FUNCTION(Servers1, function9, 9)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(9, Servers1, function9)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -252,7 +228,8 @@ IMPLEMENT_FUNCTION(Servers1, function9, 9)
 	}
 }
 
-IMPLEMENT_FUNCTION(Servers1, function10, 10)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(10, Servers1, function10)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -297,19 +274,23 @@ IMPLEMENT_FUNCTION(Servers1, function10, 10)
 	}
 }
 
-IMPLEMENT_FUNCTION(Servers1, function11, 11)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(11, Servers1, function11)
 	serveTable(savepoint, "919", kEntityTables1, "005H", "005J", "921", &ENTITY_PARAM(0, 3), 63);
 }
 
-IMPLEMENT_FUNCTION(Servers1, function12, 12)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(12, Servers1, function12)
 	serveTable(savepoint, "923", kEntityTables2, "009F", "009G", "926", &ENTITY_PARAM(0, 4));
 }
 
-IMPLEMENT_FUNCTION(Servers1, function13, 13)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(13, Servers1, function13)
 	serveTable(savepoint, "923", kEntityTables2, "009F", "009G", "926", &ENTITY_PARAM(0, 5));
 }
 
-IMPLEMENT_FUNCTION(Servers1, chapter1Handler, 14)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(14, Servers1, chapter1Handler)
 switch (savepoint.action) {
 	default:
 		break;
@@ -357,7 +338,8 @@ switch (savepoint.action) {
 	}
 }
 
-IMPLEMENT_FUNCTION(Servers1, function15, 15)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(15, Servers1, function15)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -372,7 +354,8 @@ IMPLEMENT_FUNCTION(Servers1, function15, 15)
 	}
 }
 
-IMPLEMENT_FUNCTION(Servers1, function16, 16)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(16, Servers1, function16)
 	if (savepoint.action == kActionDefault) {
 		getData()->entityPosition = kPosition_5900;
 		getData()->location = kLocationOutsideCompartment;
@@ -382,7 +365,8 @@ IMPLEMENT_FUNCTION(Servers1, function16, 16)
 	}
 }
 
-IMPLEMENT_FUNCTION(Servers1, chapter2, 17)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(17, Servers1, chapter2)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -407,7 +391,8 @@ IMPLEMENT_FUNCTION(Servers1, chapter2, 17)
 	}
 }
 
-IMPLEMENT_FUNCTION(Servers1, chapter2Handler, 18)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(18, Servers1, chapter2Handler)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -461,11 +446,13 @@ label_callback_2:
 	}
 }
 
-IMPLEMENT_FUNCTION(Servers1, function19, 19)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(19, Servers1, function19)
 	serveTable(savepoint, "969", kEntityTables1, "005H2", "018A", "971", &ENTITY_PARAM(0, 6), 63);
 }
 
-IMPLEMENT_FUNCTION(Servers1, function20, 20)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(20, Servers1, function20)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -490,11 +477,13 @@ IMPLEMENT_FUNCTION(Servers1, function20, 20)
 	}
 }
 
-IMPLEMENT_FUNCTION(Servers1, function21, 21)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(21, Servers1, function21)
 	serveTable(savepoint, "974", kEntityTables2, "009F2", "009G", "976", &ENTITY_PARAM(0, 8), 0, true, &ENTITY_PARAM(0, 5));
 }
 
-IMPLEMENT_FUNCTION(Servers1, chapter3, 22)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(22, Servers1, chapter3)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -518,7 +507,8 @@ IMPLEMENT_FUNCTION(Servers1, chapter3, 22)
 	}
 }
 
-IMPLEMENT_FUNCTION(Servers1, chapter3Handler, 23)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(23, Servers1, chapter3Handler)
 	if (savepoint.action != kActionNone)
 		return;
 
@@ -537,11 +527,13 @@ IMPLEMENT_FUNCTION(Servers1, chapter3Handler, 23)
 	}
 }
 
-IMPLEMENT_FUNCTION(Servers1, function24, 24)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(24, Servers1, function24)
 	serveSalon(savepoint, "927", "Ann3143A", kEntityAnna, "Ann31444", "112C", kAction122288808, "928", &ENTITY_PARAM(1, 1));
 }
 
-IMPLEMENT_FUNCTION(Servers1, chapter4, 25)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(25, Servers1, chapter4)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -568,7 +560,8 @@ IMPLEMENT_FUNCTION(Servers1, chapter4, 25)
 	}
 }
 
-IMPLEMENT_FUNCTION(Servers1, chapter4Handler, 26)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(26, Servers1, chapter4Handler)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -620,19 +613,23 @@ label_continue:
 	}
 }
 
-IMPLEMENT_FUNCTION(Servers1, function27, 27)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(27, Servers1, function27)
 	serveSalon(savepoint, "929", "", kEntityAugust, "Aug4003", "122D", kAction134486752, "930", &ENTITY_PARAM(1, 3));
 }
 
-IMPLEMENT_FUNCTION(Servers1, function28, 28)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(28, Servers1, function28)
 	serveSalon(savepoint, "931", "", kEntityAugust, "Aug4004", "122E", kAction125826561, "930", &ENTITY_PARAM(1, 5));
 }
 
-IMPLEMENT_FUNCTION(Servers1, function29, 29)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(29, Servers1, function29)
 	serveSalon(savepoint, "932", "", kEntityAnna, "Ann4151", "127D", kAction122288808, "930", &ENTITY_PARAM(1, 4));
 }
 
-IMPLEMENT_FUNCTION(Servers1, chapter5, 30)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(30, Servers1, chapter5)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -652,13 +649,19 @@ IMPLEMENT_FUNCTION(Servers1, chapter5, 30)
 	}
 }
 
-IMPLEMENT_FUNCTION(Servers1, chapter5Handler, 31)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(31, Servers1, chapter5Handler)
 	if (savepoint.action == kActionProceedChapter5)
 		setup_nullfunction();
 }
 
-IMPLEMENT_NULL_FUNCTION(Servers1, 32)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_NULL_FUNCTION(32, Servers1)
 
+
+//////////////////////////////////////////////////////////////////////////
+// Private functions
+//////////////////////////////////////////////////////////////////////////
 void Servers1::serveTable(const SavePoint &savepoint, const char* seq1, EntityIndex entity, const char* seq2, const char* seq3, const char* seq4, uint *parameter, Position position, bool shouldUpdatePosition, uint* parameter2) {
 	switch (savepoint.action) {
 	default:
@@ -712,6 +715,7 @@ void Servers1::serveTable(const SavePoint &savepoint, const char* seq1, EntityIn
 	}
 }
 
+//////////////////////////////////////////////////////////////////////////
 void Servers1::serveSalon(const SavePoint &savepoint, const char* seq1, const char* snd1, EntityIndex entity, const char* snd2, const char* seq2, ActionIndex action, const char* seq3, uint *parameter) {
 	switch (savepoint.action) {
 	default:

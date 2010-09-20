@@ -38,27 +38,96 @@ public:
 	Alouan(LastExpressEngine *engine);
 	~Alouan() {};
 
-	// Setup
+	/**
+	 * Resets the entity
+	 */
 	DECLARE_FUNCTION(reset)
-	DECLARE_FUNCTION_SI(enterExitCompartment)
-	DECLARE_FUNCTION_S(playSound)
-	DECLARE_FUNCTION_I(updateFromTime)
-	DECLARE_FUNCTION_II(updateEntity)
+
+	/**
+	 * Handles entering/exiting a compartment.
+	 *
+	 * @param sequence    The sequence to draw
+	 * @param compartment The compartment
+	 */
+	DECLARE_FUNCTION(enterExitCompartment, const char* sequence, ObjectIndex compartment)
+
+	/**
+	 * Plays sound
+	 *
+	 * @param filename The sound filename
+	 */
+	DECLARE_FUNCTION(playSound, const char* filename)
+
+	/**
+	 * Updates parameter 2 using time value
+	 *
+	 * @param time The time to add
+	 */
+	DECLARE_FUNCTION(updateFromTime, uint32 time)
+
+	/**
+	 * Updates the entity
+	 *
+	 * @param index          The car
+	 * @param entityPosition The entity position
+	 */
+	DECLARE_FUNCTION(updateEntity, CarIndex index, EntityPosition entityPosition)
+
 	DECLARE_FUNCTION(compartment6)
 	DECLARE_FUNCTION(compartment8)
 	DECLARE_FUNCTION(compartment6to8)
 	DECLARE_FUNCTION(compartment8to6)
+
+	/**
+	 * Setup Chapter 1
+	 */
 	DECLARE_FUNCTION(chapter1)
+
+	/**
+	 * Handle Chapter 1 events
+	 */
 	DECLARE_FUNCTION(chapter1Handler)
 	DECLARE_FUNCTION(function12)
+
+	/**
+	 * Setup Chapter 2
+	 */
 	DECLARE_FUNCTION(chapter2)
+
+	/**
+	 * Handle Chapter 2 events
+	 */
 	DECLARE_FUNCTION(chapter2Handler)
+
+	/**
+	 * Setup Chapter 3
+	 */
 	DECLARE_FUNCTION(chapter3)
+
+	/**
+	 * Handle Chapter 3 events
+	 */
 	DECLARE_FUNCTION(chapter3Handler)
+
+	/**
+	 * Setup Chapter 4
+	 */
 	DECLARE_FUNCTION(chapter4)
+
+	/**
+	 * Handle Chapter 4 events
+	 */
 	DECLARE_FUNCTION(chapter4Handler)
 	DECLARE_FUNCTION(function19)
+
+	/**
+	 * Setup Chapter 5
+	 */
 	DECLARE_FUNCTION(chapter5)
+
+	/**
+	 * Handle Chapter 5 events
+	 */
 	DECLARE_FUNCTION(chapter5Handler)
 	DECLARE_FUNCTION(function22)
 	DECLARE_FUNCTION(function23)

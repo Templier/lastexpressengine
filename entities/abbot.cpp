@@ -98,104 +98,58 @@ Abbot::Abbot(LastExpressEngine *engine) : Entity(engine, kEntityAbbot) {
 	ADD_CALLBACK_FUNCTION(Abbot, function53);
 }
 
-/**
- * Resets the entity
- */
-IMPLEMENT_FUNCTION(Abbot, reset, 1)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(1, Abbot, reset)
 	Entity::reset(savepoint);
 }
 
-/**
- * Draws the entity
- *
- * @param seq1 The sequence to draw
- */
-IMPLEMENT_FUNCTION_S(Abbot, draw, 2)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_S(2, Abbot, draw)
 	Entity::draw(savepoint);
 }
 
-/**
- * Handles entering/exiting a compartment.
- *
- * @param seq1   The sequence to draw
- * @param param4 The compartment
- */
-IMPLEMENT_FUNCTION_SI(Abbot, enterExitCompartment, 3)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_SI(3, Abbot, enterExitCompartment, ObjectIndex)
 	Entity::enterExitCompartment(savepoint);
 }
 
-/**
- * Handles entering/exiting a compartment and updates position/play animation
- *
- * @param seq1   The sequence to draw
- * @param param4 The compartment
- */
-IMPLEMENT_FUNCTION_SI(Abbot, enterExitCompartment2, 4)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_SI(4, Abbot, enterExitCompartment2, ObjectIndex)
 	Entity::enterExitCompartment(savepoint, kPosition_6470, kPosition_6130, kCarRedSleeping, kObjectCompartmentC, true, true);
 }
 
-/**
- * Process callback action when the entity direction is not kDirectionRight
- */
-IMPLEMENT_FUNCTION(Abbot, callbackActionOnDirection, 5)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(5, Abbot, callbackActionOnDirection)
 	Entity::callbackActionOnDirection(savepoint);
 }
 
-/**
- * Draws the entity along with another one
- *
- * @param seq1   The sequence to draw
- * @param seq2   The sequence to draw for the second entity
- * @param param7 The EntityIndex of the second entity
- */
-IMPLEMENT_FUNCTION_SSI(Abbot, draw2, 6)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_SSI(6, Abbot, draw2, EntityIndex)
 	Entity::draw2(savepoint);
 }
 
-/**
- * Updates parameter 2 using time value
- *
- * @param param1 The time to add
- */
-IMPLEMENT_FUNCTION_I(Abbot, updateFromTime, 7)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_I(7, Abbot, updateFromTime, uint32)
 	Entity::updateFromTime(savepoint);
 }
 
-/**
- * Updates parameter 2 using ticks value
- *
- * @param param1 The number of ticks to add
- */
-IMPLEMENT_FUNCTION_I(Abbot, updateFromTicks, 8)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_I(8, Abbot, updateFromTicks, uint32)
 	Entity::updateFromTicks(savepoint);
 }
 
-/**
- * Plays sound
- *
- * @param param1 The sound filename
- */
-IMPLEMENT_FUNCTION_S(Abbot, playSound, 9)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_S(9, Abbot, playSound)
 	Entity::playSound(savepoint);
 }
 
-/**
- * Save the game
- *
- * @param param1 The SavegameType for the savegame
- * @param param2 The EventIndex for the savegame
- */
-IMPLEMENT_FUNCTION_II(Abbot, savegame, 10)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_II(10, Abbot, savegame, SavegameType, uint32)
 	Entity::savegame(savepoint);
 }
 
-/**
- * Updates the entity
- *
- * @param param1 The car
- * @param param2 The entity position
- */
-IMPLEMENT_FUNCTION_II(Abbot, updateEntity, 11)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_II(11, Abbot, updateEntity, CarIndex, EntityPosition)
 	if (savepoint.action == kActionExcuseMeCath) {
 		if (getEntities()->isPlayerPosition(kCarGreenSleeping, 18) || getEntities()->isPlayerPosition(kCarRedSleeping, 18)) {
 			getSound()->excuseMe(kEntityAbbot);
@@ -211,47 +165,35 @@ IMPLEMENT_FUNCTION_II(Abbot, updateEntity, 11)
 	Entity::updateEntity(savepoint, true);
 }
 
-/**
- * Call a savepoint (or draw sequence in default case)
- *
- * @param seq1   The sequence to draw in the default case
- * @param param4 The entity
- * @param param5 The action
- * @param seq1   The sequence name for the savepoint
- */
-IMPLEMENT_FUNCTION_SIIS(Abbot, callSavepoint, 12)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_SIIS(12, Abbot, callSavepoint, EntityIndex, ActionIndex)
 	Entity::callSavepoint(savepoint);
 }
 
-/**
- * Updates the position
- *
- * @param seq1   The sequence to draw
- * @param param4 The car
- * @param param5 The entity position
- */
-IMPLEMENT_FUNCTION_SII(Abbot, updatePosition, 13)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_SII(13, Abbot, updatePosition, CarIndex, Position)
 	Entity::updatePosition(savepoint);
 }
 
-/**
- * Process callback action when somebody is standing in the restaurant or salon.
- */
-IMPLEMENT_FUNCTION(Abbot, callbackActionRestaurantOrSalon, 14)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(14, Abbot, callbackActionRestaurantOrSalon)
 	Entity::callbackActionRestaurantOrSalon(savepoint);
 }
 
-IMPLEMENT_FUNCTION(Abbot, chapter1, 15)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(15, Abbot, chapter1)
 	if (savepoint.action == kActionDefault)
 		getSavePoints()->addData(kEntityAbbot, kAction203073664, 0);
 }
 
-IMPLEMENT_FUNCTION(Abbot, chapter2, 16)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(16, Abbot, chapter2)
 	if (savepoint.action == kActionDefault)
 		getEntities()->clearSequences(kEntityAbbot);
 }
 
-IMPLEMENT_FUNCTION(Abbot, chapter3, 17)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(17, Abbot, chapter3)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -273,7 +215,8 @@ IMPLEMENT_FUNCTION(Abbot, chapter3, 17)
 	}
 }
 
-IMPLEMENT_FUNCTION(Abbot, chapter3Handler, 18)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(18, Abbot, chapter3Handler)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -331,7 +274,8 @@ IMPLEMENT_FUNCTION(Abbot, chapter3Handler, 18)
 	}
 }
 
-IMPLEMENT_FUNCTION(Abbot, function19, 19)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(19, Abbot, function19)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -376,7 +320,8 @@ IMPLEMENT_FUNCTION(Abbot, function19, 19)
 	}
 }
 
-IMPLEMENT_FUNCTION(Abbot, function20, 20)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(20, Abbot, function20)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -392,7 +337,8 @@ IMPLEMENT_FUNCTION(Abbot, function20, 20)
 	}
 }
 
-IMPLEMENT_FUNCTION(Abbot, function21, 21)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(21, Abbot, function21)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -465,7 +411,8 @@ IMPLEMENT_FUNCTION(Abbot, function21, 21)
 	}
 }
 
-IMPLEMENT_FUNCTION(Abbot, function22, 22)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(22, Abbot, function22)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -511,7 +458,8 @@ IMPLEMENT_FUNCTION(Abbot, function22, 22)
 	}
 }
 
-IMPLEMENT_FUNCTION(Abbot, function23, 23)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(23, Abbot, function23)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -562,7 +510,8 @@ IMPLEMENT_FUNCTION(Abbot, function23, 23)
 	}
 }
 
-IMPLEMENT_FUNCTION(Abbot, function24, 24)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(24, Abbot, function24)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -613,7 +562,8 @@ IMPLEMENT_FUNCTION(Abbot, function24, 24)
 	}
 }
 
-IMPLEMENT_FUNCTION(Abbot, function25, 25)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(25, Abbot, function25)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -647,7 +597,7 @@ IMPLEMENT_FUNCTION(Abbot, function25, 25)
 			getData()->location = kLocationOutsideCompartment;
 
 			setCallback(4);
-			setup_updatePosition("115A", 5, 56);
+			setup_updatePosition("115A", kCarRestaurant, 56);
 			break;
 
 		case 4:
@@ -661,7 +611,8 @@ IMPLEMENT_FUNCTION(Abbot, function25, 25)
 	}
 }
 
-IMPLEMENT_FUNCTION(Abbot, function26, 26)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(26, Abbot, function26)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -685,7 +636,8 @@ IMPLEMENT_FUNCTION(Abbot, function26, 26)
 	}
 }
 
-IMPLEMENT_FUNCTION(Abbot, function27, 27)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(27, Abbot, function27)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -704,7 +656,7 @@ IMPLEMENT_FUNCTION(Abbot, function27, 27)
 			getData()->location = kLocationOutsideCompartment;
 
 			setCallback(2);
-			setup_updatePosition("115C", 5, 56);
+			setup_updatePosition("115C", kCarRestaurant, 56);
 			break;
 
 		case 2:
@@ -733,7 +685,8 @@ IMPLEMENT_FUNCTION(Abbot, function27, 27)
 	}
 }
 
-IMPLEMENT_FUNCTION(Abbot, function28, 28)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(28, Abbot, function28)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -760,7 +713,8 @@ IMPLEMENT_FUNCTION(Abbot, function28, 28)
 	}
 }
 
-IMPLEMENT_FUNCTION(Abbot, function29, 29)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(29, Abbot, function29)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -824,7 +778,8 @@ IMPLEMENT_FUNCTION(Abbot, function29, 29)
 	}
 }
 
-IMPLEMENT_FUNCTION(Abbot, function30, 30)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(30, Abbot, function30)
 switch (savepoint.action) {
 	default:
 		break;
@@ -865,7 +820,7 @@ switch (savepoint.action) {
 			getData()->location = kLocationOutsideCompartment;
 
 			setCallback(5);
-			setup_updatePosition("115A", 5, 56);
+			setup_updatePosition("115A", kCarRestaurant, 56);
 			break;
 
 		case 5:
@@ -879,11 +834,13 @@ switch (savepoint.action) {
 	}
 }
 
-IMPLEMENT_FUNCTION(Abbot, function31, 31)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(31, Abbot, function31)
 	error("Abbot: callback function 31 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Abbot, function32, 32)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(32, Abbot, function32)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -918,7 +875,8 @@ IMPLEMENT_FUNCTION(Abbot, function32, 32)
 	}
 }
 
-IMPLEMENT_FUNCTION(Abbot, function33, 33)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(33, Abbot, function33)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -955,7 +913,8 @@ IMPLEMENT_FUNCTION(Abbot, function33, 33)
 	}
 }
 
-IMPLEMENT_FUNCTION(Abbot, function34, 34)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(34, Abbot, function34)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -1010,7 +969,8 @@ IMPLEMENT_FUNCTION(Abbot, function34, 34)
 }
 }
 
-IMPLEMENT_FUNCTION(Abbot, function35, 35)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(35, Abbot, function35)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -1071,11 +1031,13 @@ IMPLEMENT_FUNCTION(Abbot, function35, 35)
 	}
 }
 
-IMPLEMENT_FUNCTION(Abbot, function36, 36)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(36, Abbot, function36)
 	error("Abbot: callback function 36 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Abbot, function37, 37)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(37, Abbot, function37)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -1110,7 +1072,8 @@ IMPLEMENT_FUNCTION(Abbot, function37, 37)
 	}
 }
 
-IMPLEMENT_FUNCTION(Abbot, function38, 38)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(38, Abbot, function38)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -1129,7 +1092,8 @@ IMPLEMENT_FUNCTION(Abbot, function38, 38)
 	}
 }
 
-IMPLEMENT_FUNCTION(Abbot, chapter4, 39)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(39, Abbot, chapter4)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -1151,14 +1115,12 @@ IMPLEMENT_FUNCTION(Abbot, chapter4, 39)
 }
 
 //////////////////////////////////////////////////////////////////////////
-// Parameters
-//  - CarIndex
-//  - EntityPosition
-IMPLEMENT_FUNCTION_II(Abbot, function40, 40)
+IMPLEMENT_FUNCTION_II(40, Abbot, function40, CarIndex, EntityPosition)
 	error("Abbot: callback function 40 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Abbot, chapter4Handler, 41)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(41, Abbot, chapter4Handler)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -1187,7 +1149,8 @@ IMPLEMENT_FUNCTION(Abbot, chapter4Handler, 41)
 	}
 }
 
-IMPLEMENT_FUNCTION(Abbot, function42, 42)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(42, Abbot, function42)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -1238,11 +1201,13 @@ IMPLEMENT_FUNCTION(Abbot, function42, 42)
 	}
 }
 
-IMPLEMENT_FUNCTION(Abbot, function43, 43)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(43, Abbot, function43)
 	error("Abbot: callback function 43 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Abbot, function44, 44)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(44, Abbot, function44)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -1264,7 +1229,8 @@ IMPLEMENT_FUNCTION(Abbot, function44, 44)
 	}
 }
 
-IMPLEMENT_FUNCTION(Abbot, function45, 45)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(45, Abbot, function45)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -1290,7 +1256,7 @@ IMPLEMENT_FUNCTION(Abbot, function45, 45)
 
 		case 1:
 			setCallback(2);
-			setup_enterExitCompartment("617Kc");
+			setup_enterExitCompartment("617Kc", kObjectCompartmentC);
 			break;
 
 		case 2:
@@ -1304,7 +1270,8 @@ IMPLEMENT_FUNCTION(Abbot, function45, 45)
 	}
 }
 
-IMPLEMENT_FUNCTION(Abbot, function46, 46)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(46, Abbot, function46)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -1323,7 +1290,8 @@ IMPLEMENT_FUNCTION(Abbot, function46, 46)
 	}
 }
 
-IMPLEMENT_FUNCTION(Abbot, drinkAfterDefuse, 47)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(47, Abbot, drinkAfterDefuse)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -1366,15 +1334,18 @@ IMPLEMENT_FUNCTION(Abbot, drinkAfterDefuse, 47)
 	}
 }
 
-IMPLEMENT_FUNCTION(Abbot, function48, 48)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(48, Abbot, function48)
 	error("Abbot: callback function 48 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Abbot, pickBomb, 49)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(49, Abbot, pickBomb)
 	error("Abbot::pickBomb: callback 49 function not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Abbot, chapter5, 50)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(50, Abbot, chapter5)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -1395,12 +1366,14 @@ IMPLEMENT_FUNCTION(Abbot, chapter5, 50)
 	}
 }
 
-IMPLEMENT_FUNCTION(Abbot, chapter5Handler, 51)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(51, Abbot, chapter5Handler)
 	if (savepoint.action == kActionProceedChapter5)
 		setup_function52();
 }
 
-IMPLEMENT_FUNCTION(Abbot, function52, 52)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(52, Abbot, function52)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -1419,7 +1392,8 @@ IMPLEMENT_FUNCTION(Abbot, function52, 52)
 	}
 }
 
-IMPLEMENT_FUNCTION(Abbot, function53, 53)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(53, Abbot, function53)
 	switch (savepoint.action) {
 	default:
 		break;

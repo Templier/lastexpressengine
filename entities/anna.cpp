@@ -125,95 +125,53 @@ Anna::Anna(LastExpressEngine *engine) : Entity(engine, kEntityAnna) {
 	ADD_CALLBACK_FUNCTION(Anna, finalSequence);
 }
 
-/**
- * Resets the entity
- */
-IMPLEMENT_FUNCTION(Anna, reset, 1)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(1, Anna, reset)
 	Entity::reset(savepoint, true, true);
 }
 
-/**
- * Draws the entity
- *
- * @param seq1 The sequence to draw
- */
-IMPLEMENT_FUNCTION_S(Anna, draw, 2)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_S(2, Anna, draw)
 	Entity::draw(savepoint);
 }
 
-/**
- * Updates the position
- *
- * @param seq1   The sequence to draw
- * @param param4 The car
- * @param param5 The entity position
- */
-IMPLEMENT_FUNCTION_SII(Anna, updatePosition, 3)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_SII(3, Anna, updatePosition, CarIndex, Position)
 	Entity::updatePosition(savepoint);
 }
 
-/**
- * Handles entering/exiting a compartment.
- *
- * @param seq1   The sequence to draw
- * @param param4 The compartment
- */
-IMPLEMENT_FUNCTION_SI(Anna, enterExitCompartment, 4)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_SI(4, Anna, enterExitCompartment, ObjectIndex)
 	Entity::enterExitCompartment(savepoint);
 }
 
-/**
- * Process callback action when the entity direction is not kDirectionRight
- */
-IMPLEMENT_FUNCTION(Anna, callbackActionOnDirection, 5)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(5, Anna, callbackActionOnDirection)
 	Entity::callbackActionOnDirection(savepoint);
 }
 
-/**
- * Call a savepoint (or draw sequence in default case)
- *
- * @param seq1   The sequence to draw in the default case
- * @param param4 The entity
- * @param param5 The action
- * @param seq1   The sequence name for the savepoint
- */
-IMPLEMENT_FUNCTION_SIIS(Anna, callSavepoint, 6)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_SIIS(6, Anna, callSavepoint, EntityIndex, ActionIndex)
 	Entity::callSavepoint(savepoint);
 }
 
-/**
- * Plays sound
- *
- * @param param1 The sound filename
- */
-IMPLEMENT_FUNCTION_S(Anna, playSound, 7)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_S(7, Anna, playSound)
 	Entity::playSound(savepoint);
 }
 
-/**
- * Process callback action when somebody is standing in the restaurant or salon.
- */
-IMPLEMENT_FUNCTION(Anna, callbackActionRestaurantOrSalon, 8)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(8, Anna, callbackActionRestaurantOrSalon)
 	Entity::callbackActionRestaurantOrSalon(savepoint);
 }
 
-/**
- * Save the game
- *
- * @param param1 The SavegameType for the savegame
- * @param param2 The EventIndex for the savegame
- */
-IMPLEMENT_FUNCTION_II(Anna, savegame, 9)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_II(9, Anna, savegame, SavegameType, uint32)
 	Entity::savegame(savepoint);
 }
 
-/**
- * Updates the entity
- *
- * @param param1 The car
- * @param param2 The entity position
- */
-IMPLEMENT_FUNCTION_II(Anna, updateEntity, 10)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_II(10, Anna, updateEntity, CarIndex, EntityPosition)
 	if (savepoint.action == kActionExcuseMeCath) {
 		if (getEvent(kEventAugustPresentAnna) || getEvent(kEventAugustPresentAnnaFirstIntroduction) || getProgress().chapter >= kChapter2)
 			getSound()->playSound(kEntityPlayer, "CAT1001");
@@ -226,16 +184,13 @@ IMPLEMENT_FUNCTION_II(Anna, updateEntity, 10)
 	Entity::updateEntity(savepoint, true);
 }
 
-/**
- * Updates parameter 2 using time value
- *
- * @param param1 The time to add
- */
-IMPLEMENT_FUNCTION_I(Anna, updateFromTime, 11)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_I(11, Anna, updateFromTime, uint32)
 	Entity::updateFromTime(savepoint);
 }
 
-IMPLEMENT_FUNCTION(Anna, function12, 12)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(12, Anna, function12)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -449,31 +404,18 @@ IMPLEMENT_FUNCTION(Anna, function12, 12)
 	}
 }
 
-/**
- * Draws the entity along with another one
- *
- * @param seq1   The sequence to draw
- * @param seq2   The sequence to draw for the second entity
- * @param param7 The EntityIndex of the second entity
- */
-IMPLEMENT_FUNCTION_SSI(Anna, draw2, 13)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_SSI(13, Anna, draw2, EntityIndex)
 	Entity::draw2(savepoint);
 }
 
-/**
- * Updates parameter 2 using ticks value
- *
- * @param param1 The number of ticks to add
- */
-IMPLEMENT_FUNCTION_I(Anna, updateFromTicks, 14)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_I(14, Anna, updateFromTicks, uint32)
 	Entity::updateFromTicks(savepoint);
 }
 
 //////////////////////////////////////////////////////////////////////////
-// Parameters
-//  - time
-//  - sequence
-IMPLEMENT_FUNCTION_IS(Anna, function15, 15)
+IMPLEMENT_FUNCTION_IS(15, Anna, function15, TimeValue)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -601,7 +543,8 @@ IMPLEMENT_FUNCTION_IS(Anna, function15, 15)
 	}
 }
 
-IMPLEMENT_FUNCTION(Anna, chapter1, 16)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(16, Anna, chapter1)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -626,7 +569,8 @@ IMPLEMENT_FUNCTION(Anna, chapter1, 16)
 	}
 }
 
-IMPLEMENT_FUNCTION_II(Anna, function17, 17)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_II(17, Anna, function17, uint32, uint32)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -714,7 +658,8 @@ IMPLEMENT_FUNCTION_II(Anna, function17, 17)
 	}
 }
 
-IMPLEMENT_FUNCTION_I(Anna, function18, 18)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_I(18, Anna, function18, TimeValue)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -821,7 +766,8 @@ label_next:
 	}
 }
 
-IMPLEMENT_FUNCTION(Anna, chapter1Handler, 19)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(19, Anna, chapter1Handler)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -861,7 +807,8 @@ IMPLEMENT_FUNCTION(Anna, chapter1Handler, 19)
 	}
 }
 
-IMPLEMENT_FUNCTION(Anna, function20, 20)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(20, Anna, function20)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -891,7 +838,8 @@ IMPLEMENT_FUNCTION(Anna, function20, 20)
 	}
 }
 
-IMPLEMENT_FUNCTION(Anna, function21, 21)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(21, Anna, function21)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -936,7 +884,8 @@ IMPLEMENT_FUNCTION(Anna, function21, 21)
 	}
 }
 
-IMPLEMENT_FUNCTION(Anna, function22, 22)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(22, Anna, function22)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -953,7 +902,8 @@ IMPLEMENT_FUNCTION(Anna, function22, 22)
 	}
 }
 
-IMPLEMENT_FUNCTION(Anna, function23, 23)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(23, Anna, function23)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -964,7 +914,7 @@ IMPLEMENT_FUNCTION(Anna, function23, 23)
 		getSavePoints()->push(kEntityAnna, kEntityTables0, kAction136455232);
 
 		setCallback(1);
-		setup_function18(false);
+		setup_function18(kTimeNone);
 		break;
 
 	case kActionCallback:
@@ -992,7 +942,8 @@ IMPLEMENT_FUNCTION(Anna, function23, 23)
 	}
 }
 
-IMPLEMENT_FUNCTION(Anna, function24, 24)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(24, Anna, function24)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -1001,7 +952,7 @@ IMPLEMENT_FUNCTION(Anna, function24, 24)
 		getEntities()->drawSequenceLeft(kEntityAnna, "001G");
 
 		setCallback(1);
-		setup_function18();
+		setup_function18(kTimeNone);
 		break;
 
 	case kActionCallback:
@@ -1024,7 +975,8 @@ IMPLEMENT_FUNCTION(Anna, function24, 24)
 	}
 }
 
-IMPLEMENT_FUNCTION(Anna, function25, 25)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(25, Anna, function25)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -1034,7 +986,7 @@ IMPLEMENT_FUNCTION(Anna, function25, 25)
 		getProgress().field_28 = 1;
 
 		setCallback(1);
-		setup_function18(0);
+		setup_function18(kTimeNone);
 		break;
 
 	case kActionCallback:
@@ -1064,7 +1016,8 @@ IMPLEMENT_FUNCTION(Anna, function25, 25)
 	}
 }
 
-IMPLEMENT_FUNCTION(Anna, function26, 26)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(26, Anna, function26)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -1116,7 +1069,8 @@ IMPLEMENT_FUNCTION(Anna, function26, 26)
 	}
 }
 
-IMPLEMENT_FUNCTION(Anna, function27, 27)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(27, Anna, function27)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -1137,7 +1091,7 @@ IMPLEMENT_FUNCTION(Anna, function27, 27)
 			if (getProgress().field_14 == 29) {
 				params->param1 = getState()->time + 900;
 				setCallback(2);
-				setup_function15(params->param1, "NONE");
+				setup_function15((TimeValue)params->param1, "NONE");
 			} else {
 				setCallback(3);
 				setup_enterExitCompartment("618Bf", kObjectCompartmentF);
@@ -1154,7 +1108,8 @@ IMPLEMENT_FUNCTION(Anna, function27, 27)
 	}
 }
 
-IMPLEMENT_FUNCTION(Anna, function28, 28)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(28, Anna, function28)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -1192,11 +1147,13 @@ IMPLEMENT_FUNCTION(Anna, function28, 28)
 	}
 }
 
-IMPLEMENT_FUNCTION(Anna, function29, 29)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(29, Anna, function29)
 	error("Anna: callback function 29 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Anna, function30, 30)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(30, Anna, function30)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -1258,7 +1215,8 @@ IMPLEMENT_FUNCTION(Anna, function30, 30)
 	}
 }
 
-IMPLEMENT_FUNCTION(Anna, function31, 31)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(31, Anna, function31)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -1300,7 +1258,8 @@ IMPLEMENT_FUNCTION(Anna, function31, 31)
 	}
 }
 
-IMPLEMENT_FUNCTION(Anna, function32, 32)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(32, Anna, function32)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -1330,7 +1289,8 @@ IMPLEMENT_FUNCTION(Anna, function32, 32)
 	}
 }
 
-IMPLEMENT_FUNCTION(Anna, function33, 33)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(33, Anna, function33)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -1340,7 +1300,7 @@ IMPLEMENT_FUNCTION(Anna, function33, 33)
 
 		params->param1 = getState()->time + 4500;
 		setCallback(1);
-		setup_function15(params->param1, "NONE");
+		setup_function15((TimeValue)params->param1, "NONE");
 		break;
 
 	case kActionCallback:
@@ -1352,15 +1312,18 @@ IMPLEMENT_FUNCTION(Anna, function33, 33)
 	}
 }
 
-IMPLEMENT_FUNCTION(Anna, function34, 34)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(34, Anna, function34)
 	error("Anna: callback function 34 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Anna, function35, 35)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(35, Anna, function35)
 	error("Anna: callback function 35 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Anna, function36, 36)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(36, Anna, function36)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -1396,7 +1359,8 @@ IMPLEMENT_FUNCTION(Anna, function36, 36)
 	}
 }
 
-IMPLEMENT_FUNCTION(Anna, function37, 37)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(37, Anna, function37)
   switch (savepoint.action) {
   default:
 	break;
@@ -1413,7 +1377,8 @@ IMPLEMENT_FUNCTION(Anna, function37, 37)
   }
 }
 
-IMPLEMENT_FUNCTION(Anna, function38, 38)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(38, Anna, function38)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -1434,19 +1399,23 @@ IMPLEMENT_FUNCTION(Anna, function38, 38)
 	}
 }
 
-IMPLEMENT_FUNCTION_II(Anna, function39, 39)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_II(39, Anna, function39, CarIndex, EntityPosition)
 	error("Anna: callback function 39 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Anna, function40, 40)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(40, Anna, function40)
 	error("Anna: callback function 40 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Anna, function41, 41)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(41, Anna, function41)
 	error("Anna: callback function 41 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Anna, chapter2, 42)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(42, Anna, chapter2)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -1468,7 +1437,8 @@ IMPLEMENT_FUNCTION(Anna, chapter2, 42)
 	}
 }
 
-IMPLEMENT_FUNCTION(Anna, chapter2Handler, 43)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(43 ,Anna, chapter2Handler)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -1514,7 +1484,8 @@ IMPLEMENT_FUNCTION(Anna, chapter2Handler, 43)
 	}
 }
 
-IMPLEMENT_FUNCTION(Anna, chapter3, 44)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(44, Anna, chapter3)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -1539,7 +1510,8 @@ IMPLEMENT_FUNCTION(Anna, chapter3, 44)
 	}
 }
 
-IMPLEMENT_FUNCTION_I(Anna, function45, 45)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_I(45, Anna, function45, bool)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -1577,7 +1549,8 @@ IMPLEMENT_FUNCTION_I(Anna, function45, 45)
 	}
 }
 
-IMPLEMENT_FUNCTION(Anna, chapter3Handler, 46)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(46, Anna, chapter3Handler)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -1596,22 +1569,25 @@ IMPLEMENT_FUNCTION(Anna, chapter3Handler, 46)
 				setup_function47();
 			} else {
 				setCallback(2);
-				setup_function15(getState()->time + 4500, "418C");
+				setup_function15((TimeValue)(getState()->time + 4500), "418C");
 			}
 		}
 		break;
 	}
 }
 
-IMPLEMENT_FUNCTION(Anna, function47, 47)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(47, Anna, function47)
 	error("Anna: callback function 47 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Anna, function48, 48)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(48, Anna, function48)
 	error("Anna: callback function 48 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Anna, leaveTableWithAugust, 49)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(49, Anna, leaveTableWithAugust)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -1631,7 +1607,8 @@ IMPLEMENT_FUNCTION(Anna, leaveTableWithAugust, 49)
 	}
 }
 
-IMPLEMENT_FUNCTION(Anna, function50, 50)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(50, Anna, function50)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -1662,11 +1639,13 @@ IMPLEMENT_FUNCTION(Anna, function50, 50)
 	}
 }
 
-IMPLEMENT_FUNCTION(Anna, function51, 51)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(51, Anna, function51)
 	error("Anna: callback function 51 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Anna, function52, 52)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(52, Anna, function52)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -1702,15 +1681,18 @@ IMPLEMENT_FUNCTION(Anna, function52, 52)
 	}
 }
 
-IMPLEMENT_FUNCTION(Anna, function53, 53)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(53, Anna, function53)
 	error("Anna: callback function 53 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Anna, function54, 54)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(54, Anna, function54)
 	error("Anna: callback function 54 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Anna, function55, 55)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(55, Anna, function55)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -1748,7 +1730,8 @@ IMPLEMENT_FUNCTION(Anna, function55, 55)
 	}
 }
 
-IMPLEMENT_FUNCTION(Anna, function56, 56)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(56, Anna, function56)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -1766,11 +1749,13 @@ IMPLEMENT_FUNCTION(Anna, function56, 56)
 	}
 }
 
-IMPLEMENT_FUNCTION(Anna, function57, 57)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(57, Anna, function57)
 	error("Anna: callback function 57 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Anna, function58, 58)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(58, Anna, function58)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -1793,11 +1778,13 @@ IMPLEMENT_FUNCTION(Anna, function58, 58)
 	}
 }
 
-IMPLEMENT_FUNCTION(Anna, function59, 59)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(59, Anna, function59)
 	error("Anna: callback function 59 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Anna, function60, 60)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(60, Anna, function60)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -1842,11 +1829,13 @@ IMPLEMENT_FUNCTION(Anna, function60, 60)
 	}
 }
 
-IMPLEMENT_FUNCTION(Anna, function61, 61)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(61, Anna, function61)
 	error("Anna: callback function 61 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Anna, function62, 62)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(62, Anna, function62)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -1870,7 +1859,8 @@ IMPLEMENT_FUNCTION(Anna, function62, 62)
 	}
 }
 
-IMPLEMENT_FUNCTION(Anna, function63, 63)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(63, Anna, function63)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -1898,7 +1888,8 @@ IMPLEMENT_FUNCTION(Anna, function63, 63)
 	}
 }
 
-IMPLEMENT_FUNCTION(Anna, baggage, 64)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(64, Anna, baggage)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -1919,7 +1910,7 @@ IMPLEMENT_FUNCTION(Anna, baggage, 64)
 			getAction()->playAnimation(kEventAnnaBaggageArgument);
 
 			setCallback(2);
-			setup_savegame(kSavegameTypeTime, kTimeNone);
+			setup_savegame(kSavegameTypeTime, (EventIndex)kTimeNone);
 			break;
 
 		case 2:
@@ -1949,7 +1940,8 @@ IMPLEMENT_FUNCTION(Anna, baggage, 64)
 	}
 }
 
-IMPLEMENT_FUNCTION(Anna, function65, 65)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(65, Anna, function65)
 	if (savepoint.action == kActionDefault) {
 		getData()->entityPosition = kPosition_4070;
 		getData()->location = kLocationInsideCompartment;
@@ -1964,7 +1956,8 @@ IMPLEMENT_FUNCTION(Anna, function65, 65)
 	}
 }
 
-IMPLEMENT_FUNCTION(Anna, chapter4, 66)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(66, Anna, chapter4)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -1986,11 +1979,13 @@ IMPLEMENT_FUNCTION(Anna, chapter4, 66)
 	}
 }
 
-IMPLEMENT_FUNCTION(Anna, chapter4Handler, 67)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(67, Anna, chapter4Handler)
 	error("Anna: callback function 67 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Anna, function68, 68)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(68, Anna, function68)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -2022,11 +2017,13 @@ IMPLEMENT_FUNCTION(Anna, function68, 68)
 	}
 }
 
-IMPLEMENT_FUNCTION(Anna, function69, 69)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(69, Anna, function69)
 	error("Anna: callback function 69 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Anna, function70, 70)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(70, Anna, function70)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -2056,19 +2053,23 @@ IMPLEMENT_FUNCTION(Anna, function70, 70)
 	}
 }
 
-IMPLEMENT_FUNCTION(Anna, function71, 71)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(71, Anna, function71)
 	error("Anna: callback function 71 not implemented!");
 }
 
-IMPLEMENT_FUNCTION_II(Anna, function72, 72)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_II(72, Anna, function72, CarIndex, EntityPosition)
 	error("Anna: callback function 72 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Anna, function73, 73)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(73, Anna, function73)
 	error("Anna: callback function 73 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Anna, chapter5, 74)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(74, Anna, chapter5)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -2092,7 +2093,8 @@ IMPLEMENT_FUNCTION(Anna, chapter5, 74)
 	}
 }
 
-IMPLEMENT_FUNCTION(Anna, chapter5Handler, 75)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(75, Anna, chapter5Handler)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -2116,16 +2118,19 @@ IMPLEMENT_FUNCTION(Anna, chapter5Handler, 75)
 	}
 }
 
-IMPLEMENT_FUNCTION(Anna, function76, 76)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(76, Anna, function76)
 	if (savepoint.action == kAction158480160)
 		setup_function77();
 }
 
-IMPLEMENT_FUNCTION(Anna, function77, 77)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(77, Anna, function77)
 	error("Anna: callback function 77 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Anna, function78, 78)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(78, Anna, function78)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -2163,7 +2168,8 @@ IMPLEMENT_FUNCTION(Anna, function78, 78)
 	}
 }
 
-IMPLEMENT_FUNCTION(Anna, function79, 79)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(79, Anna, function79)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -2215,11 +2221,13 @@ IMPLEMENT_FUNCTION(Anna, function79, 79)
 	}
 }
 
-IMPLEMENT_FUNCTION(Anna, function80, 80)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(80, Anna, function80)
 	error("Anna: callback function 80 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Anna, finalSequence, 81)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(81, Anna, finalSequence)
 	switch (savepoint.action) {
 	default:
 		break;

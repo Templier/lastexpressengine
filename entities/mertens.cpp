@@ -106,14 +106,13 @@ Mertens::Mertens(LastExpressEngine *engine) : Entity(engine, kEntityMertens) {
 	ADD_NULL_FUNCTION();
 }
 
-/**
- * Resets the entity
- */
-IMPLEMENT_FUNCTION(Mertens, reset, 1)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(1, Mertens, reset)
 	Entity::reset(savepoint);
 }
 
-IMPLEMENT_FUNCTION_S(Mertens, bloodJacket, 2)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_S(2, Mertens, bloodJacket)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -139,13 +138,8 @@ IMPLEMENT_FUNCTION_S(Mertens, bloodJacket, 2)
 	}
 }
 
-/**
- * Handles entering/exiting a compartment.
- *
- * @param seq1   The sequence to draw
- * @param param4 The compartment
- */
-IMPLEMENT_FUNCTION_SI(Mertens, enterExitCompartment, 3)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_SI(3, Mertens, enterExitCompartment, ObjectIndex)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -165,13 +159,8 @@ IMPLEMENT_FUNCTION_SI(Mertens, enterExitCompartment, 3)
 	Entity::enterExitCompartment(savepoint);
 }
 
-/**
- * Handles entering/exiting a compartment.
- *
- * @param seq1   The sequence to draw
- * @param param4 The compartment
- */
-IMPLEMENT_FUNCTION_SI(Mertens, enterExitCompartment2, 4)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_SI(4, Mertens, enterExitCompartment2, ObjectIndex)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -196,15 +185,8 @@ IMPLEMENT_FUNCTION_SI(Mertens, enterExitCompartment2, 4)
 	Entity::enterExitCompartment(savepoint);
 }
 
-/**
- * Handles entering/exiting a compartment.
- *
- * @param seq1   The sequence to draw
- * @param param4 The compartment
- *
- * @note We are not using the shared function due to too many differences
- */
-IMPLEMENT_FUNCTION_SIII(Mertens, enterExitCompartment3, 5)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_SIII(5, Mertens, enterExitCompartment3, ObjectIndex, EntityPosition, EntityPosition)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -240,10 +222,8 @@ IMPLEMENT_FUNCTION_SIII(Mertens, enterExitCompartment3, 5)
 	}
 }
 
-/**
- * Process callback action when the entity direction is not kDirectionRight
- */
-IMPLEMENT_FUNCTION(Mertens, callbackActionOnDirection, 6)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(6, Mertens, callbackActionOnDirection)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -270,12 +250,8 @@ IMPLEMENT_FUNCTION(Mertens, callbackActionOnDirection, 6)
 	}
 }
 
-/**
- * Plays sound
- *
- * @param param1 The sound filename
- */
-IMPLEMENT_FUNCTION_S(Mertens, playSound, 7)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_S(7, Mertens, playSound)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -301,12 +277,8 @@ IMPLEMENT_FUNCTION_S(Mertens, playSound, 7)
 	}
 }
 
-/**
- * Plays sound
- *
- * @param param1 The sound filename
- */
-IMPLEMENT_FUNCTION_S(Mertens, playSound16, 8)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_S(8, Mertens, playSound16)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -332,21 +304,13 @@ IMPLEMENT_FUNCTION_S(Mertens, playSound16, 8)
 	}
 }
 
-/**
- * Save the game
- *
- * @param param1 The SavegameType for the savegame
- * @param param2 The EventIndex for the savegame
- */
-IMPLEMENT_FUNCTION_II(Mertens, savegame, 9)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_II(9, Mertens, savegame, SavegameType, uint32)
 	Entity::savegame(savepoint);
 }
 
 //////////////////////////////////////////////////////////////////////////
-// Parameters
-//  - CarIndex
-//  - EntityPosition
-IMPLEMENT_FUNCTION_II(Mertens, function10, 10)
+IMPLEMENT_FUNCTION_II(10, Mertens, function10, CarIndex, EntityPosition)
 
 #define LOADSCENE_FROM_POSITION() \
 	if (getData()->direction != kDirectionUp) { \
@@ -512,12 +476,8 @@ IMPLEMENT_FUNCTION_II(Mertens, function10, 10)
 #undef LOADSCENE_FROM_POSITION
 }
 
-/**
- *
- *
- * @param param1 The time offset.
- */
-IMPLEMENT_FUNCTION_I(Mertens, function11, 11)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_I(11, Mertens, function11, uint32)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -539,12 +499,8 @@ IMPLEMENT_FUNCTION_I(Mertens, function11, 11)
 	}
 }
 
-/**
- * Says "Bonsoir" to another character
- *
- * @param param1 The entity
- */
-IMPLEMENT_FUNCTION_I(Mertens, bonsoir, 12)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_I(12, Mertens, bonsoir, EntityIndex)
 	EntityIndex entity = (EntityIndex)params->param1;
 
 	if (savepoint.action == kActionDefault)
@@ -588,13 +544,8 @@ IMPLEMENT_FUNCTION_I(Mertens, bonsoir, 12)
 	CALLBACK_ACTION();
 }
 
-/**
- * ??
- *
- * @param param1 true if ??, false otherwise
- * @param param2 true if ??, false otherwise
- */
-IMPLEMENT_FUNCTION_II(Mertens, function13, 13)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_II(13, Mertens, function13, bool, bool)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -725,12 +676,8 @@ IMPLEMENT_FUNCTION_II(Mertens, function13, 13)
 	}
 }
 
-/**
- *
- *
- * @param param1 The EntityIndex
- */
-IMPLEMENT_FUNCTION_I(Mertens, function14, 14)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_I(14, Mertens, function14, EntityIndex)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -798,8 +745,8 @@ IMPLEMENT_FUNCTION_I(Mertens, function14, 14)
 	}
 }
 
-// bool
-IMPLEMENT_FUNCTION_I(Mertens, function15, 15)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_I(15, Mertens, function15, bool)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -854,12 +801,13 @@ IMPLEMENT_FUNCTION_I(Mertens, function15, 15)
 	}
 }
 
-// bool
-IMPLEMENT_FUNCTION_I(Mertens, function16, 16)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_I(16, Mertens, function16, bool)
 	error("Mertens: callback function 16 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Mertens, function17, 17)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(17, Mertens, function17)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -942,7 +890,8 @@ IMPLEMENT_FUNCTION(Mertens, function17, 17)
 	}
 }
 
-IMPLEMENT_FUNCTION(Mertens, function18, 18)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(18, Mertens, function18)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -1005,7 +954,8 @@ IMPLEMENT_FUNCTION(Mertens, function18, 18)
 	}
 }
 
-IMPLEMENT_FUNCTION(Mertens, function19, 19)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(19, Mertens, function19)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -1034,7 +984,8 @@ IMPLEMENT_FUNCTION(Mertens, function19, 19)
 	}
 }
 
-IMPLEMENT_FUNCTION(Mertens, function20, 20)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(20, Mertens, function20)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -1059,29 +1010,28 @@ IMPLEMENT_FUNCTION(Mertens, function20, 20)
 	}
 }
 
-/**
- * ???
- *
- * @param param1 First object index
- * @param param2 Second object index
- */
-IMPLEMENT_FUNCTION_II(Mertens, function21, 21)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_II(21, Mertens, function21, ObjectIndex, ObjectIndex)
 	error("Mertens: callback function 21 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Mertens, function22, 22)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(22, Mertens, function22)
 	error("Mertens: callback function 22 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Mertens, function23, 23)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(23, Mertens, function23)
 	error("Mertens: callback function 23 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Mertens, function24, 24)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(24, Mertens, function24)
 	error("Mertens: callback function 24 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Mertens, function25, 25)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(25, Mertens, function25)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -1091,7 +1041,7 @@ IMPLEMENT_FUNCTION(Mertens, function25, 25)
 			UPDATE_PARAM(params->param2, getState()->timeTicks, 75);
 
 			setCallback(3);
-			setup_enterExitCompartment3("601Zb", kObjectCompartment2, kPosition_7500);
+			setup_enterExitCompartment3("601Zb", kObjectCompartment2, kPosition_7500, kPositionNone);
 		}
 		break;
 
@@ -1187,11 +1137,13 @@ IMPLEMENT_FUNCTION(Mertens, function25, 25)
 	}
 }
 
-IMPLEMENT_FUNCTION_I(Mertens, function26, 26)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_I(26, Mertens, function26, bool)
 	error("Mertens: callback function 26 not implemented!");
 }
 
-IMPLEMENT_FUNCTION_I(Mertens, tylerCompartment, 27)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_I(27, Mertens, tylerCompartment, MertensActionType)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -1583,11 +1535,13 @@ label_callback11:
 	}
 }
 
-IMPLEMENT_FUNCTION_S(Mertens, function28, 28)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_S(28, Mertens, function28)
 	error("Mertens: callback function 28 not implemented!");
 }
 
-IMPLEMENT_FUNCTION_SS(Mertens, function29, 29)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_SS(29, Mertens, function29)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -1649,7 +1603,8 @@ IMPLEMENT_FUNCTION_SS(Mertens, function29, 29)
 	}
 }
 
-IMPLEMENT_FUNCTION_I(Mertens, function30, 30)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_I(30, Mertens, function30, MertensActionType)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -1691,7 +1646,7 @@ IMPLEMENT_FUNCTION_I(Mertens, function30, 30)
 
 		case 1:
 			setCallback(2);
-			setup_function10(kCarGreenSleeping, params->param2);
+			setup_function10(kCarGreenSleeping, (EntityPosition)params->param2);
 			break;
 
 		case 2:
@@ -1709,7 +1664,7 @@ IMPLEMENT_FUNCTION_I(Mertens, function30, 30)
 					getSavePoints()->push(kEntityMertens, kEntityTatiana, kAction238790488);
 
 				setCallback(3);
-				setup_tylerCompartment(3);
+				setup_tylerCompartment(kMertensAction3);
 				break;
 
 			case 2:
@@ -1797,7 +1752,8 @@ IMPLEMENT_FUNCTION_I(Mertens, function30, 30)
 	}
 }
 
-IMPLEMENT_FUNCTION_I(Mertens, function31, 31)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_I(31, Mertens, function31, MertensActionType)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -1835,7 +1791,8 @@ IMPLEMENT_FUNCTION_I(Mertens, function31, 31)
 	}
 }
 
-IMPLEMENT_FUNCTION(Mertens, function32, 32)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(32, Mertens, function32)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -1882,11 +1839,13 @@ IMPLEMENT_FUNCTION(Mertens, function32, 32)
 	}
 }
 
-IMPLEMENT_FUNCTION(Mertens, function33, 33)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(33, Mertens, function33)
 	error("Mertens: callback function 33 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Mertens, chapter1, 34)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(34, Mertens, chapter1)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -1920,19 +1879,23 @@ IMPLEMENT_FUNCTION(Mertens, chapter1, 34)
 
 }
 
-IMPLEMENT_FUNCTION(Mertens, function35, 35)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(35, Mertens, function35)
 	error("Mertens: callback function 35 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Mertens, function36, 36)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(36, Mertens, function36)
 	error("Mertens: callback function 36 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Mertens, function37, 37)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(37, Mertens, function37)
 	error("Mertens: callback function 37 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Mertens, function38, 38)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(38, Mertens, function38)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -1963,7 +1926,7 @@ IMPLEMENT_FUNCTION(Mertens, function38, 38)
 			}
 
 			setCallback(2);
-			setup_tylerCompartment(0);
+			setup_tylerCompartment(kMertensActionNone);
 			break;
 
 		case 2:
@@ -1975,11 +1938,13 @@ IMPLEMENT_FUNCTION(Mertens, function38, 38)
 	}
 }
 
-IMPLEMENT_FUNCTION(Mertens, function39, 39)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(39, Mertens, function39)
 	error("Mertens: callback function 39 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Mertens, function40, 40)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(40, Mertens, function40)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -2024,7 +1989,8 @@ IMPLEMENT_FUNCTION(Mertens, function40, 40)
 	}
 }
 
-IMPLEMENT_FUNCTION(Mertens, chapter1Handler, 41)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(41, Mertens, chapter1Handler)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -2052,7 +2018,8 @@ IMPLEMENT_FUNCTION(Mertens, chapter1Handler, 41)
 	}
 }
 
-IMPLEMENT_FUNCTION(Mertens, function42, 42)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(42, Mertens, function42)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -2376,7 +2343,7 @@ label_callback_5_6:
 		if (!ENTITY_PARAM(0, 1)) {
 			getData()->inventoryItem = kItemNone;
 			setCallback(23);
-			setup_function30(savepoint.param.intValue);
+			setup_function30((MertensActionType)savepoint.param.intValue);
 		}
 		break;
 
@@ -2389,14 +2356,15 @@ label_callback_5_6:
 		if (!ENTITY_PARAM(2, 1) && !ENTITY_PARAM(0, 1)) {
 			getData()->inventoryItem = kItemNone;
 			setCallback(24);
-			setup_function31(savepoint.param.intValue);
+			setup_function31((MertensActionType)savepoint.param.intValue);
 		}
 		break;
 
 	}
 }
 
-IMPLEMENT_FUNCTION(Mertens, chapter2, 43)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(43, Mertens, chapter2)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -2433,7 +2401,8 @@ IMPLEMENT_FUNCTION(Mertens, chapter2, 43)
 	}
 }
 
-IMPLEMENT_FUNCTION(Mertens, function44, 44)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(44, Mertens, function44)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -2508,7 +2477,7 @@ label_callback3:
 	case kAction225358684:
 		if (!ENTITY_PARAM(0, 1)) {
 			setCallback(9);
-			setup_function30(savepoint.param.intValue);
+			setup_function30((MertensActionType)savepoint.param.intValue);
 		}
 		break;
 
@@ -2527,13 +2496,14 @@ label_callback3:
 	case kAction305159806:
 		if (!ENTITY_PARAM(2, 1) && !ENTITY_PARAM(0, 1)) {
 			setCallback(10);
-			setup_function31(savepoint.param.intValue);
+			setup_function31((MertensActionType)savepoint.param.intValue);
 		}
 		break;
 }
 }
 
-IMPLEMENT_FUNCTION(Mertens, chapter3, 45)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(45, Mertens, chapter3)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -2570,11 +2540,13 @@ IMPLEMENT_FUNCTION(Mertens, chapter3, 45)
 	}
 }
 
-IMPLEMENT_FUNCTION(Mertens, function46, 46)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(46, Mertens, function46)
 	error("Mertens: callback function 46 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Mertens, chapter4, 47)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(47, Mertens, chapter4)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -2613,15 +2585,18 @@ IMPLEMENT_FUNCTION(Mertens, chapter4, 47)
 	}
 }
 
-IMPLEMENT_FUNCTION(Mertens, function48, 48)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(48, Mertens, function48)
 	error("Mertens: callback function 48 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Mertens, function49, 49)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(49, Mertens, function49)
 	error("Mertens: callback function 49 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Mertens, chapter5, 50)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(50, Mertens, chapter5)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -2641,12 +2616,14 @@ IMPLEMENT_FUNCTION(Mertens, chapter5, 50)
 	}
 }
 
-IMPLEMENT_FUNCTION(Mertens, chapter5Handler, 51)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(51, Mertens, chapter5Handler)
 	if (savepoint.action == kActionProceedChapter5)
 		setup_function52();
 }
 
-IMPLEMENT_FUNCTION(Mertens, function52, 52)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(52, Mertens, function52)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -2700,10 +2677,12 @@ IMPLEMENT_FUNCTION(Mertens, function52, 52)
 	}
 }
 
-IMPLEMENT_FUNCTION(Mertens, function53, 53)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(53, Mertens, function53)
 	error("Mertens: callback function 53 not implemented!");
 }
 
-IMPLEMENT_NULL_FUNCTION(Mertens, 54)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_NULL_FUNCTION(54, Mertens)
 
 } // End of namespace LastExpress

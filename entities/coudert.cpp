@@ -115,14 +115,13 @@ Coudert::Coudert(LastExpressEngine *engine) : Entity(engine, kEntityCoudert) {
 	ADD_NULL_FUNCTION();
 }
 
-/**
- * Resets the entity
- */
-IMPLEMENT_FUNCTION(Coudert, reset, 1)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(1, Coudert, reset)
 	Entity::reset(savepoint, true);
 }
 
-IMPLEMENT_FUNCTION_S(Coudert, bloodJacket, 2)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_S(2, Coudert, bloodJacket)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -148,13 +147,8 @@ IMPLEMENT_FUNCTION_S(Coudert, bloodJacket, 2)
 	}
 }
 
-/**
- * Handles entering/exiting a compartment.
- *
- * @param seq1   The sequence to draw
- * @param param4 The compartment
- */
-IMPLEMENT_FUNCTION_SI(Coudert, enterExitCompartment, 3)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_SI(3, Coudert, enterExitCompartment, ObjectIndex)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -174,10 +168,8 @@ IMPLEMENT_FUNCTION_SI(Coudert, enterExitCompartment, 3)
 	Entity::enterExitCompartment(savepoint);
 }
 
-/**
- * Process callback action when the entity direction is not kDirectionRight
- */
-IMPLEMENT_FUNCTION(Coudert, callbackActionOnDirection, 4)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(4, Coudert, callbackActionOnDirection)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -204,15 +196,8 @@ IMPLEMENT_FUNCTION(Coudert, callbackActionOnDirection, 4)
 	}
 }
 
-/**
- * Handles entering/exiting a compartment.
- *
- * @param seq1   The sequence to draw
- * @param param4 The compartment
- * @param param5 The entity position 1
- * @param param6 The entity position 2
- */
-IMPLEMENT_FUNCTION_SIII(Coudert, enterExitCompartment2, 5)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_SIII(5, Coudert, enterExitCompartment2, ObjectIndex, EntityPosition, EntityPosition)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -232,12 +217,8 @@ IMPLEMENT_FUNCTION_SIII(Coudert, enterExitCompartment2, 5)
 	Entity::enterExitCompartment(savepoint, (EntityPosition)params->param5, (EntityPosition)params->param6, kCarRedSleeping, (ObjectIndex)params->param4, false);
 }
 
-/**
- * Play a sound
- *
- * @param seq1 The sound name
- */
-IMPLEMENT_FUNCTION_S(Coudert, playSound, 6)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_S(6, Coudert, playSound)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -263,12 +244,8 @@ IMPLEMENT_FUNCTION_S(Coudert, playSound, 6)
 	}
 }
 
-/**
- * Play a sound
- *
- * @param seq1 The sound name
- */
-IMPLEMENT_FUNCTION_NOSETUP(Coudert, playSound16, 7)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_NOSETUP(7, Coudert, playSound16)
 	EXPOSE_PARAMS(EntityData::EntityParametersSIIS);
 
 	switch (savepoint.action) {
@@ -296,21 +273,13 @@ IMPLEMENT_FUNCTION_NOSETUP(Coudert, playSound16, 7)
 	}
 }
 
-/**
- * Save the game
- *
- * @param param1 The SavegameType for the savegame
- * @param param2 The EventIndex for the savegame
- */
-IMPLEMENT_FUNCTION_II(Coudert, savegame, 8)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_II(8, Coudert, savegame, SavegameType, uint32)
 	Entity::savegame(savepoint);
 }
 
 //////////////////////////////////////////////////////////////////////////
-// Parameters
-//  - CarIndex
-//  - EntityPosition
-IMPLEMENT_FUNCTION_II(Coudert, function9, 9)
+IMPLEMENT_FUNCTION_II(9, Coudert, function9, CarIndex, EntityPosition)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -391,9 +360,7 @@ IMPLEMENT_FUNCTION_II(Coudert, function9, 9)
 }
 
 //////////////////////////////////////////////////////////////////////////
-// Parameters
-//  - Time
-IMPLEMENT_FUNCTION_I(Coudert, function10, 10)
+IMPLEMENT_FUNCTION_I(10, Coudert, function10, uint32)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -416,9 +383,7 @@ IMPLEMENT_FUNCTION_I(Coudert, function10, 10)
 }
 
 //////////////////////////////////////////////////////////////////////////
-// Parameters
-//  - TimeTicks
-IMPLEMENT_FUNCTION_I(Coudert, function11, 11)
+IMPLEMENT_FUNCTION_I(11, Coudert, function11, uint32)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -443,7 +408,7 @@ IMPLEMENT_FUNCTION_I(Coudert, function11, 11)
 //////////////////////////////////////////////////////////////////////////
 // Parameters
 //  - EntityIndex
-IMPLEMENT_FUNCTION_I(Coudert, excuseMe, 12)
+IMPLEMENT_FUNCTION_I(12, Coudert, excuseMe, EntityIndex)
 	if (savepoint.action != kActionDefault)
 		return;
 
@@ -451,7 +416,6 @@ IMPLEMENT_FUNCTION_I(Coudert, excuseMe, 12)
 		CALLBACK_ACTION();
 		return;
 	}
-
 
 	if (isNight()) {
 		if (Entities::isFemale((EntityIndex)params->param1)) {
@@ -493,10 +457,7 @@ IMPLEMENT_FUNCTION_I(Coudert, excuseMe, 12)
 }
 
 //////////////////////////////////////////////////////////////////////////
-// Parameters
-//  - bool
-//  - EntityIndex
-IMPLEMENT_FUNCTION_II(Coudert, function13, 13)
+IMPLEMENT_FUNCTION_II(13, Coudert, function13, bool, EntityIndex)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -553,7 +514,7 @@ IMPLEMENT_FUNCTION_II(Coudert, function13, 13)
 			params->param3 = 1;
 
 		setCallback(1);
-		setup_excuseMe(params->param2);
+		setup_excuseMe((EntityIndex)params->param2);
 		break;
 
 	case kAction16:
@@ -618,9 +579,7 @@ IMPLEMENT_FUNCTION_II(Coudert, function13, 13)
 }
 
 //////////////////////////////////////////////////////////////////////////
-// Paramaters
-//  - EntityIndex
-IMPLEMENT_FUNCTION_I(Coudert, function14, 14)
+IMPLEMENT_FUNCTION_I(14, Coudert, function14, EntityIndex)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -700,7 +659,8 @@ IMPLEMENT_FUNCTION_I(Coudert, function14, 14)
 	}
 }
 
-IMPLEMENT_FUNCTION_I(Coudert, function15, 15)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_I(15, Coudert, function15, bool)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -754,7 +714,8 @@ IMPLEMENT_FUNCTION_I(Coudert, function15, 15)
 }
 }
 
-IMPLEMENT_FUNCTION(Coudert, function16, 16)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(16, Coudert, function16)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -791,9 +752,7 @@ IMPLEMENT_FUNCTION(Coudert, function16, 16)
 }
 
 //////////////////////////////////////////////////////////////////////////
-// Parameters
-//  - bool
-IMPLEMENT_FUNCTION_I(Coudert, function17, 17)
+IMPLEMENT_FUNCTION_I(17, Coudert, function17, bool)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -838,7 +797,8 @@ IMPLEMENT_FUNCTION_I(Coudert, function17, 17)
 	}
 }
 
-IMPLEMENT_FUNCTION(Coudert, function18, 18)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(18, Coudert, function18)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -906,9 +866,7 @@ IMPLEMENT_FUNCTION(Coudert, function18, 18)
 }
 
 //////////////////////////////////////////////////////////////////////////
-// Parameters
-//  - bool
-IMPLEMENT_FUNCTION_I(Coudert, function19, 19)
+IMPLEMENT_FUNCTION_I(19, Coudert, function19, bool)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -952,13 +910,8 @@ IMPLEMENT_FUNCTION_I(Coudert, function19, 19)
 	}
 }
 
-/**
- * ??
- *
- * @param param1 The first object index
- * @param param2 The second object index
- */
-IMPLEMENT_FUNCTION_II(Coudert, function20, 20)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_II(20, Coudert, function20, ObjectIndex, ObjectIndex)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -1044,15 +997,18 @@ IMPLEMENT_FUNCTION_II(Coudert, function20, 20)
 	}
 }
 
-IMPLEMENT_FUNCTION(Coudert, function21, 21)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(21, Coudert, function21)
 	error("Coudert: callback function 21 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Coudert, function22, 22)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(22, Coudert, function22)
 	error("Coudert: callback function 22 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Coudert, function23, 23)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(23, Coudert, function23)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -1090,19 +1046,23 @@ IMPLEMENT_FUNCTION(Coudert, function23, 23)
 	}
 }
 
-IMPLEMENT_FUNCTION(Coudert, visitCompartmentF, 24)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(24, Coudert, visitCompartmentF)
 	visitCompartment(savepoint, kPosition_4070, "627Vf", kObjectCompartmentF, "627Wf", "627Zf", kPosition_4455, kObject53, "697Af");
 }
 
-IMPLEMENT_FUNCTION(Coudert, function25, 25)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(25, Coudert, function25)
 	error("Coudert: callback function 25 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Coudert, function26, 26)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(26, Coudert, function26)
 	error("Coudert: callback function 26 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Coudert, function27, 27)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(27, Coudert, function27)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -1199,20 +1159,18 @@ IMPLEMENT_FUNCTION(Coudert, function27, 27)
 	}
 }
 
-IMPLEMENT_FUNCTION(Coudert, visitCompartmentB, 28)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(28, Coudert, visitCompartmentB)
 	visitCompartment(savepoint, kPosition_7500, "627Vb", kObjectCompartmentB, "627Wb", "627Zb", kPosition_7850, kObject49, "697Ab");
 }
 
-IMPLEMENT_FUNCTION(Coudert, visitCompartmentA, 29)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(29, Coudert, visitCompartmentA)
 	visitCompartment(savepoint, kPosition_8200, "627Ma", kObjectCompartmentA, "627Na", "627Ra", kPosition_7850, kObject48, "627Sa");
 }
 
-/**
- * ???
- *
- * @param param1 The compartment
- */
-IMPLEMENT_FUNCTION_I(Coudert, function30, 30)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_I(30, Coudert, function30, ObjectIndex)
 	// Expose parameters as IIIIIS and ignore the default exposed parameters
 	EntityData::EntityParametersI5S  *parameters  = (EntityData::EntityParametersI5S*)_data->getCurrentParameters();
 	EntityData::EntityParametersSIIS *parameters1 = (EntityData::EntityParametersSIIS*)_data->getCurrentParameters(1);
@@ -1331,7 +1289,8 @@ IMPLEMENT_FUNCTION_I(Coudert, function30, 30)
 	}
 }
 
-IMPLEMENT_FUNCTION_I(Coudert, function31, 31)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_I(31, Coudert, function31, uint32)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -1369,7 +1328,8 @@ IMPLEMENT_FUNCTION_I(Coudert, function31, 31)
 	}
 }
 
-IMPLEMENT_FUNCTION(Coudert, function32, 32)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(32, Coudert, function32)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -1413,7 +1373,8 @@ IMPLEMENT_FUNCTION(Coudert, function32, 32)
 	}
 }
 
-IMPLEMENT_FUNCTION(Coudert, function33, 33)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(33, Coudert, function33)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -1528,15 +1489,18 @@ IMPLEMENT_FUNCTION(Coudert, function33, 33)
 	}
 }
 
-IMPLEMENT_FUNCTION_I(Coudert, function34, 34)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_I(34, Coudert, function34, bool)
 	error("Coudert: callback function 34 not implemented!");
 }
 
-IMPLEMENT_FUNCTION_I(Coudert, function35, 35)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_I(35, Coudert, function35, bool)
 	error("Coudert: callback function 35 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Coudert, chapter1, 36)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(36, Coudert, chapter1)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -1580,7 +1544,8 @@ IMPLEMENT_FUNCTION(Coudert, chapter1, 36)
 	}
 }
 
-IMPLEMENT_FUNCTION(Coudert, function37, 37)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(37, Coudert, function37)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -1632,7 +1597,8 @@ IMPLEMENT_FUNCTION(Coudert, function37, 37)
 	}
 }
 
-IMPLEMENT_FUNCTION(Coudert, function38, 38)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(38, Coudert, function38)
 switch (savepoint.action) {
 	default:
 		break;
@@ -1673,11 +1639,13 @@ switch (savepoint.action) {
 	}
 }
 
-IMPLEMENT_FUNCTION(Coudert, function39, 39)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(39, Coudert, function39)
 	error("Coudert: callback function 39 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Coudert, chapter1Handler, 40)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(40, Coudert, chapter1Handler)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -1907,7 +1875,7 @@ label_coudert_object:
 		if (!ENTITY_PARAM(0, 1)) {
 			getData()->inventoryItem = kItemNone;
 			setCallback(16);
-			setup_function30(savepoint.param.intValue);
+			setup_function30((ObjectIndex)savepoint.param.intValue);
 		}
 		break;
 
@@ -1926,7 +1894,8 @@ label_coudert_object:
 	}
 }
 
-IMPLEMENT_FUNCTION(Coudert, function41, 41)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(41, Coudert, function41)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -2038,7 +2007,8 @@ IMPLEMENT_FUNCTION(Coudert, function41, 41)
 	}
 }
 
-IMPLEMENT_FUNCTION(Coudert, chapter2, 42)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(42, Coudert, chapter2)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -2083,7 +2053,8 @@ IMPLEMENT_FUNCTION(Coudert, chapter2, 42)
 	}
 }
 
-IMPLEMENT_FUNCTION(Coudert, function43, 43)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(43, Coudert, function43)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -2122,11 +2093,11 @@ label_callback2:
 
 		if (getEntities()->isPlayerPosition(kCarRedSleeping, 1)) {
 			setCallback(5);
-			setup_function13(true, false);
+			setup_function13(true, kEntityPlayer);
 
 		} else if (getEntities()->isPlayerPosition(kCarRedSleeping, 23)) {
 			setCallback(6);
-			setup_function13(false, false);
+			setup_function13(false, kEntityPlayer);
 		}
 		break;
 
@@ -2151,7 +2122,7 @@ label_callback2:
 	case kAction225358684:
 		if (!ENTITY_PARAM(0, 1)) {
 			setCallback(9);
-			setup_function30(savepoint.param.intValue);
+			setup_function30((ObjectIndex)savepoint.param.intValue);
 		}
 		break;
 
@@ -2173,7 +2144,8 @@ label_callback2:
 }
 }
 
-IMPLEMENT_FUNCTION(Coudert, chapter3, 44)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(44, Coudert, chapter3)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -2220,19 +2192,23 @@ IMPLEMENT_FUNCTION(Coudert, chapter3, 44)
 	}
 }
 
-IMPLEMENT_FUNCTION(Coudert, function45, 45)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(45, Coudert, function45)
 	error("Coudert: callback function 45 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Coudert, function46, 46)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(46, Coudert, function46)
 	error("Coudert: callback function 46 not implemented!");
 }
 
-IMPLEMENT_FUNCTION_I(Coudert, function47, 47)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_I(47, Coudert, function47, bool)
 	error("Coudert: callback function 47 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Coudert, function48, 48)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(48, Coudert, function48)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -2279,19 +2255,23 @@ IMPLEMENT_FUNCTION(Coudert, function48, 48)
 	}
 }
 
-IMPLEMENT_FUNCTION(Coudert, function49, 49)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(49, Coudert, function49)
 	error("Coudert: callback function 49 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Coudert, function50, 50)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(50, Coudert, function50)
 	error("Coudert: callback function 50 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Coudert, function51, 51)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(51, Coudert, function51)
 	error("Coudert: callback function 51 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Coudert, chapter4, 52)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(52, Coudert, chapter4)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -2339,11 +2319,13 @@ IMPLEMENT_FUNCTION(Coudert, chapter4, 52)
 	}
 }
 
-IMPLEMENT_FUNCTION(Coudert, function53, 53)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(53, Coudert, function53)
 	error("Coudert: callback function 53 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Coudert, function54, 54)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(54, Coudert, function54)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -2388,15 +2370,18 @@ IMPLEMENT_FUNCTION(Coudert, function54, 54)
 	}
 }
 
-IMPLEMENT_FUNCTION(Coudert, function55, 55)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(55, Coudert, function55)
 	error("Coudert: callback function 55 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Coudert, function56, 56)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(56, Coudert, function56)
 	error("Coudert: callback function 56 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Coudert, chapter5, 57)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(57, Coudert, chapter5)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -2416,12 +2401,14 @@ IMPLEMENT_FUNCTION(Coudert, chapter5, 57)
 	}
 }
 
-IMPLEMENT_FUNCTION(Coudert, chapter5Handler, 58)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(58, Coudert, chapter5Handler)
 	if (savepoint.action == kActionProceedChapter5)
 		setup_function59();
 }
 
-IMPLEMENT_FUNCTION(Coudert, function59, 59)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(59, Coudert, function59)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -2446,7 +2433,8 @@ IMPLEMENT_FUNCTION(Coudert, function59, 59)
 	}
 }
 
-IMPLEMENT_FUNCTION(Coudert, function60, 60)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(60, Coudert, function60)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -2463,16 +2451,23 @@ IMPLEMENT_FUNCTION(Coudert, function60, 60)
 	}
 }
 
-IMPLEMENT_FUNCTION(Coudert, function61, 61)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(61, Coudert, function61)
 	error("Coudert: callback function 61 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Coudert, function62, 62)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(62, Coudert, function62)
 	error("Coudert: callback function 62 not implemented!");
 }
 
-IMPLEMENT_NULL_FUNCTION(Coudert, 63)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_NULL_FUNCTION(63, Coudert)
 
+
+//////////////////////////////////////////////////////////////////////////
+// Private functions
+//////////////////////////////////////////////////////////////////////////
 void Coudert::visitCompartment(const SavePoint &savepoint, EntityPosition position, const char* seq1, ObjectIndex compartment, const char* seq2, const char* seq3, EntityPosition sittingPosition, ObjectIndex object, const char* seq4) {
 	EXPOSE_PARAMS(EntityData::EntityParametersIIII)
 

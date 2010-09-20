@@ -38,21 +38,80 @@ public:
 	Kronos(LastExpressEngine *engine);
 	~Kronos() {};
 
-	// Setup
+	/**
+	 * Resets the entity
+	 */
 	DECLARE_FUNCTION(reset)
-	DECLARE_FUNCTION_II(savegame)
-	DECLARE_FUNCTION_II(function3)
+
+	/**
+	 * Saves the game
+	 *
+	 * @param savegameType The type of the savegame
+	 * @param param        The param for the savegame (EventIndex or TimeValue)
+	 */
+	DECLARE_FUNCTION(savegame, SavegameType savegameType, uint32 param)
+
+	/**
+	 * Updates the entity
+	 *
+	 * @param index          The car
+	 * @param entityPosition The entity position
+	 */
+	DECLARE_FUNCTION(updateEntity, CarIndex index, EntityPosition entityPosition)
+
+	/**
+	 * Plays sound
+	 *
+	 * @param savepoint The savepoint
+	 *                    - the sound filename
+	 */
 	DECLARE_FUNCTION_NOSETUP(playSound)
+
+	/**
+	 * Updates parameter 2 using time value
+	 *
+	 * @param savepoint The savepoint
+	 *                    - Time to add
+	 */
 	DECLARE_FUNCTION_NOSETUP(updateFromTime)
+
+	/**
+	 * Updates parameter 2 using ticks value
+	 *
+	 * @param savepoint The savepoint
+	 *                    - ticks to add
+	 */
 	DECLARE_FUNCTION_NOSETUP(updateFromTicks)
+
+	/**
+	 * Setup Chapter 1
+	 */
 	DECLARE_FUNCTION(chapter1)
+
+	/**
+	 * Handle Chapter 1 events
+	 */
 	DECLARE_FUNCTION(chapter1Handler)
+
 	DECLARE_FUNCTION(function9)
 	DECLARE_FUNCTION(function10)
 	DECLARE_FUNCTION(function11)
+
+	/**
+	 * Setup Chapter 2
+	 */
 	DECLARE_FUNCTION(chapter2)
+
+	/**
+	 * Setup Chapter 3
+	 */
 	DECLARE_FUNCTION(chapter3)
+
+	/**
+	 * Handle Chapter 3 events
+	 */
 	DECLARE_FUNCTION(chapter3Handler)
+
 	DECLARE_FUNCTION(function15)
 	DECLARE_FUNCTION(function16)
 	DECLARE_FUNCTION(function17)
@@ -62,7 +121,15 @@ public:
 	DECLARE_FUNCTION(function21)
 	DECLARE_FUNCTION(function22)
 	DECLARE_FUNCTION(function23)
+
+	/**
+	 * Setup Chapter 4
+	 */
 	DECLARE_FUNCTION(chapter4)
+
+	/**
+	 * Setup Chapter 5
+	 */
 	DECLARE_FUNCTION(chapter5)
 };
 

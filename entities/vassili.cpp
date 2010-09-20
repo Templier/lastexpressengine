@@ -64,33 +64,23 @@ Vassili::Vassili(LastExpressEngine *engine) : Entity(engine, kEntityVassili) {
 	ADD_CALLBACK_FUNCTION(Vassili, chapter5);
 }
 
-/**
- * Resets the entity
- */
-IMPLEMENT_FUNCTION(Vassili, reset, 1)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(1, Vassili, reset)
 	Entity::reset(savepoint);
 }
 
-/**
- * Draws the entity
- *
- * @param seq1 The sequence to draw
- */
-IMPLEMENT_FUNCTION_S(Vassili, draw, 2)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_S(2, Vassili, draw)
 	Entity::draw(savepoint);
 }
 
-/**
- * Save the game
- *
- * @param param1 The SavegameType for the savegame
- * @param param2 The EventIndex for the savegame
- */
-IMPLEMENT_FUNCTION_II(Vassili, savegame, 3)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_II(3, Vassili, savegame, SavegameType, uint32)
 	Entity::savegame(savepoint);
 }
 
-IMPLEMENT_FUNCTION(Vassili, chapter1, 4)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(4, Vassili, chapter1)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -106,7 +96,8 @@ IMPLEMENT_FUNCTION(Vassili, chapter1, 4)
 	}
 }
 
-IMPLEMENT_FUNCTION(Vassili, chapter1Handler, 5)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(5, Vassili, chapter1Handler)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -148,7 +139,8 @@ IMPLEMENT_FUNCTION(Vassili, chapter1Handler, 5)
 	}
 }
 
-IMPLEMENT_FUNCTION(Vassili, function6, 6)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(6, Vassili, function6)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -215,7 +207,8 @@ label_function7:
 	}
 }
 
-IMPLEMENT_FUNCTION(Vassili, function7, 7)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(7, Vassili, function7)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -259,7 +252,8 @@ IMPLEMENT_FUNCTION(Vassili, function7, 7)
 	}
 }
 
-IMPLEMENT_FUNCTION(Vassili, function8, 8)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(8, Vassili, function8)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -282,7 +276,8 @@ IMPLEMENT_FUNCTION(Vassili, function8, 8)
 	}
 }
 
-IMPLEMENT_FUNCTION(Vassili, function9, 9)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(9, Vassili, function9)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -314,7 +309,8 @@ IMPLEMENT_FUNCTION(Vassili, function9, 9)
 	}
 }
 
-IMPLEMENT_FUNCTION(Vassili, seizure, 10)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(10, Vassili, seizure)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -368,12 +364,14 @@ IMPLEMENT_FUNCTION(Vassili, seizure, 10)
 	}
 }
 
-IMPLEMENT_FUNCTION(Vassili, drawInBed, 11)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(11, Vassili, drawInBed)
 	if (savepoint.action == kActionDefault)
 		getEntities()->drawSequenceLeft(kEntityVassili, "303A");
 }
 
-IMPLEMENT_FUNCTION(Vassili, chapter2, 12)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(12, Vassili, chapter2)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -397,7 +395,8 @@ IMPLEMENT_FUNCTION(Vassili, chapter2, 12)
 	}
 }
 
-IMPLEMENT_FUNCTION(Vassili, sleeping, 13)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(13, Vassili, sleeping)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -431,7 +430,8 @@ IMPLEMENT_FUNCTION(Vassili, sleeping, 13)
 	}
 }
 
-IMPLEMENT_FUNCTION(Vassili, chapter3, 14)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(14, Vassili, chapter3)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -454,7 +454,8 @@ IMPLEMENT_FUNCTION(Vassili, chapter3, 14)
 	}
 }
 
-IMPLEMENT_FUNCTION(Vassili, stealEgg, 15)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(15, Vassili, stealEgg)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -511,7 +512,8 @@ IMPLEMENT_FUNCTION(Vassili, stealEgg, 15)
 	}
 }
 
-IMPLEMENT_FUNCTION(Vassili, chapter4, 16)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(16, Vassili, chapter4)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -535,8 +537,9 @@ IMPLEMENT_FUNCTION(Vassili, chapter4, 16)
 	}
 }
 
+//////////////////////////////////////////////////////////////////////////
 // Looks identical to sleeping (#13)
-IMPLEMENT_FUNCTION(Vassili, chapter4Handler, 17)
+IMPLEMENT_FUNCTION(17, Vassili, chapter4Handler)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -570,7 +573,8 @@ IMPLEMENT_FUNCTION(Vassili, chapter4Handler, 17)
 	}
 }
 
-IMPLEMENT_FUNCTION(Vassili, chapter5, 18)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(18, Vassili, chapter5)
 	if (savepoint.action == kActionDefault) {
 		getEntities()->clearSequences(kEntityVassili);
 

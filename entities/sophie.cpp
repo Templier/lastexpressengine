@@ -63,7 +63,7 @@ namespace LastExpress {
 
 Sophie::Sophie(LastExpressEngine *engine) : Entity(engine, kEntitySophie) {
 	ADD_CALLBACK_FUNCTION(Sophie, reset);
-	ADD_CALLBACK_FUNCTION(Sophie, function2);
+	ADD_CALLBACK_FUNCTION(Sophie, updateEntity);
 	ADD_CALLBACK_FUNCTION(Sophie, chapters_handler);
 	ADD_CALLBACK_FUNCTION(Sophie, chapter1);
 	ADD_CALLBACK_FUNCTION(Sophie, function5);
@@ -76,18 +76,13 @@ Sophie::Sophie(LastExpressEngine *engine) : Entity(engine, kEntitySophie) {
 	ADD_NULL_FUNCTION();
 }
 
-/**
- * Resets the entity
- */
-IMPLEMENT_FUNCTION(Sophie, reset, 1)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(1, Sophie, reset)
 	Entity::reset(savepoint);
 }
 
 //////////////////////////////////////////////////////////////////////////
-// Parameters
-//  - CarIndex
-//  - EntityPosition
-IMPLEMENT_FUNCTION_II(Sophie, function2, 2)
+IMPLEMENT_FUNCTION_II(2, Sophie, updateEntity, CarIndex, EntityPosition)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -136,7 +131,7 @@ IMPLEMENT_FUNCTION_II(Sophie, function2, 2)
 }
 
 //////////////////////////////////////////////////////////////////////////
-IMPLEMENT_FUNCTION(Sophie, chapters_handler, 3)
+IMPLEMENT_FUNCTION(3, Sophie, chapters_handler)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -175,7 +170,7 @@ IMPLEMENT_FUNCTION(Sophie, chapters_handler, 3)
 		getData()->car = getEntityData(kEntityRebecca)->car;
 
 		setCallback(1);
-		setup_function2(kCarRestaurant, kPosition_850);
+		setup_updateEntity(kCarRestaurant, kPosition_850);
 		break;
 
 	case kAction136654208:
@@ -184,7 +179,7 @@ IMPLEMENT_FUNCTION(Sophie, chapters_handler, 3)
 		getData()->car = getEntityData(kEntityRebecca)->car;
 
 		setCallback(2);
-		setup_function2(kCarRedSleeping, kPosition_4840);
+		setup_updateEntity(kCarRedSleeping, kPosition_4840);
 		break;
 
 	case kAction259921280:
@@ -193,7 +188,7 @@ IMPLEMENT_FUNCTION(Sophie, chapters_handler, 3)
 		getData()->car = getEntityData(kEntityRebecca)->car;
 
 		setCallback(3);
-		setup_function2(kCarKronos, kPosition_9460);
+		setup_updateEntity(kCarKronos, kPosition_9460);
 		break;
 
 	case kAction292775040:
@@ -202,13 +197,13 @@ IMPLEMENT_FUNCTION(Sophie, chapters_handler, 3)
 		getData()->car = kCarKronos;
 
 		setCallback(4);
-		setup_function2(kCarRedSleeping, kPosition_4840);
+		setup_updateEntity(kCarRedSleeping, kPosition_4840);
 		break;
 	}
 }
 
 //////////////////////////////////////////////////////////////////////////
-IMPLEMENT_FUNCTION(Sophie, chapter1, 4)
+IMPLEMENT_FUNCTION(4, Sophie, chapter1)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -226,32 +221,32 @@ IMPLEMENT_FUNCTION(Sophie, chapter1, 4)
 }
 
 //////////////////////////////////////////////////////////////////////////
-IMPLEMENT_FUNCTION(Sophie, function5, 5)
+IMPLEMENT_FUNCTION(5, Sophie, function5)
 	DEFAULT_ACTION_IMPLEMENTATION()
 }
 
 //////////////////////////////////////////////////////////////////////////
-IMPLEMENT_FUNCTION(Sophie, chapter2, 6)
+IMPLEMENT_FUNCTION(6, Sophie, chapter2)
 	CHAPTER_IMPLEMENTATION()
 }
 
 //////////////////////////////////////////////////////////////////////////
-IMPLEMENT_FUNCTION(Sophie, chapter3, 7)
+IMPLEMENT_FUNCTION(7, Sophie, chapter3)
 	CHAPTER_IMPLEMENTATION()
 }
 
 //////////////////////////////////////////////////////////////////////////
-IMPLEMENT_FUNCTION(Sophie, chapter4, 8)
+IMPLEMENT_FUNCTION(8, Sophie, chapter4)
 	CHAPTER_IMPLEMENTATION()
 }
 
 //////////////////////////////////////////////////////////////////////////
-IMPLEMENT_FUNCTION(Sophie, function9, 9)
+IMPLEMENT_FUNCTION(9, Sophie, function9)
 	DEFAULT_ACTION_IMPLEMENTATION()
 }
 
 //////////////////////////////////////////////////////////////////////////
-IMPLEMENT_FUNCTION(Sophie, chapter5, 10)
+IMPLEMENT_FUNCTION(10, Sophie, chapter5)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -273,12 +268,12 @@ IMPLEMENT_FUNCTION(Sophie, chapter5, 10)
 }
 
 //////////////////////////////////////////////////////////////////////////
-IMPLEMENT_FUNCTION(Sophie, chapter5Handler, 11)
+IMPLEMENT_FUNCTION(11, Sophie, chapter5Handler)
 	if (savepoint.action == kActionProceedChapter5)
 		setup_nullfunction();
 }
 
 //////////////////////////////////////////////////////////////////////////
-IMPLEMENT_NULL_FUNCTION(Sophie, 12)
+IMPLEMENT_NULL_FUNCTION(12, Sophie)
 
 } // End of namespace LastExpress

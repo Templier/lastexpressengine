@@ -65,41 +65,23 @@ Mahmud::Mahmud(LastExpressEngine *engine) : Entity(engine, kEntityMahmud) {
 	ADD_CALLBACK_FUNCTION(Mahmud, chapter5);
 }
 
-/**
- * Resets the entity
- */
-IMPLEMENT_FUNCTION(Mahmud, reset, 1)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(1, Mahmud, reset)
 	Entity::reset(savepoint);
 }
 
-/**
- * Draws the entity
- *
- * @param seq1 The sequence to draw
- */
-IMPLEMENT_FUNCTION_NOSETUP(Mahmud, draw, 2)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_NOSETUP(2, Mahmud, draw)
 	Entity::draw(savepoint);
 }
 
-/**
- * Handles entering/exiting a compartment.
- *
- * @param seq1   The sequence to draw
- * @param param4 The compartment
- */
-IMPLEMENT_FUNCTION_SI(Mahmud, enterExitCompartment, 3)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_SI(3, Mahmud, enterExitCompartment, ObjectIndex)
 	Entity::enterExitCompartment(savepoint);
 }
 
-/**
- * Handles entering/exiting a compartment.
- *
- * @param seq1   The sequence to draw
- * @param param4 The compartment
- * @param param5 The time ticks
- * @param param6 The object for loading the scene
- */
-IMPLEMENT_FUNCTION_SIII(Mahmud, enterExitCompartment2, 4)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_SIII(4, Mahmud, enterExitCompartment2, ObjectIndex, uint32, ObjectIndex)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -124,50 +106,28 @@ IMPLEMENT_FUNCTION_SIII(Mahmud, enterExitCompartment2, 4)
 	}
 }
 
-/**
- * Plays sound
- *
- * @param param1 The sound filename
- */
-IMPLEMENT_FUNCTION_S(Mahmud, playSound, 5)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_S(5, Mahmud, playSound)
 	Entity::playSound(savepoint);
 }
 
-/**
- * Plays sound
- *
- * @param param1 The sound filename
- */
-IMPLEMENT_FUNCTION_S(Mahmud, playSoundMertens, 6)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_S(6, Mahmud, playSoundMertens)
 	Entity::playSound(savepoint, false, getSound()->getSoundFlag(kEntityMertens));
 }
 
-/**
- * Updates parameter 2 using time value
- *
- * @param param1 The time to add
- */
-IMPLEMENT_FUNCTION_NOSETUP(Mahmud, updateFromTime, 7)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_NOSETUP(7, Mahmud, updateFromTime)
 	Entity::updateFromTime(savepoint);
 }
 
-/**
- * Save the game
- *
- * @param param1 The SavegameType for the savegame
- * @param param2 The EventIndex for the savegame
- */
-IMPLEMENT_FUNCTION_II(Mahmud, savegame, 8)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_II(8, Mahmud, savegame, SavegameType, uint32)
 	Entity::savegame(savepoint);
 }
 
-/**
- * Updates the entity
- *
- * @param param1 The car
- * @param param2 The entity position
- */
-IMPLEMENT_FUNCTION_II(Mahmud, updateEntity, 9)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_II(9, Mahmud, updateEntity, CarIndex, EntityPosition)
 	if (savepoint.action == kActionExcuseMeCath) {
 		if (getInventory()->hasItem(kItemPassengerList))
 			getSound()->playSound(kEntityPlayer, rnd(2) ? "CAT1025" : "CAT1025Q");
@@ -181,7 +141,7 @@ IMPLEMENT_FUNCTION_II(Mahmud, updateEntity, 9)
 }
 
 //////////////////////////////////////////////////////////////////////////
-IMPLEMENT_FUNCTION_II(Mahmud, function10, 10)
+IMPLEMENT_FUNCTION_II(10, Mahmud, function10, ObjectIndex, bool)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -282,7 +242,7 @@ IMPLEMENT_FUNCTION_II(Mahmud, function10, 10)
 		getProgress().field_C4 = 1;
 
 		setCallback(1);
-		setup_enterExitCompartment2("614Dd", kObjectCompartment4, 30, params->param1);
+		setup_enterExitCompartment2("614Dd", kObjectCompartment4, 30, (ObjectIndex)params->param1);
 		break;
 
 	case kActionCallback:
@@ -316,7 +276,7 @@ IMPLEMENT_FUNCTION_II(Mahmud, function10, 10)
 }
 
 //////////////////////////////////////////////////////////////////////////
-IMPLEMENT_FUNCTION(Mahmud, function11, 11)
+IMPLEMENT_FUNCTION(11, Mahmud, function11)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -455,7 +415,7 @@ IMPLEMENT_FUNCTION(Mahmud, function11, 11)
 
 //////////////////////////////////////////////////////////////////////////
 // TODO: factorize code between function12 & function13
-IMPLEMENT_FUNCTION(Mahmud, function12, 12)
+IMPLEMENT_FUNCTION(12, Mahmud, function12)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -521,7 +481,7 @@ IMPLEMENT_FUNCTION(Mahmud, function12, 12)
 }
 
 //////////////////////////////////////////////////////////////////////////
-IMPLEMENT_FUNCTION(Mahmud, function13, 13)
+IMPLEMENT_FUNCTION(13, Mahmud, function13)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -587,7 +547,7 @@ IMPLEMENT_FUNCTION(Mahmud, function13, 13)
 }
 
 //////////////////////////////////////////////////////////////////////////
-IMPLEMENT_FUNCTION(Mahmud, chaptersHandler, 14)
+IMPLEMENT_FUNCTION(14, Mahmud, chaptersHandler)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -761,13 +721,13 @@ IMPLEMENT_FUNCTION(Mahmud, chaptersHandler, 14)
 	case kAction290410610:
 		params->param3 = (params->param3 < 1) ? 1 : 0;
 		setCallback(11);
-		setup_function10(savepoint.param.intValue, params->param3);
+		setup_function10((ObjectIndex)savepoint.param.intValue, params->param3);
 		break;
 	}
 }
 
 //////////////////////////////////////////////////////////////////////////
-IMPLEMENT_FUNCTION(Mahmud, chapter1, 15)
+IMPLEMENT_FUNCTION(15, Mahmud, chapter1)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -790,7 +750,7 @@ IMPLEMENT_FUNCTION(Mahmud, chapter1, 15)
 }
 
 //////////////////////////////////////////////////////////////////////////
-IMPLEMENT_FUNCTION(Mahmud, resetChapter, 16)
+IMPLEMENT_FUNCTION(16, Mahmud, resetChapter)
 	if (savepoint.action != kActionDefault)
 		return;
 
@@ -803,7 +763,7 @@ IMPLEMENT_FUNCTION(Mahmud, resetChapter, 16)
 }
 
 //////////////////////////////////////////////////////////////////////////
-IMPLEMENT_FUNCTION(Mahmud, chapter2, 17)
+IMPLEMENT_FUNCTION(17, Mahmud, chapter2)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -825,7 +785,7 @@ IMPLEMENT_FUNCTION(Mahmud, chapter2, 17)
 }
 
 //////////////////////////////////////////////////////////////////////////
-IMPLEMENT_FUNCTION(Mahmud, chapter3, 18)
+IMPLEMENT_FUNCTION(18, Mahmud, chapter3)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -848,7 +808,7 @@ IMPLEMENT_FUNCTION(Mahmud, chapter3, 18)
 }
 
 //////////////////////////////////////////////////////////////////////////
-IMPLEMENT_FUNCTION(Mahmud, chapter4, 19)
+IMPLEMENT_FUNCTION(19, Mahmud, chapter4)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -871,7 +831,7 @@ IMPLEMENT_FUNCTION(Mahmud, chapter4, 19)
 }
 
 //////////////////////////////////////////////////////////////////////////
-IMPLEMENT_FUNCTION(Mahmud, chapter5, 20)
+IMPLEMENT_FUNCTION(20, Mahmud, chapter5)
 	if (savepoint.action == kActionDefault)
 		getEntities()->clearSequences(kEntityMahmud);
 }

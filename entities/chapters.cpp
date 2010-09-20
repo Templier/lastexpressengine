@@ -98,28 +98,23 @@ Chapters::Chapters(LastExpressEngine *engine) : Entity(engine, kEntityChapters) 
 	ADD_CALLBACK_FUNCTION(Chapters, chapter4Handler);
 }
 
-/**
- * Save the game
- *
- * @param param1 The SavegameType for the savegame
- * @param param2 The EventIndex for the savegame
- */
-IMPLEMENT_FUNCTION_II(Chapters, savegame, 1)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_II(1, Chapters, savegame, SavegameType, uint32)
 	Entity::savegame(savepoint);
 }
 
 //////////////////////////////////////////////////////////////////////////
-IMPLEMENT_FUNCTION_SI(Chapters, enterStation, 2)
+IMPLEMENT_FUNCTION_SI(2, Chapters, enterStation, uint32)
 	enterExitStation(savepoint, true);
 }
 
 //////////////////////////////////////////////////////////////////////////
-IMPLEMENT_FUNCTION_S(Chapters, exitStation, 3)
+IMPLEMENT_FUNCTION_S(3, Chapters, exitStation)
 	enterExitStation(savepoint, false);
 }
 
 //////////////////////////////////////////////////////////////////////////
-IMPLEMENT_FUNCTION(Chapters, chapter1, 4)
+IMPLEMENT_FUNCTION(4, Chapters, chapter1)
 	if (savepoint.action == kActionDefault) {
 		getSavePoints()->addData(kEntityChapters, kAction171843264, 0);
 		setup_chapter1Init();
@@ -127,7 +122,7 @@ IMPLEMENT_FUNCTION(Chapters, chapter1, 4)
 }
 
 //////////////////////////////////////////////////////////////////////////
-IMPLEMENT_FUNCTION(Chapters, resetMainEntities, 5)
+IMPLEMENT_FUNCTION(5, Chapters, resetMainEntities)
 	if (savepoint.action != kActionDefault)
 		return;
 
@@ -161,7 +156,7 @@ IMPLEMENT_FUNCTION(Chapters, resetMainEntities, 5)
 }
 
 //////////////////////////////////////////////////////////////////////////
-IMPLEMENT_FUNCTION(Chapters, function6, 6)
+IMPLEMENT_FUNCTION(6,Chapters, function6)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -320,7 +315,7 @@ IMPLEMENT_FUNCTION(Chapters, function6, 6)
 }
 
 //////////////////////////////////////////////////////////////////////////
-IMPLEMENT_FUNCTION(Chapters, chapter1Init, 7)
+IMPLEMENT_FUNCTION(7, Chapters, chapter1Init)
 	if (savepoint.action != kActionDefault)
 		return;
 
@@ -396,7 +391,7 @@ IMPLEMENT_FUNCTION(Chapters, chapter1Init, 7)
 	ENTITY_PARAM(0, 2) = 0; \
 	}
 
-IMPLEMENT_FUNCTION(Chapters, chapter1Handler, 8)
+IMPLEMENT_FUNCTION(8, Chapters, chapter1Handler)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -686,7 +681,7 @@ label_chapter1_end:
 }
 
 //////////////////////////////////////////////////////////////////////////
-IMPLEMENT_FUNCTION(Chapters, chapter1End, 9)
+IMPLEMENT_FUNCTION(9, Chapters, chapter1End)
 	if (savepoint.action == kActionDefault) {
 		// Reset sound cache
 		if (ENTITY_PARAM(0, 2) || ENTITY_PARAM(0, 3)) {
@@ -706,7 +701,7 @@ IMPLEMENT_FUNCTION(Chapters, chapter1End, 9)
 }
 
 //////////////////////////////////////////////////////////////////////////
-IMPLEMENT_FUNCTION(Chapters, chapter2, 10)
+IMPLEMENT_FUNCTION(10, Chapters, chapter2)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -743,7 +738,7 @@ IMPLEMENT_FUNCTION(Chapters, chapter2, 10)
 }
 
 //////////////////////////////////////////////////////////////////////////
-IMPLEMENT_FUNCTION(Chapters, chapter2Init, 11)
+IMPLEMENT_FUNCTION(11, Chapters, chapter2Init)
 	if (savepoint.action != kActionDefault)
 		return;
 
@@ -802,7 +797,7 @@ IMPLEMENT_FUNCTION(Chapters, chapter2Init, 11)
 }
 
 //////////////////////////////////////////////////////////////////////////
-IMPLEMENT_FUNCTION(Chapters, chapter2Handler, 12)
+IMPLEMENT_FUNCTION(12, Chapters, chapter2Handler)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -830,7 +825,7 @@ IMPLEMENT_FUNCTION(Chapters, chapter2Handler, 12)
 }
 
 //////////////////////////////////////////////////////////////////////////
-IMPLEMENT_FUNCTION(Chapters, chapter3, 13)
+IMPLEMENT_FUNCTION(13, Chapters, chapter3)
 	if (savepoint.action == kActionDefault) {
 		// Setup for chapter 3 in case it hasn't been done before
 		if (getProgress().chapter != kChapter3) {
@@ -847,7 +842,7 @@ IMPLEMENT_FUNCTION(Chapters, chapter3, 13)
 }
 
 //////////////////////////////////////////////////////////////////////////
-IMPLEMENT_FUNCTION(Chapters, chapter3Init, 14)
+IMPLEMENT_FUNCTION(14, Chapters, chapter3Init)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -890,17 +885,17 @@ IMPLEMENT_FUNCTION(Chapters, chapter3Init, 14)
 }
 
 //////////////////////////////////////////////////////////////////////////
-IMPLEMENT_FUNCTION(Chapters, chapter3Handler, 15)
+IMPLEMENT_FUNCTION(15, Chapters, chapter3Handler)
 	error("Chapters: callback function chapter3Handler not implemented!");
 }
 
 //////////////////////////////////////////////////////////////////////////
-IMPLEMENT_FUNCTION(Chapters, function16, 16)
+IMPLEMENT_FUNCTION(16, Chapters, function16)
 	error("Chapters: callback function 16 not implemented!");
 }
 
 //////////////////////////////////////////////////////////////////////////
-IMPLEMENT_FUNCTION(Chapters, chapter4, 17)
+IMPLEMENT_FUNCTION(17, Chapters, chapter4)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -938,7 +933,7 @@ IMPLEMENT_FUNCTION(Chapters, chapter4, 17)
 }
 
 //////////////////////////////////////////////////////////////////////////
-IMPLEMENT_FUNCTION(Chapters, chapter4Init, 18)
+IMPLEMENT_FUNCTION(18, Chapters, chapter4Init)
 	if (savepoint.action != kActionDefault)
 		return;
 
@@ -984,12 +979,12 @@ IMPLEMENT_FUNCTION(Chapters, chapter4Init, 18)
 }
 
 //////////////////////////////////////////////////////////////////////////
-IMPLEMENT_FUNCTION(Chapters, chapter4Handler, 19)
+IMPLEMENT_FUNCTION(19, Chapters, chapter4Handler)
 	error("Chapters: callback function 19 not implemented!");
 }
 
 //////////////////////////////////////////////////////////////////////////
-IMPLEMENT_FUNCTION(Chapters, chapter5, 20)
+IMPLEMENT_FUNCTION(20, Chapters, chapter5)
 	if (savepoint.action == kActionDefault) {
 		// Setup for chapter 5 in case it hasn't been done before
 		if (getProgress().chapter != kChapter5) {
@@ -1006,7 +1001,7 @@ IMPLEMENT_FUNCTION(Chapters, chapter5, 20)
 }
 
 //////////////////////////////////////////////////////////////////////////
-IMPLEMENT_FUNCTION(Chapters, chapter5Init, 21)
+IMPLEMENT_FUNCTION(21, Chapters, chapter5Init)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -1102,7 +1097,7 @@ IMPLEMENT_FUNCTION(Chapters, chapter5Init, 21)
 }
 
 //////////////////////////////////////////////////////////////////////////
-IMPLEMENT_FUNCTION(Chapters, chapter5Handler, 22)
+IMPLEMENT_FUNCTION(22, Chapters, chapter5Handler)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -1157,6 +1152,10 @@ IMPLEMENT_FUNCTION(Chapters, chapter5Handler, 22)
 	}
 }
 
+
+//////////////////////////////////////////////////////////////////////////
+// Private functions
+//////////////////////////////////////////////////////////////////////////
 void Chapters::enterExitStation(const SavePoint &savepoint, bool isEnteringStation) {
 	if (savepoint.action == kActionDefault) {
 		if (!ENTITY_PARAM(0, 2) && !ENTITY_PARAM(0, 3)) {
@@ -1227,6 +1226,7 @@ void Chapters::enterExitStation(const SavePoint &savepoint, bool isEnteringStati
 	}
 }
 
+//////////////////////////////////////////////////////////////////////////
 void Chapters::enterExitHelper(const SavePoint &savepoint, bool isEnteringStation) {
 	EXPOSE_PARAMS(EntityData::EntityParametersSIIS);
 

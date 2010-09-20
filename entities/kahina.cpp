@@ -72,38 +72,23 @@ Kahina::Kahina(LastExpressEngine *engine) : Entity(engine, kEntityKahina) {
 	ADD_CALLBACK_FUNCTION(Kahina, chapter5);
 }
 
-/**
- * Resets the entity
- */
-IMPLEMENT_FUNCTION(Kahina, reset, 1)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(1, Kahina, reset)
 	Entity::reset(savepoint);
 }
 
-/**
- * Plays sound
- *
- * @param param1 The sound filename
- */
-IMPLEMENT_FUNCTION_S(Kahina, playSound, 2)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_S(2, Kahina, playSound)
 	Entity::playSound(savepoint);
 }
 
-/**
- * Save the game
- *
- * @param param1 The SavegameType for the savegame
- * @param param2 The EventIndex for the savegame
- */
-IMPLEMENT_FUNCTION_II(Kahina, savegame, 3)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_II(3, Kahina, savegame, SavegameType, uint32)
 	Entity::savegame(savepoint);
 }
 
-/**
- * Updates parameter 2 using time value
- *
- * @param param1 The time to add
- */
-IMPLEMENT_FUNCTION_I(Kahina, updateFromTime, 4)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_I(4, Kahina, updateFromTime, uint32)
 	if (savepoint.action == kAction137503360) {
 		ENTITY_PARAM(0, 2) = 1;
 		CALLBACK_ACTION();
@@ -112,31 +97,23 @@ IMPLEMENT_FUNCTION_I(Kahina, updateFromTime, 4)
 	Entity::updateFromTime(savepoint);
 }
 
-/**
- * Updates parameter 2 using ticks value
- *
- * @param savepoint The savepoint
- *                    - number of ticks to add
- */
-IMPLEMENT_FUNCTION_NOSETUP(Kahina, updateFromTicks, 5)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_NOSETUP(5, Kahina, updateFromTicks)
 	Entity::updateFromTicks(savepoint);
 }
 
-IMPLEMENT_FUNCTION_I(Kahina, function6, 6)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_I(6, Kahina, function6, TimeValue)
 	error("Kahina: callback function 6 not implemented!");
 }
 
-IMPLEMENT_FUNCTION_II(Kahina, function7, 7)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_II(7 ,Kahina, function7, CarIndex, EntityPosition)
 	error("Kahina: callback function 7 not implemented!");
 }
 
-/**
- * Updates the entity
- *
- * @param param1 The car
- * @param param2 The entity position
- */
-IMPLEMENT_FUNCTION_II(Kahina, updateEntity, 8)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_II(8, Kahina, updateEntity, CarIndex, EntityPosition)
 	if (savepoint.action == kActionExcuseMeCath) {
 		if (getEvent(kEventKronosConversation) || getEvent(kEventKronosConversationFirebird)) {
 			getSound()->playSound(kEntityPlayer, rnd(2) ? "CAT1019" : "CAT1019A");
@@ -149,17 +126,13 @@ IMPLEMENT_FUNCTION_II(Kahina, updateEntity, 8)
 	Entity::updateEntity(savepoint, true);
 }
 
-/**
- * Handles entering/exiting a compartment.
- *
- * @param seq1   The sequence to draw
- * @param param4 The compartment
- */
-IMPLEMENT_FUNCTION_SI(Kahina, enterExitCompartment, 9)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_SI(9, Kahina, enterExitCompartment, ObjectIndex)
 	Entity::enterExitCompartment(savepoint);
 }
 
-IMPLEMENT_FUNCTION(Kahina, chapter1, 10)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(10, Kahina, chapter1)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -179,7 +152,8 @@ IMPLEMENT_FUNCTION(Kahina, chapter1, 10)
 	}
 }
 
-IMPLEMENT_FUNCTION(Kahina, chapter1Handler, 11)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(11, Kahina, chapter1Handler)
 	if (savepoint.action != kActionNone)
 		return;
 
@@ -190,7 +164,8 @@ IMPLEMENT_FUNCTION(Kahina, chapter1Handler, 11)
 		setup_function12();
 }
 
-IMPLEMENT_FUNCTION(Kahina, function12, 12)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(12, Kahina, function12)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -237,7 +212,8 @@ IMPLEMENT_FUNCTION(Kahina, function12, 12)
 	}
 }
 
-IMPLEMENT_FUNCTION(Kahina, function13, 13)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(13, Kahina, function13)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -277,7 +253,8 @@ label_callback:
 	}
 }
 
-IMPLEMENT_FUNCTION(Kahina, function14, 14)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(14, Kahina, function14)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -300,11 +277,13 @@ IMPLEMENT_FUNCTION(Kahina, function14, 14)
 	}
 }
 
-IMPLEMENT_FUNCTION(Kahina, function15, 15)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(15, Kahina, function15)
 	error("Kahina: callback function 15 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Kahina, chapter2, 16)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(16, Kahina, chapter2)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -328,7 +307,8 @@ IMPLEMENT_FUNCTION(Kahina, chapter2, 16)
 	}
 }
 
-IMPLEMENT_FUNCTION(Kahina, chapter2Handler, 17)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(17, Kahina, chapter2Handler)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -456,7 +436,8 @@ label_callback_3:
 	}
 }
 
-IMPLEMENT_FUNCTION(Kahina, chapter3, 18)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(18, Kahina, chapter3)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -478,13 +459,8 @@ IMPLEMENT_FUNCTION(Kahina, chapter3, 18)
 	}
 }
 
-/**
- * Update the entity, handling excuse me events and resetting the entity state after the argument with Anna in the baggage car
- *
- * @param param1 The car index
- * @param param2 The entity position
- */
-IMPLEMENT_FUNCTION_II(Kahina, function19, 19)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_II(19, Kahina, function19, CarIndex, EntityPosition)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -515,15 +491,18 @@ IMPLEMENT_FUNCTION_II(Kahina, function19, 19)
 	}
 }
 
-IMPLEMENT_FUNCTION(Kahina, chapter3Handler, 20)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(20, Kahina, chapter3Handler)
 	error("Kahina: callback function 20 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Kahina, function21, 21)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(21, Kahina, function21)
 	error("Kahina: callback function 21 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Kahina, function22, 22)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(22, Kahina, function22)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -555,23 +534,28 @@ IMPLEMENT_FUNCTION(Kahina, function22, 22)
 	}
 }
 
-IMPLEMENT_FUNCTION(Kahina, function23, 23)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(23, Kahina, function23)
 	error("Kahina: callback function 23 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Kahina, function24, 24)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(24, Kahina, function24)
 	error("Kahina: callback function 24 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Kahina, function25, 25)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(25, Kahina, function25)
 	error("Kahina: callback function 25 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Kahina, function26, 26)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(26, Kahina, function26)
 	error("Kahina: callback function 26 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Kahina, function27, 27)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(27, Kahina, function27)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -613,12 +597,14 @@ IMPLEMENT_FUNCTION(Kahina, function27, 27)
 	}
 }
 
-IMPLEMENT_FUNCTION(Kahina, chapter4, 28)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(28, Kahina, chapter4)
 	if (savepoint.action == kActionDefault)
 		getEntities()->clearSequences(kEntityKahina);
 }
 
-IMPLEMENT_FUNCTION(Kahina, chapter5, 29)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(29, Kahina, chapter5)
 	if (savepoint.action == kActionDefault)
 		getEntities()->clearSequences(kEntityKahina);
 }

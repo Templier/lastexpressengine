@@ -38,28 +38,116 @@ public:
 	Chapters(LastExpressEngine *engine);
 	~Chapters() {};
 
-	// Setup
-	DECLARE_FUNCTION_II(savegame)
-	DECLARE_FUNCTION_SI(enterStation)
-	DECLARE_FUNCTION_S(exitStation)
+	/**
+	 * Saves the game
+	 *
+	 * @param savegameType The type of the savegame
+	 * @param param        The param for the savegame (EventIndex or TimeValue)
+	 */
+	DECLARE_FUNCTION(savegame, SavegameType savegameType, uint32 param)
+
+	/**
+	 * Exit a train station
+	 *
+	 * @param stationName The name of the train station
+	 * @param index       The index of the train station
+	 */
+	DECLARE_FUNCTION(enterStation, const char *stationName, uint32 index)
+
+	/**
+	 * Exit a train station
+	 *
+	 * @param stationName The name of the train station
+	 */
+	DECLARE_FUNCTION(exitStation, const char *stationName)
+
+	/**
+	 * Setup Chapter 1
+	 */
 	DECLARE_FUNCTION(chapter1)
+
+	/**
+	 * Reset main entities
+	 */
 	DECLARE_FUNCTION(resetMainEntities)
+
 	DECLARE_FUNCTION(function6)
+
+	/**
+	 * Init Chapter 1 data
+	 */
 	DECLARE_FUNCTION(chapter1Init)
+
+	/**
+	 * Handle Chapter 1 events
+	 */
 	DECLARE_FUNCTION(chapter1Handler)
+
+	/**
+	 * Handle end of Chapter 1
+	 */
 	DECLARE_FUNCTION(chapter1End)
+
+	/**
+	 * Setup Chapter 2
+	 */
 	DECLARE_FUNCTION(chapter2)
+
+	/**
+	 * Init Chapter 2 data
+	 */
 	DECLARE_FUNCTION(chapter2Init)
+
+	/**
+	 * Handle Chapter 2 events
+	 */
 	DECLARE_FUNCTION(chapter2Handler)
+
+	/**
+	 * Setup Chapter 3
+	 */
 	DECLARE_FUNCTION(chapter3)
+
+	/**
+	 * Init Chapter 3 data
+	 */
 	DECLARE_FUNCTION(chapter3Init)
+
+	/**
+	 * Handle Chapter 3 events
+	 */
 	DECLARE_FUNCTION(chapter3Handler)
+
 	DECLARE_FUNCTION(function16)
+
+	/**
+	 * Setup Chapter 4
+	 */
 	DECLARE_FUNCTION(chapter4)
+
+	/**
+	 * Init Chapter 4 data
+	 */
 	DECLARE_FUNCTION(chapter4Init)
+
+	/**
+	 * Handle Chapter 4 events
+	 */
 	DECLARE_FUNCTION(chapter4Handler)
+
+	/**
+	 * Setup Chapter 5
+	 */
 	DECLARE_FUNCTION(chapter5)
+
+	/**
+	 * Init Chapter 5 data
+	 */
 	DECLARE_FUNCTION(chapter5Init)
+
+	/**
+	 * Handle Chapter 5 events
+	 */
 	DECLARE_FUNCTION(chapter5Handler)
 
 private:

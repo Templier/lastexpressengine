@@ -38,25 +38,81 @@ public:
 	Verges(LastExpressEngine *engine);
 	~Verges() {};
 
-	// Setup
+	/**
+	 * Resets the entity
+	 */
 	DECLARE_FUNCTION(reset)
-	DECLARE_FUNCTION_S(draw)
+
+	/**
+	 * Draws the entity
+	 *
+	 * @param sequence The sequence to draw
+	 */
+	DECLARE_FUNCTION(draw, const char* sequence)
+
+	/**
+	 * Process callback action when the entity direction is not kDirectionRight
+	 */
 	DECLARE_FUNCTION(callbackActionOnDirection)
-	DECLARE_FUNCTION_S(playSound)
+
+	/**
+	 * Plays sound
+	 *
+	 * @param filename The sound filename
+	 */
+	DECLARE_FUNCTION(playSound, const char* filename)
+
+	/**
+	 * Plays sound
+	 *
+	 * @param savepoint The savepoint
+	 *                    - the sound filename
+	 */
 	DECLARE_FUNCTION_NOSETUP(playSound16)
+
+	/**
+	 * Process callback action when somebody is standing in the restaurant or salon.
+	 */
 	DECLARE_FUNCTION(callbackActionRestaurantOrSalon)
-	DECLARE_FUNCTION_II(savegame)
-	DECLARE_FUNCTION_II(updateEntity)
-	DECLARE_FUNCTION_S(function9)
-	DECLARE_FUNCTION_IIS(function10)
+
+	/**
+	 * Saves the game
+	 *
+	 * @param savegameType The type of the savegame
+	 * @param param        The param for the savegame (EventIndex or TimeValue)
+	 */
+	DECLARE_FUNCTION(savegame, SavegameType savegameType, uint32 param)
+
+	/**
+	 * Updates the entity
+	 *
+	 * @param index          The car
+	 * @param entityPosition The entity position
+	 */
+	DECLARE_FUNCTION(updateEntity, CarIndex index, EntityPosition entityPosition)
+
+	DECLARE_FUNCTION(function9, const char *soundName)
+	DECLARE_FUNCTION(function10, CarIndex car, EntityPosition entityPosition, const char *soundName)
 	DECLARE_FUNCTION(function11)
 	DECLARE_FUNCTION(function12)
-	DECLARE_FUNCTION_I(function13)
-	DECLARE_FUNCTION_I(updateFromTime)
-	DECLARE_FUNCTION_IS(function15)
-	DECLARE_FUNCTION_ISS(function16)
+	DECLARE_FUNCTION(function13, bool)
+
+	/**
+	 * Updates parameter 2 using time value
+	 *
+	 * @param time The time to add
+	 */
+	DECLARE_FUNCTION(updateFromTime, uint32 time)
+
+	DECLARE_FUNCTION(function15, EntityIndex entity, const char *soundName)
+	DECLARE_FUNCTION(function16, EntityIndex entityIndex, const char *soundName1, const char *soundName2)
 	DECLARE_FUNCTION(function17)
+
+	/**
+	 * Setup Chapter 1
+	 */
 	DECLARE_FUNCTION(chapter1)
+
 	DECLARE_FUNCTION_NOSETUP(talkHarem)
 	DECLARE_FUNCTION(talkPassengerList)
 	DECLARE_FUNCTION(talkGendarmes)
@@ -64,21 +120,56 @@ public:
 	DECLARE_FUNCTION(function23)
 	DECLARE_FUNCTION(policeGettingOffTrain)
 	DECLARE_FUNCTION(function25)
+
+	/**
+	 * Handle Chapter 1 events
+	 */
 	DECLARE_FUNCTION(chapter1Handler)
+
+	/**
+	 * Setup Chapter 2
+	 */
 	DECLARE_FUNCTION(chapter2)
+
+	/**
+	 * Handle Chapter 2 events
+	 */
 	DECLARE_FUNCTION(chapter2Handler)
+
+	/**
+	 * Setup Chapter 3
+	 */
 	DECLARE_FUNCTION(chapter3)
-	DECLARE_FUNCTION_S(function30)
+
+	DECLARE_FUNCTION(function30, const char *soundName)
 	DECLARE_FUNCTION(function31)
 	DECLARE_FUNCTION(function32)
 	DECLARE_FUNCTION(function33)
 	DECLARE_FUNCTION(function34)
 	DECLARE_FUNCTION(function35)
+
+	/**
+	 * Setup Chapter 4
+	 */
 	DECLARE_FUNCTION(chapter4)
+
+	/**
+	 * Handle Chapter 4 events
+	 */
 	DECLARE_FUNCTION(chapter4Handler)
+
 	DECLARE_FUNCTION(function38)
+
+	/**
+	 * Setup Chapter 5
+	 */
 	DECLARE_FUNCTION(chapter5)
+
+	/**
+	 * Handle Chapter 5 events
+	 */
 	DECLARE_FUNCTION(chapter5Handler)
+
 	DECLARE_FUNCTION(function41)
 	DECLARE_FUNCTION(function42)
 

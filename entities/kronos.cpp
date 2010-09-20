@@ -43,7 +43,7 @@ namespace LastExpress {
 Kronos::Kronos(LastExpressEngine *engine) : Entity(engine, kEntityKronos) {
 	ADD_CALLBACK_FUNCTION(Kronos, reset);
 	ADD_CALLBACK_FUNCTION(Kronos, savegame);
-	ADD_CALLBACK_FUNCTION(Kronos, function3);
+	ADD_CALLBACK_FUNCTION(Kronos, updateEntity);
 	ADD_CALLBACK_FUNCTION(Kronos, playSound);
 	ADD_CALLBACK_FUNCTION(Kronos, updateFromTime);
 	ADD_CALLBACK_FUNCTION(Kronos, updateFromTicks);
@@ -68,62 +68,38 @@ Kronos::Kronos(LastExpressEngine *engine) : Entity(engine, kEntityKronos) {
 	ADD_CALLBACK_FUNCTION(Kronos, chapter5);
 }
 
-/**
- * Resets the entity
- */
-IMPLEMENT_FUNCTION(Kronos, reset, 1)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(1, Kronos, reset)
 	Entity::reset(savepoint);
 }
 
-/**
- * Save the game
- *
- * @param param1 The SavegameType for the savegame
- * @param param2 The EventIndex for the savegame
- */
-IMPLEMENT_FUNCTION_II(Kronos, savegame, 2)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_II(2, Kronos, savegame, SavegameType, uint32)
 	Entity::savegame(savepoint);
 }
 
-/**
- * Updates the entity
- *
- * @param param1 The car
- * @param param2 The entity position
- */
-IMPLEMENT_FUNCTION_II(Kronos, function3, 3)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_II(3, Kronos, updateEntity, CarIndex, EntityPosition)
 	Entity::updateEntity(savepoint);
 }
 
-/**
- * Plays sound
- *
- * @param param1 The sound filename
- */
-IMPLEMENT_FUNCTION_NOSETUP(Kronos, playSound, 4)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_NOSETUP(4, Kronos, playSound)
 	Entity::playSound(savepoint);
 }
 
-/**
- * Updates parameter 2 using time value
- *
- * @param param1 The time to add
- */
-IMPLEMENT_FUNCTION_NOSETUP(Kronos, updateFromTime, 5)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_NOSETUP(5, Kronos, updateFromTime)
 	Entity::updateFromTime(savepoint);
 }
 
-/**
- * Updates parameter 2 using ticks value
- *
- * @param savepoint The savepoint
- *                    - number of ticks to add
- */
-IMPLEMENT_FUNCTION_NOSETUP(Kronos, updateFromTicks, 6)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_NOSETUP(6, Kronos, updateFromTicks)
 	Entity::updateFromTicks(savepoint);
 }
 
-IMPLEMENT_FUNCTION(Kronos, chapter1, 7)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(7, Kronos, chapter1)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -143,7 +119,8 @@ IMPLEMENT_FUNCTION(Kronos, chapter1, 7)
 	}
 }
 
-IMPLEMENT_FUNCTION(Kronos, chapter1Handler, 8)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(8, Kronos, chapter1Handler)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -162,7 +139,8 @@ IMPLEMENT_FUNCTION(Kronos, chapter1Handler, 8)
 	}
 }
 
-IMPLEMENT_FUNCTION(Kronos, function9, 9)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(9, Kronos, function9)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -183,7 +161,8 @@ IMPLEMENT_FUNCTION(Kronos, function9, 9)
 	}
 }
 
-IMPLEMENT_FUNCTION(Kronos, function10, 10)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(10, Kronos, function10)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -207,7 +186,8 @@ IMPLEMENT_FUNCTION(Kronos, function10, 10)
 	}
 }
 
-IMPLEMENT_FUNCTION(Kronos, function11, 11)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(11, Kronos, function11)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -226,12 +206,14 @@ IMPLEMENT_FUNCTION(Kronos, function11, 11)
 	}
 }
 
-IMPLEMENT_FUNCTION(Kronos, chapter2, 12)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(12, Kronos, chapter2)
 	if (savepoint.action == kActionDefault)
 		getEntities()->clearSequences(kEntityKronos);
 }
 
-IMPLEMENT_FUNCTION(Kronos, chapter3, 13)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(13, Kronos, chapter3)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -255,7 +237,8 @@ IMPLEMENT_FUNCTION(Kronos, chapter3, 13)
 	}
 }
 
-IMPLEMENT_FUNCTION(Kronos, chapter3Handler, 14)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(14, Kronos, chapter3Handler)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -286,11 +269,13 @@ IMPLEMENT_FUNCTION(Kronos, chapter3Handler, 14)
 	}
 }
 
-IMPLEMENT_FUNCTION(Kronos, function15, 15)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(15, Kronos, function15)
 	error("Kronos: callback function 15 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Kronos, function16, 16)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(16 ,Kronos, function16)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -314,7 +299,8 @@ IMPLEMENT_FUNCTION(Kronos, function16, 16)
 	}
 }
 
-IMPLEMENT_FUNCTION(Kronos, function17, 17)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(17, Kronos, function17)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -325,7 +311,7 @@ IMPLEMENT_FUNCTION(Kronos, function17, 17)
 		getData()->car = kCarRedSleeping;
 
 		setCallback(1);
-		setup_function3(kCarGreenSleeping, kPosition_9270);
+		setup_updateEntity(kCarGreenSleeping, kPosition_9270);
 		break;
 
 	case kActionCallback:
@@ -335,7 +321,8 @@ IMPLEMENT_FUNCTION(Kronos, function17, 17)
 	}
 }
 
-IMPLEMENT_FUNCTION(Kronos, function18, 18)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(18, Kronos, function18)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -372,15 +359,18 @@ IMPLEMENT_FUNCTION(Kronos, function18, 18)
 	}
 }
 
-IMPLEMENT_FUNCTION(Kronos, function19, 19)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(19, Kronos, function19)
 	error("Kronos: callback function 19 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Kronos, function20, 20)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(20, Kronos, function20)
 	error("Kronos: callback function 20 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Kronos, function21, 21)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(21, Kronos, function21)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -421,11 +411,13 @@ IMPLEMENT_FUNCTION(Kronos, function21, 21)
 	}
 }
 
-IMPLEMENT_FUNCTION(Kronos, function22, 22)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(22, Kronos, function22)
 	error("Kronos: callback function 22 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Kronos, function23, 23)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(23, Kronos, function23)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -458,12 +450,14 @@ IMPLEMENT_FUNCTION(Kronos, function23, 23)
 	}
 }
 
-IMPLEMENT_FUNCTION(Kronos, chapter4, 24)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(24, Kronos, chapter4)
 	if (savepoint.action == kActionDefault)
 		getEntities()->clearSequences(kEntityKronos);
 }
 
-IMPLEMENT_FUNCTION(Kronos, chapter5, 25)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(25, Kronos, chapter5)
 	if (savepoint.action == kActionDefault)
 		getEntities()->clearSequences(kEntityKronos);
 }

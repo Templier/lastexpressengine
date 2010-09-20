@@ -38,39 +38,148 @@ public:
 	Tatiana(LastExpressEngine *engine);
 	~Tatiana() {};
 
-	// Setup
+	/**
+	 * Resets the entity
+	 */
 	DECLARE_FUNCTION(reset)
-	DECLARE_FUNCTION_S(playSound)
-	DECLARE_FUNCTION_S(draw)
-	DECLARE_FUNCTION_SII(updatePosition)
-	DECLARE_FUNCTION_SI(enterExitCompartment)
-	DECLARE_FUNCTION_SI(enterExitCompartment2)
-	DECLARE_FUNCTION_SIIS(callSavepoint)
+
+	/**
+	 * Plays sound
+	 *
+	 * @param filename The sound filename
+	 */
+	DECLARE_FUNCTION(playSound, const char* filename)
+
+	/**
+	 * Draws the entity
+	 *
+	 * @param sequence The sequence to draw
+	 */
+	DECLARE_FUNCTION(draw, const char* sequence)
+
+	/**
+	 * Updates the position
+	 *
+	 * @param sequence1      The sequence to draw
+	 * @param car            The car
+	 * @param position       The position
+	 */
+	DECLARE_FUNCTION(updatePosition, const char* sequence1, CarIndex car, Position position)
+
+	/**
+	 * Handles entering/exiting a compartment.
+	 *
+	 * @param sequence    The sequence to draw
+	 * @param compartment The compartment
+	 */
+	DECLARE_FUNCTION(enterExitCompartment, const char* sequence, ObjectIndex compartment)
+
+	/**
+	 * Handles entering/exiting a compartment and updates position/play animation
+	 *
+	 * @param sequence    The sequence to draw
+	 * @param compartment The compartment
+	 */
+	DECLARE_FUNCTION(enterExitCompartment2, const char* sequence, ObjectIndex compartment)
+
+	/**
+	 * Call a savepoint (or draw sequence in default case)
+	 *
+	 * @param sequence1   The sequence to draw in the default case
+	 * @param entity      The entity
+	 * @param action      The action
+	 * @param sequence2   The sequence name for the savepoint
+	 */
+	DECLARE_FUNCTION(callSavepoint, const char* sequence1, EntityIndex entity, ActionIndex action, const char* sequence2)
+
+	/**
+	 * Process callback action when the entity direction is not kDirectionRight
+	 */
 	DECLARE_FUNCTION(callbackActionOnDirection)
+
+	/**
+	 * Updates parameter 2 using ticks value
+	 *
+	 * @param savepoint The savepoint
+	 *                    - ticks to add
+	 */
 	DECLARE_FUNCTION_NOSETUP(updateFromTicks)
-	DECLARE_FUNCTION_I(updateFromTime)
+
+	/**
+	 * Updates parameter 2 using time value
+	 *
+	 * @param time The time to add
+	 */
+	DECLARE_FUNCTION(updateFromTime, uint32 time)
+
+	/**
+	 * Process callback action when somebody is standing in the restaurant or salon.
+	 */
 	DECLARE_FUNCTION(callbackActionRestaurantOrSalon)
-	DECLARE_FUNCTION_II(savegame)
-	DECLARE_FUNCTION_II(updateEntity)
+
+	/**
+	 * Saves the game
+	 *
+	 * @param savegameType The type of the savegame
+	 * @param param        The param for the savegame (EventIndex or TimeValue)
+	 */
+	DECLARE_FUNCTION(savegame, SavegameType savegameType, uint32 param)
+
+	/**
+	 * Updates the entity
+	 *
+	 * @param index          The car
+	 * @param entityPosition The entity position
+	 */
+	DECLARE_FUNCTION(updateEntity, CarIndex index, EntityPosition entityPosition)
+
 	DECLARE_FUNCTION(function14)
 	DECLARE_FUNCTION(function15)
-	DECLARE_FUNCTION_I(function16)
+	DECLARE_FUNCTION(function16, uint32)
+
+	/**
+	 * Setup Chapter 1
+	 */
 	DECLARE_FUNCTION(chapter1)
+
 	DECLARE_FUNCTION(function18)
+
+	/**
+	 * Handle Chapter 1 events
+	 */
 	DECLARE_FUNCTION(chapter1Handler)
+
 	DECLARE_FUNCTION(function20)
 	DECLARE_FUNCTION(function21)
 	DECLARE_FUNCTION(function22)
 	DECLARE_FUNCTION(function23)
 	DECLARE_FUNCTION(function24)
+
+	/**
+	 * Setup Chapter 2
+	 */
 	DECLARE_FUNCTION(chapter2)
+
+	/**
+	 * Handle Chapter 2 events
+	 */
 	DECLARE_FUNCTION(chapter2Handler)
+
 	DECLARE_FUNCTION(function27)
 	DECLARE_FUNCTION(function28)
 	DECLARE_FUNCTION(function29)
 	DECLARE_FUNCTION(function30)
+
+	/**
+	 * Setup Chapter 3
+	 */
 	DECLARE_FUNCTION(chapter3)
+
+	/**
+	 * Handle Chapter 3 events
+	 */
 	DECLARE_FUNCTION(chapter3Handler)
+
 	DECLARE_FUNCTION(function33)
 	DECLARE_FUNCTION(function34)
 	DECLARE_FUNCTION(function35)
@@ -81,8 +190,17 @@ public:
 	DECLARE_FUNCTION(function40)
 	DECLARE_FUNCTION(function41)
 	DECLARE_FUNCTION(function42)
+
+	/**
+	 * Setup Chapter 4
+	 */
 	DECLARE_FUNCTION(chapter4)
+
+	/**
+	 * Handle Chapter 4 events
+	 */
 	DECLARE_FUNCTION(chapter4Handler)
+
 	DECLARE_FUNCTION(function45)
 	DECLARE_FUNCTION(function46)
 	DECLARE_FUNCTION(function47)
@@ -90,8 +208,17 @@ public:
 	DECLARE_FUNCTION(function49)
 	DECLARE_FUNCTION(function50)
 	DECLARE_FUNCTION(function51)
+
+	/**
+	 * Setup Chapter 5
+	 */
 	DECLARE_FUNCTION(chapter5)
+
+	/**
+	 * Handle Chapter 5 events
+	 */
 	DECLARE_FUNCTION(chapter5Handler)
+
 	DECLARE_FUNCTION(function54)
 	DECLARE_FUNCTION(function55)
 };

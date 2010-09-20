@@ -72,48 +72,28 @@ Vesna::Vesna(LastExpressEngine *engine) : Entity(engine, kEntityVesna) {
 	ADD_NULL_FUNCTION();
 }
 
-/**
- * Resets the entity
- */
-IMPLEMENT_FUNCTION(Vesna, reset, 1)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(1, Vesna, reset)
 	Entity::reset(savepoint);
 }
 
-/**
- * Plays sound
- *
- * @param param1 The sound filename
- */
-IMPLEMENT_FUNCTION_S(Vesna, playSound, 2)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_S(2, Vesna, playSound)
 	Entity::playSound(savepoint);
 }
 
-/**
- * Handles entering/exiting a compartment.
- *
- * @param seq1   The sequence to draw
- * @param param4 The compartment
- */
-IMPLEMENT_FUNCTION_SI(Vesna, enterExitCompartment, 3)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_SI(3, Vesna, enterExitCompartment, ObjectIndex)
 	Entity::enterExitCompartment(savepoint);
 }
 
-/**
- * Draws the entity
- *
- * @param seq1 The sequence to draw
- */
-IMPLEMENT_FUNCTION_S(Vesna, draw, 4)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_S(4, Vesna, draw)
 	Entity::draw(savepoint);
 }
 
-/**
- * Updates the entity
- *
- * @param param1 The car
- * @param param2 The entity position
- */
-IMPLEMENT_FUNCTION_II(Vesna, updateEntity, 5)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_II(5, Vesna, updateEntity, CarIndex, EntityPosition)
 	if (savepoint.action == kActionExcuseMeCath) {
 		getSound()->playSound(kEntityPlayer, rnd(2) ? "CAT10150" : "CAT1015A");
 
@@ -123,22 +103,13 @@ IMPLEMENT_FUNCTION_II(Vesna, updateEntity, 5)
 	Entity::updateEntity(savepoint, true);
 }
 
-/**
- * Updates parameter 2 using time value
- *
- * @param param1 The time to add
- */
-IMPLEMENT_FUNCTION_I(Vesna, updateFromTime, 6)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_I(6, Vesna, updateFromTime, uint32)
 	Entity::updateFromTime(savepoint);
 }
 
-/**
- * Updates the entity
- *
- * @param param1 The car
- * @param param2 The entity position
- */
-IMPLEMENT_FUNCTION_II(Vesna, updateEntity2, 7)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_II(7, Vesna, updateEntity2, CarIndex, EntityPosition)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -167,32 +138,24 @@ IMPLEMENT_FUNCTION_II(Vesna, updateEntity2, 7)
 	}
 }
 
-/**
- * Process callback action when somebody is standing in the restaurant or salon.
- */
-IMPLEMENT_FUNCTION(Vesna, callbackActionRestaurantOrSalon, 8)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(8, Vesna, callbackActionRestaurantOrSalon)
 	Entity::callbackActionRestaurantOrSalon(savepoint);
 }
 
-/**
- * Process callback action when the entity direction is not kDirectionRight
- */
-IMPLEMENT_FUNCTION(Vesna, callbackActionOnDirection, 9)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(9, Vesna, callbackActionOnDirection)
 	Entity::callbackActionOnDirection(savepoint);
 }
 
-/**
- * Save the game
- *
- * @param param1 The SavegameType for the savegame
- * @param param2 The EventIndex for the savegame
- */
-IMPLEMENT_FUNCTION_II(Vesna, savegame, 10)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_II(10, Vesna, savegame, SavegameType, uint32)
 	Entity::savegame(savepoint);
 }
 
-IMPLEMENT_FUNCTION(Vesna, function11, 11)
-	// Expose parameters as IIIS and ignore the default exposed paremeters
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(11, Vesna, function11)
+	// Expose parameters as IIIS and ignore the default exposed parameters
 	EntityData::EntityParametersIIIS *parameters = (EntityData::EntityParametersIIIS*)_data->getCurrentParameters();
 
 	switch (savepoint.action) {
@@ -286,7 +249,8 @@ IMPLEMENT_FUNCTION(Vesna, function11, 11)
 	}
 }
 
-IMPLEMENT_FUNCTION(Vesna, chapter1, 12)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(12, Vesna, chapter1)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -305,7 +269,8 @@ IMPLEMENT_FUNCTION(Vesna, chapter1, 12)
 	}
 }
 
-IMPLEMENT_FUNCTION(Vesna, chapter1Handler, 13)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(13, Vesna, chapter1Handler)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -329,7 +294,8 @@ IMPLEMENT_FUNCTION(Vesna, chapter1Handler, 13)
 	}
 }
 
-IMPLEMENT_FUNCTION(Vesna, function14, 14)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(14, Vesna, function14)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -347,7 +313,8 @@ IMPLEMENT_FUNCTION(Vesna, function14, 14)
 	}
 }
 
-IMPLEMENT_FUNCTION(Vesna, function15, 15)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(15, Vesna, function15)
 	if (savepoint.action == kActionDefault) {
 		getData()->entityPosition = kPosition_3050;
 		getData()->location = kLocationInsideCompartment;
@@ -358,7 +325,8 @@ IMPLEMENT_FUNCTION(Vesna, function15, 15)
 	}
 }
 
-IMPLEMENT_FUNCTION(Vesna, chapter2, 16)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(16, Vesna, chapter2)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -380,7 +348,8 @@ IMPLEMENT_FUNCTION(Vesna, chapter2, 16)
 	}
 }
 
-IMPLEMENT_FUNCTION(Vesna, chapter2Handler, 17)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(17, Vesna, chapter2Handler)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -397,11 +366,13 @@ IMPLEMENT_FUNCTION(Vesna, chapter2Handler, 17)
 	}
 }
 
-IMPLEMENT_FUNCTION(Vesna, function18, 18)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(18, Vesna, function18)
 	error("Vesna: callback function 18 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Vesna, chapter3, 19)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(19, Vesna, chapter3)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -422,19 +393,23 @@ IMPLEMENT_FUNCTION(Vesna, chapter3, 19)
 	}
 }
 
-IMPLEMENT_FUNCTION(Vesna, chapter3Handler, 20)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(20, Vesna, chapter3Handler)
 	error("Vesna: callback function 20 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Vesna, function21, 21)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(21, Vesna, function21)
 	error("Vesna: callback function 21 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Vesna, function22, 22)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(22, Vesna, function22)
 	error("Vesna: callback function 22 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Vesna, function23, 23)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(23, Vesna, function23)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -477,7 +452,8 @@ IMPLEMENT_FUNCTION(Vesna, function23, 23)
 	}
 }
 
-IMPLEMENT_FUNCTION(Vesna, chapter4, 24)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(24, Vesna, chapter4)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -504,11 +480,13 @@ IMPLEMENT_FUNCTION(Vesna, chapter4, 24)
 	}
 }
 
-IMPLEMENT_FUNCTION(Vesna, function25, 25)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(25, Vesna, function25)
 	error("Vesna: callback function 25 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Vesna, function26, 26)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(26, Vesna, function26)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -560,7 +538,8 @@ IMPLEMENT_FUNCTION(Vesna, function26, 26)
 	}
 }
 
-IMPLEMENT_FUNCTION(Vesna, function27, 27)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(27, Vesna, function27)
 	if (savepoint.action == kActionDefault) {
 		getEntities()->clearSequences(kEntityVesna);
 		getObjects()->update(kObjectCompartmentG, kEntityPlayer, kLocation3, kCursorHandKnock, kCursorHand);
@@ -572,7 +551,8 @@ IMPLEMENT_FUNCTION(Vesna, function27, 27)
 	}
 }
 
-IMPLEMENT_FUNCTION(Vesna, chapter5, 28)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(28, Vesna, chapter5)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -591,7 +571,8 @@ IMPLEMENT_FUNCTION(Vesna, chapter5, 28)
 	}
 }
 
-IMPLEMENT_FUNCTION(Vesna, chapter5Handler, 29)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(29, Vesna, chapter5Handler)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -621,10 +602,9 @@ IMPLEMENT_FUNCTION(Vesna, chapter5Handler, 29)
 	}
 }
 
-IMPLEMENT_FUNCTION(Vesna, function30, 30)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(30, Vesna, function30)
 	error("Vesna: callback function 30 not implemented!");
 }
-
-IMPLEMENT_NULL_FUNCTION(Vesna, 31)
 
 } // End of namespace LastExpress

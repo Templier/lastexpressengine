@@ -533,11 +533,11 @@ public:
 	// Setup
 	void setup(ChapterIndex index);
 
-	virtual void setup_chapter1(uint param1 = 0, uint param2 = 0, uint param3 = 0, uint param4 = 0) = 0;
-	virtual void setup_chapter2(uint param1 = 0, uint param2 = 0, uint param3 = 0, uint param4 = 0) = 0;
-	virtual void setup_chapter3(uint param1 = 0, uint param2 = 0, uint param3 = 0, uint param4 = 0) = 0;
-	virtual void setup_chapter4(uint param1 = 0, uint param2 = 0, uint param3 = 0, uint param4 = 0) = 0;
-	virtual void setup_chapter5(uint param1 = 0, uint param2 = 0, uint param3 = 0, uint param4 = 0) = 0;
+	virtual void setup_chapter1() = 0;
+	virtual void setup_chapter2() = 0;
+	virtual void setup_chapter3() = 0;
+	virtual void setup_chapter4() = 0;
+	virtual void setup_chapter5() = 0;
 
 	// Serializable
 	void saveLoadWithSerializer(Common::Serializer &ser) { _data->saveLoadWithSerializer(ser); }

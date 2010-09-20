@@ -85,51 +85,28 @@ Servers0::Servers0(LastExpressEngine *engine) : Entity(engine, kEntityServers0) 
 	ADD_NULL_FUNCTION();
 }
 
-/**
- * Call a savepoint (or draw sequence in default case)
- *
- * @param seq1   The sequence to draw in the default case
- * @param param4 The entity
- * @param param5 The action
- * @param seq1   The sequence name for the savepoint
- */
-IMPLEMENT_FUNCTION_SIIS(Servers0, callSavepoint, 1)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_SIIS(1, Servers0, callSavepoint, EntityIndex, ActionIndex)
 	Entity::callSavepoint(savepoint, true);
 }
 
-/**
- * Updates parameter 2 using time value
- *
- * @param param1 The time to add
- */
-IMPLEMENT_FUNCTION_NOSETUP(Servers0, updateFromTime, 2)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_NOSETUP(2, Servers0, updateFromTime)
 	Entity::updateFromTime(savepoint);
 }
 
-/**
- * Draws the entity
- *
- * @param seq1 The sequence to draw
- */
-IMPLEMENT_FUNCTION_S(Servers0, draw, 3)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_S(3, Servers0, draw)
 	Entity::draw(savepoint, true);
 }
 
-/**
- * Updates the position
- *
- * @param seq1   The sequence to draw
- * @param param4 The car
- * @param param5 The entity position
- */
-IMPLEMENT_FUNCTION_NOSETUP(Servers0, updatePosition, 4)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_NOSETUP(4, Servers0, updatePosition)
 	Entity::updatePosition(savepoint, true);
 }
 
-/**
- * Process callback action when the entity direction is not kDirectionRight
- */
-IMPLEMENT_FUNCTION_NOSETUP(Servers0, callbackActionOnDirection, 5)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_NOSETUP(5, Servers0, callbackActionOnDirection)
 	EXPOSE_PARAMS(EntityData::EntityParametersIIII);
 
 	switch (savepoint.action) {
@@ -154,16 +131,13 @@ IMPLEMENT_FUNCTION_NOSETUP(Servers0, callbackActionOnDirection, 5)
 	}
 }
 
-/**
- * Plays sound
- *
- * @param param1 The sound filename
- */
-IMPLEMENT_FUNCTION_S(Servers0, playSound, 6)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_S(6, Servers0, playSound)
 	Entity::playSound(savepoint);
 }
 
-IMPLEMENT_FUNCTION(Servers0, function7, 7)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(7, Servers0, function7)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -203,11 +177,13 @@ IMPLEMENT_FUNCTION(Servers0, function7, 7)
 	}
 }
 
-IMPLEMENT_FUNCTION(Servers0, function8, 8)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(8, Servers0, function8)
 	serveTable(savepoint, "911", kEntityTables3, "010L", "010M", "913", &ENTITY_PARAM(1, 2));
 }
 
-IMPLEMENT_FUNCTION(Servers0, function9, 9)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(9, Servers0, function9)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -253,11 +229,13 @@ IMPLEMENT_FUNCTION(Servers0, function9, 9)
 	}
 }
 
-IMPLEMENT_FUNCTION(Servers0, function10, 10)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(10, Servers0, function10)
 	serveTable(savepoint, "916", kEntityTables4, "014E", "014F", "918", &ENTITY_PARAM(2, 3), false);
 }
 
-IMPLEMENT_FUNCTION(Servers0, chapter1, 11)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(11, Servers0, chapter1)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -291,39 +269,48 @@ IMPLEMENT_FUNCTION(Servers0, chapter1, 11)
 	}
 }
 
-IMPLEMENT_FUNCTION(Servers0, function12, 12)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(12, Servers0, function12)
 	handleServer(savepoint, "907", kEntityAnna, kAction268773672, &ENTITY_PARAM(0, 1));
 }
 
-IMPLEMENT_FUNCTION(Servers0, function13, 13)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(13, Servers0, function13)
 	handleServer(savepoint, "911", kEntityAugust, kAction268773672, &ENTITY_PARAM(0, 2), "010F");
 }
 
-IMPLEMENT_FUNCTION(Servers0, function14, 14)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(14, Servers0, function14)
 	handleServer(savepoint, "908", kEntityAnna, kAction170016384, &ENTITY_PARAM(0, 4));
 }
 
-IMPLEMENT_FUNCTION(Servers0, function15, 15)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(15, Servers0, function15)
 	handleServer(savepoint, "912", kEntityAugust, kAction170016384, &ENTITY_PARAM(0, 5));
 }
 
-IMPLEMENT_FUNCTION(Servers0, function16, 16)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(16, Servers0, function16)
 	serveTable(savepoint, "907", kEntityTables0, "001N", "001P", "909", &ENTITY_PARAM(0, 6));
 }
 
-IMPLEMENT_FUNCTION(Servers0, function17, 17)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(17, Servers0, function17)
 	serveTable(savepoint, "915", kEntityTables4, "014E", "014F", "917", &ENTITY_PARAM(1, 1), true, false, 67);
 }
 
-IMPLEMENT_FUNCTION(Servers0, function18, 18)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(18, Servers0, function18)
 	serveTable(savepoint, "911", kEntityTables3, "010L", "010H", "913", &ENTITY_PARAM(0, 7));
 }
 
-IMPLEMENT_FUNCTION(Servers0, function19, 19)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(19, Servers0, function19)
 	serveTable(savepoint, "911", kEntityTables3, "010L", "010M", "913", &ENTITY_PARAM(0, 8), true, true);
 }
 
-IMPLEMENT_FUNCTION(Servers0, chapter1Handler, 20)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(20, Servers0, chapter1Handler)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -401,7 +388,8 @@ label_continue2:
 	}
 }
 
-IMPLEMENT_FUNCTION(Servers0, function21, 21)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(21, Servers0, function21)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -416,7 +404,8 @@ IMPLEMENT_FUNCTION(Servers0, function21, 21)
 	}
 }
 
-IMPLEMENT_FUNCTION(Servers0, function22, 22)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(22, Servers0, function22)
 	if (savepoint.action == kActionDefault) {
 		getData()->entityPosition = kPosition_5900;
 		getData()->location = kLocationOutsideCompartment;
@@ -426,7 +415,8 @@ IMPLEMENT_FUNCTION(Servers0, function22, 22)
 	}
 }
 
-IMPLEMENT_FUNCTION(Servers0, chapter2, 23)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(23, Servers0, chapter2)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -450,7 +440,8 @@ IMPLEMENT_FUNCTION(Servers0, chapter2, 23)
 	}
 }
 
-IMPLEMENT_FUNCTION(Servers0, chapter2Handler, 24)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(24, Servers0, chapter2Handler)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -470,7 +461,8 @@ IMPLEMENT_FUNCTION(Servers0, chapter2Handler, 24)
 	}
 }
 
-IMPLEMENT_FUNCTION(Servers0, function25, 25)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(25, Servers0, function25)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -510,11 +502,13 @@ IMPLEMENT_FUNCTION(Servers0, function25, 25)
 	}
 }
 
-IMPLEMENT_FUNCTION(Servers0, function26, 26)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(26, Servers0, function26)
 	serveTable(savepoint, "957", kEntityTables0, "016E", "016D", "959", &ENTITY_PARAM(1, 4));
 }
 
-IMPLEMENT_FUNCTION(Servers0, chapter3, 27)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(27, Servers0, chapter3)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -542,7 +536,8 @@ IMPLEMENT_FUNCTION(Servers0, chapter3, 27)
 	}
 }
 
-IMPLEMENT_FUNCTION(Servers0, chapter3Handler, 28)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(28, Servers0, chapter3Handler)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -617,7 +612,8 @@ label_callback_5:
 	}
 }
 
-IMPLEMENT_FUNCTION(Servers0, augustAnnaDateOrder, 29)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(29, Servers0, augustAnnaDateOrder)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -662,7 +658,8 @@ IMPLEMENT_FUNCTION(Servers0, augustAnnaDateOrder, 29)
 	}
 }
 
-IMPLEMENT_FUNCTION(Servers0, function30, 30)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(30, Servers0, function30)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -707,7 +704,8 @@ IMPLEMENT_FUNCTION(Servers0, function30, 30)
 	}
 }
 
-IMPLEMENT_FUNCTION(Servers0, chapter4, 31)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(31, Servers0, chapter4)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -735,7 +733,8 @@ IMPLEMENT_FUNCTION(Servers0, chapter4, 31)
 	}
 }
 
-IMPLEMENT_FUNCTION(Servers0, chapter4Handler, 32)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(32, Servers0, chapter4Handler)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -829,7 +828,8 @@ label_callback_5:
 	}
 }
 
-IMPLEMENT_FUNCTION(Servers0, augustOrderSteak, 33)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(33, Servers0, augustOrderSteak)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -871,7 +871,8 @@ IMPLEMENT_FUNCTION(Servers0, augustOrderSteak, 33)
 	}
 }
 
-IMPLEMENT_FUNCTION(Servers0, augustServeDuck, 34)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(34, Servers0, augustServeDuck)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -913,11 +914,13 @@ IMPLEMENT_FUNCTION(Servers0, augustServeDuck, 34)
 	}
 }
 
-IMPLEMENT_FUNCTION(Servers0, function35, 35)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(35, Servers0, function35)
 	serveTable(savepoint, "911", kEntityTables3, "010L", "010M", "914", &ENTITY_PARAM(2, 1), false, true);
 }
 
-IMPLEMENT_FUNCTION(Servers0, chapter5, 36)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(36, Servers0, chapter5)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -937,13 +940,19 @@ IMPLEMENT_FUNCTION(Servers0, chapter5, 36)
 	}
 }
 
-IMPLEMENT_FUNCTION(Servers0, chapter5Handler, 37)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(37, Servers0, chapter5Handler)
 	if (savepoint.action == kActionProceedChapter5)
 		setup_nullfunction();
 }
 
-IMPLEMENT_NULL_FUNCTION(Servers0, 38)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_NULL_FUNCTION(38, Servers0)
 
+
+//////////////////////////////////////////////////////////////////////////
+// Private functions
+//////////////////////////////////////////////////////////////////////////
 void Servers0::handleServer(const SavePoint &savepoint, const char* name, EntityIndex entity, ActionIndex action, uint *parameter, const char* name2) {
 	switch (savepoint.action) {
 	default:
@@ -974,6 +983,7 @@ void Servers0::handleServer(const SavePoint &savepoint, const char* name, Entity
 	}
 }
 
+//////////////////////////////////////////////////////////////////////////
 void Servers0::serveTable(const SavePoint &savepoint, const char* seq1, EntityIndex entity, const char* seq2, const char* seq3, const char* seq4, uint *parameter, bool shouldUpdatePosition, bool pushSavepoint, Position position) {
 	switch (savepoint.action) {
 	default:

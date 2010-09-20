@@ -90,138 +90,78 @@ Rebecca::Rebecca(LastExpressEngine *engine) : Entity(engine, kEntityRebecca) {
 	ADD_NULL_FUNCTION();
 }
 
-/**
- * Resets the entity
- */
-IMPLEMENT_FUNCTION(Rebecca, reset, 1)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(1, Rebecca, reset)
 	Entity::reset(savepoint);
 }
 
-/**
- * Updates parameter 2 using time value
- *
- * @param param1 The time to add
- */
-IMPLEMENT_FUNCTION_I(Rebecca, updateFromTime, 2)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_I(2, Rebecca, updateFromTime, uint32)
 	Entity::updateFromTime(savepoint);
 }
 
-/**
- * Plays sound
- *
- * @param param1 The sound filename
- */
-IMPLEMENT_FUNCTION_S(Rebecca, playSound, 3)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_S(3, Rebecca, playSound)
 	Entity::playSound(savepoint);
 }
 
-/**
- * Plays sound
- *
- * @param param1 The sound filename
- */
-IMPLEMENT_FUNCTION_S(Rebecca, playSound16, 4)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_S(4, Rebecca, playSound16)
 	Entity::playSound(savepoint, false, getSound()->getSoundFlag(kEntityCoudert));
 }
 
-/**
- * Call a savepoint (or draw sequence in default case)
- *
- * @param seq1   The sequence to draw in the default case
- * @param param4 The entity
- * @param param5 The action
- * @param seq1   The sequence name for the savepoint
- */
-IMPLEMENT_FUNCTION_SIIS(Rebecca, callSavepoint, 5)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_SIIS(5, Rebecca, callSavepoint, EntityIndex, ActionIndex)
 	Entity::callSavepoint(savepoint);
 }
 
-/**
- * Draws the entity
- *
- * @param seq1 The sequence to draw
- */
-IMPLEMENT_FUNCTION_S(Rebecca, draw, 6)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_S(6, Rebecca, draw)
 	Entity::draw(savepoint);
 }
 
-/**
- * Handles entering/exiting a compartment.
- *
- * @param seq1   The sequence to draw
- * @param param4 The compartment
- */
-IMPLEMENT_FUNCTION_SI(Rebecca, enterExitCompartment, 7)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_SI(7, Rebecca, enterExitCompartment, ObjectIndex)
 	Entity::enterExitCompartment(savepoint);
 }
 
-/**
- * Handles entering/exiting a compartment and updates position/play animation
- *
- * @param seq1   The sequence to draw
- * @param param4 The compartment
- */
-IMPLEMENT_FUNCTION_SI(Rebecca, enterExitCompartment2, 8)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_SI(8, Rebecca, enterExitCompartment2, ObjectIndex)
 	Entity::enterExitCompartment(savepoint, kPosition_4840, kPosition_4455, kCarRedSleeping, kObjectCompartmentE, true);
 }
 
-/**
- * Handles entering/exiting a compartment.
- *
- * @param seq1   The sequence to draw
- * @param param4 The compartment
- */
-IMPLEMENT_FUNCTION_SI(Rebecca, enterExitCompartment3, 9)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_SI(9, Rebecca, enterExitCompartment3, ObjectIndex)
 	Entity::enterExitCompartment(savepoint);
 }
 
-/**
- * Process callback action when the entity direction is not kDirectionRight
- */
-IMPLEMENT_FUNCTION(Rebecca, callbackActionOnDirection, 10)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(10, Rebecca, callbackActionOnDirection)
 	Entity::callbackActionOnDirection(savepoint);
 }
 
-/**
- * Process callback action when somebody is standing in the restaurant or salon.
- */
-IMPLEMENT_FUNCTION(Rebecca, callbackActionRestaurantOrSalon, 11)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(11, Rebecca, callbackActionRestaurantOrSalon)
 	Entity::callbackActionRestaurantOrSalon(savepoint);
 }
 
-/**
- * Updates the entity
- *
- * @param param1 The car
- * @param param2 The entity position
- */
-IMPLEMENT_FUNCTION_II(Rebecca, updateEntity, 12)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_II(12, Rebecca, updateEntity, CarIndex, EntityPosition)
 	Entity::updateEntity(savepoint, true);
 }
 
-/**
- * Updates the position
- *
- * @param seq1   The sequence to draw
- * @param param4 The car
- * @param param5 The entity position
- */
-IMPLEMENT_FUNCTION_SII(Rebecca, updatePosition, 13)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_SII(13, Rebecca, updatePosition, CarIndex, Position)
 	Entity::updatePosition(savepoint);
 }
 
-/**
- * Draws the entity along with another one
- *
- * @param seq1   The sequence to draw
- * @param seq2   The sequence to draw for the second entity
- * @param param7 The EntityIndex of the second entity
- */
-IMPLEMENT_FUNCTION_SSI(Rebecca, draw2, 14)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_SSI(14, Rebecca, draw2, EntityIndex)
 	Entity::draw2(savepoint);
 }
 
-IMPLEMENT_FUNCTION(Rebecca, function15, 15)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(15, Rebecca, function15)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -246,23 +186,28 @@ IMPLEMENT_FUNCTION(Rebecca, function15, 15)
 	}
 }
 
-IMPLEMENT_FUNCTION_I(Rebecca, function16, 16)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_I(16, Rebecca, function16, bool)
 	error("Rebecca: callback function 16 not implemented!");
 }
 
-IMPLEMENT_FUNCTION_I(Rebecca, function17, 17)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_I(17, Rebecca, function17, bool)
 	error("Rebecca: callback function 17 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Rebecca, function18, 18)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(18, Rebecca, function18)
 	error("Rebecca: callback function 18 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Rebecca, function19, 19)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(19, Rebecca, function19)
 	error("Rebecca: callback function 19 not implemented!");
 }
 
-IMPLEMENT_FUNCTION_I(Rebecca, function20, 20)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_I(20, Rebecca, function20, TimeValue)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -432,7 +377,8 @@ label_callback:
 	}
 }
 
-IMPLEMENT_FUNCTION(Rebecca, chapter1, 21)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(21, Rebecca, chapter1)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -459,7 +405,8 @@ IMPLEMENT_FUNCTION(Rebecca, chapter1, 21)
 	}
 }
 
-IMPLEMENT_FUNCTION(Rebecca, chapter1Handler, 22)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(22, Rebecca, chapter1Handler)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -553,15 +500,18 @@ label_playConversation:
 	}
 }
 
-IMPLEMENT_FUNCTION(Rebecca, function23, 23)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(23, Rebecca, function23)
 	error("Rebecca: callback function 23 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Rebecca, function24, 24)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(24, Rebecca, function24)
 	error("Rebecca: callback function 24 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Rebecca, function25, 25)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(25, Rebecca, function25)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -578,7 +528,7 @@ IMPLEMENT_FUNCTION(Rebecca, function25, 25)
 
 		case 1:
 			setCallback(2);
-			setup_function17();
+			setup_function17(0);
 			break;
 
 		case 2:
@@ -589,7 +539,8 @@ IMPLEMENT_FUNCTION(Rebecca, function25, 25)
 	}
 }
 
-IMPLEMENT_FUNCTION(Rebecca, function26, 26)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(26, Rebecca, function26)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -631,7 +582,8 @@ IMPLEMENT_FUNCTION(Rebecca, function26, 26)
 	}
 }
 
-IMPLEMENT_FUNCTION(Rebecca, function27, 27)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(27, Rebecca, function27)
 	if (savepoint.action == kActionDefault) {
 		getData()->entityPosition = kPosition_4840;
 		getData()->location = kLocationInsideCompartment;
@@ -644,7 +596,8 @@ IMPLEMENT_FUNCTION(Rebecca, function27, 27)
 	}
 }
 
-IMPLEMENT_FUNCTION(Rebecca, chapter2, 28)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(28, Rebecca, chapter2)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -672,7 +625,8 @@ IMPLEMENT_FUNCTION(Rebecca, chapter2, 28)
 	}
 }
 
-IMPLEMENT_FUNCTION(Rebecca, chapter2Handler, 29)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(29, Rebecca, chapter2Handler)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -689,7 +643,7 @@ IMPLEMENT_FUNCTION(Rebecca, chapter2Handler, 29)
 
 		case 1:
 			setCallback(2);
-			setup_function17();
+			setup_function17(0);
 			break;
 
 		case 2:
@@ -700,11 +654,13 @@ IMPLEMENT_FUNCTION(Rebecca, chapter2Handler, 29)
 	}
 }
 
-IMPLEMENT_FUNCTION(Rebecca, function30, 30)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(30, Rebecca, function30)
 	error("Rebecca: callback function 30 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Rebecca, function31, 31)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(31, Rebecca, function31)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -733,7 +689,8 @@ IMPLEMENT_FUNCTION(Rebecca, function31, 31)
 	}
 }
 
-IMPLEMENT_FUNCTION(Rebecca, chapter3, 32)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(32, Rebecca, chapter3)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -754,7 +711,8 @@ IMPLEMENT_FUNCTION(Rebecca, chapter3, 32)
 	}
 }
 
-IMPLEMENT_FUNCTION(Rebecca, chapter3Handler, 33)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(33, Rebecca, chapter3Handler)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -771,11 +729,13 @@ IMPLEMENT_FUNCTION(Rebecca, chapter3Handler, 33)
 	}
 }
 
-IMPLEMENT_FUNCTION(Rebecca, function34, 34)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(34, Rebecca, function34)
 	error("Rebecca: callback function 34 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Rebecca, function35, 35)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(35, Rebecca, function35)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -792,11 +752,13 @@ IMPLEMENT_FUNCTION(Rebecca, function35, 35)
 	}
 }
 
-IMPLEMENT_FUNCTION(Rebecca, function36, 36)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(36, Rebecca, function36)
 	error("Rebecca: callback function 36 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Rebecca, function37, 37)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(37, Rebecca, function37)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -813,7 +775,8 @@ IMPLEMENT_FUNCTION(Rebecca, function37, 37)
 	}
 }
 
-IMPLEMENT_FUNCTION(Rebecca, function38, 38)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(38, Rebecca, function38)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -847,7 +810,8 @@ IMPLEMENT_FUNCTION(Rebecca, function38, 38)
 	}
 }
 
-IMPLEMENT_FUNCTION(Rebecca, function39, 39)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(39, Rebecca, function39)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -869,7 +833,8 @@ IMPLEMENT_FUNCTION(Rebecca, function39, 39)
 	}
 }
 
-IMPLEMENT_FUNCTION(Rebecca, function40, 40)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(40, Rebecca, function40)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -911,7 +876,8 @@ IMPLEMENT_FUNCTION(Rebecca, function40, 40)
 	}
 }
 
-IMPLEMENT_FUNCTION(Rebecca, function41, 41)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(41, Rebecca, function41)
 	if (savepoint.action == kActionDefault) {
 		ENTITY_PARAM(0, 2) = 1;
 
@@ -920,7 +886,8 @@ IMPLEMENT_FUNCTION(Rebecca, function41, 41)
 	}
 }
 
-IMPLEMENT_FUNCTION(Rebecca, chapter4, 42)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(42, Rebecca, chapter4)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -946,7 +913,8 @@ IMPLEMENT_FUNCTION(Rebecca, chapter4, 42)
 	}
 }
 
-IMPLEMENT_FUNCTION(Rebecca, chapter4Handler, 43)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(43, Rebecca, chapter4Handler)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -962,18 +930,20 @@ IMPLEMENT_FUNCTION(Rebecca, chapter4Handler, 43)
 				setup_function44();
 			} else {
 				setCallback(2);
-				setup_function20(getState()->time + 900);
+				setup_function20((TimeValue)(getState()->time + 900));
 			}
 		}
 		break;
 	}
 }
 
-IMPLEMENT_FUNCTION(Rebecca, function44, 44)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(44, Rebecca, function44)
 	error("Rebecca: callback function 44 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Rebecca, function45, 45)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(45, Rebecca, function45)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -1003,7 +973,8 @@ IMPLEMENT_FUNCTION(Rebecca, function45, 45)
 	}
 }
 
-IMPLEMENT_FUNCTION(Rebecca, chapter5, 46)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(46, Rebecca, chapter5)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -1025,15 +996,18 @@ IMPLEMENT_FUNCTION(Rebecca, chapter5, 46)
 	}
 }
 
-IMPLEMENT_FUNCTION(Rebecca, chapter5Handler, 47)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(47, Rebecca, chapter5Handler)
 	if (savepoint.action == kActionProceedChapter5)
 		setup_function48();
 }
 
-IMPLEMENT_FUNCTION(Rebecca, function48, 48)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(48, Rebecca, function48)
 	error("Rebecca: callback function 48 not implemented!");
 }
 
-IMPLEMENT_NULL_FUNCTION(Rebecca, 49)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_NULL_FUNCTION(49, Rebecca)
 
 } // End of namespace LastExpress

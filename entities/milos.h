@@ -38,41 +38,135 @@ public:
 	Milos(LastExpressEngine *engine);
 	~Milos() {};
 
-	// Setup
+	/**
+	 * Resets the entity
+	 */
 	DECLARE_FUNCTION(reset)
-	DECLARE_FUNCTION_S(draw)
-	DECLARE_FUNCTION_SI(enterExitCompartment)
-	DECLARE_FUNCTION_SI(enterExitCompartment2)
+
+	/**
+	 * Draws the entity
+	 *
+	 * @param sequence The sequence to draw
+	 */
+	DECLARE_FUNCTION(draw, const char* sequence)
+
+	/**
+	 * Handles entering/exiting a compartment.
+	 *
+	 * @param sequence    The sequence to draw
+	 * @param compartment The compartment
+	 */
+	DECLARE_FUNCTION(enterExitCompartment, const char* sequence, ObjectIndex compartment)
+
+	/**
+	 * Handles entering/exiting a compartment and updates position/play animation
+	 *
+	 * @param sequence    The sequence to draw
+	 * @param compartment The compartment
+	 */
+	DECLARE_FUNCTION(enterExitCompartment2, const char* sequence, ObjectIndex compartment)
+
+	/**
+	 * Process callback action when the entity direction is not kDirectionRight
+	 */
 	DECLARE_FUNCTION(callbackActionOnDirection)
-	DECLARE_FUNCTION_S(playSound)
-	DECLARE_FUNCTION_S(playSound16)
-	DECLARE_FUNCTION_II(savegame)
-	DECLARE_FUNCTION_I(updateFromTime)
-	DECLARE_FUNCTION_II(enterCompartmentDialog)
-	DECLARE_FUNCTION_I(function11)
+
+	/**
+	 * Plays sound
+	 *
+	 * @param filename The sound filename
+	 */
+	DECLARE_FUNCTION(playSound, const char* filename)
+
+	/**
+	 * Plays sound
+	 *
+	 * @param filename The sound filename
+	 */
+	DECLARE_FUNCTION(playSound16, const char* filename)
+
+	/**
+	 * Saves the game
+	 *
+	 * @param savegameType The type of the savegame
+	 * @param param        The param for the savegame (EventIndex or TimeValue)
+	 */
+	DECLARE_FUNCTION(savegame, SavegameType savegameType, uint32 param)
+
+	/**
+	 * Updates parameter 2 using time value
+	 *
+	 * @param time The time to add
+	 */
+	DECLARE_FUNCTION(updateFromTime, uint32 time)
+
+	DECLARE_FUNCTION(enterCompartmentDialog, CarIndex car, EntityPosition entityPosition)
+	DECLARE_FUNCTION(function11, TimeValue timeValue)
+
+	/**
+	 * Setup Chapter 1
+	 */
 	DECLARE_FUNCTION(chapter1)
+
 	DECLARE_FUNCTION(function13)
 	DECLARE_FUNCTION(function14)
+
+	/**
+	 * Handle Chapter 1 events
+	 */
 	DECLARE_FUNCTION(chapter1Handler)
+
 	DECLARE_FUNCTION(function16)
 	DECLARE_FUNCTION(function17)
 	DECLARE_FUNCTION(function18)
+
+	/**
+	 * Setup Chapter 2
+	 */
 	DECLARE_FUNCTION(chapter2)
+
+	/**
+	 * Handle Chapter 2 events
+	 */
 	DECLARE_FUNCTION(chapter2Handler)
+
 	DECLARE_FUNCTION(function21)
+
+	/**
+	 * Setup Chapter 3
+	 */
 	DECLARE_FUNCTION(chapter3)
+
 	DECLARE_FUNCTION(function23)
 	DECLARE_FUNCTION(function24)
 	DECLARE_FUNCTION(function25)
-	DECLARE_FUNCTION_I(function26)
-	DECLARE_FUNCTION_II(function27)
+	DECLARE_FUNCTION(function26, TimeValue timeValue)
+	DECLARE_FUNCTION(function27, CarIndex car, EntityPosition entityPosition)
+
+	/**
+	 * Setup Chapter 4
+	 */
 	DECLARE_FUNCTION(chapter4)
+
+	/**
+	 * Handle Chapter 4 events
+	 */
 	DECLARE_FUNCTION(chapter4Handler)
+
 	DECLARE_FUNCTION(function30)
 	DECLARE_FUNCTION(function31)
 	DECLARE_FUNCTION(function32)
+
+	/**
+	 * Setup Chapter 5
+	 */
 	DECLARE_FUNCTION(chapter5)
+
+	/**
+	 * Handle Chapter 5 events
+	 */
 	DECLARE_FUNCTION(chapter5Handler)
+
 	DECLARE_FUNCTION(function35)
 };
 

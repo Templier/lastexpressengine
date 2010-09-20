@@ -72,75 +72,48 @@ Francois::Francois(LastExpressEngine *engine) : Entity(engine, kEntityFrancois) 
 	ADD_NULL_FUNCTION();
 }
 
-/**
- * Resets the entity
- */
-IMPLEMENT_FUNCTION(Francois, reset, 1)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(1, Francois, reset)
 	Entity::reset(savepoint, true);
 }
 
-/**
- * Updates parameter 2 using time value
- *
- * @param param1 The time to add
- */
-IMPLEMENT_FUNCTION_I(Francois, updateFromTime, 2)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_I(2, Francois, updateFromTime, uint32)
 	Entity::updateFromTime(savepoint);
 }
 
-/**
- * Draws the entity
- *
- * @param seq1 The sequence to draw
- */
-IMPLEMENT_FUNCTION_S(Francois, draw, 3)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_S(3, Francois, draw)
 	Entity::draw(savepoint);
 }
 
-/**
- * Handles entering/exiting a compartment.
- *
- * @param seq1   The sequence to draw
- * @param param4 The compartment
- */
-IMPLEMENT_FUNCTION_SI(Francois, enterExitCompartment, 4)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_SI(4, Francois, enterExitCompartment, ObjectIndex)
 	Entity::enterExitCompartment(savepoint);
 }
 
-/**
- * Handles entering/exiting a compartment and updates position/play animation
- *
- * @param seq1   The sequence to draw
- * @param param4 The compartment
- */
-IMPLEMENT_FUNCTION_SI(Francois, enterExitCompartment2, 5)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_SI(5, Francois, enterExitCompartment2, ObjectIndex)
 	Entity::enterExitCompartment(savepoint, kPosition_5790, kPosition_6130, kCarRedSleeping, kObjectCompartmentD, true);
 }
 
-/**
- * Plays sound
- *
- * @param param1 The sound filename
- */
-IMPLEMENT_FUNCTION_S(Francois, playSound, 6)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_S(6, Francois, playSound)
 	Entity::playSound(savepoint);
 }
 
-/**
- * Save the game
- *
- * @param param1 The SavegameType for the savegame
- * @param param2 The EventIndex for the savegame
- */
-IMPLEMENT_FUNCTION_II(Francois, savegame, 7)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_II(7, Francois, savegame, SavegameType, uint32)
 	Entity::savegame(savepoint);
 }
 
-IMPLEMENT_FUNCTION_II(Francois, function8, 8)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_II(8, Francois, function8, CarIndex, EntityPosition)
 	error("Francois: callback function 8 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Francois, function9, 9)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(9, Francois, function9)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -175,7 +148,8 @@ IMPLEMENT_FUNCTION(Francois, function9, 9)
 	}
 }
 
-IMPLEMENT_FUNCTION(Francois, function10, 10)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(10, Francois, function10)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -212,7 +186,8 @@ IMPLEMENT_FUNCTION(Francois, function10, 10)
 	}
 }
 
-IMPLEMENT_FUNCTION_I(Francois, function11, 11)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_I(11, Francois, function11, TimeValue)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -421,7 +396,8 @@ label_callback:
 	}
 }
 
-IMPLEMENT_FUNCTION(Francois, function12, 12)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(12, Francois, function12)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -474,23 +450,28 @@ IMPLEMENT_FUNCTION(Francois, function12, 12)
 	}
 }
 
-IMPLEMENT_FUNCTION(Francois, function13, 13)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(13, Francois, function13)
 	error("Francois: callback function 13 not implemented!");
 }
 
-IMPLEMENT_FUNCTION_IIS(Francois, function14, 14)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_IIS(14, Francois, function14, ObjectIndex, EntityPosition)
 	error("Francois: callback function 14 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Francois, function15, 15)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(15, Francois, function15)
 	error("Francois: callback function 15 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Francois, function16, 16)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(16, Francois, function16)
 	error("Francois: callback function 16 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Francois, chapter1, 17)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(17, Francois, chapter1)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -507,7 +488,8 @@ IMPLEMENT_FUNCTION(Francois, chapter1, 17)
 	}
 }
 
-IMPLEMENT_FUNCTION(Francois, chapter1Handler, 18)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(18, Francois, chapter1Handler)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -523,7 +505,8 @@ IMPLEMENT_FUNCTION(Francois, chapter1Handler, 18)
 	}
 }
 
-IMPLEMENT_FUNCTION(Francois, function19, 19)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(19, Francois, function19)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -539,7 +522,8 @@ IMPLEMENT_FUNCTION(Francois, function19, 19)
 	}
 }
 
-IMPLEMENT_FUNCTION(Francois, function20, 20)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(20, Francois, function20)
 	if (savepoint.action == kActionDefault) {
 		getData()->entityPosition = kPosition_5790;
 		getData()->location = kLocationInsideCompartment;
@@ -549,7 +533,8 @@ IMPLEMENT_FUNCTION(Francois, function20, 20)
 	}
 }
 
-IMPLEMENT_FUNCTION(Francois, chapter2, 21)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(21 ,Francois, chapter2)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -570,7 +555,8 @@ IMPLEMENT_FUNCTION(Francois, chapter2, 21)
 	}
 }
 
-IMPLEMENT_FUNCTION(Francois, chapter2Handler, 22)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(22, Francois, chapter2Handler)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -603,11 +589,13 @@ IMPLEMENT_FUNCTION(Francois, chapter2Handler, 22)
 	}
 }
 
-IMPLEMENT_FUNCTION(Francois, function23, 23)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(23, Francois, function23)
 	error("Francois: callback function 23 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Francois, chapter3, 24)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(24, Francois, chapter3)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -628,11 +616,13 @@ IMPLEMENT_FUNCTION(Francois, chapter3, 24)
 	}
 }
 
-IMPLEMENT_FUNCTION(Francois, chapter3Handler, 25)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(25, Francois, chapter3Handler)
 	error("Francois: callback function 25 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Francois, chapter4, 26)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(26, Francois, chapter4)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -653,14 +643,16 @@ IMPLEMENT_FUNCTION(Francois, chapter4, 26)
 	}
 }
 
-IMPLEMENT_FUNCTION(Francois, chapter4Handler, 27)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(27, Francois, chapter4Handler)
 	if (savepoint.action == kAction101107728) {
 		setCallback(1);
 		setup_function16();
 	}
 }
 
-IMPLEMENT_FUNCTION(Francois, chapter5, 28)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(28, Francois, chapter5)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -681,7 +673,8 @@ IMPLEMENT_FUNCTION(Francois, chapter5, 28)
 	}
 }
 
-IMPLEMENT_FUNCTION(Francois, chapter5Handler, 29)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(29, Francois, chapter5Handler)
 	if (savepoint.action == kActionProceedChapter5) {
 		if (!getInventory()->hasItem(kItemWhistle)
 		  && getInventory()->get(kItemWhistle)->location != kLocation3)
@@ -691,7 +684,8 @@ IMPLEMENT_FUNCTION(Francois, chapter5Handler, 29)
 	}
 }
 
-IMPLEMENT_FUNCTION(Francois, function30, 30)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(30, Francois, function30)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -710,6 +704,7 @@ IMPLEMENT_FUNCTION(Francois, function30, 30)
 	}
 }
 
-IMPLEMENT_NULL_FUNCTION(Francois, 31)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_NULL_FUNCTION(31, Francois)
 
 } // End of namespace LastExpress

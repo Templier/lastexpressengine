@@ -38,27 +38,84 @@ public:
 	Coudert(LastExpressEngine *engine);
 	~Coudert() {};
 
-	// Setup
+	/**
+	 * Resets the entity
+	 */
 	DECLARE_FUNCTION(reset)
-	DECLARE_FUNCTION_S(bloodJacket)
-	DECLARE_FUNCTION_SI(enterExitCompartment)
+
+	/**
+	 * Handle meeting Coudert with the blooded jacket
+	 *
+	 * @param sequence The sequence to draw
+	 */
+	DECLARE_FUNCTION(bloodJacket, const char *sequence)
+
+	/**
+	 * Handles entering/exiting a compartment.
+	 *
+	 * @param sequence    The sequence to draw
+	 * @param compartment The compartment
+	 */
+	DECLARE_FUNCTION(enterExitCompartment, const char* sequence, ObjectIndex compartment)
+
+	/**
+	 * Process callback action when the entity direction is not kDirectionRight
+	 */
 	DECLARE_FUNCTION(callbackActionOnDirection)
-	DECLARE_FUNCTION_SIII(enterExitCompartment2)
-	DECLARE_FUNCTION_S(playSound)
+
+	/**
+	* Handles entering/exiting a compartment.
+	*
+	* @param sequence        The sequence to draw
+	* @param compartment     The compartment
+	* @param entityPosition1 The entity position 1
+	* @param entityPosition2 The entity position 2
+	*/
+	DECLARE_FUNCTION(enterExitCompartment2, const char* sequence, ObjectIndex compartment, EntityPosition entityPosition1, EntityPosition entityPosition2)
+
+	/**
+	 * Plays sound
+	 *
+	 * @param filename The sound filename
+	 */
+	DECLARE_FUNCTION(playSound, const char* filename)
+
+	/**
+	 * Plays sound
+	 *
+	 * @param savepoint The savepoint
+	 *                    - the sound filename
+	 */
 	DECLARE_FUNCTION_NOSETUP(playSound16)
-	DECLARE_FUNCTION_II(savegame)
-	DECLARE_FUNCTION_II(function9)
-	DECLARE_FUNCTION_I(function10)
-	DECLARE_FUNCTION_I(function11)
-	DECLARE_FUNCTION_I(excuseMe)
-	DECLARE_FUNCTION_II(function13)
-	DECLARE_FUNCTION_I(function14)
-	DECLARE_FUNCTION_I(function15)
+
+	/**
+	 * Saves the game
+	 *
+	 * @param savegameType The type of the savegame
+	 * @param param        The param for the savegame (EventIndex or TimeValue)
+	 */
+	DECLARE_FUNCTION(savegame, SavegameType savegameType, uint32 param)
+
+	DECLARE_FUNCTION(function9, CarIndex car, EntityPosition entityPosition)
+	DECLARE_FUNCTION(function10, uint32 time)
+	DECLARE_FUNCTION(function11, uint32 ticks)
+	DECLARE_FUNCTION(excuseMe, EntityIndex entity)
+	DECLARE_FUNCTION(function13, bool, EntityIndex entity)
+	DECLARE_FUNCTION(function14, EntityIndex entity)
+	DECLARE_FUNCTION(function15, bool)
 	DECLARE_FUNCTION(function16)
-	DECLARE_FUNCTION_I(function17)
+	DECLARE_FUNCTION(function17, bool)
 	DECLARE_FUNCTION(function18)
-	DECLARE_FUNCTION_I(function19)
-	DECLARE_FUNCTION_II(function20)
+	DECLARE_FUNCTION(function19, bool)
+
+	/**
+	 * ???
+	 *
+	 * @param object1 The first object index
+	 * @param object2 The second object index
+	 */
+	DECLARE_FUNCTION(function20, ObjectIndex object1, ObjectIndex object2)
+
 	DECLARE_FUNCTION(function21)
 	DECLARE_FUNCTION(function22)
 	DECLARE_FUNCTION(function23)
@@ -68,39 +125,80 @@ public:
 	DECLARE_FUNCTION(function27)
 	DECLARE_FUNCTION(visitCompartmentB)
 	DECLARE_FUNCTION(visitCompartmentA)
-	DECLARE_FUNCTION_I(function30)
-	DECLARE_FUNCTION_I(function31)
+
+	/**
+	 * ???
+	 *
+	 * @param compartment The compartment
+	 */
+	DECLARE_FUNCTION(function30, ObjectIndex compartment)
+
+	DECLARE_FUNCTION(function31, uint32)
 	DECLARE_FUNCTION(function32)
 	DECLARE_FUNCTION(function33)
-	DECLARE_FUNCTION_I(function34)
-	DECLARE_FUNCTION_I(function35)
+	DECLARE_FUNCTION(function34, bool)
+	DECLARE_FUNCTION(function35, bool)
+
+	/**
+	 * Setup Chapter 1
+	 */
 	DECLARE_FUNCTION(chapter1)
 	DECLARE_FUNCTION(function37)
 	DECLARE_FUNCTION(function38)
 	DECLARE_FUNCTION(function39)
+
+	/**
+	 * Handle Chapter 1 events
+	 */
 	DECLARE_FUNCTION(chapter1Handler)
+
 	DECLARE_FUNCTION(function41)
+
+	/**
+	 * Setup Chapter 2
+	 */
 	DECLARE_FUNCTION(chapter2)
+
 	DECLARE_FUNCTION(function43)
+
+	/**
+	 * Setup Chapter 3
+	 */
 	DECLARE_FUNCTION(chapter3)
+
 	DECLARE_FUNCTION(function45)
 	DECLARE_FUNCTION(function46)
-	DECLARE_FUNCTION_I(function47)
+	DECLARE_FUNCTION(function47, bool)
 	DECLARE_FUNCTION(function48)
 	DECLARE_FUNCTION(function49)
 	DECLARE_FUNCTION(function50)
 	DECLARE_FUNCTION(function51)
+
+	/**
+	 * Setup Chapter 4
+	 */
 	DECLARE_FUNCTION(chapter4)
+
 	DECLARE_FUNCTION(function53)
 	DECLARE_FUNCTION(function54)
 	DECLARE_FUNCTION(function55)
 	DECLARE_FUNCTION(function56)
+
+	/**
+	 * Setup Chapter 5
+	 */
 	DECLARE_FUNCTION(chapter5)
+
+	/**
+	 * Handle Chapter 5 events
+	 */
 	DECLARE_FUNCTION(chapter5Handler)
+
 	DECLARE_FUNCTION(function59)
 	DECLARE_FUNCTION(function60)
 	DECLARE_FUNCTION(function61)
 	DECLARE_FUNCTION(function62)
+
 	DECLARE_NULL_FUNCTION()
 
 private:

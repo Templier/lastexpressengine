@@ -38,44 +38,147 @@ public:
 	Boutarel(LastExpressEngine *engine);
 	~Boutarel() {};
 
-	// Setup
+	/**
+	 * Resets the entity
+	 */
 	DECLARE_FUNCTION(reset)
-	DECLARE_FUNCTION_S(playSound)
-	DECLARE_FUNCTION_S(draw)
-	DECLARE_FUNCTION_I(updateFromTime)
-	DECLARE_FUNCTION_SII(updatePosition)
-	DECLARE_FUNCTION_SI(enterExitCompartment)
-	DECLARE_FUNCTION_SI(enterExitCompartment2)
+
+	/**
+	 * Plays sound
+	 *
+	 * @param filename The sound filename
+	 */
+	DECLARE_FUNCTION(playSound, const char* filename)
+
+	/**
+	 * Draws the entity
+	 *
+	 * @param sequence The sequence to draw
+	 */
+	DECLARE_FUNCTION(draw, const char* sequence)
+
+	/**
+	 * Updates parameter 2 using time value
+	 *
+	 * @param time The time to add
+	 */
+	DECLARE_FUNCTION(updateFromTime, uint32 time)
+
+	/**
+	 * Updates the position
+	 *
+	 * @param sequence1      The sequence to draw
+	 * @param car            The car
+	 * @param position       The position
+	 */
+	DECLARE_FUNCTION(updatePosition, const char* sequence1, CarIndex car, Position position)
+
+	/**
+	 * Handles entering/exiting a compartment.
+	 *
+	 * @param sequence    The sequence to draw
+	 * @param compartment The compartment
+	 */
+	DECLARE_FUNCTION(enterExitCompartment, const char* sequence, ObjectIndex compartment)
+
+	/**
+	 * Handles entering/exiting a compartment and updates position/play animation
+	 *
+	 * @param sequence    The sequence to draw
+	 * @param compartment The compartment
+	 */
+	DECLARE_FUNCTION(enterExitCompartment2, const char* sequence, ObjectIndex compartment)
+
+	/**
+	 * Process callback action when the entity direction is not kDirectionRight
+	 */
 	DECLARE_FUNCTION(callbackActionOnDirection)
+
+	/**
+	 * Process callback action when somebody is standing in the restaurant or salon.
+	 */
 	DECLARE_FUNCTION(callbackActionRestaurantOrSalon)
-	DECLARE_FUNCTION_II(updateEntity)
-	DECLARE_FUNCTION_I(function11)
+
+	/**
+	 * Updates the entity
+	 *
+	 * @param index          The car
+	 * @param entityPosition The entity position
+	 */
+	DECLARE_FUNCTION(updateEntity, CarIndex index, EntityPosition entityPosition)
+
+	DECLARE_FUNCTION(function11, bool)
 	DECLARE_FUNCTION(enterTableWithMmeBoutarel)
 	DECLARE_FUNCTION(leaveTableWithMmeBoutarel)
-	DECLARE_FUNCTION_I(function14)
-	DECLARE_FUNCTION_IS(function15)
-	DECLARE_FUNCTION_IS(function16)
-	DECLARE_FUNCTION_IS(function17)
-	DECLARE_FUNCTION_I(function18)
+	DECLARE_FUNCTION(function14, bool)
+	DECLARE_FUNCTION(function15, bool, const char *sequence)
+	DECLARE_FUNCTION(function16, bool, const char *sequence)
+	DECLARE_FUNCTION(function17, TimeValue timeValue, const char *sequence)
+	DECLARE_FUNCTION(function18, TimeValue timeValue)
+
+	/**
+	 * Setup Chapter 1
+	 */
 	DECLARE_FUNCTION(chapter1)
 	DECLARE_FUNCTION(function20)
+
+	/**
+	 * Handle Chapter 1 events
+	 */
 	DECLARE_FUNCTION(chapter1Handler)
+
 	DECLARE_FUNCTION(function22)
+
+	/**
+	 * Setup Chapter 2
+	 */
 	DECLARE_FUNCTION(chapter2)
+
+	/**
+	 * Handle Chapter 2 events
+	 */
 	DECLARE_FUNCTION(chapter2Handler)
+
 	DECLARE_FUNCTION(function25)
+
+	/**
+	 * Setup Chapter 3
+	 */
 	DECLARE_FUNCTION(chapter3)
+
+	/**
+	 * Handle Chapter 3 events
+	 */
 	DECLARE_FUNCTION(chapter3Handler)
+
 	DECLARE_FUNCTION(function28)
 	DECLARE_FUNCTION(function29)
 	DECLARE_FUNCTION(function30)
+
+	/**
+	 * Setup Chapter 4
+	 */
 	DECLARE_FUNCTION(chapter4)
+
+	/**
+	 * Handle Chapter 4 events
+	 */
 	DECLARE_FUNCTION(chapter4Handler)
+
 	DECLARE_FUNCTION(function33)
 	DECLARE_FUNCTION(function34)
 	DECLARE_FUNCTION(function35)
+
+	/**
+	 * Setup Chapter 5
+	 */
 	DECLARE_FUNCTION(chapter5)
+
+	/**
+	 * Handle Chapter 5 events
+	 */
 	DECLARE_FUNCTION(chapter5Handler)
+
 	DECLARE_FUNCTION(function38)
 	DECLARE_NULL_FUNCTION()
 };

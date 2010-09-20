@@ -76,84 +76,53 @@ Milos::Milos(LastExpressEngine *engine) : Entity(engine, kEntityMilos) {
 	ADD_CALLBACK_FUNCTION(Milos, function35);
 }
 
-/**
- * Resets the entity
- */
-IMPLEMENT_FUNCTION(Milos, reset, 1)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(1, Milos, reset)
 	Entity::reset(savepoint);
 }
 
-/**
- * Draws the entity
- *
- * @param seq1 The sequence to draw
- */
-IMPLEMENT_FUNCTION_S(Milos, draw, 2)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_S(2, Milos, draw)
 	Entity::draw(savepoint);
 }
 
-/**
- * Handles entering/exiting a compartment.
- *
- * @param seq1   The sequence to draw
- * @param param4 The compartment
- */
-IMPLEMENT_FUNCTION_SI(Milos, enterExitCompartment, 3)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_SI(3, Milos, enterExitCompartment, ObjectIndex)
 	Entity::enterExitCompartment(savepoint);
 }
 
-/**
- * Handles entering/exiting a compartment.
- *
- * @param seq1   The sequence to draw
- * @param param4 The compartment
- *
- * @note Seems to be exactly the same as the previous function
- */
-IMPLEMENT_FUNCTION_SI(Milos, enterExitCompartment2, 4)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_SI(4, Milos, enterExitCompartment2, ObjectIndex)
 	Entity::enterExitCompartment(savepoint);
 }
 
-/**
- * Process callback action when the entity direction is not kDirectionRight
- */
-IMPLEMENT_FUNCTION(Milos, callbackActionOnDirection, 5)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(5, Milos, callbackActionOnDirection)
 	Entity::callbackActionOnDirection(savepoint);
 }
 
-/**
- * Plays sound
- *
- * @param param1 The sound filename
- */
-IMPLEMENT_FUNCTION_S(Milos, playSound, 6)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_S(6, Milos, playSound)
 	Entity::playSound(savepoint);
 }
 
-/**
- * Plays sound
- *
- * @param param1 The sound filename
- */
-IMPLEMENT_FUNCTION_S(Milos, playSound16, 7)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_S(7, Milos, playSound16)
 	Entity::playSound(savepoint, false, SoundManager::kFlagDefault);
 }
 
-/**
- * Save the game
- *
- * @param param1 The SavegameType for the savegame
- * @param param2 The EventIndex for the savegame
- */
-IMPLEMENT_FUNCTION_II(Milos, savegame, 8)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_II(8, Milos, savegame, SavegameType, uint32)
 	Entity::savegame(savepoint);
 }
 
-IMPLEMENT_FUNCTION_I(Milos, updateFromTime, 9)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_I(9, Milos, updateFromTime, uint32)
 	Entity::updateFromTime(savepoint);
 }
 
-IMPLEMENT_FUNCTION_II(Milos, enterCompartmentDialog, 10)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_II(10, Milos, enterCompartmentDialog, CarIndex, EntityPosition)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -189,8 +158,8 @@ IMPLEMENT_FUNCTION_II(Milos, enterCompartmentDialog, 10)
 	}
 }
 
-//
-IMPLEMENT_FUNCTION_I(Milos, function11, 11)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_I(11, Milos, function11, TimeValue)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -242,7 +211,7 @@ IMPLEMENT_FUNCTION_I(Milos, function11, 11)
 		case 1:
 			getData()->location = kLocationOutsideCompartment;
 			setCallback(2);
-			setup_enterCompartmentDialog(3, 8200);
+			setup_enterCompartmentDialog(kCarGreenSleeping, kPosition_8200);
 			break;
 
 		case 2:
@@ -256,7 +225,7 @@ IMPLEMENT_FUNCTION_I(Milos, function11, 11)
 
 			params->param6 = 1;
 			setCallback(4);
-			setup_enterCompartmentDialog(kCarRedSleeping, 3050);
+			setup_enterCompartmentDialog(kCarRedSleeping, kPosition_3050);
 			break;
 
 		case 4:
@@ -328,7 +297,8 @@ IMPLEMENT_FUNCTION_I(Milos, function11, 11)
 	}
 }
 
-IMPLEMENT_FUNCTION(Milos, chapter1, 12)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(12, Milos, chapter1)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -352,7 +322,8 @@ IMPLEMENT_FUNCTION(Milos, chapter1, 12)
 	}
 }
 
-IMPLEMENT_FUNCTION(Milos, function13, 13)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(13, Milos, function13)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -376,11 +347,13 @@ IMPLEMENT_FUNCTION(Milos, function13, 13)
 	}
 }
 
-IMPLEMENT_FUNCTION(Milos, function14, 14)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(14, Milos, function14)
 	error("Milos: callback function 14 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Milos, chapter1Handler, 15)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(15, Milos, chapter1Handler)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -435,18 +408,21 @@ label_checkNextPosition:
 
 }
 
-IMPLEMENT_FUNCTION(Milos, function16, 16)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(16, Milos, function16)
 	error("Milos: callback function 16 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Milos, function17, 17)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(17, Milos, function17)
 	if (savepoint.action == kActionDefault) {
 		setCallback(1);
 		setup_function11(kTimeBedTime);
 	}
 }
 
-IMPLEMENT_FUNCTION(Milos, function18, 18)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(18, Milos, function18)
 	if (savepoint.action == kActionDefault) {
 		getData()->entityPosition = kPosition_3050;
 		getData()->location = kLocationInsideCompartment;
@@ -457,7 +433,8 @@ IMPLEMENT_FUNCTION(Milos, function18, 18)
 	}
 }
 
-IMPLEMENT_FUNCTION(Milos, chapter2, 19)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(19, Milos, chapter2)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -479,7 +456,8 @@ IMPLEMENT_FUNCTION(Milos, chapter2, 19)
 	}
 }
 
-IMPLEMENT_FUNCTION(Milos, chapter2Handler, 20)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(20, Milos, chapter2Handler)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -524,11 +502,13 @@ IMPLEMENT_FUNCTION(Milos, chapter2Handler, 20)
 	}
 }
 
-IMPLEMENT_FUNCTION(Milos, function21, 21)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(21, Milos, function21)
 	error("Milos: callback function 21 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Milos, chapter3, 22)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(22, Milos, chapter3)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -554,23 +534,28 @@ IMPLEMENT_FUNCTION(Milos, chapter3, 22)
 	}
 }
 
-IMPLEMENT_FUNCTION(Milos, function23, 23)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(23, Milos, function23)
 	error("Milos: callback function 23 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Milos, function24, 24)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(24, Milos, function24)
 	error("Milos: callback function 24 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Milos, function25, 25)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(25, Milos, function25)
 	error("Milos: callback function 25 not implemented!");
 }
 
-IMPLEMENT_FUNCTION_I(Milos, function26, 26)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_I(26, Milos, function26, TimeValue)
 	error("Milos: callback function 26 not implemented!");
 }
 
-IMPLEMENT_FUNCTION_II(Milos, function27, 27)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_II(27, Milos, function27, CarIndex, EntityPosition)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -600,7 +585,8 @@ IMPLEMENT_FUNCTION_II(Milos, function27, 27)
 	}
 }
 
-IMPLEMENT_FUNCTION(Milos, chapter4, 28)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(28, Milos, chapter4)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -621,11 +607,13 @@ IMPLEMENT_FUNCTION(Milos, chapter4, 28)
 	}
 }
 
-IMPLEMENT_FUNCTION(Milos, chapter4Handler, 29)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(29, Milos, chapter4Handler)
 	error("Milos: callback function 29 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Milos, function30, 30)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(30, Milos, function30)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -659,7 +647,8 @@ IMPLEMENT_FUNCTION(Milos, function30, 30)
 	}
 }
 
-IMPLEMENT_FUNCTION(Milos, function31, 31)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(31, Milos, function31)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -687,7 +676,8 @@ IMPLEMENT_FUNCTION(Milos, function31, 31)
 	}
 }
 
-IMPLEMENT_FUNCTION(Milos, function32, 32)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(32, Milos, function32)
 	if (savepoint.action == kActionDefault) {
 		getEntities()->clearSequences(kEntityMilos);
 		getObjects()->update(kObjectCompartmentG, kEntityPlayer, kLocation3, kCursorHandKnock, kCursorHand);
@@ -699,7 +689,8 @@ IMPLEMENT_FUNCTION(Milos, function32, 32)
 	}
 }
 
-IMPLEMENT_FUNCTION(Milos, chapter5, 33)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(33, Milos, chapter5)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -720,11 +711,13 @@ IMPLEMENT_FUNCTION(Milos, chapter5, 33)
 	}
 }
 
-IMPLEMENT_FUNCTION(Milos, chapter5Handler, 34)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(34, Milos, chapter5Handler)
 	error("Milos: callback function 34 not implemented!");
 }
 
-IMPLEMENT_FUNCTION(Milos, function35, 35)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(35, Milos, function35)
 	if (savepoint.action == kActionDefault)
 		getEntities()->clearSequences(kEntityMilos);
 }

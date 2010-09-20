@@ -60,52 +60,33 @@ Max::Max(LastExpressEngine *engine) : Entity(engine, kEntityMax) {
 	ADD_CALLBACK_FUNCTION(Max, chapter5);
 }
 
-/**
- * Resets the entity
- */
-IMPLEMENT_FUNCTION(Max, reset, 1)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(1, Max, reset)
 	Entity::reset(savepoint);
 }
 
-/**
- * Plays sound
- *
- * @param param1 The sound filename
- */
-IMPLEMENT_FUNCTION_S(Max, playSound, 2)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_S(2, Max, playSound)
 	Entity::playSound(savepoint);
 }
 
-/**
- * Draws the entity
- *
- * @param seq1 The sequence to draw
- */
-IMPLEMENT_FUNCTION_NOSETUP(Max, draw, 3)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_NOSETUP(3, Max, draw)
 	Entity::draw(savepoint);
 }
 
-/**
- * Handles entering/exiting a compartment.
- *
- * @param seq1   The sequence to draw
- * @param param4 The compartment
- */
-IMPLEMENT_FUNCTION_SI(Max, enterExitCompartment, 4)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_SI(4, Max, enterExitCompartment, ObjectIndex)
 	Entity::enterExitCompartment(savepoint);
 }
 
-/**
- * Save the game
- *
- * @param param1 The SavegameType for the savegame
- * @param param2 The EventIndex for the savegame
- */
-IMPLEMENT_FUNCTION_II(Max, savegame, 5)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_II(5, Max, savegame, SavegameType, uint32)
 	Entity::savegame(savepoint);
 }
 
-IMPLEMENT_FUNCTION(Max, chapter12_handler, 6)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(6, Max, chapter12_handler)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -138,7 +119,8 @@ IMPLEMENT_FUNCTION(Max, chapter12_handler, 6)
 	}
 }
 
-IMPLEMENT_FUNCTION(Max, function7, 7)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(7, Max, function7)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -226,7 +208,8 @@ IMPLEMENT_FUNCTION(Max, function7, 7)
 	}
 }
 
-IMPLEMENT_FUNCTION(Max, chapter4Handler, 8)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(8, Max, chapter4Handler)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -287,7 +270,8 @@ IMPLEMENT_FUNCTION(Max, chapter4Handler, 8)
 	}
 }
 
-IMPLEMENT_FUNCTION(Max, function9, 9)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(9, Max, function9)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -333,7 +317,8 @@ setup_functions:
 	}
 }
 
-IMPLEMENT_FUNCTION(Max, chapter1, 10)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(10, Max, chapter1)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -351,7 +336,8 @@ IMPLEMENT_FUNCTION(Max, chapter1, 10)
 	}
 }
 
-IMPLEMENT_FUNCTION(Max, chapter2, 11)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(11, Max, chapter2)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -373,7 +359,8 @@ IMPLEMENT_FUNCTION(Max, chapter2, 11)
 	}
 }
 
-IMPLEMENT_FUNCTION(Max, chapter3, 12)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(13, Max, chapter3)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -394,7 +381,8 @@ IMPLEMENT_FUNCTION(Max, chapter3, 12)
 	}
 }
 
-IMPLEMENT_FUNCTION(Max, chapter3Handler, 13)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(13, Max, chapter3Handler)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -447,7 +435,8 @@ IMPLEMENT_FUNCTION(Max, chapter3Handler, 13)
 	}
 }
 
-IMPLEMENT_FUNCTION(Max, freeFromCage, 14)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(14, Max, freeFromCage)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -515,7 +504,8 @@ IMPLEMENT_FUNCTION(Max, freeFromCage, 14)
 	}
 }
 
-IMPLEMENT_FUNCTION(Max, function15, 15)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(15, Max, function15)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -566,7 +556,8 @@ IMPLEMENT_FUNCTION(Max, function15, 15)
 	}
 }
 
-IMPLEMENT_FUNCTION(Max, chapter4, 16)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(16, Max, chapter4)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -585,7 +576,8 @@ IMPLEMENT_FUNCTION(Max, chapter4, 16)
 	}
 }
 
-IMPLEMENT_FUNCTION(Max, function17, 17)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(17, Max, function17)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -619,7 +611,8 @@ IMPLEMENT_FUNCTION(Max, function17, 17)
 	}
 }
 
-IMPLEMENT_FUNCTION(Max, chapter5, 18)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(18, Max, chapter5)
 	if (savepoint.action == kActionDefault) {
 		getEntities()->clearSequences(kEntityMax);
 

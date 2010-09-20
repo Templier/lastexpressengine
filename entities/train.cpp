@@ -51,55 +51,43 @@ Train::Train(LastExpressEngine *engine) : Entity(engine, kEntityTrain) {
 	ADD_CALLBACK_FUNCTION(Train, process);
 }
 
-/**
- * Save the game
- *
- * @param param1 The SavegameType for the savegame
- * @param param2 The EventIndex for the savegame
- */
-IMPLEMENT_FUNCTION_II(Train, savegame, 1)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_II(1, Train, savegame, SavegameType, uint32)
 	Entity::savegame(savepoint);
 }
 
-IMPLEMENT_FUNCTION(Train, chapter1, 2)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(2, Train, chapter1)
 	if (savepoint.action == kActionDefault)
 		setup_process();
 }
 
-IMPLEMENT_FUNCTION(Train, chapter2, 3)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(3, Train, chapter2)
 	if (savepoint.action == kActionDefault)
 		setup_process();
 }
 
-IMPLEMENT_FUNCTION(Train, chapter3, 4)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(4, Train, chapter3)
 	if (savepoint.action == kActionDefault)
 		setup_process();
 }
 
-IMPLEMENT_FUNCTION(Train, chapter4, 5)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(5, Train, chapter4)
 	if (savepoint.action == kActionDefault)
 		setup_process();
 }
 
-IMPLEMENT_FUNCTION(Train, chapter5, 6)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(6, Train, chapter5)
 	if (savepoint.action == kActionDefault)
 		setup_process();
 }
 
-void Train::handleCompartmentAction() {
-	EXPOSE_PARAMS(EntityData::EntityParametersIIII)
-
-	if (params->param8)
-		getSavePoints()->push(kEntityTrain, kEntityMahmud, kAction290410610, (uint32)params->param1);
-
-	getAction()->handleOtherCompartment((ObjectIndex)params->param1, false, !params->param8);
-
-	ENTITY_PARAM(0, 8) = params->param1;
-
-	CALLBACK_ACTION();
-}
-
-IMPLEMENT_FUNCTION_II(Train, harem, 7)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_II(7, Train, harem, ObjectIndex, uint32)
 	if (savepoint.action != kActionDefault)
 		return;
 
@@ -108,19 +96,19 @@ IMPLEMENT_FUNCTION_II(Train, harem, 7)
 		error("Train::harem: Invalid value for parameter 1: %d", params->param1);
 		break;
 
-	case 5:
+	case kObjectCompartment5:
 		params->param3 = kPosition_4840;
 		break;
 
-	case 6:
+	case kObjectCompartment6:
 		params->param3 = kPosition_4070;
 		break;
 
-	case 7:
+	case kObjectCompartment7:
 		params->param3 = kPosition_3050;
 		break;
 
-	case 8:
+	case kObjectCompartment8:
 		params->param3 = kPosition_2740;
 		break;
 	}
@@ -269,7 +257,8 @@ IMPLEMENT_FUNCTION_II(Train, harem, 7)
 	handleCompartmentAction();
 }
 
-IMPLEMENT_FUNCTION(Train, process, 8)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(8, Train, process)
 	EntityData::EntityParametersIIIS *params1 = (EntityData::EntityParametersIIIS*)_data->getCurrentParameters(1);
 
 	switch (savepoint.action) {
@@ -551,6 +540,23 @@ label_process:
 	}
 }
 
+//////////////////////////////////////////////////////////////////////////
+// Private functions
+//////////////////////////////////////////////////////////////////////////
+void Train::handleCompartmentAction() {
+	EXPOSE_PARAMS(EntityData::EntityParametersIIII)
+
+	if (params->param8)
+		getSavePoints()->push(kEntityTrain, kEntityMahmud, kAction290410610, params->param1);
+
+	getAction()->handleOtherCompartment((ObjectIndex)params->param1, false, !params->param8);
+
+	ENTITY_PARAM(0, 8) = params->param1;
+
+	CALLBACK_ACTION();
+}
+
+//////////////////////////////////////////////////////////////////////////
 void Train::resetParam8() {
 	EXPOSE_PARAMS(EntityData::EntityParametersIIII)
 	EntityData::EntityParametersIIIS *params1 = (EntityData::EntityParametersIIIS*)_data->getCurrentParameters(1);

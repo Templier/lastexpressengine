@@ -38,26 +38,113 @@ public:
 	Mahmud(LastExpressEngine *engine);
 	~Mahmud() {};
 
-	// Setup
+	/**
+	 * Resets the entity
+	 */
 	DECLARE_FUNCTION(reset)
+
+	/**
+	* Draws the entity
+	*
+	* @param savepoint The savepoint
+	*                    - The sequence to draw
+	*/
 	DECLARE_FUNCTION_NOSETUP(draw)
-	DECLARE_FUNCTION_SI(enterExitCompartment)
-	DECLARE_FUNCTION_SIII(enterExitCompartment2)
-	DECLARE_FUNCTION_S(playSound)
-	DECLARE_FUNCTION_S(playSoundMertens)
+
+	/**
+	 * Handles entering/exiting a compartment.
+	 *
+	 * @param sequence    The sequence to draw
+	 * @param compartment The compartment
+	 */
+	DECLARE_FUNCTION(enterExitCompartment, const char* sequence, ObjectIndex compartment)
+
+	/**
+	 * Handles entering/exiting a compartment.
+	 *
+	 * @param sequence    The sequence to draw
+	 * @param compartment The compartment
+	 * @param ticks       The time ticks
+	 * @param object      The object for loading the scene
+	 */
+	DECLARE_FUNCTION(enterExitCompartment2, const char* sequence, ObjectIndex compartment, uint32 ticks, ObjectIndex object)
+
+	/**
+	 * Plays sound
+	 *
+	 * @param filename The sound filename
+	 */
+	DECLARE_FUNCTION(playSound, const char* filename)
+
+	/**
+	 * Plays sound
+	 *
+	 * @param filename The sound filename
+	 */
+	DECLARE_FUNCTION(playSoundMertens, const char* filename)
+
+	/**
+	 * Updates parameter 2 using time value
+	 *
+	 * @param savepoint The savepoint
+	 *                    - Time to add
+	 */
 	DECLARE_FUNCTION_NOSETUP(updateFromTime)
-	DECLARE_FUNCTION_II(savegame)
-	DECLARE_FUNCTION_II(updateEntity)
-	DECLARE_FUNCTION_II(function10)
+
+	/**
+	 * Saves the game
+	 *
+	 * @param savegameType The type of the savegame
+	 * @param param        The param for the savegame (EventIndex or TimeValue)
+	 */
+	DECLARE_FUNCTION(savegame, SavegameType savegameType, uint32 param)
+
+	/**
+	 * Updates the entity
+	 *
+	 * @param index          The car
+	 * @param entityPosition The entity position
+	 */
+	DECLARE_FUNCTION(updateEntity, CarIndex index, EntityPosition entityPosition)
+
+	DECLARE_FUNCTION(function10, ObjectIndex, bool)
 	DECLARE_FUNCTION(function11)
 	DECLARE_FUNCTION(function12)
 	DECLARE_FUNCTION(function13)
+
+	/**
+	 * Handle chapters events
+	 */
 	DECLARE_FUNCTION(chaptersHandler)
+
+	/**
+	 * Setup Chapter 1
+	 */
 	DECLARE_FUNCTION(chapter1)
+
+	/**
+	 * Reset chapter data
+	 */
 	DECLARE_FUNCTION(resetChapter)
+
+	/**
+	 * Setup Chapter 2
+	 */
 	DECLARE_FUNCTION(chapter2)
+
+	/**
+	 * Setup Chapter 3
+	 */
 	DECLARE_FUNCTION(chapter3)
+
+	/**
+	 * Setup Chapter 4
+	 */
 	DECLARE_FUNCTION(chapter4)
+
+	/**
+	 * Setup Chapter 5
+	 */
 	DECLARE_FUNCTION(chapter5)
 };
 

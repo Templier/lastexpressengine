@@ -75,26 +75,18 @@ Pascale::Pascale(LastExpressEngine *engine) : Entity(engine, kEntityPascale) {
 	ADD_NULL_FUNCTION();
 }
 
-/**
- * Draws the entity
- *
- * @param seq1 The sequence to draw
- */
-IMPLEMENT_FUNCTION_S(Pascale, draw, 1)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_S(1, Pascale, draw)
 	Entity::draw(savepoint, true);
 }
 
-/**
- * Process callback action when somebody is standing in the restaurant or salon.
- */
-IMPLEMENT_FUNCTION(Pascale, callbackActionRestaurantOrSalon, 2)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(2, Pascale, callbackActionRestaurantOrSalon)
 	Entity::callbackActionRestaurantOrSalon(savepoint);
 }
 
-/**
- * Process callback action when the entity direction is not kDirectionRight
- */
-IMPLEMENT_FUNCTION(Pascale, callbackActionOnDirection, 3)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(3, Pascale, callbackActionOnDirection)
 	if (savepoint.action == kActionExcuseMeCath) {
 		if (!params->param1) {
 			getSound()->excuseMe(kEntityPascale);
@@ -107,47 +99,28 @@ IMPLEMENT_FUNCTION(Pascale, callbackActionOnDirection, 3)
 	Entity::callbackActionOnDirection(savepoint);
 }
 
-/**
- * Updates parameter 2 using time value
- *
- * @param param1 The time to add
- */
-IMPLEMENT_FUNCTION_I(Pascale, updateFromTime, 4)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_I(4, Pascale, updateFromTime, uint32)
 	Entity::updateFromTime(savepoint);
 }
 
-/**
- * Updates the position
- *
- * @param seq1   The sequence to draw
- * @param param4 The car
- * @param param5 The entity position
- */
-IMPLEMENT_FUNCTION_NOSETUP(Pascale, updatePosition, 5)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_NOSETUP(5, Pascale, updatePosition)
 	Entity::updatePosition(savepoint, true);
 }
 
-/**
- * Plays sound
- *
- * @param param1 The sound filename
- */
-IMPLEMENT_FUNCTION_S(Pascale, playSound, 6)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_S(6, Pascale, playSound)
 	Entity::playSound(savepoint);
 }
 
-/**
- * Draws the entity along with another one
- *
- * @param seq1   The sequence to draw
- * @param seq2   The sequence to draw for the second entity
- * @param param7 The EntityIndex of the second entity
- */
-IMPLEMENT_FUNCTION_NOSETUP(Pascale, draw2, 7)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION_NOSETUP(7, Pascale, draw2)
 	Entity::draw2(savepoint);
 }
 
-IMPLEMENT_FUNCTION(Pascale, welcomeSophieAndRebecca, 8)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(8, Pascale, welcomeSophieAndRebecca)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -206,7 +179,8 @@ IMPLEMENT_FUNCTION(Pascale, welcomeSophieAndRebecca, 8)
 	}
 }
 
-IMPLEMENT_FUNCTION(Pascale, sitSophieAndRebecca, 9)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(9, Pascale, sitSophieAndRebecca)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -223,7 +197,8 @@ IMPLEMENT_FUNCTION(Pascale, sitSophieAndRebecca, 9)
 	}
 }
 
-IMPLEMENT_FUNCTION(Pascale, welcomeCath, 10)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(10, Pascale, welcomeCath)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -271,7 +246,8 @@ IMPLEMENT_FUNCTION(Pascale, welcomeCath, 10)
 	}
 }
 
-IMPLEMENT_FUNCTION(Pascale, function11, 11)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(11, Pascale, function11)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -315,7 +291,8 @@ IMPLEMENT_FUNCTION(Pascale, function11, 11)
 	}
 }
 
-IMPLEMENT_FUNCTION(Pascale, chapter1, 12)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(12, Pascale, chapter1)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -344,7 +321,8 @@ IMPLEMENT_FUNCTION(Pascale, chapter1, 12)
 	}
 }
 
-IMPLEMENT_FUNCTION(Pascale, getMessageFromAugustToTyler, 13)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(13, Pascale, getMessageFromAugustToTyler)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -396,7 +374,8 @@ IMPLEMENT_FUNCTION(Pascale, getMessageFromAugustToTyler, 13)
 	}
 }
 
-IMPLEMENT_FUNCTION(Pascale, sitAnna, 14)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(14, Pascale, sitAnna)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -417,7 +396,8 @@ IMPLEMENT_FUNCTION(Pascale, sitAnna, 14)
 	}
 }
 
-IMPLEMENT_FUNCTION(Pascale, welcomeAnna, 15)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(15, Pascale, welcomeAnna)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -461,7 +441,8 @@ IMPLEMENT_FUNCTION(Pascale, welcomeAnna, 15)
 	}
 }
 
-IMPLEMENT_FUNCTION(Pascale, serveTatianaVassili, 16)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(16, Pascale, serveTatianaVassili)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -513,7 +494,8 @@ IMPLEMENT_FUNCTION(Pascale, serveTatianaVassili, 16)
 	}
 }
 
-IMPLEMENT_FUNCTION(Pascale, chapter1Handler, 17)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(17, Pascale, chapter1Handler)
 switch (savepoint.action) {
 	default:
 		break;
@@ -597,7 +579,8 @@ label_callback4:
 	}
 }
 
-IMPLEMENT_FUNCTION(Pascale, function18, 18)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(18, Pascale, function18)
 	if (savepoint.action != kActionNone)
 		return;
 
@@ -613,7 +596,8 @@ IMPLEMENT_FUNCTION(Pascale, function18, 18)
 	}
 }
 
-IMPLEMENT_FUNCTION(Pascale, function19, 19)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(19, Pascale, function19)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -642,7 +626,8 @@ IMPLEMENT_FUNCTION(Pascale, function19, 19)
 	}
 }
 
-IMPLEMENT_FUNCTION(Pascale, chapter2, 20)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(20, Pascale, chapter2)
 	if (savepoint.action == kActionDefault) {
 		getEntities()->clearSequences(kEntityPascale);
 
@@ -656,7 +641,8 @@ IMPLEMENT_FUNCTION(Pascale, chapter2, 20)
 	}
 }
 
-IMPLEMENT_FUNCTION(Pascale, chapter3, 21)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(21, Pascale, chapter3)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -679,7 +665,8 @@ IMPLEMENT_FUNCTION(Pascale, chapter3, 21)
 	}
 }
 
-IMPLEMENT_FUNCTION(Pascale, chapter3Handler, 22)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(22, Pascale, chapter3Handler)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -708,7 +695,8 @@ label_callback:
 	}
 }
 
-IMPLEMENT_FUNCTION(Pascale, function23, 23)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(23, Pascale, function23)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -747,7 +735,8 @@ IMPLEMENT_FUNCTION(Pascale, function23, 23)
 	}
 }
 
-IMPLEMENT_FUNCTION(Pascale, welcomeAbbot, 24)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(24, Pascale, welcomeAbbot)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -775,7 +764,8 @@ IMPLEMENT_FUNCTION(Pascale, welcomeAbbot, 24)
 	}
 }
 
-IMPLEMENT_FUNCTION(Pascale, chapter4, 25)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(25, Pascale, chapter4)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -801,7 +791,8 @@ IMPLEMENT_FUNCTION(Pascale, chapter4, 25)
 	}
 }
 
-IMPLEMENT_FUNCTION(Pascale, chapter4Handler, 26)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(26, Pascale, chapter4Handler)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -917,7 +908,8 @@ label_callback3:
 	}
 }
 
-IMPLEMENT_FUNCTION(Pascale, function27, 27)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(27, Pascale, function27)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -969,7 +961,8 @@ IMPLEMENT_FUNCTION(Pascale, function27, 27)
 	}
 }
 
-IMPLEMENT_FUNCTION(Pascale, messageFromAnna, 28)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(28, Pascale, messageFromAnna)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -1014,7 +1007,8 @@ IMPLEMENT_FUNCTION(Pascale, messageFromAnna, 28)
 	}
 }
 
-IMPLEMENT_FUNCTION(Pascale, function29, 29)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(29, Pascale, function29)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -1051,7 +1045,8 @@ IMPLEMENT_FUNCTION(Pascale, function29, 29)
 	}
 }
 
-IMPLEMENT_FUNCTION(Pascale, function30, 30)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(30, Pascale, function30)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -1088,7 +1083,8 @@ IMPLEMENT_FUNCTION(Pascale, function30, 30)
 	}
 }
 
-IMPLEMENT_FUNCTION(Pascale, chapter5, 31)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(31, Pascale, chapter5)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -1108,12 +1104,14 @@ IMPLEMENT_FUNCTION(Pascale, chapter5, 31)
 	}
 }
 
-IMPLEMENT_FUNCTION(Pascale, chapter5Handler, 32)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(32, Pascale, chapter5Handler)
 	if (savepoint.action == kActionProceedChapter5)
 		setup_function33();
 }
 
-IMPLEMENT_FUNCTION(Pascale, function33, 33)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_FUNCTION(33, Pascale, function33)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -1234,6 +1232,7 @@ label_callback1:
 	}
 }
 
-IMPLEMENT_NULL_FUNCTION(Pascale, 34)
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_NULL_FUNCTION(34, Pascale)
 
 } // End of namespace LastExpress
