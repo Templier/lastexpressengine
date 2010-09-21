@@ -1053,6 +1053,8 @@ bool Debugger::cmdSwitchChapter(int argc, const char **argv) {
 			getState()->progress.chapter = (ChapterIndex)(id - 1);
 
 			getLogic()->switchChapter();
+
+			resetCommand();
 		}
 	} else {
 error:
