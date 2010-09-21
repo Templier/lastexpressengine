@@ -1022,7 +1022,60 @@ IMPLEMENT_FUNCTION(22, Mertens, function22)
 
 //////////////////////////////////////////////////////////////////////////
 IMPLEMENT_FUNCTION(23, Mertens, function23)
-	error("Mertens: callback function 23 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionDefault:
+		setCallback(1);
+		setup_function10(kCarGreenSleeping, kPosition_5790);
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			setCallback(2);
+			setup_enterExitCompartment("601Vd", kObjectCompartment4);
+			break;
+
+		case 2:
+			getEntities()->drawSequenceLeft(kEntityMertens, "601Wd");
+			getEntities()->enterCompartment(kEntityMertens, kObjectCompartment4, true);
+
+			setCallback(3);
+			setup_function11(150);
+			break;
+
+		case 3:
+			setCallback(4);
+			setup_enterExitCompartment("601Zd", kObjectCompartment4);
+			break;
+
+		case 4:
+			getEntities()->exitCompartment(kEntityMertens, kObjectCompartment4);
+			getData()->location = kLocationInsideCompartment;
+			getEntities()->clearSequences(kEntityMertens);
+
+			setCallback(5);
+			setup_function21(kObjectCompartment4, kObject20);
+			break;
+
+		case 5:
+			setCallback(6);
+			setup_enterExitCompartment("671Ad", kObjectCompartment4);
+			break;
+
+		case 6:
+			getData()->location = kLocationOutsideCompartment;
+
+			CALLBACK_ACTION();
+			break;
+		}
+		break;
+	}
 }
 
 //////////////////////////////////////////////////////////////////////////

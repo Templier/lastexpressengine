@@ -100,7 +100,46 @@ IMPLEMENT_FUNCTION_II(6, Salko, savegame, SavegameType, uint32)
 
 //////////////////////////////////////////////////////////////////////////
 IMPLEMENT_FUNCTION_II(7, Salko, function7, CarIndex, EntityPosition)
-	error("Salko: callback function 7 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionNone: {
+		params->param3 = 0;
+
+		EntityDirection direction = getData()->direction;
+		CarIndex carSalko = getData()->car;
+		CarIndex carIvo   = getEntityData(kEntityIvo)->car;
+		EntityPosition positionSalko = getData()->entityPosition;
+		EntityPosition positionIvo   = getEntityData(kEntityIvo)->entityPosition;
+
+		if (getEntities()->isDistanceBetweenEntities(kEntitySalko, kEntityIvo, 500)
+		 || (direction == kDirectionUp   && (carSalko > carIvo || (carSalko == carIvo && positionSalko > positionIvo)))
+		 || (direction == kDirectionDown && (carSalko < carIvo || (carSalko == carIvo && positionSalko < positionIvo)))) {
+			 getData()->field_49B = 0;
+			 params->param3 = 1;
+		}
+
+		if (!params->param3)
+			getEntities()->updateEntity(kEntitySalko, (CarIndex)params->param1, (EntityPosition)params->param2);
+
+		}
+		break;
+
+	case kActionExcuseMeCath:
+	case kActionExcuseMe:
+		getSound()->playSound(kEntityPlayer, "ZFX1002", getSound()->getSoundFlag(kEntitySalko));
+		getSound()->playSound(kEntityPlayer, "CAT1127A");
+		break;
+
+	case kActionDefault:
+		getEntities()->updateEntity(kEntitySalko, (CarIndex)params->param1, (EntityPosition)params->param2);
+		break;
+
+	case kAction123668192:
+		CALLBACK_ACTION();
+		break;
+}
 }
 
 //////////////////////////////////////////////////////////////////////////

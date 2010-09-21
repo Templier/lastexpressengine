@@ -1831,7 +1831,65 @@ IMPLEMENT_FUNCTION(60, Anna, function60)
 
 //////////////////////////////////////////////////////////////////////////
 IMPLEMENT_FUNCTION(61, Anna, function61)
-	error("Anna: callback function 61 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionDefault:
+		getState()->timeDelta = 3;
+
+		setCallback(1);
+		setup_savegame(kSavegameTypeIndex, 0);
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			getObjects()->update(kObject53, kEntityPlayer, kLocation1, kCursorHandKnock, kCursorHand);
+
+			setCallback(2);
+			setup_function45(false);
+			break;
+
+		case 2:
+			getObjects()->update(kObjectCompartmentF, kEntityPlayer, kLocation1, kCursorHandKnock, kCursorHand);
+
+			setCallback(3);
+			setup_updateEntity(kCarRestaurant, kPosition_850);
+			break;
+
+		case 3:
+			setCallback(4);
+			setup_callbackActionRestaurantOrSalon();
+			break;
+
+		case 4:
+			getData()->entityPosition = kPosition_1540;
+			getData()->location = kLocationOutsideCompartment;
+
+			setCallback(5);
+			setup_draw("802US");
+			break;
+
+		case 5:
+			getEntities()->drawSequenceRight(kEntityAnna, "802UD");
+			if (getEntities()->isInSalon(kEntityPlayer))
+				getEntities()->updateFrame(kEntityAnna);
+
+			setCallback(6);
+			setup_callbackActionOnDirection();
+			break;
+
+		case 6:
+			getEntities()->clearSequences(kEntityAnna);
+			setup_function62();
+			break;
+		}
+		break;
+	}
 }
 
 //////////////////////////////////////////////////////////////////////////
