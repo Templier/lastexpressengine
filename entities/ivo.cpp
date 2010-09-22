@@ -134,7 +134,71 @@ IMPLEMENT_FUNCTION_II(10, Ivo, savegame, SavegameType, uint32)
 
 //////////////////////////////////////////////////////////////////////////
 IMPLEMENT_FUNCTION(11, Ivo, function11)
-	error("Ivo: callback function 11 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionNone:
+		if (getEntities()->isDistanceBetweenEntities(kEntityIvo, kEntitySalko, 750) || getEntities()->checkDistanceFromPosition(kEntitySalko, kPosition_2740, 500)) {
+			getSavePoints()->push(kEntityIvo, kEntitySalko, kAction123668192);
+
+			setCallback(4);
+			setup_enterExitCompartment("613Ah", kObjectCompartmentH);
+		}
+		break;
+
+	case kActionDefault:
+		getEntities()->drawSequenceRight(kEntityIvo, "809DS");
+		if (getEntities()->isInRestaurant(kEntityPlayer))
+			getEntities()->updateFrame(kEntityIvo);
+
+		setCallback(1);
+		setup_callbackActionOnDirection();
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			getSavePoints()->push(kEntityIvo, kEntitySalko, kAction125242096);
+
+			setCallback(2);
+			setup_updateEntity(kCarRedSleeping, kPosition_2740);
+			break;
+
+		case 2:
+			if (getEntities()->isDistanceBetweenEntities(kEntityIvo, kEntitySalko, 750) || getEntities()->checkDistanceFromPosition(kEntitySalko, kPosition_2740, 500)) {
+				getSavePoints()->push(kEntityIvo, kEntitySalko, kAction123668192);
+
+				setCallback(3);
+				setup_enterExitCompartment("613Ah", kObjectCompartmentH);
+			} else {
+				getEntities()->drawSequenceLeft(kEntityIvo, "613Hh");
+				getEntities()->enterCompartment(kEntityIvo, kObjectCompartmentH, true);
+			}
+			break;
+
+		case 3:
+			getData()->entityPosition = kPosition_2740;
+			getData()->location = kLocationInsideCompartment;
+			getEntities()->clearSequences(kEntityIvo);
+
+			CALLBACK_ACTION();
+			break;
+
+		case 4:
+			getEntities()->exitCompartment(kEntityIvo, kObjectCompartmentH, true);
+			getData()->entityPosition = kPosition_2740;
+			getData()->location = kLocationInsideCompartment;
+			getEntities()->clearSequences(kEntityIvo);
+
+			CALLBACK_ACTION();
+			break;
+		}
+		break;
+	}
 }
 
 //////////////////////////////////////////////////////////////////////////

@@ -469,6 +469,12 @@ void class::setup_##name() { \
 	parameter = kTimeInvalid; \
 }
 
+#define UPDATE_PARAM_SIMPLE(parameter, type, value) { \
+	if (!parameter) \
+		parameter = type + value; \
+	if (parameter >= type) \
+		break; \
+}
 
 // Go from one compartment to another (or the same one if no optional args are passed
 #define COMPARTMENT_TO(class, compartmentFrom, positionFrom, sequenceFrom, sequenceTo) \

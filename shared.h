@@ -165,6 +165,7 @@ enum TimeValue {
 	kTime2133000              = 2133000,
 	kTime2151000              = 2151000,
 	kTimeCityAmstetten        = 2154600,
+	kTime2155500              = 2155500,
 	kTime2160000              = 2160000,
 	kTime2187000              = 2187000,
 	kTime2196000              = 2196000,

@@ -251,7 +251,54 @@ IMPLEMENT_FUNCTION(14, Alexei, function14)
 
 //////////////////////////////////////////////////////////////////////////
 IMPLEMENT_FUNCTION(15, Alexei, function15)
-	error("Alexei: callback function 15 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionNone:
+		UPDATE_PARAM_SIMPLE(params->param2, getState()->time, params->param1);
+
+		if (getEntities()->isSomebodyInsideRestaurantOrSalon()) {
+			getData()->location = kLocationOutsideCompartment;
+
+			setCallback(3);
+			setup_updatePosition("103D", kCarRestaurant, 52);
+		}
+		break;
+
+	case kActionDefault:
+		params->param1 = 5 * (3 * rnd(60) + 90);
+
+		setCallback(1);
+		setup_callbackActionRestaurantOrSalon();
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			getData()->location = kLocationOutsideCompartment;
+
+			setCallback(2);
+			setup_updatePosition("103C", kCarRestaurant, 52);
+			break;
+
+		case 2:
+			getData()->location = kLocationInsideCompartment;
+			getEntities()->drawSequenceLeft(kEntityAlexei, "103E");
+			break;
+
+		case 3:
+			getData()->location = kLocationInsideCompartment;
+			getEntities()->drawSequenceLeft(kEntityAlexei, "103B");
+
+			CALLBACK_ACTION();
+			break;
+		}
+		break;
+	}
 }
 
 //////////////////////////////////////////////////////////////////////////

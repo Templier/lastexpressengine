@@ -71,7 +71,10 @@ public:
 	 */
 	DECLARE_FUNCTION(resetMainEntities)
 
-	DECLARE_FUNCTION(function6)
+	/**
+	 * Handle end of Chapter 1 events
+	 */
+	DECLARE_FUNCTION(chapter1End)
 
 	/**
 	 * Init Chapter 1 data
@@ -84,9 +87,9 @@ public:
 	DECLARE_FUNCTION(chapter1Handler)
 
 	/**
-	 * Handle end of Chapter 1
+	 * Handle switching to Chapter 2 after the end of Chapter 1
 	 */
-	DECLARE_FUNCTION(chapter1End)
+	DECLARE_FUNCTION(chapter1Next)
 
 	/**
 	 * Setup Chapter 2
@@ -118,7 +121,10 @@ public:
 	 */
 	DECLARE_FUNCTION(chapter3Handler)
 
-	DECLARE_FUNCTION(function16)
+	/**
+	 * Handle Vienna events
+	 */
+	DECLARE_FUNCTION(viennaEvents)
 
 	/**
 	 * Setup Chapter 4

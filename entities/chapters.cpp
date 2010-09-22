@@ -79,17 +79,17 @@ Chapters::Chapters(LastExpressEngine *engine) : Entity(engine, kEntityChapters) 
 	ADD_CALLBACK_FUNCTION(Chapters, exitStation);
 	ADD_CALLBACK_FUNCTION(Chapters, chapter1);
 	ADD_CALLBACK_FUNCTION(Chapters, resetMainEntities);
-	ADD_CALLBACK_FUNCTION(Chapters, function6);
+	ADD_CALLBACK_FUNCTION(Chapters, chapter1End);
 	ADD_CALLBACK_FUNCTION(Chapters, chapter1Init);
 	ADD_CALLBACK_FUNCTION(Chapters, chapter1Handler);
-	ADD_CALLBACK_FUNCTION(Chapters, chapter1End);
+	ADD_CALLBACK_FUNCTION(Chapters, chapter1Next);
 	ADD_CALLBACK_FUNCTION(Chapters, chapter2);
 	ADD_CALLBACK_FUNCTION(Chapters, chapter2Init);
 	ADD_CALLBACK_FUNCTION(Chapters, chapter2Handler);
 	ADD_CALLBACK_FUNCTION(Chapters, chapter3);
 	ADD_CALLBACK_FUNCTION(Chapters, chapter3Init);
 	ADD_CALLBACK_FUNCTION(Chapters, chapter3Handler);
-	ADD_CALLBACK_FUNCTION(Chapters, function16);
+	ADD_CALLBACK_FUNCTION(Chapters, viennaEvents);
 	ADD_CALLBACK_FUNCTION(Chapters, chapter4);
 	ADD_CALLBACK_FUNCTION(Chapters, chapter4Init);
 	ADD_CALLBACK_FUNCTION(Chapters, chapter4Handler);
@@ -156,7 +156,7 @@ IMPLEMENT_FUNCTION(5, Chapters, resetMainEntities)
 }
 
 //////////////////////////////////////////////////////////////////////////
-IMPLEMENT_FUNCTION(6,Chapters, function6)
+IMPLEMENT_FUNCTION(6,Chapters, chapter1End)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -275,7 +275,7 @@ IMPLEMENT_FUNCTION(6,Chapters, function6)
 		getSound()->playSound(kEntityPlayer, "MUS008", SoundManager::kFlagDefault);
 		getInventory()->unselectItem();
 
-		// FIXME add event pump
+		// FIXME add event pump ?
 		while (getSound()->isBuffered("MUS008"))
 			getSound()->updateQueue();
 
@@ -500,10 +500,10 @@ label_exit_badenoos:
 		// Exiting Baden Oos station
 		TIME_CHECK_EXITSTATION(Chapters, kTimeExitBadenOos, CURRENT_PARAMS(3, 3), 21, "BadenOos");
 
-label_chapter1_end:
+label_chapter1_next:
 		if (getState()->time > kTimeChapter1End3 && ! CURRENT_PARAMS(3, 4)) {
 			CURRENT_PARAMS(3, 4) = 1;
-			setup_chapter1End();
+			setup_chapter1Next();
 		}
 		break;
 
@@ -650,7 +650,7 @@ label_chapter1_end:
 			goto label_exit_badenoos;
 
 		case 21:
-			goto label_chapter1_end;
+			goto label_chapter1_next;
 
 		case 22:
 			params->param5 = 1;
@@ -671,17 +671,17 @@ label_chapter1_end:
 		getProgress().field_18 = 3;
 
 		if (getState()->time >= kTimeChapter1End) {
-			setup_chapter1End();
+			setup_chapter1Next();
 		} else {
 			setCallback(23);
-			setup_function6();
+			setup_chapter1End();
 		}
 		break;
 	}
 }
 
 //////////////////////////////////////////////////////////////////////////
-IMPLEMENT_FUNCTION(9, Chapters, chapter1End)
+IMPLEMENT_FUNCTION(9, Chapters, chapter1Next)
 	if (savepoint.action == kActionDefault) {
 		// Reset sound cache
 		if (ENTITY_PARAM(0, 2) || ENTITY_PARAM(0, 3)) {
@@ -890,8 +890,65 @@ IMPLEMENT_FUNCTION(15, Chapters, chapter3Handler)
 }
 
 //////////////////////////////////////////////////////////////////////////
-IMPLEMENT_FUNCTION(16, Chapters, function16)
-	error("Chapters: callback function 16 not implemented!");
+IMPLEMENT_FUNCTION(16, Chapters, viennaEvents)
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionDefault:
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			getAction()->playAnimation(kEventViennaAugustUnloadGuns);
+			if (getEvent(kEventConcertLeaveWithBriefcase))
+				getLogic()->gameOver(kSavegameTypeTime, kTime2187000, kSceneNone, true);
+			else if (getEvent(kEventCathJumpDownCeiling))
+				getLogic()->gameOver(kSavegameTypeEvent, kEventCathJumpDownCeiling, kSceneNone, true);
+			else
+				getLogic()->gameOver(kSavegameTypeTime, kTime2155500, kSceneNone, true);
+			break;
+
+		case 2:
+			getAction()->playAnimation(kEventViennaKronosFirebird);
+			if (getEvent(kEventKronosBringEggCeiling))
+				getLogic()->gameOver(kSavegameTypeEvent2, kEventKronosBringEggCeiling, kSceneGameOverVienna1, true);
+			else if (getEvent(kEventKronosBringEgg)) {
+				if (getEvent(kEventKronosBringEggCeiling))
+					getLogic()->gameOver(kSavegameTypeEvent2, kEventKronosBringEggCeiling, kSceneGameOverVienna1, true);
+				else
+					getLogic()->gameOver(kSavegameTypeTime, kTime2155500, kSceneGameOverVienna1, true);
+			} else {
+				if (getProgress().field_C0) {
+					if (getEvent(kEventKronosReturnBriefcase))
+						getLogic()->gameOver(kSavegameTypeTime, getProgress().field_C0, kSceneGameOverVienna2, true);
+					else
+						getLogic()->gameOver(kSavegameTypeTime, kTime2155500, kSceneGameOverVienna2, true);
+				} else {
+					if (getEvent(kEventKronosReturnBriefcase))
+						getLogic()->gameOver(kSavegameTypeEvent, kEventKronosReturnBriefcase, kSceneGameOverVienna, true);
+					else
+						getLogic()->gameOver(kSavegameTypeTime, kTime2155500, kSceneGameOverVienna, true);
+				}
+			}
+			break;
+
+		case 3:
+			getAction()->playAnimation(kEventVergesAnnaDead);
+			getLogic()->gameOver(kSavegameTypeTime, kTime2250000, kSceneGameOverAnnaDied, true);
+			break;
+
+		case 4:
+			getAction()->playAnimation(kEventViennaContinueGame);
+			setup_chapter4();
+			break;
+		}
+		break;
+	}
 }
 
 //////////////////////////////////////////////////////////////////////////
