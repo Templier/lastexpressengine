@@ -121,7 +121,7 @@ public:
 	 * @param sequence2   The sequence to draw for the second entity
 	 * @param entity      The EntityIndex of the second entity
 	 */
-	DECLARE_FUNCTION_3(draw2, const char* sequence1, const char* sequence2, EntityIndex entity);
+	DECLARE_FUNCTION_3(draw2, const char* sequence1, const char* sequence2, EntityIndex entity)
 
 	/**
 	 * Plays sound
