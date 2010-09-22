@@ -57,7 +57,7 @@ public:
 	 * @param sequence    The sequence to draw
 	 * @param compartment The compartment
 	 */
-	DECLARE_FUNCTION(enterExitCompartment, const char* sequence, ObjectIndex compartment)
+	DECLARE_FUNCTION_2(enterExitCompartment, const char* sequence, ObjectIndex compartment)
 
 	/**
 	 * Handles entering/exiting a compartment.
@@ -67,21 +67,21 @@ public:
 	 * @param ticks       The time ticks
 	 * @param object      The object for loading the scene
 	 */
-	DECLARE_FUNCTION(enterExitCompartment2, const char* sequence, ObjectIndex compartment, uint32 ticks, ObjectIndex object)
+	DECLARE_FUNCTION_4(enterExitCompartment2, const char* sequence, ObjectIndex compartment, uint32 ticks, ObjectIndex object)
 
 	/**
 	 * Plays sound
 	 *
 	 * @param filename The sound filename
 	 */
-	DECLARE_FUNCTION(playSound, const char* filename)
+	DECLARE_FUNCTION_1(playSound, const char* filename)
 
 	/**
 	 * Plays sound
 	 *
 	 * @param filename The sound filename
 	 */
-	DECLARE_FUNCTION(playSoundMertens, const char* filename)
+	DECLARE_FUNCTION_1(playSoundMertens, const char* filename)
 
 	/**
 	 * Updates parameter 2 using time value
@@ -97,7 +97,7 @@ public:
 	 * @param savegameType The type of the savegame
 	 * @param param        The param for the savegame (EventIndex or TimeValue)
 	 */
-	DECLARE_FUNCTION(savegame, SavegameType savegameType, uint32 param)
+	DECLARE_FUNCTION_2(savegame, SavegameType savegameType, uint32 param)
 
 	/**
 	 * Updates the entity
@@ -105,9 +105,9 @@ public:
 	 * @param index          The car
 	 * @param entityPosition The entity position
 	 */
-	DECLARE_FUNCTION(updateEntity, CarIndex index, EntityPosition entityPosition)
+	DECLARE_FUNCTION_2(updateEntity, CarIndex index, EntityPosition entityPosition)
 
-	DECLARE_FUNCTION(function10, ObjectIndex, bool)
+	DECLARE_FUNCTION_2(function10, ObjectIndex, bool)
 	DECLARE_FUNCTION(function11)
 	DECLARE_FUNCTION(function12)
 	DECLARE_FUNCTION(function13)

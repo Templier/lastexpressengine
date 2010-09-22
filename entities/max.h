@@ -48,7 +48,7 @@ public:
 	 *
 	 * @param filename The sound filename
 	 */
-	DECLARE_FUNCTION(playSound, const char* filename)
+	DECLARE_FUNCTION_1(playSound, const char* filename)
 
 	/**
 	* Draws the entity
@@ -64,7 +64,7 @@ public:
 	 * @param sequence    The sequence to draw
 	 * @param compartment The compartment
 	 */
-	DECLARE_FUNCTION(enterExitCompartment, const char* sequence, ObjectIndex compartment)
+	DECLARE_FUNCTION_2(enterExitCompartment, const char* sequence, ObjectIndex compartment)
 
 	/**
 	 * Saves the game
@@ -72,7 +72,7 @@ public:
 	 * @param savegameType The type of the savegame
 	 * @param param        The param for the savegame (EventIndex or TimeValue)
 	 */
-	DECLARE_FUNCTION(savegame, SavegameType savegameType, uint32 param)
+	DECLARE_FUNCTION_2(savegame, SavegameType savegameType, uint32 param)
 
 	/**
 	 * Handle Chapter 1 & 2 events

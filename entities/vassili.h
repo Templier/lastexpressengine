@@ -48,7 +48,7 @@ public:
 	 *
 	 * @param sequence The sequence to draw
 	 */
-	DECLARE_FUNCTION(draw, const char* sequence)
+	DECLARE_FUNCTION_1(draw, const char* sequence)
 
 	/**
 	 * Saves the game
@@ -56,7 +56,7 @@ public:
 	 * @param savegameType The type of the savegame
 	 * @param param        The param for the savegame (EventIndex or TimeValue)
 	 */
-	DECLARE_FUNCTION(savegame, SavegameType savegameType, uint32 param)
+	DECLARE_FUNCTION_2(savegame, SavegameType savegameType, uint32 param)
 
 	/**
 	 * Setup Chapter 1

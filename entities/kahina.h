@@ -48,7 +48,7 @@ public:
 	 *
 	 * @param filename The sound filename
 	 */
-	DECLARE_FUNCTION(playSound, const char* filename)
+	DECLARE_FUNCTION_1(playSound, const char* filename)
 
 	/**
 	 * Saves the game
@@ -56,14 +56,14 @@ public:
 	 * @param savegameType The type of the savegame
 	 * @param param        The param for the savegame (EventIndex or TimeValue)
 	 */
-	DECLARE_FUNCTION(savegame, SavegameType savegameType, uint32 param)
+	DECLARE_FUNCTION_2(savegame, SavegameType savegameType, uint32 param)
 
 	/**
 	 * Updates parameter 2 using time value
 	 *
 	 * @param time The time to add
 	 */
-	DECLARE_FUNCTION(updateFromTime, uint32 time)
+	DECLARE_FUNCTION_1(updateFromTime, uint32 time)
 
 	/**
 	 * Updates parameter 2 using ticks value
@@ -73,8 +73,8 @@ public:
 	 */
 	DECLARE_FUNCTION_NOSETUP(updateFromTicks)
 
-	DECLARE_FUNCTION(function6, TimeValue timeValue)
-	DECLARE_FUNCTION(function7, CarIndex car, EntityPosition entityPosition)
+	DECLARE_FUNCTION_1(function6, TimeValue timeValue)
+	DECLARE_FUNCTION_2(function7, CarIndex car, EntityPosition entityPosition)
 
 	/**
 	 * Updates the entity
@@ -82,7 +82,7 @@ public:
 	 * @param index          The car
 	 * @param entityPosition The entity position
 	 */
-	DECLARE_FUNCTION(updateEntity, CarIndex index, EntityPosition entityPosition)
+	DECLARE_FUNCTION_2(updateEntity, CarIndex index, EntityPosition entityPosition)
 
 	/**
 	 * Handles entering/exiting a compartment.
@@ -90,7 +90,7 @@ public:
 	 * @param sequence    The sequence to draw
 	 * @param compartment The compartment
 	 */
-	DECLARE_FUNCTION(enterExitCompartment, const char* sequence, ObjectIndex compartment)
+	DECLARE_FUNCTION_2(enterExitCompartment, const char* sequence, ObjectIndex compartment)
 
 	/**
 	 * Setup Chapter 1
@@ -128,7 +128,7 @@ public:
 	 * @param car            The car index
 	 * @param entityPosition The entity position
 	 */
-	DECLARE_FUNCTION(function19, CarIndex car, EntityPosition entityPosition)
+	DECLARE_FUNCTION_2(function19, CarIndex car, EntityPosition entityPosition)
 
 	/**
 	 * Handle Chapter 3 events

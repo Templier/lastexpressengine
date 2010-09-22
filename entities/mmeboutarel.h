@@ -48,21 +48,21 @@ public:
 	 *
 	 * @param filename The sound filename
 	 */
-	DECLARE_FUNCTION(playSound, const char* filename)
+	DECLARE_FUNCTION_1(playSound, const char* filename)
 
 	/**
 	 * Draws the entity
 	 *
 	 * @param sequence The sequence to draw
 	 */
-	DECLARE_FUNCTION(draw, const char* sequence)
+	DECLARE_FUNCTION_1(draw, const char* sequence)
 
 	/**
 	 * Updates parameter 2 using time value
 	 *
 	 * @param time The time to add
 	 */
-	DECLARE_FUNCTION(updateFromTime, uint32 time)
+	DECLARE_FUNCTION_1(updateFromTime, uint32 time)
 
 	/**
 	 * Handles entering/exiting a compartment.
@@ -70,7 +70,7 @@ public:
 	 * @param sequence    The sequence to draw
 	 * @param compartment The compartment
 	 */
-	DECLARE_FUNCTION(enterExitCompartment, const char* sequence, ObjectIndex compartment)
+	DECLARE_FUNCTION_2(enterExitCompartment, const char* sequence, ObjectIndex compartment)
 
 	/**
 	 * Handles entering/exiting a compartment and updates position/play animation
@@ -78,7 +78,7 @@ public:
 	 * @param sequence    The sequence to draw
 	 * @param compartment The compartment
 	 */
-	DECLARE_FUNCTION(enterExitCompartment2, const char* sequence, ObjectIndex compartment)
+	DECLARE_FUNCTION_2(enterExitCompartment2, const char* sequence, ObjectIndex compartment)
 
 	/**
 	 * Updates the entity
@@ -86,9 +86,9 @@ public:
 	 * @param index          The car
 	 * @param entityPosition The entity position
 	 */
-	DECLARE_FUNCTION(updateEntity, CarIndex index, EntityPosition entityPosition)
+	DECLARE_FUNCTION_2(updateEntity, CarIndex index, EntityPosition entityPosition)
 
-	DECLARE_FUNCTION(function8, const char *soundName)
+	DECLARE_FUNCTION_1(function8, const char *soundName)
 
 	DECLARE_FUNCTION(function9)
 

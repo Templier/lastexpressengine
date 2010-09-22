@@ -51,7 +51,7 @@ public:
 	 *
 	 * @param sequence The sequence to draw
 	 */
-	DECLARE_FUNCTION(draw, const char* sequence)
+	DECLARE_FUNCTION_1(draw, const char* sequence)
 
 	/**
 	 * Updates the position
@@ -60,7 +60,7 @@ public:
 	 * @param car            The car
 	 * @param position       The position
 	 */
-	DECLARE_FUNCTION(updatePosition, const char *sequence, CarIndex car, Position position)
+	DECLARE_FUNCTION_3(updatePosition, const char *sequence, CarIndex car, Position position)
 
 	/**
 	 * Process callback action when the entity direction is not kDirectionRight
@@ -75,14 +75,14 @@ public:
 	 * @param action      The action
 	 * @param sequence2   The sequence name for the savepoint
 	 */
-	DECLARE_FUNCTION(callSavepoint, const char* sequence1, EntityIndex entity, ActionIndex action, const char* sequence2)
+	DECLARE_FUNCTION_4(callSavepoint, const char* sequence1, EntityIndex entity, ActionIndex action, const char* sequence2)
 
 	/**
 	 * Plays sound
 	 *
 	 * @param filename The sound filename
 	 */
-	DECLARE_FUNCTION(playSound, const char* filename)
+	DECLARE_FUNCTION_1(playSound, const char* filename)
 
 	DECLARE_FUNCTION(function7)
 

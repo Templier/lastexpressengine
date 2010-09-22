@@ -71,6 +71,3 @@ endif
 
 # Include common rules
 include $(srcdir)/rules.mk
-
-# Silence variadic macros warning for C++
-CXXFLAGS := $(CXXFLAGS) -Wno-variadic-macros

@@ -48,7 +48,7 @@ public:
 	 *
 	 * @param sequence The sequence to draw
 	 */
-	DECLARE_FUNCTION(draw, const char* sequence)
+	DECLARE_FUNCTION_1(draw, const char* sequence)
 
 	/**
 	 * Handles entering/exiting a compartment.
@@ -56,7 +56,7 @@ public:
 	 * @param sequence    The sequence to draw
 	 * @param compartment The compartment
 	 */
-	DECLARE_FUNCTION(enterExitCompartment, const char* sequence, ObjectIndex compartment)
+	DECLARE_FUNCTION_2(enterExitCompartment, const char* sequence, ObjectIndex compartment)
 
 	/**
 	 * Handles entering/exiting a compartment and updates position/play animation
@@ -64,7 +64,7 @@ public:
 	 * @param sequence    The sequence to draw
 	 * @param compartment The compartment
 	 */
-	DECLARE_FUNCTION(enterExitCompartment2, const char* sequence, ObjectIndex compartment)
+	DECLARE_FUNCTION_2(enterExitCompartment2, const char* sequence, ObjectIndex compartment)
 
 	/**
 	 * Process callback action when the entity direction is not kDirectionRight
@@ -76,14 +76,14 @@ public:
 	 *
 	 * @param filename The sound filename
 	 */
-	DECLARE_FUNCTION(playSound, const char* filename)
+	DECLARE_FUNCTION_1(playSound, const char* filename)
 
 	/**
 	 * Plays sound
 	 *
 	 * @param filename The sound filename
 	 */
-	DECLARE_FUNCTION(playSound16, const char* filename)
+	DECLARE_FUNCTION_1(playSound16, const char* filename)
 
 	/**
 	 * Saves the game
@@ -91,17 +91,17 @@ public:
 	 * @param savegameType The type of the savegame
 	 * @param param        The param for the savegame (EventIndex or TimeValue)
 	 */
-	DECLARE_FUNCTION(savegame, SavegameType savegameType, uint32 param)
+	DECLARE_FUNCTION_2(savegame, SavegameType savegameType, uint32 param)
 
 	/**
 	 * Updates parameter 2 using time value
 	 *
 	 * @param time The time to add
 	 */
-	DECLARE_FUNCTION(updateFromTime, uint32 time)
+	DECLARE_FUNCTION_1(updateFromTime, uint32 time)
 
-	DECLARE_FUNCTION(enterCompartmentDialog, CarIndex car, EntityPosition entityPosition)
-	DECLARE_FUNCTION(function11, TimeValue timeValue)
+	DECLARE_FUNCTION_2(enterCompartmentDialog, CarIndex car, EntityPosition entityPosition)
+	DECLARE_FUNCTION_1(function11, TimeValue timeValue)
 
 	/**
 	 * Setup Chapter 1
@@ -140,8 +140,8 @@ public:
 	DECLARE_FUNCTION(function23)
 	DECLARE_FUNCTION(function24)
 	DECLARE_FUNCTION(function25)
-	DECLARE_FUNCTION(function26, TimeValue timeValue)
-	DECLARE_FUNCTION(function27, CarIndex car, EntityPosition entityPosition)
+	DECLARE_FUNCTION_1(function26, TimeValue timeValue)
+	DECLARE_FUNCTION_2(function27, CarIndex car, EntityPosition entityPosition)
 
 	/**
 	 * Setup Chapter 4

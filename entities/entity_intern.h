@@ -43,12 +43,26 @@ namespace LastExpress {
 
 //////////////////////////////////////////////////////////////////////////
 // Declaration
-//
-// Setup functions are declared in the header to avoid duplicating argument information
-//   - Arguments type and name must be passed to the implementation macro
+//////////////////////////////////////////////////////////////////////////
 
-#define DECLARE_FUNCTION(name, ...) \
-	void setup_##name(__VA_ARGS__); \
+#define DECLARE_FUNCTION(name) \
+	void setup_##name(); \
+	void name(const SavePoint &savepoint);
+
+#define DECLARE_FUNCTION_1(name, param1) \
+	void setup_##name(param1); \
+	void name(const SavePoint &savepoint);
+
+#define DECLARE_FUNCTION_2(name, param1, param2) \
+	void setup_##name(param1, param2); \
+	void name(const SavePoint &savepoint);
+
+#define DECLARE_FUNCTION_3(name, param1, param2, param3) \
+	void setup_##name(param1, param2, param3); \
+	void name(const SavePoint &savepoint);
+
+#define DECLARE_FUNCTION_4(name, param1, param2, param3, param4) \
+	void setup_##name(param1, param2, param3, param4); \
 	void name(const SavePoint &savepoint);
 
 #define DECLARE_FUNCTION_NOSETUP(name) \

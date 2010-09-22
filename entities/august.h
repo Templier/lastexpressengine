@@ -48,14 +48,14 @@ public:
 	 *
 	 * @param time The time to add
 	 */
-	DECLARE_FUNCTION(updateFromTime, uint32 time)
+	DECLARE_FUNCTION_1(updateFromTime, uint32 time)
 
 	/**
 	 * Draws the entity
 	 *
 	 * @param sequence The sequence to draw
 	 */
-	DECLARE_FUNCTION(draw, const char* sequence)
+	DECLARE_FUNCTION_1(draw, const char* sequence)
 
 	/**
 	 * Updates the position
@@ -64,7 +64,7 @@ public:
 	 * @param car            The car
 	 * @param position       The position
 	 */
-	DECLARE_FUNCTION(updatePosition, const char* sequence1, CarIndex car, Position position)
+	DECLARE_FUNCTION_3(updatePosition, const char* sequence1, CarIndex car, Position position)
 
 	/**
 	 * Handles entering/exiting a compartment.
@@ -72,7 +72,7 @@ public:
 	 * @param sequence    The sequence to draw
 	 * @param compartment The compartment
 	 */
-	DECLARE_FUNCTION(enterExitCompartment, const char* sequence, ObjectIndex compartment)
+	DECLARE_FUNCTION_2(enterExitCompartment, const char* sequence, ObjectIndex compartment)
 
 	/**
 	 * Handles entering/exiting a compartment and updates position/play animation
@@ -80,7 +80,7 @@ public:
 	 * @param sequence    The sequence to draw
 	 * @param compartment The compartment
 	 */
-	DECLARE_FUNCTION(enterExitCompartment2, const char* sequence, ObjectIndex compartment)
+	DECLARE_FUNCTION_2(enterExitCompartment2, const char* sequence, ObjectIndex compartment)
 
 	/**
 	 * Handles entering/exiting a compartment.
@@ -88,7 +88,7 @@ public:
 	 * @param sequence    The sequence to draw
 	 * @param compartment The compartment
 	 */
-	DECLARE_FUNCTION(enterExitCompartment3, const char* sequence, ObjectIndex compartment)
+	DECLARE_FUNCTION_2(enterExitCompartment3, const char* sequence, ObjectIndex compartment)
 
 	/**
 	 * Process callback action when the entity direction is not kDirectionRight
@@ -103,7 +103,7 @@ public:
 	 * @param action      The action
 	 * @param sequence2   The sequence name for the savepoint
 	 */
-	DECLARE_FUNCTION(callSavepoint, const char* sequence1, EntityIndex entity, ActionIndex action, const char* sequence2)
+	DECLARE_FUNCTION_4(callSavepoint, const char* sequence1, EntityIndex entity, ActionIndex action, const char* sequence2)
 
 	/**
 	 * Call a savepoint
@@ -112,7 +112,7 @@ public:
 	 * @param param2 The action
 	 * @param seq    The sequence name for the savepoint
 	 */
-	DECLARE_FUNCTION(callSavepointNoDrawing, EntityIndex entity, ActionIndex action, const char* sequence)
+	DECLARE_FUNCTION_3(callSavepointNoDrawing, EntityIndex entity, ActionIndex action, const char* sequence)
 
 	/**
 	 * Draws the entity along with another one
@@ -121,21 +121,21 @@ public:
 	 * @param sequence2   The sequence to draw for the second entity
 	 * @param entity      The EntityIndex of the second entity
 	 */
-	DECLARE_FUNCTION(draw2, const char* sequence1, const char* sequence2, EntityIndex entity);
+	DECLARE_FUNCTION_3(draw2, const char* sequence1, const char* sequence2, EntityIndex entity);
 
 	/**
 	 * Plays sound
 	 *
 	 * @param filename The sound filename
 	 */
-	DECLARE_FUNCTION(playSound, const char* filename)
+	DECLARE_FUNCTION_1(playSound, const char* filename)
 
 	/**
 	 * Plays sound
 	 *
 	 * @param filename The sound filename
 	 */
-	DECLARE_FUNCTION(playSound16, const char* filename)
+	DECLARE_FUNCTION_1(playSound16, const char* filename)
 
 	/**
 	 * Process callback action when somebody is standing in the restaurant or salon.
@@ -148,7 +148,7 @@ public:
 	 * @param savegameType The type of the savegame
 	 * @param param        The param for the savegame (EventIndex or TimeValue)
 	 */
-	DECLARE_FUNCTION(savegame, SavegameType savegameType, uint32 param)
+	DECLARE_FUNCTION_2(savegame, SavegameType savegameType, uint32 param)
 
 	/**
 	 * Updates the entity
@@ -156,9 +156,9 @@ public:
 	 * @param index          The car
 	 * @param entityPosition The entity position
 	 */
-	DECLARE_FUNCTION(updateEntity, CarIndex index, EntityPosition entityPosition)
+	DECLARE_FUNCTION_2(updateEntity, CarIndex index, EntityPosition entityPosition)
 
-	DECLARE_FUNCTION(function17, TimeValue timeValue)
+	DECLARE_FUNCTION_1(function17, TimeValue timeValue)
 
 	/**
 	 * Updates the entity
@@ -166,19 +166,19 @@ public:
 	 * @param param1 The car
 	 * @param param2 The entity position
 	 */
-	DECLARE_FUNCTION(updateEntity2, CarIndex index, EntityPosition entityPosition)
+	DECLARE_FUNCTION_2(updateEntity2, CarIndex index, EntityPosition entityPosition)
 
-	DECLARE_FUNCTION(function19, bool, bool)
+	DECLARE_FUNCTION_2(function19, bool, bool)
 
-	DECLARE_FUNCTION(function20, bool)
-	DECLARE_FUNCTION(function21, TimeValue timeValue)
+	DECLARE_FUNCTION_1(function20, bool)
+	DECLARE_FUNCTION_1(function21, TimeValue timeValue)
 
 	/**
 	 * Setup Chapter 1
 	 */
 	DECLARE_FUNCTION(chapter1)
 
-	DECLARE_FUNCTION(function23, TimeValue timeValue)
+	DECLARE_FUNCTION_1(function23, TimeValue timeValue)
 	DECLARE_FUNCTION(dinner)
 
 	/**
@@ -215,8 +215,8 @@ public:
 	 */
 	DECLARE_FUNCTION(chapter3)
 
-	DECLARE_FUNCTION(function41, CarIndex car, EntityPosition entityPosition)
-	DECLARE_FUNCTION(function42, CarIndex car, EntityPosition entityPosition, bool)
+	DECLARE_FUNCTION_2(function41, CarIndex car, EntityPosition entityPosition)
+	DECLARE_FUNCTION_3(function42, CarIndex car, EntityPosition entityPosition, bool)
 
 	/**
 	 * Handle Chapter 3 events

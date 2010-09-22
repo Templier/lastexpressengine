@@ -48,7 +48,7 @@ public:
 	 *
 	 * @param sequence The sequence to draw
 	 */
-	DECLARE_FUNCTION(draw, const char* sequence)
+	DECLARE_FUNCTION_1(draw, const char* sequence)
 
 	/**
 	 * Updates the position
@@ -57,7 +57,7 @@ public:
 	 * @param car            The car
 	 * @param position       The position
 	 */
-	DECLARE_FUNCTION(updatePosition, const char* sequence1, CarIndex car, Position position)
+	DECLARE_FUNCTION_3(updatePosition, const char* sequence1, CarIndex car, Position position)
 
 	/**
 	 * Handles entering/exiting a compartment.
@@ -65,7 +65,7 @@ public:
 	 * @param sequence    The sequence to draw
 	 * @param compartment The compartment
 	 */
-	DECLARE_FUNCTION(enterExitCompartment, const char* sequence, ObjectIndex compartment)
+	DECLARE_FUNCTION_2(enterExitCompartment, const char* sequence, ObjectIndex compartment)
 
 	/**
 	 * Process callback action when the entity direction is not kDirectionRight
@@ -80,14 +80,14 @@ public:
 	 * @param action      The action
 	 * @param sequence2   The sequence name for the savepoint
 	 */
-	DECLARE_FUNCTION(callSavepoint, const char* sequence1, EntityIndex entity, ActionIndex action, const char* sequence2)
+	DECLARE_FUNCTION_4(callSavepoint, const char* sequence1, EntityIndex entity, ActionIndex action, const char* sequence2)
 
 	/**
 	 * Plays sound
 	 *
 	 * @param filename The sound filename
 	 */
-	DECLARE_FUNCTION(playSound, const char* filename)
+	DECLARE_FUNCTION_1(playSound, const char* filename)
 
 	/**
 	 * Process callback action when somebody is standing in the restaurant or salon.
@@ -100,7 +100,7 @@ public:
 	 * @param savegameType The type of the savegame
 	 * @param param        The param for the savegame (EventIndex or TimeValue)
 	 */
-	DECLARE_FUNCTION(savegame, SavegameType savegameType, uint32 param)
+	DECLARE_FUNCTION_2(savegame, SavegameType savegameType, uint32 param)
 
 	/**
 	 * Updates the entity
@@ -108,14 +108,14 @@ public:
 	 * @param index          The car
 	 * @param entityPosition The entity position
 	 */
-	DECLARE_FUNCTION(updateEntity, CarIndex index, EntityPosition entityPosition)
+	DECLARE_FUNCTION_2(updateEntity, CarIndex index, EntityPosition entityPosition)
 
 	/**
 	 * Updates parameter 2 using time value
 	 *
 	 * @param time The time to add
 	 */
-	DECLARE_FUNCTION(updateFromTime, uint32 time)
+	DECLARE_FUNCTION_1(updateFromTime, uint32 time)
 
 	DECLARE_FUNCTION(function12)
 
@@ -126,25 +126,25 @@ public:
 	 * @param sequence2   The sequence to draw for the second entity
 	 * @param entity      The EntityIndex of the second entity
 	 */
-	DECLARE_FUNCTION(draw2, const char* sequence1, const char* sequence2, EntityIndex entity);
+	DECLARE_FUNCTION_3(draw2, const char* sequence1, const char* sequence2, EntityIndex entity);
 
 	/**
 	 * Updates parameter 2 using ticks value
 	 *
 	 * @param ticks The number of ticks to add
 	 */
-	DECLARE_FUNCTION(updateFromTicks, uint32 ticks)
+	DECLARE_FUNCTION_1(updateFromTicks, uint32 ticks)
 
-	DECLARE_FUNCTION(function15, TimeValue timeValue, const char *sequence)
+	DECLARE_FUNCTION_2(function15, TimeValue timeValue, const char *sequence)
 
 	/**
 	 * Setup Chapter 1
 	 */
 	DECLARE_FUNCTION(chapter1)
 
-	DECLARE_FUNCTION(function17, uint32, uint32)
+	DECLARE_FUNCTION_2(function17, uint32, uint32)
 
-	DECLARE_FUNCTION(function18, TimeValue timeValue)
+	DECLARE_FUNCTION_1(function18, TimeValue timeValue)
 
 	/**
 	 * Handle Chapter 1 events
@@ -169,7 +169,7 @@ public:
 	DECLARE_FUNCTION(function36)
 	DECLARE_FUNCTION(function37)
 	DECLARE_FUNCTION(function38)
-	DECLARE_FUNCTION(function39, CarIndex car, EntityPosition entityPosition)
+	DECLARE_FUNCTION_2(function39, CarIndex car, EntityPosition entityPosition)
 	DECLARE_FUNCTION(function40)
 	DECLARE_FUNCTION(function41)
 
@@ -187,7 +187,7 @@ public:
 	 * Setup Chapter 3
 	 */
 	DECLARE_FUNCTION(chapter3)
-	DECLARE_FUNCTION(function45, bool useAction1)
+	DECLARE_FUNCTION_1(function45, bool useAction1)
 
 	/**
 	 * Handle Chapter 3 events
@@ -227,7 +227,7 @@ public:
 	DECLARE_FUNCTION(function69)
 	DECLARE_FUNCTION(function70)
 	DECLARE_FUNCTION(function71)
-	DECLARE_FUNCTION(function72, CarIndex car, EntityPosition entityPosition)
+	DECLARE_FUNCTION_2(function72, CarIndex car, EntityPosition entityPosition)
 	DECLARE_FUNCTION(function73)
 
 	/**

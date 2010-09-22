@@ -57,7 +57,7 @@ public:
 	 *
 	 * @param sequence The sequence to draw
 	 */
-	DECLARE_FUNCTION(bloodJacket, const char *sequence)
+	DECLARE_FUNCTION_1(bloodJacket, const char *sequence)
 
 	/**
 	 * Handles entering/exiting a compartment.
@@ -65,7 +65,7 @@ public:
 	 * @param sequence    The sequence to draw
 	 * @param compartment The compartment
 	 */
-	DECLARE_FUNCTION(enterExitCompartment, const char* sequence, ObjectIndex compartment)
+	DECLARE_FUNCTION_2(enterExitCompartment, const char* sequence, ObjectIndex compartment)
 
 	/**
 	 * Handles entering/exiting a compartment and updates position/play animation
@@ -73,7 +73,7 @@ public:
 	 * @param sequence    The sequence to draw
 	 * @param compartment The compartment
 	 */
-	DECLARE_FUNCTION(enterExitCompartment2, const char* sequence, ObjectIndex compartment)
+	DECLARE_FUNCTION_2(enterExitCompartment2, const char* sequence, ObjectIndex compartment)
 
 	/**
 	 * Handles entering/exiting a compartment.
@@ -85,7 +85,7 @@ public:
 	 *
 	 * @note We are not using the shared function due to too many differences
 	 */
-	DECLARE_FUNCTION(enterExitCompartment3, const char* sequence, ObjectIndex compartment, EntityPosition entityPosition1, EntityPosition entityPosition2)
+	DECLARE_FUNCTION_4(enterExitCompartment3, const char* sequence, ObjectIndex compartment, EntityPosition entityPosition1, EntityPosition entityPosition2)
 
 	/**
 	 * Process callback action when the entity direction is not kDirectionRight
@@ -97,14 +97,14 @@ public:
 	 *
 	 * @param filename The sound filename
 	 */
-	DECLARE_FUNCTION(playSound, const char* filename)
+	DECLARE_FUNCTION_1(playSound, const char* filename)
 
 	/**
 	 * Plays sound
 	 *
 	 * @param filename The sound filename
 	 */
-	DECLARE_FUNCTION(playSound16, const char* filename)
+	DECLARE_FUNCTION_1(playSound16, const char* filename)
 
 	/**
 	 * Saves the game
@@ -112,21 +112,21 @@ public:
 	 * @param savegameType The type of the savegame
 	 * @param param        The param for the savegame (EventIndex or TimeValue)
 	 */
-	DECLARE_FUNCTION(savegame, SavegameType savegameType, uint32 param)
+	DECLARE_FUNCTION_2(savegame, SavegameType savegameType, uint32 param)
 
-	DECLARE_FUNCTION(function10, CarIndex car, EntityPosition entityPosition)
-	DECLARE_FUNCTION(function11, uint32 time)
+	DECLARE_FUNCTION_2(function10, CarIndex car, EntityPosition entityPosition)
+	DECLARE_FUNCTION_1(function11, uint32 time)
 
 	/**
 	* Says "Bonsoir" to another character
 	*
 	* @param entity The entity
 	*/
-	DECLARE_FUNCTION(bonsoir, EntityIndex entity)
-	DECLARE_FUNCTION(function13, bool, bool)
-	DECLARE_FUNCTION(function14, EntityIndex entity)
-	DECLARE_FUNCTION(function15, bool)
-	DECLARE_FUNCTION(function16, bool)
+	DECLARE_FUNCTION_1(bonsoir, EntityIndex entity)
+	DECLARE_FUNCTION_2(function13, bool, bool)
+	DECLARE_FUNCTION_1(function14, EntityIndex entity)
+	DECLARE_FUNCTION_1(function15, bool)
+	DECLARE_FUNCTION_1(function16, bool)
 	DECLARE_FUNCTION(function17)
 	DECLARE_FUNCTION(function18)
 	DECLARE_FUNCTION(function19)
@@ -138,17 +138,17 @@ public:
 	 * @param object1 First object index
 	 * @param object2 Second object index
 	 */
-	DECLARE_FUNCTION(function21, ObjectIndex object1, ObjectIndex object2)
+	DECLARE_FUNCTION_2(function21, ObjectIndex object1, ObjectIndex object2)
 	DECLARE_FUNCTION(function22)
 	DECLARE_FUNCTION(function23)
 	DECLARE_FUNCTION(function24)
 	DECLARE_FUNCTION(function25)
-	DECLARE_FUNCTION(function26, bool)
-	DECLARE_FUNCTION(tylerCompartment, MertensActionType action)
-	DECLARE_FUNCTION(function28, const char *soundName)
-	DECLARE_FUNCTION(function29, const char *soundName1, const char *soundName2)
-	DECLARE_FUNCTION(function30, MertensActionType action)
-	DECLARE_FUNCTION(function31, MertensActionType action)
+	DECLARE_FUNCTION_1(function26, bool)
+	DECLARE_FUNCTION_1(tylerCompartment, MertensActionType action)
+	DECLARE_FUNCTION_1(function28, const char *soundName)
+	DECLARE_FUNCTION_2(function29, const char *soundName1, const char *soundName2)
+	DECLARE_FUNCTION_1(function30, MertensActionType action)
+	DECLARE_FUNCTION_1(function31, MertensActionType action)
 	DECLARE_FUNCTION(function32)
 	DECLARE_FUNCTION(function33)
 

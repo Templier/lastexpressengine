@@ -50,10 +50,10 @@ public:
 	 */
 	DECLARE_FUNCTION(chapter1)
 
-	DECLARE_FUNCTION(arrestDraw, const char *sequence)
-	DECLARE_FUNCTION(arrestPlaysound, const char *soundName)
-	DECLARE_FUNCTION(arrestPlaysound16, const char *soundName)
-	DECLARE_FUNCTION(arrestCallback, TimeValue timeValue)
+	DECLARE_FUNCTION_1(arrestDraw, const char *sequence)
+	DECLARE_FUNCTION_1(arrestPlaysound, const char *soundName)
+	DECLARE_FUNCTION_1(arrestPlaysound16, const char *soundName)
+	DECLARE_FUNCTION_1(arrestCallback, TimeValue timeValue)
 
 	/**
 	 * Saves the game
@@ -61,11 +61,11 @@ public:
 	 * @param savegameType The type of the savegame
 	 * @param param        The param for the savegame (EventIndex or TimeValue)
 	 */
-	DECLARE_FUNCTION(savegame, SavegameType savegameType, uint32 param)
+	DECLARE_FUNCTION_2(savegame, SavegameType savegameType, uint32 param)
 
-	DECLARE_FUNCTION(arrestUpdateEntity, CarIndex car, EntityPosition entityPosition)
-	DECLARE_FUNCTION(function9, CarIndex car, EntityPosition entityPosition, const char *sequence1, const char *sequence2)
-	DECLARE_FUNCTION(function10, CarIndex car, EntityPosition entityPosition, ObjectIndex object)
+	DECLARE_FUNCTION_2(arrestUpdateEntity, CarIndex car, EntityPosition entityPosition)
+	DECLARE_FUNCTION_4(function9, CarIndex car, EntityPosition entityPosition, const char *sequence1, const char *sequence2)
+	DECLARE_FUNCTION_3(function10, CarIndex car, EntityPosition entityPosition, ObjectIndex object)
 	DECLARE_FUNCTION(chapter1Handler)
 	DECLARE_FUNCTION(function12)
 	DECLARE_FUNCTION(function13)

@@ -48,14 +48,14 @@ public:
 	 *
 	 * @param time The time to add
 	 */
-	DECLARE_FUNCTION(updateFromTime, uint32 time)
+	DECLARE_FUNCTION_1(updateFromTime, uint32 time)
 
 	/**
 	 * Draws the entity
 	 *
 	 * @param sequence The sequence to draw
 	 */
-	DECLARE_FUNCTION(draw, const char* sequence)
+	DECLARE_FUNCTION_1(draw, const char* sequence)
 
 	/**
 	 * Handles entering/exiting a compartment.
@@ -63,7 +63,7 @@ public:
 	 * @param sequence    The sequence to draw
 	 * @param compartment The compartment
 	 */
-	DECLARE_FUNCTION(enterExitCompartment, const char* sequence, ObjectIndex compartment)
+	DECLARE_FUNCTION_2(enterExitCompartment, const char* sequence, ObjectIndex compartment)
 
 	/**
 	 * Handles entering/exiting a compartment and updates position/play animation
@@ -71,14 +71,14 @@ public:
 	 * @param sequence    The sequence to draw
 	 * @param compartment The compartment
 	 */
-	DECLARE_FUNCTION(enterExitCompartment2, const char* sequence, ObjectIndex compartment)
+	DECLARE_FUNCTION_2(enterExitCompartment2, const char* sequence, ObjectIndex compartment)
 
 	/**
 	 * Plays sound
 	 *
 	 * @param filename The sound filename
 	 */
-	DECLARE_FUNCTION(playSound, const char* filename)
+	DECLARE_FUNCTION_1(playSound, const char* filename)
 
 	/**
 	 * Saves the game
@@ -86,15 +86,15 @@ public:
 	 * @param savegameType The type of the savegame
 	 * @param param        The param for the savegame (EventIndex or TimeValue)
 	 */
-	DECLARE_FUNCTION(savegame, SavegameType savegameType, uint32 param)
+	DECLARE_FUNCTION_2(savegame, SavegameType savegameType, uint32 param)
 
-	DECLARE_FUNCTION(function8, CarIndex car, EntityPosition entityPosition)
+	DECLARE_FUNCTION_2(function8, CarIndex car, EntityPosition entityPosition)
 	DECLARE_FUNCTION(function9)
 	DECLARE_FUNCTION(function10)
-	DECLARE_FUNCTION(function11, TimeValue timeValue)
+	DECLARE_FUNCTION_1(function11, TimeValue timeValue)
 	DECLARE_FUNCTION(function12)
 	DECLARE_FUNCTION(function13)
-	DECLARE_FUNCTION(function14, ObjectIndex compartment, EntityPosition entityPosition, const char *str)
+	DECLARE_FUNCTION_3(function14, ObjectIndex compartment, EntityPosition entityPosition, const char *str)
 	DECLARE_FUNCTION(function15)
 	DECLARE_FUNCTION(function16)
 

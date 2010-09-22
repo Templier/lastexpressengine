@@ -44,7 +44,7 @@ public:
 	 * @param savegameType The type of the savegame
 	 * @param param        The param for the savegame (EventIndex or TimeValue)
 	 */
-	DECLARE_FUNCTION(savegame, SavegameType savegameType, uint32 param)
+	DECLARE_FUNCTION_2(savegame, SavegameType savegameType, uint32 param)
 
 	/**
 	 * Exit a train station
@@ -52,14 +52,14 @@ public:
 	 * @param stationName The name of the train station
 	 * @param index       The index of the train station
 	 */
-	DECLARE_FUNCTION(enterStation, const char *stationName, uint32 index)
+	DECLARE_FUNCTION_2(enterStation, const char *stationName, uint32 index)
 
 	/**
 	 * Exit a train station
 	 *
 	 * @param stationName The name of the train station
 	 */
-	DECLARE_FUNCTION(exitStation, const char *stationName)
+	DECLARE_FUNCTION_1(exitStation, const char *stationName)
 
 	/**
 	 * Setup Chapter 1

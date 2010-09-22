@@ -44,7 +44,7 @@ public:
 	 * @param savegameType The type of the savegame
 	 * @param param        The param for the savegame (EventIndex or TimeValue)
 	 */
-	DECLARE_FUNCTION(savegame, SavegameType savegameType, uint32 param)
+	DECLARE_FUNCTION_2(savegame, SavegameType savegameType, uint32 param)
 
 	/**
 	 * Setup Chapter 1
@@ -77,7 +77,7 @@ public:
 	 * @param compartment The compartment to handle
 	 * @param counter     ??? (checked to decide which sound to make when knocking)
 	 */
-	DECLARE_FUNCTION(harem, ObjectIndex compartment, uint32 counter)
+	DECLARE_FUNCTION_2(harem, ObjectIndex compartment, uint32 counter)
 
 	/**
 	 * Handles Train events
