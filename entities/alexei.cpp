@@ -256,13 +256,16 @@ IMPLEMENT_FUNCTION(15, Alexei, function15)
 		break;
 
 	case kActionNone:
-		UPDATE_PARAM_SIMPLE(params->param2, getState()->time, params->param1);
+		if (params->param2 < getState()->time) {
+			if (!params->param2)
+				params->param2 = getState()->time + params->param1;
 
-		if (getEntities()->isSomebodyInsideRestaurantOrSalon()) {
-			getData()->location = kLocationOutsideCompartment;
+			if (getEntities()->isSomebodyInsideRestaurantOrSalon()) {
+				getData()->location = kLocationOutsideCompartment;
 
-			setCallback(3);
-			setup_updatePosition("103D", kCarRestaurant, 52);
+				setCallback(3);
+				setup_updatePosition("103D", kCarRestaurant, 52);
+			}
 		}
 		break;
 
@@ -1275,7 +1278,59 @@ IMPLEMENT_FUNCTION(42, Alexei, function42)
 
 //////////////////////////////////////////////////////////////////////////
 IMPLEMENT_FUNCTION(43, Alexei, function43)
-	error("Alexei: callback function 43 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionNone:
+		if (getState()->time < kTime1806300 && params->param2 < getState()->time) {
+			if (!params->param2)
+				params->param2 = getState()->time + params->param1;
+
+			if (getEntities()->isSomebodyInsideRestaurantOrSalon()) {
+				setCallback(1);
+				setup_function15();
+				break;
+			}
+		}
+
+label_callback_1:
+		if (getState()->time > kTime2457000 && !params->param3) {
+			params->param3 = 1;
+
+			setCallback(2);
+			setup_callbackActionRestaurantOrSalon();
+		}
+		break;
+
+	case kActionDefault:
+		params->param1 = 5 * (3 * rnd(120) + 180);
+		getEntities()->drawSequenceLeft(kEntityAlexei, "103B");
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			params->param1 = 5 * (3 * rnd(120) + 180);
+			params->param2 = 0;
+			goto label_callback_1;
+
+		case 2:
+			getData()->location = kLocationOutsideCompartment;
+
+			setCallback(3);
+			setup_updatePosition("124C", kCarRestaurant, 52);
+			break;
+
+		case 3:
+			setup_function44();
+			break;
+		}
+		break;
+}
 }
 
 //////////////////////////////////////////////////////////////////////////

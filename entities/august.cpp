@@ -1222,7 +1222,50 @@ IMPLEMENT_FUNCTION_II(41, August, function41, CarIndex, EntityPosition)
 
 //////////////////////////////////////////////////////////////////////////
 IMPLEMENT_FUNCTION_III(42, August, function42, CarIndex, EntityPosition, bool)
-	error("August: callback function 42 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionNone:
+		if (params->param4 && getEntities()->isDistanceBetweenEntities(kEntityAugust, kEntityPlayer, 2000))
+			getData()->inventoryItem = kItemInvalid;
+		else
+			getData()->inventoryItem = kItemNone;
+
+		if (getEntities()->updateEntity(kEntityAugust, (CarIndex)params->param1, (EntityPosition)params->param2)) {
+			getData()->inventoryItem = kItemNone;
+
+			CALLBACK_ACTION();
+		}
+		break;
+
+	case kAction1:
+		params->param4 = 0;
+		getData()->inventoryItem = kItemNone;
+
+		getSound()->playSound(kEntityPlayer, "CAT1002");
+		getSound()->playSound(kEntityAugust, getEvent(kEventAugustBringBriefcase) ? "AUG3103" : "AUG3100", SoundManager::kFlagInvalid, 15);
+		break;
+
+	case kActionExcuseMe:
+		if (!getSound()->isBuffered(kEntityAugust))
+			getSound()->excuseMe(kEntityAugust);
+		break;
+
+	case kActionDefault:
+		if (getEntities()->updateEntity(kEntityAugust, (CarIndex)params->param1, (EntityPosition)params->param2)) {
+			CALLBACK_ACTION();
+			break;
+		}
+
+		if (params->param3) {
+			params->param4 = 128;
+
+			if (!getEvent(kEventAugustBringBriefcase))
+				params->param4 = 147;
+		}
+		break;
+	}
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -1232,7 +1275,68 @@ IMPLEMENT_FUNCTION(43, August, chapter3Handler)
 
 //////////////////////////////////////////////////////////////////////////
 IMPLEMENT_FUNCTION(44, August, function44)
-	error("August: callback function 44 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionDefault:
+		getData()->location = kLocationOutsideCompartment;
+
+		setCallback(1);
+		setup_updatePosition("122H", kCarRestaurant, 57);
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			if (getEvent(kEventAugustMerchandise)) {
+				setCallback(4);
+				setup_function41(kCarGreenSleeping, kPosition_6470);
+			} else {
+				setCallback(2);
+				setup_function17(kTime2043000);
+			}
+			break;
+
+		case 2:
+			if (!ENTITY_PARAM(0, 1)) {
+				setCallback(4);
+				setup_function41(kCarGreenSleeping, kPosition_6470);
+			} else {
+				setCallback(3);
+				setup_savegame(kSavegameTypeEvent, kEventAugustMerchandise);
+			}
+			break;
+
+		case 3:
+			getAction()->playAnimation(kEventAugustMerchandise);
+			if (getData()->car == kCarGreenSleeping && getEntities()->checkDistanceFromPosition(kEntityAugust, kPosition_6470, 500))
+				getData()->entityPosition = kPosition_5970;
+
+			getEntities()->updateEntity(kEntityAugust, kCarGreenSleeping, kPosition_6470);
+
+			getEntities()->loadSceneFromEntityPosition(getData()->car,
+			                                           (EntityPosition)(getData()->entityPosition + 750 * (getData()->direction == kDirectionUp ? -1 : 1)),
+													   getData()->direction == kDirectionUp);
+
+			setCallback(4);
+			setup_function41(kCarGreenSleeping, kPosition_6470);
+			break;
+
+		case 4:
+			setCallback(5);
+			setup_function19(true, false);
+			break;
+
+		case 5:
+			setup_function45();
+			break;
+		}
+		break;
+	}
 }
 
 //////////////////////////////////////////////////////////////////////////

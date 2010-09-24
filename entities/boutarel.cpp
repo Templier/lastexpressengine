@@ -203,7 +203,60 @@ IMPLEMENT_FUNCTION_I(14, Boutarel, function14, bool)
 
 //////////////////////////////////////////////////////////////////////////
 IMPLEMENT_FUNCTION_IS(15, Boutarel, function15, bool)
-	error("Boutarel: callback function 15 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionDefault:
+		if (params->param1)
+			getObjects()->update(kObjectCompartmentC, kEntityPlayer, kLocation1, kCursorKeepValue, kCursorKeepValue);
+
+		setCallback(params->param1 ? 1 : 2);
+		setup_enterExitCompartment(params->param1 ? "607Dc" : "607Bc", kObjectCompartmentC);
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			getObjects()->update(kObjectCompartmentC, kEntityPlayer, kLocation2, kCursorKeepValue, kCursorKeepValue);
+			getObjects()->update(kObject50, kEntityPlayer, kLocationNone, kCursorHandKnock, kCursorHand);
+
+			setCallback(3);
+			setup_updateEntity(kCarRestaurant, kPosition_850);
+			break;
+
+		case 2:
+			getObjects()->update(kObjectCompartmentC, kEntityPlayer, kLocationNone, kCursorHandKnock, kCursorHand);
+			getObjects()->update(kObject50, kEntityPlayer, kLocationNone, kCursorHandKnock, kCursorHand);
+
+			setCallback(3);
+			setup_updateEntity(kCarRestaurant, kPosition_850);
+			break;
+
+		case 3:
+			setCallback(4);
+			setup_callbackActionRestaurantOrSalon();
+			break;
+
+		case 4:
+			getData()->entityPosition = kPosition_1540;
+			getData()->location = kLocationOutsideCompartment;
+
+			setCallback(5);
+			setup_updatePosition(params->seq, kCarRestaurant, 52);
+			break;
+
+		case 5:
+			getData()->location = kLocationInsideCompartment;
+
+			CALLBACK_ACTION();
+			break;
+		}
+		break;
+	}
 }
 
 //////////////////////////////////////////////////////////////////////////

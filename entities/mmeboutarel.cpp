@@ -186,7 +186,59 @@ IMPLEMENT_FUNCTION(10, MmeBoutarel, chapter1)
 
 //////////////////////////////////////////////////////////////////////////
 IMPLEMENT_FUNCTION(11, MmeBoutarel, function11)
-	error("MmeBoutarel: callback function 11 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionNone:
+		if (params->param2 == kTimeInvalid)
+			break;
+
+		if (params->param1 >= getState()->time) {
+			if (!getEntities()->isDistanceBetweenEntities(kEntityMmeBoutarel, kEntityPlayer, 1000) || !params->param2)
+				params->param2 = getState()->time + 150;
+
+			if (params->param2 >= getState()->time)
+				break;
+		}
+
+		params->param2 = kTimeInvalid;
+
+		setCallback(1);
+		setup_playSound("MME1040");
+		break;
+
+	case kActionDefault:
+		params->param1 = getState()->time + 1800;
+		getObjects()->update(kObjectCompartmentD, kEntityMmeBoutarel, kLocation1, kCursorNormal, kCursorNormal);
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			setCallback(2);
+			setup_playSound("MME1040A");
+			break;
+
+		case 2:
+			setCallback(3);
+			setup_playSound("MME1041");
+			break;
+
+		case 3:
+			setCallback(4);
+			setup_updateFromTime(900);
+			break;
+
+		case 4:
+			CALLBACK_ACTION();
+			break;
+		}
+		break;
+	}
 }
 
 //////////////////////////////////////////////////////////////////////////

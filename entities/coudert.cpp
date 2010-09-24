@@ -1053,7 +1053,68 @@ IMPLEMENT_FUNCTION(24, Coudert, visitCompartmentF)
 
 //////////////////////////////////////////////////////////////////////////
 IMPLEMENT_FUNCTION(25, Coudert, function25)
-	error("Coudert: callback function 25 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionDefault:
+		setCallback(1);
+		setup_function9(kCarRedSleeping, kPosition_4840);
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			setCallback(2);
+			setup_enterExitCompartment("627Me", kObjectCompartmentE);
+			break;
+
+		case 2:
+			getEntities()->drawSequenceLeft(kEntityCoudert, "627Ne");
+			getEntities()->enterCompartment(kEntityCoudert, kObjectCompartmentE, true);
+
+			setCallback(3);
+			setup_function10(45);
+			break;
+
+		case 3:
+			getSavePoints()->push(kEntityCoudert, kEntityRebecca, kAction254915200);
+
+			setCallback(4);
+			setup_function10(450);
+			break;
+
+		case 4:
+			setCallback(5);
+			setup_enterExitCompartment2("627Re", kObjectCompartmentE, kPosition_4840, kPosition_4455);
+			break;
+
+		case 5:
+			getEntities()->exitCompartment(kEntityCoudert, kObjectCompartmentE, true);
+			getData()->location = kLocationInsideCompartment;
+			getEntities()->clearSequences(kEntityCoudert);
+
+			setCallback(6);
+			setup_function20(kObjectCompartmentE, kObject52);
+			break;
+
+		case 6:
+			setCallback(7);
+			setup_enterExitCompartment("627Se", kObjectCompartmentE);
+			break;
+
+		case 7:
+			getData()->location = kLocationOutsideCompartment;
+			getSavePoints()->push(kEntityCoudert, kEntityRebecca, kAction123852928);
+
+			CALLBACK_ACTION();
+			break;
+		}
+		break;
+	}
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -1491,7 +1552,76 @@ IMPLEMENT_FUNCTION(33, Coudert, function33)
 
 //////////////////////////////////////////////////////////////////////////
 IMPLEMENT_FUNCTION_I(34, Coudert, function34, bool)
-	error("Coudert: callback function 34 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionDefault:
+		setCallback(1);
+		setup_function16();
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			setCallback(2);
+			setup_function9(kCarRedSleeping, kPosition_4070);
+			break;
+
+		case 2:
+			if (!params->param1) {
+				getSound()->playSound(kEntityCoudert, "Ann3124");
+
+				ENTITY_PARAM(1, 7) = 0;
+				ENTITY_PARAM(1, 4) = 0;
+
+				setCallback(7);
+				setup_function35(params->param1);
+			} else {
+				getEntities()->drawSequenceLeft(kEntityCoudert, "627Vf");
+				getEntities()->enterCompartment(kEntityCoudert, kObjectCompartmentF, true);
+
+				setCallback(3);
+				setup_playSound("LIB012");
+			}
+			break;
+
+		case 3:
+			setCallback(4);
+			setup_playSound("Jac1001");
+			break;
+
+		case 4:
+			getSound()->playSound(kEntityCoudert, "Ann3125");
+
+			setCallback(5);
+			setup_enterExitCompartment("629Bf", kObjectCompartmentF);
+			break;
+
+		case 5:
+			setCallback(6);
+			setup_enterExitCompartment("629Ff", kObjectCompartmentF);
+			break;
+
+		case 6:
+			getEntities()->exitCompartment(kEntityCoudert, kObjectCompartmentF, true);
+
+			ENTITY_PARAM(1, 7) = 0;
+			ENTITY_PARAM(1, 4) = 0;
+
+			setCallback(7);
+			setup_function35(params->param1);
+			break;
+
+		case 7:
+			CALLBACK_ACTION();
+			break;
+		}
+		break;
+	}
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -2204,7 +2334,67 @@ IMPLEMENT_FUNCTION(46, Coudert, function46)
 
 //////////////////////////////////////////////////////////////////////////
 IMPLEMENT_FUNCTION_I(47, Coudert, function47, bool)
-	error("Coudert: callback function 47 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionDefault:
+		setCallback(1);
+		setup_function16();
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			setCallback(2);
+			setup_function9(kCarRedSleeping, kPosition_4070);
+			break;
+
+		case 2:
+			setCallback(3);
+			setup_enterExitCompartment("627Xf", kObjectCompartmentF);
+			break;
+
+		case 3:
+			getEntities()->drawSequenceLeft(kEntityCoudert, "627Wf");
+			getEntities()->enterCompartment(kEntityCoudert, kObjectCompartmentF);
+			// Fallback to next case
+
+		case 4:
+			if (getSound()->isBuffered(kEntityCoudert)) {
+				setCallback(4);
+				setup_function10(225);
+			} else {
+				setCallback(5);
+				setup_playSound(params->param1 ? "Ann3149" : "Ann3147a");
+			}
+			break;
+
+		case 5:
+			getEntities()->exitCompartment(kEntityCoudert, kObjectCompartmentF, true);
+			getSavePoints()->push(kEntityCoudert, kEntityAnna, kAction157894320);
+
+			setCallback(6);
+			setup_function9(kCarRedSleeping, kPosition_2000);
+			break;
+
+		case 6:
+			ENTITY_PARAM(1, 5) = 0;
+			ENTITY_PARAM(1, 6) = 0;
+
+			setCallback(7);
+			setup_function18();
+			break;
+
+		case 7:
+			CALLBACK_ACTION();
+			break;
+		}
+		break;
+	}
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -2372,7 +2562,70 @@ IMPLEMENT_FUNCTION(54, Coudert, function54)
 
 //////////////////////////////////////////////////////////////////////////
 IMPLEMENT_FUNCTION(55, Coudert, function55)
-	error("Coudert: callback function 55 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionDefault:
+		setCallback(1);
+		setup_playSound("LIB070");
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			setCallback(2);
+			setup_function16();
+			break;
+
+		case 2:
+			setCallback(3);
+			setup_function9(kCarRedSleeping, kPosition_4070);
+			break;
+
+		case 3:
+			getEntities()->drawSequenceLeft(kEntityCoudert, "627Wf");
+			getEntities()->enterCompartment(kEntityCoudert, kObjectCompartmentF, true);
+
+			setCallback(4);
+			setup_playSound("Ann4150A");
+			break;
+
+		case 4:
+			getEntities()->exitCompartment(kEntityCoudert, kObjectCompartmentF, true);
+			getSavePoints()->push(kEntityCoudert, kEntityAnna, kAction219971920);
+			getSavePoints()->push(kEntityCoudert, kEntityPascale, kAction101824388);
+
+			setCallback(5);
+			setup_function9(kCarRedSleeping, kPosition_9460);
+			break;
+
+		case 5:
+			getEntities()->clearSequences(kEntityCoudert);
+			getSavePoints()->push(kEntityCoudert, kEntityPascale, kAction136059947);
+			break;
+
+		case 6:
+			ENTITY_PARAM(1, 2) = 0;
+
+			setCallback(7);
+			setup_function18();
+			break;
+
+		case 7:
+			CALLBACK_ACTION();
+			break;
+		}
+		break;
+
+	case kAction123712592:
+		setCallback(6);
+		setup_function9(kCarRedSleeping, kPosition_2000);
+		break;
+	}
 }
 
 //////////////////////////////////////////////////////////////////////////

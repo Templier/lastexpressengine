@@ -1578,7 +1578,59 @@ IMPLEMENT_FUNCTION(46, Anna, chapter3Handler)
 
 //////////////////////////////////////////////////////////////////////////
 IMPLEMENT_FUNCTION(47, Anna, function47)
-	error("Anna: callback function 47 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionDefault:
+		getObjects()->update(kObjectCompartmentF, kEntityPlayer, kLocation1, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObject53, kEntityPlayer, kLocation1, kCursorHandKnock, kCursorHand);
+
+		setCallback(1);
+		setup_enterExitCompartment("688Bf", kObjectCompartmentF);
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			getData()->location = kLocationOutsideCompartment;
+			getSavePoints()->push(kEntityAnna, kEntityMax, kAction71277948);
+
+			setCallback(2);
+			setup_updateEntity(kCarRestaurant, kPosition_850);
+			break;
+
+		case 2:
+			setCallback(3);
+			setup_callbackActionRestaurantOrSalon();
+			break;
+
+		case 3:
+			getData()->entityPosition = kPosition_1540;
+			getData()->location = kLocationOutsideCompartment;
+
+			setCallback(4);
+			setup_draw("801VS");
+			break;
+
+		case 4:
+			getSound()->playSound(kEntityAnna, getEvent(kEventAugustLunch) ? "Ann3136" : "Ann3136A", SoundManager::kFlagInvalid, 30);
+			getSavePoints()->push(kEntityAnna, kEntityAugust, kAction122358304);
+
+			setCallback(5);
+			setup_draw2("026B1", "026B2", kEntityAugust);
+			break;
+
+		case 5:
+			getEntities()->drawSequenceLeft(kEntityAugust, "BLANK");
+			setup_function48();
+			break;
+		}
+		break;
+	}
 }
 
 //////////////////////////////////////////////////////////////////////////

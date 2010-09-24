@@ -2645,7 +2645,76 @@ IMPLEMENT_FUNCTION(48, Mertens, function48)
 
 //////////////////////////////////////////////////////////////////////////
 IMPLEMENT_FUNCTION(49, Mertens, function49)
-	error("Mertens: callback function 49 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionDefault:
+		setCallback(1);
+		setup_function19();
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			setCallback(2);
+			setup_function10(kCarGreenSleeping, kPosition_8200);
+			break;
+
+		case 2:
+			setCallback(3);
+			setup_tylerCompartment(kMertensActionNone);
+			break;
+
+		case 3:
+			setCallback(4);
+			setup_function33();
+			break;
+
+		case 4:
+			setCallback(5);
+			setup_function25();
+			break;
+
+		case 5:
+			setCallback(6);
+			setup_function33();
+			break;
+
+		case 6:
+			setCallback(7);
+			setup_function24();
+			break;
+
+		case 7:
+			setCallback(8);
+			setup_function33();
+			break;
+
+		case 8:
+			setCallback(9);
+			setup_function23();
+			break;
+
+		case 9:
+			setCallback(10);
+			setup_function10(kCarGreenSleeping, kPosition_2000);
+			break;
+
+		case 10:
+			setCallback(11);
+			setup_function17();
+			break;
+
+		case 11:
+			CALLBACK_ACTION();
+			break;
+		}
+		break;
+	}
 }
 
 //////////////////////////////////////////////////////////////////////////

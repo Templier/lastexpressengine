@@ -462,7 +462,67 @@ IMPLEMENT_FUNCTION_IIS(14, Francois, function14, ObjectIndex, EntityPosition)
 
 //////////////////////////////////////////////////////////////////////////
 IMPLEMENT_FUNCTION(15, Francois, function15)
-	error("Francois: callback function 15 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionDefault:
+		setCallback(1);
+		setup_function9();
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			if (getData()->entityPosition >= getEntityData(kEntityPlayer)->entityPosition) {
+				setCallback(3);
+				setup_function8(kCarRedSleeping, kPosition_540);
+			} else {
+				setCallback(2);
+				setup_function8(kCarRedSleeping, kPosition_9460);
+			}
+			break;
+
+		case 2:
+		case 3:
+			setCallback(4);
+			setup_updateFromTime(450);
+			break;
+
+		case 4:
+			setCallback(5);
+			setup_function8(kCarRedSleeping, kPosition_5790);
+			break;
+
+		case 5:
+			setCallback(6);
+			setup_function10();
+			break;
+
+		case 6:
+			setCallback(7);
+			setup_updateFromTime(900);
+			break;
+
+		case 7:
+			if (!getEntities()->isInsideCompartment(kEntityMmeBoutarel, kCarRedSleeping, kPosition_5790)) {
+				CALLBACK_ACTION();
+				break;
+			}
+
+			setCallback(8);
+			setup_playSound("Fra2012");
+			break;
+
+		case 8:
+			CALLBACK_ACTION();
+			break;
+		}
+		break;
+	}
 }
 
 //////////////////////////////////////////////////////////////////////////

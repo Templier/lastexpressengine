@@ -1134,7 +1134,64 @@ IMPLEMENT_FUNCTION(32, Verges, function32)
 
 //////////////////////////////////////////////////////////////////////////
 IMPLEMENT_FUNCTION(33, Verges, function33)
-	error("Verges: callback function 33 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionDefault:
+		setCallback(1);
+		setup_callbackActionRestaurantOrSalon();
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			getData()->entityPosition = kPosition_1540;
+			getData()->location = kLocationOutsideCompartment;
+
+			setCallback(2);
+			setup_draw("813US");
+			break;
+
+		case 2:
+			getEntities()->drawSequenceRight(kEntityVerges, "813UD");
+			if (getEntities()->isInSalon(kEntityPlayer))
+				getEntities()->updateFrame(kEntityVerges);
+
+			setCallback(3);
+			setup_callbackActionOnDirection();
+			break;
+
+		case 3:
+			getEntities()->clearSequences(kEntityVerges);
+			getData()->location = kLocationInsideCompartment;
+			getData()->entityPosition = kPosition_5799;
+
+			setCallback(getProgress().field_3C ? 4 : 5);
+			setup_playSound(getProgress().field_3C ? "ABB3035A" : "ABB3035");
+			break;
+
+		case 4:
+			setCallback(5);
+			setup_playSound("ABB3035");
+			break;
+
+		case 5:
+			getSavePoints()->push(kEntityVerges, kEntityAbbot, kAction192054567);
+
+			setCallback(6);
+			setup_function9("Tra3010");
+			break;
+
+		case 6:
+			setup_function34();
+			break;
+		}
+		break;
+	}
 }
 
 //////////////////////////////////////////////////////////////////////////

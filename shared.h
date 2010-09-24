@@ -126,6 +126,7 @@ enum TimeValue {
 	kTime1786500              = 1786500,
 	kTime1791000              = 1791000,
 	kTime1800000              = 1800000,
+	kTime1806300              = 1806300,
 	kTime1809000              = 1809000,
 	kTimeCityAugsburg         = 1809900,
 	kTime1818000              = 1818000,
@@ -146,6 +147,7 @@ enum TimeValue {
 	kTime1998000              = 1998000,
 	kTime2016000              = 2016000,
 	kTime2020500              = 2020500,
+	kTime2043000              = 2043000,
 	kTimeCityAttnangPuchheim  = 2049300,
 	kTime2052000              = 2052000,
 	kTime2061000              = 2061000,
@@ -195,6 +197,7 @@ enum TimeValue {
 	kTimeCityGalanta          = 2418300,
 	kTime2421000              = 2421000,
 	kTime2422800              = 2422800,
+	kTime2428200              = 2428200,
 	kTime2425500              = 2425500,
 	kTime2430000              = 2430000,
 	kTime2443500              = 2443500,
@@ -206,6 +209,7 @@ enum TimeValue {
 	kTime2488500              = 2488500,
 	kTime2511000              = 2511000,
 	kTime2511900              = 2511900,
+	kTime2520000              = 2520000,
 	kTimeCityBudapest         = 2551500,
 
 	// Chapter 5
@@ -498,9 +502,11 @@ enum EntityPosition {
 	kPosition_5540  = 5540,
 	kPosition_5610  = 5610,
 	kPosition_5790  = 5790,
+	kPosition_5799  = 5799,
 	kPosition_5800  = 5800,
 	kPosition_5810  = 5810,
 	kPosition_5900  = 5900,
+	kPosition_5970  = 5970,
 	kPosition_6000  = 6000,
 	kPosition_6130  = 6130,
 	kPosition_6160  = 6160,
@@ -1253,6 +1259,7 @@ enum ActionIndex {
 	kAction201439712 = 201439712,
 	kAction205033696 = 205033696,
 	kAction205346192 = 205346192,    // Francois
+	kAction219971920 = 219971920,    // Anna
 	kAction225932896 = 225932896,
 	kAction226031488 = 226031488,    // Verges
 	kAction238358920 = 238358920,    // Anna

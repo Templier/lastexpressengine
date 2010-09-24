@@ -1074,7 +1074,60 @@ IMPLEMENT_FUNCTION(49, Tatiana, function49)
 
 //////////////////////////////////////////////////////////////////////////
 IMPLEMENT_FUNCTION(50, Tatiana, function50)
-	error("Tatiana: callback function 50 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionNone:
+		if (getState()->time > kTime2520000 && !params->param1) {
+			params->param1 = 1;
+			setup_function51();
+		}
+		break;
+
+	case kAction2:
+		getSound()->playSound(kEntityTatiana, "Tat4166");
+		break;
+
+	case kActionKnock:
+		if (!getSound()->isBuffered("LIB012", true))
+			getSound()->playSound(kEntityPlayer, "LIB012");
+		break;
+
+	case kActionOpenDoor:
+		getSound()->playSound(kEntityPlayer, "LIB014");
+
+		setCallback(1);
+		setup_savegame(kSavegameTypeEvent, kEventVassiliDeadAlexei);
+		break;
+
+	case kActionDefault:
+		getData()->entityPosition = kPosition_8200;
+		getData()->location = kLocationInsideCompartment;
+		getData()->car = kCarRedSleeping;
+
+		getObjects()->update(kObjectCompartmentB, kEntityPlayer, kLocationNone, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObject49, kEntityPlayer, kLocationNone, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObject48, kEntityTatiana, kLocationNone, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObjectCompartmentA, kEntityTatiana, kLocationNone, kCursorHandKnock, kCursorHand);
+
+		if (!getSound()->isBuffered(kEntityTatiana))
+			getSound()->playSound(kEntityTatiana, "Tat4166");
+		break;
+
+	case kActionCallback:
+		if (getCallback() == 1) {
+			if (getSound()->isBuffered("MUS013"))
+				getSound()->processEntry("MUS013");
+
+			getAction()->playAnimation(kEventVassiliDeadAlexei);
+			getSavePoints()->push(kEntityTatiana, kEntityAbbot, kAction104060776);
+			getScenes()->loadSceneFromPosition(kCarRedSleeping, 38);
+
+			setup_function51();
+		}
+		break;
+	}
 }
 
 //////////////////////////////////////////////////////////////////////////

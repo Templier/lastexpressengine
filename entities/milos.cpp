@@ -25,11 +25,13 @@
 
 #include "lastexpress/entities/milos.h"
 
+#include "lastexpress/game/action.h"
 #include "lastexpress/game/entities.h"
 #include "lastexpress/game/inventory.h"
 #include "lastexpress/game/logic.h"
 #include "lastexpress/game/object.h"
 #include "lastexpress/game/savepoint.h"
+#include "lastexpress/game/scenes.h"
 #include "lastexpress/game/sound.h"
 #include "lastexpress/game/state.h"
 
@@ -504,7 +506,66 @@ IMPLEMENT_FUNCTION(20, Milos, chapter2Handler)
 
 //////////////////////////////////////////////////////////////////////////
 IMPLEMENT_FUNCTION(21, Milos, function21)
-	error("Milos: callback function 21 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionNone:
+		UPDATE_PARAM(params->param2, getState()->time, 4500);
+
+		params->param1 = 1;
+		break;
+
+	case kActionKnock:
+		getObjects()->update(kObjectCompartmentG, kEntityMilos, kLocation3, kCursorNormal, kCursorNormal);
+
+		setCallback(1);
+		setup_playSound("LIB012");
+		break;
+
+	case kActionOpenDoor:
+		getObjects()->update(kObjectCompartmentG, kEntityMilos, kLocation3, kCursorNormal, kCursorNormal);
+
+		setCallback(3);
+		setup_savegame(kSavegameTypeEvent, kEventMilosCompartmentVisitAugust);
+		break;
+
+	case kActionDefault:
+		getObjects()->update(kObjectCompartmentG, kEntityMilos, kLocation3, kCursorHandKnock, kCursorHand);
+		break;
+
+	case kActionDrawScene:
+		if (!getEvent(kEventMilosCompartmentVisitAugust)
+		 && !getEntities()->isInsideTrainCar(kEntityPlayer, kCarRedSleeping)
+		 && params->param1)
+			setup_chapter2Handler();
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			setCallback(2);
+			setup_playSound("Mil1118");
+			break;
+
+		case 2:
+			getObjects()->update(kObjectCompartmentG, kEntityMilos, kLocation3, kCursorHandKnock, kCursorHand);
+			break;
+
+		case 3:
+			getAction()->playAnimation(kEventMilosCompartmentVisitAugust);
+			getScenes()->loadSceneFromPosition(kCarRedSleeping, 5);
+			getSavePoints()->push(kEntityMilos, kEntityVesna, kAction135024800);
+
+			setCallback(4);
+			setup_function11(kTimeEnd);
+			break;
+		}
+		break;
+	}
 }
 
 //////////////////////////////////////////////////////////////////////////
