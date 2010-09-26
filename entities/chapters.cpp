@@ -168,6 +168,7 @@ IMPLEMENT_FUNCTION(6,Chapters, chapter1End)
 	case kActionKnock:
 		if (!getSound()->isBuffered("LIB012", true))
 			getSound()->playSound(kEntityPlayer, "LIB012");
+		break;
 
 	case kActionOpenDoor:
 		if (params->param1) {
@@ -1216,7 +1217,7 @@ IMPLEMENT_FUNCTION(22, Chapters, chapter5Handler)
 void Chapters::enterExitStation(const SavePoint &savepoint, bool isEnteringStation) {
 	if (savepoint.action == kActionDefault) {
 		if (!ENTITY_PARAM(0, 2) && !ENTITY_PARAM(0, 3)) {
-			enterExitHelper(savepoint, isEnteringStation);
+			enterExitHelper(isEnteringStation);
 			return;
 		}
 
@@ -1226,7 +1227,7 @@ void Chapters::enterExitStation(const SavePoint &savepoint, bool isEnteringStati
 			if (ENTITY_PARAM(0, 3))
 				ENTITY_PARAM(0, 3) = 0;
 
-			enterExitHelper(savepoint, isEnteringStation);
+			enterExitHelper(isEnteringStation);
 			return;
 		}
 
@@ -1234,7 +1235,7 @@ void Chapters::enterExitStation(const SavePoint &savepoint, bool isEnteringStati
 
 		if (getEntityData(kEntityPlayer)->location != kLocationOutsideTrain) {
 			ENTITY_PARAM(0, 2) = 0;
-			enterExitHelper(savepoint, isEnteringStation);
+			enterExitHelper(isEnteringStation);
 			return;
 		}
 
@@ -1242,7 +1243,7 @@ void Chapters::enterExitStation(const SavePoint &savepoint, bool isEnteringStati
 		if (getEntities()->isOutsideAlexeiWindow()) {
 			getScenes()->loadSceneFromPosition(kCarGreenSleeping, 49);
 			ENTITY_PARAM(0, 2) = 0;
-			enterExitHelper(savepoint, isEnteringStation);
+			enterExitHelper(isEnteringStation);
 			return;
 		}
 
@@ -1250,7 +1251,7 @@ void Chapters::enterExitStation(const SavePoint &savepoint, bool isEnteringStati
 		if (getEntities()->isOutsideAnnaWindow()) {
 			getScenes()->loadSceneFromPosition(kCarRedSleeping, 49);
 			ENTITY_PARAM(0, 2) = 0;
-			enterExitHelper(savepoint, isEnteringStation);
+			enterExitHelper(isEnteringStation);
 			return;
 		}
 
@@ -1259,7 +1260,7 @@ void Chapters::enterExitStation(const SavePoint &savepoint, bool isEnteringStati
 
 			if (getEntityData(kEntityPlayer)->car < kCarBaggageRear || getEntityData(kEntityPlayer)->car > kCarGreenSleeping) {
 				ENTITY_PARAM(0, 2) = 0;
-				enterExitHelper(savepoint, isEnteringStation);
+				enterExitHelper(isEnteringStation);
 				return;
 			}
 
@@ -1267,24 +1268,24 @@ void Chapters::enterExitStation(const SavePoint &savepoint, bool isEnteringStati
 				getSound()->playSound(kEntityPlayer, "LIB015");
 				getScenes()->loadSceneFromPosition(kCarGreenSleeping, 71);
 				ENTITY_PARAM(0, 2) = 0;
-				enterExitHelper(savepoint, isEnteringStation);
+				enterExitHelper(isEnteringStation);
 				return;
 			}
 
 			getScenes()->loadSceneFromPosition(kCarGreenSleeping, 82);
 			ENTITY_PARAM(0, 2) = 0;
-			enterExitHelper(savepoint, isEnteringStation);
+			enterExitHelper(isEnteringStation);
 			return;
 		}
 
 		getScenes()->loadSceneFromPosition(kCarRestaurant, 82);
 		ENTITY_PARAM(0, 2) = 0;
-		enterExitHelper(savepoint, isEnteringStation);
+		enterExitHelper(isEnteringStation);
 	}
 }
 
 //////////////////////////////////////////////////////////////////////////
-void Chapters::enterExitHelper(const SavePoint &savepoint, bool isEnteringStation) {
+void Chapters::enterExitHelper(bool isEnteringStation) {
 	EXPOSE_PARAMS(EntityData::EntityParametersSIIS);
 
 	getSound()->playSound(kEntityChapters, isEnteringStation ? "ARRIVE" : "DEPART", SoundManager::kFlag8);

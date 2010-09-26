@@ -601,7 +601,7 @@ IMPLEMENT_FUNCTION(24, Boutarel, chapter2Handler)
 		break;
 
 	case kActionNone:
-		TIME_CHECK_CALLBACK_I(Boutarel, kTime1759500, params->param2, 1, setup_function14, 0);
+		TIME_CHECK_CALLBACK_I(Boutarel, kTime1759500, params->param2, 1, setup_function14, false);
 		break;
 
 	case kActionDefault:
@@ -684,7 +684,7 @@ IMPLEMENT_FUNCTION(28, Boutarel, function28)
 
 	case kActionDefault:
 		setCallback(1);
-		setup_function11(1);
+		setup_function11(true);
 		break;
 
 	case kActionCallback:

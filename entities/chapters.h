@@ -158,7 +158,7 @@ public:
 
 private:
 	void enterExitStation(const SavePoint &savepoint, bool isEnteringStation);
-	void enterExitHelper(const SavePoint &savepoint, bool isEnteringStation);
+	void enterExitHelper(bool isEnteringStation);
 };
 
 } // End of namespace LastExpress

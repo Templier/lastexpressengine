@@ -973,7 +973,7 @@ IMPLEMENT_FUNCTION(31, August, function31)
 
 		case 1:
 			setCallback(2);
-			setup_function19(0, 0);
+			setup_function19(false, false);
 			break;
 
 		case 2:
@@ -1439,7 +1439,7 @@ IMPLEMENT_FUNCTION(47, August, function47)
 
 		case 4:
 			setCallback(5);
-			setup_function19(0, 0);
+			setup_function19(false, false);
 			break;
 
 		case 5:
@@ -1675,7 +1675,7 @@ IMPLEMENT_FUNCTION(55, August, function55)
 
 		case 3:
 			setCallback(4);
-			setup_function19(1 /* true */, 0 /* false */);
+			setup_function19(true, false);
 			break;
 
 		case 4:

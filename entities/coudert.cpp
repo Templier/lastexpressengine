@@ -711,7 +711,7 @@ IMPLEMENT_FUNCTION_I(15, Coudert, function15, bool)
 			break;
 		}
 		break;
-}
+	}
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -1579,7 +1579,7 @@ IMPLEMENT_FUNCTION_I(34, Coudert, function34, bool)
 				ENTITY_PARAM(1, 4) = 0;
 
 				setCallback(7);
-				setup_function35(params->param1);
+				setup_function35((bool)params->param1);
 			} else {
 				getEntities()->drawSequenceLeft(kEntityCoudert, "627Vf");
 				getEntities()->enterCompartment(kEntityCoudert, kObjectCompartmentF, true);
@@ -1613,7 +1613,7 @@ IMPLEMENT_FUNCTION_I(34, Coudert, function34, bool)
 			ENTITY_PARAM(1, 4) = 0;
 
 			setCallback(7);
-			setup_function35(params->param1);
+			setup_function35((bool)params->param1);
 			break;
 
 		case 7:
@@ -1907,7 +1907,7 @@ label_coudert_object:
 			getData()->inventoryItem = kItemNone;
 
 			setCallback(13);
-			setup_function13(savepoint.param.intValue, savepoint.entity2);
+			setup_function13((bool)savepoint.param.intValue, savepoint.entity2);
 		}
 		break;
 
@@ -2213,7 +2213,7 @@ label_callback2:
 	case kAction11:
 		if (!ENTITY_PARAM(2, 1)) {
 			setCallback(4);
-			setup_function13(savepoint.param.intValue, savepoint.entity2);
+			setup_function13((bool)savepoint.param.intValue, savepoint.entity2);
 		}
 		break;
 
@@ -2271,7 +2271,7 @@ label_callback2:
 			setup_function31(savepoint.param.intValue);
 		}
 		break;
-}
+	}
 }
 
 //////////////////////////////////////////////////////////////////////////

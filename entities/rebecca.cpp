@@ -528,7 +528,7 @@ IMPLEMENT_FUNCTION(25, Rebecca, function25)
 
 		case 1:
 			setCallback(2);
-			setup_function17(0);
+			setup_function17(false);
 			break;
 
 		case 2:
@@ -643,7 +643,7 @@ IMPLEMENT_FUNCTION(29, Rebecca, chapter2Handler)
 
 		case 1:
 			setCallback(2);
-			setup_function17(0);
+			setup_function17(false);
 			break;
 
 		case 2:

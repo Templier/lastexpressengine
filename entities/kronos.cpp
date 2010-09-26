@@ -174,7 +174,7 @@ IMPLEMENT_FUNCTION(10, Kronos, function10)
 			UPDATE_PARAM(params->param3, getState()->timeTicks, 150);
 			setup_function9();
 		}
-	break;
+		break;
 
 	case kActionDefault:
 		getData()->entityPosition = kPosition_6000;

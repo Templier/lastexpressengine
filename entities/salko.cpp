@@ -139,7 +139,7 @@ IMPLEMENT_FUNCTION_II(7, Salko, function7, CarIndex, EntityPosition)
 	case kAction123668192:
 		CALLBACK_ACTION();
 		break;
-}
+	}
 }
 
 //////////////////////////////////////////////////////////////////////////

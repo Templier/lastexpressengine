@@ -1014,7 +1014,7 @@ IMPLEMENT_FUNCTION(30, Alexei, function30)
 		getEntities()->updatePositionEnter(kEntityAlexei, kCarRestaurant, 63);
 
 		if (savepoint.param.intValue)
-			getScenes()->loadSceneFromPosition(kCarRestaurant, savepoint.param.intValue);
+			getScenes()->loadSceneFromPosition(kCarRestaurant, (Position)savepoint.param.intValue);
 
 		setCallback(1);
 		setup_callbackActionOnDirection();
@@ -1330,7 +1330,7 @@ label_callback_1:
 			break;
 		}
 		break;
-}
+	}
 }
 
 //////////////////////////////////////////////////////////////////////////

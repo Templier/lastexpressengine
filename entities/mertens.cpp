@@ -2254,7 +2254,7 @@ label_callback_19:
 		if (!ENTITY_PARAM(0, 1) && !ENTITY_PARAM(2, 1)) {
 			getData()->inventoryItem = kItemNone;
 			setCallback(20);
-			setup_function13(savepoint.param.intValue, savepoint.entity2);
+			setup_function13((bool)savepoint.param.intValue, (bool)savepoint.entity2);
 		}
 		break;
 
@@ -2493,7 +2493,7 @@ label_callback3:
 	case kAction11:
 		if (!ENTITY_PARAM(2, 1)) {
 			setCallback(5);
-			setup_function13(savepoint.param.intValue, savepoint.entity2);
+			setup_function13((bool)savepoint.param.intValue, (bool)savepoint.entity2);
 		}
 		break;
 
@@ -2552,7 +2552,7 @@ label_callback3:
 			setup_function31((MertensActionType)savepoint.param.intValue);
 		}
 		break;
-}
+	}
 }
 
 //////////////////////////////////////////////////////////////////////////

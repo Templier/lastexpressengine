@@ -721,7 +721,7 @@ IMPLEMENT_FUNCTION(14, Mahmud, chaptersHandler)
 	case kAction290410610:
 		params->param3 = (params->param3 < 1) ? 1 : 0;
 		setCallback(11);
-		setup_function10((ObjectIndex)savepoint.param.intValue, params->param3);
+		setup_function10((ObjectIndex)savepoint.param.intValue, (bool)params->param3);
 		break;
 	}
 }

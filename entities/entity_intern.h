@@ -123,7 +123,7 @@ void class::setup_##name() { \
 	void class::setup_##name(paramType param1) { \
 	BEGIN_SETUP(class, name, index, EntityData::EntityParametersIIII) \
 	EntityData::EntityParametersIIII *params = (EntityData::EntityParametersIIII*)_data->getCurrentParameters(); \
-	params->param1 = param1; \
+	params->param1 = (unsigned int)param1; \
 	END_SETUP() \
 	} \
 	void class::name(const SavePoint &savepoint) { \
@@ -254,7 +254,7 @@ void class::setup_##name() { \
 	void class::setup_##name(paramType param1, const char* seq) { \
 		BEGIN_SETUP(class, name, index, EntityData::EntityParametersISII) \
 		EntityData::EntityParametersISII *params = (EntityData::EntityParametersISII*)_data->getCurrentParameters(); \
-		params->param1 = param1; \
+		params->param1 = (unsigned int)param1; \
 		strncpy((char *)&params->seq, seq, 12); \
 		END_SETUP() \
 	} \
