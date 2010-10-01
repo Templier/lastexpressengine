@@ -46,7 +46,7 @@ Francois::Francois(LastExpressEngine *engine) : Entity(engine, kEntityFrancois) 
 	ADD_CALLBACK_FUNCTION(Francois, enterExitCompartment2);
 	ADD_CALLBACK_FUNCTION(Francois, playSound);
 	ADD_CALLBACK_FUNCTION(Francois, savegame);
-	ADD_CALLBACK_FUNCTION(Francois, function8);
+	ADD_CALLBACK_FUNCTION(Francois, updateEntity);
 	ADD_CALLBACK_FUNCTION(Francois, function9);
 	ADD_CALLBACK_FUNCTION(Francois, function10);
 	ADD_CALLBACK_FUNCTION(Francois, function11);
@@ -108,7 +108,7 @@ IMPLEMENT_FUNCTION_II(7, Francois, savegame, SavegameType, uint32)
 }
 
 //////////////////////////////////////////////////////////////////////////
-IMPLEMENT_FUNCTION_II(8, Francois, function8, CarIndex, EntityPosition)
+IMPLEMENT_FUNCTION_II(8, Francois, updateEntity, CarIndex, EntityPosition)
 	error("Francois: callback function 8 not implemented!");
 }
 
@@ -295,7 +295,7 @@ label_callback:
 				getSound()->processEntry(kEntityFrancois);
 
 			setCallback(4);
-			setup_function8(kCarRedSleeping, kPosition_5790);
+			setup_updateEntity(kCarRedSleeping, kPosition_5790);
 		}
 		break;
 
@@ -414,7 +414,7 @@ IMPLEMENT_FUNCTION(12, Francois, function12)
 
 		case 1:
 			setCallback(2);
-			setup_function8(kCarRedSleeping, kPosition_9460);
+			setup_updateEntity(kCarRedSleeping, kPosition_9460);
 			break;
 
 		case 2:
@@ -424,7 +424,7 @@ IMPLEMENT_FUNCTION(12, Francois, function12)
 
 		case 3:
 			setCallback(4);
-			setup_function8(kCarRedSleeping, kPosition_540);
+			setup_updateEntity(kCarRedSleeping, kPosition_540);
 			break;
 
 		case 4:
@@ -434,7 +434,7 @@ IMPLEMENT_FUNCTION(12, Francois, function12)
 
 		case 5:
 			setCallback(6);
-			setup_function8(kCarRedSleeping, kPosition_5790);
+			setup_updateEntity(kCarRedSleeping, kPosition_5790);
 			break;
 
 		case 6:
@@ -479,10 +479,10 @@ IMPLEMENT_FUNCTION(15, Francois, function15)
 		case 1:
 			if (getData()->entityPosition >= getEntityData(kEntityPlayer)->entityPosition) {
 				setCallback(3);
-				setup_function8(kCarRedSleeping, kPosition_540);
+				setup_updateEntity(kCarRedSleeping, kPosition_540);
 			} else {
 				setCallback(2);
-				setup_function8(kCarRedSleeping, kPosition_9460);
+				setup_updateEntity(kCarRedSleeping, kPosition_9460);
 			}
 			break;
 
@@ -494,7 +494,7 @@ IMPLEMENT_FUNCTION(15, Francois, function15)
 
 		case 4:
 			setCallback(5);
-			setup_function8(kCarRedSleeping, kPosition_5790);
+			setup_updateEntity(kCarRedSleeping, kPosition_5790);
 			break;
 
 		case 5:
@@ -527,7 +527,64 @@ IMPLEMENT_FUNCTION(15, Francois, function15)
 
 //////////////////////////////////////////////////////////////////////////
 IMPLEMENT_FUNCTION(16, Francois, function16)
-	error("Francois: callback function 16 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionNone:
+		getData()->entityPosition = getEntityData(kEntityBoutarel)->entityPosition;
+		getData()->location = getEntityData(kEntityBoutarel)->location;
+		break;
+
+	case kActionDefault:
+		getObjects()->update(kObjectCompartmentD, kEntityPlayer, kLocationNone, kCursorNormal, kCursorNormal);
+
+		setCallback(1);
+		setup_enterExitCompartment("605Cd", kObjectCompartmentD);
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			getData()->location = kLocationOutsideCompartment;
+			getData()->entityPosition = kPosition_5890;
+
+			getSavePoints()->push(kEntityFrancois, kEntityMmeBoutarel, kAction101107728);
+
+			setCallback(2);
+			setup_updateEntity(kCarRestaurant, kPosition_850);
+			break;
+
+		case 2:
+			getEntities()->clearSequences(kEntityFrancois);
+			getSavePoints()->push(kEntityFrancois, kEntityBoutarel, kAction237889408);
+			break;
+
+		case 3:
+			setCallback(4);
+			setup_enterExitCompartment("605Id", kObjectCompartmentD);
+			break;
+
+		case 4:
+			getObjects()->update(kObjectCompartmentD, kEntityPlayer, kLocation2, kCursorKeepValue, kCursorKeepValue);
+			getSavePoints()->push(kEntityFrancois, kEntityMmeBoutarel, kAction100957716);
+
+			getData()->entityPosition = kPosition_5790;
+			getData()->location = kLocationInsideCompartment;
+
+			CALLBACK_ACTION();
+			break;
+		}
+		break;
+
+	case kAction100901266:
+		setCallback(3);
+		setup_updateEntity(kCarRedSleeping, kPosition_5790);
+		break;
+	}
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -644,7 +701,7 @@ IMPLEMENT_FUNCTION(22, Francois, chapter2Handler)
 
 	case kAction100901266:
 		setCallback(1);
-		setup_function8(kCarRedSleeping, kPosition_5790);
+		setup_updateEntity(kCarRedSleeping, kPosition_5790);
 		break;
 	}
 }

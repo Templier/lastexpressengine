@@ -59,7 +59,7 @@ Mertens::Mertens(LastExpressEngine *engine) : Entity(engine, kEntityMertens) {
 	ADD_CALLBACK_FUNCTION(Mertens, playSound);
 	ADD_CALLBACK_FUNCTION(Mertens, playSound16);
 	ADD_CALLBACK_FUNCTION(Mertens, savegame);
-	ADD_CALLBACK_FUNCTION(Mertens, function10);
+	ADD_CALLBACK_FUNCTION(Mertens, updateEntity);
 	ADD_CALLBACK_FUNCTION(Mertens, function11);
 	ADD_CALLBACK_FUNCTION(Mertens, bonsoir);
 	ADD_CALLBACK_FUNCTION(Mertens, function13);
@@ -310,7 +310,7 @@ IMPLEMENT_FUNCTION_II(9, Mertens, savegame, SavegameType, uint32)
 }
 
 //////////////////////////////////////////////////////////////////////////
-IMPLEMENT_FUNCTION_II(10, Mertens, function10, CarIndex, EntityPosition)
+IMPLEMENT_FUNCTION_II(10, Mertens, updateEntity, CarIndex, EntityPosition)
 
 #define LOADSCENE_FROM_POSITION() \
 	if (getData()->direction != kDirectionUp) { \
@@ -693,7 +693,7 @@ IMPLEMENT_FUNCTION_I(14, Mertens, function14, EntityIndex)
 			ENTITY_PARAM(2, 1) = 0;
 
 			setCallback(3);
-			setup_function10(kCarGreenSleeping, kPosition_1500);
+			setup_updateEntity(kCarGreenSleeping, kPosition_1500);
 		} else {
 			setCallback(1);
 			setup_function11(15);
@@ -766,14 +766,14 @@ IMPLEMENT_FUNCTION_I(15, Mertens, function15, bool)
 
 		case 1:
 			setCallback(2);
-			setup_function10(kCarGreenSleeping, kPosition_4070);
+			setup_updateEntity(kCarGreenSleeping, kPosition_4070);
 			break;
 
 		case 2:
 			getSound()->playSound(kEntityMertens, params->param1 ? "CON1059A" : "CON1059");
 
 			setCallback(3);
-			setup_function10(kCarGreenSleeping, kPosition_7500);
+			setup_updateEntity(kCarGreenSleeping, kPosition_7500);
 			break;
 
 		case 3:
@@ -785,7 +785,7 @@ IMPLEMENT_FUNCTION_I(15, Mertens, function15, bool)
 			getSavePoints()->push(kEntityMertens, kEntityAlexei, kAction135664192);
 
 			setCallback(5);
-			setup_function10(kCarGreenSleeping, kPosition_2000);
+			setup_updateEntity(kCarGreenSleeping, kPosition_2000);
 			break;
 
 		case 5:
@@ -803,7 +803,79 @@ IMPLEMENT_FUNCTION_I(15, Mertens, function15, bool)
 
 //////////////////////////////////////////////////////////////////////////
 IMPLEMENT_FUNCTION_I(16, Mertens, function16, bool)
-	error("Mertens: callback function 16 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionDefault:
+		ENTITY_PARAM(1, 6) = 0;
+		ENTITY_PARAM(1, 7) = 0;
+
+		setCallback(1);
+		setup_function19();
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			setCallback(2);
+			setup_updateEntity(kCarGreenSleeping, kPosition_4070);
+			break;
+
+		case 2:
+			switch (rnd(4)) {
+			default:
+				break;
+
+			case 0:
+				getSound()->playSound(kEntityMertens, "AUG2095A");
+				break;
+
+			case 1:
+				getSound()->playSound(kEntityMertens, "AUG2096A");
+				break;
+
+			case 2:
+				getSound()->playSound(kEntityMertens, "AUG2094B");
+				break;
+
+			case 3:
+				getSound()->playSound(kEntityMertens, "AUG2094C");
+				break;
+			}
+
+			setCallback(3);
+			setup_updateEntity(kCarGreenSleeping, kPosition_6470);
+			break;
+
+		case 3:
+			getSound()->playSound(kEntityMertens, params->param1 ? "AUG2097" : "AUG2098");
+
+			setCallback(4);
+			setup_enterExitCompartment("601Xc", kObjectCompartment3);
+			break;
+
+		case 4:
+			getSavePoints()->push(kEntityMertens, kEntityAugust, kAction69239528);
+
+			setCallback(5);
+			setup_updateEntity(kCarGreenSleeping, kPosition_2000);
+			break;
+
+		case 5:
+			setCallback(6);
+			setup_function17();
+			break;
+
+		case 6:
+			CALLBACK_ACTION();
+			break;
+		}
+		break;
+	}
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -818,7 +890,7 @@ IMPLEMENT_FUNCTION(17, Mertens, function17)
 			getInventory()->setLocationAndProcess(kItem7, kLocation1);
 
 			setCallback(1);
-			setup_function10(kCarGreenSleeping, kPosition_540);
+			setup_updateEntity(kCarGreenSleeping, kPosition_540);
 			break;
 		}
 
@@ -1028,7 +1100,7 @@ IMPLEMENT_FUNCTION(23, Mertens, function23)
 
 	case kActionDefault:
 		setCallback(1);
-		setup_function10(kCarGreenSleeping, kPosition_5790);
+		setup_updateEntity(kCarGreenSleeping, kPosition_5790);
 		break;
 
 	case kActionCallback:
@@ -1100,7 +1172,7 @@ IMPLEMENT_FUNCTION(25, Mertens, function25)
 
 	case kActionDefault:
 		setCallback(1);
-		setup_function10(kCarGreenSleeping, kPosition_7500);
+		setup_updateEntity(kCarGreenSleeping, kPosition_7500);
 		break;
 
 	case kActionCallback:
@@ -1170,7 +1242,7 @@ IMPLEMENT_FUNCTION(25, Mertens, function25)
 			getSavePoints()->push(kEntityMertens, kEntityAlexei, kAction124697504);
 
 			setCallback(9);
-			setup_function10(kCarGreenSleeping, kPosition_9460);
+			setup_updateEntity(kCarGreenSleeping, kPosition_9460);
 			break;
 
 		case 9:
@@ -1590,7 +1662,62 @@ label_callback11:
 
 //////////////////////////////////////////////////////////////////////////
 IMPLEMENT_FUNCTION_S(28, Mertens, function28)
-	error("Mertens: callback function 28 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionNone:
+		if (params->param4 && params->param5) {
+			getSavePoints()->push(kEntityMertens, kEntityCoudert, kAction125499160);
+
+			setCallback(3);
+			setup_updateEntity(kCarGreenSleeping, kPosition_2000);
+		}
+		break;
+
+	case kAction2:
+		params->param4 = 1;
+		break;
+
+	case kActionDefault:
+		setCallback(1);
+		setup_function19();
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			setCallback(2);
+			setup_updateEntity(kCarRedSleeping, kPosition_1500);
+			break;
+
+		case 2:
+			getEntities()->drawSequenceLeft(kEntityMertens, "601O");
+			getSavePoints()->push(kEntityMertens, kEntityCoudert, kAction154005632);
+			break;
+
+		case 3:
+			setCallback(4);
+			setup_function17();
+			break;
+
+		case 4:
+			CALLBACK_ACTION();
+			break;
+		}
+		break;
+
+	case kAction155853632:
+		params->param5 = 1;
+		break;
+
+	case kAction202558662:
+		getEntities()->drawSequenceLeft(kEntityMertens, "601L");
+		getSound()->playSound(kEntityMertens, params->seq1);
+	}
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -1604,7 +1731,7 @@ IMPLEMENT_FUNCTION_SS(29, Mertens, function29)
 			getSavePoints()->push(kEntityMertens, kEntityCoudert, kAction125499160);
 
 			setCallback(3);
-			setup_function10(kCarGreenSleeping, kPosition_2000);
+			setup_updateEntity(kCarGreenSleeping, kPosition_2000);
 		}
 		break;
 
@@ -1626,7 +1753,7 @@ IMPLEMENT_FUNCTION_SS(29, Mertens, function29)
 
 		case 1:
 			setCallback(2);
-			setup_function10(kCarRedSleeping, kPosition_1500);
+			setup_updateEntity(kCarRedSleeping, kPosition_1500);
 			break;
 
 		case 2:
@@ -1699,7 +1826,7 @@ IMPLEMENT_FUNCTION_I(30, Mertens, function30, MertensActionType)
 
 		case 1:
 			setCallback(2);
-			setup_function10(kCarGreenSleeping, (EntityPosition)params->param2);
+			setup_updateEntity(kCarGreenSleeping, (EntityPosition)params->param2);
 			break;
 
 		case 2:
@@ -1709,7 +1836,7 @@ IMPLEMENT_FUNCTION_I(30, Mertens, function30, MertensActionType)
 					getProgress().field_14 = 0;
 
 				setCallback(8);
-				setup_function10(kCarGreenSleeping, kPosition_2000);
+				setup_updateEntity(kCarGreenSleeping, kPosition_2000);
 				break;
 
 			case 1:
@@ -1747,7 +1874,7 @@ IMPLEMENT_FUNCTION_I(30, Mertens, function30, MertensActionType)
 					getProgress().field_14 = 0;
 
 			setCallback(8);
-			setup_function10(kCarGreenSleeping, kPosition_2000);
+			setup_updateEntity(kCarGreenSleeping, kPosition_2000);
 			break;
 
 		case 4:
@@ -1768,7 +1895,7 @@ IMPLEMENT_FUNCTION_I(30, Mertens, function30, MertensActionType)
 					getProgress().field_14 = 0;
 
 			setCallback(8);
-			setup_function10(kCarGreenSleeping, kPosition_2000);
+			setup_updateEntity(kCarGreenSleeping, kPosition_2000);
 			break;
 
 		case 6:
@@ -1789,7 +1916,7 @@ IMPLEMENT_FUNCTION_I(30, Mertens, function30, MertensActionType)
 					getProgress().field_14 = 0;
 
 			setCallback(8);
-			setup_function10(kCarGreenSleeping, kPosition_2000);
+			setup_updateEntity(kCarGreenSleeping, kPosition_2000);
 			break;
 
 		case 8:
@@ -1862,7 +1989,7 @@ IMPLEMENT_FUNCTION(32, Mertens, function32)
 
 		case 1:
 			setCallback(2);
-			setup_function10(kCarGreenSleeping, kPosition_9510);
+			setup_updateEntity(kCarGreenSleeping, kPosition_9510);
 			break;
 
 		case 2:
@@ -1876,7 +2003,7 @@ IMPLEMENT_FUNCTION(32, Mertens, function32)
 
 		case 3:
 			setCallback(4);
-			setup_function10(kCarGreenSleeping, kPosition_2000);
+			setup_updateEntity(kCarGreenSleeping, kPosition_2000);
 			break;
 
 		case 4:
@@ -1963,7 +2090,7 @@ IMPLEMENT_FUNCTION(38, Mertens, function38)
 			CALLBACK_ACTION();
 		} else {
 			setCallback(1);
-			setup_function10(kCarGreenSleeping, kPosition_8200);
+			setup_updateEntity(kCarGreenSleeping, kPosition_8200);
 		}
 		break;
 
@@ -1993,7 +2120,76 @@ IMPLEMENT_FUNCTION(38, Mertens, function38)
 
 //////////////////////////////////////////////////////////////////////////
 IMPLEMENT_FUNCTION(39, Mertens, function39)
-	error("Mertens: callback function 39 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionDefault:
+		ENTITY_PARAM(0, 4) = 1;
+
+		setCallback(1);
+		setup_function19();
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			setCallback(2);
+			setup_function22();
+			break;
+
+		case 2:
+			setCallback(3);
+			setup_function33();
+			break;
+
+		case 3:
+			setCallback(4);
+			setup_function24();
+			break;
+
+		case 4:
+			setCallback(5);
+			setup_function33();
+			break;
+
+		case 5:
+			setCallback(6);
+			setup_function25();
+			break;
+
+		case 6:
+			setCallback(7);
+			setup_function33();
+			break;
+
+		case 7:
+			setCallback(8);
+			setup_function38();
+			break;
+
+		case 8:
+			if (getProgress().field_14 == 3)
+				getProgress().field_14 = 0;
+
+			setCallback(9);
+			setup_updateEntity(kCarGreenSleeping, kPosition_2000);
+			break;
+
+		case 9:
+			setCallback(10);
+			setup_function17();
+			break;
+
+		case 10:
+			CALLBACK_ACTION();
+			break;
+		}
+		break;
+	}
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -2015,7 +2211,7 @@ IMPLEMENT_FUNCTION(40, Mertens, function40)
 
 		case 1:
 			setCallback(2);
-			setup_function10(kCarKronos, kPosition_9460);
+			setup_updateEntity(kCarKronos, kPosition_9460);
 			break;
 
 		case 2:
@@ -2025,7 +2221,7 @@ IMPLEMENT_FUNCTION(40, Mertens, function40)
 
 		case 3:
 			setCallback(4);
-			setup_function10(kCarGreenSleeping, kPosition_1500);
+			setup_updateEntity(kCarGreenSleeping, kPosition_1500);
 			break;
 
 		case 4:
@@ -2050,7 +2246,7 @@ IMPLEMENT_FUNCTION(41, Mertens, chapter1Handler)
 
 	case kActionDefault:
 		setCallback(1);
-		setup_function10(kCarGreenSleeping, kPosition_2000);
+		setup_updateEntity(kCarGreenSleeping, kPosition_2000);
 		break;
 
 	case kActionCallback:
@@ -2661,7 +2857,7 @@ IMPLEMENT_FUNCTION(49, Mertens, function49)
 
 		case 1:
 			setCallback(2);
-			setup_function10(kCarGreenSleeping, kPosition_8200);
+			setup_updateEntity(kCarGreenSleeping, kPosition_8200);
 			break;
 
 		case 2:
@@ -2701,7 +2897,7 @@ IMPLEMENT_FUNCTION(49, Mertens, function49)
 
 		case 9:
 			setCallback(10);
-			setup_function10(kCarGreenSleeping, kPosition_2000);
+			setup_updateEntity(kCarGreenSleeping, kPosition_2000);
 			break;
 
 		case 10:
