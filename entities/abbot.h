@@ -112,10 +112,10 @@ public:
 	/**
 	 * Updates the entity
 	 *
-	 * @param index          The car
+	 * @param car            The car
 	 * @param entityPosition The entity position
 	 */
-	DECLARE_FUNCTION_2(updateEntity, CarIndex index, EntityPosition entityPosition)
+	DECLARE_FUNCTION_2(updateEntity, CarIndex car, EntityPosition entityPosition)
 
 	/**
 	 * Call a savepoint (or draw sequence in default case)
@@ -192,7 +192,7 @@ public:
 	 * @param car            The car
 	 * @param entityPosition The entity position
 	 */
-	DECLARE_FUNCTION_2(function40, CarIndex index, EntityPosition position)
+	DECLARE_FUNCTION_2(function40, CarIndex car, EntityPosition position)
 
 	/**
 	 * Handle Chapter 4 events

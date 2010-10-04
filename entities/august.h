@@ -153,10 +153,10 @@ public:
 	/**
 	 * Updates the entity
 	 *
-	 * @param index          The car
+	 * @param car            The car
 	 * @param entityPosition The entity position
 	 */
-	DECLARE_FUNCTION_2(updateEntity, CarIndex index, EntityPosition entityPosition)
+	DECLARE_FUNCTION_2(updateEntity, CarIndex car, EntityPosition entityPosition)
 
 	DECLARE_FUNCTION_1(function17, TimeValue timeValue)
 
@@ -166,7 +166,7 @@ public:
 	 * @param param1 The car
 	 * @param param2 The entity position
 	 */
-	DECLARE_FUNCTION_2(updateEntity2, CarIndex index, EntityPosition entityPosition)
+	DECLARE_FUNCTION_2(updateEntity2, CarIndex car, EntityPosition entityPosition)
 
 	DECLARE_FUNCTION_2(function19, bool, bool)
 

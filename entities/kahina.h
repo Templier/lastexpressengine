@@ -79,10 +79,10 @@ public:
 	/**
 	 * Updates the entity
 	 *
-	 * @param index          The car
+	 * @param car            The car
 	 * @param entityPosition The entity position
 	 */
-	DECLARE_FUNCTION_2(updateEntity, CarIndex index, EntityPosition entityPosition)
+	DECLARE_FUNCTION_2(updateEntity, CarIndex car, EntityPosition entityPosition)
 
 	/**
 	 * Handles entering/exiting a compartment.

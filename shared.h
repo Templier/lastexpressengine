@@ -221,6 +221,7 @@ enum TimeValue {
 	kTimeTrainStopped2        = 2943000,
 	kTimeCityNish             = 3205800,
 	kTimeCityTzaribrod        = 3492000,
+	kTime3645000              = 3645000,
 	kTimeCitySofia            = 3690000,
 	kTimeCityAdrianople       = 4320900,
 	kTimeCityConstantinople   = 4941000,
@@ -1204,9 +1205,11 @@ enum ActionIndex {
 	kAction191668032 = 191668032,	// some action during or before concert?
 	kAction201437056 = 201437056,
 	kAction235856512 = 235856512,
+	kAction236060709 = 236060709,
 	kAction238936000 = 238936000,
 	kAction259136835 = 259136835,
 	kAction291662081 = 291662081,
+
 
 	/////////////////////////////
 	// August
