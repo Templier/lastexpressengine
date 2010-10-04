@@ -74,7 +74,14 @@ public:
 	DECLARE_FUNCTION_NOSETUP(updateFromTicks)
 
 	DECLARE_FUNCTION_1(function6, TimeValue timeValue)
-	DECLARE_FUNCTION_2(function7, CarIndex car, EntityPosition entityPosition)
+
+	/**
+	 * Updates the entity
+	 *
+	 * @param car            The car
+	 * @param entityPosition The entity position
+	 */
+	DECLARE_FUNCTION_2(updateEntity2, CarIndex car, EntityPosition entityPosition)
 
 	/**
 	 * Updates the entity

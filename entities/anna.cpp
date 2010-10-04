@@ -1401,7 +1401,48 @@ IMPLEMENT_FUNCTION(38, Anna, function38)
 
 //////////////////////////////////////////////////////////////////////////
 IMPLEMENT_FUNCTION_II(39, Anna, function39, CarIndex, EntityPosition)
-	error("Anna: callback function 39 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionNone:
+		if (getEntities()->updateEntity(kEntityAnna, (CarIndex)params->param1, (EntityPosition)params->param2)) {
+			getData()->inventoryItem = kItemNone;
+
+			CALLBACK_ACTION();
+		}
+		break;
+
+	case kAction1:
+		setCallback(1);
+		setup_savegame(kSavegameTypeEvent, kEventAnnaGoodNight);
+		break;
+
+	case kActionExcuseMe:
+		getSound()->playSound(kEntityAnna, "ANN1107A");
+		break;
+
+	case kActionDefault:
+		getData()->inventoryItem = kItemNone;
+		if (!getEvent(kEventAnnaGoodNight) && !getEvent(kEventAnnaGoodNightInverse))
+			getData()->inventoryItem = kItemInvalid;
+
+		if (getEntities()->updateEntity(kEntityAnna, (CarIndex)params->param1, (EntityPosition)params->param2)) {
+			getData()->inventoryItem = kItemNone;
+
+			CALLBACK_ACTION();
+		}
+		break;
+
+	case kActionCallback:
+		if (getCallback() == 1) {
+			getAction()->playAnimation(getData()->direction == kDirectionNone ? kEventAnnaGoodNight : kEventAnnaGoodNightInverse);
+			getData()->inventoryItem = kItemNone;
+
+			getEntities()->loadSceneFromEntityPosition(getData()->car, (EntityPosition)(getData()->entityPosition + (750 * (getData()->direction == kDirectionUp ? -1 : 1))), getData()->direction == kDirectionUp);
+		}
+		break;
+	}
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -2165,12 +2206,96 @@ IMPLEMENT_FUNCTION(70, Anna, function70)
 
 //////////////////////////////////////////////////////////////////////////
 IMPLEMENT_FUNCTION(71, Anna, function71)
-	error("Anna: callback function 71 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionExitCompartment:
+		getEntities()->exitCompartment(kEntityAnna, kObjectCompartmentF);
+		getData()->entityPosition = kPosition_4070;
+
+		CALLBACK_ACTION();
+		break;
+
+	case kActionDefault:
+		getEntities()->drawSequenceRight(kEntityAnna, "625Af");
+
+		if (getEntities()->isPlayerPosition(kCarRedSleeping, 7)
+		 || getEntities()->isPlayerPosition(kCarRedSleeping, 28)
+		 || getEntities()->isPlayerPosition(kCarRedSleeping, 56))
+			getScenes()->loadScene(getScenes()->processIndex(getState()->scene));
+
+		getEntities()->enterCompartment(kEntityAnna, kObjectCompartmentF);
+
+		getData()->location = kLocationInsideCompartment;
+
+		if (getEntities()->isInsideCompartment(kEntityPlayer, kCarRedSleeping, kPosition_4070)
+		 || getEntities()->isInsideCompartment(kEntityPlayer, kCarRedSleeping, kPosition_4455)) {
+			getAction()->playAnimation(isNight() ? kEventCathTurningNight : kEventCathTurningDay);
+			getSound()->playSound(kEntityPlayer, "BUMP");
+			getScenes()->loadSceneFromObject(kObjectCompartmentF, true);
+		}
+		break;
+
+	case kActionDrawScene:
+		if (!getEvent(kEventAnnaTiredKiss)
+		 && getEntities()->isDistanceBetweenEntities(kEntityPlayer, kEntityAnna, 2000)
+		 && getEntities()->hasValidFrame(kEntityAnna)
+		 && getData()->entityPosition < getEntityData(kEntityPlayer)->entityPosition) {
+			setCallback(1);
+			setup_savegame(kSavegameTypeEvent, kEventAnnaTiredKiss);
+		}
+		break;
+
+	case kActionCallback:
+		if (getCallback() == 1) {
+			getAction()->playAnimation(kEventAnnaTiredKiss);
+			getScenes()->loadSceneFromPosition(kCarRestaurant, 29);
+		}
+		break;
+	}
 }
 
 //////////////////////////////////////////////////////////////////////////
 IMPLEMENT_FUNCTION_II(72, Anna, function72, CarIndex, EntityPosition)
-	error("Anna: callback function 72 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionNone:
+		if (getEvent(kEventAnnaTired) || getEntities()->isWalkingOppositeToPlayer(kEntityAnna))
+			getData()->inventoryItem = kItemNone;
+		else
+			getData()->inventoryItem = kItemInvalid;
+
+		if (getEntities()->updateEntity(kEntityAnna, (CarIndex)params->param1, (EntityPosition)params->param2)) {
+			getData()->inventoryItem = kItemNone;
+			CALLBACK_ACTION();
+		}
+		break;
+
+	case kAction1:
+		getData()->inventoryItem = kItemNone;
+
+		setCallback(1);
+		setup_savegame(kSavegameTypeEvent, kEventAnnaTired);
+		break;
+
+	case kActionDefault:
+		if (getEntities()->updateEntity(kEntityAnna, (CarIndex)params->param1, (EntityPosition)params->param2)) {
+			CALLBACK_ACTION();
+		} else if (!getEvent(kEventAnnaTired))
+			getData()->inventoryItem = kItemInvalid;
+		break;
+
+	case kActionCallback:
+		if (getCallback() == 1) {
+			getAction()->playAnimation(kEventAnnaTired);
+
+			getEntities()->loadSceneFromEntityPosition(getData()->car, (EntityPosition)(getData()->entityPosition + (750 * (getData()->direction == kDirectionUp ? -1 : 1))), getData()->direction == kDirectionUp);
+		}
+		break;
+	}
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -2236,7 +2361,66 @@ IMPLEMENT_FUNCTION(76, Anna, function76)
 
 //////////////////////////////////////////////////////////////////////////
 IMPLEMENT_FUNCTION(77, Anna, function77)
-	error("Anna: callback function 77 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionNone:
+		if (getState()->time > kTime3645000 && !params->param2) {
+			params->param2 = 1;
+			getState()->timeDelta = 0;
+		}
+		break;
+
+	case kActionKnock:
+	case kActionOpenDoor:
+		getSound()->playSound(kEntityPlayer, savepoint.action == kActionKnock ? "LIB012" : "LIB014");
+
+		setCallback(2);
+		setup_savegame(kSavegameTypeEvent, kEventAnnaDialogGoToJerusalem);
+		break;
+
+	case kActionDefault:
+		getObjects()->update(kObject106, kEntityAnna, kLocation1, kCursorHandKnock, kCursorHand);
+		break;
+
+	case kActionDrawScene:
+		if (!params->param1 && getEntities()->isInsideTrainCar(kEntityPlayer, kCarBaggage)) {
+			setCallback(1);
+			setup_savegame(kSavegameTypeTime, kTimeNone);
+		}
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			params->param1 = 1;
+			break;
+
+		case 2:
+			getObjects()->update(kObject106, kEntityPlayer, kLocationNone, kCursorHandKnock, kCursorHand);
+			getAction()->playAnimation(kEventAnnaDialogGoToJerusalem);
+
+			getState()->time = kTimeCityConstantinople;
+			getState()->timeDelta = 0;
+
+			getSavePoints()->push(kEntityAnna, kEntityTatiana, kAction236060709);
+
+			getScenes()->loadSceneFromPosition(kCarBaggage, 97, 1);
+
+			setCallback(3);
+			setup_savegame(kSavegameTypeTime, kTimeNone);
+			break;
+
+		case 3:
+			setup_function78();
+			break;
+		}
+		break;
+	}
 }
 
 //////////////////////////////////////////////////////////////////////////

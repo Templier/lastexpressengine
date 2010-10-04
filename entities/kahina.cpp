@@ -47,7 +47,7 @@ Kahina::Kahina(LastExpressEngine *engine) : Entity(engine, kEntityKahina) {
 	ADD_CALLBACK_FUNCTION(Kahina, updateFromTime);
 	ADD_CALLBACK_FUNCTION(Kahina, updateFromTicks);
 	ADD_CALLBACK_FUNCTION(Kahina, function6);
-	ADD_CALLBACK_FUNCTION(Kahina, function7);
+	ADD_CALLBACK_FUNCTION(Kahina, updateEntity2);
 	ADD_CALLBACK_FUNCTION(Kahina, updateEntity);
 	ADD_CALLBACK_FUNCTION(Kahina, enterExitCompartment);
 	ADD_CALLBACK_FUNCTION(Kahina, chapter1);
@@ -108,8 +108,36 @@ IMPLEMENT_FUNCTION_I(6, Kahina, function6, TimeValue)
 }
 
 //////////////////////////////////////////////////////////////////////////
-IMPLEMENT_FUNCTION_II(7 ,Kahina, function7, CarIndex, EntityPosition)
-	error("Kahina: callback function 7 not implemented!");
+IMPLEMENT_FUNCTION_II(7 ,Kahina, updateEntity2, CarIndex, EntityPosition)
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionNone:
+		if (getEntities()->updateEntity(_entityIndex, (CarIndex)params->param1, (EntityPosition)params->param2))
+			CALLBACK_ACTION();
+		break;
+
+	case kActionDefault:
+		if (getEntities()->updateEntity(_entityIndex, (CarIndex)params->param1, (EntityPosition)params->param2)) {
+			CALLBACK_ACTION();
+		} else if (getEntities()->isDistanceBetweenEntities(kEntityKahina, kEntityPlayer, 1000)
+		        && !getEntities()->isInGreenCarEntrance(kEntityPlayer)
+				&& !getEntities()->isInsideCompartments(kEntityPlayer)
+				&& !getEntities()->checkFields10(kEntityPlayer)) {
+
+			if (getData()->car == kCarGreenSleeping || getData()->car == kCarRedSleeping) {
+				ENTITY_PARAM(0, 1) = 1;
+				CALLBACK_ACTION();
+			}
+		}
+		break;
+
+	case kAction137503360:
+		ENTITY_PARAM(0, 2) = 1;
+		CALLBACK_ACTION();
+		break;
+	}
 }
 
 //////////////////////////////////////////////////////////////////////////

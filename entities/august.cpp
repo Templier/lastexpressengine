@@ -947,7 +947,64 @@ IMPLEMENT_FUNCTION(28, August, function28)
 
 //////////////////////////////////////////////////////////////////////////
 IMPLEMENT_FUNCTION(29, August, function29)
-	error("August: callback function 29 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionNone:
+		if (!getProgress().field_28 || params->param2 && params->param3 == kTimeInvalid)
+			break;
+
+		if (getState()->time < kTime1134000) {
+
+			if (!getEntities()->isInRestaurant(kEntityPlayer)
+			 || getSound()->isBuffered("MRB1076") || getSound()->isBuffered("MRB1078") || getSound()->isBuffered("MRB1078A"))
+				params->param3 = getState()->time + 225;
+
+			if (params->param3 > getState()->time)
+				break;
+		}
+
+		params->param3 = kTimeInvalid;
+		getData()->inventoryItem = kItemNone;
+		getProgress().field_28 = 0;
+
+		setup_restaurant();
+		break;
+
+	case kAction1:
+		getData()->inventoryItem = kItemNone;
+		params->param1 = kItemNone;
+
+		setCallback(1);
+		setup_dinner();
+		break;
+
+	case kActionDefault:
+		if (!getProgress().eventMetAugust && getProgress().jacket == kJacketGreen)
+			params->param1 = kItemInvalid;
+
+		getData()->inventoryItem = (InventoryItem)LOBYTE(params->param1);
+
+		getEntities()->drawSequenceLeft(kEntityAugust, "010H");
+		break;
+
+	case kAction168046720:
+		getData()->inventoryItem = kItemNone;
+		break;
+
+	case kAction168627977:
+		getData()->inventoryItem = (InventoryItem)LOBYTE(params->param1);
+		break;
+
+	case kAction189426612:
+		params->param2 = 1;
+		break;
+
+	case kAction235257824:
+		params->param2 = 0;
+		break;
+	}
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -1813,7 +1870,71 @@ IMPLEMENT_FUNCTION(59, August, function59)
 
 //////////////////////////////////////////////////////////////////////////
 IMPLEMENT_FUNCTION(60, August, function60)
-	error("August: callback function 60 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionNone: {
+		bool pushSavepoint = false;
+		if (!params->param2) {
+			pushSavepoint = true;
+			params->param2 = getState()->time + 450;
+		}
+
+		if (params->param2 < getState()->time) {
+			pushSavepoint = true;
+			params->param2 = kTimeInvalid;
+		}
+
+		if (pushSavepoint)
+			getSavePoints()->push(kEntityAugust, kEntityServers0, kAction207330561);
+
+		if (!params->param1)
+			break;
+
+		UPDATE_PARAM(params->param3, getState()->time, 9000);
+
+		setCallback(1);
+		setup_callbackActionRestaurantOrSalon();
+		}
+		break;
+
+	case kActionDefault:
+		getEntities()->drawSequenceLeft(kEntityAugust, "010B3");
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			getData()->location = kLocationOutsideCompartment;
+
+			setCallback(2);
+			setup_callSavepoint("010J3", kEntityTables3, kActionDrawTablesWithChairs, "010M");
+			break;
+
+		case 2:
+			getSavePoints()->push(kEntityAugust, kEntityServers0, kAction286403504);
+			setup_function61();
+			break;
+		}
+		break;
+
+	case kAction122288808:
+		getEntities()->drawSequenceLeft(kEntityAugust, "010B3");
+		break;
+
+	case kAction122358304:
+		getEntities()->drawSequenceLeft(kEntityAugust, "BLANK");
+		break;
+
+	case kAction201964801:
+		getEntities()->drawSequenceLeft(kEntityAugust, "010H3");
+		params->param1 = 1;
+		break;
+	}
 }
 
 //////////////////////////////////////////////////////////////////////////
