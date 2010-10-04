@@ -177,7 +177,7 @@ void Logic::eventMouse(const Common::Event &ev) {
 	 && !getInventory()->isFlag2()
 	 && !getInventory()->isEggHighlighted()
 	 && !getInventory()->isMagnifierInUse()
-	 && (getInventory()->get(kItem2)->location == kLocationNone || getEntityData(kEntityPlayer)->car != kCarRedSleeping || getEntityData(kEntityPlayer)->entityPosition != kPosition_2300)) {
+	 && (getInventory()->get(kItem2)->location == kObjectLocationNone || getEntityData(kEntityPlayer)->car != kCarRedSleeping || getEntityData(kEntityPlayer)->entityPosition != kPosition_2300)) {
 
 		// Update cursor
 		_engine->getCursor()->setStyle(getInventory()->get(kItemMatch)->cursor);
@@ -452,9 +452,9 @@ void Logic::switchChapter() const {
 		break;
 
 	case kChapter3:
-		getInventory()->get(kItemFirebird)->location = kLocation4;
+		getInventory()->get(kItemFirebird)->location = kObjectLocation4;
 		getInventory()->get(kItemFirebird)->isPresent = false;
-		getInventory()->get(kItem11)->location = kLocation1;
+		getInventory()->get(kItem11)->location = kObjectLocation1;
 		getInventory()->addItem(kItemWhistle);
 		getInventory()->addItem(kItemKey);
 

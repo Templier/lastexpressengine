@@ -158,8 +158,8 @@ switch (savepoint.action) {
 		break;
 
 	case kActionDefault:
-		getObjects()->update(kObject104, kEntityPlayer, kLocationNone, kCursorNormal, kCursorHand);
-		getObjects()->update(kObject105, kEntityPlayer, kLocationNone, kCursorNormal, kCursorHand);
+		getObjects()->update(kObject104, kEntityPlayer, kObjectLocationNone, kCursorNormal, kCursorHand);
+		getObjects()->update(kObject105, kEntityPlayer, kObjectLocationNone, kCursorNormal, kCursorHand);
 
 		if (getEntities()->isInBaggageCar(kEntityPlayer) || getEntities()->isInKitchen(kEntityPlayer)) {
 			getAction()->playAnimation(getEntities()->isInBaggageCar(kEntityPlayer) ? kEventVergesBaggageCarOffLimits : kEventVergesCanIHelpYou);
@@ -330,13 +330,13 @@ IMPLEMENT_FUNCTION(11, Verges, function11)
 				getScenes()->loadSceneFromPosition(kCarRestaurant, 65);
 			}
 
-			getInventory()->setLocationAndProcess(kItem9, kLocation1);
+			getInventory()->setLocationAndProcess(kItem9, kObjectLocation1);
 
 			getData()->car = kCarBaggage;
 			getData()->entityPosition = kPosition_5000;
 
-			getObjects()->update(kObject104, kEntityVerges, kLocationNone, kCursorNormal, kCursorHand);
-            getObjects()->update(kObject105, kEntityVerges, kLocationNone, kCursorNormal, kCursorHand);
+			getObjects()->update(kObject104, kEntityVerges, kObjectLocationNone, kCursorNormal, kCursorHand);
+            getObjects()->update(kObject105, kEntityVerges, kObjectLocationNone, kCursorNormal, kCursorHand);
 
 			CALLBACK_ACTION();
 			break;
@@ -353,8 +353,8 @@ IMPLEMENT_FUNCTION(12, Verges, function12)
 		break;
 
 	case kActionDefault:
-		getObjects()->update(kObject104, kEntityPlayer, kLocationNone, kCursorNormal, kCursorHand);
-		getObjects()->update(kObject105, kEntityPlayer, kLocationNone, kCursorNormal, kCursorHand);
+		getObjects()->update(kObject104, kEntityPlayer, kObjectLocationNone, kCursorNormal, kCursorHand);
+		getObjects()->update(kObject105, kEntityPlayer, kObjectLocationNone, kCursorNormal, kCursorHand);
 
 		if (getEntities()->isInBaggageCar(kEntityPlayer) || getEntities()->isInKitchen(kEntityPlayer)) {
 			getAction()->playAnimation(getEntities()->isInBaggageCar(kEntityPlayer) ? kEventVergesBaggageCarOffLimits : kEventVergesCanIHelpYou);
@@ -587,8 +587,8 @@ IMPLEMENT_FUNCTION(18, Verges, chapter1)
 		getSavePoints()->addData(kEntityVerges, kAction201431954, 5);
 		getSavePoints()->addData(kEntityVerges, kAction168187490, 6);
 
-		getObjects()->update(kObject104, kEntityVerges, kLocationNone, kCursorNormal, kCursorHand);
-		getObjects()->update(kObject105, kEntityVerges, kLocationNone, kCursorNormal, kCursorHand);
+		getObjects()->update(kObject104, kEntityVerges, kObjectLocationNone, kCursorNormal, kCursorHand);
+		getObjects()->update(kObject105, kEntityVerges, kObjectLocationNone, kCursorNormal, kCursorHand);
 
 		getData()->entityPosition = kPosition_5000;
 		getData()->location = kLocationOutsideCompartment;
@@ -828,7 +828,7 @@ label_callback15:
 		getData()->location = kLocationOutsideCompartment;
 
 		getEntities()->clearSequences(kEntityVerges);
-		getInventory()->setLocationAndProcess(kItem9, kLocation1);
+		getInventory()->setLocationAndProcess(kItem9, kObjectLocation1);
 		break;
 
 	case kActionCallback:
@@ -916,8 +916,8 @@ IMPLEMENT_FUNCTION(27, Verges, chapter2)
 		getData()->car = kCarBaggage;
 		getData()->inventoryItem = kItemNone;
 
-		getObjects()->update(kObject104, kEntityVerges, kLocationNone, kCursorNormal, kCursorHand);
-		getObjects()->update(kObject105, kEntityVerges, kLocationNone, kCursorNormal, kCursorHand);
+		getObjects()->update(kObject104, kEntityVerges, kObjectLocationNone, kCursorNormal, kCursorHand);
+		getObjects()->update(kObject105, kEntityVerges, kObjectLocationNone, kCursorNormal, kCursorHand);
 
 		ENTITY_PARAM(0, 3) = 0;
 		break;
@@ -982,7 +982,7 @@ label_callback_6:
 		break;
 
 	case kActionDefault:
-		getInventory()->setLocationAndProcess(kItem9, kLocation1);
+		getInventory()->setLocationAndProcess(kItem9, kObjectLocation1);
 		break;
 
 	case kActionCallback:
@@ -1037,8 +1037,8 @@ IMPLEMENT_FUNCTION(29, Verges, chapter3)
 		getData()->clothes = kClothesDefault;
 		getData()->inventoryItem = kItemNone;
 
-		getObjects()->update(kObject104, kEntityVerges, kLocationNone, kCursorNormal, kCursorHand);
-		getObjects()->update(kObject105, kEntityVerges, kLocationNone, kCursorNormal, kCursorHand);
+		getObjects()->update(kObject104, kEntityVerges, kObjectLocationNone, kCursorNormal, kCursorHand);
+		getObjects()->update(kObject105, kEntityVerges, kObjectLocationNone, kCursorNormal, kCursorHand);
 
 		ENTITY_PARAM(0, 3) = 0;
 		ENTITY_PARAM(0, 4) = 0;
@@ -1271,8 +1271,8 @@ IMPLEMENT_FUNCTION(36, Verges, chapter4)
 		getData()->clothes = kClothesDefault;
 		getData()->inventoryItem = kItemNone;
 
-		getObjects()->update(kObject104, kEntityVerges, kLocationNone, kCursorNormal, kCursorHand);
-		getObjects()->update(kObject105, kEntityVerges, kLocationNone, kCursorNormal, kCursorHand);
+		getObjects()->update(kObject104, kEntityVerges, kObjectLocationNone, kCursorNormal, kCursorHand);
+		getObjects()->update(kObject105, kEntityVerges, kObjectLocationNone, kCursorNormal, kCursorHand);
 
 		ENTITY_PARAM(0, 3) = 0;
 		ENTITY_PARAM(0, 6) = 0;
@@ -1292,8 +1292,8 @@ IMPLEMENT_FUNCTION(38, Verges, function38)
 		break;
 
 	case kActionDefault:
-		getObjects()->update(kObject104, kEntityPlayer, kLocationNone, kCursorNormal, kCursorHand);
-		getObjects()->update(kObject105, kEntityPlayer, kLocationNone, kCursorNormal, kCursorHand);
+		getObjects()->update(kObject104, kEntityPlayer, kObjectLocationNone, kCursorNormal, kCursorHand);
+		getObjects()->update(kObject105, kEntityPlayer, kObjectLocationNone, kCursorNormal, kCursorHand);
 		getScenes()->loadSceneFromItemPosition(kItem9);
 		getEntities()->clearSequences(kEntityVerges);
 
@@ -1352,8 +1352,8 @@ IMPLEMENT_FUNCTION(39, Verges, chapter5)
 		getData()->clothes = kClothesDefault;
 		getData()->inventoryItem = kItemNone;
 
-		getObjects()->update(kObject104, kEntityPlayer, kLocationNone, kCursorNormal, kCursorHand);
-		getObjects()->update(kObject105, kEntityPlayer, kLocationNone, kCursorNormal, kCursorHand);
+		getObjects()->update(kObject104, kEntityPlayer, kObjectLocationNone, kCursorNormal, kCursorHand);
+		getObjects()->update(kObject105, kEntityPlayer, kObjectLocationNone, kCursorNormal, kCursorHand);
 		break;
 	}
 }
@@ -1376,7 +1376,7 @@ IMPLEMENT_FUNCTION(40, Verges, chapter5Handler)
 		if (getSound()->isBuffered("MUS050"))
 			getSound()->processEntry("MUS050");
 
-		getObjects()->update(kObject65, kEntityPlayer, kLocationNone, kCursorNormal, kCursorForward);
+		getObjects()->update(kObject65, kEntityPlayer, kObjectLocationNone, kCursorNormal, kCursorForward);
 
 		setCallback(1);
 		setup_savegame(kSavegameTypeEvent, kEventCathFreePassengers);
@@ -1384,7 +1384,7 @@ IMPLEMENT_FUNCTION(40, Verges, chapter5Handler)
 
 	case kActionDefault:
 		getScenes()->loadSceneFromItemPosition(kItem9);
-		getObjects()->update(kObject65, kEntityVerges, kLocation1, kCursorNormal, kCursorForward);
+		getObjects()->update(kObject65, kEntityVerges, kObjectLocation1, kCursorNormal, kCursorForward);
 		break;
 
 	case kActionCallback:
@@ -1405,7 +1405,7 @@ IMPLEMENT_FUNCTION(41, Verges, function41)
 		break;
 
 	case kActionDefault:
-		getObjects()->updateLocation2(kObjectRestaurantCar, kLocation3);
+		getObjects()->updateLocation2(kObjectRestaurantCar, kObjectLocation3);
 		getData()->car = kCarRedSleeping;
 		getData()->entityPosition = kPosition_9460;
 		getData()->location = kLocationInsideCompartment;

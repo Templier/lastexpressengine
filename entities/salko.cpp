@@ -202,7 +202,7 @@ IMPLEMENT_FUNCTION(11, Salko, function11)
 		getData()->car = kCarRedSleeping;
 
 		getEntities()->clearSequences(kEntitySalko);
-		getObjects()->update(kObjectCompartmentH, kEntityPlayer, kLocation3, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObjectCompartmentH, kEntityPlayer, kObjectLocation3, kCursorHandKnock, kCursorHand);
 	}
 }
 
@@ -553,7 +553,7 @@ IMPLEMENT_FUNCTION(21, Salko, function21)
 IMPLEMENT_FUNCTION(22, Salko, function22)
 	if (savepoint.action == kActionDefault) {
 		getEntities()->clearSequences(kEntitySalko);
-		getObjects()->update(kObjectCompartmentH, kEntityPlayer, kLocation3, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObjectCompartmentH, kEntityPlayer, kObjectLocation3, kCursorHandKnock, kCursorHand);
 
 		getData()->entityPosition = kPosition_2740;
 		getData()->location = kLocationInsideCompartment;

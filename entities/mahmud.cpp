@@ -149,10 +149,10 @@ IMPLEMENT_FUNCTION_II(10, Mahmud, function10, ObjectIndex, bool)
 	case kActionNone:
 		UPDATE_PARAM(params->param6, getState()->time, 13500);
 
-		getObjects()->update(kObjectCompartment5, kEntityTrain, kLocation3, kCursorHandKnock, kCursorHand);
-		getObjects()->update(kObjectCompartment6, kEntityTrain, kLocation3, kCursorHandKnock, kCursorHand);
-		getObjects()->update(kObjectCompartment7, kEntityTrain, kLocation3, kCursorHandKnock, kCursorHand);
-		getObjects()->update(kObjectCompartment8, kEntityTrain, kLocation3, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObjectCompartment5, kEntityTrain, kObjectLocation3, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObjectCompartment6, kEntityTrain, kObjectLocation3, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObjectCompartment7, kEntityTrain, kObjectLocation3, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObjectCompartment8, kEntityTrain, kObjectLocation3, kCursorHandKnock, kCursorHand);
 
 		setCallback(2);
 		setup_enterExitCompartment("614Ed", kObjectCompartment4);
@@ -163,10 +163,10 @@ IMPLEMENT_FUNCTION_II(10, Mahmud, function10, ObjectIndex, bool)
 		if (!getSound()->isBuffered(kEntityMahmud)) {
 			EntityPosition position = getEntityData(kEntityPlayer)->entityPosition;
 			if (position < kPosition_1500 || position >= kPosition_5790 || (position > kPosition_4455 && params->param5 != 5)) {
-				getObjects()->update(kObjectCompartment5, kEntityTrain, kLocation3, kCursorHandKnock, kCursorHand);
-				getObjects()->update(kObjectCompartment6, kEntityTrain, kLocation3, kCursorHandKnock, kCursorHand);
-				getObjects()->update(kObjectCompartment7, kEntityTrain, kLocation3, kCursorHandKnock, kCursorHand);
-				getObjects()->update(kObjectCompartment8, kEntityTrain, kLocation3, kCursorHandKnock, kCursorHand);
+				getObjects()->update(kObjectCompartment5, kEntityTrain, kObjectLocation3, kCursorHandKnock, kCursorHand);
+				getObjects()->update(kObjectCompartment6, kEntityTrain, kObjectLocation3, kCursorHandKnock, kCursorHand);
+				getObjects()->update(kObjectCompartment7, kEntityTrain, kObjectLocation3, kCursorHandKnock, kCursorHand);
+				getObjects()->update(kObjectCompartment8, kEntityTrain, kObjectLocation3, kCursorHandKnock, kCursorHand);
 
 				setCallback(3);
 				setup_enterExitCompartment("614Ed", kObjectCompartment4);
@@ -251,10 +251,10 @@ IMPLEMENT_FUNCTION_II(10, Mahmud, function10, ObjectIndex, bool)
 			break;
 
 		case 1:
-			getObjects()->update(kObjectCompartment5, kEntityMahmud, kLocation3, kCursorHandKnock, kCursorHand);
-			getObjects()->update(kObjectCompartment6, kEntityMahmud, kLocation3, kCursorHandKnock, kCursorHand);
-			getObjects()->update(kObjectCompartment7, kEntityMahmud, kLocation3, kCursorHandKnock, kCursorHand);
-			getObjects()->update(kObjectCompartment8, kEntityMahmud, kLocation3, kCursorHandKnock, kCursorHand);
+			getObjects()->update(kObjectCompartment5, kEntityMahmud, kObjectLocation3, kCursorHandKnock, kCursorHand);
+			getObjects()->update(kObjectCompartment6, kEntityMahmud, kObjectLocation3, kCursorHandKnock, kCursorHand);
+			getObjects()->update(kObjectCompartment7, kEntityMahmud, kObjectLocation3, kCursorHandKnock, kCursorHand);
+			getObjects()->update(kObjectCompartment8, kEntityMahmud, kObjectLocation3, kCursorHandKnock, kCursorHand);
 
 			getData()->location = kLocationOutsideCompartment;
 
@@ -327,7 +327,7 @@ IMPLEMENT_FUNCTION(11, Mahmud, function11)
 
 		case 1:
 			getData()->location = kLocationOutsideCompartment;
-			getObjects()->update(kObjectCompartment4, kEntityPlayer, kLocation3, kCursorHandKnock, kCursorHand);
+			getObjects()->update(kObjectCompartment4, kEntityPlayer, kObjectLocation3, kCursorHandKnock, kCursorHand);
 			getEntities()->drawSequenceLeft(kEntityMahmud, "614Kd");
 			getEntities()->enterCompartment(kEntityMahmud, kObjectCompartment4, true);
 
@@ -380,10 +380,10 @@ IMPLEMENT_FUNCTION(11, Mahmud, function11)
 			break;
 
 		case 10:
-			getObjects()->update(kObjectCompartment5, kEntityMahmud, kLocation3, kCursorHandKnock, kCursorHand);
-			getObjects()->update(kObjectCompartment6, kEntityMahmud, kLocation3, kCursorHandKnock, kCursorHand);
-			getObjects()->update(kObjectCompartment7, kEntityMahmud, kLocation3, kCursorHandKnock, kCursorHand);
-			getObjects()->update(kObjectCompartment8, kEntityMahmud, kLocation3, kCursorHandKnock, kCursorHand);
+			getObjects()->update(kObjectCompartment5, kEntityMahmud, kObjectLocation3, kCursorHandKnock, kCursorHand);
+			getObjects()->update(kObjectCompartment6, kEntityMahmud, kObjectLocation3, kCursorHandKnock, kCursorHand);
+			getObjects()->update(kObjectCompartment7, kEntityMahmud, kObjectLocation3, kCursorHandKnock, kCursorHand);
+			getObjects()->update(kObjectCompartment8, kEntityMahmud, kObjectLocation3, kCursorHandKnock, kCursorHand);
 			break;
 
 		case 11:
@@ -391,7 +391,7 @@ IMPLEMENT_FUNCTION(11, Mahmud, function11)
 			getData()->location = kLocationInsideCompartment;
 
 			getEntities()->clearSequences(kEntityMahmud);
-			getObjects()->update(kObjectCompartment4, kEntityMahmud, kLocation3, kCursorHandKnock, kCursorHand);
+			getObjects()->update(kObjectCompartment4, kEntityMahmud, kObjectLocation3, kCursorHandKnock, kCursorHand);
 
 			CALLBACK_ACTION();
 			break;
@@ -402,10 +402,10 @@ IMPLEMENT_FUNCTION(11, Mahmud, function11)
 		if (getSound()->isBuffered(kEntityMahmud))
 			getSound()->processEntry(kEntityMahmud);
 
-		getObjects()->update(kObjectCompartment5, kEntityTrain, kLocation3, kCursorHandKnock, kCursorHand);
-		getObjects()->update(kObjectCompartment6, kEntityTrain, kLocation3, kCursorHandKnock, kCursorHand);
-		getObjects()->update(kObjectCompartment7, kEntityTrain, kLocation3, kCursorHandKnock, kCursorHand);
-		getObjects()->update(kObjectCompartment8, kEntityTrain, kLocation3, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObjectCompartment5, kEntityTrain, kObjectLocation3, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObjectCompartment6, kEntityTrain, kObjectLocation3, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObjectCompartment7, kEntityTrain, kObjectLocation3, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObjectCompartment8, kEntityTrain, kObjectLocation3, kCursorHandKnock, kCursorHand);
 
 		setCallback(11);
 		setup_enterExitCompartment("614Cd", kObjectCompartment4);
@@ -432,7 +432,7 @@ IMPLEMENT_FUNCTION(12, Mahmud, function12)
 
 		case 1:
 			getData()->location = kLocationOutsideCompartment;
-			getObjects()->update(kObjectCompartment4, kEntityPlayer, kLocation3, kCursorHandKnock, kCursorHand);
+			getObjects()->update(kObjectCompartment4, kEntityPlayer, kObjectLocation3, kCursorHandKnock, kCursorHand);
 
 			setCallback(2);
 			setup_updateEntity(kCarGreenSleeping, kPosition_4070);
@@ -498,7 +498,7 @@ IMPLEMENT_FUNCTION(13, Mahmud, function13)
 
 		case 1:
 			getData()->location = kLocationOutsideCompartment;
-			getObjects()->update(kObjectCompartment4, kEntityPlayer, kLocation3, kCursorHandKnock, kCursorHand);
+			getObjects()->update(kObjectCompartment4, kEntityPlayer, kObjectLocation3, kCursorHandKnock, kCursorHand);
 
 			setCallback(2);
 			setup_updateEntity(kCarGreenSleeping, kPosition_2740);
@@ -578,7 +578,7 @@ IMPLEMENT_FUNCTION(14, Mahmud, chaptersHandler)
 			params->param4 = 1;
 			params->param5 = 0;
 
-			getObjects()->update(kObjectCompartment4, kEntityMahmud, kLocation3, kCursorNormal, kCursorNormal);
+			getObjects()->update(kObjectCompartment4, kEntityMahmud, kObjectLocation3, kCursorNormal, kCursorNormal);
 		}
 
 		params->param8 = 0;
@@ -587,7 +587,7 @@ IMPLEMENT_FUNCTION(14, Mahmud, chaptersHandler)
 	case kActionKnock:
 	case kActionOpenDoor:
 		if (params->param5) {
-			getObjects()->update(kObjectCompartment4, kEntityMahmud, kLocation3, kCursorNormal, kCursorNormal);
+			getObjects()->update(kObjectCompartment4, kEntityMahmud, kObjectLocation3, kCursorNormal, kCursorNormal);
 
 			if (getProgress().jacket == kJacketBlood || getEvent(kEventMahmudWrongDoor) || getEvent(kEventMahmudWrongDoorOriginalJacket) || getEvent(kEventMahmudWrongDoorDay)) {
 				// Check if we have the passenger list
@@ -603,7 +603,7 @@ IMPLEMENT_FUNCTION(14, Mahmud, chaptersHandler)
 				setup_playSound(savepoint.action == kActionKnock ? "LIB012" : "LIB013");
 			}
 		} else {
-			getObjects()->update(kObjectCompartment4, kEntityMahmud, kLocation1, kCursorNormal, kCursorNormal);
+			getObjects()->update(kObjectCompartment4, kEntityMahmud, kObjectLocation1, kCursorNormal, kCursorNormal);
 
 			setCallback(savepoint.action == kActionKnock ? 3 : 4);
 			setup_playSound(savepoint.action == kActionKnock ? "LIB012" : "LIB013");
@@ -618,12 +618,12 @@ IMPLEMENT_FUNCTION(14, Mahmud, chaptersHandler)
 		getEntities()->clearSequences(kEntityMahmud);
 		params->param3 = 1;
 
-		getObjects()->update(kObjectCompartment4, kEntityMahmud, kLocation3, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObjectCompartment4, kEntityMahmud, kObjectLocation3, kCursorHandKnock, kCursorHand);
 		break;
 
 	case kActionDrawScene:
 		if (params->param4 || params->param5) {
-			getObjects()->update(kObjectCompartment4, kEntityMahmud, kLocation3, kCursorHandKnock, kCursorHand);
+			getObjects()->update(kObjectCompartment4, kEntityMahmud, kObjectLocation3, kCursorHandKnock, kCursorHand);
 			params->param4 = 0;
 			params->param5 = 0;
 		}
@@ -635,7 +635,7 @@ IMPLEMENT_FUNCTION(14, Mahmud, chaptersHandler)
 			return;
 
 		case 1:
-			getObjects()->update(kObjectCompartment4, kEntityMahmud, kLocation3, kCursorHandKnock, kCursorHand);
+			getObjects()->update(kObjectCompartment4, kEntityMahmud, kObjectLocation3, kCursorHandKnock, kCursorHand);
 			params->param4 = 0;
 			params->param5 = 0;
 
@@ -650,7 +650,7 @@ IMPLEMENT_FUNCTION(14, Mahmud, chaptersHandler)
 			break;
 
 		case 2:
-			getObjects()->update(kObjectCompartment4, kEntityMahmud, kLocation3, kCursorHandKnock, kCursorHand);
+			getObjects()->update(kObjectCompartment4, kEntityMahmud, kObjectLocation3, kCursorHandKnock, kCursorHand);
 			params->param4 = 0;
 			params->param5 = 0;
 			params->param8 = 0;
@@ -674,7 +674,7 @@ IMPLEMENT_FUNCTION(14, Mahmud, chaptersHandler)
 				cursor2 = kCursorTalk;
 			}
 
-			getObjects()->update(kObjectCompartment4, kEntityMahmud, kLocation1, cursor, cursor2);
+			getObjects()->update(kObjectCompartment4, kEntityMahmud, kObjectLocation1, cursor, cursor2);
 			params->param5 = 1;
 			break;
 			}
@@ -699,13 +699,13 @@ IMPLEMENT_FUNCTION(14, Mahmud, chaptersHandler)
 			break;
 
 		case 11:
-			getObjects()->update(kObjectCompartment4, kEntityMahmud, kLocation3, kCursorHandKnock, kCursorHand);
+			getObjects()->update(kObjectCompartment4, kEntityMahmud, kObjectLocation3, kCursorHandKnock, kCursorHand);
 			params->param4 = 0;
 			params->param5 = 0;
 			break;
 
 		case 12:
-			getObjects()->update(kObjectCompartment4, kEntityMahmud, kLocation3, kCursorHandKnock, kCursorHand);
+			getObjects()->update(kObjectCompartment4, kEntityMahmud, kObjectLocation3, kCursorHandKnock, kCursorHand);
 			params->param2 = 0;
 			params->param4 = 0;
 			params->param5 = 0;
@@ -743,8 +743,8 @@ IMPLEMENT_FUNCTION(15, Mahmud, chapter1)
 		getData()->location = kLocationOutsideCompartment;
 		getData()->car = kCarGreenSleeping;
 
-		getObjects()->update(kObjectCompartment4, kEntityPlayer, kLocation3, kCursorHandKnock, kCursorHand);
-		getObjects()->update(kObject20, kEntityPlayer, kLocation3, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObjectCompartment4, kEntityPlayer, kObjectLocation3, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObject20, kEntityPlayer, kObjectLocation3, kCursorHandKnock, kCursorHand);
 		break;
 	}
 }
@@ -758,7 +758,7 @@ IMPLEMENT_FUNCTION(16, Mahmud, resetChapter)
 	getData()->location = kLocationInsideCompartment;
 	getData()->car = kCarGreenSleeping;
 
-	getObjects()->update(kObjectCompartment4, kEntityPlayer, kLocation3, kCursorHandKnock, kCursorHand);
+	getObjects()->update(kObjectCompartment4, kEntityPlayer, kObjectLocation3, kCursorHandKnock, kCursorHand);
 	getEntities()->clearSequences(kEntityMahmud);
 }
 

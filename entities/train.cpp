@@ -118,7 +118,7 @@ IMPLEMENT_FUNCTION_II(7, Train, harem, ObjectIndex, uint32)
 	params->param6 = getEntities()->isInsideCompartment(kEntityYasmin, kCarGreenSleeping, (EntityPosition)params->param3);
 	params->param7 = getEntities()->isInsideCompartment(kEntityHadija, kCarGreenSleeping, (EntityPosition)params->param3);
 
-	getObjects()->update((ObjectIndex)params->param1, kEntityTrain, kLocation3, kCursorNormal, kCursorNormal);
+	getObjects()->update((ObjectIndex)params->param1, kEntityTrain, kObjectLocation3, kCursorNormal, kCursorNormal);
 
 	// Knock / closed door sound
 	getSound()->playSound(kEntityTables5, (params->param2 == 8) ? "LIB012" : "LIB013", SoundManager::kFlagDefault);
@@ -304,7 +304,7 @@ label_process:
 
 		// Update object
 		if (ENTITY_PARAM(0, 8) && !getSound()->isBuffered(kEntityTables5)) {
-			getObjects()->update((ObjectIndex)ENTITY_PARAM(0, 8), getObjects()->get((ObjectIndex)ENTITY_PARAM(0, 8)).entity, kLocation3, kCursorHandKnock, kCursorHand);
+			getObjects()->update((ObjectIndex)ENTITY_PARAM(0, 8), getObjects()->get((ObjectIndex)ENTITY_PARAM(0, 8)).entity, kObjectLocation3, kCursorHandKnock, kCursorHand);
 			ENTITY_PARAM(0, 8) = 0;
 		}
 
@@ -328,10 +328,10 @@ label_process:
 	case kActionDefault:
 		params->param3 = 1;
 		if (getProgress().chapter < kChapter5) {
-			getObjects()->update(kObjectCompartment5, kEntityTrain, kLocation3, kCursorHandKnock, kCursorHand);
-			getObjects()->update(kObjectCompartment6, kEntityTrain, kLocation3, kCursorHandKnock, kCursorHand);
-			getObjects()->update(kObjectCompartment7, kEntityTrain, kLocation3, kCursorHandKnock, kCursorHand);
-			getObjects()->update(kObjectCompartment8, kEntityTrain, kLocation3, kCursorHandKnock, kCursorHand);
+			getObjects()->update(kObjectCompartment5, kEntityTrain, kObjectLocation3, kCursorHandKnock, kCursorHand);
+			getObjects()->update(kObjectCompartment6, kEntityTrain, kObjectLocation3, kCursorHandKnock, kCursorHand);
+			getObjects()->update(kObjectCompartment7, kEntityTrain, kObjectLocation3, kCursorHandKnock, kCursorHand);
+			getObjects()->update(kObjectCompartment8, kEntityTrain, kObjectLocation3, kCursorHandKnock, kCursorHand);
 		}
 		getData()->entityPosition = kPosition_30000;
 		break;
@@ -428,7 +428,7 @@ label_process:
 
 		case 6:
 			getAction()->playAnimation(kEventCathBreakCeiling);
-			getObjects()->update(kObjectCeiling, kEntityPlayer, kLocation2, kCursorKeepValue, kCursorKeepValue);
+			getObjects()->update(kObjectCeiling, kEntityPlayer, kObjectLocation2, kCursorKeepValue, kCursorKeepValue);
 			getScenes()->processScene();
 			break;
 

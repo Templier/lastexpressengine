@@ -345,7 +345,7 @@ void Inventory::addItem(InventoryItem item) {
 		return;
 
 	get(item)->isPresent = true;
-	get(item)->location = kLocationNone;
+	get(item)->location = kObjectLocationNone;
 
 	// Auto-select item if necessary
 	if (get(item)->cursor && !get(item)->manualSelect) {

@@ -125,7 +125,7 @@ IMPLEMENT_FUNCTION_III(10, Gendarmes, function10, CarIndex, EntityPosition, Obje
 			if (!params->param5)
 				params->param5 = getState()->timeTicks + 75;
 
-			if (!getEntities()->isOutsideAlexeiWindow() && getObjects()->get((ObjectIndex)params->param3).location != kLocation1) {
+			if (!getEntities()->isOutsideAlexeiWindow() && getObjects()->get((ObjectIndex)params->param3).location != kObjectLocation1) {
 				setCallback(2);
 				setup_savegame(kSavegameTypeEvent, kEventGendarmesArrestation);
 				break;
@@ -144,7 +144,7 @@ IMPLEMENT_FUNCTION_III(10, Gendarmes, function10, CarIndex, EntityPosition, Obje
 		UPDATE_PARAM(params->param7, getState()->timeTicks, 300);
 
 		if (!params->param4 && getEntities()->isOutsideAlexeiWindow()) {
-			getObjects()->update((ObjectIndex)params->param3, kEntityPlayer, kLocationNone, kCursorHandKnock, kCursorHand);
+			getObjects()->update((ObjectIndex)params->param3, kEntityPlayer, kObjectLocationNone, kCursorHandKnock, kCursorHand);
 			CALLBACK_ACTION();
 		} else {
 			if (getEntities()->isOutsideAlexeiWindow())
@@ -195,7 +195,7 @@ IMPLEMENT_FUNCTION_III(10, Gendarmes, function10, CarIndex, EntityPosition, Obje
 			getAction()->playAnimation((params->param1 < kCarRedSleeping) ? kEventMertensBloodJacket : kEventCoudertBloodJacket);
 			getLogic()->gameOver(kSavegameTypeIndex, 1, kSceneGameOverBloodJacket, true);
 
-			getObjects()->update((ObjectIndex)params->param3, kEntityPlayer, kLocationNone, kCursorHandKnock, kCursorHand);
+			getObjects()->update((ObjectIndex)params->param3, kEntityPlayer, kObjectLocationNone, kCursorHandKnock, kCursorHand);
 			CALLBACK_ACTION();
 			break;
 
@@ -203,7 +203,7 @@ IMPLEMENT_FUNCTION_III(10, Gendarmes, function10, CarIndex, EntityPosition, Obje
 			getAction()->playAnimation(kEventGendarmesArrestation);
 			getLogic()->gameOver(kSavegameTypeIndex, 1, kSceneGameOverPolice1, true);
 
-			getObjects()->update((ObjectIndex)params->param3, kEntityPlayer, kLocationNone, kCursorHandKnock, kCursorHand);
+			getObjects()->update((ObjectIndex)params->param3, kEntityPlayer, kObjectLocationNone, kCursorHandKnock, kCursorHand);
 			CALLBACK_ACTION();
 			break;
 

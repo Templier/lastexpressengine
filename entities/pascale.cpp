@@ -604,7 +604,7 @@ IMPLEMENT_FUNCTION(19, Pascale, function19)
 
 	case kActionNone:
 		if (!params->param1 && getEntityData(kEntityPlayer)->entityPosition < kPosition_3650) {
-			getObjects()->update(kObject65, kEntityPlayer, kLocation1, kCursorHandKnock, kCursorHand);
+			getObjects()->update(kObject65, kEntityPlayer, kObjectLocation1, kCursorHandKnock, kCursorHand);
 			getSavePoints()->push(kEntityPascale, kEntityTables0, kActionDrawTablesWithChairs, "001P");
 			getSavePoints()->push(kEntityPascale, kEntityTables1, kActionDrawTablesWithChairs, "005J");
 			getSavePoints()->push(kEntityPascale, kEntityTables2, kActionDrawTablesWithChairs, "009G");
@@ -637,7 +637,7 @@ IMPLEMENT_FUNCTION(20, Pascale, chapter2)
 		getData()->clothes = kClothes1;
 		getData()->inventoryItem = kItemNone;
 
-		getObjects()->update(kObject65, kEntityPlayer, kLocationNone, kCursorNormal, kCursorForward);
+		getObjects()->update(kObject65, kEntityPlayer, kObjectLocationNone, kCursorNormal, kCursorForward);
 	}
 }
 
@@ -1125,7 +1125,7 @@ IMPLEMENT_FUNCTION(33, Pascale, function33)
 			if (params->param5 < getState()->time) {
 				params->param5 = kTimeInvalid;
 
-				getObjects()->update(kObjectCompartmentG, kEntityPascale, kLocation1, kCursorNormal, kCursorNormal);
+				getObjects()->update(kObjectCompartmentG, kEntityPascale, kObjectLocation1, kCursorNormal, kCursorNormal);
 
 				setCallback(1);
 				setup_playSound("Wat5010");
@@ -1140,7 +1140,7 @@ label_callback1:
 			params->param1 = 0;
 			params->param2 = 2;
 
-			getObjects()->update(kObjectCompartmentG, kEntityPascale, kLocation1, kCursorNormal, kCursorNormal);
+			getObjects()->update(kObjectCompartmentG, kEntityPascale, kObjectLocation1, kCursorNormal, kCursorNormal);
 		}
 
 		params->param6 = 0;
@@ -1149,7 +1149,7 @@ label_callback1:
 	case kActionKnock:
 	case kActionOpenDoor:
 		if (params->param1) {
-			getObjects()->update(kObjectCompartmentG, kEntityPascale, kLocation1, kCursorNormal, kCursorNormal);
+			getObjects()->update(kObjectCompartmentG, kEntityPascale, kObjectLocation1, kCursorNormal, kCursorNormal);
 			params->param1 = 0;
 
 			setCallback(2);
@@ -1165,7 +1165,7 @@ label_callback1:
 		getData()->entityPosition = kPosition_3050;
 		getData()->location = kLocationInsideCompartment;
 
-		getObjects()->update(kObjectCompartmentG, kEntityPascale, kLocation1, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObjectCompartmentG, kEntityPascale, kObjectLocation1, kCursorHandKnock, kCursorHand);
 		break;
 
 	case kActionDrawScene:
@@ -1174,7 +1174,7 @@ label_callback1:
 			params->param2 = 0;
 			params->param3 = 0;
 
-			getObjects()->update(kObjectCompartmentG, kEntityPascale, kLocation1, kCursorHandKnock, kCursorHand);
+			getObjects()->update(kObjectCompartmentG, kEntityPascale, kObjectLocation1, kCursorHandKnock, kCursorHand);
 		}
 		break;
 
@@ -1184,11 +1184,11 @@ label_callback1:
 			break;
 
 		case 1:
-			getObjects()->update(kObjectCompartmentG, kEntityPascale, kLocation1, kCursorHandKnock, kCursorHand);
+			getObjects()->update(kObjectCompartmentG, kEntityPascale, kObjectLocation1, kCursorHandKnock, kCursorHand);
 			goto label_callback1;
 
 		case 2:
-			getObjects()->update(kObjectCompartmentG, kEntityPascale, kLocation1, kCursorHandKnock, kCursorHand);
+			getObjects()->update(kObjectCompartmentG, kEntityPascale, kObjectLocation1, kCursorHandKnock, kCursorHand);
 			break;
 
 		case 3:
@@ -1196,7 +1196,7 @@ label_callback1:
 			params->param3++;
 
 			if (params->param3 == 1 || params->param3 == 2) {
-				getObjects()->update(kObjectCompartmentG, kEntityPascale, kLocation1, kCursorNormal, kCursorNormal);
+				getObjects()->update(kObjectCompartmentG, kEntityPascale, kObjectLocation1, kCursorNormal, kCursorNormal);
 				setCallback(params->param3 == 1 ? 5 : 6);
 				setup_playSound(params->param3 == 1 ? "Wat5001" : "Wat5002");
 			}
@@ -1204,7 +1204,7 @@ label_callback1:
 
 		case 5:
 			params->param1 = 1;
-			getObjects()->update(kObjectCompartmentG, kEntityPascale, kLocation1, kCursorTalk, kCursorNormal);
+			getObjects()->update(kObjectCompartmentG, kEntityPascale, kObjectLocation1, kCursorTalk, kCursorNormal);
 			break;
 
 		case 6:

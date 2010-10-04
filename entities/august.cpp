@@ -281,8 +281,8 @@ IMPLEMENT_FUNCTION(22, August, chapter1)
 		break;
 
 	case kActionDefault:
-		getObjects()->update(kObjectCompartment3, kEntityPlayer, kLocation1, kCursorHandKnock, kCursorHand);
-		getObjects()->update(kObject11, kEntityPlayer, kLocationNone, kCursorKeepValue, kCursorKeepValue);
+		getObjects()->update(kObjectCompartment3, kEntityPlayer, kObjectLocation1, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObject11, kEntityPlayer, kObjectLocationNone, kCursorKeepValue, kCursorKeepValue);
 
 		getData()->entityPosition = kPosition_4691;
 		getData()->location = kLocationInsideCompartment;
@@ -309,7 +309,7 @@ IMPLEMENT_FUNCTION_I(23, August, function23, TimeValue)
 				setup_enterExitCompartment("626Ea", kObjectCompartment1);
 			} else {
 				getEntities()->exitCompartment(kEntityAugust, kObjectCompartment1, true);
-				getObjects()->update(kObjectCompartment1, kEntityPlayer, kLocationNone, kCursorHandKnock, kCursorHand);
+				getObjects()->update(kObjectCompartment1, kEntityPlayer, kObjectLocationNone, kCursorHandKnock, kCursorHand);
 				CALLBACK_ACTION();
 			}
 			break;
@@ -346,7 +346,7 @@ label_callback_8:
 					setup_enterExitCompartment3("626Da", kObjectCompartment1);
 				} else {
 					getScenes()->loadSceneFromPosition(kCarNone, 1);
-					getObjects()->update(kObjectOutsideTylerCompartment, kEntityPlayer, kLocationNone, kCursorKeepValue, kCursorKeepValue);
+					getObjects()->update(kObjectOutsideTylerCompartment, kEntityPlayer, kObjectLocationNone, kCursorKeepValue, kCursorKeepValue);
 					setCallback(11);
 					setup_savegame(kSavegameTypeEvent, kEventAugustFindCorpse);
 				}
@@ -356,7 +356,7 @@ label_callback_8:
 label_callback_9:
 			if (params->param3 && params->param1 < getState()->time && !CURRENT_PARAMS(1, 5)) {
 				CURRENT_PARAMS(1, 5) = 1;
-				getObjects()->update(kObjectCompartment1, kEntityPlayer, kLocationNone, kCursorHandKnock, kCursorHand);
+				getObjects()->update(kObjectCompartment1, kEntityPlayer, kObjectLocationNone, kCursorHandKnock, kCursorHand);
 
 				setCallback(12);
 				setup_enterExitCompartment("626Ea", kObjectCompartment1);
@@ -370,7 +370,7 @@ label_callback_9:
 		if (CURRENT_PARAMS(1, 1) >= getState()->timeTicks)
 			break;
 
-		if (getObjects()->get(kObjectCompartment1).location == kLocation1) {
+		if (getObjects()->get(kObjectCompartment1).location == kObjectLocation1) {
 			UPDATE_PARAM(CURRENT_PARAMS(1, 2), getState()->timeTicks, 75);
 
 			getObjects()->update(kObjectCompartment1, kEntityAugust, getObjects()->get(kObjectCompartment1).location, kCursorNormal, kCursorNormal);
@@ -408,13 +408,13 @@ label_callback_9:
 		} else {
 
 			if (getProgress().eventCorpseMovedFromFloor && getProgress().jacket != kJacketBlood) {
-				params->param7 = (getObjects()->get(kObjectCompartment1).location2 == kLocation1) ? 8 : 7;
-				getObjects()->update(kObjectOutsideTylerCompartment, kEntityPlayer, kLocationNone, kCursorKeepValue, kCursorKeepValue);
+				params->param7 = (getObjects()->get(kObjectCompartment1).location2 == kObjectLocation1) ? 8 : 7;
+				getObjects()->update(kObjectOutsideTylerCompartment, kEntityPlayer, kObjectLocationNone, kCursorKeepValue, kCursorKeepValue);
 
 				setCallback(4);
 				setup_savegame(kSavegameTypeEvent, kEventMeetAugustTylerCompartment);
 			} else {
-				getObjects()->update(kObjectOutsideTylerCompartment, kEntityPlayer, kLocationNone, kCursorKeepValue, kCursorKeepValue);
+				getObjects()->update(kObjectOutsideTylerCompartment, kEntityPlayer, kObjectLocationNone, kCursorKeepValue, kCursorKeepValue);
 
 				setCallback(3);
 				setup_savegame(kSavegameTypeEvent, kEventAugustFindCorpse);
@@ -424,7 +424,7 @@ label_callback_9:
 
 	case kActionKnock:
 		if (params->param3) {
-			getObjects()->update(kObjectCompartment1, kEntityAugust, kLocationNone, kCursorNormal, kCursorNormal);
+			getObjects()->update(kObjectCompartment1, kEntityAugust, kObjectLocationNone, kCursorNormal, kCursorNormal);
 
 			setCallback(15);
 			setup_playSound("LIB012");
@@ -441,15 +441,15 @@ label_callback_9:
 			if (params->param3) {
 				getData()->location = kLocationInsideCompartment;
 
-				params->param7 = (getObjects()->get(kObjectCompartment1).location2 == kLocation1) ? kEventMeetAugustHisCompartmentBed : kEventMeetAugustHisCompartment;
+				params->param7 = (getObjects()->get(kObjectCompartment1).location2 == kObjectLocation1) ? kEventMeetAugustHisCompartmentBed : kEventMeetAugustHisCompartment;
 			} else {
-				params->param7 = (getObjects()->get(kObjectCompartment1).location2 == kLocation1) ? kEventMeetAugustTylerCompartmentBed : kEventMeetAugustTylerCompartment;
+				params->param7 = (getObjects()->get(kObjectCompartment1).location2 == kObjectLocation1) ? kEventMeetAugustTylerCompartmentBed : kEventMeetAugustTylerCompartment;
 			}
 
 			setCallback(14);
 			setup_savegame(kSavegameTypeEvent, kEventMeetAugustTylerCompartment);
 		} else {
-			getObjects()->update(kObjectOutsideTylerCompartment, kEntityPlayer, kLocationNone, kCursorKeepValue, kCursorKeepValue);
+			getObjects()->update(kObjectOutsideTylerCompartment, kEntityPlayer, kObjectLocationNone, kCursorKeepValue, kCursorKeepValue);
 
 			setCallback(13);
 			setup_savegame(kSavegameTypeEvent, kEventAugustFindCorpse);
@@ -487,7 +487,7 @@ label_callback_9:
 			break;
 
 		case 2:
-			getObjects()->update(kObjectCompartment1, kEntityPlayer, kLocationNone, kCursorHandKnock, kCursorHand);
+			getObjects()->update(kObjectCompartment1, kEntityPlayer, kObjectLocationNone, kCursorHandKnock, kCursorHand);
 			CALLBACK_ACTION();
 			break;
 
@@ -503,7 +503,7 @@ label_callback_9:
 			break;
 
 		case 4:
-			getObjects()->update(kObjectCompartment1, kEntityPlayer, kLocationNone, kCursorHandKnock, kCursorHand);
+			getObjects()->update(kObjectCompartment1, kEntityPlayer, kObjectLocationNone, kCursorHandKnock, kCursorHand);
 			getSound()->playSound(kEntityPlayer, "LIB014");
 			getEntities()->clearSequences(kEntityAugust);
 			getData()->location = kLocationInsideCompartment;
@@ -537,11 +537,11 @@ label_callback_9:
 			params->param3 = 1;
 			getEntities()->clearSequences(kEntityAugust);
 			getData()->location = kLocationInsideCompartment;
-			getObjects()->update(kObjectCompartment1, kEntityAugust, kLocationNone, kCursorHandKnock, kCursorHand);
+			getObjects()->update(kObjectCompartment1, kEntityAugust, kObjectLocationNone, kCursorHandKnock, kCursorHand);
 			goto label_callback_9;
 
 		case 10:
-			getObjects()->update(kObjectOutsideTylerCompartment, kEntityPlayer, kLocationNone, kCursorKeepValue, kCursorKeepValue);
+			getObjects()->update(kObjectOutsideTylerCompartment, kEntityPlayer, kObjectLocationNone, kCursorKeepValue, kCursorKeepValue);
 			setCallback(11);
 			setup_savegame(kSavegameTypeEvent, kEventAugustFindCorpse);
 			break;
@@ -561,7 +561,7 @@ label_callback_9:
 			break;
 
 		case 13:
-			getSound()->playSound(kEntityPlayer, getObjects()->get(kObjectCompartment1).location == kLocation1 ? "LIB032" : "LIB014");
+			getSound()->playSound(kEntityPlayer, getObjects()->get(kObjectCompartment1).location == kObjectLocation1 ? "LIB032" : "LIB014");
 			getAction()->playAnimation(kEventAugustFindCorpse);
 
 			if (getEvent(kEventDinerAugustOriginalJacket))
@@ -574,10 +574,10 @@ label_callback_9:
 
 		case 14:
 			if (!params->param2)
-				getSound()->playSound(kEntityPlayer, getObjects()->get(kObjectCompartment1).location == kLocation1 ? "LIB032" : "LIB014");
+				getSound()->playSound(kEntityPlayer, getObjects()->get(kObjectCompartment1).location == kObjectLocation1 ? "LIB032" : "LIB014");
 
-			getObjects()->update(kObjectCompartment1, kEntityPlayer, kLocationNone, kCursorHandKnock, kCursorHand);
-			getObjects()->update(kObjectOutsideTylerCompartment, kEntityPlayer, kLocationNone, kCursorKeepValue, kCursorKeepValue);
+			getObjects()->update(kObjectCompartment1, kEntityPlayer, kObjectLocationNone, kCursorHandKnock, kCursorHand);
+			getObjects()->update(kObjectOutsideTylerCompartment, kEntityPlayer, kObjectLocationNone, kCursorKeepValue, kCursorKeepValue);
 
 			getAction()->playAnimation((EventIndex)params->param7);
 			getProgress().eventMetAugust = true;
@@ -594,7 +594,7 @@ label_callback_9:
 			break;
 
 		case 16:
-			getObjects()->update(kObjectCompartment1, kEntityAugust, kLocationNone, kCursorHandKnock, kCursorHand);
+			getObjects()->update(kObjectCompartment1, kEntityAugust, kObjectLocationNone, kCursorHandKnock, kCursorHand);
 			break;
 
 		case 17:
@@ -711,7 +711,7 @@ IMPLEMENT_FUNCTION(25, August, chapter1Handler)
 		case 4:
 			getSavePoints()->push(kEntityAugust, kEntityAlexei, kAction225182640);
 			getAction()->playAnimation(kEventDinerAugustOriginalJacket);
-			getObjects()->update(kObjectCompartment1, kEntityPlayer, kLocation3, kCursorNormal, kCursorNormal);
+			getObjects()->update(kObjectCompartment1, kEntityPlayer, kObjectLocation3, kCursorNormal, kCursorNormal);
 
 			getData()->location = kLocationOutsideCompartment;
 
@@ -1087,7 +1087,7 @@ IMPLEMENT_FUNCTION(34, August, function34)
 		break;
 
 	case kActionDefault:
-		getObjects()->update(kObjectCompartment3, kEntityPlayer, kLocation1, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObjectCompartment3, kEntityPlayer, kObjectLocation1, kCursorHandKnock, kCursorHand);
 
 		getData()->entityPosition = kPosition_6470;
 		getData()->location = kLocationInsideCompartment;
@@ -1117,8 +1117,8 @@ IMPLEMENT_FUNCTION(35, August, chapter2)
 		getData()->clothes = kClothes1;
 		getData()->inventoryItem = kItemNone;
 
-		getObjects()->update(kObjectCompartment3, kEntityPlayer, kLocation1, kCursorHandKnock, kCursorHand);
-		getObjects()->update(kObject11, kEntityPlayer, kLocationNone, kCursorKeepValue, kCursorKeepValue);
+		getObjects()->update(kObjectCompartment3, kEntityPlayer, kObjectLocation1, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObject11, kEntityPlayer, kObjectLocationNone, kCursorKeepValue, kCursorKeepValue);
 
 		break;
 	}
@@ -1418,7 +1418,7 @@ IMPLEMENT_FUNCTION(45, August, function45)
 		break;
 
 	case kActionDefault:
-		getObjects()->update(kObjectCompartment3, kEntityPlayer, kLocation2, kCursorNormal, kCursorNormal);
+		getObjects()->update(kObjectCompartment3, kEntityPlayer, kObjectLocation2, kCursorNormal, kCursorNormal);
 		getEntities()->drawSequenceLeft(kEntityAugust, "506A2");
 		getData()->inventoryItem = kItem146;	// TODO which item is that?
 		break;
@@ -1531,7 +1531,7 @@ IMPLEMENT_FUNCTION(48, August, function48)
 		break;
 
 	case kActionDefault:
-		getObjects()->update(kObjectCompartment3, kEntityAugust, kLocation1, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObjectCompartment3, kEntityAugust, kObjectLocation1, kCursorHandKnock, kCursorHand);
 		getData()->clothes = kClothes2;
 		break;
 
@@ -1592,7 +1592,7 @@ IMPLEMENT_FUNCTION(50, August, function50)
 		break;
 
 	case kActionDefault:
-		getObjects()->update(kObjectCompartment3, kEntityPlayer, kLocation1, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObjectCompartment3, kEntityPlayer, kObjectLocation1, kCursorHandKnock, kCursorHand);
 		getEntities()->clearSequences(kEntityAugust);
 
 		getData()->entityPosition = kPosition_6000;
@@ -1750,7 +1750,7 @@ IMPLEMENT_FUNCTION(56, August, function56)
 		break;
 
 	case kActionDefault:
-		getObjects()->update(kObjectCompartment3, kEntityPlayer, kLocation2, kCursorNormal, kCursorNormal);
+		getObjects()->update(kObjectCompartment3, kEntityPlayer, kObjectLocation2, kCursorNormal, kCursorNormal);
 		getEntities()->drawSequenceLeft(kEntityAugust, "507A3");
 		break;
 
@@ -1789,7 +1789,7 @@ IMPLEMENT_FUNCTION(57, August, chapter4)
 		getData()->clothes = kClothes2;
 		getData()->inventoryItem = kItemNone;
 
-		getObjects()->update(kObjectCompartment3, kEntityPlayer, kLocation2, kCursorNormal, kCursorNormal);
+		getObjects()->update(kObjectCompartment3, kEntityPlayer, kObjectLocation2, kCursorNormal, kCursorNormal);
 
 		break;
 	}
@@ -2062,7 +2062,7 @@ IMPLEMENT_FUNCTION(65, August, function65)
 
 		getEntities()->clearSequences(kEntityAugust);
 
-		getObjects()->update(kObjectCompartment3, kEntityPlayer, kLocation1, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObjectCompartment3, kEntityPlayer, kObjectLocation1, kCursorHandKnock, kCursorHand);
 
 		if (!getSound()->isBuffered(kEntityAugust))
 			getSound()->playSound(kEntityAugust, "AUG1057");   // August snoring

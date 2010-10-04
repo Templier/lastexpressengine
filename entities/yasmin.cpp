@@ -252,7 +252,7 @@ IMPLEMENT_FUNCTION(9, Yasmin, chapter1Handler)
 //////////////////////////////////////////////////////////////////////////
 IMPLEMENT_FUNCTION(10, Yasmin, function10)
 	if (savepoint.action == kActionDefault) {
-		getObjects()->update(kObjectCompartment7, kEntityPlayer, kLocation3, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObjectCompartment7, kEntityPlayer, kObjectLocation3, kCursorHandKnock, kCursorHand);
 		getData()->entityPosition = kPosition_3050;
 		getData()->location = kLocationInsideCompartment;
 		getData()->car = kCarGreenSleeping;

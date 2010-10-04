@@ -137,8 +137,8 @@ IMPLEMENT_FUNCTION(7, Max, function7)
 
 	case kActionKnock:
 	case kActionOpenDoor:
-		getObjects()->update(kObjectCompartmentF, kEntityMax, kLocation1, kCursorNormal, kCursorNormal);
-		getObjects()->update(kObject53, kEntityMax, kLocation1, kCursorNormal, kCursorNormal);
+		getObjects()->update(kObjectCompartmentF, kEntityMax, kObjectLocation1, kCursorNormal, kCursorNormal);
+		getObjects()->update(kObject53, kEntityMax, kObjectLocation1, kCursorNormal, kCursorNormal);
 
 		if (getSound()->isBuffered(kEntityMax))
 			getSound()->processEntry(kEntityMax);
@@ -154,8 +154,8 @@ IMPLEMENT_FUNCTION(7, Max, function7)
 		getData()->location = kLocationInsideCompartment;
 		getData()->car = kCarRedSleeping;
 
-		getObjects()->update(kObjectCompartmentF, kEntityMax, kLocation1, kCursorHandKnock, kCursorHand);
-		getObjects()->update(kObject53, kEntityMax, kLocation1, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObjectCompartmentF, kEntityMax, kObjectLocation1, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObject53, kEntityMax, kObjectLocation1, kCursorHandKnock, kCursorHand);
 		break;
 
 	case kActionDrawScene:
@@ -178,8 +178,8 @@ IMPLEMENT_FUNCTION(7, Max, function7)
 			break;
 
 		case 3:
-			getObjects()->update(kObjectCompartmentF, kEntityMax, kLocation1, kCursorHandKnock, kCursorHand);
-			getObjects()->update(kObject53, kEntityMax, kLocation1, kCursorHandKnock, kCursorHand);
+			getObjects()->update(kObjectCompartmentF, kEntityMax, kObjectLocation1, kCursorHandKnock, kCursorHand);
+			getObjects()->update(kObject53, kEntityMax, kObjectLocation1, kCursorHandKnock, kCursorHand);
 			break;
 		}
 		break;
@@ -193,8 +193,8 @@ IMPLEMENT_FUNCTION(7, Max, function7)
 	case kAction122358304:
 	case kActionMaxFreeFromCage:
 		getSavePoints()->push(kEntityMax, kEntityMax, kActionMaxFreeFromCage);
-		getObjects()->update(kObjectCompartmentF, kEntityPlayer, kLocationNone, kCursorHandKnock, kCursorHand);
-		getObjects()->update(kObject53, kEntityPlayer, kLocationNone, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObjectCompartmentF, kEntityPlayer, kObjectLocationNone, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObject53, kEntityPlayer, kObjectLocationNone, kCursorHandKnock, kCursorHand);
 
 		CALLBACK_ACTION();
 		break;
@@ -243,7 +243,7 @@ IMPLEMENT_FUNCTION(8, Max, chapter4Handler)
 	case kActionDefault:
 		params->param2 = 255 * (4 * rnd(20) + 40);
 
-		getObjects()->update(kObjectCageMax, kEntityMax, kLocationNone, kCursorNormal, kCursorHand);
+		getObjects()->update(kObjectCageMax, kEntityMax, kObjectLocationNone, kCursorNormal, kCursorHand);
 		getEntities()->clearSequences(kEntityMax);
 
 		getData()->entityPosition = kPosition_8000;
@@ -264,7 +264,7 @@ IMPLEMENT_FUNCTION(8, Max, chapter4Handler)
 		getSound()->playSound(kEntityPlayer, "LIB026");
 		getAction()->playAnimation(kEventCathMaxFree);
 		getScenes()->loadSceneFromPosition(kCarBaggage, 92);
-		getObjects()->update(kObjectCageMax, kEntityPlayer, kLocationNone, kCursorNormal, kCursorHand);
+		getObjects()->update(kObjectCageMax, kEntityPlayer, kObjectLocationNone, kCursorNormal, kCursorHand);
 		setup_function9();
 		break;
 	}
@@ -464,7 +464,7 @@ IMPLEMENT_FUNCTION(14, Max, freeFromCage)
 		break;
 
 	case kActionDefault:
-		getObjects()->update(kObjectCageMax, kEntityMax, kLocationNone, kCursorNormal, kCursorHand);
+		getObjects()->update(kObjectCageMax, kEntityMax, kObjectLocationNone, kCursorNormal, kCursorHand);
 
 		getData()->entityPosition = kPosition_8000;
 		getData()->location = kLocationInsideCompartment;
@@ -496,7 +496,7 @@ IMPLEMENT_FUNCTION(14, Max, freeFromCage)
 			getSound()->playSound(kEntityPlayer, "LIB026");
 			getAction()->playAnimation(kEventCathMaxFree);
 			getScenes()->loadSceneFromPosition(kCarBaggage, 92);
-			getObjects()->update(kObjectCageMax, kEntityPlayer, kLocationNone, kCursorNormal, kCursorHand);
+			getObjects()->update(kObjectCageMax, kEntityPlayer, kObjectLocationNone, kCursorNormal, kCursorHand);
 			setup_function9();
 			break;
 		}
@@ -620,7 +620,7 @@ IMPLEMENT_FUNCTION(18, Max, chapter5)
 		getData()->location = kLocationOutsideCompartment;
 		getData()->car = kCarNone;
 
-		getObjects()->update(kObjectCageMax, kEntityPlayer, kLocationNone, kCursorNormal, kCursorHand);
+		getObjects()->update(kObjectCageMax, kEntityPlayer, kObjectLocationNone, kCursorNormal, kCursorHand);
 	}
 }
 

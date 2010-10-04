@@ -72,7 +72,7 @@ public:
 			isSelectable = false;
 			isPresent = false;
 			manualSelect = true;
-			location = kLocationNone;
+			location = kObjectLocationNone;
 		}
 
 		Common::String toString() {
@@ -85,7 +85,7 @@ public:
 
 	// Inventory contents
 	void addItem(InventoryItem item);
-	void removeItem(InventoryItem item, ObjectLocation newLocation = kLocationNone);
+	void removeItem(InventoryItem item, ObjectLocation newLocation = kObjectLocationNone);
 	bool hasItem(InventoryItem item);
 	void selectItem(InventoryItem item);
 	void unselectItem();

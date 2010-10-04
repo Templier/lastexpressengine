@@ -241,7 +241,7 @@ IMPLEMENT_FUNCTION(14, Alexei, function14)
 		break;
 
 	case kAction135664192:
-		getObjects()->update(kObjectCompartment2, kEntityPlayer, kLocation1, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObjectCompartment2, kEntityPlayer, kObjectLocation1, kCursorHandKnock, kCursorHand);
 		getEntities()->exitCompartment(kEntityAlexei, kObjectCompartment2, true);
 
 		CALLBACK_ACTION();
@@ -314,8 +314,8 @@ IMPLEMENT_FUNCTION_IS(16, Alexei, function16, TimeValue)
 		if (!params->param7 && params->param1 < getState()->time && !params->param8) {
 			params->param8 = 1;
 
-			getObjects()->update(kObjectCompartment2, kEntityPlayer, kLocation1, kCursorHandKnock, kCursorHand);
-			getObjects()->update(kObjectHandleInsideBathroom, kEntityPlayer, kLocation1, kCursorHandKnock, kCursorHand);
+			getObjects()->update(kObjectCompartment2, kEntityPlayer, kObjectLocation1, kCursorHandKnock, kCursorHand);
+			getObjects()->update(kObjectHandleInsideBathroom, kEntityPlayer, kObjectLocation1, kCursorHandKnock, kCursorHand);
 
 			CALLBACK_ACTION();
 			break;
@@ -327,8 +327,8 @@ IMPLEMENT_FUNCTION_IS(16, Alexei, function16, TimeValue)
 			params->param5 = 0;
 			params->param6 = 1;
 
-			getObjects()->update(kObjectCompartment2, kEntityAlexei, kLocation1, kCursorNormal, kCursorNormal);
-			getObjects()->update(kObjectHandleInsideBathroom, kEntityAlexei, kLocation1, kCursorNormal, kCursorNormal);
+			getObjects()->update(kObjectCompartment2, kEntityAlexei, kObjectLocation1, kCursorNormal, kCursorNormal);
+			getObjects()->update(kObjectHandleInsideBathroom, kEntityAlexei, kObjectLocation1, kCursorNormal, kCursorNormal);
 		}
 
 		CURRENT_PARAMS(1, 1) = 0;
@@ -336,8 +336,8 @@ IMPLEMENT_FUNCTION_IS(16, Alexei, function16, TimeValue)
 
 	case kActionKnock:
 	case kActionOpenDoor:
-		getObjects()->update(kObjectCompartment2, kEntityAlexei, kLocation1, kCursorNormal, kCursorNormal);
-		getObjects()->update(kObjectHandleInsideBathroom, kEntityAlexei, kLocation1, kCursorNormal, kCursorNormal);
+		getObjects()->update(kObjectCompartment2, kEntityAlexei, kObjectLocation1, kCursorNormal, kCursorNormal);
+		getObjects()->update(kObjectHandleInsideBathroom, kEntityAlexei, kObjectLocation1, kCursorNormal, kCursorNormal);
 
 		if (params->param5) {
 			if (savepoint.param.intValue == 18) {
@@ -361,14 +361,14 @@ IMPLEMENT_FUNCTION_IS(16, Alexei, function16, TimeValue)
 
 	case kActionDefault:
 		getEntities()->drawSequenceLeft(kEntityAlexei, (char*)&params->seq);
-		getObjects()->update(kObjectCompartment2, kEntityAlexei, kLocation1, kCursorHandKnock, kCursorHand);
-		getObjects()->update(kObjectHandleInsideBathroom, kEntityAlexei, kLocation1, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObjectCompartment2, kEntityAlexei, kObjectLocation1, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObjectHandleInsideBathroom, kEntityAlexei, kObjectLocation1, kCursorHandKnock, kCursorHand);
 		break;
 
 	case kActionDrawScene:
 		if (params->param6 || params->param5) {
-			getObjects()->update(kObjectCompartment2, kEntityAlexei, kLocation1, kCursorHandKnock, kCursorHand);
-			getObjects()->update(kObjectHandleInsideBathroom, kEntityAlexei, kLocation1, kCursorHandKnock, kCursorHand);
+			getObjects()->update(kObjectCompartment2, kEntityAlexei, kObjectLocation1, kCursorHandKnock, kCursorHand);
+			getObjects()->update(kObjectHandleInsideBathroom, kEntityAlexei, kObjectLocation1, kCursorHandKnock, kCursorHand);
 
 			params->param5 = 0;
 			params->param6 = 0;
@@ -387,8 +387,8 @@ IMPLEMENT_FUNCTION_IS(16, Alexei, function16, TimeValue)
 			break;
 
 		case 3:
-			getObjects()->update(kObjectCompartment2, kEntityAlexei, kLocation1, kCursorTalk, kCursorNormal);
-			getObjects()->update(kObjectHandleInsideBathroom, kEntityAlexei, kLocation1, kCursorTalk, kCursorNormal);
+			getObjects()->update(kObjectCompartment2, kEntityAlexei, kObjectLocation1, kCursorTalk, kCursorNormal);
+			getObjects()->update(kObjectHandleInsideBathroom, kEntityAlexei, kObjectLocation1, kCursorTalk, kCursorNormal);
 			params->param5 = 1;
 			break;
 
@@ -423,8 +423,8 @@ IMPLEMENT_FUNCTION_IS(16, Alexei, function16, TimeValue)
 			getData()->entityPosition = kPosition_7500;
 
 			getEntities()->drawSequenceLeft(kEntityAlexei, (char *)&params->seq);
-			getObjects()->update(kObjectCompartment2, kEntityAlexei, kLocation1, kCursorHandKnock, kCursorHand);
-			getObjects()->update(kObjectHandleInsideBathroom, kEntityAlexei, kLocation1, kCursorHandKnock, kCursorHand);
+			getObjects()->update(kObjectCompartment2, kEntityAlexei, kObjectLocation1, kCursorHandKnock, kCursorHand);
+			getObjects()->update(kObjectHandleInsideBathroom, kEntityAlexei, kObjectLocation1, kCursorHandKnock, kCursorHand);
 
 			params->param7 = 0;
 			break;
@@ -457,9 +457,9 @@ IMPLEMENT_FUNCTION(17, Alexei, chapter1)
 		break;
 
 	case kActionDefault:
-		getObjects()->update(kObjectCompartment2, kEntityPlayer, kLocation1, kCursorHandKnock, kCursorHand);
-		getObjects()->update(kObject10, kEntityPlayer, kLocationNone, kCursorKeepValue, kCursorKeepValue);
-		getObjects()->update(kObjectHandleInsideBathroom, kEntityPlayer, kLocation1, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObjectCompartment2, kEntityPlayer, kObjectLocation1, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObject10, kEntityPlayer, kObjectLocationNone, kCursorKeepValue, kCursorKeepValue);
+		getObjects()->update(kObjectHandleInsideBathroom, kEntityPlayer, kObjectLocation1, kCursorHandKnock, kCursorHand);
 
 		getData()->entityPosition = kPosition_3969;
 		getData()->location = kLocationInsideCompartment;
@@ -482,7 +482,7 @@ IMPLEMENT_FUNCTION(18, Alexei, chapter1Handler)
 			getData()->inventoryItem = kItemNone;
 
 			getEntities()->updatePositionEnter(kEntityAlexei, kCarRestaurant, 63);
-			getInventory()->setLocationAndProcess(kItem17, kLocation1);
+			getInventory()->setLocationAndProcess(kItem17, kObjectLocation1);
 
 			setCallback(1);
 			setup_callSavepoint("005D", kEntityTables1, kActionDrawTablesWithChairs, "005E");
@@ -535,7 +535,7 @@ IMPLEMENT_FUNCTION(18, Alexei, chapter1Handler)
 			getData()->location = kLocationOutsideCompartment;
 
 			getEntities()->clearSequences(kEntityAlexei);
-			getInventory()->get(kItem17)->location = kLocation1;
+			getInventory()->get(kItem17)->location = kObjectLocation1;
 			getScenes()->loadSceneFromPosition(kCarRestaurant, 63);
 
 			setup_function19();
@@ -855,9 +855,9 @@ IMPLEMENT_FUNCTION(26, Alexei, function26)
 		getData()->car = kCarGreenSleeping;
 		getData()->location = kLocationInsideCompartment;
 
-		getObjects()->update(kObjectCompartment2, kEntityPlayer, kLocation1, kCursorHandKnock, kCursorHand);
-		getObjects()->update(kObjectHandleInsideBathroom, kEntityPlayer, kLocation1, kCursorHandKnock, kCursorHand);
-		getObjects()->update(kObject10, kEntityPlayer, kLocation1, kCursorKeepValue, kCursorKeepValue);
+		getObjects()->update(kObjectCompartment2, kEntityPlayer, kObjectLocation1, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObjectHandleInsideBathroom, kEntityPlayer, kObjectLocation1, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObject10, kEntityPlayer, kObjectLocation1, kCursorKeepValue, kCursorKeepValue);
 
 		if (getEntities()->isPlayerPosition(kCarGreenSleeping, 61))
 			getScenes()->loadSceneFromPosition(kCarGreenSleeping, 66);
@@ -870,7 +870,7 @@ IMPLEMENT_FUNCTION(26, Alexei, function26)
 //////////////////////////////////////////////////////////////////////////
 IMPLEMENT_FUNCTION(27, Alexei, function27)
 	if (savepoint.action == kActionDefault) {
-		getObjects()->update(kObject10, kEntityPlayer, kLocationNone, kCursorKeepValue, kCursorKeepValue);
+		getObjects()->update(kObject10, kEntityPlayer, kObjectLocationNone, kCursorKeepValue, kCursorKeepValue);
 
 		if (getEntities()->isPlayerPosition(kCarGreenSleeping, 66))
 			getScenes()->loadSceneFromPosition(kCarGreenSleeping, 49);
@@ -892,9 +892,9 @@ IMPLEMENT_FUNCTION(28, Alexei, chapter2)
 	case kActionDefault:
 		getEntities()->clearSequences(kEntityAlexei);
 
-		getObjects()->update(kObjectCompartment2, kEntityAlexei, kLocation1, kCursorHandKnock, kCursorHand);
-		getObjects()->update(kObject10, kEntityPlayer, kLocationNone, kCursorKeepValue, kCursorKeepValue);
-		getObjects()->update(kObjectHandleInsideBathroom, kEntityAlexei, kLocation1, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObjectCompartment2, kEntityAlexei, kObjectLocation1, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObject10, kEntityPlayer, kObjectLocationNone, kCursorKeepValue, kCursorKeepValue);
+		getObjects()->update(kObjectHandleInsideBathroom, kEntityAlexei, kObjectLocation1, kCursorHandKnock, kCursorHand);
 
 		getData()->entityPosition = kPosition_7500;
 		getData()->location = kLocationInsideCompartment;
@@ -968,7 +968,7 @@ IMPLEMENT_FUNCTION(30, Alexei, function30)
 		break;
 
 	case kActionDefault:
-		getObjects()->update(kObjectCompartment2, kEntityPlayer, kLocation1, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObjectCompartment2, kEntityPlayer, kObjectLocation1, kCursorHandKnock, kCursorHand);
 		getData()->car = kCarRestaurant;
 		getData()->location = kLocationInsideCompartment;
 
@@ -1072,9 +1072,9 @@ IMPLEMENT_FUNCTION(32, Alexei, chapter3)
 	case kActionDefault:
 		getEntities()->clearSequences(kEntityAlexei);
 
-		getObjects()->update(kObjectCompartment2, kEntityPlayer, kLocation1, kCursorHandKnock, kCursorHand);
-		getObjects()->update(kObject10, kEntityPlayer, kLocationNone, kCursorKeepValue, kCursorKeepValue);
-		getObjects()->update(kObjectHandleInsideBathroom, kEntityPlayer, kLocation1, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObjectCompartment2, kEntityPlayer, kObjectLocation1, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObject10, kEntityPlayer, kObjectLocationNone, kCursorKeepValue, kCursorKeepValue);
+		getObjects()->update(kObjectHandleInsideBathroom, kEntityPlayer, kObjectLocation1, kCursorHandKnock, kCursorHand);
 
 		getData()->location = kLocationInsideCompartment;
 		getData()->car = kCarRestaurant;
@@ -1138,9 +1138,9 @@ IMPLEMENT_FUNCTION(37, Alexei, chapter4)
 	case kActionDefault:
 		getEntities()->clearSequences(kEntityAlexei);
 
-		getObjects()->update(kObjectCompartment2, kEntityPlayer, kLocation1, kCursorHandKnock, kCursorHand);
-		getObjects()->update(kObject10, kEntityPlayer, kLocationNone, kCursorKeepValue, kCursorKeepValue);
-		getObjects()->update(kObjectHandleInsideBathroom, kEntityPlayer, kLocation1, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObjectCompartment2, kEntityPlayer, kObjectLocation1, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObject10, kEntityPlayer, kObjectLocationNone, kCursorKeepValue, kCursorKeepValue);
+		getObjects()->update(kObjectHandleInsideBathroom, kEntityPlayer, kObjectLocation1, kCursorHandKnock, kCursorHand);
 
 		getData()->entityPosition = kPosition_7500;
 		getData()->location = kLocationInsideCompartment;
@@ -1379,8 +1379,8 @@ IMPLEMENT_FUNCTION(47, Alexei, function47)
 		getData()->location = kLocationOutsideCompartment;
 		getData()->car = kCarNone;
 
-		getObjects()->update(kObjectCompartment2, kEntityPlayer, kLocationNone, kCursorHandKnock, kCursorHand);
-		getObjects()->update(kObjectHandleInsideBathroom, kEntityPlayer, kLocationNone, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObjectCompartment2, kEntityPlayer, kObjectLocationNone, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObjectHandleInsideBathroom, kEntityPlayer, kObjectLocationNone, kCursorHandKnock, kCursorHand);
 	}
 }
 

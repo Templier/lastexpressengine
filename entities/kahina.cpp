@@ -170,7 +170,7 @@ IMPLEMENT_FUNCTION(10, Kahina, chapter1)
 		break;
 
 	case kActionDefault:
-		getObjects()->update(kObjectCompartmentKronos, kEntityPlayer, kLocation1, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObjectCompartmentKronos, kEntityPlayer, kObjectLocation1, kCursorHandKnock, kCursorHand);
 
 		getData()->entityPosition = kPosition_5000;
 		getData()->location = kLocationOutsideCompartment;
@@ -222,7 +222,7 @@ IMPLEMENT_FUNCTION(12, Kahina, function12)
 		break;
 
 	case kActionDefault:
-		getObjects()->update(kObjectCompartmentKronos, kEntityKahina, kLocationNone, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObjectCompartmentKronos, kEntityKahina, kObjectLocationNone, kCursorHandKnock, kCursorHand);
 		break;
 
 	case kActionCallback:
@@ -274,7 +274,7 @@ label_callback:
 		getData()->entityPosition = kPosition_5000;
 		getData()->location = kLocationOutsideCompartment;
 
-		getObjects()->update(kObjectCompartmentKronos, kEntityPlayer, kLocation1, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObjectCompartmentKronos, kEntityPlayer, kObjectLocation1, kCursorHandKnock, kCursorHand);
 
 		params->param1 = getState()->time + 1800;
 		break;
@@ -329,7 +329,7 @@ IMPLEMENT_FUNCTION(16, Kahina, chapter2)
 		getData()->clothes = kClothesDefault;
 		getData()->inventoryItem = kItemNone;
 
-		getObjects()->update(kObjectCompartmentKronos, kEntityKahina, kLocation1, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObjectCompartmentKronos, kEntityKahina, kObjectLocation1, kCursorHandKnock, kCursorHand);
 
 		break;
 	}
@@ -367,7 +367,7 @@ IMPLEMENT_FUNCTION(17, Kahina, chapter2Handler)
 
 label_callback_3:
 		if (getState()->time > kTime1845000 && getEvent(kEventKronosConversationFirebird) && getEntities()->isInKronosSalon(kEntityPlayer)) {
-			getObjects()->update(kObjectCompartmentKronos, kEntityPlayer, kLocation1, kCursorHandKnock, kCursorHand);
+			getObjects()->update(kObjectCompartmentKronos, kEntityPlayer, kObjectLocation1, kCursorHandKnock, kCursorHand);
 			getScenes()->loadSceneFromPosition(kCarKronos, 87);
 		}
 		break;
@@ -405,12 +405,12 @@ label_callback_3:
 			getAction()->playAnimation(kEventKahinaAskSpeak);
 			getScenes()->processScene();
 
-			getObjects()->update(kObjectCompartmentKronos, kEntityKahina, kLocation1, kCursorNormal, kCursorNormal);
+			getObjects()->update(kObjectCompartmentKronos, kEntityKahina, kObjectLocation1, kCursorNormal, kCursorNormal);
 
 			setCallback(8);
 			setup_playSound("KRO3003");
 		} else {
-			getObjects()->update(kObjectCompartmentKronos, kEntityKahina, kLocation1, kCursorNormal, kCursorNormal);
+			getObjects()->update(kObjectCompartmentKronos, kEntityKahina, kObjectLocation1, kCursorNormal, kCursorNormal);
 
 			setCallback(savepoint.action == kActionKnock ? 9 : 10);
 			setup_playSound(savepoint.action == kActionKnock ? "LIB012" : "LIB013");
@@ -419,7 +419,7 @@ label_callback_3:
 
 	case kActionDefault:
 		params->param1 = 1;
-		getObjects()->update(kObjectCompartmentKronos, kEntityKahina, kLocation1, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObjectCompartmentKronos, kEntityKahina, kObjectLocation1, kCursorHandKnock, kCursorHand);
 		break;
 
 	case kActionCallback:
@@ -430,7 +430,7 @@ label_callback_3:
 		case 1:
 		case 4:
 			getAction()->playAnimation(kEventKronosConversationFirebird);
-			getObjects()->update(kObjectCompartmentKronos, kEntityPlayer, kLocationNone, kCursorHandKnock, kCursorHand);
+			getObjects()->update(kObjectCompartmentKronos, kEntityPlayer, kObjectLocationNone, kCursorHandKnock, kCursorHand);
 			getScenes()->loadSceneFromPosition(kCarKronos, 80, 1);
 
 			setCallback(getCallback() == 1 ? 2 : 5);
@@ -455,7 +455,7 @@ label_callback_3:
 		case 8:
 		case 9:
 		case 10:
-			getObjects()->update(kObjectCompartmentKronos, kEntityKahina, kLocation1, kCursorHandKnock, kCursorHand);
+			getObjects()->update(kObjectCompartmentKronos, kEntityKahina, kObjectLocation1, kCursorHandKnock, kCursorHand);
 			if (getCallback() == 8)
 				params->param1 = 0;
 			break;
@@ -539,10 +539,10 @@ IMPLEMENT_FUNCTION(22, Kahina, function22)
 		if (params->param1) {
 			ObjectLocation location = getInventory()->get(kItemFirebird)->location;
 
-			if (ENTITY_PARAM(0, 3) || location == kLocation3 || location == kLocation7) {
+			if (ENTITY_PARAM(0, 3) || location == kObjectLocation3 || location == kObjectLocation7) {
 				setCallback(1);
 				setup_function25();
-			} else if (location == kLocation2 || location == kLocation1) {
+			} else if (location == kObjectLocation2 || location == kObjectLocation1) {
 				setCallback(2);
 				setup_function26();
 			}

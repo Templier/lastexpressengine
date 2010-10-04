@@ -168,7 +168,7 @@ IMPLEMENT_FUNCTION(11, Vesna, function11)
 
 			parameters->param2 = 1;
 			parameters->param3 = 0;
-			getObjects()->update(kObjectCompartmentG, kEntityVesna, kLocation1, kCursorNormal, kCursorNormal);
+			getObjects()->update(kObjectCompartmentG, kEntityVesna, kObjectLocation1, kCursorNormal, kCursorNormal);
 		}
 
 		parameters->param7 = 0;
@@ -177,7 +177,7 @@ IMPLEMENT_FUNCTION(11, Vesna, function11)
 	case kActionKnock:
 	case kActionOpenDoor:
 		if (parameters->param3) {
-			getObjects()->update(kObjectCompartmentG, kEntityVesna, kLocation3, kCursorNormal, kCursorNormal);
+			getObjects()->update(kObjectCompartmentG, kEntityVesna, kObjectLocation3, kCursorNormal, kCursorNormal);
 
 			setCallback(4);
 			setup_playSound(getSound()->wrongDoorCath());
@@ -200,19 +200,19 @@ IMPLEMENT_FUNCTION(11, Vesna, function11)
 			break;
 		}
 
-		getObjects()->update(kObjectCompartmentG, kEntityVesna, kLocation3, kCursorNormal, kCursorNormal);
+		getObjects()->update(kObjectCompartmentG, kEntityVesna, kObjectLocation3, kCursorNormal, kCursorNormal);
 
 		setCallback(savepoint.action == kActionKnock ? 2 : 1);
 		setup_playSound(savepoint.action == kActionKnock ? "LIB012" : "LIB013");
 		break;
 
 	case kActionDefault:
-		getObjects()->update(kObjectCompartmentG, kEntityVesna, kLocation3, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObjectCompartmentG, kEntityVesna, kObjectLocation3, kCursorHandKnock, kCursorHand);
 		break;
 
 	case kActionDrawScene:
 		if (parameters->param2 || parameters->param3) {
-			getObjects()->update(kObjectCompartmentG, kEntityVesna, kLocation1, kCursorHandKnock, kCursorHand);
+			getObjects()->update(kObjectCompartmentG, kEntityVesna, kObjectLocation1, kCursorHandKnock, kCursorHand);
 
 			parameters->param2 = 0;
 			parameters->param3 = 0;
@@ -231,7 +231,7 @@ IMPLEMENT_FUNCTION(11, Vesna, function11)
 			break;
 
 		case 3:
-			getObjects()->update(kObjectCompartmentG, kEntityVesna, kLocation3, kCursorTalk, kCursorNormal);
+			getObjects()->update(kObjectCompartmentG, kEntityVesna, kObjectLocation3, kCursorTalk, kCursorNormal);
 			parameters->param3 = 1;
 			break;
 
@@ -321,7 +321,7 @@ IMPLEMENT_FUNCTION(15, Vesna, function15)
 		getData()->car = kCarRedSleeping;
 
 		getEntities()->clearSequences(kEntityVesna);
-		getObjects()->update(kObjectCompartmentG, kEntityPlayer, kLocation3, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObjectCompartmentG, kEntityPlayer, kObjectLocation3, kCursorHandKnock, kCursorHand);
 	}
 }
 
@@ -416,7 +416,7 @@ IMPLEMENT_FUNCTION(23, Vesna, function23)
 
 	case kActionKnock:
 	case kActionOpenDoor:
-		getObjects()->update(kObjectCompartmentG, kEntityVesna, kLocation3, kCursorNormal, kCursorNormal);
+		getObjects()->update(kObjectCompartmentG, kEntityVesna, kObjectLocation3, kCursorNormal, kCursorNormal);
 		setCallback(savepoint.action == kActionKnock ? 1 : 2);
 		setup_playSound(savepoint.action == kActionKnock ? "LIB012" : "LIB013");
 		break;
@@ -441,13 +441,13 @@ IMPLEMENT_FUNCTION(23, Vesna, function23)
 			break;
 
 		case 3:
-			getObjects()->update(kObjectCompartmentG, kEntityVesna, kLocation3, kCursorHandKnock, kCursorHand);
+			getObjects()->update(kObjectCompartmentG, kEntityVesna, kObjectLocation3, kCursorHandKnock, kCursorHand);
 			break;
 		}
 		break;
 
 	case kAction203663744:
-		getObjects()->update(kObjectCompartmentG, kEntityVesna, kLocation3, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObjectCompartmentG, kEntityVesna, kObjectLocation3, kCursorHandKnock, kCursorHand);
 		break;
 	}
 }
@@ -471,7 +471,7 @@ IMPLEMENT_FUNCTION(24, Vesna, chapter4)
 		getData()->car = kCarRedSleeping;
 		getData()->inventoryItem = kItemNone;
 
-		getObjects()->update(kObjectCompartmentG, kEntityVesna, kLocation3, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObjectCompartmentG, kEntityVesna, kObjectLocation3, kCursorHandKnock, kCursorHand);
 		break;
 
 	case kActionCallback:
@@ -605,7 +605,7 @@ IMPLEMENT_FUNCTION(26, Vesna, function26)
 IMPLEMENT_FUNCTION(27, Vesna, function27)
 	if (savepoint.action == kActionDefault) {
 		getEntities()->clearSequences(kEntityVesna);
-		getObjects()->update(kObjectCompartmentG, kEntityPlayer, kLocation3, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObjectCompartmentG, kEntityPlayer, kObjectLocation3, kCursorHandKnock, kCursorHand);
 
 		getData()->entityPosition = kPosition_3050;
 		getData()->location = kLocationInsideCompartment;
@@ -648,7 +648,7 @@ IMPLEMENT_FUNCTION(29, Vesna, chapter5Handler)
 		break;
 
 	case kActionDefault:
-		getObjects()->update(kObject64, kEntityVesna, kLocationNone, kCursorNormal, kCursorForward);
+		getObjects()->update(kObject64, kEntityVesna, kObjectLocationNone, kCursorNormal, kCursorForward);
 		break;
 
 	case kActionCallback:
@@ -659,7 +659,7 @@ IMPLEMENT_FUNCTION(29, Vesna, chapter5Handler)
 		break;
 
 	case kAction134427424:
-		getObjects()->update(kObject64, kEntityPlayer, kLocationNone, kCursorNormal, kCursorForward);
+		getObjects()->update(kObject64, kEntityPlayer, kObjectLocationNone, kCursorNormal, kCursorForward);
 		setup_function30();
 		break;
 	}

@@ -176,7 +176,7 @@ IMPLEMENT_FUNCTION(15, Rebecca, function15)
 
 	case kActionCallback:
 		if (getCallback() == 1) {
-			getObjects()->update(kObjectOutsideBetweenCompartments, kEntityPlayer, kLocationNone, kCursorKeepValue, kCursorKeepValue);
+			getObjects()->update(kObjectOutsideBetweenCompartments, kEntityPlayer, kObjectLocationNone, kCursorKeepValue, kCursorKeepValue);
 			getData()->location = kLocationInsideCompartment;
 			getEntities()->clearSequences(kEntityRebecca);
 
@@ -216,8 +216,8 @@ IMPLEMENT_FUNCTION_I(20, Rebecca, function20, TimeValue)
 		if (params->param1 < getState()->time && !params->param5) {
 			params->param5 = 1;
 
-			getObjects()->update(kObjectCompartmentE, kEntityPlayer, kLocationNone, kCursorHandKnock, kCursorHand);
-			getObjects()->update(kObject52, kEntityPlayer, kLocationNone, kCursorHandKnock, kCursorHand);
+			getObjects()->update(kObjectCompartmentE, kEntityPlayer, kObjectLocationNone, kCursorHandKnock, kCursorHand);
+			getObjects()->update(kObject52, kEntityPlayer, kObjectLocationNone, kCursorHandKnock, kCursorHand);
 
 			CALLBACK_ACTION();
 			break;
@@ -232,8 +232,8 @@ IMPLEMENT_FUNCTION_I(20, Rebecca, function20, TimeValue)
 
 		params->param2 = 0;
 		params->param3 = 1;
-		getObjects()->update(kObjectCompartmentE, kEntityRebecca, kLocation1, kCursorNormal, kCursorNormal);
-		getObjects()->update(kObject52, kEntityRebecca, kLocation1, kCursorNormal, kCursorNormal);
+		getObjects()->update(kObjectCompartmentE, kEntityRebecca, kObjectLocation1, kCursorNormal, kCursorNormal);
+		getObjects()->update(kObject52, kEntityRebecca, kObjectLocation1, kCursorNormal, kCursorNormal);
 		params->param6 = 0;
 
 label_process:
@@ -250,8 +250,8 @@ label_process:
 				params->param7 = kTimeInvalid;
 				ENTITY_PARAM(0, 3) = 1;
 
-				getObjects()->update(kObjectCompartmentE, kEntityRebecca, kLocation1, kCursorNormal, kCursorNormal);
-				getObjects()->update(kObject52, kEntityRebecca, kLocation1, kCursorNormal, kCursorNormal);
+				getObjects()->update(kObjectCompartmentE, kEntityRebecca, kObjectLocation1, kCursorNormal, kCursorNormal);
+				getObjects()->update(kObject52, kEntityRebecca, kObjectLocation1, kCursorNormal, kCursorNormal);
 
 				setCallback(1);
 				setup_playSound("REB1205");
@@ -272,8 +272,8 @@ label_process:
 			params->param8 = kTimeInvalid;
 			ENTITY_PARAM(0, 4) = 1;
 
-			getObjects()->update(kObjectCompartmentE, kEntityRebecca, kLocation1, kCursorNormal, kCursorNormal);
-			getObjects()->update(kObject52, kEntityRebecca, kLocation1, kCursorNormal, kCursorNormal);
+			getObjects()->update(kObjectCompartmentE, kEntityRebecca, kObjectLocation1, kCursorNormal, kCursorNormal);
+			getObjects()->update(kObject52, kEntityRebecca, kObjectLocation1, kCursorNormal, kCursorNormal);
 
 			setCallback(2);
 			setup_playSound("REB3010");
@@ -282,8 +282,8 @@ label_process:
 
 label_callback:
 		if (ENTITY_PARAM(0, 2) && getEntities()->isDistanceBetweenEntities(kEntityRebecca, kEntityPlayer, 1000)) {
-			getObjects()->update(kObjectCompartmentE, kEntityRebecca, kLocation1, kCursorNormal, kCursorNormal);
-			getObjects()->update(kObject52, kEntityRebecca, kLocation1, kCursorNormal, kCursorNormal);
+			getObjects()->update(kObjectCompartmentE, kEntityRebecca, kObjectLocation1, kCursorNormal, kCursorNormal);
+			getObjects()->update(kObject52, kEntityRebecca, kObjectLocation1, kCursorNormal, kCursorNormal);
 
 			setCallback(3);
 			setup_playSound("REB1040");
@@ -295,15 +295,15 @@ label_callback:
 		break;
 
 	case kActionDefault:
-		getObjects()->update(kObjectCompartmentE, kEntityRebecca, kLocation1, kCursorHandKnock, kCursorHand);
-		getObjects()->update(kObject52, kEntityRebecca, kLocation1, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObjectCompartmentE, kEntityRebecca, kObjectLocation1, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObject52, kEntityRebecca, kObjectLocation1, kCursorHandKnock, kCursorHand);
 
 		break;
 
 	case kActionDrawScene:
 		if (params->param3 || params->param2) {
-			getObjects()->update(kObjectCompartmentE, kEntityRebecca, kLocation1, kCursorHandKnock, kCursorHand);
-			getObjects()->update(kObject52, kEntityRebecca, kLocation1, kCursorHandKnock, kCursorHand);
+			getObjects()->update(kObjectCompartmentE, kEntityRebecca, kObjectLocation1, kCursorHandKnock, kCursorHand);
+			getObjects()->update(kObject52, kEntityRebecca, kObjectLocation1, kCursorHandKnock, kCursorHand);
 
 			params->param2 = 0;
 			params->param3 = 0;
@@ -318,8 +318,8 @@ label_callback:
 		case 1:
 		case 2:
 		case 3:
-			getObjects()->update(kObjectCompartmentE, kEntityRebecca, kLocation1, kCursorHandKnock, kCursorHand);
-			getObjects()->update(kObject52, kEntityRebecca, kLocation1, kCursorHandKnock, kCursorHand);
+			getObjects()->update(kObjectCompartmentE, kEntityRebecca, kObjectLocation1, kCursorHandKnock, kCursorHand);
+			getObjects()->update(kObject52, kEntityRebecca, kObjectLocation1, kCursorHandKnock, kCursorHand);
 
 			if (getCallback() != 2)
 				ENTITY_PARAM(0, 2) = 0;
@@ -342,8 +342,8 @@ label_callback:
 		case 6:
 		case 7:
 			params->param4 = (getCallback() == 6 ? 0 : 1);
-			getObjects()->update(kObjectCompartmentE, kEntityRebecca, kLocation1, kCursorTalk, kCursorNormal);
-			getObjects()->update(kObject52, kEntityRebecca, kLocation1, kCursorTalk, kCursorNormal);
+			getObjects()->update(kObjectCompartmentE, kEntityRebecca, kObjectLocation1, kCursorTalk, kCursorNormal);
+			getObjects()->update(kObject52, kEntityRebecca, kObjectLocation1, kCursorTalk, kCursorNormal);
 			params->param2 = 1;
 			break;
 
@@ -361,15 +361,15 @@ label_callback:
 			break;
 
 		case 13:
-			getObjects()->update(kObjectCompartmentE, kEntityRebecca, kLocation1, kCursorHandKnock, kCursorHand);
-			getObjects()->update(kObject52, kEntityRebecca, kLocation1, kCursorHandKnock, kCursorHand);
+			getObjects()->update(kObjectCompartmentE, kEntityRebecca, kObjectLocation1, kCursorHandKnock, kCursorHand);
+			getObjects()->update(kObject52, kEntityRebecca, kObjectLocation1, kCursorHandKnock, kCursorHand);
 			break;
 		}
 		break;
 
 	case kAction254915200:
-		getObjects()->update(kObjectCompartmentE, kEntityRebecca, kLocation1, kCursorNormal, kCursorNormal);
-		getObjects()->update(kObject52, kEntityRebecca, kLocation1, kCursorNormal, kCursorNormal);
+		getObjects()->update(kObjectCompartmentE, kEntityRebecca, kObjectLocation1, kCursorNormal, kCursorNormal);
+		getObjects()->update(kObject52, kEntityRebecca, kObjectLocation1, kCursorNormal, kCursorNormal);
 
 		setCallback(12);
 		setup_playSound("REB1039A");
@@ -390,11 +390,11 @@ IMPLEMENT_FUNCTION(21, Rebecca, chapter1)
 	case kActionDefault:
 		getSavePoints()->addData(kEntityRebecca, kAction224253538, 0);
 
-		getObjects()->update(kObjectCompartmentE, kEntityPlayer, kLocationNone, kCursorHandKnock, kCursorHand);
-		getObjects()->update(kObject52, kEntityPlayer, kLocationNone, kCursorHandKnock, kCursorHand);
-		getObjects()->update(kObjectOutsideBetweenCompartments, kEntityPlayer, kLocationNone, kCursorKeepValue, kCursorKeepValue);
+		getObjects()->update(kObjectCompartmentE, kEntityPlayer, kObjectLocationNone, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObject52, kEntityPlayer, kObjectLocationNone, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObjectOutsideBetweenCompartments, kEntityPlayer, kObjectLocationNone, kCursorKeepValue, kCursorKeepValue);
 
-		getObjects()->updateLocation2(kObject110, kLocation1);
+		getObjects()->updateLocation2(kObject110, kObjectLocation1);
 
 		getData()->entityPosition = kPosition_2830;
 		getData()->location = kLocationInsideCompartment;
@@ -589,8 +589,8 @@ IMPLEMENT_FUNCTION(27, Rebecca, function27)
 		getData()->location = kLocationInsideCompartment;
 		getData()->car = kCarRedSleeping;
 
-		getObjects()->update(kObjectCompartmentE, kEntityPlayer, kLocation1, kCursorHandKnock, kCursorHand);
-		getObjects()->update(kObject52, kEntityPlayer, kLocation1, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObjectCompartmentE, kEntityPlayer, kObjectLocation1, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObject52, kEntityPlayer, kObjectLocation1, kCursorHandKnock, kCursorHand);
 
 		getEntities()->clearSequences(kEntityRebecca);
 	}
@@ -615,10 +615,10 @@ IMPLEMENT_FUNCTION(28, Rebecca, chapter2)
 		getData()->clothes = kClothesDefault;
 		getData()->inventoryItem = kItemNone;
 
-		getObjects()->update(kObjectCompartmentE, kEntityPlayer, kLocation1, kCursorHandKnock, kCursorHand);
-		getObjects()->update(kObject52, kEntityPlayer, kLocation1, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObjectCompartmentE, kEntityPlayer, kObjectLocation1, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObject52, kEntityPlayer, kObjectLocation1, kCursorHandKnock, kCursorHand);
 
-		getObjects()->updateLocation2(kObject110, kLocation2);
+		getObjects()->updateLocation2(kObject110, kObjectLocation2);
 
 		ENTITY_PARAM(0, 2) = 1;
 		break;
@@ -681,7 +681,7 @@ IMPLEMENT_FUNCTION(31, Rebecca, function31)
 			break;
 
 		case 2:
-			getObjects()->update(kObjectCompartmentE, kEntityPlayer, kLocation2, kCursorNormal, kCursorNormal);
+			getObjects()->update(kObjectCompartmentE, kEntityPlayer, kObjectLocation2, kCursorNormal, kCursorNormal);
 			getEntities()->drawSequenceLeft(kEntityRebecca, "504");
 			break;
 		}
@@ -794,7 +794,7 @@ IMPLEMENT_FUNCTION(38, Rebecca, function38)
 			break;
 
 		case 1:
-			getObjects()->update(kObjectCompartmentE, kEntityPlayer, kLocationNone, kCursorHandKnock, kCursorHand);
+			getObjects()->update(kObjectCompartmentE, kEntityPlayer, kObjectLocationNone, kCursorHandKnock, kCursorHand);
             getSavePoints()->push(kEntityRebecca, kEntitySophie, kAction259921280);
 
 			setCallback(2);
@@ -819,8 +819,8 @@ IMPLEMENT_FUNCTION(39, Rebecca, function39)
 	case kActionDefault:
 		getEntities()->clearSequences(kEntityRebecca);
 
-		getObjects()->update(kObjectCompartmentE, kEntityPlayer, kLocationNone, kCursorHandKnock, kCursorHand);
-		getObjects()->update(kObject52, kEntityPlayer, kLocationNone, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObjectCompartmentE, kEntityPlayer, kObjectLocationNone, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObject52, kEntityPlayer, kObjectLocationNone, kCursorHandKnock, kCursorHand);
 
 		getData()->entityPosition = kPosition_6000;
 		getData()->location = kLocationInsideCompartment;
@@ -905,7 +905,7 @@ IMPLEMENT_FUNCTION(42, Rebecca, chapter4)
 		getData()->clothes = kClothesDefault;
 		getData()->inventoryItem = kItemNone;
 
-		getObjects()->updateLocation2(kObject110, kLocation3);
+		getObjects()->updateLocation2(kObject110, kObjectLocation3);
 
 		ENTITY_PARAM(0, 1) = 0;
 		ENTITY_PARAM(0, 2) = 1;
@@ -953,8 +953,8 @@ IMPLEMENT_FUNCTION(45, Rebecca, function45)
 		getData()->location = kLocationInsideCompartment;
 		getData()->car = kCarRedSleeping;
 
-		getObjects()->update(kObjectCompartmentE, kEntityPlayer, kLocation1, kCursorHandKnock, kCursorHand);
-		getObjects()->update(kObject52, kEntityPlayer, kLocation1, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObjectCompartmentE, kEntityPlayer, kObjectLocation1, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObject52, kEntityPlayer, kObjectLocation1, kCursorHandKnock, kCursorHand);
 
 		getEntities()->clearSequences(kEntityRebecca);
 		break;
@@ -991,7 +991,7 @@ IMPLEMENT_FUNCTION(46, Rebecca, chapter5)
 		getData()->car = kCarRestaurant;
 		getData()->inventoryItem = kItemNone;
 
-		getObjects()->updateLocation2(kObject110, kLocation4);
+		getObjects()->updateLocation2(kObject110, kObjectLocation4);
 		break;
 	}
 }

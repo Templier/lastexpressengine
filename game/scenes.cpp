@@ -196,7 +196,7 @@ void SceneManager::loadSceneFromItemPosition(InventoryItem item) {
 		return;
 
 	// Reset location
-	entry->location = kLocationNone;
+	entry->location = kObjectLocationNone;
 
 	if (item != kItem3 && item != kItem5 && item != kItem7)
 		return;
@@ -581,7 +581,7 @@ void SceneManager::updateDoorsAndClock() {
 		for (ObjectIndex index = firstIndex; index < (ObjectIndex)(firstIndex + 8); index = (ObjectIndex)(index + 1)) {
 
 			// Doors is not open, nothing to do
-			if (getObjects()->get(index).location != kLocation2)
+			if (getObjects()->get(index).location != kObjectLocation2)
 				continue;
 
 			// Load door sequence
@@ -837,7 +837,7 @@ void SceneManager::preProcessScene(SceneIndex *index) {
 		if (object >= kObjectMax)
 			break;
 
-		if (getObjects()->get(object).location == kLocationNone)
+		if (getObjects()->get(object).location == kObjectLocationNone)
 			break;
 
 		for (Common::Array<SceneHotspot *>::iterator it = scene->getHotspots()->begin(); it != scene->getHotspots()->end(); ++it) {
@@ -856,7 +856,7 @@ void SceneManager::preProcessScene(SceneIndex *index) {
 		if (item >= kPortraitOriginal)
 			break;
 
-		if (getInventory()->get(item)->location == kLocationNone)
+		if (getInventory()->get(item)->location == kObjectLocationNone)
 			break;
 
 		for (Common::Array<SceneHotspot *>::iterator it = scene->getHotspots()->begin(); it != scene->getHotspots()->end(); ++it) {
@@ -876,13 +876,13 @@ void SceneManager::preProcessScene(SceneIndex *index) {
 		if (item1 >= kPortraitOriginal || item2 >= kPortraitOriginal)
 			break;
 
-		int location = kLocationNone;
+		int location = kObjectLocationNone;
 
-		if (getInventory()->get(item1)->location != kLocationNone)
-			location = kLocation1;
+		if (getInventory()->get(item1)->location != kObjectLocationNone)
+			location = kObjectLocation1;
 
-		if (getInventory()->get(item2)->location != kLocationNone)
-			location |= kLocation2;
+		if (getInventory()->get(item2)->location != kObjectLocationNone)
+			location |= kObjectLocation2;
 
 		if (!location)
 			break;
@@ -913,13 +913,13 @@ void SceneManager::preProcessScene(SceneIndex *index) {
 		if (item >= kPortraitOriginal)
 			break;
 
-		int location = kLocationNone;
+		int location = kObjectLocationNone;
 
-		if (getObjects()->get(object).location == kLocation2)
-			location = kLocation1;
+		if (getObjects()->get(object).location == kObjectLocation2)
+			location = kObjectLocation1;
 
-		if (getInventory()->get(item)->location != kLocationNone)
-			location |= kLocation2;
+		if (getInventory()->get(item)->location != kObjectLocationNone)
+			location |= kObjectLocation2;
 
 		if (!location)
 			break;
@@ -948,16 +948,16 @@ void SceneManager::preProcessScene(SceneIndex *index) {
 		if (item1 >= kPortraitOriginal || item2 >= kPortraitOriginal || item3 >= kPortraitOriginal)
 			break;
 
-		int location = kLocationNone;
+		int location = kObjectLocationNone;
 
-		if (getInventory()->get(item1)->location != kLocationNone)
-			location = kLocation1;
+		if (getInventory()->get(item1)->location != kObjectLocationNone)
+			location = kObjectLocation1;
 
-		if (getInventory()->get(item2)->location != kLocationNone)
-			location |= kLocation2;
+		if (getInventory()->get(item2)->location != kObjectLocationNone)
+			location |= kObjectLocation2;
 
-		if (getInventory()->get(item3)->location != kLocationNone)
-			location |= kLocation4;
+		if (getInventory()->get(item3)->location != kObjectLocationNone)
+			location |= kObjectLocation4;
 
 		if (!location)
 			break;
@@ -1038,7 +1038,7 @@ void SceneManager::preProcessScene(SceneIndex *index) {
 			if (item >= kPortraitOriginal)
 				break;
 
-			if (getInventory()->get(item)->location == kLocationNone)
+			if (getInventory()->get(item)->location == kObjectLocationNone)
 				break;
 
 			for (Common::Array<SceneHotspot *>::iterator it = scene->getHotspots()->begin(); it != scene->getHotspots()->end(); ++it) {
@@ -1147,7 +1147,7 @@ void SceneManager::postProcessScene() {
 
 	case Scene::kTypeLoadBeetleSequences:
 		if ((getProgress().chapter == kChapter2 || getProgress().chapter == kChapter3)
-		  && getInventory()->get(kItemBeetle)->location == kLocation3) {
+		  && getInventory()->get(kItemBeetle)->location == kObjectLocation3) {
 			if (!getBeetle()->isLoaded())
 				getBeetle()->load();
 		}

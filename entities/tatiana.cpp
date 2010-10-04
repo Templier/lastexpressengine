@@ -226,7 +226,7 @@ IMPLEMENT_FUNCTION(15, Tatiana, function15)
 
 	case kAction69239528:
 		getEntities()->exitCompartment(kEntityTatiana, kObjectCompartmentB, true);
-		getObjects()->update(kObjectCompartmentB, kEntityPlayer, kLocation1, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObjectCompartmentB, kEntityPlayer, kObjectLocation1, kCursorHandKnock, kCursorHand);
 
 		CALLBACK_ACTION();
 		break;
@@ -251,9 +251,9 @@ IMPLEMENT_FUNCTION(17, Tatiana, chapter1)
 	case kActionDefault:
 		getSavePoints()->addData(kEntityTatiana, kAction191198209, 0);
 
-		getObjects()->update(kObjectCompartmentB, kEntityPlayer, kLocation1, kCursorHandKnock, kCursorHand);
-		getObjects()->update(kObject49, kEntityPlayer, kLocation1, kCursorHandKnock, kCursorHand);
-		getObjects()->update(kObject41, kEntityPlayer, kLocationNone, kCursorKeepValue, kCursorKeepValue);
+		getObjects()->update(kObjectCompartmentB, kEntityPlayer, kObjectLocation1, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObject49, kEntityPlayer, kObjectLocation1, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObject41, kEntityPlayer, kObjectLocationNone, kCursorKeepValue, kCursorKeepValue);
 
 		getData()->entityPosition = kPosition_5419;
 		getData()->location = kLocationInsideCompartment;
@@ -420,16 +420,16 @@ IMPLEMENT_FUNCTION(24, Tatiana, function24)
 		getData()->location = kLocationInsideCompartment;
 		getData()->car = kCarRedSleeping;
 
-		getObjects()->update(kObject25, kEntityPlayer, kLocationNone, kCursorKeepValue, kCursorKeepValue);
-		getObjects()->update(kObjectTrainTimeTable, kEntityPlayer, kLocationNone, kCursorKeepValue, kCursorKeepValue);
+		getObjects()->update(kObject25, kEntityPlayer, kObjectLocationNone, kCursorKeepValue, kCursorKeepValue);
+		getObjects()->update(kObjectTrainTimeTable, kEntityPlayer, kObjectLocationNone, kCursorKeepValue, kCursorKeepValue);
 
 		getEntities()->updatePositionExit(kEntityTatiana, kCarGreenSleeping, 70);
 		getEntities()->updatePositionExit(kEntityTatiana, kCarGreenSleeping, 71);
 		getEntities()->clearSequences(kEntityTatiana);
 
-		getObjects()->update(kObjectCompartmentB, kEntityPlayer, kLocation1, kCursorHandKnock, kCursorHand);
-		getObjects()->update(kObject49, kEntityPlayer, kLocation1, kCursorHandKnock, kCursorHand);
-		getObjects()->update(kObject41, kEntityPlayer, kLocationNone, kCursorKeepValue, kCursorKeepValue);
+		getObjects()->update(kObjectCompartmentB, kEntityPlayer, kObjectLocation1, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObject49, kEntityPlayer, kObjectLocation1, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObject41, kEntityPlayer, kObjectLocationNone, kCursorKeepValue, kCursorKeepValue);
 	}
 }
 
@@ -446,9 +446,9 @@ IMPLEMENT_FUNCTION(25, Tatiana, chapter2)
 	case kActionDefault:
 		getEntities()->clearSequences(kEntityTatiana);
 
-		getObjects()->update(kObjectCompartmentB, kEntityPlayer, kLocation1, kCursorHandKnock, kCursorHand);
-		getObjects()->update(kObject49, kEntityPlayer, kLocation1, kCursorHandKnock, kCursorHand);
-		getObjects()->update(kObject41, kEntityPlayer, kLocationNone, kCursorKeepValue, kCursorKeepValue);
+		getObjects()->update(kObjectCompartmentB, kEntityPlayer, kObjectLocation1, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObject49, kEntityPlayer, kObjectLocation1, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObject41, kEntityPlayer, kObjectLocationNone, kCursorKeepValue, kCursorKeepValue);
 
 		getData()->entityPosition = kPosition_5420;
 		getData()->location = kLocationInsideCompartment;
@@ -515,7 +515,7 @@ IMPLEMENT_FUNCTION(27, Tatiana, function27)
 			RESET_ENTITY_STATE(kEntityAlexei, Alexei, setup_function30);
 			getAction()->playAnimation(kEventTatianaBreakfastAlexei);
 			getInventory()->addItem(kItemParchemin);
-			getInventory()->setLocationAndProcess(kItem11, kLocation1);
+			getInventory()->setLocationAndProcess(kItem11, kObjectLocation1);
 			setup_function28();
 			break;
 
@@ -655,8 +655,8 @@ IMPLEMENT_FUNCTION(31, Tatiana, chapter3)
 	case kActionDefault:
 		getEntities()->clearSequences(kEntityTatiana);
 
-		getObjects()->update(kObjectCompartmentB, kEntityPlayer, kLocation1, kCursorHandKnock, kCursorHand);
-		getObjects()->update(kObject49, kEntityPlayer, kLocation1, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObjectCompartmentB, kEntityPlayer, kObjectLocation1, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObject49, kEntityPlayer, kObjectLocation1, kCursorHandKnock, kCursorHand);
 
 		getData()->entityPosition = kPosition_1750;
 		getData()->location = kLocationInsideCompartment;
@@ -665,10 +665,10 @@ IMPLEMENT_FUNCTION(31, Tatiana, chapter3)
 		getData()->inventoryItem = kItemNone;
 
 		// Update inventory
-		getInventory()->get(kItemFirebird)->location = kLocation2;
+		getInventory()->get(kItemFirebird)->location = kObjectLocation2;
 
 		if (getEvent(kEventTatianaBreakfastGivePoem) || (getEvent(kEventTatianaGivePoem) && !getEvent(kEventTatianaBreakfastAlexei)))
-			getInventory()->get(kItemParchemin)->location = kLocation2;
+			getInventory()->get(kItemParchemin)->location = kObjectLocation2;
 
 		break;
 	}
@@ -728,12 +728,12 @@ IMPLEMENT_FUNCTION(34, Tatiana, function34)
 			break;
 
 		case 1:
-			getInventory()->get(kItemFirebird)->location = kLocation1;
+			getInventory()->get(kItemFirebird)->location = kObjectLocation1;
 			if (getEntities()->checkFields19(kEntityPlayer, kCarRedSleeping, kPosition_7850))
 				getScenes()->loadSceneFromObject(kObjectCompartmentB);
 
-			getObjects()->update(kObjectCompartmentB, kEntityPlayer, kLocation1, kCursorHandKnock, kCursorHand);
-			getObjects()->update(kObject49, kEntityPlayer, kLocationNone, kCursorHandKnock, kCursorHand);
+			getObjects()->update(kObjectCompartmentB, kEntityPlayer, kObjectLocation1, kCursorHandKnock, kCursorHand);
+			getObjects()->update(kObject49, kEntityPlayer, kObjectLocationNone, kCursorHandKnock, kCursorHand);
 			setup_function15();
 			break;
 
@@ -774,8 +774,8 @@ label_callback_1:
 		break;
 
 	case kActionDefault:
-		getObjects()->update(kObjectCompartmentB, kEntityPlayer, kLocation1, kCursorHandKnock, kCursorHand);
-		getObjects()->update(kObject49, kEntityPlayer, kLocationNone, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObjectCompartmentB, kEntityPlayer, kObjectLocation1, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObject49, kEntityPlayer, kObjectLocationNone, kCursorHandKnock, kCursorHand);
 		getEntities()->clearSequences(kEntityTatiana);
 
 		getData()->car = kCarKronos;
@@ -825,7 +825,7 @@ IMPLEMENT_FUNCTION(36, Tatiana, function36)
 			if (getInventory()->hasItem(kItemFirebird)) {
 				getAction()->playAnimation(kEventTatianaCompartmentStealEgg);
 				getInventory()->removeItem(kItemFirebird);
-				getInventory()->get(kItemFirebird)->location = kLocation2;
+				getInventory()->get(kItemFirebird)->location = kObjectLocation2;
 			} else {
 				getAction()->playAnimation(kEventTatianaCompartment);
 			}
@@ -865,8 +865,8 @@ IMPLEMENT_FUNCTION(39, Tatiana, function39)
 		break;
 
 	case kActionDefault:
-		getObjects()->update(kObjectCompartmentB, kEntityPlayer, kLocation1, kCursorHandKnock, kCursorHand);
-		getObjects()->update(kObject49, kEntityPlayer, kLocation1, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObjectCompartmentB, kEntityPlayer, kObjectLocation1, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObject49, kEntityPlayer, kObjectLocation1, kCursorHandKnock, kCursorHand);
 		break;
 	}
 }
@@ -926,8 +926,8 @@ IMPLEMENT_FUNCTION(43, Tatiana, chapter4)
 	case kActionDefault:
 		getEntities()->clearSequences(kEntityTatiana);
 
-		getObjects()->update(kObjectCompartmentB, kEntityPlayer, kLocation1, kCursorHandKnock, kCursorHand);
-		getObjects()->update(kObject49, kEntityPlayer, kLocation1, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObjectCompartmentB, kEntityPlayer, kObjectLocation1, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObject49, kEntityPlayer, kObjectLocation1, kCursorHandKnock, kCursorHand);
 
 		getData()->entityPosition = kPosition_7500;
 		getData()->location = kLocationInsideCompartment;
@@ -975,7 +975,7 @@ IMPLEMENT_FUNCTION(45, Tatiana, function45)
 			break;
 
 		case 1:
-			getObjects()->update(kObjectCompartmentB, kEntityPlayer, kLocationNone, kCursorHandKnock, kCursorHand);
+			getObjects()->update(kObjectCompartmentB, kEntityPlayer, kObjectLocationNone, kCursorHandKnock, kCursorHand);
 			getData()->location = kLocationOutsideCompartment;
 
 			setCallback(1);
@@ -1034,7 +1034,7 @@ IMPLEMENT_FUNCTION(47, Tatiana, function47)
 
 		case 3:
 		case 4:
-			if (ENTITY_PARAM(0, 1) && getObjects()->get(kObjectCompartment1).location2 == kLocation1) {
+			if (ENTITY_PARAM(0, 1) && getObjects()->get(kObjectCompartment1).location2 == kObjectLocation1) {
 				setup_function48();
 			} else {
 				setCallback(4);
@@ -1062,8 +1062,8 @@ IMPLEMENT_FUNCTION(49, Tatiana, function49)
 		getData()->location = kLocationInsideCompartment;
 		getData()->car = kCarRedSleeping;
 
-		getObjects()->update(kObjectCompartmentB, kEntityPlayer, kLocation1, kCursorHandKnock, kCursorHand);
-		getObjects()->update(kObject49, kEntityPlayer, kLocation1, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObjectCompartmentB, kEntityPlayer, kObjectLocation1, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObject49, kEntityPlayer, kObjectLocation1, kCursorHandKnock, kCursorHand);
 		break;
 
 	case kAction169360385:
@@ -1106,10 +1106,10 @@ IMPLEMENT_FUNCTION(50, Tatiana, function50)
 		getData()->location = kLocationInsideCompartment;
 		getData()->car = kCarRedSleeping;
 
-		getObjects()->update(kObjectCompartmentB, kEntityPlayer, kLocationNone, kCursorHandKnock, kCursorHand);
-		getObjects()->update(kObject49, kEntityPlayer, kLocationNone, kCursorHandKnock, kCursorHand);
-		getObjects()->update(kObject48, kEntityTatiana, kLocationNone, kCursorHandKnock, kCursorHand);
-		getObjects()->update(kObjectCompartmentA, kEntityTatiana, kLocationNone, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObjectCompartmentB, kEntityPlayer, kObjectLocationNone, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObject49, kEntityPlayer, kObjectLocationNone, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObject48, kEntityTatiana, kObjectLocationNone, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObjectCompartmentA, kEntityTatiana, kObjectLocationNone, kCursorHandKnock, kCursorHand);
 
 		if (!getSound()->isBuffered(kEntityTatiana))
 			getSound()->playSound(kEntityTatiana, "Tat4166");
@@ -1133,8 +1133,8 @@ IMPLEMENT_FUNCTION(50, Tatiana, function50)
 //////////////////////////////////////////////////////////////////////////
 IMPLEMENT_FUNCTION(51, Tatiana, function51)
 	if (savepoint.action == kActionDefault) {
-		getObjects()->update(kObjectCompartmentA, kEntityPlayer, kLocation1, kCursorNormal, kCursorNormal);
-		getObjects()->update(kObject48, kEntityPlayer, kLocation1, kCursorNormal, kCursorNormal);
+		getObjects()->update(kObjectCompartmentA, kEntityPlayer, kObjectLocation1, kCursorNormal, kCursorNormal);
+		getObjects()->update(kObject48, kEntityPlayer, kObjectLocation1, kCursorNormal, kCursorNormal);
 	}
 }
 

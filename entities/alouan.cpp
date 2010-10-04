@@ -170,8 +170,8 @@ label_callback1:
 //////////////////////////////////////////////////////////////////////////
 IMPLEMENT_FUNCTION(12, Alouan, function12)
 	if (savepoint.action == kActionDefault) {
-		getObjects()->update(kObjectCompartment7, kEntityPlayer, kLocation3, kCursorHandKnock, kCursorHand);
-		getObjects()->update(kObjectCompartment5, kEntityPlayer, kLocation3, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObjectCompartment7, kEntityPlayer, kObjectLocation3, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObjectCompartment5, kEntityPlayer, kObjectLocation3, kCursorHandKnock, kCursorHand);
 
 		getData()->entityPosition = kPosition_4070;
 		getData()->location = kLocationInsideCompartment;
@@ -396,8 +396,8 @@ label_callback2:
 //////////////////////////////////////////////////////////////////////////
 IMPLEMENT_FUNCTION(19, Alouan, function19)
 	if (savepoint.action == kActionDefault) {
-		getObjects()->update(kObjectCompartment7, kEntityPlayer, kLocation3, kCursorHandKnock, kCursorHand);
-		getObjects()->update(kObjectCompartment5, kEntityPlayer, kLocation3, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObjectCompartment7, kEntityPlayer, kObjectLocation3, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObjectCompartment5, kEntityPlayer, kObjectLocation3, kCursorHandKnock, kCursorHand);
 
 		getData()->entityPosition = kPosition_2740;
 		getData()->location = kLocationInsideCompartment;
@@ -487,7 +487,7 @@ IMPLEMENT_FUNCTION(23, Alouan, function23)
 			getData()->entityPosition = kPosition_4070;
 			getData()->location = kLocationInsideCompartment;
 
-			getObjects()->update(kObjectCompartment6, kEntityPlayer, kLocation1, kCursorHandKnock, kCursorHand);
+			getObjects()->update(kObjectCompartment6, kEntityPlayer, kObjectLocation1, kCursorHandKnock, kCursorHand);
 			break;
 		}
 		break;

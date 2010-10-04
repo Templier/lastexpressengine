@@ -217,7 +217,7 @@ label_callback4:
 //////////////////////////////////////////////////////////////////////////
 IMPLEMENT_FUNCTION(12, Hadija, function12)
 	if (savepoint.action == kActionDefault) {
-		getObjects()->update(kObjectCompartment8, kEntityPlayer, kLocation3, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObjectCompartment8, kEntityPlayer, kObjectLocation3, kCursorHandKnock, kCursorHand);
 
 		getData()->entityPosition = kPosition_2740;
 		getData()->location = kLocationInsideCompartment;
@@ -421,7 +421,7 @@ label_callback3:
 //////////////////////////////////////////////////////////////////////////
 IMPLEMENT_FUNCTION(19, Hadija, function19)
 	if (savepoint.action == kActionDefault) {
-		getObjects()->update(kObjectCompartment8, kEntityPlayer, kLocation3, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObjectCompartment8, kEntityPlayer, kObjectLocation3, kCursorHandKnock, kCursorHand);
 
 		getData()->entityPosition = kPosition_4070;
 		getData()->location = kLocationInsideCompartment;
@@ -512,7 +512,7 @@ IMPLEMENT_FUNCTION(23, Hadija, function23)
 			getData()->entityPosition = kPosition_4840;
 			getData()->location = kLocationInsideCompartment;
 
-			getObjects()->update(kObjectCompartment5, kEntityPlayer, kLocation1, kCursorHandKnock, kCursorHand);
+			getObjects()->update(kObjectCompartment5, kEntityPlayer, kObjectLocation1, kCursorHandKnock, kCursorHand);
 			break;
 		}
 		break;

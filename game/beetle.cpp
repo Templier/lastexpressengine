@@ -55,7 +55,7 @@ void Beetle::load() {
 		return;
 
 	// Do not load if beetle is in the wrong location
-	if (getInventory()->get(kItemBeetle)->location != kLocation3)
+	if (getInventory()->get(kItemBeetle)->location != kObjectLocation3)
 		return;
 
 	///////////////////////
@@ -173,7 +173,7 @@ void Beetle::update() {
 		return;
 	}
 
-	if (getInventory()->get(kItemBeetle)->location == kLocation3) {
+	if (getInventory()->get(kItemBeetle)->location == kObjectLocation3) {
 		if ((!_data->field_DD && rnd(10) < 1)
 		  || (_data->field_DD && rnd(30) < 1)
 		  || rnd(100) < 1) {

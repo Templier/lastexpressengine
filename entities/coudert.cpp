@@ -723,7 +723,7 @@ IMPLEMENT_FUNCTION(16, Coudert, function16)
 	case kActionDefault:
 		if (ENTITY_PARAM(2, 1)) {
 			ENTITY_PARAM(2, 1) = 0;
-			getInventory()->setLocationAndProcess(kItem5, kLocation1);
+			getInventory()->setLocationAndProcess(kItem5, kObjectLocation1);
 
 			CALLBACK_ACTION();
 			break;
@@ -740,7 +740,7 @@ IMPLEMENT_FUNCTION(16, Coudert, function16)
 
 		case 1:
 		case 2:
-			getInventory()->setLocationAndProcess(kItem5, kLocation1);
+			getInventory()->setLocationAndProcess(kItem5, kObjectLocation1);
 			if (!getEntities()->isPlayerPosition(kCarRedSleeping, 2))
 				getData()->entityPosition = kPosition_2088;
 
@@ -807,7 +807,7 @@ IMPLEMENT_FUNCTION(18, Coudert, function18)
 		if (ENTITY_PARAM(0, 6) || ENTITY_PARAM(0, 8)
 		 || ENTITY_PARAM(1, 1) || ENTITY_PARAM(1, 2) || ENTITY_PARAM(1, 3) || ENTITY_PARAM(1, 5) || ENTITY_PARAM(1, 6) || ENTITY_PARAM(1, 7) || ENTITY_PARAM(1, 8)
 		 || ENTITY_PARAM(2, 4) || ENTITY_PARAM(2, 6)) {
-			getInventory()->setLocationAndProcess(kItem5, kLocation1);
+			getInventory()->setLocationAndProcess(kItem5, kObjectLocation1);
 
 			setCallback(1);
 			setup_function9(kCarRedSleeping, kPosition_540);
@@ -875,7 +875,7 @@ IMPLEMENT_FUNCTION_I(19, Coudert, function19, bool)
 		if (ENTITY_PARAM(0, 6) || ENTITY_PARAM(0, 8)
 		 || ENTITY_PARAM(1, 1) || ENTITY_PARAM(1, 2) || ENTITY_PARAM(1, 3) || ENTITY_PARAM(1, 5) || ENTITY_PARAM(1, 6) || ENTITY_PARAM(1, 7) || ENTITY_PARAM(1, 8)
 		 || ENTITY_PARAM(2, 4) || ENTITY_PARAM(2, 6)) {
-			getInventory()->setLocationAndProcess(kItem5, kLocation1);
+			getInventory()->setLocationAndProcess(kItem5, kObjectLocation1);
 			ENTITY_PARAM(2, 1) = 1;
 			CALLBACK_ACTION();
 			break;
@@ -928,9 +928,9 @@ IMPLEMENT_FUNCTION_II(20, Coudert, function20, ObjectIndex, ObjectIndex)
 
 		UPDATE_PARAM(CURRENT_PARAMS(1, 4), getState()->time, 900);
 
-		getObjects()->updateLocation2((ObjectIndex)params->param1, kLocation1);
+		getObjects()->updateLocation2((ObjectIndex)params->param1, kObjectLocation1);
 
-		if (params->param4 != kLocation2)
+		if (params->param4 != kObjectLocation2)
 			getObjects()->update((ObjectIndex)params->param1, (EntityIndex)params->param3, (ObjectLocation)params->param4, (CursorStyle)params->param5, (CursorStyle)params->param6);
 
 		if (params->param2)
@@ -941,9 +941,9 @@ IMPLEMENT_FUNCTION_II(20, Coudert, function20, ObjectIndex, ObjectIndex)
 
 	case kActionKnock:
 	case kActionOpenDoor:
-		getObjects()->update((ObjectIndex)params->param1, kEntityCoudert, kLocation1, kCursorNormal, kCursorNormal);
+		getObjects()->update((ObjectIndex)params->param1, kEntityCoudert, kObjectLocation1, kCursorNormal, kCursorNormal);
 		if (params->param2)
-			getObjects()->update((ObjectIndex)params->param2, kEntityCoudert, kLocation1, kCursorNormal, kCursorNormal);
+			getObjects()->update((ObjectIndex)params->param2, kEntityCoudert, kObjectLocation1, kCursorNormal, kCursorNormal);
 
 		setCallback(savepoint.action == kActionKnock ? 1 : 2);
 		setup_playSound(savepoint.action == kActionKnock ? "LIB012" : "LIB013");
@@ -961,11 +961,11 @@ IMPLEMENT_FUNCTION_II(20, Coudert, function20, ObjectIndex, ObjectIndex)
 			CURRENT_PARAMS(1, 1) = getObjects()->get((ObjectIndex)params->param2).cursor;
 			CURRENT_PARAMS(1, 2) = getObjects()->get((ObjectIndex)params->param2).cursor2;
 
-			getObjects()->update((ObjectIndex)params->param2, kEntityCoudert, kLocation1, kCursorHandKnock, kCursorHand);
+			getObjects()->update((ObjectIndex)params->param2, kEntityCoudert, kObjectLocation1, kCursorHandKnock, kCursorHand);
 		}
 
-		if (params->param4 != kLocation2)
-			getObjects()->update((ObjectIndex)params->param1, kEntityCoudert, kLocation1, kCursorHandKnock, kCursorHand);
+		if (params->param4 != kObjectLocation2)
+			getObjects()->update((ObjectIndex)params->param1, kEntityCoudert, kObjectLocation1, kCursorHandKnock, kCursorHand);
 		break;
 
 	case kActionCallback:
@@ -987,10 +987,10 @@ IMPLEMENT_FUNCTION_II(20, Coudert, function20, ObjectIndex, ObjectIndex)
 
 		case 3:
 		case 4:
-			getObjects()->update((ObjectIndex)params->param1, kEntityCoudert, kLocation1, kCursorHandKnock, kCursorHand);
+			getObjects()->update((ObjectIndex)params->param1, kEntityCoudert, kObjectLocation1, kCursorHandKnock, kCursorHand);
 
 			if (params->param2)
-				getObjects()->update((ObjectIndex)params->param2, kEntityCoudert, kLocation1, kCursorHandKnock, kCursorHand);
+				getObjects()->update((ObjectIndex)params->param2, kEntityCoudert, kObjectLocation1, kCursorHandKnock, kCursorHand);
 			break;
 		}
 		break;
@@ -1664,7 +1664,7 @@ IMPLEMENT_FUNCTION(36, Coudert, chapter1)
 		getData()->location = kLocationOutsideCompartment;
 		getData()->car = kCarRedSleeping;
 
-		getObjects()->updateLocation2(kObject111, kLocation1);
+		getObjects()->updateLocation2(kObject111, kObjectLocation1);
 		break;
 
 	case kActionCallback:
@@ -1717,7 +1717,7 @@ IMPLEMENT_FUNCTION(37, Coudert, function37)
 			break;
 
 		case 4:
-			getObjects()->update(kObjectCompartmentA, kEntityPlayer, kLocation2, kCursorKeepValue, kCursorKeepValue);
+			getObjects()->update(kObjectCompartmentA, kEntityPlayer, kObjectLocation2, kCursorKeepValue, kCursorKeepValue);
 			getData()->location = kLocationInsideCompartment;
 			getEntities()->clearSequences(kEntityCoudert);
 			setup_function38();
@@ -1761,7 +1761,7 @@ switch (savepoint.action) {
 	case kAction191477936:
 		getData()->entityPosition = kPosition_4070;
 		getData()->location = kLocationOutsideCompartment;
-		getObjects()->update(kObjectCompartment4, kEntityPlayer, kLocationNone, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObjectCompartment4, kEntityPlayer, kObjectLocationNone, kCursorHandKnock, kCursorHand);
 
 		setCallback(1);
 		setup_function9(kCarRedSleeping, kPosition_2000);
@@ -1890,9 +1890,9 @@ label_coudert_object:
 		if (!ENTITY_PARAM(0, 2))
 			break;
 
-		TIME_CHECK_OBJECT(kTime1107000, params->param4, kObject111, kLocation2);
-		TIME_CHECK_OBJECT(kTime1161000, params->param5, kObject111, kLocation3);
-		TIME_CHECK_OBJECT(kTime1206000, params->param6, kObject111, kLocation4);
+		TIME_CHECK_OBJECT(kTime1107000, params->param4, kObject111, kObjectLocation2);
+		TIME_CHECK_OBJECT(kTime1161000, params->param5, kObject111, kObjectLocation3);
+		TIME_CHECK_OBJECT(kTime1206000, params->param6, kObject111, kObjectLocation4);
 		break;
 
 	case kAction1:
@@ -2173,7 +2173,7 @@ IMPLEMENT_FUNCTION(42, Coudert, chapter2)
 
 		ENTITY_PARAM(2, 4) = 0;
 
-		getObjects()->updateLocation2(kObject111, kLocation5);
+		getObjects()->updateLocation2(kObject111, kObjectLocation5);
 		break;
 
 	case kActionCallback:
@@ -2312,7 +2312,7 @@ IMPLEMENT_FUNCTION(44, Coudert, chapter3)
 		ENTITY_PARAM(2, 4) = 0;
 		ENTITY_PARAM(2, 5) = 0;
 
-		getObjects()->updateLocation2(kObject111, kLocation6);
+		getObjects()->updateLocation2(kObject111, kObjectLocation6);
 		break;
 
 	case kActionCallback:
@@ -2497,7 +2497,7 @@ IMPLEMENT_FUNCTION(52, Coudert, chapter4)
 		ENTITY_PARAM(2, 3) = 0;
 		ENTITY_PARAM(2, 4) = 0;
 
-		getObjects()->updateLocation2(kObject111, kLocation10);
+		getObjects()->updateLocation2(kObject111, kObjectLocation10);
 		break;
 
 	case kActionCallback:

@@ -113,7 +113,7 @@ IMPLEMENT_FUNCTION(7, Kronos, chapter1)
 		getData()->location = kLocationInsideCompartment;
 		getData()->car = kCarKronos;
 
-		getObjects()->update(kObjectCeiling, kEntityPlayer, kLocation1, kCursorKeepValue, kCursorKeepValue);
+		getObjects()->update(kObjectCeiling, kEntityPlayer, kObjectLocation1, kCursorKeepValue, kCursorKeepValue);
 
 		break;
 	}
@@ -231,7 +231,7 @@ IMPLEMENT_FUNCTION(13, Kronos, chapter3)
 		getData()->clothes = kClothesDefault;
 		getData()->inventoryItem = kItemNone;
 
-		getObjects()->update(kObjectCeiling, kEntityPlayer, kLocationNone, kCursorKeepValue, kCursorKeepValue);
+		getObjects()->update(kObjectCeiling, kEntityPlayer, kObjectLocationNone, kCursorKeepValue, kCursorKeepValue);
 
 		break;
 	}
@@ -329,8 +329,8 @@ IMPLEMENT_FUNCTION(18, Kronos, function18)
 
 	case kActionNone:
 		if (getState()->time > kTime2079000 && !params->param2) {
-			getObjects()->updateLocation2(kObjectCompartmentKronos, kLocation3);
-			getObjects()->update(kObjectCompartmentKronos, kEntityPlayer, kLocation3, kCursorHandKnock, kCursorHand);
+			getObjects()->updateLocation2(kObjectCompartmentKronos, kObjectLocation3);
+			getObjects()->update(kObjectCompartmentKronos, kEntityPlayer, kObjectLocation3, kCursorHandKnock, kCursorHand);
 			params->param1 = 1;
 			params->param2 = 1;
 		}
@@ -384,7 +384,7 @@ IMPLEMENT_FUNCTION(21, Kronos, function21)
 
 	case kActionDefault:
 		getProgress().field_40 = 0;
-		getObjects()->update(kObjectCompartmentKronos, kEntityPlayer, kLocation3, kCursorNormal, kCursorNormal);
+		getObjects()->update(kObjectCompartmentKronos, kEntityPlayer, kObjectLocation3, kCursorNormal, kCursorNormal);
 		getSavePoints()->push(kEntityKronos, kEntityRebecca, kAction191668032);
 		if (!getEvent(kEventConcertLeaveWithBriefcase))
 			setup_function22();
@@ -430,7 +430,7 @@ IMPLEMENT_FUNCTION(23, Kronos, function23)
 		break;
 
 	case kActionDefault:
-		getObjects()->update(kObjectCompartmentKronos, kEntityPlayer, kLocation3, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObjectCompartmentKronos, kEntityPlayer, kObjectLocation3, kCursorHandKnock, kCursorHand);
 		break;
 
 	case kActionCallback:

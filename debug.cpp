@@ -784,7 +784,7 @@ bool Debugger::cmdBeetle(int argc, const char **argv) {
 			// Setup scene & inventory
 			getProgress().chapter = kChapter2;
 			Scene *scene = getScenes()->get(kSceneBeetle);
-			getInventory()->get(kItemBeetle)->location = kLocation3;
+			getInventory()->get(kItemBeetle)->location = kObjectLocation3;
 
 			askForRedraw();
 			redrawScreen();

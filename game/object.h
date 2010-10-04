@@ -47,10 +47,10 @@ public:
 
 		Object() {
 			entity = kEntityPlayer;
-			location = kLocationNone;
+			location = kObjectLocationNone;
 			cursor = kCursorHandKnock;
 			cursor2 = kCursorHandKnock;
-			location2 = kLocationNone;
+			location2 = kObjectLocationNone;
 		}
 
 		Common::String toString();

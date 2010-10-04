@@ -592,16 +592,15 @@ enum ClothesIndex {
 // Location of objects
 //////////////////////////////////////////////////////////////////////////
 enum ObjectLocation {
-	kLocationNone = 0,
-	kLocation1    = 1, // Floor?
-	kLocation2    = 2, // Bed ?
-	kLocation3    = 3,
-	kLocation4    = 4, // Window ?
-	kLocation5    = 5,
-	kLocation6    = 6,
-	kLocation7    = 7,
-	kLocation10   = 10,
-	kLocation11   = 11
+	kObjectLocationNone = 0,
+	kObjectLocation1    = 1, // Floor?
+	kObjectLocation2    = 2, // Bed ?
+	kObjectLocation3    = 3,
+	kObjectLocation4    = 4, // Window ?
+	kObjectLocation5    = 5,
+	kObjectLocation6    = 6,
+	kObjectLocation7    = 7,
+	kObjectLocation10   = 10
 };
 
 //////////////////////////////////////////////////////////////////////////

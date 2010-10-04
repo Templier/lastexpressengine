@@ -861,7 +861,7 @@ const char *SoundManager::getDialogName(EntityIndex entity) const {
 
 		if (getEvent(kEventKronosConversation) || getEvent(kEventKronosConversationFirebird)) {
 			ObjectLocation location = getInventory()->get(kItemFirebird)->location;
-			if (location != kLocation6 && location != kLocation5 && location != kLocation2 && location != kLocation1)
+			if (location != kObjectLocation6 && location != kObjectLocation5 && location != kObjectLocation2 && location != kObjectLocation1)
 				return "XKRO4A";
 		}
 

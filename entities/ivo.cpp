@@ -254,8 +254,8 @@ IMPLEMENT_FUNCTION(14, Ivo, chapter1)
 		break;
 
 	case kActionDefault:
-		getObjects()->update(kObjectCompartmentH, kEntityPlayer, kLocation3, kCursorHandKnock, kCursorHand);
-		getObjects()->update(kObject47, kEntityPlayer, kLocationNone, kCursorKeepValue, kCursorKeepValue);
+		getObjects()->update(kObjectCompartmentH, kEntityPlayer, kObjectLocation3, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObject47, kEntityPlayer, kObjectLocationNone, kCursorKeepValue, kCursorKeepValue);
 
 		getData()->entityPosition = kPosition_4691;
 		getData()->location = kLocationInsideCompartment;
@@ -311,7 +311,7 @@ IMPLEMENT_FUNCTION(16, Ivo, function16)
 		getData()->location = kLocationInsideCompartment;
 		getData()->car = kCarRedSleeping;
 
-		getObjects()->update(kObjectCompartmentH, kEntityPlayer, kLocation3, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObjectCompartmentH, kEntityPlayer, kObjectLocation3, kCursorHandKnock, kCursorHand);
 		getEntities()->clearSequences(kEntityIvo);
 		break;
 
@@ -331,7 +331,7 @@ IMPLEMENT_FUNCTION(16, Ivo, function16)
 			getData()->location = kLocationInsideCompartment;
 
 			getEntities()->clearSequences(kEntityIvo);
-			getObjects()->update(kObjectCompartmentH, kEntityPlayer, kLocation3, kCursorHandKnock, kCursorHand);
+			getObjects()->update(kObjectCompartmentH, kEntityPlayer, kObjectLocation3, kCursorHandKnock, kCursorHand);
 			break;
 		}
 		break;
@@ -364,7 +364,7 @@ IMPLEMENT_FUNCTION(17, Ivo, function17)
 		getData()->car = kCarRedSleeping;
 
 		getEntities()->clearSequences(kEntityIvo);
-		getObjects()->update(kObjectCompartmentH, kEntityPlayer, kLocation3, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObjectCompartmentH, kEntityPlayer, kObjectLocation3, kCursorHandKnock, kCursorHand);
 	}
 }
 
@@ -387,8 +387,8 @@ IMPLEMENT_FUNCTION(18, Ivo, chapter2)
 		getData()->clothes = kClothesDefault;
 		getData()->inventoryItem = kItemNone;
 
-		getObjects()->update(kObjectCompartmentH, kEntityPlayer, kLocation3, kCursorHandKnock, kCursorHand);
-		getObjects()->update(kObject47, kEntityPlayer, kLocationNone, kCursorKeepValue, kCursorKeepValue);
+		getObjects()->update(kObjectCompartmentH, kEntityPlayer, kObjectLocation3, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObject47, kEntityPlayer, kObjectLocationNone, kCursorKeepValue, kCursorKeepValue);
 
 		break;
 	}
@@ -511,7 +511,7 @@ IMPLEMENT_FUNCTION(21, Ivo, function21)
 		getData()->location = kLocationInsideCompartment;
 		getData()->car = kCarRedSleeping;
 
-		getObjects()->update(kObjectCompartmentH, kEntityPlayer, kLocation3, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObjectCompartmentH, kEntityPlayer, kObjectLocation3, kCursorHandKnock, kCursorHand);
 	}
 }
 
@@ -541,7 +541,7 @@ IMPLEMENT_FUNCTION(22, Ivo, chapter3)
 //////////////////////////////////////////////////////////////////////////
 IMPLEMENT_FUNCTION(23, Ivo, chapter3Handler)
 	if (savepoint.action == kActionDefault)
-		getObjects()->update(kObjectCompartmentH, kEntityPlayer, kLocation3, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObjectCompartmentH, kEntityPlayer, kObjectLocation3, kCursorHandKnock, kCursorHand);
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -615,7 +615,7 @@ IMPLEMENT_FUNCTION(27, Ivo, function27)
 		break;
 
 	case kActionDefault:
-		getObjects()->update(kObjectCompartmentH, kEntityPlayer, kLocation3, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObjectCompartmentH, kEntityPlayer, kObjectLocation3, kCursorHandKnock, kCursorHand);
 		break;
 
 	case kActionCallback:
@@ -709,7 +709,7 @@ IMPLEMENT_FUNCTION(28, Ivo, function28)
 IMPLEMENT_FUNCTION(29, Ivo, function29)
 	if (savepoint.action == kActionDefault) {
 		getEntities()->clearSequences(kEntityIvo);
-		getObjects()->update(kObjectCompartmentH, kEntityPlayer, kLocation3, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObjectCompartmentH, kEntityPlayer, kObjectLocation3, kCursorHandKnock, kCursorHand);
 
 		getData()->entityPosition = kPosition_2740;
 		getData()->location = kLocationInsideCompartment;
@@ -804,7 +804,7 @@ IMPLEMENT_FUNCTION(33, Ivo, function33)
 
 	case kActionCallback:
 		if (getCallback() == 1)
-			getObjects()->update(kObject94, kEntityPlayer, kLocation2, kCursorKeepValue, kCursorKeepValue);
+			getObjects()->update(kObject94, kEntityPlayer, kObjectLocation2, kCursorKeepValue, kCursorKeepValue);
 
 		break;
 
