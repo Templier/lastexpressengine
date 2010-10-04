@@ -1,7 +1,13 @@
-Index: adpcm.cpp
-===================================================================
---- adpcm.cpp	(revision 51749)
-+++ adpcm.cpp	(working copy)
+# HG changeset patch
+# User Julien <littleboy@users.sf.net>
+# Date 1285742429 14400
+# Node ID d13140e33afb74813bf514cc2423bbf8fee668b5
+# Parent  6ed039240db66b0fcc587d74bc4be86b42fa7b86
+SOUND: Add support for LastExpress version of IMA ADPCM sound
+
+diff -r 6ed039240db6 -r d13140e33afb sound/decoders/adpcm.cpp
+--- a/sound/decoders/adpcm.cpp	Mon Sep 27 13:55:39 2010 -0400
++++ b/sound/decoders/adpcm.cpp	Wed Sep 29 02:40:29 2010 -0400
 @@ -290,8 +290,8 @@
  
  class MSIma_ADPCMStream : public Ima_ADPCMStream {
@@ -38,15 +44,14 @@ Index: adpcm.cpp
  		return new Oki_ADPCMStream(stream, disposeAfterUse, size, rate, channels, blockAlign);
  	case kADPCMMSIma:
  		return new MSIma_ADPCMStream(stream, disposeAfterUse, size, rate, channels, blockAlign);
-+	case kADPCMMSImaInverted:
++	case kADPCMMSImaLastExpress:
 +		return new MSIma_ADPCMStream(stream, disposeAfterUse, size, rate, channels, blockAlign, true);
  	case kADPCMMS:
  		return new MS_ADPCMStream(stream, disposeAfterUse, size, rate, channels, blockAlign);
  	case kADPCMTinsel4:
-Index: adpcm.h
-===================================================================
---- adpcm.h	(revision 51749)
-+++ adpcm.h	(working copy)
+diff -r 6ed039240db6 -r d13140e33afb sound/decoders/adpcm.h
+--- a/sound/decoders/adpcm.h	Mon Sep 27 13:55:39 2010 -0400
++++ b/sound/decoders/adpcm.h	Wed Sep 29 02:40:29 2010 -0400
 @@ -50,14 +50,15 @@
  // Usually, if the audio stream we're trying to play has the FourCC header
  // string intact, it's easy to discern which encoding is used
@@ -59,15 +64,15 @@ Index: adpcm.h
 -	kADPCMTinsel8,	// 8-bit ADPCM used by the Tinsel engine
 -	kADPCMIma,		// Standard IMA ADPCM
 -	kADPCMApple		// Apple QuickTime IMA ADPCM
-+	kADPCMOki,		      // Dialogic/Oki ADPCM (aka VOX)
-+	kADPCMMSIma,	      // Microsoft IMA ADPCM
-+	kADPCMMSImaInverted,  // Microsoft IMA ADPCM (with inverted samples)
-+	kADPCMMS,		      // Microsoft ADPCM
-+	kADPCMTinsel4,	      // 4-bit ADPCM used by the Tinsel engine
-+	kADPCMTinsel6,	      // 6-bit ADPCM used by the Tinsel engine
-+	kADPCMTinsel8,	      // 8-bit ADPCM used by the Tinsel engine
-+	kADPCMIma,		      // Standard IMA ADPCM
-+	kADPCMApple		      // Apple QuickTime IMA ADPCM
++	kADPCMOki,                 // Dialogic/Oki ADPCM (aka VOX)
++	kADPCMMSIma,               // Microsoft IMA ADPCM
++	kADPCMMSImaLastExpress,    // Microsoft IMA ADPCM (with inverted samples)
++	kADPCMMS,                  // Microsoft ADPCM
++	kADPCMTinsel4,             // 4-bit ADPCM used by the Tinsel engine
++	kADPCMTinsel6,             // 6-bit ADPCM used by the Tinsel engine
++	kADPCMTinsel8,             // 8-bit ADPCM used by the Tinsel engine
++	kADPCMIma,                 // Standard IMA ADPCM
++	kADPCMApple                // Apple QuickTime IMA ADPCM
  };
  
  /**
