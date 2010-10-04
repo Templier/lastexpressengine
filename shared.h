@@ -56,6 +56,7 @@ enum TimeValue {
 	kTime1125000              = 1125000,
 	kTime1134000              = 1134000,
 	kTime1138500              = 1138500,
+	kTime1143000              = 1143000,
 	kTimeEnterEpernay         = 1147500,
 	kTimeCityEpernay          = 1148400,
 	kTimeExitEpernay          = 1150200,
@@ -145,6 +146,7 @@ enum TimeValue {
 	kTime1989000              = 1989000,
 	kTime1993500              = 1993500,
 	kTime1998000              = 1998000,
+	kTime2002500              = 2002500,
 	kTime2016000              = 2016000,
 	kTime2020500              = 2020500,
 	kTime2043000              = 2043000,
@@ -226,7 +228,8 @@ enum TimeValue {
 	kTimeCityAdrianople       = 4320900,
 	kTimeCityConstantinople   = 4941000,
 
-	// Bug in original game?
+
+	kTime10881000             = 10881000,
 	kTimeEnd                  = 15803100,
 
 	kTimeInvalid              = 2147483647,
@@ -460,6 +463,7 @@ enum EntityPosition {
 	kPosition_2088  = 2088,
 	kPosition_2110  = 2110,
 	kPosition_2300  = 2300,
+	kPosition_2330  = 2330,
 	kPosition_2410  = 2410,
 	kPosition_2436  = 2436,
 	kPosition_2490  = 2490,
@@ -1374,6 +1378,10 @@ enum ActionIndex {
 	/////////////////////////////
 	// Rebecca
 	/////////////////////////////
+	kAction125496184 = 125496184,
+	kAction155465152 = 155465152,
+	kAction155980128 = 155980128,
+	kAction169358379 = 169358379,
 	kAction224253538 = 224253538,
 	kAction254915200 = 254915200,
 

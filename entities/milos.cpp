@@ -597,7 +597,61 @@ IMPLEMENT_FUNCTION(22, Milos, chapter3)
 
 //////////////////////////////////////////////////////////////////////////
 IMPLEMENT_FUNCTION(23, Milos, function23)
-	error("Milos: callback function 23 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionNone:
+		if (getState()->time > kTime2106000 && !params->param1) {
+			params->param1 = 1;
+
+			setCallback(1);
+			setup_enterCompartmentDialog(kCarRedSleeping, kPosition_3050);
+		}
+		break;
+
+	case kActionDefault:
+		getData()->entityPosition = kPosition_540;
+		getData()->location = kLocationOutsideCompartment;
+		getData()->car = kCarRedSleeping;
+
+		getSavePoints()->push(kEntityMilos, kEntityVesna, kAction137165825);
+		break;
+
+	case kActionDrawScene:
+		if (getEntities()->isPlayerInCar(kCarRedSleeping)
+		 && !getEntities()->isPlayerPosition(kCarRedSleeping, 1)) {
+			setCallback(3);
+			setup_enterCompartmentDialog(kCarRedSleeping, kPosition_3050);
+		}
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			setCallback(2);
+			setup_enterExitCompartment("609Bg", kObjectCompartmentG);
+			break;
+
+		case 2:
+		case 4:
+			getEntities()->clearSequences(kEntityMilos);
+			getData()->location = kLocationInsideCompartment;
+			getSavePoints()->push(kEntityMilos, kEntityVesna, kAction101687594);
+
+			setup_function24();
+			break;
+
+		case 3:
+			setCallback(4);
+			setup_enterExitCompartment("609Bg", kObjectCompartmentG);
+			break;
+		}
+		break;
+	}
 }
 
 //////////////////////////////////////////////////////////////////////////

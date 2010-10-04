@@ -696,7 +696,71 @@ IMPLEMENT_FUNCTION(28, Boutarel, function28)
 
 //////////////////////////////////////////////////////////////////////////
 IMPLEMENT_FUNCTION(29, Boutarel, function29)
-	error("Boutarel: callback function 29 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionNone:
+		UPDATE_PARAM_GOTO(params->param2, getState()->time, 450, label_next);
+
+		getSavePoints()->push(kEntityBoutarel, kEntityServers1, kAction256200848);
+
+label_next:
+		if (!params->param1)
+			break;
+
+		if (getEntities()->isInRestaurant(kEntityAnna)
+		 && getEntities()->isInRestaurant(kEntityAugust)
+		 && !getSound()->isBuffered(kEntityBoutarel)
+		 && params->param3 != kTimeInvalid) {
+
+			if (getState()->time > kTime1998000)
+				goto label_skip_update;
+
+			if (!getEntities()->isInRestaurant(kEntityPlayer) || !params->param3)
+				params->param3 = getState()->time + 450;
+
+			if (params->param3 < getState()->time) {
+label_skip_update:
+				params->param3 = kTimeInvalid;
+
+				setCallback(1);
+				setup_playSound("MRB3102");
+				break;
+			}
+		}
+
+		TIME_CHECK_CALLBACK_I(Boutarel, kTime2002500, params->param4, 1, setup_function14, true);
+		break;
+
+	case kActionDefault:
+		getEntities()->drawSequenceLeft(kEntityBoutarel, "008B");
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			TIME_CHECK_CALLBACK_I(Boutarel, kTime2002500, params->param4, 1, setup_function14, true);
+			break;
+
+		case 2:
+			setup_function30();
+			break;
+		}
+		break;
+
+	case kAction122288808:
+		getEntities()->drawSequenceLeft(kEntityBoutarel, "008D");
+		params->param1 = 1;
+		break;
+
+	case kAction122358304:
+		getEntities()->drawSequenceLeft(kEntityBoutarel, "BLANK");
+		break;
+	}
 }
 
 //////////////////////////////////////////////////////////////////////////

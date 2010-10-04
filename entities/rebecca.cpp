@@ -656,7 +656,72 @@ IMPLEMENT_FUNCTION(29, Rebecca, chapter2Handler)
 
 //////////////////////////////////////////////////////////////////////////
 IMPLEMENT_FUNCTION(30, Rebecca, function30)
-	error("Rebecca: callback function 30 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionNone:
+		if (!params->param1 && params->param4 != kTimeInvalid) {
+
+			if (getState()->time > kTimeEnd)
+				goto label_skip_update;
+
+			if (!getEntities()->isInSalon(kEntityPlayer) || !params->param4)
+				params->param4 = getState()->time + 450;
+
+			if (params->param4 < getState()->time) {
+	label_skip_update:
+				params->param4 = kTimeInvalid;
+
+				getSound()->playSound(kEntityRebecca, "Reb2001");
+				getProgress().field_B0 = 1;
+				params->param2 = 1;
+			}
+		}
+
+		if (!params->param3 && !params->param2 && params->param5 != kTimeInvalid) {
+
+			if (getState()->time <= kTime10881000) {
+				if (!getEntities()->isInSalon(kEntityPlayer) || !params->param5)
+					params->param5 = getState()->time + 450;
+
+				if (params->param5 >= getState()->time)
+					break;
+			}
+
+			params->param5 = kTimeInvalid;
+
+			getSavePoints()->push(kEntityRebecca, kEntityAugust, kAction169358379);
+		}
+		break;
+
+	case kAction2:
+		params->param2 = 0;
+		break;
+
+	case kActionDefault:
+		getEntities()->drawSequenceLeft(kEntityRebecca, "107B");
+		break;
+
+	case kActionCallback:
+		if (getCallback() == 1)
+			setup_function31();
+		break;
+
+	case kAction125496184:
+		setCallback(1);
+		setup_function18();
+		break;
+
+	case kAction155465152:
+		getEntities()->drawSequenceLeft(kEntityRebecca, "BLANK");
+		break;
+
+	case kAction155980128:
+		params->param1 = 1;
+		params->param3 = 1;
+		break;
+	}
 }
 
 //////////////////////////////////////////////////////////////////////////

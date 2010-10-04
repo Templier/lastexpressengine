@@ -1335,7 +1335,69 @@ label_callback_1:
 
 //////////////////////////////////////////////////////////////////////////
 IMPLEMENT_FUNCTION(44, Alexei, function44)
-	error("Alexei: callback function 44 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionNone:
+		if (getState()->time > kTime2457000 && !params->param1) {
+			params->param1 = 1;
+
+			getEntities()->updatePositionExit(kEntityAlexei, kCarGreenSleeping, 70);
+			getEntities()->updatePositionExit(kEntityAlexei, kCarGreenSleeping, 71);
+
+			if (getEntities()->isInGreenCarEntrance(kEntityPlayer)) {
+				getSound()->excuseMe(kEntityAlexei);
+
+				if (getEntities()->isPlayerPosition(kCarGreenSleeping, 62))
+					getScenes()->loadSceneFromPosition(kCarGreenSleeping, 72);
+
+				setup_function45();
+			}
+		}
+		break;
+
+	case kActionDefault:
+		getData()->car = kCarRedSleeping;
+		getData()->location = kLocationOutsideCompartment;
+		getData()->entityPosition = kPosition_9460;
+
+		setCallback(1);
+		setup_updateEntity(kCarGreenSleeping, kPosition_540);
+		break;
+
+	case kActionDrawScene:
+		if (getEntities()->isPlayerPosition(kCarGreenSleeping, 62)) {
+			setCallback(2);
+			setup_draw("306A");
+		}
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			getEntities()->clearSequences(kEntityAlexei);
+
+			if (getEntities()->isInGreenCarEntrance(kEntityPlayer)) {
+				getSound()->excuseMe(kEntityAlexei);
+
+				if (getEntities()->isPlayerPosition(kCarGreenSleeping, 62))
+					getScenes()->loadSceneFromPosition(kCarGreenSleeping, 72);
+			}
+
+			getEntities()->updatePositionEnter(kEntityAlexei, kCarGreenSleeping, 70);
+			getEntities()->updatePositionEnter(kEntityAlexei, kCarGreenSleeping, 71);
+			break;
+
+		case 2:
+			getEntities()->drawSequenceLeft(kEntityAlexei, "306F");
+			break;
+		}
+		break;
+	}
 }
 
 //////////////////////////////////////////////////////////////////////////

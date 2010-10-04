@@ -264,7 +264,63 @@ IMPLEMENT_FUNCTION(17, Tatiana, chapter1)
 
 //////////////////////////////////////////////////////////////////////////
 IMPLEMENT_FUNCTION(18, Tatiana, function18)
-	error("Tatiana: callback function 18 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionNone:
+		if (!params->param1) {
+
+			if (getState()->time > kTime1143000 && !params->param2) {
+				params->param2 = 1;
+				getEntities()->drawSequenceRight(kEntityTatiana, "806DS");
+				params->param1 = 1;
+			}
+
+			if (!params->param1) {
+				if (!params->param3)
+					params->param3 = getState()->time + 4500;
+
+				if (params->param3 < getState()->time) {
+					params->param3 = kTimeInvalid;
+
+					getEntities()->drawSequenceRight(kEntityTatiana, "806DS");
+					params->param1 = 1;
+				}
+			}
+		}
+
+		if (getData()->entityPosition <= kPosition_2330) {
+			getSavePoints()->push(kEntityTatiana, kEntityAlexei, kAction157159392);
+			getEntities()->clearSequences(kEntityTatiana);
+
+			CALLBACK_ACTION();
+		}
+		break;
+
+	case kActionExitCompartment:
+		getSavePoints()->push(kEntityTatiana, kEntityAlexei, kAction188784532);
+
+		CALLBACK_ACTION();
+		break;
+
+	case kActionDefault:
+		if (getEntities()->isInSalon(kEntityPlayer)) {
+			getEntities()->drawSequenceRight(kEntityTatiana, "806DS");
+			params->param1 = 1;
+		} else {
+			getEntities()->clearSequences(kEntityTatiana);
+		}
+		break;
+
+	case kActionDrawScene:
+		if (!params->param1 && getEntities()->isInSalon(kEntityPlayer)) {
+			getEntities()->drawSequenceRight(kEntityTatiana, "806DS");
+			getEntities()->updateFrame(kEntityTatiana);
+			params->param1 = 1;
+		}
+		break;
+	}
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -1168,7 +1224,89 @@ IMPLEMENT_FUNCTION(53, Tatiana, chapter5Handler)
 
 //////////////////////////////////////////////////////////////////////////
 IMPLEMENT_FUNCTION(54, Tatiana, function54)
-	error("Tatiana: callback function 54 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionNone:
+		if (!params->param2) {
+			switch (params->param1) {
+			default:
+				break;
+
+			case 0:
+				getSound()->playSound(kEntityTatiana, "Tat5167A");
+				params->param2 = 1;
+				break;
+
+			case 1:
+				getSound()->playSound(kEntityTatiana, "Tat5167B");
+				params->param2 = 1;
+				break;
+
+			case 2:
+				getSound()->playSound(kEntityTatiana, "Tat5167C");
+				params->param2 = 1;
+				break;
+
+			case 3:
+				getSound()->playSound(kEntityTatiana, "Tat5167D");
+				params->param2 = 1;
+				break;
+			}
+		}
+
+		if (params->param1 > 3) {
+			UPDATE_PARAM(params->param3, getState()->timeTicks, 225);
+
+			params->param1 = 0;
+			params->param3 = 0;
+		}
+		break;
+
+	case kAction1:
+		getData()->inventoryItem = kItemNone;
+
+		setCallback(1);
+		setup_savegame(kSavegameTypeEvent, kEventTatianaVassiliTalk);
+		break;
+
+	case kAction2:
+		++params->param1;
+		params->param2 = 0;
+		break;
+
+	case kActionDefault:
+		getEntities()->drawSequenceLeft(kEntityTatiana, "033A");
+		getData()->inventoryItem = kItemInvalid;
+		break;
+
+	case kActionCallback:
+		if (getCallback() == 1) {
+			if (getSound()->isBuffered("MUS050"))
+				getSound()->processEntry("MUS050");
+
+			if (getSound()->isBuffered(kEntityTatiana))
+				getSound()->processEntry(kEntityTatiana);
+
+			getAction()->playAnimation(isNight() ? kEventTatianaVassiliTalkNight : kEventTatianaVassiliTalk);
+			getScenes()->processScene();
+
+			params->param1 = 4;
+			params->param2 = 0;
+			params->param3 = 0;
+		}
+		break;
+
+	case kAction203078272:
+		getEntities()->drawSequenceLeft(kEntityTatiana, "033E");
+		break;
+
+	case kAction236060709:
+		getData()->inventoryItem = kItemNone;
+		setup_function55();
+		break;
+	}
 }
 
 //////////////////////////////////////////////////////////////////////////

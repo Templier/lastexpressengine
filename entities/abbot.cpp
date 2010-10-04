@@ -1033,7 +1033,70 @@ IMPLEMENT_FUNCTION(35, Abbot, function35)
 
 //////////////////////////////////////////////////////////////////////////
 IMPLEMENT_FUNCTION(36, Abbot, function36)
-	error("Abbot: callback function 36 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionNone:
+		switch (params->param2) {
+		default:
+			break;
+
+		case 1:
+			if (params->param3 == kTimeInvalid)
+				break;
+
+			if (params->param1 >= getState()->time) {
+
+				if (!getEntities()->isInSalon(kEntityPlayer) || !params->param3)
+					params->param3 = getState()->time + 675;
+
+				if (params->param3 >= getState()->time)
+					break;
+			}
+
+			params->param3 = kTimeInvalid;
+
+			getSound()->playSound(kEntityAbbot, "Abb3041");
+			break;
+
+		case 2:
+			UPDATE_PARAM(params->param4, getState()->time, 900);
+
+			getSound()->playSound(kEntityAbbot, "Abb3042");
+			break;
+
+		case 3:
+			getSound()->playSound(kEntityAbbot, "Abb3043");
+			getEntities()->updatePositionEnter(kEntityAbbot, kCarRestaurant, 57);
+
+			setCallback(1);
+			setup_callSavepoint("121D", kEntityAugust, kAction122288808, "BOGUS");
+			break;
+		}
+		break;
+
+	case kAction2:
+		++params->param2;
+		break;
+
+	case kActionDefault:
+		params->param1 = getState()->time + 4500;
+		getEntities()->drawSequenceLeft(kEntityAbbot, "121B");
+		break;
+
+	case kActionDrawScene:
+		if (getEntities()->isPlayerPosition(kCarRestaurant, 57))
+			getScenes()->loadSceneFromPosition(kCarRestaurant, 50);
+		break;
+
+	case kActionCallback:
+		if (getCallback() == 1) {
+			getEntities()->updatePositionExit(kEntityAbbot, kCarRestaurant, 57);
+			setup_function37();
+		}
+		break;
+	}
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -1116,7 +1179,37 @@ IMPLEMENT_FUNCTION(39, Abbot, chapter4)
 
 //////////////////////////////////////////////////////////////////////////
 IMPLEMENT_FUNCTION_II(40, Abbot, function40, CarIndex, EntityPosition)
-	error("Abbot: callback function 40 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionNone:
+		if (getEntities()->updateEntity(kEntityAbbot, (CarIndex)params->param1, (EntityPosition)params->param2)) {
+			CALLBACK_ACTION();
+		} else if (!getEvent(kEventAbbotInvitationDrink)
+			    && getEntities()->isDistanceBetweenEntities(kEntityAbbot, kEntityPlayer, 1000)
+			    && !getEntities()->isInsideCompartments(kEntityPlayer)
+			    && !getEntities()->checkFields10(kEntityPlayer)) {
+
+			if (getData()->car == kCarGreenSleeping || getData()->car == kCarRedSleeping) {
+				setCallback(1);
+				setup_savegame(kSavegameTypeEvent, kEventAbbotInvitationDrink);
+			}
+		}
+		break;
+
+	case kActionDefault:
+		if (getEntities()->updateEntity(kEntityAbbot, (CarIndex)params->param1, (EntityPosition)params->param2))
+			CALLBACK_ACTION();
+		break;
+
+	case kActionCallback:
+		if (getCallback() == 1) {
+			getAction()->playAnimation(kEventAbbotInvitationDrink);
+			getEntities()->loadSceneFromEntityPosition(getData()->car, (EntityPosition)(getData()->entityPosition + (750 * (getData()->direction == kDirectionUp ? -1 : 1))), getData()->direction == kDirectionUp);
+		}
+		break;
+	}
 }
 
 //////////////////////////////////////////////////////////////////////////
