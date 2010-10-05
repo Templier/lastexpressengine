@@ -917,12 +917,7 @@ IMPLEMENT_FUNCTION_II(20, Coudert, function20, ObjectIndex, ObjectIndex)
 		break;
 
 	case kActionNone:
-		if (!CURRENT_PARAMS(1, 3))
-			CURRENT_PARAMS(1, 3) = getState()->time + 300;
-
-		if (CURRENT_PARAMS(1, 3) < getState()->time) {
-			CURRENT_PARAMS(1, 3) = kTimeInvalid;
-
+		UPDATE_PARAM_PROC(CURRENT_PARAMS(1, 3), getState()->time, 300)
 			getSound()->playSound(kEntityPlayer, "ZFX1004", getSound()->getSoundFlag(kEntityCoudert));
 		}
 

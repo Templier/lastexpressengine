@@ -426,13 +426,7 @@ IMPLEMENT_FUNCTION(22, Rebecca, chapter1Handler)
 		if (params->param4 >= getState()->time) {
 label_callback_4:
 			if (params->param1) {
-				bool checkParam5 = false;
-				if (!params->param5) {
-					params->param5 = getState()->time + 900;
-					checkParam5 = true;
-				}
-
-				if (checkParam5 || params->param5 < getState()->time) {
+				UPDATE_PARAM_CHECK(params->param5, getState()->time, 900)
 					if (getEntities()->isInSalon(kEntityPlayer)) {
 						setCallback(5);
 						setup_playSound("REB1013");

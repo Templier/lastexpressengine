@@ -1118,13 +1118,7 @@ IMPLEMENT_FUNCTION(33, Pascale, function33)
 
 	case kActionNone:
 		if (params->param4) {
-
-			if (!params->param5)
-				params->param5 = getState()->time + 4500;
-
-			if (params->param5 < getState()->time) {
-				params->param5 = kTimeInvalid;
-
+			UPDATE_PARAM_PROC(params->param5, getState()->time, 4500)
 				getObjects()->update(kObjectCompartmentG, kEntityPascale, kObjectLocation1, kCursorNormal, kCursorNormal);
 
 				setCallback(1);

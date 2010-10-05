@@ -1716,7 +1716,7 @@ IMPLEMENT_FUNCTION_S(28, Mertens, function28)
 
 	case kAction202558662:
 		getEntities()->drawSequenceLeft(kEntityMertens, "601L");
-		getSound()->playSound(kEntityMertens, params->seq1);
+		getSound()->playSound(kEntityMertens, (char *)&params->seq1);
 	}
 }
 
@@ -2331,10 +2331,7 @@ IMPLEMENT_FUNCTION(42, Mertens, function42)
 
 label_callback_8:
 		if (getState()->time > kTime1215000 && !ENTITY_PARAM(0, 1) && !ENTITY_PARAM(2, 1)) {
-			if (!params->param5)
-				params->param5 = getState()->time + 2700;
-
-			if (params->param5 < getState()->time) {
+			UPDATE_PARAM_PROC(params->param5, getState()->time, 2700)
 				getEntities()->drawSequenceLeft(kEntityMertens, "601E");
 				ENTITY_PARAM(0, 1) = 1;
 				params->param5 = 0;

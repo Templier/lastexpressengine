@@ -256,10 +256,7 @@ IMPLEMENT_FUNCTION(15, Alexei, function15)
 		break;
 
 	case kActionNone:
-		if (params->param2 < getState()->time) {
-			if (!params->param2)
-				params->param2 = getState()->time + params->param1;
-
+		UPDATE_PARAM_CHECK(params->param2, getState()->time, params->param1)
 			if (getEntities()->isSomebodyInsideRestaurantOrSalon()) {
 				getData()->location = kLocationOutsideCompartment;
 
@@ -693,20 +690,13 @@ IMPLEMENT_FUNCTION(21, Alexei, function21)
 	default:
 		break;
 
-	case kActionNone: {
-		bool updated = false;
-		if (!params->param2) {
-			updated = true;
-			params->param2 = getState()->time + params->param1;
-		}
-
-		if (updated || params->param2 < getState()->time) {
+	case kActionNone:
+		UPDATE_PARAM_CHECK(params->param2, getState()->time, params->param1)
 			getData()->location = kLocationOutsideCompartment;
 			getData()->inventoryItem = kItemNone;
 
 			setCallback(1);
 			setup_updatePosition("103C", kCarRestaurant, 52);
-		}
 		}
 		break;
 

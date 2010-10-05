@@ -893,49 +893,15 @@ IMPLEMENT_FUNCTION(15, Chapters, chapter3Handler)
 
 	case kActionNone:
 		if (getProgress().isTrainRunning) {
+			UPDATE_PARAM_PROC(params->param4, getState()->timeTicks, params->param1)
+				getSound()->playLocomotiveSound();
 
-			if (!params->param4)
-				params->param4 = getState()->timeTicks + params->param1;
-
-			if (params->param4 < getState()->timeTicks) {
-				params->param4 = kTimeInvalid;
+				params->param1 = 225 * (4 * rnd(5) + 20);
+				params->param4 = 0;
 			}
-
-			switch (rnd(5)) {
-			default:
-				break;
-
-			case 0:
-				getSound()->playSound(kEntityPlayer, "ZFX1005", (SoundManager::FlagType)(rnd(15) + 2));
-				break;
-
-			case 1:
-				getSound()->playSound(kEntityPlayer, "ZFX1006", (SoundManager::FlagType)(rnd(15) + 2));
-				break;
-
-			case 2:
-				getSound()->playSound(kEntityPlayer, "ZFX1007", (SoundManager::FlagType)(rnd(15) + 2));
-				break;
-
-			case 3:
-				getSound()->playSound(kEntityPlayer, "ZFX1007A", (SoundManager::FlagType)(rnd(15) + 2));
-				break;
-
-			case 4:
-				getSound()->playSound(kEntityPlayer, "ZFX1007B", (SoundManager::FlagType)(rnd(15) + 2));
-				break;
-			}
-
-			params->param1 = 225 * (4 * rnd(5) + 20);
-			params->param4 = 0;
 		}
 
-		if (!params->param5)
-			params->param5 = getState()->timeTicks + params->param2;
-
-		if (params->param5 < getState()->timeTicks) {
-			params->param5 = kTimeInvalid;
-
+		UPDATE_PARAM_PROC(params->param5, getState()->timeTicks, params->param2)
 			switch (rnd(2)) {
 			default:
 				break;
@@ -1219,7 +1185,363 @@ IMPLEMENT_FUNCTION(18, Chapters, chapter4Init)
 
 //////////////////////////////////////////////////////////////////////////
 IMPLEMENT_FUNCTION(19, Chapters, chapter4Handler)
-	error("Chapters: callback function chapter4Handler not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionNone:
+		if (getProgress().isTrainRunning) {
+
+			UPDATE_PARAM_GOTO(params->param6, getState()->timeTicks, params->param4, label_next);
+
+			getSound()->playLocomotiveSound();
+
+			params->param4 = 225 * (4 * rnd(5) + 20);
+			params->param6 = 0;
+		}
+
+label_next:
+		UPDATE_PARAM_GOTO(params->param7, getState()->timeTicks, params->param5, label_enterPozsony);
+
+		switch (rnd(2)) {
+		default:
+			break;
+
+		case 0:
+			getSound()->playSound(kEntityPlayer, "ZFX1008", (SoundManager::FlagType)(rnd(15) + 2));
+			break;
+
+		case 1:
+			getSound()->playSound(kEntityPlayer, "ZFX1009", (SoundManager::FlagType)(rnd(15) + 2));
+			break;
+		}
+
+		params->param5 = 225 * (4 * rnd(6) + 8);
+		params->param7 = 0;
+
+label_enterPozsony:
+		TIME_CHECK_ENTERSTATION(Chapters, kTimeEnterPoszony, params->param8, 1, "Pozsony", kCityPoszony);
+
+label_exitPozsony:
+		TIME_CHECK_EXITSTATION(Chapters, kTimeExitPoszony, CURRENT_PARAMS(1, 1), 2, "Pozsony");
+
+label_enterGalanta:
+		if (getObjects()->get(kObjectCompartment1).location2 == kObjectLocation1) {
+			if (getState()->time > kTime2403000 && !CURRENT_PARAMS(1, 2)) {
+				CURRENT_PARAMS(1, 2) = 1;
+				getProgress().field_18 = 2;
+			}
+		}
+
+		if (params->param1)
+			goto label_callback_4;
+
+		TIME_CHECK_ENTERSTATION(Chapters, kTimeEnterGalanta, CURRENT_PARAMS(1, 3), 3, "Galanta", kCityGalanta);
+
+label_exitGalanta:
+		TIME_CHECK_EXITSTATION(Chapters, kTimeExitGalanta, CURRENT_PARAMS(1, 4), 4, "Galanta");
+
+label_callback_4:
+		if (getState()->time > kTime2470500 && !CURRENT_PARAMS(1, 5)) {
+			CURRENT_PARAMS(1, 5) = 1;
+
+			if (getProgress().field_18 == 2)
+				getState()->timeDelta = 1;
+		}
+
+		if (getState()->time > kTime2506500 && !CURRENT_PARAMS(1, 6)) {
+			CURRENT_PARAMS(1, 6) = 1;
+
+			if (getProgress().field_18 == 2)
+				getProgress().field_18 = 1;
+		}
+
+		if (getState()->time > kTime2520000 && !CURRENT_PARAMS(1, 7)) {
+			CURRENT_PARAMS(1, 7) = 1;
+
+			if (!params->param2 && !params->param3) {
+				setCallback(5);
+				setup_savegame(kSavegameTypeEvent, kEventTrainExplosionBridge);
+			}
+		}
+		break;
+
+	case kAction2:
+		if (ENTITY_PARAM(0, 2)) {
+
+			getSavePoints()->push(kEntityChapters, kEntityTrain, kActionTrainStopRunning);
+
+			if (getEntityData(kEntityPlayer)->location != kLocationOutsideTrain) {
+				PLAY_STEAM();
+				break;
+			}
+
+			if (getEntities()->isOutsideAlexeiWindow()) {
+				getScenes()->loadSceneFromPosition(kCarGreenSleeping, 49);
+				PLAY_STEAM();
+				break;
+			}
+
+			if (getEntities()->isOutsideAnnaWindow()) {
+				getScenes()->loadSceneFromPosition(kCarRedSleeping, 49);
+				PLAY_STEAM();
+				break;
+			}
+
+			CarIndex car = getEntityData(kEntityPlayer)->car;
+			if (car < kCarRedSleeping || car > kCarCoalTender) {
+				if (car < kCarBaggageRear || car > kCarGreenSleeping) {
+					PLAY_STEAM();
+					break;
+				}
+
+				if (getEntities()->isPlayerPosition(kCarGreenSleeping, 98)) {
+					getSound()->playSound(kEntityPlayer, "LIB015");
+					getScenes()->loadSceneFromPosition(kCarGreenSleeping, 71);
+					PLAY_STEAM();
+					break;
+				}
+
+				getScenes()->loadSceneFromPosition(kCarGreenSleeping, 82);
+				PLAY_STEAM();
+				break;
+			}
+
+			getScenes()->loadSceneFromPosition(kCarRestaurant, 82);
+			PLAY_STEAM();
+			break;
+		}
+
+		if (ENTITY_PARAM(0, 3)) {
+			getSound()->resetState();
+			ENTITY_PARAM(0, 3) = 0;
+		} else if (!params->param2 && !params->param3) {
+			getSound()->playSound(kEntityChapters, "ZFX1001");
+		}
+		break;
+
+	case kActionExitCompartment:
+		getEntities()->clearSequences(kEntityChapters);
+
+		setCallback(11);
+		setup_savegame(kSavegameTypeTime, kTimeNone);
+		break;
+
+	case kActionDefault:
+		params->param4 = 225 * (4 * rnd(5) + 20);
+		params->param5 = 225 * (4 * rnd(6) + 8);
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			goto label_exitPozsony;
+
+		case 2:
+			goto label_enterGalanta;
+
+		case 3:
+			goto label_exitGalanta;
+
+		case 4:
+			goto label_callback_4;
+
+		case 5:
+			if (getSound()->isBuffered(kEntityChapters))
+				getSound()->removeFromQueue(kEntityChapters);
+
+			getAction()->playAnimation(kEventTrainExplosionBridge);
+			getLogic()->gameOver(kSavegameTypeIndex, 1, kSceneNone, true);
+			break;
+
+		case 6:
+			getSound()->processEntries();
+			getAction()->playAnimation(kEventTylerCastleDream);
+			getSound()->resetState();
+
+			getProgress().field_18 = 1;
+
+			getScenes()->loadScene(kScene41);
+			getSavePoints()->push(kEntityChapters, kEntityTatiana, kAction169360385);
+
+			getState()->timeDelta = 1;
+			getState()->time = kTime2511900;
+
+			getInventory()->setLocationAndProcess(kItem2, kObjectLocation1);
+			getScenes()->loadSceneFromItemPosition(kItem22);
+
+			getData()->car = kCarRedSleeping;
+			getData()->entityPosition = kPosition_1500;
+			getData()->location = kLocationInsideCompartment;
+
+			getSound()->playSound(kEntityChapters, "ZFX1001");
+			break;
+
+		case 7:
+			getAction()->playAnimation(kEventTrainExplosionBridge);
+			getLogic()->gameOver(kSavegameTypeTime, kTime2430000, kSceneNone, true);
+			break;
+
+		case 8:
+			getSound()->playSound(kEntityPlayer, "MUS022");
+
+			if (getState()->time < kTime2517300)
+				getState()->time = kTime2517300;
+			break;
+
+		case 9:
+			getAction()->playAnimation(kEventCathDefusingBomb);
+			getScenes()->loadSceneFromPosition(kCarRedSleeping, 73);
+			break;
+
+		case 10:
+			getAction()->playAnimation(kEventDefuseBomb);
+			RESET_ENTITY_STATE(kEntityAbbot, Abbot, setup_function48);
+			getSavePoints()->push(kEntityChapters, kEntityAnna, kAction191001984);
+			getSavePoints()->push(kEntityChapters, kEntityCoudert, kAction191001984);
+			getScenes()->loadSceneFromItemPosition(kItem2);
+
+			getInventory()->get(kItem2)->location = kObjectLocationNone;
+			params->param2 = 1;
+
+			getScenes()->loadSceneFromPosition(kCarRedSleeping, 2);
+			break;
+
+		case 11:
+			getScenes()->loadSceneFromPosition(kCarRedSleeping, 74);
+			getSound()->playSound(kEntityTrain, "ZFX4001", SoundManager::kFlagDefault);
+			getLogic()->gameOver(kSavegameTypeIndex, 1, kSceneNone, true);
+			break;
+		}
+		break;
+
+	case kActionChapter5:
+		setup_chapter5();
+		break;
+
+	case kAction156435676:
+		getSavePoints()->push(kEntityChapters, kEntityTatiana, kAction169360385);
+		getSavePoints()->push(kEntityChapters, kEntityCoudert, kAction201431954);
+		getSavePoints()->push(kEntityChapters, kEntityVerges, kAction201431954);
+
+		getState()->timeDelta = 1;
+		getState()->time = kTime2511900;
+
+		getInventory()->setLocationAndProcess(kItem2, kObjectLocation1);
+
+		getData()->car = kCarRedSleeping;
+		getData()->entityPosition = kPosition_1500;
+		getData()->location = kLocationInsideCompartment;
+
+		getSound()->playSound(kEntityChapters, "ZFX1001");
+		break;
+
+	case kAction158610240:
+		setCallback(8);
+		setup_savegame(kSavegameTypeTime, kTimeNone);
+		break;
+
+	case kAction169300225:
+		if (getState()->time < kTime2519100)
+			getState()->time = kTime2519100;
+
+		params->param3 = 1;
+
+		getEntities()->drawSequenceRight(kEntityChapters, "BOMB");
+		break;
+
+	case kAction190346110:
+		getProgress().field_18 = 3;
+
+		params->param1 = 1;
+
+		if (ENTITY_PARAM(0, 2) || ENTITY_PARAM(0, 3)) {
+			getSound()->removeFromQueue(kEntityChapters);
+
+			ENTITY_PARAM(0, 2) = 0;
+			ENTITY_PARAM(0, 3) = 0;
+		}
+
+		getSound()->playSound(kEntityPlayer, "MUS008", SoundManager::kFlagDefault);
+		getInventory()->unselectItem();
+
+		while (getSound()->isBuffered("MUS008"))
+			getSound()->updateQueue();
+
+		if (getInventory()->hasItem(kItemBomb)) {
+			RESET_ENTITY_STATE(kEntityAlexei, Alexei, setup_function47);
+			RESET_ENTITY_STATE(kEntityAnna, Anna, setup_function68);
+			RESET_ENTITY_STATE(kEntityAugust, August, setup_function65);
+			RESET_ENTITY_STATE(kEntityMertens, Mertens, setup_function48);
+			RESET_ENTITY_STATE(kEntityCoudert, Coudert, setup_function53);
+			RESET_ENTITY_STATE(kEntityServers0, Servers0, setup_chapter4Handler);
+			RESET_ENTITY_STATE(kEntityServers1, Servers1, setup_chapter4Handler);
+			RESET_ENTITY_STATE(kEntityPascale, Pascale, setup_chapter4Handler);
+			RESET_ENTITY_STATE(kEntityVerges, Verges, setup_chapter4Handler);
+			RESET_ENTITY_STATE(kEntityTatiana, Tatiana, setup_function49);
+			RESET_ENTITY_STATE(kEntityAbbot, Abbot, setup_function44);
+			RESET_ENTITY_STATE(kEntityMilos, Milos, setup_function32);
+			RESET_ENTITY_STATE(kEntityVesna, Vesna, setup_function27);
+			RESET_ENTITY_STATE(kEntityIvo, Ivo, setup_function29);
+			RESET_ENTITY_STATE(kEntitySalko, Salko, setup_function22);
+			RESET_ENTITY_STATE(kEntityMmeBoutarel, MmeBoutarel, setup_function25);
+			RESET_ENTITY_STATE(kEntityBoutarel, Boutarel, setup_function35);
+			RESET_ENTITY_STATE(kEntityRebecca, Rebecca, setup_function45);
+			RESET_ENTITY_STATE(kEntitySophie, Sophie, setup_function9);
+			RESET_ENTITY_STATE(kEntityYasmin, Yasmin, setup_function17);
+			RESET_ENTITY_STATE(kEntityHadija, Hadija, setup_function19);
+			RESET_ENTITY_STATE(kEntityAlouan, Alouan, setup_function19);
+			RESET_ENTITY_STATE(kEntityMax, Max, setup_chapter4Handler);
+			getSavePoints()->push(kEntityChapters, kEntityAnna, kAction201431954);
+			getSavePoints()->push(kEntityChapters, kEntityMertens, kAction201431954);
+			getSavePoints()->push(kEntityChapters, kEntityCoudert, kAction201431954);
+			getSavePoints()->push(kEntityChapters, kEntityServers0, kAction201431954);
+			getSavePoints()->push(kEntityChapters, kEntityServers1, kAction201431954);
+			getSavePoints()->push(kEntityChapters, kEntityPascale, kAction201431954);
+			getSavePoints()->push(kEntityChapters, kEntityVerges, kAction201431954);
+
+			setCallback(6);
+			setup_savegame(kSavegameTypeEvent, kEventTylerCastleDream);
+		} else {
+			getState()->time = kTime2520000;
+
+			setCallback(7);
+			setup_savegame(kSavegameTypeEvent, kEventTrainExplosionBridge);
+		}
+		break;
+
+	case kAction191001984:
+		getState()->time = kTime2520000;
+
+		if (getSound()->isBuffered(kEntityChapters))
+			getSound()->removeFromQueue(kEntityChapters);
+
+		getEntities()->clearSequences(kEntityChapters);
+		getInventory()->removeItem(kItemTelegram);
+
+		getState()->timeDelta = 5;
+
+		setCallback(10);
+		setup_savegame(kSavegameTypeEvent, kEventDefuseBomb);
+		break;
+
+	case kAction201959744:
+		if (getSound()->isBuffered(kEntityChapters))
+			getSound()->removeFromQueue(kEntityChapters);
+
+		getSound()->playSound(kEntityTrain, "ZFX4001", SoundManager::kFlagDefault);
+
+		getLogic()->gameOver(kSavegameTypeIndex, 0, kSceneNone, true);
+		break;
+
+	case kAction225367984:
+		setCallback(9);
+		setup_savegame(kSavegameTypeEvent, kEventCathDefusingBomb);
+		break;
+	}
 }
 
 //////////////////////////////////////////////////////////////////////////

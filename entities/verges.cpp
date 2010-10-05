@@ -262,7 +262,7 @@ IMPLEMENT_FUNCTION_IIS(10, Verges, function10, CarIndex, EntityPosition)
 
 	case kActionDefault:
 		if (!getSound()->isBuffered(kEntityVerges)) {
-			getSound()->playSound(kEntityVerges, params->seq);
+			getSound()->playSound(kEntityVerges, (char *)&params->seq);
 			params->param7 = 1;
 		}
 

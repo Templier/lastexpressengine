@@ -732,7 +732,112 @@ IMPLEMENT_FUNCTION(31, Tatiana, chapter3)
 
 //////////////////////////////////////////////////////////////////////////
 IMPLEMENT_FUNCTION(32, Tatiana, chapter3Handler)
-	error("Tatiana: callback function 32 not implemented!");
+	EntityData::EntityParametersI5S  *parameters = (EntityData::EntityParametersI5S*)_data->getCurrentParameters();
+	EntityData::EntityParametersSIII *parameters1 = (EntityData::EntityParametersSIII*)_data->getCurrentParameters(1);
+
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionNone:
+		if (!parameters->param2 && !parameters->param5) {
+			parameters->param1 -= getState()->timeDelta;
+
+			if (getState()->timeDelta > parameters->param1) {
+
+				getEntities()->drawSequenceLeft(kEntityTatiana, (char *)&parameters1->seq);
+				getSound()->playSound(kEntityTatiana, (char *)&parameters->seq);
+
+				if (parameters->param3 == 4 && getEntities()->isInSalon(kEntityPlayer))
+					getProgress().field_90 = 1;
+
+				parameters->param2 = 1;
+			}
+		}
+
+		if (parameters->param4 && parameters->param5) {
+			UPDATE_PARAM_CHECK(parameters->param4, getState()->time, 6300)
+				if (getEntities()->isSomebodyInsideRestaurantOrSalon()) {
+					getData()->location = kLocationOutsideCompartment;
+
+					setCallback(1);
+					setup_updatePosition("110E", kCarRestaurant, 52);
+				}
+			}
+		}
+		break;
+
+	case  kAction2:
+		parameters->param2 = 0;
+		++parameters->param3;
+
+		switch (parameters->param3) {
+		default:
+			parameters->param5 = 1;
+			break;
+
+		case 1:
+			parameters->param1 = 900;
+			getEntities()->drawSequenceLeft(kEntityTatiana, "110A");
+			strcpy((char *)&parameters->seq, "Tat3160B");
+			strcpy((char *)&parameters1->seq, "110A");
+			break;
+
+		case 2:
+			parameters->param1 = 9000;
+			strcpy((char *)&parameters->seq, "Tat3160C");
+			strcpy((char *)&parameters1->seq, "110C");
+			break;
+
+		case 3:
+			parameters->param1 = 13500;
+			getEntities()->drawSequenceLeft(kEntityTatiana, "110B");
+			strcpy((char *)&parameters->seq, "Tat3160D");
+			strcpy((char *)&parameters1->seq, "110D");
+			break;
+
+		case 4:
+			parameters->param1 = 9000;
+			getEntities()->drawSequenceLeft(kEntityTatiana, "110B");
+			strcpy((char *)&parameters->seq, "Tat3160E");
+			strcpy((char *)&parameters1->seq, "110D");
+			break;
+
+		case 5:
+			parameters->param1 = 4500;
+			getEntities()->drawSequenceLeft(kEntityTatiana, "110B");
+			strcpy((char *)&parameters->seq, "Tat3160G");
+			strcpy((char *)&parameters1->seq, "110D");
+			break;
+
+		case 6:
+			parameters->param1 = 4500;
+			getEntities()->drawSequenceLeft(kEntityTatiana, "110B");
+			strcpy((char *)&parameters->seq, "Tat3160B");
+			break;
+		}
+		break;
+
+	case kActionDefault:
+		getSavePoints()->push(kEntityTatiana, kEntityAlexei, kAction122358304);
+		getSavePoints()->push(kEntityTatiana, kEntityKronos, kAction157159392);
+		getEntities()->drawSequenceLeft(kEntityTatiana, "110C");
+		getSound()->playSound(kEntityTatiana, "Tat3160A");
+
+		parameters->param2 = 1;
+		break;
+
+	case kActionCallback:
+		if (getCallback() == 1) {
+			getSavePoints()->push(kEntityTatiana, kEntityAlexei, kAction122288808);
+			setup_function33();
+		}
+		break;
+
+	case kAction101169422:
+		parameters->param4 = 1;
+		break;
+	}
 }
 
 //////////////////////////////////////////////////////////////////////////

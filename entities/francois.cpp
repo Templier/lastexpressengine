@@ -195,10 +195,7 @@ IMPLEMENT_FUNCTION_I(11, Francois, function11, TimeValue)
 	case kActionNone:
 		if (!getSound()->isBuffered(kEntityFrancois)) {
 
-			if (!CURRENT_PARAMS(1, 1))
-				CURRENT_PARAMS(1, 1) = getState()->timeTicks + params->param6;
-
-			if (CURRENT_PARAMS(1, 1) < getState()->timeTicks) {
+			UPDATE_PARAM_PROC(CURRENT_PARAMS(1, 1), getState()->timeTicks, params->param6)
 				switch (rnd(7)) {
 				default:
 					break;

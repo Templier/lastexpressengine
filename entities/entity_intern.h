@@ -457,7 +457,7 @@ void class::setup_##name() { \
 }
 
 //////////////////////////////////////////////////////////////////////////
-// Helpers
+// Callback action
 //////////////////////////////////////////////////////////////////////////
 #define CALLBACK_ACTION() { \
 	if (getData()->currentCall == 0) \
@@ -467,6 +467,9 @@ void class::setup_##name() { \
 	getSavePoints()->call(_entityIndex, _entityIndex, kActionCallback); \
 	}
 
+//////////////////////////////////////////////////////////////////////////
+// Param update
+//////////////////////////////////////////////////////////////////////////
 #define UPDATE_PARAM(parameter, type, value) { \
 	if (!parameter) \
 		parameter = type + value; \
@@ -475,6 +478,7 @@ void class::setup_##name() { \
 	parameter = kTimeInvalid; \
 }
 
+// Todo: replace with UPDATE_PARAM_PROC as appropriate?
 #define UPDATE_PARAM_GOTO(parameter, type, value, label) { \
 	if (!parameter) \
 		parameter = type + value; \
@@ -483,6 +487,22 @@ void class::setup_##name() { \
 	parameter = kTimeInvalid; \
 }
 
+// Updating parameter with code inside the check
+#define UPDATE_PARAM_PROC(parameter, type, value) \
+	if (!parameter) \
+		parameter = type + value; \
+	if (parameter < type) { \
+		parameter = kTimeInvalid;
+
+// Updating parameter with an added check (and code inside the check)
+#define UPDATE_PARAM_CHECK(parameter, type, value) \
+	if (!parameter || parameter < type) { \
+		if (!parameter) \
+			parameter = type + value;
+
+//////////////////////////////////////////////////////////////////////////
+// Compartments
+//////////////////////////////////////////////////////////////////////////
 // Go from one compartment to another (or the same one if no optional args are passed
 #define COMPARTMENT_TO(class, compartmentFrom, positionFrom, sequenceFrom, sequenceTo) \
 	switch (savepoint.action) { \
@@ -539,9 +559,6 @@ void class::setup_##name() { \
 		} \
 		break; \
 	}
-
-
-
 
 } // End of namespace LastExpress
 

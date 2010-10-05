@@ -200,10 +200,7 @@ IMPLEMENT_FUNCTION(12, Anna, function12)
 			params->param2 = 1;
 
 		if (params->param6) {
-			if (!params->param7)
-				params->param7 = getState()->timeTicks + 75;
-
-			if (params->param7 < getState()->timeTicks) {
+			UPDATE_PARAM_PROC(params->param7, getState()->timeTicks, 75)
 				getSavePoints()->push(kEntityAnna, kEntityAnna, kAction2);
 
 				params->param6 = 0;
@@ -672,14 +669,13 @@ IMPLEMENT_FUNCTION_I(18, Anna, function18, TimeValue)
 		}
 
 		if (params->param5 && !params->param4) {
-			UPDATE_PARAM_GOTO(params->param6, getState()->time, 900, label_next);
-
-			params->param2 |= kItemScarf;
-			params->param5 = 0;
-			params->param6 = 0;
+			UPDATE_PARAM_PROC(params->param6, getState()->time, 900)
+				params->param2 |= kItemScarf;
+				params->param5 = 0;
+				params->param6 = 0;
+			}
 		}
 
-label_next:
 		if (params->param3) {
 			UPDATE_PARAM(params->param7, getState()->timeTicks, 90);
 
@@ -1320,12 +1316,7 @@ IMPLEMENT_FUNCTION(34, Anna, function34)
 
 	case kActionNone:
 		if (!params->param1 && getEntities()->isPlayerPosition(kCarRedSleeping, 60)) {
-			if (!params->param2)
-				params->param2 = getState()->time + 150;
-
-			if (params->param2 < getState()->time) {
-				params->param2 = kTimeInvalid;
-
+			UPDATE_PARAM_PROC(params->param2, getState()->time, 150)
 				setCallback(1);
 				setup_draw("419B");
 				break;
@@ -2354,7 +2345,108 @@ IMPLEMENT_FUNCTION(66, Anna, chapter4)
 
 //////////////////////////////////////////////////////////////////////////
 IMPLEMENT_FUNCTION(67, Anna, chapter4Handler)
-	error("Anna: callback function 67 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionNone:
+		if (getEntities()->isPlayerPosition(kCarRedSleeping, 46)) {
+			UPDATE_PARAM_GOTO(params->param4, getState()->timeTicks, 30, label_next);
+
+			getScenes()->loadSceneFromPosition(kCarRedSleeping, 8);
+		}
+
+		params->param4 = 0;
+
+label_next:
+		if (params->param1) {
+			UPDATE_PARAM(params->param5, getState()->timeTicks, 75);
+
+			params->param1 = 0;
+			params->param2 = 1;
+
+			getObjects()->update(kObject53, kEntityAnna, kObjectLocation1, kCursorNormal, getEntities()->isInsideCompartment(kEntityMax, kCarRedSleeping, kPosition_4070) ? kCursorHand : kCursorNormal);
+		}
+
+		params->param5 = 0;
+		break;
+
+	case kAction1:
+		getData()->inventoryItem = kItemNone;
+		getData()->location = kLocationInsideCompartment;
+
+		setCallback(1);
+		setup_savegame(kSavegameTypeEvent, kEventAnnaConversation_34);
+		break;
+
+	case kActionKnock:
+	case kActionOpenDoor:
+		getObjects()->update(kObject53, kEntityAnna, kObjectLocation1, kCursorNormal, kCursorNormal);
+
+		if (params->param1) {
+			setCallback(5);
+			setup_playSound(getSound()->justAMinuteCath());
+		} else {
+			setCallback(savepoint.action == kActionKnock ? 2 : 3);
+			setup_playSound(savepoint.action == kActionKnock ? "LIB012" : "LIB013");
+		}
+		break;
+
+	case kActionDefault:
+		getObjects()->update(kObjectCompartmentF, kEntityPlayer, kObjectLocation2, kCursorNormal, kCursorNormal);
+		getObjects()->update(kObjectOutsideAnnaCompartment, kEntityPlayer, kObjectLocation1, kCursorKeepValue, kCursorKeepValue);
+		getObjects()->update(kObject53, kEntityAnna, kObjectLocation1, kCursorHandKnock, kCursorHand);
+		getEntities()->drawSequenceLeft(kEntityAnna, "511B");
+		break;
+
+	case kActionDrawScene:
+		getObjects()->update(kObject53, kEntityAnna, kObjectLocation1, kCursorHandKnock, kCursorHand);
+		params->param1 = 0;
+		params->param2 = 0;
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			getAction()->playAnimation(kEventAnnaConversation_34);
+			getSound()->playSound(kEntityPlayer, "LIB015");
+			getScenes()->loadSceneFromPosition(kCarRedSleeping, 8);
+
+			setup_function68();
+			break;
+
+		case 2:
+		case 3:
+			setCallback(4);
+			setup_playSound("ANN1016");
+			break;
+
+		case 4:
+			getObjects()->update(kObject53, kEntityAnna, kObjectLocation1, kCursorTalk, kCursorNormal);
+			params->param1 = 1;
+			break;
+
+		case 5:
+			params->param1 = 0;
+			params->param2 = 1;
+			break;
+		}
+		break;
+
+	case kAction191001984:
+		getObjects()->update(kObjectCompartmentF, kEntityPlayer, kObjectLocationNone, kCursorHandKnock, kCursorHand);
+		getData()->inventoryItem = kItemNone;
+
+		setup_function69();
+		break;
+
+	case kAction219971920:
+		params->param3 = 1;
+		getData()->inventoryItem = kItemInvalid;
+	}
 }
 
 //////////////////////////////////////////////////////////////////////////

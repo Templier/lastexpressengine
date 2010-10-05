@@ -343,22 +343,14 @@ IMPLEMENT_FUNCTION(17, Kahina, chapter2Handler)
 
 	case kActionNone:
 		if (params->param1) {
-			if (!params->param2)
-				params->param2 = getState()->time + 9000;
-
-			if (params->param2 < getState()->time) {
+			UPDATE_PARAM_PROC(params->param2, getState()->time, 9000)
 				params->param1 = 1;
 				params->param2 = 0;
 			}
 		}
 
 		if (getEvent(kEventKahinaAskSpeakFirebird) && getEvent(kEventKronosConversationFirebird) && getEntities()->isInsideTrainCar(kEntityPlayer, kCarKronos)) {
-			if (!params->param3)
-				params->param3 = getState()->time + 900;
-
-			if (params->param3 < getState()->time) {
-				params->param3 = kTimeInvalid;
-
+			UPDATE_PARAM_PROC(params->param3, getState()->time, 900)
 				setCallback(1);
 				setup_savegame(kSavegameTypeEvent, kEventKronosConversationFirebird);
 				break;
