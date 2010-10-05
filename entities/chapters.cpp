@@ -104,7 +104,7 @@ IMPLEMENT_FUNCTION_II(1, Chapters, savegame, SavegameType, uint32)
 }
 
 //////////////////////////////////////////////////////////////////////////
-IMPLEMENT_FUNCTION_SI(2, Chapters, enterStation, uint32)
+IMPLEMENT_FUNCTION_SI(2, Chapters, enterStation, CityIndex)
 	enterExitStation(savepoint, true);
 }
 
@@ -415,7 +415,7 @@ label_processStations:
 
 label_enter_epernay:
 		// Entering Epernay station
-		TIME_CHECK_ENTERSTATION(Chapters, kTimeEnterEpernay, params->param8, 1, "Epernay", 0);
+		TIME_CHECK_ENTERSTATION(Chapters, kTimeEnterEpernay, params->param8, 1, "Epernay", kCityEpernay);
 
 label_exit_epernay:
 		// Exiting Epernay station
@@ -887,7 +887,188 @@ IMPLEMENT_FUNCTION(14, Chapters, chapter3Init)
 
 //////////////////////////////////////////////////////////////////////////
 IMPLEMENT_FUNCTION(15, Chapters, chapter3Handler)
-	error("Chapters: callback function chapter3Handler not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionNone:
+		if (getProgress().isTrainRunning) {
+
+			if (!params->param4)
+				params->param4 = getState()->timeTicks + params->param1;
+
+			if (params->param4 < getState()->timeTicks) {
+				params->param4 = kTimeInvalid;
+			}
+
+			switch (rnd(5)) {
+			default:
+				break;
+
+			case 0:
+				getSound()->playSound(kEntityPlayer, "ZFX1005", (SoundManager::FlagType)(rnd(15) + 2));
+				break;
+
+			case 1:
+				getSound()->playSound(kEntityPlayer, "ZFX1006", (SoundManager::FlagType)(rnd(15) + 2));
+				break;
+
+			case 2:
+				getSound()->playSound(kEntityPlayer, "ZFX1007", (SoundManager::FlagType)(rnd(15) + 2));
+				break;
+
+			case 3:
+				getSound()->playSound(kEntityPlayer, "ZFX1007A", (SoundManager::FlagType)(rnd(15) + 2));
+				break;
+
+			case 4:
+				getSound()->playSound(kEntityPlayer, "ZFX1007B", (SoundManager::FlagType)(rnd(15) + 2));
+				break;
+			}
+
+			params->param1 = 225 * (4 * rnd(5) + 20);
+			params->param4 = 0;
+		}
+
+		if (!params->param5)
+			params->param5 = getState()->timeTicks + params->param2;
+
+		if (params->param5 < getState()->timeTicks) {
+			params->param5 = kTimeInvalid;
+
+			switch (rnd(2)) {
+			default:
+				break;
+
+			case 0:
+				getSound()->playSound(kEntityPlayer, "ZFX1008", (SoundManager::FlagType)(rnd(15) + 2));
+				break;
+
+			case 1:
+				getSound()->playSound(kEntityPlayer, "ZFX1009", (SoundManager::FlagType)(rnd(15) + 2));
+				break;
+			}
+
+			params->param2 = 225 * (4 * rnd(6) + 8);
+			params->param5 = 0;
+		}
+
+		TIME_CHECK_ENTERSTATION(Chapters, kTimeEnterSalzbourg, params->param6, 1, "Salzburg", kCitySalzbourg);
+
+label_callback_1:
+		TIME_CHECK_EXITSTATION(Chapters, kTimeExitSalzbourg, params->param7, 2, "Salzburg");
+
+label_callback_2:
+		TIME_CHECK_ENTERSTATION(Chapters, kTimeEnterAttnangPuchheim, params->param8, 3, "Attnang", kCityAttnangPuchheim);
+
+label_callback_3:
+		TIME_CHECK_EXITSTATION(Chapters, kTimeExitAttnangPuchheim, CURRENT_PARAMS(1, 1), 4, "Attnang");
+
+label_callback_4:
+		TIME_CHECK_ENTERSTATION(Chapters, kTimeEnterWels, CURRENT_PARAMS(1, 2), 5, "Wels", kCityWels);
+
+label_callback_5:
+		TIME_CHECK_EXITSTATION(Chapters, kTimeEnterWels, CURRENT_PARAMS(1, 3), 6, "Wels");
+
+label_callback_6:
+		TIME_CHECK_ENTERSTATION(Chapters, kTimeEnterLinz, CURRENT_PARAMS(1, 4), 7, "Linz", kCityLinz);
+
+label_callback_7:
+		TIME_CHECK_EXITSTATION(Chapters, kTimeCityLinz, CURRENT_PARAMS(1, 5), 8, "Linz");
+
+label_callback_8:
+		if (getState()->time > kTime2187000 && !CURRENT_PARAMS(1, 6)) {
+			CURRENT_PARAMS(1, 6) = 1;
+			getState()->timeDelta = 5;
+		}
+
+		TIME_CHECK_ENTERSTATION(Chapters, kTimeCityVienna, CURRENT_PARAMS(1, 7), 9, "Vienna", kCityVienna);
+		break;
+
+	case kAction2:
+		if (ENTITY_PARAM(0, 2)) {
+			getSavePoints()->push(kEntityChapters, kEntityTrain, kActionTrainStopRunning);
+
+			if (getEntityData(kEntityPlayer)->location == kLocationOutsideTrain) {
+
+				if (getEntities()->isOutsideAlexeiWindow()) {
+					getScenes()->loadSceneFromPosition(kCarGreenSleeping, 49);
+				} else if (getEntities()->isOutsideAnnaWindow()) {
+					getScenes()->loadSceneFromPosition(kCarRedSleeping, 49);
+				} else {
+					CarIndex car = getEntityData(kEntityPlayer)->car;
+
+					if (car < kCarRedSleeping || car > kCarCoalTender) {
+						if (car >= kCarBaggageRear && car <= kCarGreenSleeping) {
+							if (getEntities()->isPlayerPosition(kCarGreenSleeping, 98)) {
+								getSound()->playSound(kEntityPlayer, "LIB015");
+								getScenes()->loadSceneFromPosition(kCarGreenSleeping, 71);
+							} else {
+								getScenes()->loadSceneFromPosition(kCarGreenSleeping, 82);
+							}
+						}
+					} else {
+						getScenes()->loadSceneFromPosition(kCarRestaurant, 82);
+					}
+				}
+			}
+
+			getSound()->resetState();
+			getSound()->playSteam((CityIndex)ENTITY_PARAM(0, 4));
+
+			ENTITY_PARAM(0, 2) = 0;
+			if (params->param1)
+				setup_viennaEvents();
+
+			break;
+		}
+
+		if (ENTITY_PARAM(0, 3)) {
+			getSound()->resetState();
+			ENTITY_PARAM(0, 3) = 0;
+		}
+		break;
+
+	case kActionDefault:
+		params->param1 = 225 * (4 * rnd(5) + 20);
+		params->param2 = 225 * (4 * rnd(6) + 8);
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			goto label_callback_1;
+
+		case 2:
+			goto label_callback_2;
+
+		case 3:
+			goto label_callback_3;
+
+		case 4:
+			goto label_callback_4;
+
+		case 5:
+			goto label_callback_5;
+
+		case 6:
+			goto label_callback_6;
+
+		case 7:
+			goto label_callback_7;
+
+		case 8:
+			goto label_callback_8;
+
+		case 9:
+			params->param3 = 1;
+			break;
+		}
+		break;
+	}
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -1038,7 +1219,7 @@ IMPLEMENT_FUNCTION(18, Chapters, chapter4Init)
 
 //////////////////////////////////////////////////////////////////////////
 IMPLEMENT_FUNCTION(19, Chapters, chapter4Handler)
-	error("Chapters: callback function 19 not implemented!");
+	error("Chapters: callback function chapter4Handler not implemented!");
 }
 
 //////////////////////////////////////////////////////////////////////////

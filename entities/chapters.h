@@ -52,7 +52,7 @@ public:
 	 * @param stationName The name of the train station
 	 * @param index       The index of the train station
 	 */
-	DECLARE_FUNCTION_2(enterStation, const char *stationName, uint32 index)
+	DECLARE_FUNCTION_2(enterStation, const char *stationName, CityIndex index)
 
 	/**
 	 * Exit a train station

@@ -25,6 +25,7 @@
 
 #include "lastexpress/entities/august.h"
 
+#include "lastexpress/entities/alexei.h"
 #include "lastexpress/entities/verges.h"
 
 #include "lastexpress/game/action.h"
@@ -1217,7 +1218,60 @@ IMPLEMENT_FUNCTION(36, August, chapter2Handler)
 
 //////////////////////////////////////////////////////////////////////////
 IMPLEMENT_FUNCTION(37, August, function37)
-	error("August: callback function 37 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionNone:
+		TIME_CHECK_CALLBACK_I(August, kTime1791000, params->param2, 5, setup_function20, true);
+		break;
+
+	case kActionDefault:
+		getObjects()->update(kObjectCompartment3, kEntityPlayer, kObjectLocation2, kCursorNormal, kCursorNormal);
+		getEntities()->drawSequenceLeft(kEntityAugust, "506A2");
+		break;
+
+	case kActionDrawScene:
+		if (getState()->time > kTime1786500 && getEntities()->isPlayerPosition(kCarGreenSleeping, 43)) {
+			if (params->param1) {
+				setCallback(2);
+				setup_draw("506C2");
+			} else {
+				params->param1 = 1;
+
+				setCallback(1);
+				setup_draw("506B2");
+			}
+		}
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			getScenes()->loadSceneFromPosition(kCarGreenSleeping, 16);
+			break;
+
+		case 2:
+			setCallback(3);
+			setup_function20(true);
+			break;
+
+		case 3:
+		case 5:
+			setCallback(getCallback() == 3 ? 4 : 6);
+			setup_updateEntity(kCarRestaurant, kPosition_850);
+			break;
+
+		case 4:
+		case 6:
+			setup_function38();
+			break;
+		}
+		break;
+	}
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -1988,7 +2042,65 @@ IMPLEMENT_FUNCTION(62, August, function62)
 
 //////////////////////////////////////////////////////////////////////////
 IMPLEMENT_FUNCTION(63, August, function63)
-	error("August: callback function 63 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionNone:
+		if (!params->param3)
+			params->param3 = getState()->time + 1800;
+
+		if (params->param3 < getState()->time) {
+			params->param3 = kTimeInvalid;
+			getData()->inventoryItem = kItemInvalid;
+		}
+
+		if (getState()->time > kTime2488500 && !params->param4) {
+			params->param4 = 1;
+			getData()->inventoryItem = kItemNone;
+			setup_function64();
+			break;
+		}
+
+		UPDATE_PARAM(params->param5, getState()->timeTicks, params->param1);
+
+		params->param2 = (params->param6 < 1 ? 1 : 0);
+
+		getEntities()->drawSequenceLeft(kEntityAugust, params->param2 ? "122H" : "122F");
+
+		params->param1 = 5 * (3 * rnd(20) + 15);
+		params->param5 = 0;
+		break;
+
+	case kAction1:
+		if (getEntities()->isInSalon(kEntityAlexei))
+			RESET_ENTITY_STATE(kEntityAlexei, Alexei, setup_function44);
+
+		getData()->inventoryItem = kItemNone;
+
+		setCallback(1);
+		setup_savegame(kSavegameTypeEvent, kEventAugustDrink);
+		break;
+
+	case kActionDefault:
+		params->param1 = 5 * (3 * rnd(20) + 15);
+		getEntities()->drawSequenceLeft(kEntityAugust, "122F");
+		break;
+
+	case kActionDrawScene:
+		if (getEntities()->isPlayerPosition(kCarRestaurant, 57))
+			getScenes()->loadSceneFromPosition(kCarRestaurant, 50);
+		break;
+
+	case kActionCallback:
+		if (getCallback() == 1) {
+			getAction()->playAnimation(kEventAugustDrink);
+			getScenes()->loadSceneFromPosition(kCarRestaurant, 55);
+
+			setup_function64();
+		}
+		break;
+	}
 }
 
 //////////////////////////////////////////////////////////////////////////
