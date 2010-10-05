@@ -1205,7 +1205,7 @@ enum ActionIndex {
 	kAction157894320 = 157894320,
 	kAction159332865 = 159332865,   // August
 	kAction189299008 = 189299008,
-	kAction191668032 = 191668032,	// some action during or before concert?
+	kAction191668032 = 191668032,   // some action during or before concert?
 	kAction201437056 = 201437056,
 	kAction235856512 = 235856512,
 	kAction236060709 = 236060709,
