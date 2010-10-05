@@ -1871,17 +1871,16 @@ label_callback_9:
 
 label_callback_10:
 		if (getState()->time > kTime1189800 && !ENTITY_PARAM(0, 1) && !ENTITY_PARAM(2, 1)) {
-			UPDATE_PARAM_GOTO(params->param3, getState()->time, 2700, label_coudert_object);
+			UPDATE_PARAM_PROC(params->param3, getState()->time, 2700);
+				ENTITY_PARAM(0, 2) = 1;
+				ENTITY_PARAM(0, 1) = 1;
 
-			ENTITY_PARAM(0, 2) = 1;
-			ENTITY_PARAM(0, 1) = 1;
+				getEntities()->drawSequenceLeft(kEntityCoudert, "697F");
 
-			getEntities()->drawSequenceLeft(kEntityCoudert, "697F");
-
-			params->param3 = 0;
+				params->param3 = 0;
+			}
 		}
 
-label_coudert_object:
 		if (!ENTITY_PARAM(0, 2))
 			break;
 

@@ -435,14 +435,13 @@ IMPLEMENT_FUNCTION(11, Cooks, chapter3Handler)
 		break;
 
 	case kActionNone:
-		UPDATE_PARAM_GOTO(params->param4, getState()->time, params->param2, update_params);
+		UPDATE_PARAM_PROC(params->param4, getState()->time, params->param2)
+			// Broken plate sound
+			getSound()->playSound(kEntityPlayer, "LIB122",  getSound()->getSoundFlag(kEntityCooks));
+			params->param2 = 225 * (4 * rnd(30) + 120);
+			params->param4 = 0;
+		}
 
-		// Broken plate sound
-		getSound()->playSound(kEntityPlayer, "LIB122",  getSound()->getSoundFlag(kEntityCooks));
-		params->param2 = 225 * (4 * rnd(30) + 120);
-		params->param4 = 0;
-
-update_params:
 		if (getState()->time > kTime2079000 && !params->param5) {
 			params->param1 = 0;
 			params->param5 = 1;

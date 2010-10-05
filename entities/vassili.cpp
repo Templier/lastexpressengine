@@ -147,7 +147,6 @@ IMPLEMENT_FUNCTION(6, Vassili, function6)
 
 	case kActionNone:
 		if (getEntities()->isInsideCompartment(kEntityPlayer, kCarRedSleeping, kPosition_8200)) {
-
 			UPDATE_PARAM_GOTO(params->param3, getState()->timeTicks, params->param1, label_function7);
 
 			setCallback(1);
@@ -156,6 +155,7 @@ IMPLEMENT_FUNCTION(6, Vassili, function6)
 		}
 
 		params->param3 = 0;
+
 		if (params->param2)
 			getEntities()->drawSequenceLeft(kEntityVassili, "303A");
 

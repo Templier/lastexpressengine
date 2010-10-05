@@ -278,12 +278,7 @@ IMPLEMENT_FUNCTION(18, Tatiana, function18)
 			}
 
 			if (!params->param1) {
-				if (!params->param3)
-					params->param3 = getState()->time + 4500;
-
-				if (params->param3 < getState()->time) {
-					params->param3 = kTimeInvalid;
-
+				UPDATE_PARAM_PROC(params->param3, getState()->time, 4500)
 					getEntities()->drawSequenceRight(kEntityTatiana, "806DS");
 					params->param1 = 1;
 				}
@@ -333,20 +328,20 @@ IMPLEMENT_FUNCTION(19, Tatiana, chapter1Handler)
 		if (getSound()->isBuffered(kEntityTatiana) || !params->param4 || params->param3 == 2 || getSound()->isBuffered("TAT1066"))
 			goto label_tatiana_chapter1_2;
 
-		UPDATE_PARAM_GOTO(params->param5, getState()->timeTicks, 450, label_tatiana_chapter1_1);
-		getSound()->playSound(kEntityTatiana, params->param3 ? "TAT1069B" : "TAT1069A");
-		getProgress().field_64 = 1;
-		params->param3++;
-		params->param5 = 0;
-
-label_tatiana_chapter1_1:
-		if (getEntities()->isPlayerPosition(kCarRestaurant, 71)) {
-			UPDATE_PARAM_GOTO(params->param6, getState()->timeTicks, 75, label_tatiana_chapter1_2);
-
+		UPDATE_PARAM_PROC(params->param5, getState()->timeTicks, 450)
 			getSound()->playSound(kEntityTatiana, params->param3 ? "TAT1069B" : "TAT1069A");
 			getProgress().field_64 = 1;
 			params->param3++;
-			params->param6 = 0;
+			params->param5 = 0;
+		}
+
+		if (getEntities()->isPlayerPosition(kCarRestaurant, 71)) {
+			UPDATE_PARAM_PROC(params->param6, getState()->timeTicks, 75)
+				getSound()->playSound(kEntityTatiana, params->param3 ? "TAT1069B" : "TAT1069A");
+				getProgress().field_64 = 1;
+				params->param3++;
+				params->param6 = 0;
+			}
 		}
 
 label_tatiana_chapter1_2:

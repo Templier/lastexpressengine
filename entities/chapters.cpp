@@ -401,13 +401,13 @@ IMPLEMENT_FUNCTION(8, Chapters, chapter1Handler)
 		if (!getProgress().isTrainRunning || getState()->time >= kTime1458000)
 			goto label_processStations;
 
-		UPDATE_PARAM_GOTO(params->param6, getState()->timeTicks, params->param2, label_processStations)
+		UPDATE_PARAM_PROC(params->param6, getState()->timeTicks, params->param2)
+			// Play sound FX
+			getSound()->playLocomotiveSound();
 
-		// Play sound FX
-		getSound()->playLocomotiveSound();
-
-		params->param2 = 225 * (4 * rnd(5) + 20);
-		params->param6 = 0;
+			params->param2 = 225 * (4 * rnd(5) + 20);
+			params->param6 = 0;
+		}
 
 label_processStations:
 		// Process stations
@@ -1191,35 +1191,32 @@ IMPLEMENT_FUNCTION(19, Chapters, chapter4Handler)
 
 	case kActionNone:
 		if (getProgress().isTrainRunning) {
+			UPDATE_PARAM_PROC(params->param6, getState()->timeTicks, params->param4);
+				getSound()->playLocomotiveSound();
 
-			UPDATE_PARAM_GOTO(params->param6, getState()->timeTicks, params->param4, label_next);
-
-			getSound()->playLocomotiveSound();
-
-			params->param4 = 225 * (4 * rnd(5) + 20);
-			params->param6 = 0;
+				params->param4 = 225 * (4 * rnd(5) + 20);
+				params->param6 = 0;
+			}
 		}
 
-label_next:
-		UPDATE_PARAM_GOTO(params->param7, getState()->timeTicks, params->param5, label_enterPozsony);
+		UPDATE_PARAM_PROC(params->param7, getState()->timeTicks, params->param5)
+			switch (rnd(2)) {
+			default:
+				break;
 
-		switch (rnd(2)) {
-		default:
-			break;
+			case 0:
+				getSound()->playSound(kEntityPlayer, "ZFX1008", (SoundManager::FlagType)(rnd(15) + 2));
+				break;
 
-		case 0:
-			getSound()->playSound(kEntityPlayer, "ZFX1008", (SoundManager::FlagType)(rnd(15) + 2));
-			break;
+			case 1:
+				getSound()->playSound(kEntityPlayer, "ZFX1009", (SoundManager::FlagType)(rnd(15) + 2));
+				break;
+			}
 
-		case 1:
-			getSound()->playSound(kEntityPlayer, "ZFX1009", (SoundManager::FlagType)(rnd(15) + 2));
-			break;
+			params->param5 = 225 * (4 * rnd(6) + 8);
+			params->param7 = 0;
 		}
 
-		params->param5 = 225 * (4 * rnd(6) + 8);
-		params->param7 = 0;
-
-label_enterPozsony:
 		TIME_CHECK_ENTERSTATION(Chapters, kTimeEnterPoszony, params->param8, 1, "Pozsony", kCityPoszony);
 
 label_exitPozsony:

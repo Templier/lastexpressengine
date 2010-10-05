@@ -369,14 +369,13 @@ IMPLEMENT_FUNCTION(15, Milos, chapter1Handler)
 		}
 
 		if (getEntities()->isPlayerPosition(kCarRestaurant, 61) && !params->param1) {
-			UPDATE_PARAM_GOTO(params->param4, getState()->timeTicks, 45, label_checkNextPosition);
-
-			setCallback(1);
-			setup_draw("009C");
-			break;
+			UPDATE_PARAM_PROC(params->param4, getState()->timeTicks, 45)
+				setCallback(1);
+				setup_draw("009C");
+				break;
+			}
 		}
 
-label_checkNextPosition:
 		if (getEntities()->isPlayerPosition(kCarRestaurant, 70) && !params->param2) {
 			UPDATE_PARAM(params->param5, getState()->timeTicks, 45);
 

@@ -554,12 +554,7 @@ IMPLEMENT_FUNCTION_II(13, Mertens, function13, bool, bool)
 		SAVEGAME_BLOOD_JACKET();
 
 		if (!params->param2 && !params->param3) {
-			if (!params->param4)
-				params->param4 = getState()->timeTicks + 75;
-
-			if (params->param4 < getState()->timeTicks) {
-				params->param4 = kTimeInvalid;
-
+			UPDATE_PARAM_PROC(params->param4, getState()->timeTicks, 75)
 				getData()->inventoryItem = kItemNone;
 				setCallback(5);
 				setup_function18();
@@ -567,12 +562,7 @@ IMPLEMENT_FUNCTION_II(13, Mertens, function13, bool, bool)
 			}
 		}
 
-		if (!params->param5)
-			params->param5 = getState()->timeTicks + 225;
-
-		if (params->param5 < getState()->timeTicks) {
-			params->param5 = kTimeInvalid;
-
+		UPDATE_PARAM_PROC(params->param5, getState()->timeTicks, 225)
 			getData()->inventoryItem = kItemNone;
 			setCallback(6);
 			setup_function18();
@@ -1279,12 +1269,7 @@ IMPLEMENT_FUNCTION_I(27, Mertens, tylerCompartment, MertensActionType)
 			break;
 		}
 
-		if (!params->param2)
-			params->param2 = getState()->timeTicks + 150;
-
-		if (params->param2 < getState()->timeTicks) {
-			params->param2 = kTimeInvalid;
-
+		UPDATE_PARAM_PROC(params->param2, getState()->timeTicks, 150)
 			getObjects()->update(kObjectCompartment1, kEntityPlayer, getObjects()->get(kObjectCompartment1).location, kCursorNormal, kCursorNormal);
 
 			setCallback(10);

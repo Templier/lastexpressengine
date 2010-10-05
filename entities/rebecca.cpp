@@ -225,18 +225,17 @@ IMPLEMENT_FUNCTION_I(20, Rebecca, function20, TimeValue)
 
 		if (!params->param2) {
 			params->param6 = 0;
-			goto label_process;
+		} else {
+			UPDATE_PARAM_PROC(params->param6, getState()->timeTicks, 75)
+				params->param2 = 0;
+				params->param3 = 1;
+				getObjects()->update(kObjectCompartmentE, kEntityRebecca, kObjectLocation1, kCursorNormal, kCursorNormal);
+				getObjects()->update(kObject52, kEntityRebecca, kObjectLocation1, kCursorNormal, kCursorNormal);
+
+				params->param6 = 0;
+			}
 		}
 
-		UPDATE_PARAM_GOTO(params->param6, getState()->timeTicks, 75, label_process);
-
-		params->param2 = 0;
-		params->param3 = 1;
-		getObjects()->update(kObjectCompartmentE, kEntityRebecca, kObjectLocation1, kCursorNormal, kCursorNormal);
-		getObjects()->update(kObject52, kEntityRebecca, kObjectLocation1, kCursorNormal, kCursorNormal);
-		params->param6 = 0;
-
-label_process:
 		if (getProgress().chapter == kChapter1 && !ENTITY_PARAM(0, 3)) {
 			if (params->param7 != kTimeInvalid && getState()->time > kTime1174500) {
 				if (getState()->time <= kTime1183500) {

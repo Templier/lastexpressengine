@@ -568,13 +568,12 @@ IMPLEMENT_FUNCTION(26, Servers1, chapter4Handler)
 
 	case kActionNone:
 		if (params->param2) {
-			UPDATE_PARAM_GOTO(params->param2, getState()->time, 900, label_continue);
-
-			ENTITY_PARAM(1, 5) = 1;
-			params->param1 = 0;
+			UPDATE_PARAM_PROC(params->param2, getState()->time, 900)
+				ENTITY_PARAM(1, 5) = 1;
+				params->param1 = 0;
+			}
 		}
 
-label_continue:
 		if (!getEntities()->isInKitchen(kEntityServers1) || !getEntities()->isSomebodyInsideRestaurantOrSalon())
 			break;
 
