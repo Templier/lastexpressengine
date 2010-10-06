@@ -228,7 +228,7 @@ IMPLEMENT_FUNCTION_I(11, Francois, function11, TimeValue)
 
 				params->param6 = 15 * rnd(7);
 				CURRENT_PARAMS(1, 1) = 0;
-			}
+			UPDATE_PARAM_PROC_END
 		}
 
 		if (!getEntities()->hasValidFrame(kEntityFrancois) || !getEntities()->isWalkingOppositeToPlayer(kEntityFrancois))

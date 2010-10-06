@@ -919,7 +919,7 @@ IMPLEMENT_FUNCTION_II(20, Coudert, function20, ObjectIndex, ObjectIndex)
 	case kActionNone:
 		UPDATE_PARAM_PROC(CURRENT_PARAMS(1, 3), getState()->time, 300)
 			getSound()->playSound(kEntityPlayer, "ZFX1004", getSound()->getSoundFlag(kEntityCoudert));
-		}
+		UPDATE_PARAM_PROC_END
 
 		UPDATE_PARAM(CURRENT_PARAMS(1, 4), getState()->time, 900);
 
@@ -1878,7 +1878,7 @@ label_callback_10:
 				getEntities()->drawSequenceLeft(kEntityCoudert, "697F");
 
 				params->param3 = 0;
-			}
+			UPDATE_PARAM_PROC_END
 		}
 
 		if (!ENTITY_PARAM(0, 2))

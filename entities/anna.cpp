@@ -205,7 +205,7 @@ IMPLEMENT_FUNCTION(12, Anna, function12)
 
 				params->param6 = 0;
 				params->param7 = 0;
-			}
+			UPDATE_PARAM_PROC_END
 		}
 
 		if (params->param4) {
@@ -673,7 +673,7 @@ IMPLEMENT_FUNCTION_I(18, Anna, function18, TimeValue)
 				params->param2 |= kItemScarf;
 				params->param5 = 0;
 				params->param6 = 0;
-			}
+			UPDATE_PARAM_PROC_END
 		}
 
 		if (params->param3) {
@@ -1320,7 +1320,7 @@ IMPLEMENT_FUNCTION(34, Anna, function34)
 				setCallback(1);
 				setup_draw("419B");
 				break;
-			}
+			UPDATE_PARAM_PROC_END
 		}
 
 label_callback_1:

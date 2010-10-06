@@ -703,7 +703,7 @@ IMPLEMENT_FUNCTION(29, Boutarel, function29)
 	case kActionNone:
 		UPDATE_PARAM_PROC(params->param2, getState()->time, 450)
 			getSavePoints()->push(kEntityBoutarel, kEntityServers1, kAction256200848);
-		}
+		UPDATE_PARAM_PROC_END
 
 		if (!params->param1)
 			break;

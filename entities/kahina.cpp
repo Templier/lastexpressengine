@@ -346,7 +346,7 @@ IMPLEMENT_FUNCTION(17, Kahina, chapter2Handler)
 			UPDATE_PARAM_PROC(params->param2, getState()->time, 9000)
 				params->param1 = 1;
 				params->param2 = 0;
-			}
+			UPDATE_PARAM_PROC_END
 		}
 
 		if (getEvent(kEventKahinaAskSpeakFirebird) && getEvent(kEventKronosConversationFirebird) && getEntities()->isInsideTrainCar(kEntityPlayer, kCarKronos)) {
@@ -354,7 +354,7 @@ IMPLEMENT_FUNCTION(17, Kahina, chapter2Handler)
 				setCallback(1);
 				setup_savegame(kSavegameTypeEvent, kEventKronosConversationFirebird);
 				break;
-			}
+			UPDATE_PARAM_PROC_END
 		}
 
 label_callback_3:
@@ -551,7 +551,7 @@ label_callback_2:
 			UPDATE_PARAM_PROC(params->param3, getState()->time, 9000)
 				params->param1 = 1;
 				params->param3 = 0;
-			}
+			UPDATE_PARAM_PROC_END
 		}
 
 		if (getEvent(kEventKahinaAskSpeakFirebird)

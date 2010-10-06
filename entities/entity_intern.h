@@ -470,7 +470,7 @@ void class::setup_##name() { \
 	parameter = kTimeInvalid; \
 }
 
-// Todo: replace with UPDATE_PARAM_PROC as appropriate?
+// Todo: replace with UPDATE_PARAM_PROC as appropriate
 #define UPDATE_PARAM_GOTO(parameter, type, value, label) { \
 	if (!parameter) \
 		parameter = type + value; \
@@ -485,6 +485,8 @@ void class::setup_##name() { \
 		parameter = type + value; \
 	if (parameter < type) { \
 		parameter = kTimeInvalid;
+
+#define UPDATE_PARAM_PROC_END }
 
 // Updating parameter with an added check (and code inside the check)
 #define UPDATE_PARAM_CHECK(parameter, type, value) \

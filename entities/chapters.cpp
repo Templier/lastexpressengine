@@ -407,7 +407,7 @@ IMPLEMENT_FUNCTION(8, Chapters, chapter1Handler)
 
 			params->param2 = 225 * (4 * rnd(5) + 20);
 			params->param6 = 0;
-		}
+		UPDATE_PARAM_PROC_END
 
 label_processStations:
 		// Process stations
@@ -898,7 +898,7 @@ IMPLEMENT_FUNCTION(15, Chapters, chapter3Handler)
 
 				params->param1 = 225 * (4 * rnd(5) + 20);
 				params->param4 = 0;
-			}
+			UPDATE_PARAM_PROC_END
 		}
 
 		UPDATE_PARAM_PROC(params->param5, getState()->timeTicks, params->param2)
@@ -917,7 +917,7 @@ IMPLEMENT_FUNCTION(15, Chapters, chapter3Handler)
 
 			params->param2 = 225 * (4 * rnd(6) + 8);
 			params->param5 = 0;
-		}
+		UPDATE_PARAM_PROC_END
 
 		TIME_CHECK_ENTERSTATION(Chapters, kTimeEnterSalzbourg, params->param6, 1, "Salzburg", kCitySalzbourg);
 
@@ -1196,7 +1196,7 @@ IMPLEMENT_FUNCTION(19, Chapters, chapter4Handler)
 
 				params->param4 = 225 * (4 * rnd(5) + 20);
 				params->param6 = 0;
-			}
+			UPDATE_PARAM_PROC_END
 		}
 
 		UPDATE_PARAM_PROC(params->param7, getState()->timeTicks, params->param5)
@@ -1215,7 +1215,7 @@ IMPLEMENT_FUNCTION(19, Chapters, chapter4Handler)
 
 			params->param5 = 225 * (4 * rnd(6) + 8);
 			params->param7 = 0;
-		}
+		UPDATE_PARAM_PROC_END
 
 		TIME_CHECK_ENTERSTATION(Chapters, kTimeEnterPoszony, params->param8, 1, "Pozsony", kCityPoszony);
 

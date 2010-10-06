@@ -440,7 +440,7 @@ IMPLEMENT_FUNCTION(11, Cooks, chapter3Handler)
 			getSound()->playSound(kEntityPlayer, "LIB122",  getSound()->getSoundFlag(kEntityCooks));
 			params->param2 = 225 * (4 * rnd(30) + 120);
 			params->param4 = 0;
-		}
+		UPDATE_PARAM_PROC_END
 
 		if (getState()->time > kTime2079000 && !params->param5) {
 			params->param1 = 0;

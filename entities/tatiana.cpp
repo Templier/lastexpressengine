@@ -281,7 +281,7 @@ IMPLEMENT_FUNCTION(18, Tatiana, function18)
 				UPDATE_PARAM_PROC(params->param3, getState()->time, 4500)
 					getEntities()->drawSequenceRight(kEntityTatiana, "806DS");
 					params->param1 = 1;
-				}
+				UPDATE_PARAM_PROC_END
 			}
 		}
 
@@ -333,7 +333,7 @@ IMPLEMENT_FUNCTION(19, Tatiana, chapter1Handler)
 			getProgress().field_64 = 1;
 			params->param3++;
 			params->param5 = 0;
-		}
+		UPDATE_PARAM_PROC_END
 
 		if (getEntities()->isPlayerPosition(kCarRestaurant, 71)) {
 			UPDATE_PARAM_PROC(params->param6, getState()->timeTicks, 75)
@@ -341,7 +341,7 @@ IMPLEMENT_FUNCTION(19, Tatiana, chapter1Handler)
 				getProgress().field_64 = 1;
 				params->param3++;
 				params->param6 = 0;
-			}
+			UPDATE_PARAM_PROC_END
 		}
 
 label_tatiana_chapter1_2:

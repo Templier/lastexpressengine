@@ -429,7 +429,7 @@ label_callback_8:
 					setup_savegame(kSavegameTypeEvent, kEventAugustFindCorpse);
 				}
 				break;
-			}
+			UPDATE_PARAM_PROC_END
 
 label_callback_9:
 			if (params->param3 && params->param1 < getState()->time && !CURRENT_PARAMS(1, 5)) {
@@ -2219,7 +2219,7 @@ IMPLEMENT_FUNCTION(63, August, function63)
 	case kActionNone:
 		UPDATE_PARAM_PROC(params->param3, getState()->time, 1800)
 			getData()->inventoryItem = kItemInvalid;
-		}
+		UPDATE_PARAM_PROC_END
 
 		if (getState()->time > kTime2488500 && !params->param4) {
 			params->param4 = 1;

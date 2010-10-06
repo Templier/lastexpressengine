@@ -559,7 +559,7 @@ IMPLEMENT_FUNCTION_II(13, Mertens, function13, bool, bool)
 				setCallback(5);
 				setup_function18();
 				break;
-			}
+			UPDATE_PARAM_PROC_END
 		}
 
 		UPDATE_PARAM_PROC(params->param5, getState()->timeTicks, 225)
@@ -567,7 +567,7 @@ IMPLEMENT_FUNCTION_II(13, Mertens, function13, bool, bool)
 			setCallback(6);
 			setup_function18();
 			break;
-		}
+		UPDATE_PARAM_PROC_END
 
 		getData()->inventoryItem = (getProgress().chapter == kChapter1
 		                         && !ENTITY_PARAM(2, 1)
@@ -1275,7 +1275,7 @@ IMPLEMENT_FUNCTION_I(27, Mertens, tylerCompartment, MertensActionType)
 			setCallback(10);
 			setup_playSound16("CON1018A");
 			break;
-		}
+		UPDATE_PARAM_PROC_END
 
 label_callback10:
 		if (!params->param3)
@@ -2320,7 +2320,7 @@ label_callback_8:
 				getEntities()->drawSequenceLeft(kEntityMertens, "601E");
 				ENTITY_PARAM(0, 1) = 1;
 				params->param5 = 0;
-			}
+			UPDATE_PARAM_PROC_END
 		}
 
 		if (ENTITY_PARAM(0, 8)) {

@@ -373,7 +373,7 @@ IMPLEMENT_FUNCTION(15, Milos, chapter1Handler)
 				setCallback(1);
 				setup_draw("009C");
 				break;
-			}
+			UPDATE_PARAM_PROC_END
 		}
 
 		if (getEntities()->isPlayerPosition(kCarRestaurant, 70) && !params->param2) {

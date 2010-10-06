@@ -233,7 +233,7 @@ IMPLEMENT_FUNCTION_I(20, Rebecca, function20, TimeValue)
 				getObjects()->update(kObject52, kEntityRebecca, kObjectLocation1, kCursorNormal, kCursorNormal);
 
 				params->param6 = 0;
-			}
+			UPDATE_PARAM_PROC_END
 		}
 
 		if (getProgress().chapter == kChapter1 && !ENTITY_PARAM(0, 3)) {

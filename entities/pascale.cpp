@@ -1124,7 +1124,7 @@ IMPLEMENT_FUNCTION(33, Pascale, function33)
 				setCallback(1);
 				setup_playSound("Wat5010");
 				break;
-			}
+			UPDATE_PARAM_PROC_END
 		}
 
 label_callback1:
