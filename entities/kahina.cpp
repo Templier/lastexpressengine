@@ -513,7 +513,168 @@ IMPLEMENT_FUNCTION_II(19, Kahina, function19, CarIndex, EntityPosition)
 
 //////////////////////////////////////////////////////////////////////////
 IMPLEMENT_FUNCTION(20, Kahina, chapter3Handler)
-	error("Kahina: callback function 20 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionNone:
+		if (getEvent(kEventKronosVisit))
+			getObjects()->update(kObjectCompartmentKronos, kEntityPlayer, kObjectLocation3, kCursorHandKnock, kCursorHand);
+
+		if (getEntities()->isInKronosSanctum(kEntityPlayer)) {
+			setCallback(1);
+			setup_savegame(kSavegameTypeEvent, kEventKahinaPunchSuite4);
+			break;
+		}
+
+label_callback_1:
+		if (getState()->time > kTime2079000 && !params->param2) {
+			params->param2 = 1;
+
+			if (getEvent(kEventKahinaAskSpeakFirebird)
+			 && !getEvent(kEventKronosConversationFirebird)
+			 && getEntities()->isInsideTrainCar(kEntityPlayer, kCarKronos)) {
+				setCallback(2);
+				setup_savegame(kSavegameTypeEvent, kEventKronosConversationFirebird);
+				break;
+			}
+
+label_callback_2:
+			if (getEntities()->isInKronosSalon(kEntityPlayer))
+				getScenes()->loadSceneFromPosition(kCarKronos, 87);
+
+			setup_function21();
+			break;
+		}
+
+		if (!params->param1) {
+			UPDATE_PARAM_PROC(params->param3, getState()->time, 9000)
+				params->param1 = 1;
+				params->param3 = 0;
+			}
+		}
+
+		if (getEvent(kEventKahinaAskSpeakFirebird)
+		 && !getEvent(kEventKronosConversationFirebird)
+		 && getEntities()->isInsideTrainCar(kEntityPlayer, kCarKronos)) {
+			UPDATE_PARAM(params->param4, getState()->time, 900);
+
+			setCallback(3);
+			setup_savegame(kSavegameTypeEvent, kEventKronosConversationFirebird);
+		}
+		break;
+
+	case kActionKnock:
+	case kActionOpenDoor:
+		if (!getEvent(kEventKronosConversationFirebird)) {
+
+			if (getEvent(kEventKahinaAskSpeakFirebird)) {
+				if (savepoint.action == kActionKnock)
+					getSound()->playSound(kEntityPlayer, "LIB012");
+
+				setCallback(6);
+				setup_savegame(kSavegameTypeEvent, kEventKronosConversationFirebird);
+				break;
+			}
+
+			if (getEvent(kEventMilosCompartmentVisitAugust) || getEvent(kEventTatianaGivePoem) || getEvent(kEventTatianaBreakfastGivePoem)) {
+				if (savepoint.action == kActionKnock)
+					getSound()->playSound(kEntityPlayer, "LIB012");
+
+				setCallback(9);
+				setup_savegame(kSavegameTypeEvent, kEventKahinaAskSpeakFirebird);
+				break;
+			}
+
+			if (params->param1) {
+				if (savepoint.action == kActionKnock)
+					getSound()->playSound(kEntityPlayer, "LIB012");
+
+				getAction()->playAnimation(kEventKahinaAskSpeak);
+				getScenes()->processScene();
+				getObjects()->update(kObjectCompartmentKronos, kEntityKahina, kObjectLocation1, kCursorNormal, kCursorNormal);
+
+				setCallback(10);
+				setup_playSound("KRO3003");
+				break;
+			}
+
+			getObjects()->update(kObjectCompartmentKronos, kEntityKahina, kObjectLocation1, kCursorNormal, kCursorNormal);
+
+			setCallback(savepoint.action == kActionKnock ? 11 : 12);
+			setup_playSound(savepoint.action == kActionKnock ? "LIB012" : "LIB013");
+		}
+		break;
+
+	case kActionDefault:
+		if (getEvent(kEventKronosConversationFirebird)) {
+			getObjects()->update(kObjectCompartmentKronos, kEntityPlayer, kObjectLocation3, kCursorHandKnock, kCursorHand);
+		} else {
+			getObjects()->update(kObjectCompartmentKronos, kEntityKahina, kObjectLocation1, kCursorHandKnock, kCursorHand);
+			params->param1 = 1;
+		}
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			getAction()->playAnimation(kEventKahinaPunchSuite4);
+			getLogic()->gameOver(kSavegameTypeEvent2, kEventCathJumpDownCeiling, kSceneNone, false);
+			goto label_callback_1;
+
+		case 2:
+			getAction()->playAnimation(kEventKronosConversationFirebird);
+			getScenes()->loadSceneFromPosition(kCarKronos, 87);
+			goto label_callback_2;
+
+		case 3:
+			getAction()->playAnimation(kEventKronosConversationFirebird);
+			getObjects()->update(kObjectCompartmentKronos, kEntityPlayer, kObjectLocationNone, kCursorHandKnock, kCursorHand);
+			getScenes()->loadSceneFromPosition(kCarKronos, 80, 1);
+
+			setCallback(4);
+			setup_updateFromTime(900);
+			break;
+
+		case 4:
+			setCallback(5);
+			setup_playSound("KRO3005");
+			break;
+
+		case 6:
+			getAction()->playAnimation(kEventKronosConversationFirebird);
+			getObjects()->update(kObjectCompartmentKronos, kEntityPlayer, kObjectLocationNone, kCursorHandKnock, kCursorHand);
+			getScenes()->loadSceneFromPosition(kCarKronos, 80, 1);
+
+			setCallback(7);
+			setup_updateFromTime(900);
+			break;
+
+		case 7:
+			setCallback(8);
+			setup_playSound("KRO3005");
+			break;
+
+		case 9:
+			getAction()->playAnimation(kEventKahinaAskSpeakFirebird);
+			getScenes()->loadSceneFromPosition(kCarKronos, 81);
+			getSound()->playSound(kEntityKahina, "KRO3004");
+			break;
+
+		case 10:
+			params->param1 = 0;
+			// Fallback to next case
+
+		case 11:
+		case 12:
+			getObjects()->update(kObjectCompartmentKronos, kEntityKahina, kObjectLocation1, kCursorHandKnock, kCursorHand);
+			break;
+		}
+		break;
+	}
 }
 
 //////////////////////////////////////////////////////////////////////////

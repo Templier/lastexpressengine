@@ -395,7 +395,133 @@ IMPLEMENT_FUNCTION(19, Vesna, chapter3)
 
 //////////////////////////////////////////////////////////////////////////
 IMPLEMENT_FUNCTION(20, Vesna, chapter3Handler)
-	error("Vesna: callback function 20 not implemented!");
+	EntityData::EntityParametersIIIS *parameters = (EntityData::EntityParametersIIIS*)_data->getCurrentParameters();
+
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionNone:
+		if (getProgress().field_54 && parameters->param7 != kTimeInvalid) {
+			if (getState()->time > kTime2250000) {
+				parameters->param7 = kTimeInvalid;
+				setup_function22();
+				break;
+			}
+
+			if (!getEntities()->isPlayerInCar(kCarRedSleeping) || !parameters->param7)
+				parameters->param7 = getState()->time;
+
+			if (parameters->param7 < getState()->time) {
+				parameters->param7 = kTimeInvalid;
+				setup_function22();
+				break;
+			}
+		}
+
+		if (parameters->param2) {
+			UPDATE_PARAM(parameters->param8, getState()->timeTicks, 75);
+
+			parameters->param1 = 1;
+			parameters->param2 = 0;
+
+			getObjects()->update(kObjectCompartmentG, kEntityVesna, kObjectLocation1, kCursorNormal, kCursorNormal);
+		}
+
+		parameters->param8 = 0;
+		break;
+
+	case kActionKnock:
+	case kActionOpenDoor:
+		if (parameters->param2) {
+			getObjects()->update(kObjectCompartmentG, kEntityVesna, kObjectLocation3, kCursorNormal, kCursorNormal);
+
+			setCallback(4);
+			setup_playSound(getSound()->wrongDoorCath());
+			break;
+		}
+
+		++parameters->param3;
+
+		switch (parameters->param3) {
+		default:
+			break;
+
+		case 1:
+			strcpy((char *)&parameters->seq, "VES1015A");
+			break;
+
+		case 2:
+			strcpy((char *)&parameters->seq, "VES1015B");
+			break;
+
+		case 3:
+			strcpy((char *)&parameters->seq, "VES1015C");
+			parameters->param3 = 0;
+			break;
+		}
+
+		getObjects()->update(kObjectCompartmentG, kEntityVesna, kObjectLocation3, kCursorNormal, kCursorNormal);
+
+		setCallback(savepoint.action == kActionKnock ? 2 : 1);
+		setup_playSound(savepoint.action == kActionKnock ? "LIB012" : "LIB013");
+		break;
+
+	case kActionDefault:
+		getData()->car = kCarRedSleeping;
+		getData()->entityPosition = kPosition_3050;
+		getData()->location = kLocationInsideCompartment;
+		getData()->clothes = kClothesDefault;
+		getData()->inventoryItem = kItemNone;
+
+		getEntities()->clearSequences(kEntityVesna);
+		break;
+
+	case kActionDrawScene:
+		if (parameters->param1 || parameters->param2) {
+			getObjects()->update(kObjectCompartmentG, kEntityVesna, kObjectLocation1, kCursorHandKnock, kCursorHand);
+			parameters->param1 = 0;
+			parameters->param2 = 0;
+		}
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+		case 2:
+			setCallback(3);
+			setup_playSound((char *)&parameters->seq);
+			break;
+
+		case 3:
+			getObjects()->update(kObjectCompartmentG, kEntityVesna, kObjectLocation3, kCursorTalk, kCursorNormal);
+			parameters->param2 = 1;
+			break;
+
+		case 4:
+			parameters->param1 = 1;
+			parameters->param2 = 0;
+			break;
+		}
+		break;
+
+	case kAction137165825:
+		setCallback(5);
+		setup_function11();
+		break;
+
+	case kAction155913424:
+		setCallback(6);
+		setup_function21();
+		break;
+
+	case kAction203663744:
+		getObjects()->update(kObjectCompartmentG, kEntityVesna, kObjectLocation3, kCursorHandKnock, kCursorHand);
+		break;
+	}
 }
 
 //////////////////////////////////////////////////////////////////////////

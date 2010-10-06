@@ -345,7 +345,7 @@ void class::setup_##name() { \
 		break; \
 	}
 
-#define TIME_CHECK_CALLBACK_I(class, timeValue, parameter, callback, function, param1) \
+#define TIME_CHECK_CALLBACK_1(class, timeValue, parameter, callback, function, param1) \
 	if (getState()->time > timeValue && !parameter) { \
 		parameter = 1; \
 		setCallback(callback); \
@@ -353,19 +353,11 @@ void class::setup_##name() { \
 		break; \
 	}
 
-#define TIME_CHECK_CALLBACK_S(class, timeValue, parameter, callback, function, seq) \
+#define TIME_CHECK_CALLBACK_3(class, timeValue, parameter, callback, function, param1, param2, param3) \
 	if (getState()->time > timeValue && !parameter) { \
 		parameter = 1; \
 		setCallback(callback); \
-		function(seq); \
-		break; \
-	}
-
-#define TIME_CHECK_CALLBACK_SII(class, timeValue, parameter, callback, function, seq, param1, param2) \
-	if (getState()->time > timeValue && !parameter) { \
-		parameter = 1; \
-		setCallback(callback); \
-		function(seq, param1, param2); \
+		function(param1, param2, param3); \
 		break; \
 	}
 

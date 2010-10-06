@@ -762,7 +762,7 @@ label_callback3:
 		if (params->param6)
 			goto label_callback12;
 
-		TIME_CHECK_CALLBACK_S(Verges, kTimeChapter1, params->param7, 4, setup_function9, "TRA1001");
+		TIME_CHECK_CALLBACK_1(Verges, kTimeChapter1, params->param7, 4, setup_function9, "TRA1001");
 
 label_callback4:
 		TIME_CHECK_CALLBACK(Verges, kTime1089000, params->param8, 5, setup_function12);
@@ -776,16 +776,16 @@ label_callback4:
 		}
 
 label_callback8:
-		TIME_CHECK_CALLBACK_S(Verges, kTime1107000, CURRENT_PARAMS(1, 1), 9, setup_function9, "TRA1001A");
+		TIME_CHECK_CALLBACK_1(Verges, kTime1107000, CURRENT_PARAMS(1, 1), 9, setup_function9, "TRA1001A");
 
 label_callback9:
-		TIME_CHECK_CALLBACK_S(Verges, kTime1134000, CURRENT_PARAMS(1, 2), 10, setup_function9, "TRA1002");
+		TIME_CHECK_CALLBACK_1(Verges, kTime1134000, CURRENT_PARAMS(1, 2), 10, setup_function9, "TRA1002");
 
 label_callback10:
-		TIME_CHECK_CALLBACK_S(Verges, kTime1165500, CURRENT_PARAMS(1, 3), 11, setup_function9, "TRA1003");
+		TIME_CHECK_CALLBACK_1(Verges, kTime1165500, CURRENT_PARAMS(1, 3), 11, setup_function9, "TRA1003");
 
 label_callback11:
-		TIME_CHECK_CALLBACK_S(Verges, kTime1225800, CURRENT_PARAMS(1, 4), 12, setup_function9, "TRA1004");
+		TIME_CHECK_CALLBACK_1(Verges, kTime1225800, CURRENT_PARAMS(1, 4), 12, setup_function9, "TRA1004");
 
 label_callback12:
 		if (ENTITY_PARAM(0, 5) && !params->param2) {
@@ -937,7 +937,7 @@ IMPLEMENT_FUNCTION(28, Verges, chapter2Handler)
 		}
 
 label_callback_1:
-		TIME_CHECK_CALLBACK_S(Verges, kTime1818900, params->param1, 2, setup_function9, "Tra2177");
+		TIME_CHECK_CALLBACK_1(Verges, kTime1818900, params->param1, 2, setup_function9, "Tra2177");
 
 label_callback_2:
 		if (params->param2 == kTimeInvalid || !getState()->time)

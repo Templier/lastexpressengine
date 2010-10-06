@@ -533,7 +533,117 @@ IMPLEMENT_FUNCTION(20, MmeBoutarel, chapter3)
 
 //////////////////////////////////////////////////////////////////////////
 IMPLEMENT_FUNCTION(21, MmeBoutarel, chapter3Handler)
-	error("MmeBoutarel: callback function 21 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionNone:
+		if (ENTITY_PARAM(0, 1) && params->param2 != kTimeInvalid) {
+
+			if (getState()->time <= kTime2038500) {
+				if (!getEntities()->isPlayerInCar(kCarRedSleeping)
+				 || !params->param1
+				 || getSound()->isBuffered("FRA2012")
+				 || getSound()->isBuffered("FRA2010")
+				 ||!params->param2)
+					params->param2 = getState()->time;
+
+				if (params->param2 >= getState()->time)
+					break;
+			}
+
+			params->param2 = kTimeInvalid;
+
+			getSavePoints()->push(kEntityMmeBoutarel, kEntityFrancois, kAction189872836);
+			getObjects()->update(kObjectCompartmentD, kEntityPlayer, kObjectLocation1, kCursorHandKnock, kCursorHand);
+
+			setCallback(1);
+			setup_enterExitCompartment("606Cd", kObjectCompartmentD);
+		}
+		break;
+
+	case kActionDefault:
+		params->param1 = 1;
+
+		getObjects()->update(kObjectCompartmentD, kEntityPlayer, kObjectLocation2, kCursorNormal, kCursorNormal);
+		getObjects()->update(kObject51, kEntityPlayer, kObjectLocation1, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObject43, kEntityPlayer, kObjectLocationNone, kCursorKeepValue, kCursorKeepValue);
+		getEntities()->drawSequenceLeft(kEntityMmeBoutarel, "501");
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			setCallback(2);
+			setup_enterExitCompartment("606Rd", kObjectCompartmentD);
+			break;
+
+		case 2:
+			getData()->location = kLocationOutsideCompartment;
+
+			setCallback(3);
+			setup_updateEntity(kCarRedSleeping, kPosition_2000);
+			break;
+
+		case 3:
+			setCallback(4);
+			setup_function8("MME3001");
+			break;
+
+		case 4:
+			setCallback(5);
+			setup_updateEntity(kCarRedSleeping, kPosition_5790);
+			break;
+
+		case 5:
+			setCallback(6);
+			setup_enterExitCompartment2("606Td", kObjectCompartmentD);
+			break;
+
+		case 6:
+			getEntities()->clearSequences(kEntityMmeBoutarel);
+			getObjects()->update(kObjectCompartmentD, kEntityPlayer, kObjectLocation1, kCursorHandKnock, kCursorHand);
+
+			setCallback(7);
+			setup_updateFromTime(150);
+			break;
+
+		case 7:
+			setCallback(8);
+			setup_enterExitCompartment("606Dd", kObjectCompartmentD);
+			break;
+
+		case 8:
+			getObjects()->update(kObjectCompartmentD, kEntityPlayer, kObjectLocation2, kCursorNormal, kCursorNormal);
+			getEntities()->drawSequenceLeft(kEntityMmeBoutarel, "501");
+			getSavePoints()->push(kEntityMmeBoutarel, kEntityFrancois, kAction190390860);
+			break;
+
+		case 9:
+			getEntities()->drawSequenceLeft(kEntityMmeBoutarel, "501");
+			params->param1 = 1;
+			break;
+		}
+		break;
+
+	case kAction101107728:
+		setCallback(9);
+		setup_function9();
+		break;
+
+	case kAction102484312:
+		getEntities()->drawSequenceLeft(kEntityMmeBoutarel, "501");
+		params->param1 = 1;
+		break;
+
+	case kAction134289824:
+		getEntities()->drawSequenceLeft(kEntityMmeBoutarel, "502A");
+		params->param1 = 0;
+		break;
+	}
 }
 
 //////////////////////////////////////////////////////////////////////////

@@ -539,7 +539,7 @@ IMPLEMENT_FUNCTION(26, Rebecca, function26)
 		break;
 
 	case kActionNone:
-		TIME_CHECK_CALLBACK_SII(Rebecca, kTime1224000, params->param2, 1, setup_updatePosition, "118H", kCarRestaurant, 52);
+		TIME_CHECK_CALLBACK_3(Rebecca, kTime1224000, params->param2, 1, setup_updatePosition, "118H", kCarRestaurant, 52);
 
 		if (params->param1) {
 			UPDATE_PARAM(params->param3, getState()->timeTicks, 90);
@@ -656,14 +656,11 @@ IMPLEMENT_FUNCTION(30, Rebecca, function30)
 	case kActionNone:
 		if (!params->param1 && params->param4 != kTimeInvalid) {
 
-			if (getState()->time > kTimeEnd)
-				goto label_skip_update;
+			if (getState()->time <= kTimeEnd)
+				if (!getEntities()->isInSalon(kEntityPlayer) || !params->param4)
+					params->param4 = getState()->time + 450;
 
-			if (!getEntities()->isInSalon(kEntityPlayer) || !params->param4)
-				params->param4 = getState()->time + 450;
-
-			if (params->param4 < getState()->time) {
-	label_skip_update:
+			if (params->param4 < getState()->time || getState()->time > kTimeEnd) {
 				params->param4 = kTimeInvalid;
 
 				getSound()->playSound(kEntityRebecca, "Reb2001");

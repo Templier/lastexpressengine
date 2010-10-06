@@ -1300,7 +1300,7 @@ IMPLEMENT_FUNCTION(37, August, function37)
 		break;
 
 	case kActionNone:
-		TIME_CHECK_CALLBACK_I(August, kTime1791000, params->param2, 5, setup_function20, true);
+		TIME_CHECK_CALLBACK_1(August, kTime1791000, params->param2, 5, setup_function20, true);
 		break;
 
 	case kActionDefault:

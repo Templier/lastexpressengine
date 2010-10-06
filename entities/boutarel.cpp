@@ -601,7 +601,7 @@ IMPLEMENT_FUNCTION(24, Boutarel, chapter2Handler)
 		break;
 
 	case kActionNone:
-		TIME_CHECK_CALLBACK_I(Boutarel, kTime1759500, params->param2, 1, setup_function14, false);
+		TIME_CHECK_CALLBACK_1(Boutarel, kTime1759500, params->param2, 1, setup_function14, false);
 		break;
 
 	case kActionDefault:
@@ -713,14 +713,11 @@ IMPLEMENT_FUNCTION(29, Boutarel, function29)
 		 && !getSound()->isBuffered(kEntityBoutarel)
 		 && params->param3 != kTimeInvalid) {
 
-			if (getState()->time > kTime1998000)
-				goto label_skip_update;
+			if (getState()->time <= kTime1998000)
+				if (!getEntities()->isInRestaurant(kEntityPlayer) || !params->param3)
+					params->param3 = getState()->time + 450;
 
-			if (!getEntities()->isInRestaurant(kEntityPlayer) || !params->param3)
-				params->param3 = getState()->time + 450;
-
-			if (params->param3 < getState()->time) {
-label_skip_update:
+			if (params->param3 < getState()->time || getState()->time > kTime1998000) {
 				params->param3 = kTimeInvalid;
 
 				setCallback(1);
@@ -729,7 +726,7 @@ label_skip_update:
 			}
 		}
 
-		TIME_CHECK_CALLBACK_I(Boutarel, kTime2002500, params->param4, 1, setup_function14, true);
+		TIME_CHECK_CALLBACK_1(Boutarel, kTime2002500, params->param4, 1, setup_function14, true);
 		break;
 
 	case kActionDefault:
@@ -742,7 +739,7 @@ label_skip_update:
 			break;
 
 		case 1:
-			TIME_CHECK_CALLBACK_I(Boutarel, kTime2002500, params->param4, 1, setup_function14, true);
+			TIME_CHECK_CALLBACK_1(Boutarel, kTime2002500, params->param4, 1, setup_function14, true);
 			break;
 
 		case 2:
@@ -833,7 +830,7 @@ IMPLEMENT_FUNCTION(33, Boutarel, function33)
 
 	case kActionNone:
 		if (params->param1)
-			TIME_CHECK_CALLBACK_I(Boutarel, kTime2389500, params->param2, 3, setup_function14, false);
+			TIME_CHECK_CALLBACK_1(Boutarel, kTime2389500, params->param2, 3, setup_function14, false);
 		break;
 
 	case kActionDefault:
