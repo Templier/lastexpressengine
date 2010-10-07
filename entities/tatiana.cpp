@@ -523,7 +523,85 @@ IMPLEMENT_FUNCTION(20, Tatiana, function20)
 
 //////////////////////////////////////////////////////////////////////////
 IMPLEMENT_FUNCTION(21, Tatiana, function21)
-	error("Tatiana: callback function 21 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionDefault:
+		getData()->clothes = kClothes1;
+
+		setCallback(1);
+		setup_updateEntity(kCarRedSleeping, kPosition_8513);
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			getData()->clothes = kClothesDefault;
+
+			getSound()->playSound(kEntityTatiana, "TAT1071");
+			getEntities()->drawSequenceRight(kEntityTatiana, "604Aa");
+			getEntities()->enterCompartment(kEntityTatiana, kObjectCompartmentA);
+
+			getData()->location = kLocationInsideCompartment;
+
+			if (getEntities()->checkFields19(kEntityPlayer, kCarRedSleeping, kPosition_7850)) {
+				getAction()->playAnimation(isNight() ? kEventCathTurningNight : kEventCathTurningDay);
+				getSound()->playSound(kEntityPlayer, "BUMP");
+				getScenes()->loadSceneFromObject(kObjectCompartmentA, true);
+			}
+
+			setCallback(2);
+			setup_callbackActionOnDirection();
+			break;
+
+		case 2:
+			getEntities()->exitCompartment(kEntityTatiana, kObjectCompartmentA);
+
+			getData()->location = kLocationInsideCompartment;
+
+			getEntities()->clearSequences(kEntityTatiana);
+			getSavePoints()->push(kEntityTatiana, kEntityAlexei, kAction135854208);
+			getObjects()->update(kObjectCompartmentA, kEntityPlayer, kObjectLocation1, kCursorNormal, kCursorNormal);
+			getObjects()->update(kObjectCompartmentB, kEntityPlayer, kObjectLocation1, kCursorNormal, kCursorNormal);
+			// Fallback to next case
+
+		case 3:
+			if (getSound()->isBuffered(kEntityTatiana)) {
+				setCallback(3);
+				setup_updateFromTime(75);
+			} else {
+				setCallback(4);
+				setup_playSound("TAT1071A");
+			}
+			break;
+
+		case 4:
+			getData()->entityPosition = kPosition_7500;
+
+			getSavePoints()->push(kEntityTatiana, kEntityVassili, kAction168459827);
+
+			setCallback(5);
+			setup_function16(kTime1156500);
+			break;
+
+		case 5:
+		case 6:
+			if (getProgress().field_14 == 29) {
+				setCallback(6);
+				setup_function16(getState()->time + 900);
+			} else {
+				getObjects()->update(kObject49, kEntityPlayer, kObjectLocation1, kCursorHandKnock, kCursorHand);
+
+				setup_function22();
+			}
+			break;
+		}
+		break;
+	}
 }
 
 //////////////////////////////////////////////////////////////////////////

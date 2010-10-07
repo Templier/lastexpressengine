@@ -193,7 +193,86 @@ IMPLEMENT_FUNCTION_I(16, Rebecca, function16, bool)
 
 //////////////////////////////////////////////////////////////////////////
 IMPLEMENT_FUNCTION_I(17, Rebecca, function17, bool)
-	error("Rebecca: callback function 17 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionNone:
+		if (getEntities()->isDistanceBetweenEntities(kEntityRebecca, kEntitySophie, 750)
+		 && !getEntities()->hasValidFrame(kEntitySophie)) {
+			getSavePoints()->push(kEntityRebecca, kEntitySophie, kAction123668192);
+
+			setCallback(3);
+			setup_updateFromTime(0);
+		}
+		break;
+
+	case kActionDefault:
+		setCallback(1);
+		setup_enterExitCompartment("624Be", kObjectCompartmentE);
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			getObjects()->update(kObjectCompartmentE, kEntityPlayer, kObjectLocationNone, kCursorHandKnock, kCursorHand);
+			getObjects()->update(kObject52, kEntityPlayer, kObjectLocationNone, kCursorHandKnock, kCursorHand);
+
+			getData()->location = kLocationOutsideCompartment;
+
+			getSavePoints()->push(kEntityRebecca, kEntitySophie, kAction125242096);
+
+			setCallback(2);
+			setup_updateEntity(kCarRestaurant, kPosition_850);
+			break;
+
+		case 2:
+			getEntities()->clearSequences(kEntitySophie);
+			break;
+
+		case 3:
+			setCallback(4);
+			setup_callbackActionRestaurantOrSalon();
+			break;
+
+		case 4:
+			getData()->entityPosition = kPosition_1540;
+			getData()->location = kLocationOutsideCompartment;
+
+			if (getProgress().chapter == kChapter3)
+				getSound()->playSound(kEntityRebecca, "Reb3005", SoundManager::kFlagInvalid, 75);
+
+			if (params->param1) {
+				setCallback(5);
+				setup_updatePosition("118A", kCarRestaurant, 52);
+			} else {
+				getEntities()->updatePositionEnter(kEntityRebecca, kCarRestaurant, 57);
+
+				setCallback(6);
+				setup_draw2("107A1", "107A2", kEntitySophie);
+			}
+			break;
+
+		case 5:
+			getData()->location = kLocationInsideCompartment;
+
+			CALLBACK_ACTION();
+			break;
+
+		case 6:
+			getEntities()->updatePositionExit(kEntityRebecca, kCarRestaurant, 57);
+			getEntities()->clearSequences(kEntitySophie);
+
+			getData()->location = kLocationInsideCompartment;
+
+			CALLBACK_ACTION();
+			break;
+		}
+		break;
+	}
 }
 
 //////////////////////////////////////////////////////////////////////////

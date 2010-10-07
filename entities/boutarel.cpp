@@ -198,7 +198,80 @@ IMPLEMENT_FUNCTION(13, Boutarel, leaveTableWithMmeBoutarel)
 
 //////////////////////////////////////////////////////////////////////////
 IMPLEMENT_FUNCTION_I(14, Boutarel, function14, bool)
-	error("Boutarel: callback function 14 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionDefault:
+		setCallback(1);
+		setup_callbackActionRestaurantOrSalon();
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			getData()->location = kLocationOutsideCompartment;
+			getSound()->playSound(kEntityBoutarel, "MRB1079");
+
+			setCallback(2);
+			setup_leaveTableWithMmeBoutarel();
+			break;
+
+		case 2:
+			getSavePoints()->push(kEntityBoutarel, kEntityServers1, kAction326144276);
+			getEntities()->drawSequenceRight(kEntityBoutarel, "812DS");
+			if (getEntities()->isInRestaurant(kEntityPlayer))
+				getEntities()->updateFrame(kEntityBoutarel);
+
+			setCallback(3);
+			setup_callbackActionOnDirection();
+			break;
+
+		case 3:
+			getEntityData(kEntityFrancois)->entityPosition = kPosition_540;
+			getEntityData(kEntityMmeBoutarel)->entityPosition = kPosition_540;
+			getData()->entityPosition = kPosition_540;
+
+			getEntityData(kEntityFrancois)->location = kLocationOutsideCompartment;
+			getEntityData(kEntityMmeBoutarel)->location = kLocationOutsideCompartment;
+
+			getEntities()->clearSequences(kEntityBoutarel);
+			getSavePoints()->push(kEntityBoutarel, kEntityMmeBoutarel, kAction100901266);
+
+			setCallback(4);
+			setup_updateFromTime(450);
+			break;
+
+		case 4:
+			getSavePoints()->push(kEntityBoutarel, kEntityFrancois, kAction100901266);
+
+			setCallback(5);
+			setup_updateFromTime(450);
+			break;
+
+		case 5:
+			setCallback(6);
+			setup_updateEntity(kCarRedSleeping, kPosition_6470);
+			break;
+
+		case 6:
+			setCallback(params->param1 ?  7: 8);
+			setup_enterExitCompartment2(params->param1 ? "607Gc" : "607Ac", kObjectCompartmentC);
+			break;
+
+		case 7:
+		case 8:
+			getEntities()->clearSequences(kEntityBoutarel);
+			getData()->location = kLocationInsideCompartment;
+
+			CALLBACK_ACTION();
+			break;
+		}
+		break;
+	}
 }
 
 //////////////////////////////////////////////////////////////////////////

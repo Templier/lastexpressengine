@@ -41,7 +41,7 @@ namespace LastExpress {
 	default: \
 		break; \
 	case kActionNone: \
-		setup_chapters_handler(); \
+		setup_chaptersHandler(); \
 		break; \
 	case kActionDefault: \
 		getEntities()->clearSequences(kEntitySophie); \
@@ -64,7 +64,7 @@ namespace LastExpress {
 Sophie::Sophie(LastExpressEngine *engine) : Entity(engine, kEntitySophie) {
 	ADD_CALLBACK_FUNCTION(Sophie, reset);
 	ADD_CALLBACK_FUNCTION(Sophie, updateEntity);
-	ADD_CALLBACK_FUNCTION(Sophie, chapters_handler);
+	ADD_CALLBACK_FUNCTION(Sophie, chaptersHandler);
 	ADD_CALLBACK_FUNCTION(Sophie, chapter1);
 	ADD_CALLBACK_FUNCTION(Sophie, function5);
 	ADD_CALLBACK_FUNCTION(Sophie, chapter2);
@@ -131,7 +131,7 @@ IMPLEMENT_FUNCTION_II(2, Sophie, updateEntity, CarIndex, EntityPosition)
 }
 
 //////////////////////////////////////////////////////////////////////////
-IMPLEMENT_FUNCTION(3, Sophie, chapters_handler)
+IMPLEMENT_FUNCTION(3, Sophie, chaptersHandler)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -209,7 +209,7 @@ IMPLEMENT_FUNCTION(4, Sophie, chapter1)
 		break;
 
 	case kActionNone:
-		TIME_CHECK_CHAPTER1(setup_chapters_handler);
+		TIME_CHECK_CHAPTER1(setup_chaptersHandler);
 		break;
 
 	case kActionDefault:

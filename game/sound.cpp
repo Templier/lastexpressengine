@@ -376,6 +376,13 @@ void SoundManager::processEntry(SoundType type) {
 		updateEntry(entry, 0);
 }
 
+void SoundManager::setupEntry(SoundType type, EntityIndex index) {
+	SoundEntry *entry = getEntry(type);
+
+	if (entry)
+		entry->entity = index;
+}
+
 void SoundManager::processEntry(Common::String filename) {
 	SoundEntry *entry = getEntry(filename);
 

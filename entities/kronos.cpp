@@ -25,6 +25,12 @@
 
 #include "lastexpress/entities/kronos.h"
 
+#include "lastexpress/entities/anna.h"
+#include "lastexpress/entities/august.h"
+#include "lastexpress/entities/rebecca.h"
+#include "lastexpress/entities/sophie.h"
+#include "lastexpress/entities/tatiana.h"
+
 #include "lastexpress/game/action.h"
 #include "lastexpress/game/entities.h"
 #include "lastexpress/game/inventory.h"
@@ -361,7 +367,46 @@ IMPLEMENT_FUNCTION(18, Kronos, function18)
 
 //////////////////////////////////////////////////////////////////////////
 IMPLEMENT_FUNCTION(19, Kronos, function19)
-	error("Kronos: callback function 19 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionNone:
+		break;
+
+	case kActionDefault:
+		getObjects()->update(kObjectCompartmentKronos, kEntityPlayer, kObjectLocation1, kCursorNormal, kCursorNormal);
+		break;
+
+	case kActionDrawScene:
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			getAction()->playAnimation(kEventKahinaPunchSuite4);
+			getLogic()->gameOver(kSavegameTypeEvent2, kEventCathJumpDownCeiling, kSceneNone, true);
+			break;
+
+		case 2:
+			getAction()->playAnimation(kEventConcertStart);
+			getSound()->setupEntry(SoundManager::kSoundType7, kEntityKronos);
+			getScenes()->loadSceneFromPosition(kCarKronos, 83);
+
+			RESET_ENTITY_STATE(kEntityRebecca, Rebecca, setup_function39);
+			RESET_ENTITY_STATE(kEntitySophie, Sophie, setup_chaptersHandler);
+			RESET_ENTITY_STATE(kEntityAugust, August,  setup_function50);
+			RESET_ENTITY_STATE(kEntityAnna, Anna, setup_function56);
+			RESET_ENTITY_STATE(kEntityTatiana, Tatiana, setup_function35);
+
+			setup_function20();
+			break;
+		}
+		break;
+	}
 }
 
 //////////////////////////////////////////////////////////////////////////

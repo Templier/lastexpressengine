@@ -449,7 +449,92 @@ IMPLEMENT_FUNCTION(12, Francois, function12)
 
 //////////////////////////////////////////////////////////////////////////
 IMPLEMENT_FUNCTION(13, Francois, function13)
-	error("Francois: callback function 13 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionDefault:
+		setCallback(1);
+		setup_function9();
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			setCallback(2);
+			setup_updateEntity(kCarRedSleeping, kPosition_540);
+			break;
+
+		case 2:
+			setCallback(3);
+			setup_updateEntity(kCarGreenSleeping, kPosition_4070);
+			break;
+
+		case 3:
+			setCallback(4);
+			setup_enterExitCompartment("605Df", kObjectCompartment6);
+			break;
+
+		case 4:
+			getData()->location = kLocationInsideCompartment;
+			getEntities()->clearSequences(kEntityFrancois);
+
+			setCallback(5);
+			setup_playSound("Har2010");
+			break;
+
+		case 5:
+			getSavePoints()->push(kEntityFrancois, kEntityAlouan, kAction189489753);
+			break;
+
+		case 6:
+			getData()->location = kLocationOutsideCompartment;
+
+			setCallback(7);
+			setup_updateEntity(kCarGreenSleeping, kPosition_4840);
+			break;
+
+		case 7:
+			if (getInventory()->hasItem(kItemWhistle) || getInventory()->get(kItemWhistle)->location == kObjectLocation3) {
+				setCallback(10);
+				setup_updateEntity(kCarGreenSleeping, kPosition_5790);
+				break;
+			}
+
+			getEntities()->drawSequenceLeft(kEntityFrancois, "605He");
+			break;
+
+		case 8:
+			setCallback(9);
+			setup_updateFromTime(450);
+			break;
+
+		case 9:
+			getEntities()->exitCompartment(kEntityFrancois, kObjectCompartmentE, true);
+
+			setCallback(10);
+			setup_updateEntity(kCarGreenSleeping, kPosition_5790);
+			break;
+
+		case 10:
+			setCallback(11);
+			setup_function10();
+			break;
+
+		case 11:
+			CALLBACK_ACTION();
+			break;
+		}
+		break;
+
+	case kAction190219584:
+		setCallback(6);
+		setup_enterExitCompartment("605Ef", kObjectCompartment6);
+		break;
+	}
 }
 
 //////////////////////////////////////////////////////////////////////////

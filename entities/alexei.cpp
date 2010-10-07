@@ -1166,7 +1166,86 @@ IMPLEMENT_FUNCTION(33, Alexei, chapter3Handler)
 
 //////////////////////////////////////////////////////////////////////////
 IMPLEMENT_FUNCTION(34, Alexei, function34)
-	error("Alexei: callback function 34 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionDefault:
+		if (getEntities()->isPlayerPosition(kCarGreenSleeping, 61))
+			getScenes()->loadSceneFromPosition(kCarGreenSleeping, 49);
+
+		setCallback(1);
+		setup_function16(kTime2083500, "411");
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			setCallback(2);
+			setup_function14();
+			break;
+
+		case 2:
+			setCallback(3);
+			setup_updateEntity(kCarRestaurant, kPosition_850);
+			break;
+
+		case 3:
+			setCallback(4);
+			setup_callbackActionRestaurantOrSalon();
+			break;
+
+		case 4:
+			getData()->entityPosition = kPosition_1540;
+			getData()->location = kLocationOutsideCompartment;
+
+			setCallback(5);
+			setup_updatePosition("103A", kCarRestaurant, 52);
+			break;
+
+		case 5:
+			setCallback(6);
+			setup_function35();
+			break;
+
+		case 6:
+			setCallback(7);
+			setup_function13();
+			break;
+
+		case 7:
+			getObjects()->update(kObject10, kEntityPlayer, kObjectLocation1, kCursorKeepValue, kCursorKeepValue);
+			if (getEntities()->isPlayerPosition(kCarGreenSleeping, 61))
+				getScenes()->loadSceneFromPosition(kCarGreenSleeping, 66);
+
+			setCallback(8);
+			setup_function16(kTime2124000, "NONE");
+			break;
+
+		case 8:
+			setCallback(9);
+			setup_function14();
+			break;
+
+		case 9:
+			setCallback(10);
+			setup_function36();
+			break;
+
+		case 10:
+			getObjects()->update(kObject10, kEntityPlayer, kObjectLocationNone, kCursorKeepValue, kCursorKeepValue);
+			if (getEntities()->isPlayerPosition(kCarGreenSleeping, 66))
+				getScenes()->loadSceneFromPosition(kCarGreenSleeping, 49);
+
+			setCallback(11);
+			setup_function16(kTime16451100, "411");
+			break;
+		}
+		break;
+	}
 }
 
 //////////////////////////////////////////////////////////////////////////

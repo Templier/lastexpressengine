@@ -96,7 +96,14 @@ public:
 	 */
 	DECLARE_FUNCTION_2(savegame, SavegameType savegameType, uint32 param)
 
-	DECLARE_FUNCTION_2(function9, CarIndex car, EntityPosition entityPosition)
+	/**
+	 * Updates the entity
+	 *
+	 * @param car            The car
+	 * @param entityPosition The entity position
+	 */
+	DECLARE_FUNCTION_2(updateEntity, CarIndex car, EntityPosition entityPosition)
+
 	DECLARE_FUNCTION_1(function10, uint32 time)
 	DECLARE_FUNCTION_1(function11, uint32 ticks)
 	DECLARE_FUNCTION_1(excuseMe, EntityIndex entity)

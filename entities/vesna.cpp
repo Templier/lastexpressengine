@@ -27,9 +27,11 @@
 
 #include "lastexpress/game/action.h"
 #include "lastexpress/game/entities.h"
+#include "lastexpress/game/fight.h"
 #include "lastexpress/game/logic.h"
 #include "lastexpress/game/object.h"
 #include "lastexpress/game/savepoint.h"
+#include "lastexpress/game/scenes.h"
 #include "lastexpress/game/sound.h"
 #include "lastexpress/game/state.h"
 
@@ -368,7 +370,100 @@ IMPLEMENT_FUNCTION(17, Vesna, chapter2Handler)
 
 //////////////////////////////////////////////////////////////////////////
 IMPLEMENT_FUNCTION(18, Vesna, function18)
-	error("Vesna: callback function 18 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionDefault:
+		setCallback(1);
+		setup_enterExitCompartment("610Bg", kObjectCompartmentG);
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			getData()->location = kLocationOutsideCompartment;
+			if (getData()->entityPosition < kPosition_2087)
+				getData()->entityPosition = kPosition_2088;
+
+			setCallback(2);
+			setup_updateEntity(kCarRestaurant, kPosition_850);
+			break;
+
+		case 2:
+			setCallback(3);
+			setup_callbackActionRestaurantOrSalon();
+			break;
+
+		case 3:
+			getData()->entityPosition = kPosition_1540;
+			getData()->location = kLocationOutsideCompartment;
+
+			setCallback(4);
+			setup_draw("808US");
+			break;
+
+		case 4:
+			getEntities()->drawSequenceRight(kEntityVesna, "808UD");
+			if (getEntities()->isInSalon(kEntityPlayer))
+				getEntities()->updateFrame(kEntityVesna);
+
+			setCallback(5);
+			setup_callbackActionOnDirection();
+			break;
+
+		case 5:
+			getData()->location = kLocationInsideCompartment;
+			getEntities()->clearSequences(kEntityVesna);
+
+			setCallback(6);
+			setup_updateFromTime(4500);
+			break;
+
+		case 6:
+			setCallback(7);
+			setup_callbackActionRestaurantOrSalon();
+			break;
+
+		case 7:
+			getData()->entityPosition = kPosition_5800;
+			getData()->location = kLocationOutsideCompartment;
+
+			setCallback(8);
+			setup_draw("808DD");
+			break;
+
+		case 8:
+			getEntities()->drawSequenceRight(kEntityVesna, "808DS");
+			if (getEntities()->isInRestaurant(kEntityPlayer))
+				getEntities()->updateFrame(kEntityVesna);
+
+			setCallback(9);
+			setup_callbackActionOnDirection();
+			break;
+
+		case 9:
+			setCallback(10);
+			setup_updateEntity(kCarRedSleeping, kPosition_3050);
+			break;
+
+		case 10:
+			setCallback(11);
+			setup_enterExitCompartment("610Ag", kObjectCompartmentG);
+			break;
+
+		case 11:
+			getData()->location = kLocationInsideCompartment;
+			getEntities()->clearSequences(kEntityVesna);
+
+			CALLBACK_ACTION();
+			break;
+		}
+		break;
+	}
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -526,12 +621,202 @@ IMPLEMENT_FUNCTION(20, Vesna, chapter3Handler)
 
 //////////////////////////////////////////////////////////////////////////
 IMPLEMENT_FUNCTION(21, Vesna, function21)
-	error("Vesna: callback function 21 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionDefault:
+		setCallback(1);
+		setup_enterExitCompartment("610Bg", kObjectCompartmentG);
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			getData()->location = kLocationOutsideCompartment;
+			if (getData()->entityPosition < kPosition_2087)
+				getData()->entityPosition = kPosition_2088;
+
+			setCallback(2);
+			setup_updateEntity(kCarRestaurant, kPosition_850);
+			break;
+
+		case 2:
+			setCallback(3);
+			setup_callbackActionRestaurantOrSalon();
+			break;
+
+		case 3:
+			getData()->entityPosition = kPosition_1540;
+			getData()->location = kLocationOutsideCompartment;
+
+			setCallback(4);
+			setup_draw("808US");
+			break;
+
+		case 4:
+			getEntities()->drawSequenceRight(kEntityVesna, "808UD");
+			if (getEntities()->isInSalon(kEntityPlayer))
+				getEntities()->updateFrame(kEntityVesna);
+
+			setCallback(5);
+			setup_callbackActionOnDirection();
+			break;
+
+		case 5:
+			getEntities()->clearSequences(kEntityVesna);
+			getData()->entityPosition = kPosition_5900;
+			getData()->location = kLocationInsideCompartment;
+
+			setCallback(6);
+			setup_updateFromTime(4500);
+			break;
+
+		case 6:
+			setCallback(7);
+			setup_callbackActionRestaurantOrSalon();
+			break;
+
+		case 7:
+			getData()->entityPosition = kPosition_5800;
+			getData()->location = kLocationOutsideCompartment;
+
+			setCallback(8);
+			setup_draw("808DD");
+			break;
+
+		case 8:
+			getEntities()->drawSequenceRight(kEntityVesna, "808DS");
+			if (getEntities()->isInRestaurant(kEntityPlayer))
+				getEntities()->updateFrame(kEntityVesna);
+
+			setCallback(9);
+			setup_callbackActionOnDirection();
+			break;
+
+		case 9:
+			setCallback(10);
+			setup_updateEntity(kCarRedSleeping, kPosition_3050);
+			break;
+
+		case 10:
+			setCallback(11);
+			setup_enterExitCompartment("610Ag", kObjectCompartmentG); /* BUG the original engine passes 3050 here */
+			break;
+
+		case 11:
+			getData()->entityPosition = kPosition_3050;
+			getData()->location = kLocationInsideCompartment;
+			getEntities()->clearSequences(kEntityVesna);
+
+			CALLBACK_ACTION();
+			break;
+		}
+		break;
+	}
 }
 
 //////////////////////////////////////////////////////////////////////////
 IMPLEMENT_FUNCTION(22, Vesna, function22)
-	error("Vesna: callback function 22 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionDefault:
+		getSavePoints()->push(kEntityVesna, kEntityMilos, kAction259125998);
+
+		setCallback(1);
+		setup_enterExitCompartment("610Bg", kObjectCompartmentG);
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			getData()->location = kLocationOutsideCompartment;
+			if (getData()->entityPosition < kPosition_2087)
+				getData()->entityPosition = kPosition_2088;
+
+			setCallback(2);
+			setup_updateEntity(kCarRestaurant, kPosition_850);
+			break;
+
+		case 2:
+			setCallback(3);
+			setup_callbackActionRestaurantOrSalon();
+			break;
+
+		case 3:
+			getData()->entityPosition = kPosition_1540;
+			getData()->location = kLocationOutsideCompartment;
+
+			setCallback(4);
+			setup_draw("808US");
+			break;
+
+		case 4:
+			getEntities()->drawSequenceRight(kEntityVesna, "808UD");
+			if (getEntities()->isInSalon(kEntityPlayer))
+				getEntities()->updateFrame(kEntityVesna);
+
+			setCallback(5);
+			setup_callbackActionOnDirection();
+			break;
+
+		case 5:
+			getEntities()->clearSequences(kEntityVesna);
+			getData()->car = kCarBaggage;
+			getSavePoints()->push(kEntityVesna, kEntityAnna, kAction235856512);
+			break;
+
+		case 6:
+			getData()->car = kCarRestaurant;
+			getData()->entityPosition = kPosition_5800;
+			getData()->location = kLocationOutsideCompartment;
+
+			setCallback(7);
+			setup_draw("808DD");
+			break;
+
+		case 7:
+			getEntities()->drawSequenceRight(kEntityVesna, "808DS");
+			if (getEntities()->isInRestaurant(kEntityPlayer))
+				getEntities()->updateFrame(kEntityVesna);
+
+			setCallback(8);
+			setup_callbackActionOnDirection();
+			break;
+
+		case 8:
+			setCallback(9);
+			setup_updateEntity(kCarRedSleeping, kPosition_3050);
+			break;
+
+		case 9:
+			setCallback(10);
+			setup_enterExitCompartment("610Ag", kObjectCompartmentG); /* BUG the original engine passes 3050 here */
+			break;
+
+		case 10:
+			getData()->entityPosition = kPosition_3050;
+			getData()->location = kLocationInsideCompartment;
+			getEntities()->clearSequences(kEntityVesna);
+
+			setup_function23();
+			break;
+		}
+		break;
+
+	case kAction189299008:
+		setCallback(6);
+		setup_callbackActionRestaurantOrSalon();
+		break;
+	}
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -793,7 +1078,84 @@ IMPLEMENT_FUNCTION(29, Vesna, chapter5Handler)
 
 //////////////////////////////////////////////////////////////////////////
 IMPLEMENT_FUNCTION(30, Vesna, function30)
-	error("Vesna: callback function 30 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionNone:
+		if (!params->param1) {
+			UPDATE_PARAM_PROC(params->param3, getState()->timeTicks, 120)
+				getSound()->playSound(kEntityVesna, "Ves50001", SoundManager::kFlagDefault);
+				params->param1 = 1;
+			UPDATE_PARAM_PROC_END
+		}
+
+		UPDATE_PARAM(params->param4, getState()->timeTicks, 180);
+
+		setCallback(1);
+		setup_savegame(kSavegameTypeEvent, kEventCathVesnaTrainTopKilled);
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+		case 2:
+			getAction()->playAnimation(kEventCathVesnaTrainTopKilled);
+			getLogic()->gameOver(kSavegameTypeIndex, 1, kSceneNone, true);
+			break;
+
+		case 3:
+			getAction()->playAnimation(kEventCathVesnaTrainTopFight);
+
+			setCallback(4);
+			setup_savegame(kSavegameTypeTime, kTimeNone);
+			break;
+
+		case 4:
+			params->param2 = getFight()->setup(kFightVesna);
+
+			if (params->param2) {
+				getLogic()->gameOver(kSavegameTypeIndex, 0, kSceneNone, params->param2 != Fight::kFightEndExit);
+			} else {
+				getSound()->playSound(kEntityPlayer, "TUNNEL");
+
+				getState()->time += 1800;
+
+				setCallback(5);
+				setup_savegame(kSavegameTypeEvent, kEventCathVesnaTrainTopWin);
+			}
+			break;
+
+		case 5:
+			getAction()->playAnimation(kEventCathVesnaTrainTopWin);
+			getScenes()->loadSceneFromPosition(kCarRestaurant, 11);
+
+			setup_nullfunction();
+			break;
+		}
+		break;
+
+	case kAction167992577:
+		setCallback(3);
+		setup_savegame(kSavegameTypeEvent, kEventCathVesnaTrainTopFight);
+		break;
+
+	case kAction202884544:
+		if (params->param1) {
+			setCallback(2);
+			setup_savegame(kSavegameTypeEvent, kEventCathVesnaTrainTopKilled);
+		} else {
+			getSound()->playSound(kEntityVesna, "Ves5001", SoundManager::kFlagDefault);
+			params->param1 = 1;
+		}
+		break;
+	}
 }
+
+//////////////////////////////////////////////////////////////////////////
+IMPLEMENT_NULL_FUNCTION(31, Vesna)
 
 } // End of namespace LastExpress

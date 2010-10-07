@@ -54,7 +54,7 @@ public:
 	/**
 	 * Handle chapters events
 	 */
-	DECLARE_FUNCTION(chapters_handler)
+	DECLARE_FUNCTION(chaptersHandler)
 
 	/**
 	 * Setup Chapter 1

@@ -153,6 +153,7 @@ public:
 	// Entry
 	bool isBuffered(Common::String filename, bool testForEntity = false);
 	bool isBuffered(EntityIndex entity);
+	void setupEntry(SoundType type, EntityIndex index);
 	void processEntry(EntityIndex entity);
 	void processEntry(SoundType type);
 	void processEntry(Common::String filename);

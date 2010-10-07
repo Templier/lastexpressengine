@@ -275,20 +275,20 @@ IMPLEMENT_FUNCTION_I(20, August, function20, bool)
 		default:
 			break;
 
-		case 1:
+		case kChapter1:
 			strcpy((char *)&parameters->seq1, "626");
 			break;
 
-		case 2:
-		case 3:
+		case kChapter2:
+		case kChapter3:
 			if (getData()->clothes != kClothes2) {
 				strcpy((char *)&parameters->seq1, "666");
 				break;
 			}
 			// Fallback to next case
 
-		case 4:
-		case 5:
+		case kChapter4:
+		case kChapter5:
 			strcpy((char *)&parameters->seq1, "696");
 			break;
 		}

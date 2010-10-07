@@ -665,7 +665,77 @@ IMPLEMENT_FUNCTION(25, Milos, function25)
 
 //////////////////////////////////////////////////////////////////////////
 IMPLEMENT_FUNCTION_I(26, Milos, function26, TimeValue)
-	error("Milos: callback function 26 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionNone:
+		if (params->param1 < getState()->time && !params->param2) {
+			CALLBACK_ACTION();
+			break;
+		}
+
+		if (getEntities()->isPlayerInCar(kCarGreenSleeping) || getEntities()->isPlayerInCar(kCarRedSleeping)) {
+			if (getEntities()->isInsideTrainCar(kEntityPlayer, kCarGreenSleeping)) {
+				setCallback(2);
+				setup_function27(kCarGreenSleeping, kPosition_540);
+			} else {
+				setCallback(3);
+				setup_function27(kCarRedSleeping, kPosition_9460);
+			}
+		}
+		break;
+
+	case kActionDefault:
+		ENTITY_PARAM(0, 2) = 0;
+
+		setCallback(1);
+		setup_function27(kCarRedSleeping, kPosition_540);
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			if (ENTITY_PARAM(0, 2)) {
+				CALLBACK_ACTION();
+				break;
+			}
+
+			getEntities()->clearSequences(kEntityMilos);
+			break;
+
+		case 2:
+		case 3:
+			if (ENTITY_PARAM(0, 2)) {
+				CALLBACK_ACTION();
+				break;
+			}
+
+			getEntities()->clearSequences(kEntityMilos);
+
+			setCallback(4);
+			setup_updateFromTime(450);
+			break;
+
+		case 4:
+			setCallback(5);
+			setup_function27(kCarRedSleeping, kPosition_540);
+			break;
+
+		case 5:
+			if (ENTITY_PARAM(0, 2)) {
+				CALLBACK_ACTION();
+				break;
+			}
+
+			getEntities()->clearSequences(kEntityMilos);
+			break;
+		}
+		break;
+	}
 }
 
 //////////////////////////////////////////////////////////////////////////

@@ -262,6 +262,7 @@ enum TimeValue {
 
 	kTime10881000             = 10881000,
 	kTimeEnd                  = 15803100,
+	kTime16451100             = 16451100,
 
 	kTimeInvalid              = 2147483647,
 	kTimeInvalid2             = 0xFFFFFEDA
@@ -518,6 +519,7 @@ enum EntityPosition {
 	kPosition_3970  = 3970,
 	kPosition_4070  = 4070,
 	kPosition_4100  = 4100,
+	kPosition_4370  = 4370,
 	kPosition_4455  = 4455,
 	kPosition_4460  = 4460,
 	kPosition_4500  = 4500,
@@ -1285,6 +1287,7 @@ enum ActionIndex {
 	/////////////////////////////
 	// Coudert
 	/////////////////////////////
+	kAction123733488 = 123733488,
 	kAction154005632 = 154005632,
 	kAction155991520 = 155991520,
 	kAction157026693 = 157026693,
@@ -1303,6 +1306,7 @@ enum ActionIndex {
 	kAction205033696 = 205033696,
 	kAction205346192 = 205346192,    // Francois
 	kAction219971920 = 219971920,    // Anna
+	kAction223068211 = 223068211,    // MmeBoutarel
 	kAction225932896 = 225932896,
 	kAction226031488 = 226031488,    // Verges
 	kAction238358920 = 238358920,    // Anna
