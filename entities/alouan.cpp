@@ -136,7 +136,7 @@ IMPLEMENT_FUNCTION(11, Alouan, chapter1Handler)
 
 	case kActionNone:
 
-		TIME_CHECK_CALLBACK(Alouan, kTime1096200, params->param1, 1, setup_compartment8to6);
+		TIME_CHECK_CALLBACK(kTime1096200, params->param1, 1, setup_compartment8to6);
 
 label_callback1:
 		if (getState()->time > kTime1162800 && !params->param2) {
@@ -286,21 +286,21 @@ IMPLEMENT_FUNCTION(16, Alouan, chapter3Handler)
 		break;
 
 	case kActionNone:
-		TIME_CHECK_CALLBACK(Alouan, kTimeCitySalzbourg, params->param1, 1, setup_compartment8to6);
+		TIME_CHECK_CALLBACK(kTimeCitySalzbourg, params->param1, 1, setup_compartment8to6);
 
 label_callback1:
 		if (params->param2 != kTimeInvalid && getState()->time > kTime1989000)
-			TIME_CHECK_CAR(Alouan, kTime2119500, params->param5, 5, setup_compartment8);
+			TIME_CHECK_CAR(kTime2119500, params->param5, 5, setup_compartment8);
 
 label_callback2:
-		TIME_CHECK_PLAYSOUND(Alouan, kTime2052000, params->param3, 3, "Har1005");
+		TIME_CHECK_PLAYSOUND(kTime2052000, params->param3, 3, "Har1005");
 
 label_callback3:
-		TIME_CHECK_CALLBACK(Alouan, kTime2133000, params->param4, 4, setup_compartment6to8);
+		TIME_CHECK_CALLBACK(kTime2133000, params->param4, 4, setup_compartment6to8);
 
 label_callback4:
 		if (params->param5 != kTimeInvalid && getState()->time > kTime2151000)
-			TIME_CHECK_CAR(Alouan, kTime2241000, params->param5, 5, setup_compartment8);
+			TIME_CHECK_CAR(kTime2241000, params->param5, 5, setup_compartment8);
 		break;
 
 	case kActionDefault:
@@ -358,10 +358,10 @@ IMPLEMENT_FUNCTION(18, Alouan, chapter4Handler)
 
 	case kActionNone:
 		if (params->param1 != kTimeInvalid)
-			TIME_CHECK_CAR(Alouan, kTime2443500, params->param1, 1, setup_compartment8);
+			TIME_CHECK_CAR(kTime2443500, params->param1, 1, setup_compartment8);
 
 label_callback1:
-		TIME_CHECK_CALLBACK(Alouan, kTime2455200, params->param2, 2, setup_compartment8to6);
+		TIME_CHECK_CALLBACK(kTime2455200, params->param2, 2, setup_compartment8to6);
 
 label_callback2:
 		if (getState()->time > kTime2475000 && !params->param3) {

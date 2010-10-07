@@ -411,7 +411,7 @@ IMPLEMENT_FUNCTION(22, Rebecca, chapter1Handler)
 		break;
 
 	case kActionNone:
-		TIME_CHECK_PLAYSOUND(Rebecca, kTime1084500, params->param3, 1, "REB1015");
+		TIME_CHECK_PLAYSOUND(kTime1084500, params->param3, 1, "REB1015");
 
 		if (params->param4 == kTimeInvalid)
 			goto label_callback_4;
@@ -539,7 +539,7 @@ IMPLEMENT_FUNCTION(26, Rebecca, function26)
 		break;
 
 	case kActionNone:
-		TIME_CHECK_CALLBACK_3(Rebecca, kTime1224000, params->param2, 1, setup_updatePosition, "118H", kCarRestaurant, 52);
+		TIME_CHECK_CALLBACK_3(kTime1224000, params->param2, 1, setup_updatePosition, "118H", kCarRestaurant, 52);
 
 		if (params->param1) {
 			UPDATE_PARAM(params->param3, getState()->timeTicks, 90);

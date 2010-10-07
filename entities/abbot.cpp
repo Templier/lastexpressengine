@@ -692,7 +692,7 @@ IMPLEMENT_FUNCTION(28, Abbot, function28)
 		break;
 
 	case kActionNone:
-		TIME_CHECK_CALLBACK(Abbot, kTime2052000, params->param1, 1, setup_function29);
+		TIME_CHECK_CALLBACK(kTime2052000, params->param1, 1, setup_function29);
 		break;
 
 	case kActionDefault:

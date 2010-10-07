@@ -762,10 +762,10 @@ label_callback3:
 		if (params->param6)
 			goto label_callback12;
 
-		TIME_CHECK_CALLBACK_1(Verges, kTimeChapter1, params->param7, 4, setup_function9, "TRA1001");
+		TIME_CHECK_CALLBACK_1(kTimeChapter1, params->param7, 4, setup_function9, "TRA1001");
 
 label_callback4:
-		TIME_CHECK_CALLBACK(Verges, kTime1089000, params->param8, 5, setup_function12);
+		TIME_CHECK_CALLBACK(kTime1089000, params->param8, 5, setup_function12);
 
 		params->param8 = 1;
 
@@ -776,16 +776,16 @@ label_callback4:
 		}
 
 label_callback8:
-		TIME_CHECK_CALLBACK_1(Verges, kTime1107000, CURRENT_PARAMS(1, 1), 9, setup_function9, "TRA1001A");
+		TIME_CHECK_CALLBACK_1(kTime1107000, CURRENT_PARAMS(1, 1), 9, setup_function9, "TRA1001A");
 
 label_callback9:
-		TIME_CHECK_CALLBACK_1(Verges, kTime1134000, CURRENT_PARAMS(1, 2), 10, setup_function9, "TRA1002");
+		TIME_CHECK_CALLBACK_1(kTime1134000, CURRENT_PARAMS(1, 2), 10, setup_function9, "TRA1002");
 
 label_callback10:
-		TIME_CHECK_CALLBACK_1(Verges, kTime1165500, CURRENT_PARAMS(1, 3), 11, setup_function9, "TRA1003");
+		TIME_CHECK_CALLBACK_1(kTime1165500, CURRENT_PARAMS(1, 3), 11, setup_function9, "TRA1003");
 
 label_callback11:
-		TIME_CHECK_CALLBACK_1(Verges, kTime1225800, CURRENT_PARAMS(1, 4), 12, setup_function9, "TRA1004");
+		TIME_CHECK_CALLBACK_1(kTime1225800, CURRENT_PARAMS(1, 4), 12, setup_function9, "TRA1004");
 
 label_callback12:
 		if (ENTITY_PARAM(0, 5) && !params->param2) {
@@ -937,7 +937,7 @@ IMPLEMENT_FUNCTION(28, Verges, chapter2Handler)
 		}
 
 label_callback_1:
-		TIME_CHECK_CALLBACK_1(Verges, kTime1818900, params->param1, 2, setup_function9, "Tra2177");
+		TIME_CHECK_CALLBACK_1(kTime1818900, params->param1, 2, setup_function9, "Tra2177");
 
 label_callback_2:
 		if (params->param2 == kTimeInvalid || !getState()->time)
@@ -1282,7 +1282,93 @@ IMPLEMENT_FUNCTION(36, Verges, chapter4)
 
 //////////////////////////////////////////////////////////////////////////
 IMPLEMENT_FUNCTION(37, Verges, chapter4Handler)
-	error("Verges: callback function 37 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionNone:
+		if (getEntities()->isInBaggageCarEntrance(kEntityPlayer)) {
+			setCallback(1);
+			setup_function13(false);
+			break;
+		}
+
+label_callback_1:
+		if (ENTITY_PARAM(0, 6)) {
+			if (ENTITY_PARAM(0, 3)) {
+				setCallback(2);
+				setup_function17();
+				break;
+			}
+
+label_callback_2:
+			TIME_CHECK_CALLBACK_1(kTime2349000, params->param1, 3, setup_function9, "Tra1001");
+
+label_callback_3:
+			TIME_CHECK_CALLBACK_1(kTime2378700, params->param2, 4, setup_function9, "Tra4001");
+
+label_callback_4:
+			TIME_CHECK_CALLBACK_1(kTime2403000, params->param3, 5, setup_function9, "Tra1001A");
+
+label_callback_5:
+			TIME_CHECK_CALLBACK_1(kTime2414700, params->param4, 6, setup_function9, "Tra4002");
+
+label_callback_6:
+			TIME_CHECK_CALLBACK_1(kTime2484000, params->param5, 7, setup_function9, "Tra4003");
+
+label_callback_7:
+			TIME_CHECK_CALLBACK_1(kTime2511000, params->param6, 8, setup_function9, "Tra4004");
+		}
+
+label_callback_8:
+		TIME_CHECK_CALLBACK_1(kTime2538000, params->param7, 9, setup_function9, "Tra4005");
+
+		break;
+
+	case kActionOpenDoor:
+		setCallback(10);
+		setup_function13(savepoint.param.intValue < 106);
+		break;
+
+	case kActionDefault:
+		getData()->car = kCarBaggage;
+		getData()->entityPosition = kPosition_5000;
+		getData()->location = kLocationOutsideCompartment;
+
+		getInventory()->setLocationAndProcess(kItem9, kObjectLocation1);
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			goto label_callback_1;
+
+		case 2:
+			goto label_callback_2;
+
+		case 3:
+			goto label_callback_3;
+
+		case 4:
+			goto label_callback_4;
+
+		case 5:
+			goto label_callback_5;
+
+		case 6:
+			goto label_callback_6;
+
+		case 7:
+			goto label_callback_7;
+
+		case 8:
+			goto label_callback_8;
+		}
+		break;
+	}
 }
 
 //////////////////////////////////////////////////////////////////////////

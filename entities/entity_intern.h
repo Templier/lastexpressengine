@@ -337,7 +337,7 @@ void class::setup_##name() { \
 		getSavePoints()->push(entity1, entity2, action); \
 	}
 
-#define TIME_CHECK_CALLBACK(class, timeValue, parameter, callback, function) \
+#define TIME_CHECK_CALLBACK(timeValue, parameter, callback, function) \
 	if (getState()->time > timeValue && !parameter) { \
 		parameter = 1; \
 		setCallback(callback); \
@@ -345,7 +345,7 @@ void class::setup_##name() { \
 		break; \
 	}
 
-#define TIME_CHECK_CALLBACK_1(class, timeValue, parameter, callback, function, param1) \
+#define TIME_CHECK_CALLBACK_1(timeValue, parameter, callback, function, param1) \
 	if (getState()->time > timeValue && !parameter) { \
 		parameter = 1; \
 		setCallback(callback); \
@@ -353,7 +353,7 @@ void class::setup_##name() { \
 		break; \
 	}
 
-#define TIME_CHECK_CALLBACK_3(class, timeValue, parameter, callback, function, param1, param2, param3) \
+#define TIME_CHECK_CALLBACK_3(timeValue, parameter, callback, function, param1, param2, param3) \
 	if (getState()->time > timeValue && !parameter) { \
 		parameter = 1; \
 		setCallback(callback); \
@@ -361,14 +361,14 @@ void class::setup_##name() { \
 		break; \
 	}
 
-#define TIME_CHECK_CALLBACK_ACTION(class, timeValue, parameter) \
+#define TIME_CHECK_CALLBACK_ACTION(timeValue, parameter) \
 	if (getState()->time > timeValue && !parameter) { \
 		parameter = 1; \
 		CALLBACK_ACTION(); \
 		break; \
 	}
 
-#define TIME_CHECK_SAVEGAME(class, timeValue, parameter, callback, type, event) \
+#define TIME_CHECK_SAVEGAME(timeValue, parameter, callback, type, event) \
 	if (getState()->time > timeValue && !parameter) { \
 		parameter = 1; \
 		setCallback(callback); \
@@ -376,7 +376,7 @@ void class::setup_##name() { \
 		break; \
 	}
 
-#define TIME_CHECK_ENTERSTATION(class, timeValue, parameter, callback, name, param2) \
+#define TIME_CHECK_ENTERSTATION(timeValue, parameter, callback, name, param2) \
 	if (getState()->time > timeValue && !parameter) { \
 		parameter = 1; \
 		setCallback(callback); \
@@ -384,7 +384,7 @@ void class::setup_##name() { \
 		break; \
 	}
 
-#define TIME_CHECK_EXITSTATION(class, timeValue, parameter, callback, name) \
+#define TIME_CHECK_EXITSTATION(timeValue, parameter, callback, name) \
 	if (getState()->time > timeValue && !parameter) { \
 		parameter = 1; \
 		setCallback(callback); \
@@ -392,7 +392,7 @@ void class::setup_##name() { \
 		break; \
 	}
 
-#define TIME_CHECK_EXITSTATION_2(class, timeValue, parameter1, parameter2, callback, name) \
+#define TIME_CHECK_EXITSTATION_2(timeValue, parameter1, parameter2, callback, name) \
 	if (getState()->time > timeValue && !parameter1) { \
 		parameter1 = 1; \
 		parameter2 = 1; \
@@ -401,14 +401,14 @@ void class::setup_##name() { \
 		break; \
 	}
 
-#define TIME_CHECK_EXITSTATION_0(class, parameter1, parameter2, callback, name) \
+#define TIME_CHECK_EXITSTATION_0(parameter1, parameter2, callback, name) \
 	if (parameter1 && !parameter2) { \
 		setCallback(callback); \
 		setup_exitStation(name); \
 		break; \
 	}
 
-#define TIME_CHECK_PLAYSOUND(class, timeValue, parameter, callback, sound) \
+#define TIME_CHECK_PLAYSOUND(timeValue, parameter, callback, sound) \
 	if (getState()->time > timeValue && !parameter) { \
 		parameter = 1; \
 		setCallback(callback); \
@@ -416,7 +416,7 @@ void class::setup_##name() { \
 		break; \
 	}
 
-#define TIME_CHECK_PLAYSOUND_UPDATEPOSITION(class, timeValue, parameter, callback, sound, position) \
+#define TIME_CHECK_PLAYSOUND_UPDATEPOSITION(timeValue, parameter, callback, sound, position) \
 	if (getState()->time > timeValue && !parameter) { \
 		parameter = 1; \
 		getData()->entityPosition = position; \
@@ -437,7 +437,7 @@ void class::setup_##name() { \
 		getData()->entityPosition = position; \
 	}
 
-#define TIME_CHECK_CAR(class, timeValue, parameter, callback, function) {\
+#define TIME_CHECK_CAR(timeValue, parameter, callback, function) {\
 	if ((getState()->time <= timeValue && !getEntities()->isPlayerInCar(kCarGreenSleeping)) || !parameter) \
 		parameter = getState()->time + 75; \
 	if (getState()->time > timeValue || parameter < getState()->time) { \

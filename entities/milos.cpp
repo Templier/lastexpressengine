@@ -723,7 +723,86 @@ IMPLEMENT_FUNCTION(28, Milos, chapter4)
 
 //////////////////////////////////////////////////////////////////////////
 IMPLEMENT_FUNCTION(29, Milos, chapter4Handler)
-	error("Milos: callback function 29 not implemented!");
+#define TIME_CHECK_PLAYSOUND_MILOS(timeValue, parameter, sound) \
+	if (getState()->time > timeValue && !parameter) { \
+		parameter = 1; \
+		getSound()->playSound(kEntityMilos, sound); \
+		if (getEntities()->isDistanceBetweenEntities(kEntityMilos, kEntityPlayer, 2000)) \
+			getProgress().field_94 = 1; \
+		break; \
+	}
+
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionNone:
+		if (params->param1)
+			break;
+
+		if (params->param2) {
+			setup_function30();
+			break;
+		}
+
+		TIME_CHECK_PLAYSOUND_MILOS(kTime2356200, params->param3, "Mil4013");
+
+		TIME_CHECK_PLAYSOUND_MILOS(kTime2360700, params->param4, "Mil4014");
+
+		TIME_CHECK_PLAYSOUND_MILOS(kTime2370600, params->param5, "Mil4015");
+
+		TIME_CHECK_SAVEPOINT(kTime2407500, params->param6, kEntityMilos, kEntityVesna, kAction55996766);
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			getData()->location = kLocationOutsideCompartment;
+			getEntities()->drawSequenceLeft(kEntityMilos, "611Cg");
+			getEntities()->enterCompartment(kEntityMilos, kObjectCompartmentG, true);
+			getSavePoints()->push(kEntityMilos, kEntityCoudert, kAction88652208);
+			break;
+
+		case 2:
+			getEntities()->exitCompartment(kEntityMilos, kObjectCompartmentG);
+
+			getData()->location = kLocationInsideCompartment;
+			getData()->entityPosition = kPosition_3050;
+
+			getEntities()->clearSequences(kEntityMilos);
+
+			params->param1 = 0;
+			break;
+		}
+		break;
+
+	case kAction122865568:
+		setCallback(1);
+		setup_enterExitCompartment("611Bg", kObjectCompartmentG);
+		break;
+
+	case kAction123852928:
+		setCallback(2);
+		setup_enterExitCompartment("611Dg", kObjectCompartmentG);
+		break;
+
+	case kAction135600432:
+		params->param2 = 1;
+		break;
+
+	case kAction221683008:
+		if (getSound()->isBuffered(kEntityMilos))
+			getSound()->processEntry(kEntityMilos);
+
+		params->param1 = 1;
+		getSavePoints()->push(kEntityMilos, kEntityCoudert, kAction123199584);
+		break;
+	}
+
+#undef TIME_CHECK_PLAYSOUND_MILOS
 }
 
 //////////////////////////////////////////////////////////////////////////

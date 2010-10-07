@@ -561,7 +561,7 @@ IMPLEMENT_FUNCTION(14, Mahmud, chaptersHandler)
 
 		if (!params->param2 && getProgress().chapter == kChapter1) {
 
-			TIME_CHECK_CALLBACK(Mahmud, kTime1098000, params->param6, 1, setup_function13);
+			TIME_CHECK_CALLBACK(kTime1098000, params->param6, 1, setup_function13);
 
 			if (!getSound()->isBuffered("HAR1104") && getState()->time > kTime1167300 && !params->param7) {
 				params->param7 = 1;

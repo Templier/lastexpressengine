@@ -1030,7 +1030,7 @@ IMPLEMENT_FUNCTION(29, August, function29)
 		break;
 
 	case kActionNone:
-		if (!getProgress().field_28 || params->param2 && params->param3 == kTimeInvalid)
+		if (!getProgress().field_28 || (params->param2 && params->param3 == kTimeInvalid))
 			break;
 
 		if (getState()->time < kTime1134000) {
@@ -1300,7 +1300,7 @@ IMPLEMENT_FUNCTION(37, August, function37)
 		break;
 
 	case kActionNone:
-		TIME_CHECK_CALLBACK_1(August, kTime1791000, params->param2, 5, setup_function20, true);
+		TIME_CHECK_CALLBACK_1(kTime1791000, params->param2, 5, setup_function20, true);
 		break;
 
 	case kActionDefault:
@@ -1653,7 +1653,7 @@ IMPLEMENT_FUNCTION(45, August, function45)
 IMPLEMENT_FUNCTION(46, August, function46)
 	switch (savepoint.action) {
 	default:
-		TIME_CHECK_CALLBACK(August, kTime2088000, params->param1, 1, setup_function47);
+		TIME_CHECK_CALLBACK(kTime2088000, params->param1, 1, setup_function47);
 		break;
 
 	case kActionNone:

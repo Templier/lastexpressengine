@@ -609,7 +609,7 @@ IMPLEMENT_FUNCTION(18, Francois, chapter1Handler)
 		break;
 
 	case kActionNone:
-		TIME_CHECK_CALLBACK_1(Francois, kTimeParisEpernay, params->param1, 1, setup_function11, kTime1093500);
+		TIME_CHECK_CALLBACK_1(kTimeParisEpernay, params->param1, 1, setup_function11, kTime1093500);
 		break;
 
 	case kActionCallback:
@@ -626,7 +626,7 @@ IMPLEMENT_FUNCTION(19, Francois, function19)
 		break;
 
 	case kActionNone:
-		TIME_CHECK_CALLBACK(Francois, kTime1161000, params->param1, 2, setup_function12);
+		TIME_CHECK_CALLBACK(kTime1161000, params->param1, 2, setup_function12);
 		break;
 
 	case kAction101107728:
@@ -750,32 +750,32 @@ IMPLEMENT_FUNCTION(25, Francois, chapter3Handler)
 			}
 
 label_callback_2:
-			TIME_CHECK_CALLBACK(Francois, kTime2025000, params->param3, 3, setup_function12);
+			TIME_CHECK_CALLBACK(kTime2025000, params->param3, 3, setup_function12);
 
 label_callback_3:
-			TIME_CHECK_CALLBACK(Francois, kTime2052000, params->param4, 4, setup_function12);
+			TIME_CHECK_CALLBACK(kTime2052000, params->param4, 4, setup_function12);
 
 label_callback_4:
-			TIME_CHECK_CALLBACK(Francois, kTime2079000, params->param5, 5, setup_function12);
+			TIME_CHECK_CALLBACK(kTime2079000, params->param5, 5, setup_function12);
 
 label_callback_5:
-			TIME_CHECK_CALLBACK(Francois, kTime2092500, params->param6, 6, setup_function12);
+			TIME_CHECK_CALLBACK(kTime2092500, params->param6, 6, setup_function12);
 
 label_callback_6:
-			TIME_CHECK_CALLBACK(Francois, kTime2173500, params->param7, 7, setup_function12);
+			TIME_CHECK_CALLBACK(kTime2173500, params->param7, 7, setup_function12);
 
 label_callback_7:
-			TIME_CHECK_CALLBACK(Francois, kTime2182500, params->param8, 8, setup_function12);
+			TIME_CHECK_CALLBACK(kTime2182500, params->param8, 8, setup_function12);
 
 label_callback_8:
-			TIME_CHECK_CALLBACK(Francois, kTime2241000, CURRENT_PARAMS(1, 1), 9, setup_function12);
+			TIME_CHECK_CALLBACK(kTime2241000, CURRENT_PARAMS(1, 1), 9, setup_function12);
 
 label_callback_9:
 			if (!getInventory()->hasItem(kItemWhistle) && getInventory()->get(kItemWhistle)->location != kObjectLocation3) {
-				TIME_CHECK_CALLBACK_1(Francois, kTime2011500, CURRENT_PARAMS(1, 2), 10, setup_function11, kTime2016000);
+				TIME_CHECK_CALLBACK_1(kTime2011500, CURRENT_PARAMS(1, 2), 10, setup_function11, kTime2016000);
 
 label_callback_10:
-				TIME_CHECK_CALLBACK_1(Francois, kTime2115000, CURRENT_PARAMS(1, 3), 11, setup_function11, kTime2119500);
+				TIME_CHECK_CALLBACK_1(kTime2115000, CURRENT_PARAMS(1, 3), 11, setup_function11, kTime2119500);
 			}
 
 label_callback_11:
@@ -793,13 +793,13 @@ label_callback_11:
 				}
 
 label_callback_12:
-				TIME_CHECK_CALLBACK_3(Francois, kTime2040300, CURRENT_PARAMS(1, 5), 13, setup_function14, kObjectCompartmentE, kPosition_4840, "e");
+				TIME_CHECK_CALLBACK_3(kTime2040300, CURRENT_PARAMS(1, 5), 13, setup_function14, kObjectCompartmentE, kPosition_4840, "e");
 
 label_callback_13:
-				TIME_CHECK_CALLBACK_3(Francois, kTime2040300, CURRENT_PARAMS(1, 6), 14, setup_function14, kObjectCompartmentF, kPosition_4070, "f");
+				TIME_CHECK_CALLBACK_3(kTime2040300, CURRENT_PARAMS(1, 6), 14, setup_function14, kObjectCompartmentF, kPosition_4070, "f");
 
 label_callback_14:
-				TIME_CHECK_CALLBACK_3(Francois, kTime2040300, CURRENT_PARAMS(1, 7), 15, setup_function14, kObjectCompartmentB, kPosition_7500, "b");
+				TIME_CHECK_CALLBACK_3(kTime2040300, CURRENT_PARAMS(1, 7), 15, setup_function14, kObjectCompartmentB, kPosition_7500, "b");
 			}
 		}
 		break;

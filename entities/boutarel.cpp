@@ -314,7 +314,7 @@ IMPLEMENT_FUNCTION_IS(17, Boutarel, function17, TimeValue)
 		break;
 
 	case kActionNone:
-		TIME_CHECK_CALLBACK_ACTION(Boutarel, params->param1, params->param6);
+		TIME_CHECK_CALLBACK_ACTION(params->param1, params->param6);
 
 		if (params->param5) {
 			UPDATE_PARAM(params->param7, getState()->timeTicks, 90)
@@ -601,7 +601,7 @@ IMPLEMENT_FUNCTION(24, Boutarel, chapter2Handler)
 		break;
 
 	case kActionNone:
-		TIME_CHECK_CALLBACK_1(Boutarel, kTime1759500, params->param2, 1, setup_function14, false);
+		TIME_CHECK_CALLBACK_1(kTime1759500, params->param2, 1, setup_function14, false);
 		break;
 
 	case kActionDefault:
@@ -726,7 +726,7 @@ IMPLEMENT_FUNCTION(29, Boutarel, function29)
 			}
 		}
 
-		TIME_CHECK_CALLBACK_1(Boutarel, kTime2002500, params->param4, 1, setup_function14, true);
+		TIME_CHECK_CALLBACK_1(kTime2002500, params->param4, 1, setup_function14, true);
 		break;
 
 	case kActionDefault:
@@ -739,7 +739,7 @@ IMPLEMENT_FUNCTION(29, Boutarel, function29)
 			break;
 
 		case 1:
-			TIME_CHECK_CALLBACK_1(Boutarel, kTime2002500, params->param4, 1, setup_function14, true);
+			TIME_CHECK_CALLBACK_1(kTime2002500, params->param4, 1, setup_function14, true);
 			break;
 
 		case 2:
@@ -830,7 +830,7 @@ IMPLEMENT_FUNCTION(33, Boutarel, function33)
 
 	case kActionNone:
 		if (params->param1)
-			TIME_CHECK_CALLBACK_1(Boutarel, kTime2389500, params->param2, 3, setup_function14, false);
+			TIME_CHECK_CALLBACK_1(kTime2389500, params->param2, 3, setup_function14, false);
 		break;
 
 	case kActionDefault:

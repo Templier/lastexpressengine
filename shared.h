@@ -196,12 +196,17 @@ enum TimeValue {
 	kTimeCityVienna           = 2268000,
 
 	// Chapter 4
+	kTime2349000              = 2349000,
 	kTimeChapter4             = 2353500,
 	kTime2354400              = 2354400,
+	kTime2356200              = 2356200,
 	kTime2358000              = 2358000,
+	kTime2360700              = 2360700,
 	kTime2362500              = 2362500,
 	kTime2361600              = 2361600,
 	kTime2367000              = 2367000,
+	kTime2370600              = 2370600,
+	kTime2378700              = 2378700,
 	kTimeEnterPoszony         = 2381400,
 	kTimeCityPoszony          = 2383200,
 	kTime2385000              = 2385000,
@@ -211,6 +216,7 @@ enum TimeValue {
 	kTime2407500              = 2407500,
 	kTime2410200              = 2410200,
 	kTime2412000              = 2412000,
+	kTime2414700              = 2414700,
 	kTime2415600              = 2415600,
 	kTimeEnterGalanta         = 2416500,
 	kTimeCityGalanta          = 2418300,
@@ -234,6 +240,7 @@ enum TimeValue {
 	kTime2517300              = 2517300,
 	kTime2519100              = 2519100,
 	kTime2520000              = 2520000,
+	kTime2538000              = 2538000,
 	kTimeCityBudapest         = 2551500,
 
 	// Chapter 5

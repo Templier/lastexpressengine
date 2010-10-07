@@ -235,7 +235,104 @@ IMPLEMENT_FUNCTION(15, Tatiana, function15)
 
 //////////////////////////////////////////////////////////////////////////
 IMPLEMENT_FUNCTION_I(16, Tatiana, function16, uint32)
-	error("Tatiana: callback function 16 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionNone:
+		if (params->param1 < getState()->time && !params->param4) {
+			params->param4 = 1;
+
+			getObjects()->update(kObjectCompartmentB, kEntityPlayer, kObjectLocationNone, kCursorHandKnock, kCursorHand);
+			getObjects()->update(kObject49, kEntityPlayer, kObjectLocationNone, kCursorHandKnock, kCursorHand);
+
+			CALLBACK_ACTION();
+			break;
+		}
+
+		if (params->param2) {
+			UPDATE_PARAM(params->param5, getState()->timeTicks, 75);
+
+			params->param2 = 0;
+			params->param3 = 1;
+
+			getObjects()->update(kObjectCompartmentB, kEntityTatiana, kObjectLocation1, kCursorNormal, kCursorNormal);
+			getObjects()->update(kObject49, kEntityTatiana, kObjectLocation1, kCursorNormal, kCursorNormal);
+		}
+
+		params->param5 = 0;
+		break;
+
+	case kActionKnock:
+	case kActionOpenDoor:
+		if (params->param2) {
+			getObjects()->update(kObjectCompartmentB, kEntityTatiana, kObjectLocation1, kCursorNormal, kCursorNormal);
+			getObjects()->update(kObject49, kEntityTatiana, kObjectLocation1, kCursorNormal, kCursorNormal);
+
+			if (savepoint.param.intValue == 49) {
+				setCallback(4);
+				setup_playSound(getSound()->justAMinuteCath());
+				break;
+			}
+
+			if (getInventory()->hasItem(kItemPassengerList)) {
+				setCallback(5);
+				setup_playSound(rnd(2) ? "CAT1512" : getSound()->wrongDoorCath());
+				break;
+			}
+
+			setCallback(6);
+			setup_playSound(getSound()->wrongDoorCath());
+		} else {
+			getObjects()->update(kObjectCompartmentB, kEntityTatiana, kObjectLocation1, kCursorNormal, kCursorNormal);
+			getObjects()->update(kObject49, kEntityTatiana, kObjectLocation1, kCursorNormal, kCursorNormal);
+
+			setCallback(savepoint.action == kActionKnock ? 1 : 2);
+			setup_playSound(savepoint.action == kActionKnock ? "LIB012" : "LIB013");
+		}
+		break;
+
+	case kActionDefault:
+		getObjects()->update(kObjectCompartmentB, kEntityTatiana, kObjectLocation1, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObject49, kEntityTatiana, kObjectLocation1, kCursorHandKnock, kCursorHand);
+		break;
+
+	case kActionDrawScene:
+		if (params->param2 || params->param3) {
+			getObjects()->update(kObjectCompartmentB, kEntityTatiana, kObjectLocation1, kCursorHandKnock, kCursorHand);
+			getObjects()->update(kObject49, kEntityTatiana, kObjectLocation1, kCursorHandKnock, kCursorHand);
+
+			params->param2 = 0;
+			params->param3 = 0;
+		}
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+		case 2:
+			setCallback(3);
+			setup_playSound(rnd(2) ? "TAT1133A" : "TAT1133B");
+			break;
+
+		case 3:
+			getObjects()->update(kObjectCompartmentB, kEntityTatiana, kObjectLocation1, kCursorTalk, kCursorNormal);
+			getObjects()->update(kObject49, kEntityTatiana, kObjectLocation1, kCursorTalk, kCursorNormal);
+			params->param2 = 1;
+			break;
+
+		case 4:
+		case 5:
+		case 6:
+			params->param2 = 0;
+			params->param3 = 1;
+			break;
+		}
+		break;
+	}
 }
 
 //////////////////////////////////////////////////////////////////////////
