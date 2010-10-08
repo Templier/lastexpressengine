@@ -59,8 +59,8 @@ Coudert::Coudert(LastExpressEngine *engine) : Entity(engine, kEntityCoudert) {
 	ADD_CALLBACK_FUNCTION(Coudert, playSound16);
 	ADD_CALLBACK_FUNCTION(Coudert, savegame);
 	ADD_CALLBACK_FUNCTION(Coudert, updateEntity);
-	ADD_CALLBACK_FUNCTION(Coudert, function10);
-	ADD_CALLBACK_FUNCTION(Coudert, function11);
+	ADD_CALLBACK_FUNCTION(Coudert, updateFromTime);
+	ADD_CALLBACK_FUNCTION(Coudert, updateFromTicks);
 	ADD_CALLBACK_FUNCTION(Coudert, excuseMe);
 	ADD_CALLBACK_FUNCTION(Coudert, function13);
 	ADD_CALLBACK_FUNCTION(Coudert, function14);
@@ -360,7 +360,7 @@ IMPLEMENT_FUNCTION_II(9, Coudert, updateEntity, CarIndex, EntityPosition)
 }
 
 //////////////////////////////////////////////////////////////////////////
-IMPLEMENT_FUNCTION_I(10, Coudert, function10, uint32)
+IMPLEMENT_FUNCTION_I(10, Coudert, updateFromTime, uint32)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -383,7 +383,7 @@ IMPLEMENT_FUNCTION_I(10, Coudert, function10, uint32)
 }
 
 //////////////////////////////////////////////////////////////////////////
-IMPLEMENT_FUNCTION_I(11, Coudert, function11, uint32)
+IMPLEMENT_FUNCTION_I(11, Coudert, updateFromTicks, uint32)
 	switch (savepoint.action) {
 	default:
 		break;
@@ -596,7 +596,7 @@ IMPLEMENT_FUNCTION_I(14, Coudert, function14, EntityIndex)
 			setup_updateEntity(kCarRedSleeping, kPosition_1500);
 		} else {
 			setCallback(1);
-			setup_function10(15);
+			setup_updateFromTime(15);
 		}
 		break;
 
@@ -846,7 +846,7 @@ IMPLEMENT_FUNCTION(18, Coudert, function18)
 			ENTITY_PARAM(2, 1) = 1;
 
 			setCallback(2);
-			setup_function10(75);
+			setup_updateFromTime(75);
 			break;
 
 		case 2:
@@ -1221,7 +1221,7 @@ IMPLEMENT_FUNCTION(23, Coudert, function23)
 			getSavePoints()->push(kEntityCoudert, kEntityMax, kAction158007856);
 
 			setCallback(3);
-			setup_function10(150);
+			setup_updateFromTime(150);
 			break;
 
 		case 3:
@@ -1264,14 +1264,14 @@ IMPLEMENT_FUNCTION(25, Coudert, function25)
 			getEntities()->enterCompartment(kEntityCoudert, kObjectCompartmentE, true);
 
 			setCallback(3);
-			setup_function10(45);
+			setup_updateFromTime(45);
 			break;
 
 		case 3:
 			getSavePoints()->push(kEntityCoudert, kEntityRebecca, kAction254915200);
 
 			setCallback(4);
-			setup_function10(450);
+			setup_updateFromTime(450);
 			break;
 
 		case 4:
@@ -1600,7 +1600,7 @@ IMPLEMENT_FUNCTION(32, Coudert, function32)
 		case 2:
 			getEntities()->clearSequences(kEntityCoudert);
 			setCallback(3);
-			setup_function10(900);
+			setup_updateFromTime(900);
 			break;
 
 		case 3:
@@ -1655,7 +1655,6 @@ IMPLEMENT_FUNCTION(33, Coudert, function33)
 			if (ENTITY_PARAM(0, 3)) {
 				setCallback(2);
 				setup_function14(kEntityVerges);
-
 				break;
 			}
 			// Fallback to next case
@@ -1664,7 +1663,6 @@ IMPLEMENT_FUNCTION(33, Coudert, function33)
 			if (ENTITY_PARAM(0, 5)) {
 				setCallback(3);
 				setup_function14(kEntityMertens);
-
 				break;
 			}
 			// Fallback to next case
@@ -1673,7 +1671,6 @@ IMPLEMENT_FUNCTION(33, Coudert, function33)
 			if (ENTITY_PARAM(0, 4)) {
 				setCallback(4);
 				setup_function14(kEntityMmeBoutarel);
-
 				break;
 			}
 			// Fallback to next case
@@ -1688,14 +1685,13 @@ IMPLEMENT_FUNCTION(33, Coudert, function33)
 			getEntities()->clearSequences(kEntityCoudert);
 
 			setCallback(6);
-			setup_function10(75);
+			setup_updateFromTime(75);
 			break;
 
 		case 6:
 			if (ENTITY_PARAM(0, 6) || ENTITY_PARAM(0, 7)) {
 				setCallback(7);
 				setup_function37();
-
 				break;
 			}
 			// Fallback to next case
@@ -1704,7 +1700,6 @@ IMPLEMENT_FUNCTION(33, Coudert, function33)
 			if (ENTITY_PARAM(2, 2)) {
 				setCallback(8);
 				setup_function39();
-
 				break;
 			}
 			// Fallback to next case
@@ -1713,7 +1708,6 @@ IMPLEMENT_FUNCTION(33, Coudert, function33)
 			if (ENTITY_PARAM(1, 2)) {
 				setCallback(9);
 				setup_function55();
-
 				break;
 			}
 			// Fallback to next case
@@ -1722,7 +1716,6 @@ IMPLEMENT_FUNCTION(33, Coudert, function33)
 			if (ENTITY_PARAM(1, 7)) {
 				setCallback(10);
 				setup_function34(false);
-
 				break;
 			}
 			// Fallback to next case
@@ -2657,7 +2650,94 @@ IMPLEMENT_FUNCTION(45, Coudert, function45)
 
 //////////////////////////////////////////////////////////////////////////
 IMPLEMENT_FUNCTION(46, Coudert, function46)
-	error("Coudert: callback function 46 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionDefault:
+		setCallback(1);
+		setup_function16();
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			setCallback(2);
+			setup_updateEntity(kCarRedSleeping, kPosition_4070);
+			break;
+
+		case 2:
+			getEntities()->drawSequenceLeft(kEntityCoudert, "627Vf");
+			getEntities()->enterCompartment(kEntityCoudert, kObjectCompartmentF, true);
+			getSavePoints()->push(kEntityCoudert, kEntityAnna, kAction253868128);
+
+			setCallback(3);
+			setup_playSound("LIB012");
+			break;
+
+		case 3:
+			getEntities()->drawSequenceLeft(kEntityCoudert, "627Wf");
+
+			setCallback(4);
+			setup_playSound("Ann1016A");
+			break;
+
+		case 4:
+			setCallback(5);
+			setup_playSound("Ann4150");
+			break;
+
+		case 5:
+			getSound()->playSound(kEntityCoudert, "Ann3121");
+
+			setCallback(6);
+			setup_enterExitCompartment("629Bf", kObjectCompartmentF);
+			break;
+
+		case 6:
+			getEntities()->drawSequenceLeft(kEntityCoudert, "629Cf");
+			getEntities()->enterCompartment(kEntityCoudert, kObjectCompartmentF, true);
+			// Fallback to next case
+
+		case 7:
+			if (getSound()->isBuffered(kEntityCoudert)) {
+				setCallback(7);
+				setup_updateFromTime(75);
+			} else {
+				setCallback(8);
+				setup_playSound("Ann3122");
+			}
+			break;
+
+		case 8:
+			getSound()->playSound(kEntityCoudert, "Ann3123");
+
+			setCallback(9);
+			setup_updateFromTicks(75);
+			break;
+
+		case 9:
+			setCallback(10);
+			setup_enterExitCompartment("629Ff", kObjectCompartmentF);
+			break;
+
+		case 10:
+			getEntities()->exitCompartment(kEntityCoudert, kObjectCompartmentF, true);
+			ENTITY_PARAM(1, 3) = 0;
+
+			setCallback(11);
+			setup_function35(true);
+			break;
+
+		case 11:
+			CALLBACK_ACTION();
+			break;
+		}
+		break;
+	}
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -2694,7 +2774,7 @@ IMPLEMENT_FUNCTION_I(47, Coudert, function47, bool)
 		case 4:
 			if (getSound()->isBuffered(kEntityCoudert)) {
 				setCallback(4);
-				setup_function10(225);
+				setup_updateFromTime(225);
 			} else {
 				setCallback(5);
 				setup_playSound(params->param1 ? "Ann3149" : "Ann3147a");
@@ -2775,7 +2855,99 @@ IMPLEMENT_FUNCTION(48, Coudert, function48)
 
 //////////////////////////////////////////////////////////////////////////
 IMPLEMENT_FUNCTION(49, Coudert, function49)
-	error("Coudert: callback function 49 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionDefault:
+		setCallback(1);
+		setup_function16();
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			setCallback(2);
+			setup_updateEntity(kCarRedSleeping, kPosition_7500);
+			break;
+
+		case 2:
+			setCallback(3);
+			setup_enterExitCompartment("627Vb", kObjectCompartmentB);
+			break;
+
+		case 3:
+			if (getEntities()->isInsideCompartment(kEntityTatiana, kCarRedSleeping, kPosition_7500)) {
+				getEntities()->drawSequenceLeft(kEntityCoudert, "627Wb");
+
+				setCallback(4);
+				setup_playSound("Jac3006");
+			} else {
+				getEntities()->drawSequenceLeft(kEntityCoudert, "627Wb");
+				getEntities()->enterCompartment(kEntityCoudert, kObjectCompartmentB, true);
+
+				setCallback(8);
+				setup_playSound("LIB012");
+			}
+			break;
+
+		case 4:
+			getEntities()->exitCompartment(kEntityCoudert, kObjectCompartmentB, true);
+
+			setCallback(5);
+			setup_enterExitCompartment("627Zb", kObjectCompartmentB);
+			break;
+
+		case 5:
+			getData()->location = kLocationInsideCompartment;
+			getEntities()->clearSequences(kEntityCoudert);
+
+			setCallback(6);
+			setup_playSound("Jac3006A");
+			break;
+
+		case 6:
+			setCallback(7);
+			setup_enterExitCompartment("697Ab", kObjectCompartmentB);
+			break;
+
+		case 7:
+			getData()->location = kLocationOutsideCompartment;
+
+			setCallback(10);
+			setup_updateEntity(kCarRedSleeping, kPosition_2000);
+			break;
+
+		case 8:
+			setCallback(9);
+			setup_updateFromTime(150);
+			break;
+
+		case 9:
+			getEntities()->exitCompartment(kEntityCoudert, kObjectCompartmentB, true);
+
+			setCallback(10);
+			setup_updateEntity(kCarRedSleeping, kPosition_2000);
+			break;
+
+		case 10:
+			getSavePoints()->push(kEntityCoudert, kEntityMmeBoutarel, kAction242526416);
+			ENTITY_PARAM(2, 4) = 0;
+			ENTITY_PARAM(2, 5) = 1;
+
+			setCallback(11);
+			setup_function18();
+			break;
+
+		case 11:
+			CALLBACK_ACTION();
+			break;
+		}
+		break;
+	}
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -3202,7 +3374,7 @@ IMPLEMENT_FUNCTION(60, Coudert, function60)
 
 	case kAction155991520:
 		setCallback(1);
-		setup_function10(225);
+		setup_updateFromTime(225);
 		break;
 	}
 }
@@ -3235,7 +3407,7 @@ IMPLEMENT_FUNCTION(61, Coudert, function61)
 			getEntities()->enterCompartment(kEntityCoudert, kObjectCompartmentE, true);
 
 			setCallback(3);
-			setup_function10(75);
+			setup_updateFromTime(75);
 			break;
 
 		case 3:
@@ -3326,7 +3498,7 @@ void Coudert::visitCompartment(const SavePoint &savepoint, EntityPosition positi
 			getEntities()->enterCompartment(kEntityCoudert, compartment, true);
 
 			setCallback(3);
-			setup_function10(150);
+			setup_updateFromTime(150);
 			break;
 
 		case 3:

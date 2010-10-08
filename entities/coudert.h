@@ -104,8 +104,20 @@ public:
 	 */
 	DECLARE_FUNCTION_2(updateEntity, CarIndex car, EntityPosition entityPosition)
 
-	DECLARE_FUNCTION_1(function10, uint32 time)
-	DECLARE_FUNCTION_1(function11, uint32 ticks)
+	/**
+	 * Updates parameter 2 using time value
+	 *
+	 * @param time The time to add
+	 */
+	DECLARE_FUNCTION_1(updateFromTime, uint32 time)
+
+	/**
+	 * Updates parameter 2 using ticks value
+	 *
+	 * @param ticks The number of ticks to add
+	 */
+	DECLARE_FUNCTION_1(updateFromTicks, uint32 ticks)
+
 	DECLARE_FUNCTION_1(excuseMe, EntityIndex entity)
 	DECLARE_FUNCTION_2(function13, bool, EntityIndex entity)
 	DECLARE_FUNCTION_1(function14, EntityIndex entity)

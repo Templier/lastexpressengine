@@ -1255,7 +1255,77 @@ IMPLEMENT_FUNCTION(35, Alexei, function35)
 
 //////////////////////////////////////////////////////////////////////////
 IMPLEMENT_FUNCTION(36, Alexei, function36)
-	error("Alexei: callback function 36 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionNone:
+		if (params->param3 || params->param2)
+			break;
+
+		UPDATE_PARAM(params->param4, getState()->timeTicks, params->param1);
+
+		getEntities()->drawSequenceRight(kEntityAlexei, "124B");
+
+		params->param2 = 1;
+		params->param4 = 0;
+		break;
+
+	case kActionExitCompartment:
+		if (params->param2) {
+			getEntities()->drawSequenceLeft(kEntityAlexei, "124A");
+			params->param1 = 5 * (3 * rnd(15) + 15);
+			params->param2 = 0;
+		}
+		break;
+
+	case kActionDefault:
+		params->param1 = 5 * (3 * rnd(15) + 15);
+
+		setCallback(1);
+		setup_updateEntity(kCarRestaurant, kPosition_850);
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			setCallback(2);
+			setup_callbackActionRestaurantOrSalon();
+			break;
+
+		case 2:
+			getSavePoints()->push(kEntityAlexei, kEntityAbbot, kAction222609266);
+			getData()->entityPosition = kPosition_1540;
+			getData()->location = kLocationOutsideCompartment;
+
+			setCallback(3);
+			setup_updatePosition("103A", kCarRestaurant, 52);
+			break;
+
+		case 3:
+			getData()->location = kLocationInsideCompartment;
+			getEntities()->drawSequenceLeft(kEntityAlexei, "124A");
+			break;
+
+		case 4:
+			CALLBACK_ACTION();
+			break;
+		}
+		break;
+
+	case kAction122288808:
+		setCallback(4);
+		setup_function13();
+		break;
+
+	case kAction122358304:
+		getEntities()->drawSequenceLeft(kEntityAlexei, "BLANK");
+		params->param3 = 1;
+		break;
+	}
 }
 
 //////////////////////////////////////////////////////////////////////////

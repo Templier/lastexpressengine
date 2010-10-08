@@ -1079,7 +1079,93 @@ IMPLEMENT_FUNCTION_II(21, Mertens, function21, ObjectIndex, ObjectIndex)
 
 //////////////////////////////////////////////////////////////////////////
 IMPLEMENT_FUNCTION(22, Mertens, function22)
-	error("Mertens: callback function 22 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionDefault:
+		setCallback(1);
+		setup_updateEntity(kCarGreenSleeping, kPosition_2740);
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			setCallback(2);
+			setup_enterExitCompartment("601Mh", kObjectCompartment8);
+			break;
+
+		case 2:
+			getEntities()->drawSequenceLeft(kEntityMertens, "601Nh");
+			getEntities()->enterCompartment(kEntityMertens, kObjectCompartment8, true);
+
+			setCallback(3);
+			setup_function11(150);
+			break;
+
+		case 3:
+			setCallback(4);
+			setup_enterExitCompartment("601Mh", kObjectCompartment8);
+			break;
+
+		case 4:
+			getEntities()->drawSequenceLeft(kEntityMertens, "601Nh");
+			getEntities()->enterCompartment(kEntityMertens, kObjectCompartment8);
+			getSavePoints()->push(kEntityMertens, kEntityMahmud, kAction225563840);
+			break;
+
+		case 5:
+			if (!getSound()->isBuffered(kEntityMertens))
+				getSound()->playSound(kEntityMertens, "MAH1170I");
+
+			setCallback(6);
+			setup_enterExitCompartment("601Zd", kObjectCompartment4);
+			break;
+
+		case 6:
+			getData()->location = kLocationInsideCompartment;
+			getEntities()->clearSequences(kEntityMertens);
+			if (!getSound()->isBuffered(kEntityMertens))
+				getSound()->playSound(kEntityMertens, "MAH1172", SoundManager::kFlagInvalid, 225);
+
+			setCallback(7);
+			setup_function21(kObjectCompartment4, kObject20);
+			break;
+
+		case 7:
+			setCallback(8);
+			setup_enterExitCompartment("671Ad", kObjectCompartment4);
+			break;
+
+		case 8:
+			getData()->location = kLocationOutsideCompartment;
+			getSavePoints()->push(kEntityMertens, kEntityMahmud, kAction123852928);
+
+			setCallback(9);
+			setup_updateEntity(kCarGreenSleeping, kPosition_540);
+
+			break;
+
+		case 9:
+			CALLBACK_ACTION();
+			break;
+		}
+		break;
+
+	case kAction102227384:
+		getEntities()->drawSequenceLeft(kEntityMertens, "671Dh");
+		break;
+
+	case kAction156567128:
+		getEntities()->exitCompartment(kEntityMertens, kObjectCompartment8, true);
+
+		setCallback(5);
+		setup_updateEntity(kCarGreenSleeping, kPosition_5790);
+		break;
+	}
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -2124,7 +2210,103 @@ IMPLEMENT_FUNCTION(35, Mertens, function35)
 
 //////////////////////////////////////////////////////////////////////////
 IMPLEMENT_FUNCTION(36, Mertens, function36)
-	error("Mertens: callback function 36 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionDefault:
+		if (getProgress().field_14 == 29) {
+			CALLBACK_ACTION();
+		} else {
+			getProgress().field_14 = 3;
+
+			setCallback(1);
+			setup_function19();
+		}
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			setCallback(2);
+			setup_updateEntity(kCarGreenSleeping, kPosition_8200);
+			break;
+
+		case 2:
+			if (ENTITY_PARAM(0, 6)) {
+				if (getEntities()->isPlayerInCar(kCarGreenSleeping) && getData()->entityPosition < getEntityData(kEntityPlayer)->entityPosition) {
+					setCallback(3);
+					setup_updateEntity(kCarGreenSleeping, kPosition_9460);
+				} else {
+					setCallback(7);
+					setup_tylerCompartment(kMertensAction2);
+				}
+			} else {
+				ENTITY_PARAM(0, 6) = 0;
+				ENTITY_PARAM(0, 7) = 0;
+
+				if (getProgress().field_14 == 3)
+					getProgress().field_14 = 0;
+
+				setCallback(5);
+				setup_updateEntity(kCarGreenSleeping, kPosition_2000);
+			}
+			break;
+
+		case 3:
+			setCallback(4);
+			setup_updateEntity(kCarGreenSleeping, kPosition_8200);
+			break;
+
+		case 4:
+			if (ENTITY_PARAM(0, 6)) {
+				setCallback(7);
+				setup_tylerCompartment(kMertensAction2);
+			} else {
+				ENTITY_PARAM(0, 6) = 0;
+				ENTITY_PARAM(0, 7) = 0;
+
+				if (getProgress().field_14 == 3)
+					getProgress().field_14 = 0;
+
+				setCallback(5);
+				setup_updateEntity(kCarGreenSleeping, kPosition_2000);
+			}
+			break;
+
+		case 5:
+			setCallback(6);
+			setup_function17();
+			break;
+
+		case 7:
+			if (getProgress().field_14 == 3)
+				getProgress().field_14 = 0;
+
+			if (!getProgress().eventMertensKronosInvitation)
+				ENTITY_PARAM(0, 7) = 1;
+
+			ENTITY_PARAM(0, 6) = 0;
+
+			setCallback(8);
+			setup_updateEntity(kCarGreenSleeping, kPosition_2000);
+			break;
+
+		case 8:
+			setCallback(9);
+			setup_function17();
+			break;
+
+		case 6:
+		case 9:
+			CALLBACK_ACTION();
+			break;
+		}
+		break;
+	}
 }
 
 //////////////////////////////////////////////////////////////////////////

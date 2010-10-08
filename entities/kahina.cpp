@@ -717,7 +717,85 @@ IMPLEMENT_FUNCTION(22, Kahina, function22)
 
 //////////////////////////////////////////////////////////////////////////
 IMPLEMENT_FUNCTION(23, Kahina, function23)
-	error("Kahina: callback function 23 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionDefault:
+		getSound()->playSound(kEntityPlayer, "LIB014", getSound()->getSoundFlag(kEntityKahina));
+		getSound()->playSound(kEntityPlayer, "LIB015", getSound()->getSoundFlag(kEntityKahina), 15);
+
+		getEntities()->clearSequences(kEntityKahina);
+
+		getData()->car = kCarGreenSleeping;
+		getData()->entityPosition = kPosition_540;
+
+		setCallback(1);
+		setup_updateEntity(kCarRedSleeping, kPosition_4070);
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			if (getEntities()->checkFields19(kEntityPlayer, kCarRedSleeping, kPosition_4455) || getEntities()->isOutsideAnnaWindow()) {
+				setCallback(5);
+				setup_updateEntity(kCarRedSleeping, kPosition_9460);
+				break;
+			} else {
+				setCallback(2);
+				setup_enterExitCompartment("616Cf", kObjectCompartmentF);
+			}
+			break;
+
+		case 2:
+			getData()->location = kLocationInsideCompartment;
+			getEntities()->clearSequences(kEntityKahina);
+
+			getObjects()->update(kObjectCompartmentF, kEntityPlayer, getObjects()->get(kObjectCompartmentF).location, kCursorNormal, kCursorNormal);
+			getObjects()->update(kObject53, kEntityPlayer, getObjects()->get(kObject53).location, kCursorNormal, kCursorNormal);
+
+			setCallback(3);
+			setup_updateFromTime(900);
+			break;
+
+		case 3:
+			getObjects()->update(kObjectCompartmentF, kEntityPlayer, getObjects()->get(kObjectCompartmentF).location, kCursorHandKnock, kCursorHand);
+			getObjects()->update(kObject53, kEntityPlayer, getObjects()->get(kObject53).location, kCursorHandKnock, kCursorHand);
+
+			setCallback(4);
+			setup_enterExitCompartment("616Df", kObjectCompartmentF);
+			break;
+
+		case 4:
+			getData()->location = kLocationOutsideCompartment;
+
+			setCallback(5);
+			setup_updateEntity(kCarRedSleeping, kPosition_9460);
+			break;
+
+		case 5:
+			getEntities()->clearSequences(kEntityKahina);
+
+			setCallback(6);
+			setup_updateFromTime(900);
+			break;
+
+		case 6:
+			setCallback(7);
+			setup_updateEntity(kCarKronos, kPosition_9270);
+			break;
+
+		case 7:
+			getEntities()->clearSequences(kEntityKahina);
+
+			CALLBACK_ACTION();
+			break;
+		}
+		break;
+	}
 }
 
 //////////////////////////////////////////////////////////////////////////

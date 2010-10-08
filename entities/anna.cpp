@@ -2057,7 +2057,93 @@ IMPLEMENT_FUNCTION(56, Anna, function56)
 
 //////////////////////////////////////////////////////////////////////////
 IMPLEMENT_FUNCTION(57, Anna, function57)
-	error("Anna: callback function 57 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionDefault:
+		getData()->car = kCarGreenSleeping;
+		getData()->entityPosition = kPosition_850;
+		getData()->location = kLocationOutsideCompartment;
+
+		setCallback(1);
+		setup_updateEntity(kCarGreenSleeping, kPosition_5790);
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			getSavePoints()->push(kEntityAnna, kEntityAugust, kAction191668032);
+
+			setCallback(2);
+			setup_updateEntity(kCarRedSleeping, kPosition_4070);
+			break;
+
+		case 2:
+			getObjects()->update(kObjectCompartmentF, kEntityPlayer, kObjectLocation1, kCursorNormal, kCursorNormal);
+			getSavePoints()->push(kEntityAnna, kEntityCoudert, kAction205033696);
+			getEntities()->drawSequenceLeft(kEntityAnna, "625Ef");
+			getEntities()->enterCompartment(kEntityAnna, kObjectCompartmentF, true);
+			break;
+
+		case 3:
+			getEntities()->drawSequenceLeft(kEntityAnna, "625Gf");
+			getEntities()->enterCompartment(kEntityAnna, kObjectCompartmentF, true);
+			getSavePoints()->push(kEntityAnna, kEntityAugust, kAction169032608);
+			break;
+
+		case 4:
+			if (getSound()->isBuffered(kEntityAugust)) {
+				setCallback(4);
+				setup_updateFromTime(75);
+			} else {
+				setCallback(5);
+				setup_playSound("Aug3009");
+			}
+			break;
+
+		case 5:
+			getSound()->playSound(kEntityAnna, "Aug3009A");
+
+			setCallback(6);
+			setup_enterExitCompartment("628Bf", kObjectCompartmentF);
+			break;
+
+		case 6:
+			getEntities()->exitCompartment(kEntityAnna, kObjectCompartmentF, true);
+			getSavePoints()->push(kEntityAnna, kEntityAugust, kAction122288808);
+
+			setup_function59();
+			break;
+		}
+		break;
+
+	case kAction123712592:
+		getEntities()->drawSequenceLeft(kEntityAnna, "628Af");
+
+		if (getSound()->isBuffered(kEntityAugust)) {
+			setCallback(4);
+			setup_updateFromTime(75);
+		} else {
+			setCallback(5);
+			setup_playSound("Aug3009");
+		}
+		break;
+
+	case kAction192063264:
+		if (getEntities()->isInsideCompartment(kEntityPlayer, kCarRedSleeping, kPosition_4070)
+		 || getEntities()->isInsideCompartment(kEntityPlayer, kCarRedSleeping, kPosition_4455)) {
+			getEntities()->exitCompartment(kEntityAnna, kObjectCompartmentF, true);
+			setup_function58();
+		} else {
+			setCallback(3);
+			setup_enterExitCompartment("625Ff", kObjectCompartmentF);
+		}
+		break;
+	}
 }
 
 //////////////////////////////////////////////////////////////////////////

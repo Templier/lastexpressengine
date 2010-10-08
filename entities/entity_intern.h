@@ -329,6 +329,7 @@ void class::setup_##name() { \
 	if (getState()->time > timeValue && !parameter) { \
 		parameter = 1; \
 		function(); \
+		break; \
 	}
 
 #define TIME_CHECK_SAVEPOINT(timeValue, parameter, entity1, entity2, action) \
@@ -350,6 +351,14 @@ void class::setup_##name() { \
 		parameter = 1; \
 		setCallback(callback); \
 		function(param1); \
+		break; \
+	}
+
+#define TIME_CHECK_CALLBACK_2(timeValue, parameter, callback, function, param1, param2) \
+	if (getState()->time > timeValue && !parameter) { \
+		parameter = 1; \
+		setCallback(callback); \
+		function(param1, param2); \
 		break; \
 	}
 

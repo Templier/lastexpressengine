@@ -411,7 +411,90 @@ IMPLEMENT_FUNCTION(15, Milos, chapter1Handler)
 
 //////////////////////////////////////////////////////////////////////////
 IMPLEMENT_FUNCTION(16, Milos, function16)
-	error("Milos: callback function 16 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionNone:
+		if (params->param1) {
+			if (getEntities()->isDistanceBetweenEntities(kEntityMilos, kEntityVesna, 750)
+			 || getEntities()->checkDistanceFromPosition(kEntityVesna, kPosition_3050, 500)) {
+				getSavePoints()->push(kEntityMilos, kEntityVesna, kAction123668192);
+
+				setCallback(5);
+				setup_enterExitCompartment("611Ag", kObjectCompartmentG);
+			}
+		}
+		break;
+
+	case kActionDefault:
+		getData()->location = kLocationOutsideCompartment;
+
+		setCallback(1);
+		setup_function13();
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			getSavePoints()->push(kEntityMilos, kEntityServers1, kAction269485588);
+			getSavePoints()->push(kEntityMilos, kEntityIvo, kAction125242096);
+			getEntities()->drawSequenceRight(kEntityMilos, "807DS");
+			if (getEntities()->isInRestaurant(kEntityPlayer))
+				getEntities()->updateFrame(kEntityMilos);
+
+			setCallback(2);
+			setup_callbackActionOnDirection();
+			break;
+
+		case 2:
+			getEntities()->clearSequences(kEntityMilos);
+			break;
+
+		case 3:
+			if (getEntities()->isDistanceBetweenEntities(kEntityMilos, kEntityVesna, 750)
+			 || getEntities()->checkDistanceFromPosition(kEntityVesna, kPosition_3050, 500)) {
+				getSavePoints()->push(kEntityMilos, kEntityVesna, kAction123668192);
+
+				setCallback(4);
+				setup_enterExitCompartment("611Ag", kObjectCompartmentG);
+			} else {
+				params->param1 = 1;
+
+				getEntities()->drawSequenceLeft(kEntityMilos, "609Dg");
+				getEntities()->enterCompartment(kEntityMilos, kObjectCompartmentG, true);
+			}
+			break;
+
+		case 4:
+			getData()->entityPosition = kPosition_3050;
+			getData()->location = kLocationInsideCompartment;
+			getEntities()->clearSequences(kEntityMilos);
+
+			setup_function17();
+			break;
+
+		case 5:
+			getEntities()->exitCompartment(kEntityMilos, kObjectCompartmentG, true);
+			getData()->entityPosition = kPosition_3050;
+			getData()->location = kLocationInsideCompartment;
+			getEntities()->clearSequences(kEntityMilos);
+
+			setup_function17();
+			break;
+		}
+		break;
+
+	case kAction135024800:
+		getSavePoints()->push(kEntityMilos, kEntityVesna, kAction204832737);
+
+		setCallback(3);
+		setup_enterCompartmentDialog(kCarRedSleeping, kPosition_3050);
+		break;
+	}
 }
 
 //////////////////////////////////////////////////////////////////////////

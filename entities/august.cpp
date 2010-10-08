@@ -225,7 +225,78 @@ IMPLEMENT_FUNCTION_II(16, August, updateEntity, CarIndex, EntityPosition)
 
 //////////////////////////////////////////////////////////////////////////
 IMPLEMENT_FUNCTION_I(17, August, function17, TimeValue)
-	error("August: callback function 17 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionNone:
+		if (params->param1 < getState()->time && !params->param2) {
+			params->param2 = 1;
+			CALLBACK_ACTION();
+			break;
+		}
+
+		if (getEntities()->isPlayerInCar(kCarGreenSleeping) || getEntities()->isPlayerInCar(kCarRedSleeping)) {
+			if (getEntities()->isInsideTrainCar(kEntityPlayer, kCarGreenSleeping)) {
+				setCallback(2);
+				setup_updateEntity2(kCarGreenSleeping, kPosition_540);
+			} else {
+				setCallback(3);
+				setup_updateEntity2(kCarRedSleeping, kPosition_9460);
+			}
+		}
+		break;
+
+	case kActionDefault:
+		ENTITY_PARAM(0, 1) = 0;
+
+		setCallback(1);
+		setup_updateEntity(kCarRedSleeping, kPosition_540);
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			if (ENTITY_PARAM(0, 1)) {
+				CALLBACK_ACTION();
+				break;
+			}
+
+			getEntities()->clearSequences(kEntityAugust);
+			break;
+
+		case 2:
+		case 3:
+			if (ENTITY_PARAM(0, 1)) {
+				CALLBACK_ACTION();
+				break;
+			}
+
+			getEntities()->clearSequences(kEntityAugust);
+
+			setCallback(4);
+			setup_updateFromTime(450);
+			break;
+
+		case 4:
+			setCallback(5);
+			setup_updateEntity2(kCarRedSleeping, kPosition_540);
+			break;
+
+		case 5:
+			if (ENTITY_PARAM(0, 1)) {
+				CALLBACK_ACTION();
+				break;
+			}
+
+			getEntities()->clearSequences(kEntityAugust);
+			break;
+		}
+		break;
+	}
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -2207,7 +2278,80 @@ IMPLEMENT_FUNCTION(61, August, function61)
 
 //////////////////////////////////////////////////////////////////////////
 IMPLEMENT_FUNCTION(62, August, function62)
-	error("August: callback function 62 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionNone:
+		UPDATE_PARAM(params->param1, getState()->time, 900);
+
+		getSound()->playSound(kEntityAugust, "Aug4003A");
+
+		setCallback(5);
+		setup_updatePosition("122C", kCarRestaurant, 57);
+		break;
+
+	case kActionDefault:
+		getData()->location = kLocationOutsideCompartment;
+
+		setCallback(1);
+		setup_enterExitCompartment("696Ec", kObjectCompartment3);
+		break;
+
+	case kActionDrawScene:
+		if (getEntities()->isPlayerPosition(kCarRestaurant, 57))
+			getScenes()->loadSceneFromPosition(kCarRestaurant, 50);
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			getObjects()->update(kObjectCompartment3, kEntityPlayer, kObjectLocationNone, kCursorHandKnock, kCursorHand);
+
+			setCallback(2);
+			setup_updateEntity(kCarRestaurant, kPosition_850);
+			break;
+
+		case 2:
+			setCallback(3);
+			setup_callbackActionRestaurantOrSalon();
+			break;
+
+		case 3:
+			getData()->entityPosition = kPosition_1540;
+			getData()->location = kLocationOutsideCompartment;
+
+			setCallback(4);
+			setup_updatePosition("122A", kCarRestaurant, 57);
+			break;
+
+		case 4:
+			getData()->location = kLocationInsideCompartment;
+			getEntities()->drawSequenceLeft(kEntityAugust, "122B");
+			break;
+
+		case 5:
+			getEntities()->drawSequenceLeft(kEntityAugust, "122B");
+			getSavePoints()->push(kEntityAugust, kEntityServers1, kAction291721418);
+			break;
+		}
+		break;
+
+	case kAction122358304:
+		getEntities()->drawSequenceLeft(kEntityAugust, "BLANK");
+		break;
+
+	case kAction125826561:
+		setup_function63();
+		break;
+
+	case kAction134486752:
+		getEntities()->drawSequenceLeft(kEntityAugust, "122B");
+		break;
+	}
 }
 
 //////////////////////////////////////////////////////////////////////////

@@ -175,11 +175,6 @@ IMPLEMENT_FUNCTION(10, Kronos, function10)
 
 	case kActionNone:
 		TIME_CHECK(kTime1489500, params->param1, setup_function11);
-
-		if (params->param1 && getEntities()->isInsideTrainCar(kEntityPlayer, kCarKronos)) {
-			UPDATE_PARAM(params->param3, getState()->timeTicks, 150);
-			setup_function9();
-		}
 		break;
 
 	case kActionDefault:

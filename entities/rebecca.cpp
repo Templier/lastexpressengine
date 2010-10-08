@@ -188,7 +188,83 @@ IMPLEMENT_FUNCTION(15, Rebecca, function15)
 
 //////////////////////////////////////////////////////////////////////////
 IMPLEMENT_FUNCTION_I(16, Rebecca, function16, bool)
-	error("Rebecca: callback function 16 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionNone:
+		if (!params->param2) {
+			if (getEntities()->isDistanceBetweenEntities(kEntityRebecca, kEntitySophie, 750)) {
+				if (!getEntities()->hasValidFrame(kEntitySophie)) {
+					getSavePoints()->push(kEntityRebecca, kEntitySophie, kAction123668192);
+
+					setCallback(3);
+					setup_callbackActionRestaurantOrSalon();
+				}
+			}
+		}
+		break;
+
+	case kActionDefault:
+		setCallback(1);
+		setup_enterExitCompartment(params->param1 ? "624Be" : "623Ee", kObjectCompartmentE);
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			getObjects()->update(kObjectCompartmentE, kEntityPlayer, kObjectLocationNone, kCursorHandKnock, kCursorHand);
+			getObjects()->update(kObject52, kEntityPlayer, kObjectLocationNone, kCursorHandKnock, kCursorHand);
+			getData()->location = kLocationOutsideCompartment;
+			getSavePoints()->push(kEntityRebecca, kEntitySophie, kAction125242096);
+
+			setCallback(2);
+			setup_updateEntity(kCarRestaurant, kPosition_850);
+			break;
+
+		case 2:
+			getEntities()->clearSequences(kEntityRebecca);
+			break;
+
+		case 3:
+			getData()->entityPosition = kPosition_1540;
+			getData()->location = kLocationOutsideCompartment;
+
+			setCallback(4);
+			setup_draw("810US");
+			break;
+
+		case 4:
+			getEntities()->drawSequenceRight(kEntityRebecca, "012B");
+			if (getEntities()->isInSalon(kEntityPlayer))
+				getEntities()->updateFrame(kEntityRebecca);
+
+			setCallback(4);
+			setup_callbackActionOnDirection();
+			break;
+
+		case 5:
+			getEntities()->drawSequenceLeft(kEntityRebecca, "012A");
+			if (getProgress().chapter == kChapter3)
+				getSound()->playSound(kEntityRebecca, "REB3000");
+
+			getSavePoints()->push(kEntityRebecca, kEntityPascale, kAction269479296);
+
+			params->param2 = 1;
+			break;
+		}
+		break;
+
+	case kAction157370960:
+		getSavePoints()->push(kEntityRebecca, kEntityTables3, kAction136455232);
+		getData()->location = kLocationInsideCompartment;
+
+		CALLBACK_ACTION();
+		break;
+	}
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -277,12 +353,132 @@ IMPLEMENT_FUNCTION_I(17, Rebecca, function17, bool)
 
 //////////////////////////////////////////////////////////////////////////
 IMPLEMENT_FUNCTION(18, Rebecca, function18)
-	error("Rebecca: callback function 18 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionNone:
+		if (getEntities()->isDistanceBetweenEntities(kEntityRebecca, kEntitySophie, 750)
+		 || getEntities()->checkDistanceFromPosition(kEntitySophie, kPosition_4840, 500)) {
+			getSavePoints()->push(kEntityRebecca, kEntitySophie, kAction123668192);
+			getEntities()->exitCompartment(kEntityRebecca, kObjectCompartmentE, true);
+
+			setCallback(3);
+			setup_function15();
+		}
+		break;
+
+	case kActionDefault:
+		getData()->car = kCarRedSleeping;
+		getData()->entityPosition = kPosition_9270;
+		getData()->location = kLocationOutsideCompartment;
+		getSavePoints()->push(kEntityRebecca, kEntitySophie, kAction136654208);
+
+		setCallback(1);
+		setup_updateEntity(kCarRedSleeping, kPosition_4840);
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			if (getEntities()->isDistanceBetweenEntities(kEntityRebecca, kEntitySophie, 750)
+			 || getEntities()->checkDistanceFromPosition(kEntitySophie, kPosition_4840, 500)) {
+				getSavePoints()->push(kEntityRebecca, kEntitySophie, kAction123668192);
+
+				setCallback(2);
+				setup_function15();
+			} else {
+				getEntities()->drawSequenceLeft(kEntityRebecca, "623Ge");
+				getEntities()->enterCompartment(kEntityRebecca, kObjectCompartmentE, true);
+			}
+			break;
+
+		case 2:
+		case 3:
+			CALLBACK_ACTION();
+			break;
+		}
+		break;
+	}
 }
 
 //////////////////////////////////////////////////////////////////////////
 IMPLEMENT_FUNCTION(19, Rebecca, function19)
-	error("Rebecca: callback function 19 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionNone:
+		if (getEntities()->isDistanceBetweenEntities(kEntityRebecca, kEntitySophie, 750)
+		 || getEntities()->checkDistanceFromPosition(kEntitySophie, kPosition_4840, 500)) {
+			getSavePoints()->push(kEntityRebecca, kEntitySophie, kAction123668192);
+			getEntities()->exitCompartment(kEntityRebecca, kObjectCompartmentE, true);
+
+			setCallback(6);
+			setup_function15();
+		}
+		break;
+
+	case kActionDefault:
+		setCallback(1);
+		setup_callbackActionRestaurantOrSalon();
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			getData()->location = kLocationOutsideCompartment;
+
+			setCallback(2);
+			setup_callSavepoint("012H", kEntityTables3, kActionDrawTablesWithChairs, "010M");
+			break;
+
+		case 2:
+			getSavePoints()->push(kEntityRebecca, kEntityServers0, kAction337548856);
+			getEntities()->drawSequenceRight(kEntityRebecca, "810DS");
+			if (getEntities()->isInRestaurant(kEntityPlayer))
+				getEntities()->updateFrame(kEntityRebecca);
+
+			setCallback(4);
+			setup_callbackActionOnDirection();
+			break;
+
+		case 3:
+			getData()->car = kCarRedSleeping;
+			getData()->entityPosition = kPosition_9270;
+			getData()->location = kLocationOutsideCompartment;
+			getSavePoints()->push(kEntityRebecca, kEntitySophie, kAction136654208);
+
+			setCallback(4);
+			setup_updateEntity(kCarRedSleeping, kPosition_4840);
+			break;
+
+		case 4:
+			if (getEntities()->isDistanceBetweenEntities(kEntityRebecca, kEntitySophie, 750)
+			 || getEntities()->checkDistanceFromPosition(kEntitySophie, kPosition_4840, 500)) {
+				getSavePoints()->push(kEntityRebecca, kEntitySophie, kAction123668192);
+
+				setCallback(5);
+				setup_function15();
+			} else {
+				getEntities()->drawSequenceLeft(kEntityRebecca, "623Ge");
+				getEntities()->enterCompartment(kEntityRebecca, kObjectCompartmentE, true);
+			}
+			break;
+
+		case 5:
+		case 6:
+			CALLBACK_ACTION();
+			break;
+		}
+		break;
+	}
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -574,7 +770,71 @@ label_playConversation:
 
 //////////////////////////////////////////////////////////////////////////
 IMPLEMENT_FUNCTION(23, Rebecca, function23)
-	error("Rebecca: callback function 23 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionNone:
+		TIME_CHECK_CALLBACK_2(kTime1111500, params->param2, 3, setup_enterExitCompartment, "623De", kObjectCompartmentE);
+		break;
+
+	case kActionDefault:
+		setCallback(1);
+		setup_updateFromTime(900);
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			setCallback(2);
+			setup_enterExitCompartment("623Ce", kObjectCompartmentE);
+			break;
+
+		case 2:
+			getObjects()->update(kObjectCompartmentE, kEntityPlayer, kObjectLocation2, kCursorNormal, kCursorNormal);
+			getEntities()->drawSequenceLeft(kEntityRebecca, "504");
+			break;
+
+		case 3:
+		case 6:
+			getEntities()->clearSequences(kEntityRebecca);
+			getData()->entityPosition = kPosition_4840;
+			getData()->location = kLocationInsideCompartment;
+
+			setCallback(getCallback() + 1);
+			setup_function20(kTime1120500);
+			break;
+
+		case 4:
+		case 5:
+			if (ENTITY_PARAM(0, 1)) {
+				setup_function24();
+			} else {
+				setCallback(5);
+				setup_function20((TimeValue)(getState()->time + 900));
+			}
+			break;
+
+		case 7:
+		case 8:
+			if (ENTITY_PARAM(0, 1)) {
+				setup_function24();
+			} else {
+				setCallback(8);
+				setup_function20((TimeValue)(getState()->time + 900));
+			}
+			break;
+		}
+		break;
+
+	case kAction285528346:
+		setCallback(6);
+		setup_enterExitCompartment("623De", kObjectCompartmentE);
+		break;
+	}
 }
 
 //////////////////////////////////////////////////////////////////////////

@@ -946,7 +946,91 @@ IMPLEMENT_FUNCTION(33, Boutarel, function33)
 
 //////////////////////////////////////////////////////////////////////////
 IMPLEMENT_FUNCTION(34, Boutarel, function34)
-	error("Boutarel: callback function 34 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionNone:
+		TIME_CHECK(kTime2470500, params->param1, setup_function35);
+
+		if (getState()->time > kTime2457000 && getEvent(kEventAugustDrink)) {
+			getSavePoints()->push(kEntityBoutarel, kEntityAbbot, kAction159003408);
+
+			setCallback(1);
+			setup_function15(false, "102A");
+		}
+		break;
+
+	case kActionDefault:
+		getSavePoints()->push(kEntityBoutarel, kEntityAbbot, kAction101687594);
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			setCallback(2);
+			setup_function17(kTime2479500, "102B");
+			break;
+
+		case 2:
+			setCallback(3);
+			setup_function16(false, "102C");
+			break;
+
+		case 3:
+		case 7:
+			setup_function35();
+			break;
+
+		case 4:
+		case 8:
+			if (getState()->time >= kTime2470500) {
+				setup_function35();
+				break;
+			}
+
+			if (getEvent(kEventAugustDrink)) {
+				setCallback(5);
+				setup_function15(false, "102A");
+			} else {
+				setCallback(8);
+				setup_function18((TimeValue)(getState()->time + 900));
+			}
+			break;
+
+		case 5:
+			setCallback(6);
+			setup_function17(kTime2479500, "102B");
+			break;
+
+		case 6:
+			setCallback(7);
+			setup_function16(false, "102C");
+			break;
+
+		case 9:
+			getSavePoints()->push(kEntityBoutarel, kEntityCoudert, kAction123199584);
+			break;
+		}
+		break;
+
+	case kAction122865568:
+		getSavePoints()->push(kEntityBoutarel, kEntityCoudert, kAction88652208);
+		break;
+
+	case kAction125039808:
+		setCallback(4);
+		setup_function18(kTime2457000);
+		break;
+
+	case kAction221683008:
+		setCallback(9);
+		setup_playSound("Mrb1001");
+		break;
+	}
 }
 
 //////////////////////////////////////////////////////////////////////////
