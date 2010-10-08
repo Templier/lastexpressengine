@@ -79,6 +79,7 @@ namespace LastExpress {
 
 class LastExpressEngine;
 class StreamedSound;
+class SubtitleManager;
 
 class SoundManager : Common::Serializable {
 public:
@@ -196,7 +197,7 @@ public:
 	void saveLoadWithSerializer(Common::Serializer &ser);
 
 private:
-	LastExpressEngine* _engine;
+	typedef int32* SoundBuffer;
 
 	enum SoundStatus {
 		kSoundStatus_20       = 0x20,
@@ -256,7 +257,7 @@ private:
 		Common::String name1; //char[16];
 		Common::String name2; //char[16];
 		//int next; // offset to the next structure in the list (not used)
-		//Subtitle subtitle;
+		SubtitleManager *subtitle;
 
 		bool isStreamed; // TEMPORARY
 
@@ -273,6 +274,9 @@ private:
 		};
 	};
 
+	// Engine
+	LastExpressEngine* _engine;
+
 	// State flag
 	int _state;
 	SoundType _currentType;
@@ -286,8 +290,15 @@ private:
 	uint32 _data2;
 	uint32 _flag;
 
+	// Filters
+
+	int32 _buffer[2940];    ///< Static sound buffer
+
 	// Compartment warnings by Mertens or Coudert
 	uint32 _lastWarning[12];
+
+	// Looping sound
+	void playLoopingSound();
 
 	// Sound cache
 	Common::List<SoundEntry *> _cache;
@@ -307,9 +318,12 @@ private:
 	void resetEntry(SoundEntry *entry) const;
 	void removeEntry(SoundEntry *entry);
 
-
 	// Subtitles
 	void showSubtitles(SoundEntry *entry, Common::String filename);
+	void drawSubtitles(SubtitleManager *subtitle);
+
+	// Sound filter
+	void applyFilter(SoundEntry *entry, SoundBuffer buffer);
 };
 
 } // End of namespace LastExpress

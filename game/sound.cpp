@@ -26,6 +26,7 @@
 #include "lastexpress/game/sound.h"
 
 #include "lastexpress/data/snd.h"
+#include "lastexpress/data/subtitle.h"
 
 #include "lastexpress/game/action.h"
 #include "lastexpress/game/entities.h"
@@ -158,19 +159,6 @@ void SoundManager::resetQueue(SoundType type1, SoundType type2) {
 	}
 }
 
-bool SoundManager::isBuffered(EntityIndex entity) {
-	return (getEntry(entity) != NULL);
-}
-
-bool SoundManager::isBuffered(Common::String filename, bool testForEntity) {
-	SoundEntry *entry = getEntry(filename);
-
-	if (testForEntity)
-		return entry && !entry->entity;
-
-	return (entry != NULL);
-}
-
 void SoundManager::removeFromQueue(EntityIndex entity) {
 	SoundEntry *entry = getEntry(entity);
 
@@ -183,6 +171,42 @@ void SoundManager::removeFromQueue(Common::String filename) {
 
 	if (entry)
 		resetEntry(entry);
+}
+
+void SoundManager::clearQueue() {
+	_flag |= 4;
+
+	// Wait a while for a flag to be set
+	for (int i = 0; i < 3000000; i++)
+		if (_flag & 8)
+			break;
+
+	_flag |= 8;
+
+	for (Common::List<SoundEntry *>::iterator i = _cache.begin(); i != _cache.end(); ++i) {
+		SoundEntry *entry = (*i);
+
+		removeEntry(entry);
+
+		// Delete entry
+		SAFE_DELETE(entry);
+		i = _cache.reverse_erase(i);
+	}
+
+	updateSubtitles();
+}
+
+bool SoundManager::isBuffered(EntityIndex entity) {
+	return (getEntry(entity) != NULL);
+}
+
+bool SoundManager::isBuffered(Common::String filename, bool testForEntity) {
+	SoundEntry *entry = getEntry(filename);
+
+	if (testForEntity)
+		return entry && !entry->entity;
+
+	return (entry != NULL);
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -321,6 +345,31 @@ void SoundManager::resetEntry(SoundEntry * entry) const {
 			SAFE_DELETE(entry->stream);
 
 		entry->stream = NULL;
+	}
+}
+
+
+void SoundManager::removeEntry(SoundEntry *entry) {
+	entry->status.status |= kSoundStatusRemoved;
+
+	// Loop until ready
+	while (!(entry->status.status1 & 4) && !(_flag & 8) && (_flag & 1));
+
+	// The original game remove the entry from the cache here,
+	// but since we are called from within an iterator loop
+	// we will remove the entry there
+	// removeFromCache(entry);
+
+	if (entry->subtitle) {
+		drawSubtitles(entry->subtitle);
+		SAFE_DELETE(entry->subtitle);
+	}
+
+	if (entry->entity) {
+		if (entry->entity == kEntitySteam)
+			playLoopingSound();
+		else if (entry->entity != kEntityTrain)
+			getSavePoints()->push(kEntityPlayer, entry->entity, kAction2);
 	}
 }
 
@@ -1608,10 +1657,17 @@ void SoundManager::showSubtitles(SoundEntry *entry, Common::String filename) {
 	warning("SoundManager::showSubtitles: not implemented!");
 }
 
+void SoundManager::drawSubtitles(SubtitleManager *subtitle) {
+	warning("SoundManager::drawSubtitles: not implemented!");
+}
 
 //////////////////////////////////////////////////////////////////////////
 // Misc
 //////////////////////////////////////////////////////////////////////////
+void SoundManager::playLoopingSound() {
+	warning("SoundManager::playLoopingSound: not implemented!");
+}
+
 void SoundManager::stopAllSound() const {
 	_soundStream->stop();
 }
