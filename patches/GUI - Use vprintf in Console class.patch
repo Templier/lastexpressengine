@@ -1,0 +1,37 @@
+# HG changeset patch
+# Parent 1fa6d32dcb74cd39a0a1d550b03c15e000deb6f9
+GUI: Use vprintf in Console class
+
+diff -r 1fa6d32dcb74 gui/console.cpp
+--- a/gui/console.cpp	Mon Oct 11 15:31:15 2010 -0400
++++ b/gui/console.cpp	Mon Oct 11 15:36:19 2010 -0400
+@@ -660,7 +660,7 @@
+ }
+ 
+ int ConsoleDialog::printf(const char *format, ...) {
+-	va_list	argptr;
++	va_list argptr;
+ 
+ 	va_start(argptr, format);
+ 	int count = this->vprintf(format, argptr);
+@@ -669,17 +669,10 @@
+ }
+ 
+ int ConsoleDialog::vprintf(const char *format, va_list argptr) {
+-	char	buf[2048];
++	Common::String output = Common::String::vprintf(format, argptr);
+ 
+-#if defined(WIN32)
+-	int count = _vsnprintf(buf, sizeof(buf), format, argptr);
+-#elif defined(__SYMBIAN32__)
+-	int count = vsprintf(buf, format, argptr);
+-#else
+-	int count = vsnprintf(buf, sizeof(buf), format, argptr);
+-#endif
+-	print(buf);
+-	return count;
++	print(output.c_str());
++	return output.size();
+ }
+ 
+ void ConsoleDialog::putchar(int c) {
