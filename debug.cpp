@@ -790,7 +790,7 @@ bool Debugger::cmdBeetle(int argc, const char **argv) {
 			redrawScreen();
 
 			// Load the beetle game
-			Action *action   = new Action(_engine);
+			Action *action = NULL;
 			Beetle *beetle = new Beetle(_engine);
 			if (!beetle->isLoaded())
 				beetle->load();
@@ -822,8 +822,12 @@ bool Debugger::cmdBeetle(int argc, const char **argv) {
 						// Update cursor
 						CursorStyle style = kCursorNormal;
 						SceneHotspot *hotspot = NULL;
-						if (scene->checkHotSpot(ev.mouse, &hotspot))
+						if (scene->checkHotSpot(ev.mouse, &hotspot)) {
+							if (!action)
+								action = new Action(_engine);
+
 							style = action->getCursor(*hotspot);
+						}
 
 						_engine->getCursor()->setStyle(style);
 						break;
@@ -847,7 +851,7 @@ bool Debugger::cmdBeetle(int argc, const char **argv) {
 			// Cleanup
 			beetle->unload();
 			delete beetle;
-			delete action;
+			SAFE_DELETE(action);
 
 			// Pause for a second to be able to see the final scene
 			_engine->_system->delayMillis(1000);

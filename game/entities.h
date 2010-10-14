@@ -96,9 +96,9 @@ public:
 	// Accessors
 	Entity *get(EntityIndex entity);
 	EntityData::EntityCallData *getData(EntityIndex entity) const;
-	int getPosition(CarIndex car, Position position) { int index = 100 * car + position; assert(index < _positionsCount); return _positions[index]; }
-	int getCompartments(int index) { assert(index < _compartmentsCount); return _compartments[index]; }
-	int getCompartments1(int index) { assert(index < _compartmentsCount); return _compartments1[index]; }
+	int getPosition(CarIndex car, Position position);
+	int getCompartments(int index);
+	int getCompartments1(int index);
 
 	// Scene
 	void loadSceneFromEntityPosition(CarIndex car, EntityPosition position, bool alternate = false) const;

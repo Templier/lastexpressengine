@@ -270,6 +270,8 @@ private:
 			field_48 = 0;
 			field_4C = 0;
 
+			subtitle = NULL;
+
 			isStreamed = false;
 		};
 	};

@@ -215,6 +215,32 @@ EntityData::EntityCallData *Entities::getData(EntityIndex entity) const {
 	return _entities[entity]->getData();
 }
 
+int Entities::getPosition(CarIndex car, Position position) {
+	int index = 100 * car + position;
+
+	if (car < 0 || car > 10)
+		error("Entities::getPosition: trying to access an invalid car (was: %d, valid:0-9)", car);
+
+	if (position < 0 || position > 100)
+		error("Entities::getPosition: trying to access an invalid position (was: %d, valid:0-100)", position);
+
+	return _positions[index];
+}
+
+int Entities::getCompartments(int index) {
+	if (index >= _compartmentsCount)
+		error("Entities::getCompartments: trying to access an invalid compartment (was: %d, valid:0-15)", index);
+
+	return _compartments[index];
+}
+
+int Entities::getCompartments1(int index) {
+	if (index >= _compartmentsCount)
+		error("Entities::getCompartments: trying to access an invalid compartment (was: %d, valid:0-15)", index);
+
+	return _compartments1[index];
+}
+
 //////////////////////////////////////////////////////////////////////////
 // Savegame
 //////////////////////////////////////////////////////////////////////////

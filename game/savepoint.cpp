@@ -154,7 +154,7 @@ void SavePoints::call(EntityIndex entity2, EntityIndex entity1, ActionIndex acti
 	point.param.intValue = param;
 
 	Entity::Callback *callback = getCallback(entity1);
-	if (callback && callback->isValid()) {
+	if (callback != NULL && callback->isValid()) {
 		debugC(8, kLastExpressDebugLogic, "Savepoint: entity1=%s, action=%s, entity2=%s, param=%d", ENTITY_NAME(entity1), ACTION_NAME(action), ENTITY_NAME(entity2), param);
 		(*callback)(point);
 	}
@@ -168,7 +168,7 @@ void SavePoints::call(EntityIndex entity2, EntityIndex entity1, ActionIndex acti
 	strcpy((char *)&point.param.charValue, param);
 
 	Entity::Callback *callback = getCallback(entity1);
-	if (callback && callback->isValid()) {
+	if (callback != NULL && callback->isValid()) {
 		debugC(8, kLastExpressDebugLogic, "Savepoint: entity1=%s, action=%s, entity2=%s, param=%s", ENTITY_NAME(entity1), ACTION_NAME(action), ENTITY_NAME(entity2), param);
 		(*callback)(point);
 	}
@@ -185,7 +185,7 @@ void SavePoints::callAndProcess() {
 	while (isRunning) {
 
 		Entity::Callback *callback = getCallback(index);
-		if (callback && callback->isValid()) {
+		if (callback != NULL && callback->isValid()) {
 			(*callback)(savepoint);
 			isRunning = getFlags()->isGameRunning;
 		}
