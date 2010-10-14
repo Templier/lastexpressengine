@@ -272,7 +272,61 @@ IMPLEMENT_FUNCTION(14, Kronos, chapter3Handler)
 
 //////////////////////////////////////////////////////////////////////////
 IMPLEMENT_FUNCTION(15, Kronos, function15)
-	error("Kronos: callback function 15 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionNone:
+		if (params->param1 && !getEntities()->isInSalon(kEntityBoutarel)) {
+			UPDATE_PARAM_PROC(params->param2, getState()->timeTicks, 75)
+				setup_function16();
+				break;
+			UPDATE_PARAM_PROC_END
+		}
+
+		if (params->param3 != kTimeInvalid && getState()->time > kTime2002500) {
+			if (getState()->time <= kTime2052000) {
+				if (!getEntities()->isInSalon(kEntityPlayer) || getEntities()->isInSalon(kEntityPlayer) || !params->param3)
+					params->param3 = getState()->time + 900;
+
+				if (params->param3 >= getState()->time)
+					break;
+			}
+
+			params->param3 = kTimeInvalid;
+
+			if (getEntities()->isInSalon(kEntityPlayer)) {
+				setup_function16();
+			} else {
+				getSavePoints()->push(kEntityKronos, kEntityAnna, kAction101169422);
+				getSavePoints()->push(kEntityKronos, kEntityTatiana, kAction101169422);
+				getSavePoints()->push(kEntityKronos, kEntityAbbot, kAction101169422);
+
+				setup_function18();
+			}
+		}
+		break;
+
+	case kActionDefault:
+		if (getEntities()->isPlayerPosition(kCarRestaurant, 60)
+		 || getEntities()->isPlayerPosition(kCarRestaurant, 59)
+		 || getEntities()->isPlayerPosition(kCarRestaurant, 83)
+		 || getEntities()->isPlayerPosition(kCarRestaurant, 81)
+		 || getEntities()->isPlayerPosition(kCarRestaurant, 87))
+			params->param1 = 1;
+		break;
+
+	case kActionDrawScene:
+		if (params->param1 && getEntities()->isPlayerPosition(kCarRestaurant, 51) && !getEntities()->isInSalon(kEntityBoutarel))
+			setup_function16();
+		else
+			params->param1 = getEntities()->isPlayerPosition(kCarRestaurant, 60)
+			              || getEntities()->isPlayerPosition(kCarRestaurant, 59)
+			              || getEntities()->isPlayerPosition(kCarRestaurant, 83)
+			              || getEntities()->isPlayerPosition(kCarRestaurant, 81)
+			              || getEntities()->isPlayerPosition(kCarRestaurant, 87);
+		break;
+	}
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -453,7 +507,114 @@ IMPLEMENT_FUNCTION(21, Kronos, function21)
 
 //////////////////////////////////////////////////////////////////////////
 IMPLEMENT_FUNCTION(22, Kronos, function22)
-	error("Kronos: callback function 22 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionNone:
+		if (getProgress().field_44) {
+			setCallback(5);
+			setup_savegame(kSavegameTypeEvent, kEventKahinaPunchBaggageCarEntrance);
+		} else {
+			setCallback(6);
+			setup_savegame(kSavegameTypeEvent, kEventKahinaWrongDoor);
+		}
+		break;
+
+	case kActionKnock:
+	case kActionOpenDoor:
+		if (!getSound()->isBuffered(savepoint.action == kActionKnock ? "LIB012" : "LIB013", true))
+			getSound()->playSound(kEntityPlayer, savepoint.action == kActionKnock ? "LIB012" : "LIB013");
+
+		if (getEvent(kEventConcertLeaveWithBriefcase))
+			getSavePoints()->call(kEntityKronos, kEntityKahina, kAction137503360);
+
+		if (getInventory()->hasItem(kItemBriefcase)) {
+			setCallback(1);
+			setup_savegame(kSavegameTypeEvent, kEventKronosReturnBriefcase);
+			break;
+		}
+
+		if (getInventory()->hasItem(kItemFirebird) && getEvent(kEventConcertLeaveWithBriefcase)) {
+			setCallback(2);
+			setup_savegame(kSavegameTypeEvent, kEventKronosBringEggCeiling);
+			break;
+		}
+
+		if (getInventory()->hasItem(kItemFirebird)) {
+			setCallback(3);
+			setup_savegame(kSavegameTypeEvent, kEventKronosBringEggCeiling);
+			break;
+		}
+
+		if (getEvent(kEventConcertLeaveWithBriefcase)) {
+			setCallback(4);
+			setup_savegame(kSavegameTypeEvent, kEventKronosBringNothing);
+			break;
+		}
+		break;
+
+	case kActionDefault:
+		getObjects()->update(kObjectCompartmentKronos, kEntityKronos, kObjectLocation3, kCursorHandKnock, kCursorHand);
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			getAction()->playAnimation(kEventKronosReturnBriefcase);
+			getScenes()->loadSceneFromPosition(kCarKronos, 87);
+			getInventory()->removeItem(kItemFirebird);
+			getInventory()->removeItem(kItemScarf);
+
+			setup_function23();
+			break;
+
+		case 2:
+			getAction()->playAnimation(kEventKronosBringEggCeiling);
+			getScenes()->loadSceneFromPosition(kCarKronos, 87);
+			getInventory()->removeItem(kItemFirebird);
+			getInventory()->get(kItemFirebird)->location = kObjectLocation5;
+
+			setup_function23();
+			break;
+
+		case 3:
+			getInventory()->removeItem(kItemFirebird);
+			getInventory()->get(kItemFirebird)->location = kObjectLocation5;
+			getAction()->playAnimation(kEventKronosBringEgg);
+			getScenes()->loadSceneFromPosition(kCarKronos, 87);
+			getInventory()->addItem(kItemBriefcase);
+			setup_function23();
+			break;
+
+		case 4:
+			getAction()->playAnimation(kEventKronosBringNothing);
+			getLogic()->gameOver(kSavegameTypeIndex, 1, kSceneNone, true);
+			break;
+
+		case 5:
+			getAction()->playAnimation(kEventKahinaPunchSuite4);
+			getLogic()->gameOver(kSavegameTypeIndex, 1, kSceneNone, true);
+			break;
+
+		case 6:
+			getAction()->playAnimation(kEventKahinaWrongDoor);
+			if (getInventory()->hasItem(kItemBriefcase))
+				getInventory()->removeItem(kItemBriefcase);
+
+			getSound()->playSound(kEntityPlayer, "BUMP");
+			getScenes()->loadSceneFromPosition(kCarKronos, 81);
+			getSound()->playSound(kEntityPlayer, "LIB015");
+			break;
+		}
+		break;
+
+	case kAction138085344:
+		setup_function23();
+	}
 }
 
 //////////////////////////////////////////////////////////////////////////

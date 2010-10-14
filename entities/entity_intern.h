@@ -370,6 +370,15 @@ void class::setup_##name() { \
 		break; \
 	}
 
+#define TIME_CHECK_CALLBACK_INVENTORY(timeValue, parameter, callback, function) \
+	if (getState()->time > timeValue && !parameter) { \
+	parameter = 1; \
+	getData()->inventoryItem = kItemNone; \
+	setCallback(callback); \
+	function(); \
+	break; \
+	}
+
 #define TIME_CHECK_CALLBACK_ACTION(timeValue, parameter) \
 	if (getState()->time > timeValue && !parameter) { \
 		parameter = 1; \
