@@ -144,7 +144,99 @@ IMPLEMENT_FUNCTION_II(10, Boutarel, updateEntity, CarIndex, EntityPosition)
 
 //////////////////////////////////////////////////////////////////////////
 IMPLEMENT_FUNCTION_I(11, Boutarel, function11, bool)
-	error("Boutarel: callback function 11 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionNone:
+		if (ENTITY_PARAM(0, 1) && ENTITY_PARAM(0, 2)) {
+			ENTITY_PARAM(0, 2) = 0;
+			ENTITY_PARAM(0, 1) = 0;
+
+			setCallback(5);
+			setup_callbackActionRestaurantOrSalon();
+		}
+		break;
+
+	case kActionDefault:
+		if (params->param1) {
+			if (getProgress().chapter == kChapter4) {
+				getObjects()->update(kObjectCompartmentC, kEntityPlayer, kObjectLocationNone, kCursorHandKnock, kCursorHand);
+
+				setCallback(1);
+				setup_enterExitCompartment("607Hc", kObjectCompartmentC);
+			} else {
+				getObjects()->update(kObjectCompartmentC, kEntityPlayer, kObjectLocation1, kCursorKeepValue, kCursorKeepValue);
+
+				setCallback(2);
+				setup_enterExitCompartment("607Dc", kObjectCompartmentC);
+			}
+		} else {
+			setCallback(3);
+			setup_enterExitCompartment("607Bc", kObjectCompartmentC);
+		}
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 2:
+		case 3:
+			if (getCallback() == 2)
+				getObjects()->update(kObjectCompartmentC, kEntityPlayer, kObjectLocation2, kCursorKeepValue, kCursorKeepValue);
+			else
+				getObjects()->update(kObjectCompartmentC, kEntityPlayer, kObjectLocationNone, kCursorHandKnock, kCursorHand);
+			// Fallback to next case
+
+		case 1:
+			getObjects()->update(kObject50, kEntityPlayer, kObjectLocationNone, kCursorHandKnock, kCursorHand);
+			getData()->location = kLocationOutsideCompartment;
+			getSavePoints()->push(kEntityBoutarel, kEntityFrancois, kAction101107728);
+
+			setCallback(4);
+			setup_updateEntity(kCarRestaurant, kPosition_850);
+			break;
+
+		case 4:
+			getEntities()->clearSequences(kEntityBoutarel);
+			break;
+
+		case 5:
+			getData()->entityPosition = kPosition_1540;
+			getData()->location = kLocationOutsideCompartment;
+
+			setCallback(6);
+			setup_draw("812US");
+			break;
+
+		case 6:
+			switch (getProgress().chapter) {
+			default:
+				break;
+
+			case kChapter1:
+				getSound()->playSound(kEntityBoutarel, "MRB1075", SoundManager::kFlagInvalid, 60);
+				break;
+
+			case kChapter3:
+				getSound()->playSound(kEntityBoutarel, "MRB3101");
+				break;
+			}
+
+			setCallback(7);
+			setup_enterTableWithMmeBoutarel();
+			break;
+
+		case 7:
+			getData()->location = kLocationInsideCompartment;
+
+			CALLBACK_ACTION();
+			break;
+		}
+		break;
+	}
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -544,7 +636,76 @@ IMPLEMENT_FUNCTION(19, Boutarel, chapter1)
 
 //////////////////////////////////////////////////////////////////////////
 IMPLEMENT_FUNCTION(20, Boutarel, function20)
-	error("Boutarel: callback function 20 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionNone:
+		if (!params->param1)
+			break;
+
+		if (!params->param2) {
+			UPDATE_PARAM_PROC(params->param3, getState()->time, 4500)
+				setCallback(3);
+				setup_playSound("MRB1078A");
+				break;
+			UPDATE_PARAM_PROC_END
+		}
+
+		TIME_CHECK_CALLBACK_1(kTime1138500, params->param4, 4, setup_function14, false);
+		break;
+
+	case kActionDefault:
+		setCallback(1);
+		setup_function11(false);
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			getEntities()->drawSequenceLeft(kEntityBoutarel, "008B");
+
+			setCallback(2);
+			setup_playSound("MRB1076");
+			break;
+
+		case 2:
+			getSavePoints()->push(kEntityBoutarel, kEntityServers1, kAction256200848);
+			break;
+
+		case 3:
+			TIME_CHECK_CALLBACK_1(kTime1138500, params->param4, 4, setup_function14, false);
+			break;
+
+		case 4:
+			getSavePoints()->push(kEntityBoutarel, kEntityCooks, kAction224849280);
+
+			CALLBACK_ACTION();
+			break;
+		}
+		break;
+
+	case kAction134466544:
+		params->param2 = 0;
+		break;
+
+	case kAction135854206:
+		params->param2 = 1;
+		break;
+
+	case kAction168717392:
+		params->param1 = 1;
+		getEntities()->drawSequenceLeft(kEntityBoutarel, "008D");
+
+		if (!params->param2) {
+			setCallback(5);
+			setup_playSound("MRB1078");
+		}
+		break;
+	}
 }
 
 //////////////////////////////////////////////////////////////////////////

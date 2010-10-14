@@ -717,7 +717,154 @@ IMPLEMENT_FUNCTION(24, Verges, policeGettingOffTrain)
 
 //////////////////////////////////////////////////////////////////////////
 IMPLEMENT_FUNCTION(25, Verges, function25)
-	error("Verges: callback function 25 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionDefault:
+		setCallback(1);
+		setup_savegame(kSavegameTypeTime, kTimeNone);
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			getScenes()->loadSceneFromItemPosition(kItem9);
+
+			if (!getEntities()->isInKronosSalon(kEntityPlayer)) {
+
+				if (getEntityData(kEntityPlayer)->car > kCarRedSleeping
+				 || (getEntityData(kEntityPlayer)->car == kCarRedSleeping && getEntityData(kEntityPlayer)->entityPosition > kPosition_9270)) {
+					getSound()->playSound(kEntityPlayer, "BUMP");
+					getScenes()->loadSceneFromPosition(kCarRedSleeping, 40);
+
+					getData()->car = kCarRedSleeping;
+					getData()->entityPosition = kPosition_9270;
+				} else {
+					if (getEntityData(kEntityPlayer)->car > kCarGreenSleeping
+					 || (getEntityData(kEntityPlayer)->car == kCarGreenSleeping && getEntityData(kEntityPlayer)->entityPosition < kPosition_4840)) {
+						getSound()->playSound(kEntityPlayer, "BUMP");
+						getScenes()->loadSceneFromObject(kObjectCompartment5, true);
+					}
+
+					getData()->car = kCarGreenSleeping;
+					getData()->entityPosition = kPosition_850;
+				}
+
+				getData()->location = kLocationOutsideCompartment;
+
+				getObjects()->update(kObjectRestaurantCar, kEntityPlayer, kObjectLocation1, kCursorNormal, kCursorForward);
+				getObjects()->update(kObjectCompartmentE, kEntityPlayer, kObjectLocation1, kCursorHandKnock, kCursorHand);
+
+				if (getEntities()->isOutsideAnnaWindow())
+					getScenes()->loadSceneFromPosition(kCarRedSleeping, 49);
+
+				if (getEntities()->isInsideCompartment(kEntityPlayer, kCarRedSleeping, kPosition_4840)
+				 || getEntities()->isInsideCompartment(kEntityPlayer, kCarRedSleeping, kPosition_4455)) {
+					getAction()->playAnimation(isNight() ? kEventCathTurningNight : kEventCathTurningDay);
+					getSound()->playSound(kEntityPlayer, "BUMP");
+					getScenes()->loadSceneFromObject(kObjectCompartmentE, true);
+				}
+
+				getSavePoints()->push(kEntityVerges, kEntityGendarmes, kAction169499649);
+
+				getProgress().field_3C = 1;
+				getState()->timeDelta = 1;
+
+				if (getData()->car == kCarRedSleeping) {
+					setCallback(6);
+					setup_function10(kCarGreenSleeping, kPosition_540, "TRA1005");
+				} else {
+					setCallback(7);
+					setup_function10(kCarRedSleeping, kPosition_9460, "TRA1006");
+				}
+				break;
+			}
+			// Fallback to next case
+
+		case 2:
+			if (getEvent(kEventKronosConversation)) {
+				getProgress().field_3C = 1;
+				getData()->car = kCarGreenSleeping;
+				getData()->entityPosition = kPosition_540;
+				getData()->location = kLocationOutsideCompartment;
+
+				getState()->timeDelta = 3;
+				getSavePoints()->push(kEntityVerges, kEntityChapters, kAction169629818);
+
+				setCallback(3);
+				setup_policeGettingOffTrain();
+			} else {
+				setCallback(2);
+				setup_updateFromTime(150);
+			}
+			break;
+
+		case 3:
+			getSavePoints()->push(kEntityVerges, kEntityCoudert, kAction168254872);
+
+			setCallback(4);
+			setup_function10(kCarRedSleeping, kPosition_9460, "TRA1006");
+			break;
+
+		case 4:
+			setCallback(5);
+			setup_function11();
+			break;
+
+		case 5:
+		case 11:
+			ENTITY_PARAM(0, 7);
+
+			CALLBACK_ACTION();
+			break;
+
+		case 6:
+		case 7:
+			getEntities()->clearSequences(kEntityVerges);
+			break;
+
+		case 8:
+			getSavePoints()->push(kEntityVerges, kEntityChapters, kAction169629818);
+
+			setCallback(9);
+			setup_policeGettingOffTrain();
+			break;
+
+		case 9:
+			getObjects()->update(kObjectRestaurantCar, kEntityPlayer, kObjectLocationNone, kCursorNormal, kCursorForward);
+			getObjects()->update(kObjectCompartmentE, kEntityPlayer, kObjectLocationNone, kCursorHandKnock, kCursorHand);
+			getSavePoints()->push(kEntityVerges, kEntityCoudert, kAction168254872);
+
+			setCallback(10);
+			setup_function10(kCarGreenSleeping, kPosition_540, "TRA1006");
+			break;
+
+		case 10:
+			setCallback(11);
+			setup_function11();
+			break;
+		}
+		break;
+
+	case kAction168710784:
+		getData()->car = kCarGreenSleeping;
+
+		if (!getEntityData(kEntityPlayer)->car == kCarGreenSleeping)
+			getData()->car = kCarRedSleeping;
+
+		getData()->entityPosition = kPosition_8200;
+		getData()->location = kLocationOutsideCompartment;
+
+		getState()->timeDelta = 3;
+
+		setCallback(8);
+		setup_savegame(kSavegameTypeTime, kTimeNone);
+		break;
+	}
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -1129,7 +1276,79 @@ IMPLEMENT_FUNCTION(31, Verges, function31)
 
 //////////////////////////////////////////////////////////////////////////
 IMPLEMENT_FUNCTION(32, Verges, function32)
-	error("Verges: callback function 32 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionNone:
+		TIME_CHECK_CALLBACK_3(kTime2263500, params->param1, 5, setup_function10, kCarRedSleeping, kPosition_9460, "TRA3006");
+		break;
+
+	case kActionDefault:
+		getObjects()->update(kObject104, kEntityPlayer, kObjectLocationNone, kCursorNormal, kCursorHand);
+		getObjects()->update(kObject105, kEntityPlayer, kObjectLocationNone, kCursorNormal, kCursorHand);
+
+		if (getEntities()->isInBaggageCar(kEntityPlayer) || getEntities()->isInKitchen(kEntityPlayer)) {
+			getAction()->playAnimation(getEntities()->isInBaggageCar(kEntityPlayer) ? kEventVergesBaggageCarOffLimits : kEventVergesCanIHelpYou);
+			getSound()->playSound(kEntityPlayer, "BUMP");
+			getScenes()->loadSceneFromPosition(kCarRestaurant, 65);
+		}
+
+		getScenes()->loadSceneFromItemPosition(kItem9);
+		getData()->car = kCarRestaurant;
+		getData()->entityPosition = kPosition_5900;
+
+		setCallback(1);
+		setup_callbackActionRestaurantOrSalon();
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			getData()->entityPosition = kPosition_8500;
+			getData()->location = kLocationOutsideCompartment;
+			getSound()->playSound(kEntityVerges, "TRA3004");
+
+			setCallback(2);
+			setup_draw("813DD");
+			break;
+
+		case 2:
+			if (!getSound()->isBuffered(kEntityVerges))
+				getSound()->playSound(kEntityVerges, "TRA3004");
+
+			getEntities()->drawSequenceRight(kEntityVerges, "813DS");
+
+			if (getEntities()->isInRestaurant(kEntityPlayer))
+				getEntities()->updateFrame(kEntityVerges);
+
+			setCallback(3);
+			setup_callbackActionOnDirection();
+			break;
+
+		case 3:
+			setCallback(4);
+			setup_function10(kCarGreenSleeping, kPosition_540, "TRA3004");
+			break;
+
+		case 4:
+			getEntities()->clearSequences(kEntityVerges);
+			break;
+
+		case 5:
+			setCallback(6);
+			setup_function11();
+			break;
+
+		case 6:
+			CALLBACK_ACTION();
+			break;
+		}
+		break;
+	}
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -1196,7 +1415,92 @@ IMPLEMENT_FUNCTION(33, Verges, function33)
 
 //////////////////////////////////////////////////////////////////////////
 IMPLEMENT_FUNCTION(34, Verges, function34)
-	error("Verges: callback function 34 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionNone:
+		if (getEntities()->isInBaggageCarEntrance(kEntityPlayer)) {
+			setCallback(1);
+			setup_function13(false);
+			break;
+		}
+
+label_callback_1:
+		if (ENTITY_PARAM(0, 4)) {
+			setCallback(2);
+			setup_function31();
+			break;
+		}
+
+label_callback_2:
+		if (ENTITY_PARAM(0, 3)) {
+			setCallback(3);
+			setup_function17();
+			break;
+		}
+
+label_callback_3:
+		TIME_CHECK_CALLBACK_1(kTime1971000, params->param1, 4, setup_function9, "Tra3001");
+
+label_callback_4:
+		TIME_CHECK_CALLBACK_1(kTime1998000, params->param2, 5, setup_function9, "Tra3010a");
+
+label_callback_5:
+		TIME_CHECK_CALLBACK(kTime2016000, params->param3, 6, setup_function35);
+
+label_callback_6:
+		TIME_CHECK_CALLBACK_1(kTime2070000, params->param4, 7, setup_function9, "Tra3002");
+
+label_callback_7:
+		TIME_CHECK_CALLBACK_1(kTime2142000, params->param5, 8, setup_function9, "Tra3003");
+
+label_callback_8:
+		TIME_CHECK_CALLBACK_1(kTime2173500, params->param6, 9, setup_function30, "Tra3012");
+
+label_callback_9:
+		TIME_CHECK_CALLBACK(kTime2218500, params->param7, 10, setup_function32);
+		break;
+
+	case kActionOpenDoor:
+		setCallback(11);
+		setup_function13(savepoint.param.intValue < 106);
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			goto label_callback_1;
+
+		case 2:
+			goto label_callback_2;
+
+		case 3:
+			goto label_callback_3;
+
+		case 4:
+			goto label_callback_4;
+
+		case 5:
+			goto label_callback_5;
+
+		case 6:
+			goto label_callback_6;
+
+		case 7:
+			goto label_callback_7;
+
+		case 8:
+			goto label_callback_8;
+
+		case 9:
+			goto label_callback_9;
+		}
+		break;
+	}
 }
 
 //////////////////////////////////////////////////////////////////////////
