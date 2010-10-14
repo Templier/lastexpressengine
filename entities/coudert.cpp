@@ -3461,7 +3461,86 @@ IMPLEMENT_FUNCTION(61, Coudert, function61)
 
 //////////////////////////////////////////////////////////////////////////
 IMPLEMENT_FUNCTION(62, Coudert, function62)
-	error("Coudert: callback function 62 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionNone:
+		if (params->param1) {
+			UPDATE_PARAM(params->param4, getState()->timeTicks, 75);
+
+			params->param1 = 0;
+			params->param2 = 1;
+
+			getObjects()->update(kObjectCompartmentH, kEntityCoudert, kObjectLocation1, kCursorNormal, kCursorNormal);
+		}
+
+		params->param4 = 0;
+		break;
+
+	case kActionKnock:
+	case kActionOpenDoor:
+		if (params->param1) {
+			getObjects()->update(kObjectCompartmentH, kEntityCoudert, kObjectLocation1, kCursorNormal, kCursorNormal);
+			params->param1 = 0;
+
+			setCallback(1);
+			setup_playSound(getSound()->justCheckingCath());
+		} else {
+			setCallback(savepoint.action == kActionKnock ? 2 : 3);
+			setup_playSound(savepoint.action == kActionKnock ? "LIB012" : "LIB013");
+		}
+		break;
+
+	case kActionDefault:
+		getObjects()->update(kObjectCompartmentH, kEntityCoudert, kObjectLocation1, kCursorHandKnock, kCursorHand);
+		break;
+
+	case kActionDrawScene:
+		if (params->param1 || params->param2) {
+			params->param1 = 0;
+			params->param2 = 0;
+			params->param3 = 0;
+
+			getObjects()->update(kObjectCompartmentH, kEntityCoudert, kObjectLocation1, kCursorHandKnock, kCursorHand);
+		}
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			getObjects()->update(kObjectCompartmentH, kEntityCoudert, kObjectLocation1, kCursorHandKnock, kCursorHand);
+			break;
+
+		case 2:
+		case 3:
+			++params->param3;
+
+			if (params->param3 == 1 || params->param2) {
+				getObjects()->update(kObjectCompartmentH, kEntityCoudert, kObjectLocation1, kCursorNormal, kCursorNormal);
+				setCallback(params->param3 == 1 ? 4 : 5);
+				setup_playSound(params->param3 == 1 ? "Jac5002" : "Jac5002A");
+			}
+			break;
+
+		case 4:
+			params->param1 = 1;
+			getObjects()->update(kObjectCompartmentH, kEntityCoudert, kObjectLocation1, kCursorTalk, kCursorNormal);
+			break;
+
+		case 5:
+			params->param2 = 1;
+			break;
+		}
+		break;
+
+	case kAction135800432:
+		setup_nullfunction();
+		break;
+	}
 }
 
 //////////////////////////////////////////////////////////////////////////

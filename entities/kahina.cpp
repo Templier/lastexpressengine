@@ -800,7 +800,80 @@ IMPLEMENT_FUNCTION(23, Kahina, function23)
 
 //////////////////////////////////////////////////////////////////////////
 IMPLEMENT_FUNCTION(24, Kahina, function24)
-	error("Kahina: callback function 24 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionNone:
+		if (params->param1 && getEntities()->updateEntity(kEntityKahina, (CarIndex)params->param2, (EntityPosition)params->param3)) {
+			getEntities()->clearSequences(kEntityKahina);
+			params->param1 = 0;
+		}
+		break;
+
+	case kAction2:
+		if (getEntities()->isInsideTrainCar(kEntityPlayer, kCarKronos))
+			getSavePoints()->push(kEntityKahina, kEntityKronos, kActionOpenDoor);
+		else
+			setup_function27();
+		break;
+
+	case kActionDefault:
+		setCallback(1);
+		setup_function6(kTime2241000);
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			if (ENTITY_PARAM(0, 2)) {
+				getEntities()->clearSequences(kEntityKahina);
+				if (getSound()->isBuffered(kEntityKahina))
+					getSound()->processEntry(kEntityKahina);
+
+				getProgress().field_44 = 0;
+
+				setup_function22();
+			} else if (ENTITY_PARAM(0, 1)) {
+				setCallback(2);
+				setup_savegame(kSavegameTypeEvent, kEventKahinaGunYellow);
+			} else {
+				setup_function27();
+			}
+			break;
+
+		case 2:
+			if (getEntityData(kEntityPlayer)->entityPosition >= getData()->entityPosition)
+				getAction()->playAnimation(getData()->car < kCarRedSleeping ? kEventKahinaGunYellow : kEventKahinaGunBlue);
+			else
+				getAction()->playAnimation(kEventKahinaGun);
+
+			getEntities()->updateEntity(kEntityKahina, kCarKronos, kPosition_9270);
+			getEntities()->loadSceneFromEntityPosition(getData()->car, (EntityPosition)(getData()->entityPosition + 750));
+			getSavePoints()->push(kEntityKahina, kEntityKronos, kAction235599361);
+			getSound()->playSound(kEntityKahina, "MUS016", SoundManager::kFlagDefault);
+			getProgress().field_44 = 1;
+
+			params->param1 = true;
+			params->param2 = kCarKronos;
+			params->param3 = kPosition_9270;
+			break;
+		}
+		break;
+
+	case kAction137503360:
+		getEntities()->clearSequences(kEntityKahina);
+		if (getSound()->isBuffered(kEntityKahina))
+			getSound()->processEntry(kEntityKahina);
+
+		getProgress().field_44 = 0;
+
+		setup_function22();
+		break;
+	}
 }
 
 //////////////////////////////////////////////////////////////////////////

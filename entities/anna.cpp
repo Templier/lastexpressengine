@@ -1953,7 +1953,102 @@ IMPLEMENT_FUNCTION(50, Anna, function50)
 
 //////////////////////////////////////////////////////////////////////////
 IMPLEMENT_FUNCTION(51, Anna, function51)
-	error("Anna: callback function 51 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionNone:
+		if (params->param1) {
+			if (getEntities()->isSomebodyInsideRestaurantOrSalon()) {
+				getSound()->playSound(kEntityAnna, "Aug3008");
+				getData()->location = kLocationOutsideCompartment;
+
+				setCallback(2);
+				setup_draw2("112E1", "112E2", kEntityAugust);
+			}
+		}
+		break;
+
+	case kActionDefault:
+		getSound()->playSound(kEntityAnna, "Aug3142", SoundManager::kFlagInvalid, 30);
+		getEntities()->updatePositionEnter(kEntityAnna, kCarRestaurant, 57);
+		getEntities()->drawSequenceRight(kEntityAnna, "112A");
+		if (getEntities()->isInRestaurant(kEntityPlayer))
+			getEntities()->updateFrame(kEntityAnna);
+
+		setCallback(1);
+		setup_callbackActionOnDirection();
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			getData()->location = kLocationInsideCompartment;
+			getEntities()->drawSequenceLeft(kEntityAnna, "112B");
+			getEntities()->updatePositionExit(kEntityAnna, kCarRestaurant, 57);
+			getSavePoints()->push(kEntityAnna, kEntityServers1, kAction219377792);
+			break;
+
+		case 2:
+			getSavePoints()->push(kEntityAnna, kEntityAugust, kAction122288808);
+
+			setup_function52();
+			break;
+
+		case 3:
+			getEntities()->drawSequenceLeft(kEntityAnna, "112D");
+
+			if (getState()->time >= kTimeEnterAttnangPuchheim) {
+				params->param1 = 1;
+			} else {
+				setCallback(4);
+				setup_playSound("Ann3142A");
+			}
+			break;
+
+		case 4:
+			setCallback(5);
+			setup_updateFromTime(1800);
+			break;
+
+		case 5:
+			setCallback(6);
+			setup_playSound("Aug3007");
+			break;
+
+		case 6:
+			params->param1 = 1;
+			break;
+		}
+		break;
+
+	case kAction101169422:
+		if (getEvent(kEventKronosVisit)) {
+			setCallback(3);
+			setup_updatePosition("112J", kCarRestaurant, 57);
+			break;
+		}
+
+		if (getState()->time >= kTimeEnterAttnangPuchheim) {
+			params->param1 = 1;
+		} else {
+			setCallback(4);
+			setup_playSound("Ann3142A");
+		}
+		break;
+
+	case kAction122288808:
+		getEntities()->drawSequenceLeft(kEntityAnna, "112D");
+		getSavePoints()->push(kEntityAnna, kEntityKronos, kAction157159392);
+		break;
+
+	case kAction122358304:
+		getEntities()->drawSequenceLeft(kEntityAnna, "BLANK");
+		break;
+	}
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -2706,7 +2801,77 @@ IMPLEMENT_FUNCTION_II(72, Anna, function72, CarIndex, EntityPosition)
 
 //////////////////////////////////////////////////////////////////////////
 IMPLEMENT_FUNCTION(73, Anna, function73)
-	error("Anna: callback function 73 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionNone:
+		if (params->param3 == kTimeInvalid || params->param1 >= getState()->time)
+			break;
+
+		if (params->param2 >= getState()->time) {
+			if (!((getEntities()->isPlayerInCar(kCarGreenSleeping) || getEntities()->isPlayerInCar(kCarRedSleeping)) && params->param3))
+				params->param3 = getState()->time;
+
+			if (params->param3 >= getState()->time)
+				break;
+		}
+
+		params->param3 = kTimeInvalid;
+
+		if (!getEntities()->isPlayerInCar(kCarGreenSleeping) && !getEntities()->isPlayerInCar(kCarRedSleeping))
+			getSound()->playSound(kEntityPlayer, "BUMP");
+
+		setCallback(1);
+		setup_savegame(kSavegameTypeEvent, kEventTrainHijacked);
+		break;
+
+	case kActionKnock:
+		getObjects()->update(kObjectCompartmentF, kEntityAnna, kObjectLocationNone, kCursorNormal, kCursorNormal);
+
+		setCallback(2);
+		setup_playSound("LIB012");
+		break;
+
+	case kActionOpenDoor:
+		setCallback(4);
+		setup_savegame(kSavegameTypeEvent, kEventAnnaKissTrainHijacked);
+		break;
+
+	case kActionDefault:
+		getObjects()->update(kObjectCompartmentF, kEntityAnna, kObjectLocationNone, kCursorHandKnock, kCursorHand);
+		getState()->timeDelta = 1;
+
+		params->param1 = getState()->time + 4500;
+		params->param2 = getState()->time + 9000;
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			getAction()->playAnimation(kEventTrainHijacked);
+			getSavePoints()->push(kEntityAnna, kEntityChapters, kAction139254416);
+			break;
+
+		case 2:
+			setCallback(3);
+			setup_playSound("Ann4200");
+			break;
+
+		case 3:
+			getObjects()->update(kObjectCompartmentF, kEntityAnna, kObjectLocationNone, kCursorHandKnock, kCursorHand);
+			break;
+
+		case 4:
+			getAction()->playAnimation(kEventAnnaKissTrainHijacked);
+			getSavePoints()->push(kEntityAnna, kEntityChapters, kAction139254416);
+			break;
+		}
+		break;
+	}
 }
 
 //////////////////////////////////////////////////////////////////////////

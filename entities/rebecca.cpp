@@ -1125,7 +1125,75 @@ IMPLEMENT_FUNCTION(33, Rebecca, chapter3Handler)
 
 //////////////////////////////////////////////////////////////////////////
 IMPLEMENT_FUNCTION(34, Rebecca, function34)
-	error("Rebecca: callback function 34 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionNone:
+		if (params->param2 == kTimeInvalid) {
+			if (getState()->time <= kTime1386000) {
+				if (!getEntities()->isInRestaurant(kEntityPlayer) || !params->param2)
+					params->param2 = getState()->time;
+
+				if (params->param2 >= getState()->time) {
+					TIME_CHECK_CALLBACK(kTime2052000, params->param3, 1, setup_function19);
+					break;
+				}
+			}
+
+			params->param2 = kTimeInvalid;
+
+			getSavePoints()->push(kEntityRebecca, kEntityServers0, kAction223712416);
+		}
+
+		TIME_CHECK_CALLBACK(kTime2052000, params->param3, 1, setup_function19);
+		break;
+
+	case kAction2:
+		setCallback(5);
+		setup_playSound("Reb3004");
+		break;
+
+	case kActionDefault:
+		getData()->location = kLocationOutsideCompartment;
+
+		setCallback(1);
+		setup_function16(true);
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			getEntities()->drawSequenceLeft(kEntityRebecca, "012D");
+			getData()->location = kLocationInsideCompartment;
+
+			setCallback(2);
+			setup_playSound("Reb3002");
+			break;
+
+		case 3:
+			setup_function35();
+			break;
+
+		case 4:
+			getSavePoints()->push(kEntityRebecca, kEntityServers0, kAction136702400);
+			getEntities()->drawSequenceLeft(kEntityRebecca, "012G");
+			params->param1 = 1;
+			break;
+		}
+		break;
+
+	case kAction123712592:
+		getEntities()->drawSequenceLeft(kEntityServers0, "BLANK");
+		getSound()->playSound(kEntityRebecca, "Reb3003");
+
+		setCallback(4);
+		setup_draw("012E");
+		break;
+	}
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -1398,7 +1466,86 @@ IMPLEMENT_FUNCTION(47, Rebecca, chapter5Handler)
 
 //////////////////////////////////////////////////////////////////////////
 IMPLEMENT_FUNCTION(48, Rebecca, function48)
-	error("Rebecca: callback function 48 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionNone:
+		if (params->param1) {
+			UPDATE_PARAM(params->param3, getState()->timeTicks, 75);
+
+			params->param1 = 0;
+			params->param2 = 1;
+			getObjects()->update(kObjectCompartmentE, kEntityRebecca, kObjectLocation1, kCursorNormal, kCursorNormal);
+		}
+
+		params->param3 = 0;
+		break;
+
+	case kActionKnock:
+	case kActionOpenDoor:
+		getObjects()->update(kObjectCompartmentE, kEntityRebecca, kObjectLocation1, kCursorNormal, kCursorNormal);
+
+		if (params->param1) {
+			params->param1 = 0;
+
+			setCallback(2);
+			setup_playSound(getSound()->justCheckingCath());
+		} else {
+			setCallback(savepoint.action == kActionKnock ? 3 : 4);
+			setup_playSound(savepoint.action == kActionKnock ? "LIB012" : "LIB013");
+		}
+		break;
+
+	case kActionDefault:
+		getData()->car = kCarRedSleeping;
+
+		setCallback(1);
+		setup_enterExitCompartment("624AE", kObjectCompartmentE);
+		break;
+
+	case kActionDrawScene:
+		if (params->param1 || params->param2) {
+			params->param1 = 0;
+			params->param2 = 0;
+
+			getObjects()->update(kObjectCompartmentE, kEntityRebecca, kObjectLocation1, kCursorHandKnock, kCursorHand);
+		}
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			getEntities()->clearSequences(kEntityRebecca);
+			getData()->location = kLocationInsideCompartment;
+			getData()->entityPosition = kPosition_4840;
+			getObjects()->update(kObjectCompartmentE, kEntityRebecca, kObjectLocation1, kCursorHandKnock, kCursorHand);
+			break;
+
+		case 3:
+		case 4:
+			setCallback(5);
+			setup_playSound("Reb5001");
+			break;
+
+		case 5:
+			params->param1 = 1;
+			getObjects()->update(kObjectCompartmentE, kEntityRebecca, kObjectLocation1, kCursorTalk, kCursorNormal);
+			break;
+		}
+		break;
+
+	case kAction135800432:
+		setup_nullfunction();
+		break;
+
+	case kAction155604840:
+		getObjects()->update(kObjectCompartmentE, kEntityRebecca, kObjectLocation1, kCursorHandKnock, kCursorHand);
+		break;
+	}
 }
 
 //////////////////////////////////////////////////////////////////////////

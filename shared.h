@@ -96,6 +96,7 @@ enum TimeValue {
 	kTimeExitAvricourt        = 1363500,
 	kTimeCityDeutschAvricourt = 1367100,
 	kTimeExitDeutschAvricourt = 1370700,
+	kTime1386000              = 1386000,
 	kTimeBedTime              = 1404000,
 	kTimeEnterStrasbourg      = 1424700,
 	kTime1449000              = 1449000,
@@ -1248,6 +1249,7 @@ enum ActionIndex {
 	// Anna
 	/////////////////////////////
 	kAction136702400 = 136702400,
+	kAction139254416 = 139254416,
 	kAction156049968 = 156049968,
 	kAction157370960 = 157370960,
 	kAction157894320 = 157894320,
