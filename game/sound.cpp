@@ -113,7 +113,8 @@ SoundManager::SoundManager(LastExpressEngine *engine) : _engine(engine), _state(
 	_data1 = 0;
 	_data2 = 0;
 
-	memset(&_lastWarning, 0, 12 * sizeof(uint32));
+	memset(&_buffer, 0, sizeof(_buffer));
+	memset(&_lastWarning, 0, sizeof(_lastWarning));
 }
 
 SoundManager::~SoundManager() {
@@ -204,7 +205,7 @@ bool SoundManager::isBuffered(Common::String filename, bool testForEntity) {
 	SoundEntry *entry = getEntry(filename);
 
 	if (testForEntity)
-		return entry && !entry->entity;
+		return entry != NULL && !entry->entity;
 
 	return (entry != NULL);
 }
