@@ -1267,6 +1267,9 @@ IMPLEMENT_FUNCTION(32, Anna, function32)
 
 	case kActionCallback:
 		switch (getCallback()) {
+		default:
+			break;
+
 		case 1:
 			setCallback(2);
 			setup_enterExitCompartment("618Af", kObjectCompartmentF);
@@ -1926,6 +1929,9 @@ IMPLEMENT_FUNCTION(50, Anna, function50)
 
 	case kActionCallback:
 		switch (getCallback()) {
+		default:
+			break;
+
 		case 1:
 			setCallback(2);
 			setup_callbackActionRestaurantOrSalon();

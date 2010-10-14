@@ -1024,6 +1024,9 @@ IMPLEMENT_FUNCTION(33, Tatiana, function33)
 
 	case kActionCallback:
 		switch (getCallback()) {
+		default:
+			break;
+
 		case 1:
 			setCallback(2);
 			setup_updateEntity(kCarRedSleeping, kPosition_7500);

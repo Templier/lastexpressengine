@@ -595,6 +595,9 @@ IMPLEMENT_FUNCTION(26, Ivo, function26)
 
 	case kActionCallback:
 		switch (getCallback()) {
+		default:
+			break;
+
 		case 1:
 			setCallback(2);
 			setup_function11();
@@ -692,6 +695,9 @@ IMPLEMENT_FUNCTION(28, Ivo, function28)
 
 	case kActionCallback:
 		switch (getCallback()) {
+		default:
+			break;
+
 		case 1:
 			setCallback(2);
 			setup_enterExitCompartment("613EH", kObjectCompartmentH);

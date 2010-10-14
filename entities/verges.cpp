@@ -817,7 +817,7 @@ IMPLEMENT_FUNCTION(25, Verges, function25)
 
 		case 5:
 		case 11:
-			ENTITY_PARAM(0, 7);
+			ENTITY_PARAM(0, 7) = 0;
 
 			CALLBACK_ACTION();
 			break;
@@ -853,7 +853,7 @@ IMPLEMENT_FUNCTION(25, Verges, function25)
 	case kAction168710784:
 		getData()->car = kCarGreenSleeping;
 
-		if (!getEntityData(kEntityPlayer)->car == kCarGreenSleeping)
+		if (!(getEntityData(kEntityPlayer)->car == kCarGreenSleeping))
 			getData()->car = kCarRedSleeping;
 
 		getData()->entityPosition = kPosition_8200;

@@ -536,6 +536,9 @@ IMPLEMENT_FUNCTION(21, Salko, function21)
 
 	case kActionCallback:
 		switch (getCallback()) {
+		default:
+			break;
+
 		case 1:
 			setCallback(2);
 			setup_enterExitCompartment("612Ch", kObjectCompartmentH);

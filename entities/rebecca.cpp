@@ -804,7 +804,7 @@ IMPLEMENT_FUNCTION(23, Rebecca, function23)
 			getData()->entityPosition = kPosition_4840;
 			getData()->location = kLocationInsideCompartment;
 
-			setCallback(getCallback() + 1);
+			setCallback((byte)(getCallback() + 1));
 			setup_function20(kTime1120500);
 			break;
 

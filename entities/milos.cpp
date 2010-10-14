@@ -971,6 +971,9 @@ IMPLEMENT_FUNCTION(30, Milos, function30)
 
 	case kActionCallback:
 		switch (getCallback()) {
+		default:
+			break;
+
 		case 1:
 			getSavePoints()->push(kEntityMilos, kEntityIvo, kAction55996766);
 
@@ -1006,6 +1009,9 @@ IMPLEMENT_FUNCTION(31, Milos, function31)
 
 	case kActionCallback:
 		switch (getCallback()) {
+		default:
+			break;
+
 		case 1:
 			getData()->location = kLocationOutsideCompartment;
 			getObjects()->update(kObjectCompartmentG, kEntityPlayer, kObjectLocation3, kCursorHandKnock, kCursorHand);

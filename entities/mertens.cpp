@@ -2400,7 +2400,7 @@ IMPLEMENT_FUNCTION(33, Mertens, function33)
 			break;
 
 		case 2:
-			ENTITY_PARAM(1, 8);
+			ENTITY_PARAM(1, 8) = 0;
 
 			CALLBACK_ACTION();
 			break;
@@ -3567,7 +3567,7 @@ label_callback_10:
 	case kAction11:
 		if (!ENTITY_PARAM(2, 1)) {
 			setCallback(12);
-			setup_function13(savepoint.param.intValue, savepoint.entity2);
+			setup_function13((bool)savepoint.param.intValue, savepoint.entity2 != kEntityPlayer);
 		}
 		break;
 
@@ -3770,7 +3770,7 @@ label_callback_8:
 	case kAction11:
 		if (!ENTITY_PARAM(2, 1) && !ENTITY_PARAM(0, 1)) {
 			setCallback(9);
-			setup_function13(savepoint.param.intValue, savepoint.entity2);
+			setup_function13((bool)savepoint.param.intValue, savepoint.entity2 != kEntityPlayer);
 		}
 		break;
 
