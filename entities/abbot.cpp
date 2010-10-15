@@ -1179,7 +1179,7 @@ IMPLEMENT_FUNCTION(36, Abbot, function36)
 		}
 		break;
 
-	case kAction2:
+	case kActionEndSound:
 		++params->param2;
 		break;
 

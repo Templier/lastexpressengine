@@ -1201,7 +1201,7 @@ enum EventIndex {
 enum ActionIndex {
 	kActionNone            = 0,
 	kAction1               = 1,
-	kAction2               = 2,
+	kActionEndSound               = 2,
 	kActionExitCompartment = 3,
 	kAction4               = 4,
 	kActionExcuseMeCath    = 5,

@@ -811,7 +811,7 @@ IMPLEMENT_FUNCTION(24, Kahina, function24)
 		}
 		break;
 
-	case kAction2:
+	case kActionEndSound:
 		if (getEntities()->isInsideTrainCar(kEntityPlayer, kCarKronos))
 			getSavePoints()->push(kEntityKahina, kEntityKronos, kActionOpenDoor);
 		else

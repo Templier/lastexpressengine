@@ -1112,7 +1112,7 @@ IMPLEMENT_FUNCTION(30, Rebecca, function30)
 		}
 		break;
 
-	case kAction2:
+	case kActionEndSound:
 		params->param2 = 0;
 		break;
 
@@ -1237,7 +1237,7 @@ IMPLEMENT_FUNCTION(34, Rebecca, function34)
 		TIME_CHECK_CALLBACK(kTime2052000, params->param3, 1, setup_function19);
 		break;
 
-	case kAction2:
+	case kActionEndSound:
 		setCallback(5);
 		setup_playSound("Reb3004");
 		break;
@@ -1530,7 +1530,7 @@ label_callback_2:
 			TIME_CHECK_CALLBACK(kTime2443500, params->param5, 3, setup_function19);
 		break;
 
-	case kAction2:
+	case kActionEndSound:
 		if (getEntities()->isInRestaurant(kEntityPlayer)) {
 			setCallback(5);
 			setup_playSound("Reb4004");

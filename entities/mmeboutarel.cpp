@@ -129,7 +129,7 @@ IMPLEMENT_FUNCTION_S(8, MmeBoutarel, function8)
 		}
 		break;
 
-	case kAction2:
+	case kActionEndSound:
 		params->param5 = 1;
 		break;
 

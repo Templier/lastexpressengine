@@ -256,7 +256,7 @@ IMPLEMENT_FUNCTION_IIS(10, Verges, function10, CarIndex, EntityPosition)
 		}
 		break;
 
-	case kAction2:
+	case kActionEndSound:
 		params->param6 = 1;
 		break;
 
@@ -467,7 +467,7 @@ IMPLEMENT_FUNCTION_IS(15, Verges, function15, EntityIndex)
 		}
 		break;
 
-	case kAction2:
+	case kActionEndSound:
 		params->param5 = 1;
 		break;
 
@@ -504,7 +504,7 @@ IMPLEMENT_FUNCTION_ISS(16, Verges, function16, EntityIndex)
 		}
 		break;
 
-	case kAction2:
+	case kActionEndSound:
 		CURRENT_PARAMS(1, 1)++;
 
 		if (CURRENT_PARAMS(1, 1) == 1)
@@ -697,7 +697,7 @@ IMPLEMENT_FUNCTION(24, Verges, policeGettingOffTrain)
 		}
 		break;
 
-	case kAction2:
+	case kActionEndSound:
 		CALLBACK_ACTION();
 		break;
 

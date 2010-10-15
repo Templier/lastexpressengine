@@ -227,7 +227,7 @@ IMPLEMENT_FUNCTION_S(6, Coudert, playSound)
 		SAVEGAME_BLOOD_JACKET();
 		break;
 
-	case kAction2:
+	case kActionEndSound:
 		CALLBACK_ACTION();
 		break;
 
@@ -256,7 +256,7 @@ IMPLEMENT_FUNCTION_NOSETUP(7, Coudert, playSound16)
 		SAVEGAME_BLOOD_JACKET();
 		break;
 
-	case kAction2:
+	case kActionEndSound:
 		CALLBACK_ACTION();
 		break;
 
@@ -1543,7 +1543,7 @@ IMPLEMENT_FUNCTION_I(31, Coudert, function31, uint32)
 	default:
 		break;
 
-	case kAction2:
+	case kActionEndSound:
 		setCallback(3);
 		setup_function19(true);
 		break;

@@ -444,7 +444,7 @@ IMPLEMENT_FUNCTION(14, Max, freeFromCage)
 	case kActionNone:
 		break;
 
-	case kAction2:
+	case kActionEndSound:
 		getSound()->playSound(kEntityMax, "Max1122");
 		break;
 

@@ -161,7 +161,7 @@ IMPLEMENT_FUNCTION(6,Chapters, chapter1End)
 	default:
 		break;
 
-	case kAction2:
+	case kActionEndSound:
 		getSound()->playSound(kEntityChapters, "MUS0009", SoundManager::kFlagDefault);
 		break;
 
@@ -508,7 +508,7 @@ label_chapter1_next:
 		}
 		break;
 
-	case kAction2:
+	case kActionEndSound:
 		if (ENTITY_PARAM(0, 2)) {
 
 			getSavePoints()->push(kEntityChapters, kEntityTrain, kActionTrainStopRunning);
@@ -951,7 +951,7 @@ label_callback_8:
 		TIME_CHECK_ENTERSTATION(kTimeCityVienna, CURRENT_PARAMS(1, 7), 9, "Vienna", kCityVienna);
 		break;
 
-	case kAction2:
+	case kActionEndSound:
 		if (ENTITY_PARAM(0, 2)) {
 			getSavePoints()->push(kEntityChapters, kEntityTrain, kActionTrainStopRunning);
 
@@ -1263,7 +1263,7 @@ label_callback_4:
 		}
 		break;
 
-	case kAction2:
+	case kActionEndSound:
 		if (ENTITY_PARAM(0, 2)) {
 
 			getSavePoints()->push(kEntityChapters, kEntityTrain, kActionTrainStopRunning);
@@ -1680,7 +1680,7 @@ IMPLEMENT_FUNCTION(22, Chapters, chapter5Handler)
 		}
 		break;
 
-	case kAction2:
+	case kActionEndSound:
 		if (getState()->time <= kTimeTrainStopped2) {
 			setCallback(1);
 			setup_savegame(kSavegameTypeEvent, kEventTrainStopped);

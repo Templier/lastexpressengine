@@ -2710,7 +2710,7 @@ IMPLEMENT_FUNCTION(65, August, function65)
 	default:
 		break;
 
-	case kAction2:
+	case kActionEndSound:
 		getSound()->playSound(kEntityAugust, "AUG1057");   // August snoring
 		break;
 

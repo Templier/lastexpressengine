@@ -260,7 +260,7 @@ IMPLEMENT_FUNCTION_S(7, Mertens, playSound)
 		SAVEGAME_BLOOD_JACKET();
 		break;
 
-	case kAction2:
+	case kActionEndSound:
 		CALLBACK_ACTION();
 		break;
 
@@ -287,7 +287,7 @@ IMPLEMENT_FUNCTION_S(8, Mertens, playSound16)
 		SAVEGAME_BLOOD_JACKET();
 		break;
 
-	case kAction2:
+	case kActionEndSound:
 		CALLBACK_ACTION();
 		break;
 
@@ -2024,7 +2024,7 @@ IMPLEMENT_FUNCTION_S(28, Mertens, function28)
 		}
 		break;
 
-	case kAction2:
+	case kActionEndSound:
 		params->param4 = 1;
 		break;
 
@@ -2084,7 +2084,7 @@ IMPLEMENT_FUNCTION_SS(29, Mertens, function29)
 		}
 		break;
 
-	case kAction2:
+	case kActionEndSound:
 		params->param7++;
 		if (params->param7 == 1)
 			getSound()->playSound(kEntityMertens, (char *)&params->seq2);
@@ -2287,7 +2287,7 @@ IMPLEMENT_FUNCTION_I(31, Mertens, function31, MertensActionType)
 	default:
 		break;
 
-	case kAction2:
+	case kActionEndSound:
 		setCallback(3);
 		setup_function17();
 		break;
@@ -2736,7 +2736,7 @@ IMPLEMENT_FUNCTION(37, Mertens, function37)
 		}
 		break;
 
-	case kAction2:
+	case kActionEndSound:
 		++params->param6;
 
 		if (params->param6 == 1)

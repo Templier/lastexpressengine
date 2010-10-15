@@ -193,7 +193,7 @@ IMPLEMENT_FUNCTION(11, Kronos, function11)
 	default:
 		break;
 
-	case kAction2:
+	case kActionEndSound:
 		params->param1++;
 		getSound()->playSound(kEntityKronos, (params->param1 & 1) ? "KRO1001" : "KRO1002");
 		break;

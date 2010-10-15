@@ -200,7 +200,7 @@ void Entity::playSound(const SavePoint &savepoint, bool resetItem, SoundManager:
 	default:
 		break;
 
-	case kAction2:
+	case kActionEndSound:
 		CALLBACK_ACTION();
 		break;
 

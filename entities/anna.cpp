@@ -201,7 +201,7 @@ IMPLEMENT_FUNCTION(12, Anna, function12)
 
 		if (params->param6) {
 			UPDATE_PARAM_PROC(params->param7, getState()->timeTicks, 75)
-				getSavePoints()->push(kEntityAnna, kEntityAnna, kAction2);
+				getSavePoints()->push(kEntityAnna, kEntityAnna, kActionEndSound);
 
 				params->param6 = 0;
 				params->param7 = 0;
@@ -219,13 +219,13 @@ IMPLEMENT_FUNCTION(12, Anna, function12)
 
 			--params->param1;
 
-			getSavePoints()->push(kEntityAnna, kEntityAnna, kAction2);
+			getSavePoints()->push(kEntityAnna, kEntityAnna, kActionEndSound);
 		}
 
 		params->param8 = 0;
 		break;
 
-	case kAction2:
+	case kActionEndSound:
 		if (params->param2) {
 			CALLBACK_ACTION();
 			break;
@@ -1196,7 +1196,7 @@ IMPLEMENT_FUNCTION(30, Anna, function30)
 		}
 		break;
 
-	case kAction2:
+	case kActionEndSound:
 		params->param2 = 1;
 		break;
 
@@ -1420,7 +1420,7 @@ IMPLEMENT_FUNCTION(35, Anna, function35)
 		params->param3 = 0;
 		break;
 
-	case kAction2:
+	case kActionEndSound:
 		++params->param2;
 
 		if (params->param2 > 3)
@@ -3225,7 +3225,7 @@ IMPLEMENT_FUNCTION(79, Anna, function79)
 	default:
 		break;
 
-	case kAction2:
+	case kActionEndSound:
 		getState()->time = kTime5933;
 		setCallback(1);
 		setup_savegame(kSavegameTypeEvent, kEventKahinaPunch);
@@ -3284,7 +3284,7 @@ IMPLEMENT_FUNCTION(80, Anna, function80)
 		getSound()->playSound(kEntityPlayer, "Kro5001", SoundManager::kFlagDefault);
 		break;
 
-	case kAction2:
+	case kActionEndSound:
 		getSound()->playSound(kEntityPlayer, "Kro5002", SoundManager::kFlagDefault);
 		getState()->time = kTime4923000;
 

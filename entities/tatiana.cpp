@@ -937,7 +937,7 @@ IMPLEMENT_FUNCTION(32, Tatiana, chapter3Handler)
 		}
 		break;
 
-	case  kAction2:
+	case  kActionEndSound:
 		parameters->param2 = 0;
 		++parameters->param3;
 
@@ -1523,7 +1523,7 @@ IMPLEMENT_FUNCTION(50, Tatiana, function50)
 		}
 		break;
 
-	case kAction2:
+	case kActionEndSound:
 		getSound()->playSound(kEntityTatiana, "Tat4166");
 		break;
 
@@ -1653,7 +1653,7 @@ IMPLEMENT_FUNCTION(54, Tatiana, function54)
 		setup_savegame(kSavegameTypeEvent, kEventTatianaVassiliTalk);
 		break;
 
-	case kAction2:
+	case kActionEndSound:
 		++params->param1;
 		params->param2 = 0;
 		break;

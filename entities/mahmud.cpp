@@ -158,7 +158,7 @@ IMPLEMENT_FUNCTION_II(10, Mahmud, function10, ObjectIndex, bool)
 		setup_enterExitCompartment("614Ed", kObjectCompartment4);
 		break;
 
-	case kAction2:
+	case kActionEndSound:
 	case kActionDrawScene:
 		if (!getSound()->isBuffered(kEntityMahmud)) {
 			EntityPosition position = getEntityData(kEntityPlayer)->entityPosition;

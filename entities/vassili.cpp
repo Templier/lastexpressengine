@@ -258,7 +258,7 @@ IMPLEMENT_FUNCTION(8, Vassili, function8)
 	default:
 		break;
 
-	case kAction2:
+	case kActionEndSound:
 		setup_function9();
 		break;
 
@@ -282,7 +282,7 @@ IMPLEMENT_FUNCTION(9, Vassili, function9)
 	default:
 		break;
 
-	case kAction2:
+	case kActionEndSound:
 		if (!getEntities()->isDistanceBetweenEntities(kEntityVassili, kEntityPlayer, 2500))
 			getSound()->playSound(kEntityPlayer, "BUMP");
 

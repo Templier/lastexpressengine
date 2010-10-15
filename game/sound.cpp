@@ -370,7 +370,7 @@ void SoundManager::removeEntry(SoundEntry *entry) {
 		if (entry->entity == kEntitySteam)
 			playLoopingSound();
 		else if (entry->entity != kEntityTrain)
-			getSavePoints()->push(kEntityPlayer, entry->entity, kAction2);
+			getSavePoints()->push(kEntityPlayer, entry->entity, kActionEndSound);
 	}
 }
 
@@ -512,7 +512,7 @@ void SoundManager::playSound(EntityIndex entity, Common::String filename, FlagTy
 
 	if (!playSoundWithSubtitles(filename, currentFlag, entity, a4))
 		if (entity)
-			getSavePoints()->push(kEntityPlayer, entity, kAction2);
+			getSavePoints()->push(kEntityPlayer, entity, kActionEndSound);
 }
 
 SoundManager::SoundType SoundManager::playSoundWithSubtitles(Common::String filename, FlagType flag, EntityIndex entity, byte a4) {
