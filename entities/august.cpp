@@ -26,10 +26,12 @@
 #include "lastexpress/entities/august.h"
 
 #include "lastexpress/entities/alexei.h"
+#include "lastexpress/entities/salko.h"
 #include "lastexpress/entities/verges.h"
 
 #include "lastexpress/game/action.h"
 #include "lastexpress/game/entities.h"
+#include "lastexpress/game/inventory.h"
 #include "lastexpress/game/logic.h"
 #include "lastexpress/game/object.h"
 #include "lastexpress/game/savepoint.h"
@@ -1469,14 +1471,68 @@ IMPLEMENT_FUNCTION(40, August, chapter3)
 		getData()->car = kCarGreenSleeping;
 		getData()->clothes = kClothes1;
 		getData()->inventoryItem = kItemNone;
-
 		break;
 	}
 }
 
 //////////////////////////////////////////////////////////////////////////
 IMPLEMENT_FUNCTION_II(41, August, function41, CarIndex, EntityPosition)
-	error("August: callback function 41 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionNone:
+		if (params->param3 && getEntities()->isDistanceBetweenEntities(kEntityAugust, kEntityPlayer, 2000))
+			getData()->inventoryItem = kItemInvalid;
+		else
+			getData()->inventoryItem = kItemNone;
+
+		if (getEntities()->updateEntity(kEntityAugust, (CarIndex)params->param1, (EntityPosition)params->param2)) {
+			CALLBACK_ACTION();
+			break;
+		}
+
+		if (!getEvent(kEventAugustMerchandise)
+		 && getEntities()->isDistanceBetweenEntities(kEntityAugust, kEntityPlayer, 1000)
+		 && !getEntities()->isInsideCompartments(kEntityPlayer)
+		 && !getEntities()->checkFields10(kEntityPlayer)) {
+			if (getData()->car == kCarGreenSleeping || getData()->car == kCarGreenSleeping) {
+				getAction()->playAnimation(kEventAugustMerchandise);
+
+				getEntities()->loadSceneFromEntityPosition(getData()->car, (EntityPosition)(getData()->entityPosition + (750 * (getData()->direction == kDirectionUp ? -1 : 1))), getData()->direction == kDirectionUp);
+			}
+		}
+		break;
+
+	case kAction1:
+		params->param3 = kItemNone;
+		getData()->inventoryItem = kItemNone;
+
+		getAction()->playAnimation((getData()->entityPosition < getEntityData(kEntityPlayer)->entityPosition) ? kEventAugustTalkGoldDay : kEventAugustTalkGold);
+		getEntities()->loadSceneFromEntityPosition(getData()->car, (EntityPosition)(getData()->entityPosition + (750 * (getData()->direction == kDirectionUp ? -1 : 1))), getData()->direction == kDirectionUp);
+		break;
+
+	case kActionExcuseMeCath:
+		if (getProgress().eventMetAugust)
+			getSound()->playSound(kEntityPlayer, rnd(2) ? "CAT1002" : "CAT1002A");
+		else
+			getSound()->excuseMeCath();
+		break;
+
+	case kActionExcuseMe:
+		getSound()->excuseMe(kEntityAugust);
+		break;
+
+	case kActionDefault:
+		if (getEntities()->updateEntity(kEntityAugust, (CarIndex)params->param1, (EntityPosition)params->param2)) {
+			CALLBACK_ACTION();
+			break;
+		}
+
+		if (getEvent(kEventAugustMerchandise) && !getEvent(kEventAugustTalkGold) && !getEvent(kEventAugustTalkGoldDay))
+			params->param3 = kItemInvalid;
+		break;
+	}
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -1955,7 +2011,94 @@ IMPLEMENT_FUNCTION(51, August, function51)
 
 //////////////////////////////////////////////////////////////////////////
 IMPLEMENT_FUNCTION(52, August, function52)
-	error("August: callback function 52 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionKnock:
+	case kActionOpenDoor:
+		if (getInventory()->hasItem(kItemBriefcase)) {
+			getData()->location = kLocationInsideCompartment;
+			if (savepoint.action == kActionKnock)
+				getSound()->playSound(kEntityPlayer, "LIB012");
+
+			setCallback(3);
+			setup_savegame(kSavegameTypeEvent, kEventAugustBringBriefcase);
+			break;
+		}
+
+		if (getInventory()->hasItem(kItemFirebird) && !getEvent(kEventAugustBringEgg)) {
+			setCallback(4);
+			setup_savegame(kSavegameTypeEvent, kEventAugustBringEgg);
+			break;
+		}
+
+		if (!getEvent(kEventAugustTalkCompartmentDoorBlueRedingote) && !getEvent(kEventAugustBringEgg) && !getEvent(kEventAugustBringBriefcase)) {
+			if (savepoint.action == kActionKnock)
+				getSound()->playSound(kEntityPlayer, "LIB012");
+
+			setCallback(5);
+			setup_savegame(kSavegameTypeEvent, kEventAugustBringEgg);
+			break;
+		}
+
+		getObjects()->update(kObjectCompartment3, kEntityAugust, kObjectLocation1, kCursorNormal, kCursorNormal);
+
+		setCallback(savepoint.action == kActionKnock ? 6 : 7);
+		setup_playSound(savepoint.action == kActionKnock ? "LIB012" : "LIB013");
+		break;
+
+	case kActionDefault:
+		setCallback(1);
+		setup_function42(kCarGreenSleeping, kPosition_6470, true);
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			setCallback(2);
+			setup_function19(false, true);
+			break;
+
+		case 2:
+			getObjects()->update(kObjectCompartment3, kEntityAugust, kObjectLocationNone, kCursorHandKnock, kCursorHand);
+			getSavePoints()->push(kEntityAugust, kEntityKahina, kAction134611040);
+			break;
+
+		case 3:
+			getAction()->playAnimation(kEventAugustBringBriefcase);
+			getSound()->playSound(kEntityPlayer, "LIB015");
+			RESET_ENTITY_STATE(kEntitySalko, Salko, setup_function17);
+			getScenes()->loadSceneFromPosition(kCarGreenSleeping, 13);
+
+			setup_function53();
+			break;
+
+		case 4:
+			getAction()->playAnimation(kEventAugustBringEgg);
+			getScenes()->processScene();
+			break;
+
+		case 5:
+			getAction()->playAnimation(kEventAugustTalkCompartmentDoorBlueRedingote);
+			getScenes()->processScene();
+			break;
+
+		case 6:
+		case 7:
+			setCallback(8);
+			setup_playSound("AUG1128F");
+			break;
+
+		case 8:
+			getObjects()->update(kObjectCompartment3, kEntityAugust, kObjectLocation1, kCursorHandKnock, kCursorHand);
+			break;
+		}
+		break;
+	}
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -1994,7 +2137,101 @@ IMPLEMENT_FUNCTION(53, August, function53)
 
 //////////////////////////////////////////////////////////////////////////
 IMPLEMENT_FUNCTION(54, August, function54)
-	error("August: callback function 54 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionNone:
+		if (!params->param4 || params->param2 || getProgress().field_44)
+			getData()->inventoryItem = kItemNone;
+		else
+			getData()->inventoryItem = kItemInvalid;
+
+		if (!params->param2 && params->param1) {
+			UPDATE_PARAM(params->param5, getState()->time, params->param1);
+
+			getData()->inventoryItem = kItemNone;
+			setup_function55();
+		}
+		break;
+
+	case kAction1:
+		getData()->inventoryItem = kItemNone;
+
+		setCallback(3);
+		setup_savegame(kSavegameTypeEvent, kEventAugustTalkCigar);
+		break;
+
+	case kActionExitCompartment:
+		getEntities()->updatePositionExit(kEntityAugust, kCarRestaurant, 57);
+		getEntities()->drawSequenceLeft(kEntityAugust, "105B3");
+		break;
+
+	case kActionDefault:
+		setCallback(1);
+		setup_callbackActionRestaurantOrSalon();
+		break;
+
+	case kActionDrawScene:
+		if (!getEntities()->isPlayerPosition(kCarRestaurant, 60) || params->param3) {
+			if (!params->param2 && getEntities()->isPlayerPosition(kCarRestaurant, 57))
+				getScenes()->loadSceneFromPosition(kCarRestaurant, 50);
+		} else if (!params->param2) {
+			getEntities()->updatePositionEnter(kEntityAugust, kCarRestaurant, 57);
+			getEntities()->drawSequenceRight(kEntityAugust, "105C3");
+		}
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			getData()->entityPosition = kPosition_1540;
+			getData()->location = kLocationOutsideCompartment;
+
+			setCallback(2);
+			setup_updatePosition("105A3", kCarRestaurant, 57);
+			break;
+
+		case 2:
+			getData()->location = kLocationInsideCompartment;
+			getSavePoints()->push(kEntityAugust, kEntityAbbot, kAction123712592);
+			getEntities()->drawSequenceLeft(kEntityAugust, "105B3");
+			params->param4 = 1;
+			break;
+
+		case 3:
+			getAction()->playAnimation(kEventAugustTalkCigar);
+			getEntities()->drawSequenceLeft(kEntityAugust, params->param3 ? "122B" : "105B3");
+			getScenes()->processScene();
+
+			params->param1 = 9000;
+			params->param4 = 0;
+			break;
+		}
+		break;
+
+	case kAction122288808:
+		getEntities()->drawSequenceLeft(kEntityAugust, "122B");
+		params->param2 = 0;
+
+		if (getEvent(kEventAugustTalkCigar))
+			params->param1 = 9000;
+		break;
+
+	case kAction122358304:
+		getEntities()->drawSequenceLeft(kEntityAugust, "BLANK");
+		params->param2 = 1;
+		params->param3 = 1;
+		break;
+
+	case kAction136196244:
+		params->param2 = 1;
+		getData()->inventoryItem = kItemNone;
+		break;
+	}
 }
 
 //////////////////////////////////////////////////////////////////////////

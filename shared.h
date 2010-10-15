@@ -254,6 +254,7 @@ enum TimeValue {
 	kTime2519100              = 2519100,
 	kTime2520000              = 2520000,
 	kTime2533500              = 2533500,
+	kTime2535300              = 2535300,
 	kTime2538000              = 2538000,
 	kTimeCityBudapest         = 2551500,
 
@@ -1233,6 +1234,7 @@ enum ActionIndex {
 	// Alexei
 	/////////////////////////////
 	kAction100906246 = 100906246,
+	kAction123536024 = 123536024,
 	kAction124697504 = 124697504,
 	kAction135664192 = 135664192,
 	kAction135854208 = 135854208,
@@ -1268,6 +1270,7 @@ enum ActionIndex {
 	// August
 	/////////////////////////////
 	kAction123793792 = 123793792,
+	kAction134611040 = 134611040,
 	kAction168046720 = 168046720,
 	kAction168627977 = 168627977,
 	kAction169032608 = 169032608,
@@ -1528,6 +1531,8 @@ enum ActionIndex {
 	kAction191198209 = 191198209,
 	kAction223183000 = 223183000,    // August
 	kAction236053296 = 236053296,    // Alexei
+	kAction236241630 = 236241630,    // Anna
+	kAction236517970 = 236517970,    // Anna
 	kAction268620864 = 268620864,    // August
 	kAction290869168 = 290869168,
 

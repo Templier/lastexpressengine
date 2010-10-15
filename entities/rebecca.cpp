@@ -839,7 +839,95 @@ IMPLEMENT_FUNCTION(23, Rebecca, function23)
 
 //////////////////////////////////////////////////////////////////////////
 IMPLEMENT_FUNCTION(24, Rebecca, function24)
-	error("Rebecca: callback function 24 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionNone:
+		TIME_CHECK_SAVEPOINT(kTime1134000, params->param2, kEntityRebecca, kEntityServers0, kAction223712416);
+
+		if (!params->param1)
+			break;
+
+		TIME_CHECK_CALLBACK(kTime1165500, params->param3, 6, setup_function19);
+
+		if (params->param4 != kTimeInvalid) {
+			if (getState()->time <= kTime1161000) {
+				if (!getEntities()->isInRestaurant(kEntityPlayer) || !params->param4)
+					params->param4 = getState()->time + 150;
+
+				if (params->param4 >= getState()->time)
+					break;
+			}
+
+			params->param4 = kTimeInvalid;
+
+			setCallback(7);
+			setup_playSound("REB1200A");
+		}
+		break;
+
+	case kActionDefault:
+		setCallback(1);
+		setup_function16(true);
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			getEntities()->drawSequenceLeft(kEntityRebecca, "012D");
+
+			setCallback(2);
+			setup_playSound("REB1199");
+			break;
+
+		case 2:
+			if (getEntities()->isInRestaurant(kEntityPlayer)) {
+				setCallback(3);
+				setup_playSound("REB1199A");
+				break;
+			}
+			// Fallback to next case
+
+		case 3:
+			if (getCallback() == 3)
+				getProgress().field_BC = 1;
+
+			if (getEntities()->isInRestaurant(kEntityAnna)) {
+				setCallback(4);
+				setup_playSound("REB1199B");
+				break;
+			}
+			// Fallback to next case
+
+		case 4:
+			setCallback(5);
+			setup_playSound("REB1199C");
+			break;
+
+		case 6:
+			setup_function25();
+			break;
+
+		case 8:
+			getSavePoints()->push(kEntityRebecca, kEntityServers0, kAction136702400);
+			getEntities()->drawSequenceLeft(kEntityRebecca, "012G");
+			params->param1 = 1;
+			break;
+		}
+		break;
+
+	case kAction123712592:
+		getEntities()->drawSequenceLeft(kEntityServers0, "BLANK");
+		getEntities()->drawSequenceLeft(kEntityRebecca, "012E");
+
+		setCallback(8);
+		setup_playSound("REB1200");
+		break;
+	}
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -1401,7 +1489,97 @@ IMPLEMENT_FUNCTION(43, Rebecca, chapter4Handler)
 
 //////////////////////////////////////////////////////////////////////////
 IMPLEMENT_FUNCTION(44, Rebecca, function44)
-	error("Rebecca: callback function 44 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionNone:
+		if (params->param3 != kTimeInvalid) {
+			if (getState()->time <= kTime2412000) {
+				if (!getEntities()->isInRestaurant(kEntityPlayer) || !params->param3)
+					params->param3 = getState()->time;
+
+				if (params->param3 >= getState()->time)
+					goto label_next;
+			}
+
+			params->param3 = kTimeInvalid;
+
+			getSavePoints()->push(kEntityRebecca, kEntityServers0, kAction223712416);
+		}
+
+label_next:
+		if (params->param1 && params->param4 != kTimeInvalid) {
+			if (getState()->time <= kTime2430000) {
+				if (!getEntities()->isInRestaurant(kEntityPlayer) || !params->param4)
+					params->param4 = getState()->time + 150;
+
+				if (params->param4 >= getState()->time)
+					goto label_callback_2;
+			}
+
+			params->param4 = kTimeInvalid;
+
+			setCallback(2);
+			setup_playSound("Reb4004");
+			break;
+		}
+
+label_callback_2:
+		if (params->param2)
+			TIME_CHECK_CALLBACK(kTime2443500, params->param5, 3, setup_function19);
+		break;
+
+	case kAction2:
+		if (getEntities()->isInRestaurant(kEntityPlayer)) {
+			setCallback(5);
+			setup_playSound("Reb4004");
+			break;
+		}
+
+		params->param1 = 1;
+		break;
+
+	case kActionDefault:
+		getData()->location = kLocationOutsideCompartment;
+
+		setCallback(1);
+		setup_function16(true);
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			getEntities()->drawSequenceLeft(kEntityRebecca, "012D");
+			getData()->location = kLocationInsideCompartment;
+			break;
+
+		case 2:
+			goto label_callback_2;
+
+		case 3:
+			setup_function45();
+			break;
+
+		case 4:
+			getSavePoints()->push(kEntityRebecca, kEntityServers0, kAction136702400);
+			getEntities()->drawSequenceLeft(kEntityRebecca, "012G");
+			params->param2 = 1;
+			break;
+		}
+		break;
+
+	case kAction123712592:
+		getEntities()->drawSequenceLeft(kEntityRebecca, "BLANK");
+		getSound()->playSound(kEntityRebecca, "Reb4003");
+
+		setCallback(4);
+		setup_draw("012E");
+		break;
+	}
 }
 
 //////////////////////////////////////////////////////////////////////////

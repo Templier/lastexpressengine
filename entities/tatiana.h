@@ -189,7 +189,14 @@ public:
 	DECLARE_FUNCTION(function39)
 	DECLARE_FUNCTION(function40)
 	DECLARE_FUNCTION(function41)
-	DECLARE_FUNCTION(function42)
+
+	/**
+	 * ???
+	 *
+	 * @param car            The car
+	 * @param entityPosition The entity position
+	 */
+	DECLARE_FUNCTION_2(function42, CarIndex car, EntityPosition entityPosition)
 
 	/**
 	 * Setup Chapter 4

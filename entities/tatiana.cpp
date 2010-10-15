@@ -1182,7 +1182,111 @@ IMPLEMENT_FUNCTION(37, Tatiana, function37)
 
 //////////////////////////////////////////////////////////////////////////
 IMPLEMENT_FUNCTION(38, Tatiana, function38)
-	error("Tatiana: callback function 38 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionNone:
+		UPDATE_PARAM(params->param1, getState()->time, 450);
+
+		getEntities()->exitCompartment(kEntityTatiana, kObjectCompartmentF, true);
+
+		setCallback(4);
+		setup_function42(kCarRedSleeping, kPosition_7500);
+		break;
+
+	case kActionDefault:
+		getData()->clothes = kClothes3;
+
+		setCallback(1);
+		setup_enterExitCompartment("673Jb", kObjectCompartmentB);
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			getData()->location = kLocationOutsideCompartment;
+			getObjects()->update(kObjectCompartmentB, kEntityPlayer, kObjectLocationNone, kCursorHandKnock, kCursorHand);
+			getObjects()->update(kObject49, kEntityPlayer, kObjectLocationNone, kCursorHandKnock, kCursorHand);
+
+			setCallback(2);
+			setup_function42(kCarRedSleeping, kPosition_4070);
+			break;
+
+		case 2:
+			getEntities()->drawSequenceLeft(kEntityTatiana, "673Gf");
+			getEntities()->enterCompartment(kEntityTatiana, kObjectCompartmentF, true);
+
+			setCallback(3);
+			setup_playSound("Tat3164");
+			break;
+
+		case 3:
+			getSavePoints()->push(kEntityTatiana, kEntityAnna, kAction236241630);
+			break;
+
+		case 4:
+			setCallback(5);
+			setup_enterExitCompartment2("673Db", kObjectCompartmentB);
+			break;
+
+		case 5:
+			getData()->location = kLocationInsideCompartment;
+			getEntities()->clearSequences(kEntityTatiana);
+
+			setup_function39();
+			break;
+
+		case 6:
+			getEntities()->exitCompartment(kEntityTatiana, kObjectCompartmentF, true);
+			getEntities()->clearSequences(kEntityTatiana);
+			getData()->location = kLocationInsideCompartment;
+
+			setCallback(7);
+			setup_playSound("ANN3011");
+			break;
+
+		case 7:
+			setCallback(8);
+			setup_updateFromTime(900);
+			break;
+
+		case 8:
+			setCallback(9);
+			setup_enterExitCompartment("673Jf", kObjectCompartmentF);
+			break;
+
+		case 9:
+			getData()->location = kLocationOutsideCompartment;
+
+			setCallback(10);
+			setup_function42(kCarRedSleeping, kPosition_7500);
+			break;
+
+		case 10:
+			getSavePoints()->push(kEntityTatiana, kEntityAnna, kAction236517970);
+
+			setCallback(11);
+			setup_enterExitCompartment2("673Db", kObjectCompartmentB);
+			break;
+
+		case 11:
+			getData()->location = kLocationInsideCompartment;
+			getEntities()->clearSequences(kEntityTatiana);
+
+			setup_function39();
+			break;
+		}
+		break;
+
+	case kAction100906246:
+		setCallback(6);
+		setup_enterExitCompartment("673Df", kObjectCompartmentF);
+		break;
+	}
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -1238,7 +1342,7 @@ IMPLEMENT_FUNCTION(41, Tatiana, function41)
 }
 
 //////////////////////////////////////////////////////////////////////////
-IMPLEMENT_FUNCTION(42, Tatiana, function42)
+IMPLEMENT_FUNCTION_II(42, Tatiana, function42, CarIndex, EntityPosition)
 	if (savepoint.action == kActionExcuseMeCath || savepoint.action == kActionExcuseMe) {
 		getSound()->playSound(kEntityPlayer, "Tat3124", getSound()->getSoundFlag(kEntityTatiana));
 		return;

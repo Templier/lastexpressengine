@@ -843,7 +843,94 @@ IMPLEMENT_FUNCTION(27, MmeBoutarel, chapter5Handler)
 
 //////////////////////////////////////////////////////////////////////////
 IMPLEMENT_FUNCTION(28, MmeBoutarel, function28)
-	error("MmeBoutarel: callback function 28 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionNone:
+		if (params->param1) {
+			UPDATE_PARAM(params->param3, getState()->timeTicks, 75);
+
+			params->param1 = 0;
+			params->param2 = 1;
+
+			getObjects()->update(kObjectCompartmentD, kEntityMmeBoutarel, kObjectLocation1, kCursorNormal, kCursorNormal);
+			getObjects()->update(kObject51, kEntityMmeBoutarel, kObjectLocation1, kCursorNormal, kCursorNormal);
+		}
+
+		params->param3 = 0;
+		break;
+
+	case kActionKnock:
+	case kActionOpenDoor:
+		if (params->param1) {
+			getObjects()->update(kObjectCompartmentD, kEntityMmeBoutarel, kObjectLocation1, kCursorNormal, kCursorNormal);
+			getObjects()->update(kObject51, kEntityMmeBoutarel, kObjectLocation1, kCursorNormal, kCursorNormal);
+			params->param1 = 0;
+
+			setCallback(1);
+			setup_playSound(getSound()->justCheckingCath());
+			break;
+		}
+
+		setCallback(savepoint.action == kActionKnock ? 2 : 3);
+		setup_playSound(savepoint.action == kActionKnock ? "LIB012" : "LIB013");
+		break;
+
+	case kActionDefault:
+		getData()->car = kCarRedSleeping;
+		getData()->entityPosition = kPosition_5790;
+		getData()->location = kLocationInsideCompartment;
+
+		getEntities()->clearSequences(kEntityMmeBoutarel);
+		break;
+
+	case kActionDrawScene:
+		if (params->param1 || params->param2) {
+			params->param1 = 0;
+			params->param2 = 0;
+
+			getObjects()->update(kObjectCompartmentD, kEntityMmeBoutarel, kObjectLocation1, kCursorHandKnock, kCursorHand);
+			getObjects()->update(kObject51, kEntityMmeBoutarel, kObjectLocation1, kCursorHandKnock, kCursorHand);
+		}
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			getObjects()->update(kObjectCompartmentD, kEntityMmeBoutarel, kObjectLocation1, kCursorHandKnock, kCursorHand);
+			getObjects()->update(kObject51, kEntityMmeBoutarel, kObjectLocation1, kCursorHandKnock, kCursorHand);
+			break;
+
+		case 2:
+		case 3:
+			getObjects()->update(kObjectCompartmentD, kEntityMmeBoutarel, kObjectLocation1, kCursorNormal, kCursorNormal);
+			getObjects()->update(kObject51, kEntityMmeBoutarel, kObjectLocation1, kCursorNormal, kCursorNormal);
+
+			setCallback(4);
+			setup_playSound("Mme5001");
+			break;
+
+		case 4:
+			params->param1 = 1;
+			getObjects()->update(kObjectCompartmentD, kEntityMmeBoutarel, kObjectLocation1, kCursorTalk, kCursorNormal);
+			getObjects()->update(kObject51, kEntityMmeBoutarel, kObjectLocation1, kCursorTalk, kCursorNormal);
+			break;
+		}
+		break;
+
+	case kAction135800432:
+		setup_nullfunction();
+		break;
+
+	case kAction155604840:
+		getObjects()->update(kObjectCompartmentD, kEntityMmeBoutarel, kObjectLocation1, kCursorHandKnock, kCursorHand);
+		getObjects()->update(kObject51, kEntityMmeBoutarel, kObjectLocation1, kCursorHandKnock, kCursorHand);
+		break;
+	}
 }
 
 //////////////////////////////////////////////////////////////////////////

@@ -1385,7 +1385,106 @@ label_callback_1:
 
 //////////////////////////////////////////////////////////////////////////
 IMPLEMENT_FUNCTION(35, Anna, function35)
-	error("Anna: callback function 35 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionNone:
+		if (!params->param1)
+			break;
+
+		UPDATE_PARAM(params->param3, getState()->timeTicks, 75);
+
+		switch (params->param2) {
+		default:
+			break;
+
+		case 0:
+			getSound()->playSound(kEntityAnna, "ANN2135E");
+			break;
+
+		case 1:
+			getSound()->playSound(kEntityAnna, "ANN2135F");
+			break;
+
+		case 2:
+			getSound()->playSound(kEntityAnna, "ANN2135G");
+			break;
+
+		case 3:
+			getSound()->playSound(kEntityAnna, "ANN2135D");
+			break;
+		}
+
+		params->param1 = 0;
+		params->param3 = 0;
+		break;
+
+	case kAction2:
+		++params->param2;
+
+		if (params->param2 > 3)
+			params->param2 = 0;
+
+		params->param1 = 1;
+		break;
+
+	case kActionKnock:
+	case kActionOpenDoor:
+		if (getSound()->isBuffered(kEntityAnna))
+			getSound()->processEntry(kEntityAnna);
+
+		if (savepoint.action == kActionKnock)
+			getSound()->playSound(kEntityPlayer, "LIB012");
+
+		setCallback(1);
+		setup_savegame(kSavegameTypeEvent, kEventAnnaVisitToCompartmentGun);
+		break;
+
+	case kActionDefault:
+		getData()->clothes = kClothes1;
+		params->param1 = 1;
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			getAction()->playAnimation(kEventAnnaVisitToCompartmentGun);
+			getSound()->playSound(kEntityPlayer, "LIB015");
+			getData()->location = kLocationOutsideCompartment;
+			getData()->entityPosition = kPosition_4840;
+
+			getEntities()->updateEntity(kEntityAnna, kCarRedSleeping, kPosition_8200);
+			getScenes()->loadSceneFromObject(kObjectCompartmentF, true);
+			getSavePoints()->push(kEntityAnna, kEntityVassili, kAction339669520);
+			getSavePoints()->push(kEntityAnna, kEntityVerges, kAction339669520);
+			getSavePoints()->push(kEntityAnna, kEntityCoudert, kAction339669520);
+			getSavePoints()->push(kEntityAnna, kEntityMax, kAction71277948);
+
+			setup_function36();
+			break;
+
+		case 2:
+			setup_function36();
+			break;
+		}
+		break;
+
+	case kAction226031488:
+		if (getSound()->isBuffered(kEntityAnna))
+			getSound()->processEntry(kEntityAnna);
+
+		getSavePoints()->push(kEntityAnna, kEntityMax, kAction71277948);
+		break;
+
+	case kAction238358920:
+		setCallback(2);
+		setup_enterExitCompartment("608Cf", kObjectCompartmentF);
+		break;
+	}
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -2671,7 +2770,94 @@ IMPLEMENT_FUNCTION(68, Anna, function68)
 
 //////////////////////////////////////////////////////////////////////////
 IMPLEMENT_FUNCTION(69, Anna, function69)
-	error("Anna: callback function 69 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionNone:
+		if (params->param1) {
+			UPDATE_PARAM(params->param2, getState()->time, 4500);
+
+			getData()->car = kCarRedSleeping;
+			getData()->entityPosition = kPosition_9270;
+			getData()->location = kLocationOutsideCompartment;
+
+			setup_function70();
+			break;
+		}
+
+		TIME_CHECK_CALLBACK(kTime2535300, params->param3, 4, setup_callbackActionRestaurantOrSalon);
+		break;
+
+	case kActionDefault:
+		getData()->car = kCarRedSleeping;
+		getData()->entityPosition = kPosition_4070;
+		getData()->location = kLocationOutsideCompartment;
+
+		setCallback(1);
+		setup_updateEntity(kCarRestaurant, kPosition_850);
+		break;
+
+	case kActionDrawScene:
+		if (params->param1 && getEntities()->isInsideTrainCar(kEntityPlayer, kCarRedSleeping)) {
+			getData()->car = kCarRedSleeping;
+			getData()->entityPosition = kPosition_8200;
+			getData()->location = kLocationOutsideCompartment;
+
+			setup_function70();
+		}
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			setCallback(2);
+			setup_callbackActionRestaurantOrSalon();
+			break;
+
+		case 2:
+			getData()->entityPosition = kPosition_1540;
+			getData()->location = kLocationOutsideCompartment;
+
+			setCallback(3);
+			setup_updatePosition("127A", kCarRestaurant, 56);
+			break;
+
+		case 3:
+			getData()->location = kLocationInsideCompartment;
+			getEntities()->drawSequenceLeft(kEntityAnna, "127B");
+			getSavePoints()->push(kEntityAnna, kEntityServers1, kAction258136010);
+			break;
+
+		case 4:
+			getData()->location = kLocationOutsideCompartment;
+
+			setCallback(5);
+			setup_updatePosition("127G", kCarRestaurant, 56);
+			break;
+
+		case 5:
+			setup_function70();
+			break;
+		}
+		break;
+
+	case kAction100969180:
+		getEntities()->clearSequences(kEntityAnna);
+		params->param1 = 1;
+
+	case kAction122288808:
+		getEntities()->drawSequenceLeft(kEntityAnna, "127E");
+		getSavePoints()->push(kEntityAnna, kEntityAbbot, kAction203073664);
+		break;
+
+	case kAction122358304:
+		getEntities()->drawSequenceLeft(kEntityAnna, "BLANK");
+		break;
+	}
 }
 
 //////////////////////////////////////////////////////////////////////////

@@ -1512,7 +1512,107 @@ IMPLEMENT_FUNCTION(38, Alexei, chapter4Handler)
 
 //////////////////////////////////////////////////////////////////////////
 IMPLEMENT_FUNCTION(39, Alexei, function39)
-	error("Alexei: callback function 39 not implemented!");
+	switch (savepoint.action) {
+	default:
+		break;
+
+	case kActionNone:
+		if (!params->param2)
+			break;
+
+		if (!params->param4) {
+			params->param3 = getState()->time + 4500;
+			params->param4 = getState()->time + 9000;
+		}
+
+		if (params->param5 != kTimeInvalid && params->param3 < getState()->time) {
+
+			if (params->param4 >= getState()->time) {
+				if (getEntities()->isInGreenCarEntrance(kEntityPlayer) || !params->param5)
+					params->param5 = getState()->time;
+
+				if (params->param5 >= getState()->time)
+					break;
+			}
+
+			params->param4 = kTimeInvalid;
+
+			getEntities()->updatePositionEnter(kEntityAlexei, kCarGreenSleeping, 70);
+			getEntities()->updatePositionEnter(kEntityAlexei, kCarGreenSleeping, 71);
+
+			if (getEntities()->isInGreenCarEntrance(kEntityPlayer)) {
+				getSound()->excuseMe(kEntityAlexei);
+
+				if (getEntities()->isPlayerPosition(kCarGreenSleeping, 62))
+					getScenes()->loadSceneFromPosition(kCarGreenSleeping, 72);
+			}
+
+			setup_function40();
+		}
+		break;
+
+	case kActionExitCompartment:
+		if (!params->param2 && !params->param2)
+			getEntities()->drawSequenceLeft(kEntityAlexei, "306F");
+		break;
+
+	case kActionDefault:
+		setCallback(1);
+		setup_enterExitCompartment("602FB", kObjectCompartment2);
+		break;
+
+	case kActionDrawScene:
+		if (getEntities()->isPlayerPosition(kCarGreenSleeping, 62)) {
+			if (params->param1) {
+				if (!params->param2)
+					break;
+			} else if (!params->param2) {
+				getEntities()->drawSequenceRight(kEntityAlexei, "306A");
+				break;
+			}
+
+			setup_function40();
+		}
+		break;
+
+	case kActionCallback:
+		switch (getCallback()) {
+		default:
+			break;
+
+		case 1:
+			getObjects()->update(kObjectCompartment2, kEntityPlayer, kObjectLocationNone, kCursorHandKnock, kCursorHand);
+			getData()->location = kLocationOutsideCompartment;
+
+			setCallback(2);
+			setup_updateEntity(kCarGreenSleeping, kPosition_540);
+			break;
+
+		case 2:
+			getEntities()->clearSequences(kEntityAlexei);
+
+			if (getEntities()->isInGreenCarEntrance(kEntityPlayer)) {
+				getSound()->excuseMe(kEntityAlexei);
+
+				if (getEntities()->isPlayerPosition(kCarGreenSleeping, 62))
+					getScenes()->loadSceneFromPosition(kCarGreenSleeping, 72);
+			}
+
+			getEntities()->updatePositionEnter(kEntityAlexei, kCarGreenSleeping, 70);
+			getEntities()->updatePositionEnter(kEntityAlexei, kCarGreenSleeping, 71);
+			break;
+		}
+		break;
+
+	case kAction123536024:
+		params->param2 = 1;
+		break;
+
+	case kAction123712592:
+		getEntities()->clearSequences(kEntityAlexei);
+		params->param1 = 1;
+		break;
+	}
 }
 
 //////////////////////////////////////////////////////////////////////////
